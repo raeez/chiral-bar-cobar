@@ -1011,12 +1011,12 @@ def ap_violation_checks() -> Dict[str, Any]:
 
     # AP34: bar-cobar inversion recovers A, NOT the bulk
     checks["AP34"] = {
-        "description": "Omega(B(A)) ~ A (inversion), NOT Z^der_ch(A) (bulk)",
+        "description": "Omega(B(A)) ~ A (inversion), NOT Z^der_ch(A) (closed-sector)",
         "four_distinct_objects": [
             "B(A): bar coalgebra",
             "Omega(B(A)) ~ A: cobar recovers A",
             "D_Ran(B(A)) ~ B(A!): Verdier dual",
-            "Z^der_ch(A): derived center (bulk)",
+            "Z^der_ch(A): derived center (closed-sector)",
         ],
         "satisfied": True,
     }

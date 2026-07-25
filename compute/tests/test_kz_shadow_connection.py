@@ -1,8 +1,9 @@
 """Tests for KZ connection from shadow obstruction tower.
 
 Verifies the proved recovery theorem: the shadow obstruction tower at genus 0, arity 2,
-produces the KZ connection.  The CYBE for r(z) = Omega/z follows from the
-Arnold relation on FM_3(C).  Higher-arity shadows give L_infinity corrections.
+produces the KZ connection.  In KZ normalization the CYBE for
+r(z) = Omega/((k+h^v)z) follows from the Arnold relation on FM_3(C).
+Higher-arity shadows give L_infinity corrections.
 
 Organization:
   1. Casimir element: construction, symmetry, eigenvalues, invariance
@@ -349,7 +350,7 @@ class TestShadowEqualsKZ:
             assert abs(result['kappa'] - expected_kappa) < 1e-12
 
     def test_collision_residue_is_r_matrix(self):
-        """Res^{coll}(Theta_A) = Omega/z for affine algebras."""
+        """KZ-normalized Res^{coll}(Theta_A) = Omega/((k+h^v)z)."""
         for k_val in [1, 2, 5]:
             res = collision_residue('sl2', Fraction(k_val))
             assert res['r_matrix_type'] == 'Omega/z'

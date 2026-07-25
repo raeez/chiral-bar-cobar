@@ -584,7 +584,7 @@ class TestKoszulObjectFirewall:
         assert "Omega(B(A)) = A" in firewall.cobar_inversion
         assert "inversion" in firewall.cobar_inversion
         assert "Z^der_ch(A)" in firewall.bulk_sector
-        assert "derived-centre bulk sector" in firewall.bulk_sector
+        assert "derived-centre closed-sector" in firewall.bulk_sector
 
     def test_firewall_records_forbidden_collapses(self):
         """Known stale collapses are recorded as forbidden pairs, not identities."""

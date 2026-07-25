@@ -53,7 +53,8 @@ THREE VERIFICATION PATHS per claim:
 CONVENTIONS:
   AP19: r-matrix poles ONE BELOW OPE (d log kernel absorption)
   AP27: bar propagator d log E(z,w) is weight 1
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  AP33: H_k^! is the curved second-kind Sym^ch(V*[1]) branch at k != 0,
+        not H_{-k}; uncurved Sym^ch(V*) is only the k=0/graded shadow.
   AP39: kappa != c/2 in general
   AP44: lambda-bracket coeff = OPE mode / n!
 

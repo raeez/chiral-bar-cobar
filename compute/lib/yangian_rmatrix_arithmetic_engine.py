@@ -727,9 +727,9 @@ def verify_kappa_shadow_consistency(lie_type: str, n: int,
     kappa = dim_g * (k_level + hv) / (2.0 * hv)
     C2 = casimir_eigenvalue(lie_type, n)
 
-    # The R-matrix for affine g_k at leading order in the bar expansion:
+    # The R-matrix for affine g_k at leading order in the normalized bar expansion:
     # R(u) = 1 + Omega/(u/kappa) + ... (expanding in 1/kappa)
-    # The collision residue at genus 0 gives r(z) = Omega/z,
+    # The unit-normalized collision residue at genus 0 gives r(z) = Omega/z,
     # with Omega normalized so that tr_V(Omega^2) gives the right C_2.
 
     # Consistency: C_2 * N should equal dim(g) / N

@@ -190,7 +190,7 @@ class TestDualKappa:
     """Verify Koszul dual kappa and complementarity sums."""
 
     def test_heisenberg_dual(self):
-        """kappa(H_k^!) = -k.  Sum = 0."""
+        """Scalar kappa(H_k^!) = -k.  Sum = 0."""
         for k in [1, 2, 5]:
             assert abs(kappa_heisenberg(k) + dual_kappa_heisenberg(k)) < 1e-12
 

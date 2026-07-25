@@ -14,6 +14,7 @@ Organized by the five identification axes plus multi-path verification.
 import pytest
 from dataclasses import fields, is_dataclass
 from fractions import Fraction
+from pathlib import Path
 
 from compute.lib.theorem_twisted_holography_deep_engine import (
     # Helpers
@@ -118,7 +119,8 @@ def _component_text(component):
         parts.extend(str(getattr(component, field.name))
                      for field in fields(component))
     for attr in (
-        "name", "description", "bulk_description", "bar_cobar_scope", "kind",
+        "name", "description", "closed_sector_description",
+        "bar_cobar_scope", "kind",
     ):
         if hasattr(component, attr):
             parts.append(str(getattr(component, attr)))
@@ -208,7 +210,7 @@ class TestAxis1ZengBoundaryDefect:
         assert not dual.full_dual_constructed
 
     def test_heisenberg_defect_is_sym_ch_dual(self):
-        """AP33: H_k^! = Sym^ch(V*) with the H_{-k} kappa value.
+        """AP33: H_k^! is the curved Sym^ch(V*[1]) branch with the H_{-k} kappa value.
 
         They have the same kappa but are different chiral algebras.
         """
@@ -226,8 +228,8 @@ class TestAxis1ZengBoundaryDefect:
         """
         A = make_boundary_sl_N(2, Fraction(1))
         triangle = construct_triangle(A)
-        assert triangle.bar_is_not_bulk
-        assert triangle.bulk_is_derived_center_of_boundary
+        assert triangle.bar_is_not_closed_sector
+        assert triangle.closed_sector_is_derived_center_of_boundary
 
     def test_koszul_duality_anti_symmetry_sl_N(self):
         """kappa(A) + kappa(A^!) = 0 for affine KM (AP24)."""
@@ -646,8 +648,8 @@ class TestHolographicPackageFirewall:
         assert "verdier" in dual_text or "koszul branch" in dual_text
         assert "omega(b(a)) constructs" not in dual_text
 
-    def test_C_component_is_derived_center_bulk_not_bar_or_dual(self):
-        """C is the derived centre/bulk channel, not A, A^i, or A^!."""
+    def test_C_component_is_derived_center_not_bar_or_dual(self):
+        """C is the derived centre/closed-sector channel, not A, A^i, or A^!."""
         datum = construct_holographic_datum(make_boundary_heisenberg(Fraction(1)))
         components = _holographic_components(datum)
 
@@ -658,7 +660,7 @@ class TestHolographicPackageFirewall:
         center_text = _component_text(components["C"]).lower()
         assert "derived" in center_text
         assert "center" in center_text or "centre" in center_text
-        assert "bulk" in center_text
+        assert "closed-sector" in center_text
         if hasattr(components["C"], "is_derived_center"):
             assert components["C"].is_derived_center
 
@@ -794,7 +796,7 @@ class TestMultiPathVerification:
 class TestDerivedCenter:
     """Verify derived center properties (AP34, AP-OC)."""
 
-    def test_derived_center_is_bulk(self):
+    def test_derived_center_is_closed_sector_slot(self):
         """The closed-sector model is the derived center, distinct from the bar complex."""
         A = make_boundary_sl_N(2, Fraction(1))
         center = compute_derived_center(A)
@@ -802,17 +804,41 @@ class TestDerivedCenter:
         assert center.is_derived_center
 
     def test_derived_center_has_shifted_poisson(self):
-        """Bulk has (-1)-shifted Poisson bracket (CDG20)."""
+        """The closed-sector descriptor has a (-1)-shifted Poisson bracket."""
         A = make_boundary_sl_N(2, Fraction(1))
         center = compute_derived_center(A)
         assert center.is_commutative_with_poisson
         assert center.poisson_bracket_shift == -1
 
-    def test_heisenberg_bulk_is_fock(self):
-        """Heisenberg bulk = Fock space (jet algebra)."""
+    def test_heisenberg_closed_sector_is_fock_descriptor(self):
+        """Heisenberg closed-sector descriptor is the Fock jet algebra."""
         A = make_boundary_heisenberg(Fraction(1))
         center = compute_derived_center(A)
-        assert "Fock" in center.bulk_description
+        assert "Fock" in center.closed_sector_description
+
+    def test_ap34_docstrings_do_not_promote_closed_sector_to_bulk(self):
+        """The engine must not identify the Hochschild slot with physical bulk."""
+        source = (
+            " ".join(Path(
+                "compute/lib/theorem_twisted_holography_deep_engine.py"
+            ).read_text().split())
+        )
+        forbidden = (
+            "C^*_ch(A,A) = Z_der is the bulk",
+            "Bulk = commutative chiral algebra",
+            "Bulk is a commutative chiral algebra",
+            "Bulk = Fock space",
+            "Heisenberg bulk = Fock space",
+            "bulk-boundary-line",
+            "BulkBoundaryLineTriangle",
+            "bar_is_not_bulk",
+        )
+        for fragment in forbidden:
+            assert fragment not in source
+        assert "ClosedSectorBoundaryLineTriangle" in source
+        assert "bar_is_not_closed_sector" in source
+        assert "It becomes a physical bulk only after an OCA comparison" in source
+        assert "closed-sector descriptor" in source
 
 
 # ============================================================================

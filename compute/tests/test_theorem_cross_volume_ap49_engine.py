@@ -432,7 +432,7 @@ class TestRMatrixPoles:
         assert r_matrix_max_pole(4) == 3
 
     def test_km(self):
-        """KM OPE z^{-2} -> r-matrix z^{-1} (Omega/z)."""
+        """KM OPE z^{-2} -> trace-form r-matrix z^{-1} (k*Omega/z)."""
         assert r_matrix_max_pole(2) == 1
 
     def test_w3_self(self):

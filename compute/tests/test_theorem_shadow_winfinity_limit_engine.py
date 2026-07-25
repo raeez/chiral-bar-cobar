@@ -255,12 +255,12 @@ class TestConstantFirewalls:
         assert status['multiweight_cross_channel_certified'] is False
 
     def test_bar_dual_bulk_objects_stay_distinct(self):
-        """Bar inversion, Verdier duality, and Hochschild bulk are separate."""
+        """Bar inversion, Verdier duality, and Hochschild closed-sector are separate."""
         status = object_firewall_status()
         assert status['A'] == 'chiral algebra'
         assert status['B(A)'] == 'bar coalgebra'
         assert status['A^!'] == 'Verdier continuous-linear dual algebra branch'
-        assert status['Z_ch^der(A)'] == 'derived chiral centre, Hochschild/bulk branch'
+        assert status['Z_ch^der(A)'] == 'derived chiral centre, Hochschild/closed-sector branch'
         assert status['Omega(B(A))'] == 'bar-cobar inversion'
         assert status['Omega_BA_is_koszul_duality'] is False
         assert status['bulk_is_koszul_dual'] is False

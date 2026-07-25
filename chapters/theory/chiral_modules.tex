@@ -26,11 +26,13 @@ implements a complete/conilpotent comparison
 $\cA$-modules correspond to conilpotent $\barB(\cA)$-comodules,
 and derived Ext groups are computed on the bar-comodule side. The
 target is intrinsic: it becomes a category of complete $\cA^!$-modules
-only after the Koszul dual coalgebra
-$\cA^{\mathrm{i}}=H^*(\barB(\cA))$ is finite-type and Verdier
-dualizable. Outside this lane, the correct comparison is the
-Positselski coderived/contraderived comparison for the bar coalgebra,
-not an ordinary module-category equivalence. Second, the module-level
+when a quadratic presentation
+$\cA^{\mathrm{i}}=C_X(s^{-1}V,s^{-2}R)$ carries a Koszul
+quasi-isomorphism
+$q_\cA\colon\cA^{\mathrm i}\to\barB(\cA)$ and the resulting Verdier
+algebra is identified with~$\cA^!$.  The general lane is the
+Positselski coderived/contraderived comparison for the full bar
+coalgebra. Second, the module-level
 Verdier intertwining (Theorem~\ref{thm:module-bar-verdier}) exchanges
 module bar complexes after the finite-type Verdier dual algebra
 $\cA^!=(\cA^{\mathrm{i}})^\vee$ has been identified, yielding
@@ -362,7 +364,7 @@ $\Eone$-chiral algebra~$\cA$. Three module surfaces are used below.
  D^{\mathrm{ctr}}(C_\cA\text{-}\mathrm{contra}),
  \]
  when the chiral product/sum exactness hypotheses of
- Theorem~\textup{\ref{thm:positselski-chiral-proved}} hold.
+ Theorem~\textup{\ref{thm:positselski-chiral-finite-type}} hold.
 \item The \emph{completed dual-algebra surface} exists only when
  $C_\cA$ has finite-dimensional graded pieces and the contraderived
  category reduces to complete modules over
@@ -407,15 +409,26 @@ module bar functor. Thus the counit and unit are the comparison maps
 \]
 They are quasi-isomorphisms exactly on the stated
 complete/conilpotent lane.
-Write $\cA^{\mathrm{i}}=H^*(\barB(\cA))$ for the Koszul dual
-coalgebra. When $\barB(\cA)$ is finite-type graded and computes
-$\cA^{\mathrm{i}}$, the graded dual
-$\barB(\cA)^\vee$ identifies with the Koszul dual algebra
-$\cA^!=(\cA^{\mathrm{i}})^\vee$; only then does one further obtain
+For a quadratic presentation, write
+\[
+ \cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),
+ \qquad
+ q_\cA\colon\cA^{\mathrm i}\longrightarrow\barB(\cA).
+\]
+When $q_\cA$ is a quasi-isomorphism and the bar pieces are finite-type,
+$H^\bullet(q_\cA)$ identifies the presentation-coalgebra cohomology
+with $H^\bullet\barB(\cA)$, while Verdier duality gives
+\[
+ K_X(\cA):=\mathbb D_{\Ran}\barB(\cA),\qquad
+ \mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+ \mathbb D_{\Ran}(\cA^{\mathrm i}).
+\]
+A Koszul-pair map $\nu_\cA\colon K_X(\cA)\xrightarrow{\sim}\cA^!$
+then gives
 $D(\mathrm{Mod}^{\mathrm{compl}}_{\cA})
 \simeq D(\mathrm{Mod}^{\mathrm{compl}}_{\cA^!})$ on the completed
-dual-algebra surface; without finite-type, the intermediate comodule
-step is essential (Positselski~\cite[\S4]{Positselski11}).
+dual-algebra surface.  The bar-comodule category remains the intrinsic
+intermediate surface (Positselski~\cite[\S4]{Positselski11}).
 \end{proposition}
 
 \begin{proof}
@@ -430,11 +443,11 @@ the unit $\eta_N$ is induced by the $C_\cA$-coaction on~$N$ and the
 coaugmentation of~$C_\cA$. On the quadratic genus-$0$
 complete/conilpotent lane these are the unit and counit
 quasi-isomorphisms of
-Theorem~\ref{thm:e1-module-koszul-duality}. The further rewrite on
-the graded-dual algebra side is available only when
-$\barB(\cA)$ computes a finite-type Koszul dual coalgebra
-$\cA^{\mathrm{i}}$ and the Verdier dual algebra
-$\cA^!=(\cA^{\mathrm{i}})^\vee$ is justified.
+Theorem~\ref{thm:e1-module-koszul-duality}.  On the quadratic lane,
+$q_\cA$ replaces the full bar coalgebra by~$\cA^{\mathrm i}$ in the
+derived comodule category.  Finite-type Verdier tensor exchange and
+the pair equivalence~$\nu_\cA$ then transport the comparison to
+complete $\cA^!$-modules.
 \end{proof}
 
 \begin{construction}[Module categories as MC twisting]
@@ -686,15 +699,26 @@ $\mathbb{V}(\mathcal{A}; X) = H^0(X, \mathcal{A}) \backslash
 \mathbf{1}$ is the \emph{vacuum conformal block}.
 \end{definition}
 
-\begin{proposition}[Conformal blocks via the bar complex; \ClaimStatusProvedHere]
+\begin{proposition}[Pointed bar resolution and conformal-block comparison;
+\ClaimStatusConditional]
 \label{prop:conformal-blocks-bar}
 \index{conformal blocks!bar complex computation}
+Type signature: \textup{(}Open quadrant, pointed chiral-module
+bar/coinvariant comparison presentation, Beilinson levels~$2$ and~$5$,
+hypothesis package: Koszul chiral algebra, Koszul module insertions,
+holonomic degreewise finite pointed bar terms, exactness above
+degree~$0$ after coinvariants, and a TUY/Hitchin or equivalent
+finite-rank conformal-block comparison for the chosen module
+category\textup{)}.
 For a Koszul chiral algebra $\mathcal{A}$ on a curve $X$ of
 genus~$g$ with Koszul module insertions
-$\mathcal{M}_1, \ldots, \mathcal{M}_r$, assume that the pointed
-module bar resolution is degreewise finite and exact above
-degree~$0$ after applying coinvariants. Then the space of
-conformal blocks is computed by the bar complex on $X$:
+$\mathcal{M}_1, \ldots, \mathcal{M}_r$, the pointed module bar
+complex computes the derived coinvariant complex of
+$\mathcal A(X\setminus\{x_i\})$ acting on
+$\mathcal{M}_1\otimes\cdots\otimes\mathcal{M}_r$. If the stated
+finite-rank comparison and degree-$0$ exactness package is supplied,
+its zeroth cohomology identifies with the classical conformal-block
+space:
 \begin{equation}\label{eq:conformal-blocks-bar}
 \mathbb{V}(\mathcal{A};\, \mathcal{M}_1, \ldots, \mathcal{M}_r;\, X)
 \;\cong\;
@@ -706,8 +730,9 @@ H^0\bigl(
 where $\bar{B}(\mathcal{M}_1, \ldots, \mathcal{M}_r; X)$ is the
 bar complex on $\overline{C}_{n+r}(X)$ with module data at the
 first $r$ marked points and algebra data at the remaining~$n$
-points. Without the degree-$0$ exactness hypothesis, the same total
-complex computes the derived conformal blocks.
+points. Without the degree-$0$ exactness and comparison hypotheses, the
+same total complex computes derived coinvariants; calling those
+classical conformal blocks requires an additional comparison theorem.
 \end{proposition}
 
 \begin{proof}
@@ -745,18 +770,24 @@ map, hence the classical coinvariant space
 \eqref{eq:conformal-blocks}. The exactness hypothesis kills the
 higher homology of this resolution, so the derived and classical
 coinvariants agree in degree~$0$, giving
-\eqref{eq:conformal-blocks-bar}. In the rational affine
-Kac--Moody/TUY lane this exactness is the finite-rank conformal-block
-exactness; in a general module category it is the extra hypothesis
-that prevents higher derived conformal blocks from contributing.
+\eqref{eq:conformal-blocks-bar}. In the rational affine Kac--Moody/TUY
+lane this is the standard finite-rank conformal-block comparison plus
+exactness of the pointed bar resolution. In a general module category
+it is an extra hypothesis: the bar complex is the derived coinvariant
+model, and higher derived coinvariants need not vanish.
 \end{proof}
 
 \begin{remark}[Conformal blocks and Koszul duality]
 \label{rem:conformal-blocks-koszul}
 \index{conformal blocks!Koszul duality}
-The Verdier intertwining
-$\mathbb{D}_{\Ran}\bar{B}(\cA) \simeq \cA^!_\infty$
-(Theorem~\ref{thm:bar-cobar-verdier}) acts at the
+The Verdier algebra
+\[
+ K_X(\cA):=\mathbb{D}_{\Ran}^{\mathrm{cont}}
+ B_X^{\mathrm{cont}}(\cA)
+\]
+is identified with the opposite member~$\cA^!$ of a chiral Koszul
+pair by its pair map $\nu_{12}$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  This acts at the
 algebra level. To obtain a conformal-block identity
 \[
 \mathbb{V}(\mathcal{A};\, \vec{\mathcal{M}};\, X)
@@ -791,37 +822,45 @@ Theorem~\ref{thm:module-bar-verdier}.
 \begin{definition}[Koszul module pair; \ClaimStatusDefinitional]\label{def:koszul-module-pair}
 \index{Koszul duality!module pair|textbf}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair
-(Definition~\ref{def:chiral-koszul-pair}), and write
-$\cA^{\mathrm{i}}=H^*(\barB(\cA))$ for the Koszul dual coalgebra. A
+(Definition~\ref{def:chiral-koszul-pair}), with twisting coalgebra
+$\cC_{\cA}$ and unit comparison
+$\eta_{\cA}\colon\cC_{\cA}\to B_X(\cA)$.  A
 \emph{Koszul module pair} consists of an $\cA$-module~$\mathcal{M}$,
-a conilpotent $\cA^{\mathrm{i}}$-comodule
-$\mathcal{M}^{\mathrm{i}}$, and, when the finite-type Verdier
-dualization is part of the chosen lane, the corresponding
+a conilpotent $\cC_{\cA}$-comodule
+$\mathcal{M}^{\mathrm{i}}$, a quasi-isomorphism of comodules
+\[
+ \eta_{\mathcal M}\colon\mathcal M^{\mathrm i}
+ \xrightarrow{\ \sim\ }B_X(\cA;\mathcal M),
+\]
+and, when finite-type Verdier
+dualization is part of the chosen setting, the corresponding
 $\cA^!$-module $\mathcal{M}^!=(\mathcal{M}^{\mathrm{i}})^\vee$,
-such that the module bar complex
+where the module bar complex is
 \[
 \bar{B}(\cA;\, \mathcal{M})
 \;=\;
 \bigoplus_{n \ge 0}
 (s^{-1}\bar{\cA})^{\otimes n} \otimes \mathcal{M}
 \otimes \Omega^n_{\log}(\overline{C}_{n,1}(X))
-\]
-satisfies
-$H^*(\bar{B}(\cA;\, \mathcal{M})) \cong \mathcal{M}^{\mathrm{i}}$
-as a $\bar{B}(\cA)$-comodule. Just as
-$H^*(\barB(\cA))=\cA^{\mathrm{i}}$ is the Koszul dual coalgebra of
-$\cA$ and $\barB(\cA)$ is the bar coalgebra computing it
-(Convention~\ref{conv:bar-coalgebra-identity}),
-$\bar{B}(\cA;\, \mathcal{M})$ computes the Koszul dual
-comodule of~$\mathcal{M}$. The notation $\mathcal{M}^!$ is reserved
-for the Verdier-dual module over $\cA^!$, not for the bar-comodule
-itself.
+\].
+The comparison $\eta_{\mathcal M}$ is the module analogue of
+$\eta_{\cA}$.  For a quadratic presentation, the quadratic comodule
+maps separately to the full module bar object; its quasi-isomorphism
+is the module-level recognition condition.  The notation
+$\mathcal{M}^!$ is reserved for the Verdier-dual module over
+$\cA^!$; $\mathcal M^{\mathrm i}$ denotes the intrinsic
+bar-comodule.
 \end{definition}
 
-\begin{theorem}[Module-level Verdier intertwining; \ClaimStatusProvedHere]
+\begin{theorem}[Module-level Verdier intertwining; \ClaimStatusConditional]
 \label{thm:module-bar-verdier}
 \index{Verdier duality!module bar complex|textbf}
 \index{conformal blocks!Verdier intertwining}
+\textup{[Type signature: Open quadrant; pointed completed module-bar
+presentation; Beilinson levels $1\leftrightarrow2$; hypothesis
+package: chiral Koszul-pair maps $\nu_{12},\nu_{21}$, finite-type
+Verdier tensor exchange, perfect algebra--module collision pairings,
+and perverse-normalized pointed-bar exactness.]}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}\textup{)}
 on a smooth projective curve~$X$, and let
@@ -869,12 +908,11 @@ is a holonomic $\mathcal{D}$-module on $\overline{C}_{n,r}(X)$
 setting).
 
 \emph{Step~1: Verdier duality on algebra factors.}
-On the $n$ algebra-insertion factors, Verdier duality acts by
-Theorem~\ref{thm:bar-cobar-verdier}: $\mathbb{D}$ exchanges the
-logarithmic forms $\eta_{ij}$ with the distributional sections
-$\delta_{D_{ij}}$, and maps $\cA^{\boxtimes n}$ to
-$(\cA^!)^{\boxtimes n}$ via the Koszul pairing
-$\cA \otimes \cA^! \to \omega_X$.
+On the $n$ algebra-insertion factors, the tensor-exchange datum of
+Theorem~\ref{thm:bar-cobar-verdier} produces the Verdier algebra
+$K_X(\cA)$.  The chiral Koszul-pair map
+$\nu_{12}\colon K_X(\cA)\xrightarrow{\sim}\cA^!$ identifies its
+algebra insertions with $(\cA^!)^{\boxtimes n}$.
 
 \emph{Step~2: Verdier duality on module factors.}
 At each module insertion $x_i$, the Koszul-module pairing
@@ -896,9 +934,8 @@ pairing is compatible with the chiral bracket:
 \langle d_{\mathrm{bar}} m,\, m^! \rangle
 = - \langle m,\, d_{\mathrm{bar}}^! m^! \rangle
 \]
-(the adjoint-connection identity of
-Theorem~\ref{thm:bar-cobar-verdier}, Step~2, applied to each
-collision divisor). Combining Steps~1--3 yields the
+(the adjointness clause in the Verdier tensor-exchange package,
+applied to each collision divisor). Combining Steps~1--3 yields the
 identification~\eqref{eq:module-bar-verdier} on $\overline{C}_{n,r}(X)$:
 the Verdier dual of the module bar complex of $\cA$ on
 $(\vec{\mathcal{M}})$ is the module bar complex of $\cA^!$ on
@@ -909,13 +946,12 @@ normalization of the pointed bar complex this shift is suppressed.
 In the homotopy module-algebra notation of
 Convention~\ref{conv:bar-coalgebra-identity},
 $\mathbb{D}\bar{B}_n(\cA; \vec{\mathcal{M}})
-\simeq \bar{B}_n(\cA^!; \vec{\mathcal{M}}^!)[d_{n,r}]$,
-which agrees with $\cA^{!}_{\infty,n}(\vec{\mathcal{M}}^!)$ as a
-factorization algebra on the proved Verdier-intertwining surface.
+\simeq \bar{B}_n(\cA^!; \vec{\mathcal{M}}^!)[d_{n,r}]$ on the
+stated module-level comparison surface.
 
 \emph{Step~4: Descent to conformal blocks.}
 Taking the perverse degree-zero piece of~\eqref{eq:module-bar-verdier}
-and using the bar-complex computation of conformal blocks
+and using the pointed-bar/conformal-block comparison package
 (Proposition~\ref{prop:conformal-blocks-bar}) gives:
 \[
 \mathbb{V}(\cA; \vec{\mathcal{M}}; X)
@@ -995,12 +1031,20 @@ of finite rank, called the \emph{bundle of conformal blocks} (or
 \end{enumerate}
 \end{definition}
 
-\begin{proposition}[KZB connection from the bar complex; \ClaimStatusProvedHere]
+\begin{proposition}[KZB comparison from the pointed bar family;
+\ClaimStatusConditional]
 \label{prop:kzb-bar-complex}
 \index{KZB connection!bar complex}
-The projective flat connection on
-$\mathbb{V}(\mathcal{A}; \vec{\Lambda})$ arises from the
-bar complex as follows. The bar complex
+Type signature: \textup{(}Open quadrant, pointed bar-family to
+TUY/Hitchin transport comparison presentation, Beilinson levels~$2$
+and~$5$, hypothesis package: Proposition~\textup{\ref{prop:conformal-blocks-bar}},
+holonomic family base change, boundary sewing, determinant-anomaly
+matching, and projectivised or anomaly-cancelled flat
+transport\textup{)}.
+The bar-family variation defines Gauss--Manin transport on the derived
+coinvariant complex. Under the stated comparison package, its
+degree-$0$ projectivisation matches the projectively flat connection on
+$\mathbb{V}(\mathcal{A}; \vec{\Lambda})$. The bar complex
 $\bar{B}(\vec{\mathcal{M}}; X)$ of
 Proposition~\textup{\ref{prop:conformal-blocks-bar}} depends on the
 complex structure of~$X$ through the propagator
@@ -1014,11 +1058,11 @@ yields:
 \mathrm{Res}_{D_{ij}} \frac{\partial \eta_{ij}}{\partial t_\alpha},
 \]
 where the residue operator acts on bar complex terms on
-$\overline{C}_{n+r}(X)$. Flatness
-$[\nabla_\alpha, \nabla_\beta] = 0$ follows from $d^2 = 0$ on
-the bar complex (Theorem~\ref{thm:bar-nilpotency-complete}):
-the flatness obstruction equals the commutator of bar
-differentials, which vanishes.
+$\overline{C}_{n+r}(X)$. The identity $d^2 = 0$ on the pointed bar
+complex \textup{(}Theorem~\ref{thm:bar-nilpotency-complete}\textup{)}
+gives flat transport on the derived coinvariant model. The ordinary
+conformal-block bundle inherits only projectively flat transport unless
+the determinant anomaly is cancelled.
 
 For $\mathcal{A} = \widehat{\mathfrak{g}}_k$ on $\mathbb{P}^1$, on the
 affine Kac--Moody comparison surface this genus-$0$
@@ -1033,9 +1077,11 @@ element.
 The bar complex $\bar{B}(\vec{\mathcal{M}}; X)$ is a complex of
 sheaves on $\mathcal{M}_{g,r}$ (via the universal curve
 $\pi\colon \mathcal{C}_{g,r} \to \mathcal{M}_{g,r}$), and its
-cohomology sheaf $R^0\pi_*(\bar{B})$ is the bundle
-$\mathbb{V}$. The Gauss--Manin connection on
-$R^0\pi_*(\bar{B})$ is the KZB connection.
+cohomology sheaf is the derived coinvariant family. Under
+Proposition~\ref{prop:conformal-blocks-bar} and the determinant-line
+comparison package, the degree-$0$ finite-rank summand is the
+TUY/Hitchin conformal-block bundle. The Gauss--Manin connection on the
+bar family then matches the KZB/Hitchin connection projectively.
 
 The propagator $\eta_{ij}$ on $\overline{C}_2(X)$ is the unique
 logarithmic $1$-form with simple pole along the diagonal $D_{ij}$
@@ -1059,9 +1105,17 @@ $D_{ij} \cap D_{kl}$, which is controlled by $d^2 = 0$ on
 the bar complex.
 \end{proof}
 
-\begin{theorem}[Verlinde formula via the bar complex {\cite{Verlinde}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Verlinde formula on the TUY target and pointed-bar
+comparison {\cite{Verlinde}}; \ClaimStatusConditional]
 \label{thm:verlinde-bar}
 \index{Verlinde formula!bar complex|textbf}
+Type signature: \textup{(}Open quadrant, TUY/Hitchin
+conformal-block target with pointed-bar comparison presentation,
+Beilinson levels~$2$ and~$5$, hypothesis package: positive integral
+affine level, integrable-module truncation, TUY factorization,
+modular \(S\)-matrix diagonalization, determinant-anomaly matching,
+and the pointed-bar comparison package of
+Proposition~\textup{\ref{prop:conformal-blocks-bar}}\textup{)}.
 Let $\mathcal{A} = \widehat{\mathfrak{g}}_k$ at positive integer
 level~$k$, with integrable highest weights
 $\Lambda_1, \ldots, \Lambda_r$. The dimension of the space of
@@ -1116,24 +1170,27 @@ orthogonality $\sum_\mu S_{\mu,\sigma} \overline{S_{\mu,\tau}}
 = \delta_{\sigma,\tau}$, the sum telescopes to the claimed
 formula~\eqref{eq:verlinde}.
 
-\emph{Step~3: Bar complex interpretation.}
+\emph{Step~3: Pointed-bar comparison.}
 In the bar-cobar framework, each ingredient has a geometric
-counterpart:
+counterpart only after the pointed-bar comparison package is supplied:
 \begin{itemize}
-\item The fusion coefficients $N_{\Lambda\mu}^{\nu}$ are computed
- by the bar complex on $\overline{C}_3(\mathbb{P}^1)$
+\item The fusion coefficients $N_{\Lambda\mu}^{\nu}$ agree with the
+ degree-$0$ pointed-bar comparison target on
+ $\overline{C}_3(\mathbb{P}^1)$
  (Proposition~\ref{prop:conformal-blocks-bar} with $g = 0$,
  $r = 3$).
-\item The modular $S$-matrix is the monodromy of the KZB connection
- (Proposition~\ref{prop:kzb-bar-complex}) around the $A$-cycle
- of a genus-$1$ curve.
-\item The factorization property is the bar complex's
- factorization along boundary strata of $\overline{C}_{n+r}(X)$
- (Definition~\ref{def:geometric-bar-definition}).
+\item The modular $S$-matrix is the monodromy of the KZB/Hitchin
+ connection on the TUY bundle; the bar-side Gauss--Manin connection
+ matches it only under Proposition~\ref{prop:kzb-bar-complex}.
+\item TUY factorization is compared with the pointed bar complex's
+ factorization along boundary strata of $\overline{C}_{n+r}(X)$ under
+ the boundary-sewing part of the comparison package
+ \textup{(}Definition~\ref{def:geometric-bar-definition}\textup{)}.
 \end{itemize}
-The Koszul property ensures that the bar spectral sequence
-degenerates, so the rank of $\mathbb{V}$ is computed exactly by
-the $E_2$ page.
+The Koszul property is not by itself a proof of the analytic
+TUY/Hitchin comparison; it supplies the bar-side degeneration once the
+finite-rank comparison, sewing, and anomaly hypotheses have been
+verified.
 \end{proof}
 
 \begin{remark}[Verlinde formula and Koszul duality]
@@ -1145,7 +1202,9 @@ Q_g(\widehat{\mathfrak{g}}_k) +
 Q_g(\widehat{\mathfrak{g}}_{k'}^!)
 = H^*(\mathcal{M}_g, Z(\widehat{\mathfrak{g}}_k)).
 \]
-At positive integer level, the Verlinde dimensions are computed exactly via the bar complex (Theorem~\ref{thm:verlinde-bar}).
+At positive integer level, the Verlinde dimensions are the TUY/Hitchin
+conformal-block ranks; they agree with pointed-bar \(H^0\) only under
+the comparison package of Theorem~\ref{thm:verlinde-bar}.
 \end{remark}
 
 \subsection{Conformal block ranks under Koszul duality}
@@ -1244,7 +1303,7 @@ Without the three inputs, the statement is a derived-DS problem rather
 than an ordinary equality of conformal-block ranks.
 \end{remark}
 
-\subsection{Conformal blocks from the bar complex: the standard families}
+\subsection{Conformal-block comparison for standard families}
 \label{sec:conformal-blocks-families}
 \index{conformal blocks!bar complex realization}
 
@@ -1274,7 +1333,9 @@ The bar differential has two components:
  v_j \cdot \eta_{i,x_j}] = T^a_j \cdot v_j$, where
  $T^a_j$ is the representation matrix in~$V_{\Lambda_j}$.
 \end{enumerate}
-The resulting $H^0$ is the space of coinvariants
+The resulting degree-$0$ pointed bar target is the coinvariant
+complex. Under the TUY comparison package its \(H^0\) is the space of
+coinvariants
 $\widehat{\fg}_k(X \setminus \{x_i\}) \backslash
 V_{\Lambda_1} \otimes \cdots \otimes V_{\Lambda_r}$: the conformal
 block in the sense of Tsuchiya--Ueno--Yamada~\cite{TUY89}.
@@ -1309,8 +1370,9 @@ three-point vacuum block is zero.
 For the Virasoro algebra $\mathrm{Vir}_c$, the conformal block at
 genus~$0$ with $r$ highest-weight module insertions
 $M_{h_1}, \ldots, M_{h_r}$ at $z_1, \ldots, z_r \in \mathbb{P}^1$
-is computed by the bar complex on pointed configuration spaces, with
-the bar differential extracting the Virasoro action via:
+is compared with the pointed bar complex only after the finite-rank
+and exactness package is supplied. The bar differential extracts the
+Virasoro action via:
 \[
 \Res_{z = z_i}\!\bigl[T(z) \cdot v_i \cdot \eta_{z,z_i}\bigr]
 = L_{-1}^{(i)} v_i.
@@ -1323,11 +1385,11 @@ enters the KZ-type connection on the conformal block bundle.
 
 At central charge $c = c_{p,q} = 1 - 6(p-q)^2/(pq)$ (minimal
 models), the conformal block spaces are finite-dimensional and
-computed by the Feigin--Fuchs resolution, which the bar spectral
-sequence recovers: the $E_1$ page is the Verma module coinvariant,
-and the $d_1$ differential implements the BGG resolution
-(Theorem~\ref{thm:bgg-from-bar}). The surviving $E_2 = E_\infty$
-gives the finite-dimensional conformal block.
+computed by the Feigin--Fuchs resolution. The bar spectral sequence
+matches this only on the comparison lane where the $E_1$ page is the
+Verma-module coinvariant and the $d_1$ differential implements the BGG
+resolution (Theorem~\ref{thm:bgg-from-bar}). On that lane the surviving
+$E_2 = E_\infty$ gives the finite-dimensional conformal block.
 
 \subsubsection{$\mathcal{W}$-algebras via Drinfeld--Sokolov}
 
@@ -1342,8 +1404,10 @@ H^0_{Q_{\mathrm{DS}}}\bigl(
 \end{equation}
 where $\mathcal{N}_i$ are the $\widehat{\fg}_k$-modules
 inducing~$\mathcal{M}_i$ under DS reduction.
-The conformal blocks of $\mathcal{W}^k(\fg)$ are therefore the
-BRST-reduced conformal blocks of $\widehat{\fg}_k$:
+Under the DS exactness, bar-term compatibility, and sewing hypotheses
+of Remark~\ref{rem:ds-conformal-block-comparison-scope}, the
+conformal blocks of $\mathcal{W}^k(\fg)$ are the BRST-reduced
+conformal blocks of $\widehat{\fg}_k$:
 \[
 \mathbb{V}(\mathcal{W}^k;\, \vec{\mathcal{M}};\, X)
 = H^0_{Q_{\mathrm{DS}}}\bigl(
@@ -1366,23 +1430,23 @@ DS functor and no rank equality is asserted.
 For a conformal embedding $\cB \hookrightarrow \cA$ (e.g.,
 the diagonal $\widehat{\fg}_k \hookrightarrow
 \widehat{\fg}_{k_1} \otimes \widehat{\fg}_{k_2}$ with
-$k = k_1 + k_2$), the coset $\cA / \cB$ has conformal blocks
-computed by the \emph{relative bar complex}:
+$k = k_1 + k_2$), the coset $\cA / \cB$ has a relative bar
+coinvariant model:
 \[
 \bar{B}(\cA/\cB;\, \vec{\mathcal{M}};\, X)
 := \bar{B}(\cA;\, \vec{\mathcal{M}};\, X)
 \otimes_{\bar{B}(\cB)} \mathbb{C},
 \]
-the bar complex of $\cA$ with $\cB$-coinvariants imposed. The
-conformal blocks decompose as:
+the bar complex of $\cA$ with $\cB$-coinvariants imposed. On the
+finite-rank coset comparison lane, the conformal blocks decompose as:
 \[
 \mathbb{V}(\cA;\, \vec{\Lambda};\, X)
 \cong \bigoplus_{\vec{\mu}}
 \mathbb{V}(\cA/\cB;\, \vec{\Lambda}/\vec{\mu};\, X)
 \otimes \mathbb{V}(\cB;\, \vec{\mu};\, X),
 \]
-the branching rule realized at the bar-complex level by the
-Künneth decomposition on $\overline{C}_{n,r}(X)$. The coset
+the branching rule compared with the bar-complex Künneth decomposition
+on $\overline{C}_{n,r}(X)$. The coset
 Koszul dual $(\cA/\cB)^!$ is computed from
 $\bar{B}(\cA/\cB)^\vee$: the Verdier dual of the relative bar
 coalgebra.
@@ -1391,11 +1455,13 @@ coalgebra.
 \label{ex:gko-coset-bar}
 The Goddard--Kent--Olive coset realizes the Virasoro minimal
 model $\mathcal{M}(k+2, k+3)$ at $c = 1 - 6/((k+2)(k+3))$.
-At the bar-complex level: the relative bar complex of the coset
+At the relative-bar comparison level: the relative bar complex of the coset
 is the BRST reduction of the tensor-product bar complex by the
 diagonal $\widehat{\mathfrak{sl}}_2$ action. The Verlinde
 dimensions of the coset conformal blocks match the minimal model
-fusion rules; this is a bar-complex proof of the GKO correspondence.
+fusion rules; this is bar-complex evidence for the GKO comparison, not
+an independent proof of the GKO correspondence without the coset
+comparison theorem.
 \end{example}
 
 \subsubsection{Yangians and quantum groups}
@@ -1403,8 +1469,8 @@ fusion rules; this is a bar-complex proof of the GKO correspondence.
 For the $\Eone$-chiral Yangian $Y(\fg)^{\mathrm{ch}}$ on a
 pointed curve $(X; x_1, \ldots, x_r)$, the module bar complex
 is built on \emph{ordered} configuration spaces
-$\widetilde{C}_{n,r}(X)$ (no $\Sigma_n$-equivariance). The
-conformal blocks are:
+$\widetilde{C}_{n,r}(X)$ (no $\Sigma_n$-equivariance). The ordered
+derived coinvariant spaces are:
 \[
 \mathbb{V}^{\Eone}\bigl(Y(\fg);\,
 V_{\Lambda_1}(a_1), \ldots, V_{\Lambda_r}(a_r);\, X\bigr)
@@ -1414,7 +1480,7 @@ V_{\Lambda_1}(a_1), \ldots, V_{\Lambda_r}(a_r);\, X\bigr)
 where $V_{\Lambda_i}(a_i)$ are evaluation modules at spectral
 parameters $a_1, \ldots, a_r$.
 
-The KZ connection on these conformal blocks (with Casimir insertion
+The KZ connection on these ordered comparison targets (with Casimir insertion
 $\Omega_{ij}/(a_i - a_j)$ from the rational $R$-matrix) has
 monodromy valued in the braid group $B_r$. The
 Drinfeld--Kohno theorem
@@ -1439,11 +1505,14 @@ of Yangian category~$\mathcal{O}$ without the separate completion and
 ambient-extension inputs recorded in
 Conjecture~\ref{conj:derived-drinfeld-kohno}.
 
-\begin{remark}[Chiral homology as the derived conformal block]
+\begin{remark}[Chiral homology as the derived coinvariant refinement]
 \label{rem:chiral-homology-derived-conformal}
 \index{chiral homology!as derived conformal block}
-The conformal block $\mathbb{V} = H^0(\bar{B}(\cA;\vec{\mathcal{M}};X))$
-is the degree-$0$ piece of a richer object: the full chiral
+Under the comparison package of
+Proposition~\ref{prop:conformal-blocks-bar}, the conformal block
+\(\mathbb{V}\) is identified with
+\(H^0(\bar{B}(\cA;\vec{\mathcal{M}};X))\). This \(H^0\) is the
+degree-$0$ piece of a richer object: the full chiral
 homology
 $H^*_{\mathrm{ch}}(\cA; \vec{\mathcal{M}}; X)
 = H^*(\bar{B}(\cA; \vec{\mathcal{M}}; X))$.
@@ -1455,8 +1524,9 @@ The higher cohomology $H^{>0}$ detects:
  spectral sequence of the universal curve).
 \item \emph{Derived coinvariants}: for non-rational algebras
  (e.g., $\widehat{\fg}_k$ at admissible level), $H^{>0} \neq 0$
- and the derived conformal blocks carry the logarithmic
- structure of non-semisimple modules.
+ and the derived coinvariant complex carries the logarithmic
+ structure of non-semisimple modules; calling it a conformal-block
+ space requires the relevant comparison theorem.
 \item \emph{Genus corrections}: at genus~$g \ge 1$, the higher
  chiral homology groups $H^i_{\mathrm{ch}}$ receive contributions
  from~$H^i(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)$ via
@@ -1467,8 +1537,9 @@ On the Koszul lanes where the pointed module bar complex is
 degreewise finite and the genus spectral sequence has no higher
 surviving rows, the $E_2$ collapse
 (Lemma~\ref{lem:e2-collapse-higher-genus}) forces
-$H^{>0}=0$, so the conformal block is the full chiral homology on
-that surface. Off those exactness hypotheses, the higher chiral
+$H^{>0}=0$, so the conformal-block comparison target is the full
+chiral homology on that surface. Off those exactness hypotheses, the
+higher chiral
 homology groups are the derived obstruction spaces of
 Theorem~\ref{thm:quantum-complementarity-main}.
 \end{remark}
@@ -2916,8 +2987,13 @@ By the McKean--Singer theorem, the supertrace $\mathrm{STr}(e^{-t\Delta}) = \sum
 \begin{theorem}[Koszul dual coalgebras linearize module resolutions; \ClaimStatusProvedHere]
 \label{thm:koszul-resolution-module}
 Let $\mathcal{A}$ be Koszul and let
-$\mathcal{A}^{\mathrm{i}}=H^*(\barB(\mathcal{A}))$ be its Koszul
-dual coalgebra. Then the augmented module bar resolution of any
+$\mathcal{A}^{\mathrm{i}}=C_X(s^{-1}V,s^{-2}R)$ be the coalgebra of a
+quadratic presentation.  Assume its canonical comparison
+\[
+ q_{\mathcal A}\colon\mathcal A^{\mathrm i}\longrightarrow
+ \barB(\mathcal A)
+\]
+is a quasi-isomorphism. Then the augmented module bar resolution of any
 $\mathcal{A}$-module $\mathcal{M}$ is quasi-isomorphic to the
 Koszul complex
 \[
@@ -2937,9 +3013,9 @@ dual-algebra notation; the resolution itself is coalgebraic.
 \end{theorem}
 
 \begin{proof}
-Koszulity means that the projection from the bar coalgebra to the
-Koszul dual coalgebra is a quasi-isomorphism,
-$\barB(\mathcal{A})\xrightarrow{\sim}\mathcal{A}^{\mathrm{i}}$.
+Koszulity supplies the coalgebra quasi-isomorphism
+$q_{\mathcal A}\colon\mathcal A^{\mathrm i}\xrightarrow{\sim}
+\barB(\mathcal A)$.
 The two-sided augmented bar resolution is:
 \[
 \cdots \to
@@ -4921,19 +4997,26 @@ $\operatorname{ch}(\mathcal{L}(\lambda)) /
 \prod_{\alpha > 0}(1 - e^{-\alpha})$.
 \end{proof}
 
-\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra bar at dual level via DS and Verdier intertwining; \ClaimStatusConditional]\label{cor:ds-bar-level-shift}
+\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra at dual
+level via DS and Verdier intertwining; \ClaimStatusConditional]
+\label{cor:ds-bar-level-shift}
 \index{Drinfeld--Sokolov reduction!bar at dual level}
-For a simple Lie algebra $\mathfrak{g}$ and non-critical level $k \neq -h^\vee$:
+For a simple Lie algebra $\mathfrak{g}$ and non-critical level
+$k \neq -h^\vee$, assume the principal DS-exact lane of
+Theorem~\ref{thm:ds-koszul-intertwine}. Then
 \begin{equation}\label{eq:ds-bar-level-shift}
 H^0_{\mathrm{DS}}\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr) \;\simeq\; \bar{B}_W^{\mathrm{ch}}(\mathcal{W}^k(\mathfrak{g})),
 \end{equation}
-and composing with the Verdier intertwining
-\textup{(}Corollary~\textup{\ref{cor:level-shifting-part1})}:
+as bar coalgebras. If, in addition, the BRST total complex is
+holonomic and dualizable on the Ran/Fulton--MacPherson strata and
+Verdier duality commutes with DS totalization in the completed
+filtered category, then composing with the Verdier intertwining
+\textup{(}Corollary~\textup{\ref{cor:level-shifting-part1})} gives
 \begin{equation}\label{eq:ds-cobar-dual}
 H^0_{\mathrm{DS}}\!\bigl(
  \mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr)
  \;\simeq\;
- \bar{B}_W^{\mathrm{ch}}(\mathcal{W}^{k'}(\mathfrak{g})),
+ \mathcal{W}^{k'}(\mathfrak{g}),
  \qquad k' = -k - 2h^\vee.
 \end{equation}
 \end{corollary}
@@ -4942,16 +5025,20 @@ H^0_{\mathrm{DS}}\!\bigl(
 Equation~\eqref{eq:ds-bar-level-shift} is the algebra-level case of
 Theorem~\ref{thm:ds-koszul-intertwine} (take
 $M = \widehat{\mathfrak{g}}_k$ as a module over itself).
-For~\eqref{eq:ds-cobar-dual}: Corollary~\ref{cor:level-shifting-part1}
-provides the algebra-level Verdier intertwining
-$\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)
-\simeq \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'})$
-(this is the Koszul-dual identification, distinct from bar-cobar
-inversion $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))
-\simeq \widehat{\mathfrak{g}}_k$, which recovers the original algebra
-by Theorem~B). Applying $H^0_{\mathrm{DS}}$ to both sides and using
-\eqref{eq:ds-bar-level-shift} for $\widehat{\mathfrak{g}}_{k'}$ gives
-$\bar{B}_W^{\mathrm{ch}}(\mathcal{W}^{k'}(\mathfrak{g}))$.
+For~\eqref{eq:ds-cobar-dual},
+Corollary~\ref{cor:level-shifting-part1} supplies the algebra map
+\[
+ \nu_k\colon
+ \mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)
+ \xrightarrow{\sim}\widehat{\mathfrak{g}}_{k'}.
+\]
+The holonomicity, dualizability, and Verdier--BRST exchange hypotheses
+carry this map through $H^0_{\mathrm{DS}}$.  Principal DS reduction of
+the reflected affine algebra is
+$H^0_{\mathrm{DS}}(\widehat{\mathfrak g}_{k'})
+=\mathcal W^{k'}(\mathfrak g)$, which proves the displayed
+algebra-level comparison.  Equation~\eqref{eq:ds-bar-level-shift}
+is the separate bar-coalgebra comparison at level~$k$.
 \end{proof}
 
 
@@ -5111,7 +5198,10 @@ hypotheses~\textup{(i)} and~\textup{(ii)} above.
 \index{module category!genus-graded}
 
 The full bar complex $\bar{B}^{\mathrm{full}}(\cA) = \bigoplus_{g \geq 0}
-\bar{B}^{(g)}(\cA)$ is genus-graded (Theorem~\ref{thm:master-tower}).
+\bar{B}^{(g)}(\cA)$ carries the formal genus grading of
+Theorem~\ref{thm:master-tower}.  Its chain-level boundary-residue
+structure is the conditional lift supplied there by the signed log-FM
+residue-pushforward package.
 
 \begin{definition}[Genus-graded module; \ClaimStatusDefinitional]\label{def:genus-graded-module}
 \index{module!genus-graded}
@@ -5145,9 +5235,17 @@ genus parameter $\hbar$.
 \end{definition}
 
 \begin{theorem}[Module tower from bar complex with insertions;
-\ClaimStatusProvedHere]\label{thm:module-genus-tower}
+\ClaimStatusConditional]\label{thm:module-genus-tower}
 \index{module tower!genus-graded}
-For a Koszul chiral algebra $\cA$ and an $\cA$-module $M$, the
+\textbf{Type signature.} (Open quadrant; module bar/Feynman-transform
+presentation; level~$3$ boundary-residue module structure over the
+level~$5$ modular tower; hypothesis package: Koszul chiral algebra
+$\cA$; $\cA$-module $M$; finite-window bar construction with module
+insertion; signed log-FM residue-pushforward package compatible with
+module insertions, determinant-line orientations, proper pushforwards,
+and stabiliser normalisations.)
+For a Koszul chiral algebra $\cA$ and an $\cA$-module $M$, assume this
+signed log-FM module-insertion package is supplied. Then the
 bar complex with module insertion
 $\bar{B}^{(g)}_n(\cA; M) :=
 \bar{B}^{(g)}_n(\cA; M, \cA, \ldots, \cA)$
@@ -5160,8 +5258,10 @@ of Definition~\textup{\ref{def:genus-graded-module}}.
 The bar complex with module insertion
 $\bar{B}^{(g)}_n(\cA; M)$ is defined via configuration space
 integrals on the logarithmic FM compactification
-(Theorem~\ref{thm:genus-induction-strict}). The nilpotency
-$d^2 = 0$ is proved there.
+(Theorem~\ref{thm:genus-induction-strict}). The square-zero assertion
+in the strict model is inherited from that finite-window construction;
+the global boundary-residue module structure below is the conditional
+lift governed by the signed log-FM residue-pushforward package.
 
 The factorization map~\eqref{eq:module-factorization} is
 constructed as follows. The separating boundary divisor
@@ -5173,17 +5273,25 @@ $\mathrm{Res}_{D_{\mathrm{sep}}}\colon
 \bar{B}^{(g_1)}_{|I|+1}(\cA; M) \otimes
 \bar{B}^{(g_2)}_{|J|+1}(\cA)$.
 The module insertion stays on one component; the other component
-carries only algebra insertions. That this is a chain map follows
-from the compatibility of the Feynman transform differential with
-boundary strata (Getzler--Kapranov \cite{GeK98}).
+carries only algebra insertions. On the formal stable-curve skeleton,
+this assignment is the Getzler--Kapranov modular-operad boundary
+operation \cite{GeK98}.  On actual chiral bar coefficient chains, it is
+a chain map only after the signed residue-pushforward package supplies
+the Gysin residue map, determinant-line sign, proper pushforward, and
+stabiliser normalisation for the module insertion.
 
 The self-sewing map~\eqref{eq:module-self-sewing} is constructed
 from the nonseparating boundary divisor, analogously to the
-algebra case (Theorem~\ref{thm:chain-modular-functor}(iii)).
+algebra case (Theorem~\ref{thm:chain-modular-functor}(iii)); its
+chain-level construction uses the same signed residue-pushforward data
+with the module insertion carried through the normalization.
 
 Coherence follows from the $A_\infty$ module structure on
 $\bar{B}^{(g)}_n(\cA; M)$, which provides the required
-homotopies between different orderings of degeneration.
+homotopies between different orderings of degeneration, once the
+package identifies the competing global residue-pushforward targets.
+Without that package this theorem records only the formal modular-operad
+module skeleton, not a chain-level genus-graded module tower.
 \end{proof}
 
 \begin{proposition}[Koszul duality of genus-graded modules;
@@ -5220,16 +5328,18 @@ with Corollary~\ref{cor:dual-modular-functor} (Verdier duality of
 the chain-level modular functor). The module insertion at a marked
 point transforms covariantly under the bar functor $\Phi$,
 while the algebra insertions at other marked points transform via
-the algebra-level Verdier intertwining
-$\mathbb{D}_{\Ran}\barB(\cA) \simeq \cA^!_\infty$
-(Theorem~\ref{thm:bar-cobar-verdier}). The Verdier duality on
+the algebra-level Verdier algebra
+$K_X(\cA)=\mathbb{D}_{\Ran}\barB(\cA)$ and the pair equivalence
+$\nu_{12}\colon K_X(\cA)\xrightarrow{\sim}\cA^!$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}). The Verdier duality on
 $\overline{\mathcal{M}}_{g,n}$ interchanges the factorization
 maps by the naturality argument of
 Corollary~\ref{cor:dual-modular-functor}. The right-hand side
 of~\eqref{eq:genus-module-duality} is the Verdier dual module bar
 complex on the dual side. The finite-type hypothesis is exactly what
-permits the notation $M^!$ as a complete $\cA^!$-module; without it,
-the target remains the intrinsic bar-comodule $M^{\mathrm{i}}$.
+permits the notation $M^!$ as a complete $\cA^!$-module.  The
+intrinsic target before finite-type dualization is the bar-comodule
+$M^{\mathrm{i}}$.
 \end{proof}
 
 \begin{remark}[Curvature as obstruction to strict genus-grading]

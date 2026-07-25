@@ -1,113 +1,34 @@
-r"""Exceptional-type Yangian R-matrices from the bar complex.
+r"""Exceptional Lie-theoretic data used by the Yangian programme.
 
-FRONTIER COMPUTATION: explicit R-matrices, spectral decompositions,
-Yang-Baxter verification, RTT relations, Drinfeld polynomials, and
-quantum group deformation for all exceptional simple Lie algebras
-(E_6, E_7, E_8, F_4, G_2).
+The implemented layer consists of root systems, quadratic Casimir
+eigenvalues, and multiplicity-free decompositions of selected tensor
+squares.  For a component ``V_lambda`` in ``V tensor V`` it computes
 
-MATHEMATICAL FRAMEWORK
-----------------------
-The bar construction B(V_k(\hat{g})) produces a factorization coalgebra.
-The collision residue Res^{coll}_{0,2}(\Theta_A) extracts the classical
-r-matrix:
+    omega_lambda = (C_2(lambda) - 2 C_2(V)) / 2,
 
-    r(z) = \Omega_g / z
+the eigenvalue of the invariant tensor ``Omega``.  Consequently the
+module records the eigenvalues of the *Casimir-linear ansatz*
+``u + Omega``.
 
-where \Omega_g is the quadratic Casimir element of g (AP19: r-matrix has
-poles ONE LESS than the OPE). The R-matrix is then:
+This datum is strictly weaker than an exceptional Yangian R-matrix.
+The Yang--Baxter equation lives on ``V tensor V tensor V``: its three
+pairwise projectors are related by recoupling coefficients and therefore
+do not reduce to multiplication of scalar eigenvalues.  A genuine check
+requires explicit projectors together with the triple-tensor recoupling
+matrices, or an independently established universal/evaluation R-matrix.
+Likewise, an RTT presentation requires the RTT relations and PBW/flatness
+for the algebra they generate.  The status-report functions below expose
+these obligations directly.
 
-    R(z) = 1 + r(z)/(k + h^\vee) + O(1/(k+h^\vee)^2)
-
-For a representation V of g, the R-matrix in the spectral decomposition is:
-
-    R_{V \otimes V}(z) = \sum_\lambda f_\lambda(z) P_\lambda
-
-where \lambda runs over the irreducible components of V \otimes V,
-P_\lambda is the orthogonal projector onto the \lambda-isotypic component,
-and f_\lambda(z) depends on the quadratic Casimir eigenvalue C_2(\lambda).
-
-The rational R-matrix (Yangian) is:
-
-    R(u) = 1 + \Omega/u
-
-where u is the spectral parameter. The spectral decomposition gives:
-
-    f_\lambda(u) = 1 + c_\lambda / u
-
-with c_\lambda = C_2(\lambda)/2 - C_2(V). More precisely, for the
-standard rational R-matrix:
-
-    R(u) = u + \Omega  (additive convention)
-
-the eigenvalues on the \lambda component are u + c_\lambda where
-c_\lambda = (C_2(\lambda) - 2 C_2(V)) / 2.
-
-TENSOR PRODUCT DECOMPOSITIONS (ground truth from representation theory)
-----------------------------------------------------------------------
-E_6, V = 27:
-    27 \otimes 27 = 27* + 351' (antisymmetric part = 351)
-    This is NOT self-dual. 27 \otimes 27* = 1 + 78 + 650
-    27 \otimes 27 = 27_a + 351_s   [Landsberg-Manivel notation]
-    Actually: 27 \otimes 27 = \Lambda^2(27) + S^2(27) = 351_a + 378 -> NO.
-
-    CORRECT (from LiE / representation theory):
-    27 \otimes 27 = 27* + 351'_s  (wrong -- 27 is NOT self-dual as a rep)
-
-    Let me be precise. For E_6:
-    - V(\omega_1) = 27, V(\omega_6) = 27* (dual, contragredient)
-    - 27 is NOT self-dual.
-    - 27 \otimes 27 decomposes as: \Lambda^2(27) + S^2(27)
-      = V(\omega_5) + V(2\omega_1)  = 351 + 351' -> wrong dims.
-      Actually V(\omega_5) = 351, V(2\omega_1) = 351.
-      \Lambda^2(27) = 27*=V(\omega_6)? No, dim(\Lambda^2(27))=351.
-    - CORRECT: 27 \otimes 27 = V(0,0,0,0,1,0) + V(2,0,0,0,0,0)
-                              = 351_a          + 351_s
-      But wait: V(\omega_5) has dim 351, and V(2\omega_1) has dim...
-      Weyl dim formula needed.
-
-    Let me use the ACTUAL decomposition. For E_6:
-    27 \otimes 27* = 1 + 78 + 650
-    27 \otimes 27 = 351_a + 351_s (two 351-dimensional reps)
-
-    This means the Casimir has TWO eigenvalues on 27 \otimes 27
-    (since 27 is not self-dual, the permutation acts on 27 \otimes 27
-    and splits it into symmetric and antisymmetric parts).
-
-E_7, V = 56:
-    56 is self-dual (pseudo-real / symplectic).
-    56 \otimes 56 = 1 + 133 + 1463 + S^2_0(56) decomposition
-    CORRECT: 56 \otimes 56 = \Lambda^2(56) + S^2(56)
-    \Lambda^2(56) = 1 + 1539 (dim 1540)
-    S^2(56) = 133 + 1463 (dim 1596)
-    Total: 1540 + 1596 = 3136 = 56^2. CHECK.
-
-    So 56 \otimes 56 = 1 + 133 + 1463 + 1539
-
-E_8, V = 248 (adjoint):
-    248 is self-dual (real, since E_8 has no outer automorphism).
-    248 \otimes 248 = 1 + 248 + 3875 + 27000 + 30380
-    \Lambda^2(248) = 248 + 30380 (dim 30628)
-    S^2(248) = 1 + 3875 + 27000 (dim 30876)
-    Total: 30628 + 30876 = 61504 = 248^2. CHECK.
-
-MULTI-PATH VERIFICATION
------------------------
-Path 1: Direct Casimir construction (from root system data)
-Path 2: Spectral decomposition (from tensor product decomposition)
-Path 3: Yang-Baxter equation verification
-Path 4: Consistency with modular characteristic kappa
-
-References
-----------
-- Humphreys, "Introduction to Lie Algebras and Representation Theory"
-- Chari-Pressley, "A Guide to Quantum Groups"
-- Cohen-de Man, "Computational evidence for Deligne's conjecture"
-- Landsberg-Manivel, "The sextonions and E_{7 1/2}"
-- concordance.tex; AP19 (pole absorption)
+References for the implemented classical layer include Humphreys,
+Chari--Pressley, and the type-specific tensor-product tables cited by the
+manuscript.  The exceptional Yangian comparison remains a separate
+theorem-level input.
 """
 
 from __future__ import annotations
 
+import math
 from fractions import Fraction
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
@@ -127,7 +48,8 @@ EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES: Tuple[str, ...] = (
     "chosen exceptional type and finite representation window",
     "type-specific tensor-product decomposition for V tensor V",
     "quadratic Casimir eigenvalues on every component",
-    "spectral R-matrix check in the chosen evaluation representation",
+    "explicit component projectors and triple-tensor recoupling matrices",
+    "type-specific spectral functions satisfying the Yang--Baxter equation",
     "separate Drinfeld/J-presentation or RTT presentation theorem",
     "PBW/flatness comparison for the generated exceptional Yangian window",
 )
@@ -577,19 +499,18 @@ def tensor_product_decomposition(name: str) -> List[Dict]:
 # =====================================================================
 
 class SpectralDecomposition:
-    """Spectral decomposition of the Yangian R-matrix for an exceptional type.
+    """Casimir spectrum on a selected exceptional tensor square.
 
-    For the rational R-matrix R(u) = u + Omega (additive convention),
-    the spectral decomposition is:
+    For the invariant endomorphism ``Omega`` on ``V tensor V``, the
+    multiplicity-free tables give
 
-        R(u) = sum_lambda (u + c_lambda) P_lambda
+        Omega = sum_lambda c_lambda P_lambda,
 
     where c_lambda = (C_2(lambda) - 2*C_2(V)) / 2 and P_lambda is the
-    orthogonal projector onto the lambda-isotypic component of V x V.
-
-    In the MULTIPLICATIVE convention R(u) = 1 + Omega/u:
-
-        R(u) = sum_lambda (1 + c_lambda/u) P_lambda
+    projector onto the lambda-isotypic component.  The methods named
+    ``R_eigenvalue`` retain the historical API and return the eigenvalues
+    of the Casimir-linear ansatz ``u + Omega``.  Establishing that ansatz
+    as an exceptional Yangian R-matrix is a separate obligation.
     """
 
     def __init__(self, name: str):
@@ -637,7 +558,7 @@ class SpectralDecomposition:
             f"{name}: total dim {total_dim} != {self.fund_dim}^2"
 
     def R_eigenvalue(self, component_index: int, u: complex) -> complex:
-        """Eigenvalue of R(u) on the given component (additive convention).
+        """Eigenvalue of the additive Casimir ansatz on one component.
 
         R(u) |_{V_lambda} = (u + c_lambda) * Id_{V_lambda}
         """
@@ -645,7 +566,7 @@ class SpectralDecomposition:
         return u + c_lambda
 
     def R_eigenvalue_multiplicative(self, component_index: int, u: complex) -> complex:
-        """Eigenvalue of R(u) on the given component (multiplicative convention).
+        """Eigenvalue of the multiplicative Casimir ansatz on one component.
 
         R(u) |_{V_lambda} = (1 + c_lambda/u) * Id_{V_lambda}
         """
@@ -671,27 +592,18 @@ class SpectralDecomposition:
         }
 
     def yang_baxter_spectral_check(self, u: complex, v: complex) -> Dict:
-        """Verify the Yang-Baxter equation via spectral decomposition.
+        """Report the data available for a future Yang--Baxter check.
 
-        For a DIAGONAL R-matrix (R(u) = sum f_lambda(u) P_lambda),
-        the YBE R_{12}(u-v) R_{13}(u) R_{23}(v) = R_{23}(v) R_{13}(u) R_{12}(u-v)
-        reduces to checking that for every triple (lambda, mu, nu) of
-        irreducible components appearing in V^{tensor 3}:
-
-            f_lambda(u-v) * f_mu(u) * f_nu(v) = f_nu(v) * f_mu(u) * f_lambda(u-v)
-
-        This is AUTOMATICALLY TRUE since multiplication is commutative.
-        The YBE for a spectral R-matrix is thus trivially satisfied.
-
-        The NONTRIVIAL check is that the spectral decomposition is CONSISTENT:
-        the projectors P_lambda are ORTHOGONAL and COMPLETE.
+        Scalar eigenvalues on ``V tensor V`` determine the action of a
+        candidate R-matrix on each irreducible summand.  The Yang--Baxter
+        equation compares the three embeddings into ``End(V tensor 3)``;
+        its evaluation also requires the projectors and their recoupling
+        matrices.  This routine therefore checks the dimension table and
+        records the missing triple-tensor datum.
         """
-        # The spectral YBE is trivially satisfied. The real verification
-        # is the dimension consistency and orthogonality of the decomposition.
         total_dim = sum(c['dim'] for c in self.spectral_data)
         consistent = total_dim == self.fund_dim ** 2
 
-        # For the additive R-matrix, check that the eigenvalues are distinct
         eigenvalues = [c['c_lambda'] for c in self.spectral_data]
         distinct = len(set(eigenvalues)) == len(eigenvalues)
 
@@ -702,12 +614,17 @@ class SpectralDecomposition:
             'dimension_consistent': consistent,
             'eigenvalues_distinct': distinct,
             'eigenvalues': eigenvalues,
-            'passes': consistent,  # The spectral YBE is always satisfied
+            'tensor_square_data_complete': consistent,
+            'triple_tensor_projectors_available': False,
+            'recoupling_matrices_available': False,
+            'ybe_evaluated': False,
+            'passes': None,
+            'status': 'open_triple_tensor_recoupling',
         }
 
 
 # =====================================================================
-# 4. Modular characteristic from bar complex
+# 4. Configured modular-characteristic formula
 # =====================================================================
 
 def modular_characteristic_exceptional(name: str, k: float) -> float:
@@ -720,12 +637,9 @@ def modular_characteristic_exceptional(name: str, k: float) -> float:
         E_7: dim = 133, h^\vee = 18. kappa = 133*(k+18)/36 = 19(k+18)/36*7.
         E_8: dim = 248, h^\vee = 30. kappa = 248*(k+30)/60 = 62(k+30)/15.
 
-    Multi-path verification:
-    Path 1: Direct formula dim(g)*(k+h^vee)/(2*h^vee).
-    Path 2: From the Casimir eigenvalue: kappa = C_2(adj)*(k+h^vee)/2 * dim(g)/(2*h^vee*dim(g)).
-            Actually kappa = dim(g)*(k+h^vee)/(2*h^vee). Same formula.
-    Path 3: From the partition function (formal level): kappa determines
-            the leading Fourier coefficient of F_1(tau).
+    This function evaluates the manuscript's chosen normalization.  It
+    uses tabulated ``dim(g)`` and ``h^vee``; a collision-residue or
+    genus-one derivation belongs to the mathematical comparison layer.
     """
     data = EXCEPTIONAL_DATA[name]
     dim_g = data[4]
@@ -734,13 +648,11 @@ def modular_characteristic_exceptional(name: str, k: float) -> float:
 
 
 def kappa_multi_path(name: str, k: float) -> Dict:
-    """Multi-path verification of kappa for exceptional types.
+    """Internal consistency checks for the configured kappa formula.
 
     Path 1: Direct formula.
-    Path 2: From Casimir eigenvalue of adjoint representation.
-           C_2(adj) = 2*h^vee for simply-laced. Then:
-           kappa = dim(g)*(k+h^vee)/(2*h^vee).
-    Path 3: Consistency check: kappa(k=-h^vee) = 0 (critical level).
+    The ``direct`` and ``casimir`` fields are algebraic rewritings of one
+    formula.  The critical-level value supplies a boundary check.
     """
     data = EXCEPTIONAL_DATA[name]
     dim_g = data[4]
@@ -775,14 +687,14 @@ def kappa_multi_path(name: str, k: float) -> Dict:
 
 
 # =====================================================================
-# 5. Classical r-matrix from the bar complex
+# 5. Unit Casimir kernel on a tensor square
 # =====================================================================
 
 def classical_r_matrix_eigenvalues(name: str) -> Dict:
-    """Compute the classical r-matrix r(z) = Omega/z eigenvalues on V x V.
+    """Compute unit-normalized Casimir r(z) = Omega/z eigenvalues on V x V.
 
-    The r-matrix is the collision residue of the bar complex MC element:
-        r(z) = Res^{coll}_{0,2}(Theta_A) = Omega/z
+    This helper computes the unit Casimir eigenvalues of the kernel
+        r(z) = Omega/z
 
     where Omega is the quadratic Casimir operator acting on V tensor V.
 
@@ -792,10 +704,9 @@ def classical_r_matrix_eigenvalues(name: str) -> Dict:
     This follows from: Omega = sum I^a tensor I_a, and the Casimir
     identity C_2(V_1 tensor V_2) = C_2(V_1) + C_2(V_2) + 2*Omega.
 
-    AP19 CHECK: The r-matrix has a SINGLE pole at z = 0. The OPE for
-    affine KM has poles at z^{-2} and z^{-1}. The r-matrix has pole at
-    z^{-1} only (one less than OPE). This is because the bar construction
-    extracts residues along d log(z_i - z_j), which absorbs one power.
+    The displayed kernel has a simple pole at ``z=0`` by construction.
+    Identifying it with a collision residue or exceptional Yangian
+    classical limit is a separate comparison statement.
     """
     sd = SpectralDecomposition(name)
     base = name.replace("_dual", "")
@@ -941,62 +852,36 @@ def yang_baxter_symplectic(
 
 
 def yang_baxter_multipath(name: str, u: float, v: float) -> Dict:
-    """Multi-path Yang-Baxter verification for an exceptional type.
+    """Assemble the present exceptional Yang--Baxter status.
 
-    Path 1: Spectral decomposition (automatic for diagonal R-matrices).
-    Path 2: Direct matrix computation (for small representations).
-    Path 3: Algebraic identity check (P^2 = I, Q^2 = NQ, PQ = QP = Q).
-
-    NOTE: Direct matrix computation is ONLY feasible for small N.
-    For E_7 (N=56) and E_8 (N=248), the triple tensor product N^3 is
-    too large. We rely on the spectral/algebraic paths.
+    The tensor-square Casimir spectrum is computed when a decomposition
+    table is available.  The generic orthogonal and symplectic routines in
+    this module test the corresponding classical-group R-matrices; they do
+    not provide exceptional-type projectors.  Thus the exceptional YBE is
+    recorded as open until type-specific triple-tensor recoupling data or a
+    universal R-matrix is supplied.
     """
-    results = {'type': name, 'u': u, 'v': v}
+    results = {
+        'type': name,
+        'u': u,
+        'v': v,
+        'exceptional_ybe_evaluated': False,
+        'passes': None,
+        'status': 'open_triple_tensor_recoupling',
+    }
 
-    # Path 1: spectral (always works)
     try:
         sd = SpectralDecomposition(name)
         spec_result = sd.yang_baxter_spectral_check(u, v)
-        results['path1_spectral'] = spec_result['passes']
+        results['tensor_square_spectrum'] = spec_result
     except Exception as e:
-        results['path1_spectral'] = None
-        results['path1_error'] = str(e)
+        results['tensor_square_spectrum'] = None
+        results['tensor_square_error'] = str(e)
 
-    # Path 2: direct computation (only for small N)
-    data = EXCEPTIONAL_DATA.get(name.replace("_dual", ""), None)
-    if data is None:
-        results['path2_direct'] = None
-        results['path2_error'] = 'Unknown type'
-    else:
-        # Get the fund dim for this type
-        fund_dims = {
-            'G2': 7, 'F4': 26, 'E6': 27, 'E7': 56, 'E8': 248,
-            'E6_dual': 27
-        }
-        N = fund_dims.get(name, 0)
-        if N <= 14:  # N^3 must be feasible for triple-tensor computation
-            # Feasible for direct computation
-            h_vee = data[3]
-            kappa_r = N / 2.0 - 1.0  # Generic orthogonal kappa
-            try:
-                direct = yang_baxter_generic_orthogonal(N, kappa_r, u, v)
-                results['path2_direct'] = direct['passes']
-                results['path2_max_diff'] = direct['max_diff']
-            except Exception as e:
-                results['path2_direct'] = None
-                results['path2_error'] = str(e)
-        else:
-            results['path2_direct'] = None
-            results['path2_note'] = f'N={N} too large for direct triple-tensor computation'
-
-    # Path 3: algebraic identity
-    results['path3_algebraic'] = True  # P^2=I, Q^2=NQ, PQ=QP=Q always hold
-
-    results['passes'] = any(
-        results.get(f'path{i}_{name}') is True
-        for i in range(1, 4)
-        for name in ['spectral', 'direct', 'algebraic']
-        if f'path{i}_{name}' in results
+    results['required_data'] = (
+        'explicit pair projectors on V tensor V',
+        'recoupling matrices on V tensor V tensor V',
+        'type-specific spectral functions or a universal R-matrix',
     )
 
     return results
@@ -1009,32 +894,17 @@ def yang_baxter_multipath(name: str, u: float, v: float) -> Dict:
 def quantum_r_matrix_expansion(
     name: str, max_order: int = 4
 ) -> Dict:
-    r"""Compute the universal R-matrix expansion to order hbar^{max_order}.
+    r"""Expand the auxiliary endomorphism ``exp(hbar*Omega)``.
 
-    R^{univ} = 1 + hbar * r_1 + hbar^2 * r_2 + ...
+    On a tensor-square component ``V_lambda`` this endomorphism acts by
 
-    where r_1 = Omega (the Casimir), and higher terms involve products
-    of Casimir eigenvalues.
+        exp(hbar*c_lambda)
+        = sum_n hbar^n c_lambda^n/n!.
 
-    For the SPECTRAL R-matrix in a representation V:
-
-        R_V(u, q) = sum_lambda f_lambda(u, q) P_lambda
-
-    where q = exp(hbar/(k+h^vee)) and:
-
-        f_lambda(u, q) = product_{i} (u - u_i(lambda)) * (quantum correction)
-
-    At leading order in hbar:
-        f_lambda(u, q) = f_lambda(u, 1) + hbar * f'_lambda(u) + O(hbar^2)
-
-    The quantum correction to order hbar^n involves the n-th power of
-    the Casimir eigenvalue difference.
-
-    For the STANDARD Drinfeld-Jimbo quantum group U_q(g):
-        R(z) = sum_lambda prod_{(i,j) in box(lambda)} (q^{c_{ij}} z - q^{-c_{ij}}) P_lambda
-    where the product is over some combinatorial data of the representation.
-
-    Here we compute the PERTURBATIVE expansion around q=1 (hbar=0).
+    This is a well-defined Casimir exponential.  It is an auxiliary formal
+    series rather than a construction of the universal or spectral
+    exceptional quantum R-matrix; the latter also contains ordered root
+    factors and must satisfy quasi-triangularity and Yang--Baxter identities.
     """
     try:
         sd = SpectralDecomposition(name)
@@ -1048,52 +918,10 @@ def quantum_r_matrix_expansion(
     coefficients = {}
     for idx, comp in enumerate(sd.spectral_data):
         c_lambda = comp['c_lambda']
-        # The quantum deformation of f_lambda(u) = 1 + c_lambda/u is:
-        # At order hbar^n: the coefficient involves c_lambda^n / u^n
-        # More precisely, the quantum R-matrix eigenvalue on V_lambda is:
-        #   f_lambda(u, hbar) = sinh(hbar(u + c_lambda)) / sinh(hbar*u)
-        #                     = 1 + c_lambda/u + hbar^2*c_lambda(c_lambda^2 - u^2)/(6u^3) + ...
-        # This is for the trigonometric R-matrix.
-        #
-        # For the rational limit (hbar -> 0 with u = hbar*v):
-        #   f_lambda(v) = (v + c_lambda)/v = 1 + c_lambda/v
-        #
-        # The PERTURBATIVE expansion of the quantum R-matrix around classical:
-        # R_q(u) = R(u) * (1 + sum_{n>=1} hbar^{2n} * correction_n(u))
-        # where correction_1(u) = c_lambda * (c_lambda^2 - something) / u^3
-        #
-        # For concreteness, the trigonometric R-matrix eigenvalue is:
-        # f_lambda(u, eta) = Gamma(1 + u/eta) * Gamma(c_lambda/eta)
-        #                  / (Gamma(1 + (u+c_lambda)/eta) * Gamma(-c_lambda/eta)??? no.
-        #
-        # The SIMPLEST perturbative expansion: the quantum R-matrix has
-        # R_q = R_0 + hbar * R_1 + hbar^2 * R_2 + ...
-        # where R_0 = classical R-matrix, and R_n involves n-fold products
-        # of root vectors. On each spectral component:
-        #
-        # R_q |_{V_lambda} = R_0|_{V_lambda} * exp(sum_{n>=1} hbar^n * r_n(lambda))
-        #
-        # For now, compute the FIRST FEW ORDERS using the fact that the
-        # quantum correction to the eigenvalue on V_lambda is:
-        # f_q(u) = f_0(u) * (1 + hbar^2/(k+h^vee)^2 * correction(c_lambda, u) + ...)
-
-        expansion = []
-        for order in range(max_order + 1):
-            if order == 0:
-                expansion.append(1.0)  # Leading: identity
-            elif order == 1:
-                expansion.append(c_lambda)  # First order: classical r-matrix
-            elif order == 2:
-                # Second order: r_2 eigenvalue = c_lambda^2 / 2
-                expansion.append(c_lambda ** 2 / 2.0)
-            elif order == 3:
-                # Third order: r_3 eigenvalue = c_lambda^3 / 6
-                expansion.append(c_lambda ** 3 / 6.0)
-            elif order == 4:
-                # Fourth order: r_4 eigenvalue = c_lambda^4 / 24
-                expansion.append(c_lambda ** 4 / 24.0)
-            else:
-                expansion.append(c_lambda ** order / float(np.math.factorial(order)))
+        expansion = [
+            c_lambda ** order / float(math.factorial(order))
+            for order in range(max_order + 1)
+        ]
 
         coefficients[comp['name']] = {
             'c_lambda': c_lambda,
@@ -1105,6 +933,9 @@ def quantum_r_matrix_expansion(
         'h_vee': h_vee,
         'c2_fund': c2_fund,
         'max_order': max_order,
+        'series': 'exp(hbar*Omega)',
+        'exceptional_quantum_r_matrix_constructed': False,
+        'status': 'auxiliary_casimir_exponential',
         'components': coefficients,
     }
 
@@ -1114,21 +945,17 @@ def quantum_r_matrix_expansion(
 # =====================================================================
 
 def rtt_spectral_check(name: str, u: complex, v: complex) -> Dict:
-    """Finite-window spectral check for an exceptional Yangian-facing R-matrix.
+    """Report the finite-window input presently available for RTT.
 
     The RTT relation R_{12}(u-v) T_1(u) T_2(v) = T_2(v) T_1(u) R_{12}(u-v)
     in the evaluation representation T(u) = R(u-a) becomes:
 
         R_{12}(u-v) R_{13}(u-a) R_{23}(v-a) = R_{23}(v-a) R_{13}(u-a) R_{12}(u-v)
 
-    which is the Yang-Baxter equation in this evaluation window.  This is
-    not a full RTT presentation theorem for the exceptional Yangian.
-
-    For the SPECTRAL R-matrix, this reduces to commutativity of multiplication,
-    which is automatic after the type-specific spectral decomposition is
-    supplied.  The missing stronger datum is a Drinfeld/J-presentation or
-    RTT presentation theorem with PBW/flatness control for the generated
-    exceptional window.
+    which is the Yang--Baxter equation in this evaluation window.  The
+    tensor-square spectrum supplies its eigenvalue input.  Evaluation on
+    the triple tensor product additionally requires the recoupling data
+    listed by ``yang_baxter_spectral_check``.
     """
     try:
         sd = SpectralDecomposition(name)
@@ -1137,13 +964,14 @@ def rtt_spectral_check(name: str, u: complex, v: complex) -> Dict:
             'type': name,
             'u': u,
             'v': v,
-            'rtt_passes': ybe['passes'],
-            'finite_window_ybe_passes': ybe['passes'],
+            'rtt_passes': None,
+            'finite_window_ybe_passes': None,
+            'tensor_square_data_complete': ybe['tensor_square_data_complete'],
             'full_exceptional_rtt_presentation_proved': False,
             'an_rtt_extrapolation': False,
-            'rtt_implication_status': 'finite_window_spectral_only',
-            'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:],
-            'note': 'finite evaluation-window YBE check, not a full RTT presentation',
+            'rtt_implication_status': 'open_triple_tensor_and_pbw',
+            'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[3:],
+            'note': 'tensor-square Casimir spectrum computed; triple-tensor RTT input remains',
         }
     except Exception as e:
         return {
@@ -1195,7 +1023,7 @@ def exceptional_rtt_scope_report(name: str) -> Dict:
         'expected_tensor_square_dim': spectral['fund_dim'] ** 2,
         'component_dimension_check': total_dim == spectral['fund_dim'] ** 2,
         'r_matrix_eigenvalues': classical_r_matrix_eigenvalues(name),
-        'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:],
+        'missing_hypotheses': EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[3:],
     })
     return report
 
@@ -1282,30 +1110,20 @@ def drinfeld_polynomials_fundamental(name: str) -> Dict:
 
 
 # =====================================================================
-# 10. Pole structure verification (AP19)
+# 10. Pole inventory for the OPE and the unit Casimir kernel
 # =====================================================================
 
 def verify_pole_structure(name: str) -> Dict:
-    """Verify that the r-matrix pole structure matches AP19.
-
-    AP19: the bar complex r-matrix r(z) has poles ONE LESS than the OPE.
+    """Record two elementary pole inventories.
 
     For affine Kac-Moody algebras:
         OPE: J^a(z) J^b(w) ~ k*g^{ab}/(z-w)^2 + f^{ab}_c J^c/(z-w)
-        This has poles at (z-w)^{-2} and (z-w)^{-1}.
+    has pole orders two and one.  The separately defined unit Casimir
+    kernel ``Omega/z`` has pole order one.
 
-    The r-matrix (collision residue of Theta_A along d log(z-w)):
-        r(z) = Omega/z
-        This has a SINGLE pole at z^{-1} (one less than the OPE).
-
-    The d log measure absorbs one power: d log(z-w) = dz/(z-w),
-    so the residue of (z-w)^{-2} along d log(z-w) is (z-w)^{-1}
-    (shifted by one).
-
-    For exceptional types, the OPE is the SAME structure (Kac-Moody OPE
-    with structure constants f^{ab}_c and metric g^{ab} of g). So:
-        OPE poles: z^{-2}, z^{-1}
-        r-matrix poles: z^{-1} only
+    A theorem identifying the bar collision residue with ``Omega/z``
+    requires an explicit residue convention and chain map.  This routine
+    records that comparison as an open input.
     """
     data = EXCEPTIONAL_DATA.get(name, None)
     if data is None:
@@ -1319,12 +1137,14 @@ def verify_pole_structure(name: str) -> Dict:
         'ope_pole_orders': [2, 1],
         'r_matrix_pole_orders': [1],
         'pole_reduction': 1,
-        'ap19_satisfied': True,
+        'bar_collision_map_evaluated': False,
+        'ap19_satisfied': None,
+        'status': 'pole_inventories_computed_comparison_open',
         'explanation': (
             f'OPE for hat({name}) has poles at z^{{-2}} (Killing form) '
             f'and z^{{-1}} (structure constants). '
-            f'The bar complex collision residue along d log(z-w) absorbs '
-            f'one power, giving r(z) = Omega/z with single pole at z^{{-1}}.'
+            f'The auxiliary unit Casimir kernel Omega/z has a simple pole. '
+            f'The bar-to-kernel comparison remains an explicit chain-level input.'
         ),
     }
 
@@ -1334,7 +1154,7 @@ def verify_pole_structure(name: str) -> Dict:
 # =====================================================================
 
 def e6_detailed() -> Dict:
-    """Detailed E_6 R-matrix computation.
+    """Detailed E_6 Casimir-spectrum computation.
 
     E_6 data:
         dim = 78, rank = 6, h^vee = 12
@@ -1350,11 +1170,11 @@ def e6_detailed() -> Dict:
         C_2(omega_5) = (omega_5, omega_5 + 2*rho)
         C_2(2*omega_1) = (2*omega_1, 2*omega_1 + 2*rho)
 
-    The R-matrix eigenvalues:
+    The Casimir-linear ansatz has eigenvalues:
         On Alt^2(27) = 351: c_1 = (C_2(351) - 2*C_2(27)) / 2
         On Sym^2(27) = 378: c_2 = (C_2(378) - 2*C_2(27)) / 2
 
-    Since 27 is NOT self-dual, the R-matrix R(u) on 27 x 27 is:
+    On the displayed multiplicity-free decomposition the ansatz is
         R(u) = (u + c_1) * P_{351} + (u + c_2) * P_{378}
     (additive convention)
 
@@ -1377,7 +1197,7 @@ def e6_detailed() -> Dict:
 # =====================================================================
 
 def e7_detailed() -> Dict:
-    """Detailed E_7 R-matrix computation.
+    """Detailed E_7 Casimir-spectrum computation.
 
     E_7 data:
         dim = 133, rank = 7, h^vee = 18
@@ -1388,18 +1208,13 @@ def e7_detailed() -> Dict:
         Alt^2(56) = V(0) + V(omega_6) = 1 + 1539
         Sym^2(56) = V(omega_1) + V(2*omega_7) = 133 + 1463
 
-    The R-matrix is SYMPLECTIC type:
-        R(u) = I - P/u - K/(u + kappa)
-    where K is the symplectic contraction and kappa is determined by
-    the Casimir eigenvalue.
-
     Spectral decomposition:
-        R(u) = sum_lambda f_lambda(u) P_lambda
+        Omega = sum_lambda c_lambda P_lambda
     with 4 components (1, 1539, 133, 1463).
 
     The TRIVIAL component (dim 1) in Alt^2 corresponds to the invariant
     antisymmetric form J. On this component:
-        f_0(u) = eigenvalue = u + c_trivial = u - C_2(56)
+        c_trivial = -C_2(56).
     """
     sd = SpectralDecomposition("E7")
     r_data = classical_r_matrix_eigenvalues("E7")
@@ -1418,7 +1233,7 @@ def e7_detailed() -> Dict:
 # =====================================================================
 
 def e8_detailed() -> Dict:
-    """Detailed E_8 R-matrix computation.
+    """Detailed E_8 Casimir-spectrum computation.
 
     E_8 data:
         dim = 248, rank = 8, h^vee = 30
@@ -1431,16 +1246,13 @@ def e8_detailed() -> Dict:
 
     Spectral decomposition has 5 components.
 
-    NOTE: direct matrix computation of the R-matrix on 248 x 248 requires
+    Direct matrix computation of an endomorphism on 248 x 248 requires
     248^2 = 61504-dimensional matrices. This is FEASIBLE for storage
     (~30 GB at double precision) but the triple tensor product (248^3 ~ 15M)
-    is NOT feasible for direct YBE verification.
-
-    The spectral decomposition provides the FULL R-matrix abstractly.
-    The first 3 terms in the z-expansion are:
-        R(u) = I + Omega/u + Omega^2/(2*u^2) + ...
-    on each component:
-        R(u)|_{V_lambda} = 1 + c_lambda/u + c_lambda^2/(2*u^2) + ...
+    is substantially larger.  The spectral table provides the action of
+    ``Omega`` on each tensor-square component.  A full R-matrix further
+    requires its type-specific spectral functions and triple-tensor
+    compatibility.
     """
     sd = SpectralDecomposition("E8")
     r_data = classical_r_matrix_eigenvalues("E8")

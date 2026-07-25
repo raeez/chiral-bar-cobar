@@ -851,7 +851,7 @@ class TestFiniteWindowCensus(unittest.TestCase):
         self.assertEqual(cert['bar_object_relations']['Omega(B(A))'],
                          'bar-cobar inversion to A')
         self.assertEqual(cert['bar_object_relations']['Z_ch^der(A)'],
-                         'ChirHoch^*(A,A), the Hochschild bulk')
+                         'ChirHoch^*(A,A), the Hochschild closed-sector')
 
 
 # ============================================================================

@@ -1,6 +1,6 @@
-"""Independent-verification decorators for Part III Platonic Introduction.
+"""Independent-verification decorators for the Part III structural introduction.
 
-Five Platonic theorems assemble the reconstituted Part III (Standard
+Five carrier theorems assemble the reconstituted Part III (Standard
 Landscape) into an atlas on the chiral-algebra moduli stack
 M_ChirAlg.  Each \\ClaimStatusProvedHere theorem gets a decorator
 whose derived_from / verified_against cite disjoint sources.

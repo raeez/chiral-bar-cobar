@@ -566,7 +566,7 @@ def _dual_label(algebra: str = 'virasoro', c: float = 26.0, **kwargs) -> str:
     if algebra == 'virasoro':
         return f"Vir_{_fraction_label(_as_fraction(26) - _as_fraction(c))}"
     if algebra == 'heisenberg':
-        return "Sym^ch(V*)"
+        return "curved Sym^ch(V*[1])"
     if algebra == 'kac_moody':
         return f"Verdier/Koszul companion of {_algebra_label(algebra, c, **kwargs)}"
     if algebra == 'betagamma':

@@ -430,8 +430,9 @@ def defect_ope_r_matrix(z: complex, N: int, k: Rational) -> np.ndarray:
     r"""Defect OPE R-matrix in the fundamental representation.
 
     The defect OPE for two parallel Wilson lines is controlled by the
-    collision residue r(z) = Omega/z of Theta_A (AP19: one pole order
-    below the OPE).  In the fundamental representation V = C^N:
+    unit-normalized collision residue r_unit(z) = Omega/z of Theta_A
+    (AP19: one pole order below the OPE).  In the fundamental
+    representation V = C^N:
 
       R^{defect}(z) = I + P / (kappa * z) + O(1/(kappa*z)^2)
 
@@ -1286,8 +1287,9 @@ def kz_connection_parameter(lie_type: str, rank: int,
     the i-th and j-th tensor factors.
 
     The connection parameter is 1/(k + h^v), which appears in the
-    bar complex as the prefactor of the collision residue r(z) = Omega/z.
-    This is consistent with r(z) = Res^{coll}_{0,2}(Theta_A) (AP19).
+    bar complex as the prefactor of the unit residue r_unit(z) = Omega/z.
+    This is the KZ/defect normalization, distinct from the affine
+    trace-form residue k*Omega/z.
 
     Returns:
         Dict with KZ data.

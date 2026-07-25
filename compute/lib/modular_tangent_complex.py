@@ -753,7 +753,7 @@ def modular_tangent_scope_firewall() -> Dict[str, object]:
                 "or completed hypotheses"
             ),
             "Omega(B(A))": "bar-cobar inversion recovering A",
-            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk derived centre",
+            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/closed-sector derived centre",
         },
         "ce_window_role": "finite Chevalley-Eilenberg tangent oracle; not R4_mod(L)",
     }

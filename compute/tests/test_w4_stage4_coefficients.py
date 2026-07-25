@@ -146,7 +146,7 @@ class TestScopeFirewalls:
         fw = stage4_scope_certificate()["object_firewall"]
         assert "bar-cobar inversion, not Koszul duality" in fw["bar_cobar_inversion"]
         assert "Verdier/continuous-linear dual branch" in fw["verdier_branch"]
-        assert "Hochschild/bulk, not Koszul dual" in fw["derived_center"]
+        assert "Hochschild/closed-sector, not Koszul dual" in fw["derived_center"]
 
     def test_kernel_constants(self):
         """Kernel constants retain the level and trace-form conventions."""
@@ -382,7 +382,7 @@ class TestPredictions:
         assert values == [0, 2]
 
     def test_distinguished_value_scope(self):
-        """The distinguished values are not derived-centre or bulk data."""
+        """The distinguished values are not derived-centre or closed-sector data."""
         preds = stage4_virasoro_target_identity_data()
         for payload in preds.values():
             assert payload["value_scope"] == (

@@ -1,91 +1,44 @@
-r"""Non-principal W-algebra duality engine for types B, C, D.
+r"""Exact BCD root arithmetic with typed principal-W comparison claims.
 
-Extends Direction 4 (non-principal W-algebra Koszul duality) beyond type A
-for the first time.  Implements computational verification of duality
-invariants for W-algebras of types B, C, D, including:
+The scalar lane records the dimensions, dual Coxeter numbers, exponents,
+principal generator weights, Weyl-vector norms, and nilpotent-partition
+combinatorics of the classical root systems.  The principal-W lane records
+central charge, the genus-one anomaly ratio, modular characteristic,
+reflected level, modular conductor, full shadow, and Koszul duality as
+``ClaimPacket`` objects imported from the canonical Creutzig landscape
+engine.  Each unresolved packet names the comparison theorem required to
+promote root arithmetic to a modular or chiral statement.
 
-MATHEMATICAL CONTENT:
+The distinction is forced by the accidental isomorphism ``D_3=A_3``.  The
+rank-minus-pole expression formerly used for the BCD central charge differs
+from the Kac--Roan--Wakimoto type-A value by ``60*k+120``.  Thus the exact
+root isomorphism survives, while its principal-W central-charge realization
+remains open until the complete non-simply-laced KRW convention is supplied.
 
-1. PRINCIPAL W-ALGEBRA DUALITY FOR BCD TYPES:
-   For the principal W-algebra W^k(g) of simple g with dual Coxeter
-   number h^v, the Feigin-Frenkel involution is k |--> k' = -k - 2h^v.
-   The Koszul duality conjecture is:
-     (W^k(g))^! = W^{k'}(g)    (same-type FF duality)
-   for g of type B, C, or D.
+The exact root-system normalization has long roots of squared length two:
 
-   Key invariants:
-   - Central charge: c(k) = rank - 12*||rho||^2/(k + h^v)
-     where ||rho||^2 uses the invariant form with long roots squared = 2.
-   - Anomaly ratio: rho = sum_i 1/h_i over generator conformal weights.
-   - Modular characteristic: kappa = rho * c.
-   - Complementarity: kappa(k) + kappa(k') = rho * K (Theorem D).
+``B_n``: ``||rho||^2 = n(2n-1)(2n+1)/12``;
+``C_n``: ``||rho||^2 = n(n+1)(2n+1)/12``;
+``D_n``: ``||rho||^2 = n(n-1)(2n-1)/6``.
 
-2. ACCIDENTAL ISOMORPHISMS AS CROSS-CHECKS:
-   - B_2 = C_2 (so_5 ~ sp_4): all invariants MUST agree.
-   - D_3 = A_3 (so_6 ~ sl_4): central charge MUST match type-A formula.
-   These provide independent verification of the ||rho||^2 formulas.
-
-3. LANGLANDS DUALITY STRUCTURE:
-   B_n and C_n are Langlands dual: B_n^L = C_n.
-   They share the same exponents, hence the same generator weights and
-   the same anomaly ratio rho.  But h^v(B_n) = 2n-1 and h^v(C_n) = n+1
-   differ for n >= 3, so the central charges and kappa values differ.
-   D_n is self-Langlands-dual: D_n^L = D_n.
-
-   KEY QUESTION: does Koszul duality for BCD types involve the Langlands
-   dual?  I.e., is (W^k(B_n))^! = W^{k'}(C_n) or W^{k'}(B_n)?
-   At the level of kappa complementarity, the same-type FF duality
-   k' = -k - 2h^v produces k-independent kappa + kappa', while
-   cross-type Langlands duality does NOT.  This is evidence for
-   same-type FF duality, not cross-type Langlands.
-
-4. NON-PRINCIPAL NILPOTENT ORBITS IN BCD:
-   Unlike type A, nilpotent orbits in types B, C, D are NOT parameterized
-   by partitions of N.  They are parameterized by:
-   - Type B_n (so_{2n+1}): partitions of 2n+1 where even parts occur with
-     even multiplicity.
-   - Type C_n (sp_{2n}): partitions of 2n where odd parts occur with
-     even multiplicity.
-   - Type D_n (so_{2n}): partitions of 2n where even parts occur with
-     even multiplicity, with very even partitions (all parts even)
-     splitting into two orbits.
-
-   The Barbasch-Vogan duality (BV duality) replaces the transpose
-   operation of type A.  For each nilpotent orbit O in g, there is a
-   BV dual orbit O^BV in g^L (the Langlands dual Lie algebra).
-
-5. SHADOW DEPTH CLASSIFICATION:
-   All principal W-algebras of BCD types with rank >= 2 are class M
-   (infinite shadow depth), since the self-OPE of the weight-2 generator
-   produces composite fields from weight-4+ generators.
-
-6. MINIMAL W-ALGEBRAS OF so_N AT LEVEL -1:
-   W^{-1}(so_N, f_min) for N >= 7 odd are rational and C_2-cofinite
-   (Arakawa-Moreau conjecture, proved by [2506.15605]).
-   We compute kappa and complementarity data for these.
-
-||rho||^2 NORMALIZATION (CRITICAL):
-   The KRW formula uses the invariant bilinear form normalized so that
-   LONG roots have squared length 2.  The correct formulas are:
-     B_n: ||rho||^2 = n(2n-1)(2n+1)/12
-     C_n: ||rho||^2 = n(n+1)(2n+1)/12   (NOT /6: /6 is orthonormal coords)
-     D_n: ||rho||^2 = n(n-1)(2n-1)/6
-   Cross-check: B_2 ~ C_2 (so_5 ~ sp_4) forces both to give 5/2.
-
-References:
-  [2409.03465] Creutzig-Kovalchuk-Linshaw: building blocks for BCD
-  [2506.15605] Arakawa-Creutzig-Linshaw: minimal W-algebras so_N at -1
-  [KRW] Kac-Roan-Wakimoto: quantum DS reduction
-  Manuscript: Direction 4, conj:w-orbit-duality, thm:w-algebra-koszul-main
+Manuscript anchors: ``conj:w-orbit-duality`` and
+``thm:w-algebra-koszul-main`` in ``chapters/examples/w_algebras.tex``.
 """
 
 from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
-from sympy import Rational, Symbol, oo, simplify, sympify
+from sympy import Rational, Symbol, simplify, sympify
+
+from compute.lib.non_principal_w_bar_engine import ClaimPacket, ClaimStatus
+from compute.lib.theorem_creutzig_w_landscape_engine import (
+    building_block_bcd_data,
+    d3_a3_incomplete_ansatz_discrepancy,
+    minimal_w_so_data,
+)
 
 
 k_sym = Symbol('k')
@@ -139,7 +92,9 @@ def _lie_data(lie_type: str, rank: int) -> Dict[str, Any]:
             raise ValueError(f"D_n requires n >= 3, got {rank}")
         n = rank
         N = 2 * n
-        exps = sorted(set(list(2 * i + 1 for i in range(n - 1)) + [n - 1]))
+        exps = list(2 * i + 1 for i in range(n - 1))
+        exps.append(n - 1)
+        exps.sort()
         return {
             'type': f'D_{n}',
             'lie_algebra': f'so_{N}',
@@ -166,42 +121,71 @@ def _langlands_dual_type(lie_type: str) -> str:
     raise ValueError(f"Unsupported: {lie_type}")
 
 
+def _open_claim(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    """Return an unresolved comparison with its exact obligations."""
+
+    return ClaimPacket(
+        statement=statement,
+        status=ClaimStatus.OPEN,
+        value=None,
+        evidence=evidence,
+        hypotheses=tuple(dict.fromkeys(hypotheses)),
+    )
+
+
+def _conditional_claim(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    """Return a conditional consequence of named comparison data."""
+
+    return ClaimPacket(
+        statement=statement,
+        status=ClaimStatus.CONDITIONAL,
+        value=None,
+        evidence=evidence,
+        hypotheses=tuple(dict.fromkeys(hypotheses)),
+    )
+
+
 # =====================================================================
 # 2.  Principal W-algebra invariants
 # =====================================================================
 
-def anomaly_ratio(lie_type: str, rank: int) -> Rational:
-    """Anomaly ratio rho = sum_i 1/h_i for the principal W-algebra.
+def reciprocal_weight_diagnostic(lie_type: str, rank: int) -> Rational:
+    """Return the exact reciprocal sum of principal generator weights."""
 
-    All generators are bosonic for the principal W-algebra.
-    Generator weights = exponents + 1.
-    """
     data = _lie_data(lie_type, rank)
-    return sum(Rational(1, h) for h in data['generator_weights'])
+    return sum(Rational(1, weight) for weight in data['generator_weights'])
 
 
-def central_charge(lie_type: str, rank: int, level=k_sym):
-    """Central charge c(k) for the principal W-algebra W^k(g).
+def anomaly_ratio(lie_type: str, rank: int) -> ClaimPacket:
+    """Return the open genus-one realization of the weight diagnostic."""
 
-    c(k) = rank - 12 * ||rho||^2 / (k + h^v)
-
-    Uses the invariant form with long roots squared = 2.
-    """
-    data = _lie_data(lie_type, rank)
-    kk = sympify(level)
-    return simplify(data['rank'] - 12 * data['rho_squared'] / (kk + data['h_dual']))
+    return building_block_bcd_data(lie_type, rank).anomaly_ratio
 
 
-def kappa(lie_type: str, rank: int, level=k_sym):
-    """Modular characteristic kappa = rho * c for the principal W-algebra."""
-    return simplify(anomaly_ratio(lie_type, rank) * central_charge(lie_type, rank, level))
+def central_charge(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the canonical open principal-W central-charge packet."""
+
+    return building_block_bcd_data(lie_type, rank, level).central_charge
 
 
-def ff_dual_level(lie_type: str, rank: int, level=k_sym):
-    """Feigin-Frenkel dual level k' = -k - 2h^v (same-type duality)."""
-    data = _lie_data(lie_type, rank)
-    kk = sympify(level)
-    return -kk - 2 * data['h_dual']
+def kappa(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the conditional principal-W modular characteristic."""
+
+    return building_block_bcd_data(lie_type, rank, level).kappa
+
+
+def ff_dual_level(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the open fixed-convention Langlands-dual level relation."""
+
+    return building_block_bcd_data(lie_type, rank, level).langlands_dual_level
 
 
 # =====================================================================
@@ -210,49 +194,51 @@ def ff_dual_level(lie_type: str, rank: int, level=k_sym):
 
 @dataclass(frozen=True)
 class KappaComplementarityData:
-    """Kappa complementarity data for a principal W-algebra."""
+    """Typed modular-conductor data for a principal BCD W-algebra."""
 
     lie_type: str
     rank: int
-    kappa_k: object           # kappa(k)
-    kappa_kprime: object      # kappa(k')
-    kappa_sum: object         # kappa(k) + kappa(k'), should be k-independent
-    kappa_sum_is_constant: bool
-    anomaly_ratio_val: Rational
+    kappa_k: ClaimPacket
+    kappa_kprime: ClaimPacket
+    kappa_sum: ClaimPacket
+    kappa_sum_is_constant: ClaimPacket
+    anomaly_ratio: ClaimPacket
     rho_squared: Rational
     h_dual: int
 
 
 def kappa_complementarity(lie_type: str, rank: int, level=k_sym) -> KappaComplementarityData:
-    """Compute kappa(k) + kappa(k') for same-type FF duality.
+    """Return the open modular conductor without symbolic packet arithmetic."""
 
-    For Theorem D: kappa + kappa' = rho * K where K is a constant
-    depending on the algebra family but not on the level k.
-    """
-    kk = sympify(level)
     data = _lie_data(lie_type, rank)
-    kp = ff_dual_level(lie_type, rank, kk)
-
-    kap = kappa(lie_type, rank, kk)
-    kap_dual = kappa(lie_type, rank, kp)
-    kap_sum = simplify(kap + kap_dual)
-
-    # Check k-independence
-    is_const = True
-    try:
-        deriv = simplify(kap_sum.diff(kk))
-        is_const = (deriv == 0)
-    except (AttributeError, TypeError):
-        pass
+    canonical = building_block_bcd_data(lie_type, rank, level)
+    dual_type = _langlands_dual_type(lie_type)
+    dual = building_block_bcd_data(dual_type, rank, level)
+    dual_kappa = _conditional_claim(
+        f"kappa of principal {dual.lie_type} at the dual level of {canonical.lie_type}",
+        *dual.kappa.hypotheses,
+        *canonical.langlands_dual_level.hypotheses,
+        evidence=(
+            f"exact Langlands-dual root type {canonical.lie_type}^L={dual.lie_type}",
+        ),
+    )
+    level_independence = _open_claim(
+        f"level-independence of K^kappa for principal {canonical.lie_type}",
+        *canonical.modular_conductor.hypotheses,
+        "a proof that the represented trace sum is constant in the dual-level parameter",
+        evidence=(
+            f"exact generator diagnostic {reciprocal_weight_diagnostic(lie_type, rank)}",
+        ),
+    )
 
     return KappaComplementarityData(
         lie_type=data['type'],
         rank=rank,
-        kappa_k=kap,
-        kappa_kprime=kap_dual,
-        kappa_sum=kap_sum,
-        kappa_sum_is_constant=is_const,
-        anomaly_ratio_val=anomaly_ratio(lie_type, rank),
+        kappa_k=canonical.kappa,
+        kappa_kprime=dual_kappa,
+        kappa_sum=canonical.modular_conductor,
+        kappa_sum_is_constant=level_independence,
+        anomaly_ratio=canonical.anomaly_ratio,
         rho_squared=data['rho_squared'],
         h_dual=data['h_dual'],
     )
@@ -264,74 +250,134 @@ def kappa_complementarity(lie_type: str, rank: int, level=k_sym) -> KappaComplem
 
 @dataclass(frozen=True)
 class IsomorphismCheckData:
-    """Cross-check data for an accidental isomorphism."""
+    """Exact root oracle and typed modular comparisons for an isomorphism."""
 
     type_1: str
     rank_1: int
     type_2: str
     rank_2: int
-    c_1: object
-    c_2: object
-    kappa_1: object
-    kappa_2: object
-    rho_1: Rational
-    rho_2: Rational
-    c_match: bool
-    kappa_match: bool
-    rho_match: bool
+    dim_1: int
+    dim_2: int
+    h_dual_1: int
+    h_dual_2: int
+    exponents_1: Tuple[int, ...]
+    exponents_2: Tuple[int, ...]
+    generator_weights_1: Tuple[int, ...]
+    generator_weights_2: Tuple[int, ...]
+    rho_squared_1: Rational
+    rho_squared_2: Rational
+    root_data_match: bool
+    c_match: ClaimPacket
+    kappa_match: ClaimPacket
+    rho_match: ClaimPacket
+    incomplete_central_ansatz_discrepancy: object
 
 
 def check_b2_c2_isomorphism(level=k_sym) -> IsomorphismCheckData:
-    """Verify so_5 ~ sp_4 isomorphism: B_2 and C_2 must agree on all invariants."""
-    kk = sympify(level)
-    c_b = central_charge('B', 2, kk)
-    c_c = central_charge('C', 2, kk)
-    k_b = kappa('B', 2, kk)
-    k_c = kappa('C', 2, kk)
-    r_b = anomaly_ratio('B', 2)
-    r_c = anomaly_ratio('C', 2)
+    """Return the exact ``B_2=C_2`` root oracle and modular obligations."""
+
+    b = _lie_data('B', 2)
+    c = _lie_data('C', 2)
+    b_claims = building_block_bcd_data('B', 2, level)
+    c_claims = building_block_bcd_data('C', 2, level)
+    evidence = (
+        "B_2 and C_2 have dimension 10, h^vee=3, exponents (1,3), "
+        "generator weights (2,4), and ||rho||^2=5/2",
+    )
 
     return IsomorphismCheckData(
         type_1='B_2', rank_1=2,
         type_2='C_2', rank_2=2,
-        c_1=c_b, c_2=c_c,
-        kappa_1=k_b, kappa_2=k_c,
-        rho_1=r_b, rho_2=r_c,
-        c_match=(simplify(c_b - c_c) == 0),
-        kappa_match=(simplify(k_b - k_c) == 0),
-        rho_match=(r_b == r_c),
+        dim_1=b['dim'], dim_2=c['dim'],
+        h_dual_1=b['h_dual'], h_dual_2=c['h_dual'],
+        exponents_1=b['exponents'], exponents_2=c['exponents'],
+        generator_weights_1=b['generator_weights'],
+        generator_weights_2=c['generator_weights'],
+        rho_squared_1=b['rho_squared'], rho_squared_2=c['rho_squared'],
+        root_data_match=all(
+            b[key] == c[key]
+            for key in ('dim', 'h_dual', 'exponents', 'generator_weights', 'rho_squared')
+        ),
+        c_match=_open_claim(
+            "principal-W central charges agree under B_2=C_2",
+            *b_claims.central_charge.hypotheses,
+            *c_claims.central_charge.hypotheses,
+            "a fixed-convention identification of the two DS reductions",
+            evidence=evidence,
+        ),
+        kappa_match=_conditional_claim(
+            "principal-W modular characteristics agree under B_2=C_2",
+            *b_claims.kappa.hypotheses,
+            *c_claims.kappa.hypotheses,
+            "the central-charge and genus-one trace identifications under B_2=C_2",
+            evidence=evidence,
+        ),
+        rho_match=_open_claim(
+            "principal-W anomaly ratios agree under B_2=C_2",
+            *b_claims.anomaly_ratio.hypotheses,
+            *c_claims.anomaly_ratio.hypotheses,
+            evidence=(
+                *evidence,
+                "both reciprocal-weight diagnostics equal 3/4",
+            ),
+        ),
+        incomplete_central_ansatz_discrepancy=None,
     )
 
 
 def check_d3_a3_isomorphism(level=k_sym) -> IsomorphismCheckData:
-    """Verify so_6 ~ sl_4 isomorphism: D_3 central charge must match A_3.
+    """Return the exact ``D_3=A_3`` root oracle and the failed-ansatz gap."""
 
-    A_3 = sl_4 principal W-algebra:
-    c(k) = 3 - 12 * N(N^2-1)/12 / (k + N) = 3 - 60/(k + 4)
-    where N = 4, ||rho||^2 = 4*15/12 = 5.
-    """
-    kk = sympify(level)
-    c_d = central_charge('D', 3, kk)
-    # A_3 formula: c = 3 - 12*5/(k+4) = 3 - 60/(k+4)
-    rho_sq_a3 = Rational(4 * 15, 12)  # N(N^2-1)/12 for sl_4
-    c_a = simplify(3 - 12 * rho_sq_a3 / (kk + 4))
-
-    # kappa for A_3: rho = 1/2 + 1/3 + 1/4 = 13/12
-    rho_a3 = Rational(1, 2) + Rational(1, 3) + Rational(1, 4)
-    k_a = simplify(rho_a3 * c_a)
-
-    rho_d3 = anomaly_ratio('D', 3)
-    k_d = kappa('D', 3, kk)
+    d = _lie_data('D', 3)
+    a = {
+        'dim': 15,
+        'h_dual': 4,
+        'exponents': (1, 2, 3),
+        'generator_weights': (2, 3, 4),
+        'rho_squared': Rational(5),
+    }
+    d_claims = building_block_bcd_data('D', 3, level)
+    discrepancy = d3_a3_incomplete_ansatz_discrepancy(level)
+    evidence = (
+        "D_3 and A_3 have dimension 15, h^vee=4, exponents (1,2,3), "
+        "generator weights (2,3,4), and ||rho||^2=5",
+        f"the incomplete rank-minus-pole central ansatz has discrepancy {discrepancy}",
+    )
 
     return IsomorphismCheckData(
         type_1='D_3', rank_1=3,
         type_2='A_3', rank_2=3,
-        c_1=c_d, c_2=c_a,
-        kappa_1=k_d, kappa_2=k_a,
-        rho_1=rho_d3, rho_2=rho_a3,
-        c_match=(simplify(c_d - c_a) == 0),
-        kappa_match=(simplify(k_d - k_a) == 0),
-        rho_match=(rho_d3 == rho_a3),
+        dim_1=d['dim'], dim_2=a['dim'],
+        h_dual_1=d['h_dual'], h_dual_2=a['h_dual'],
+        exponents_1=d['exponents'], exponents_2=a['exponents'],
+        generator_weights_1=d['generator_weights'],
+        generator_weights_2=a['generator_weights'],
+        rho_squared_1=d['rho_squared'], rho_squared_2=a['rho_squared'],
+        root_data_match=all(
+            d[key] == a[key]
+            for key in ('dim', 'h_dual', 'exponents', 'generator_weights', 'rho_squared')
+        ),
+        c_match=_open_claim(
+            "principal-W central charges agree under D_3=A_3",
+            *d_claims.central_charge.hypotheses,
+            "the complete KRW formula in the D_3 convention and its transport through D_3=A_3",
+            evidence=evidence,
+        ),
+        kappa_match=_conditional_claim(
+            "principal-W modular characteristics agree under D_3=A_3",
+            *d_claims.kappa.hypotheses,
+            "the central-charge and genus-one trace identifications under D_3=A_3",
+            evidence=evidence,
+        ),
+        rho_match=_open_claim(
+            "principal-W anomaly ratios agree under D_3=A_3",
+            *d_claims.anomaly_ratio.hypotheses,
+            evidence=(
+                *evidence,
+                "both reciprocal-weight diagnostics equal 13/12",
+            ),
+        ),
+        incomplete_central_ansatz_discrepancy=discrepancy,
     )
 
 
@@ -341,7 +387,7 @@ def check_d3_a3_isomorphism(level=k_sym) -> IsomorphismCheckData:
 
 @dataclass(frozen=True)
 class LanglandsDualityData:
-    """Comparison data for a Langlands dual pair (g, g^L)."""
+    """Exact root comparison and typed claims for ``(g,g^L)``."""
 
     type_g: str
     rank: int
@@ -350,49 +396,41 @@ class LanglandsDualityData:
     h_dual_g: int
     dim_g: int
     rho_sq_g: Rational
-    rho_g: Rational
-    c_g: object
-    kappa_g: object
+    rho_g: ClaimPacket
+    c_g: ClaimPacket
+    kappa_g: ClaimPacket
     # g^L data
     h_dual_gL: int
     dim_gL: int
     rho_sq_gL: Rational
-    rho_gL: Rational
-    c_gL: object
-    kappa_gL: object
+    rho_gL: ClaimPacket
+    c_gL: ClaimPacket
+    kappa_gL: ClaimPacket
     # Comparisons
     same_exponents: bool
-    same_anomaly_ratio: bool
-    same_central_charge: bool
-    # Complementarity sums (same-type FF for each)
-    kappa_sum_g: object
-    kappa_sum_gL: object
-    same_kappa_sum: bool
+    same_anomaly_ratio: ClaimPacket
+    same_central_charge: ClaimPacket
+    kappa_sum_g: ClaimPacket
+    kappa_sum_gL: ClaimPacket
+    same_kappa_sum: ClaimPacket
 
 
 def langlands_duality_data(lie_type: str, rank: int, level=k_sym) -> LanglandsDualityData:
-    """Compare a Lie algebra with its Langlands dual.
+    """Return exact Langlands root data and unresolved modular comparisons."""
 
-    For B_n <-> C_n: same exponents, same rho, but different h^v and ||rho||^2.
-    For D_n: self-dual.
-    """
-    kk = sympify(level)
     dual_type = _langlands_dual_type(lie_type)
-
     data_g = _lie_data(lie_type, rank)
     data_gL = _lie_data(dual_type, rank)
-
-    rho_g = anomaly_ratio(lie_type, rank)
-    rho_gL = anomaly_ratio(dual_type, rank)
-
-    c_g = central_charge(lie_type, rank, kk)
-    c_gL = central_charge(dual_type, rank, kk)
-
-    kap_g = kappa(lie_type, rank, kk)
-    kap_gL = kappa(dual_type, rank, kk)
-
-    comp_g = kappa_complementarity(lie_type, rank, kk)
-    comp_gL = kappa_complementarity(dual_type, rank, kk)
+    claims_g = building_block_bcd_data(lie_type, rank, level)
+    claims_gL = building_block_bcd_data(dual_type, rank, level)
+    same_exponents = data_g['exponents'] == data_gL['exponents']
+    root_evidence = (
+        f"exact exponent ledgers {data_g['type']}:{data_g['exponents']} and "
+        f"{data_gL['type']}:{data_gL['exponents']}",
+        f"exact reciprocal-weight diagnostics "
+        f"{reciprocal_weight_diagnostic(lie_type, rank)} and "
+        f"{reciprocal_weight_diagnostic(dual_type, rank)}",
+    )
 
     return LanglandsDualityData(
         type_g=data_g['type'],
@@ -401,21 +439,37 @@ def langlands_duality_data(lie_type: str, rank: int, level=k_sym) -> LanglandsDu
         h_dual_g=data_g['h_dual'],
         dim_g=data_g['dim'],
         rho_sq_g=data_g['rho_squared'],
-        rho_g=rho_g,
-        c_g=c_g,
-        kappa_g=kap_g,
+        rho_g=claims_g.anomaly_ratio,
+        c_g=claims_g.central_charge,
+        kappa_g=claims_g.kappa,
         h_dual_gL=data_gL['h_dual'],
         dim_gL=data_gL['dim'],
         rho_sq_gL=data_gL['rho_squared'],
-        rho_gL=rho_gL,
-        c_gL=c_gL,
-        kappa_gL=kap_gL,
-        same_exponents=(data_g['exponents'] == data_gL['exponents']),
-        same_anomaly_ratio=(rho_g == rho_gL),
-        same_central_charge=(simplify(c_g - c_gL) == 0),
-        kappa_sum_g=comp_g.kappa_sum,
-        kappa_sum_gL=comp_gL.kappa_sum,
-        same_kappa_sum=(simplify(comp_g.kappa_sum - comp_gL.kappa_sum) == 0),
+        rho_gL=claims_gL.anomaly_ratio,
+        c_gL=claims_gL.central_charge,
+        kappa_gL=claims_gL.kappa,
+        same_exponents=same_exponents,
+        same_anomaly_ratio=_open_claim(
+            f"rho agrees for the Langlands pair {data_g['type']},{data_gL['type']}",
+            *claims_g.anomaly_ratio.hypotheses,
+            *claims_gL.anomaly_ratio.hypotheses,
+            evidence=root_evidence,
+        ),
+        same_central_charge=_open_claim(
+            f"principal central charges compare for {data_g['type']},{data_gL['type']}",
+            *claims_g.central_charge.hypotheses,
+            *claims_gL.central_charge.hypotheses,
+            "a common invariant-form and DS-reduction convention",
+            evidence=root_evidence,
+        ),
+        kappa_sum_g=claims_g.modular_conductor,
+        kappa_sum_gL=claims_gL.modular_conductor,
+        same_kappa_sum=_open_claim(
+            f"modular conductors agree for {data_g['type']},{data_gL['type']}",
+            *claims_g.modular_conductor.hypotheses,
+            *claims_gL.modular_conductor.hypotheses,
+            evidence=root_evidence,
+        ),
     )
 
 
@@ -449,9 +503,12 @@ def _is_valid_bcd_partition(lie_type: str, partition: Tuple[int, ...]) -> bool:
 
 
 def bcd_nilpotent_partitions(lie_type: str, rank: int) -> List[Tuple[int, ...]]:
-    """All partitions parameterizing nilpotent orbits for the given type.
+    """Return the admissible partition labels for the given classical type.
 
-    Returns partitions in decreasing dominance order.
+    The labels occur in decreasing dominance order.  In type ``D``, a
+    very-even label represents the familiar pair of nilpotent orbits; this
+    routine enumerates partition labels and therefore records that label
+    once.
     """
     if lie_type == 'B':
         N = 2 * rank + 1
@@ -491,18 +548,17 @@ def _transpose_partition(partition: Tuple[int, ...]) -> Tuple[int, ...]:
     return tuple(cols)
 
 
-def _x_collapse(partition: Tuple[int, ...], target_type: str) -> Tuple[int, ...]:
-    """X-collapse: largest X-valid partition dominated by the input.
+def _transpose_parity_repair_candidate(
+    partition: Tuple[int, ...], target_type: str
+) -> Tuple[int, ...]:
+    """Return the deterministic transpose-lane parity-repair candidate.
 
-    Algorithm (Collingwood-McGovern, Chapter 6):
-    Scan parts from largest to smallest.  When an even part (for B/D) or
-    odd part (for C) has odd multiplicity, decrease the LAST occurrence
-    of that part by 1.  This preserves dominance ordering.  Repeat until
-    valid.  The total decreases by 1 at each step.
-
-    For same-type duality (D -> D): the total is preserved up to collapse.
-    For cross-type (B -> C or C -> B): the total changes, which is correct
-    since B_n orbits are partitions of 2n+1 and C_n orbits are partitions of 2n.
+    This exact combinatorial routine decreases a parity-violating part until
+    the target parity condition holds.  It can change the size of the
+    partition.  Consequently it is an audit candidate, rather than the
+    Barbasch--Vogan ``B/C/D`` collapse: the latter requires the source-backed
+    size-changing ``+/-`` operation and the genuine dominance-maximal
+    collapse convention.
     """
     result = list(sorted(partition, reverse=True))
     max_iterations = 2 * sum(result) + 10  # safety bound
@@ -545,29 +601,47 @@ def _x_collapse(partition: Tuple[int, ...], target_type: str) -> Tuple[int, ...]
     return tuple(result) if result else (0,)
 
 
-def bv_dual_partition(lie_type: str, rank: int, partition: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Barbasch-Vogan dual of a nilpotent orbit partition.
+def bv_dual_partition(
+    lie_type: str, rank: int, partition: Tuple[int, ...]
+) -> ClaimPacket:
+    """Return the open Barbasch--Vogan orbit-identification claim.
 
-    The BV dual sends orbits in g to orbits in g^L (Langlands dual).
-    Algorithm (Barbasch-Vogan 1985, Collingwood-McGovern Ch 6):
-    1. Transpose the partition.
-    2. Apply the X-collapse for the Langlands dual type X = g^L.
-
-    For B_n -> C_n: partition of 2n+1 -> collapse gives partition of <= 2n+1
-        (the total decreases because the collapse removes parts).
-    For C_n -> B_n: partition of 2n -> collapse gives partition of <= 2n.
-    For D_n -> D_n: partition of 2n -> D-collapse preserves or decreases.
-
-    NOTE: The resulting partition may have a different total than the
-    Langlands dual's natural partition size.  This is correct: the BV
-    dual map is a set-theoretic correspondence between orbit sets, not
-    a partition-preserving map.  The orbits themselves are geometric
-    objects; the partition merely labels them.
+    Transposition and the local parity repair are computed as evidence.
+    They do not identify the dual orbit: a valid target label has the
+    target algebra's natural partition size, and the classical ``B/C/D``
+    formulas insert type-dependent ``+/-`` operations before the genuine
+    collapse.  A source-backed convention is therefore a proof obligation.
     """
     parts = tuple(sorted(partition, reverse=True))
+    if lie_type == 'B':
+        source_size = 2 * rank + 1
+        target_size = 2 * rank
+    elif lie_type == 'C':
+        source_size = 2 * rank
+        target_size = 2 * rank + 1
+    elif lie_type == 'D':
+        source_size = target_size = 2 * rank
+    else:
+        raise ValueError(f"Unsupported: {lie_type}")
+    if sum(parts) != source_size:
+        raise ValueError(f"Partition {parts} does not sum to {source_size}")
+    if not _is_valid_bcd_partition(lie_type, parts):
+        raise ValueError(f"Partition {parts} violates the type-{lie_type} parity condition")
+
     tr = _transpose_partition(parts)
     dual_type = _langlands_dual_type(lie_type)
-    return _x_collapse(tr, dual_type)
+    candidate = _transpose_parity_repair_candidate(tr, dual_type)
+    return _open_claim(
+        f"Barbasch--Vogan dual of the type-{lie_type}_{rank} orbit {parts}",
+        "a source-backed type-dependent +/- operation",
+        "the dominance-maximal B/C/D collapse in a fixed partition convention",
+        "resolution of very-even type-D orbit labels when applicable",
+        evidence=(
+            f"transpose {tr}",
+            f"parity-repair candidate {candidate}",
+            f"target type {dual_type}_{rank} has partition size {target_size}",
+        ),
+    )
 
 
 # =====================================================================
@@ -576,7 +650,7 @@ def bv_dual_partition(lie_type: str, rank: int, partition: Tuple[int, ...]) -> T
 
 @dataclass(frozen=True)
 class BCDPrincipalDualityData:
-    """Complete duality data for a principal W-algebra of type B, C, or D."""
+    """Exact root data and typed principal-W duality claims."""
 
     lie_type: str
     rank: int
@@ -585,49 +659,40 @@ class BCDPrincipalDualityData:
     rho_squared: Rational
     exponents: Tuple[int, ...]
     generator_weights: Tuple[int, ...]
-    anomaly_ratio_val: Rational
-    central_charge: object
-    kappa_val: object
-    # Duality
-    ff_dual_level_val: object
-    dual_central_charge: object
-    dual_kappa: object
-    kappa_sum: object           # kappa + kappa'
-    kappa_sum_is_constant: bool
-    # Shadow
-    shadow_class: str           # G, L, C, or M
-    shadow_depth: object
-    # Langlands
+    reciprocal_weight_diagnostic: Rational
+    anomaly_ratio: ClaimPacket
+    central_charge: ClaimPacket
+    kappa: ClaimPacket
+    langlands_dual_level: ClaimPacket
+    dual_central_charge: ClaimPacket
+    dual_kappa: ClaimPacket
+    central_charge_complementarity: ClaimPacket
+    modular_conductor: ClaimPacket
+    conductor_level_independence: ClaimPacket
+    shadow_class: ClaimPacket
+    shadow_depth: ClaimPacket
     langlands_dual_type: str
-    # Koszulness
-    koszul_status: str
+    koszul_status: ClaimPacket
 
 
 def principal_duality_data(
     lie_type: str, rank: int, level=k_sym
 ) -> BCDPrincipalDualityData:
-    """Compute complete duality data for a principal W-algebra."""
-    kk = sympify(level)
+    """Return the canonical packets together with their exact root ledger."""
+
     data = _lie_data(lie_type, rank)
-
-    rho = anomaly_ratio(lie_type, rank)
-    c = central_charge(lie_type, rank, kk)
-    kap = kappa(lie_type, rank, kk)
-
-    kp = ff_dual_level(lie_type, rank, kk)
-    c_dual = central_charge(lie_type, rank, kp)
-    kap_dual = kappa(lie_type, rank, kp)
-    kap_sum = simplify(kap + kap_dual)
-
-    is_const = True
-    try:
-        is_const = (simplify(kap_sum.diff(kk)) == 0)
-    except (AttributeError, TypeError):
-        pass
-
-    # Shadow class: rank >= 2 => M (composite fields), rank 1 impossible for BCD
-    shadow_cls = "M"
-    shadow_d = oo
+    canonical = building_block_bcd_data(lie_type, rank, level)
+    dual_family = _langlands_dual_type(lie_type)
+    dual = building_block_bcd_data(dual_family, rank, level)
+    complementarity = kappa_complementarity(lie_type, rank, level)
+    dual_central = _conditional_claim(
+        f"principal central charge of {dual.lie_type} at the dual level of {canonical.lie_type}",
+        *dual.central_charge.hypotheses,
+        *canonical.langlands_dual_level.hypotheses,
+        evidence=(
+            f"exact Langlands-dual root type {canonical.lie_type}^L={dual.lie_type}",
+        ),
+    )
 
     return BCDPrincipalDualityData(
         lie_type=data['type'],
@@ -637,18 +702,20 @@ def principal_duality_data(
         rho_squared=data['rho_squared'],
         exponents=data['exponents'],
         generator_weights=data['generator_weights'],
-        anomaly_ratio_val=rho,
-        central_charge=c,
-        kappa_val=kap,
-        ff_dual_level_val=kp,
-        dual_central_charge=c_dual,
-        dual_kappa=kap_dual,
-        kappa_sum=kap_sum,
-        kappa_sum_is_constant=is_const,
-        shadow_class=shadow_cls,
-        shadow_depth=shadow_d,
-        langlands_dual_type=_langlands_dual_type(lie_type),
-        koszul_status="proved",
+        reciprocal_weight_diagnostic=reciprocal_weight_diagnostic(lie_type, rank),
+        anomaly_ratio=canonical.anomaly_ratio,
+        central_charge=canonical.central_charge,
+        kappa=canonical.kappa,
+        langlands_dual_level=canonical.langlands_dual_level,
+        dual_central_charge=dual_central,
+        dual_kappa=complementarity.kappa_kprime,
+        central_charge_complementarity=canonical.c_complementarity,
+        modular_conductor=canonical.modular_conductor,
+        conductor_level_independence=complementarity.kappa_sum_is_constant,
+        shadow_class=canonical.shadow_class,
+        shadow_depth=canonical.shadow_depth,
+        langlands_dual_type=canonical.langlands_dual_type,
+        koszul_status=canonical.koszul_status,
     )
 
 
@@ -656,86 +723,69 @@ def principal_duality_data(
 # 8.  Affine vertex algebra (pre-DS) central charge
 # =====================================================================
 
-def affine_central_charge(lie_type: str, rank: int, level=k_sym):
-    """Central charge of the affine vertex algebra V_k(g).
+def affine_central_charge(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the typed Sugawara central-charge surface."""
 
-    c(V_k(g)) = k * dim(g) / (k + h^v).
-    """
+    building_block_bcd_data(lie_type, rank, level)
     data = _lie_data(lie_type, rank)
     kk = sympify(level)
-    return simplify(kk * data['dim'] / (kk + data['h_dual']))
+    formula = simplify(kk * data['dim'] / (kk + data['h_dual']))
+    return _conditional_claim(
+        f"Sugawara central charge of V_{kk}({data['type']})",
+        "a fixed invariant-form normalization",
+        f"the noncritical-level hypothesis {kk} != -{data['h_dual']}",
+        "the chosen Sugawara conformal vector",
+        evidence=(f"the Sugawara expression in this convention is {formula}",),
+    )
 
 
-def affine_kappa(lie_type: str, rank: int, level=k_sym):
-    """Kappa for the affine vertex algebra V_k(g).
+def affine_kappa(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the typed affine modular-characteristic surface."""
 
-    kappa(V_k(g)) = dim(g) * (k + h^v) / (2 * h^v)
-
-    This is the standard formula for affine KM algebras.
-    For the affine algebra, the anomaly ratio is dim(g)/(2*dim(g)) = 1/2
-    ... no. The affine algebra has a single generator of weight 1 per
-    root + Cartan direction, so rho_aff = sum_{i=1}^{dim(g)} 1/1 = dim(g).
-    That is wrong too. The affine VOA has dim(g) generators all at weight 1.
-    rho = dim(g) * (1/1) = dim(g)? No, rho = sum 1/h_i = dim(g) since all h_i = 1.
-    Then kappa = rho * c = dim(g) * k*dim(g)/(k+h^v).
-    That gives kappa growing like dim(g)^2 which is wrong.
-
-    Actually the correct formula for affine KM is:
-    kappa(V_k(g)) = dim(g) * (k + h^v) / (2*h^v)
-
-    This comes from the Hodge bundle computation, not from rho*c.
-    The rho*c formula applies to W-algebras (after DS reduction) where
-    the generators have definite conformal weights.  For the affine algebra
-    the rho*c formula does NOT directly apply in the same way (AP39: kappa != c/2
-    for rank > 1).
-    """
+    building_block_bcd_data(lie_type, rank, level)
     data = _lie_data(lie_type, rank)
     kk = sympify(level)
-    return simplify(Rational(data['dim'], 2 * data['h_dual']) * (kk + data['h_dual']))
+    formula = simplify(Rational(data['dim'], 2 * data['h_dual']) * (kk + data['h_dual']))
+    return _conditional_claim(
+        f"affine modular characteristic of V_{kk}({data['type']})",
+        "the affine genus-one Hodge trace calculation",
+        "normalization of the invariant bilinear form and Hodge line",
+        evidence=(f"the candidate affine trace expression is {formula}",),
+    )
 
 
 # =====================================================================
 # 9.  DS reduction kappa deficit
 # =====================================================================
 
-def ds_kappa_deficit(lie_type: str, rank: int, level=k_sym):
-    """Deficit kappa(V_k(g)) - kappa(W^k(g)) for the principal DS reduction.
+def ds_kappa_deficit(lie_type: str, rank: int, level=k_sym) -> ClaimPacket:
+    """Return the conditional DS trace-defect comparison."""
 
-    This measures the ghost contribution in the BRST complex.
-    """
-    kk = sympify(level)
-    return simplify(affine_kappa(lie_type, rank, kk) - kappa(lie_type, rank, kk))
+    affine = affine_kappa(lie_type, rank, level)
+    principal = kappa(lie_type, rank, level)
+    return _conditional_claim(
+        f"DS modular-characteristic defect for principal {lie_type}_{rank}",
+        *affine.hypotheses,
+        *principal.hypotheses,
+        "a chain-level BRST trace comparison identifying the ghost contribution",
+        evidence=(*affine.evidence, *principal.evidence),
+    )
 
 
 # =====================================================================
 # 10.  Minimal W-algebra kappa for so_N
 # =====================================================================
 
-def minimal_so_kappa(N: int, level=k_sym):
-    """Kappa for the minimal W-algebra W^k(so_N, f_min).
+def minimal_so_kappa(N: int, level=k_sym) -> ClaimPacket:
+    """Return the canonical conditional minimal-orthogonal kappa packet."""
 
-    Uses the existing engine's computation from theorem_creutzig_w_landscape_engine.
-    Imported here to provide a unified interface.
-    """
-    from compute.lib.theorem_creutzig_w_landscape_engine import (
-        minimal_w_so_data as _min_so,
-    )
-    data = _min_so(N, level)
-    return data.kappa
+    return minimal_w_so_data(N, level).kappa
 
 
-def minimal_so_complementarity(N: int, level=k_sym):
-    """Kappa complementarity for W^{-1}(so_N, f_min).
+def minimal_so_complementarity(N: int, level=k_sym) -> ClaimPacket:
+    """Return the canonical open minimal-orthogonal modular conductor."""
 
-    The FF dual level for so_N is k' = -k - 2h^v = -k - 2(N-2).
-    """
-    kk = sympify(level)
-    h_dual = N - 2
-    kp = -kk - 2 * h_dual
-
-    kap = minimal_so_kappa(N, kk)
-    kap_dual = minimal_so_kappa(N, kp)
-    return simplify(kap + kap_dual)
+    return minimal_w_so_data(N, level).modular_conductor
 
 
 # =====================================================================
@@ -749,12 +799,13 @@ class BCDTransportQuestion:
     lie_type: str
     rank: int
     partition: Tuple[int, ...]
-    bv_dual_partition: Tuple[int, ...]
+    transpose_parity_candidate: Tuple[int, ...]
+    bv_duality: ClaimPacket
     bv_dual_type: str        # Langlands dual type
     is_principal: bool
     is_minimal: bool
     is_zero: bool
-    self_dual: bool          # partition == BV dual
+    self_duality: ClaimPacket
 
 
 def transport_question(
@@ -775,8 +826,10 @@ def transport_question(
     if sum(parts) != N:
         raise ValueError(f"Partition {parts} does not sum to {N}")
 
-    bv = bv_dual_partition(lie_type, rank, parts)
     dual_type = _langlands_dual_type(lie_type)
+    transposed = _transpose_partition(parts)
+    candidate = _transpose_parity_repair_candidate(transposed, dual_type)
+    bv = bv_dual_partition(lie_type, rank, parts)
 
     is_principal = (parts == (N,)) if lie_type == 'B' else (parts == (N,) if N > 0 else True)
     # For type B: principal partition is (2n+1)
@@ -807,12 +860,17 @@ def transport_question(
         lie_type=lie_type,
         rank=rank,
         partition=parts,
-        bv_dual_partition=bv,
+        transpose_parity_candidate=candidate,
+        bv_duality=bv,
         bv_dual_type=dual_type,
         is_principal=is_principal,
         is_minimal=is_minimal,
         is_zero=is_zero,
-        self_dual=(parts == bv and lie_type == dual_type),
+        self_duality=_open_claim(
+            f"the type-{lie_type}_{rank} orbit {parts} is Barbasch--Vogan self-dual",
+            "identification of the Barbasch--Vogan dual orbit",
+            evidence=(*bv.evidence,),
+        ),
     )
 
 
@@ -821,7 +879,7 @@ def transport_question(
 # =====================================================================
 
 def bcd_duality_summary(max_rank: int = 5) -> List[Dict[str, Any]]:
-    """Generate a summary table of BCD principal W-algebra duality data."""
+    """Return exact root rows and statuses of every geometric claim."""
     rows = []
     for lie_type in ['B', 'C', 'D']:
         min_rank = 2 if lie_type != 'D' else 3
@@ -833,11 +891,14 @@ def bcd_duality_summary(max_rank: int = 5) -> List[Dict[str, Any]]:
                 'dim': d.dim_g,
                 'h_dual': d.h_dual,
                 'rho_sq': d.rho_squared,
-                'rho': d.anomaly_ratio_val,
-                'c': str(d.central_charge),
-                'kappa': str(d.kappa_val),
-                'kappa_sum': str(d.kappa_sum),
-                'shadow': d.shadow_class,
+                'exponents': d.exponents,
+                'generator_weights': d.generator_weights,
+                'reciprocal_weight_diagnostic': d.reciprocal_weight_diagnostic,
+                'rho_status': d.anomaly_ratio.status,
+                'central_charge_status': d.central_charge.status,
+                'kappa_status': d.kappa.status,
+                'modular_conductor_status': d.modular_conductor.status,
+                'shadow_status': d.shadow_class.status,
                 'langlands_dual': d.langlands_dual_type,
             })
     return rows

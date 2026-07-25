@@ -170,14 +170,14 @@ class TestObjectFirewallAndDescentScope:
     """Pin the object distinctions and descent predicates exposed here."""
 
     def test_engine_docstring_types_object_firewall(self):
-        """The engine types the bar, dual, inversion, and bulk slots separately."""
+        """The engine types the bar, dual, inversion, and closed-sector slots separately."""
         doc = _normalized_engine_docstring()
         required_fragments = [
             "B(A) = T^c(s^{-1} bar A) is a conilpotent dg coalgebra",
             "A^i = H^*(B(A)) is the Koszul dual coalgebra",
             "A^! is obtained from A^i only after Verdier/linear duality",
             "Omega(B(A)) -> A is bar-cobar inversion, not the construction of A^!",
-            "Z_ch^der(A) = ChirHoch^*(A,A) is the bulk derived centre",
+            "Z_ch^der(A) = ChirHoch^*(A,A) is the closed-sector derived centre",
             "distinct from B(A), A^i, and A^!",
         ]
         for fragment in required_fragments:

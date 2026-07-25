@@ -32,7 +32,7 @@ MATHEMATICAL FRAMEWORK:
   Its binary collision residue on Conf_2(C) gives r(z):
 
     For Heisenberg H_k:   r(z) = k*Omega_H/z (rank-one coeff k/z)               (abelian, trivial CYBE)
-    For affine sl_2(k):   r(z) = Omega/z            (classical r-matrix, CYBE)
+    For affine sl_2(k):   r_k(z) = k*Omega/z        (trace-form r-matrix, CYBE)
     For Virasoro Vir_c:   r(z) = (c/2)/z^3 + 2T/z
                                                      (Virasoro r-matrix)
 
@@ -195,15 +195,14 @@ def heisenberg_r_matrix(k=None) -> ClassicalRMatrix:
 
 
 def affine_sl2_r_matrix(k=None) -> ClassicalRMatrix:
-    r"""r-matrix for affine sl_2 at level k: r(z) = Omega/z.
+    r"""Trace-form r-matrix for affine sl_2 at level k: r_k(z) = k*Omega/z.
 
     Here Omega is the Casimir in sl_2 tensor sl_2.  In the basis
     {e, h, f} with standard structure constants:
         Omega = e tensor f + f tensor e + (1/2) h tensor h
 
-    Normalized by the level: the actual shadow coefficient is
-        r(z) = (1/(k + h^v)) * Omega / z
-
+    The KZ connection uses the distinct normalization
+        r_KZ(z) = (1/(k + h^v)) * Omega / z,
     where h^v = 2 is the dual Coxeter number of sl_2.
 
     The CYBE is satisfied by the classical r-matrix Omega/z
@@ -217,7 +216,7 @@ def affine_sl2_r_matrix(k=None) -> ClassicalRMatrix:
     h_dual = 2  # dual Coxeter number for sl_2
     return ClassicalRMatrix(
         family="Affine_sl2",
-        poles={1: Rational(1, 1)},  # Omega/z, Omega = Casimir
+        poles={1: k},  # k*Omega/z, Omega = Casimir
         max_pole=1,
         dim_g=3,
         parameter=k,
@@ -254,7 +253,7 @@ def virasoro_r_matrix(c=None) -> ClassicalRMatrix:
 
 
 def affine_slN_r_matrix(N: int, k=None) -> ClassicalRMatrix:
-    r"""r-matrix for affine sl_N at level k: r(z) = Omega/z.
+    r"""Trace-form r-matrix for affine sl_N at level k: r_k(z) = k*Omega/z.
 
     Omega is the Casimir in sl_N tensor sl_N:
         Omega = sum_{a} t^a tensor t_a
@@ -272,7 +271,7 @@ def affine_slN_r_matrix(N: int, k=None) -> ClassicalRMatrix:
     dim_g = N * N - 1
     return ClassicalRMatrix(
         family=f"Affine_sl{N}",
-        poles={1: S.One},  # Omega/z
+        poles={1: k},  # k*Omega/z
         max_pole=1,
         dim_g=dim_g,
         parameter=k,

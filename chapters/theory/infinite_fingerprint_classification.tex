@@ -9,8 +9,9 @@ invariant, and it degenerates on the critical-level locus
 $\kappa_{\mathrm{ch}}(\cA) = 0$. The canonical fingerprint
 $\varphi(\cA) = (p_{\max}, r_{\max}, \chi_{\mathrm{VOA}}, n_{\mathrm{strong}}, \mathrm{coset})$
 of Definition~\ref{def:canonical-fingerprint} is the correct
-complete invariant: it separates every pair of chiral algebras in the
-standard landscape whose bar complexes differ, it survives
+conditional reconstruction datum: it separates the standard
+witness rows, it records the finite-window data carried by the
+ordered bar complex, it survives
 $\kappa_{\mathrm{ch}} = 0$ by recording the critical boundary stratum
 $\mathrm{FF}$, and it transports functorially under
 Drinfeld--Sokolov reduction.
@@ -74,7 +75,7 @@ The fingerprint $\varphi$ is the minimal extension that cures
 all three.
 \end{remark}
 
-\section{The fingerprint is a complete invariant}
+\section{The conditional fingerprint reconstruction surface}
 \label{sec:fingerprint-is-complete-invariant}
 
 \begin{lemma}[Presentation-independence of the fingerprint slots on the standard landscape]
@@ -158,12 +159,29 @@ slot~$\mathrm{coset}_{FF}$ is likewise intrinsic. Thus the coset slot is
 presentation-independent on the whole standard landscape.
 \end{proof}
 
-\begin{theorem}[Infinite fingerprint classification; strengthening of
-Theorem~\ref{thm:fingerprint-completeness}]
-\label{thm:fingerprint-is-complete-invariant}
+\begin{theorem}[Conditional fingerprint reconstruction equivalence;
+strengthening of Theorem~\ref{thm:fingerprint-completeness}]
+\label{thm:fingerprint-reconstruction-equivalence}
 \ClaimStatusConditional
-Let~$\cA_1,\cA_2$ be chiral algebras in the standard landscape. The
-following are equivalent:
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{fingerprint/bar\ reconstruction},
+\mathrm{level}=1\leftrightarrow2,
+\mathrm{hypothesis\ package}=\mathrm{standard\ landscape}
++\mathrm{slot\ presentation\ independence}
++\mathrm{bar\text{-}intrinsic\ MC}
++\mathrm{Koszul\ locus}
++\mathrm{residual\text{-}free\ recovery})$.\textup{]}
+Let~$\cA_1,\cA_2$ be chiral algebras in the standard landscape, and
+assume the fingerprint-reconstruction package for the pair: the
+typed projection of Theorem~\ref{thm:fingerprint-completeness}, the
+presentation-independence of
+Lemma~\ref{lem:fingerprint-slot-presentation-independence}, the
+bar-intrinsic Maurer--Cartan tower of
+Theorem~\ref{thm:mc2-bar-intrinsic}, the Koszul-locus bar--cobar
+comparison of Chapter~\ref{ch:cobar}, and residual-free recovery of
+the maps, higher braces, ordered coinvariants, and OPE coefficients
+forgotten by~$\Pi_{\mathrm{fp}}$ in the chosen completed landscape
+row. Under this package, the following are equivalent:
 \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
 \item the canonical fingerprints agree,
 $\varphi(\cA_1) = \varphi(\cA_2)$;
@@ -179,6 +197,9 @@ $\Theta_{\cA_1}^{\leq r} \simeq \Theta_{\cA_2}^{\leq r}$ for
 every~$r$, as
 $(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebras.
 \end{enumerate}
+Without the residual-free recovery clause, the theorem asserts only
+that the bar/tower data determine the fingerprint; it does not assert
+that the five slots reconstruct the forgotten structure.
 \end{theorem}
 
 \begin{proof}
@@ -189,7 +210,8 @@ standard-landscape scope of the theorem.
 
 \emph{Step 1: \textup{(a)} implies \textup{(b)}.}
 Assume~$\varphi(\cA_1)=\varphi(\cA_2)$. By
-Theorem~\ref{thm:fingerprint-completeness}, there is an
+the residual-free recovery clause in the stated
+fingerprint-reconstruction package, there is an
 $\mathrm{Ass}^{\mathrm{ch}}$-coalgebra isomorphism
 \[
 f\colon \bar{B}^{\mathrm{ch}}(\cA_1)\xrightarrow{\ \sim\ }
@@ -278,8 +300,8 @@ Thus~\textup{(c)}~$\Rightarrow$~\textup{(a)}.
 Combining Steps~2 and~3 gives
 \textup{(b)}~$\Rightarrow$~\textup{(a)}$;$ the extra Koszul-dual
 isomorphism in~\textup{(b)} is therefore compatible with, but not needed
-for, the reverse implication. Together with Step~1 this supplies both
-directions of the biconditional
+for, this invariant direction. Together with the conditional
+Step~1, this supplies both directions of the biconditional
 \[
 \varphi(\cA_1)=\varphi(\cA_2)
 \Longleftrightarrow
@@ -290,7 +312,10 @@ directions of the biconditional
 \bigr),
 \]
 and hence the equivalence of~\textup{(a)}, \textup{(b)}, and
-\textup{(c)}.
+\textup{(c)} under the stated package. Without the residual-free
+clause, Steps~2 and~3 remain the asserted bar-to-fingerprint
+direction, and Step~1 is an open reconstruction obligation rather
+than a theorem.
 \end{proof}
 
 \section{The critical boundary stratum: critical-level bar structure}
@@ -316,10 +341,10 @@ Then:
 \item \textup{(}Position in the classification\textup{)}
  the coarse shadow-depth projection remains the affine
  Lie/tree value $r_{\max}=3$: the cubic shadow is the Lie bracket and
- the quartic shadow vanishes by the Jacobi identity. Hence FF is not a
- fifth \emph{generic} shadow-depth class; it is the critical
- fixed-point boundary stratum of class~L, recorded separately only in
- the refined fingerprint / atlas surface.
+ the quartic shadow vanishes by the Jacobi identity. Thus FF is the
+ critical fixed-point boundary stratum of class~L. The refined
+ fingerprint records this stratum separately, while the generic
+ shadow-depth classification retains its four classes.
 \item \textup{(}Scalar invariants\textup{)}
  \[
  \kappa(\cA_{\mathrm{FF}})
@@ -333,8 +358,8 @@ Then:
  \[
  \kappa(\cA_{\mathrm{FF}}) + \kappa(\cA_{\mathrm{FF}}^{!}) = 0,
  \qquad
- \operatorname{obs}_g(\cA_{\mathrm{FF}})
- = \kappa(\cA_{\mathrm{FF}})\lambda_g = 0
+ \operatorname{obs}^{\mathrm{Hdg}}_g(\cA_{\mathrm{FF}})
+ =(-1)^g\kappa(\cA_{\mathrm{FF}})\lambda_g = 0
  \quad (g \ge 1).
  \]
 \item \textup{(}Sugawara degeneration and bar-cobar scope\textup{)}
@@ -343,11 +368,9 @@ Then:
  T_{\mathrm{Sug}}
  = \frac{1}{2(k+h^\vee)}\sum_a {:}J^aJ_a{:}
  \]
- is undefined at $k=-h^\vee$. Accordingly the raw non-critical
- class-L topologization and raw direct-sum Positselski / bar-cobar
- statements do not extend verbatim through the critical point; the
- surviving critical statement is the weight-completed / coderived
- bar-cobar package.
+ has a pole at $k=-h^\vee$. The critical formulation is the
+ weight-completed/coderived bar--cobar package; the direct-sum
+ Sugawara topologisation belongs to the punctured level line.
 \item \textup{(}Center, derived center, and opers\textup{)}
  the ordinary center is the Feigin--Frenkel center
  \[
@@ -362,14 +385,27 @@ Then:
  \cong \Omega^n\!\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
  \qquad (n \ge 0),
  \]
- and the derived center is computed in Vol~I via this same critical bar
- complex as a bar-Ext resolution
+ while the derived centre remains
+ $C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{FF}},\cA_{\mathrm{FF}})$.
+ The critical bar complex supplies resolution input for the vacuum
+ Ext calculation
  \textup{(}Theorem~\textup{\ref{thm:langlands-bar-bridge}(iii)}\textup{)}.
 \item \textup{(}Theorem~H boundary\textup{)}
- the generic Theorem~H concentration in~$\{0,1,2\}$ does not persist
- on FF: the chiral Hochschild theory at critical level is unbounded,
- with the degree-zero piece already infinite-dimensional through the
- Feigin--Frenkel center.
+ the critical bar--oper calculation has nonzero terms
+ $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ in arbitrarily large degree.
+ A conclusion about chiral Hochschild support requires a chain map
+ \[
+  \chi_{\mathrm{FF}}^{\mathrm{bar}}
+  \colon C^\bullet_{\mathrm{bar\text{-}Ext}}(\cA_{\mathrm{FF}})
+  \longrightarrow
+  C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{FF}},\cA_{\mathrm{FF}})
+ \]
+ from the completed bar--Ext model, together with a proof that it is a
+ quasi-isomorphism and that its source cohomology is the displayed
+ oper-form algebra. Under this comparison, the FF chart has unbounded
+ support, and every finite-support datum $H_H(\cA_{\mathrm{FF}};S)$ is
+ excluded. The bar--oper calculation and the chart support remain
+ separately typed until this comparison is constructed.
 \item \textup{(}Geometric Langlands face\textup{)}
  the oper-algebra center is already present in Vol~I: the chapter on
  derived Langlands identifies the critical bar complex with the oper
@@ -385,11 +421,10 @@ $\kappa(V_k(\fg)) = \dim(\fg)(k+h^\vee)/(2h^\vee)$, so
 $\kappa(\cA_{\mathrm{FF}})=0$ at $k=-h^\vee$
 \textup{(}Chapter~\ref{ch:landscape-census},
 Chapter~\ref{chap:shadow-quadrichotomy-platonic}\textup{)}.
-The Feigin--Frenkel involution $k \mapsto -k-2h^\vee$ fixes
+The critical-level reflection \(k \mapsto -k-2h^\vee\) fixes
 $k=-h^\vee$, hence $\kappa(\cA_{\mathrm{FF}}^{!})=0$ as well and the
-complementarity sum is~$0$. The genus-universality formula
-$\operatorname{obs}_g = \kappa\lambda_g$ then gives
-$\operatorname{obs}_g(\cA_{\mathrm{FF}})=0$ for all~$g \ge 1$.
+complementarity sum is~$0$.  Under~$H_D^K$, the perfect object and
+its Hodge character therefore vanish for~$\cA_{\mathrm{FF}}$.
 
 \emph{Path~2: shadow/OPE analysis.}
 For affine Kac--Moody the cubic shadow is the Lie bracket and the
@@ -397,8 +432,7 @@ quartic shadow vanishes by the Jacobi identity; the Kac--Moody census
 and archetype table therefore keep the shadow-depth value
 $r_{\max}=3$ at the critical fixed point. The same OPE analysis shows
 that the Sugawara denominator $2(k+h^\vee)$ vanishes at $k=-h^\vee$,
-so the non-critical topologization proof cannot continue through the
-fixed point.
+placing the fixed point in the completed critical construction.
 
 \emph{Path~3: critical-level bar / oper package.}
 The Feigin--Frenkel theorem identifies
@@ -408,10 +442,13 @@ $\operatorname{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
 Theorem~\ref{thm:langlands-bar-bridge} upgrades this inside Vol~I:
 the critical bar complex is uncurved and its cohomology is the oper
 differential-form algebra in all degrees, while clause~(iii) records
-the derived-center computation via the same critical bar complex.
-Theorem~H's generic concentration is excluded at critical level, and
-Remark~\ref{rem:critical-level-lie-vs-chirhoch} records the surviving
-critical statement: chiral Hochschild cohomology is unbounded.
+its role as resolution input and keeps the derived centre in the
+chiral Hochschild category. Theorem~H computes chart support from a
+family datum $H_H(\cA;S)$. The comparison map
+$\chi_{\mathrm{FF}}^{\mathrm{bar}}$ named in clause~(v) is therefore
+the exact bridge. If it is a quasi-isomorphism with the displayed
+bar--oper source cohomology, the nonzero oper forms in arbitrarily
+large degree transport to the chart, giving unbounded support.
 Finally, Corollary~\ref{cor:positselski-applicable-families} and
 Remark~\ref{rem:ainf2-heal-74} give the correct Theorems~A/B scope at
 the critical point: the raw direct-sum theorem is replaced by the
@@ -423,25 +460,24 @@ weight-completed / coderived package. This proves all clauses.
 The FF characterization satisfies three independent checks.
 \begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
 \item \emph{Shadow-depth check.}
- If FF were a new generic shadow-depth class, one would need a new
- quartic or higher witness. None appears: the affine cubic shadow
- survives and the Jacobi identity still kills the quartic term, so the
- coarse depth value remains~$3$.
+ The affine cubic shadow survives and the Jacobi identity kills the
+ quartic term, so the coarse depth value remains~$3$ and the critical
+ refinement lies inside class~L.
 \item \emph{Theorems~C/D/H check.}
  The self-dual critical level gives $\kappa^!=0$ and therefore
- $\operatorname{obs}_g=0$, but the Feigin--Frenkel center forces
- unbounded chiral Hochschild cohomology. Thus FF is compatible with
- Theorem~D only after one excludes the generic Theorem~H surface and
- replaces it by the critical bar/oper package.
-\item \emph{Theorems~A/B attack.}
- The Sugawara denominator shows that the raw non-critical class-L
- bar-cobar/topologization proof breaks at $k=-h^\vee$. What survives
- is exactly the weight-completed / coderived critical regime already
- inscribed elsewhere in Vol~I.
+ $\mathfrak O_g^K=0$ under~$H_D^K$. Independently, the completed bar--oper
+ calculation gives unbounded bar cohomology. The map
+ $\chi_{\mathrm{FF}}^{\mathrm{bar}}$ would transport it to chiral
+ Hochschild cohomology. Theorem~D and the conditional chart-support
+ calculation therefore occupy distinct levels of the Beilinson tower.
+\item \emph{Theorems~A/B critical scope.}
+ The Sugawara denominator places the critical point in the
+ weight-completed/coderived regime already constructed elsewhere in
+ Volume~I.
 \end{enumerate}
-No further structural gap remains on this theorem surface: every
-surviving assertion is either proved above or explicitly scoped to the
-completed critical regime.
+The remaining comparison obligation is the construction and
+quasi-isomorphism proof for $\chi_{\mathrm{FF}}^{\mathrm{bar}}$.
+Every chart-support assertion above is conditional on this map.
 \end{remark}
 
 \begin{remark}[AP\textup{77} consequence: W(p) has $4$ strong
@@ -493,7 +529,9 @@ $\Walg_N$ & $2N$ & $\infty$ & $M$ & $W_NW_N$ \\
 
 \begin{proof}
 Each row is a citation to the landscape census
-	\textup{(}Chapter~\ref{ch:landscape-census}\textup{)}: Heisenberg
+	\textup{(}Chapter~\ref{ch:landscape-census}\textup{)}, with the
+	$\beta\gamma$ row carried by
+	Chapter~\ref{ch:three-invariants}: Heisenberg
 	\eqref{eq:heisenberg-kappa}, $\beta\gamma$
 	\eqref{eq:beta-gamma-ope}--\eqref{eq:beta-gamma-r-max}, affine
 	\eqref{eq:affine-KM-p-max}, Virasoro \eqref{eq:vir-p-max},
@@ -764,9 +802,11 @@ $\Gamma$ principal, $n_{\mathrm{strong}} = N-1$.
 $(\mathrm{Com}(\cH, \widehat{\fg}_k), \widehat{\fg}_k/\mathrm{Com})$
 transforms to the W-algebra coset
 $(\mathrm{Com}(\cH, \Walg^\Gamma_k(\fg)), \Walg^\Gamma_k/\mathrm{Com})$;
-on the Koszul dual side this is Feigin--Frenkel duality
+on the critical-level reflected comparison side this is the
+Feigin--Frenkel \(W\)-algebra duality
 $\Walg^\Gamma_k(\fg) \leftrightarrow \Walg^{\Gamma^\vee}_{k'}(\fg^\vee)$
-with~$(k + h^\vee)(k' + h^{\vee,\vee}) = 1$.
+with~$(k + h^\vee)(k' + h^{\vee,\vee}) = 1$, not an identification
+of either \(W\)-algebra with the chiral Koszul dual object.
 \end{enumerate}
 In particular, DS reduction is a well-defined map
 $\mathrm{DS}_\Gamma\colon \mathcal{F}_L \to \mathcal{F}_M$ on
@@ -907,7 +947,7 @@ rows with the same leading parity are still separated by their
 standard supertrace series.
 \end{calculation}
 
-\begin{corollary}[Completeness on the standard landscape]
+\begin{corollary}[Witness-row separation on the standard landscape]
 \label{cor:fingerprint-separates-landscape}
 \ClaimStatusProvedHere
 Calculation~\ref{calc:fingerprint-stratum-separation} exhibits
@@ -923,8 +963,8 @@ rows, including pairs within a single coarse class:
 \end{itemize}
 Together with the stratum theorem
 \textup{(}Theorem~\ref{thm:five-class-stratum}\textup{)}, this
-establishes that~$\varphi$ is the canonical complete invariant of
-a chiral algebra in the standard landscape.
+establishes that~$\varphi$ is the canonical separating row datum for
+the listed standard-landscape witnesses.
 \end{corollary}
 
 \begin{proof}
@@ -1118,15 +1158,16 @@ is the explicit ADE rank-sum computation encoded in the displayed row
 set. Path~(c) is the Schellekens-table count of the explicit row set.
 This proves all claims. Throughout, the five objects are kept distinct:
 $A$ is the VOA, $B(A)$ its bar coalgebra,
-$A^i=H^*(B(A))$ its Koszul-dual coalgebra,
-$A^!=(A^i)^\vee$ its Koszul-dual algebra, and
+$A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ its presentation coalgebra,
+$K_X(A)=\mathbb D_{\Ran}B_X(A)$ its Verdier algebra, and
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ its derived
-center; the theorem compares their invariants, not the objects
-themselves.
+center. The maps $q_A$, $\mathbb D(q_A)$, and~$\nu_A$ supply the
+quadratic and chosen-pair comparisons used by the theorem.
 \end{proof}
 
-\begin{proposition}[Uniform weight-two threshold across the three
-holomorphic \texorpdfstring{$c=24$}{c=24} machineries]
+\begin{proposition}[Weight-one threshold under the filtered
+Hochschild comparison]
+\label{prop:schellekens-weight-one-threshold}
 \label{prop:schellekens-weight-two-threshold}
 \ClaimStatusConditional
 On the ambient~$\mathfrak{S}_{24}^{\mathrm{hol}}$ of
@@ -1134,51 +1175,50 @@ Theorem~\ref{thm:schellekens-structured-subset}, the minimal uniform
 threshold at which the Schellekens row, and therefore the structured
 subset position of~$A$, is determined is the conformal-weight threshold
 \[
-w_\ast = 2.
+w_\ast = 1.
 \]
-The same threshold is seen in each of the three machineries:
+Assume for every chart~$A$ a family datum $H_H(A;S_A)$ and a
+filtration-preserving bar-to-chart quasi-isomorphism whose restriction
+to conformal weights at most one identifies the $V_1$ bracket. Then
+the same threshold is seen in each
+of the three constructions:
 \begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
 \item \textup{(}bar--cobar lane\textup{)}
- the weight-$\le2$ truncation of the ordered bar differential records
- the weight-one OPE residues and the first weight-two correction, hence
- reconstructs~$V_1$ and separates the Monster row~$V_1=0$ from the
- other~$70$ rows;
+ the weight-$\le1$ truncation of the ordered bar differential records
+ the weight-one OPE residues, hence reconstructs~$V_1$ and separates
+ all~$71$ rows, including the row~$V_1=0$;
 \item \textup{(}chiral Hochschild lane\textup{)}
- Theorem~H
- \textup{(}Theorem~\ref{thm:hochschild-concentration-E1} together with
- Corollary~\ref{cor:hochschild-averaging-symmetric}\textup{)}
- forces $\ChirHoch^\bullet(A)$ into degrees~$\{0,1,2\}$, and the
- weight-$\le2$ part detects exactly the same $V_1$/Monster dichotomy;
+ Theorem~H identifies
+ $\ChirHoch^n(A)$ with $H^n(K_{A,S_A})$ and places its
+ cohomological support in~$S_A$.  The assumed filtered comparison
+ transports the weight-$\le1$ row classifier to this complex;
 \item \textup{(}derived-center lane\textup{)}
  the evaluation pairing on
  $Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ restricted
- to conformal weights~$\le2$ is read on the same underlying
- cochain complex as the Hochschild lane, so the threshold agrees
- tautologically with~\textup{(ii)}.
+ to conformal weights~$\le1$ is read on the same filtered cochain
+ complex as the Hochschild lane.
 \end{enumerate}
-In particular, the threshold statement is uniform across the three
-machineries and is not an extra counting axiom.
+Thus the conformal-weight threshold is uniform across the three
+constructions under the stated comparison.  The support set~$S_A$
+records cohomological degrees and remains independent of conformal
+weight.
 \end{proposition}
 
 \begin{proof}
-Schellekens's classification is by~$V_1$ except for the unique Monster
-row, whose first nonzero positive-weight datum lies in weight~$2$.
-Therefore weight~$1$ is sufficient for the~$70$ non-Monster rows and
-weight~$2$ is the minimal uniform threshold on the full family.
+Schellekens's rows are indexed by~$V_1$, with the row~$V_1=0$ included
+as one value of that invariant. Thus conformal weight~$1$ determines
+all~$71$ rows. Conformal weight~$0$ contains the common vacuum line,
+so weight~$1$ is the minimal uniform threshold.
 
 On the bar side, the reduced bar differential on weight-one generators
 is the OPE residue Lie bracket, so the bar complex truncated at
-conformal weight~$2$ already reconstructs~$V_1$ together with the
-Monster exceptional case. On the Hochschild side,
-Theorem~\ref{thm:hochschild-bar-cobar} identifies
-$\ChirHoch^\bullet(A)$ with the bar-cobar coderivation complex, and
-Theorem~\ref{thm:hochschild-concentration-E1} confines the live degrees
-to~$\{0,1,2\}$; no higher cohomological threshold can intervene. On the
-derived-center side,
-$Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ is the same
-object with its $E_2$-structure retained, so the evaluation pairing on
-weights~$\le2$ reads exactly the same data. Hence the common threshold
-is~$w_\ast=2$ in all three lanes.
+conformal weight~$1$ reconstructs~$V_1$, including its zero value. The
+family datum computes the cohomological support
+of the chart complex.  The additional filtered quasi-isomorphism
+identifies its conformal-weight-$\le1$ truncation with the bar
+truncation, and the derived centre retains this complex together with
+its $E_2$-structure.  Hence all three filtered objects have the common
+threshold $w_\ast=1$.
 \end{proof}
 
 \begin{remark}[Independent verification record for the numerical claims]
@@ -1236,17 +1276,17 @@ three independent verification paths.
  $c(\widehat{\fg}_{1})=\operatorname{rank}(\fg)$ on simply-laced
  factors recovers total central charge~$24$ exactly on those rows.
  \end{enumerate}
-\item \textup{(}$w_\ast = 2$\textup{)}
+\item \textup{(}$w_\ast = 1$\textup{)}
  \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
- \item Schellekens 1993, pp.~4, 23--24, classifies the nonzero cases by
- their weight-one Lie algebra and isolates the unique $N=0$ / Monster
- exceptional branch.
- \item The ordered bar differential on weight-one generators already
- reconstructs~$V_1$, and weight~$2$ is the first place the Monster
- branch differs.
- \item Theorem~H confines $\ChirHoch^\bullet$ to degrees~$\{0,1,2\}$,
- and the derived-center lane is the same cochain complex with its
- $E_2$-structure retained.
+ \item Schellekens 1993, pp.~4, 23--24, indexes every row by its
+ weight-one Lie algebra, including the value~$V_1=0$.
+ \item The ordered bar differential on weight-one generators
+ reconstructs~$V_1$, while conformal weight~$0$ is the common vacuum
+ line.
+ \item A datum $H_H(A;S_A)$ computes cohomological support in~$S_A$;
+ the assumed filtered comparison transports the conformal-weight-one
+ row classifier to the same cochain complex. These are independent
+ gradings.
  \end{enumerate}
 \end{enumerate}
 \end{remark}
@@ -1268,8 +1308,9 @@ cross-volume consequences.
  transport of the Leech slot, not an accidental slogan.
 \item \textup{(}Vol~III categorical DT\textup{)}
  the portable statement on the CY$_3$ side is the low-weight threshold,
- not a new ``71'' count: the DT/Hochschild deformation data are read in
- degrees~$\le2$, mirroring Proposition~\ref{prop:schellekens-weight-two-threshold}.
+ namely the conformal-weight filtration through~$1$. Its
+ cohomological support is recorded separately by the family set~$S_A$,
+ as in Proposition~\ref{prop:schellekens-weight-one-threshold}.
 \end{enumerate}
 \end{remark}
 
@@ -1389,12 +1430,12 @@ central-charge correction.
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\begin{remark}[Pentagon--umbral cohomology class as fingerprint refinement]
+\begin{remark}[Pentagon target cocycle and umbral cohomology class as fingerprint refinement]
 \label{rem:ifc-3-pentagon-umbral}
 A cohomological fingerprint refinement extends the numerical triple
 $(c_{4d}, c_{2d}, \mathrm{rank}_{\mathrm{Coul}}) = (107/6, -214, 21)$
 of Remark~\ref{rem:ifc-1}. The pentagon
-$\hbar^3$-obstruction of the Siegel--Borcherds associator
+$\hbar^3$-obstruction of the candidate Siegel--Borcherds target cocycle
 $\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}]$
 and the projective $\widetilde{M}_{24}$-umbral cocycle of order $6$ on the
 K3 Serre functor live in \emph{the same transgressed cohomology class}

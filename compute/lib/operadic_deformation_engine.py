@@ -1318,8 +1318,9 @@ def koszul_dual_kappa(family: str, **kwargs) -> Dict[str, Any]:
     This is a constraint from duality (Theorem D).
 
     Key values:
-      Heisenberg: kappa(H_k) = k, kappa(H_k^!) = kappa(Sym^ch(V*)) = -k.
-        Sum = 0. (Note: H_k^! = Sym^ch(V*) != H_{-k})
+      Heisenberg: kappa(H_k) = k, scalar kappa(H_k^!) = -k on the
+        curved Sym^ch(V*[1]) branch.
+        Sum = 0. (Note: H_k^! is not H_{-k})
       sl2: kappa(V_k(sl_2)) = 3(k+2)/4, kappa(V_k(sl_2)^!) = -3(k+2)/4.
         Sum = 0.
       Virasoro: kappa(Vir_c) = c/2, kappa(Vir_{26-c}) = (26-c)/2.
@@ -1334,10 +1335,10 @@ def koszul_dual_kappa(family: str, **kwargs) -> Dict[str, Any]:
 
     # Determine the dual
     if family == 'Heisenberg':
-        # H_k^! = Sym^ch(V*), kappa^! = -k
+        # H_k^! is the curved Sym^ch(V*[1]) branch, scalar kappa^! = -k
         k = kwargs.get('k', Symbol('k'))
         kappa_dual = -kappa
-        dual_name = 'Sym^ch(V*)'
+        dual_name = 'curved Sym^ch(V*[1])'
         sum_constraint = 'kappa + kappa^! = 0'
         sum_value = simplify(kappa + kappa_dual)
     elif family in ('sl2', 'sl3'):

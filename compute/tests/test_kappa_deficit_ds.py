@@ -272,9 +272,11 @@ class TestKoszulConductorToda:
         assert s == Rational(250, 3)
 
     def test_BP_complementarity_value(self):
-        """kappa(BP,k) + kappa(BP,k') = 98/3.
+        """Shifted-lane kappa sum: kappa^shift(BP,k) + kappa^shift(BP,k') = 98/3.
 
-        # AP140: K_BP=196, rho=1/6, kappa_sum=(1/6)*196=98/3
+        # Shifted conformal-vector lane: reflection sum 196, rho=1/6,
+        # (1/6)*196=98/3. Standard FKR lane: K^c_BP=50, conditional
+        # kappa complementarity 25/3.
         """
         kp = dual_level(k, 3)
         s = simplify(kappa_BP(k) + kappa_BP(kp))

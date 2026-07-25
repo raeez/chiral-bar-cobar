@@ -726,9 +726,9 @@ def koszul_dual_shadow_data(kappa, alpha, S4, c=None, family='virasoro'):
         c_dual = 26 - c
         return shadow_data('virasoro', c=c_dual)
     elif family == 'heisenberg':
-        # Heisenberg: H_k! = Sym^ch(V*), NOT H_{-k}
-        # For level 1 free boson: κ! = 1/2, same class G.
-        # The Koszul dual is the same algebra with dual lattice.
+        # Heisenberg: H_k! is the curved Sym^ch(V*[1]) branch, NOT H_{-k}.
+        # For level 1 free boson: scalar kappa! is reflected; this is
+        # the class-G scalar shadow, not an object identification.
         return shadow_data('heisenberg', k=kappa * 2)
     else:
         raise ValueError(f"Koszul dual not implemented for {family}")

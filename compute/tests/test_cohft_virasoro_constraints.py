@@ -731,7 +731,7 @@ class TestScalarLaneFirewalls:
         assert kernels['heisenberg']['formula'] == 'k/z'
         assert kernels['virasoro']['formula'] == '(c/2)/z^3 + 2*T/z'
         assert any('bar-cobar inversion' in item for item in cert['object_firewalls'])
-        assert any('Hochschild/bulk' in item for item in cert['object_firewalls'])
+        assert any('Hochschild/closed-sector' in item for item in cert['object_firewalls'])
 
     def test_shadow_equation_classification(self):
         """Classification records the residual away from KW and zero field."""

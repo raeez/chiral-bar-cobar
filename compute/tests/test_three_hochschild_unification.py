@@ -68,9 +68,9 @@ FAMILY_LOW_DEGREE_TABLE = {
         "gf_cont": (1, 0, 1),  # central extension only
     },
     "affine_sl2_generic": {
-        # ChirHoch: prop:chirhoch1-affine-km (chiral_center_theorem.tex:2132).
-        # Dim sl_2 = 3.
-        "chirhoch": (1, 3, 1),
+        # ChirHoch: prop:chirhoch1-affine-km after the zero-mode quotient.
+        # Dim sl_2 = 3 is prequotient metadata, not H^1.
+        "chirhoch": (1, 0, 1),
         # HH*(U(sl_2_hat) mode at generic level): Whitehead vanishing
         # for semisimple over char 0 gives HH^0 = C, HH^1 = HH^2 = 0.
         # Whitehead 1937.
@@ -95,7 +95,7 @@ FAMILY_LOW_DEGREE_TABLE = {
 THETA1_KERNEL_TABLE = {
     "heisenberg": (0, 1, 1),
     "fermion": (0, 0, 1),
-    "affine_sl2_generic": (0, 3, 1),
+    "affine_sl2_generic": (0, 0, 1),
     "virasoro_generic": (0, 0, 1),
 }
 
@@ -112,9 +112,24 @@ THETA3_SCALAR_IMAGE_TABLE = {
 EXPECTED_EULER_CHARACTERISTICS = {
     "heisenberg": {"chirhoch": 1, "hh_mode": 1, "gf_cont": 2},
     "fermion": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
-    "affine_sl2_generic": {"chirhoch": -1, "hh_mode": 1, "gf_cont": 2},
+    "affine_sl2_generic": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
     "virasoro_generic": {"chirhoch": 2, "hh_mode": 1, "gf_cont": 2},
 }
+
+
+def test_low_degree_table_source_records_bounded_bdsk_benchmarks():
+    """The source table records the two proved bounded BDSK benchmarks."""
+    source = THREE_HOCHSCHILD_TEX.read_text()
+    label_pos = source.index(r"\label{rem:three-hochschild-low-degree-tables}")
+    start = source.rindex(r"\begin{remark}", 0, label_pos)
+    block = source[start:source.index(r"\end{remark}", start)]
+    flat = " ".join(block.split())
+
+    assert r"$B_{\mathfrak h}$, $\dim\mathfrak h_{\bar0}=1$" in flat
+    assert r"$\dim H^n_{\mathrm{ch},b}=(2,1,0,\ldots)$" in flat
+    assert r"$\operatorname{Vir}_c$" in flat
+    assert r"$\dim H^n_{\mathrm{ch},b}=1$ for $n\in\{0,2,3\}$" in flat
+    assert r"\cite[Theorems~7.4 and~7.2]{BDSK21}" in flat
 
 
 def test_circle_restriction_firewall_is_inscribed():
@@ -206,19 +221,16 @@ def test_theorem_h_thh_gf_amplitude_firewall_is_inscribed():
     assert "None of these steps is a statement about" in conventions_flat
     assert "\\THH" in conventions_flat
     assert (
-        "This is a structural distinction among operads and differentials, "
-        "not a size theorem about topological Hochschild homology."
+        "This is a structural distinction among operads and differentials. "
+        "A THH comparison enters after the spectrum-level lift package"
     ) in three_flat
-    assert "the high-degree comparison target used below is scalar GF, not THH" in three_flat
-    assert "cohomological dimensions need not agree" in chiral_flat
-    assert "while the Weyl-mode algebra has" in chiral_flat
-    assert "The high-degree divergence used in the three-Hochschild comparison is scalar" in chiral_flat
-    assert "The same boundary excludes topological Hochschild homology" in three_flat
-    assert "GF cohomology is continuous Lie algebra cohomology" in three_flat
-    assert (
-        "The chiral, algebraic, and topological constructions use different "
-        "ambient categories and produce different outputs."
-    ) in preface_flat
+    assert "the high-degree comparison target used below is scalar GF" in three_flat
+    assert "The continuous GF cohomology" in three_flat
+    assert "the chiral source occurs only in~$S$" in three_flat
+    assert "Topological, categorical, and product-ambient Hall Hochschild theories" in three_flat
+    assert "the source is the modular chiral convolution algebra" in chiral_flat
+    assert "Bakalov--De Sole--Kac benchmarks" in preface_flat
+    assert r"\operatorname{Supp} \operatorname{ChirHoch}^{\bullet}(\cA)\subseteq S" in preface_flat
 
     for forbidden in [
         "Theorem H fails for THH",
@@ -328,7 +340,8 @@ def test_three_hochschild_cohomological_euler_characteristic():
         != EXPECTED_EULER_CHARACTERISTICS["heisenberg"]["gf_cont"]
     )
     affine_chis = EXPECTED_EULER_CHARACTERISTICS["affine_sl2_generic"]
-    assert len(set(affine_chis.values())) == 3
+    assert affine_chis["chirhoch"] == affine_chis["gf_cont"]
+    assert affine_chis["hh_mode"] != affine_chis["chirhoch"]
 
 
 def test_theta3_scalar_image_is_not_full_scalar_gf():

@@ -597,7 +597,7 @@ class TestAPChecks:
         assert "A" != "A^!"
 
     def test_ap33_koszul_dual_not_negative_level(self):
-        """H_k^! = Sym^ch(V*) != H_{-k}.
+        """H_k^! is the curved Sym^ch(V*[1]) branch, not H_{-k}.
 
         They have the same kappa but are different algebras.
         kappa(H_k^!) = -k = kappa(H_{-k}), but H_k^! != H_{-k}.
@@ -605,7 +605,7 @@ class TestAPChecks:
         # Same kappa
         assert kappa_heisenberg(-1) == -1  # kappa(H_1^!) = -1
         assert kappa_heisenberg(-1) == kappa_heisenberg(-1)  # same number
-        # But H_1^! = Sym^ch(V*) is NOT the same algebra as H_{-1}
+        # But H_1^! is the curved Sym^ch(V*[1]) branch, not H_{-1}
 
     def test_ap48_kappa_not_c_over_2(self):
         """kappa != c/2 for non-Virasoro families."""
@@ -622,17 +622,17 @@ class TestAPChecks:
             for r in rmat:
                 assert (r + 1) in ope
 
-    def test_ap_cy54_drinfeld_center_not_averaging(self):
-        """The Drinfeld center constructs braiding; averaging destroys it."""
+    def test_ap_cy54_center_and_symmetrisation_keep_their_types(self):
+        """The front matter gives the centre and descent separate maps."""
         active = "\n".join(
             path.read_text()
             for path in (PREFACE_TEX, EN_KOSZUL_TEX)
         )
-        assert "right adjoint to the forgetful" in active
-        assert "center constructs what averaging destroys" in active
-        assert r"\emph{not} the averaging map" in active
-        assert "categorified analogue of the averaging map" not in active
-        assert "categorical averaging map" not in active
+        normalized = " ".join(active.split())
+        assert r"\cZ_{\mathrm{ch}}^{\mathrm{der}}(A_b)" in active
+        assert r"C^\bullet_{\mathrm{ch}}(A_b,A_b)" in active
+        assert "symmetrisation is expressed by homotopy descent" in normalized
+        assert r"\bigl(Q^{\mathrm{ord}}_{\cA,N}\bigr)_{h\Sigma_n}" in active
 
     def test_ap150_operadic_circle_is_not_composite_confabulation(self):
         """The E_n passage is guarded arrow-by-arrow on active surfaces."""

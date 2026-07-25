@@ -166,7 +166,7 @@ def bar_koszul_firewall_summary() -> Dict[str, str]:
             "completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "Hochschild/derived-centre bulk object",
+        "Z_ch^der(A)": "Hochschild/derived-centre closed-sector object",
     }
 
 

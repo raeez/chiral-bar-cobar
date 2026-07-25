@@ -13,7 +13,7 @@ CORE CLAIMS VERIFIED:
 8. AP44 convention: lambda-bracket coeff = a_{(n)}b / n!
 9. AP19: bar kernel d log absorbs one pole order
 10. Three models: flat (d^2=0), corrected holomorphic (D_g^2=0), curved (d_fib^2 = kappa*omega_g)
-11. CDG bulk algebra = H*(Z^der_ch(A_b)) with shifted Poisson bracket
+11. CDG closed-sector algebra = H*(Z^der_ch(A_b)) with shifted Poisson bracket
 12. Swiss-cheese directionality: no operadic open-to-closed maps
 13. Moriwaki absolute convergence compatible with our sewing
 14. The product rectification surface decomposes into typed chiral,
@@ -117,7 +117,7 @@ def verify_package_firewalls():
         "A": "boundary chiral algebra",
         "A^i": "bar-dual coalgebra H*(B(A))",
         "A^!": "Verdier/continuous-linear dual branch of A^i",
-        "C": "derived-centre/Hochschild bulk slot",
+        "C": "derived-centre/Hochschild closed-sector slot",
         "r(z)": "binary genus-0 collision residue of Theta_A",
         "Theta_A": "full universal Maurer-Cartan element",
         "nabla^hol": "holomorphic connection assembled from Theta_A projections",
@@ -563,7 +563,10 @@ def verify_ap19_affine():
     From pole order 2: coefficient * 1/z (absorbed one power)
     From pole order 1: coefficient * 1 (constant, the Lie bracket)
 
-    So r(z) = Omega/z for Heisenberg/KM (the Casimir divided by z).
+    Thus the trace-form collision kernel is k*Omega/z for affine KM,
+    and k*Omega_H/z (rank-one coefficient k/z) for Heisenberg.  Unit
+    Casimir CYBE checks may set k=1, but the affine trace-form residue
+    vanishes at k=0.
 
     Returns: dict with verification.
     """
@@ -712,13 +715,13 @@ def verify_pva_descent():
 def verify_cdg_compatibility():
     """Verify compatibility with Costello-Dimofte-Gaiotto [2005.00083].
 
-    CDG prove: the bulk algebra of a 3d HT theory is commutative with a
+    CDG prove: the closed-sector algebra of a 3d HT theory is commutative with a
     shifted Poisson bracket (a "higher stress tensor").
     The boundary algebra is a module for the bulk.
 
     Our Vol II claims:
     (a) After choosing a boundary condition b, the Morita chart is
-        A_b = End_Cop(b).  The intrinsic bulk is the chiral derived
+        A_b = End_Cop(b).  The intrinsic closed colour is the chiral derived
         center Z^der_ch(A_b) = C^bullet_ch(A_b, A_b), not B(A_b).
         On cohomology, this is a Gerstenhaber algebra (= shifted Poisson).
         CDG's "shifted Poisson" IS our Gerstenhaber structure.
@@ -793,7 +796,7 @@ def verify_moriwaki_compatibility():
         module-category level while we work with Morita charts of the
         open sector and their derived centers.  The common datum is the
         typed bulk-to-boundary SC directionality, not an identification
-        of bar, boundary, and bulk objects.
+        of bar, boundary, and closed-sector objects.
 
     (c) Moriwaki's C_1-cofiniteness condition corresponds to our
         "locally C_1-cofinite" hypothesis in the sewing programme.
@@ -866,7 +869,7 @@ def verify_koszul_decomposition():
         },
         "combined": {
             "type": "SC^{ch,top} open/closed rectification surface",
-            "content": "two-colored bulk-to-boundary structure on (Z^der_ch(A_b), A_b)",
+            "content": "two-colored closed-to-boundary structure on (Z^der_ch(A_b), A_b)",
             "not_swiss_cheese_self_duality": True,
             "not_bar_equals_bulk": True,
         },
@@ -878,7 +881,7 @@ def verify_koszul_decomposition():
             "Omega(B(A_b))": "bar-cobar reconstruction of A_b",
             "A^i": "Koszul-dual coalgebra H*(B(A_b))",
             "A^!": "Verdier/linear dual algebra of A^i under finite-type or completed hypotheses",
-            "Z^der_ch(A_b)": "bulk, the chiral Hochschild cochain object acting on A_b",
+            "Z^der_ch(A_b)": "closed colour, the chiral Hochschild cochain object acting on A_b",
         },
     }
 
@@ -1072,13 +1075,13 @@ def verify_heisenberg_genus1_partition_function(k):
 
 
 # ============================================================================
-# Section 16: Bulk = derived center (AP-OC, AP25, AP34)
+# Section 16: Closed colour = derived center (AP-OC, AP25, AP34)
 # ============================================================================
 
 def verify_bulk_identification():
-    """Verify the correct identification of the bulk algebra.
+    """Verify the correct identification of the closed-sector algebra.
 
-    AP-OC: the bulk is Z^der_ch(A_b) = C^bullet_ch(A_b, A_b),
+    AP-OC: the closed colour is Z^der_ch(A_b) = C^bullet_ch(A_b, A_b),
     not B(A_b).  Here A_b is a Morita chart of the open-sector
     factorization dg-category C_op.
 
@@ -1089,7 +1092,7 @@ def verify_bulk_identification():
         (4) A^! = D(A^i), the Verdier/linear-dual algebra only on the
             finite-type Verdier surface, or after the completed strict
             Mittag-Leffler replacement in class M
-        (5) Z^der_ch(A_b) = RHom^ch_{A_b-A_b}(A_b, A_b), the bulk
+        (5) Z^der_ch(A_b) = RHom^ch_{A_b-A_b}(A_b, A_b), the closed colour
 
     AP34: Bar-cobar inversion ≠ open-to-closed passage.
 
@@ -1123,13 +1126,13 @@ def verify_bulk_identification():
         "Z^der_ch(A_b)": {
             "type": "chiral Hochschild cochain object",
             "construction": "RHom^ch_{A_b-A_b}(A_b, A_b)",
-            "role": "intrinsic bulk acting on the boundary chart",
+            "role": "intrinsic closed colour acting on the boundary chart",
         },
     }
 
     return {
         "bar_complex_classifies": "twisting morphisms (universal couplings A_b <-> A_b^!)",
-        "bulk_algebra": "chiral derived center Z^der_ch(A_b) = C^bullet_ch(A_b, A_b)",
+        "bulk_algebra": "closed-colour chiral derived center Z^der_ch(A_b) = C^bullet_ch(A_b, A_b)",
         "bar_cobar_inversion": "Omega(B(A_b)) -> A_b (recovers the original boundary algebra)",
         "koszul_dual_coalgebra": "A^i = H*(B(A_b))",
         "verdier_dual": "A^! = D(A^i) under finite-type or completed strict ML hypotheses",

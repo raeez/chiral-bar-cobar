@@ -1164,7 +1164,7 @@ def full_form_factor_analysis(algebra_type: str, max_arity: int = 8,
 def compare_r_matrices_tree_level(N: int,
                                    z_values: Optional[List[complex]] = None
                                    ) -> Dict[str, object]:
-    """Compare the bar collision residue r(z) = Omega/z with Costello's
+    """Compare the unit bar collision residue r(z) = Omega/z with Costello's
     tree-level r-matrix from 4d CS.
 
     Both give r(z) = Omega/z = (P - I/N)/z.  This function verifies

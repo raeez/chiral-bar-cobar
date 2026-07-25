@@ -13,7 +13,8 @@ Anti-pattern guards:
   AP19: r-matrix pole order = OPE pole order - 1.
   AP24: kappa + kappa' = 0 for free fields.
   AP31: kappa = 0 does NOT imply Theta = 0.
-  AP33: H_k^! != H_{-k} (same kappa, different algebras).
+  AP33: at k != 0, H_k^! is the curved second-kind Sym branch,
+  not H_{-k}; only scalar kappa agrees with kappa(H_{-k}).
   AP45: Desuspension lowers degree.
   AP48: kappa = rank for free bosons, NOT c/2 in general.
 """
@@ -569,7 +570,7 @@ class TestHolographicPackage:
         assert holographic_datum_k3e().boundary_kappa == F(24)
 
     def test_verdier_koszul_kappa(self):
-        """kappa(A^!) = -24; A^! is not the derived-centre bulk."""
+        """kappa(A^!) = -24; A^! is not the derived-centre closed-sector."""
         hd = holographic_datum_k3e()
         assert hd.verdier_koszul_kappa == F(-24)
 
@@ -589,11 +590,11 @@ class TestHolographicPackage:
         assert "B^ch" in hd.bar_dual_description
         assert "Omega(B(A_E))" in hd.cobar_inversion_result
 
-    def test_derived_center_bulk_slot(self):
-        """The bulk slot is C = Z_ch^der(A), not A^!."""
+    def test_derived_center_closed_sector_slot(self):
+        """The closed-sector slot is C = Z_ch^der(A), not A^!."""
         hd = holographic_datum_k3e()
         assert hd.derived_center_description.startswith("C = Z_ch^der")
-        assert "bulk" in hd.derived_center_description
+        assert "closed-sector" in hd.derived_center_description
 
     def test_boundary_c(self):
         """c = 24."""
@@ -958,7 +959,7 @@ class TestAntiPatternGuards:
         # After desuspension: degree 1 -> degree 0
 
     def test_ap33_koszul_dual_not_negative_level(self):
-        """AP33: H_k^! != H_{-k}. Same kappa, different algebras.
+        """AP33: the curved dual is not H_{-k}; only scalar kappa agrees.
 
         We verify the statement is correctly handled: the Verdier/Koszul branch
         has kappa = -24, and we do NOT assert A^! = A_{-k}.
@@ -979,14 +980,14 @@ class TestAntiPatternGuards:
         assert objects["A_i"].object_type == "bar-dual coalgebra"
         assert objects["Omega_B_A"].role.startswith("bar-cobar inversion")
         assert objects["A_shriek"].role.startswith("dual boundary")
-        assert objects["Z_der_ch_A"].role.startswith("bulk slot")
+        assert objects["Z_der_ch_A"].role.startswith("closed-sector slot")
 
-    def test_ap25_no_line_bulk_conflation(self):
-        """AP25: A^! is the dual boundary/line slot; C is the bulk."""
+    def test_ap25_no_line_closed_sector_conflation(self):
+        """AP25: A^! is the dual boundary/line slot; C is closed-sector."""
         fw = ap25_object_firewall_k3e()
-        assert "not the bulk" in fw["objects"]["A_shriek"].not_output
+        assert "not the closed-sector slot C" in fw["objects"]["A_shriek"].not_output
         assert fw["objects"]["Z_der_ch_A"].symbol == "Z_ch^der(A_E)"
-        assert "bulk" in fw["objects"]["Z_der_ch_A"].role
+        assert "closed-sector slot" in fw["objects"]["Z_der_ch_A"].role
 
     def test_ap10_no_hardcoded_values(self):
         """AP10: kappa = 24 derived from rank computation, not hardcoded.

@@ -149,7 +149,9 @@ AP19: r-matrix poles one below OPE.
 AP20: kappa(A) is intrinsic to A, not to a physical system.
 AP24: kappa + kappa' = 0 for KM, NOT universal.
 AP27: bar propagator d log E(z,w) is weight 1.
-AP33: H_k^! = Sym^ch(V*) != H_{-k}.
+AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+branch with scalar kappa -k; H_{-k} is only the level-reflected
+scalar shadow.
 AP39: kappa != c/2 in general.
 AP48: kappa depends on full algebra, not just Virasoro subalgebra.
 

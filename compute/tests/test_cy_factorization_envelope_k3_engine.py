@@ -713,7 +713,7 @@ class TestKoszulDuality:
         assert data['kappa_A_dual'] == F(-24)
 
     def test_boundary_not_self_dual(self):
-        """A_E is NOT self-dual (AP33: H_k^! != H_{-k})."""
+        """A_E is NOT self-dual; AP33 keeps the curved dual branch typed apart."""
         data = boundary_koszul_dual_data()
         assert data['is_self_dual'] is False
 

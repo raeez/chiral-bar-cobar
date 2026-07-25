@@ -1,7 +1,7 @@
 % Master Reconstruction Theorem: the structural climax of Vol I.
-% Inscribes the five-level Beilinson tower on the open-quadrant of
+% Inscribes the six-node Beilinson reconstruction fork on the open quadrant of
 % $(\mathrm{Open}\cup\mathrm{CY})\times(\mathrm{Cat}\cup\mathrm{Chain})$,
-% the seven primitive data, the reconstruction theorems with named
+% the primitive open datum, the reconstruction theorems with named
 % hypothesis packages, the KSDual fixed locus, and the vertical
 % holographic equivalences to Vols II and III.
 
@@ -28,482 +28,953 @@
 \providecommand{\comp}{\mathrm{comp}}
 \providecommand{\op}{\mathrm{op}}
 
-\chapter[Master Reconstruction Theorem]%
-{Master Reconstruction Theorem: the open Beilinson tower on a tangential
+\chapter[Master Reconstruction and Formation Theorem]%
+{Master Reconstruction and Formation Theorem: the open Beilinson fork on a tangential
 log curve}
 \label{ch:master-reconstruction}
 
 \begin{abstract}
 On a tangential log curve $(X,D,\tau)$ the open quadrant of
 $(\mathrm{Open}\cup\mathrm{CY})\times(\mathrm{Cat}\cup\mathrm{Chain})$
-is organized into a five-level tower of mathematical objects connected
-by named adjunctions. From the factorization dg-category $\cC^\op$ on
-$(X,D,\tau)$, a vacuum chart $b$ produces the chart algebra
-$A_b = \End_\cC(b)$; the chiral bar coalgebra
-$B(A_b)=T^c(s^{-1}\bar A_b)$ is the twisting object dual to $A_b$;
-the chiral derived centre $\DerZch(A_b)\simeq \ChirHoch^\bullet(A_b)$
-is the closed-sector cochain object; line and brane operators are the
-modules and bimodules over the centre; the modular trace and the
-clutching system on $\Mbar_{g,n}$ project the entire stack onto its
-scalar shadow. Each forgetful step has a reconstruction theorem with a
-named hypothesis package: Morita, the chiral Koszul reflection
-$K^2\simeq\mathrm{id}$, Hochschild concentration in $\{0,1,2\}$, the
-Drinfeld-double recovery, modular reconstruction. The
-$\mathbb Z/2$-fixed sublocus $\KSDual$ under the Verdier involution
-$A\mapsto A^!$ is the locus where every reconstruction step is an
-equivalence; on $\KSDual$ the Master Reconstruction is the $E_1$ open
-shadow of a single Bourbaki-structural datum, and Theorems~A, B, C, D,
-H are corollaries indexed by tower level. Vertical holographic
-equivalences identify each level with its companion in Vol~II
-($\SCchtop$-brace bulk; gravity-line completion) and Vol~III (6d hCS
-quartic anomaly; $\PhiFA_d$; $\SpCh_{\Sigma_{d-1},C}$; Drinfeld
-double via $Y^+(X)$; $\kappa_\BKM(\Phi_N)=c_N(0)/2$).
+is organized by six typed objects and a fork of maps.  A factorization compact
+generator $b$ of the stable presentable category $\mathsf C$ produces
+the chart algebra $A_b=\RHom_{\mathsf C}(b,b)$.  Factorization Morita
+reconstructs $\mathsf C$ from this pointed chart.  Enhanced
+associative bar--cobar duality reconstructs $A_b$ from the full bar
+coalgebra under the Ran and factorization-closure packages.
+
+Three further constructions begin with the chart.  Chiral Hochschild
+cochains form the chart center.  The quadratic--Verdier
+comparison forms $A_b^!$ and its perfect label category.  Intrinsic
+lines are the colimit-preserving factorization endofunctors of
+$\mathsf C$.  The regular bimodule forms the pointed brane datum; under
+$H_Z$ its derived endomorphisms agree with the chart center.  A full connected
+category-valued modular functor restricts to its genus-zero balanced
+braided line datum; its Hodge and partition classes are scalar
+projections.
+
+The Master Reconstruction Theorem records the two chart-side
+reconstructions, the three further constructions, and the named
+comparison problems among their targets.  A point of $\KSDual$ is a
+homotopy-fixed triple $(A_b,\varphi_b,H_b)$ for the Verdier--Koszul
+involution.  Vertical comparison functors connect
+the Open nodes to their Vol~II and Vol~III companions under the
+hypothesis package displayed at each node.
 \end{abstract}
 
 %===========================================================
-\section{The seven primitive data}
+\section{The primitive open datum}
 \label{sec:mr-seven-data}
 %===========================================================
 
-The open quadrant carries one structure with seven slots, all defined
+The open quadrant carries one structure with named components, all defined
 before any choice of presentation.
 
-\begin{definition}[Open holographic datum on a tangential log curve;
-\ClaimStatusProvedHere]
-\label{def:mr-open-datum}
-\index{open holographic datum!seven primitive data}
-An \emph{open holographic datum on a tangential log curve} is a tuple
+\begin{definition}[Mixed Ran and open-sector factorization category;
+\ClaimStatusDefinitional]
+\label{def:mr-mixed-ran-factorization-category}
+\index{mixed Ran space}
+\index{factorization dg-category!open sector}
+Let \((X,D,\tau)\) be a tangential log curve.  Write
+\(\widetilde X_D\) for the real-oriented blowup of \(X\) at the points
+of \(D\), and write
 \[
- (X,\,D,\,\tau;\;\cC^\op,\,b,\,A_b,\,\DerZch(\cC),\,\Theta_\cC,\,\Tr_\cC),
+ I_p:=S^1_p\setminus\{\tau_p\}\cong\mathbb R
+ \qquad (p\in D)
 \]
-where:
-\begin{enumerate}[label=\textup{(\arabic*)}]
-\item $X$ is a smooth projective curve over a field $k$ of
-characteristic zero;
-\item $D=\sum_i p_i$ is a reduced effective divisor on $X$;
-\item $\tau$ is a tangential structure along $D$ (a choice of formal
-nonzero tangent vector at each $p_i\in D$);
-\item $\cC^\op$ is a factorization dg-category on $(X,D,\tau)$ in the
-Francis--Gaitsgory sense, equipped with its Verdier-symmetric
-monoidal structure on $\Ran(X,D,\tau)$;
-\item $b\in\cC^\op$ is a vacuum chart, a choice of compact generator
-sufficient for Morita reconstruction;
-\item $A_b=\End_\cC(b)$ is the chart algebra at $b$, an augmented
-factorization $E_1$-chiral algebra on $(X,D,\tau)$;
-\item $\DerZch(\cC)$ is the chiral derived centre of $\cC^\op$,
-identified through the Hochschild-cochain object on a chosen chart by
+for the boundary interval obtained by deleting the tangential
+basepoint.  For a finite set \(I\) of closed insertions and a tuple
+\(\mathbf m=(m_p)_{p\in D}\) of boundary multiplicities, set
 \[
-\DerZch(\cC) \simeq C^\bullet_{\ch}(A_b,A_b),
-\qquad b\in\cC^\op \text{ Morita-generating;}
+\Conf^{\mathrm{oc}}_{I,\mathbf m}(X,D,\tau)
+:=
+\Conf_I(X\setminus D)
+\times
+\prod_{p\in D}\Conf^{<}_{m_p}(I_p).
 \]
-\item $\Theta_\cC$ is the universal Maurer--Cartan element of the
-ordered convolution dg Lie algebra
-$\mathfrak g^{E_1}_{\cC}=\mathrm{Conv}(B(A_b),A_b)$, satisfying
+The \emph{mixed Ran space} is the colimit
 \[
- D\Theta_\cC + \tfrac12[\Theta_\cC,\Theta_\cC] = 0;
+\Ran^{\mathrm{oc}}(X,D,\tau)
+:=
+\varinjlim_{(I,\mathbf m)}
+\Conf^{\mathrm{oc}}_{I,\mathbf m}(X,D,\tau)/\Sigma_I .
 \]
-\item $\Tr_\cC$ is the modular trace, a section of the determinant
-gerbe over $\Mbar_{g,n}$ together with a clutching system compatible
-with the gluing strata.
+An \emph{open-sector factorization dg-category} on
+\((X,D,\tau)\) is a constructible dg-cosheaf of dg-categories
+\(\cC\) on \(\Ran^{\mathrm{oc}}(X,D,\tau)\) equipped with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item factorization equivalences for decompositions into disjoint
+sub-configurations;
+\item holomorphic locality and meromorphic collision extension in the
+closed variables;
+\item local constancy on each boundary interval \(I_p\), giving the
+\(E_1\)-direction;
+\item a datum: a specified local mixed-collision model --- a
+two-coloured collision structure on the boundary--bulk corestrictions
+whose component operations are those of the local chiral Swiss-cheese
+category (Theorem~\ref{thm:chiral-deligne-tamarkin}); the choice of
+model is part of the hypothesis package of every statement that
+consumes it; and
+\item clutching compatibility for restoring the punctured boundary
+circles and gluing boundary strata.
 \end{enumerate}
-The category of open holographic data on $(X,D,\tau)$ is denoted
+This is the category-valued factorization package used in this
+volume when we write ``factorization dg-category on \((X,D,\tau)\)''.
+Francis--Gaitsgory factorization algebras supply the closed
+\(D=\varnothing\) algebra-valued case.  The definition above supplies
+the category-valued open-sector case.
+\end{definition}
+
+\begin{definition}[Factorization compact generator;
+\ClaimStatusDefinitional]
+\label{def:mr-factorization-compact-generator}
+Let $U\mapsto\mathsf C(U)$ be the stable presentable enhancement of an
+open-sector factorization category on
+$\Ran^{\mathrm{oc}}(X,D,\tau)$.  Its corestriction functors are exact,
+colimit preserving, and compact preserving.  A \emph{factorization
+compact generator} is a
+homotopy-coherent cocartesian section
+$b=(b_U,\beta_f,\beta_{U,V})$ such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $b_U$ is a compact generator of $\mathsf C(U)$ for every
+factorization chart $U$;
+\item every structure map $f\colon U\to V$ carries a specified
+equivalence
+\[
+ \beta_f\colon f_!b_U\xrightarrow{\ \sim\ }b_V;
+\]
+the maps $\beta_f$ satisfy the identity and composition laws
+$\beta_{g\circ f}\simeq
+\beta_g\circ g_!(\beta_f)$ together with their higher coherences;
+\item every disjoint pair carries a specified equivalence
+$\beta_{U,V}\colon
+b_{U\sqcup V}\xrightarrow{\sim}b_U\boxtimes b_V$ under the factorization
+equivalence
+$\mathsf C(U\sqcup V)\simeq\mathsf C(U)\otimes\mathsf C(V)$;
+the maps $\beta_{U,V}$ satisfy the unital, symmetric, and associative
+factorization coherences and commute with the maps $\beta_f$;
+\item the resulting K\"unneth map
+\[
+ \RHom_{\mathsf C(U)}(b_U,b_U)\otimes
+ \RHom_{\mathsf C(V)}(b_V,b_V)
+ \xrightarrow{\ \sim\ }
+ \RHom_{\mathsf C(U\sqcup V)}(b_{U\sqcup V},b_{U\sqcup V})
+\]
+is an equivalence.
+\end{enumerate}
+Set
+\[
+ A_b(U):=\RHom_{\mathsf C(U)}(b_U,b_U).
+\]
+The corestriction maps and the K\"unneth equivalences make $A_b$ a
+factorization $E_1$-algebra.  The compact-opposite level-$0$ category
+is
+\[
+ \cC^\op(U):=\bigl(\mathsf C(U)^\omega\bigr)^\op .
+\]
+\end{definition}
+
+\begin{definition}[Primitive open chart datum;
+\ClaimStatusDefinitional]
+\label{def:mr-open-datum}
+\index{open chart datum|textbf}
+A \emph{primitive open chart datum} on a tangential log curve is a
+tuple
+\[
+ \mathfrak D_{\mathrm{op}}
+ =
+ (X,D,\tau;\mathsf C,b,\varepsilon_b),
+\]
+with the following entries.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $(X,D,\tau)$ is a smooth projective curve over a
+characteristic-zero field, equipped with a reduced divisor and
+tangential structure.
+\item $\mathsf C$ is a stable presentable open-sector factorization
+category on $\Ran^{\mathrm{oc}}(X,D,\tau)$.
+\item $b=(b_U,\beta_f,\beta_{U,V})$ is a factorization compact
+generator in the sense of
+Definition~\ref{def:mr-factorization-compact-generator}.
+\item The associated factorization $E_1$-algebra is
+\[
+ A_b(U):=\RHom_{\mathsf C(U)}(b_U,b_U).
+\]
+\item The vacuum character is a morphism of unital factorization
+$E_1$-algebras
+\[
+ \varepsilon_b\colon A_b\longrightarrow\mathbf1_{\fact}.
+\]
+Its chart maps $\varepsilon_{b,U}\colon A_b(U)\to k$ commute with
+corestriction and the factorization K\"unneth equivalences.
+\end{enumerate}
+The category of primitive open chart data is denoted
 $\mathsf{OpenDatum}(X,D,\tau)$.
 \end{definition}
 
-The seven slots are the primitive data; everything else in the open
-quadrant is constructed from them. Slots~(4) and~(5) carry the
-geometry and the chart; slot~(6) carries the chart-level algebra;
-slot~(7) is the closed-sector cochain object; slot~(8) is the
-universal MC element witnessing the chiral structure on the curve;
-slot~(9) is the modular trace witnessing the family-level theorems on
-$\Mbar_{g,n}$.
+\begin{definition}[Objects constructed from a pointed chart;
+\ClaimStatusDefinitional]
+\label{def:mr-constructed-outputs}
+The primitive datum determines the augmentation ideal
+\[
+ \bar A_b:=\fib(\varepsilon_b),
+\]
+the full bar coalgebra
+\[
+ B_{\varepsilon_b}(A_b)
+ =T^c(s^{-1}\bar A_b),
+\]
+and the canonical twisting morphism
+\[
+ \theta_b\colon B_{\varepsilon_b}(A_b)\longrightarrow A_b.
+\]
+Its image in
+$\mathrm{Conv}(B_{\varepsilon_b}(A_b),A_b)$ is the
+Maurer--Cartan element $\Theta_b$.  It also determines the
+compact-opposite category
+\[
+ \cC^\op=(\mathsf C^\omega)^\op.
+\]
+The center, operator, and modular objects are formed by the typed
+constructions below.
+\end{definition}
+
+\begin{remark}[Geometric and chart presentations;
+\ClaimStatusProvedHere]
+\label{rem:mr-primitive-chart-circularity}
+\index{primitive datum!chart circularity}
+The mixed-Ran cosheaf $\mathsf C$ carries the geometric descent datum.
+Factorization Morita transports this datum to
+$\mathrm{RMod}_{A_b}^{\fact}$ and identifies the compact opposite with
+$\mathrm{Perf}(A_b)^\op$.  Thus the geometric and chart presentations
+are equivalent under $H_0$.
+\end{remark}
 
 \begin{remark}[Type signature of the datum]
 \label{rem:mr-type-signature-datum}
-The datum lives in the type
-$(\mathrm{Open},\,\mathrm{Cat}\&\mathrm{Chain},\,\text{level }0\text{ to }5,\,
-H_0\text{--}H_5)$, where $H_0,\ldots,H_5$ are the hypothesis packages
-of the six reconstruction theorems below. Quadrant Open: the curve
-$X$ is the geometry. Presentation Cat$\&$Chain: $\cC^\op$ is a
-$(\infty,1)$-category with a chain-level Hochschild presentation.
+The primitive datum has type
+$(\mathrm{Open},\mathrm{Cat},\text{levels }0\text{--}1,H_0)$.
+The augmentation supplies the level-$2$ bar construction.  The center,
+operator, and modular packages extend the datum to levels $3$, $4$,
+and $5$, respectively.
 \end{remark}
 
+\begin{definition}[Dependency, vacuum, level, and quadrant discipline;
+\ClaimStatusDefinitional]
+\label{def:mr-dependency-vacuum-level-quadrant-discipline}
+\index{dependency graph!typed arrows}
+\index{chosen vacuum!Morita chart}
+\index{level alphabet!Open quadrant}
+\index{quadrant grid!Open and CY}
+In this chapter a \emph{dependency arrow} records a proved implication
+of a named theorem, proposition, or construction under its displayed
+hypothesis package.  A comparison problem carries its mathematical status
+on the same line.  Every use of a comparison theorem names its
+hypotheses.  The adjective ``universal'' records a displayed universal
+property.  The adjective ``canonical'' records uniqueness through a
+contractible space of choices; a chosen object is called
+``specified''.
+
+The chosen vacuum datum is the pair $(\mathsf C,b)$ over the
+tangential log curve $(X,D,\tau)$, where $b$ is a factorization
+compact generator.  Level~0 is
+$\cC^\op=(\mathsf C^\omega)^\op$; level~1 is
+$A_b=\RHom_{\mathsf C}(b,b)$.  Theorem~\ref{thm:mr-morita} gives
+\[
+ \mathsf C\simeq\mathrm{RMod}_{A_b}^{\fact},
+ \qquad
+ \cC^\op\simeq\mathrm{Perf}(A_b)^\op .
+\]
+The category $\cC^\op$ and the algebra $A_b$ thus occupy the
+categorical and algebraic presentations of the same pointed Morita
+chart.  Two factorization compact generators give Morita-equivalent
+endomorphism algebras by
+Theorem~\ref{thm:morita-invariance-HH}.
+
+The level alphabet is fixed once for the Open quadrant:
+level~0 is the factorization dg-category, level~1 the chart algebra,
+level~2 the ordered/symmetric bar coalgebra, level~3 the derived
+chiral centre, level~4 the line and brane operator categories, and
+level~5 the modular trace together with scalar shadows.  This alphabet
+belongs to the Open quadrant.  The CY quadrant carries its own typed
+alphabet.  The quadrant grid is
+$(\mathrm{Open}\cup\mathrm{CY})\times(\mathrm{Cat}\cup
+\mathrm{Chain})$.  Each Open--CY comparison map names the vertical
+equivalence theorem, its hypothesis package, and the structures it
+preserves; a frontier map carries the status
+\ClaimStatusConjectured.
+\end{definition}
+
 %===========================================================
-\section{The five-level open Beilinson tower}
+\section{The six-node open Beilinson reconstruction fork}
 \label{sec:mr-tower}
 %===========================================================
 
-The seven primitive data organize into a tower of forgetful functors
-between five mathematical objects, with reconstruction theorems
-returning each step.
+The primitive datum produces two reconstruction equivalences and
+three further constructions.  A modular enhancement enters through
+genus-zero restriction and admits a separate scalar projection.
 
-\begin{definition}[Open Beilinson tower on $(X,D,\tau)$;
-\ClaimStatusProvedHere]
+\begin{definition}[Open Beilinson reconstruction fork on
+$(X,D,\tau)$; \ClaimStatusDefinitional]
 \label{def:mr-tower}
 \index{Beilinson tower!open quadrant}
-The \emph{open Beilinson tower} on $(X,D,\tau)$ is the diagram
+The \emph{open Beilinson reconstruction fork} on $(X,D,\tau)$ is the
+typed diagram
 \[
-\begin{aligned}
- \cC^\op
- &\quad\text{[level 0: factorization dg-category]}
-\\[-2pt]
- \quad\downarrow\;F_0\colon b\mapsto \End_\cC(b)
-\\[-2pt]
- A_b
- &\quad\text{[level 1: chart algebra]}
-\\[-2pt]
- \quad\downarrow\;F_1\colon A_b\mapsto T^c(s^{-1}\bar A_b)
-\\[-2pt]
- B(A_b)=T^c(s^{-1}\bar A_b)
- &\quad\text{[level 2: bar / twisting coalgebra]}
-\\[-2pt]
- \quad\downarrow\;F_2\colon \text{Hochschild cochains}
-\\[-2pt]
- \DerZch(A_b)\simeq \ChirHoch^\bullet
- &\quad\text{[level 3: universal closed sector;}
-\\[-2pt]
- &\quad\text{\phantom{[level 3: } physical bulk via OCA, Vol~II]}
-\\[-2pt]
- \quad\downarrow\;F_3\colon \text{module / bimodule formation}
-\\[-2pt]
- \mathsf{Line}(A_b),\;\mathsf{Brane}(A_b)
- &\quad\text{[level 4: line / brane operators]}
-\\[-2pt]
- \quad\downarrow\;F_4\colon \text{modular trace}+\text{clutching}
-\\[-2pt]
- (\kappa(A_b),\,Z(A_b),\,F_g(A_b))
- &\quad\text{[level 5: scalar shadow]}
-\end{aligned}
+\begin{tikzcd}[column sep=3.2em,row sep=2.3em]
+&& B_{\varepsilon_b}(A_b)
+   \arrow[dl,bend right=13,"\Omegach_X"']
+\\
+(\mathsf C,b)
+   \arrow[r,bend left=13,"F_0"]
+& (A_b,\varepsilon_b)
+   \arrow[l,bend left=13,"\mathrm{Morita}"]
+   \arrow[ur,bend left=13,"\Bbarch_X"]
+   \arrow[d,"\mathfrak Z_b"]
+   \arrow[dr,"\mathfrak O_b"]
+\\
+& Z_{\ch}^{\mathrm{chart}}(A_b)
+& \mathfrak O_b
+\\
+&& \mathfrak F
+   \arrow[u,"\mathrm{res}_0+\rho"']
+   \arrow[r,"\pi_{\mathrm{scal}}"]
+& \bigl(\mathfrak O^K_{g,n},
+          \operatorname{obs}^{\mathrm{Hdg}}_{g,n},
+          F_{g,n}(-;\alpha)\bigr).
+\end{tikzcd}
 \]
-The forgetful functor $F_0$ assigns the endomorphism algebra at the
-chosen vacuum; $F_1$ is the bar functor with desuspension and
-deconcatenation; $F_2$ is the formation of chiral Hochschild
-cochains; $F_3$ produces the categories of modules over $A_b$ and of
-bimodules over $\DerZch(A_b)$; $F_4$ takes the modular trace on
-$\Mbar_{g,n}$ together with the clutching system at the boundary
-divisors.
+Here the six levels are: the factorization category at level~$0$; its
+pointed Morita chart at level~$1$; the full bar coalgebra at level~$2$;
+the chart cochain center at level~$3$; the operator package
+$\mathfrak O_b$ at level~$4$; and the category-valued modular functor
+$\mathfrak F$ together with its scalar projection at level~$5$.
+The package $\mathfrak O_b$ comprises the intrinsic endofunctor line
+category, the pointed diagonal-bimodule datum, and the
+quadratic--Verdier label category introduced in
+Definition~\ref{def:mr-pointed-operator-data}.  The horizontal and
+upper arrows become equivalences under $H_0$ and $H_1$,
+respectively.  The arrows $\mathfrak Z_b$ and $\mathfrak O_b$ are
+functorial constructions.  The lower arrows are genus-zero restriction followed
+by a specified realization $\rho$, and scalar projection.
 \end{definition}
 
-\begin{remark}[Five objects, never conflated]
+\begin{remark}[Five Koszul objects and their typed morphisms]
 \label{rem:mr-five-objects}
-\index{five-object firewall}
-The tower distinguishes five distinct objects which the
-master-concordance type discipline forbids ever to identify
-(Convention~\ref{conv:master-five-object-firewall}):
+\index{five Koszul objects}
+The Koszul construction distinguishes five objects
+(the type convention of Convention~\ref{conv:master-five-object-firewall} and
+Theorem~\ref{thm:typed-verdier-koszul-firewall}):
 \[
- A_b,\quad B(A_b),\quad A_b^{i}=H^\bullet B(A_b),
- \quad A_b^{!},\quad \DerZch(A_b).
+ A_b,\quad B(A_b),\quad A_b^{i},
+\quad K_X(A_b),\quad \DerZch(A_b).
 \]
-The arrow $\Omegach B(A_b)\xrightarrow{\sim} A_b$ is bar--cobar
-inversion. The arrow $\mathbb{D}_{\Ran} B(A_b)\rightsquigarrow
-A_b^{!,\co}_\infty$ is Verdier--Koszul duality. The arrow
+Here $A_b^i$ is the quadratic coalgebra of the chosen presentation.
+Theorem~B studies the comparison defined by its twisting morphism,
+$q_{A_b}\colon A_b^i\to B(A_b)$; the package
+$H_{\mathrm{CL}}(A_b,A_b^i,\tau_i)$ makes $q_{A_b}$ an equivalence.
+Theorem~A
+supplies the completion-aware counit
+$\epsilon_{A_b}\colon\Omegach B(A_b)\xrightarrow{\sim} A_b$
+under $H_1$.  Verdier--Koszul duality forms the algebra
+$K_X(A_b):=\mathbb{D}_{\Ran} B(A_b)$; a pair map
+$\nu_{A_b}\colon K_X(A_b)\to A_b^!$ requires the quadratic comparison
+and local finite duality. The arrow
 $A_b\mapsto C^\bullet_{\ch}(A_b,A_b)$ is the Hochschild-centre
-construction. None of these arrows is replaceable by another.
+construction.  Each morphism retains the displayed source, target,
+ambient category, and hypothesis package.
 \end{remark}
 
 %===========================================================
-\section{Reconstruction theorems with named hypothesis packages}
+\section{Reconstruction and formation theorems with named hypothesis
+packages}
 \label{sec:mr-reconstruction}
 %===========================================================
 
-The open Beilinson tower is anchored by five reconstruction theorems.
-Each names the hypothesis package under which the corresponding
-forgetful step has a left or two-sided inverse.
+The open Beilinson fork is governed by two reconstruction
+equivalences, three functorial constructions, and their comparison
+theorems.  Every statement displays its hypothesis package.
 
-\begin{theorem}[$F_0$-reconstruction: Morita;
+\begin{theorem}[$F_0$-reconstruction: factorization Morita;
 \ClaimStatusProvedHere]
 \label{thm:mr-morita}
 \index{reconstruction!Morita; level 0 to 1}
 \textup{[Type: Open, Cat, $0\leftrightarrow 1$, hypothesis package
 $H_0$.]}
-Let $\cC^\op$ be a factorization dg-category on $(X,D,\tau)$ and
-$b\in\cC^\op$ a compact generator. The functor
+Let $U\mapsto\mathsf C(U)$ be a stable presentable open-sector
+factorization category on $(X,D,\tau)$, and let $b=(b_U)$ be a
+factorization compact generator.  For every factorization chart $U$,
+put $A_b(U)=\RHom_{\mathsf C(U)}(b_U,b_U)$.  The Morita functors
 \[
- \cC^\op \longrightarrow A_b\text{-}\mathsf{mod}^\fact,
- \qquad
- c \longmapsto \mathrm{Hom}_\cC(b,c),
+ \Psi_U\colon\mathsf C(U)\longrightarrow
+ \mathrm{RMod}_{A_b(U)},
+ \qquad c\longmapsto\RHom_{\mathsf C(U)}(b_U,c),
 \]
-is an equivalence of factorization $(\infty,1)$-categories. Conversely,
-$A_b$-modules recover $\cC^\op$ once $b$ is fixed.
+assemble into equivalences of factorization categories
+\[
+ \mathsf C\xrightarrow{\ \sim\ }
+ \mathrm{RMod}^{\fact}_{A_b},
+ \qquad
+ \cC^\op=(\mathsf C^\omega)^\op
+ \xrightarrow{\ \sim\ }
+ \mathrm{Perf}(A_b)^\op .
+\]
 
-\textbf{Hypothesis package $H_0$.} $\cC^\op$ is small, idempotent
-complete, and dualizable in the Lurie symmetric-monoidal $\infty$-cat
-of factorization presentable stable categories on $(X,D,\tau)$;
-$b$ is compact and Morita-generating in the sense of
-Francis--Gaitsgory.
+\textbf{Hypothesis package $H_0$.} The structure functors of
+$\mathsf C$ are exact and colimit preserving; they preserve compact
+objects; $b$ satisfies clauses \textup{(i)--(iv)} of
+Definition~\ref{def:mr-factorization-compact-generator}; and the
+factorization transition maps are enriched over $\Ch(k)$.
 \end{theorem}
 
 \begin{proof}
-Lurie's Morita theorem in the factorization context
-(Francis--Gaitsgory, \cite[\S4.2]{Francis2012}; promoted to
-$(\infty,2)$ by \cite[Chapter~IV.5]{GR17}). Compact generation, idempotent completion, and
-dualizability are exactly the hypotheses needed for reconstruction.
+The presentable part of
+Theorem~\ref{prop:morita-equivalence-compact-gen} gives
+$\Psi_U\colon\mathsf C(U)\simeq\mathrm{RMod}_{A_b(U)}$ on every
+factorization chart.  Let $f\colon U\to V$ be a structure map.  The
+enriched functor $f_!$ and the chosen equivalence
+$\beta_f\colon f_!b_U\simeq b_V$ induce the algebra morphism
+\[
+ f_b\colon A_b(U)\longrightarrow A_b(V)
+\]
+and, naturally in $c\in\mathsf C(U)$, the comparison
+\[
+ \alpha_f(c)\colon
+ \RHom_{\mathsf C(U)}(b_U,c)
+ \otimes^{\mathbf L}_{A_b(U)}A_b(V)
+ \longrightarrow
+ \RHom_{\mathsf C(V)}(b_V,f_!c).
+\]
+To\"en's derived Eilenberg--Watts theorem
+\cite[Theorem~7.2 and Corollary~7.6]{Toen07} represents the composite
+$\Psi_Vf_!\Psi_U^{-1}$ by the bimodule
+\[
+ \Psi_V(f_!b_U)
+ \xrightarrow[\beta_f]{\ \sim\ }
+ \Psi_V(b_V)=A_b(V),
+\]
+whose left $A_b(U)$-action is $f_b$.  Hence $\alpha_f$ is an
+equivalence.  Equivalently, both sides preserve colimits in $c$, and
+$\alpha_f(b_U)$ is the displayed equivalence on the compact generator.
+The coherences of the maps $\beta_f$ identify the composites
+$\alpha_{g\circ f}$ and $\alpha_g\alpha_f$.  Clause~\textup{(iv)} and
+the maps $\beta_{U,V}$ identify the disjoint-union comparisons with
+the factorization product of $A_b$.  The functors $\Psi_U$ therefore
+assemble into an equivalence of factorization cosheaves.  Compact
+preservation gives
+$\mathsf C^\omega\simeq\mathrm{Perf}(A_b)$; passage to opposites gives
+the level-$0$ equivalence.
 \end{proof}
 
-\begin{theorem}[$F_1$-reconstruction: chiral Koszul reflection
-$K^2\simeq\mathrm{id}$, Theorem~A;
+\begin{theorem}[$F_1$-reconstruction: associative bar--cobar
+equivalence, Theorem~A;
 \ClaimStatusConditional]
 \label{thm:mr-A}
 \index{reconstruction!Theorem A; level 1 to 2}
-\textup{[Type: Open, Chain, $1\leftrightarrow 2$, hypothesis package
-$H_1=$ (H1)+(H2)+(H3) of \S\ref{ch:theorem-A-infinity-2}.]}
+\textup{[Type: Open, Chain, $1\leftrightarrow 2$, pro-nilpotent
+Francis--Gaitsgory Ran ambient; hypothesis package
+$H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}$ of
+\S\ref{ch:theorem-A-infinity-2}.]}
 The bar--cobar adjunction
 \[
- \Omegach_X\;:\;\mathsf{CoAlg}^{\fact,\conil,\co}_X
+ \Omegach_X\;:\;
+ \mathsf{CoAlg}^{\fact,\mathrm{dp}}_{\operatorname{Bar}(\mathsf{Ass}),X}
  \rightleftarrows
- \mathsf{Alg}^{\fact,\aug,\comp}_X\;:\;\Bbarch_X
+ \mathsf{Alg}^{\fact,\aug}_{\mathsf{Ass},X}\;:\;\Bbarch_X
 \]
-restricts on the Koszul locus $\Kosz(X)$ to a chain-level
-quasi-isomorphism
-$\Omegach_X\Bbarch_X(A)\xrightarrow{\sim} A$. This is
-Theorem~\ref{thm:koszul-reflection} in the form $K^2\simeq\mathrm{id}$
-on $\Kosz(X)$.
-
+is an equivalence.  Its counit and unit are
+\[
+ \Omegach_X\Bbarch_X(A)\xrightarrow{\ \sim\ }A,
+ \qquad
+ C\xrightarrow{\ \sim\ }\Bbarch_X\Omegach_X(C).
+\]
 \textbf{Hypothesis package $H_1$.}
-\textup{(H1)} $A$ is augmented;
-\textup{(H2)} $A$ is augmentation-ideal complete (weakly curved in the
-Positselski sense);
-\textup{(H3)} the conformal-weight bar pieces
-$(\Bbarch_X(A))_w$ are finite-dimensional for each $w$.
-On the standard landscape $\mathsf G\cup\mathsf L\cup\mathsf C\cup
-\mathsf M\cup\mathsf B$, hypothesis (H3) holds with the class-$\mathsf
-M$ row taken in its weight-completed pro-conilpotent ambient
-$\widehat A=\varprojlim_N A/A_{\geq N}$.
+The reduced associative operad lies in the pro-nilpotent chiral Ran
+ambient of Francis--Gaitsgory.  $H_{\mathrm{fact}}$ supplies the
+associative factorization subcategories and proves closure of enhanced
+bar and cobar under disjoint-locus factorization, collision descent,
+units, and completion.  $H_{\mathrm{conv}}$ realizes the completed
+chain models through exhaustive complete filtrations.
 \end{theorem}
 
 \begin{proof}
-Theorem~\ref{thm:koszul-reflection}, with proof body
-\S\ref{ch:theorem-A-infinity-2}; Vallette--Hinich--Positselski
-specialised to the chiral ambient by
-\cite{BD04,Val16,Hinich2003,Positselski2018}.
+Clauses~\ref{KR-i} and~\ref{KR-ii} of
+Theorem~\ref{thm:koszul-reflection} give the enhanced equivalence in
+the Ran ambient.  Clause~\ref{KR-iii} restricts it under
+$H_{\mathrm{fact}}$.
 \end{proof}
 
-\begin{theorem}[$F_2$-reconstruction via Theorem~H: Hochschild
-concentration in $\{0,1,2\}$;
+\begin{theorem}[Quadratic Koszul recognition, Theorem~B;
 \ClaimStatusConditional]
+\label{thm:mr-B}
+\index{recognition!Theorem B; quadratic level 1 to 2}
+\textup{[Type: Open, Chain, $1\leftrightarrow2$, chosen quadratic
+presentation, hypothesis package
+$H_{\mathrm{CL}}(A,A^i,\tau_i)$.]}
+Let $A=T(V)/(R)$ be a complete augmented quadratically presented
+chiral algebra, let
+\[
+ A^i=C(s^{-1}V,s^{-2}R),
+ \qquad
+ q_A\colon A^i\longrightarrow B_X(A)
+\]
+be the quadratic coalgebra and its canonical comparison with the full
+bar coalgebra.  Under $H_{\mathrm{CL}}(A,A^i,\tau_i)$, the following conditions
+are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $q_A$ is a quasi-isomorphism of complete chiral coalgebras;
+\item the adjoint map $\Omega_X(A^i)\to A$ is a quasi-isomorphism;
+\item the left and right twisted tensor products for the quadratic
+twisting morphism $\tau_i\colon A^i\to A$ are acyclic.
+\end{enumerate}
+Thus Theorem~B recognizes the quadratic Koszul locus of the chosen
+presentation.
+\end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{thm:bar-cobar-inversion-qi}, the chiral transport
+of the Loday--Vallette quadratic twisting criterion
+\cite[Theorems~2.3.2 and~3.4.6]{LV12}.  The package
+$H_{\mathrm{CL}}(A,A^i,\tau_i)$ supplies factorization descent,
+finite-window comparison, and strong convergence.
+\end{proof}
+
+\begin{proposition}[Fixed-coalgebra second-kind comparison;
+\ClaimStatusConditional]
+\label{prop:mr-fixed-C-second-kind}
+\index{Positselski!fixed-coalgebra lane}
+\textup{[Type: Open, Chain, level-$2$ module categories, fixed chiral
+CDG-coalgebra $C$, hypothesis package
+$\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)$.]}
+Let $C$ be a fixed complete chiral CDG-coalgebra satisfying
+$\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)$.  Then the
+co--contra correspondence is an equivalence
+\[
+ D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+ \xrightarrow{\ \sim\ }
+ D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact}).
+\]
+An algebra comparison from a twisting morphism
+$\tau\colon C\to A$ uses the independent acyclic-twisting package
+$\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)$.
+Theorem~A carries the universal bar--cobar unit and counit; Theorem~B
+carries the quadratic comparison $q_A$; this proposition carries the
+fixed-coalgebra second-kind equivalence.
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~\ref{thm:off-koszul-ran-inversion} to the fixed
+coalgebra $C$.  The twisting-morphism comparison is governed by the
+displayed acyclic-twisting package.
+\end{proof}
+
+\begin{theorem}[Level-$3$ formation and family-indexed support,
+Theorem~H; \ClaimStatusConditional]
 \label{thm:mr-H}
-\index{reconstruction!Theorem H; level 1 to 3}
-\textup{[Type: Open, Chain, $1\rightarrow 3$, hypothesis package
-$H_3=H_1\cup H_H$, where $H_H$ is the PBW chiral Koszul,
-finite-type/perfectness, genericity, $E_\infty$-completion,
-strict Mittag--Leffler, and PBW/Arnold-contraction package of
-Theorem~\textup{\ref{thm:main-koszul-hoch}}.]}
-On the Koszul / PBW locus, the chiral Hochschild cochain object of
-the chart algebra is concentrated in degrees $\{0,1,2\}$:
+\index{formation!Theorem H; level 1 to 3}
+\textup{[Type: Open, Chain, $1\rightarrow 3$, hypothesis packages
+$H_Z$ and $H_H(A;S)$.]}
+The level-$3$ operation forms the chart cochain center
 \[
- \ChirHoch^n(A_b) = 0
- \quad\text{for every } n\notin\{0,1,2\},
+ Z_{\ch}^{\mathrm{chart}}(A)
+ =C^\bullet_{\ch}(A,A).
 \]
-and on the affine Kac--Moody row $\ChirHoch^1(V_k(\mathfrak g))\cong
-\mathfrak g$ at non-critical level. Hence the centre lane reads at
-most three nontrivial groups.
+Fix a finite set $S\subset\mathbb Z$.  The family support package
+$H_H(A;S)$ consists of a complete filtered cochain model $Q_A$, a
+quasi-isomorphism $Q_A\xrightarrow{\sim}C^\bullet_{\ch}(A,A)$, a
+cochain complex $K_{A,S}$ supported in $S$, and maps
+\[
+ K_{A,S}\mathop{\xrightarrow{\ \iota\ }}
+ Q_A\mathop{\xrightarrow{\ p\ }}K_{A,S},
+ \qquad p\iota=\mathrm{id},
+\]
+together with a filtration-continuous homotopy $h$ satisfying
+\[
+ dh+hd=\mathrm{id}_{Q_A}-\iota p.
+\]
+The package also includes convergence of the filtration and, when
+$Q_A$ is first constructed on ordered configurations, a
+quasi-isomorphism from its homotopy descent to the symmetric chiral
+complex.  Under $H_H(A;S)$ the inclusion $\iota$ induces
+\[
+ H^n(K_{A,S})\xrightarrow{\ \sim\ }
+ \ChirHoch^n(A)
+ \qquad(n\in\mathbb Z),
+\]
+so the cohomology has support $S$.
 
-\textbf{Hypothesis package $H_3$.} Hypothesis package $H_1$ together
-with PBW chiral Koszulness in the Shelton--Yuzvinsky/Arnold sense, a
-PBW basis on each finite conformal-weight piece, perfectness of the
-diagonal chiral Hochschild complexes for $A_b$ and $A_b^!$,
-genericity away from critical affine and non-generic simple-quotient
-loci, the $E_\infty$ chiral completion hypothesis, and strict
-Mittag--Leffler passage through finite weight windows. Class
-$\mathsf M$ requires the weight-completed / pro-conilpotent ambient or
-the Felder BRST chain model. Outside this package the asserted object
-is the Hochschild Koszul-defect complex
-$\mathrm{KD}_{\mathrm H}^{\bullet}(A_b)$, and concentration follows
-only after its relevant high-degree cohomology is proved zero.
+The support is an invariant of the algebra and coefficient theory.
+For bounded vertex-algebra cohomology, Bakalov--De Sole--Kac compute
+the rank-one even free superboson as
+\[
+ \dim H^n=(2,1,0,0,\ldots)
+\]
+and the Virasoro vertex algebra as one-dimensional in degrees
+$0,2,3$ and supported on those degrees
+\cite[Theorems~7.4 and~7.2]{BDSK21}.  Transport of these benchmarks to
+$C^\bullet_{\ch}(A,A)$ uses a specified comparison quasi-isomorphism
+between the two cochain theories.
 \end{theorem}
 
 \begin{proof}
-Theorem~\ref{thm:hochschild-concentration-E1} on the ordered $E_1$ side
-before averaging, established on the first page of the
-collision-depth spectral sequence on
-$\overline{C}^{\mathrm{ord}}_{p+2}(X)$ via the PBW/Arnold
-Shelton--Yuzvinsky contraction. Symmetric concentration follows, under
-the $E_\infty$ chiral completion and strict Mittag--Leffler
-hypotheses, from the averaging step
-$\Av\colon \mathfrak g^{E_1}_A \to \mathfrak g^{\mathrm{mod}}_A$
-which preserves the $\{0,1,2\}$ envelope.
+The displayed homotopy makes $(\iota,p,h)$ a strong deformation
+retract.  Hence $\iota$ is a quasi-isomorphism.  Filtered convergence
+and the ordered-to-symmetric comparison transport this
+quasi-isomorphism to $C^\bullet_{\ch}(A,A)$.  The two benchmark vectors
+are the cited computations of Bakalov--De Sole--Kac.
 \end{proof}
 
-\begin{theorem}[$F_3$-reconstruction: Drinfeld-double recovery;
+\begin{definition}[Intrinsic lines, chart center, and Koszul-dual
+labels; \ClaimStatusDefinitional]
+\label{def:mr-pointed-operator-data}
+Let $(\mathsf C,b)$ be a pointed factorization category and put
+$A=A_b$.  The intrinsic line category is the monoidal category
+\[
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C)
+ :=\operatorname{Fun}^{L,\fact}(\mathsf C,\mathsf C),
+\]
+with tensor product given by composition and unit
+$\operatorname{Id}_{\mathsf C}$.  Its intrinsic cochain center is
+\[
+ Z_{\ch}^{\mathrm{int}}(\mathsf C)
+ :=\RHom^{\ch}_{\mathsf{Line}^{\mathrm{int}}(\mathsf C)}
+ (\operatorname{Id}_{\mathsf C},\operatorname{Id}_{\mathsf C}).
+\]
+The chart cochain center and pointed brane datum are
+\[
+ Z_{\ch}^{\mathrm{chart}}(A):=C^\bullet_{\ch}(A,A),
+ \qquad
+ \mathsf{Brane}^{\mathrm{pt}}(A)
+ :=\bigl(\mathrm{RMod}^{\fact}_{A^e},\,{}_AA_A\bigr).
+\]
+Under the smooth-diagonal package
+$H_{\mathrm{sm}}=\{A\in(\mathrm{RMod}^{\fact}_{A^e})^\omega\}$, its
+compact part is
+\[
+ \mathsf{Brane}^{\mathrm{pt},\omega}(A)
+ :=\bigl(\mathrm{Perf}^{\fact}(A^e),\,{}_AA_A\bigr).
+\]
+We retain $\DerZch(A)$ as an abbreviation for
+$Z_{\ch}^{\mathrm{chart}}(A)$.  On the quadratic--Verdier locus the
+Koszul-dual label category is
+\[
+ \mathsf{Line}^{!}(A):=\mathrm{Perf}(A^!),
+\]
+the compact part of the line-operator category
+$\mathsf{Line}(A)=A^!\text{-}\mathsf{mod}$ used in the
+open--closed dictionary; every statement below consumes only this
+module-category reading.
+A Hopf, quasi-Hopf, or specified $E_2$ structure on $A^!$ supplies a
+monoidal structure on $\mathsf{Line}^{!}(A)$.  A
+\emph{line-realization datum} is a strong monoidal functor
+\[
+ \rho_A^!\colon
+ \mathsf{Line}^{!}(A)\longrightarrow
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C).
+\]
+The package $H_{\mathrm{line}}$ specifies the displayed tensor
+structure and promotes $\rho_A^!$ to an equivalence of finite tensor
+categories.
+\end{definition}
+
+\begin{proposition}[Factorization Eilenberg--Watts for intrinsic
+lines; \ClaimStatusProvedHere]
+\label{prop:mr-factorization-ew-lines}
+Under $H_0$, factorization Morita induces a monoidal equivalence
+\[
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C)
+ \simeq
+ \mathrm{RMod}^{\fact}_{A^e}.
+\]
+It carries $\operatorname{Id}_{\mathsf C}$ to the regular bimodule
+${}_AA_A$ and hence identifies
+\[
+ Z_{\ch}^{\mathrm{int}}(\mathsf C)
+ \simeq
+ \RHom^{\ch}_{\mathrm{RMod}^{\fact}_{A^e}}(A,A).
+\]
+\end{proposition}
+
+\begin{proof}
+Apply To\"en's derived Eilenberg--Watts theorem chartwise to the Morita
+equivalence of Theorem~\ref{thm:mr-morita}.  The comparison maps
+$\alpha_f$ in its proof assemble the chartwise bimodule kernels into a
+factorization bimodule.  Composition of endofunctors corresponds to
+relative tensor product of kernels, and the identity kernel is the
+diagonal bimodule $A$.
+\end{proof}
+
+\begin{proposition}[Chart--intrinsic center comparison;
 \ClaimStatusConditional]
+\label{prop:mr-pointed-brane-center}
+There is a natural comparison
+\[
+ \chi_b\colon
+ Z_{\ch}^{\mathrm{chart}}(A)
+ \longrightarrow
+ Z_{\ch}^{\mathrm{int}}(\mathsf C).
+\]
+It is an equivalence under the package $H_Z$: the normalized chiral
+bar diagonal is an h-projective $A^e$-resolution in the chosen
+factorization-module model; its arity--collision filtration is
+complete and exhaustive; and chiral internal Hom commutes with the
+resulting Ran totalization and factorization corestrictions.  Thus
+\[
+ Z_{\ch}^{\mathrm{chart}}(A)
+ \xrightarrow[H_Z]{\ \sim\ }
+ Z_{\ch}^{\mathrm{int}}(\mathsf C)
+ \simeq
+ \RHom^{\ch}_{\mathrm{RMod}^{\fact}_{A^e}}(A,A).
+\]
+\end{proposition}
+
+\begin{proof}
+Evaluate the chiral cochain model on the normalized chiral bar
+resolution of the diagonal.  The completeness and totalization
+clauses of $H_Z$ identify this complex with the derived internal Hom
+from $A$ to itself in factorization $A^e$-modules.  Proposition~
+\ref{prop:mr-factorization-ew-lines} identifies the latter with the
+intrinsic center.
+\end{proof}
+
+\begin{theorem}[Categorical Drinfeld-center formation from line data;
+\ClaimStatusProvedElsewhere]
 \label{thm:mr-drinfeld-double}
-\index{reconstruction!Drinfeld double; level 4 to 3}
-\textup{[Type: Open, Cat, $4\rightarrow 3$, hypothesis package $H_4$.]}
-On the Koszul locus, the closed-sector centre is recovered from line
-and brane operators by Drinfeld-double formation: the bimonoidal
-category of bimodules over $\DerZch(A_b)$ is equivalent to a Drinfeld
-double of the line category over $A_b$,
+\index{formation!Drinfeld center; level 4}
+\textup{[Type: Open, Cat, level $4$, hypothesis package
+$H_4=$ finite tensor category.]}
+Let $\mathcal L$ be a finite tensor category.  Then
 \[
- \mathsf{Bimod}(\DerZch(A_b))
- \;\simeq\;
- \mathcal Z_{\mathrm{Dr}}(\mathsf{Line}(A_b))
+ \mathcal Z_{\mathrm{Dr}}(\mathcal L)
+ \simeq
+ \operatorname{Fun}_{\mathcal L-\mathcal L}(\mathcal L,\mathcal L)
 \]
-where $\mathcal Z_{\mathrm{Dr}}$ is the Drinfeld centre of a braided
-monoidal category.
-
-\textbf{Hypothesis package $H_4$.} $A_b$ admits a finite-type chart
-presentation; the line category $\mathsf{Line}(A_b)$ is rigid braided
-and admits compact generation; the elliptic global obstruction
-$\mathrm{obs}^{(1)}_{\mathrm{double}}\in
-H^2(\mathfrak{grt}^{\mathrm{ell}},\mathfrak{sp}(A_b)\otimes
-\mathfrak{sp}(A_b^!))$ vanishes, equivalently $r_{\max}(A_b)=2$ at
-genus~$1$. At genus zero the package reduces to rigid braiding only.
+as braided tensor categories.  For a finite-dimensional Hopf algebra
+$H$ this specializes to
+\[
+ \mathcal Z_{\mathrm{Dr}}(\operatorname{Rep}H)
+ \simeq \operatorname{Rep}D(H).
+\]
 \end{theorem}
 
 \begin{proof}
-The genus-zero statement is the Joyal--Street Drinfeld-centre theorem
-applied to the line category, with the chiral promotion of
-\cite[Chapter~7]{EGNO}. The genus-$1$ obstruction is recorded in
-Frontier~F5 and the elliptic associator package of Enriquez
-$\mathrm{GRT}^{\mathrm{ell}}_1(\mathbb Q)$. The conditional status
-reflects the open frontier at $g\geq 2$.
+This is \cite[Proposition~7.13.8 and \S7.14]{EGNO}.
 \end{proof}
 
-\begin{theorem}[$F_4$-reconstruction: modular reconstruction;
-\ClaimStatusConditional]
+\begin{conjecture}[Categorical chiral--Drinfeld center comparison;
+\ClaimStatusConjectured]
+\label{conj:mr-chiral-drinfeld-comparison}
+Suppose $A^!$ carries the structure in
+Definition~\ref{def:mr-pointed-operator-data}, and let
+$\mathcal Z_{\ch}^{\mathrm{cat}}(A)$ be a categorical chiral center
+equipped with
+\[
+ \operatorname{End}_{\mathcal Z_{\ch}^{\mathrm{cat}}(A)}
+ (\mathbf 1)\simeq\DerZch(A).
+\]
+The open--closed comparison problem asks for a braided equivalence
+\[
+ \mathcal Z_{\mathrm{Dr}}(\mathsf{Line}^{!}(A))
+ \xrightarrow{\ \sim\ }
+ \mathcal Z_{\ch}^{\mathrm{cat}}(A).
+\]
+\end{conjecture}
+
+\begin{theorem}[Genus-zero restriction of a full modular functor;
+\ClaimStatusProvedElsewhere]
 \label{thm:mr-modular}
 \index{reconstruction!modular; level 5 to 4}
-\textup{[Type: Open, Cat, $5\rightarrow 4$, hypothesis package
-$H_5$.]}
-The modular trace and clutching data on $\Mbar_{g,n}$ recover the
-line category from the scalar shadow:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item the boundary clutching maps at separating and non-separating
-divisors, together with $\Tr_\cC$ on each stratum, determine the
-line category up to Morita equivalence;
-\item the partition function
-$Z_g(A_b) = \int_{\Mbar_{g,n}} \kappa(A_b)\cdot \lambda_g$
-($\lambda_g$ the Hodge class) is the universal scalar shadow at
-uniform weight on the genus stratum.
-\end{enumerate}
-
-\textbf{Hypothesis package $H_5$.} Modular tensor data: rigidity,
-non-degenerate $S$-matrix, factorization at all boundary divisors of
-$\Mbar_{g,n}$, and consistency of the clutching system with the
-chiral fusion. Multi-weight refinement carries the cross-channel
-correction $\delta F_g^{\mathrm{cross}}$ at $g\geq 2$.
+\textup{[Type: Open, Cat, $5\rightarrow4$, hypothesis package
+$H_5=$ connected category-valued modular functor over a specified
+central extension of the surface operad.]}
+Let
+$\mathfrak F\colon\widetilde{\mathsf{Surf}}\to\mathsf{Rex}$ be a
+connected category-valued modular functor.  Its genus-zero
+restriction is a connected self-dual balanced braided algebra
+$\mathcal L_{\mathfrak F}$.  Genus-zero restriction induces an
+equivalence between the corresponding $2$-groupoids of modular
+functors and connected self-dual balanced braided algebras.
 \end{theorem}
 
 \begin{proof}
-Modular reconstruction in the chiral category is the
-Beilinson--Drinfeld factorization of \cite[\S 4.5]{BD04} together with
-Wakimoto--Tsuchiya--Ueno clutching at the boundary divisors. The
-uniform-weight scalar lane is Theorem~\ref{thm:genus-universality}
-\(\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g\). Multi-weight extension with
-$\delta F_g^{\mathrm{cross}}$ is recorded in
-Theorem~\ref{thm:multi-weight-genus-expansion}.
+This is the genus-zero restriction theorem of
+Brochier--Woike~\cite[Theorem~6.13]{BrochierWoike2022}.
+\end{proof}
+
+\begin{definition}[Virtual Hodge object, Hodge image, and graph insertion;
+\ClaimStatusDefinitional]
+\label{def:mr-hodge-scalar-projection}
+Given~$H_D^K(A,g)$, the scalar virtual object and its Hodge image are
+\[
+ \mathfrak O^K_{g,n}(A)
+ =\kappa(A)\lambda_{-1}(\mathbb E_g)
+ \in K^0(\Mbar_{g,n}),
+ \qquad
+ \operatorname{obs}^{\mathrm{Hdg}}_{g,n}(A)
+ =\operatorname{ch}_g\!\left(\mathfrak O^K_{g,n}(A)\right)
+ =(-1)^g\kappa(A)\lambda_g.
+\]
+For an insertion
+$\alpha\in H^{2(2g-3+n)}(\Mbar_{g,n})$, the scalar-diagonal graph
+functional in~$H_D^{\mathrm{graph}}$ is
+\[
+ F^{\mathrm{sc}}_{g,n}(A;\alpha)
+ :=
+ \int_{\Mbar_{g,n}}\kappa(A)\lambda_g\smile\alpha.
+\]
+The full graph functional is
+$F_{g,n}=F^{\mathrm{sc}}_{g,n}+\delta F^{\mathrm{cross}}_{g,n}$.
+The deformation class
+$\operatorname{Obs}^{\mathrm{def}}_g(A)\in H^2(\Def_g(A))$, $g\geq2$,
+enters
+this branch through~$H_D^{\mathrm{tr}}$; the pointed genus-one
+normalization is
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(A)
+=\kappa(A)\lambda_1$ under~$H_D^1$.
+\end{definition}
+
+\begin{proposition}[Multiplicity in a scalar fibre;
+\ClaimStatusProvedHere]
+\label{prop:mr-scalar-fibre-multiplicity}
+The semion and anti-semion modular categories have the same
+$\mathbb Z/2$ fusion rules, the same nondegenerate $S$-matrix, the
+same quantum dimensions, and the same closed Verlinde dimensions
+$2^g$.  Their twists are
+\[
+ T_+=\operatorname{diag}(1,i),
+ \qquad
+ T_-=\operatorname{diag}(1,-i).
+\]
+Consequently the fibre of the closed-scalar projection contains at
+least two balanced braided equivalence classes.  Category-valued
+sewing retains the twist and recovers the genus-zero datum through
+Theorem~\ref{thm:mr-modular}.
+\end{proposition}
+
+\begin{proof}
+Both categories have simple objects $\mathbf1,s$ with
+$s\otimes s\simeq\mathbf1$ and quantum dimensions $(1,1)$.  Their
+$S$-matrix is the rank-two Fourier matrix.  The Verlinde formula
+therefore gives $2^g$ on a closed genus-$g$ surface in both cases.
+The twist of the nontrivial simple object is respectively $i$ and
+$-i$; a balanced braided equivalence preserves this eigenvalue.
 \end{proof}
 
 %===========================================================
-\section{The Master Reconstruction Theorem}
+\section{The Master Reconstruction and Formation Theorem}
 \label{sec:mr-master}
 %===========================================================
 
-The five reconstruction theorems compose into a single Bourbaki-level
-structural statement: every level of the open Beilinson tower is
-accessible from any other through a finite chain of named adjunctions
-with explicit hypothesis packages.
+The open quadrant contains two reconstruction equivalences and three
+further constructions.  Their common source is the pointed Morita chart;
+the following theorem records their joint type signature.
 
-\begin{theorem}[Master Reconstruction Theorem on the open quadrant]
+\begin{theorem}[Master Reconstruction and Formation Theorem on the
+open quadrant]
 \label{thm:mr-master}
 \ClaimStatusConditional
 \index{Master Reconstruction Theorem!open quadrant}
-\index{open Beilinson tower!five-level reconstruction}
+\index{open Beilinson tower!six-node reconstruction fork}
 \textup{[Type: Open, Cat$\,\&$Chain, $0\rightarrow 5$, hypothesis
-package $H_0\cup H_1\cup H_3\cup H_4\cup H_5$.]}
+package
+$H_0\cup H_1\cup H_Z\cup H_{\mathrm{CL}}\cup
+H_{\mathrm{VD}}\cup H_{\mathrm{line}}\cup H_5\cup
+H_{\mathrm{real}}\cup H_D$.]}
 Let $(X,D,\tau)$ be a tangential log curve over $k$,
-$\cC^\op$ a factorization dg-category with vacuum chart $b$, and
-$A_b=\End_\cC(b)$. Under the hypothesis package
-$H_0\cup H_1\cup H_3\cup H_4\cup H_5$ the open Beilinson tower
-\[
- \cC^\op \rightleftarrows A_b
- \rightleftarrows B(A_b)
- \xrightarrow{F_2} \DerZch(A_b)
- \xrightarrow{F_3}\mathsf{Line}(A_b)
- \xrightarrow{F_4}\bigl(\kappa,Z,F_g\bigr)
-\]
-satisfies the following four properties:
-At genus zero on $\KSDual$ the Drinfeld-double and multi-weight
-residuals vanish from the statement. At higher genus the theorem has
-the conditional strength of the packages $H_4$ and $H_5$.
+$\mathsf C$ a stable presentable factorization category with
+factorization compact generator $b$, and
+$A_b=\RHom_{\mathsf C}(b,b)$.  Fix a factorization augmentation
+$\varepsilon_b\colon A_b\to\mathbf1$.  Let $\mathfrak F$ be a
+connected category-valued modular functor.  These data instantiate
+the reconstruction fork of Definition~\ref{def:mr-tower} as follows.
 \begin{enumerate}[label=\textup{(M\arabic*)}]
 \item \label{M1}
-\emph{Step-wise reconstruction.}
-$F_0$ has left inverse Morita reconstruction
-(Theorem~\ref{thm:mr-morita}); $F_1$ has two-sided inverse on the
-Koszul locus given by chiral Koszul reflection $K^2\simeq\mathrm{id}$
-(Theorem~\ref{thm:mr-A}); $F_2$ on the Koszul locus has image
-concentrated in $\{0,1,2\}$ (Theorem~\ref{thm:mr-H}); $F_3$ has left
-inverse Drinfeld-double recovery
-(Theorem~\ref{thm:mr-drinfeld-double}); $F_4$ has left inverse
-modular reconstruction (Theorem~\ref{thm:mr-modular}).
-\item \label{M2}
-\emph{Universal Maurer--Cartan witness.}
-The element $\Theta_\cC$ of the ordered convolution dGLA
-$\mathfrak g^{E_1}_\cC = \mathrm{Conv}(B(A_b),A_b)$ controls every
-forgetful step: its binary collision residue $r_{A_b}(z)$ is the
-universal twisting morphism, its full bar projection is the
-$F_1$-image, its averaged image
-$\mathrm{Sh}_{g,n}(\Theta_\cC)$ is the connection determining the
-$F_4$-image.
-\item \label{M3}
-\emph{Universal chain-homotopy normalisation.}
-The chain homotopy controlling the $F_1$-counit is
-$h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$ where
-$\mathcal N(A_b)$ is the chain-homotopy norm of
-Convention~\ref{conv:A-two-kappa-shriek}
-\textup{(}equivalently $\kappa(A_b)+\kappa^!_{\mathrm{LV}}(A_b)$,
-distinct from the algebra-level scalar Verdier sum
-$K^\kappa(A_b)$\textup{)},
-with archetype witnesses
-$\mathcal N(\mathsf G)=1$ giving $h_\mathsf G$ trivial,
-$\mathcal N(\mathsf L)=2(k+h^\vee)$ giving Sugawara
-$h_\mathsf L = 1/(2(k+h^\vee))$,
-$\mathcal N(\mathsf C)=1$ giving $h_\mathsf C$ free-field OPE,
-$\mathcal N(\mathsf M)=c(5c+22)/10$ giving weight-completed
-Felder BRST,
-$\mathcal N(\mathsf B)=8$ giving Mukai-K3 Heisenberg.
-\item \label{M4}
-\emph{Five-archetype dichotomy.}
-Every finite-atlas chart witness in the standard landscape lies in one
-of the five archetypes
-$\mathsf G\cup\mathsf L\cup\mathsf C\cup\mathsf M\cup\mathsf B$:
-the Open-quadrant rows $\mathsf G/\mathsf L/\mathsf C/\mathsf M$
-have shadow depths $2,3,4,\infty$, while the CY-specialisation row
-$\mathsf B$ has Vol~I shadow-depth coordinate $5$ after the
-Hall--Borcherds recognition gates. It admits the
-$5\times 5$ $\kappa$-stratification matrix
+\emph{Chart-side reconstruction.}
+Factorization Morita gives
 \[
- (\kappa_{\mathrm{cat}},\,\kappa^{\mathrm{Hodge}}_{\mathrm{ch}},\,
- \kappa^{\mathrm{Heis}}_{\mathrm{ch}},\,\kappa_\BKM,\,
- \kappa_{\mathrm{fiber}}).
+ \mathsf C\simeq\mathrm{RMod}^{\fact}_{A_b},
+ \qquad
+ \cC^\op\simeq\mathrm{Perf}(A_b)^\op.
 \]
-The K3$\times E$ row anchors $\mathsf B$ at $(0,0,3,5,24)$; the
-infinite Borcherds root tower of $\Delta_5$ is denominator data, not
-the shadow-depth coordinate.
+Associative bar--cobar gives
+\[
+ \Omegach_XB_X(A_b)\simeq A_b,
+ \qquad
+ C\simeq B_X\Omegach_X(C)
+\]
+for every divided-power conilpotent coalgebra $C$ in the Ran ambient.
+\item \label{M2}
+\emph{Intrinsic lines, chart center, and pointed branes.}
+Factorization Eilenberg--Watts gives
+\[
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C)
+ \simeq \mathrm{RMod}^{\fact}_{A_b^e},
+ \qquad
+ \operatorname{Id}_{\mathsf C}\longleftrightarrow{}_{A_b}A_b{}_{A_b}.
+\]
+The associative chiral cochain functor forms
+$Z_{\ch}^{\mathrm{chart}}(A_b)=C^\bullet_{\ch}(A_b,A_b)$.
+Under $H_Z$, its comparison with the intrinsic center is
+\[
+ \chi_b\colon Z_{\ch}^{\mathrm{chart}}(A_b)
+ \xrightarrow{\ \sim\ }
+ Z_{\ch}^{\mathrm{int}}(\mathsf C).
+\]
+\item \label{M3}
+\emph{Quadratic--Verdier line branch.}
+Theorem~\ref{thm:mr-B} and the packages
+$H_{\mathrm{CL}}\cup H_{\mathrm{VD}}$ give
+\[
+ A_b^i\xrightarrow{\sim}B_X(A_b),
+ \qquad
+ K_X(A_b)=\mathbb D_{\Ran}B_X(A_b),
+ \qquad
+ \mathsf{Line}^{!}(A_b)=\mathrm{Perf}(A_b^!).
+\]
+The package $H_{\mathrm{line}}$ supplies the finite tensor structure
+and the realization equivalence
+\[
+ \rho_{A_b}^!\colon\mathsf{Line}^{!}(A_b)
+ \xrightarrow{\ \sim\ }
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C).
+\]
+Theorem~\ref{thm:mr-drinfeld-double} then computes
+$\mathcal Z_{\mathrm{Dr}}(\mathsf{Line}^{!}(A_b))$.  Conjecture~
+\ref{conj:mr-chiral-drinfeld-comparison} is the comparison problem
+with the categorical chiral center.
+\item \label{M4}
+\emph{Modular and scalar branches.}
+A connected category-valued modular functor $\mathfrak F$ determines
+its genus-zero self-dual balanced braided algebra
+$\mathcal L_{\mathfrak F}$.  A realization equivalence
+$\rho_{\mathfrak F}\colon\mathcal L_{\mathfrak F}\xrightarrow{\sim}
+\mathsf{Line}^{\mathrm{int}}(\mathsf C)$ is the package
+$H_{\mathrm{real}}$ and identifies the genus-zero datum with the
+intrinsic line branch.
+The scalar projection, under its indicated comparison packages,
+consists of
+\[
+ \mathfrak O^K_{g,n}(A_b)
+ =\kappa(A_b)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{obs}^{\mathrm{Hdg}}_{g,n}(A_b)
+ =(-1)^g\kappa(A_b)\lambda_g,
+ \qquad
+ F_{g,n}(A_b;\alpha)
+ =\int_{\Mbar_{g,n}}\kappa(A_b)\lambda_g\smile\alpha
+ +\delta F^{\mathrm{cross}}_{g,n}(A_b;\alpha).
+\]
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-\ref{M1} is the conjunction of
-Theorems~\ref{thm:mr-morita}, \ref{thm:mr-A}, \ref{thm:mr-H},
-\ref{thm:mr-drinfeld-double}, and \ref{thm:mr-modular}, each on its
-declared hypothesis package. \ref{M2} is the universal
-Maurer--Cartan element of
-Theorem~\ref{thm:mc2-bar-intrinsic} together with the collision
-residue identification of
-Theorem~\ref{thm:collision-residue-twisting}. \ref{M3} is recorded in
-Chapter~\ref{ch:theorem-A-infinity-2} with archetype witnesses
-inscribed there; the normalisation
-$h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$, with the level-$2$
-Verdier-Ran-on-bar norm
-$\mathcal N(A_b) = \kappa(A_b)+\kappa^!_{\mathrm{LV}}(A_b)$
-(distinct from the algebra-level $K^\kappa$, coinciding only on
-class~$\mathsf B$), is the universal
-denominator unifying Theorems~A and~C. \ref{M4} is the finite-atlas
-stratification theorem of Chapter~\ref{ch:landscape-census}, with the
-K3$\times E$ anchor supplied on the Vol~III $\mathsf B$-row and
-transported to Vol~I only through the stated recognition gates.
+\ref{M1} is Theorems~\ref{thm:mr-morita} and~\ref{thm:mr-A}.
+\ref{M2} is Propositions~\ref{prop:mr-factorization-ew-lines}
+and~\ref{prop:mr-pointed-brane-center}.
+\ref{M3} combines Theorem~\ref{thm:mr-B} and clause~\ref{KR-v} of
+Theorem~\ref{thm:koszul-reflection} with
+Theorem~\ref{thm:mr-drinfeld-double}.
+\ref{M4} is Theorem~\ref{thm:mr-modular} together with
+Definition~\ref{def:mr-hodge-scalar-projection}.
 \end{proof}
 
 %===========================================================
@@ -511,101 +982,198 @@ transported to Vol~I only through the stated recognition gates.
 \label{sec:mr-ksdual}
 %===========================================================
 
-The Verdier--Koszul involution $A\mapsto A^!$ on the Koszul locus is
-an involutive equivalence: $A^{!!}\simeq A$ on the standard landscape.
-The fixed sublocus is the place where every step of the Master
-Reconstruction degenerates from an adjunction with comparison map to
-a strict equivalence.
+The finite-type curved, weight-completed ambient carries the
+Verdier--Koszul reflection $\sigma(A)=A^!$ and its biduality
+equivalence $\eta_A\colon A\xrightarrow{\sim}\sigma^2(A)$ from
+Theorem~\ref{thm:universal-defect-construction}.  Its maximal
+$\infty$-groupoid therefore carries a homotopy-coherent
+$\mathbb Z/2$-action.  KSDual is its homotopy-fixed locus over the
+uncurved Koszul charts.
 
 \begin{definition}[KSDual sublocus;
-\ClaimStatusProvedHere]
+\ClaimStatusDefinitional]
 \label{def:mr-ksdual}
 \index{KSDual!definition}
 \index{Verdier involution!fixed locus}
-The \emph{KSDual sublocus} is the $\mathbb Z/2$-fixed sublocus of the
-Koszul locus under the Verdier--Koszul involution
-$\sigma\colon A_b\mapsto A_b^!$:
+Let $\Kosz^{\mathrm{ft,curv}}(X,D,\tau)$ be the finite-type curved,
+weight-completed Verdier--Koszul ambient in which
+Proposition~\ref{prop:fourier-five-duality-objects} defines $A_b^!$.
+Write $(-)^\simeq$ for the maximal $\infty$-groupoid.  The
+\emph{KSDual sublocus} is the homotopy pullback
 \[
- \KSDual(X,D,\tau) := \bigl\{\,A_b\in\Kosz(X,D,\tau)
- \;:\;\sigma(A_b)\simeq A_b\,\bigr\}.
+ \KSDual(X,D,\tau)
+ :=\Kosz(X,D,\tau)^\simeq
+ \mathop{\times}_{\Kosz^{\mathrm{ft,curv}}(X,D,\tau)^\simeq}
+ \Bigl(\Kosz^{\mathrm{ft,curv}}(X,D,\tau)^\simeq
+ \Bigr)^{h\mathbb Z/2}.
 \]
-On a chart algebra $A_b\in\KSDual$, the scalar shadow constants
-$\kappa(A_b)+\kappa(A_b^!)$ collapse to twice the self-dual ceiling.
+A point is a triple $(A_b,\varphi_b,H_b)$ consisting of an uncurved
+Koszul chart, an equivalence
+$\varphi_b\colon A_b\xrightarrow{\sim}A_b^!$, and a coherent homotopy
+\[
+ H_b\colon \sigma(\varphi_b)\circ\varphi_b\simeq\eta_{A_b}
+\]
+together with the standard higher $\mathbb Z/2$ coherence.  A scalar
+invariant functorial under $\sigma$ satisfies
+$\kappa(A_b)=\kappa(A_b^!)$ on this locus; its orbit sum is
+$2\kappa(A_b)$.  The homotopy-fixed datum
+$(\varphi_b,H_b)$ determines membership.
 \end{definition}
 
-\begin{theorem}[Master Reconstruction degenerates to equivalence on
+\begin{theorem}[Equivariant restriction of the reconstruction fork to
 $\KSDual$;
 \ClaimStatusConditional]
 \label{thm:mr-ksdual}
 \index{KSDual!Master Reconstruction equivalence}
 \textup{[Type: Open, Cat$\,\&$Chain, $0\rightarrow 5$, hypothesis
-package $H_0\cup H_1\cup H_3\cup H_4\cup H_5\cup\{\sigma\text{-fixed}\}$.]}
-Let $A_b\in\KSDual(X,D,\tau)$. Then the Master Reconstruction Theorem
-\textup{(}Theorem~\ref{thm:mr-master}\textup{)} is an equivalence in
-the strong sense \textup{(}not adjunction with comparison map\textup{)}
-at every level of the tower:
+package $H_{\mathrm{MR}}\cup H_\sigma$, where $H_{\mathrm{MR}}$ is the
+package of Theorem~\ref{thm:mr-master} and $H_\sigma$ supplies
+equivariant augmentations, comparison maps, and realizations.]}
+Let $(A_b,\varphi_b,H_b)$ be a point of
+$\KSDual(X,D,\tau)$.  Under $H_{\mathrm{MR}}\cup H_\sigma$, the
+reconstruction fork has the following equivariant form.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Hochschild concentration is exact in $\{0,1,2\}$:}
-$\ChirHoch^n(A_b)=0$ for $n\notin\{0,1,2\}$, $\ChirHoch^0(A_b)=k$,
-$\ChirHoch^2(A_b)$ pairs nondegenerately with $\ChirHoch^0(A_b)$
-under the cyclic Verdier pairing.
-\item \emph{The five-archetype dichotomy stabilises:} on $\KSDual$,
-the archetype label is invariant under deformation in the open chart
-moduli, hence chart-independent.
-\item \emph{Universal Trace Identity is the equivariant signature:}
-the modular trace satisfies the involutive identity
+\item The fixed-point equivalence identifies the chart algebra with
+its Koszul dual,
 \[
- \Tr_\cC(A_b) = \Tr_\cC(A_b^!),
+ \varphi_b\colon A_b\xrightarrow{\sim}A_b^!,
+ \qquad
+ \sigma(\varphi_b)\varphi_b\simeq\eta_{A_b}.
 \]
-hence the partition function $Z_g(A_b)$ admits a $\mathbb Z/2$-graded
-decomposition into Verdier-symmetric and Verdier-antisymmetric pieces,
-and the antisymmetric piece is the equivariant signature of the
-involution.
+Independently, the bar--cobar counit identifies
+$\Omegach_XB_X(A_b)$ with $A_b$ under $H_1$.
+\item The equivariant factorization Eilenberg--Watts and center
+comparisons give
+\[
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C)
+ \simeq\mathrm{RMod}^{\fact}_{A_b^e},
+ \qquad
+ Z_{\ch}^{\mathrm{chart}}(A_b)
+ \xrightarrow[H_Z]{\sim}Z_{\ch}^{\mathrm{int}}(\mathsf C).
+\]
+The line realization intertwines $\varphi_b$ with the induced
+equivalence of perfect label categories.
+\item An $H_\sigma$-equivariant modular realization carries the
+involution to the genus-zero balanced braided algebra.  When the
+equivariance package includes~$H_D^K$ and~$H_D^{\mathrm{graph}}$, its
+trace, Hodge, and graph projections satisfy
+\[
+ \Tr_{\mathfrak F}(A_b)=\Tr_{\mathfrak F}(A_b^!),
+ \qquad
+ \mathfrak O^K_{g,n}(A_b)=\mathfrak O^K_{g,n}(A_b^!),
+ \qquad
+ \operatorname{obs}^{\mathrm{Hdg}}_{g,n}(A_b)
+ =\operatorname{obs}^{\mathrm{Hdg}}_{g,n}(A_b^!),
+ \qquad
+ F_{g,n}(A_b;\alpha)=F_{g,n}(A_b^!;\alpha).
+\]
+The corresponding scalar functions decompose into the two
+$\mathbb Z/2$-isotypic summands.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-On $\KSDual$, the chiral Koszul reflection $K^2\simeq\mathrm{id}$ of
-Theorem~\ref{thm:mr-A} is the identity on the chart $A_b\simeq A_b^!$;
-hence the comparison map of Theorem~\ref{thm:mr-master}\ref{M1}
-collapses to the identity at every level. The Hochschild
-concentration sharpens to exactness because on the self-dual locus
-the Verdier symmetric ambient pairs $\ChirHoch^0$ with $\ChirHoch^2$
-nondegenerately, and pairs $\ChirHoch^1$ with itself
-antisymmetrically; the chiral analogue is the cyclic Verdier pairing
-inscribed in Chapter~\ref{chap:deformation-theory}. The
-chart-independence of the archetype label on $\KSDual$ follows from
-the Morita-class invariance of $r_{\max}$ under self-Verdier-dual
-deformation. The trace identity is the modular reconstruction
-restricted to the involutive locus.
+The first clause is the homotopy-fixed datum of
+Definition~\ref{def:mr-ksdual} together with the counit in
+Theorem~\ref{thm:mr-A}.  The second clause is the equivariant form of
+Propositions~\ref{prop:mr-factorization-ew-lines}
+and~\ref{prop:mr-pointed-brane-center}; the coherences belong to
+$H_\sigma$.  The third clause follows by applying the modular functor
+and scalar projection to the specified equivariant realization.
 \end{proof}
 
-\begin{remark}[Self-dual scalar witnesses]
+\begin{remark}[KSDual fixed-point data and parameter involutions]
 \label{rem:mr-ksdual-witnesses}
-On the standard landscape the $\KSDual$ witnesses include:
+The finite standard-landscape atlas records two kinds of data.  An
+orbit datum is a pair $(A,\sigma A)$ together with scalar identities.
+A KSDual point is the triple $(A,\varphi,H)$ of
+Definition~\ref{def:mr-ksdual}.  The parameter involutions currently
+computed have status \ClaimStatusComputed.  They are:
 \begin{itemize}
-\item Heisenberg $\mathcal H_k$ with curved $\mathrm{Sym}^{\ch}(V^*)$:
-$\kappa+\kappa^!=0$;
-\item $\beta\gamma_\lambda$ with $bc_\lambda$:
-$c_{bc}=-c_{\beta\gamma}$, $\kappa+\kappa^!=0$;
+\item the Heisenberg row
+$\mathcal H_k\mapsto \mathrm{Sym}^{\ch}(V^*)$ with curvature
+$-k\,\omega_X$
+\textup{(}Remark~\ref{rem:fourier-heisenberg-not-selfdual}\textup{)};
+\item the class-$\mathsf C$ pair
+$\beta\gamma_\lambda\leftrightarrow bc_\lambda$ with
+$c_{bc}=-c_{\beta\gamma}$.
+\end{itemize}
+
+The following comparison rows have recorded scalar images:
+\begin{itemize}
 \item Self-dual lattice VOA $V_{\Lambda_{24}}^!\simeq V_{\Lambda_{24}}$:
 $\kappa+\kappa^!=48$;
-\item Mukai-enhanced K3 Heisenberg: the $\mathsf B$-row witness with
-Mukai/Koszul conductor $K^{\kappa_{\ch}}=2c_+(\mathrm{Mukai}(K3))=8$.
+\item Mukai-enhanced K3 Heisenberg: the exact lattice calculation is
+$2c_+(\mathrm{Mukai}(K3))=8$; its interpretation as
+$K^{\kappa_{\ch}}=8$ is \ClaimStatusConjectured{} under
+$H_{\mathsf B}$.
 \end{itemize}
-The class-$\mathsf M$ Verdier partner pairs are
-$\sigma$-fixed at single central charges:
-$(\Vir_c,\Vir_{26-c})$ at $c=13$;
-$(\cW_3^k,\cW_3^{k'})$ at $c=50$;
-$(\BP_k,\BP_{-k-6})$ at $c=98$.
-For $\Vir_c$ the parameter is $c$ itself, so the fixed point lies in
-the real domain; for $\cW_3$ and $\BP$ the fixed central charge is
-attained only at imaginary shifted level $k+h^\vee = \pm 2i$, so the
-KSDual point lives on the analytically continued parameter family
-\textup{(}Remark~\ref{rem:ksdual-fixed-points-bucket} of
-\texttt{master\_concordance.tex}\textup{).} The full $\mathsf M$
-families lie on the boundary of $\KSDual$ with the fixed locus a
-single \textup{(}possibly complex\textup{)} point per family.
+The lattice entry becomes a KSDual witness upon construction of the
+coherent homotopy $H$.  The Mukai row additionally requires the full
+$H_{\mathsf B}$ comparison.  The class-$\mathsf M$ scalar companion
+data are:
+\begin{itemize}
+\item For Virasoro, $\sigma_{\mathrm{Vir}}(c)=26-c$ has the regular
+fixed value $c=13$.
+\item For the principal $\mathcal W_3$ family,
+$\sigma_{\mathcal W_3}(k)=-k-6$ fixes the pole $k=-3$.  The standard
+Fateev--Lukyanov principal-DS formula satisfies
+\[
+ c_{\mathcal W_3}(k)
+ =2-\frac{24(k+2)^2}{k+3},
+ \qquad
+ c_{\mathcal W_3}(k)+c_{\mathcal W_3}(-k-6)=100.
+\]
+Its scalar midpoint is $c^{\mathrm{mid}}_{\mathcal W_3}=50$, attained
+on the regular two-point fibre $k=-3\pm i$; the involution exchanges
+the two points.
+\item For Bershadsky--Polyakov,
+$\sigma_{\mathrm{BP}}(k)=-k-6$ fixes the pole $k=-3$.  The standard
+Feigin--Semikhatov normalization is
+\[
+ c_{\mathrm{BP}}(k)
+ =-\frac{(2k+3)(3k+1)}{k+3},
+ \qquad
+ K^c_{\mathrm{BP}}
+ =c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\]
+Fehily--Kawasetsu--Ridout define the standard Bershadsky--Polyakov
+object as a vertex operator algebra whose strong generators
+$J,G^+,G^-,L$ are even fields~\cite[\S2.1]{FKR20}.  The genus-$1$
+anomaly ratio therefore requires the complete non-separating curvature
+calculation.  The conditional normalization
+\[
+ \kappa_{\mathrm{BP}}(k)=\frac16c_{\mathrm{BP}}(k),
+ \qquad
+ \varrho_{\mathrm{BP}}
+ =\frac{\kappa_{\mathrm{BP}}(k)}{c_{\mathrm{BP}}(k)}=\frac16,
+ \qquad
+ K^\kappa_{\mathrm{BP}}
+ =\varrho_{\mathrm{BP}}K^c_{\mathrm{BP}}=\frac{25}{3}.
+\]
+This normalization has status \ClaimStatusOpen.  Its proof
+obligation is a direct
+genus-$1$ curvature computation of the non-separating modular trace.
+The exact central-charge midpoint is
+$c^{\mathrm{mid}}_{\mathrm{BP}}=25$, attained
+on the regular two-point fibre $k=-3\pm2i$; the involution exchanges
+the two points.  The same-family Verdier--Koszul interpretation has
+status \ClaimStatusConditional\ on
+$H_{\mathrm{BP}}^{\mathrm{DS/bar}}$: regular $k\ne-3$, a finite-type
+bar dual or a completed continuous nondegenerate Verdier pairing, and
+subregular hook-type DS/bar transport.
+\end{itemize}
+The explicitly shifted secondary BP rational function is
+\[
+ c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+ =2-\frac{24(k+1)^2}{k+3},
+ \qquad
+ c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+ +c_{\mathrm{BP}}^{\mathrm{shift}}(-k-6)=196.
+\]
+The value~$196$ belongs to this computed-secondary scalar convention.
+A KSDual witness additionally consists of an equivalence
+$\varphi\colon A\xrightarrow{\sim}A^!$ and its coherent homotopy~$H$.
 \end{remark}
 
 %===========================================================
@@ -613,195 +1181,264 @@ single \textup{(}possibly complex\textup{)} point per family.
 \label{sec:mr-vertical}
 %===========================================================
 
-Each level of the open Beilinson tower has a companion in Vol~II or
-Vol~III. The vertical equivalences are not statements that the open
-quadrant equals its companion; they are statements that the
-$\mathbb Z/2$ holographic involution
-$\mathrm{Open}\leftrightarrow\mathrm{CY}$ induces explicit functors at
-every level, with named comparison theorem.
+Each node of the open Beilinson fork has a proposed companion in
+Vol~II or Vol~III.  The vertical atlas records the comparison morphism,
+its source and target, and the package that promotes it to an
+equivalence.
 
-\begin{theorem}[Vertical holographic dictionary;
+\begin{theorem}[Six-level vertical comparison atlas;
 \ClaimStatusConditional]
 \label{thm:mr-vertical-dictionary}
-\index{vertical holographic equivalence!five-level dictionary}
+\index{vertical holographic comparison!six-level atlas}
 \textup{[Type: $(\mathrm{Open}\cup\mathrm{CY})$, Cat$\,\&$Chain,
 levels $0\text{--}5$, hypothesis package
-$H_0\cup\cdots\cup H_5\cup H_{\mathrm{vert}}$.]}
-The five levels of the open Beilinson tower are connected to their
-Vol~II and Vol~III companions by the following dictionary:
-\begin{center}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|c|p{4.4cm}|p{7.0cm}|}
-\hline
-\textbf{Level} & \textbf{Vol~I (Open)} & \textbf{Vol~II / Vol~III companion} \\
-\hline\hline
-$0$ & factorization dg-cat $\cC^\op$ on $(X,D,\tau)$ &
-Vol~III: CY-cat via 6d $\hCS$, formal locus + global descent
-(anomaly \emph{quartic}
-$\int_X \Tr_{\mathrm{ad}}(A(F_A)^3)$) \\
-\hline
-$1$ & chart $A_b$ &
-Vol~III: $\PhiFA_d$ at chosen target / vacuum \\
-\hline
-$2$ & bar $B(A_b)$ &
-Vol~III: $\SpCh_{\Sigma_{d-1},C}$ specialisation \\
-\hline
-$3$ & derived chiral centre $\DerZch(A_b)$ &
-Vol~II: $\SCchtop$-brace bulk
-(Vol~II climax) \\
-\hline
-$4$ & line / brane operators &
-Vol~III: Drinfeld double $G(X)=D(Y^+(X))$ + descent \\
-\hline
-$5$ & modular trace + clutching &
-Vol~III: $\kappa_\BKM(\Phi_N)=c_N(0)/2$;
-Vol~II: gravity-line completion \\
-\hline
-\end{tabular}
-\end{center}
-
-The hypothesis package $H_{\mathrm{vert}}$ comprises:
+$H_{\mathrm{vert}}=\bigcup_{j=0}^5H_{Vj}$.]}
+The vertical atlas consists of the following six typed comparisons.
 \begin{enumerate}[label=\textup{(V\arabic*)}]
-\item \textup{(}level 0\textup{)} Costello--Gwilliam local-to-global
-quantization of 6d holomorphic Chern--Simons on a CY$_3$,
-quartic-anomaly cancellation
-$\int_X \Tr_{\mathrm{ad}}(A(F_A)^3)\equiv 0$, formal locus existence
-and global descent;
-\item \textup{(}level 1\textup{)} Kontsevich--Tamarkin $E_d$-formality
-of the CY$_d$ category for $d\leq 3$ via three-vanishing;
-\item \textup{(}level 2\textup{)} bar specialisation
-$\SpCh_{\Sigma_{d-1},C}$ defined as the Stage~2 functor of the
-two-stage factorisation
-$\Phi_d^{(\Sigma_{d-1},C)} = \SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d$;
-\item \textup{(}level 3\textup{)}
-$\SCchtop$-brace structure on the open-closed pair
-$(\DerZch(A_b),A_b)$, the Vol~II climax;
-\item \textup{(}level 4\textup{)}
-Hall pairing on the K3 Yangian $Y^+(X)$, completion, integral form,
-and descent obstruction
-$\mathrm{obs}^{(1)}_{\mathrm{double}}\in
-H^2(\mathfrak{grt}^{\mathrm{ell}},\cdot)$;
-\item \textup{(}level 5\textup{)}
-universal Borcherds-weight identity
-$\kappa_\BKM(\Phi_N)=c_N(0)/2$ for
-$N\in\{1,2,3,4,6\}$ plus half- and quarter-integer continuations,
-together with the Maloney--Witten + Manschot--Moore Farey-tail
-gravity-line completion.
+\item \emph{Category-valued boundary comparison
+(\ClaimStatusConjectured).}
+The package $H_{V0}$ consists of a quantized six-dimensional
+holomorphic Chern--Simons factorization algebra, a vanishing class
+$\mathfrak a_{\mathrm{hCS}}$ in its local anomaly complex, global
+descent, and an enriched factorization functor
+\[
+ \Xi_{V0}\colon\mathsf C_{\mathrm{Open}}\longrightarrow
+ \mathsf{BdryMod}(\mathrm{Obs}_{\mathrm{hCS}}).
+\]
+An equivalence $\Xi_{V0}$ is the level-$0$ vertical statement.
+
+\item \emph{Pointed chart comparison
+(\ClaimStatusConjectured).}
+Choose a boundary object $c$ and an equivalence
+$\Xi_{V0}(b)\simeq c$.  Enrichment gives
+\[
+ \chi_{V1}\colon
+ A_b\longrightarrow
+ \RHom_{\mathsf{BdryMod}(\mathrm{Obs}_{\mathrm{hCS}})}(c,c).
+\]
+The package $H_{V1}$ asserts full faithfulness of $\Xi_{V0}$ on the
+thick subcategory generated by $b$ and hence makes $\chi_{V1}$ an
+equivalence.
+
+\item \emph{Bar comparison (\ClaimStatusConditional).}
+The two-stage CY-to-chiral formation is
+\[
+ \Phi_d^{(\Sigma_{d-1},C)}
+ =\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d.
+\]
+Once its pointed output is identified with the target of $\chi_{V1}$,
+functoriality of bar gives
+\[
+ B_C(\chi_{V1})\colon B_C(A_b)\longrightarrow
+ B_C\!\left(\SpCh_{\Sigma_{d-1},C}
+ (\PhiFA_d(\mathcal C))\right).
+\]
+The package $H_{V2}$ comprises the comparison with the Stage~2
+specialization and the factorization descent that makes this arrow an
+equivalence.
+
+\item \emph{Cochain-center and physical-bulk comparison
+(\ClaimStatusConditional).}
+The chart center $Z_{\ch}^{\mathrm{chart}}(A_b)$ carries its algebraic
+$\SCchtop$-brace structure.  A boundary-linear open--closed map
+\[
+ \mathrm{OCA}_{\mathcal T}\colon
+ \mathrm{Obs}_{\mathrm{bulk}}(\mathcal T)\longrightarrow
+ Z_{\ch}^{\mathrm{chart}}(A_b)
+\]
+is the additional datum in $H_{V3}$; the bulk interpretation is an
+equivalence precisely on the sector where
+$\mathrm{OCA}_{\mathcal T}$ is a quasi-isomorphism.
+
+\item \emph{Line and Hall-double realization
+(\ClaimStatusConjectured).}
+An algebra comparison
+\[
+ \gamma_{V4}\colon A_b^!\longrightarrow D(Y^+(X))
+\]
+induces the category-valued realization
+\[
+ \rho_{V4}\colon\mathsf{Line}^{!}(A_b)\longrightarrow
+ \mathrm{Perf}\bigl(D(Y^+(X))\bigr).
+\]
+The package $H_{V4}$ consists of the Hall pairing, completion,
+integral form, stable-envelope transport, and global descent; it makes
+$\rho_{V4}$ an equivalence.  Formation of the algebraic Drinfeld
+double precedes this comparison.
+
+\item \emph{Modular and scalar comparisons
+(\ClaimStatusConditional).}
+The Vol~II gravity-line map is a comparison from its completed
+category-valued modular datum to $\mathfrak F$.  Its equivalence is the
+package $H_{V5}^{\mathrm{mod}}$.  Separately, on each Borcherds family
+with a fixed Fourier normalization, the scalar formula is
+\[
+ \kappa_{\mathrm{BKM}}(\Phi_N)=\frac{c_N(0)}2.
+\]
+This identity occupies the scalar projection of level~$5$; the
+Open--CY modular comparison occupies the category-valued node.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Each row is the named comparison theorem in the cited volume.
-Level~0: Costello--Gwilliam local-to-global package
-\cite{CG17,CG-vol2}; the quartic anomaly is the chiral promotion of the cubic
-Casimir failure, and it is not a three-dimensional Chern--Simons term
-written in six-dimensional notation. Level~1: $\PhiFA_d$ is the Stage~1
-factorisation-algebra functor of Vol~III. Level~2:
-$\SpCh_{\Sigma_{d-1},C}$ is the Stage~2 specialisation of Vol~III.
-Level~3: the $\SCchtop$-brace structure is the Vol~II climax theorem,
-which identifies the closed-sector cochain object as a
-Swiss-cheese-coloured brace algebra over $\mathrm{Ass}^{\ch}$.
-Level~4: the Drinfeld double construction with elliptic obstruction
-is the K3 Yangian package of Vol~III together with Frontier~F5.
-Level~5: the Borcherds-weight identity is proved for
-$N\in\{1,2,3,4,6\}$ in Vol~III; half- and quarter-integer continuations
-are central (multiplier-system) extensions; the gravity-line completion is the
-Maloney--Witten + Manschot--Moore Farey-tail of Vol~II.
+The level-$1$ morphism is the map on enriched endomorphism objects
+induced by $\Xi_{V0}$.  The level-$2$ morphism is its image under the
+functorial bar construction.  The level-$3$ statement separates the
+algebraic brace structure from the specified open--closed map.  The
+level-$4$ functor is extension of scalars along $\gamma_{V4}$ followed
+by passage to perfect modules.  The level-$5$ clauses are respectively
+category-valued realization and scalar projection.  Each asserted
+equivalence is exactly the corresponding package $H_{Vj}$.
 \end{proof}
 
-\begin{remark}[Open and CY are not identified; vertical functors are
-typed]
+\begin{remark}[Domains of the vertical comparison functors]
 \label{rem:mr-not-identified}
-The vertical dictionary is a system of typed comparison functors,
-not an identification of the two quadrants. At level~2 one has the
-bar coalgebra
-$F_1\circ F_0(\cC^\op)=B(A_b)$, whereas at level~3 one has the derived
-closed sector
-$F_2\circ F_1\circ F_0(\cC^\op)=\DerZch(A_b)$.  At level~5 modularity
-is supplied by the modular trace and clutching system on the open
-category.  The CY-to-chiral comparison is the two-stage factorisation
-$\Phi_d^{(\Sigma_{d-1},C)}=\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d$.
-The K3 quantum group is the Drinfeld double
-$G(X)=D(Y^+(X))$ with Hall pairing, completion, and descent.  The
-six-dimensional holomorphic Chern--Simons theory carries the quartic
-anomaly $\int_X \Tr_{\mathrm{ad}}(A(F_A)^3)$.
+The level-$2$ branch has source $(A_b,\varepsilon_b)$ and target
+$B_{\varepsilon_b}(A_b)$.  The level-$3$ branch has the same chart
+source and target $Z_{\ch}^{\mathrm{chart}}(A_b)$.  The level-$4$
+branch compares categories of perfect modules.  The level-$5$ branch
+starts from a full category-valued modular functor; its Hodge and
+automorphic invariants arise by scalar projection.  Thus every
+vertical morphism in Theorem~\ref{thm:mr-vertical-dictionary} has its
+displayed source, target, and hypothesis package.
 \end{remark}
 
 %===========================================================
-\section{Theorems A, B, C, D, H as restratified corollaries}
+\section{Typed placement of Theorems A, B, C, D, and H}
 \label{sec:mr-corollaries}
 %===========================================================
 
-The Master Reconstruction Theorem is a structural meta-theorem; the
-five named theorems of Vol~I are corollaries indexed by the level at
-which their open mathematical condition lives.
+The five named theorems occupy distinct parts of the
+reconstruction fork.  Each retains its own claim status, mathematical
+carrier, and hypothesis package.
 
 \begin{corollary}[Theorem~A as $F_1$-reconstruction;
 \ClaimStatusConditional]
 \label{cor:mr-A}
 \textup{[Type: Open, Chain, $1\leftrightarrow 2$, hypothesis package
 $H_1$.]}
-Theorem~A is the reconstruction theorem for the bar functor
-$F_1\colon A_b\mapsto B(A_b)$ at the bar level of the open Beilinson
-tower, on the Koszul locus.
+Theorem~A is the associative bar--cobar reconstruction theorem in the
+pro-nilpotent Ran ambient under
+$H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}$.  Its
+completion-aware counit and unit are
+\[
+ \epsilon_{A_b}\colon\Omegach_XB_X(A_b)\xrightarrow{\sim}A_b,
+ \qquad
+ \eta_C\colon C\xrightarrow{\sim}B_X\Omegach_X(C)
+\]
+for every divided-power conilpotent coalgebra $C$ in the stated Ran
+ambient.
 \end{corollary}
 
-\begin{corollary}[Theorem~B as bar--cobar inversion at the centre
-level;
-\ClaimStatusProvedHere\ on Koszul locus]
+\begin{corollary}[Theorem~B as quadratic Koszul recognition;
+\ClaimStatusConditional]
 \label{cor:mr-B}
-\textup{[Type: Open, Chain, $1\rightarrow 3$, hypothesis package
-$H_3$.]}
-Theorem~B is the inversion statement
-$\Omegach B(A_b)\xrightarrow{\sim} A_b$ in the chiral coderived
-$D^{\co}_{\ch}(X)$, the link between $F_1$-reconstruction and
-$F_2$-formation. Class $\mathsf M$ chain-level fails in
-$\mathrm{Ch}(\mathrm{Vect})$ and holds in the
-weight-completed / pro-conilpotent / $J$-adic ambient.
+\textup{[Type: Open, Chain, $1\leftrightarrow2$, chosen quadratic
+presentation, hypothesis package
+$H_{\mathrm{CL}}(A_b,A_b^i,\tau_i)$.]}
+Theorem~B is the quadratic comparison
+\[
+ q_{A_b}\colon A_b^i\longrightarrow B_X(A_b).
+\]
+Under $H_{\mathrm{CL}}(A_b,A_b^i,\tau_i)$, this map is a
+quasi-isomorphism precisely
+when $\Omega_X(A_b^i)\to A_b$ is a quasi-isomorphism and the two
+quadratic twisted tensor products are acyclic.  This is
+Theorem~\ref{thm:mr-B}.
 \end{corollary}
 
-\begin{corollary}[Theorem~C as scalar shadow at the family-stratum
-ceiling;
-\ClaimStatusProvedHere\ on Koszul locus]
+\begin{remark}[Placement of the fixed-coalgebra Positselski lane]
+\label{rem:mr-fixed-C-placement}
+Proposition~\ref{prop:mr-fixed-C-second-kind} records the independent
+second-kind equivalence for a fixed chiral CDG-coalgebra $C$ under
+$\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)$.  A twisting map
+$C\to A$ uses
+$\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)$.
+Its carrier is the pair of module categories over the fixed
+coalgebra~$C$.
+\end{remark}
+
+\begin{conjecture}[Theorem~C as the typed $5\times5$ census;
+\ClaimStatusConjectured]
 \label{cor:mr-C}
 \textup{[Type: Open, Cat$\,\&$Chain, $5$ per stratum, hypothesis
 package $H_5$ at chosen stratum.]}
-Theorem~C is the family-stratum scalar reading at level~5: the
-Verdier sum
+Theorem~C forms the matrix whose rows are
+$\mathsf G,\mathsf L,\mathsf C,\mathsf M,\mathsf B$ and whose columns
+are
+$\kappa_{\mathrm{cat}},\kappa_{\ch}^{\mathrm{Hodge}},
+\kappa_{\ch}^{\mathrm{Heis}},\kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}$.  A cell is a numerical value, a
+parameterized expression, an absent datum $\varnothing$, or two
+competing formulas together with their sources.  The Vol~I
+$\mathsf B$ row presently carries
 \[
- K^\kappa(A_b) = \kappa(A_b)+\kappa(A_b^!)
+ (0,0,3,5,24).
 \]
-collapses on each row of the $\mathsf G\cup\mathsf L\cup\mathsf C
-\cup\mathsf M\cup\mathsf B$ ladder, with the master-concordance values
-recorded in the master-concordance complementarity table.
-\end{corollary}
+The Vol~III K3 source assigns $2$ to the Hodge coordinate, so this row
+also requires the comparison of the two Hodge definitions.
+For the $\mathsf G,\mathsf L,\mathsf C,$ and $\mathsf M$ rows, the TeX
+table and the computational engines currently assign different
+formulas.  These pairs remain displayed until both constructions are
+derived from the same definitions.
+The row and column types are those of
+Table~\ref{tab:five-by-five-kappa-stratification}.  A proof of the
+conjecture consists of deriving every cell from its defining geometry
+and reconciling the competing formulas above.
+\end{conjecture}
 
-\begin{corollary}[Theorem~D as obstruction tower on $\Mbar_{g,n}$;
-\ClaimStatusProvedHere]
+\begin{corollary}[Theorem~D on $\Mbar_{g,n}$;
+\ClaimStatusConditional]
 \label{cor:mr-D}
-\textup{[Type: Open, Cat, $4$ on $\Mbar_{g,n}$, hypothesis package
-$H_4$.]}
-Theorem~D is the genus-universality identity at level~4 in the
-modular reconstruction:
+\textup{[Type: Open, Cat, $4\text{--}5$ on $\Mbar_{g,n}$, hypothesis
+package $H_D=(H_D^1,H_D^K,H_D^{\mathrm{tr}},
+H_D^{\mathrm{graph}})$.]}
+For $g\geq2$, the native deformation class satisfies
 \[
- \mathrm{obs}_g(A_b) = \kappa(A_b)\cdot\lambda_g
+ \operatorname{Obs}^{\mathrm{def}}_g(A_b)
+ \in H^2\!\left(\Def_g(A_b)\right).
 \]
-with $\lambda_g\in H^2(\Mbar_{g,n})$ the Hodge class, holding
-uniformly at all $g\geq 1$ on the uniform-weight scalar lane;
-multi-weight extension carries cross-channel correction
-$\delta F_g^{\mathrm{cross}}$.
+Under~$H_D^1$, the pointed class
+$\operatorname{Obs}^{\mathrm{def}}_{1,1}(A_b)$ has trace
+$\kappa(A_b)\lambda_1$.  Under~$H_D^K$, the virtual Hodge object and
+its codimension-$g$ Chern character are
+\[
+ \mathfrak O^K_g(A_b)=\kappa(A_b)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g\!\left(\mathfrak O^K_g(A_b)\right)
+ =(-1)^g\kappa(A_b)\lambda_g.
+\]
+The package~$H_D^{\mathrm{tr}}$ supplies their derived comparison.
+Under~$H_D^{\mathrm{graph}}$, the numerical trace is
+\[
+ F_g(A_b)=\kappa(A_b)\lambda_g^{\mathrm{FP}}
+ +\delta F_g^{\mathrm{cross}}(A_b).
+\]
 \end{corollary}
 
-\begin{corollary}[Theorem~H as $F_2$-concentration;
-\ClaimStatusProvedHere]
+\begin{proof}
+The four clauses are Theorem~\ref{thm:modular-characteristic}
+\textup{(i)--(iii)}.  Proposition~
+\ref{prop:scalar-obstruction-hodge-euler} computes the signed Hodge
+image from the exterior-power class.  Definition~
+\ref{def:mr-hodge-scalar-projection} supplies the insertion notation.
+\end{proof}
+
+\begin{corollary}[Theorem~H as family-indexed center amplitude;
+\ClaimStatusConditional]
 \label{cor:mr-H}
-\textup{[Type: Open, Chain, $3$, hypothesis package $H_3$.]}
-Theorem~H is the concentration statement for $F_2$ at the centre
-level:
-$\ChirHoch^\bullet(A_b)\subset\{0,1,2\}$ on the Koszul / PBW locus
-with the Feigin--Frenkel companion at the critical level
-$k=-h^\vee$ \textup{(}where the centre is infinite-dimensional and
-the concentration fails\textup{)}.
+\textup{[Type: Open, Chain, $3$, hypothesis package $H_H(A_b;S)$.]}
+Theorem~H forms $Z_{\ch}^{\mathrm{chart}}(A_b)$ and assigns its
+cohomological amplitude through a strong deformation retract onto a
+complex $K_{A_b,S}$ supported in a specified set $S$.  The chain
+identity
+\[
+ dh+hd=\mathrm{id}-\iota p
+\]
+proves that $\iota$ is a quasi-isomorphism.  The set $S$ belongs to
+the family and coefficient theory; the benchmark supports in
+Theorem~\ref{thm:mr-H} include $\{0,1\}$ for the rank-one even free
+superboson and $\{0,2,3\}$ for the Virasoro vertex algebra.
 \end{corollary}
 
 %===========================================================
@@ -809,133 +1446,142 @@ the concentration fails\textup{)}.
 \label{sec:mr-meta}
 %===========================================================
 
-The five corollaries above demonstrate that Theorems~A, B, C, D, H
-are not five independent facts about chiral algebras; they are five
-projections of a single structural datum onto the levels of one
-tower.
+The five theorems above share a pointed Morita chart and then
+follow distinct constructions.  Their common organization is the following
+structure theorem.
 
-\begin{theorem}[Master Reconstruction as Bourbaki structure]
+\begin{theorem}[Bourbaki structure of the reconstruction fork]
 \label{thm:mr-bourbaki}
 \ClaimStatusConditional
 \index{Master Reconstruction!Bourbaki structure}
 \textup{[Type: Open, Cat$\,\&$Chain, $0\text{--}5$, hypothesis package
-$H_0\cup\cdots\cup H_5\cup\{\sigma\text{-fixed}\}$.]}
-On $\KSDual$, the open holographic datum
-$(X,D,\tau;\cC^\op,b,A_b,\DerZch(\cC),\Theta_\cC,\Tr_\cC)$ is a
-Bourbaki structure in the sense that:
+$H_0\cup H_1\cup H_Z\cup H_{\mathrm{CL}}
+\cup H_{\mathrm{VD}}
+\cup H_{\mathrm{line}}\cup H_5\cup H_{\mathrm{real}}\cup H_D$.]}
+The primitive open chart datum
+\[
+ \mathfrak D_{\mathrm{op}}
+ =(X,D,\tau;\mathsf C,b,\varepsilon_b)
+\]
+generates the structured fork
+\[
+ \mathfrak R(\mathfrak D_{\mathrm{op}},\mathfrak F)
+ =\bigl(
+ B_{\varepsilon_b}(A_b),
+ Z_{\ch}^{\mathrm{chart}}(A_b),
+ Z_{\ch}^{\mathrm{int}}(\mathsf C),
+ \mathsf{Line}^{\mathrm{int}}(\mathsf C),
+ \mathsf{Brane}^{\mathrm{pt}}(A_b),
+ A_b^!,\mathsf{Line}^{!}(A_b),
+ \mathfrak F,\mathfrak O^K_{g,n},
+ \operatorname{obs}^{\mathrm{Hdg}}_{g,n},F_{g,n}
+ \bigr).
+\]
+It has the following structure.
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item the species of the structure is fixed by the seven primitive
-slots;
-\item the morphisms are the simultaneous chart-equivalences
-$\cC^\op\to\cC'^\op$ with $b\mapsto b'$ such that the induced map
-$A_b\to A_{b'}$ is a chain-level isomorphism on the Koszul locus and
-intertwines $\Theta$ and $\Tr$;
-\item the typical structure is recovered from any one of its five
-projections via the corresponding reconstruction theorem;
-\item the structure is rigid in the sense of Bourbaki: an
-endomorphism inducing the identity on any one level is the identity
-on every level.
+\item A morphism of primitive data is an enriched factorization
+functor $\Xi\colon\mathsf C\to\mathsf C'$ together with an equivalence
+$\Xi(b)\simeq b'$ and a homotopy commuting with the augmentations
+$\varepsilon_b$ and $\varepsilon_{b'}$.  It induces morphisms on every
+displayed formation branch.
+\item Under $H_0$, the pointed chart and factorization category are
+Morita-equivalent:
+\[
+ \mathsf C\simeq\mathrm{RMod}^{\fact}_{A_b}.
+\]
+Under $H_1$, the augmented chart and full bar coalgebra are related by
+the bar--cobar unit and counit equivalences.
+\item The chart center, intrinsic center, brane datum, and
+Koszul-dual label category are functorial constructions.  Their comparison
+maps are $\chi_b$, $\rho_{A_b}^!$, and the categorical
+chiral--Drinfeld map of
+Conjecture~\ref{conj:mr-chiral-drinfeld-comparison}, with the statuses
+displayed at their definitions.
+\item Genus-zero restriction sends the full modular functor
+$\mathfrak F$ to $\mathcal L_{\mathfrak F}$.  The package
+$H_{\mathrm{real}}$ supplies
+$\mathcal L_{\mathfrak F}\simeq
+\mathsf{Line}^{\mathrm{int}}(\mathsf C)$.  Drinfeld-center formation
+then produces the braided category
+$\mathcal Z_{\mathrm{Dr}}(\mathcal L_{\mathfrak F})$.
+\item A KSDual enhancement is a homotopy-fixed triple
+$(A_b,\varphi_b,H_b)$ as in
+Definition~\ref{def:mr-ksdual}.  It equips the chart branch with the
+coherent reflection $A_b\simeq A_b^!$.
 \end{enumerate}
-The Master Reconstruction Theorem is the statement that this
-structure is well-defined, recoverable from any level, and rigid
-under endomorphisms.
+Thus the Bourbaki species is the primitive datum together with typed
+functors and named comparison maps; its reconstruction
+arrows are precisely factorization Morita and associative
+bar--cobar.
 \end{theorem}
 
 \begin{proof}
-The species of the structure is the type signature of
-Definition~\ref{def:mr-open-datum}. The morphisms are defined
-through the chart-equivalence and the intertwining conditions; these
-form a category $\mathsf{OpenDatum}(X,D,\tau)$. Recoverability from
-any one level is the conjunction of the five reconstruction theorems
-(\ref{thm:mr-morita}, \ref{thm:mr-A}, \ref{thm:mr-H},
-\ref{thm:mr-drinfeld-double}, \ref{thm:mr-modular}) on the Koszul
-locus, sharpened to equivalences on $\KSDual$ by
-Theorem~\ref{thm:mr-ksdual}. Rigidity under endomorphisms is the
-universal Maurer--Cartan statement \ref{M2} of
-Theorem~\ref{thm:mr-master}: an endomorphism preserving $\Theta_\cC$
-and acting as the identity at any level acts as the identity on the
-universal MC element, hence on every projection of it.
+Functoriality of $\RHom(b,b)$ gives the morphism on pointed charts,
+and functoriality of bar, chiral cochains, bimodule kernels, perfect
+modules, and scalar projection gives the remaining branch maps.
+The two reconstruction equivalences are
+Theorems~\ref{thm:mr-morita} and~\ref{thm:mr-A}.  The center and line
+comparisons are Propositions~\ref{prop:mr-factorization-ew-lines}
+and~\ref{prop:mr-pointed-brane-center}, the datum $\rho_{A_b}^!$, and
+Conjecture~\ref{conj:mr-chiral-drinfeld-comparison}.  Modular
+restriction is Theorem~\ref{thm:mr-modular}; the final clause is the
+definition of the KSDual homotopy-fixed locus.
 \end{proof}
 
-\begin{remark}[Numerical signatures and three-path verification]
+\begin{remark}[Numerical source separation]
 \label{rem:mr-numerical}
-The Master Reconstruction Theorem entails three numerical signatures
-of the open quadrant. Each is verified by three independent paths.
-\smallskip
-
-\noindent\textbf{Signature 1: $\kappa$-stratification matrix anchor.}
-The K3$\times E$ row anchors archetype $\mathsf B$ at
-$(0,0,3,5,24)$.
-\textsl{Path 1.} $\kappa_{\mathrm{cat}}=0$ from compact-generation
-of $\mathsf{Coh}^{\mathrm{cpt}}(\mathrm{K3})\boxtimes \mathrm{Coh}(E)$;
-$\kappa^{\mathrm{Hodge}}_{\ch}=0$ from $h^{2,0}(\mathrm{K3})=1$
-combined with Mukai pairing.
-\textsl{Path 2.} $\kappa^{\mathrm{Heis}}_{\ch}=3$ from
-the Mukai-enhanced K3 Heisenberg of rank $24$ projected to the
-$3$-dimensional spectral lattice of the elliptic curve.
-\textsl{Path 3.} $\kappa_\BKM=5$ as the Borcherds weight of the
-weight-$5$ Igusa cusp form $\Delta_5$, the Mukai-K3 archetype anchor
-recorded in
-\S\ref{sec:master-concordance-complementarity-scalars}; this is
-$\kappa_\BKM(\Delta_5)=5$. The fibre invariant
-$\kappa_{\mathrm{fiber}}=24$ is the topological Euler characteristic
-$\chi_{\mathrm{top}}(\mathrm{K3})=24$.
-The five values agree across the three paths.
-\smallskip
-
-\noindent\textbf{Signature 2: Borcherds denominator weight.}
-On the diagonal Mukai--Nikulin denominator lanes
-$N\in\{1,2,3,4,6\}$ one has
+The five entries in the $\mathsf B$ row are five distinct invariants.
+Each therefore requires a derivation from its own defining object.  The
+current Vol~I census records
 \[
-\kappa_\BKM(\Phi_N)=c_N(0)/2,\qquad
-c_N(0)=(10,8,6,4,2),
+ (\kappa_{\mathrm{cat}},\kappa_{\ch}^{\mathrm{Hodge}},
+ \kappa_{\ch}^{\mathrm{Heis}},\kappa_{\mathrm{BKM}},
+ \kappa_{\mathrm{fiber}})=(0,0,3,5,24).
 \]
-hence weights $(5,4,3,2,1)$. The Cl\'ery--Gritsenko eight-form atlas
-has the separate coefficient packet
-$c_N(0)=(10,4,2,2,1,2,1/2,0)$ for $N=1,\ldots,8$; it is an
-automorphic-twining spread, not the physical CHL dyonic tower.
-\textsl{Path 1.} Direct from Borcherds product expansion of $\Phi_N$,
-where $c_N(0)$ is the constant Fourier coefficient of the
-weak-Jacobi-form lift; at $N=1$ this gives $\kappa_\BKM(\Delta_5)=5$.
-\textsl{Path 2.} Theta-decomposition of the lattice
-$\mathrm{II}_{2,N}$ and Bruinier--Funke quasi-modularity, recovering
-$c_N(0)$ as the trace of the Hecke operator on the elliptic-genus
-generator.
-\textsl{Path 3.} Three-factor universal trace identity in the
-chiral-half denominator normalization
-$\mathrm{tr}^\zeta_{\mathrm{ghost}}(Q^2_{\mathrm{BRST}})
-= \mathrm{tr}_{\mathrm{Pentagon}}
-= \omega_{\mathrm{Borcherds}}
-= c_N(0)/2$
-after the same automorphic input has been fixed. It must not be
-identified with the physical CHL dyonic normalization
-$k_N^{\mathrm{dyon}}=24/(N+1)-2$; only at $N=1$ does
-$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ make the two normalizations meet
-by squaring the primitive denominator.
-\smallskip
+The Vol~III K3 surface assigns the value $2$ to its Hodge coordinate.
+A comparison between the two definitions of the Hodge coordinate is
+the required cross-volume calculation.
 
-\noindent\textbf{Signature 3: Universal chain-homotopy denominator.}
-$h_{A_b}=h_{\mathrm{LV}}/\mathcal N(A_b)$, with level-$2$
-Verdier-Ran-on-bar norm
-$\mathcal N(A_b)=\kappa(A_b)+\kappa^!_{\mathrm{LV}}(A_b)$
-(not the algebra-level $K^\kappa=\kappa(A_b)+\kappa(A_b^!)$).
-\textsl{Path 1.} Sugawara at the affine row:
-$h_\mathsf L=1/(2(k+h^\vee))$ for $k\neq -h^\vee$; the generic formula
-has a pole as $k\to -h^\vee$, and at $k=-h^\vee$ the Sugawara
-construction is undefined and is replaced by the Feigin--Frenkel
-critical package.
-\textsl{Path 2.} Felder BRST at the Virasoro row:
-$h_\mathsf M$ has Zamolodchikov norm $c(5c+22)/10$, divergent at
-$c=0$ (where $\kappa(\mathrm{Vir}_0)=0$) and $c=-22/5$ (Yang--Lee
-self-dual fixed point under $\sigma$, where $\kappa+\kappa^!=0$).
-\textsl{Path 3.} Free-field $\beta\gamma_\lambda$ row at the
-self-dual locus $\kappa+\kappa^!=0$: the universal denominator
-vanishes, and $h_\mathsf C$ is the free-field OPE chain homotopy,
-which carries its own regularisation independent of the
-$\kappa+\kappa^!$ scaling. The three paths agree on the universal
-divisor and on the divergence loci, and identify the self-dual locus
-as the place where the universal denominator must be replaced by the
-archetype-specific homotopy.
+For the primitive Igusa denominator, the index-$1$ normalization is
+\[
+ c_1(0)=10,
+ \qquad
+ \kappa_{\mathrm{BKM}}(\Delta_5)=\frac{c_1(0)}2=5.
+\]
+The Ooguri--Pandharipande normalization uses
+\[
+ \Phi_{10}^{\mathrm{OP}}=4096^{-1}\Delta_5^2,
+ \qquad
+ Z_{\mathrm{OP}}=-4096\,\Delta_5^{-2}.
+\]
+Thus every occurrence of $\Delta_5$, $\Phi_{10}$, and its reciprocal
+must carry the chosen normalization.
+\end{remark}
+
+\begin{lemma}[Rescaling a contraction; \ClaimStatusProvedHere]
+\label{lem:mr-rescaling-contraction}
+Let $(C,d)$ be a cochain complex, let
+$\iota\colon H\to C$ and $p\colon C\to H$ be cochain maps with
+$p\iota=\mathrm{id}_H$, and suppose that a degree-$(-1)$ map $h$ obeys
+\[
+ dh+hd=\nu\bigl(\mathrm{id}_C-\iota p\bigr)
+\]
+for some $\nu\in k^\times$.  Then $\nu^{-1}h$ is a contracting
+homotopy from $\mathrm{id}_C$ to $\iota p$.
+\end{lemma}
+
+\begin{proof}
+Multiply the displayed identity by $\nu^{-1}$.
+\end{proof}
+
+\begin{remark}[The comparison required for a universal denominator]
+The Sugawara coefficient $2(k+h^\vee)$, the Virasoro Gram factor
+$c(5c+22)/10$, and the Verdier scalar sums arise from distinct
+constructions.  An equality with the scalar $\nu$ in
+Lemma~\ref{lem:mr-rescaling-contraction} requires an explicit chain
+model $(C_A,d_A)$ and maps $(\iota_A,p_A,h_A)$ satisfying its displayed
+identity.  Constructing these maps family by family is the precise
+comparison between the bar--cobar homotopy and the scalar invariants.
 \end{remark}
 
 %===========================================================
@@ -943,19 +1589,23 @@ archetype-specific homotopy.
 \label{sec:mr-permanent}
 %===========================================================
 
-The Master Reconstruction Theorem is the open-quadrant reconstruction
-principle.
+The Master Reconstruction and Formation Theorem organizes the open
+quadrant.
 Every theorem statement in Vol~I carries a type signature
 $(\text{quadrant},\,\text{presentation},\,\text{level},\,\text{hypothesis package})$;
-every cross-level equality invokes one of the five reconstruction
-theorems with explicit hypothesis package; $\KSDual$ is the
-$\mathbb Z/2$-fixed sublocus where the four-quadrant grid degenerates
-into self-dual form. Cells admitting holographic vertical
-equivalence carry both Open- and CY-quadrant statements through the
-typed dictionary of
+every cross-level equality names the theorem and hypotheses that
+construct it.  Factorization Morita and associative bar--cobar are the
+two reconstruction equivalences.  The center, operator, modular, and
+scalar objects arise from functors with named comparison maps.
+$\KSDual$ is the homotopy-fixed locus of the Verdier--Koszul
+$\mathbb Z/2$-action.  Each Open--CY vertical comparison carries the
+status and hypotheses displayed in
 Theorem~\ref{thm:mr-vertical-dictionary}.
 
-Primitive objects are the seven slots of
-Definition~\ref{def:mr-open-datum}; shadows are the five levels of
-the Beilinson tower; scalar modular forms are the level-5 partition
-function and its $\kappa$-stratification matrix entries.
+The primitive object is the tuple
+$\mathfrak D_{\mathrm{op}}=(X,D,\tau;\mathsf C,b,\varepsilon_b)$ of
+Definition~\ref{def:mr-open-datum}.  Its six-node fork proceeds from
+the factorization category to the pointed chart and full bar
+coalgebra, then to the center and operator branches.  A full modular
+functor supplies level~$5$; its partition functions and
+$\kappa$-entries are scalar projections.

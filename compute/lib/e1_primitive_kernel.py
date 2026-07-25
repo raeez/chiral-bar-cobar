@@ -215,7 +215,8 @@ HEISENBERG_E1 = E1PrimitiveKernelProfile(
     einfty_kernel=("K02", "K11"),
 )
 
-# Affine sl_2 at level k=1: r(z) = κΩ/z, Φ_KZ non-trivial, no quartic
+# Affine sl_2 at level k=1: projected Casimir coefficient is 3/4;
+# raw trace-form residue is r_k(z)=k*Omega/z, and Phi_KZ is non-trivial.
 # Shadow depth = 3 (Lie/tree class L)
 AFFINE_SL2_E1 = E1PrimitiveKernelProfile(
     name="Affine sl2-hat",

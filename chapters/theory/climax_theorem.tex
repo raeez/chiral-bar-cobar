@@ -1,4 +1,4 @@
-\chapter{The Climax Theorem: $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$}
+\chapter{The Climax Theorem: the KZ--Arnold bar superconnection}
 \label{ch:climax-theorem}
 
 The chiral bar differential and the $\kappa$-conductor are not two
@@ -11,7 +11,8 @@ This chapter inscribes that unification at genus zero.
 
 Let $C$ be a smooth complex curve and $\Conf_n^{\mathrm{ord}}(C)$ the
 configuration space of $n$ ordered distinct points on $C$. The
-Arnold logarithmic $1$-forms
+Arnold logarithmic \(1\)-forms on an affine/formal genus-zero screen
+are represented by
 \[
  \eta_{ij} \;=\; d \log(z_i - z_j) \;\in\; \Omega^1\bigl(\Conf_n^{\mathrm{ord}}(C)\bigr)
 \]
@@ -35,50 +36,70 @@ Arnold's universal KZ connection is the operator-valued connection
 \]
 The scalar forms $\eta_{ij}$ are its Arnold coefficients; they are not
 the connection form without the infinitesimal-braid operators $t_{ij}$.
+The displayed coordinate difference is not a global function on an
+arbitrary curve; globally \(\eta_{ij}\) denotes the logarithmic normal
+form along \(D_{ij}\) together with its coordinate-change cocycle.
 The flatness $\nabla_{\mathrm{Arnold}}^2 = 0$ is equivalent to Arnold's
 three-term identity together with the infinitesimal braid relations.
 
 \section{The KZ functor and the climax statement}
 \label{sec:climax-kz-functor}
 
-\begin{theorem}[Climax of Vol~I, genus-zero form]
+\begin{theorem}[Climax of Vol~I, genus-zero finite-window form]
 \label{thm:climax-genus-zero}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $C$ be a smooth complex curve of genus $0$, and let $A$ be a
 chirally Koszul $E_\infty$-chiral algebra on $C$ admitting a quasi-free
-BRST resolution. Let $\mathrm{Bar}^{\mathrm{ord}}(A)$ be the ordered
-chiral bar complex of $A$ on $\Conf_n^{\mathrm{ord}}(C)$
-\textup{(}Fulton--MacPherson residue construction, Theorem~A in Platonic
-form\textup{).} There exists a universal functor
+BRST resolution. Fix a finite current/KZ trace window
+\(V\subset\bar A\) with invariant pairing and an infinitesimal-braid
+action
+\(\rho_{A,V,n}\colon\mathfrak t_n\to\End(V^{\otimes n})\). Let
+\(\mathrm{Bar}^{\mathrm{ord}}(A)\) be the ordered chiral bar complex of
+\(A\) on \(\Conf_n^{\mathrm{ord}}(C)\)
+\textup{(}Fulton--MacPherson residue construction, Theorem~A in
+Platonic form\textup{).} There exists a finite-window KZ comparison
+functor
 \[
  \mathrm{KZ} \;\colon\; \mathrm{Alg}^{\mathrm{fact, aug, comp}}_C(\text{Koszul})
  \;\longrightarrow\; \mathrm{ConnConf}_C
 \]
-into the category of flat connections on $\Conf_n^{\mathrm{ord}}(C)$,
+into the category of flat superconnections on
+\(\Conf_n^{\mathrm{ord}}(C)\),
 satisfying:
 \begin{enumerate}
- \item \emph{Pullback identity.} The bar differential $d_{\mathrm{bar}}$ of
- $\mathrm{Bar}^{\mathrm{ord}}(A)$ is the pullback of Arnold's
- universal KZ connection $\nabla_{\mathrm{Arnold}}$ along the
- structure functor:
+ \item \emph{Superconnection identity.} On the affine/formal
+ genus-zero tangent screen, the finite-window bar superconnection is
+ the pullback of Arnold's universal KZ connection:
  \[
- d_{\mathrm{bar}} \;=\; \mathrm{KZ}^*\bigl(\nabla_{\mathrm{Arnold}}\bigr).
+ \nabla^{B,0}_{A,V,n}
+ =d_A+d_{\mathrm{dR}}
+ -\sum_{i<j}\widetilde\rho_{A,V,n}(t_{ij})\,\eta_{ij}
+ =\mathrm{KZ}_{A,V,n}^*
+ \bigl(\nabla_{\mathrm{Arnold}}\bigr).
  \]
+ The chain differential \(d_{\mathrm{bar}}\) is the
+ Fulton--MacPherson boundary/residue realization of
+ \(\nabla^{B,0}_{A,V,n}\), not the connection itself.
  \item \emph{Conductor identity.} The $\kappa$-conductor of $A$ equals
- the negative ghost central charge of any quasi-free BRST resolution:
+ the negative ghost central charge on the canonical standard-family
+ BRST witness surface:
  \[
- \kappa(A) \;=\; -\, c_{\mathrm{ghost}}\bigl(\mathrm{BRST}(A)\bigr).
+ \kappa(A) \;=\; -\, c_{\mathrm{ghost}}\bigl(\mathrm{BRST}_{\mathrm{can}}(A)\bigr).
  \]
  \item \emph{Universality.} $\nabla_{\mathrm{Arnold}}$ is the initial
- object in $\mathrm{ConnConf}_C$: every $(\nabla(A), \mathrm{Bar}^{\mathrm{ord}}(A))$
- is a pullback of $\nabla_{\mathrm{Arnold}}$ under the structure
- morphism $A \to \End_{\mathrm{Bar}^{\mathrm{ord}}}(A)$ via the
- universal-enveloping chiral algebra construction.
+ operator-valued genus-zero configuration-space connection in the
+ infinitesimal-braid lane: every displayed finite-window
+ \((\nabla^{B,0}_{A,V,n}, \mathrm{Bar}^{\mathrm{ord}}(A))\) is obtained
+ by applying the structure morphism
+ \(A \to \End_{\mathrm{Bar}^{\mathrm{ord}}}(A)\) to the
+ \(U(\mathfrak t_n)\)-connection, then residue-realizing it on the
+ ordered bar complex.
  \item \emph{Arnold reduction.} The flatness identity
  $\nabla_{\mathrm{Arnold}}^2 = 0$ is equivalent, after pullback, to
- $d_{\mathrm{bar}}^2 = 0$ on $\mathrm{Bar}^{\mathrm{ord}}(A)$; the
+ flatness of \(\nabla^{B,0}_{A,V,n}\) and hence to
+ \(d_{\mathrm{bar}}^2 = 0\) after residue realization; the
  classical Yang--Baxter equation on the $r$-matrix
- $r_{ij}(z_{ij}) = \mathrm{KZ}^*(\eta_{ij})$ is the chain-level
+ \(r_{ij}(z_{ij})=\mathrm{KZ}^{*}(t_{ij}\eta_{ij})\) is the chain-level
  incarnation of Arnold's three-term relation.
 \end{enumerate}
 \end{theorem}
@@ -90,11 +111,15 @@ $U \colon \mathrm{Alg}^{\mathrm{fact, aug, comp}}_C(\text{Koszul}) \to
 $\mathrm{End}$-functor on $\mathrm{Bar}^{\mathrm{ord}}(A)$. Specialising
 to genus $0$ \textup{(}$C = \mathbb{P}^1$\textup{)}, the configuration
 space $\Conf_n^{\mathrm{ord}}(\mathbb{P}^1)$ is rational and the Arnold
-connection has unobstructed monodromy. Pullback identity (1) is the
-combinatorial content of the chiral bar complex on $\mathrm{FM}$:
-$d_{\mathrm{bar}}$ is exactly the residue at the codimension-$2$
-diagonals where two marked points collide, which is by Cauchy's residue
-theorem the pullback of $\eta_{ij}$ under the structure functor.
+connection has unobstructed monodromy on the affine/formal tangent
+screen after imposing the projective linear relations. The
+superconnection identity (1) is the combinatorial content of the
+chiral bar complex on \(\mathrm{FM}\): the pulled-back one-form
+\(\widetilde\rho_{A,V,n}(t_{ij})\eta_{ij}\) supplies the
+coefficient-bundle term, and the ordered bar differential is obtained
+by applying the FM Poincare-residue map along the collision divisors
+\(D_{ij}\). This is the precise sense in which the old shorthand
+\(d_{\mathrm{bar}}=\mathrm{KZ}^{*}(\nabla_{\mathrm{Arnold}})\) is used.
 
 Conductor identity (2) is Theorem on the universal $\kappa$-conductor
 \textup{(}Chapter on the $\kappa$-conductor functor\textup{):} the
@@ -107,9 +132,10 @@ relation: the infinitesimal braid Lie algebra $\mathfrak{t}_n$ is the
 of KZ type on $\Conf_n^{\mathrm{ord}}(C)$ factors through
 $U(\mathfrak{t}_n)$.
 
-Arnold reduction (4) is the chain-level incarnation: the
-$d_{\mathrm{bar}}^2 = 0$ identity, expanded in terms of the $r$-matrix
-generators $r_{ij}(z_{ij})$, is precisely the three-term relation
+Arnold reduction (4) is the chain-level incarnation after residue
+realization: the \(d_{\mathrm{bar}}^2=0\) identity, expanded in terms
+of the \(r\)-matrix generators \(r_{ij}(z_{ij})\), is precisely the
+three-term relation
 $[r_{ij}, r_{ik} + r_{jk}] + [r_{ik}, r_{jk}] = 0$, which is the
 classical Yang--Baxter equation for $r$-matrices arising from KZ-type
 connections.
@@ -197,9 +223,9 @@ is the KZB connection
  \nabla_{\mathrm{KZB}} \;=\; d \;-\; \sum_{i < j} t_{ij} \cdot \eta_{ij}^{(1)}(\tau, z_{ij})
 \]
 with $\eta_{ij}^{(1)}$ the elliptic KZB form (Bernard 1988, Calaque--Enriquez--Etingof
-2010). The climax identity
-$d_{\mathrm{bar}}^{(1)} = \mathrm{KZ}^*(\nabla_{\mathrm{KZB}})$ holds at
-genus $1$ for the chiral bar complex with the elliptic propagator.
+2010). The genus-one finite-window bar superconnection is expected to
+be the KZB pullback, and the chiral bar differential with the elliptic
+propagator is expected to be its FM-boundary residue realization.
 \end{conjecture}
 
 \begin{conjecture}[Higher-genus Climax via Beilinson--Drinfeld]
@@ -212,10 +238,10 @@ the Beilinson--Drinfeld formula with $\delta$-function correction:
  \nabla_{\mathrm{BD}}^{(g)} \;=\; d \;-\; \sum_{i < j} t_{ij} \cdot G_{C_g}(z_i, z_j)
 \]
 with $G_{C_g}(z, w)$ the Green's function on $C_g$. The climax identity
-$d_{\mathrm{bar}}^{(g)} = \mathrm{KZ}^*(\nabla_{\mathrm{BD}}^{(g)})$
-extends to genus $g$, but the $\delta$-function singularity at the
-diagonal forces a regularisation prescription that has not been fixed
-universally.
+is expected to extend as a period-corrected bar superconnection whose
+FM-boundary residue realization gives \(d_{\mathrm{bar}}^{(g)}\), but
+the $\delta$-function singularity at the diagonal forces a
+regularisation prescription that has not been fixed universally.
 \end{conjecture}
 
 \begin{conjecture}[$W$-algebra extension via the W-arena]

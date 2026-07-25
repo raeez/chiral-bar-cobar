@@ -1,952 +1,787 @@
-r"""Line-operator data for non-principal W-algebras via DNP25 constraints.
+r"""Non-principal line restrictions and typed line-category comparisons.
 
-Computes line-operator category data for non-principal W-algebras
-W^k(sl_N, f_lambda) using the DS-KD intertwining on the proved corridor
-(hook type in type A).  The DNP25 framework applies to ALL 3d
-holomorphic-topological QFTs: the line-operator category of a boundary
-chiral algebra A is C_line(A) = A!_line-mod, where A! is the Koszul dual.
+The finite computational surface consists of KRW central charges, Young
+diagrams, strong-generator weights and parity, BP OPE pole orders, and formal
+level or quantum-parameter expressions.  These data determine restrictions to
+specified generator spans.  The full shadow tower and the category of
+topological lines require the comparison packages recorded below.
 
-MATHEMATICAL CONTENT:
+Categorical outputs carry named packages:
 
-1. CENTRAL CHARGE AND KAPPA FOR NON-PRINCIPAL W-ALGEBRAS:
-   - Bershadsky-Polyakov W^k(sl_3, f_{sub}):
-       c_BP(k) = 2 - 3(2k+3)^2/(k+3)
-       rho_BP = 1/6  (anomaly ratio: 1/1 - 2/3 - 2/3 + 1/2 for J,G+,G-,T)
-       kappa_BP(k) = rho_BP * c_BP(k) = (1/6)(2 - 3(2k+3)^2/(k+3))
-   - Minimal W^k(sl_3, f_{min}) = Zamolodchikov W_3^{(2)}:
-       Same algebra as BP (sl_3 has only two non-trivial orbits,
-       and (2,1) is BOTH subregular and minimal).  This is a key point:
-       sl_3 is small enough that the subregular and minimal nilpotent
-       coincide (both correspond to the partition (2,1)).
+``H_line``
+    dualizable boundary condition, completed topological line category, and
+    the boundary-to-line comparison;
 
-2. KOSZUL DUAL IDENTIFICATION VIA HOOK-TYPE TRANSPORT:
-   For hook partition lambda = (N-p, 1^p) in sl_N:
-     (W_k(sl_N, f_lambda))^! = W_{k'}(sl_N, f_{lambda^t})
-   where k' = -k - 2N and lambda^t is the transpose partition.
-   For sl_3, (2,1)^t = (2,1) (self-transpose!), so:
-     (W_k(sl_3, f_{(2,1)}))^! = W_{-k-6}(sl_3, f_{(2,1)})
-   i.e. the Bershadsky-Polyakov algebra is SELF-DUAL under Koszul duality
-   (with level shift k -> -k-6).
+``H_DS/line``
+    a filtered BRST functor on line objects, convergence, and descent to the
+    completed category;
 
-3. LINE-OPERATOR CATEGORIES (DNP25):
-   For hat{sl}_N at level k:
-     C_line(V_k(sl_N)) = Rep_q(sl_N)  with q = exp(pi i/(k+N))
-   DS reduction on line categories:
-     C_line(W_k(sl_N, f_lambda)) should be a quotient/subcategory of
-     Rep_q(sl_N) determined by the BRST functor.  For principal f:
-     this is the full Rep_q(sl_N).  For non-principal f: this is a
-     proper subcategory -- the EVALUATION sector restricted by f.
+``H_hook^{DS/bar}``
+    filtered DS/bar comparison, strict completion, and a perfect Verdier
+    pairing;
 
-4. SHADOW DEPTH CLASSIFICATION:
-   - Principal W_N: class M (infinite depth) on T-line.
-   - BP = W^k(sl_3, f_{(2,1)}): class M on T-line (generic c nonzero,
-     5c+22 generically nonzero), class G on J-line (abelian current).
-   - Hook-type W^k(sl_N, f_{(N-1,1)}): class M on T-line universally.
+``H_KSDual``
+    an object-level fixed-point equivalence compatible with the preceding
+    packages.
 
-5. THE r-MATRIX AND MULTI-CHANNEL STRUCTURE:
-   For BP: the r-matrix r(z) = Res^{coll}_{0,2}(Theta_BP) involves
-   ALL four generators (J, G+, G-, T).  The pole structure:
-     J(z)J(w) ~ k_res/(z-w)^2  (double pole only -> r-matrix: k_res/z)
-     J(z)G+(w) ~ G+(w)/(z-w)   (simple pole -> r-matrix: constant)
-     G+(z)G-(w) ~ k_res/(z-w)^3 + J/(z-w)^2 + ...  (triple pole -> quadratic in 1/z)
-     T(z)T(w) ~ c/2/(z-w)^4 + ...  (quartic pole -> cubic in 1/z)
-   The multi-channel nature is STRUCTURAL: the r-matrix lives in
-   End(V) where V = span{J, G+, G-, T} with mixed statistics.
-
-6. KOSZUL CONDUCTOR:
-   K_BP = c_BP(k) + c_BP(-k-6) = 196  (k-independent).
-   Compare: K_{Vir} = 26, K_{W_3} = 100, K_{W_4} = 316.
-   For BP: the conductor 196 does NOT match the principal W_3 conductor
-   100 -- this is because BP is a DIFFERENT DS reduction of the SAME
-   affine algebra sl_3.
-
-References:
-    Dimofte-Niu-Py (2025): line operators in 3d HT QFT
-    Fehily (2022): hook-type inverse reduction
-    Creutzig-Linshaw-Nakatsuka-Sato (2023): Feigin-Semikhatov duality
-    Bershadsky (1991), Polyakov (1990): W^(2)_3 algebra
-    Manuscript: thm:ds-koszul-obstruction, thm:hook-transport-corridor
+For Bershadsky--Polyakov, the standard FKR central charge has formal reflected
+sum ``50``.  The shifted secondary formula has formal reflected sum ``196``.
+The unsigned reciprocal-weight diagnostic is ``17/6``.  The modular quantities
+``rho``, ``kappa``, and ``K^kappa`` remain open.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, Tuple
 
-from sympy import (
-    Rational,
-    Symbol,
-    cancel,
-    cos,
-    exp,
-    expand,
-    factor,
-    oo,
-    pi,
-    simplify,
-    solve,
-    sqrt,
-    sympify,
+from sympy import I, Rational, Symbol, exp, pi, simplify, sympify
+
+from compute.lib.non_principal_w_bar_engine import (
+    ClaimPacket,
+    ClaimStatus,
+    GeneratorSpec,
+    OpenInvariantError,
+    bershadsky_polyakov_central_charge,
+    bershadsky_polyakov_ope_data,
+    bershadsky_polyakov_reciprocal_weight_diagnostic,
+    bershadsky_polyakov_shifted_central_charge,
+    formal_level_reflection,
+    type_a_krw_central_charge,
+    type_a_strong_generators,
+)
+from compute.lib.nonprincipal_ds_orbits import (
+    normalize_partition,
+    partition_size,
+    transpose_partition,
+    type_a_orbit_class,
 )
 
-k = Symbol('k')
+
+k = Symbol("k")
+H_LINE = (
+    "H_line: dualizable boundary condition, completed topological line "
+    "category, and boundary-to-line comparison"
+)
+H_DS_LINE = (
+    "H_DS/line: filtered BRST functor on line objects, convergence, and "
+    "descent to the completed category"
+)
+H_HOOK_DS_BAR = (
+    "H_hook^{DS/bar}: filtered DS/bar comparison, strict completion, "
+    "and a finite or continuously perfect Verdier pairing"
+)
+H_KSDUAL = (
+    "H_KSDual: object-level fixed-point equivalence compatible with "
+    "H_line, H_DS/line, and H_hook^{DS/bar}"
+)
 
 
-# =============================================================================
-# 1. Central charge formulas for non-principal W-algebras
-# =============================================================================
-
-def bp_central_charge(level=None):
-    """Central charge of the Bershadsky-Polyakov algebra W^k(sl_3, f_{(2,1)}).
-
-    c_BP(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
-    BP formula (FKR 2020, verified k=-3/2 -> c=-2).
-    """
-    if level is None:
-        level = k
-    lev = sympify(level)
-    return 2 - 24 * (lev + 1) ** 2 / (lev + 3)
+def _open(statement: str, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, ClaimStatus.OPEN, None, hypotheses=tuple(hypotheses))
 
 
-def principal_w3_central_charge(level=None):
-    """Central charge of the principal W_3 = W^k(sl_3, f_{(3)}).
-
-    c_{W_3}(k) = 2 - 24(k+2)^2/(k+3)
-
-    Fateev-Lukyanov formula.
-    """
-    if level is None:
-        level = k
-    lev = sympify(level)
-    return 2 - 24 * (lev + 2) ** 2 / (lev + 3)
+def _conditional(statement: str, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, ClaimStatus.CONDITIONAL, None, hypotheses=tuple(hypotheses))
 
 
-def principal_wn_central_charge(N, level=None):
-    """Central charge of the principal W_N = W^k(sl_N, f_{(N)}).
+@dataclass(frozen=True)
+class LineRestrictionData:
+    """Exact OPE closure data for a specified generator span."""
 
-    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-    """
-    if level is None:
-        level = k
-    lev = sympify(level)
-    return (N - 1) - N * (N ** 2 - 1) * (lev + N - 1) ** 2 / (lev + N)
+    name: str
+    generators: Tuple[str, ...]
+    closure: str
+    exact_ope_channels: Tuple[Tuple[str, str, int], ...]
+    full_shadow_depth: ClaimPacket
 
-
-def affine_central_charge(N, level=None):
-    """Sugawara central charge for V_k(sl_N).
-
-    c = k * dim(sl_N) / (k + h^v) = k(N^2-1)/(k+N).
-    """
-    if level is None:
-        level = k
-    lev = sympify(level)
-    return lev * (N ** 2 - 1) / (lev + N)
-
-
-def virasoro_central_charge(level=None):
-    """Central charge of the Virasoro algebra = W^k(sl_2, f_{(2)}).
-
-    c(k) = 1 - 6(k+1)^2/(k+2)
-    """
-    if level is None:
-        level = k
-    lev = sympify(level)
-    return 1 - 6 * (lev + 1) ** 2 / (lev + 2)
-
-
-# =============================================================================
-# 2. Dual levels (Feigin-Frenkel involution)
-# =============================================================================
-
-def ff_dual_level(N, level=None):
-    """Feigin-Frenkel dual level: k' = -k - 2h^v = -k - 2N for sl_N."""
-    if level is None:
-        level = k
-    return -sympify(level) - 2 * N
-
-
-def bp_dual_level(level=None):
-    """Dual level for BP (sl_3): k' = -k - 6."""
-    return ff_dual_level(3, level)
-
-
-# =============================================================================
-# 3. Koszul conductors
-# =============================================================================
-
-def koszul_conductor_bp():
-    """K_BP = c_BP(k) + c_BP(-k-6).
-
-    Should be 196, independent of k (FKR 2020).
-    """
-    c_k = bp_central_charge()
-    c_kp = bp_central_charge(bp_dual_level())
-    return simplify(c_k + c_kp)
-
-
-def koszul_conductor_principal_wn(N):
-    """K_{W_N} = c_{W_N}(k) + c_{W_N}(-k-2N).
-
-    Known values: K_{Vir} = 26, K_{W_3} = 100, K_{W_4} = 246, K_{W_5} = 488.
-    """
-    c_k = principal_wn_central_charge(N)
-    c_kp = principal_wn_central_charge(N, ff_dual_level(N))
-    return simplify(c_k + c_kp)
-
-
-# =============================================================================
-# 4. Anomaly ratios and kappa
-# =============================================================================
-
-def bp_anomaly_ratio():
-    """Anomaly ratio rho_BP for the Bershadsky-Polyakov algebra.
-
-    Generators: J (h=1, bosonic), G+ (h=3/2, fermionic),
-                G- (h=3/2, fermionic), T (h=2, bosonic).
-
-    rho = 1/1 - 2/3 - 2/3 + 1/2 = 1 - 4/3 + 1/2 = 1/6.
-
-    NOTE: fermionic generators contribute -1/h, bosonic contribute +1/h.
-    """
-    return (Rational(1, 1)            # J: bosonic, h=1
-            - Rational(1, 1) * Rational(2, 3)   # G+: fermionic, 1/(3/2) = 2/3
-            - Rational(1, 1) * Rational(2, 3)   # G-: fermionic, 1/(3/2) = 2/3
-            + Rational(1, 2))          # T: bosonic, h=2
-
-
-def bp_kappa(level=None):
-    """Modular characteristic kappa for BP.
-
-    kappa_BP(k) = rho_BP * c_BP(k) = (1/6) * c_BP(k).
-    """
-    return bp_anomaly_ratio() * bp_central_charge(level)
-
-
-def principal_w3_anomaly_ratio():
-    """Anomaly ratio for W_3: generators at h=2 (bosonic), h=3 (bosonic).
-
-    rho = 1/2 + 1/3 = 5/6.
-    """
-    return Rational(1, 2) + Rational(1, 3)
-
-
-def principal_w3_kappa(level=None):
-    """kappa for W_3 = (5/6) * c_{W_3}(k)."""
-    return principal_w3_anomaly_ratio() * principal_w3_central_charge(level)
-
-
-def virasoro_anomaly_ratio():
-    """Anomaly ratio for Virasoro: single generator T at h=2.
-
-    rho = 1/2.
-    """
-    return Rational(1, 2)
-
-
-def virasoro_kappa(level=None):
-    """kappa for Virasoro = (1/2) * c_{Vir}(k)."""
-    return virasoro_anomaly_ratio() * virasoro_central_charge(level)
-
-
-# =============================================================================
-# 5. Kappa complementarity
-# =============================================================================
-
-def bp_kappa_complementarity():
-    """kappa_BP(k) + kappa_BP(-k-6): should be k-independent.
-
-    For the self-transpose partition (2,1)^t = (2,1) in sl_3:
-    kappa(k) + kappa(k') is a constant (the Koszul conductor times rho).
-    """
-    kap = bp_kappa()
-    kap_dual = bp_kappa(bp_dual_level())
-    return simplify(kap + kap_dual)
-
-
-def principal_w3_kappa_complementarity():
-    """kappa_{W_3}(k) + kappa_{W_3}(-k-6): should be k-independent.
-
-    Since (3)^t = (1,1,1), the Koszul dual of W_3 is hat{sl}_3 at dual level.
-    But W_3 IS the principal W-algebra, so the KD stays within the principal
-    family: W_k(sl_3)^! = W_{-k-6}(sl_3).
-
-    kappa_sum = (5/6) * K_{W_3} = (5/6) * 100 = 250/3.
-    """
-    kap = principal_w3_kappa()
-    kap_dual = principal_w3_kappa(ff_dual_level(3))
-    return simplify(kap + kap_dual)
-
-
-# =============================================================================
-# 6. Generator content and shadow depth classification
-# =============================================================================
 
 @dataclass(frozen=True)
 class GeneratorData:
-    """Strong generator content of a W-algebra."""
+    """Exact generator ledger with line restrictions and typed full depth."""
+
     name: str
-    generators: Tuple[Tuple[str, object, str], ...]  # (name, weight, parity)
-    num_bosonic: int
-    num_fermionic: int
-    anomaly_ratio: object
-    shadow_depth_T: object   # depth on T-line
-    shadow_class_T: str      # G, L, C, or M
+    generators: Tuple[Tuple[str, object, str], ...]
+    num_even: int
+    num_odd: int
+    reciprocal_weight_diagnostic: Rational
+    line_restrictions: Tuple[LineRestrictionData, ...]
+    full_shadow_depth: ClaimPacket
+    rho: ClaimPacket
 
+    @property
+    def num_bosonic(self) -> int:
+        return self.num_even
 
-def bp_generator_data():
-    """Generator data for Bershadsky-Polyakov."""
-    gens = (
-        ('J', Rational(1), 'bosonic'),
-        ('G+', Rational(3, 2), 'fermionic'),
-        ('G-', Rational(3, 2), 'fermionic'),
-        ('T', Rational(2), 'bosonic'),
-    )
-    return GeneratorData(
-        name='Bershadsky-Polyakov W^k(sl_3, f_{(2,1)})',
-        generators=gens,
-        num_bosonic=2,
-        num_fermionic=2,
-        anomaly_ratio=bp_anomaly_ratio(),
-        shadow_depth_T=oo,
-        shadow_class_T='M',
-    )
+    @property
+    def num_fermionic(self) -> int:
+        return self.num_odd
 
+    @property
+    def anomaly_ratio(self) -> ClaimPacket:
+        return self.rho
 
-def principal_w3_generator_data():
-    """Generator data for principal W_3."""
-    gens = (
-        ('T', Rational(2), 'bosonic'),
-        ('W', Rational(3), 'bosonic'),
-    )
-    return GeneratorData(
-        name='Principal W_3 = W^k(sl_3, f_{(3)})',
-        generators=gens,
-        num_bosonic=2,
-        num_fermionic=0,
-        anomaly_ratio=principal_w3_anomaly_ratio(),
-        shadow_depth_T=oo,
-        shadow_class_T='M',
-    )
+    @property
+    def shadow_depth_T(self) -> ClaimPacket:
+        return self.full_shadow_depth
 
+    @property
+    def shadow_class_T(self) -> ClaimPacket:
+        return self.full_shadow_depth
 
-def virasoro_generator_data():
-    """Generator data for Virasoro = W^k(sl_2, f_{(2)})."""
-    gens = (
-        ('T', Rational(2), 'bosonic'),
-    )
-    return GeneratorData(
-        name='Virasoro = W^k(sl_2, f_{(2)})',
-        generators=gens,
-        num_bosonic=1,
-        num_fermionic=0,
-        anomaly_ratio=virasoro_anomaly_ratio(),
-        shadow_depth_T=oo,
-        shadow_class_T='M',
-    )
-
-
-# =============================================================================
-# 7. Line-operator category data (DNP25 framework)
-# =============================================================================
 
 @dataclass(frozen=True)
 class LineOperatorCategoryData:
-    """Line-operator category data for a boundary chiral algebra A.
+    """Exact indexing data and typed line-category comparison claims."""
 
-    By DNP25, C_line(A) = A!_line-mod, where A! is the Koszul dual.
-    For affine algebras V_k(g), C_line = Rep_q(g) on the evaluation sector.
-    For DS reductions, C_line is a subcategory determined by the BRST functor.
-    """
     algebra_name: str
     partition: Tuple[int, ...]
     N: int
-    # Koszul dual identification
-    koszul_dual_name: str
-    koszul_dual_partition: Tuple[int, ...]
-    dual_level_formula: str
-    is_self_dual: bool
-    # Line-operator category
-    line_category_description: str
-    quantum_group_type: str
-    quantum_parameter_formula: str
-    # DS reduction constraint
-    ds_reduction_type: str  # 'principal', 'subregular', 'minimal', 'hook', etc.
-    ds_kd_commutes: bool    # True on proved corridor
-    proof_status: str       # 'proved', 'conjectural'
+    transpose: Tuple[int, ...]
+    formal_reflected_level: object
+    formal_quantum_parameter: object
+    ds_reduction_type: str
+    line_category_equivalence: ClaimPacket
+    ds_line_functor: ClaimPacket
+    ds_bar_commutation: ClaimPacket
+    same_family_duality: ClaimPacket
+    ksdual_membership: ClaimPacket
 
+    @property
+    def dual_level_formula(self) -> str:
+        return f"k' = {self.formal_reflected_level}"
 
-def affine_line_operators(N, level=None):
-    """Line-operator data for hat{sl}_N at level k.
+    @property
+    def is_self_transpose(self) -> bool:
+        """Return the exact Young-diagram fixed-point condition."""
 
-    C_line(V_k(sl_N)) = Rep_q(sl_N), q = exp(pi i / (k + N)).
-    Koszul dual: V_{-k-2N}(sl_N).
-    """
-    return LineOperatorCategoryData(
-        algebra_name=f'V_k(sl_{N})',
-        partition=(1,) * N,
-        N=N,
-        koszul_dual_name=f'V_{{-k-2{N}}}(sl_{N})',
-        koszul_dual_partition=(1,) * N,
-        dual_level_formula=f'k\' = -k - {2 * N}',
-        is_self_dual=True,
-        line_category_description=f'Rep_q(sl_{N}), evaluation sector',
-        quantum_group_type=f'U_q(sl_{N})',
-        quantum_parameter_formula=f'q = exp(pi i / (k + {N}))',
-        ds_reduction_type='trivial',
-        ds_kd_commutes=True,
-        proof_status='proved',
-    )
+        return self.partition == self.transpose
 
+    @property
+    def is_self_dual(self) -> ClaimPacket:
+        """Compatibility surface carrying the conditional duality claim."""
 
-def bp_line_operators():
-    """Line-operator data for BP = W^k(sl_3, f_{(2,1)}).
+        return self.same_family_duality
 
-    Koszul dual: W_{-k-6}(sl_3, f_{(2,1)}) (self-dual, since (2,1)^t = (2,1)).
-    Line-operator category: subcategory of Rep_q(sl_3) determined by
-    the BRST reduction functor DS_{(2,1)}.
+    @property
+    def proof_status(self) -> ClaimStatus:
+        return self.line_category_equivalence.status
 
-    The BRST functor DS_f: V_k(sl_3)-mod -> W_k(sl_3, f)-mod sends
-    a V_k(sl_3)-module M to H^0(M tensor C_{chi}, Q_BRST).
-    For hook-type f: this is an exact functor on the appropriate
-    subcategory.  The image in line-operator categories is:
-
-      C_line(BP) = DS_{(2,1)}(Rep_q(sl_3))
-
-    which is a quotient category of Rep_q(sl_3).  The quantum group
-    underlying the line operators is a QUOTIENT of U_q(sl_3), not a
-    different quantum group.  Concretely, the simple objects of
-    C_line(BP) are indexed by the BRST-nonvanishing representations
-    of sl_3 at level k.
-    """
-    return LineOperatorCategoryData(
-        algebra_name='W^k(sl_3, f_{(2,1)}) [Bershadsky-Polyakov]',
-        partition=(2, 1),
-        N=3,
-        koszul_dual_name='W^{-k-6}(sl_3, f_{(2,1)}) [BP at dual level]',
-        koszul_dual_partition=(2, 1),
-        dual_level_formula='k\' = -k - 6',
-        is_self_dual=True,
-        line_category_description=(
-            'DS_{(2,1)}(Rep_q(sl_3)): BRST reduction of evaluation '
-            'modules of hat{sl}_3 at level k'
-        ),
-        quantum_group_type='Quotient of U_q(sl_3)',
-        quantum_parameter_formula='q = exp(pi i / (k + 3))',
-        ds_reduction_type='subregular = minimal (sl_3)',
-        ds_kd_commutes=True,
-        proof_status='proved (hook type, self-transpose)',
-    )
-
-
-def principal_w3_line_operators():
-    """Line-operator data for W_3 = W^k(sl_3, f_{(3)}).
-
-    Koszul dual: W_{-k-6}(sl_3, f_{(3)}) = W_3 at dual level.
-    For the principal nilpotent, DS is the standard quantum DS reduction.
-    Line-operator category:
-      C_line(W_3) = DS_{(3)}(Rep_q(sl_3)) = full evaluation sector of Y(sl_3).
-    """
-    return LineOperatorCategoryData(
-        algebra_name='W^k(sl_3, f_{(3)}) [principal W_3]',
-        partition=(3,),
-        N=3,
-        koszul_dual_name='W^{-k-6}(sl_3, f_{(3)}) [W_3 at dual level]',
-        koszul_dual_partition=(1, 1, 1),
-        dual_level_formula='k\' = -k - 6',
-        is_self_dual=False,
-        line_category_description=(
-            'DS_{(3)}(Rep_q(sl_3)): full quantum DS reduction, '
-            'evaluation sector of Y(sl_3)_q'
-        ),
-        quantum_group_type='Y(sl_3)_q (quantum Yangian)',
-        quantum_parameter_formula='q = exp(pi i / (k + 3))',
-        ds_reduction_type='principal',
-        ds_kd_commutes=True,
-        proof_status='proved (principal)',
-    )
-
-
-def sl4_hook_31_line_operators():
-    """Line-operator data for W^k(sl_4, f_{(3,1)}).
-
-    Koszul dual: W_{-k-8}(sl_4, f_{(2,1,1)}) (transpose partition).
-    Line-operator category: subcategory of Rep_q(sl_4).
-    """
-    return LineOperatorCategoryData(
-        algebra_name='W^k(sl_4, f_{(3,1)}) [subregular]',
-        partition=(3, 1),
-        N=4,
-        koszul_dual_name='W^{-k-8}(sl_4, f_{(2,1,1)}) [minimal, transpose]',
-        koszul_dual_partition=(2, 1, 1),
-        dual_level_formula='k\' = -k - 8',
-        is_self_dual=False,
-        line_category_description=(
-            'DS_{(3,1)}(Rep_q(sl_4)): BRST reduction by subregular '
-            'nilpotent of evaluation modules of hat{sl}_4'
-        ),
-        quantum_group_type='Quotient of U_q(sl_4)',
-        quantum_parameter_formula='q = exp(pi i / (k + 4))',
-        ds_reduction_type='subregular (hook type)',
-        ds_kd_commutes=True,
-        proof_status='proved (hook type)',
-    )
-
-
-def sl4_hook_211_line_operators():
-    """Line-operator data for W^k(sl_4, f_{(2,1,1)}).
-
-    Koszul dual: W_{-k-8}(sl_4, f_{(3,1)}) (transpose partition).
-    """
-    return LineOperatorCategoryData(
-        algebra_name='W^k(sl_4, f_{(2,1,1)}) [minimal]',
-        partition=(2, 1, 1),
-        N=4,
-        koszul_dual_name='W^{-k-8}(sl_4, f_{(3,1)}) [subregular, transpose]',
-        koszul_dual_partition=(3, 1),
-        dual_level_formula='k\' = -k - 8',
-        is_self_dual=False,
-        line_category_description=(
-            'DS_{(2,1,1)}(Rep_q(sl_4)): BRST reduction by minimal '
-            'nilpotent of evaluation modules of hat{sl}_4'
-        ),
-        quantum_group_type='Quotient of U_q(sl_4)',
-        quantum_parameter_formula='q = exp(pi i / (k + 4))',
-        ds_reduction_type='minimal (hook type)',
-        ds_kd_commutes=True,
-        proof_status='proved (hook type)',
-    )
-
-
-# =============================================================================
-# 8. DS reduction on line categories: the commutative diagram
-# =============================================================================
 
 @dataclass(frozen=True)
 class DSLineReductionDiagram:
-    """The commutative diagram for DS reduction on line categories.
+    """Exact diagram indices and typed comparison arrows."""
 
-    The DS-KD intertwining on the proved corridor states:
-
-        V_k(sl_N)  --DS(f_lam)-->  W_k(sl_N, f_lam)
-             |                            |
-            KD                           KD
-             |                            |
-        V_{k'}(sl_N) --DS(f_{lam^t})--> W_{k'}(sl_N, f_{lam^t})
-
-    Passing to line categories:
-
-        Rep_q(sl_N)  --DS(f_lam)-->  C_line(W_k(f_lam))
-             |                            |
-            KD                           KD
-             |                            |
-        Rep_{q'}(sl_N) --DS(f_{lam^t})--> C_line(W_{k'}(f_{lam^t}))
-
-    where q = exp(pi i/(k+N)), q' = exp(pi i/(k'+N)).
-    """
     N: int
     partition: Tuple[int, ...]
     transpose: Tuple[int, ...]
     is_self_transpose: bool
-    # Top row
+    formal_reflected_level: object
     source_algebra: str
-    source_line_cat: str
     target_algebra: str
-    target_line_cat: str
-    # Bottom row
-    dual_source_algebra: str
-    dual_source_line_cat: str
-    dual_target_algebra: str
-    dual_target_line_cat: str
-    # Diagram status
-    left_vertical_proved: bool    # affine KD always proved
-    right_vertical_proved: bool   # the DS-KD commutation claim
-    top_horizontal_proved: bool   # DS reduction is constructive
-    bottom_horizontal_proved: bool
-    diagram_commutes: bool
+    reflected_source_algebra: str
+    reflected_target_algebra: str
+    algebraic_ds_reduction: ClaimPacket
+    source_line_category: ClaimPacket
+    target_line_category: ClaimPacket
+    ds_line_functor: ClaimPacket
+    ds_bar_commutation: ClaimPacket
+    diagram_commutes: ClaimPacket
 
-
-def ds_line_reduction_diagram(partition, N=None):
-    """Construct the DS-line reduction commutative diagram."""
-    lam = tuple(sorted(partition, reverse=True))
-    if N is None:
-        N = sum(lam)
-    lam_t = _transpose_partition(lam)
-    is_self_t = (lam == lam_t)
-    is_hook = _is_hook(lam)
-
-    kv_str = f'-k - {2 * N}'
-
-    return DSLineReductionDiagram(
-        N=N,
-        partition=lam,
-        transpose=lam_t,
-        is_self_transpose=is_self_t,
-        source_algebra=f'V_k(sl_{N})',
-        source_line_cat=f'Rep_q(sl_{N})',
-        target_algebra=f'W_k(sl_{N}, f_{{{lam}}})',
-        target_line_cat=f'DS_{{{lam}}}(Rep_q(sl_{N}))',
-        dual_source_algebra=f'V_{{{kv_str}}}(sl_{N})',
-        dual_source_line_cat=f'Rep_{{q\'}}(sl_{N})',
-        dual_target_algebra=f'W_{{{kv_str}}}(sl_{N}, f_{{{lam_t}}})',
-        dual_target_line_cat=f'DS_{{{lam_t}}}(Rep_{{q\'}}(sl_{N}))',
-        left_vertical_proved=True,
-        right_vertical_proved=is_hook or lam == (N,) or lam == (1,) * N,
-        top_horizontal_proved=True,
-        bottom_horizontal_proved=True,
-        diagram_commutes=is_hook or lam == (N,) or lam == (1,) * N,
-    )
-
-
-# =============================================================================
-# 9. Virasoro shadow tower (for depth classification)
-# =============================================================================
-
-def virasoro_shadow_tower(c_val, max_arity=10):
-    """Compute S_r(c) for r = 2..max_arity via the master equation recursion.
-
-    S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)).
-    """
-    c_sym = sympify(c_val)
-    tower = {}
-    tower[2] = c_sym / 2
-    tower[3] = Rational(2)
-    tower[4] = Rational(10) / (c_sym * (5 * c_sym + 22))
-
-    for r in range(5, max_arity + 1):
-        total = Rational(0)
-        for j in range(2, r + 1):
-            kk = r + 2 - j
-            if kk < 2 or kk > r or j > kk:
-                continue
-            if j not in tower or kk not in tower:
-                continue
-            contrib = j * kk * tower[j] * tower[kk]
-            if j == kk:
-                contrib = contrib / 2
-            total += contrib
-        tower[r] = cancel(-total / (r * c_sym))
-
-    return tower
-
-
-def bp_shadow_tower_on_tline(max_arity=8):
-    """BP shadow tower on the T-line: S_r^{Vir}(c_BP(k)).
-
-    Returns dict {r: S_r(k)} as rational functions of k.
-    """
-    c_bp = bp_central_charge()
-    c_sym = Symbol('c')
-    vir_tower = virasoro_shadow_tower(c_sym, max_arity)
-
-    result = {}
-    for r, sr in vir_tower.items():
-        result[r] = factor(cancel(sr.subs(c_sym, c_bp)))
-    return result
-
-
-def shadow_depth_classification(c_val):
-    """Classify shadow depth on the T-line from central charge.
-
-    Class G (depth 2): c = 0 (kappa = 0, tower trivializes).
-    Class L (depth 3): 5c + 22 = 0, c = -22/5 (quartic diverges, but
-                        special cancellation kills quintic and higher).
-    Class M (infinite): generic c (quartic nonzero, infinite cascade).
-
-    NOTE: this is the T-LINE classification only.  Multi-generator
-    algebras can have different depths on different lines.
-    """
-    c_simplified = simplify(c_val)
-    if c_simplified == 0:
-        return 'G', 2
-    if simplify(5 * c_val + 22) == 0:
-        return 'L', 3
-    return 'M', oo
-
-
-def bp_shadow_depth():
-    """Shadow depth classification for BP on each generator line.
-
-    T-line: class M (infinite) -- generic c_BP nonzero and 5c_BP+22 nonzero.
-    J-line: class G (depth 2) -- J is an abelian current, J_{(0)}J = 0.
-    G-lines: determined by the G+/G- OPE structure (fermionic, class M).
-
-    Overall classification: M (the deepest line dominates).
-    """
-    c_bp = bp_central_charge()
-    t_class, t_depth = shadow_depth_classification(c_bp)
-
-    return {
-        'T_line': {'class': t_class, 'depth': t_depth},
-        'J_line': {'class': 'G', 'depth': 2},
-        'G_lines': {'class': 'M', 'depth': oo},
-        'overall': 'M',
-    }
-
-
-# =============================================================================
-# 10. r-matrix structure for non-principal W-algebras
-# =============================================================================
 
 @dataclass(frozen=True)
-class RMatrixChannelData:
-    """Data for a single OPE channel contributing to the r-matrix.
+class OPEChannelData:
+    """One primary-source BP OPE pole order and its conditional extraction."""
 
-    The r-matrix r(z) = Res^{coll}_{0,2}(Theta_A) has poles determined
-    by the OPE singular terms, SHIFTED DOWN by one order due to the
-    d log(z-w) kernel (AP19: the bar kernel absorbs a pole).
+    source_generator: str
+    target_generator: str
+    ope_max_pole: int
+    channel_type: str
+    source: str
+    rmatrix_extraction: ClaimPacket
 
-    For an OPE a(z)b(w) ~ sum_{n>=0} c_n/(z-w)^{n+1}, the r-matrix
-    contribution is sum_{n>=0} c_n / z^n (poles shifted down by 1).
-    """
-    source_gen: str
-    target_gen: str
-    ope_max_pole: int       # highest pole order in the OPE
-    rmatrix_max_pole: int   # highest pole order in r-matrix (= ope - 1, AP19)
-    channel_type: str       # 'bosonic-bosonic', 'bosonic-fermionic', 'fermionic-fermionic'
+    @property
+    def source_gen(self) -> str:
+        return self.source_generator
 
+    @property
+    def target_gen(self) -> str:
+        return self.target_generator
 
-def bp_rmatrix_channels():
-    """r-matrix channel data for the Bershadsky-Polyakov algebra.
-
-    OPE structure (from Bershadsky 1991):
-      J(z)J(w) ~ k_res/(z-w)^2                     (double pole)
-      J(z)G+(w) ~ G+(w)/(z-w)                       (simple pole)
-      J(z)G-(w) ~ -G-(w)/(z-w)                      (simple pole)
-      J(z)T(w) ~ 0                                   (regular)
-      G+(z)G-(w) ~ k_res/(z-w)^3 + J/(z-w)^2 + ... (triple pole)
-      G+(z)G+(w) ~ 0                                 (fermionic, regular)
-      G-(z)G-(w) ~ 0                                 (fermionic, regular)
-      T(z)T(w) ~ c/2/(z-w)^4 + 2T/(z-w)^2 + dT/(z-w) (quartic pole)
-      T(z)J(w) ~ J/(z-w)^2 + dJ/(z-w)              (double pole)
-      T(z)G+(w) ~ (3/2)G+/(z-w)^2 + dG+/(z-w)      (double pole)
-      T(z)G-(w) ~ (3/2)G-/(z-w)^2 + dG-/(z-w)      (double pole)
-
-    r-matrix poles (AP19: shifted down by 1):
-      J-J: single pole (from double pole OPE)
-      J-G+: constant (from simple pole OPE)
-      G+-G-: double pole (from triple pole OPE)
-      T-T: cubic pole (from quartic pole OPE)
-      T-J: single pole (from double pole OPE)
-      T-G+: single pole (from double pole OPE)
-    """
-    channels = [
-        RMatrixChannelData('J', 'J', 2, 1, 'bosonic-bosonic'),
-        RMatrixChannelData('J', 'G+', 1, 0, 'bosonic-fermionic'),
-        RMatrixChannelData('J', 'G-', 1, 0, 'bosonic-fermionic'),
-        RMatrixChannelData('J', 'T', 0, 0, 'bosonic-bosonic'),
-        RMatrixChannelData('G+', 'G-', 3, 2, 'fermionic-fermionic'),
-        RMatrixChannelData('G+', 'G+', 0, 0, 'fermionic-fermionic'),
-        RMatrixChannelData('G-', 'G-', 0, 0, 'fermionic-fermionic'),
-        RMatrixChannelData('T', 'T', 4, 3, 'bosonic-bosonic'),
-        RMatrixChannelData('T', 'J', 2, 1, 'bosonic-bosonic'),
-        RMatrixChannelData('T', 'G+', 2, 1, 'bosonic-fermionic'),
-        RMatrixChannelData('T', 'G-', 2, 1, 'bosonic-fermionic'),
-    ]
-    return channels
+    @property
+    def rmatrix_max_pole(self) -> ClaimPacket:
+        return self.rmatrix_extraction
 
 
-def bp_rmatrix_max_pole():
-    """Maximum pole order in the BP r-matrix.
+RMatrixChannelData = OPEChannelData
 
-    The T-T channel has OPE pole order 4, so r-matrix pole order 3.
-    This is the highest.
-    """
-    return 3
-
-
-def principal_w3_rmatrix_max_pole():
-    """Maximum pole order in the W_3 r-matrix.
-
-    W(z)W(w) has pole order 6 (from the W_3 OPE), so r-matrix pole order 5.
-    T(z)T(w) has pole order 4, so r-matrix pole order 3.
-    The W-W channel dominates.
-    """
-    return 5
-
-
-# =============================================================================
-# 11. Comprehensive non-principal line-operator catalog
-# =============================================================================
 
 @dataclass(frozen=True)
 class NonPrincipalLineOperatorEntry:
-    """Complete line-operator entry for a non-principal W-algebra."""
+    """One catalog entry with exact scalar data and typed frontier fields."""
+
     algebra_name: str
     lie_algebra: str
     N: int
     partition: Tuple[int, ...]
     transpose: Tuple[int, ...]
     nilpotent_type: str
-    # Invariants
     central_charge: object
-    anomaly_ratio: object
-    kappa: object
-    koszul_conductor: object
-    # Depth
-    shadow_class: str
-    # Line operators
-    line_cat_data: LineOperatorCategoryData
-    # DS diagram
+    central_scalar_reflection_sum: object
+    shifted_secondary_sum: object
+    reciprocal_weight_diagnostic: Rational
+    rho: ClaimPacket
+    kappa: ClaimPacket
+    modular_conductor: ClaimPacket
+    full_shadow_depth: ClaimPacket
+    line_category: LineOperatorCategoryData
     ds_diagram: DSLineReductionDiagram
-    # r-matrix
-    rmatrix_max_pole: int
-    num_rmatrix_channels: int
+    ope_channels: Tuple[OPEChannelData, ...]
 
 
-def build_catalog():
-    """Build the complete catalog of non-principal line-operator data.
+def bp_central_charge(level=k):
+    """Return the standard FKR BP central charge."""
 
-    Covers: sl_2 (Virasoro), sl_3 (BP, W_3), sl_4 (hooks).
-    """
-    catalog = {}
+    return bershadsky_polyakov_central_charge(sympify(level))
 
-    # Virasoro = W^k(sl_2, f_{(2)})
-    catalog['Vir'] = NonPrincipalLineOperatorEntry(
-        algebra_name='Virasoro',
-        lie_algebra='sl_2',
-        N=2,
-        partition=(2,),
-        transpose=(1, 1),
-        nilpotent_type='principal',
-        central_charge=virasoro_central_charge(),
-        anomaly_ratio=virasoro_anomaly_ratio(),
-        kappa=virasoro_kappa(),
-        koszul_conductor=Rational(26),
-        shadow_class='M',
-        line_cat_data=affine_line_operators(2),
-        ds_diagram=ds_line_reduction_diagram((2,), 2),
-        rmatrix_max_pole=3,
-        num_rmatrix_channels=1,
+
+def bp_shifted_central_charge(level=k):
+    """Return the shifted secondary BP comparison scalar."""
+
+    return bershadsky_polyakov_shifted_central_charge(sympify(level))
+
+
+def principal_w3_central_charge(level=k):
+    """Return the principal ``W_3`` central charge in the standard convention."""
+
+    return type_a_krw_central_charge((3,), sympify(level))
+
+
+def principal_wn_central_charge(N: int, level=k):
+    """Return the principal ``W_N`` central charge from KRW."""
+
+    return type_a_krw_central_charge((N,), sympify(level))
+
+
+def affine_central_charge(N: int, level=k):
+    """Return the Sugawara central charge of ``V_k(sl_N)``."""
+
+    return type_a_krw_central_charge((1,) * N, sympify(level))
+
+
+def virasoro_central_charge(level=k):
+    """Return the principal ``sl_2`` Virasoro central charge."""
+
+    return type_a_krw_central_charge((2,), sympify(level))
+
+
+def ff_dual_level(N: int, level=k):
+    """Return the formal reflection ``k -> -k-2N``."""
+
+    return formal_level_reflection(N, sympify(level))
+
+
+def bp_dual_level(level=k):
+    """Return the BP formal reflection ``k -> -k-6``."""
+
+    return ff_dual_level(3, level)
+
+
+def bp_standard_central_reflection_sum(level=k):
+    """Return the standard BP central scalar sum under formal reflection."""
+
+    kk = sympify(level)
+    return simplify(bp_central_charge(kk) + bp_central_charge(bp_dual_level(kk)))
+
+
+def bp_shifted_central_reflection_sum(level=k):
+    """Return the shifted secondary BP scalar sum under formal reflection."""
+
+    kk = sympify(level)
+    return simplify(bp_shifted_central_charge(kk) + bp_shifted_central_charge(bp_dual_level(kk)))
+
+
+def principal_wn_central_reflection_sum(N: int, level=k):
+    """Return the principal central scalar sum under formal reflection."""
+
+    kk = sympify(level)
+    return simplify(
+        principal_wn_central_charge(N, kk)
+        + principal_wn_central_charge(N, ff_dual_level(N, kk))
     )
 
-    # BP = W^k(sl_3, f_{(2,1)})
-    catalog['BP'] = NonPrincipalLineOperatorEntry(
-        algebra_name='Bershadsky-Polyakov',
-        lie_algebra='sl_3',
-        N=3,
-        partition=(2, 1),
-        transpose=(2, 1),
-        nilpotent_type='subregular = minimal (sl_3)',
-        central_charge=bp_central_charge(),
-        anomaly_ratio=bp_anomaly_ratio(),
-        kappa=bp_kappa(),
-        koszul_conductor=Rational(196),  # K=196 (FKR 2020)
-        shadow_class='M',
-        line_cat_data=bp_line_operators(),
-        ds_diagram=ds_line_reduction_diagram((2, 1), 3),
-        rmatrix_max_pole=3,
-        num_rmatrix_channels=11,
+
+def koszul_conductor_bp() -> ClaimPacket:
+    """Return the open BP modular-conductor packet."""
+
+    return _open(
+        "K_BP^kappa",
+        "BP modular characteristics at both formal reflected levels",
+        H_HOOK_DS_BAR,
     )
 
-    # W_3 = W^k(sl_3, f_{(3)})
-    catalog['W3'] = NonPrincipalLineOperatorEntry(
-        algebra_name='Principal W_3',
-        lie_algebra='sl_3',
-        N=3,
-        partition=(3,),
-        transpose=(1, 1, 1),
-        nilpotent_type='principal',
-        central_charge=principal_w3_central_charge(),
-        anomaly_ratio=principal_w3_anomaly_ratio(),
-        kappa=principal_w3_kappa(),
-        koszul_conductor=Rational(100),
-        shadow_class='M',
-        line_cat_data=principal_w3_line_operators(),
-        ds_diagram=ds_line_reduction_diagram((3,), 3),
-        rmatrix_max_pole=5,
-        num_rmatrix_channels=3,
+
+def koszul_conductor_principal_wn(N: int) -> ClaimPacket:
+    """Return the open principal modular-conductor packet."""
+
+    return _open(
+        f"K^kappa for principal W_{N}",
+        "modular characteristics in one convention at both reflected levels",
     )
 
-    # sl_4 hooks
-    catalog['sl4_31'] = NonPrincipalLineOperatorEntry(
-        algebra_name='W^k(sl_4, f_{(3,1)})',
-        lie_algebra='sl_4',
-        N=4,
-        partition=(3, 1),
-        transpose=(2, 1, 1),
-        nilpotent_type='subregular (hook)',
-        central_charge=None,  # would need the full KRW computation
-        anomaly_ratio=None,
-        kappa=None,
-        koszul_conductor=None,
-        shadow_class='M',
-        line_cat_data=sl4_hook_31_line_operators(),
-        ds_diagram=ds_line_reduction_diagram((3, 1), 4),
-        rmatrix_max_pole=None,
-        num_rmatrix_channels=None,
+
+def bp_anomaly_ratio() -> ClaimPacket:
+    return _open(
+        "rho_BP",
+        "a nonseparating genus-one calculation",
+        "identification of the contributing modular channel",
     )
 
-    catalog['sl4_211'] = NonPrincipalLineOperatorEntry(
-        algebra_name='W^k(sl_4, f_{(2,1,1)})',
-        lie_algebra='sl_4',
-        N=4,
-        partition=(2, 1, 1),
-        transpose=(3, 1),
-        nilpotent_type='minimal (hook)',
-        central_charge=None,
-        anomaly_ratio=None,
-        kappa=None,
-        koszul_conductor=None,
-        shadow_class='M',
-        line_cat_data=sl4_hook_211_line_operators(),
-        ds_diagram=ds_line_reduction_diagram((2, 1, 1), 4),
-        rmatrix_max_pole=None,
-        num_rmatrix_channels=None,
+
+def bp_kappa(level=k) -> ClaimPacket:
+    return _open(
+        f"kappa_BP({sympify(level)})",
+        "a nonseparating genus-one calculation with charged, neutral, improvement, and mixed channels",
     )
 
-    return catalog
+
+def principal_w3_anomaly_ratio() -> ClaimPacket:
+    return _open("rho_W3", "a genus-one modular calculation")
 
 
-# =============================================================================
-# 12. Numerical evaluation helpers
-# =============================================================================
+def principal_w3_kappa(level=k) -> ClaimPacket:
+    return _open(f"kappa_W3({sympify(level)})", "a genus-one modular calculation")
 
-def bp_numerical_at_level(level_val):
-    """Evaluate all BP invariants numerically at a specific level."""
-    lv = Rational(level_val)
-    c_val = bp_central_charge(lv)
-    kap_val = bp_kappa(lv)
-    kap_dual = bp_kappa(bp_dual_level(lv))
+
+def virasoro_anomaly_ratio() -> ClaimPacket:
+    return _open("rho_Vir", "a genus-one modular calculation in the manuscript convention")
+
+
+def virasoro_kappa(level=k) -> ClaimPacket:
+    return _open(f"kappa_Vir({sympify(level)})", "a genus-one modular calculation")
+
+
+def bp_kappa_complementarity() -> ClaimPacket:
+    return koszul_conductor_bp()
+
+
+def principal_w3_kappa_complementarity() -> ClaimPacket:
+    return koszul_conductor_principal_wn(3)
+
+
+def _restriction_depth(name: str) -> ClaimPacket:
+    return _open(
+        f"full shadow depth determined from the {name} restriction",
+        "the full Maurer--Cartan tower and a reconstruction theorem from the restriction",
+    )
+
+
+def bp_line_restrictions() -> Tuple[LineRestrictionData, ...]:
+    """Return exact BP OPE closure data for four natural generator spans."""
+
+    return (
+        LineRestrictionData(
+            name="Heisenberg J-line",
+            generators=("J",),
+            closure="The J-J singular OPE closes through the vacuum channel.",
+            exact_ope_channels=(("J", "J", 2),),
+            full_shadow_depth=_restriction_depth("Heisenberg J-line"),
+        ),
+        LineRestrictionData(
+            name="Virasoro L-line",
+            generators=("L",),
+            closure="The L-L singular OPE closes through L, its derivative, and the vacuum.",
+            exact_ope_channels=(("L", "L", 4),),
+            full_shadow_depth=_restriction_depth("Virasoro L-line"),
+        ),
+        LineRestrictionData(
+            name="charged self-lines",
+            generators=("G+", "G-"),
+            closure="Each charged self-OPE is regular.",
+            exact_ope_channels=(("G+", "G+", 0), ("G-", "G-", 0)),
+            full_shadow_depth=_restriction_depth("charged self-lines"),
+        ),
+        LineRestrictionData(
+            name="charged pair",
+            generators=("G+", "G-"),
+            closure="The mixed channel generates J, L, dJ, and :JJ:.",
+            exact_ope_channels=(("G+", "G-", 3),),
+            full_shadow_depth=_restriction_depth("charged pair"),
+        ),
+    )
+
+
+def _generator_data(name: str, partition) -> GeneratorData:
+    generators = type_a_strong_generators(partition)
+    ledger = tuple(
+        (generator.label, generator.conformal_weight, generator.parity)
+        for generator in generators
+    )
+    diagnostic = sum(Rational(1) / Rational(generator.conformal_weight) for generator in generators)
+    restrictions = bp_line_restrictions() if normalize_partition(partition) == (2, 1) else ()
+    return GeneratorData(
+        name=name,
+        generators=ledger,
+        num_even=len(generators),
+        num_odd=0,
+        reciprocal_weight_diagnostic=diagnostic,
+        line_restrictions=restrictions,
+        full_shadow_depth=_open(
+            f"full shadow depth of {name}",
+            "the full Maurer--Cartan coefficient tower",
+        ),
+        rho=_open(f"rho of {name}", "a genus-one modular calculation"),
+    )
+
+
+def bp_generator_data() -> GeneratorData:
+    return _generator_data("Bershadsky--Polyakov", (2, 1))
+
+
+def principal_w3_generator_data() -> GeneratorData:
+    return _generator_data("principal W_3", (3,))
+
+
+def virasoro_generator_data() -> GeneratorData:
+    return _generator_data("Virasoro", (2,))
+
+
+def _line_operator_data(partition, algebra_name: str) -> LineOperatorCategoryData:
+    lam = normalize_partition(partition)
+    N = partition_size(lam)
+    lam_t = transpose_partition(lam)
+    reflected = ff_dual_level(N, k)
+    return LineOperatorCategoryData(
+        algebra_name=algebra_name,
+        partition=lam,
+        N=N,
+        transpose=lam_t,
+        formal_reflected_level=reflected,
+        formal_quantum_parameter=exp(pi * I / (k + N)),
+        ds_reduction_type=type_a_orbit_class(lam),
+        line_category_equivalence=_conditional(
+            f"line-category equivalence for {algebra_name}",
+            H_LINE,
+        ),
+        ds_line_functor=_conditional(
+            f"DS functor on line objects for {algebra_name}",
+            H_DS_LINE,
+        ),
+        ds_bar_commutation=_conditional(
+            f"DS--bar comparison for {algebra_name}",
+            H_HOOK_DS_BAR,
+        ),
+        same_family_duality=_conditional(
+            f"same- or transpose-family duality candidate for {algebra_name}",
+            H_HOOK_DS_BAR,
+        ),
+        ksdual_membership=_conditional(
+            f"KSDual membership for {algebra_name}",
+            H_KSDUAL,
+        ),
+    )
+
+
+def affine_line_operators(N: int, level=k) -> LineOperatorCategoryData:
+    return _line_operator_data((1,) * N, f"V_{sympify(level)}(sl_{N})")
+
+
+def bp_line_operators() -> LineOperatorCategoryData:
+    return _line_operator_data((2, 1), "Bershadsky--Polyakov")
+
+
+def principal_w3_line_operators() -> LineOperatorCategoryData:
+    return _line_operator_data((3,), "principal W_3")
+
+
+def sl4_hook_31_line_operators() -> LineOperatorCategoryData:
+    return _line_operator_data((3, 1), "W^k(sl_4,f_(3,1))")
+
+
+def sl4_hook_211_line_operators() -> LineOperatorCategoryData:
+    return _line_operator_data((2, 1, 1), "W^k(sl_4,f_(2,1,1))")
+
+
+def _proved_elsewhere(statement: str, value=True, *evidence: str) -> ClaimPacket:
+    return ClaimPacket(
+        statement=statement,
+        status=ClaimStatus.PROVED_ELSEWHERE,
+        value=value,
+        evidence=tuple(evidence),
+    )
+
+
+def ds_line_reduction_diagram(partition, N=None) -> DSLineReductionDiagram:
+    """Return exact partition indices and typed arrows for the DS/line square."""
+
+    lam = normalize_partition(partition)
+    actual_N = partition_size(lam)
+    if N is not None and N != actual_N:
+        raise ValueError(f"partition {lam} has size {actual_N}, while N={N}")
+    lam_t = transpose_partition(lam)
+    reflected = ff_dual_level(actual_N, k)
+    return DSLineReductionDiagram(
+        N=actual_N,
+        partition=lam,
+        transpose=lam_t,
+        is_self_transpose=lam == lam_t,
+        formal_reflected_level=reflected,
+        source_algebra=f"V_k(sl_{actual_N})",
+        target_algebra=f"W_k(sl_{actual_N},f_{lam})",
+        reflected_source_algebra=f"V_({reflected})(sl_{actual_N})",
+        reflected_target_algebra=f"W_({reflected})(sl_{actual_N},f_{lam_t})",
+        algebraic_ds_reduction=_proved_elsewhere(
+            f"quantum DS reduction indexed by {lam}",
+            True,
+            "Kac--Roan--Wakimoto (2003)",
+        ),
+        source_line_category=_conditional("source line-category identification", H_LINE),
+        target_line_category=_conditional("target line-category identification", H_LINE),
+        ds_line_functor=_conditional("DS functor on completed line categories", H_DS_LINE),
+        ds_bar_commutation=_conditional("DS--bar comparison in the diagram", H_HOOK_DS_BAR),
+        diagram_commutes=_conditional(
+            f"commutativity of the DS/line square for {lam}",
+            H_LINE,
+            H_DS_LINE,
+            H_HOOK_DS_BAR,
+        ),
+    )
+
+
+def virasoro_shadow_tower(c_val, max_arity=10) -> ClaimPacket:
+    """Return the typed open higher-shadow packet for a Virasoro restriction."""
+
+    return _open(
+        f"Virasoro-line shadow tower through arity {max_arity} at c={sympify(c_val)}",
+        "a derivation of every Maurer--Cartan coefficient in the manuscript normalization",
+    )
+
+
+def bp_shadow_tower_on_tline(max_arity=8) -> ClaimPacket:
+    """Return the typed open BP Virasoro-line shadow packet."""
+
+    return virasoro_shadow_tower(bp_central_charge(k), max_arity)
+
+
+def shadow_depth_classification(c_val) -> ClaimPacket:
+    """Return the typed open full-depth classification packet."""
+
+    return _open(
+        f"full shadow depth at central charge {sympify(c_val)}",
+        "all generator channels and the full Maurer--Cartan tower",
+    )
+
+
+def bp_shadow_depth() -> Dict[str, object]:
+    """Return exact BP line restrictions and the open full-depth packet."""
+
     return {
-        'level': lv,
-        'c': c_val,
-        'kappa': kap_val,
-        'kappa_dual': kap_dual,
-        'kappa_sum': simplify(kap_val + kap_dual),
-        'dual_level': bp_dual_level(lv),
-        'dual_c': bp_central_charge(bp_dual_level(lv)),
+        "line_restrictions": bp_line_restrictions(),
+        "full_shadow_depth": shadow_depth_classification(bp_central_charge(k)),
+    }
+
+
+def bp_ope_channels() -> Tuple[OPEChannelData, ...]:
+    """Return the directed singular BP OPE channels in FKR equation (2.1)."""
+
+    source = "Fehily--Kawasetsu--Ridout (2021), Definition 2.1, equation (2.1)"
+    channel_specs = (
+        ("L", "L", 4),
+        ("L", "J", 2),
+        ("L", "G+", 2),
+        ("L", "G-", 2),
+        ("J", "J", 2),
+        ("J", "G+", 1),
+        ("J", "G-", 1),
+        ("G+", "G+", 0),
+        ("G-", "G-", 0),
+        ("G+", "G-", 3),
+    )
+    return tuple(
+        OPEChannelData(
+            source_generator=left,
+            target_generator=right,
+            ope_max_pole=pole,
+            channel_type="even-even",
+            source=source,
+            rmatrix_extraction=_conditional(
+                f"collision-residue extraction from the {left}-{right} OPE channel",
+                "H_OPE/r: collision-kernel normalization and residue comparison",
+            ),
+        )
+        for left, right, pole in channel_specs
+    )
+
+
+def bp_rmatrix_channels() -> Tuple[OPEChannelData, ...]:
+    """Compatibility API returning exact OPE channels and conditional residues."""
+
+    return bp_ope_channels()
+
+
+def bp_rmatrix_max_pole() -> ClaimPacket:
+    return _conditional(
+        "maximum pole order in the BP collision r-matrix",
+        "H_OPE/r: collision-kernel normalization and residue comparison",
+    )
+
+
+def principal_w3_rmatrix_max_pole() -> ClaimPacket:
+    return _conditional(
+        "maximum pole order in the principal W_3 collision r-matrix",
+        "the exact W-W OPE and H_OPE/r",
+    )
+
+
+def _catalog_entry(name: str, partition) -> NonPrincipalLineOperatorEntry:
+    lam = normalize_partition(partition)
+    N = partition_size(lam)
+    central_charge = type_a_krw_central_charge(lam, k)
+    is_bp = lam == (2, 1)
+    standard_sum = (
+        bp_standard_central_reflection_sum(k)
+        if is_bp
+        else simplify(
+            central_charge + type_a_krw_central_charge(lam, ff_dual_level(N, k))
+        )
+    )
+    shifted_sum = bp_shifted_central_reflection_sum(k) if is_bp else None
+    diagnostic = sum(
+        Rational(1) / Rational(generator.conformal_weight)
+        for generator in type_a_strong_generators(lam)
+    )
+    return NonPrincipalLineOperatorEntry(
+        algebra_name=name,
+        lie_algebra=f"sl_{N}",
+        N=N,
+        partition=lam,
+        transpose=transpose_partition(lam),
+        nilpotent_type=type_a_orbit_class(lam),
+        central_charge=central_charge,
+        central_scalar_reflection_sum=standard_sum,
+        shifted_secondary_sum=shifted_sum,
+        reciprocal_weight_diagnostic=diagnostic,
+        rho=_open(f"rho for {name}", "a genus-one modular calculation"),
+        kappa=_open(f"kappa for {name}", "a genus-one modular calculation"),
+        modular_conductor=_open(
+            f"K^kappa for {name}",
+            "modular characteristics at both formal reflected levels",
+        ),
+        full_shadow_depth=_open(
+            f"full shadow depth for {name}",
+            "the full Maurer--Cartan tower",
+        ),
+        line_category=_line_operator_data(lam, name),
+        ds_diagram=ds_line_reduction_diagram(lam, N),
+        ope_channels=bp_ope_channels() if is_bp else (),
+    )
+
+
+def build_catalog() -> Dict[str, NonPrincipalLineOperatorEntry]:
+    """Build the exact scalar and typed categorical catalog through the sl4 hooks."""
+
+    return {
+        "Vir": _catalog_entry("Virasoro", (2,)),
+        "BP": _catalog_entry("Bershadsky--Polyakov", (2, 1)),
+        "W3": _catalog_entry("principal W_3", (3,)),
+        "sl4_31": _catalog_entry("W^k(sl_4,f_(3,1))", (3, 1)),
+        "sl4_211": _catalog_entry("W^k(sl_4,f_(2,1,1))", (2, 1, 1)),
+    }
+
+
+def bp_numerical_at_level(level_val) -> Dict[str, object]:
+    """Evaluate exact BP scalar data and retain typed frontier packets."""
+
+    level = Rational(level_val)
+    reflected = bp_dual_level(level)
+    return {
+        "level": level,
+        "formal_reflected_level": reflected,
+        "standard_central_charge": bp_central_charge(level),
+        "reflected_standard_central_charge": bp_central_charge(reflected),
+        "standard_sum": bp_standard_central_reflection_sum(level),
+        "shifted_central_charge": bp_shifted_central_charge(level),
+        "shifted_sum": bp_shifted_central_reflection_sum(level),
+        "reciprocal_weight_diagnostic": bershadsky_polyakov_reciprocal_weight_diagnostic(),
+        "rho": bp_anomaly_ratio(),
+        "kappa": bp_kappa(level),
+        "modular_conductor": koszul_conductor_bp(),
     }
 
 
 def quantum_parameter_at_level(N, level_val):
-    """Compute the quantum parameter q = exp(pi i / (k + N)) numerically."""
-    lv = float(level_val)
+    """Return the formal complex value ``exp(pi i/(k+N))`` at one level."""
+
     import cmath
-    return cmath.exp(cmath.pi * 1j / (lv + N))
 
+    level = float(level_val)
+    return cmath.exp(cmath.pi * 1j / (level + N))
 
-# =============================================================================
-# 13. Utility functions
-# =============================================================================
 
 def _transpose_partition(lam):
-    """Transpose a partition."""
-    if not lam:
-        return ()
-    max_part = max(lam)
-    result = []
-    for j in range(1, max_part + 1):
-        count = sum(1 for part in lam if part >= j)
-        if count > 0:
-            result.append(count)
-    return tuple(result)
+    """Compatibility wrapper for exact partition transpose."""
+
+    return transpose_partition(lam)
 
 
 def _is_hook(lam):
-    """Check if a partition is hook-type: (a, 1, 1, ..., 1)."""
-    if not lam:
-        return False
-    lam_sorted = tuple(sorted(lam, reverse=True))
-    if len(lam_sorted) <= 1:
-        return True
-    return all(p == 1 for p in lam_sorted[1:])
+    """Return the exact hook predicate for a normalized partition."""
+
+    normalized = normalize_partition(lam)
+    return len(normalized) == 1 or all(part == 1 for part in normalized[1:])
+
+
+__all__ = [
+    "ClaimPacket",
+    "ClaimStatus",
+    "OpenInvariantError",
+    "LineRestrictionData",
+    "GeneratorData",
+    "LineOperatorCategoryData",
+    "DSLineReductionDiagram",
+    "OPEChannelData",
+    "RMatrixChannelData",
+    "NonPrincipalLineOperatorEntry",
+    "bp_central_charge",
+    "bp_shifted_central_charge",
+    "principal_w3_central_charge",
+    "principal_wn_central_charge",
+    "affine_central_charge",
+    "virasoro_central_charge",
+    "ff_dual_level",
+    "bp_dual_level",
+    "bp_standard_central_reflection_sum",
+    "bp_shifted_central_reflection_sum",
+    "principal_wn_central_reflection_sum",
+    "koszul_conductor_bp",
+    "koszul_conductor_principal_wn",
+    "bp_anomaly_ratio",
+    "bp_kappa",
+    "principal_w3_anomaly_ratio",
+    "principal_w3_kappa",
+    "virasoro_anomaly_ratio",
+    "virasoro_kappa",
+    "bp_kappa_complementarity",
+    "principal_w3_kappa_complementarity",
+    "bp_line_restrictions",
+    "bp_generator_data",
+    "principal_w3_generator_data",
+    "virasoro_generator_data",
+    "affine_line_operators",
+    "bp_line_operators",
+    "principal_w3_line_operators",
+    "sl4_hook_31_line_operators",
+    "sl4_hook_211_line_operators",
+    "ds_line_reduction_diagram",
+    "virasoro_shadow_tower",
+    "bp_shadow_tower_on_tline",
+    "shadow_depth_classification",
+    "bp_shadow_depth",
+    "bp_ope_channels",
+    "bp_rmatrix_channels",
+    "bp_rmatrix_max_pole",
+    "principal_w3_rmatrix_max_pole",
+    "build_catalog",
+    "bp_numerical_at_level",
+    "quantum_parameter_at_level",
+]

@@ -1,10 +1,9 @@
-"""Verdier pairing between bar and cobar complexes.
+"""Finite bar-dual pairings and exact associative bar--cobar windows.
 
-The bar-cobar adjunction (Theorem A) has a Verdier structure:
-there is a perfect pairing <-,->: B(A) tensor Omega(B(A)) -> k
-compatible with differentials.
-
-Bar-cobar inversion (Theorem B): Omega(B(A)) -> A quasi-iso on Koszul locus.
+The tensor-degree matrices pair a finite bar basis with its linear dual.  The
+associative counit calculation is delegated to
+``FiniteOmegaBarComplex``, which includes every mixed tuple of positive bar
+words in the requested window and works over ``QQ``.
 
 For finite-dimensional algebras, the pairing is a matrix at each
 tensor degree, and non-degeneracy + compatibility are checkable.
@@ -16,7 +15,7 @@ CRITICAL DISTINCTIONS (CLAUDE.md):
   A^! = (A^i)^v:  the Koszul dual algebra after Verdier/linear duality
   Omega(B(A)) = A (bar-cobar INVERSION, not duality)
   A^! is obtained by VERDIER/LINEAR duality, not cobar
-  Z_ch^der(A) is the Hochschild derived-centre bulk slot, not bar/cobar
+  Z_ch^der(A) is the Hochschild derived-centre closed-sector slot, not bar/cobar
 
 GRADING: cohomological (|d| = +1). Bar uses DESUSPENSION.
 
@@ -33,6 +32,13 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from sympy import Matrix, Rational, zeros, eye
+
+from compute.lib.bar_cobar_chain_maps import (
+    AugDGA as ExactAugDGA,
+    FiniteOmegaBarComplex,
+    augmented_dga_axioms,
+    finite_calculation_state,
+)
 
 
 TYPED_KOSZUL_OBJECTS: Tuple[str, ...] = (
@@ -84,6 +90,86 @@ class DGA:
         """Verify d^2 = 0."""
         d2 = self.diff @ self.diff
         return np.allclose(d2, 0, atol=1e-12)
+
+
+def _exact_scalar(value: float) -> Rational:
+    """Convert a stored numerical structure constant to an exact rational."""
+    return Rational(str(float(value)))
+
+
+def _has_strict_unit_at_zero(dga: DGA) -> bool:
+    if dga.dim == 0 or dga.degrees[0] != 0:
+        return False
+    for index in range(dga.dim):
+        if dga.mult.get((0, index), {}) != {index: 1.0}:
+            return False
+        if dga.mult.get((index, 0), {}) != {index: 1.0}:
+            return False
+    return True
+
+
+def exact_augmented_model(dga: DGA) -> ExactAugDGA:
+    """Place a finite associative algebra in the exact augmented engine.
+
+    A strict unit at basis index ``0`` is preserved.  A nonunital algebra is
+    unitized, and its original basis becomes the augmentation ideal.  The
+    resulting exact object is accepted precisely when the chosen projection
+    to the ground field is an augmentation and all cochain-DGA axioms hold.
+    """
+    already_unital = _has_strict_unit_at_zero(dga)
+    shift = 0 if already_unital else 1
+    dimension = dga.dim + shift
+    degrees = list(dga.degrees) if already_unital else [0] + list(dga.degrees)
+    differential = zeros(dimension, dimension)
+    for row in range(dga.dim):
+        for column in range(dga.dim):
+            if dga.diff[row, column] != 0:
+                differential[row + shift, column + shift] = _exact_scalar(dga.diff[row, column])
+
+    multiplication: Dict[Tuple[int, int], Dict[int, Rational]] = {}
+    if not already_unital:
+        for index in range(dimension):
+            multiplication[(0, index)] = {index: Rational(1)}
+            multiplication[(index, 0)] = {index: Rational(1)}
+    for (left, right), outputs in dga.mult.items():
+        multiplication[(left + shift, right + shift)] = {
+            target + shift: _exact_scalar(coefficient)
+            for target, coefficient in outputs.items()
+            if coefficient != 0
+        }
+
+    return ExactAugDGA(
+        dimension,
+        degrees,
+        differential,
+        multiplication,
+        name=(dga.name + " with adjoined unit") if not already_unital else dga.name,
+    )
+
+
+def exact_bar_cobar_window(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
+    """Compute the exact mixed-word window when the input is associative."""
+    exact = exact_augmented_model(dga)
+    axioms = augmented_dga_axioms(exact)
+    failed = [name for name, value in axioms.items() if value is not True]
+    if failed:
+        return {
+            "calculation_status": "input lies outside the associative augmented engine",
+            "input_axioms": axioms,
+            "remaining_input_obligation": ", ".join(failed),
+            "convergence_status": "finite associative calculation awaits valid input",
+            "global_quasi_isomorphism": "unresolved",
+            "is_quasi_iso": None,
+        }
+
+    complex_ = FiniteOmegaBarComplex(exact, max_tensor, max_tensor)
+    report = complex_.finite_window_report()
+    return {
+        **report,
+        "exact_augmented_model": exact,
+        "input_axioms": axioms,
+        "is_quasi_iso": None,
+    }
 
 
 class BarData:
@@ -209,9 +295,7 @@ class BarData:
 
 
 class CobarData:
-    """Cobar complex Omega(C) for a finite-dimensional dg coalgebra C.
-
-    If C = B(A), then Omega(C) = Omega(B(A)) is the cobar of the bar.
+    """Quadratic linear-dual diagnostic generated by multiplication on ``V``.
 
     Omega^n(C) = (s^{-1} C)^{tensor n} with the cobar differential.
     The cobar differential has:
@@ -229,9 +313,7 @@ class CobarData:
     def __init__(self, bar: BarData, max_tensor: int = 3):
         self.bar = bar
         self.max_tensor = max_tensor
-        # Omega^n uses elements of bar as "letters"
-        # For simplicity, at tensor degree 1 of Omega, letters = bar basis at each degree
-        # We restrict to bar degree 1 letters for tractability
+        # The active letters form the tensor-degree comparison basis.
         self._basis_cache: Dict[int, List[Tuple[int, ...]]] = {}
         self._diff_cache: Dict[int, np.ndarray] = {}
 
@@ -323,7 +405,7 @@ def bar_complex_finite(dga: DGA, max_tensor: int = 3) -> BarData:
 
 
 def cobar_complex_finite(bar: BarData, max_tensor: int = 3) -> CobarData:
-    """Construct cobar complex Omega(C) for C = B(A).
+    """Construct the quadratic tensor-degree comparison object.
 
     Returns CobarData with basis and differential at each tensor degree.
     """
@@ -331,7 +413,7 @@ def cobar_complex_finite(bar: BarData, max_tensor: int = 3) -> CobarData:
 
 
 def bar_cobar_finite(dga: DGA, max_tensor: int = 3) -> Tuple[BarData, CobarData]:
-    """Construct Omega(B(A)) as a dg algebra.
+    """Construct finite bar data and its quadratic dual comparison object.
 
     Returns both bar and cobar data.
     """
@@ -465,12 +547,12 @@ def verify_differential_compatibility(bar: BarData, cobar: CobarData,
 # ============================================================================
 
 def bar_cobar_map(dga: DGA, max_tensor: int = 3) -> Dict[int, np.ndarray]:
-    """The natural map epsilon: Omega(B(A)) -> A (augmentation/counit).
+    """The degree-one restriction of the counit projection.
 
     At tensor degree 1: epsilon is the identity V -> V.
     At tensor degree n > 1: epsilon = 0 (augmentation kills higher tensors).
 
-    This is the counit of the bar-cobar adjunction.
+    These matrices describe the restriction to the active diagnostic basis.
     """
     result = {}
     # Degree 1: identity
@@ -522,86 +604,20 @@ def cohomology_of_complex(differentials: Dict[int, np.ndarray],
 
 
 def verify_quasi_iso(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
-    """Check that Omega(B(A)) -> A induces isomorphism on cohomology.
-
-    For a Koszul algebra, the bar-cobar resolution is exact:
-    H^*(Omega(B(A))) = H^*(A) via the augmentation map.
-
-    The augmentation epsilon: Omega(B(A)) -> A is the projection onto
-    tensor degree 1. It is always a chain map. The bar-cobar theorem
-    says epsilon induces a quasi-isomorphism on the KOSZUL LOCUS.
-
-    For the trivial case (zero product): all differentials are zero,
-    so Omega(B(A)) = T(V) with zero differential. The augmentation
-    epsilon: T(V) -> V projects onto degree 1. This IS a quasi-iso
-    when we view A = V as the degree-1 part of the bar-cobar complex.
-    The bar-cobar resolution recovers A at the level of the augmentation,
-    not at the level of raw cochain cohomology.
-
-    We verify quasi-isomorphism by checking:
-    1. The augmentation map epsilon: Omega^1 -> V is surjective (identity)
-    2. The cobar complex at degree 1 contains A as a retract
-    3. For algebras with nontrivial product, the higher cobar cohomology vanishes
-
-    For Lie algebras viewed as non-associative algebras: the bar-cobar
-    adjunction applies to the CE complex formulation, not the associative
-    bar of the Lie bracket.
-    """
-    bar, cobar = bar_cobar_finite(dga, max_tensor)
-
-    # Cohomology of A: from d on V
-    a_coh = {}
-    for deg in set(dga.degrees):
-        indices_deg = [i for i in range(dga.dim) if dga.degrees[i] == deg]
-        indices_next = [i for i in range(dga.dim) if dga.degrees[i] == deg + 1]
-        if not indices_deg:
-            continue
-        d_block = dga.diff[np.ix_(indices_next, indices_deg)] if indices_next else np.zeros((0, len(indices_deg)))
-        ker = _kernel_dim(d_block)
-        indices_prev = [i for i in range(dga.dim) if dga.degrees[i] == deg - 1]
-        if indices_prev:
-            d_prev = dga.diff[np.ix_(indices_deg, indices_prev)]
-            im = _image_dim(d_prev)
-        else:
-            im = 0
-        a_coh[deg] = ker - im
-
-    # Cobar cohomology
-    cobar_dims = {n: cobar.dim_at(n) for n in range(1, max_tensor + 1)}
-    cobar_diffs = {}
-    for n in range(1, max_tensor):
-        d = cobar.differential(n)
-        if d.size > 0:
-            cobar_diffs[n] = d
-
-    cobar_coh = cohomology_of_complex(cobar_diffs, cobar_dims)
-
-    # Augmentation map check: epsilon at degree 1 is the identity V -> V.
-    # For algebras with zero product (Heisenberg, abelian):
-    #   All cobar differentials are zero, so H^n(cobar) = dim(V)^n.
-    #   The augmentation is still a quasi-iso because the bar-cobar
-    #   resolution is a FREE resolution, and the augmentation is an
-    #   acyclic fibration. The relevant check is at degree 1 only.
-    #
-    # For algebras with nontrivial product:
-    #   The cobar cohomology should be concentrated at degree 1.
-    has_product = len(dga.mult) > 0
-    if has_product:
-        # With nontrivial product: full check
-        is_qi = (cobar_coh.get(1, 0) == dga.dim and
-                 all(cobar_coh.get(n, 0) == 0 for n in range(2, max_tensor + 1)))
-    else:
-        # Zero product: the augmentation epsilon: T(V) -> V is a quasi-iso
-        # by the bar-cobar theorem (free algebras are Koszul).
-        # The cobar differential is zero, so we verify via augmentation.
-        is_qi = (cobar_coh.get(1, 0) == dga.dim)
-
+    """Compute the exact associative window and state its filtered-limit scope."""
+    report = exact_bar_cobar_window(dga, max_tensor)
+    if report["calculation_status"] != "computed finite truncation":
+        return {
+            **report,
+            "A_cohomology": {},
+            "cobar_cohomology": {},
+            "has_product": bool(dga.mult),
+        }
     return {
-        "A_cohomology": a_coh,
-        "cobar_cohomology": cobar_coh,
-        "augmentation_is_identity_at_deg1": True,
-        "has_product": has_product,
-        "is_quasi_iso": is_qi,
+        **report,
+        "A_cohomology": report["A_homology"],
+        "cobar_cohomology": report["finite_window_homology"],
+        "has_product": bool(dga.mult),
     }
 
 
@@ -766,16 +782,16 @@ def _sl2_lie_dga() -> DGA:
 
 
 def sl2_verdier_pairing() -> Dict[str, object]:
-    """Full Verdier pairing computation for sl_2.
+    """Finite Verdier-pairing matrices for sl_2.
 
     Constructs:
     1. sl_2 as a Lie algebra (DGA concentrated in degree 0)
     2. B(sl_2) = bar complex
-    3. Omega(B(sl_2)) = cobar of bar
+    3. the cobar diagnostic generated by B^1(sl_2)
     4. Verdier pairing matrices
     5. Non-degeneracy verification
     6. Differential compatibility verification
-    7. Bar-cobar quasi-isomorphism check
+    7. the typed state of the full-cobar counit check
     """
     dga = _sl2_lie_dga()
     bar = bar_complex_finite(dga, max_tensor=3)
@@ -815,8 +831,7 @@ def _heisenberg_dga(k: float = 1.0) -> DGA:
     For bar-cobar, the algebra structure is:
       V = k (1-dimensional), d = 0, m_2 = 0.
     The bar complex B(H_k) has d_B = 0 (no product to differentiate).
-    The cobar Omega(B(H_k)) = T(s^{-1}B) also has d = 0.
-    Bar-cobar inversion is exact: Omega(B(H_k)) = H_k.
+    The quadratic dual comparison object is T(J) with zero differential.
     """
     dim = 1
     degrees = [0]
@@ -849,8 +864,7 @@ def heisenberg_verdier_pairing(k: float = 1.0) -> Dict[str, object]:
 
     nondeg = verify_pairing_nondegeneracy(bar, cobar, max_degree=4)
 
-    # Bar-cobar inversion: exact for Heisenberg (no product means
-    # all differentials are zero, so Omega(B(H)) = H trivially)
+    # Typed state of the full-cobar counit theorem.
     qi = verify_quasi_iso(dga, max_tensor=4)
 
     # Combinatorial pairing with level:
@@ -920,14 +934,13 @@ def koszul_dual_from_bar(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
 
 
 def pairing_descends_to_cohomology(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
-    """Verify the Verdier pairing descends to cohomology: A tensor A^! -> k.
+    """Verify descent for the finite bar/length-one-cobar pairing.
 
-    The pairing B(A) tensor Omega(B(A)) -> k descends to:
-      H*(B(A)) tensor H*(Omega(B(A))) -> k
-    = A^i tensor H*(Omega(B(A))) -> k.
+    The finite pairing descends to the cohomology of the two displayed
+    diagnostic complexes.
 
-    Since Omega(B(A)) -> A is a quasi-iso (on Koszul locus), this gives:
-      A^i tensor A -> k  (or equivalently, A tensor A^! -> k).
+    A theorem-level pairing with ``A`` is obtained after constructing the full
+    cobar counit and proving its quasi-isomorphism.
     """
     bar, cobar = bar_cobar_finite(dga, max_tensor)
 
@@ -952,15 +965,7 @@ def pairing_descends_to_cohomology(dga: DGA, max_tensor: int = 3) -> Dict[str, o
 # ============================================================================
 
 def verify_koszul_pair(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
-    """Verify A and A^! form a Koszul pair.
-
-    Conditions:
-    1. B(A) is acyclic in positive tensor degrees > 1
-       (bar cohomology concentrated at the expected degrees)
-    2. Omega(B(A)) -> A is a quasi-isomorphism
-    3. The Verdier pairing is non-degenerate and descends to cohomology
-    4. A^! is the Verdier/linear dual algebra of A^i = H*(B(A))
-    """
+    """Assemble the finite bar-dual matrices and exact counit window."""
     bar_coh = koszul_dual_from_bar(dga, max_tensor)
     qi = verify_quasi_iso(dga, max_tensor)
     pairing = pairing_descends_to_cohomology(dga, max_tensor)
@@ -969,11 +974,14 @@ def verify_koszul_pair(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
     nondeg = verify_pairing_nondegeneracy(bar, cobar, max_degree=max_tensor)
 
     return {
+        "calculation_status": qi["calculation_status"],
+        "convergence_status": qi["convergence_status"],
+        "global_quasi_isomorphism": qi["global_quasi_isomorphism"],
         "bar_cohomology": bar_coh,
         "quasi_iso": qi,
         "pairing_descends": pairing,
         "nondegeneracy": nondeg,
-        "is_koszul_pair": qi.get("is_quasi_iso", False),
+        "is_koszul_pair": None,
     }
 
 
@@ -982,10 +990,7 @@ def verify_koszul_pair(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
 # ============================================================================
 
 def bar_cobar_inversion_table(families: Optional[Dict[str, DGA]] = None) -> Dict[str, Dict[str, object]]:
-    """For each family: is Omega(B(A)) -> A a quasi-iso?
-
-    Tests bar-cobar inversion (Theorem B) across standard families.
-    """
+    """Collect finite counit calculations across standard families."""
     if families is None:
         families = {
             "sl_2": _sl2_lie_dga(),
@@ -999,7 +1004,10 @@ def bar_cobar_inversion_table(families: Optional[Dict[str, DGA]] = None) -> Dict
     for name, dga in families.items():
         qi = verify_quasi_iso(dga, max_tensor=3)
         results[name] = {
-            "is_quasi_iso": qi.get("is_quasi_iso", False),
+            "calculation_status": qi["calculation_status"],
+            "convergence_status": qi["convergence_status"],
+            "global_quasi_isomorphism": qi["global_quasi_isomorphism"],
+            "is_quasi_iso": qi["is_quasi_iso"],
             "A_cohomology": qi.get("A_cohomology", {}),
             "cobar_cohomology": qi.get("cobar_cohomology", {}),
         }
@@ -1010,12 +1018,12 @@ def bar_cobar_inversion_table(families: Optional[Dict[str, DGA]] = None) -> Dict
 # Four objects distinguished
 # ============================================================================
 
-def typed_koszul_object_firewall(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
-    """Return the typed firewall for bar, dual, inversion, and bulk objects.
+def typed_koszul_object_table(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
+    """Return the type table for bar, dual, inversion, and closed-sector objects.
 
     The finite engine computes dimensions for the bar, bar cohomology, and
-    cobar inversion pieces.  The derived-centre slot is recorded as a typed
-    Hochschild target because it is not computed by this bar-cobar routine.
+    mixed-word cobar window.  The derived-centre slot is recorded as a typed
+    Hochschild target.
     """
     bar = bar_complex_finite(dga, max_tensor)
     cobar = cobar_complex_finite(bar, max_tensor)
@@ -1023,7 +1031,7 @@ def typed_koszul_object_firewall(dga: DGA, max_tensor: int = 3) -> Dict[str, obj
 
     ba_dims = {n: bar.dim_at(n) for n in range(1, max_tensor + 1)}
     ai_dims = bar_coh["A_i_dims"]
-    cobar_dims = {n: cobar.dim_at(n) for n in range(1, max_tensor + 1)}
+    omega_report = verify_quasi_iso(dga, max_tensor)
 
     objects = {
         "A": {
@@ -1048,12 +1056,19 @@ def typed_koszul_object_firewall(dga: DGA, max_tensor: int = 3) -> Dict[str, obj
             "source_object": "A^i",
         },
         "Omega(B(A))": {
-            "kind": "cobar algebra and inversion object",
-            "construction": "Omega applied to B(A), with augmentation Omega(B(A)) -> A",
-            "dims": cobar_dims,
+            "calculation_status": omega_report["calculation_status"],
+            "convergence_status": omega_report["convergence_status"],
+            "kind": (
+                "finite mixed-word cobar algebra"
+                if omega_report["calculation_status"] == "computed finite truncation"
+                else "associative cobar construction awaiting associative input"
+            ),
+            "construction": "T(s overline{B}(A)) in the stated finite window",
+            "dims": omega_report.get("bidegree_dimensions", {}),
+            "dims_scope": "(cobar length, total bar length)",
         },
         "Z_ch^der(A)": {
-            "kind": "chiral Hochschild derived-centre bulk",
+            "kind": "chiral Hochschild derived-centre closed-sector",
             "construction": "ChirHoch^bullet(A,A), not a bar/cobar output",
             "dims": "not computed by this finite bar-cobar engine",
         },
@@ -1077,7 +1092,7 @@ def typed_koszul_object_firewall(dga: DGA, max_tensor: int = 3) -> Dict[str, obj
         "valid_identifications": (
             "A^i = H*(B(A))",
             "A^! = (A^i)^v after Verdier/linear duality",
-            "Omega(B(A)) -> A is bar-cobar inversion",
+            "full counit target: Omega(B(A)) -> A",
             "Z_ch^der(A) = ChirHoch^bullet(A,A)",
         ),
         "forbidden_shorthands": (
@@ -1106,23 +1121,26 @@ def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, objec
     bar = bar_complex_finite(dga, max_tensor)
     cobar = cobar_complex_finite(bar, max_tensor)
     bar_coh = koszul_dual_from_bar(dga, max_tensor)
-    firewall = typed_koszul_object_firewall(dga, max_tensor)
+    type_table = typed_koszul_object_table(dga, max_tensor)
 
     a_dim = dga.dim
     ba_dims = {n: bar.dim_at(n) for n in range(1, max_tensor + 1)}
     ai_dims = bar_coh["A_i_dims"]
     # A^! = (A^i)^v has same dimensions as A^i but is the LINEAR DUAL (an algebra, not coalgebra)
     adual_dims = ai_dims.copy()
-    omega_dims = {n: cobar.dim_at(n) for n in range(1, max_tensor + 1)}
+    omega_report = verify_quasi_iso(dga, max_tensor)
+    omega_dims = omega_report.get("bidegree_dimensions", {})
 
-    # All four are different objects
     results = {
+        "calculation_status": omega_report["calculation_status"],
+        "convergence_status": omega_report["convergence_status"],
         "A_dim": a_dim,
         "B(A)_dims": ba_dims,
         "A^i_dims": ai_dims,
         "A^!_dims": adual_dims,
         "Omega(B(A))_dims": omega_dims,
-        "Z_ch^der(A)_type": "chiral Hochschild derived-centre bulk",
+        "Omega(B(A))_dims_scope": "(cobar length, total bar length)",
+        "Z_ch^der(A)_type": "chiral Hochschild derived-centre closed-sector",
         "A_neq_BA": a_dim != sum(ba_dims.values()),
         "A_neq_Ai": a_dim != sum(ai_dims.values()) or dga.name != "",
         "BA_neq_Ai": sum(ba_dims.values()) != sum(ai_dims.values()),
@@ -1130,13 +1148,16 @@ def four_objects_distinguished(dga: DGA, max_tensor: int = 3) -> Dict[str, objec
         # A^i is a COALGEBRA, A^! is an ALGEBRA
         "Ai_is_coalgebra": True,
         "Adual_is_algebra": True,
-        "Omega_is_cobar_inversion": True,
-        "Zch_is_derived_center_bulk": True,
+        "Omega_finite_window_counit": omega_report.get(
+            "finite_window_counit_is_quasi_isomorphism"
+        ),
+        "Omega_is_cobar_inversion": None,
+        "Zch_is_derived_center_closed_sector": True,
         "Ai_Adual_same_dims_different_structure": True,
         "B_Ai_Adual_Omega_Z_typed_apart": True,
-        "typed_firewall": firewall,
-        "forbidden_shorthands": firewall["forbidden_shorthands"],
-        "forbidden_collapses": firewall["forbidden_collapses"],
+        "typed_object_table": type_table,
+        "forbidden_shorthands": type_table["forbidden_shorthands"],
+        "forbidden_collapses": type_table["forbidden_collapses"],
     }
     return results
 
@@ -1150,8 +1171,7 @@ def _abelian_lie_dga(dim: int) -> DGA:
 
     All brackets are zero. This is the simplest test case:
     B(A) = T(sV) with zero differential.
-    Omega(B(A)) = T(V) with zero differential.
-    Bar-cobar is exact.
+    The quadratic dual comparison object is T(V) with zero differential.
     """
     degrees = [0] * dim
     diff = np.zeros((dim, dim))
@@ -1403,7 +1423,7 @@ def heisenberg_combinatorial_pairing(k: float, max_n: int = 6) -> Dict[int, floa
 # ============================================================================
 
 def adjunction_unit(dga: DGA) -> np.ndarray:
-    """The unit eta: A -> Omega(B(A)) of the bar-cobar adjunction.
+    """The degree-one matrix of the bar-cobar unit.
 
     At the algebra level, eta: V -> Omega^1(B(A)) is:
       eta(e_i) = s^{-1}(s e_i) = e_i  (in Omega^1 = s^{-1}(sV) = V)
@@ -1414,7 +1434,7 @@ def adjunction_unit(dga: DGA) -> np.ndarray:
 
 
 def adjunction_counit(dga: DGA) -> np.ndarray:
-    """The counit epsilon: B(Omega(C)) -> C of the bar-cobar adjunction.
+    """The degree-one matrix of the bar-cobar counit.
 
     At the coalgebra level, this is the projection onto the
     degree-1 component.
@@ -1423,12 +1443,12 @@ def adjunction_counit(dga: DGA) -> np.ndarray:
 
 
 def verify_adjunction_identities(dga: DGA) -> Dict[str, bool]:
-    """Verify the triangle identities for the B dashv Omega adjunction.
+    """Verify the degree-one restrictions of the triangle identities.
 
     epsilon_Omega(C) . Omega(eta_C) = id_Omega(C)
     B(epsilon_A) . eta_B(A) = id_B(A)
 
-    At the level of the identity maps, these are automatic.
+    At degree one both displayed maps are identities.
     """
     eta = adjunction_unit(dga)
     eps = adjunction_counit(dga)
@@ -1469,14 +1489,15 @@ def heisenberg_not_self_dual() -> Dict[str, object]:
     """Verify Heisenberg is NOT self-dual under Koszul duality.
 
     CLAUDE.md critical pitfall:
-    Heisenberg NOT self-dual. H^! = Sym^ch(V*) (commutative chiral).
-    H has 1 generator; its dual is commutative, not Heisenberg.
+    Heisenberg NOT self-dual. At nonzero level, H^! is the curved
+    second-kind Sym^ch(V*[1]) branch. H has 1 generator; its dual is
+    not H_{-k}.
     """
     return {
         "self_dual": False,
         "A": "Heisenberg (1 bosonic generator, level k)",
-        "A_dual": "Sym^ch(V*) (commutative chiral algebra)",
-        "reason": "Koszul dual of free boson is commutative, not another boson",
+        "A_dual": "curved Sym^ch(V*[1]) branch (scalar kappa -k)",
+        "reason": "Koszul dual of free boson is the curved branch, not another boson",
         "common_error": "Claiming H_k^! = H_{-k} (WRONG)",
     }
 

@@ -30,7 +30,9 @@ NEGATIVE_ONE = Fraction(-1, 1)
 # VERIFIED: [DC] kappa_BP(0)=c_BP(0)/6=-1; [LT] varrho_BP=1/6 and kappa=varrho*c in w_algebras_deep.tex.
 
 NINETY_EIGHT_THIRDS = Fraction(98, 3)
-# VERIFIED: [DC] 196/6=98/3 from BP conductor 196 and varrho_BP=1/6; [LT] CLAUDE C31.
+# VERIFIED: [DC] 196/6=98/3 on the shifted conformal-vector lane (reflection
+# sum 196) with varrho_BP=1/6. Standard FKR lane: K^c_BP=50, conditional
+# kappa complementarity 25/3.
 
 ZERO = Fraction(0, 1)
 # VERIFIED: [DC] additive identity; [SY] anti-symmetric duality gives exact cancellation.

@@ -198,9 +198,11 @@ $T^c$ and the bar differential coming from OPE residues; no
 Drinfeld associator enters its construction. The $E_1$-chiral
 \emph{coproduct} $\Delta^{\ch}_z$ on $\cA$ itself (the quantum-group
 datum, def:chiral-yangian-datum) does carry associator dependence in
-chain-level presentations: the Etingof--Kazhdan quantisation of the
-chiral coproduct uses $\Phi_{\KZ}^{\mot}$ to intertwine the two
-natural $E_2$-structures on $(\cA, \cA)$. Accordingly the chiral
+chain-level presentations: after the source Lie bialgebra,
+\(\hbar\)-adic topology, associator, and chiral QUE/quasi-Hopf target
+are fixed, the Etingof--Kazhdan quantisation of the chiral coproduct
+uses $\Phi_{\KZ}^{\mot}$ to intertwine the two natural
+$E_2$-structures on $(\cA, \cA)$. Accordingly the chiral
 coproduct carries $\MZV^{\mot}$-content, while the chiral bar does
 not. This is the structural source of the paradox: the same
 algebra's bar-side and coproduct-side have opposite motivic
@@ -306,16 +308,20 @@ $\zet^{\mot}(n)$ atoms; none arise.
 The Bershadsky--Polyakov algebra $\mathrm{BP}_k = \cW^k(sl_3,
 f_{(2,1)})$ is the minimal-nilpotent DS reduction of $\widehat{sl_3}$;
 its four generators $(J, G^+, G^-, T)$ have weights $(1, 3/2, 3/2, 2)$
-and its central charge in Arakawa convention is
-$c_{\mathrm{BP}}(k) = 2 - 24(k+1)^2/(k+3)$
-(Fehily--Kawasetsu--Ridout 2020). The Koszul conductor
-$K_{\mathrm{BP}}(k) = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6) = 196$
-is level-independent
+and its standard central charge is
+$c_{\mathrm{BP}}(k) = -(2k+3)(3k+1)/(k+3)$
+(Fehily--Kawasetsu--Ridout 2020), with level-independent Koszul
+conductor
+$K_{\mathrm{BP}}(k) = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6) = 50$
 (\texttt{bp\_self\_duality.tex} Thm.\
-\texttt{thm:bp-koszul-conductor-polynomial}).
+\texttt{thm:bp-koszul-conductor-polynomial}). The computations below
+use the explicitly shifted conformal-vector scalar
+$c^{\mathrm{shift}}_{\mathrm{BP}}(k) = 2 - 24(k+1)^2/(k+3)$, whose
+reflection sum is $196$; the shifted lane is a separate
+conformal-vector convention, not the FKR central charge.
 
 \begin{theorem}[\label{thm:bp-motivic-rationality-arakawa}BP T-line
-motivic rationality in Arakawa convention]
+motivic rationality]
 \ClaimStatusProvedHere
 For every $r \geq 2$, the BP shadow coefficient on the T-line
 (Virasoro restriction) lies in $\mathbb{Q}(k)$:
@@ -352,58 +358,57 @@ their own residue-lane identifications before a class-M rationality
 statement can be made for them.
 \end{proof}
 
-\begin{proposition}[\label{prop:bp-fl-convention-caveat}FL-convention
-Koszul conductor: distinct constant]
+\begin{proposition}[\label{prop:bp-fl-convention-caveat}Standard
+Koszul conductor: polynomial constant]
 \ClaimStatusProvedHere
-Under the Fateev--Lukyanov screening convention
-$c_{\mathrm{BP}}^{\mathrm{FL}}(k) = -(2k+3)(3k+1)/(k+3)$, the
+Under the standard Fehily--Kawasetsu--Ridout convention
+$c_{\mathrm{BP}}(k) = -(2k+3)(3k+1)/(k+3)$, the
 Koszul-conductor identity under the level involution $k \mapsto -k-6$
 is the polynomial identity
 \[
- K_{\mathrm{BP}}^{\mathrm{FL}}(k) \;=\;
- c_{\mathrm{BP}}^{\mathrm{FL}}(k) + c_{\mathrm{BP}}^{\mathrm{FL}}(-k-6)
+ K_{\mathrm{BP}}(k) \;=\;
+ c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6)
  \;=\; 50
  \qquad \text{(constant in } k \text{).}
 \]
-Both conventions parametrise the \emph{same} algebra via level
-reparametrisation; Theorem~\ref{thm:bp-motivic-rationality-arakawa}
-therefore descends to the FL convention through the rational level
-reparametrisation, and the Koszul-conductor identity remains
-polynomial in both. The \emph{value} of the conductor depends on
-convention: $196$ in Arakawa, $50$ in Fateev--Lukyanov; this
-convention shift reflects a redefinition of the central charge and
-the scale of the dual-level pairing, not a change in the algebra.
+The shifted conformal-vector scalar is a change of stress tensor on
+the \emph{same} algebra; Theorem~\ref{thm:bp-motivic-rationality-arakawa}
+therefore applies to either scalar, and the reflection-sum identity
+remains polynomial in both. The \emph{value} depends on the conformal
+vector: $50$ for the standard FKR vector, $196$ for the explicitly
+shifted vector; the shift is a redefinition of the stress tensor and
+central charge, not a change in the algebra.
 \end{proposition}
 
 \begin{proof}
 Direct substitution: writing
-$c_{\mathrm{BP}}^{\mathrm{FL}}(k) = (-6k^2 - 11k - 3)/(k + 3)$ and
-$c_{\mathrm{BP}}^{\mathrm{FL}}(-k-6) = (6k^2 + 61k + 153)/(k + 3)$,
+$c_{\mathrm{BP}}(k) = (-6k^2 - 11k - 3)/(k + 3)$ and
+$c_{\mathrm{BP}}(-k-6) = (6k^2 + 61k + 153)/(k + 3)$,
 their sum is $(50(k+3))/(k+3) = 50$ after cancellation of the common
 denominator. This is a polynomial identity in $k$ (in fact constant),
 verified in the compute engine
 \texttt{compute/tests/test\_motivic\_shadow\_full\_class\_m.py} at
 four explicit levels $k \in \{1, 2, 4, 10\}$ and via the
 \texttt{sympy.simplify} symbolic identity. Volume~II's
-\texttt{bp\_chain\_level\_strict\_platonic.tex} uses the Fateev--Lukyanov
-convention consistently. Rational change of level variable preserves
+\texttt{bp\_chain\_level\_strict\_platonic.tex} uses this standard
+convention consistently. Rational substitution preserves
 $\mathbb{Q}(k)$-membership, so the motivic-rationality conclusion of
-Theorem~\ref{thm:bp-motivic-rationality-arakawa} descends.
+Theorem~\ref{thm:bp-motivic-rationality-arakawa} holds for either
+conformal-vector scalar.
 \end{proof}
 
 \begin{remark}[\label{rem:bp-conductor-polynomial-constant}Polynomial-constant
-identity in both conventions]
-Direct substitution of $c^{\mathrm{FL}}_{\mathrm{BP}}(k)$ and
-$c^{\mathrm{FL}}_{\mathrm{BP}}(-k-6)$ yields the polynomial-constant
-value $K^{\mathrm{FL}}_{\mathrm{BP}} = 50$: any putative meromorphic
+identity in both conformal-vector conventions]
+Direct substitution of $c_{\mathrm{BP}}(k)$ and
+$c_{\mathrm{BP}}(-k-6)$ yields the polynomial-constant
+value $K_{\mathrm{BP}} = 50$: any putative meromorphic
 expression $-12(k+3) - 48/(k+3)$ is an arithmetic artefact, as the
 apparent pole at $k = -3$ cancels in the sum.
 Proposition~\ref{prop:bp-fl-convention-caveat} records the polynomial
-identity $K^{\mathrm{FL}}_{\mathrm{BP}} = 50$. The Arakawa convention
-gives $K^{\mathrm{Arakawa}}_{\mathrm{BP}} = 196$; the two constants
-differ by a convention-dependent rescaling ($196 - 50 = 146 =
-2 \cdot 73$, the factor accompanying the change of central-charge
-normalisation between FL screening and Arakawa DS reduction).
+identity $K_{\mathrm{BP}} = 50$. The explicitly shifted conformal
+vector gives the auxiliary reflection sum $196$; it corresponds to a
+change of stress tensor and must not be cited as the FKR
+central-charge conductor.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1210,8 +1210,9 @@ def koszul_dual_kappa_virasoro(c_val: float) -> float:
 def koszul_dual_kappa_heisenberg(k_val: float) -> float:
     """Koszul dual kappa for Heisenberg: kappa(H_k^!) = -k.
 
-    CAUTION (AP33): H_k^! = Sym^ch(V*) != H_{-k} as chiral algebras,
-    but they have the same kappa.
+    CAUTION (AP33): at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+    centre.  This helper records only the shared scalar kappa.
     """
     return -k_val
 

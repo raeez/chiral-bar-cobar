@@ -844,8 +844,8 @@ def first_higher_correction(c: Fraction, h1: Fraction) -> Dict[str, Any]:
     which after d log absorption gives (c/2)/z^3 in r(z).
 
     For Heisenberg: the OPE has only z^{-2}, so r(z) = k*Omega_H/z (rank-one coeff k/z), and R_2 = 0.
-    For affine KM: the OPE has z^{-2} and z^{-1}, so r(z) = Omega/z,
-        and R_2 = 0 (no z^{-3} pole).
+    For affine KM in trace-form normalization: the OPE has z^{-2} and
+        z^{-1}, so r_k(z) = k*Omega/z, and R_2 = 0 (no z^{-3} pole).
     For Virasoro: R_2 = -c/4, NONZERO for c != 0.
 
     This is the first visible R-matrix correction distinguishing

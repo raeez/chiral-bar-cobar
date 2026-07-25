@@ -18,32 +18,32 @@ MATHEMATICAL CONTENT:
    (brackets [E_12, E_23] = E_13, etc.).
 
 2. STRONG GENERATORS OF W^k(sl_5, f_{(3,2)}):
-   From the ad(h/2)-grading on g^f (8-dimensional):
-     h = 1:   1 bosonic   (J-type current from Cartan of g^f)
-     h = 3/2: 2 fermionic (from grade -1 of g^f)
-     h = 2:   2 bosonic   (from grade -2 of g^f, includes T)
-     h = 5/2: 2 fermionic (from grade -3 of g^f)
-     h = 3:   1 bosonic   (from grade -4 of g^f, highest weight)
-   Total: 4 bosonic + 4 fermionic = 8 strong generators.
-   Anomaly ratio: rho = 1/1 - 2/3*(2) + 1/2*(2) - 2/5*(2) + 1/3
-                      = 1 - 4/3 + 1 - 4/5 + 1/3 = 1/5.
+   From the sl_2-decomposition pairing of the parts (type A: every
+   strong generator is EVEN):
+     h = 1:   1     h = 3/2: 2     h = 2:   2     h = 5/2: 2     h = 3: 1
+   Total: 8 strong generators, all even.
+   Anomaly ratio rho: OPEN (typed ClaimPacket; no derivation exists --
+   the named obligation is a nonseparating genus-one calculation and a
+   theorem identifying rho with a specified modular channel).
 
 3. STRONG GENERATORS OF W^k(sl_5, f_{(2,2,1)}):
    dim(g^f) = 12.
-     h = 1:   4 bosonic
-     h = 3/2: 4 fermionic
-     h = 2:   4 bosonic
-   Anomaly ratio: rho_t = 4/1 - 4*(2/3) + 4/2 = 4 - 8/3 + 2 = 10/3.
+     h = 1: 4     h = 3/2: 4     h = 2: 4     (all even)
+   Anomaly ratio rho_t: OPEN (same typed lane).
 
-4. CENTRAL CHARGE (KRW formula):
-   c(3,2; k) = 2 - 108/(k+5) = 2(k - 49)/(k + 5).
-   c(2,2,1; k) = 6 - 90/(k+5) = 6(k - 10)/(k + 5).
+4. CENTRAL CHARGE (KRW per-root-pair formula, canonical oracle):
+   c(3,2; k)   = 24k/(k+5) - 30k - 52 = (-30k^2 - 178k - 260)/(k + 5);
+                 c(0) = -52, c(1) = -78.
+   c(2,2,1; k) = 24k/(k+5) - 12k - 6  = -6(2k + 5)(k + 1)/(k + 5);
+                 c(0) = -6, c(1) = -14.
 
 5. KOSZUL CONDUCTOR AND COMPLEMENTARITY:
-   K(k) = c(3,2; k) + c(2,2,1; -k-10) = 2(4k + 11)/(k + 5).
+   K(k) = c(3,2; k) + c(2,2,1; -k-10) = 110 - 18k = 2(55 - 9k).
    This is k-DEPENDENT, unlike hook partitions where the conductor
-   is constant.  The root cause: rho_{(3,2)} = 1/5 != 10/3 = rho_{(2,2,1)},
-   so the kappa sum kappa(k) + kappa(k') is not k-independent.
+   is constant.  Structural root cause: the two KRW quadratic
+   coefficients differ for a non-self-transpose pair, so no level
+   reflection makes the sum constant.  The kappa sum passes through the
+   OPEN rho packets and is itself a typed packet.
 
    For SELF-TRANSPOSE non-hook partitions like (2,2) in sl_4, the conductor
    IS k-independent (since rho = rho_t).  For NON-self-transpose non-hook
@@ -248,12 +248,13 @@ def _generator_spectrum_from_partition(partition) -> GeneratorSpectrum:
 # =============================================================================
 
 def central_charge_32(level=None):
-    """Central charge of W^k(sl_5, f_{(3,2)}).
+    r"""Central charge of W^k(sl_5, f_{(3,2)}).
 
-    c(k) = 2 - 108/(k+5) = 2(k - 49)/(k + 5).
-
-    Leading term: dim(g_0) - (1/2)*dim(g_{1/2}) = 4 - 2 = 2.
-    Quadratic coefficient: 12*||rho - rho_L||^2 = 108.
+    KRW per-root-pair formula with x = h/2 = diag(1, 0, -1, 1/2, -1/2):
+      c(k) = 24k/(k+5) - 30k - 52 = (-30k^2 - 178k - 260)/(k + 5)
+    (|x|^2 = 5/2; ghost sum over grades {1/2 x4, 1 x3, 3/2 x2, 2 x1} = 50;
+    dim(g_{1/2})/2 = 2).  Anchors: c(0) = -52, c(1) = -78.
+    Real zeros at k = -13/5 and k = -10/3 (both negative, non-generic).
     """
     if level is None:
         level = k
@@ -261,12 +262,12 @@ def central_charge_32(level=None):
 
 
 def central_charge_221(level=None):
-    """Central charge of W^k(sl_5, f_{(2,2,1)}).
+    r"""Central charge of W^k(sl_5, f_{(2,2,1)}).
 
-    c(k) = 6 - 90/(k+5) = 6(k - 10)/(k + 5).
-
-    Leading term: dim(g_0) - (1/2)*dim(g_{1/2}) = 8 - 2 = 6.
-    Quadratic coefficient: 12*||rho - rho_L||^2 = 90.
+    KRW per-root-pair formula with x = h/2 = diag(1/2,-1/2,1/2,-1/2,0):
+      c(k) = 24k/(k+5) - 12k - 6 = -6(2k + 5)(k + 1)/(k + 5)
+    (|x|^2 = 1; ghost sum over grades {1/2 x4, 1 x4} = 4; dim(g_{1/2})/2 = 2).
+    Anchors: c(0) = -6, c(1) = -14.  Real zeros at k = -1, -5/2.
     """
     if level is None:
         level = k
@@ -274,9 +275,11 @@ def central_charge_221(level=None):
 
 
 def kappa_32(level=None):
-    """Modular characteristic kappa for W^k(sl_5, f_{(3,2)}).
+    """Typed modular-characteristic packet for W^k(sl_5, f_{(3,2)}).
 
-    kappa = rho * c = (1/5) * 2(k-49)/(k+5) = 2(k-49)/(5(k+5)).
+    kappa = rho * c requires the anomaly ratio rho, which is OPEN (no
+    derivation exists; a nonseparating genus-one calculation is the named
+    obligation).  Returns a ClaimPacket, never a fabricated scalar.
     """
     if level is None:
         level = k
@@ -284,9 +287,10 @@ def kappa_32(level=None):
 
 
 def kappa_221(level=None):
-    """Modular characteristic kappa for W^k(sl_5, f_{(2,2,1)}).
+    """Typed modular-characteristic packet for W^k(sl_5, f_{(2,2,1)}).
 
-    kappa = rho_t * c_t = (10/3) * 6(k-10)/(k+5) = 20(k-10)/(k+5).
+    Same lane as ``kappa_32``: rho is OPEN, so the packet carries the
+    obligation instead of a value.
     """
     if level is None:
         level = k
@@ -300,13 +304,11 @@ def kappa_221(level=None):
 def koszul_conductor_32():
     """Koszul conductor K = c(3,2; k) + c(2,2,1; -k-10).
 
-    K(k) = 2(4k + 11)/(k + 5).
-
-    This is k-DEPENDENT -- a new phenomenon for non-self-transpose
-    non-hook partitions.  For hook partitions and self-transpose
-    non-hook partitions, the conductor is k-independent.
-
-    Root cause: rho_{(3,2)} = 1/5 != 10/3 = rho_{(2,2,1)}.
+    K(k) = 110 - 18k = 2(55 - 9k): the pole at k = -5 cancels in the sum,
+    leaving a polynomial, but the conductor remains k-DEPENDENT.  For
+    non-self-transpose pairs the two KRW quadratic coefficients differ,
+    so no reflection can make the sum constant.  Anchors: K(0) = 110,
+    K(1) = 92.
     """
     c_k = central_charge_32()
     c_kp = central_charge_221(-k - DUAL_LEVEL_SHIFT)
@@ -314,10 +316,11 @@ def koszul_conductor_32():
 
 
 def kappa_sum_32():
-    """Kappa complementarity sum: kappa(3,2; k) + kappa(2,2,1; -k-10).
+    """Typed kappa-complementarity packet: kappa(3,2;k) + kappa(2,2,1;-k-10).
 
-    Returns a simplified expression.  For (3,2) this is k-DEPENDENT:
-      6(17k + 317)/(5(k + 5)).
+    Both summands pass through the OPEN anomaly ratio rho (kappa = rho*c),
+    so the sum is a ClaimPacket carrying the rho obligation, not a
+    rational function.
     """
     return kappa_complementarity_sum(PARTITION_32)
 
@@ -702,27 +705,27 @@ def seven_face_status_221() -> SevenFaceStatus:
 # =============================================================================
 
 def numerical_data_32(level_val):
-    """Evaluate all numerical invariants at a specific level.
+    """Evaluate the exact scalar invariants at a specific level.
 
-    Returns a dict with c, kappa, conductor, kappa_sum at the given level.
+    Central charges and their conductor sum are exact scalars (canonical
+    KRW oracle).  The kappa entries pass through the OPEN anomaly ratio
+    rho, so they are returned as typed ClaimPackets, unevaluated.
     """
     lev = sympify(level_val)
     dual_lev = -lev - DUAL_LEVEL_SHIFT
 
     c_32 = simplify(central_charge_32(lev))
     c_221 = simplify(central_charge_221(dual_lev))
-    kap_32 = simplify(kappa_32(lev))
-    kap_221 = simplify(kappa_221(dual_lev))
 
     return {
         'level': lev,
         'dual_level': dual_lev,
         'c_32': c_32,
         'c_221_dual': c_221,
-        'kappa_32': kap_32,
-        'kappa_221_dual': kap_221,
+        'kappa_32': kappa_32(lev),
+        'kappa_221_dual': kappa_221(dual_lev),
         'conductor': simplify(c_32 + c_221),
-        'kappa_sum': simplify(kap_32 + kap_221),
+        'kappa_sum': kappa_sum_32(),
     }
 
 
@@ -735,10 +738,11 @@ class HookTransportObstruction:
     """Analysis of why hook-type transport fails for (3,2)."""
     partition: Tuple[int, ...]
     is_hook: bool
-    # The anomaly ratio mismatch
+    # The anomaly ratio comparison: rho packets are OPEN, so the match
+    # verdict is None (undetermined), never a fabricated bool.
     rho_source: object
     rho_target: object
-    rho_match: bool
+    rho_match: Optional[bool]
     # Generator spectrum mismatch
     source_weights: Tuple[object, ...]
     target_weights: Tuple[object, ...]
@@ -752,17 +756,18 @@ class HookTransportObstruction:
 def hook_transport_obstruction_32() -> HookTransportObstruction:
     """Why hook transport fails for (3,2) in sl_5.
 
-    Three independent obstructions:
+    Computed obstructions:
     1. (3,2) is not a hook partition, so Fehily's inverse reduction
-       argument does not apply.
-    2. The anomaly ratios rho_{(3,2)} = 1/5 and rho_{(2,2,1)} = 10/3
-       do not match, so the kappa sum rule (rem:hook-kappa-sum-rule)
-       fails: the kappa sum is k-dependent.
-    3. The generator spectra differ qualitatively: (3,2) has generators
-       at h = 1, 3/2, 2, 5/2, 3, while (2,2,1) has only h = 1, 3/2, 2.
-       The h = 5/2 and h = 3 generators of (3,2) have no counterpart
-       in (2,2,1).  This means the r-matrix structures are qualitatively
-       different (max pole 5 vs 3).
+       argument does not apply (exact combinatorics).
+    2. The generator spectra differ qualitatively: (3,2) has generators
+       at h = 1, 3/2, 2, 5/2, 3, while (2,2,1) has only h = 1, 3/2, 2
+       (exact); the r-matrix structures differ (max pole 5 vs 3).
+    3. The conductor c(3,2;k) + c(2,2,1;-k-10) = 110 - 18k is
+       k-DEPENDENT (exact, canonical KRW oracle).
+
+    The anomaly ratios rho are OPEN typed packets (no derivation exists),
+    so ``rho_match`` is ``None``: the rho comparison is undetermined
+    until rho is constructed, and is NOT usable as an obstruction.
     """
     spec_32 = generator_spectrum_32()
     spec_221 = generator_spectrum_221()
@@ -777,15 +782,16 @@ def hook_transport_obstruction_32() -> HookTransportObstruction:
         is_hook=False,
         rho_source=spec_32.anomaly_ratio,
         rho_target=spec_221.anomaly_ratio,
-        rho_match=spec_32.anomaly_ratio == spec_221.anomaly_ratio,
+        rho_match=None,
         source_weights=src_weights,
         target_weights=tgt_weights,
         spectra_match=src_weights == tgt_weights,
         conductor_k_dependent=k_dep,
         obstruction_summary=(
-            '(3,2) is NOT hook. Three obstructions to transport: '
+            '(3,2) is NOT hook. Computed obstructions to transport: '
             '(1) not in Fehily corridor, '
-            '(2) rho mismatch (1/5 vs 10/3), '
-            '(3) generator spectra differ (max weight 3 vs 2).'
+            '(2) generator spectra differ (max weight 3 vs 2), '
+            '(3) conductor 110 - 18k is k-dependent. '
+            'rho comparison OPEN (typed packets, no derivation).'
         ),
     )

@@ -33,16 +33,16 @@ The degree-two, genus-zero trace:
 \;=\;
 \operatorname{tr}(\Theta_\cA)_{2,0}
 \;=\;
-\mathrm{av}\bigl(r(z)\bigr)
+\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})
 \;\in\;\Bbbk.
 \]
-This is the first Chern class of the modular bar bundle:
-$\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$ for
-uniform-weight algebras at all genera, and unconditionally
-at genus~$1$. On
-the $E_1$ side, $\kappa$ is the $\Sigma_2$-coinvariant of
-the $R$-matrix $r(z)$; averaging collapses the $z$-dependent
-profile to a number. Explicit values:
+Under~$H_D^1$ this scalar gives the pointed trace
+$\kappa(\cA)\lambda_1$.  Under~$H_D^K$ it gives
+$\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g)$ and its
+signed Hodge character. On
+the $E_1$ side, $q_2(K_\cA^{\mathrm{coll}})$ is the
+$\Sigma_2$-homotopy-coinvariant operator class; the normalized
+functional $\tau_{\cA,2}^{\mathrm{res}}$ produces $\kappa$. Explicit values:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lccl}
@@ -149,8 +149,8 @@ Flatness $\Omega=0$
  & Automatic (bar-intrinsic)\\[2pt]
 First Chern class $c_1$
  & Scalar curvature $\kappa(\cA)$ (abelian/scalar:
- $\mathrm{av}(r(z))$; affine KM:
- $\mathrm{av}(r(z))+\dim(\fg)/2$)\\[2pt]
+ $\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$; affine KM:
+ $\kappa_{\mathrm{dp}}+\dim(\fg)/2$)\\[2pt]
 Chern character
  & Spectral discriminant
  $\Delta_\cA(t)=\operatorname{sdet}(1-tT_{\mathrm{br}})$\\[2pt]
@@ -331,9 +331,10 @@ Q_L(t)=4\kappa^2+12\kappa\alpha\,t+(9\alpha^2+16\kappa S_4)t^2,
 a quadratic polynomial in three genus-$0$ invariants
 $(\kappa,\alpha,S_4)$
 (Theorem~\ref{thm:riccati-algebraicity}). The infinite tower is
-algebraic of degree~$2$: $H(t)=t^2\sqrt{Q_L(t)}$. The
-discriminant $\Delta = 8\kappa S_4$ governs the depth
-classification.
+algebraic of degree~$2$: $H(t)=t^2\sqrt{Q_L(t)}$. The scalar
+discriminant $\Delta = 8\kappa S_4$ governs the branch structure of
+the primary-line square root after the support stratum has been fixed;
+the depth classification itself is carried by the support packet.
 
 \subsection*{6.5.\enspace The four depth classes}
 
@@ -353,9 +354,10 @@ The standard landscape partitions into four classes
 by the cubic shadow $\mathfrak C$ (the degree-$3$ obstruction)
 and the quartic contact invariant $\mathfrak Q$ (the
 canonical degree-$4$ class of \S6.3). The single-line
-dichotomy (Theorem~\ref{thm:single-line-dichotomy}):
-$\Delta = 0$ forces tower termination; $\Delta \neq 0$
-forces an infinite tower.
+dichotomy (Theorem~\ref{thm:single-line-dichotomy}) is a statement on
+a fixed primary line: the perfect-square scalar trace is finite, and a
+nonzero scalar discriminant witnesses the mixed Virasoro wheel only
+after the mixed support packet has been fixed.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -541,7 +543,7 @@ $\cH_k$
 $\widehat{\fg}_k$
  & $J^a$ (wt~$1$)
  & $\frac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
- & $k\Omega/z$
+ & $k\Omega_{\mathrm{tr}}/z$
  & $3$
  & L
  & $0$
@@ -580,8 +582,8 @@ $V_\Lambda$
  & arithmetic from~$q$\\[2pt]
 $Y(\fg)$
  & line operators
- & $\mathrm{av}(k\Omega/z)$
- & $k\Omega/z$
+ & $\mathrm{av}(k\Omega_{\mathrm{tr}}/z)$
+ & $k\Omega_{\mathrm{tr}}/z$
  & $3$
  & L
  & n/a
@@ -608,7 +610,7 @@ curved. Sewing by Fredholm determinant.
 \medskip
 \noindent\textbf{Affine Kac--Moody} (class L).
 Currents $J^a$ of weight~$1$; OPE with first- and second-order
-poles. $R$-matrix: $r(z)=k\Omega/z$, the Casimir tensor of
+poles. $R$-matrix: $r(z)=k\Omega_{\mathrm{tr}}/z$, the Casimir tensor of
 $\fg$, matrix-valued. Averaging collapses $\Omega$ to
 $\kappa(\widehat\fg_k)=(k{+}h^\vee)\dim\fg/(2h^\vee)$. The
 matrix structure builds the Yangian $Y(\fg)$; the cubic shadow
@@ -683,7 +685,7 @@ even self-dual lattice VOAs.
 \medskip
 \noindent\textbf{Yangians and quantum groups} (class L).
 The Yangian $Y(\fg)$ governs the ordered/line-operator sector:
-the $R$-matrix $r(z)=k\Omega/z$ is the genus-$0$ binary shadow
+the $R$-matrix $r(z)=k\Omega_{\mathrm{tr}}/z$ is the genus-$0$ binary shadow
 of $\Theta^{E_1}_\cA$. The classical Yang--Baxter equation is
 Arnold on $\mathrm{FM}_3(\mathbb C)$ evaluated on the Casimir:
 three boundary divisors of $\overline C_3(\mathbb C)$, with the
@@ -762,18 +764,22 @@ $Z=\sum_g g_s^{2g-2}\int_{\cM_g}[\mathrm{det}'_\zeta\Delta]
 by gauge-fixing the worldsheet metric to conformal gauge, paying
 the price of a conformal anomaly
 $\langle T^a{}_a\rangle=(c/12)\,R$ and a ghost system with
-$c_{\mathrm{ghost}}=-26$. Every element of this programme has a
-bar-cobar counterpart:
+$c_{\mathrm{ghost}}=-26$. In this manuscript this is an
+anomaly-accounting dictionary. A string-critical claim requires a determinant line, the
+\(bc\)-ghost complex, a BRST current, and \(Q^2=0\). With those data
+fixed, the bar-cobar counterparts are:
 \begin{itemize}[nosep]
 \item The conformal anomaly is $\kappa(\cA)$: both measure the
  obstruction to metric-independence at genus~$1$, one by
  functional-integral trace, the other by bar curvature.
-\item The critical dimension $c=26$ is the vanishing of the dual
- curvature: $\kappa(\mathrm{Vir}_{26-c})=(26{-}c)/2=0$ when
- $c=26$.
+\item The string-critical dimension \(c_{\mathrm{matter}}=26\) is the
+ BRST anomaly-cancellation equation
+ \(c_{\mathrm{matter}}+c_{\mathrm{ghost}}=0\) for the chosen ghost
+ complex. The KSDual fixed-point condition belongs to the separate
+ Verdier--Koszul lane.
 \item The ghost system $bc$ with $c_{\mathrm{ghost}}=-26$ is the
- Koszul dual $\cA^!$ in the BRST pairing: the ghost partition
- function is the complementarity partner.
+ external BRST ghost resolution. A named BRST/Koszul comparison map
+ relates it to the Koszul partner $\cA^!$.
 \item The functional determinant
  $\mathrm{det}'_\zeta\Delta$ on the Laplacian is the Fredholm
  determinant $\det(1-K)$ on the Bergman sewing kernel: the
@@ -781,9 +787,10 @@ bar-cobar counterpart:
  regularisation with a convergent Fredholm series.
 \item The genus expansion
  $F_g=\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$ (uniform weight)
- is the bar-complex computation of Polyakov's path integral at
- genus~$g$, with the Faber--Pandharipande $\lambda$-class
- replacing Weil--Petersson integration.
+ is the scalar diagonal bar-complex lane. It matches the Polyakov
+ anomaly coefficient under the determinant-line and BRST comparison
+ package; Weil--Petersson integration remains a separate geometric
+ input.
 \end{itemize}
 The four shadow depth classes are the four levels of departure
 from the Gaussian path integral: class~G is free ($Z$ is a
@@ -858,8 +865,9 @@ are the seven independent bidirectional equivalences. Item
 \textup{(vi)} is the Barr--Beck--Lurie consequence of the
 bar-cobar counit. Item \textup{(vii)} is conditional on the
 factorization-homology comparison and detection package. Item
-\textup{(viii)} is a one-way chiral Hochschild consequence on
-the Koszul locus. Item \textup{(xi)} is conditional on the
+\textup{(viii)} is the family-indexed chiral Hochschild support
+statement under $H_H(\cA;S)$, with duality supplied by a separate
+perfect degree-$d$ pairing. Item \textup{(xi)} is conditional on the
 shifted-symplectic hypothesis package, and item \textup{(xii)}
 ($\mathcal D$-module purity) is one-directional. For $\cA$
 positive-energy and finitely strongly generated:
@@ -876,8 +884,10 @@ positive-energy and finitely strongly generated:
 \item Barr--Beck--Lurie comparison is an equivalence.
 \item $\int_X \cA$ concentrated in degree~$0$
  for every smooth proper~$X$.
-\item $\mathrm{ChirHoch}^*(\cA)$ vanishes outside
- $\{0,1,2\}$.
+\item A family datum $H_H(\cA;S)$ gives
+ $\operatorname{Supp}\mathrm{ChirHoch}^\bullet(\cA)\subseteq S$;
+ a perfect degree-$d$ pairing gives the separate reflection
+ $n\leftrightarrow d-n$.
 \item Kac--Shapovalov determinant $\det G_h \neq 0$
  in bar-relevant range.
 \item Restriction to every FM boundary stratum acyclic
@@ -946,8 +956,10 @@ $E_2$-formality of chiral Hochschild cohomology (consequence of
 Koszulness); genus-$0$ curve independence (proved independently
 by factorization descent); PBW universality (sufficient
 condition: every freely strongly generated vertex algebra is
-chirally Koszul, covering universal algebras $V_k(\fg)$ at every
-level including critical and admissible); and bifunctor
+chirally Koszul on the universal non-critical PBW/Koszul lane;
+critical level is a separate Feigin--Frenkel centre/Sugawara
+degeneration boundary, and admissibility is a simple-quotient
+condition rather than a universal-PBW enhancement); and bifunctor
 decomposition (one-directional, converse open). A further
 heuristic characterization; \emph{tropical Koszulness}, phrased
 via a weight spectral sequence on the real blowup; is suggestive
@@ -956,32 +968,37 @@ equivalence here; see the scope remark attached to
 Theorem~\ref{thm:koszul-equivalences-meta} and the ``see also''
 discussion in the body of the text.
 
-For simple quotients $L_k(\fg)$ at admissible levels, the
-Koszulness status is rank-dependent: $L_k(\mathfrak{sl}_2)$ is
-Koszul at all admissible levels, but at $\mathrm{rk}(\fg)\ge 2$
-with denominator $q\ge 3$, Koszulness may fail via a bar
-obstruction from the abelian Cartan subalgebra.
+For simple quotients $L_k(\fg)$ at admissible levels, rationality is
+not a Koszulness criterion. The $L_k(\mathfrak{sl}_2)$ lane carries
+strong finite Shapovalov/character evidence, but it is conditional
+until the quotient-bar spectral sequence and convergence package is
+installed. At $\mathrm{rk}(\fg)\ge 2$ with denominator $q\ge 3$,
+Koszulness may fail via a bar obstruction from the abelian Cartan
+subalgebra.
 
 \subsection*{9.3.\enspace Chiral Hochschild cohomology (Theorem~H)}
 
 The chiral Hochschild complex
 $\mathrm{ChirHoch}^\bullet(\cA)$ is the derived endomorphism
-algebra of the identity functor on $\cA$-modules. For
-principal $\mathcal W$-algebras at generic level:
+algebra of the identity functor on $\cA$-modules.  For a principal
+$\mathcal W$-algebra, PBW supplies the associated-graded quadratic
+input.  A family datum
+$H_H(\mathcal W^k(\fg);S_{k,\fg})$ supplies the complete retract and
+gives
 \[
-\mathrm{ChirHoch}^n(\mathcal W^k(\fg)) = 0
-\quad\text{for } n > 2,
+\operatorname{Supp}\mathrm{ChirHoch}^\bullet
+(\mathcal W^k(\fg))\subseteq S_{k,\fg},
 \qquad
-P(t) = 1 + t^2.
+P(t)=\sum_{n\in S_{k,\fg}}
+\dim H^n(K_{\mathcal W^k(\fg),S_{k,\fg}})t^n.
 \]
-The deformation class in $\mathrm{ChirHoch}^2=\mathbb C$ is the
-level deformation $k\mapsto k+\epsilon$. This is a \emph{finite}
-invariant (concentrated in three degrees, not a polynomial ring);
-contrast with the infinite-dimensional continuous Lie algebra
-cohomology $H^*_{\mathrm{GF}}(\mathrm{Diff}(S^1))$, which is
-an unrelated invariant. On the Koszul locus,
-$\mathrm{ChirHoch}^\bullet(\cA)$ carries a formal $E_2$-algebra
-structure.
+The bounded Virasoro calculation has support $\{0,2,3\}$ with
+one-dimensional groups.  Identifying a class in
+$\mathrm{ChirHoch}^2$ with the level deformation
+$k\mapsto k+\epsilon$ requires the family-specific tangent map.
+Continuous Gel'fand--Fuks cohomology is a distinct functor connected
+to the curve chart by a filtered comparison.  A brace-compatible
+formality contraction supplies a formal $E_2$-algebra presentation.
 
 \subsection*{9.4.\enspace BV/BRST identification}
 

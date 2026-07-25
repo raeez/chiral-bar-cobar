@@ -54,8 +54,11 @@ tests must not silently register as verification.
 
 from __future__ import annotations
 
+import ast
 import functools
 import inspect
+import re
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Iterable
@@ -68,13 +71,21 @@ from typing import Callable, Iterable
 
 @dataclass(frozen=True)
 class VerificationEntry:
-    """Record of one (test, claim) verification relationship."""
+    """Record of one (test, claim) verification relationship.
+
+    ``manuscript_read_paths`` and ``derivation_module_imports`` are filled
+    by the static source scan performed at decoration time (see the
+    ``independent_verification`` docstring for exactly what the scan does
+    and does not guarantee).
+    """
     claim: str
     test_qualname: str
     test_file: str
     derived_from: tuple[str, ...]
     verified_against: tuple[str, ...]
     disjoint_rationale: str
+    manuscript_read_paths: tuple[str, ...] = ()
+    derivation_module_imports: tuple[str, ...] = ()
 
     def is_tautological(self) -> bool:
         """True if any derivation source also appears as a verification source.
@@ -108,6 +119,25 @@ def entries_for(claim: str) -> list[VerificationEntry]:
 def tautological_entries() -> list[VerificationEntry]:
     """Entries whose derivation and verification sources overlap."""
     return [e for e in _REGISTRY if e.is_tautological()]
+
+
+def manuscript_reading_entries() -> list[VerificationEntry]:
+    """Entries whose test module statically appears to read ``.tex`` files.
+
+    A verification value obtained by reading the manuscript is compared
+    against the manuscript -- circular by construction. These entries are
+    flagged for audit; see ``independent_verification`` for scan semantics.
+    """
+    return [e for e in _REGISTRY if e.manuscript_read_paths]
+
+
+def derivation_import_entries() -> list[VerificationEntry]:
+    """Entries whose test module imports a cited derivation module.
+
+    Flagged for audit: the rationale must argue function-level
+    disjointness inside the shared module, or the entry is tautological.
+    """
+    return [e for e in _REGISTRY if e.derivation_module_imports]
 
 
 def clear_registry() -> None:
@@ -159,6 +189,125 @@ def assert_sources_disjoint(
 
 
 # ---------------------------------------------------------------------------
+# Static source scan (module-level, best-effort)
+# ---------------------------------------------------------------------------
+
+# Explicit python-module references inside source-description strings, e.g.
+# "compute.lib.kappa_bkm_universal" or "kappa_BKM_universal.py".
+_MODULE_REF_PATTERNS = (
+    re.compile(r"compute\.lib\.([A-Za-z_]\w*)"),
+    re.compile(r"([A-Za-z_]\w*)\.py\b"),
+)
+
+
+def _parse_module_source(module) -> ast.Module | None:
+    """Best-effort AST of the module defining the decorated test."""
+    try:
+        source = inspect.getsource(module)
+        return ast.parse(source)
+    except (OSError, TypeError, SyntaxError):
+        return None
+
+
+def _imported_module_names(tree: ast.Module) -> set[str]:
+    """All module names imported by the module (top of dotted path and leaf)."""
+    names: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                names.update(alias.name.split("."))
+        elif isinstance(node, ast.ImportFrom):
+            if node.module:
+                names.update(node.module.split("."))
+            for alias in node.names:
+                names.add(alias.name)
+    return names
+
+
+def _derivation_module_tokens(derived_from: Iterable[str]) -> set[str]:
+    """Python-module names explicitly cited as DERIVATION sources."""
+    tokens: set[str] = set()
+    for source in derived_from:
+        for pattern in _MODULE_REF_PATTERNS:
+            tokens.update(match.lower() for match in pattern.findall(source))
+    return tokens
+
+
+def _is_iv_decorator_call(node: ast.Call) -> bool:
+    """True if the Call node is an ``independent_verification(...)`` call."""
+    func = node.func
+    name = getattr(func, "id", None) or getattr(func, "attr", None)
+    return name == "independent_verification"
+
+
+def _tex_paths_in_calls(tree: ast.Module) -> tuple[str, ...]:
+    """String constants ending in ``.tex`` used inside call expressions.
+
+    Docstrings, comments, and prose citations mentioning ``.tex`` mid-string
+    are NOT flagged; only path-shaped strings (ending with ``.tex``) that
+    flow into a function call (``open``, ``Path(...)``, ``read_text``
+    argument chains, glob patterns, ...) are collected.  Arguments of the
+    ``independent_verification`` decorator itself (source-citation prose)
+    are excluded.
+    """
+    found: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or _is_iv_decorator_call(node):
+            continue
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Call) and _is_iv_decorator_call(sub):
+                continue
+            if isinstance(sub, ast.Constant) and isinstance(sub.value, str):
+                if sub.value.endswith(".tex"):
+                    found.append(sub.value)
+    return tuple(dict.fromkeys(found))
+
+
+def _scan_module(
+    module,
+    derived_from: tuple[str, ...],
+    claim: str,
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Run both static checks; flag findings on the entry and warn.
+
+    Returns ``(manuscript_read_paths, derivation_module_imports)``.
+
+    Neither finding is a hard error: derivation and verification may
+    legitimately live in DIFFERENT FUNCTIONS of one engine module (the
+    rationale must argue the function-level disjointness), and a module
+    may read .tex files for reasons other than sourcing expected values.
+    Both situations are recorded for audit rather than silently passed.
+    """
+    tree = _parse_module_source(module)
+    if tree is None:
+        return (), ()
+
+    imported = {name.lower() for name in _imported_module_names(tree)}
+    derivation_tokens = _derivation_module_tokens(derived_from)
+    overlap = tuple(sorted(imported & derivation_tokens))
+    if overlap:
+        warnings.warn(
+            f"claim={claim!r}: the test module imports {overlap!r}, which "
+            "derived_from explicitly names as a derivation source. If the "
+            "verification value flows through the same code path as the "
+            "derivation, this is a tautology; entry flagged in the "
+            "registry (derivation_module_imports).",
+            stacklevel=3,
+        )
+
+    tex_paths = _tex_paths_in_calls(tree)
+    if tex_paths:
+        warnings.warn(
+            f"claim={claim!r}: the test module passes .tex paths to calls "
+            f"({tex_paths!r}). Manuscript-derived expected values are not "
+            "independent verification; entry flagged in the registry "
+            "(see manuscript_reading_entries()).",
+            stacklevel=3,
+        )
+    return tex_paths, overlap
+
+
+# ---------------------------------------------------------------------------
 # Decorator
 # ---------------------------------------------------------------------------
 
@@ -193,14 +342,54 @@ def independent_verification(
     Raises
     ------
     IndependentVerificationError
-        At decoration time, if derived_from and verified_against overlap.
-        This surfaces as a test collection failure -- the tautology is
-        caught before the test runs.
+        At decoration time, if derived_from and verified_against overlap
+        as strings. This surfaces as a test collection failure -- the
+        tautology is caught before the test runs.
 
     Notes
     -----
-    The decorator does not change test behaviour. It only installs a
-    registry entry and enforces the disjointness invariant.
+    WHAT THIS DECORATOR GUARANTEES (all checks are static and best-effort):
+
+    1. String disjointness (hard error): ``derived_from`` and
+       ``verified_against`` share no element (case/whitespace-insensitive
+       exact-string comparison).
+    2. Derivation-import flagging (warning + registry flag): if the module
+       containing the decorated test imports a python module explicitly
+       cited in ``derived_from`` via a ``compute.lib.<name>`` or
+       ``<name>.py`` reference, the import is recorded on the entry
+       (``derivation_module_imports``) and a ``UserWarning`` is emitted.
+       Not a hard error, because derivation and verification may
+       legitimately be different FUNCTIONS of one engine module -- the
+       ``disjoint_rationale`` must then argue function-level disjointness.
+    3. Manuscript-read flagging (warning + registry flag): string
+       constants ending in ``.tex`` that appear inside call expressions of
+       the test's module (file opens, Path construction, glob patterns)
+       are recorded on the entry (``manuscript_read_paths``). Comparing a
+       computed value against a number scraped from the manuscript is
+       circular whenever the manuscript value came from the same
+       derivation; such entries are queryable via
+       ``manuscript_reading_entries()`` for audit. Prose citations that
+       merely mention a ``.tex`` file (including inside this decorator's
+       own arguments) are not flagged.
+
+    WHAT IT DOES NOT GUARANTEE:
+
+    - Genuine mathematical independence of the two source sets. Renaming a
+      source, re-deriving the same formula in a second module, or citing a
+      secondary reference that itself derives from the primary all pass
+      every static check. Only the ``disjoint_rationale`` review catches
+      these.
+    - Transitive import hygiene: an imported module may itself import the
+      derivation module; the scan is one level deep by design.
+    - Dynamic behaviour: file paths assembled at runtime, ``importlib``
+      loads, or data files that cache manuscript values are invisible to
+      the AST scan.
+    - Data provenance: a hardcoded constant inside the verification path
+      is not traced to its origin.
+
+    The decorator does not change test behaviour at call time. It installs
+    a registry entry, enforces string disjointness, and records the two
+    static-scan flags at import time.
     """
     derived_tuple = tuple(derived_from)
     verified_tuple = tuple(verified_against)
@@ -220,6 +409,12 @@ def independent_verification(
             if module and module.__file__
             else "<unknown>"
         )
+        if module is not None:
+            tex_paths, derivation_imports = _scan_module(
+                module, derived_tuple, claim,
+            )
+        else:
+            tex_paths, derivation_imports = (), ()
         entry = VerificationEntry(
             claim=claim,
             test_qualname=f"{fn.__module__}.{fn.__qualname__}",
@@ -227,6 +422,8 @@ def independent_verification(
             derived_from=derived_tuple,
             verified_against=verified_tuple,
             disjoint_rationale=disjoint_rationale.strip(),
+            manuscript_read_paths=tex_paths,
+            derivation_module_imports=derivation_imports,
         )
         _REGISTRY.append(entry)
 

@@ -1,26 +1,8 @@
-"""
-Independent-verification tests for the Z_g vs S_r(Vir_c) arithmetic duality.
+"""Exact Bernoulli witnesses and a formal Virasoro prime census.
 
-Claims decorated
-----------------
-thm:s-r-kummer-absent-through-r-11
-    derived: MC master-equation recursion on Vol I shadow tower
-    verified: (a) direct sympy.factorint on every N_r(c) coefficient;
-              (b) OEIS A000928 Kummer-irregular prime table
-
-thm:z-g-s-r-arithmetic-duality
-    derived: (i) Hurwitz-Bernoulli leading coefficient B_{2g-2}/(g-1);
-             (ii) MC master-equation recursion for S_r(Vir_c)
-    verified: (a) von Staudt-Clausen / OEIS A000928 Kummer-irregular list;
-              (b) explicit SymPy Bernoulli numerator factorisation
-              bernoulli(12) = -691/2730, bernoulli(16) = -3617/510;
-              (c) explicit SymPy factorint of every coefficient of N_r for
-              r in [4, 11].
-
-The protocol is enforced at decoration time by
-compute.lib.independent_verification.independent_verification: derived_from
-and verified_against must be DISJOINT. Tautological decorations raise
-IndependentVerificationError at import.
+The tests compare two independent computations as arithmetic data.  A
+geometric identification between them requires the manuscript packages
+H_res and H_Kum and is not certified by this module.
 """
 
 from __future__ import annotations
@@ -101,26 +83,22 @@ IRREGULAR_PRIMES_LE_10000 = (
 )
 IRREGULAR_PRIME_SET = set(IRREGULAR_PRIMES_LE_10000)
 
-# The two leading Kummer-irregular primes, witnessed on the Z_g side at
-# g = 7 (via B_12 = -691/2730) and g = 9 (via B_16 = -3617/510). The
-# sharp Z_g vs S_r duality is stated at this two-element set.
+# The two displayed Bernoulli-numerator witnesses.
 LEADING_IRREGULAR_PRIMES = {691, 3617}
 
 
 # ---------------------------------------------------------------------------
 # Closed-form integer numerators N_r(c) for r in [4, 11]
 # ---------------------------------------------------------------------------
-# N_r(c) := S_r(Vir_c) * c^{r-3} * (5c + 22)^{floor((r-2)/2)}, a polynomial
+# N_r(c) := R_r(c) * c^{r-3} * (5c + 22)^{floor((r-2)/2)}, a polynomial
 # in c with rational coefficients whose integer clear is given below.
 # Values derived independently of the irregular-prime list, via
 # sympy-symbolic evaluation of the MC master-equation recurrence
-# (Theorem thm:virasoro-shadow-recurrence) starting from the initial data
+# starting from the formal quadratic recurrence and its initial data
 # (S_2, S_3, S_4, S_5) = (c/2, 2, 10/(c(5c+22)), -48/(c^2(5c+22))).
 #
-# The numerators through r=8 are stated explicitly in the chapter
-# shadow_tower_higher_coefficients.tex (Theorems thm:s6..thm:s8); the
-# entries for r=9, 10, 11 extend the recurrence and are cross-verified in
-# the test below against the closed-form sympy evaluation.
+# The entries through r=11 are generated and cross-verified here as formal
+# rational functions.
 
 
 def _clear_integer_polynomial(num_expr, c_sym):
@@ -171,20 +149,16 @@ def _N_r_polynomial(r: int, S_table, c_sym):
 
 
 # ---------------------------------------------------------------------------
-# thm:s-r-kummer-absent-through-r-11
+# Formal recurrence prime census through arity eleven
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="thm:s-r-kummer-absent-through-r-11",
+    claim="formal-virasoro-prime-census-through-11",
     derived_from=[
-        "MC master-equation recursion "
-        "S_r = -(1/(r c)) sum_{j+k=r+2} f(j,k) j k S_j S_k "
-        "on (kappa, S_3, S_4, S_5) = (c/2, 2, 10/(c(5c+22)), -48/(c^2(5c+22))); "
-        "closed forms through S_8 inscribed at "
-        "chapters/theory/shadow_tower_higher_coefficients.tex "
-        "(Theorems thm:s6-virasoro-closed-form, thm:s7-virasoro-closed-form, "
-        "thm:s8-virasoro-closed-form)",
+        "Formal quadratic recurrence "
+        "R_r = -(1/(r c)) sum_{j+k=r+2} f(j,k) j k R_j R_k "
+        "on the displayed rational initial data",
     ],
     verified_against=[
         "Kummer-irregular prime tabulation OEIS A000928 (von Staudt-Clausen "
@@ -201,7 +175,7 @@ def _N_r_polynomial(r: int, S_table, c_sym):
         "2m <= p - 3; it originates from cyclotomic class-field theory "
         "(Kummer 1851) with no input from any chiral algebra. "
         "sympy.factorint is a purely number-theoretic black-box factoring "
-        "algorithm with no awareness of the shadow tower. The two "
+        "algorithm with no awareness of the recurrence provenance. The two "
         "verification paths share no intermediate with the MC recurrence."
     ),
 )
@@ -212,9 +186,7 @@ def test_kummer_primes_absent_from_S_r_through_r_11():
     (which are the ones witnessed on the Z_g side at g = 7, 9) are absent
     from S_r through r = 11. Higher Kummer-irregular primes (e.g., 2111)
     can and do appear (2111 | 29554 in N_9), without contradicting the
-    arithmetic duality: higher IrrKum primes are not witnessed on the Z_g
-    side for g <= 9 since num(B_{2m}) for 2 <= 2m <= 16 has only {691, 3617}
-    as Kummer-irregular prime factors.
+    finite census: higher irregular primes belong to a wider comparison.
     """
     S_table, c_sym = _S_r_table_sympy(max_r=11)
     for r in range(4, 12):
@@ -228,7 +200,7 @@ def test_kummer_primes_absent_from_S_r_through_r_11():
             assert not leading_hits, (
                 f"Leading Kummer-irregular prime(s) {sorted(leading_hits)} "
                 f"divide N_r coefficient {cf} at r={r}; the sharp "
-                f"arithmetic duality at {{691, 3617}} is VIOLATED"
+                f"formal prime census at {{691, 3617}} has failed"
             )
 
     # Sharpness: 2111 is Kummer-irregular (2111 | num(B_{1038})) AND
@@ -247,20 +219,18 @@ def test_kummer_primes_absent_from_S_r_through_r_11():
 
 
 # ---------------------------------------------------------------------------
-# thm:z-g-s-r-arithmetic-duality
+# Comparison of two exact finite arithmetic computations
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="thm:z-g-s-r-arithmetic-duality",
+    claim="zg-bernoulli-and-formal-recurrence-prime-comparison",
     derived_from=[
         "Hurwitz-Bernoulli leading coefficient B_{2g-2}/(g-1) for Z_g via "
         "Hurwitz 1890 cosecant series + Euler even-zeta + Verlinde fusion "
         "(chapters/theory/z_g_kummer_bernoulli_platonic.tex, "
         "Theorem thm:z-g-leading-coefficient-bernoulli)",
-        "MC master-equation recurrence for S_r(Vir_c) "
-        "(chapters/theory/shadow_tower_higher_coefficients.tex, "
-        "Theorem thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence for R_r(c)",
     ],
     verified_against=[
         "Direct sympy.factorint of bernoulli(12).p and bernoulli(16).p "
@@ -270,10 +240,8 @@ def test_kummer_primes_absent_from_S_r_through_r_11():
         "Kummer-irregular prime list",
     ],
     disjoint_rationale=(
-        "The derivation paths (Hurwitz-Bernoulli for Z_g; MC recurrence "
-        "for S_r) localise on different geometric spaces: Z_g on "
-        "Bun_{SL_2}(Sigma_g) via Witten symplectic volume, S_r on "
-        "ChirHoch(Vir_c) via the ordered convolution dGLA. The verification "
+        "The derivation paths are the Hurwitz--Bernoulli computation and an "
+        "independent formal quadratic recurrence. The verification "
         "paths (SymPy Bernoulli factorisation; SymPy N_r coefficient "
         "factorisation) are purely number-theoretic black-box factorisations "
         "with no moduli-of-bundles or chiral-algebra input. No shared "
@@ -281,8 +249,8 @@ def test_kummer_primes_absent_from_S_r_through_r_11():
         "source."
     ),
 )
-def test_zg_sr_arithmetic_duality():
-    """Two-leading-Kummer duality: {691, 3617} present on Z_g AND absent on S_r.
+def test_zg_and_formal_recurrence_prime_comparison():
+    """Compare the two leading Bernoulli witnesses with a formal census.
 
     Part 1 (Presence on Z_g side at g = 7, 9):
         691 | num(B_12)  ==> 691 divides Z_7 leading coefficient
@@ -291,8 +259,7 @@ def test_zg_sr_arithmetic_duality():
     Part 2 (Absence on S_r side through r = 11):
         691, 3617 do not divide any coefficient of N_r for 2 <= r <= 11.
 
-    The duality is sharp at these two primes: higher Kummer-irregular primes
-    (e.g., 2111) can appear in S_r but are not witnessed on Z_g at g <= 9.
+    This finite comparison is arithmetic data for a future H_Kum map.
     """
     # Part 1 (Presence on Z_g side): 691 | num(B_12), 3617 | num(B_16).
     B12 = sp.bernoulli(12)
@@ -325,18 +292,17 @@ def test_zg_sr_arithmetic_duality():
             factors = sp.factorint(abs(cf))
             leading_hits = set(factors.keys()) & LEADING_IRREGULAR_PRIMES
             assert not leading_hits, (
-                f"Duality VIOLATED: N_{r} coefficient {cf} contains "
+                f"Finite comparison failed: N_{r} coefficient {cf} contains "
                 f"leading Kummer-irregular prime(s) {sorted(leading_hits)}; "
                 f"sharp disjointness at {{691, 3617}} fails"
             )
 
     # Part 3 (Sharpness witness): 2111 is higher-Kummer-irregular AND 2111 | N_9.
-    # This does NOT contradict the duality: 2111 is not in num(B_{2m}) for
-    # 2 <= 2m <= 16 (the range of g <= 9 Z_g Kummer-presence witnesses).
+    # The prime 2111 supplies a sharpness witness outside the displayed pair.
     assert 2111 in IRREGULAR_PRIME_SET
     for two_m in range(2, 17, 2):
         Bnum = abs(int(sp.bernoulli(two_m).p))
         assert 2111 not in sp.factorint(Bnum), (
             f"2111 should NOT divide num(B_{two_m})={Bnum} (not witnessed on "
-            f"Z_g for g <= 9); the duality relies on this"
+            f"Z_g for g <= 9); the finite witness range has changed"
         )

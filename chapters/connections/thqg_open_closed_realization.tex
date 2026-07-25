@@ -75,6 +75,51 @@ q^{(1-c)/24}\,(1-q)/\eta(\tau)$ attached to
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$.
 \end{remark}
 
+\begin{definition}[Open--closed comparison datum \textup{(}OCA\textup{)};
+\ClaimStatusDefinitional]
+\label{def:thqg-oca-datum}
+\index{open--closed comparison datum|textbf}
+\index{OCA datum|see{open--closed comparison datum}}
+Let \(T\) be a holomorphic--topological field theory with boundary
+condition whose boundary chart is a complete curved
+\(A_\infty\)-chiral algebra~\(\cA\). An
+\emph{open--closed comparison datum} for~\(T\) over~\(\cA\) consists
+of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a boundary identification
+ \[
+ \alpha_\partial\colon
+ \operatorname{Obs}^{\partial}(T)\xrightarrow{\;\simeq\;}\cA
+ \]
+ in the completed chiral \(A_\infty\)-ambient;
+\item a completed boundary local-operator shadow
+ \(\operatorname{Loc}_{\partial}
+ \operatorname{Obs}^{\mathrm{bulk}}(T)\), equipped with the
+ continuous brace dg algebra structure induced by the closed colour;
+\item a continuous brace dg algebra map
+ \begin{equation}\label{eq:thqg-oca-map}
+ \beta_T\colon
+ \operatorname{Loc}_{\partial}\operatorname{Obs}^{\mathrm{bulk}}(T)
+ \longrightarrow
+ \mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ =
+ \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA,\cA);
+ \end{equation}
+\item compatibility of \(\beta_T\) with the
+ \(\mathsf{SC}^{\mathrm{ch,top}}\)-mixed action on the pair
+ \((\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\cA)\);
+\item compatibility with the conformal-weight, pole-order, and
+ analytic completions in which the observables of~\(T\) and the
+ chiral Hochschild cochains are defined.
+\end{enumerate}
+The OCA datum is an \emph{identification datum} only when
+\(\beta_T\) is a quasi-isomorphism in the chosen completion. Without
+that quasi-isomorphism, it is merely a comparison map from the physical
+bulk shadow to the algebraic derived centre. In particular, neither
+\(\bar B(\cA)\) nor \(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\) is, by
+itself, the physical bulk factorisation algebra of~\(T\).
+\end{definition}
+
 \begin{remark}[Local input]
 \label{rem:thqg-oc-dependency-spine}
 The local open/closed construction uses:
@@ -436,7 +481,15 @@ Definition~\ref{def:chiral-hochschild-cochain-brace}.
 \label{def:thqg-chiral-derived-center}
 \index{derived center!chiral|textbf}
 The \emph{cochain-level chiral derived center} of~$\cA$ is the
-brace dg algebra
+active bimodule derived endomorphism object
+\begin{equation}\label{eq:thqg-derived-center-rhom}
+\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\;:=\;
+R\!\operatorname{Hom}^{\mathrm{act}}_{\mathsf{Fact}_{\cA-\cA}}
+(\cA,\cA),
+\end{equation}
+computed in the completed factorisation \(\cA\)-\(\cA\)-bimodule
+ambient. In the chiral Hochschild model this is the brace dg algebra
 \[
 \mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 :=
@@ -454,36 +507,38 @@ Swiss-cheese theorem is the dg object
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; its on-shell
 cochain closed fields are the classes in
 $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+The \(E_2\)-language is used only after applying the chiral
+Deligne--Tamarkin rectification to this brace dg algebra; before that
+rectification the structure being asserted is the explicit continuous
+brace dg algebra above.
 This is a cochain object. The annulus trace is the cyclic Hochschild
 chain complex, and topological Hochschild homology is the
 spectrum-valued trace of an $E_1$-ring. A physical bulk
 factorization algebra of a holomorphic--topological theory compares
 to this object after taking its boundary $E_2$ local-operator shadow
-and supplying a brace-compatible quasi-isomorphism.
-On the Koszul locus at generic level with the
-$E_\infty$-chiral PBW completion, Theorem~H
-\textup{(}Theorem~\ref{thm:hochschild-polynomial-growth}\textup{)}
+and supplying the OCA datum of
+Definition~\ref{def:thqg-oca-datum}, with \(\beta_T\) a
+brace-compatible quasi-isomorphism.
+Let $S\subset\mathbb Z$ be finite.  A family datum $H_H(\cA;S)$
 gives
-$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)^n = 0$
-for $n \notin \{0, 1, 2\}$, so the derived center is a
-three-term Gerstenhaber algebra:
-\begin{equation}\label{eq:thqg-derived-center-three-term}
+\begin{equation}\label{eq:thqg-derived-center-family-support}
 \mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 \;=\;
-\mathcal{Z}^0 \;\oplus\; \mathcal{Z}^1 \;\oplus\; \mathcal{Z}^2,
+\bigoplus_{n\in S}\mathcal Z^n,
+\qquad
+\mathcal Z^n\cong H^n(K_{\cA,S}).
 \end{equation}
-with the Lie bracket of degree $-1$ giving
-$[\cdot, \cdot] \colon
-\mathcal{Z}^1 \otimes \mathcal{Z}^1 \to \mathcal{Z}^1$
-(a Lie algebra on bulk derivations) and
-$[\cdot, \cdot] \colon
-\mathcal{Z}^1 \otimes \mathcal{Z}^2 \to \mathcal{Z}^2$
-(the action of derivations on obstructions). No concentration
-claim is made here for critical level, minimal/admissible level,
-or non-PBW $E_1$-chiral inputs.
+The Gerstenhaber bracket has degree~$-1$ and therefore maps
+$\mathcal Z^p\otimes\mathcal Z^q$ to
+$\mathcal Z^{p+q-1}$.  Bakalov--De Sole--Kac give the benchmark
+support $\{0,2,3\}$ for Virasoro and dimensions $(2,1,0,\ldots)$ for
+the rank-one even superboson after the bounded-to-chart comparison.
+Critical, minimal/admissible, and $E_1$-chiral families carry their
+own support data and averaging comparisons.  A perfect degree-$d$
+pairing supplies the separate Koszul-dual degree reflection.
 \end{definition}
 
-\begin{definition}[Genus-$g$ chiral derived center]
+\begin{definition}[Genus-$g$ chiral derived center; \ClaimStatusDefinitional]
 \label{def:genus-g-derived-center}
 \index{derived center!genus $g$|textbf}
 For a curved $A_\infty$-chiral algebra $(\cA, \{m_k\})$ with
@@ -505,13 +560,16 @@ and the total corrected differential
 \begin{equation}\label{eq:Dg-decomposition}
 \Dg{g} \;=\; \dfib + \nabla^{\mathrm{GM}}
 \end{equation}
-has two components: the fiberwise differential $\dfib$ with
-$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g \cdot \operatorname{id}$
+has two components: the curved fiberwise differential $\dfib$, whose
+curvature element satisfies $m_1^2=[m_0^{(g)},-]$ and whose scalar
+diagonal projection is
+$\operatorname{tr}_{\mathrm{diag}}(m_0^{(g)})
+=\kappa(\cA)\cdot\omega_g$
 (Convention~\ref{conv:higher-genus-differentials}), and the
 Gauss--Manin connection $\nabla^{\mathrm{GM}}$ on the family of
 bar complexes over $\overline{\mathcal{M}}_g$. The total
 differential satisfies $\Dg{g}^{\,2} = 0$: the Gauss--Manin
-connection absorbs the fiberwise curvature
+connection absorbs the projected fiberwise curvature
 $\kappa(\cA) \cdot \omega_g$.
 
 At genus~$0$, $\overline{\mathcal{M}}_{0,n}$ carries no Hodge
@@ -610,10 +668,19 @@ $\mu^{\mathrm{univ}}_{p;q} \colon
 \otimes A^{\otimes q}
 \to A((\lambda_1))\cdots((\lambda_{p+q-1}))$
 are defined by iterated brace evaluation of chiral Hochschild
-cochains on algebra elements. Passing to cohomology gives the
-on-shell Gerstenhaber algebra
-$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, but terminality
-is a cochain-level statement.
+cochains on algebra elements. Thus the
+\(\mathsf{SC}^{\mathrm{ch,top}}\)-output is the typed pair
+\[
+(\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\,\cA),
+\]
+with closed colour the cochain derived centre and open colour the
+boundary algebra. Passing to cohomology gives the on-shell
+Gerstenhaber algebra \(\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)\),
+but terminality is a cochain-level statement. The bar coalgebra
+\(\bar B(\cA)\) is the level-\(2\) twisting coalgebra used to compute
+or resolve this object; it is not itself the
+\(\mathsf{SC}^{\mathrm{ch,top}}\) closed colour and is not a physical
+bulk without the OCA datum of Definition~\ref{def:thqg-oca-datum}.
 \end{theorem}
 
 \begin{proof}
@@ -660,7 +727,8 @@ Let $T$ be a holomorphic--topological theory on a half-space with
 boundary chiral algebra~$\cA$, and let
 $\operatorname{Obs}^{\mathrm{bulk}}(T)$ denote its physical bulk
 factorization algebra. A comparison between the physical bulk and
-the cochain derived center consists of three typed data:
+the cochain derived center is the OCA datum of
+Definition~\ref{def:thqg-oca-datum}; in particular it contains:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item a boundary identification
  $\operatorname{Obs}^{\mathrm{bdry}}(T)\simeq \cA$ as an
@@ -678,7 +746,12 @@ the cochain derived center consists of three typed data:
  \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA,\cA)
  \]
  whose induced mixed operations on~$\cA$ agree with the
- bulk-to-boundary operations of~$T$.
+ bulk-to-boundary operations of~$T$;
+\item compatibility with the
+ $\mathsf{SC}^{\mathrm{ch,top}}$ mixed action on
+ $(\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\cA)$;
+\item compatibility with the conformal-weight, pole-order, and
+ analytic completions in which both sides are defined.
 \end{enumerate}
 The chiral Swiss-cheese theorem supplies the unique map
 $\beta_T$ once the physical bulk acts on the boundary. A
@@ -718,8 +791,9 @@ the monograph:
 \quad\text{is bar-cobar inversion,}
 \]
 \[
-\mathbb{D}_{\Ran}\barB_X(\cA)\simeq \cA^!_\infty
-\quad\text{is Verdier duality,}
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA),\qquad
+\nu_{\cA}\colon K_X(\cA)\longrightarrow\cA^!
+\quad\text{is Verdier duality followed by the chosen-pair map,}
 \]
 whereas
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is governed by
@@ -783,8 +857,8 @@ tensor product on the line category $\mathsf{Line}(\cA)$, a compact
 generator identifying its endomorphism algebra with the
 Verdier/Koszul dual line algebra~$\cA^!$, a coproduct induced by
 tensoring line operators, and an RTT or KZ flatness comparison
-identifying the binary collision residue $r(z)$ with the relevant
-Yangian $R$-matrix.
+identifying the represented collision kernel
+$\rho(K_\cA^{\mathrm{coll}})$ with the relevant Yangian $R$-matrix.
 \end{proposition}
 
 \begin{proof}
@@ -811,7 +885,7 @@ $C_*(\FM_{k|m}(\Sigma_g, \partial))
 modular Swiss-cheese chapter) holds at all genera.
 The open colour $E_1(m)$ is genus-independent: the interval~$\mathbb{R}$
 has no genus. All genus dependence lives in the closed factor. The
-curvature $\kappa(\cA) \cdot \omega_g$ is closed-sector data, and
+scalar diagonal curvature $\kappa(\cA) \cdot \omega_g$ is closed-sector data, and
 genus-raising operations act on closed inputs. The mixed channels in
 the multi-weight correction
 $\delta F_g^{\mathrm{cross}}$ are mixed-\emph{weight} channels
@@ -940,30 +1014,32 @@ Z_{\mathrm{der}}(\mathcal{M})
 \end{equation}
 which in a chart $\mathcal{M} \simeq \operatorname{Perf}(A_b)$
 is computed by $\mathrm{HH}^{\bullet}_{\mathrm{alg}}(A_b)$.
-This is the center of the boundary category. It becomes the closed
-chiral bulk
-$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ only under the
-completed formal chiral boundary comparison: $A_b$ must be the
-completed formal chiral boundary algebra induced from~$\cA$, and
-the logarithmic finite-piece hypotheses of
-Proposition~\ref{prop:geometric-algebraic-hochschild} must hold.
-Under these hypotheses the geometric--algebraic comparison identifies
+This is the center of the boundary category.  The completed formal
+chiral boundary comparison has target
+$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$: here $A_b$ is the
+completed formal chiral boundary algebra induced from~$\cA$, and the
+logarithmic finite-piece hypotheses of
+Proposition~\ref{prop:geometric-algebraic-hochschild} hold.  Under
+these hypotheses the geometric--algebraic comparison identifies
 $\mathrm{HH}^{\bullet}_{\mathrm{alg}}(A_b)$ with the corresponding
 chiral cochain model
-$\mathcal{C}^{\bullet}_{\mathrm{ch}}(A_b, A_b)$. The concentration
-in degrees~$\{0,1,2\}$ transfers only on the Koszul/PBW locus of
-Theorem~H, with the same generic-level exclusions as in
-Definition~\ref{def:thqg-chiral-derived-center}.
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(A_b, A_b)$.  A family datum
+$H_H(A_b;S_b)$ then gives
+\[
+ \operatorname{Supp}\mathrm{HH}^{\bullet}_{\mathrm{alg}}(A_b)
+ \subseteq S_b
+\]
+by transport along this comparison.  A perfect degree-$d$ pairing is
+the additional datum governing any Koszul-dual degree reflection.
 \end{corollary}
 
 \begin{proof}
 The first formula is the definition of the derived centre of the
 boundary dg category. Morita invariance follows from the preceding
 theorem, which identifies the centre in a compact-generator chart with
-Hochschild cochains of $A_b$. The final comparison is exactly
-Proposition~\ref{prop:geometric-algebraic-hochschild}; the degree
-concentration is then transported only under the Koszul/PBW
-hypotheses of Theorem~H.
+Hochschild cochains of $A_b$.  Proposition~\ref{prop:geometric-algebraic-hochschild}
+supplies the final comparison, and the retract in $H_H(A_b;S_b)$
+supplies the support set transported through it.
 \end{proof}
 
 \begin{theorem}[Separation of Hochschild, trace, THH, BV, and
@@ -1054,12 +1130,18 @@ objects and two comparison mechanisms:
  the annulus trace and the derived center.
 
 \item \emph{Koszul dual algebra.}
-The homotopy Koszul dual algebra
-$\cA^!_\infty\simeq \mathbb{D}_{\Ran}\barB_X(\cA)$ is produced
-from the bar coalgebra by Verdier duality. On the finite-type
-Koszul locus its cohomology gives the strict algebra
-$\cA^!=(\cA^i)^\vee$. This is the line-operator algebra in the
-modular Koszul datum. The derived-center and categorical-trace
+Verdier duality sends the bar coalgebra directly to the homotopy
+Koszul-dual algebra
+\[
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA).
+\]
+A chosen finite-type Koszul pair supplies an algebra map
+$\nu_{\cA}\colon K_X(\cA)\to\cA^!$; its equivalence identifies
+$\cA^!\simeq\mathbb D_{\Ran}(\cA^{\mathrm i})
+\simeq(\cA^{\mathrm i})^\vee$ as the strict line-operator algebra
+when the quadratic comparison
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$ is an equivalence.
+The derived-center and categorical-trace
 slots are respectively
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and
 $\operatorname{Tr}(\mathcal M)$.
@@ -1124,9 +1206,14 @@ homology of the $A_\infty$-algebra $A_b$:
 \mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)
 \;=\; H_*\!\bigl(B^{\mathrm{cyc}}(A_b), \, d_{\mathrm{cyc}}\bigr),
 \end{equation}
-where $B^{\mathrm{cyc}}(A_b) = \bigoplus_{n \ge 0}
-(s A_b)^{\otimes n} \otimes_{(\mathbb{Z}/n\mathbb{Z})} A_b$
-is the cyclic bar complex.
+where
+\[
+B^{\mathrm{cyc}}_n(A_b)=A_b\otimes (sA_b)^{\otimes n}
+\]
+is the Hochschild cyclic-object model and \(d_{\mathrm{cyc}}\) is the
+ordinary Hochschild boundary, including the wrap-around face.  Connes'
+operator belongs to the cyclic/negative-cyclic refinement, not to this
+ordinary Hochschild homology formula.
 \end{theorem}
 
 \begin{proof}
@@ -1247,17 +1334,18 @@ $A_b$ is a left $A_b^e$-module (from the left interval
 decomposition).
 
 \medskip
-\noindent\textit{Step~4: The two-sided bar complex resolves the
-derived tensor product.}
-The derived tensor product above is computed
-by the \emph{two-sided bar complex}
-$B(A_b, A_b^e, A_b)$:
+\noindent\textit{Step~4: The Hochschild chain model.}
+The derived tensor product above is computed by resolving the diagonal
+\(A_b\)-bimodule by the standard \(A_b^e\)-free bar resolution
+\(B_\bullet(A_b,A_b,A_b)\):
 \begin{equation}\label{eq:thqg-two-sided-bar}
-B(A_b, A_b^e, A_b)_n
+B_n(A_b,A_b,A_b)
 \;=\;
 A_b \otimes (sA_b)^{\otimes n} \otimes A_b, \qquad n \ge 0.
 \end{equation}
-The differential $d_{\mathrm{bar}}$ on $B(A_b, A_b^e, A_b)$ is
+Here the two outside factors carry the \(A_b^e\)-module structure and
+the middle tensor powers record the internal \(A_\infty\)-operations.
+The differential $d_{\mathrm{bar}}$ on this resolution is
 the sum of the internal $A_\infty$-differential $b'$ and the
 simplicial face maps $b''$: for a typical element
 $a_0 [a_1 | \cdots | a_n] a_{n+1}$,
@@ -1277,23 +1365,25 @@ elements. The higher
 $A_\infty$-operations $m_k$ for $k \ge 3$ contribute the
 $b'$ terms (the internal differential of the bimodule resolution).
 
-The two-sided bar complex above is
-identified with the \emph{cyclic bar complex}
-$B^{\mathrm{cyc}}(A_b)$: an element
-$a_0 [a_1 | \cdots | a_n] a_{n+1}$ in that two-sided bar complex
-with $a_0$ and $a_{n+1}$ not suspended is the same datum as
-a cyclic word $a_0 \otimes a_1 \otimes \cdots \otimes a_n
-\otimes a_{n+1}$ with the identification
-$(a_0, a_1, \ldots, a_n, a_{n+1})
-\sim
-(a_{n+1}, a_0, a_1, \ldots, a_n)$
-(cyclic permutation of the unsuspended slots). The
-this differential becomes the
-standard algebraic Hochschild boundary operator under this identification,
-because the last face map wraps $a_n$ past $a_{n+1}$ to compose
-with $a_0$; this is the cyclic trace term that
-distinguishes the algebraic Hochschild differential from the bar
-differential.
+Tensoring this \(A_b^e\)-free resolution with the diagonal bimodule
+\(A_b\) over \(A_b^e\) identifies the two external \(A_b\)-actions.
+The resulting complex is the ordinary Hochschild chain complex
+\[
+C_n(A_b)
+  = A_b\otimes (sA_b)^{\otimes n},
+\qquad
+b_{\mathrm{Hoch}}=b_{\mathrm{int}}+b_{\mathrm{face}}+
+b_{\mathrm{wrap}},
+\]
+where \(b_{\mathrm{wrap}}\) is the last face term composing the final
+input with the first one, with the usual Koszul sign; for an
+\(A_\infty\)-algebra the same formula includes the higher \(m_k\) around
+the cyclic order.  The notation \(B^{\mathrm{cyc}}(A_b)\) below denotes
+this Hochschild cyclic-object model.  It is not the coinvariant quotient
+of an ordinary ordered bar complex by a naive cyclic permutation, and the
+Connes operator \(B\) belongs to the cyclic/negative-cyclic enhancement,
+not to the ordinary Hochschild differential used in
+\(\mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)\).
 
 Therefore:
 \begin{equation}\label{eq:thqg-bar-hochschild-id}
@@ -1302,11 +1392,11 @@ A_b \;\underset{A_b^e}{\overset{\mathbf{L}}{\otimes}}\; A_b
 H_*\!\bigl(B^{\mathrm{cyc}}(A_b),\, d_{\mathrm{cyc}}\bigr)
 \;=\; \mathrm{HH}_{\bullet,\mathrm{alg}}(A_b).
 \end{equation}
-The first equivalence is that the two-sided bar complex computes
-the derived tensor product (it is a free $A_b^e$-resolution of
-$A_b$; see~\cite[\S5.3]{Loday98},
-\cite[\S2.2]{LV12}). The second is the
-definition of algebraic Hochschild homology in chain complexes.
+The first equivalence is that the bar resolution computes the derived
+tensor product (it is a free $A_b^e$-resolution of $A_b$; see
+Loday~\cite[\S5.3]{Loday98} and
+Loday--Vallette~\cite[\S2.2]{LV12}). The second is the definition of
+algebraic Hochschild homology in chain complexes.
 
 \medskip
 \noindent\textit{Step~5: Morita invariance.}
@@ -1608,9 +1698,15 @@ datum:
 r(z),\Theta_\cA,
 \nabla^{\mathrm{hol}}).
 \]
-Here $\cA^i=H^*(B^{\mathrm{ch}}(\cA))$ is the bar-dual coalgebra,
-whereas $\cA^!$ is the Verdier-dual line algebra on the finite-type
-or completed continuous Koszul locus, and
+Here a chosen presentation supplies
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^{\mathrm i}\to B^{\mathrm{ch}}(\cA)$.
+The Verdier algebra is
+$K_X(\cA)=\mathbb D_{\Ran}B^{\mathrm{ch}}(\cA)$, its quadratic
+comparison is
+$\mathbb D(q_\cA)\colon K_X(\cA)\to
+\mathbb D_{\Ran}(\cA^{\mathrm i})$, and the chosen line algebra enters
+through $\nu_\cA\colon K_X(\cA)\to\cA^!$.  The object
 $\mathbf{C}_{\mathrm{ch}}(\cA)
 :=\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
 cochain-level chiral derived center, hence the intrinsic
@@ -1652,9 +1748,12 @@ are:
 Recovering $\cA^i$, $\cA^!$, $r(z)$, or
 $\nabla^{\mathrm{hol}}$ requires their respective slots in the
 completed datum. The
-coalgebra $\cA^i$ is the cohomology of the chiral bar coalgebra;
-$\cA^!$ is obtained only after Verdier duality on $\cA^i$ with the
-finite-type or completed continuous hypotheses; $r(z)$ comes from the
+$q_\cA$-comparison identifies
+$H^\bullet(\cA^{\mathrm i})$ with chiral bar cohomology under
+$H_{\mathrm{CL}}$; the chosen-pair map
+$\nu_\cA\colon K_X(\cA)\to\cA^!$ reaches the line algebra from the
+Ran--Verdier algebra under the finite-type or completed continuous
+pair hypotheses; $r(z)$ comes from the
 binary collision residue; and $\nabla^{\mathrm{hol}}$ comes from the
 modular connection data.
 \end{theorem}
@@ -2169,14 +2268,17 @@ consisting of:
 \textbf{Component} & \textbf{Object} & \textbf{Source} \\
 \hline
 $\cA$ & boundary chiral algebra & given \\
-$\cA^i$ & bar-dual coalgebra & $H^*(B^{\mathrm{ch}}(\cA))$ \\
-$\cA^!$ & Verdier-dual line algebra & Verdier dual of $\cA^i$ \\
+$\cA^{\mathrm i}$ & quadratic presentation coalgebra
+ & $C_X(s^{-1}V,s^{-2}R)$ with $q_\cA\colon\cA^{\mathrm i}\to B^{\mathrm{ch}}(\cA)$ \\
+$\cA^!$ & chosen Koszul-pair line algebra
+ & $\nu_\cA\colon\mathbb D_{\Ran}B^{\mathrm{ch}}(\cA)\to\cA^!$ \\
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
  & cochain-level derived center (universal closed-sector actor)
  & Def.~\ref{def:thqg-chiral-derived-center} \\
 $\Theta^{\mathrm{oc}}_\cA$
  & open/closed MC element & Constr.~\ref{constr:thqg-oc-mc-element} \\
-$r(z)$ & collision residue (classical $r$-matrix)
+$K_\cA^{\mathrm{coll}}(z)$ & binary collision kernel; represented
+classical $r$-matrix under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$
  & Def.~\ref{def:holographic-modular-koszul-datum} \\
 $\nabla^{\mathrm{hol}}$
  & modular shadow connection & Def.~\ref{def:holographic-modular-koszul-datum} \\
@@ -2197,8 +2299,10 @@ $\Theta_\cA$ with its open/closed lift
 $\Theta^{\mathrm{oc}}_\cA$, and by adding the annulus trace and the
 nonlinear resonance tower. The entries $\cA^i$, $\cA^!$, and
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ are distinct objects:
-$\cA^i$ is coalgebraic bar cohomology, $\cA^!$ is Verdier/Koszul dual
-after finite-type or completed continuous duality, and
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ is the quadratic presentation
+coalgebra, $q_\cA$ compares it with the full bar,
+$K_X(\cA)=\mathbb D_{\Ran}B^{\mathrm{ch}}(\cA)$ is the Ran--Verdier
+algebra, $\nu_\cA$ reaches the chosen line algebra~$\cA^!$, and
 $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is chiral Hochschild
 cochains, the closed-sector entry of the seven-entry datum.
 Here $\operatorname{Tr}_\cA$ means
@@ -2335,10 +2439,11 @@ transverse planes at each Kodaira $I_1$ node. If a
 holomorphic--topological prefactorisation model
 $T_{\mathbf{H}_{\Delta_5}}$ lies in the boundary-linear or tempered
 algebraic-sector scope of the Vol.~II
-$\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk theorem
-\textup{(}identifying $\partial = \cA$, bulk
+$\mathsf{SC}^{\mathrm{ch,top}}$-brace closed-sector theorem
+\textup{(}identifying $\partial = \cA$, algebraic closed-sector actor
 $= Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, interaction
-$= \mathsf{SC}^{\mathrm{ch,top}}$-brace; the gravity-line completion
+$= \mathsf{SC}^{\mathrm{ch,top}}$-brace; comparison with a physical
+bulk is the additional OCA datum below, and the gravity-line completion
 to a compact dynamical-metric path integral remains conditional on
 the BTZ / Cardy / Maloney--Witten / Farey-tail hypothesis package of
 Remark~\ref{rem:thqg-oc-algebraic-sector}\textup{)},

@@ -1,5 +1,12 @@
 # DS-KD Intertwining for Arbitrary Nilpotent: Assessment
 
+> Superseded status note (2026-06-18): references below to
+> admissible \(sl_2\) simple quotients as "Koszul at all admissible
+> levels" are historical audit text. Current status: finite
+> Shapovalov/character evidence only; theorem-level use requires the
+> quotient-bar spectral sequence, PBW/Shapovalov detection,
+> finite-window exactness, and strong convergence package.
+
 ## The Conjecture
 
 **conj:ds-kd-arbitrary-nilpotent** (w_algebras_deep.tex, line 1969):
@@ -24,8 +31,9 @@ PBW filtrations, (c) the BRST differential lifts to the ordered bar coalgebra.
   (thm:hook-transport-corridor, prop:transport-propagation).
   Transport-closure in type A verified computationally for N=2,...,7
   (thm:transport-closure-type-a).
-- **sl_2 admissible levels**: Koszul at all admissible levels
-  (structural argument from single-weight null vector).
+- **sl_2 admissible levels**: finite Shapovalov/character evidence;
+  conditional on the quotient-bar spectral-sequence and convergence
+  package.
 
 ## What Specifically Fails Beyond Hook-Type
 

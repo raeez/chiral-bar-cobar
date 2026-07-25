@@ -1,66 +1,29 @@
-r"""Holographic quantum error-correcting codes from Koszul duality.
+r"""Typed algebraic surfaces behind the holographic-code programme.
 
-MATHEMATICAL FRAMEWORK
-======================
+The engine keeps five constructions separate.
 
-The bar-cobar adjunction B -| Omega defines a quantum error-correcting
-code structure for each chirally Koszul algebra A (Theorem G12).  The
-key identification:
+* Theorem A is the universal enhanced-Ran reconstruction map
+  ``epsilon_A: Omega_X B_X(A) -> A``.
+* Theorem B belongs to a chosen quadratic presentation
+  ``A^i = C_X(sV, s^2R)``.  Its comparison is
+  ``q_A: A^i -> B_X(A)``, with adjoint
+  ``p_A: Omega_X(A^i) -> A``.  The homology of ``Cone(q_A)``, together
+  with ``H_CL`` and strong convergence, supplies the certificate.
+* The fixed-coalgebra co/contra correspondence is the equivalence
+  ``D^co(C-Comod) ~= D^ctr(C-Contramod)`` for one fixed ``C``.
+* Verdier duality and the derived chiral centre carry their own
+  hypotheses and comparison maps.
+* A physical decoder requires beta_T, a Hilbert realization, an error
+  algebra, and subregion recovery maps.
 
-  KOSZULNESS  <=>  AMBIENT-QUALIFIED EXACT QUANTUM ERROR CORRECTION
+The shadow classes G/L/C/M record arity depth.  Every Theorem B verdict
+in this module is obtained from an algebra-bound quadratic certificate.
 
-Specifically:
-  - Encoding:  B: A -> B(A) (bar construction)
-  - Decoding:  Omega: B(A) -> Omega(B(A)) ~ A (cobar construction)
-  - Exact recovery:  Omega(B(A)) ~ A (Theorem B, on the Koszul locus),
-    with the chain ambient specified by the family: raw finite-window
-    for finite-type G/L/C examples; weight-completed pro-conilpotent /
-    coderived for class M. Raw direct-sum class-M recovery is false.
-  - Code subspace:  Q_g(A) (one Lagrangian summand)
-  - Error space:  Q_g(A!) (complementary Lagrangian)
-  - Code/error orthogonality:  from Lagrangian isotropy (Theorem C)
-
-The 12 Koszulness tests and consequences (K1-K12) are
-12 qualified conditions for the code to admit ambient-qualified exact
-recovery.
-
-KNILL-LAFLAMME FROM LAGRANGIAN ORTHOGONALITY
-=============================================
-
-The Verdier pairing <.,.>_D satisfies <sigma(v), sigma(w)>_D = -<v,w>_D,
-so the eigenspaces Q_g(A) = V+ and Q_g(A!) = V- are isotropic:
-<v, w>_D = 0 for v, w in V+ (or both in V-).
-
-The Shapovalov inner product <v,w>_S := <v, sigma(w)>_D satisfies:
-- <v,w>_S = 0 for v in Q_g(A), w in Q_g(A!)  (orthogonal decomposition)
-- <v,w>_S = <v, sigma(w)>_D nondegenerate on Q_g(A)  (positive-definite for unitary A)
-
-This orthogonal decomposition H = C + C^perp is the code/error decomposition.
-
-The Lagrangian isotropy and Shapovalov orthogonality provide the
-STRUCTURAL PREREQUISITES for quantum error correction: a clean
-code/error bipartite decomposition.  At the scalar level (genus 1,
-dim Q_1 = 1), the full Knill-Laflamme condition is automatic.
-At genus >= 2 (dim Q_g > 1), the full KL condition requires
-additional analysis of the MC structure at each genus.
-
-SHADOW DEPTH = REDUNDANCY CHANNELS
-===================================
-
-The shadow depth r_max(A) controls the REDUNDANCY STRUCTURE, not
-the traditional code distance:
-
-  Class G (r_max=2): 0 redundancy channels (kappa is the entire code)
-  Class L (r_max=3): 1 redundancy channel (C determined by kappa via MC)
-  Class C (r_max=4): 2 redundancy channels
-  Class M (r_max=inf): infinite redundancy channels, convergent for rho < 1
-
-Each redundancy channel allows recovery from one erasure:
-the arity-r shadow is determined by lower-arity data via the MC equation.
-The shadow obstruction tower IS the error-correction procedure: recursive
-reconstruction from kappa upward.
-
-This resolves Conjecture conj:thqg-shadow-depth-code-distance.
+For an anti-symplectic involution ``sigma`` of the Verdier pairing, the
+two eigenspaces are isotropic and pair nondegenerately across the
+Lagrangian splitting.  This is algebraic input for a future
+Knill--Laflamme analysis; the physical analysis begins after an error
+algebra and adjoint structure have been specified.
 
 References:
   Almheiri-Dong-Harlow 2015 (1411.7041): holographic QEC
@@ -74,7 +37,7 @@ References:
 from __future__ import annotations
 
 from fractions import Fraction
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Mapping, Optional, Tuple
 
 from sympy import Rational, Symbol, simplify
 
@@ -91,30 +54,74 @@ from compute.lib.entanglement_shadow_engine import (
     shadow_radius_virasoro,
     von_neumann_entropy_scalar,
 )
+from compute.lib.qec_koszul_code_engine import (
+    theorem_a_reconstruction_surface,
+    theorem_b_recovery_surface_from_family,
+)
 
 
-def theorem_b_recovery_surface_from_shadow_class(cls: str) -> Dict[str, object]:
-    """Return the ambient-qualified Theorem B recovery surface."""
-    if cls == 'M':
-        return {
-            'exact_recovery': True,
-            'valid_recovery': True,
-            'status': 'AMBIENT_QUALIFIED',
-            'raw_direct_sum_chain_qi': False,
-            'ambient': 'weight-completed pro-conilpotent / coderived',
-            'hypotheses': 'finite-window strict Mittag-Leffler + completed bar-cobar',
-            'counit': 'Omega_X B_X(A) -> A',
-            'completion_required': True,
-        }
+def independent_reconstruction_surfaces() -> Dict[str, Dict[str, object]]:
+    """Return the fixed-C, Verdier, centre, and physical surfaces."""
     return {
-        'exact_recovery': True,
-        'valid_recovery': True,
-        'status': 'AMBIENT_QUALIFIED',
-        'raw_direct_sum_chain_qi': True,
-        'ambient': 'raw finite-window chain complex',
-        'hypotheses': 'H3b finite bar-degree pieces + finite-support comparison',
-        'counit': 'Omega_X B_X(A) -> A',
-        'completion_required': False,
+        'fixed_coalgebra': {
+            'construction': 'D^co(C-Comod) ~= D^ctr(C-Contramod)',
+            'scope': 'one fixed coalgebra C',
+            'status': 'SEPARATE_FIXED_C_SURFACE',
+        },
+        'verdier_dual': {
+            'construction': 'A!_infty = D_Ran B_X(A)',
+            'hypotheses': (
+                'constructibility + dualizability + continuity; strict '
+                'quadratic identification requires its finite-type comparison'
+            ),
+            'status': 'SEPARATE_CONDITIONAL_SURFACE',
+        },
+        'derived_center': {
+            'construction': 'Z^der_ch(A) = C^bullet_ch(A,A)',
+            'scope': 'Hochschild closed-sector object',
+            'status': 'SEPARATE_DEFINED_SURFACE',
+        },
+        'physical_decoder': {
+            'recovery': None,
+            'required_data': (
+                'beta_T',
+                'Hilbert realization',
+                'physical error algebra',
+                'subregion recovery maps',
+            ),
+            'status': (
+                'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+            ),
+        },
+    }
+
+
+def theorem_b_recovery_surface_from_shadow_class(
+    cls: str,
+    *,
+    algebra_id: Optional[str] = None,
+    certificate: Optional[Mapping[str, object]] = None,
+) -> Dict[str, object]:
+    """Compatibility reporter for Theorem B, indexed by an exact algebra.
+
+    The shadow class is retained as descriptive metadata.  A certificate
+    is accepted only with an explicit ``algebra_id`` and is checked by the
+    shared quadratic-certificate implementation.
+
+    >>> theorem_b_recovery_surface_from_shadow_class('G')['status']
+    'UNVERIFIED'
+    """
+    if cls not in {'G', 'L', 'C', 'M'}:
+        raise ValueError('shadow class must be one of G, L, C, M')
+    if certificate is not None and algebra_id is None:
+        raise ValueError('algebra_id is required with a quadratic certificate')
+
+    requested_id = algebra_id or f'shadow-class:{cls}:unspecified-algebra'
+    surface = theorem_b_recovery_surface_from_family(requested_id, certificate)
+    return {
+        **surface,
+        'shadow_class': cls,
+        'shadow_class_role': 'arity-depth metadata',
     }
 
 
@@ -139,7 +146,7 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'A-infinity formality',
         'algebraic': 'Bar cohomology is formal as A-infinity algebra',
         'code_property': 'Linear sufficiency',
-        'code_meaning': 'No higher-order entanglement needed; linear encoding suffices',
+        'code_meaning': 'Linear encoding captures the formal bar data',
         'status': 'unconditional',
     },
     {
@@ -147,25 +154,26 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'Ext diagonal vanishing',
         'algebraic': 'Ext^{p,q}(A) vanishes off the diagonal p = q',
         'code_property': 'Sharp error syndrome',
-        'code_meaning': 'Error detection has no ambiguity; syndromes are diagonal',
+        'code_meaning': 'Error syndromes are supported on the diagonal',
         'status': 'unconditional',
     },
     {
         'id': 'K4',
-        'name': 'Bar-cobar quasi-isomorphism',
+        'name': 'Quadratic bar comparison',
         'algebraic': (
-            'Omega(B(A)) -> A is quasi-isomorphism on the finite-window '
-            'or completed Theorem B surface'
+            'q_A: A^i -> B_X(A) is a quasi-isomorphism, equivalently '
+            'p_A: Omega_X(A^i) -> A is a quasi-isomorphism under H_CL '
+            'and strong convergence'
         ),
-        'code_property': 'Exact recovery',
+        'code_property': 'Exact quadratic recovery',
         'code_meaning': (
-            'Decoding inverts encoding on the stated raw finite-window or '
-            'completed ambient'
+            'The quadratic compression A^i retains the bar information '
+            'certified by the acyclicity of Cone(q_A)'
         ),
-        'status': 'ambient-qualified',
+        'status': 'certificate-required',
         'condition': (
-            'Theorem B package: raw finite-window conilpotent comparison, '
-            'or class-M strict Mittag-Leffler completed coderived/contraderived comparison'
+            'Theorem B package: chosen quadratic presentation + H_CL + '
+            'strong convergence + acyclic Cone(q_A)'
         ),
     },
     {
@@ -173,7 +181,7 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'Barr-Beck-Lurie comparison',
         'algebraic': 'The comparison functor is an equivalence',
         'code_property': 'Categorical determinism',
-        'code_meaning': 'Code has no hidden degrees of freedom; reconstruction is unique',
+        'code_meaning': 'Categorical descent determines the reconstructed object',
         'status': 'listed-consequence',
         'condition': 'proved consequence of the bar-cobar quasi-isomorphism row',
     },
@@ -182,7 +190,7 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'FH concentrated in degree 0',
         'algebraic': 'Factorization homology concentrated in degree 0',
         'code_property': 'Optimal threshold',
-        'code_meaning': 'Code achieves minimum distance; no wasted redundancy',
+        'code_meaning': 'The factorization-homology proxy is concentrated in degree zero',
         'status': 'conditional',
         'condition': 'prop:bar-fh comparison plus detection hypothesis',
     },
@@ -191,12 +199,13 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'ChirHoch vanishing outside {0,1,2}',
         'algebraic': 'Chiral Hochschild cohomology vanishes in degrees > 2',
         'code_property': 'Code rigidity',
-        'code_meaning': 'No non-trivial deformations of the code; structurally stable',
+        'code_meaning': 'The stated Hochschild range controls the deformation complex',
         'status': 'conditional',
         'condition': (
             'Theorem H package: PBW chiral Koszulness, finite-type/perfectness, '
             'genericity, E_infty completion, strict Mittag-Leffler passage, '
-            'and PBW/Arnold contraction; otherwise use KD_H^bullet(A)'
+            'and localized residue-twisted bar concentration; otherwise use '
+            'KD_H^bullet(A)'
         ),
     },
     {
@@ -212,7 +221,7 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'FM boundary acyclicity',
         'algebraic': 'Fulton-MacPherson boundary strata are acyclic',
         'code_property': 'Code locality',
-        'code_meaning': 'No boundary effects corrupt the code; local operations suffice',
+        'code_meaning': 'Boundary acyclicity supports a local comparison',
         'status': 'unconditional',
     },
     {
@@ -220,7 +229,7 @@ KOSZULNESS_CODE_DICTIONARY = [
         'name': 'Shadow-formality',
         'algebraic': 'Shadow obstruction tower is formal at arities 2, 3, 4',
         'code_property': 'Classical-quantum agreement',
-        'code_meaning': 'Classical code structure lifts exactly to quantum; no anomaly',
+        'code_meaning': 'The formal shadow tower admits the stated quantum lift',
         'status': 'unconditional',
     },
     {
@@ -253,7 +262,7 @@ def get_koszulness_code_dictionary() -> List[Dict]:
     >>> d[3]['id']
     'K4'
     >>> d[3]['code_property']
-    'Exact recovery'
+    'Exact quadratic recovery'
     """
     return KOSZULNESS_CODE_DICTIONARY
 
@@ -274,7 +283,34 @@ def unconditional_equivalences() -> List[Dict]:
 #  SECTION 2: CODE PARAMETERS
 # ===================================================================
 
-def code_parameters(family: str, **kwargs) -> Dict:
+
+def _canonical_algebra_id(family: str, parameters: Mapping[str, object]) -> str:
+    """Build a parameter-sensitive identifier for a standard example."""
+    normalized = family.lower()
+    if normalized in ('heisenberg', 'lattice', 'free_fermion'):
+        return f'{normalized}:k={parameters.get("k", 1)}'
+    if normalized in ('affine', 'kac_moody'):
+        return (
+            f'{normalized}:k={parameters.get("k", 1)}:'
+            f'dim_g={parameters.get("dim_g", 3)}:'
+            f'h_dual={parameters.get("h_dual", 2)}'
+        )
+    if normalized in ('betagamma', 'bc'):
+        return f'{normalized}:lambda={parameters.get("lam", 1)}'
+    if normalized in ('virasoro', 'w_algebra', 'w3', 'w_n'):
+        return f'{normalized}:c={parameters.get("c", 1)}'
+    return normalized
+
+
+def code_parameters(
+    family: str,
+    *,
+    algebra_id: Optional[str] = None,
+    quadratic_certificate: Optional[Mapping[str, object]] = None,
+    completed: bool = False,
+    chain_package_verified: bool = False,
+    **kwargs,
+) -> Dict:
     """Compute holographic code parameters for a standard family.
 
     Returns:
@@ -282,22 +318,32 @@ def code_parameters(family: str, **kwargs) -> Dict:
         shadow_class: G/L/C/M classification
         r_max: shadow depth
         redundancy_channels: number of independent error-correction channels
-        is_koszul: whether the algebra is Koszul (all standard families are)
-        exact_recovery: ambient-qualified Theorem B recovery flag
-        recovery_surface: ambient-qualified Theorem B surface
-        code_rate: fraction of physical Hilbert space used for logical data
+        theorem_a_surface: universal enhanced-Ran reconstruction
+        theorem_b_surface: certificate-governed quadratic comparison
+        is_koszul: Theorem B verdict, or ``None`` pending a certificate
+        lagrangian_fraction: algebraic half-dimensional proxy
 
     >>> p = code_parameters('heisenberg', k=1)
     >>> p['shadow_class']
     'G'
     >>> p['redundancy_channels']
     0
-    >>> p['exact_recovery']
+    >>> p['universal_reconstruction']
     True
+    >>> p['exact_recovery_status']
+    'UNVERIFIED'
     """
     cls = shadow_depth_class(family)
     r_max = entanglement_correction_depth(family)
-    recovery_surface = theorem_b_recovery_surface_from_shadow_class(cls)
+    requested_id = algebra_id or _canonical_algebra_id(family, kwargs)
+    theorem_a_surface = theorem_a_reconstruction_surface(
+        completed=completed,
+        chain_package_verified=chain_package_verified,
+    )
+    theorem_b_surface = theorem_b_recovery_surface_from_family(
+        requested_id, quadratic_certificate
+    )
+    separate = independent_reconstruction_surfaces()
 
     if cls == 'G':
         redundancy = 0
@@ -327,27 +373,49 @@ def code_parameters(family: str, **kwargs) -> Dict:
 
     return {
         'family': family,
+        'algebra_id': requested_id,
         'kappa': kappa,
         'shadow_class': cls,
         'r_max': r_max,
         'redundancy_channels': redundancy,
-        'is_koszul': True,  # all standard families are Koszul
-        'exact_recovery': recovery_surface['exact_recovery'],
-        'exact_recovery_status': recovery_surface['status'],
-        'exact_recovery_ambient': recovery_surface['ambient'],
-        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
-        'recovery_surface': recovery_surface,
-        'code_rate': Rational(1, 2),  # Lagrangian = half-dimensional
+        'universal_reconstruction': theorem_a_surface[
+            'enhanced_ran_reconstruction'
+        ],
+        'universal_reconstruction_status': theorem_a_surface[
+            'enhanced_ran_status'
+        ],
+        'chain_reconstruction': theorem_a_surface['chain_reconstruction'],
+        'chain_reconstruction_status': theorem_a_surface['chain_status'],
+        'theorem_a_surface': theorem_a_surface,
+        'is_koszul': theorem_b_surface['koszul'],
+        'quadratic_koszul': theorem_b_surface['koszul'],
+        'exact_recovery': theorem_b_surface['exact_quadratic_recovery'],
+        'exact_quadratic_recovery': theorem_b_surface[
+            'exact_quadratic_recovery'
+        ],
+        'exact_recovery_status': theorem_b_surface['status'],
+        'recovery_surface': theorem_b_surface,
+        'theorem_b_surface': theorem_b_surface,
+        'lagrangian_fraction': Rational(1, 2),
+        'code_rate': None,
+        'code_rate_status': 'REQUIRES_HILBERT_REALIZATION',
+        'fixed_coalgebra_surface': separate['fixed_coalgebra'],
+        'verdier_dual_surface': separate['verdier_dual'],
+        'derived_center_surface': separate['derived_center'],
+        'physical_recovery': separate['physical_decoder']['recovery'],
+        'physical_recovery_status': separate['physical_decoder']['status'],
+        'physical_decoder_surface': separate['physical_decoder'],
     }
 
 
 def redundancy_channels(family: str) -> int:
-    """Number of independent error-correction channels.
+    """Number of higher-shadow arity slots beyond the scalar term.
 
     Each channel corresponds to one arity level of the shadow obstruction tower
     beyond the scalar (kappa) level.  The arity-r shadow is
-    determined by lower arities via the MC equation, providing
-    one recovery channel per arity.
+    governed by the filtered MC equation.  The count is an algebraic
+    redundancy proxy; a Hilbert-space recovery channel additionally uses
+    the physical decoder surface.
 
     Class G: 0 channels (kappa is the entire code)
     Class L: 1 channel (arity 3 recoverable from arity 2)
@@ -406,9 +474,9 @@ def verify_shapovalov_cross_pairing() -> Dict:
       V+ x V- -> C is NON-DEGENERATE.
     - Therefore <v, w>_S = -<v, w>_D is also non-degenerate on V+ x V-.
 
-    The decomposition H = Q_g(A) + Q_g(A!) is LAGRANGIAN (Verdier-isotropic
-    summands), not orthogonal. The Shapovalov form detects the cross-pairing
-    with a sign flip.
+    The decomposition H = Q_g(A) + Q_g(A!) is a Lagrangian splitting with
+    Verdier-isotropic summands.  The Shapovalov form detects the
+    nondegenerate cross-pairing with a sign flip.
 
     Returns a dictionary documenting the structure.
 
@@ -420,9 +488,9 @@ def verify_shapovalov_cross_pairing() -> Dict:
     """
     return {
         'lagrangian_isotropy': True,       # <V+, V+>_D = 0, <V-, V->_D = 0
-        'shapovalov_orthogonal': False,    # <V+, V->_S != 0 in general
+        'shapovalov_orthogonal': False,    # the cross-pairing is nondegenerate
         'cross_pairing_sign': -1,          # <v,w>_S = -<v,w>_D on V+ x V-
-        'decomposition_type': 'symplectic',  # Lagrangian splitting, not orthogonal
+        'decomposition_type': 'symplectic',  # Lagrangian splitting
     }
 
 
@@ -444,35 +512,45 @@ def verify_knill_laflamme_scalar_level() -> bool:
 
 
 def knill_laflamme_structure() -> Dict:
-    """Summary of the error-correction structure from Lagrangian orthogonality.
+    """Summary of the algebraic Lagrangian input to a KL analysis.
 
     Returns a dictionary describing the proved structure:
     1. Isotropy: <Q_g(A), Q_g(A)>_D = 0 (Verdier) — code self-decoupling
-    2. Cross-pairing: <v,w>_S = -<v,w>_D on Q_g(A) x Q_g(A!) — symplectic, NOT orthogonal
+    2. Cross-pairing: <v,w>_S = -<v,w>_D on Q_g(A) x Q_g(A!), a
+       nondegenerate symplectic pairing between the summands.
 
-    These are STRUCTURAL PREREQUISITES for QEC.  The full KL condition at
-    genus >= 2 is a non-trivial open question.
+    A physical KL condition is formulated after choosing a Hilbert
+    realization, adjoint, error algebra, and recovery maps.
 
     >>> kl = knill_laflamme_structure()
     >>> kl['isotropy_proved']
     True
-    >>> kl['orthogonality_proved']
+    >>> kl['cross_pairing_nondegenerate']
     True
-    >>> kl['full_kl_higher_genus']
-    'open'
+    >>> kl['physical_kl_status']
+    'REQUIRES_HILBERT_ERROR_ALGEBRA_AND_RECOVERY_MAPS'
     """
     return {
         'isotropy_proved': True,
         'isotropy_source': 'prop:lagrangian-eigenspaces (higher_genus_complementarity.tex)',
         'isotropy_mechanism': '<sigma(v), sigma(w)>_D = -<v,w>_D => <v,w>_D = 0 on eigenspaces',
-        'orthogonality_proved': True,
-        'orthogonality_source': 'Shapovalov = Verdier composed with sigma',
-        'orthogonality_mechanism': '<v,w>_S = <v, sigma(w)>_D = 0 for v in Q_g(A), w in Q_g(A!)',
+        'orthogonality_proved': False,
+        'cross_pairing_nondegenerate': True,
+        'cross_pairing_source': 'Shapovalov = Verdier composed with sigma',
+        'cross_pairing_mechanism': (
+            '<v,w>_S = -<v,w>_D on Q_g(A) x Q_g(A!)'
+        ),
         'scalar_kl_genus_1': True,
-        'scalar_kl_mechanism': 'dim Q_1 = 1 => automatic (trivial)',
-        'full_kl_higher_genus': 'open',
-        'full_kl_note': 'At genus >= 2 where dim Q_g > 1, full KL requires MC structure analysis',
-        'overall_status': 'PROVED: isotropy + orthogonality (structural prerequisites for QEC)',
+        'scalar_kl_mechanism': (
+            'a one-dimensional realized code space makes every compressed '
+            'error product scalar'
+        ),
+        'full_kl_higher_genus': None,
+        'physical_kl_status': (
+            'REQUIRES_HILBERT_ERROR_ALGEBRA_AND_RECOVERY_MAPS'
+        ),
+        'physical_recovery': None,
+        'overall_status': 'PROVED_ALGEBRAIC_LAGRANGIAN_SPLITTING',
     }
 
 
@@ -481,10 +559,11 @@ def knill_laflamme_structure() -> Dict:
 # ===================================================================
 
 def shadow_redundancy_resolution() -> Dict:
-    """Resolution of Conjecture conj:thqg-shadow-depth-code-distance.
+    """Reformulate shadow depth as an arity-filtration proxy.
 
-    The shadow depth r_max(A) controls the REDUNDANCY STRUCTURE
-    of the holographic code, not the traditional code distance.
+    The shadow depth ``r_max(A)`` counts supported arity levels in the
+    obstruction tower.  Recursive MC extension is recorded with its own
+    hypothesis package.  Physical distance belongs to the decoder surface.
 
     Key insight: the scalar datum kappa (arity 2) is the fundamental
     logical datum.  All higher-arity shadows are DETERMINED by kappa
@@ -492,114 +571,126 @@ def shadow_redundancy_resolution() -> Dict:
     Each recovery step (arity r -> arity r+1) provides one
     redundancy channel.
 
-    The code distance (minimum uncorrectable erasure) is always 2:
-    erasure of kappa itself cannot be corrected.  The shadow depth
-    counts the number of ADDITIONAL redundancy channels beyond kappa.
-
     >>> res = shadow_redundancy_resolution()
     >>> res['conjecture_status']
-    'RESOLVED'
+    'REFORMULATED_AS_ARITY_PROXY'
     """
     return {
         'conjecture': 'conj:thqg-shadow-depth-code-distance',
-        'conjecture_status': 'RESOLVED',
+        'conjecture_status': 'REFORMULATED_AS_ARITY_PROXY',
         'resolution': (
-            'Shadow depth r_max counts redundancy channels, not code distance. '
-            'The code distance in the arity filtration is always 2 (the scalar '
-            'datum kappa is the minimum essential information). '
-            'Shadow depth controls the number of independent recovery channels: '
-            'each arity r > 2 with non-vanishing shadow provides one channel.'
+            'Shadow depth r_max counts supported higher-shadow arities.  The '
+            'arity-two scalar is the first term of this filtration.  Physical '
+            'code distance is computed after the Hilbert and error-algebra data '
+            'have been supplied.'
         ),
-        'code_distance_all_families': 2,
+        'shadow_arity_floor': 2,
+        'code_distance_all_families': None,
+        'physical_distance_status': 'REQUIRES_HILBERT_ERROR_ALGEBRA_AND_DECODER',
         'redundancy_by_class': {
-            'G': {'channels': 0, 'meaning': 'kappa is the entire code; no redundancy'},
+            'G': {'channels': 0, 'meaning': 'scalar-only shadow profile'},
             'L': {'channels': 1, 'meaning': 'arity-3 shadow recoverable from kappa'},
             'C': {'channels': 2, 'meaning': 'arities 3,4 recoverable from kappa'},
             'M': {'channels': 'infinite', 'meaning': 'all arities recoverable; convergent for rho < 1'},
         },
         'recovery_procedure': (
             'Shadow obstruction tower reconstruction: from kappa, solve MC equation recursively '
-            'at each arity. thm:recursive-existence guarantees existence and uniqueness. '
-            'This IS the error-correction procedure: redundant data is reconstructed '
-            'from the fundamental scalar.'
+            'at each arity under the hypotheses of thm:recursive-existence. '
+            'This constructs an algebraic higher-shadow extension.'
+        ),
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
         ),
     }
 
 
 # ===================================================================
-#  SECTION 5: THE MAIN THEOREM: KOSZULNESS = EXACT QEC
+#  SECTION 5: TYPED RECONSTRUCTION SURFACES
 # ===================================================================
 
-def koszulness_equals_exact_qec() -> Dict:
-    """The main theorem: Koszulness <=> exact quantum error correction.
+def koszulness_equals_exact_qec(
+    *,
+    algebra_id: str = 'A',
+    quadratic_certificate: Optional[Mapping[str, object]] = None,
+    completed: bool = False,
+    chain_package_verified: bool = False,
+) -> Dict:
+    """Return the typed theorem surfaces behind the QEC analogy.
 
-    Theorem (G12): For a chiral algebra A on a smooth projective
-    curve X, the algebraic statements (i) and (ii) are equivalent:
-
-    (i) A is chirally Koszul (any of K1-K12)
-    (ii) The bar-cobar code admits ambient-qualified exact recovery:
-         Omega(B(A)) -> A on the finite-window or completed surface.
-
-    A physical bulk reconstruction statement is a separate conditional
-    corollary requiring OCA/open-closed comparison data.
-
-    Moreover, when A is Koszul:
-    (a) The Lagrangian decomposition provides the code/error split
-    (b) The KL condition holds (from Lagrangian orthogonality)
-    (c) The shadow depth classifies the redundancy structure
-    (d) The entanglement entropy (G11) = the code's entropy
+    The function name is retained for callers of the original engine.  Its
+    value now records Theorem A, Theorem B, and the physical decoder as
+    distinct mathematical lanes.
 
     >>> thm = koszulness_equals_exact_qec()
-    >>> thm['status']
-    'PROVED_ALGEBRAIC_CONDITIONAL_PHYSICAL'
-    >>> len(thm['equivalences'])
-    3
+    >>> thm['theorem_a_surface']['enhanced_ran_reconstruction']
+    True
+    >>> thm['theorem_b_surface']['status']
+    'UNVERIFIED'
+    >>> thm['physical_decoder_surface']['recovery'] is None
+    True
     """
+    theorem_a_surface = theorem_a_reconstruction_surface(
+        completed=completed,
+        chain_package_verified=chain_package_verified,
+    )
+    theorem_b_surface = theorem_b_recovery_surface_from_family(
+        algebra_id, quadratic_certificate
+    )
+    separate = independent_reconstruction_surfaces()
+
     return {
-        'theorem': 'G12: Koszulness = Exact Quantum Error Correction',
-        'status': 'PROVED_ALGEBRAIC_CONDITIONAL_PHYSICAL',
+        'programme': 'Koszul compression and holographic-code comparison',
+        'status': 'TYPED_SURFACES',
+        'algebra_id': algebra_id,
         'status_map': {
-            'algebraic_koszul_qec_equivalence': 'PROVED',
-            'physical_bulk_reconstruction': 'CONDITIONAL_ON_OCA',
+            'theorem_a_enhanced_ran_reconstruction': theorem_a_surface[
+                'enhanced_ran_status'
+            ],
+            'theorem_a_chain_realization': theorem_a_surface['chain_status'],
+            'theorem_b_quadratic_comparison': theorem_b_surface['status'],
+            'fixed_coalgebra_co_contra': separate['fixed_coalgebra']['status'],
+            'verdier_dual_comparison': separate['verdier_dual']['status'],
+            'derived_center': separate['derived_center']['status'],
+            'physical_decoder': separate['physical_decoder']['status'],
         },
-        'equivalences': [
+        'typed_maps': [
             {
-                'label': '(i)',
-                'statement': 'A is chirally Koszul (any of K1-K12)',
-                'source': 'thm:koszul-equivalences-meta',
+                'theorem': 'A',
+                'map': 'epsilon_A: Omega_X B_X(A) -> A',
+                'status': theorem_a_surface['enhanced_ran_status'],
+                'role': 'universal enhanced-Ran reconstruction',
             },
             {
-                'label': '(ii)',
-                'statement': (
-                    'Bar-cobar code admits ambient-qualified exact recovery: '
-                    'Omega(B(A)) -> A on the finite-window or completed surface'
-                ),
-                'source': 'Theorem B (bar-cobar inversion)',
+                'theorem': 'B',
+                'map': 'q_A: A^i -> B_X(A)',
+                'adjoint': 'p_A: Omega_X(A^i) -> A',
+                'obstruction': 'Cone(q_A)',
+                'status': theorem_b_surface['status'],
+                'role': 'quadratic compression for a chosen presentation',
             },
             {
-                'label': '(iii)',
-                'statement': (
-                    'Physical bulk reconstruction requires OCA/open-closed '
-                    'comparison data; it is not implied by Theorem B alone'
-                ),
-                'source': 'OCA + thm:thqg-entanglement-wedge',
-                'status': 'CONDITIONAL',
+                'surface': 'physical decoder',
+                'status': separate['physical_decoder']['status'],
+                'role': 'Hilbert-space error correction after physical realization',
             },
         ],
-        'proof_sketch': (
-            '(i) <=> (ii): K4 states that Omega(B(A)) -> A is a quasi-isomorphism, '
-            'which is exact recovery on the stated finite-window or completed ambient. '
-            'Theorem B proves this on the Koszul locus. '
-            'The passage from (ii) to physical bulk reconstruction is conditional: '
-            'it requires OCA/open-closed comparison data in addition to the bar-cobar counit.'
+        'theorem_a_surface': theorem_a_surface,
+        'theorem_b_surface': theorem_b_surface,
+        'quadratic_koszul': theorem_b_surface['koszul'],
+        'exact_quadratic_recovery': theorem_b_surface[
+            'exact_quadratic_recovery'
+        ],
+        'fixed_coalgebra_surface': separate['fixed_coalgebra'],
+        'verdier_dual_surface': separate['verdier_dual'],
+        'derived_center_surface': separate['derived_center'],
+        'physical_recovery': separate['physical_decoder']['recovery'],
+        'physical_recovery_status': separate['physical_decoder']['status'],
+        'physical_decoder_surface': separate['physical_decoder'],
+        'physical_translation': (
+            'The OCA/open-closed comparison, beta_T, Hilbert realization, '
+            'error algebra, and subregion maps supply the physical decoder.'
         ),
-        'oca_required_for_physical_bulk': True,
-        'consequences': {
-            '(a)': 'Lagrangian decomposition = code/error split (Theorem C)',
-            '(b)': 'Knill-Laflamme from Lagrangian orthogonality',
-            '(c)': 'Shadow depth = redundancy channels (resolved conjecture)',
-            '(d)': 'Entanglement entropy comparison is conditional on the analytic/OCA package',
-        },
     }
 
 
@@ -607,8 +698,12 @@ def koszulness_equals_exact_qec() -> Dict:
 #  SECTION 6: STANDARD LANDSCAPE CODE CENSUS
 # ===================================================================
 
-def standard_landscape_code_census() -> List[Dict]:
-    """Complete code census for the standard landscape.
+def standard_landscape_code_census(
+    quadratic_certificates: Optional[
+        Mapping[str, Mapping[str, object]]
+    ] = None,
+) -> List[Dict]:
+    """Return the standard-family data with certificate-bound B status.
 
     For each standard family: code parameters, redundancy channels,
     convergence status, and cross-references.
@@ -616,59 +711,54 @@ def standard_landscape_code_census() -> List[Dict]:
     >>> census = standard_landscape_code_census()
     >>> len(census) >= 7
     True
-    >>> all(c['is_koszul'] for c in census)
+    >>> all(c['is_koszul'] is None for c in census)
     True
-    >>> all(c['exact_recovery'] for c in census)
+    >>> all(c['theorem_a_surface']['enhanced_ran_reconstruction'] for c in census)
     True
     """
     families = [
         {
             'family': 'Heisenberg H_1',
+            'algebra_id': 'heisenberg:k=1',
             'class': 'G', 'r_max': 2,
             'kappa': Rational(1),
             'redundancy': 0,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Trivial (Gaussian)',
             'physical': 'Free field / abelian Chern-Simons',
         },
         {
             'family': 'Lattice V_{E_8}',
+            'algebra_id': 'lattice:E8',
             'class': 'G', 'r_max': 2,
             'kappa': Rational(8),
             'redundancy': 0,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Trivial (Gaussian)',
             'physical': 'E_8 lattice gauge theory',
         },
         {
             'family': 'Affine sl_2 (k=1)',
+            'algebra_id': 'affine:sl2:k=1',
             'class': 'L', 'r_max': 3,
             'kappa': Rational(9, 4),
             'redundancy': 1,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Single-channel',
             'physical': 'SU(2) Chern-Simons (tree-level gravity)',
         },
         {
             'family': 'Beta-gamma (lambda=1)',
+            'algebra_id': 'betagamma:lambda=1',
             'class': 'C', 'r_max': 4,
             'kappa': Rational(1),
             'redundancy': 2,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Two-channel',
             'physical': 'Topological B-model',
         },
         {
             'family': 'Virasoro (c=1/2, Ising)',
+            'algebra_id': 'virasoro:c=1/2',
             'class': 'M', 'r_max': -1,
             'kappa': Rational(1, 4),
             'redundancy': -1,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Infinite-channel (divergent)',
             'physical': '3d gravity at c=1/2',
             'rho': shadow_radius_virasoro(0.5),
@@ -676,11 +766,10 @@ def standard_landscape_code_census() -> List[Dict]:
         },
         {
             'family': 'Virasoro (c=13, self-dual)',
+            'algebra_id': 'virasoro:c=13',
             'class': 'M', 'r_max': -1,
             'kappa': Rational(13, 2),
             'redundancy': -1,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Infinite-channel (convergent)',
             'physical': '3d gravity at self-dual point',
             'rho': shadow_radius_virasoro(13),
@@ -688,11 +777,10 @@ def standard_landscape_code_census() -> List[Dict]:
         },
         {
             'family': 'Virasoro (c=26, critical string)',
+            'algebra_id': 'virasoro:c=26',
             'class': 'M', 'r_max': -1,
             'kappa': Rational(13),
             'redundancy': -1,
-            'is_koszul': True,
-            'exact_recovery': True,
             'code_type': 'Infinite-channel (strongly convergent)',
             'physical': '3d gravity / critical bosonic string',
             'rho': shadow_radius_virasoro(26),
@@ -700,73 +788,95 @@ def standard_landscape_code_census() -> List[Dict]:
         },
     ]
 
+    certificate_map = quadratic_certificates or {}
+    separate = independent_reconstruction_surfaces()
     for entry in families:
-        entry['recovery_surface'] = theorem_b_recovery_surface_from_shadow_class(
-            entry['class']
+        theorem_a_surface = theorem_a_reconstruction_surface()
+        theorem_b_surface = theorem_b_recovery_surface_from_family(
+            entry['algebra_id'], certificate_map.get(entry['algebra_id'])
         )
-        entry['exact_recovery_status'] = entry['recovery_surface']['status']
-        entry['exact_recovery_ambient'] = entry['recovery_surface']['ambient']
-        entry['raw_direct_sum_chain_qi'] = entry['recovery_surface']['raw_direct_sum_chain_qi']
+        entry['universal_reconstruction'] = theorem_a_surface[
+            'enhanced_ran_reconstruction'
+        ]
+        entry['universal_reconstruction_status'] = theorem_a_surface[
+            'enhanced_ran_status'
+        ]
+        entry['theorem_a_surface'] = theorem_a_surface
+        entry['is_koszul'] = theorem_b_surface['koszul']
+        entry['quadratic_koszul'] = theorem_b_surface['koszul']
+        entry['exact_recovery'] = theorem_b_surface['exact_quadratic_recovery']
+        entry['exact_quadratic_recovery'] = theorem_b_surface[
+            'exact_quadratic_recovery'
+        ]
+        entry['exact_recovery_status'] = theorem_b_surface['status']
+        entry['recovery_surface'] = theorem_b_surface
+        entry['theorem_b_surface'] = theorem_b_surface
+        entry['fixed_coalgebra_surface'] = separate['fixed_coalgebra']
+        entry['verdier_dual_surface'] = separate['verdier_dual']
+        entry['derived_center_surface'] = separate['derived_center']
+        entry['physical_recovery'] = separate['physical_decoder']['recovery']
+        entry['physical_recovery_status'] = separate['physical_decoder']['status']
+        entry['physical_decoder_surface'] = separate['physical_decoder']
 
     return families
 
 
 def non_koszul_code_failure() -> Dict:
-    """Examples where Koszulness fails and the code breaks.
+    """Return the obstruction criterion and candidate test loci.
 
-    Non-Koszul chiral algebras correspond to gravitational theories
-    where holographic error correction FAILS.
+    An explicit nonzero homology class in ``Cone(q_A)`` certifies failure
+    of the chosen quadratic presentation in the finite model.  The listed
+    loci are prompts for that computation.
 
     >>> f = non_koszul_code_failure()
-    >>> f['examples'][0]['is_koszul']
-    False
-    >>> f['examples'][0]['exact_recovery']
-    False
+    >>> f['examples'][0]['status']
+    'UNVERIFIED'
     """
     return {
+        'status': 'OBSTRUCTION_CRITERION',
         'principle': (
-            'Non-Koszul algebras have code failure: '
-            'Omega(B(A)) is NOT quasi-isomorphic to A, '
-            'so the holographic code does not admit exact recovery. '
-            'Physically: the gravitational dual has information loss.'
+            'A nonzero class in H(Cone(q_A)) obstructs q_A and its adjoint '
+            'p_A.  The verdict belongs to the chosen presentation and '
+            'becomes a Theorem B certificate after H_CL and convergence '
+            'are recorded.'
         ),
         'examples': [
             {
                 'family': 'Simple quotient L_k(g) at admissible level',
-                'is_koszul': False,
-                'exact_recovery': False,
-                'failure_mechanism': (
-                    'Vacuum null vectors break PBW degeneration (K1 fails). '
-                    'The bar spectral sequence does not collapse at E_2. '
-                    'The cobar recovery map has a non-trivial kernel.'
+                'status': 'UNVERIFIED',
+                'is_koszul': None,
+                'exact_recovery': None,
+                'required_computation': (
+                    'Choose (V,R), construct q_A: A^i -> B_X(A), and compute '
+                    'H(Cone(q_A)) with exact arithmetic.'
                 ),
-                'physical': (
-                    'At admissible levels, the gravitational dual has '
-                    'information loss: bulk operators cannot be fully '
-                    'reconstructed from boundary data.'
+                'physical_question': (
+                    'Determine the OCA and Hilbert packages governing recovery '
+                    'of closed-sector operators from boundary data.'
                 ),
             },
             {
                 'family': 'Singular fiber of a deformation family',
-                'is_koszul': False,
-                'exact_recovery': False,
-                'failure_mechanism': (
-                    'At special points where the Kac-Shapovalov determinant '
-                    'vanishes (K8 fails), the code inner product degenerates. '
-                    'Distinct code states become indistinguishable.'
+                'status': 'UNVERIFIED',
+                'is_koszul': None,
+                'exact_recovery': None,
+                'required_computation': (
+                    'Specialize the presentation, compute Cone(q_A), and track '
+                    'the H_CL and convergence packages through the fiber.'
                 ),
-                'physical': (
-                    'Phase transition in the gravitational dual: '
-                    'the code degenerates at the critical point.'
+                'physical_question': (
+                    'Compare the algebraic obstruction with the spectrum and '
+                    'subregion maps of the proposed gravitational realization.'
                 ),
             },
         ],
-        'prediction': (
-            'NEW PREDICTION: non-Koszul points in moduli space correspond '
-            'to gravitational phase transitions where holographic error '
-            'correction fails. This is testable: verify that the failure '
-            'of PBW at admissible levels correlates with information loss '
-            'in the dual gravity theory.'
+        'research_test': (
+            'Compute Cone(q_A) across the deformation, then compare its jump '
+            'locus with independently constructed physical recovery data.'
+        ),
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
         ),
     }
 
@@ -776,7 +886,7 @@ def non_koszul_code_failure() -> Dict:
 # ===================================================================
 
 def verify_code_entanglement_consistency(c_val, log_ratio=1) -> Dict:
-    """Cross-check code parameters with G11 entanglement data.
+    """Place the genus-one scalar and spatial entropy side by side.
 
     The code entropy (log of code subspace dimension) should be
     related to the entanglement entropy at the scalar level.
@@ -785,12 +895,11 @@ def verify_code_entanglement_consistency(c_val, log_ratio=1) -> Dict:
     The entanglement entropy S_EE = (c/3) log(L/eps) measures the
     spatial entanglement (a different quantity from the code entropy).
 
-    The consistency check: the code rate (1/2, from Lagrangian)
-    combined with the entanglement entropy gives the total
-    information content.
+    Their comparison becomes physical after the Hilbert realization and
+    decoder package have been supplied.
 
     >>> data = verify_code_entanglement_consistency(Rational(13))
-    >>> data['code_rate']
+    >>> data['lagrangian_fraction']
     1/2
     >>> data['code_entropy_genus_1']
     0
@@ -803,22 +912,28 @@ def verify_code_entanglement_consistency(c_val, log_ratio=1) -> Dict:
         'c': c_val,
         'kappa': kappa,
         'S_EE_scalar': s_ee,
-        'code_rate': Rational(1, 2),
+        'lagrangian_fraction': Rational(1, 2),
+        'code_rate': None,
+        'code_rate_status': 'REQUIRES_HILBERT_REALIZATION',
         'code_entropy_genus_1': 0,  # dim Q_1 = 1 => log 1 = 0
-        'total_hilbert_dim_genus_1': 2,  # dim H_1 = 2
-        'lagrangian_dim_genus_1': 1,  # dim Q_1 = 1
-        'consistent': True,  # code rate * total dim = lagrangian dim
+        'total_hilbert_dim_genus_1': None,
+        'lagrangian_dim_genus_1': 1,
+        'consistent': None,
+        'comparison_status': 'CONDITIONAL_ON_HILBERT_AND_OCA_PACKAGES',
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
     }
 
 
 def verify_complementarity_as_code_constraint(c_val) -> Dict:
-    """The complementarity theorem as a code constraint.
+    """Compute the Virasoro scalar complementarity identity.
 
     Theorem C: H = Q_g(A) + Q_g(A!) (Lagrangian decomposition)
-    translates to: H = C + C^perp (code + error decomposition).
-
     The complementarity sum kappa + kappa' = 13 (Virasoro)
-    is the code constraint: total information = code + error.
+    gives the scalar ratio on the two summands.  A Hilbert-space code
+    interpretation uses the physical decoder package.
 
     >>> data = verify_complementarity_as_code_constraint(Rational(13))
     >>> data['kappa_sum']
@@ -835,8 +950,15 @@ def verify_complementarity_as_code_constraint(c_val) -> Dict:
         'kappa': kappa,
         'kappa_dual': kappa_dual,
         'kappa_sum': kappa + kappa_dual,
-        'code_fraction': kappa / (kappa + kappa_dual) if kappa + kappa_dual != 0 else None,
-        'error_fraction': kappa_dual / (kappa + kappa_dual) if kappa + kappa_dual != 0 else None,
+        'kappa_fraction': kappa / (kappa + kappa_dual) if kappa + kappa_dual != 0 else None,
+        'kappa_dual_fraction': kappa_dual / (kappa + kappa_dual) if kappa + kappa_dual != 0 else None,
+        'code_fraction': None,
+        'error_fraction': None,
+        'code_fraction_status': 'REQUIRES_HILBERT_REALIZATION',
         'is_self_dual': (c_val == 13),
         'complementarity_holds': (kappa + kappa_dual == 13),
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
     }

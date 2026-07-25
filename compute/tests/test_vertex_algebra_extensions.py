@@ -840,9 +840,10 @@ class TestKoszulnessCatalog:
         catalog = koszulness_beyond_free_generation()
         assert catalog["Minimal models M(p,q)"]["koszul"] is True
 
-    def test_sl2_admissible_koszul(self):
+    def test_sl2_admissible_conditional(self):
         catalog = koszulness_beyond_free_generation()
-        assert catalog["L_k(sl_2) admissible"]["koszul"] is True
+        assert catalog["L_k(sl_2) admissible"]["koszul"] is None
+        assert "quotient-bar" in catalog["L_k(sl_2) admissible"]["proof"]
 
     def test_higher_rank_open(self):
         catalog = koszulness_beyond_free_generation()

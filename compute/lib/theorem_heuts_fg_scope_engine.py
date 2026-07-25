@@ -1,943 +1,522 @@
-r"""Heuts-FG scope analysis engine: nilcompleteness, conilcompleteness,
-and bar-cobar equivalence scope for chiral algebras.
+r"""Exact theorem-scope certificates for bar--cobar reconstruction.
 
-CONTEXT:
-Heuts (arXiv:2408.06173, 2024) proves that Koszul duality gives an
-equivalence between nilcomplete O-algebras and conilcomplete BO-coalgebras,
-for ANY operad O in a stable presentably symmetric monoidal infinity-category.
-He also proves these are the LARGEST subcategories for which such an equivalence
-holds, disproving the Francis-Gaitsgory prediction that the equivalence extends
-to all algebras/coalgebras (without completion conditions).
+This module separates four maps which earlier versions of the computational
+layer conflated.
 
-Booth-Lazarev (arXiv:2304.08409, rev. 2026) construct a Quillen equivalence
-for the curved bar-cobar adjunction between curved coalgebras and curved
-algebras, extending classical Koszul duality to the curved setting.
+``A``  The universal associative resolution
 
-RELEVANCE TO THE MONOGRAPH:
-The monograph's Theorem A (bar-cobar adjunction + Verdier intertwining)
-and Theorem B (bar-cobar inversion on the Koszul locus) work in the
-CHIRAL setting on Ran(X).  The key question is whether Heuts' disproof
-affects any claims.
+    epsilon_A : Omega Bar(A) -> A.
 
-ANSWER: The monograph is SAFE for three independent reasons:
+    In a pro-nilpotent stable symmetric-monoidal infinity-category this is an
+    equivalence for every augmented associative algebra.  The relevant source
+    is Francis--Gaitsgory, *Chiral Koszul duality* (2012), Proposition 4.1.2;
+    their proof of Theorem 5.1.1 establishes pro-nilpotence for the chiral
+    tensor category on ``D(Ran X)``.
 
-(R1) PRO-NILPOTENT TENSOR STRUCTURE.
-    Francis-Gaitsgory [FG12, Section 6] prove that the chiral tensor
-    structure on DMod(Ran(X)) is pro-nilpotent: for any M in DMod(Ran(X)),
-    the tensor powers M^{otimes n} supported on Ran_{>=n}(X) vanish
-    for n >> 0 in the appropriate homotopical sense.  This is EXACTLY
-    the nilcompleteness/conilcompleteness condition that Heuts identifies
-    as necessary and sufficient.  The chiral setting automatically
-    satisfies Heuts' hypothesis.
+``B``  The quadratic comparison
 
-(R2) CONILPOTENCY FROM WEIGHT GRADING.
-    All standard chiral algebras (Heisenberg, KM, Virasoro, W_N, etc.)
-    have conformal weight grading with finite-dimensional weight spaces.
-    The bar coalgebra barB(A) is automatically conilpotent because the
-    deconcatenation coproduct strictly increases bar degree, and each
-    bar degree is finite-dimensional (from the weight grading).
-    This is Theorem thm:conilpotency-convergence in the monograph.
+    q_A : A^i -> Bar(A).
 
-(R3) KOSZUL LOCUS RESTRICTION.
-    Theorem B (bar-cobar inversion) is stated on the KOSZUL LOCUS:
-    algebras where barB(A) has cohomology concentrated in bar degree 1.
-    On this locus, the bar-cobar spectral sequence collapses at E_2,
-    giving an unconditional quasi-isomorphism without any completion.
-    Heuts' result concerns the GENERAL case (arbitrary operadic algebras);
-    the Koszul restriction provides much stronger convergence than
-    nilcompleteness alone.
+    For a connected quadratic presentation this map is an equivalence exactly
+    on the quadratic Koszul locus.  Equivalently, ``Omega(A^i) -> A`` is an
+    equivalence and the left and right Koszul complexes are acyclic.  See
+    Loday--Vallette (2012), Theorems 2.3.2 and 3.4.6.
 
-WHAT HEUTS TEACHES US:
-    (a) The monograph's Theorem A (abstract FG12 version, Thm 7.2.1)
-        is correct AS STATED because it works in DMod^fact(Ran(X)),
-        which is pro-nilpotent.
-    (b) The Quillen equivalence (thm:quillen-equivalence-chiral, citing
-        Val16) operates on CONILPOTENT coalgebras -- again within Heuts'
-        safe zone.
-    (c) Off the Koszul locus, the monograph correctly requires I-adic
-        completion (thm:completion-necessity) -- this is precisely the
-        passage from algebras to nilcomplete algebras.
-    (d) The general operadic statement "bar-cobar is an equivalence for
-        ALL algebras" would be FALSE by Heuts.  But the monograph never
-        makes this claim: it restricts to the Koszul locus (Theorem B)
-        or uses pro-nilpotent categories (Theorem A abstract).
+``H``  The general completion theorem
 
-BOOTH-LAZAREV UPGRADE:
-    Booth-Lazarev's curved Quillen equivalence (arXiv:2304.08409)
-    provides a STRONGER foundation for the genus >= 1 theory where
-    curvature is nonzero.  The monograph already references BL24
-    (arXiv:2406.04684, monoidal model structures) in the concordance.
-    The curved Quillen equivalence could upgrade the coderived/
-    contraderived passage at genus >= 1.
+    Heuts (2024), Theorem 2.1, identifies the unit of operadic Koszul duality
+    with nilcompletion and the counit with conilcompletion.  It gives an
+    equivalence between nilcomplete algebras and conilcomplete divided-power
+    coalgebras.  This theorem supplies the correct boundary in a general
+    ambient category; the Ran application already follows directly from the
+    pro-nilpotent Francis--Gaitsgory theorem.
 
-VERIFICATION TARGETS:
-    1. Conilpotency of barB(A) for standard families
-    2. Nilcompleteness of standard chiral algebras
-    3. Bar-cobar unit/counit quasi-isomorphism on Koszul locus
-    4. Failure modes off the Koszul locus
-    5. Pro-nilpotence of chiral tensor structure on Ran(X)
-    6. Weight-grading implies conilpotency (the structural argument)
-    7. Heuts scope boundary: where nilcompleteness fails
+``V``  The Verdier object
 
-Conventions
------------
-- Cohomological grading (|d| = +1), bar uses desuspension (AP45).
-- kappa formulas: kappa(H_k) = k, kappa(Vir_c) = c/2,
-  kappa(KM_{g,k}) = dim(g)*(k+h^v)/(2*h^v) per AP1/AP39.
-- Bar coalgebra = tensor coalgebra with deconcatenation coproduct.
-- Conilpotent = iterated reduced coproduct eventually vanishes.
-- Nilcomplete = limit over nilpotent quotients recovers the algebra.
+    D_Ran Bar(A).
+
+    Its identification with a chosen Koszul-dual algebra is a separate
+    Verdier/finiteness statement.  None of the three preceding results supplies
+    that identification by itself.
+
+The executable part is deliberately finite.  It certifies hypotheses and map
+signatures, and it checks the tensor-coalgebra combinatorics used in the first
+worked examples.  It makes no family-wide claims about Virasoro, affine, W,
+or minimal-model Koszulness.
 """
 
-from dataclasses import dataclass, field
-from fractions import Fraction
-from typing import Dict, List, Optional, Tuple
-import math
+from __future__ import annotations
 
-# ========================================================================
-# 1. FAMILY DATA: standard chiral algebra families
-# ========================================================================
+from dataclasses import dataclass
+from math import comb
+from typing import Dict, Iterable, Optional, Tuple
 
-@dataclass
-class ChiralFamilyData:
-    """Data for a standard chiral algebra family.
 
-    Attributes:
-        name: family identifier
-        generators: list of (name, conformal_weight) pairs
-        central_charge: central charge as function of level/parameters
-        kappa: modular characteristic (AP1/AP39)
-        is_quadratic: whether relations are quadratic
-        is_koszul: whether the algebra is chirally Koszul
-        weight_dims: conformal weight -> dimension of that weight space
-            (first few; enough to verify finite-dimensionality)
-        ope_max_pole: maximum pole order in OPE among generators
-        shadow_depth: G=2, L=3, C=4, M=infinity
-        has_positive_energy: whether h_min > 0
-    """
+FG_SOURCE = (
+    "Francis--Gaitsgory (2012), Proposition 4.1.2 and proof of "
+    "Theorem 5.1.1, arXiv:1103.5803"
+)
+HEUTS_SOURCE = "Heuts (2024), Theorem 2.1, arXiv:2408.06173"
+LV_RESOLUTION_SOURCE = "Loday--Vallette (2012), Corollary 2.3.4"
+LV_QUADRATIC_SOURCE = (
+    "Loday--Vallette (2012), Theorems 2.3.2 and 3.4.6"
+)
+BL_SOURCE = "Booth--Lazarev, Global Koszul duality, arXiv:2304.08409"
+
+
+@dataclass(frozen=True)
+class AmbientSignature:
+    """Hypotheses carried by an operadic ambient category."""
+
     name: str
-    generators: List[Tuple[str, int]]
-    central_charge: object  # Fraction or callable
-    kappa: object  # Fraction or callable
-    is_quadratic: bool
-    is_koszul: bool
-    weight_dims: Dict[int, int]
-    ope_max_pole: int
-    shadow_depth: object  # int or float('inf')
-    has_positive_energy: bool
-    has_finite_dim_weight_spaces: bool = True
-    needs_completion: bool = False
+    stable: bool
+    presentable: bool
+    symmetric_monoidal: bool
+    tensor_preserves_colimits_separately: bool
+    pro_nilpotent: bool
+
+    @property
+    def heuts_ready(self) -> bool:
+        """Heuts' categorical hypotheses, independent of object completion."""
+
+        return all(
+            (
+                self.stable,
+                self.presentable,
+                self.symmetric_monoidal,
+                self.tensor_preserves_colimits_separately,
+            )
+        )
+
+    @property
+    def fg_ready(self) -> bool:
+        """Francis--Gaitsgory's pro-nilpotent hypothesis package."""
+
+        return self.heuts_ready and self.pro_nilpotent
 
 
-def heisenberg_family(k: Fraction = Fraction(1)) -> ChiralFamilyData:
-    """Heisenberg algebra H_k at level k."""
-    return ChiralFamilyData(
-        name=f"Heisenberg(k={k})",
-        generators=[("alpha", 1)],
-        central_charge=k,  # c = 1 for rank 1, but kappa = k
-        kappa=k,
-        is_quadratic=True,
-        is_koszul=True,
-        weight_dims={0: 1, 1: 1, 2: 1, 3: 2, 4: 3},
-        ope_max_pole=2,
-        shadow_depth=2,
-        has_positive_energy=True,
-    )
+RAN_CHIRAL_AMBIENT = AmbientSignature(
+    name="(D(Ran X), tensor_ch)",
+    stable=True,
+    presentable=True,
+    symmetric_monoidal=True,
+    tensor_preserves_colimits_separately=True,
+    pro_nilpotent=True,
+)
+
+ORDINARY_CHAIN_AMBIENT = AmbientSignature(
+    name="(Ch_k, tensor)",
+    stable=True,
+    presentable=True,
+    symmetric_monoidal=True,
+    tensor_preserves_colimits_separately=True,
+    pro_nilpotent=False,
+)
 
 
-def kac_moody_family(
-    dim_g: int, h_dual: int, k: Fraction = Fraction(1)
-) -> ChiralFamilyData:
-    """Affine Kac-Moody at level k for simple g of dim dim_g, dual Coxeter h^v."""
-    c = Fraction(k * dim_g, k + h_dual)
-    kappa = Fraction(dim_g * (k + h_dual), 2 * h_dual)
-    return ChiralFamilyData(
-        name=f"KM(dim={dim_g}, h^v={h_dual}, k={k})",
-        generators=[(f"J^a", 1)] * dim_g,  # dim_g currents of weight 1
-        central_charge=c,
-        kappa=kappa,
-        is_quadratic=True,
-        is_koszul=True,
-        weight_dims={0: 1, 1: dim_g, 2: dim_g * (dim_g + 1) // 2},
-        ope_max_pole=2,
-        shadow_depth=3,
-        has_positive_energy=True,
-    )
+@dataclass(frozen=True)
+class MapCertificate:
+    """A theorem claim together with its complete type signature."""
+
+    theorem: str
+    map_name: str
+    domain: str
+    codomain: str
+    ambient: str
+    hypotheses: Tuple[str, ...]
+    status: str
+    conclusion: str
+    source: str
+
+    @property
+    def typed_map(self) -> str:
+        return f"{self.map_name}: {self.domain} -> {self.codomain}"
 
 
-def sl2_km(k: Fraction = Fraction(1)) -> ChiralFamilyData:
-    """sl_2 Kac-Moody at level k."""
-    return kac_moody_family(dim_g=3, h_dual=2, k=k)
+def universal_resolution_certificate(
+    ambient: AmbientSignature = RAN_CHIRAL_AMBIENT,
+) -> MapCertificate:
+    r"""Certify the universal map ``Omega Bar(A) -> A``.
 
-
-def virasoro_family(c: Fraction = Fraction(1)) -> ChiralFamilyData:
-    """Virasoro algebra at central charge c."""
-    return ChiralFamilyData(
-        name=f"Virasoro(c={c})",
-        generators=[("T", 2)],
-        central_charge=c,
-        kappa=Fraction(c, 2),
-        is_quadratic=False,  # T(z)T(w) has z^{-4} pole -> not quadratic
-        is_koszul=True,
-        weight_dims={0: 1, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 4},
-        ope_max_pole=4,
-        shadow_depth=float('inf'),
-        has_positive_energy=True,
-        needs_completion=True,  # non-quadratic, needs I-adic completion
-    )
-
-
-def w3_family(c: Fraction = Fraction(2)) -> ChiralFamilyData:
-    """W_3 algebra at central charge c."""
-    return ChiralFamilyData(
-        name=f"W_3(c={c})",
-        generators=[("T", 2), ("W", 3)],
-        central_charge=c,
-        kappa=Fraction(c, 2),
-        is_quadratic=False,
-        is_koszul=True,
-        weight_dims={0: 1, 1: 0, 2: 1, 3: 1, 4: 3, 5: 3, 6: 7},
-        ope_max_pole=6,  # W(z)W(w) has pole of order 2*3=6
-        shadow_depth=float('inf'),
-        has_positive_energy=True,
-        needs_completion=True,
-    )
-
-
-def beta_gamma_family() -> ChiralFamilyData:
-    """beta-gamma system (free bc system)."""
-    return ChiralFamilyData(
-        name="beta-gamma",
-        generators=[("beta", 1), ("gamma", 0)],
-        central_charge=Fraction(-1),  # c = -2*lambda + 1 at lambda=1
-        kappa=Fraction(-1, 2),
-        is_quadratic=True,
-        is_koszul=True,
-        weight_dims={0: 2, 1: 2, 2: 4, 3: 6},
-        ope_max_pole=1,
-        shadow_depth=4,
-        has_positive_energy=False,  # gamma has weight 0
-        has_finite_dim_weight_spaces=True,
-    )
-
-
-def w_infinity_family() -> ChiralFamilyData:
-    """W_{1+infinity} algebra (infinitely generated)."""
-    return ChiralFamilyData(
-        name="W_{1+infinity}",
-        generators=[(f"W^{h}", h) for h in range(1, 20)],
-        central_charge=Fraction(1),
-        kappa=Fraction(1),
-        is_quadratic=False,
-        is_koszul=True,
-        weight_dims={h: h for h in range(10)},  # grows linearly
-        ope_max_pole=40,  # arbitrarily high
-        shadow_depth=float('inf'),
-        has_positive_energy=True,
-        has_finite_dim_weight_spaces=True,
-        needs_completion=True,
-    )
-
-
-def minimal_model_family(p: int = 3, q: int = 4) -> ChiralFamilyData:
-    """Virasoro minimal model M(p,q). NOT Koszul (simple quotient)."""
-    c = Fraction(1 - 6 * (p - q) ** 2, p * q)
-    return ChiralFamilyData(
-        name=f"MinimalModel({p},{q})",
-        generators=[("T", 2)],
-        central_charge=c,
-        kappa=Fraction(c, 2),
-        is_quadratic=False,
-        is_koszul=False,  # simple quotient, not Koszul
-        weight_dims={0: 1, 1: 0, 2: 1, 3: 1},
-        ope_max_pole=4,
-        shadow_depth=float('inf'),
-        has_positive_energy=True,
-        needs_completion=True,
-    )
-
-
-STANDARD_FAMILIES = [
-    heisenberg_family(),
-    sl2_km(),
-    kac_moody_family(dim_g=8, h_dual=3, k=Fraction(1)),  # sl_3
-    virasoro_family(),
-    virasoro_family(c=Fraction(26)),  # critical
-    virasoro_family(c=Fraction(13)),  # self-dual
-    w3_family(),
-    beta_gamma_family(),
-]
-
-ALL_FAMILIES = STANDARD_FAMILIES + [
-    w_infinity_family(),
-    minimal_model_family(3, 4),  # Ising
-    minimal_model_family(2, 5),  # Yang-Lee
-]
-
-
-# ========================================================================
-# 2. CONILPOTENCY ENGINE
-# ========================================================================
-
-def verify_conilpotency_weight_grading(family: ChiralFamilyData) -> Dict:
-    """Verify that barB(A) is conilpotent via weight grading argument.
-
-    STRUCTURAL ARGUMENT (Path 1):
-    If A has a conformal weight grading A = bigoplus_{h >= 0} A_h with
-    finite-dimensional weight spaces, then the bar coalgebra
-    barB(A) = T^c(s^{-1} bar{A}) has the deconcatenation coproduct.
-    An element in bar degree n has total weight >= n * h_min.
-    The iterated reduced coproduct Delta^{(N)} on a bar-degree-n element
-    vanishes for N > n (there are only n tensorands to split).
-    Hence barB(A) is conilpotent.
+    The result concerns the full bar coalgebra.  Quadratic presentation data
+    and diagonal bar homology play no role in its type signature.
     """
-    h_min = min(h for (_, h) in family.generators) if family.generators else 0
-    has_grading = bool(family.weight_dims)
-    finite_dim = family.has_finite_dim_weight_spaces
 
-    # Conilpotency bound: an element of total weight w lives in bar degree
-    # at most w / h_min (when h_min > 0), so Delta^{(N)} vanishes for
-    # N > w / h_min.
-    if h_min > 0:
-        nilpotency_bound_fn = lambda w: math.ceil(w / h_min) + 1
+    status = "proved-by-FG" if ambient.fg_ready else "hypothesis-open"
+    conclusion = (
+        "equivalence for every augmented associative algebra A"
+        if ambient.fg_ready
+        else "application awaits pro-nilpotence of the ambient category"
+    )
+    return MapCertificate(
+        theorem="Theorem A: enhanced associative bar--cobar reconstruction",
+        map_name="epsilon_A",
+        domain="Omega_X Bar_X(A)",
+        codomain="A",
+        ambient=ambient.name,
+        hypotheses=(
+            "stable presentable symmetric-monoidal ambient",
+            "tensor product preserves colimits separately",
+            "pro-nilpotent ambient",
+            "augmented associative algebra A",
+        ),
+        status=status,
+        conclusion=conclusion,
+        source=FG_SOURCE,
+    )
+
+
+def coalgebra_resolution_certificate(
+    ambient: AmbientSignature = RAN_CHIRAL_AMBIENT,
+) -> MapCertificate:
+    r"""Certify the companion universal map ``C -> Bar Omega(C)``."""
+
+    status = "proved-by-FG" if ambient.fg_ready else "hypothesis-open"
+    conclusion = (
+        "equivalence for every coalgebra in the enhanced FG target"
+        if ambient.fg_ready
+        else "application awaits pro-nilpotence of the ambient category"
+    )
+    return MapCertificate(
+        theorem="Theorem A: enhanced associative bar--cobar reconstruction",
+        map_name="eta_C",
+        domain="C",
+        codomain="Bar_X Omega_X(C)",
+        ambient=ambient.name,
+        hypotheses=(
+            "stable presentable symmetric-monoidal ambient",
+            "tensor product preserves colimits separately",
+            "pro-nilpotent ambient",
+            "coalgebra C in the enhanced bar target",
+        ),
+        status=status,
+        conclusion=conclusion,
+        source=FG_SOURCE,
+    )
+
+
+@dataclass(frozen=True)
+class QuadraticPresentation:
+    """Input data for the quadratic recognition theorem."""
+
+    name: str
+    connected: bool
+    positive_weight: bool
+    relation_degrees: Tuple[int, ...]
+    filtered_realization_converges: bool
+    q_quasi_isomorphism_verified: Optional[bool] = None
+
+    @property
+    def quadratic(self) -> bool:
+        """A free presentation has ``R=0`` and is therefore quadratic."""
+
+        return all(degree == 2 for degree in self.relation_degrees)
+
+    @property
+    def recognition_hypotheses(self) -> bool:
+        return all(
+            (
+                self.connected,
+                self.positive_weight,
+                self.quadratic,
+                self.filtered_realization_converges,
+            )
+        )
+
+
+FREE_TENSOR_PRESENTATION = QuadraticPresentation(
+    name="T(V)",
+    connected=True,
+    positive_weight=True,
+    relation_degrees=(),
+    filtered_realization_converges=True,
+    q_quasi_isomorphism_verified=True,
+)
+
+DUAL_NUMBERS_PRESENTATION = QuadraticPresentation(
+    name="k[e]/(e^2)",
+    connected=True,
+    positive_weight=True,
+    relation_degrees=(2,),
+    filtered_realization_converges=True,
+    q_quasi_isomorphism_verified=True,
+)
+
+TRUNCATED_CUBIC_PRESENTATION = QuadraticPresentation(
+    name="k[x]/(x^3)",
+    connected=True,
+    positive_weight=True,
+    relation_degrees=(3,),
+    filtered_realization_converges=True,
+    q_quasi_isomorphism_verified=None,
+)
+
+
+def quadratic_comparison_certificate(
+    presentation: QuadraticPresentation,
+) -> MapCertificate:
+    r"""Certify the scope of ``q_A: A^i -> Bar(A)``.
+
+    ``q_quasi_isomorphism_verified`` records a supplied proof or computation;
+    the engine never promotes a family to the Koszul locus from its name.
+    """
+
+    if not presentation.recognition_hypotheses:
+        status = "outside-quadratic-signature"
+        conclusion = (
+            "the quadratic comparison requires connected positive-weight "
+            "quadratic presentation data and convergent realization"
+        )
+    elif presentation.q_quasi_isomorphism_verified is True:
+        status = "proved-koszul"
+        conclusion = (
+            "q_A, Omega(A^i)->A, and both Koszul-complex acyclicity "
+            "conditions are equivalent and hold"
+        )
+    elif presentation.q_quasi_isomorphism_verified is False:
+        status = "computed-off-koszul-locus"
+        conclusion = "the supplied computation detects a nonzero cone of q_A"
     else:
-        # h_min = 0: weight grading alone does not bound bar degree.
-        # But finite-dimensionality of each weight space still ensures
-        # conilpotency: the coradical filtration is exhaustive.
-        nilpotency_bound_fn = None
+        status = "criterion-open"
+        conclusion = "the cone of q_A is the remaining proof obligation"
 
-    conilpotent = has_grading and finite_dim
+    return MapCertificate(
+        theorem="Theorem B: quadratic Koszul recognition",
+        map_name="q_A",
+        domain="A^i",
+        codomain="Bar_X(A)",
+        ambient="connected positive-weight quadratic chiral presentation",
+        hypotheses=(
+            "A=T_X(V)/(R) with R in V tensor V",
+            "connected positive-weight filtration",
+            "convergent filtered realization",
+        ),
+        status=status,
+        conclusion=conclusion,
+        source=LV_QUADRATIC_SOURCE,
+    )
+
+
+def heuts_completion_certificate(
+    ambient: AmbientSignature,
+    *,
+    algebra_nilcomplete: Optional[bool],
+    coalgebra_conilcomplete: Optional[bool],
+) -> Dict[str, object]:
+    """Apply Heuts' Theorem 2.1 without inferring object completeness.
+
+    The theorem identifies the unit and counit with completion maps.  A full
+    equivalence for a specified pair therefore carries two explicit object
+    hypotheses.
+    """
+
+    categorical_scope = "proved-by-Heuts" if ambient.heuts_ready else "ambient-open"
+    pair_in_equivalence = (
+        ambient.heuts_ready
+        and algebra_nilcomplete is True
+        and coalgebra_conilcomplete is True
+    )
     return {
-        'family': family.name,
-        'has_weight_grading': has_grading,
-        'finite_dim_weight_spaces': finite_dim,
-        'h_min': h_min,
-        'conilpotent': conilpotent,
-        'nilpotency_bound': f'N > w/{h_min} + 1' if h_min > 0 else 'exhaustive coradical',
-        'reason': (
-            'Weight grading with finite-dim spaces implies exhaustive '
-            'coradical filtration; deconcatenation coproduct increases '
-            'bar degree strictly.'
+        "source": HEUTS_SOURCE,
+        "ambient": ambient.name,
+        "categorical_scope": categorical_scope,
+        "algebra_unit": "A -> prim_BO indec_O(A) = nilcompletion(A)",
+        "coalgebra_counit": (
+            "indec_O prim_BO(C) -> C = conilcompletion counit"
+        ),
+        "algebra_nilcomplete": algebra_nilcomplete,
+        "coalgebra_conilcomplete": coalgebra_conilcomplete,
+        "pair_in_equivalence": pair_in_equivalence,
+        "largest_complete_subcategories": ambient.heuts_ready,
+    }
+
+
+def verdier_comparison_certificate() -> MapCertificate:
+    """Record the Verdier comparison as a separately hypothesized map."""
+
+    return MapCertificate(
+        theorem="Verdier--bar comparison",
+        map_name="v_A",
+        domain="D_Ran Bar_X(A)",
+        codomain="A^!",
+        ambient="Verdier-dualizable Ran objects",
+        hypotheses=(
+            "H_VD: Verdier dualizability and finite-type exchange",
+            "a chosen algebra model A^! for the dual coalgebra",
+        ),
+        status="conditional-H_VD",
+        conclusion="comparison is an equivalence when H_VD is discharged",
+        source="manuscript Verdier hypothesis package H_VD",
+    )
+
+
+def booth_lazarev_transfer_certificate() -> Dict[str, object]:
+    """Separate the abstract curved result from its Ran transfer problem."""
+
+    return {
+        "source": BL_SOURCE,
+        "abstract_chain_complex_result": "proved",
+        "abstract_result": (
+            "extended curved bar--cobar is a Quillen equivalence for the "
+            "model structures constructed by Booth--Lazarev"
+        ),
+        "ran_factorization_transfer": "open-hypothesis-package",
+        "required_transfer_data": (
+            "model structures on the chosen Ran/factorization categories",
+            "compatibility of chiral tensor and weak equivalences",
+            "curvature and completion compatibility",
         ),
     }
 
 
-def verify_conilpotency_explicit(family: ChiralFamilyData, max_weight: int = 6) -> Dict:
-    """Verify conilpotency by explicit bar-degree computation (Path 2).
+def comparison_table() -> Dict[str, MapCertificate]:
+    """Return the four distinct manuscript claim surfaces."""
 
-    For each total weight w <= max_weight, compute the bar complex
-    dimension at each bar degree and verify that the maximum bar degree
-    is finite (hence Delta^{(N)} vanishes for N large enough).
-    """
-    # Count the number of ways to partition total weight w into
-    # n generator weights (with repetition).
-    # This is the dimension of barB^n(A) at total weight w.
-    gen_weights = [h for (_, h) in family.generators]
-    if not gen_weights:
-        return {'family': family.name, 'verified': True, 'max_bar_deg': 0}
-
-    # For each total weight, find the maximum bar degree that has
-    # nonzero contribution.
-    max_bar_deg_by_weight = {}
-    for w in range(max_weight + 1):
-        max_n = 0
-        # Bar degree n means n tensorands of desuspended generators.
-        # Total weight = sum of generator weights.
-        # Maximum bar degree for weight w: at most w / h_min (or w+1 if h_min=0).
-        h_min = min(gen_weights) if gen_weights else 1
-        upper_n = w + 1 if h_min == 0 else w // h_min + 1
-        for n in range(1, min(upper_n + 1, w + 2)):
-            # Count partitions of w into n parts from gen_weights
-            count = _count_weight_partitions(w, n, gen_weights)
-            if count > 0:
-                max_n = n
-        max_bar_deg_by_weight[w] = max_n
-
-    all_finite = all(d < float('inf') for d in max_bar_deg_by_weight.values())
     return {
-        'family': family.name,
-        'max_bar_deg_by_weight': max_bar_deg_by_weight,
-        'all_finite': all_finite,
-        'conilpotent': all_finite,
-        'max_bar_degree_seen': max(max_bar_deg_by_weight.values()) if max_bar_deg_by_weight else 0,
+        "universal_algebra_resolution": universal_resolution_certificate(),
+        "universal_coalgebra_resolution": coalgebra_resolution_certificate(),
+        "quadratic_comparison": quadratic_comparison_certificate(
+            FREE_TENSOR_PRESENTATION
+        ),
+        "verdier_comparison": verdier_comparison_certificate(),
     }
 
 
-def _count_weight_partitions(total_weight: int, num_parts: int,
-                              available_weights: List[int]) -> int:
-    """Count ordered tuples of length num_parts from available_weights summing to total_weight."""
-    if num_parts == 0:
-        return 1 if total_weight == 0 else 0
-    if total_weight < 0:
+def bar_word_dimension(generator_dimension: int, bar_length: int) -> int:
+    """Dimension of ``V^tensor bar_length`` for ``dim(V)=d``."""
+
+    if generator_dimension < 0 or bar_length < 0:
+        raise ValueError("dimensions and bar lengths are nonnegative")
+    return generator_dimension**bar_length
+
+
+def reduced_deconcatenation_summands(word_length: int, iterations: int) -> int:
+    r"""Count summands in the iterated reduced coproduct of one word.
+
+    ``iterations=r`` asks for ``r`` cuts and hence ``r+1`` nonempty blocks.
+    The count is ``binomial(n-1,r)``.  In particular it vanishes for
+    ``r >= n``, which is the elementwise conilpotence certificate for the
+    direct-sum tensor coalgebra ``T^c(V)``.
+    """
+
+    if word_length < 0 or iterations < 0:
+        raise ValueError("word lengths and iteration counts are nonnegative")
+    if word_length == 0:
         return 0
-    if num_parts == 1:
-        return available_weights.count(total_weight)
-    count = 0
-    for w in available_weights:
-        if w <= total_weight:
-            count += _count_weight_partitions(total_weight - w, num_parts - 1, available_weights)
-    return count
+    if iterations > word_length - 1:
+        return 0
+    return comb(word_length - 1, iterations)
 
 
-# ========================================================================
-# 3. NILCOMPLETENESS ENGINE
-# ========================================================================
+def conilpotence_index(word_length: int) -> int:
+    """First reduced-coproduct iterate vanishing on a word of length ``n``."""
 
-def verify_nilcompleteness(family: ChiralFamilyData) -> Dict:
-    """Verify that a chiral algebra is nilcomplete.
+    if word_length < 0:
+        raise ValueError("word length is nonnegative")
+    return word_length
 
-    DEFINITION (Heuts, following Lurie HA 5.2.6):
-    An O-algebra A is nilcomplete if the canonical map
-        A -> lim_n A/A^{>n}
-    is an equivalence, where A^{>n} is the n-th power of the
-    augmentation ideal in the operadic sense.
 
-    For chiral algebras on Ran(X):
-    - The chiral tensor structure on DMod(Ran(X)) is pro-nilpotent
-      (FG12, Section 6): M^{tensor n} supported on Ran_{>=n}(X) -> 0.
-    - This means ALL augmented chiral algebras are automatically
-      nilcomplete in the chiral tensor structure.
-    - The pro-nilpotence is a GEOMETRIC property of Ran(X), not an
-      algebraic property of the individual algebra.
+def completed_tensor_element_is_conilpotent(
+    nonzero_bar_lengths: Iterable[int],
+) -> bool:
+    """Test bounded bar-length support for a completed tensor element.
 
-    PATH 1 (Pro-nilpotence of chiral tensor):
-        The stratification Ran(X) = cup_n Ran_n(X) gives
-        M^{tensor n} supported on Ran_{>=n}(X).
-        For a curve X, Ran_{>=n}(X) has codimension >= n-1.
-        The D-module pushforward from Ran_{>=n} to Ran vanishes
-        in degrees < n-1 (support codimension bound).
-
-    PATH 2 (Weight grading):
-        If A has positive conformal weight h_min > 0, then
-        A^{>n} has weight >= n*h_min, so A -> lim A/A^{>n}
-        is an isomorphism in each weight (each weight appears
-        in only finitely many quotients).
-
-    PATH 3 (PBW/filtered):
-        Koszul algebras have a PBW filtration F^p A with
-        gr^p A = Sym^p(A_1).  The completion lim A/F^p A
-        converges because the PBW spectral sequence degenerates.
+    A direct-sum tensor-coalgebra element has finite support automatically.
+    A completed element represented by an unbounded stream of nonzero lengths
+    has no finite elementwise conilpotence bound.  The caller supplies a finite
+    sample here; an empty sample and every finite sample are bounded.  Infinite
+    streams are handled by ``completed_support_certificate`` below.
     """
-    # Path 1: geometric pro-nilpotence (always true for chiral on Ran(X))
-    path1_geometric = True
 
-    # Path 2: weight grading
-    h_min = min(h for (_, h) in family.generators) if family.generators else 0
-    path2_weight = (h_min > 0 and family.has_finite_dim_weight_spaces)
+    lengths = tuple(nonzero_bar_lengths)
+    if any(length < 0 for length in lengths):
+        raise ValueError("bar lengths are nonnegative")
+    return True
 
-    # Path 3: PBW/Koszul
-    path3_koszul = family.is_koszul
+
+def completed_support_certificate(*, bounded_support: bool) -> Dict[str, object]:
+    """Expose the direct-sum/completed-product distinction explicitly."""
 
     return {
-        'family': family.name,
-        'nilcomplete': True,  # always true in chiral setting on Ran(X)
-        'path1_geometric_pronilpotence': path1_geometric,
-        'path1_reason': (
-            'Chiral tensor on DMod(Ran(X)) is pro-nilpotent: '
-            'M^{otimes n} supported on Ran_{>=n}(X) -> 0 as n -> infty. '
-            'This is FG12 Section 6.'
-        ),
-        'path2_weight_grading': path2_weight,
-        'path2_reason': (
-            f'h_min = {h_min}; weight >= n*h_min in A^{{>n}}; '
-            f'each weight space is finite-dim: {family.has_finite_dim_weight_spaces}'
-        ) if path2_weight else 'h_min = 0 or infinite-dim weight spaces',
-        'path3_koszul_pbw': path3_koszul,
-        'path3_reason': (
-            'PBW spectral sequence degenerates at E_2; '
-            'associated graded is Sym(A_1), automatically complete'
-        ) if path3_koszul else 'not Koszul',
-        'num_independent_paths': sum([path1_geometric, path2_weight, path3_koszul]),
+        "bounded_bar_length_support": bounded_support,
+        "elementwise_conilpotent": bounded_support,
+        "completion_requires_separate_argument": True,
     }
 
 
-# ========================================================================
-# 4. BAR-COBAR QUASI-ISOMORPHISM SCOPE
-# ========================================================================
-
-def verify_bar_cobar_qi_scope(family: ChiralFamilyData) -> Dict:
-    """Determine whether bar-cobar inversion is a quasi-isomorphism.
-
-    The monograph's Theorem B (thm:bar-cobar-inversion-qi) states:
-    For a KOSZUL chiral algebra A with barB(A) conilpotent (or A
-    complete w.r.t. augmentation ideal), the counit
-        Omega(barB(A)) -> A
-    is a quasi-isomorphism.
-
-    Conditions checked:
-    (C1) Koszulity: bar cohomology H*(barB(A)) concentrated in bar degree 1
-    (C2) Conilpotency of barB(A) OR completeness of A
-    (C3) Central curvature (for higher genus d^2 = 0)
-
-    Failure modes:
-    (F1) Not Koszul: spectral sequence may not collapse, counit not qi
-    (F2) Not conilpotent AND not complete: cobar differential diverges
-    (F3) Non-central curvature: d^2 != 0 at higher genus
-    """
-    c1_koszul = family.is_koszul
-    c2_conilpotent = family.has_finite_dim_weight_spaces
-    c2_complete = family.needs_completion  # if True, needs completion but has it
-    c3_central = True  # all standard VOAs have central curvature
-
-    qi_at_genus_0 = c1_koszul and (c2_conilpotent or c2_complete)
-    qi_at_all_genera = qi_at_genus_0 and c3_central
-
-    # Determine which theorem applies
-    if qi_at_all_genera and not family.needs_completion:
-        mechanism = 'Conilpotent: direct bar-cobar, no completion needed'
-    elif qi_at_all_genera and family.needs_completion:
-        mechanism = 'Complete: I-adic completion gives bar-cobar qi'
-    elif not c1_koszul:
-        mechanism = 'NOT Koszul: bar-cobar counit NOT a qi in general'
-    else:
-        mechanism = 'Unknown regime'
+def worked_case_packet() -> Dict[str, object]:
+    """Return the first concrete cases before the general theorem table."""
 
     return {
-        'family': family.name,
-        'koszul': c1_koszul,
-        'conilpotent': c2_conilpotent,
-        'needs_completion': family.needs_completion,
-        'central_curvature': c3_central,
-        'bar_cobar_qi_genus_0': qi_at_genus_0,
-        'bar_cobar_qi_all_genera': qi_at_all_genera,
-        'mechanism': mechanism,
-        'within_heuts_scope': True,  # always true in chiral setting
-        'heuts_reason': (
-            'Chiral tensor on Ran(X) is pro-nilpotent, so all chiral '
-            'algebras are nilcomplete and all bar coalgebras are '
-            'conilcomplete -- within Heuts\' equivalence scope.'
-        ),
-    }
-
-
-# ========================================================================
-# 5. HEUTS SCOPE BOUNDARY ANALYSIS
-# ========================================================================
-
-def analyze_heuts_scope_boundary() -> Dict:
-    """Analyze where Heuts' theorem has content vs. where it is automatic.
-
-    Heuts proves: for any operad O in a stable presentably symmetric
-    monoidal infinity-category C, Koszul duality gives an equivalence
-        Alg^nilc_O(C) <-> CoAlg^conilc_{BO}(C)
-
-    CASE 1: C = DMod(Ran(X)) with chiral tensor.
-        Pro-nilpotent tensor structure => all algebras nilcomplete,
-        all coalgebras conilcomplete.  Heuts' theorem is AUTOMATIC:
-        the subcategories ARE the full categories.
-        This is the monograph's setting.
-
-    CASE 2: C = Chain complexes (Vect) with ordinary tensor.
-        NOT pro-nilpotent.  Nilcomplete != all algebras.
-        Example: the free associative algebra T(V) on an infinite-dim V
-        is NOT nilcomplete (the I-adic completion is strictly larger).
-        Heuts' theorem has GENUINE CONTENT here.
-
-    CASE 3: C = Spectra with smash product.
-        Heuts' main application.  The FG prediction was that
-        Koszul duality gives a full equivalence Alg_O <-> CoAlg_{BO};
-        Heuts' disproof constructs a non-nilcomplete algebra.
-
-    VERDICT: The FG prediction fails in Cases 2-3 but is TRUE in Case 1.
-    The pro-nilpotent structure of DMod(Ran(X)) makes the chiral
-    setting one where the FG prediction happens to be correct (though
-    for a reason different from what FG may have expected).
-    """
-    return {
-        'case_1_chiral': {
-            'setting': 'DMod(Ran(X)) with chiral tensor',
-            'pro_nilpotent': True,
-            'heuts_automatic': True,
-            'fg_prediction_status': 'TRUE (all algebras are nilcomplete)',
-            'monograph_safe': True,
-        },
-        'case_2_chain': {
-            'setting': 'Chain complexes with ordinary tensor',
-            'pro_nilpotent': False,
-            'heuts_automatic': False,
-            'fg_prediction_status': 'FALSE (non-nilcomplete algebras exist)',
-            'example': 'T(V) for infinite-dim V',
-        },
-        'case_3_spectra': {
-            'setting': 'Spectra with smash product',
-            'pro_nilpotent': False,
-            'heuts_automatic': False,
-            'fg_prediction_status': 'FALSE (Heuts\' counterexample)',
-        },
-        'conclusion': (
-            'Heuts\' disproof targets Cases 2-3. The monograph\'s chiral '
-            'setting (Case 1) has pro-nilpotent tensor structure, so '
-            'nilcompleteness is automatic and the bar-cobar equivalence '
-            'holds for ALL chiral algebras -- not just nilcomplete ones. '
-            'No adjustment to the monograph\'s foundations is needed.'
-        ),
-    }
-
-
-# ========================================================================
-# 6. BOOTH-LAZAREV CURVED UPGRADE
-# ========================================================================
-
-def analyze_booth_lazarev_upgrade(family: ChiralFamilyData) -> Dict:
-    """Analyze whether Booth-Lazarev curved Quillen equivalence
-    provides a stronger foundation for the monograph's genus >= 1 theory.
-
-    Booth-Lazarev (2304.08409) construct:
-    - A monoidal model structure on ALL curved coalgebras
-    - A Quillen equivalence with curved algebras via bar-cobar
-    - Recovery of classical Koszul duality (Positselski, Keller-Lefevre)
-      for conilpotent coalgebras and uncurved (dg) algebras
-
-    For the monograph:
-    - At genus 0: uncurved, classical Koszul duality applies (Vallette)
-    - At genus >= 1: curved (curvature = kappa * omega_g), need BL
-    - BL's curved Quillen equivalence gives a model-categorical
-      foundation for the coderived/contraderived passage
-
-    The monograph currently uses:
-    - Vallette model structure (Val16) at genus 0
-    - Coderived categories (Positselski) at genus >= 1
-    - BL24 monoidal structure for fusion compatibility
-
-    BL curved Quillen equivalence would UNIFY the genus-0 and genus >= 1
-    stories into a single model-categorical framework.
-    """
-    curvature_at_genus_1 = family.kappa  # kappa * omega_1
-
-    return {
-        'family': family.name,
-        'genus_0': {
-            'curved': False,
-            'current_foundation': 'Vallette model structure (Val16)',
-            'bl_upgrade': 'Not needed (uncurved case)',
-        },
-        'genus_ge_1': {
-            'curved': True,
-            'curvature': f'kappa * omega_g = {curvature_at_genus_1} * omega_g',
-            'current_foundation': 'Coderived categories (Positselski)',
-            'bl_upgrade': (
-                'BL curved Quillen equivalence provides model-categorical '
-                'foundation for the coderived bar-cobar passage, potentially '
-                'replacing the ad hoc coderived construction.'
+        "free_tensor": {
+            "presentation": FREE_TENSOR_PRESENTATION,
+            "theorem_a": universal_resolution_certificate(),
+            "theorem_b": quadratic_comparison_certificate(
+                FREE_TENSOR_PRESENTATION
             ),
         },
-        'unification_possible': True,
-        'unification_description': (
-            'BL\'s curved Quillen equivalence could unify the genus-0 '
-            '(Vallette) and genus >= 1 (coderived) frameworks into a '
-            'single model structure on curved factorization coalgebras.'
-        ),
-        'status_in_monograph': (
-            'The monograph references BL24 (monoidal model structures) '
-            'but not the 2304.08409 curved Quillen equivalence paper. '
-            'Adding the latter would strengthen the genus >= 1 '
-            'foundation.'
-        ),
-    }
-
-
-# ========================================================================
-# 7. EXPLICIT BAR COMPLEX DIMENSION TABLES
-# ========================================================================
-
-def bar_complex_dimensions(family: ChiralFamilyData,
-                           max_weight: int = 8,
-                           max_bar_deg: int = 6) -> Dict:
-    """Compute dimensions of the bar complex barB^n(A) at each weight.
-
-    barB^n(A) = (s^{-1} bar{A})^{tensor n} at bar degree n.
-    Weight of s^{-1}a_1 tensor ... tensor s^{-1}a_n = sum h_i.
-
-    Returns a dict mapping (bar_degree, weight) -> dimension.
-    """
-    gen_weights = [h for (_, h) in family.generators]
-    if not gen_weights:
-        return {'dims': {}, 'family': family.name}
-
-    dims = {}
-    for n in range(1, max_bar_deg + 1):
-        for w in range(max_weight + 1):
-            d = _count_weight_partitions(w, n, gen_weights)
-            if d > 0:
-                dims[(n, w)] = d
-
-    # Verify conilpotency: for each weight, the maximum bar degree is finite
-    max_bar_by_weight = {}
-    for (n, w), d in dims.items():
-        if d > 0:
-            max_bar_by_weight[w] = max(max_bar_by_weight.get(w, 0), n)
-
-    return {
-        'family': family.name,
-        'dims': dims,
-        'max_bar_deg_by_weight': max_bar_by_weight,
-        'conilpotent': True,  # always true for finite-dim weight spaces
-    }
-
-
-# ========================================================================
-# 8. KOSZUL LOCUS DIAGNOSTICS
-# ========================================================================
-
-def koszul_locus_diagnostic(family: ChiralFamilyData) -> Dict:
-    """Diagnose whether a family lies on the Koszul locus.
-
-    On the Koszul locus:
-    - H*(barB(A)) is concentrated in bar degree 1
-    - The PBW spectral sequence collapses at E_2
-    - Bar-cobar inversion is an unconditional quasi-isomorphism
-
-    Off the Koszul locus:
-    - barB(A) may have cohomology in higher bar degrees
-    - Higher A_infinity operations m_n (n >= 3) are nonzero
-    - Bar-cobar inversion requires the full coderived/contraderived
-      machinery or is not a quasi-isomorphism at all
-    """
-    on_koszul = family.is_koszul
-    reasons = []
-
-    if family.is_quadratic:
-        reasons.append('Quadratic: PBW collapse automatic for quadratic algebras')
-    elif family.is_koszul:
-        reasons.append(
-            'Non-quadratic but Koszul: PBW collapse proved via '
-            'Feigin-Frenkel free generation / weight filtration'
-        )
-    else:
-        reasons.append(
-            'NOT Koszul: simple quotient or non-standard structure; '
-            'bar spectral sequence carries higher differentials'
-        )
-
-    return {
-        'family': family.name,
-        'on_koszul_locus': on_koszul,
-        'is_quadratic': family.is_quadratic,
-        'bar_cobar_qi': on_koszul,
-        'bar_cohomology_concentrated': on_koszul,
-        'reasons': reasons,
-        'heuts_relevant': not on_koszul,
-        'heuts_note': (
-            'Off the Koszul locus, Heuts\' nilcompleteness condition '
-            'becomes the binding constraint: bar-cobar inversion requires '
-            'nilcompleteness of A (which is automatic in the chiral setting).'
-        ) if not on_koszul else (
-            'On the Koszul locus, Heuts\' theorem is redundant: '
-            'the Koszul spectral sequence collapse gives a much '
-            'stronger result than mere nilcompleteness.'
-        ),
-    }
-
-
-# ========================================================================
-# 9. CROSS-FAMILY CONSISTENCY
-# ========================================================================
-
-def cross_family_consistency_check() -> Dict:
-    """Verify cross-family consistency of nilcompleteness/conilcompleteness.
-
-    Key consistency checks:
-    (CC1) Additivity: if A, B are nilcomplete, so is A tensor B
-    (CC2) Koszul dual: if A is nilcomplete, barB(A) is conilcomplete
-    (CC3) DS reduction: if A is nilcomplete, DS_f(A) is nilcomplete
-    (CC4) Complementarity: if A is nilcomplete, A^! is nilcomplete
-    """
-    results = {}
-    for family in STANDARD_FAMILIES:
-        nc = verify_nilcompleteness(family)
-        cn = verify_conilpotency_weight_grading(family)
-        qi = verify_bar_cobar_qi_scope(family)
-        results[family.name] = {
-            'nilcomplete': nc['nilcomplete'],
-            'conilpotent': cn['conilpotent'],
-            'bar_cobar_qi': qi['bar_cobar_qi_all_genera'],
-            'within_heuts': qi['within_heuts_scope'],
-        }
-
-    # Check all families agree
-    all_nilcomplete = all(r['nilcomplete'] for r in results.values())
-    all_conilpotent = all(r['conilpotent'] for r in results.values())
-    all_within_heuts = all(r['within_heuts'] for r in results.values())
-
-    return {
-        'families': results,
-        'all_nilcomplete': all_nilcomplete,
-        'all_conilpotent': all_conilpotent,
-        'all_within_heuts': all_within_heuts,
-        'conclusion': (
-            'ALL standard chiral algebra families are nilcomplete and '
-            'their bar coalgebras are conilpotent. All lie within Heuts\' '
-            'equivalence scope. No family requires adjustments to the '
-            'monograph\'s foundations.'
-        ),
-    }
-
-
-# ========================================================================
-# 10. PRO-NILPOTENCE OF CHIRAL TENSOR ON RAN(X)
-# ========================================================================
-
-def verify_chiral_pronilpotence() -> Dict:
-    """Verify the pro-nilpotence of the chiral tensor structure.
-
-    The chiral tensor structure on DMod(Ran(X)) is defined by the
-    *-pushforward along the addition map Ran(X) x Ran(X) -> Ran(X).
-
-    PRO-NILPOTENCE means: for any M in DMod(Ran(X)), the object
-    M^{chiral tensor n} is supported on Ran_{>=n}(X) (the locus
-    of finite subsets of X with >= n points).  The colimit
-    colim_n Ran_{>=n}(X) = empty, so the system is pro-nilpotent.
-
-    Three verification paths:
-
-    PATH 1 (Stratification):
-        Ran(X) = union_{n>=1} Ran_n(X) where Ran_n(X) = X^n / S_n
-        is the space of n-element subsets.  The chiral tensor product
-        M *_{ch} N is supported on Ran_{>= |M| + |N|}.
-
-    PATH 2 (Configuration space):
-        On Conf_n(X) (the open part), the n-fold chiral tensor of M
-        restricts to M^{boxtimes n} on X^n minus diagonals.  The
-        Ran-space pushforward adds the diagonal contributions (residues),
-        but these cannot decrease the support.
-
-    PATH 3 (D-module vanishing):
-        For D-modules on Ran(X), the codimension of Ran_{>=n}(X)
-        in Ran(X) grows without bound.  By the Artin vanishing theorem
-        for D-modules, cohomology in low degrees vanishes on high-
-        codimension strata.
-    """
-    return {
-        'pro_nilpotent': True,
-        'path1_stratification': True,
-        'path1_detail': (
-            'Ran_{>=n}(X) has the property that the chiral tensor of n '
-            'objects is supported on Ran_{>=n}(X); the intersection '
-            'cap_n Ran_{>=n}(X) = empty.'
-        ),
-        'path2_configuration': True,
-        'path2_detail': (
-            'On configuration space Conf_n(X), the n-fold chiral product '
-            'is M^{boxtimes n}; Ran pushforward preserves support bounds.'
-        ),
-        'path3_vanishing': True,
-        'path3_detail': (
-            'D-module Artin vanishing on high-codimension strata of Ran(X).'
-        ),
-        'implication_for_heuts': (
-            'Pro-nilpotence of chiral tensor => all chiral algebras are '
-            'nilcomplete => Heuts\' theorem gives equivalence on the '
-            'FULL categories of chiral algebras and coalgebras, not just '
-            'the nilcomplete/conilcomplete subcategories.'
-        ),
-    }
-
-
-# ========================================================================
-# 11. QUILLEN EQUIVALENCE SCOPE
-# ========================================================================
-
-def quillen_equivalence_scope(family: ChiralFamilyData) -> Dict:
-    """Determine which Quillen equivalence theorem applies.
-
-    Three levels of Quillen equivalence:
-
-    LEVEL 1 (Vallette, Val16): Uncurved (genus 0).
-        B_kappa: dg-Ch-alg <-> conil-dg-C^!_ch-coalg : Omega_kappa
-        is a Quillen equivalence.  Model structure on CONILPOTENT coalgebras.
-        This is thm:quillen-equivalence-chiral in the monograph.
-
-    LEVEL 2 (Booth-Lazarev, 2304.08409): Curved (genus >= 1).
-        Extended bar-cobar on ALL curved coalgebras (not just conilpotent).
-        Quillen equivalence between curved algebras and curved coalgebras.
-        This would upgrade the coderived passage at genus >= 1.
-
-    LEVEL 3 (Heuts, 2408.06173): infinity-categorical.
-        Koszul duality as equivalence Alg^nilc_O <-> CoAlg^conilc_{BO}
-        in any stable presentably symmetric monoidal infinity-category.
-        Applies to DMod^fact(Ran(X)) directly.
-    """
-    genus_0_applies = family.is_koszul
-    genus_ge_1_applies = family.is_koszul  # with central curvature
-
-    return {
-        'family': family.name,
-        'level_1_vallette': {
-            'applies': genus_0_applies,
-            'scope': 'genus 0, conilpotent coalgebras',
-            'ref': 'Val16, Theorems 2.1, 2.9',
-        },
-        'level_2_booth_lazarev': {
-            'applies': genus_ge_1_applies,
-            'scope': 'all genera, curved coalgebras',
-            'ref': 'Booth-Lazarev, 2304.08409',
-        },
-        'level_3_heuts': {
-            'applies': True,  # always in chiral setting
-            'scope': 'infinity-categorical, all chiral algebras',
-            'ref': 'Heuts, 2408.06173',
-        },
-        'monograph_current': 'Level 1 (Vallette) + coderived (Positselski)',
-        'monograph_upgrade': (
-            'Level 2 (Booth-Lazarev) would unify genus 0 and genus >= 1; '
-            'Level 3 (Heuts) confirms scope is correct.'
-        ),
-    }
-
-
-# ========================================================================
-# 12. MASTER VERIFICATION
-# ========================================================================
-
-def verify_heuts_fg_scope_all() -> Dict:
-    """Run all Heuts-FG scope verifications across all families.
-
-    Returns a comprehensive report on whether the monograph's
-    foundations need adjustment in light of Heuts (2408.06173)
-    and Booth-Lazarev (2304.08409).
-    """
-    family_reports = {}
-    for family in ALL_FAMILIES:
-        family_reports[family.name] = {
-            'conilpotency_structural': verify_conilpotency_weight_grading(family),
-            'conilpotency_explicit': verify_conilpotency_explicit(family),
-            'nilcompleteness': verify_nilcompleteness(family),
-            'bar_cobar_scope': verify_bar_cobar_qi_scope(family),
-            'koszul_diagnostic': koszul_locus_diagnostic(family),
-            'quillen_scope': quillen_equivalence_scope(family),
-            'bl_upgrade': analyze_booth_lazarev_upgrade(family),
-        }
-
-    heuts_boundary = analyze_heuts_scope_boundary()
-    chiral_pronilpotence = verify_chiral_pronilpotence()
-    cross_family = cross_family_consistency_check()
-
-    return {
-        'family_reports': family_reports,
-        'heuts_boundary': heuts_boundary,
-        'chiral_pronilpotence': chiral_pronilpotence,
-        'cross_family': cross_family,
-        'verdict': {
-            'monograph_safe': True,
-            'reason_1': (
-                'R1: Chiral tensor on DMod(Ran(X)) is pro-nilpotent, '
-                'making all chiral algebras nilcomplete automatically.'
-            ),
-            'reason_2': (
-                'R2: All standard families have weight grading with '
-                'finite-dim weight spaces, giving conilpotent bar coalgebras.'
-            ),
-            'reason_3': (
-                'R3: The monograph restricts to the Koszul locus for '
-                'Theorem B, where spectral sequence collapse gives '
-                'quasi-isomorphism without needing Heuts\' theorem.'
-            ),
-            'adjustments_needed': (
-                'None mandatory. Two optional improvements: '
-                '(1) Add Heuts 2408.06173 reference in the literature section '
-                'confirming that the chiral setting is within Heuts\' safe zone. '
-                '(2) Add Booth-Lazarev 2304.08409 (curved Quillen equivalence) '
-                'to upgrade the genus >= 1 model-categorical foundation.'
+        "dual_numbers": {
+            "presentation": DUAL_NUMBERS_PRESENTATION,
+            "theorem_a": universal_resolution_certificate(),
+            "theorem_b": quadratic_comparison_certificate(
+                DUAL_NUMBERS_PRESENTATION
             ),
         },
+        "truncated_cubic": {
+            "presentation": TRUNCATED_CUBIC_PRESENTATION,
+            "theorem_a": universal_resolution_certificate(),
+            "theorem_b": quadratic_comparison_certificate(
+                TRUNCATED_CUBIC_PRESENTATION
+            ),
+        },
+        "square_zero_bar_dimensions_d2": tuple(
+            bar_word_dimension(2, length) for length in range(6)
+        ),
     }
+
+
+def verify_scope_engine() -> Dict[str, object]:
+    """Run deterministic consistency checks and return a theorem ledger."""
+
+    maps = comparison_table()
+    typed_maps = {certificate.typed_map for certificate in maps.values()}
+    assert len(typed_maps) == len(maps)
+
+    theorem_a = maps["universal_algebra_resolution"]
+    theorem_b = maps["quadratic_comparison"]
+    assert theorem_a.map_name == "epsilon_A"
+    assert theorem_b.map_name == "q_A"
+    assert theorem_a.status == "proved-by-FG"
+    assert theorem_b.status == "proved-koszul"
+
+    for length in range(1, 9):
+        assert reduced_deconcatenation_summands(length, length) == 0
+        if length > 1:
+            assert reduced_deconcatenation_summands(length, length - 1) == 1
+
+    heuts_general = heuts_completion_certificate(
+        ORDINARY_CHAIN_AMBIENT,
+        algebra_nilcomplete=None,
+        coalgebra_conilcomplete=None,
+    )
+    assert heuts_general["pair_in_equivalence"] is False
+
+    return {
+        "status": "verified",
+        "maps": maps,
+        "worked_cases": worked_case_packet(),
+        "heuts_general": heuts_general,
+        "booth_lazarev": booth_lazarev_transfer_certificate(),
+        "scope_statement": (
+            "Theorem A reconstructs the full bar object universally in the "
+            "pro-nilpotent Ran ambient; Theorem B recognizes when the "
+            "quadratic subcoalgebra already computes that full bar object."
+        ),
+    }
+
+
+if __name__ == "__main__":
+    report = verify_scope_engine()
+    print(report["scope_statement"])
+    for key, certificate in report["maps"].items():
+        print(f"{key}: {certificate.typed_map} [{certificate.status}]")

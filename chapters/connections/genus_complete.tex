@@ -34,6 +34,154 @@ specialization $C=E_\tau$ is the genus-$1$ shadow used in
 \S\ref{rem:genus-complete-character} and below.
 \end{remark}
 
+\begin{definition}[Formal genus class and Hodge normalisation;
+\ClaimStatusDefinitional]
+\label{def:formal-genus-class-hodge-normalization}
+\index{genus class!formal}
+\index{Hodge class!normalisation}
+\index{Faber--Pandharipande coefficient!normalisation}
+Let $\pi\colon \mathcal C_{g,n}\to\overline{\cM}_{g,n}$ be the
+universal stable curve and let
+$\mathbb E_g:=\pi_*\omega_\pi$ be the rank-$g$ Hodge bundle.  Write
+\[
+\lambda_i:=c_i(\mathbb E_g),
+\qquad
+\lambda_g:=c_g(\mathbb E_g).
+\]
+The symbol $\omega_g$ denotes the Chern--Weil Hodge-curvature package of
+$\mathbb E_g$, normalised so that its scalar top component is
+$\lambda_g$; at genus~$1$ this is the usual curvature representative of
+$c_1(\det\mathbb E_1)$.
+
+The \emph{formal genus class} of a modular Koszul chiral algebra~$\cA$
+is
+\[
+\mathcal F_g(\cA)
+:=\operatorname{CW}_{\cA,g}(\Theta_\cA)
+\in R^\bullet(\overline{\cM}_{g,0})\widehat\otimes
+\operatorname{End}_{\mathrm{ch}}(\cA),
+\]
+the genus-$g$ component of the modular Chern--Weil transform of the
+ambient Maurer--Cartan element.  The Faber--Pandharipande scalar trace is
+the numerical functional
+\[
+\operatorname{tr}^{\mathrm{FP}}_g(\alpha)
+:=\int_{\overline{\cM}_{g,1}}\psi_1^{2g-2}\,\alpha,
+\qquad
+\lambda_g^{\mathrm{FP}}
+:=\operatorname{tr}^{\mathrm{FP}}_g(\lambda_g)
+=
+\frac{2^{2g-1}-1}{2^{2g-1}}\frac{|B_{2g}|}{(2g)!}.
+\]
+Thus $F_g(\cA)$ in the algebraic part of this chapter denotes a formal
+class or its specified numerical trace.  It is called an analytic free
+energy only after an HS-sewing or trace-class hypothesis supplies a
+convergent partition function
+\textup{(}Definition~\ref{def:hs-sewing} and
+Definition~\ref{def:shadow-partition-function}\textup{)}.
+\end{definition}
+
+\begin{definition}[Diagonal trace and ordered curvature;
+\ClaimStatusDefinitional]
+\label{def:diagonal-trace-ordered-curvature}
+\index{diagonal trace}
+\index{ordered curvature}
+\index{scalar projection}
+The map
+\[
+\operatorname{tr}_{\mathrm{diag}}\colon
+\operatorname{End}_{\mathrm{ch}}(\cA)\widehat\otimes
+R^\bullet(\overline{\cM}_{g,0})
+\longrightarrow
+R^\bullet(\overline{\cM}_{g,0})
+\]
+is the cyclic trace after projection to the diagonal OPE channel: every
+internal edge of the stable graph carries the same channel label.  It is
+normalised by
+\[
+\operatorname{tr}_{\mathrm{diag}}\bigl(r_\cA(z)\bigr)=\kappa(\cA),
+\]
+where $r_\cA(z)$ is the ordered two-point residue kernel of
+Construction~\ref{constr:r-matrix-monodromy-vol1} and
+equation~\ref{eq:ordered-classical-r-kernel-A}.  The operator
+$d_{\mathrm{fib}}^{\mathrm{ord}}$ is the ordered genus-$g$ fibrewise bar
+differential before passing to symmetric coinvariants.
+\end{definition}
+
+\begin{proposition}[Ordered curvature and scalar Hodge projection;
+\ClaimStatusConditional]
+\label{prop:ordered-curvature-scalar-hodge-projection}
+\index{ordered curvature!scalar projection}
+\index{Hodge class!from ordered curvature}
+\textbf{Type signature.} (Open quadrant; ordered $E_1$ chiral bar
+presentation; level~$3$ for the endomorphism-valued curvature and
+level~$5$ after trace + clutching; hypothesis package: finite-window
+ordered bar coalgebra, the trace + clutching package, and the signed
+log-FM residue-pushforward package.)
+In each finite genus--bar window,
+\begin{equation}\label{eq:ordered-curvature-r-omega}
+\bigl(d_{\mathrm{fib}}^{\mathrm{ord}}\bigr)^2
+=
+r_\cA(z)\cdot\omega_g
+\end{equation}
+as an equality of endomorphism-valued curvature classes on
+$\overline{\cM}_{g,\bullet}$.  It is neither a scalar identity nor an
+unrenormalised equality of raw chain-level operators.  Applying the
+diagonal trace and then the top Hodge
+Chern--Weil projection gives
+\begin{equation}\label{eq:ordered-curvature-diag-hodge}
+\operatorname{tr}_{\mathrm{diag}}
+\bigl((d_{\mathrm{fib}}^{\mathrm{ord}})^2\bigr)
+=
+\kappa(\cA)\lambda_g
+\quad\text{in }R^\bullet(\overline{\cM}_{g,\bullet}).
+\end{equation}
+After the Faber--Pandharipande trace of
+Definition~\ref{def:formal-genus-class-hodge-normalization}, this becomes
+$F_g^{\mathrm{diag}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$.
+\end{proposition}
+
+\begin{proof}
+The local collision residue of the ordered bar differential is the
+kernel $r_\cA(z)$ by
+equation~\ref{eq:ordered-classical-r-kernel-A}.  The only genus-$g$
+curvature source not present on a fixed smooth configuration fibre is
+the Hodge curvature of the universal stable curve; with the
+normalisation of
+Definition~\ref{def:formal-genus-class-hodge-normalization} this is
+$\omega_g$.  Their product is therefore the endomorphism-valued
+curvature class~\eqref{eq:ordered-curvature-r-omega}.  The diagonal
+trace kills non-diagonal OPE channels and sends the ordered kernel to
+$\kappa(\cA)$ by
+Definition~\ref{def:diagonal-trace-ordered-curvature}, giving
+\eqref{eq:ordered-curvature-diag-hodge}; applying
+$\operatorname{tr}^{\mathrm{FP}}_g$ gives the displayed numerical
+coefficient.
+\end{proof}
+
+\begin{remark}[Genus-one anomaly and KZB comparison]
+\label{rem:genus-one-anomaly-kzb-comparison}
+\index{KZB connection!genus-one anomaly comparison}
+\index{Eisenstein series!$E_2$ anomaly}
+\index{holomorphic anomaly!genus one}
+At genus~$1$ the formal scalar class has a holomorphic
+quasi-modular representative: the logarithmic derivative of the
+Dedekind $\eta$-factor is proportional to $E_2(\tau)$.  Modular descent
+replaces it by the almost-holomorphic completion
+\[
+\widehat E_2(\tau)=E_2(\tau)-\frac{3}{\pi\,\operatorname{Im}\tau}.
+\]
+The anomaly term is the difference
+$\widehat E_2-E_2$, and it has no holomorphic preimage on the ordered
+$E_1$ side; this is precisely the no-section statement of
+Proposition~\ref{prop:e1-nonsplitting-genus1}.  The genus-one KZB
+connection supplies the analytic local-system comparison: its
+$d\tau$ component has Hodge shadow $\omega_1$ as in
+equation~\ref{eq:v1-kzb-conn}.  Thus KZB records the same genus-one
+curvature channel, but the cohomological class, the quasi-modular
+representative, and the analytic connection are different objects.
+\end{remark}
+
 The genus tower is governed by the modular Chern--Weil transform:
 Maurer--Cartan data in the modular convolution algebra
 $\mathfrak{g}_\cA^{\mathrm{mod}}$ are sent to tautological classes on
@@ -42,9 +190,9 @@ $\overline{\mathcal{M}}_{g,n}$. Its diagonal scalar trace is
 F_g^{\mathrm{diag}}(\cA)
 =\kappa(\cA)\lambda_g^{\mathrm{FP}}.
 \]
-This is the whole free energy on the uniform-weight scalar lane and
-at genus~$1$ for every modular Koszul algebra. Off that lane, the
-all-weight free energy is
+This is the whole formal genus class on the uniform-weight scalar lane
+and at genus~$1$ for every modular Koszul algebra. Off that lane, the
+all-weight formal genus class is
 \[
 F_g(\cA)=F_g^{\mathrm{diag}}(\cA)
 +\delta F_g^{\mathrm{cross}}(\cA),
@@ -69,12 +217,14 @@ exactly as the convolution algebra on the Steinberg variety
 presents the Hecke algebra through the geometry of the
 flag variety.
 
-The result is a chain-level modular functor
+The formal stable-curve skeleton is the modular-operad structure of
+Getzler--Kapranov.  Its lift to a chain-level boundary-residue modular
+functor is conditional on the signed log-FM residue-pushforward package
 (Theorem~\ref{thm:chain-modular-functor}): to each surface
-$\Sigma_{g,n}$ a cochain complex, to each degeneration a chain
-map, to each consistency relation a chain homotopy. Passing to
-cohomology gives the classical cohomological modular-functor
-package; for $\widehat{\fg}_k$ at integrable level,
+$\Sigma_{g,n}$ a cochain complex, to each degeneration a chain map, and
+to each consistency relation a chain homotopy. When this package is
+present, passing to cohomology gives the classical cohomological
+modular-functor package; for $\widehat{\fg}_k$ at integrable level,
 $H^0$ is the space of conformal blocks, and the induced flat
 connection has the KZ/Hitchin package as its integrable affine
 comparison surface
@@ -206,15 +356,16 @@ sewing data satisfy the FBZ trace + clutching hypotheses
 \textup{(}see~\cite{FBZ04}\textup{)} extends to genus~$1$ as a projective
 factorization algebra on $\overline{\cM}_{1,n}$, twisted by a power of
 the Hodge line. The obstruction to a strict untwisted extension is
-the genus-$1$ scalar curvature class
+the pointed genus-$1$ trace class
 \[
-\mathrm{Obs}_1(\mathcal{A}_0)
+\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathcal{A}_0)
 =\kappa(\mathcal{A}_0)\lambda_1
 \in H^2(\overline{\mathcal{M}}_{1,n},\mathcal{L}_{\mathcal{A}}).
 \]
 For the Virasoro family, $\kappa(\mathrm{Vir}_c)=c/2$, hence
-$\mathrm{Obs}_1(\mathrm{Vir}_c)=(c/2)\lambda_1$; it vanishes exactly
-at $c=0$. The integrated Virasoro obstruction is
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathrm{Vir}_c)
+=(c/2)\lambda_1$; its zero locus is $c=0$. The integrated Virasoro
+trace is
 $(c/2)\int_{\overline{\mathcal{M}}_{1,1}}\lambda_1=c/48$ on the
 stack, or $c/24$ on the coarse moduli space. When
 $c\in24\mathbb Z$, the character phase $e^{-2\pi i c/24}$ is
@@ -354,14 +505,18 @@ The bar complex correlation functions (Theorem~\ref{thm:mk-general-structure-vol
 \subsection{The universal genus tower}\label{subsec:universal-tower}
 \index{genus tower}
 
-\begin{theorem}[Master tower of boundary residues; \ClaimStatusProvedHere]\label{thm:master-tower}
+\begin{theorem}[Master tower of boundary residues; \ClaimStatusConditional]\label{thm:master-tower}
 \textbf{Type signature.} (Open quadrant; modular-operad/Feynman-transform
 presentation on $\{\overline{\cM}_{g,n}\}$; level~$2$ for the bar
 boundary residues, level~$3$ for the assembled Feynman-transform bulk;
 hypothesis package: chiral algebra $\cA$ with Koszul/finite-type or
 weight-completed bar coalgebra at every fixed window $(G,R)$;
 Getzler--Kapranov modular operad structure on
-$\{\overline{\cM}_{g,n}\}_{g,n}$.)
+$\{\overline{\cM}_{g,n}\}_{g,n}$, plus the signed log-FM
+residue-pushforward package of
+Definition~\ref{def:signed-logfm-residue-pushforward-package} whenever
+the displayed residues are read as chain-level maps on the bar
+coefficients.)
 The genus tower is a boundary-residue tower, not a chain of
 forgetful maps $\bar B^{(g+1)}\to\bar B^{(g)}$.  For each stable
 pair $(g,n)$ the boundary divisors of $\overline{\mathcal{M}}_{g,n}$
@@ -410,6 +565,14 @@ The levels $g=0,1,\geq 2$ correspond to tree-level (classical), one-loop, and hi
 \end{theorem}
 
 \begin{proof}
+There are two layers.  The stable-curve modular-operad skeleton is
+proved by Getzler--Kapranov: clutching and self-gluing maps on
+$\{\overline{\mathcal M}_{g,n}\}$ have boundary-of-boundary
+codimension-two cancellations.  The stronger assertion that the
+residue symbols above are determinant-line-correct chain maps on the
+bar coefficient system is conditional on the signed log-FM
+residue-pushforward package.
+
 The modular operad structure on
 $\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$ (Getzler--Kapranov)
 provides clutching and self-gluing maps along boundary divisors.
@@ -417,13 +580,17 @@ The Feynman transform identification
 $\bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq
 \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A})$
 (Theorem~\ref{thm:prism-higher-genus}(ii)) assembles the
-genus-$g$ bar complexes into a modular coalgebra. The maps
+genus-$g$ bar complexes into a formal modular coalgebra. The maps
 $\rho_{\mathrm{irr}}$ and $\rho_{g_1,I}$ are the residue maps to
-the irreducible and separating boundary strata.  They are compatible
-with the bar differential because the Feynman transform differential
-is the signed boundary operator of the modular operad; the two
-codimension-$2$ presentations of a boundary stratum cancel with
-opposite signs.
+the irreducible and separating boundary strata.  On the formal
+modular-operad skeleton they are compatible with the Feynman-transform
+differential because that differential is the signed boundary operator
+of the modular operad; the two codimension-$2$ presentations of a
+boundary stratum cancel with opposite signs.  On the log-FM bar
+coefficient system this compatibility additionally requires the global
+Gysin residues, proper pushforwards, stabiliser normalisations, and
+homotopy-coherent comparison maps of
+Definition~\ref{def:signed-logfm-residue-pushforward-package}.
 The finite-window formula above is stable under these maps: residues
 do not increase genus and the bar differential raises or preserves the
 bar-length filtration by a bounded amount on each window. Taking the
@@ -431,13 +598,81 @@ inverse limit gives the completed genus tower and its continuous
 differential.
 \end{proof}
 
+\begin{proposition}[Stable graph weights and finite-window passage;
+\ClaimStatusConditional]
+\label{prop:stable-graph-finite-window-passage}
+\index{stable graph weights}
+\index{cross-channel correction!stable graph sum}
+\index{BV operator!nonseparating self-gluing}
+\textbf{Type signature.} (Open quadrant; modular-operad/Feynman-transform
+presentation; level~$3$ for graph weights and level~$5$ after scalar
+trace; hypothesis package: finite channel window, signed log-FM
+residue-pushforward package, and the Mittag--Leffler condition of
+Lemma~\ref{lem:genus-window-ml-passage}.)
+Fix a finite genus--bar--channel window.  For a stable graph
+$\Gamma\in\mathcal G_{g,0}$ and an OPE-channel labelling
+$\sigma\colon E(\Gamma)\to\{1,\ldots,r\}$, the graph weight is
+\begin{equation}\label{eq:stable-graph-channel-weight}
+W_{\Gamma,\sigma}(\cA)
+:=
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\prod_{e\in E(\Gamma)}\eta^{\sigma(e)\sigma(e)}
+\prod_{v\in V(\Gamma)}
+V_{g(v),n(v)}\bigl(\sigma|_{H(v)}\bigr),
+\end{equation}
+with inverse Zamolodchikov edge metric and vertex OPE amplitude as in
+Construction~\ref{constr:cross-channel-graph-sum}.  The mixed-edge
+correction is the finite stable-graph sum
+\begin{equation}\label{eq:cross-channel-mixed-edge-sum}
+\delta F_g^{\mathrm{cross}}(\cA)
+=
+\sum_{\Gamma\in\mathcal G_{g,0}}
+\sum_{\substack{\sigma:E(\Gamma)\to\{1,\ldots,r\}\\
+\sigma\ \mathrm{mixed}}}
+W_{\Gamma,\sigma}(\cA),
+\end{equation}
+where ``mixed'' means that at least two internal edges carry different
+OPE-channel labels.  Consequently
+\[
+\delta F_1^{\mathrm{cross}}=0,
+\]
+because the genus-$1$ boundary graph has at most one internal edge,
+whereas mixed-edge graphs exist at every genus $g\ge2$ for
+multi-channel algebras: already the genus-$2$ sunset and theta graphs
+carry two or three internal edges.
+
+The finite-window graph sum is finite.  Passing from finite windows to
+the completed all-weight tower is the strict
+Mittag--Leffler passage of Lemma~\ref{lem:genus-window-ml-passage}; no
+analytic convergence of a partition function is used in this algebraic
+step.
+
+The bar object is an algebra over the Feynman transform of the
+commutative modular operad.  Its genus-$0$ restriction is cyclic; the
+nonseparating self-gluing makes the full object wheeled/modular.  The
+genus-raising operator
+\[
+\hbar\Delta:=\hbar\sum_{\mathrm{nonsep}}\Delta_{\mathrm{nonsep}}
+\]
+is the BV self-gluing component of the modular differential.  The
+identities $\Delta^2=0$ and $[d_{\mathrm{sew}},\Delta]=0$ are the two
+nonseparating boundary-of-boundary cancellations in the
+Getzler--Kapranov modular operad, transported through the signed log-FM
+package.  A loop edge is oriented by the determinant line of its two
+half-edges; reversing the two half-edges changes both the
+edge-orientation line and the odd cooperadic suspension, so the scalar
+nonseparating loop has sign $+1$ after diagonal trace.  Before scalar
+trace the remaining sign is the ordinary Koszul sign of the cyclic
+pairing.
+\end{proposition}
+
 \subsection{Chain-level modular functor}\label{subsec:chain-modular-functor}
 \index{modular functor!chain-level}
 
 The diagonal scalar genus tower
 $F_g^{\mathrm{diag}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$
 is the first Chern class of a chain-level modular object.
-For multi-weight algebras the full free energy also contains
+For multi-weight algebras the full formal genus class also contains
 $\delta F_g^{\mathrm{cross}}$ (Theorem~\ref{thm:multi-weight-genus-expansion});
 the chain-level object records the data before this scalar projection.
 The bar complex refines the classical modular-functor
@@ -468,13 +703,14 @@ The hierarchy is:
 \end{itemize}
 
 \begin{theorem}[Chain-level boundary-residue modular functor from bar complex;
-\ClaimStatusProvedHere]\label{thm:chain-modular-functor}
+\ClaimStatusConditional]\label{thm:chain-modular-functor}
 \index{modular functor!from bar complex}
 \textbf{Type signature.} (Open quadrant; bar/Feynman-transform
 presentation; level~$3$ for the chain assignment, level~$5$ for the
 modular-functor axiomatic; hypothesis package: Koszul chiral algebra
 $\cA$ with finite-type bar coalgebra, plus the trace + clutching
-package on $\{\overline{\cM}_{g,n}\}$. The functor's mapping-class
+package on $\{\overline{\cM}_{g,n}\}$ and the signed log-FM
+residue-pushforward package for chain-level residue maps. The functor's mapping-class
 $S$ and $T$ data are the modular reconstruction of $\cA$ from its
 open-category trace, not an intrinsic closed-algebra modularity.)
 For a Koszul chiral algebra $\mathcal{A}$, the finite
@@ -533,9 +769,13 @@ the corresponding modular-coalgebra maps:
  $D_\gamma \cong \overline{\mathcal{M}}_{g-1,n+2}$ give the
  self-sewing map~\eqref{eq:self-sewing-map}.
 \end{itemize}
-That these are chain maps (commute with the bar differential)
-follows from the compatibility of the Feynman transform differential
-with the modular operad structure \cite[Theorem~5.4]{GeK98}.
+At the formal stable-curve skeleton, compatibility with the
+Feynman-transform differential follows from the modular operad
+structure \cite[Theorem~5.4]{GeK98}.  At the level of actual chiral
+bar coefficient chains, the same sentence is true only after the
+signed log-FM residue-pushforward package supplies the Gysin residue
+maps, determinant-line signs, proper pushforwards, and
+automorphism-group normalisations.
 
 Part~(iv): The consistency relations (associativity of
 iterated factorization, commutativity of factorization with
@@ -552,7 +792,10 @@ relating different orderings of degeneration. The homotopy
 coherence data is encoded in the $A_\infty$ relations
 $\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t} \circ
 (\mathrm{id}^{\otimes r} \otimes m_s \otimes
-\mathrm{id}^{\otimes t}) = 0$.
+\mathrm{id}^{\otimes t}) = 0$.  The comparison between the two
+global residue-pushforward targets is part of the same signed log-FM
+package; without it this theorem is only the formal modular-operad
+skeleton, not a chain-level modular functor.
 \end{proof}
 
 \begin{remark}[Comparison with classical modular functors]
@@ -562,22 +805,26 @@ Passing to $H^*(V_{g,n})$ gives the classical cohomological modular-functor pack
 \end{remark}
 
 \begin{corollary}[Verdier-dual modular functors;
-\ClaimStatusProvedHere]\label{cor:dual-modular-functor}
+\ClaimStatusConditional]\label{cor:dual-modular-functor}
 \index{modular functor!Koszul dual}
 \textbf{Type signature.} (Open quadrant; Verdier-Koszul reflection at
 level~$2$, with the chain-level modular functor at level~$3$/$5$;
 hypothesis package: finite-type Koszul dual coalgebra $\cA^i$;
 genuswise Poincar\'e--Koszul pairing perfect; Verdier duality on
-$\overline{\cM}_{g,n}$. On the \emph{KSDual} sublocus
+$\overline{\cM}_{g,n}$; signed log-FM residue-pushforward packages for
+the $\cA$ and $\cA^!$ chain-level boundary-residue functors. On the
+\emph{KSDual} sublocus
 \textup{(}$\Z/2$-fixed under $\cA\mapsto\cA^!$\textup{)} the dualised
 functor agrees with the original; off that sublocus the equality is
 the Verdier-Koszul reflection with comparison map.)
 Koszul dual coalgebra and, under finite-type dualizability,
 $\mathcal{A}^!:=(\mathcal{A}^i)^\vee$ the Koszul dual algebra. Assume
 the genuswise Poincar\'e--Koszul pairing of
-Theorem~\ref{thm:poincare-extended} is perfect. The chain-level
-modular functor attached to $\mathcal{A}^!$ is the Verdier dual of the
-bar functor attached to $\mathcal{A}$:
+Theorem~\ref{thm:poincare-extended} is perfect and that the conditional
+chain-level functors of Theorem~\ref{thm:chain-modular-functor} are
+available for both sides. The chain-level modular functor attached to
+$\mathcal{A}^!$ is the Verdier dual of the bar functor attached to
+$\mathcal{A}$:
 \begin{equation}\label{eq:dual-mf}
 V_{g,n}(\mathcal{A}^!) \simeq
 \mathbb D_{\overline{\mathcal{M}}_{g,n}}
@@ -593,9 +840,11 @@ $\Delta_{\mathrm{sep}}(\mathcal{A}^!) = \Delta_{\mathrm{sep}}
 
 \begin{proof}
 Theorem~\ref{thm:poincare-extended} gives the Verdier duality
-identification.  Compatibility with factorization and self-sewing
-maps follows from naturality of Verdier duality for the boundary
-embeddings
+identification of the underlying genuswise complexes.  The
+factorization and self-sewing maps are the conditional residue maps of
+Theorem~\ref{thm:chain-modular-functor}; once the signed log-FM
+pushforward package supplies them on both sides, compatibility follows
+from naturality of Verdier duality for the boundary embeddings
 $\overline{\mathcal{M}}_{g_1,|I|+1}\times
 \overline{\mathcal{M}}_{g_2,|I^c|+1}\hookrightarrow
 \overline{\mathcal{M}}_{g,n}$ and
@@ -607,8 +856,9 @@ $\overline{\mathcal{M}}_{g-1,n+2}\hookrightarrow
 \label{rem:moduli-variation}%
 \index{KZ connection!from bar complex}%
 \index{Hitchin connection!from bar complex}%
-The chain-level modular functor (Theorem~\ref{thm:chain-modular-functor})
-produces, at each genus~$g$, a sheaf of cochain complexes
+Under the hypotheses of Theorem~\ref{thm:chain-modular-functor}, the
+chain-level modular functor produces, at each genus~$g$, a sheaf of
+cochain complexes
 $V_{g,n}$ over $\overline{\mathcal{M}}_{g,n}$.
 Its cohomology $\mathcal{V}_{g,n} := H^*(V_{g,n})$
 is a coherent sheaf on $\overline{\mathcal{M}}_{g,n}$
@@ -887,23 +1137,28 @@ The pattern is that each genus~$g$ introduces degree-$g$ Siegel modular forms. F
 
 \subsection{Physical interpretation: strings and holography}\label{subsec:physics}
 
-\begin{theorem}[Bar complex defines tautological moduli integrals; \ClaimStatusProvedHere]\label{thm:bar-moduli-integrals}
+\begin{theorem}[Bar complex defines tautological moduli integrals; \ClaimStatusConditional]\label{thm:bar-moduli-integrals}
 \textbf{Type signature.} (Open quadrant; level~$5$ scalar shadow on
 $\overline{\cM}_{g,n}$ with module insertions; hypothesis package:
 Koszul chiral algebra $\cA$ with modules
 $\mathcal{V}_1,\ldots,\mathcal{V}_n$; Feynman-transform identification
 \textup{(}Theorem~\textup{\ref{thm:prism-higher-genus}}\textup{)};
-properness of the Fulton--MacPherson configuration map.)
+signed log-FM residue-pushforward package for the module-insertion
+coefficient system; properness of the Fulton--MacPherson configuration
+map; finite-window compatibility with chiral operations.)
 For a Koszul chiral algebra $\mathcal{A}$ and modules
-$\mathcal{V}_1,\ldots,\mathcal{V}_n$, the bar complex with module
+$\mathcal{V}_1,\ldots,\mathcal{V}_n$, assume the signed log-FM
+residue-pushforward package of
+Definition~\ref{def:signed-logfm-residue-pushforward-package} is
+available for these module insertions. Then the bar complex with module
 insertions defines a tautological class
 \[
 \operatorname{cl}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)
 \in H^\bullet(\overline{\mathcal{M}}_{g,n})
 \]
-by proper pushforward from the logarithmic Fulton--MacPherson
-configuration space.  Pairing this class with the virtual fundamental
-class gives
+by the resulting proper pushforward from the logarithmic
+Fulton--MacPherson configuration space.  Pairing this class with the
+virtual fundamental class gives
 \[
 \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)
 =
@@ -912,19 +1167,26 @@ class gives
 \]
 The genus expansion
 \[\mathcal{I}_{\mathrm{total}} = \sum_{g=0}^\infty g_s^{2g-2+n}\, \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)\]
-is the formal power series in $g_s$ assembled from the genus-graded bar complex (Theorem~\ref{thm:master-tower}).
+is the formal power series in $g_s$ assembled from the conditional
+chain-level genus-graded bar complex of Theorem~\ref{thm:master-tower}.
+Without the signed residue-pushforward package one retains only the
+formal stable-curve pairing after a class has been supplied; the
+displayed pushforward construction itself is not proved.
 \end{theorem}
 
 \begin{proof}
-The bar complex at genus~$g$ with module insertions is a logarithmic
-sheaf on the compactified configuration space over
+Under the signed log-FM residue-pushforward package, the bar complex at
+genus~$g$ with module insertions defines a logarithmic coefficient
+object on the compactified configuration space over
 $\overline{\mathcal{M}}_{g,n}$, constructed via the Feynman transform
 identification
 $\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n)
 \simeq
 \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A};
 \mathcal{V}_1,\ldots,\mathcal{V}_n)_g$
-(Theorem~\ref{thm:prism-higher-genus}).  The forgetful map
+(Theorem~\ref{thm:prism-higher-genus}).  The package supplies the
+determinant-line-correct residue maps and the global proper pushforward
+on this coefficient object. The forgetful map
 $\pi\colon \overline{C}_n^{(g)}(\Sigma_g)\to
 \overline{\mathcal{M}}_{g,n}$ is proper
 (Definition~\ref{def:higher-genus-config}), so
@@ -943,9 +1205,12 @@ where $\mathcal{A}_{g,n}^{\mathrm{string}}$ is the $g$-loop, $n$-point string am
 \end{conjecture}
 
 \begin{remark}[Scope]
-The moduli integrals $\mathcal{I}_{g,n}$ are established in Part~\ref{part:bar-complex}.
-At genus~$0$, the algebraic BRST/bar comparison is proved, while the
-moduli-integration/amplitude identification is only conditional
+The conditional moduli integrals $\mathcal{I}_{g,n}$ are the
+construction of Theorem~\ref{thm:bar-moduli-integrals}; the formal bar
+and BRST comparison inputs are established in Part~\ref{part:bar-complex}.
+At genus~$0$, the algebraic BRST/bar comparison is conditional at the
+theorem surface, and the moduli-integration/amplitude identification is
+also conditional
 \textup{(}Corollary~\ref{cor:string-amplitude-genus0},
 Theorem~\ref{thm:brst-bar-genus0}\textup{)}; for affine
 Kac--Moody algebras, $\barB(\cA) \simeq C^{\infty/2+*}(\cA)$ at all
@@ -959,7 +1224,8 @@ genus~$0$ the algebraic BRST-bar comparison is proved, while the
 full genuswise BV/BRST/bar identification remains open
 at genus~$\geq 1$
 \textup{(}Conjecture~\ref{conj:master-bv-brst}\textup{)}. At genus~$\geq 2$, the algebraic bar differential is determined
-inductively (Theorem~\ref{thm:inductive-genus-determination});
+inductively under the signed log-FM package
+(Theorem~\ref{thm:inductive-genus-determination});
 the analytic graph amplitudes converge without UV renormalization
 in dimension~$2$ (Proposition~\ref{prop:2d-convergence}); and the
 analytic-algebraic comparison holds on the algebraic core
@@ -995,28 +1261,32 @@ concordance.
 
 \subsection{Modular hierarchy}\label{subsec:modular-hierarchy}
 
-\begin{theorem}[Poincaré--Verdier duality for genus pieces; \ClaimStatusProvedElsewhere{} \cite{BD04,FG12}]\label{thm:poincare-extended}
+\begin{theorem}[Poincaré--Verdier duality for genus pieces; \ClaimStatusConditional]\label{thm:poincare-extended}
 \index{Poincare-Verdier duality@Poincar\'e--Verdier duality!higher genus}
 \textbf{Type signature.} (Open quadrant; Verdier-Koszul reflection at
 level~$2$, with the curve-Verdier shift on $\overline{\cM}_{g,n}$;
-hypothesis package: $\cA^i = H^\bullet B^{\mathrm{ch}}(\cA)$
-finite-type; perfect genus-$g$ Poincar\'e--Koszul pairing.)
-Let $B^{(g)}(\mathcal{A})$ be the genus-$g$ bar object and let
-$\mathcal{A}^i:=H^\bullet B^{\mathrm{ch}}(\mathcal{A})$ be the
-Koszul dual coalgebra. If $\mathcal{A}^i$ is finite-type and the
+hypothesis package: a presentation
+$\cA=T_X(V)/(R)$ with
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$; a quasi-isomorphism
+$q_\cA\colon\cA^{\mathrm i}\to B^{\mathrm{ch}}(\cA)$; finite
+duality; perfect genus-$g$ Poincar\'e--Koszul pairing.)
+Let $B^{(g)}(\mathcal{A})$ be the genus-$g$ bar object. If
+$\mathcal{A}^{\mathrm i}$ is finite-type and the
 genus-$g$ Poincar\'e--Koszul pairing between the bar coefficients of
-$\mathcal A$ and the cobar coefficients of $\mathcal A^i$ is perfect,
+$\mathcal A$ and the cobar coefficients of $\mathcal A^{\mathrm i}$ is perfect,
 then Verdier duality on $\overline{\mathcal{M}}_{g,n}$ identifies the
-dual genus piece with the cobar object built from $\mathcal{A}^i$:
+algebra
+$K_X^{(g)}(\mathcal A):=
+\mathbb D_{\overline{\mathcal M}_{g,n}}B^{(g)}(\mathcal A)$ with the
+cobar object built from $\mathcal{A}^{\mathrm i}$:
 \[
-\mathbb D_{\overline{\mathcal{M}}_{g,n}}
-\bigl(\bar{B}^{(g)}(\mathcal{A})\bigr)
-\cong
-\Omega^{(g)}(\mathcal{A}^i).
+\gamma_g\colon K_X^{(g)}(\mathcal A)
+\xrightarrow{\sim}\Omega^{(g)}(\mathcal{A}^{\mathrm i}).
 \]
-This is Verdier-dual Koszul passage. It is not the inversion
-$\Omega(B(\mathcal{A}))\simeq\mathcal{A}$ and it is not a statement
-about the derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{A})$.
+The map~$\gamma_g$ is the genus-$g$ Verdier--cobar comparison.  The
+counit $\Omega B(\mathcal A)\to\mathcal A$ gives reconstruction, while
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal A)$ remains the Hochschild
+centre.
 \end{theorem}
 
 \begin{proof}
@@ -1027,11 +1297,13 @@ $j_*j^*\mathcal{A}^{\boxtimes n}$
 logarithmic extension with the dual logarithmic extension and reverses
 the residue maps. The perfect Poincar\'e--Koszul pairing identifies
 the Verdier-dual coefficient system of the $\mathcal A$-bar object
-with the cobar coefficient system generated by $\mathcal A^i$; finite
-type gives $\mathcal A^!=(\mathcal A^i)^\vee$ on the algebra side.
+with the cobar coefficient system generated by
+$\mathcal A^{\mathrm i}$; finite type gives
+$\mathcal A^!=(\mathcal A^{\mathrm i})^\vee$ on the algebra side.
 The reversed residue differential is exactly the cobar differential.
-Thus the Verdier dual of the genus-$g$ bar object is the genus-$g$
-cobar object on $\mathcal{A}^i$. The dualizing-complex shift is
+Thus~$\gamma_g$ identifies the Verdier algebra of the genus-$g$ bar
+object with the genus-$g$ cobar object on $\mathcal{A}^{\mathrm i}$.
+The dualizing-complex shift is
 contained in $\omega^\bullet_{\overline{\mathcal{M}}_{g,n}}$. The
 construction is compatible with the Feynman transform of the modular
 operad
@@ -1059,10 +1331,10 @@ homology then produces genus-graded state spaces equipped with a
 formal partition function whose $\mathrm{SL}(2,\Z)$-equivariance is
 the level-$5$ modular reconstruction (trace + clutching on the open
 factorization category), not an intrinsic closure datum.
-The complete packaging of these ingredients (bulk algebra, Koszul-dual
-defect algebra, algebraic line-side model, genus-zero $r$-matrix,
-genus-refined MC class, and shadow connection) is the
-\emph{holographic modular Koszul datum} $\mathcal{H}(T)$
+The complete packaging of these ingredients (algebraic closed-sector
+object, Koszul-dual defect algebra, algebraic line-side model,
+genus-zero $r$-matrix, genus-refined MC class, and shadow connection)
+is the \emph{holographic modular Koszul datum} $\mathcal{H}(T)$
 (Definition~\ref{def:holographic-modular-koszul-datum}). The modular
 $r$-matrix of Definition~\ref{def:modular-r-matrix-genus} below is the
 genus-refined specialization of the binary collision residue
@@ -1079,7 +1351,7 @@ Theorem~\ref{thm:elliptic-bar} above.
 \begin{proposition}[Algebraic closed sector from the boundary;
 \ClaimStatusProvedElsewhere{} \cite{BD04,FG12,CG17}]
 \label{prop:bulk-from-boundary}
-\index{bulk-boundary correspondence!derived center}
+\index{closed sector!from boundary}
 \textbf{Type signature.} (Open quadrant; level~$1\to 3$ reconstruction
 $A_b \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ via chiral
 Hochschild cochains; hypothesis package: factorisation dg-category
@@ -1134,10 +1406,10 @@ where the integral denotes factorization homology over the
 genus-$g$ surface $\Sigma_{g,n}$ with $n$ boundary punctures.
 \end{definition}
 
-\begin{definition}[Genus-graded holographic partition function]
+\begin{definition}[Genus-graded holographic formal partition series]
 \label{def:holographic-partition-function}
 \index{partition function!genus-graded holographic}
-The all-genera holographic partition function is
+The all-genera holographic formal partition series is
 \begin{equation}\label{eq:holographic-pf}
  Z_{T;\,B}(\hbar, t)
  \;:=\;
@@ -1209,9 +1481,9 @@ F_g^{\mathrm{diag}}(\mathcal{A})
 \]
 On the uniform-weight scalar lane
 (Definition~\ref{def:scalar-lane}) this diagonal term is the full
-free energy at all genera. For arbitrary modular Koszul algebras the
+formal genus class at all genera. For arbitrary modular Koszul algebras the
 diagonal term is still defined at every genus, but the full
-all-weight free energy is
+all-weight formal genus class is
 $F_g=F_g^{\mathrm{diag}}+\delta F_g^{\mathrm{cross}}$, with
 $\delta F_1^{\mathrm{cross}}=0$ universally and
 $\delta F_g^{\mathrm{cross}}$ generally nonzero at $g\geq2$.
@@ -1233,6 +1505,8 @@ $\delta F_2^{\mathrm{cross}}=(c+204)/(16c)$
 invariants and the full Maurer--Cartan completion are not determined
 by~$\kappa(\cA)$ alone; see Theorem~\ref{thm:spectral-characteristic}
 and Definition~\ref{def:full-modular-package}.
+All scalar normalisations in this paragraph use
+Appendix~\ref{sec:scalar-normalization-appendix}.
 The Mumford $\lambda$-class relations are projections of the MC equation at degree~$2$ (Proposition~\ref{prop:mumford-from-mc}).
 \end{remark}
 
@@ -1319,6 +1593,8 @@ to characteristic invariants of the modular tangent complex
 $T^{\mathrm{mod}}_{\Theta_\cA}$
 (Construction~\ref{const:vol1-modular-tangent-complex})
 at successive levels of nonlinearity:
+The scalar row uses the normalisation conventions of
+Appendix~\ref{sec:scalar-normalization-appendix}.
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lll}
@@ -1580,8 +1856,8 @@ remains open.
 \subsection{The nonlinear modular characteristic hierarchy}
 \label{subsec:nonlinear-modular-hierarchy}
 
-\begin{theorem}[The full modular invariant hierarchy]
-\label{thm:full-modular-invariant-hierarchy}
+\begin{theorem}[Conditional nonlinear modular characteristic hierarchy]
+\label{thm:conditional-modular-characteristic-hierarchy}
 \ClaimStatusConditional
 \textbf{Type signature.} (Open quadrant; bar-intrinsic MC presentation
 on the modular operad $\{\overline{\cM}_{g,n}\}$; spans levels~$1$
@@ -1597,7 +1873,7 @@ level-$5$ scalar/shadow projections.)
 The modular invariants of a Koszul chiral algebra organize into
 a hierarchy of increasing nonlinear depth:
 \begin{equation}
-\label{eq:full-hierarchy}
+\label{eq:conditional-modular-characteristic-hierarchy}
 \underbrace{\kappa(\cA),\ \delta F_\bullet^{\mathrm{cross}}(\cA)}_{\text{scalar and mixed genus}}
 \;\longrightarrow\;
 \underbrace{\Delta_{\cA}}_{\text{spectral}}
@@ -2242,13 +2518,14 @@ should live in the analytic framework.
 \index{Dirichlet--sewing lift|textbf}%
 \index{Euler--Koszul|textbf}
 
-\begin{definition}[Connected genus-$1$ free energy]%
+\begin{definition}[Connected genus-$1$ sewing scalar]%
 \label{def:connected-genus1-free-energy}%
-\index{free energy!connected genus-1}%
+\index{sewing scalar!connected genus-1}%
+\ClaimStatusDefinitional
 Let $\cA$ satisfy HS-sewing
 (Definition~\ref{def:hs-sewing}) with genus-$1$ sewing
 operator~$K_q(\cA)$.
-The \emph{connected genus-$1$ free energy}
+The \emph{connected genus-$1$ sewing scalar}
 \begin{equation}\label{eq:connected-free-energy}
 F_\cA^{\mathrm{conn}}(q)
 \;:=\;
@@ -2257,7 +2534,9 @@ F_\cA^{\mathrm{conn}}(q)
 \sum_{N=1}^\infty a_\cA(N)\, q^N
 \end{equation}
 is the genus-$1$, degree-$0$ component of
-$\log Z_\cA$: the connected vacuum amplitude on the torus.
+$\log Z_\cA$: the connected vacuum amplitude on the torus, hence the
+analytic connected free energy only after HS-sewing has supplied the
+trace-class determinant.
 For the Heisenberg algebra
 (Theorem~\ref{thm:heisenberg-one-particle-sewing}),
 $F_\cH^{\mathrm{conn}} = -\log\prod_{n \geq 1}(1-q^n) =

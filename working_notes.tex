@@ -439,7 +439,7 @@ Char.\ fn.\ $\to$ moments
   & $\kappa(\cA) \to$ genus tower via $\hat{A}$
   \quad(Thm~D) \\[3pt]
 Parseval (completeness)
-  & $\ChirHoch^*(\cA)$ polynomial, Koszul-functorial
+  & $\ChirHoch^*(\cA)$ amplitude $[0,2]$, Hilbert polynomial in $t$
   \quad(Thm~H)
 \end{tabular}
 \end{center}
@@ -4214,11 +4214,13 @@ Five main theorems.
   $\Omega(\B(\cA)) \xrightarrow{\sim} \cA$ on the Koszul locus.
 \item \textbf{Theorem C} (complementarity):
   $Q_g(\cA) \oplus Q_g(\cA^!) \cong H^*(\overline\cM_g, \cZ_\cA)$.
-\item \textbf{Theorem D} (modular characteristic):
-  $\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$ for
-  uniform-weight algebras.
+\item \textbf{Theorem D} (four typed outputs):
+  $\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\Def_g)$,
+  $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$,
+  $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$,
+  and $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$.
 \item \textbf{Theorem H} (Hochschild):
-  $\ChirHoch^*(\cA)$ polynomial, Koszul-functorial.
+  $\ChirHoch^*(\cA)$ has amplitude $[0,2]$ and Hilbert polynomial in $t$.
 \end{enumerate}
 All proved.  Together with the Koszulness programme
 (eight genuinely independent bidirectional equivalences plus one
@@ -4349,18 +4351,18 @@ levels of one reduction.
 
 \noindent\textbf{(k) Multi-generator universality at
 $g \geq 2$.}\enspace
-The formula $\mathrm{obs}_g = \kappa \cdot \lambda_g$ is proved
-for uniform-weight algebras (all generators have the same
-conformal weight) at all genera.  For multi-weight algebras at
-$g \geq 2$, the correct form is
-$F_g=\kappa\lambda_g+\delta F_g^{\mathrm{cross}}$.  The
-$\cW_3$ genus-$2$ computation gives a nonzero cross-channel
-correction, so scalar purity is not universal on the multi-weight
-lane; it fails for interacting multi-weight algebras such as
-$\cW_3$.
+Under $H_D^K$, the signed Hodge output is
+$\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$.
+The graph output is
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$.
+Uniform-weight algebras have $\delta F_g^{\mathrm{cross}}=0$.
+For $\cW_3$ at genus~$2$, the mixed-channel stable graphs produce
+the first explicit nonzero correction.
 
-At genus~$1$: $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ is
-proved on the stated theorem lanes.  At genus~$2$ and beyond,
+At genus~$1$,
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_1
+=\kappa\lambda_1$ is proved on the stated theorem lanes.  At
+genus~$2$ and beyond,
 for algebras like $\cW_3$ with generators of different weights,
 the edge-level Hodge bundle is $\cE_1$ but vertex-level
 multi-generator data produces extra tautological contributions.
@@ -4976,7 +4978,9 @@ these four, nothing further is known.
 \textbf{Test} & \textbf{Statement} & \textbf{Status} \\
 \hline
 1 & $D_\cA^2 = 0$ & proved (all families, all genera) \\
-2 & $\mathrm{obs}_g = \kappa \cdot \lambda_g$ & proved (uniform-weight) \\
+2 & $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ and
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$
+& proved on the stated lanes \\
 3 & $Q_g(\cA) \oplus Q_g(\cA^!) \cong H^*(\overline\cM_g, \cZ)$
   & proved \\
 4 & HS-sewing convergence & proved (polynomial growth)
@@ -5115,7 +5119,7 @@ On the proved principal DS-shadow lane, DS reduction is compatible
 with the binary triples.  For the principal reduction
 $\widehat\fsl_N \to \cW_N$:
 \[
-\bigl(V_k(\fsl_N),\; V_{k'}(\fsl_N),\; k\,\Omega/z\bigr)
+\bigl(V_k(\fsl_N),\; V_{k'}(\fsl_N),\; k\,\Omega_{\mathrm{tr}}/z\bigr)
 \;\longmapsto\;
 \bigl(\cW^k_N,\; \cW^{k'}_N,\; r^{\cW}(z)\bigr).
 \]
@@ -8369,15 +8373,20 @@ not the algebra it produces.
 \label{subsec:bp-c-sum}
 
 For the Bershadsky--Polyakov algebra the central-charge sum is
-convention-sensitive.  In the Arakawa convention used by the
-current local ledger,
+convention-sensitive.  In the standard Fehily--Kawasetsu--Ridout
+conformal-vector convention,
 \[
-c(BP_k)=2-24\frac{(k+1)^2}{k+3},
-\qquad c(k)+c(-k-6)=196.
+c_{\mathrm{BP}}(k)=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad c(k)+c(-k-6)=50,
 \]
-In the Fateev--Lukyanov/free-field convention the corresponding
-sum is $50$.  The $\kappa$-complementarity constant is
-$98/3$.
+and $50$ is the central-charge conductor $K^c_{\mathrm{BP}}$.  The
+explicitly shifted conformal vector
+$c_{\mathrm{BP}}^{\mathrm{shift}}(k)=2-24(k+1)^2/(k+3)$ has
+reflection sum $196$; that value belongs exclusively to the shifted
+secondary lane.  The $\kappa$-complementarity constant is
+conditionally $25/3$ on the ratio lane
+($\varrho_{\mathrm{BP}}=1/6$); the genus-one curvature
+$\kappa_{\mathrm{BP}}$ itself remains open.
 
 \subsection{Ghost formula fails for non-principal reductions}
 \label{subsec:ghost-formula-non-principal}
@@ -8387,35 +8396,38 @@ $\alpha = \sum_s 2(6s^2 - 6s + 1)$
 (summed over spins~$s$ of the $\cW$-algebra generators) gives
 the correct Koszul self-dual central-charge conductor for
 principal $\cW_N$-algebras: $\alpha_2 = 26$ (Virasoro),
-$\alpha_3 = 100$ (W$_3$, spins $2,3$), and so forth.  But
-for non-principal reductions it
-fails.  For the Bershadsky--Polyakov algebra $B^k$
+$\alpha_3 = 100$ (W$_3$, spins $2,3$), and so forth.  For
+non-principal reductions its validity is not automatic.  For the
+Bershadsky--Polyakov algebra $B^k$
 (spins $1, \tfrac{3}{2}, \tfrac{3}{2}, 2$):
 \begin{itemize}[nosep]
 \item Ghost formula:
   $\alpha = 2(6 \cdot 1 - 6 + 1) + 2 \cdot 2(6 \cdot \tfrac{9}{4}
   - 6 \cdot \tfrac{3}{2} + 1) + 2(6 \cdot 4 - 12 + 1)
   = 2 + 22 + 26 = 50$.
-\item FF/DS transport is convention-sensitive.  In the Arakawa
-  normalisation
-  $c(BP_k)=2-24(k+1)^2/(k+3)$ and
-  $c(k)+c(-k-6)=196$; in the Fateev--Lukyanov/free-field
-  convention the conductor is $50$.  The corresponding
-  $\kappa$-complementarity constant is $98/3$, not a spin-only
-  invariant.
+\item FF/DS transport is convention-sensitive.  In the standard
+  FKR conformal-vector convention
+  $c_{\mathrm{BP}}(k)=-(2k+3)(3k+1)/(k+3)$ and
+  $c(k)+c(-k-6)=50$, agreeing with the ghost-spin sum; the shifted
+  conformal vector $c^{\mathrm{shift}}(k)=2-24(k+1)^2/(k+3)$ has
+  reflection sum $196$ and belongs to a separate secondary lane.
+  The corresponding $\kappa$-complementarity constant is
+  conditionally $25/3$, not a spin-only invariant.
 \item Direct Koszul computation: $c^* = \alpha_{\mathrm{Koszul}}
   / 2$ requires the full $A_\infty$ analysis, not just the spin
   content.
 \end{itemize}
-The discrepancy arises because the Koszul involution for a
-non-principal $\cW$-algebra is \emph{not determined by the spin
-content alone}: the non-linear OPE structure (which depends on
+The convention-sensitivity arises because the Koszul involution
+for a non-principal $\cW$-algebra is \emph{not determined by the
+spin content alone}: the non-linear OPE structure (which depends on
 the choice of nilpotent orbit, not just the conformal weights)
 contributes to the Koszul dual central charge.  The ghost formula
 $\alpha = \sum 2(6s^2 - 6s + 1)$ is a \emph{principal-reduction
-formula}, valid precisely when the generators are in bijection
+formula}, valid when the generators are in bijection
 with the exponents of~$\fg$ and the OPE is controlled by the
-Miura transform.
+Miura transform; its agreement with the standard-lane BP conductor
+$50$ is a computed coincidence of the subregular hook, not a
+general non-principal theorem.
 
 \begin{observation}[The non-principal frontier]
 \label{obs:non-principal-frontier}

@@ -21,7 +21,7 @@ Typed projections from B(A) (AP25/AP34):
   2. A^i = H*(B(A)):    bar-dual coalgebra
   3. D_Ran(B(A)):       Verdier surface producing the A^! branch
   4. Omega(B(A)):       recovers A itself (inversion)
-  5. Z_ch^der(A):       chiral Hochschild/derived-center bulk slot
+  5. Z_ch^der(A):       chiral Hochschild/derived-center closed-sector slot
 
 For bc/beta-gamma surfaces the closed collision residue is zero.  The
 simple OPE residue and quartic contact data are separate boundary/contact
@@ -62,7 +62,9 @@ CONVENTIONS (from CLAUDE.md anti-patterns):
   AP24:  kappa + kappa' = 0 for KM/free; != 0 for Virasoro (sum = 13)
   AP25:  B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart
   AP29:  delta_kappa != kappa_eff (distinct objects)
-  AP33:  H_k^! = Sym^ch(V*) != H_{-k}
+  AP33:  at k != 0, H_k^! is the curved second-kind
+         Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved
+         polynomial centre; only scalar kappa agrees with kappa(H_{-k})
   AP34:  bar-cobar inversion != open-to-closed; derived center is the
          algebraic closed-sector vertex
   AP39:  kappa != c/2 for general VOA; kappa = c/2 only for Virasoro
@@ -302,7 +304,8 @@ def kappa_heisenberg(k) -> Fraction:
     """kappa(H_k) = k.
 
     Single generator of weight 1.
-    AP33: H_k^! = Sym^ch(V*) with kappa = -k (NOT H_{-k}).
+    AP33: H_k^! has scalar kappa = -k; at k != 0 the object is the
+    curved second-kind Sym^ch(V*[1]) branch, not H_{-k}.
     AP48: kappa != c/2 for Heisenberg (c=1, kappa=k).
     """
     return _frac(k)
@@ -356,9 +359,9 @@ def kappa_dual_kac_moody(dim_g, k, h_dual) -> Fraction:
 def holographic_dictionary_entry(c, h: int) -> Dict[str, Any]:
     """Bulk operator at weight h mapped to boundary operator data.
 
-    In this scalar comparison, the closed/bulk slot is the chiral
+    In this scalar comparison, the closed/closed-sector slot is the chiral
     Hochschild derived center.  Line defects are A-modules and are
-    computed by defect_spectrum; they are not the bulk slot.  At weight h:
+    computed by defect_spectrum; they are not the closed-sector slot.  At weight h:
 
       bulk operator O_h  <--->  class [O_h] in C^h_ch(A, A) / exact
 
@@ -370,7 +373,7 @@ def holographic_dictionary_entry(c, h: int) -> Dict[str, Any]:
       - Weight 2: stress tensor T (1-dimensional)
       - Weight h >= 2: quasi-primaries at weight h plus descendants
 
-    The partition function of the derived center (bulk) counts these.
+    The partition function of the derived center (closed-sector) counts these.
     For a free algebra (Heisenberg), it is the Fock space character.
     """
     c = _frac(c)
@@ -393,7 +396,7 @@ def holographic_dictionary_entry(c, h: int) -> Dict[str, Any]:
     # at generic c equals the vacuum character chi_0(q).
     # chi_0(q) = q^{-c/24} prod_{n>=2} 1/(1-q^n)
     # The coefficient of q^h (starting from h=0 after absorbing q^{-c/24})
-    # counts bulk operators at weight h.
+    # counts closed-sector operators at weight h.
 
     # Count: partitions into parts >= 2
     bulk_dim = _partitions_parts_ge2(h)
@@ -482,7 +485,7 @@ def defect_spectrum(family: str, h_max: int = 10) -> Dict[str, Any]:
 
     In twisted holography, line defects correspond to modules over A.
     The defect spectrum encodes the conformal weights and multiplicities
-    of the module category.  This is separate from the closed/bulk slot
+    of the module category.  This is separate from the closed/closed-sector slot
     Z_ch^der(A).
 
     For Heisenberg H_k:
@@ -1210,7 +1213,8 @@ def heisenberg_holographic_summary(k) -> Dict[str, Any]:
     """Holographic summary for Heisenberg H_k.
 
     kappa(H_k) = k.
-    kappa(H_k^!) = -k (AP33: Sym^ch(V*), not H_{-k}).
+    scalar kappa(H_k^!) = -k.  AP33: at k != 0, H_k^! is the curved
+    second-kind Sym^ch(V*[1]) branch, not H_{-k}.
     kappa + kappa' = 0.
     Shadow depth = 2 (Gaussian class G).
     """

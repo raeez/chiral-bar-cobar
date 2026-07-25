@@ -1,44 +1,15 @@
-r"""Tests for the W_3 four-point conformal block ODE engine.
+"""Exact four-point kinematics and open W3 scalar-ODE checks."""
 
-STRUCTURE
-=========
-
- 1. SL(2) gauge fixing: 4 points -> 1 modulus z
- 2. T-sector restriction recovers Virasoro BPZ
- 3. Depth-4 vanishing (W_{(4)}W = 0) at multiple c values
- 4. ODE order: W_3 exceeds Virasoro (4 > 2)
- 5. Surviving depths on primaries: 1, 2, 3, 5 (not 4)
- 6. W-sector leading term identification
- 7. Specific coefficient values at c = 2
- 8. Fuchsian ODE structure (regular singular at 0, 1, infty)
- 9. Channel structure and decoupling
-10. Numerical evaluation consistency
-11. Cross-family comparison: k_max hierarchy
-12. Ward identity structure
-13. Lambda composite at specific values
-14. Multi-path depth verification
-15. Cross-check with W_3 commuting Hamiltonians engine
-
-Manuscript references:
-    thm:gz26-commuting-differentials
-    eq:gz26-hamiltonian-decomposition
-    prop:shadow-connection-bpz
-    rem:bar-pole-absorption (AP19)
-    comp:w3-nthproducts (bar_complex_tables.tex)
-"""
-
-import math
-import unittest
-import sys
-import os
 from fractions import Fraction
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lib'))
+import pytest
+import sympy as sp
 
-from theorem_w3_4pt_ode_engine import (
+from compute.lib.theorem_w3_4pt_ode_engine import (
     DIFF_ORDER_W3,
     K_MAX_VIR,
     K_MAX_W3,
+    LAMBDA_COUPLING_NUMERATOR,
     MAX_OPE_POLE_W3,
     channel_structure_4pt,
     diagnostic_scope_4pt,
@@ -58,6 +29,7 @@ from theorem_w3_4pt_ode_engine import (
     w3_4pt_hamiltonian,
     w3_c2_specific_coefficients,
     w3_channel_kappa_matrix,
+    w3_channel_norm_matrix,
     w3_exceeds_virasoro_order,
     w3_lambda_coupling,
     w3_minimal_model_c2,
@@ -66,993 +38,94 @@ from theorem_w3_4pt_ode_engine import (
     zamolodchikov_lambda_norm,
 )
 
-# Also import from the parent engine for cross-checks
-from theorem_w3_commuting_hamiltonians_engine import (
-    beta_composite,
-    collision_residue_on_primary,
-    k_max_family,
-    kappa_T,
-    kappa_W,
-    kappa_total,
-    lambda_zero_mode_on_primary,
-    ope_mode,
+
+def test_four_points_leave_one_cross_ratio():
+    assert n_moduli(3) == 0
+    assert n_moduli(4) == 1
+    assert n_moduli(5) == 2
+    positions = sl2_fixed_positions()
+    assert positions["z1"] == 0
+    assert positions["z3"] == 1
+    assert positions["z4"] == sp.oo
+
+
+def test_w3_normalization_domain_and_32_coupling():
+    assert LAMBDA_COUPLING_NUMERATOR == 32
+    assert lambda_coupling_denominator(Fraction(2)) == 32
+    assert w3_lambda_coupling(Fraction(2)) == 1
+    assert zamolodchikov_lambda_norm(Fraction(2)) == sp.Rational(32, 5)
+    assert w3_universal_normalization_domain(2)["regular"]
+    assert not w3_universal_normalization_domain(0)["regular"]
+    assert not w3_universal_normalization_domain(Fraction(-22, 5))["regular"]
+    require_regular_universal_normalization(2)
+    with pytest.raises(ValueError):
+        require_regular_universal_normalization(0)
+
+
+def test_channel_matrix_is_typed_as_ope_norm_data():
+    c = sp.Symbol("c")
+    assert w3_channel_norm_matrix(c) == sp.diag(c / 2, c / 3)
+    packet = w3_channel_kappa_matrix(c)
+    assert packet["mathematical_type"] == "leading OPE norm matrix"
+    assert packet["matrix"] == sp.diag(c / 2, c / 3)
+    assert packet["modular_kappa_matrix"].status == "open"
+
+
+def test_local_pole_order_remains_separate_from_collision_and_ode_order():
+    assert MAX_OPE_POLE_W3 == 6
+    assert K_MAX_W3.status == "open"
+    assert K_MAX_VIR.status == "open"
+    assert DIFF_ORDER_W3.status == "open"
+    assert ode_order_analysis().status == "open"
+    assert w3_exceeds_virasoro_order().status == "open"
+
+
+def test_fifth_order_ope_pole_absence_has_open_collision_consequence():
+    packet = verify_depth_4_vanishing([1, 2, 10])
+    assert packet["all_zero"]
+    assert packet["W_(4)W"] == ({}, {}, {})
+    assert packet["collision_consequence"].status == "open"
+
+
+def test_c2_packet_uses_correct_lambda_zero_mode():
+    packet = w3_c2_specific_coefficients(sp.Rational(1, 2), 0)
+    assert packet["WW_to_Lambda"] == 1
+    assert packet["WW_to_dLambda"] == sp.Rational(1, 2)
+    assert packet["Lambda_zero"] == sp.Rational(7, 20)
+    assert packet["collision_projection"].status == "open"
+    assert w3_minimal_model_c2()["minimal_model_identification"].status == "open"
+
+
+def test_channel_structure_contains_exact_ope_orders_only():
+    packet = channel_structure_4pt(2)
+    assert packet["OPE_pole_orders"] == {"TT": 4, "TW": 2, "WT": 2, "WW": 6}
+    assert packet["max_OPE_pole"] == 6
+    assert packet["collision_channels"].status == "open"
+
+
+@pytest.mark.parametrize(
+    "packet",
+    [
+        virasoro_bpz_4pt_hamiltonian(2, 0, 0, 0, 0),
+        w3_4pt_hamiltonian(2, 0, 0, 0, 0, 0, 0, 0, 0),
+        extract_scalar_ode_coefficients(2, 0, 0, 0, 0),
+        t_sector_restriction_4pt(2, 0, 0, 0, 0),
+        w_sector_leading_term(2, 0, 0),
+        surviving_depths_on_primaries(2, 0, 0),
+        evaluate_hamiltonian_at_z(2, 0, 0, 0, 0, 0, 0, 0, 0, Fraction(1, 2)),
+        fuchsian_structure_4pt(),
+    ],
 )
-
-
-# Standard test values
-C_FRACTIONS = [Fraction(1), Fraction(2), Fraction(10), Fraction(50), Fraction(100)]
-C_FLOATS = [0.5, 1.0, 2.0, 4.0, 10.0, 24.0, 50.0]
-
-
-# ============================================================================
-# 0. Central-charge domain and W_3 channel weights
-# ============================================================================
-
-class TestCentralChargeDomainAndChannelWeights(unittest.TestCase):
-    """Verify exact W_3 singular denominators and channel-refined kappa."""
-
-    def test_lambda_coupling_denominator(self):
-        """The Lambda coupling denominator is exactly 5c+22."""
-        c = Fraction(10)
-        self.assertEqual(lambda_coupling_denominator(c), Fraction(72))
-        self.assertEqual(w3_lambda_coupling(c), Fraction(2, 9))
-
-    def test_lambda_norm_exact_formula(self):
-        """<Lambda|Lambda> = c(5c+22)/10."""
-        c = Fraction(10)
-        self.assertEqual(zamolodchikov_lambda_norm(c), Fraction(72))
-
-    def test_universal_domain_regular(self):
-        """c=2 lies on the non-singular universal normalization surface."""
-        domain = w3_universal_normalization_domain(Fraction(2))
-        self.assertTrue(domain['regular'])
-        self.assertEqual(domain['lambda_coupling_denominator'], Fraction(32))
-        self.assertEqual(domain['lambda_norm'], Fraction(32, 5))
-
-    def test_universal_domain_singular_c_zero(self):
-        """c=0 is a Zamolodchikov metric singularity."""
-        domain = w3_universal_normalization_domain(Fraction(0))
-        self.assertFalse(domain['regular'])
-        self.assertTrue(domain['metric_singular'])
-        self.assertFalse(domain['lambda_coupling_singular'])
-        self.assertEqual(domain['lambda_norm'], Fraction(0))
-
-    def test_universal_domain_singular_minus_22_over_5(self):
-        """c=-22/5 is the Lambda coupling and Lambda-norm singularity."""
-        c = Fraction(-22, 5)
-        domain = w3_universal_normalization_domain(c)
-        self.assertFalse(domain['regular'])
-        self.assertFalse(domain['metric_singular'])
-        self.assertTrue(domain['lambda_coupling_singular'])
-        self.assertEqual(domain['lambda_coupling_denominator'], 0)
-        self.assertEqual(domain['lambda_norm'], 0)
-
-    def test_require_regular_rejects_singular_values(self):
-        """Scalar projection formulas reject c(5c+22)=0."""
-        for c in (Fraction(0), Fraction(-22, 5)):
-            with self.assertRaises(ValueError):
-                require_regular_universal_normalization(c)
-            with self.assertRaises(ValueError):
-                w_sector_leading_term(c, Fraction(1, 2))
-
-    def test_depth_4_vanishing_survives_singular_witnesses(self):
-        """W_(4)W=0 is structural even where scalar normalization is singular."""
-        result = verify_depth_4_vanishing([Fraction(0), Fraction(-22, 5)])
-        self.assertTrue(result['all_vanish'])
-
-    def test_w3_channel_kappa_is_not_uniform_weight(self):
-        """W_3 has diag(c/2,c/3), with trace 5c/6."""
-        c = Fraction(6)
-        result = w3_channel_kappa_matrix(c)
-        self.assertEqual(result['matrix']['T'], Fraction(3))
-        self.assertEqual(result['matrix']['W'], Fraction(2))
-        self.assertEqual(result['trace'], Fraction(5))
-        self.assertFalse(result['is_uniform_weight_reduction'])
-        self.assertTrue(result['regular_nonuniform'])
-
-    def test_w3_channel_kappa_zero_is_singular_not_uniform(self):
-        """At c=0 equal channel entries do not license a uniform-weight reduction."""
-        result = w3_channel_kappa_matrix(Fraction(0))
-        self.assertTrue(result['entries_equal'])
-        self.assertFalse(result['is_uniform_weight_reduction'])
-        self.assertFalse(result['regular_nonuniform'])
-
-
-# ============================================================================
-# 1. SL(2) gauge fixing
-# ============================================================================
-
-class TestSL2GaugeFixing(unittest.TestCase):
-    """Verify SL(2) gauge-fixing structure for 4-point function."""
-
-    def test_n_moduli_4pt(self):
-        """dim M_{0,4} = 1."""
-        self.assertEqual(n_moduli(4), 1)
-
-    def test_n_moduli_3pt(self):
-        """dim M_{0,3} = 0 (fully fixed by SL(2))."""
-        self.assertEqual(n_moduli(3), 0)
-
-    def test_n_moduli_5pt(self):
-        """dim M_{0,5} = 2 (first nontrivial moduli space)."""
-        self.assertEqual(n_moduli(5), 2)
-
-    def test_n_moduli_formula(self):
-        """dim M_{0,n} = n - 3 for n >= 3."""
-        for n in range(3, 10):
-            self.assertEqual(n_moduli(n), n - 3)
-
-    def test_fixed_positions(self):
-        """Standard SL(2) fixing: 0, z, 1, infty."""
-        pos = sl2_fixed_positions()
-        self.assertEqual(pos['z1'], 0)
-        self.assertEqual(pos['z2'], 'z')
-        self.assertEqual(pos['z3'], 1)
-        self.assertEqual(pos['z4'], 'infty')
-        self.assertEqual(pos['n_moduli'], 1)
-
-
-# ============================================================================
-# 2. T-sector restriction recovers Virasoro BPZ
-# ============================================================================
-
-class TestTSectorRestriction(unittest.TestCase):
-    """Verify that restricting to the T-T channel recovers Virasoro BPZ."""
-
-    def test_t_sector_match_generic_c(self):
-        """T-sector restriction matches Virasoro at generic c values."""
-        for c in C_FRACTIONS:
-            h1 = Fraction(1, 4)
-            h2 = Fraction(1, 2)
-            h3 = Fraction(3, 4)
-            h4 = Fraction(1)
-            result = t_sector_restriction_4pt(c, h1, h2, h3, h4)
-            self.assertTrue(result['match'],
-                            f"T-sector should match Virasoro at c={c}")
-
-    def test_t_sector_depth_1_is_weight_mode(self):
-        """T-sector depth 1 gives T_{(1)}T = 2T -> 2h_j."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        result = t_sector_restriction_4pt(c, h1, h1, h1, h1)
-        self.assertEqual(result['t_sector_depths'][1], 2 * h1)
-
-    def test_t_sector_depth_2_vanishes(self):
-        """T-sector depth 2 vanishes (T_{(2)}T = 0)."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        result = t_sector_restriction_4pt(c, h1, h1, h1, h1)
-        self.assertEqual(result['t_sector_depths'][2], 0)
-
-    def test_t_sector_depth_3_is_central(self):
-        """T-sector depth 3 gives c/2 (central charge)."""
-        for c in C_FRACTIONS:
-            h1 = Fraction(1, 4)
-            result = t_sector_restriction_4pt(c, h1, h1, h1, h1)
-            self.assertEqual(result['t_sector_depths'][3], c / Fraction(2),
-                             f"Depth 3 should be c/2 = {c/2} at c={c}")
-
-    def test_t_sector_structural_2_active_depths(self):
-        """T-sector has 2 active depths (1 and 3) on primaries; depth 2 vanishes."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        result = t_sector_restriction_4pt(c, h1, h1, h1, h1)
-        # Depth 1 (weight mode) and depth 3 (central) are nonzero;
-        # depth 2 vanishes.
-        self.assertEqual(result['structural_match']['n_active_depths'], 2)
-
-    def test_bpz_ward_cross_term(self):
-        """BPZ Ward identity cross-term at site infinity."""
-        c = Fraction(10)
-        h1, h2, h3, h4 = Fraction(1, 4), Fraction(1, 2), Fraction(3, 4), Fraction(1)
-        bpz = virasoro_bpz_4pt_hamiltonian(c, h1, h2, h3, h4)
-        expected = h1 + h3 + h2 - h4
-        self.assertEqual(Fraction(expected), Fraction(1, 2),
-                         "Ward cross = h1+h3+h2-h4 = 1/4+3/4+1/2-1 = 1/2")
-
-
-# ============================================================================
-# 3. Depth-4 vanishing
-# ============================================================================
-
-class TestDepth4Vanishing(unittest.TestCase):
-    """Verify W_{(4)}W = 0 at all central charges and primaries."""
-
-    def test_depth_4_vanishes_all_c(self):
-        """Depth 4 vanishes for all tested c values."""
-        result = verify_depth_4_vanishing(C_FRACTIONS)
-        self.assertTrue(result['all_vanish'],
-                        "Depth 4 should vanish at all c values")
-
-    def test_ww_mode_4_empty(self):
-        """W_{(4)}W OPE mode returns empty dict."""
-        for c in C_FRACTIONS:
-            mode = ope_mode('W', 'W', 4, c)
-            self.assertEqual(mode, {},
-                             f"W_(4)W should be empty at c={c}")
-
-    def test_tt_mode_4_empty(self):
-        """T_{(4)}T doesn't exist (k_max for T-T is 3)."""
-        c = Fraction(10)
-        mode = ope_mode('T', 'T', 4, c)
-        self.assertEqual(mode, {})
-
-    def test_depth_4_collision_residue_zero(self):
-        """Collision residue at depth 4 is zero for all channels and primaries."""
-        c = Fraction(10)
-        for h_j in [Fraction(0), Fraction(1, 2), Fraction(1), Fraction(3)]:
-            for w_j in [Fraction(0), Fraction(1, 4), Fraction(1)]:
-                for a in ('T', 'W'):
-                    for b in ('T', 'W'):
-                        res = collision_residue_on_primary(4, (a, b), c, h_j, w_j)
-                        self.assertEqual(res, 0,
-                                         f"Depth 4 should be zero: "
-                                         f"({a},{b}) at h={h_j}, w={w_j}")
-
-    def test_depth_4_vanishing_reason(self):
-        """The reason for depth-4 vanishing is structural (weight-1 gap)."""
-        result = verify_depth_4_vanishing()
-        self.assertIn('no weight-1 field', result['reason'])
-
-
-# ============================================================================
-# 4. ODE order: W_3 exceeds Virasoro
-# ============================================================================
-
-class TestODEOrder(unittest.TestCase):
-    """Verify the key prediction: W_3 ODE order exceeds Virasoro."""
-
-    def test_w3_exceeds_virasoro(self):
-        """W_3 differential operator order (4) > Virasoro order (2)."""
-        result = w3_exceeds_virasoro_order()
-        self.assertTrue(result['w3_exceeds'])
-        self.assertEqual(result['w3_order'], 4)
-        self.assertEqual(result['virasoro_order'], 2)
-
-    def test_w3_order_is_kmax_minus_1(self):
-        """W_3 diff order = k_max - 1 = 5 - 1 = 4."""
-        self.assertEqual(DIFF_ORDER_W3, K_MAX_W3 - 1)
-
-    def test_w3_kmax_is_5(self):
-        """W_3 collision depth k_max = 5."""
-        self.assertEqual(K_MAX_W3, 5)
-        self.assertEqual(k_max_family('w3'), 5)
-
-    def test_virasoro_kmax_is_3(self):
-        """Virasoro collision depth k_max = 3."""
-        self.assertEqual(K_MAX_VIR, 3)
-        self.assertEqual(k_max_family('virasoro'), 3)
-
-    def test_max_ope_pole_w3(self):
-        """W_3 max OPE pole = 6 (from W-W channel)."""
-        self.assertEqual(MAX_OPE_POLE_W3, 6)
-
-    def test_ode_order_analysis_w3(self):
-        """W_3 ODE order analysis: 4 on descendants, 1 on generic primaries."""
-        result = ode_order_analysis('w3')
-        self.assertEqual(result['k_max'], 5)
-        self.assertEqual(result['diff_order_descendants'], 4)
-        self.assertEqual(result['diff_order_primaries_generic'], 1)
-        self.assertEqual(result['matrix_ode_order'], 1)
-
-    def test_ode_order_analysis_virasoro(self):
-        """Virasoro ODE order analysis: 2 on descendants."""
-        result = ode_order_analysis('virasoro')
-        self.assertEqual(result['diff_order_descendants'], 2)
-        self.assertEqual(result['bpz_null_vector_order_21'], 2)
-
-    def test_depth_4_in_extra_depths(self):
-        """Depth 4 listed as extra (beyond Virasoro) but vanishes."""
-        result = w3_exceeds_virasoro_order()
-        self.assertEqual(result['extra_depths'], [4, 5])
-        self.assertEqual(result['vanishing_extra_depths'], [4])
-        self.assertEqual(result['central_extra_depths'], [5])
-        self.assertTrue(result['depth_4_vanishes'])
-
-    def test_w3_order_ratio(self):
-        """W_3 order is exactly twice Virasoro order: 4/2 = 2."""
-        result = w3_exceeds_virasoro_order()
-        self.assertEqual(result['ratio'], 2.0)
-
-    def test_order_diagnostic_is_not_modular_koszul_theorem(self):
-        """The finite ODE order diagnostic is not promoted to Theorem C/H data."""
-        result = ode_order_analysis('w3')
-        self.assertTrue(result['finite_ode_diagnostic'])
-        self.assertFalse(result['full_modular_koszul_theorem'])
-        self.assertFalse(result['derived_center_computation'])
-
-
-# ============================================================================
-# 5. Surviving depths on primaries
-# ============================================================================
-
-class TestSurvivingDepths(unittest.TestCase):
-    """Verify which depths survive on primaries."""
-
-    def test_depth_4_in_vanishing(self):
-        """Depth 4 is in the vanishing list."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = surviving_depths_on_primaries(c, h_j)
-        self.assertIn(4, result['vanishing'])
-
-    def test_depths_1_and_3_survive(self):
-        """Depths 1 and 3 have nontrivial scalar contributions."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = surviving_depths_on_primaries(c, h_j, w_j=Fraction(1, 4))
-        # Depths 1 and 3 should be surviving (nontrivial scalar)
-        self.assertIn(1, result['surviving'])
-        self.assertIn(3, result['surviving'])
-
-    def test_depth_5_is_central(self):
-        """Depth 5 is central (c/3, trivial on primaries)."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = surviving_depths_on_primaries(c, h_j)
-        self.assertIn(5, result['central_only'])
-
-    def test_depth_3_is_central_for_tt_channel(self):
-        """Depth 3 T-T channel gives c/2 (central)."""
-        c = Fraction(10)
-        # T_{(3)}T = c/2 is central; but W_{(3)}W = 2T gives 2h_j (non-central)
-        # So depth 3 should be surviving (has non-central contribution from W-W)
-        h_j = Fraction(1, 2)
-        result = surviving_depths_on_primaries(c, h_j)
-        # Depth 3 should NOT be in central_only (because W_{(3)}W = 2T is non-central)
-        self.assertNotIn(3, result['central_only'])
-
-
-# ============================================================================
-# 6. W-sector leading term
-# ============================================================================
-
-class TestWSectorLeadingTerm(unittest.TestCase):
-    """Identify the leading new W_3-specific term."""
-
-    def test_leading_linear_term_at_depth_3(self):
-        """The leading LINEAR W_3-specific scalar is 2h_j at depth 3."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = w_sector_leading_term(c, h_j)
-        self.assertEqual(result['depth_3_scalar']['value'], 2 * h_j)
-
-    def test_depth_1_is_nonlinear(self):
-        """Depth-1 Lambda term is nonlinear in h_j."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = w_sector_leading_term(c, h_j)
-        self.assertTrue(result['depth_1_lambda']['is_nonlinear'])
-
-    def test_depth_1_lambda_value(self):
-        """Depth-1 Lambda = beta * (h^2 - 3h/5) at specific values."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        beta = beta_composite(c)
-        lambda_val = lambda_zero_mode_on_primary(c, h_j)
-        result = w_sector_leading_term(c, h_j)
-        self.assertEqual(result['depth_1_lambda']['value'], beta * lambda_val)
-        self.assertEqual(result['depth_1_lambda']['formula'],
-                         '16/(5c+22) * (h^2 - 3h/5)')
-
-    def test_surviving_depths_list(self):
-        """W-W channel surviving depths are 1, 2, 3, 5."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        result = w_sector_leading_term(c, h_j)
-        self.assertEqual(result['surviving_depths'], [1, 2, 3, 5])
-        self.assertEqual(result['vanishing_depths'], [4])
-
-    def test_depth_5_is_central(self):
-        """Depth 5 is c/3 (central charge term)."""
-        for c in C_FRACTIONS:
-            h_j = Fraction(1, 2)
-            result = w_sector_leading_term(c, h_j)
-            expected = c / Fraction(3)
-            self.assertEqual(result['depth_5_central']['value'], expected)
-            self.assertFalse(
-                result['depth_5_central']['included_in_primary_scalar_projection']
-            )
-
-    def test_w_charge_is_separate_from_ww_2t(self):
-        """The W-current charge and W_(3)W=2T terms are separate sources."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        w_j = Fraction(7, 5)
-        result = w_sector_leading_term(c, h_j, w_j=w_j)
-        self.assertEqual(result['depth_3_w_charge']['value'], w_j)
-        self.assertEqual(result['depth_3_scalar']['value'], 2 * h_j)
-
-
-# ============================================================================
-# 7. Specific coefficient values at c = 2
-# ============================================================================
-
-class TestC2UniversalNormalization(unittest.TestCase):
-    """Verify exact coefficients at c = 2."""
-
-    def test_beta_at_c2(self):
-        """beta(c=2) = 16/(22+10) = 16/32 = 1/2."""
-        result = w3_minimal_model_c2()
-        self.assertEqual(result['beta'], Fraction(1, 2))
-        self.assertEqual(result['beta'], result['beta_expected'])
-
-    def test_kappa_T_at_c2(self):
-        """kappa_T(c=2) = c/2 = 1."""
-        result = w3_minimal_model_c2()
-        self.assertEqual(result['kappa_T'], Fraction(1))
-
-    def test_kappa_W_at_c2(self):
-        """kappa_W(c=2) = c/3 = 2/3."""
-        result = w3_minimal_model_c2()
-        self.assertEqual(result['kappa_W'], Fraction(2, 3))
-
-    def test_kappa_total_at_c2(self):
-        """kappa_total(c=2) = kappa_T + kappa_W = 5/3."""
-        result = w3_minimal_model_c2()
-        self.assertEqual(result['kappa_total'], Fraction(5, 3))
-
-    def test_c2_is_not_claimed_as_minimal_model(self):
-        """c=2 is a regular universal normalization point, not a minimal-model claim."""
-        result = w3_minimal_model_c2()
-        self.assertFalse(result['is_minimal_model_claim'])
-        self.assertTrue(result['central_charge_domain']['regular'])
-        self.assertEqual(result['channel_kappa_matrix']['trace'], Fraction(5, 3))
-
-    def test_depth_1_lambda_at_c2_h_half(self):
-        """At c=2, h=1/2: Lambda_0 = h^2 - 3h/5 = 1/4 - 3/10 = -1/20.
-        beta * Lambda_0 = (1/2)(-1/20) = -1/40."""
-        result = w3_c2_specific_coefficients(Fraction(1, 2))
-        expected = Fraction(1, 2) * (Fraction(1, 4) - Fraction(3, 10))
-        self.assertEqual(result['depth_1_lambda'], expected)
-        self.assertEqual(expected, Fraction(-1, 40))
-
-    def test_depth_3_central_at_c2(self):
-        """At c=2: T-T central term = c/2 = 1."""
-        result = w3_c2_specific_coefficients(Fraction(1, 2))
-        self.assertEqual(result['depth_3_tt_central'], Fraction(1))
-
-    def test_depth_5_central_at_c2(self):
-        """At c=2: W-W central term = c/3 = 2/3."""
-        result = w3_c2_specific_coefficients(Fraction(1, 2))
-        self.assertEqual(result['depth_5_central'], Fraction(2, 3))
-
-    def test_depth_4_zero_at_c2(self):
-        """At c=2: depth 4 vanishes."""
-        result = w3_c2_specific_coefficients(Fraction(1, 2))
-        self.assertEqual(result['depth_4'], Fraction(0))
-
-    def test_depth_3_ww_2T_at_c2(self):
-        """At c=2, h=1/2: W_{(3)}W = 2T -> 2h = 1."""
-        result = w3_c2_specific_coefficients(Fraction(1, 2))
-        self.assertEqual(result['depth_3_ww_2T'], Fraction(1))
-
-
-# ============================================================================
-# 8. Fuchsian ODE structure
-# ============================================================================
-
-class TestFuchsianStructure(unittest.TestCase):
-    """Verify the Fuchsian ODE structure."""
-
-    def test_virasoro_3_singular_points(self):
-        """Virasoro BPZ: 3 regular singular points at 0, 1, infty."""
-        result = fuchsian_structure_4pt()
-        self.assertEqual(result['virasoro']['n_regular_singular'], 3)
-        self.assertIn(0, result['virasoro']['singular_points'])
-        self.assertIn(1, result['virasoro']['singular_points'])
-
-    def test_w3_3_singular_points(self):
-        """W_3: 3 regular singular points at 0, 1, infty."""
-        result = fuchsian_structure_4pt()
-        self.assertEqual(result['w3']['n_regular_singular'], 3)
-
-    def test_virasoro_ode_order_2(self):
-        """Virasoro BPZ: ODE order 2 (hypergeometric)."""
-        result = fuchsian_structure_4pt()
-        self.assertEqual(result['virasoro']['ode_order'], 2)
-
-    def test_w3_max_ode_order_4(self):
-        """W_3: max ODE order 4."""
-        result = fuchsian_structure_4pt()
-        self.assertEqual(result['w3']['max_ode_order'], 4)
-
-
-# ============================================================================
-# 9. Channel structure and decoupling
-# ============================================================================
-
-class TestChannelStructure(unittest.TestCase):
-    """Verify the channel structure of the W_3 Hamiltonian."""
-
-    def test_diagonal_metric(self):
-        """W_3 Zamolodchikov metric is diagonal: eta^{TW} = 0."""
-        c = Fraction(10)
-        result = channel_structure_4pt(c)
-        self.assertEqual(result['inverse_metric']['TW'], 0)
-
-    def test_tt_active_depths(self):
-        """T-T channel active at depths 1, 3."""
-        c = Fraction(10)
-        result = channel_structure_4pt(c)
-        self.assertEqual(result['active_depths_by_channel'][('T', 'T')], [1, 3])
-
-    def test_ww_active_depths(self):
-        """W-W channel active at depths 1, 2, 3, 5."""
-        c = Fraction(10)
-        result = channel_structure_4pt(c)
-        self.assertEqual(result['active_depths_by_channel'][('W', 'W')],
-                         [1, 2, 3, 5])
-
-    def test_tw_active_depths(self):
-        """T-W and W-T cross-channels active only at depth 1."""
-        c = Fraction(10)
-        result = channel_structure_4pt(c)
-        self.assertEqual(result['active_depths_by_channel'][('T', 'W')], [1])
-        self.assertEqual(result['active_depths_by_channel'][('W', 'T')], [1])
-
-    def test_virasoro_max_depth(self):
-        """Virasoro max depth = 3."""
-        c = Fraction(10)
-        result = channel_structure_4pt(c)
-        self.assertEqual(result['virasoro_max_depth'], 3)
-
-    def test_channel_structure_c_zero_singular_no_inverse_metric(self):
-        """At c=0 the inverse Zamolodchikov metric is not formed."""
-        result = channel_structure_4pt(Fraction(0))
-        self.assertFalse(result['regular'])
-        self.assertIsNone(result['metric'])
-        self.assertIsNone(result['inverse_metric'])
-        self.assertTrue(result['central_charge_domain']['metric_singular'])
-
-    def test_channel_structure_lambda_denominator_singular(self):
-        """At c=-22/5 the Lambda denominator kills the universal scalar lane."""
-        result = channel_structure_4pt(Fraction(-22, 5))
-        self.assertFalse(result['regular'])
-        self.assertTrue(result['central_charge_domain']['lambda_coupling_singular'])
-        self.assertEqual(result['active_depths_by_channel'][('W', 'W')], [1, 2, 3, 5])
-
-
-# ============================================================================
-# 10. Numerical evaluation consistency
-# ============================================================================
-
-class TestNumericalEvaluation(unittest.TestCase):
-    """Verify numerical consistency of the Hamiltonian evaluation."""
-
-    def test_evaluation_at_z_half(self):
-        """Evaluate at z = 0.5 and verify BPZ + W-sector decomposition."""
-        z = 0.5
-        c = 10.0
-        h = 0.25
-        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
-        # total = bpz + w_sector
-        self.assertAlmostEqual(
-            result['total'],
-            result['bpz'] + result['w_sector_total'],
-            places=12,
-        )
-
-    def test_depth_4_zero_numerical(self):
-        """Depth 4 contribution is exactly zero in numerical evaluation."""
-        z = 0.5
-        c = 10.0
-        h = 0.25
-        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
-        self.assertEqual(result['w_depth4'], 0)
-
-    def test_bpz_only_when_w_zero(self):
-        """When w_i = 0, the W-W OPE still contributes through W_{(3)}W = 2T
-        and the Lambda composite, which depend on h_j not w_j.
-
-        Use asymmetric weights h1 != h3 to avoid accidental cancellation
-        at z = 0.5 (where z^3 = -(z-1)^3 causes equal-weight terms to cancel).
-        """
-        z = 0.5
-        c = 10.0
-        h1, h3 = 0.25, 0.75  # asymmetric to avoid cancellation
-        result = evaluate_hamiltonian_at_z(z, c, h1, 0.5, h3, 0.5, w1=0, w3_ch=0)
-        # W-depth-3: (0 + 2*0.25)/z^3 + (0 + 2*0.75)/(z-1)^3
-        # = 0.5/0.125 + 1.5/(-0.125) = 4 - 12 = -8, nonzero
-        self.assertNotEqual(result['w_depth3'], 0)
-
-    def test_w_sector_nonzero_with_charges(self):
-        """W-sector is nonzero when W-charges are turned on."""
-        z = 0.3
-        c = 10.0
-        h = 0.5
-        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h,
-                                           w1=0.1, w3_ch=0.2)
-        self.assertNotEqual(result['w_sector_total'], 0)
-
-    def test_even_depth_symmetry(self):
-        """Even-depth (BPZ depth-2) part of H(z) is symmetric under
-        z -> 1-z when h1 = h3 and w1 = w3.
-
-        Odd-depth terms (z^{-k} for k odd) pick up a sign under
-        z -> 1-z because (1-z)^{-k} = -(z-1)^{-k} for odd k and
-        the exchange swaps z <-> (z-1).  So the BPZ (depth-2)
-        contribution h_1/z^2 + h_3/(z-1)^2 is symmetric, while
-        depth-3 and depth-5 terms are antisymmetric.
-        """
-        c = 10.0
-        h = 0.5
-        z1 = 0.3
-        z2 = 1.0 - z1
-        r1 = evaluate_hamiltonian_at_z(z1, c, h, h, h, h)
-        r2 = evaluate_hamiltonian_at_z(z2, c, h, h, h, h)
-        # BPZ sector: h/z^2 + h/(z-1)^2 + cross/(z(z-1))
-        # Under z -> 1-z: h/(1-z)^2 + h/(-z)^2 + cross/((1-z)(-z))
-        # = h/(1-z)^2 + h/z^2 + cross/(z(1-z)) -- same.
-        self.assertAlmostEqual(r1['bpz'], r2['bpz'], places=10)
-
-
-# ============================================================================
-# 11. Cross-family comparison: k_max hierarchy
-# ============================================================================
-
-class TestCrossFamilyHierarchy(unittest.TestCase):
-    """Verify the k_max and ODE order hierarchy across families."""
-
-    def test_kmax_hierarchy(self):
-        """Heisenberg = KM < Virasoro < W_3 < W_4 in k_max."""
-        # Heisenberg and KM both have OPE pole 2 -> k_max = 1
-        self.assertEqual(k_max_family('heisenberg'), k_max_family('km'))
-        self.assertLess(k_max_family('km'), k_max_family('virasoro'))
-        self.assertLess(k_max_family('virasoro'), k_max_family('w3'))
-
-    def test_kmax_formula_wN(self):
-        """k_max(W_N) = 2N - 1 is monotone increasing in N."""
-        for N in range(2, 8):
-            self.assertEqual(k_max_family('wN', N), 2 * N - 1)
-        for N in range(2, 7):
-            self.assertLess(k_max_family('wN', N), k_max_family('wN', N + 1))
-
-    def test_virasoro_is_w2(self):
-        """Virasoro = W_2: k_max(Virasoro) = k_max(W_2) = 3."""
-        self.assertEqual(k_max_family('virasoro'), k_max_family('wN', 2))
-
-    def test_w3_matches_wN_at_N3(self):
-        """W_3 specific value matches W_N formula at N=3."""
-        self.assertEqual(k_max_family('w3'), k_max_family('wN', 3))
-
-
-# ============================================================================
-# 12. Ward identity structure
-# ============================================================================
-
-class TestWardIdentityStructure(unittest.TestCase):
-    """Verify the Ward identity structure of the 4-point Hamiltonian."""
-
-    def test_bpz_pole_orders(self):
-        """BPZ Hamiltonian has poles of order 2 at z=0 and z=1."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        bpz = virasoro_bpz_4pt_hamiltonian(c, h, h, h, h)
-        self.assertEqual(bpz['pole_0']['order'], 2)
-        self.assertEqual(bpz['pole_1']['order'], 2)
-
-    def test_bpz_pole_0_coefficient(self):
-        """BPZ pole at z=0 has coefficient h_1."""
-        c = Fraction(10)
-        h1, h2, h3, h4 = Fraction(1, 4), Fraction(1, 2), Fraction(3, 4), Fraction(1)
-        bpz = virasoro_bpz_4pt_hamiltonian(c, h1, h2, h3, h4)
-        self.assertEqual(bpz['pole_0']['coefficients'][2], h1)
-
-    def test_ward_cross_equal_weights(self):
-        """Ward cross-term vanishes when all weights are equal."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        bpz = virasoro_bpz_4pt_hamiltonian(c, h, h, h, h)
-        # h1 + h3 + h2 - h4 = h + h + h - h = 2h
-        expected = h + h + h - h
-        self.assertEqual(bpz['ward_cross_term']['coefficient'], expected)
-        self.assertEqual(expected, 2 * h)
-
-    def test_w3_depth_4_vanishes_in_hamiltonian(self):
-        """W_3 4-point Hamiltonian has depth_4_vanishes = True."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        result = w3_4pt_hamiltonian(c, h, h, h, h, 0, 0, 0, 0)
-        self.assertTrue(result['depth_4_vanishes'])
-
-    def test_w3_hamiltonian_depth_3_scalar_projection_keeps_sources(self):
-        """Depth 3 records W-charge and W_(3)W=2T separately and in total."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        h3 = Fraction(3, 4)
-        w1 = Fraction(1, 5)
-        w3_ch = Fraction(2, 5)
-        result = w3_4pt_hamiltonian(c, h1, h1, h3, h1, w1, 0, w3_ch, 0)
-        w_sector = result['w_sector']
-        self.assertEqual(w_sector['w_ward_depth3']['pole_0'], w1)
-        self.assertEqual(w_sector['ww_depth3_from_2T']['pole_0'], 2 * h1)
-        self.assertEqual(
-            w_sector['pole_0']['coefficients'][3],
-            w1 + 2 * h1,
-        )
-        self.assertEqual(
-            w_sector['pole_1']['coefficients'][3],
-            w3_ch + 2 * h3,
-        )
-
-    def test_w3_hamiltonian_scope_is_scalar_projection(self):
-        """The Hamiltonian diagnostic marks full OPE data as out of scope."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        result = w3_4pt_hamiltonian(c, h, h, h, h, 0, 0, 0, 0)
-        self.assertTrue(result['scope']['primary_scalar_projection_only'])
-        self.assertFalse(result['scope']['full_ope_computation'])
-        self.assertIn(2, result['w_sector']['full_ope_terms_not_in_scalar_projection'])
-
-
-# ============================================================================
-# 13. Lambda composite at specific values
-# ============================================================================
-
-class TestLambdaCompositeSpecific(unittest.TestCase):
-    """Verify Lambda_0 action on primaries at specific parameter values."""
-
-    def test_lambda_at_h_zero(self):
-        """Lambda_0(h=0) = 0^2 - 3*0/5 = 0."""
-        c = Fraction(10)
-        val = lambda_zero_mode_on_primary(c, Fraction(0))
-        self.assertEqual(val, 0)
-
-    def test_lambda_at_h_three_fifths(self):
-        """Lambda_0(h=3/5) = 9/25 - 9/25 = 0."""
-        c = Fraction(10)
-        h = Fraction(3, 5)
-        val = lambda_zero_mode_on_primary(c, h)
-        expected = h**2 - Fraction(3, 5) * h
-        self.assertEqual(val, expected)
-        self.assertEqual(expected, 0)
-
-    def test_lambda_at_h_one(self):
-        """Lambda_0(h=1) = 1 - 3/5 = 2/5."""
-        c = Fraction(10)
-        val = lambda_zero_mode_on_primary(c, Fraction(1))
-        self.assertEqual(val, Fraction(2, 5))
-
-    def test_lambda_independent_of_c(self):
-        """Lambda_0 on a primary is INDEPENDENT of c."""
-        h = Fraction(1, 2)
-        vals = set()
-        for c in C_FRACTIONS:
-            vals.add(lambda_zero_mode_on_primary(c, h))
-        self.assertEqual(len(vals), 1,
-                         "Lambda_0 should be independent of c")
-
-    def test_lambda_quadratic_formula(self):
-        """Lambda_0(h) = h^2 - 3h/5 for multiple h values."""
-        c = Fraction(10)
-        for h in [Fraction(0), Fraction(1, 4), Fraction(1, 2),
-                  Fraction(1), Fraction(2), Fraction(5)]:
-            val = lambda_zero_mode_on_primary(c, h)
-            expected = h**2 - Fraction(3, 5) * h
-            self.assertEqual(val, expected,
-                             f"Lambda_0({h}) should be {expected}, got {val}")
-
-
-# ============================================================================
-# 14. Multi-path depth verification
-# ============================================================================
-
-class TestMultiPathDepthVerification(unittest.TestCase):
-    """Cross-check collision residues via independent paths.
-
-    Path 1: Direct from ope_mode function
-    Path 2: From collision_residue_on_primary function
-    Path 3: From the 4-point ODE scalar coefficients
-    """
-
-    def test_depth_1_tt_cross_check(self):
-        """Depth 1 T-T: ope_mode vs collision_residue_on_primary."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        # Path 1: direct OPE mode
-        mode = ope_mode('T', 'T', 1, c)
-        path1 = mode.get('T', 0) * h_j  # T_{(1)}T = 2T -> 2*h_j
-        # Path 2: collision residue
-        path2 = collision_residue_on_primary(1, ('T', 'T'), c, h_j)
-        self.assertEqual(path1, path2)
-        self.assertEqual(path1, 2 * h_j)
-
-    def test_depth_3_ww_cross_check(self):
-        """Depth 3 W-W: ope_mode vs collision_residue_on_primary."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        # Path 1: direct OPE mode
-        mode = ope_mode('W', 'W', 3, c)
-        path1 = mode.get('T', 0) * h_j  # W_{(3)}W = 2T -> 2*h_j
-        # Path 2: collision residue
-        path2 = collision_residue_on_primary(3, ('W', 'W'), c, h_j)
-        self.assertEqual(path1, path2)
-        self.assertEqual(path1, 2 * h_j)
-
-    def test_depth_5_ww_cross_check(self):
-        """Depth 5 W-W: ope_mode vs collision_residue_on_primary."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        # Path 1: direct OPE mode
-        mode = ope_mode('W', 'W', 5, c)
-        path1 = mode.get('vac', 0)  # W_{(5)}W = c/3
-        # Path 2: collision residue
-        path2 = collision_residue_on_primary(5, ('W', 'W'), c, h_j)
-        self.assertEqual(path1, path2)
-        self.assertEqual(path1, c / 3)
-
-    def test_depth_4_ww_cross_check(self):
-        """Depth 4 W-W: both paths give zero."""
-        c = Fraction(10)
-        h_j = Fraction(1, 2)
-        mode = ope_mode('W', 'W', 4, c)
-        path1 = sum(mode.values()) if mode else 0
-        path2 = collision_residue_on_primary(4, ('W', 'W'), c, h_j)
-        self.assertEqual(path1, 0)
-        self.assertEqual(path2, 0)
-
-    def test_scalar_coefficients_match_collision_residues(self):
-        """extract_scalar_ode_coefficients agrees with collision_residue_on_primary."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        coeffs = extract_scalar_ode_coefficients(c, h1, h1, h1, h1)
-
-        # Depth 2 site 0 should be h_1
-        self.assertEqual(coeffs[2]['site_0'], h1)
-        # This matches T_{(1)}T on primary:
-        self.assertEqual(collision_residue_on_primary(1, ('T', 'T'), c, h1), 2 * h1)
-        # (The factor of 2 is from the OPE normalization; the BPZ convention
-        # absorbs it into the metric normalization.)
-
-    def test_w3_depth_3_combines_w_ward_and_ww(self):
-        """Depth 3 has TWO independent contributions: W-Ward and W_{(3)}W."""
-        c = Fraction(10)
-        h1 = Fraction(1, 2)
-        w1 = Fraction(1, 4)
-        coeffs = extract_scalar_ode_coefficients(c, h1, h1, h1, h1,
-                                                  w1=w1, w3_ch=w1)
-        # W-Ward gives w_1, W_{(3)}W = 2T gives 2h_1
-        self.assertEqual(coeffs[3]['site_0_w_ward'], w1)
-        self.assertEqual(coeffs[3]['site_0_ww_2T'], 2 * h1)
-
-    def test_scalar_coefficients_mark_central_only_depth_5(self):
-        """Depth 5 is reported but not included in primary scalar projection."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        coeffs = extract_scalar_ode_coefficients(c, h, h, h, h)
-        self.assertEqual(coeffs[5]['site_0'], c / Fraction(3))
-        self.assertFalse(coeffs[5]['included_in_primary_scalar_projection'])
-        self.assertTrue(coeffs['_scope']['primary_scalar_projection_only'])
-
-
-# ============================================================================
-# 15. Cross-check with W_3 commuting Hamiltonians engine
-# ============================================================================
-
-class TestCrossCheckWithParentEngine(unittest.TestCase):
-    """Cross-check results with the W_3 commuting Hamiltonians engine."""
-
-    def test_kmax_agreement(self):
-        """k_max from both engines agree."""
-        self.assertEqual(K_MAX_W3, k_max_family('w3'))
-
-    def test_beta_agreement(self):
-        """beta_composite from both engines agree at multiple c."""
-        for c in C_FRACTIONS:
-            expected = Fraction(16) / (Fraction(22) + 5 * c)
-            self.assertEqual(beta_composite(c), expected)
-
-    def test_kappa_agreement(self):
-        """kappa values from both engines agree."""
-        for c in C_FRACTIONS:
-            self.assertEqual(kappa_T(c), c / 2)
-            self.assertEqual(kappa_W(c), c / 3)
-            self.assertEqual(kappa_total(c), 5 * c / 6)
-
-    def test_lambda_agreement(self):
-        """Lambda_0 on primary from both engines agree."""
-        c = Fraction(10)
-        for h in [Fraction(0), Fraction(1, 2), Fraction(1), Fraction(3)]:
-            expected = h**2 - Fraction(3, 5) * h
-            self.assertEqual(lambda_zero_mode_on_primary(c, h), expected)
-
-    def test_full_summary_runs(self):
-        """Full 4-point ODE summary executes without error."""
-        c = Fraction(10)
-        h = Fraction(1, 4)
-        result = full_4pt_ode_summary(c, h, h, h, h)
-        self.assertIn('hamiltonian', result)
-        self.assertIn('ode_order', result)
-        self.assertIn('depth_4_vanishing', result)
-        self.assertTrue(result['order_exceeds_virasoro']['w3_exceeds'])
-        self.assertTrue(result['depth_4_vanishing']['all_vanish'])
-        self.assertFalse(result['scope']['derived_center_computation'])
-        self.assertEqual(result['channel_kappa_matrix']['trace'], Fraction(25, 3))
-
-
-# ============================================================================
-# Additional tests for completeness
-# ============================================================================
-
-class TestAdditionalVerifications(unittest.TestCase):
-    """Miscellaneous verification tests."""
-
-    def test_kmax_equals_max_pole_minus_1(self):
-        """k_max = max_OPE_pole - 1 (AP19 d log absorption)."""
-        self.assertEqual(K_MAX_W3, MAX_OPE_POLE_W3 - 1)
-
-    def test_diff_order_equals_kmax_minus_1(self):
-        """Differential operator order = k_max - 1."""
-        self.assertEqual(DIFF_ORDER_W3, K_MAX_W3 - 1)
-
-    def test_diagnostic_scope_rejects_theorem_promotion(self):
-        """Finite ODE diagnostics are not derived-center or modular Koszul outputs."""
-        scope = diagnostic_scope_4pt()
-        self.assertTrue(scope['finite_ode_diagnostic'])
-        self.assertTrue(scope['primary_scalar_projection_only'])
-        self.assertFalse(scope['full_modular_koszul_theorem'])
-        self.assertFalse(scope['derived_center_computation'])
-
-    def test_w3_hamiltonian_returns_both_sectors(self):
-        """w3_4pt_hamiltonian returns both BPZ and W sectors."""
-        c = Fraction(10)
-        h = Fraction(1, 2)
-        result = w3_4pt_hamiltonian(c, h, h, h, h, 0, 0, 0, 0)
-        self.assertIn('bpz_sector', result)
-        self.assertIn('w_sector', result)
-
-    def test_evaluation_decomposition(self):
-        """Numerical evaluation decomposes correctly into BPZ + W-sector."""
-        z = 0.4
-        c = 10.0
-        h = 0.5
-        w = 0.1
-        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h,
-                                           w1=w, w3_ch=w)
-        reconstructed = (result['bpz'] + result['w_depth1']
-                         + result['w_depth3'] + result['w_depth4']
-                         + result['w_depth5'])
-        self.assertAlmostEqual(result['total'], reconstructed, places=12)
-
-    def test_central_depth_5_excluded_by_default(self):
-        """The default evaluation is the primary scalar projection, not central vac."""
-        z = Fraction(1, 3)
-        c = Fraction(3)
-        h = Fraction(1, 2)
-        result = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
-        expected_central = (c / Fraction(3)) / z**5 + (c / Fraction(3)) / (z - 1)**5
-        self.assertEqual(result['w_depth5'], 0)
-        self.assertEqual(result['w_depth5_central'], expected_central)
-        self.assertFalse(result['central_projection_included'])
-
-    def test_central_depth_5_can_be_included_explicitly(self):
-        """include_central=True adds c/3 depth-5 vac term to the total."""
-        z = Fraction(1, 3)
-        c = Fraction(3)
-        h = Fraction(1, 2)
-        without = evaluate_hamiltonian_at_z(z, c, h, h, h, h)
-        with_central = evaluate_hamiltonian_at_z(
-            z, c, h, h, h, h, include_central=True
-        )
-        self.assertEqual(with_central['w_depth5'], with_central['w_depth5_central'])
-        self.assertEqual(
-            with_central['total'] - without['total'],
-            with_central['w_depth5_central'],
-        )
-        self.assertTrue(with_central['central_projection_included'])
-
-    def test_w_sector_near_c_zero_requires_nonzero_metric(self):
-        """Near c=0 the beta coupling is finite, while the metric pole is avoided."""
-        c = Fraction(1, 100)
-        h = Fraction(1, 2)
-        # beta = 16/(22 + 5/100) = 16/(2205/100) = 320/441
-        beta = beta_composite(c)
-        self.assertEqual(beta, Fraction(16) / (Fraction(22) + 5 * c))
-        # This should not raise an error
-        result = w_sector_leading_term(c, h)
-        self.assertIsNotNone(result['depth_1_lambda']['value'])
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_hamiltonian_bpz_fuchsian_and_scalar_ode_outputs_are_open(packet):
+    assert packet.status == "open"
+
+
+def test_scope_and_full_summary():
+    scope = diagnostic_scope_4pt()
+    assert scope["cross_ratio_dimension"] == "exact"
+    assert scope["finite_OPE"] == "exact"
+    assert scope["scalar_ODE"].status == "open"
+    summary = full_4pt_ode_summary(2, 0, 0, 0, 0)
+    assert summary["moduli_dimension"] == 1
+    assert summary["Hamiltonian"].status == "open"
+    assert summary["scalar_ODE"].status == "open"

@@ -1,11 +1,13 @@
-"""Independent-verification decorators for Vol I HZ-IV campaign, wave 1.
+"""Arithmetic checks and decorators for the Vol I HZ-IV campaign, wave 1.
 
-Installs @independent_verification decorators for six high-leverage Vol I
-ProvedHere claims that were previously uncovered:
+The decorated claims retain disjoint executable paths.  The affine
+chiral-Hochschild lane is a typed status guard: its exact content is the
+adjoint zero-mode count, while the completed chart quotient remains an open
+chain-level computation.
 
   1. prop:s5-vir-mot        (already decorated elsewhere; not here)
   2. thm:miura-cross-universality-monograph (chapters/theory/ordered_associative_chiral_kd.tex)
-  3. prop:chirhoch1-affine-km       (chiral_center_theorem.tex)
+  3. affine chiral-Hochschild zero-mode status guard
   4. prop:depth-gap-trichotomy      (higher_genus_modular_koszul.tex)
   5. prop:sc-formal-iff-class-g     (chiral_koszul_pairs.tex)
   6. prop:ker-av-schur-weyl         (ordered_associative_chiral_kd.tex)
@@ -87,48 +89,24 @@ def test_miura_cross_universality_boundary_values():
 
 
 # ---------------------------------------------------------------------------
-# prop:chirhoch1-affine-km  (Vol I, chapters/theory/chiral_center_theorem.tex)
+# Affine chiral-Hochschild zero-mode arithmetic
 # ---------------------------------------------------------------------------
 
-
-@independent_verification(
-    claim="prop:chirhoch1-affine-km",
-    derived_from=[
-        "Koszul resolution of V_k(g) at generic level; Ext^1 = g "
-        "(chiral_center_theorem.tex proof outline)",
-        "chirhoch_affine_km engine (compute/lib/chirhoch_dimension_engine.py)",
-    ],
-    verified_against=[
-        "Classical Lie-algebra outer derivation count: for simple g, "
-        "Out(g) as inner-derivation quotient Der(g)/Inn(g) (Whitehead "
-        "first lemma H^1(g,g)=0 adapted to current algebra, giving the "
-        "current-deformation space equal to dim(g))",
-        "Simple Lie dimension tables (Bourbaki Lie IV-VI): dim(sl_2)=3, "
-        "dim(sl_3)=8, dim(G_2)=14",
-    ],
-    disjoint_rationale=(
-        "Derivation computes ChirHoch^1 as Ext^1 in the chiral Koszul "
-        "resolution. Verification uses classical Lie-algebra dimension "
-        "tables (Bourbaki) and the Whitehead-first-lemma current-algebra "
-        "adaptation. Dimension count is a topological invariant of the "
-        "underlying simple Lie algebra, independent of the chiral bar "
-        "construction that produces the Ext^1 identification."),
-)
-def test_chirhoch1_affine_km_matches_dim_g():
-    """For simple g at generic level, ChirHoch^1(V_k(g)) = g (as vector
-    space), so dim ChirHoch^1 = dim(g). Total dim = dim(g) + 2."""
-    # Bourbaki dimensions (verification source)
+def test_affine_zero_mode_arithmetic_and_chart_status():
+    """Lie dimensions determine a known inner subspace of the chart complex."""
     bourbaki_dims = {"sl_2": 3, "sl_3": 8, "G2": 14}
     for name, expected_dim in bourbaki_dims.items():
         data = chirhoch_affine_km(name)
-        assert data.dim1 == expected_dim, (
-            f"{name}: engine dim1 = {data.dim1}, Bourbaki dim(g) = "
-            f"{expected_dim}")
-        assert data.dim0 == 1 and data.dim2 == 1, (
-            f"{name}: dim0/dim2 should be 1 at generic level")
-        assert data.total == expected_dim + 2, (
-            f"{name}: total = {data.total}, expected dim(g)+2 = "
-            f"{expected_dim + 2}")
+        assert data.prequotient_dimension == expected_dim
+        assert data.known_inner_zero_mode_dimension == expected_dim
+        assert data.dim0 is None
+        assert data.dim1 is None
+        assert data.dim2 is None
+        assert data.total is None
+        assert data.chart_support is None
+        assert data.chart_dimensions is None
+        assert data.chart_status == "open-family-support-datum"
+        assert "bounded-to-chart" in data.resolution_obligation
 
 
 # ---------------------------------------------------------------------------

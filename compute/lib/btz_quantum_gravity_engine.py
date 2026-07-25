@@ -1180,7 +1180,7 @@ def critical_string_c26(M: float = 1.0, g_max: int = 5) -> Dict[str, Any]:
 
     At c = 26: kappa(Vir_26) = 13.  The complementarity partner has
     kappa(Vir_0) = 0 in the scalar Virasoro lane.  This does not identify
-    A^!, B(A), or the Hochschild bulk.
+    A^!, B(A), or the Hochschild closed-sector.
     """
     return full_entropy_report(26, M, g_max, algebra='virasoro')
 

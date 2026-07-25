@@ -9,15 +9,15 @@
 The non-abelian Poincar\'e (NAP) chapter operates on the Open quadrant
 in two strata. The bar/twisting calculation
 $\barB^{\mathrm{ch}}_X(\cA)$ and its Verdier dual
-$\cA^!_\infty$ are level-$2$ statements (bar coalgebra and post-Verdier
+$K_X(\cA)$ are level-$2$ statements (bar coalgebra and Verdier
 homotopy dual algebra). The genus-graded NAP scalar shadow
 $\kappa(\cA)\lambda_g$ on $\overline{\cM}_g$ is a level-$5$ scalar
 shadow, obtained by trace + clutching on the open factorization
 category. The hypothesis package on every theorem in this chapter is:
 \emph{finite type on the Koszul locus, or separated completed
 continuous-dual replacement}; comparison maps from CY/Hall/Mukai data
-\textup{(}Vol~III\textup{)} are not used as inputs and never identify
-$\cA^!_\infty$ with a CY-side bulk. Modular invariance of any
+\textup{(}Vol~III\textup{)} enter through separately named maps from
+$K_X(\cA)$ to a CY-side object. Modular invariance of any
 genus-$g$ partition function specialization derived from NAP is a
 level-$5$ trace+clutching statement; the closed shadow has modular
 consequences but modularity is not an intrinsic closed-algebra
@@ -38,22 +38,26 @@ Verdier-dualizable surface of Theorem~\ref{thm:main-NAP-resolution}:
 finite type on the Koszul locus, or the separated completed
 continuous-dual replacement. On this surface the chiral bar coalgebra
 $\barB_X^{\mathrm{ch}}(\cA)$ is the factorization homology object,
-and its Verdier dual
+and its Verdier dual is already an algebra:
 \[
-\cA^!_\infty := \mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\cA)
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\cA).
 \]
-is the post-Verdier homotopy dual algebra. If the transferred
-structure is formal and dualizable, the strict Koszul-dual algebra is
-$\cA^!=(\cA^i)^\vee$, where
-$\cA^i=H^\bullet\barB_X^{\mathrm{ch}}(\cA)$ is the Koszul-dual
-coalgebra. The cobar counit
-$\Omegach_X\barB_X^{\mathrm{ch}}(\cA)\simeq\cA$ is bar-cobar
-inversion, not the definition of~$\cA^!$.
+For a quadratic presentation, the coalgebra comparison
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X^{\mathrm{ch}}(\cA)$ dualizes to
+\[
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}).
+\]
+A chosen Koszul partner carries a map
+$\nu_\cA\colon K_X(\cA)\to\cA^!$; formality and dualizability make it
+an equivalence with $\cA^!=(\cA^{\mathrm i})^\vee$.  The cobar counit
+$\Omegach_X\barB_X^{\mathrm{ch}}(\cA)\simeq\cA$ gives bar--cobar
+reconstruction.
 
 The computation is local on configuration strata. The logarithmic
 forms on $\overline{C}_n(X)$ carry the collision residues; Verdier
 duality turns the bar coproduct into the product of
-$\cA^!_\infty$, with the usual dimension shift and orientation line.
+$K_X(\cA)$, with the usual dimension shift and orientation line.
 Thus the same residue calculation detects the bar differential,
 the post-Verdier curvature, and the scalar genus obstruction, but it
 does so only after the finite-type or completed hypotheses have been
@@ -140,7 +144,14 @@ m_0^!=-k\,\omega_{\mathrm{cen}}\bigr)\right).
 \end{example}
 
 \begin{remark}[Heisenberg Koszul duality]\label{rem:heisenberg-koszul}
-The duality $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ is \emph{not} level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$, which exchanges different algebras. It is operadic: $\mathrm{chirLie}^! = \mathrm{chirCom}$, realized at the factorization algebra level by Verdier duality on configuration spaces.
+The duality
+$\mathcal{H}_k^!\simeq
+(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$ for \(k\ne0\)
+is \emph{not} level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$,
+which exchanges different algebras. It is operadic:
+$\mathrm{chirLie}^! = \mathrm{chirCom}$ in the curved second-kind
+ambient, realized at the factorization algebra level by Verdier
+duality on configuration spaces.
 \end{remark}
 
 \subsection{Free fermions: correct Koszul pair}
@@ -216,15 +227,18 @@ J^a(z)J^b(w)
 +\frac{[a,b](w)}{z-w}.
 \]
 On the generic completed finite-weight surface, the double pole gives
-$r^{\mathrm{KM}}(z)=k\Omega/z$, while Verdier duality negates the
+$r^{\mathrm{KM}}(z)=k\Omega_{\mathrm{tr}}/z$, while Verdier duality negates the
 shifted curvature
 \[
 m_0(k)=\frac{k+h^\vee}{2h^\vee}\Omega .
 \]
 Thus the Koszul partner is
 \[
-\mathbb{D}_{\Ran}\barB^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)
-\simeq
+K_X(\widehat{\mathfrak g}_k):=
+\mathbb{D}_{\Ran}\barB^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k),
+\qquad
+\nu_k^{\mathrm{aff}}\colon
+K_X(\widehat{\mathfrak g}_k)\xrightarrow{\sim}
 \widehat{\mathfrak{g}}_{k'},
 \qquad
 k'=-k-2h^\vee
@@ -315,15 +329,14 @@ R\Gamma\!\left(
 with direct sum only in finite bar-length truncations.
 
 The modular characteristic $\kappa(\mathrm{Vir}_c)=c/2$ couples to
-the Hodge class on the uniform-weight scalar-diagonal lane of
+the signed Hodge component on the uniform-weight scalar-diagonal lane of
 Theorem~\ref{thm:genus-universality}:
 \[
-\mathrm{obs}_g(\mathrm{Vir}_c)
-=
-(c/2)\,\lambda_g
+\operatorname{obs}^{\mathrm{Hdg}}_g(\mathrm{Vir}_c)
+=(-1)^g(c/2)\,\lambda_g
 \in H^{2g}(\overline{\mathcal{M}}_g),
 \]
-and at genus~$1$ this reads $(c/2)\lambda_1$. Since Virasoro has one
+and its pointed genus-$1$ trace is $(c/2)\lambda_1$. Since Virasoro has one
 strong generator, the cross-channel correction term of
 Theorem~\ref{thm:genus-universality} vanishes for this family.
 
@@ -541,8 +554,8 @@ $\delta F_g^{\mathrm{cross}}(\mathcal{A})$ is additional data, not a
 NAP consequence.
 Verdier duality on the $n$-point stratum carries the usual
 $[2n]$ orientation shift for a complex curve and sends this completed
-bar chain model to the corresponding post-Verdier model for
-$\mathcal{A}^!_\infty$.
+bar chain model to the corresponding component of the algebra
+$K_X(\mathcal A)=\mathbb D_{\Ran}\bar B_X(\mathcal A)$.
 \end{definition}
 
 \begin{remark}[Curve Verdier shifts and Calabi--Yau Serre shifts]

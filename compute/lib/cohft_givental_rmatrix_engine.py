@@ -1183,7 +1183,7 @@ def koszul_dual_rmatrix(c_val, max_order: int = 8) -> Dict[str, Any]:
     computation here is the Virasoro central-charge complementarity
     c <-> 26-c used for the A^! Verdier/continuous-dual branch under
     finite-type/completed hypotheses.  It is not bar-cobar inversion
-    Omega(B(A)) = A and it is not the Hochschild/bulk center
+    Omega(B(A)) = A and it is not the Hochschild/closed-sector center
     Z_ch^der(A) = ChirHoch^*(A,A).
 
     The R-matrices are:

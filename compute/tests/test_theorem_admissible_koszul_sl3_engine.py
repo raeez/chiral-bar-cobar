@@ -6,7 +6,7 @@ VERIFICATION MANDATE (3+ genuinely independent paths per claim):
     Path 3: Shapovalov determinant zero loci
     Path 4: Admissible module count + Zhu algebra finiteness
     Path 5: DS reduction compatibility
-    Path 6: Cross-check with sl_2 (proved case)
+    Path 6: Cross-check with sl_2 finite evidence / conditional lane
     Path 7: Dual level complementarity (AP24: kappa + kappa' = 0)
     Path 8: C_2 algebra regularity (tensor product decomposition)
 
@@ -582,7 +582,7 @@ class TestFullAnalysis(unittest.TestCase):
     def test_integrable_all_koszul(self):
         """All integrable levels (q=1, p >= 3) are Koszul.
 
-        These should be unconditionally Koszul (universal algebra is Koszul).
+        These are the integrable finite-model cases of this engine.
         """
         for p in range(3, 10):
             r = full_koszul_analysis(p, 1, max_weight=6, explicit=True)
@@ -644,10 +644,11 @@ class TestRankComparison(unittest.TestCase):
         self.assertEqual(comp['sl_3']['dim'], 8)
         self.assertEqual(comp['sl_3']['rank'], 2)
 
-    def test_sl2_koszulness_proved(self):
-        """sl_2 Koszulness is PROVED at all admissible levels."""
+    def test_sl2_koszulness_conditional(self):
+        """sl_2 admissible simple quotients stay conditional here."""
         comp = rank_comparison()
-        self.assertIn('PROVED', comp['sl_2']['koszulness'])
+        self.assertIn('CONDITIONAL', comp['sl_2']['koszulness'])
+        self.assertIn('quotient-bar', comp['sl_2']['koszulness'])
 
     def test_sl3_koszulness_open(self):
         """sl_3 Koszulness is OPEN (this is what we're testing)."""

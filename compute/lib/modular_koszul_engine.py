@@ -505,7 +505,7 @@ def _stage7_dual(family: str, kap, cc, **params) -> Dict[str, Any]:
     k_sym = Symbol('k')
 
     duals = {
-        'heisenberg': ('Sym^ch(V*)', lambda kp, cc_: -kp, None),
+        'heisenberg': ('curved Sym^ch(V*[1])', lambda kp, cc_: -kp, None),
         'affine_sl2': ('V_{-k-4}(sl_2)',
                        lambda kp, cc_: Rational(3) * (-k_sym - 4 + 2) / 4,
                        None),

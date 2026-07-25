@@ -2,8 +2,10 @@
 \label{chap:config-spaces}
 
 The open configuration space $C_n(X)$ is not compact, and the
-propagator $\eta_{ij}=d\log(z_i-z_j)$ does not extend as a smooth
-form. The bar construction needs a weaker and sharper object: a
+coordinate expression \(\eta_{ij}=d\log(z_i-z_j)\) is only an affine or
+formal-screen representative of the logarithmic normal form along the
+diagonal; it does not extend as a smooth global form on an arbitrary
+curve. The bar construction needs a weaker and sharper object: a
 logarithmic extension with residues along the collision boundary. The
 Fulton--MacPherson compactification $\overline C_n(X)$ supplies that
 object. Its normal-crossing boundary carries holomorphic scale
@@ -17,9 +19,9 @@ coming from the $\mathrm{PSL}_2$ action; for $g(X)\geq1$ it must be
 replaced by the surface classes and mixed period relations recorded in
 Proposition~\ref{prop:arnold-higher-genus}.
 
-The logarithmic 1-forms $\eta_{ij}=d\log(z_i-z_j)$ are the scalar
-coefficients of the universal KZ connection one-form on an affine
-genus-$0$ screen,
+The logarithmic \(1\)-forms \(\eta_{ij}\), represented on an affine
+genus-$0$ screen by \(d\log(z_i-z_j)\), are the scalar coefficients of
+the universal KZ connection one-form on that screen,
 $\omega_{\mathrm{Arnold}} = \sum_{i<j} t_{ij}\,\eta_{ij}$ valued in
 the infinitesimal braid Lie algebra $\mathfrak{t}_n$; the
 universal flat connection is
@@ -27,8 +29,8 @@ $\nabla_{\mathrm{Arnold}} = d - \omega_{\mathrm{Arnold}}$ on the
 trivial $U(\mathfrak t_n)$-bundle over
 $\operatorname{Conf}_n(\mathbb C)$. On the Arnold-local ordered
 genus-$0$ subcategory, the simple-pole part of the chiral bar
-differential is the image of this flat connection under the KZ
-specialisation:
+differential is the FM-residue realization of the image of this flat
+connection under the KZ specialisation:
 \[
  d_{\mathrm{bar}}^{(0),\,\mathrm{simp}}
  \;=\;
@@ -132,24 +134,27 @@ $\Omega^1_{\overline{C}_n(X)}(\log D)$ and satisfy the
 + \eta_{ki} \wedge \eta_{ij} = 0
 \qquad (i,j,k \text{ distinct}).
 \end{equation}
-Third, this relation forces the affine simple-pole component of
-$d_{\mathrm{residue}}^2$ to vanish
+Third, this relation supplies the form half of the affine simple-pole
+component of $d_{\mathrm{residue}}^2$
 (Theorem~\ref{thm:bar-nilpotency-complete}): the
 bar differential at degree~$2$ is a sum of double residues
 at compatible codimension-two collision corners, and
-the genus-$0$ Arnold relation is the precise local cancellation
-identity ensuring that these contributions sum to zero on an affine
-screen. The equivalence between the local Arnold relation and
-nilpotency of the bar differential is
+the genus-$0$ Arnold relation is the precise local cancellation identity
+for the scalar logarithmic-form coefficients. For a chiral algebra
+coefficient system the same codimension-two corner also consumes the
+Borcherds coefficient identity on OPE coefficients. The equivalence between
+the local Arnold relation and scalar-form triple-residue nilpotency is
 Theorem~\ref{thm:arnold-iff-nilpotent}; on the affine genus-$0$ screen
-it is the only relation on the scalar propagator classes. On
+it is the only relation on the scalar propagator classes, not the whole
+operator-valued bar-square proof. On
 $\mathbb{P}^1$ one must also quotient by the projective linear
 relations, and on $\Sigma_g$ with $g \geq 1$ one must adjoin the
 surface generators and mixed period relations of
 Proposition~\ref{prop:arnold-higher-genus}. The further elliptic and
 prime-form corrections
-(Proposition~\ref{prop:elliptic-arnold-relations}) measure the
-failure of strict nilpotency by the curvature
+(Proposition~\ref{prop:elliptic-arnold-relations}) feed the curved
+positive-genus fibrewise square; only after scalar projection does this
+produce the Hodge obstruction
 $\kappa(\cA) \cdot \omega_g$.
 
 \section{Fulton--MacPherson compactification}
@@ -161,19 +166,17 @@ by iterated blow-up of $X^n$ along all diagonals, adding boundary
 divisors that encode all collision patterns. It is the geometric
 carrier of the bar complex $\bar{B}_X(\cA)$, a factorization
 \emph{coalgebra} on $\operatorname{Ran}(X)$. Verdier duality on
-$\operatorname{Ran}(X)$ exchanges coalgebras and algebras and
-realizes the intertwining
+$\operatorname{Ran}(X)$ exchanges coalgebras and algebras and forms
+the Verdier--Koszul algebra
 \[
-\mathbb{D}_{\operatorname{Ran}}\, \bar{B}_X(\cA) \;\simeq\; \bar{B}_X(\cA^!)
-\;\simeq\; \cA^!_\infty
+K_X(\cA)
+:=\mathbb{D}_{\operatorname{Ran}}\, \bar{B}_X(\cA)
 \]
-of factorization algebras (Theorem~A,
-Convention~\textup{\ref{conv:bar-coalgebra-identity}}): the Verdier
-dual of the bar coalgebra of $\cA$ is identified with the bar of the
-Koszul dual $\cA^!$, equivalently the homotopy Koszul dual algebra
-$\cA^!_\infty$. This is \emph{not} the bar--cobar inversion
-$\Omega(\bar{B}_X(\cA)) \simeq \cA$ of Theorem~B, which recovers $\cA$
-itself; the two are distinct functors on $\bar{B}_X(\cA)$.
+Convention~\textup{\ref{conv:bar-coalgebra-identity}}).  A
+finite-type quadratic comparison supplies the pair map
+\(\nu_\cA\colon K_X(\cA)\to\cA^!\).  The bar--cobar counit
+$\Omega(\bar{B}_X(\cA)) \simeq \cA$ is the separate reconstruction
+functor on the same bar input.
 
 \subsection{Explicit construction}
 
@@ -812,7 +815,13 @@ $\{1,\ldots,n\}$ of cardinality at least two.
 
 \begin{definition}[Logarithmic forms]\label{def:log-forms}
 \index{logarithmic forms|textbf}
-The forms $\eta_{ij} = d\log(z_i - z_j)$ that served as propagators in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg1}) are the simplest instances of the following class.
+On an affine genus-zero chart, the forms
+\(\eta_{ij}=d\log(z_i-z_j)\) that served as propagators in the
+Heisenberg bar complex (\S\ref{sec:frame-bar-deg1}) are the simplest
+instances of the following class. On a general curve the notation
+\(\eta_{ij}\) means the logarithmic
+normal form along \(D_{ij}\) together with its coordinate-change
+cocycle.
 
 A differential $k$-form $\omega$ on $\overline{C}_n(\Sigma_g)$ has \emph{logarithmic poles along $D$} if:
 \begin{enumerate}
@@ -1051,7 +1060,7 @@ rational-model refinements due to K\v{r}\'{\i}\v{z} and
 Bezrukavnikov.
 \end{proof}
 
-\begin{proposition}[Higher-genus correction to the Arnold-only presentation; \ClaimStatusProvedHere]
+\begin{proposition}[Higher-genus correction to the affine Arnold scalar presentation; \ClaimStatusProvedHere]
 \label{prop:arnold-higher-genus}
 \index{configuration space!genus split}
 \index{Totaro relations|textbf}
@@ -1348,7 +1357,7 @@ generator to the ambient cohomology. Because $\Sigma_g$ is smooth and
 projective, Totaro's degeneration theorem
 \cite[Theorem~3]{Totaro96} identifies the rational cohomology of
 $C_n(\Sigma_g)$ with the cohomology of this diagonal CDGA; no
-additional Arnold-only relation among closed pairwise classes computes
+additional affine Arnold scalar relation among closed pairwise classes computes
 the positive-genus contribution.
 The resulting model is equivalent to the rational models of
 K\v{r}\'{\i}\v{z}~\cite{Kriz94} and
@@ -1842,6 +1851,7 @@ modified to account for two geometric mechanisms:
 
 \begin{definition}[Logarithmic FM compactification \cite{Mok25}]
 \label{def:log-fm-compactification}
+\ClaimStatusProvedElsewhere
 \index{logarithmic FM compactification|textbf}
 Let $X$ be a smooth projective curve, $D = p_1 + \cdots + p_r$ an
 effective divisor. The \emph{logarithmic Fulton--MacPherson
@@ -1854,6 +1864,16 @@ properties:
  $j\colon C_m(X \setminus D) \hookrightarrow
  \mathrm{FM}_m(X \mathbin{|} D)$
  with dense image.
+\item The logarithmic structure on
+ $\mathrm{FM}_m(X \mathbin{|} D)$ is the fine saturated divisorial
+ log structure of the toroidal boundary
+ $\partial\mathrm{FM}_m(X\mathbin{|}D)$; equivalently
+ \[
+ M_{\mathrm{FM}}=
+ j_*\mathcal O^\times_{C_m(X\setminus D)}
+ \cap \mathcal O_{\mathrm{FM}_m(X\mathbin{|}D)}
+ \]
+ inside the total quotient sheaf on each toroidal chart.
 \item The boundary
  $\partial\mathrm{FM}_m(X \mathbin{|} D)$ is a logarithmic
  normal-crossings boundary in the toroidal sense. Its local strata
@@ -2005,11 +2025,18 @@ Each case contributes zero to $d^2$, establishing
 $d^2 = 0$.
 \end{proof}
 
-\begin{corollary}[Conformal blocks from punctured bar complex;
+\begin{corollary}[Punctured bar coinvariants and conformal-block comparison;
 \ClaimStatusConditional]
 \label{cor:conformal-blocks-punctured-bar}
-The zeroth cohomology of the punctured bar complex recovers
-the space of conformal blocks:
+Type signature: \textup{(}Open quadrant, punctured pointed-bar
+coinvariant comparison presentation, Beilinson levels~$2$ and~$5$,
+hypothesis package: punctured FM bar complex, module-action
+nilpotence, Čech/bar resolution of the coinvariant functor,
+degree-$0$ exactness, and a TUY/Hitchin or equivalent finite-rank
+conformal-block comparison for the inserted modules\textup{)}.
+The punctured bar complex computes the derived coinvariant complex.
+Under the stated exactness and conformal-block comparison package, its
+zeroth cohomology identifies with the space of conformal blocks:
 \[
 H^0(\bar{B}_\bullet(\cA;\, \vec{\mathcal{M}};\, X))
 \;\cong\;
@@ -2021,8 +2048,9 @@ H^0(\bar{B}_\bullet(\cA;\, \vec{\mathcal{M}};\, X))
 The zeroth bar cohomology computes the space of coinvariants:
 elements of $\mathcal{M}_1 \otimes \cdots \otimes \mathcal{M}_r$
 modulo the $\cA(X \setminus \{p_1, \ldots, p_r\})$-action.
-By definition, this is $\mathbb{V}(\cA;\, \vec{\mathcal{M}};\, X)$
-(Definition~\ref{def:conformal-blocks}).
+On the comparison lane, this is
+$\mathbb{V}(\cA;\, \vec{\mathcal{M}};\, X)$
+\textup{(}Definition~\ref{def:conformal-blocks}\textup{)}.
 The identification follows from the quasi-isomorphism
 of the bar complex with the Čech resolution of the
 coinvariant functor, applied to the Weiss cover
@@ -2413,17 +2441,21 @@ component with nodal points added to~$D_v$ and tangential
 directions induced from the gluing parameter.
 
 \medskip
-The bordered FM compactification is:
+For a fixed tangential log curve, the bordered FM compactification is:
 \begin{equation}\label{eq:bordered-fm-result}
 \overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)
 \;:=\;
 \text{iterated blowup of } Y
 \text{ along }
 \Delta_B^{\mathrm{bdy}},\;
-\Delta_{S,B,j}^{\mathrm{mix}},\;
-D_\Gamma^{\mathrm{nod}}
+\Delta_{S,B,j}^{\mathrm{mix}}.
 \end{equation}
-in the order prescribed above.
+This is performed in the order prescribed above. In the relative
+modular family over
+$\overline{\mathcal M}_{g,r}$ one further blows up the pullbacks of
+the nodal boundary strata $D_\Gamma^{\mathrm{nod}}$ from Step~5; those
+relative strata are not boundary faces of the fixed-fiber space in
+\eqref{eq:bordered-fm-result}.
 \end{construction}
 
 \begin{theorem}[Properties of the bordered FM compactification;
@@ -2525,24 +2557,43 @@ is independent of the ordering~\cite{FM94}.
 \label{subsec:boundary-decomposition}
 \index{bordered FM compactification!boundary strata|textbf}
 
-\begin{proposition}[Four-type boundary decomposition;
+\begin{proposition}[Fixed and relative boundary decomposition;
 \ClaimStatusProvedHere]
 \label{prop:four-type-boundary}
 \index{boundary strata!four types}
-The codimension-one boundary of the bordered FM
+The codimension-one boundary of the fixed-fiber bordered FM
 compactification
 $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$
-decomposes into four types of smooth faces:
-\begin{equation}\label{eq:boundary-four-types}
-\partial\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}
+decomposes into three collision types:
+\begin{equation}\label{eq:boundary-three-types-fixed}
+\partial\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau)
 \;=\;
-\partial_{\mathrm{I}}\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}
+\partial_{\mathrm{I}}\,
+\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau)
 \;\cup\;
-\partial_{\mathrm{II}}\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}
+\partial_{\mathrm{II}}\,
+\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau)
 \;\cup\;
-\partial_{\mathrm{III}}\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}
+\partial_{\mathrm{III}}\,
+\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau).
+\end{equation}
+For the relative bordered FM compactification over the
+Deligne--Mumford boundary of $\overline{\mathcal M}_{g,r}$, the
+pullbacks of the nodal boundary divisors add a fourth type:
+\begin{equation}\label{eq:boundary-four-types}
+\partial\,\overline{C}{}^{\,\mathrm{oc,rel}}_{g;k,\vec{m}}
+\;=\;
+\partial_{\mathrm{I}}\,
+\overline{C}{}^{\,\mathrm{oc,rel}}_{g;k,\vec{m}}
 \;\cup\;
-\partial_{\mathrm{IV}}\,\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}.
+\partial_{\mathrm{II}}\,
+\overline{C}{}^{\,\mathrm{oc,rel}}_{g;k,\vec{m}}
+\;\cup\;
+\partial_{\mathrm{III}}\,
+\overline{C}{}^{\,\mathrm{oc,rel}}_{g;k,\vec{m}}
+\;\cup\;
+\partial_{\mathrm{IV}}\,
+\overline{C}{}^{\,\mathrm{oc,rel}}_{g;k,\vec{m}}.
 \end{equation}
 
 \medskip
@@ -2815,7 +2866,7 @@ $\Delta_{\mathrm{ns}}(\phi)(a_1, \ldots, a_n)
 \begin{proof}
 It suffices to verify that every codimension-one face of
 $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$ is of one of the
-four types. A codimension-one face is defined by one
+listed types. A codimension-one face is defined by one
 boundary-defining function reaching zero. The possible
 degenerations are:
 \begin{enumerate}
@@ -2828,20 +2879,22 @@ degenerations are:
  boundary component~$j$: mixed bubbling (Type~III). The
  consecutive block~$B$ of simultaneously collapsing boundary
  points is determined by the limiting configuration.
-\item $t_e = 0$ for some edge~$e$ of a stable graph: nodal
- clutching (Type~IV).
+\item in the relative modular family only, $t_e = 0$ for some edge~$e$
+of a stable graph: nodal clutching (Type~IV).
 \end{enumerate}
 Any other degeneration has codimension $\geq 2$ (e.g.,
 simultaneous collisions of two independent clusters, or a
 non-consecutive boundary collision). The four types are
 mutually exclusive because their boundary-defining functions
 ($\epsilon_S$, $\delta_B$, $\rho_{i,j}$, $t_e$) are
-independent local coordinates. Exhaustiveness follows from
-the compactness of
-$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$: every sequence
+independent local coordinates in the relative family; on a fixed curve
+there is no $t_e$ coordinate, hence no Type~IV face. Exhaustiveness
+follows from the compactness of
+$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$ in the fixed case and of
+the relative compactification in the modular case: every sequence
 in the interior has a convergent subsequence, and the limit
 is classified by the minimal degeneration pattern, which is
-one of the four types.
+one of the listed types.
 \end{proof}
 
 \begin{remark}[Comparison with classical FM]
@@ -2850,12 +2903,13 @@ When $D = \emptyset$ (no punctures), the bordered FM
 compactification reduces to the classical FM compactification:
 $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{0}}(X, \emptyset, -)
 = \overline{C}_k(X)$.
-Only Type~I and Type~IV faces are present. The Type~II and
-Type~III faces are \emph{new} in the bordered setting and encode
-the open-string sector. When the curve is fixed
-(no moduli variation), Type~IV faces are absent and the boundary
-has three types, matching the Swiss-cheese operad structure
-of Voronov~\cite{Voronov99}.
+For a fixed curve only Type~I faces are present in the closed sector;
+Type~II and Type~III are \emph{new} in the bordered setting and
+encode the open-string sector. Type~IV faces occur only in the
+relative modular family where the underlying curve varies. Thus the
+fixed bordered boundary has Types~I--III, matching the Swiss-cheese
+operad structure of Voronov~\cite{Voronov99}, while the relative
+family adds nodal clutching faces.
 \end{remark}
 
 
@@ -2864,17 +2918,18 @@ of Voronov~\cite{Voronov99}.
 \index{modular Maurer--Cartan equation!with clutching|textbf}
 \index{clutching!in modular MC equation|textbf}
 
-The bordered FM compactification of
-\S\ref{sec:bordered-fm} carries, via the Stokes theorem on
-its boundary, the \emph{modular Maurer--Cartan equation with
-clutching}: the master equation
+The fixed-fiber bordered FM compactification of
+\S\ref{sec:bordered-fm} supplies the collision part of the
+open-closed differential by Stokes' theorem on its boundary. The
+full \emph{modular Maurer--Cartan equation with clutching}, the master
+equation
 $d\Theta + \tfrac{1}{2}[\Theta, \Theta]
 + \hbar\Delta_{\mathrm{clutch}}(\Theta) = 0$
 governing the genus expansion of chiral correlators on
-punctured stable curves. The modular open-closed convolution
-algebra carries the equation; the MC element~$\Theta_\cA$ and the
-equation itself follow from Stokes' theorem on the four-type
-boundary of~$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$.
+punctured stable curves, lives in the modular open-closed convolution
+algebra. Its Type~IV terms are relative-moduli terms: they are supplied
+by the separating and non-separating parts of the modular operad
+square-zero identity, not by Stokes' theorem on a fixed curve.
 
 \subsection{The modular open-closed convolution algebra}
 \label{subsec:modular-oc-convolution}
@@ -3218,19 +3273,35 @@ where:
 \end{theorem}
 
 \begin{proof}
-The proof is a Stokes-theorem argument on the bordered FM
-compactification, following the same logic as
-Theorem~\ref{thm:mc2-bar-intrinsic} but with the four-type
-boundary decomposition of
-Proposition~\ref{prop:four-type-boundary} in place of the
-boundary of $\overline{\cM}_{g,n}$.
+The proof has two inputs, and the conditional status of the theorem is
+attached to their compatibility in the open-closed relative family.
+
+\emph{Source 1: fixed-fiber Stokes.}
+On the fixed tangential log curve $(X,D,\tau)$, Stokes' theorem on
+$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau)$ sees only the
+collision faces of
+Proposition~\ref{prop:four-type-boundary}, namely Types~I--III. This
+geometric calculation gives the open-closed differential
+$d=d_{\mathrm{int}}+d_{\mathrm{bdy}}+d_{\mathrm{mix}}$ applied to
+$\Theta_\cA$.
+
+\emph{Source 2: modular-operad square-zero.}
+The genus-completed open-closed bar differential
+$D_\cA^{\mathrm{oc}}=\dzero+\Theta_\cA$ is part of the
+$\mathrm{FCom}^{\mathrm{oc}}$-algebra structure invoked in
+Definition~\ref{def:modular-twisting-morphism-oc}. The assertion that
+this relative open-closed structure squares to zero is the
+open-closed extension of Theorem~\ref{thm:bar-modular-operad}. Its
+Getzler--Kapranov edge decomposition supplies the separating bracket
+and non-separating clutching terms. Thus Type~IV is a relative-moduli
+or algebraic modular-operad contribution, not a boundary face of the
+fixed-fiber Stokes chain.
 
 \medskip
-\noindent\textsc{Setup.}
-Consider a generic one-parameter family in the bordered FM
-compactification: a smooth chain
+\noindent\textsc{Fixed-fiber Stokes setup.}
+Consider a smooth chain
 $\sigma \in C_{2k + |\vec{m}|}
-(\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}})$. The
+(\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X,D,\tau))$. The
 chiral amplitude form
 $\omega^{(g)}_{k,\vec{m}}(\cA, \vec{\mathcal{M}})$ of
 Definition~\ref{def:modular-twisting-morphism-oc} is a
@@ -3259,10 +3330,10 @@ the classical FM case) then gives
 \int_F \omega^{(g)}_{k,\vec{m}},
 \end{equation}
 where $\mathcal{F}(\partial\sigma)$ is the set of
-codimension-one faces of~$\partial\sigma$. By
-Proposition~\ref{prop:four-type-boundary}, these faces
-decompose into four types, and each type contributes a
-specific term to the MC equation.
+codimension-one faces of~$\partial\sigma$. By the fixed-fiber clause
+of Proposition~\ref{prop:four-type-boundary}, these faces decompose
+into Types~I--III. They produce exactly the three components of
+$d\,\Theta_\cA$.
 
 \medskip
 \noindent\textsc{Type~I contribution:
@@ -3334,29 +3405,25 @@ degenerations} (Type~IV(a)), not over boundary or mixed
 collisions.
 
 \medskip
-\noindent\textsc{Type~IV contribution:
+\noindent\textsc{Relative modular contribution:
 bracket $\tfrac{1}{2}[\Theta_\cA, \Theta_\cA]^{\mathrm{oc}}$
 and clutching $\hbar\,\Delta_{\mathrm{clutch}}(\Theta_\cA)$.}
 
-The Type~IV faces produce the nodal-degeneration terms and
-split into two geometrically distinct classes.
-The \emph{separating} nodal faces Type~IV(a) are the
-\emph{sole} source of the bracket
-$\frac{1}{2}[\Theta_\cA, \Theta_\cA]^{\mathrm{oc}}$:
-each separating node joins two distinct components, composing
-two operations via the interior pairing.
-The \emph{non-separating} clutching faces Type~IV(b)
-contribute the genuinely new term
-$\hbar\,\Delta_{\mathrm{clutch}}(\Theta_\cA)$.
-(Note: the Type~IV faces arise from the genus-graded modular
-structure of the bar differential: they record nodal
-degenerations of the underlying curve, not collisions of marked
-points on a fixed curve. The fixed-curve Stokes argument on
-$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$ produces
-Types~I--III; the Type~IV contribution enters through the
-moduli variation encoded in the genus summation
-$\sum_g \hbar^g$ and the modular operad algebra structure of the bar
-complex (Theorem~\textup{\ref{thm:bar-modular-operad}}).
+The nodal terms are not produced by the preceding fixed-fiber Stokes
+calculation. They enter through the relative modular family and the
+genus-completed modular operad algebra structure of the bar complex
+(Theorem~\textup{\ref{thm:bar-modular-operad}}). In the relative
+bordered FM family, the Type~IV divisors split into two geometrically
+distinct classes. The \emph{separating} nodal divisors Type~IV(a) are
+the source of the bracket
+$\frac{1}{2}[\Theta_\cA, \Theta_\cA]^{\mathrm{oc}}$: each separating
+node joins two distinct components, composing two operations via the
+interior pairing. The \emph{non-separating} clutching divisors
+Type~IV(b) contribute
+$\hbar\,\Delta_{\mathrm{clutch}}(\Theta_\cA)$ by tracing two legs of
+one operation. Equivalently, these terms are the separating and
+non-separating edge parts of
+$(D_\cA^{\mathrm{oc}})^2=0$.
 
 \emph{Precise accounting.}
 The factor of $\frac{1}{2}$ arises because each separating
@@ -3424,25 +3491,32 @@ The non-separating clutching increases genus by~$1$
 
 \medskip
 \noindent\textsc{Assembly.}
-Summing the contributions from all four boundary types:
+Combining the fixed-fiber Stokes calculation for collision faces with
+the relative modular-operad square-zero identity gives, componentwise:
 \begin{align}
-0 &= \int_{\partial\sigma} \omega^{(g)} \notag \\
- &= \underbrace{\text{Type~I} + \text{Type~II}
+0
+&=
+\underbrace{\text{Type~I} + \text{Type~II}
  + \text{Type~III}}_{\displaystyle d\,\Theta_\cA}
  \;+\;
- \underbrace{\text{Type~IV(a)}}_{\displaystyle
+ \underbrace{\text{separating modular edges}}_{\displaystyle
  \frac{1}{2}[\Theta_\cA, \Theta_\cA]^{\mathrm{oc}}}
  \;+\;
- \underbrace{\text{Type~IV(b)}}_{\displaystyle
+ \underbrace{\text{non-separating modular edges}}_{\displaystyle
  \hbar\,\Delta_{\mathrm{clutch}}(\Theta_\cA)}.
- \label{eq:stokes-assembly}
+ \label{eq:modular-two-source-assembly}
 \end{align}
-Since this holds for every smooth chain~$\sigma$ (by the
-Stokes theorem on the manifold with corners
-$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}$,
-applied using the normal-crossings property of
-Theorem~\ref{thm:bordered-fm-properties}(iii)), we obtain
-the MC equation~\eqref{eq:modular-mc-clutching}:
+The first brace is the value of
+$\int_{\partial\sigma}\omega^{(g)}$ on the fixed-fiber boundary
+Types~I--III. The second and third braces are the separating and
+non-separating parts of the Getzler--Kapranov decomposition
+\eqref{eq:gk-decomposition} for the relative modular
+$\mathrm{FCom}^{\mathrm{oc}}$ structure. Thus the displayed identity
+is not a single fixed-curve Stokes formula; it is the compatibility of
+fixed-fiber collision Stokes with the relative modular square-zero
+operator. This compatibility is the named open-closed relative-family
+hypothesis in the theorem. We obtain
+\eqref{eq:modular-mc-clutching}:
 \[
 d\,\Theta_\cA
 + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]^{\mathrm{oc}}
@@ -3661,8 +3735,19 @@ Orlik--Solomon presentation.
 
 The logarithmic forms at each genus:
 \begin{itemize}
-\item \emph{Genus 0:} Standard forms $\eta_{ij} = d\log(z_i - z_j)$
-\item \emph{Genus 1:} Elliptic forms $\eta_{ij}^{(1)} = d\log\vartheta_1(z_i - z_j|\tau)$ with modular parameter
+\item \emph{Genus 0:} affine/formal representatives
+\(\eta_{ij}=d\log(z_i-z_j)\), glued on \(\mathbb P^1\) with the
+projective linear relations
+\item \emph{Genus 1:} Elliptic forms
+\[
+\eta_{ij}^{(1)}
+=
+\left[
+\partial_u\log\vartheta_1(u|\tau)
++2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+\right]_{u=z_i-z_j}d(z_i-z_j)
+\]
+with modular parameter~$\tau$
 \item \emph{Genus $g \geq 2$:} Prime forms $\eta_{ij}^{(g)} = d_z\log E(z_i, z_j)$ where $E$ is the Fay--Schottky prime form (a $(-\tfrac{1}{2},-\tfrac{1}{2})$-differential with a unique simple zero at $z_i = z_j$)
 \end{itemize}
 
@@ -4022,9 +4107,15 @@ The logarithmic forms on elliptic curves are replaced by forms built from theta 
 \begin{definition}[Elliptic logarithmic forms]
 On $\overline{C_n(E_\tau)}$, define the elliptic analogs of $\eta_{ij}$:
 \[
-\eta_{ij}^{(1)} = d\log\theta_1\left(\frac{z_i - z_j}{2\pi i}; \tau\right) + \frac{\pi}{\mathrm{Im}(\tau)}\, d(\overline{z_i - z_j})
+\eta_{ij}^{(1)}
+=
+\left[
+\partial_u\log\theta_1(u|\tau)
++2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+\right]_{u=z_i-z_j}
+d(z_i-z_j)
 \]
-where $\theta_1(z|\tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2/2}e^{i\pi(2n+1)z}$ with $q = e^{2\pi i\tau}$.
+where $\theta_1(z|\tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2/2}e^{i\pi(2n+1)z}$ with $q = e^{2\pi i\tau}$ and period lattice $\Lambda_\tau=\mathbb Z+\tau\mathbb Z$.
 \end{definition}
 
 \begin{proposition}[Elliptic correction to the Arnold relation \cite{Fay73}; \ClaimStatusProvedElsewhere]
@@ -4046,10 +4137,11 @@ theta-function normalization; the only invariant point used here is
 that the term is generally nonzero globally and vanishes on the
 tangent-screen associated graded. Thus the affine Arnold relation is
 recovered on a formal disk. The form $\eta_{ij}^{(1)}$ is \emph{not}
-holomorphic: the regularization term
-$\frac{\pi}{\mathrm{Im}(\tau)}\,d\bar{z}$ ensures double periodicity
-but introduces a $(0,1)$-component, so the cyclic wedge can produce a
-$(1,1)$ period term.
+holomorphic as a coefficient: the regularization is a $(1,0)$-form
+with real-analytic coefficient. Its $\bar\partial$ contributes the
+smooth term in
+$d\eta_{ij}^{(1)}=2\pi i(\delta_{\Delta_{ij}}-q_{ij}^{*}\omega_\tau)$,
+and this Arakelov term is the source of the $(1,1)$ period class.
 \end{proposition}
 
 The non-vanishing right-hand side encodes the central extension that appears at genus 1.
@@ -4815,15 +4907,20 @@ monomials. Induction on the length of the cycle reduces every circuit
 relation to triangular Arnold relations.
 \end{proof}
 
-\begin{corollary}[Bar differential squares to zero; \ClaimStatusProvedHere]
+\begin{corollary}[Affine scalar residue differential squares to zero; \ClaimStatusProvedHere]
 \label{cor:bar-d-squared-zero}
-On an affine genus-$0$ screen, the Arnold relations ensure $d^2 = 0$
-for the bar differential. For $X=\mathbb{P}^1$ or $g(X)\geq 1$, one
-must add the projective or period relations of
+On an affine genus-$0$ screen, the scalar Orlik--Solomon residue
+differential is square-zero by the Arnold relations. For the
+operator-valued chiral bar differential one must also impose the
+Borcherds coefficient identity; for $X=\mathbb{P}^1$ or
+$g(X)\geq 1$, one must add the projective or period relations of
 Proposition~\ref{prop:arnold-higher-genus}.
 \end{corollary}
 \begin{proof}
-This is Theorem~\ref{thm:bar-nilpotency-complete}.
+The scalar statement is Theorem~\ref{thm:arnold-iff-nilpotent}. The
+operator-valued bar statement is the Arnold--Borcherds cancellation of
+Theorem~\ref{thm:bar-nilpotency-complete} and
+Corollary~\ref{cor:ordered-arnold-borcherds-residue-cancellation}.
 \end{proof}
 
 \section{Higher genus}
@@ -4835,8 +4932,17 @@ On a torus $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
 \begin{theorem}[Elliptic logarithmic forms \cite{Fay73}; \ClaimStatusProvedElsewhere]
 \label{thm:elliptic-logarithmic-forms}
 The logarithmic form becomes:
-\[\eta_{ij}^{(1)} = d\log\vartheta_1\left(\frac{z_i - z_j}{2\pi i}\Big|\tau\right) + \text{modular correction}\]
-where $\vartheta_1(z|\tau)$ is the odd Jacobi theta function.
+\[
+\eta_{ij}^{(1)}
+=
+\left[
+\partial_u\log\vartheta_1(u|\tau)
++2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+\right]_{u=z_i-z_j}
+d(z_i-z_j),
+\]
+where $\vartheta_1(z|\tau)$ is the odd Jacobi theta function for the
+period lattice $\mathbb Z+\tau\mathbb Z$.
 \end{theorem}
 
 \subsection{Higher genus: prime forms}
@@ -5741,7 +5847,7 @@ $D$-modules on Ran with disjoint-locus multiplication \\
 \end{table}
 
 \medskip\noindent
-The geometric inputs are now in place. The Fulton--MacPherson compactification $\overline{C}_n(X)$ carries the local logarithmic propagators $\eta_{ij}$ as sections of $\Omega^1(\log D)$ on affine charts and tangent screens, and the Arnold relation is the codimension-two compatibility that forces the affine simple-pole component of $d^2$ to vanish on the bar differential. Proposition~\ref{prop:arnold-higher-genus} records the additional projective and period relations needed on $\mathbb{P}^1$ and on positive-genus curves. The logarithmic FM variant $\mathrm{FM}_m(X\mathbin{|}D)$ and the bordered FM compactification $\overline{C}^{\,\mathrm{oc}}_{k,\vec{m}}$ extend the framework to punctured and tangential-log curves, on which the modular Maurer--Cartan equation with clutching governs the genus expansion of chiral correlators. The Ran space $\operatorname{Ran}(X)$ provides the factorization-theoretic carrier $\operatorname{ChirAlg}(X) \simeq \operatorname{D-mod}_{\mathrm{fact}}(\operatorname{Ran}(X))$ in which the bar coalgebra lives. The affine simple-pole comparison
+The geometric inputs are now in place. The Fulton--MacPherson compactification $\overline{C}_n(X)$ carries the local logarithmic propagators $\eta_{ij}$ as sections of $\Omega^1(\log D)$ on affine charts and tangent screens, and the Arnold relation is the codimension-two form compatibility in the affine simple-pole component of the bar-square calculation. The operator-valued cancellation also consumes the Borcherds coefficient identity on OPE coefficients. Proposition~\ref{prop:arnold-higher-genus} records the additional projective and period relations needed on $\mathbb{P}^1$ and on positive-genus curves. The logarithmic FM variant $\mathrm{FM}_m(X\mathbin{|}D)$ and the bordered FM compactification $\overline{C}^{\,\mathrm{oc}}_{k,\vec{m}}$ extend the framework to punctured and tangential-log curves, on which the modular Maurer--Cartan equation with clutching governs the genus expansion of chiral correlators. The Ran space $\operatorname{Ran}(X)$ provides the factorization-theoretic carrier $\operatorname{ChirAlg}(X) \simeq \operatorname{D-mod}_{\mathrm{fact}}(\operatorname{Ran}(X))$ in which the bar coalgebra lives. The affine simple-pole comparison
 $d_{\mathrm{bar}}^{(0),\mathrm{simp}}=\mathrm{KZ}^{*}(\nabla_{\mathrm{Arnold}})_{\mathrm{simp}}$
 is proved at the climax on the Arnold-local genus-$0$ surface (Chapter~\ref{chap:climax-platonic}); its inputs are assembled here.
 
@@ -6404,7 +6510,7 @@ each reduced to the chain-level witnesses listed above.
 \begin{proof}
 Assemble the preceding conditional theorems and the unit proposition; the
 cocycle witness of
-Theorem~\ref{thm:confspaces-ran-space-cocycle-witness} certifies that
+Theorem~\ref{thm:confspaces-ran-space-cocycle-witness} proves that
 the resulting factorisation-algebra class is non-trivial and
 $M_{24}$-equivariant once its stated normalisations are supplied.
 \end{proof}

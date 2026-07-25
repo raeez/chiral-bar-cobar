@@ -229,8 +229,8 @@ def kappa_lattice(rank: int) -> Fraction:
 def kappa_dual_heisenberg(k: Fraction) -> Fraction:
     """kappa(H_k^!) = kappa(H_{-k}) = -k.
 
-    CRITICAL (AP33): H_k^! = Sym^ch(V*) != H_{-k} as algebras,
-    but they have the same kappa.
+    CRITICAL (AP33): at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k}; they have the same scalar kappa.
     """
     return -Fraction(k)
 

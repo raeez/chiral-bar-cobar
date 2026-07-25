@@ -9,7 +9,7 @@ Object discipline:
   - B(A) is the ordered bar coalgebra, used as a resolution input.
   - A^i is the Koszul cohomology coalgebra H^*(B(A)).
   - A^! is the Verdier/linear dual algebra of A^i.
-  - Z^der_ch(A) is ChirHoch^*(A,A), the bulk derived center.
+  - Z^der_ch(A) is ChirHoch^*(A,A), the closed-sector derived center.
 
 The central objects:
   - ChiralEndOperad: the chiral endomorphism operad End^ch_A
@@ -566,7 +566,7 @@ def koszul_dual_family(name: str) -> str:
 
     This labels A^!, not B(A), not A^i, and not Z^der_ch(A).
 
-    Heisenberg: H_k^! = Sym^ch(V*), NOT H_{-k}
+    Heisenberg: H_k^! is the curved second-kind Sym branch, NOT H_{-k}
     Affine sl_2: V_k(sl_2)^! = V_{-k-4}(sl_2) (Feigin-Frenkel)
     Virasoro: Vir_c^! = Vir_{26-c}
     W_3: W_3(c)^! = W_3(c') where c' is the dual central charge

@@ -1377,8 +1377,9 @@ def bar_to_rtt_connection() -> Dict[str, str]:
     The bar construction B(V_k(\hat{sl}_3)) produces a factorization coalgebra.
     The RTT presentation of Y(sl_3) emerges from this via:
 
-    1. The collision residue r(z) = Omega/z = Res^{coll}_{0,2}(Theta_A)
-       is the classical r-matrix (AP19: one pole order below OPE).
+    1. The trace-form collision residue is k*Omega/z.  The RTT
+       presentation uses the unit-normalized r(z) = Omega/z
+       (AP19: one pole order below OPE).
 
     2. The Yang R-matrix R(u) = u I + P is the EXACT solution of YBE
        with r(z) = (R(z) - I)/z as z -> infinity.  Equivalently,
@@ -1398,7 +1399,7 @@ def bar_to_rtt_connection() -> Dict[str, str]:
        This is the categorical Clebsch-Gordan equivalence.
     """
     return {
-        "step_1": "Bar collision residue -> classical r-matrix r(z) = Omega/z (AP19)",
+        "step_1": "Bar collision residue -> trace-form k*Omega/z, then unit r(z)=Omega/z for RTT",
         "step_2": "r-matrix exponentiates -> Yang R-matrix R(u) = u I + P",
         "step_3": "RTT relation = arity-2 MC equation",
         "step_4": "YBE = arity-3 d^2 = 0",

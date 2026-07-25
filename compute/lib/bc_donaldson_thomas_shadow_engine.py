@@ -613,8 +613,10 @@ def koszul_dual_shadow(shadow_seq: Dict[int, Rational],
     For Virasoro: Vir_c! = Vir_{26-c}.  kappa(Vir_c) = c/2, kappa(Vir_{26-c}) = (26-c)/2.
     AP24: kappa + kappa' = 13 (not 0) for Virasoro.
 
-    For Heisenberg: H_k! has kappa' = -k. AP33: H_k! = Sym^ch(V*) != H_{-k}.
-    The shadow coefficients of H_k! are: S_2 = -k, S_r = 0 for r >= 3.
+    For Heisenberg: H_k^! has scalar kappa' = -k.  AP33: at k != 0,
+    the object is the curved second-kind Sym^ch(V*[1]) branch, not
+    H_{-k} and not the uncurved polynomial centre.
+    The shadow coefficients of H_k^! are: S_2 = -k, S_r = 0 for r >= 3.
 
     For affine sl_2: kappa + kappa' = 0 (AP24 applies, KM family).
     """

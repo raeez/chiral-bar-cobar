@@ -17,6 +17,8 @@ from compute.lib.nonlinear_modular_shadows_all_degree import (
     virasoro_master_tower,
     virasoro_null_state_s6,
     virasoro_null_state_s6_residual,
+    virasoro_relation_s6,
+    virasoro_relation_s6_residual,
     virasoro_weighted_metric_s6,
     virasoro_weighted_metric_s6_residual,
 )
@@ -150,7 +152,7 @@ def test_virasoro_low_degree_rational_witnesses():
 @independent_verification(
     claim="thm:S6-Vir-closed",
     derived_from=[
-        "chapters/theory/shadow_tower_quadrichotomy_platonic.tex order-t^8 null-state equation",
+        "chapters/theory/shadow_tower_quadrichotomy_platonic.tex formal order-t^8 relation",
         "census values S_2=c/2, S_3=2, S_4=10/[c(5c+22)], S_5=-48/[c^2(5c+22)]",
     ],
     verified_against=[
@@ -158,22 +160,31 @@ def test_virasoro_low_degree_rational_witnesses():
         "Exact symbolic residual comparison distinguishing the two normalisations",
     ],
     disjoint_rationale=(
-        "The manuscript proof solves the null-state equation. This test "
+        "The manuscript proof solves the formal quadratic relation. This test "
         "keeps the older square-root metric coefficient as an explicit "
         "auxiliary value and checks that each value annihilates only its "
         "own defining residual."
     ),
 )
-def test_virasoro_sextic_null_state_distinct_from_weighted_metric():
-    """The corrected S_6 and the weighted metric coefficient are distinct."""
-    null_s6 = virasoro_null_state_s6()
+def test_virasoro_sextic_relation_distinct_from_weighted_metric():
+    """The relation coefficient and weighted metric coefficient are distinct."""
+    relation_s6 = virasoro_relation_s6()
     metric_s6 = virasoro_weighted_metric_s6()
 
-    assert simplify(null_s6 - metric_s6) != 0
-    assert virasoro_null_state_s6_residual(null_s6) == 0
+    assert simplify(relation_s6 - metric_s6) != 0
+    assert virasoro_relation_s6_residual(relation_s6) == 0
     assert virasoro_weighted_metric_s6_residual(metric_s6) == 0
-    assert virasoro_null_state_s6_residual(metric_s6) != 0
-    assert virasoro_weighted_metric_s6_residual(null_s6) != 0
+    assert virasoro_relation_s6_residual(metric_s6) != 0
+    assert virasoro_weighted_metric_s6_residual(relation_s6) != 0
 
-    assert simplify(null_s6.subs(c, 1) - Rational(5084, 729)) == 0
+    assert simplify(relation_s6.subs(c, 1) - Rational(5084, 729)) == 0
     assert simplify(metric_s6.subs(c, 1) - Rational(19040, 2187)) == 0
+
+
+def test_legacy_null_state_aliases_carry_relation_semantics():
+    """Compatibility aliases return the canonical formal relation output."""
+    relation_s6 = virasoro_relation_s6()
+    assert virasoro_null_state_s6() == relation_s6
+    assert virasoro_null_state_s6_residual(relation_s6) == 0
+    assert "Compatibility alias" in virasoro_null_state_s6.__doc__
+    assert "radical/decoupling map" in virasoro_null_state_s6.__doc__

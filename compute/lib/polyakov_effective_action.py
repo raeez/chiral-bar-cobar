@@ -130,8 +130,6 @@ def _kappa_virasoro(c: Rational) -> Rational:
 def _kappa_affine_slN(N: int, k: Rational) -> Rational:
     """kappa(V_k(sl_N)) = (N^2 - 1)(k + N) / (2N)."""
     k = Rational(k)
-    if k + N == 0:
-        raise ValueError(f"Critical level k = -{N}: kappa undefined for sl_{N}")
     return Rational(N * N - 1) * (k + N) / (2 * N)
 
 

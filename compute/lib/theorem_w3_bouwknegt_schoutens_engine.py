@@ -1,481 +1,353 @@
-r"""Exact W_3 Bouwknegt-Schoutens finite-OPE diagnostics.
+r"""Finite Bouwknegt--Schoutens data for the standard W3 algebra.
 
-This module is deliberately finite.  It records computable witnesses for
-the Zamolodchikov/Bouwknegt-Schoutens W_3 normalization:
-
-* channel curvatures kappa_T = c/2 and kappa_W = c/3;
-* principal scalar trace kappa(W_3) = c(H_3 - 1) = 5c/6;
-* W(z)W(w) singular coefficients through the Lambda pole;
-* the singular surfaces c = 0 and 5c + 22 = 0;
-* scope flags preventing finite OPE data from being promoted to a full
-  modular Koszul, derived-centre, or all-genus theorem.
-
-Conventions
------------
-- OPE modes: a_{(n)}b is the coefficient of (z-w)^(-(n+1)).
-- The dlog collision residue shifts an OPE pole of order n to an
-  r-matrix pole of order n-1.
-- beta = 16/(5c + 22) is the Lambda coupling in the W-W pole of order 2.
+Certified outputs are OPE coefficients, highest-weight mode arithmetic,
+minimal-model parameter formulas, and the level-one singular-vector curve.
+Collision Hamiltonians, bar curvature, scalar shadows, and differential
+equations require named comparison packages and remain open.
 """
 
 from __future__ import annotations
 
 import math
+from dataclasses import dataclass
 from fractions import Fraction
-from typing import Any, Dict
+from typing import Any, Dict, Mapping, Tuple
+
+import sympy as sp
 
 
 W3_BETA_SINGULAR_C = Fraction(-22, 5)
 
+H_BAR = (
+    "H_W3^bar: an ordered configuration-space residue bar complex with fixed signs and completion"
+)
+H_PROJ = (
+    "H_W3^proj: a chain-compatible projection of the full multi-channel Maurer--Cartan tensor"
+)
+H_COLL = (
+    "H_W3^coll: a collision-residue map with descendant and composite channels retained"
+)
+H_BS = (
+    "H_W3^BS: the relevant Kac--Shapovalov determinant locus, singular vector, Ward reduction, and monodromy control"
+)
+H_MOD = (
+    "H_W3^mod: a trace-compatible genus-one curvature calculation"
+)
+H_DIAG = (
+    "H_diag^{g=1}: non-separating sewing traces the diagonal leading-pole pairing and mixed channels are orthogonal"
+)
+H_DS_BAR = (
+    "H_W3^{DS/bar}: the formally reflected principal chart is the chosen bar/Verdier companion"
+)
 
-def _five_c_plus_22(c):
-    return 5 * c + 22
+
+class OpenW3ComparisonError(RuntimeError):
+    """Signals that finite W3 data have reached a comparison boundary."""
 
 
-def _is_exact(value: Any) -> bool:
-    return isinstance(value, (int, Fraction)) and not isinstance(value, bool)
+@dataclass(frozen=True)
+class ClaimPacket:
+    statement: str
+    status: str
+    value: object | None = None
+    hypotheses: Tuple[str, ...] = ()
 
 
-def _third(value):
-    return value / Fraction(3) if _is_exact(value) else value / 3
+def _open(statement: str, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, "open", None, tuple(hypotheses))
 
 
-def _require_beta_regular(c) -> None:
-    if _five_c_plus_22(c) == 0:
-        raise ValueError("W_3 Zamolodchikov normalization is singular at c = -22/5")
+def _conditional(statement: str, value, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, "conditional", value, tuple(hypotheses))
 
 
-def _require_shadow_regular(c) -> None:
-    if c == 0 or _five_c_plus_22(c) == 0:
-        raise ValueError("W_3 shadow coefficients require c(5c + 22) != 0")
+def _sym(value):
+    if isinstance(value, Fraction):
+        return sp.Rational(value.numerator, value.denominator)
+    return sp.sympify(value)
 
 
-# ============================================================================
-# W_3 structure constants and kappa data
-# ============================================================================
+def _require_regular(c):
+    if sp.simplify(5 * _sym(c) + 22) == 0:
+        raise ValueError("Zamolodchikov normalization has a pole at c=-22/5.")
+
 
 def beta_w3(c):
-    """Return the W_3 Lambda coupling beta = 16/(5c + 22)."""
-    _require_beta_regular(c)
-    return Fraction(16) / _five_c_plus_22(c) if _is_exact(c) else 16 / _five_c_plus_22(c)
+    r"""Return the pole-two ``WW Lambda`` coefficient ``32/(22+5c)``."""
+
+    _require_regular(c)
+    c_val = _sym(c)
+    return sp.Integer(32) / (5 * c_val + 22)
 
 
-def w3_harmonic_ratio() -> Fraction:
-    """H_3 - 1 = 1/2 + 1/3 = 5/6."""
-    return Fraction(5, 6)
+def reciprocal_weight_diagnostic_w3():
+    """Return the generator-weight arithmetic ``1/2+1/3=5/6``."""
+
+    return sp.Rational(5, 6)
 
 
-def kappa_channels_w3(c) -> Dict[str, Any]:
-    """Per-channel W_3 curvatures and principal scalar trace.
+def w3_harmonic_ratio():
+    """Compatibility name for the reciprocal-weight diagnostic."""
 
-    The two channels are not a uniform-weight system: T has weight 2 and
-    W has weight 3.  The scalar trace is the principal W_3 kappa from
-    kappa(W_N) = c(H_N - 1), not a certificate for a uniform-weight
-    all-genus reduction.
-    """
-    kappa_t = c / Fraction(2) if _is_exact(c) else c / 2
-    kappa_w = _third(c)
+    return reciprocal_weight_diagnostic_w3()
+
+
+def leading_norm_channels_w3(c) -> Mapping[str, object]:
+    """Return the exact leading two-point OPE coefficients."""
+
+    c_val = _sym(c)
     return {
-        "T": kappa_t,
-        "W": kappa_w,
-        "principal_total": kappa_t + kappa_w,
-        "harmonic_ratio": w3_harmonic_ratio(),
+        "T": c_val / 2,
+        "W": c_val / 3,
         "weights": {"T": 2, "W": 3},
-        "uniform_weight": False,
+        "ratio": sp.Rational(2, 3),
+        "mathematical_type": "leading OPE norms",
+    }
+
+
+def kappa_channels_w3(c):
+    c_val = _sym(c)
+    return {
+        "status": "conditional",
+        "T": ClaimPacket("W3 T-channel modular kappa", "conditional", c_val / 2, (H_DIAG,)),
+        "W": ClaimPacket("W3 W-channel modular kappa", "conditional", c_val / 3, (H_DIAG,)),
+        "total": ClaimPacket("W3 modular kappa", "conditional", sp.simplify(5 * c_val / 6), (H_DIAG,)),
     }
 
 
 def kappa_principal_w3(c):
-    """Principal scalar kappa(W_3) = c(H_3 - 1) = 5c/6."""
-    return kappa_channels_w3(c)["principal_total"]
+    return kappa_channels_w3(c)["total"]
 
 
 def kappa_total_w3(c):
-    """Backward-compatible alias for the principal scalar trace 5c/6."""
     return kappa_principal_w3(c)
 
 
-def uniform_weight_reduction_diagnostic(c=None) -> Dict[str, Any]:
-    """Detect the forbidden uniform-weight promotion for W_3."""
+def uniform_weight_reduction_diagnostic(c=None) -> Mapping[str, object]:
+    """Return exact weights and typed status of any scalar reduction."""
+
     result = {
         "weights": (2, 3),
         "is_uniform_weight": False,
-        "scalar_trace_available": True,
-        "uniform_weight_all_genus_formula_available": False,
-        "certifies_modular_koszul": False,
-        "certifies_derived_center": False,
-        "certifies_all_genus": False,
-        "reason": "W_3 has distinct T and W weights; multi-weight corrections are separate data.",
+        "leading_norms": leading_norm_channels_w3(sp.Symbol("c") if c is None else c),
+        "scalar_modular_reduction": kappa_principal_w3(sp.Symbol("c") if c is None else c),
+        "all_genus_reduction": _open("W3 all-genus scalar reduction", H_MOD, H_PROJ),
     }
-    if c is not None:
-        result["principal_scalar_trace"] = kappa_principal_w3(c)
-        result["channels"] = kappa_channels_w3(c)
     return result
 
 
-# ============================================================================
-# W_3 OPE witnesses
-# ============================================================================
+def lambda_zero_witness(h) -> Mapping[str, object]:
+    r"""Return the exact action of ``Lambda_0`` on ``|h,w>``."""
 
-def lambda_zero_witness(h) -> Dict[str, Any]:
-    r"""Zero-mode witness for Lambda = :TT: - (3/10) d^2 T on a primary.
-
-    In physics-index modes, (:TT:)_0 acts by h^2 and (d^2T)_0 acts by
-    6h.  Therefore Lambda_0 acts by h^2 - 9h/5.  This is a Virasoro
-    computation, not a full W_3 null-vector certificate.
-    """
-    d2t_zero = 6 * h
-    d2t_coeff = Fraction(3, 10) if _is_exact(h) else 0.3
-    lambda_value = h * h - d2t_coeff * d2t_zero
+    h_val = _sym(h)
     return {
-        "normal_ordered_TT_zero": h * h,
-        "d2T_zero": d2t_zero,
-        "lambda_zero": lambda_value,
-        "formula": "h^2 - 9h/5",
+        "normal_ordered_TT_zero": h_val**2 + 2 * h_val,
+        "d2T_zero": 6 * h_val,
+        "lambda_zero": sp.factor(h_val**2 + h_val / 5),
+        "formula": "h^2+h/5",
     }
 
 
 def lambda_zero_on_primary(c, h):
-    """Compatibility wrapper returning the Lambda_0 eigenvalue witness."""
     return lambda_zero_witness(h)["lambda_zero"]
 
 
-def w3_ww_ope_modes(c) -> Dict[str, Any]:
-    r"""Exact W(z)W(w) singular coefficients used by this finite engine."""
-    beta = beta_w3(c)
-    d2t_coeff = Fraction(3, 10) if _is_exact(c) else 0.3
+def w3_ww_ope_modes(c) -> Mapping[str, object]:
+    """Return the exact Zamolodchikov-normalized singular WW packet."""
+
+    c_val = _sym(c)
+    alpha = beta_w3(c_val)
     return {
-        "normalization": "Bouwknegt-Schoutens/Zamolodchikov",
-        "mode_5": {"field": "1", "coefficient": _third(c), "ope_pole_order": 6, "r_pole_order": 5},
-        "mode_4": {"field": "0", "coefficient": 0, "ope_pole_order": 5, "r_pole_order": 4},
-        "mode_3": {"field": "T", "coefficient": 2, "ope_pole_order": 4, "r_pole_order": 3},
-        "mode_2": {"field": "dT", "coefficient": 1, "ope_pole_order": 3, "r_pole_order": 2},
+        "normalization": "Bouwknegt--Schoutens/Zamolodchikov",
+        "mode_5": {"fields": {"vac": c_val / 3}, "ope_pole_order": 6},
+        "mode_4": {"fields": {}, "ope_pole_order": 5},
+        "mode_3": {"fields": {"T": sp.Integer(2)}, "ope_pole_order": 4},
+        "mode_2": {"fields": {"dT": sp.Integer(1)}, "ope_pole_order": 3},
         "mode_1": {
-            "fields": {"d2T": d2t_coeff, "Lambda": beta},
+            "fields": {"d2T": sp.Rational(3, 10), "Lambda": alpha},
             "ope_pole_order": 2,
-            "r_pole_order": 1,
         },
-        "beta": beta,
-        "singular_surface_excluded": "5c + 22 = 0",
+        "mode_0": {
+            "fields": {"d3T": sp.Rational(1, 15), "dLambda": alpha / 2},
+            "ope_pole_order": 1,
+        },
+        "alpha_ope": alpha,
+        "beta_mode": alpha / 2,
     }
 
 
-def w3_rmatrix_collision_poles(c) -> Dict[int, Any]:
-    """Return the W-W collision-residue poles after dlog absorption."""
-    modes = w3_ww_ope_modes(c)
+def w3_mode_lambda_coefficient(m, n, c):
+    """Return the Lambda-mode coefficient in ``[W_m,W_n]``."""
+
+    return sp.simplify(beta_w3(c) * (_sym(m) - _sym(n)) / 2)
+
+
+def w3_rmatrix_collision_poles(c) -> ClaimPacket:
+    return _open("W3 collision r-matrix poles", H_COLL)
+
+
+def finite_ope_diagnostic_scope() -> Mapping[str, object]:
     return {
-        5: modes["mode_5"],
-        4: modes["mode_4"],
-        3: modes["mode_3"],
-        2: modes["mode_2"],
-        1: modes["mode_1"],
+        "finite_ope_modes": "exact",
+        "lambda_zero_mode": "exact",
+        "level_one_null_curve": "exact determinant equation",
+        "collision_hamiltonian": _open("W3 collision Hamiltonian", H_COLL),
+        "ordered_bar": _open("W3 ordered bar differential", H_BAR),
+        "scalar_shadow": _open("W3 scalar shadow", H_BAR, H_PROJ),
+        "modular_kappa": _open("W3 modular kappa", H_MOD),
     }
 
-
-def finite_ope_diagnostic_scope() -> Dict[str, bool]:
-    """Scope of the finite W_3 OPE diagnostic."""
-    return {
-        "finite_ope_modes": True,
-        "certifies_bs_null_vector_ode": False,
-        "certifies_modular_koszul": False,
-        "certifies_derived_center": False,
-        "certifies_all_genus": False,
-    }
-
-
-# ============================================================================
-# Minimal model central charges and Virasoro BPZ weights
-# ============================================================================
 
 def w3_minimal_model_c(p, pp):
-    """Central charge c(p,p') = 2(1 - 12(p-p')^2/(pp')) for W_3."""
-    if p == 0 or pp == 0:
-        raise ValueError("W_3 minimal-model parameters must be nonzero")
-    p, pp = Fraction(p), Fraction(pp)
-    return Fraction(2) * (1 - Fraction(12) * (p - pp) ** 2 / (p * pp))
+    r"""Return ``2(1-12(p-p')^2/(pp'))``."""
+
+    p_val, pp_val = _sym(p), _sym(pp)
+    if p_val == 0 or pp_val == 0:
+        raise ValueError("Minimal-model parameters are nonzero.")
+    return sp.factor(2 * (1 - 12 * (p_val - pp_val) ** 2 / (p_val * pp_val)))
 
 
 def w3_kac_weight(r, s, p, pp):
-    """Virasoro-sublattice Kac weight used only for T-sector checks."""
-    p, pp = Fraction(p), Fraction(pp)
-    r, s = Fraction(r), Fraction(s)
-    return ((r * pp - s * p) ** 2 - (pp - p) ** 2) / (4 * p * pp)
+    """Return the Virasoro-sublattice Kac-weight arithmetic."""
+
+    r_val, s_val, p_val, pp_val = map(_sym, (r, s, p, pp))
+    return sp.factor(
+        ((r_val * pp_val - s_val * p_val) ** 2 - (pp_val - p_val) ** 2)
+        / (4 * p_val * pp_val)
+    )
 
 
 def _sqrt_fraction_if_square(value: Fraction):
     if value < 0:
         return None
-    num = math.isqrt(value.numerator)
-    den = math.isqrt(value.denominator)
-    if num * num == value.numerator and den * den == value.denominator:
-        return Fraction(num, den)
+    numerator = math.isqrt(value.numerator)
+    denominator = math.isqrt(value.denominator)
+    if numerator**2 == value.numerator and denominator**2 == value.denominator:
+        return Fraction(numerator, denominator)
     return None
 
 
 def bpz_degenerate_weight(c):
-    """The two Virasoro level-2 BPZ weights h = (5-c +/- sqrt(D))/16."""
-    disc = (c - 1) * (c - 25)
-    if _is_exact(c):
-        sqrt_disc = _sqrt_fraction_if_square(disc)
-        if sqrt_disc is None:
-            return {
-                "discriminant": disc,
-                "sqrt_discriminant": None,
-                "h_plus": None,
-                "h_minus": None,
-                "exact_rational": False,
-                "formula": "h = (5-c +/- sqrt((c-1)(c-25)))/16",
-            }
+    r"""Return the formal Virasoro level-two roots inside the T-sector."""
+
+    if isinstance(c, (int, Fraction)) and not isinstance(c, bool):
+        c_frac = Fraction(c)
+        discriminant = (c_frac - 1) * (c_frac - 25)
+        square_root = _sqrt_fraction_if_square(discriminant)
         return {
-            "discriminant": disc,
-            "sqrt_discriminant": sqrt_disc,
-            "h_plus": (5 - c + sqrt_disc) / 16,
-            "h_minus": (5 - c - sqrt_disc) / 16,
-            "exact_rational": True,
-            "bpz_coefficient": lambda h: Fraction(-3) / (2 * (2 * h + 1)),
+            "discriminant": discriminant,
+            "sqrt_discriminant": square_root,
+            "h_plus": None if square_root is None else (5 - c_frac + square_root) / 16,
+            "h_minus": None if square_root is None else (5 - c_frac - square_root) / 16,
+            "exact_rational": square_root is not None,
+            "mathematical_type": "Virasoro T-sector determinant roots",
         }
-
-    sqrt_disc = math.sqrt(disc) if disc >= 0 else complex(0, math.sqrt(-disc))
+    c_val = _sym(c)
+    root = sp.sqrt((c_val - 1) * (c_val - 25))
     return {
-        "discriminant": disc,
-        "sqrt_discriminant": sqrt_disc,
-        "h_plus": (5 - c + sqrt_disc) / 16,
-        "h_minus": (5 - c - sqrt_disc) / 16,
+        "discriminant": (c_val - 1) * (c_val - 25),
+        "sqrt_discriminant": root,
+        "h_plus": (5 - c_val + root) / 16,
+        "h_minus": (5 - c_val - root) / 16,
         "exact_rational": False,
-        "bpz_coefficient": lambda h: -3 / (2 * (2 * h + 1)),
+        "mathematical_type": "Virasoro T-sector determinant roots",
     }
 
 
-# ============================================================================
-# BPZ T-sector ODE and collision diagnostics
-# ============================================================================
-
-def bpz_null_vector_ode(c, h1, h2, h3, h4):
-    r"""Virasoro BPZ level-2 null-vector ODE inside the W_3 T-sector."""
-    a_coeff = Fraction(2) * (2 * h1 + 1) / 3 if _is_exact(h1) else 2 * (2 * h1 + 1) / 3
-    return {
+def bpz_null_vector_ode(c, h1, h2, h3, h4) -> ClaimPacket:
+    data = {
         "order": 2,
-        "leading_coefficient": a_coeff,
-        "p1_pole_0": 1,
-        "p1_pole_1": 1,
-        "p0_pole_0_order2": -h2,
-        "p0_pole_1_order2": -h3,
-        "p0_cross": -(h2 + h3 - h4 + h1),
-        "null_vector": "L_{-2} - 3/(2(2h+1))*L_{-1}^2",
-        "source": "BPZ T-sector only",
+        "leading_coefficient": sp.simplify(2 * (2 * _sym(h1) + 1) / 3),
+        "null_vector": "L_-2-3 L_-1^2/[2(2h+1)]",
     }
+    return _conditional("Virasoro BPZ equation inside the W3 T-sector", data, H_BS)
 
 
-def bpz_ode_indicial_exponents(c, h1, h_ext):
-    """Indicial discriminant of the BPZ equation at a regular singularity."""
-    a_coeff = Fraction(2) * (2 * h1 + 1) / 3 if _is_exact(h1) else 2 * (2 * h1 + 1) / 3
-    discriminant = 1 + 4 * h_ext / a_coeff
-    return {
-        "a_coefficient": a_coeff,
-        "discriminant": discriminant,
-        "note": "alpha = (1 +/- sqrt(1 + 4h/a))/2",
-    }
+def bpz_ode_indicial_exponents(c, h1, h_ext) -> ClaimPacket:
+    a_value = sp.simplify(2 * (2 * _sym(h1) + 1) / 3)
+    data = {"a_coefficient": a_value, "discriminant": sp.simplify(1 + 4 * _sym(h_ext) / a_value)}
+    return _conditional("Virasoro BPZ indicial equation", data, H_BS)
 
 
-def collision_depth_ode_virasoro(c, h1, h2, h3, h4):
-    """Finite T-sector Hamiltonian coefficients before scalar BPZ conversion."""
-    return {
-        "pole_0_order_2": h1,
-        "pole_1_order_2": h3,
-        "ward_cross": h1 + h3 + h2 - h4,
-        "source": "finite collision-depth expansion (T-sector)",
-    }
+def w3_level_one_null_curve(c, h, w):
+    r"""Return the exact level-one determinant polynomial.
 
-
-def collision_depth_ode_w3(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
-    """Finite W_3 collision-depth data from the W-W OPE."""
-    modes = w3_ww_ope_modes(c)
-    beta = modes["beta"]
-    lam_h1 = lambda_zero_on_primary(c, h1)
-    lam_h3 = lambda_zero_on_primary(c, h3)
-    d2t_scalar_h1 = modes["mode_1"]["fields"]["d2T"] * (6 * h1)
-    d2t_scalar_h3 = modes["mode_1"]["fields"]["d2T"] * (6 * h3)
-
-    return {
-        "bpz_sector": collision_depth_ode_virasoro(c, h1, h2, h3, h4),
-        "w_sector": {
-            "depth_1": {
-                "pole_0_lambda": beta * lam_h1,
-                "pole_1_lambda": beta * lam_h3,
-                "pole_0_d2T": d2t_scalar_h1,
-                "pole_1_d2T": d2t_scalar_h3,
-                "pole_0_total_on_primary": beta * lam_h1 + d2t_scalar_h1,
-                "pole_1_total_on_primary": beta * lam_h3 + d2t_scalar_h3,
-                "formal_fields": modes["mode_1"]["fields"],
-            },
-            "depth_2": {"field": "dT", "coefficient": 1},
-            "depth_3": {
-                "pole_0_ww": 2 * h1,
-                "pole_1_ww": 2 * h3,
-                "pole_0_ward": w1,
-                "pole_1_ward": w3_ch,
-            },
-            "depth_4": {"pole_0": 0, "pole_1": 0, "vanishes": True},
-            "depth_5": {"pole_0": _third(c), "pole_1": _third(c), "type": "central"},
-        },
-        "scope": finite_ope_diagnostic_scope(),
-    }
-
-
-def compare_bpz_equations(c, h1, h2, h3, h4):
-    """Compare finite T-sector coefficients without upgrading to W_3 BS ODEs."""
-    cd = collision_depth_ode_virasoro(c, h1, h2, h3, h4)
-    nv = bpz_null_vector_ode(c, h1, h2, h3, h4)
-    sign_adjusted_cross_match = cd["ward_cross"] == -nv["p0_cross"]
-    return {
-        "t_sector_only": True,
-        "regular_singular_points": (0, 1, "infinity"),
-        "sign_adjusted_cross_match": sign_adjusted_cross_match,
-        "collision_depth": cd,
-        "null_vector": nv,
-        "structural_agreement": sign_adjusted_cross_match,
-        "certifies_w3_bs_null_vector_ode": False,
-        "note": "BPZ agreement is a Virasoro T-sector check, not a W-sector null-vector proof.",
-    }
-
-
-# ============================================================================
-# W_3 line shadows
-# ============================================================================
-
-def w3_tline_shadow_data(c) -> Dict[str, Any]:
-    """T-line Virasoro shadow data inside W_3 on c(5c+22) != 0."""
-    _require_shadow_regular(c)
-    s4 = Fraction(10) / (c * _five_c_plus_22(c)) if _is_exact(c) else 10 / (c * _five_c_plus_22(c))
-    kappa_t = kappa_channels_w3(c)["T"]
-    delta = 8 * kappa_t * s4
-    return {"kappa": kappa_t, "S3": 2, "S4": s4, "Delta": delta, "class": "M"}
-
-
-def w3_wline_shadow_data(c) -> Dict[str, Any]:
-    """W-line shadow data inside W_3 on c(5c+22) != 0."""
-    _require_shadow_regular(c)
-    den = c * (_five_c_plus_22(c) ** 3)
-    s4 = Fraction(2560) / den if _is_exact(c) else 2560 / den
-    kappa_w = kappa_channels_w3(c)["W"]
-    delta = 8 * kappa_w * s4
-    q0 = (2 * c / Fraction(3)) ** 2 if _is_exact(c) else (2 * c / 3) ** 2
-    return {
-        "kappa": kappa_w,
-        "S3": 0,
-        "S4": s4,
-        "Delta": delta,
-        "Q_constant": q0,
-        "Q_t2_coefficient": 2 * delta,
-        "odd_coefficients_vanish": True,
-        "class": "M",
-    }
-
-
-def w3_extra_depths_on_primaries(c, h_j, w_j=0):
-    """W_3 finite-depth contributions on a primary, separated by source."""
-    modes = w3_ww_ope_modes(c)
-    beta = modes["beta"]
-    lam = lambda_zero_on_primary(c, h_j)
-    d2t_scalar = modes["mode_1"]["fields"]["d2T"] * (6 * h_j)
-    return {
-        "depth_1_lambda": beta * lam,
-        "depth_1_d2T": d2t_scalar,
-        "depth_1_total_on_primary": beta * lam + d2t_scalar,
-        "depth_3_2T": 2 * h_j,
-        "depth_3_w_ward": w_j,
-        "depth_4_zero": 0,
-        "depth_5_central": _third(c),
-        "beta": beta,
-        "lambda_0": lam,
-        "total_depth_3": 2 * h_j + w_j,
-        "scope": finite_ope_diagnostic_scope(),
-    }
-
-
-def bs_w3_null_vector_level2(c, h, w):
-    """Return an honest scope diagnostic for level-2 W-sector null vectors.
-
-    Generic (c,h,w) triples are not degenerate.  A finite list of OPE
-    constants is not the Bouwknegt-Schoutens Kac-Shapovalov determinant,
-    and this engine does not certify a full W-sector null vector.
+    The singular locus is
+    ``9 w^2(22+5c)=2 h^2(32h+2-c)``.
     """
-    beta_w3(c)
+
+    c_val, h_val, w_val = map(_sym, (c, h, w))
+    return sp.expand(9 * w_val**2 * (22 + 5 * c_val) - 2 * h_val**2 * (32 * h_val + 2 - c_val))
+
+
+def level_one_null_status(c, h, w) -> Mapping[str, object]:
+    polynomial = w3_level_one_null_curve(c, h, w)
     return {
-        "has_w_null_vector": False,
-        "certifies_full_bs_null_vector": False,
-        "level": 2,
-        "basis": ("L_-2", "L_-1^2", "W_-2", "W_-1 L_-1", "W_-1^2"),
-        "required_missing_witness": "full W_3 Kac-Shapovalov determinant vanishing",
-        "finite_ope_scope": finite_ope_diagnostic_scope(),
-        "input": {"c": c, "h": h, "w": w},
+        "polynomial": polynomial,
+        "is_on_curve": sp.simplify(polynomial) == 0,
+        "status": "exact level-one Kac--Shapovalov condition",
     }
 
 
-def verify_depth_4_vanishing_bs():
-    """Depth 4 vanishes because W_{(4)}W = 0."""
+def collision_depth_ode_virasoro(*_args, **_kwargs) -> ClaimPacket:
+    return _open("Virasoro collision-depth Hamiltonian", H_COLL)
+
+
+def collision_depth_ode_w3(*_args, **_kwargs) -> ClaimPacket:
+    return _open("W3 collision-depth Hamiltonian", H_COLL)
+
+
+def compare_bpz_equations(*_args, **_kwargs) -> ClaimPacket:
+    return _open("comparison of W3 collision and BPZ equations", H_COLL, H_BS)
+
+
+def w3_tline_shadow_data(c) -> ClaimPacket:
+    return _open("W3 T-line scalar shadow", H_BAR, H_PROJ)
+
+
+def w3_wline_shadow_data(c) -> ClaimPacket:
+    return _open("W3 W-line scalar shadow", H_BAR, H_PROJ)
+
+
+def w3_extra_depths_on_primaries(*_args, **_kwargs) -> ClaimPacket:
+    return _open("W3 projected collision depths on primaries", H_COLL, H_PROJ)
+
+
+def bs_w3_null_vector_level2(c, h, w) -> ClaimPacket:
+    return _open("W3 level-two singular vector and differential equation", H_BS)
+
+
+def verify_depth_4_vanishing_bs() -> Mapping[str, object]:
+    """Record the exact absence of the fifth-order WW pole."""
+
     return {
-        "w4_w_vanishes": True,
-        "reason": "The W-W OPE has no fifth-order pole.",
-        "collision_depth_consistent": True,
-        "bs_consistent_as_finite_ope_check": True,
-        "certifies_full_bs_null_vector_ode": False,
-        "ope_mode": "W_{(4)}W = 0",
-        "pole_order": 5,
-        "depth": 4,
+        "W_(4)W": sp.Integer(0),
+        "status": "exact OPE coefficient",
+        "collision_consequence": _open("depth-four collision consequence", H_COLL),
     }
 
-
-# ============================================================================
-# Summary helpers
-# ============================================================================
 
 def compare_at_c2(h1=0, h2=0, h3=0, h4=0, w1=0, w2=0, w3_ch=0, w4=0):
-    """Finite comparison data at c = 2."""
-    c = Fraction(2)
-    return {
-        "c": c,
-        "beta": beta_w3(c),
-        "kappa_channels": kappa_channels_w3(c),
-        "kappa_total": kappa_total_w3(c),
-        "collision_depth": collision_depth_ode_w3(c, h1, h2, h3, h4, w1, w2, w3_ch, w4),
-        "bpz_comparison": compare_bpz_equations(c, h1, h2, h3, h4),
-        "w3_extra_depths": w3_extra_depths_on_primaries(c, h1, w1),
-        "scope": finite_ope_diagnostic_scope(),
-    }
+    return compare_at_generic_c(Fraction(2), h1, h2, h3, h4, w1, w2, w3_ch, w4)
 
 
 def compare_at_generic_c(c, h1, h2, h3, h4, w1=0, w2=0, w3_ch=0, w4=0):
-    """Finite comparison data at regular generic c."""
     return {
-        "c": c,
-        "beta": beta_w3(c),
-        "kappa_channels": kappa_channels_w3(c),
-        "kappa_total": kappa_total_w3(c),
-        "collision_depth": collision_depth_ode_w3(c, h1, h2, h3, h4, w1, w2, w3_ch, w4),
-        "bpz_comparison": compare_bpz_equations(c, h1, h2, h3, h4),
-        "w3_extra_depths": w3_extra_depths_on_primaries(c, h1, w1),
-        "scope": finite_ope_diagnostic_scope(),
+        "c": _sym(c),
+        "ope": w3_ww_ope_modes(c),
+        "lambda_zero_h1": lambda_zero_on_primary(c, h1),
+        "level_one_null_curve_h1": w3_level_one_null_curve(c, h1, w1),
+        "collision": _open("W3 collision comparison", H_COLL),
+        "bpz": _open("W3/BPZ differential-equation comparison", H_COLL, H_BS),
+        "shadow": _open("W3 scalar shadow comparison", H_BAR, H_PROJ),
     }
 
 
 def full_comparison_summary(c=Fraction(2)):
-    """Complete finite-OPE summary with explicit non-certification flags."""
-    beta = beta_w3(c)
-    channels = kappa_channels_w3(c)
     return {
-        "c": c,
-        "beta": beta,
-        "kappa_channels": channels,
-        "kappa_total": channels["principal_total"],
-        "tline_shadow": w3_tline_shadow_data(c),
-        "wline_shadow": w3_wline_shadow_data(c),
-        "ww_ope_modes": w3_ww_ope_modes(c),
-        "depth_4_vanishing": verify_depth_4_vanishing_bs(),
-        "bpz_t_sector": compare_bpz_equations(c, Fraction(1), Fraction(0), Fraction(0), Fraction(0)),
-        "uniform_weight": uniform_weight_reduction_diagnostic(c),
-        "finite_ope_diagnostic_passes": True,
-        "overall_agreement": False,
+        "c": _sym(c),
+        "finite_ope": w3_ww_ope_modes(c),
+        "leading_norms": leading_norm_channels_w3(c),
         "scope": finite_ope_diagnostic_scope(),
-        "remaining_obligation": "Full BS null-vector ODE requires the W_3 Kac-Shapovalov determinant.",
+        "status": "finite OPE and determinant arithmetic exact; comparison theorems open",
     }

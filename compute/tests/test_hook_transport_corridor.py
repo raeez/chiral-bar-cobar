@@ -60,7 +60,7 @@ def test_manuscript_surfaces_keep_hook_duality_conditional():
         r"compatibility; \ClaimStatusConditional]"
     ) in hook
     assert "Assume that, at generic level, bar--cobar/Koszul duality intertwines" in hook
-    assert "conditional on hook-wide DS/bar compatibility" in active
+    assert r"H_{\mathrm{hook}}^{\mathrm{DS/bar}}" in active
     assert "DS--bar compatibility package" in active
 
     forbidden = [
@@ -76,6 +76,40 @@ def test_manuscript_surfaces_keep_hook_duality_conditional():
     ]
     for phrase in forbidden:
         assert phrase not in active
+
+
+def test_concordance_separates_exact_hook_ds_data_from_bar_transport():
+    """The concordance mirrors the exact KRW/Arakawa lane and conditional transport."""
+    source = CONCORDANCE_TEX.read_text(encoding="utf-8")
+    start = source.index(r"\paragraph{Hook-type quantitative data.}")
+    end = source.index(
+        r"\paragraph{$\mathcal{W}_3$ multi-variable shadow archetype.}",
+        start,
+    )
+    block = " ".join(source[start:end].split())
+
+    for required in (
+        r"C_{(m,1^r)} = m(m^2-1)/6 + r\lfloor m^2/2\rfloor/2",
+        r"$\dim(\mathfrak{sl}_N^{f_\eta})$",
+        "Kac--Roan--Wakimoto supertrace formula",
+        "chosen good grading",
+        "Kazhdan filtration identifies the",
+        "arc algebra of the",
+        "Slodowy slice on the regular universal lane",
+        "exact reduction-theoretic statements",
+        r"the genus-$1$ curvature defines $\kappa$ independently",
+        r"H_{\mathrm{hook}}^{\mathrm{DS/bar}}",
+        "modular complementarity identity",
+        "conditional on the genus-$1$ curvature",
+    ):
+        assert required in block
+
+    for stale in (
+        "kappa compatibility, generator matching, and central charge threading",
+        r"= -(C_\eta + C_{\eta^t})",
+        "strict bar-commutation statement remains conditional",
+    ):
+        assert stale not in block
 
 
 # ===================================================================

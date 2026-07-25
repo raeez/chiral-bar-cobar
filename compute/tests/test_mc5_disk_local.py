@@ -1,10 +1,13 @@
-"""Tests for MC5 disk-local packet: BV-BRST = bar at chain level.
+"""Finite C2/C3 evidence for the MC5 disk-local packet.
 
-Verifies conj:disk-local-perturbative-fm on C₂ and C₃ strata
-for abelian CS, su(2) KM, and Virasoro.
+These tests guard selected residue-model matches for abelian CS, su(2)
+KM, and Virasoro. They do not prove
+conj:disk-local-perturbative-fm, whose compactified perturbative forms,
+FM orientation/Stokes comparison, and genuswise analytic lift remain
+outside this finite symbolic check.
 
-The identification: at genus 0, the perturbative BRST differential
-extracts the SAME residue operations as the Vol I bar differential.
+In these finite genus-0 models, the perturbative BRST differential
+extracts the same residue operations as the Vol I bar differential.
 """
 
 import pytest

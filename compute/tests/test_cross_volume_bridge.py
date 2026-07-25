@@ -7,7 +7,7 @@ Five bridges tested:
   2. Theorem D (κ): curvature from bar complex = m_0 from curved A∞
   3. Theorem C (complementarity): κ(A) + κ(A!) is constant
   4. Theorem B (Feigin–Frenkel): k ↔ −k−2h∨, Vir self-dual at c=13
-  5. Theorem H (Hochschild): ChirHoch*(A) polynomial on Koszul locus
+  5. Theorem H (Hochschild): ChirHoch*(A) amplitude/Hilbert profile on Koszul locus
 
 Families: Heisenberg, sl₂, Virasoro, bc/βγ, W₃.
 """
@@ -178,19 +178,19 @@ class TestBridge5_Hochschild:
         assert data["bounded_by_theorem_h"] is True
 
     def test_sl2_bounded(self):
-        """sl₂: ChirHoch concentrated in {0,1,2}; dim HH^1 = dim sl₂ = 3."""
+        """sl₂: ChirHoch concentrated in {0,1,2}; dim HH^1 = 0 after quotient."""
         results = verify_bridge_5_sl2()
         data = results["sl₂ ChirHoch"]
         assert data["amplitude"] == (0, 2)
-        assert data["total_dim"] == 5  # 1 + 3 + 1
+        assert data["total_dim"] == 2  # 1 + 0 + 1
         assert data["bounded_by_theorem_h"] is True
 
     def test_sl3_bounded(self):
-        """sl₃: ChirHoch concentrated in {0,1,2}; dim HH^1 = dim sl₃ = 8."""
+        """sl₃: ChirHoch concentrated in {0,1,2}; dim HH^1 = 0 after quotient."""
         results = verify_bridge_5_sl3()
         data = results["sl₃ ChirHoch"]
         assert data["amplitude"] == (0, 2)
-        assert data["total_dim"] == 10  # 1 + 8 + 1
+        assert data["total_dim"] == 2  # 1 + 0 + 1
         assert data["bounded_by_theorem_h"] is True
 
     def test_hochschild_heisenberg_dims(self):
@@ -219,31 +219,31 @@ class TestBridge5_Hochschild:
         assert total_path1 == total_path2 == total_path3 == 3
 
     def test_total_dim_via_two_paths_sl2(self):
-        """sl_2 total dim: engine vs dim Z + dim g + dim Z^!.
+        """sl_2 total dim: engine vs dim Z + 0 + dim Z^!.
 
         Path 1: engine-reported total_dim.
-        Path 2: 1 + dim sl_2 + 1 = 1 + 3 + 1 = 5 (Theorem H P_A).
+        Path 2: 1 + 0 + 1 = 2 (Theorem H P_A after quotient).
         """
         results = verify_bridge_5_sl2()
         data = results["sl₂ ChirHoch"]
         total_path1 = data["total_dim"]
-        total_path2 = 1 + 3 + 1  # dim sl_2 = 3
+        total_path2 = 1 + 0 + 1
         total_path3 = sum(data["dims_0_through_7"].values())
-        assert total_path1 == total_path2 == total_path3 == 5
+        assert total_path1 == total_path2 == total_path3 == 2
 
     def test_total_dim_via_two_paths_sl3(self):
-        """sl_3 total dim: engine vs 1 + dim sl_3 + 1 = 10.
+        """sl_3 total dim: engine vs 1 + 0 + 1 = 2.
 
         Path 1: engine total.
-        Path 2: 1 + dim sl_3 + 1 = 10 (structural formula).
+        Path 2: 1 + 0 + 1 = 2 (structural formula after quotient).
         Path 3: sum of dims_0_through_7.
         """
         results = verify_bridge_5_sl3()
         data = results["sl₃ ChirHoch"]
         total_path1 = data["total_dim"]
-        total_path2 = 1 + 8 + 1
+        total_path2 = 1 + 0 + 1
         total_path3 = sum(data["dims_0_through_7"].values())
-        assert total_path1 == total_path2 == total_path3 == 10
+        assert total_path1 == total_path2 == total_path3 == 2
 
     def test_amplitude_vanishes_above_2_cross_family(self):
         """AP94 amplitude [0,2] verified across all three families.

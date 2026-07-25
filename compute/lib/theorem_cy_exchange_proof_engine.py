@@ -95,7 +95,8 @@ CONVENTIONS (from CLAUDE.md):
   AP20: kappa(A) intrinsic to A
   AP24: kappa + kappa' != 0 in general (= 13 for Virasoro)
   AP25: B(A) is coalgebra; D_Ran(B(A)) ~ B(A!); Omega(B(A)) ~ A
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  AP33: at k != 0, H_k^! is the curved second-kind
+  Sym^ch(V*[1]) branch, not H_{-k}
   AP50: A!_inf (homotopy) != A! (strict); compatibility = Theorem A
 
 References:
@@ -688,11 +689,13 @@ def proper_cy_data(family, params):
 def koszul_dual_cy_data(family, params):
     r"""CY data for the Koszul dual A!.
 
-    AP33: H_k^! = Sym^ch(V*) != H_{-k}. The Koszul dual is a
-    DIFFERENT algebra with the SAME kappa.
+    AP33: H_k^! is not H_{-k}. For k != 0 the Koszul dual is the
+    curved second-kind Sym^ch(V*[1]) branch; the uncurved Sym^ch(V*)
+    is only the k=0/associated-graded shadow. The dual is a different
+    algebra with the same scalar kappa shadow.
 
     For each family:
-      H_k^! = Sym^ch(V*), kappa(H_k^!) = -k
+      H_k^! = curved Sym^ch(V*[1]), kappa(H_k^!) = -k
       V_k(g)^! = V_{-k-2h^v}(g), kappa dual via FF involution
       Vir_c^! = Vir_{26-c}, kappa(Vir_c^!) = (26-c)/2
       bc^! = betagamma, betagamma^! = bc

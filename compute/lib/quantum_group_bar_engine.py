@@ -6,8 +6,8 @@ produces the quantum group U_q(g) through a precise chain of identifications:
   1. COLLISION RESIDUE -> GENERATORS
      The arity-2 bar differential encodes the OPE J^a(z) J^b(w) ~ ...
      After extracting the collision residue Res^{coll}_{0,2}(Theta_A),
-     one obtains the classical r-matrix r(z) = Omega/z (AP19: bar propagator
-     d log E absorbs one pole).  The Casimir Omega = sum_a T^a tensor T_a
+     one obtains the trace-form classical r-matrix r_k(z) = k*Omega/z
+     (AP19: bar propagator d log E absorbs one pole).  The Casimir Omega = sum_a T^a tensor T_a
      decomposes into Chevalley generators {E_i, F_i, H_i} of g.  The
      q-deformation q = exp(pi*i/(k + h^vee)) arises from the level k of
      the affine algebra, via the Drinfeld-Kohno theorem identifying KZ
@@ -1231,7 +1231,7 @@ def universal_r_matrix_sl2(q: complex, j1: float, j2: float,
     We truncate at max_terms for numerical computation.
 
     Connection to bar complex:
-    - The arity-2 collision residue gives the classical limit r = Omega/z
+    - The arity-2 collision residue gives the trace-form classical limit r = k*Omega/z
     - Higher-arity shadows give the higher-order terms
     - The hbar-expansion R = 1 + hbar*r + hbar^2*r_2 + ...
       recovers r at leading order
@@ -1366,7 +1366,7 @@ def yangian_from_quantum_group(N: int, hbar: complex) -> Dict[str, Any]:
     Connection to bar complex:
     - The Yangian Y(g) generators J^a_n arise from the Taylor expansion
       of the T-matrix T(u) around u = infinity
-    - The collision residue Res^{coll}(Theta_A) gives r(z) = Omega/z
+    - The collision residue Res^{coll}(Theta_A) gives trace-form r_k(z) = k*Omega/z
     - The Yangian R-matrix R(u) = uI + P quantizes this
     - The additive parameter u is the Yangian evaluation-module shift,
       not something manufactured by the topological bar coproduct

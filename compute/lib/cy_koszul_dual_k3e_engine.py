@@ -94,7 +94,8 @@ DERIVED-CENTRE / OPEN-CLOSED BRANCH
   Identifying it with a physical bulk factorization algebra requires OCA.
 
   For Koszul algebras (including the N=4 SCA):
-    Z^ch_der(A) = HH*(A) is polynomial in degrees {0, 1, 2} (Theorem H).
+    Z^ch_der(A) = HH*(A) has amplitude [0, 2] and Hilbert polynomial
+    in t (Theorem H).
     The Hochschild cohomology relates to A^! via the Koszul resolution:
       HH^n(A) = Ext^n_{A^e}(A, A) = H^n(A^! tensor_{A^!^e} A^!)
     For the N=4 SCA: HH^0 = center of A, HH^1 = outer derivations,
@@ -481,7 +482,8 @@ def dual_central_charge_k3() -> Fraction:
 
     This is the "wrong-sign" N=4 algebra, analogous to:
     - Vir_c^! = Vir_{26-c}: the complementary Virasoro
-    - H_k^! = Sym^ch(V*) with level -k: the dual Heisenberg
+    - H_k^! is the curved second-kind Sym^ch(V*[1]) branch with
+      scalar kappa -k: the dual Heisenberg branch
     """
     k_R_dual = -K3_SU2_LEVEL
     return 6 * k_R_dual
@@ -491,10 +493,12 @@ def dual_central_charge_e() -> Fraction:
     """Central charge of A_E^!.
 
     For the free boson at level 1 (Heisenberg VOA):
-    H_1^! = Sym^ch(V*) with kappa = -1.
+    H_1^! is the curved second-kind Sym^ch(V*[1]) branch with scalar
+    kappa = -1.
     The central charge of the dual is -1.
 
-    AP33: H_k^! = Sym^ch(V*) is NOT H_{-k}, though they share kappa = -k.
+    AP33: the curved dual branch is not H_{-k} and not the uncurved
+    polynomial centre; only scalar kappa agrees with kappa(H_{-k}).
     """
     return -E_CENTRAL_CHARGE
 
@@ -745,10 +749,10 @@ def hochschild_dim_2_k3() -> int:
 
 
 def hochschild_polynomial_check_k3() -> Dict[str, Any]:
-    """Verify HH*(A_{K3}) is polynomial in degrees {0,1,2} (Theorem H).
+    """Verify HH*(A_{K3}) has amplitude [0,2] and Hilbert polynomial.
 
-    For Koszul algebras: ChirHoch*(A) is polynomial with
-    HH^n = 0 for n >= 3 (concentrated in {0,1,2}).
+    For Koszul algebras: ChirHoch*(A) has Hilbert polynomial in t and
+    HH^n = 0 for n >= 3 (amplitude [0,2]).
     """
     return {
         'hh0': hochschild_dim_0_k3(),
@@ -994,7 +998,7 @@ def boundary_bulk_passage_k3() -> Dict[str, Any]:
             'role': 'closed-sector Hochschild object; physical bulk requires OCA',
         },
         'physical_bulk_identification_allowed': False,
-        'physical_bulk_requires': 'OCA comparison from physical bulk observables to Z^ch_der(A)',
+        'physical_bulk_requires': 'OCA comparison from physical closed-sector observables to Z^ch_der(A)',
         'objects_kept_distinct': True,
         'warning': ('Bar-cobar inversion does NOT produce the bulk. '
                     'The derived center is the universal closed sector, '

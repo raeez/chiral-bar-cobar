@@ -1,4 +1,4 @@
-"""W-orbit duality: computational verification of conj:w-orbit-duality.
+"""W-orbit duality: finite evidence and consistency checks.
 
 Conjecture (w_algebras_framework.tex, conj:w-orbit-duality):
 For non-principal nilpotent f in a simple Lie algebra g (simply-laced):
@@ -9,10 +9,12 @@ where k' is the Feigin-Frenkel dual level and f^D is the Barbasch-Vogan
 dual nilpotent.  For non-simply-laced g the duality involves the
 Langlands dual g^vee and the Spaltenstein dual.
 
-Verifiable predictions:
+This module does not prove conj:w-orbit-duality. It checks finite
+algebraic consequences and consistency packets:
   1. Central charge complementarity: c(k) + c(k') = K (level-independent)
   2. Hilbert series relation: H_A(t) * H_{A!}(-t) = 1 (OS algebra)
-  3. Principal orbit recovery: reduces to proved Feigin-Frenkel duality
+  3. Principal orbit recovery: reduces to the conditional principal
+     characteristic-transport theorem
   4. Involutivity of dual level: (k')' = k
   5. BV self-duality of minimal orbit in type A_2
 
@@ -29,8 +31,8 @@ CRITICAL (from CLAUDE.md):
   - BV dual in type A = partition transpose
 
 Ground truth:
-  - thm:w-algebra-koszul-main (principal case proved)
-  - prop:bp-duality (BP self-duality proved)
+  - thm:w-algebra-koszul-main (conditional principal characteristic transport)
+  - conj:bp-duality (BP self-duality conjecture; conductor evidence only)
   - rem:koszul-conductor-explicit: K_N = 2(N-1)(2N^2+2N+1)
   - comp:sl3-ds-hierarchy, comp:w3-curvature-dual
   - comp:bp-bar (BP bar complex)
@@ -329,7 +331,7 @@ def wn_central_charge(n: int, k):
     """
     k = sympify(k)
     kN = k + n
-    return Rational(n - 1) - Rational(n * (n**2 - 1)) / kN
+    return Rational(n - 1) - Rational(n * (n**2 - 1)) * (k + n - 1) ** 2 / kN
 
 
 def bp_central_charge(k):
@@ -874,7 +876,7 @@ def hook_pair_first_nonselfdual(n: int) -> Optional[Dict[str, object]]:
 
 @dataclass(frozen=True)
 class WOrbitDualityVerification:
-    """Full verification record for one orbit duality case."""
+    """Finite check record for one orbit-duality evidence packet."""
 
     lie_type: str
     n: int
@@ -890,7 +892,7 @@ class WOrbitDualityVerification:
 
 
 def verify_orbit_duality_type_a(partition: Iterable[int]) -> WOrbitDualityVerification:
-    """Run all available checks for W-orbit duality on a type-A orbit."""
+    """Run available finite checks for W-orbit duality on a type-A orbit."""
     lam = normalize_partition(partition)
     n = partition_size(lam)
     k = Symbol("k")

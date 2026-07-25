@@ -20,10 +20,11 @@ The three verification paths for `thm:A-infinity-2` are:
 
 These are disjoint from the derivation sources enumerated in the chapter's
 HZ-IV remark, which are: (1) Francis 2012 star-product adjunctions,
-(2) GR17 IV.5 factorization model structure, (3) Hackney-Robertson model
-structure on properads, (4) LV12 classical Koszul bar-cobar (used only at
-pole-free restriction), (5) Mok25 log FM nearby-cycle compatibility (used
-only for the descent lemma's extension across diagonal strata).
+(2) the conditional Ran/properadic enhancement package isolated in the
+chapter, (3) Hackney-Robertson model structure on properads, (4) LV12
+classical Koszul bar-cobar (used only at pole-free restriction), (5) Mok25
+log FM nearby-cycle compatibility (used only for the descent lemma's
+extension across diagonal strata).
 
 The disjointness check is: each verification source must NOT appear, by
 canonical string match (case-insensitive, whitespace-stripped), in the
@@ -35,8 +36,8 @@ five derivation sources:
 
   - Francis 2012 chiral Deligne (verification (a)) is the brace-structure
     statement, NOT the star-product; logically independent.
-  - Lurie HA 5.5 (verification (b)) uses little-discs, NOT the GR17
-    sheaf-of-categories framework that is the derivation ambient.
+  - Lurie HA 5.5 (verification (b)) uses little-discs, NOT the conditional
+    Ran/properadic enhancement package that is the derivation ambient.
   - Hackney-Robertson properads (verification (c)) is listed in derivation
     (3) but at MODEL-STRUCTURE level; verification (c) uses the
     properad infinity-category at a DIFFERENT granularity (transfer
@@ -67,7 +68,7 @@ from compute.lib.independent_verification import (  # noqa: E402
 
 _DERIVATION_SOURCES_A_INFINITY_2 = [
     "Francis 2012 star-product adjunctions",
-    "GR17 Chapter IV.5 factorization model structure",
+    "conditional Ran/properadic enhancement package",
     "Hackney-Robertson 2019 model structure on infinity-properads",
     "Loday-Vallette 2012 Theorem 11.4.1 classical Koszul bar-cobar",
     "Mok 2025 logarithmic Fulton-MacPherson nearby-cycle compatibility",
@@ -121,11 +122,12 @@ def test_A_infinity_2_via_chiral_deligne():
     disjoint_rationale=(
         "Lurie HA Chapter 5.5 constructs factorization algebras via the "
         "little-discs operad and factorization envelopes, bypassing the "
-        "GR17 sheaf-of-categories framework. The resulting (infty,1)-level "
-        "bar-cobar pair pulls back to LV12 at chain level via "
+        "conditional Ran/properadic enhancement package. The resulting "
+        "(infty,1)-level bar-cobar pair pulls back to LV12 at chain level via "
         "cohomological truncation. This provides an independent check of "
         "the pole-free restriction (A2-ii) in Theorem A^{infty,2} that "
-        "does not invoke GR17 or Francis's star-product construction."
+        "does not invoke the conditional enhancement package or Francis's "
+        "star-product construction."
     ),
 )
 def test_A_infinity_2_via_lurie_little_discs():
@@ -135,7 +137,8 @@ def test_A_infinity_2_via_lurie_little_discs():
     Metadata-only at this installation; substantive content is that
     Lurie's little-discs factorization-algebra construction recovers
     LV12 Koszul pair at a marked point, verifying (A2-ii) of
-    Theorem A^{infty,2} independently from GR17/Francis.
+    Theorem A^{infty,2} independently from the conditional ambient
+    package and Francis.
     """
     entries = entries_for("thm:A-infinity-2")
     assert len(entries) >= 2, (

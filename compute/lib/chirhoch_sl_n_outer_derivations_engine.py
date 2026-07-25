@@ -1,59 +1,75 @@
-r"""Affine sl_N outer-derivation engine for ChirHoch^1.
+r"""Affine type-A zero-mode audit for the first chiral-Hochschild group.
 
-This module records the FR4 conjecture verification surface for generic
-affine Kac--Moody type A:
+For ``sl_N`` the adjoint zero modes span an ``N^2-1`` dimensional subspace.
+Their action
 
-    ChirHoch^1(V_k(sl_N)) \cong sl_N,
-    dim ChirHoch^1(V_k(sl_N)) = dim(sl_N) = N^2 - 1.
+    (J^a)_(0) J^b = f^{ab}_c J^c
 
-Verification paths:
-    1. [DC] dim(sl_N) = N^2 - 1 from traceless N x N matrices.
-    2. [LT] Frenkel--Ben-Zvi, Vertex Algebras and Algebraic Curves:
-       the generic affine first Hochschild package identifies HH^1(V_k(g))
-       with the adjoint g-module.
-    3. [CF] compute/lib/chirhoch_dimension_engine.py records the generic
-       affine rule ChirHoch^1(V_k(g)) = dim(g).
-
-References:
-    - Frenkel--Ben-Zvi, Vertex Algebras and Algebraic Curves, 2nd ed. (2004)
-    - chapters/theory/chiral_center_theorem.tex, prop:chirhoch1-affine-km
-    - compute/lib/chirhoch_dimension_engine.py, chirhoch_affine_km
+is inner.  This finite-dimensional calculation identifies a known inner
+subspace of the completed chiral derivation complex.  The dimension of the
+full quotient ``Der_ch/Inn_ch`` requires the complete chart complex and its
+bounded-to-chart comparison, so the numerical value of
+``ChirHoch^1(V_k(sl_N))`` remains open.
 """
 
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from dataclasses import dataclass
+from typing import Dict, Optional
 
 
-def compute_chirhoch1_affine_sl_n(N: int, k: object = "generic") -> int:
-    r"""Return dim ChirHoch^1(V_k(sl_N)) at generic level.
+CHART_H1_OBLIGATION = (
+    "construct the completed affine chiral derivation complex, compute every "
+    "cocycle and inner coderivation, and prove the bounded-to-chart "
+    "quasi-isomorphism"
+)
 
-    FR4 verification surface:
-        ChirHoch^1(V_k(sl_N)) \cong sl_N
-        dim ChirHoch^1(V_k(sl_N)) = N^2 - 1
 
-    The generic affine locus excludes the critical level k = -N, since
-    h^\vee(sl_N) = N.
-    """
+@dataclass(frozen=True)
+class AffineSLNOuterDerivationAudit:
+    N: int
+    level: object
+    lie_dimension: int
+    adjoint_zero_mode_dimension: int
+    known_inner_zero_mode_dimension: int
+    chart_chirhoch1_dimension: Optional[int]
+    status: str
+    resolution_obligation: str
+
+
+def affine_sl_n_outer_derivation_audit(
+    N: int, k: object = "generic"
+) -> AffineSLNOuterDerivationAudit:
     if not isinstance(N, int) or N < 2:
-        raise ValueError(f"N must be an integer >= 2, got {N!r}")
-
+        raise ValueError("N must be an integer at least 2")
     if isinstance(k, str):
         if k != "generic":
-            raise ValueError("k must be 'generic' or a non-critical level")
+            raise ValueError("a string level must equal 'generic'")
     elif k == -N:
-        raise ValueError(
-            f"critical level k = -N = {-N} is excluded for affine sl_{N}"
-        )
+        raise ValueError(f"the critical level k={-N} has a separate centre theory")
 
-    return N * N - 1
+    dimension = N * N - 1
+    return AffineSLNOuterDerivationAudit(
+        N=N,
+        level=k,
+        lie_dimension=dimension,
+        adjoint_zero_mode_dimension=dimension,
+        known_inner_zero_mode_dimension=dimension,
+        chart_chirhoch1_dimension=None,
+        status="open-complete-chiral-derivation-quotient",
+        resolution_obligation=CHART_H1_OBLIGATION,
+    )
 
 
-def verify_fr4_conjecture() -> Dict[int, Tuple[int, int, bool]]:
-    """Check the FR4 affine sl_N dimension statement for N = 2, ..., 8."""
-    results: Dict[int, Tuple[int, int, bool]] = {}
-    for N in range(2, 9):
-        computed = compute_chirhoch1_affine_sl_n(N)
-        expected = N * N - 1
-        results[N] = (computed, expected, computed == expected)
-    return results
+def compute_chirhoch1_affine_sl_n(
+    N: int, k: object = "generic"
+) -> Optional[int]:
+    """Return the chart dimension when available; the current audit gives ``None``."""
+
+    return affine_sl_n_outer_derivation_audit(N, k).chart_chirhoch1_dimension
+
+
+def verify_fr4_conjecture() -> Dict[int, AffineSLNOuterDerivationAudit]:
+    """Return exact type-A zero-mode arithmetic for ``N=2,...,8``."""
+
+    return {N: affine_sl_n_outer_derivation_audit(N) for N in range(2, 9)}

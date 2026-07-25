@@ -1271,13 +1271,65 @@ MC5_AMBIENT_STATUS = {
     },
 }
 
-# Five main theorems
+# Five main theorems.  Each record distinguishes the status of the
+# advertised theorem from the narrower mathematical core already available.
+# The TeX theorem environment named by ``label`` is the canonical status
+# surface; the tests below compare this ledger with that environment.
 MAIN_THEOREMS = {
-    'A': 'PROVED',  # Bar-cobar adjunction + Verdier intertwining
-    'B': 'PROVED',  # Bar-cobar inversion on Koszul locus
-    'C': 'PROVED',  # Complementarity
-    'D': 'PROVED',  # Modular characteristic
-    'H': 'PROVED',  # Chiral Hochschild
+    'A': {
+        'status': 'CONDITIONAL',
+        'label': 'thm:bar-cobar-isomorphism-main',
+        'source': 'chapters/theory/chiral_koszul_pairs.tex',
+        'proved_core_status': 'PROVED_ELSEWHERE',
+        'proved_core': (
+            'associative bar--cobar equivalence in the pro-nilpotent '
+            'Ran ambient; factorization, Fulton--MacPherson, and '
+            'Verdier transport require the stated comparison package'
+        ),
+    },
+    'B': {
+        'status': 'CONDITIONAL',
+        'label': 'thm:bar-cobar-inversion-qi',
+        'source': 'chapters/theory/bar_cobar_adjunction_inversion.tex',
+        'proved_core_status': 'PROVED_ELSEWHERE',
+        'proved_core': (
+            'ordinary fundamental twisting theorem and quadratic Koszul '
+            'recognition; the fixed-coalgebra co--contra correspondence '
+            'is a distinct Positselski theorem'
+        ),
+    },
+    'C': {
+        'status': 'CONDITIONAL',
+        'label': 'thm:quantum-complementarity-main',
+        'source': 'chapters/theory/higher_genus_complementarity.tex',
+        'proved_core_status': 'PROVED_HERE',
+        'proved_core': (
+            'homotopy eigenspace splitting for a supplied cochain '
+            'involution; the geometric pairing and scalar lane require '
+            'the displayed complementarity package'
+        ),
+    },
+    'D': {
+        'status': 'CONDITIONAL',
+        'label': 'thm:genus-universality',
+        'source': 'chapters/theory/higher_genus_foundations.tex',
+        'proved_core_status': 'PROVED_HERE',
+        'proved_core': (
+            'formal Hodge projection and the genus-one scalar coordinate; '
+            'geometric comparison and the all-weight expansion require '
+            'the stated modular hypotheses'
+        ),
+    },
+    'H': {
+        'status': 'CONDITIONAL',
+        'label': 'thm:hochschild-polynomial-growth',
+        'source': 'chapters/theory/chiral_hochschild_koszul.tex',
+        'proved_core_status': 'PROVED_ELSEWHERE',
+        'proved_core': (
+            'the Bakalov--De Sole--Kac benchmark calculations; chart '
+            'transport, finite-family support, and duality require H_H'
+        ),
+    },
 }
 
 # Koszulness programme counts (from concordance sec:concordance-koszulness-programme)
@@ -1693,11 +1745,41 @@ ENVELOPE_SHADOW_COMPLEXITY = {
 # ============================================================
 
 E1_FIVE_THEOREMS = {
-    'A_E1': {'genus_0': 'PROVED', 'all_genera': 'PROVED'},
-    'B_E1': {'genus_0': 'PROVED', 'all_genera': 'PROVED'},
-    'C_E1': {'genus_0': 'PROVED', 'all_genera': 'PROVED'},
-    'D_E1': {'genus_0': 'PROVED', 'all_genera': 'PROVED'},
-    'H_E1': {'genus_0': 'PROVED', 'all_genera': 'PROVED'},
+    'A_E1': {
+        'status': 'CONDITIONAL',
+        'genus_0': 'CONDITIONAL',
+        'all_genera': 'CONDITIONAL',
+        'label': 'thm:e1-theorem-A-modular',
+        'source': 'chapters/theory/e1_modular_koszul.tex',
+    },
+    'B_E1': {
+        'status': 'CONDITIONAL',
+        'genus_0': 'CONDITIONAL',
+        'all_genera': 'CONDITIONAL',
+        'label': 'thm:e1-theorem-B-modular',
+        'source': 'chapters/theory/e1_modular_koszul.tex',
+    },
+    'C_E1': {
+        'status': 'CONDITIONAL',
+        'genus_0': 'CONDITIONAL',
+        'all_genera': 'CONDITIONAL',
+        'label': 'thm:e1-theorem-C-modular',
+        'source': 'chapters/theory/e1_modular_koszul.tex',
+    },
+    'D_E1': {
+        'status': 'CONDITIONAL',
+        'genus_0': 'CONDITIONAL',
+        'all_genera': 'CONDITIONAL',
+        'label': 'thm:e1-theorem-D-modular',
+        'source': 'chapters/theory/e1_modular_koszul.tex',
+    },
+    'H_E1': {
+        'status': 'CONDITIONAL',
+        'genus_0': 'CONDITIONAL',
+        'all_genera': 'CONDITIONAL',
+        'label': 'thm:e1-theorem-H-modular',
+        'source': 'chapters/theory/e1_modular_koszul.tex',
+    },
 }
 
 

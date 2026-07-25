@@ -724,7 +724,7 @@ class TestVerdierDualBranch:
         assert max(products) - min(products) > 0.01
 
     def test_duality_firewalls_are_explicit(self):
-        """A^!, bar-cobar inversion, and Hochschild bulk stay distinct."""
+        """A^!, bar-cobar inversion, and Hochschild closed-sector stay distinct."""
         result = koszul_convergence_comparison(13.0)
         assert result['duality_branch'] == VERDIER_DUAL_BRANCH
         assert result['bar_cobar_inversion'] == BAR_COBAR_INVERSION_FIREWALL

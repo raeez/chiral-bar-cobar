@@ -853,7 +853,7 @@ def chiral_koszul_conductor(N: int) -> Optional[Fraction]:
 
     The historical function name is retained for compatibility.  The
     returned scalar is not a bar-cobar inversion statement and not a
-    Hochschild/bulk computation.
+    Hochschild/closed-sector computation.
     """
     return ff_central_charge_sum(N)
 

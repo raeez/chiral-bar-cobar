@@ -33,7 +33,7 @@ Scope firewalls:
     (Fact_X(L), barB_X(L), Theta_L, L_L, (V_br,T_br), R4_mod(L)).
   * A, B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are distinct:
     Omega(B(A)) = A is bar-cobar inversion, A^! is the Verdier /
-    continuous-linear dual branch, and Z_ch^der(A) is Hochschild bulk.
+    continuous-linear dual branch, and Z_ch^der(A) is Hochschild closed-sector.
 
 Canonical anchors:
     thm:theorem-d, thm:multi-weight-genus-expansion
@@ -104,7 +104,7 @@ TYPED_OBJECT_ROLES: Mapping[str, str] = {
     "A^i": "bar cohomology coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch",
     "Omega(B(A))": "bar-cobar inversion recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild closed-sector",
 }
 
 
@@ -121,7 +121,7 @@ def modular_koszul_compute_projections() -> Tuple[str, ...]:
 
 
 def typed_object_firewall() -> Dict[str, str]:
-    """Roles that keep bar, dual, inversion, and bulk objects distinct."""
+    """Roles that keep bar, dual, inversion, and closed-sector objects distinct."""
 
     return dict(TYPED_OBJECT_ROLES)
 

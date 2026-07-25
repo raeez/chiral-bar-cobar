@@ -146,7 +146,7 @@ def typed_duality_firewall() -> Dict[str, Any]:
                 "or completed hypotheses"
             ),
             "Omega(B(A))": "bar-cobar inversion recovering A",
-            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+            "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
         },
         "confusions_forbidden": {
             "omega_bar_is_koszul_duality": False,

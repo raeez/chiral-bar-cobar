@@ -239,7 +239,7 @@ def hdelta5_recognition_firewall() -> Dict[str, Any]:
 
 
 def koszul_object_firewall() -> Dict[str, str]:
-    """Typed separation among the bar, dual, inversion, and bulk objects."""
+    """Typed separation among the bar, dual, inversion, and closed-sector objects."""
     return {
         "A": "input chiral algebra",
         "B(A)": "reduced bar coalgebra",

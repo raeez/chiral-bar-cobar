@@ -222,20 +222,31 @@ def virasoro_weighted_metric_s6() -> Any:
     """Weighted Riccati-metric sextic coefficient.
 
     This is the coefficient computed by
-    ``H_w(t)^2 = t^4 Q_L(t)`` with ``H_w = sum r*S_r*t^r``.  It is kept
-    as an auxiliary metric coefficient after the manuscript shadow
-    normalisation was rectified.
+    ``H_w(t)^2 = t^4 Q_L(t)`` with ``H_w = sum r*R_r*t^r``.  It is the
+    formal weighted-Riccati coefficient.
     """
     return Rational(80) * (45 * c + 193) / (3 * c**3 * (5 * c + 22) ** 2)
 
 
-def virasoro_null_state_s6() -> Any:
-    """Manuscript-normalised sextic shadow coefficient.
+def virasoro_relation_s6() -> Any:
+    """Return the formal order-six relation coefficient ``C_6^rel``.
 
-    This is forced by the order-t^8 null-state equation
-    ``2*S_2*S_6 + 2*S_3*S_5 + S_4**2 = 0``.
+    It is the unique solution of
+    ``2*R_2*C_6^rel + 2*R_3*R_5 + R_4**2 = 0``.  A singular-vector
+    interpretation is supplied by an explicit level-six
+    radical/decoupling map.
     """
     return Rational(4) * (240 * c + 1031) / (c**3 * (5 * c + 22) ** 2)
+
+
+def virasoro_null_state_s6() -> Any:
+    """Compatibility alias for :func:`virasoro_relation_s6`.
+
+    The returned expression carries formal-relation semantics.  A
+    level-six radical/decoupling map supplies the singular-vector
+    interpretation.
+    """
+    return virasoro_relation_s6()
 
 
 def virasoro_weighted_metric_s6_residual(s6: Any) -> Any:
@@ -247,10 +258,15 @@ def virasoro_weighted_metric_s6_residual(s6: Any) -> Any:
     return simplify(24 * s2 * s6 + 30 * s3 * s5 + 16 * s4**2)
 
 
-def virasoro_null_state_s6_residual(s6: Any) -> Any:
-    """Residual of the manuscript null-state equation at arity 6."""
+def virasoro_relation_s6_residual(s6: Any) -> Any:
+    """Residual of the formal quadratic relation at arity six."""
     s2 = c / 2
     s3 = Rational(2)
     s4 = Rational(10) / (c * (5 * c + 22))
     s5 = Rational(-48) / (c**2 * (5 * c + 22))
     return simplify(2 * s2 * s6 + 2 * s3 * s5 + s4**2)
+
+
+def virasoro_null_state_s6_residual(s6: Any) -> Any:
+    """Compatibility alias for :func:`virasoro_relation_s6_residual`."""
+    return virasoro_relation_s6_residual(s6)

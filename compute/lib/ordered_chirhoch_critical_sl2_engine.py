@@ -39,10 +39,11 @@ changes occur simultaneously:
     satisfies av(r(z)) = kappa at degree 2 for abelian algebras.  For
     non-abelian KM (trace-form): av(r(z)) = k*dim(g)/(2*h^v) = kappa_dp.
     The full kappa includes the Sugawara shift: kappa = kappa_dp + dim(g)/2.
-    At critical level: kappa_dp = 0 * 3/4 = 0, but kappa = 0 + 3/2 = 3/2?
-    NO: kappa(V_{-2}(sl_2)) = 3*0/4 = 0.  The Sugawara shift is dim(g)/2
-    = 3/2 ONLY at generic level; at critical level the Sugawara element
-    is undefined and the shift mechanism breaks.  kappa = 0 exactly.
+    At critical level: kappa_dp = (-2)*3/4 = -3/2, and the generic
+    Sugawara normal-ordering shift is +3/2.  The Sugawara element itself
+    is undefined at k+h^v=0, so the split is only a limiting convention
+    at the critical point; the full scalar is nevertheless
+    kappa(V_{-2}(sl_2)) = 3*0/4 = 0.
 
     ker(av) at arity n: at generic level, dim ker(av_n|V^{tensor n})
     = d^n - C(n+d-1, d-1) where d = dim(V).  This formula depends only

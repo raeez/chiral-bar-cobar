@@ -4,8 +4,8 @@
 %
 % Central theorem anchored by the Quadrichotomy Theorem and the
 % Riccati metric equation H_wt^2 = t^4 Q_c. The Riccati equation governs
-% the weighted metric coefficients; the manuscript shadow coefficients
-% are kept unhatted.
+% the weighted metric coefficients; order-six relation coefficients
+% form a separate formal lane.
 %
 % Related chapters:
 % shadow_tower_higher_coefficients.tex (S_6, S_7, S_8 closed)
@@ -155,22 +155,27 @@ sequence $\{\widehat S^{\rm wt}_r(\cA,L)\}_{r\ge2}$, normalised by
 \widehat S^{\rm wt}_3=S_3=\alpha,\qquad
 \widehat S^{\rm wt}_4=S_4,
 \]
-and transported by the one-dimensional Arnold-residue recursion below.
+and transported by the formal one-dimensional weighted recurrence below.
 Its generating function is
 \[
 H_{\rm wt}(t) \;:=\; \sum_{r\ge2} r\,\widehat S^{\rm wt}_r(\cA,L)\,t^r.
 \]
-The unhatted $S_r$ are the manuscript shadow coefficients. For
-Virasoro the two normalisations agree through $r=5$ and split at
-$r=6$:
+The formal order-six relation uses the same seeds through arity five
+and supplies a second coefficient at arity six:
 \[
-\widehat S^{\rm wt}_6(\Vir_c)
+R^{\mathrm{Ricc}}_6(\Vir_c)
 =\frac{80(45c+193)}{3c^3(5c+22)^2},
 \qquad
-S_6(\Vir_c)
+C^{\mathrm{rel}}_6(\Vir_c)
 =\frac{4(240c+1031)}{c^3(5c+22)^2}.
 \]
 \end{definition}
+
+\begin{remark}[Geometric realization]
+The identification of either formal sequence with a scalar coordinate
+of the ordered residue bar requires the package
+$\mathsf H_{\mathrm{res}}(\Vir_c;X)$ and its transfer maps.
+\end{remark}
 
 \begin{remark}[Curvature]
 \label{rem:curvature-kappa-normalization}
@@ -202,7 +207,7 @@ At $N=2$ this gives $c\cdot \tfrac{1}{2} = c/2 = \kappa(\Vir_c)$
 
 \begin{lemma}[MC recursion, line-restricted]
 \label{lem:mc-recursion-line}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 On a primary line $L$ with $\kappa = \kappa(\cA, L) \neq 0$, the
 weighted Riccati metric coefficients
 $\widehat S^{\rm wt}_r := \widehat S^{\rm wt}_r(\cA, L)$ satisfy
@@ -212,9 +217,12 @@ $\widehat S^{\rm wt}_r := \widehat S^{\rm wt}_r(\cA, L)$ satisfy
 \widehat S^{\rm wt}_j\,\widehat S^{\rm wt}_k,
 \qquad r \ge 5,
 \]
-where $c_{jk} \in \mathbb Q$ are the universal genus-zero
-combinatorial coefficients of the Arnold-form residue at total
-collision (Lemma~\ref{lem:mc-recursion-line} of the bar-complex part). The
+where $c_{jk} \in \mathbb Q$ are the coefficients specified by the
+weighted quadratic recurrence; the degree-$r$ extraction of the
+Hamiltonian master equation that produces this convolution form is
+Theorem~\ref{thm:nms-all-degree-master-equation}.  Their realization
+as Arnold-form residues is the hypothesis
+$\mathsf H_{\mathrm{res}}$. The
 inputs are $\widehat S^{\rm wt}_2 = \kappa$,
 $\widehat S^{\rm wt}_3 = \alpha$, $\widehat S^{\rm wt}_4=S_4$, with $\alpha$ the
 universal cubic shadow datum and $S_4$ the quartic.
@@ -222,26 +230,27 @@ universal cubic shadow datum and $S_4$ the quartic.
 
 The first five Virasoro entries fix the convention.
 
-\begin{proposition}[Virasoro shadow coefficients through $r = 5$]
+\begin{proposition}[Virasoro weighted-Riccati seeds through $r = 5$]
 \label{prop:vir-shadow-r5}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 For the universal Virasoro vertex algebra at central charge $c$, the
-manuscript and weighted Riccati metric normalisations agree through
-$r=5$:
+weighted Riccati presentation has
 \[
-S_2(\Vir_c) = \frac{c}{2},
+\widehat S^{\rm wt}_2(\Vir_c) = \frac{c}{2},
 \qquad
-S_3(\Vir_c) = 2,
+\widehat S^{\rm wt}_3(\Vir_c) = 2,
 \qquad
-S_4(\Vir_c) = \frac{10}{c\,(5c+22)},
+\widehat S^{\rm wt}_4(\Vir_c) = \frac{10}{c\,(5c+22)},
 \qquad
-S_5(\Vir_c) = \frac{-48}{c^{2}\,(5c+22)}.
+\widehat S^{\rm wt}_5(\Vir_c) = \frac{-48}{c^{2}\,(5c+22)}.
 \]
 The Zamolodchikov denominator $5c+22$ is the norm of the weight-$4$
 quasi-primary
 $\Lambda := {:}TT{:} - \tfrac{3}{10}\partial^{2}T$ via
-$\langle \Lambda \mid \Lambda \rangle = c\,(5c+22)/10$. Higher
-unhatted coefficients $S_6, S_7, S_8$ and weighted coefficients
+$\langle \Lambda \mid \Lambda \rangle = c\,(5c+22)/10$.  An
+ordered residue scalar $S_5(\Vir_c;\mathsf H_{\mathrm{res}})$ agrees
+with the displayed weighted value under the residue-comparison
+hypothesis. Higher unhatted coefficients $S_6, S_7, S_8$ and weighted coefficients
 $\widehat S^{\rm wt}_6,\widehat S^{\rm wt}_7,\widehat S^{\rm wt}_8$
 are separated in Chapter~\ref{ch:shadow-tower-higher-coefficients}.
 For the weighted metric tower the leading asymptotic
@@ -253,7 +262,7 @@ obeys $A^{\rm wt}_r = 8\,(-6)^{r-4}/r$.
 \end{proposition}
 
 \begin{proof}[Provenance]
-These are the canonical values of
+These are the presentation-separated values of
 Proposition~\ref{prop:virasoro-shadow-canonical}. The normalisation is
 the Belavin--Polyakov--Zamolodchikov Virasoro OPE
 \[
@@ -265,14 +274,18 @@ so the quadratic and cubic entries are $S_2=c/2$ and $S_3=2$. At
 weight~$4$, orthogonalising ${:}TT{:}$ by
 $\Lambda={:}TT{:}-(3/10)\partial^2T$ gives the Gram entry
 $\langle\Lambda\mid\Lambda\rangle=c(5c+22)/10$; the quartic contact
-coefficient is its inverse, $S_4=10/[c(5c+22)]$. The quintic entry is
-the first non-trivial sewing contraction of the cubic vertex with this
-quartic contact in the Virasoro shadow recursion, equivalently the
-first BPZ/Zamolodchikov five-leg constraint in the standard
-normalisation; it gives $S_5=-48/[c^2(5c+22)]$ with the displayed
-sign. The primary literature is BPZ~\cite{BPZ84} for the Virasoro OPE
-normalisation and Zamolodchikov~\cite{Zamolodchikov1985} for the
-weight-$4$ quasi-primary normalisation.
+coefficient is its inverse,
+$\widehat S^{\rm wt}_4=10/[c(5c+22)]$. The weighted recurrence gives
+\[
+ \widehat S^{\rm wt}_5
+ =-\frac{6}{5\kappa}\,widehat S^{\rm wt}_3
+   \widehat S^{\rm wt}_4
+ =-\frac{48}{c^2(5c+22)}.
+\]
+BPZ~\cite{BPZ84} supplies the Virasoro OPE normalization and
+Zamolodchikov~\cite{Zamolodchikov1985} supplies the weight-$4$
+quasi-primary normalization.  The residue comparison is recorded by
+$\mathsf H_{\mathrm{res}}$.
 \end{proof}
 
 \begin{remark}[$S_4$ large-$c$ asymptotic]
@@ -286,8 +299,8 @@ S_4(\Vir_c) \;=\; \frac{10}{c\,(5c+22)}
 \;\sim\; \frac{2}{c^{2}}
 \qquad (c \to \infty),
 \]
-not $2/(5c^{2})$. The factor $5$ from $5c+22$ cancels against
-the numerator $10 = 2 \cdot 5$.
+because the factor $5$ from $5c+22$ combines with the numerator
+$10=2\cdot5$.
 \end{remark}
 
 \begin{proposition}[$S_2$ as the curvature, $S_3$ as the cubic colour]
@@ -327,9 +340,12 @@ three equivalent presentations.
 
 \begin{theorem}[Riccati master equation]
 \label{thm:riccati-master}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $\cA$ be a chirally Koszul vertex algebra of finite type, $L$ a
-primary line with $\kappa = \kappa(\cA, L) \neq 0$, and define
+primary line with $\kappa = \kappa(\cA, L) \neq 0$.  Assume that the
+weighted recurrence, after setting
+$a_n=(n+2)\widehat S^{\rm wt}_{n+2}$, has the convolution form
+$\sum_{i+j=m}a_i a_j=0$ for every $m\ge3$.  Define
 \[
 H_{\rm wt}(t) \;:=\; \sum_{r\ge 2} r\,\widehat S^{\rm wt}_r(\cA, L)\,t^{r}
 \;\in\; \mathbb Q(\kappa, \alpha, S_4)\,[\![t]\!]
@@ -376,7 +392,10 @@ Hence $F^{2} = Q_c$, i.e.\ $H_{\rm wt}^{2} = t^{4}\,Q_c$.
 
 \begin{proposition}[Three equivalent presentations]
 \label{prop:riccati-three-presentations}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
+Assume $\mathsf H_{\mathrm{res}}$ identifies the primary-line
+Maurer--Cartan equation with the weighted convolution recurrence used in
+Theorem~\ref{thm:riccati-master}.
 The following three statements on the primary line $L$ are
 equivalent.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -493,9 +512,8 @@ r^{\rm wt}_{\max}(L^{(\mathbf q)}) \;=\;
  \alpha^{(\mathbf q)} \neq 0,\; \Delta^{(\mathbf q)} = 0; \\[2pt]
 \infty,
  & \text{(class M)}\quad
- Q^{(\mathbf q)} \text{ irreducible over }
- \mathbb Q(\kappa^{(\mathbf q)}, \alpha^{(\mathbf q)},
- S_4^{(\mathbf q)}),\;
+ Q^{(\mathbf q)} \text{ has two simple roots over the algebraic
+ closure},\;
  \Delta^{(\mathbf q)} \neq 0.
 \end{cases}
 \]
@@ -549,9 +567,8 @@ $\Delta^{(\mathbf q)} = 0$ (given $\kappa^{(\mathbf q)} \neq 0$). The
 three cases of the factorisation are then the exhaustive case split
 on $(\alpha^{(\mathbf q)}, \Delta^{(\mathbf q)})$ on a
 $\kappa \neq 0$ line. Proposition~\ref{prop:depth-gap-trichotomy}
-rules out the manuscript shadow value $r_{\max}=4$ on such a line;
-the weighted Riccati metric has no fourth finite depth on a
-$\kappa\ne0$ line.
+gives the three possible depth patterns: depth $2$, depth $3$, or
+infinite depth.
 
 Part \ref{quad:iii} is the explicit class-C witness of
 Proposition~\ref{prop:depth-gap-trichotomy}(ii): the standard
@@ -592,8 +609,9 @@ package.
 
 \begin{remark}[Shadow class is not Koszul duality or bulk]
 \label{rem:shadow-class-not-duality-bulk}
-The class $G/L/C/M$ is a scalar invariant of the averaged
-Maurer--Cartan shadow. It is not the Koszul dual algebra $\cA^!$, not
+The class $G/L/C/M$ is determined by the scalar sequence
+$S_n=\tau_{\cA,n}^{\mathrm{res}}
+q_n((\Theta_\cA^{E_1})_{0,n})$ on its stated trace locus. It is not the Koszul dual algebra $\cA^!$, not
 the bar--cobar inversion statement $\Omega B(\cA)\simeq\cA$, and not
 the closed-sector object
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$. The five objects
@@ -707,7 +725,8 @@ Proposition of Chapter~\ref{ch:ordered-associative-chiral-kd}).
 \section{Class M as a Riemann surface}
 \label{sec:class-M-Riemann-surface}
 
-In class M, the irreducible quadratic $Q_c$ defines a smooth
+In class M, the non-square quadratic $Q_c$ has two simple roots and
+defines a smooth
 hyperelliptic spectral Riemann surface
 $\Sigma_c = \{y^{2} = Q_c(t)\}$, and the shadow connection
 $\nabla^{\rm sh, c}$ is the Picard--Fuchs equation of its periods.
@@ -868,31 +887,42 @@ Cyclotomic angular quantisation is a specialization statement, not a
 generic Virasoro root-field statement.
 \end{remark}
 
-\begin{theorem}[Shadow coefficient $S_6(\Vir_c)$ closed form]
+\begin{theorem}[Formal order-six relation coefficient]
 \label{thm:S6-Vir-closed}
 \ClaimStatusProvedHere
-With the shadow tower normalised by $S_2 = c/2$, $S_3 = 2$,
-$S_4 = 10/[c(5c+22)]$, $S_5 = -48/[c^{2}(5c+22)]$, the next entry is
+\emph{Type signature:}
+\textup{(Open quadrant, formal primary-line relation presentation,
+auxiliary level (1), Virasoro vacuum package on
+(c(5c+22)\ne0)).}
+Set $R_2 = c/2$, $R_3 = 2$,
+$R_4 = 10/[c(5c+22)]$, and $R_5 = -48/[c^{2}(5c+22)]$.
+The formal relation
+$2R_2C_6^{\mathrm{rel}}+2R_3R_5+R_4^2=0$ has the unique solution
 \begin{equation}
 \label{eq:S6-closed}
-S_6(\Vir_c) \;=\; \frac{4\,(240\, c + 1031)}{c^{3}\,(5c+22)^{2}}.
+C_6^{\mathrm{rel}}(\Vir_c) \;=\;
+\frac{4\,(240\, c + 1031)}{c^{3}\,(5c+22)^{2}}.
 \end{equation}
+A singular-vector interpretation is supplied by an explicit
+level-six radical vector and its decoupling map.  A geometric scalar
+$S_6(\Vir_c;\mathsf H_{\mathrm{res}})$ is supplied by the ordered
+residue package and its normalized projection.
 \end{theorem}
 
 \begin{proof}
-The unweighted manuscript shadow polynomial
-$G(t) = \sum_{r\ge 2} S_r\,t^{r}$ satisfies the
-order-$t^{8}$ vanishing constraint
+The formal polynomial
+$G_{\mathrm{rel}}(t)=\sum_{r=2}^{5}R_rt^r+C_6^{\mathrm{rel}}t^6$
+satisfies the prescribed order-$t^{8}$ relation
 \[
-[t^{8}] G(t)^{2}
-\;=\; 2\,S_2\,S_6 \;+\; 2\,S_3\,S_5 \;+\; S_4^{2} \;=\; 0,
+[t^{8}] G_{\mathrm{rel}}(t)^{2}
+\;=\; 2R_2C_6^{\mathrm{rel}}+2R_3R_5+R_4^{2}=0.
 \]
-the first null-state constraint beyond the entries common to the
-weighted Riccati metric. Substituting the census values,
-$2\,S_3\,S_5 = -192/[c^{2}(5c+22)]$ and
-$S_4^{2} = 100/[c^{2}(5c+22)^{2}]$, and solving for $S_6$,
+Substitution gives
+$2R_3R_5=-192/[c^{2}(5c+22)]$ and
+$R_4^{2}=100/[c^{2}(5c+22)^{2}]$.  Solving for
+$C_6^{\mathrm{rel}}$ yields
 \[
-c\,S_6
+c\,C_6^{\mathrm{rel}}
 \;=\; \frac{192}{c^{2}(5c+22)}
 \;-\; \frac{100}{c^{2}(5c+22)^{2}}
 \;=\; \frac{192\,(5c+22) - 100}{c^{2}\,(5c+22)^{2}}
@@ -900,7 +930,7 @@ c\,S_6
 \]
 whence \eqref{eq:S6-closed}. The weighted Riccati metric coefficient
 at the same weight is
-$\widehat S^{\rm wt}_6(\Vir_c)=80(45c+193)/[3c^3(5c+22)^2]$ by
+$R^{\mathrm{Ricc}}_6(\Vir_c)=80(45c+193)/[3c^3(5c+22)^2]$ by
 Definition~\ref{def:weighted-riccati-metric}; the two coefficients
 are distinct.
 \end{proof}
@@ -1154,21 +1184,29 @@ projector is a non-trivial operadic boundary.
 
 \begin{remark}[Shadow/Gel'fand--Fuks data and curve-level Hochschild]
 \label{rem:shadow-gf-not-curve-hochschild}
-The shadow tower and Gel'fand--Fuks representatives are not
-curve-level Hochschild classes. Theorem~H in
-Chapter~\ref{ch:hochschild-cohomology} places
-$\ChirHoch^\bullet_{\mathrm{curve}}(\cA)$ in degrees
-$\{0,1,2\}$ for the ambient-curve rows. In particular, the
-class-M Virasoro weight-$5$ quasi-primary
+The shadow tower, Gel'fand--Fuks cochains, and curve-level Hochschild
+cochains are linked by specified comparison maps.  A family datum
+$H_H(\cA;S)$ in Chapter~\ref{ch:hochschild-cohomology} gives
+$\operatorname{Supp}\ChirHoch^\bullet_{\mathrm{curve}}(\cA)
+\subseteq S$.  For Virasoro, Bakalov--De Sole--Kac give
+$S=\{0,2,3\}$ and a one-dimensional degree-three group after the
+bounded-to-chart quasi-isomorphism.  De Sole--Kac variational Poisson
+cohomology is nonvanishing in unboundedly many degrees for
+Virasoro-type Poisson vertex algebras \cite{BDSK21}, so the
+concentration lives strictly on the stated Koszul/bounded locus, with
+that quasi-isomorphism part of $H_H(\cA;S)$.  The class-M Virasoro
+weight-$5$
+quasi-primary
 \[
 W_3^{\mathrm{Zam}}={:}T\partial T{:}-\frac14\,\partial^3T
 \]
-is a shadow/Gel'fand--Fuks or extension representative; its image in
-$\ChirHoch^3_{\mathrm{curve}}(\Vir_c)$ is exact, represented by
-$\partial\beta_2^{\mathrm{Vir}}$. A non-zero degree-$3$ class enters
-only after the CY-$3$ product ambient in the $\mathbf B$ row. Thus
-shadow depth and Gel'fand--Fuks data are independent of the
-curve-level Hochschild concentration statement.
+is a shadow/Gel'fand--Fuks representative.  Its image in
+$\ChirHoch^3_{\mathrm{curve}}(\Vir_c)$ is determined by the filtered
+comparison map; identifying it with the Bakalov--De Sole--Kac
+generator is a separate chain-level calculation.  Product-ambient
+degree-three classes in the $\mathbf B$ row arise through the CY-$3$
+comparison functor.  Thus shadow depth, Gel'fand--Fuks cochains, and
+curve-level Hochschild support retain their respective types.
 \end{remark}
 
 \subsection{C5 -- Mock modularity for $\cW_N$ at admissible levels}
@@ -1577,7 +1615,8 @@ full standard $\lambda$-family, not either one-dimensional slice.
 Modular characteristic $\kappa(\Vir_c) = c/2$ (census C3). Cubic
 $\alpha = 2$. Quartic $S_4 = 10/[c\,(5 c + 22)]$ (census). Discriminant
 $\Delta = 8 \kappa\,S_4 = 40/(5 c + 22) \neq 0$ for generic $c$. The
-Riccati polynomial is irreducible:
+Riccati polynomial is not a perfect square (two simple roots over the
+algebraic closure):
 $Q_c = (c + 6\,t)^{2} + 80\,t^{2}/(5 c + 22)$. The weighted metric
 has infinite depth and the spectral curve $\Sigma_c$ is smooth away
 from $c=0$ and $c=-22/5$.
@@ -1603,19 +1642,20 @@ non-$T$ spin-lane constants remain open mathematical conditions unless computed
 separately.
 
 \paragraph{Bershadsky--Polyakov $\BP_k$ (class M).}
-Convention-dependent central-charge formula. In the Arakawa
-convention $c(\BP_k) = 2 - 24 (k + 1)^{2}/(k + 3)$, the Koszul
-conductor $K_{\BP}(k) = c(\BP_k) + c(\BP_{-k - 6}) \equiv 196$ as a
+Convention-dependent central-charge formula. In the standard
+Fehily--Kawasetsu--Ridout convention
+$c(\BP_k) = -(2 k + 3)(3 k + 1)/(k + 3)$, the Koszul
+conductor $K_{\BP}(k) = c(\BP_k) + c(\BP_{-k - 6}) \equiv 50$ as a
 constant rational function of $k$, with the fixed point $k = -3$
 coinciding with the critical level $-\hv(\fsl_3)$.
-$\kappa(\BP_k) + \kappa(\BP_k^{!}) = 98/3$ (self-dual at $k = -3$).
+Conditionally on the ratio lane,
+$\kappa(\BP_k) + \kappa(\BP_k^{!}) = 25/3$ (self-dual at $k = -3$).
 Class M with depth $\infty$. (Vol I standalone
 \texttt{bp\_self\_duality.tex} carries the polynomial-identity
-theorem in Arakawa convention; the Vol II Fateev--Lukyanov
-convention $c^{\rm FL}(k) = -(2 k + 3)(3 k + 1)/(k + 3)$ has the
-same algebra but produces meromorphic rather than polynomial
-$K^{\rm FL}_{\BP}$. Both conventions parametrise the same algebra by
-level reparametrisation.)
+theorem $K_{\BP}\equiv 50$; the explicitly shifted conformal-vector
+scalar $c^{\rm shift}(k) = 2 - 24(k+1)^2/(k+3)$ has reflection
+sum $196$ and belongs to a separate secondary lane, a change of
+stress tensor rather than of level parametrisation.)
 
 \paragraph{Lattice VOA $V_\Lambda$ (class G).}
 Modular characteristic $\kappa(V_\Lambda) = \mathrm{rank}(\Lambda)$
@@ -1965,7 +2005,9 @@ Section~\ref{sec:class-M-Riemann-surface}: the K3 BKM chiral
 stress-tensor line has
 $(\kappa, \alpha, S_4) = (-107, 2, 5/112\,136)$ with discriminant
 $\Delta_{\mathrm{Ricc}} = 8\kappa S_4 = -5/131 \neq 0$, so $Q_c$
-is irreducible and $r_{\max} = \infty$. Here
+is not a perfect square and $r_{\max} = \infty$ (here $Q_{-214}$
+is a difference of squares, hence reducible over~$\mathbb R$; the
+classification criterion is non-squareness, not irreducibility). Here
 \[
 Q_{-214}(t)=(-214+6t)^2-\frac{10}{131}t^2,
 \qquad
@@ -1986,7 +2028,7 @@ class-$\mathrm M$ object refined by $M_{24}$-umbral shadow and
 Kuga--Satake geometry, not a fifth class. The class-$\mathrm M$
 conclusion uses only the generic class-$\mathrm M$ conditions at
 $c=-214$: nonvanishing $5c + 22$, nonvanishing $S_4$, and
-irreducible $Q_c$. The depth-$\infty$ tower is a topological
+non-square $Q_c$. The depth-$\infty$ tower is a topological
 invariant of that stratum, not of auxiliary central-charge
 choices.
 \end{remark}
@@ -2538,7 +2580,7 @@ No asymptotic claim is used in this computation.
 
 \begin{proposition}[Fixed-node Sato--Tate limit and the failure of a
 $\sqrt p$ law; \ClaimStatusProvedHere]
-\label{conj:stqp-gauss-kuzmin-asymptotic}
+\label{prop:stqp-gauss-kuzmin-asymptotic}
 \index{Sato--Tate!fixed-node nearest-distance limit}%
 Let
 \[
@@ -2928,7 +2970,7 @@ descriptive statistic, not a nine-bin goodness-of-fit proof.
 \item \textup{(Nearest-node deviation.)}
 Proposition~\ref{prop:stqp-gauss-kuzmin} gives
 sample mean $\bar\mu = 0.596$ and sample standard deviation $0.348$
-for $\delta_p\sqrt p$. Proposition~\ref{conj:stqp-gauss-kuzmin-asymptotic}
+for $\delta_p\sqrt p$. Proposition~\ref{prop:stqp-gauss-kuzmin-asymptotic}
 shows that no fixed-node $\sqrt p$ limit follows from Sato--Tate.
 \item \textup{(Hilbert-symbol sign compatibility.)}
 Theorem~\ref{thm:stqp-archimedean-sign} proves

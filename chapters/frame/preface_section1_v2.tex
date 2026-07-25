@@ -237,9 +237,11 @@ The Arnold relation kills the form; the Borcherds identity
 kills the algebra. Both are needed, and both are consumed.
 
 \item \emph{Same pair.}\;
-$d_{\mathrm{res}}^{(ij)}\,d_{\mathrm{res}}^{(ij)} = 0$ by the
-sign rule on desuspensions: extracting a residue twice at the
-same diagonal vanishes for degree reasons.
+$d_{\mathrm{res}}^{(ij)}\,d_{\mathrm{res}}^{(ij)} = 0$ because the
+first Poincar\'e residue removes the unique logarithmic normal factor
+along \(D_{ij}\).  After restriction to that divisor there is no second
+normal direction for the same diagonal; the desuspension sign only
+records the ordered-bar orientation.
 \end{enumerate}
 
 The result: $d_{\barB}^2 = 0$ if and only if the $n$-th products
@@ -298,42 +300,46 @@ visible in the first examples.
 
 The bar construction is a categorical logarithm:
 $B(\cA\otimes\cA') \simeq B(\cA)\oplus B(\cA')$.
-The logarithmic form $\eta_{ij}=d\log(z_i-z_j)$ is the integral
-kernel; the Arnold relation is the cocycle condition for~$\log$.
+The logarithmic normal form \(\eta_{ij}\) along the collision diagonal
+is the integral kernel; \(d\log(z_i-z_j)\) is its affine/formal
+genus-zero representative, not a global coordinate difference. The
+Arnold relation is the local cocycle condition for that representative.
 
 The cobar functor $\Omega$ inverts the bar on the Koszul locus:
 $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ (Theorem~B).
-This is bar-cobar \emph{inversion}: the cobar recovers the
-\emph{original} algebra, not a dual.
+Thus bar--cobar reconstruction recovers the original algebra.
 
-A separate operation produces the dual. Take bar cohomology
-$\cA^{\mathrm i} := H^*(B(\cA))$, a graded coalgebra, and apply
-graded linear duality: $\cA^! := (\cA^{\mathrm i})^\vee$.
-This is the \emph{Koszul dual algebra}. Verdier duality
-on $\mathrm{Ran}(X)$ produces the richer chain-level
-object~$\cA^!_\infty$:
+A chosen quadratic presentation $\cA=T_X(V)/(R)$ produces
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^{\mathrm i}\to B_X(\cA)$.
+Graded linear duality gives the strict algebra
+$\cA^!:=(\cA^{\mathrm i})^\vee$. Verdier duality on
+$\mathrm{Ran}(X)$ produces its chain-level homotopy model directly:
 \begin{equation}\label{eq:pf1-verdier}
-\mathbb D_{\mathrm{Ran}}\,\barB_X(\cA)
-\;\simeq\;
-\cA^!_\infty.
+K_X(\cA):=\mathbb D_{\mathrm{Ran}}\barB_X(\cA),
+\qquad
+\nu_\cA\colon K_X(\cA)\longrightarrow\cA^!.
 \end{equation}
-Verdier duality converts coalgebra to algebra, so $\cA^!_\infty$
-is a factorization \emph{algebra}, retaining full chain-level data.
-That its cohomology recovers~$\cA^!$ on the Koszul locus is the
-content of Theorem~A, not a tautology.
+The quadratic comparison dualizes to
+$\mathbb D(q_\cA)\colon K_X(\cA)\to
+\mathbb D_{\mathrm{Ran}}(\cA^{\mathrm i})$.
+Here $K_X(\cA)$ is a factorization algebra retaining the full
+chain-level data.  Theorem~A makes~$\nu_\cA$ an equivalence on the
+chosen finite-type Koszul-pair locus.
 
 Three functors act on $B(\cA)$ and produce three distinct outputs:
 \[
 \begin{array}{lcll}
 \Omega(B(\cA)) &\simeq& \cA
  & \text{(inversion: recovers the original)},\\[3pt]
-\mathbb D_{\mathrm{Ran}}(B(\cA)) &\simeq& \cA^!_\infty
- & \text{(Verdier: the homotopy dual)},\\[3pt]
-(H^*(B(\cA)))^\vee &=& \cA^!
- & \text{(linear duality: the strict dual)}.
+\mathbb D_{\mathrm{Ran}}(B(\cA))
+ &=& K_X(\cA)
+ & \text{(Verdier duality: the homotopy dual algebra)},\\[3pt]
+\mathbb D_{\mathrm{Ran}}(\cA^{\mathrm i}) &=& \cA^!
+ & \text{(quadratic finite duality: the strict dual)}.
 \end{array}
 \]
-Confusing any two is a category error.
+Their source and target categories distinguish the three operations.
 
 When~$\cA$ is chirally Koszul, $H^*(B(\cA))$ concentrates in bar
 degree~$1$, the bar-to-cobar spectral sequence collapses at~$E_2$,
@@ -487,7 +493,7 @@ Lie-algebraic structure absent from the rank-one Heisenberg
 kernel $k\Omega_{\mathcal H}/z$. The averaging map collapses the Casimir to a
 scalar:
 \begin{equation}\label{eq:pf1-km-kappa}
-\mathrm{av}\bigl(k\Omega/z\bigr)
+\mathrm{av}\bigl(k\Omega_{\mathrm{tr}}/z\bigr)
 \;=\;
 \frac{\dim(\mathfrak g)\cdot(k+h^\vee)}{2h^\vee}
 \;=\;
@@ -497,7 +503,7 @@ The matrix structure of~$\Omega$, erased by
 $\Sigma_2$-coinvariance, encodes the representation theory
 of~$\mathfrak g$. At this point the ordered bar has strictly more
 information than the symmetric bar: the passage from
-$r(z) = k\Omega/z$ to $\kappa(\widehat{\mathfrak g}_k)$ discards
+$r(z) = k\Omega_{\mathrm{tr}}/z$ to $\kappa(\widehat{\mathfrak g}_k)$ discards
 the Casimir tensor, which is precisely the datum that builds the
 Yangian~$Y(\mathfrak g)$.
 
@@ -523,12 +529,14 @@ The ordered story is the primitive; the symmetric / modular-Koszul story (T15 se
 \subsection*{Genus $0$ and genus $\ge 1$}
 % ====================================================================
 
-Everything above takes place at genus~$0$: the propagator
-$\eta_{12} = d\log(z_1-z_2)$ is globally defined
-on~$\mathbb P^1$, and the Arnold relation holds without correction.
-On a curve of genus $g \geq 1$, the function $z_1 - z_2$ has no
-global meaning: the curve is compact, and any meromorphic function
-with a single simple zero must also have a simple pole.
+Everything above takes place on the genus-$0$ affine/formal screen:
+there the logarithmic normal form is represented by
+\(\eta_{12}=d\log(z_1-z_2)\), and the Arnold relation holds in that
+local coordinate. On \(\mathbb P^1\) the representative is glued with
+the projective linear relations; on a curve of genus \(g \geq 1\), the
+function \(z_1-z_2\) has no global meaning: the curve is compact, and
+any meromorphic function with a single simple zero must also have a
+simple pole.
 
 The replacement is the \emph{prime form} $E(z_1,z_2)$, a section of
 $K^{-1/2}\boxtimes K^{-1/2}$ (not $K^{+1/2}\boxtimes K^{+1/2}$),

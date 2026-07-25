@@ -1008,7 +1008,8 @@ def heisenberg_koszul_duality_genus1(kappa=None) -> KoszulDualityData:
     Complementarity: kappa + (-kappa) = 0.
 
     CRITICAL PITFALL (CLAUDE.md): Heisenberg is NOT self-dual.
-    H_k^! = Sym^ch(V*) != H_{-k}.
+    at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1]) branch,
+    not H_{-k}.
     """
     if kappa is None:
         kappa = Symbol('kappa')

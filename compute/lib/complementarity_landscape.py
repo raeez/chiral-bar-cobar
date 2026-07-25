@@ -43,7 +43,8 @@ FORMULAS (all verified by independent computation):
     W_N:                 kappa = rho_N*c, kappa' = rho_N*(K_N-c), sum = rho_N*K_N
 
 CRITICAL PITFALLS:
-    - Heisenberg is NOT self-dual (AP25/CLAUDE.md): H_k^! = Sym^ch(V*)
+    - Heisenberg is NOT self-dual (AP25/CLAUDE.md): at k != 0,
+      H_k^! is the curved second-kind Sym^ch(V*[1]) branch
     - betagamma is NOT self-dual: bg^! = bc (different statistics)
     - kappa_bg(lam) = kappa_bg(1-lam) is a SYMMETRY, not duality
     - Virasoro self-dual at c=13, NOT c=26 (AP8)

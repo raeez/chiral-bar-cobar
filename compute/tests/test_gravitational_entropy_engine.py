@@ -473,7 +473,7 @@ class TestCrossFamilyConsistency:
 
     def test_heisenberg_antisymmetry(self):
         """kappa(H_k) + kappa(H_k^!) = 0 (free field anti-symmetry)."""
-        # H_k^! = Sym^ch(V*), kappa(H_k^!) = -k
+        # H_k^! is the curved Sym^ch(V*[1]) branch; scalar kappa(H_k^!) = -k
         k = Rational(3)
         kappa = heisenberg_kappa(k)
         kappa_dual = -k

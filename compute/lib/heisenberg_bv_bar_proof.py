@@ -551,7 +551,8 @@ def additivity_check(k_max: int = 10, g_max: int = 5) -> bool:
 def complementarity_check(g_max: int = 5) -> bool:
     """Verify Koszul complementarity for the Heisenberg.
 
-    H_k^! = Sym^ch(V*) with kappa(H_k^!) = -k.
+    at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1]) branch
+    with scalar kappa(H_k^!) = -k.
     So kappa(H_k) + kappa(H_k^!) = k + (-k) = 0.
 
     At each genus:

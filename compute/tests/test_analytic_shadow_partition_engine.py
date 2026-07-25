@@ -132,7 +132,7 @@ class TestCertificationFirewalls:
         )
 
     def test_object_firewalls_separate_duals_and_bulk(self):
-        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild bulk stay typed."""
+        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild closed-sector stay typed."""
         firewalls = package_firewall_certificate()["object_firewalls"]
         assert firewalls == OBJECT_FIREWALLS
         assert "bar-cobar inversion" in firewalls["Omega(B(A))"]

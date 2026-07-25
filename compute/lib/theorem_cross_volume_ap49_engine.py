@@ -365,7 +365,8 @@ def r_matrix_max_pole(ope_max_pole: int) -> int:
     AGREE.
 
     AP19: OPE pole n -> r-matrix pole n-1.
-    KM: OPE z^{-2}, z^{-1} -> r-matrix z^{-1} (simple pole, Omega/z).
+    KM: OPE z^{-2}, z^{-1} -> trace-form r-matrix z^{-1}
+    (simple pole, k*Omega/z).
     Virasoro: OPE z^{-4}, z^{-2}, z^{-1} -> r-matrix z^{-3}, z^{-1}.
     W_3 TT: OPE z^{-4}, z^{-2}, z^{-1} -> r-matrix z^{-3}, z^{-1}.
     W_N self: OPE z^{-2N} -> r-matrix z^{-(2N-1)}.
@@ -723,7 +724,7 @@ def verify_r_matrix_poles_cross_volume() -> Dict[str, object]:
         'r_matrix_max_pole': r_matrix_max_pole(2),
         'expected': 1,
         'match': r_matrix_max_pole(2) == 1,
-        'form': 'r(z) = Omega/z',
+        'form': 'trace-form r_k(z) = k*Omega/z',
     }
 
     # Virasoro: OPE z^{-4} -> r-matrix z^{-3}

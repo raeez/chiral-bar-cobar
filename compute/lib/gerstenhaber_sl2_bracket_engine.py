@@ -1,26 +1,30 @@
-r"""Gerstenhaber bracket on ChirHoch^1(V_k(sl_2)): non-abelian E_3 verification.
+r"""Gerstenhaber bracket on the affine sl_2 zero-mode prequotient.
 
-Computes the Gerstenhaber bracket [-, -] on ChirHoch^1(V_k(sl_2)) = sl_2
-directly from the current algebra OPE via the chiral brace formula, and
-verifies that it reproduces the sl_2 Lie bracket.
+Computes the prequotient current bracket [-, -] on the adjoint
+zero-mode directions of V_k(sl_2) directly from the current algebra OPE
+via the chiral brace formula, and verifies that it reproduces the sl_2
+Lie bracket before quotienting by inner derivations.  The actual
+cohomology group ChirHoch^1(V_k(sl_2)) is zero on the corrected
+fixed-fiber surface.
 
 This is the FIRST non-abelian E_3 structure verification in the programme.
 For the Heisenberg algebra (abelian, class G), all Gerstenhaber brackets
 vanish (hh_heisenberg_e3_engine.py).  For affine sl_2 (non-abelian,
-class L), the bracket on ChirHoch^1 is nontrivial: it IS the sl_2 Lie
-bracket.
+class L), the bracket on the zero-mode prequotient is nontrivial: it is
+the sl_2 Lie bracket.  Its cohomology class vanishes because the
+zero-mode directions are inner.
 
 MATHEMATICAL CONTENT:
 
-1. OUTER DERIVATIONS OF V_k(sl_2)
-   ChirHoch^1(V_k(sl_2)) = sl_2 (prop:chirhoch1-affine-km).
-   Basis: {D_e, D_f, D_h} where D_X is the outer derivation
+1. ZERO-MODE PREQUOTIENT DIRECTIONS OF V_k(sl_2)
+   ChirHoch^1(V_k(sl_2)) = 0, but the zero-mode prequotient is sl_2.
+   Basis: {D_e, D_f, D_h} where D_X is the inner zero-mode direction
    parametrized by X in sl_2.  Explicitly:
      D_X: V_k(sl_2) -> V_k(sl_2), J^a |-> X^a * |0>
    (the infinitesimal current algebra deformation in direction X).
 
 2. GERSTENHABER BRACKET FROM CHIRAL BRACE
-   For degree-1 cochains phi, psi in ChirHoch^1, the Gerstenhaber
+   For degree-1 prequotient cochains phi, psi, the Gerstenhaber
    bracket is:
      [phi, psi] = phi circ psi - (-1)^{(|phi|-1)(|psi|-1)} psi circ phi
    where (phi circ psi)(a) is the circle product (operadic composition)
@@ -46,9 +50,9 @@ MATHEMATICAL CONTENT:
                       = f^{ab}_c (X^a Y^b - X^b Y^a)   (relabelling)
                       = [X, Y]^c                        (Lie bracket!)
 
-   Therefore [D_X, D_Y] = D_{[X,Y]_g}: the Gerstenhaber bracket
-   on ChirHoch^1 reproduces the Lie bracket of the underlying
-   finite-dimensional Lie algebra g.
+   Therefore [D_X, D_Y] = D_{[X,Y]_g}: the prequotient bracket
+   reproduces the Lie bracket of the underlying finite-dimensional Lie
+   algebra g, and then maps to zero in cohomology.
 
 3. FALSIFICATION TEST FT-10
    For g = sl_2 with standard basis {e, f, h}:
@@ -58,8 +62,8 @@ MATHEMATICAL CONTENT:
 
    These are the sl_2 structure constants.  If ANY of these fail,
    the Gerstenhaber bracket does not reproduce the Lie bracket,
-   falsifying the claim that ChirHoch^1(V_k(g)) carries the adjoint
-   g-module structure at the level of E_3 operations.
+   falsifying the claim that the affine zero-mode prequotient carries
+   the adjoint g-module structure at the level of E_3 operations.
 
 4. LEVEL INDEPENDENCE
    The bracket [D_X, D_Y] = D_{[X,Y]} is independent of k (at
@@ -70,7 +74,7 @@ MATHEMATICAL CONTENT:
 
    At the CRITICAL level k = -h^v = -2: the derived center changes
    (Feigin-Frenkel center becomes infinite-dimensional), so the
-   identification ChirHoch^1 = g breaks down.
+   critical-level finite-window quotient statement breaks down.
 
 CRITICAL PITFALLS:
   - The Gerstenhaber bracket has degree -1: [HH^p, HH^q] -> HH^{p+q-1}.
@@ -264,17 +268,18 @@ def verify_killing_form() -> Dict[str, Any]:
 
 
 # ============================================================
-# 3. OUTER DERIVATIONS D_X AND THE CHIRAL BRACE
+# 3. ZERO-MODE PREQUOTIENT DIRECTIONS D_X AND THE CHIRAL BRACE
 # ============================================================
 
 @dataclass
 class OuterDerivation:
-    """An outer derivation D_X of V_k(sl_2), parametrized by X in sl_2.
+    """A zero-mode prequotient direction D_X of V_k(sl_2), parametrized by X in sl_2.
 
     D_X is the degree-1 Hochschild cochain:
       D_X(J^a) = X^a * |0>  (shift generator by X component)
 
-    In ChirHoch^1(V_k(sl_2)) = sl_2, D_X corresponds to the
+    In the corrected quotient D_X is inner and has zero class in
+    ChirHoch^1(V_k(sl_2)); before quotienting, it corresponds to the
     element X of the Lie algebra.
 
     Attributes:
@@ -329,7 +334,7 @@ def basis_derivations() -> List[OuterDerivation]:
 def chiral_brace(phi: OuterDerivation, psi: OuterDerivation) -> OuterDerivation:
     r"""Chiral brace product (phi circ psi) for degree-1 cochains.
 
-    For derivations D_X, D_Y in ChirHoch^1(V_k(g)):
+    For prequotient directions D_X, D_Y:
       (D_X circ D_Y)(J^c) = Res_{lambda=0} {(D_X)_lambda D_Y(J^c)}
 
     Using the lambda-bracket {J^a_lambda J^b} = k*kappa^{ab}*lambda + f^{ab}_c J^c:
@@ -359,11 +364,11 @@ def chiral_brace(phi: OuterDerivation, psi: OuterDerivation) -> OuterDerivation:
 
 
 # ============================================================
-# 5. GERSTENHABER BRACKET ON ChirHoch^1
+# 5. GERSTENHABER BRACKET ON THE ZERO-MODE PREQUOTIENT
 # ============================================================
 
 def gerstenhaber_bracket(phi: OuterDerivation, psi: OuterDerivation) -> OuterDerivation:
-    r"""Gerstenhaber bracket [D_X, D_Y] on ChirHoch^1(V_k(sl_2)).
+    r"""Gerstenhaber bracket [D_X, D_Y] on the zero-mode prequotient.
 
     [phi, psi] = phi circ psi - (-1)^{(|phi|-1)(|psi|-1)} psi circ phi
 
@@ -445,9 +450,9 @@ def gerstenhaber_bracket(phi: OuterDerivation, psi: OuterDerivation) -> OuterDer
 
     The computation gives [D_X, D_Y] = D_{[X,Y]} directly.
     """
-    # Direct computation: the Gerstenhaber bracket on ChirHoch^1 of a
-    # Koszul algebra with quadratic relations reproduces the Lie bracket
-    # of the generating Lie algebra.
+    # Direct computation: the prequotient Gerstenhaber bracket of the
+    # Koszul generator reproduces the Lie bracket of the generating Lie
+    # algebra.
     #
     # [D_X, D_Y] = D_{[X,Y]}
     #
@@ -533,9 +538,9 @@ def verify_graded_antisymmetry() -> bool:
 # ============================================================
 
 def verify_graded_jacobi() -> bool:
-    r"""Verify the graded Jacobi identity on ChirHoch^1.
+    r"""Verify the graded Jacobi identity on the zero-mode prequotient.
 
-    For all phi, psi, chi in ChirHoch^1 (shifted degrees all 0):
+    For all prequotient phi, psi, chi (shifted degrees all 0):
       [phi, [psi, chi]] + [psi, [chi, phi]] + [chi, [phi, psi]] = 0
 
     This is the ordinary Jacobi identity for sl_2.
@@ -573,7 +578,7 @@ def verify_graded_jacobi() -> bool:
 # ============================================================
 
 def verify_level_independence() -> bool:
-    """Verify that the Gerstenhaber bracket on ChirHoch^1 is independent of k.
+    """Verify that the prequotient Gerstenhaber bracket is independent of k.
 
     The bracket [D_X, D_Y] = D_{[X,Y]} depends only on the structure
     constants f^{ab}_c, not on the level k.  The level enters only
@@ -615,12 +620,13 @@ def heisenberg_comparison() -> Dict[str, Any]:
 
     This is the abelian limit: all structure constants vanish,
     so all brackets vanish.  The non-abelian case (sl_2) is the
-    simplest example where brackets are nontrivial.
+    simplest example where prequotient brackets are nontrivial.
     """
     return {
         "heisenberg_dim_hh1": 1,
         "heisenberg_brackets_trivial": True,
-        "sl2_dim_hh1": 3,
+        "sl2_dim_hh1": 0,
+        "sl2_zero_mode_prequotient_dim": 3,
         "sl2_brackets_trivial": False,
         "reason": "sl_2 has f^{ab}_c != 0 (simple-pole OPE term)",
     }
@@ -632,7 +638,7 @@ def heisenberg_comparison() -> Dict[str, Any]:
 
 @dataclass
 class GerstenhaberSl2Result:
-    """Complete result of the Gerstenhaber bracket verification on ChirHoch^1(V_k(sl_2))."""
+    """Complete result of the affine sl_2 prequotient bracket verification."""
 
     # Dimensions
     dim_hh0: int
@@ -678,7 +684,7 @@ def full_verification() -> GerstenhaberSl2Result:
 
     return GerstenhaberSl2Result(
         dim_hh0=1,
-        dim_hh1=3,
+        dim_hh1=0,
         dim_hh2=1,
         bracket_ef=brackets["[D_e, D_f]"],
         bracket_he=brackets["[D_h, D_e]"],
@@ -697,9 +703,10 @@ def summary() -> Dict[str, Any]:
     """Summary of the FT-10 verification."""
     result = full_verification()
     return {
-        "test": "FT-10: Gerstenhaber bracket on ChirHoch^1(V_k(sl_2))",
+        "test": "FT-10: Gerstenhaber bracket on affine sl_2 zero-mode prequotient",
         "algebra": "affine sl_2 at generic level k != -2",
         "chirhoch_dims": {0: result.dim_hh0, 1: result.dim_hh1, 2: result.dim_hh2},
+        "zero_mode_prequotient_dim": 3,
         "total_dim": result.dim_hh0 + result.dim_hh1 + result.dim_hh2,
         "brackets": {
             "[D_e, D_f]": f"{result.bracket_ef[1]}*D_{result.bracket_ef[0]}",

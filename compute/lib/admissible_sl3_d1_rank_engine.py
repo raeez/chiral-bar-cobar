@@ -1,7 +1,10 @@
-r"""Explicit Koszulness engine for admissible sl_3 via Li-bar diagonal concentration.
+r"""Explicit Li-bar diagnostic for admissible sl_3 via diagonal concentration.
 
-THEOREM-LEVEL ENGINE: Proves Koszulness of L_k(sl_3) at admissible levels
-by establishing diagonal concentration of the Li-bar E_1 (and hence E_2) page.
+This module computes an associated-graded/Li-bar model.  It does not by
+itself prove chiral Koszulness of the simple quotient \(L_k(sl_3)\);
+promotion to a theorem requires the quotient-bar spectral sequence,
+comparison from the Li associated graded to the full vertex algebra,
+finite-window exactness, and strong convergence.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -35,7 +38,7 @@ where d_i depends on the null vector structure.  For admissible levels
 with denominator q:
     d_i = q  for all generators (root and Cartan alike).
 
-KEY OBSERVATION FOR q = 2 (THEOREM A):
+KEY OBSERVATION FOR q = 2 (MODEL DIAGNOSTIC):
 
 For q = 2: all truncation degrees d_i = 2.  The minimal resolution of k
 over A = k[x]/(x^2) is:
@@ -50,10 +53,11 @@ Since E_1 is diagonal, E_2 = H(E_1, d_1) is AUTOMATICALLY diagonal
 (d_1 preserves weight, and the only E_1 classes are on the diagonal,
 so both kernel and image of d_1 lie on the diagonal).
 
-Therefore: E_2 is diagonally concentrated, and L_k(sl_3) is Koszul.
-
-This proves Koszulness for ALL admissible levels with q = 2, including
-the critical case k = -3/2 (p=3, q=2).
+Therefore the associated-graded Li-bar model has diagonal E_2.  This is
+evidence for Koszulness, not a theorem for the simple quotient until the
+quotient-bar comparison and convergence package is supplied.  The q=2
+levels, including k = -3/2 (p=3, q=2), are therefore
+CONDITIONAL/MODEL-SUPPORTED, not unconditional theorem outputs.
 
 FOR q >= 3 (STATUS: OPEN):
 
@@ -705,15 +709,15 @@ def compute_e2_general(d: int, max_bar: int = 8,
 
 
 # =========================================================================
-# 10. The theorem: Koszulness verdict
+# 10. Model verdict: Koszulness status
 # =========================================================================
 
 @dataclass
 class KoszulnessVerdict:
-    """Final Koszulness verdict for L_k(sl_3) at a specific admissible level."""
+    """Model-level Koszulness verdict for L_k(sl_3) at an admissible level."""
     level: AdmissibleLevel
     is_koszul: bool
-    confidence: str  # 'unconditional', 'conditional', 'open'
+    confidence: str  # 'conditional-model', 'conditional', 'open'
     evidence: str
     e2_data: Optional[E2Data]
     off_diagonal_survivors: int
@@ -724,8 +728,10 @@ def prove_koszulness(p: int, q: int,
                      max_weight: int = 8) -> KoszulnessVerdict:
     """Attempt to prove Koszulness of L_k(sl_3) at admissible level k = p/q - 3.
 
-    For q = 1 (integrable): V_k = L_k, universally Koszul.
-    For q = 2: d = 2, E_1 diagonal, E_2 = E_1 diagonal. UNCONDITIONAL.
+    For q = 1 (integrable): ordinary rationality is known, but this
+        helper does not promote the simple quotient to bar-Koszulness.
+    For q = 2: d = 2, E_1 diagonal, E_2 = E_1 diagonal in the Li model.
+        CONDITIONAL/MODEL-SUPPORTED.
     For q >= 3: d >= 3, E_1 has off-diagonal classes. CONDITIONAL on d_1 analysis.
     """
     if p < 3 or q < 1 or gcd(p, q) != 1:
@@ -737,12 +743,14 @@ def prove_koszulness(p: int, q: int,
     if q == 1:
         return KoszulnessVerdict(
             level=level, is_koszul=True,
-            confidence='unconditional',
-            evidence=(f'Integrable level k = {p-3}. V_k = L_k (no null vectors in '
-                      f'the bar range). Universal algebra is Koszul (CE cohomology).'),
+            confidence='conditional-model',
+            evidence=(f'Integrable level k = {p-3}. Ordinary rationality is a '
+                      f'finiteness input, but this helper does not identify '
+                      f'ordinary Ext with quotient bar-Ext. Quotient-bar '
+                      f'exactness/convergence is still required.'),
             e2_data=None, off_diagonal_survivors=0)
 
-    # Case 2: q = 2, d = 2 (THE THEOREM)
+    # Case 2: q = 2, d = 2 (associated-graded Li-bar diagnostic)
     if q == 2:
         e2 = compute_e2_d2(max_bar, max_weight)
         evidence_parts = [
@@ -751,12 +759,13 @@ def prove_koszulness(p: int, q: int,
             f'd_1 has bidegree (-1, 0): maps (p,p) to (p-1, p), which is '
             f'off-diagonal and hence EMPTY for d=2.',
             f'Therefore d_1 = 0, E_2 = E_1, and E_2 is diagonally concentrated.',
-            f'Koszulness follows from thm:associated-variety-koszulness.',
+            f'Promotion to simple-quotient Koszulness still requires the '
+            f'quotient-bar comparison and convergence package.',
             f'E_1 diagonal dim = {e2.diagonal_e2}, off-diagonal dim = {e2.off_diagonal_e2}.',
         ]
         return KoszulnessVerdict(
             level=level, is_koszul=True,
-            confidence='unconditional',
+            confidence='conditional-model',
             evidence=' '.join(evidence_parts),
             e2_data=e2, off_diagonal_survivors=0)
 
@@ -766,9 +775,10 @@ def prove_koszulness(p: int, q: int,
         # E_1 itself is diagonal (can happen for small max_bar/max_weight)
         return KoszulnessVerdict(
             level=level, is_koszul=True,
-            confidence='unconditional',
+            confidence='conditional-model',
             evidence=(f'E_1 is diagonal at d = {level.d_trunc} within the '
-                      f'computed range (max_bar={max_bar}, max_weight={max_weight}).'),
+                      f'computed range (max_bar={max_bar}, max_weight={max_weight}); '
+                      f'this is finite-window model evidence, not a quotient theorem.'),
             e2_data=e2, off_diagonal_survivors=0)
     else:
         n_off = len(e2.off_diagonal_entries)
@@ -870,17 +880,18 @@ def diagonal_e2_via_ce(max_bar: int = 8) -> Dict[int, int]:
 # =========================================================================
 
 def theorem_summary() -> str:
-    """Summary of the theorem for the manuscript."""
+    """Summary of the model diagnostic for the manuscript."""
     return (
-        "THEOREM (admissible_sl3_d1_rank_engine): "
-        "L_k(sl_3) is chirally Koszul at all admissible levels k = p/q - 3 "
-        "with denominator q <= 2. This includes k = -3/2 (p=3, q=2), "
-        "k = -1/2 (p=5, q=2), k = 1/2 (p=7, q=2), and all integrable "
-        "levels (q=1). "
+        "MODEL DIAGNOSTIC (admissible_sl3_d1_rank_engine): "
+        "the associated-graded Li-bar model for L_k(sl_3) is diagonally "
+        "concentrated at admissible denominator q <= 2. This includes "
+        "k = -3/2 (p=3, q=2), k = -1/2 (p=5, q=2), k = 1/2 (p=7, q=2), "
+        "and the integrable q=1 lane. "
         "\n\n"
-        "PROOF: For q = 1 (integrable): the simple quotient L_k equals the "
-        "universal algebra V_k, which is Koszul by the PBW universality "
-        "criterion (prop:pbw-universality). "
+        "SCOPE: this is not by itself a theorem that the simple quotient is "
+        "chirally Koszul. Promotion requires the quotient-bar spectral "
+        "sequence, the comparison from Li associated graded to the full "
+        "vertex algebra, finite-window exactness, and strong convergence. "
         "\n"
         "For q = 2: the C_2 algebra R = C[sl_3*]/I has all generators "
         "truncated at degree d = q = 2, so R = bigotimes_{i=1}^{8} k[x_i]/(x_i^2). "
@@ -889,9 +900,8 @@ def theorem_summary() -> str:
         "E_1 page E_1^{p,w} = 0 for all p != w. The d_1 Poisson "
         "differential has bidegree (-1, 0) and maps E_1^{p,p} to "
         "E_1^{p-1, p}, which vanishes since p-1 != p. Therefore d_1 = 0, "
-        "E_2 = E_1 is diagonally concentrated, and L_k is Koszul by "
-        "the Li-bar spectral sequence criterion "
-        "(thm:associated-variety-koszulness). QED."
+        "E_2 = E_1 is diagonally concentrated in the model. The simple "
+        "quotient theorem remains conditional on the quotient-bar package."
         "\n\n"
         "STATUS for q >= 3: The E_1 page has off-diagonal classes (e.g., "
         "Tor_2 at weight d >= 3 != 2). Koszulness requires these to be "

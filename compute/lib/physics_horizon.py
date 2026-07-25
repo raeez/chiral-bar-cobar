@@ -13,7 +13,8 @@ Conjectures covered:
 
 2. ANOMALY CANCELLATION (conj:anomaly-cancellation, conj:anomaly-physical)
    BRST nilpotency requires c_matter + c_ghost = 0.
-   Shadow: kappa(A) + kappa(A!) = 0 for Koszul dual pairs.
+   Shadow: kappa(A) + kappa(A!) is family-dependent; it vanishes on
+   the KM/Heisenberg/free-field lanes and is non-zero on Virasoro/W lanes.
 
 3. FEYNMAN DIAGRAM COUNTING (conj:bar-worldline)
    Bar complex elements correspond to worldline Feynman integrands.
@@ -325,20 +326,24 @@ def genus_1_partition_function_exponent(c: int) -> int:
 
 
 def heisenberg_genus1_bar(n_fields: int = 1) -> Dict[str, object]:
-    """Bar complex data at genus 1 for free fields (Heisenberg).
+    """Genus-1 free-boson stress-tensor scalar lane.
 
     At genus 1, the bar complex contribution is controlled by
     F_1(H_kappa) = kappa * lambda_1^FP where:
       lambda_1^FP = (2^1 - 1)/2^1 * |B_2|/(2!) = (1/2)*(1/6)/2 = 1/24
 
-    For n_fields free bosons (c = n_fields):
-      kappa(H) = c/2 = n_fields/2
+    This legacy-named helper uses the Virasoro/stress-tensor scalar lane
+    of n_fields free bosons (central charge c = n_fields):
+      kappa = c/2 = n_fields/2
       F_1 = (n_fields/2) * (1/24) = n_fields/48
+
+    It is not the rank-one Heisenberg level convention kappa(H_k)=k.
+    For that convention use matter_ghost_anomaly(..., rho_matter=1).
 
     This connects to the Dedekind eta function:
       log eta(tau) = pi*i*tau/12 - sum_{n>=1} log(1 - q^n)
       F_1 = c/48 relates to the coefficient c/24 in the partition function
-      via the kappa convention kappa = c/2.
+      via the stress-tensor scalar convention kappa = c/2.
     """
     kappa = Rational(n_fields, 2)
     lambda1_fp = Rational(1, 24)
@@ -417,8 +422,9 @@ def matter_ghost_anomaly(
     rho_matter = 1/2 gives the Virasoro convention kappa = c/2.
 
     The anomaly cancellation is about CENTRAL CHARGE (c_total = 0),
-    NOT about kappa.  For the bosonic string, kappa_total = 26 - 13 = 13
-    (the Virasoro constant at c=26), which does NOT vanish.
+    not a universal kappa cancellation.  With the same rho=1/2 convention
+    on both sectors the kappa sum also vanishes; with Heisenberg matter
+    and bc ghosts it is 26 - 13 = 13, which does not vanish.
 
     Ground truth: conj:anomaly-cancellation (bar_cobar_construction.tex).
     """
@@ -444,12 +450,14 @@ def koszul_dual_kappa_cancellation(
     c_val: object = None,
     k_val: object = None,
 ) -> Dict[str, object]:
-    """Verify kappa(A) + kappa(A!) = 0 for Koszul dual pairs.
+    """Compute family-dependent kappa complementarity for Koszul pairs.
 
     For Virasoro: kappa(Vir_c) = c/2, kappa(Vir_{26-c}) = (26-c)/2.
       Sum = 26/2 = 13 (NOT zero unless c + c' = 0, which gives c=0, c'=26).
-      But kappa_total = c/2 for the single algebra. The cancellation is:
-      kappa(A) + kappa(A!) = 0 when the Koszul dual has kappa' = -kappa.
+      This is complementarity, not cancellation.
+
+    For anti-symmetric families, such as KM and free-field/bc-beta-gamma
+    lanes, the Koszul dual has kappa' = -kappa and the sum is zero.
 
     For KM: kappa(g_k) = dim(g)*(k+h^vee)/(2*h^vee).
       FF dual level: k' = -k - 2*h^vee.
@@ -1128,7 +1136,9 @@ def nc_chern_simons() -> Dict[str, object]:
 def closed_string_cobar() -> Dict[str, object]:
     """Closed-string cobar identification (conj:closed-string-cobar).
 
-    Omega(C_bulk) = closed string field theory action.
+    Omega(C_closed) denotes the conjectural cobar transform of the
+    closed-sector complex, not the boundary bar-cobar inversion
+    Omega(B(A)) -> A.
     """
     return {
         "conjecture": "conj:closed-string-cobar",

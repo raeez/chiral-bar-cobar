@@ -810,7 +810,7 @@ class TestMultiPathVerification:
         """R-matrix agreement verified 3 ways for sl_2.
 
         Path 1: Costello tree-level r(z) = Omega/z.
-        Path 2: Bar collision residue r(z) = Omega/z.
+        Path 2: Unit-normalized bar collision residue r(z) = Omega/z.
         Path 3: Yang R-matrix R(u) = uI + P (additive form).
         """
         N = 2
@@ -893,5 +893,4 @@ class TestCrossVerificationSl3:
             kappa_ours = kappa_affine_slN(3, k)
             kappa_sl3_val = float(kappa_sl3(k))
             assert abs(kappa_ours - kappa_sl3_val) < 1e-10
-
 

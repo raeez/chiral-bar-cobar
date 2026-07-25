@@ -485,7 +485,7 @@ class KoszulnessAtCriticalLevel:
     k5_bbl: str = ""
     # K6: FH concentration
     k6_fh: str = ""
-    # K7: ChirHoch polynomial
+    # K7: ChirHoch amplitude/Hilbert polynomial
     k7_hochschild: str = ""
     # K8: Kac-Shapovalov determinant
     k8_kac_shapovalov: str = ""

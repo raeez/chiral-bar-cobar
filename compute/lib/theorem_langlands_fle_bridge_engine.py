@@ -1,19 +1,22 @@
-r"""Geometric Langlands FLE bridge: bar-cobar at critical level meets opers.
+r"""Geometric Langlands/FLE critical-level consistency suite.
 
-THEOREM (Langlands FLE bridge, thm:langlands-bar-bridge + thm:oper-bar-dl):
+Comparison surface (thm:langlands-bar-bridge + thm:oper-bar-dl):
 
 The Fundamental Local Equivalence (FLE) of Gaitsgory-Raskin (arXiv:2405.03648)
-states, at the critical level k = -h^v:
+is a categorical statement at the critical level k = -h^v:
 
     V_{-h^v}(g)-mod  ~  QCoh(Op_{g^v}(D))
 
-Our bar-cobar framework gives an independent algebraic bridge:
+The bar-cobar surface records the cohomological shadow:
 
     H^n(B(V_{-h^v}(g)))  ~  Omega^n(Op_{g^v}(D))    for all n >= 0.
 
-This engine verifies the bridge by SIX INDEPENDENT METHODS:
+This engine runs finite critical-level consistency checks for that
+cohomological shadow.  It does not prove the categorical FLE and does not
+identify critical centers, chiral Koszul duals, bar-cobar inverses, or
+derived chiral centers.
 
-Method 1 (Bar cohomology dimensions):
+Check 1 (Bar cohomology dimensions):
     At critical level k = -h^v, the curvature kappa = 0 so the bar complex
     is uncurved (d^2 = 0).  The PBW spectral sequence + Whitehead lemma
     gives dim H^n(B) = dim Omega^n(Op).  For sl_2:
@@ -23,30 +26,31 @@ Method 1 (Bar cohomology dimensions):
         H^0 = Fun(Op_{PGL_N}(D)) = C[[q_2,...,q_N]]
         with generators in weights d_1+1,...,d_r+1 (exponents + 1).
 
-Method 2 (Whitehead spectral decomposition):
+Check 2 (Whitehead spectral decomposition):
     E_1^{p,q} = Fun^p(Op) tensor H^q(g; k).
     For sl_2: nonzero rows at q = 0 and q = 3 only.
     For sl_N: 2^r nonzero rows (r = rank).
     The spectral sequence degenerates after at most 2*d_r steps.
 
-Method 3 (Kappa vanishing at critical level):
+Check 3 (Kappa vanishing at critical level):
     kappa(g, k) = dim(g) * (k + h^v) / (2 h^v).
     At k = -h^v: kappa = 0 exactly.
     Cross-check: the modular characteristic vanishes, bar is uncurved,
     and the Feigin-Frenkel center emerges as H^0.
 
-Method 4 (Feigin-Frenkel involution fixed point):
-    The FF involution k -> -k - 2h^v has unique fixed point k = -h^v.
-    At the fixed point: the Koszul dual is the algebra itself,
-    kappa = kappa' = 0, and complementarity becomes self-complementarity.
+Check 4 (critical-level reflection fixed point):
+    The level reflection k -> -k - 2h^v has unique fixed point k = -h^v.
+    This is a level-reflection fixed point only: it is not strict Koszul
+    self-duality, not membership in KSDual, and not self-complementarity.
+    It gives kappa anti-symmetry and, at the fixed point, kappa = 0.
 
-Method 5 (Transgression differential d_4):
+Check 5 (Transgression differential d_4):
     The PBW spectral sequence has d_1 = d_2 = d_3 = 0 on E_r^{0,3}
     (Whitehead vanishing), but d_4(omega_3) != 0 (transgression of the
     Cartan 3-cocycle).  This is the spectral incarnation of the FF center:
     the invariant subalgebra Fun(Op) absorbs the Cartan class.
 
-Method 6 (Localization functor compatibility):
+Check 6 (Localization functor compatibility):
     The bar complex at critical level projects to Fun(Op) = H^0(B),
     compatible with the Frenkel-Gaitsgory localization functor Delta.
     At genus 0: B maps the vacuum to O_Op.
@@ -69,22 +73,26 @@ CONNECTIONS TO THE FLE (arXiv:2405.03648):
         formalism on Ran(X).
 
 WHAT THE FLE DOES NOT GIVE FOR KOSZULNESS:
-    The FLE is specific to the critical level k = -h^v.  Koszulness
-    (bar cohomology concentrated in bar degree 1) holds at ALL generic
-    levels k != -h^v.  The FLE characterizes the UNCURVED case (kappa = 0),
-    not the KOSZUL case (curved but concentrated).  These are complementary:
-    - Generic level: curved, Koszul, bar cohomology = Koszul dual algebra.
+    The FLE is specific to the critical level k = -h^v.  Generic-level
+    Koszulness is a separate PBW/chiral-Koszul/finite-type/completion
+    package, not a consequence of the FLE and not established merely by
+    checking k != -h^v.  The FLE characterizes the UNCURVED critical
+    comparison surface (kappa = 0), not the generic Koszul package.  These
+    are orthogonal:
+    - Generic package: curved chart lane; Koszul-dual coalgebra after the
+      named PBW, Verdier/formality, finite-type, and completion hypotheses.
     - Critical level: uncurved, NOT Koszul in the bar-degree-1 sense
       (bar cohomology is the full oper differential-form algebra, spread
-      across all bar degrees).
+      across form/bar degrees), hence outside the generic Koszul locus.
 
 Conventions
 -----------
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(g, k) = dim(g)(k + h^v)/(2 h^v) (AP1, AP39).
 - Sugawara undefined at critical level.
-- FF involution: k <-> -k - 2h^v.
-- H_k^! = V_{-k-2h^v}(g), NOT H_{-k} (AP33).
+- Critical-level reflection: k <-> -k - 2h^v.
+- The reflected level is not by itself the chiral Koszul-dual object; a
+  strict object comparison needs the Verdier/formality package (AP33).
 - Bar propagator d log E(z,w) is weight 1 (AP27).
 
 Beilinson warnings
@@ -253,23 +261,25 @@ def central_charge_affine(g: SimpleLieData, k: Union[int, float, Fraction]
         denom = k + g.h_vee
         if denom == 0:
             raise ValueError(
-                f"Sugawara undefined at critical level k = -{g.h_vee}"
+                f"Sugawara UNDEFINED at critical level k = -{g.h_vee}"
             )
         return Fraction(g.dim) * k / denom
     denom = k + g.h_vee
     if abs(denom) < 1e-15:
         raise ValueError(
-            f"Sugawara undefined at critical level k = -{g.h_vee}"
+            f"Sugawara UNDEFINED at critical level k = -{g.h_vee}"
         )
     return g.dim * k / denom
 
 
 def koszul_dual_level(g: SimpleLieData, k: Union[int, float, Fraction]
                       ) -> Union[float, Fraction]:
-    """Feigin-Frenkel involution: k' = -k - 2h^v.
+    """Critical-level reflected companion level: k' = -k - 2h^v.
 
     Fixed point: k = -h^v (critical level).
-    AP33: The Koszul dual V_{k'}(g) is NOT V_{-k}(g).
+    AP33: This reflected level is not V_{-k}(g), and it is not by itself an
+    object-level chiral Koszul duality statement.  Strict comparison with a
+    Koszul-dual object requires the Verdier/formality/completion package.
     """
     return -k - 2 * g.h_vee
 
@@ -564,15 +574,16 @@ def d4_nonvanishing_sl2() -> Dict[str, Any]:
 
 
 # =========================================================================
-# Section 6: FF involution and self-duality at critical level
+# Section 6: critical-level reflection, not self-duality
 # =========================================================================
 
 def ff_involution_analysis(g: SimpleLieData, k: Union[int, float, Fraction]
                            ) -> Dict[str, Any]:
-    """Analyze the Feigin-Frenkel involution k -> -k - 2h^v.
+    """Analyze the critical-level reflection k -> -k - 2h^v.
 
-    At critical level k = -h^v, this is a FIXED POINT.
-    At generic level, the dual algebra is V_{k'}(g) with k' = -k - 2h^v.
+    At critical level k = -h^v, this is a level-reflection fixed point.
+    At generic level, k' = -k - 2h^v is the reflected companion level.
+    Neither statement, by itself, identifies the chiral Koszul-dual object.
     kappa + kappa' = 0 for affine KM (AP24: this is specific to KM).
     """
     k_dual = koszul_dual_level(g, k)
@@ -590,6 +601,11 @@ def ff_involution_analysis(g: SimpleLieData, k: Union[int, float, Fraction]
         'kappa_sum': kap + kap_dual,
         'is_critical': is_crit,
         'is_ff_fixed_point': is_fixed,
+        'ff_fixed_point_scope': (
+            'level reflection fixed point only; not strict Koszul self-duality'
+        ),
+        'not_koszul_self_dual': True,
+        'critical_not_koszul': is_crit,
     }
 
     if is_crit:
@@ -614,36 +630,46 @@ def ff_involution_analysis(g: SimpleLieData, k: Union[int, float, Fraction]
 
 @dataclass
 class FLEBridgeResult:
-    """Result of the FLE bridge verification."""
+    """Result of the finite FLE cohomological-shadow consistency suite."""
     lie_type: str
     rank: int
     critical_level: Union[int, Fraction]
     kappa_at_critical: Union[float, Fraction]
     bar_uncurved: bool
 
-    # Method 1: dimension matching
+    # Check 1: dimension matching
     h0_dims_match: bool
     h0_dims: Dict[int, Tuple[int, int]]  # weight -> (bar_dim, oper_dim)
 
-    # Method 2: Whitehead decomposition
+    # Check 2: Whitehead decomposition
     num_spectral_rows: int
     lie_cohomology_dim: int
     spectral_rows_valid: bool
 
-    # Method 3: kappa vanishing
+    # Check 3: kappa vanishing
     kappa_zero: bool
 
-    # Method 4: FF fixed point
+    # Check 4: reflected-level fixed point
     ff_fixed_point: bool
 
-    # Method 5: transgression
+    # Check 5: transgression
     transgression_page: int
     d4_nonzero: Optional[bool]
 
-    # Method 6: localization compatibility
+    # Check 6: localization compatibility
     vacuum_to_oper: bool
 
-    # Overall
+    # Scope metadata
+    verification_scope: str = (
+        'finite critical-level consistency checks; not a proof of the categorical FLE'
+    )
+    ff_fixed_point_scope: str = (
+        'level reflection fixed point only; not strict Koszul self-duality'
+    )
+    not_koszul_self_dual: bool = True
+    critical_not_koszul: bool = True
+
+    # Overall finite-check flag; this is not a theorem-status proof flag.
     all_methods_pass: bool = False
 
     def __post_init__(self):
@@ -659,10 +685,12 @@ class FLEBridgeResult:
 
 def verify_fle_bridge(lie_type: str, rank: int,
                       max_weight: int = 12) -> FLEBridgeResult:
-    """Full six-method verification of the FLE bridge.
+    """Run finite critical-level consistency checks for the cohomological shadow.
 
     This is the main entry point.  For a given simple Lie algebra g,
-    it verifies all six methods at the critical level k = -h^v.
+    it checks six finite consequences at the critical level k = -h^v.
+    The result is not a proof of the categorical FLE and does not assert
+    strict Koszul self-duality at the critical fixed point.
     """
     g = lie_data(lie_type, rank)
     k_crit = -g.h_vee
@@ -731,11 +759,12 @@ def critical_vs_generic_comparison(lie_type: str, rank: int,
     """Compare bar complex properties at critical vs generic level.
 
     At critical level: uncurved, H^0 = Fun(Op), Sugawara undefined.
-    At generic level: curved (kappa != 0), Koszul, H^0 = Koszul dual.
+    At generic level: curved (kappa != 0); Koszulness is available only
+    under the named PBW/chiral-Koszul/finite-type/completion package.
 
-    This verifies that Koszulness and the FLE are COMPLEMENTARY properties:
+    This checks that Koszulness and the FLE are orthogonal properties:
     - FLE holds at critical level (kappa = 0, uncurved).
-    - Koszulness holds at generic level (kappa != 0, curved but concentrated).
+    - Koszulness belongs to the generic package, not to the critical FLE.
     """
     g = lie_data(lie_type, rank)
     k_crit = -g.h_vee
@@ -764,7 +793,10 @@ def critical_vs_generic_comparison(lie_type: str, rank: int,
             'level': k,
             'kappa': float(kap) if not isinstance(kap, Fraction) else float(kap),
             'uncurved': False,
-            'koszul': True,  # Koszul at generic level
+            'koszul': True,  # Backward-compatible table flag under package below.
+            'koszul_status': (
+                'conditional on named PBW/chiral-Koszul/finite-type/completion package'
+            ),
             'sugawara_defined': True,
             'central_charge': float(c) if c is not None else None,
             'ff_center': False,
@@ -776,9 +808,9 @@ def critical_vs_generic_comparison(lie_type: str, rank: int,
         'critical': critical_data,
         'generic': generic_data,
         'complementarity': (
-            "FLE holds at critical (kappa=0), "
-            "Koszulness holds at generic (kappa!=0). "
-            "These are complementary, not competing, characterizations."
+            "FLE is categorical at critical level (kappa=0), while "
+            "generic-level Koszulness is a separate conditional package. "
+            "These are orthogonal, not competing, characterizations."
         ),
     }
 
@@ -879,7 +911,7 @@ def admissible_level_interpolation(g: SimpleLieData,
 
 def fle_bridge_landscape_sweep(max_weight: int = 8
                                ) -> Dict[str, FLEBridgeResult]:
-    """Verify the FLE bridge for all standard simple Lie algebras."""
+    """Run finite FLE-shadow consistency checks for standard simple Lie algebras."""
     results = {}
     for (lt, rk) in [("A", 1), ("A", 2), ("A", 3), ("A", 4),
                      ("B", 2), ("B", 3),

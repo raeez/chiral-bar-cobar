@@ -29,15 +29,18 @@ V_{1,1}(b) = (b^2 + 4*pi^2)/48.
 SHADOW TOWER CONNECTION
 =======================
 
-The JT spectral curve is y = sin(2*pi*sqrt(x)) / (4*pi), which is the
-spectral curve of the double-scaled matrix model.  The topological
-recursion on this curve reproduces all V_{g,n}.
+The compact Weil--Petersson normalization of the JT comparison curve is
+x = z^2, y_WP(z) = sin(2*pi*z)/(4*pi).  The physical JT density is
+obtained only after the energy-contour continuation z = i*sqrt(E),
+which gives rho_0(E) = sinh(2*pi*sqrt(E))/(4*pi^2).  The topological
+recursion statement is external WP/JT comparison data, not a theorem
+of the scalar shadow tower alone.
 
-The connection to the shadow obstruction tower: in the Schwarzian limit (c -> infty
-with appropriate scaling), the Virasoro shadow connection degenerates to
-the JT spectral curve.  More precisely, the shadow metric Q_Vir(t) at
-large c scales to a trigonometric spectral curve whose topological recursion
-reproduces the JT amplitudes.
+The connection to the shadow obstruction tower is conditional: in the
+Schwarzian limit (c -> infty with appropriate scaling), the Virasoro
+shadow connection supplies scalar comparison data for the compact sine
+curve.  The double-scaled JT matrix integral, the contour, and the
+non-perturbative completion remain separate analytic inputs.
 
 The shadow free energies F_g = kappa * lambda_g^FP (from the scalar shadow
 tower) should be compared with the JT genus-g contributions.  The key
@@ -1990,10 +1993,10 @@ def schwarzian_limit_check(c_values: List[float]) -> Dict[str, Any]:
     Q(c*tau) ~ c^2 * (1 + 12*tau + 36*tau^2) = c^2 * (1 + 6*tau)^2
     plus corrections of order 1/c.
 
-    The JT spectral curve y = sin(2*pi*z)/(4*pi) has a DIFFERENT structure.
-    The connection is through the MATRIX MODEL: the Virasoro modular Koszul
-    datum, in the large-c limit, produces a double-scaled random matrix model
-    whose spectral curve is the JT curve.
+    The compact WP/JT curve y_WP(z)=sin(2*pi*z)/(4*pi) has a DIFFERENT
+    structure.  The connection passes through external double-scaling,
+    contour, and matrix-integral data; the Virasoro modular Koszul datum
+    alone does not produce the JT matrix model.
 
     This comparison verifies the structural relationship, not numerical equality.
     """

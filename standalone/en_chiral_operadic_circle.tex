@@ -469,14 +469,13 @@ pole $k/(z-w)^2$ and no simple pole (the algebra is abelian),
 so all OPE products are $\Sigma_k$-symmetric. The
 $\Einf$-chiral bar complex is the coshuffle coalgebra
 $S^c(s^{-1}\overline{H}_k)$ with the bar differential encoding
-the double-pole OPE. The classical $r$-matrix is
-% level-shift check: r(z)|_{k=0} = 0 (abelian limit). Y.
+the double-pole OPE. The ordered collision kernel is
 \begin{equation}\label{eq:e-heis-r}
-r^{\mathrm{Heis}}(z) \;=\; k/z,
+K_{H_k}^{\mathrm{coll}}(z)=k\Omega_{\mathcal H}/z,
 \end{equation}
-with $\kappa(H_k) = \mathrm{av}(r(z)) = k$.
-At $k = 0$, $r(z) = 0$ and $\kappa = 0$: the algebra becomes
-trivially abelian with no scattering.
+with $\tau_{H_k,2}^{\mathrm{res}}q_2(K_{H_k}^{\mathrm{coll}})
+=\kappa(H_k)=k$. Its Fock representation supplies the classical
+$r$-matrix. The specialization $k=0$ gives the zero operator.
 \end{example}
 
 \begin{example}[Heisenberg: $\Eone$-chiral]
@@ -499,8 +498,9 @@ The $\Etwo$ bar complex
 $\barB_{\Etwo}(H_k^{\mathrm{top}})$ uses the topological
 propagator $(1/2\pi)\,d\arg(z_1 - z_2)$. The bar cohomology
 is concentrated in degree $1$: the Heisenberg is Koszul. The
-Koszul dual is $H_k^! = \Sym^{\mathrm{ch}}(V^*)$, the
-symmetric chiral algebra on the dual generator. The Koszul
+Koszul dual is
+$H_k^!=(\Sym^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$, the
+curved second-kind symmetric chiral branch. The Koszul
 complementarity is
 $\kappa(H_k) + \kappa(H_k^!) = k + (-k) = 0$.
 \end{example}
@@ -792,9 +792,10 @@ convolution algebra formalism.
 At genus $g \ge 1$, the curvature is
 $d_{\mathrm{fib}}^2 = k \cdot \omega_g$, using
 $\kappa(H_k) = k$. At $k = 0$, the curvature vanishes: the
-bar complex is uncurved at every genus. The genus-$g$ anomaly
-$\mathrm{obs}_g = \kappa \cdot \lambda_g = k \cdot \lambda_g$
-(uniform-weight) gives $F_1 = k/24$ from the Hodge class on
+bar complex is uncurved at every genus. Under~$H_D^K$ the Hodge
+character is $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^gk\lambda_g$;
+under~$H_D^{\mathrm{graph}}$ the scalar trace gives
+$F_1=k/24$ on
 $\overline{\cM}_{1,1}$.
 \end{example}
 
@@ -984,75 +985,80 @@ where the two maps enforce closed-sector and open-sector
 equivariance.
 \end{definition}
 
-\subsection{Theorem H: concentration in degrees $\{0,1,2\}$}
+\subsection{Theorem H: family-indexed cohomological support}
 
-\begin{theorem}[Theorem H: cohomological concentration]
+\begin{theorem}[Theorem H: support from a family retract]
 \label{thm:e-theorem-H}
-Let $\cA$ be a Koszul chiral algebra. The chiral Hochschild
-cohomology $\ChirHoch^*(\cA) = H^*(C^\bullet_{\mathrm{ch}}(\cA,\cA))$
-is concentrated in cohomological degrees $\{0,1,2\}$:
+Fix a finite set $S\subset\mathbb Z$.  Let $Q_\cA$ be a complete
+filtered model of $C^\bullet_{\mathrm{ch}}(\cA,\cA)$, and suppose
+there are complete complexes and continuous maps
+\[
+ K_{\cA,S}\mathop{\xrightarrow{\ \iota\ }}Q_\cA
+ \mathop{\xrightarrow{\ p\ }}K_{\cA,S},
+ \qquad
+ p\iota=\id,
+ \qquad
+ dh+hd=\id-\iota p,
+\]
+where the cochain terms of $K_{\cA,S}$ occur in degrees belonging
+to~$S$.  Include in this datum the chart quasi-isomorphism
+$Q_\cA\xrightarrow{\sim}C^\bullet_{\mathrm{ch}}(\cA,\cA)$,
+the finite-window inverse-limit comparison, and the
+ordered-to-symmetric averaging quasi-isomorphism.  Then
 \begin{equation}\label{eq:e-thmH}
-\ChirHoch^i(\cA) = 0
-\qquad \text{for } i \ge 3.
+ \ChirHoch^n(\cA)\cong H^n(K_{\cA,S}),
+ \qquad
+ \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S.
 \end{equation}
-The Hilbert series is polynomial. The three nonvanishing degrees
-have the following interpretations:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $\ChirHoch^0(\cA) = Z(\cA)$: the naive centre.
-\item $\ChirHoch^1(\cA)$: first-order deformations of $\cA$
- as a chiral algebra.
-\item $\ChirHoch^2(\cA)$: obstructions to extending
- deformations.
-\end{enumerate}
+If these groups have finite graded pieces, their Hilbert series is
+$P_\cA(t)=\sum_{n\in S}\dim H^n(K_{\cA,S})t^n$.  A palindromic
+relation with $\cA^!$ follows from a separately specified perfect
+degree-$d$ pairing.
 \end{theorem}
 
-\begin{remark}[Amplitude, not virtual dimension]
+\begin{remark}[Three independent data]
 \label{rem:e-amplitude}
-Concentration in degrees $\{0,1,2\}$ is a statement about
-\emph{cohomological amplitude}: the cochain complex is
-quasi-isomorphic to one supported in degrees $0, 1, 2$. This
-is not the same as ``virtual dimension $2$'' (an arithmetic
-invariant) or ``$\ChirHoch^*(\cA) = \bC[\Theta]$''
-(which is false for all non-trivial algebras). It also differs
-from the Gelfand--Fuchs cohomology $H^*_{\mathrm{GF}}(\fg)$,
-which is infinite-dimensional for the Virasoro algebra.
+The finite set~$S$ records cohomological support.  The dimensions
+$\dim H^n(K_{\cA,S})$ record the Hilbert series.  A perfect shifted
+pairing records duality.  The Gelfand--Fuchs cohomology of the mode
+Lie algebra and the chiral Hochschild cohomology of the curve chart
+are functors on different ambient objects.
 \end{remark}
 
-\begin{example}[Heisenberg: $\ChirHoch^*(H_k)$]
+\begin{example}[Rank-one even superboson]
 \label{ex:e-heis-chirhoch}
-For the Heisenberg algebra $H_k$:
-\begin{align}
-\ChirHoch^0(H_k) &= \bC
-\qquad\text{(the centre is $1$-dimensional)},
-\label{eq:e-heis-hoch0}\\
-\ChirHoch^1(H_k) &= \bC
-\qquad\text{(one-parameter deformation: the level $k$)},
-\label{eq:e-heis-hoch1}\\
-\ChirHoch^2(H_k) &= \bC
-\qquad\text{(one obstruction class)}.
-\label{eq:e-heis-hoch2}
-\end{align}
-Total dimension: $\dim\ChirHoch^*(H_k) = 3$.
-For comparison: the naive centre $Z(H_k) = \bC$ has dimension
-$1$; the derived centre has dimension $3$, detecting the
-$\mathrm{Ext}^1$ and $\mathrm{Ext}^2$ contributions invisible
-to the commutant.
+Bakalov--De Sole--Kac compute the bounded vertex cohomology of the
+rank-one even superboson $B_{\mathfrak h}$:
+\begin{equation}\label{eq:e-heis-hoch0}
+ \bigl(\dim H^n_{\mathrm{ch},b}
+ (B_{\mathfrak h},B_{\mathfrak h})\bigr)_{n\geq0}
+ =(2,1,0,0,\ldots).
+\end{equation}
+Thus its bounded support is $\{0,1\}$.  A bounded-to-chart
+quasi-isomorphism
+\[
+ \chi^{\mathrm{bd}}_{B_{\mathfrak h}}\colon
+ C^\bullet_{\mathrm{ch},b}(B_{\mathfrak h},B_{\mathfrak h})
+ \xrightarrow{\sim}C^\bullet_{\mathrm{ch}}(\cA_{B_{\mathfrak h}},
+ \cA_{B_{\mathfrak h}})
+\]
+transports precisely these dimensions to the curve chart
+\cite[Theorem~7.4]{BDSK21}.
 \end{example}
 
 \begin{example}[Affine Kac--Moody: $\ChirHoch^*(V_k(\fg))$]
 \label{ex:e-km-chirhoch}
 For the affine Kac--Moody algebra $V_k(\fg)$ with
-$\fg$ simple of dimension $\dim(\fg)$:
-\begin{align}
-\ChirHoch^0(V_k(\fg)) &= \bC,\\
-\ChirHoch^1(V_k(\fg)) &\cong \fg
-\qquad\text{($\dim(\fg)$ deformations)},\\
-\ChirHoch^2(V_k(\fg)) &= \bC.
-\end{align}
-Total dimension: $\dim(\fg) + 2$. The $\ChirHoch^1$ is
-isomorphic to $\fg$ as a vector space; the $\dim(\fg)$
-directions correspond to the current-algebra deformations
-$J^a(z) \mapsto J^a(z) + \epsilon\,\phi^a(z)$.
+$\fg$ simple, Bakalov--De Sole--Kac conjecture the bounded estimates
+\[
+ \dim H^n_{\mathrm{ch},b}(V_k(\fg),V_k(\fg))
+ \leq
+ \dim\bigl(\Lambda^n\fg\oplus\Lambda^{n+1}\fg\bigr)
+\]
+away from the critical level \cite[Conjecture~7.5]{BDSK21}.  A
+bounded-to-chart quasi-isomorphism transports these estimates to
+$\ChirHoch^n(\cA_{V_k(\fg)})$.  The adjoint~$\fg$ belongs to the
+zero-mode derivation prequotient and the bar-dual generator count.
 \end{example}
 
 \subsection{Three Hochschild theories: chiral, topological, categorical}
@@ -1062,11 +1068,11 @@ $J^a(z) \mapsto J^a(z) + \epsilon\,\phi^a(z)$.
 Three distinct Hochschild-type constructions appear in the $\En$ operadic circle: chiral, topological, and categorical. The geometry of the base space
 determines which of the chiral/topological/categorical theories applies.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Chiral Hochschild:}
+ \item \emph{Chiral Hochschild:}
  $\ChirHoch^*(\cA)$. Input: $\Einf$-chiral algebra on a
  curve $X$. Configuration complex: $\FM_k(X)$. Output:
- $\Etwo$ structure (chiral braces), concentrated in degrees
- $\{0,1,2\}$ (Theorem~\ref{thm:e-theorem-H}).
+ $\Etwo$ structure (chiral braces), with support computed by
+ a family datum $H_H(\cA;S)$ (Theorem~\ref{thm:e-theorem-H}).
 \item \emph{Topological Hochschild:}
  $\THH(A)$. Input: $\Eone$-algebra (associative). Configuration
  complex: $\Conf_k(\bR)$ (ordered, locally constant). Output:
@@ -1337,7 +1343,8 @@ $= (\mathrm{Com}, \mathrm{Ass})$-algebra.
 
 \begin{example}[Heisenberg: $H_k^!$]
 \label{ex:e-heis-koszul-dual}
-The Koszul dual $H_k^! = \Sym^{\mathrm{ch}}(V^*)$ has
+The Koszul dual
+$H_k^!=(\Sym^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$ has
 $\kappa(H_k^!) = -k$, so the Koszul complementarity gives
 $\kappa(H_k) + \kappa(H_k^!) = k + (-k) = 0$. The Lie bracket
 (Sklyanin bracket) on $H_k^!$ is trivial (abelian), reflecting
@@ -2003,10 +2010,9 @@ of chiral Deligne. If, in addition, the \(\SCchtop\)-action, PBW
 collapse, and intrinsic-formality hypotheses of
 Theorem~\ref{thm:e-e3-identification} hold in the chosen model, then
 this \(\Etwo\)-structure extends to the formal \(\Ethree\)-deformation
-family used in the heptagon comparison. The concentration theorem for
-\(\mathrm{ChirHoch}^\bullet(\cA)\) in degrees \(\{0,1,2\}\) is not a
-formal consequence of \(\Ethree\)-rigidity alone; it also uses the
-PBW-collapse hypothesis.
+family used in the heptagon comparison.  The family datum
+$H_H(\cA;S)$ supplies the independent deformation retract that
+computes the cohomological support of the same derived centre.
 \end{theorem}
 
 \begin{remark}[The seven faces of $\SCchtop$]
@@ -2309,12 +2315,14 @@ quotient collapses to dimension $1$.
 \begin{remark}[What the five theorems see and what they miss]
 \label{rem:e-five-thms-see}
 The five theorems of modular Koszul duality (A, B, C, D, H)
-extract the $\Sigma_n$-invariant content of the ordered bar:
-the scalar $\kappa$, given by $\mathrm{av}(r(z))$ in abelian and
-scalar families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
-non-abelian affine Kac--Moody, the genus
-anomaly $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-(uniform-weight), and the shadow tower. For $\Einf$-chiral
+extract normalized traces of the homotopy-coinvariant ordered bar.
+At degree~$2$ the scalar is
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$; it equals
+$\kappa$ in abelian and scalar families and $\kappa_{\mathrm{dp}}$
+on the non-abelian affine row, where $\dim(\fg)/2$ completes
+$\kappa$. They also extract the $H_D^K$ Hodge character
+$\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$,
+the $H_D^{\mathrm{graph}}$ functional, and the shadow tower. For $\Einf$-chiral
 algebras this is the complete picture. For $\Eone$-chiral
 algebras, the five theorems see only the shadow, while the
 ordered bar carries the $R$-matrix, the KZ associator, and
@@ -2630,10 +2638,13 @@ $\Phi \in \exp(\hat{\mathfrak{t}}_3)$:
 \end{enumerate}
 The comparison depends on the choice of associator $\Phi$:
 different choices give gauge-equivalent $\Ainf$ structures.
-On BRST cohomology, the $\Ainf$ structure is
-associator-independent \textup{(}the $\GRT_1$ action on the
-$\Pthree$ bracket is trivial for simple $\fg$\textup{)}.
-At chain level, the associator dependence is genuine.
+On the verified $\mathfrak{sl}_2$ BRST shadow the induced
+$\Pthree$ obstruction class changes by a coboundary, so the
+cohomology class is associator-independent. For general simple
+$\fg$ this independence is an additional comparison hypothesis, not
+a formal consequence of the $\GRT_1$ torsor, and it says nothing by
+itself about categorical modular data. At chain level, the
+associator dependence is genuine.
 \end{theorem}
 
 \begin{proof}
@@ -2924,9 +2935,17 @@ verification runs through spins $2$--$6$.
 
 \begin{proposition}[Verlinde formula from ordered chiral homology]
 \label{prop:e-verlinde}
-At integer level $k \ge 0$, the dimension of the ordered
-chiral homology of $V_k(\mathfrak{sl}_2)$ at genus $g$ recovers
-the Verlinde formula:
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+chiral-homology/conformal-block comparison presentation, Beilinson
+levels~$2$ and~$5$, hypothesis package: positive integral
+\(\widehat{\mathfrak{sl}}_2\) level, TUY/Hitchin finite-rank
+conformal-block sheaf, integrable-module truncation, KZB
+projectively flat connection, boundary sewing, determinant-anomaly
+matching, and the ordered-chain-to-TUY comparison morphism\textup{)}.
+At integer level $k \ge 1$, the TUY/Hitchin conformal-block target
+reached through the ordered-chain-to-TUY comparison has Verlinde
+dimension:
 \begin{equation}\label{eq:e-verlinde}
 Z_g
 \;=\;
@@ -2954,13 +2973,14 @@ asymptotic growth of modular forms.
 
 \begin{proof}
 The Verlinde formula computes the dimension of conformal blocks
-at genus $g$ and level $k$. The ordered chiral homology at
-level $k$ is the factorisation homology of $V_k(\mathfrak{sl}_2)$
-over the ordered configuration space on a genus-$g$ surface.
+at genus $g$ and level $k$. The ordered chiral chain complex over
+the ordered configuration space is compared with this target only
+after the integrable-level truncation, TUY sewing, projectively flat
+connection, and determinant-anomaly packages are supplied.
 Handle attachment (sewing along a pair of pants) and separating
-factorisation are verified: the pair-of-pants fusion product
-(Definition~\ref{def:e-pants}) reproduces the Verlinde
-fusion coefficients. The closed-form polynomials are obtained
+factorisation are TUY identities, with the ordered pair-of-pants
+fusion product (Definition~\ref{def:e-pants}) matching them under the
+comparison package. The closed-form polynomials are obtained
 by evaluating $\sum_{j=0}^{k} S_{0j}^{2-2g}$ using the
 explicit $S$-matrix entries and summing by residue calculus.
 The rational generating function
@@ -2998,8 +3018,9 @@ $\Eone$ (bar complex, $R$-matrix, Yangian),
 $\Etwo$ (derived centre, Gerstenhaber bracket),
 $\Ethree^{\mathrm{top}}$ (topologised bulk, BV structure),
 together with the shadow tower
-$(\kappa, S_4, \Delta, \mathrm{class})$ and the genus
-anomaly $\mathrm{obs}_g$. The three standard families
+$(\kappa, S_4, \Delta, \mathrm{class})$ and the genus package
+$(\operatorname{Obs}^{\mathrm{def}}_g,\mathfrak O_g^K,
+\operatorname{obs}^{\mathrm{Hdg}}_g,F_g)$. The three standard families
 (Heisenberg, affine Kac--Moody, Virasoro) exhibit the
 full range of behaviour.
 
@@ -3024,7 +3045,7 @@ $\En$ data:
  $S_4 = 0$, $\Delta = 8k \cdot 0 = 0$ \\
 \textup{$R$-matrix} & $S(z) = \id$ & abelian \\
 \textup{Yangian} & cocommutative & abelian \\
-\textup{Koszul dual} & $H_k^! = \Sym^{\mathrm{ch}}(V^*)$,
+\textup{Koszul dual} & $H_k^!=(\Sym^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$,
  $\kappa^! = -k$ & $K = k + (-k) = 0$ \\
 \textup{$\ChirHoch^*$} & $\bC \oplus \bC[-1] \oplus \bC[-2]$ &
  Example~\ref{ex:e-heis-chirhoch} \\
@@ -3032,8 +3053,9 @@ $\En$ data:
  ($\Pthree$ bracket zero) & abelian CS \\
 \textup{SC-formality} & SC-formal &
  class G $\Leftrightarrow$ SC-formal \\
-\textup{Genus anomaly} & $\mathrm{obs}_g = k \cdot \lambda_g$
- \textup{(uniform-weight)} & $d_{\mathrm{fib}}^2 = k\,\omega_g$
+\textup{Hodge character} &
+ $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^gk\lambda_g$
+ & $H_D^K$; $d_{\mathrm{fib}}^2 = k\,\omega_g$
 \end{tabular}
 \end{center}
 \end{proposition}
@@ -3054,7 +3076,9 @@ $\Sigma_k$-symmetric (abelian). The Yangian
 $Y(\widehat{\mathrm{U}(1)})$ is the universal enveloping
 algebra of the abelian Lie algebra, which is cocommutative.
 
-The chiral Hochschild cohomology has total dimension $3$
+The bounded rank-one superboson cohomology has dimension vector
+$(2,1,0,\ldots)$; its transport to the curve chart uses
+$\chi^{\mathrm{bd}}_{B_{\mathfrak h}}$
 (Example~\ref{ex:e-heis-chirhoch}). The $\Pthree$ bracket
 on $C^*(H_k)$ is zero because $[J, J] = 0$ (abelian).
 The $\Ethree^{\mathrm{top}}$ structure is trivial (all
@@ -3082,13 +3106,13 @@ $d = \dim(\fg)$, has the following $\En$ data:
  $J^a(z)J^b(w) \sim kB^{ab}/(z-w)^2 + f^{ab}{}_c J^c/(z-w)$
  & defining \\
 % level-shift trace-form: r(z)|_{k=0} = 0 for trace-form convention. Y.
-\textup{$r$-matrix} &
- $r^{\mathrm{KM}}(z) = k\,\Omega/z$
+\textup{collision kernel} &
+ $K_{k,\fg}^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z$
  \textup{(trace-form)} &
  $d\log$ absorption \\
 \textup{$\kappa$} &
  $\kappa = d(k + h^\vee)/(2h^\vee)$ &
- $\mathrm{av}(r) + d/2$ \\
+ $\tau_{k,\fg}^{\mathrm{res}}q_2(K_{k,\fg}^{\mathrm{coll}})+d/2$ \\
 \textup{Class} & L &
  $S_4 = 0$, shadow depth $r = 3$ \\
 \textup{$R$-matrix} & $S(z) = \id$ &
@@ -3105,9 +3129,9 @@ $d = \dim(\fg)$, has the following $\En$ data:
  nontrivial, $\simeq$ CFG CS &
  Theorem~\ref{thm:e-e3-identification} \\
 \textup{SC-formality} & not SC-formal & class L, $\ell_3 \neq 0$ \\
-\textup{Genus anomaly} &
- $\mathrm{obs}_g = \kappa \cdot \lambda_g$
- \textup{(uniform-weight)} & curvature
+\textup{Hodge character} &
+ $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$
+ & $H_D^K$
 \end{tabular}
 \end{center}
 The Koszul complementarity $\kappa + \kappa' = 0$ holds
@@ -3115,12 +3139,13 @@ for all simple $\fg$ and all $k$.
 \end{proposition}
 
 \begin{proof}
-The $r$-matrix uses the trace-form convention:
-$r(z) = k\,\Omega/z$, where $\Omega$ is the inverse Killing
-form Casimir. At $k = 0$, $r(z) = 0$: the $r$-matrix
-vanishes (abelian limit). The averaging map gives
-$\mathrm{av}(r(z)) = k\dim(\fg)/(2h^\vee)$ (the double-pole
-channel contribution); the full $\kappa$ includes the
+The collision kernel uses the trace-form convention:
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$, where
+$\Omega$ is the inverse Killing-form Casimir. Its homotopy coinvariant
+retains the Casimir operator and the normalized functional gives
+$\tau_{k,\fg}^{\mathrm{res}}q_2(K_{k,\fg}^{\mathrm{coll}})
+=k\dim(\fg)/(2h^\vee)$ (the double-pole channel contribution).
+The full $\kappa$ includes the
 Sugawara shift $\dim(\fg)/2$ from the simple-pole
 self-contraction:
 $\kappa = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
@@ -3139,16 +3164,20 @@ is the linearisation of the Chern--Simons interaction, and
 the identification with the CFG algebra is
 Theorem~\ref{thm:e-e3-identification}.
 
-$\ChirHoch^1(V_k(\fg)) \cong \fg$ as a vector space, with
-total dimension $\dim(\fg) + 2$.
+Under a family datum $H_H(V_k(\fg);S_{k,\fg})$, the curve-level
+quotient is supported in $S_{k,\fg}$ and is computed by
+$K_{V_k(\fg),S_{k,\fg}}$.  The bounded affine estimates enter through
+the bounded-to-chart comparison; the adjoint~$\fg$ belongs to the
+zero-mode derivation prequotient and bar-dual generator count.
 \end{proof}
 
 \begin{remark}[The Sugawara shift]
 \label{rem:e-sugawara-shift}
-For the Heisenberg (abelian), $\mathrm{av}(r(z)) = \kappa$
-holds directly. For non-abelian Kac--Moody, the full
-$\kappa$ includes the Sugawara shift:
-$\kappa = \mathrm{av}(r(z)) + \dim(\fg)/2$. The term
+For the Heisenberg row,
+$\tau_{\mathcal H,2}^{\mathrm{res}}q_2(K_{\mathcal H}^{\mathrm{coll}})
+=\kappa$. For non-abelian Kac--Moody, the same trace gives
+$\kappa_{\mathrm{dp}}$ and the full modular characteristic is
+$\kappa=\kappa_{\mathrm{dp}}+\dim(\fg)/2$. The term
 $\dim(\fg)/2$ arises from the simple-pole self-contraction
 through the adjoint Casimir eigenvalue $2h^\vee$. This is a
 fundamental difference between abelian and non-abelian
@@ -3187,16 +3216,16 @@ has the following $\En$ data:
  $\mathrm{Vir}_{26-c}$, $K = 13$ &
  self-dual at $c = 13$ \\
 \textup{$\ChirHoch^*$} &
- concentrated in $\{0,1,2\}$, polynomial &
- Theorem~\ref{thm:e-theorem-H} \\
+ bounded support $\{0,2,3\}$; chart after $\chi^{\mathrm{bd}}$ &
+ \cite[Theorem~7.2]{BDSK21}; Theorem~\ref{thm:e-theorem-H} \\
 \textup{$\Ethree^{\mathrm{top}}$} &
  proved \textup{(}cohom.\ $+$ model\textup{)} &
  Theorem~\ref{thm:e-topologisation-DS},
  Proposition~\ref{prop:e-chain-level-virasoro} \\
 \textup{SC-formality} & not SC-formal & class M \\
-\textup{Genus anomaly} &
- $\mathrm{obs}_g = (c/2) \cdot \lambda_g$
- \textup{(uniform-weight)} & curvature
+\textup{Hodge character} &
+ $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g(c/2)\lambda_g$
+ & $H_D^K$
 \end{tabular}
 \end{center}
 \end{proposition}
@@ -3210,8 +3239,9 @@ quartic gives cubic $(c/2)/z^3$, the double gives simple
 $2T/z$, and the simple pole contributes a regular term. Hence
 $r(z) = (c/2)/z^3 + 2T/z$, not quartic.
 
-The scalar $\kappa = c/2$ is the unique family for which
-$\kappa$ equals half the central charge. The Koszul dual is
+The scalar $\kappa = c/2$ here is the Virasoro-family specialization,
+not a universal rule for Heisenberg or affine Kac--Moody input. The
+Koszul dual is
 $\mathrm{Vir}_{26-c}$ with $\kappa' = (26-c)/2$, giving the scalar
 complementarity $\varkappa := \kappa + \kappa' = c/2 + (26-c)/2 = 13$
 (distinct from the Trinity ghost-charge conductor
@@ -3280,7 +3310,7 @@ $\Delta$ & $0$ & $0$ & $\neq 0$ \\
 $\Ethree$ & trivial & nontrivial (proved) &
  conjectural \\
 SC-formal & yes & no & no \\
-$\ChirHoch$ dim & $3$ & $\dim(\fg)+2$ & polynomial \\
+$\ChirHoch$ profile & bounded $(2,1,0,\ldots)$; chart after $\chi^{\mathrm{bd}}$ & family support $S_{V_k(\fg)}$ after the bounded-to-chart comparison & bounded Virasoro support $\{0,2,3\}$; chart after $\chi^{\mathrm{bd}}$ \\
 $K$ & $0$ & $0$ & $13$
 \end{tabular}
 \end{center}
@@ -3581,7 +3611,8 @@ agrees with the full derived centre. Pointwise
 reduction holds unconditionally.
 
 \emph{Obstruction~(II): Factorisation for $H_k^!$.}
-The Koszul dual $H_k^! = \Sym^{\mathrm{ch}}(V^*)$
+The Koszul dual
+$H_k^!=(\Sym^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$
 is a free-field chiral algebra generated by $V^*$
 with the OPE
 $\alpha^*(z)\alpha^*(w) \sim -k/(z-w)^2$.
@@ -3730,7 +3761,7 @@ determined by the braiding of
 the Drinfeld double. For affine Kac--Moody at non-critical
 level, the braiding is the KZ braiding, whose classical
 limit is the $r$-matrix
-$r(z) = k\Omega/z$ (trace-form convention).
+$r(z) = k\Omega_{\mathrm{tr}}/z$ (trace-form convention).
 The Drinfeld centre
 carries the half-braiding
 $\gamma_N \colon M \otimes N \to N \otimes M$ induced by
@@ -3946,6 +3977,10 @@ for all standard families.
 
 \bibitem{BD04} A.~Beilinson and V.~Drinfeld, \emph{Chiral Algebras},
  AMS Colloquium Publications, vol.~51, 2004.
+
+\bibitem{BDSK21} B.~Bakalov, A.~De Sole, and V.~G.~Kac,
+ \emph{Computation of cohomology of vertex algebras},
+ Japan J. Math. \textbf{16} (2021), 81--154.
 
 \bibitem{CFG25} K.~Costello, D.~Francis, and O.~Gwilliam,
  \emph{Chern--Simons factorization algebras and knot polynomials},

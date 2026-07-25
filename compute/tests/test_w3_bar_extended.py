@@ -1,83 +1,68 @@
-"""Tests for compute/lib/w3_bar_extended.py -- W_3 vacuum module bar construction.
-
-Non-trivial identities tested:
-  (i)   W_3 OPE mu(T,T) = (c/2)|0> + 2T + dT (BPZ, c=7 sample).
-  (ii)  W_3 OPE mu(W,W) includes the Lambda-correction coefficient
-        alpha = 16/(5c+22) at c=7: alpha = 16/57.
-  (iii) Skew-symmetry W_{(0)} T = 2*dW.
-  (iv)  vbar dimensions: generating function counts partitions into
-        T-parts and W-parts with shifted weights.
-"""
-
-from __future__ import annotations
+"""Generic W3 PBW and exact generator-OPE checks."""
 
 import pytest
+import sympy as sp
 
 from compute.lib.w3_bar_extended import (
+    OpenW3ExtendedBarError,
+    VACUUM,
     W3VacuumModule,
-    dim_vbar,
+    bar_chain_dim,
+    chain_dimension_analysis,
     dim_vbar_gf,
+    make_state,
     state_weight,
+    verify_ds_central_charge,
     verify_mu_generators,
     verify_skew_symmetry,
     vbar_basis,
 )
 
 
-def test_smoke_vbar_basis_at_low_weights():
-    """Smoke: vbar basis at weight 0 is empty; weight 2 contains T only."""
-    basis = vbar_basis(max_weight=4)
-    # Weight 2: T = ((2,), ())
-    assert ((2,), ()) in basis[2]
-    # Weight 3: W = ((), (3,))
-    assert ((), (3,)) in basis[3]
-    # Weight 0: no entries (vbar = V_vac quotient by vacuum)
-    assert basis.get(0, []) == []
+def test_pbw_basis_matches_independent_product_character():
+    max_weight = 14
+    basis = vbar_basis(max_weight)
+    dimensions = dim_vbar_gf(max_weight)
+    assert {weight: len(basis[weight]) for weight in range(max_weight + 1)} == dimensions
+    assert make_state((2,), ()) in basis[2]
+    assert make_state((), (3,)) in basis[3]
+    assert state_weight(make_state((3, 2), (4,))) == 9
 
 
-def test_state_weight_is_sum_of_mode_numbers():
-    """weight((L_2, L_3), (W_3,)) = 2+3+3 = 8."""
-    w = state_weight(((2, 3), (3,)))
-    assert w == 8
+def test_generator_ope_packet_uses_32_16_and_skew_symmetry():
+    assert all(verify_mu_generators(verbose=False).values())
+    assert all(verify_skew_symmetry().values())
 
 
-def test_mu_T_T_central_charge_c_over_2():
-    """mu(T,T) has vacuum coefficient c/2 for arbitrary c."""
-    results = verify_mu_generators(c_val=7.0, verbose=False)
-    assert bool(results["mu(T,T) vac = c/2"])
-    assert bool(results["mu(T,T) T = 2"])
-    assert bool(results["mu(T,T) dT = 1"])
+def test_finite_module_represents_exact_generator_nth_products():
+    module = W3VacuumModule(8, c_val=sp.Integer(2))
+    T = make_state((2,), ())
+    W = make_state((), (3,))
+    assert module.compute_nth_product(T, T, 3)[0] == 1
+    ww1 = module.compute_nth_product(W, W, 1)
+    assert ww1[module._state_to_idx[make_state((2, 2), ())]] == 1
+    assert ww1[module._state_to_idx[make_state((4,), ())]] == 0
+    assert module._L_on_state(0, W) == {W: 3}
+    assert module._L_on_state(-2, VACUUM) == {T: 1}
 
 
-def test_mu_W_W_central_charge_c_over_3():
-    """mu(W,W) has vacuum c/3 and Lambda correction alpha = 16/(5c+22)."""
-    results = verify_mu_generators(c_val=7.0, verbose=False)
-    assert bool(results["mu(W,W) vac = c/3"])
-    # Lambda-level terms: L4 and L22 split via alpha = 16/57 at c=7
-    assert bool(results["mu(W,W) L4 correct"])
-    assert bool(results["mu(W,W) L22 correct"])
+def test_raw_top_form_chain_count_is_typed_as_chain_data():
+    assert bar_chain_dim(0, 4) == 3
+    packet = chain_dimension_analysis(3, 10)
+    assert packet["ordered_bar_differential"].status == "open"
+    assert packet["bar_cohomology"].status == "open"
 
 
-def test_mu_T_W_skew_coefficients():
-    """mu(T,W) = 3W + dW; mu(W,T) = 3W + 2dW (skew-symmetry)."""
-    results = verify_mu_generators(c_val=7.0, verbose=False)
-    assert bool(results["mu(T,W) W = 3"])
-    assert bool(results["mu(T,W) dW = 1"])
-    assert bool(results["mu(W,T) W = 3"])
-    assert bool(results["mu(W,T) dW = 2"])
+def test_formal_central_reflection_is_not_categorical_duality():
+    packet = verify_ds_central_charge()
+    assert packet["formal_reflected_sum"] == 100
+    assert packet["categorical_duality"].status == "open"
 
 
-def test_skew_symmetry_W_zero_T_equals_twice_dW():
-    """W_{(0)} T = 2*dW (no other components)."""
-    results = verify_skew_symmetry(c_val=7.0)
-    assert bool(results["W_{(0)}T = 2*dW"])
-    # No spurious components
-    spurious = [k for k in results if k.startswith("W_(0)T spurious")]
-    assert not spurious
-
-
-def test_vbar_dim_monotone_in_weight():
-    """dim V-bar_h is non-decreasing through a small range."""
-    dims = dim_vbar_gf(max_h=6)
-    # Some non-trivial entries should appear
-    assert sum(dims.values()) > 0
+def test_residue_multiplication_and_composite_mode_actions_stop_at_boundary():
+    module = W3VacuumModule(8, c_val=2)
+    T = make_state((2,), ())
+    with pytest.raises(OpenW3ExtendedBarError):
+        module.compute_mu(T, T)
+    with pytest.raises(OpenW3ExtendedBarError):
+        module.compute_nth_product(T, make_state((2, 2), ()), 1)

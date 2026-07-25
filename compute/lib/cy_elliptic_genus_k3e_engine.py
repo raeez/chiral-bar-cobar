@@ -55,7 +55,7 @@ FIREWALLS:
     is not the seven-entry holographic package.
   - A^! is the Verdier/continuous-linear branch under finite-type or
     completed hypotheses.  Omega(B(A)) = A is bar-cobar inversion.
-    Z_ch^der(A) is the Hochschild/bulk object, not the Koszul dual.
+    Z_ch^der(A) is the Hochschild/closed-sector object, not the Koszul dual.
   - Kernel normalizations: affine raw collision k*Omega_tr/z; KZ
     coefficient Omega/((k+h^vee)z); Virasoro (c/2)/z^3 + 2T/z.
 
@@ -117,7 +117,7 @@ OBJECT_SEPARATION: Dict[str, str] = {
         "Verdier/continuous-linear Koszul branch under finite-type or "
         "completed hypotheses"
     ),
-    "Z_ch^der(A)": "chiral Hochschild/derived-centre bulk object",
+    "Z_ch^der(A)": "chiral Hochschild/derived-centre closed-sector object",
     "Omega(B(A))": "bar-cobar inversion returning A",
 }
 

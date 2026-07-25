@@ -70,14 +70,16 @@ KEY RELATIONSHIPS TO THE MONOGRAPH:
 
 (D) Admissible level -4/3 for sl_2:
     k = -4/3, h^v = 2, so k + h^v = 2/3.
-    The monograph proves L_k(sl_2) is chirally Koszul at ALL admissible
-    levels (rem:admissible-koszul-status). Linshaw-Qi's rigidity result
-    at k = -4/3 gives the ADDITIONAL information that ChirHoch^2 = 0
-    (no deformations) for this particular admissible level.
+    Linshaw-Qi prove vertex-algebra deformation rigidity at this level:
+    H^2_{1/2}(L_{-4/3}(sl_2), L_{-4/3}(sl_2)) = 0. This is NOT by
+    itself a computation of chiral Hochschild cohomology and NOT a proof
+    of simple-quotient chiral Koszulness. The latter remains conditional
+    on the quotient-bar spectral sequence, PBW/Shapovalov detection,
+    finite-window exactness, and strong convergence package.
 
-    This is INDEPENDENT of Koszulness: the sl_2 admissible Koszulness
-    theorem says the bar complex is concentrated, while Linshaw-Qi says
-    the deformation space vanishes. Both can hold simultaneously.
+    If that quotient-bar package is supplied, Linshaw-Qi's rigidity is
+    compatible with ChirHoch^2 = 0. Until then the admissible row is a
+    conditional compatibility datum, not a proved Theorem-H input.
 
     kappa(L_{-4/3}(sl_2)) = 3 * (2/3) / (2*2) = 1/2.
     So the shadow tower is nontrivial (kappa != 0).
@@ -88,14 +90,15 @@ KEY RELATIONSHIPS TO THE MONOGRAPH:
     For L_k(g): the singular vector e(-1)^{k+1} |0> = 0 provides a
     constraint that kills the deformation parameter, forcing H^2_{1/2} = 0.
 
-    In our language: the simple quotient has a SMALLER center for
-    its Koszul dual, so ChirHoch^2 = Z(A!)^* tensor omega shrinks.
+    After the quotient-bar package is supplied, the simple quotient
+    should shrink the deformation direction in the Koszul-dual centre;
+    before that comparison this is only compatibility evidence.
 
 VERIFICATION PATHS (3+ per claim, per Multi-Path Mandate):
   Path 1: Direct computation of ChirHoch dimensions for standard families
   Path 2: Koszul duality exchange (cor:def-obs-exchange-genus0)
   Path 3: Shadow tower nontriviality (kappa != 0) vs rigidity
-  Path 4: Admissible level kappa computation
+  Path 4: Admissible level kappa computation and scope separation
   Path 5: Universal vs simple quotient deformation dimension comparison
   Path 6: Cross-family rigidity status classification
   Path 7: Pole-order inner-derivation principle (rem:boson-fermion-hochschild-comparison)
@@ -106,8 +109,8 @@ References:
     Huang (2004-2010): VOA cohomology H^n_{1/2}
     Manuscript: thm:hochschild-polynomial-growth (Theorem H),
     cor:def-obs-exchange-genus0, rem:boson-fermion-hochschild-comparison,
-    rem:admissible-koszul-status, thm:cubic-gauge-triviality,
-    thm:koszul-equivalences-meta
+    the manuscript admissible simple-quotient status surface,
+    thm:cubic-gauge-triviality, thm:koszul-equivalences-meta
 """
 
 from __future__ import annotations
@@ -202,9 +205,13 @@ class ChirHochData:
     name: str
     dim_H0: int  # center
     dim_H1: int  # outer derivations
-    dim_H2: int  # first-order deformations
-    is_koszul: bool
-    is_rigid: bool  # = (dim_H2 == 0) in our framework, or more precisely no nontrivial deformations
+    dim_H2: int  # first-order deformations, conditional when status says so
+    is_koszul: Optional[bool]
+    is_rigid: Optional[bool]  # chiral-Hochschild rigidity when chirhoch_status is proved
+    koszul_status: str = "PROVED"
+    chirhoch_status: str = "PROVED"
+    huang_rigidity: Optional[bool] = None
+    missing_hypotheses: Tuple[str, ...] = field(default_factory=tuple)
 
     @property
     def poincare_polynomial(self) -> str:
@@ -212,8 +219,10 @@ class ChirHochData:
         return f"{self.dim_H0} + {self.dim_H1}*t + {self.dim_H2}*t^2"
 
     @property
-    def is_deformation_rigid(self) -> bool:
+    def is_deformation_rigid(self) -> Optional[bool]:
         """Deformation rigidity: no nontrivial first-order deformations."""
+        if self.chirhoch_status != "PROVED":
+            return None
         return self.dim_H2 == 0
 
     def verify_koszul_duality(self, dual: 'ChirHochData') -> bool:
@@ -332,14 +341,16 @@ def chirhoch_simple_affine_integral(g: LieAlgebraData, k: int) -> ChirHochData:
 
 
 def chirhoch_simple_sl2_admissible_minus_4_3() -> ChirHochData:
-    """ChirHoch for L_{-4/3}(sl_2) (admissible, non-integral level).
+    """Conditional ChirHoch record for L_{-4/3}(sl_2).
 
     Linshaw-Qi prove H^2_{1/2} = 0 [LQ26, Section 5].
-    The monograph proves chirally Koszul (rem:admissible-koszul-status).
+    This is vertex-algebra deformation rigidity, not a chain-level proof
+    of chiral Hochschild concentration.
 
-    ChirHoch^0 = C (center = scalars; L_k is simple)
-    ChirHoch^1 = 0 (derivations inner from simple-pole OPE)
-    ChirHoch^2 = 0 (rigid by Linshaw-Qi)
+    Conditional on the quotient-bar spectral sequence,
+    PBW/Shapovalov detection, finite-window exactness, and strong
+    convergence package, the expected chiral Hochschild record is:
+    ChirHoch^0 = C, ChirHoch^1 = 0, ChirHoch^2 = 0.
 
     This is the first example of rigidity at a non-integral,
     non-C_2-cofinite level. Neither C_2-cofiniteness nor rationality
@@ -352,8 +363,18 @@ def chirhoch_simple_sl2_admissible_minus_4_3() -> ChirHochData:
         dim_H0=1,
         dim_H1=0,
         dim_H2=0,
-        is_koszul=True,
-        is_rigid=True,
+        is_koszul=None,
+        is_rigid=None,
+        koszul_status="CONDITIONAL_QUOTIENT_BAR",
+        chirhoch_status="CONDITIONAL_QUOTIENT_BAR",
+        huang_rigidity=True,
+        missing_hypotheses=(
+            "quotient-bar spectral sequence",
+            "PBW/Shapovalov detection",
+            "finite-window exactness",
+            "strong convergence",
+            "comparison from Huang H^2_{1/2} to chiral Hochschild H^2",
+        ),
     )
 
 
@@ -596,8 +617,13 @@ def rigidity_mechanism_analysis(g: LieAlgebraData, k: Fraction) -> Dict:
         'rigidity_source': rigidity_source,
         'shadow_tower_trivial': (kap == 0),
         'koszul_universal': True,  # prop:pbw-universality
-        'koszul_simple': True if is_integrable else (
-            True if (g.name == "sl_2" and is_admissible) else None
+        'koszul_simple': True if is_integrable else None,
+        'koszul_simple_status': "PROVED" if is_integrable else "CONDITIONAL_QUOTIENT_BAR",
+        'missing_koszul_hypotheses': () if is_integrable else (
+            "quotient-bar spectral sequence",
+            "PBW/Shapovalov detection",
+            "finite-window exactness",
+            "strong convergence",
         ),
     }
 
@@ -815,7 +841,7 @@ def linshaw_qi_conjecture_status(g: LieAlgebraData, k: Fraction) -> Dict:
         source = "Linshaw-Qi Section 5"
     elif g.name == "sl_2" and is_admissible_level(g, k):
         status = "CONJECTURED"
-        source = "Linshaw-Qi conjecture + monograph Koszul compatibility"
+        source = "Linshaw-Qi conjecture; quotient-bar Koszul package not supplied"
     else:
         status = "CONJECTURED"
         source = "Linshaw-Qi conjecture"
@@ -827,6 +853,9 @@ def linshaw_qi_conjecture_status(g: LieAlgebraData, k: Fraction) -> Dict:
         'rigidity_status': status,
         'source': source,
         'kappa': kappa_km(g, k),
+        'chiral_koszul_status': (
+            "PROVED" if is_positive_integral else "CONDITIONAL_QUOTIENT_BAR"
+        ),
     }
 
 
@@ -844,8 +873,9 @@ def koszulness_vs_rigidity_analysis() -> Dict:
     Deformation rigidity: ChirHoch^2(A) = 0.
     By Theorem H: ChirHoch^2(A) = Z(A!)^* tensor omega (on the Koszul locus).
 
-    So: Koszul + Z(A!) = C  =>  ChirHoch^2 = C  (NOT rigid)
-        Koszul + Z(A!) = 0  =>  ChirHoch^2 = 0  (rigid)
+    So, after the relevant quotient-bar comparison has been supplied:
+        Koszul + deformation direction survives  => ChirHoch^2 = C
+        Koszul + quotient constraint kills it    => ChirHoch^2 = 0
 
     The center Z(A!) depends on the specific algebra, not just on
     Koszulness. Koszulness is a STRUCTURAL property (bar concentration);
@@ -860,13 +890,13 @@ def koszulness_vs_rigidity_analysis() -> Dict:
         'rigidity_implies_K3': False,
         'relationship': 'independent',
         'connecting_bridge': (
-            'On the Koszul locus, ChirHoch^2(A) = Z(A!)^* tensor omega. '
-            'Rigidity (ChirHoch^2 = 0) then becomes equivalent to Z(A!) = 0 '
-            '(trivial center of the Koszul dual). For SIMPLE quotients L_k, '
-            'the Koszul dual center tends to be trivial, giving both Koszulness '
-            'and rigidity. For UNIVERSAL algebras V_k, the center Z(V_k!) is '
-            'nontrivial (it contains the level parameter), giving Koszulness '
-            'WITHOUT rigidity.'
+            'On the Koszul locus with the quotient-bar comparison supplied, '
+            'ChirHoch^2(A) is controlled by the deformation direction in the '
+            'Koszul-dual center Z(A!). Linshaw-Qi rigidity for L_{-4/3}(sl_2) is '
+            'Huang H^2_{1/2}-rigidity; converting it to a chiral-Hochschild '
+            'dimension requires the quotient-bar spectral sequence, '
+            'PBW/Shapovalov detection, finite-window exactness, strong '
+            'convergence, and the Huang-to-chiral-Hochschild comparison.'
         ),
         'examples': {
             'koszul_rigid': ['L_k(g) at positive integral k (all simple Lie)'],

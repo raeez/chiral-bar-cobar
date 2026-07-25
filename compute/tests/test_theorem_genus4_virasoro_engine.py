@@ -815,11 +815,11 @@ class TestCertificationFirewall:
         assert kernels['virasoro'] == 'r^Vir(z) = (c/2)/z^3 + 2T/z'
 
     def test_object_firewalls_are_preserved(self):
-        """Bar-cobar inversion, Verdier duality, and Hochschild bulk stay distinct."""
+        """Bar-cobar inversion, Verdier duality, and Hochschild closed-sector stay distinct."""
         from compute.lib.theorem_genus4_virasoro_engine import (
             genus4_certification_firewall,
         )
         firewalls = genus4_certification_firewall()['object_firewalls']
         assert firewalls['Omega(B(A))'] == 'bar-cobar inversion returning A, not Koszul duality'
         assert firewalls['A^!'].startswith('Verdier/continuous-linear dual branch')
-        assert firewalls['Z_ch^der(A)'] == 'ChirHoch^*(A,A), the Hochschild/derived-centre bulk'
+        assert firewalls['Z_ch^der(A)'] == 'ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector'

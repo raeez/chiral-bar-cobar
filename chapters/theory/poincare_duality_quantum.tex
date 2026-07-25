@@ -8,15 +8,25 @@ Poincar\'e duality for manifolds identifies the chain theory with the
 linear dual of the cochain theory after an orientation shift.  Quantum
 Poincar\'e duality for a chiral algebra is the same assertion after
 the ordinary linear dual has been replaced by Verdier duality on the
-Ran/Fulton--MacPherson compactification.  The theorem has five
-non-interchangeable outputs:
+Ran/Fulton--MacPherson compactification.  The theorem has the following
+typed layers.  For a quadratic presentation
+$\cA=T_X(V)/(R)$ they are:
 \[
 \cA,\qquad
 \barBch_X(\cA),\qquad
-\cA^{\mathrm i}:=H^\star\barBch_X(\cA),\qquad
-\cA^!:=(\cA^{\mathrm i})^\vee,\qquad
+\cA^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R),\qquad
+H^\bullet\barBch_X(\cA),\qquad
+K_X(\cA):=\mathbb D_{\Ran}\barBch_X(\cA),\qquad
+\cA^!,\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
  = C^\bullet_{\mathrm{ch}}(\cA,\cA).
+\]
+The comparison maps are
+\[
+q_\cA\colon\cA^{\mathrm i}\to\barBch_X(\cA),\qquad
+\mathbb D(q_\cA)\colon K_X(\cA)\to\mathbb D_{\Ran}(\cA^{\mathrm i}),
+\qquad
+\nu_\cA\colon K_X(\cA)\to\cA^!.
 \]
 The bar coalgebra classifies twisting morphisms.  The cobar of the
 bar coalgebra reconstructs the input:
@@ -28,7 +38,7 @@ on the Koszul locus and on the weight-completed Positselski surface of
 Theorem~B.  The Koszul-dual algebra is produced by the different
 functor
 \[
-K_X(\cA):=\mathbb{D}_{\Ran}\barBch_X(\cA),
+K_X(\cA)=\mathbb{D}_{\Ran}\barBch_X(\cA),
 \]
 the Verdier-dualized functor of
 Theorem~\ref{thm:koszul-reflection}.  Thus
@@ -37,8 +47,14 @@ $\mathbb{D}_{\Ran}\barB(\cA)$ is the Verdier-dual defect object; and
 the cochain-level closed-sector object is the chiral derived centre, not the
 bar complex.
 
-The scalar shadow of this Verdier pairing is Theorem~C.  For the
-standard witnesses,
+Theorem~C applies Verdier duality to the strict-flat
+centre-local-system complex
+\[
+ \mathbf C_g(\cA)
+ =R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA)).
+\]
+Its normalized scalar trace is supplied by Theorem~D.  For the standard
+witnesses,
 \[
 \kappa(\cH_k)+\kappa(\cH_k^!)=0,\qquad
 \kappa(\widehat{\fg}_k)+\kappa(\widehat{\fg}_k^!)=0,\qquad
@@ -194,20 +210,18 @@ m_1^2(x)=m_2(m_0,x)-m_2(x,m_0)=[m_0,x];
 \item the completed bar construction is the continuous product
 $\widehat{\bar{B}}(\mathcal{A})=\prod_n\bar{B}^n(\mathcal A)$ with
 the curved bar differential determined by the completed filtration;
-\item Verdier duality yields the curved defect object
+\item Verdier duality yields the curved Verdier--Koszul algebra
 \[
-\mathcal D_{\mathrm{curv}}(\mathcal A)
+K_X^{\mathrm{II}}(\mathcal A)
 =
 \mathbb{D}_{\mathrm{Ran}}\widehat{\bar{B}}(\mathcal{A}),
 \]
-and completed cobar gives the homotopy Koszul-dual algebra
-$\mathcal{A}_{\mathrm{curv}}^{!\,\infty}
-=\Omegach_X\mathcal D_{\mathrm{curv}}(\mathcal A)$;
+whose multiplication and curvature are the continuous Verdier
+transposes of the bar coproduct and curvature functional;
 \item the completed bar-cobar adjunction gives the
 coderived/contraderived Positselski equivalence.  Its reconstruction
 part recovers $\mathcal A$ from $\widehat{\bar{B}}(\mathcal A)$; its
-Verdier part produces the dual after applying
-$\mathbb{D}_{\Ran}$ before cobar.
+Verdier part produces $K_X^{\mathrm{II}}(\mathcal A)$ directly.
 \end{enumerate}
 \end{theorem}
 
@@ -310,12 +324,12 @@ $\Lambda(V) \leftrightarrow \mathrm{Sym}(V^*)$ Koszul duality.
 
 \subsubsection{Example: Heisenberg and $\mathcal{W}$-algebras}
 
-\begin{example}[Affine Kac--Moody: Koszul duality vs Feigin--Frenkel involution]
-The Feigin--Frenkel involution
+\begin{example}[Affine Kac--Moody: Koszul duality vs critical-level reflection]
+The critical-level reflection
 $k \mapsto -k - 2h^\vee$ and the chiral Koszul duality
 $\widehat{\mathfrak{g}}_k \mapsto (\widehat{\mathfrak{g}}_k)^!$ are
-\emph{distinct} operations. The Feigin--Frenkel involution replaces
-the level within the \emph{same} family of affine algebras; chiral
+\emph{distinct} operations. The reflection replaces the level within
+the \emph{same} family of affine algebras; chiral
 Koszul duality produces the Verdier-linear dual of the bar cohomology,
 \[
 (\widehat{\mathfrak{g}}_k)^!
@@ -323,8 +337,8 @@ Koszul duality produces the Verdier-linear dual of the bar cohomology,
 \bigl(H^\star\widehat{\bar{B}}^{\mathrm{ch}}
 (\widehat{\mathfrak{g}}_k)\bigr)^\vee
 \]
-on the finite or completed Koszul surface.  Both the Feigin--Frenkel
-partner $\widehat{\mathfrak g}_{-k-2h^\vee}$ and the Koszul dual have
+on the finite or completed Koszul surface. Both the reflected
+companion $\widehat{\mathfrak g}_{-k-2h^\vee}$ and the Koszul dual have
 modular characteristic
 $-\kappa(\widehat{\mathfrak g}_k)$, because
 \[
@@ -336,8 +350,9 @@ This scalar agreement does not identify their OPEs, centres, or
 Verdier-dual bar models.
 
 For the Heisenberg algebra $\cH_k$, the Koszul dual is
-$\cH_k^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature
-$-k \cdot \omega_X$ (Part~\ref{part:characteristic-datum}). This is \emph{not} the same as
+$\cH_k^!\simeq
+(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega_X)$
+(Part~\ref{part:characteristic-datum}). This is \emph{not} the same as
 $\cH_{-k}$: the dual $\cH_k^!$ is generated by $V^*$ with its own OPE
 structure, while $\cH_{-k}$ is generated by $V$ with level $-k$. The bar complex
 $\bar{B}(\cH_k)$ is the Chevalley--Eilenberg complex
@@ -1020,11 +1035,10 @@ complex $\bar{B}^{(g)}(\mathcal{H}_k)$ with the Feynman transform of
 $\mathcal{H}_k$ over the modular operad
 $\{\overline{\mathcal{M}}_{g,n}\}$.  Because $\mathcal{H}_k$ has a
 single generator with quadratic OPE, each edge contributes the scalar
-propagator~$k$.  The diagonal scalar obstruction is
-\[
-\mathrm{obs}_g(\mathcal H_k)=k\cdot\lambda_g,
-\]
-and integration against the Faber--Pandharipande class gives the
+propagator~$k$.  Under~$H_D^K$ its Hodge character is
+$\operatorname{ch}_g(\mathfrak O_g^K(\mathcal H_k))=
+(-1)^gk\lambda_g$, and under~$H_D^{\mathrm{graph}}$ integration
+against the Faber--Pandharipande class gives the
 coefficient computed in~\S\ref{sec:frame-genus-tower}.
 \end{example}
 
@@ -1408,12 +1422,12 @@ $3$d HT amplitudes are then related by the square below.
 \arrow[d, "\text{correlators}"] &
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA_{\mathrm{bdy}})
 \arrow[r, dashed, "\mathrm{BV/BRST}"]
-\arrow[d, "\text{bulk action}"] &
+\arrow[d, "\text{closed-sector action}"] &
 \Obs_{\mathrm{BRST}}(\mathcal A_{\mathrm{bulk}}^{3d})
 \arrow[d, "\text{amplitudes}"] \\
 \text{Boundary observables}
 \arrow[r, "\text{open--closed}"] &
-\text{Intrinsic bulk operators}
+\text{Intrinsic closed-sector operators}
 \arrow[r, dashed, "\text{AdS/CFT}"] &
 \text{3d bulk amplitudes}
 \end{tikzcd}
@@ -1421,13 +1435,16 @@ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA_{\mathrm{bdy}})
 
 Specifically:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The boundary-to-intrinsic-bulk map is the centre map
+\item The boundary-to-intrinsic-closed-sector map is the centre map
 $\cA_{\mathrm{bdy}}\to Z^{\mathrm{der}}_{\mathrm{ch}}(\cA_{\mathrm{bdy}})$,
 not the bar construction.
 \item The bar coalgebra
 $\barBch_X(\cA_{\mathrm{bdy}})$ classifies twisting morphisms and MC
-couplings.  Its Verdier dual gives the defect/Koszul-dual lane
-$\cA_{\mathrm{bdy}}^!$ after completed cobar.
+couplings.  Ran--Verdier duality forms
+$K_X(\cA_{\mathrm{bdy}})=\mathbb D_{\Ran}
+\barBch_X(\cA_{\mathrm{bdy}})$, and a chosen-pair map
+$\nu_{\cA_{\mathrm{bdy}}}\colon K_X(\cA_{\mathrm{bdy}})
+\to\cA_{\mathrm{bdy}}^!$ reaches the defect/Koszul-dual lane.
 \item Collision residues model bulk interactions only after passage
 to brace operations on chiral Hochschild cochains.
 \item Cobar reconstruction recovers the boundary algebra from its bar
@@ -1504,9 +1521,16 @@ The $(4,20)$ signature is triply visible:
  $L(s,\Phi_{10}) = L(s,\Delta\otimes E_6)\,\zeta(s-9)\,\zeta(s-8)$,
  with $9 = c_-/2-1$ and $8 = K^{\kappa_{\mathrm{ch}}}$.
 \end{enumerate}
-The $\kappa^!$-complementarity between $\kappa_{\mathrm{ch}}, \kappa_{\mathrm{cat}}, \kappa_{\mathrm{BKM}}, \kappa_{\mathrm{fiber}}$
-is the K3-chiral-bialgebra refinement of derived-centre complementarity
-\cite{Mukai1987,Bruinier2002,Borcherds1998}.
+The K3 chiral-bialgebra comparison places
+$\kappa_{\mathrm{ch}},\kappa_{\mathrm{cat}},\kappa_{\mathrm{BKM}}$,
+and~$\kappa_{\mathrm{fiber}}$ in four distinct measurement targets
+\cite{Mukai1987,Bruinier2002,Borcherds1998}.  Theorem~C remains the
+Verdier decomposition of
+$R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\mathbf H_{\Delta_5}))$;
+Theorem~H remains the support theorem for
+$\ChirHoch^\bullet(\mathbf H_{\Delta_5},\mathbf H_{\Delta_5})$.
+A supplied $\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, joins
+these two surfaces.
 Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} records
 the K3 chiral-bialgebra chart.  The chain-level realisation of the
 Mukai form as a non-degenerate

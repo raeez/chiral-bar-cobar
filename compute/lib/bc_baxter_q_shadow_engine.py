@@ -256,9 +256,10 @@ def yang_r_matrix(u: complex, eta: float = 1.0) -> np.ndarray:
 
     R(u) = u*I_4 + eta*P
 
-    This is the collision residue of the shadow MC element:
-    Res^{coll}_{0,2}(Theta_A) for A = sl_2-hat gives r(z) = Omega/z,
-    quantized to R(u) = u*I + eta*P (AP19).
+    This is the unit-normalized collision residue of the shadow MC element:
+    Res^{coll}_{0,2}(Theta_A) for A = sl_2-hat gives r_unit(z) = Omega/z,
+    quantized to R(u) = u*I + eta*P (AP19).  The affine trace-form
+    current residue carries the separate level factor k.
 
     Parameters
     ----------

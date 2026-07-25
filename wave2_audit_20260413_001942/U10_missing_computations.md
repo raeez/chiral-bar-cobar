@@ -1179,10 +1179,10 @@ exec
 /bin/zsh -lc "sed -n '1,240p' compute/lib/genus2_formality_obstruction_virasoro_engine.py" in /Users/raeez/chiral-bar-cobarexec
 /bin/zsh -lc "sed -n '1,240p' compute/lib/collision_residue_identification.py" in /Users/raeez/chiral-bar-cobarexec
 /bin/zsh -lc "sed -n '1,240p' compute/lib/wn_central_charge_canonical.py" in /Users/raeez/chiral-bar-cobar succeeded in 51ms:
-r"""Explicit E_3 structure on HH*(H_k): Gerstenhaber bracket verification.
+r"""Explicit algebraic E_3 structure on chiral HH*(H_k): Gerstenhaber bracket verification.
 
 Computes the Hochschild cohomology HH*(H_k) of the Heisenberg vertex
-algebra at level k and verifies the E_3 algebra structure explicitly,
+algebra at level k and verifies the algebraic E_3 structure explicitly,
 including the Gerstenhaber bracket on low-degree groups.
 
 MATHEMATICAL CONTENT:

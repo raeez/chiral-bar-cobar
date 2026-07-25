@@ -140,7 +140,7 @@ class TestUnconditionalItems:
         assert 'A_infty' in KOSZUL_ITEMS['(iii)'].name
 
     def test_item_viii_name(self):
-        """Item (viii) is ChirHoch polynomial."""
+        """Item (viii) is ChirHoch amplitude/Hilbert polynomial."""
         assert 'ChirHoch' in KOSZUL_ITEMS['(viii)'].name
 
 

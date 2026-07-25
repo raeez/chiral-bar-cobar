@@ -1419,7 +1419,8 @@ def full_mixed_hodge_package(family: str, max_pq: int = 8,
 def koszul_dual_hodge_comparison(family: str, max_pq: int = 8) -> Dict[str, Any]:
     r"""Compare Hodge numbers of A and A! (Koszul dual).
 
-    For Heisenberg: A = H_k, A! = Sym^ch(V*) with curvature -k.
+    For Heisenberg: A = H_k, A! is the curved second-kind
+    Sym^ch(V*[1]) branch with curvature -k.
         The Koszul dual has the SAME weight space structure (isomorphic
         as graded vector spaces) but different OPE.
         Hodge numbers should be the SAME.

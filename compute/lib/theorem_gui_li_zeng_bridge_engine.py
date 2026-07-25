@@ -42,8 +42,10 @@ STANDARD FAMILIES AND THEIR DUALS:
   Heisenberg H_k:
     GLZ:  N = C*alpha,  P = {alpha tensor alpha - k*1}.
           P^perp = {alpha^* tensor alpha^* + k^{-1}*1^*}.
-          H_k^! = Sym^ch(V^*) with curvature -k.
-    Mono: barB(H_k) = coLie^ch(V^*), H^*(barB) = Sym^ch(V^*).
+          H_k^! is the curved second-kind Sym^ch(V^*[1]) branch with
+          curvature -k.
+    Mono: barB(H_k) = coLie^ch(V^*), and H^*(barB) has associated-
+    graded Sym^ch(V^*) shadow.
     AGREE on kappa(H_k) = k, kappa(H_k^!) = -k.
 
   Affine KM g_k (g simple):
@@ -314,10 +316,11 @@ def compute_glz_dual_heisenberg(k: Fraction) -> QuadraticDualResult:
 
     The GLZ construction gives:
       P^perp = annihilator of P under residue pairing.
-      H_k^! = Sym^ch(V*) with curvature -k.
+      H_k^! is the curved second-kind Sym^ch(V*[1]) branch with
+      curvature -k.
 
-    The dual is NOT H_{-k} (AP33): H_k^! = Sym^ch(V*) is a DIFFERENT
-    algebra from H_{-k}, though they share the same modular characteristic.
+    The dual is NOT H_{-k} (AP33): H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, though it shares the same modular characteristic.
     """
     original = ChiralQuadraticDatum(
         name=f"H_{k}",
@@ -329,7 +332,7 @@ def compute_glz_dual_heisenberg(k: Fraction) -> QuadraticDualResult:
         curvature_description=f"m_0 = {k} * 1 (central, proportional to vacuum)",
     )
     dual = ChiralQuadraticDatum(
-        name=f"Sym^ch(V*) [Koszul dual of H_{k}]",
+        name=f"curved Sym^ch(V*[1]) [Koszul dual of H_{k}]",
         dim_N=1,
         dim_P=0,   # free commutative (no relations beyond commutativity)
         dim_P_perp=1,

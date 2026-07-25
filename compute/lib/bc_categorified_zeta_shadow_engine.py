@@ -46,7 +46,7 @@ Object firewalls preserved here:
     - Omega(B(A))=A is bar-cobar inversion, not Koszul duality.
     - A^! is the Verdier/continuous-linear dual branch under finite-type or
       completed hypotheses.
-    - Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/bulk, not Koszul dual.
+    - Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/closed-sector, not Koszul dual.
 
 Kernel constants used for firewall checks:
 
@@ -111,7 +111,7 @@ OBJECT_FIREWALL = {
         "Verdier/continuous-linear dual branch under finite-type or "
         "completed hypotheses"
     ),
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk object",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/closed-sector object",
     "A^i": "bar-dual/linear-dual branch, typed separately from A^!",
     "B(A)": "bar coalgebra, typed separately from A and Omega(B(A))",
 }
@@ -1481,7 +1481,7 @@ def hkr_theorem_dk(rank: int, k_level: int) -> Dict[str, Any]:
     and HH_n = 0 for n > 0 (semisimple).
 
     This function does not identify the chiral derived centre
-    Z_ch^der(A)=ChirHoch^*(A,A), and does not construct the Hochschild/bulk
+    Z_ch^der(A)=ChirHoch^*(A,A), and does not construct the Hochschild/closed-sector
     slot C in a holographic package.
 
     Parameters

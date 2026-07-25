@@ -65,7 +65,7 @@ class TestD2WeightShifts:
 
 
 class TestW3ExplicitChecks:
-    """Low-weight W_3 computations realize the abstract triangular pattern."""
+    """Exact L0 action and homogeneous-product weights realize the triangular pattern."""
 
     def test_w3_l0_scalar_bundle(self):
         for ok in verify_w3_l0_scalar(max_weight=8).values():
@@ -77,8 +77,11 @@ class TestW3ExplicitChecks:
 
 
 class TestIntegration:
-    """End-to-end support bundle used by the manuscript theorem."""
+    """The support bundle keeps the PBW/genus-one comparison explicit."""
 
     def test_all_pass(self):
-        for name, ok in verify_principal_w_pbw_genus1(max_weight=8).items():
+        packet = verify_principal_w_pbw_genus1(max_weight=8)
+        comparison = packet.pop("PBW spectral-sequence identification")
+        assert comparison.status == "open"
+        for name, ok in packet.items():
             assert ok, name

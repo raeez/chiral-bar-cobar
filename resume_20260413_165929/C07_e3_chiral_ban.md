@@ -642,7 +642,7 @@ CLAUDE.md:1117:**Unconditional (high confidence):** Theorems A (fixed-curve), B 
 CLAUDE.md:1123:**Open frontier:** The five deepest open problems are: (1) chain-level E_3 on the original complex (not qi model); (2) MC5 chain-level for class M; (3) the modular-family Theorem A over M-bar_{g,n}; (4) topologization for general chiral algebras with conformal vector; (5) the chiral coproduct for non-gauge-theoretic families. Each has a precise research programme identified by the healing agents.
 staging/combined_for_en_koszul.tex:4:% E_3 identification, explicit operations, chiral P_3 bracket,
 staging/combined_for_en_koszul.tex:5:% filtered E_3-chiral algebra, CFG comparison
-compute/lib/hh_heisenberg_e3_engine.py:424:    For E_3-formal algebras (which includes all chirally Koszul algebras
+compute/lib/hh_heisenberg_e3_engine.py:424:    When the SC(E_2)-to-E_3 formality/topologisation comparison is available
 standalone/survey_modular_koszul_duality_v2.tex:1403:$\SCchtop+\text{conformal vector}=E_3$-topological (not $E_3$-chiral;
 standalone/survey_modular_koszul_duality_v2.tex:2204:$R$-matrix; the topologization $\SCchtop\to E_3$ loses the chiral
 standalone/survey_modular_koszul_duality_v2.tex:6355:to $E_3$-topological (not $E_3$-chiral; the conformal
@@ -768,10 +768,10 @@ Theorem H just like the quadratic regime.
      SC(P)-algebra from a colored operad P and an algebra A.
      When P = E_n, SC(P) ~ SC_n (Swiss-cheese). For n=2: SC(E_2) ~ SC_2,
  succeeded in 50ms:
-r"""Explicit E_3 structure on HH*(H_k): Gerstenhaber bracket verification.
+r"""Explicit algebraic E_3 structure on chiral HH*(H_k): Gerstenhaber bracket verification.
 
 Computes the Hochschild cohomology HH*(H_k) of the Heisenberg vertex
-algebra at level k and verifies the E_3 algebra structure explicitly,
+algebra at level k and verifies the algebraic E_3 structure explicitly,
 including the Gerstenhaber bracket on low-degree groups.
 
 MATHEMATICAL CONTENT:
@@ -824,10 +824,10 @@ CLAUDE.md:1117:**Unconditional (high confidence):** Theorems A (fixed-curve), B 
 CLAUDE.md:1123:**Open frontier:** The five deepest open problems are: (1) chain-level E_3 on the original complex (not qi model); (2) MC5 chain-level for class M; (3) the modular-family Theorem A over M-bar_{g,n}; (4) topologization for general chiral algebras with conformal vector; (5) the chiral coproduct for non-gauge-theoretic families. Each has a precise research programme identified by the healing agents.
 staging/combined_for_en_koszul.tex:4:% E_3 identification, explicit operations, chiral P_3 bracket,
 staging/combined_for_en_koszul.tex:5:% filtered E_3-chiral algebra, CFG comparison
-compute/lib/hh_heisenberg_e3_engine.py:424:    For E_3-formal algebras (which includes all chirally Koszul algebras
-compute/lib/factorization_homology_explicit_engine.py:43:             E_3-algebra on a 3-manifold = WRT invariant.  For a chiral
-compute/lib/theorem_cs_knot_invariant_engine.py:46:     - The E_3 structure combines chiral + topological (Swiss-cheese)
-compute/lib/theorem_cs_knot_invariant_engine.py:922:    The BV quantization of CS produces an E_3 algebra whose E_1 (chiral) factor
+compute/lib/hh_heisenberg_e3_engine.py:424:    When the SC(E_2)-to-E_3 formality/topologisation comparison is available
+compute/lib/factorization_homology_explicit_engine.py:43:             locally constant topological E_3-algebra on a 3-manifold = WRT invariant
+compute/lib/theorem_cs_knot_invariant_engine.py:46:     - The comparison is a boundary/Swiss-cheese topologisation package, not a literal product "chiral + topological = E_3" on raw chains
+compute/lib/theorem_cs_knot_invariant_engine.py:922:    The BV quantization of CS produces a locally constant topological E_3 algebra after the CFG/CG locality package
 chapters/frame/preface.tex:3778:$E_3$-chiral algebra.
 chapters/frame/preface.tex:3866:$E_3^{\mathrm{top}}$, not $E_3$-chiral.
 chapters/frame/preface.tex:3980:$E_3^{\mathrm{top}}$-deformation space of the derived chiral center
@@ -1179,10 +1179,10 @@ CLAUDE.md:1117:**Unconditional (high confidence):** Theorems A (fixed-curve), B 
 CLAUDE.md:1123:**Open frontier:** The five deepest open problems are: (1) chain-level E_3 on the original complex (not qi model); (2) MC5 chain-level for class M; (3) the modular-family Theorem A over M-bar_{g,n}; (4) topologization for general chiral algebras with conformal vector; (5) the chiral coproduct for non-gauge-theoretic families. Each has a precise research programme identified by the healing agents.
 AGENTS.md:55:**The E_n operadic circle (2026-04-12):** E_3-TOPOLOGICAL(bulk) → E_2(boundary chiral) → E_1(bar/QG) → E_2(Drinfeld center) → E_3-TOPOLOGICAL(derived center). Each arrow: restriction to codim-2 defect, ordered bar complex, categorified averaging (Drinfeld center), higher Deligne (derived center). Closes for 3d HT with conformal vector; without conformal vector, stuck at SC^{ch,top}.
 staging/combined_for_en_koszul.tex:4:% E_3 identification, explicit operations, chiral P_3 bracket,
-compute/lib/theorem_cs_knot_invariant_engine.py:46:     - The E_3 structure combines chiral + topological (Swiss-cheese)
-compute/lib/theorem_cs_knot_invariant_engine.py:922:    The BV quantization of CS produces an E_3 algebra whose E_1 (chiral) factor
-compute/lib/factorization_homology_explicit_engine.py:43:             E_3-algebra on a 3-manifold = WRT invariant.  For a chiral
-compute/lib/hh_heisenberg_e3_engine.py:424:    For E_3-formal algebras (which includes all chirally Koszul algebras
+compute/lib/theorem_cs_knot_invariant_engine.py:46:     - The comparison is a boundary/Swiss-cheese topologisation package, not a literal product "chiral + topological = E_3" on raw chains
+compute/lib/theorem_cs_knot_invariant_engine.py:922:    The BV quantization of CS produces a locally constant topological E_3 algebra after the CFG/CG locality package
+compute/lib/factorization_homology_explicit_engine.py:43:             locally constant topological E_3-algebra on a 3-manifold = WRT invariant
+compute/lib/hh_heisenberg_e3_engine.py:424:    When the SC(E_2)-to-E_3 formality/topologisation comparison is available
 chapters/frame/preface.tex:3980:$E_3^{\mathrm{top}}$-deformation space of the derived chiral center
 standalone/survey_modular_koszul_duality_v2.tex:2204:$R$-matrix; the topologization $\SCchtop\to E_3$ loses the chiral
 standalone/survey_modular_koszul_duality_v2.tex:6355:to $E_3$-topological; the conformal vector kills the chiral

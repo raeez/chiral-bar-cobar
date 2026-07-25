@@ -1,735 +1,209 @@
 % !TEX root = ../../main.tex
 %
-% Chapter: scalar all-tier Laurent stratification of the Virasoro shadow
-% tower.  The proof uses the single-channel Virasoro Riccati recurrence,
-% its Catalan generating function in the arity variable, and Gauss's
-% terminating hypergeometric form.
+% All-tier Virasoro residues: construction and comparison obligations.
 
-\chapter{All-tier Laurent stratification
-\texorpdfstring{$S_r(\Vir_c)$}{S\_r(Vir\_c)} via a bivariate
-hypergeometric generating function}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\cA}{\mathcal A}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{All-Tier Virasoro Residues}
 \label{ch:all-tier-generating-function}
 
-\section*{Orientation}
+\section*{The object to be constructed}
 
-The Virasoro shadow tower has a single strong generator.  The scalar
-Riccati recurrence therefore has one transport channel, and the
-Laurent expansion at $c=\infty$
+The Virasoro operator product and the level-four vacuum Gram form
+determine exact local data.  In the notation of
+Chapter~\ref{ch:shadow-tower-higher-coefficients},
 \[
-\Phi_r(c) := c^{r-2}S_r(\Vir_c)
- = A_r + \frac{B_r}{c} + \frac{\Gamma_r}{c^2}
- + \frac{\Delta_r}{c^3}+\cdots
+ T(z)T(w)\sim \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w},
+ \qquad
+ N_\Lambda(c)=\frac{c(5c+22)}{10}.
 \]
-is controlled by a one-variable Catalan convolution.  The first four
-tiers of Chapter~\ref{ch:shadow-tower-higher-coefficients} are the
-initial shadows of the following closed form:
-\begin{equation}
-\label{eq:all-tier-raw-intro}
-\frac{\mathrm{Tier}\text{-}K(r)}{A_r}
- \;=\; (-1)^{K+1}
- \sum_{m = 0}^{K-1}
- \binom{K-1}{m}\,
- \frac{\tau^{K-1-m}\,(r-4)_{2m}}{9^m \, m! \, (m+1)!},
-\end{equation}
-for every $K \ge 1$ and every integer $r \ge 4$.  Here
-$\tau=22/5$, $A_r=8(-6)^{r-4}/r$, and
-$(r-4)_{2m}=(r-4)(r-5)\cdots(r-4-(2m-1))$.
+The connected Ward functions are rational functions on ordered
+configuration spaces.  Scalar higher residues arise after the
+ordered-residue package
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\) supplies a completed complex,
+a collision-compatible correlator map, and contractions onto the
+scalar lines.
 
-The bivariate package is
-\begin{equation}
-\label{eq:bivariate-F-intro}
-F(r, u) \;:=\; \frac{\Phi_r(1/u)}{A_r}
- \;=\; \frac{1}{1 + \tau u} \,
- {}_2F_1\!\left(\frac{4-r}{2},\frac{5-r}{2};\; 2;\;
-\frac{-4u}{9(1 + \tau u)}\right),
-\end{equation}
-which is rational in $u$ because the Gauss factor terminates at
-degree $\lfloor (r-4)/2\rfloor$.  The base cases are
-$F(4,u)=F(5,u)=(1+\tau u)^{-1}$.  For $r\ge5$ the rescaled master
-recurrence is
-\begin{equation}
-\label{eq:bilinear-master-intro}
-\frac{r\, F(r, u)\, A_r}{u}
- \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
-f(j, k)\, j k\, A_j A_k\, F(j, u)\, F(k, u),
-\end{equation}
-with $F(3,u)=1/u$, $A_3=2$, $f(j,k)=1$ for $j<k$, and
-$f(j,j)=1/2$.  Splitting off the $(3,r-1)$ channel gives the
-ordinary Catalan recurrence in the shifted arity $n=r-4$; solving it
-is the proof of \eqref{eq:bivariate-F-intro}.
+The all-tier problem begins with this chain model.  A formal
+weighted-Riccati series is an auxiliary algebraic object.  Its
+identification with the scalar coordinates
+\(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\) is a comparison theorem to be
+proved from the transfer data.
 
-This is a scalar diagonal theorem.  It applies to the Virasoro family,
-equivalently the principal $\mathcal{W}_2$ line, where
-$\kappa(\Vir_c)=c/2$, $\Vir_c^!=\Vir_{26-c}$, and
-$\kappa+\kappa^!=13$.  For principal $\mathcal{W}_N$ one has the
-diagonal scalar coefficient
-$\kappa(\mathcal{W}_N)=c(H_N-1)$ and
-$\kappa+\kappa^!=(c+c')(H_N-1)$, with
-$c+c'=2(N-1)(2N^2+2N+1)$; at $N=3$ this is $250/3$.  For
-$N\ge3$ the full genus expansion has cross-channel corrections from
-mixed generator pairs.  The hypergeometric formula above is not a
-multi-weight $\mathcal{W}_N$ formula.
+\section{Laurent data of a constructed residue tower}
 
-\section{Bivariate generating function and the hypergeometric form}
-
-\subsection{Definitions and normalisation}
-
-Fix $\tau := 22/5$ throughout.  The Zamolodchikov quasi-primary
-$\Lambda={:}TT{:}-(3/10)\partial^2T$ has
-$\langle \Lambda | \Lambda \rangle = c(5c + 22)/10$, and this is the
-source of the factor $22/5$.  Fix also the rescaled shadow sequence
-\begin{equation}
-\Phi_r(c) \;:=\; c^{r-2}\, S_r(\Vir_c), \qquad r \ge 2,
-\end{equation}
-so that $\Phi_r$ is a rational function of $c$ with $\Phi_3 = 2c$ of
-negative Laurent order at $c = \infty$ and $\Phi_r$ of order zero for
-$r \ge 4$. The leading Laurent coefficient at $c = \infty$ is
-$A_r = 8 (-6)^{r-4}/r$ for $r \ge 4$
-(Theorem~\ref{thm:shadow-tower-asymptotic-closed-form}).
-
-\begin{definition}[Bivariate generating function; \ClaimStatusDefinitional]
+\begin{definition}[Asymptotic package and normalized tiers]
+\ClaimStatusDefinitional
 \label{def:bivariate-F}
-For every integer $r \ge 4$, set
+Assume \(\mathsf H_{\mathrm{res}}(\Vir_c;X)\).  The package
+\(\mathsf H_{\mathrm{asymp}}\) consists of:
+\begin{enumerate}[(i)]
+\item meromorphic dependence of every transferred coordinate on the
+central charge~\(c\);
+\item a declared normalization exponent \(\nu_r\) and a Laurent
+expansion at \(c=\infty\);
+\item uniform coefficient bounds in~\(r\), together with a declared
+order of the limits \(c\to\infty\) and \(r\to\infty\);
+\item compatibility of coefficient extraction with the filtration
+completion used in \(\mathsf H_{\mathrm{res}}\).
+\end{enumerate}
+Write
 \begin{equation}
-\label{eq:F-def}
-F(r, u) \;:=\; \Phi_r(c = 1/u) / A_r \;\in\; \mathbb{Q}(u).
+ \Phi_r(c;\mathsf H_{\mathrm{res}})
+ :=c^{\nu_r}S_r(\Vir_c;\mathsf H_{\mathrm{res}})
+ =\sum_{K\ge1}T_K(r)c^{1-K}.
+ \label{eq:all-tier-raw-intro}
 \end{equation}
-Equivalently, $F(r, u) = 1 + \sum_{K \ge 1} \mathrm{Tier}\text{-}(K+1)(r)
-/ A_r \cdot u^K$ where $\mathrm{Tier}\text{-}K(r)$ is the $c^{-(K-1)}$
-Laurent coefficient of $\Phi_r(c)$ at $c = \infty$. By convention the
-constant term of $F(r, u)$ is $\mathrm{Tier}\text{-}1(r)/A_r = 1$.
+The leading tier is \(A_r:=T_1(r)\).  Whenever \(A_r\) is invertible,
+set
+\begin{equation}
+ F(r,u):=\frac{\Phi_r(1/u;\mathsf H_{\mathrm{res}})}{A_r}
+ =1+\sum_{K\ge2}\frac{T_K(r)}{A_r}u^{K-1}.
+ \label{eq:bivariate-F-intro}
+ \label{eq:F-def}
+\end{equation}
+Thus the bivariate series is an invariant of
+\((\Vir_c,\mathsf H_{\mathrm{res}},\mathsf H_{\mathrm{asymp}})\).
 \end{definition}
 
-\subsection{The hypergeometric closed form}
-
-\begin{theorem}[\label{thm:all-tier-bivariate-generating-function}%
-Bivariate hypergeometric generating function for the Virasoro shadow
-tower]
-\ClaimStatusProvedHere
-For every integer $r \ge 4$,
+\begin{remark}[Transferred equation before scalar closure]
+Write \(s=s_{\Vir_c}\) for the transferred scalar Maurer--Cartan
+element.  Its coordinates satisfy the projected transferred
+Maurer--Cartan equation
 \begin{equation}
-\label{eq:F-hyper}
-F(r, u) \;=\; \frac{1}{1 + \tau u}\,
- {}_2F_1\!\left(\frac{4-r}{2},\, \frac{5-r}{2};\; 2;\;
- \frac{-4 u}{9 (1 + \tau u)}\right).
+ \operatorname{pr}_r\left(
+ \sum_{n\ge1}\frac1{n!}
+ \ell_n^{\mathrm{sc}}(s,\ldots,s)\right)=0.
+ \label{eq:bilinear-master-intro}
 \end{equation}
-The Gauss hypergeometric factor terminates at polynomial degree
-$\lfloor (r-4)/2 \rfloor$ in its argument, hence $F(r, u) \in
-\mathbb{Q}(u)$ is a rational function whose denominator divides
-$(1 + \tau u)^{\lfloor (r-4)/2 \rfloor + 1}$.
-\end{theorem}
-
-\begin{proof}
-The base cases are direct:
-\begin{align*}
-\Phi_4(c) &= c^{2} \cdot \frac{10}{c(5c + 22)}
- \;=\; \frac{10 c}{5 c + 22}
- \;=\; \frac{2}{1 + 22/(5c)}, \\
-F(4, u) &= \Phi_4(1/u) / A_4 \;=\; \frac{2}{1 + \tau u} \cdot \frac{1}{2}
- \;=\; \frac{1}{1 + \tau u}.
-\end{align*}
-For $r = 5$, $\Phi_5(c) = -48 c / (5 c + 22)$ and $A_5 = -48/5$ gives
-$F(5, u) = 1 / (1 + \tau u)$ identically. These are also the two
-specialisations of \eqref{eq:F-hyper}: at $r=4$ one upper parameter is
-$0$, and at $r=5$ the second upper parameter is $0$.
-
-For $r \ge 5$, the Virasoro weighted recurrence of
-Theorem~\ref{thm:virasoro-shadow-recurrence}, equivalently the
-rescaled recurrence used in
-Theorem~\ref{thm:shadow-tower-subleading-closed-form}, gives
-\begin{equation}
-\label{eq:master-bilinear-proof}
-r\, c\, \Phi_r \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
-f(j, k)\, j k\, \Phi_j \Phi_k
-\end{equation}
-with $\Phi_3=2c$.  Substituting $c = 1/u$ and dividing by $A_r$ gives
-\begin{equation}
-\label{eq:master-in-u}
-\frac{r\, F(r, u)\, A_r}{u}
- \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, A_j A_k\, F(j, u)\, F(k, u),
-\end{equation}
-where we use $F(3, u) := \Phi_3(1/u) / A_3 = (2/u) / 2 = 1/u$ with the
-formal setting $A_3 = 2$ (the leading-$c$ coefficient of $\Phi_3 = 2 c$).
-
-Split the $(3,r-1)$ transport term.  Since
-$rA_r=-6(r-1)A_{r-1}$ for $r\ge5$, this term contributes exactly
-$rA_rF(r-1,u)/u$ to the right hand side of the displayed recurrence.
-For the remaining terms $j,k\ge4$ the identity
-\[
-\frac{jkA_jA_k}{rA_r}
- = \frac{8(-6)^{j-4}\,8(-6)^{k-4}}{8(-6)^{r-4}}
- = \frac{2}{9},
-\qquad j+k=r+2,
-\]
-is independent of $(j,k)$.  Thus
-\[
-F(r,u)=F(r-1,u)
--\frac{2u}{9}
-\sum_{\substack{j+k=r+2\\4\le j\le k\le r-2}}
-f(j,k)F(j,u)F(k,u).
-\]
-Set $H_n(u)=F(n+4,u)$ and $a(u)=(1+\tau u)^{-1}$.  Then
-$H_0=H_1=a$, and for $n\ge2$
-\[
-H_n=H_{n-1}
--\frac{u}{9}\sum_{p+q=n-2}H_pH_q,
-\]
-where the unordered sum with weights $f$ has become one half of the
-ordered convolution.
-
-Let $R(t,u)=\sum_{n\ge0}H_n(u)t^n$.  Multiplying the recurrence by
-$t^n$ and summing over $n\ge1$ gives the quadratic identity
-\[
-(1-t)R(t,u)-a(u)=-\frac{u}{9}\,t^2R(t,u)^2.
-\]
-The solution with $R(0,u)=a(u)$ is
-\[
-R(t,u)=\frac{a(u)}{1-t}\,
-C\!\left(-\,\frac{u\,a(u)t^2}{9(1-t)^2}\right),
-\qquad
-C(z)=\sum_{m\ge0}\frac{1}{m+1}\binom{2m}{m}z^m .
-\]
-Extracting the coefficient of $t^n$ yields
-\[
-H_n(u)
-=a(u)\sum_{m\ge0}
-\frac{(n)_{2m}}{9^m\,m!\,(m+1)!}
-\bigl(-u\,a(u)\bigr)^m ,
-\]
-with automatic termination at $m=\lfloor n/2\rfloor$.
-Substituting $n=r-4$ and $a(u)=(1+\tau u)^{-1}$ gives
-\[
-F(r,u)=\frac{1}{1+\tau u}
-\sum_{m\ge0}
-\frac{(r-4)_{2m}}{9^m\,m!\,(m+1)!}
-\left(\frac{-u}{1+\tau u}\right)^m .
-\]
-Finally
-\[
-(r-4)_{2m}
-=4^m\left(\frac{4-r}{2}\right)_m
-\left(\frac{5-r}{2}\right)_m,
-\qquad
-(2)_m=(m+1)!,
-\]
-turns this finite Catalan sum into the Gauss expression
-\eqref{eq:F-hyper}.  One of the two upper parameters is a
-non-positive integer for every integer $r\ge4$, so the Gauss series
-terminates at degree $\lfloor(r-4)/2\rfloor$; hence $F(r,u)$ is
-rational with denominator dividing
-$(1+\tau u)^{\lfloor(r-4)/2\rfloor+1}$.
-\end{proof}
-
-\begin{remark}[\label{rem:F-reduction-structure}%
-Reduction to polynomial + denominator power]
-The formula \eqref{eq:F-hyper} makes the rational structure of $\Phi_r/A_r$
-transparent. Clearing the denominator:
-\begin{equation}
-\label{eq:F-clear-denominator}
-(1 + \tau u)^{\lfloor (r-4)/2 \rfloor + 1}\, F(r, u) \;=\; P_r(u),
-\end{equation}
-where $P_r \in \mathbb{Q}[u]$ is a polynomial of degree
-$\lfloor (r-4)/2 \rfloor$ obtained as the ${}_2F_1$ polynomial scaled by
-the extra denominator factors. The denominator pattern
-$(5 c + 22)^{\lfloor (r-2)/2 \rfloor}$ of $S_r(\Vir_c)$ corresponds
-(via $c = 1/u$ and $5 c + 22 = (5 + 22 u)/u = 5(1 + \tau u)/u$) to
-$(1 + \tau u)^{\lfloor (r-2)/2 \rfloor}$ in $F(r, u)$.  Since
-\[
-\lfloor(r-2)/2\rfloor=\lfloor(r-4)/2\rfloor+1
-\qquad (r\ge4),
-\]
-this is exactly \eqref{eq:F-clear-denominator}; $u=0$ is the regular
-expansion point.
+A bilinear recurrence follows after a quadratic-closure package
+identifies the surviving transferred brackets and their kernels.
+This package determines the admissible arity pairs and every scalar
+normalization.
 \end{remark}
 
-\section{All-tier closed form}
+\section{Generating-function and tier problems}
 
-\begin{theorem}[\label{thm:all-tier-laurent-stratification}%
-All-tier Laurent stratification of the Virasoro shadow tower at $c =
-\infty$]
-\ClaimStatusProvedHere
-For every $K \ge 1$ and every integer $r \ge 4$,
-\begin{equation}
-\label{eq:tier-K-closed-form}
-\frac{\mathrm{Tier}\text{-}K(r)}{A_r}
- \;=\; (-1)^{K+1}
- \sum_{m = 0}^{K-1}
- \binom{K-1}{m}\,
- \frac{\tau^{K-1-m}\,(r-4)_{2m}}{9^m \, m! \, (m+1)!},
-\end{equation}
-where $\tau = 22/5$, $(r-4)_{2m} = (r-4)(r-5) \cdots (r-4-(2m-1))$ is
-the falling factorial of length $2m$ starting at $r - 4$, and $A_r =
-8 (-6)^{r-4} / r$ is the leading asymptotic coefficient.
-\end{theorem}
+\begin{problem}[Construct the bivariate residue generating function]
+\ClaimStatusOpen
+\label{thm:all-tier-bivariate-generating-function}
+\label{thm:all-tier-laurent-stratification}
+\label{thm:all-tier-closed-form-proved}
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue-bar and transferred
+scalar presentations, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{quad}}
++\mathsf H_{\mathrm{asymp}}\)).}
 
-\begin{proof}
-By Theorem~\ref{thm:all-tier-bivariate-generating-function},
-\begin{equation}
-\label{eq:F-sum-over-m}
-F(r, u) \;=\; \frac{1}{1 + \tau u}
- \sum_{m \ge 0} \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
- \left( \frac{-u}{1 + \tau u} \right)^{m},
-\end{equation}
-where the ${}_2F_1$ series has been written in the form $\sum_m
-(a)_m^{\uparrow} (b)_m^{\uparrow} (2)_m^{-1} x^m / m!$ and the identity
-\begin{equation}
-(r - 4)_{2m}^{\downarrow}
- \;=\; 4^m \bigl(\tfrac{4-r}{2}\bigr)_m^{\uparrow}
- \bigl(\tfrac{5-r}{2}\bigr)_m^{\uparrow}
-\end{equation}
-(Gauss's multiplication theorem for the Pochhammer symbol) has been
-used, together with $(2)_m^{\uparrow} = (m+1)!$ and $4^m / 9^m$
-absorbed into $(4/9)^m$, cancelling the $(4/9)^m$ from the argument
-$-4 u / (9 (1 + \tau u))$ to leave $(-u/(1 + \tau u))^m$.
-
-Using this expansion and the binomial series
-$(1 + \tau u)^{-(m+1)} = \sum_{n \ge 0} \binom{m + n}{m} (-\tau u)^n$:
-\begin{equation}
-F(r, u) \;=\; \sum_{m, n \ge 0}
- \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
- (-u)^m\, \binom{m + n}{m}\, (-\tau u)^n.
-\end{equation}
-Collect powers of $u$: set $K - 1 = m + n$, so $n = K - 1 - m$ with
-$m \in \{0, 1, \ldots, K - 1\}$. Then
-\begin{equation}
-[u^{K-1}]\, F(r, u)
- \;=\; \sum_{m=0}^{K-1}
- \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
- (-1)^{K-1}\, \binom{K - 1}{m}\, \tau^{K-1-m}.
-\end{equation}
-The sign $(-1)^m (-1)^{n} = (-1)^{m+n} = (-1)^{K-1} = -(-1)^{K}$
-simplifies to $(-1)^{K-1} = (-1)^{K+1}$.
-
-By Definition~\ref{def:bivariate-F},
-$F(r, u) = 1 + \sum_{K \ge 1} (\mathrm{Tier}\text{-}(K+1)(r) / A_r) u^K$,
-i.e.\ $[u^{K-1}] F(r, u) = \mathrm{Tier}\text{-}K(r) / A_r$ (with
-Tier-1 being the constant term, equal to 1, which is
-$(-1)^{1+1} \binom{0}{0} \tau^0 \cdot 1 / (9^0 \cdot 0! \cdot 1!) = 1$
-on the right-hand side of \eqref{eq:tier-K-closed-form}, as required).
-
-This is \eqref{eq:tier-K-closed-form}.
-\end{proof}
-
-\begin{corollary}[\label{cor:tier-k-leading-coefficient}%
-Leading (highest-degree) coefficient of Tier-$K$]
-\ClaimStatusProvedHere
-For every $K \ge 1$ and every $r \ge 4$ with $r - 4 \ge 2(K-1)$, the
-coefficient $c^{(K)}_{K-1}$ of the highest-degree term
-$(r-4)_{2(K-1)}$ in $\mathrm{Tier}\text{-}K(r)/A_r$ is
-\begin{equation}
-c^{(K)}_{K-1} \;=\;
-\frac{(-1)^{K+1}}{9^{K-1}\,(K-1)!\,K!}.
-\end{equation}
-Equivalently, the leading denominator pattern of Tier-$K$ is
-$D_K = 9^{K-1}\,(K-1)!\,K!$.
-\end{corollary}
-
-\begin{proof}
-Specialize $m = K - 1$ in \eqref{eq:tier-K-closed-form}, giving
-coefficient
-$(-1)^{K+1}\binom{K-1}{K-1}\tau^0/(9^{K-1}(K-1)!K!)$.
-Its denominator is $D_K$.
-\end{proof}
-
-\begin{remark}[\label{rem:four-tier-recovery}%
-Four-tier recovery]
-The four explicitly inscribed Tiers of
-Chapter~\ref{ch:shadow-tower-higher-coefficients} are recovered from
-\eqref{eq:tier-K-closed-form} at $K = 1, 2, 3, 4$:
-\begin{align*}
-K &= 1: \quad \tau^0 / (9^0 \cdot 1) \;=\; 1 \;=\; A_r/A_r. \\
-K &= 2: \quad -[\tau + (r-4)(r-5)/18] \;=\; B_r/A_r. \\
-K &= 3: \quad +[\tau^2 + 2\tau (r-4)(r-5)/18 + (r-4)_4/972]
- \;=\; \tau^2 + \tfrac{22}{45}(r-4)(r-5) + (r-4)_4/972, \\
- &\qquad = \Gamma_r/A_r, \\
-K &= 4: \quad -[\tau^3 + 3\tau^2(r-4)(r-5)/18 + 3 \tau (r-4)_4/972
- + (r-4)_6/104976] \\
- &\qquad = -(22/5)^3 - \tfrac{242}{75}(r-4)(r-5)
- - \tfrac{11}{810}(r-4)_4 - (r-4)_6/104976
- \;=\; \Delta_r/A_r.
-\end{align*}
-All four agree with the closed forms of
-Theorems~\ref{thm:shadow-tower-asymptotic-closed-form},
-\ref{thm:shadow-tower-subleading-closed-form},
-\ref{thm:shadow-tower-sub-subleading-closed-form},
-\ref{thm:shadow-tower-tier-4-closed-form}.
-\end{remark}
-
-\section{Tier-5 closed form}
-
-\begin{theorem}[\label{thm:tier-5-closed-form}%
-Tier-5 closed form]
-\ClaimStatusProvedHere
-Let $\mathrm{Epsilon}_r := \mathrm{Tier}\text{-}5(r)$ denote the
-$c^{-4}$ Laurent coefficient of $\Phi_r(c) = c^{r-2} S_r(\Vir_c)$ at
-$c = \infty$. Then for every $r \ge 4$,
-\begin{equation}
-\label{eq:tier-5-explicit}
-\begin{aligned}
-\frac{\mathrm{Epsilon}_r}{A_r}
- &= \left(\frac{22}{5}\right)^{4}
- \;+\; \frac{21296}{1125}\,(r-4)(r-5)
- \;+\; \frac{242}{2025}\,(r-4)(r-5)(r-6)(r-7) \\
- &\quad\;+\; \frac{11}{65610}\,(r-4)(r-5)(r-6)(r-7)(r-8)(r-9) \\
- &\quad\;+\; \frac{1}{18895680}\,(r-4)(r-5)(r-6)(r-7)(r-8)(r-9)(r-10)(r-11).
-\end{aligned}
-\end{equation}
-The five coefficients specialize the all-tier formula
-\eqref{eq:tier-K-closed-form} at $K = 5$:
-$c^{(5)}_m = \binom{4}{m} \tau^{4-m} / (9^m\, m!\, (m+1)!)$ for
-$m = 0, 1, 2, 3, 4$.
-\end{theorem}
-
-\begin{proof}
-Specialize \eqref{eq:tier-K-closed-form} at $K = 5$:
-\begin{equation}
-\frac{\mathrm{Epsilon}_r}{A_r}
- \;=\; (-1)^6 \sum_{m=0}^{4} \binom{4}{m} \frac{\tau^{4-m} (r-4)_{2m}}
- {9^m \, m! \, (m+1)!}.
-\end{equation}
-Compute each coefficient:
-\begin{align*}
-m = 0: &\quad \binom{4}{0} \tau^4 / (9^0 \cdot 0! \cdot 1!)
- \;=\; \tau^4 \;=\; (22/5)^4 \;=\; 234256/625, \\
-m = 1: &\quad \binom{4}{1} \tau^3 / (9 \cdot 1! \cdot 2!)
- \;=\; 4 \cdot (22/5)^3 / 18 \;=\; 4 \cdot 10648 / (125 \cdot 18)
- \;=\; 21296/1125, \\
-m = 2: &\quad \binom{4}{2} \tau^2 / (81 \cdot 2! \cdot 3!)
- \;=\; 6 \cdot (484/25) / 972 \;=\; 2904 / 24300
- \;=\; 242/2025, \\
-m = 3: &\quad \binom{4}{3} \tau / (729 \cdot 3! \cdot 4!)
- \;=\; 4 \cdot (22/5) / 104976 \;=\; 88/524880
- \;=\; 11/65610, \\
-m = 4: &\quad \binom{4}{4} \tau^0 / (6561 \cdot 4! \cdot 5!)
- \;=\; 1 / 18895680.
-\end{align*}
-The sign $(-1)^{K+1} = (-1)^{6} = +1$, giving the stated formula.
-\end{proof}
-
-\begin{remark}[\label{rem:tier-5-numerical-signature}%
-Tier-5 signature at characteristic $r$]
-Evaluating \eqref{eq:tier-5-explicit} at representative $r$:
-\begin{align*}
-r = 4: &\quad \mathrm{Epsilon}_4/A_4 \;=\; (22/5)^4 \;=\; 234256/625. \\
-r = 8: &\quad \mathrm{Epsilon}_8/A_8 \;=\; \tfrac{234256}{625}
- + \tfrac{21296 \cdot 12}{1125} + \tfrac{242 \cdot 24}{2025}
- \;=\; 10206592/16875. \\
-r = 12: &\quad \mathrm{Epsilon}_{12}/A_{12} \;=\; 6721045886/4100625.
-\end{align*}
-The Tier-5 denominator pattern $D_5 = 9^4 \cdot 4! \cdot 5! = 6561
-\cdot 24 \cdot 120 = 18895680 = 2^6 \cdot 3^{10} \cdot 5$ introduces
-the prime $5$ to the leading denominator sequence for the first
-time; all prior Tier leading denominators $D_1, D_2, D_3, D_4$ were
-$\{2, 3\}$-smooth.
-\end{remark}
-
-\section{Arithmetic consequences}
-
-\begin{corollary}[\label{cor:tier-leading-denominator-pattern}%
-Tier leading denominator pattern]
-\ClaimStatusProvedHere
-The leading (highest-polynomial-degree) denominator of
-$\mathrm{Tier}\text{-}K(r)/A_r$ is
-\begin{equation}
-D_K \;=\; 9^{K-1} \, (K-1)! \, K!.
-\end{equation}
-The first five values are
-$D_1 = 1$, $D_2 = 18$, $D_3 = 972$, $D_4 = 104976$, $D_5 = 18895680$.
-Explicit factorisations:
-\begin{align*}
-D_2 &= 2 \cdot 3^2 = 18, \\
-D_3 &= 2^2 \cdot 3^5 = 972, \\
-D_4 &= 2^4 \cdot 3^8 = 104976, \\
-D_5 &= 2^6 \cdot 3^{10} \cdot 5 = 18895680, \\
-D_6 &= 2^7 \cdot 3^{13} \cdot 5^2 = 5101833600, \\
-D_7 &= 2^8 \cdot 3^{16} \cdot 5^2 \cdot 7 = 1928493100800.
-\end{align*}
-The first prime $\ge 5$ appearing in the $D_K$ sequence is $p = 5$, at
-$K = 5$ (via $K! = 120 = 2^3 \cdot 3 \cdot 5$). The first prime $\ge 7$
-appears at $K = 7$. More generally, for every prime $p \ge 5$, $p$
-first appears in $D_K$ at $K = p$, a direct consequence of
-$v_p(K!) \ge 1 \Leftrightarrow K \ge p$ (the primes $p \in \{2, 3\}$
-are already present in $D_2 = 18 = 2 \cdot 3^2$).
-\end{corollary}
-
-\begin{proof}
-The denominator pattern follows from
-Corollary~\ref{cor:tier-k-leading-coefficient}.  The displayed
-factorisations are the prime decompositions of
-$9^{K-1}(K-1)!K!$ for $2\le K\le7$.
-\end{proof}
-
-\begin{corollary}[\label{cor:tier-K-kummer-arithmetic}%
-Denominator support and characteristic numerator primes]
-\ClaimStatusProvedHere
-For every fixed integer $r\ge4$ and every $K\ge1$,
-\[
-M_K\cdot \frac{\mathrm{Tier}\text{-}K(r)}{A_r}\in\mathbb{Z},
-\qquad
-M_K:=5^{K-1}\,9^{K-1}\,(K-1)!\,K!.
-\]
-Thus every denominator prime of
-$\mathrm{Tier}\text{-}K(r)/A_r$ is a prime divisor of $M_K$.  There is
-no analogous support restriction on the numerator: new characteristic
-primes can be created by the integer sum over $m$.
-
-The four-tier range already shows this numerator phenomenon:
-\[
-\frac{\Gamma_8}{A_8}
-=\frac{484}{25}+\frac{88}{15}+\frac{2}{81}
-=\frac{39204+11880+50}{2025}
-=\frac{2\cdot37\cdot691}{3^4\cdot5^2}.
-\]
-The prime $691$ does not divide the falling-factorial window
-$(8-4)_4=24$; it is produced by the numerator sum.  At Tier~5 and
-$r=12$ one obtains
-\[
-\frac{\mathrm{Epsilon}_{12}}{A_{12}}
-=\frac{6721045886}{4100625},
-\qquad
-4100625=3^8\cdot5^4,
-\]
-so the denominator contains no factor $13$.
-\end{corollary}
-
-\begin{proof}
-Multiplying the $m$th summand of \eqref{eq:tier-K-closed-form} by
-$M_K$ gives
-\[
-(-1)^{K+1}\binom{K-1}{m}
-22^{K-1-m}5^m9^{K-1-m}
-\frac{(K-1)!}{m!}\frac{K!}{(m+1)!}(r-4)_{2m},
-\]
-an integer.  Summing over $m$ proves the denominator assertion.  The
-displayed Tier~3 and Tier~5 values follow by substitution in
-\eqref{eq:tier-K-closed-form}; they show why numerator primes require
-separate arithmetic analysis.
-\end{proof}
-
-\section{Fuchsian ODE satisfied by the generating function}
-
-The rationality of $F(r, u)$ established in
-Theorem~\ref{thm:all-tier-bivariate-generating-function} is refined here
-to a \emph{Fuchsian} second-order linear ordinary differential equation
-in $u$, with polynomial coefficients in $(r, u)$ and four regular
-singular points on $\mathbb{P}^1_u$.  The operator records the same
-finite Catalan solution as a Frobenius solution of a pulled-back Gauss
-equation; its fourth singularity is apparent for the rational solution
-selected by $F(r,0)=1$.
-
-\begin{theorem}[\label{thm:all-tier-fuchsian-ode}%
-Fuchsian ODE in $u$ for the bivariate generating function]
-\ClaimStatusProvedHere
-For every integer $r \ge 4$, the bivariate generating function
-$F(r, u) = \Phi_r(1/u)/A_r$ of
-Definition~\ref{def:bivariate-F} satisfies the second-order linear ODE
-\begin{equation}
-\label{eq:fuchsian-ode}
-L_r[F](r, u) \;=\; 0,
-\end{equation}
-where
-\begin{equation}
-\label{eq:fuchsian-ode-expanded}
-\begin{aligned}
-L_r \;=\;
- & -u\,(22u + 5)^{2}\,(218u + 45)\,\partial_u^{2} \\
- & + 2\,(22u + 5)\,\bigl[50\, r\, u - 9592\, u^{2} - 3245\, u - 225\bigr]\,
- \partial_u \\
- & - \bigl[125\, r^{2} - 2200\, r\, u - 1125\, r + 211024\, u^{2} + 99220\, u + 12400\bigr].
-\end{aligned}
-\end{equation}
-The ODE is Fuchsian on $\mathbb{P}^{1}_{u}$ with regular singular points
-at the four loci
-\begin{equation}
-\label{eq:fuchsian-sing-loci}
-u \;\in\; \Bigl\{\, 0,\; -\tfrac{5}{22},\; -\tfrac{45}{218},\; \infty \,\Bigr\}
-\end{equation}
-for every $r \ge 4$.  After the gauge transformation
-$G=(1+\tau u)F$ and the M\"obius coordinate
-$x = -4u/(9(1 + \tau u))$, the equation reduces to the Gauss
-hypergeometric equation with parameters
-$a = (4-r)/2$, $b = (5-r)/2$, $c_{\mathrm{G}} = 2$.
-\end{theorem}
-
-\begin{proof}
-By Theorem~\ref{thm:all-tier-bivariate-generating-function},
-$F(r, u) = G(r, u)/(1 + \tau u)$ with $G(r, u) = {}_2F_1(a, b; 2; x)$,
-$a = (4-r)/2$, $b = (5-r)/2$, $x = -4u/(9(1 + \tau u))$. The function $G$
-satisfies the Gauss hypergeometric equation in $x$:
-\begin{equation}
-\label{eq:gauss-ode-x}
-x(1 - x)\,\partial_x^{2} G + \bigl[2 - (a + b + 1) x\bigr]\,\partial_x G
- - a b\, G \;=\; 0.
-\end{equation}
-Here
-\[
-a+b+1=\frac{11-2r}{2},\qquad
-ab=\frac{(r-4)(r-5)}{4}.
-\]
-The change of variables has
-\begin{equation}
-\frac{\mathrm{d}x}{\mathrm{d}u}
- \;=\; \frac{-4(1 + \tau u) + 4u \tau}{9(1 + \tau u)^{2}}
- \;=\; \frac{-4}{9(1 + \tau u)^{2}},
-\end{equation}
-and note that $1 - x = (9 + 9\tau u + 4u)/(9(1 + \tau u)) = (45 + 218u)/
-(45(1 + \tau u))$ using $9\tau = 198/5$, so $45 + 218u = 9\cdot 5 +
-(9\cdot 22 + 20) u = 45 + 198 u + 20 u$. The factor $218u + 45$
-is therefore precisely $45(1 - x)(1 + \tau u)$ cleared of its $u$-pole
-at $u = -5/22$.
-
-Direct substitution of $G = F (1 + \tau u)$,
-$\partial_u G = F'(1 + \tau u) + F \tau$,
-$\partial_u^{2} G = F''(1 + \tau u) + 2 F' \tau$ into the displayed
-Gauss equation and multiplication by $9 (1 + \tau u)^{3} / [(1 + \tau u) \cdot
-(\mathrm{d}x/\mathrm{d}u)^{2}]$ gives exactly
-\eqref{eq:fuchsian-ode-expanded}.  This is an identity in
-\(\mathbb{Q}[r,u,\partial_u]\), not a finite check at selected $r$.
-
-For the Fuchsian assertion, write the operator as
-$P_2(u)\partial_u^2+P_1(u)\partial_u+P_0(u)$ with
-$P_2=-u(22u+5)^2(218u+45)$.  At $u=0$, $u=-45/218$, and
-$u=-5/22$, the quotients $P_1/P_2$ and $P_0/P_2$ have poles of order
-at most $1$ and $2$, respectively.  At $u=\infty$,
-$P_1/P_2=O(u^{-1})$ and $P_0/P_2=O(u^{-2})$.  These are precisely
-Fuchs's regular-singularity conditions on $\mathbb{P}^1_u$.
-
-The points $u=0$, $u=-45/218$, and $u=-5/22=-1/\tau$ are the
-preimages of the Gauss points $x=0$, $x=1$, and $x=\infty$.
-The point $u=\infty$ maps to the ordinary Gauss point
-$x=-4/(9\tau)=-10/99$ and is an apparent regular singularity of the
-gauged equation for $F$; in the coordinate $v=1/u$ its indicial
-exponents are $1$ and $2$.
-\end{proof}
-
-\begin{remark}[\label{rem:fuchsian-heun-comparison}%
-Comparison with the Heun equation]
-An ODE with four regular singular points is classically a Heun equation.
-The operator \eqref{eq:fuchsian-ode-expanded} is a pullback-and-gauge
-of Gauss, not a generic Heun operator.  The three Gauss singularities
-have preimages $u=0$, $u=-45/218$, and $u=-5/22$; the remaining point
-$u=\infty$ is apparent for the gauged equation.  For the selected
-terminating solution $F(r,u)$, $u=-45/218$ and $u=\infty$ are regular
-points of the rational function, while $u=-5/22$ is the
-Zamolodchikov pole.
-\end{remark}
-
-\begin{corollary}[\label{cor:three-disjoint-hz-iv-chains}%
-Three derivations of the scalar formula]
-\ClaimStatusProvedHere
-Theorem~\ref{thm:all-tier-laurent-stratification} has three compatible
-derivations:
-\begin{enumerate}
-\item[(A)] \textbf{Master Riccati.} The scalar bilinear recurrence
-displayed in the proof of
-Theorem~\ref{thm:all-tier-bivariate-generating-function}, after the
-$(3,r-1)$ channel is split off, becomes the Catalan convolution for
-$H_n(u)=F(n+4,u)$.
-
-\item[(B)] \textbf{Hypergeometric Laurent extraction.} The explicit
-${}_2F_1$ closed form of
-Theorem~\ref{thm:all-tier-bivariate-generating-function}, combined with
-Gauss Pochhammer multiplication
-$(r-4)_{2m}^{\downarrow} = 4^m (a)_m^{\uparrow} (b)_m^{\uparrow}$ and the
-binomial expansion of $(1 + \tau u)^{-(m+1)}$.
-
-\item[(C)] \textbf{Fuchsian ODE.} The second-order linear ODE
-$L_r[F] = 0$ of Theorem~\ref{thm:all-tier-fuchsian-ode}, combined with
-the termination condition that selects the polynomial-in-$x$ solution
-at integer $r$ via the non-positive upper parameter.
+Construct the Virasoro residue package and determine the transferred
+brackets in~\eqref{eq:bilinear-master-intro}.  Then derive the
+functional equation of \(F(r,u)\) directly from those brackets.
+A complete solution supplies:
+\begin{enumerate}[(i)]
+\item chain representatives for every scalar coordinate;
+\item the quadratic and higher transfer kernels;
+\item a proof of the Laurent expansion in
+Definition~\ref{def:bivariate-F};
+\item a closed form, when one exists, derived from the constructed
+functional equation;
+\item an independent residue computation of the same coefficients.
 \end{enumerate}
-\end{corollary}
+Any hypergeometric expression belongs to the conclusion of this
+comparison theorem.
+\end{problem}
 
-\begin{proof}
-Derivation (A) is the proof of
-Theorem~\ref{thm:all-tier-bivariate-generating-function}.  Derivation
-(B) is the coefficient extraction in
-Theorem~\ref{thm:all-tier-laurent-stratification}.  Derivation (C) is
-Theorem~\ref{thm:all-tier-fuchsian-ode}, with the same normalization
-$F(r,0)=1$.
-\end{proof}
+\begin{problem}[Determine the tier arithmetic]
+\ClaimStatusOpen
+\label{cor:tier-k-leading-coefficient}
+\label{thm:tier-5-closed-form}
+\label{cor:tier-leading-denominator-pattern}
+\label{cor:tier-K-kummer-arithmetic}
+\emph{Type signature:}
+\textup{(Open quadrant, scalar Laurent presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}
++\mathsf H_{\mathrm{arith}}\)).}
 
-\begin{theorem}[\label{thm:all-tier-closed-form-proved}%
-Scalar all-tier closed form]
-\ClaimStatusProvedHere
-Combining
-Theorems~\ref{thm:all-tier-bivariate-generating-function},
-\ref{thm:all-tier-laurent-stratification},
-\ref{thm:all-tier-fuchsian-ode}, and
-Corollary~\ref{cor:three-disjoint-hz-iv-chains}, the all-tier Laurent
-stratification \eqref{eq:tier-K-closed-form} holds for every
-$K \ge 1$ and every integer $r \ge 4$ on the Virasoro scalar lane.
-The bivariate generating function is the rational function
-\eqref{eq:F-hyper}, and the leading Tier denominator is
-$D_K = 9^{K-1} (K-1)!\, K!$.
-\end{theorem}
+For the constructed coefficients \(T_K(r)\), determine the leading
+polynomial degree, reduced denominator, and prime support.  The
+arithmetic package \(\mathsf H_{\mathrm{arith}}\) records exact
+integer normalizations, factorization certificates, and a second
+coefficient oracle.  Kummer comparisons are then intersections of
+explicitly certified prime sets.
+\end{problem}
 
-\begin{proof}
-The statement follows from
-Theorems~\ref{thm:all-tier-bivariate-generating-function},
-\ref{thm:all-tier-laurent-stratification},
-\ref{thm:all-tier-fuchsian-ode}, and
-Corollary~\ref{cor:three-disjoint-hz-iv-chains}.
-\end{proof}
+\begin{problem}[Derive the analytic differential equation]
+\ClaimStatusOpen
+\label{thm:all-tier-fuchsian-ode}
+\label{cor:three-disjoint-hz-iv-chains}
+\emph{Type signature:}
+\textup{(Open quadrant, analytic scalar presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}
++\mathsf H_{\mathrm{ODE}}\)).}
 
-\section{Scalar boundary and analytic radius}
+Determine the singular locus and minimal differential operator of
+the constructed function \(F(r,u)\).  The package
+\(\mathsf H_{\mathrm{ODE}}\) consists of a convergence domain, an
+operator derivation from the residue functional equation, and a
+Frobenius comparison at every singular point.  A Gauss or Heun
+description becomes a theorem after this derivation.
+\end{problem}
 
-\begin{remark}[\label{rem:borel-analytic-continuation}%
-Taylor radius at the Zamolodchikov pole]
-The bivariate generating function $F(r, u)$ of
-Theorem~\ref{thm:all-tier-bivariate-generating-function} is \emph{rational}
-in $u$ for every integer $r$, but its Taylor expansion at $u=0$ does
-not have infinite radius.  The pole at
-$u=-1/\tau=-5/22$ is the $c=-22/5$ Zamolodchikov pole, so the fixed-$r$
-Laurent series in $1/c$ has radius $5/22$.  Clearing the factor
-$(1+\tau u)^{\lfloor(r-4)/2\rfloor+1}$ produces a polynomial
-$P_r(u)$; it does not change the analytic radius of $F(r,u)$ itself.
-Thus no fixed-$r$ Borel summation problem is present.  The large-$r$
-asymptotic regime is a different question governed by the
-shadow-exponential base $C_{\Vir}=6$.
+\section{Comparison with formal algebraic lanes}
+
+\begin{remark}[Formal series and geometric residues]
+\label{rem:F-reduction-structure}
+A square-root or Catalan series defined from chosen seeds has exact
+formal coefficients.  A comparison morphism from its coefficient
+complex to the ordered-residue scalar model determines the locus on
+which those coefficients compute
+\(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\).
+The comparison includes the arity convention, residue orientation,
+and gauge compatibility.
 \end{remark}
 
-\begin{remark}[\label{rem:hypergeometric-contiguous-relation}%
-Contiguous relations and the Catalan recurrence]
-Gauss contiguous relations for the shift $r\mapsto r+1$ are another
-language for the same scalar recurrence.  In the shifted index
-$n=r-4$, the recurrence is
-\[
-H_n=H_{n-1}-\frac{u}{9}\sum_{p+q=n-2}H_pH_q,
-\qquad H_0=H_1=(1+\tau u)^{-1}.
-\]
-The ordinary generating function
-\[
-R(t,u)=\frac{(1+\tau u)^{-1}}{1-t}\,
-C\!\left(-\frac{u t^2}{9(1+\tau u)(1-t)^2}\right)
-\]
-is the exact contiguous object; expanding the Catalan series gives
-the Gauss polynomial in \eqref{eq:F-hyper}.
+\begin{remark}[Finite-tier recovery]
+\label{rem:four-tier-recovery}
+The first residue tiers are the worked cases for the all-tier
+problem.  Their computation begins with the exact Ward correlators
+and ends with the normalized contractions in
+\(\mathsf H_{\mathrm{res}}\).
 \end{remark}
 
-\begin{remark}[\label{rem:bivariate-generalisation-W-N}%
-Class-$M$ boundary: Virasoro versus multi-weight $\mathcal{W}_N$]
-The class label $\mathsf{M}$ records infinite shadow depth, not the
-existence of a one-channel hypergeometric formula.  The Virasoro
-family is the unique principal $\mathcal{W}_N$ family with $N=2$ and a
-single strong generator; its cross-channel correction is identically
-zero.  For $N\ge3$, principal $\mathcal{W}_N$ has generators of
-weights $2,3,\ldots,N$.  Its scalar diagonal genus term is
-\[
-F_g^{\mathrm{diag}}(\mathcal{W}_N)
-=c(H_N-1)\lambda_g^{\mathrm{FP}},
-\]
-and its complementarity constant is
-\[
-\kappa+\kappa^!
-=2(N-1)(2N^2+2N+1)(H_N-1).
-\]
-This gives $13$ at $N=2$ and $250/3$ at $N=3$.  For interacting
-multi-weight families the full genus expansion is
-$F_g^{\mathrm{diag}}+\delta F_g^{\mathrm{cross}}$ for $g\ge2$; the
-mixed $T$--$W$ and higher-spin channels are outside the scalar
-Virasoro theorem proved here.
+\begin{remark}[Arithmetic signatures]
+\label{rem:tier-5-numerical-signature}
+\label{rem:fuchsian-heun-comparison}
+Certified numerical signatures belong to
+\(\mathsf H_{\mathrm{arith}}\); analytic singularities belong to
+\(\mathsf H_{\mathrm{ODE}}\).  Agreement between these packages is a
+cross-check on the common residue tower.
 \end{remark}
 
-% End of chapter.
+\begin{remark}[Analytic radius and adjacent families]
+\label{rem:borel-analytic-continuation}
+\label{rem:hypergeometric-contiguous-relation}
+\label{rem:bivariate-generalisation-W-N}
+The analytic radius follows from the singularities of the constructed
+generating function.  Principal \(\mathcal W_N\) families require
+multivariable residue complexes for their additional generator lines;
+their scalar diagonals and mixed channels carry separate transfer
+kernels.
+\end{remark}
+
+%% Legacy equation anchors are retained for downstream references.  Their
+%% mathematical content is governed by the open packages above.
+\phantomsection\label{eq:F-hyper}%
+\phantomsection\label{eq:master-bilinear-proof}%
+\phantomsection\label{eq:master-in-u}%
+\phantomsection\label{eq:F-clear-denominator}%
+\phantomsection\label{eq:tier-K-closed-form}%
+\phantomsection\label{eq:F-sum-over-m}%
+\phantomsection\label{eq:tier-5-explicit}%
+\phantomsection\label{eq:fuchsian-ode}%
+\phantomsection\label{eq:fuchsian-ode-expanded}%
+\phantomsection\label{eq:fuchsian-sing-loci}%
+\phantomsection\label{eq:gauss-ode-x}%

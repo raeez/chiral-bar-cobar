@@ -733,22 +733,23 @@ A^{\mathrm{i}},\qquad
 A^!,\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(A).
 \]
-Here $A$ is the input algebra, $\barB_{\En}(A)$ is its completed
-conilpotent bar coalgebra, and $A^{\mathrm{i}}$ denotes the
-Koszul-dual coalgebra, either $\barB_{\En}(A)$ at chain level or
-$H^\bullet\barB_{\En}(A)$ after passing to cohomology. The
-Koszul-dual algebra is
-$A^! := (A^{\mathrm{i}})^\vee_{\mathrm{cont}}$ when finite-type or
-completed continuous duality is available. The derived chiral center
+Here $A$ is the input algebra and $\barB_{\En}(A)$ is its completed
+conilpotent bar coalgebra.  A quadratic presentation supplies the
+separate coalgebra
+$A^{\mathrm i}=C(s^{-1}V,s^{-2}R)$ and its comparison
+$q_A\colon A^{\mathrm i}\to\barB_{\En}(A)$; on the Koszul locus
+$H^\bullet(q_A)$ computes bar cohomology from the presentation.
+Finite-type or completed continuous duality forms the dual of the
+full bar, and a chosen-pair map reaches the Koszul partner~$A^!$.
+The derived chiral center
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\RHom_{A^e}(A,A)$ is a Hochschild
 cochain object. The counit
-$\Omega_{\En}\barB_{\En}(A)\to A$ is bar-cobar inversion, not
-Verdier duality and not the construction of $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
-Verdier duality enters only when a symmetric $\cD$-module coalgebra
-on the Ran space is dualized to an algebra.
+$\Omega_{\En}\barB_{\En}(A)\to A$ performs bar--cobar
+reconstruction. On the chiral Ran surface, Verdier duality sends the
+symmetric $\cD$-module bar coalgebra to the algebra~$K_X(A)$.
 Factorization homology and higher Hochschild chains
 $\int_M A$ are trace objects depending on a chosen manifold~$M$;
-they are homological and are not the cochain center
+the Hochschild cochain construction supplies the centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
 \end{convention}
 
@@ -781,17 +782,17 @@ $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
  $\En$-algebra~$A$ satisfying the Ayala--Francis dualizability and
  completion hypotheses, Poincar\'e--Koszul duality identifies
  factorization homology with compactly supported factorization
- cohomology with coefficients in the Koszul-dual coalgebra:
+ cohomology with coefficients in the completed $\En$-bar coalgebra:
  \begin{equation}\label{eq:poincare-koszul}
  \int_M A
  \;\simeq\;
- \int_M^c A^{\mathrm{i}}.
+ \int_M^c \barB_{\En}(A).
  \end{equation}
- Here $A^{\mathrm{i}}=\barB_{\En}(A)$ on the chain-level coalgebra
- side. Only after finite-type or completed continuous dualization
- may one rewrite the right hand side using the algebra
- $A^!=(A^{\mathrm{i}})^\vee_{\mathrm{cont}}$; the orientation shift is
- carried by the dualizing local system of~$M$.
+ A quadratic presentation gives
+ $q_A\colon A^{\mathrm i}=C(s^{-1}V,s^{-2}R)\to\barB_{\En}(A)$.
+ Under the Koszul comparison and finite-type or completed continuous
+ duality, the right-hand side admits its chosen-pair algebra model;
+ the dualizing local system of~$M$ carries the orientation shift.
 \end{enumerate}
 \end{theorem}
 
@@ -1472,6 +1473,93 @@ Later arguments use this boundary-stratum description; the full
 minimal presentation is not written out here.
 \end{remark}
 
+\begin{proposition}[$\mathsf{SC}^{\mathrm{ch,top}}$ boundary-relation
+ledger; \ClaimStatusProvedHere]
+\label{prop:sc-chtop-boundary-relation-ledger}
+\index{Swiss-cheese operad!boundary relation ledger}
+\index{Arnold relation!closed colour}
+\index{Stasheff relation!open colour}
+\textup{[}Type signature:
+$(\mathrm{Open/closed},\mathrm{operation\ spaces},
+\mathrm{level}=3,
+\mathrm{hypothesis\ package}=\mathrm{compactified\ FM}
+\times\mathrm{compactified}\ E_1)$\textup{].}
+For the operation spaces of Definition~\ref{def:SC}, the following
+relations are the canonical codimension-$2$ relations.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item In the closed colour, the boundary strata of
+$\FM_k(\bC)$ give the Arnold--Orlik--Solomon relation
+\begin{equation}
+\label{eq:sc-ledger-arnold}
+\omega_{ij}\omega_{jk}
+\omega_{jk}\omega_{ki}
+\omega_{ki}\omega_{ij}=0
+\qquad (i,j,k\ \mathrm{distinct}).
+\end{equation}
+\item In the open colour, the codimension-$2$ corners of the
+Stasheff compactification of $E_1(m)$ give the associativity
+relation
+\begin{equation}
+\label{eq:sc-ledger-stasheff}
+(a_1a_2)a_3-a_1(a_2a_3)=0
+\end{equation}
+on the strict associated-graded operation, with the usual
+$A_\infty$ boundary signs before passing to homology.
+\item In the mixed operation space
+$\FM_k(\bC)\times E_1(m)$, a closed collision face and an open
+interval-splitting face meet as a product corner.  Hence the mixed
+square commutes:
+\begin{equation}
+\label{eq:sc-ledger-mixed-square}
+(\partial^{\mathrm{cl}}_S\times\id)\circ
+(\id\times\partial^{\mathrm{op}}_I)
+=
+(\id\times\partial^{\mathrm{op}}_I)\circ
+(\partial^{\mathrm{cl}}_S\times\id).
+\end{equation}
+\item The no-open-to-closed rule
+\begin{equation}
+\label{eq:sc-ledger-no-open-to-closed}
+\mathsf{SC}^{\mathrm{ch,top}}
+(\ldots,\mathsf{top},\ldots;\mathsf{ch})=\varnothing
+\end{equation}
+implies that the closed colour is an operadic retract:
+restriction to closed inputs is a morphism of operads and receives no
+operation with a topological input.
+\end{enumerate}
+Thus the derived chiral centre may carry the
+$\mathsf{SC}^{\mathrm{ch,top}}$ structure produced by the centre
+theorem, while the bar complex itself remains only the
+$\Eone$-chiral coassociative computational coalgebra of
+Theorem~\ref{thm:bar-e1-coalgebra}.
+\end{proposition}
+
+\begin{proof}
+The closed-colour operation space is the Fulton--MacPherson
+compactification of configurations in $\bC$.  The codimension-$2$
+boundary strata where three points collide are the standard
+Orlik--Solomon boundary cells, and the de Rham relation among their
+logarithmic generators is exactly
+\eqref{eq:sc-ledger-arnold}.  The open-colour operation space is the
+compactified ordered configuration space on an interval, whose
+codimension-$2$ faces are the two parenthesisations of three
+consecutive inputs; this is the Stasheff associativity relation
+\eqref{eq:sc-ledger-stasheff}, with higher $A_\infty$ signs before
+strictification.
+
+For mixed operations the compactified space is the product
+$\FM_k(\bC)\times E_1(m)$.  A closed collision changes only the first
+factor and an open split changes only the second factor, so the two
+face maps commute, giving \eqref{eq:sc-ledger-mixed-square}.  Finally
+Definition~\ref{def:SC} has no operation with topological input and
+holomorphic output, which proves \eqref{eq:sc-ledger-no-open-to-closed}
+and the retract statement.  The last sentence follows from
+Theorem~\ref{thm:bar-e1-coalgebra} and the centre theorem:
+$\barB^{\mathrm{ord}}(\cA)$ is the ordered $E_1$ coalgebraic
+resolution, while $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
+cochain object on which the closed-colour centre action is produced.
+\end{proof}
+
 \begin{principle}[The bar complex is $\Eone$-chiral coassociative;
 $\mathsf{SC}^{\mathrm{ch,top}}$ emerges on the derived center]
 \label{princ:sc-two-incarnations}
@@ -1501,9 +1589,10 @@ $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 = C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$,
 computed \emph{using} the bar complex as a resolution.
 This derived center is the cochain-level local closed-sector slot attached to
-the boundary algebra~$\cA$.  Under the HT boundary comparison it is
-identified with local bulk observables of the corresponding 3d
-holomorphic-topological theory on $X \times \bR$:
+the boundary algebra~$\cA$.  When an HT boundary comparison supplies an
+OCA quasi-isomorphism from physical local bulk observables to this
+cochain object, it identifies those observables of the corresponding
+3d holomorphic-topological theory on $X \times \bR$:
 \begin{itemize}
 \item It carries $\Etwo$ structure from
  $\FM_k(\bC)$ (the operadic center theorem,
@@ -1680,25 +1769,23 @@ of the resulting $\mathsf{SC}^{\mathrm{ch,top}}$-algebra
 naturally carries the $\Eone$-chiral coassociative dg coalgebra structure.
 \end{construction}
 
-\begin{remark}[Ordered Verdier duality does not exist]
+\begin{remark}[Symmetric Verdier duality and ordered opposite-duality]
 \label{rem:ordered-verdier-nonexistence}
 \index{Verdier duality!ordered bar obstruction}
-The Verdier intertwining
-$\mathbb{D}_{\mathrm{Ran}}\barB^{\Sigma}(\cA) \simeq \cA^!_\infty$
-(Theorem~A, Convention~\textup{\ref{conv:bar-coalgebra-identity}})
-is a statement about the \emph{symmetric} bar~$\barB^{\Sigma}$
-on~$\mathrm{Ran}(X)$. Here $\cA^!$ is the Verdier-dual algebra
-obtained from the symmetric bar coalgebra after finite-type or
-completed continuous dualization; the cohomological Koszul-dual
-coalgebra before this dualization is $\cA^{\mathrm{i}}$.
-A naive ordered analogue
-$\mathbb{D}_{\mathrm{Ran}}(\barB^{\mathrm{ord}}(\cA))
-\simeq (\cA^{!,\mathrm{ord}})_\infty$
-does \emph{not} exist: the ordered bar lives on ordered
-configurations $\mathrm{Conf}_n^{<}(X)$, not on~$\mathrm{Ran}(X)$,
-and pushing forward to~$\mathrm{Ran}$ via the
-$\Sigma_n$-quotient recovers~$\barB^{\Sigma}$, losing the ordering.
-The correct $E_1$ analogue of Verdier intertwining is
+Theorem~A and
+Convention~\textup{\ref{conv:bar-coalgebra-identity}} place the
+\emph{symmetric} bar on~$\mathrm{Ran}(X)$ and form the Verdier algebra
+\[
+K_X^{\Sigma}(\cA):=
+\mathbb{D}_{\mathrm{Ran}}\barB^{\Sigma}(\cA).
+\]
+A chosen symmetric Koszul pair supplies
+$\nu_\cA^{\Sigma}\colon K_X^{\Sigma}(\cA)\to\cA^!$; the
+cohomological coalgebra preceding this dualization is
+$\cA^{\mathrm{i}}$.  The ordered bar belongs instead to the ordered
+configuration spaces $\mathrm{Conf}_n^{<}(X)$.  Pushforward along the
+$\Sigma_n$-quotient produces~$\barB^{\Sigma}$ and passes from ordered
+data to coinvariants.  Its native $E_1$ duality is
 \emph{opposite-duality}:
 $\barB^{\mathrm{ord}}(\cA^{\mathrm{op}})
 = \barB^{\mathrm{ord}}(\cA)^{\mathrm{cop}}$
@@ -2970,9 +3057,10 @@ The chiral setting introduces three layers of obstruction.
  locus provides a reconstruction path:
  $B \simeq Z_{\mathsf{SC}}(A)$ whenever the pair $(B, A)$
  arises from a Koszul chiral algebra. Off the Koszul locus,
- bar-cobar inversion holds only in the coderived category
+ the BV/bar comparison is conditional in the coderived category on the
+ harmonic-factorization package
  (Theorem~\ref{thm:bv-bar-coderived-vol1}), and reconstruction
- requires passage to completions.
+ requires passage to completions with that package installed.
 
 \item \emph{Curvature obstruction.}
  At genus $g \geq 1$, the fiberwise differential satisfies
@@ -3016,13 +3104,15 @@ Four constraints govern
 Conjecture~\ref{conj:center-essential-surjectivity}.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Koszul reconstruction.}
- On the Koszul locus, $\Omega(\barB(\cA)) \simeq \cA$ and
- $Z_{\mathsf{SC}}(A) \simeq
- \operatorname{CoDer}(\barB(\cA))$. The pair
- $(Z_{\mathsf{SC}}(A), A)$ is therefore determined by the bar
- coalgebra $\barB(\cA)$ alone. For an arbitrary SC-pair
- $(B,A)$ with the same open component, bar-cobar inversion
- reconstructs~$A$, not~$B$. The additional geometric hypothesis is
+On the Koszul locus, $\Omega(\barB(\cA)) \simeq \cA$ and
+$Z_{\mathsf{SC}}(A) \simeq
+\operatorname{CoDer}(\barB(\cA))$. The pair
+$(Z_{\mathsf{SC}}(A), A)$ is therefore determined by the bar
+coalgebra $\barB(\cA)$ together with the centre-generation comparison
+datum. The bar coalgebra by itself remains the $\Eone$ computational
+object, not the closed colour. For an arbitrary SC-pair
+$(B,A)$ with the same open component, bar-cobar inversion
+reconstructs~$A$, not~$B$. The additional geometric hypothesis is
  that the closed action of~$B$ is generated by bar coderivations and
  is detected on the associated graded; under that hypothesis
  $\eta_B$ captures all of~$B$.
@@ -3044,18 +3134,19 @@ Conjecture~\ref{conj:center-essential-surjectivity}.
  centrally on~$A$ is equivalent to a subalgebra
  of~$\mathrm{HH}^\bullet(A, A)$.
 
-\item \emph{Finite-dimensionality of ChirHoch.}
- Theorem~H shows $\ChirHoch^*(\cA)$ has cohomological amplitude
- $[0,2]$ on the Koszul locus, with sharp Hilbert series
- $P(t,q)=\operatorname{HS}_{Z(\cA)}(q)
- + \operatorname{HS}_{\ChirHoch^1(\cA)}(q)\cdot t
- + \operatorname{HS}_{Z(\cA^!)}(q)\cdot t^2$. The total dimension is
- family-dependent and need not be at most four
- \textup{(}for affine Kac--Moody at generic non-critical level it is
- $\dim\fg+2$\textup{)}. This rigidity still constrains the space
- of possible closed-sector algebras: any $B$ acting on~$A$
- must map into a low-amplitude target, leaving little room for the
- unit to fail surjectivity.
+\item \emph{Family support of ChirHoch.}
+ A datum $H_H(\cA;S)$ identifies $\ChirHoch^*(\cA)$ with the
+ cohomology of a strong deformation retract $K_{\cA,S}$ and gives
+ \[
+  \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S,
+  \qquad
+  P_\cA(t,q)=\sum_{n\in S}\dim_qH^n(K_{\cA,S})t^n
+ \]
+ for finite graded pieces.  The bounded Virasoro and rank-one even
+ superboson supports are $\{0,2,3\}$ and $\{0,1\}$ after their
+ bounded-to-chart quasi-isomorphisms.  Any central action
+ $B\to C^\bullet_{\mathrm{ch}}(\cA,\cA)$ therefore lands in the
+ family-specific chart complex computed by this retract.
 \end{enumerate}
 \end{remark}
 
@@ -3079,8 +3170,10 @@ on~$A$ that does not factor through any chiral algebra
 structure. Such pairs would represent genuinely
 non-geometric boundary-bulk systems. Whether exotic
 SC-pairs exist is an open question closely related to the
-formality of the Swiss-cheese operad
-$\mathsf{SC}^{\mathrm{ch,top}}$ and to the recognition
+formality problem for the two-coloured operad
+$\mathsf{SC}^{\mathrm{ch,top}}$ \textup{(}its classical
+topological counterpart, the Swiss-cheese operad, is \emph{not}
+formal, by Livernet's obstruction\textup{)} and to the recognition
 problem for holomorphic-topological field theories
 (Volume~II).
 \end{remark}
@@ -3097,8 +3190,9 @@ Fix $c$ generic and let $\cA = \mathrm{Vir}_c$ (class~$M$,
 $r_{\max} = \infty$). The center
 $Z_{\mathsf{SC}}(\cA)$ is the chiral Hochschild cochain complex
 $C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$, whose cohomology is
-concentrated in degrees~$\{0, 2\}$ with Hilbert series
-$P(t) = 1 + t^2$
+one-dimensional in degrees~$\{0,2,3\}$ with Hilbert series
+$P(t)=1+t^2+t^3$, provided the Bakalov--De Sole--Kac
+bounded-to-chart map is a quasi-isomorphism
 (Theorem~\ref{thm:virasoro-hochschild}). The universal SC-pair
 $U(\cA) = (Z_{\mathsf{SC}}(\cA),\; \cA)$ carries brace
 operations
@@ -3287,6 +3381,70 @@ additivity is applied only after this extraction; it is not a
 theorem about the two-coloured operad
 $\mathsf{SC}^{\mathrm{ch,top}}$ itself.
 \end{definition}
+
+\begin{proposition}[Affine Chern--Simons bulk-to-boundary gate;
+\ClaimStatusConditional]
+\label{prop:affine-cs-bulk-boundary-gate}
+\index{Chern--Simons comparison!affine Kac--Moody}
+\index{holomorphic--topological bulk!separated from curve chiral algebra}
+\index{slab reduction!definition gate}
+\textup{[}Type signature:
+$(\mathrm{HT\ bulk}\to\mathrm{Open\ boundary},
+\mathrm{Costello\text{--}Gwilliam\ factorization\ algebra},
+\mathrm{levels}=3\to1,
+\mathrm{hypothesis\ package}=\mathsf{BulkExtract}_{\mathrm{CG}}
+\ +\ \mathrm{perturbative\ finiteness}
+\ +\ \mathrm{boundary\ condition})$\textup{].}
+Let $\cF^{\mathrm{CS}}_{\fg,k}$ be the Costello--Gwilliam
+factorization algebra of $3$d holomorphic--topological
+Chern--Simons theory on $\RR_t\times\CC_z$ with gauge algebra
+$\fg$ and level $k$.  The comparison with affine Kac--Moody is the
+boundary restriction
+\begin{equation}
+\label{eq:affine-cs-boundary-restriction}
+\operatorname{Obs}^{\mathrm{bulk}}_{\mathrm{loc}}
+(\cF^{\mathrm{CS}}_{\fg,k})
+\xrightarrow{\ \mathrm{res}_{\partial}\ }
+V_k(\fg)
+\end{equation}
+after imposing a boundary condition and completing the BRST complex.
+For $\fg=\mathfrak{gl}_1$, the bracket term vanishes and the boundary
+current algebra is the Heisenberg vertex algebra; the derived centre
+is the corresponding Heisenberg centre.  For nonabelian $\fg$, the
+same restriction gives the affine currents
+\begin{equation}
+\label{eq:affine-cs-current-ope}
+J^a(z)J^b(w)\sim
+\frac{k\,\kappa^{ab}}{(z-w)^2}
+\;+\;
+\frac{f^{ab}_{\ \ c}J^c(w)}{z-w}.
+\end{equation}
+These are boundary OPE statements.  The bulk object is the
+single-coloured factorization algebra
+$\cF^{\mathrm{CS}}_{\fg,k}$ on $\RR\times\CC$; the curve-level chiral
+algebra is obtained only after boundary restriction to a holomorphic
+curve and is not identical to the $3$d HT bulk.
+
+The comparison is classical when only the BV differential and the
+classical interaction functional are used.  It is quantum only after a
+renormalised Costello--Gwilliam perturbative quantization is supplied
+and the anomaly/finite-counterterm problem has been solved in the
+chosen completion.  The perturbative finiteness hypothesis is part of
+the input; it is not a formal consequence of the affine OPE.
+
+If a slab reduction is used, it is the functor
+\begin{equation}
+\label{eq:affine-cs-slab-reduction}
+\operatorname{Slab}_{[0,\epsilon]}(\cF)
+:=
+R\Gamma_c([0,\epsilon]_t,\cF)
+\end{equation}
+followed by the boundary-condition map at the two faces of the
+interval.  A slab calculation may produce a boundary vertex algebra
+or a shifted central charge, but it does not identify the slab
+observable complex with the full $3$d bulk unless the OCA
+quasi-isomorphism of Convention~\ref{conv:master-oca} is also proved.
+\end{proposition}
 
 \begin{theorem}[Cohomological topologization for affine Kac--Moody; {\cite{KhanZeng25}}]
 \label{thm:topologization}
@@ -3767,8 +3925,12 @@ $3$d gravity, this is the subject of Volume~II
 \end{remark}
 
 \begin{remark}[Original-complex topologization obstruction criterion;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{rem:topologization-chain-vs-cohomology}
+Type signature: \textup{(}Open quadrant, original-complex
+topologization criterion, Beilinson level~$3$ bulk comparison,
+hypothesis package: cohomological topologization plus class-$L$
+higher-brace coherence for original-complex lift\textup{)}.
 The proof of Theorem~\ref{thm:topologization} has three
 outputs and isolates one coherence not supplied by that proof
 itself:
@@ -3876,7 +4038,8 @@ and requires a completed or coderived approach
  $\infty$-quasi-isomorphism class of the algebraic closed-sector
  object: existence of
  an $\Ethree^{\mathrm{top}}$ enhancement, factorization homology up
- to equivalence, deformation functors of the bulk algebra, and
+ to equivalence, deformation functors of the algebraic closed-sector
+ object, and
  homotopy-invariant module-category constructions. In that ambient,
 parts~\textup{(i)} and~\textup{(ii)} already have a second proof
  path: the physical factorization argument of the preceding remark
@@ -3985,10 +4148,15 @@ Kac--Moody]
 \index{topologization theorem!explicit $G(z)$}%
 \index{antighost contraction|textbf}%
 \ClaimStatusProvedHere
-The proof of Theorem~\textup{\ref{thm:topologization}} asserts the
-existence of $G(z)$ witnessing the inner conformal vector in BRST
-cohomology but does not construct it. We supply the explicit
-operator and verify the cohomological identity.
+Type signature: \textup{(}Open quadrant, affine Kac--Moody BRST
+operator presentation, Beilinson level~$3$ bulk comparison,
+hypothesis package: non-critical Sugawara denominator
+$k+h^\vee\neq0$ and the standard holomorphic Chern--Simons BRST
+field model\textup{)}.
+The cohomological topologization argument requires an explicit
+operator $G(z)$ witnessing the inner conformal vector in BRST
+cohomology. We supply the operator and verify the cohomological
+identity.
 
 Let $\fg$ be a finite-dimensional simple Lie algebra with basis
 $\{t_a\}_{a=1}^{\dim\fg}$, structure constants
@@ -4110,9 +4278,7 @@ The combined computation yields
 \end{equation}
 On $Q$-cohomology, $[Q, G(z)] = T_{\mathrm{Sug}}(z)$ exactly. This is
 the explicit operator-level datum that makes the cohomological
-topologization proof
-\textup{(}Theorem~\textup{\ref{thm:topologization}}\textup{)}
-constructive. The strict chain-level correction
+topologization proof constructive. The strict chain-level correction
 $\widetilde G_1 = G_1-\eta_1$ is proved separately in
 Theorem~\ref{thm:sugawara-antighost-primitive-chain-level}.
 
@@ -4833,8 +4999,9 @@ The three proved results are:
  pair $(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ is
  chain-level
  (Theorem~\ref{thm:operadic-center-hochschild}).
-\item The coderived BV$=$bar identification absorbs all
- $m_0$-proportional obstructions for every shadow class
+\item Conditional on the harmonic-factorization package, the coderived
+ BV$=$bar identification absorbs all $m_0$-proportional obstructions
+ for every shadow class
  (Theorem~\ref{thm:bv-bar-coderived-vol1}).
 \item Topologization via inner conformal vector is proved on
  $Q$-cohomology for affine Kac--Moody
@@ -4981,8 +5148,8 @@ absorption of Step~2 produces the coderived~$\Ethree$ in~$\cC$.
 
 \emph{Summary.}
 Conjecture~\ref{conj:coderived-e3} decomposes into
-(i)~a proved content-level input (obstruction absorption,
-Step~2, following from
+(i)~a conditional content-level input (obstruction absorption,
+Step~2, under the harmonic-factorization package of
 Theorem~\ref{thm:bv-bar-coderived-vol1} and
 Proposition~\ref{prop:chain-level-three-obstructions}),
 (ii)~a proved structural input (DG enhancement providing
@@ -5190,9 +5357,14 @@ coderived alternative remains Conjecture~\ref{conj:coderived-e3}.
 
 \begin{theorem}[The $\Ethree$-algebra and Chern--Simons]
 \label{thm:e3-cs}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 Let $\fg$ be a simple finite-dimensional Lie algebra and
 $V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
+Type signature: \textup{(}Open quadrant, derived-center
+presentation, Beilinson level~$3$, hypothesis package: the Higher
+Deligne Conjecture for the algebraic $\Ethree$ structure and the
+cohomological topologization package of
+Theorem~\ref{thm:topologization} for the topological enhancement\textup{)}.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textup{(The $\Ethree$ structure.)}
  The curve geometry provides the $\Etwo$ structure on
@@ -5219,9 +5391,13 @@ $V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
  The Sugawara Virasoro element at non-critical level
  upgrades the holomorphic $\Etwo$ to topological $\Etwo$;
  Dunn additivity gives $\Ethree^{\mathrm{top}}$
+ under the conditional topologization package
  \textup{(}Theorem~\textup{\ref{thm:topologization}}\textup{)}.
  At $k = -h^\vee$, the enhancement fails.
 \end{enumerate}
+Items \textup{(i)--(iii)} are the external HDC/CFG comparison
+surface. Item \textup{(iv)} is conditional in this manuscript because
+it imports Theorem~\ref{thm:topologization}.
 \end{theorem}
 
 \begin{theorem}[Costello--Francis--Gwilliam~\cite{CFG25}]
@@ -5657,7 +5833,8 @@ $\Pthree$ bracket on
 $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$
 explicitly:
 $\{X, Y\} = h_{\mathrm{KZ}} \cdot (X, Y)
-= (X,Y)/(k + 2)$ for $X, Y \in \mathfrak{sl}_2 = \HH^1$
+= (X,Y)/(k + 2)$ for zero-mode prequotient currents
+$X,Y\in\mathfrak{sl}_2$
 (equation~\eqref{eq:e3-p3-killing}).
 This matches the CFG $\Pthree$ bracket
 (Theorem~\ref{thm:chiral-e3-cfg}(ii)) and confirms that
@@ -5706,7 +5883,13 @@ $\dim H^3(\fg)$ of them.
 \begin{proposition}[$\mathfrak{gl}_N$ two-parameter $\Ethree$ comparison]
 \label{prop:e3-glN-two-parameter}
 \label{rem:e3-non-simple-gl-N}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, fixed-formality
+$\Ethree$ MC-family presentation, Beilinson level~$3$ bulk comparison,
+hypothesis package: the conditional one-parameter
+$\Ethree$-identification package of
+Theorem~\textup{\ref{thm:e3-identification}} plus independent
+central $\mathfrak{gl}_1$ normalization\textup{)}.
 Fix the formality rigidification~$\Phi$ and the formal-disk
 $\Pthree$ comparison package used in
 Theorem~\ref{thm:e3-identification}. For
@@ -5899,38 +6082,48 @@ $V_k(\mathfrak{sl}_2)$}
 
 The abstract $\Ethree$ structure of
 Theorem~\ref{thm:e3-cs} acquires concrete content
-for $\fg = \mathfrak{sl}_2$: the five-dimensional derived
-chiral centre $\CC \oplus \mathfrak{sl}_2[-1] \oplus \CC[-2]$
-carries an explicit cup product, Gerstenhaber bracket,
-$\Pthree$ bracket, and BV operator, all computable from the
-OPE.
+for $\fg = \mathfrak{sl}_2$: the derived chiral centre has cohomology
+\(\CC\oplus\CC[-2]\), while the zero-mode prequotient current model
+\(\CC \oplus \mathfrak{sl}_2[-1] \oplus \CC[-2]\) carries an explicit
+cup product, Gerstenhaber bracket, $\Pthree$ bracket, and BV operator,
+all computable from the OPE before quotienting by inner derivations.
 
 \medskip
 \noindent
 \textbf{The underlying graded vector space.}
 By Theorem~\ref{thm:e3-cs} and
-Proposition~\ref{prop:derived-center-explicit}(ii), the derived chiral centre of
-$V_k(\mathfrak{sl}_2)$ at generic level
-$k \neq -2$ is the graded vector space
+Proposition~\ref{prop:derived-center-explicit}(ii), the derived chiral
+centre cohomology of $V_k(\mathfrak{sl}_2)$ at generic level
+$k \neq -2$ is
+\[
+H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2)))
+\cong \CC \oplus \CC[-2],
+\qquad \HH^1=0.
+\]
+The zero-mode prequotient current model used below, before dividing by
+inner chiral derivations, is the graded vector space
 \begin{equation}\label{eq:e3-graded-space}
- Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))
+ Z^{\mathrm{pre}}_{\mathrm{zm}}(V_k(\mathfrak{sl}_2))
  \;=\;
  \underbrace{\CC}_{=\, \HH^0}
  \;\oplus\;
- \underbrace{\mathfrak{sl}_2[-1]}_{=\, \HH^1}
+ \underbrace{\mathfrak{sl}_2[-1]}_{=\, \HH^1_{\mathrm{pre}}}
  \;\oplus\;
  \underbrace{\CC[-2]}_{=\, \HH^2},
 \end{equation}
-with total dimension $1 + 3 + 1 = 5$. Write $\mathbf{1}$
+with five prequotient generators and cohomological total dimension
+\(1+0+1=2\). Write $\mathbf{1}$
 for the generator of $\HH^0 = \CC$ (the vacuum),
-$\{e, f, h\}$ for the standard basis of
-$\HH^1 = \mathfrak{sl}_2$
-(outer derivations: infinitesimal level-preserving
-deformations parametrised by $\fg$ itself), and $\eta$
+$\{e, f, h\}$ for the standard basis of the zero-mode prequotient slot
+$\HH^1_{\mathrm{pre}} = \mathfrak{sl}_2$
+(inner adjoint current directions), and $\eta$
 for the generator of $\HH^2 = \CC$
 (the central charge deformation cocycle). The
 $\mathfrak{sl}_2$-module structure is: $\HH^0$ trivial,
-$\HH^1$ adjoint, $\HH^2$ trivial.
+$\HH^1_{\mathrm{pre}}$ adjoint, $\HH^2$ trivial. In the formulas below
+inside this prequotient subsection, an occurrence of \(\HH^1\) means
+\(\HH^1_{\mathrm{pre}}\); it is not the Hochschild cohomology group,
+which is zero by Proposition~\ref{prop:chirhoch1-affine-km}.
 
 \medskip
 \noindent
@@ -5986,13 +6179,13 @@ operations:
 \end{itemize}
 We compute each in turn.
 
-\begin{proposition}[Explicit $\Ethree$ operations on
-$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$]
+\begin{proposition}[Explicit $\Ethree$ operations on the affine
+zero-mode prequotient model]
 \label{prop:e3-explicit-sl2}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $k \neq -2$.
-The $\Ethree$-algebra structure on
-$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$
+The $\Ethree$ current-calculus structure on
+$Z^{\mathrm{pre}}_{\mathrm{zm}}(V_k(\mathfrak{sl}_2))$
 is determined by the following data.
 
 \smallskip
@@ -6653,8 +6846,9 @@ $\CE^{\mathrm{ch}}_k(\fg)$ satisfies:
  commutative structure to a filtered chiral $\Ethree$-algebra.
  The deformation parameter is $(k+h^\vee) \in
  (k+h^\vee)\,H^3(\fg)[[k+h^\vee]]$,
- matching the deformation space of
- Theorem~\textup{\ref{thm:e3-cs}(ii)}.
+ matching the HDC/CFG deformation classification for filtered
+ $\Ethree$-deformations of $C^*(\fg)$
+ \textup{(}\cite{HA,Francis2013,CFG25}\textup{)}.
 \item \textup{(Factorisation property.)}
  The chiral $\Ethree$-algebra
  $\CE^{\mathrm{ch}}_k(\fg)$ is a factorisation algebra on
@@ -6744,20 +6938,19 @@ rule (Step~2 below): the bracket is a biderivation of the
 free commutative algebra, so a trilinear identity that
 holds on generators holds on all elements.
 
-\textit{Step 2: the Leibniz rule from PVA sesquilinearity.}
-The PVA right Leibniz rule (De Sole--Kac axiom)
+\textit{Step 2: the Leibniz rule from the classical PVA
+compatibility.}
+The classical PVA right Leibniz rule in the shifted convention
 states:
 \[
  \{a \mathbin{{}_\lambda} (b \cdot c)\}
  = \{a \mathbin{{}_\lambda} b\} \cdot c
  + (-1)^{(|a|+1)|b|}\,
- b \cdot \{a \mathbin{{}_\lambda} c\}
- + \int_0^\lambda
- \{\{a \mathbin{{}_\mu} b\}
- \mathbin{{}_\lambda} c\}\,d\mu.
+ b \cdot \{a \mathbin{{}_\lambda} c\}.
 \]
-At $\lambda = 0$, the integral term vanishes
-(the integration range collapses to a point), leaving:
+The singular--singular Wick integral belongs to the quantum vertex
+algebra normally ordered product, not to the classical PVA
+compatibility used here. Specialising at $\lambda = 0$ gives
 \[
  \{a, b \cdot c\}^{\mathrm{ch}}
  = \{a, b\}^{\mathrm{ch}} \cdot c
@@ -6854,9 +7047,9 @@ in~$k$ and hence linear in $(k + h^\vee)$.
 Both vanish at $k = -h^\vee$, so the
 deformation is controlled by $(k + h^\vee)$. The identification
 of the deformation space as $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$
-then follows from the computation of
-Theorem~\ref{thm:e3-cs}(ii): $H^3(\fg)$ is one-dimensional
-for simple $\fg$, and the Cartan $3$-form
+then follows from the HDC/CFG deformation computation
+\textup{(}\cite{HA,Francis2013,CFG25}\textup{)}: $H^3(\fg)$ is
+one-dimensional for simple $\fg$, and the Cartan $3$-form
 $\omega_3(X, Y, Z) = (X, [Y,Z])$ is the generator.
 
 Part (iv) is the factorisation property of the chiral
@@ -6895,9 +7088,9 @@ genus-$0$ collision residue\textup{)} satisfy
 \begin{proof}
 The abstract $\Ethree$-algebra structure on the derived
 chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
-is provided by Theorem~\ref{thm:e3-cs}(ii)
-via the Higher Deligne Conjecture applied to the
-$\Etwo$-coalgebra $\BarSig(V_k(\fg))$.
+is provided by the Higher Deligne Conjecture
+\textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}\textup{)}
+applied to the $\Etwo$-coalgebra $\BarSig(V_k(\fg))$.
 This abstract $\Ethree$ structure includes, in particular,
 an abstract BV operator $\Delta_{\mathrm{HDC}}$
 (from the framed $\Etwo$ structure) and an abstract
@@ -7037,7 +7230,7 @@ Knizhnik--Zamolodchikov connection.
 \item The flatness
  $(\nabla^{\mathrm{ch}})^2 = 0$ follows from the
  classical Yang--Baxter equation for the $r$-matrix
- $r(z) = k\,\Omega/z$
+ $r(z) = k\,\Omega_{\mathrm{tr}}/z$
  \textup{(}trace-form convention; at $k = 0$, $r = 0$%
  \textup{)}: the curvature of $\nabla^{\mathrm{ch}}$
  is proportional to the LHS of the CYBE, which vanishes.
@@ -7278,8 +7471,9 @@ $(k+h^\vee)\,H^3(\fg)[[k+h^\vee]]$, one-dimensional at each
 order in $(k+h^\vee)$. Both
 $\Gamma(D, \CE^{\mathrm{ch}}_k(\fg))$ and
 $\cA^\lambda$ are deformations of $C^*(\fg)$ over this
-base (Theorem~\ref{thm:e3-cs}(ii) and
-Theorem~\ref{thm:cfg}(iv) respectively). Since the deformation
+base: the chiral side by the HDC/CFG deformation classification
+\textup{(}\cite{HA,Francis2013,CFG25}\textup{)}, and the
+topological side by Theorem~\ref{thm:cfg}(iv). Since the deformation
 space is one-dimensional at each order, and both deformations have
 matching associated graded (Part~(i)) and matching $\Pthree$ bracket
 (Part~(ii)), their MC classes agree. By
@@ -8012,8 +8206,9 @@ Hochschild cochains and the bracket is the Gerstenhaber bracket
 $[-,-]$ of degree~$1$; the Leibniz rule $[a, bc] = [a,b]c
 + (-1)^{(|a|-1)|b|} b[a,c]$ is the defining relation of a
 Gerstenhaber algebra (Getzler--Jones~\cite{GJ}).
-For the explicit computation of this bracket on
-$\ChirHoch^1(V_k(\fsl_2)) \cong \fsl_2$, see
+For the explicit computation of this bracket on the affine zero-mode
+prequotient and its disappearance in
+\(\ChirHoch^1(V_k(\fsl_2))=0\), see
 Proposition~\ref{prop:gerstenhaber-sl2-bracket}.
 
 \textbf{Part~(ii).}
@@ -8251,7 +8446,8 @@ curves from two genus-$0$ components.
 The modular characteristic $\kappa(\cA)$ first appears as a
 genuine obstruction at this genus level: the genus-$1$ free
 energy satisfies
-$\mathrm{obs}_1(\cA) = \kappa(\cA) \cdot \lambda_1$
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)
+=\kappa(\cA)\lambda_1$
 (\textsc{uniform-weight}; unconditional at $g = 1$;
 Theorem~\ref{thm:genus-universality}).
 Thus the passage from $\mathrm{FT}^{(\leq 0)}$ to
@@ -8380,8 +8576,8 @@ $K^{\kappa_{\mathrm{ch}}}(\mathcal H_{\mathrm{Muk}}(K3))
 =2c_+(\mathrm{Mukai}(K3))=8$, hence it adjoins the
 $\mathsf B$-row value to the Vol~I Theorem~C ceiling
 \[
-  \{0,13,250/3,98/3\}\subset
-  \{0,8,13,250/3,98/3\}.
+  \{0,13,250/3,25/3\}\subset
+  \{0,8,13,250/3,25/3\}.
 \]
 The Lusztig lane is an integral-form specialisation: under the
 Vol~III source-recognition and Hall--Drinfeld integral-form

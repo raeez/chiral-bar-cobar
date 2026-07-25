@@ -1,127 +1,79 @@
-"""Test harness for wave19_phi_n_extension_weight11_12_13.
+"""Tests for the motivic arithmetic at weights 11, 12, and 13."""
 
-Runs all Wave-19 tests and multi-path cross-checks:
-  - Padovan MZV basis dimension  d_n
-  - Brown-Deligne basis at weights 11, 12, 13
-  - KZ iterated-integral word structure
-  - Richardson-extrapolated numerical anchors
-  - phi^(11), phi^(12), phi^(13) structure
-  - reversal-duality symmetry
-  - multi-path cross-checks (recurrence self-consistency,
-    Richardson-vs-anchor table, depth-4 contribution, KZ-word
-    consistency).
-"""
+from math import factorial
 
-from __future__ import annotations
+import pytest
 
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "lib"))
-
-from wave19_phi_n_extension_weight11_12_13 import (  # noqa: E402
+from compute.lib.wave19_phi_n_extension_weight11_12_13 import (
+    motivic_dimension_table,
     run_tests,
-    phi_n_mzv,
-    padovan_d_n,
-    mzv_anchor_float,
-    deligne_basis_weight_11,
-    deligne_basis_weight_12_depth_le_3,
-    deligne_basis_weight_12_depth_4,
-    deligne_basis_weight_13_depth_le_3,
+    weight_extension_status,
+    weight_order_status,
 )
 
 
-def test_wave19_phi_n_extension_all():
-    """Run the complete Wave-19 test suite."""
-    run_tests()
+def _independent_count(weight):
+    if weight < 0:
+        return 0
+    if weight == 0:
+        return 1
+    return _independent_count(weight - 2) + _independent_count(weight - 3)
 
 
-def test_padovan_anchors_claude_md():
-    """Confirm Padovan anchors from CLAUDE.md."""
-    anchors = {1: 1, 2: 0, 3: 1, 4: 1, 5: 1, 6: 2, 7: 2,
-               8: 3, 9: 4, 10: 5, 11: 7, 12: 9}
-    for n, d in anchors.items():
-        assert padovan_d_n(n) == d
+@pytest.mark.parametrize(
+    "weight,expected",
+    [(3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 4),
+     (9, 5), (10, 7), (11, 9), (12, 12), (13, 16)],
+)
+def test_dimensions(weight, expected):
+    assert motivic_dimension_table(weight, weight)[weight] == expected
+    assert expected == _independent_count(weight)
 
 
-def test_padovan_weight_13():
-    """d_13 = d_11 + d_10 = 7 + 5 = 12."""
-    assert padovan_d_n(13) == 12
-    assert padovan_d_n(13) == padovan_d_n(11) + padovan_d_n(10)
+def test_weight_words_have_exact_weight():
+    statuses = weight_extension_status()
+    for weight, status in statuses.items():
+        assert len(status["hoffman_words"]) == status["motivic_dimension"]
+        assert all(sum(word) == weight for word in status["hoffman_words"])
+        assert all(set(word) <= {2, 3} for word in status["hoffman_words"])
 
 
-def test_zeta_3333_anchor():
-    """V1 anchor for zeta(3,3,3,3) ~ 2.959990 * 10^{-4}."""
-    v = mzv_anchor_float((3, 3, 3, 3))
-    assert 2.9599e-4 < v < 2.9600e-4
+@pytest.mark.parametrize("weight", [11, 12, 13])
+def test_simplex_volume_is_only_the_constant_integrand_normalisation(weight):
+    status = weight_order_status(weight)
+    assert status["simplex_denominator"] == factorial(weight)
+    kz = status["kz_normalization"]
+    assert kz["constant_integrand_simplex_denominator"] == factorial(weight)
+    assert kz["word_specified"] is False
+    assert kz["regularised_word_integral_computed"] is False
 
 
-def test_zeta_11_anchor():
-    v = mzv_anchor_float((11,))
-    assert 1.000494 < v < 1.000495
+def test_weight_twelve_repeated_period_is_decomposable():
+    status = weight_order_status(12)["zeta3333"]
+    assert status["decomposable"]
+    assert status["primitive_projection"] == 0
+    assert status["first_depth_four_primitive"] is False
+    assert status["graph_complex_class_constructed"] is False
+    assert status["grt_action_computed"] is False
 
 
-def test_zeta_13_anchor():
-    v = mzv_anchor_float((13,))
-    assert 1.000122 < v < 1.000123
+@pytest.mark.parametrize("weight", [11, 12, 13])
+def test_cyclic_operations_remain_open(weight):
+    status = weight_order_status(weight)
+    assert status["associator_chosen"] is False
+    assert status["represented_kz_word_constructed"] is False
+    assert status["word_to_cochain_map_constructed"] is False
+    assert status["cyclic_cochain_constructed"] is False
+    assert status["rotation_equation_verified"] is False
+    assert status["maurer_cartan_equation_verified"] is False
+    assert status["phi_n_constructed"] is False
 
 
-def test_phi_11_denominator():
-    ph = phi_n_mzv(11)
-    assert ph["denominator_factorial"] == 39_916_800
-
-
-def test_phi_12_denominator():
-    ph = phi_n_mzv(12)
-    assert ph["denominator_factorial"] == 479_001_600
-
-
-def test_phi_13_denominator():
-    ph = phi_n_mzv(13)
-    assert ph["denominator_factorial"] == 6_227_020_800
-
-
-def test_phi_12_contains_depth_4():
-    """phi^(12) basis must contain zeta(3,3,3,3) (depth-4 irreducible)."""
-    ph = phi_n_mzv(12)
-    found = any(
-        e["indices"] == (3, 3, 3, 3) and e["name"] == "zeta(3, 3, 3, 3)"
-        for e in ph["basis"]
-    )
-    assert found
-
-
-def test_phi_13_no_depth_4():
-    """phi^(13) must NOT contain a depth-4 irreducible (Broadhurst-Kreimer)."""
-    ph = phi_n_mzv(13)
-    for e in ph["basis"]:
-        assert len(e["indices"]) <= 3
-
-
-def test_basis_counts_match_padovan():
-    assert len(deligne_basis_weight_11()) == padovan_d_n(11)
-    assert (len(deligne_basis_weight_12_depth_le_3()) + 1) == padovan_d_n(12)
-    assert len(deligne_basis_weight_13_depth_le_3()) == padovan_d_n(13)
-
-
-def test_weight_12_depth_4_is_zeta_3333():
-    name, s = deligne_basis_weight_12_depth_4()
-    assert name == "zeta(3, 3, 3, 3)"
-    assert s == (3, 3, 3, 3)
-
-
-if __name__ == "__main__":
-    test_wave19_phi_n_extension_all()
-    test_padovan_anchors_claude_md()
-    test_padovan_weight_13()
-    test_zeta_3333_anchor()
-    test_zeta_11_anchor()
-    test_zeta_13_anchor()
-    test_phi_11_denominator()
-    test_phi_12_denominator()
-    test_phi_13_denominator()
-    test_phi_12_contains_depth_4()
-    test_phi_13_no_depth_4()
-    test_basis_counts_match_padovan()
-    test_weight_12_depth_4_is_zeta_3333()
-    print("test_wave19_phi_n_extension_weight11_12_13: all tests passed.")
+def test_validation_and_internal_checks():
+    with pytest.raises(ValueError):
+        motivic_dimension_table(-1, 3)
+    with pytest.raises(ValueError):
+        motivic_dimension_table(4, 3)
+    checks = run_tests()
+    assert checks
+    assert all(checks.values())

@@ -3,26 +3,29 @@ r"""Algebraic code skeletons from Koszul duality.
 MATHEMATICAL FRAMEWORK
 ======================
 
-The bar-cobar adjunction B -| Omega defines an algebraic symplectic
-code skeleton for each chirally Koszul algebra A.  This module
-constructs finite weight-level matrices, records KL-style algebraic
-isotropy checks, and computes arity-proxy parameters.  A Hilbert-space
-quantum error-correcting code requires additional unitary completion,
-a physical inner product, an error algebra, and recovery maps.
+The enhanced bar-cobar adjunction supplies the universal Theorem A
+reconstruction map
 
-Firewall: Omega(B(A)) -> A is bar-cobar reconstruction.  It does not
-construct A!.  The post-Verdier Koszul dual A! appears only after the
-finite-type/completed Verdier lane represents D_Ran B(A) and the
-completed cobar construction converges.  The derived chiral centre is
-the Hochschild cochain object, not the bar coalgebra and not A!.
-Theorem B recovery is also ambient-qualified: raw finite-window for
-finite-type G/L/C examples, but weight-completed pro-conilpotent /
-coderived for class M. Raw direct-sum class-M chain recovery is false.
+    epsilon_A: Omega_X B_X(A) -> A
 
-The central G12 surface: Koszulness is equivalent to the
-ambient-qualified bar-cobar counit quasi-isomorphism.  Physical QEC
-or holographic reconstruction is an extra comparison theorem, not a
-consequence of the counit alone.
+for every augmented algebra in the pro-nilpotent Ran ambient.  A
+quadratic presentation A = T_X(V)/(R) supplies the smaller coalgebra
+A^i = C_X(sV, s^2R), the comparison
+
+    q_A: A^i -> B_X(A),
+
+and its adjoint p_A: Omega_X(A^i) -> A.  Theorem B identifies
+quadratic Koszulness with acyclicity of Cone(q_A), equivalently with
+q_A or p_A being a quasi-isomorphism, under H_CL and strong
+convergence.  The fixed-coalgebra equivalence
+D^co(C-Comod) ~= D^ctr(C-Contramod) is a separate module-theoretic
+surface.
+
+This module constructs exact finite-chain models for Cone(q_A),
+records certificate status, builds finite weight-level symplectic
+models, and computes arity proxies.  Hilbert-space quantum error
+correction is conditional on unitary completion, a physical inner
+product, an error algebra, the comparison beta_T, and recovery maps.
 
 The code is SYMPLECTIC, not orthogonal:
   - Code subspace C = Q_g(A) (one Lagrangian summand)
@@ -71,7 +74,7 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Mapping, Optional, Tuple
 
 import numpy as np
 from sympy import (
@@ -94,29 +97,269 @@ from compute.lib.entanglement_shadow_engine import (
 )
 
 
-def theorem_b_recovery_surface_from_family(family: str) -> Dict[str, object]:
-    """Ambient-qualified Theorem B recovery surface for QEC data."""
-    cls = shadow_depth_class(family)
-    if cls == 'M':
-        return {
-            'exact_recovery': True,
-            'valid_recovery': True,
-            'status': 'AMBIENT_QUALIFIED',
-            'raw_direct_sum_chain_qi': False,
-            'ambient': 'weight-completed pro-conilpotent / coderived',
-            'hypotheses': 'finite-window strict Mittag-Leffler + completed bar-cobar',
-            'counit': 'Omega_X B_X(A) -> A',
-            'completion_required': True,
-        }
+def theorem_a_reconstruction_surface(
+    *,
+    completed: bool = False,
+    chain_package_verified: bool = False,
+) -> Dict[str, object]:
+    """Universal Theorem A reconstruction, independent of family data.
+
+    The enhanced Ran equivalence is the proved ambient statement.  A
+    finite-window or completed factorization-chain realization carries
+    its own verification flag; a family name supplies no such flag.
+    """
+    chain_ambient = (
+        'strict completed factorization chain model'
+        if completed
+        else 'finite-window factorization chain model'
+    )
     return {
-        'exact_recovery': True,
-        'valid_recovery': True,
-        'status': 'AMBIENT_QUALIFIED',
-        'raw_direct_sum_chain_qi': True,
-        'ambient': 'raw finite-window chain complex',
-        'hypotheses': 'H3b finite bar-degree pieces + finite-support comparison',
-        'counit': 'Omega_X B_X(A) -> A',
-        'completion_required': False,
+        'theorem': 'A',
+        'map': 'epsilon_A: Omega_X B_X(A) -> A',
+        'source': 'Omega_X B_X(A)',
+        'target': 'A',
+        'enhanced_ran_reconstruction': True,
+        'enhanced_ran_status': 'PROVED_ELSEWHERE',
+        'enhanced_ran_ambient': 'pro-nilpotent stable Ran category',
+        'chain_ambient': chain_ambient,
+        'chain_reconstruction': True if chain_package_verified else None,
+        'chain_status': 'CERTIFIED' if chain_package_verified else 'CONDITIONAL',
+        'chain_hypotheses': (
+            'H_fact + finite-window reconstruction package'
+            if not completed
+            else 'H_fact + strict Mittag-Leffler completed reconstruction package'
+        ),
+        'completion_required': completed,
+        'family_independent': True,
+        'koszul_hypothesis_required': False,
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
+    }
+
+
+def _matrix_with_shape(
+    matrices: Mapping[int, Matrix],
+    degree: int,
+    rows: int,
+    cols: int,
+    name: str,
+) -> Matrix:
+    """Return an exact matrix, interpreting an omitted map as zero."""
+    matrix = Matrix(matrices.get(degree, zeros(rows, cols)))
+    if matrix.shape != (rows, cols):
+        raise ValueError(
+            f'{name}[{degree}] has shape {matrix.shape}; expected {(rows, cols)}'
+        )
+    return matrix
+
+
+def quadratic_comparison_cone(
+    source_dimensions: Mapping[int, int],
+    target_dimensions: Mapping[int, int],
+    source_differentials: Mapping[int, Matrix],
+    target_differentials: Mapping[int, Matrix],
+    comparison_maps: Mapping[int, Matrix],
+) -> Dict[str, object]:
+    r"""Compute the exact homology of ``Cone(q_A)`` for finite chains.
+
+    The source models ``A^i`` and the target models ``B_X(A)``.  Chain
+    differentials have degree ``-1``.  Thus ``d_A[n]`` has shape
+    ``dim(A[n-1]) x dim(A[n])``, and ``q[n]`` has shape
+    ``dim(B[n]) x dim(A[n])``.  The cone convention is
+
+        Cone(q)_n = B_n + A_{n-1},
+        d(b, a) = (d_B b + q a, -d_A a).
+
+    All ranks are computed exactly by SymPy.
+    """
+    if not source_dimensions and not target_dimensions:
+        raise ValueError('Cone(q_A) requires a nonempty finite chain model')
+
+    for name, dimensions in (
+        ('source_dimensions', source_dimensions),
+        ('target_dimensions', target_dimensions),
+    ):
+        for degree, dimension in dimensions.items():
+            if not isinstance(degree, int) or not isinstance(dimension, int):
+                raise TypeError(f'{name} must map integer degrees to integer dimensions')
+            if dimension < 0:
+                raise ValueError(f'{name}[{degree}] must be nonnegative')
+
+    def a_dim(degree: int) -> int:
+        return source_dimensions.get(degree, 0)
+
+    def b_dim(degree: int) -> int:
+        return target_dimensions.get(degree, 0)
+
+    base_degrees = set(source_dimensions) | set(target_dimensions)
+    first = min(base_degrees) - 1
+    last = max(base_degrees) + 2
+
+    d_a = {}
+    d_b = {}
+    q = {}
+    for degree in range(first, last + 1):
+        d_a[degree] = _matrix_with_shape(
+            source_differentials,
+            degree,
+            a_dim(degree - 1),
+            a_dim(degree),
+            'd_Ai',
+        )
+        d_b[degree] = _matrix_with_shape(
+            target_differentials,
+            degree,
+            b_dim(degree - 1),
+            b_dim(degree),
+            'd_Bar',
+        )
+        q[degree] = _matrix_with_shape(
+            comparison_maps,
+            degree,
+            b_dim(degree),
+            a_dim(degree),
+            'q_A',
+        )
+
+    for degree in range(first + 1, last + 1):
+        if d_a[degree - 1] * d_a[degree] != zeros(
+            a_dim(degree - 2), a_dim(degree)
+        ):
+            raise ValueError(f'd_Ai^2 is nonzero at degree {degree}')
+        if d_b[degree - 1] * d_b[degree] != zeros(
+            b_dim(degree - 2), b_dim(degree)
+        ):
+            raise ValueError(f'd_Bar^2 is nonzero at degree {degree}')
+        if d_b[degree] * q[degree] != q[degree - 1] * d_a[degree]:
+            raise ValueError(f'q_A is not a chain map at degree {degree}')
+
+    cone_dimensions = {
+        degree: b_dim(degree) + a_dim(degree - 1)
+        for degree in range(first, last + 1)
+    }
+    cone_differentials = {}
+    for degree in range(first + 1, last + 1):
+        top = d_b[degree].row_join(q[degree - 1])
+        bottom = zeros(a_dim(degree - 2), b_dim(degree)).row_join(
+            -d_a[degree - 1]
+        )
+        cone_differentials[degree] = top.col_join(bottom)
+
+    for degree in range(first + 2, last + 1):
+        composite = cone_differentials[degree - 1] * cone_differentials[degree]
+        if composite != zeros(cone_dimensions[degree - 2], cone_dimensions[degree]):
+            raise AssertionError(f'constructed Cone(q_A) has d^2 != 0 at {degree}')
+
+    homology_dimensions = {}
+    for degree in range(first + 1, last):
+        dimension = cone_dimensions[degree]
+        outgoing_rank = cone_differentials[degree].rank()
+        incoming_rank = cone_differentials[degree + 1].rank()
+        homology_dimensions[degree] = dimension - outgoing_rank - incoming_rank
+
+    support = tuple(
+        degree for degree, dimension in homology_dimensions.items() if dimension
+    )
+    return {
+        'object': 'Cone(q_A: A^i -> B_X(A))',
+        'map': 'q_A: A^i -> B_X(A)',
+        'cone_dimensions': cone_dimensions,
+        'cone_differentials': cone_differentials,
+        'homology_dimensions': homology_dimensions,
+        'homology_support': support,
+        'acyclic': not support,
+        'exact_arithmetic': True,
+    }
+
+
+def theorem_b_certificate_from_cone(
+    cone_result: Mapping[str, object],
+    *,
+    algebra_id: str,
+    presentation: str,
+    h_cl_verified: bool,
+    strong_convergence_verified: bool,
+) -> Dict[str, object]:
+    """Build a Theorem B certificate from an explicit ``Cone(q_A)`` result."""
+    cone_acyclic = bool(cone_result['acyclic'])
+    packages_complete = h_cl_verified and strong_convergence_verified
+
+    if cone_acyclic and packages_complete:
+        status = 'CERTIFIED'
+        koszul = True
+    elif not cone_acyclic:
+        status = 'OBSTRUCTED_IN_FINITE_MODEL'
+        koszul = False
+    else:
+        status = 'INCOMPLETE_PACKAGE'
+        koszul = None
+
+    return {
+        'theorem': 'B',
+        'algebra_id': algebra_id,
+        'presentation': presentation,
+        'quadratic_coalgebra': 'A^i = C_X(sV, s^2R)',
+        'comparison': 'q_A: A^i -> B_X(A)',
+        'adjoint': 'p_A: Omega_X(A^i) -> A',
+        'obstruction': 'Cone(q_A)',
+        'cone_acyclic': cone_acyclic,
+        'cone_homology_dimensions': dict(cone_result['homology_dimensions']),
+        'cone_homology_support': tuple(cone_result['homology_support']),
+        'h_cl_verified': h_cl_verified,
+        'strong_convergence_verified': strong_convergence_verified,
+        'status': status,
+        'koszul': koszul,
+        'exact_quadratic_recovery': koszul,
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
+    }
+
+
+def theorem_b_recovery_surface_from_family(
+    family: str,
+    certificate: Optional[Mapping[str, object]] = None,
+) -> Dict[str, object]:
+    """Report Theorem B status; a family name alone gives no verdict."""
+    if certificate is None:
+        return {
+            'family': family,
+            'theorem': 'B',
+            'comparison': 'q_A: A^i -> B_X(A)',
+            'adjoint': 'p_A: Omega_X(A^i) -> A',
+            'obstruction': 'Cone(q_A)',
+            'status': 'UNVERIFIED',
+            'koszul': None,
+            'exact_quadratic_recovery': None,
+            'certificate_present': False,
+            'reason': (
+                'family and shadow class do not determine the homology of Cone(q_A)'
+            ),
+            'fixed_coalgebra_surface': (
+                'D^co(C-Comod) ~= D^ctr(C-Contramod) for one fixed C'
+            ),
+            'physical_recovery': None,
+            'physical_recovery_status': (
+                'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+            ),
+        }
+
+    if certificate.get('theorem') != 'B':
+        raise ValueError('quadratic certificate must have theorem = B')
+    if certificate.get('algebra_id') != family:
+        raise ValueError(
+            'quadratic certificate algebra_id must match the requested family'
+        )
+    return {
+        'family': family,
+        **dict(certificate),
+        'certificate_present': True,
+        'fixed_coalgebra_surface': (
+            'D^co(C-Comod) ~= D^ctr(C-Contramod) for one fixed C'
+        ),
     }
 
 
@@ -130,28 +373,37 @@ n_sym = Symbol('n', positive=True)
 
 KOSZUL_FIREWALL = {
     'bar_cobar_inversion': (
-        'Omega_X B_X(A) -> A is reconstruction of the input algebra; '
-        'it is not a construction of A!.'
+        'epsilon_A: Omega_X B_X(A) -> A is universal Theorem A '
+        'reconstruction in the pro-nilpotent Ran/completion package.'
     ),
     'bar_dual_coalgebra': (
-        'A^i is the Koszul-dual coalgebra H^*(B_X(A)) on the strict '
-        'square-zero Koszul lane; in curved lanes it requires the '
-        'associated square-zero or coderived replacement.'
+        'A^i = C_X(sV, s^2R) is the quadratic coalgebra of a chosen '
+        'presentation.'
+    ),
+    'quadratic_comparison': (
+        'q_A: A^i -> B_X(A), equivalently p_A: Omega_X(A^i) -> A, '
+        'is the Theorem B comparison.'
+    ),
+    'quadratic_obstruction': (
+        'Cone(q_A) carries the quadratic Koszul obstruction; acyclicity '
+        'is decisive under H_CL and strong convergence.'
+    ),
+    'fixed_coalgebra': (
+        'D^co(C-Comod) ~= D^ctr(C-Contramod) is the separate fixed-C '
+        'module-theoretic surface.'
     ),
     'verdier_koszul_dual': (
-        'A!_infty is obtained from the Verdier-dual bar coalgebra only '
-        'under constructibility, finite-dimensional-stratum, and '
-        'completed cobar convergence hypotheses; the strict finite-type '
+        'A!_infty = D_Ran B_X(A) under constructibility, dualizability, '
+        'and continuity hypotheses; the strict finite-type '
         'quadratic case reduces to A! = (A^i)^vee.'
     ),
     'derived_centre': (
-        'Z^der_ch(A) = C^bullet_ch(A,A), the Hochschild bulk object; '
+        'Z^der_ch(A) = C^bullet_ch(A,A), the Hochschild closed-sector object; '
         'it is not B(A), A^i, A!, or Omega(B(A)).'
     ),
     'forbidden_collapse': (
-        'Do not identify the Ran Verdier dual of B(A) with the bar '
-        'coalgebra of A! unless a separate finite-type/completed theorem '
-        'supplies that comparison.'
+        'A finite-type/completed comparison theorem supplies any '
+        'identification between D_Ran B_X(A) and a strict quadratic dual.'
     ),
 }
 
@@ -361,9 +613,9 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
 
     >>> code = symplectic_code_at_weight('heisenberg', 2, k=1)
     >>> code['n_h']
-    6
+    4
     >>> code['k_h']
-    3
+    2
     >>> code['rate']
     Fraction(1, 2)
     """
@@ -399,6 +651,11 @@ def symplectic_code_at_weight(family: str, h: int, **kwargs) -> Dict:
         'koszul_firewall': koszul_firewall(),
         'lagrangian': True,
         'symplectic': True,
+        'theorem_c_status': 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE',
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
     }
 
 
@@ -483,7 +740,11 @@ def code_parameters_up_to_weight(family: str, h_max: int, **kwargs) -> Dict:
     }
 
 
-def heisenberg_code_parameters(k_val: int, h_max: int = 10) -> Dict:
+def heisenberg_code_parameters(
+    k_val: int,
+    h_max: int = 10,
+    quadratic_certificate: Optional[Mapping[str, object]] = None,
+) -> Dict:
     r"""Explicit code parameters for Heisenberg H_k up to weight h_max.
 
     For the Heisenberg algebra at level k (rank 1 free boson),
@@ -502,18 +763,25 @@ def heisenberg_code_parameters(k_val: int, h_max: int = 10) -> Dict:
     """
     kappa = int(k_val)  # kappa(H_k) = k
     code = code_parameters_up_to_weight('heisenberg', h_max, k=k_val)
-    recovery_surface = theorem_b_recovery_surface_from_family('heisenberg')
+    theorem_a_surface = theorem_a_reconstruction_surface()
+    theorem_b_surface = theorem_b_recovery_surface_from_family(
+        f'heisenberg:k={k_val}', quadratic_certificate
+    )
 
     return {
         **code,
         'kappa': kappa,
         'shadow_class': 'G',
         'redundancy_channels': 0,
-        'exact_recovery': recovery_surface['exact_recovery'],
-        'exact_recovery_status': recovery_surface['status'],
-        'exact_recovery_ambient': recovery_surface['ambient'],
-        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
-        'recovery_surface': recovery_surface,
+        'universal_reconstruction': theorem_a_surface['enhanced_ran_reconstruction'],
+        'universal_reconstruction_status': theorem_a_surface['enhanced_ran_status'],
+        'theorem_a_surface': theorem_a_surface,
+        'quadratic_koszul': theorem_b_surface['koszul'],
+        'quadratic_koszul_status': theorem_b_surface['status'],
+        'exact_quadratic_recovery': theorem_b_surface['exact_quadratic_recovery'],
+        'theorem_b_surface': theorem_b_surface,
+        'physical_recovery': None,
+        'physical_recovery_status': theorem_b_surface['physical_recovery_status'],
         'convergent': True,  # class G: no corrections
     }
 
@@ -780,10 +1048,15 @@ def knill_laflamme_path3_complementarity(c_val) -> Dict:
         'error_fraction': error_fraction,
         'self_dual': (c_val == 13),
         'kl_structural': True,
+        'theorem_c_status': 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE',
         'kl_mechanism': (
             'Complementarity provides Lagrangian splitting H = C + C^perp. '
             'Isotropy of each summand gives the structural KL prerequisite. '
             'The code rate = 1/2 is the maximum for a Lagrangian code.'
+        ),
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
         ),
         'koszul_firewall': koszul_firewall(),
     }
@@ -814,7 +1087,15 @@ def verify_knill_laflamme_three_paths(c_val=Rational(13)) -> Dict:
         'path3_complementarity': p3,
         'all_paths_agree': all_agree,
         'num_paths': 3,
-        'conclusion': 'KL verified via three independent paths' if all_agree else 'DISAGREEMENT',
+        'conclusion': (
+            'algebraic isotropy, the explicit finite model, and complementarity agree'
+            if all_agree
+            else 'DISAGREEMENT'
+        ),
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
     }
 
 
@@ -906,44 +1187,42 @@ def code_distance_census() -> Dict:
 # 5. ENCODING/DECODING FROM BAR-COBAR
 # ===========================================================================
 
-def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
-    r"""Encoding and decoding maps from the bar-cobar adjunction.
+def encoding_decoding_structure(
+    family: str,
+    h: int = 2,
+    *,
+    quadratic_certificate: Optional[Mapping[str, object]] = None,
+    completed: bool = False,
+    chain_package_verified: bool = False,
+    **kwargs,
+) -> Dict:
+    r"""Return the universal and quadratic recovery surfaces.
 
-    Encoding: B: A -> B(A)  (bar construction)
-      Maps the algebra A into its bar coalgebra.
-      At weight h: maps V_h(A) into the bar complex.
-
-    Decoding: Omega: B(A) -> A  (cobar construction)
-      Recovers the algebra from its bar coalgebra.
-      Exact on the Koszul locus (Theorem B).
-
-    The bar-cobar round-trip: Omega(B(A)) ~ A  (quasi-isomorphism)
-    This is the ambient-qualified error-correction statement: encoding
-    followed by decoding gives back the original data (up to homotopy)
-    on the finite-window or completed Theorem B surface.
-
-    IMPORTANT: bar-cobar inversion recovers A ITSELF.
-    The Koszul dual A! is obtained only by the separate
-    finite-type/completed Verdier route followed by completed cobar.
-    Omega(B(A)) = A is inversion; D_Ran(B(A)) names the Verdier-dual
-    bar-coalgebra lane, not the bar coalgebra of A! by definition.
-    The derived chiral centre is the Hochschild object C^bullet_ch(A,A),
-    not B(A), A^i, A!, or Omega(B(A)).
+    The bar construction is an object assignment ``A |-> B_X(A)``.
+    Its universal decoding map is the Theorem A counit
+    ``epsilon_A: Omega_X B_X(A) -> A``.  A quadratic presentation adds
+    the compressed coalgebra ``A^i`` and the Theorem B maps ``q_A`` and
+    ``p_A``.  Their status is reported only from an explicit certificate.
 
     >>> result = encoding_decoding_structure('heisenberg', h=2)
-    >>> result['round_trip']
-    'quasi-isomorphism'
-    >>> result['exact_recovery']
+    >>> result['universal_reconstruction']
     True
+    >>> result['quadratic_koszul_status']
+    'UNVERIFIED'
     """
     dim_h = _weight_dim(family, h, **kwargs)
-    recovery_surface = theorem_b_recovery_surface_from_family(family)
+    theorem_a_surface = theorem_a_reconstruction_surface(
+        completed=completed,
+        chain_package_verified=chain_package_verified,
+    )
+    theorem_b_surface = theorem_b_recovery_surface_from_family(
+        family, quadratic_certificate
+    )
     firewall_note = (
-        'Omega(B(A)) = A (recovers the original algebra). '
-        'A! is post-Verdier: it is obtained only from the '
-        'Verdier-dual bar coalgebra plus completed cobar under '
-        'finite-type/completed hypotheses.  This computation does '
-        'not identify D_Ran(B(A)) with the bar coalgebra of A!.'
+        'epsilon_A: Omega_X B_X(A) -> A is universal Theorem A '
+        'reconstruction.  Theorem B tests q_A: A^i -> B_X(A) through '
+        'Cone(q_A).  D_Ran B_X(A), the fixed-C co/contra equivalence, '
+        'and the derived centre each carry their own comparison package.'
     )
 
     return {
@@ -951,24 +1230,35 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
         'weight': h,
         'dim_input': dim_h,
         'encoding': {
-            'functor': 'B (bar construction)',
+            'functor': 'B_X (bar object assignment)',
             'input': f'V_{h}(A): dim = {dim_h}',
-            'output': f'B(A) at weight {h}',
+            'output': f'B_X(A) at weight {h}',
             'mechanism': 'bar differential d_B = sum over binary collisions',
         },
-        'decoding': {
-            'functor': 'Omega (cobar construction)',
-            'input': 'B(A)',
-            'output': f'Omega(B(A)) ~ A at weight {h}',
-            'mechanism': 'cobar differential d_Omega from coalgebra structure',
+        'universal_decoding': {
+            'map': 'epsilon_A: Omega_X B_X(A) -> A',
+            'theorem': 'A',
+            'status': theorem_a_surface['enhanced_ran_status'],
         },
-        'round_trip': 'quasi-isomorphism',
-        'exact_recovery': recovery_surface['exact_recovery'],
-        'exact_recovery_status': recovery_surface['status'],
-        'exact_recovery_ambient': recovery_surface['ambient'],
-        'raw_direct_sum_chain_qi': recovery_surface['raw_direct_sum_chain_qi'],
-        'recovery_surface': recovery_surface,
-        'source': 'Theorem B (ambient-qualified bar-cobar inversion on Koszul locus)',
+        'quadratic_decoding': {
+            'comparison': 'q_A: A^i -> B_X(A)',
+            'adjoint': 'p_A: Omega_X(A^i) -> A',
+            'obstruction': 'Cone(q_A)',
+            'theorem': 'B',
+            'status': theorem_b_surface['status'],
+        },
+        'round_trip': 'enhanced Ran equivalence',
+        'universal_reconstruction': theorem_a_surface['enhanced_ran_reconstruction'],
+        'universal_reconstruction_status': theorem_a_surface['enhanced_ran_status'],
+        'chain_reconstruction': theorem_a_surface['chain_reconstruction'],
+        'chain_reconstruction_status': theorem_a_surface['chain_status'],
+        'theorem_a_surface': theorem_a_surface,
+        'quadratic_koszul': theorem_b_surface['koszul'],
+        'quadratic_koszul_status': theorem_b_surface['status'],
+        'exact_quadratic_recovery': theorem_b_surface['exact_quadratic_recovery'],
+        'theorem_b_surface': theorem_b_surface,
+        'physical_recovery': None,
+        'physical_recovery_status': theorem_b_surface['physical_recovery_status'],
         'bar_cobar_firewall_note': firewall_note,
         'note_ap25': firewall_note,
         'koszul_firewall': koszul_firewall(),
@@ -976,13 +1266,10 @@ def encoding_decoding_structure(family: str, h: int = 2, **kwargs) -> Dict:
 
 
 def bar_cobar_round_trip_dimensions(family: str, h_max: int = 6, **kwargs) -> List[Dict]:
-    r"""Verify bar-cobar round-trip preserves dimensions at each weight.
+    r"""Record the dimension consequence of universal Theorem A recovery.
 
     The quasi-isomorphism Omega(B(A)) ~ A implies:
       dim H^*(Omega(B(A)))|_h = dim A|_h  for all h.
-
-    For Koszul algebras, the bar spectral sequence collapses at E_2
-    (characterization K1), so we can track dimensions through.
 
     >>> data = bar_cobar_round_trip_dimensions('heisenberg', 4)
     >>> all(d['dim_in'] == d['dim_out'] for d in data)
@@ -996,6 +1283,8 @@ def bar_cobar_round_trip_dimensions(family: str, h_max: int = 6, **kwargs) -> Li
             'dim_in': dim_h,
             'dim_out': dim_h,  # quasi-isomorphism preserves
             'match': True,
+            'source': 'Theorem A universal bar-cobar resolution',
+            'quadratic_koszul_verdict': None,
         })
     return results
 
@@ -1051,6 +1340,7 @@ def logical_operators_from_koszul_pair(family: str, c_val=None, **kwargs) -> Dic
         'kappa_x': kappa_x,
         'kappa_z': kappa_z,
         'commutation_nondegenerate': True,
+        'theorem_c_status': 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE',
         'commutation_mechanism': (
             'The Verdier cross-pairing <Q_g(A), Q_g(A!)>_D is non-degenerate '
             'on the finite-type/completed Verdier-Koszul lane. This provides '
@@ -1061,6 +1351,10 @@ def logical_operators_from_koszul_pair(family: str, c_val=None, **kwargs) -> Dic
             'kappa_sum': kappa_x + kappa_z,
             'self_dual': (kappa_x == kappa_z) if c_val is not None else False,
         },
+        'physical_recovery': None,
+        'physical_recovery_status': (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        ),
         'koszul_firewall': koszul_firewall(),
     }
 
@@ -1344,8 +1638,8 @@ def compare_with_happy() -> Dict:
       - HaPPY perfect tensor <-> bar complex tensor at each vertex
       - HaPPY graph <-> bar complex graph
       - HaPPY Ryu--Takayanagi <-> Koszul scalar entropy analogy
-      - HaPPY wedge reconstruction <-> Koszul Omega(B(A)) ~ A as an
-        algebraic analogy, not a physical-bulk identification
+      - HaPPY wedge reconstruction <-> Theorem A universal
+        reconstruction as an algebraic analogy
 
     >>> result = compare_with_happy()
     >>> result['correspondence_count']
@@ -1374,8 +1668,8 @@ def compare_with_happy() -> Dict:
              'HaPPY computes code entropy; the Koszul side is a scalar shadow analogy'),
             (
                 'Wedge reconstruction',
-                'Bar-cobar inversion',
-                'HaPPY reconstructs a code subregion; bar-cobar recovers the boundary chart A, not physical bulk',
+                'Theorem A universal reconstruction',
+                'HaPPY reconstructs a code subregion; Theorem A reconstructs the boundary chart A',
             ),
             ('Stabilizer code', 'Lagrangian code', 'Both have code/error decomposition'),
         ],
@@ -1601,6 +1895,14 @@ def full_code_dictionary(h_max: int = 10) -> List[Dict]:
         'convergent': shadow_radius_virasoro(13) < 1.0,
     })
 
+    for entry in dictionary:
+        entry['quadratic_koszul'] = None
+        entry['quadratic_koszul_status'] = 'UNVERIFIED_CERTIFICATE_REQUIRED'
+        entry['physical_recovery'] = None
+        entry['physical_recovery_status'] = (
+            'CONDITIONAL_ON_BETA_T_HILBERT_ERROR_ALGEBRA_AND_SUBREGION_MAPS'
+        )
+
     return dictionary
 
 
@@ -1619,10 +1921,12 @@ def code_summary_report(h_max: int = 10) -> str:
     """
     dictionary = full_code_dictionary(h_max)
     lines = [
-        "QUANTUM ERROR-CORRECTING CODES FROM KOSZUL DUALITY",
+        "ALGEBRAIC SYMPLECTIC CODE SKELETONS FROM KOSZUL DUALITY",
         "=" * 52,
         f"Weight truncation: h_max = {h_max}",
         f"Code type: symplectic (Lagrangian, rate = 1/2)",
+        "Quadratic Koszul status: explicit Cone(q_A) certificate required",
+        "Physical recovery: conditional on beta_T and Hilbert/error data",
         "",
         f"{'Family':<30} {'N':>6} {'K':>6} {'D':>4} "
         f"{'Class':>6} {'Chan':>5}",

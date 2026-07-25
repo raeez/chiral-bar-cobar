@@ -1,30 +1,38 @@
-"""Explicit E_3 operations and BV relations on the 5-dimensional derived
-center Z^der_ch(V_k(sl_2)).
+"""Explicit E_3 operations and BV relations on the 5-dimensional
+zero-mode prequotient model for Z^der_ch(V_k(sl_2)).
 
-Verifies all structure maps from prop:e3-explicit-sl2 in
-en_koszul_duality.tex: cup product, Gerstenhaber bracket, BV operator
-Delta, and P_3 bracket on the graded space
+The normalized fixed-fiber derived center has Betti vector (1, 0, 1):
+the adjoint zero-mode slot is inner and disappears from ChirHoch^1.
+This engine deliberately retains the prequotient slot
+sl_2[-1] because prop:e3-explicit-sl2 in en_koszul_duality.tex uses it
+as a conditional model for the KZ/P_3 and BV bookkeeping.
 
-    HH^0 = C (unit 1),  HH^1 = sl_2 (basis e,f,h),  HH^2 = C (eta).
+Verifies all structure maps from that prequotient model: cup product,
+Gerstenhaber bracket, BV operator Delta, and P_3 bracket on the graded
+space
 
-The central result: Delta = 0 on the entire 5-dimensional space.
+    C (unit 1),  sl_2[-1] (basis e,f,h),  C[-2] (eta).
+
+The central result: Delta = 0 on the entire 5-dimensional prequotient.
 
 PROOF ANALYSIS (independent verification):
   The proof uses sl_2-equivariance of the BV operator:
-    - Delta: HH^1 -> HH^0 is equivariant, adjoint -> trivial => 0 (Schur)
-    - Delta: HH^2 -> HH^1 is equivariant, trivial -> adjoint => 0 (Schur)
+    - Delta: sl_2[-1] -> C is equivariant, adjoint -> trivial => 0 (Schur)
+    - Delta: C[-2] -> sl_2[-1] is equivariant, trivial -> adjoint => 0 (Schur)
   This is CORRECT and NECESSARY. The BV relation alone is INSUFFICIENT:
-    - With mu=0 on HH^1 x HH^1 and [X,Y]=0, the BV relation gives
-      0 = Delta(0) - (Delta X)*Y + X*(Delta Y) = 0 for X,Y in HH^1.
-      This is tautologically satisfied for ANY Delta on HH^1.
-    - Delta(eta): the BV relation for (X, eta) with X in HH^1 gives
+    - With mu=0 on sl_2[-1] x sl_2[-1] and [X,Y]=0, the BV relation
+      gives 0 = Delta(0) - (Delta X)*Y + X*(Delta Y) = 0 for X,Y in
+      sl_2[-1].  This is tautologically satisfied for ANY Delta on the
+      prequotient degree-1 slot.
+    - Delta(eta): the BV relation for (X, eta) with X in sl_2[-1] gives
       [X,eta] = Delta(X*eta) - (Delta X)*eta + X*(Delta eta)
               = 0 - 0 + X*(Delta eta).
-      Since X*(Delta eta) uses mu: HH^1 x HH^1 -> HH^2 (skew-sym,
-      adjoint, hence 0), we get [X,eta] = 0 regardless of Delta(eta).
+      Since X*(Delta eta) uses mu: sl_2[-1] x sl_2[-1] -> C[-2]
+      (skew-sym, adjoint, hence 0), we get [X,eta] = 0 regardless of
+      Delta(eta).
     - Delta^2 = 0 is also automatic: Delta^2(eta) = Delta(Delta(eta))
-      where Delta(eta) in HH^1 and Delta on HH^1 -> HH^0 is killed
-      by equivariance anyway.
+      where Delta(eta) lies in the prequotient degree-1 slot and Delta
+      to scalars is killed by equivariance anyway.
   So: BV relation is consistent with ANY equivariant Delta(eta), and
   the equivariance argument (trivial -> adjoint = 0) is required.
 
@@ -36,8 +44,8 @@ WHAT THIS ENGINE VERIFIES:
   4. Graded antisymmetry of the Gerstenhaber bracket.
   5. P_3 bracket symmetry and Jacobi identity.
   6. P_3 Leibniz rule over the cup product.
-  7. Independence: the BV relation does NOT determine Delta on HH^1
-     or HH^2 (only equivariance does).
+  7. Independence: the BV relation does NOT determine Delta on the
+     prequotient degree-1 slot or on C[-2] (only equivariance does).
 
 References:
   prop:e3-explicit-sl2 in chapters/theory/en_koszul_duality.tex
@@ -58,12 +66,16 @@ import itertools
 
 
 # ======================================================================
-#  The 5-dimensional derived center Z^der_ch(V_k(sl_2))
+#  The 5-dimensional zero-mode prequotient model
 # ======================================================================
 
 # Generators with their cohomological degrees and sl_2-representation data.
-# HH^0 = C*1 (trivial), HH^1 = sl_2 = C*e + C*f + C*h (adjoint),
-# HH^2 = C*eta (trivial).
+# Actual ChirHoch Betti vector after quotient: (1, 0, 1).
+# Prequotient model vector retained here: C*1, sl_2[-1], C*eta.
+
+ACTUAL_CHIRHOCH_BETTI = (1, 0, 1)
+ZERO_MODE_PREQUOTIENT_BETTI = (1, 3, 1)
+ZERO_MODE_PREQUOTIENT_DIM1 = 3
 
 GENERATORS = ("1", "e", "f", "h", "eta")
 
@@ -75,11 +87,11 @@ DEGREE = {
     "eta": 2,
 }
 
-# sl_2 representation type for each graded piece
+# sl_2 representation type for each prequotient graded piece
 SL2_REP = {
-    0: "trivial",   # HH^0
-    1: "adjoint",   # HH^1
-    2: "trivial",   # HH^2
+    0: "trivial",   # C*1
+    1: "adjoint",   # prequotient sl_2[-1]
+    2: "trivial",   # C*eta
 }
 
 
@@ -129,11 +141,11 @@ def killing_form(X: str, Y: str) -> Fraction:
 
 
 # ======================================================================
-#  E_3 algebra structure on the derived center
+#  E_3 algebra structure on the prequotient model
 # ======================================================================
 
 class E3DerivedCenterSl2:
-    """The E_3 algebra structure on Z^der_ch(V_k(sl_2)).
+    """The E_3 algebra structure on the zero-mode prequotient model.
 
     All operations are computed from the data in prop:e3-explicit-sl2.
     The parameter k is the level of V_k(sl_2); we require k != -2
@@ -167,9 +179,10 @@ class E3DerivedCenterSl2:
 
         Rules from prop:e3-explicit-sl2:
           (a) 1 is the unit.
-          (b) mu(X, Y) = 0 for X, Y in HH^1 = sl_2.
+          (b) mu(X, Y) = 0 for X, Y in the prequotient sl_2[-1] slot.
               (Equivariance: Lambda^2(ad)^{sl_2} = 0.)
-          (c) mu(X, eta) = 0 for X in HH^1 (lands in HH^3 = 0).
+          (c) mu(X, eta) = 0 for X in the prequotient degree-1 slot
+              (lands in degree 3, which is absent).
               mu(eta, eta) = 0 (lands in HH^4 = 0).
         """
         deg_a, deg_b = DEGREE[a], DEGREE[b]
@@ -185,7 +198,7 @@ class E3DerivedCenterSl2:
         if b == "1":
             return {a: Fraction(1)}
 
-        # Both in HH^1: mu(X, Y) = 0
+        # Both in prequotient degree 1: mu(X, Y) = 0
         # Proof: Lambda^2(ad) = ad has no trivial summand, so
         # Hom_{sl_2}(Lambda^2(ad), C) = 0.
         if deg_a == 1 and deg_b == 1:
@@ -203,13 +216,13 @@ class E3DerivedCenterSl2:
 
         Returns linear combination as {generator: coefficient}.
 
-        Delta = 0 on the entire derived center.
+        Delta = 0 on the entire prequotient model.
 
         Proof (sl_2-equivariance, NOT the BV relation):
-          - Delta: HH^0 -> HH^{-1} = 0 (target zero).
-          - Delta: HH^1 -> HH^0 is equivariant ad -> triv.
+          - Delta: C -> 0 (target zero).
+          - Delta: sl_2[-1] -> C is equivariant ad -> triv.
             Hom_{sl_2}(ad, C) = 0 by Schur (ad irreducible, nontrivial).
-          - Delta: HH^2 -> HH^1 is equivariant triv -> ad.
+          - Delta: C[-2] -> sl_2[-1] is equivariant triv -> ad.
             Hom_{sl_2}(C, ad) = 0 by Schur.
           - Delta: HH^n = 0 for n >= 3 (source zero).
         """
@@ -224,9 +237,9 @@ class E3DerivedCenterSl2:
 
         Returns linear combination as {generator: coefficient}.
 
-        All brackets vanish on the derived center.
+        All brackets vanish on the prequotient model.
         This follows from the BV relation with Delta = 0 and mu = 0
-        on HH^1 x HH^1:
+        on the prequotient degree-1 slot:
           [X, Y] = Delta(mu(X,Y)) - (Delta X)*Y + X*(Delta Y) = 0.
           [X, eta] = Delta(mu(X,eta)) - (Delta X)*eta + X*(Delta eta) = 0.
           [eta, eta] in HH^3 = 0.
@@ -246,7 +259,7 @@ class E3DerivedCenterSl2:
         return {}
 
     # ------------------------------------------------------------------
-    #  P_3 bracket: HH^p x HH^q -> HH^{p+q-2}
+    #  P_3 bracket: prequotient degree p x q -> degree p+q-2
     # ------------------------------------------------------------------
 
     def p3_bracket(self, a: str, b: str) -> Dict[str, Fraction]:
@@ -255,7 +268,8 @@ class E3DerivedCenterSl2:
         Returns linear combination as {generator: coefficient}.
 
         From prop:e3-explicit-sl2:
-          {X, Y} = h_KZ * (X, Y) for X, Y in HH^1.
+          {X, Y} = h_KZ * (X, Y) for X, Y in the prequotient
+          sl_2[-1] slot.
           {X, eta} = 0.
           {1, -} = 0.
           {eta, eta} = 0.
@@ -271,7 +285,7 @@ class E3DerivedCenterSl2:
         if a == "1" or b == "1":
             return {}
 
-        # {X, Y} for X, Y in HH^1: lands in HH^0 = C*1
+        # {X, Y} for prequotient degree-1 inputs: lands in C*1
         if deg_a == 1 and deg_b == 1:
             kf = killing_form(a, b)
             coeff = self.h_KZ * kf
@@ -279,7 +293,7 @@ class E3DerivedCenterSl2:
                 return {"1": coeff}
             return {}
 
-        # {X, eta} = 0 for X in HH^1, eta in HH^2
+        # {X, eta} = 0 for X in the prequotient degree-1 slot
         # (proved by iterated Jacobi + h_KZ != 0)
         if (deg_a == 1 and deg_b == 2) or (deg_a == 2 and deg_b == 1):
             return {}
@@ -602,14 +616,14 @@ class E3DerivedCenterSl2:
         (ii) the specific triple (a, b, c) happens to avoid the
              obstructing terms.
 
-        For the 5-dimensional derived center of V_k(sl_2), the
-        transferred P_3 bracket on cohomology satisfies Jacobi and
-        symmetry (these are intrinsic to the bracket) but NOT
-        necessarily Leibniz over the cup product (which couples two
-        operations).  The non-Leibniz triples are those where
-        {a,b} or {a,c} produces a scalar in HH^0 that, when
-        multiplied by a degree-1 element, gives a nonzero HH^1
-        contribution not cancelled by the LHS.
+        For the 5-dimensional zero-mode prequotient of V_k(sl_2), the
+        transferred P_3 bracket satisfies Jacobi and symmetry (these are
+        intrinsic to the bracket) but NOT necessarily Leibniz over the
+        cup product (which couples two operations).  The non-Leibniz
+        triples are those where {a,b} or {a,c} produces a scalar in
+        degree 0 that, when multiplied by a degree-1 prequotient
+        element, gives a nonzero prequotient contribution not cancelled
+        by the LHS.
 
         Returns dict identifying whether Leibniz holds or requires
         chain-level correction.
@@ -680,10 +694,11 @@ class E3DerivedCenterSl2:
             "note": (
                 "The P_3 Leibniz rule is a chain-level property. "
                 "On cohomology, failures occur when the P_3 bracket "
-                "maps into HH^0 (scalars) which then multiply "
+                "maps into degree-0 scalars which then multiply "
                 "nontrivially via the unit, while the LHS vanishes "
-                "because mu on HH^1 x HH^1 = 0. These are corrected "
-                "by higher A-infinity transfer maps at the chain level."
+                "because mu on the prequotient degree-1 square is 0. "
+                "These are corrected by higher A-infinity transfer maps "
+                "at the chain level."
             ),
         }
 
@@ -693,11 +708,11 @@ class E3DerivedCenterSl2:
 
     def verify_bv_independence(self) -> Dict[str, Any]:
         """Demonstrate that the BV relation alone does NOT determine
-        Delta on HH^1 or HH^2.
+        Delta on the prequotient degree-1 slot or on C[-2].
 
         We construct a MODIFIED algebra with the same cup product and
-        Gerstenhaber bracket but Delta(eta) = h (a nonzero element of
-        HH^1), and show that all BV relations still hold.
+        Gerstenhaber bracket but Delta(eta) = h (a nonzero prequotient
+        degree-1 element), and show that all BV relations still hold.
 
         This proves that the equivariance argument is NECESSARY.
         """

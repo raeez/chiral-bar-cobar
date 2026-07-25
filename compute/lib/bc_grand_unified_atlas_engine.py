@@ -243,7 +243,11 @@ def central_charge_betagamma(lam: float) -> float:
 # ---------------------------------------------------------------------------
 
 def dual_kappa_heisenberg(k: float) -> float:
-    """kappa(H_k^!) = -k.  AP33: H_k^! != H_{-k} as algebras."""
+    """Scalar kappa(H_k^!) = -k.
+
+    AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch, not H_{-k}; this atlas helper records only the scalar.
+    """
     return -float(k)
 
 
@@ -1252,11 +1256,11 @@ def check_hochschild_polynomial_growth(
     alg: AlgebraFamily,
     t_values: Optional[List[float]] = None,
 ) -> Dict[str, Any]:
-    r"""Theorem H consistency: ChirHoch*(A) polynomial =>
+    r"""Theorem H consistency: ChirHoch*(A) amplitude/Hilbert profile =>
     the categorical zeta has polynomial growth along vertical lines.
 
-    For polynomial ChirHoch: |zeta^{DK}(sigma + it)| grows at most
-    polynomially in |t|.
+    For bounded ChirHoch with Hilbert polynomial in the cohomological
+    variable: |zeta^{DK}(sigma + it)| grows at most polynomially in |t|.
 
     We check the growth order:
       rho(f) = lim sup log|f(sigma + it)| / log|t|

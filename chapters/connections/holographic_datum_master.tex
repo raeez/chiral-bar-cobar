@@ -5,10 +5,11 @@
 The Open quadrant fixes a primitive datum
 $(X, D, \tau;\;\cC^{\mathrm{op}}, b, A_b,\;
 Z^{\mathrm{der}}_{\mathrm{ch}}(A_b),\;\Theta_{A_b},\;\Tr_{\cC^{\mathrm{op}}})$:
-a tangential log curve $(X, D, \tau)$, the factorisation dg-category
-$\cC^{\mathrm{op}}$ on $(X, D, \tau)$ at level~$0$, a chosen
-vacuum $b\in\cC^{\mathrm{op}}$, the chart algebra
-$A_b=\End_\cC(b)$ at level~$1$, the derived chiral centre
+a tangential log curve $(X,D,\tau)$, the stable presentable
+factorisation category $\mathsf C$ with compact opposite
+$\cC^\op=(\mathsf C^\omega)^\op$ at level~$0$, a factorisation
+compact generator $b$, the chart algebra
+$A_b=\RHom_{\mathsf C}(b,b)$ at level~$1$, the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)\simeq
 \mathcal{C}^\bullet_{\mathrm{ch}}(A_b, A_b)$ at level~$3$, the
 universal Maurer--Cartan twisting datum $\Theta_{A_b}=D_{A_b}-d_0$
@@ -57,11 +58,12 @@ in this order of construction:
 \item the tangential log curve $(X,D,\tau)$, with $X$ a smooth
 projective curve, $D\subset X$ a divisor of marked points, and
 $\tau$ a tangential structure at $D$;
-\item the factorisation dg-category $\cC^{\mathrm{op}}$ on
-$(X,D,\tau)$, level~$0$ in the Beilinson tower, the primitive
-open object;
-\item the chosen vacuum $b\in\cC^{\mathrm{op}}$;
-\item the chart algebra $A_b=\End_\cC(b)$, level~$1$;
+\item the stable presentable factorisation category $\mathsf C$ on
+$(X,D,\tau)$ and its compact opposite
+$\cC^\op=(\mathsf C^\omega)^\op$, level~$0$;
+\item the factorisation compact generator $b=(b_U)$;
+\item the chart algebra
+$A_b(U)=\RHom_{\mathsf C(U)}(b_U,b_U)$, level~$1$;
 \item the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b) \simeq
 \mathcal{C}^\bullet_{\mathrm{ch}}(A_b,A_b)$, level~$3$, the universal
@@ -80,7 +82,7 @@ and a physical bulk interpretation requires the
 open--closed comparison datum. Throughout
 this chapter, when a generic chart algebra is denoted~$\cA$, the
 type signature is $\cA = A_b$ at a chosen vacuum
-$b\in\cC^{\mathrm{op}}$ on $(X,D,\tau)$; the symbol is shorthand for
+$b\in\mathsf C^\omega$ on $(X,D,\tau)$; the symbol is shorthand for
 that pair, never a free-floating ``primitive open algebra''. The
 local symbol $\cC$ is reserved here for the closed-sector slot
 $\cC = Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ and is to be distinguished
@@ -121,7 +123,8 @@ formally introduced in
 Definition~\ref{def:holographic-modular-koszul-datum}, is not a
 list of independent invariants. It has a proved algebraic core
 and a conditional open/closed comparison. The proved core consists of the
-chart algebra~$\cA = A_b$, its bar-dual coalgebra~$\cA^i$, the
+chart algebra~$\cA = A_b$, its presentation coalgebra~$\cA^{\mathrm i}$
+and full bar~$\barBch_X(\cA)$, the
 Verdier/Koszul companion~$\cA^!$ where it rectifies, the chiral
 Hochschild centre, the collision residue, the universal
 Maurer--Cartan element, and the induced shadow connection.
@@ -143,22 +146,24 @@ modular-Koszul / boundary-linear / principal DS surfaces named below,
 the strict edge $\cA^{!}_\infty\to\cA^!$ and the global-triangle
 comparison to the line model are the active obstructions.
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item \emph{Boundary slot.} $\cA = A_b = \End_\cC(b)$ is the chart
- algebra at the chosen vacuum~$b$ on the level-$0$ factorisation
- dg-category $\cC^{\mathrm{op}}$, sitting as the boundary factor of
+\item \emph{Boundary slot.} $\cA=A_b=\RHom_{\mathsf C}(b,b)$ is the
+ chart algebra of the factorisation compact generator~$b$, sitting as the boundary factor of
  the matched-pair lift $U_\cA = \cA\bowtie\cA^{!}_\infty$. The
  primitive open object is the level-$0$ datum
  $(\cC^{\mathrm{op}},b)$, not $\cA$ itself.
-\item \emph{Bar-dual coalgebra slot.}
- $\cA^i:=H^*(\barBch(\cA))$ is the coalgebra produced by the
- chiral bar construction. It is not the line-operator algebra.
+\item \emph{Quadratic coalgebra slot.}
+ A chosen presentation supplies
+ $\cA^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R)$ and
+ $q_\cA\colon\cA^{\mathrm i}\to\barBch_X(\cA)$.
+ The full bar remains the chain coalgebra~$\barBch_X(\cA)$;
+ $H^\bullet(q_\cA)$ compares their cohomology on the Koszul locus.
 \item \emph{Verdier/Koszul slot.} $\cA^!$ means the strict chiral
  Koszul dual obtained from the Verdier-dual factorization companion
 ~$\cA^{!}_\infty$ when the rectification map
  $\cA^{!}_\infty \to \cA^!$ is proved. We never identify
  $\cA^!$ with $\Omega(\barB(\cA))$: $\Omega(\barB(\cA))\simeq \cA$ is
  bar--cobar inversion, not Koszul duality, and
- $(\cA^i)^\vee$ is the finite-type linear shadow of the Verdier
+ $(\cA^{\mathrm i})^\vee$ is the finite-type quadratic target of the Verdier
  construction.
 \item \emph{Closed-sector/line slot.} We pin the algebraic closed sector to chiral
  Hochschild cochains,
@@ -176,23 +181,27 @@ comparison to the line model are the active obstructions.
  topological Hochschild trace of a category, nor the $3$d HT quantum
  field theory itself, unless the separate categorical trace and
  open/closed comparison theorems have been invoked.
-\item \emph{$R$-matrix slot.} We pin the residue entry to the
+\item \emph{Collision-kernel slot.} We pin the residue entry to the
  family-normalized binary collision residue
  \[
- r_\cA(z) \;:=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA).
+ K_\cA^{\mathrm{coll}}(z)
+ :=\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1}).
  \]
  In the standard families this specializes to
  \[
- r^{\mathrm{Heis}}_k(z)=\frac{k}{z}\,J\otimes J,\qquad
- r^{KM,\fg}_{\mathrm{coll},k}(z)=\frac{k\,\Omega_{\mathrm{tr}}}{z},
+ K^{\mathrm{coll}}_{\mathrm{Heis},k}(z)=\frac{k}{z}\,J\otimes J,
  \qquad
- r^{KM,\fg}_{\mathrm{KZ},k}(z)=\frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z},
+ K^{\mathrm{coll}}_{KM,\fg,k}(z)=\frac{k\,\Omega_{\mathrm{tr}}}{z},
  \]
  and
  \[
- r^{\mathrm{Vir}}_c(z)=\frac{c/2}{z^3}+\frac{2T}{z}.
+ K^{\mathrm{coll}}_{\mathrm{Vir},c}(z)=\frac{c/2}{z^3}+\frac{2T}{z}.
  \]
- An unspecialized bare $r$-symbol will therefore not be used below.
+ A classical $r$-matrix is a represented image
+ $r_\cA=\rho_\cA(K_\cA^{\mathrm{coll}})$ under
+ $H_{\mathrm{CYBE}}^{\mathrm{rep}}(\cA;W)$.  On the affine KZ lane,
+ $r^{KM,\fg}_{\mathrm{KZ},k}(z)=
+ \Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ after the stated comparison map.
 \item \emph{Maurer--Cartan slot.} In the chain-level lane we pin
  $\Theta_\cA$ to the degree-$1$ Maurer--Cartan element of the ordered
  convolution dGLA
@@ -230,7 +239,7 @@ chain-level \emph{closed-sector object} below) along the
 restriction map $\rho_{\partial}\colon \cC \to \cA$ and the operadic
 inclusion $\mathrm{Ass}^{\mathrm{ch}} \hookrightarrow
 \mathrm{SC}^{\mathrm{ch,top}}$, witnessed by the same trio
-$(r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})$. Bare \emph{bulk}
+$(K_\cA^{\mathrm{coll}}(z),\Theta_\cA,\nabla^{\mathrm{hol}})$. Bare \emph{bulk}
 language is avoided below: T18(i) is the chiral derived centre, while
 T18(iii) is the $3$d HT quantum field theory. The latter appears only
 as the Brown--Henneaux partition-function partner recalled below. The proved scope is the
@@ -243,12 +252,21 @@ With this convention, the three structural constants of the datum have
 the following content. The chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the closed-sector algebra, computed
 from~$\cA$ by chiral Hochschild cochains. The modular
-characteristic~$\kappa(\cA)$ is the degree-$2$ scalar component of
-$\Theta_\cA$ and, on the Brown--Henneaux comparison lane of
+characteristic is the traced binary coordinate
+\[
+ \kappa(\cA)=\tau_{\cA,2}^{\mathrm{res}}
+ q_2(K_\cA^{\mathrm{coll}}),
+\]
+and, on the Brown--Henneaux comparison lane of
 Theorem~\ref{thm:genus-universality}, the coefficient in the
 $3$d partition-function comparison. The shadow obstruction tower
-$\{S_r(\cA)\}_{r \geq 2}$ is the scalar finite-order projection
-sequence of~$\Theta_\cA$; cross-channel towers for multi-generator
+$\{S_r(\cA)\}_{r \geq 2}$ is the scalar sequence
+\[
+ S_r(\cA)=\tau_{\cA,r}^{\mathrm{res}}
+ q_r\bigl((\Theta_\cA^{E_1})_{0,r}\bigr),
+\]
+defined when the family supplies the higher residue/trace
+functionals. Cross-channel towers for multi-generator
 algebras are separate data and do not follow from the scalar tower
 alone. The matched-pair object
 $U_\cA = \cA \bowtie \cA^{!}_\infty$ organizes the proved comparison
@@ -256,17 +274,18 @@ maps from the boundary VOA to the closed-sector slot
 $\cC=\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ along
 $\rho_{\partial}\colon \cC\to\cA$ and
 $\mathrm{Ass}^{\mathrm{ch}}\hookrightarrow\mathrm{SC}^{\mathrm{ch,top}}$,
-witnessed by $(r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})$ on the
+witnessed by $(K_\cA^{\mathrm{coll}}(z),\Theta_\cA,\nabla^{\mathrm{hol}})$ on the
 named modular-Koszul / boundary-linear / principal DS surfaces
 (introduction, Remark~\ref{rem:five-facets-boundary-bulk}).
 
-The collision residue~$r_\cA(z)$, which is the subject of this chapter,
-is the residue entry of this datum: on the strict matched-pair surface it is
-the spectral $R$-matrix of the quasitriangular structure of~$U_\cA$,
-and off that surface it is the binary residue of the universal
-ordered convolution MC element. The seven-face master theorem
+The collision kernel~$K_\cA^{\mathrm{coll}}(z)$ is the residue entry
+of this datum.  On a strict matched-pair surface carrying
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, its represented image is the
+classical term of the spectral $R$-matrix of~$U_\cA$; intrinsically it
+is the binary residue of the universal ordered convolution MC element.
+The seven-face master theorem
 is the comparison theorem for this residue entry: the available independent
-computations of~$r_\cA(z)$ across the seven frameworks must agree on
+computations of~$K_\cA^{\mathrm{coll}}(z)$ across the seven frameworks must agree on
 their common comparison domain, and when they do, the $R$-matrix slot
 of~$U_\cA$ is verified on that domain whenever~$U_\cA$ has strict
 quasitriangular meaning there.
@@ -277,7 +296,7 @@ $\mathcal{H}(T)$ is recovered from one matched-pair object by typed
 projections together with the bar construction. The comparison still
 runs between boundary object~$\cA$ and closed-sector slot~$\cC$ via
 $\rho_{\partial}$ and the Swiss-cheese inclusion, with witness triple
-$(r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})$; off the named surfaces,
+$(K_\cA^{\mathrm{coll}}(z),\Theta_\cA,\nabla^{\mathrm{hol}})$; off the named surfaces,
 the strict edge and global-triangle obstructions keep the remaining
 entries from assembling into a fully strict theorem. The remaining
 entries admit analogous seven-face
@@ -319,8 +338,11 @@ This object is neither the bar dual~$\cA^i$ nor the Verdier dual~$\cA^!$.
 \item The $3$d HT lane is a separate realization map, available only
 under the boundary-linear and anomaly-vanishing hypotheses:
 \[
-\Phi_{\mathrm{hol}}(\cA)=\mathcal T_\cA,\qquad
-\Obs^\partial(\mathcal T_\cA)\simeq\cA.
+\Xi_\cA\vdash
+\Phi_{\mathrm{hol}}(\cA,\omega,T_\omega,\Xi_\cA)
+=\mathcal T_{\cA,\Xi},\qquad
+\eta^\partial_\cA\colon
+\Obs^\partial(\mathcal T_{\cA,\Xi})\xrightarrow{\simeq}\cA.
 \]
 It compares with the closed-sector lane only through the named
 open/closed trace and compact-generator theorems. It does not prove
@@ -352,24 +374,25 @@ the unique element of
 the modular cyclic deformation complex satisfying
 $D_\cA \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
 that lifts the chiral bracket to all degrees and all genera. The
-\emph{collision residue} is the projection of $\Theta_\cA$ onto the
+\emph{collision kernel} is the projection of $\Theta_\cA^{E_1}$ onto the
 codimension-one boundary stratum of the genus-zero, two-point
 moduli space:
 \begin{equation}\label{eq:hdm-collision-residue-defn}
-r_\cA(z)
+K_\cA^{\mathrm{coll}}(z)
 \;:=\;
-\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})
 \;=\;
-\Theta_\cA\bigm|_{\partial\overline{\mathcal{M}}_{0,2}^{\mathrm{coll}}}.
+\Theta_\cA^{E_1}\bigm|_{\partial\overline{\mathcal{M}}_{0,2}^{\mathrm{coll}}}.
 \end{equation}
-The notation $r_\cA(z)$ records the residual spectral parameter that
+The notation $K_\cA^{\mathrm{coll}}(z)$ records the residual spectral parameter that
 survives the collision: when two marked points~$z_1, z_2$ approach
 each other, the bar propagator $\eta(z_1,z_2) = d\log(z_1 - z_2)$
 acquires a residue along the diagonal, leaving a one-parameter
-family $r_\cA(z) \in \mathrm{End}_\cA(2)[\![z^{-1}]\!]$ indexed by
+family $K_\cA^{\mathrm{coll}}(z)
+\in\mathrm{End}_\cA(2)[\![z^{-1}]\!]$ indexed by
 the relative coordinate $z = z_1 - z_2$.
 
-The existence of $r_\cA(z)$ follows from the bar-intrinsic
+The existence of $K_\cA^{\mathrm{coll}}(z)$ follows from the bar-intrinsic
 construction. $\Theta_\cA$ exists by
 Theorem~\ref{thm:mc2-bar-intrinsic}: the universal MC element is
 $D_\cA - d_0$, and its restriction to any boundary stratum is
@@ -379,8 +402,11 @@ of generic cyclic rigidity
 (Theorem~\ref{thm:cyclic-rigidity-generic}): the cyclic deformation
 complex has one-dimensional second cohomology in degree~$2$ on the
 generic locus. On that locus the gauge class is therefore
-presentation-independent. The collision residue is
-therefore a canonical invariant of~$\cA$.
+presentation-independent, and the collision residue is an invariant
+of~$\cA$ on the cyclic-rigid generic locus. Its scalar projections
+depend additionally on the designated primary line and trace datum:
+the degree-two coefficient is an invariant of the triple
+(algebra, primary line, trace datum), not of the algebra alone.
 
 \begin{theorem}[Seven-face master theorem; \ClaimStatusConditional]
 \label{thm:seven-faces-master}
@@ -392,18 +418,20 @@ extraction; line-side comparison enters $(\infty,1)$-categorically
 through Vol~II). Level: $1\leftrightarrow 2$ at the bar/chart layer,
 projecting to level~$5$ on the scalar shadow side; closed-sector
 comparison invokes level~$3$. Hypothesis package: chart pair
-$(\cC^{\mathrm{op}}, b, A_b)$ with $A_b=\End_\cC(b)$ modular Koszul
+$(\cC^{\mathrm{op}}, b, A_b)$ with
+$A_b=\RHom_{\mathsf C}(b,b)$ modular Koszul
 on $(X,D,\tau)$; existence and gauge-rigidity of the universal MC
 element $\Theta_{A_b}$ on the cyclic-rigid generic locus
 \textup{(}Theorem~\textup{\ref{thm:cyclic-rigidity-generic}}\textup{);}
 genus-zero formal-disk comparison ambient for the binary residue.
-Let $\cA = A_b$ in this hypothesis package. The collision residue
-$r_\cA(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ admits
+Let $\cA=A_b$ in this hypothesis package. The collision kernel
+$K_\cA^{\mathrm{coll}}(z)
+=\mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})$ admits
 the following realizations on their stated comparison surfaces:
 \begin{enumerate}[label=\textup{(F\arabic*)}]
-\item the universal twisting morphism
-	 $\pi_\cA \in \mathrm{Tw}(\barBch(\cA), \cA)$ of the bar-cobar
- adjunction;
+\item the binary collision component $(\pi_\cA)_2^{\mathrm{coll}}$
+ of the universal twisting morphism
+ $\pi_\cA\in\mathrm{Tw}(\barBch(\cA),\cA)$;
 \item the spectral $r$-matrix of the dg-shifted Yangian arising as
  the line-operator algebra of Dimofte--Niu--Py~\cite{DNP25};
 \item the leading $\lambda$-bracket coefficient of the classical
@@ -427,9 +455,12 @@ constructed. Face \textup{(F2)} is available when~$\cA$ is realised as
 the closed colour of the Dimofte--Niu--Py line-operator package.
 Faces \textup{(F5)}--\textup{(F7)} are the affine
 Kac--Moody specialization. On the common domain of any two available
-faces, their realizations are equal as elements of
+faces, their typed extraction maps have equal images as elements of
 $\mathrm{End}_\cA(2)[\![z^{-1}]\!]$, after the explicit
-normalization conventions of \S\ref{sec:hdm-master}. On the affine
+normalization conventions of \S\ref{sec:hdm-master}.  Every face
+called a classical $r$-matrix includes
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and identifies its represented
+operator with $\rho_\cA(K_\cA^{\mathrm{coll}})$. On the affine
 lane the trace-form Drinfeld kernel
 $k\,\Omega_{\mathrm{tr}}/z$ and the KZ collision residue
 $\Omega/((k+h^\vee)z)$ are not literal rational-function identities;
@@ -441,7 +472,8 @@ $k\,\Omega_{\mathrm{tr}}\mapsto\Omega/(k+h^\vee)$.
 \noindent The proof of Theorem~\ref{thm:seven-faces-master} is
 distributed across \S\ref{sec:hdm-face-1}--\S\ref{sec:hdm-face-7}:
 each section establishes one face on its stated comparison surface and
-identifies it with the collision residue there, citing the formal
+identifies its extracted kernel with $K_\cA^{\mathrm{coll}}$ there,
+citing the formal
 cross-volume theorem that proves the identification.
 \S\ref{sec:hdm-master} assembles the available identifications into a
 common-domain equation.
@@ -497,20 +529,22 @@ universal twisting morphism. More precisely, if
 denotes the propagator-extraction map of
 \eqref{eq:hdm-twisting-propagator}, then
 \begin{equation}\label{eq:hdm-face-1}
-r_\cA(z)
+K_\cA^{\mathrm{coll}}(z)
 \;=\;
-\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})
 \;=\;
 \operatorname{Prop}^{\mathrm{coll}}_{0,2}(\pi_\cA)
 \;\in\;
 \mathrm{End}_\cA(2)[\![z^{-1}]\!].
 \end{equation}
 Thus the equality is typed by the residue functor: $\pi_\cA$ is a
-twisting morphism out of the bar coalgebra, while $r_\cA(z)$ is its
+twisting morphism out of the bar coalgebra, while
+$K_\cA^{\mathrm{coll}}(z)$ is its
 arity-two collision kernel.
-After passage to Koszul coalgebra coordinates
-$\cA^{\mathrm{i}}:=H^*(\barBch(\cA))$, and then to strict Verdier-dual
-algebra coordinates when Upgrade~\textup{(U2)} holds,
+After applying
+$q_\cA\colon\cA^{\mathrm{i}}=C_X(s^{-1}V,s^{-2}R)
+\to\barBch_X(\cA)$, and then passing to strict Verdier-dual algebra
+coordinates when Upgrade~\textup{(U2)} holds,
 $\cA^!=(\cA^{\mathrm{i}})^\vee$, the morphism~$\pi_\cA$ becomes an
 element of $\cA^! \otimes \cA^![\![z^{-1}]\!]$ that satisfies the
 classical Yang--Baxter equation.
@@ -865,12 +899,17 @@ algebraic (Lie-bialgebra / Yangian classical limit). Level: $1$
 (chart) projected to genus-zero level-$2$ binary residue.
 Hypothesis package: chart $\cA = A_b = \widehat{\fg}_k$ at
 non-critical level $k\neq -h^\vee$; trace-form / KZ Casimir
-rescaling $k\,\Omega_{\mathrm{tr}}\mapsto\Omega/(k+h^\vee)$.
+rescaling $k\,\Omega_{\mathrm{tr}}\mapsto\Omega/(k+h^\vee)$;
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ supplied by the KZ representation
+$\rho_{\mathrm{KZ}}$.
 
 For $\cA = A_b = \widehat{\fg}_k$ the affine Kac--Moody chart algebra
-at level $k \neq -h^\vee$, the KZ-normalized collision residue is
+at level $k \neq -h^\vee$, the KZ representation of the collision
+kernel is
 \begin{equation}\label{eq:hdm-face-5}
 r^{KM,\fg}_{\mathrm{KZ},k}(z)
+\;:=\;\rho_{\mathrm{KZ}}
+\bigl(K_{k,\fg}^{\mathrm{coll}}(z)\bigr)
 \;=\;
 \frac{\Omega}{(k + h^\vee)\, z}
 \;\in\;
@@ -880,36 +919,34 @@ On the generic trace-form locus this is matched with
 Drinfeld's level-prefixed kernel
 $r^{\mathrm{Dr}}(z)=k\,\Omega_{\mathrm{tr}}/z$ by the finite Casimir
 rescaling $k\,\Omega_{\mathrm{tr}}\mapsto\Omega/(k+h^\vee)$.
-The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
-follows from the infinitesimal braid relation
+The infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
 collision depth~$2$ projection of the modular MC equation
-\textup{(}Theorem~\textup{\ref{thm:collision-depth-2-ybe}})}.
+\textup{(}Theorem~\textup{\ref{thm:collision-depth-2-ybe}})}, maps
+under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ to the classical
+Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$.
 \end{theorem}
 
 \begin{proof}
 The Kac--Moody OPE
 $J^a(z)\, J^b(w) \sim k\,\delta^{ab}/(z-w)^2 + f^{ab}_{\;\;c}\,
-J^c(w)/(z-w)$ has poles of order~$2$ and~$1$. The bar propagator
-$d\log(z-w)$ absorbs one power, so the collision residue
-extracts the simple-pole coefficient: the zeroth product
-$a_{(0)}b = f^{ab}_{\;\;c} J^c$ (the Lie bracket). The double-pole
-term $k\,\delta^{ab}$ contributes to the curvature~$m_0$, not to
-the collision residue
-(Computation~\ref{comp:sl2-collision-residue-kz}, Step~2).
-Dualizing via the level-shifted Killing form $(k+h^\vee)\kappa$
-(the Sugawara normalization) gives the Casimir $r$-matrix
-$\Omega/((k+h^\vee)z)$, which is~\eqref{eq:hdm-face-5}.
+J^c(w)/(z-w)$ has poles of order~$2$ and~$1$. The trace-form
+collision kernel in the central Casimir channel is
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$; the zeroth
+product $a_{(0)}b=f^{ab}_{\;\;c}J^c$ supplies its Lie-bracket
+compatibility. The KZ representation applies the level-shifted
+invariant form and the explicit comparison
+$k\Omega_{\mathrm{tr}}\mapsto\Omega/(k+h^\vee)$, giving
+\eqref{eq:hdm-face-5}.
 At the critical level $k = -h^\vee$ the denominator vanishes,
 tracking the Sugawara singularity.
-At $k = 0$ the collision residue is $\Omega/(h^\vee z) \neq 0$:
-the Lie bracket of~$\fg$ persists at vanishing level, so the
-abelian vanishing $r = 0$ that characterizes the Heisenberg
-$r$-matrix does not hold for non-abelian Kac--Moody.
-The Yang--Baxter equation is then the IBR of
-Theorem~\ref{thm:collision-depth-2-ybe} after evaluation against
-the Casimir, which is the pure algebraic content of the Arnold
-relation tensored with the structure constants of~$\fg$. The full
+At $k=0$ the trace-form kernel specializes to zero, while the
+KZ-normalized represented kernel specializes to
+$\Omega/(h^\vee z)$; these are two comparison coordinates joined by
+the stated normalization map. The collision-depth-$2$ theorem gives
+the operadic three-insertion relation. The represented-CYBE clause of
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ evaluates it against the Casimir
+and gives the Yang--Baxter equation. The full
 derivation is the shadow/KZ comparison theorem
 (Theorem~\ref{thm:shadow-connection-kz}).
 \end{proof}
@@ -1262,17 +1299,20 @@ are proved. Faces~5--7 are specialized to
 $\cA = \widehat{\fg}_k$, where the historical $r$-matrix and Gaudin
 formulas live. For a general modular Koszul~$\cA$ these affine
 Casimir formulas are not asserted; the corresponding slot is the
-available face-specific expression of the universal collision residue
-$r_\cA(z)$.
+available face-specific expression of the universal collision kernel
+$K_\cA^{\mathrm{coll}}(z)$.
 \end{remark}
 
 \subsection{Averaging-map compatibility on the seven faces}
 \label{subsec:hdm-averaging-compatibility}
 
 The seven-way master theorem is stated at the level of the bar
-hub~$F_1$, where the universal collision residue
-$r_\cA(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ lives in the
-$E_\infty$-modular dGLA $\mathfrak{g}_\cA^{\mathrm{mod}}$. The
+hub~$F_1$, where the universal ordered collision kernel
+$K_\cA^{\mathrm{coll}}(z)=
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})$ lives in the
+$E_1$ convolution dGLA.  Its homotopy coinvariant
+$q_2(K_\cA^{\mathrm{coll}})$ lives in the modular dGLA
+$\mathfrak{g}_\cA^{\mathrm{mod}}$. The
 seven faces $F_2, \dots, F_7$ are constructed in different ambient
 homotopy frames: some symmetric ($F_3, F_5, F_6, F_7$ in their
 classical-Sugawara presentations), some intrinsically ordered
@@ -2186,9 +2226,10 @@ constructed, or compared with~$U_\cA$, as follows.
 \begin{enumerate}[label=\textup{(R\arabic*)}]
 \item \emph{Boundary factor.} The first tensor factor of~$U_\cA$ is
  the boundary chiral algebra~$\cA$.
-\item \emph{Bar-dual coalgebra.} The bar construction on the boundary
- factor gives
- $\cA^i=H^*(\barBch(\cA))$.
+\item \emph{Quadratic coalgebra and full bar.} The chosen boundary
+ presentation gives
+ $\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+ $q_\cA\colon\cA^{\mathrm i}\to\barBch_X(\cA)$.
 \item \emph{Verdier factor.} The second tensor factor of~$U_\cA$ is
  the Verdier-dual factorization companion~$\cA^{!}_\infty$; when
  Upgrade~\textup{(U2)} holds, its strict cohomological shadow is the
@@ -2481,15 +2522,15 @@ $r^{KM,\fg}_{\mathrm{coll},k}(z) = k\, \Omega_{\mathrm{tr}}/z$
 in the trace-form collision lane, equivalently
 $r^{KM,\fg}_{\mathrm{KZ},k}(z)=\Omega/((k+h^\vee)z)$ after the
 Sugawara/KZ Casimir rescaling, recovering the residue entry.
-Theorem~C (central-charge complementarity,
-Theorem~\ref{thm:chiral-center-theorem}) reads here as
-$\kappa(V_k) + \kappa(V_k^!) = \dim(\mathfrak g)/2$ on the trace-form
+Theorem~C forms the strict-flat centre-local-system eigensummands.
+Their normalized Theorem~D trace gives
+$\kappa(V_k)+\kappa(V_{-k-2h^\vee})=0$ on the trace-form
 normalization.
 
 \emph{Virasoro $\mathrm{Vir}_c$.} The coderived dual is
 $\mathrm{Vir}_c^{!}_\infty \simeq \mathrm{Vir}_{c'}^{\text{copy}}_\infty$
-with $c + c' = 26$ (the critical-central-charge complementarity of
-Theorem~C on the Virasoro lane, $c/2 + c'/2 = 13$). The representing
+with $c + c' = 26$.  The C1 centre-local-system eigensummands acquire
+the normalized Theorem~D scalar trace $c/2+c'/2=13$. The representing
 object $U_{\mathrm{Vir}_c} = \mathrm{Vir}_c \bowtie
 \mathrm{Vir}_{26 - c}^{!}_\infty$ has universal $R$-matrix
 $r^{\mathrm{Vir}}_c(z) = (c/2)/z^3 + 2T/z$, recovering the residue
@@ -2652,17 +2693,21 @@ Proposition~\ref{prop:hdm-u-a-recoverability}:
  \simeq \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)$ on the open/closed
  side, and in the free-field line presentation
  $\cC_{\mathrm{line}} \simeq \cH_{-k}\text{-}\mathsf{mod}$.
-\item Quasitriangular $R$-matrix: the single-generator OPE has
+\item Collision kernel and represented $R$-matrix: the single-generator OPE has
  double pole $k$, and the $d\log$ absorption strips one
  pole, producing
  \[
- r^{\mathrm{Heis}}_k(z) \;=\; \frac{k}{z}\, J \otimes J,
+ K^{\mathrm{coll}}_{\mathrm{Heis},k}(z)
+ \;=\; \frac{k}{z}\, J \otimes J,
  \]
- which is the level-$k$ Drinfeld $r$-matrix at $\fg = \C$; vanishing
- at $k = 0$ is the level sanity check.
+ whose Fock representation has commuting tensor insertions and hence
+ supplies $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and the level-$k$
+ Drinfeld $r$-matrix at $\fg=\C$.
 \item Universal MC element: $\Theta_{\cH_k}$ has a single non-zero
  degree~$2$ component (class~$\mathbf{G}$, $r = 2$), and
- $\kappa(\cH_k) = k$ by the degree-$2$ projection
+ $\kappa(\cH_k)=\tau_{\cH_k,2}^{\mathrm{res}}
+ q_2(K^{\mathrm{coll}}_{\mathrm{Heis},k})=k$ by the normalized
+ degree-$2$ residue/trace
  (Heisenberg entry).
 \item Shadow connection: the shadow tower terminates at $r = 2$
  (class~$\mathbf{G}$), so $\nabla^{\mathrm{hol}}$ is the trivial
@@ -2670,7 +2715,7 @@ Proposition~\ref{prop:hdm-u-a-recoverability}:
  higher-order corrections vanish.
 \end{enumerate}
 The datum therefore reduces to rank-one free-field data:
-$(\cH_k,\cH_k^i,\cH_k^!,\cC,r^{\mathrm{Heis}}_k(z),
+$(\cH_k,\cH_k^i,\cH_k^!,\cC,K^{\mathrm{coll}}_{\mathrm{Heis},k}(z),
 \Theta_{\cH_k},\nabla^{\mathrm{KZ}})$, with $\cH_k^!$ represented on
 the Verdier-finite lane by the negative-curvature companion
 $\cH_{-k}$. On that lane the strict matched-pair object
@@ -2973,12 +3018,15 @@ half-braiding of~$T$ with itself.
 
 \begin{proof}
 \emph{(F1).} Heisenberg is modular Koszul: the Koszul-duality
-witness is $\cH_k^! = \cH_{-k}$. Apply
+witness is the curved second-kind branch
+\(\cH_k^!=(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)\).
+The level-flipped algebra \(\cH_{-k}\) is only the scalar-shadow and
+open-colour comparison object with the same \(\kappa=-k\). Apply
 Theorem~\ref{thm:hdm-u-a-drinfeld-center}\textup{(i)} and unpack
 Ben-Zvi--Francis--Nadler for the abelian vertex algebra
 $\cH_k$: half-braidings of Fock modules~$V_\alpha$ are the $U(1)$
 monodromy phases, and the Drinfeld centre
-$\cH_k\otimes \cH_{-k}$ realises these as the doubled lattice
+$\cH_k\otimes \cH_{-k}$ realises these as the doubled open-colour lattice
 algebra. The $E_2$-equivalence with~$P_\cC(U_{\cH_k})$ is the
 self-dual centre-projection case of
 \eqref{eq:hdm-u-a-drinfeld-center-koszul}.
@@ -3618,8 +3666,9 @@ $\rho^!\colon H\to\cH_{-k}$ satisfying the $U(1)$ matched-pair
 $[\rho_\partial(J),\rho^!(J^*)]=k$ factors uniquely through
 $U_{\cH_k}=\cH_k\otimes\cH_{-k}$ via
 $\Phi_H(x)=\rho_\partial(x_{(1)})\otimes\rho^!(x_{(2)})$, the factorisation
-of the braided coproduct. Self-duality $\cH_k^!=\cH_{-k}$ makes the
-finality property the universal one for the free Weyl algebra.
+of the braided coproduct. This is the universal property of the free
+Weyl/open-colour doubled algebra; it is not an object-level Koszul
+self-duality statement.
 
 \emph{Affine Kac--Moody $V_k(\fg)$ at non-critical~$k$.} The final
 object receives the universal map from every braided $E_2$-Hopf
@@ -3712,11 +3761,12 @@ matched-pair object $U_\cA = \cA\bowtie\cA^!_\infty$; Upgrades
 $R$-matrix) projections.
 
 Let $\cA = A_b$ be a modular Koszul chart algebra with matched-pair
-object $U_\cA=\cA\bowtie\cA^!_\infty$. The chart slot and the five
-functorial entries other than the bar-dual coalgebra are the images of
-$U_\cA$ under six explicit $(\infty,1)$-functors; the omitted
-bar-dual entry is $H^*(\barBch(P_\cA(U_\cA)))$ and is
-therefore determined by the boundary projection:
+object $U_\cA=\cA\bowtie\cA^!_\infty$. The chart slot and five
+functorial entries are images of $U_\cA$ under the specified
+$(\infty,1)$-functors.  The boundary projection determines the full
+bar cohomology $H^\bullet\barBch(P_\cA(U_\cA))$; the quadratic
+coalgebra~$\cA^{\mathrm i}$ additionally uses the chosen presentation
+of the projected boundary algebra:
 \begin{enumerate}[label=\textup{(P\arabic*)}]
 \item \emph{Boundary projection} (tensor with counit, left adjoint):
 \[
@@ -3911,14 +3961,20 @@ Section~\ref{sec:hdm-thesis}. $\beta$ is the counit of the
 $P_\cA\dashv P_{\cA^!}$ adjunction applied fibrewise. $\gamma$ is the
 codimension-$1$ boundary-stratum residue on
 $\mathcal C^\bullet_{\mathrm{ch}}(\cA,\cA)$, equal to the
-$\operatorname{Res}^{\mathrm{coll}}_{0,2}$ used to define $r_\cA(z)$
+$\operatorname{Res}^{\mathrm{coll}}_{0,2}$ used to define
+$K_\cA^{\mathrm{coll}}(z)$
 in Section~\ref{sec:hdm-collision-residue}. $\delta$ is the universal
 bar construction: $\Theta_\cA$ defines a codifferential on
-$B^{\mathrm{ord}}(\cA)$ whose cohomology is $\cA^i$; after
+$B^{\mathrm{ord}}(\cA)$.  The quadratic presentation supplies
+$\cA^i=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^i\to B^{\mathrm{ord}}(\cA)$; under
+$H_{\mathrm{CL}}(\cA)$, the induced map $H^\bullet(q_\cA)$ is an
+isomorphism.  After
 Upgrade~\textup{(U2)} its Verdier dual rectifies to~$\cA^!$ on the
 Koszul locus. $\epsilon$ is the genus-zero, two-point specialization
 of the shadow connection whose connection one-form has collision
-coefficient $r_\cA(z)$; in the affine KZ lane this coefficient is
+coefficient $K_\cA^{\mathrm{coll}}(z)$; in the affine KZ lane its
+represented image is
 $\Omega/((k+h^\vee)z)$, with no further division by the relative
 coordinate. $\zeta$ is Upgrade~(U1) together
 with $\operatorname{Sh}_{g,n}$ applied to the MC entry. Commutativity is checked
@@ -4773,7 +4829,7 @@ Proposition~\ref{prop:higher-w-kappa-matrix} and, on the
 $\mathsf G$-family stratum specifically (Theorem~C ceiling
 restricted to the Heisenberg class, where
 $\kappa+\kappa^!=0$; distinct from the $\mathsf L$ ceiling~$13$,
-$\mathsf C$ ceiling~$250/3$, $\mathsf M$ ceiling~$98/3$). All cross-composite
+$\mathsf C$ ceiling~$250/3$, $\mathsf M$ ceiling~$25/3$). All cross-composite
 sectors are absorbed into the Heisenberg diagonal by the bosonic
 OPE, confirming the shadow-depth--$2$ truncation: no new content
 opens at higher rank~$|S|$.
@@ -5138,17 +5194,17 @@ structural anchor:
  fixes the conductor $K(\cA)=c(\cA)+c(\cA^!)$ after passing to the
  Verdier partner.
 \item \emph{Climax identity.} The full datum $\mathcal{H}(T)$
- condenses into the climax identity
- $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
- of Chapter~\ref{ch:climax-theorem}: the modular shadow
- connection $\nabla^{\mathrm{hol}}$ is the
- KZ-pullback of the Arnold connection on $\overline{C}_n(X)$,
- and the seven-face master theorem records the seven names
- under which the binary collision residue~$r_\cA(z)$ enters
- that pullback. Outside the stated comparison surfaces this remains
- only a partial anchor: there is no proved degeneration-independent
- sewing theorem identifying the higher-genus horizontal sections of
- $\nabla^{\mathrm{hol}}_{g,n}$ with a field-theoretic moduli problem, and the
+ condenses into the typed KZ--Arnold bar-superconnection theorem of
+ Chapter~\ref{ch:climax-theorem}: the modular shadow connection
+ $\nabla^{\mathrm{hol}}$ is compared with the local Arnold/KZB
+ representative, and the bar-complex operator appears after
+ Fulton--MacPherson boundary-residue realization.  The seven-face
+ master theorem records the seven names under which the binary
+ collision residue~$r_\cA(z)$ enters that comparison. Outside the
+ stated comparison surfaces this remains
+only a partial anchor: there is no proved degeneration-independent
+sewing theorem identifying the higher-genus horizontal sections of
+$\nabla^{\mathrm{hol}}_{g,n}$ with a field-theoretic moduli problem, and the
 global triangle comparing the closed-sector slot to the line model is still
 blocked by the strict edge and quartic-contact obstructions.
 \end{enumerate}
@@ -5338,57 +5394,44 @@ average kills the spectral parameter of $r_\cA(z)$ and collapses
 $\Theta_\cA$ onto its scalar genus-$0$ trace.
 \end{remark}
 
-\begin{remark}[Theorem~C bucket $\{0, 8, 13, 250/3, 98/3\}$ and the $K^{\kappa_{\mathrm{ch}}} = 8$ B-family value]
+\begin{remark}[Theorem~C scalar trace bucket and the Mukai arithmetic candidate]
 \label{rem:holo-master-theoremC-bucket}
-\index{Theorem~C!allowed-values bucket $\{0, 8, 13, 250/3, 98/3\}$}
+\index{Theorem~C!scalar trace bucket $\{0,13,250/3\}$}
 \index{B-family!$K^{\kappa_{\mathrm{ch}}} = 8$ Bruinier--Heegner reciprocity}
 The scalar Verdier sum
-$K^\kappa(\cA):=\kappa(\cA)+\kappa(\cA^!)$ attached to the
-Drinfeld double $U_\cA$ by
-Proposition~\ref{prop:hdm-u-a-recoverability}(ii) inherits from
-Theorem~C (the derived-centre complementarity theorem of
-Part~\ref{part:standard-landscape}) two nested finite buckets. On the
-four standard-landscape lanes $\mathsf G / \mathsf L / \mathsf C /
-\mathsf M$ the value is forced into the classical ceiling
+$K^\kappa(\cA):=\kappa(\cA)+\kappa(\cA^!)$ is the normalized
+Theorem~D trace shadow of the two C1 eigensummands of
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$.
+The represented Vol~I witnesses give the computed bucket
 \[
  K^\kappa(\cA)
  \;\in\;
- \{0,\; 13,\; 250/3,\; 98/3\}.
+ \{0,\;13,\;250/3\}.
 \]
-The canonical five-element bucket
+The zero lane is represented by the Heisenberg, affine, and free-field
+pairs; Virasoro gives~$13$; the principal~$\mathcal W_3$ witness gives
+$250/3$.  For Bershadsky--Polyakov the central-charge identity
+$K^c_{\mathrm{BP}}=50$ is exact, while the proposed modular value
+$25/3$ awaits the genus-one curvature comparison.
+
+The Mukai lattice gives the exact arithmetic value
 \[
- K^\kappa(\cA)
- \;\in\;
- \{0,\; 8,\; 13,\; 250/3,\; 98/3\}
+ 2c_+(\mathrm{II}_{4,20})=8.
 \]
-adjoins the Vol~III $\mathsf B$-row witness. The value~$0$ is the
-free-field abelian scalar locus
-(Heisenberg, class~$\mathsf G$, with $k\mapsto -k$ on the scalar lane
-and $\cH_k^!\simeq\mathrm{Sym}^{\mathrm{ch}}(V^*)$ on the algebra lane). The
-values $13$ (Virasoro, bosonic string), $250/3$ (principal
-$\mathcal{W}_N$ universal family), and $98/3$ (matter + ghost
-balanced families) are the Theorem~C generic-$\mathsf M$ outputs
-recorded in Chapter~\ref{chap:universal-conductor}. The extremal
-entry~$8$ is not a fifth $\mathsf G/\mathsf L/\mathsf C/\mathsf M$
-value. It is the B-family rigidity value of the Mukai-enhanced K3
-Heisenberg witness
-$K^{\kappa_{\mathrm{ch}}}(\mathrm{Mukai}(K3))
-=2c_+(\mathrm{II}_{4,20})=8$, transported through Bruinier
-Heegner-reciprocity~\cite{Bruinier02}. Vol~III keeps this scalar
-separate from the Borcherds weight
-$\kappa_{\mathrm{BKM}}(\Delta_5)=c_1(0)/2=\mathrm{wt}(\Delta_5)=5$
-and from the Oberdieck--Pixton normalisation
+Its interpretation as
+$K^{\kappa_{\mathrm{ch}}}(\mathrm{Mukai}(K3))=8$ is conjectural under
+$H_{\mathsf B}$ and is transported through Bruinier--Heegner
+reciprocity~\cite{Bruinier02}.  The Mukai arithmetic, the Borcherds
+weight
+$\kappa_{\mathrm{BKM}}(\Delta_5)=c_1(0)/2=\mathrm{wt}(\Delta_5)=5$,
+and the Oberdieck--Pixton normalization
 \[
  D_5=64^{-1}\Delta_5,\qquad
  \Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2,\qquad
- Z_{\mathrm{OP/DT}}=-D_5^{-2}=-4096\,\Delta_5^{-2}.
+ Z_{\mathrm{OP/DT}}=-D_5^{-2}=-4096\,\Delta_5^{-2}
 \]
-The cross-volume bridge
-relates the three faces by the singular-theta / Heegner
-correspondence; it does not identify $8$ with a doubled or averaged
-Borcherds weight. No sixth value is admitted on the chirally Koszul
-boundary-linear locus where the Verdier entry of
-Proposition~\ref{prop:hdm-u-a-recoverability} is strict.
+occupy distinct scalar targets.  The singular-theta/Heegner
+correspondence supplies the cross-volume bridge among them.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -5652,19 +5695,28 @@ The four properties are established sequentially.
 \smallskip
 \emph{\textup{(i)} Chain-level middle inversion.} By Vol~II
 Theorem ``Universal holography functor,'' part~(i) (boundary face),
-$\Obs^\partial(\Phi_{\mathrm{hol}}(\cA)) \simeq \cA$ as $E_1$-chiral
-algebras on $X$ for every $\cA \in \ChirAlg^{\omega,\mathrm{BL,adm}}_X$.
-Hypothesis~\textup{\ref{H4-triangle}} places $\Phi_{d,\sigma}(\cC)$ in the
-source of $\Phi_{\mathrm{hol}}$, and
-Hypothesis~\textup{\ref{H6-triangle}} places the HT model on the
-anomaly-free BV/BRST comparison surface, so the identification applies with
-$\cA = \Phi_{d,\sigma}(\cC)$. Vol~II's Theorem ``Bulk-to-boundary OPE
-consistency'' sharpens the identification from a quasi-isomorphism
-of underlying objects to a chain-level identification of
-$E_1$-chiral algebra structures \textup{(}part~(c) of that
-theorem: the algebra structure on
-$\Obs^\partial(\Phi_{\mathrm{hol}}(\cA))$ agrees strictly at
-chain level with the chiral product on $\cA$\textup{).} This gives
+the supplied comparison
+\[
+\eta^\partial_\cA\colon
+\Obs^\partial(\Phi_{\mathrm{hol}}(\cA,\omega,T_\omega,\Xi_\cA))
+\xrightarrow{\simeq}\cA
+\]
+is an $E_1$-chiral equivalence on $X$ for every
+\((\cA,\omega,T_\omega,\Xi_\cA)\in
+\ChirAlg^{\omega,\mathrm{BL,adm},\Xi}_X\).
+Hypothesis~\textup{\ref{H4-triangle}} places
+\(\Phi_{d,\sigma}(\cC)\) in the algebraic source, and
+Hypothesis~\textup{\ref{H6-triangle}} supplies the anomaly-free
+BV/BRST comparison surface, hence the required
+\(\Xi_{\Phi_{d,\sigma}(\cC)}\). The identification applies with
+\(\cA = \Phi_{d,\sigma}(\cC)\). Vol~II's Theorem
+``Bulk-to-boundary OPE consistency'' sharpens the comparison from a
+quasi-isomorphism of underlying objects to a chain-level
+identification of $E_1$-chiral algebra structures \textup{(}part~(c)
+of that theorem: the algebra structure on the realized boundary
+\(\Obs^\partial(\Phi_{\mathrm{hol}}(\cA,\omega,T_\omega,\Xi_\cA))\)
+agrees strictly at chain level with the chiral product on
+\(\cA\)\textup{).} This gives
 \eqref{eq:triangle-middle-inversion}.
 
 \smallskip

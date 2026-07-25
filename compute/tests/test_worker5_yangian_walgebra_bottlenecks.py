@@ -14,6 +14,7 @@ import numpy as np
 
 from compute.lib.bp_koszul_conductor_engine import (
     K_BP,
+    UnverifiedBPInvariantError,
     c_BP,
     dual_level,
     kappa_complementarity,
@@ -252,13 +253,14 @@ def test_dk5_dg_realization_formal_finite_thick_model():
     verified_against=[
         "exact rational BP conductor engine",
         "dual-level involution arithmetic k -> -k-6",
-        "oddness of c_BP(k)-98 about the critical fixed point",
+        "oddness of c_BP(k)-25 about the critical fixed point",
     ],
     disjoint_rationale=(
         "The proposition's transport assertion is conditional. This test does "
         "not certify that transport hypothesis; it independently checks the "
         "arithmetic content attached to the conditional surface: the level "
-        "involution, the conductor 196, and the kappa complementarity 98/3."
+        "involution, the conductor 50, and the conditional kappa "
+        "complementarity 25/3."
     ),
 )
 def test_bp_self_duality_arithmetic_surface():
@@ -267,10 +269,19 @@ def test_bp_self_duality_arithmetic_surface():
         kd = dual_level(k)
         assert dual_level(kd) == k
         assert k + kd == Fraction(-6)
-        assert K_BP(k) == Fraction(196)
-        assert c_BP(k) + c_BP(kd) == Fraction(196)
-        assert (c_BP(k) - Fraction(98)) + (c_BP(kd) - Fraction(98)) == 0
-        assert kappa_complementarity(k) == Fraction(98, 3)
+        assert K_BP(k) == Fraction(50)
+        assert c_BP(k) + c_BP(kd) == Fraction(50)
+        assert (c_BP(k) - Fraction(25)) + (c_BP(kd) - Fraction(25)) == 0
+        # The BP genus-one curvature is open; the engine refuses to emit a
+        # kappa companion sum (conditional value 25/3 on the ratio lane).
+        try:
+            kappa_complementarity(k)
+        except UnverifiedBPInvariantError:
+            pass
+        else:
+            raise AssertionError(
+                "kappa_complementarity must signal the open BP genus-one status"
+            )
 
 
 @independent_verification(

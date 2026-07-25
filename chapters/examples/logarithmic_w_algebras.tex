@@ -54,8 +54,8 @@ D (modular characteristic) &
  $T$-line scalar $\kappa_T(\cW(p)) = c/2$
  & Prop~\ref{prop:wp-kappa} \\
 H (chiral Hochschild) &
- curve-level amplitude $[0,2]$ only under the Koszul-completed
- hypotheses; off-locus degree-$3$ obstruction
+ $H_H(\cW(p);S_p)$ gives family support; the degree-$3$ column is the
+ positive-collision obstruction when $3\in S_p$
  & Prop~\ref{prop:wp-theorem-h-boundary} \\
 \bottomrule
 \end{tabular}
@@ -221,11 +221,13 @@ Three checks identify the $T$-line and fence off the full package.
 \emph{Path~1 (Virasoro OPE).}
 The algebra $\cW(p)$ has $\dim V_1 = 0$: there are no weight-$1$
 currents ($T$ has weight~$2$; the triplet $W^a$ has weight
-$2p - 1 \geq 3$). The stress tensor nevertheless generates an
+$2p - 1 \geq 3$). The stress tensor generates an
 autonomous Virasoro subalgebra with
 $T(z)T(w)\sim (c/2)(z-w)^{-4}+\cdots$. The ordered collision
-residue on this line is therefore the Virasoro residue, and the
-averaged scalar is $\kappa_T=c/2$.
+kernel on this line is therefore the Virasoro kernel, and
+\[
+ \tau_{T,2}^{\mathrm{res}}q_2(K_T^{\mathrm{coll}})=\kappa_T=c/2.
+\]
 
 \emph{Path~2 (lattice parent).}
 The triplet $\cW(p) \subset V_{\sqrt{2p}\Z}$ is a vertex
@@ -306,7 +308,8 @@ lattice VOA and the $\mathfrak{sl}_2$-action on the
 generators.
 \end{proof}
 
-\begin{remark}[$C_2$-cofiniteness vs rationality vs Koszulness]
+\begin{remark}[$C_2$-cofiniteness vs rationality vs Koszulness;
+\ClaimStatusProvedHere]
 \label{rem:wp-c2-vs-koszul}
 \index{$C_2$-cofiniteness!relation to Koszulness}
 Three finiteness conditions on a vertex algebra and their
@@ -318,6 +321,21 @@ theorem, Arakawa--van Ekeren \cite{AvE23}).
 \item \emph{$C_2$-cofiniteness} $\not\Longrightarrow$
 \emph{rationality}: $\cW(p)$ is $C_2$-cofinite but not
 rational for any $p \geq 2$.
+\item \emph{$C_2$-cofiniteness} $\not\Longrightarrow$
+\emph{chiral Koszulness}.  The assertion that the Li associated
+variety is zero-dimensional is a statement about the commutative
+quotient $R_{\cW(p)}$; it does not contract the chiral diagonal bar
+complex and does not kill the positive-depth
+$\mathrm{KD}_{\mathrm H}^{\bullet}$ obstruction.
+\item \emph{Rationality} $\not\Longrightarrow$ \emph{Theorem~H}.
+Rationality is a semisimplicity statement for the module category.
+Theorem~H is a curve-level diagonal-bar statement requiring PBW
+chiral Koszulness, $E_\infty$ averaging, finite-window perfectness,
+and Mittag--Leffler completion.
+\item \emph{Finite logarithmic module category} $\not\Longrightarrow$
+\emph{Theorem~H}.  Finitely many simple modules and finite
+projective covers constrain representation theory; they do not prove
+the Fulton--MacPherson collision-depth spectral sequence collapses.
 \item \emph{Chiral Koszulness}
 (Definition~\ref{def:chiral-koszul-morphism}) does not require
 free strong generation. Free strong generation is the hypothesis
@@ -333,7 +351,7 @@ finite fixed-point subalgebras need not preserve free strong
 generation or PBW collapse. The open problem is whether the
 equivariant bar complex of the fixed-point algebra itself has
 the Koszul concentration required by
-Conjecture~\ref{conj:wp-koszulness}.
+the open triplet Koszulness problem stated below.
 \end{remark}
 
 \begin{proposition}[No finite free strong generation;
@@ -393,9 +411,8 @@ destroy the PBW basis.
 Feigin--Tipunin~\cite{FeiginTipunin2010} give an explicit
 presentation of $\cW(p)$ by generators and relations.
 The presentation establishes finite strong generation and gives the
-relations that must be seen by the bar differential. It cannot prove
-free strong generation, because $C_2$-cofiniteness already excludes
-finite free strong generation.
+relations seen by the bar differential.  Its $C_2$-cofiniteness places
+the algebra outside the finitely freely strongly generated class.
 
 \item \emph{Character and Zhu comparison.}
 The excluded PBW character
@@ -406,13 +423,14 @@ Adamovi\'c--Milas vacuum character locates the first normally
 ordered relation and hence the first candidate bar $2$-cocycle.
 It does not by itself prove chiral Koszulness.
 
-\item \emph{Finite-window and completion argument.}
-The $T$-line is class~M, so the raw direct-sum class-M
-chain-level statement is not the correct ambient. Any positive
-Koszulness theorem for $\cW(p)$ must be formulated in finite
-conformal-weight windows and then passed to the pro-object /
-filtered-completed ambient by a Mittag--Leffler comparison, as in
-the repaired class-M higher-genus theorem.
+\item \emph{Finite-window and completion problem.}
+For the class-$\mathsf M$ presentation, finite conformal-weight windows
+and their product completion contain different state families.  The
+raw bar--cobar counit is governed by its comparison cone.  A completed
+Koszulness theorem for $\cW(p)$ begins with actual finite-stage chiral
+algebras, strict transition maps, the low-weight bar comparisons, and
+the CP1--CP3 derived-limit package.  These are explicit hypotheses for
+the proposed $\cW(p)$ comparison.
 \end{enumerate}
 
 \begin{remark}[Koszulness constraints]
@@ -474,12 +492,15 @@ For $n\ge4$,
  \ChirHoch^n(\cA)
  \cong H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)).
 \]
-Thus a nonzero $\ChirHoch^3(\cW(p))$ is not a fourth column of
-curve-level Theorem~H. It is the off-Koszul positive-collision
-obstruction $\mathfrak{o}_{\mathrm H}^{3}(\cW(p))$. Under the full
-PBW chiral Koszul, completion, perfectness, and averaging hypotheses
-of Theorem~\ref{thm:theorem-h-on-koszul-locus}, this obstruction
-vanishes and $\ChirHoch^n(\cW(p))=0$ for $n\ge3$.
+Thus $\ChirHoch^3(\cW(p))$ is the degree-three column of the
+family-indexed Theorem~H and is represented here by the
+positive-collision obstruction
+$\mathfrak{o}_{\mathrm H}^{3}(\cW(p))$.  A family datum
+$H_H(\cW(p);S_p)$ identifies this group with
+$H^3(K_{\cW(p),S_p})$.  Membership $3\in S_p$ retains the column;
+omission of~$3$ from~$S_p$ forces its vanishing.  PBW chiral
+Koszulness supplies the associated-graded contraction, while the
+finite-window retract and chart comparison determine~$S_p$.
 \end{proposition}
 
 \begin{proof}
@@ -488,7 +509,8 @@ sequence of
 Theorem~\ref{thm:theorem-h-off-koszul-explicit-correction} to the
 triplet algebra. The positive-depth complex is the closed
 collision-stratum part of the completed FM Hochschild complex. The
-depth-zero quotient supplies only the curve-level $[0,2]$ piece; the
+depth-zero quotient supplies the curve-level columns through
+degree~$2$; the
 long exact sequence of the displayed triangle identifies the first
 possible high-degree class with the cokernel of
 $\partial_{\mathrm H}^{3}$. For $\cW(p)$ the first candidates lie on
@@ -628,9 +650,12 @@ No assertion is made here that the full dual is again a triplet
 algebra, a $C_2$-cofinite algebra, or a lattice screening kernel.
 \end{conjecture}
 
-\begin{remark}[Five-object firewall for the triplet]
+\begin{remark}[Five-object firewall specialization for the triplet]
 \label{rem:wp-five-object-firewall}
-The symbols in the previous conjecture denote different objects:
+This is the triplet specialization of
+Convention~\ref{conv:master-five-object-firewall} and
+Theorem~\ref{thm:typed-verdier-koszul-firewall}. The symbols in the
+previous conjecture denote different objects:
 $\cW(p)$ is the algebra; $\barB(\cW(p))$ is its bar coalgebra;
 $H^\bullet(\barB(\cW(p)))$, when it is concentrated in the Koszul
 way, is the intrinsic bar-dual coalgebra $\cW(p)^i$ rather than an

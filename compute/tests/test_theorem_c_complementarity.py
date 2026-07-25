@@ -93,12 +93,10 @@ class TestKappaValues:
             expected = Fraction(N * N - 1) * (k_val + N) / (2 * N)
             assert kappa("affine", lie_type="A", rank=N - 1, k=k_val) == expected
 
-    def test_affine_critical_level_raises(self):
-        """kappa undefined at critical level k = -h^v."""
-        with pytest.raises(ValueError, match="Critical level"):
-            kappa("affine", lie_type="A", rank=1, k=-2)
-        with pytest.raises(ValueError, match="Critical level"):
-            kappa("affine", lie_type="A", rank=2, k=-3)
+    def test_affine_kappa_vanishes_at_critical_level(self):
+        """The polynomial modular scalar extends with critical value zero."""
+        assert kappa("affine", lie_type="A", rank=1, k=-2) == 0
+        assert kappa("affine", lie_type="A", rank=2, k=-3) == 0
 
     def test_betagamma_kappa_formula(self):
         """kappa(bg) = c/2 = 6*lam^2 - 6*lam + 1."""

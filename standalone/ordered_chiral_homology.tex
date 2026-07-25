@@ -99,6 +99,7 @@
 
 % Claim status macros (standalone: no-op definitions)
 \providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusConditional}{}
 \providecommand{\ClaimStatusProvedHere}{}
 \providecommand{\ClaimStatusProvedElsewhere}{}
 \providecommand{\ClaimStatusHeuristic}{}
@@ -1119,10 +1120,11 @@ smooth curve $X$.
       Y_\hbar(\mathfrak{sl}_2)^{\mathrm{ch}}\bigr)
   \]
   is infinite-dimensional as a graded vector space.
-  This stands in contrast to the derived chiral centre of
-  any $\Einf$-chiral algebra, which has finite-dimensional
-  cohomology concentrated in degrees $\{0,1,2\}$
-  \textup{(Theorem~H)}.
+  For an $\Einf$-chiral curve chart carrying a family datum
+  $H_H(\cA;S)$, Theorem~H identifies its derived-centre
+  cohomology with $H^\bullet(K_{\cA,S})$ and hence supports it
+  in the prescribed finite set~$S$.  Finite-dimensional graded
+  pieces are a separate finiteness hypothesis.
 
 \item \textup{(Poincar\'e series -- fundamental
   representation.)}
@@ -1692,7 +1694,7 @@ Let $\cA$ be a chiral algebra on a smooth proper curve $X$.
   \item \textup{Class $G$ \textup{(}Heisenberg\textup{)}:}
     $r(z) = k/z$, pole order $1$. Regular singularities.
   \item \textup{Class $L$ \textup{(}affine KM\textup{)}:}
-    $r(z) = k\Omega/z$ \textup{(}trace-form\textup{)},
+    $r(z) = k\Omega_{\mathrm{tr}}/z$ \textup{(}trace-form\textup{)},
     pole order $1$. Regular singularities.
   \item \textup{Class $C$ \textup{(}$\beta\gamma$\textup{)}:}
     $r$ is a constant nilpotent endomorphism
@@ -1877,6 +1879,14 @@ from ordered to symmetric chiral homology.
 \begin{proposition}[Symmetric descent recovers
 Beilinson--Drinfeld]
 \label{prop:sym-descent}
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+chiral-homology presentation, Beilinson levels~$2$ and~$5$,
+hypothesis package: \(\Einf\)-commutative chiral input, finite
+ordered arity, \(\Sigma_n\)-equivariant holonomic \(\cD\)-module,
+finite direct image along \(X^n\to X^{(n)}\), Reynolds summand
+identifying the Beilinson--Drinfeld symmetric \(\cD\)-module, and
+regular extension across diagonals\textup{)}.
 Let $\cA$ be an $\Einf$-chiral algebra on a smooth
 proper curve $X$. The quotient
 $q \colon \Ran^{\mathrm{ord}}(X) \to \Ran(X)$
@@ -1911,19 +1921,31 @@ The equivariant descent for $\cD$-modules works through the
 quotient stack $[X^n / \Sigma_n]$: the category of
 $\Sigma_n$-equivariant $\cD$-modules on $X^n$ is equivalent
 to the category of $\cD$-modules on $[X^n / \Sigma_n]$.
-Since $\Sigma_n$ is a finite group acting in characteristic
-zero, Maschke's theorem ensures that representations of
-$\Sigma_n$ are semisimple; the quotient stack
-$[X^n / \Sigma_n]$ and the coarse moduli space
-$X^{(n)} = X^n / \Sigma_n$ have equivalent $\cD$-module
-categories. The quotient $\pi \colon X^n \to X^{(n)}$ is
-ramified along the diagonals, but equivariant descent
-is not affected by ramification in characteristic zero.
+This is not an equivalence between $\cD$-modules on the quotient stack
+and arbitrary $\cD$-modules on the coarse symmetric power
+$X^{(n)}$.  Stabilizers along diagonals retain equivariant data.
+The coarse Beilinson--Drinfeld object is obtained by the finite direct
+image
+\[
+\pi_{n,+}\cF_n^{\mathrm{ord}},
+\qquad
+\pi_n\colon X^n\longrightarrow X^{(n)},
+\]
+followed by the Reynolds summand fixed by the symmetric descent datum:
+\[
+\cF_n^{\Sigma}(\cA)
+\;\simeq\;
+\operatorname{Re}_{\Sigma_n}
+\bigl(\pi_{n,+}\cF_n^{\mathrm{ord}}(\cA)\bigr).
+\]
+The regular-extension hypothesis across the diagonals is exactly what
+makes this finite direct-image description compatible with the
+collision strata.
 
-The de~Rham functor commutes with
-$\Sigma_n$-coinvariants (which are exact for the symmetric
-group acting on vector spaces over $\CC$ of
-characteristic zero), giving:
+The de~Rham functor commutes with finite direct image.  After this
+passage to global de~Rham complexes, Maschke's theorem applies to the
+finite symmetric-group action in characteristic zero, so
+derived coinvariants agree with ordinary coinvariants.  Thus
 $R\Gamma_{\mathrm{dR}}(X^n,
 \cF_n^{\mathrm{ord}})_{\Sigma_n}
 \simeq
@@ -1938,13 +1960,21 @@ homology at degree $n$.
 The cross-degree chiral differential $d_{\mathrm{ch}}$
 is $\Sigma$-equivariant for $\Einf$-chiral algebras
 because the factorisation maps (collision/OPE) are
-symmetric: the OPE $Y(a,z)b$ and $Y(b,z)a$ agree up to
-signs. This ensures that the total complex, not just
-the fixed-degree pieces, descends to the symmetric quotient.
+symmetric in the BD sense: the two ordered collision representatives
+are identified by the commutative chiral operation, with the Koszul
+sign already built into the symmetric structure. This ensures that
+the total complex, not just the fixed-degree pieces, descends to the
+Reynolds symmetric summand.
 \end{proof}
 
 \begin{proposition}[Lossy descent for $\Eone$-chiral algebras]
 \label{prop:lossy-descent}
+\ClaimStatusProvedHere
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+chiral-homology presentation, Beilinson levels~$2$ and~$5$,
+hypothesis package: fixed finite arity window, characteristic zero,
+completed \(\Sigma_n\)- or \(R\)-twisted coinvariant descent, and
+continuous ordered homology carrier\textup{)}.
 For an $\Eone$-chiral algebra $\cA$, the natural map
 \begin{equation}\label{eq:lossy}
   \av_n \colon
@@ -1952,44 +1982,68 @@ For an $\Eone$-chiral algebra $\cA$, the natural map
   \;\longrightarrow\;
   \Bigl(\int_{X,n}^{\mathrm{ord}} \cA\Bigr)_{\Sigma_n}
 \end{equation}
-is surjective but not injective for $n \geq 2$. The kernel
-$\ker(\av_n)$ carries ordered data invisible to the
-Beilinson--Drinfeld theory:
+is the completed coinvariant quotient and is therefore surjective.
+Its kernel is exactly the completed relation subspace
+\[
+\ker(\av_n)
+=
+\overline{
+\left\langle \sigma\cdot c-c\;:\;
+\sigma\in\Sigma_n,\;
+c\in\int_{X,n}^{\mathrm{ord}}\cA
+\right\rangle}.
+\]
+In the \(R\)-twisted case the same formula is replaced by the
+relations \(r\sigma\otimes c-r\otimes\sigma c\) in
+\[
+R_n\widehat\otimes_{\mathbb Q[\Sigma_n]}
+\int_{X,n}^{\mathrm{ord}}\cA .
+\]
+Consequently \(\av_n\) is non-injective precisely when the ordered
+arity-\(n\) carrier has a nonzero nontrivial
+\(\Sigma_n\)-isotypic, or \(R\)-twisted, component.  When that
+component vanishes, the descent is lossless in arity~\(n\).  On the
+standard nontrivial windows, the kernel contains the following
+witnesses:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item At $n = 2$: the full spectral $r$-matrix $r(z)$
-  versus the scalar $\kappa(\cA)$
-  (for abelian algebras, $\kappa = \av(r(z))$;
-  for non-abelian KM, $\kappa = \av(r(z)) + \dim(\fg)/2$,
-  the Sugawara shift).
-\item At $n = 3$: the Drinfeld associator $\Phi$ appears
-  in $\ker(\av_3)$. The space of sections of $\av_3$
-  compatible with the Maurer--Cartan equation is a
-  $\GRT_1$-torsor.
-\item At $n \geq 4$: the kernel carries higher-degree
+\item At $n=2$: the anti-invariant part of
+  $K_\cA^{\mathrm{coll}}$ lies in $\ker(q_2)$, while
+  $q_2(K_\cA^{\mathrm{coll}})$ retains the invariant operator part.
+  The normalized trace gives $\kappa$ on scalar abelian windows and
+  $\kappa_{\mathrm{dp}}$ on non-abelian KM, where the Sugawara term
+  $\dim(\fg)/2$ completes $\kappa$.
+\item At $n = 3$: the nontrivial Reynolds complement of the
+  Drinfeld associator $\Phi$ appears in $\ker(\av_3)$ when the
+  associator class survives in the chosen window. The space of
+  sections of $\av_3$ compatible with the Maurer--Cartan equation is
+  a $\GRT_1$-torsor.
+\item At $n \geq 4$: whenever the corresponding nontrivial
+  isotypic component survives, the kernel carries higher-degree
   ordered shadow data from the $\Eone$ obstruction
   tower.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-By \cite[the non-splitting proposition]{Lorgat26I},
-the short exact sequence
-$0 \to \ker(\av) \to \gEone \to \gmod \to 0$
-does not split as dg Lie algebras.
-At $n = 2$: for a genuinely $\Eone$-chiral algebra,
-$R(z) \neq \id$ and the $\Sigma_2$-action on the
-ordered de~Rham cohomology is twisted by $R$; the
-antisymmetric eigenspace of this twisted action gives
-$\ker(\av_2) \neq 0$
-(see Example~\ref{ex:yangian} for the Yangian
-case). At $n \geq 3$: the cross-degree
-obstruction (the bar differential is
-$\Sigma_{n-2}$-equivariant but not
-$\Sigma_n$-equivariant) forces non-trivial elements
-of $\ker(\av_n)$. The $\GRT_1$-torsor
-structure at $n = 3$ follows from Drinfeld's theorem
-on associators combined with the Etingof--Kazhdan
-quantisation theorem.
+The coinvariant quotient of a completed \(\Sigma_n\)-complex is the
+cokernel of the continuous maps \(\sigma-\id\). Hence the quotient map
+is surjective and its kernel is the completed span of the displayed
+relations. This proves the injectivity criterion. The \(R\)-twisted
+statement is the same cokernel calculation for
+\(R_n\widehat\otimes_{\mathbb Q[\Sigma_n]}(-)\), using the relations
+defining the balanced tensor product.
+
+The listed classes are then witnesses, not extra axioms.  In arity
+\(2\), the complementary Reynolds projector
+\((1-s)/2\) extracts the anti-invariant part of the ordered
+\(r\)-matrix; it is zero on scalar abelian windows and nonzero on
+the non-abelian windows where the ordered matrix part survives.
+In arity \(3\), a nontrivial associator component contributes through
+its Reynolds complement; Drinfeld's associator theorem and
+Etingof--Kazhdan quantisation describe the torsor of compatible
+sections once the source Lie bialgebra, topology, associator, and
+target category are fixed. Higher arities are identical: only the
+surviving nontrivial isotypic components lie in the kernel.
 \end{proof}
 
 
@@ -2001,10 +2055,11 @@ At genus zero the bar differential squares to zero and
 ordered chiral homology is an ordinary chain complex.
 At genus $g \geq 1$, this fails: the fiberwise bar
 differential acquires curvature proportional to the Koszul
-invariant $\kappa(\cA)$ (the scalar $\kappa(\cA) = \av(r(z))$ in the
-abelian and scalar families, while non-abelian affine Kac--Moody has
-$\kappa(V_k(\fg)) = \av(r(z)) + \dim(\fg)/2$,
-the degree-$2$ average of the classical $r$-matrix; computed
+invariant $\kappa(\cA)$ (the scalar
+$\kappa(\cA)=\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$
+in the abelian and scalar families, while non-abelian affine
+Kac--Moody has
+$\kappa(V_k(\fg))=\kappa_{\mathrm{dp}}+\dim(\fg)/2$; computed
 explicitly in \S\ref{sec:examples}) times the Hodge class
 $\omega_g = c_1(\lambda)$ on $\overline{\cM}_g$.
 The curvature is a \emph{base} class (on moduli),
@@ -2622,10 +2677,10 @@ structures are:
 \item \textup{($R$-matrix.)} The vertex $R$-matrix is the
   KZ $R$-matrix: the monodromy of the KZ connection
   % level-shift/trace-form: trace-form convention; k=0 -> r=0. Verified.
-  $\nabla = d - k\Omega/(z_1 - z_2) \cdot d(z_1 - z_2)$
+  $\nabla = d - k\Omega_{\mathrm{tr}}/(z_1 - z_2) \cdot d(z_1 - z_2)$
   around $\Delta_{12}$. The classical $r$-matrix
   (trace-form) is
-  $r(z) = k\Omega/z$; at $k = 0$, $r = 0$; at
+  $r(z) = k\Omega_{\mathrm{tr}}/z$; at $k = 0$, $r = 0$; at
   $k = -h^\vee$, the critical level, the Sugawara
   construction degenerates.
 \item \textup{($\Ainf$ structure.)} The chiral $\Ainf$
@@ -5049,15 +5104,16 @@ of holomorphic translation, the datum
 Khan--Zeng~\cite{KhanZeng25} requires.
 \end{proof}
 
-\begin{remark}[Two $\Ethree$ structures]
+\begin{remark}[Closed-sector $\Etwo$ versus topological $\Ethree$]
 \label{rem:two-e3}
-The algebraic bulk $\Etwo$ (chiral Hochschild cohomology of the
-$\Etwo$-coalgebra $\BarSig$, no conformal vector needed)
-and the topological $\Ethree^{\mathrm{top}}$ (Sugawara
+The algebraic closed-sector $\Etwo$ (chiral Hochschild cohomology of
+the $\Etwo$-coalgebra $\BarSig$, no conformal vector needed) and the
+topological $\Ethree^{\mathrm{top}}$ (Sugawara
 topologization, conformal vector at non-critical level)
 are distinct; Theorem~\ref{thm:e3-identification}
 compares their deformation parameter spaces. Full family
-identification remains open.
+identification remains open, and a physical bulk interpretation
+requires the open--closed comparison datum.
 \end{remark}
 
 \begin{warning}[The bar complex itself is not $\Ethree$]
@@ -5140,9 +5196,9 @@ The Koszul invariant is
   \kappa = 3(k + 2)/4.
 \end{equation}
 The $r$-matrix in trace-form convention is
-$r(z) = k\Omega/z$ (at $k = 0$, $r = 0$);
+$r(z) = k\Omega_{\mathrm{tr}}/z$ (at $k = 0$, $r = 0$);
 in KZ normalisation,
-$r(z) = \Omega/((k + 2)z)$.
+$r(z) = \Omega_{\mathrm{KZ}}/((k + 2)z)$.
 Class $L$ (shadow depth $r = 3$): $\ell_1, \ell_2, \ell_3$
 non-trivial, $\ell_k = 0$ for $k \geq 4$.
 
@@ -5231,9 +5287,11 @@ The kernel of the averaging map $\av_3$ is the space of
 ordered data invisible to $\BarSig$. For
 $\fg = \mathfrak{sl}_2$, this kernel is one-dimensional:
 $\ker(\av_3) \cong \Lambda^3(\CC^3) = \CC$, carrying the
-Drinfeld associator. The associator $\Phi_{\mathrm{KZ}}$
-is the unique (up to $\GRT_1$-action) non-trivial element
-of this kernel.
+Drinfeld associator class. After fixing an associator gauge,
+$\Phi_{\mathrm{KZ}}$ supplies a distinguished generator of this
+one-dimensional shadow. The $\GRT_1$ action changes the associator
+representative in the torsor; it does not upgrade this scalar
+shadow into an associator-independent chain-level object.
 
 For general $\fg$, the ordered data at degree $3$ is
 controlled by
@@ -5666,7 +5724,7 @@ The degeneration
 $\tau \to i\infty$ sends
 $\wp_1(z, \tau) \to \pi\cot(\pi z) \to 1/z + O(z)$
 and $\phi_\pm \to 1/z + O(1)$, recovering
-$r^{\mathrm{rat}}(z) = k\,\Omega/z$.
+$r^{\mathrm{rat}}(z) = k\,\Omega_{\mathrm{tr}}/z$.
 
 The KZB connection at degree~$2$ on the relative coordinate
 $w = z_1 - z_2$ is
@@ -6098,14 +6156,18 @@ vanish.
 
 \begin{remark}[The elliptic $R$-matrix as ordered datum]
 \label{rem:ell-r-matrix-ordered}
-The Belavin elliptic $r$-matrix
-$r^{\mathrm{ell}}(z, \tau) = k \cdot r^{\mathrm{Belavin}}
-(z, \tau)$ is the degree-$2$ projection of the genus-$1$
-Maurer--Cartan element
-$\Theta_\cA^{(1)} \in \gEone$. It satisfies the classical
-Yang--Baxter equation with spectral parameter (verified
+The degree-$2$ projection of the genus-$1$ ordered Maurer--Cartan
+element $\Theta_\cA^{(1)}\in\gEone$ is the elliptic collision kernel
+$K_\cA^{(1),\mathrm{coll}}(z,\tau)$. Under the KZB package
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, its represented image is the
+Belavin elliptic $r$-matrix
+$r^{\mathrm{ell}}(z,\tau)=k\,r^{\mathrm{Belavin}}(z,\tau)$.
+It satisfies the classical Yang--Baxter equation with spectral parameter (verified
 numerically in \texttt{elliptic\_rmatrix\_shadow.py}),
-and its averaging gives $\kappa = 3(k+2)/4$
+and its normalized trace gives
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{(1),\mathrm{coll}})
+=\kappa_{\mathrm{dp}}$; adjoining the Sugawara contribution gives
+$\kappa=3(k+2)/4$
 (equation~\eqref{eq:sl2-kappa}), the same value as at
 genus~$0$. The agreement is forced: the Sugawara shift
 $\dim(\fg)/2 = 3/2$ comes from the simple-pole
@@ -6123,25 +6185,35 @@ $q = e^{2\pi i/(k+2)}$ is a primitive $(k+2)$-th root of unity.
 The representation category of $U_q(\mathfrak{sl}_2)$ is
 semisimple with $k+1$ integrable modules $V_0, \ldots, V_k$,
 and the KZB local system has finite monodromy.
-The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$
-on a genus-$g$ curve $\Sigma_g$ therefore computes
-a finite-dimensional invariant at each degree, and the
-symmetric coinvariants recover the space of conformal
-blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
+The Tsuchiya--Ueno--Yamada/Hitchin conformal-block sheaf is
+then finite rank.  The ordered chiral chain complex enters this
+statement only through the ordered-to-TUY comparison morphism:
+after the integrable level, boundary sewing, projectively flat
+connection, and determinant-anomaly packages are supplied, its
+symmetric coinvariant shadow identifies with that finite-rank
+sheaf (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
 The following proposition shows that the resulting dimension
 is given by the Verlinde formula~\cite{Verlinde88}.
 
 \begin{proposition}[Verlinde formula from ordered chiral
 homology]
 \label{prop:verlinde-from-ordered}
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+chiral-homology/conformal-block comparison presentation, Beilinson
+levels~$2$ and~$5$, hypothesis package: positive integral
+\(\widehat{\mathfrak{sl}}_2\) level, TUY/Hitchin finite-rank
+conformal-block sheaf, integrable-module truncation, KZB
+projectively flat connection, boundary sewing, determinant-anomaly
+matching, and the ordered-chain-to-TUY comparison morphism\textup{)}.
 Let $k \geq 1$ be a positive integer, and let
 $S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
 be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
 level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textup{(Genus~$0$.)}
-  The ordered chiral homology at genus~$0$ with no marked
-  points recovers the unique vacuum:
+  Under the ordered-chain-to-TUY comparison, the genus-$0$
+  no-marked-point target is the unique vacuum:
   \begin{equation}\label{eq:verlinde-g0}
     \dim H^0\!\bigl(\cM_{0,0},\, V_k(\mathfrak{sl}_2)\bigr)
     = \sum_{j=0}^{k} S_{0j}^2 = 1.
@@ -6151,8 +6223,8 @@ level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
   the orthogonality of the sine functions.
 
 \item \textup{(Genus~$1$.)}
-  The ordered chiral homology at genus~$1$ recovers the
-  number of integrable representations:
+  Under the same comparison, the genus-$1$ target has rank equal
+  to the number of integrable representations:
   \begin{equation}\label{eq:verlinde-g1}
     \dim H^0\!\bigl(\cM_{1,0},\, V_k(\mathfrak{sl}_2)\bigr)
     = \sum_{j=0}^{k} S_{0j}^0 = k + 1.
@@ -6161,9 +6233,9 @@ level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
   \cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$, the $k+1$
   simple modules of $A(V_k)$ are $V_0, \ldots, V_k$, and
   the genus-$1$ conformal blocks are their characters.
-  From the ordered chiral homology:
-  Proposition~\textup{\ref{prop:ell-degree0}} computes
-  the degree-$0$ center at integrable level as $\CC^{k+1}$
+  On the ordered/TUY comparison lane:
+  Proposition~\textup{\ref{prop:ell-degree0}} computes the
+  degree-$0$ center at integrable level as $\CC^{k+1}$
   \textup{(}the center of the integrable quotient of $Y_\hbar$
   at the root of unity $q = e^{2\pi i/(k+2)}$\textup{)}.
 
@@ -6194,8 +6266,9 @@ level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
   $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
 
 \item \textup{(Handle attachment.)}
-  The ordered bar complex factorization under non-separating
-  sewing recovers the TQFT handle-attachment formula:
+  TUY non-separating factorization, compared with the ordered
+  sewing map under the stated package, gives the TQFT
+  handle-attachment formula:
   each isospin channel $j$ contributes a handle operator
   $H_j = S_{0j}^{-2}$, so
   \begin{equation}\label{eq:handle-attachment}
@@ -6207,7 +6280,7 @@ level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
 \item \textup{(Separating factorization.)}
   Under separating degeneration $\Sigma_g \rightsquigarrow
   \Sigma_{g_1} \cup \Sigma_{g_2}$ with $g = g_1 + g_2$,
-  the bar complex factorization gives
+  TUY factorization and the ordered sewing comparison give
   \begin{equation}\label{eq:sep-factorization}
     Z_g
     = \sum_{j=0}^{k} S_{0j}^{2-2g_1} \cdot S_{0j}^{2-2g_2}
@@ -6223,8 +6296,8 @@ $(0,0)$-entry of $S \cdot S^T = I$, which follows from the
 orthogonality relation
 $\sum_{j=0}^{k} \sin(\pi(j{+}1)a/(k{+}2))
 \sin(\pi(j{+}1)b/(k{+}2)) = (k{+}2)\delta_{ab}/2$.
-From the ordered chiral homology: at genus~$0$ with no
-marked points, the conformal block space is the space of
+Under the ordered-chain-to-TUY comparison, at genus~$0$ with no
+marked points the conformal block space is the space of
 vacua $\CC \cdot |0\rangle$, which is one-dimensional.
 
 \textup{(ii)} At genus~$1$, $S_{0j}^0 = 1$ for all $j$,
@@ -6236,11 +6309,12 @@ so $Z_1 = k + 1$. This has three independent derivations:
   $A(V_k(\mathfrak{sl}_2))$ has $k+1$ simple modules;
   each contributes a one-dimensional space of genus-$1$
   conformal blocks (the character).
-\item \textup{(Ordered center.)}
+\item \textup{(Ordered/TUY comparison.)}
   Proposition~\ref{prop:ell-degree0} identifies the
   degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
   integrable level $k$ as $\CC^{k+1}$ (the center of
-  the integrable quotient). The averaging map $\av_0$ is
+  the integrable quotient). Under the comparison morphism this is
+  the TUY genus-$1$ block space. The averaging map $\av_0$ is
   an isomorphism (nothing to symmetrise at degree~$0$),
   so all $k+1$ dimensions survive.
 \end{itemize}
@@ -6248,9 +6322,9 @@ so $Z_1 = k + 1$. This has three independent derivations:
 \textup{(iii)} The Verlinde formula~\cite{Verlinde88} gives
 $Z_g = \sum_j S_{0j}^{2-2g}$ as the dimension of the space
 of conformal blocks on a genus-$g$ curve with no insertions.
-From the ordered chiral homology: the symmetric coinvariants
-of the ordered chain complex compute the conformal blocks
-via the factorization property (TUY~\cite{TUY89}). The
+Through the ordered-chain-to-TUY comparison, the symmetric
+coinvariant shadow is identified with the TUY conformal-block sheaf.
+The
 KZB local system at integrable level decomposes into $k+1$
 channels labeled by integrable representations; each channel
 $j$ contributes $S_{0j}^{2-2g}$ to the partition function.
@@ -6259,15 +6333,16 @@ with the rank of the Verlinde bundle over~$\cM_g$.
 
 \textup{(iv)} Handle attachment: a genus-$g$ surface with
 a non-separating cycle cut open gives a genus-$(g{-}1)$
-surface with two extra marked points. The bar complex sewing
-map reglues these marked points, summing over the $k+1$
+surface with two extra marked points. TUY sewing reglues these
+marked points, and the ordered sewing map agrees with it only under
+the stated comparison package. The channel sum runs over the $k+1$
 intermediate representations with the propagator
 $S_{0j}^{-2}$ (the inverse of the $j$-th eigenvalue of
 the sewing operator). This gives
 $Z_{g+1} = \sum_j H_j \cdot S_{0j}^{2-2g}$.
 
-\textup{(v)} Separating factorization: the bar complex
-factorization under separating degeneration
+\textup{(v)} Separating factorization: TUY factorization under
+separating degeneration, together with the ordered sewing comparison
 (Theorem~A for the ordered bar complex on $\Ran^{\mathrm{ord}}$)
 decomposes the genus-$g$ partition function into a sum over
 channels of the product of the two lower-genus contributions,

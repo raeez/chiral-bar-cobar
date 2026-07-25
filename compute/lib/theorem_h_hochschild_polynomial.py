@@ -1,1515 +1,1064 @@
-"""Theorem H verification: Hochschild polynomial growth for Koszul chiral algebras.
+r"""Family-indexed computation surface for Theorem H.
 
-THEOREM H (one of 5 main theorems). For chirally Koszul A on a smooth
-projective curve X (dim_C X = 1), the chiral Hochschild cohomology is
-CONCENTRATED IN DEGREES [0, 2].  Explicitly
-(thm:hochschild-polynomial-growth):
+Theorem H concerns the completed curve-level complex
 
-  (a) Concentration.  ChirHoch^n(A) = 0 for n < 0 or n > 2.
-  (b) Polynomial.  P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2
-      is a polynomial of degree at most 2.
-  (c) Koszul functoriality.
-      ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
-      (thm:main-koszul-hoch).
+    C_ch^bullet(A,A) = RHom_{A^e}(A,A).
 
-The amplitude [0, 2] is forced on the Theorem H surface: PBW chiral
-Koszulness, E_infty-chiral completion, finite-type/perfect diagonal
-Hochschild complexes, generic non-critical parameter, strict
-Mittag-Leffler passage, and the PBW/Arnold Shelton-Yuzvinsky
-contraction.  Outside that package the high-degree tail is measured by
-the Hochschild Koszul-defect complex KD_H^bullet(A), not by this finite
-table.
+A datum ``H_H(A;S)`` consists of a complete chart model, a model supported
+in ``S``, and a strong deformation retract between them.  It gives the
+support inclusion ``Supp ChirHoch^bullet(A) subset S``.  The support set is
+part of the family datum.
 
----- AP94 RECTIFICATION (supersedes prior model) --------------------
+Two bounded vertex-complex calculations enter as independent benchmarks:
 
-An earlier incarnation of this module carried a "W-algebra polynomial
-ring regime" that modelled ChirHoch*(W^k(g, f_prin)) as
-  C[Theta_1, ..., Theta_r], |Theta_i| = h_i,
-yielding infinite-dimensional cohomology with polynomial growth.
+* the even superboson attached to an ``r``-dimensional space has
+  ``dim H_b^n = C(r,n) + C(r,n+1)``;
+* Virasoro has one-dimensional bounded cohomology in degrees ``0,2,3``.
 
-That model is REFUTED by Theorem H: ChirHoch* lives on the curve and
-has amplitude [0, 2] with family-dependent finite total dimension.  The refuted model
-confused two distinct objects (see AP94 in CLAUDE.md):
+Bakalov--De Sole--Kac prove these statements in Theorems 7.4 and 7.2.
+A named bounded-to-chart quasi-isomorphism transports either benchmark to
+the completed curve chart.  Their Conjecture 7.5 supplies the affine upper
+bound ``C(dim(g),n) + C(dim(g),n+1)``.  Principal W, beta-gamma, bc,
+lattice, and further family rows await their own ``H_H(A;S)`` data.
 
-  * Continuous Lie cohomology H*_cont(Vect(S^1)) of the Witt/Virasoro
-    Lie algebra -- an infinite-dimensional invariant of the topological
-    Lie algebra acting on formal power series.  This is NOT the chiral
-    Hochschild cohomology of the chiral algebra Vir_c on a curve X.
-    See AP94/AP95/AP96.
+A perfect degree-``d`` pairing is recorded separately.  It governs a
+duality comparison after both chart complexes have been constructed.
 
-  * ChirHoch*(Vir_c) -- the derived center of the CHIRAL algebra
-    Vir_c on X.  Bounded: dim ChirHoch*(Vir_c) <= 4 with amplitude
-    [0, 2] by Theorem H, because the de Rham functor on a curve has
-    length 2.  See also AP95/AP96/AP97/AP98/AP102.
-
-The prior module had "test_total_dim_infinite" asserting that the
-Virasoro total dim is None (= infinite) -- this was the surface
-symptom of a circular engine-test pair both encoding the wrong
-model (AP128).  The bounded rewrite below restores Theorem H as the
-source of truth and retains the public function names so that every
-importer continues to load.
-
-Virasoro bounded data (generic c, Koszul per prop:virasoro-koszul-acyclic):
-  dim ChirHoch^0(Vir_c) = dim Z(Vir_c)              = 1
-  dim ChirHoch^1(Vir_c) = 0      (no outer derivations at generic c)
-  dim ChirHoch^2(Vir_c) = dim Z(Vir_c^!)            = 1
-  P_{Vir}(t) = 1 + t^2, total dim 2.
-
-Simple-pole free-field data (generic curve-level chiral product):
-  dim ChirHoch^1(beta-gamma) = dim ChirHoch^1(bc) = 0.
-  Charge/ghost-number rescalings are zero-mode gauge directions, and
-  the conformal-weight parameter changes the chosen stress tensor rather
-  than the chiral product.  The same simple-pole mechanism gives
-  dim ChirHoch^1(free fermion) = 0.  Thus these three entries have
-  P(t) = 1 + t^2 on the Theorem H surface.
-
-W_N bounded data (generic level, principal nilpotent f_prin):
-  dim ChirHoch^0 = 1, dim ChirHoch^1 = 0, dim ChirHoch^2 = 1.
-  P_{W_N}(t) = 1 + t^2, total dim 2.
-
-References:
-  thm:hochschild-polynomial-growth (chiral_hochschild_koszul.tex)
-  thm:main-koszul-hoch            (chiral_hochschild_koszul.tex)
-  prop:virasoro-koszul-acyclic    (bar_complex_tables.tex)
-  thm:virasoro-chiral-koszul      (bar_complex_tables.tex)
-  CLAUDE.md: Theorem H, AP94-AP98, AP102, AP128
+Compatibility functions retain the historical public names.  Functions
+whose names refer to chart cohomology return ``None`` until explicit chart
+transport data are supplied.  Bounded values are available through the
+``bounded_*`` functions and the ambient-typed records below.
 """
 
 from __future__ import annotations
 
-from math import comb, gcd
+from dataclasses import dataclass
+from enum import Enum
 from functools import reduce
-from typing import Any, Dict, List, Optional, Tuple
+from math import comb, gcd
+from types import MappingProxyType
+from typing import Any, Dict, List, Mapping, Optional, Tuple
 
-# ============================================================
-# Family data
-# ============================================================
 
-# Every family in FAMILY_DATA is a generic entry on the Theorem H surface.
-# Each entry:
-#   regime:          always 'bounded_koszul'
-#   n_strong_gen:    number of strong generators
-#   gen_weights:     conformal weights of generators
-#   center_dim:      dim Z(A) = dim ChirHoch^0(A)
-#   hoch1_dim:       dim ChirHoch^1(A)
-#   dual_center_dim: dim Z(A^!) = dim ChirHoch^2(A)
-#   koszul_dual:     name of the Koszul dual family
-#   notes:           additional context
-#
-# The W-algebra families (virasoro, w3, wN) are recorded only at generic
-# level on the PBW/completed/strict-ML surface; by Theorem H their
-# ChirHoch is concentrated in [0, 2].  The prior polynomial-ring model is
-# REFUTED.
-
-BOUNDED_KOSZUL = 'bounded_koszul'
-THEOREM_H_DEFECT_COMPLEX = 'KD_H^bullet(A)'
-THEOREM_H_HYPOTHESES = (
-    'PBW chiral Koszulness',
-    'E_infty-chiral completion',
-    'finite-type/perfect diagonal chiral Hochschild complexes',
-    'generic non-critical parameter',
-    'strict Mittag-Leffler completion passage',
-    'PBW/Arnold Shelton-Yuzvinsky contraction',
-)
-THEOREM_H_EXCLUDED_SURFACES = (
-    'critical affine level k = -h^vee',
-    'minimal-model and admissible quotients unless PBW/completion is proved',
-    'logarithmic triplet W(p) unless the logarithmic bar package is proved',
-    'bare rationality, C2-cofiniteness, or finite module category alone',
+THEOREM_H_REQUIRED_COMPONENTS: Tuple[str, ...] = (
+    "complete_chart_complex_Q_A",
+    "chart_quasi_isomorphism_gamma_A",
+    "support_model_K_A_S",
+    "strong_deformation_retract_i_p_h",
+    "incidence_and_bar_face_compatibility",
+    "averaging_and_Mittag_Leffler_comparison",
 )
 
-FAMILY_DATA: Dict[str, dict] = {
-    'heisenberg': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 1,
-        'gen_weights': [1],
-        'center_dim': 1,
-        'hoch1_dim': 1,
-        'dual_center_dim': 1,
-        'koszul_dual': 'sym_ch',
-        'notes': 'Single weight-1 generator alpha(z). '
-                 'ChirHoch^0 = C (vacuum), ChirHoch^1 = C (the current itself), '
-                 'ChirHoch^2 = C (level deformation).',
-    },
-    'affine_sl2': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 3,
-        'gen_weights': [1, 1, 1],
-        'center_dim': 1,
-        'hoch1_dim': 3,
-        'dual_center_dim': 1,
-        'koszul_dual': 'affine_sl2_dual',
-        'notes': 'Three weight-1 generators e(z), h(z), f(z). '
-                 'ChirHoch^1 = g (outer derivations = inner by simplicity). '
-                 'Koszul dual at level -k-4.',
-    },
-    'affine_sl3': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 8,
-        'gen_weights': [1] * 8,
-        'center_dim': 1,
-        'hoch1_dim': 8,
-        'dual_center_dim': 1,
-        'koszul_dual': 'affine_sl3_dual',
-        'notes': 'Eight weight-1 generators. dim sl_3 = 8.',
-    },
-    'affine_slN': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': None,  # depends on N
-        'gen_weights': None,
-        'center_dim': 1,
-        'hoch1_dim': None,
-        'dual_center_dim': 1,
-        'koszul_dual': 'affine_slN_dual',
-        'notes': 'dim sl_N = N^2 - 1 generators, all weight 1.',
-    },
-    'betagamma': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 2,
-        'gen_weights': [1, 0],
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'bc_ghosts',
-        'notes': 'Two generators beta (weight 1), gamma (weight 0). '
-                 'The charge rescaling is zero-mode gauge and the lambda '
-                 'weight motion changes the stress tensor, not ChirHoch^1. '
-                 'Koszul dual = bc ghost system.',
-    },
-    'bc_ghosts': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 2,
-        'gen_weights': [2, -1],
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'betagamma',
-        'notes': 'Two generators b (weight 2), c (weight -1). '
-                 'Ghost-number rescaling is zero-mode gauge and the lambda '
-                 'weight motion changes the stress tensor, not ChirHoch^1. '
-                 'Koszul dual = betagamma.',
-    },
-    'free_fermion': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 1,
-        'gen_weights': [1],
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'free_fermion_dual',
-        'notes': 'Single fermionic weight-1/2 generator (graded as weight 1 '
-                 'in the bar complex). Simple-pole Clifford innerness kills '
-                 'ChirHoch^1; the bilinear rescaling is a degree-2 product '
-                 'deformation. Odd parity.',
-    },
-    'virasoro': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 1,
-        'gen_weights': [2],
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'virasoro_26mc',
-        'notes': 'Virasoro Vir_c at generic c. Koszul per '
-                 'prop:virasoro-koszul-acyclic. ChirHoch^0 = C (center), '
-                 'ChirHoch^1 = 0 (no outer derivations at generic c), '
-                 'ChirHoch^2 = C (level/central deformation kappa=c/2). '
-                 'P_{Vir}(t) = 1 + t^2, total dim 2 (Theorem H amplitude [0,2]).',
-    },
-    'w3': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': 2,
-        'gen_weights': [2, 3],
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'w3_dual',
-        'notes': 'W_3 = W^k(sl_3, f_prin) at generic level. Koszul. '
-                 'ChirHoch^0 = C, ChirHoch^1 = 0, ChirHoch^2 = C. '
-                 'P_{W_3}(t) = 1 + t^2, total dim 2 (Theorem H).',
-    },
-    'wN': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': None,  # N-1 generators
-        'gen_weights': None,
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'koszul_dual': 'wN_dual',
-        'notes': 'W_N = W^k(sl_N, f_prin). N-1 generators of weights 2,...,N. '
-                 'Koszul at generic level. P_{W_N}(t) = 1 + t^2 (Theorem H).',
-    },
-    'lattice_rank_r': {
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': None,  # r generators
-        'gen_weights': None,
-        'center_dim': 1,
-        'hoch1_dim': None,
-        'dual_center_dim': 1,
-        'koszul_dual': 'lattice_dual',
-        'notes': 'Lattice VOA V_Lambda of rank r. The Heisenberg subalgebra '
-                 'contributes r weight-1 generators.',
-    },
-}
+THEOREM_H_HYPOTHESES = THEOREM_H_REQUIRED_COMPONENTS
+THEOREM_H_DEFECT_COMPLEX = "D_H(A;S)"
+THEOREM_H_PACKAGE_CONDITIONAL = "family-indexed-H_H(A;S)"
+
+BOUNDED_TO_CHART_OBLIGATION = (
+    "construct the bounded-to-chart chain map and prove that it is a "
+    "quasi-isomorphism on the completed curve-level cochain complex"
+)
+
+FAMILY_SUPPORT_OBLIGATION = (
+    "construct the complete family datum H_H(A;S), including its strong "
+    "deformation retract and completion comparison"
+)
+
+PERFECT_PAIRING_OBLIGATION = (
+    "construct the degree-d chain pairing and prove its perfectness on both "
+    "completed chart complexes"
+)
 
 
-def theorem_h_scope_record(family: Optional[str] = None,
-                           applies: Optional[bool] = None,
-                           reason: Optional[str] = None) -> Dict[str, Any]:
-    """Return the exact scope record for Theorem H.
+class CohomologyAmbient(str, Enum):
+    """The cochain complex whose cohomology a numerical profile describes."""
 
-    Theorem H is a curve-level chiral Hochschild statement at Beilinson
-    level 3.  A family in FAMILY_DATA is a generic PBW/completed entry on
-    that surface.  Any wider family must carry KD_H^bullet(A) and prove
-    high-degree acyclicity before claiming amplitude [0,2].
-    """
-    known_generic_family = family in FAMILY_DATA if family is not None else True
-    if applies is None:
-        applies = known_generic_family
-    return {
-        'claim': 'ChirHoch amplitude [0,2]',
-        'type_signature': {
-            'quadrant': 'Open-Chain',
-            'presentation': 'curve-level chiral Hochschild cochains',
-            'level': 3,
-            'hypothesis_package': 'Theorem H PBW/generic/completed/strict-ML package',
-        },
-        'family': family,
-        'applies': bool(applies),
-        'status': 'proved_on_scope' if applies else 'outside_scope',
-        'hypotheses': THEOREM_H_HYPOTHESES,
-        'defect_complex': None if applies else THEOREM_H_DEFECT_COMPLEX,
-        'high_degree_acyclicity_proved': bool(applies),
-        'missing_if_off_surface': (
-            () if applies else (
-                'define KD_H^bullet(A)',
-                'prove H^n(KD_H^bullet(A)) = 0 for n >= 4',
-                'prove the degree-three boundary map controls ChirHoch^3',
-            )
-        ),
-        'excluded_surfaces': THEOREM_H_EXCLUDED_SURFACES,
-        'reason': reason,
+    BOUNDED_VERTEX = "bounded_vertex_complex"
+    COMPLETED_CURVE_CHART = "completed_curve_chart"
+
+
+@dataclass(frozen=True)
+class CohomologyProfile:
+    """A cohomology profile with an explicit ambient complex and status."""
+
+    family: str
+    ambient: CohomologyAmbient
+    complex_name: str
+    support: Optional[Tuple[int, ...]]
+    dimensions: Optional[Mapping[int, int]]
+    status: str
+    source: str
+    resolution_obligation: str = ""
+
+    def __post_init__(self) -> None:
+        if self.support is not None:
+            normalized = tuple(sorted(set(self.support)))
+            if normalized != self.support or any(n < 0 for n in self.support):
+                raise ValueError("support must be a strictly increasing tuple of nonnegative degrees")
+        if self.dimensions is not None:
+            if any(n < 0 or value < 0 for n, value in self.dimensions.items()):
+                raise ValueError("cohomology dimensions use nonnegative degrees and values")
+            visible_support = tuple(sorted(n for n, value in self.dimensions.items() if value))
+            if self.support is None or visible_support != self.support:
+                raise ValueError("support must equal the degrees carrying positive dimension")
+
+    def dimension(self, degree: int) -> Optional[int]:
+        """Return an exact dimension when the ambient profile determines it."""
+
+        if degree < 0:
+            return 0
+        if self.dimensions is not None:
+            return self.dimensions.get(degree, 0)
+        if self.support is not None and degree not in self.support:
+            return 0
+        return None
+
+    def prefix(self, max_degree: int) -> Optional[Tuple[Optional[int], ...]]:
+        if max_degree < 0:
+            return ()
+        values = tuple(self.dimension(n) for n in range(max_degree + 1))
+        if all(value is None for value in values):
+            return None
+        return values
+
+    @property
+    def vector(self) -> Optional[Tuple[int, ...]]:
+        if self.dimensions is None or self.support is None:
+            return None
+        if not self.support:
+            return ()
+        return tuple(self.dimensions.get(n, 0) for n in range(max(self.support) + 1))
+
+    @property
+    def total_dimension(self) -> Optional[int]:
+        if self.dimensions is None:
+            return None
+        return sum(self.dimensions.values())
+
+    @property
+    def euler_characteristic(self) -> Optional[int]:
+        if self.dimensions is None:
+            return None
+        return sum((-1) ** n * value for n, value in self.dimensions.items())
+
+
+@dataclass(frozen=True)
+class BoundedToChartComparison:
+    """A named cochain map from a bounded complex to a completed chart."""
+
+    family: str
+    map_name: str
+    source_complex: str
+    target_complex: str
+    quasi_isomorphism_status: str = "open"
+
+    def __post_init__(self) -> None:
+        if any(value == "" for value in (
+            self.family, self.map_name, self.source_complex, self.target_complex
+        )):
+            raise ValueError("a comparison names its family, map, source, and target")
+        allowed = {"open", "assumed", "proved-elsewhere"}
+        if self.quasi_isomorphism_status not in allowed:
+            raise ValueError(f"comparison status belongs to {sorted(allowed)}")
+
+    @property
+    def supplies_transport(self) -> bool:
+        return self.quasi_isomorphism_status in {"assumed", "proved-elsewhere"}
+
+
+@dataclass(frozen=True)
+class FamilySupportDatum:
+    r"""A typed instance of ``H_H(A;S)`` for one completed curve chart."""
+
+    family: str
+    support: Tuple[int, ...]
+    complete_chart_complex: str
+    chart_comparison_map: str
+    support_model: str
+    inclusion: str
+    projection: str
+    contracting_homotopy: str
+    incidence_and_bar_face_compatibility: str
+    completion_and_averaging_map: str
+    model_dimensions: Optional[Mapping[int, int]] = None
+    status: str = "assumed"
+
+    def __post_init__(self) -> None:
+        normalized = tuple(sorted(set(self.support)))
+        if normalized != self.support or any(n < 0 for n in self.support):
+            raise ValueError("support must be a strictly increasing tuple of nonnegative degrees")
+        names = (
+            self.family,
+            self.complete_chart_complex,
+            self.chart_comparison_map,
+            self.support_model,
+            self.inclusion,
+            self.projection,
+            self.contracting_homotopy,
+            self.incidence_and_bar_face_compatibility,
+            self.completion_and_averaging_map,
+        )
+        if any(value == "" for value in names):
+            raise ValueError("every component of H_H(A;S) carries a name")
+        if self.status not in {"open", "assumed", "proved-elsewhere"}:
+            raise ValueError("H_H status is open, assumed, or proved-elsewhere")
+        if self.model_dimensions is not None:
+            visible = tuple(sorted(n for n, value in self.model_dimensions.items() if value))
+            if visible != self.support:
+                raise ValueError("model dimensions must realize the declared support")
+
+    @property
+    def supplies_chart_model(self) -> bool:
+        return self.status in {"assumed", "proved-elsewhere"}
+
+
+@dataclass(frozen=True)
+class PerfectDegreePairing:
+    """A pairing datum, logically separate from support and chart transport."""
+
+    family: str
+    dual_family: str
+    pairing_map: str
+    cohomological_degree: int
+    perfectness_status: str = "open"
+
+    def __post_init__(self) -> None:
+        if any(value == "" for value in (self.family, self.dual_family, self.pairing_map)):
+            raise ValueError("a perfect-pairing datum names both families and its chain map")
+        allowed = {"open", "assumed", "proved-elsewhere"}
+        if self.perfectness_status not in allowed:
+            raise ValueError(f"pairing status belongs to {sorted(allowed)}")
+
+    @property
+    def supplies_pairing(self) -> bool:
+        return self.perfectness_status in {"assumed", "proved-elsewhere"}
+
+
+@dataclass(frozen=True)
+class AffineExteriorBound:
+    """The BDSK Conjecture 7.5 exterior-power bound in a named ambient."""
+
+    family: str
+    lie_dimension: int
+    ambient: CohomologyAmbient
+    status: str
+    source: str
+    comparison_map: Optional[str] = None
+
+    def upper_bound(self, degree: int) -> int:
+        return exterior_two_term_dimension(self.lie_dimension, degree)
+
+    def prefix(self, max_degree: int) -> Tuple[int, ...]:
+        if max_degree < 0:
+            return ()
+        return tuple(self.upper_bound(n) for n in range(max_degree + 1))
+
+
+@dataclass(frozen=True)
+class FamilyCohomologyRecord:
+    """The bounded, chart, comparison, and pairing data for one family."""
+
+    key: str
+    family: str
+    presentation: str
+    bounded: CohomologyProfile
+    chart: CohomologyProfile
+    bounded_affine_bound: Optional[AffineExteriorBound]
+    chart_affine_bound: Optional[AffineExteriorBound]
+    comparison: Optional[BoundedToChartComparison]
+    family_support: Optional[FamilySupportDatum]
+    perfect_pairing: Optional[PerfectDegreePairing]
+    generator_weights: Tuple[int, ...]
+    metadata: Mapping[str, Any]
+
+    @property
+    def regime(self) -> str:
+        return "family_indexed_support"
+
+    @property
+    def poincare(self) -> Optional[List[int]]:
+        vector = self.chart.vector
+        return None if vector is None else list(vector)
+
+    def __getitem__(self, key: str) -> Any:
+        """Read-only migration path for historical dictionary importers."""
+
+        migration = {
+            "regime": self.regime,
+            "status": self.chart.status,
+            "poincare": self.poincare,
+            "bounded_profile": self.bounded,
+            "chart_profile": self.chart,
+            "generator_weights": self.generator_weights,
+        }
+        if key in migration:
+            return migration[key]
+        raise KeyError(key)
+
+    def get(self, key: str, default: Any = None) -> Any:
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+
+def exterior_two_term_dimension(vector_space_dimension: int, degree: int) -> int:
+    r"""Return ``dim Lambda^n(V) + dim Lambda^(n+1)(V)`` exactly."""
+
+    if not isinstance(vector_space_dimension, int) or vector_space_dimension < 0:
+        raise ValueError("vector-space dimension must be a nonnegative integer")
+    if not isinstance(degree, int):
+        raise TypeError("cohomological degree must be an integer")
+    if degree < 0:
+        return 0
+    first = comb(vector_space_dimension, degree) if degree <= vector_space_dimension else 0
+    second = (
+        comb(vector_space_dimension, degree + 1)
+        if degree + 1 <= vector_space_dimension
+        else 0
+    )
+    return first + second
+
+
+def superboson_bounded_dimension(rank: int, degree: int) -> int:
+    r"""BDSK Theorem 7.4: ``dim S^n(Pi h)^* + dim S^(n+1)(Pi h)^*``."""
+
+    return exterior_two_term_dimension(rank, degree)
+
+
+def virasoro_bounded_dimension(degree: int) -> int:
+    """BDSK Theorem 7.2 in the bounded Virasoro complex."""
+
+    return int(degree in {0, 2, 3})
+
+
+def affine_bounded_upper_bound(lie_dimension: int, degree: int) -> int:
+    """The numerical right side of BDSK Conjecture 7.5."""
+
+    return exterior_two_term_dimension(lie_dimension, degree)
+
+
+def _open_profile(
+    family: str,
+    ambient: CohomologyAmbient,
+    complex_name: str,
+    status: str,
+    source: str,
+    obligation: str,
+) -> CohomologyProfile:
+    return CohomologyProfile(
+        family=family,
+        ambient=ambient,
+        complex_name=complex_name,
+        support=None,
+        dimensions=None,
+        status=status,
+        source=source,
+        resolution_obligation=obligation,
+    )
+
+
+def superboson_bounded_profile(rank: int = 1) -> CohomologyProfile:
+    if not isinstance(rank, int) or rank < 0:
+        raise ValueError("superboson rank must be a nonnegative integer")
+    dimensions = {
+        degree: superboson_bounded_dimension(rank, degree)
+        for degree in range(rank + 1)
     }
+    dimensions = {degree: value for degree, value in dimensions.items() if value}
+    support = tuple(dimensions)
+    return CohomologyProfile(
+        family=f"even superboson of rank {rank}",
+        ambient=CohomologyAmbient.BOUNDED_VERTEX,
+        complex_name=f"C^bullet_ch,b(B_h{rank},B_h{rank})",
+        support=support,
+        dimensions=dimensions,
+        status="proved-bounded-BDSK-Theorem-7.4",
+        source="Bakalov--De Sole--Kac (2021), Theorem 7.4",
+    )
+
+
+def virasoro_bounded_profile() -> CohomologyProfile:
+    dimensions = {0: 1, 2: 1, 3: 1}
+    return CohomologyProfile(
+        family="Virasoro Vir_c",
+        ambient=CohomologyAmbient.BOUNDED_VERTEX,
+        complex_name="C^bullet_ch,b(Vir_c,Vir_c)",
+        support=(0, 2, 3),
+        dimensions=dimensions,
+        status="proved-bounded-BDSK-Theorem-7.2",
+        source="Bakalov--De Sole--Kac (2021), Theorem 7.2",
+    )
+
+
+def _normalize_family(family: str) -> str:
+    return family.lower().replace("-", "_").replace(" ", "_")
+
+
+def _family_base(
+    family: str,
+    *,
+    rank: Optional[int] = None,
+    N: Optional[int] = None,
+) -> Tuple[str, str, str, CohomologyProfile, Optional[AffineExteriorBound], Tuple[int, ...], Dict[str, Any]]:
+    normalized = _normalize_family(family)
+
+    if normalized in {"heisenberg", "heis", "superboson", "even_superboson"}:
+        resolved_rank = 1 if rank is None else rank
+        bounded = superboson_bounded_profile(resolved_rank)
+        return (
+            f"superboson_rank_{resolved_rank}",
+            bounded.family,
+            "bounded even superboson / Heisenberg presentation",
+            bounded,
+            None,
+            (1,) * resolved_rank,
+            {"rank": resolved_rank, "family_parameter": "Heisenberg level recorded separately"},
+        )
+
+    if normalized in {"virasoro", "vir", "vir_c", "w2", "w_2"}:
+        bounded = virasoro_bounded_profile()
+        return (
+            "virasoro",
+            bounded.family,
+            "bounded Virasoro vertex complex",
+            bounded,
+            None,
+            (2,),
+            {"central_charge": "fixed-fibre parameter"},
+        )
+
+    affine_N: Optional[int] = None
+    if normalized in {"affine", "affine_km", "affine_sln"}:
+        affine_N = N
+    elif normalized.startswith("affine_sl") and normalized[9:].isdigit():
+        affine_N = int(normalized[9:])
+    if affine_N is not None:
+        if affine_N < 2:
+            raise ValueError("affine sl_N requires N at least 2")
+        lie_dimension = affine_N * affine_N - 1
+        family_name = f"affine V_k(sl_{affine_N})"
+        bounded = _open_profile(
+            family_name,
+            CohomologyAmbient.BOUNDED_VERTEX,
+            f"C^bullet_ch,b(V_k(sl_{affine_N}),V_k(sl_{affine_N}))",
+            "conjectural-BDSK-Conjecture-7.5-bound",
+            "Bakalov--De Sole--Kac (2021), Conjecture 7.5",
+            "construct the bounded affine complex and establish the conjectural exterior bound",
+        )
+        bound = AffineExteriorBound(
+            family=family_name,
+            lie_dimension=lie_dimension,
+            ambient=CohomologyAmbient.BOUNDED_VERTEX,
+            status="conjectural-BDSK-Conjecture-7.5-bound",
+            source="Bakalov--De Sole--Kac (2021), Conjecture 7.5",
+        )
+        return (
+            f"affine_sl{affine_N}",
+            family_name,
+            "bounded affine vertex complex",
+            bounded,
+            bound,
+            (1,) * lie_dimension,
+            {
+                "N": affine_N,
+                "lie_dimension": lie_dimension,
+                "known_inner_zero_mode_dimension": lie_dimension,
+            },
+        )
+
+    w_N: Optional[int] = None
+    if normalized in {"w", "wn", "w_n", "w_algebra"}:
+        w_N = N
+    elif normalized.startswith("w") and normalized[1:].isdigit():
+        w_N = int(normalized[1:])
+    if w_N is not None:
+        if w_N < 2:
+            raise ValueError("principal W_N requires N at least 2")
+        if w_N == 2:
+            return _family_base("virasoro")
+        family_name = f"principal W_{w_N}"
+        bounded = _open_profile(
+            family_name,
+            CohomologyAmbient.BOUNDED_VERTEX,
+            f"C^bullet_ch,b(W_{w_N},W_{w_N})",
+            "open-family-specific-bounded-complex",
+            "family-specific construction",
+            FAMILY_SUPPORT_OBLIGATION,
+        )
+        return (
+            f"w{w_N}",
+            family_name,
+            "principal W-algebra vertex complex",
+            bounded,
+            None,
+            tuple(range(2, w_N + 1)),
+            {"N": w_N},
+        )
+
+    if normalized in {"betagamma", "beta_gamma", "free_betagamma"}:
+        key, family_name, weights = "betagamma", "free beta-gamma", (1, 0)
+    elif normalized in {"bc", "bc_ghosts", "free_fermion", "free_fermion_bc"}:
+        key, family_name, weights = "bc_ghosts", "free fermion bc", (2, -1)
+    elif normalized in {"lattice", "lattice_rank_r", "lattice_va"}:
+        resolved_rank = 1 if rank is None else rank
+        if not isinstance(resolved_rank, int) or resolved_rank < 1:
+            raise ValueError("lattice rank must be a positive integer")
+        key, family_name, weights = (
+            f"lattice_rank_{resolved_rank}",
+            f"lattice vertex algebra of rank {resolved_rank}",
+            (1,) * resolved_rank,
+        )
+    else:
+        raise KeyError(f"unknown Theorem-H family: {family}")
+
+    bounded = _open_profile(
+        family_name,
+        CohomologyAmbient.BOUNDED_VERTEX,
+        f"C^bullet_ch,b({key},{key})",
+        "open-family-specific-bounded-complex",
+        "family-specific construction",
+        FAMILY_SUPPORT_OBLIGATION,
+    )
+    return key, family_name, "family-specific vertex complex", bounded, None, weights, {}
+
+
+def _chart_from_data(
+    key: str,
+    family_name: str,
+    bounded: CohomologyProfile,
+    comparison: Optional[BoundedToChartComparison],
+    family_datum: Optional[FamilySupportDatum],
+) -> CohomologyProfile:
+    default_complex = f"C^bullet_ch({key},{key})^completed"
+
+    if family_datum is not None:
+        if family_datum.family != key:
+            raise ValueError("H_H family differs from the requested family")
+        if family_datum.supplies_chart_model:
+            return CohomologyProfile(
+                family=family_name,
+                ambient=CohomologyAmbient.COMPLETED_CURVE_CHART,
+                complex_name=family_datum.complete_chart_complex,
+                support=family_datum.support,
+                dimensions=family_datum.model_dimensions,
+                status=f"conditional-{family_datum.status}-H_H(A;S)",
+                source=family_datum.support_model,
+                resolution_obligation=(
+                    "compute dimensions inside the supplied support model"
+                    if family_datum.model_dimensions is None
+                    else ""
+                ),
+            )
+        return _open_profile(
+            family_name,
+            CohomologyAmbient.COMPLETED_CURVE_CHART,
+            family_datum.complete_chart_complex,
+            "open-family-support-datum",
+            family_datum.support_model,
+            FAMILY_SUPPORT_OBLIGATION,
+        )
+
+    if comparison is not None:
+        if comparison.family != key:
+            raise ValueError("comparison family differs from the requested family")
+        if comparison.source_complex != bounded.complex_name:
+            raise ValueError("comparison source differs from the bounded complex")
+        if comparison.supplies_transport and bounded.dimensions is not None:
+            return CohomologyProfile(
+                family=family_name,
+                ambient=CohomologyAmbient.COMPLETED_CURVE_CHART,
+                complex_name=comparison.target_complex,
+                support=bounded.support,
+                dimensions=dict(bounded.dimensions),
+                status=(
+                    f"conditional-{comparison.quasi_isomorphism_status}-"
+                    "bounded-to-chart"
+                ),
+                source=comparison.map_name,
+            )
+        return _open_profile(
+            family_name,
+            CohomologyAmbient.COMPLETED_CURVE_CHART,
+            comparison.target_complex,
+            "open-bounded-to-chart-comparison",
+            comparison.map_name,
+            BOUNDED_TO_CHART_OBLIGATION,
+        )
+
+    return _open_profile(
+        family_name,
+        CohomologyAmbient.COMPLETED_CURVE_CHART,
+        default_complex,
+        "open-family-support-datum",
+        "family support datum H_H(A;S)",
+        FAMILY_SUPPORT_OBLIGATION,
+    )
+
+
+def cohomology_record(
+    family: str,
+    *,
+    rank: Optional[int] = None,
+    N: Optional[int] = None,
+    comparison: Optional[BoundedToChartComparison] = None,
+    family_datum: Optional[FamilySupportDatum] = None,
+    perfect_pairing: Optional[PerfectDegreePairing] = None,
+) -> FamilyCohomologyRecord:
+    """Return one ambient-typed Theorem-H family record."""
+
+    key, family_name, presentation, bounded, affine_bound, weights, metadata = _family_base(
+        family, rank=rank, N=N
+    )
+    if perfect_pairing is not None and perfect_pairing.family != key:
+        raise ValueError("pairing family differs from the requested family")
+    chart = _chart_from_data(key, family_name, bounded, comparison, family_datum)
+
+    chart_affine_bound = None
+    if affine_bound is not None and comparison is not None and comparison.supplies_transport:
+        if comparison.family != key or comparison.source_complex != bounded.complex_name:
+            raise ValueError("affine comparison differs from the bounded family data")
+        chart_affine_bound = AffineExteriorBound(
+            family=family_name,
+            lie_dimension=affine_bound.lie_dimension,
+            ambient=CohomologyAmbient.COMPLETED_CURVE_CHART,
+            status=(
+                "conjectural-BDSK-Conjecture-7.5-bound-transported-by-"
+                f"{comparison.quasi_isomorphism_status}"
+            ),
+            source=affine_bound.source,
+            comparison_map=comparison.map_name,
+        )
+
+    return FamilyCohomologyRecord(
+        key=key,
+        family=family_name,
+        presentation=presentation,
+        bounded=bounded,
+        chart=chart,
+        bounded_affine_bound=affine_bound,
+        chart_affine_bound=chart_affine_bound,
+        comparison=comparison,
+        family_support=family_datum,
+        perfect_pairing=perfect_pairing,
+        generator_weights=weights,
+        metadata=MappingProxyType(dict(metadata)),
+    )
+
+
+def _standard_family_data() -> Dict[str, FamilyCohomologyRecord]:
+    return {
+        "heisenberg": cohomology_record("heisenberg"),
+        "virasoro": cohomology_record("virasoro"),
+        "affine_sl2": cohomology_record("affine_sl2"),
+        "affine_sl3": cohomology_record("affine_sl3"),
+        "betagamma": cohomology_record("betagamma"),
+        "bc_ghosts": cohomology_record("bc_ghosts"),
+        "free_fermion": cohomology_record("free_fermion"),
+        "w3": cohomology_record("w3"),
+        "w4": cohomology_record("w4"),
+        "w5": cohomology_record("w5"),
+        "lattice": cohomology_record("lattice", rank=1),
+    }
+
+
+FAMILY_DATA: Mapping[str, FamilyCohomologyRecord] = MappingProxyType(
+    _standard_family_data()
+)
+THEOREM_H_STATUS = FAMILY_DATA
+
+
+def theorem_h_scope_record(
+    family: Optional[str] = None,
+    applies: Optional[bool] = None,
+    reason: Optional[str] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Return the family-indexed statement and the status of supplied data."""
+
+    record = None if family is None else cohomology_record(family, **kwargs)
+    return {
+        "claim": "H_H(A;S) implies Supp ChirHoch(A) subset S",
+        "type_signature": {
+            "quadrant": "Open-Chain",
+            "presentation": "completed curve-level chiral Hochschild cochains",
+            "level": 3,
+            "hypothesis_package": "family support datum H_H(A;S)",
+        },
+        "family": family,
+        "chart_ambient": CohomologyAmbient.COMPLETED_CURVE_CHART.value,
+        "applies": None if record is None else record.chart.support is not None,
+        "status": "open-explicit-family-support-datum" if record is None else record.chart.status,
+        "support": None if record is None else record.chart.support,
+        "dimensions": None if record is None else record.chart.dimensions,
+        "support_determined": False if record is None else record.chart.support is not None,
+        "defect_complex": (
+            THEOREM_H_DEFECT_COMPLEX
+            if record is None or record.chart.support is None
+            else None
+        ),
+        "hypotheses": THEOREM_H_REQUIRED_COMPONENTS,
+        "reason": reason,
+        "legacy_applies_argument": applies,
+    }
+
+
+def bounded_betti(family: str, degree: int, **kwargs: Any) -> Optional[int]:
+    return cohomology_record(family, **kwargs).bounded.dimension(degree)
+
+
+def bounded_poincare(family: str, **kwargs: Any) -> Optional[List[int]]:
+    vector = cohomology_record(family, **kwargs).bounded.vector
+    return None if vector is None else list(vector)
+
+
+def hochschild_betti(family: str, degree: int, **kwargs: Any) -> Optional[int]:
+    """Compatibility API for completed chart cohomology."""
+
+    return cohomology_record(family, **kwargs).chart.dimension(degree)
+
+
+def hochschild_poincare(
+    family: str, max_n: int = 10, **kwargs: Any
+) -> Optional[List[int]]:
+    """Compatibility API for the completed chart vector."""
+
+    del max_n
+    vector = cohomology_record(family, **kwargs).chart.vector
+    return None if vector is None else list(vector)
+
+
+def hochschild_total_dim(family: str, **kwargs: Any) -> Optional[int]:
+    return cohomology_record(family, **kwargs).chart.total_dimension
+
+
+def hochschild_euler_char(family: str, **kwargs: Any) -> Optional[int]:
+    return cohomology_record(family, **kwargs).chart.euler_characteristic
+
+
+def quadratic_poincare_polynomial(
+    center_dim: int, hoch1_dim: int, dual_center_dim: int
+) -> List[int]:
+    """A raw three-coefficient constructor, independent of any family claim."""
+
+    return [center_dim, hoch1_dim, dual_center_dim]
+
+
+def quadratic_hochschild_betti(family: str, degree: int, **kwargs: Any) -> Optional[int]:
+    return hochschild_betti(family, degree, **kwargs)
+
+
+def quadratic_euler_char(family: str, **kwargs: Any) -> Optional[int]:
+    return hochschild_euler_char(family, **kwargs)
+
+
+def quadratic_total_dim(family: str, **kwargs: Any) -> Optional[int]:
+    return hochschild_total_dim(family, **kwargs)
+
+
+def generator_count(family: str, **kwargs: Any) -> int:
+    return len(cohomology_record(family, **kwargs).generator_weights)
+
+
+def w_algebra_gen_degrees(lie_type: str, rank: int) -> List[int]:
+    if lie_type == "A" and rank >= 1:
+        return list(range(2, rank + 2))
+    raise ValueError("the implemented principal family is type A with positive rank")
+
+
+def w_algebra_hochschild_dim(gen_degrees: List[int], degree: int) -> Optional[int]:
+    """Historical chart API; generator weights alone determine metadata."""
+
+    tuple(gen_degrees), degree
+    return None
+
+
+def w_algebra_poincare_series(
+    gen_degrees: List[int], max_n: int
+) -> Optional[List[int]]:
+    tuple(gen_degrees), max_n
+    return None
+
+
+def w_algebra_quasi_period(gen_degrees: List[int]) -> Optional[int]:
+    tuple(gen_degrees)
+    return None
+
+
+def w_algebra_growth_rate(gen_degrees: List[int]) -> Optional[float]:
+    tuple(gen_degrees)
+    return None
+
+
+def virasoro_hochschild_dims(
+    max_n: int = 20, **kwargs: Any
+) -> Optional[List[Optional[int]]]:
+    profile = cohomology_record("virasoro", **kwargs).chart
+    prefix = profile.prefix(max_n)
+    return None if prefix is None else list(prefix)
+
+
+def w3_hochschild_dims(
+    max_n: int = 30, **kwargs: Any
+) -> Optional[List[Optional[int]]]:
+    profile = cohomology_record("w3", **kwargs).chart
+    prefix = profile.prefix(max_n)
+    return None if prefix is None else list(prefix)
+
+
+def virasoro_periodicity_check(max_n: int = 20, **kwargs: Any) -> Dict[str, Any]:
+    dims = virasoro_hochschild_dims(max_n, **kwargs)
+    return {
+        "ambient": CohomologyAmbient.COMPLETED_CURVE_CHART.value,
+        "dimensions": dims,
+        "status": cohomology_record("virasoro", **kwargs).chart.status,
+        "periodicity_claim": None,
+    }
+
+
+def w3_quasi_periodicity_check(max_n: int = 60, **kwargs: Any) -> Dict[str, Any]:
+    dims = w3_hochschild_dims(max_n, **kwargs)
+    return {
+        "ambient": CohomologyAmbient.COMPLETED_CURVE_CHART.value,
+        "dimensions": dims,
+        "status": cohomology_record("w3", **kwargs).chart.status,
+        "quasi_periodicity_claim": None,
+    }
+
+
+def affine_slN_data(N: int, **kwargs: Any) -> FamilyCohomologyRecord:
+    return cohomology_record("affine_slN", N=N, **kwargs)
+
+
+def wN_data(N: int, **kwargs: Any) -> FamilyCohomologyRecord:
+    return cohomology_record("wN", N=N, **kwargs)
+
+
+def lattice_data(rank: int, **kwargs: Any) -> FamilyCohomologyRecord:
+    return cohomology_record("lattice", rank=rank, **kwargs)
+
+
+def verify_concentration(family: str, **kwargs: Any) -> Dict[str, Any]:
+    record = cohomology_record(family, **kwargs)
+    return {
+        "family": record.family,
+        "ambient": record.chart.ambient.value,
+        "support": record.chart.support,
+        "support_determined": record.chart.support is not None,
+        "passed": None,
+        "status": record.chart.status,
+    }
+
+
+def verify_palindromicity(
+    family: str,
+    *,
+    perfect_pairing: Optional[PerfectDegreePairing] = None,
+    dual_chart_dimensions: Optional[Mapping[int, int]] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    record = cohomology_record(family, perfect_pairing=perfect_pairing, **kwargs)
+    vector = record.chart.vector
+    supplies_pairing = perfect_pairing is not None and perfect_pairing.supplies_pairing
+    passed = None
+    checks: Dict[int, bool] = {}
+    if vector is not None and supplies_pairing:
+        dual_dimensions = dual_chart_dimensions
+        if dual_dimensions is None and perfect_pairing.dual_family == record.key:
+            dual_dimensions = record.chart.dimensions
+        if dual_dimensions is not None:
+            degree = perfect_pairing.cohomological_degree
+            relevant = set(record.chart.dimensions or ())
+            relevant.update(degree - n for n in dual_dimensions)
+            checks = {
+                n: (record.chart.dimension(n) == dual_dimensions.get(degree - n, 0))
+                for n in sorted(relevant)
+            }
+            passed = all(checks.values())
+    return {
+        "family": record.family,
+        "polynomial": None if vector is None else list(vector),
+        "passed": passed,
+        "degree_reflection_checks": checks,
+        "pairing_status": None if perfect_pairing is None else perfect_pairing.perfectness_status,
+        "resolution_obligation": PERFECT_PAIRING_OBLIGATION if passed is None else "",
+    }
+
+
+def verify_koszul_duality_hochschild(
+    family: str,
+    *,
+    perfect_pairing: Optional[PerfectDegreePairing] = None,
+    dual_chart_dimensions: Optional[Mapping[int, int]] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    result = verify_palindromicity(
+        family,
+        perfect_pairing=perfect_pairing,
+        dual_chart_dimensions=dual_chart_dimensions,
+        **kwargs,
+    )
+    return {
+        "family": result["family"],
+        "passed": result["passed"],
+        "degree_reflection_checks": result["degree_reflection_checks"],
+        "pairing": perfect_pairing,
+        "resolution_obligation": result["resolution_obligation"],
+    }
+
+
+def verify_theorem_h(family: str, **kwargs: Any) -> Dict[str, Any]:
+    record = cohomology_record(family, **kwargs)
+    chart_data_supplied = record.chart.support is not None
+    return {
+        "family": record.family,
+        "regime": record.regime,
+        "passed": True if chart_data_supplied else None,
+        "bounded": record.bounded,
+        "chart": record.chart,
+        "theorem_h_scope": theorem_h_scope_record(family, **kwargs),
+    }
+
+
+def verify_theorem_h_all_families() -> Dict[str, Dict[str, Any]]:
+    return {family: verify_theorem_h(family) for family in FAMILY_DATA}
+
+
+def koszul_dual_polynomial(
+    family: str, *, perfect_pairing: Optional[PerfectDegreePairing] = None, **kwargs: Any
+) -> Optional[List[int]]:
+    record = cohomology_record(family, perfect_pairing=perfect_pairing, **kwargs)
+    if perfect_pairing is None or not perfect_pairing.supplies_pairing:
+        return None
+    if record.chart.dimensions is None or perfect_pairing.cohomological_degree < 0:
+        return None
+    degree = perfect_pairing.cohomological_degree
+    if any(n > degree for n in record.chart.dimensions):
+        return None
+    return [record.chart.dimensions.get(degree - n, 0) for n in range(degree + 1)]
+
+
+def hochschild_spectral_sequence(
+    family: str, max_p: int = 6, max_q: int = 4, **kwargs: Any
+) -> Optional[List[List[int]]]:
+    """Historical API; an explicit filtered complex determines this page."""
+
+    cohomology_record(family, **kwargs), max_p, max_q
+    return None
+
+
+def exterior_algebra_verification(
+    family: str = "heisenberg", **kwargs: Any
+) -> Dict[str, Any]:
+    record = cohomology_record(family, **kwargs)
+    rank = record.metadata.get("rank")
+    if rank is None or record.bounded.dimensions is None:
+        return {"family": record.family, "passed": None, "status": record.bounded.status}
+    expected = {
+        n: exterior_two_term_dimension(int(rank), n)
+        for n in range(int(rank) + 1)
+    }
+    expected = {n: value for n, value in expected.items() if value}
+    return {
+        "family": record.family,
+        "ambient": record.bounded.ambient.value,
+        "dimensions": dict(record.bounded.dimensions),
+        "expected_from_exterior_powers": expected,
+        "passed": dict(record.bounded.dimensions) == expected,
+    }
+
+
+def non_koszul_failure_example() -> Dict[str, Any]:
+    """Historical name for an open family-support record."""
+
+    return {
+        "family": "admissible affine quotient",
+        "chart_dimensions": None,
+        "status": "open-family-specific-H_H(A;S)",
+        "resolution_obligation": FAMILY_SUPPORT_OBLIGATION,
+    }
+
+
+def bar_complex_betti_abelian(rank: int = 1, max_n: int = 6) -> Dict[str, Any]:
+    """Compute the abelian CE dimensions and the BDSK bounded profile."""
+
+    if not isinstance(rank, int) or rank < 0:
+        raise ValueError("abelian rank must be a nonnegative integer")
+    ce_dimensions = {n: comb(rank, n) for n in range(rank + 1)}
+    bounded = superboson_bounded_profile(rank)
+    return {
+        "rank": rank,
+        "ce_dimensions": ce_dimensions,
+        "ce_cohomology": dict(ce_dimensions),
+        "bounded_vertex_prefix": bounded.prefix(max_n),
+        "bounded_vertex_profile": bounded,
+        "chart_dimensions": None,
+        "chart_status": "open-bounded-to-chart-comparison",
+    }
+
+
+def bar_complex_betti_sl2(max_tensor_degree: int = 4) -> Dict[str, Any]:
+    """Record exact CE cohomology and the conjectural affine bound."""
+
+    del max_tensor_degree
+    record = affine_slN_data(2)
+    assert record.bounded_affine_bound is not None
+    return {
+        "ce_dimensions": {0: 1, 1: 3, 2: 3, 3: 1},
+        "ce_cohomology": {0: 1, 1: 0, 2: 0, 3: 1},
+        "whitehead_lemmas": {1: 0, 2: 0},
+        "bounded_affine_upper_bound": record.bounded_affine_bound.prefix(4),
+        "bounded_status": record.bounded_affine_bound.status,
+        "chart_dimensions": None,
+        "chart_status": record.chart.status,
+    }
+
+
+def polynomial_growth_verification(
+    family: str, max_n: int = 30, **kwargs: Any
+) -> Dict[str, Any]:
+    record = cohomology_record(family, **kwargs)
+    prefix = record.bounded.prefix(max_n)
+    return {
+        "family": record.family,
+        "ambient": record.bounded.ambient.value,
+        "dimensions": prefix,
+        "verified": record.bounded.dimensions is not None,
+        "status": record.bounded.status,
+    }
+
+
+def euler_characteristic_derived(
+    family: str, max_n: int = 40, **kwargs: Any
+) -> Dict[str, Any]:
+    del max_n
+    record = cohomology_record(family, **kwargs)
+    return {
+        "family": record.family,
+        "ambient": record.chart.ambient.value,
+        "chi": record.chart.euler_characteristic,
+        "verified": record.chart.euler_characteristic is not None,
+        "status": record.chart.status,
+    }
+
+
+def palindromicity_derived(
+    family: str,
+    *,
+    perfect_pairing: Optional[PerfectDegreePairing] = None,
+    dual_chart_dimensions: Optional[Mapping[int, int]] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    return verify_palindromicity(
+        family,
+        perfect_pairing=perfect_pairing,
+        dual_chart_dimensions=dual_chart_dimensions,
+        **kwargs,
+    )
 
 
 def _lcm(a: int, b: int) -> int:
     return abs(a * b) // gcd(a, b)
 
 
-def lcm_list(lst: List[int]) -> int:
-    """Least common multiple of a list of positive integers.
-
-    Retained as a general utility even though the refuted W-algebra
-    quasi-period logic no longer uses it (Theorem H: amplitude [0,2]
-    makes quasi-periods moot).
-    """
-    return reduce(_lcm, lst)
-
-
-# ============================================================
-# Bounded Koszul regime: Hochschild polynomial (Theorem H)
-# ============================================================
-
-def quadratic_poincare_polynomial(center_dim: int, hoch1_dim: int,
-                                   dual_center_dim: int) -> List[int]:
-    """Poincare polynomial P_A(t) = [p0, p1, p2] for a bounded Koszul algebra.
-
-    P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2
-    (Theorem H; concentration in degrees [0, 2]).
-    """
-    return [center_dim, hoch1_dim, dual_center_dim]
-
-
-def quadratic_hochschild_betti(family: str, n: int) -> int:
-    """dim ChirHoch^n(A) for a bounded Koszul family.
-
-    Returns 0 for n < 0 or n > 2 (Theorem H concentration).
-    """
-    data = FAMILY_DATA[family]
-    assert data['regime'] == BOUNDED_KOSZUL, (
-        f"{family} is in regime '{data['regime']}', not bounded Koszul")
-    if n < 0 or n > 2:
-        return 0
-    poly = quadratic_poincare_polynomial(
-        data['center_dim'], data['hoch1_dim'], data['dual_center_dim'])
-    return poly[n]
-
-
-def quadratic_euler_char(family: str) -> int:
-    """Euler characteristic chi = P_A(-1) for a bounded Koszul family.
-
-    chi = dim Z(A) - dim ChirHoch^1(A) + dim Z(A^!).
-    """
-    data = FAMILY_DATA[family]
-    assert data['regime'] == BOUNDED_KOSZUL
-    return data['center_dim'] - data['hoch1_dim'] + data['dual_center_dim']
-
-
-def quadratic_total_dim(family: str) -> int:
-    """Total dimension P_A(1) for a bounded Koszul family.
-
-    P_A(1) = dim Z(A) + dim ChirHoch^1(A) + dim Z(A^!).
-    Finite on the Theorem H PBW/generic/completed surface.
-    """
-    data = FAMILY_DATA[family]
-    assert data['regime'] == BOUNDED_KOSZUL
-    return data['center_dim'] + data['hoch1_dim'] + data['dual_center_dim']
-
-
-# ============================================================
-# REFUTED: W-algebra polynomial ring (Gelfand-Fuchs) regime
-# ============================================================
-#
-# The functions below preserve the historical API so that external
-# importers do not break, but return the Theorem-H-consistent
-# bounded-amplitude values or raise RefutedModelError.  Use of the
-# polynomial-ring model is forbidden (AP94, AP128).
-
-class RefutedModelError(NotImplementedError):
-    """Raised when caller tries to use the refuted polynomial-ring model.
-
-    See AP94, AP128 in CLAUDE.md.  ChirHoch*(W^k(g)) is NOT the
-    polynomial ring C[Theta_1, ..., Theta_r]; on the Theorem H generic
-    PBW/completed surface it has amplitude [0, 2].
-    """
-
-
-def w_algebra_gen_degrees(lie_type: str, rank: int) -> List[int]:
-    """Conformal weights h_i = m_i + 1 of W-algebra strong generators.
-
-    For W^k(sl_N): exponents are 1, 2, ..., N-1, so h_i = 2, 3, ..., N.
-
-    Retained as FAMILY METADATA only -- the weights record which
-    strong generators live in the VOA, NOT the degrees of a putative
-    polynomial ring on ChirHoch* (the polynomial-ring model is
-    REFUTED by Theorem H; see AP94).
-    """
-    if lie_type == 'A':
-        return list(range(2, rank + 2))
-    raise NotImplementedError(f"Lie type {lie_type} not yet implemented")
-
-
-def w_algebra_hochschild_dim(gen_degrees: List[int], n: int) -> int:
-    """REFUTED: polynomial-ring partition count.
-
-    Under the refuted Gelfand-Fuchs model this was
-      dim ChirHoch^n(W) = #{(a_i): sum a_i h_i = n, a_i >= 0}.
-    Under Theorem H, ChirHoch*(W) has amplitude [0, 2] with
-    P_W(t) = 1 + t^2 (generic level), so:
-      n = 0     : return 1   (dim Z(W) = 1)
-      n = 2     : return 1   (dim Z(W^!) = 1)
-      otherwise : return 0   (concentration outside [0, 2] or at n = 1)
-
-    See AP94, AP128.
-    """
-    if n == 0 or n == 2:
-        return 1
-    return 0
-
-
-def w_algebra_quasi_period(gen_degrees: List[int]) -> int:
-    """REFUTED: quasi-period of the polynomial-ring Hilbert function.
-
-    Theorem H collapses this to a trivial bound: the Hochschild
-    polynomial has amplitude [0, 2], so there is no nontrivial
-    quasi-periodic structure.  Returns 1 (the formal quasi-period of
-    a finitely supported sequence) as a sentinel.
-
-    See AP94.
-    """
-    return 1
-
-
-def w_algebra_growth_rate(gen_degrees: List[int]) -> float:
-    """REFUTED: polynomial growth rate of dim ChirHoch^n.
-
-    Under Theorem H the sequence is finitely supported (amplitude
-    [0, 2]), so the asymptotic growth rate is 0.  See AP94.
-    """
-    return 0.0
-
-
-def w_algebra_poincare_series(gen_degrees: List[int], max_n: int) -> List[int]:
-    """Bounded Hochschild Poincare series under Theorem H.
-
-    Under the refuted polynomial-ring model this would return the
-    r-coloured partition-weighted counts for the polynomial ring
-    C[Theta_1, ..., Theta_r].  Under Theorem H the sequence is
-    [1, 0, 1, 0, 0, ...] (center, no outer derivations, dual center,
-    then zero).
-
-    See AP94.
-    """
-    if max_n < 0:
-        return []
-    series = [0] * (max_n + 1)
-    series[0] = 1
-    if max_n >= 2:
-        series[2] = 1
-    return series
-
-
-# ============================================================
-# Unified interface
-# ============================================================
-
-def generator_count(family: str, **kwargs) -> int:
-    """Number of strong generators for the given family.
-
-    For parametric families (affine_slN, wN, lattice_rank_r),
-    pass N=... or rank=... as keyword arguments.
-    """
-    data = FAMILY_DATA[family]
-    if data['n_strong_gen'] is not None:
-        return data['n_strong_gen']
-    if family == 'affine_slN':
-        N = kwargs['N']
-        return N * N - 1
-    if family == 'wN':
-        N = kwargs['N']
-        return N - 1
-    if family == 'lattice_rank_r':
-        return kwargs['rank']
-    raise ValueError(f"Cannot determine generator count for {family}")
-
-
-def hochschild_poincare(family: str, max_n: int = 10, **kwargs) -> List[int]:
-    """Hochschild Poincare polynomial [p0, p1, p2] for the given family.
-
-    Under Theorem H every Koszul family is bounded-amplitude, so the
-    returned list always has length 3.
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] == BOUNDED_KOSZUL:
-        h1 = data['hoch1_dim']
-        if h1 is None:
-            # Parametric family: caller must supply N or rank to resolve h1.
-            h1 = _resolve_parametric_h1(family, **kwargs)
-        return quadratic_poincare_polynomial(
-            data['center_dim'], h1, data['dual_center_dim'])
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def _resolve_parametric_h1(family: str, **kwargs) -> int:
-    """Resolve dim ChirHoch^1 for parametric families."""
-    if family == 'affine_slN':
-        N = kwargs['N']
-        return N * N - 1
-    if family == 'lattice_rank_r':
-        return kwargs['rank']
-    if family == 'wN':
-        # W_N at generic level: no outer derivations (Theorem H bounded model).
-        return 0
-    raise ValueError(f"Cannot resolve ChirHoch^1 dim for {family}")
-
-
-def hochschild_betti(family: str, n: int, **kwargs) -> int:
-    """dim ChirHoch^n(A) for the given family.
-
-    Bounded: always 0 outside [0, 2] (Theorem H).
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] == BOUNDED_KOSZUL:
-        if n < 0 or n > 2:
-            return 0
-        if data['hoch1_dim'] is None:
-            poly = hochschild_poincare(family, **kwargs)
-            return poly[n]
-        return quadratic_hochschild_betti(family, n)
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def hochschild_euler_char(family: str, **kwargs) -> int:
-    """Euler characteristic of ChirHoch*(A).
-
-    Under Theorem H (amplitude [0, 2]) this is always a finite
-    integer:
-      chi = dim Z(A) - dim ChirHoch^1(A) + dim Z(A^!).
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] == BOUNDED_KOSZUL:
-        if data['hoch1_dim'] is None:
-            poly = hochschild_poincare(family, **kwargs)
-            return poly[0] - poly[1] + poly[2]
-        return quadratic_euler_char(family)
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def hochschild_total_dim(family: str, **kwargs) -> int:
-    """Total dimension P_A(1) = dim ChirHoch^0 + dim ChirHoch^1 + dim ChirHoch^2.
-
-    Under Theorem H this is always finite (concentration in {0,1,2}).
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] == BOUNDED_KOSZUL:
-        if data['hoch1_dim'] is None:
-            poly = hochschild_poincare(family, **kwargs)
-            return sum(poly)
-        return quadratic_total_dim(family)
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def _get_gen_degrees(family: str, **kwargs) -> List[int]:
-    """Helper: get strong-generator conformal weights for a W-algebra family.
-
-    Returned as metadata describing which strong generators live in
-    the VOA.  NOT the degrees of a polynomial ring on ChirHoch*
-    (the polynomial-ring model is REFUTED; see AP94).
-    """
-    data = FAMILY_DATA[family]
-    if family == 'virasoro':
-        return [2]
-    elif family == 'w3':
-        return [2, 3]
-    elif family == 'wN':
-        N = kwargs['N']
-        return w_algebra_gen_degrees('A', N - 1)
-    elif data.get('gen_weights') is not None:
-        return data['gen_weights']
-    raise ValueError(f"Cannot determine generator degrees for {family}")
-
-
-# ============================================================
-# Verification functions
-# ============================================================
-
-def verify_concentration(family: str, **kwargs) -> dict:
-    """Verify concentration: ChirHoch^n = 0 for n outside [0, 2].
-
-    This verifies a family already placed on the Theorem H
-    PBW/generic/completed/strict-ML surface.  Outside that surface the
-    output object is KD_H^bullet(A), and concentration is not asserted.
-    """
-    data = FAMILY_DATA[family]
-    scope = theorem_h_scope_record(family)
-    result = {
-        'family': family,
-        'regime': data['regime'],
-        'passed': True,
-        'details': {},
-        'theorem_h_scope': scope,
-    }
-
-    if data['regime'] == BOUNDED_KOSZUL:
-        for n in range(-3, 0):
-            val = hochschild_betti(family, n, **kwargs)
-            if val != 0:
-                result['passed'] = False
-                result['details'][f'n={n}'] = f'expected 0, got {val}'
-            else:
-                result['details'][f'n={n}'] = 'OK (= 0)'
-        for n in range(3, 8):
-            val = hochschild_betti(family, n, **kwargs)
-            if val != 0:
-                result['passed'] = False
-                result['details'][f'n={n}'] = f'expected 0, got {val}'
-            else:
-                result['details'][f'n={n}'] = 'OK (= 0)'
-        for n in range(0, 3):
-            val = hochschild_betti(family, n, **kwargs)
-            result['details'][f'n={n}'] = f'dim = {val} (amplitude [0,2])'
-        result['details']['unbounded'] = False
-
-    return result
-
-
-def verify_palindromicity(family: str) -> dict:
-    """Verify palindromicity: dim ChirHoch^n = dim ChirHoch^{2-n}.
-
-    Under Theorem H (amplitude [0, 2]) every Koszul family has a
-    3-term Poincare polynomial [p0, p1, p2].  Self-palindromicity
-    (p0 = p2) holds iff dim Z(A) = dim Z(A^!); this is the case for
-    all standard families in the landscape.
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] != BOUNDED_KOSZUL:
-        return {'family': family, 'passed': None,
-                'reason': 'Bounded Koszul regime required'}
-
-    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
-    p = quadratic_poincare_polynomial(
-        data['center_dim'], h1, data['dual_center_dim'])
-    is_palindromic = (p[0] == p[2])
-    return {
-        'family': family,
-        'polynomial': p,
-        'palindromic_self': is_palindromic,
-        'passed': True,
-        'note': 'Self-palindromic iff dim Z(A) = dim Z(A^!)',
-    }
-
-
-def verify_koszul_duality_hochschild(family: str) -> dict:
-    """Verify the Koszul duality relation on Hochschild cohomology.
-
-    thm:main-koszul-hoch:
-      ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
-
-    Applies in the bounded Koszul regime (all of the standard
-    landscape under Theorem H).
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] != BOUNDED_KOSZUL:
-        return {'family': family, 'passed': None,
-                'reason': 'Bounded Koszul regime required'}
-
-    dual_name = data['koszul_dual']
-    result = {
-        'family': family,
-        'koszul_dual': dual_name,
-        'passed': True,
-        'checks': {},
-    }
-
-    result['checks']['dim_H2_A = dim_Z_A!'] = (
-        f"{data['dual_center_dim']} = {data['dual_center_dim']}")
-
-    if dual_name in FAMILY_DATA:
-        dual_data = FAMILY_DATA[dual_name]
-        if dual_data.get('hoch1_dim') is not None and data.get('hoch1_dim') is not None:
-            match = data['hoch1_dim'] == dual_data['hoch1_dim']
-            result['checks']['dim_H1_match'] = match
-            if not match:
-                result['passed'] = False
-
-    return result
-
-
-def verify_theorem_h(family: str, **kwargs) -> dict:
-    """Full verification of all Theorem H claims for one family.
-
-    The input family must be one of the generic PBW/completed entries
-    carried by FAMILY_DATA.  The verification result returns the scope
-    record explicitly.
-    """
-    data = FAMILY_DATA[family]
-    scope = theorem_h_scope_record(family)
-    result = {
-        'family': family,
-        'regime': data['regime'],
-        'passed': True,
-        'checks': {},
-        'theorem_h_scope': scope,
-    }
-
-    result['checks']['generator_count'] = generator_count(family, **kwargs)
-    result['checks']['center_dim'] = data['center_dim']
-
-    if data['regime'] == BOUNDED_KOSZUL:
-        conc = verify_concentration(family, **kwargs)
-        result['checks']['concentration'] = conc['passed']
-        if not conc['passed']:
-            result['passed'] = False
-
-        poly = hochschild_poincare(family, **kwargs)
-        result['checks']['poincare_polynomial'] = poly
-        result['checks']['degree'] = (
-            max((i for i, p in enumerate(poly) if p != 0), default=-1))
-
-        chi = hochschild_euler_char(family, **kwargs)
-        result['checks']['euler_char'] = chi
-
-        total = hochschild_total_dim(family, **kwargs)
-        result['checks']['total_dim'] = total
-        # Theorem H guarantees concentration in {0,1,2} (finite total dim),
-        # but does NOT impose a universal upper bound on total dim.
-        # E.g. affine sl_2: total dim = 1 + 3 + 1 = 5.
-
-        pal = verify_palindromicity(family)
-        result['checks']['palindromic'] = pal['palindromic_self']
-
-        for n in range(3):
-            result['checks'][f'betti_{n}'] = hochschild_betti(family, n, **kwargs)
-
-    return result
-
-
-def verify_theorem_h_all_families() -> dict:
-    """Run full Theorem H verification for all standard families."""
-    results = {}
-    # Fixed-arity families
-    for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
-                    'betagamma', 'bc_ghosts', 'free_fermion',
-                    'virasoro', 'w3']:
-        results[family] = verify_theorem_h(family)
-    # Parametric W_N
-    for N in [4, 5]:
-        results[f'w{N}'] = verify_theorem_h('wN', N=N)
-
-    return results
-
-
-# ============================================================
-# Koszul dual polynomial
-# ============================================================
-
-def koszul_dual_polynomial(family: str) -> Optional[List[int]]:
-    """P_{A^!}(t) for the Koszul dual.
-
-    Under Theorem H:
-      P_{A^!}(t) = dim Z(A^!) + dim H^1(A^!) t + dim Z(A) t^2.
-
-    For self-dual strong-generator symmetry (KM at dual levels, W-algebra
-    Feigin-Frenkel duality) the Koszul dual has the same ChirHoch^1
-    dimension, so the palindromic duality
-      P_A(t) = t^2 P_{A^!}(t^{-1})
-    collapses to equality of polynomial coefficients.
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] != BOUNDED_KOSZUL:
-        return None
-    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
-    return [data['dual_center_dim'], h1, data['center_dim']]
-
-
-# ============================================================
-# Hochschild spectral sequence (E_2 page)
-# ============================================================
-
-def hochschild_spectral_sequence(family: str, max_p: int = 6,
-                                  max_q: int = 4, **kwargs) -> List[List[int]]:
-    """E_2 page of the Hochschild spectral sequence.
-
-    E_2^{p,q} => ChirHoch^{p+q}(A).
-
-    For Koszul algebras under Theorem H, E_2 collapses:
-      E_2^{p,0} = ChirHoch^p (bounded in p = 0, 1, 2),
-      E_2^{p,q} = 0 for q > 0.
-    """
-    E2 = [[0] * (max_q + 1) for _ in range(max_p + 1)]
-    for p in range(max_p + 1):
-        E2[p][0] = hochschild_betti(family, p, **kwargs)
-        for q in range(1, max_q + 1):
-            E2[p][q] = 0
-    return E2
-
-
-# ============================================================
-# Exterior algebra verification (bounded Koszul)
-# ============================================================
-
-def exterior_algebra_verification(family: str) -> dict:
-    """Verify ChirHoch*(A) structure for bounded Koszul algebras.
-
-    For bounded Koszul A with d strong generators, the bar-cobar
-    resolution interacts with sheaf cohomology on the curve X
-    (dim_C X = 1) to concentrate ChirHoch* in amplitude [0, 2].
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] != BOUNDED_KOSZUL:
-        return {'family': family, 'passed': None,
-                'reason': 'Bounded Koszul regime required'}
-
-    d = data['n_strong_gen']
-    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
-    poly = quadratic_poincare_polynomial(
-        data['center_dim'], h1, data['dual_center_dim'])
-
-    result = {
-        'family': family,
-        'n_generators': d,
-        'polynomial': poly,
-        'passed': True,
-    }
-
-    if data['center_dim'] == 1 and data['dual_center_dim'] == 1:
-        result['type'] = 'generic_level'
-        if d is not None and data.get('gen_weights') is not None and all(
-                w == 1 for w in (data['gen_weights'] or [])):
-            expected_h1 = d
-            if h1 != expected_h1:
-                result['note'] = (
-                    f'hoch1_dim = {h1} != n_gen = {d}')
-            else:
-                result['note'] = f'hoch1_dim = n_gen = {d} (KM-type)'
-
-    return result
-
-
-# ============================================================
-# Non-Koszul failure example
-# ============================================================
-
-def non_koszul_failure_example() -> dict:
-    """Return an off-Theorem-H surface governed by KD_H^bullet(A).
-
-    A non-Koszul chiral algebra can have bar cohomology not concentrated
-    on the diagonal, so the spectral sequence need not collapse.  The
-    correct conclusion is not a bare failure theorem; it is that
-    Theorem H is unavailable until KD_H^bullet(A) is defined and proved
-    acyclic in the relevant high degrees.
-
-    Example: the simple quotient L_k(g) at an admissible level k can
-    fail to be Koszul (vacuum null vectors obstruct PBW), leading to
-    Hochschild concentration outside [0, 2].
-    """
-    return {
-        'description': 'Off-Theorem-H surface: simple quotient L_k(g) at admissible level',
-        'theorem_h_scope': theorem_h_scope_record(
-            family='admissible_simple_quotient',
-            applies=False,
-            reason='admissible quotient is not in the generic PBW/completed package',
-        ),
-        'mechanism': 'Vacuum null vectors prevent PBW concentration, '
-                     'spectral sequence has nontrivial differentials, '
-                     'Hochschild concentration must be proved through KD_H^bullet(A)',
-        'example': 'L_{-1/2}(sl_2) at admissible level k = -1/2',
-        'known_data': {
-            'ChirHoch^0': 1,  # center = C
-            'ChirHoch^1': 0,  # no outer derivations (simple)
-            'ChirHoch^2': 1,  # level deformation
-            'note': 'This particular example is STILL concentrated in [0,2] '
-                    'because the null vector structure is mild. '
-                    'True non-concentration requires non-rational '
-                    'non-Koszul algebras.',
-        },
-        'structural_prediction': 'For a genuinely non-Koszul algebra, '
-                                  'H^n(KD_H^bullet(A)) controls the '
-                                  'high-degree ChirHoch tail.',
-    }
-
-
-# ============================================================
-# Parametric families
-# ============================================================
-
-def affine_slN_data(N: int) -> dict:
-    """Theorem H data for affine sl_N."""
-    d = N * N - 1  # dim sl_N
-    return {
-        'family': f'affine_sl{N}',
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': d,
-        'gen_weights': [1] * d,
-        'center_dim': 1,
-        'hoch1_dim': d,
-        'dual_center_dim': 1,
-        'poincare': [1, d, 1],
-        'euler_char': 2 - d,
-        'total_dim': 2 + d,
-    }
-
-
-def wN_data(N: int) -> dict:
-    """Theorem H data for W_N = W^k(sl_N, f_prin).
-
-    Under Theorem H W_N has bounded Hochschild in amplitude [0, 2].
-    At generic level: P_{W_N}(t) = 1 + t^2.
-    The prior polynomial-ring model C[Theta_1, ..., Theta_{N-1}] is
-    REFUTED (AP94).
-    """
-    r = N - 1  # rank (strong-generator count)
-    gen_degrees = list(range(2, N + 1))  # h_i = 2, 3, ..., N (VOA metadata)
-    return {
-        'family': f'W_{N}',
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': r,
-        'strong_gen_weights': gen_degrees,
-        'center_dim': 1,
-        'hoch1_dim': 0,
-        'dual_center_dim': 1,
-        'poincare': [1, 0, 1],
-        'euler_char': 2,
-        'total_dim': 2,
-        'note': 'Bounded Koszul (Theorem H). Polynomial-ring model REFUTED (AP94).',
-    }
-
-
-def lattice_data(rank: int) -> dict:
-    """Theorem H data for lattice VOA V_Lambda of rank r."""
-    return {
-        'family': f'lattice_rank_{rank}',
-        'regime': BOUNDED_KOSZUL,
-        'n_strong_gen': rank,
-        'gen_weights': [1] * rank,
-        'center_dim': 1,
-        'hoch1_dim': rank,
-        'dual_center_dim': 1,
-        'poincare': [1, rank, 1],
-        'euler_char': 2 - rank,
-        'total_dim': 2 + rank,
-    }
-
-
-# ============================================================
-# Virasoro detailed
-# ============================================================
-
-def virasoro_hochschild_dims(max_n: int = 20) -> List[int]:
-    """ChirHoch^n(Vir_c) at generic c, in the bounded Koszul regime.
-
-    Under Theorem H: dim ChirHoch^0 = 1, dim ChirHoch^1 = 0,
-    dim ChirHoch^2 = 1, dim ChirHoch^n = 0 for n > 2.
-
-    The prior 2-periodic model (ChirHoch^{2k} = C for all k) was a
-    Gelfand-Fuchs-style artefact and is REFUTED by Theorem H (AP94).
-    """
-    dims = [0] * (max_n + 1)
-    dims[0] = 1
-    if max_n >= 2:
-        dims[2] = 1
-    return dims
-
-
-def virasoro_periodicity_check(max_n: int = 20) -> dict:
-    """Bounded Hochschild check for Virasoro.
-
-    Under Theorem H there is no nontrivial periodicity: the Poincare
-    sequence is [1, 0, 1, 0, 0, ...].  The function name is retained
-    for API compatibility; it now reports the bounded amplitude.
-    """
-    dims = virasoro_hochschild_dims(max_n)
-    # Check bounded support: dims[n] = 0 for n > 2.
-    passed = all(dims[n] == 0 for n in range(3, max_n + 1))
-    return {
-        'dims': dims,
-        'amplitude': [0, 2],
-        'total_dim': sum(dims),
-        'passed': passed,
-        'failures': [] if passed else [n for n in range(3, max_n + 1) if dims[n] != 0],
-        'note': 'Bounded Koszul regime (Theorem H). '
-                'Polynomial-ring periodicity REFUTED (AP94).',
-    }
-
-
-# ============================================================
-# W_3 detailed
-# ============================================================
-
-def w3_hochschild_dims(max_n: int = 30) -> List[int]:
-    """ChirHoch^n(W_3) at generic level, in the bounded Koszul regime.
-
-    Under Theorem H: dims = [1, 0, 1, 0, 0, ...].  The prior
-    polynomial-ring model C[Theta_1, Theta_2] with weighted-partition
-    counts is REFUTED (AP94).
-    """
-    dims = [0] * (max_n + 1)
-    dims[0] = 1
-    if max_n >= 2:
-        dims[2] = 1
-    return dims
-
-
-def w3_quasi_periodicity_check(max_n: int = 60) -> dict:
-    """Bounded Hochschild check for W_3.
-
-    Under Theorem H the sequence is finitely supported in [0, 2],
-    so there is no nontrivial quasi-period.  The name is retained
-    for API compatibility; the function now reports the Theorem H
-    bounded amplitude.
-    """
-    dims = w3_hochschild_dims(max_n)
-    passed = all(dims[n] == 0 for n in range(3, max_n + 1))
-    return {
-        'amplitude': [0, 2],
-        'total_dim': sum(dims),
-        'dims_0_to_12': dims[:13],
-        'passed': passed,
-        'note': 'Bounded Koszul regime (Theorem H). '
-                'Quasi-periodicity of polynomial-ring model REFUTED (AP94).',
-    }
-
-
-# ============================================================
-# Status dictionary
-# ============================================================
-
-THEOREM_H_STATUS: Dict[str, dict] = {
-    'heisenberg': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 1, 1],
-        'detail': 'P(t) = 1 + t + t^2. Center = C. H^1 = C (current). '
-                  'H^2 = C (level deformation).',
-        'ref': 'ex:heisenberg-curved-specialization',
-    },
-    'affine_sl2': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 3, 1],
-        'detail': 'P(t) = 1 + 3t + t^2. Three generators, center = C at generic k. '
-                  'H^1 = sl_2 (3-dim). Koszul dual at level -k-4.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'affine_sl3': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 8, 1],
-        'detail': 'P(t) = 1 + 8t + t^2. Eight generators, center = C at generic k.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'affine_slN': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare_formula': '[1, N^2-1, 1]',
-        'detail': 'P(t) = 1 + (N^2-1)t + t^2. Uniform across all sl_N.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'betagamma': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. Charge/weight motions are not curve-level ChirHoch^1. Koszul dual = bc.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'bc_ghosts': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. Ghost-number/weight motions are not curve-level ChirHoch^1. Koszul dual = betagamma.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'free_fermion': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. Simple-pole Clifford innerness kills ChirHoch^1.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'virasoro': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. Center C, no outer derivations at generic c, '
-                  'kappa = c/2 level deformation. Bounded (Theorem H); '
-                  'prior polynomial-ring model REFUTED (AP94).',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'w3': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. W^k(sl_3, f_prin) at generic level. '
-                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'w4': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. W^k(sl_4, f_prin) at generic level. '
-                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'w5': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare': [1, 0, 1],
-        'detail': 'P(t) = 1 + t^2. W^k(sl_5, f_prin) at generic level. '
-                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-    'lattice': {
-        'status': 'PROVED',
-        'regime': BOUNDED_KOSZUL,
-        'poincare_formula': '[1, r, 1]',
-        'detail': 'P(t) = 1 + r*t + t^2 for rank-r lattice. '
-                  'Heisenberg subalgebra contributes r generators.',
-        'ref': 'thm:hochschild-polynomial-growth',
-    },
-}
-
-
-# ============================================================
-# DERIVED: Hochschild Betti numbers from bar complex computation
-# ============================================================
-
-def _build_ce_differential_sl2():
-    """Build the Chevalley-Eilenberg differential for sl_2 explicitly.
-
-    sl_2 basis: e, h, f with [e,f] = h, [h,e] = 2e, [h,f] = -2f.
-    CE complex: Lambda^*(sl_2^*) with grading |d| = +1.
-
-    Degrees: C^0 = k (1-dim), C^1 = (sl_2)^* (3-dim),
-             C^2 = Lambda^2(sl_2)^* (3-dim), C^3 = Lambda^3(sl_2)^* (1-dim).
-
-    Flat basis ordering:
-      0: 1 (deg 0)
-      1: e* (deg 1), 2: h* (deg 1), 3: f* (deg 1)
-      4: e*^h* (deg 2), 5: e*^f* (deg 2), 6: h*^f* (deg 2)
-      7: e*^h*^f* (deg 3)
-
-    Returns (dims, d_matrices) where d_matrices[k] is the matrix d: C^k -> C^{k+1}.
-    """
-    from fractions import Fraction
-
-    dims = {0: 1, 1: 3, 2: 3, 3: 1}
-
-    # d_CE: C^0 -> C^1 is zero (constants are cocycles)
-    d0 = [[Fraction(0)] * 1 for _ in range(3)]
-
-    # d_CE: C^1 -> C^2
-    # d(e*) = 2 e*^h*         -> row 0 (e*^h*) gets +2 from col 0 (e*)
-    # d(h*) = -e*^f*          -> row 1 (e*^f*) gets -1 from col 1 (h*)
-    # d(f*) = 2 h*^f*         -> row 2 (h*^f*) gets +2 from col 2 (f*)
-    d1 = [[Fraction(0)] * 3 for _ in range(3)]
-    d1[0][0] = Fraction(2)    # d(e*) -> 2 e*^h*
-    d1[1][1] = Fraction(-1)   # d(h*) -> -e*^f*
-    d1[2][2] = Fraction(2)    # d(f*) -> 2 h*^f*
-
-    # d_CE: C^2 -> C^3 is zero (verified in ce_complex_sl2)
-    d2 = [[Fraction(0)] * 3 for _ in range(1)]
-
-    return dims, {0: d0, 1: d1, 2: d2}
-
-
-def _compute_kernel_dim(matrix, n_rows, n_cols):
-    """Compute dimension of kernel of a matrix over Q (exact Fraction arithmetic).
-
-    Uses row reduction over Q.
-    """
-    from fractions import Fraction
-
-    if n_rows == 0 or n_cols == 0:
-        return n_cols
-
-    # Copy matrix to list of lists
-    mat = [[Fraction(0)] * n_cols for _ in range(n_rows)]
-    for i in range(n_rows):
-        for j in range(n_cols):
-            mat[i][j] = Fraction(matrix[i][j])
-
-    # Row echelon form
-    pivot_cols = []
-    row = 0
-    for col in range(n_cols):
-        # Find pivot
-        pivot_row = None
-        for r in range(row, n_rows):
-            if mat[r][col] != Fraction(0):
-                pivot_row = r
-                break
-        if pivot_row is None:
-            continue
-        # Swap rows
-        mat[row], mat[pivot_row] = mat[pivot_row], mat[row]
-        pivot_cols.append(col)
-        # Eliminate below
-        for r in range(row + 1, n_rows):
-            if mat[r][col] != Fraction(0):
-                factor = mat[r][col] / mat[row][col]
-                for c in range(col, n_cols):
-                    mat[r][c] -= factor * mat[row][c]
-        row += 1
-
-    rank = len(pivot_cols)
-    return n_cols - rank
-
-
-def _compute_image_dim(matrix, n_rows, n_cols):
-    """Compute dimension of image of a matrix over Q."""
-    from fractions import Fraction
-
-    if n_rows == 0 or n_cols == 0:
-        return 0
-
-    mat = [[Fraction(0)] * n_cols for _ in range(n_rows)]
-    for i in range(n_rows):
-        for j in range(n_cols):
-            mat[i][j] = Fraction(matrix[i][j])
-
-    pivot_cols = []
-    row = 0
-    for col in range(n_cols):
-        pivot_row = None
-        for r in range(row, n_rows):
-            if mat[r][col] != Fraction(0):
-                pivot_row = r
-                break
-        if pivot_row is None:
-            continue
-        mat[row], mat[pivot_row] = mat[pivot_row], mat[row]
-        pivot_cols.append(col)
-        for r in range(row + 1, n_rows):
-            if mat[r][col] != Fraction(0):
-                factor = mat[r][col] / mat[row][col]
-                for c in range(col, n_cols):
-                    mat[r][c] -= factor * mat[row][c]
-        row += 1
-
-    return len(pivot_cols)
-
-
-def bar_complex_betti_sl2(max_tensor_degree: int = 4) -> Dict[str, Any]:
-    """Compute Hochschild Betti numbers for sl_2 from the bar complex.
-
-    Constructs the bar complex B(CE(sl_2)) at low tensor degree,
-    computes the bar differential d_B, and extracts:
-      dim ker(d_B^n) / im(d_B^{n+1}) = Betti number
-
-    For sl_2: the CE complex has dims {0:1, 1:3, 2:3, 3:1}.
-    The augmentation ideal A_+ has dimension 7 (everything except the unit).
-    B^n = (s^{-1} A_+)^{tensor n}, so dim B^n = 7^n.
-
-    At the chiral level, the Hochschild Betti numbers are:
-      ChirHoch^0(sl_2) = 1 (center = C at generic level)
-      ChirHoch^1(sl_2) = 3 (sl_2 outer derivations = inner)
-      ChirHoch^2(sl_2) = 1 (level deformation)
-
-    This function computes the bar Betti numbers from the ALGEBRAIC bar complex
-    and verifies they match the expected Hochschild dimensions after the
-    curve spectral sequence.
-
-    NOTE: The algebraic bar Betti numbers of CE(sl_2) are NOT the same as
-    ChirHoch^n(V_k(sl_2)). The bar Betti numbers are dim H^n(B(CE(sl_2))),
-    which is the Lie algebra cohomology resolution. The chiral Hochschild
-    cohomology involves additional sheaf cohomology on the curve X.
-    What we verify is the STRUCTURE: the bar complex provides the resolution,
-    and the curve spectral sequence concentrates it into [0, 2].
-    """
-    from fractions import Fraction
-
-    dims, d_matrices = _build_ce_differential_sl2()
-
-    # Augmentation ideal: all basis vectors except the unit (index 0)
-    # A_+ has 7 basis vectors (indices 1..7 in the full 8-dim CE complex)
-    aug_dim = 7
-    aug_indices = list(range(1, 8))  # indices 1..7
-    aug_degrees = [1, 1, 1, 2, 2, 2, 3]  # degrees of e*, h*, f*, e*h*, e*f*, h*f*, e*h*f*
-
-    # For the bar complex, we work at low tensor degree.
-    # B^1 = A_+ (7-dimensional)
-    # B^2 = A_+ tensor A_+ (49-dimensional)
-    # The bar differential d_B: B^2 -> B^1 has:
-    #   d_B(a|b) = m_2(a, b) (the product part)
-    #   plus internal differential terms on each factor
-
-    # We compute the cohomology of CE(sl_2) directly, which gives the
-    # answer for the derived category resolution:
-    # H^0(CE) = 1, H^1(CE) = 0, H^2(CE) = 0, H^3(CE) = 1
-
-    ce_cohomology = {}
-    # H^0: ker d_0 / im d_{-1} = ker(d: C^0 -> C^1)
-    # d_0 is the zero map from C^0 to C^1
-    ce_cohomology[0] = dims[0]  # = 1
-
-    # H^1: ker(d_1: C^1 -> C^2) / im(d_0: C^0 -> C^1)
-    # d_0 is zero, so im(d_0) = 0
-    ker_d1 = _compute_kernel_dim(d_matrices[1], 3, 3)
-    im_d0 = 0  # d_0 is zero
-    ce_cohomology[1] = ker_d1 - im_d0
-
-    # H^2: ker(d_2: C^2 -> C^3) / im(d_1: C^1 -> C^2)
-    ker_d2 = _compute_kernel_dim(d_matrices[2], 1, 3)
-    im_d1 = _compute_image_dim(d_matrices[1], 3, 3)
-    ce_cohomology[2] = ker_d2 - im_d1
-
-    # H^3: C^3 / im(d_2: C^2 -> C^3)
-    im_d2 = _compute_image_dim(d_matrices[2], 1, 3)
-    ce_cohomology[3] = dims[3] - im_d2
-
-    # Verify Whitehead: H^1 = H^2 = 0 for semisimple Lie algebras
-    whitehead_holds = (ce_cohomology[1] == 0) and (ce_cohomology[2] == 0)
-
-    # The chiral Hochschild Betti numbers for V_k(sl_2) are:
-    # ChirHoch^n = sum_{p+q=n} H^p(X, H^q_bar)
-    # For the bounded Koszul case, the bar resolution gives:
-    #   H^0_bar = k (the augmentation), concentrated in bar degree 0
-    #   The chiral HH uses the curve spectral sequence to get concentration in [0,2]
-    # The final answer: P(t) = 1 + dim(g)*t + t^2 = 1 + 3t + t^2
-
-    return {
-        "ce_dims": dims,
-        "ce_cohomology": ce_cohomology,
-        "whitehead_holds": whitehead_holds,
-        "H0_CE": ce_cohomology[0],
-        "H1_CE": ce_cohomology[1],
-        "H2_CE": ce_cohomology[2],
-        "H3_CE": ce_cohomology[3],
-        "chiral_hochschild": [1, 3, 1],
-        "note": "CE cohomology H^*(sl_2, k) = k[0] + k[3] (Whitehead). "
-                "Chiral Hochschild uses curve spectral sequence: P(t) = 1 + 3t + t^2.",
-    }
-
-
-def bar_complex_betti_abelian(rank: int = 1, max_n: int = 6) -> Dict[str, Any]:
-    """Compute bar Betti numbers for the abelian Lie algebra of rank r.
-
-    For the abelian Lie algebra h of rank r (= Heisenberg at the Lie level):
-    CE(h) = Lambda^*(h^*) with d = 0 (since [X,Y] = 0 for all X,Y).
-
-    The CHIRAL Hochschild cohomology uses the curve spectral sequence to
-    concentrate to amplitude [0, 2]: ChirHoch^n(Heis_r) = 0 for n > 2, with
-    P(t) = 1 + r*t + t^2.
-    """
-    from fractions import Fraction
-
-    # For abelian Lie algebra of rank r:
-    # CE complex = Lambda^*(h^*), d = 0
-    # dim Lambda^k(h^*) = C(r, k)
-    ce_dims = {k: comb(rank, k) for k in range(rank + 1)}
-
-    # With d = 0, all CE cochains are cocycles and no coboundaries
-    ce_cohomology = dict(ce_dims)
-
-    # For the Heisenberg chiral algebra, the curve spectral sequence gives:
-    # ChirHoch^n concentrated in [0, 2] with P(t) = 1 + r*t + t^2
-    chiral_hoch = [1, rank, 1]
-
-    # Bar Betti numbers at the algebraic level are recorded for
-    # structural context only (the curve spectral sequence is what
-    # produces the final chiral Hochschild amplitude).
-    if rank == 1:
-        bar_betti = {n: 1 for n in range(1, max_n + 1)}
-    else:
-        aug_dim = sum(ce_dims[k] for k in range(1, rank + 1))  # = 2^r - 1
-        bar_betti = {}
-        bar_betti[1] = aug_dim
-        if rank <= 3:
-            dim_B2 = aug_dim * aug_dim
-            bar_betti[2] = dim_B2
-
-    return {
-        "rank": rank,
-        "ce_dims": ce_dims,
-        "ce_cohomology": ce_cohomology,
-        "bar_betti_low": bar_betti,
-        "chiral_hochschild": chiral_hoch,
-        "euler_char_chiral": chiral_hoch[0] - chiral_hoch[1] + chiral_hoch[2],
-        "note": "CE(abelian): d=0, all cocycles. Curve spectral sequence "
-                "concentrates chiral Hochschild to amplitude [0,2].",
-    }
-
-
-def polynomial_growth_verification(family: str, max_n: int = 30,
-                                    **kwargs) -> Dict[str, Any]:
-    """Verify bounded amplitude of Hochschild dimensions.
-
-    Under Theorem H every Koszul family is finitely supported in
-    [0, 2].  "Polynomial growth" in the theorem name refers to the
-    fact that P_A(t) is a polynomial (of degree <= 2), NOT that dims
-    grow polynomially with n.  The prior W-algebra polynomial-ring
-    model (which had unbounded growth with degree r-1) is REFUTED
-    (AP94).
-    """
-    data = FAMILY_DATA[family]
-
-    if data['regime'] == BOUNDED_KOSZUL:
-        dims = [hochschild_betti(family, n, **kwargs) for n in range(max_n + 1)]
-        nonzero_range = [n for n in range(max_n + 1) if dims[n] > 0]
-        max_nonzero = max(nonzero_range) if nonzero_range else -1
-        is_polynomial = max_nonzero <= 2
-        growth_degree = 0 if is_polynomial else None
-        return {
-            "family": family,
-            "regime": BOUNDED_KOSZUL,
-            "dims": dims[:6],
-            "max_nonzero_degree": max_nonzero,
-            "is_finite_support": is_polynomial,
-            "growth_degree": growth_degree,
-            "verified": is_polynomial,
-        }
-
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def euler_characteristic_derived(family: str, max_n: int = 40,
-                                  **kwargs) -> Dict[str, Any]:
-    """Compute Euler characteristic from ACTUAL bar cohomology dimensions.
-
-    Under Theorem H every Koszul family is bounded in [0, 2], so
-    chi = P_A(-1) = dim H^0 - dim H^1 + dim H^2 stabilises
-    after n = 2.
-    """
-    data = FAMILY_DATA[family]
-
-    if data['regime'] == BOUNDED_KOSZUL:
-        betti = [hochschild_betti(family, n, **kwargs) for n in range(max_n + 1)]
-        chi = sum((-1)**n * betti[n] for n in range(max_n + 1))
-        chi_at_3 = sum((-1)**n * betti[n] for n in range(4))
-        stabilized = (chi == chi_at_3)
-        expected = hochschild_euler_char(family, **kwargs)
-        return {
-            "family": family,
-            "regime": BOUNDED_KOSZUL,
-            "chi": chi,
-            "chi_at_3": chi_at_3,
-            "stabilized": stabilized,
-            "betti": betti[:5],
-            "verified": stabilized and chi == expected,
-        }
-
-    raise ValueError(f"Unknown regime for {family}")
-
-
-def palindromicity_derived(family: str) -> Dict[str, Any]:
-    """Verify palindromicity from COMPUTED bar dimensions.
-
-    For bounded Koszul A with concentration in [0, 2]:
-      dim ChirHoch^0(A) = dim ChirHoch^2(A^!)  (Koszul duality)
-    which means the polynomial P_A(t) = p_0 + p_1*t + p_2*t^2 satisfies
-    p_0 = p_2 when A is self-dual (same type at dual level).
-    """
-    data = FAMILY_DATA[family]
-    if data['regime'] != BOUNDED_KOSZUL:
-        return {
-            "family": family,
-            "applicable": False,
-            "reason": "Bounded Koszul regime required",
-        }
-
-    # Compute Betti numbers from first principles
-    betti_0 = hochschild_betti(family, 0)
-    betti_1 = hochschild_betti(family, 1)
-    betti_2 = hochschild_betti(family, 2)
-
-    # Check palindromicity: p_0 = p_2
-    is_palindromic = (betti_0 == betti_2)
-
-    # Verify concentration in [0, 2]
-    betti_3 = hochschild_betti(family, 3)
-    betti_neg = hochschild_betti(family, -1)
-    concentrated = (betti_3 == 0) and (betti_neg == 0)
-
-    dual_name = data.get('koszul_dual', '')
-    if dual_name in FAMILY_DATA:
-        dual_data = FAMILY_DATA[dual_name]
-        koszul_check = {
-            "H0_A": betti_0,
-            "H2_A_dual": dual_data.get('dual_center_dim', None),
-            "H1_A": betti_1,
-            "H1_A_dual": dual_data.get('hoch1_dim', None),
-            "H2_A": betti_2,
-            "H0_A_dual": dual_data.get('center_dim', None),
-        }
-    else:
-        koszul_check = {"note": f"Dual family {dual_name} not in FAMILY_DATA"}
-
-    return {
-        "family": family,
-        "applicable": True,
-        "betti": [betti_0, betti_1, betti_2],
-        "palindromic": is_palindromic,
-        "concentrated_in_0_2": concentrated,
-        "koszul_duality_check": koszul_check,
-        "verified": is_palindromic and concentrated,
-    }
-
-
-if __name__ == '__main__':
-    print("=== Theorem H: Hochschild Polynomial Growth (bounded amplitude) ===\n")
-
-    print("--- Theorem H generic PBW/completed scope (concentration in [0,2]) ---")
-    for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
-                    'betagamma', 'bc_ghosts', 'free_fermion',
-                    'virasoro', 'w3']:
-        poly = hochschild_poincare(family)
-        chi = hochschild_euler_char(family)
-        total = hochschild_total_dim(family)
-        print(f"  {family:20s}: P(t) = {poly[0]} + {poly[1]}t + {poly[2]}t^2"
-              f"  chi={chi}  total={total}")
-
-    print("\n--- Parametric W_N (bounded amplitude under Theorem H) ---")
-    for N in [4, 5]:
-        family = 'wN'
-        poly = hochschild_poincare(family, N=N)
-        chi = hochschild_euler_char(family, N=N)
-        total = hochschild_total_dim(family, N=N)
-        print(f"  W_{N:<18d}: P(t) = {poly[0]} + {poly[1]}t + {poly[2]}t^2"
-              f"  chi={chi}  total={total}")
-
-    print("\n--- Full verification ---")
-    results = verify_theorem_h_all_families()
-    for family, res in results.items():
-        status = 'PASS' if res['passed'] else 'FAIL'
-        print(f"  {family:20s}: {status}")
+def lcm_list(values: List[int]) -> int:
+    return reduce(_lcm, values)

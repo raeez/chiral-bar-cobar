@@ -21,7 +21,8 @@ CRITICAL PITFALLS TESTED:
   - AP1: kappa formula correctness per family
   - AP14: shadow depth != Koszulness
   - AP24: kappa + kappa' = 0 for KM/free; = 13 for Virasoro; = 250/3 for W_3
-  - AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  - AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch, not H_{-k} and not the uncurved polynomial centre.
   - AP45: desuspension lowers degree
 """
 

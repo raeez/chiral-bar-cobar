@@ -140,12 +140,15 @@ def koszul_dual_shadow_coefficients(
     """Shadow coefficients of the Koszul dual A!.
 
     Virasoro: Vir_c^! = Vir_{26-c}.
-    Heisenberg: H_k^! has kappa = -k at shadow level (AP33: H_k^! != H_{-k}).
+    Heisenberg: H_k^! has scalar kappa = -k at shadow level; the
+    object is the curved second-kind Sym^ch(V*[1]) branch, not H_{-k}
+    and not the uncurved polynomial centre (AP33).
     Affine sl_2: V_k^! corresponds to level -k - 2h^v = -k - 4.
     Affine sl_3: V_k^! corresponds to level -k - 2h^v = -k - 6.
 
     CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-    CAUTION (AP33): H_k^! = Sym^ch(V*) != H_{-k}.
+    CAUTION (AP33): only scalar kappa agrees with kappa(H_{-k});
+    the Koszul-dual object is the curved second-kind Sym branch.
     """
     if family == 'heisenberg':
         result = {2: -float(param)}

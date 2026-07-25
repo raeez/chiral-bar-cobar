@@ -1102,7 +1102,7 @@ def comprehensive_purity_analysis() -> PuritySummary:
         "(v) Bar-cobar counit qi": "unconditional",
         "(vi) Barr-Beck-Lurie": "unconditional",
         "(vii) FH concentrated deg 0": "unconditional",
-        "(viii) ChirHoch polynomial": "unconditional",
+        "(viii) ChirHoch amplitude/Hilbert polynomial": "unconditional",
         "(ix) Kac-Shapovalov nonzero": "unconditional",
         "(x) FM boundary acyclicity": "unconditional",
         "(xi) Lagrangian criterion": "conditional (perfectness/nondegen)",

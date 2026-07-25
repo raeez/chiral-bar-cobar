@@ -105,7 +105,7 @@ class TestStructuralFirewalls(unittest.TestCase):
         self.assertIn("finite-type or completed hypotheses", roles["A^!"])
         self.assertEqual(roles["Omega(B(A))"], "bar-cobar inversion recovering A")
         self.assertIn("ChirHoch^*(A,A)", roles["Z_ch^der(A)"])
-        self.assertIn("Hochschild/derived-centre bulk", roles["Z_ch^der(A)"])
+        self.assertIn("Hochschild/derived-centre closed-sector", roles["Z_ch^der(A)"])
 
     def test_kernel_normalization_constants(self):
         kernels = kernel_normalization_constants(c=Fraction(24), k=Fraction(5), h_vee=Fraction(3))
@@ -128,7 +128,7 @@ class TestStructuralFirewalls(unittest.TestCase):
         self.assertEqual(len(summary["modular_koszul_primary_projections"]), 6)
         self.assertEqual(
             summary["object_roles"]["Z_ch^der(A)"],
-            "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+            "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
         )
 
     def test_gravitational_truncation_does_not_zero_full_ope(self):

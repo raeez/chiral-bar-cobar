@@ -18,8 +18,9 @@ LITERATURE SURVEYED:
 
   [CDG20]  Costello-Dimofte-Gaiotto, "Boundary Chiral Algebras and Holomorphic
            Twists", arXiv:2005.00083, CMP 399 (2023).
-           Bulk = commutative chiral algebra with shifted Poisson bracket.
-           Boundary algebra is a module for the bulk.
+           Physical closed-sector observables form a commutative chiral
+           algebra with shifted Poisson bracket. Boundary algebra is a module
+           for that closed sector.
            Constructs boundary algebras for free, LG, gauge+matter+CS.
 
   [DNP25]  Dimofte-Niu-Py, "Line Operators in 3d Holomorphic QFT",
@@ -63,11 +64,13 @@ FIVE COMPARISON AXES:
          (on the uniform-weight lane). This is a GENUINE EXTENSION.
     KEY: GKW's one-loop is ONE BULK LOOP, not genus 1 on the worldsheet.
 
-  Axis 4: BULK-BOUNDARY-LINE TRIANGLE
-    CDG: bulk = commutative + shifted Poisson. Boundary = module.
+  Axis 4: CLOSED-SECTOR-BOUNDARY-LINE TRIANGLE
+    CDG: physical closed observables = commutative + shifted Poisson.
+         Boundary = module.
     DNP: line = A^!-modules. dg-shifted Yangian.
-    Us:  bulk = derived center Z^der_ch(A). Boundary = A_b = End(b).
-         Line = A^!_line-mod. Triangle: bulk = Z_der(boundary) = HH*(A^!_line).
+    Us:  closed-sector actor = derived center Z^der_ch(A). Boundary =
+         A_b = End(b). Line = A^!_line-mod. Physical bulk comparison is
+         an OCA datum, not a definition.
     MATCH: CDG's shifted Poisson = our PVA descent (Theorem D2-D6 proved).
            DNP's dg-shifted Yangian = our ordered Koszul dual (Part VII).
 
@@ -91,7 +94,8 @@ ANTI-PATTERN COMPLIANCE:
   AP14: shadow depth != Koszulness. ALL standard families are Koszul.
   AP19: r-matrix poles ONE BELOW OPE (d log absorption).
   AP25: bar != Verdier dual != cobar. Three distinct functors.
-  AP34: bar-cobar != open-to-closed. Bulk = derived center.
+  AP34: bar-cobar != open-to-closed. The derived center is the algebraic
+        closed-sector actor; physical bulk requires OCA comparison.
   AP44: lambda-bracket = OPE mode / n! (divided power convention).
 
 CONVENTIONS:
@@ -521,38 +525,40 @@ def compare_mk_virasoro(arity: int) -> OperationComparison:
 
 
 # ============================================================================
-# 4. CDG BULK ALGEBRA vs OUR DERIVED CENTER
+# 4. CDG CLOSED OBSERVABLES vs OUR DERIVED CENTRE
 # ============================================================================
 
 @dataclass(frozen=True)
 class BulkComparison:
-    """Comparison of bulk algebra structures.
+    """Comparison of closed-sector algebra structures.
 
-    CDG20: bulk = commutative chiral algebra with (-1)-shifted Poisson bracket
-    Us:    bulk = chiral derived center Z^der_ch(A) = C^bullet_ch(A_b, A_b)
+    CDG20: physical closed observables carry a commutative chiral algebra
+    with (-1)-shifted Poisson bracket.  Us: the algebraic closed-sector
+    actor is Z^der_ch(A) = C^bullet_ch(A_b, A_b).  Matching these is an
+    OCA/cohomology-level comparison, not a definitional equality.
     """
     theory_name: str
-    cdg_bulk: str           # CDG description
-    our_bulk: str           # our description
+    cdg_bulk: str           # legacy key: CDG closed-observable description
+    our_bulk: str           # legacy key: our closed-sector actor description
     match_at_cohomology: bool
     shifted_poisson: bool   # whether the shifted Poisson bracket is visible
     notes: str = ''
 
 
 def cdg_bulk_comparison_free() -> BulkComparison:
-    """CDG bulk for free theory vs our derived center.
+    """CDG closed observables for the free theory vs our derived centre.
 
-    CDG20: For free scalar on C x R, the bulk local operators form
-    Sym(C[z,dz][1]) -- symmetric algebra on holomorphic forms,
-    shifted by 1 in cohomological degree. The shifted Poisson bracket
-    comes from the propagator.
+    CDG20: For free scalar on C x R, the physical closed local operators
+    form Sym(C[z,dz][1]) -- symmetric algebra on holomorphic forms, shifted
+    by 1 in cohomological degree. The shifted Poisson bracket comes from
+    the propagator.
 
     Us: Z^der_ch(H_k) = HH^*_ch(H_k) (chiral Hochschild of Heisenberg).
     At cohomology level, this is Sym(V[1]) with the shifted Poisson
     bracket from the Heisenberg OPE.
 
-    Match: at cohomology level, both give the same graded commutative
-    algebra with (-1)-shifted Poisson structure.
+    Match: under the OCA comparison, the cohomology-level algebras carry
+    the same graded commutative (-1)-shifted Poisson structure.
     """
     return BulkComparison(
         theory_name='Free scalar / Heisenberg',
@@ -560,16 +566,16 @@ def cdg_bulk_comparison_free() -> BulkComparison:
         our_bulk='HH^*_ch(H_k) = Sym(V[1]) with Poisson from OPE',
         match_at_cohomology=True,
         shifted_poisson=True,
-        notes='Both = symmetric algebra on shifted generators. Poisson = OPE residue.',
+        notes='OCA/cohomology comparison: symmetric algebra on shifted generators; Poisson = OPE residue.',
     )
 
 
 def cdg_bulk_comparison_gauge() -> BulkComparison:
-    """CDG bulk for gauge theory vs our derived center.
+    """CDG closed observables for gauge theory vs our derived centre.
 
-    CDG20: For 3d N=4 gauge theory with group G, bulk is C[BG][1]
-    (functions on the classifying stack, shifted). The shifted Poisson
-    bracket is the Kirillov-Kostant bracket on g*.
+    CDG20: For 3d N=4 gauge theory with group G, the physical closed
+    sector is C[BG][1] (functions on the classifying stack, shifted).
+    The shifted Poisson bracket is the Kirillov-Kostant bracket on g*.
 
     Us: Z^der_ch(V_k(g)) = HH^*_ch(V_k(g)).
     By Theorem H, this is a polynomial algebra on the Casimirs,
@@ -586,9 +592,9 @@ def cdg_bulk_comparison_gauge() -> BulkComparison:
 
 
 def cdg_bulk_comparison_lg() -> BulkComparison:
-    """CDG bulk for LG model vs our derived center.
+    """CDG closed observables for LG model vs our derived centre.
 
-    CDG20: For LG model with superpotential W, bulk is the
+    CDG20: For LG model with superpotential W, the physical closed sector is the
     Jacobian ring Jac(W) = C[fields] / (dW), shifted, with
     residue pairing giving the Poisson bracket.
 
@@ -1341,7 +1347,8 @@ def full_comparison_summary() -> Dict[str, Any]:
         'axis4_bulk': {
             'comparisons': bulk_comparisons,
             'summary': (
-                'CDG bulk = our derived center at cohomology level. '
+                'CDG closed observables compare with our derived-centre '
+                'closed sector at cohomology level under the OCA datum. '
                 'Shifted Poisson = our PVA descent (D2-D6 proved).'
             ),
         },

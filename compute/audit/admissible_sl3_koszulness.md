@@ -2,7 +2,10 @@
 
 ## Status
 
-**sl_2**: PROVED at all admissible levels (rem:admissible-koszul-status).
+**sl_2**: finite Shapovalov/character evidence; theorem-level use is
+conditional on the quotient-bar spectral sequence, PBW/Shapovalov
+detection, finite-window exactness, and strong convergence package
+(rem:admissible-koszul-status).
 **sl_3 and higher rank**: OPEN.
 
 ## The Precise Obstruction
@@ -18,9 +21,11 @@ For sl_2 at admissible level k = p/q - 2:
   h_null = (p-1)*q.
 - For most admissible levels, h_null > 3, so nulls never enter the bar range.
   The quotient bar complex equals the universal bar complex, which is Koszul.
-- Even when h_null <= 3 (possible for small p, q), the quotient bar spectral
-  sequence degenerates at E_2 by the Kac-Wakimoto character formula because
-  there is only one null-vector generator.
+- Even when h_null <= 3 (possible for small p, q), the finite
+  Shapovalov/character model is compatible with collapse.  A theorem
+  still requires the quotient-bar spectral sequence and convergence
+  package; the Kac--Wakimoto character formula alone gives character
+  control, not bar exactness.
 
 ### Why sl_3 fails
 

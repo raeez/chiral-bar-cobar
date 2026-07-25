@@ -3,7 +3,7 @@
 The degree-$2$, all-genera projection of the MC element
 $\Theta_\cA \in \MC(\gAmod)$
 (Theorem~\ref{thm:mc2-bar-intrinsic}) produces the scalar part of
-the genus-$g$ free energy. On the proved uniform-weight
+the genus-$g$ formal coefficient. On the proved uniform-weight
 scalar-diagonal lane,
 $F_g^{\mathrm{sc}}(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
 at all genera, where $\lambda_g^{\mathrm{FP}}$ is the
@@ -11,7 +11,7 @@ Faber--Pandharipande--Mumford number. Free fields, including
 the multi-weight $\beta\gamma$ system, are exact exceptions:
 their cross-channel correction vanishes. For interacting
 multi-weight algebras, with principal $\cW_N$ ($N \geq 3$)
-as the standard witness, the full free energy is
+as the standard witness, the full formal coefficient is
 \[
 F_g(\cA)
 =F_g^{\mathrm{sc}}(\cA)
@@ -30,11 +30,11 @@ $\kappa(\cA)\bigl((x/2)/\sin(x/2)-1\bigr)
 supplied by the Grothendieck--Riemann--Roch pushforward.
 
 \medskip
-The Hodge class $\lambda_g=c_g(\mathbb E)$ supplies the
-cohomological universal factor;
-$\kappa(\cA)$ supplies the scalar
-multiplier: $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-on the uniform-weight scalar lane, and after integration
+Under~$H_D^K$, the Hodge class $\lambda_g=c_g(\mathbb E)$ enters as
+the signed top Chern character
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g$.  Under~$H_D^{\mathrm{graph}}$, integration
+gives
 $F_1(\cA)=\kappa(\cA)/24$ for every modular Koszul algebra
 (Theorem~\ref{thm:genus-universality}). The scalar series
 is controlled by $(x/2)/\sin(x/2)$, the Wick-rotated $\hat{A}$ factor,
@@ -51,18 +51,20 @@ algebra (Theorem~\ref{thm:cech-hca}) with curvature
 $\kappa(\cA) \cdot \omega_g$, where $\omega_g$ is the Mumford class
 (Theorem~\ref{thm:mumford-formula}). The secondary Borcherds
 operations (Definition~\ref{def:secondary-borcherds}) at genus~$g$
-encode the obstruction $\mathrm{obs}_g(\cA)$ as their leading
-component: the universality theorem
-$\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$ on the uniform-weight
-scalar lane is the statement that only
-the scalar shadow survives at genus~$g$;
+encode, for $g\geq2$, the native deformation class
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)$ as their leading component.
+The genus-one component is the pointed class
+$\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)$.
+The package~$H_D^{\mathrm{tr}}$ compares this class with
+$\mathfrak O_g^K(\cA)$, whose signed Hodge character is
+$(-1)^g\kappa(\cA)\lambda_g$ under~$H_D^K$;
 (ii)~the genus expansion is the numerical projection of the weight
 filtration on the
 modular convolution dg~Lie algebra $\mathfrak{g}^{\mathrm{mod}}_\cA$
 (Definition~\ref{def:modular-convolution-dg-lie}):
 the convolution $sL_\infty$-algebra
 (Theorem~\ref{thm:operadic-homotopy-convolution}) acquires a
-genus grading, and the free energy $F_g$ is the
+genus grading, and the scalar coefficient $F_g$ is the
 genus-$g$ projection of the master MC element $\Theta_\cA$.
 The generating functions $\sum_g F_g x^{2g}$ computed in this
 chapter are the shadow-algebra projections of
@@ -73,7 +75,7 @@ of $\overline{\operatorname{FM}}_n(\Sigma_g)$; the log-FM framework
 configuration spaces to nodal curves at the boundary of
 $\overline{\mathcal{M}}_g$, and the planted-forest tropicalization
 governs the clutching contributions to
-$\mathrm{obs}_g$ at genus~$g$.
+$\operatorname{obs}^{\mathrm{Hdg}}_g$ at genus~$g$.
 \end{remark}
 
 \noindent
@@ -83,13 +85,13 @@ $\mathfrak{T} = (\cA, \cA^!, r(z))$
 \begin{equation}\begin{aligned}
 \mathfrak{T}_{\cH}
  &= \bigl(\cH_\kappa,\;
- \operatorname{Sym}^{\mathrm{ch}}(V^*),\;
+ (\operatorname{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-\kappa\omega),\;
  \kappa/z\bigr), \\
-%: canonical form r(z) = k\Omega/z; k=0 -> r=0
+%: canonical form r(z) = k\Omega_{\mathrm{tr}}/z; k=0 -> r=0
 \mathfrak{T}_{\widehat{\fg}_k}
  &= \bigl(\widehat{\fg}_k,\;
  \widehat{\fg}_{-k-2h^\vee},\;
- k\Omega/z\bigr), \\
+ k\Omega_{\mathrm{tr}}/z\bigr), \\
 \mathfrak{T}_{\mathrm{Vir}}
  &= \bigl(\mathrm{Vir}_c,\;
  \mathrm{Vir}_{26-c},\;
@@ -104,7 +106,7 @@ The degree-$2$ projection of the MC element $\Theta_\cA$ produces
 the scalar term
 $F_g^{\mathrm{diag}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$.
 For uniform-weight algebras and free fields this is the full
-free energy. For interacting multi-weight algebras the $r$-matrix,
+formal coefficient. For interacting multi-weight algebras the $r$-matrix,
 the Verdier Koszul partner, and mixed boundary graphs enter through
 $\delta F_g^{\mathrm{cross}}$ and the complementarity constraint
 $F_g(\cA)+F_g(\cA^!)$.
@@ -112,13 +114,13 @@ $F_g(\cA)+F_g(\cA^!)$.
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
 \subsection{Heisenberg algebra}
-\begin{theorem}[Heisenberg free energy at all genera;
+\begin{theorem}[Heisenberg formal genus coefficient at all genera;
 \ClaimStatusConditional]\label{thm:heisenberg-all-genera}
 
 \index{Heisenberg algebra!genus expansion}
 For the Heisenberg algebra $\mathcal{H}_\kappa$
 of rank~$d$ at level~$\kappa \neq 0$, the genus-$g$
-free energy is:
+formal scalar coefficient is:
 \begin{equation}F_g(\mathcal{H}_\kappa) = d\kappa \cdot
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
 \frac{|B_{2g}|}{(2g)!}
@@ -148,7 +150,7 @@ This is the all-genera extension of the genus-$1$ computation in
 For a rank-one Heisenberg algebra, the shadow obstruction tower
 terminates at degree~$2$ (Gaussian archetype): $\Theta_{\mathcal{H}} =
 \Theta_{\mathcal{H}}^{\leq 2} = \kappa \cdot \eta \otimes \Lambda$.
-The genus-$g$ free energy $F_g$ is obtained by evaluating the genus-$g$
+The genus-$g$ scalar coefficient $F_g$ is obtained by evaluating the genus-$g$
 component of this MC element on the fundamental class
 $[\overline{\mathcal{M}}_{g,1}]$:
 \[
@@ -209,7 +211,7 @@ $\sum_{g\geq1} F_g x^{2g}
 For the $\beta\gamma$-system of conformal weights
 $(\lambda, 1-\lambda)$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The genus-$g$ free energy is
+\item The genus-$g$ formal scalar coefficient is
 $F_g(\beta\gamma_\lambda) = \kappa(\beta\gamma_\lambda)
 \lambda_g^{\mathrm{FP}}$ for all $g\geq 1$, with
 \[
@@ -254,13 +256,13 @@ canonical bundle on an elliptic curve.
 
 The Heisenberg genus expansion (\S\ref{sec:frame-genus-tower}) treats a single free boson. A lattice VOA $V_\Lambda$ tensors $d$ copies of $\mathcal{H}_1$ with $\mathbb{C}[\Lambda]$; lattice shifts leave $\kappa$ unchanged, so the genus expansion follows immediately.
 
-\begin{theorem}[Lattice VOA free energy;
+\begin{theorem}[Lattice VOA formal genus coefficient;
 \ClaimStatusConditional]
 For a positive-definite even lattice $\Lambda$ of
 rank~$d$, the lattice vertex algebra
 $V_\Lambda = \mathcal{H}_1^{\otimes d} \otimes
 \mathbb{C}[\Lambda]$
-has genus-$g$ free energy:
+has genus-$g$ formal scalar coefficient:
 \begin{equation}F_g(V_\Lambda) = d \cdot
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
 \frac{|B_{2g}|}{(2g)!}
@@ -304,17 +306,17 @@ In particular, the Leech lattice VOA $V_{\Lambda_{24}}$ and the Niemeier lattice
 While $F_g$ depends only on $d = \mathrm{rank}(\Lambda)$, the physical partition function encodes the full lattice structure: $Z_g(V_\Lambda, \Omega) = \Theta_\Lambda^{(g)}(\Omega)/F_g^{\mathrm{osc}}(\Omega)$, where $\Theta_\Lambda^{(g)}$ is the degree-$g$ Siegel theta series. For unimodular even $\Lambda$, $\Theta_\Lambda$ transforms under $\mathrm{Sp}(2g, \mathbb{Z})$ by $\det(C\Omega + D)^{d/2}$; for non-unimodular lattices, the Weil representation on $\mathbb{C}[\Lambda^*/\Lambda]$ enters.
 \end{remark}
 
-\section{\texorpdfstring{$\mathcal{W}$-algebra free energy and Higgs bundles}{$\mathcal{W}$-algebra free energy and Higgs bundles}}
+\section{\texorpdfstring{$\mathcal{W}$-algebra formal genus coefficients and Higgs bundles}{$\mathcal{W}$-algebra formal genus coefficients and Higgs bundles}}
 \index{W-algebra@$\mathcal{W}$-algebra!genus expansion}
 
-The progression Heisenberg $\to$ $\widehat{\mathfrak{sl}}_2$ $\to$ $\mathcal{W}$-algebra reflects increasing operadic complexity: rank~$1$ abelian, rank~$1$ nonabelian, and Drinfeld--Sokolov reduction. DS reduction preserves both the discriminant (Theorem~\ref{thm:ds-bar-gf-discriminant}) and $\kappa$, so the genus expansion of a $\mathcal{W}$-algebra is determined by its parent Kac--Moody algebra.
+The progression Heisenberg $\to$ $\widehat{\mathfrak{sl}}_2$ $\to$ $\mathcal{W}$-algebra reflects increasing operadic complexity: rank~$1$ abelian, rank~$1$ nonabelian, and Drinfeld--Sokolov reduction. On the principal generic lane, and only after the DS--bar exchange and scalar-normalization hypotheses of Theorem~\ref{thm:ds-bar-gf-discriminant}, the discriminant and genus-$1$ curvature are transported from the parent Kac--Moody algebra. For non-principal reductions the same sentence requires the corresponding subregular DS--bar transport package; DS reduction is a filtered functor on primitive triples, not an equality of all structures.
 
-\begin{theorem}[Uniform-weight $\mathcal{W}$-algebra free energy;
+\begin{theorem}[Uniform-weight $\mathcal{W}$-algebra formal genus coefficient;
 \ClaimStatusConditional]
 For uniform-weight $\mathcal{W}$-algebras
 \textup{(}in particular, the Virasoro algebra
 $\mathfrak{g} = \mathfrak{sl}_2$\textup{)} at generic level
-$k \neq -h^\vee$, the genus-$g$ free energy is
+$k \neq -h^\vee$, the genus-$g$ formal scalar coefficient is
 \begin{equation}F_g\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
 = \kappa\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
 \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
@@ -322,8 +324,8 @@ $k \neq -h^\vee$, the genus-$g$ free energy is
 \end{equation}
 at all genera. For $\operatorname{rank}(\mathfrak{g}) \geq 2$
 \textup{(}multi-weight generators\textup{)}, the scalar formula
-holds at $g = 1$ unconditionally; at $g \geq 2$ the free energy
-decomposes as the scalar term above plus the mixed-channel
+holds at $g = 1$ unconditionally; at $g \geq 2$ the full formal
+coefficient decomposes as the scalar term above plus the mixed-channel
 correction of Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}.
 Here $\kappa(\mathcal{W}^k(\mathfrak{g}))$ is
 determined by the genus-$1$ curvature of the bar
@@ -501,8 +503,11 @@ $k=-2$, the scalar curvature $\kappa$ vanishes, but the surviving
 structure is the Feigin--Frenkel oper centre in bar cohomology; strict
 bar-cobar inversion at the critical fibre requires the separate
 critical-level oper comparison.
-\item \emph{Theorem~C} (Complementarity, Theorem~\ref{thm:quantum-complementarity-main}):
-$\mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,k}) + \mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,-k-4}) = 0$ in $H^{2g}(\overline{\mathcal{M}}_g)$ for all~$g$.
+\item \emph{Theorems~C and D} (Complementarity and modular trace):
+under~$H_D^K$, the Hodge characters of
+$\widehat{\mathfrak{sl}}_{2,k}$ and
+$\widehat{\mathfrak{sl}}_{2,-k-4}$ sum to zero in
+$H^{2g}(\overline{\mathcal M}_g)$.
 \end{itemize}
 
 All three theorems are unconditional for $\widehat{\mathfrak{sl}}_{2,k}$
@@ -518,15 +523,15 @@ level-$k$ Killing contraction kills~$V_1$.
 The genus expansion below
 is the numerical shadow of this algebraic mechanism.
 
-\subsection{\texorpdfstring{Genus-$g$ free energy}{Genus-g free energy}}\label{subsec:sl2-free-energy}
+\subsection{\texorpdfstring{Genus-$g$ formal coefficient}{Genus-g formal coefficient}}\label{subsec:sl2-free-energy}
 
-\begin{theorem}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} free energy at all genera;
+\begin{theorem}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} formal genus coefficient at all genera;
 \ClaimStatusConditional]\label{thm:sl2-all-genera}
 
 \textup{[Regime: curved-central\textup{;}
 Convention~\textup{\ref{conv:regime-tags}}.]}
 
-For $\widehat{\mathfrak{sl}}_{2,k}$ at generic level $k \neq -2$, the genus-$g$ free energy is:
+For $\widehat{\mathfrak{sl}}_{2,k}$ at generic level $k \neq -2$, the genus-$g$ formal scalar coefficient is:
 \begin{equation}\label{eq:sl2-Fg}
 F_g(\widehat{\mathfrak{sl}}_{2,k}) = \frac{3(k+2)}{4} \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
 \end{equation}
@@ -534,21 +539,21 @@ where $B_{2g}$ are the Bernoulli numbers ($B_2 = \frac{1}{6}$, $B_4 = -\frac{1}{
 \end{theorem}
 
 \begin{proof}
-By the genus universality theorem
-(Theorem~\ref{thm:genus-universality}), the genus-$g$ obstruction
-class on the uniform-weight scalar lane factors as
-$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$, where
-$\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge
-bundle on $\overline{\mathcal{M}}_g$. For
+By Theorem~\ref{thm:genus-universality}, $H_D^K$ gives
+$\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g)$ and hence
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g$.  Under~$H_D^{\mathrm{graph}}$ its
+scalar-diagonal trace is
+$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$. For
 $\widehat{\mathfrak{sl}}_{2,k}$, the genus-1 curvature computation
 (Theorem~\ref{thm:sl2-genus1-curvature}) gives
 $\kappa = 3(k+2)/4$.
 
-The free energy is the tautological integral:
+The scalar coefficient is the tautological integral:
 \[
 F_g^{\mathrm{sc}}(\cA) =
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,
-\mathrm{obs}_g(\cA)
+\kappa(\cA)\lambda_g
 = \kappa(\cA) \cdot
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g
 \]
@@ -725,11 +730,11 @@ $\kappa_{\mathcal{W}_3} + \kappa_{\mathcal{W}_3}' = 250/3$.
 
 \begin{remark}[Bosonic string anomaly splitting]\label{rem:bosonic-string-anomaly-splitting}
 
-The complementarity sum $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$ equals the bosonic string curvature $\kappa$ at $d = 26$ divided by~$2$. The combined genus-$g$ free energy
+The complementarity sum $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$ equals the bosonic string curvature $\kappa$ at $d = 26$ divided by~$2$. The combined genus-$g$ scalar coefficient
 \[
 F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \lambda_g^{\mathrm{FP}}
 \]
-is the scalar free energy of $13$ free bosons. This is the
+is the scalar coefficient of $13$ free bosons. This is the
 Koszul-dual form of Polyakov's anomaly cancellation
 $c_{\mathrm{matter}}+c_{\mathrm{ghost}}=26-26=0$:
 the Virasoro scalar is $\kappa=c/2$, so the pair
@@ -1076,14 +1081,17 @@ $d^{(2)}(f \boxtimes f \cdot \eta_{12}) = 0$.
 
 \subsubsection{Curvature at genus 2}
 
-\begin{theorem}[Genus-2 curvature for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2};
+\begin{theorem}[Genus-2 K-theory and Hodge outputs for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2};
 \ClaimStatusConditional]\label{thm:sl2-genus2-curvature}
 \index{curvature!genus-2 for sl2@genus-2 for $\mathfrak{sl}_2$}
-The genus-$2$ obstruction class of $\widehat{\mathfrak{sl}}_{2,k}$ is:
+Under $H_D^K$, the genus-$2$ K-class and signed Hodge component are
 \begin{equation}\label{eq:sl2-obs2}
-\mathrm{obs}_2(\widehat{\mathfrak{sl}}_{2,k})
-= \frac{3(k+2)}{4} \cdot \lambda_2
-\in H^4(\overline{\mathcal{M}}_2,\, Z(\widehat{\mathfrak{sl}}_{2,k}))
+\mathfrak O_2^K(\widehat{\mathfrak{sl}}_{2,k})
+=\frac{3(k+2)}4\lambda_{-1}(\mathbb E_2),
+\qquad
+\operatorname{obs}^{\mathrm{Hdg}}_2(\widehat{\mathfrak{sl}}_{2,k})
+= \frac{3(k+2)}{4} \lambda_2
+\in H^4(\overline{\mathcal{M}}_2,\mathbb Q)
 \end{equation}
 where $\lambda_2 = c_2(\mathbb{E})$ is the second Chern class of the
 rank-$2$ Hodge bundle. The coefficient $3(k+2)/4 = \kappa(\widehat{\mathfrak{sl}}_{2,k})$
@@ -1163,19 +1171,24 @@ Combining both channels:
 \end{equation}
 in agreement with $\kappa(\widehat{\mathfrak{sl}}_{2,k})$ from
 Theorem~\ref{thm:kac-moody-obs}.
-Therefore $\mathrm{obs}_2 = \frac{3(k+2)}{4} \cdot \lambda_2$.
+Therefore
+$\operatorname{obs}^{\mathrm{Hdg}}_2
+=\frac{3(k+2)}4\lambda_2$.
 
 \emph{Step~5: Consistency checks.}
 \begin{itemize}
 \item \emph{Critical level $k = -2$:}
-$\kappa = 3 \cdot 0/4 = 0$, so $\mathrm{obs}_2 = 0$.
+$\kappa = 3 \cdot 0/4 = 0$, so
+$\operatorname{obs}^{\mathrm{Hdg}}_2=0$.
 The bar complex is uncurved, consistent with
 Proposition~\ref{prop:km-bar-curvature}(i).
 \item \emph{Abelian limit:}
 Setting $f^{ab}{}_c = 0$ and $h^\vee = 0$ recovers the
-Heisenberg formula $\mathrm{obs}_2 = \kappa \cdot \lambda_2$
+Heisenberg formula
+$\operatorname{obs}^{\mathrm{Hdg}}_2=\kappa\lambda_2$
 with only the double-pole channel active.
-\item \emph{Universality:} The result $\mathrm{obs}_2 =
+\item \emph{Universality:} The result
+$\operatorname{obs}^{\mathrm{Hdg}}_2 =
 \kappa \cdot \lambda_2$ with $\kappa = 3(k+2)/4$ is
 precisely the $g = 2$ case of
 Theorem~\ref{thm:kac-moody-obs}, confirming that the
@@ -1243,14 +1256,15 @@ The cancellation with $(d^{(1)})^2$ is a genuine constraint
 that is not visible in any abelian example.
 \end{proof}
 
-\subsubsection{Free energy at genus 2: independent computation}
+\subsubsection{Formal coefficient at genus 2: independent computation}
 
-\begin{computation}[Genus-2 free energy for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}]
+\begin{computation}[Genus-2 formal coefficient for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}]
 \label{comp:sl2-genus2-F2}
 \index{free energy!genus-2 for sl2@genus-2 for $\mathfrak{sl}_2$}
 From the curvature
-$\mathrm{obs}_2 = \frac{3(k+2)}{4} \cdot \lambda_2$
-(Theorem~\ref{thm:sl2-genus2-curvature}), the genus-$2$ free energy is:
+$\operatorname{obs}^{\mathrm{Hdg}}_2
+= \frac{3(k+2)}{4} \lambda_2$
+(Theorem~\ref{thm:sl2-genus2-curvature}), the genus-$2$ formal scalar coefficient is:
 \begin{equation}\label{eq:sl2-F2-explicit}
 F_2(\widehat{\mathfrak{sl}}_{2,k})
 = \frac{3(k+2)}{4} \cdot \lambda_2^{\mathrm{FP}}
@@ -1296,7 +1310,10 @@ The $\widehat{\mathfrak{sl}}_2$ genus-$2$ computation reveals three features inv
 \index{degeneration!genus-2 for sl2@genus-2 for $\mathfrak{sl}_2$}
 As $\Sigma_2$ degenerates:
 \begin{enumerate}
-\item \emph{Separating} ($\delta_1$): $\Omega = \mathrm{diag}(\tau_1, \tau_2)$, monodromies decouple, and $\mathrm{obs}_2|_{\delta_1} = \kappa \cdot \lambda_1(E_{\tau_1}) \cdot \lambda_1(E_{\tau_2})$ factorizes into two genus-$1$ curvatures.
+\item \emph{Separating} ($\delta_1$): $\Omega = \mathrm{diag}(\tau_1, \tau_2)$, monodromies decouple, and
+$\operatorname{obs}^{\mathrm{Hdg}}_2|_{\delta_1}
+=\kappa\lambda_1(E_{\tau_1})\lambda_1(E_{\tau_2})$ factorizes into
+two genus-$1$ curvatures.
 \item \emph{Non-separating} ($\delta_0$): $\Omega_{12} \to 0$, $\lambda_2|_{\delta_0} = 0$, and the bar differential reduces to genus~$1$.
 \end{enumerate}
 These limits are identical to the Heisenberg degeneration (Remark~\ref{rem:genus2-degeneration}): the non-abelian structure does not alter boundary behavior.
@@ -1396,16 +1413,17 @@ $\Omega^{ab}$ collapses to the scalar $c/2$ under DS reduction.
 \begin{corollary}[Genus-2 Virasoro curvature; \ClaimStatusConditional]
 \label{cor:virasoro-genus2-curvature}
 \index{curvature!genus-2 for Virasoro}
-The genus-$2$ obstruction class of $\mathrm{Vir}_c$ is:
+The genus-$2$ signed Hodge component of $\mathrm{Vir}_c$ is:
 \begin{equation}\label{eq:vir-obs2}
-\mathrm{obs}_2(\mathrm{Vir}_c) = \frac{c}{2} \cdot \lambda_2
+\operatorname{obs}^{\mathrm{Hdg}}_2(\mathrm{Vir}_c)
+= \frac{c}{2} \lambda_2
 \in H^4(\overline{\mathcal{M}}_2, \mathbb{Q})
 \end{equation}
 consistent with the genus universality theorem
 \textup{(}Theorem~\textup{\ref{thm:genus-universality})} with
 $\kappa(\mathrm{Vir}_c) = c/2$.
 
-The genus-$2$ free energy is:
+The genus-$2$ formal scalar coefficient is:
 \begin{equation}\label{eq:vir-F2}
 F_2(\mathrm{Vir}_c) = \frac{c}{2} \cdot \lambda_2^{\mathrm{FP}}
 = \frac{c}{2} \cdot \frac{7}{5760} = \frac{7c}{11520}
@@ -1423,12 +1441,12 @@ The single-channel curvature is:
 \cdot \sum_{j=1}^{2} (\partial_w^3\omega_j)^2
 = -4\pi^2 \cdot \frac{c^2}{4} \cdot [\text{topological}].
 \]
-However, this quadratic expression contributes to
-$\mathrm{obs}_2$ only through its \emph{linear part} (the
-cocycle obstruction, not the full square). By
+The package $H_D^K$ evaluates the linear cocycle component of this
+quadratic representative as
+$\operatorname{obs}^{\mathrm{Hdg}}_2$. By
 Theorem~\ref{thm:genus-universality}(iii), the obstruction is
-$\mathrm{obs}_g(\mathrm{Vir}_c)
-= \kappa(\mathrm{Vir}_c)\lambda_g$ on the uniform-weight
+$\operatorname{obs}^{\mathrm{Hdg}}_g(\mathrm{Vir}_c)
+=(-1)^g\kappa(\mathrm{Vir}_c)\lambda_g$ on the uniform-weight
 scalar lane for all~$g$, with
 \(\kappa(\mathrm{Vir}_c)=c/2\) for the Virasoro (Master Table). The
 genus-$2$ specialization gives~\eqref{eq:vir-obs2}.
@@ -1460,11 +1478,11 @@ differential involves four propagator channels (the four
 generator pairs $T \times T$, $T \times W$, $W \times T$,
 $W \times W$).
 
-\begin{proposition}[\texorpdfstring{$\mathcal{W}_3$}{W_3} genus-$2$ free energy;
+\begin{proposition}[\texorpdfstring{$\mathcal{W}_3$}{W_3} genus-$2$ formal coefficient;
 \ClaimStatusConditional]\label{prop:w3-genus2-curvature}
 \index{curvature!genus-2 for W3@genus-2 for $\mathcal{W}_3$}
 \index{cross-channel correction!$\mathcal{W}_3$ genus-2}
-The genus-$2$ free energy of $\mathcal{W}_3$ at level~$k$
+The genus-$2$ formal scalar coefficient of $\mathcal{W}_3$ at level~$k$
 decomposes as
 \begin{equation}\label{eq:w3-obs2}
 F_2(\mathcal{W}_3^k)
@@ -1483,7 +1501,7 @@ The first term is the per-channel universal part; the second is the
 cross-channel correction
 \textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(vi)\textup{)}.
 
-The diagonal free energy and complementarity are:
+The diagonal coefficient and complementarity are:
 \begin{align}
 F_2^{\mathrm{diag}}(\mathcal{W}_3^k) &= \frac{5c}{6} \cdot \frac{7}{5760}
 = \frac{7c}{6912}, \label{eq:w3-F2} \\
@@ -1794,7 +1812,7 @@ one summand.
 \index{complementarity!genus-2 dimension table}
 
 The preceding subsections computed the genus-$2$ obstruction class
-$\operatorname{obs}_2 = \kappa \cdot \lambda_2$ and scalar free energy
+$\operatorname{obs}^{\mathrm{Hdg}}_2=\kappa\lambda_2$ and scalar coefficient
 $F^{\mathrm{sc}}_2 = \kappa \cdot \frac{7}{5760}$ for each example family.
 The \emph{dimension-level} complementarity
 (Theorem~\ref{thm:quantum-complementarity-main}) holds:
@@ -1926,7 +1944,11 @@ Two structural features emerge:
 \subsection{Genus-3 obstruction: first computation}\label{subsec:genus-3}
 
 \begin{computation}[First genus-3 result]\label{comp:genus-3-sl2}
-The genus-3 obstruction is the first case where the dimensional vanishing argument for nilpotence fails; however, Theorem~\ref{thm:obstruction-nilpotent-all-genera} (via Mumford's relation) proves $(\operatorname{obs}_3)^2 = 0$ for all genera. The genus universality theorem yields an explicit formula.
+The genus-$3$ signed Hodge component is the first case where the
+dimensional vanishing argument for nilpotence requires Mumford's
+relation.  Theorem~\ref{thm:obstruction-nilpotent-all-genera} gives
+$(\operatorname{obs}^{\mathrm{Hdg}}_3)^2=0$, and the genus
+universality theorem yields its explicit value.
 
 The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_3$ has rank~$3$, and $\lambda_3 = c_3(\mathbb{E}) \in H^6(\overline{\mathcal{M}}_3)$. The moduli space $\overline{\mathcal{M}}_3$ has complex dimension~$3 \cdot 3 - 3 = 6$, so $\lambda_3 = c_3(\mathbb{E})$ is the \emph{top Chern class} of the rank-$3$ Hodge bundle (though $H^6(\overline{\mathcal{M}}_3)$ is middle-degree cohomology on this $6$-dimensional space).
 
@@ -2167,12 +2189,12 @@ rank asymptotic for the Verlinde bundle. It is the scalar
 determinant-line curvature extracted from the same modular functor.
 \end{remark}
 
-\begin{proposition}[Bar free energy and Verlinde determinant curvature; \ClaimStatusProvedHere]
+\begin{proposition}[Scalar bar coefficient and Verlinde determinant curvature; \ClaimStatusProvedHere]
 \label{prop:bar-verlinde-asymptotics}
 \index{Verlinde formula!bar complex asymptotics}
 \index{conformal blocks!bar complex}
 For $\widehat{\mathfrak{g}}_k$ at integrable level, the scalar
-bar free energy
+bar coefficient
 $F_g^{\mathrm{sc}}
 =\kappa(\widehat{\mathfrak{g}}_k)\lambda_g^{\mathrm{FP}}$
 on the uniform-weight lane records the first Chern
@@ -2191,7 +2213,7 @@ $\log\dim V_{g,k}$ is logarithmic in $k+h^\vee$ at leading order.
 \begin{proof}
 The Verlinde rank estimate gives
 $\dim V_{g,k}(G)\sim C_g(k+h^\vee)^{(g-1)\dim G}$, hence
-\eqref{eq:bar-verlinde-leading}. The scalar bar free energy is
+\eqref{eq:bar-verlinde-leading}. The scalar bar coefficient is
 \[
 F_g
 =\frac{(k+h^\vee)\dim\mathfrak g}{2h^\vee}
@@ -2213,7 +2235,7 @@ is the first source of mixed-channel terms not absorbed by~$\kappa$.
 For $\mathcal{W}_3^k(\mathfrak{sl}_3)$ with central charge
 $c(k) = 2 - 24(k+2)^2/(k+3)$, the obstruction coefficient is
 $\kappa = 5c/6$ (Table~\ref{tab:master-invariants}). The diagonal
-scalar term in the genus-$g$ free energy is:
+scalar term in the genus-$g$ formal coefficient is:
 \begin{equation}\label{eq:w3-Fg}
 F_g^{\mathrm{diag}}(\mathcal{W}_3^k)
 = \kappa(\mathcal{W}_3^k)\lambda_g^{\mathrm{FP}}
@@ -2221,7 +2243,7 @@ F_g^{\mathrm{diag}}(\mathcal{W}_3^k)
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
 \frac{|B_{2g}|}{(2g)!}.
 \end{equation}
-The full free energy is
+The full formal coefficient is
 $F_g=F_g^{\mathrm{diag}}+\delta F_g^{\mathrm{cross}}$ for
 $g\geq 2$, with $\delta F_2^{\mathrm{cross}}=(c+204)/(16c)$
 and the higher corrections governed by
@@ -2341,9 +2363,9 @@ in the channels
 This is exactly the first open higher-spin packet isolated abstractly
 by Corollary~\ref{cor:winfty-stage4-closure-criterion}.
 
-\subsection{\texorpdfstring{Genus-$g$ free energy}{Genus-g free energy}}\label{subsec:vir-free-energy}
+\subsection{\texorpdfstring{Genus-$g$ formal coefficient}{Genus-g formal coefficient}}\label{subsec:vir-free-energy}
 
-\begin{theorem}[Virasoro scalar free energy; \ClaimStatusConditional]\label{thm:vir-all-genera}
+\begin{theorem}[Virasoro scalar genus coefficient; \ClaimStatusConditional]\label{thm:vir-all-genera}
 
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
@@ -2614,7 +2636,7 @@ F_g^{\mathrm{diag}}(\mathcal{W}_N^k)
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}.
 \end{equation}
 At genus~1, $F_1 = c(k) \cdot (H_N - 1)/24$ is the full
-free energy. For $N\geq 3$ and $g\geq2$, the full free energy is
+formal coefficient. For $N\geq 3$ and $g\geq2$, the full formal coefficient is
 $F_g^{\mathrm{diag}}+\delta F_g^{\mathrm{cross}}$.
 The complementarity sum:
 \[
@@ -2682,12 +2704,12 @@ weights, with $c_{\beta\gamma} = 2(6\lambda^2 - 6\lambda + 1)
 $\mathrm{Ext} \leftrightarrow \mathrm{Sym}$
 (Theorem~\ref{thm:fermion-boson-koszul}).
 
-\begin{theorem}[Free fermion free energy at all genera;
+\begin{theorem}[Free fermion formal genus coefficient at all genera;
 \ClaimStatusConditional]\label{thm:fermion-all-genera}
 
 \index{free fermion!obstruction coefficient}
 For the $bc$ system at conformal weights $(\lambda, 1-\lambda)$,
-the genus-$g$ free energy is
+the genus-$g$ formal scalar coefficient is
 \begin{equation}\label{eq:fermion-Fg-bc}
 F_g(bc_\lambda) = \kappa(bc_\lambda) \cdot
 \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
@@ -3053,7 +3075,7 @@ The ratios~\eqref{eq:universal-ratios} hold unconditionally for all
 uniform-weight algebras and for free-field exact multi-weight
 systems such as $\beta\gamma_\lambda$, where
 $\delta F_g^{\mathrm{cross}}=0$. For interacting multi-weight
-algebras, beginning with $\mathcal{W}_3$, the full free energy
+algebras, beginning with $\mathcal{W}_3$, the full formal coefficient
 adds a nonzero cross-channel correction at $g\geq2$, so the
 ratios apply only to the diagonal scalar part.
 \end{remark}
@@ -3253,7 +3275,7 @@ the nonlinear shadow obstruction tower, distinct from the
 cross-channel correction
 $\delta F_2^{\mathrm{cross}} = (c{+}204)/(16c)$ of
 Proposition~\ref{prop:w3-genus2-curvature}. The full genus-$2$
-free energy is
+formal coefficient is
 \begin{equation}\label{eq:w3-F2-cross-channel}
 F_2(\mathcal{W}_3)
 = \underbrace{\frac{5c}{6} \cdot \frac{7}{5760}}_{\displaystyle
@@ -4370,17 +4392,20 @@ element $\Theta_{\cA}$
 \begin{remark}[Genus-$2$ expansion on $\bar{\mathcal A}_2$;
 \ClaimStatusConditional]
 \label{rem:gexp-1}
-The genus-expansion machinery of this chapter lifts to the K3
-setting by passing from $\bar{\mathcal M}_{g,n}$ to $\bar{\mathcal A}_2$,
-the Baily--Borel-compactified moduli of principally polarised abelian
-surfaces. The K3 chiral bialgebra $\mathbf H_{\Delta_5}$ supplies
+The genus-expansion machinery of this chapter has a conditional K3
+target obtained by passing from $\bar{\mathcal M}_{g,n}$ to
+$\bar{\mathcal A}_2$, the Baily--Borel-compactified moduli of
+principally polarised abelian surfaces. After the compact Hall/CoHA
+source, Hopf pairing, PBW/no-extra-relations theorem, comparison
+maps, and Mittag--Leffler inverse limit have been supplied, the
+K3 target $\mathbf H_{\Delta_5}^{\mathrm{tgt}}$ is expected to carry
 a genus-$2$ Siegel trace package that reads
 \[
-B_{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigm|_{\bar{\mathcal A}_2}
-\;=\; \bigoplus_{[Z]\in\bar{\mathcal A}_2}\, B_{\mathrm{ch}}^{(2)}(\mathbf H_{\Delta_5})_{[Z]}\, q^{[Z]},
+B_{\mathrm{ch}}(\mathbf H_{\Delta_5}^{\mathrm{tgt}})\bigm|_{\bar{\mathcal A}_2}
+\;=\; \bigoplus_{[Z]\in\bar{\mathcal A}_2}\, B_{\mathrm{ch}}^{(2)}(\mathbf H_{\Delta_5}^{\mathrm{tgt}})_{[Z]}\, q^{[Z]},
 \]
 where $[Z]$ runs over $\mathrm{Sp}_4(\mathbb Z)$-orbits on $\mathfrak H_2$
-and the fibre $B^{(2)}_{\mathrm{ch}}(\mathbf H_{\Delta_5})_{[Z]}$ is the
+and the fibre $B^{(2)}_{\mathrm{ch}}(\mathbf H_{\Delta_5}^{\mathrm{tgt}})_{[Z]}$ is the
 genus-$2$ bar complex evaluated at the Siegel period $Z$. The
 Gritsenko--Nikulin 1997--98 denominator identity
 $\Phi_{10}(Z) = \prod_{(n,l,m)>0}(1 - q^n\zeta^l p^m)^{c(nm,l)}$

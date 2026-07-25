@@ -1,8 +1,18 @@
-r"""Explicit E_3 structure on HH*(H_k): Gerstenhaber bracket verification.
+r"""Explicit algebraic E_3 structure on chiral HH*(H_k).
 
-Computes the Hochschild cohomology HH*(H_k) of the Heisenberg vertex
-algebra at level k and verifies the E_3 algebra structure explicitly,
-including the Gerstenhaber bracket on low-degree groups.
+Computes the chiral Hochschild cohomology HH*(H_k) of the Heisenberg
+vertex algebra at level k and verifies the algebraic E_3 structure
+explicitly, including the Gerstenhaber bracket on low-degree groups.
+
+Register convention: throughout this engine HH^* is a local shorthand
+for the curve-level chiral Hochschild cohomology
+ChirHoch^*(H_k, H_k) = Ext_{ChirAlg}(H_k, H_k). It is not THH and not
+categorical Hochschild cohomology of a dg category.
+The E_3 here is the algebraic Higher-Deligne/SC-formality E_3 acting on
+the chiral Hochschild model.  Its S^2-linking operation is read through a
+rational/formal operadic comparison; it is not the same datum as a
+locally constant topological little-disks E_3 structure on raw chains
+unless a separate topologisation package is supplied.
 
 MATHEMATICAL CONTENT:
 
@@ -11,7 +21,8 @@ conformal weight 1 with OPE J(z)J(w) ~ k/(z-w)^2.  It is the simplest
 chiral algebra: abelian (class G), Koszul, with kappa(H_k) = k and
 classical r-matrix r^Heis(z) = k/z.
 
-Hochschild cohomology HH*(H_k) = Ext_{ChirAlg}(H_k, H_k) decomposes:
+Chiral Hochschild cohomology HH*(H_k) = Ext_{ChirAlg}(H_k, H_k)
+decomposes:
 
   HH^0(H_k) = Z(H_k) = C           (center = scalars, the vacuum)
   HH^1(H_k) = Der(H_k)/Inn(H_k)    (outer derivations)
@@ -23,10 +34,11 @@ For H_k specifically:
     i.e. translation along the Heisenberg field)
   - HH^2 = C (1-dimensional: the level deformation k -> k + epsilon)
 
-The E_3 structure on HH*(H_k) consists of:
+The algebraic/formal E_3 structure on HH*(H_k) consists of:
   (a) Cup product: HH^p x HH^q -> HH^{p+q} (associative, graded commutative)
   (b) Gerstenhaber bracket: HH^p x HH^q -> HH^{p+q-1} (degree -1 Lie bracket)
-  (c) E_3 linking operations: HH^p x HH^q -> HH^{p+q-2} (from S^2 linking)
+  (c) Formal E_3 linking operations: HH^p x HH^q -> HH^{p+q-2}
+      (from the S^2 generator after the formality comparison)
 
 For H_k all brackets vanish because:
   - [HH^0, HH^q] = 0: scalars act trivially via the bracket
@@ -403,9 +415,10 @@ def e3_linking(a: HHElement, b: HHElement) -> HHElement:
 
 
 def e3_linking_degree() -> int:
-    """The E_3 linking operation has degree -2.
+    """The formal E_3 linking operation has degree -2.
 
-    This comes from H_2(Conf_2(R^3)) = C (the S^2 linking class).
+    This comes from the S^2 linking class in the rational/formal model
+    of H_2(Conf_2(R^3)); topological realisation is a separate package.
     """
     return -2
 
@@ -415,15 +428,15 @@ def e3_linking_degree() -> int:
 # ============================================================
 
 def browder_bracket(a: HHElement, b: HHElement) -> HHElement:
-    """Browder bracket: the secondary operation from E_3 structure.
+    """Browder bracket: the secondary operation from algebraic E_3 structure.
 
     The Browder bracket lambda_2: HH^p x HH^q -> HH^{p+q-2} is the
-    secondary operation arising from the E_3 operad. It measures the
-    failure of the E_2 multiplication to be E_3-commutative.
+    secondary operation arising from the algebraic/formal E_3 operad. It
+    measures the failure of the E_2 multiplication to be E_3-commutative
+    inside that comparison model.
 
-    For E_3-formal algebras (which includes all chirally Koszul algebras
-    on curves, by De Leger's SC(E_2) ~ SC_2 and prop:e2-formality),
-    the Browder bracket is well-defined on cohomology and agrees with
+    When the SC(E_2)-to-E_3 formality/topologisation comparison is
+    available, the Browder bracket is well-defined on cohomology and agrees with
     the E_3 linking operation.
 
     For H_k: trivial (same argument as e3_linking).

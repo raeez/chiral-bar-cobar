@@ -194,7 +194,7 @@ def anomaly_datum_separation(g: int, kappa: Fraction) -> Dict[str, DatumSeparati
             source_anchor="chapters/connections/concordance.tex:12460",
             feeds_scalar_anomaly=False,
             proves_full_mc_reconstruction=False,
-            role="bulk/derived-center datum, not the scalar trace kappa lambda_g",
+            role="closed-sector/derived-center datum, not the scalar trace kappa lambda_g",
         ),
     }
 

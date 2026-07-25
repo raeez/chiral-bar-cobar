@@ -200,18 +200,18 @@ class TestDerivedCenterSl2Level1:
     """7 tests for the derived center Z^der_ch(hat{sl}_2, k=1)."""
 
     def test_dimensions(self):
-        """Z^0 = 1, Z^1 = 3, Z^2 = 1 at generic level."""
+        """Z^0 = 1, Z^1 = 0, Z^2 = 1 at generic level."""
         dc = DerivedCenterSl2Level1(k=1)
         dims = dc.derived_center_dimensions()
         assert dims[0] == 1
-        assert dims[1] == 3
+        assert dims[1] == 0
         assert dims[2] == 1
 
     def test_dimensions_level2(self):
         """Same dimensions at level 2 (generic level independence)."""
         dc = DerivedCenterSl2Level1(k=2)
         dims = dc.derived_center_dimensions()
-        assert dims == {0: 1, 1: 3, 2: 1}
+        assert dims == {0: 1, 1: 0, 2: 1}
 
     def test_critical_level_raises(self):
         """Critical level k = -2: center infinite-dimensional."""
@@ -220,13 +220,14 @@ class TestDerivedCenterSl2Level1:
             dc.derived_center_dimensions()
 
     def test_gerstenhaber_bracket_sl2(self):
-        """Gerstenhaber bracket on Z^1 reproduces sl_2 Lie bracket."""
+        """Prequotient bracket reproduces the sl_2 Lie bracket."""
         dc = DerivedCenterSl2Level1(k=1)
         bracket = dc.gerstenhaber_bracket_z1z1()
         assert bracket["[e,f]"] == ("h", Fraction(1))
         assert bracket["[h,e]"] == ("e", Fraction(2))
         assert bracket["[h,f]"] == ("f", Fraction(-2))
         assert bracket["is_standard_bracket"] is True
+        assert bracket["prequotient_only"] is True
 
     def test_annulus_trace_sl2(self):
         """Annulus trace for sl_2 at level 1: kappa = 9/4.
@@ -253,11 +254,12 @@ class TestDerivedCenterSl2Level1:
         assert dc.kappa + kappa_d == Fraction(0)
 
     def test_cup_product_nondegenerate(self):
-        """Cup product on Z^1 x Z^1 -> Z^2 is nondegenerate (Killing form)."""
+        """Prequotient Killing pairing is nondegenerate."""
         dc = DerivedCenterSl2Level1(k=1)
         cup = dc.cup_product_z1z1()
         assert cup["is_nondegenerate"] is True
         assert cup["dimension_Z2"] == 1
+        assert cup["prequotient_only"] is True
 
 
 # ======================================================================
@@ -517,7 +519,7 @@ class TestCrossChecks:
             assert forbidden not in active
 
     def test_physical_bulk_comparison_requires_typed_data(self):
-        """Physical bulk is identified with the center only after all hypotheses."""
+        """Physical bulk comparison with the center requires typed data."""
         empty = physical_bulk_comparison_check()
         assert empty["universal_action_classified"] is False
         assert empty["physical_bulk_identified_with_derived_center"] is False

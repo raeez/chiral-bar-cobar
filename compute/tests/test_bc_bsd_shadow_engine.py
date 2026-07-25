@@ -118,7 +118,7 @@ class TestKoszulDualCoefficients:
     """Test Koszul dual shadow coefficient computation."""
 
     def test_heisenberg_dual_kappa(self):
-        """H_k^! has kappa = -k (AP33: H_k^! != H_{-k})."""
+        """H_k^! has scalar kappa = -k; AP33 keeps the curved branch."""
         for k in [1, 2, 5]:
             dual = koszul_dual_shadow_coefficients('heisenberg', k, 30)
             assert abs(dual[2] - (-k)) < 1e-14

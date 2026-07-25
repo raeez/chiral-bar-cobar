@@ -559,7 +559,7 @@ class TestPackageFirewalls:
         assert roles["A^i"] == "bar cohomology coalgebra H^*(B(A))"
         assert "Verdier/continuous-linear dual branch" in roles["A^!"]
         assert roles["Omega(B(A))"] == "bar-cobar inversion recovering A"
-        assert "Hochschild/bulk" in roles["Z_ch^der(A)"]
+        assert "Hochschild/closed-sector" in roles["Z_ch^der(A)"]
         assert roles["A^!"] != roles["Z_ch^der(A)"]
         assert roles["Omega(B(A))"] != roles["A^!"]
 

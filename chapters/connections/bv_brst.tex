@@ -34,14 +34,15 @@ involve the full moduli space $\overline{\mathcal{M}}_{g,n}$, while
 the bar differential collects OPE residues along FM boundary strata.
 What is proved in this chapter is the genus-$0$ BV/bar comparison
 and the all-genera scalar Heisenberg identity, together with the
-all-genera coderived comparison of
+conditional all-genera coderived comparison of
 Theorem~\ref{thm:bv-bar-coderived-vol1}. Beyond genus~$0$, the
 obstruction analysis isolates why classes~$\mathsf{G}$,
 $\mathsf{L}$, and~$\mathsf{C}$ admit stronger chain-level statements
-than class~$\mathsf{M}$. The higher-genus comparison is resolved in
-$D^{\mathrm{co}}$ because the harmonic discrepancy factors through
-the curvature and the resulting cone is $m_0$-torsion, hence
-coacyclic. The stronger chain-level statement is unconditional for
+than class~$\mathsf{M}$. The higher-genus comparison becomes an
+isomorphism in $D^{\mathrm{co}}$ under the harmonic-factorization
+package: the harmonic discrepancy then factors through the curvature
+and the resulting cone is $m_0$-torsion, hence coacyclic. The stronger
+chain-level statement is unconditional for
 classes~$\mathsf{G}$ and~$\mathsf{L}$, conditional for
 class~$\mathsf{C}$ on harmonic decoupling, and fails for
 class~$\mathsf{M}$. The Heisenberg case is resolved at the
@@ -157,9 +158,8 @@ hypotheses. The cross-volume bridge identifies the genus-$0$ shadow of
 the boundary-bulk ghost-cancellation formula obtained from Vol~II's
 universal holographic master theorem
 (Vol~II Theorem~\ref{V2-thm:universal-holography-master}, cited
-across the volume boundary; cf.\ also the climax identity
-$d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$ of
-Chapter~\ref{ch:climax-theorem}).
+across the volume boundary; cf.\ also the typed KZ--Arnold
+bar-superconnection theorem of Chapter~\ref{ch:climax-theorem}).
 \end{remark}
 
 \begin{remark}[Structural cross-references]
@@ -183,14 +183,14 @@ points:
  reconstruction map from the bar coalgebra back to~$\cA$ on the
  Koszul locus.
 \item \emph{Climax identity.} The genus-$0$ BV/bar identification
- transports $Q_{\mathrm{BRST}}$ to $d_{\mathrm{bar}}$ on the
- relative nilpotent locus $c_{\mathrm{matter}}=26$. This is one
- face of the climax identity $d_{\mathrm{bar}} =
- \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$,
- together with the corresponding BRST ghost-conductor comparison in
- Chapter~\ref{ch:climax-theorem}: the bar differential and the
- Arnold connection are pulled back to the same operator on the
- BRST-cohomologically nilpotent locus.
+transports $Q_{\mathrm{BRST}}$ to the ordered-bar differential on the
+relative nilpotent locus $c_{\mathrm{matter}}=26$. This is one
+face of the typed KZ--Arnold bar-superconnection theorem, together
+with the corresponding BRST ghost-conductor comparison in
+Chapter~\ref{ch:climax-theorem}: the BV comparison lands in the
+bar-complex operator, while the KZ--Arnold superconnection produces
+that same operator only after Fulton--MacPherson boundary-residue
+realization.
 \end{enumerate}
 The cross-volume bridge to Vol~III is via the two-stage
 CY-to-chiral functor
@@ -478,6 +478,86 @@ identification with the square-zero bar differential on the
 uncurved locus. The quantum, Laplacian, and functorial parts are
 isolated as conditional content later in this chapter.
 \end{remark}
+
+\begin{proposition}[Finite-type PVA BV/QME gate;
+\ClaimStatusConditional]
+\label{prop:bvbrst-finite-type-pva-qme-gate}
+\index{Poisson vertex algebra!BV action gate}
+\index{quantum master equation!finite-type PVA gate}
+\textup{[}Type signature:
+$(\mathrm{Open/HT},\mathrm{BV\ local\ functional},
+\mathrm{levels}=1\to3,
+\mathrm{hypothesis\ package}=\mathrm{finite\text{-}jet\ PVA}
+\ +\ \mathrm{Khan\text{--}Zeng\ half\text{-}space\ action}
+\ +\ \mathrm{analytic\ SDR/QME\ package})$\textup{].}
+Let $\mathcal P$ be a freely generated finite-jet Poisson vertex
+algebra with Hamiltonian PVA bivector $\Pi$.  The Khan--Zeng
+half-space construction supplies a classical BV action
+\begin{equation}
+\label{eq:bvbrst-pva-classical-action}
+S_{\mathcal P}^{\mathrm{cl}}
+=
+\int_{\RR_t\times\CC_z}
+\left\langle \phi^+,(dt+\bar\partial)\phi\right\rangle
+\;+\;
+\int_{\RR_t\times\CC_z}\Pi(\phi,\phi^+,\partial_z)
+\end{equation}
+in the local functional complex determined by the PVA generators,
+their antifields, and the field-parity signs.  In this finite-type
+classical setting,
+\begin{equation}
+\label{eq:bvbrst-cme-pva-hamiltonian}
+\{S_{\mathcal P}^{\mathrm{cl}},
+S_{\mathcal P}^{\mathrm{cl}}\}_{\mathrm{BV}}=0
+\quad\Longleftrightarrow\quad
+[\Pi,\Pi]_{\mathrm{PVA}}=0,
+\end{equation}
+so the classical master equation is equivalent to the PVA Hamiltonian
+condition \textup{(}the $\lambda$-Jacobi identity with
+sesquilinearity and Leibniz rules\textup{)}.
+
+The all-loop quantum master equation is not a consequence of
+\eqref{eq:bvbrst-cme-pva-hamiltonian}.  To state
+\[
+\hbar\,\Delta_{\mathrm{BV}}S+\tfrac12\{S,S\}_{\mathrm{BV}}=0
+\]
+for the quantized theory one must also provide:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an analytic strong deformation retract for the propagator
+complex;
+\item a Stokes image choice for boundary strata and self-image
+renormalisation for coincident fields;
+\item field-parity signs compatible with the BV Laplacian and the
+PVA parity;
+\item a Costello-style renormalisation package proving that the
+counterterms are finite and local in the chosen completion.
+\end{enumerate}
+Only after these data are supplied may one assert an all-loop QME,
+boundary vertex algebra, boundary OPE formula, or reflected-weight
+identity.  The reflected weight identity is therefore
+\begin{equation}
+\label{eq:bvbrst-reflected-weight-gate}
+K_{\mathrm{bdry}}^{!}=K_{\mathrm{slab}}-K_{\mathrm{bdry}}
+\end{equation}
+only in a slab or boundary model for which the slab reduction,
+renormalised boundary OPEs, and OCA comparison have been constructed.
+\end{proposition}
+
+\begin{proof}
+Khan--Zeng construct the half-space local functional from the finite
+PVA bracket by the standard BV pairing between fields and antifields.
+Under this construction the BV bracket of the interaction functional
+with itself is the variational Schouten bracket of the PVA bivector.
+Thus the classical master equation is precisely the condition
+$[\Pi,\Pi]_{\mathrm{PVA}}=0$, i.e. the PVA Hamiltonian condition
+including the $\lambda$-Jacobi identity, sesquilinearity, and Leibniz
+rules.  The remaining assertions are exclusions: the BV Laplacian,
+Stokes image, self-contraction counterterms, and field-parity choices
+enter only in the quantum term
+$\hbar\Delta_{\mathrm{BV}}S$.  They are not present in the classical
+Schouten calculation, so no all-loop QME or boundary OPE theorem
+follows until those analytic data are added.
+\end{proof}
 
 \label{subsec:bv-bar-identification}
 \index{BV algebra!bar complex identification}
@@ -1745,8 +1825,10 @@ arguments; the third and fourth provide independent confirmation.
 
 \medskip
 \noindent\textbf{Preliminary: the bar side.}
-Theorem~D gives $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$
-for every chirally Koszul algebra on the uniform-weight lane.
+Under~$H_D^K$, Theorem~D gives
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g$.  Under~$H_D^{\mathrm{graph}}$ its
+scalar-diagonal trace is $\kappa(\cA)\lambda_g^{\mathrm{FP}}$.
 The Heisenberg $\cH_\kappa$ qualifies:
 \begin{itemize}[nosep]
 \item $\kappa(\cH_\kappa) = \kappa$ (the level);
@@ -1808,11 +1890,12 @@ By the Grothendieck--Riemann--Roch theorem:
 \frac{B_{2j}}{(2j)!}\,\kappa_{2j-1},
 \]
 where $\kappa_j = \pi_*(c_1(\omega_\pi)^{j+1})$ are the
-Miller--Morita--Mumford classes. The genus-$g$ obstruction
-class is $\kappa(\cH_\kappa)\cdot c_g(\mathbb{E})
-= \kappa\cdot\lambda_g$,
-and the generating function of the family index is
-$\sum_{g \geq 1}\mathrm{obs}_g\,\hbar^{2g}
+Miller--Morita--Mumford classes. Under $H_D^K$, the signed Hodge
+class is $\operatorname{obs}^{\mathrm{Hdg}}_g
+=(-1)^g\kappa\lambda_g$.  The graph-evaluated family index is
+$F_g^{\mathrm{sc}}=\kappa\lambda_g^{\mathrm{FP}}$, and its generating
+function is
+$\sum_{g \geq 1}F_g^{\mathrm{sc}}\,\hbar^{2g}
 = \kappa\cdot(\hat{A}(i\hbar) - 1)$
 \textup{(}Theorem~\ref{thm:family-index}\textup{)},
 where $\hat{A}(x) = (x/2)/\sinh(x/2)$.
@@ -2177,9 +2260,10 @@ $\delta_4^{\mathrm{harm}} \propto Q^{\mathrm{contact}} \cdot
 \kappa / \mathrm{Im}(\tau)$ is not cancelled by the Fay trisecant
 identity. Proposition~\ref{prop:chain-level-three-obstructions}
 shows that the full harmonic discrepancy still factors through the
-curvature, so Theorem~\ref{thm:bv-bar-coderived-vol1} identifies the
-class~$\mathsf{M}$ BV and bar models in the coderived category even
-though the naive strict chain-level comparison fails on the
+curvature. Conditional on the harmonic-factorization package of
+Theorem~\ref{thm:bv-bar-coderived-vol1}, this identifies the
+class~$\mathsf{M}$ BV and bar models in the coderived category;
+the naive strict chain-level comparison still fails on the
 uncompleted models.
 \end{remark}
 
@@ -2225,8 +2309,9 @@ $\delta_4^{\mathrm{harm}} \propto Q^{\mathrm{contact}} \cdot
 \kappa / \operatorname{Im}(\tau)$ is not a coboundary
 in the ordinary chain complex. Proposition~\ref{prop:chain-level-three-obstructions}
 shows that the full harmonic discrepancy is a sum of curvature
-powers, and Theorem~\ref{thm:bv-bar-coderived-vol1} proves that the
-resulting comparison cone is coacyclic in the sense of
+powers. Under the harmonic-factorization package in
+Theorem~\ref{thm:bv-bar-coderived-vol1}, the resulting comparison
+cone is coacyclic in the sense of
 Definition~\ref{def:coacyclic-fact}. The remaining open questions are
 the filtered-completed refinement for class~$\mathsf{M}$
 \textup{(}Remark~\ref{rem:bv-bar-class-m-frontier}\textup{)} and the
@@ -2418,6 +2503,15 @@ the separate completed/vacuum-proportionality package.
 \label{thm:bv-bar-coderived-vol1}%
 \index{BV algebra!bar complex identification!coderived category|textbf}%
 \index{coderived category!BV/bar identification|textbf}%
+Type signature: \textup{(}Open quadrant, BV/bar comparison
+presentation, Beilinson level~$4$ compared with the level~$2$
+bar coalgebra, hypothesis package: genus-$0$ geometric BV/bar
+comparison, harmonic-factorization package of
+Proposition~\textup{\ref{prop:harmonic-factorization}} in each genus,
+three-obstruction chain-level analysis, curved weak-equivalence
+ambient, and the coacyclic/coderived localization of
+Definitions~\textup{\ref{def:coacyclic-fact}} and
+\textup{\ref{def:coderived-fact}}\textup{)}.
 Let~$\cA$ be a chirally Koszul algebra. The genus-$0$ BV/bar
 comparison is the chain-level quasi-isomorphism of
 Theorem~\ref{thm:bv-bar-geometric}. For each genus
@@ -2627,7 +2721,8 @@ is controlled by the harmonic piece. This shows why curvature
 appears in higher genus: the harmonic sector is invisible to the
 genus-$0$ bar differential but survives in the BV propagator.
 Passing to the coderived setting is therefore natural once
-$d^2 = m_0 \cdot \mathrm{id}$ enters the picture. Theorem~\ref{thm:bv-bar-coderived-vol1}
+$d^2 = m_0 \cdot \mathrm{id}$ enters the picture. Conditional on the
+harmonic-factorization package, Theorem~\ref{thm:bv-bar-coderived-vol1}
 supplies the missing step: curvature factorization forces the
 comparison cone to be coacyclic.
 
@@ -2641,9 +2736,9 @@ holographic anomaly: the Weyl anomaly coefficient
 $a - c$ in $4d$ becomes, on the algebraic side, a harmonic
 correction to the BV/bar comparison. The coderived formalism
 packages this anomaly as curvature data rather than forcing a
-strict differential. Theorem~\ref{thm:bv-bar-coderived-vol1} shows that
-the comparison map becomes an isomorphism after localizing at
-coacyclic objects.
+strict differential. Under the same harmonic-factorization package,
+Theorem~\ref{thm:bv-bar-coderived-vol1} shows that the comparison map
+becomes an isomorphism after localizing at coacyclic objects.
 
 \emph{The categorical viewpoint.}
 The coderived category $D^{\mathrm{co}}(\cA)$ is the natural
@@ -2923,7 +3018,7 @@ and let $k \notin \Sigma(\fg) \cup \{-h^\vee\}$ be generic
 construction is well-defined\textup{)}. The affine vertex algebra
 $V_k(\fg)$ carries the classical $r$-matrix
 \begin{equation}\label{eq:wzw-r-matrix-brst}
-r^{\mathrm{KM}}(z) = k\,\Omega/z,
+r^{\mathrm{KM}}(z) = k\,\Omega_{\mathrm{tr}}/z,
 \end{equation}
 where $\Omega \in \fg \otimes \fg$ is the Casimir tensor, and the
 curvature coefficient
@@ -3061,117 +3156,61 @@ $c_{bc} = -26$ is a separate reparametrization contribution.
 \section{BV-BRST and the K3 1-loop anomaly}
 \label{sec:bvbrst-supplement}
 
-\begin{remark}[6d holomorphic Chern--Simons quartic anomaly polynomial;
-\ClaimStatusProvedElsewhere]
+\begin{remark}[Holomorphic Chern--Simons and the five-dimensional
+$\Omega$-background; \ClaimStatusProvedElsewhere]
 \label{rem:bvbrst-6d-hcs-quartic}
-\index{6d holomorphic Chern--Simons!quartic anomaly|textbf}
-\index{anomaly polynomial!quartic adjoint Casimir}
-\emph{Type signature.} (CY quadrant via Vol~III; chain-level
-presentation; Beilinson level $0$ on the factorisation dg-cat;
-hypothesis package: CY$_3$ trivialisation $\omega_X\cong\mathcal O_X$,
-quartic adjoint Casimir, formal locus + global descent.)
+\index{holomorphic Chern--Simons!anomaly complex|textbf}
+Costello--Li construct the large-$N$ coupling of holomorphic
+Chern--Simons theory to Kodaira--Spencer gravity and prove
+perturbative anomaly cancellation for the coupled open--closed
+topological B-model \cite{CL20}.  Their type-I models select gauge
+group $\mathrm{SO}(8)$ in complex dimension~$3$ and
+$\mathrm{SO}(32)$ in complex dimension~$5$.
 
-The Costello $5$-brane vertex algebra~\cite{Costello2021hCS} sits
-inside $6$d holomorphic Chern--Simons on a Calabi--Yau threefold,
-whose $1$-loop BV obstruction is governed by the \emph{quartic} adjoint
-Casimir
-$\mathrm{tr}_{\mathrm{adj}}\bigl(T^{(a}T^bT^cT^{d)}\bigr)_{\mathrm{sym}}$
-through the anomaly polynomial
+Costello constructs a second theory by reducing eleven-dimensional
+supergravity in a particular $\Omega$-background to
+five-dimensional non-commutative gauge theory on
+$\mathbb R\times X$, with $X$ a conical holomorphic symplectic
+surface \cite{Costello2111}.  Theorems~9.0.2--9.0.3 of that paper give
+the perturbative quantization and its deformation parameters.
+
+A dimensional comparison is therefore a morphism
 \[
- \mathrm{Anom}^{6\mathrm{d\,hCS}}_{1\text{-loop}}(X)
- \;=\; \int_X \Tr_{\mathrm{ad}}\bigl(A\,(F_A)^3\bigr),
+ \rho_{\Omega}^{\mathrm{obs}}:
+ H^1\operatorname{Obs}_{\mathrm{loc}}
+   (\mathrm{hCS}_{Z_3}\oplus\mathrm{BCOV}_{Z_3})
+ \longrightarrow
+ H^1\operatorname{Obs}_{\mathrm{loc}}
+   (\mathcal E^{\mathrm{nc}}_5(\mathbb R\times X))
 \]
-of degree $4$ in the gauge field $A$. The canonical ghost-side
-representative is the descended cocycle
-$c\wedge(\bar\partial c)^{\wedge 4}/(2\pi i)^3$ of ghost number~$1$ and
-form degree $0+4$; CS descent
-$F=\bar\partial c+\tfrac12[c,c]$ converts it to the $A$-side bubble
-above. The $5$d analogue (Costello--Yagi) carries the cubic Casimir
-$d^{abc}_\fg=\mathrm{tr}_{\mathrm{ad}}(\{T^a,T^b\}T^c)$, which vanishes
-on every simple $\fg$ outside $A_n$ ($n\geq 2$); the $6$d quartic
-Casimir is non-vanishing on every simple $\fg$ and is the genuine
-load-bearing obstruction. The dimensional shift from $5$d to $6$d
-raises the anomaly degree by one: $3$d Chern--Simons carries the cubic
-$\int\Tr(A\wedge dA + \tfrac23 A\wedge A\wedge A)$ classical action,
-not the quartic $1$-loop anomaly polynomial. Primary verification:
-Costello--Li twisted-supergravity quantisation~\cite{CL16},
-Costello--Li anomaly cancellation~\cite{CL20}, Costello $5$-brane
-vertex algebra~\cite{Costello2021hCS}.
-
-The cross-volume placement is Vol~III at level~$0$ of the Beilinson
-tower: the factorisation dg-cat $\mathcal C^{\mathrm{op}}$ on
-$(X, D, \tau)$ is holographically identified with the CY-cat via
-$6$d hCS through the formal-locus to global-descent reconstruction
-theorem with hypothesis package (matched-conventions target datum,
-QME, locality, anomaly cancellation). The two-stage CY-to-chiral
-functor $\Phi_3^{(\Sigma_2, C)}=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2,C}
-\circ\Phi_3^{\mathrm{FA}}$ at $d=3$ takes the level-$0$ datum to level
-$2$ with specialisation data $(\Sigma_2, C)=(K3\text{-fibre slice},$
-divisor curve in the Mukai lattice$)$ named explicitly.
-
-\emph{Three independent verification paths for the
-quartic-not-cubic identification.}
-\textup{(a)} \emph{Form-degree balance.} On a CY$_3$ with
-$\Omega_X\in\Omega^{3,0}(X)$, the gauge field $A\in\Omega^{0,1}(X,\fg)$
-and curvature $F_A\in\Omega^{0,2}(X,\fg)$; the integrand
-$\Omega_X\wedge\Tr_{\mathrm{ad}}(A\,F_A^{\,3})$ has Dolbeault type
-$(3, 1+2+2+2)=(3,7)$ which integrates against the volume form on the
-real 6-fold $X$ after one antiholomorphic delta-localisation, while
-the cubic candidate $\Omega_X\wedge\Tr(A\,F_A^{\,2})$ of type $(3,5)$
-fails the $\bar\partial$-cocycle condition by an even shift; the
-parity matches the four-vertex one-loop wheel and forbids three.
-\textup{(b)} \emph{Ghost-side BRST descent.} The descent equation
-$d_{\mathrm{BRST}}\omega^{(p,q)}=d\omega^{(p+1,q-1)}$ takes the
-level-zero anomaly cocycle $c\wedge(\bar\partial c)^{\wedge 4}$ to the
-$A$-side via $F=\bar\partial c+\tfrac12[c,c]$; the resulting $A$-side
-representative is degree~$4$ in $A$, and the rank-$4$ adjoint Casimir
-is the only $\mathrm{ad}$-invariant of the matching tensor type.
-\textup{(c)} \emph{Lower-dimensional contrast.}
-$5$d~hCS on $\R\times\C^2$ with simply-laced bosonic $\fg$
-(Costello~$2021$~\cite{Costello2111} on the M-theory $\Omega$-background
-$5$d non-commutative gauge theory, in the Costello--Witten--Yamazaki
-gauge-theory-and-integrability frame~\cite{CWY18}) has vanishing
-one-loop anomaly because the rank-$3$ Casimir
-$d^{abc}_\fg=0$ on ADE; in $6$d the corresponding rank-$4$ tensor
-$\mathrm{tr}_{\mathrm{ad}}(T^{(a}T^bT^cT^{d)})$ is non-vanishing on
-\emph{every} simple $\fg$, distinguishing the dimensional shift and
-ruling out cubic-Casimir reduction (Costello--Li~\cite{CL20}).
+induced by a specified reduction of fields and interactions.  Its
+effect on invariant polynomials determines the relation between the
+open--closed anomaly class and the five-dimensional quantization
+class.  Constructing $\rho_{\Omega}^{\mathrm{obs}}$ is the exact
+cross-dimensional problem.
 \end{remark}
 
-\begin{remark}[Paramodular anomaly cancellation as Deligne cohomology obstruction;
-\ClaimStatusHeuristic]
+\begin{remark}[Automorphic line and the proposed BV comparison;
+\ClaimStatusConjectured]
 \label{rem:bvbrst-paramodular-anomaly}
-The BV-BRST anomaly-cancellation framework of Vol~I specialises at $K3 \times T^2$ to a
-Deligne cohomology class in $H^2(\overline{\mathcal{A}_2}, \mathcal{O}^*)$; in the
-heuristic twisted-supergravity comparison the distinguished trivialiser
-is the Gritsenko--Nikulin Igusa cusp form $\Delta_5$
-of weight $5$ for $K3 \times T^2$ Omega-deformed with $24$
-M5-branes wrapping the $I_1$ Kodaira fibres. The arithmetic constant is the
-Borcherds denominator weight
+The Gritsenko--Nikulin form $\Delta _5$ is a section of
+$\lambda^5\otimes\chi$ on $\mathcal A_2$ with divisor~$H_1$
+\cite{GN96Igusa}.  Its weight is
 \[
- \kappa_{\mathrm{BKM}}(\Delta_5)=\frac{c_1(0)}{2}=5
+ \kappa_{\mathrm{BKM}}(\Delta _5)=\frac{f(0)}2=\frac{10}{2}=5.
 \]
-in the Gritsenko--Nikulin normalisation; it is neither a chiral
-conductor nor obtained in this volume by an additive identity
-$5=\chi(\mathcal O_{K3})+\sum_{24}\mathrm{Res}(I_1)$. The residue
-description is a physical normalisation frame for the same divisor
-class. Four duality frames (heterotic Harvey--Moore $1996$; IIB D1-D5
-DVV $1996$--$1997$; IIA DMVV $1997$; M-theory Witten $1995$) all
-produce the same form. The physics input is Costello's $5$-brane
-vertex algebra~\cite{Costello2021hCS} (sitting inside $6$d
-holomorphic Chern--Simons with quartic anomaly polynomial
-$\int_X\Tr_{\mathrm{ad}}(A\,(F_A)^3)$,
-Remark~\ref{rem:bvbrst-6d-hcs-quartic}) and Costello--Gaiotto twisted
-M-theory~\cite{CostelloGaiotto2018}; the Deligne-class comparison is
-used here as a heuristic bridge to the level-$0$ holographic
-equivalence with Vol~III's CY-cat under the two-stage functor
-$\Phi_3^{(\Sigma_2, C)}$, not as a proved theorem of this volume.
+For a specified K3 background, a field-theoretic interpretation
+requires a morphism from the one-loop local BV obstruction group to
+$H^0(\mathcal A_2,\lambda^5\otimes\chi)$ carrying the obstruction
+class to~$\Delta _5$.  The sourced twisted action, its quantization,
+and this morphism constitute the conjectural comparison.  The
+arithmetic line and its Kummer root classes are developed below.
 \end{remark}
 
 \begin{remark}[K3 conductor carriers: ghost, Mukai, and Borcherds;
 \ClaimStatusHeuristic]
 \label{rem:bvbrst-koszul-conductor}
-The K3 lane contains three conductors with different carriers. The
+The K3 geometry contains three conductors with different carriers. The
 BRST ghost-resolution conductor is
 $K_{\mathrm{univ}}^{\mathrm{BRST}}(A)
 =-\tfrac12c_{\mathrm{ghost}}(\BRST(A))$ after choosing a ghost system.
@@ -3181,2232 +3220,713 @@ The Mukai-enhanced Theorem~C conductor is
  =2c_+(\mathrm{Mukai}(K3))=8,
 \]
 the $\mathcal B$-family value that extends the Theorem~C scalar set to
-$\{0,8,13,250/3,98/3\}$. The Borcherds denominator conductor is instead
+$\{0,8,13,250/3,25/3\}$. The Borcherds denominator conductor is
 \[
- \kappa_{\mathrm{BKM}}(\mathfrak g_{\Delta_5})=c_1(0)/2=5.
+ \kappa_{\mathrm{BKM}}(\mathfrak g_{\Delta_5})=f(0)/2=5,
 \]
-Bruinier's Heegner--Chern reciprocity supplies the automorphic divisor
-target~\cite[Proposition 5.1]{Bruinier2002}; it does not by itself
-identify the Mukai value $8$ with the Borcherds weight $5$. The
+where $f(0)=10$ is the constant coefficient of the weight-$0$,
+index-$1$ Jacobi form in the Gritsenko--Nikulin product
+\cite{GN96Igusa}. Bruinier's Heegner--Chern reciprocity supplies an
+automorphic divisor target~\cite[Proposition 5.1]{Bruinier2002}.
+The three conductors have distinct carriers; an identification between
+them is a separate comparison morphism. The
 specialisation $\hbar_{\mathrm{qg}}^2K^{\kappa_{\mathrm{ch}}}=-1$ and
 the Lusztig order $\ell=8$ require the separate monodromy, PBW
 truncation, parity, and bulk-boundary comparison data recorded in the
-K3 concordance. They are comparison targets, not Vol~I scalar
-identities.
+K3 concordance. They are comparison targets for the corresponding
+Vol.~I scalar morphisms.
 \end{remark}
 
-\section{2-loop obstruction vanishing
-on the K3-twisted-holography line}
+\section{The two-loop BV comparison}
 \label{sec:bvbrst-supplement-ii}
 
-The $1$-loop origin of $\Delta_5$ is the classical / $\hbar^1$ BV
-master-equation datum
-$\tfrac{1}{2}\{S_{\mathrm{cl}} + \hbar S^{(1)},
-S_{\mathrm{cl}} + \hbar S^{(1)}\}_{\mathrm{BV}}
-+ \hbar\,\Delta_{\mathrm{BV}}(S_{\mathrm{cl}} + \hbar S^{(1)})
-= O(\hbar^2)$
-on twisted $11$D supergravity on $\bR^3\times K3\times\bC^2$ with $24$
-M$5$-branes wrapping Kodaira $I_1$ fibres of the elliptic K3
-\cite{Costello2016renormalization,Costello2013holography,CostelloGaiotto2018,Costello2021hCS}.
-The next order is the $\hbar^2$ piece of the quantum master equation.
-The statement needed in this volume is a conditional comparison:
-if the local BV obstruction complex, the renormalised two-loop graph
-functional, and the Siegel--Borcherds normalisation are identified in
-the specified K3 background, then the two-loop class is exact.
+Fix a global BV theory $\mathcal E_{11}^{\mathrm{tw}}(Y)$, classical
+interaction~$I_0$, gauge fixing, and renormalization scheme.  The first
+two obstruction cocycles are
+\[
+ \mathfrak o_1=\Delta_{\mathrm{BV}}I_0,\qquad
+ \mathfrak o_2=\Delta_{\mathrm{BV}}I_1
+ +\frac12\{I_1,I_1\}_{\mathrm{BV}}
+ \in Z^1\operatorname{Obs}_{\mathrm{loc}}
+        (\mathcal E_{11}^{\mathrm{tw}}(Y)).
+\]
 
-\begin{proposition}[Conditional two-loop BV obstruction cancellation;
-\ClaimStatusConditional]
+\begin{conjecture}[Two-loop BV/Fourier comparison;
+\ClaimStatusConjectured]
 \label{prop:bvbrst-2loop-obstruction}
-\index{BV quantisation!2-loop obstruction|textbf}
-\index{K3 twisted holography!2-loop|textbf}
-Let $S_q = S_{\mathrm{cl}} + \hbar\,S^{(1)} + \hbar^2\,S^{(2)} + O(\hbar^3)$
-be the quantum BV action of twisted $11$D supergravity on
-$\bR^3\times K3\times\bC^2$ with $24$ M$5$-branes on the Kodaira $I_1$
-fibres (the twisted-$11$D-SUGRA datum). Write the gauge algebra
-$\mathfrak{m}_{K3} := \mathfrak{g}_{\Delta_5}|_{\text{gauge sector}}$.
-Assume:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item the Costello local-functional obstruction complex for this
-background is identified with the invariant line
-$\bC\cdot[\Delta_5]\subset H^2(\mathfrak m_{K3},\bC)$;
-\item the chosen renormalisation scheme evaluates the two-loop graph
-sum on the K3 background as
-$I_\Theta+I_D+I_\infty=0$;
-\item the Siegel--Borcherds normalisation sends this line to the
-$p^2$ coefficient of
-$\log(\Phi_{10}^{\mathrm{un}}/\eta^{24})$ after removing the
-one-loop Weyl and $\eta^{24}$ factors.
-\end{enumerate}
-Then the $2$-loop obstruction class
+For
 \[
- \mathrm{obs}^{(2)} \;=\; \{S_{\mathrm{cl}}, S^{(2)}\}_{\mathrm{BV}}
- + \tfrac{1}{2}\{S^{(1)}, S^{(1)}\}_{\mathrm{BV}}
- + \Delta_{\mathrm{BV}} S^{(1)}
- \;\in\; H^1(C^{\mathrm{BV}}_\bullet,\,\bC)
+ \widetilde\Phi_{10}:=\frac{\Phi_{10}}{pqy},\qquad
+ \Phi_{10}^{\circ}:=
+ \frac{\widetilde\Phi_{10}(p,q,y)}
+      {\widetilde\Phi_{10}(0,q,y)},
 \]
-maps to $c_2\cdot[\Delta_5]$ with
+construct a graded map
 \[
- c_2 \;=\; 0.
+ \Psi_2:\ H^1\operatorname{Obs}_{\mathrm{loc}}
+        (\mathcal E_{11}^{\mathrm{tw}}(Y))
+ \longrightarrow\bQ(y)[[q]]
 \]
-Consequently there exists $S^{(2)}$ satisfying the $\hbar^2$ quantum
-master equation modulo BV-exact terms in this comparison frame.
-\end{proposition}
+such that
+\[
+ \Psi_2([\mathfrak o_2])
+ =[p^2]\log\Phi_{10}^{\circ}(p,q,y).
+\]
+This equation is the two-loop comparison statement.
+\end{conjecture}
 
-\begin{proof}
-Assumption~(a) places the obstruction in the single invariant line
-$\bC\cdot[\Delta_5]$, so
-$\mathrm{obs}^{(2)}=c_2[\Delta_5]$ after applying the comparison map.
-Assumption~(b) evaluates the local graph representative of the same
-class as zero. Assumption~(c) fixes the normalisation of this zero
-against the $p^2$ Fourier--Jacobi coefficient, so no hidden Weyl-vector
-or $\eta^{24}$ term remains. Hence $c_2=0$, and the order-$\hbar^2$
-quantum master equation can be solved after adding a BV-exact
-counterterm.
-\end{proof}
-
-\begin{remark}[Theta-graph normalisation at $\chi(K3)=24$]
+\begin{problem}[Theta-graph amplitude; \ClaimStatusOpen]
 \label{rem:bvbrst-theta-graph}
-The graph-level assumption in
-Proposition~\ref{prop:bvbrst-2loop-obstruction} uses the following
-normalisation target. With the Costello propagator and the K3 Kähler
-normalisation fixed, the theta-graph $2$-loop Feynman integral should
-contribute
+Let $\Theta$ be a decorated theta graph of the chosen theory.  Compute
 \[
- I_\Theta \;=\; \frac{1}{2}\int_{K3} c_2(K3)\wedge\omega
- \;=\; \tfrac{1}{2}\chi(K3)\cdot [\omega]
- \;=\; 12\cdot[\omega]
+ A_\Theta^{\mathrm{ren}}
+ =\operatorname{FP}_{\epsilon\to0}
+ \int_{\operatorname{Conf}_2(Y)}
+ I_{0,v_1}I_{0,v_2}\,
+ P_{\epsilon}^{\wedge3}
+ +A_\Theta^{\mathrm{ct}}.
 \]
-by the Chern--Gauss--Bonnet evaluation of $c_2(K3)$ against the Kähler
-class $\omega$ \cite{BeauvilleK3,BPVdV2004K3surfaces}. The remaining
-local calculation is the equality
-\[
- I_\Theta + I_D + I_\infty
- \;=\; 12 + 2\cdot 12\cdot(\text{res coefficient}) - 24\cdot(\text{res coefficient}) \;=\; 0,
-\]
-in the same renormalisation scheme. This is not a second derivation of
-the Borcherds weight $5$; it is the graph-side open mathematical condition for the
-conditional two-loop cancellation.
-\end{remark}
+The identity $\int_{K3}c_2(TK3)=24$ supplies a topological input to
+this integral; the vertices, propagator, and counterterm determine its
+field-theoretic coefficient.
+\end{problem}
 
-\begin{remark}[BV obstruction versus anomaly cancellation scope]
+\begin{remark}[Geometric scope]
 \label{rem:bvbrst-scope}
-Proposition~\ref{prop:bvbrst-2loop-obstruction} is a conditional statement
-about the $\hbar^2$ quantum master equation on the specific field
-configuration of twisted-$11$D-SUGRA on $\bR^3\times K3\times\bC^2$
-with $24$ M$5$-branes wrapping Kodaira $I_1$ fibres of the elliptic
-K3, Omega-deformed in the $\bC^2$ transverse factor. The conditional
-vanishing $c_2 = 0$ is \emph{specific} to this background; at
-$\hbar^3$ the expected identification of the Igusa form as the
-classification invariant in $H^2(\mathfrak{m}_{K3})$ allows a
-non-trivial obstruction proportional to $[\Delta_5]^2 = [\Delta_{10}]$,
-predicted to be non-zero (the pentagon $\hbar^3$ failure needing the
-$\Phi_{10}/\eta^{24}$ associator twist). A proof of the comparison
-hypotheses would verify obstruction-free BV quantisation through two
-loops and pin the first non-trivial obstruction to $\hbar^3$.
+A compact K3 comparison may be posed on
+$Y=\mathbb R\times K3\times E\times\mathbb C^2$, together with
+specified M5 source worldvolumes.  The proof requires a sourced global
+action, a solution of the QME through order~$2$, and the map~$\Psi_2$.
 \end{remark}
 
-\begin{remark}[Two $\hbar$'s: loop-counting $\hbar$ versus
-specialisation $\hbar^2 = -1/8$]
+\begin{remark}[Two deformation parameters]
 \label{rem:bvbrst-two-hbar}
-The K3-twisted-holography construction contains two distinct
-$\hbar$ parameters. The parameter $\hbar_{\mathrm{BV}}$ is the
-loop-counting parameter of the BV quantisation above, formal in
-power series $\bC[\![\hbar_{\mathrm{BV}}]\!]$; $\hbar^2_{\mathrm{qg}}
-= -1/8$ is the Lusztig specialisation of the Hall--Drinfeld double
-$\mathcal{D}_\hbar(\mathrm{CoHA}_{K3\times E})$ at $\zeta^8 = 1$
-(Bruinier $2002$ Proposition~$5.1$). The
-bridge is this: $\hbar_{\mathrm{BV}}$ parametrises the formal deformation of
-the classical BV action; $\hbar_{\mathrm{qg}}$ parametrises the
-roots-of-unity limit of the associated quantum group. They coincide
-only on the formal side (they are equated as formal parameters
-within the holography line); the numerical specialisation
-$\hbar^2_{\mathrm{qg}} = -1/8$ takes a definite value of
-$\hbar_{\mathrm{BV}}$ only after passage to the root-of-unity phase.
+The BV parameter $\hbar_{\mathrm{BV}}$ records loop order in the
+completed local-functional algebra.  A quantum-group parameter
+$\hbar_{\mathrm{qg}}$ records deformation of a Hall or Drinfeld
+algebra.  A bridge between them is a specified morphism of formal
+deformation bases; a root-of-unity value is a further specialization
+of the second base.
 \end{remark}
 
-\begin{remark}[Partition function match to $\log\Phi_{10}$]
+\begin{remark}[Fourier--Jacobi target]
 \label{rem:bvbrst-partition-match}
-The conditional $2$-loop comparison in
-Proposition~\ref{prop:bvbrst-2loop-obstruction} requires matching the
-BV partition function on $T^2\times K3$ with the $p^2$ Fourier
-coefficient of $\log\Phi_{10}(Z)$ after Wick rotation to Euclidean
-signature and Siegel-to-paramodular reduction. In that normalisation,
-the $p^2$ Fourier coefficient of $\log\Phi_{10}$ is
-$(-24\log\eta)|_{p^0} + 2c(\phi_{10,1})|_{p^1} + O(p^3)$ with
-$c(\phi_{10,1}) = 0$ at the first Jacobi-index level (Gritsenko 1999,
-$\eta^{24}/\phi_{10,1}$), so the $p^2$ coefficient reduces to $-24$
-times the standard Eisenstein-$E_2^*$ completion term. The graph-side
-open mathematical condition of Remark~\ref{rem:bvbrst-theta-graph} is to produce
-this prefactor in the same scheme; the completion term is then absorbed
-by the Omega-background modification. Cross-volume check: Vol~III
-Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} establishes the same
-$\Phi_{10}$ partition function from the Hall-Drinfeld-double side,
-independently reproducing this coefficient.
+The arithmetic target at two loops is the complete series
+\[
+ C_2(q,y):=[p^2]\log\Phi_{10}^{\circ}(p,q,y).
+\]
+Expanding the Gritsenko--Nikulin product determines $C_2$ exactly.
+The graph calculation determines $[\mathfrak o_2]$.  The map~$\Psi_2$
+identifies their normalizations.
 \end{remark}
 
-\section{chain-level $\mu_8$-gerbe banding
-cocycle as BV counterterm}
+\section{Roots of the automorphic line and BV counterterms}
 \label{sec:bvbrst-supplement-iii}
 
-At the $(\infty,1)$-level, the associator
-$\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}]$
-is conjectured to define a $\mu_8$-gerbe $\mathcal{G}$ on
-$\overline{\mathcal{A}_2}$. The carrier is the Heegner--Chern torsion
-lane, not the BV graph lane. The statements below spell out the exact
-cocycle and counterterm hypotheses needed to trivialise the gerbe on
-$U := \overline{\mathcal{A}_2}\setminus(H_1\cup H_4)$ and compare that
-trivialisation with the root-of-unity phase
-$\hbar_{\mathrm{qg}}^2 = -1/8$.
+Let $\lambda$ be the Hodge line on $\mathcal A_2$ and let $\chi$ be
+the quadratic character of $\operatorname{Sp}_4(\mathbb Z)$.  The
+form $\Delta _5$ is a section of $\lambda^5\otimes\chi$, with divisor
+$H_1$ \cite{GN96Igusa}.  The Kummer sequence provides the intrinsic
+obstruction to a chosen root of this automorphic line.
 
-\begin{proposition}[Conditional \v Cech $2$-cocycle for the $\mu_8$-gerbe;
-\ClaimStatusConditional]
+\begin{proposition}[Kummer cocycle for an eighth root;
+\ClaimStatusProvedHere]
 \label{prop:bvbrst-cech-cocycle}
-\index{gerbe!chain-level banding|textbf}
-\index{Bruinier!order-8 Heegner-Chern torsion}
-\index{Baily-Borel cover!Cech cocycle}
-Let $\{U_i\}_{i\in I}$ be the finite open cover of
-$U := \overline{\mathcal{A}_2}\setminus(H_1\cup H_4)$ obtained from the
-Baily--Borel compactification by deleting $H_1 \cup H_4$ and restricting
-the canonical affine cover coming from the Siegel upper half-space
-$\mathfrak{H}_2 / \mathrm{Sp}_4(\mathbb Z)$ \textup{(}Faltings--Chai $1990$
-\textup{IV}.$6$; Baily--Borel $1966$\textup{).} Let
-$\gamma_{ij} \in \mathrm{Sp}_4(\mathbb Z)$ be the transition
-modular-group elements witnessing $U_i \cap U_j$. Assume that the
-Bruinier Heegner--Chern class has been lifted to an
-$\mathrm{Sp}_4(\mathbb Z)$ cocycle
+Let $U\subset\mathcal A_2$ be an open substack and
+$\{U_i\}$ an étale cover trivializing
+$L:=(\lambda^5\otimes\chi)|_U$.  Write $g_{ij}\in
+\mathcal O^\times(U_{ij})$ for its transition functions and choose
+étale-local eighth roots $r_{ij}^8=g_{ij}$.  Then
 \[
- \mathrm{HeegChern}\colon \mathrm{Sp}_4(\mathbb Z)\to
- \mathrm{Pic}(\overline{\mathcal{A}_2})\otimes\mathbb Z/8
+ F_{ijk}:=r_{ij}r_{jk}r_{ki}\in\mu_8(U_{ijk})
 \]
-and that its restriction to
-$U=\overline{\mathcal A_2}\setminus(H_1\cup H_4)$ has vanishing
-Bockstein obstruction. Then the $\mu_8$-gerbe banding
-$F_U \in H^2(U,\mu_8)$ admits the \v Cech representative
-$F_{ijk}\colon U_{ijk}\to\mu_8$ given by
-\[
- F_{ijk} \;=\; \exp\!\bigl(2\pi i\,k_{ijk}/8\bigr),
- \qquad k_{ijk} \;=\; \bigl\langle \mathrm{HeegChern}(\gamma_{jk}),
- [H_1] + [H_4] \bigr\rangle \bmod 8,
-\]
-where $[H_1]$ and $[H_4]$ are the Humbert divisor classes of
-discriminant $1$ and $4$, and the pairing is taken in
-$\mathrm{Pic}(\overline{\mathcal{A}_2})\otimes \mathbb Z/8$. The cochain
-$F_{ijk}$ is a genuine $2$-cocycle
-\[
- F_{jkl}^{\mathrm{W}18}\cdot (F_{ikl}^{\mathrm{W}18})^{-1}\cdot
- F_{ijl}^{\mathrm{W}18}\cdot (F_{ijk})^{-1} \;=\; 1
-\]
-on every fourfold intersection $U_{ijkl}$, and its class in
-$H^2(U,\mu_8)$ is zero; the cocycle is a nontrivial $2$-coboundary
-witness to the restricted gerbe trivialisation.
+is a \v Cech $2$-cocycle.  Its class
+$[F]\in H^2(U,\mu_8)$ is the Kummer obstruction to an eighth root of
+$L$, and $[F]=0$ exactly when such a root exists.
 \end{proposition}
 
 \begin{proof}
-The assumed Heegner--Chern cocycle is additive with values in
-$\mathrm{Pic}(\overline{\mathcal{A}_2})\otimes\mathbb Z/8$. Restriction
-to $U$ removes $H_1$ and $H_4$ as divisors, leaving their classes as
-cohomology witnesses. The pairing
-$\langle \mathrm{HeegChern}(\gamma_{jk}),[H_1]+[H_4]\rangle\bmod 8$
-lands in $\mathbb Z/8$ and the exponential lift gives an element of
-$\mu_8\subset\bC^*$. Cocycle closure
-\[
- \delta k_{ijkl} \;=\; k_{jkl} - k_{ikl} + k_{ijl} - k_{ijk} \;=\; 0 \bmod 8
-\]
-on $U_{ijkl}$ follows because $\mathrm{HeegChern}\circ\gamma$
-satisfies the $1$-cocycle condition in the symplectic group
-$\mathrm{Sp}_4(\mathbb Z)$ \textup{(}Kudla--Millson $1990$
-Theorem~$3.1$\textup{),} and the pairing with the fixed Humbert class
-inherits closure. The final assertion is exactly the assumed Bockstein
-vanishing on $U$: after removing $H_1\cup H_4$, the banding class lifts
-from $H^2(U,\mu_8)$ to the specified $\mathbb Z/8$ cochain and is
-therefore a coboundary.
+On quadruple overlaps, cancellation of the $r_{ij}$ gives
+$\delta F=1$.  Replacing the local roots changes $F$ by a
+$\mu_8$-valued coboundary.  The Kummer exact sequence
+$1\to\mu_8\to\mathbb G_m\xrightarrow{(\cdot)^8}\mathbb G_m\to1$
+identifies its cohomology class with the connecting image of~$[L]$.
 \end{proof}
 
-\begin{proposition}[Conditional banding as BV zero-loop counterterm;
-\ClaimStatusConditional]
+\begin{conjecture}[Banding-to-counterterm map;
+\ClaimStatusConjectured]
 \label{prop:bvbrst-banding-counterterm}
-\index{BV counterterm!zero-loop banding|textbf}
-\index{twisted 11D SUGRA!mu_8 counterterm}
-Assume the \v Cech $2$-cocycle $F_{ijk}$ of
-Proposition~\textup{\ref{prop:bvbrst-cech-cocycle}} corresponds
-under the Kuga--Satake pullback and the Freed--Quinn banding action to
-a \emph{zero-loop} BV counterterm in the twisted $11$D SUGRA quantum
-action $S_q$. Then the counterterm has the form
+For a specified family of twisted BV theories over~$U$, construct a
+map
 \[
- S^{\mathrm{banding}}_{\mathrm{c.t.}} \;=\;
- \frac{2\pi i}{8}\,\int_{U\text{-band}}
- \log F_U \wedge \omega_{K3},
+ \beta_{\mathrm{band}}:\ H^2(U,\mu_8)
+ \longrightarrow H^0\operatorname{Obs}_{\mathrm{loc}}
+      (\mathcal E_{11}^{\mathrm{tw}}/U)\otimes\mathbb Q/\mathbb Z .
 \]
-where the integration is over a $U$-banded region of
-$\overline{\mathcal{A}_2}\setminus(H_1\cup H_4)$ and $\omega_{K3}$ is
-the holomorphic $2$-form on $K3$ pulled back to the $\overline{\mathcal{A}_2}$
-moduli via the Kuga--Satake construction. Adding
-$S^{\mathrm{banding}}_{\mathrm{c.t.}}$ to $S_{\mathrm{cl}}$
-perturbatively trivialises the $\mu_8$-gerbe obstruction at the
-zero-loop sector without modifying the one-loop weight-$5$ Igusa-form
-anomaly. Its relation to the two-loop obstruction is only through the
-separate comparison hypotheses of
-Proposition~\ref{prop:bvbrst-2loop-obstruction}.
-\end{proposition}
+The counterterm associated with the automorphic root datum is
+\[
+ S_{\mathrm{ct}}^{\mathrm{band}}
+ :=2\pi i\,\beta_{\mathrm{band}}([F]).
+\]
+Compatibility with the QME is the equation
+$d_0S_{\mathrm{ct}}^{\mathrm{band}}=0$ together with its chosen
+integral lift.
+\end{conjecture}
 
-\begin{proof}[Proof sketch]
-The Freed--Quinn banding action for a gerbe $\mathcal{G}$ with \v Cech
-representative $F_{ijk} \in \mu_8$ is the classical CS-type action
-$S_{\mathrm{FQ}} = (2\pi i/N)\int\log F$ with $N = 8$; here we use
-$\log\colon\mu_8\to\mathbb Z/8$ extended by the free-part factor to
-$\mathbb Q/\mathbb Z$. Under the Kuga--Satake embedding
-$\mathcal{A}^{K3}_{\mathrm{Hodge}}\hookrightarrow
-\overline{\mathcal{A}_2}$ of
-Remark~\ref{V3-rem:cy2ch-phi-K3-comparison} \textup{(}Vol~III
-\texttt{cy\_to\_chiral.tex}\textup{),} the cover $\{U_i\}$ of $U$ pulls
-back to a cover of the K3-period moduli; the holomorphic $2$-form
-$\omega_{K3}$ lifts to a global section via Hodge-type degeneration on
-$U$. Adding $S^{\mathrm{banding}}_{\mathrm{c.t.}}$ to $S_q$ shifts the
-BV partition function by a $\mu_8$-phase that cancels the
-Heegner-Chern order-$8$ torsion on $U$ without affecting higher-loop
-data: the derivative $\partial_\hbar$ sees only $\hbar^0$-order terms.
-The numerical relation $\chi(K3)=24=3\cdot 8$ is a compatibility check
-for the phase convention; it is not a proof that the two-loop graph
-sum factors through the banding cocycle.
-\end{proof}
-
-\begin{remark}[Heegner-simplex linking-number formula]
+\begin{problem}[Meridian realization of the Kummer class;
+\ClaimStatusOpen]
 \label{rem:bvbrst-linking-number}
-\index{Heegner simplex!linking number}
-\index{Borcherds!denominator formula}
-The Gritsenko--Nikulin denominator $\Phi_{10}/\eta^{24}$ extends to a
-Heegner divisor class on $\overline{\mathcal{A}_2}$ whose $\mu_8$-torsion
-part is conjectured to be the gerbe banding obstruction
-\cite[\S10]{Borcherds1998}. Under the cocycle hypothesis of
-Proposition~\ref{prop:bvbrst-cech-cocycle}, an alternative chain-level
-representative of $F_U$ is the linking-number formula
+Choose a real oriented $2$-cycle~$\Sigma$ in~$U$ and a $3$-chain
+bounding it in a compactification.  Compute the intersection number
+with the divisor of~$\Delta _5$ and compare
 \[
- F_U(x_0, x_1, x_2) \;=\;
- \exp\!\bigl(2\pi i/8 \cdot \mathrm{lk}(\mathrm{HS}(x_0, x_1, x_2),\,
- H_1 \cup H_4)\bigr),
+ \exp\!\left(\frac{2\pi i}{8}
+       \,\Sigma\cdot\operatorname{div}(\Delta _5)\right)
 \]
-where $x_0, x_1, x_2 \in U$ and $\mathrm{HS}(x_0, x_1, x_2)$ is the
-Heegner simplex, the $2$-simplex in $\overline{\mathcal{A}_2}$ with
-vertices $x_0, x_1, x_2$ bounded by the Heegner-geodesic triangles
-joining the three points. The linking number
-\[
- \mathrm{lk}(\mathrm{HS},\,H_1\cup H_4) \;=\;
- \#(\mathrm{HS}\cap H_1) + \#(\mathrm{HS}\cap H_4) \bmod 8
-\]
-counts transverse intersection points of the Heegner simplex with
-$H_1\cup H_4$, weighted with sign and reduced modulo $8$. Equivalence
-with the \v Cech form of
-Proposition~\ref{prop:bvbrst-cech-cocycle} is the required
-chain-level open mathematical condition: on the nerve of the
-cover $\{U_i\}$ with $x_\alpha \in U_{i_\alpha}$, the Heegner simplex
-degenerates to the $2$-simplex $\{i_0, i_1, i_2\}$ in the nerve, and
-the linking number recovers $k_{i_0 i_1 i_2}$ by Bruinier--Borcherds
-reciprocity~\cite[Theorem 5.2]{Bruinier2002}. Borcherds
-\cite[\S10]{Borcherds1998} gives the denominator identities for
-reflection BKMs; Bruinier~\cite[Proposition 5.1]{Bruinier2002} gives
-the Heegner--Chern divisor formalism. Under the comparison hypothesis,
-the linking-number formula connects to Vol~II
-Chapter~\ref{ch:hcs-yangian-etale} and Vol~III
-Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} where the same
-intersection data appears as the $\hbar^3$ Bruinier-reduced Feynman
-denominator
-$c_3^{\mathrm{Br}}=c_{\phi_{-2,1}}(3)[H_3]=-8[H_3]$.
-\end{remark}
+with the holonomy of~$[F]$ on~$\Sigma$.  This gives a geometric
+representative of the Kummer cocycle.
+\end{problem}
 
-\begin{remark}[Two-$\hbar$ bridge: $\hbar_{\mathrm{qg}}^2 = -1/8$
-from banding]
+\begin{remark}[Root-of-unity specialization]
 \label{rem:bvbrst-two-hbar-banding}
-\index{two-hbar bridge!chain-level}
-Remark~\ref{rem:bvbrst-two-hbar} pins
-$\hbar_{\mathrm{qg}}^2 = -1/8$ at the root-of-unity phase. The
-conditional banding construction explains how a denominator-$8$ phase
-could be carried by the Heegner--Chern gerbe. The banding counterterm
-$S^{\mathrm{banding}}_{\mathrm{c.t.}}$ is the zero-loop input that
-would close the Lusztig specialisation loop if the cocycle and
-bulk-boundary comparison hypotheses are supplied. Without those
-hypotheses, the residual phase obstruction on $H_1\cup H_4$ remains an
-open open mathematical condition.
+The class $[F]$ takes values in~$\mu_8$.  A quantum-group
+specialization may send its deformation parameter to a primitive
+eighth root of unity.  The map $\beta_{\mathrm{band}}$ transports this
+finite monodromy to the BV family; it is the precise bridge between
+the two parameter spaces.
 \end{remark}
 
-\begin{remark}[Conditional metaplectic refinement to $\mu_{16}$-gerbe on
-$\overline{\mathcal A_2}\setminus H_1$]
+\begin{remark}[Sixteenth-root refinement]
 \label{rem:bvbrst-mu16-metaplectic-refinement}
-\index{gerbe!mu_16@$\mu_{16}$ metaplectic refinement}
-\index{Humbert divisor!$H_4$ order-16 torsion}
-Assume the $\mu_8$-cocycle $F_{ijk}$ of
-Proposition~\ref{prop:bvbrst-cech-cocycle} trivialises the gerbe on
-$U = \overline{\mathcal A_2}\setminus(H_1\cup H_4)$. A metaplectic
-refinement at $H_4$ would have order $16$, not $8$, if
-$\mathrm{ord}_{H_4}(\Phi_{10}) = 2$ (Igusa 1962 \S7 Cor.~2) combines
-with the Kuga--Satake metaplectic factor-of-two (Morrison 1984
-\emph{Invent.}~75 Thm.~3). Passing to the metaplectic double cover
-$\widetilde{\mathrm{Sp}}_4(\mathbb Z)$ and replacing $\Phi_{10}$ by its
-paramodular square root $\Delta_5 = \sqrt{\Phi_{10}}$
-(Gritsenko 1995 \S3 Thm.~3.2) would produce the refined cocycle
-$G_{ij}(Z) = [\Delta_5/\eta^{12}]^{1/8}|_{\widetilde U_i}/
-[\Delta_5/\eta^{12}]^{1/8}|_{\widetilde U_j} \in \mu_{16}$ on
-$V = \overline{\mathcal A_2}\setminus H_1$, with
-$G_{ij}|_U^2 = F_{ij}$. The Vol~III inscription is
-Theorem~\ref{V3-thm:modtr-mu16-metaplectic-banding-cocycle} of
-\texttt{modular\_trace.tex}. The BV counterterm
-$S^{\mathrm{banding}}_{\mathrm{c.t.}}$ of
-Proposition~\ref{prop:bvbrst-banding-counterterm} would lift to the
-Mp cover as a $\mu_{16}$-valued counterterm
-$\widetilde S^{\mathrm{banding}}_{\mathrm{c.t.}}
-= (2\pi i/16)\int_{\widetilde V\text{-band}}\log G_V \wedge
-\omega_{K3}$, whose descent to $V$ adds a metaplectic sheet-transition
-phase $\zeta_{16}^3$ at $H_4$. The Lusztig specialisation
-$\zeta^8 = 1$ and the two-$\hbar$ identity
-$\hbar_{\mathrm{qg}}^2 = -1/8$ are unchanged: the metaplectic
-factor-of-two is orthogonal to the Drinfeld-$\hbar$/BV-$\hbar$ direction.
+The Kummer sequence with $\mu_{16}$ defines the obstruction
+\[
+ \delta_{16}([L])\in H^2(U,\mu_{16})
+\]
+to a sixteenth root of~$L$.  A metaplectic refinement consists of a
+cover $\widetilde U\to U$ and a line $\widetilde L$ whose sixteenth
+power is the pullback of~$L$.  Its square maps to the eighth-root
+datum of Proposition~\ref{prop:bvbrst-cech-cocycle}.  Computing
+$\delta_{16}([L])$ on meridians gives the refinement problem.
 \end{remark}
 
-\section{All-order BV obstruction as Heegner--Chern coefficients of a
-weak Jacobi form}
+\section{The Igusa product and the BV comparison problem}
 \label{sec:bvbrst-heegner-all-order}
 
-The preceding analysis isolates the order-by-order pattern expected for
-the BV obstruction cohomology classes
-$c_n \in H^2(\mathfrak{g}_{\Delta_5}, \bC)\cong \bC\cdot[\Delta_5]$ on
-twisted $11$D~SUGRA on $\bR^3\times K3\times\bC^2$ with $24$~M$5$-branes
-on the Kodaira~$I_1$ fibres of the elliptic~K3: $c_1$ fixed
-via the one-loop paramodular anomaly, $c_2 = 0$ after the comparison
-hypotheses of Proposition~\ref{prop:bvbrst-2loop-obstruction}, and the
-three-loop Bruinier-reduced class
-\[
- c_3^{\mathrm{Br}}
- =
- c_{\phi_{-2,1}}(3)[H_3]
- =
- -8[H_3]
-\]
-computed from the discriminant-$3$ coefficient of $\phi_{-2,1}$
-\textup{(}Proposition~\ref{prop:bvbrst-2loop-obstruction}; companion
-Vol~II three-loop obstruction theorem\textup{).} The scalar
-$176256=p_{24}(5)=\chi(\operatorname{Hilb}^5(K3))$ is the fifth
-K3 Fock/Hilbert-sector dimension, not a BV obstruction coefficient.
-The natural continuation to all orders $n\geq 1$ is the content of the
-present section.
+The arithmetic object and the field-theoretic obstruction live in
+different categories.  We first state the automorphic theorem, then
+formulate the morphism that would compare them.
 
-\begin{theorem}[Conditional Heegner pattern for the all-order BV obstruction
-tower; \ClaimStatusConditional]
+\begin{theorem}[Gritsenko--Nikulin product for \texorpdfstring{$\Delta _5$}{Delta 5};
+\ClaimStatusProvedElsewhere]
 \label{thm:bvbrst-heegner-all-order}
-\index{BV obstruction!all-order Heegner pattern|textbf}
-\index{weak Jacobi form!\phi_{-2,1}@$\phi_{-2,1}$ and BV obstruction}
-\index{Bruinier!Heegner-Chern reciprocity all-order}
-Let $S_q = S_{\mathrm{cl}} + \sum_{n\geq 1}\hbar_{\mathrm{BV}}^n S^{(n)}$ be the BV
-quantum action of twisted $11$D~SUGRA on
-$\bR^3\times K3\times\bC^2$ with $24$~M$5$-branes on the Kodaira~$I_1$
-fibres of the elliptic~K3, in the Costello--Li holomorphic-topological
-twist \cite{Costello2015omega,CostelloLi2016} and the
-Costello--Gaiotto--Paquette tree-level holography
-frame~\cite{CostelloGaiottoPaquette2018}. For each $n\geq 1$, let
+\index{Igusa cusp form!Gritsenko--Nikulin product|textbf}
+Let
 \[
- c_n \;:=\; \bigl[\{S_{\mathrm{cl}}, S^{(n)}\}_{\mathrm{BV}}
- +\tfrac{1}{2}\!\!\sum_{i+j=n,\,i,j\geq 1}\!\!\{S^{(i)}, S^{(j)}\}_{\mathrm{BV}}
- +\Delta_{\mathrm{BV}}\,S^{(n-1)}\bigr] \;\in\;
- H^2(\mathfrak{g}_{\Delta_5}, \bC)
+ \phi_{0,1}(\tau,z)=\sum_{n\geq0,\,r\in\bZ}f(4n-r^2)q^ny^r
+ =y^{-1}+10+y+O(q)
 \]
-be the $\hbar_{\mathrm{BV}}^n$-order BV master-equation obstruction class. Let
-$\phi_{-2,1}(\tau, z) = \vartheta_1(\tau, z)^2/\eta(\tau)^6$ denote the
-unique-up-to-scale weight-$(-2)$, index-$1$ weak Jacobi form
-\cite[\S 9, Theorem 9.3]{EichlerZagier1985}, expanded as
-$\phi_{-2,1}(\tau, z) = \sum_{n\geq 0,\,r\in\bZ}c_{\phi_{-2,1}}(4n-r^2)\,q^n
-y^r$ with Fourier coefficients $c_{\phi_{-2,1}}(N)$ depending only on the
-discriminant $N = 4n-r^2$, vanishing unless $N\equiv 0,-1\pmod 4$
-\textup{(}admissibility\textup{).}
-Let $[H_n]\in\mathrm{Pic}(\overline{\mathcal{A}_2})_\bQ$ denote the
-class of the Humbert divisor of discriminant~$n$, by Bruinier~$2002$
-Proposition~$5.1$~\cite[Prop.~5.1, Thm.~5.12]{Bruinier2002}. Assume
-there is a BV/Fourier comparison morphism
-\[
- \Psi_{\mathrm{BV}}\colon
- H^2(\mathfrak{g}_{\Delta_5},\bC)
- \longrightarrow
- \mathrm{Pic}(\overline{\mathcal{A}_2})_\bQ
-      \widehat{\otimes}\bQ[\![p,q,y^{\pm1/2}]\!]
-\]
-compatible with Costello renormalisation, the
-$\hbar_{\mathrm{BV}}$-filtration, the Fourier--Jacobi $p$-filtration,
-and the removal of the Weyl-vector and $\eta^{24}$ one-loop factors.
-Let $c_n^{\mathrm{Heg}}$ denote the leading Humbert--Heegner projection
-of $\Psi_{\mathrm{BV}}(c_n)$ at $p^n$. Then
+be the canonical weak Jacobi form of weight~$0$ and index~$1$ in the
+Gritsenko--Nikulin normalization.  In the product chamber,
 \begin{equation}\label{eq:bvbrst-heegner-identity}
- c_n^{\mathrm{Heg}} \;=\; c_{\phi_{-2,1}}(n)\cdot [H_n]
- \;\in\; \mathrm{Pic}(\overline{\mathcal{A}_2})_\bQ,
- \qquad n\geq 1,
+ \Delta _5(p,q,y)
+ =(pqy)^{1/2}\prod_{(m,n,r)>0}
+       (1-p^mq^ny^r)^{f(4mn-r^2)},
+ \qquad \Phi_{10}=\Delta _5^{\,2}.
 \end{equation}
-where $c_{\phi_{-2,1}}(N) \neq 0$ requires $N\equiv 0, 3 \pmod 4$
-\textup{(}equivalently $N\equiv -1, 0\pmod 4$, Eichler--Zagier admissibility at
-index $m = 1$\textup{).} Here the Fourier coefficients of $\phi_{-2,1}$ are
-normalised by $\phi_{-2,1} = -(y - 2 + y^{-1})\prod_{n\geq 1}(1-q^n y)^2
-(1-q^n/y)^2/(1-q^n)^4$, giving $c_{\phi_{-2,1}}(-1) = -1$. In particular:
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\roman*)}]
-\item \emph{Admissibility} \textup{(}vanishing of the leading Heegner
-projection on inadmissible orders\textup{):}
-$c_n^{\mathrm{Heg}} = 0$ whenever $n\not\equiv 0, 3 \pmod 4$. In the
-first six orders this gives
-$c_2^{\mathrm{Heg}}=c_5^{\mathrm{Heg}}=c_6^{\mathrm{Heg}}=0$ while
-$c_3^{\mathrm{Heg}}, c_4^{\mathrm{Heg}}, c_7^{\mathrm{Heg}},
-c_8^{\mathrm{Heg}}$ are potentially non-zero.
-\item \emph{Explicit leading values} at admissible orders:
-\[
- c_3^{\mathrm{Heg}} \;=\; -8\cdot[H_3],\quad
- c_4^{\mathrm{Heg}} \;=\; +12\cdot[H_4],\quad
- c_7^{\mathrm{Heg}} \;=\; -39\cdot[H_7],\quad
- c_8^{\mathrm{Heg}} \;=\; +56\cdot[H_8].
-\]
-The numerical values are computed from the $q, y$-expansion
-$\phi_{-2,1}(\tau, z) = \sum_{n\geq 0,\,r\in\bZ}c_{\phi_{-2,1}}(4n-r^2)\,
-q^n y^r$: direct expansion of the infinite product through
-$q^8$ yields $c_{\phi_{-2,1}}(3) = -8$, $c_{\phi_{-2,1}}(4) = 12$,
-$c_{\phi_{-2,1}}(7) = -39$, $c_{\phi_{-2,1}}(8) = 56$.
-Compare Eichler--Zagier~$1985$ \cite[\S 9]{EichlerZagier1985} and
-Dabholkar--Murthy--Zagier
-\cite[\S A.2]{DabholkarMurthyZagier2012}.
-\item \emph{Asymptotic bound} \textup{(}Ramanujan--Petersson for cuspidal
-weak Jacobi forms\textup{):}
-\[
- |c_n^{\mathrm{Heg}}| \;\sim\; \exp\!\bigl(\pi\sqrt{n}\bigr),\qquad n\to\infty,
-\]
-on the admissible residues; hence the obstruction tower has
-super-polynomial coefficient growth but no factorial Gevrey growth in
-the Fourier degree. The BV parameter $\hbar_{\mathrm{BV}}$ weights this
-degree; the Lusztig parameter $\hbar_{\mathrm{qg}}$ is independent.
-\end{enumerate}
+Here $(m,n,r)>0$ means $m,n\geq0$, with arbitrary $r$ when
+$m+n>0$ and $r<0$ when $m=n=0$.
+In particular, $f(0)=10$, $\operatorname{wt}(\Delta _5)=f(0)/2=5$,
+and $\operatorname{wt}(\Phi_{10})=10$.
 \end{theorem}
 
 \begin{proof}
-The identity~\eqref{eq:bvbrst-heegner-identity} is a composite of three
-primary inputs. We assemble them in turn.
-
-\emph{Input~(i): Bruinier~$2002$ Heegner--Chern reciprocity.}
-Bruinier's Proposition~$5.1$~\cite[Prop.~5.1]{Bruinier2002} pairs the
-Fourier coefficients of the weak Jacobi form $\phi_{-2,1}$ with Heegner
-divisor classes on $\overline{\mathcal{A}_2}$: for each admissible
-discriminant $N\equiv 0, 3\pmod 4$, the Fourier coefficient
-$c_{\phi_{-2,1}}(N)$ computes the intersection multiplicity of the
-Kudla--Millson--Bruinier regularised theta lift with the Humbert
-divisor $[H_N]$:
-\[
- c_{\phi_{-2,1}}(n)\cdot[H_n]
- \;=\; \bigl[\Theta^{\mathrm{reg}}_{-2,1}(\phi_{-2,1})\cdot H_n\bigr]
- \;\in\;\mathrm{CH}^1(\overline{\mathcal{A}_2}).
-\]
-This provides the $[H_n]$-valued right-hand side of the
-identity~\eqref{eq:bvbrst-heegner-identity}.
-
-\emph{Input~(ii): Borcherds~$1998$ singular-theta lift of $\phi_{-2,1}$.}
-Borcherds' singular-theta machinery
-\cite[Theorem~10.1]{Borcherds1998} lifts $\phi_{-2,1}$ to the Igusa cusp
-form $\Phi_{10}$ on $\overline{\mathcal{A}_2}$ via the Borcherds product
-\[
- \Phi_{10}(Z) \;=\; p\,q\,y^{1/2}\!\!
- \prod_{(m, n, r)>0}(1 - p^m q^n y^r)^{-c_{\phi_{-2,1}}(4mn-r^2)},
-\]
-where the convention $c_{\phi_{-2,1}}(-1) = -1$ is fixed by the
-normalisation $\phi_{-2,1} = -(y - 2 + y^{-1})\prod_{n\geq 1}(1-q^n y)^2
-(1-q^n/y)^2/(1-q^n)^4$. Taking $\log$ and collecting the
-$p^n$-Fourier coefficient gives
-\[
- \bigl[\log(\Phi_{10}/\eta^{24})\bigr]\big|_{p^n} \;=\; c_{\phi_{-2,1}}(n)
- \;+\; (\text{lower-order summands in the denominator identity}),
-\]
-so the Heegner--Chern class at the $p^n$-level has Fourier multiplier
-$c_{\phi_{-2,1}}(n)$.
-
-\emph{Input~(iii): BV/Fourier comparison hypothesis.} The
-twisted-holography framework
-of~\cite{CostelloGaiottoPaquette2018} identifies the bulk partition
-function of twisted $11$D~SUGRA on
-$\bR^3\times K3\times\bC^2$ with the Borcherds--Gritsenko--Nikulin
-automorphic form $\Phi_{10}(Z)$. The extra hypothesis in this theorem is
-that the Feynman expansion of the BV quantum master equation at order
-$\hbar_{\mathrm{BV}}^n$ matches the leading Heegner projection of the
-$p^n$-Fourier coefficient of $\log(\Phi_{10}/\eta^{24})$ via the
-Costello singular
-pushforward~\cite[\S 8]{Costello2017M5} and the Costello--Li
-$\Omega$-background reduction~\cite[\S 3]{CostelloLi2016}. The
-$\eta^{24}$ normalisation absorbs the one-loop paramodular anomaly and
-the two-loop comparison class
-\textup{(}Proposition~\ref{prop:bvbrst-2loop-obstruction}\textup{),}
-so that at order~$n\geq 3$ the bulk partition function reduces to
-\[
- Z^{\mathrm{bulk}, (n)}_{K3\times\bC^2} \;=\;
- \bigl[\log(\Phi_{10}/\eta^{24})\bigr]\bigr|_{p^n}
- \;=\; c_{\phi_{-2,1}}(n) \;+\;\text{(lower discriminant contributions)},
-\]
-by the standard $\log$-expansion of the Fourier--Jacobi series. Matching
-with the leading Heegner projection of the BV obstruction class via the
-Chevalley--Eilenberg identification of
-Costello--Gwilliam~\cite[Ch.~5, Vol.~2]{CostelloGwilliam2021} gives
-the identity~\eqref{eq:bvbrst-heegner-identity}.
-
-\emph{Composite.} Input~(i) supplies the $[H_n]$-valued Heegner--Chern
-class; Input~(ii) supplies the Fourier multiplier
-$c_{\phi_{-2,1}}(n)$ through the Borcherds product; Input~(iii)
-is the comparison morphism that identifies the leading Heegner
-projection of the BV obstruction class with the $p^n$-order
-singular-theta lift coefficient. The triple composite
-yields~\eqref{eq:bvbrst-heegner-identity}.
-
-\emph{Admissibility item~(i).} By Eichler--Zagier~$1985$
-\cite[Theorem 2.2 and Theorem 9.3]{EichlerZagier1985}, a weak Jacobi
-form of weight~$k$ and index~$m$ satisfies $c(n, r)\neq 0$ only if
-$4mn - r^2 \equiv 0$ or $-1 \pmod{4m}$; at $m = 1$ this collapses to
-the discriminant residue $N\equiv 0$ or $3 \pmod 4$, i.e., the Fourier
-coefficient $c_{\phi_{-2,1}}(N)$ is supported on the set $\{-1, 0, 3,
-4, 7, 8, 11, \ldots\}$. Evaluating at $N = n$ (positive discriminant),
-the admissible orders are exactly $n\equiv 0, 3\pmod 4$.
-
-\emph{Numerical values item~(ii).} Direct $q, y$-expansion of the
-infinite-product form $\phi_{-2,1} = -(y-2+y^{-1})\prod_{n\geq 1}
-(1-q^n y)^2(1-q^n/y)^2/(1-q^n)^4$ through $q^8$ yields
-$c_{\phi_{-2,1}}(3) = -8$, $c_{\phi_{-2,1}}(4) = +12$,
-$c_{\phi_{-2,1}}(7) = -39$, $c_{\phi_{-2,1}}(8) = +56$. Compare the
-tabulation in Eichler--Zagier~$1985$
-\cite[\S 9, Theorem 9.3 and Table 1]{EichlerZagier1985} and
-Dabholkar--Murthy--Zagier \cite[Appendix A.2]{DabholkarMurthyZagier2012}
-(which differ from the present normalisation by an overall sign fixed
-by $c_{\phi_{-2,1}}(-1) = -1$).
-
-\emph{Asymptotic item~(iii).} The Ramanujan--Petersson bound for
-cuspidal weak Jacobi forms of weight $k$ and index~$m$ reads
-$|c_\phi(N)| \ll_{\varepsilon, \phi} N^{k/2 - 3/4 + \varepsilon}$ on the
-cuspidal part, but for the full cuspidal plus Eisenstein decomposition
-one has the Rademacher-type asymptotic $|c_\phi(N)| \sim
-\exp(\pi\sqrt{N/m})$ by Gritsenko's Fourier--Jacobi circle method
-\cite[\S 2]{Gritsenko1999} and the saddle-point analysis of
-Dabholkar--Murthy--Zagier
-\cite[Theorem 1.3]{DabholkarMurthyZagier2012}. Specialising
-$m = 1$, $N = n$ gives $|c_{\phi_{-2,1}}(n)| \sim \exp(\pi\sqrt{n})$
-as $n\to\infty$ through admissible residues, diverging super-polynomially.
-The BV obstruction tower
-$\{c_n\}_{n\geq 1}$ is thus a formal $\hbar_{\mathrm{BV}}$-series with
-super-polynomial coefficient growth. The root-of-unity condition
-$\hbar_{\mathrm{qg}}^2 = -1/8$
-\textup{(}Remark~\ref{rem:bvbrst-two-hbar};
-Remark~\ref{rem:bvbrst-two-hbar-banding}\textup{)} is a separate
-quantum-group specialisation; it does not supply analytic convergence
-for the BV Fourier-degree series.
+This is equation~(1.10), with the Jacobi form defined in
+equations~(1.8)--(1.9), of Gritsenko--Nikulin
+\cite[eqs.~(1.8)--(1.10)]{GN96Igusa}.  Their equation~(1.5) identifies
+$\Delta _5^2$ with the Igusa cusp form~$\chi_{10}$.
 \end{proof}
 
-\subsection{Explicit four-loop enumeration}
+The weight-$(-2)$ generator belongs to a second calculation.  With
+\[
+ \phi_{-2,1}=-(y-2+y^{-1})
+ \prod_{j\geq1}\frac{(1-q^jy)^2(1-q^j/y)^2}{(1-q^j)^4},
+\]
+direct expansion gives coefficients
+$a(3)=-8$, $a(4)=12$, $a(7)=-39$, and $a(8)=56$.  The product
+\eqref{eq:bvbrst-heegner-identity} uses the coefficients $f(D)$ of
+$\phi_{0,1}$.  Thus the two sequences govern distinct Jacobi-form
+constructions.
+
+Let $\mathcal E_{11}^{\mathrm{tw}}(Y)$ denote a specified BV model of
+the holomorphic--topological twist on an eleven-manifold~$Y$, and put
+$d_0=Q+\{I_0,-\}_{\mathrm{BV}}$.  Once
+$I_1,\ldots,I_{N-1}$ solve the QME through order $N-1$, its order-$N$
+obstruction is the $d_0$-closed local functional
+\[
+ \mathfrak o_N=
+ \Delta_{\mathrm{BV}}I_{N-1}
+ +\frac12\sum_{i=1}^{N-1}\{I_i,I_{N-i}\}_{\mathrm{BV}}
+ \in Z^1\operatorname{Obs}_{\mathrm{loc}}
+       (\mathcal E_{11}^{\mathrm{tw}}(Y)).
+\]
+Write
+\[
+ \widetilde\Phi_{10}:=\frac{\Phi_{10}}{pqy},\qquad
+ \Phi_{10}^{\circ}(p,q,y):=
+ \frac{\widetilde\Phi_{10}(p,q,y)}
+      {\widetilde\Phi_{10}(0,q,y)},\qquad
+ C_N(q,y):=[p^N]\log\Phi_{10}^{\circ}
+ \in\bQ(y)[[q]].
+\]
+The physics comparison asks for graded maps
+\[
+ \Psi_N:\ H^1\operatorname{Obs}_{\mathrm{loc}}
+       (\mathcal E_{11}^{\mathrm{tw}}(Y))
+ \longrightarrow \bQ(y)[[q]],
+ \qquad \Psi_N([\mathfrak o_N])=C_N(q,y).
+\]
+Costello constructs a particular $\Omega$-background reduction of
+eleven-dimensional supergravity to five-dimensional non-commutative
+gauge theory and proves its perturbative quantization
+\cite[Thms.~9.0.2--9.0.3]{Costello2111}.  Raghavendran--Saberi--Williams
+construct an interacting twist on $\bR\times Z_5$ for a Calabi--Yau
+fivefold~$Z_5$ and describe M2/M5 source backgrounds
+\cite{RSW23}.  The maps $\Psi_N$ for a compact K3 geometry form the
+remaining holographic construction.
+
+\subsection{Four-loop graph integral}
 \label{subsec:bvbrst-4loop-enumeration}
 
-The four-loop statement $c_4 = +12\cdot[H_4]$ of
-Theorem~\ref{thm:bvbrst-heegner-all-order} is the $n = 4$ entry of the
-Heegner pattern, and the first non-zero entry beyond the
-$c_3 = -8\cdot[H_3]$ triangle graph. Unlike $c_3$, which is carried by
-a single theta topology, the four-loop sum demands a full enumeration
-of connected vacuum graphs. We carry out that enumeration below.
-
-\begin{definition}[Four-loop vacuum diagram on $K3\times\bC^2$]
+\begin{definition}[Decorated four-loop BV graph]
 \label{def:bvbrst-4loop-diagram}
-\index{4-loop diagram!vacuum|textbf}
-A \emph{four-loop vacuum diagram} for the twisted $11$D~SUGRA BV action
-on $\bR^3\times K3\times\bC^2$ is a connected multigraph $\Gamma$ with
-loop number $h^1(\Gamma) = 4$ whose vertices are drawn from
-$\{v^{(3)}, v^{(4)}\}$ (cubic interaction vertex from the classical
-Chern--Simons-type action $\int A\wedge dA + \tfrac23 A\wedge A\wedge A$;
-quartic $R^4$ counterterm or quartic-anomaly-polynomial vertex from
-the $1$-loop adjoint quartic Casimir, distinguishing
-the $11$D~SUGRA-on-CY background from the $5$d~hCS cubic-Casimir lane,
-Remark~\ref{rem:bvbrst-6d-hcs-quartic}) and whose edges are drawn from
-the two propagator species $\{P_{K3}, P_{\bC^2}\}$. Write $V_3(\Gamma), V_4(\Gamma)$ for the cubic
-and quartic vertex counts, and $E(\Gamma) = E_{K3}(\Gamma) +
-E_{\bC^2}(\Gamma)$ for the edge count split by propagator species.
-Euler balance: $V_3 + V_4 - E + L = 1$, $3V_3 + 4V_4 = 2E$, $L = 4$;
-hence $E = V_3 + V_4 + 3$ with $V_3$ even (from $3V_3$ even). The
-symmetry factor is
-$\mathrm{Sym}(\Gamma) := |\mathrm{Aut}(\Gamma)|$ counted with edge
-orientations.
+A decorated four-loop graph is a connected graph $\Gamma$ with
+$h^1(\Gamma)=4$, vertices labelled by Taylor coefficients of the
+chosen interaction~$I_0$, edges labelled by the chosen gauge-fixed
+propagator, and divergent subgraphs labelled by the counterterms of
+the chosen renormalization scheme.  Its amplitude is the pushforward
+of the resulting density on compactified configuration space.
 \end{definition}
-
-The enumeration of connected two-edge-connected four-loop vacuum
-graphs is classical: Kreimer's Hopf algebra of Feynman graphs gives a
-total of $d_4 = 11$ topologies at loop $4$~\cite[\S 3]{Kreimer1998},
-matched independently by the $\mathrm{SL}(2, \bZ)$-invariant
-enumeration of Borel's stable Feynman
-graphs~\cite[\S 4]{BorelPortugues2002}. Table~\ref{tab:bvbrst-4loop-enum}
-lists all eleven.
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{clcccl}
+\begin{tabular}{@{}ll@{}}
 \toprule
-$\#$ & Topology $\Gamma$ & $V_3$ & $V_4$ & $E$ & $\mathrm{Sym}(\Gamma)$\\
+datum & required construction \\
 \midrule
-$1$ & Wheel $W_4$ & $4$ & $0$ & $6$ & $24$ \\
-$2$ & Double theta $\Theta\Theta$ & $0$ & $2$ & $4$ & $8$ \\
-$3$ & Ladder $\mathrm{Lad}_4$ & $8$ & $0$ & $10$ & $16$ \\
-$4$ & Box with diagonals $\Box^{\mathrm{diag}}_4$ & $4$ & $0$ & $6$ & $8$ \\
-$5$ & Two-triangle $\Delta\Delta$ & $4$ & $0$ & $6$ & $12$ \\
-$6$ & Dumbbell--tadpole $\Theta\!+\!\mathrm{tad}$ & $2$ & $1$ & $4$ & $8$ \\
-$7$ & Pretzel $\mathcal{P}$ & $2$ & $1$ & $4$ & $12$ \\
-$8$ & $Z$-snake $Z_4$ & $6$ & $0$ & $8$ & $2$ \\
-$9$ & Sunrise-square $\mathrm{Sun}_4$ & $2$ & $0$ & $4$ & $48$ \\
-$10$ & Figure-eight-loop $8\!+\!\mathrm{loop}$ & $0$ & $2$ & $4$ & $16$ \\
-$11$ & Tadpole-tadpole $T^2$ & $2$ & $0$ & $4$ & $8$ \\
+vertices & Taylor coefficients of the interacting twisted action \\
+edges & gauge-fixed propagator with parity and orientation \\
+counterterms & local extensions along collision strata \\
+automorphic output & the map $\Psi_4$ \\
 \bottomrule
 \end{tabular}
-\caption{The eleven connected four-loop vacuum topologies on
-$K3\times\bC^2$, with Euler data $(V_3, V_4, E)$ and symmetry factor
-$|\mathrm{Aut}(\Gamma)|$. Euler balance $V_3 + V_4 - E + 4 = 1$ is
-satisfied throughout; $\mathrm{Sym}(\Gamma)$ counts the combinatorial
-automorphism group of the graph with edge-orientations, after
-Kreimer~\cite[\S 3]{Kreimer1998}.}
+\caption{Data determining the four-loop comparison.}
 \label{tab:bvbrst-4loop-enum}
 \end{table}
 
-\begin{proposition}[Kreimer count matches; \ClaimStatusProvedElsewhere]
+\begin{problem}[Graph-indexing comparison; \ClaimStatusOpen]
 \label{prop:bvbrst-kreimer-count}
-\index{Kreimer!Hopf algebra count}
-The count $d_4 = 11$ of Table~\ref{tab:bvbrst-4loop-enum} equals the
-dimension of the degree-$4$ component of Kreimer's Hopf algebra of
-connected two-edge-connected Feynman graphs in $\phi^3/\phi^4$
-theory~\cite[\S 3, eq.~(16)]{Kreimer1998}, and equals the fourth
-coefficient of the generating series
-$\sum_{n\geq 0}d_n q^n = 1 + q + 2q^2 + 4q^3 + 11q^4 + 33q^5 + 101q^6 +
-\cdots$ recorded on OEIS~A005750.
-\end{proposition}
+Construct a bijection between the decorated graphs of
+Definition~\ref{def:bvbrst-4loop-diagram} and an external graph-Hopf
+algebra in the same valence, tadpole, orientation, and automorphism
+convention.  The bijection determines the symmetry factor
+$|\operatorname{Aut}\Gamma|^{-1}$ for every field-theoretic graph.
+\end{problem}
 
-\begin{proof}
-Direct combinatorial enumeration: every connected four-loop graph
-with cubic + quartic vertices and $E - V = L - 1 = 3$ falls into
-exactly one topology of Table~\ref{tab:bvbrst-4loop-enum} after
-identification under graph isomorphism. The count is verified via the
-Bogner--Weinzierl multiple-polylogarithm table of four-loop vacuum
-graphs~\cite[Table~1]{BognerWeinzierl2017}.
-\end{proof}
-
-\begin{proposition}[K$3$ Euler-normalised trace; \ClaimStatusConditional]
+\begin{problem}[Renormalized K3 kernels; \ClaimStatusOpen]
 \label{prop:bvbrst-k3-green-integrals}
-\index{K3 Green function!integrated powers}
-\index{Gauss-Bonnet!K3 integral}
-Let $G_{K3}(x, y)$ denote the Costello-renormalised Green function for
-the scalar Laplacian on $K3$ with the Gauss--Bonnet subtraction of
-$\chi(K3)/24 = 1$ from the trace anomaly
-\cite[\S 5]{Costello2011}. The analytic kernel is normalised by
-\[
- \int_{K3}G_{K3}(x,y)\,\mathrm{vol}_{K3}(y)=0.
-\]
-The scalar used in the graph table is instead the Euler-normalised
-trace of the collapsed local insertion:
+Choose a gauge-fixed kinetic operator for
+$\mathcal E_{11}^{\mathrm{tw}}(Y)$ and construct its heat-kernel
+parametrix on the K3 factor.  For every decorated graph~$\Gamma$, form
+the configuration-space integral
 \begin{equation}\label{eq:bvbrst-k3-green-powers}
- \mathcal T^{\mathrm{Euler}}_{K3,n}(1)
- \;:=\;
- \frac{1}{n!}\left(\int_{K3}c_2(TK3)\right)^n
- \;=\; \frac{\chi(K3)^n}{n!}
- \;=\; \frac{24^n}{n!}.
+ A_\Gamma^{\mathrm{ren}}
+ :=\operatorname{FP}_{\epsilon\to0}
+ \int_{\operatorname{Conf}_{V(\Gamma)}(Y)}
+ \Bigl(\bigwedge_{e\in E(\Gamma)}P_{\epsilon,e}\Bigr)
+ \Bigl(\bigwedge_{v\in V(\Gamma)}I_{0,v}\Bigr)
+ +A_\Gamma^{\mathrm{ct}}.
 \end{equation}
-The $\mathbb{C}^2$ propagator $P_{\bC^2}(w_1, w_2) =
-(w_1 - w_2)^{-2}\cdot \mathrm{d}w_1\wedge\mathrm{d}\bar w_2$ has
-transverse weight zero and integrates against the top form
-$\mathrm{vol}_{\bC^2}$ at every vertex; closed graph insertions reduce
-to constants via residue calculation.
-\end{proposition}
+This construction supplies the K3-dependent amplitude.
+\end{problem}
 
-\begin{proof}
-Costello's renormalisation theorem~\cite[Thm.~5.0.1]{Costello2011}
-removes the constant mode, so the Green kernel satisfies
-\(\Delta G_{K3}=\delta-1/\mathrm{vol}(K3)\) and has zero integral in
-either variable. Hence the unadorned iterated Green integral is not
-\(24^n/n!\). The graph scalar used here is obtained only after the
-local anomaly insertion is projected to the Euler trace. Gauss--Bonnet
-gives
-\[
-\int_{K3}c_2(TK3)=\chi(K3)=24,
-\]
-and symmetrisation of \(n\) identical local insertions divides by
-\(n!\). This gives \eqref{eq:bvbrst-k3-green-powers}.
-\end{proof}
-
-\begin{theorem}[Explicit four-loop Feynman sum; \ClaimStatusConditional]
+\begin{conjecture}[Four-loop BV/Fourier comparison;
+\ClaimStatusConjectured]
 \label{thm:bvbrst-4loop-feynman-sum}
-\index{4-loop BV!Feynman sum|textbf}
-\index{Feynman sum!topology-by-topology}
-Let $\mathrm{Amp}(\Gamma) := \mathrm{Sym}(\Gamma)^{-1}\cdot
-\int_{K3^{V_3+V_4}\times\bC^{2(V_3+V_4)}}
-P_{K3}^{E_{K3}}\cdot P_{\bC^2}^{E_{\bC^2}}$ be the Feynman amplitude of
-topology $\Gamma$ from Table~\ref{tab:bvbrst-4loop-enum}, after
-K\"ahler-class pairing with the Humbert class
-$[H_4]\in\mathrm{Pic}(\overline{\mathcal{A}_2})_{\bQ}$. Then
+For a globally defined twisted theory and a comparison map~$\Psi_4$,
+the renormalized order-four obstruction satisfies
 \begin{equation}\label{eq:bvbrst-4loop-table}
-\begin{aligned}
-\mathrm{Amp}(W_4) &= +576\cdot[H_4], &
-\mathrm{Amp}(\Theta\Theta) &= +72\cdot[H_4], \\
-\mathrm{Amp}(\mathrm{Lad}_4) &= -576\cdot[H_4], &
-\mathrm{Amp}(\Box^{\mathrm{diag}}_4) &= -72\cdot[H_4], \\
-\mathrm{Amp}(\Delta\Delta) &= -48\cdot[H_4], &
-\mathrm{Amp}(\Theta\!+\!\mathrm{tad}) &= 0, \\
-\mathrm{Amp}(\mathcal{P}) &= +48\cdot[H_4], &
-\mathrm{Amp}(Z_4) &= 0, \\
-\mathrm{Amp}(\mathrm{Sun}_4) &= +12\cdot[H_4], &
-\mathrm{Amp}(8\!+\!\mathrm{loop}) &= 0, \\
-\mathrm{Amp}(T^2) &= 0. & &
-\end{aligned}
+ \mathfrak o_4=
+ \Delta_{\mathrm{BV}}I_3+\{I_1,I_3\}_{\mathrm{BV}}
+ +\frac12\{I_2,I_2\}_{\mathrm{BV}},
 \end{equation}
-The total four-loop BV amplitude is
+and the desired arithmetic comparison is
 \begin{equation}\label{eq:bvbrst-4loop-sum}
- c_4 \;=\; \sum_{\Gamma\in\text{Table~\ref{tab:bvbrst-4loop-enum}}}
- \mathrm{Amp}(\Gamma) \;=\; +12\cdot[H_4]
- \;=\; c_{\phi_{-2,1}}(4)\cdot [H_4],
+ \Psi_4([\mathfrak o_4])=C_4(q,y)
+ =[p^4]\log\Phi_{10}^{\circ}(p,q,y).
 \end{equation}
-matching Theorem~\ref{thm:bvbrst-heegner-all-order} at $n = 4$.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
-Proceed topology by topology, using the K$3$ Euler-normalised trace of
-Proposition~\ref{prop:bvbrst-k3-green-integrals} and the
-Gritsenko--Nikulin denominator identity~\cite[Thm.~2.1]{GritsenkoNikulin1998}
-for the K\"ahler-class pairing with $[H_4]$.
-
-\emph{Topology $1$, Wheel $W_4$.} Four trivalent vertices on a $4$-cycle
-with a central trivalent vertex connected by radial spokes yields
-$V_3 = 4$, $E_{K3} = 4$ (rim), $E_{\bC^2} = 2$ (spokes reduced by
-$R^4$-counterterm). Applying
-\eqref{eq:bvbrst-k3-green-powers} with $n = 4$ gives the Euler trace
-$\chi(K3)^4/4! = 24^4/24 = 13824$. Pairing with $[H_4]$ and applying
-the symmetry factor $\mathrm{Sym}(W_4) = 24$ gives
-$\mathrm{Amp}(W_4) = 13824/24 = 576$, up to sign fixed by the
-orientation convention of~\cite[\S 4]{CostelloGaiottoPaquette2018}:
-$\mathrm{Amp}(W_4) = +576\cdot[H_4]$.
-
-\emph{Topology $2$, Double theta $\Theta\Theta$.} Two theta subgraphs
-($V_3 = 0, V_4 = 2, E = 4$) share no edges; the K$3$ Euler trace on
-each theta is $\chi(K3)^2/2 = 288$, and the two thetas are joined by
-$\bC^2$-propagators that contribute a residue factor $1/2$ via the
-Nekrasov--Okounkov self-dual evaluation. Combined:
-$288^2\cdot (1/2)\cdot \mathrm{Sym}^{-1} = 41472/8 = 5184$. Pairing
-with $[H_4]$ through the Gritsenko--Nikulin identity at weight
-$-2\cdot 2$ yields the reduction factor $5184/72 = 72$, giving
-$\mathrm{Amp}(\Theta\Theta) = +72\cdot [H_4]$.
-
-\emph{Topology $3$, Ladder $\mathrm{Lad}_4$.} Four rungs, eight
-trivalent vertices, $E = 10$. Applying the Clebsch--Gordan
-decomposition on $\mathrm{Hilb}^2(K3)$ via the Maulik--Okounkov
-stable envelope~\cite[Thm.~13.1]{MaulikOkounkov2019}, the ladder
-amplitude computes as the trace of the R-matrix
-$R_{\mathrm{K3}}^{\otimes 4}$ at the four rungs, giving
-$\mathrm{Tr}(R_{\mathrm K3}^{\otimes 4}) = -\chi(K3)^4/\mathrm{Sym} =
--24^4/16 = -20736$. Pairing with $[H_4]$ reduces by the same factor
-$36$ as the wheel (geometric origin: ladder is the open cousin of the
-wheel under $\mathrm{Sp}_4(\bZ)$-duality): $-20736/36 = -576$, hence
-$\mathrm{Amp}(\mathrm{Lad}_4) = -576\cdot[H_4]$. The sign flip relative
-to the wheel is the ladder-orientation flip of the
-Costello--Gaiotto--Paquette convention~\cite[\S 4.3]{CostelloGaiottoPaquette2018}.
-
-\emph{Topology $4$, Box with diagonals $\Box^{\mathrm{diag}}_4$.} A
-$4$-cycle with two crossing diagonals; four vertices, $E = 6$.
-Applying \eqref{eq:bvbrst-k3-green-powers} and the diagonal-crossing
-sign from the Borcherds additive lift gives
-$\mathrm{Amp}(\Box^{\mathrm{diag}}_4) = -\Theta\Theta/1 =
--72\cdot [H_4]$. Direct check: the box diagonal flip is the
-$\mathrm{Sp}_4(\bZ)$-$S$-conjugate of the double theta, hence the sign
-flip is the involution determinant~$-1$ of the Humbert involution
-$H_1\leftrightarrow H_4$.
-
-\emph{Topology $5$, Two-triangle $\Delta\Delta$.} Two triangles joined
-at a vertex; $V_3 = 4, E = 6$, $\mathrm{Sym} = 12$. The triangle
-amplitude is $\mathrm{Tri} = \chi(K3)^3/6 = 2304$, squared and reduced
-by the joining-vertex Wick contraction:
-$2304\cdot 24/12 = 4608$. The cross-ratio with $[H_4]$ reduces by
-$96$: $-4608/96 = -48$, hence
-$\mathrm{Amp}(\Delta\Delta) = -48\cdot[H_4]$.
-
-\emph{Topology $6$, Dumbbell-tadpole $\Theta\!+\!\mathrm{tad}$.} A
-theta subgraph with a tadpole attached. The tadpole $\int_{K3}G_{K3}(x, x)$
-is logarithmically divergent before Costello renormalisation; the
-$\chi(K3)/24$-subtraction gives $\mathrm{tad}_{\mathrm{ren}} = 0$
-\cite[\S 5.2]{Costello2011}. Hence
-$\mathrm{Amp}(\Theta\!+\!\mathrm{tad}) = 0$ in the renormalised theory,
-absorbing the logarithmic counterterm into the bulk Lagrangian.
-
-\emph{Topology $7$, Pretzel $\mathcal{P}$.} Two loops joined at a
-$\mathrm{figure}$-$8$-locus with an extra $\bC^2$-propagator loop. The
-pretzel amplitude computes as the residue of the order-$1$
-contribution to the Nekrasov--Okounkov pair-creation amplitude on
-the $\Omega$-background~\cite[\S 3]{NekrasovOkounkov2003}, giving
-$48\cdot[H_4]$; the sign is fixed to $+$ by the CGP
-convention~\cite[\S 4.3]{CostelloGaiottoPaquette2018}:
-$\mathrm{Amp}(\mathcal{P}) = +48\cdot[H_4]$.
-
-\emph{Topology $8$, $Z$-snake $Z_4$.} A $4$-loop non-planar snake with
-$V_3 = 6, E = 8$, $\mathrm{Sym} = 2$. The $Z$-topology is
-Feynman-trivial after Kontsevich--Manin graph-periodicity
-localisation~\cite[\S 7]{KontsevichManin1994}; the contribution
-vanishes on the self-dual $\Omega$-background:
-$\mathrm{Amp}(Z_4) = 0$.
-
-\emph{Topology $9$, Sunrise-square $\mathrm{Sun}_4$.} Four parallel
-propagators between two trivalent vertices;
-$V_3 = 2, E = 4, \mathrm{Sym} = 48$ (the symmetric group $S_4$ on the
-propagators). The amplitude is
-$\chi(K3)^4/(4!\cdot 48) = 24^4/(24\cdot 48) = 12$, pairing with
-$[H_4]$:
-$\mathrm{Amp}(\mathrm{Sun}_4) = +12\cdot[H_4]$. This is the residual
-theta-product graph and the canonical
-four-loop witness of the Heegner pattern.
-
-\emph{Topology $10$, Figure-eight-loop $8\!+\!\mathrm{loop}$.} A
-figure-eight with an attached loop; two quartic vertices, $E = 4$. The
-figure-eight tadpole is the product of two tadpoles, each
-Costello-renormalised to $0$:
-$\mathrm{Amp}(8\!+\!\mathrm{loop}) = 0$.
-
-\emph{Topology $11$, Tadpole-tadpole $T^2$.} Two disjoint tadpoles
-joined at a vertex; each tadpole renormalises to $0$:
-$\mathrm{Amp}(T^2) = 0$.
-
-\emph{Sum.} Summing the eleven contributions,
-\begin{align*}
-c_4 &= 576 + 72 - 576 - 72 - 48 + 0 + 48 + 0 + 12 + 0 + 0\\
- &= (576 - 576) + (72 - 72) + (-48 + 48) + 12\\
- &= 12.
-\end{align*}
-The wheel-ladder pair cancels via the Costello--Gaiotto--Paquette
-open-closed reflection~\cite[\S 4.3]{CostelloGaiottoPaquette2018}; the
-double-theta/box-diagonal pair cancels via the
-$H_1\leftrightarrow H_4$ Humbert involution; the two-triangle/pretzel
-pair cancels via parity on the Borcherds singular
-theta lift~\cite[\S 10]{Borcherds1998}; the sunrise-square is the
-residual witness. This proves \eqref{eq:bvbrst-4loop-sum}.
-
-\emph{Identification with $c_{\phi_{-2,1}}(4)$.} The
-Gritsenko--Nikulin denominator identity
-$\Phi_{10} = p q y^{1/2}\prod_{(m, n, r) > 0}(1 - p^mq^ny^r)^{-c_{\phi_{-2,1}}(4mn - r^2)}$
-expanded at order $p^4$ reads
-$[\log(\Phi_{10}/\eta^{24})]_{p^4} = -\sum_{(m, n, r)}c_{\phi_{-2,1}}
-(4mn - r^2)\mathrm{w}(m, n, r)$, and the diagonal term at discriminant
-$4$ (i.e.\ $m = n = 1, r = 0$) has weight $\mathrm{w}(1, 1, 0) = -1$
-and coefficient $c_{\phi_{-2,1}}(4) = 12$. Composing inputs,
-$[\log(\Phi_{10}/\eta^{24})]_{p^4} = 12\cdot[H_4]$
-\cite[Thm.~2.1]{GritsenkoNikulin1998}, matching the Feynman sum. The
-K\"ahler-class identification between Feynman amplitude and Fourier
-coefficient is Bruinier~$2002$ Proposition~$5.1$ Heegner--Chern-class
-reciprocity~\cite{Bruinier2002}.
-\end{proof}
-
-\begin{remark}[Symmetry factors by Kreimer's Hopf algebra]
+\begin{remark}[Symmetry factors]
 \label{rem:bvbrst-4loop-sym-kreimer}
-\index{Kreimer!symmetry factor}
-Every $\mathrm{Sym}(\Gamma)$ in Table~\ref{tab:bvbrst-4loop-enum}
-equals the order of the edge-labelled automorphism group
-$|\mathrm{Aut}(\Gamma)|$ computed via Kreimer's four-loop enumeration
-\cite[Table 2]{Kreimer1998}. Independent verification against the
-Bogner--Weinzierl tensor-reduction
-database~\cite[Appendix B]{BognerWeinzierl2017}: $W_4$ has
-$S_4$-symmetry on rim ($|S_4| = 24$); $\Theta\Theta$ has
-$S_2\times S_2$ on theta-permutation and internal-edge swap
-($8 = 4\cdot 2$); $\mathrm{Sun}_4$ has $S_4$-symmetry on propagators
-($24$) times $S_2$-symmetry on vertex swap ($48 = 24\cdot 2$); the
-remaining seven match the Bogner--Weinzierl table directly.
+The factor $|\operatorname{Aut}\Gamma|^{-1}$ is computed in the
+groupoid of graphs decorated by the actual field species.  Erasing
+the decorations defines a second automorphism group.
 \end{remark}
 
-\begin{remark}[K\"ahler pairing with the Humbert class $\lbrack H_4\rbrack$]
+\begin{problem}[Humbert-valued projection; \ClaimStatusOpen]
 \label{rem:bvbrst-4loop-humbert-pair}
-\index{Humbert divisor!K\"ahler pairing 4-loop}
-The K\"ahler-class factor that converts the raw Feynman integral
-(valued in $\bQ$ after Costello renormalisation) into an
-$H^2(\overline{\mathcal{A}_2}, \bQ)$-valued class proportional to
-$[H_4]$ is Bruinier's Heegner--Chern-class
-map~\cite[Prop.~5.1]{Bruinier2002}. Concretely, each K$3$ Euler
-trace $\chi(K3)^n/n!$ is paired via the regularised theta integral
-against the Heegner divisor of discriminant $4mn - r^2 = -4$ (i.e.\
-$m = n = 1, r = 0$), which is $[H_4]$ itself. The pairing normalisation
-is chosen by the convention $c_{\phi_{-2,1}}(-1) = -1$
-\cite[\S 9]{EichlerZagier1985}, fixing the absolute sign of the Feynman
-sum.
-\end{remark}
+Construct a morphism from the automorphic target of~$\Psi_4$ to the
+Picard group of the chosen compactification of~$\mathcal A_2$, and
+compute the divisor of~$C_4$.  Gritsenko--Nikulin identify
+$\operatorname{div}(\Delta _5)=H_1$ and
+$\operatorname{div}(\chi_{35})=H_1+H_4$
+\cite[pp.~3--4]{GN96Igusa}; these are the arithmetic divisor inputs.
+\end{problem}
 
-\begin{remark}[Divergence structure: no divergent four-loop topology]
+\begin{problem}[Four-loop extension across diagonals;
+\ClaimStatusOpen]
 \label{rem:bvbrst-4loop-divergence}
-\index{divergence!4-loop BV}
-\index{Costello renormalisation!4-loop finiteness}
-The only potentially divergent topologies are those with tadpoles:
-$\Theta\!+\!\mathrm{tad}$, $8\!+\!\mathrm{loop}$, $T^2$. The
-tadpole $\int_{K3}G_{K3}(x, x)$ is logarithmically divergent in the
-unrenormalised theory; after
-Costello's~\cite[\S 5.2]{Costello2011} $\chi(K3)/24$-subtraction
-(Gauss--Bonnet-regularised), each tadpole evaluates to zero as the
-subtraction exactly absorbs the logarithmic divergence into the bulk
-Lagrangian counterterm. The remaining eight topologies are manifestly
-finite: the K$3$ Euler trace $\chi(K3)^n/n!$ is a bounded rational
-number, and the $\bC^2$ transverse integration reduces to a residue
-calculation. Hence all eleven amplitudes in
-Theorem~\ref{thm:bvbrst-4loop-feynman-sum} are finite rational
-multiples of $[H_4]$.
-\end{remark}
+Extend every amplitude density from configuration space to its
+Fulton--MacPherson compactification and solve the local QME on each
+collision stratum.  This determines the finite counterterms and the
+renormalized value of each tadpole subgraph.
+\end{problem}
 
-\begin{corollary}[Cross-verification: DT/GW and four duality frames; \ClaimStatusConditional]
+\begin{corollary}[Arithmetic coefficient and physical amplitude;
+\ClaimStatusConditional]
 \label{cor:bvbrst-4loop-cross-verify}
-\index{cross-verification!4-loop}
-The value $c_4 = +12\cdot[H_4]$ of
-Theorem~\ref{thm:bvbrst-4loop-feynman-sum} is cross-verified by four
-independent paths.
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\alph*)}]
-\item \emph{Gritsenko--Nikulin denominator identity.} Direct expansion
- of $\Phi_{10}/\eta^{24}$ at $p^4$ gives the Fourier coefficient
- $c_{\phi_{-2,1}}(4) = 12$~\cite[Thm.~2.1]{GritsenkoNikulin1998}.
-\item \emph{Oberdieck--Pixton DT on $K3\times E$.} The reduced
- Donaldson--Thomas invariant at class $p^4$ equals
- $12$~\cite[\S 6]{OberdieckPixton2017} via the DT/GW
- correspondence and the K$3$ reduced Gromov--Witten potential.
-\item \emph{Heterotic new-supersymmetric-index.} The Harvey--Moore
- degeneracy at order $p^4$ is
- $12$~\cite[\S 4]{HarveyMoore1996} by direct lattice count.
-\item \emph{DMVV symmetric-product orbifold.} The
- $K3^{[4]}$-Hilbert-scheme orbifold elliptic genus has Fourier
- coefficient $12$ at order~$4$~\cite[Thm.~1]{DMVV1997}.
-\end{enumerate}
-All four paths agree. The Feynman sum of
-Theorem~\ref{thm:bvbrst-4loop-feynman-sum} is the fifth, internal
-path: direct enumeration.
+The Gritsenko--Nikulin product computes $C_4$ by formal expansion.
+The equality in \eqref{eq:bvbrst-4loop-sum} follows from that arithmetic
+identity together with the independently constructed map~$\Psi_4$.
 \end{corollary}
 
-\begin{remark}[Vol~II companion at 3D HT bulk-boundary-line]
+\begin{remark}[Vol.~II comparison]
 \label{rem:bvbrst-4loop-vol2-companion}
-\index{Vol II!4-loop companion}
-The Vol~II twin of Theorem~\ref{thm:bvbrst-4loop-feynman-sum} is
-recorded at \texttt{vol2/chapters/connections/ht\_bulk\_boundary\_line.tex},
-as the $\hbar^4$-order Wilson-line counterterm of the
-$\mathsf{SC}^{\mathrm{ch,top}}$ HT bulk-boundary-line triangle. The
-Feynman-graph sum \eqref{eq:bvbrst-4loop-sum} lifts to the pairing of
-$\mathcal{W}^{\mathrm{BKM}}_\lambda(\bR)$ with the four-loop Heegner
-class via the Bruinier Heegner-Chern
-generating series. Vol~III records the same coefficients as the
-degree-$p^4$ Cartan-matrix decomposition of the BKM algebra
-$\mathfrak{g}_{\Delta_5}$: the $12$ roots of discriminant $-4$ under
-the Mukai-lattice signature-$(2, 3)$ decomposition
-\cite[\S 3]{GritsenkoNikulin1997} are precisely
-$c_{\phi_{-2,1}}(4) = 12$ root vectors.
+A cross-volume statement requires a morphism from the Vol.~I local
+obstruction complex to the Vol.~II Wilson-line deformation complex,
+followed by its scalar Fourier--Jacobi trace.  Compatibility with
+$\Psi_4$ is a commutative-square condition on these maps.
 \end{remark}
 
-\begin{remark}[Five- and six-loop Feynman cancellation]
+\begin{remark}[The coefficients at discriminants five and six]
 \label{rem:bvbrst-heegner-c5-c6-vanishing}
-\index{5-loop BV!vanishing}
-\index{6-loop BV!vanishing}
-\index{inadmissible order!Feynman cancellation}
-At orders $n = 5$ and $n = 6$ (both inadmissible, $5\equiv 1, 6\equiv 2
-\pmod 4$), the leading Heegner projection vanishes. The explicit
-five-loop enumeration below uses $33$ connected topologies; no smaller
-topology count is used as a proof input here, and the six-loop graph
-count is not used in this chapter. Under the BV/Fourier comparison of
-Theorem~\ref{thm:bvbrst-heegner-all-order}, the graph-weighted leading
-projection equals the $p^n$-coefficient of
-\(\log(\Phi_{10}/\eta^{24})\), which vanishes at inadmissible
-discriminants. Witness: at $\hbar^5$ the wheel $W_5$ contribution pairs
-with the double-pretzel
-$\Theta\cdot\mathrm{pretzel}$ contribution through the denominator
-identity of~\cite[Thm.~2.1]{GritsenkoNikulin1998}, giving
-$c_5^{\mathrm{Heg}} = 0$; at
-$\hbar^6$ the tri-theta $\Theta^{\otimes 3}$ contribution cancels
-against the $\chi(K3)\cdot E_4^*$-completion banana-graph contribution,
-giving $c_6^{\mathrm{Heg}} = 0$. These cancellations are the
-Feynman-side shadows predicted by Eichler--Zagier admissibility; a
-complete unprojected BV graph proof remains a separate problem.
+The coefficients of $\phi_{-2,1}$ at discriminants five and six
+equal zero by the index-one congruence.  The Igusa product is governed by
+$\phi_{0,1}$ and its complete coefficients $f(4mn-r^2)$; its
+Fourier--Jacobi coefficients $C_5$ and $C_6$ arise from the logarithm
+of the full product.
 \end{remark}
 
-\begin{remark}[Multi-path verification of the Heegner pattern]
+\begin{remark}[Independent mathematical inputs]
 \label{rem:bvbrst-heegner-multipath}
-\index{multi-path verification!Heegner pattern}
-The projected identity
-$c_n^{\mathrm{Heg}}=c_{\phi_{-2,1}}(n)\cdot[H_n]$ of
-Theorem~\ref{thm:bvbrst-heegner-all-order} has four verification paths
-for its separate components. The only conditional step is the
-BV/Fourier comparison morphism $\Psi_{\mathrm{BV}}$.
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\alph*)}]
-\item \emph{Feynman path.} Direct BV graph enumeration in the Costello
-renormalisation formalism computes the same Heegner-projected
-coefficient as a sum of graph integrals over $K3\times\bC^2$ precisely
-when the comparison map $\Psi_{\mathrm{BV}}$ is imposed.
-\item \emph{Bruinier--Heegner path.} The Heegner--Chern reciprocity of
-Bruinier~$2002$ Proposition~$5.1$ gives the divisor-side coefficient as
-an intersection multiplicity with the Humbert divisor $H_n$, whose class in
-$\mathrm{Pic}(\overline{\mathcal{A}_2})$ is fixed by Bruinier's
-Humbert-class formulas~\cite{Bruinier2002}.
-\item \emph{Heterotic dual path.} The Harvey--Moore heterotic string on
-$K3\times T^2$ has new-supersymmetric-index degeneracy at order $p^n$
-equal to the Fourier coefficient of $\Phi_{10}/\eta^{24}$ at $p^n$, by
-\cite[\S 4]{HarveyMoore1996}; independent of the twisted-holography
-derivation.
-\item \emph{DMVV/DT path.} The symmetric-product orbifold elliptic
-genus of $K3^{[n]}$ matches $c_{\phi_{-2,1}}(n)$ via the DMVV
-formula~\cite{DMVV1997} at every order; the Oberdieck--Pixton DT
-invariants on $K3\times E$~\cite{OberdieckPixton2017} provide a parallel
-count.
-\end{enumerate}
-All four paths agree at $n = 3, 4, 7, 8$ with the values $-8, +12,
--39, +56$ recorded by the multi-path verifier for the Heegner pattern.
+The Jacobi expansion, the Siegel product, and the divisor theorem are
+arithmetic statements.  The graph integrals compute classes in local
+BV obstruction cohomology.  The maps~$\Psi_N$ compare these two
+systems and therefore carry the holographic content.
 \end{remark}
 
-\subsection{Diagrammatic moves and sign-verification for 4-loop cancellations}
+\subsection{Diagrammatic comparison maps}
 \label{subsec:bvbrst-4loop-moves}
 
-Theorem~\ref{thm:bvbrst-4loop-feynman-sum} asserts four pairwise
-cancellations and one residual witness at 4-loop: $W_4 + \mathrm{Lad}_4
-= 0$, $\Theta\Theta + \Box^{\mathrm{diag}}_4 = 0$, $\Delta\Delta +
-\mathcal{P} = 0$, $\mathrm{Sun}_4 = +12\cdot[H_4]$, plus three
-tadpole-carrying topologies ($\Theta+\mathrm{tad}, 8+\mathrm{loop},
-T^2$) each vanishing under Costello renormalisation. The topology-by-topology
-enumeration gave each amplitude; the present subsection records
-the explicit \emph{diagrammatic move} underlying each
-cancellation, exhibiting the bijection on graph automorphisms and
-computing the relative sign from first principles (fermionic
-propagator parity, Humbert involution eigenvalue, Borcherds
-singular-theta parity).
-
-\begin{proposition}[Pair (a): wheel--ladder via CGP open-closed reflection; \ClaimStatusConditional]
+\begin{problem}[Wheel--ladder chain map; \ClaimStatusOpen]
 \label{prop:bvbrst-4loop-pair-a}
-\index{wheel-ladder cancellation!diagrammatic move}
-\index{Costello-Gaiotto-Paquette!open-closed reflection}
-The sign flip $\mathrm{Amp}(W_4) = +576\cdot[H_4]$,
-$\mathrm{Amp}(\mathrm{Lad}_4) = -576\cdot[H_4]$ is realised by the
-explicit graph involution
-$\sigma^{\mathrm{CGP}}: W_4 \leftrightarrow \mathrm{Lad}_4$ of
-Costello--Gaiotto--Paquette~\cite[\S 4, eq.~(4.12)]{CostelloGaiottoPaquette2018}:
-cut the central spoke of $W_4$, rotate the resulting $4$-cycle by
-$90^\circ$, and reglue as a ladder. The relative sign is
-$(-1)^{E_{\mathrm{fermion}}}\cdot\det(\sigma^{\mathrm{CGP}}) = (-1)^2\cdot (-1) = -1$,
-computed from: two fermionic propagators flipped under the rotation
-(each contributing $(-1)$, product $+1$), and the ladder-orientation
-determinant $-1$ of the open-closed reflection. Hence
-$\mathrm{Amp}(W_4) + \mathrm{Amp}(\mathrm{Lad}_4) = 576\cdot[H_4]\cdot(1 + (-1)) = 0$.
-\end{proposition}
+Construct an orientation-preserving map between the compactified
+configuration spaces of the proposed wheel and ladder graphs, pull
+back every propagator and vertex density, and compute the determinant
+line of the induced map.
+\end{problem}
 
-\begin{proof}
-The Costello--Gaiotto--Paquette open-closed reflection~\cite[eq.~(4.12)]{CostelloGaiottoPaquette2018}
-is the map on twisted $11$D SUGRA graphs that cuts a closed $K3$ cycle
-and unfolds it to an open ladder by the rule: each rim edge of the
-closed cycle becomes a rung of the ladder, and the central hub vertex
-is pushed to infinity as the ladder's $\partial$-endpoint. For $W_4$
-with $4$ rim vertices, the reflection $\sigma^{\mathrm{CGP}}$ sends
-\[
- W_4 = (v^{(3)}_0, v^{(3)}_1, v^{(3)}_2, v^{(3)}_3, v^{(3)}_{\mathrm{hub}})
- \;\longmapsto\;
- \mathrm{Lad}_4 = (u^{(3)}_0, u^{(3)}_1, \ldots, u^{(3)}_7),
-\]
-where $(v^{(3)}_i)_{i = 0, 1, 2, 3}$ are the rim vertices,
-$v^{(3)}_{\mathrm{hub}}$ the hub, and $(u^{(3)}_j)_{j = 0, \ldots, 7}$
-the eight ladder rung-endpoints. The rim edges $(v^{(3)}_i, v^{(3)}_{i+1})$
-carry $K3$-propagator weight $P_{K3}$, and the spoke edges
-$(v^{(3)}_i, v^{(3)}_{\mathrm{hub}})$ carry $\bC^2$-propagator weight
-$P_{\bC^2}$. The reflection preserves the product
-$P_{K3}^{E_{K3}}\cdot P_{\bC^2}^{E_{\bC^2}}$ but reorders the
-propagator tensor factors.
-
-\emph{Sign from fermionic parity.} The twisted $11$D SUGRA
-propagator species $P_{\bC^2}(w_1, w_2) = (w_1 - w_2)^{-2}\mathrm{d}
-w_1\wedge\mathrm{d}\bar w_2$ is a fermionic $(1, 1)$-form with parity
-$(-1)$ under $w_1 \leftrightarrow w_2$. The reflection $\sigma^{\mathrm{CGP}}$
-reverses the orientation of two spokes (the two that become
-$\partial$-rungs), contributing a sign $(-1)^2 = +1$. The remaining
-four spokes map to internal rungs with preserved orientation,
-contributing $(-1)^0 = +1$.
-
-\emph{Sign from involution determinant.} The ladder-orientation
-convention of CGP~\cite[\S 4.3]{CostelloGaiottoPaquette2018} fixes
-the ladder to be read \emph{bottom-up}, reversing the natural top-down
-reading of the wheel rim. This global orientation reversal contributes
-$\det(\sigma^{\mathrm{CGP}}) = -1$ to the amplitude ratio.
-
-Combining: $\mathrm{Amp}(\mathrm{Lad}_4)/\mathrm{Amp}(W_4) = (+1)\cdot(-1) = -1$,
-giving $\mathrm{Amp}(\mathrm{Lad}_4) = -576\cdot[H_4]$ and the pair
-cancels.
-\end{proof}
-
-\begin{proposition}[Pair (b): double-theta--box-diagonal via Humbert $H_1\leftrightarrow H_4$ involution; \ClaimStatusConditional]
+\begin{problem}[Theta--box period map; \ClaimStatusOpen]
 \label{prop:bvbrst-4loop-pair-b}
-\index{Humbert involution!diagrammatic move}
-\index{Bruinier involution eigenvalue}
-The sign flip $\mathrm{Amp}(\Theta\Theta) = +72\cdot[H_4]$,
-$\mathrm{Amp}(\Box^{\mathrm{diag}}_4) = -72\cdot[H_4]$ is realised by
-the Humbert involution $\iota_{H_1, H_4}:
-\overline{\mathcal{A}_2}\to\overline{\mathcal{A}_2}$ exchanging the
-Humbert divisor classes $[H_1]\leftrightarrow[H_4]$. The involution
-acts on graphs by the rule: a $\Theta\Theta$ graph with two disjoint
-theta subgraphs maps to a $\Box^{\mathrm{diag}}$ graph with the
-$S$-conjugate $\mathrm{Sp}_4(\bZ)$-action on the complex structure. The
-eigenvalue is $-1$, by Bruinier~\cite[Thm.~2.1]{Bruinier2002}, giving
-$\mathrm{Amp}(\Box^{\mathrm{diag}}_4) = -\mathrm{Amp}(\Theta\Theta)$ and
-the pair cancels.
-\end{proposition}
+Construct a correspondence between the two graph integrals and a
+geometric correspondence between their period targets.  Its action on
+$H_1$ and~$H_4$ determines the relative scalar after pushforward.
+\end{problem}
 
-\begin{proof}
-The Humbert involution $\iota_{H_1, H_4}$ is the $\mathrm{Sp}_4(\bZ)$-element
-realising the $S$-transformation in $\mathrm{Sp}_4(\bZ)$
-$\hookrightarrow \mathrm{Sp}_4(\bR)$, acting on the Siegel upper
-half-space $\mathbb{H}_2$ by
-\[
- \iota_{H_1, H_4}:\; \Omega = \begin{pmatrix}\tau_1 & z \\ z & \tau_2\end{pmatrix}
- \;\longmapsto\;
- -\Omega^{-1} = \frac{1}{\det\Omega}\begin{pmatrix}-\tau_2 & z \\ z & -\tau_1\end{pmatrix}.
-\]
-The fixed point locus decomposes as $H_1\cup H_4$ where $H_n =
-\{\Omega: 4\det\Omega - (n - 1)\tau_1^2 - (n - 1)\tau_2^2 + 2z^2 = 0\}$
-for $n\in\{1, 4\}$; the involution exchanges $H_1$ with $H_4$ as
-divisor classes in $\mathrm{Pic}(\overline{\mathcal{A}_2})$.
-
-\emph{Graph-level action.} The $\Theta\Theta$ graph has two disjoint
-theta subgraphs, one carrying the $H_1$-periods (the "small" theta
-with small $\chi(K3)$-pairing) and the other carrying the $H_4$-periods
-(the "large" theta). Applying $\iota_{H_1, H_4}$ to the period
-integrals exchanges the two thetas; at the graph level, this is the
-$\mathrm{Sp}_4(\bZ)$-$S$-transform that opens the two thetas and
-reglues them as a $4$-cycle with crossing diagonals, i.e.\
-$\Box^{\mathrm{diag}}_4$.
-
-\emph{Eigenvalue from Bruinier involution.} By
-Bruinier~\cite[Thm.~2.1]{Bruinier2002}, the involution
-$\iota_{H_1, H_4}$ acts on the vector space of Heegner class
-cohomology $H^2(\overline{\mathcal{A}_2}, \bQ)$ with eigenvalue
-$-1$ on the antidiagonal $([H_1] - [H_4])/\sqrt{2}$ and $+1$ on the
-diagonal $([H_1] + [H_4])/\sqrt{2}$. The $\Theta\Theta$ amplitude
-pairs with $[H_4]$ alone (the $H_1$-theta contributes as a scalar
-multiplier of the $H_4$-theta via the Bruinier reciprocity), hence
-$\iota_{H_1, H_4}^*[\Theta\Theta] = -[\Box^{\mathrm{diag}}_4]$ at
-the level of Heegner-class cohomology. Combined with the Feynman
-amplitude equality $\mathrm{Amp}(\Theta\Theta) = +72\cdot[H_4]$, the
-pullback gives
-$\mathrm{Amp}(\Box^{\mathrm{diag}}_4) = \iota_{H_1, H_4}^*\mathrm{Amp}(\Theta\Theta) = -72\cdot[H_4]$.
-\end{proof}
-
-\begin{proposition}[Pair (c): two-triangle--pretzel via Borcherds singular-theta parity; \ClaimStatusConditional]
+\begin{problem}[Triangle--pretzel parity; \ClaimStatusOpen]
 \label{prop:bvbrst-4loop-pair-c}
-\index{Borcherds singular-theta!parity}
-\index{two-triangle cancellation}
-The sign flip $\mathrm{Amp}(\Delta\Delta) = -48\cdot[H_4]$,
-$\mathrm{Amp}(\mathcal{P}) = +48\cdot[H_4]$ is realised by the
-Borcherds singular-theta parity $\varepsilon_{\mathrm{BST}}$:
-the two-triangle graph has $3$-cycle orientation parity
-$(-1)^3 = -1$, whereas the pretzel graph has the opposite orientation
-after the figure-$8$ crossing, giving parity $(+1)$. The difference
-$\varepsilon_{\mathrm{BST}}(\Delta\Delta) - \varepsilon_{\mathrm{BST}}(\mathcal{P}) = -2$
-is absorbed into the Feynman-amplitude sign convention, yielding
-$\mathrm{Amp}(\Delta\Delta) + \mathrm{Amp}(\mathcal{P}) = 0$.
-\end{proposition}
+Compute the parity of the propagator determinant line for both graphs
+from the BV field degrees and edge ordering.  A sign-reversing chain
+map then gives the proposed cancellation.
+\end{problem}
 
-\begin{proof}
-The Borcherds singular-theta parity $\varepsilon_{\mathrm{BST}}$ is
-the signature of the Borcherds regularised theta
-lift~\cite[\S 10]{Borcherds1998} on a graph: for a graph $\Gamma$ with
-cycle structure determined by its vertex adjacency, $\varepsilon_{\mathrm{BST}}(\Gamma)
-:= (-1)^{c(\Gamma)}$ where $c(\Gamma)$ is the number of independent
-odd-length cycles in $\Gamma$ (modulo the Euler-cycle basis).
-
-\emph{For $\Delta\Delta$:} two triangles joined at a vertex have
-cycle basis $\{C_3^{(1)}, C_3^{(2)}\}$, both of length $3$ (odd), so
-$c(\Delta\Delta) = 2$ and $\varepsilon_{\mathrm{BST}}(\Delta\Delta) =
-(-1)^2 = +1$. But the $\Delta\Delta$ amplitude carries an extra
-Wick-contraction sign $-1$ from the joining-vertex quartic
-Feynman rule (the diagonal factor in the \cite[\S 4]{CostelloGaiottoPaquette2018}
-convention), giving total sign $-1$, matching the table.
-
-\emph{For $\mathcal{P}$:} the pretzel is a figure-$8$ with an
-attached $\bC^2$-propagator loop. Its cycle basis is
-$\{C_{\infty}^{(1)}, C_{\infty}^{(2)}, C_{\bC^2}\}$ where
-$C_\infty^{(i)}$ are the two lobes of the figure-$8$ (each even-length
-$2$, excluded from the odd-cycle count) and $C_{\bC^2}$ is the
-$\bC^2$-loop (length $1$, odd). Hence $c(\mathcal{P}) = 1$ and
-$\varepsilon_{\mathrm{BST}}(\mathcal{P}) = -1$. The
-Feynman-amplitude convention assigns an additional crossing
-sign $-1$ from the figure-$8$ crossing, giving total sign $+1$.
-
-\emph{Relative sign.} $\mathrm{Amp}(\mathcal{P})/\mathrm{Amp}(\Delta\Delta) = (+1)/(-1) = -1$,
-and the absolute value is $48/48 = 1$, hence
-$\mathrm{Amp}(\mathcal{P}) = -\mathrm{Amp}(\Delta\Delta)$. The pair
-cancels via Borcherds singular-theta parity as asserted.
-\end{proof}
-
-\begin{proposition}[Tadpole vanishing: explicit regularisation scheme; \ClaimStatusConditional]
+\begin{problem}[Renormalized tadpole; \ClaimStatusOpen]
 \label{prop:bvbrst-4loop-tadpole-vanish}
-\index{tadpole vanishing!Costello regularisation}
-\index{Gauss-Bonnet subtraction!explicit}
-The three tadpole-carrying topologies
-$\Theta+\mathrm{tad}, 8+\mathrm{loop}, T^2$ each vanish after
-Costello's~\cite[\S 5.2]{Costello2011} $\chi(K3)/24$-subtraction,
-applied via the explicit renormalisation scheme:
+For the selected kinetic operator and subtraction scheme, compute
 \begin{equation}\label{eq:bvbrst-4loop-tadpole-reg}
- \mathrm{tad}_{\mathrm{reg}}(x) \;:=\; \lim_{y\to x}\Bigl[G_{K3}(x, y) -
- \frac{\chi(K3)/24}{\mathrm{vol}(K3)}\cdot\log|x - y|^2\Bigr] \;=\; 0,
+ \operatorname{tad}_{\mathrm{ren}}(x)=
+ \operatorname{FP}_{\epsilon\to0}
+ \int_\epsilon^\infty K_t(x,x)\,dt+c_{\mathrm{ct}}(x).
 \end{equation}
-where the logarithmic subtraction absorbs the $\chi(K3)/24 = 1$
-Gauss--Bonnet counterterm into the bulk Lagrangian.
-\end{proposition}
+The result fixes every graph containing this local subgraph.
+\end{problem}
 
-\begin{proof}
-The unrenormalised tadpole $\int_{K3}G_{K3}(x, x)$ diverges as
-$\log|x - y|^2$ as $y\to x$ by the standard short-distance expansion
-of the scalar heat kernel on $K3$~\cite[\S 5.1]{Costello2011}. The
-Costello renormalisation scheme adds a Gauss--Bonnet counterterm
-proportional to $\chi(K3)/24 = 1$ by
-$\int_{K3}c_2(K3) = \chi(K3) = 24$ and the $24$-normalisation, which
-cancels the short-distance logarithmic singularity exactly. After
-subtraction, the residual tadpole $\mathrm{tad}_{\mathrm{reg}}(x)$ is a
-smooth function on $K3$ whose integral is
-$\int_{K3}\mathrm{tad}_{\mathrm{reg}}(x)\mathrm{vol}(x) = 0$ by
-Gauss--Bonnet (see Costello~\cite[Prop.~5.2.3]{Costello2011}). Hence
-each tadpole evaluates to zero, and the three tadpole-carrying
-topologies have amplitude zero:
-\[
- \mathrm{Amp}(\Theta+\mathrm{tad}) = \mathrm{Amp}(\Theta)\cdot 0 = 0,
- \qquad \mathrm{Amp}(8+\mathrm{loop}) = 0, \qquad \mathrm{Amp}(T^2) = 0^2 = 0.
-\]
-\end{proof}
-
-\begin{remark}[Pair structure and residual Sun$_4$ witness summary]
+\begin{remark}[Four-loop status]
 \label{rem:bvbrst-4loop-summary}
-The four 4-loop pairs plus residual Sun$_4$ witness structure:
-$(W_4, \mathrm{Lad}_4)$ cancel by CGP open-closed reflection
-(Proposition~\ref{prop:bvbrst-4loop-pair-a});
-$(\Theta\Theta, \Box^{\mathrm{diag}})$ cancel by Humbert
-$H_1\leftrightarrow H_4$ involution (Proposition~\ref{prop:bvbrst-4loop-pair-b});
-$(\Delta\Delta, \mathcal{P})$ cancel by Borcherds singular-theta
-parity (Proposition~\ref{prop:bvbrst-4loop-pair-c}); the three
-tadpole topologies vanish by Costello $\chi(K3)/24$-subtraction
-(Proposition~\ref{prop:bvbrst-4loop-tadpole-vanish}); and the
-residual $\mathrm{Sun}_4 = +12\cdot[H_4]$ is the sole non-cancelling
-witness, matching $c_{\phi_{-2,1}}(4) = 12$ via the
-Gritsenko--Nikulin identity. Sum: $0 + 0 + 0 + 0 + 0 + 0 + 12 = 12$,
-hence $c_4 = +12\cdot[H_4]$.
+The arithmetic coefficient~$C_4$ is explicit.  The field-theoretic
+side consists of the interacting action, decorated graph list,
+configuration-space extensions, determinant-line signs, and the map
+$\Psi_4$.  These data constitute the four-loop proof problem.
 \end{remark}
 
-\subsection{Five-loop extension (33 topologies, $d_5 = 33$)}
+\subsection{Five-loop comparison}
 \label{subsec:bvbrst-5loop-extension}
 
-At five loops the leading Heegner projection satisfies
-$c_5^{\mathrm{Heg}}=0$ by the mod-$4$ admissibility of
-Eichler--Zagier weak Jacobi forms: $5\equiv 1\pmod 4$ is inadmissible,
-so $c_{\phi_{-2,1}}(5)=0$. This does not say that the full
-Fourier--Jacobi coefficient $C_5(Z)$ or the unprojected BV obstruction
-vanishes; denominator-depth terms may remain. Kreimer's Hopf algebra
-gives a candidate count $d_5=33$~\cite[\S 3, eq.~(16)]{Kreimer1998}
-(OEIS A005750 at $n=5$). The table below is a topology ledger for the
-comparison problem, not a proof of the BV amplitude identity without a
-separate graph encoding and amplitude calculation.
-
-\begin{definition}[Five-loop vacuum diagram on $K3\times\bC^2$]
+\begin{definition}[Decorated five-loop BV graph]
 \label{def:bvbrst-5loop-diagram}
-\index{5-loop diagram!vacuum|textbf}
-A \emph{five-loop vacuum diagram} for the twisted $11$D~SUGRA BV
-action is a connected multigraph $\Gamma$ with loop number
-$h^1(\Gamma) = 5$, vertices drawn from $\{v^{(3)}, v^{(4)}\}$, and
-edges split by propagator species. In a strict undecorated
-cubic/quartic encoding, Euler balance gives
-$V_3 + V_4 - E + 5 = 1$ gives $E = V_3 + V_4 + 4$; with
-$3V_3 + 4V_4 = 2E$, we have $V_3 + 2V_4 = 8$, whence $(V_3, V_4)
-\in\{(0, 4), (2, 3), (4, 2), (6, 1), (8, 0)\}$ and correspondingly
-$E\in\{8, 9, 10, 11, 12\}$. Any ledger row outside this set must be
-interpreted as a decorated topology awaiting expansion into the strict
-encoding, or corrected before it is used in an amplitude proof.
+A decorated five-loop graph is defined as in
+Definition~\ref{def:bvbrst-4loop-diagram}, with
+$h^1(\Gamma)=5$.  Vertex valences are read from every Taylor
+coefficient of the chosen interacting action.
 \end{definition}
 
-\begin{proposition}[Conditional Kreimer count input: $d_5 = 33$;
-\ClaimStatusConditional]
+\begin{problem}[Five-loop graph enumeration; \ClaimStatusOpen]
 \label{prop:bvbrst-5loop-kreimer}
-\index{Kreimer!$d_5 = 33$}
-In Kreimer's Hopf-algebra convention for connected two-edge-connected
-five-loop vacuum topologies, the recorded topology count is
-$d_5 = 33$, matching the fifth
-coefficient of the generating series
-$\sum_{n\geq 0}d_n q^n = 1 + q + 2q^2 + 4q^3 + 11q^4 + 33q^5 + 101q^6 +
-\cdots$~\cite[\S 3, eq.~(16)]{Kreimer1998} recorded on OEIS~A005750.
-Using this count in the BV obstruction calculation requires a separate
-check that the table's valence data, propagator species, automorphism
-orders, and amplitude signs are encoded in the same convention.
-\end{proposition}
-
-\begin{proof}
-This is the external enumeration input from Kreimer's graph Hopf
-algebra. The proposition does not prove that every row in
-Table~\ref{tab:bvbrst-5loop-enum} has already been matched to a
-Costello BV graph with the displayed valence and symmetry data; that is
-the local graph-encoding open mathematical condition.
-\end{proof}
+Enumerate the decorated five-loop graphs of the twisted theory and
+compute their automorphism groups in the same convention as the BV
+Feynman rules.
+\end{problem}
 
 \begin{table}[ht]
 \centering
-\small
-\begin{tabular}{clccl}
+\begin{tabular}{@{}ll@{}}
 \toprule
-$\#$ & Topology $\Gamma$ & $(V_3, V_4, E)$ & Sym & pair/role \\
+stage & output \\
 \midrule
-$1$ & Wheel $W_5$ & $(5, 0, 9)$ & $10$ & (a5) \\
-$2$ & Ladder $\mathrm{Lad}_5$ & $(10, 0, 14)$ & $20$ & (a5) \\
-$3$ & Triple theta $\Theta^3$ & $(0, 3, 6)$ & $48$ & (b5) \\
-$4$ & Box-triangle $\Box\Delta$ & $(5, 0, 8)$ & $12$ & (b5) \\
-$5$ & Pentagon-prism $\mathrm{Prism}_5$ & $(6, 0, 9)$ & $6$ & (c5) \\
-$6$ & Five-cycle-star $5\!*\!$ & $(6, 0, 9)$ & $10$ & (c5) \\
-$7$ & Double-pretzel $\mathcal{P}^2$ & $(4, 1, 7)$ & $24$ & (d5) \\
-$8$ & Theta-pretzel $\Theta\mathcal{P}$ & $(2, 2, 6)$ & $16$ & (d5) \\
-$9$ & Triple-triangle $\Delta^3$ & $(6, 0, 9)$ & $36$ & (e5) \\
-$10$ & Sun$_5$-pentagon $\mathrm{Sun}_5$ & $(2, 0, 5)$ & $120$ & (e5) \\
-$11$ & Theta-box $\Theta\Box$ & $(4, 1, 7)$ & $16$ & (f5) \\
-$12$ & Box-box $\Box\Box$ & $(8, 0, 12)$ & $32$ & (f5) \\
-$13$ & Star-5 $\star_5$ & $(6, 0, 9)$ & $120$ & (g5) \\
-$14$ & Pentagram $\mathrm{Pgm}_5$ & $(5, 0, 10)$ & $10$ & (g5) \\
-$15$ & Wedge-theta $\wedge\Theta$ & $(4, 1, 7)$ & $8$ & (h5) \\
-$16$ & Dumbbell-triangle $\mathrm{Db}\Delta$ & $(4, 1, 7)$ & $12$ & (h5) \\
-$17$ & $K_{3,3}$-complete bipartite & $(6, 0, 9)$ & $72$ & (i5, self) \\
-$18$ & Theta-theta-wedge $\Theta\Theta\wedge$ & $(2, 2, 6)$ & $16$ & (j5) \\
-$19$ & Double-box $\Box\!-\!\Box$ & $(6, 1, 8)$ & $24$ & (j5) \\
-$20$ & Triple-dumbbell $\mathrm{Db}^3$ & $(4, 2, 8)$ & $48$ & (tadpole) \\
-$21$ & Theta+$2$-tadpole $\Theta+2\mathrm{tad}$ & $(2, 2, 6)$ & $8$ & (tadpole) \\
-$22$ & $8$+triangle $8\Delta$ & $(4, 1, 6)$ & $12$ & (tadpole) \\
-$23$ & $8$-$8$ $8^2$ & $(0, 3, 6)$ & $72$ & (tadpole) \\
-$24$ & Triangle-tadpole $\Delta+\mathrm{tad}$ & $(4, 1, 7)$ & $24$ & (tadpole) \\
-$25$ & Theta+theta $\Theta+\Theta\text{tad}$ & $(0, 3, 6)$ & $16$ & (tadpole) \\
-$26$ & Sunrise-ladder $\mathrm{Sun}\!-\!\mathrm{Lad}$ & $(4, 1, 7)$ & $24$ & (k5) \\
-$27$ & Broken-wheel $W_5^\flat$ & $(4, 1, 7)$ & $8$ & (k5) \\
-$28$ & $Z$-pentagon $Z_5$ & $(7, 0, 11)$ & $2$ & (l5) \\
-$29$ & Snake-$5$ $S_5$ & $(7, 0, 11)$ & $4$ & (l5) \\
-$30$ & Flower-$5$ $F_5$ & $(4, 2, 8)$ & $48$ & (m5) \\
-$31$ & Book-theta $\mathrm{Bk}\Theta$ & $(4, 2, 8)$ & $24$ & (m5) \\
-$32$ & Crossed-ladder $\mathrm{Lad}^\times$ & $(10, 0, 14)$ & $40$ & (n5) \\
-$33$ & Rotated-wheel $W_5^\circ$ & $(5, 0, 9)$ & $20$ & (n5) \\
+interaction expansion & decorated vertex types \\
+graph generation & isomorphism classes and automorphisms \\
+renormalization & finite amplitudes $A_\Gamma^{\mathrm{ren}}$ \\
+comparison & $\Psi_5([\mathfrak o_5])$ \\
 \bottomrule
 \end{tabular}
-\caption{Candidate ledger for the $d_5 = 33$ connected five-loop
-topologies in the K3 BV comparison problem. The displayed valence,
-symmetry, and pairing data are open mathematical conditions for a graph-encoding
-check before they can be used as an amplitude computation.}
+\caption{Five-loop construction stages.}
 \label{tab:bvbrst-5loop-enum}
 \end{table}
 
-\begin{theorem}[Conditional five-loop Heegner-projected sum:
-$c_5^{\mathrm{Heg}} = 0$; \ClaimStatusConditional]
+\begin{conjecture}[Five-loop BV/Fourier comparison;
+\ClaimStatusConjectured]
 \label{thm:bvbrst-5loop-sum}
-\index{5-loop BV!cancellation sum rule|textbf}
-\index{5-loop BV!$c_5^{\mathrm{Heg}} = 0$}
-Let $\mathrm{Amp}(\Gamma)$ denote the Feynman amplitude of topology
-$\Gamma\in$~Table~\ref{tab:bvbrst-5loop-enum}, normalised as in
-Theorem~\ref{thm:bvbrst-4loop-feynman-sum}. Assume the table has been
-verified by a graph encoding in the Costello BV convention, the listed
-pairings are realised by amplitude sign-reversing involutions, and the
-BV/Fourier comparison morphism of
-Theorem~\ref{thm:bvbrst-heegner-all-order} identifies the leading
-Heegner projection of the graph sum with the discriminant-$5$
-coefficient of $\phi_{-2,1}$. Then
+For a globally defined twisted theory and comparison map~$\Psi_5$,
 \begin{equation}\label{eq:bvbrst-5loop-sum}
- c_5^{\mathrm{Heg}}
- \;=\;
- \operatorname{Heg}\!\left(
- \sum_{\Gamma\in\text{Table~\ref{tab:bvbrst-5loop-enum}}}
- \mathrm{Amp}(\Gamma)\right)
- \;=\; c_{\phi_{-2,1}}(5)\cdot[H_5]
- \;=\; 0\cdot[H_5] \;=\; 0.
+ \Psi_5([\mathfrak o_5])=C_5(q,y)
+ =[p^5]\log\Phi_{10}^{\circ}(p,q,y).
 \end{equation}
-No assertion is made here about the full Fourier--Jacobi coefficient
-$C_5(Z)$ or about unprojected denominator-depth terms.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
-For a weak Jacobi form of index~$1$, the
-discriminant is $N=4n-r^2$, so every nonzero coefficient has
-$N\equiv0$ or $3\pmod4$. Since $5\equiv1\pmod4$, no Fourier
-coefficient of $\phi_{-2,1}$ sits at discriminant~$5$. Hence the
-conditional Heegner-pattern identity gives
-$c_5^{\mathrm{Heg}}=c_{\phi_{-2,1}}(5)[H_5]=0$. The graph-sum equality
-is exactly the assumed amplitude encoding and comparison morphism.
-\end{proof}
-
-\begin{remark}[Five-loop projected cross-check via Gritsenko--Nikulin]
+\begin{remark}[Five-loop arithmetic target]
 \label{rem:bvbrst-5loop-cross-verify}
-\index{cross-verification!5-loop}
-The projected vanishing $c_5^{\mathrm{Heg}} = 0$ of
-Theorem~\ref{thm:bvbrst-5loop-sum} is checked on the automorphic side
-by four paths, paralleling the 4-loop structure of
-Corollary~\ref{cor:bvbrst-4loop-cross-verify}:
-(a) Gritsenko--Nikulin denominator identity:
-$c_{\phi_{-2,1}}(5)=0$ by Eichler--Zagier admissibility and the
-Heegner leading term of the product
-\cite[Thm.~2.1]{GritsenkoNikulin1998};
-(b) Oberdieck--Pandharipande reduced DT: in the OP convention
-$\Phi_{10}^{\mathrm{OP}}=D_5^2$, $D_5=64^{-1}\Delta_5$, and
-$Z_{\mathrm{OP/DT}}=-(\Phi_{10}^{\mathrm{OP}})^{-1}
-=-D_5^{-2}=-4096\Delta_5^{-2}$; the class-$p^5$ coefficient
-has no leading discriminant-$5$ Heegner term;
-(c) Harvey--Moore heterotic new-supersymmetric-index: the degeneracy
-at $p^5$ is zero by the Eichler--Zagier admissibility
-condition~\cite[\S 9]{EichlerZagier1985};
-(d) DMVV symmetric-product: the $K3^{[5]}$-Hilbert-scheme orbifold
-elliptic genus has no discriminant-$5$ Heegner coefficient. These
-checks do not replace the direct Feynman-graph encoding required in
-Theorem~\ref{thm:bvbrst-5loop-sum}.
+The product \eqref{eq:bvbrst-heegner-identity} determines $C_5$ as a
+formal $q,y$-series.  This coefficient supplies the target of
+\eqref{eq:bvbrst-5loop-sum}.
 \end{remark}
 
-\begin{remark}[Mod-$4$ admissibility as graph-level congruence]
+\begin{remark}[Discriminant and loop order]
 \label{rem:bvbrst-4loop-mod4-graph-level}
-\index{mod-$4$ admissibility!graph-level}
-The Eichler--Zagier mod-$4$ admissibility condition for
-$\phi_{-2,1}$ says that the discriminant
-$N=4n-r^2$ of any nonzero Fourier coefficient satisfies
-$N\equiv0$ or $3\pmod4$. The projected graph-level Heegner dictionary
-sends the leading $L$-loop obstruction to the positive discriminant
-$N=L$. Therefore the leading Heegner projection of the graph-weighted
-sum vanishes whenever $L\equiv1$ or $2\pmod4$. At $L=5$, the
-discriminant $N=5$ is inadmissible, so the coefficient
-$c_{\phi_{-2,1}}(5)$ and the projected five-loop graph sum vanish. The
-full Fourier--Jacobi coefficient $C_L(Z)$ may still contain
-denominator-depth terms.
+The discriminant $4mn-r^2$ indexes a Jacobi coefficient inside one
+Borcherds factor.  The loop number indexes a graph and the power of
+$\hbar_{\mathrm{BV}}$.  A comparison map~$\Psi_N$ provides the
+relation between these gradings.
 \end{remark}
 
-\begin{remark}[Cross-volume companion: five-loop Wilson-line counterterms]
+\begin{remark}[Five-loop cross-volume map]
 \label{rem:bvbrst-5loop-cross-volume}
-\index{Vol II!5-loop companion}
-\index{Vol III!5-loop BKM Cartan decomposition}
-The conditional Vol~II companion of Theorem~\ref{thm:bvbrst-5loop-sum} is
-recorded at \texttt{vol2/chapters/connections/ht\_bulk\_boundary\_line.tex}
-as the $\hbar^5$-order Wilson-line counterterm of the
-$\mathsf{SC}^{\mathrm{ch,top}}$ HT bulk-boundary-line triangle: the
-projected pairing
-$\mathcal{W}^{\mathrm{BKM}}_\lambda(\bR)$ at order $\hbar^5$ vanishes
-by the same mod-$4$ admissibility. The Vol~III twin records the
-absence of discriminant-$-5$ roots in the Gritsenko--Nikulin
-Cartan-matrix decomposition of
-$\mathfrak{g}_{\Delta_5}$~\cite[\S 3]{GritsenkoNikulin1997}; the Mukai
-lattice has no vector of square $-5$, confirming the projected
-graph-level cancellation from the algebraic side. Triple consistency is
-a compatibility check for the projected mod-$4$ admissibility invariant,
-not a proof of the unprojected five-loop BV graph sum.
+The Vol.~II Wilson-line coefficient and the Vol.~III denominator
+coefficient become comparable after constructing typed maps from the
+same order-five BV obstruction class to both targets.
 \end{remark}
 
-\begin{remark}[Cross-volume propagation of the Heegner pattern]
+\begin{remark}[Cross-volume arithmetic normalization]
 \label{rem:bvbrst-heegner-cross-volume}
-\index{cross-volume!Heegner pattern}
-\index{Vol III!K3 chiral bialgebra}
-Theorem~\ref{thm:bvbrst-heegner-all-order} is Vol~I's BV-side statement
-of the Heegner pattern. The Vol~II twin
-\textup{(}\texttt{vol2/chapters/connections/bv\_brst.tex},
-Theorem~$\mathrm{[thm:bvbrst-heegner-all-order-vol2]}$\textup{)} records
-the same identity as the $\hbar_{\mathrm{BV}}^n$-order coupling of the
-$\mathsf{SC}^{\mathrm{ch,top}}$ HT bulk-boundary-line triangle, with the
-weak Jacobi form $\phi_{-2,1}$ playing the role of the generating series
-of Wilson-line counterterms on $U = \overline{\mathcal{A}_2}\setminus
-(H_1\cup H_4)$ extended to all Heegner loci. The Vol~III twin records
-the same coefficients as the Gritsenko--Nikulin Cartan-matrix
-decomposition of the BKM algebra $\mathfrak{g}_{\Delta_5}$: the
-admissible-order condition $n\equiv 0, 3\pmod 4$ is the weight-residue
-condition on positive roots of $\mathfrak{g}_{\Delta_5}$ under the
-Mukai-lattice decomposition. Triple consistency
-\textup{(}Vol~I~=~BV cohomology; Vol~II~=~twisted-holographic coupling;
-Vol~III~=~BKM root decomposition\textup{)} is the compatibility target
-for the projected Heegner pattern of the holographic atom at
-$K3\times T^2$.
+Every volume using the $\Delta _5$ denominator must employ the
+weight-$0$, index-$1$ coefficients~$f(D)$ of
+Theorem~\ref{thm:bvbrst-heegner-all-order}.  The weight-$(-2)$ form
+may enter a derivative or insertion construction once that map is
+written explicitly.
 \end{remark}
 
-\section{Non-perturbative completion by Euclidean D\texorpdfstring{$3$}{3}-instantons on rigid K$3$ curves}
+\section{Instanton interpretation as a comparison problem}
 \label{sec:bvbrst-nonperturbative-d3}
 
-The conditional Heegner pattern of
-Theorem~\ref{thm:bvbrst-heegner-all-order} records the leading
-Heegner projection of the BV obstruction tower $\{c_n\}_{n\geq 1}$ as a
-formal $\hbar_{\mathrm{BV}}$-series whose Fourier
-coefficients $c_{\phi_{-2,1}}(n)$ grow as $\exp(\pi\sqrt{n})$. The
-Ramanujan--Petersson bound is subexponential in the Fourier degree:
-after the Kudla--Millson identification $[H_n]\leftrightarrow p^n$,
-the BV loop variable enters by the Fourier-degree substitution
-$p\mapsto \hbar_{\mathrm{BV}}p$, so the class $[H_n]$
-acquires weight $\hbar_{\mathrm{BV}}^n$. This is independent of the
-root-of-unity quantum-group parameter
-$\hbar_{\mathrm{qg}}$ of Remark~\ref{rem:bvbrst-two-hbar}. The
-non-perturbative problem lies in analytic continuation across
-the Borcherds product divisors and the corresponding instanton saddles.
-For twisted
-$11$D~SUGRA on $\bR^3\times K3\times\bC^2$ these singularities are the
-Euclidean D$3$-brane instantons wrapping rigid holomorphic curves
-$C\subset K3$ with $[C]^2 = -2$ (rational $(-2)$-curves in the Mukai
-lattice). The analytic
-completion target is $c^{\mathrm{pert}}$ plus the D$3$-instanton tail
-indexed by $H_2^+(K3)/\mathrm{Aut}(K3)$.
-
-\begin{definition}[D$3$-instanton amplitude on a rigid K$3$ curve]
+\begin{definition}[Euclidean D3 saddle datum]
 \label{def:bvbrst-d3-instanton-amplitude}
-\index{D3-instanton!rigid K3 curve|textbf}
-\index{instanton amplitude!Euclidean D3}
-Fix the type~IIB frame dual to M-theory on $\bR^3\times K3\times\bC^2$
-by the Vafa $F$-theory
-construction~\cite[\S 2]{VafaFTheory1996},
-$F$-theory on $K3\times K3$ with D$3$-branes wrapping rational
-curves of square $-2$. For a smooth rigid rational curve $C\subset K3$
-with normal bundle $\mathcal{N}_{C/K3} = \mathcal{O}_{\bP^1}(-2)$ and
-volume $\mathrm{vol}(C) = \int_C\omega_{K3}$ with respect to the
-K\"ahler form $\omega_{K3}$ at complex-moduli point
-$\tau\in\overline{\mathcal{A}_2}$, the \emph{Euclidean D$3$-instanton
-amplitude} is
+A Euclidean D3 saddle consists of a real four-cycle~$W_4$, a classical
+solution on~$W_4$, its gauge-fixed deformation complex, and an
+orientation of its determinant line.  Its semiclassical contribution
+has the form
 \begin{equation}\label{eq:bvbrst-d3-amp}
- \mathcal{A}^{\mathrm{D3}}_{[C]}(\hbar)
- \;:=\; e^{-S_{\mathrm{D3}}(C)/\hbar}\cdot \mathcal{Z}^{(1)}_{\det}(C),
- \qquad S_{\mathrm{D3}}(C) \;=\; 2\pi\,\mathrm{vol}(C),
+ \mathcal A_{W_4}(\hbar)=
+ e^{-S_{\mathrm{cl}}(W_4)/\hbar}
+ \operatorname{Pfaff}_{\mathrm{ren}}(D_{W_4})\,
+ \bigl(1+O(\hbar)\bigr).
 \end{equation}
-with the $\mathcal{Z}^{(1)}_{\det}(C)$ factor carrying the one-loop
-fluctuation determinant around the $C$-instanton configuration,
-computed as the Quillen metric on
-$\mathrm{Det}(\mathcal{O}_{C}(-2))$
-after~\cite[\S 5]{HarveyMoore1996}. Rigidity of $C$
-(self-intersection $-2$) guarantees $\mathcal{Z}^{(1)}_{\det}(C)$ is a
-finite multiplicative constant depending only on the class $[C]\in
-H_2^+(K3)$ and not on deformation moduli of~$C$.
 \end{definition}
 
-\begin{remark}[Worldvolume of the D$3$ and the Humbert boundary]
+\begin{remark}[Worldvolume dimension]
 \label{rem:bvbrst-d3-worldvolume-humbert}
-\index{D3-instanton!worldvolume on K3}
-The Euclidean D$3$ worldvolume is the real-$4$-dimensional cycle
-$C\times_{\bR}\{\mathrm{pt}\}\subset K3\times\bR\subset
-K3\times\bC^2$ (the boundary $\bR^3$ of the BV sandwich degenerates to
-a point for Euclidean instantons). The amplitude factor
-$e^{-S_{\mathrm{D3}}/\hbar}$ is non-zero in the weak-coupling regime
-$|\hbar|\to 0^+$ and vanishes identically in the formal
-$\hbar$-perturbative expansion: D$3$-instantons are invisible order by
-order in $\hbar$ but contribute beyond-all-orders to the BV
-obstruction. At the Humbert boundary $H_1\cup H_4$, a rigid curve $C$
-can degenerate to a pair of components meeting the boundary divisor;
-the instanton amplitude develops an additional phase factor from the
-Freed--Witten anomaly at the Humbert locus, recorded as the Gelfand
-$\mu_8$-gerbe monodromy of the Vol~II Wilson-line twist
-in~\cite[\S 3.2]{FreedWitten1999}.
+A holomorphic curve $C\subset K3$ has real dimension~$2$.  A D3
+worldvolume therefore requires an additional real two-cycle or a
+different four-cycle construction.  The duality frame must specify
+$W_4$, its flux, and its behavior along the Humbert divisor.
 \end{remark}
 
-\begin{theorem}[Conditional Borcherds analytic completion of the BV obstruction
-tower; \ClaimStatusConditional]
+\begin{conjecture}[Borcherds factors from isolated saddles;
+\ClaimStatusConjectured]
 \label{thm:bvbrst-nonperturbative-completion}
-\index{BV obstruction!non-perturbative completion|textbf}
-\index{D3-instanton!Borcherds analytic completion}
-\index{Borcherds product!BV analytic completion}
-Let $\{c_n\}_{n\geq 1}$ be the BV obstruction tower of
-Theorem~\ref{thm:bvbrst-heegner-all-order}. Assume the BV/Fourier
-comparison morphism of that theorem and assume the F-theory
-D$3$-instanton matching which identifies rigid $(-2)$-curve saddles
-with the positive-root factors of the Borcherds product. View the tower
-as a formal
-$\hbar$-series
-$c^{\mathrm{pert}}(\hbar) := \sum_{n\geq 0}\hbar^n c_n\in
-H^2(\mathfrak{g}_{\Delta_5}, \bC)[\![\hbar]\!]$ with the convention
-$c_0 = [\Delta_5]$ (classical obstruction). Let
-$H_2^+(K3)_{\mathrm{rig}} := \{[C]\in H_2(K3,\bZ)\mid [C]^2 = -2,\,
-C\in |[C]|\text{ rigid rational}\}$ denote the set of rigid
-$(-2)$-curves modulo $\mathrm{Aut}(K3)$-orbits, finite at each fixed
-complex-moduli point $\tau\in\overline{\mathcal{A}_2}$ and indexed by
-effective root vectors of the Mukai lattice
-$\Lambda_{K3} = 2U\oplus 3(-E_8)$ of signature $(3, 19)$. Then the
-Fourier-degree series $c^{\mathrm{pert}}(\hbar)$ admits the Borcherds
-analytic completion
+Suppose a duality construction assigns to every positive product
+index $(m,n,r)$ an isolated saddle~$W_{m,n,r}$ together with an
+equality between its one-loop index and~$2f(4mn-r^2)$.  Then the
+saddle product has the formal shape
 \begin{equation}\label{eq:bvbrst-nonpert-completion}
- c^{\mathrm{full}}(\hbar)
- \;=\; c^{\mathrm{pert}}(\hbar)
- \;+\;\!\!\sum_{[C]\in H_2^+(K3)_{\mathrm{rig}}}\!\!
- e^{-2\pi\mathrm{vol}(C)/|\hbar|}\cdot c^{\mathrm{D3}}_{[C]},
+ Z_{\mathrm{saddles}}=
+ \prod_{(m,n,r)>0}
+ \bigl(1-p^mq^ny^r\bigr)^{2f(4mn-r^2)}.
 \end{equation}
-where the non-perturbative coefficients
-$c^{\mathrm{D3}}_{[C]}\in H^2(\mathfrak{g}_{\Delta_5}, \bC)$ are the
-one-loop fluctuation determinants of
-Definition~\ref{def:bvbrst-d3-instanton-amplitude}, computed by the
-Quillen--Bismut formula on
-$\mathrm{Det}(\mathcal{O}_{C}(-2))$.
-At the Lusztig specialisation $\hbar_{\mathrm{qg}}^2 = -1/8$
-(i.e.\ $|\hbar_{\mathrm{qg}}| = 1/(2\sqrt{2})$), the D$3$-instanton weight is
-\[
- e^{-2\pi\mathrm{vol}(C)/|\hbar_{\mathrm{qg}}|}
- \;=\; e^{-4\pi\sqrt{2}\,\mathrm{vol}(C)},
-\]
-a genuine non-perturbative suppression whose magnitude is set by the
-K\"ahler volume of the rigid curve. The identity
-\eqref{eq:bvbrst-nonpert-completion} matches the infinite-product form
-of the Igusa cusp form
+The arithmetic target is
 \begin{equation}\label{eq:bvbrst-phi10-product}
- \Phi_{10}(Z) \;=\; p\,q\,y^{1/2}\!\!
- \prod_{(m, n, r)>0}\!(1 - p^m q^n y^r)^{-c_{\phi_{-2,1}}(4mn - r^2)},
+ \Phi_{10}(p,q,y)=pqy
+ \prod_{(m,n,r)>0}
+ \bigl(1-p^mq^ny^r\bigr)^{2f(4mn-r^2)}.
 \end{equation}
-interpreted as the Borcherds product
-resummation~\cite[Thm.~10.1]{Borcherds1998} of the perturbative
-logarithmic expansion.
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}
-The proof assembles three primary inputs.
-
-\emph{Input~(a): subfactorial coefficient growth of
-$c^{\mathrm{pert}}(\hbar)$.} The Ramanujan--Petersson growth
-$|c_{\phi_{-2,1}}(n)| \sim \exp(\pi\sqrt{n})$ of
-Theorem~\ref{thm:bvbrst-heegner-all-order}(iii), combined with the
-subexponential $|[H_n]|\ll n^{1+\varepsilon}$ bound for Humbert
-divisor classes on $\overline{\mathcal{A}_2}$ by
-\cite[Thm.~5.12]{Bruinier2002}, gives $|c_n| \ll
-\exp(\pi\sqrt{n})\cdot n^{1+\varepsilon}$. This growth is
-subfactorial, and by itself it does not prove a factorially divergent
-Gevrey expansion. It proves that the Fourier-degree generating
-function is controlled by the first Borcherds divisor in the product
-chamber. The non-perturbative saddles enter after analytic
-continuation across those divisors; Costello~$2011$
-Proposition~$4.3$~\cite[Prop.~4.3]{Costello2011} identifies such
-saddles of a BV effective action with isolated classical solutions.
-
-\emph{Input~(b): Identification of instanton saddles with
-rigid K$3$ curve classes.} By the Vafa $F$-theory
-lift~\cite[\S 2]{VafaFTheory1996}, twisted $11$D~SUGRA on
-$\bR^3\times K3\times\bC^2$ has Euclidean instantons given by
-D$3$-branes wrapping holomorphic curves $C\subset K3$ of volume
-$\mathrm{vol}(C)$ and action $S_{\mathrm{D3}}(C) = 2\pi\mathrm{vol}(C)$.
-Rigidity $[C]^2 = -2$ ensures the instanton moduli space is a point
-(no zero modes beyond the normal-bundle
-$\mathcal{O}(-2) = T^*_{\bP^1}$ fluctuations); the one-loop
-fluctuation determinant $\mathcal{Z}^{(1)}_{\det}(C)$ is therefore
-finite by the Quillen--Bismut
-formula~\cite[\S 7]{BismutGilletSoule1988}. Harvey--Moore~$1996$
-\cite[\S 5]{HarveyMoore1996} evaluate the heterotic-dual $F$-theory
-instanton amplitude explicitly:
-\[
- \mathcal{A}^{\mathrm{D3}}_{[C]}(\hbar)
- \;=\; \mathcal{Z}^{(1)}_{\det}(C)\cdot e^{-2\pi\mathrm{vol}(C)/\hbar}.
-\]
-These amplitudes supply the instanton saddles
-$S_{\mathrm{D3}}(C)=2\pi\mathrm{vol}(C)$ for each rigid curve class
-$[C]\in H_2^+(K3)_{\mathrm{rig}}$.
-
-\emph{Input~(c): Borcherds product as analytic completion.} The Igusa
-cusp form admits the Borcherds
-product~\cite[Thm.~10.1]{Borcherds1998}
-\eqref{eq:bvbrst-phi10-product}. Taking $\log$ and expanding each
-factor $\log(1 - p^m q^n y^r) = -\sum_{k\geq 1}(p^m q^n y^r)^k/k$
-exchanges the infinite product for a formal power series in $p$ whose
-$p^n$-Fourier coefficient is $c_{\phi_{-2,1}}(n)$ plus lower-order
-logarithmic denominator-identity
-contributions~\cite[Thm.~2.1]{GritsenkoNikulin1998}. Each factor
-$(1 - p^m q^n y^r)^{-c_{\phi_{-2,1}}(4mn - r^2)}$ corresponds to a
-single D$3$-instanton contribution with instanton number $(m, n, r)$
-and multiplicity $c_{\phi_{-2,1}}(4mn - r^2)$: the infinite-product
-form is therefore the non-perturbative (instanton) presentation of
-$\Phi_{10}$, while the formal $p$-series expansion is its perturbative
-Fourier-degree presentation. Analytic continuation of the perturbative
-presentation inside the Borcherds product chamber recovers the
-infinite product; the D$3$-instanton factors describe the
-non-perturbative saddles met when that continuation crosses the
-Borcherds divisors.
-
-\emph{Composite.} Input~(a) controls the Fourier-degree growth;
-input~(b) identifies the instanton saddles as rigid K$3$ curve classes;
-input~(c) identifies the analytic completion with the Borcherds
-infinite product. The composite yields
-\eqref{eq:bvbrst-nonpert-completion} with
-$c^{\mathrm{D3}}_{[C]}$ extracted from the Borcherds-product factor
-of multiplicity $c_{\phi_{-2,1}}(4mn - r^2)$ per class~$[C]$.
-
-\emph{Lusztig specialisation evaluation.} Substituting
-$\hbar_{\mathrm{qg}}^2 = -1/8$ gives $|\hbar_{\mathrm{qg}}| = 1/(2\sqrt
-2)$, and $2\pi\mathrm{vol}(C)/|\hbar_{\mathrm{qg}}| = 4\pi\sqrt 2
-\mathrm{vol}(C)$ as claimed. For the minimal rigid
-$(-2)$-curve with $\mathrm{vol}(C) = 1$ in K\"ahler units, the
-suppression factor is $e^{-4\pi\sqrt 2}\approx 1.72\times 10^{-8}$:
-non-perturbative but numerically tractable at the Lusztig phase.
+Equation~\eqref{eq:bvbrst-phi10-product} is the square of
+\eqref{eq:bvbrst-heegner-identity}.  The physical statement is the
+assignment $(m,n,r)\mapsto W_{m,n,r}$ and the determinant-line
+identity in the hypothesis.
 \end{proof}
 
-\begin{remark}[Schwinger pair creation at the Humbert boundary as
-non-perturbative shadow]
+\begin{problem}[Humbert-wall saddle analysis; \ClaimStatusOpen]
 \label{rem:bvbrst-schwinger-humbert}
-\index{Schwinger pair creation!Humbert boundary}
-\index{non-perturbative shadow!mu8-gerbe}
-The Gelfand $\mu_8$-gerbe on $\overline{\mathcal{A}_2}$ of the Vol~II
-Wilson-line twist
-(Theorem~\ref{thm:bvbrst-heegner-all-order} cross-volume companion
-in~\texttt{vol2/chapters/connections/ht\_bulk\_boundary\_line.tex})
-has non-trivial monodromy $\mu_8$ around the Humbert divisors
-$H_1\cup H_4$. Crossing $H_1$ adiabatically in the complex-moduli base
-$\overline{\mathcal{A}_2}$ produces a Schwinger-type pair-creation
-amplitude for $\mathbf{H}_{\Delta_5}$-modules, with creation rate
-\[
- \Gamma^{\mathrm{Schwinger}}_{H_1}(\hbar)
- \;=\; \frac{(\mathrm{vol}\,H_1)^2}{(2\pi\hbar)^2}\,
- e^{-\pi m^2/|q|\hbar},
-\]
-where $m$ is the $\mathbf{H}_{\Delta_5}$-module mass at the Humbert
-locus (set by the K\"ahler potential's discriminant residue) and $q$
-is the $\mu_8$-gerbe holonomy charge
-($q = 1, 2, \ldots, 7$ on the seven non-trivial
-$\mu_8$-twist sectors). At Lusztig specialisation this becomes
-$e^{-2\pi\sqrt 2 m^2/|q|}$, a Schwinger-effect non-perturbative
-correction parallel to Theorem~\ref{thm:bvbrst-nonperturbative-completion}
-in the D$3$-instanton channel but sourced by the gerbe monodromy
-rather than by K\"ahler-volume instanton action. Primary derivation:
-Vol~II \texttt{ht\_bulk\_boundary\_line.tex} Theorem
-$\mathrm{[thm:htbb-schwinger-humbert]}$.
-\end{remark}
+Construct the family of deformation operators~$D_{W_4}$ across a
+Humbert wall and compute its spectral flow.  The resulting determinant
+line monodromy is the precise wall-crossing datum.
+\end{problem}
 
-\begin{remark}[Multi-path verification of the D$3$-instanton completion]
+\begin{remark}[Independent instanton obligations]
 \label{rem:bvbrst-d3-multipath}
-\index{multi-path verification!D3-instanton completion}
-The identity~\eqref{eq:bvbrst-nonpert-completion} admits four
-genuinely independent verification paths.
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\alph*)}]
-\item \emph{Heterotic-dual path.} Harvey--Moore~$1996$
-\cite[\S 5]{HarveyMoore1996} evaluate the heterotic threshold
-correction on $K3\times T^2$ as a one-loop heterotic amplitude with
-D$3$-instanton contributions given by Fourier--Jacobi coefficients of
-$\Phi_{10}$; direct comparison with
-\eqref{eq:bvbrst-phi10-product} term by term.
-\item \emph{$F$-theory path.} Vafa~$1996$
-\cite[\S 2]{VafaFTheory1996} identifies the Euclidean D$3$-branes on
-rigid K$3$ curves as the $F$-theory instanton tail of the
-$K3\times K3$ compactification; the action
-$S_{\mathrm{D3}} = 2\pi\mathrm{vol}(C)$ is the K\"ahler calibration.
-\item \emph{BV saddle path.} Costello~$2011$
-\cite[Ch.~4, Prop.~4.3]{Costello2011} identifies non-perturbative
-saddles of a BV renormalised effective action with isolated classical
-solutions; rigidity ensures the relevant saddles are the rigid
-rational curves with action $S_{\mathrm{D3}}=2\pi\mathrm{vol}(C)$.
-\item \emph{Gritsenko--Nikulin denominator path.} The Borcherds
-product~\eqref{eq:bvbrst-phi10-product} decomposes into
-denominator-identity factors~\cite[\S 3]{GritsenkoNikulin1998} whose
-exponents are the Cartan-matrix root multiplicities of
-$\mathfrak{g}_{\Delta_5}$: each rigid curve class $[C]$ contributes
-one Borcherds-product factor of multiplicity
-$c_{\phi_{-2,1}}(4mn - r^2)$.
-\end{enumerate}
-All four paths agree on the leading weight-$n$ non-perturbative
-correction $c^{\mathrm{D3}}_{[C]}$ through the Borcherds Fourier
-coefficients; disagreement between paths would signal a missing K$3$
-rigid-curve class and is falsifiable order by order in the Borcherds
-product.
+The cycle assignment, classical action, fluctuation determinant,
+and automorphic product are four separate objects.  Agreement follows
+from explicit maps among them, evaluated one saddle at a time.
 \end{remark}
 
-\begin{remark}[Cross-volume: Vol~II Schwinger boundary and Vol~III
-BKM denominator]
+\begin{remark}[Cross-volume instanton comparison]
 \label{rem:bvbrst-nonpert-cross-volume}
-\index{cross-volume!non-perturbative completion}
-Theorem~\ref{thm:bvbrst-nonperturbative-completion} is Vol~I's
-BV-side statement. The Vol~II twin is the Schwinger pair-creation
-amplitude at the Humbert boundary
-(\texttt{vol2/chapters/connections/ht\_bulk\_boundary\_line.tex}
-Theorem~$\mathrm{[thm:htbb-schwinger-humbert]}$) and the
-D$3$-instanton contribution to the twisted-holographic HT triangle
-(\texttt{vol2/chapters/connections/thqg\_nonperturbative.tex}
-Theorem~$\mathrm{[thm:thqg-np-d3-completion]}$). The Vol~III twin is
-the interpretation of the Borcherds-product exponents
-$c_{\phi_{-2,1}}(4mn - r^2)$ as root multiplicities of the BKM
-algebra $\mathfrak{g}_{\Delta_5}$ under the Gritsenko--Nikulin
-denominator identity~\cite[Thm.~2.1]{GritsenkoNikulin1998}: each
-non-perturbative D$3$-instanton contribution is one root of
-$\mathfrak{g}_{\Delta_5}$. Triple consistency
-\textup{(}Vol~I~=~Borcherds analytic completion; Vol~II~=~THQG Schwinger and
-D$3$-instanton; Vol~III~=~BKM denominator identity\textup{)} recovers
-the infinite-product form~\eqref{eq:bvbrst-phi10-product} of
-$\Phi_{10}$ as the non-perturbative invariant of the holographic atom.
+The Vol.~II wall-crossing object and the Vol.~III BKM root object are
+targets for the cycle assignment of
+Theorem~\ref{thm:bvbrst-nonperturbative-completion}.  The cross-volume
+statement is the commutativity of the corresponding determinant and
+character maps.
 \end{remark}
 
-\section{All-loop Borcherds-product resummation of the BV obstruction
-tower}
+\section{Formal resummation of the arithmetic Fourier tower}
 \label{sec:bvbrst-allloop-resummation}
 
-The order-by-order projected identity
-$c_n^{\mathrm{Heg}} = c_{\phi_{-2,1}}(n)\cdot[H_n]$ of
-Theorem~\ref{thm:bvbrst-heegner-all-order} records the leading
-Heegner part of the perturbative BV obstruction tower. The full
-Fourier--Jacobi logarithm contains additional denominator-depth terms.
-The all-loop statement therefore uses the full coefficients
-\[
- C_N(Z):=[p^N]\log\!\bigl(\Phi_{10}^{\mathrm{un}}(p,q,y)/\eta^{24}\bigr),
- \qquad N\geq 1,
-\]
-whose leading Humbert projection is
-$c_{\phi_{-2,1}}(N)[H_N]$ under the comparison theorem. Here
-$\hbar_{\mathrm{BV}}$ is the BV loop-counting variable and
-Fourier-degree weight. The Lusztig parameter is the separate
-quantum-group parameter $\hbar_{\mathrm{qg}}$ with
-$\hbar_{\mathrm{qg}}^2=-1/8$. A holographic reconstruction theorem
-requires the separate boundary-recognition and bulk-to-boundary
-comparison functors.
-
-\begin{theorem}[Formal Borcherds-product resummation of the full
-Fourier coefficient tower; \ClaimStatusConditional]
+\begin{theorem}[Fourier resummation of the Igusa product;
+\ClaimStatusProvedHere]
 \label{thm:bvbrst-allloop-resummation}
-\index{BV obstruction!all-loop Borcherds resummation|textbf}
-\index{Igusa cusp form!$\Phi_{10}$ all-loop BV identity}
-\index{Borcherds product!BV exponential resummation}
-Under the hypotheses of Theorem~\ref{thm:bvbrst-heegner-all-order}
-(twisted $11$D~SUGRA on $\bR^3\times K3\times\bC^2$ with
-$24$ M$5$-branes on the Kodaira~$I_1$ fibres of the elliptic K$3$, in
-the Costello--Li HT twist and the Costello--Gaiotto--Paquette tree-level
-holography frame), and assuming the BV/Fourier comparison morphism
-identifies the BV obstruction class at order $N$ with the full
-coefficient $C_N(Z)$, the BV obstruction generating series
-\[
- c^{\mathrm{pert}}(\hbar_{\mathrm{BV}}; Z) \;:=\;
- \sum_{N\geq 1}\hbar_{\mathrm{BV}}^N\,C_N(Z)
- \;\in\; H^2\!\bigl(\mathfrak{g}_{\Delta_5}, \bC\bigr)\!
- \llbracket \hbar_{\mathrm{BV}}\rrbracket,
-\]
-Fourier-dual to the $p$-expansion on the Siegel upper half-space,
-satisfies the exponential resummation identity
+Let $C_N(q,y)=[p^N]\log\Phi_{10}^{\circ}$.  Then
 \begin{equation}\label{eq:bvbrst-allloop-master}
- \exp\!\Bigl(\sum_{N\geq 1}\hbar_{\mathrm{BV}}^N C_N(Z)\Bigr)
- \;=\; \Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)
- /\eta^{24}
- \;:=\;
- \prod_{(m, n, r)>0}\!\!
- \bigl(1 - (\hbar_{\mathrm{BV}}p)^m q^n y^r\bigr)^{
- -c_{\phi_{-2,1}}(4mn-r^2)}\big/\eta^{24},
+ \exp\!\left(\sum_{N\geq1}
+   \hbar_{\mathrm{BV}}^Np^N C_N(q,y)\right)
+ =\Phi_{10}^{\circ}(\hbar_{\mathrm{BV}}p,q,y),
 \end{equation}
-after removing the Weyl-vector factor $pqy^{1/2}$. The identity holds
-as an identity
-of formal power series in $\hbar_{\mathrm{BV}}$ with
-coefficients in $H^2(\mathfrak{g}_{\Delta_5},\bC)\otimes\bQ[\![p, q,
-y^{\pm 1/2}]\!]$. At the unweighted BV specialisation
-$\hbar_{\mathrm{BV}} = 1$ the right-hand side specialises to
-the unnormalised Igusa cusp form divided by the one-loop factor,
-$\Phi_{10}^{\mathrm{un}}(Z)/\eta^{24}$, and the identity reads
+and
 \begin{equation}\label{eq:bvbrst-allloop-log}
- \sum_{N\geq 1} C_N(Z) \;=\;
- \log\!\bigl(\Phi_{10}^{\mathrm{un}}(Z)/\eta^{24}\bigr),
+ \sum_{N\geq1}p^NC_N(q,y)=\log\Phi_{10}^{\circ}(p,q,y).
 \end{equation}
-where $\eta^{24}$ absorbs the one-loop paramodular normalisation.
-Under the same BV/Fourier comparison, the quantum BV action
-$S_q(\hbar_{\mathrm{BV}}) = S_{\mathrm{cl}} +
-\sum_{N\geq 1}\hbar_{\mathrm{BV}}^N S^{(N)}$
-satisfies the quantum master equation
-\[
- \hbar_{\mathrm{BV}}\Delta_{\mathrm{BV}} S_q
- + \tfrac{1}{2}\{S_q, S_q\}_{\mathrm{BV}} \;=\; 0
-\]
-modulo exact BV-coboundaries if and only if
+The comparison with the BV action is the family of equations
 \begin{equation}\label{eq:bvbrst-allloop-effective-action}
- S_q(\hbar_{\mathrm{BV}}) \;=\; S_{\mathrm{cl}} +
- \log\!\bigl(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/
- \eta^{24}\bigr)
+ \Psi_N([\mathfrak o_N])=C_N(q,y),\qquad N\geq1.
 \end{equation}
-as a formal power series in $\hbar_{\mathrm{BV}}$ with
-$H^2(\mathfrak{g}_{\Delta_5},\bC)$-valued coefficients.
 \end{theorem}
 
 \begin{proof}
-The identity~\eqref{eq:bvbrst-allloop-master} is the combination of
-three primary inputs.
-
-\emph{Input~(a): Borcherds singular-theta lift.} By
-Borcherds~$1998$ Theorem~$10.1$~\cite[Thm.~10.1]{Borcherds1998}, the
-Igusa cusp form $\Phi_{10}$ admits the convergent infinite product
-\eqref{eq:bvbrst-phi10-product}. Taking $\log$ and expanding each
-factor $-\log(1 - p^m q^n y^r) = \sum_{k\geq 1}(p^m q^n y^r)^k/k$ gives
+Taking the logarithm of \eqref{eq:bvbrst-phi10-product} gives
 \begin{equation}\label{eq:bvbrst-allloop-log-expansion}
- \log\Phi_{10}(Z)
- \;=\; \log(pqy^{1/2}) \;+\;
- \sum_{(m, n, r)>0}\!\!c_{\phi_{-2,1}}(4mn-r^2)\cdot
- \sum_{k\geq 1}\frac{(p^mq^ny^r)^k}{k}.
+ \log\Phi_{10}^{\circ}
+ =2\sum_{\substack{(m,n,r)>0\\m>0}}f(4mn-r^2)
+      \log(1-p^mq^ny^r).
 \end{equation}
-Collecting the $p^N$-Fourier coefficient of the double sum, for each
-$N\geq 1$,
-\[
- \bigl[\log\Phi_{10}\bigr]\big|_{p^N}
- \;=\; \sum_{(m, n, r, k): mk = N}\!\!c_{\phi_{-2,1}}(4mn-r^2)\cdot
- \frac{(q^ny^r)^k}{k}.
-\]
-By Bruinier's Heegner--Chern reciprocity
-(\cite[Prop.~5.1]{Bruinier2002}; Input~(i) in the proof of
-Theorem~\ref{thm:bvbrst-heegner-all-order}), the
-$[H_N]\in\mathrm{Pic}(\overline{\mathcal{A}_2})_\bQ$-valued lift of
-this Fourier coefficient equals $c_{\phi_{-2,1}}(N)\cdot[H_N]$ through
-the Kudla--Millson pushforward; the $k\geq 2$ contributions on the
-right are the $\log$-expansion sub-leading terms that collapse onto
-lower-index Humbert classes $[H_{N/k}]$ through the denominator
-identity of~\cite[Thm.~2.1]{GritsenkoNikulin1998}, which identifies
-them with positive-root multiplicities of
-$\mathfrak{g}_{\Delta_5}$ of depth~$k$. Thus
+Hence
 \begin{equation}\label{eq:bvbrst-allloop-log-identity}
- \bigl[\log\Phi_{10}\bigr]\big|_{p^N} \;=\; c_{\phi_{-2,1}}(N)\cdot[H_N]
- \;+\; (\text{denominator-identity depth-}k\text{ sub-leading terms}).
+ C_N(q,y)=
+ -2\!\sum_{\substack{(m,n,r)>0,\,m>0,\,k\geq1\\mk=N}}
+ \frac{f(4mn-r^2)}{k}q^{nk}y^{rk}.
 \end{equation}
-
-\emph{Input~(b): BV/Fourier comparison hypothesis.} The
-twisted-holography framework of
-\cite{CostelloGaiottoPaquette2018} identifies the bulk partition
-function of twisted $11$D~SUGRA on $\bR^3\times K3\times\bC^2$ with
-$\Phi_{10}(Z)$. The comparison hypothesis in this theorem says that
-the Feynman expansion of the BV quantum master equation at order
-$\hbar_{\mathrm{BV}}^n$ matches the full $p^n$-Fourier coefficient of
-$\log(\Phi_{10}/\eta^{24})$ via the Costello singular
-pushforward~\cite[\S 8]{Costello2017M5} and the
-$\Omega$-background reduction~\cite[\S 3]{CostelloLi2016}. Input~(b)
-in the proof of Theorem~\ref{thm:bvbrst-heegner-all-order} gives the
-leading Heegner projection of this statement; the present theorem uses
-the full coefficient $C_n(Z) = [\log(\Phi_{10}/\eta^{24})]|_{p^n}$.
-
-\emph{Input~(c): formal exponentiation.} Summing the right-hand side
-of the coefficient identity
-$C_N(Z) = [\log(\Phi_{10}^{\mathrm{un}}/\eta^{24})]|_{p^N}$
-against $\hbar_{\mathrm{BV}}^N$ is precisely the substitution
-$p\mapsto \hbar_{\mathrm{BV}}p$ in the Fourier--Jacobi variable. Using
-absolute convergence of the Borcherds product in the product chamber to
-exchange sum and product, one obtains
-\[
- \sum_{N\geq 1}\hbar_{\mathrm{BV}}^N C_N(Z)
- \;=\;
- \log\!\bigl(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/
- \eta^{24}\bigr),
-\]
-equivalently
-$\exp(\sum\hbar_{\mathrm{BV}}^N C_N(Z)) =
-\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/\eta^{24}$, i.e.,
-\eqref{eq:bvbrst-allloop-master} up to the classical normalisation
-$\eta^{24}$. The normalisation $\eta^{24}$ absorbs the weight-$12$
-one-loop anomaly; after absorption one lands
-on~\eqref{eq:bvbrst-allloop-master}.
-
-\emph{BV master-equation equivalence.} The Costello--Gwilliam
-formulation of the quantum master equation
-\cite[Ch.~5, Vol.~2]{CostelloGwilliam2021} presents
-$\hbar_{\mathrm{BV}}\Delta_{\mathrm{BV}} S_q
-+ \tfrac{1}{2}\{S_q, S_q\}_{\mathrm{BV}}$ order by order in
-$\hbar_{\mathrm{BV}}$ as the BV obstruction class at
-order~$\hbar_{\mathrm{BV}}^N$. Under the comparison hypothesis this
-class is represented by $C_N(Z)$. Vanishing of the master equation
-modulo BV-coboundaries is therefore equivalent to cancelling all
-$C_N(Z)$ by counterterms. The coefficientwise counterterm is
-$-\log(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/\eta^{24})$,
-fixed coefficientwise by
-$C_N(Z) = -[\,\hbar_{\mathrm{BV}}^N\,]
-S^{\mathrm{counter}}(\hbar_{\mathrm{BV}})$;
-absorbing the sign into the effective action gives
-\eqref{eq:bvbrst-allloop-effective-action}. The effective action
-$S^{\mathrm{eff}} = S_{\mathrm{cl}} +
-\log(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/\eta^{24})$
-satisfies the quantum master equation in the chosen comparison frame by
-construction, and is unique modulo BV-exact terms after fixing the
-normalisation of the one-loop anomaly line.
-
-\emph{Composite.} Inputs~(a), (b), (c) together
-yield~\eqref{eq:bvbrst-allloop-master}; the master-equation
-equivalence yields~\eqref{eq:bvbrst-allloop-effective-action}. The
-$\hbar_{\mathrm{BV}} = 1$ specialisation~\eqref{eq:bvbrst-allloop-log}
-is the unweighted Fourier-degree evaluation of
-\eqref{eq:bvbrst-allloop-master}. The Lusztig locus is the independent
-quantum-group specialisation $\hbar_{\mathrm{qg}}^2=-1/8$.
+Substitution $p\mapsto\hbar_{\mathrm{BV}}p$ proves
+\eqref{eq:bvbrst-allloop-master}; the specialization
+$\hbar_{\mathrm{BV}}=1$ proves \eqref{eq:bvbrst-allloop-log}.
 \end{proof}
 
-\begin{remark}[Analytic scope: Fourier-degree $\hbar_{\mathrm{BV}}$-series]
+\begin{remark}[Analytic domain]
 \label{rem:bvbrst-allloop-gevrey-scope}
-\index{Fourier-degree series!BV obstruction tower}
-\index{Ramanujan--Petersson!analytic scope}
-The Fourier coefficients $c_{\phi_{-2,1}}(n)$ satisfy the
-Gritsenko--Rademacher asymptotic $|c_{\phi_{-2,1}}(n)|\sim\exp(\pi\sqrt
-n)$ by~\cite[\S 2]{Gritsenko1999} and
-\cite[Thm.~1.3]{DabholkarMurthyZagier2012}. Two regimes govern the
-$\hbar_{\mathrm{BV}}$-series~\eqref{eq:bvbrst-allloop-master}.
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\alph*)}]
-\item \emph{As an $[H_n]$-valued formal power series.} With
-coefficients in $H^2(\mathfrak{g}_{\Delta_5}, \bC)\otimes
-\mathrm{Pic}(\overline{\mathcal{A}_2})_\bQ$ and growth
-$|c_n|\sim\exp(\pi\sqrt n)$ subexponential in $n$, the scalar root test
-does not produce factorial Gevrey growth. It gives a finite
-Fourier-degree radius determined by the first Borcherds product
-divisor in the $p$-plane; under the substitution
-$p\mapsto\hbar_{\mathrm{BV}}p$ this is the corresponding radius in
-$\hbar_{\mathrm{BV}}$. Thus the $[H_n]$-valued series is a
-Fourier-degree generating function with no factorial semiclassical
-growth.
-\item \emph{As a numerical Fourier series at fixed $Z$.} Evaluating
-each Humbert class $[H_n]$ as a numerical coefficient at fixed
-$(p, q, y) = Z$ on $\overline{\mathcal{A}_2}$ and pairing against the
-Kudla--Millson volume form gives a numerical series
-$\sum_n\hbar_{\mathrm{BV}}^n
-C_n(Z)$ whose coefficients carry the full Rademacher growth
-$|C_n(Z)|\sim\exp(\pi\sqrt n + C\,\mathrm{vol}(Z))$. This numerical
-series has finite radius of convergence in $\hbar_{\mathrm{BV}}$ at
-fixed $Z$, and the boundary of that disk is controlled by the
-Borcherds divisor rather than by $n!$-growth. The analytic completion
-is the Borcherds product
-$\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)$ itself; Borel
-language belongs to the separate instanton-action expansion. The
-Fourier-degree series has the analytic behaviour described above.
-\end{enumerate}
-The distinction is the chain-level $[H_n]$-valued lane versus the
-$(\infty, 1)$-categorical numerical evaluation lane: both are
-load-bearing, neither subsumes the other, and the all-loop identity
-\eqref{eq:bvbrst-allloop-master} is the bridge between them.
+Gritsenko--Nikulin prove absolute convergence of the product in a
+Siegel product chamber.  Formal resummation uses the
+$p$-adic topology; analytic continuation uses the automorphic form
+$\Phi_{10}$.  A semiclassical expansion in $\hbar_{\mathrm{BV}}$
+requires the maps~$\Psi_N$ and analytic estimates for the corresponding
+graph integrals.
 \end{remark}
 
-\begin{remark}[Non-perturbative = exact Borcherds product]
+\begin{remark}[Arithmetic exactness and physical interpretation]
 \label{rem:bvbrst-allloop-nonpert-exact}
-\index{Borcherds product!exact non-perturbative form}
-\index{D3-instanton!exact all-loop presentation}
-The Borcherds infinite product~\eqref{eq:bvbrst-phi10-product} is the
-non-perturbatively exact, analytic presentation of $\Phi_{10}$. Every
-factor $(1 - p^mq^ny^r)^{-c_{\phi_{-2,1}}(4mn-r^2)}$ contributes to
-the one-loop BV partition function at all Fourier degrees in
-$\hbar_{\mathrm{BV}}$
-simultaneously through the D$3$-instanton on the rigid K$3$ curve
-class $[C]\in H_2^+(K3)_{\mathrm{rig}}$ with
-$(m, n, r)\leftrightarrow [C]$ via the Mukai-lattice embedding
-(under the comparison hypotheses of
-Theorem~\ref{thm:bvbrst-nonperturbative-completion}). The
-perturbative $\hbar_{\mathrm{BV}}$-expansion of~\eqref{eq:bvbrst-allloop-master},
-obtained by $\log$-expanding each factor and collecting powers of
-$\hbar_{\mathrm{BV}}$ after $p\mapsto \hbar_{\mathrm{BV}}p$, is the
-Fourier-degree expansion of the same analytic function. Thus, after
-the BV/Fourier and D$3$-instanton comparison maps are supplied, the
-Borcherds product is the amplitude and the perturbative tower is its
-degree expansion. Primary:
-Harvey--Moore~$1996$ \cite[\S 5]{HarveyMoore1996} evaluate the
-$F$-theoretic D$3$-instanton amplitude as a Fourier--Jacobi
-coefficient of $\Phi_{10}$; Gritsenko--Nikulin~$1998$
-\cite[\S 3]{GritsenkoNikulin1998} identify the Borcherds-product
-exponents with Cartan-matrix root multiplicities of
-$\mathfrak{g}_{\Delta_5}$.
+Equation~\eqref{eq:bvbrst-phi10-product} is an exact automorphic
+identity.  Its instanton interpretation is the cycle-and-determinant
+construction of
+Theorem~\ref{thm:bvbrst-nonperturbative-completion}.
 \end{remark}
 
-\begin{corollary}[All-loop effective action; normalized bulk--boundary
-partition-function identity; \ClaimStatusConditional]
+\begin{conjecture}[Bulk and boundary character maps;
+\ClaimStatusConjectured]
 \label{cor:bvbrst-allloop-bulk-boundary}
-\index{effective action!all-loop Igusa form}
-\index{bulk--boundary!partition-function identity}
-\index{bulk--boundary!normalised scalar cancellation}
-Under the comparison hypotheses of
-Theorem~\ref{thm:bvbrst-allloop-resummation}, the all-loop effective
-action of twisted $11$D~SUGRA on
-$\bR^3\times K3\times\bC^2$ with $24$ M$5$-branes on the Kodaira~$I_1$
-fibres is represented by
+Suppose a renormalized BV trace and a boundary character map satisfy
 \begin{equation}\label{eq:bvbrst-allloop-effective}
- S^{\mathrm{eff}}(\hbar_{\mathrm{BV}}; Z) \;=\; S_{\mathrm{cl}}(Z) \;+\;
- \log\!\bigl(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/
- \eta(q)^{24}\bigr).
+ \operatorname{Tr}_{\mathrm{BV}}(I_{\mathrm{eff}})
+ =\log\Phi_{10}^{\circ},
 \end{equation}
-The bulk partition function is
 \begin{equation}\label{eq:bvbrst-allloop-zbulk}
- Z_{\mathrm{bulk}}(\hbar_{\mathrm{BV}}; Z)
- \;=\; \exp\bigl(S^{\mathrm{eff}}(\hbar_{\mathrm{BV}}; Z)/
- \hbar_{\mathrm{BV}}\bigr)
- \;=\; e^{S_{\mathrm{cl}}/\hbar_{\mathrm{BV}}}\cdot
- \bigl(\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)/
- \eta^{24}\bigr)^{1/\hbar_{\mathrm{BV}}},
+ Z_{\mathrm{bulk}}^{\mathrm{arith}}=\Phi_{10}^{\circ},
 \end{equation}
-normalised so that
-$Z_{\mathrm{bulk}}(\hbar_{\mathrm{BV}}; Z)/
-e^{S_{\mathrm{cl}}/\hbar_{\mathrm{BV}}}$ specialises to
-$\Phi_{10}^{\mathrm{un}}(p,q,y)/\eta^{24}$ at the unweighted BV point
-$\hbar_{\mathrm{BV}}=1$.
-Assume, in addition, the Costello--Gaiotto--Paquette boundary
-Fock-space identification and the Gritsenko--Nikulin denominator
-recognition of its scalar character.  Then the boundary character is
+and
 \begin{equation}\label{eq:bvbrst-allloop-zboundary}
- Z_{\mathrm{boundary}}(Z)
- \;=\; \mathrm{ch}\bigl(\mathbf{H}_{\Delta_5}\text{-Fock}\bigr)
- \;=\; 1/\Phi_{10}^{\mathrm{un}}(Z),
+ \operatorname{ch}_{\partial}(\mathcal H_{\partial})
+ =Z_{\mathrm{boundary}}^{\mathrm{arith}}
+ =(\Phi_{10}^{\circ})^{-1}.
 \end{equation}
-consistent with the Gritsenko--Nikulin denominator identity for
-$\mathfrak{g}_{\Delta_5}$. The bulk--boundary product specialises to
+Then
 \begin{equation}\label{eq:bvbrst-allloop-bulk-boundary-product}
- Z_{\mathrm{bulk}}(\hbar_{\mathrm{BV}}; Z)\cdot Z_{\mathrm{boundary}}(Z)
- \;=\; e^{S_{\mathrm{cl}}/\hbar_{\mathrm{BV}}}\cdot
- \eta^{-24/\hbar_{\mathrm{BV}}}\cdot
- \frac{\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)^{
- 1/\hbar_{\mathrm{BV}}}}{\Phi_{10}^{\mathrm{un}}(p,q,y)},
+ Z_{\mathrm{bulk}}^{\mathrm{arith}}
+ Z_{\mathrm{boundary}}^{\mathrm{arith}}=1,
 \end{equation}
-which at the unweighted BV point $\hbar_{\mathrm{BV}} = 1$ collapses
-(modulo the classical phase $e^{S_{\mathrm{cl}}}$ and the $\eta^{24}$
-denominator normalisation absorbed by the one-loop anomaly) to
+and in particular
 \begin{equation}\label{eq:bvbrst-allloop-lusztig-duality}
- Z_{\mathrm{bulk}}\cdot Z_{\mathrm{boundary}}\;\big|_{\hbar_{\mathrm{BV}} = 1}
- \;=\; 1,
+ \left.Z_{\mathrm{bulk}}^{\mathrm{arith}}
+ Z_{\mathrm{boundary}}^{\mathrm{arith}}
+ \right|_{\hbar_{\mathrm{BV}}=1}=1.
 \end{equation}
-as a normalized scalar partition-function cancellation. The Lusztig
-point is the separate specialisation
-$\hbar_{\mathrm{qg}}^2=-1/8$ and is not used in this cancellation.
-No equivalence of bulk field theories, boundary VOAs, or state spaces
-is asserted without the additional holographic comparison functor.
-\end{corollary}
+\end{conjecture}
 
 \begin{proof}
-\eqref{eq:bvbrst-allloop-effective} is
-Theorem~\ref{thm:bvbrst-allloop-resummation}'s
-equation~\eqref{eq:bvbrst-allloop-effective-action} written out.
-\eqref{eq:bvbrst-allloop-zbulk} is the saddle-point evaluation of
-the path integral $Z_{\mathrm{bulk}} = \int e^{S/\hbar_{\mathrm{BV}}}$ at the
-all-loop effective action
-(Costello~$2011$~\cite[Ch.~8]{Costello2011}). The boundary partition
-function~\eqref{eq:bvbrst-allloop-zboundary} is the character of the
-$\mathbf{H}_{\Delta_5}$-Fock module under the boundary-recognition
-hypothesis, over the paramodular group
-$\mathrm{Sp}_4(\bZ)$ (Gritsenko--Nikulin~$1998$
-\cite[\S 1]{GritsenkoNikulin1998};
-Costello--Gaiotto--Paquette~$2018$
-\cite[\S 7]{CostelloGaiottoPaquette2018}), whose normalised
-$q$-character is the reciprocal of the Borcherds denominator
-$\Phi_{10}$. The
-product~\eqref{eq:bvbrst-allloop-bulk-boundary-product} is immediate
-by multiplying the two exponentials. At $\hbar_{\mathrm{BV}} = 1$ the
-ratio
-$\Phi_{10}^{\mathrm{un}}(\hbar_{\mathrm{BV}}p,q,y)^{
-1/\hbar_{\mathrm{BV}}}/\Phi_{10}^{\mathrm{un}}(p,q,y)$ is unity and
-the classical
-normalisation $e^{S_{\mathrm{cl}}}$ together with the $\eta^{24}$
-denominator sit in the trivial class (one-loop anomaly absorption of
-the $\eta^{24}$ normalisation), giving
-\eqref{eq:bvbrst-allloop-lusztig-duality}. This proves the normalized
-scalar product identity, not a reconstruction equivalence.
+Multiply equations~\eqref{eq:bvbrst-allloop-zbulk} and
+\eqref{eq:bvbrst-allloop-zboundary}.  The field-theoretic content is
+the construction of the two maps in the hypothesis.
 \end{proof}
 
-\begin{remark}[Component checks for the all-loop resummation]
+\begin{remark}[Arithmetic and field-theoretic routes]
 \label{rem:bvbrst-allloop-multipath}
-\index{multi-path verification!all-loop resummation}
-The formal identity~\eqref{eq:bvbrst-allloop-master} has four component
-checks. The step from those checks to a BV effective action is the
-comparison hypothesis of Theorem~\ref{thm:bvbrst-allloop-resummation}.
-\begin{enumerate}[leftmargin=1.8em,label=\textup{(\alph*)}]
-\item \emph{Order-by-order Feynman.} Direct BV graph enumeration is the
-local computation required to identify the obstruction coefficients
-with the automorphic coefficients $C_N(Z)$.
-\item \emph{Harvey--Moore heterotic.} The heterotic threshold on
-$K3\times T^2$ evaluates~\cite[\S 4]{HarveyMoore1996} as a one-loop
-string amplitude whose Fourier-degree derivative integrates to
-$\log\Phi_{10}$ directly, no $\log$-expansion
-required.
-\item \emph{Borcherds singular-theta lift.} Borcherds~$1998$
-Theorem~$10.1$~\cite[Thm.~10.1]{Borcherds1998} presents $\Phi_{10}$ as
-a regularised theta integral whose Fourier expansion produces the
-infinite product~\eqref{eq:bvbrst-phi10-product} directly; taking
-$\log$ and matching against the $\hbar_{\mathrm{BV}}$-series gives the
-identity as a tautology at the level of generating functions.
-\item \emph{Gritsenko--Nikulin denominator.} The denominator identity
-for $\mathfrak{g}_{\Delta_5}$~\cite[Thm.~2.1]{GritsenkoNikulin1998}
-presents $\Phi_{10}$ as the infinite-product denominator of the
-BKM algebra character; exponentiating the sum over positive roots
-recovers~\eqref{eq:bvbrst-allloop-master} with Fourier multiplier
-$c_{\phi_{-2,1}}(4mn-r^2) =$ root multiplicity.
-\end{enumerate}
-The automorphic paths agree on the leading coefficient at every order
-$n\in\{3, 4, 7, 8, 11, 12, \ldots\}$ of the admissible-residue lattice,
-while the Feynman path remains the required local comparison.
+The product formula and its logarithmic expansion are two forms of one
+arithmetic theorem.  The BV graph expansion is a second object.  The
+comparison maps $\Psi_N$, $\operatorname{Tr}_{\mathrm{BV}}$, and
+$\operatorname{ch}_{\partial}$ carry the relations between them.
 \end{remark}
 
-\begin{remark}[Cross-volume triangulation of the all-loop resummation]
+\begin{remark}[Cross-volume formulation]
 \label{rem:bvbrst-allloop-cross-volume}
-\index{cross-volume!all-loop resummation}
-Theorem~\ref{thm:bvbrst-allloop-resummation} and
-Corollary~\ref{cor:bvbrst-allloop-bulk-boundary} are Vol~I's
-BV-side statements. The Vol~II twin is the
-$\mathsf{SC}^{\mathrm{ch,top}}$ HT bulk--boundary--line all-loop
-generating identity in
-\texttt{vol2/chapters/connections/ht\_bulk\_boundary\_line.tex}
-Theorem~$\mathrm{[thm:htbb-allloop-resummation]}$ and the twisted
-holography quantum-gravity climax in
-\texttt{vol2/chapters/connections/twisted\_holography\_quantum\_gravity.tex}
-Theorem~$\mathrm{[thm:thqg-allloop-bulk-boundary-duality]}$. The
-Vol~III twin is the Borcherds--Kac--Moody denominator identity for
-$\mathfrak{g}_{\Delta_5}$ as the character identity of the K$3$
-automorphic BKM algebra in
-\texttt{vol3/chapters/theory/bkm\_denominator.tex}
-Theorem~$\mathrm{[thm:bkm-phi10-character-identity]}$. The comparison
-hypothesis is that the three twins agree on the bulk--boundary
-product~\eqref{eq:bvbrst-allloop-bulk-boundary-product}: Vol~I sees it
-as a BV effective-action identity; Vol~II as a factorisation-algebra
-partition-function identity on the HT triangle; Vol~III as the
-Gritsenko--Nikulin root-multiplicity identity for the BKM algebra. The
-cross-volume comparison functors are part of the hypothesis, not a
-consequence of the Vol~I calculation alone.
-The universal $\Phi$-trace identity
-$\kappa_{\mathrm{BKM}}(\mathfrak{g}_{\Delta_5}) = 5$ of the K$3$
-synthesis belongs to the Vol~III denominator normalisation. The BV
-series here records the positive Fourier-degree coefficients through
-$[\hbar_{\mathrm{BV}}^n]S^{\mathrm{eff}}$; it does not identify the
-unweighted point $\hbar_{\mathrm{BV}}=1$ with the Lusztig
-root-of-unity phase.
+Vol.~I supplies local BV obstruction classes, Vol.~II supplies
+boundary and line deformation objects, and Vol.~III supplies the
+automorphic denominator.  A cross-volume theorem consists of typed
+maps from the first two objects to the third, compatible with the
+Fourier filtration and with
+Theorem~\ref{thm:bvbrst-allloop-resummation}.
 \end{remark}

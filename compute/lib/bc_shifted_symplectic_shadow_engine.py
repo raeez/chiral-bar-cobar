@@ -98,7 +98,9 @@ CONVENTIONS (from CLAUDE.md):
     AP20: kappa(A) is intrinsic to A
     AP24: kappa + kappa' = 0 for KM; = 13 for Virasoro
     AP29: delta_kappa != kappa_eff
-    AP33: H_k^! = Sym^ch(V*) != H_{-k}
+    AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch; it is not H_{-k} and not the uncurved polynomial centre.
+    Only scalar kappa agrees with kappa(H_{-k}).
     AP39: kappa != c/2 for general VOA
     AP45: desuspension LOWERS degree: |s^{-1}v| = |v| - 1
     AP48: kappa depends on full algebra

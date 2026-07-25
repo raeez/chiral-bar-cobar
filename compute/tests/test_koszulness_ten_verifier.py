@@ -497,11 +497,11 @@ class TestChirHochRange:
         assert res['chirhoch_heisenberg_duality']['dim2'] == 1
 
     def test_sl2_hochschild_dims(self):
-        """sl_2: ChirHoch^0 = 1, ChirHoch^1 = 3, ChirHoch^2 = 1."""
+        """sl_2: ChirHoch^1 = 0 after the zero-mode inner quotient."""
         s = sl2_data()
         res = verify_chirhoch_range(s)
         assert res['chirhoch_sl2_dims']['dim0'] == 1
-        assert res['chirhoch_sl2_dims']['dim1'] == 3
+        assert res['chirhoch_sl2_dims']['dim1'] == 0
         assert res['chirhoch_sl2_dims']['dim2'] == 1
 
     def test_polynomial_growth(self):

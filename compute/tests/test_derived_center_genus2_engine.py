@@ -95,7 +95,7 @@ class TestObjectFirewall:
             "A^i = H^*(B(A)) is the Koszul-dual coalgebra",
             "A^! is obtained from A^i by Verdier/linear duality",
             "Omega(B(A)) ~= A is bar-cobar inversion",
-            "Z^der_ch(A) is the derived center/bulk algebra",
+            "Z^der_ch(A) is the derived center/closed-sector algebra",
             "distinct from B(A), A^i, and A^!",
         ]
         for phrase in required_phrases:

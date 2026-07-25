@@ -91,7 +91,7 @@ KAZHDAN-LUSZTIG-ARAKAWA FUNCTOR:
   involves the INTERNAL structure of the VOA, not just its module category.
 
 CONJECTURE (conj:admissible-koszul-rank2):
-  L_k(sl_3) is chirally Koszul at all admissible levels where the
+  L_k(sl_3) is conjectured to be chirally Koszul at admissible levels where the
   associated variety X_{L_k} is a nilpotent orbit closure of dimension <= 4.
 
   Rationale: dim X <= 4 means the Poisson algebra R_V is "small enough"
@@ -1552,7 +1552,7 @@ def check_dimension_conjecture_sl3(p: int, q: int) -> ConjectureTestResult:
     """Test: is L_k(sl_3) Koszul when dim X_{L_k} <= 4?
 
     CONJECTURE (conj:admissible-koszul-rank2):
-    L_k(sl_3) is chirally Koszul at all admissible levels where
+    L_k(sl_3) is conjectured to be chirally Koszul at admissible levels where
     dim X_{L_k} <= 4.
 
     Since ALL admissible L_k(sl_3) have X = {0} (dim = 0 <= 4),

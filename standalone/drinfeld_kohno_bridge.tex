@@ -461,7 +461,7 @@ stratum $z_i = z_j$ of $\overline{\FM}_n^{\mathrm{ord}}(\CC)$
 produces a residue.  The $d\log$ kernel
 $\eta_{ij} = d\log(z_i - z_j)$ absorbs one power of the
 OPE pole: if the OPE of $\cA$ has pole of order $p$, the
-collision residue $r(z)$ has pole of order $p - 1$.
+collision kernel $K_\cA^{\mathrm{coll}}(z)$ has pole of order $p - 1$.
 
 For the affine Kac--Moody algebra $V^k(\fg)$, the OPE of
 current operators is
@@ -647,7 +647,7 @@ R_{12}
 Since $\Omega_{12}$ acts as a single endomorphism (not a
 sum of $z$-dependent terms), the path-ordering is trivial
 and $R_{12} = e^{2\pi i k\Omega_{12}}$ in the trace
-normalization where $r_{\mathrm{tr}}(z) = k\Omega/z$.
+normalization where $r_{\mathrm{tr}}(z) = k\Omega_{\mathrm{tr}}/z$.
 In the KZ normalization where
 $r_{\mathrm{KZ}}(z) = \Omega/((\kp) z)$, the monodromy reads
 \[
@@ -783,8 +783,12 @@ pentagon and hexagon equations.  It provides an equivalence
 of braided monoidal categories between the completion
 $\hat{\ft}_n\text{-}\mathrm{mod}$
 (with KZ braiding) and $\Rep_{q_{\mathrm{KL}}}(\fg)$ (with $R$-matrix
-braiding) at $q_{\mathrm{KL}} = e^{\hbar}$,
-$\hbar = \pi i/(\kp)$.
+braiding) at
+\[
+q_{\mathrm{KL}}=\exp(\pi i\hbar_{\mathrm{ref}}),
+\qquad
+\hbar_{\mathrm{ref}}=\kp^{-1}.
+\]
 
 The pentagon equation for $\Phi$ states
 that the two parenthesizations
@@ -839,12 +843,13 @@ where:
 \begin{enumerate}[label=(\roman*)]
 \item $\Phi$ is the Verdier/linear-dual functor on the ordered Koszul
   coalgebra; bar-cobar supplies the separate inversion witness. It reverses
-  the braiding: $R(u; \hbar) \mapsto R^{-1}(u; \hbar)
-  = R(u; -\hbar)$.
+  the braiding for the additive Yangian parameter:
+  $R(u; \hbar_Y) \mapsto R^{-1}(u; \hbar_Y)
+  = R(u; -\hbar_Y)$.
 \item $\Phi_K$ is the evaluation-module Kazhdan--Drinfeld comparison
-  $\Rep_{\mathrm{fd}}(Y_\hbar(\fg))
+  $\Rep_{\mathrm{fd}}(Y_{\hbar_Y}(\fg))
   \xrightarrow{\sim}
-  \Rep_{\mathrm{fd}}(U_{q_Y}(L\fg))\big|_{q_Y = e^\hbar}$,
+  \Rep_{\mathrm{fd}}(U_{q_Y}(L\fg))\big|_{q_Y = \exp(\hbar_Y)}$,
   the monoidal equivalence that sends the rational
   $R$-matrix of the Yangian to the trigonometric
   $R$-matrix of the quantum loop algebra.
@@ -1171,24 +1176,27 @@ Yangian multiplication.
 \begin{corollary}[Yangian as strictified bar product]
 \label{cor:dk-yangian-strict}
 The strictified ordered bar complex of $V^k(\fg)$ is the
-Yangian $Y_\hbar(\fg)$ at $\hbar = \pi i/(\kp)$:
+Yangian $Y_{\hbar_Y}(\fg)$ at the additive Yangian parameter
+\[
+\hbar_Y:=\frac{\pi i}{\kp}.
+\]
 the spectral twist $G$ of
 Theorem~\textup{\ref{thm:dk-strictification}} converts the
 $\Ainf$ bar-complex product into the Yangian product
-$m_\hbar(u)$, and the monodromy of the strictified
+$m_{\hbar_Y}(u)$, and the monodromy of the strictified
 connection is the Yangian $R$-matrix $R^Y(u)$.
 \end{corollary}
 
 \begin{proof}
 The strictified product satisfies the spectral associativity
-$(m_\hbar \otimes \id) \circ m_\hbar
-= (\id \otimes m_\hbar) \circ m_\hbar$
+$(m_{\hbar_Y} \otimes \id) \circ m_{\hbar_Y}
+= (\id \otimes m_{\hbar_Y}) \circ m_{\hbar_Y}$
 and the RTT relation
 $R_{12}(u-v)\,T_1(u)\,T_2(v)
 = T_2(v)\,T_1(u)\,R_{12}(u-v)$,
 where $T(u) = \sum_{k \geq 0} T_k\,u^{-k}$ is the
 generating matrix.  These are the defining relations of the
-Yangian $Y_\hbar(\fg)$.  The identification with the
+Yangian $Y_{\hbar_Y}(\fg)$.  The identification with the
 standard Yangian follows from Drinfeld's new
 realization~\cite{Drinfeld88}.
 \end{proof}
@@ -1259,9 +1267,9 @@ Yangian:
 \begin{equation}\label{eq:dk-koszul-yangian}
 (V^k(\fg))^{!,\Eone}
 \;\simeq\;
-\Ydg_\hbar(\fg),
+\Ydg_{\hbar_Y}(\fg),
 \qquad
-\hbar = \frac{\pi i}{\kp}\,.
+\hbar_Y := \frac{\pi i}{\kp}\,.
 \end{equation}
 The Koszul duality interchanges:
 \begin{center}
@@ -1269,12 +1277,12 @@ The Koszul duality interchanges:
 \begin{tabular}{ll}
 \toprule
 \textbf{Affine side} ($V^k(\fg)$) &
-\textbf{Yangian side} ($\Ydg_\hbar(\fg)$) \\
+\textbf{Yangian side} ($\Ydg_{\hbar_Y}(\fg)$) \\
 \midrule
 Chiral OPE ($\Einf$-chiral) &
 Spectral product ($\Eone$-topological) \\
 Level $k$ &
-Planck constant $\hbar = \pi i/(\kp)$ \\
+Additive Yangian parameter $\hbar_Y = \pi i/(\kp)$ \\
 KZ monodromy &
 $R$-matrix \\
 Affine Weyl group &
@@ -1564,9 +1572,10 @@ the braid representation is abelian.
 
 \subsection{The shadow invariant}
 The modular characteristic of the Heisenberg algebra is
-$\kappa(\cH_k) = k$.  The averaging map
-$\av(r(z)) = \av(k/z) = k = \kappa$ is exact: for abelian
-algebras, $\av(r) = \kappa$ without Sugawara correction.
+$\kappa(\cH_k)=k$. The homotopy coinvariant
+$q_2(K_{\cH_k}^{\mathrm{coll}})$ retains the rank-one operator, and
+$\tau_{\cH_k,2}^{\mathrm{res}}q_2(K_{\cH_k}^{\mathrm{coll}})=k$.
+The Fock representation supplies the scalar $r$- and $R$-operators.
 The Drinfeld--Kohno bridge is trivial because all the
 non-trivial content (CYBE, associator, quantum group)
 requires non-abelian structure.

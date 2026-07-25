@@ -205,7 +205,7 @@ class TestLowArityIdentifications:
         assert HEISENBERG_E1.r_matrix_scalar == Fraction(1)
 
     def test_affine_r_matrix_casimir(self):
-        """Affine: r(z) = κΩ/z, Casimir type."""
+        """Affine: projected Casimir type; raw trace-form residue is k*Omega/z."""
         assert AFFINE_SL2_E1.r_matrix_type == "casimir"
 
     def test_betagamma_r_matrix_zero(self):

@@ -1143,7 +1143,7 @@ class TwistedHolographyBridge:
             B(A) -> A^i = H^*(B(A)) -> A^! by Verdier/continuous duality
 
     The Koszul dual A^! is the boundary condition on the other end.  It is
-    not the cobar reconstruction Omega(B(A)), and the derived-centre bulk
+    not the cobar reconstruction Omega(B(A)), and the derived-centre closed-sector
     Z_ch^der(A) is a separate Hochschild/cochain slot.
 
     For the D3 brane in type I:
@@ -1185,7 +1185,7 @@ def costello_bridge_object_firewall(algebra_name: str = "A",
             "bar-cobar reconstruction branch"
         ),
         "Z_ch^der(A)": (
-            f"Z_ch^der({algebra_name}): chiral Hochschild derived-centre bulk, "
+            f"Z_ch^der({algebra_name}): chiral Hochschild derived-centre closed-sector, "
             "not a bar, cobar, or Verdier-dual output"
         ),
     }
@@ -1229,7 +1229,7 @@ def twisted_holography_d3(N: int) -> TwistedHolographyBridge:
         ),
         derived_center_slot=(
             f"Z_ch^der({boundary}) = ChirHoch^bullet({boundary},{boundary}); "
-            "bulk slot distinct from B(A), A^i, and A^!"
+            "closed-sector slot distinct from B(A), A^i, and A^!"
         ),
         object_firewall=costello_bridge_object_firewall(boundary, dual),
     )

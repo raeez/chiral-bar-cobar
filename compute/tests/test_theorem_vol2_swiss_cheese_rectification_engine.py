@@ -132,7 +132,7 @@ class TestPackageAndProjectionFirewalls:
 
     def test_package_roles_do_not_collapse_bar_bulk_dual(self):
         result = verify_package_firewalls()
-        assert result["holographic_roles"]["C"] == "derived-centre/Hochschild bulk slot"
+        assert result["holographic_roles"]["C"] == "derived-centre/Hochschild closed-sector slot"
         assert result["holographic_roles"]["A^!"].startswith("Verdier")
         assert result["compute_roles"]["barB_X(L)"] == "bar coalgebra projection"
         assert result["bar_projection_not_verdier_dual"]
@@ -643,7 +643,7 @@ class TestBulkIdentification:
         assert typed["Omega(B(A_b))"]["role"] == "reconstructs the original boundary algebra A_b"
         assert typed["A^i"]["type"] == "Koszul-dual coalgebra"
         assert typed["A^!"]["type"] == "Koszul-dual algebra"
-        assert typed["Z^der_ch(A_b)"]["role"] == "intrinsic bulk acting on the boundary chart"
+        assert typed["Z^der_ch(A_b)"]["role"] == "intrinsic closed colour acting on the boundary chart"
 
     def test_verdier_hypotheses_named(self):
         result = verify_bulk_identification()

@@ -1,7 +1,6 @@
-"""GREEN TEAM tests for conj:ds-kd-arbitrary-nilpotent alternative strategies.
+"""Finite oracles and typed obligations for five arbitrary-DS audit routes.
 
-Tests five strategies for proving bar-cobar/Koszul commutes with
-arbitrary DS reduction:
+The routes are:
 
   A: Induction on orbit closure
   B: BFN / Coulomb branch
@@ -16,6 +15,8 @@ Proved cases: principal (all types), subregular/minimal sl_3, hooks type A.
 from fractions import Fraction
 
 import pytest
+
+from compute.lib.hook_type_w_duality import ClaimPacket, ClaimStatus
 
 from compute.lib.ds_kd_green_team import (
     # Strategy A
@@ -36,6 +37,7 @@ from compute.lib.ds_kd_green_team import (
     formality_assessment,
     derived_ds_strategy_score,
     # Strategy D
+    generator_weight_shadow_depth_candidate,
     shadow_depth_estimate,
     shadow_kappa_ds_commutation,
     shadow_commutation_induction_data,
@@ -58,6 +60,15 @@ from compute.lib.w_algebra_transport_propagation import (
     generator_weights,
     graph_is_connected,
 )
+
+
+def _assert_unresolved(packet: ClaimPacket, status: ClaimStatus) -> None:
+    """Assert an explicit typed construction obligation."""
+
+    assert isinstance(packet, ClaimPacket)
+    assert packet.status is status
+    assert packet.value is None
+    assert packet.hypotheses
 
 
 # =====================================================================
@@ -99,40 +110,52 @@ class TestStrategyA:
         assert layers[0] == [(5,)]
         assert len(layers) >= 3
 
-    def test_induction_sl3_all_proved(self):
-        """sl_3: all orbits should be proved (principal + hooks cover everything)."""
+    def test_induction_sl3_candidate_closure(self):
+        """The candidate closure covers sl3 and transport remains open."""
         score = induction_feasibility_score(3)
-        assert score['all_proved']
+        assert score['candidate_closure_covers_all']
+        _assert_unresolved(score['transport_realization'], ClaimStatus.OPEN)
         assert score['remaining'] == 0
 
-    def test_induction_sl4_all_proved(self):
+    def test_induction_sl4_candidate_closure(self):
         """sl_4: hooks cover (4), (3,1), (2,1,1). (2,2) is non-hook but
         reachable by induction since its parents (3,1) and/or (2,2) covers
         only (2,1,1)."""
         score = induction_feasibility_score(4)
         # All should be reached: hooks cover 3 of 5 partitions,
         # and graph connectivity fills in (2,2)
-        assert score['all_proved']
+        assert score['candidate_closure_covers_all']
+        _assert_unresolved(score['transport_realization'], ClaimStatus.OPEN)
 
-    def test_induction_sl5_all_proved(self):
+    def test_induction_sl5_candidate_closure(self):
         """sl_5: 7 partitions. Hooks give 5. Non-hook: (3,2), (2,2,1).
         Both should be reachable."""
         score = induction_feasibility_score(5)
-        assert score['all_proved']
+        assert score['candidate_closure_covers_all']
+        _assert_unresolved(score['transport_realization'], ClaimStatus.OPEN)
 
     def test_induction_sl6(self):
         """sl_6: 11 partitions. Test induction coverage."""
         score = induction_feasibility_score(6)
         # In type A, the dominance order graph is always connected,
         # so induction from hooks should reach everything
-        assert score['all_proved']
+        assert score['candidate_closure_covers_all']
+        _assert_unresolved(score['transport_realization'], ClaimStatus.OPEN)
 
     def test_induction_steps_have_codimension(self):
-        """Each induction step should have positive codimension."""
+        """Each induction step carries exact codimension and KRW arithmetic."""
         steps = compute_induction_steps(4)
         for s in steps:
             assert s.codimension >= 0
             assert s.parent_orbit_dim >= s.child_orbit_dim
+            assert not hasattr(s, 'kappa_drop')
+        step_31_22 = next(step for step in steps if step.parent == (3, 1) and step.child == (2, 2))
+        from compute.lib.hook_type_w_duality import krw_central_charge
+        from sympy import Rational as SRational, simplify
+        expected = krw_central_charge((3, 1), SRational(7)) - krw_central_charge(
+            (2, 2), SRational(7)
+        )
+        assert simplify(step_31_22.central_charge_difference - expected) == 0
 
     def test_induction_graph_connected_small(self):
         """Gamma_N is connected for N = 2, 3, 4, 5, 6."""
@@ -148,55 +171,56 @@ class TestStrategyB:
     """Tests for BFN Coulomb branch approach."""
 
     def test_bfn_quiver_principal_sl3(self):
-        """Principal sl_3: gauge ranks should encode Kostant slice."""
+        """Principal sl3 exposes exact target dimensions and an open identification."""
         quiver = bfn_quiver_for_type_a((3,))
         assert quiver.lie_type == 'A'
-        assert quiver.coulomb_dimension == centralizer_dimension((3,))
-        # sl_3 principal: dim(g^e) = 2
-        assert quiver.coulomb_dimension == 2
+        assert quiver.slodowy_dimension == centralizer_dimension((3,)) == 2
+        _assert_unresolved(quiver.bfn_slodowy_identification, ClaimStatus.OPEN)
 
     def test_bfn_quiver_subregular_sl3(self):
         """Subregular sl_3: partition (2,1)."""
         quiver = bfn_quiver_for_type_a((2, 1))
-        assert quiver.coulomb_dimension == centralizer_dimension((2, 1))
+        assert quiver.slodowy_dimension == centralizer_dimension((2, 1))
         # dim(g^e) for (2,1) in sl_3: transpose = (2,1), sum of squares - 1 = 4+1-1 = 4
-        assert quiver.coulomb_dimension == 4
+        assert quiver.slodowy_dimension == 4
 
     def test_bfn_quiver_zero_sl3(self):
         """Zero orbit sl_3: partition (1,1,1)."""
         quiver = bfn_quiver_for_type_a((1, 1, 1))
-        assert quiver.coulomb_dimension == centralizer_dimension((1, 1, 1))
+        assert quiver.slodowy_dimension == centralizer_dimension((1, 1, 1))
         # dim(g^e) for (1,1,1) = dim(sl_3) = 8
-        assert quiver.coulomb_dimension == 8
+        assert quiver.slodowy_dimension == 8
 
     def test_bfn_dim_match_all_sl4(self):
-        """BFN Coulomb dimension matches Slodowy slice dim for all sl_4 orbits."""
+        """Every sl4 BFN--Slodowy identification stays open."""
         for lam in partitions(4):
-            assert bfn_coulomb_matches_slodowy(lam), f"BFN dim mismatch for {lam}"
+            _assert_unresolved(bfn_coulomb_matches_slodowy(lam), ClaimStatus.OPEN)
 
     def test_bfn_dim_match_all_sl5(self):
-        """BFN Coulomb dimension matches for all sl_5 orbits."""
+        """Every sl5 candidate ledger carries its geometric obligation."""
         for lam in partitions(5):
-            assert bfn_coulomb_matches_slodowy(lam), f"BFN dim mismatch for {lam}"
+            _assert_unresolved(bfn_coulomb_matches_slodowy(lam), ClaimStatus.OPEN)
 
     def test_bfn_assessment_sl3(self):
         """BFN strategy assessment for sl_3."""
         result = bfn_strategy_assessment(3)
-        assert result['all_dimensions_match']
-        assert result['feasibility'] == 'high'
+        assert result['partition_ledgers_complete']
+        assert len(result['bfn_slodowy_identifications']) == 3
+        for packet in result['bfn_slodowy_identifications']:
+            _assert_unresolved(packet, ClaimStatus.OPEN)
 
     def test_bfn_quiver_higgs_dim(self):
-        """Higgs branch dim = orbit dim (symplectic resolution)."""
+        """The exact orbit dimension remains separate from the BFN claim."""
         for lam in partitions(4):
             quiver = bfn_quiver_for_type_a(lam)
-            assert quiver.higgs_dimension == nilpotent_orbit_dimension(lam)
+            assert quiver.orbit_dimension == nilpotent_orbit_dimension(lam)
 
     def test_bfn_principal_framing(self):
         """Principal orbit has specific framing pattern."""
         quiver = bfn_quiver_for_type_a((4,))
         # For principal: lambda^t = (1,1,1,1), so framing = (1,1,1,1)
         # minus consecutive differences
-        assert len(quiver.framing_ranks) > 0
+        assert len(quiver.candidate_framing_ranks) > 0
 
 
 # =====================================================================
@@ -225,31 +249,36 @@ class TestStrategyC:
             assert slodowy_slice_is_affine(lam)
 
     def test_li_filtration_type_a(self):
-        """Li filtration is available for all type A orbits."""
+        """Each Li associated-graded comparison states its source obligation."""
         for n in [3, 4, 5]:
             for lam in partitions(n):
-                assert li_filtration_status(lam)
+                _assert_unresolved(li_filtration_status(lam), ClaimStatus.OPEN)
 
-    def test_formality_all_sl3(self):
-        """All sl_3 orbits should have formality expected."""
+    def test_formality_packets_sl3(self):
+        """Every sl3 orbit has affine input and an open realization."""
         assessments = formality_assessment(3)
-        assert all(a.formality_expected for a in assessments)
+        assert all(a.slodowy_is_affine for a in assessments)
+        for assessment in assessments:
+            _assert_unresolved(assessment.formality_realization, ClaimStatus.OPEN)
 
-    def test_formality_all_sl5(self):
-        """All sl_5 orbits should have formality expected."""
+    def test_formality_packets_sl5(self):
+        """Affine Slodowy input leaves every sl5 formality claim open."""
         assessments = formality_assessment(5)
-        assert all(a.formality_expected for a in assessments)
+        assert all(a.slodowy_is_affine for a in assessments)
+        for assessment in assessments:
+            _assert_unresolved(assessment.formality_realization, ClaimStatus.OPEN)
 
     def test_derived_ds_score_sl4(self):
-        """Derived DS strategy should score highly for sl_4."""
+        """The sl4 derived route separates affine input from comparison."""
         score = derived_ds_strategy_score(4)
-        assert score['all_formal']
-        assert score['feasibility'] == 'high'
+        assert score['all_slodowy_slices_affine']
+        _assert_unresolved(score['derived_ds_bar_comparison'], ClaimStatus.OPEN)
 
     def test_derived_ds_score_sl5(self):
         """Derived DS strategy score for sl_5."""
         score = derived_ds_strategy_score(5)
-        assert score['all_formal']
+        assert score['all_slodowy_slices_affine']
+        _assert_unresolved(score['derived_ds_bar_comparison'], ClaimStatus.OPEN)
         assert score['num_orbits'] == 7
 
 
@@ -260,28 +289,24 @@ class TestStrategyC:
 class TestStrategyD:
     """Tests for shadow-level commutation."""
 
-    def test_kappa_commutes_all_sl3(self):
-        """Kappa (arity-2) DS-bar commutation for all sl_3 orbits."""
+    def test_kappa_packets_all_sl3(self):
+        """Arity-two scalar evidence carries a conditional comparison."""
         for lam in partitions(3):
             result = shadow_kappa_ds_commutation(3, lam)
-            assert result['commutation_arity2']
-            assert result['status'] == 'PROVED'
+            _assert_unresolved(result['anomaly_ratio'], ClaimStatus.OPEN)
+            _assert_unresolved(result['kappa_w'], ClaimStatus.CONDITIONAL)
+            _assert_unresolved(result['commutation_arity2'], ClaimStatus.OPEN)
 
-    def test_kappa_commutes_all_sl4(self):
+    def test_kappa_packets_all_sl4(self):
         """Kappa DS-bar commutation for all sl_4 orbits."""
         for lam in partitions(4):
             result = shadow_kappa_ds_commutation(4, lam)
-            assert result['commutation_arity2']
+            _assert_unresolved(result['commutation_arity2'], ClaimStatus.OPEN)
 
     def test_kappa_ghost_constant_principal_sl3(self):
-        """Principal sl_3: ghost constant = 2 (one positive root pair)."""
+        """Principal sl3 uses the canonical DS ghost constant C_(3)=4."""
         result = shadow_kappa_ds_commutation(3, (3,))
-        # For (3): h = diag(-1, 0, 1), ghost constant = |(-1)-0| + |(-1)-1| + |0-1| = 1+2+1 = 4
-        # Wait: ghost constant = (1/2) sum_{i<j} |h_i - h_j|
-        # h_diag = [-1, 0, 1] for partition (3)
-        # sum = |(-1)-0| + |(-1)-1| + |0-1| = 1 + 2 + 1 = 4
-        # C = 4/2 = 2
-        assert result['ghost_constant'] == Fraction(2)
+        assert result['ghost_constant'] == 4
 
     def test_kappa_ghost_constant_zero_orbit(self):
         """Zero orbit: ghost constant = 0 (h = 0)."""
@@ -293,19 +318,20 @@ class TestStrategyD:
         data = shadow_commutation_induction_data(3)
         assert data['total_orbits'] == 3
         for label, orbit_data in data['orbit_data'].items():
-            assert orbit_data['arity2_proved']
+            _assert_unresolved(orbit_data['arity2'], ClaimStatus.OPEN)
+            _assert_unresolved(orbit_data['shadow_depth_realization'], ClaimStatus.OPEN)
+            _assert_unresolved(orbit_data['full_tower'], ClaimStatus.OPEN)
 
     def test_shadow_depth_principal(self):
-        """Principal sl_3 (Virasoro-like) should have infinite depth."""
-        depth = shadow_depth_estimate((3,))
-        assert depth == float('inf')
+        """Generator weights give a candidate; full depth remains open."""
+        assert generator_weight_shadow_depth_candidate((3,)) == float('inf')
+        _assert_unresolved(shadow_depth_estimate((3,)), ClaimStatus.OPEN)
 
     def test_shadow_depth_zero(self):
-        """Zero orbit (1,1,...,1) = affine -> finite depth."""
-        depth = shadow_depth_estimate((1, 1, 1))
-        # Zero orbit gives the full affine algebra, which has depth 3
-        # But our heuristic may give a different answer depending on gen weights
-        assert isinstance(depth, (int, float))
+        """The zero-orbit generator candidate leaves full depth open."""
+        candidate = generator_weight_shadow_depth_candidate((1, 1, 1))
+        assert isinstance(candidate, (int, float))
+        _assert_unresolved(shadow_depth_estimate((1, 1, 1)), ClaimStatus.OPEN)
 
 
 # =====================================================================
@@ -316,17 +342,19 @@ class TestStrategyE:
     """Tests for type-by-type exhaustion."""
 
     def test_orbit_census_sl2(self):
-        """sl_2: 2 orbits, both proved."""
+        """The sl2 census carries conditional hook comparison packets."""
         census = type_a_orbit_census(2)
         assert len(census) == 2
-        assert all(r.ds_bar_status in ('proved', 'hook-proved') for r in census)
+        for record in census:
+            _assert_unresolved(record.ds_bar_status, ClaimStatus.CONDITIONAL)
 
     def test_orbit_census_sl3(self):
-        """sl_3: 3 orbits, all proved."""
+        """The sl3 census separates hook and non-hook statuses."""
         census = type_a_orbit_census(3)
         assert len(census) == 3
-        open_count = sum(1 for r in census if r.ds_bar_status == 'open')
-        assert open_count == 0
+        for record in census:
+            expected = ClaimStatus.CONDITIONAL if record.is_hook else ClaimStatus.OPEN
+            _assert_unresolved(record.ds_bar_status, expected)
 
     def test_orbit_census_sl4(self):
         """sl_4: 5 orbits. Hooks = 4, non-hook (2,2) = 1."""
@@ -341,12 +369,10 @@ class TestStrategyE:
         """sl_5: 7 orbits."""
         census = type_a_orbit_census(5)
         assert len(census) == 7
-        # All should be proved or reachable
-        open_count = sum(1 for r in census if r.ds_bar_status == 'open')
-        assert open_count == 0
+        assert any(record.ds_bar_status.status is ClaimStatus.OPEN for record in census)
 
     def test_bv_dual_is_transpose_type_a(self):
-        """In type A, BV dual = transpose for all orbits."""
+        """Partition transpose is exact; object-level orbit duality is open."""
         for n in [3, 4, 5]:
             for lam in partitions(n):
                 lam_t = transpose(lam)
@@ -354,10 +380,8 @@ class TestStrategyE:
                 for r in census:
                     if r.label == f"({','.join(str(p) for p in lam)})":
                         expected = f"({','.join(str(p) for p in lam_t)})"
-                        assert r.bv_dual_label == expected, (
-                            f"BV dual mismatch for {lam}: got {r.bv_dual_label}, "
-                            f"expected {expected}"
-                        )
+                        assert r.transpose_label == expected
+                        _assert_unresolved(r.orbit_duality, ClaimStatus.OPEN)
 
     def test_type_bcd_orbit_counts(self):
         """Verify orbit counts for small BCD types."""
@@ -365,17 +389,18 @@ class TestStrategyE:
         assert len(data['B_2']) == 4
         assert len(data['C_2']) == 4
         assert len(data['G_2']) == 5
+        assert len(data['B_3']) == 7
+        assert [orbit['dim'] for orbit in data['B_2']] == [8, 6, 4, 0]
+        assert [orbit['dim'] for orbit in data['C_2']] == [8, 6, 4, 0]
 
-    def test_type_bcd_principal_zero_proved(self):
-        """Principal and zero orbits are proved in all types."""
+    def test_type_bcd_distinguished_endpoint_packets(self):
+        """Principal and zero BCD comparisons retain explicit hypotheses."""
         data = type_bcd_orbit_data()
         for type_name, orbits in data.items():
             principal = [o for o in orbits if 'principal' in o.get('orbit', '')]
             zero = [o for o in orbits if 'zero' in o.get('orbit', '')]
             for o in principal + zero:
-                assert o['ds_status'] == 'proved', (
-                    f"{type_name} {o['orbit']}: expected proved, got {o['ds_status']}"
-                )
+                _assert_unresolved(o['ds_bar_status'], ClaimStatus.CONDITIONAL)
 
     def test_exceptional_assessment(self):
         """Exceptional types: verify orbit counts."""
@@ -385,6 +410,8 @@ class TestStrategyE:
         assert assessment['E_6']['total'] == 21
         assert assessment['E_7']['total'] == 45
         assert assessment['E_8']['total'] == 70
+        assert assessment['B_3']['total'] == 7
+        assert assessment['C_3']['total'] == 8
 
 
 # =====================================================================
@@ -430,10 +457,14 @@ class TestOverall:
         assert 'COMPOSITE' in rec
 
     def test_diagnostics_pass(self):
-        """All diagnostic checks should pass."""
+        """Exact diagnostics pass and every theorem claim stays typed."""
         results = run_diagnostics()
-        failures = {k: v for k, v in results.items() if not v}
-        assert len(failures) == 0, f"Diagnostic failures: {failures}"
+        for name, result in results.items():
+            if isinstance(result, ClaimPacket):
+                assert result.status in (ClaimStatus.OPEN, ClaimStatus.CONDITIONAL)
+                assert result.value is None and result.hypotheses
+            else:
+                assert result is True, name
 
     def test_diagnostics_count(self):
         """Should have at least 25 diagnostic checks."""
@@ -449,23 +480,32 @@ class TestCrossStrategy:
     """Cross-strategy consistency checks."""
 
     def test_all_strategies_agree_on_sl3(self):
-        """All strategies should agree: sl_3 has no open orbits."""
+        """Exact candidate diagnostics agree while theorem realizations stay open."""
         # Strategy A
-        assert induction_feasibility_score(3)['all_proved']
+        induction = induction_feasibility_score(3)
+        assert induction['candidate_closure_covers_all']
+        _assert_unresolved(induction['transport_realization'], ClaimStatus.OPEN)
         # Strategy B
-        assert bfn_strategy_assessment(3)['all_dimensions_match']
+        bfn = bfn_strategy_assessment(3)
+        assert bfn['partition_ledgers_complete']
+        assert all(
+            packet.status is ClaimStatus.OPEN
+            for packet in bfn['bfn_slodowy_identifications']
+        )
         # Strategy C
-        assert derived_ds_strategy_score(3)['all_formal']
+        derived = derived_ds_strategy_score(3)
+        assert derived['all_slodowy_slices_affine']
+        _assert_unresolved(derived['derived_ds_bar_comparison'], ClaimStatus.OPEN)
         # Strategy E
         census = type_a_orbit_census(3)
-        assert sum(1 for r in census if r.ds_bar_status == 'open') == 0
+        assert all(isinstance(record.ds_bar_status, ClaimPacket) for record in census)
 
     def test_centralizer_dim_consistency(self):
         """Centralizer dimension from different methods should agree."""
         for n in [3, 4, 5]:
             for lam in partitions(n):
                 quiver = bfn_quiver_for_type_a(lam)
-                assert quiver.coulomb_dimension == centralizer_dimension(lam)
+                assert quiver.slodowy_dimension == centralizer_dimension(lam)
 
     def test_orbit_dim_plus_centralizer_dim(self):
         """dim(O) + dim(g^e) = dim(g) = N^2 - 1 for all sl_N orbits."""

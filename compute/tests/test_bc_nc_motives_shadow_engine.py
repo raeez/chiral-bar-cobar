@@ -21,7 +21,8 @@ CRITICAL PITFALLS TESTED:
 - AP20: kappa(A) vs kappa_eff
 - AP24: complementarity sum != 0 for Virasoro (sum = 13)
 - AP25: bar != Verdier dual != cobar != derived center
-- AP33: H_k^! = Sym^ch(V*) != H_{-k}
+- AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+  branch, not H_{-k} and not the uncurved polynomial centre.
 - AP48: kappa depends on the full algebra, not the Virasoro sub
 
 VERIFICATION PATHS (>= 3 per claim):
@@ -145,7 +146,7 @@ class TestKappaDualAndComplementarity:
     """Test kappa(A!) and the complementarity sum kappa + kappa'."""
 
     def test_kappa_dual_heisenberg(self):
-        # H_k^! has kappa = -k
+        # H_k^! has scalar kappa = -k; the object is the curved branch.
         assert kappa_dual("Heisenberg", k=1) == Fraction(-1)
 
     def test_kappa_dual_heisenberg_k3(self):

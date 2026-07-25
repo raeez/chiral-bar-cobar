@@ -450,7 +450,7 @@ class TestPath4BarCobar:
         assert 'A^! is obtained from A^i by Verdier/linear duality' in chain['koszul_dual']
         assert 'finite-type or completed hypotheses' in chain['koszul_dual']
         assert 'Omega(B(A)) = A is bar-cobar inversion' in chain['inversion']
-        assert 'Z_ch^der(A) is the bulk/derived centre' in chain['derived_centre']
+        assert 'Z_ch^der(A) is the closed-sector/derived centre' in chain['derived_centre']
 
     def test_ap25_note_firewalls_removed_shorthand(self):
         """Omega(B(A)) = A is inversion; A^! is obtained from A^i."""
@@ -461,7 +461,7 @@ class TestPath4BarCobar:
         assert 'A^i = H^*(B(A))' in note
         assert 'A^! is obtained from A^i by Verdier/linear duality' in note
         assert 'Omega(B(A)) = A is inversion' in note
-        assert 'Z_ch^der(A) is the bulk/derived centre' in note
+        assert 'Z_ch^der(A) is the closed-sector/derived centre' in note
 
         verdier_collapse = 'D_Ran(B(A)) = ' + 'B(A!)'
         assert verdier_collapse not in note

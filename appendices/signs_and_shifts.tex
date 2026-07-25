@@ -8,6 +8,32 @@ Loday--Vallette~\cite{LV12} (operadic structures),
 Beilinson--Drinfeld~\cite{BD04} (chiral algebras), and Lurie~\cite{HA}
 ($\infty$-categorical foundations).
 
+\begin{convention}[Canonical sign source; \ClaimStatusDefinitional]
+\label{conv:canonical-sign-source-app-b}
+\index{sign conventions!canonical source}
+Appendix~\ref{app:signs} is the unique source of sign conventions for
+this volume. Its conventions are:
+\[
+|d|=+1,\qquad |s^{-1}a|=|a|-1,\qquad
+[a_1|\cdots|a_n]=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n,
+\]
+with the ordered bar product sign, for each singular OPE mode \(r\),
+\[
+d_{\mathrm{res}}[a_1|\cdots|a_n]\big|_{(i,i+1)}
+=
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}
+[a_1|\cdots|a_i{}_{(r)}a_{i+1}|\cdots|a_n].
+\]
+The determinant-line theorem
+\ref{thm:det-bar-cobar-signs}, the master sign formula
+\ref{prop:master-sign}, and the computation
+\ref{ver:d2-degree3} are the canonical low-level witnesses. The
+dictionaries in \S\ref{app:sign-conventions} and
+\S\ref{sec:sign-dictionary-complete} compare these conventions with
+BD, Costello--Gwilliam, and Loday--Vallette; they introduce no second
+sign convention.
+\end{convention}
+
 \section{The Koszul sign rule}
 \label{sec:koszul-sign-rule}
 
@@ -749,6 +775,12 @@ is compatible with orientations:
 \[
 \Res_{D_{ij}}(\omega \wedge \dlog(z_i - z_j)) = \omega|_{D_{ij}}
 \]
+where $z_i-z_j$ is a local normal coordinate on an affine/formal
+collision screen.  On a global curve this formula is applied to the
+chosen local representative of the logarithmic normal form along
+$D_{ij}$; projective and positive-genus models replace this
+representative by the corresponding coordinate-change or KZB/prime-form
+data.
 with sign conventions:
 \begin{enumerate}[label=(\roman*)]
 \item If $\omega = f(z_1, \ldots, z_n) \, dz_1 \wedge \cdots \wedge \widehat{dz_i} \wedge \cdots \wedge dz_n$
@@ -771,7 +803,11 @@ where $dz_i$ would appear.
 \section{Dictionary of sign conventions}
 \label{app:sign-conventions}
 
-Sign conventions used in different sources are compared and translated below.
+The canonical conventions are those of
+Convention~\ref{conv:canonical-sign-source-app-b}. This section is a
+translation dictionary: sign conventions used in different sources are
+compared and translated below, without introducing an independent
+normalisation.
 
 \subsection{Loday--Vallette vs. this manuscript}
 
@@ -1119,6 +1155,10 @@ Note: Each term has a $+$ sign in the cyclic sum, but the individual forms antic
 
 \subsection{Sign convention dictionary}
 \label{sec:sign-dictionary-complete}
+
+The table below is a comparison surface for the conventions fixed in
+Convention~\ref{conv:canonical-sign-source-app-b}; it is not a second
+sign appendix.
 
 \begin{table}[ht!]
 \centering
@@ -1919,3 +1959,148 @@ If the Heisenberg case already fails, the error is geometric (Pitfalls~7,
 10, 11); if it only appears with grading, the error is algebraic (Pitfalls~5,
 6, 8, 9, 12).
 \end{remark}
+
+\section{Scalar normalization appendix}
+\label{sec:scalar-normalization-appendix}
+\index{scalar normalization|textbf}
+\index{trace normalization|textbf}
+\index{dual Coxeter number!normalization}
+
+\begin{convention}[Trace, root-length, and level normalizations]
+\label{conv:scalar-normalization-master}
+\ClaimStatusDefinitional{}
+\index{root-length normalization}
+\index{Kac--Moody level convention}
+For a simple Lie algebra~$\fg$, the invariant form is normalized so
+that long roots have squared length~$2$.  The dual Coxeter number is
+denoted $h^\vee$; the Coxeter number is denoted $h$ and is used only
+where explicitly stated.  The affine level is~$k$, and the shifted
+level is
+\[
+t:=k+h^\vee .
+\]
+The Feigin--Frenkel level involution is
+$k\mapsto -k-2h^\vee$, equivalently $t\mapsto -t$.
+The critical level is $k=-h^\vee$; at this value the KZ and Sugawara
+normalizations with denominator $k+h^\vee$ are undefined.
+\end{convention}
+
+\begin{convention}[Collision residue versus KZ residue]
+\label{conv:collision-kz-normalization}
+\ClaimStatusDefinitional{}
+\index{collision residue!trace form}
+\index{KZ normalization}
+The trace-form collision residue and the KZ-normalized residue are
+different rational kernels:
+\[
+r^{\mathrm{coll}}_{V_k(\fg)}(z)
+=\frac{k\Omega_{\mathrm{tr}}}{z},
+\qquad
+r^{\mathrm{KZ}}_{V_k(\fg)}(z)
+=\frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z},
+\qquad
+\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}.
+\]
+The first is extracted directly from the double pole in the affine OPE.
+The second is the Casimir-and-coupling normalization appearing in the
+KZ connection.  They are compared by a normalization bridge; they are
+not equal as functions of~$k$.
+\end{convention}
+
+\begin{convention}[Scalar modular characteristics]
+\label{conv:scalar-kappa-normalizations}
+\ClaimStatusDefinitional{}
+\index{modular characteristic!normalizations}
+The scalar modular characteristic conventions used in the tables are:
+\[
+\kappa(\mathcal H_\ell^{\oplus d})=d\ell,\qquad
+\kappa(V_k(\fg))=\frac{\dim(\fg)(k+h^\vee)}{2h^\vee},
+\]
+\[
+\kappa(\mathrm{Vir}_c)=\frac{c}{2},\qquad
+\kappa(\mathcal W_N)=c\,(H_N-1).
+\]
+Thus the affine Kac--Moody characteristic is linear in the shifted
+level~$t=k+h^\vee$, not quadratic in~$t$ and not the Sugawara central
+charge
+\[
+c(V_k(\fg))=\frac{k\,\dim(\fg)}{k+h^\vee}.
+\]
+For the principal $\mathcal W_3$ algebra, $H_3-1=5/6$, so
+$\kappa(\mathcal W_3)=5c/6$.
+\end{convention}
+
+\begin{convention}[Scalar conductor checks]
+\label{conv:scalar-conductor-checks}
+\ClaimStatusDefinitional{}
+\index{Virasoro!scalar conductor}
+\index{W3@$\mathcal W_3$!scalar conductor}
+The same-family scalar conductor checks are:
+\[
+\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13,
+\qquad
+c(\mathrm{Vir}_c)+c(\mathrm{Vir}_{26-c})=26,
+\]
+and, for the principal $\mathcal W_3$ family under the
+$H_N-1$ normalization,
+\[
+K^c(\mathcal W_3)=100,\qquad
+K^\kappa(\mathcal W_3)=\frac{5}{6}\cdot 100=\frac{250}{3}.
+\]
+These constants are scalar-shadow statements.  They do not identify
+the input algebra with its bar coalgebra, its Koszul-dual coalgebra,
+its continuous dual algebra, or its derived chiral centre.
+\end{convention}
+
+\begin{convention}[Genus variables, Hodge coefficients, and
+complementarity domain; \ClaimStatusDefinitional]
+\label{conv:genus-variable-normalization-table}
+\index{formal variables!genus tower}
+\index{Hodge coefficient!normalization}
+\index{scalar conductor!domain of definition}
+The genus and scalar tables use the following symbols only in the
+indicated scope:
+\[
+\begin{array}{lll}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Scope} \\
+\hline
+t & k+h^\vee & \text{shifted affine level} \\
+q & e^{2\pi i\tau} & \text{elliptic analytic parameter, } \Im\tau>0 \\
+\hbar & \text{genus/quantum formal parameter} &
+ \text{locally declared; not interchangeable across tables} \\
+z & \text{local collision or spectral coordinate} &
+ \text{near a diagonal or in an RTT/KZ kernel} \\
+\omega & \text{holomorphic differential on a curve} &
+ \text{not the Hodge-curvature package } \omega_g \\
+\omega_g & \text{Chern--Weil Hodge-curvature package} &
+ \text{top scalar component } \lambda_g=c_g(\mathbb E_g) \\
+\mathcal F_g(\cA) & \text{formal genus cohomology class} &
+ \text{before scalar trace or analytic interpretation} \\
+F_g(\cA) & \text{Faber--Pandharipande scalar trace of }\mathcal F_g &
+ \text{a number, not itself an operator or curvature form} \\
+\operatorname{tr}_{\mathrm{diag}} & \text{diagonal scalar projection} &
+ \text{projection to the scalar primary channel before }\operatorname{tr}^{\mathrm{FP}}_g \\
+\lambda_g^{\mathrm{FP}} &
+ \dfrac{(2^{2g-1}-1)|B_{2g}|}{2^{2g-1}(2g)!} &
+ \text{Faber--Pandharipande numerical trace} \\
+\kappa(\cA) & \text{degree-two scalar modular characteristic} &
+ \text{defined after diagonal trace/averaged residue} \\
+K^\kappa(\cA,\cA^!) &
+ \kappa(\cA)+\kappa(\cA^!) &
+ \text{defined only when both scalar characteristics exist.}
+\end{array}
+\]
+The genus-completed bar object uses the $\hbar$-adic convention
+$\bar B^{\mathrm{full}}=\prod_{g\ge0}\hbar^g\bar B^{(g)}$.  The
+nonseparating BV self-gluing operator $\Delta$ raises genus by one;
+therefore $\hbar\Delta$ raises the $\hbar$-adic filtration by one and is
+the genus-raising summand in the completed modular differential.  A
+loop edge is oriented by the determinant line of its two half-edges;
+reversing the two half-edges changes the edge-orientation line and the
+odd cooperadic suspension simultaneously, so the scalar
+nonseparating loop has sign \(+1\) after diagonal trace.  Before scalar
+trace, the remaining sign is the Koszul sign of the cyclic pairing.  In
+amplitude expansions of the form $g_s^{2g-2+n}$, the string-coupling
+symbol is $g_s$; it should not be silently identified with the
+$\hbar$ used for KZ/RTT deformation parameters.
+\end{convention}

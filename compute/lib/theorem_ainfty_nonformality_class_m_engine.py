@@ -475,24 +475,25 @@ def swiss_cheese_m4_betagamma(N: int = 10) -> Dict[str, Any]:
 def virasoro_quartic_shadow(c: Fraction) -> Dict[str, Any]:
     r"""Compute the quartic shadow S_4 and contact invariant Q^{contact} for Virasoro.
 
-    S_4(Vir_c) = -(5c + 22) / (10c)
-    Q^{contact}(Vir_c) = 10 / [c(5c + 22)]
+    S_4(Vir_c) = Q^{contact}(Vir_c) = 10 / [c(5c + 22)]
 
     These are c-DEPENDENT (unlike S_3 = 2).
     S_4 diverges at c = 0 and at c = -22/5.
 
     The critical discriminant Delta = 8 kappa S_4:
-      Delta = 8 * (c/2) * (-(5c+22)/(10c)) = -4(5c+22)/10 = -2(5c+22)/5
+      Delta = 8 * (c/2) * 10/[c(5c+22)] = 40/(5c+22)
 
-    Delta = 0 iff c = -22/5 (the c_{2,5} minimal model).
+    The point c = -22/5 is singular: the Zamolodchikov norm vanishes.
     For generic c: Delta != 0, so the tower is infinite (class M).
     """
     if c == F(0):
         return {
             "S4": None,
             "Q_contact": None,
-            "Delta": None,
-            "explanation": "c=0: S_4 and Q^{contact} diverge.",
+            "Delta": F(20, 11),
+            "Delta_simplified": F(20, 11),
+            "tower_infinite": None,
+            "explanation": "c=0: S_4 and Q^{contact} diverge; Delta has removable value 20/11.",
         }
 
     five_c_plus_22 = F(5) * c + F(22)
@@ -501,13 +502,15 @@ def virasoro_quartic_shadow(c: Fraction) -> Dict[str, Any]:
         return {
             "S4": None,
             "Q_contact": None,
-            "Delta": F(0),
-            "explanation": "c = -22/5: Delta = 0, tower truncates (degenerate).",
+            "Delta": None,
+            "Delta_simplified": None,
+            "tower_infinite": None,
+            "explanation": "c = -22/5: Zamolodchikov norm vanishes; S_4 and Delta are singular.",
         }
 
     kappa = c / F(2)
-    S4 = -(five_c_plus_22) / (F(10) * c)
-    Q_contact = F(10) / (c * five_c_plus_22)
+    S4 = F(10) / (c * five_c_plus_22)
+    Q_contact = S4
     Delta = F(8) * kappa * S4
 
     return {
@@ -517,13 +520,13 @@ def virasoro_quartic_shadow(c: Fraction) -> Dict[str, Any]:
         "S4": S4,
         "Q_contact": Q_contact,
         "Delta": Delta,
-        "Delta_simplified": -F(2) * five_c_plus_22 / F(5),
+        "Delta_simplified": F(40) / five_c_plus_22,
         "S4_c_dependent": True,
         "tower_infinite": Delta != F(0),
         "explanation": (
-            f"Virasoro c={c}: S_4 = -(5c+22)/(10c) = {S4}. "
+            f"Virasoro c={c}: S_4 = 10/[c(5c+22)] = {S4}. "
             f"Q^contact = 10/[c(5c+22)] = {Q_contact}. "
-            f"Delta = -2(5c+22)/5 = {Delta}. "
+            f"Delta = 40/(5c+22) = {Delta}. "
             f"Tower infinite: {Delta != F(0)}."
         ),
     }
@@ -841,7 +844,7 @@ def linfty_ell3_virasoro_mode_sum(c: Fraction, N: int = 30) -> Dict[str, Any]:
 
     Path C (Shadow generating function consistency):
       H(t) = S_2 t^2 + S_3 t^3 + S_4 t^4 + ...
-      S_2 = 2*kappa = c, S_3 = 2, S_4 = -(5c+22)/(10c).
+      S_2 = 2*kappa = c, S_3 = 2, S_4 = 10/[c(5c+22)].
       Verify: H(t)^2 / t^4 = Q_L(t) = (2kappa + 3*(S_3/3)*t)^2 + 2*Delta*t^2
       where Delta = 8*kappa*S_4.
       Check: q_0 = 4*kappa^2, q_1 = 12*kappa*(S_3/3) = 4*kappa*S_3,
@@ -922,7 +925,7 @@ def linfty_ell3_heisenberg(k: Fraction) -> Dict[str, Any]:
 # ============================================================================
 
 def linfty_ell4_virasoro_exact(c: Fraction) -> Dict[str, Any]:
-    r"""L-infinity ell_4 for Virasoro: quartic shadow S_4 = -(5c+22)/(10c).
+    r"""L-infinity ell_4 for Virasoro: quartic shadow S_4 = 10/[c(5c+22)].
 
     ell_4 involves the five planar binary trees with 4 leaves
     plus the K_4 (pentagon) correction from associahedron geometry.
@@ -1052,8 +1055,9 @@ def shadow_tower_terminates(family: str, c: Optional[Fraction] = None,
                             k: Optional[Fraction] = None) -> Dict[str, Any]:
     """Test whether the shadow obstruction tower terminates at finite depth.
 
-    The tower terminates iff the critical discriminant Delta = 0.
-    For Virasoro: Delta = -2(5c+22)/5, so terminates iff c = -22/5.
+    The tower terminates iff the critical discriminant Delta = 0 on the
+    regular locus. For Virasoro: Delta = 40/(5c+22), so the regular
+    class-M tower does not terminate.
     For Heisenberg: Delta = 0 always (tower terminates at depth 2).
     For affine sl_2: S_4 = 0 always (tower terminates at depth 3).
     """
@@ -1089,19 +1093,27 @@ def shadow_tower_terminates(family: str, c: Optional[Fraction] = None,
         if c is None:
             c = F(1)
         five_c_plus_22 = F(5) * c + F(22)
-        Delta = -F(2) * five_c_plus_22 / F(5)
-        terminates = (Delta == F(0))
-        depth = float("inf") if not terminates else 4
+        if c == F(0) or five_c_plus_22 == F(0):
+            return {
+                "family": family,
+                "c": c,
+                "terminates": None,
+                "depth": None,
+                "class": "singular",
+                "Delta": F(20, 11) if c == F(0) else None,
+                "explanation": "Virasoro singular locus c(5c+22)=0; S_4 is not finite.",
+            }
+        Delta = F(40) / five_c_plus_22
         return {
             "family": family,
             "c": c,
-            "terminates": terminates,
-            "depth": depth,
-            "class": "C" if terminates else "M",
+            "terminates": False,
+            "depth": float("inf"),
+            "class": "M",
             "Delta": Delta,
             "explanation": (
-                f"Virasoro c={c}: Delta = -2(5c+22)/5 = {Delta}. "
-                f"{'Terminates (c=-22/5).' if terminates else 'Infinite tower (class M).'}"
+                f"Virasoro c={c}: Delta = 40/(5c+22) = {Delta}. "
+                "Infinite tower (class M)."
             ),
         }
 

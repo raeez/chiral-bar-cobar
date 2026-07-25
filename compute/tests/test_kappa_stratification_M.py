@@ -1,59 +1,32 @@
-"""
-Row M (Virasoro / W_N) of the 5x5 kappa-stratification matrix.
+"""Row M calculations and the typed Virasoro extraction problem.
 
-CLAUDE.md (canonical) — five kappa-measurements per family, three independent
-verification paths per entry:
+The local identities tested here are
 
-    {kappa_cat, kappa^Hodge_ch, kappa^Heis_ch, kappa_BKM, kappa_fiber}
+    kappa(Vir_c) = c/2,
+    kappa(W_N) = c (H_N - 1),
+    <Lambda|Lambda> = c(5c+22)/10.
 
-For class M (infinite Mok-style shadow-tower depth, r_max = infinity), the row
-is anchored on the Virasoro stress-tensor field T (one strong generator at
-weight 2) and the principal W_N (strong generators at weights 2..N). All five
-entries are computed from first principles and verified against three
-independent paths each, in compliance with the @independent_verification
-decorator (compute/lib/independent_verification.py).
+The sphere Ward identities determine coordinate functions ``G_n`` and
+``G_n^conn``.  A scalar ``S_n(Vir_c; H_res)`` uses an ordered Arnold class
+and a normalized residue projection.  The formal weighted-Riccati series
 
-Numerical claims (canonical, CLAUDE.md):
-    kappa(Vir_c) = c/2.
-    kappa(W_N)   = c (H_N - 1),  H_N = sum_{j=1..N} 1/j.
-    Virasoro shadow tower:
-        S_2 = c/2,
-        S_3 = 2,
-        S_4 = 10/[c(5c+22)],
-        S_5 = -48/[c^2(5c+22)],
-        S_6 = 40(45c+188)/[3 c^3 (5c+22)^2].
-    Borel-radius closed form:
-        |omega|^2(c) = c^2(5c+22)/[4(45c+218)].
-    Stokes pole:           c_S = -218/45.
-    Yang-Lee point:        c_YL = -22/5.
-    Zamolodchikov norm:    <Lambda|Lambda> = c(5c+22)/10
-                           for Lambda = :TT: - (3/10) d^2 T.
+    H_Ricc(t) = t^2 sqrt(c^2 + 12ct + (36 + 80/(5c+22))t^2)
+              = sum r R_r(c)t^r
 
-NOTE on CLAUDE.md essential constants: the entry recorded as
-`S_6 = 40(45c+188)/[3 c^3 (5c+22)^2]` does not match three independent
-direct computations:
+has exact coefficients
 
-    (i)  sqrt(Q_L(t)) Taylor expansion (path A below);
-    (ii) Riccati convolution recursion a_n = -(2c)^{-1} sum a_j a_{n-j}
-         (path B below);
-    (iii) compute/lib/virasoro_shadow_tower.shadow_coefficients(6).
+    R_5 = -48/[c^2(5c+22)],
+    R_6 = 80(45c+193)/[3c^3(5c+22)^2].
 
-All three give
+The formal order-six relation gives the distinct output
 
-    S_6 = 80 (45c + 193) / [3 c^3 (5c+22)^2].
+    C_6^rel = 4(240c+1031)/[c^3(5c+22)^2],
 
-This is an open obligation against CLAUDE.md (the 'memory' lane in the
-epistemic hierarchy is dominated by 'direct computation in compute/'). The
-test below uses the directly-computed S_6, the residue is independently
-flagged in the report.
+on ``c(5c+22) != 0``.  A singular-vector interpretation requires an
+explicit level-six radical/decoupling map.
 
-Class M signature: r_max = infinity (an infinite tower of nontrivial shadow
-coefficients S_r, all rational in c with denominator c^a (5c+22)^b).
-This is the Kontsevich endpoint Phi_{Kon} = Phi_infty (chord-diagram
-universal); see landscape_census.tex master table.
-
-Three verification paths per kappa entry (DERIVED_FROM disjoint from
-VERIFIED_AGAINST under the IndependentVerificationError protocol).
+The tests below verify these named algebraic outputs and preserve their
+separation from the ordered scalar lane.
 """
 
 import os
@@ -73,6 +46,18 @@ from sympy import (
     sqrt,
     symbols,
     zoo,
+)
+
+from compute.lib.shadow_tower_higher_vir import (
+    s5_riccati_candidate,
+    s6_relation_candidate,
+    s6_riccati_candidate,
+)
+from compute.lib.virasoro_ward_correlators import (
+    ResidueProjectionRequired,
+    require_residue_projection,
+    standard_points,
+    virasoro_connected_correlator,
 )
 
 # -- Optional independent_verification decorator (graceful no-op if absent) --
@@ -237,13 +222,13 @@ def test_kappa_W4_equals_13c_over_12():
 
 
 # ---------------------------------------------------------------------------
-# Virasoro shadow tower S_2 .. S_6  --  Riccati / direct / sqrt expansion
+# Formal weighted-Riccati series through arity six
 # ---------------------------------------------------------------------------
 
-def _shadow_via_sqrt_QL(max_r=6):
-    """Path A: H(t) = t^2 sqrt(Q_L(t)) with Q_L = c^2 + 12 c t + (36 + 80/(5c+22)) t^2.
+def _riccati_via_sqrt_QL(max_r=6):
+    """Match coefficients in ``H_Ricc(t)^2=t^4 Q_L(t)``.
 
-    Then S_r = a_{r-2} / r where a_n are Taylor coefficients of sqrt(Q_L).
+    Here ``R_r=a_{r-2}/r`` for the Taylor coefficients of ``sqrt(Q_L)``.
     """
     q0 = c**2
     q1 = 12 * c
@@ -262,10 +247,11 @@ def _shadow_via_sqrt_QL(max_r=6):
     return S
 
 
-def _shadow_riccati_recursion(max_r=6):
-    """Path B: pure recursion a_n = -(1/(2c)) sum_{j=1}^{n-1} a_j a_{n-j}
-    for n >= 3; same H(t) algebraic relation but solved as a Riccati-style
-    convolution starting from a_0=c, a_1=6, a_2=40/[c(5c+22)].
+def _riccati_coefficient_recursion(max_r=6):
+    """Implement the coefficient recurrence of the same square-root identity.
+
+    For ``n>=3``, ``a_n=-(2c)^{-1} sum_{j=1}^{n-1}a_j a_{n-j}``, with
+    ``a_0=c``, ``a_1=6``, and ``a_2=40/[c(5c+22)]``.
     """
     a = [None] * (max_r + 5)
     a[0] = c
@@ -282,48 +268,45 @@ def _shadow_riccati_recursion(max_r=6):
     return S
 
 
-def _shadow_known_closed_forms():
-    """Path C: closed-form values, derived from the Riccati a_2 = 40/[c(5c+22)]
-    seed and the convolution recursion (cf. compute/lib/virasoro_shadow_tower.py
-    and the existing test_virasoro_shadow_tower test_sh6_numerator which
-    asserts the (45c+193) factor).
+def _riccati_closed_forms():
+    """Simplified coefficients of the formal weighted-Riccati series."""
 
-    NOTE: CLAUDE.md essential constants currently records
-    S_6 = 40(45c+188)/[3 c^3 (5c+22)^2]. This does not match the direct
-    computation; the canonical value derived from the Riccati / sqrt(Q_L)
-    recursion is S_6 = 80(45c+193)/[3 c^3 (5c+22)^2]. See module-level note.
-    """
     return {
         2: c / 2,
         3: Rational(2),
         4: Rational(10) / (c * (5 * c + 22)),
-        5: Rational(-48) / (c**2 * (5 * c + 22)),
-        6: Rational(80) * (45 * c + 193) / (3 * c**3 * (5 * c + 22)**2),
+        5: s5_riccati_candidate(c),
+        6: s6_riccati_candidate(c),
     }
 
 
-@independent_verification(
-    claim="kappa-stratification-M::shadow-tower-S2-S6",
-    derived_from=[
-        "Algebraic relation H(t) = t^2 sqrt(Q_L(t)) with Q_L = c^2+12ct+(36+80/(5c+22)) t^2",
-    ],
-    verified_against=[
-        "Riccati convolution recursion a_n = -(2c)^{-1} sum a_j a_{n-j}",
-        "Closed-form table from master_concordance.tex",
-    ],
-    disjoint_rationale=(
-        "Path A recovers a_n from f^2 = Q_L by matching Taylor coefficients; "
-        "Path B uses a different convolution recursion derived from differentiating "
-        "f^2 = Q_L; Path C cites the closed-form table independently established "
-        "by quasi-primary projection."),
-)
-def test_shadow_tower_three_paths():
-    A = _shadow_via_sqrt_QL(6)
-    B = _shadow_riccati_recursion(6)
-    C = _shadow_known_closed_forms()
+def test_weighted_riccati_coefficients_from_defining_identity():
+    A = _riccati_via_sqrt_QL(6)
+    B = _riccati_coefficient_recursion(6)
+    C = _riccati_closed_forms()
     for r in range(2, 7):
-        assert simplify(A[r] - B[r]) == 0, f"S_{r}: A vs B mismatch"
-        assert simplify(A[r] - C[r]) == 0, f"S_{r}: A vs C mismatch"
+        assert simplify(A[r] - B[r]) == 0, f"R_{r}: coefficient recursion mismatch"
+        assert simplify(A[r] - C[r]) == 0, f"R_{r}: closed-form mismatch"
+
+
+def test_weight_six_relation_and_riccati_outputs_remain_distinct():
+    riccati = s6_riccati_candidate(c)
+    relation = s6_relation_candidate(c)
+    difference = -Rational(4) * (180 * c + 767) / (
+        3 * c**3 * (5 * c + 22) ** 2
+    )
+    assert factor(relation - riccati - difference) == 0
+
+    r = _riccati_closed_forms()
+    assert factor(2 * r[2] * relation + 2 * r[3] * r[5] + r[4] ** 2) == 0
+
+
+def test_six_point_ward_function_requests_an_ordered_residue_projection():
+    points = standard_points(6)
+    connected = virasoro_connected_correlator(points, c)
+    assert connected.free_symbols == set(points) | {c}
+    with pytest.raises(ResidueProjectionRequired):
+        require_residue_projection(6)
 
 
 # ---------------------------------------------------------------------------
@@ -353,49 +336,26 @@ def _zam_path1_shapovalov():
     return G22 - 2 * a * G12 + a**2 * G11
 
 
-def _zam_path2_quartic_contact_inverse():
-    """Path 2: 1/<Lambda|Lambda> = quartic contact coefficient S_4.
+def _zam_path2_riccati_seed_inverse():
+    """Invert the formal seed ``R_4=10/[c(5c+22)]``."""
 
-    The quartic contact coefficient of the Virasoro shadow envelope is the
-    one-vertex level-zero residue of T_(1)T at the projection onto the
-    Lambda channel. By the BPZ pairing,
-        S_4 = 1 / <Lambda|Lambda>.
-    Inverting S_4 = 10/[c(5c+22)] yields <Lambda|Lambda> = c(5c+22)/10.
-    """
-    S4 = Rational(10) / (c * (5 * c + 22))
-    return 1 / S4
+    r4 = Rational(10) / (c * (5 * c + 22))
+    return 1 / r4
 
 
 def _zam_path3_appendix_ribbon_check():
-    """Path 3: G_4 block of W_3 quartic resonance determinant.
+    """Return the level-four value recorded by the W_3 Gram block.
 
     appendices/nonlinear_modular_shadows.tex (W_3 quartic resonance)
     states G_4 = c(5c+22)/10 as the weight-4 Shapovalov restriction
-    of the level-4 vacuum-Verma form to the Lambda-direction. This is
-    independent of Path 1 (which derives the matrix G itself) and Path 2
-    (which uses the quartic-contact OPE pairing).
+    of the level-4 vacuum-Verma form to the Lambda-direction.
     """
     return c * (5 * c + 22) / 10
 
 
-@independent_verification(
-    claim="kappa-stratification-M::zamolodchikov-norm",
-    derived_from=[
-        "Shapovalov Gram matrix at level 4 of vacuum Verma module",
-    ],
-    verified_against=[
-        "Quartic contact OPE coefficient S_4 = 1/<Lambda|Lambda>",
-        "Quartic resonance determinant G_4 (nonlinear_modular_shadows appendix)",
-    ],
-    disjoint_rationale=(
-        "Path 1 starts from Virasoro commutators in vacuum Verma; "
-        "Path 2 inverts the OPE quartic-contact coefficient (operator-level); "
-        "Path 3 cites the W_3 weight-4 resonance determinant (constructed from "
-        "spectral-curve data, not Shapovalov)."),
-)
-def test_zamolodchikov_norm_three_paths():
+def test_zamolodchikov_norm_and_formal_inverse_seed():
     p1 = simplify(_zam_path1_shapovalov())
-    p2 = simplify(_zam_path2_quartic_contact_inverse())
+    p2 = simplify(_zam_path2_riccati_seed_inverse())
     p3 = simplify(_zam_path3_appendix_ribbon_check())
     expected = c * (5 * c + 22) / 10
     assert simplify(p1 - expected) == 0
@@ -509,11 +469,11 @@ def test_stokes_pole_numerical_blowup():
 
 def test_yang_lee_point_at_minus_22_over_5():
     """Yang-Lee minimal model M(2,5) sits at c = -22/5 where 5c+22 = 0.
-    All shadows S_r for r >= 4 develop a pole there.
+    The displayed weighted-Riccati coefficients have a pole there.
     """
     cYL = Rational(-22, 5)
     assert simplify(5 * cYL + 22) == 0
-    # S_4 has 1/(5c+22), so it diverges at cYL:
+    # R_4 has the factor (5c+22)^-1.
     S4 = Rational(10) / (c * (5 * c + 22))
     val = S4.subs(c, cYL)
     assert val in (zoo, oo, -oo)
@@ -562,19 +522,17 @@ def test_classM_five_kappa_signature_virasoro():
     # Fiber CY Euler invariant: not applicable.
     kappa_fiber = None
 
-    # Class M discriminator: r_max = infinity. We witness this by
-    # checking that S_4, S_5, S_6 are all nonzero rational functions
-    # of c with the (5c+22)-denominator pattern.
-    closed = _shadow_known_closed_forms()
+    # The formal weighted-Riccati series has nonzero coefficients through
+    # arity six.  H_res supplies the comparison with the scalar class-M lane.
+    closed = _riccati_closed_forms()
     for r in (4, 5, 6):
         assert closed[r] != 0
         # Each must contain a (5c+22) factor in the denominator:
         denom = factor(1 / closed[r]).as_numer_denom()[0]
-        # the inverse "denominator" of S_r has 5c+22 as factor
-        # (because S_r is rational with that denom)
+        # the inverse of R_r has 5c+22 as a factor
         assert (5 * c + 22) in factor(closed[r]).args or \
             simplify(closed[r] * (5 * c + 22)).has(c), \
-            f"S_{r} should have (5c+22) in its denominator"
+            f"R_{r} lost its (5c+22) denominator factor"
 
     assert kappa_cat == 0
     assert simplify(kappa_Hodge_ch - c / 2) == 0
@@ -589,8 +547,7 @@ def test_classM_five_kappa_signature_W3():
     kappa_BKM = None
     kappa_fiber = None
     assert simplify(kappa_Hodge_ch - 5 * c / 6) == 0
-    # W_3 inherits class-M shadow tower from Virasoro by DS transport:
-    # the same r_max = infinity holds.
+    # A scalar W_3 sequence uses its multivariable ordered residue package.
 
 
 # ---------------------------------------------------------------------------
@@ -615,33 +572,31 @@ def test_self_dual_central_charge_virasoro_is_13():
 # Sign-alternation pattern (structural check on infinite-tower)
 # ---------------------------------------------------------------------------
 
-def test_shadow_sign_alternation_at_c1():
-    """At c=1, signs of S_2..S_7 follow the documented pattern +,+,+,-,+,-."""
-    closed = _shadow_known_closed_forms()
-    # We added S_2..S_6 to the dict; let's also include the published S_7.
-    # For the test we only check S_2..S_6.
-    expected_signs_c1 = [+1, +1, +1, -1, +1]  # S_2,S_3,S_4,S_5,S_6 at c=1
+def test_riccati_sign_alternation_at_c1():
+    """At ``c=1``, the signs of ``R_2,...,R_6`` are ``+,+,+,-,+``."""
+    closed = _riccati_closed_forms()
+    expected_signs_c1 = [+1, +1, +1, -1, +1]
     for r, sign in zip(range(2, 7), expected_signs_c1):
         val = closed[r].subs(c, 1)
         assert (val > 0 and sign == 1) or (val < 0 and sign == -1), \
-            f"S_{r}(c=1) sign mismatch: got {val}, expected sign {sign}"
+            f"R_{r}(1) has sign {val}; expected {sign}"
 
 
 # ---------------------------------------------------------------------------
 # Pole structure: 1/c and 1/(5c+22) divisors
 # ---------------------------------------------------------------------------
 
-def test_shadow_pole_at_c_zero():
-    """All S_r with r >= 4 have a pole at c=0."""
-    closed = _shadow_known_closed_forms()
+def test_riccati_pole_at_c_zero():
+    """Each displayed ``R_r``, ``4<=r<=6``, has a pole at ``c=0``."""
+    closed = _riccati_closed_forms()
     for r in range(4, 7):
         val = closed[r].subs(c, 0)
         assert val in (zoo, oo, -oo)
 
 
-def test_shadow_pole_at_yang_lee():
-    """All S_r with r >= 4 have a pole at c=-22/5."""
-    closed = _shadow_known_closed_forms()
+def test_riccati_pole_at_yang_lee():
+    """Each displayed ``R_r``, ``4<=r<=6``, has a pole at ``c=-22/5``."""
+    closed = _riccati_closed_forms()
     cYL = Rational(-22, 5)
     for r in range(4, 7):
         val = closed[r].subs(c, cYL)

@@ -1,12 +1,14 @@
-"""Tests for the E_3 BV structure on Z^der_ch(V_k(sl_2)).
+"""Tests for the E_3 BV structure on the affine sl_2 zero-mode prequotient.
 
-Verifies prop:e3-explicit-sl2 from en_koszul_duality.tex.
+Verifies the conditional prequotient model in prop:e3-explicit-sl2 from
+en_koszul_duality.tex.
 
-The 5-dimensional derived center C + sl_2[-1] + C[-2] carries:
+The normalized fixed-fiber derived center has Betti vector (1, 0, 1);
+the 5-dimensional prequotient C + sl_2[-1] + C[-2] carries:
   - Cup product mu (all products except unit vanish)
   - BV operator Delta = 0 (equivariance, NOT just BV relation)
   - Gerstenhaber bracket [-, -] = 0 (follows from Delta=0, mu=0 via BV)
-  - P_3 bracket {X, Y} = (X,Y)/(k+2) on HH^1
+  - P_3 bracket {X, Y} = (X,Y)/(k+2) on the prequotient degree-1 slot
 
 This test suite verifies ALL algebraic identities on ALL generator pairs
 and triples, and independently confirms that the equivariance argument
@@ -24,9 +26,11 @@ import pytest
 from fractions import Fraction
 
 from compute.lib.e3_bv_sl2_derived_center_engine import (
+    ACTUAL_CHIRHOCH_BETTI,
     GENERATORS,
     DEGREE,
     KILLING_FORM,
+    ZERO_MODE_PREQUOTIENT_BETTI,
     E3DerivedCenterSl2,
     killing_form,
     lie_bracket,
@@ -41,8 +45,13 @@ class TestGeneratorData:
     """Verify the generator metadata is correct."""
 
     def test_generator_count(self):
-        """Total dimension = 1 + 3 + 1 = 5."""
+        """Prequotient total dimension is five."""
         assert len(GENERATORS) == 5
+
+    def test_actual_chirhoch_betti_firewall(self):
+        """Actual fixed-fiber ChirHoch has no adjoint H^1 slot."""
+        assert ACTUAL_CHIRHOCH_BETTI == (1, 0, 1)
+        assert ZERO_MODE_PREQUOTIENT_BETTI == (1, 3, 1)
 
     def test_degrees(self):
         assert DEGREE["1"] == 0
@@ -52,7 +61,7 @@ class TestGeneratorData:
         assert DEGREE["eta"] == 2
 
     def test_degree_counts(self):
-        """HH^0: dim 1, HH^1: dim 3, HH^2: dim 1."""
+        """Prequotient degrees: dim 1, dim 3, dim 1."""
         counts = {}
         for g in GENERATORS:
             d = DEGREE[g]
@@ -159,7 +168,7 @@ class TestSl2RepTheory:
 # ======================================================================
 
 class TestCupProduct:
-    """Test the cup product mu on the derived center."""
+    """Test the cup product mu on the zero-mode prequotient model."""
 
     @pytest.fixture
     def E(self):
@@ -178,7 +187,7 @@ class TestCupProduct:
             assert result == {g: Fraction(1)}
 
     def test_hh1_times_hh1_vanishes(self, E):
-        """mu(X, Y) = 0 for all X, Y in HH^1 = sl_2.
+        """mu(X, Y) = 0 for all X, Y in the prequotient sl_2[-1] slot.
         # VERIFIED: [SY] Lambda^2(ad) = ad has no trivial summand.
         # [DC] Antisymmetric bilinear form on 3-dim irrep valued in C: none.
         """
@@ -188,7 +197,7 @@ class TestCupProduct:
                 assert result == {}, f"mu({X}, {Y}) should vanish"
 
     def test_hh1_times_hh2_vanishes(self, E):
-        """mu(X, eta) = 0 (lands in HH^3 = 0)."""
+        """mu(X, eta) = 0 (lands in absent prequotient degree 3)."""
         for X in ("e", "f", "h"):
             assert E.cup_product(X, "eta") == {}
             assert E.cup_product("eta", X) == {}
@@ -209,7 +218,7 @@ class TestCupProduct:
 # ======================================================================
 
 class TestBVOperator:
-    """Test that Delta = 0 on the entire derived center."""
+    """Test that Delta = 0 on the entire zero-mode prequotient."""
 
     @pytest.fixture
     def E(self):
@@ -218,8 +227,8 @@ class TestBVOperator:
     def test_delta_vanishes_on_all_generators(self, E):
         """Delta = 0 on all 5 generators.
         # VERIFIED: [SY] Schur's lemma on sl_2 representations.
-        # HH^1 -> HH^0: Hom_{sl_2}(ad, triv) = 0.
-        # HH^2 -> HH^1: Hom_{sl_2}(triv, ad) = 0.
+        # prequotient degree 1 -> degree 0: Hom_{sl_2}(ad, triv) = 0.
+        # degree 2 -> prequotient degree 1: Hom_{sl_2}(triv, ad) = 0.
         """
         for g in GENERATORS:
             result = E.bv_operator(g)
@@ -246,7 +255,7 @@ class TestGerstenhaberBracket:
     def test_bracket_vanishes_on_all_pairs(self, E):
         """[a, b] = 0 for all a, b.
         # VERIFIED: [DC] BV relation with Delta=0 and mu=0 gives [X,Y]=0.
-        # [SY] equivariance for bracket [HH^1, HH^2] -> HH^2.
+        # [SY] equivariance for bracket [prequotient degree 1, degree 2] -> degree 2.
         """
         for a in GENERATORS:
             for b in GENERATORS:
@@ -330,7 +339,7 @@ class TestBVIndependence:
     def test_modified_delta_satisfies_all_bv_relations(self, E):
         """With Delta(eta) = h, all BV relations still hold.
         # VERIFIED: [DC] explicit computation.
-        # The key: mu(X, h) = 0 for all X in HH^1 (mu vanishes on HH^1 x HH^1),
+        # The key: mu(X, h) = 0 for all X in the prequotient degree-1 slot,
         # so the terms involving Delta(eta) always get killed by mu = 0.
         """
         result = E.verify_bv_independence()
@@ -340,7 +349,8 @@ class TestBVIndependence:
 
     def test_modified_delta_squared_zero(self, E):
         """Delta_mod^2 = 0 with modified Delta.
-        Delta_mod^2(eta) = Delta_mod(h) = 0 (since Delta_mod on HH^1 is 0).
+        Delta_mod^2(eta) = Delta_mod(h) = 0 (since Delta_mod on the
+        prequotient degree-1 slot is 0).
         """
         result = E.verify_bv_independence()
         assert result["delta_squared_zero"], (
@@ -432,8 +442,8 @@ class TestBVIndependence:
 
     def test_modified_delta_arbitrary_linear_comb(self, E):
         """Delta(eta) = 3e + 7f - 5h satisfies all BV relations.
-        ANY element of HH^1 works, proving the full 3-dimensional
-        family of solutions.
+        ANY element of the prequotient degree-1 slot works, proving the
+        full 3-dimensional family of solutions.
         """
         modified_delta = {"1": {}, "e": {}, "f": {}, "h": {},
                           "eta": {"e": Fraction(3), "f": Fraction(7),
@@ -518,7 +528,7 @@ class TestP3Bracket:
         assert E.p3_bracket("f", "f") == {}
 
     def test_p3_x_eta(self, E):
-        """{X, eta} = 0 for all X in HH^1.
+        """{X, eta} = 0 for all X in the prequotient degree-1 slot.
         # VERIFIED: [DC] iterated Jacobi identity forces beta = 0.
         """
         for X in ("e", "f", "h"):
@@ -561,7 +571,8 @@ class TestP3Bracket:
         """
         result = E.classify_p3_leibniz_triples()
         assert result["total"] == 125
-        # The failing triples are those with a, b, c in HH^1 where
+        # The failing triples are those with a, b, c in the prequotient
+        # degree-1 slot where
         # {a,c} or {a,b} hits a nonzero Killing form value.
         # There should be a specific nonzero count of failures.
         assert result["requires_chain_correction"] > 0, (
@@ -686,9 +697,10 @@ class TestCrossCheck:
     """Cross-check sl_2 results against known Heisenberg behaviour."""
 
     def test_hh_dimension_count(self):
-        """sl_2 derived center: 5 = 1 + 3 + 1.
+        """sl_2 zero-mode prequotient has five generators.
         Heisenberg: 3 = 1 + 1 + 1.
-        Both concentrated in {0, 1, 2} (Theorem H).
+        Actual affine sl_2 ChirHoch is (1, 0, 1); this test is only the
+        prequotient generator count.
         # VERIFIED: [CF] derived_center_explicit.py Heisenberg case.
         """
         sl2_dim = sum(1 for g in GENERATORS)
@@ -708,8 +720,9 @@ class TestCrossCheck:
     def test_delta_vanishes_sl2_vs_heisenberg(self):
         """sl_2: Delta = 0 by equivariance.
         Heisenberg: Delta(xi) = vac (NONZERO!), Delta(eta) = 0.
-        The difference: Heisenberg HH^1 is trivial rep (not adjoint),
-        so Hom(triv, triv) = C, allowing nonzero Delta.
+        The difference: the Heisenberg degree-1 class is a true trivial
+        representation, while the affine sl_2 degree-1 slot here is an
+        adjoint prequotient killed by inner zero modes.
         This is a genuine structural difference.
         """
         E = E3DerivedCenterSl2(k=Fraction(1))
@@ -826,7 +839,8 @@ class TestMultiPathVerification:
 
     def test_p3_ef_path2_casimir_contraction(self):
         """{e,f} via Casimir contraction.
-        [SY] The P_3 bracket on HH^1 is determined by sl_2-equivariance:
+        [SY] The P_3 bracket on the prequotient degree-1 slot is
+        determined by sl_2-equivariance:
         the unique invariant symmetric bilinear form on ad, normalised
         by the r-matrix residue. Sym^2(ad)^{sl_2} is 1-dimensional,
         spanned by (X,Y). So {X,Y} = alpha*(X,Y) for some scalar alpha.
@@ -838,8 +852,8 @@ class TestMultiPathVerification:
         # Verify Sym^2(ad)^{sl_2} = 1-dim:
         # ad = V_2 (spin-1). Sym^2(V_2) = V_0 + V_2 + V_4.
         # (V_0 component) = trivial = C. Dim of invariants = 1.
-        # So the P_3 bracket on HH^1 x HH^1 -> HH^0 is proportional
-        # to the Killing form, with coefficient h_KZ.
+        # So the P_3 bracket on the prequotient degree-1 square is
+        # proportional to the Killing form, with coefficient h_KZ.
         assert E.p3_bracket("e", "f") == {"1": E.h_KZ * Fraction(1)}
 
     def test_p3_hh_path1_killing(self):
@@ -863,8 +877,8 @@ class TestMultiPathVerification:
     # --- Delta = 0: multi-path ---
 
     def test_delta_hh1_to_hh0_path1_schur(self):
-        """Delta: HH^1 -> HH^0 vanishes by Schur's lemma.
-        [SY] HH^1 = ad (irreducible, nontrivial). HH^0 = triv.
+        """Delta from the prequotient degree-1 slot to scalars vanishes.
+        [SY] The slot is ad (irreducible, nontrivial), and degree 0 is triv.
         Hom_{sl_2}(ad, triv) = 0.
         """
         E = E3DerivedCenterSl2(k=Fraction(1))
@@ -872,7 +886,7 @@ class TestMultiPathVerification:
             assert E.bv_operator(X) == {}
 
     def test_delta_hh1_to_hh0_path2_explicit_hom(self):
-        """Delta: HH^1 -> HH^0 vanishes: no equivariant linear map.
+        """Delta from the prequotient degree-1 slot vanishes explicitly.
         [DC] An equivariant map phi: ad -> C satisfies phi([X,Y]) = 0
         for all X, Y. Since [e,f]=h, phi(h)=0. Since [h,e]=2e,
         0=phi([h,e])=phi(2e), so phi(e)=0. Similarly phi(f)=0.
@@ -896,14 +910,15 @@ class TestMultiPathVerification:
         )
 
     def test_delta_hh2_to_hh1_path1_schur(self):
-        """Delta: HH^2 -> HH^1 vanishes by Schur's lemma.
-        [SY] HH^2 = triv, HH^1 = ad. Hom_{sl_2}(triv, ad) = 0.
+        """Delta from degree 2 to the prequotient degree-1 slot vanishes.
+        [SY] Degree 2 is triv, the degree-1 slot is ad, and
+        Hom_{sl_2}(triv, ad) = 0.
         """
         E = E3DerivedCenterSl2(k=Fraction(1))
         assert E.bv_operator("eta") == {}
 
     def test_delta_hh2_to_hh1_path2_fixed_points(self):
-        """Delta: HH^2 -> HH^1 vanishes: ad has no fixed points.
+        """Delta from degree 2 to the prequotient degree-1 slot vanishes.
         [DC] A map C -> ad equivariant means 1 maps to a FIXED POINT
         of the adjoint action: ad_X(v) = 0 for all X. The only
         fixed point of ad on sl_2 is 0 (center of sl_2 is trivial).
@@ -927,7 +942,7 @@ class TestMultiPathVerification:
     # --- mu(X,Y) = 0: multi-path ---
 
     def test_mu_hh1_hh1_path1_equivariance(self):
-        """mu: HH^1 x HH^1 -> HH^2 vanishes by equivariance.
+        """mu on the prequotient degree-1 square vanishes by equivariance.
         [SY] Graded commutativity: mu(X,Y) = -mu(Y,X), so mu is
         antisymmetric. Lambda^2(ad) = ad for sl_2, and
         Hom_{sl_2}(ad, C) = 0 (proved above). Hence mu = 0.
@@ -938,7 +953,7 @@ class TestMultiPathVerification:
                 assert E.cup_product(X, Y) == {}
 
     def test_mu_hh1_hh1_path2_representation(self):
-        """mu: HH^1 x HH^1 -> HH^2 vanishes by rep theory.
+        """mu on the prequotient degree-1 square vanishes by rep theory.
         [SY] Lambda^2(V_2) = V_2 (the exterior square of the adjoint
         of sl_2 is isomorphic to the adjoint itself). The target is
         HH^2 = C (trivial). Hom_{sl_2}(V_2, V_0) = 0 since V_2 is
@@ -952,32 +967,35 @@ class TestMultiPathVerification:
         # So Lambda^2(ad) = ad = V_2. Check: dim = 3. Yes.
         assert 3 == 3  # dim Lambda^2(C^3) = 3 = dim(ad)
 
-    # --- Dimension 5: multi-path ---
+    # --- Dimension firewall: actual cohomology versus prequotient ---
 
     def test_dimension_path1_thm_h(self):
-        """Total dim = 5 from Theorem H dimensions.
+        """Theorem H gives total dim 2 after the zero-mode quotient.
         [LT] Theorem H: ChirHoch concentrated in {0,1,2}.
-        For V_k(sl_2): HH^0 = C (center), HH^1 = g (outer derivations),
-        HH^2 = C (c-deformation). Total = 1 + 3 + 1 = 5.
+        For V_k(sl_2): HH^0 = C (center), HH^1 = 0 (zero modes inner),
+        HH^2 = C (level-deformation metadata). Total = 1 + 0 + 1 = 2.
+        The five generators tested here are the zero-mode prequotient.
         """
+        assert ACTUAL_CHIRHOCH_BETTI == (1, 0, 1)
+        assert sum(ACTUAL_CHIRHOCH_BETTI) == 2
+        assert ZERO_MODE_PREQUOTIENT_BETTI == (1, 3, 1)
         assert len(GENERATORS) == 5
 
     def test_dimension_path2_kappa(self):
-        """Dimension check via kappa.
+        """Kappa check records prequotient metadata, not actual H^1.
         [CF] kappa(V_k(sl_2)) = 3(k+2)/4 (from C3: dim(g)(k+h^v)/(2h^v)
         = 3(k+2)/4). At k=1: kappa = 9/4.
-        dim(g) = 3, h^v = 2 (dual Coxeter). Total HH dim = dim(g) + 2 = 5.
-        (This uses prop:chirhoch1-affine-km: dim HH^1 = dim(g),
-        plus HH^0 = HH^2 = C.)
+        dim(g) = 3, h^v = 2 (dual Coxeter). This dim(g) is the
+        zero-mode prequotient/bar-dual count; actual ChirHoch^1 is 0.
         """
         from compute.lib.e3_bv_sl2_derived_center_engine import E3DerivedCenterSl2
         E = E3DerivedCenterSl2(k=Fraction(1))
         # kappa = dim(g)(k+h^v)/(2h^v) = 3*3/4 = 9/4
         kappa_val = Fraction(3) * (Fraction(1) + Fraction(2)) / (2 * Fraction(2))
         assert kappa_val == Fraction(9, 4)
-        # Total HH dimension = dim(g) + 2
-        dim_g = 3
-        assert dim_g + 2 == 5
+        dim_g_prequotient = 3
+        assert dim_g_prequotient == ZERO_MODE_PREQUOTIENT_BETTI[1]
+        assert ACTUAL_CHIRHOCH_BETTI[1] == 0
 
     # --- h_KZ at specific levels: multi-path ---
 

@@ -98,7 +98,7 @@ OBJECT_BRANCH_STATUS: Dict[str, str] = {
         "Verdier/continuous-linear dual of A^i under finite-type or "
         "completed hypotheses"
     ),
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk object, not A^!",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild closed-sector object, not A^!",
     "Omega(B(A))": "bar-cobar inversion recovering A, not Koszul duality",
 }
 

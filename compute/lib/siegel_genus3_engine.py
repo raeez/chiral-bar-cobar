@@ -1248,7 +1248,8 @@ def virasoro_complementarity_F3(c_val) -> Dict[str, Any]:
 def heisenberg_complementarity_F3(k: int) -> Dict[str, Any]:
     """Heisenberg complementarity at genus 3: H_k and H_{-k}.
 
-    kappa(H_k) = k, kappa(H_k^!) involves Koszul dual = Sym^ch(V*).
+    kappa(H_k) = k, kappa(H_k^!) comes from the curved second-kind
+    Sym^ch(V*[1]) branch.
     For Heisenberg: kappa + kappa! = 0 (anti-symmetry).
     F_3(H_k) + F_3(H_k^!) = 0.
     """

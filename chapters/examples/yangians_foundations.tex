@@ -182,6 +182,69 @@ $\sBer(T(u))$ and the orthosymplectic reflection equation of
 \cite{AcdfR2003} for the $Y_{\fosp(m|n)}$ analogue.
 \end{remark}
 
+\begin{proposition}[Super-Yangian parity and pairing ledger;
+\ClaimStatusConditional]
+\label{prop:super-yangian-parity-sign-ledger}
+\index{super-Yangian!parity convention}
+\index{super-Yangian!Berezinian shift}
+\index{bar differential!super-Yangian signs}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\Eone,\mathrm{RTT/supertrace\ presentation},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=Y_\hbar(\mathfrak{sl}(m|n));
+m\ne n;
+\mathrm{sub\text{-}Sugawara\ line};
+\fpsl(2|2)\ \mathrm{excluded};
+\mathrm{Berezinian\ shift\ magnitude\ conditional})$\textup{]}
+Fix the standard module $\mathbb C^{m|n}$ with parity vector
+\begin{equation}
+\label{eq:super-yangian-ledger-parity}
+p_i=
+\begin{cases}
+0,&1\le i\le m,\\
+1,&m<i\le m+n,
+\end{cases}
+\qquad
+|E_{ij}|=p_i+p_j\pmod 2 .
+\end{equation}
+The supertrace normalization is
+\begin{equation}
+\label{eq:super-yangian-ledger-supertrace}
+\str(E_{ij}E_{ji})=(-1)^{p_i},\qquad
+\str(X)=\sum_i(-1)^{p_i}X_{ii}.
+\end{equation}
+With $h_s^\vee=m-n$ and Feigin--Frenkel reflection
+$k^\vee=-k-2h_s^\vee$, Proposition~\ref{prop:super-berezinian-central-automorphism}
+proves the supertrace cancellation
+\begin{equation}
+\label{eq:super-yangian-ledger-supertrace-sum}
+\kappa^{\str}_{m|n}(k)+\kappa^{\str}_{m|n}(k^\vee)=0.
+\end{equation}
+The Berezinian normalization is recorded separately:
+\begin{equation}
+\label{eq:super-yangian-ledger-berezinian-shift}
+\kappa^{\sBer}_{m|n}(k)
+=\kappa^{\str}_{m|n}(k)+\frac12\max(m,n),
+\qquad
+\kappa^{\sBer}_{m|n}(k)+\kappa^{\sBer}_{m|n}(k^\vee)=\max(m,n),
+\end{equation}
+but \eqref{eq:super-yangian-ledger-berezinian-shift} has the status of
+Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}; Nazarov
+centrality and Gow non-degeneracy do not by themselves prove the
+shadow-depth shift magnitude.
+
+Finally, the ordered bar differential uses the desuspended total
+degree. For homogeneous inputs $x,y$ with cohomological degrees
+$|x|,|y|$ and super parities $p_x,p_y$, the transposition sign is
+\begin{equation}
+\label{eq:super-yangian-ledger-bar-sign}
+(-1)^{(|x|-1+p_x)(|y|-1+p_y)}.
+\end{equation}
+Thus every super-Yangian bar computation must specify the parity vector,
+the supertrace normalization, the Berezinian normalization if used, and
+the desuspended sign convention before any scalar shadow comparison.
+\end{proposition}
+
 \phantomsection
 \label{lem:super-trace-berezinian-bridge}
 
@@ -335,7 +398,7 @@ $1, 2$ indicate the tensor factor in
 $\mathrm{End}(V) \otimes \mathrm{End}(V) \otimes Y(\mathfrak{g})$.
 Expanding in modes
 $T_{ij}(u) = \delta_{ij} + \hbar \sum_{r \geq 0} T_{ij}^{(r)} u^{-r-1}$,
-the RTT relation \eqref{eq:rtt-relation} is equivalent to:
+the RTT relation \eqref{eq:rtt-relation-yang} is equivalent to:
 \begin{equation}\label{eq:rtt-modes}
 [T_{ij}^{(r+1)}, T_{kl}^{(s)}]
 - [T_{ij}^{(r)}, T_{kl}^{(s+1)}]
@@ -350,6 +413,148 @@ The isomorphism with the Drinfeld presentation
 $J_a^{(0)} = \sum_{i,j} \rho(e_a)_{ij}\, T_{ij}^{(0)}$
 and higher modes from the coproduct structure.
 \end{definition}
+
+\begin{proposition}[Drinfeld--RTT presentation comparison map;
+\ClaimStatusProvedElsewhere]
+\label{prop:drinfeld-rtt-presentation-comparison}
+\index{Yangian!Drinfeld--RTT comparison}
+\index{RTT presentation!comparison with Drinfeld presentation}
+For the standard type-$A$ Yangian, and for the normalized classical
+RTT presentations of types $B,C,D$, the comparison from the RTT/FRT
+presentation to Drinfeld's presentation is a filtered algebra
+isomorphism
+\[
+\Psi_{\mathrm{RTT}\to\mathrm{Dr}}\colon
+A^{\mathrm{RTT}}_\hbar(\fg,V_0)_{\mathcal N}
+\xrightarrow{\;\sim\;}
+Y_\hbar(\fg)_{\mathrm{Dr}},
+\]
+where $\mathcal N$ is the quantum-determinant or
+orthogonal/symplectic determinant normalization.  In type~$A$ the map
+is obtained by Gauss decomposition
+$T(u)=F(u)H(u)E(u)$: the diagonal series give Drinfeld Cartan
+currents, the adjacent upper and lower triangular entries give the
+Drinfeld $e_i(u)$ and $f_i(u)$ currents, and the determinant
+normalization removes the central $\mathfrak{gl}$ series.  Molev
+\cite[Theorems~3.2.1, 4.2.1, 4.3.1, 4.4.1]{molev-yangians}
+proves the corresponding classical-type presentation theorems.
+\end{proposition}
+
+\begin{remark}[No presentation transport without $\Psi_{\mathrm{RTT}\to\mathrm{Dr}}$]
+\label{rem:no-drinfeld-rtt-transport-without-comparison}
+\index{Yangian!presentation transport firewall}
+The map in
+Proposition~\ref{prop:drinfeld-rtt-presentation-comparison} is the
+comparison map required before an RTT relation-space computation can
+be read as a statement about an abstract Drinfeld second-presentation
+Yangian.  For exceptional types, or for a finite module packet not
+covered by the standard presentation theorem, the map
+$\Psi_{\mathrm{RTT}\to\mathrm{Dr}}$ is part of the hypothesis package;
+without it, the RTT calculation remains a calculation in the chosen
+finite RTT/FRT window.
+\end{remark}
+
+\begin{proposition}[Yangian RTT finite-window prerequisite package;
+\ClaimStatusConditional]
+\label{prop:yangian-rtt-finite-window-prerequisite-package}
+\index{Yangian!RTT finite-window prerequisite package}
+\index{RTT presentation!finite-window prerequisite package}
+\textup{[}Type signature:
+$(\mathrm{Open/line},\mathrm{ordered\ RTT/FRT\ presentation},
+\mathrm{levels}=1\leftrightarrow2\to4,
+\mathrm{hypothesis\ package}=\mathrm{ordered\ residue}
++\mathrm{QYBE/RTT\ quantization}
++\mathrm{finite\ RTT\ packet}
++\mathrm{PBW}
++\mathrm{Drinfeld/RTT\ comparison}
++\mathrm{completed\ spectral\ tower})$\textup{].}
+A Yangian duality or RTT relation-space computation in this chapter may
+be read as a statement about the ordered bar Koszul dual only after the
+following package has been fixed.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Ordered kernel before scalar shadow.}
+ The primary two-point datum is the collision kernel
+ $K_A^{\mathrm{coll}}(z)$ of
+ Construction~\ref{constr:r-matrix-monodromy-vol1}.  Its homotopy
+ coinvariant is $q_2(K_A^{\mathrm{coll}})$, and the scalar lane uses
+ $\tau_{A,2}^{\mathrm{res}}q_2(K_A^{\mathrm{coll}})$.
+
+\item \emph{CYBE and quantization.}
+ The classical Yang--Baxter equation is the flatness equation
+ \eqref{eq:cybe-vol1} for the ordered Kohno connection, supplied in
+ the examples by the Arnold relation for logarithmic forms together
+ with the infinitesimal braid relations.  A quantum kernel
+ $R_A(z)=\id+\hbar r_A(z)+O(\hbar^2)$ must separately satisfy the
+ spectral QYBE \eqref{eq:qybe-ordered-rkernel-A}; the passage
+ $r_A\rightsquigarrow R_A$ is a DK/EK/KZ or RTT/FRT quantization datum,
+ not a formal consequence of the CYBE.
+
+\item \emph{Finite RTT window and spectral Laurent completion.}
+ A finite-dimensional Yangian module packet is the data of
+ Definition~\ref{def:finite-yangian-module-packet}.  The finite
+ window
+ \[
+ A^{\mathrm{RTT}}_{\le N}(K)
+ =
+ T(V_{\le N})/\langle\operatorname{im}\Phi_{K,\le N}\rangle
+ \]
+ is the completed spectral-Laurent object of
+ Definition~\ref{def:finite-rtt-window-spectral-completion}; no
+ uncompleted direct sum over all RTT modes is used.
+
+\item \emph{Trace pairing and inverse-kernel relation space.}
+ The trace pairing on a finite RTT packet is nondegenerate by
+ Proposition~\ref{prop:finite-rtt-trace-pairing-nondegenerate}.  The
+ finite relation-space condition is
+ \[
+ R_{\le N}^{\perp}
+ =
+ \operatorname{im}\Phi_{R_\hbar^{-1},\le N}
+ \]
+ under that trace pairing, followed by scalar Laurent gauge
+ $R_\hbar^{-1}\sim R_{-\hbar}$ in the completed spectral ring.
+
+\item \emph{PBW and windowwise bar-cobar recovery.}
+ PBW compatible with the RTT filtration is part of
+ Proposition~\ref{prop:yangian-koszul}; windowwise recovery is the
+ completed statement of Corollary~\ref{cor:yangian-bar-cobar}.
+
+\item \emph{Drinfeld second presentation.}
+ Transfer from an RTT/FRT computation to Drinfeld's presentation uses
+ the comparison map
+ $\Psi_{\mathrm{RTT}\to\mathrm{Dr}}$ of
+ Proposition~\ref{prop:drinfeld-rtt-presentation-comparison}.  Without
+ this map, the computation remains a finite RTT/FRT-window statement.
+
+\item \emph{Low-rank proved surfaces.}
+ The type-$A_1$ finite-window inverse-kernel theorem is
+ Theorem~\ref{thm:yangian-koszul-dual}; the type-$A_2$ finite-window
+ continuous-dual surface is Corollary~\ref{cor:sl3-finite-rtt-dual}.
+
+\item \emph{Completions and module surface.}
+ Affine Yangians are read in the completion of
+ Definition~\ref{def:affine-yangian-completion}, and shifted Yangians
+ are read in the completion of
+ Definition~\ref{def:shifted-yangian-completion}.  Their reduced bar coalgebras
+ are conilpotent by bar degree, with finite-dimensional homogeneous
+ chain spaces after bounding bar degree and the mode/spectral window,
+ by Proposition~\ref{prop:yangian-completed-bar-finite-pieces}.  The
+ generic spectral-parameter module surface is
+ Definition~\ref{def:generic-spectral-parameter-surface}.
+
+\item \emph{Exceptional quarantine.}
+ Exceptional types require the separate obstruction theorem
+ Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}.
+ A finite-dimensional $\mathfrak g$-module, a generic Yang--Baxter
+ check, or an orthogonal-style $P,Q$ matrix does not by itself supply
+ the exceptional RTT module packet, PBW theorem, inverse-kernel
+ orthogonal-complement identity, or tower compatibility.
+\end{enumerate}
+Thus ``Yangian duality'' below means finite-window completed
+continuous duality on the named RTT packet, transported to the
+Drinfeld second presentation only after the comparison map is part of
+the hypothesis package.
+\end{proposition}
 
 \begin{theorem}[RTT R-matrices for all classical types; \ClaimStatusConditional]
 \label{thm:rtt-all-classical-types}
@@ -430,7 +635,7 @@ In all four cases, the Yang--Baxter equation
 R_{12}(u{-}v)\, R_{13}(u)\, R_{23}(v)
 = R_{23}(v)\, R_{13}(u)\, R_{12}(u{-}v)
 \end{equation}
-holds.  The RTT relation~\eqref{eq:rtt-relation} with the
+holds.  The RTT relation~\eqref{eq:rtt-relation-yang} with the
 type-specific kernel gives the standard RTT presentation for type~A
 and the extended orthogonal/symplectic RTT Yangians in types
 $B,C,D$; imposing the usual central determinant normalization
@@ -561,7 +766,7 @@ symmetric chiral algebra.
 
 \begin{proof}
 \emph{Step~1: Quadraticity.}
-The RTT relation~\eqref{eq:rtt-relation} is quadratic in the entries
+The RTT relation~\eqref{eq:rtt-relation-yang} is quadratic in the entries
 of $T$.  Expanding
 $T_{ij}(u)=\delta_{ij}+\hbar\sum_{r\ge0}T_{ij}^{(r)}u^{-r-1}$
 gives the homogeneous mode relations~\eqref{eq:rtt-modes} on each
@@ -590,7 +795,7 @@ $\Einf$-locality constraint without forgetting the $R$-matrix.
 \end{proof}
 
 \begin{remark}[Presentations and quadraticity]\label{rem:yangian-presentations}
-Whether the Yangian is ``quadratic'' depends on the presentation. In the \emph{RTT presentation} (Definition~\ref{def:yangian-rtt}), the defining relation \eqref{eq:rtt-relation} is quadratic in $T$, so standard quadratic Koszul duality (mechanism~(iii) of Remark~\ref{rem:three-koszul-mechanisms}) applies directly. In the \emph{Drinfeld presentation} (Definition~\ref{def:yangian}), the ``terrific relation'' is cubic in the generators, so Koszul duality requires nilpotent completion \ifannalsedition\else
+Whether the Yangian is ``quadratic'' depends on the presentation. In the \emph{RTT presentation} (Definition~\ref{def:yangian-rtt}), the defining relation \eqref{eq:rtt-relation-yang} is quadratic in $T$, so standard quadratic Koszul duality (mechanism~(iii) of Remark~\ref{rem:three-koszul-mechanisms}) applies directly. In the \emph{Drinfeld presentation} (Definition~\ref{def:yangian}), the ``terrific relation'' is cubic in the generators, so Koszul duality requires nilpotent completion \ifannalsedition\else
 (Appendix~\ref{app:nilpotent-completion})
 \fi.
 The two presentations yield isomorphic algebras but different Koszul dual
@@ -606,7 +811,7 @@ relative to a formal additive coordinate or to an auxiliary spectral
 line, is an $\Eone$-factorization algebra on the ordered Ran chart
 (Definition~\ref{def:e1-chiral}) whose local operator algebra, in
 the RTT presentation, reproduces the Yangian $R(u)$-matrix
-relations~\eqref{eq:rtt-relation}.  In a coordinate chart the
+relations~\eqref{eq:rtt-relation-yang}.  In a coordinate chart the
 spectral parameter may be identified with the ordered coordinate
 difference $u=z_1-z_2$; globally it is part of the spectral datum.
 Concretely, its bar complex
@@ -692,12 +897,14 @@ d(T_{ij}^{(r)*} \otimes \eta_{12}) = \sum_{k} \bigl(T_{ik}^{(r)*} \otimes T_{kj}
 \end{equation}
 This is the quadratic dual of the RTT relation~\eqref{eq:rtt-modes}: the bar differential encodes the orthogonal complement of the relations under the chiral pairing.
 
-\emph{Bar complex structure.} Since the RTT relation is quadratic, the
-finite-window intrinsic bar-dual coalgebra
-$A^i=H^\bullet\barB(A)$ is determined in bar degrees $\leq 2$ by
-cogenerators $V^*$ and corelations $R^\perp$. The Koszul dual algebra
-$A^!$ is obtained only after taking the continuous dual
-$(A^i)^{\vee,\mathrm{cont}}$. If the algebra is Koszul
+\emph{Bar complex structure.} Since the RTT relation is quadratic,
+the presentation coalgebra
+$A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and comparison
+$q_A\colon A^{\mathrm i}\to\barB_X(A)$ are defined in every finite
+window.  On the Koszul locus, $H^\bullet(q_A)$ computes bar cohomology
+from this model. The strict quadratic algebra is the continuous dual
+$(A^{\mathrm i})^{\vee,\mathrm{cont}}$, while the chosen Yangian
+partner enters through $\nu_A\colon K_X(A)\to A^!$. If the algebra is Koszul
 \textup{(}i.e.,
 $\mathrm{Ext}^{i,j}_A(\mathbb{C}, \mathbb{C})=0$ for $i\neq j$\textup{)},
 then the bar-cobar counit recovers $A$ from $\barB(A)$; that recovery is
@@ -718,7 +925,13 @@ The differential $d\colon \bar{B}^2 \to \bar{B}^1$ is the dual of the inclusion 
 
 \subsection{Koszul dual identification}
 
-For the Heisenberg algebra, Koszul duality exchanged Lie-type and Com-type: $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}). In the Yangian setting, both sides are associative ($\Eone$), and Verdier duality inverts the $R$-matrix instead of exchanging operadic types.
+For the Heisenberg algebra, Koszul duality exchanges Lie-type and
+Com-type only on the curved second-kind lane:
+$\mathcal{H}_k^!\simeq
+(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$ for \(k\ne0\)
+(\S\ref{sec:frame-koszul-dual}). In the Yangian setting, both sides
+are associative ($\Eone$), and Verdier duality inverts the
+$R$-matrix instead of exchanging operadic types.
 
 \begin{theorem}[Finite-window Yangian inverse-kernel duality; \ClaimStatusProvedHere]\label{thm:yangian-koszul-dual}
 \index{Yangian!Koszul dual}
@@ -830,6 +1043,61 @@ $Y_\hbar(\mathfrak{sl}_2)$ is
 $Y_{-\hbar}(\mathfrak{sl}_2)$ on the stated windowwise Koszul locus.
 \end{proof}
 
+\begin{corollary}[\texorpdfstring{$Y_\hbar(\mathfrak{sl}_3)$}{Yh(sl3)}
+finite-window RTT dual; \ClaimStatusProvedHere]
+\label{cor:sl3-finite-rtt-dual}
+\index{Yangian!sl3@$\mathfrak{sl}_3$!finite RTT dual}
+For the fundamental type-$A_2$ RTT packet
+$V_0=\mathbb C^3$ with Yang kernel
+$R_\hbar(u)=1-\hbar P/u$, every finite RTT window satisfies
+\[
+A_N^{\mathrm{RTT}}\bigl(R_\hbar\bigr)^!
+\cong
+A_N^{\mathrm{RTT}}\bigl(R_\hbar^{-1}\bigr)
+\cong
+A_N^{\mathrm{RTT}}\bigl(R_{-\hbar}\bigr)
+\]
+in the completed spectral Laurent ring.  After the quantum determinant
+normalization and the Drinfeld--RTT comparison
+of Proposition~\ref{prop:drinfeld-rtt-presentation-comparison}, this
+is the finite-window continuous-dual statement
+\[
+Y_\hbar(\mathfrak{sl}_3)^{!,\mathrm{ch}}
+\cong
+Y_{-\hbar}(\mathfrak{sl}_3)^{\mathrm{ch}}
+\]
+on the stated RTT completion surface.
+\end{corollary}
+
+\begin{proof}
+The packet is finite in each window because
+$\End(\mathbb C^3)$ has dimension~$9$ and the window keeps only
+finitely many modes.  The trace pairing is nondegenerate by
+Proposition~\ref{prop:finite-rtt-trace-pairing-nondegenerate}.  The
+Yang kernel has the same involutive permutation operator as in the
+$\mathfrak{sl}_2$ computation: $P^2=1$ on
+$\mathbb C^3\otimes\mathbb C^3$.  Hence
+\[
+R_\hbar(u)^{-1}
+=
+\frac{u}{u-\hbar P}
+=
+\left(1-\frac{\hbar^2}{u^2}\right)^{-1}R_{-\hbar}(u),
+\]
+so scalar Laurent gauge identifies the inverse-kernel and sign-reversed
+RTT relation spaces.  The explicit $9\times9$ matrix realization,
+YBE/RTT checks, quantum determinant calculation, and
+$\operatorname{Sym}^2\mathbb C^3\oplus\wedge^2\mathbb C^3$ spectral
+decomposition are implemented in
+\texttt{compute/lib/gl3\_yangian\_verification\_engine.py},
+\texttt{compute/lib/yangian\_sl3\_rtt.py}, and
+\texttt{compute/lib/theorem\_sl3\_yangian\_r\_matrix\_engine.py}.
+Those computations give the advertised finite-window
+$\mathfrak{sl}_3$ RTT dual surface; the passage to the abstract
+Drinfeld presentation uses
+Proposition~\ref{prop:drinfeld-rtt-presentation-comparison}.
+\end{proof}
+
 \begin{corollary}[RTT associated-graded classical limit; \ClaimStatusProvedHere]\label{cor:yangian-classical-self-dual}
 On the abelian associated-graded RTT special fibre, obtained by
 rescaling the RTT generators before setting $\hbar=0$, the quadratic
@@ -861,7 +1129,8 @@ affine Kac--Moody algebras. The Feigin--Frenkel involution is a
 level shift within the affine family; Koszul duality is a bar-cobar
 construction. For Heisenberg algebras the two produce the same modular
 characteristic $\kappa(H_k^!) = -k = \kappa(H_{-k})$, but
-$H_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \neq H_{-k}$
+$H_k^!\simeq(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)
+\neq H_{-k}$
 \textup{(}Theorem~\textup{\ref{thm:heisenberg-not-self-dual}}\textup{)};
 for the Yangian, the type-A finite-window completed RTT locus has
 $Y(\fg)^! \simeq Y_{-\hbar}(\fg)$ after the bar-dual coalgebra is
@@ -1624,6 +1893,87 @@ completion packet remains outside symmetric averaging.
 
 \section{Shifted Yangians}
 \label{sec:shifted-yangians}
+
+\begin{definition}[Affine Yangian completion; \ClaimStatusDefinitional]
+\label{def:affine-yangian-completion}
+\index{affine Yangian!completion}
+When an affine Yangian occurs in this manuscript, the object used is
+not the raw direct sum of all current modes.  The
+\emph{completed affine Yangian}
+\[
+\widehat Y^{\mathrm{aff}}_\hbar(\fg)
+\]
+is the inverse limit over finite mode and finite spectral-pole
+windows of the chosen affine-Yangian current presentation.  Equivalently,
+one first imposes the RTT/shuffle/current relations in every finite
+window, then completes with respect to the ideal generated by modes
+outside the window.  All bar, Hochschild, and Koszul-dual operations
+on affine Yangian lineages are read in this completed topology.
+\end{definition}
+
+\begin{definition}[Shifted Yangian completion; \ClaimStatusDefinitional]
+\label{def:shifted-yangian-completion}
+\index{shifted Yangian!completion}
+For a coweight~$\mu$, the \emph{completed shifted Yangian}
+\[
+\widehat Y_{\mu,\hbar}(\fg)
+\]
+is the inverse limit of finite mode windows of
+$Y_{\mu,\hbar}(\fg)$ in which the rational Drinfeld currents
+$H_i(u)$ are truncated by pole order and the numerator/denominator
+degrees prescribed by~$\mu$ are held fixed.  The completion is
+separated and filtered by mode degree together with spectral pole
+order.  The raw algebra $Y_{\mu,\hbar}(\fg)$ is used only as a dense
+presentation of this completed object.
+\end{definition}
+
+\begin{proposition}[Finite-window bar conilpotence for Yangian completions;
+\ClaimStatusProvedHere]
+\label{prop:yangian-completed-bar-finite-pieces}
+\index{bar coalgebra!Yangian completion finite windows}
+Let $\widehat Y$ denote either
+$\widehat Y^{\mathrm{aff}}_\hbar(\fg)$ or
+$\widehat Y_{\mu,\hbar}(\fg)$ on a fixed finite mode and spectral-pole
+window.  The reduced bar coalgebra
+\[
+\barB(\widehat Y)=T^c(s^{-1}\overline{\widehat Y})
+\]
+is conilpotent by bar degree.  Moreover, after bounding bar degree and
+the mode/spectral window, every homogeneous chain space is
+finite-dimensional.
+\end{proposition}
+
+\begin{proof}
+The cofree tensor coalgebra has deconcatenation coproduct.  Iterating
+the reduced coproduct strictly lowers tensor length, so a bar word of
+length~$m$ is killed after more than~$m$ iterations; this is
+conilpotence by bar degree.  In a fixed mode and spectral-pole window
+there are only finitely many generators, and a fixed bar degree uses
+only finitely many tensor words in those generators.  Hence each
+bounded window has finite-dimensional homogeneous chain spaces.  The
+completed object is the inverse limit of these finite windows; the
+claim is not a raw finite-dimensionality assertion about the unbounded
+direct sum of all modes.
+\end{proof}
+
+\begin{definition}[Generic spectral-parameter module surface;
+\ClaimStatusDefinitional]
+\label{def:generic-spectral-parameter-surface}
+\index{Yangian!generic spectral-parameter surface}
+The \emph{generic spectral-parameter module surface} is the completed
+subcategory generated, in each finite window, by tensor products of
+evaluation modules whose spectral parameters avoid all resonance
+diagonals
+\[
+a_i-a_j\notin \hbar\mathbb Z_{\mathrm{res}}.
+\]
+It is completed by the same finite-window inverse limit as the
+Yangian algebra itself.  On this surface the RTT kernels are invertible
+coefficientwise, the braid operators vary locally constantly away from
+the resonance diagonals, and tensor products remain in the
+evaluation-generated core.  This is a completed generic surface, not
+the raw category of all modules at arbitrary spectral parameters.
+\end{definition}
 
 \subsection{Definition}
 
@@ -4282,16 +4632,19 @@ The Yangian foundations developed here cover three classical taxa --
 Drinfeld 1985 $Y_\hbar(\mathfrak g)$ via new realisation, RTT
 $U^{\mathrm{RTT}}(R_{\mathrm{rat}})$, and Drinfeld 1986 current algebra
 $Y^{\mathrm{curr}}(\mathfrak g)$ -- all indexed by finite-type simple
-Lie algebras $\mathfrak g$. The K3 chiral Hall--Drinfeld double
+Lie algebras $\mathfrak g$. The K3 chiral Hall--Drinfeld target
 \[
-\mathbf H_{\Delta_5} \;=\; \mathcal D_\hbar\!\bigl(\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E}),\;
+\mathbf H_{\Delta_5}^{\mathrm{tgt}} \;:=\; \mathcal D_\hbar\!\bigl(\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E}),\;
 \widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}^{\mathrm{un}}/\eta^{24}],\;
 R_{\mathrm{Sieg,dyn}}\bigr)
 \]
-occupies a fourth taxonomic slot, distinct from the three classical
-taxa above. It is indexed not by a finite-type $\mathfrak g$ but by the
-K3 Mukai lattice $\Lambda_{\mathrm{Muk}} = II_{4,20}$, with generators
-of Hall-theoretic (CoHA) type rather than Cartan-theoretic type. The
+occupies a fourth taxonomic slot only as a conditional recognition
+target until the finite Hall/CoHA source, compact Hopf pairing,
+PBW/no-extra-relations theorem, source-to-target comparison maps, and
+Mittag--Leffler exact inverse limit are supplied. It is indexed not by
+a finite-type $\mathfrak g$ but by the K3 Mukai lattice
+$\Lambda_{\mathrm{Muk}} = II_{4,20}$, with generators of
+Hall-theoretic (CoHA) type rather than Cartan-theoretic type. The
 Igusa symbol here is
 $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$, the unnormalised square of the
 primitive weight-$5$ BKM denominator. It is not the
@@ -4317,7 +4670,7 @@ change of taxon:
 \begin{array}{ccc}
 Y_\hbar(\mathfrak g) & \xrightarrow{\;\mathrm{RTT}\;} & U^{\mathrm{RTT}}(R_{\mathrm{rat}}) \\
 \downarrow{\scriptstyle\Phi} & & \downarrow{\scriptstyle R_{\mathrm{rat}}\to R_{\mathrm{Sieg,dyn}}} \\
-\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E}) & \xrightarrow{\;\mathcal D_\hbar\;} & \mathbf H_{\Delta_5}
+\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E}) & \xrightarrow{\;\mathcal D_\hbar\;} & \mathbf H_{\Delta_5}^{\mathrm{tgt}}
 \end{array}
 \]
 where $\Phi$ abbreviates Vol~III's two-stage CY-to-chiral factorisation
@@ -4326,8 +4679,10 @@ $\Phi_3^{(\Sigma_2,E^{\mathrm{nod,sm}}_{24})}
 (Stage~1 canonical $E_3$-holomorphic factorisation algebra on
 $\mathrm{K3} \times E$, Stage~2 specialisation to the Kodaira
 reference curve $E^{\mathrm{nod,sm}}_{24}$ via factorisation
-homology over a $2$-cycle), and $\mathcal D_\hbar$ is the
-Heisenberg-double construction twisted by the Siegel--Borcherds associator.
+homology over a $2$-cycle), and $\mathcal D_\hbar$ names the
+target Hall--Drinfeld double construction twisted by the
+Siegel--Borcherds comparison datum once the recognition package
+exists.
 Thus finite ordered RTT data and scalar $\kappa$-data do not by
 themselves promote to the K3 Hall--Drinfeld double; the promotion
 requires the Vol~III Hall/CoHA and Borcherds-divisor inputs.

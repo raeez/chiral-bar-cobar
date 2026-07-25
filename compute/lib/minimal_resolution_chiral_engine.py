@@ -429,8 +429,9 @@ def free_fermion_minimal_resolution(max_degree: int = 10) -> MinimalResolution:
 def heisenberg_dual_hilbert(n: int) -> int:
     """Coefficient of t^n in P_{H_k!}(t).
 
-    H_k^! = Sym^ch(V*) has Hilbert series matching the bar cohomology
-    dimensions: 1 at n=1 and p(n-2) at n >= 2.
+    This is the weight Hilbert series of the associated-graded shadow
+    of the curved second-kind Sym^ch(V*[1]) branch.  It matches the bar
+    cohomology dimensions: 1 at n=1 and p(n-2) at n >= 2.
     """
     return heisenberg_dual_dim(n)
 

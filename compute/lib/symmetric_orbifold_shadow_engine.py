@@ -79,7 +79,7 @@ holographic package.
      - B(A) = T^c(s^{-1}bar A), distinct from A, A^i, A!, and Z^der_ch(A)
      - A^i = H^bullet B(A), the Koszul dual coalgebra
      - A! = (A^i)^vee by Verdier duality, with only kappa(A!) recorded here
-     - C / Z^der_ch(A) = bulk-observable slot, not the bar coalgebra or A!
+     - C / Z^der_ch(A) = closed-sector-observable slot, not the bar coalgebra or A!
      - r(z) = collision residue (genus-0 binary shadow)
      - Theta_A = bar-intrinsic MC element
      - nabla^hol = shadow connection
@@ -102,7 +102,7 @@ holographic package.
    holography framework.  Their boundary algebra at genus 0 matches the
    chiral algebra of the free symmetric orbifold in the large-N limit.
    Their comparison concerns the large-N boundary algebra and the
-   bulk/derived-centre slot.  It is not an identification of A! with the bulk.
+   closed-sector/derived-centre slot.  It is not an identification of A! with the bulk.
 
 10. SECOND-QUANTIZED PARTITION FUNCTION AND BORCHERDS PRODUCTS
     sum_N p^N Z(Sym^N(K3)) = 1/Phi_{10}(Omega) (DMVV/Borcherds)
@@ -915,7 +915,7 @@ def holographic_datum_ads3_t4(N: int) -> HolographicDatum:
             f"A^!({boundary}) = (A^i)^vee; kappa(A^!) = {-kap}"
         ),
         bulk_slot=(
-            f"C / Z_ch^der({boundary}): Kodaira-Spencer bulk-observable "
+            f"C / Z_ch^der({boundary}): Kodaira-Spencer closed-sector-observable "
             "comparison slot"
         ),
         r_matrix="r(z) = Omega/z at the free symmetric-orbifold scalar level",
@@ -950,7 +950,7 @@ def holographic_datum_ads3_k3(N: int) -> HolographicDatum:
         koszul_dual_algebra=(
             f"A^!({boundary}) = (A^i)^vee; kappa(A^!) = {-kap}"
         ),
-        bulk_slot=f"C / Z_ch^der({boundary}): bulk-observable slot",
+        bulk_slot=f"C / Z_ch^der({boundary}): closed-sector-observable slot",
         r_matrix="r(z) = Omega/z at the free symmetric-orbifold scalar level",
         theta="Theta_A, scalar shadow projection with kappa = 2N",
         holomorphic_connection="nabla^hol = d - Sh(Theta_A), scalar flatness slot",
@@ -1016,7 +1016,7 @@ def costello_paquette_comparison(N: int) -> Dict[str, Any]:
             "B(A)": "bar coalgebra T^c(s^-1 bar A)",
             "A^i": "H^bullet B(A), Koszul dual coalgebra",
             "A^!": "Verdier dual algebra (A^i)^vee; scalar kappa stored as kappa_dual",
-            "Z_ch^der(A)": "derived-centre/bulk-observable slot, not A^i or A^!",
+            "Z_ch^der(A)": "derived-centre/closed-sector-observable slot, not A^i or A^!",
             "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
         },
         "costello_paquette_match": {

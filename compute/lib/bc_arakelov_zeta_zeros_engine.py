@@ -1163,14 +1163,16 @@ def beilinson_bloch_height_pairing(
       <Q_1(A), Q_1(A!)>_{BB} = kappa * kappa' * (lambda_1^FP)^2 * deg_Ar(lambda_1)
 
     CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
-    CAUTION (AP33): H_k^! has kappa = -k (shadow level), but H_k^! != H_{-k}.
+    CAUTION (AP33): H_k^! has scalar kappa = -k at shadow level; at
+    k != 0 the object is the curved second-kind Sym^ch(V*[1]) branch,
+    not H_{-k} and not the uncurved polynomial centre.
     """
     kap = kappa_exact_float(family, **params)
 
     # Compute kappa of the Koszul dual
     fam = family.lower()
     if fam == "heisenberg":
-        kap_dual = -kap  # kappa(H_k^!) = -k at shadow level (AP33)
+        kap_dual = -kap  # scalar kappa(H_k^!) = -k at shadow level (AP33)
     elif fam == "virasoro":
         c = float(params.get("c", 1))
         kap_dual = (26.0 - c) / 2.0  # Vir_c^! = Vir_{26-c}

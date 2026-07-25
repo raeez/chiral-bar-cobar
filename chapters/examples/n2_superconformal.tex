@@ -1,594 +1,373 @@
-\chapter{\texorpdfstring{The $\mathcal{N}=2$ superconformal algebra}{The N=2 superconformal algebra}}\label{chap:n2-sca}
+\chapter{\texorpdfstring{The $\mathcal{N}=2$ superconformal algebra}{The N=2 superconformal algebra}}
+\label{chap:n2-sca}
 
-The $\mathcal{N}=2$ superconformal algebra is the definitive
-witness in the standard landscape that chiral Koszulness and
-Chevalley--Eilenberg Koszulness are genuinely distinct properties:
-the CE complex has $H^2_{\mathrm{CE}} \neq 0$ at conformal
-weight~$3$, yet the chiral bar complex has $H^2_{\mathrm{bar}} = 0$.
-The sub-leading OPE modes in the chiral bar differential, invisible
-to the CE complex, provide coboundary contributions that kill the
-CE cocycles.
+The $\mathcal N=2$ superconformal algebra offers a clean test of the
+distinction between OPE data, a coset presentation, and a modular
+characteristic.  Its Lie conformal algebra is explicit.  Its unitary
+minimal models admit the Kazama--Suzuki realization.  A genus-one
+curvature comparison for that coset is a further theorem.
 
-The W-type complementarity sum
-$\kappa(c) + \kappa(6{-}c) = 1$ is an instance of the universal
-Koszul-conductor identity
-$\varkappa := \kappa + \kappa' = \varrho \cdot K$ analysed in
-Chapter~\ref{chap:universal-conductor} (where
-$K := c + c^! = -c_{\mathrm{ghost}}(\BRST)$ is the Trinity ghost-charge
-conductor and $\varkappa$ is the scalar complementarity); here
-$\varrho_{\mathcal{N}=2} = 1$ and $\varkappa_{\mathcal{N}=2} = K_{\mathcal{N}=2} = 1$
-\textup{(}distinct from the Virasoro scalar $\varkappa(\Vir) = 13$ with
-Trinity $K(\Vir) = 26$, and from the Bershadsky--Polyakov Trinity
-$K(\mathrm{BP}) = 196$ with scalar $\varkappa(\mathrm{BP}) = 98/3$;
-cf.\ the per-family table in
-Chapter~\ref{chap:universal-conductor}\textup{)}.
-The multi-channel shadow profile (\S\ref{sec:n2-multi-channel-shadow})
-inhabits all three of $\{\mathbf{G},\mathbf{L},\mathbf{M}\}$
-simultaneously across $J$-, $G$-, $T$-channels respectively; the
-overall class~$\mathbf{M}$ is governed by the deepest channel, in
-accord with the channel maximum rule of
-Chapter~\ref{chap:shadow-quadrichotomy-platonic}.
-
-The Kazama--Suzuki coset decomposition $\mathrm{SCA}_c \simeq
-\operatorname{Com}(\mathrm{U}(1),\, \widehat{\mathfrak{sl}}_{2,k}
-\otimes \psi\bar\psi)$ determines the modular characteristic
-$\kappa = (k{+}4)/4$; the Feigin--Frenkel involution
-$k \mapsto -k-4$ identifies the Koszul dual at central charge
-$c' = 6 - c$; the complementarity sum
-$\kappa(c) + \kappa(6{-}c) = 1$ is constant. The shadow obstruction
-tower has multi-channel structure: the $T$-channel is class~M
-(infinite shadow depth, as for Virasoro), the $J$-channel is class~G
-(Gaussian, terminating at degree~$2$), and the overall shadow class
-is~M, governed by the deepest channel. All five main theorems are
-verified.
+We use the following type signature throughout:
+\[
+ (\text{Open quadrant},\ \text{$\mathcal N=2$ OPE/coset presentation},\
+ \text{Beilinson levels }1\text{--}3,\
+ H_{\mathrm{KS}}+H_{\mathcal N=2}^{\mathrm{mod}}
+ +H_{\mathcal N=2}^{\mathrm{bar}}).
+\]
+The three packages name separate obligations.  The first constructs a
+coset comparison, the second transports genus-one traces, and the third
+controls the bar spectral sequence.
 
 \begin{table}[ht]
 \centering
-\small
-\caption{Five-theorem verification for the $\mathcal{N}=2$
-superconformal algebra at generic level
-$k \neq -2$.}\label{tab:n2-five-theorems}
-\begin{tabular}{llll}
+\caption{The five theorem lanes for the $\mathcal N=2$ family.}
+\label{tab:n2-five-theorems}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c p{5.2cm} p{4.4cm}@{}}
 \toprule
-\textbf{Theorem} & \textbf{Statement for $\mathrm{SCA}_c$}
- & \textbf{Status} & \textbf{Reference} \\
+Lane & Exact input & Present theorem status \\
 \midrule
-A (adjunction) &
- $\mathrm{SCA}_c^! \simeq \mathrm{SCA}_{6-c}$
- (Kazama--Suzuki involution $k \mapsto -k-4$)
- & Proved & Thm~\ref{thm:bar-cobar-verdier} \\
-B (inversion) &
- $\Omega(\barB(\mathrm{SCA}_c)) \xrightarrow{\sim}
- \mathrm{SCA}_c$
- & Proved & Thm~\ref{thm:bar-cobar-inversion-qi} \\
-C (complementarity) &
- $\kappa(c) + \kappa(6{-}c) = 1$
- & Proved & Prop~\ref{prop:n2-complementarity} \\
-D (modular char.) &
- $\kappa(\mathrm{SCA}_c)
- = \dfrac{6{-}c}{2(3{-}c)}
- = \dfrac{k{+}4}{4}$
- & Proved & Prop~\ref{prop:n2-kappa} \\
-H (chiral Hochschild) &
- $\mathrm{ChirHoch}^*(\mathrm{SCA}_c)$ polynomial
- & Proved & Thm~\ref{thm:hochschild-polynomial-growth} \\
+A & universal bar--cobar resolution & published in the pro-nilpotent
+Ran ambient; completed family realization under
+$H_{\mathrm{fact}}+H_{\mathrm{conv}}$ \\
+B & quadratic comparison $q_A\colon A^{\mathrm i}\to B(A)$ & conditional on $H_{\mathcal N=2}^{\mathrm{bar}}$ \\
+C & parameter reflection $c\mapsto6-c$ & arithmetic identity; modular lift conditional \\
+D & genus-one curvature $\kappa$ & open comparison under $H_{\mathcal N=2}^{\mathrm{mod}}$ \\
+H & chiral Hochschild support & open family retract problem \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\small
-\caption{Shadow archetype data for the $\mathcal{N}=2$
-superconformal algebra.}\label{tab:n2-shadow-archetype}
-\begin{tabular}{ll}
+\caption{Typed shadow data for the $\mathcal N=2$ algebra.}
+\label{tab:n2-shadow-archetype}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c c c p{5.2cm}@{}}
 \toprule
-\textbf{Invariant} & \textbf{Value} \\
+Generator & weight & parity & defining datum \\
 \midrule
-Class & M (mixed: $T$-channel $\infty$, $J$-channel G) \\
-Shadow depth $r_{\max}$ & $\infty$ \\
-$\kappa(\mathrm{SCA}_c)$ &
- $(6{-}c)/(2(3{-}c)) = (k{+}4)/4$ \\
-Central charge & $c = 3k/(k{+}2)$; \; $c' = 6 - c$ \\
-Complementarity & $\kappa + \kappa' = 1$ (W-type) \\
-Self-dual point & $c = 3$ ($k \to \infty$, free-field limit) \\
-Critical level & $k = -2$: Sugawara undefined \\
-$r$-matrix $r(z)$ & Multi-channel:
- $T$-channel has poles at $z^{-3}, z^{-1}$;
- $J$-channel has pole at $z^{-1}$ \\
-CE vs chiral bar &
- $H^2_{\mathrm{CE}} \neq 0$ at wt~$3$;
- $H^2_{\mathrm{bar}} = 0$ (chiral Koszul) \\
+$J$ & $1$ & even & $J(z)J(w)\sim \frac{c/3}{(z-w)^2}$ \\
+$G^+$ & $3/2$ & odd & charge $+1$ under $J$ \\
+$G^-$ & $3/2$ & odd & charge $-1$ under $J$ \\
+$T$ & $2$ & even & Virasoro field of central charge $c$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent
-The modular Koszul triple
-(Definition~\ref{def:modular-koszul-triple}) of the $\mathcal{N}=2$
-SCA at generic level $k \neq -2$ is
+The modular ledger is therefore
 \begin{equation}\label{eq:n2-triple}
-\mathfrak{T}_{\mathrm{SCA}}
-\;=\;
-\bigl(\,\mathrm{SCA}_c,\;\;
-\mathrm{SCA}_{6-c},\;\;
-r_{\mathrm{SCA}}(z)\,\bigr),
+ \bigl(c_{\mathcal N=2}(k),\,\kappa_{\mathcal N=2}(k),\,
+ K^\kappa_{\mathcal N=2}\bigr)
+ =\left(\frac{3k}{k+2},\,\text{open},\,\text{open}\right).
 \end{equation}
-where the $r$-matrix has two bosonic channels: a triple pole
-$(c/2)/z^3 + 2T/z$ from the Virasoro subalgebra and a simple
-pole $(c/3)/z$ from the $\mathrm{U}(1)$ current~$J$.
-
-The $\mathcal{N}=2$ SCA occupies a distinguished position in the
-shadow depth classification. The Virasoro subalgebra places it in
-class~M ($r_{\max} = \infty$), while the $\mathrm{U}(1)$ current
-gives a class~G channel ($r_{\max} = 2$) and the fermionic
-$G^+G^-$ pairing gives a class~L channel ($r_{\max} = 3$). The
-overall class is~M, governed by the deepest channel.
-Extended supersymmetry modifies the modular characteristic
-relative to the Virasoro value: the coset decomposition
-(Proposition~\ref{prop:n2-kappa}) yields
-$\kappa = (k{+}4)/4 = (6{-}c)/(2(3{-}c))$, which diverges
-at the free-field limit $c = 3$ and vanishes at $c = 6$
-(corresponding to $k = -4$).
-
 
 \section{OPE data and generators}
 
-The $\mathcal{N}=2$ superconformal algebra has four generators:
+Let $V_c^{\mathcal N=2}$ denote the universal Neveu--Schwarz vertex
+superalgebra at central charge $c$.  It is strongly generated by
 \begin{equation}\label{eq:n2-generators}
-T \;\;(\text{wt } 2,\; \text{bosonic}), \quad
-J \;\;(\text{wt } 1,\; \text{bosonic}), \quad
-G^+ \;\;(\text{wt } \tfrac{3}{2},\; \text{fermionic}), \quad
-G^- \;\;(\text{wt } \tfrac{3}{2},\; \text{fermionic}).
+ T\quad(h=2,\ \bar0),\qquad
+ J\quad(h=1,\ \bar0),\qquad
+ G^\pm\quad(h=\tfrac32,\ \bar1).
 \end{equation}
-The stress tensor~$T$ generates a Virasoro subalgebra at central
-charge~$c$; the $\mathrm{U}(1)$ current~$J$ has charge assignments
-$\mathrm{ch}(G^+) = +1$, $\mathrm{ch}(G^-) = -1$,
-$\mathrm{ch}(T) = \mathrm{ch}(J) = 0$; and the supercurrents
-$G^\pm$ are fermionic primaries of conformal weight~$\frac{3}{2}$.
-
-The OPE algebra is (OPE-mode convention: $a_{(n)}b$ denotes the
-coefficient of $(z{-}w)^{-(n+1)}$):
+In the convention of Kac~\cite{Kac98}, the singular OPEs are
 \begin{align}
-T_{(3)}T &= \tfrac{c}{2}, &
-T_{(1)}T &= 2T, &
-T_{(0)}T &= \partial T,
-\label{eq:n2-ope-TT} \\
-T_{(1)}J &= J, &
-T_{(0)}J &= \partial J,
-\label{eq:n2-ope-TJ} \\
-T_{(1)}G^\pm &= \tfrac{3}{2}\,G^\pm, &
-T_{(0)}G^\pm &= \partial G^\pm,
-\label{eq:n2-ope-TG} \\
-J_{(1)}J &= \tfrac{c}{3},
-\label{eq:n2-ope-JJ} \\
-J_{(0)}G^+ &= G^+, &
-J_{(0)}G^- &= -G^-,
-\label{eq:n2-ope-JG} \\
-G^+_{(2)}G^- &= \tfrac{c}{3}, &
-G^+_{(1)}G^- &= J, &
-G^+_{(0)}G^- &= T + \tfrac{1}{2}\,\partial J,
-\label{eq:n2-ope-GG} \\
-G^\pm_{(n)}G^\pm &= 0 \quad\text{for all } n.
+T(z)T(w)&\sim \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w},
+\label{eq:n2-ope-TT}\\
+T(z)J(w)&\sim \frac{J(w)}{(z-w)^2}+\frac{\partial J(w)}{z-w},
+\label{eq:n2-ope-TJ}\\
+T(z)G^\pm(w)&\sim \frac{\frac32G^\pm(w)}{(z-w)^2}
+ +\frac{\partial G^\pm(w)}{z-w},
+\label{eq:n2-ope-TG}\\
+J(z)J(w)&\sim \frac{c/3}{(z-w)^2},
+\label{eq:n2-ope-JJ}\\
+J(z)G^\pm(w)&\sim \frac{\pm G^\pm(w)}{z-w},
+\label{eq:n2-ope-JG}\\
+G^+(z)G^-(w)&\sim \frac{2c/3}{(z-w)^3}
+ +\frac{2J(w)}{(z-w)^2}
+ +\frac{2T(w)+\partial J(w)}{z-w},
+\label{eq:n2-ope-GG}\\
+G^\pm(z)G^\pm(w)&\sim 0.
 \label{eq:n2-ope-self}
 \end{align}
-The fermionic self-OPEs vanish identically. By vertex
-superalgebra skew-symmetry, the reversed zero-mode product is
-$G^-_{(0)}G^+ = T - \frac{1}{2}\,\partial J$
-(the sign on $\partial J$ flips relative to
-$G^+_{(0)}G^- = T + \frac{1}{2}\,\partial J$); the higher reversed
-modes $G^-_{(n)}G^+$ for $n \geq 1$ receive derivative corrections
-from the skew-symmetry formula.
+The opposite mixed OPE follows from vertex-superalgebra skew symmetry.
 
-\begin{proposition}[Kazama--Suzuki coset realization;
-\ClaimStatusProvedElsewhere{} \cite{KazamaSuzuki1989}]
-\label{rem:n2-kazama-suzuki}
-\index{Kazama--Suzuki coset}
-\index{N=2 superconformal algebra!coset realization}
-The $\mathcal{N}=2$ SCA at central charge
-$c = 3k/(k{+}2)$ is realized as the Kazama--Suzuki coset
-\begin{equation}\label{eq:n2-coset}
-\mathrm{SCA}_c
-\;\simeq\;
-\operatorname{Com}\bigl(\mathrm{U}(1),\;
-\widehat{\mathfrak{sl}}_{2,k} \otimes \psi\bar\psi\bigr),
+\begin{proposition}[$\mathcal N=2$ standard-family ledger;
+\ClaimStatusProvedElsewhere]
+\label{prop:n2-standard-family-ledger}
+The OPE package
+\begin{equation}\label{eq:n2-ledger-ope-package}
+ (T,J,G^+,G^-;c)
 \end{equation}
-where $\psi\bar\psi$ denotes a complex free fermion pair and
-$\mathrm{U}(1)$ is the diagonal current
-$J_{\mathrm{diag}} = J^3_{\mathrm{KM}} + :\!\psi\bar\psi\!:$\,.
-The level $k$ ranges over $\mathbb{C} \setminus \{-2\}$; at
-$k = -2$ the Sugawara construction is undefined. The
-free-field limit $k \to \infty$ gives $c \to 3$.
+defines the universal $\mathcal N=2$ Neveu--Schwarz vertex
+superalgebra.  Its line restrictions are the four channels
+\begin{equation}\label{eq:n2-ledger-shadow-channels}
+ T\!T,\qquad J\!J,\qquad G^+G^-,\qquad JG^\pm.
+\end{equation}
+Integer spectral flow acts by the formulas in
+\eqref{eq:n2-spectral-flow}.  These statements determine OPE and
+representation-theoretic data.  The modular characteristic and the
+bar-collapse map belong to the packages introduced below.
 \end{proposition}
 
+\begin{equation}\label{eq:n2-ledger-spectral-flow}
+ \ell\in\mathbb Z
+ \quad\longmapsto\quad
+ \sigma^\ell\in\operatorname{Aut}_{\mathrm{mode}}(\mathfrak{ns}_2).
+\end{equation}
+The Koszul-status ledger is
+\begin{equation}\label{eq:n2-ledger-koszul-status}
+ \operatorname{gr}^{\mathrm{Li}}V_c^{\mathcal N=2}
+ \quad\text{computed},\qquad
+ q_{V_c^{\mathcal N=2}}\quad\text{conditional on }
+ H_{\mathcal N=2}^{\mathrm{bar}}.
+\end{equation}
+
+\section{The Kazama--Suzuki presentation}
+
+\begin{remark}[Kazama--Suzuki coset; \ClaimStatusProvedElsewhere]
+\label{rem:n2-kazama-suzuki}
+For $k\in\mathbb Z_{\ge0}$, the simple unitary $\mathcal N=2$ minimal
+model is realized as the commutant of a diagonal Heisenberg algebra in
+$L_k(\mathfrak{sl}_2)\otimes F$, where $F$ is a complex free-fermion
+vertex superalgebra~\cite{KazamaSuzuki1989}.  Its central charge is
+\begin{equation}\label{eq:n2-coset}
+ c_{\mathcal N=2}(k)=\frac{3k}{k+2}.
+\end{equation}
+The generic universal coset comparison is denoted $H_{\mathrm{KS}}$;
+it includes the chosen Heisenberg embedding, the commutant map, simple
+quotient compatibility, and base change in $k$.
+\end{remark}
+
+The inverse parameter relation is
+\[
+ k=\frac{2c}{3-c}.
+\]
+Thus $c=3$ is the boundary value approached as $k$ tends to infinity,
+while $k=-2$ is the pole of the rational parametrization.
 
 \section{Modular characteristic}
 
-\begin{proposition}[Modular characteristic of the $\mathcal{N}=2$
-SCA;\; \ClaimStatusProvedHere]
+\begin{definition}[Genus-one Kazama--Suzuki comparison package]
+\label{def:n2-modular-comparison-package}
+The package $H_{\mathcal N=2}^{\mathrm{mod}}$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item chain models for the genus-one curvature of
+ $V_k(\mathfrak{sl}_2)$, $F$, the diagonal Heisenberg algebra, and
+ their commutant;
+\item a trace-compatible exact coset triangle;
+\item determinant-line and conformal-vector compatibility;
+\item continuity through the completed commutant and simple quotient;
+\item a comparison from the resulting curvature class to the scalar
+ Hodge line.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Conditional modular characteristic of the
+$\mathcal N=2$ coset; \ClaimStatusConditional]
 \label{prop:n2-kappa}
-\index{N=2 superconformal algebra!modular characteristic}
-\index{kappa@$\kappa$!N=2 superconformal}
-At central charge $c = 3k/(k{+}2)$ with $k \neq -2$:
-\begin{equation}\label{eq:n2-sca-kappa}
-\kappa(\mathrm{SCA}_c)
-\;=\;
-\frac{k{+}4}{4}
-\;=\;
-\frac{6{-}c}{2(3{-}c)}\,.
-\end{equation}
-\end{proposition}
-
-\begin{proof}
-The Kazama--Suzuki decomposition~\eqref{eq:n2-coset} gives
-$\kappa$ as the coset difference of modular characteristics:
-\begin{align*}
-\kappa(\mathrm{SCA}_c)
-&= \kappa(\widehat{\mathfrak{sl}}_{2,k})
- + \kappa(\psi\bar\psi)
- - \kappa(\mathrm{U}(1)_{\mathrm{diag}}) \\
-&= \frac{3(k{+}2)}{4}
- + \frac{1}{2}
- - \Bigl(\frac{k}{2} + 1\Bigr)
-\;=\;
-\frac{3k + 6 + 2 - 2k - 4}{4}
-\;=\;
-\frac{k{+}4}{4}\,.
-\end{align*}
-The coset constituents:
-$\kappa(\widehat{\mathfrak{sl}}_{2,k})
-= \dim(\mathfrak{sl}_2)(k{+}h^\vee)/(2h^\vee)
-= 3(k{+}2)/4$;
-$\kappa(\psi\bar\psi) = 1/2$
-(complex free fermion at $c = 1$);
-$\kappa(\mathrm{U}(1)_{\mathrm{diag}})
-= k/2 + 1$, since the diagonal current
-$J_{\mathrm{diag}} = J^3_{\mathrm{KM}} + :\!\psi\bar\psi\!:$
-has level $\ell = k/2 + 1$ (the Cartan generator $J^3$
-contributes $k/2$ and the fermion bilinear contributes~$1$).
-Substituting $k = 2c/(3{-}c)$ yields
-$(6{-}c)/(2(3{-}c))$.
-\end{proof}
-
-
-\section{Koszul duality and complementarity}
-
-\begin{proposition}[Complementarity for the $\mathcal{N}=2$
-SCA;\; \ClaimStatusProvedHere]
-\label{prop:n2-complementarity}
-\index{N=2 superconformal algebra!Koszul duality}
-\index{complementarity!N=2 superconformal}
-The Feigin--Frenkel involution
-$k \mapsto -k - 2h^\vee = -k - 4$
-sends $c = 3k/(k{+}2)$ to
-$c' = 6 - c$. The modular characteristics satisfy
-\begin{equation}\label{eq:n2-sca-complementarity-sum}
-\kappa(c) + \kappa(6{-}c) \;=\; 1\,.
-\end{equation}
-The self-dual point is $c = 3$ ($k \to \infty$).
-\end{proposition}
-
-\begin{proof}
-Under $k \mapsto -k-4$:
-$c' = 3(-k{-}4)/(-k{-}2) = 3(k{+}4)/(k{+}2)$.
-Then $c + c' = 3k/(k{+}2) + 3(k{+}4)/(k{+}2) = 6$.
-For the complementarity sum:
+Assume $H_{\mathrm{KS}}$ and
+$H_{\mathcal N=2}^{\mathrm{mod}}$.  Assume further that the three
+constituent curvature classes have the common trace convention
 \[
-\kappa(c) + \kappa(6{-}c)
-\;=\;
-\frac{6{-}c}{2(3{-}c)}
-\;+\;
-\frac{6{-}(6{-}c)}{2(3{-}(6{-}c))}
-\;=\;
-\frac{6{-}c}{2(3{-}c)}
-\;+\;
-\frac{c}{2(c{-}3)}
-\;=\;
-\frac{6{-}c}{2(3{-}c)}
-\;-\;
-\frac{c}{2(3{-}c)}
-\;=\;
-\frac{6 - 2c}{2(3{-}c)}
-\;=\; 1\,.
+ \kappa\bigl(V_k(\mathfrak{sl}_2)\bigr)=\frac{3(k+2)}4,
+ \qquad
+ \kappa(F)=\frac12,
+ \qquad
+ \kappa(H_{\mathrm{diag}})=\frac{k}{2}+1.
 \]
-This is W-type complementarity: the sum is~$1$, not~$0$
-(compare $\kappa + \kappa' = 0$ for affine KM and
-$\kappa + \kappa' = 13$ for Virasoro).
-\end{proof}
-
-
-\section{Chiral Koszulness: CE versus chiral bar}
-
-\begin{proposition}[PBW Koszulness of the $\mathcal{N}=2$ SCA;\;
-\ClaimStatusProvedHere]
-\label{prop:n2-koszulness}
-\index{N=2 superconformal algebra!Koszulness}
-\index{chiral Koszulness!N=2 superconformal}
-The $\mathcal{N}=2$ superconformal algebra is chirally Koszul
-at generic central charge. The PBW spectral sequence collapses
-at~$E_2$, and $H^n(\barB(\mathrm{SCA}_c)) = 0$ for $n \geq 2$
-in the bar-relevant range.
+Then additivity in the trace-compatible coset triangle gives
+\begin{equation}\label{eq:n2-sca-kappa}
+ \kappa\bigl(V_c^{\mathcal N=2}\bigr)
+ =\frac{k+4}{4}
+ =\frac{6-c}{2(3-c)}.
+\end{equation}
+The pointed genus-one class satisfies
+\[
+ \operatorname{tr}_1
+ \operatorname{Obs}^{\mathrm{def}}_{1,1}
+ \bigl(V_c^{\mathcal N=2}\bigr)
+ =\kappa\bigl(V_c^{\mathcal N=2}\bigr)\lambda_1.
+\]
 \end{proposition}
 
 \begin{proof}
-The $\mathcal{N}=2$ SCA is freely strongly generated by
-$\{T, J, G^+, G^-\}$ at generic~$c$
-(Adamovi\'c~\cite{Adamovic1999}: no singular vectors in the
-vacuum Verma module at generic level).
-By Proposition~\ref{prop:pbw-universality}, free strong generation
-implies PBW collapse at~$E_2$, hence chiral Koszulness.
-
-The CE complex of the negative-mode Lie superalgebra
-$\mathfrak{g}_-$ has $H^2_{\mathrm{CE}} \neq 0$ at conformal
-weight~$3$.
-This does \emph{not} obstruct chiral Koszulness: the CE complex
-uses only the mode-$0$ product $a_{(0)}b$ (the Lie bracket),
-while the chiral bar differential incorporates all OPE modes via the
-Orlik--Solomon form factor on configuration spaces
-(Proposition~\ref{prop:pbw-universality}).
-The sub-leading modes $G^+_{(1)}G^- = J$ and
-$G^+_{(2)}G^- = c/3$
-provide additional coboundary contributions in the PBW spectral
-sequence that kill the CE cocycles at the $E_2$ page.
-Verified computationally through conformal weight~$6$.
+The assumed exact triangle gives
+\[
+ \kappa\bigl(V_c^{\mathcal N=2}\bigr)
+ =\frac{3(k+2)}4+\frac12-\left(\frac{k}{2}+1\right)
+ =\frac{k+4}{4}.
+\]
+Substitution of $k=2c/(3-c)$ gives the second expression.
 \end{proof}
 
-\begin{remark}[The CE/chiral bar gap]
+The proposition is an implication from a named genus-one package.
+Constructing its trace-compatible coset triangle is the open
+mathematical step.
+
+\section{Parameter reflection and complementarity}
+
+Define the critical affine reflection
+\[
+ \iota_{\mathrm{crit}}(k):=-k-4.
+\]
+Direct substitution into~\eqref{eq:n2-coset} gives
+\[
+ c_{\mathcal N=2}(k)+
+ c_{\mathcal N=2}\bigl(\iota_{\mathrm{crit}}(k)\bigr)=6.
+\]
+This is an identity of rational functions.  A chiral Koszul
+interpretation requires a Verdier--bar comparison between the two
+levels.
+
+\begin{proposition}[Conditional $\mathcal N=2$ complementarity;
+\ClaimStatusConditional]
+\label{prop:n2-complementarity}
+Assume the hypotheses of Proposition~\ref{prop:n2-kappa} at $k$ and
+$-k-4$, together with a duality comparison
+\[
+ H_{\mathcal N=2}^{\mathrm{KD}}\colon
+ \mathbb D_{\operatorname{Ran}}B
+ \bigl(V_{c(k)}^{\mathcal N=2}\bigr)
+ \simeq V_{c(-k-4)}^{\mathcal N=2}.
+\]
+Then
+\begin{equation}\label{eq:n2-sca-complementarity-sum}
+ \kappa\bigl(c(k)\bigr)+\kappa\bigl(c(-k-4)\bigr)=1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The conditional formula~\eqref{eq:n2-sca-kappa} gives
+\[
+ \frac{k+4}{4}+\frac{(-k-4)+4}{4}=1.
+\]
+The package $H_{\mathcal N=2}^{\mathrm{KD}}$ supplies the object-level
+meaning of the reflected second summand.
+\end{proof}
+
+The fixed point of $c\mapsto6-c$ is $c=3$.  It lies on the boundary
+of the $k$-chart.  The fixed point of $k\mapsto-k-4$ is the pole
+$k=-2$.  A completed comparison across this boundary is part of
+$H_{\mathcal N=2}^{\mathrm{KD}}$.
+
+\section{PBW data and the chiral bar problem}
+
+\begin{definition}[$\mathcal N=2$ bar-collapse package]
+\label{def:n2-bar-collapse-package}
+The package $H_{\mathcal N=2}^{\mathrm{bar}}$ consists of a complete
+Li filtration, convergence of the induced bar spectral sequence,
+control of singular vectors in the selected quotient, and a
+quasi-isomorphism from the quadratic coalgebra to the full bar
+coalgebra.
+\end{definition}
+
+\begin{proposition}[PBW page and conditional quadratic recognition;
+\ClaimStatusConditional]
+\label{prop:n2-koszulness}
+For the universal algebra $V_c^{\mathcal N=2}$, the Li-associated
+graded is the differential supercommutative algebra generated by the
+symbols of $J,T,G^+,G^-$ and their derivatives.  Consequently the Li
+filtration determines the first page of the bar spectral sequence.
+Under $H_{\mathcal N=2}^{\mathrm{bar}}$, the canonical comparison
+\[
+ q_{\mathcal N=2}\colon
+ \bigl(V_c^{\mathcal N=2}\bigr)^{\mathrm i}
+ \longrightarrow B\bigl(V_c^{\mathcal N=2}\bigr)
+\]
+is a quasi-isomorphism, and quadratic Koszul recognition follows.
+\end{proposition}
+
+\begin{proof}
+The PBW assertion is the standard Li-filtration statement for a
+freely generated universal vertex superalgebra.  The final implication
+is precisely the quasi-isomorphism included in
+$H_{\mathcal N=2}^{\mathrm{bar}}$ and the quadratic Comparison Lemma.
+\end{proof}
+
+\begin{remark}[The CE/chiral bar comparison]
 \label{rem:n2-ce-chiral-gap}
-\index{N=2 superconformal algebra!CE vs chiral bar}
-The $\mathcal{N}=2$ SCA provides a direct demonstration
-in the standard landscape that CE Koszulness (vanishing of
-$H^2_{\mathrm{CE}}(\mathfrak{g}_-)$) and chiral Koszulness
-(vanishing of $H^2(\barB(A))$) are genuinely distinct properties.
-For single-generator algebras (Heisenberg, Virasoro), the two
-complexes agree at bar degree~$2$ because the mode-$0$ product
-exhausts the generating OPE at that level. For multi-generator
-algebras with mixed bosonic/fermionic statistics and sub-leading
-OPE poles, the chiral bar complex is strictly finer.
-The mechanism: at bar degree~$3$, the Orlik--Solomon differential on
-$\operatorname{Conf}_3(\mathbb{C})$ activates the higher OPE modes
-$G^+_{(1)}G^-$ and $G^+_{(2)}G^-$, which are invisible to
-the CE complex but provide coboundaries in the PBW spectral sequence
-that annihilate the CE $H^2$ classes.
+The Chevalley--Eilenberg complex of the negative-mode Lie superalgebra
+and the chiral bar complex have different inputs and filtrations.  A
+comparison map between them is an additional datum.  The Li PBW page
+provides the natural starting filtration for constructing that map.
 \end{remark}
 
-
-\section{MC3 status: Koszulness without thick generation}
+\section{MC3 status: coset descent}
 \label{sec:n2-mc3-status}
 
-Chiral Koszulness
-\textup{(}Proposition~\ref{prop:n2-koszulness}\textup{)} and MC3
-thick generation of the Drinfeld--Kohno factorization category
-$\mathrm{DK}_{\mathcal{N}=2}$ by evaluation-type modules are
-structurally independent. Koszulness is bar cohomology
-concentrated in degree~$1$; MC3 is
-$\mathrm{thick}(\mathrm{ev}\text{-}\mathrm{type})
-= \mathrm{DK}_{\mathcal{N}=2}$. The $\mathcal{N}=2$ SCA satisfies
-the former at generic level via PBW collapse; the latter is open.
-
-\begin{conjecture}[MC3 for the $\mathcal{N}=2$ SCA via
- Kazama--Suzuki coset reduction; \ClaimStatusConjectured]
+\begin{conjecture}[MC3 through Kazama--Suzuki descent;
+\ClaimStatusConjectured]
 \label{conj:mc3-n2-sca-kazama-suzuki}
-\index{MC3!N=2 superconformal}
-\index{N=2 superconformal algebra!MC3}
-\index{Kazama--Suzuki coset!MC3 descent}
-At generic level $k \neq -2$, MC3 holds for the $\mathcal{N}=2$
-superconformal algebra on its evaluation-generated core
-$\mathrm{DK}^{\mathrm{ev}}_{\mathcal{N}=2}$: evaluation-type
-modules thickly generate the factorization category
-$\mathrm{DK}_{\mathcal{N}=2}$. The conjectural reduction path
-is the Kazama--Suzuki coset
-\eqref{eq:n2-coset}: MC3 on the ambient
-$\widehat{\mathfrak{sl}}_{2,k} \otimes \psi\bar\psi$ follows from
-Family~(1) \textup{(}type~$A$ asymptotic prefundamentals, for the
-affine $\mathrm{sl}_2$ factor\textup{)} and Family~(6)
-\textup{(}super-Yangian parity-balance at
-$\mathfrak{gl}(1|1) \simeq$ complex free fermion\textup{)} of
-Theorem~\ref{thm:mc3-evaluation-core-five-family}, and the
-conjectural step is the coset preservation lemma: thick generation
-of the ambient descends to thick generation of the coset
-$\operatorname{Com}(\mathrm{U}(1), -)$.
+Suppose the ambient affine--fermion category is compactly generated,
+the diagonal Heisenberg action is monadic, and commutant formation
+preserves the selected compact generator.  Then the induced generator
+of the $\mathcal N=2$ coset category is thick and the corresponding
+Morita chart reconstructs the coset category.
 \end{conjecture}
 
-\begin{remark}[Why the coset preservation is not automatic]
+\begin{remark}[Coset descent obligation]
 \label{rem:n2-mc3-coset-obstruction}
-\index{MC3!coset non-inheritance}
-The branching of $\widehat{\mathfrak{sl}}_{2,k} \otimes
-\psi\bar\psi$-modules under the diagonal
-$\mathrm{U}(1) \subset \widehat{\mathfrak{sl}}_{2,k}
-\otimes \psi\bar\psi$ decomposes each evaluation-type ambient
-module into a direct sum of $\mathrm{U}(1)$-isotypic components,
-each of which is an $\mathrm{SCA}_c$-module. Two conditions
-must hold for MC3 descent:
-\begin{enumerate}[label=\textup{(C\arabic*)},nosep]
-\item \emph{Branching preservation}: every isotypic summand of an
- ambient evaluation-type module is itself evaluation-type over
- $\mathrm{SCA}_c$.
-\item \emph{Thick-closure preservation}: the thick closure of the
- branching image inside
- $D^b(\mathcal{O}^{\mathrm{sh}}_{\le 0}(\mathrm{SCA}_c))$ exhausts
- $\mathrm{DK}_{\mathcal{N}=2}$.
-\end{enumerate}
-Kazama--Suzuki 1989 and Feigin--Semikhatov 2004
-(\cite{KazamaSuzuki1989}, \cite{FeiginSemikhatov2004})
-establish \emph{character-level} branching; they do not
-establish (C1)--(C2) at the factorization-category level. The
-principal obstruction to (C1) is the spectral-flow twist: the
-$\mathcal{N}=2$ SCA carries an infinite cyclic group of
-automorphisms
-\textup{(}Equation~\eqref{eq:n2-spectral-flow}\textup{)}, and
-branching intertwines the NS and Ramond sectors in a way that
-can take an evaluation-type ambient to a spectral-flowed
-non-evaluation $\mathrm{SCA}_c$-module.
+The required theorem is a Barr--Beck comparison for the diagonal
+Heisenberg action, followed by compactness of the commutant generator.
+The Kazama--Suzuki character identity supplies numerical evidence;
+the monadic comparison supplies the categorical transition.
 \end{remark}
 
-\begin{remark}[Falsification test for
- Conjecture~\ref{conj:mc3-n2-sca-kazama-suzuki}]
+\begin{remark}[Falsification test]
 \label{rem:n2-mc3-falsification}
-The conjecture is falsifiable at a concrete generic level, for
-example $c = 1$ \textup{(}$k = -1$\textup{)}, a non-critical generic
-rational point where the Kazama--Suzuki coset is well-defined and
-all representation-theoretic input \textup{(}Verma modules,
-evaluation modules, branching coefficients\textup{)} is
-computable. The falsification test: compute the image of a
-concrete evaluation-type $\widehat{\mathfrak{sl}}_{2,-1}
-\otimes \psi\bar\psi$-module under the $\mathrm{U}(1)$-branching,
-restrict to a single isotypic component, and verify that the
-restriction is evaluation-type over $\mathrm{SCA}_1$ in the sense
-of Definition~\ref{def:evaluation-type-module}. Failure at this
-point would refute (C1); success at this point is consistent with
-the conjecture but not a proof.
+A decisive test computes the endomorphism algebra of the proposed
+coset generator at the first nontrivial unitary levels $k=1,2$ and
+compares its thick closure with the known finite module category.
+Disagreement identifies the missing descent or compactness input.
 \end{remark}
 
-\begin{remark}[Alternative reduction paths]
+\begin{remark}[Alternative comparison routes]
 \label{rem:n2-mc3-alternative-routes}
-Two further candidate reduction paths exist, each open:
-\begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item \emph{Adamovi\'c lattice coset}: the realization of
- $\mathrm{SCA}_c$ as
- $\operatorname{Com}(\widehat{\mathfrak{sl}}(1|2)_{k'}, V_L)$ for
- a specific lattice VOA $V_L$ at $k' = -3/2 + c/6$
- \textup{(}\cite{Adamovic1999}\textup{)} routes MC3 through
- affine $\mathfrak{sl}(1|2)$, where Family~(6) super-Yangian
- parity-balance partially applies but is not proved for the
- lattice-coset branching.
-\item \emph{Feigin--Semikhatov DS reduction from
- $\mathfrak{osp}(2|2)$}: the realization of $\mathrm{SCA}_c$ as a
- principal DS reduction of affine $\mathfrak{osp}(2|2)$
- \textup{(}\cite{FeiginSemikhatov2004}\textup{)} routes MC3
- through the super-Yangian family post-DS quotient; the DS
- quotient of the Shapovalov pairing is well-defined but its
- thick-generation status is open.
-\end{enumerate}
-The three candidate paths (Kazama--Suzuki, Adamovi\'c, DS) would
-establish MC3 for $\mathrm{SCA}_c$ independently if any one is
-proved. Currently all three are conjectural; the MC3 assertion for
-the $\mathcal{N}=2$ SCA is the conjunction of their failures, i.e.~still
-open.
+Adamovi\'c's lattice realization~\cite{Adamovic1999} and the
+Feigin--Semikhatov realization~\cite{FeiginSemikhatov2004} provide two
+candidate ambient categories.  Each route requires its own compact
+generator, commutant comparison, and trace compatibility.
 \end{remark}
 
-
-\section{Shadow obstruction tower: multi-channel structure}
+\section{Multi-channel deformation data}
 \label{sec:n2-multi-channel-shadow}
 
-The $\mathcal{N}=2$ SCA has four generators spanning three
-independent primary lines in the cyclic deformation complex
-$\Defcyc^{\mathrm{mod}}$
-(Definition~\ref{def:modular-cyclic-deformation-complex}):
-\begin{enumerate}[label=(\roman*),nosep]
-\item The \emph{$T$-line} (stress tensor, conformal weight~$2$,
- bosonic): identical to the Virasoro line. The $TT$ OPE has
- maximal pole order~$4$; $d\log$ absorption
- (Remark~\ref{rem:bar-pole-absorption})
- gives collision depth $k_{\max} = 3$.
- Class~M: infinite shadow depth.
-\item The \emph{$J$-line} ($\mathrm{U}(1)$ current, conformal
- weight~$1$, bosonic): identical to the Heisenberg line. The
- $JJ$ OPE has maximal pole order~$2$, giving $k_{\max} = 1$.
- Class~G: Gaussian, shadow depth $r_{\max} = 2$.
-\item The \emph{$G$-lines} (supercurrents $G^\pm$, conformal
- weight~$\frac{3}{2}$, fermionic): the $G^\pm G^\pm$ OPEs
- vanish; the mixed $G^+ G^-$ OPE has maximal pole order~$3$,
- giving $k_{\max} = 2$. Class~L: Lie/tree, shadow depth
- $r_{\max} = 3$.
-\end{enumerate}
-The overall shadow class is~M (governed by the deepest channel),
-and the shadow depth is $r_{\max} = \infty$. The modular
-characteristic $\kappa = (k{+}4)/4$ receives contributions from all
-channels via the Kazama--Suzuki coset decomposition
-(Proposition~\ref{prop:n2-kappa}).
-
-\begin{remark}[Shadow obstruction tower for the $\mathcal{N}=2$ SCA]
-\textup{(full coefficient includes the cross-channel summand)}
+\begin{remark}[Shadow-tower status]
 \label{rem:n2-shadow-tower}
-\index{shadow obstruction tower!N=2 superconformal}
-For $\mathrm{SCA}_c$ at generic level, the shadow obstruction tower
-in the modular convolution algebra $\gAmod$
-(Definition~\ref{def:modular-convolution-dg-lie}) has modular
-characteristic $\kappa = (k{+}4)/4$. Since the $\mathcal{N}=2$
-SCA has generators at three distinct conformal weights
-($1, \frac{3}{2}, 2$), it is a multi-weight algebra; the genus-$1$
-identity
-\(\mathrm{obs}_1(\mathrm{SCA}_c)
-=\kappa(\mathrm{SCA}_c)\lambda_1\)
-holds
-unconditionally \textup{($g = 1$; all-weight at $g = 1$ is unconditional)}.
-For $g \geq 2$ the scalar trace
-$F_g^{\mathrm{sc}}(\mathrm{SCA}_c)
-=\kappa(\mathrm{SCA}_c)\lambda_g^{\mathrm{FP}}$
-is only the one-channel summand; the full all-weight coefficient is
-$F_g(\mathrm{SCA}_c)
-=F_g^{\mathrm{sc}}(\mathrm{SCA}_c)
-+\delta F_g^{\mathrm{cross}}(\mathrm{SCA}_c)$. The
-tower does not terminate: the $T$-channel carries the
-same infinite tower as the Virasoro algebra
-(Chapter~\ref{chap:w-algebra-koszul}), including a nonzero
-quintic obstruction $o_5^{(T)} \neq 0$. The $J$-channel terminates
-at degree~$2$ (Gaussian) and the $G$-channel at degree~$3$
-(Lie/tree, from the $G^+G^-$ bracket). Cross-channel interactions
-between the $T$-, $J$-, and $G$-channels produce
-additional multi-channel shadow coefficients at degrees $\geq 4$.
+The OPEs~\eqref{eq:n2-ope-TT}--\eqref{eq:n2-ope-self} determine the
+quadratic channel data.  A scalar sequence $S_r$ requires a specified
+projection from the full multi-generator Maurer--Cartan tensor.  Its
+construction must retain the $TT$, $JJ$, $G^+G^-$, and $JG^\pm$
+channels and their cross terms.  The resulting full shadow tower is
+an open computation; the Virasoro $T$-line is one restricted channel.
 \end{remark}
-
 
 \section{Spectral flow}
 \label{sec:n2-spectral-flow}
 
-The $\mathcal{N}=2$ SCA admits a one-parameter family of
-automorphisms $\sigma_\theta$ ($\theta \in \mathbb{Z}$), the
-\emph{spectral flow}, defined by
+For $\ell\in\mathbb Z$, choose the standard spectral-flow convention
 \begin{equation}\label{eq:n2-spectral-flow}
-\sigma_\theta(T) = T + \theta\,J + \tfrac{c}{6}\,\theta^2,
-\qquad
-\sigma_\theta(J) = J + \tfrac{c}{3}\,\theta,
-\qquad
-\sigma_\theta(G^\pm) = G^\pm_{\pm\theta},
+\begin{aligned}
+ \sigma^\ell(L_n)&=L_n+\ell J_n+\frac{c}{6}\ell^2\delta_{n,0},\\
+ \sigma^\ell(J_n)&=J_n+\frac{c}{3}\ell\delta_{n,0},\\
+ \sigma^\ell(G_r^\pm)&=G_{r\pm\ell}^\pm.
+\end{aligned}
 \end{equation}
-where $G^\pm_{\pm\theta}$ denotes the shift of mode indices by
-$\pm\theta$. At $\theta = 1/2$, the spectral flow intertwines
-the Neveu--Schwarz and Ramond sectors.
+Substitution in the Neveu--Schwarz commutation relations proves that
+$\sigma^\ell$ is an automorphism of the mode algebra.  Transport of a
+genus-one curvature class through spectral flow requires compatibility
+of the determinant line and trace map; it belongs to
+$H_{\mathcal N=2}^{\mathrm{mod}}$.
 
-Since $\sigma_\theta$ is an algebra automorphism, it preserves
-all OPE structure constants and hence every shadow coefficient:
-$S_r^{\sigma_\theta} = S_r$ for all~$r$. The modular
-characteristic~$\kappa$, the cubic shadow~$C$, the quartic
-resonance class~$Q$, and the full shadow obstruction tower are
-spectral-flow invariants. This provides a non-trivial consistency
-check: the NS and Ramond sectors have different field content
-(integer vs.\ half-integer moded supercurrents) but identical
-shadow data (Remark~\ref{rem:n2-spectral-flow-invariance}).
-
-
-\begin{remark}[Comparison with the $\mathcal{N}=1$ and
-$\mathcal{N}=4$ families]
+\begin{remark}[Superconformal comparison ledger]
 \label{rem:n2-susy-hierarchy}
-\index{superconformal hierarchy}
-\index{N=1 super Virasoro}
-\index{N=4 small superconformal}
-The three fundamental superconformal families form a hierarchy
-under extended supersymmetry:
-\[
-\renewcommand{\arraystretch}{1.3}
-\begin{array}{cccccc}
-\mathcal{N} & c & \kappa &
- c' & \kappa + \kappa' & \text{Self-dual} \\
-\hline
-0 \;(\text{Vir}) &
- c & c/2 & 26{-}c & 13 & c = 13 \\
-1 \;(\text{SVir}) &
- c & (3c{-}2)/4 & 15{-}c & 41/4 & c = 15/2 \\
-2 \;(\text{SCA}) &
- 3k/(k{+}2) &
- (k{+}4)/4 & 6{-}c & 1 & c = 3 \\
-4 \;(\text{small}) &
- 6k &
- 2k & -c{-}24 & -8 & c = -12 \\
-\end{array}
-\]
-As $\mathcal{N}$ increases, the complementarity sum
-$\kappa + \kappa'$ decreases: $13, \; 41/4, \; 1, \; {-}8$.
-This reflects the increasing cancellation between bosonic and
-fermionic contributions to the genus-$1$ obstruction class:
-the modular characteristic is an invariant of the full algebra,
-not of the Virasoro subalgebra alone.
+On the represented Virasoro comparison lane, the modular conductor is
+$13$.  The
+$\mathcal N=1$, $\mathcal N=2$, and small $\mathcal N=4$ families
+carry exact OPE and parameter data together with open genus-one
+comparison problems.  Cross-family ordering begins after those
+curvature calculations are complete.
 \end{remark}

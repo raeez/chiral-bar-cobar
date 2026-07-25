@@ -47,7 +47,7 @@ TANGENT COMPLEX ARITY GRADING:
     The tangent complex L_Theta = d + [Theta, -] decomposes by arity:
 
     Arity 2: controlled by r(z), the collision residue (bar r-matrix).
-        For sl_2 at level k: r(z) = Omega/z where Omega is the Casimir.
+        For sl_2 at level k: r_k(z) = k*Omega/z where Omega is the Casimir.
         This is the binary genus-0 shadow of Theta_A (seven faces of r(z)).
 
     Arity 3: controlled by the cubic shadow C.
@@ -269,7 +269,8 @@ def S4_betagamma() -> Fraction:
 def kappa_koszul_dual_heisenberg(k: Fraction) -> Fraction:
     """kappa(H_k^!) = -k.
 
-    For Heisenberg: H_k^! = Sym^ch(V*) with kappa = -k.
+    For Heisenberg at k != 0: H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch with scalar kappa = -k.
     NOT H_{-k} as an algebra (AP33), but same kappa.
     Complementarity: kappa + kappa^! = 0.
     """
@@ -720,13 +721,13 @@ def tangent_arity_data(family: str, arity: int, **params) -> TangentArityData:
             return TangentArityData(
                 family=family,
                 arity=2,
-                controlling_object='r(z) = Omega/z (Casimir r-matrix)',
+                controlling_object='r_k(z) = k*Omega/z (trace-form Casimir r-matrix)',
                 dimension=1,
                 is_zero=False,
                 scalar_value=kap,
                 description=(
-                    f'Casimir r-matrix for sl_{N}: r(z) = Omega/z. '
-                    'Single pole. Yang-Baxter with spectral parameter.'
+                    f'Trace-form Casimir r-matrix for sl_{N}: r_k(z)=k*Omega/z. '
+                    'Single pole. Unit-normalized CYBE uses Omega/z.'
                 ),
             )
         elif family_lower in ('virasoro',):

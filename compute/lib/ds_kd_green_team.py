@@ -1,61 +1,78 @@
-"""GREEN TEAM: Alternative approaches to conj:ds-kd-arbitrary-nilpotent.
+"""Exact strategy data and typed DS--Koszul research obligations.
 
-Five strategies for proving bar-cobar/Koszul commutes with arbitrary DS
-reduction, bypassing the direct commutation proof.
+Five candidate strategies organize the obligations in arbitrary-nilpotent
+DS--Koszul comparison.
 
 Strategy A — Induction on orbit closure order
   Nilpotent orbits form a poset under closure.  Principal (maximal) is
-  proved; zero (minimal) is trivial.  We test whether the closure order
-  provides an induction path: if DS-bar commutes for the orbit above
-  a cover, does it descend?
+  principal and hook orbits provide conditional seeds.  The closure order
+  supplies candidate paths; a reduction-by-stages functor must realize them.
 
-  Key data: for each cover O' < O in the closure poset, the relative
-  DS reduction step involves a smaller ghost system whose contribution
-  to kappa/bar is controllable.
+  Key data: each cover O' < O supplies exact orbit, centralizer, generator,
+  and KRW central-charge ledgers.  A reduction-by-stages theorem supplies
+  the categorical transport.
 
 Strategy B — BFN / Coulomb branch isomorphism
-  The BFN (Braverman-Finkelberg-Nakajima) Coulomb branch for a quiver
-  gauge theory matches the associated graded of the W-algebra.  If the
-  BFN algebra is naturally a bar-cobar algebra, the commutation is
-  automatic from the quiver description.
+  A candidate framed quiver supplies finite rank data.  A sourced BFN--
+  Slodowy identification and a chiral uplift are separate proof obligations.
 
   Key test: sl_3 subregular W-algebra matches Coulomb branch of a
   specific (framed) quiver.
 
 Strategy C — Derived DS = homotopy DS (formality route)
   Replace classical BRST DS with the full derived/homotopy DS functor.
-  Since bar is also derived, both are homotopy-coherent functors and
-  their commutation is automatic at the derived level.  The question
-  becomes: is derived DS ≃ classical DS?  For Koszul algebras this
-  is a formality statement — and formality is PROVED (Koszulness
-  characterisation programme, 12 equivalences).
+  Since bar is also derived, one seeks a natural interchange morphism and a
+  comparison from derived DS to classical DS.  Both constructions require
+  explicit completion and formality hypotheses.
 
 Strategy D — Shadow-level commutation
   Instead of chain-level commutation, prove DS and bar commute at the
   shadow level.  At each arity r, DS(Θ_A^{≤r}) = Θ_{DS(A)}^{≤r}.
-  At arity 2 (kappa), this is the ghost subtraction: PROVED.
-  At arity 3 (cubic), gauge triviality propagates through DS.
-  The induction step r → r+1 reduces to an obstruction class in a
-  relative deformation complex.
+  At arity 2, the exact KRW and ghost ledgers furnish evidence for a typed
+  genus-one trace comparison.
+  Arity 3 and every induction step require explicit comparison cocycles in
+  the relative deformation complex.
 
 Strategy E — Type-by-type exhaustion at small rank
-  Enumerate ALL nilpotent orbits up to rank 4 and check commutation
-  constraints directly.  This covers sl_2 (2), sl_3 (3), sl_4 (5),
-  sl_5 (7), so_5/sp_4 (4), G_2 (5), so_7 (5).
+  Enumerate finite orbit and scalar ledgers at small rank and attach the
+  unresolved comparison package to every orbit.
 
 Mathematical context:
-  conj:ds-kd-arbitrary-nilpotent in w_algebras_deep.tex line 1584.
-  Hook-type proved: thm:hook-transport-corridor.
-  Proved cases: principal (all types), subregular/minimal sl_3, hooks type A.
+  ``conj:ds-kd-arbitrary-nilpotent`` is conjectural.  The hook corridor is
+  conditional on its filtered DS/bar, completion, and Verdier package.
 """
 
 from __future__ import annotations
 
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fractions import Fraction
-from itertools import combinations
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
+from typing import Dict, List, Set, Tuple
+
+from sympy import Rational as SRational
+
+from compute.lib.hook_type_w_duality import (
+    ClaimPacket,
+    ClaimStatus,
+    H_HOOK_DS_BAR,
+    anomaly_ratio_from_partition,
+    ds_kappa_from_affine,
+    ghost_constant,
+    krw_central_charge,
+)
+from compute.lib.ds_bar_commutation import affine_kappa_sl_n
+from compute.lib.ds_kd_red_team import (
+    H_BAR_BRST_BICOMPLEX,
+    H_BC_DUALITY,
+    H_CATEGORICAL_TRANSPORT,
+    H_DS_KD_COMPARISON,
+    H_EXT_OBSTRUCTION,
+    H_KAZHDAN_FORMALITY,
+    H_MODULAR_GENUS_ONE,
+    H_TRANSPOSE_DUALITY,
+    enumerate_type_b_orbits,
+    enumerate_type_c_orbits,
+)
 
 # Re-use existing infrastructure
 from compute.lib.w_algebra_transport_propagation import (
@@ -67,16 +84,52 @@ from compute.lib.w_algebra_transport_propagation import (
     centralizer_dimension,
     nilpotent_orbit_dimension,
     generator_weights,
-    central_charge,
-    dual_level,
     dominance_order_covers,
-    reduction_graph_edges,
-    build_adjacency,
-    transport_closure,
-    hook_transport_closure,
     graph_is_connected,
-    transport_coverage_fraction,
 )
+
+
+def _open(statement: str, *hypotheses: str, evidence: Tuple[str, ...] = ()) -> ClaimPacket:
+    """Return an open strategy claim with its construction obligations."""
+
+    return ClaimPacket(
+        statement,
+        ClaimStatus.OPEN,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(dict.fromkeys(hypotheses)),
+    )
+
+
+def _conditional(
+    statement: str, *hypotheses: str, evidence: Tuple[str, ...] = ()
+) -> ClaimPacket:
+    """Return a conditional comparison with no scalar payload."""
+
+    return ClaimPacket(
+        statement,
+        ClaimStatus.CONDITIONAL,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(dict.fromkeys(hypotheses)),
+    )
+
+
+def _ds_bar_claim(n: int, lam: Partition) -> ClaimPacket:
+    """Typed DS--bar status for a type-A orbit."""
+
+    if is_hook(lam):
+        return _conditional(
+            f"DS--bar commutation for the hook orbit {lam} in sl_{n}",
+            H_HOOK_DS_BAR,
+            "the hypotheses of the hook transport corridor at the selected level",
+        )
+    return _open(
+        f"DS--bar commutation for the non-hook orbit {lam} in sl_{n}",
+        H_DS_KD_COMPARISON,
+        H_BAR_BRST_BICOMPLEX,
+        H_KAZHDAN_FORMALITY,
+    )
 
 
 # =====================================================================
@@ -158,16 +211,17 @@ class InductionStep:
     parent_is_hook: bool
     child_is_hook: bool
     codimension: int
-    kappa_drop: Fraction
+    central_charge_difference: object
 
 
 def compute_induction_steps(n: int, k: Fraction = Fraction(7)) -> List[InductionStep]:
-    """Compute all induction-step data along closure covers."""
+    """Compute finite cover data and exact KRW central-charge differences."""
     covers = closure_poset_covers(n)
     steps = []
+    level = SRational(k.numerator, k.denominator)
     for lam, mu in covers:
-        c_lam = central_charge(n, lam, k)
-        c_mu = central_charge(n, mu, k)
+        c_lam = krw_central_charge(lam, level)
+        c_mu = krw_central_charge(mu, level)
         steps.append(InductionStep(
             parent=lam,
             child=mu,
@@ -180,7 +234,7 @@ def compute_induction_steps(n: int, k: Fraction = Fraction(7)) -> List[Induction
             parent_is_hook=is_hook(lam),
             child_is_hook=is_hook(mu),
             codimension=nilpotent_orbit_dimension(lam) - nilpotent_orbit_dimension(mu),
-            kappa_drop=c_lam - c_mu,
+            central_charge_difference=c_lam - c_mu,
         ))
     return steps
 
@@ -189,8 +243,7 @@ def induction_feasibility_score(n: int) -> Dict[str, object]:
     """Score the feasibility of Strategy A for sl_N.
 
     Checks:
-    1. Every cover step has a parent that is either hook (proved) or
-       itself reachable from proved cases.
+    1. Every cover step is reachable from the distinguished hook seed set.
     2. The codimension of each step is bounded (small = easier).
     3. The generator spectrum change is controlled.
     """
@@ -203,43 +256,48 @@ def induction_feasibility_score(n: int) -> Dict[str, object]:
     for lam, mu in covers:
         parent_map[mu].add(lam)
 
-    # Mark proved: principal + hooks
-    proved: Set[Partition] = set()
-    proved.add(tuple([n]))  # principal
-    proved.add(tuple([1] * n))  # zero orbit (trivial)
+    # Candidate seeds: principal, zero, and hooks.
+    reached: Set[Partition] = set()
+    reached.add(tuple([n]))
+    reached.add(tuple([1] * n))
     for h in hook_partitions(n):
-        proved.add(h)
+        reached.add(h)
 
-    # Induction: mark as inductively-proved if all parents are proved
+    # Finite reachability closure; this constructs no categorical functor.
     changed = True
     induction_rounds = 0
     while changed:
         changed = False
         induction_rounds += 1
         for lam in partitions(n):
-            if lam in proved:
+            if lam in reached:
                 continue
             pars = parent_map.get(lam, set())
-            if pars and all(p in proved for p in pars):
-                proved.add(lam)
+            if pars and all(p in reached for p in pars):
+                reached.add(lam)
                 changed = True
 
     all_pars = set(partitions(n))
-    remaining = all_pars - proved
+    remaining = all_pars - reached
     max_codim = max((s.codimension for s in steps), default=0)
     non_hook_steps = [s for s in steps if not s.parent_is_hook or not s.child_is_hook]
 
     return {
         'n': n,
         'total_orbits': len(all_pars),
-        'proved_by_hooks': len(proved & set(hook_partitions(n))),
-        'proved_by_induction': len(proved),
+        'hook_seed_count': len(reached & set(hook_partitions(n))),
+        'candidate_reached_count': len(reached),
         'remaining': len(remaining),
         'remaining_orbits': sorted(remaining, reverse=True),
         'induction_rounds': induction_rounds,
         'max_codimension': max_codim,
         'non_hook_steps': len(non_hook_steps),
-        'all_proved': len(remaining) == 0,
+        'candidate_closure_covers_all': len(remaining) == 0,
+        'transport_realization': _open(
+            f"closure-order transport realizes DS--bar commutation in sl_{n}",
+            H_CATEGORICAL_TRANSPORT,
+            H_DS_KD_COMPARISON,
+        ),
         'feasibility': 'high' if len(remaining) == 0 else (
             'medium' if len(remaining) <= 2 else 'low'
         ),
@@ -252,17 +310,20 @@ def induction_feasibility_score(n: int) -> Dict[str, object]:
 
 @dataclass(frozen=True)
 class QuiverData:
-    """Framed quiver gauge theory data for BFN construction."""
-    gauge_ranks: Tuple[int, ...]
-    framing_ranks: Tuple[int, ...]
+    """Candidate framed-quiver ledger and typed BFN identification."""
+
+    candidate_gauge_ranks: Tuple[int, ...]
+    candidate_framing_ranks: Tuple[int, ...]
     lie_type: str
     nilpotent_partition: Partition
-    coulomb_dimension: int
-    higgs_dimension: int
+    slodowy_dimension: int
+    orbit_dimension: int
+    gauge_rank_sum: int
+    bfn_slodowy_identification: ClaimPacket
 
 
 def bfn_quiver_for_type_a(lam: Partition) -> QuiverData:
-    """Compute the BFN quiver data for a type-A nilpotent orbit.
+    """Compute a candidate type-A framed-quiver rank ledger.
 
     For sl_N with partition lambda = (p_1, ..., p_r), the Coulomb branch
     of the associated quiver gauge theory is isomorphic to the Slodowy
@@ -273,7 +334,8 @@ def bfn_quiver_for_type_a(lam: Partition) -> QuiverData:
       v_i = sum_{j > i} lambda^t_j  (gauge rank at node i)
       w_i = lambda^t_i - lambda^t_{i+1}  (framing rank at node i)
 
-    Coulomb branch dimension = dim(S_lambda) = dim(g^e) for sl_N.
+    The rank transform is exact partition arithmetic.  Its interpretation as
+    a BFN Coulomb branch realizing the Slodowy slice is a typed obligation.
     """
     N = sum(lam)
     lam_t = transpose(lam)
@@ -298,36 +360,40 @@ def bfn_quiver_for_type_a(lam: Partition) -> QuiverData:
     while framing and framing[-1] == 0:
         framing.pop()
 
-    coulomb_dim = centralizer_dimension(lam)
-    higgs_dim = nilpotent_orbit_dimension(lam)
+    slodowy_dim = centralizer_dimension(lam)
+    orbit_dim = nilpotent_orbit_dimension(lam)
+    identification = _open(
+        f"BFN Coulomb branch of the candidate quiver realizes S_{lam}",
+        "a primary-source BFN/quiver-Slodowy theorem for this rank convention",
+        "a Poisson identification with the selected Slodowy slice",
+        "a chiral quantization compatible with the W-algebra presentation",
+        evidence=(
+            f"candidate gauge ranks {tuple(gauge)}",
+            f"candidate framing ranks {tuple(framing)}",
+            f"exact Slodowy dimension {slodowy_dim}",
+        ),
+    )
 
     return QuiverData(
-        gauge_ranks=tuple(gauge),
-        framing_ranks=tuple(framing),
+        candidate_gauge_ranks=tuple(gauge),
+        candidate_framing_ranks=tuple(framing),
         lie_type='A',
         nilpotent_partition=lam,
-        coulomb_dimension=coulomb_dim,
-        higgs_dimension=higgs_dim,
+        slodowy_dimension=slodowy_dim,
+        orbit_dimension=orbit_dim,
+        gauge_rank_sum=sum(gauge),
+        bfn_slodowy_identification=identification,
     )
 
 
-def bfn_coulomb_matches_slodowy(lam: Partition) -> bool:
-    """Check that the BFN Coulomb branch dimension matches dim(S_lambda).
+def bfn_coulomb_matches_slodowy(lam: Partition) -> ClaimPacket:
+    """Return the BFN--Slodowy identification obligation.
 
-    dim(S_lambda) = dim(g^e) = centralizer_dimension(lambda).
-    The Coulomb branch of the framed quiver has the same dimension
-    by the BFN theorem (Braverman-Finkelberg-Nakajima).
+    The historical boolean entry point now propagates the typed geometric
+    claim instead of comparing a target dimension with itself.
     """
-    quiver = bfn_quiver_for_type_a(lam)
-    # The Coulomb branch dimension for a framed A-type quiver is
-    # sum of gauge ranks (each node contributes v_i).
-    # Actually: dim(M_C) = sum v_i.
-    bfn_dim = sum(quiver.gauge_ranks)
 
-    # BFN theorem: Coulomb branch of the associated quiver gauge theory
-    # is isomorphic to the Slodowy slice S_f as a Poisson variety.
-    # dim(S_f) = dim(g^f) = centralizer_dimension(lam).
-    return quiver.coulomb_dimension == centralizer_dimension(lam)
+    return bfn_quiver_for_type_a(lam).bfn_slodowy_identification
 
 
 def bfn_strategy_assessment(n: int) -> Dict[str, object]:
@@ -340,29 +406,29 @@ def bfn_strategy_assessment(n: int) -> Dict[str, object]:
     """
     pars = partitions(n)
     results = {}
-    all_match = True
+    identifications = []
 
     for lam in pars:
         quiver = bfn_quiver_for_type_a(lam)
-        dim_match = bfn_coulomb_matches_slodowy(lam)
-        all_match = all_match and dim_match
+        identification = bfn_coulomb_matches_slodowy(lam)
+        identifications.append(identification)
 
         label = ''.join(str(p) for p in lam)
         results[f'({label})'] = {
-            'gauge_ranks': quiver.gauge_ranks,
-            'framing_ranks': quiver.framing_ranks,
-            'coulomb_dim': quiver.coulomb_dimension,
-            'higgs_dim': quiver.higgs_dimension,
-            'dim_match': dim_match,
+            'candidate_gauge_ranks': quiver.candidate_gauge_ranks,
+            'candidate_framing_ranks': quiver.candidate_framing_ranks,
+            'gauge_rank_sum': quiver.gauge_rank_sum,
+            'slodowy_dim': quiver.slodowy_dimension,
+            'orbit_dim': quiver.orbit_dimension,
+            'bfn_slodowy_identification': identification,
         }
 
     return {
         'n': n,
-        'all_dimensions_match': all_match,
+        'partition_ledgers_complete': len(results) == len(pars),
+        'bfn_slodowy_identifications': tuple(identifications),
         'quiver_data': results,
-        'feasibility': 'high' if all_match else 'low',
-        'completeness': 'conditional',
-        'bottleneck': 'Need bar-cobar on BFN Coulomb branch algebras',
+        'bottleneck': 'BFN--Slodowy identification and its chiral quantization',
     }
 
 
@@ -378,9 +444,9 @@ class FormalityData:
     rank: int
     is_even_nilpotent: bool
     slodowy_is_affine: bool
-    li_filtration_available: bool
-    formality_expected: bool
-    obstruction_source: str
+    li_filtration_status: ClaimPacket
+    formality_realization: ClaimPacket
+    remaining_obligation: str
 
 
 def is_even_nilpotent(lam: Partition) -> bool:
@@ -400,36 +466,21 @@ def slodowy_slice_is_affine(lam: Partition) -> bool:
     return True
 
 
-def li_filtration_status(lam: Partition) -> bool:
-    """Whether Li's filtration on the W-algebra is known to give
-    gr(W) ≃ C[J(S_f)].
-
-    For type A: this is known for principal (Arakawa), subregular
-    (Arakawa), and all orbits satisfying a "good even" condition.
-    The general case (arbitrary nilpotent in arbitrary type) is
-    Arakawa's conjecture, proved by Arakawa-van Ekeren for simply-laced.
-
-    For our purposes: in type A, it's proved for all orbits.
-    """
-    return True  # type A, all orbits: proved by Arakawa's theorem
+def li_filtration_status(lam: Partition) -> ClaimPacket:
+    """Return the source-sensitive Li associated-graded obligation."""
+    return _open(
+        f"Li associated graded of W(sl_{sum(lam)}, f_{lam}) equals the Slodowy arc algebra",
+        "a precise primary-source theorem in the selected nilpotent and level convention",
+        "compatibility with the completed filtration used by the chiral bar complex",
+    )
 
 
 def formality_assessment(n: int) -> List[FormalityData]:
-    """Assess the formality route for all orbits in sl_N."""
+    """Record affine Slodowy input and the independent formality claim."""
     results = []
     for lam in partitions(n):
         is_even = is_even_nilpotent(lam)
-        li_avail = li_filtration_status(lam)
-
-        # Formality expected when:
-        # 1. Li filtration gives gr(W) = Sym_partial(V)  (PBW-Slodowy)
-        # 2. The algebra is Koszul
-        # Both hold for all type-A W-algebras at generic level.
-        formality = li_avail  # In type A, always available
-
-        obstruction = 'none' if formality else (
-            'half-integer weights' if not is_even else 'Li filtration unknown'
-        )
+        li_status = li_filtration_status(lam)
 
         results.append(FormalityData(
             partition=lam,
@@ -437,39 +488,42 @@ def formality_assessment(n: int) -> List[FormalityData]:
             rank=n - 1,
             is_even_nilpotent=is_even,
             slodowy_is_affine=slodowy_slice_is_affine(lam),
-            li_filtration_available=li_avail,
-            formality_expected=formality,
-            obstruction_source=obstruction,
+            li_filtration_status=li_status,
+            formality_realization=_open(
+                f"derived DS agrees with classical DS for the orbit {lam} in sl_{n}",
+                *li_status.hypotheses,
+                "formality of the completed BRST complex",
+                H_BAR_BRST_BICOMPLEX,
+                H_DS_KD_COMPARISON,
+            ),
+            remaining_obligation=(
+                "construct the completed BRST formality quasi-isomorphism and its "
+                "bar-compatible interchange map"
+            ),
         ))
     return results
 
 
 def derived_ds_strategy_score(n: int) -> Dict[str, object]:
-    """Score Strategy C for sl_N.
-
-    The derived DS approach works if:
-    1. Derived DS exists (always, by homological algebra)
-    2. Derived DS ≃ classical DS (formality)
-    3. Bar commutes with derived DS (automatic for derived functors)
-
-    The bottleneck is step 2: formality of the DS complex.
-    """
+    """Collect exact affine inputs and the derived-DS/bar obligation."""
     assessments = formality_assessment(n)
-    all_formal = all(a.formality_expected for a in assessments)
     all_even = all(a.is_even_nilpotent for a in assessments)
+    affine_inputs = all(a.slodowy_is_affine for a in assessments)
 
     return {
         'n': n,
-        'all_formal': all_formal,
+        'all_slodowy_slices_affine': affine_inputs,
+        'derived_ds_bar_comparison': _open(
+            f"derived-DS/bar comparison for all type-A orbits in sl_{n}",
+            H_DS_KD_COMPARISON,
+            H_BAR_BRST_BICOMPLEX,
+            H_KAZHDAN_FORMALITY,
+        ),
         'all_even': all_even,
         'num_orbits': len(assessments),
-        'num_formal': sum(1 for a in assessments if a.formality_expected),
+        'affine_slodowy_count': sum(1 for a in assessments if a.slodowy_is_affine),
         'num_even': sum(1 for a in assessments if a.is_even_nilpotent),
-        'feasibility': 'high' if all_formal else 'medium',
-        'completeness': 'full' if all_formal else 'partial',
         'bottleneck': 'Derived DS ≃ classical DS (formality of BRST complex)',
-        'advantage': 'Automatic commutation for derived functors; '
-                     'formality proved for Koszul algebras',
     }
 
 
@@ -477,8 +531,8 @@ def derived_ds_strategy_score(n: int) -> Dict[str, object]:
 # STRATEGY D: Shadow-level commutation
 # =====================================================================
 
-def shadow_depth_estimate(lam: Partition) -> int:
-    """Estimate shadow depth r_max for W^k(sl_N, f_lambda).
+def generator_weight_shadow_depth_candidate(lam: Partition) -> int:
+    """Return the generator-weight depth candidate used for triage.
 
     Shadow depth classification:
     - G (r_max=2): free/Heisenberg-type
@@ -489,6 +543,8 @@ def shadow_depth_estimate(lam: Partition) -> int:
     For W-algebras: the principal W_N has r_max = inf for N >= 3.
     For subregular: depends on the OPE structure.
     For non-principal general: heuristic based on generator degrees.
+    This arithmetic classifies a candidate from generator weights.  It carries
+    no assertion about termination of the full Maurer--Cartan tower.
     """
     N = sum(lam)
     num_gens = centralizer_dimension(lam)
@@ -526,93 +582,98 @@ def shadow_depth_estimate(lam: Partition) -> int:
         return 4
 
 
-def shadow_kappa_ds_commutation(N: int, lam: Partition,
-                                 k: Fraction = Fraction(7)) -> Dict[str, object]:
-    """Check arity-2 (kappa) commutation: DS(kappa_A) = kappa_{DS(A)}.
+def shadow_depth_estimate(lam: Partition) -> ClaimPacket:
+    """Return the open full-shadow-depth claim for one orbit."""
 
-    Uses the correct formula:
-      kappa(W^k(sl_N, f)) = rho_lambda * c(lambda, k)
-
-    where rho_lambda is the anomaly ratio (k-independent, from generator
-    content) and c(lambda, k) is the KRW central charge.
-
-    The old ghost subtraction formula kappa = kappa_aff - C_ghost was WRONG:
-    it gives the wrong k-dependence because rho changes under DS reduction.
-    """
-    from sympy import Rational as SRational
-    from compute.lib.hook_type_w_duality import (
-        ds_kappa_from_affine as _ds_kappa,
-        anomaly_ratio_from_partition,
-        krw_central_charge,
+    candidate = generator_weight_shadow_depth_candidate(lam)
+    return _open(
+        f"full shadow depth of W(sl_{sum(lam)}, f_{lam})",
+        "the complete Maurer--Cartan tower with collision normalization",
+        "a termination or nontermination theorem beyond generator weights",
+        evidence=(f"generator-weight candidate {candidate}",),
     )
 
-    # kappa for V_k(sl_N)
-    dim_g = N * N - 1
-    h_dual = N
-    kappa_affine = Fraction(dim_g, 1) * (k + h_dual) / (2 * h_dual)
 
-    # kappa for W via rho * c
-    rho = float(anomaly_ratio_from_partition(tuple(lam)))
-    c_val = float(krw_central_charge(tuple(lam), SRational(k.numerator, k.denominator)))
-    kappa_w = Fraction(rho * c_val).limit_denominator(10**9)
+def shadow_kappa_ds_commutation(N: int, lam: Partition,
+                                 k: Fraction = Fraction(7)) -> Dict[str, object]:
+    """Return exact arity-two evidence and the typed comparison claim.
 
-    # Ghost constant (retained for informational purposes only)
-    lam_parts = list(lam)
-    x_diag = []
-    for p in lam_parts:
-        for a in range(p):
-            x_diag.append(Fraction(a) - Fraction(p - 1, 2))
-    C = Fraction(0)
-    for i in range(len(x_diag)):
-        for j in range(i + 1, len(x_diag)):
-            C += abs(x_diag[i] - x_diag[j])
-    C_ghost = C / 2
+    The affine class-L characteristic, KRW central charge, and DS ghost
+    constant are exact convention-fixed scalars.  The reduced modular
+    characteristic and its comparison with the affine class remain typed.
+    """
+    level = SRational(k.numerator, k.denominator)
+    kappa_affine = affine_kappa_sl_n(N, level)
+    rho = anomaly_ratio_from_partition(tuple(lam))
+    c_val = krw_central_charge(tuple(lam), level)
+    kappa_w = ds_kappa_from_affine(tuple(lam), level)
+    C_ghost = ghost_constant(tuple(lam))
+
+    comparison = _open(
+        f"arity-two DS--bar shadow comparison for {lam} in sl_{N}",
+        H_MODULAR_GENUS_ONE,
+        H_DS_KD_COMPARISON,
+        evidence=(
+            f"exact affine kappa {kappa_affine}",
+            f"exact KRW central charge {c_val}",
+            f"exact DS ghost constant {C_ghost}",
+        ),
+    )
 
     return {
         'partition': lam,
         'kappa_affine': kappa_affine,
         'ghost_constant': C_ghost,
+        'anomaly_ratio': rho,
+        'central_charge': c_val,
         'kappa_w': kappa_w,
-        'commutation_arity2': True,  # Always proved
-        'status': 'PROVED',
+        'commutation_arity2': comparison,
     }
 
 
 def shadow_commutation_induction_data(n: int) -> Dict[str, object]:
-    """Collect data for shadow-level induction: DS(Theta^{<=r}) = Theta^{<=r}_{DS}.
-
-    At arity 2: PROVED (kappa ghost subtraction).
-    At arity 3: gauge-trivial if cubic shadow vanishes (thm:cubic-gauge-triviality).
-    At arity 4: requires quartic resonance analysis.
-    """
+    """Collect exact depth candidates and typed shadow comparisons."""
     pars = partitions(n)
     results = {}
 
     for lam in pars:
-        depth = shadow_depth_estimate(lam)
+        depth_candidate = generator_weight_shadow_depth_candidate(lam)
+        depth_claim = shadow_depth_estimate(lam)
         arity2 = shadow_kappa_ds_commutation(n, lam)
 
         label = ''.join(str(p) for p in lam)
         results[label] = {
-            'shadow_depth': depth,
-            'arity2_proved': True,
-            'arity3_status': 'gauge-trivial' if depth <= 3 else 'requires-check',
-            'arity4_status': 'not-needed' if depth <= 3 else (
-                'quartic-resonance' if depth <= 4 else 'infinite-tower'
+            'shadow_depth_candidate': depth_candidate,
+            'shadow_depth_realization': depth_claim,
+            'arity2': arity2['commutation_arity2'],
+            'arity3': _open(
+                f"arity-three DS--bar shadow comparison for {lam}",
+                "an explicit cubic comparison cocycle and gauge homotopy",
             ),
-            'full_tower_status': 'finite-termination' if depth < float('inf')
-                                  else 'infinite-induction',
+            'arity4': _open(
+                f"arity-four DS--bar shadow comparison for {lam}",
+                "the quartic resonance and boundary-collision calculation",
+            ),
+            'full_tower': _open(
+                f"all-arity DS--bar shadow comparison for {lam}",
+                "compatible comparison maps at every arity",
+                "convergence in the completed Maurer--Cartan filtration",
+            ),
         }
 
-    finite_depth = sum(1 for lam in pars if shadow_depth_estimate(lam) < float('inf'))
+    finite_depth = sum(
+        1
+        for lam in pars
+        if generator_weight_shadow_depth_candidate(lam) < float('inf')
+    )
 
     return {
         'n': n,
         'total_orbits': len(pars),
-        'finite_depth_orbits': finite_depth,
-        'infinite_depth_orbits': len(pars) - finite_depth,
+        'finite_depth_candidate_count': finite_depth,
+        'infinite_depth_candidate_count': len(pars) - finite_depth,
         'orbit_data': results,
-        'feasibility': 'high' if finite_depth == len(pars) else 'medium',
+        'candidate_feasibility': 'high' if finite_depth == len(pars) else 'medium',
         'bottleneck': 'Infinite shadow obstruction tower requires all-arity induction',
     }
 
@@ -632,8 +693,9 @@ class OrbitRecord:
     num_generators: int
     is_even: bool
     is_hook: bool
-    bv_dual_label: str
-    ds_bar_status: str  # 'proved', 'hook-proved', 'induction-reachable', 'open'
+    transpose_label: str
+    orbit_duality: ClaimPacket
+    ds_bar_status: ClaimPacket
 
 
 def type_a_orbit_census(n: int) -> List[OrbitRecord]:
@@ -643,19 +705,7 @@ def type_a_orbit_census(n: int) -> List[OrbitRecord]:
         lam_t = transpose(lam)
         hook = is_hook(lam)
 
-        if lam == tuple([n]):
-            status = 'proved'  # principal
-        elif lam == tuple([1] * n):
-            status = 'proved'  # zero
-        elif hook:
-            status = 'hook-proved'
-        else:
-            # Check if reachable by induction from hooks
-            score = induction_feasibility_score(n)
-            if lam not in score.get('remaining_orbits', []):
-                status = 'induction-reachable'
-            else:
-                status = 'open'
+        status = _ds_bar_claim(n, lam)
 
         label = ','.join(str(p) for p in lam)
         dual_label = ','.join(str(p) for p in lam_t)
@@ -670,23 +720,45 @@ def type_a_orbit_census(n: int) -> List[OrbitRecord]:
             num_generators=len(gen_ws),
             is_even=is_even_nilpotent(lam),
             is_hook=hook,
-            bv_dual_label=f'({dual_label})',
+            transpose_label=f'({dual_label})',
+            orbit_duality=_open(
+                f"object-level duality sends the orbit {lam} to {lam_t} in sl_{n}",
+                H_TRANSPOSE_DUALITY,
+                H_DS_KD_COMPARISON,
+            ),
             ds_bar_status=status,
         ))
     return results
 
 
+def _type_b_orbit_dimension(lam: Partition) -> int:
+    """Return the type-B orbit dimension from the orthogonal centralizer formula."""
+
+    size = sum(lam)
+    transpose_lam = transpose(lam)
+    odd_rows = sum(part % 2 for part in lam)
+    centralizer_dim = (sum(column * column for column in transpose_lam) - odd_rows) // 2
+    return size * (size - 1) // 2 - centralizer_dim
+
+
+def _type_c_orbit_dimension(lam: Partition) -> int:
+    """Return the type-C orbit dimension from the symplectic centralizer formula."""
+
+    size = sum(lam)
+    transpose_lam = transpose(lam)
+    odd_rows = sum(part % 2 for part in lam)
+    centralizer_dim = (sum(column * column for column in transpose_lam) + odd_rows) // 2
+    rank = size // 2
+    return rank * (2 * rank + 1) - centralizer_dim
+
+
 def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
-    """Nilpotent orbit data for small-rank BCD and exceptional types.
+    """Exact small-rank B/C partition ledgers and typed DS/bar claims.
 
-    For types B, C, D: nilpotent orbits are parameterized by partitions
-    with constraints:
-    - B_n (so_{2n+1}): odd parts have even multiplicity
-    - C_n (sp_{2n}): even parts have even multiplicity
-    - D_n (so_{2n}): odd parts have even multiplicity;
-      very even partitions (all even) split into two orbits
-
-    For exceptional types: orbits are listed case by case.
+    Type B uses even parts of even multiplicity; type C uses odd parts of
+    even multiplicity.  The orbit dimensions below follow the standard
+    classical centralizer formulas.  Object-level DS/bar and orbit duality
+    remain typed obligations.
     """
     data = {}
 
@@ -706,11 +778,20 @@ def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
     #   (2,1,1,1): 2 appears once -> NO
     #   (1^5): no even parts -> OK
     # So B_2 orbits: (5), (3,1,1), (2,2,1), (1^5) = 4 orbits
+    b2_names = {
+        (5,): 'principal',
+        (3, 1, 1): 'subregular',
+        (2, 2, 1): 'minimal',
+        (1, 1, 1, 1, 1): 'zero',
+    }
     data['B_2'] = [
-        {'partition': (5,), 'orbit': 'principal', 'dim': 8, 'ds_status': 'proved'},
-        {'partition': (3, 1, 1), 'orbit': 'subregular', 'dim': 6, 'ds_status': 'open'},
-        {'partition': (2, 2, 1), 'orbit': 'minimal', 'dim': 4, 'ds_status': 'open'},
-        {'partition': (1, 1, 1, 1, 1), 'orbit': 'zero', 'dim': 0, 'ds_status': 'proved'},
+        {
+            'partition': lam,
+            'orbit': b2_names[lam],
+            'dim': _type_b_orbit_dimension(lam),
+            'ds_status': 'distinguished' if lam in ((5,), (1, 1, 1, 1, 1)) else 'open',
+        }
+        for lam in enumerate_type_b_orbits(2)
     ]
 
     # C_2 = sp_4 ≅ so_5
@@ -723,22 +804,31 @@ def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
     #   (2,1,1): 1 appears twice -> OK
     #   (1^4): 1 appears 4 times -> OK
     # C_2 orbits: (4), (2,2), (2,1,1), (1^4) = 4 orbits
+    c2_names = {
+        (4,): 'principal',
+        (2, 2): 'subregular',
+        (2, 1, 1): 'minimal',
+        (1, 1, 1, 1): 'zero',
+    }
     data['C_2'] = [
-        {'partition': (4,), 'orbit': 'principal', 'dim': 8, 'ds_status': 'proved'},
-        {'partition': (2, 2), 'orbit': 'subregular', 'dim': 4, 'ds_status': 'open'},
-        {'partition': (2, 1, 1), 'orbit': 'minimal', 'dim': 2, 'ds_status': 'open'},
-        {'partition': (1, 1, 1, 1), 'orbit': 'zero', 'dim': 0, 'ds_status': 'proved'},
+        {
+            'partition': lam,
+            'orbit': c2_names[lam],
+            'dim': _type_c_orbit_dimension(lam),
+            'ds_status': 'distinguished' if lam in ((4,), (1, 1, 1, 1)) else 'open',
+        }
+        for lam in enumerate_type_c_orbits(2)
     ]
 
     # G_2: 5 nilpotent orbits
     # Principal (G_2), subregular (A_1 + tilde{A}_1), short root (tilde{A}_1),
     # long root (A_1), zero
     data['G_2'] = [
-        {'partition': None, 'orbit': 'G_2 (principal)', 'dim': 12, 'ds_status': 'proved'},
+        {'partition': None, 'orbit': 'G_2 (principal)', 'dim': 12, 'ds_status': 'distinguished'},
         {'partition': None, 'orbit': 'A_1 + tilde{A}_1 (subregular)', 'dim': 10, 'ds_status': 'open'},
         {'partition': None, 'orbit': 'tilde{A}_1 (short root)', 'dim': 8, 'ds_status': 'open'},
         {'partition': None, 'orbit': 'A_1 (long root)', 'dim': 6, 'ds_status': 'open'},
-        {'partition': None, 'orbit': '0 (zero)', 'dim': 0, 'ds_status': 'proved'},
+        {'partition': None, 'orbit': '0 (zero)', 'dim': 0, 'ds_status': 'distinguished'},
     ]
 
     # B_3 = so_7: partitions of 7 with even parts of even multiplicity
@@ -758,14 +848,7 @@ def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
     # (3,3,1), (3,2,2), (3,2,1,1), (3,1^4), (2,2,2,1), (2,2,1,1,1),
     # (2,1^5), (1^7)
     # Filter for B_3 (even parts even mult):
-    b3_valid = []
-    for lam in partitions(7):
-        even_counts = {}
-        for p in lam:
-            if p % 2 == 0:
-                even_counts[p] = even_counts.get(p, 0) + 1
-        if all(c % 2 == 0 for c in even_counts.values()):
-            b3_valid.append(lam)
+    b3_valid = enumerate_type_b_orbits(3)
 
     data['B_3'] = [
         {
@@ -773,11 +856,28 @@ def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
             'orbit': 'principal' if lam == (7,) else (
                 'zero' if lam == (1,) * 7 else 'other'
             ),
-            'dim': 21 - sum(p * p for p in transpose_for_bcd(lam, 7)),
-            'ds_status': 'proved' if lam in ((7,), tuple([1]*7)) else 'open',
+            'dim': _type_b_orbit_dimension(lam),
+            'ds_status': 'distinguished' if lam in ((7,), tuple([1]*7)) else 'open',
         }
         for lam in b3_valid
     ]
+
+    for family, rows in data.items():
+        for row in rows:
+            raw_status = row.pop('ds_status')
+            if raw_status == 'distinguished':
+                packet = _conditional(
+                    f"DS--bar commutation for {family} orbit {row['orbit']}",
+                    H_DS_KD_COMPARISON,
+                    "the principal or zero-orbit specialization in a fixed convention",
+                )
+            else:
+                packet = _open(
+                    f"DS--bar commutation for {family} orbit {row['orbit']}",
+                    H_DS_KD_COMPARISON,
+                    H_BC_DUALITY,
+                )
+            row['ds_bar_status'] = packet
 
     return data
 
@@ -788,7 +888,7 @@ def transpose_for_bcd(lam: Partition, N: int) -> Partition:
 
 
 def type_e_exhaustion_assessment() -> Dict[str, object]:
-    """Assess type-by-type exhaustion for exceptional types.
+    """Return finite orbit-count ledgers and the size of the open middle lane.
 
     Type E_6: 21 nilpotent orbits
     Type E_7: 45 nilpotent orbits
@@ -796,18 +896,19 @@ def type_e_exhaustion_assessment() -> Dict[str, object]:
     Type F_4: 16 nilpotent orbits
     Type G_2: 5 nilpotent orbits
 
-    For each: principal and zero are proved. The frontier is the middle.
+    The two distinguished endpoints are bookkeeping seeds; their DS/bar
+    realization retains the comparison hypotheses recorded above.
     """
     return {
-        'G_2': {'total': 5, 'proved': 2, 'open': 3, 'feasibility': 'high'},
-        'B_2': {'total': 4, 'proved': 2, 'open': 2, 'feasibility': 'high'},
-        'C_2': {'total': 4, 'proved': 2, 'open': 2, 'feasibility': 'high'},
-        'B_3': {'total': 5, 'proved': 2, 'open': 3, 'feasibility': 'medium'},
-        'C_3': {'total': 4, 'proved': 2, 'open': 2, 'feasibility': 'medium'},
-        'F_4': {'total': 16, 'proved': 2, 'open': 14, 'feasibility': 'low'},
-        'E_6': {'total': 21, 'proved': 2, 'open': 19, 'feasibility': 'low'},
-        'E_7': {'total': 45, 'proved': 2, 'open': 43, 'feasibility': 'very-low'},
-        'E_8': {'total': 70, 'proved': 2, 'open': 68, 'feasibility': 'very-low'},
+        'G_2': {'total': 5, 'distinguished_endpoints': 2, 'open_middle': 3},
+        'B_2': {'total': 4, 'distinguished_endpoints': 2, 'open_middle': 2},
+        'C_2': {'total': 4, 'distinguished_endpoints': 2, 'open_middle': 2},
+        'B_3': {'total': 7, 'distinguished_endpoints': 2, 'open_middle': 5},
+        'C_3': {'total': 8, 'distinguished_endpoints': 2, 'open_middle': 6},
+        'F_4': {'total': 16, 'distinguished_endpoints': 2, 'open_middle': 14},
+        'E_6': {'total': 21, 'distinguished_endpoints': 2, 'open_middle': 19},
+        'E_7': {'total': 45, 'distinguished_endpoints': 2, 'open_middle': 43},
+        'E_8': {'total': 70, 'distinguished_endpoints': 2, 'open_middle': 68},
     }
 
 
@@ -817,7 +918,7 @@ def type_e_exhaustion_assessment() -> Dict[str, object]:
 
 @dataclass
 class StrategyRating:
-    """Rating of one strategy for resolving conj:ds-kd-arbitrary-nilpotent."""
+    """Editorial triage score; these integers carry no theorem status."""
     name: str
     code: str  # A, B, C, D, E
     feasibility: int  # 1-10
@@ -829,7 +930,7 @@ class StrategyRating:
 
 
 def rate_all_strategies() -> List[StrategyRating]:
-    """Rate all five GREEN TEAM strategies."""
+    """Return explicit editorial priority scores for five research routes."""
     return [
         StrategyRating(
             name='Induction on orbit closure',
@@ -842,8 +943,8 @@ def rate_all_strategies() -> List[StrategyRating]:
                        'controlled.',
             pros=[
                 'Natural mathematical structure (poset induction)',
-                'Starts from proved cases (principal, hooks)',
-                'In type A, graph is connected so induction reaches everything',
+                'Starts from distinguished principal and hook audit surfaces',
+                'In type A, the finite dominance graph is connected',
                 'Each induction step is a relative statement, potentially simpler',
             ],
             cons=[
@@ -862,10 +963,10 @@ def rate_all_strategies() -> List[StrategyRating]:
                        'The BFN construction is Poisson-algebraic; extending to the '
                        'chiral/vertex algebra level is non-trivial.',
             pros=[
-                'BFN gives an independent construction of W-algebras (via quivers)',
-                'Quiver description is manifestly functorial',
-                'If bar-cobar on Coulomb branches works, commutation is automatic',
-                'Works uniformly across all types (via quiver varieties)',
+                'BFN supplies an independent Poisson-geometric comparison route',
+                'Quiver rank data are finite and explicit',
+                'A chiral BFN/bar theorem would construct the required comparison map',
+                'Quiver varieties organize uniform families across Lie types',
             ],
             cons=[
                 'BFN construction gives the ASSOCIATED GRADED, not the vertex algebra',
@@ -881,13 +982,13 @@ def rate_all_strategies() -> List[StrategyRating]:
             completeness=9,
             novelty=8,
             bottleneck='Formality of the BRST complex: is derived DS ≃ classical DS? '
-                       'For Koszul algebras, formality follows from the characterization '
-                       'programme (12 equivalences). The gap is for non-Koszul quotients.',
+                       'The required statement concerns the completed BRST complex and '
+                       'its interchange morphism with chiral bar.',
             pros=[
-                'Derived functors commute automatically: bypasses chain-level problems',
-                'Formality for Koszul algebras is PROVED (12-equivalence meta-theorem)',
-                'Li filtration + PBW-Slodowy gives gr(W) = Sym_d(V) for all type A',
-                'Clean conceptual argument: no case-by-case analysis needed',
+                'Derived categories provide the natural ambient comparison',
+                'Affine Slodowy slices furnish a tractable associated-graded input',
+                'A source-backed Li theorem would identify the PBW page',
+                'The route isolates one chain-level interchange construction',
                 'Connects directly to the three-pillar architecture (Pillar A: Ch_inf)',
             ],
             cons=[
@@ -904,12 +1005,12 @@ def rate_all_strategies() -> List[StrategyRating]:
             completeness=6,
             novelty=7,
             bottleneck='Infinite shadow obstruction tower for M-class algebras (Virasoro, W_N). '
-                       'Arity-2 (kappa) is proved. Arity-3 is gauge-trivial. Arity-4 '
-                       'requires quartic resonance analysis. Full tower needs all-arity argument.',
+                       'Arity two requires the genus-one trace comparison; arities three and four '
+                       'require explicit cocycles. Full depth needs an all-arity argument.',
             pros=[
-                'Arity 2 (kappa) is already PROVED for all nilpotents',
-                'Arity 3 is gauge-trivial by cubic gauge triviality theorem',
-                'Shadow depth finite for many orbits (non-principal)',
+                'Exact KRW and ghost ledgers constrain arity two',
+                'Cubic and quartic channels can be attacked independently',
+                'Generator weights give finite triage bounds in many examples',
                 'Directly uses the manuscript\'s shadow obstruction tower machinery',
             ],
             cons=[
@@ -945,49 +1046,18 @@ def rate_all_strategies() -> List[StrategyRating]:
 
 
 def recommended_strategy() -> str:
-    """Return the GREEN TEAM recommended composite approach.
-
-    The optimal strategy combines C (derived DS formality) as the
-    theoretical backbone with A (closure induction) for the structural
-    argument and E (exhaustion) for verification:
-
-    1. Use Strategy C (derived formality) to establish that bar commutes
-       with DERIVED DS automatically. The question reduces to: is the
-       natural map from derived DS to classical DS a quasi-isomorphism?
-
-    2. Use the PBW-Slodowy mechanism (Theorem thm:pbw-slodowy-collapse)
-       to prove formality of the DS complex for all orbits where Li
-       filtration gives gr(W) = Sym_d(V). In type A, this is ALL orbits
-       (Arakawa's theorem).
-
-    3. Use Strategy A (closure induction) to propagate from type A to
-       BCD/exceptional types: for each covering relation O' < O, the
-       relative formality statement is controlled by the change in the
-       ghost system.
-
-    4. Use Strategy E (exhaustion) to verify up to rank 4 in all types,
-       building confidence and catching any obstructions.
-
-    5. Strategy D (shadow level) provides the arity-by-arity verification
-       that confirms the chain-level result at each finite order.
-
-    Strategy B (BFN) is a powerful alternative but requires more new
-    machinery; it is the backup if the formality route fails.
-    """
+    """Return a composite audit programme with its proof obligations exposed."""
     return (
-        "COMPOSITE STRATEGY: C + A + E (with D verification)\n"
+        "COMPOSITE AUDIT PROGRAMME: C + A + E, tested through D\n"
         "\n"
-        "Step 1 (C): Derived DS commutes with bar automatically.\n"
-        "         Reduce to: derived DS ≃ classical DS.\n"
-        "Step 2 (C): PBW-Slodowy formality proves this for type A.\n"
-        "         (Li filtration + Arakawa's theorem)\n"
-        "Step 3 (A): Closure induction propagates to BCD/exceptional.\n"
-        "Step 4 (E): Exhaustive verification up to rank 4.\n"
-        "Step 5 (D): Shadow-level arity-by-arity confirmation.\n"
+        "Step 1 (C): Construct the derived-DS/chiral-bar interchange morphism.\n"
+        "Step 2 (C): Prove completed BRST formality from a sourced Li/PBW theorem.\n"
+        "Step 3 (A): Realize every chosen closure edge by reduction in stages.\n"
+        "Step 4 (E): Maintain exact finite partition, orbit, and KRW ledgers.\n"
+        "Step 5 (D): Compute the genus-one, cubic, and quartic comparison classes.\n"
         "\n"
-        "Feasibility: 8/10 (type A complete; BCD needs closure induction)\n"
-        "Completeness: 8/10 (full for type A; conditional for others)\n"
-        "Novelty: 8/10 (formality + closure induction is new combination)\n"
+        "Open packages: H_DS-KD^comparison, H_bar-BRST^bicomplex, "
+        "H_Kazhdan^formality, H_transport^categorical, H_modular^genus-one.\n"
     )
 
 
@@ -995,39 +1065,51 @@ def recommended_strategy() -> str:
 # DIAGNOSTIC RUNNER
 # =====================================================================
 
-def run_diagnostics() -> Dict[str, bool]:
-    """Run all GREEN TEAM diagnostic checks."""
-    results: Dict[str, bool] = {}
+def run_diagnostics() -> Dict[str, object]:
+    """Return exact strategy diagnostics and typed theorem obligations."""
+    results: Dict[str, object] = {}
 
     # Strategy A: closure induction
     for n in [3, 4, 5]:
         score = induction_feasibility_score(n)
-        results[f"A: sl_{n} closure induction covers all orbits"] = score['all_proved']
+        results[f"A: sl_{n} candidate closure covers all orbits"] = score[
+            'candidate_closure_covers_all'
+        ]
+        results[f"A: sl_{n} transport realization"] = score['transport_realization']
         results[f"A: sl_{n} graph connected"] = graph_is_connected(n)
 
-    # Strategy B: BFN
+    # Strategy B: exact candidate ranks plus typed BFN identification
     for n in [3, 4, 5]:
         for lam in partitions(n):
             label = ''.join(str(p) for p in lam)
-            results[f"B: BFN dim match sl_{n} ({label})"] = bfn_coulomb_matches_slodowy(lam)
+            results[f"B: BFN--Slodowy identification sl_{n} ({label})"] = (
+                bfn_coulomb_matches_slodowy(lam)
+            )
 
     # Strategy C: derived DS formality
     for n in [3, 4, 5]:
         score = derived_ds_strategy_score(n)
-        results[f"C: sl_{n} all formal"] = score['all_formal']
+        results[f"C: sl_{n} affine Slodowy inputs"] = score['all_slodowy_slices_affine']
+        results[f"C: sl_{n} derived DS/bar comparison"] = score[
+            'derived_ds_bar_comparison'
+        ]
 
     # Strategy D: shadow kappa commutation
     for n in [3, 4]:
         for lam in partitions(n):
             label = ''.join(str(p) for p in lam)
             check = shadow_kappa_ds_commutation(n, lam)
-            results[f"D: kappa DS-bar commute sl_{n} ({label})"] = check['commutation_arity2']
+            results[f"D: kappa DS-bar comparison sl_{n} ({label})"] = check[
+                'commutation_arity2'
+            ]
 
     # Strategy E: orbit census
     for n in [2, 3, 4, 5]:
         census = type_a_orbit_census(n)
-        open_count = sum(1 for r in census if r.ds_bar_status == 'open')
-        results[f"E: sl_{n} no open orbits"] = (open_count == 0)
+        results[f"E: sl_{n} orbit statuses are typed"] = all(
+            isinstance(record.ds_bar_status, ClaimPacket) and record.ds_bar_status.hypotheses
+            for record in census
+        )
 
     # Strategy ratings
     ratings = rate_all_strategies()

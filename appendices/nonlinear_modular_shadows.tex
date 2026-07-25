@@ -318,9 +318,9 @@ for $r > r_{\max}$, which reflects the OPE complexity of~$\cA$.
 Two aspects of this deserve emphasis. First, even the
 degree-$2$ projection $\kappa(\cA)$
 already depends on curve geometry:
-the averaging map $\mathrm{av}$ is a
-$\Sigma_2$-coinvariant projection of the meromorphic function
-$r(z)$ extracted from collision residues on the
+the averaging map $\mathrm{av}$ gives the
+$\Sigma_2$-coinvariant operator class of the meromorphic collision
+kernel $K_\cA^{\mathrm{coll}}(z)$ on the
 Fulton--MacPherson compactification $\overline{C}_2(X)$.
 This is not ``Koszul duality over a point''; the
 formal-disk restriction that recovers the classical theory
@@ -471,11 +471,13 @@ the corresponding quotient.
 \section{The governing question from first principles}
 \label{sec:nms-governing-question}
 
-The correct theorem of complementarity is not
+The linear complementarity identity
 \[
 Q_g(\cA)\oplus Q_g(\cA^!) \cong C_g(\cA).
 \]
-That is only the linear shadow. The correct theorem is that there is a single formal moduli problem carrying a shifted symplectic structure, and the two dual deformation packages are Lagrangian inside it. The first-principles data are therefore not two vector spaces and a linear identity, but:
+is the trace shadow of a formal moduli problem carrying a shifted
+symplectic structure, with the two dual deformation packages as
+Lagrangians. The first-principles datum consists of:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item a cyclic deformation complex for $\cA$,
 \item a cyclic deformation complex for $\cA^!$,
@@ -490,11 +492,19 @@ This is exactly the geometric shape suggested by the chiral bar--cobar formalism
 
 \begin{definition}[Ambient complementarity datum]
 \label{def:nms-ambient-datum}
-Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
-curve, let $\cA^{\mathrm i}=H^\bullet\barB_X(\cA)$ be its bar-dual
-coalgebra on the finite or completed Koszul locus, and let
-$\cA^!$ denote the post-Verdier Koszul dual algebra where the
-Verdier package is defined. An \emph{ambient complementarity datum}
+Let $\cA=T_X(V)/(R)$ be a modular Koszul chiral algebra on a smooth
+projective curve, let
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ be its presentation
+coalgebra, and let
+\[
+q_\cA\colon\cA^{\mathrm i}\longrightarrow\barB_X(\cA),\qquad
+K_X(\cA):=\mathbb D_{\Ran}\barB_X(\cA),\qquad
+\nu_\cA\colon K_X(\cA)\longrightarrow\cA^!
+\]
+be the quadratic, Ran--Verdier, and chosen-pair data.  The package
+$H_{\mathrm{CL}}$ makes $q_\cA$ a quasi-isomorphism, while the
+finite or completed pair package makes $\nu_\cA$ an equivalence.
+An \emph{ambient complementarity datum}
 consists of:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item two cyclic deformation complexes
@@ -1016,9 +1026,12 @@ The Gaussian class~$G$ (shadow depth~$2$, $\Delta = 0$) is
 sometimes described as the stratum where ``chiral Koszul duality
 reduces to classical Koszul duality.'' This is imprecise.
 In class~$G$ the shadow tower terminates at degree~$2$
-\emph{on the curve}: the collision residue $r(z)$ is scalar,
-the averaging map $\mathrm{av}(r(z)) = \kappa$ is a
-$\Sigma_2$-coinvariant integral on $\overline{C}_2(X)$, and
+\emph{on the curve}: the ordered collision kernel
+$K_\cA^{\mathrm{coll}}(z)$ has rank one, its homotopy coinvariant
+$q_2(K_\cA^{\mathrm{coll}})$ remains an operator class, and the
+normalized integral
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})=\kappa$
+is taken on $\overline{C}_2(X)$. The
 the bar differential uses the Arnold form
 $\eta = d\log(z_1 - z_2)$. The coincidence with the
 classical theory is mediated by the formal-disk restriction
@@ -2571,7 +2584,17 @@ For a modular Koszul chiral algebra $\cA$ with cyclic slice $V_{\cA}$, define
 :=
 \sum_{g\ge 0}\hbar^g\sum_{r\ge 2}\frac{1}{r!}\,\mathrm{Sh}_r^{(g)}(\cA).
 \end{equation}
-Its scalar trace is $\operatorname{tr}(\mathfrak{ch}_{\mathrm{mod}})=\sum_g \hbar^g\kappa(\cA)\lambda_g$, recovering the $\hat{A}$-genus tower.
+Its graph-evaluated scalar trace is
+\[
+ \operatorname{tr}_{\mathrm{graph}}(\mathfrak{ch}_{\mathrm{mod}})
+ =\sum_g\hbar^g F_g^{\mathrm{sc}}(\cA),
+ \qquad
+ F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}},
+\]
+which is the $\hat A$-genus tower.  Under $H_D^K$, the corresponding
+class-valued output is
+$\operatorname{obs}^{\mathrm{Hdg}}_g
+=(-1)^g\kappa(\cA)\lambda_g$.
 \end{definition}
 
 \begin{theorem}[The modular invariant hierarchy beyond $\hat{A}$; \ClaimStatusProvedHere]
@@ -2585,12 +2608,12 @@ Let $\cA$ be a modular Koszul chiral algebra whose shadow obstruction tower does
 \end{theorem}
 
 \begin{proof}
-Suppose $\kappa(\cA)=\kappa(\cA')$ but the quartic shadows differ. Then $\Lambda_P(\mathfrak Q_{\cA})\neq \Lambda_P(\mathfrak Q_{\cA'})$ and $\rho^{(1)}_{\cA}\neq \rho^{(1)}_{\cA'}$: the full modular characteristic distinguishes the two algebras.\qedhere
+Suppose $\kappa(\cA)=\kappa(\cA')$ but the quartic shadows differ. Then $\Lambda_P(\mathfrak Q_{\cA})\neq \Lambda_P(\mathfrak Q_{\cA'})$ and $\rho^{(1)}_{\cA}\neq \rho^{(1)}_{\cA'}$: the nonlinear modular characteristic distinguishes the two algebras.\qedhere
 \end{proof}
 
 \begin{remark}[Summary of the invariant hierarchy]
 \label{rem:nms-invariant-hierarchy-summary}
-The full modular invariant hierarchy:
+The modular invariant hierarchy:
 \[
 \underbrace{\kappa(\cA)}_{\text{scalar}}
 \;\longrightarrow\;
@@ -2602,7 +2625,7 @@ The full modular invariant hierarchy:
 \;\longrightarrow\;
 \underbrace{\Theta_{\cA}}_{\text{universal class}}.
 \]
-The first three levels are genus-$0$ data. The genus loop correction is the first genuinely higher-genus modular invariant. The full universal class unifies all levels.
+The first three levels are genus-$0$ data. The genus loop correction is the first genuinely higher-genus modular invariant. The universal class unifies all levels on the stated completed tower.
 \end{remark}
 
 \section{A unified summary theorem}
@@ -2721,7 +2744,9 @@ The bar-intrinsic MC element $\Theta_\cA$ (Theorem~\ref{thm:mc2-bar-intrinsic}) 
 \]
 in the Feynman transform, whose projections recover the entire modular characteristic hierarchy:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item scalar trace: $\operatorname{tr}(\boldsymbol\Theta_{\cA})=\sum_{g\ge 1}\kappa(\cA)\lambda_g$;
+\item graph scalar trace:
+$\operatorname{tr}_{\mathrm{graph}}(\boldsymbol\Theta_{\cA})
+=\sum_{g\ge 1}\kappa(\cA)\lambda_g^{\mathrm{FP}}$;
 \item one-vertex projection: $H_{\cA}+\mathfrak C_{\cA}+\mathfrak Q_{\cA}+\cdots$;
 \item determinant shadow: the full resonance tower $\mathfrak R^{\mathrm{mod}}_{r,g,n}(\cA)$ for all $r\ge 4$;
 \item Legendre duality shadow: $\boldsymbol\Theta_{\cA^!}=\boldsymbol\Theta_{\cA}^{\vee}$.
@@ -2905,7 +2930,7 @@ with the convention $\nu_{\mathrm{nl}}=\infty$ when all nonlinear shadows vanish
 \end{definition}
 
 \begin{theorem}[Nonlinear phase of the standard families; \ClaimStatusConditional]
-\label{conj:nms-nonlinear-phase-standard}
+\label{thm:nms-nonlinear-phase-standard}
 The nonlinear phase indices of the five model families are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Heisenberg: $\nu_{\mathrm{nl}}=\infty$.
@@ -3300,7 +3325,7 @@ $\Theta_\cA \in \MC(\mathfrak{g}_\cA^{\mathrm{mod}})$:
  It gives $k\cdot\mathbb{1}/z$ in the Heisenberg/free case
  \textup{(}and $0$ for $\beta\gamma$, whose simple-pole OPE is
  absorbed by $d\log$\textup{)}
- and $k\Omega/z$ in the affine $\widehat{\fg}_k$ case
+ and $k\Omega_{\mathrm{tr}}/z$ in the affine $\widehat{\fg}_k$ case
  (Propositions~\ref{prop:free-propagator-matching}
  and~\ref{prop:affine-propagator-matching}):
  at $k = 0$ both propagators vanish, consistent.
@@ -3359,8 +3384,9 @@ Every earlier level is a shadow of every later level. The graph-completed master
 \label{rem:nms-factorization-envelope}
 \index{factorization envelope!shadow tower}
 \index{platonic package!shadow tower connection}
-The 2025--2026 factorization envelope technology
-(Nishinaka~\cite{Nish26}; Vicedo~\cite{Vic25}) provides a
+The factorization envelope
+\textup{(}\cite[\S3.7]{BD04}, \cite{CG17}; see
+also Vicedo~\cite{Vic25}\textup{)} provides a
 functorial genus-$0$ machine: from a Lie conformal algebra one
 constructs a factorization algebra whose associated vertex algebra
 is the enveloping vertex algebra. The shadow obstruction tower of this
@@ -4132,9 +4158,14 @@ conductor.
 \index{Bershadsky--Polyakov!shadow tower}
 The Bershadsky--Polyakov algebra $\mathcal{BP}_k
 = \mathcal{W}^k(\fsl_3, f_{(2,1)})$
-has central charge
-$c(k) = -2(12k^2 + 23k + 9)/(k+3)$,
-Koszul conductor $K = 196$, and on the $T$-line:
+has standard central charge
+$c_{\mathrm{BP}}(k) = -(2k+3)(3k+1)/(k+3)$ with central-charge
+conductor $K^c_{\mathrm{BP}} = 50$; the tower below is computed on the
+shifted conformal-vector scalar
+$c(k) = -2(12k^2 + 23k + 9)/(k+3) = 2 - 24(k+1)^2/(k+3)$,
+whose reflection sum is $K^{\mathrm{shift}} = 196$
+\textup{(}a separate convention from the standard
+conductor\textup{)}, and on the $T$-line:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \small
@@ -4149,11 +4180,12 @@ $5$ & $3(k+3)^3\big/\bigl[2(12k^2+23k+9)^2(15k^2+26k+3)\bigr]$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The $\sigma$-invariant: $\Delta^{(2)} = 98 = K/2$,
+The $\sigma$-invariant: $\Delta^{(2)} = 98 = K^{\mathrm{shift}}/2$,
 $\Delta^{(3)} = 4$ \textup{(}universal\textup{)},
 $\Delta^{(4)}$ level-dependent with poles at $c = 0$, $c = 196$,
 $c = -22/5$, $c = 1002/5$.
-% The pole pairs sum to K = 196: (0, 196) and (-22/5, 1002/5).
+% The pole pairs sum to K^shift = 196: (0, 196) and (-22/5, 1002/5);
+% shifted-lane arithmetic, distinct from the standard conductor 50.
 The $J$-line \textup{(}residual $U(1)$\textup{)} has class~$G$
 \textup{(}depth $2$\textup{)}: the current is abelian.
 \end{computation}

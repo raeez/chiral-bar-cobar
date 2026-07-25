@@ -15,7 +15,7 @@ Object firewalls:
   - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
   - A^! is the Verdier/continuous-linear dual branch under the required
     finite-type/completed hypotheses.
-  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/bulk data, not Koszul
+  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/closed-sector data, not Koszul
     dual data.
 
 MATHEMATICAL FRAMEWORK

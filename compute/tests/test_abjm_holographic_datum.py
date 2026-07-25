@@ -1,4 +1,5 @@
 from fractions import Fraction
+from pathlib import Path
 
 from sympy import Rational, pi, simplify
 
@@ -37,7 +38,7 @@ def test_abjm_holographic_summary_matches_rank_one_datum():
     assert summary["kappa(A)"] == "-1"
     assert summary["kappa(A!)"] == "1"
     assert summary["complementarity"] == "0"
-    assert summary["C (bulk)"] == "RW(T*(C^1/Z_1))"
+    assert summary["C (closed-sector)"] == "RW(T*(C^1/Z_1))"
     assert summary["r(z)"] == "rational (Casimir/z)"
     assert summary["shadow_depth"] == "4"
     assert summary["nabla^hol flat"] == "True"
@@ -55,7 +56,7 @@ def test_abjm_datum_exposes_seven_entry_package_as_projections():
         "A": datum.A_name,
         "A^i": datum.A_bar_dual_name,
         "A!": datum.A_dual_name,
-        "C": datum.bulk_tft,
+        "C": datum.closed_sector_description,
         "r(z)": datum.r_matrix_type,
         "Theta_A": datum.theta_kappa,
         "nabla^hol": datum.connection_is_flat,
@@ -79,20 +80,32 @@ def test_abjm_datum_exposes_seven_entry_package_as_projections():
     assert seven_entry_package["nabla^hol"] is True
 
 
-def test_abjm_dual_companion_and_bulk_slots_are_distinct():
+def test_abjm_dual_companion_and_closed_sector_slots_are_distinct():
     summary = make_abjm_datum(1, 1).summary()
 
     assert len({
         summary["A"],
         summary["A^i"],
         summary["A!"],
-        summary["C (bulk)"],
+        summary["C (closed-sector)"],
     }) == 4
     assert summary["A^i"].startswith("H^*(B(")
     assert summary["A!"].endswith("!")
-    assert summary["C (bulk)"].startswith("RW(")
-    assert "Z_ch^der(A)" in summary["bulk_slot_scope"]
-    assert "distinct from A, B(A), A^i, and A!" in summary["bulk_slot_scope"]
+    assert summary["C (closed-sector)"].startswith("RW(")
+    assert "Z_ch^der(A)" in summary["closed_sector_slot_scope"]
+    assert "distinct from A, B(A), A^i, and A!" in summary["closed_sector_slot_scope"]
+
+
+def test_abjm_summary_uses_closed_sector_c_slot_names():
+    source = (
+        Path(__file__).parents[2] / "compute/lib/abjm_holographic_datum.py"
+    ).read_text()
+
+    assert "closed_sector_description" in source
+    assert "bulk_tft" not in source
+    assert '"C (bulk)"' not in source
+    assert "bulk_slot_scope" not in source
+    assert "C_bulk" not in source
 
 
 def test_abjm_bar_cobar_scope_is_inversion_not_duality():

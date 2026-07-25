@@ -90,7 +90,7 @@ class TestScopeFirewalls:
             "bar-cobar inversion recovering A, not Koszul duality")
         assert "Verdier/continuous-linear dual branch" in roles["A^!"]
         assert roles["Z_ch^der(A)"] == (
-            "ChirHoch^*(A,A), the Hochschild bulk, not Koszul dual")
+            "ChirHoch^*(A,A), the Hochschild closed-sector, not Koszul dual")
         assert "not full Theta_A" in roles["r(z)"]
 
     def test_kernel_constants_are_exact_firewalls(self):

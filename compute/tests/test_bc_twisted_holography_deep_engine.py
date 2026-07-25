@@ -2,7 +2,7 @@ r"""Tests for twisted holography from Koszul duality: deep engine.
 
 Tests organized by section:
   1.  Kappa formulas (AP1 recomputation, AP39 family-specific)
-  2.  Holographic dictionary entries (bulk operators, boundary dimensions)
+  2.  Holographic dictionary entries (closed-sector operators, boundary dimensions)
   3.  Bulk derived center dimensions
   4.  Boundary VOA dimensions
   5.  Defect spectrum (line operators from A-modules)

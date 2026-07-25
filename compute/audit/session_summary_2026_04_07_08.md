@@ -206,7 +206,10 @@ Three full Beilinson re-audits of all inscribed material converged (zero actiona
 
 - **DK-5**: infinity-PBW equivalence for Yangian-quantum group bridge. Accessible now that MC3 is proved for all simple types, but requires pro-nilpotent structures.
 - **Genus-5 cross-channel**: needed for Borel summability verification of the cross-channel series at higher genus.
-- **Admissible sl_3 Koszulness**: proved for sl_2 at all admissible levels; sl_3 blocked by multi-weight null vector structure.
+- **Admissible sl_3 Koszulness**: the sl_2 lane has finite
+  Shapovalov/character evidence but remains conditional on the
+  quotient-bar spectral-sequence and convergence package; sl_3 is
+  blocked by multi-weight null vector structure.
 - **(3,2) nilpotent in sl_5**: first non-hook non-principal test case for DS-KD intertwining.
 - **~50 Vol II .tex files untouched** by this session's rectification. The E_1 primacy thesis is installed in CLAUDE.md and in Vol I .tex but needs systematic inscription into Vol II Part VII and the bulk-boundary-line chapters.
 

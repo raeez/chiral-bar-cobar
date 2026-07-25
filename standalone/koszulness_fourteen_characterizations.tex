@@ -1003,12 +1003,12 @@ $\ell_{r+1}^{(0)}$ of the modular convolution algebra vanish at
 genus zero for all $r \geq 2$.
 
 \item\label{item:kfc-e2formality}
-\textbf{$\Etwo$-formality of chiral Hochschild cohomology.}
-$\ChirHoch^*(\cA)$ is concentrated in cohomological degrees
-$\{0,1,2\}$, carries a polynomial Hilbert series
-$P_\cA(t) = \dim Z(\cA) + \dim \ChirHoch^1(\cA) \cdot t
- + \dim Z(\cA^!) \cdot t^2$,
-and is formal as an $\Etwo$-algebra.
+\textbf{Family-indexed $\Etwo$ model.}
+For a finite set $S\subset\mathbb Z$, a family datum
+$H_H(\cA;S)$ identifies $\ChirHoch^n(\cA)$ with
+$H^n(K_{\cA,S})$ and supports it in~$S$.  The $\Etwo$-formality
+of this model is an additional hypothesis.  A perfect degree-$d$
+pairing with $\cA^!$ is an additional duality datum.
 
 \item\label{item:kfc-curve-indep}
 \textbf{Curve independence.}
@@ -1042,9 +1042,10 @@ $H^k(\int_{\bP^1}\cA) = 0$ for $k \neq 0$.
 Under the uniform-weight hypothesis, for every smooth projective
 curve~$\Sigma_g$ of genus~$g \geq 0$,
 $H^k(\int_{\Sigma_g}\cA) = 0$ for $k \neq 0$,
-and the surviving scalar class at $g \geq 1$ is
-$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-\textup{(UNIFORM-WEIGHT)}.
+and, with the additional package~$H_D^K$, the surviving Hodge
+character at $g\ge1$ is
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g$.
 
 \item\label{item:kfc-fm}
 \textbf{FM boundary acyclicity.}
@@ -1096,8 +1097,9 @@ cohomology of the Sklyanin bracket
 $\{-,-\}_{\mathrm{STS}}$ on $(\fg^!)^*$ vanishes:
 $H^2_\pi((\fg^!)^*, \{-,-\}_{\mathrm{STS}}) = 0$.
 Equivalently, the Sklyanin--Poisson structure determined by the
-classical $r$-matrix $r(z) = k\Omega/z$ admits no nontrivial
-infinitesimal deformations.
+trace-form classical $r$-matrix
+$r(z)=k\Omega_{\mathrm{tr}}/z$ admits no nontrivial infinitesimal
+deformations.
 
 \end{enumerate}
 
@@ -1183,12 +1185,9 @@ pair (xv), (xvi) is kept outside.
 \begin{theorem}[Conditional Hochschild converse]
 \label{thm:kfc-v-converse}
 Let $\cA$ be a positive-energy chiral algebra on~$X$ with PBW
-filtration. Suppose condition~(v) holds in its full form:
-$\ChirHoch^*(\cA)$ is concentrated in cohomological degrees
-$\{0,1,2\}$, carries the polynomial Hilbert series
-$P_\cA(t) = \dim Z(\cA) + \dim \ChirHoch^1(\cA)\cdot t
- + \dim Z(\cA^!)\cdot t^2$,
-and is formal as an $\Etwo$-algebra. Assume in addition:
+filtration. Suppose condition~(v) is represented by a family datum
+$H_H(\cA;S)$ and its cohomology is formal as an $\Etwo$-algebra.
+Assume in addition:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item a two-colour chiral Higher Deligne comparison identifies
   $\ChirHoch^*(\cA)$ with the derived $\Etwo$-chiral centre of
@@ -1197,6 +1196,9 @@ and is formal as an $\Etwo$-algebra. Assume in addition:
   homotopy on the finite PBW component under consideration;
 \item the chiral cap product detects the bar cohomology
   operations faithfully.
+\item the transferred higher braces $\mathrm{br}_n$, $n\geq3$,
+  carry specified null-homotopies compatible with the chiral cap
+  product.
 \end{enumerate}
 Then condition~\textup{(v)} implies chiral Koszulness
 \textup{(i)}.
@@ -1218,20 +1220,15 @@ where the right-hand side is computed in the factorization
 ambient on~$\bP^1$. This identification is associator-dependent;
 fix a Drinfeld associator~$\Phi$ (e.g.\ $\Phi_{\mathrm{KZ}}$).
 
-\emph{Step 2: Cobar of formal $\Etwo$-algebra.} The
+\emph{Step 2: Cobar of the formal $\Etwo$-algebra.} The
 $\Etwo$-formality hypothesis on $\ChirHoch^*(\cA)$ gives a
 strict $\Etwo$-algebra model. Kontsevich--Tamarkin operadic
 Koszul duality between~$\Etwo$ and its shifted dual
 $\Etwo\{1\}$ produces an $\Etwo$-cobar
 $\Omega_{\Etwo}(\ChirHoch^*(\cA))$ that computes
 $\RHom_{\Etwo\text{-}\mathrm{mod}}(k, \cA)$ in the chiral
-ambient. The polynomial Hilbert series hypothesis
-($\dim = \dim Z(\cA) + \dim\ChirHoch^1\cdot t
- + \dim Z(\cA^!)\cdot t^2$, no higher) forces the brace
-operations $\mathrm{br}_n$ on $\ChirHoch^*(\cA)$ to vanish for
-all $n \geq 3$: any nonzero $\mathrm{br}_n$ would contribute a
-class in degree $\geq 3$ by arity-counting on
-$\FM_n(\bC)$-chains, contradicting concentration in $\{0,1,2\}$.
+ambient. The specified null-homotopies trivialize the transferred
+brace operations $\mathrm{br}_n$ for $n\geq3$ in this model.
 
 \emph{Step 3: Transfer to $\Ainfty$-operations on bar
 cohomology.} The bar coalgebra $\barBch(\cA)$ and its dual
@@ -1263,25 +1260,35 @@ for the Koszul dual Swiss-cheese complex, and faithful cap-product
 detection. The associator-independent formulation remains open.
 \end{remark}
 
-\begin{remark}[The four objects]
+\begin{remark}[The typed Koszul objects]
 \label{rem:kfc-four-objects}
-The four objects of chiral Koszul duality must not be conflated:
+Fix a quadratic presentation
+$\cA=T_{\mathrm{ch}}(V)/(R)$.  Chiral Koszul duality uses the following
+typed objects:
 \begin{enumerate}
 \item $\barBch(\cA) = T^c(s^{-1}\bar\cA)$: the bar
   \emph{coalgebra}, with deconcatenation coproduct and bar
   differential.
-\item $\cA^i = H^*(\barBch(\cA))$: the dual
-  \emph{coalgebra}, Koszul cohomology of the bar complex.
-\item $\cA^! = ((\cA^i)^\vee)$: the Koszul dual
-  \emph{algebra}, obtained by Verdier duality.
+\item $\cA^i=C_X(s^{-1}V,s^{-2}R)$: the quadratic presentation
+  \emph{coalgebra}, with canonical comparison
+  $q_\cA\colon\cA^i\to\barBch(\cA)$.
+\item $H^\bullet(\barBch(\cA))$: bar cohomology.  On the Koszul
+  locus $H^\bullet(q_\cA)$ gives its identification with the
+  cohomology of~$\cA^i$.
+\item $K_X(\cA)=\mathbb D_{\Ran}\barBch(\cA)$: the Verdier-dual
+  \emph{algebra}, with
+  $\mathbb D(q_\cA)\colon K_X(\cA)\to\mathbb D_{\Ran}(\cA^i)$.
+\item $\cA^!$: the chosen Koszul-partner algebra, reached by
+  $\nu_\cA\colon K_X(\cA)\to\cA^!$.
 \item $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
   \RHom_{\cA \otimes \cA^{\mathrm{op}}}(\cA,\cA)$: the
   derived chiral center, computed using the bar complex as a
   resolution.
 \end{enumerate}
-The bar complex is the $\Eone$ engine; $\Omega(\barBch(\cA)) = \cA$
-is \emph{inversion}, not Koszul duality. The Koszul dual comes from
-Verdier duality. The derived center comes from chiral Hochschild cochains.
+The bar complex is the $\Eone$ engine;
+$\Omega(\barBch(\cA))\xrightarrow{\sim}\cA$ is its inversion
+counit.  Verdier duality forms~$K_X(\cA)$, and chiral Hochschild
+cochains form the derived center.
 \end{remark}
 
 
@@ -1404,9 +1411,9 @@ each concentrated in degree~$0$ by PBW collapse.
 Under the uniform-weight hypothesis, the same holds at every
 genus: the loop-order spectral sequence collapses on the
 modular Koszul locus, each vertex contribution remains in
-degree~$0$, and the surviving scalar is
-$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-(UNIFORM-WEIGHT).
+degree~$0$.  With the additional package~$H_D^K$, the Hodge character
+is $\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g$.
 
 Conversely, concentration at genus zero specializes to
 $H^k(\int_{\bP^1}\cA) = 0$ for $k \neq 0$. This is computed
@@ -1557,7 +1564,8 @@ Sklyanin $H^2 = 0$ implies PBW collapse (affine family)}
 For $\cA = V_k(\fg)$ with $\fg$ semisimple, the Koszul dual
 coalgebra $\barBch(\cA)^!$ carries the Poisson-Lie group
 $(\fg^!)^*$ with the Sklyanin--Poisson bracket determined by the
-classical $r$-matrix $r(z) = k\Omega/z$ via the
+trace-form classical $r$-matrix
+$r(z)=k\Omega_{\mathrm{tr}}/z$ via the
 Semenov-Tian-Shansky construction. The second Poisson cohomology
 $H^2_\pi$ controls infinitesimal deformations of this bracket.
 
@@ -1720,10 +1728,12 @@ The argument has three steps:
   the coefficient is~$\kappa$.
 \end{enumerate}
 
-For non-abelian affine KM, the averaging identity involves the
-Sugawara shift:
-$\av(r(z)) + \dim(\fg)/2 = \kappa(V_k(\fg))$
-where $\av(r(z)) = k \cdot \dim(\fg)/(2h^\vee)$ is the
+For non-abelian affine KM, the normalized trace and Sugawara term give
+\[
+\tau_{k,\fg}^{\mathrm{res}}q_2(K_{k,\fg}^{\mathrm{coll}})
++\dim(\fg)/2=\kappa(V_k(\fg)),
+\]
+where the first term is $k\dim(\fg)/(2h^\vee)$, the
 double-pole channel and $\dim(\fg)/2$ is the simple-pole
 self-contraction through the adjoint Casimir.
 \end{proof}
@@ -1795,33 +1805,39 @@ level), $\Delta = 0$ regardless of~$S_4$.
 
 \subsection{The $\Eone$ structure}
 
-Scalar saturation is a statement about the $\Sigma_n$-coinvariant
-quotient. The full $\Eone$ ordered bar complex carries strictly
-more data: the matrix-valued classical $r$-matrix
-$r_\cA(z) \in \mathrm{End}_\cA(2)[\![z^{-1}]\!]$, of which
-$\kappa$ is only the scalar shadow $\kappa = \av(r_\cA(z))$.
-
-The $r$-matrix satisfies the classical Yang--Baxter equation
+Scalar saturation is a statement about normalized traces of the
+$\Sigma_n$-homotopy-coinvariant quotient. The full $\Eone$ ordered
+bar carries the operator kernel
+$K_\cA^{\mathrm{coll}}(z)\in\mathrm{End}_\cA(2)[\![z^{-1}]\!]$,
+and $\kappa=\tau_{\cA,2}^{\mathrm{res}}
+q_2(K_\cA^{\mathrm{coll}})$. Under
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, its represented image $r_\cA$
+satisfies the classical Yang--Baxter equation
 $[r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0$
-and determines the Yangian structure on the ordered bar cohomology.
+and determines the Yangian structure when the quantization package
+$H_Y$ is supplied.
 It absorbs one pole from the OPE via the logarithmic propagator:
 for Heisenberg, the OPE has a double pole and the $r$-matrix
 has a simple pole, $r^{\Heis}(z) = k/z$. For Virasoro, the OPE has
 a quartic pole and the $r$-matrix has a cubic pole,
 $r^{\Vir}(z) = (c/2)/z^3 + 2T/z$.
 For affine KM in the trace-form convention,
-$r^{\KM}(z) = k\Omega/z$, where $\Omega$ is the inverse Killing
-form Casimir and the level prefix~$k$ is mandatory: at $k = 0$
+$r^{\KM}(z) = k\Omega_{\mathrm{tr}}/z$, where
+$\Omega_{\mathrm{tr}}$ is the inverse Killing-form Casimir and the
+level prefix~$k$ is mandatory: at $k = 0$
 the $r$-matrix vanishes (abelian limit).
 
-The averaging map $\av \colon \fg_\cA^{\Eone} \to
-\fg_\cA^{\mathrm{mod}}$ is the $\Sigma_n$-coinvariant projection.
-It is lossy: the full $r$-matrix determines $\kappa$, but $\kappa$
-does not determine the $r$-matrix. The five theorems of the parent
-monograph extract the $\Sigma_n$-invariant content; the present
-paper works at this invariant level, where scalar saturation gives
-full control at degree two and Koszulness extends control to all
-degrees.
+The averaging map $\av_R \colon \fg_\cA^{\Eone} \to
+\fg_\cA^{\mathrm{mod}}$ is the universal-conductor descent: in the
+untwisted characteristic-zero splitting it is represented by the
+$\Sigma_n$-coinvariant projection, and with nontrivial braiding it is
+the $L_R$-twisted derived completed coinvariant descent. It is lossy:
+the full $r$-matrix determines $\kappa$, but $\kappa$ does not
+determine the $r$-matrix; the missing data live in the formal
+conductor fibre. The five theorems of the parent monograph extract the
+$\Sigma_n$-invariant content; the present paper works at this
+invariant level, where scalar saturation gives full control at degree
+two and Koszulness extends control to all degrees.
 
 
 % ================================================================
@@ -1861,12 +1877,12 @@ complementarity conductor.
 Family & Koszul equivalence & Class & $\kappa$ & $K$ \\
 \midrule
 $\mathcal{H}_k$ & (ii) PBW, trivial & G & $k$ & $0$ \\
-Lattice $V_L$ & (ii) PBW, lattice & G & $\mathrm{rk}(L)/2$ & $0$ \\
+Lattice $V_L$ & (ii) PBW, lattice & G & $\mathrm{rk}(L)$ & $0$ \\
 $V_k(\fg)$ & (xiii) Kac--Shapovalov & L & $\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}$ & $0$ \\
 $\Vir_c$ & (iv) shadow formality & M & $c/2$ & $13$ \\
 $\cW_N$ & (xiii) via DS from KM & M & $c(H_N-1)$ & family-dep. \\
 $\beta\gamma$ & (iii) $\Ainfty$-formality & C & $6\lambda^2-6\lambda+1$ & $0$ \\
-$\cW^{(2)}_k(\mathfrak{sl}_3)$ & (xii) Ext diag. & M & $c(k)/6$ & $98/3$ \\
+$\cW^{(2)}_k(\mathfrak{sl}_3)$ & (xii) Ext diag. & M & $c(k)/6$ & $25/3$ \\
 \bottomrule
 \end{tabular}
 \caption{The standard landscape and Koszulness.
@@ -1887,8 +1903,9 @@ equivalence~(ii) of Theorem~\ref{thm:kfc-fourteen}, in its
 trivial form. The modular characteristic is
 $\kappa(\mathcal{H}_k) = k$, and the shadow tower terminates
 at $r = 2$: class~G. The Koszul dual is
-$\mathcal{H}_k^! = \Symch(V^*)$ (the chiral symmetric algebra
-on the linear dual), with
+$\mathcal{H}_k^!=(\Symch(V^*[1]),m_0=-k\omega)$
+(the curved second-kind chiral symmetric branch on the shifted
+linear dual), with
 $\kappa(\mathcal{H}_k^!) = -k$, giving
 $K = k + (-k) = 0$.
 
@@ -2017,29 +2034,31 @@ $\cW^{(2)}_k(\mathfrak{sl}_3)$ is the non-principal
 $\cW$-algebra obtained by DS reduction of
 $V_k(\mathfrak{sl}_3)$ with respect to the minimal nilpotent.
 It has generators at conformal weights $\{1, 3/2, 3/2, 2\}$
-and central charge, following Feigin--Kac--Roan--Wakimoto:
+and central charge, in the standard Fehily--Kawasetsu--Ridout
+conformal-vector convention:
 \[
- c(\mathrm{BP}_k) \;=\; 2 - \frac{24(k+1)^2}{k+3}.
+ c(\mathrm{BP}_k) \;=\; -\frac{(2k+3)(3k+1)}{k+3}.
 \]
-The formula is singular at the critical level $k = -3 = -h^\vee(\mathfrak{sl}_3)$, where the Sugawara denominator $k+h^\vee$ of the parent $V_k(\mathfrak{sl}_3)$ vanishes; the self-dual point $k=-3$ of the involution $k \mapsto -k - 6$ coincides with this critical locus, and the value $\kappa(\mathrm{BP}_{-3}) = 49/3$ quoted below is the \emph{principal value} of the symmetric limit across the pole, not a regular function value. The polynomial identity $K_{\mathrm{BP}}(k) := c(k) + c(-k-6) \equiv 196$ holds in $\mathbb{Q}(k)$, and $c(k) - 98$ is an odd function of $(k+3)$.
+The formula is singular at the critical level $k = -3 = -h^\vee(\mathfrak{sl}_3)$, where the Sugawara denominator $k+h^\vee$ of the parent $V_k(\mathfrak{sl}_3)$ vanishes; the self-dual point $k=-3$ of the involution $k \mapsto -k - 6$ coincides with this critical locus, and the value $\kappa(\mathrm{BP}_{-3}) = 25/6$ quoted below is the \emph{principal value} of the symmetric limit across the pole, not a regular function value. The polynomial identity $K_{\mathrm{BP}}(k) := c(k) + c(-k-6) \equiv 50$ holds in $\mathbb{Q}(k)$, and $c(k) - 25$ is an odd function of $(k+3)$. \textup{(}The explicitly shifted conformal vector $2 - 24(k+1)^2/(k+3)$ has reflection sum $196$; it belongs to a separate secondary lane.\textup{)}
 
-Koszulness is established through Ext diagonal
-vanishing~(xii): the bigraded Ext groups
-$\Ext^{p,q}(\omega, \omega)$ are concentrated on the diagonal
-$p = q$ at generic level. The proof uses the non-principal DS
-reduction from $V_k(\mathfrak{sl}_3)$: the DS functor sends
-the Kac--Shapovalov form of the parent to the
-Bershadsky--Polyakov Shapovalov form, and nonvanishing at
-generic level gives diagonal concentration.
+At generic level, the proved input used here is the canonical
+strictness/OPE normal form together with the computed BP bar witnesses.
+The stronger assertion that this diagonal Ext condition is transported
+from $V_k(\mathfrak{sl}_3)$ by non-principal DS reduction is conditional
+on the subregular DS--bar transport package: DS reduction is a filtered
+functor on primitive triples, not an equality of all structures, and
+the level-shifted same-family duality remains conditional until the
+DS--bar and Verdier-exchange hypotheses are supplied.
 
 The modular characteristic is $\kappa(\cW^{(2)}_k) = c(k)/6$,
-with anomaly ratio $\varrho = 1/6$. The Koszul complementarity
-conductor is
+with anomaly ratio $\varrho = 1/6$, conditionally on the ratio lane
+(the genus-one curvature computation remains open). The Koszul
+complementarity conductor is then
 $K_{\mathrm{BP}} = \kappa(\cW^{(2)}_k) + \kappa(\cW^{(2)}_{k'})
-= 98/3$,
+= 25/3$,
 where $k' = -k - 6$ is the dual level.
 The self-dual level is $k = -3$, at which
-$\kappa = 49/3$.
+$\kappa = 25/6$.
 
 
 % ================================================================
@@ -2058,40 +2077,36 @@ settle that quotient.
 
 \subsection{Rank one: $\mathfrak{sl}_2$}
 
-\begin{proposition}[$\mathfrak{sl}_2$ at admissible level]
+\begin{proposition}[$\mathfrak{sl}_2$ at admissible level under the
+quotient-bar package]
 \label{prop:kfc-sl2-admissible}
-The simple quotient $L_k(\mathfrak{sl}_2)$ is chirally Koszul
-at every admissible level
-$k = -2 + p/q$ with $p \geq 2$, $q \geq 2$, $\gcd(p,q) = 1$.
+Assume the rank-one admissible quotient-bar package: the quotient bar
+spectral sequence for $L_k(\mathfrak{sl}_2)$ is constructed in a
+finite-window complete ambient, PBW/Shapovalov data detect all higher
+differentials, and the finite windows converge strongly. Then the
+simple quotient $L_k(\mathfrak{sl}_2)$ is chirally Koszul at every
+admissible level $k = -2 + p/q$ with $p \geq 2$, $q \geq 2$,
+$\gcd(p,q) = 1$.
 \end{proposition}
 
 \begin{proof}[Proof sketch]
-The ideal $I_k \subset V_k(\mathfrak{sl}_2)$ is generated by a
-single null vector at conformal weight $pq$. Since
-$\dim \mathfrak{sl}_2 = 3$, the PBW spectral sequence for
-$L_k(\mathfrak{sl}_2)$ has at most two nonzero columns at each
-conformal weight: the Cartan direction $h$ and the root
-directions $e, f$. The root generators are paired by
-$[e,f] = h$ on the $E_1$ page, and the Cartan generator
-survives as a single class in $H^1$.
-
-The null vector at weight $pq$ introduces a relation in the bar
-complex, but this relation is confined to a single PBW column: it
-does not create off-diagonal classes in the $E_2$ page. The
-PBW spectral sequence collapses at $\Etwo$ because the
-dimensional constraint ($\dim \mathfrak{sl}_2 = 3$, hence at
-most $2$ nonzero columns in the relevant range) leaves no room
-for higher differentials $d_r$ with $r \geq 2$.
+The finite Shapovalov and character computations show the expected
+rank-one pattern: the first null vector is single-weight, the quotient
+agrees with the universal algebra below the null weight, and the
+checked finite windows have the same model cohomology as
+$V_k(\mathfrak{sl}_2)$. These facts are evidence. The stated
+proposition uses the extra quotient-bar package to rule out hidden
+higher differentials and to pass from finite windows to the completed
+simple quotient.
 \end{proof}
 
 \begin{remark}[Mechanism]
 \label{rem:kfc-sl2-mechanism}
-The proof for $\mathfrak{sl}_2$ uses the small-rank accident: three
-generators produce at most two nonzero PBW columns at each weight,
-and a differential $d_r$ for $r \geq 2$ needs at least $r + 1$
-nonzero columns as domain and target. At rank one no
-domain-target pair remains. This is specific to
-$\mathfrak{sl}_2$; it fails at every higher rank.
+The rank-one evidence uses a small-rank accident: the null-vector
+structure has only one Cartan direction and no higher-rank Cartan
+plane. This is not, by itself, a dimensional proof of spectral-sequence
+collapse; hidden differentials and nilradical effects are exactly what
+the quotient-bar package must exclude.
 \end{remark}
 
 \subsection{Rank two and beyond: the obstruction}

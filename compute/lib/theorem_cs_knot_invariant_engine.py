@@ -18,7 +18,7 @@ THE CHAIN OF IDENTIFICATIONS
 
 2. COLLISION RESIDUE -> R-MATRIX (AP19)
    Res^{coll}_{0,2}(Theta_A) for A = V_k(sl_N) is the r-matrix
-   r(z) = Omega/z (one pole order below the OPE, per AP19).
+   r_k(z) = k*Omega/z (one pole order below the OPE, per AP19).
    The Drinfeld-Kohno theorem (MC3, proved for all simple types)
    identifies the KZ monodromy with the quantum R-matrix R_q.
 
@@ -41,9 +41,11 @@ THE CHAIN OF IDENTIFICATIONS
    link L, the factorization homology
      int_M Obs^q_{CS}
    computes the RT invariant of L.  In our framework:
-     - The E_3 algebra is Obs^q_{CS} = BV-quantized CS observables
-     - The bar complex B(V_k(g)) on X produces the E_1 (= chiral) factor
-     - The E_3 structure combines chiral + topological (Swiss-cheese)
+     - The topological E_3 algebra is Obs^q_{CS}, the locally constant
+       BV-quantized CS observables after the CFG/CG locality package
+     - The bar complex B(V_k(g)) on X produces the chiral boundary sector
+     - The comparison is a boundary/Swiss-cheese topologisation package,
+       not a literal product "chiral + topological = E_3" on raw chains
      - The factorization homology trace is the quantum Markov trace
 
 This engine verifies steps 1-5 computationally for sl_N at various levels.
@@ -269,7 +271,7 @@ def jones_trefoil_exact(q: complex) -> complex:
     From the bar-cobar perspective: the trefoil is the closure of
     sigma_1^3 on 2 strands. The braid representation uses check_R
     for sl_2, which comes from the bar complex collision residue
-    (the r-matrix r(z) = Omega/z, AP19) via the DK bridge.
+    (the trace-form r-matrix r_k(z) = k*Omega/z, AP19) via the DK bridge.
     """
     t = q * q
     return -t**(-4) + t**(-3) + t**(-1)
@@ -278,7 +280,7 @@ def jones_trefoil_exact(q: complex) -> complex:
 def jones_trefoil_from_bar_rmatrix(q: complex) -> complex:
     r"""Jones polynomial of the trefoil from the bar-cobar R-matrix.
 
-    The chain: B(V_k(sl_2)) -> r(z) = Omega/z -> R_q(check_R) -> braid rep -> trace.
+    The chain: B(V_k(sl_2)) -> r_k(z) = k*Omega/z -> R_q(check_R) -> braid rep -> trace.
 
     Braid word: sigma_1^3 on 2 strands.
     Writhe: w = 3.
@@ -705,8 +707,9 @@ def rt_invariant_at_level(knot_name: str, k: int, N: int = 2,
 def bar_to_rmatrix_chain(q: complex, N: int = 2) -> Dict[str, Any]:
     r"""Verify the full chain: bar complex -> r-matrix -> R-matrix -> braid rep.
 
-    Step 1: Classical r-matrix r(z) = Omega/z from bar collision residue.
-            This is the RATIONAL (Yangian) r-matrix for sl_N.
+    Step 1: Classical trace-form r-matrix r_k(z) = k*Omega/z from bar
+            collision residue.  The DK/Yangian comparison then passes to
+            the corresponding normalized rational r-matrix for sl_N.
             For sl_2: Omega = (1/2)(E tensor F + F tensor E + (1/2) H tensor H)
             acting on V tensor V.
 
@@ -919,8 +922,10 @@ def colored_jones_at_root(knot_name: str, k: int, color: int) -> Dict[str, Any]:
 def cs_bar_anomaly_data(k: int, N: int) -> Dict[str, Any]:
     r"""Anomaly data relating CS level k to bar complex kappa.
 
-    The BV quantization of CS produces an E_3 algebra whose E_1 (chiral) factor
-    is the bar complex B(V_k(sl_N)).
+    The BV quantization of CS produces a locally constant topological
+    E_3 algebra after the CFG/CG locality package.  The chiral bar complex
+    B(V_k(sl_N)) is the boundary sector compared to it through the
+    topologisation/trace theorem, not an automatic E_1 factor on raw chains.
 
     kappa(V_k(sl_N)) = (N^2-1)(k+N)/(2N)   (AP1, AP39)
     c(sl_N, k) = k(N^2-1)/(k+N)

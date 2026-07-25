@@ -1248,7 +1248,7 @@ def koszul_dual_data() -> Dict[str, Any]:
 
     The dual branch A^! has the same generator profile and negated scalar
     shadow curvature. Omega(B(A))=A is bar-cobar inversion, not this
-    dual branch. The Hochschild/bulk object Z_ch^der(A) is separate.
+    dual branch. The Hochschild/closed-sector object Z_ch^der(A) is separate.
 
     This is not Feigin-Frenkel duality and not negative-level substitution.
     """
@@ -1259,7 +1259,7 @@ def koszul_dual_data() -> Dict[str, Any]:
         'central_charge': Fraction(6),
         'dual_description': 'Verdier/continuous-linear dual branch A^! of A_{K3}',
         'bar_cobar_inverse': 'Omega(B(A_{K3})) = A_{K3}',
-        'bulk_object': 'Z_ch^der(A_{K3}) is Hochschild/bulk, not A^!',
+        'bulk_object': 'Z_ch^der(A_{K3}) is Hochschild/closed-sector, not A^!',
     }
 
 

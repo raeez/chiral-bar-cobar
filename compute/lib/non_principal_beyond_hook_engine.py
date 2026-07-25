@@ -1,832 +1,536 @@
-r"""Non-principal W-algebra duality beyond hook type.
+r"""Exact non-hook type-A reduction data with typed frontier claims.
 
-This engine extends the hook-type corridor (theorem_ds_koszul_hook_engine.py)
-to non-hook nilpotent orbits in type A.  The key structural results:
+The engine computes Young-diagram classes, good-grading BRST combinatorics,
+matrix-centralizer generator ledgers, KRW central charges, formal level
+reflection, and reachability in the finite reduction graph.  Every strong
+generator is even; half-integral conformal weight records the grading, while
+parity remains even.
 
-KOSZULNESS (universal):
-    W_k(sl_N, f_lambda) is chirally Koszul at generic level k for ALL
-    nilpotent orbits lambda of sl_N.  This follows from Arakawa's Kazhdan
-    filtration (2005, 2012, 2015): the BRST spectral sequence for the
-    Drinfeld-Sokolov reduction collapses at E_2 for ALL nilpotents, not
-    just hooks.  The PBW filtration on V_k(sl_N) descends to W_k(sl_N, f)
-    via the Kazhdan filtration universally.
-
-    The obstruction beyond hooks is therefore NOT Koszulness.  It is the
-    DS-KD INTERTWINING: does DS_{f_{lambda^t}} applied to V_{k'} produce
-    the Koszul dual of DS_{f_lambda} applied to V_k?
-
-DS-KD COMMUTATION STATUS:
-    - Hook type (all N): PROVED (Fehily 2022, Creutzig-Linshaw-Nakatsuka-Sato 2023)
-    - Self-transpose rectangular (e.g. (2,2) in sl_4): PROVED
-      (self-duality + c-complementarity c+c' = const)
-    - Self-transpose non-rectangular (e.g. (3,2,1) in sl_6): STRONG EVIDENCE
-      (c+c' = const, kappa+kappa' = const, but categorical proof OPEN)
-    - Non-self-transpose non-hook: OPEN
-      (c+c' is k-DEPENDENT for all tested cases)
-
-PARTITION CLASSIFICATION (type A):
-    Every partition lambda of N falls into exactly one class:
-    (A) Hook: lambda = (N-r, 1^r).  DS-KD PROVED.
-    (B) Even rectangular: lambda = (m^s) with ms=N, m=s.  Self-transpose
-        iff m=s.  For self-transpose: DS-KD PROVED (by self-duality).
-    (C) Non-hook self-transpose: lambda = lambda^t, not hook, not rectangular.
-        c+c' = const (verified computationally for N <= 8).  DS-KD CONJECTURAL
-        but with strong evidence.
-    (D) Non-hook non-self-transpose: lambda != lambda^t, not hook.
-        c+c' is k-DEPENDENT.  DS-KD CONJECTURAL.
-
-BRST COMPLEX STRUCTURE:
-    For hook type: n_+ is concentrated in a single grade or is abelian.
-    For non-hook: n_+ is generically non-abelian with multiple grades.
-    This makes the BRST complex more complex but does NOT obstruct PBW
-    collapse (Arakawa's theorem is universal).
-
-    The complexity of the BRST complex is measured by:
-    - dim(n_+): number of ghost pairs in the BRST complex
-    - n_+ grade structure: eigenvalues of ad(x) on n_+
-    - n_+ abelianness: whether [n_+, n_+] = 0
-    - dim(g_{1/2}): number of fermionic generators of the W-algebra
-
-TRANSPORT FROM HOOKS:
-    The reduction graph Gamma_N has vertices = partitions of N and edges =
-    proved reduction/inverse-reduction functors.  For N <= 8, the transport
-    closure of hooks covers ALL partitions (verified computationally).
-    This means every non-hook orbit is reachable from hooks via a sequence
-    of proved reduction functors.  However, transport propagation of DS-KD
-    commutation requires verifying that each reduction step PRESERVES the
-    intertwining -- this is proved for hooks (Fehily) but OPEN for
-    non-hook-to-non-hook edges.
-
-References:
-    - Arakawa (2005): Representation theory of superconformal algebras...
-    - Arakawa (2012): W-algebras at the critical level (Kazhdan filtration)
-    - Arakawa (2015): Rationality of W-algebras (associated varieties)
-    - Fehily (2022): Inverse Hamiltonian reduction for hook-type
-    - Creutzig-Linshaw-Nakatsuka-Sato (2023): Feigin-Semikhatov duality
-    - Butson-Nair (2025): Inverse Hamiltonian reduction (geometric, all types)
-    - Kac-Roan-Wakimoto (2003): Quantum reduction and DS central charge
-    - Manuscript: thm:ds-koszul-obstruction, conj:type-a-transport-to-transpose
-
-Critical pitfalls:
-    - c-complementarity (c+c' = const) holds ONLY for self-transpose pairs.
-      For non-self-transpose, c+c' is k-dependent.  This is NOT a failure of
-      duality; it reflects different anomaly ratios rho(lam) != rho(lam^t).
-    - PBW collapse (Koszulness) is UNIVERSAL at generic level.  The obstruction
-      to extending DS-KD beyond hooks is the categorical intertwining, not PBW.
-    - The reduction graph makes all orbits reachable from hooks, but transport
-      propagation requires verifying intertwining at each edge.
-    - For non-even nilpotents: half-integer ad(x)-grades produce fermionic
-      generators.  The central charge formula is the universal KRW formula.
+PBW-to-bar collapse, chiral Koszulness, modular quantities, full shadow depth,
+categorical transport, DS--bar commutation, transpose-family duality, and
+KSDual membership require named packages and return :class:`ClaimPacket`
+objects.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from fractions import Fraction
-from typing import Any, Dict, FrozenSet, List, Optional, Set, Tuple
+from collections import deque
+from dataclasses import dataclass
+from typing import Any, Dict, List, Tuple
 
 from sympy import Rational, Symbol, simplify, sympify
 
+from compute.lib.hook_transport_corridor import ReductionGraph
 from compute.lib.hook_type_w_duality import (
+    ClaimPacket,
+    ClaimStatus,
+    H_HOOK_DS_BAR,
+    OpenInvariantError,
     anomaly_ratio_from_partition,
     ds_kappa_from_affine,
     hook_dual_level_sl_n,
+    kappa_complementarity_sum,
     krw_central_charge,
     krw_central_charge_data,
-    levi_rho_norm_squared,
-    rho_shift_norm_squared,
+    reciprocal_weight_diagnostic_from_partition,
     w_algebra_generator_data,
-    weyl_vector_norm_squared_sl_n,
 )
 from compute.lib.nonprincipal_ds_orbits import (
     Partition,
     _partitions_of_n,
-    hook_partition,
     is_hook_partition,
     normalize_partition,
     partition_size,
     transpose_partition,
-    type_a_orbit_class,
     type_a_partition_sl2_triple,
 )
-from compute.lib.hook_transport_corridor import ReductionGraph
 
 
-k_sym = Symbol('k')
+k = Symbol("k")
+H_PBW_BAR = (
+    "H_PBW^bar: filtered chiral bar comparison, convergence, collapse, "
+    "extension control, and twisting compatibility"
+)
+H_NONHOOK_TRANSPORT = (
+    "H_nonhook^transport: realized reduction functors on every graph edge "
+    "and compatibility with DS, bar, completion, and Verdier duality"
+)
+H_FULL_SHADOW = (
+    "H_full-shadow: the full Maurer--Cartan coefficient tower across every "
+    "generator channel"
+)
+H_KSDUAL = (
+    "H_KSDual: an object-level fixed-point equivalence compatible with "
+    "DS/bar and transport"
+)
 
 
-# ============================================================================
-# 1. Partition classification
-# ============================================================================
+def _open(statement: str, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, ClaimStatus.OPEN, None, hypotheses=tuple(hypotheses))
+
+
+def _conditional(statement: str, *hypotheses: str) -> ClaimPacket:
+    return ClaimPacket(statement, ClaimStatus.CONDITIONAL, None, hypotheses=tuple(hypotheses))
+
 
 def is_rectangular(partition: Partition) -> bool:
-    """Check if partition is rectangular (all parts equal)."""
+    """Return whether all rows of the Young diagram have equal length."""
+
     lam = normalize_partition(partition)
     return len(set(lam)) == 1
 
 
 def is_even_nilpotent(partition: Partition) -> bool:
-    """Check if the nilpotent orbit is even.
+    """Return the type-A even-orbit parity criterion."""
 
-    A nilpotent in type A with partition (p_1,...,p_r) is even iff all
-    parts have the same parity (all odd or all even).  Equivalently,
-    all eigenvalues of ad(x) on g are integers.
-    """
     lam = normalize_partition(partition)
-    parities = set(p % 2 for p in lam)
-    return len(parities) <= 1
+    return len({part % 2 for part in lam}) == 1
 
 
 def partition_orbit_class(partition: Partition) -> str:
-    """Classify partition into the four structural classes.
+    """Classify a partition by hook, transpose, and rectangular combinatorics."""
 
-    Returns one of:
-        'hook'                     -- class A: (N-r, 1^r)
-        'self_transpose_rectangular' -- class B: (m^m), m^2 = N
-        'self_transpose_nonhook'   -- class C: lambda = lambda^t, not hook, not rect
-        'non_self_transpose_nonhook' -- class D: lambda != lambda^t, not hook
-    """
     lam = normalize_partition(partition)
     lam_t = transpose_partition(lam)
-
     if is_hook_partition(lam):
-        return 'hook'
+        return "hook"
     if lam == lam_t and is_rectangular(lam):
-        return 'self_transpose_rectangular'
+        return "self_transpose_rectangular"
     if lam == lam_t:
-        return 'self_transpose_nonhook'
-    return 'non_self_transpose_nonhook'
+        return "self_transpose_nonhook"
+    return "non_self_transpose_nonhook"
 
 
-def ds_kd_status(partition: Partition) -> str:
-    """DS-KD commutation status for this partition.
+def ds_kd_status(partition: Partition) -> ClaimPacket:
+    """Return the typed DS/Koszul comparison obligation."""
 
-    Returns:
-        'proved_hook'          -- hook type, proved by Fehily-CLNS
-        'proved_self_dual_rect' -- self-transpose rectangular, proved by self-duality
-        'evidence_self_transpose' -- self-transpose non-hook, c+c' = const (conjectural)
-        'open_non_self_transpose' -- non-self-transpose non-hook, c+c' k-dependent (open)
-    """
-    cls = partition_orbit_class(partition)
-    if cls == 'hook':
-        return 'proved_hook'
-    if cls == 'self_transpose_rectangular':
-        return 'proved_self_dual_rect'
-    if cls == 'self_transpose_nonhook':
-        return 'evidence_self_transpose'
-    return 'open_non_self_transpose'
-
-
-# ============================================================================
-# 2. BRST complex structure
-# ============================================================================
-
-@dataclass(frozen=True)
-class BRSTComplexData:
-    """BRST complex structural data for DS reduction at nilpotent f_lambda."""
-
-    partition: Partition
-    N: int
-    # ad(x) grading on n_+
-    n_plus_dim: int
-    n_plus_grades: Dict[Rational, int]  # grade -> multiplicity
-    n_plus_is_abelian: bool
-    # g_{1/2} data (fermionic generators come from here)
-    g_half_dim: int
-    # Levi data
-    levi_parts: Partition  # parts of transpose partition = block sizes of Levi
-    levi_dim: int  # dim(g_0) = dim of Levi part of the grading
-    # Classification
-    is_even: bool
-    has_half_integer_grades: bool
-    # PBW / Koszulness
-    pbw_collapse: bool  # True: Arakawa's Kazhdan filtration gives E2 collapse
-    is_koszul: bool  # True at generic level (universal)
-
-
-def brst_complex_analysis(partition: Partition) -> BRSTComplexData:
-    """Analyze the BRST complex for DS reduction at nilpotent f_lambda.
-
-    The BRST complex for the DS reduction of V_k(sl_N) at nilpotent f_lambda
-    has ghost pairs indexed by n_+, the positive-grade part of sl_N under
-    the ad(x)-grading (x = h/2 from the Jacobson-Morozov triple).
-
-    Arakawa's theorem: the Kazhdan spectral sequence collapses at E_2
-    for ALL nilpotent orbits at generic level k.  This gives PBW collapse
-    and hence Koszulness for W_k(sl_N, f_lambda) at generic k.
-    """
     lam = normalize_partition(partition)
-    N = partition_size(lam)
-    lam_t = transpose_partition(lam)
-
-    triple = type_a_partition_sl2_triple(lam)
-    h_diag = [triple.h[i, i] for i in range(N)]
-    x_diag = [Rational(h_diag[i], 2) for i in range(N)]
-
-    # n_+ grade structure
-    n_plus_grades: Dict[Rational, int] = {}
-    pos_roots: List[Tuple[int, int]] = []
-    for i in range(N):
-        for j in range(N):
-            if i == j:
-                continue
-            ev = x_diag[i] - x_diag[j]
-            if ev > 0:
-                n_plus_grades[ev] = n_plus_grades.get(ev, 0) + 1
-                pos_roots.append((i, j))
-
-    n_dim = sum(n_plus_grades.values())
-
-    # Check if n_+ is abelian: [n_+, n_+] = 0
-    # In type A: [E_{ij}, E_{jl}] = E_{il}
-    n_abelian = True
-    for (i, j1) in pos_roots:
-        for (j2, ell) in pos_roots:
-            if j1 == j2 and i != ell:
-                ev_il = x_diag[i] - x_diag[ell]
-                if ev_il > 0:
-                    n_abelian = False
-                    break
-        if not n_abelian:
-            break
-
-    # g_{1/2} dimension
-    g_half = n_plus_grades.get(Rational(1, 2), 0)
-
-    # Levi data
-    cc = krw_central_charge_data(lam)
-    levi_dim = cc.dim_g0
-
-    # Even check
-    even = is_even_nilpotent(lam)
-    has_half = any(g.denominator != 1 for g in n_plus_grades.keys())
-
-    return BRSTComplexData(
-        partition=lam,
-        N=N,
-        n_plus_dim=n_dim,
-        n_plus_grades=dict(sorted(n_plus_grades.items())),
-        n_plus_is_abelian=n_abelian,
-        g_half_dim=g_half,
-        levi_parts=lam_t,
-        levi_dim=levi_dim,
-        is_even=even,
-        has_half_integer_grades=has_half,
-        pbw_collapse=True,   # Arakawa: universal at generic level
-        is_koszul=True,       # Consequence of PBW collapse
+    package = H_HOOK_DS_BAR if is_hook_partition(lam) else H_NONHOOK_TRANSPORT
+    return _conditional(
+        f"DS/Koszul comparison for partition {lam}",
+        package,
+        H_PBW_BAR,
     )
 
 
-# ============================================================================
-# 3. c-complementarity and kappa analysis
-# ============================================================================
+@dataclass(frozen=True)
+class BRSTComplexData:
+    """Exact good-grading data and typed PBW/bar consequences."""
+
+    partition: Partition
+    N: int
+    n_plus_dim: int
+    n_plus_grades: Dict[Rational, int]
+    n_plus_is_abelian: bool
+    g_half_dim: int
+    levi_parts: Partition
+    levi_dim: int
+    is_even: bool
+    has_half_integer_grades: bool
+    pbw_collapse: ClaimPacket
+    is_koszul: ClaimPacket
+
+
+def brst_complex_analysis(partition: Partition) -> BRSTComplexData:
+    """Compute the positive good-grading Lie algebra and its exact dimensions."""
+
+    lam = normalize_partition(partition)
+    N = partition_size(lam)
+    triple = type_a_partition_sl2_triple(lam)
+    x_diag = [Rational(triple.h[index, index], 2) for index in range(N)]
+
+    grades: Dict[Rational, int] = {}
+    positive_roots: List[Tuple[int, int]] = []
+    for left in range(N):
+        for right in range(N):
+            if left == right:
+                continue
+            grade = x_diag[left] - x_diag[right]
+            if grade > 0:
+                grades[grade] = grades.get(grade, 0) + 1
+                positive_roots.append((left, right))
+
+    positive_set = set(positive_roots)
+    nonzero_bracket_exists = any(
+        middle == next_left and left != right and (left, right) in positive_set
+        for left, middle in positive_roots
+        for next_left, right in positive_roots
+    )
+    central_charge_data = krw_central_charge_data(lam)
+    return BRSTComplexData(
+        partition=lam,
+        N=N,
+        n_plus_dim=len(positive_roots),
+        n_plus_grades=dict(sorted(grades.items())),
+        n_plus_is_abelian=not nonzero_bracket_exists,
+        g_half_dim=grades.get(Rational(1, 2), 0),
+        levi_parts=transpose_partition(lam),
+        levi_dim=central_charge_data.dim_g0,
+        is_even=is_even_nilpotent(lam),
+        has_half_integer_grades=any(grade.q != 1 for grade in grades),
+        pbw_collapse=_conditional(
+            f"filtered chiral bar collapse for W(sl_{N},f_{lam})",
+            H_PBW_BAR,
+        ),
+        is_koszul=_conditional(
+            f"chiral Koszulness for W(sl_{N},f_{lam})",
+            H_PBW_BAR,
+            H_HOOK_DS_BAR if is_hook_partition(lam) else H_NONHOOK_TRANSPORT,
+        ),
+    )
+
 
 @dataclass(frozen=True)
 class ComplementarityData:
-    """c-complementarity and kappa data for a partition pair."""
+    """Exact central scalar arithmetic and typed modular/categorical claims."""
 
     partition: Partition
     transpose: Partition
     N: int
     is_self_transpose: bool
     orbit_class: str
-    ds_kd_status: str
-    # Central charge
-    c_source: object   # c(k, lambda) symbolic
-    c_dual: object     # c(k', lambda^t) symbolic
-    c_sum: object      # c + c'
+    formal_reflected_level: object
+    c_source: object
+    c_transpose_reflected: object
+    c_sum: object
     c_sum_k_independent: bool
-    c_sum_value: object  # the constant (if k-independent) or the expression
-    # Kappa
-    kappa_source: object
-    kappa_dual: object
-    kappa_sum: object
-    kappa_sum_k_independent: bool
-    kappa_sum_value: object
-    # Anomaly ratios
-    rho_source: Rational
-    rho_dual: Rational
-    rho_match: bool
-    # Self-dual point (for self-transpose only)
-    self_dual_c: object  # c* = C/2 where C = c+c'
-    # Generator data
+    formal_central_midpoint: object
+    reciprocal_weight_diagnostic_source: Rational
+    reciprocal_weight_diagnostic_transpose: Rational
+    rho_source: ClaimPacket
+    rho_transpose: ClaimPacket
+    kappa_source: ClaimPacket
+    kappa_transpose: ClaimPacket
+    modular_conductor: ClaimPacket
+    ds_kd_comparison: ClaimPacket
     source_n_generators: int
-    dual_n_generators: int
-    source_n_fermionic: int
-    dual_n_fermionic: int
+    transpose_n_generators: int
+    source_n_even: int
+    transpose_n_even: int
 
 
-def complementarity_analysis(
-    partition: Partition, level=Symbol('k')
-) -> ComplementarityData:
-    """Full complementarity analysis for partition and its transpose."""
+def complementarity_analysis(partition: Partition, level=k) -> ComplementarityData:
+    """Compute formal central reflection data and retain typed derived claims."""
+
     lam = normalize_partition(partition)
     lam_t = transpose_partition(lam)
     N = partition_size(lam)
-    kvar = sympify(level)
-    kv = hook_dual_level_sl_n(N, kvar)
-    self_t = (lam == lam_t)
-
-    cls = partition_orbit_class(lam)
-    status = ds_kd_status(lam)
-
-    # Central charge
-    c_s = krw_central_charge(lam, kvar)
-    c_d = krw_central_charge(lam_t, kv)
-    c_sum = simplify(c_s + c_d)
-    dc_dk = simplify(c_sum.diff(kvar))
-    c_indep = dc_dk == 0
-    c_val = c_sum if not c_indep else simplify(c_sum)
-
-    # Kappa
-    kappa_s = ds_kappa_from_affine(lam, kvar)
-    kappa_d = ds_kappa_from_affine(lam_t, kv)
-    kappa_sum = simplify(kappa_s + kappa_d)
-    dk_dk = simplify(kappa_sum.diff(kvar))
-    k_indep = dk_dk == 0
-    k_val = kappa_sum if not k_indep else simplify(kappa_sum)
-
-    # Anomaly ratios
-    rho_s = anomaly_ratio_from_partition(lam)
-    rho_d = anomaly_ratio_from_partition(lam_t)
-
-    # Self-dual c
-    sd_c = None
-    if self_t and c_indep:
-        sd_c = simplify(c_val / 2)
-
-    # Generator data
-    gen_s = w_algebra_generator_data(lam)
-    gen_d = w_algebra_generator_data(lam_t)
-
+    level_symbol = sympify(level)
+    reflected = hook_dual_level_sl_n(N, level_symbol)
+    c_source = krw_central_charge(lam, level_symbol)
+    c_transpose = krw_central_charge(lam_t, reflected)
+    c_sum = simplify(c_source + c_transpose)
+    c_constant = simplify(c_sum.diff(level_symbol)) == 0
+    source_generators = w_algebra_generator_data(lam)
+    transpose_generators = w_algebra_generator_data(lam_t)
     return ComplementarityData(
         partition=lam,
         transpose=lam_t,
         N=N,
-        is_self_transpose=self_t,
-        orbit_class=cls,
-        ds_kd_status=status,
-        c_source=c_s,
-        c_dual=c_d,
+        is_self_transpose=lam == lam_t,
+        orbit_class=partition_orbit_class(lam),
+        formal_reflected_level=reflected,
+        c_source=c_source,
+        c_transpose_reflected=c_transpose,
         c_sum=c_sum,
-        c_sum_k_independent=c_indep,
-        c_sum_value=c_val,
-        kappa_source=kappa_s,
-        kappa_dual=kappa_d,
-        kappa_sum=kappa_sum,
-        kappa_sum_k_independent=k_indep,
-        kappa_sum_value=k_val,
-        rho_source=rho_s,
-        rho_dual=rho_d,
-        rho_match=(rho_s == rho_d),
-        self_dual_c=sd_c,
-        source_n_generators=len(gen_s.strong_generators),
-        dual_n_generators=len(gen_d.strong_generators),
-        source_n_fermionic=gen_s.n_fermionic,
-        dual_n_fermionic=gen_d.n_fermionic,
+        c_sum_k_independent=c_constant,
+        formal_central_midpoint=simplify(c_sum / 2) if lam == lam_t and c_constant else None,
+        reciprocal_weight_diagnostic_source=reciprocal_weight_diagnostic_from_partition(lam),
+        reciprocal_weight_diagnostic_transpose=reciprocal_weight_diagnostic_from_partition(lam_t),
+        rho_source=anomaly_ratio_from_partition(lam),
+        rho_transpose=anomaly_ratio_from_partition(lam_t),
+        kappa_source=ds_kappa_from_affine(lam, level_symbol),
+        kappa_transpose=ds_kappa_from_affine(lam_t, reflected),
+        modular_conductor=kappa_complementarity_sum(lam, level_symbol),
+        ds_kd_comparison=ds_kd_status(lam),
+        source_n_generators=source_generators.f_centralizer_dimension,
+        transpose_n_generators=transpose_generators.f_centralizer_dimension,
+        source_n_even=source_generators.n_even,
+        transpose_n_even=transpose_generators.n_even,
     )
 
 
-# ============================================================================
-# 4. Shadow depth analysis for non-hook W-algebras
-# ============================================================================
-
 @dataclass(frozen=True)
 class ShadowDepthData:
-    """Shadow depth classification for W_k(sl_N, f_lambda)."""
+    """Exact generator-line data and an open full-shadow classification."""
 
     partition: Partition
     N: int
     orbit_class: str
-    # Generator content
     generator_weights: Tuple[Rational, ...]
-    n_bosonic: int
-    n_fermionic: int
-    max_bosonic_weight: Rational
-    # Anomaly ratio and kappa
-    rho: Rational
-    kappa_expr: object  # symbolic in k
-    # Shadow classification (on the T-line)
-    # G = Gaussian (r_max=2), L = Lie (r_max=3), C = contact (r_max=4), M = mixed (r_max=inf)
-    shadow_class: str
-    shadow_depth_bound: object  # int or 'infinity'
-    # Multi-line structure
+    n_even: int
+    n_odd: int
+    max_weight: Rational
     has_weight_1_generators: bool
     n_weight_1: int
-    has_fermionic_generators: bool
     has_weight_ge_3: bool
+    virasoro_line_present: bool
+    reciprocal_weight_diagnostic: Rational
+    rho: ClaimPacket
+    kappa: ClaimPacket
+    full_shadow_depth: ClaimPacket
+
+    @property
+    def n_bosonic(self) -> int:
+        return self.n_even
+
+    @property
+    def n_fermionic(self) -> int:
+        return self.n_odd
 
 
 def shadow_depth_analysis(partition: Partition) -> ShadowDepthData:
-    """Classify the shadow depth of W_k(sl_N, f_lambda).
+    """Return finite generator restrictions and the full-shadow obligation."""
 
-    The shadow depth classification (G/L/C/M) is determined by the strong
-    generator content.  The key discriminant is whether the shadow metric
-    Q_L on the T-line (Virasoro direction) has vanishing critical discriminant
-    Delta = 8*kappa*S_4.
-
-    For non-hook W-algebras: the generator content is richer (more lines),
-    and the shadow structure is generically class M (infinite depth) because
-    the Virasoro subalgebra is always present with weight-2 generator.
-    """
     lam = normalize_partition(partition)
     N = partition_size(lam)
-    cls = partition_orbit_class(lam)
-
-    gen = w_algebra_generator_data(lam)
-    weights = tuple(sorted(Rational(w) for (_, w, _) in gen.strong_generators))
-    bosonic_weights = [Rational(w) for (_, w, p) in gen.strong_generators if p == 'bosonic']
-    fermionic_weights = [Rational(w) for (_, w, p) in gen.strong_generators if p == 'fermionic']
-
-    max_bos = max(bosonic_weights) if bosonic_weights else Rational(0)
-    rho = anomaly_ratio_from_partition(lam)
-    kappa = ds_kappa_from_affine(lam, k_sym)
-
-    n_w1 = sum(1 for w in bosonic_weights if w == Rational(1))
-    has_w1 = n_w1 > 0
-    has_ferm = gen.n_fermionic > 0
-    has_w3 = any(w >= Rational(3) for w in bosonic_weights)
-
-    # Shadow depth classification on the T-line:
-    # - Single weight-1 generator with no higher: class G (Heisenberg-like)
-    # - Multiple weight-1 generators only: class L (affine-like)
-    # - Weight-2 present (Virasoro direction): class M (infinite depth)
-    #   UNLESS it terminates (very special: only for Heisenberg at kappa=0)
-    # The presence of a weight-2 generator (the Virasoro) generically forces
-    # class M on the T-line.
-    if gen.f_centralizer_dimension == 1:
-        w = bosonic_weights[0] if bosonic_weights else Rational(0)
-        if w == Rational(1):
-            shadow_class = 'G'
-            depth = 2
-        elif w == Rational(2):
-            shadow_class = 'M'
-            depth = 'infinity'
-        else:
-            shadow_class = 'M'
-            depth = 'infinity'
-    elif all(w == Rational(1) for w in bosonic_weights) and not has_ferm:
-        shadow_class = 'L'
-        depth = 3
-    elif max_bos == Rational(2) and not has_w3 and not has_ferm:
-        # Only weight 1 and 2 bosonic generators
-        if n_w1 == 0:
-            shadow_class = 'M'
-            depth = 'infinity'
-        else:
-            # Mixed weight-1 and weight-2: class C or M depending on contact
-            shadow_class = 'C'
-            depth = 4
-    else:
-        shadow_class = 'M'
-        depth = 'infinity'
-
+    generators = w_algebra_generator_data(lam)
+    weights = tuple(sorted(Rational(weight) for _, weight, _ in generators.strong_generators))
+    weight_one = sum(weight == Rational(1) for weight in weights)
     return ShadowDepthData(
         partition=lam,
         N=N,
-        orbit_class=cls,
+        orbit_class=partition_orbit_class(lam),
         generator_weights=weights,
-        n_bosonic=gen.n_bosonic,
-        n_fermionic=gen.n_fermionic,
-        max_bosonic_weight=max_bos,
-        rho=rho,
-        kappa_expr=kappa,
-        shadow_class=shadow_class,
-        shadow_depth_bound=depth,
-        has_weight_1_generators=has_w1,
-        n_weight_1=n_w1,
-        has_fermionic_generators=has_ferm,
-        has_weight_ge_3=has_w3,
+        n_even=generators.n_even,
+        n_odd=generators.n_odd,
+        max_weight=max(weights),
+        has_weight_1_generators=weight_one > 0,
+        n_weight_1=weight_one,
+        has_weight_ge_3=any(weight >= 3 for weight in weights),
+        virasoro_line_present=Rational(2) in weights,
+        reciprocal_weight_diagnostic=reciprocal_weight_diagnostic_from_partition(lam),
+        rho=anomaly_ratio_from_partition(lam),
+        kappa=ds_kappa_from_affine(lam, k),
+        full_shadow_depth=_open(
+            f"full shadow depth for W(sl_{N},f_{lam})",
+            H_FULL_SHADOW,
+        ),
     )
 
 
-# ============================================================================
-# 5. Transport graph analysis
-# ============================================================================
-
 @dataclass(frozen=True)
 class TransportAnalysis:
-    """Transport reachability analysis for non-hook partitions."""
+    """Finite graph reachability and typed functorial transport."""
 
     N: int
     total_partitions: int
     n_hook: int
     n_non_hook: int
-    hook_closure_size: int
-    all_reachable: bool
-    unreachable: Tuple[Partition, ...]
-    # Per-partition data
+    hook_graph_closure_size: int
+    graph_reaches_all_partitions: bool
+    graph_unreachable: Tuple[Partition, ...]
     partition_data: Dict[Partition, Dict[str, Any]]
+    categorical_transport: ClaimPacket
 
 
 def transport_reachability(N: int) -> TransportAnalysis:
-    """Analyze transport reachability from hooks for sl_N.
+    """Compute reachability in the finite reduction graph from hook vertices."""
 
-    Builds the reduction graph and checks whether all partitions of N
-    are reachable from the hook vertices via sequences of proved
-    reduction/inverse-reduction functors.
-    """
-    G = ReductionGraph.build(N)
-    hooks = G.hook_vertices()
-    closure = G.transport_closure(hooks)
-    all_parts = set(G.vertices)
-    unreachable = sorted(all_parts - closure)
+    graph = ReductionGraph.build(N)
+    hooks = graph.hook_vertices()
+    closure = graph.transport_closure(hooks)
+    vertices = set(graph.vertices)
+    unreachable = tuple(sorted(vertices - closure))
 
-    per_partition: Dict[Partition, Dict[str, Any]] = {}
-    for lam in sorted(all_parts):
-        lam_t = transpose_partition(lam)
-        cls = partition_orbit_class(lam)
-        status = ds_kd_status(lam)
-        in_closure = lam in closure
-        is_hook = is_hook_partition(lam)
+    distances: Dict[Partition, int] = {}
+    queue = deque()
+    for hook in hooks:
+        distances[hook] = 0
+        queue.append(hook)
+    while queue:
+        current = queue.popleft()
+        for neighbor in graph.neighbors(current):
+            if neighbor not in distances:
+                distances[neighbor] = distances[current] + 1
+                queue.append(neighbor)
 
-        # Shortest path from a hook vertex
-        dist = -1
-        if in_closure and not is_hook:
-            from collections import deque
-            visited: Dict[Partition, int] = {}
-            queue: deque = deque()
-            for h in hooks:
-                visited[h] = 0
-                queue.append(h)
-            while queue:
-                current = queue.popleft()
-                if current == lam:
-                    dist = visited[current]
-                    break
-                for neighbor in G.neighbors(current):
-                    if neighbor not in visited:
-                        visited[neighbor] = visited[current] + 1
-                        queue.append(neighbor)
-        elif is_hook:
-            dist = 0
-
-        per_partition[lam] = {
-            'partition': lam,
-            'transpose': lam_t,
-            'is_hook': is_hook,
-            'orbit_class': cls,
-            'ds_kd_status': status,
-            'in_transport_closure': in_closure,
-            'distance_from_hooks': dist,
+    partition_data = {
+        lam: {
+            "transpose": transpose_partition(lam),
+            "orbit_class": partition_orbit_class(lam),
+            "is_hook": is_hook_partition(lam),
+            "in_graph_closure": lam in closure,
+            "graph_distance_from_hooks": distances.get(lam),
+            "transport_claim": _conditional(
+                f"categorical transport to partition {lam}",
+                H_NONHOOK_TRANSPORT,
+            ),
         }
-
+        for lam in sorted(vertices)
+    }
     return TransportAnalysis(
         N=N,
-        total_partitions=len(all_parts),
+        total_partitions=len(vertices),
         n_hook=len(hooks),
-        n_non_hook=len(all_parts) - len(hooks),
-        hook_closure_size=len(closure),
-        all_reachable=len(unreachable) == 0,
-        unreachable=tuple(unreachable),
-        partition_data=per_partition,
+        n_non_hook=len(vertices) - len(hooks),
+        hook_graph_closure_size=len(closure),
+        graph_reaches_all_partitions=closure == vertices,
+        graph_unreachable=unreachable,
+        partition_data=partition_data,
+        categorical_transport=_conditional(
+            f"functorial propagation across the sl_{N} reduction graph",
+            H_NONHOOK_TRANSPORT,
+        ),
     )
 
 
-# ============================================================================
-# 6. Complete non-hook duality profile
-# ============================================================================
-
 @dataclass(frozen=True)
 class NonHookDualityProfile:
-    """Complete duality profile for a non-hook partition."""
+    """Exact non-hook arithmetic and typed object-level comparisons."""
 
     partition: Partition
     transpose: Partition
     N: int
-    # Classification
     orbit_class: str
-    ds_kd_status: str
     is_self_transpose: bool
-    is_even: bool
     is_rectangular: bool
-    # BRST
+    is_even: bool
     brst: BRSTComplexData
-    # Complementarity
     complementarity: ComplementarityData
-    # Shadow
     shadow: ShadowDepthData
-    # Transport
-    in_transport_closure: bool
-    distance_from_hooks: int
-    # Verdict
-    koszul: bool
-    ds_kd_proved: bool
-    ds_kd_evidence_level: str  # 'proved', 'strong', 'weak', 'none'
+    graph_reachable_from_hooks: bool
+    categorical_transport: ClaimPacket
+    ds_bar_commutation: ClaimPacket
+    koszul_duality: ClaimPacket
+    ksdual_membership: ClaimPacket
 
 
-def non_hook_duality_profile(
-    partition: Partition, level=Symbol('k')
-) -> NonHookDualityProfile:
-    """Complete duality analysis for a (possibly non-hook) partition."""
+def non_hook_duality_profile(partition: Partition, level=k) -> NonHookDualityProfile:
+    """Assemble exact data and typed claims for one partition."""
+
     lam = normalize_partition(partition)
-    lam_t = transpose_partition(lam)
     N = partition_size(lam)
-
-    cls = partition_orbit_class(lam)
-    status = ds_kd_status(lam)
-    self_t = (lam == lam_t)
-    even = is_even_nilpotent(lam)
-    rect = is_rectangular(lam)
-
-    brst = brst_complex_analysis(lam)
-    comp = complementarity_analysis(lam, level)
-    shadow = shadow_depth_analysis(lam)
-
-    # Transport
-    G = ReductionGraph.build(N)
-    hooks = G.hook_vertices()
-    closure = G.transport_closure(hooks)
-    in_closure = lam in closure
-
-    dist = -1
-    if in_closure and not is_hook_partition(lam):
-        from collections import deque
-        visited: Dict[Partition, int] = {}
-        queue: deque = deque()
-        for h in hooks:
-            visited[h] = 0
-            queue.append(h)
-        while queue:
-            current = queue.popleft()
-            if current == lam:
-                dist = visited[current]
-                break
-            for neighbor in G.neighbors(current):
-                if neighbor not in visited:
-                    visited[neighbor] = visited[current] + 1
-                    queue.append(neighbor)
-    elif is_hook_partition(lam):
-        dist = 0
-
-    # Verdict
-    koszul = True  # Arakawa: universal at generic level
-    if status == 'proved_hook':
-        proved = True
-        evidence = 'proved'
-    elif status == 'proved_self_dual_rect':
-        proved = True
-        evidence = 'proved'
-    elif status == 'evidence_self_transpose':
-        proved = False
-        evidence = 'strong'
-    else:
-        proved = False
-        evidence = 'weak' if in_closure else 'none'
-
+    transport = transport_reachability(N)
+    comparison_package = H_HOOK_DS_BAR if is_hook_partition(lam) else H_NONHOOK_TRANSPORT
     return NonHookDualityProfile(
         partition=lam,
-        transpose=lam_t,
+        transpose=transpose_partition(lam),
         N=N,
-        orbit_class=cls,
-        ds_kd_status=status,
-        is_self_transpose=self_t,
-        is_even=even,
-        is_rectangular=rect,
-        brst=brst,
-        complementarity=comp,
-        shadow=shadow,
-        in_transport_closure=in_closure,
-        distance_from_hooks=dist,
-        koszul=koszul,
-        ds_kd_proved=proved,
-        ds_kd_evidence_level=evidence,
+        orbit_class=partition_orbit_class(lam),
+        is_self_transpose=lam == transpose_partition(lam),
+        is_rectangular=is_rectangular(lam),
+        is_even=is_even_nilpotent(lam),
+        brst=brst_complex_analysis(lam),
+        complementarity=complementarity_analysis(lam, level),
+        shadow=shadow_depth_analysis(lam),
+        graph_reachable_from_hooks=transport.partition_data[lam]["in_graph_closure"],
+        categorical_transport=_conditional(
+            f"categorical transport from the hook corridor to {lam}",
+            comparison_package,
+        ),
+        ds_bar_commutation=_conditional(
+            f"DS--bar commutation for partition {lam}",
+            comparison_package,
+            H_PBW_BAR,
+        ),
+        koszul_duality=_conditional(
+            f"object-level Koszul comparison with transpose {transpose_partition(lam)}",
+            comparison_package,
+            H_PBW_BAR,
+        ),
+        ksdual_membership=_conditional(
+            f"KSDual membership for partition {lam}",
+            H_KSDUAL,
+        ),
     )
 
 
-# ============================================================================
-# 7. Systematic catalog
-# ============================================================================
-
 def non_hook_catalog(N: int) -> List[NonHookDualityProfile]:
-    """Generate profiles for all non-hook partitions of N."""
-    parts = _partitions_of_n(N)
+    """Return profiles for every non-hook partition of ``N``."""
+
     return [
         non_hook_duality_profile(lam)
-        for lam in parts
+        for lam in _partitions_of_n(N)
         if not is_hook_partition(lam)
     ]
 
 
 def full_catalog(N: int) -> List[NonHookDualityProfile]:
-    """Generate profiles for ALL partitions of N."""
+    """Return profiles for every partition of ``N``."""
+
     return [non_hook_duality_profile(lam) for lam in _partitions_of_n(N)]
 
 
 def self_transpose_catalog(max_N: int = 8) -> List[NonHookDualityProfile]:
-    """Catalog all self-transpose partitions up to sl_{max_N}."""
-    results = []
-    for N in range(3, max_N + 1):
-        for lam in _partitions_of_n(N):
-            if lam == transpose_partition(lam) and not is_hook_partition(lam):
-                results.append(non_hook_duality_profile(lam))
-    return results
+    """Return profiles for all self-transpose diagrams through ``max_N``."""
+
+    return [
+        non_hook_duality_profile(lam)
+        for N in range(2, max_N + 1)
+        for lam in _partitions_of_n(N)
+        if lam == transpose_partition(lam)
+    ]
 
 
-# ============================================================================
-# 8. Numerical cross-checks
-# ============================================================================
+def numerical_c_complementarity(partition: Partition, levels=None) -> List[Dict[str, object]]:
+    """Evaluate the exact formal central scalar sum at selected levels."""
 
-def numerical_c_complementarity(
-    partition: Partition, test_levels: Optional[List[int]] = None
-) -> Dict[str, Any]:
-    """Numerically verify c-complementarity at multiple levels.
+    if levels is None:
+        levels = [Rational(0), Rational(1), Rational(2), Rational(5)]
+    data = complementarity_analysis(partition, k)
+    return [
+        {
+            "level": level,
+            "reflected_level": data.formal_reflected_level.subs(k, level),
+            "c_source": data.c_source.subs(k, level),
+            "c_transpose_reflected": data.c_transpose_reflected.subs(k, level),
+            "c_sum": data.c_sum.subs(k, level),
+        }
+        for level in levels
+    ]
 
-    Returns the c+c' values at each test level and whether they are all equal.
-    """
+
+def numerical_kappa_complementarity(partition: Partition, levels=None) -> ClaimPacket:
+    """Return the open numerical modular-comparison packet."""
+
     lam = normalize_partition(partition)
-    lam_t = transpose_partition(lam)
-    N = partition_size(lam)
+    return _open(
+        f"numerical K^kappa specializations for partition {lam}",
+        "numeric values of kappa from direct genus-one calculations",
+        H_NONHOOK_TRANSPORT,
+    )
 
-    if test_levels is None:
-        test_levels = [1, 2, 3, 5, 7, 11, 13, 17]
-
-    values = {}
-    for kv in test_levels:
-        if kv + N == 0 or (-kv - 2 * N) + N == 0:
-            continue
-        c_s = krw_central_charge(lam, Rational(kv))
-        c_d = krw_central_charge(lam_t, Rational(-kv - 2 * N))
-        values[kv] = simplify(c_s + c_d)
-
-    vals_set = set(values.values())
-    return {
-        'partition': lam,
-        'transpose': lam_t,
-        'N': N,
-        'values': values,
-        'all_equal': len(vals_set) <= 1,
-        'constant_value': vals_set.pop() if len(vals_set) == 1 else None,
-    }
-
-
-def numerical_kappa_complementarity(
-    partition: Partition, test_levels: Optional[List[int]] = None
-) -> Dict[str, Any]:
-    """Numerically verify kappa-complementarity at multiple levels."""
-    lam = normalize_partition(partition)
-    lam_t = transpose_partition(lam)
-    N = partition_size(lam)
-
-    if test_levels is None:
-        test_levels = [1, 2, 3, 5, 7, 11, 13, 17]
-
-    values = {}
-    for kv in test_levels:
-        if kv + N == 0 or (-kv - 2 * N) + N == 0:
-            continue
-        k_s = ds_kappa_from_affine(lam, Rational(kv))
-        k_d = ds_kappa_from_affine(lam_t, Rational(-kv - 2 * N))
-        values[kv] = simplify(k_s + k_d)
-
-    vals_set = set(values.values())
-    return {
-        'partition': lam,
-        'transpose': lam_t,
-        'N': N,
-        'values': values,
-        'all_equal': len(vals_set) <= 1,
-        'constant_value': vals_set.pop() if len(vals_set) == 1 else None,
-    }
-
-
-# ============================================================================
-# 9. The c-complementarity theorem for self-transpose partitions
-# ============================================================================
 
 def verify_self_transpose_c_complementarity(max_N: int = 8) -> List[Dict[str, Any]]:
-    """Verify that c+c' is k-independent for ALL self-transpose partitions.
+    """Verify formal central reflection sums for self-transpose diagrams."""
 
-    This is a structural theorem: for self-transpose lambda = lambda^t,
-    rho(lambda) = rho(lambda^t) (same anomaly ratio on both sides),
-    so if c+c' = const then kappa+kappa' = rho*(c+c') = const as well.
-
-    Returns results for each self-transpose partition found.
-    """
     results = []
-    for N in range(2, max_N + 1):
-        for lam in _partitions_of_n(N):
-            lam_t = transpose_partition(lam)
-            if lam != lam_t:
-                continue
-
-            c_s = krw_central_charge(lam, k_sym)
-            c_d = krw_central_charge(lam, -k_sym - 2 * N)
-            c_sum = simplify(c_s + c_d)
-            c_indep = simplify(c_sum.diff(k_sym)) == 0
-
-            rho = anomaly_ratio_from_partition(lam)
-            kappa_sum = simplify(rho * c_sum)
-            k_indep = simplify(kappa_sum.diff(k_sym)) == 0
-
-            results.append({
-                'N': N,
-                'partition': lam,
-                'is_hook': is_hook_partition(lam),
-                'c_sum': c_sum,
-                'c_k_independent': c_indep,
-                'rho': rho,
-                'kappa_sum': kappa_sum,
-                'kappa_k_independent': k_indep,
-            })
+    for profile in self_transpose_catalog(max_N):
+        data = profile.complementarity
+        results.append({
+            "partition": profile.partition,
+            "N": profile.N,
+            "central_sum": data.c_sum,
+            "central_sum_k_independent": data.c_sum_k_independent,
+            "formal_central_midpoint": data.formal_central_midpoint,
+            "duality_claim": profile.koszul_duality,
+        })
     return results
+
+
+__all__ = [
+    "ClaimPacket",
+    "ClaimStatus",
+    "OpenInvariantError",
+    "BRSTComplexData",
+    "ComplementarityData",
+    "ShadowDepthData",
+    "TransportAnalysis",
+    "NonHookDualityProfile",
+    "is_rectangular",
+    "is_even_nilpotent",
+    "partition_orbit_class",
+    "ds_kd_status",
+    "brst_complex_analysis",
+    "complementarity_analysis",
+    "shadow_depth_analysis",
+    "transport_reachability",
+    "non_hook_duality_profile",
+    "non_hook_catalog",
+    "full_catalog",
+    "self_transpose_catalog",
+    "numerical_c_complementarity",
+    "numerical_kappa_complementarity",
+    "verify_self_transpose_c_complementarity",
+]

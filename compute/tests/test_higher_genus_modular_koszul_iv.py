@@ -156,17 +156,17 @@ def test_km_pbw_allgenera_sl2_enrichment_blocks():
     ],
     verified_against=[
         "Cartan exponent tables in compute.lib.lie_algebra via w_algebra_pbw_genus1",
-        "Explicit W3 vacuum-module L0 and W_(1) computations through conformal weight 8",
+        "Exact W3 vacuum-module L0 action and homogeneous nth-product target grades through weight 8",
     ],
     disjoint_rationale=(
         "The manuscript proof argues abstractly from principal exponents and "
         "the L0 diagonal block.  This test checks finite root-system tables "
-        "and an explicit W3 vacuum-module calculation: the unique weight-2 "
-        "generator preserves weight, while every higher-spin generator raises it."
+        "and the explicit W3 L0 action, then computes the target grade of each "
+        "homogeneous (1)-product while retaining the composite W_(1) action as an open claim."
     ),
 )
 def test_principal_w_pbw_triangular_weight_blocks():
-    """Principal finite-type W generators force an upper triangular d2 block."""
+    """Principal generator weights determine typed upper-triangular target grades."""
     from compute.lib.w_algebra_pbw_genus1 import (
         d2_target_weight,
         has_unique_stress_tensor,
@@ -174,6 +174,7 @@ def test_principal_w_pbw_triangular_weight_blocks():
         principal_generator_weights,
         verify_w3_d2_weight_pattern,
         verify_w3_l0_scalar,
+        w3_composite_w1_action_claim,
     )
 
     expected_weights = {
@@ -197,6 +198,10 @@ def test_principal_w_pbw_triangular_weight_blocks():
 
     assert all(verify_w3_l0_scalar(max_weight=8).values())
     assert all(verify_w3_d2_weight_pattern(max_weight=8).values())
+    composite_action = w3_composite_w1_action_claim(max_weight=8)
+    assert composite_action.status == "open"
+    assert composite_action.value is None
+    assert "H_W3^nl" in composite_action.hypotheses[0]
 
 
 @independent_verification(

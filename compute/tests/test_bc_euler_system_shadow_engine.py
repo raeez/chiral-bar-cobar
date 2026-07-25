@@ -90,7 +90,7 @@ class TestKappaValues:
             )
 
     def test_kappa_heisenberg_complementarity_sum(self):
-        """For Heisenberg: kappa(H_k) + kappa(H_{-k}) = 0."""
+        """For Heisenberg: kappa(H_k) plus scalar kappa(H_k^!) is 0."""
         for k in [1, 2, 3, 4, 5]:
             kap = engine.kappa_heisenberg(k)
             kap_dual = engine.kappa_heisenberg(-k)
@@ -639,7 +639,7 @@ class TestKoszulDualEulerSystem:
         assert engine.get_koszul_dual_param("virasoro", 13.0) == 13.0  # self-dual
 
     def test_koszul_dual_param_heisenberg(self):
-        """Heisenberg: dual of k is -k."""
+        """Heisenberg: the dual scalar kappa parameter is -k."""
         assert engine.get_koszul_dual_param("heisenberg", 2.0) == -2.0
 
     def test_koszul_dual_param_affine(self):

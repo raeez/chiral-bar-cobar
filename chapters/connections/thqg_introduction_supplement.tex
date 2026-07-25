@@ -1,7 +1,7 @@
 % Introduction supplement: Twisted Holography and Quantum Gravity.
 % Develops the holographic modular Koszul datum from foundations.
-% Builds the bulk-boundary-line triangle, collision filtration, shadow
-% connection, Yangian extraction, and Arnold-to-YBE proof as
+% Builds the closed-sector--boundary--line triangle, collision filtration,
+% shadow connection, Yangian extraction, and Arnold-to-YBE proof as
 % self-contained mathematical constructions.
 
 % ======================================================================
@@ -11,15 +11,16 @@
 \section{The holographic triangle}
 \label{sec:holographic-triangle}
 \index{holographic triangle|textbf}
-\index{bulk-boundary-line triangle|textbf}
+\index{closed-sector--boundary--line triangle|textbf}
 
 Three algebraic objects attach to a chiral algebra~$\cA$ on a smooth
 projective curve~$X$. They form a triangle whose vertices are the
 boundary algebra, the cochain-level closed-sector slot, and the
-line-operator category. In this section the word \emph{bulk} names the
-chiral Hochschild derived-centre slot. A physical three-dimensional
-holomorphic-topological bulk is a separate factorization algebra
-equipped with a closed-open comparison map into that slot.
+line-operator category. In this section the derived-centre vertex is
+the chiral Hochschild closed-sector slot. A physical
+three-dimensional holomorphic-topological bulk is a separate
+factorization algebra equipped with an open--closed comparison datum
+into that slot.
 
 \begin{definition}[Supplement algebraic-sector register;
 \ClaimStatusDefinitional]
@@ -104,13 +105,22 @@ The algebraic \emph{closed-sector slot} is the chiral derived centre of~$\cA$:
 \;:=\;
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 \;=\;
-R\mathcal{H}om_{\cA\text{-bimod}}(\cA,\, \cA).
+R\!\operatorname{Hom}^{\mathrm{act}}_{\mathsf{Fact}_{\cA-\cA}}
+(\cA,\cA),
 \end{equation}
+as in Definition~\ref{def:thqg-chiral-derived-center}. The
+superscript ``act'' records that the two bimodule structures are the
+active left and right chiral actions in the completed factorisation
+\(\cA\)-\(\cA\)-bimodule ambient; after choosing the chiral
+Hochschild model this object is the completed brace dg algebra
+\(\mathcal C^\bullet_{\mathrm{ch}}(\cA,\cA)\).
 Define the centre local system on the universal curve
 $\pi \colon \mathcal{C}_g \to \overline{\mathcal{M}}_g$ by
 \begin{equation}\label{eq:supp-center-local-system-def}
 \mathcal{Z}(\cA) \;:=\;
-R\mathcal{H}om_{\cA\text{-bimod}}(\cA,\, \cA),
+H^0\!\left(
+R\!\operatorname{Hom}^{\mathrm{act}}_{\mathsf{Fact}_{\cA-\cA}}
+(\cA,\cA)\right),
 \end{equation}
 where the bimodule structure uses left and right chiral actions.
 On a fixed smooth curve~$\Sigma_g$ of genus~$g$, the fiber of the
@@ -176,15 +186,22 @@ category} is the derived module category of the Koszul dual algebra:
 \begin{equation}\label{eq:supp-line-category-def}
 \mathsf{Line}(\cA) \;:=\; \cA^!\text{-}\mathsf{mod}.
 \end{equation}
-Here $\cA^i=H^*(\barB_X(\cA))$ is the cohomological
-Koszul-dual coalgebra, and
-$\cA^! = (\cA^i)^\vee$ is the strict Koszul dual chiral algebra
+For a chosen quadratic presentation,
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ is the quadratic coalgebra and
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$ is its comparison with
+the full bar.  The algebra
+$\cA^! = (\cA^{\mathrm i})^\vee$ is the strict Koszul dual
 under the stated finite-type or completed continuous duality
 convention. The bar--cobar map
-$\Omega_X\barB_X(\cA)\to\cA$ is inversion, not Koszul duality.
+$\Omega_X\barB_X(\cA)\to\cA$ reconstructs the original algebra.
 Separately,
-$\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$ is the homotopy
-Koszul-dual factorization algebra. The module category
+$\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$ is the Verdier-dual
+algebra $K_X(\cA)$.  A chosen Koszul partner carries an algebra map
+$\nu_{\cA}\colon K_X(\cA)\to\cA^!$, an equivalence on the completed
+finite-type pair locus; for the quadratic model its canonical
+comparison is
+$\mathbb D(q_\cA)\colon K_X(\cA)\to
+\mathbb D_{\operatorname{Ran}}(\cA^{\mathrm i})$. The module category
 $\cA^!\text{-}\mathsf{mod}$ is a
 $\mathbb{C}$-linear dg category whose objects are $\cA^!$-modules
 (factorization modules on $\operatorname{Ran}(X)$) and whose morphisms
@@ -233,26 +250,31 @@ and comparison maps:
  \arrow[dr, "\text{dual shadow}"]
 & \\
 \text{Boundary: } \cA
- \arrow[rr, "\text{bar cohomology + Verdier}"']
+ \arrow[rr, "B_X,\;\mathbb D_{\Ran},\;\nu_\cA"']
  \arrow[ur, "\text{bar trace}"]
 & & \text{Lines: } \mathsf{Line}(\cA)
 \end{tikzcd}
 \end{equation}
 The upward edge is the bar construction followed by the trace into the
-centre local system: $\barB_X(\cA)$ supplies the bar coalgebra, and
-its cohomology is $\cA^i$ before Verdier dualization. The downward
-edge is the closed action of the chiral Hochschild endomorphism algebra
-on its boundary object~$\cA$; it is algebraic closed-sector action,
-not a physical closed-open map from a quantum field theory. The right
+centre local system.  A chosen presentation supplies
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$; under
+$H_{\mathrm{CL}}$, $H^\bullet(q_\cA)$ identifies its cohomology with
+bar cohomology. The downward edge is the algebraic closed-sector
+action of the chiral Hochschild endomorphism algebra on its boundary
+object~$\cA$.  A physical closed--open map is supplied by the OCA
+comparison datum. The right
 edge is the holographic cofiber:
 $\mathbf{H}_g^{\mathrm{hol}}(\cA) =
 \operatorname{cofib}(\mathbf{Q}_g(\cA) \to \mathbf{C}_g(\cA))
 \simeq \mathbf{Q}_g(\cA^!)$
 (Theorem~\ref{thm:frontier-protected-bulk-antiinvolution}(iii)).
-The bottom edge is Koszul duality: $\cA \mapsto \cA^i \mapsto \cA^!$
-by bar cohomology followed by finite-type or completed duality, with
-the module category
-$\cA^!\text{-}\mathsf{mod}$ as the categorical output.
+The bottom edge is the typed assignment
+$\cA\mapsto B_X(\cA)\mapsto
+K_X(\cA)=\mathbb D_{\Ran}B_X(\cA)
+\xrightarrow{\nu_\cA}\cA^!$, together with the quadratic comparison
+$q_\cA$.  Its categorical output is the module category
+$\cA^!\text{-}\mathsf{mod}$.
 
 The algebraic datum below records these distinct outputs together with
 the single Maurer--Cartan element~$\Theta_\cA$ that controls their
@@ -263,7 +285,7 @@ modular collision structure.
 \label{subsec:holographic-datum-sixfold}
 \index{holographic modular Koszul datum|textbf}
 
-The separation of the boundary algebra, the bar-cohomology coalgebra,
+The separation of the boundary algebra, the quadratic coalgebra,
 the strict Verdier/Koszul dual, and the chiral derived centre is
 encoded by the \emph{holographic modular Koszul datum}:
 \begin{equation}\label{eq:supp-holographic-datum-intro}
@@ -275,16 +297,20 @@ r(z),\;\Theta_\cA,\;\nabla^{\mathrm{hol}}\bigr).
 The seven entries are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The boundary algebra $\cA$: augmented chiral algebra on~$X$.
-\item The bar-cohomology coalgebra
- $\cA^i=H^*(\barB_X(\cA))$: the Koszul-dual coalgebra.
-\item The strict line algebra $\cA^!=(\cA^i)^\vee$: strict
+\item For a chosen presentation $\cA=T_X(V)/(R)$, the quadratic
+ coalgebra $\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and the comparison
+ $q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$.
+\item The strict line algebra $\cA^!=(\cA^{\mathrm i})^\vee$: strict
  finite-type or completed Verdier/Koszul-dual algebra of~$\cA$ under
  the stated hypotheses.
-\item The bulk algebra
+\item The algebraic closed-sector object
  $\mathbf{C}_{\mathrm{ch}}(\cA)=Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$:
- chiral derived centre of~$\cA$.
-\item The spectral $r$-matrix $r(z)$: binary genus-zero collision
- residue of~$\Theta_\cA$ (extracted in \S\ref{subsec:collision-filtration-recovery}).
+ chiral derived centre of~$\cA$. A physical bulk algebra is supplied
+ only by the additional open--closed comparison datum.
+\item The collision kernel $K_\cA^{\mathrm{coll}}(z)$: binary
+ genus-zero component of~$\Theta_\cA^{E_1}$ (extracted in
+ \S\ref{subsec:collision-filtration-recovery}); its represented image
+ is a classical $r$-matrix under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$.
 \item The modular MC element
  $\Theta_\cA \in \MC(\gAmod)$: bar-intrinsic positive-genus
  Maurer--Cartan element
@@ -318,30 +344,33 @@ Level: $1 \leftrightarrow 2 \leftrightarrow 3$ (boundary chart, bar
 twisting coalgebra, derived chiral centre).
 Hypothesis package: augmented $\cA$ on a smooth projective curve;
 finite-type or completed continuous duality conventions for
-$\cA^!$; the closed-open comparison map
-$\mathrm{CO}_\cA$ is additional data not included in
+$\cA^!$; the open--closed comparison datum
+$\mathrm{OCA}_T$ is additional data not included in
 $\mathcal{H}(\cA)$.
 \medskip
 
 The datum $\mathcal{H}(\cA)$ determines the algebraic triangle
 \[
 \Omega_X\barB_X(\cA)\to\cA,\qquad
-\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)\simeq\cA^!_\infty,\qquad
+K_X(\cA):=\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA),\quad
+\nu_{\cA}\colon K_X(\cA)\longrightarrow\cA^!,\qquad
 \mathbf{C}_{\mathrm{ch}}(\cA)=
-R\mathcal{H}om_{\cA\text{-bimod}}(\cA,\cA),
+R\!\operatorname{Hom}^{\mathrm{act}}_{\mathsf{Fact}_{\cA-\cA}}(\cA,\cA),
 \]
 together with the line category on the strict comparison locus. It
 does not determine a physical holomorphic-topological bulk
 $\mathcal{O}^{\mathrm{HT}}_{\mathrm{bulk}}$ unless the extra
-closed-open comparison datum
+open--closed comparison datum
 \[
-\mathrm{CO}_\cA\colon
-\mathcal{O}^{\mathrm{HT}}_{\mathrm{bulk}}\big|_X
+\mathrm{OCA}_T=\beta_T\colon
+\operatorname{Loc}_{\partial}
+\mathcal{O}^{\mathrm{HT}}_{\mathrm{bulk}}
 \longrightarrow
 \mathbf{C}_{\mathrm{ch}}(\cA)
 \]
 is included and required to be an equivalence in the chosen analytic or
-coderived completion.
+coderived completion. This is the OCA datum of
+Definition~\ref{def:thqg-oca-datum}.
 \end{proposition}
 
 \begin{proof}

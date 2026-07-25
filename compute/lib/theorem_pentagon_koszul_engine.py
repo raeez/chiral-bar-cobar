@@ -702,7 +702,7 @@ def koszul_equivalences_status() -> Dict[str, Any]:
             'gk_connection': 'indirect (factorization homology)',
         },
         '(viii)': {
-            'name': 'ChirHoch polynomial',
+            'name': 'ChirHoch amplitude/Hilbert polynomial',
             'status': 'one-way',
             'gk_connection': 'indirect (Hochschild)',
         },
@@ -1092,7 +1092,7 @@ def categorification_analysis() -> Dict[str, Any]:
 
     Items that GK do NOT address:
       - (vii) FH concentration: requires global factorization homology
-      - (viii) ChirHoch polynomial: requires Hochschild theory
+      - (viii) ChirHoch amplitude/Hilbert polynomial: requires Hochschild theory
       - (ix) Kac-Shapovalov: representation-theoretic, not operadic
       - (xi) Lagrangian: requires shifted symplectic geometry
       - (xii) D-module purity: requires mixed Hodge theory

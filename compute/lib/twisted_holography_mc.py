@@ -12,7 +12,7 @@ the scalar and collision projections visible from Theta_A
 (Theorem thm:thqg-projection in twisted_holography_quantum_gravity.tex).
 It does not construct A^i, A^!, or C from Theta_A alone.  The bar-dual
 coalgebra A^i, the Verdier/Koszul branch A^!, and the derived-centre
-bulk slot C are distinct objects.
+closed-sector slot C are distinct objects.
 
 PROJECTION STRUCTURE:
 
@@ -79,7 +79,8 @@ CONVENTIONS (anti-pattern compliance):
   AP25: B(A) coalgebra, A^i = H*(B(A)), A^! from Verdier duality,
         Omega(B(A)) = A is inversion.
   AP27: bar propagator d log E(z,w) weight 1 regardless of field weight
-  AP33: H_k^! = Sym^ch(V*) != H_{-k} (same kappa, different algebras)
+  AP33: H_k^! is the curved second-kind Sym branch, not H_{-k}
+        (same scalar kappa, different object)
   AP39: kappa != c/2 in general; kappa = c/2 ONLY for Virasoro
   AP44: lambda-bracket coeff = OPE mode / n! (divided powers)
   AP48: kappa depends on full algebra, not Virasoro subalgebra
@@ -747,8 +748,9 @@ def extract_yangian_data(A: ChiralAlgebraData) -> Optional[YangianData]:
       The "Yangian" is abelian (trivial quantum group).
 
     For Virasoro:
-      The Yangian is the full quantum group U_q(Vir) (class M).
-      No finite-dimensional RTT presentation.
+      The arity-3 shadow is a class-M Yangian-like quantum-group
+      enhancement, not a classical Drinfeld Yangian.  No
+      finite-dimensional RTT presentation exists on this surface.
     """
     if A.family == "heisenberg":
         return YangianData(
@@ -978,7 +980,8 @@ def koszul_dual_kappa(A: ChiralAlgebraData) -> Fraction:
     AP24: kappa + kappa' = 0 for KM/free fields.
           kappa + kappa' = rho*K for W-algebras.
 
-    Heisenberg: kappa(H_k^!) = -k (AP33: H_k^! = Sym^ch(V*), not H_{-k})
+    Heisenberg: kappa(H_k^!) = -k (AP33: the curved second-kind
+    Sym branch has the same scalar kappa as H_{-k}, but is not H_{-k})
     Affine sl_N: kappa(V_{-k-2h^v}(g)) = dim*((-k-2h^v)+h^v)/(2h^v)
                                          = dim*(-k-h^v)/(2h^v) = -kappa(A)
     Virasoro: kappa(Vir_{26-c}) = (26-c)/2 = 13 - c/2
@@ -1041,7 +1044,7 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
 
     # Determine Verdier/Koszul branch name
     if A.family == "heisenberg":
-        dual_name = f"Sym^ch(V*) [kappa={kd_kappa}]"
+        dual_name = f"curved Sym^ch(V*[1]) [kappa={kd_kappa}]"
     elif A.family.startswith("affine") and A.level is not None:
         dual_level = -(A.level + 2 * A.dual_coxeter)
         dual_name = f"{A.name.split('(')[0]}(k={dual_level})"
@@ -1056,7 +1059,7 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
     line_cat = f"{dual_name}-mod"
     bulk_slot_name = f"Z_ch^der({A.name})"
     derived_center_scope = (
-        "C is the Z_ch^der(A) bulk slot after comparison; it is not "
+        "C is the Z_ch^der(A) closed-sector slot after comparison; it is not "
         "B(A), A^i, A^!, or Omega(B(A))."
     )
     theta_scope = f"Theta_A satisfies {MC_EQUATION} in the {MC_EQUATION_SCOPE}."
@@ -1070,7 +1073,7 @@ def extract_holographic_dictionary(A: ChiralAlgebraData) -> HolographicDictionar
         "A^i": "bar cohomology coalgebra H^*(B(A))",
         "A^!": "Verdier/Koszul dual algebra obtained from A^i",
         "Omega(B(A))": "bar-cobar inversion object returning A",
-        "Z_ch^der(A)": "derived-centre Hochschild bulk object C",
+        "Z_ch^der(A)": "derived-centre Hochschild closed-sector object C",
     }
 
     # Three-path verification
@@ -1117,7 +1120,7 @@ def sl2_explicit_verification(k: Fraction) -> Dict[str, Any]:
     This is the prototypical example:
       Boundary: A = V_k(sl_2)
       Line/evaluation model: Rep_q(sl_2) (at non-root-of-unity level)
-      Bulk slot: C = Z_ch^der(A), compared separately with line data
+      Closed-sector slot: C = Z_ch^der(A), compared separately with line data
 
     Verification:
     1. r(z) = k*Omega/z from collision residue (AP19: double pole -> simple)

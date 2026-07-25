@@ -13,8 +13,6 @@
 \chapter{The Verlinde polynomial \texorpdfstring{$Z_g(k)$}{Z\_g(k)}, Bernoulli leading term, and Kummer congruences}
 \label{ch:z-g-kummer-bernoulli}
 
-\ClaimStatusProvedHere
-
 \section*{Orientation}
 
 Fix $G = \mathrm{SL}_2$ and a level $k \in \mathbb{Z}_{\ge 0}$. Set
@@ -505,171 +503,86 @@ $G$ via the Macdonald denominator formula and the Kac--Peterson
 character-theoretic derivation of $Z_g^G(k)$; this chapter fixes only the
 $\mathrm{SL}_2$ normalisation.
 
-\section{Arithmetic duality with the Virasoro shadow tower}
+\section{Arithmetic comparison with the Virasoro residue tower}
 \label{sec:zg-arithmetic-duality}
 
-The four theorems of this chapter pin the arithmetic of $Z_g(k)$ on
-$\mathrm{Bun}_{\mathrm{SL}_2}(\Sigma_g)$ through the Hurwitz--Bernoulli
-leading coefficient
-$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ and its Kummer-irregular prime
-witnesses $\{691, 3617, \ldots\}$. The Virasoro shadow tower
-$\{S_r(\Vir_c)\}_{r \geq 2}$ carries the complementary arithmetic:
-the two invariants are geometrically disjoint (different localisations),
-and the two
-\emph{Bernoulli-leading} Kummer witnesses $\{691, 3617\}$ that appear
-on the $Z_g$ side at genera $g = 7, 9$ are provably \emph{absent} on
-the $S_r$ side through $r = 11$. Kummer-irregular primes ordered by size
-belong to a different filtration; for instance $2111$ can appear in an
-$S_r$ coefficient without contradicting the stated Bernoulli-index
-duality.
+The Verlinde computation above is complete on its own geometric
+surface.  It supplies the exact Bernoulli coefficient
+\[
+ [n^{2(g-2)}]R_{g-2}(n^2)
+ =(-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+A comparison with a Virasoro higher-residue sequence requires three
+additional data: an ordered residue package
+\(\mathsf H_{\mathrm{res}}\), an integral normalization of its scalar
+line, and a Kummer comparison
+\(\mathsf H_{\mathrm{Kum}}\) relating that line to the integral
+Bernoulli coefficient.  These data define the meaning of prime
+comparison across the two constructions.
 
-\begin{theorem}[$Z_g$ vs $S_r(\Vir_c)$ arithmetic duality at the
-Bernoulli-leading Kummer pair]
+\begin{theorem}[Bernoulli witnesses and the residue comparison problem]
 \label{thm:z-g-s-r-arithmetic-duality}
-\ClaimStatusProvedHere
-Let
+\ClaimStatusConditional
+\emph{Type signature:}
+\textup{(Open/modular comparison, Verlinde and ordered-residue
+presentations, Beilinson levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Kum}}\)).}
+The Verlinde lane has the exact reduced coefficients
 \[
- \mathrm{IrrKum}_{\mathrm{Bern},2}:=\{691,3617\}
+ [n^{18}]Z_7(k)=\frac{691}{20432412000},
+ \qquad
+ [n^{24}]Z_9(k)=\frac{3617}{41682120480000}.
 \]
-denote the Kummer-irregular primes appearing at the two smallest
-Bernoulli indices that contain irregular numerator factors:
-$691\mid\mathrm{num}(B_{12})$ and
-$3617\mid\mathrm{num}(B_{16})$. Then:
-\begin{enumerate}
-\item (Presence on the $Z_g$ side.) The prime $691$ divides the reduced
-integer numerator of the leading coefficient $[n^{18}]Z_7(k)$, and the
-prime $3617$ divides the reduced integer numerator of
-$[n^{24}]Z_9(k)$. Equivalently,
-\[
- 691\mid \mathrm{num}(B_{12}),\qquad
- 3617\mid \mathrm{num}(B_{16}),
-\]
-and in both cases the scalar multiplier
-$(-1)^g2^{g-1}/(2g-2)!$ is a $p$-adic unit.
-\item (Absence on the $S_r$ side through $r = 11$.) For every $r$ in the
-range $2 \leq r \leq 11$, neither $691$ nor $3617$ divides the numerator
-of $S_r(\Vir_c) \cdot c^{r-3} (5c + 22)^{\lfloor (r-2)/2 \rfloor}$
-regarded as an integer polynomial in $c$. Explicitly
-\[
- 691,\, 3617 \;\nmid\; \mathrm{num}\bigl[\,S_r(\Vir_c) \cdot c^{r-3}
- (5c+22)^{\lfloor (r-2)/2 \rfloor}\,\bigr]
- \qquad\text{for all } 2 \leq r \leq 11.
-\]
-\end{enumerate}
-In particular the two Bernoulli-leading Kummer witnesses $691$ (seen at
-$g = 7$, $B_{12}$) and $3617$ (seen at $g = 9$, $B_{16}$) are
-\emph{present} in the $Z_g$ leading coefficients at those genera and
-\emph{absent} from every $S_r(\Vir_c)$ coefficient through weight
-$r = 11$. The duality is sharp for this Bernoulli-index pair; it is not
-a global absence theorem for Kummer-irregular primes in the Virasoro
-shadow tower.
+Consequently \(691\) and \(3617\) are the first two displayed
+Bernoulli-numerator witnesses on this lane.  If
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Kum}}\) identifies an
+integral Virasoro residue coordinate with these genus slots, then its
+prime divisibility is obtained by transporting these two primitive
+classes through that comparison.
+
+A finite formal Virasoro recurrence may be reduced modulo the same
+primes as a separate exact computation.  Equality of that formal
+sequence with the geometric residue sequence is part of
+\(\mathsf H_{\mathrm{res}}\).
 \end{theorem}
 
 \begin{proof}
-Part (1) is a direct composition of
-Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}
-(leading coefficient of $R_{g-2}$ equals
-$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$) with the Kummer-irregularity criterion
-for the pair $\{691, 3617\}$:
-$691 \mid \mathrm{num}(B_{12})$ (with $g = 7$, $2g - 2 = 12$) and
-$3617 \mid \mathrm{num}(B_{16})$ (with $g = 9$, $2g - 2 = 16$).
-Explicit witnesses at $g = 7$ and $g = 9$ are
-Theorem~\ref{thm:z-g-kummer-congruence} (1) and (2). The factor
-$2^{g-1}/(2g-2)!$ has no factor $691$ at $g=7$ and no factor $3617$ at
-$g=9$, so the Bernoulli numerator survives rational reduction.
-
-Part (2) is exactly Theorem~\ref{thm:s-r-kummer-absent-through-r-11},
-which pins the
-$\mathbb{Z}$-polynomial numerator
-$N_r(c) = S_r(\Vir_c) \cdot c^{r-3} (5c+22)^{\lfloor (r-2)/2 \rfloor}$
-through $r = 11$ and confirms that $691, 3617$ do not appear among the
-primes in $\mathcal{P}_{\le 11}$. Exact integer factorisation of every
-coefficient of $N_2,\ldots,N_{11}$ checks the claim.
-
-The two statements together constitute the duality at the two
-Bernoulli-leading Kummer witnesses: $\{691, 3617\}$ are present on the
-$Z_g$ side (via the Hurwitz--Bernoulli leading factor) and absent on the $S_r$
-side (through $r = 11$, verified). The statement does not extend to
-every Kummer-irregular prime: the prime $2111$ is Kummer-irregular (via
-$2111 \mid \mathrm{num}(B_{1038})$) and simultaneously
-$2111 \mid 29554$, with $29554$ the constant-term coefficient of $N_9$.
-This coincidence does not violate the stated duality because $2111$ is
-not witnessed on the $Z_g$ side: the $g$-th Kummer-presence is
-controlled by $\mathrm{num}(B_{2g-2})$, and for $g \leq 9$ the relevant
-Bernoulli numerators $\mathrm{num}(B_{2}), \ldots, \mathrm{num}(B_{16})$
-have only $691$ and $3617$ as Kummer-irregular prime factors.
-\checkmark
+The two rational coefficients follow from
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} and
+\(B_{12}=-691/2730\), \(B_{16}=-3617/510\), followed by rational
+reduction.  The final assertion is functoriality of divisibility under
+the integral comparison specified by \(\mathsf H_{\mathrm{Kum}}\).
 \end{proof}
 
-\begin{remark}[geometric disjointness of localisations]
+\begin{remark}[Geometric provenance]
 \label{rem:localization-disjointness}
-Theorem~\ref{thm:z-g-s-r-arithmetic-duality} expresses a
-\emph{geometric} disjointness underlying the arithmetic duality. The two
-sides localise on different spaces.
-
-\begin{itemize}
-\item The $Z_g(k)$ leading coefficient is a characteristic number on
-$\mathrm{Bun}_{\mathrm{SL}_2}(\Sigma_g)$, the moduli stack of
-$\mathrm{SL}_2$-bundles on the genus-$g$ surface $\Sigma_g$. By
-Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} together with
-Remark~\ref{rem:witten-check}, the leading coefficient is the
-large-$k$ symplectic volume of the moduli space of flat
-$\mathrm{SU}(2)$-connections, computed by Witten~1991 via a ratio of
-zeta values; the Bernoulli content enters through Euler's even-zeta
-identity. The arithmetic of $Z_g$ is thus entirely a moduli-of-bundles
-invariant and its primes are controlled by the $B_{2m}$ denominator
-spectrum (von Staudt--Clausen) and numerator spectrum (Kummer
-irregularity).
-\item The Virasoro shadow coefficient $S_r(\Vir_c)$ is a
-Chiral Hochschild residue of the chiral algebra itself. By
-Theorem~\ref{thm:virasoro-shadow-recurrence}, $S_r$ is a
-Riccati-propagated rational function of $c$ starting from the initial
-data $(S_2, S_3, S_4, S_5)$, with no input from any moduli stack.
-$S_r(\Vir_c)$ localises on the universal Maurer--Cartan element
-$\Theta_{\Vir_c}$ in the ordered convolution dGLA -- inherently a
-statement on $\ChirHoch(\Vir_c)$, not on
-$\mathrm{Bun}_G(\Sigma_g)$.
-\end{itemize}
-
-The two sides never share a common geometric localisation. In particular
-there is no universal bridge that would force the Kummer-irregular primes
-of $Z_g$ to appear in $S_r$ or vice versa. The arithmetic duality
-(Kummer-present on $Z_g$; Kummer-absent on $S_r$) is the shadow of this
-geometric disjointness at the arithmetic level.
-
-This disjointness resolves a potentially misleading reading of the
-shadow-Feynman bridge $F_g \leftrightarrow S_{2g-2}$: the bridge is a
-\emph{structural} identification of the all-genus free energy with the
-shadow tower under the scalar-primary channel, not an equality of
-\emph{arithmetics}. The Bernoulli content of $F_g$ (via $B_{2g-2}$)
-enters through the genus normalisation, which is a moduli-of-bundles
-feature; the Riccati content of $S_r$ enters through the ordered
-MC recursion, which is a chiral-algebra feature. The two converge on a
-single formal power series under the bridge, but the arithmetic of their
-coefficients is distinct.
+The Verlinde coefficient is a characteristic number on the moduli
+space of flat \(\mathrm{SU}(2)\)-connections.  A Virasoro higher
+coefficient is extracted from an ordered chiral residue model.  The
+package \(\mathsf H_{\mathrm{Kum}}\) is therefore a correspondence:
+it consists of a chain map, an integral lattice on the scalar target,
+and compatibility with genus normalization.  Once constructed, it
+turns the two proven local computations into a theorem on one common
+arithmetic object.
 \end{remark}
 
-\begin{remark}[Extensions]
+\begin{remark}[Higher witnesses]
 \label{rem:zg-sr-duality-extensions}
-The theorem pins the duality for the Bernoulli-index pair
-$B_{12},B_{16}$ and for the shadow range $r \leq 11$. It does not
-assert absence of all Kummer-irregular primes from the Virasoro tower:
-$2111$ already appears in $N_9$. The higher Bernoulli-index witnesses
-belong to Theorem~\ref{thm:higher-kummer-refined-duality}; the Laurent
-tier refinement belongs to Theorem~\ref{thm:kummer-laurent-depth-controlled}.
+Higher Bernoulli numerators are governed by the same exact Verlinde
+formula.  Their comparison with Laurent tiers of a residue sequence
+requires tierwise integral lattices and reduction maps.  This is the
+natural extension of \(\mathsf H_{\mathrm{Kum}}\).
 \end{remark}
 
-\begin{remark}[Verification anchor: arithmetic duality]
+\begin{remark}[Verification surface]
 \label{rem:zg-verify-sr-duality}
-Theorem~\ref{thm:z-g-s-r-arithmetic-duality} combines two independent
-computations. On the $Z_g$ side, the reduced leading coefficients at
-$g=7,9$ contain the Bernoulli numerators $691$ and $3617$. On the
-Virasoro side, Theorem~\ref{thm:s-r-kummer-absent-through-r-11} factors
-every coefficient of
-$N_r(c)=S_r(\Vir_c)c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}$ for
-$2\leq r\leq11$ and finds neither prime. The first computation is a
-moduli-of-bundles calculation; the second is the Riccati transport in the
-ordered chiral Hochschild recursion.
+The Verlinde side has three independent checks: the cosecant power
+sum, Witten's large-level symplectic volume, and interpolation of the
+exact polynomial.  The residue side is checked by direct ordered
+contraction and by its formal recurrence after
+\(\mathsf H_{\mathrm{res}}\) has identified the two sequences.  The
+integral comparison is verified prime by prime on primitive
+normalizations.
 \end{remark}
 
 \bigskip

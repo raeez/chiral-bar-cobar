@@ -5,12 +5,21 @@ E_2-algebras in the factorization algebra framework (living on 2D surfaces).
 This module pushes the framework to E_3-algebras, which govern:
 
   - 3D holomorphic-topological QFT (Vol II)
-  - Braided monoidal categories (Reshetikhin-Turaev invariants)
+  - Locally constant 3D closed-sector observables
   - Chern-Simons theory
-  - Yangians (as E_1 tensor E_2 = E_2 algebras on Ran of a line,
-    but the derived center carries E_3 by Higher Deligne)
+  - Yangian boundary/center sectors: the quantum-group braiding is
+    E_2-boundary data, while a derived center of E_2/E_infty input may
+    carry algebraic E_3 by Higher Deligne. Genuinely E_1 input gives
+    only E_2 until a Drinfeld-center or topologisation package is added.
 
 MATHEMATICAL CONTENT:
+
+REGISTER CONVENTION.  This engine models the topological little-disks
+operad E_3^{top} through configuration spaces Conf_k(R^3).  The
+algebraic Higher-Deligne/Kontsevich E_3^{alg} acting on Hochschild or
+cochain objects is a distinct chain model.  The two are compared only
+after a named formality/topologisation/realisation package, usually over
+Q; no raw chiral chain complex is promoted to E_3^{top} by notation.
 
 1. E_3 BAR COMPLEX.  For an E_3-algebra A, the bar complex B_{E_3}(A) is a
    coalgebra over the cooperad E_3^i = (E_3)^{co-!}.  The underlying chain
@@ -45,19 +54,23 @@ MATHEMATICAL CONTENT:
    An E_3-algebra has:
      - Associative product mu (from E_1 subset E_3)
      - Homotopy commutativity (from E_2 subset E_3, i.e. pi_1(S^1) = Z)
-     - Braiding R: this comes from pi_1(Conf_2(R^3)) = 0 (trivial!),
-       but the TOPOLOGICAL braiding from the E_2 subalgebra persists.
+     - No nontrivial binary E_3 braiding: pi_1(Conf_2(R^3)) = 0.
+       Non-symmetric quantum-group braiding appears only after choosing
+       an E_2 boundary, restriction, or center; it is not a binary
+       operation of the full E_3^{top} object.
      - Higher coherence from pi_2(S^2) = Z (the Hopf degree).
 
-   CRITICAL DISTINCTION: the braiding of the E_3 bar complex comes from
-   the E_2 subalgebra structure, NOT from pi_1(Conf_2(R^3)) which is trivial.
-   The E_3 enhancement provides a SYMMETRIC monoidal structure (not merely
-   braided), because R^3 allows continuous paths between the two orderings
-   of any pair.
+   CRITICAL DISTINCTION: E_2 boundary data may carry a braid-group
+   action, but the full topological E_3^{top} enhancement provides a
+   symmetric monoidal structure, because R^3 allows continuous paths
+   between the two orderings of any pair.  Algebraic E_3^{alg} operations
+   on a derived center require a separate Higher-Deligne comparison.
 
-4. FORMALITY OF E_3.
+4. FORMALITY OF TOPOLOGICAL E_3.
    The E_3 operad is formal over Q (Lambrechts-Volic 2014, Kontsevich).
-   Consequence: B_{E_3}(A) has a formal model for formal E_3-algebras.
+   Consequence: B_{E_3}(A) has a rational formal model for formal
+   topological E_3-algebras.  A comparison with algebraic E_3^{alg}
+   is an additional hypothesis package, not an equality of chain models.
    The formal model: the bar complex of an E_3-algebra is quasi-isomorphic
    to the bar complex of its cohomology (as a graded E_3-algebra).
 
@@ -69,7 +82,8 @@ MATHEMATICAL CONTENT:
 
 5. CHERN-SIMONS AS E_3.
    CS theory on M^3 with gauge group G at level k:
-     - The factorization algebra of observables is an E_3-algebra
+     - The locally constant factorization algebra of observables is a
+       topological E_3^{top}-algebra after the CFG/CG locality package
      - Restriction to a surface Sigma subset M^3 gives the WZW model
        (an E_2-algebra = chiral algebra = affine g at level k)
      - The quantum group U_q(g) at q = e^{2*pi*i/(k+h^v)} arises as
@@ -101,8 +115,8 @@ MATHEMATICAL CONTENT:
    plus additional components from the normal direction.
 
    The additional E_3 components encode YANGIAN data:
-   By Dunn additivity E_3 = E_1 tensor E_2, so an E_3-algebra is an
-   E_1-algebra in E_2-algebras.  The E_1 direction yields the spectral
+   after topologisation, Dunn additivity identifies E_3^{top} with an
+   E_1-direction in E_2-algebras.  The E_1 direction yields the spectral
    parameter of the Yangian; the E_2 direction yields the chiral algebra.
 
 8. HIGHER E_n.
@@ -856,17 +870,18 @@ def e3_e2_shadow_comparison(kappa: Fraction, s3: Fraction,
 
 
 def e3_yangian_component() -> Dict[str, str]:
-    """The Yangian component of the E_3 structure.
+    """The Yangian boundary/center component seen from an E_3 structure.
 
-    By Dunn additivity: E_3 = E_1 tensor E_2.
+    After topologisation, Dunn additivity gives E_3^{top} = E_1 tensor E_2.
     An E_3-algebra A is an E_1-algebra in E_2-algebras.
 
     Decomposition:
       - E_2 direction: the chiral algebra (surface operators, OPE)
       - E_1 direction: the spectral parameter z (Wilson line direction)
 
-    The Yangian Y(g) arises as the E_1 algebra structure in the
-    E_2-algebra category.  Concretely:
+    The Yangian Y(g) arises as E_1 boundary/center data in the
+    E_2-algebra category.  This is not a statement that a genuinely
+    E_1-chiral input has an automatic E_3 derived center.  Concretely:
       - Y(g) generators T_i(u) carry a spectral parameter u (E_1 direction)
       - The OPE of T_i(u) T_j(v) is governed by the E_2 structure
       - The RTT relation R(u-v) T_1(u) T_2(v) = T_2(v) T_1(u) R(u-v)
@@ -879,7 +894,7 @@ def e3_yangian_component() -> Dict[str, str]:
       - Mixed E_1 x E_2: spectral-parameter-dependent shadows
     """
     return {
-        'dunn': 'E_3 = E_1 tensor E_2',
+        'dunn': 'E_3^{top} = E_1 tensor E_2 after topologisation',
         'e1_direction': 'spectral parameter u (Yangian)',
         'e2_direction': 'chiral algebra (OPE, surface operators)',
         'compatibility': 'RTT relation (E_1 x E_2 interaction)',
@@ -1524,9 +1539,9 @@ def e3_bar_cobar_summary() -> Dict[str, Any]:
         'inversion': 'Omega(B(A)) ~ A on E_3-Koszul locus',
         'kappa_universal': 'kappa_{E_3} = kappa_{E_2} = kappa_{E_1}',
         'shadow_depth': 'same as E_2 for formal algebras',
-        'cs_connection': ('CS_{G,k} is an E_3 algebra; '
+        'cs_connection': ('CS_{G,k} is a locally constant E_3^{top} algebra; '
                          'E_2 = WZW, E_1 = U_q(g)'),
-        'dunn': 'E_3 = E_1 tensor E_2 (Yangian = E_1 in E_2)',
+        'dunn': 'E_3^{top} = E_1 tensor E_2 after topologisation',
         'stabilization': 'S_r^{E_3} = S_r^{E_infty} for r <= 3',
         'higher_deligne': 'Z^der(B(A)) carries E_4 (if B(A) is E_3)',
     }

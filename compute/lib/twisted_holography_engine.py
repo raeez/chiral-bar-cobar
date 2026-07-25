@@ -9,7 +9,7 @@ modular Koszul datum is
 
 where A^i is the bar-dual coalgebra, A! is the Verdier/Koszul companion
 only after the strictification hypotheses are met, and
-C = Z_ch^der(A) is the pinned chiral Hochschild bulk slot.
+C = Z_ch^der(A) is the pinned chiral Hochschild closed-sector slot.
 
 This engine does not construct the full HT theory. It records the
 seven-entry package at the scalar/typed-summary level:
@@ -23,9 +23,10 @@ Bar-cobar inversion recovers A, while C is pinned to Z_ch^der(A).
 PRINCIPAL OBJECTS:
 
 1. **GL(1) Chern-Simons**: boundary = Heisenberg H_k. The C-slot is the
-   derived-centre/Fock model, while the Verdier/Koszul companion is
-   Sym^ch(V*) with kappa = -k (same scalar characteristic as H_{-k}, not the
-   same algebra).
+   derived-centre/Fock model, while the Verdier/Koszul companion at
+   k != 0 is the curved second-kind Sym^ch(V*[1]) branch with scalar
+   kappa = -k (the same scalar characteristic as H_{-k}, not the same
+   algebra and not the uncurved polynomial centre).
 
 2. **GL(N) Chern-Simons at level k**: boundary = affine gl(N)_k; the
    large-N comparison slot is W_{1+infty} at c = N (Gaberdiel-Gopakumar).
@@ -65,7 +66,7 @@ CONVENTIONS (from CLAUDE.md anti-patterns):
   Firewall: B(A), A^i, A^!, Omega(B(A)), and Z_ch^der(A) are typed apart
   AP27: bar propagator d log E(z,w) weight 1 regardless of field weight
   AP29: delta_kappa != kappa_eff (two different objects)
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  AP33: H_k^! is the curved second-kind Sym branch, not H_{-k}
   Derived centre: bar-cobar inversion != open-to-closed; C = Z_ch^der(A)
   AP39: kappa != c/2 for general VOA; kappa = c/2 only for Virasoro
   AP44: OPE mode / n! = lambda-bracket coefficient (divided powers)
@@ -205,13 +206,13 @@ class HolographicDatum:
 
     The non-scalar slots are typed summaries: A^i is the bar-dual
     coalgebra H^*(B^ch(A)); A! is the Verdier/Koszul companion summary;
-    C is the derived-centre bulk slot Z_ch^der(A). This is a
+    C is the derived-centre closed-sector slot Z_ch^der(A). This is a
     compatibility record, not a proof that the strict HT holographic
     lift exists.
     """
     A: TwistedHolographicAlgebra          # boundary algebra
     A_dual: TwistedHolographicAlgebra     # legacy alias for the A! summary
-    bulk_description: str                  # legacy alias for C = Z_ch^der(A)
+    closed_sector_description: str         # C = Z_ch^der(A) typed summary
     collision_residue_type: str            # "Casimir/z", "scalar/z", etc.
     theta_kappa: Fraction                  # scalar part of Theta_A
     kappa_sum: Fraction                    # kappa(A) + kappa(A!) summary
@@ -232,7 +233,7 @@ class HolographicDatum:
     @property
     def C(self) -> str:
         """The C slot: Z_ch^der(A), not the bar coalgebra or A^!."""
-        return self.bulk_description
+        return self.closed_sector_description
 
     @property
     def r_z(self) -> str:
@@ -267,7 +268,7 @@ class HolographicDatum:
             self.A,
             A_dual=self.A_dual,
             bar_dual_coalgebra=self.bar_dual_coalgebra,
-            derived_center=self.bulk_description,
+            derived_center=self.closed_sector_description,
         )
 
 
@@ -593,15 +594,16 @@ def koszul_dual(A: TwistedHolographicAlgebra) -> TwistedHolographicAlgebra:
     rectification hypotheses in the manuscript.
 
     For affine sl(N)_k: companion at k' = -k - 2N via Feigin-Frenkel.
-    For Heisenberg H_k: companion = Sym^ch(V*) with kappa = -k.
-        AP33: H_k^! != H_{-k} as algebras; but kappa(H_k^!) = -k = kappa(H_{-k}).
+    For Heisenberg H_k: companion is the curved second-kind Sym branch
+    with scalar kappa = -k.  AP33: H_k^! is not H_{-k}; only the
+    scalar kappa agrees with kappa(H_{-k}).
     For Virasoro Vir_c: companion = Vir_{26-c}. kappa = (26-c)/2.
     For W^k(sl_N): companion at k' = -k - 2N.
     For ABJM/CY5: only the opposite-kappa scalar companion is represented.
     """
     if A.family == "heisenberg":
         return TwistedHolographicAlgebra(
-            name=f"({A.name})! = Sym^ch(V*)",
+            name=f"({A.name})! = curved Sym^ch(V*[1])",
             family="heisenberg_dual",
             rank=A.rank,
             level=-A.level,
@@ -705,7 +707,7 @@ def bar_dual_coalgebra_summary(A: TwistedHolographicAlgebra) -> str:
 
     This is the cohomology coalgebra of the chiral bar complex. It is
     not the bar complex itself, not the Verdier/Koszul companion A^!,
-    not Omega(B(A)), and not the Hochschild bulk slot C.
+    not Omega(B(A)), and not the Hochschild closed-sector slot C.
     """
     return (
         f"A^i = H^*(B^ch({A.name})) bar-dual coalgebra; "
@@ -732,14 +734,14 @@ def holographic_object_firewall(
     The firewall encodes the manuscript distinction:
     A^i is H^*(B^ch(A)); A^! is a Verdier/Koszul companion after the
     rectification hypotheses; Omega(B(A)) recovers A by bar-cobar
-    inversion; Z_ch^der(A) is the pinned derived-centre bulk slot.
+    inversion; Z_ch^der(A) is the pinned derived-centre closed-sector slot.
     """
     if A_dual is None:
         A_dual = koszul_dual(A)
     if bar_dual_coalgebra is None:
         bar_dual_coalgebra = bar_dual_coalgebra_summary(A)
     if derived_center is None:
-        derived_center = derived_center_summary(A, "derived-centre bulk slot")
+        derived_center = derived_center_summary(A, "derived-centre closed-sector slot")
 
     return {
         "A": f"{A.name}: boundary chiral algebra",
@@ -796,7 +798,7 @@ def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
 
     # C-slot presentation. These strings are derived-centre summaries, not
     # identifications with the bar complex, the line model, or A^!.
-    bulk_descriptions = {
+    closed_sector_descriptions = {
         "heisenberg": "Fock/Hochschild model C[d phi, d^2 phi, ...]",
         "affine": f"Higher-spin/W_{{1+inf}} comparison model at c={A.rank}",
         "virasoro": "Liouville comparison model",
@@ -804,9 +806,9 @@ def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
         "abjm": f"ABJM SUGRA comparison model AdS_4 x S^7/Z_{A.level}",
         "cy5": "Twisted M-theory comparison model on CY5",
     }
-    bulk = derived_center_summary(
+    closed_sector = derived_center_summary(
         A,
-        bulk_descriptions.get(A.family, "unknown comparison model"),
+        closed_sector_descriptions.get(A.family, "unknown comparison model"),
     )
 
     kappa_sum = A.kappa + A_dual.kappa
@@ -820,7 +822,7 @@ def extract_holographic_datum(A: TwistedHolographicAlgebra) -> HolographicDatum:
     return HolographicDatum(
         A=A,
         A_dual=A_dual,
-        bulk_description=bulk,
+        closed_sector_description=closed_sector,
         collision_residue_type=residue_type,
         theta_kappa=A.kappa,
         kappa_sum=kappa_sum,
@@ -840,9 +842,9 @@ def gl1_holographic_datum(k: Fraction = Fraction(1)) -> HolographicDatum:
     """GL(1) CS at level k: the finite Heisenberg scalar package.
 
     Boundary: Heisenberg H_k (free boson at level k)
-    Bulk/Hochschild slot: Fock model C[d phi, d^2 phi, ...]
-    Verdier/Koszul companion: Sym^ch(V*) with kappa = -k
-        (AP33: NOT H_{-k} as algebra)
+    Closed-sector/Hochschild slot: Fock model C[d phi, d^2 phi, ...]
+    Verdier/Koszul companion: curved Sym^ch(V*[1]) branch with
+        scalar kappa = -k (AP33: not H_{-k} as algebra)
 
     The boundary-to-bulk map comes from the annulus trace Tr_A ~ HH_*(A).
     Complementarity: kappa(H_k) + kappa(H_k^!) = k + (-k) = 0.
@@ -881,7 +883,8 @@ def gl1_complementarity(k: Fraction = Fraction(1)) -> Dict[str, Fraction]:
     """Verify kappa(H_k) + kappa(H_k^!) = 0.
 
     kappa(H_k) = k.
-    kappa(H_k^!) = -k (by AP33, the companion Sym^ch(V*) has kappa = -k).
+    kappa(H_k^!) = -k (by AP33, the curved second-kind Sym branch has
+    scalar kappa = -k).
     Sum = 0.
 
     Multi-path verification:
@@ -1447,7 +1450,7 @@ def verify_koszul_pair(
         "F_g": F_values,
         "object_firewall": firewall,
         "dual_slot_scope": firewall["A^!"],
-        "bulk_slot_scope": firewall["Z_ch^der(A)"],
+        "closed_sector_slot_scope": firewall["Z_ch^der(A)"],
         "bar_cobar_scope": firewall["Omega(B(A))"],
         "completion_status": (
             "seven-entry scalar/typed-summary package recorded; strict HT lift "
@@ -1465,7 +1468,8 @@ def verify_koszul_pair(
 def collision_residue(A: TwistedHolographicAlgebra) -> Dict[str, object]:
     """r(z) = Res^{coll}_{0,2}(Theta_A): the binary genus-0 shadow.
 
-    For affine: r(z) = Omega/z where Omega is the Casimir (AP19: pole at z^{-1}).
+    For affine: r_k(z) = k*Omega/z where Omega is the Casimir
+    (AP19: pole at z^{-1}; unit CYBE normalization sets k=1).
     For Heisenberg: r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian).
     For Virasoro: r(z) = (c/2)/z^3 + 2T/z (higher poles from L_{-2} and L_0).
     For W_N: r(z) has poles up to z^{-(2N-1)}.

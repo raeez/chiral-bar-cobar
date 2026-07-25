@@ -1419,8 +1419,9 @@ def koszul_dual_theta_lift(
     Complementarity (Theorem C) constrains the relationship between
     the theta lifts of A and A!.
 
-    For Heisenberg: H_k^! has kappa = -k (AP33: H_k^! != H_{-k} as algebras,
-    but kappa(H_k^!) = -k = kappa(H_{-k})).
+    For Heisenberg: H_k^! has scalar kappa = -k.  AP33: at k != 0,
+    the object is the curved second-kind Sym^ch(V*[1]) branch, not
+    H_{-k}; only scalar kappa agrees with kappa(H_{-k}).
     For Virasoro: Vir_c^! = Vir_{26-c}, so kappa! = (26-c)/2 (AP24: kappa+kappa'=13 != 0).
     For affine sl_2: kappa! = -kappa via Feigin-Frenkel involution.
     """

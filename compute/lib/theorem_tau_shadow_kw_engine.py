@@ -62,7 +62,7 @@ TYPED_OBJECT_ROLES: Mapping[str, str] = {
     "A^i": "bar cohomology coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch",
     "Omega(B(A))": "bar-cobar inversion recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild closed-sector",
 }
 
 LOCAL_SOURCE_ANCHORS: Mapping[str, str] = {

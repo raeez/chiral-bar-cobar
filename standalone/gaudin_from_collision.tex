@@ -149,17 +149,17 @@ The collision residue lives on the ordered bar complex
 $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$ with deconcatenation
 coproduct; it is an element of the $E_1$ convolution algebra
 $\mathfrak{g}^{E_1}_\cA$ that retains the full spectral-parameter
-dependence. The Gaudin Hamiltonians are constructed from this ordered
-datum; the modular characteristic $\kappa$ is the
-$\Sigma_2$-coinvariant scalar shadow, given by $\mathrm{av}(r(z))$ in
-abelian and scalar families and by
-$\mathrm{av}(r(z))+\dim(\fg)/2$ for non-abelian affine
-Kac--Moody.
+dependence. The Gaudin Hamiltonians are constructed after a represented
+operator comparison. The homotopy coinvariant
+$q_2(K_\cA^{\mathrm{coll}})$ remains operator-valued; its normalized
+trace is $\kappa$ in abelian and scalar families and
+$\kappa_{\mathrm{dp}}$ on the non-abelian affine row, where
+$\dim(\fg)/2$ completes $\kappa$.
 
 \begin{proposition}[Pole structure]\label{prop:pole-structure}
-The collision residue $r(z)$ has poles of order at most
+The collision kernel $K_\cA^{\mathrm{coll}}(z)$ has poles of order at most
 $k_{\max} = p_{\max} - 1$, where $p_{\max}$ is the maximal OPE pole
-order among generating fields. The leading coefficient $r_{k_{\max}}$
+order among generating fields. The leading coefficient $K_{k_{\max}}$
 is the image of the highest-pole OPE coefficient under the bar-to-dual
 projection.
 \end{proposition}
@@ -189,15 +189,16 @@ of this simple pole with the Feigin--Frenkel--Reshetikhin
 r-matrix is the genuine content of this section; we isolate it as
 Theorem~\ref{thm:gaudin-r-matrix-identification} below.
 
-\begin{theorem}[KZ-normalized collision residue and FFR r-matrix]
+\begin{theorem}[KZ-normalized collision kernel and FFR $r$-matrix]
 \label{thm:gaudin-r-matrix-identification}
 Let $\widehat{\fg}_k$ be the affine Kac--Moody
 algebra at non-critical level $k \neq -h^\vee$, with
 $\fg$ simple finite-dimensional and $h^\vee$ the dual Coxeter number.
-The trace-form collision residue and the KZ-normalized Gaudin kernel
+Assume the KZ representation and $H_{\mathrm{CYBE}}^{\mathrm{rep}}$.
+The trace-form collision kernel and its KZ-normalized represented image
 are
 \[
-r^{\mathrm{KM}}_{\mathrm{tr}}(z)=k\,\Omega_{\mathrm{tr}}/z,
+K^{\mathrm{coll}}_{k,\fg}(z)=k\,\Omega_{\mathrm{tr}}/z,
 \qquad
 r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z),
 \quad
@@ -316,16 +317,18 @@ $i, j$.
 \begin{proof}
 The GZ Hamiltonians are defined as the residues of the flat connection
 \begin{equation}\label{eq:gz-connection}
- \nabla^{\mathrm{GZ}} = d - \sum_{i < j} r(z_i - z_j) \,
+ \nabla^{\mathrm{GZ}} = d - \sum_{i < j}
+ \rho_{\mathrm{KZ}}(K_\cA^{\mathrm{coll}}(z_i-z_j)) \,
  dz_{ij}
 \end{equation}
-on $\mathcal{M}_{0,n}$, where $r(z)$ is the collision residue of
-$\Theta_\cA$. Flatness of $\nabla^{\mathrm{GZ}}$ is equivalent to
-the Maurer--Cartan equation: $d\Theta + \frac{1}{2}[\Theta, \Theta]
-= 0$ at genus zero projects to $[H_i, H_j] = 0$.
+on $\mathcal{M}_{0,n}$.  Under the stated representation package,
+the Maurer--Cartan relation and the Arnold relation give flatness of
+$\nabla^{\mathrm{GZ}}$, hence $[H_i,H_j]=0$.
 
 For $\widehat{\fg}_k$, substituting
-$r(z) = \Omega/((k+h^\vee)z)$ (Theorem~\ref{thm:gaudin-r-matrix-identification})
+$\rho_{\mathrm{KZ}}(K_{k,\fg}^{\mathrm{coll}}(z))
+=\Omega/((k+h^\vee)z)$
+(Theorem~\ref{thm:gaudin-r-matrix-identification})
 into \eqref{eq:gz-connection} gives
 \[
  \nabla^{\mathrm{GZ}}
@@ -714,15 +717,15 @@ root terms are normalized by the same theta-function convention, not
 by a separate numerical check.
 \end{remark}
 
-\begin{remark}[Szeg\H{o} three-term as universal modular
+\begin{remark}[Normalised Szeg\H{o}/Fay identity as universal modular
 identity]\label{rem:szego-fay}
 The Fay trisecant identity, originally for $g \geq 2$ theta
-functions, specializes at $g = 0$ and $g = 1$ to the Szeg\H{o}
-three-term identity \cite[Cor.~2.5]{Fay1973ThetaFunctions}, which
-holds universally at all $g \geq 0$. The three-term identity is the
-modular
-compatibility that replaces the pentagon in the elliptic and higher
-genus monodromy computations; at $g = 1$ it controls the
+functions, specializes at $g = 0$ and $g = 1$ to the normalised
+Szeg\H{o}/prime-form identity \cite[Cor.~2.5]{Fay1973ThetaFunctions},
+which holds universally at all $g \geq 0$ after the theta-prime and
+prime-form normalisations are included. This normalised identity is
+the modular compatibility that replaces the pentagon in the elliptic
+and higher genus monodromy computations; at $g = 1$ it controls the
 Felder dynamical associator, at $g = 2$ it underlies the
 doubly-dynamical DDYBE. The Szeg\H{o}/Fay identity is \emph{distinct}
 from the theta-nulls quartic identity on the theta-divisor (which is

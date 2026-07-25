@@ -19,6 +19,7 @@ Multi-path verification: every claim checked by 3+ independent paths.
 
 import pytest
 from fractions import Fraction
+from pathlib import Path
 
 from compute.lib.theorem_linshaw_rigidity_engine import (
     # Lie algebra data
@@ -47,6 +48,10 @@ from compute.lib.theorem_linshaw_rigidity_engine import (
     # Conjecture and K3
     linshaw_qi_conjecture_status, koszulness_vs_rigidity_analysis,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+ENGINE = ROOT / "compute/lib/theorem_linshaw_rigidity_engine.py"
 
 
 # =========================================================================
@@ -119,18 +124,26 @@ class TestChirHochDimensions:
                 assert lk.is_deformation_rigid is True
 
     def test_simple_sl2_admissible_chirhoch(self):
-        """L_{-4/3}(sl_2): ChirHoch = (C, 0, 0). RIGID (Linshaw-Qi Section 5).
+        """L_{-4/3}(sl_2): Linshaw-Qi rigidity, conditional ChirHoch row.
 
         Path 1: Linshaw-Qi Section 5.
         Path 2: Singular vector at weight 3 kills deformation.
-        Path 3: Monograph: chirally Koszul (rem:admissible-koszul-status).
+        Path 3: chiral-Hochschild row requires the quotient-bar package.
         """
         lk = chirhoch_simple_sl2_admissible_minus_4_3()
         assert lk.dim_H0 == 1
         assert lk.dim_H1 == 0
-        assert lk.dim_H2 == 0, "Rigid at admissible -4/3"
-        assert lk.is_koszul is True
-        assert lk.is_rigid is True
+        assert lk.dim_H2 == 0, "conditional expected chiral-Hochschild H^2"
+        assert lk.huang_rigidity is True
+        assert lk.is_koszul is None
+        assert lk.is_rigid is None
+        assert lk.is_deformation_rigid is None
+        assert lk.koszul_status == "CONDITIONAL_QUOTIENT_BAR"
+        assert lk.chirhoch_status == "CONDITIONAL_QUOTIENT_BAR"
+        assert "quotient-bar spectral sequence" in lk.missing_hypotheses
+        assert "comparison from Huang H^2_{1/2} to chiral Hochschild H^2" in (
+            lk.missing_hypotheses
+        )
 
     def test_virasoro_chirhoch(self):
         """Virasoro: ChirHoch = (C, 0, C). Koszul but NOT rigid.
@@ -154,20 +167,23 @@ class TestChirHochDimensions:
 
         This is a CONSEQUENCE of Koszulness, not of rigidity.
         """
-        all_families = [
+        proved_families = [
             chirhoch_heisenberg(),
             chirhoch_fermion(),
             chirhoch_betagamma(),
             chirhoch_universal_affine(SL2),
             chirhoch_simple_affine_integral(SL2, 1),
-            chirhoch_simple_sl2_admissible_minus_4_3(),
             chirhoch_virasoro(),
         ]
-        for family in all_families:
+        for family in proved_families:
             assert family.is_koszul, f"{family.name} should be Koszul"
             # Theorem H => Poincare polynomial of degree <= 2
             total = family.dim_H0 + family.dim_H1 + family.dim_H2
             assert total >= 1, f"{family.name}: at least center is nonzero"
+
+        conditional = chirhoch_simple_sl2_admissible_minus_4_3()
+        assert conditional.is_koszul is None
+        assert conditional.chirhoch_status == "CONDITIONAL_QUOTIENT_BAR"
 
 
 # =========================================================================
@@ -369,6 +385,15 @@ class TestAdmissibleLevelAnalysis:
             assert analysis['simple_rigid'] is True
             assert analysis['kappa'] > 0
 
+    def test_admissible_koszul_status_is_conditional(self):
+        """The -4/3 rigidity theorem does not prove chiral Koszulness."""
+        analysis = rigidity_mechanism_analysis(SL2, Fraction(-4, 3))
+        assert analysis["simple_rigid"] is True
+        assert analysis["rigidity_source"] == "Linshaw-Qi Section 5: singular vector at weight 3"
+        assert analysis["koszul_simple"] is None
+        assert analysis["koszul_simple_status"] == "CONDITIONAL_QUOTIENT_BAR"
+        assert "quotient-bar spectral sequence" in analysis["missing_koszul_hypotheses"]
+
 
 # =========================================================================
 # Cluster 5: Pole-order innerness principle (5 tests)
@@ -466,6 +491,7 @@ class TestUniversalVsSimple:
         # Admissible -4/3: proved
         status = linshaw_qi_conjecture_status(SL2, Fraction(-4, 3))
         assert status['rigidity_status'] == "PROVED"
+        assert status['chiral_koszul_status'] == "CONDITIONAL_QUOTIENT_BAR"
 
     def test_linshaw_qi_conjecture_status_open_cases(self):
         """Linshaw-Qi conjecture: open at other admissible levels."""
@@ -561,3 +587,25 @@ class TestCrossChecks:
             central_charge_km(SL2, Fraction(-2))
         with pytest.raises(ValueError, match="Critical level"):
             central_charge_km(SL3, Fraction(-3))
+
+    def test_source_scope_blocks_admissible_koszul_overclaim(self):
+        """The engine must not promote admissible simple quotients to proved."""
+        text = ENGINE.read_text()
+        forbidden = (
+            "The monograph proves L_k(sl_2) is chirally Koszul at ALL admissible",
+            "The monograph proves chirally Koszul",
+            "rem:admissible-koszul-status",
+        )
+        for fragment in forbidden:
+            assert fragment not in text
+
+        required = (
+            "quotient-bar spectral sequence",
+            "PBW/Shapovalov detection",
+            "finite-window exactness",
+            "strong convergence",
+            "Huang H^2_{1/2}",
+            "CONDITIONAL_QUOTIENT_BAR",
+        )
+        for fragment in required:
+            assert fragment in text

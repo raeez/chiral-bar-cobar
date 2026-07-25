@@ -1,1026 +1,910 @@
 % =====================================================================
-% W_3 holographic modular Koszul datum.
+% The principal W_3 datum: exact local algebra and reconstruction gates.
 % Exact-rational companion:
 % compute/lib/theorem_w3_holographic_datum_engine.py.
 % =====================================================================
 
-% Macro safety net for universal-conductor references,
-% provided locally so the chapter remains portable
-% under standalone extraction. Definitions match
-% chapters/theory/universal_conductor_K_platonic.tex.
 \providecommand{\BRST}{\mathrm{BRST}}
 \providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
 
-\chapter{The first rank-2 holographic datum: \texorpdfstring{$\mathcal H(\Walg_3)$}{H(W3)}}
+\chapter{The principal \texorpdfstring{$\mathcal W_3$}{W3} datum:
+exact algebra and reconstruction}
 \label{ch:w3-holographic-datum}
 
-Heisenberg is the rank-$1$ Gaussian archetype, affine
-$\widehat{\mathfrak{sl}}_2$ is the rank-$1$ Lie/tree archetype,
-and Virasoro is the rank-$1$ mixed class~M prototype. Each is
-single-generator or scalar. The first standard-landscape algebra with
-genuine multi-channel structure is the principal algebra
-$\Walg_3^k$. Its holographic modular Koszul datum
-\[
-\mathcal H(\Walg_3)=
-(\cA,\cA^i,\cA^!,\cC,r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})
-\]
-has a computed algebraic surface on the principal Drinfeld--Sokolov
-locus. The bar-dual coalgebra $\cA^i$, the Verdier/Koszul branch
-$\cA^!$, the chiral derived-centre bulk
-$\cC=Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, and the line/evaluation
-comparison category remain separate throughout. The exact-rational module
-\texttt{compute/lib/theorem\_w3\_holographic\_datum\_engine.py}
-implements the scalar projection used below; it is not a proof of an
-equivalence among these seven entries.
+The principal algebra \(\mathcal W_3^k\) is the first chart in the
+standard landscape with two strong generators of different weights.
+Its local vertex-algebra structure is explicit.  The passage from this
+local structure to a seven-entry holographic modular Koszul datum is a
+sequence of reconstruction problems.  Keeping these two layers apart
+reveals the precise mathematical content of the example.
 
-\medskip
-\noindent\emph{Universal normalisations.}
-The invariants $\kappa^{W_3}(\Walg_3) = 5c/6$ and
-$K_3 = c + c' = 100$ are evaluations of two universal constructions.
-The universal conductor functor
-$K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
-yields $\kappa^{W_3}(\Walg_3) = c\,(H_3 - 1) = 5c/6$ via the
-principal-DS BRST resolution, with $H_3 = 1 + 1/2 + 1/3 = 11/6$
-(Corollary~\ref{cor:uc-K-WN} at $N = 3$,
-Chapter~\ref{chap:universal-conductor}); the quadrichotomy classification
-places $\Walg_3$ in class~M with shadow depth
-$r_{\max}^{W_3} = \infty$, on the second channel (the $W$-line) of
-which the closed-form coefficient sequence
-$a_n = 2 \cdot 3^{n-2}\,(2n-4)!/[(n-2)!\,n!]$ produces the
-doubled exponential growth rate
-$C_{\Walg_3}^{W\text{-line}} = 12 = 2 \cdot 6$
-(Theorem~\ref{thm:w3-wline-closed-form},
-Theorem~\ref{thm:w3-wline-exponential-base},
-Chapter~\ref{chap:shadow-quadrichotomy-platonic}); these two
-universal results, plus the universal-class-M $T$-line value
-$C_{\mathcal{A}} = 6$
-(Theorem~\ref{thm:universal-class-M-C-is-6}), pin the conductor,
-modular-characteristic, and single-line shadow entries used below.
-The genus-$2$ cross-channel correction and the propagator variance
-also require the finite $\Walg_3$ OPE data and the mixed-channel graph
-sum. None of these scalar computations identifies the holographic
-lift, the line/evaluation comparison category, or the derived-centre
-bulk.
-\medskip
+The exact layer consists of the Fateev--Lukyanov central charge, the
+Zamolodchikov OPE, the norm and zero mode of the Virasoro
+quasi-primary \(\Lambda\), and the level-one Shapovalov determinant.
+The reconstruction layer consists of a presentation coalgebra,
+completed chiral bar data, DS/bar transport, the derived centre,
+collision residues, modular traces, stable-graph sewing, scalar
+shadows, commuting Hamiltonians, and an open--closed comparison.
+Each reconstruction step below carries its own hypothesis package.
 
-\medskip\noindent\textbf{Rank-2 obstruction.}
-Four structural features make $\Walg_3$ the natural rank-2 base case:
-(i)~$\Walg_3$ is rank~$2$ with two generators of distinct conformal
-weight ($T$ at weight~$2$, $W$ at weight~$3$), so the multi-weight
-phenomena of Theorem~\ref{thm:multi-weight-genus-expansion} appear
-nontrivially;
-(ii)~the $W$--$W$ OPE is genuinely non-quadratic, involving the
-composite $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ with a
-$c$-dependent coefficient $\alpha(c) = 16/(22+5c)$;
-(iii)~the Verdier/Koszul branch is the nontrivial companion
-$c \mapsto 100 - c$, producing the nonzero complementarity constant
-$250/3$ rather than the affine-style vanishing sum;
-(iv)~the genus-2 cross-channel correction
-$\delta F_2(\Walg_3) = (c+204)/(16c)$ is the smallest manuscript
-example of a nonvanishing multi-weight cross-channel free energy, and
-the finite genus-$3$ window gives
-$\delta F_3^{\mathrm{cross}}(\Walg_3)
-= (5c^3+3792c^2+1{,}149{,}120c+217{,}071{,}360)/(138{,}240c^2)$,
-which witnesses the negative resolution of
-\hyperref[op:multi-generator-universality]{Open Problem
-on multi-generator universality}.
-
-\medskip\noindent\textbf{Conventions.}
-Throughout this chapter, $c$ denotes the central charge of $\Walg_3$
-at generic level $k \neq -3$. We use OPE-mode notation $a_{(n)}b$
-for singular products, the $\lambda$-bracket conversion
-$\{a_\lambda b\} = \sum_n \lambda^{(n)} a_{(n)} b$ with divided
-powers $\lambda^{(n)} = \lambda^n/n!$,
-and the cohomological grading
-convention $|d| = +1$. The bar propagator is the weight-1 form
-$d\log E(z,w)$ in \emph{both} variables, regardless of the conformal
-weights of the fields it sews
-(Remark~\ref{rem:propagator-weight-universality}).
-The modular characteristic $\kappa$ is
-the genus-1 obstruction coefficient
-\(\mathrm{obs}_1(\Walg_3)=\kappa(\Walg_3)\lambda_1\),
-distinct from both the central charge $c$
-and from $\kappa_{\mathrm{eff}}$. Every formula below containing
-$(5c+22)^{-1}$ is taken on the non-singular Zamolodchikov surface
-$c(5c+22)\neq0$.
-
-\section{The seven entries of \texorpdfstring{$\mathcal H(\Walg_3)$}{H(W3)}}
+\section{The hypothesis ledger}
 \label{sec:w3hol-seven-entries}
 
-The holographic modular Koszul datum
+Fix a smooth projective curve \(X\), a marked divisor \(D\), a
+tangential structure \(\tau\), and a principal level
+\(k\in\mathbb C\) with \(k+3\in\mathbb C^\times\).  We use the
+following packages.
+\begin{description}
+\item[\(H_{W_3}^{\mathrm{pres}}\).]
+A topological presentation
+\(\mathcal W_3^k\simeq T_X(V)/(R)\), including the nonlinear
+\(\Lambda\)-relation, together with the presentation coalgebra
 \[
-\mathcal H(\cA)=
-(\cA,\cA^i,\cA^!,\cC,r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})
+(\mathcal W_3^k)^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R)
+\quad\text{and}\quad
+q_{\mathcal W_3}\colon
+(\mathcal W_3^k)^{\mathrm i}\longrightarrow
+\bar B_X^{\mathrm{ch}}(\mathcal W_3^k).
 \]
-has a proved algebraic core and a conditional holographic lift
-(Definition~\ref{def:holographic-modular-koszul-datum}). For
-$\cA=\Walg_3^k$ the seven entries are the following.
+\item[\(H_{W_3}^{\mathrm{bar}}(X,D,\tau)\).]
+An ordered configuration-space bar complex with fixed suspension
+signs, conilpotent or complete topology, and continuous twisting
+coderivation.
+\item[\(H_{W_3}^{\mathrm{DS/bar}}\).]
+PBW convergence, BRST concentration, a filtered comparison between
+DS reduction and the completed bar construction, and continuous
+Ran--Verdier duality.
+\item[\(H_{W_3}^{\mathrm{cen}}\).]
+A chain model for
+\(Z_{\mathrm{ch}}^{\mathrm{der}}(\mathcal W_3^k)\), together with the
+family support datum
+\(H_H(\mathcal W_3^k;S_{W_3})\).
+\item[\(H_{W_3}^{\mathrm{coll}}\).]
+A collision-residue map on the ordered bar complex which retains
+descendants and composite channels and fixes the local coordinate
+and \(d\log E\) convention.
+\item[\(H_{W_3}^{\mathrm{mod}}\).]
+A trace-compatible genus-one curvature construction defining the
+scalar \(\kappa_{\mathrm{ch}}(\mathcal W_3^k)\).
+\item[\(H_{W_3}^{\mathrm{res}}\) and
+\(H_{W_3}^{\mathrm{proj}}\).]
+Chain-compatible residue and scalar-projection maps from the full
+multi-channel Maurer--Cartan tensor.
+\item[\(H_{W_3}^{\mathrm{rescale}}\).]
+A family contraction \((\iota_k,p_k,h_k,\nu_k)\) on one completed
+bar--cobar complex and a scalar trace identifying \(\nu_k\) with the
+algebra-level Verdier sum \(K^\kappa(\mathcal W_3^k)\).
+\item[\(H_{W_3}^{\mathrm{sew}}\).]
+Clutching-compatible propagators, automorphism factors, and
+convergence for the stable-graph expansion.
+\item[\(H_{W_3}^{\mathrm{flat}}\).]
+A representation of the ordered Maurer--Cartan element on conformal
+blocks for which the induced connection is flat.
+\item[\(H_{W_3}^{\mathrm{line}}\) and
+\(H_{W_3}^{\mathrm{OC}}\).]
+A comparison with the chosen line-operator category and an
+open--closed map from the physical HT observable algebra to the
+chiral derived centre.
+\end{description}
+The total holographic package is
+\[
+H_{W_3}^{\mathrm{hol}}
+:=
+H_{W_3}^{\mathrm{pres}}+
+H_{W_3}^{\mathrm{bar}}+
+H_{W_3}^{\mathrm{DS/bar}}+
+H_{W_3}^{\mathrm{cen}}+
+H_{W_3}^{\mathrm{coll}}+
+H_{W_3}^{\mathrm{mod}}+
+H_{W_3}^{\mathrm{res}}+
+H_{W_3}^{\mathrm{proj}}+
+H_{W_3}^{\mathrm{rescale}}+
+H_{W_3}^{\mathrm{sew}}+
+H_{W_3}^{\mathrm{flat}}+
+H_{W_3}^{\mathrm{line}}+
+H_{W_3}^{\mathrm{OC}}.
+\]
 
-\subsection{The algebra \texorpdfstring{$\cA = \Walg_3$}{A = W3}}
+\subsection{The chart algebra \texorpdfstring{$\mathcal A=\mathcal W_3^k$}{A=W3}}
 \label{subsec:w3hol-A}
 
-The principal $\Walg$-algebra $\Walg_3^k =
-\Walg^k(\mathfrak{sl}_3, f_{\mathrm{prin}})$ is the Drinfeld--Sokolov
-reduction of $\widehat{\mathfrak{sl}}_3$ at the principal nilpotent.
-It is freely strongly generated by the stress-energy tensor $T$
-of conformal weight~$2$ and a primary field $W$ of conformal
-weight~$3$; the central charge as a function of the level is
+The principal DS algebra
+\[
+\mathcal A=\mathcal W^k(\mathfrak{sl}_3,f_{\mathrm{prin}})
+\]
+is strongly generated on the universal generic fibre by a Virasoro
+field \(T\) of weight \(2\) and a Virasoro-primary field \(W\) of
+weight \(3\).  Its central charge is
 \begin{equation}
 \label{eq:w3hol-central-charge}
-c(\Walg_3^k) = 2 - \frac{24(k+2)^2}{k+3}
+c(k)=2-\frac{24(k+2)^2}{k+3}.
 \end{equation}
-(Drinfeld--Sokolov formula; see Chapter~\ref{chap:w-algebra-koszul},
-Proposition~\ref{prop:w3-central-charge}).
-The $T$--$T$ OPE reproduces the Virasoro algebra, the $T$--$W$ OPE
-makes $W$ a weight-3 primary, and the $W$--$W$ OPE involves the
-nonlinear composite
-$\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ with $c$-dependent
-coefficient $\alpha(c) = 16/(22+5c)$
-(Theorem~\ref{thm:lambda-coefficients-derivation}).
+Put
+\[
+\Lambda={:}TT{:}-\frac{3}{10}\partial^2T,
+\qquad D(c):=5c+22.
+\]
+In the Zamolodchikov normalization, with \(D(c)\in\mathbb C^\times\),
+\begin{align*}
+T(z)T(w)&\sim
+\frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}
++\frac{\partial T(w)}{z-w},\\
+T(z)W(w)&\sim
+\frac{3W(w)}{(z-w)^2}
++\frac{\partial W(w)}{z-w},\\
+W(z)W(w)&\sim
+\frac{c/3}{(z-w)^6}
++\frac{2T(w)}{(z-w)^4}
++\frac{\partial T(w)}{(z-w)^3}\\
+&\quad+
+\frac{\frac{3}{10}\partial^2T(w)
++\frac{32}{D(c)}\Lambda(w)}{(z-w)^2}
++\frac{\frac{1}{15}\partial^3T(w)
++\frac{16}{D(c)}\partial\Lambda(w)}{z-w}.
+\end{align*}
+This is the Zamolodchikov algebra
+\cite{Zamolodchikov,Bouwknegt-Schoutens}; the factor \(32/16\)
+is the OPE/translation-covariance pair obtained by the double-contour
+conversion from singular products to mode commutators.
 
-\subsection{The bar-dual coalgebra \texorpdfstring{$\cA^i$}{A i}}
+\subsection{The presentation coalgebra}
 \label{subsec:w3hol-A-i}
 
-The intrinsic dual object produced by the chiral bar construction is
+Under \(H_{W_3}^{\mathrm{pres}}\), the second entry is
 \begin{equation}\label{eq:w3hol-ai}
-\cA^i := H^\ast\bigl(B^{\mathrm{ch}}(\Walg_3^k)\bigr).
+\mathcal A^{\mathrm i}
+=C_X(s^{-1}V,s^{-2}R)
+\xrightarrow{\ q_{\mathcal A}\ }
+\bar B_X^{\mathrm{ch}}(\mathcal A).
 \end{equation}
-It is a coalgebra. It is not the Verdier/Koszul algebra and not the
-line category. The bar-cobar counit
-$\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(\cA)\to\cA$ is inversion on the
-Koszul locus; it is not the construction of~$\cA^!$.
+The full bar complex retains its differential and completion.
+Koszulity is the assertion that \(H^\bullet(q_{\mathcal A})\) is an
+isomorphism on the chosen locus.  Bar--cobar reconstruction then
+recovers the chart through
+\(\Omega_X^{\mathrm{ch}}\bar B_X^{\mathrm{ch}}(\mathcal A)
+\simeq\mathcal A\).
+For the nonlinear \(W_3\) presentation, constructing
+\((V,R,q_{\mathcal A})\) with these properties is an open finite
+presentation problem.
 
-\subsection{The Verdier/Koszul branch \texorpdfstring{$\cA^!$}{A!}}
+\subsection{The Ran--Verdier and Koszul entries}
 \label{subsec:w3hol-A-dual}
 
-For $k'=-k-6$, the principal companion algebra $\Walg_3^{k'}$ has
-central charge $100-c$
-(Theorem~\ref{thm:central-charge-complementarity}). The proved
-Koszul statement is characteristic-level:
-$\kappa((\Walg_3^k)^!)=\kappa(\Walg_3^{k'})$
-(Theorem~\ref{thm:w3-koszul-dual}). The stronger identification
-$\cA^!\simeq \Walg_3^{k'}$ is the Verdier/Koszul rectification of
-$\cA^i$ and is conditional on DS/bar transport; on that conditional
-locus the OPE skeleton is the same as for~$\cA$ with $c$ replaced by
-$100-c$.
+The completed Ran--Verdier algebra is
+\[
+K_X(\mathcal A)
+:=\mathbb D_{\operatorname{Ran}}
+\bar B_X^{\mathrm{ch}}(\mathcal A).
+\]
+Under \(H_{W_3}^{\mathrm{DS/bar}}\), a chosen rectification map
+\[
+\nu_{\mathcal A}\colon
+K_X(\mathcal A)\longrightarrow\mathcal A^!
+\]
+may identify the strict Koszul entry with the principal algebra at
+the reflected parameter \(k^\vee=-k-6\).  The exact arithmetic of
+this reflected parameter is proved in
+Theorem~\ref{thm:w3hol-conductor}; the algebra equivalence has status
+\ClaimStatusConditional under \(H_{W_3}^{\mathrm{DS/bar}}\).
 
-\subsection{The derived centre and the line/evaluation model}
+\subsection{The derived centre and the line comparison}
 \label{subsec:w3hol-C}
 
-The closed-sector slot is pinned to the chiral derived centre
+The fourth algebraic entry is prescribed by the chiral derived centre
 \begin{equation}\label{eq:w3hol-derived-centre}
-\cC :=
-Z^{\mathrm{der}}_{\mathrm{ch}}(\Walg_3^k).
+\mathcal C
+:=Z_{\mathrm{ch}}^{\mathrm{der}}(\mathcal W_3^k)
+\simeq
+C_{\mathrm{ch}}^\bullet(\mathcal W_3^k,\mathcal W_3^k).
 \end{equation}
-It is represented by the chiral Hochschild cochain complex
-$C^\bullet_{\mathrm{ch}}(\Walg_3^k,\Walg_3^k)$. This object is not
-the bar-dual coalgebra, not the Verdier/Koszul branch, and not the
-line category. Theorem~H is used here only in its generic Koszul-locus
-form: it constrains this chiral Hochschild object to the
-cohomological degrees \(\{0,1,2\}\). It is not topological
-Hochschild theory, categorical Hochschild theory, or a physical
-three-dimensional bulk without specified open/closed comparison maps.
-On the evaluation-generated core of the line side the
-categorical Chari--Ginzburg construction gives
+The package \(H_{W_3}^{\mathrm{cen}}\) constructs a family chain model
+and proves
+\[
+\operatorname{Supp}
+\ChirHoch^\bullet(\mathcal W_3^k)
+\subseteq S_{W_3}.
+\]
+A perfect degree-$d$ pairing is a separate input for any reflected
+degree statement on the Koszul companion.
+The evaluation-generated line category has the conditional comparison
 \begin{equation}\label{eq:w3hol-line-evaluation-category}
-\cC_{\mathrm{line}}^{\mathrm{ev}}
-\simeq \mathrm{Rep}_q(\mathfrak{sl}_3),
-\qquad q=\exp(\pi i/(k+3)),
+\mathcal C_{\mathrm{line}}^{\mathrm{ev}}
+\longrightarrow
+\operatorname{Rep}_q(\mathfrak{sl}_3),
+\qquad q=\exp\!\left(\frac{\pi i}{k+3}\right),
 \end{equation}
-(Theorem~\ref{thm:categorical-cg-all-types},
-Corollary~\ref{cor:mc3-all-types}). Thick generation by
-evaluation modules is unconditional for all simple types
-(Corollary~\ref{cor:mc3-all-types}); the residual problem of
-extending beyond evaluation modules remains separate.
-No equivalence
-$\cC_{\mathrm{line}}^{\mathrm{ev}}\simeq \cC$ is asserted here.
-The only use below is the boundary-linear comparison surface on
-which the evaluation core supplies a model for line operators, while
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\Walg_3^k)$ remains the level-$3$
-closed-sector entry.
-The physical open/closed comparison, when present, is a pair of specified
-maps
+under \(H_{W_3}^{\mathrm{line}}\).  The physical comparison consists
+of typed maps
 \begin{equation}\label{eq:w3hol-typed-comparison-maps}
 A_{\mathrm{bulk}}^{\mathrm{HT}}
-\xrightarrow{\;\beta_{\mathrm{der}}\;}
-Z^{\mathrm{der}}_{\mathrm{ch}}(\Walg_3^k),
+\xrightarrow{\ \beta_{\mathrm{der}}\ }
+Z_{\mathrm{ch}}^{\mathrm{der}}(\mathcal W_3^k),
 \qquad
-\cC_{\mathrm{line}}^{\mathrm{ev}}
-\xrightarrow{\;\iota_{\mathrm{ev}}\;}
-\cC_{\mathrm{line}},
+\mathcal C_{\mathrm{line}}^{\mathrm{ev}}
+\xrightarrow{\ \iota_{\mathrm{ev}}\ }
+\mathcal C_{\mathrm{line}},
 \end{equation}
-plus compatibility of the induced bulk-to-boundary action with the
-chiral Hochschild brace algebra. The map
-\(\iota_{\mathrm{ev}}\) is the evaluation-core inclusion supplied by
-Chari--Ginzburg. The map \(\beta_{\mathrm{der}}\) is a hypothesis of
-the holographic lift; it is not produced by bar--cobar inversion and
-not by the scalar identities in this chapter.
+with Swiss-cheese compatibility.  These maps constitute
+\(H_{W_3}^{\mathrm{OC}}+H_{W_3}^{\mathrm{line}}\).
 
-\subsection{The collision residue \texorpdfstring{$r(z)$}{r(z)}}
+\subsection{The collision entry}
 \label{subsec:w3hol-r}
 
-The spectral $r$-matrix is the binary genus-0 collision residue of
-the bar-intrinsic MC element, written in Verdier/Koszul coordinates:
+Under \(H_{W_3}^{\mathrm{bar}}+H_{W_3}^{\mathrm{coll}}\), the binary
+ordered-bar entry is
 \begin{equation}\label{eq:w3hol-r-collision}
-r_{\Walg_3}(z) :=
-\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\Walg_3})
-\in \cA^! \widehat{\otimes} \cA^!(\!(z^{-1})\!).
+K_{\mathcal W_3}^{\mathrm{coll}}(z)
+:=
+\operatorname{Res}_{0,2}^{\mathrm{coll}}
+\bigl(\Theta_{\mathcal W_3}^{E_1}\bigr)
+\in
+\operatorname{End}_{\mathcal W_3}(2)\otimes\mathcal O(*\Delta).
 \end{equation}
-The pole structure is governed by the OPE poles minus one
-because the bar propagator $d\log(z-w)$ absorbs one power of
-$(z-w)$.
-The four channel pieces are catalogued in
-\S\ref{sec:w3hol-r-matrix-channels}.
+A represented classical \(r\)-matrix is the image of this kernel
+under \(H_{\mathrm{CYBE}}^{\mathrm{rep}}\).  The local OPE determines
+the candidate channel coefficients; the residue theorem identifies
+them with the ordered-bar kernel.
 
-\subsection{The MC element \texorpdfstring{$\Theta_{\cA}$}{Theta A}}
+\subsection{The Maurer--Cartan entry}
 \label{subsec:w3hol-Theta}
 
-By the bar-intrinsic construction
-(Theorem~\ref{thm:mc2-bar-intrinsic}), the element
-\begin{equation}
-\Theta_{\Walg_3} := D_{\Walg_3} - d_0
-\end{equation}
-is automatically Maurer--Cartan in the convolution dg Lie algebra
-$\Convstr(C^!_{\mathrm{ch}}, P^{\mathrm{ch}})$ because
-$D_{\Walg_3}^2 = 0$ at the convolution level
-(Theorem~\ref{thm:convolution-d-squared-zero}). No restriction to
-simple Lie symmetry is needed. The genus expansion of $\Theta_{\cA}$
-is computed in \S\ref{sec:w3hol-kappa} and
-\S\ref{sec:w3hol-genus-2}.
+The completed ordered convolution algebra is
+\[
+\mathfrak g_{\mathcal W_3}^{E_1}
+:=
+\operatorname{Conv}\!\left(
+B^{\mathrm{ord}}(\mathcal W_3^k),\mathcal W_3^k
+\right).
+\]
+Under \(H_{W_3}^{\mathrm{bar}}\), the twisting coderivation defines
+\(\Theta_{\mathcal W_3}\in\mathfrak g_{\mathcal W_3}^{E_1}[1]\)
+satisfying
+\[
+D\Theta_{\mathcal W_3}
++\frac12[\Theta_{\mathcal W_3},\Theta_{\mathcal W_3}]=0.
+\]
+The presentation comparison and the full multi-channel completion are
+the concrete \(W_3\) obligations in this entry.
 
-\subsection{The shadow connection \texorpdfstring{$\nabla^{\mathrm{hol}}$}{nabla hol}}
+\subsection{The holomorphic connection entry}
 \label{subsec:w3hol-nabla}
 
-The flat shadow connection on the genus-0 $n$-point moduli is
+Under
+\(H_{W_3}^{\mathrm{bar}}+H_{W_3}^{\mathrm{res}}
++H_{W_3}^{\mathrm{flat}}\), the represented shadow map defines
 \begin{equation}\label{eq:w3hol-shadow-connection}
-\nabla^{\mathrm{hol}}_{0,n} = d - \mathrm{Sh}_{0,n}(\Theta_{\Walg_3}),
+\nabla_{0,n}^{\mathrm{hol}}
+:=
+d-\operatorname{Sh}_{0,n}(\Theta_{\mathcal W_3}).
 \end{equation}
-the universal flat connection whose flat sections are the genus-0
-correlators (Theorem~\ref{thm:shadow-connection}). Flatness is
-the genus-0 projection of the MC equation
-$D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$. The corresponding
-single-line shadow metrics on the $T$-line and the $W$-line are
-computed in \S\ref{sec:w3hol-shadow-connection}.
+The Maurer--Cartan equation supplies the curvature identity after the
+representation and convergence hypotheses have been verified.
 
-\section{The modular characteristic \texorpdfstring{$\kappa(\Walg_3) = 5c/6$}{kappa(W3) = 5c/6}}
-\label{sec:w3hol-kappa}
-
-The modular characteristic of $\Walg_3$ is the genus-1 obstruction
-coefficient
-\(\mathrm{obs}_1(\Walg_3)=\kappa(\Walg_3)\lambda_1\).
-
-\begin{theorem}[Modular characteristic of \texorpdfstring{$\Walg_3$}{W3}; \ClaimStatusConditional]
-\label{thm:w3hol-kappa-formula}
-For generic $c \neq 0$,
-\begin{equation}\label{eq:w3hol-kappa-w3}
-\kappa(\Walg_3) \;=\; \frac{5c}{6}.
-\end{equation}
-This is the $N=3$ specialization of Theorem~\ref{thm:wn-obstruction}.
-Equivalently $\kappa(\Walg_3) = c \cdot (H_3 - 1)$ where
-$H_3 = 1 + \tfrac{1}{2} + \tfrac{1}{3}$ is the third harmonic number.
-\end{theorem}
-
-\begin{remark}[Channel decomposition]
-\label{rem:w3hol-channel-decomp}
-The modular characteristic decomposes additively over the
-two generators:
-\begin{equation}\label{eq:w3hol-kappa-channel}
-\kappa(\Walg_3) \;=\; \kappa_T + \kappa_W,
-\qquad \kappa_T = \frac{c}{2}, \qquad \kappa_W = \frac{c}{3}.
-\end{equation}
-The $T$-channel coincides with the Virasoro modular characteristic
-because the Virasoro subalgebra of $\Walg_3$ is the full stress
-tensor; the $W$-channel contributes $c/3$ from its two-point
-normalization $\langle W(z)W(0)\rangle = (c/3)\,z^{-6}$
-(equation~\eqref{eq:wn-2pt}), reflecting the formula
-$\kappa_s = c/s$ for a weight-$s$ generator.
-\end{remark}
-
-\begin{remark}[Anomaly ratio \texorpdfstring{$\rho$}{rho}]
-\label{rem:w3hol-anomaly-ratio}
-The dimensionless anomaly ratio is
-\begin{equation}\label{eq:w3hol-rho}
-\rho(\Walg_3) \;=\; \frac{\kappa(\Walg_3)}{c} \;=\; H_3 - 1
-\;=\; \frac{1}{2} + \frac{1}{3} \;=\; \frac{5}{6}.
-\end{equation}
-This admits an independent derivation from the $\mathfrak{sl}_3$
-exponents $\{m_1, m_2\} = \{1, 2\}$:
-$\rho = \sum_i 1/(m_i + 1) = 1/2 + 1/3 = 5/6$
-(Corollary~\ref{cor:anomaly-ratio-ds}).
-\end{remark}
-
-\noindent\textbf{Independent normalisations.}
-The same value is forced by the harmonic sum
-$c(H_3-1)$, the channel sum $c/2+c/3$, the exponent formula
-$c\sum_i(m_i+1)^{-1}$ for the $\mathfrak{sl}_3$ exponents
-\(\{1,2\}\), the genus-$1$ \(d_2\)-coefficient in the bar spectral
-sequence, and the vacuum two-point trace
-$\sum_s \mathrm{tr}_{V_s}(L_0\,q^{L_0-c/24})|_{q\to1}$.
-These five normalisations determine a single scalar:
-\(\kappa(\Walg_3)=5c/6\).
-
-\section{Koszul duality and complementarity}
+\section{Reflected central arithmetic}
 \label{sec:w3hol-complementarity}
 
-\begin{theorem}[Koszul conductor and self-dual point; \ClaimStatusProvedHere]
+\begin{theorem}[Reflected principal central sum;
+\ClaimStatusProvedHere]
 \label{thm:w3hol-conductor}
-The Koszul conductor of $\Walg_3$ is
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{universal\ principal\ DS},1,
+H_{\mathrm{univ}}^{W_3})\).
+Let \(k^\vee=-k-6\).  Then
 \begin{equation}\label{eq:w3hol-conductor}
-K_3 \;=\; c + c' \;=\; 2(N-1)(2N^2 + 2N + 1)\big|_{N=3} \;=\; 100,
+c(k)+c(k^\vee)=100.
 \end{equation}
-equivalently $K_N = 4N^3 - 2N - 2$ at $N=3$. The self-dual
-central charge, fixed by $c \mapsto K_3 - c$, is
+The induced affine reflection on the central-charge coordinate is
+\(c\mapsto100-c\), with arithmetic midpoint
 \begin{equation}\label{eq:w3hol-self-dual-point}
-c^* \;=\; \frac{K_3}{2} \;=\; 50.
+c_{\mathrm{mid}}=50.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-Use the Fateev--Lukyanov Drinfeld--Sokolov central-charge formula in
-the canonical parameterisation
+Set \(t=k+3\).  Formula~\eqref{eq:w3hol-central-charge} becomes
 \[
-c(\Walg_N^k)
-=(N-1)-\frac{N(N^2-1)(k+N-1)^2}{k+N}
+c(t)=2-24\frac{(t-1)^2}{t}.
 \]
-\textup{(}Proposition~\ref{prop:fateev-lukyanov-canonical}\textup{)}.
-For \(N=3\) this is
+The reflected level has \(t^\vee=-t\), hence
 \[
-c(k)=2-\frac{24(k+2)^2}{k+3}.
-\]
-The Feigin--Frenkel companion is \(k'=-k-6\), hence
-\[
-c(k')=2-\frac{24(k'+2)^2}{k'+3}
-     =2+\frac{24(k+4)^2}{k+3}.
+c(-t)=2+24\frac{(t+1)^2}{t}.
 \]
 Therefore
 \[
-c(k)+c(k')
-=4+\frac{24((k+4)^2-(k+2)^2)}{k+3}
-=4+96=100.
+c(t)+c(-t)
+=4+24\frac{(t+1)^2-(t-1)^2}{t}
+=4+96
+=100.
 \]
-Equivalently, the universal conductor formula
-\(2(N-1)(2N^2+2N+1)=4N^3-2N-2\) gives \(K_3=100\).
-The self-dual point is the unique fixed point of
-\(c\mapsto K_3-c\), namely \(c^*=50\).
+The midpoint of the reflected \(c\)-coordinate is \(100/2=50\).
 \end{proof}
 
-\begin{theorem}[Complementarity sum; \ClaimStatusConditional]
-\label{thm:w3hol-kappa-sum}
-The modular characteristics of $\Walg_3$ and its Koszul dual sum to
-\begin{equation}\label{eq:w3hol-kappa-sum}
-\kappa(\Walg_3) + \kappa(\Walg_3^!) \;=\; \frac{5c}{6} +
-\frac{5(100-c)}{6} \;=\; \frac{500}{6} \;=\; \frac{250}{3}.
-\end{equation}
-This sum is constant in $c$ and \emph{nonzero}; in particular, it
-does not vanish at the self-dual point $c^* = 50$
-(Theorem~\ref{thm:w3-genus1-complementarity}).
-\end{theorem}
-
-\begin{remark}[Theorem C is a scalar Verdier statement]
-\label{rem:w3hol-theorem-c-scope}
-Theorem~C is used in \eqref{eq:w3hol-kappa-sum} only after the two
-objects have been distinguished: \(\cA^i\) is the bar-dual coalgebra,
-\(\cA^!\) is the Verdier/Koszul branch on the DS/bar transport locus,
-and \(\cC=Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\) is the chiral
-Hochschild closed-sector algebra. The equality
-\(\kappa(\cA)+\kappa(\cA^!)=250/3\) is a scalar characteristic
-identity. It is not a reconstruction theorem for \(\cA^!\) from
-\(\cA^i\), and it is not an equivalence between the line/evaluation
-category and the derived centre.
-\end{remark}
-
-\begin{remark}[Affine and principal-\texorpdfstring{$\Walg$}{W} complementarity]
+\begin{remark}[Arithmetic and reconstruction]
 \label{rem:w3hol-w-complementarity}
-The vanishing of the complementarity sum is a feature of affine
-Kac--Moody and free-field families only, where the Feigin--Frenkel
-involution $k \mapsto -k - 2h^\vee$ is anti-symmetric around the
-origin and $\kappa$ is linear in $k$. For $\Walg$-algebras the
-involution acts on the central charge by $c \mapsto K_N - c$, an
-affine involution with nonzero fixed-axis offset, so the
-complementarity sum becomes $\rho_N \cdot K_N$. For $\Walg_3$
-this is $(5/6) \cdot 100 = 250/3$, confirming the formula above.
-The expression $\rho_N \cdot K_N$ is the universal closed form;
-specializing it to a vanishing sum is permitted only when
-$K_N = 0$, which excludes every $\Walg$-algebra.
+Equation~\eqref{eq:w3hol-conductor} is an identity in
+\(\mathbb C(k)\).  The package \(H_{W_3}^{\mathrm{DS/bar}}\) promotes
+the reflected parameter to a comparison of completed bar--Verdier
+objects.  The KSDual fixed locus is then defined inside the resulting
+moduli problem.
 \end{remark}
 
-\begin{remark}[Self-dual point and critical string point]
+\begin{remark}[Three scalar coordinates]
 \label{rem:w3hol-self-dual-vs-critical}
-There are two distinguished central charges for $\Walg_3$.
-
-\begin{itemize}
- \item \textbf{Self-dual point}\quad $c^* = 50$. This is the fixed
- point of the Feigin--Frenkel involution $c \mapsto 100 - c$. On the
- DS/bar transport locus it is the central charge at which the
- Verdier/Koszul companion has the same principal-\(\Walg_3\) central
- charge as~$\cA$; no isomorphism away from this locus
- $\cA\simeq\cA^!$ is used. At this point the asymmetry
- $\delta_\kappa := \kappa - \kappa^!$
- vanishes (\emph{Koszul-pair self-duality}).
-
- \item \textbf{Critical string point}\quad $c_{\mathrm{crit}} = 100$.
- This is the unique central charge at which the matter-plus-ghost
- effective curvature
- $\kappa_{\mathrm{eff}} := \kappa(\text{matter}) +
- \kappa(\text{ghost})$
- vanishes, where the $\Walg_3$ ghost system contributes
- $\kappa(\text{ghost}) = -250/3$. This is the BRST anomaly
- cancellation point, not a Koszul self-duality.
-\end{itemize}
-
-The two are $50$ units apart on the $c$-axis and they vanish
-\emph{different} quantities. See also
-Remark~\ref{rem:w3-kappa-sums} for the parallel phenomenon in Virasoro
-($c^*_{\mathrm{Vir}} = 13$, $c_{\mathrm{crit},\mathrm{Vir}} = 26$).
+The number \(50\) is the midpoint of the reflected central coordinate.
+A BRST critical charge is computed from a specified ghost complex and
+nilpotence equation.  A KSDual point is a fixed object of the
+Verdier--Koszul involution.  These three constructions live at levels
+\(1\), \(5\), and \(1\leftrightarrow2\), respectively.
 \end{remark}
 
-\section{The collision residue \texorpdfstring{$r(z)$}{r(z)}: four channels}
-\label{sec:w3hol-r-matrix-channels}
-
-The spectral $r$-matrix decomposes by generator pair into four
-channels: $T$--$T$, $T$--$W$, $W$--$T$, and $W$--$W$. Each is the
-collision residue
-$\mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ extracted from the
-corresponding OPE; by the pole orders
-satisfy $\mathrm{ord}_r = \mathrm{ord}_{\mathrm{OPE}} - 1$ and
-simple OPE poles drop entirely.
-
-\begin{theorem}[Channel-by-channel \texorpdfstring{$r$}{r}-matrix;
-\ClaimStatusProvedHere]
-\label{thm:w3hol-r-channels}
-The four channels of the $\Walg_3$ collision residue are:
-\begin{align}
-r_{TT}(z) &\;=\; \frac{c/2}{z^3} + \frac{2T}{z}, &
-\text{poles } &\{3, 1\}; \label{eq:w3hol-r-TT}\\
-r_{TW}(z) &\;=\; \frac{3W}{z}, &
-\text{poles } &\{1\}; \label{eq:w3hol-r-TW}\\
-r_{WT}(z) &\;=\; \frac{3W}{z}, &
-\text{poles } &\{1\}; \label{eq:w3hol-r-WT}\\
-r_{WW}(z) &\;=\; \frac{c/3}{z^5} + \frac{2T}{z^3} +
-\frac{\partial T}{z^2} +
-\frac{\tfrac{3}{10}\partial^2 T + \alpha(c)\,\Lambda}{z}, &
-\text{poles } &\{5, 3, 2, 1\}, \label{eq:w3hol-r-WW}
-\end{align}
-where $\alpha(c) = 16/(22+5c)$ and
-$\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$. The maximum
-pole order across all four channels is
-\begin{equation}\label{eq:w3hol-kmax}
-k_{\max} \;=\; 5,
-\end{equation}
-attained by the $W$--$W$ channel. More generally, in a diagonal
-channel whose leading OPE pole has order $2h$, the leading collision
-pole has order $2h-1$ after the $d\log$ absorption.
-\end{theorem}
-
-\begin{proof}
-Each formula is the OPE
-(Theorem~\ref{thm:lambda-coefficients-derivation}) with the bar
-propagator factor $d\log(z-w) = dz/(z-w)$ absorbed. The OPE
-\[
-W(z)W(w) \;\sim\;
-\frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} +
-\frac{\partial T(w)}{(z-w)^3} +
-\frac{\tfrac{3}{10}\partial^2 T(w) + \alpha(c)\,\Lambda(w)}{(z-w)^2}
-+ \frac{\tfrac{1}{15}\partial^3 T(w) + \tfrac{\alpha(c)}{2}
-\partial\Lambda(w)}{z-w}
-\]
-has pole orders $\{6, 4, 3, 2, 1\}$. After $d\log$ absorption the
-collision residue carries pole orders $\{5, 3, 2, 1\}$; the simple
-OPE pole becomes the regular term and contributes nothing
-to~$r$. The other channels are read off identically.
-\end{proof}
-
-\begin{remark}[An even pole order in a bosonic algebra]
-\label{rem:w3hol-even-pole}
-The $W$--$W$ channel exhibits an $r$-matrix pole at $z^{-2}$, which
-is even-order. For a single-generator bosonic algebra the
-$d\log$-absorbed parity sends $z^{-2n}$ to $z^{-(2n-1)}$, leaving
-only odd-order poles; the $z^{-2}$ pole at $W$--$W$ arises from the
-OPE pole at $z^{-3}$ (the $\partial T$ Taylor term), which exists in
-$W$--$W$ but \emph{not} in $T$--$T$ because the $T$--$T$ OPE skips
-odd-order poles between $z^{-4}$ and $z^{-2}$. The phenomenon is
-intrinsic to multi-weight algebras; the landscape census
-(Remark~\ref{rem:ww-even-poles-census}) records the OPE-by-OPE
-breakdown.
-\end{remark}
-
-\section{The composite field \texorpdfstring{$\Lambda$}{Lambda} on primaries}
+\section{The exact composite and highest-weight packet}
 \label{sec:w3hol-lambda}
 
-The weight-4 quasi-primary composite field
-$\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ controls the
-nonlinearity of the $W$--$W$ OPE. Its zero mode acts on highest
-weight primaries by a quadratic polynomial in the conformal weight.
+The Virasoro calculation gives
+\[
+|\Lambda\rangle
+=L_{-2}^2|0\rangle-\frac35L_{-4}|0\rangle,
+\qquad
+N_\Lambda
+:=\langle\Lambda|\Lambda\rangle
+=\frac{c(5c+22)}{10}.
+\]
+Thus the one-dimensional inverse Gram factor is
+\[
+N_\Lambda^{-1}=\frac{10}{c(5c+22)}
+\]
+on the regular Zamolodchikov surface
+\(c(5c+22)\in\mathbb C^\times\).  A scalar quartic shadow additionally
+uses \(H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}}\).
 
-\begin{proposition}[Action of \texorpdfstring{$\Lambda_0$}{Lambda 0} on primaries; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Action of
+\texorpdfstring{$\Lambda_0$}{Lambda0} on primaries;
+\ClaimStatusProvedHere]
 \label{prop:w3hol-lambda-on-primaries}
-Let $|h, w\rangle$ be a primary state for $\Walg_3$ with conformal
-weight $h$ (eigenvalue of $L_0$) and $W$-charge $w$ (eigenvalue of
-$W_0$). Then
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{Zamolodchikov\ highest\ weight},1,
+H_{\mathrm{hw}}^{W_3})\).
+For a highest-weight vector \(|h,w\rangle\),
 \begin{equation}\label{eq:w3hol-lambda-action}
-\Lambda_0\,|h, w\rangle \;=\; \Bigl(h^2 - \tfrac{9h}{5}\Bigr)
-|h, w\rangle.
+\Lambda_0|h,w\rangle
+=\left(h^2+\frac h5\right)|h,w\rangle.
 \end{equation}
-In particular the action of $\Lambda_0$ on a primary is a polynomial
-in $h$ alone, independent of the $W$-charge $w$ and \emph{independent
-of $c$}.
 \end{proposition}
 
 \begin{proof}
-The mode expansion of the normal-ordered product is
-\begin{equation}\label{eq:w3hol-tt-zero-mode}
-({:}TT{:})_0 \;=\; 2\sum_{m \geq 1} L_{-m} L_m + L_0^2.
-\end{equation}
-On a primary state all $L_m|h,w\rangle = 0$ for $m \geq 1$, so the
-sum collapses and $({:}TT{:})_0|h,w\rangle = h^2 |h,w\rangle$. The
-zero mode of $\partial^2T$ uses the weight-four convention. Since
-$T(z)=\sum_n L_n z^{-n-2}$, one has
-$\partial^2T(z)=\sum_n(n+2)(n+3)L_n z^{-n-4}$; hence
-$(\partial^2T)_0=6L_0$ as a weight-four field. Thus
-$(\partial^2 T)_0 |h,w\rangle = 6h |h,w\rangle$. Combining,
+The weight-four mode formula
 \[
-\Lambda_0|h,w\rangle
-\;=\; \bigl(h^2 - \tfrac{3}{10}\cdot 6 h\bigr)|h,w\rangle
-\;=\; \Bigl(h^2 - \tfrac{9h}{5}\Bigr)|h,w\rangle.\qedhere
+\Lambda_n
+=\sum_{p\in\mathbb Z}{:}L_pL_{n-p}{:}
+-\frac3{10}(n+2)(n+3)L_n
 \]
+gives
+\begin{equation}\label{eq:w3hol-tt-zero-mode}
+({:}TT{:})_0
+=2\sum_{m\geq1}L_{-m}L_m+L_0^2+2L_0.
+\end{equation}
+On \(|h,w\rangle\), this acts by \(h^2+2h\).  Since
+\((\partial^2T)_0=6L_0\), the correction
+\(-\frac3{10}(\partial^2T)_0\) acts by \(-9h/5\).  Their sum is
+\(h^2+h/5\).
 \end{proof}
 
-\begin{corollary}[Roots of \texorpdfstring{$\Lambda_0$}{Lambda 0} on the conformal axis; \ClaimStatusProvedHere]
+\begin{corollary}[The conformal roots of
+\texorpdfstring{$\Lambda_0$}{Lambda0};
+\ClaimStatusProvedHere]
 \label{cor:w3hol-lambda-roots}
-The eigenvalue $h^2 - 9h/5$ vanishes on primaries with conformal
-weight $h \in \{0, 9/5\}$. The vacuum primary is the trivial root;
-the nontrivial root $h = 9/5$ is independent of $c$. This is a
-zero-mode statement on the conformal-weight axis; it does not assert
-the existence of a unitary $\Walg_3$ module at that weight.
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{Zamolodchikov\ highest\ weight},1,
+H_{\mathrm{hw}}^{W_3})\).
+The \(\Lambda_0\)-eigenvalue vanishes at
+\[
+h=0,\qquad h=-\frac15.
+\]
 \end{corollary}
 
-\begin{remark}[Independence from \texorpdfstring{$c$}{c}]
+\begin{remark}[Central-charge dependence]
 \label{rem:w3hol-lambda-c-independent}
-That the eigenvalue of $\Lambda_0$ on a primary is independent of
-$c$ is structural: the dependence on $c$ enters only through the
-OPE coefficient $\alpha(c) = 16/(22+5c)$ that multiplies $\Lambda$
-in the $W$--$W$ OPE, not through the action of $\Lambda$ on
-states. The same observation underlies the rationality of the
-roots: the denominator $5c+22$ affects the coefficient of the
-composite field in the OPE, not the zero-mode polynomial of the
-composite field on a highest-weight vector.
+The highest-weight action of \(\Lambda_0\) is determined by Virasoro
+normal ordering.  The central charge enters the \(WW\) product through
+\(32/(5c+22)\) and enters the Gram norm through
+\(N_\Lambda=c(5c+22)/10\).
 \end{remark}
 
-\section{The genus-2 cross-channel correction}
+In the ordered basis
+\(\{L_{-1}|h,w\rangle,W_{-1}|h,w\rangle\}\), the level-one
+Shapovalov matrix is
+\begin{equation}\label{eq:w3hol-level-one-gram}
+M_1(c,h,w)=
+\begin{pmatrix}
+2h&3w\\[2pt]
+3w&
+-\frac h5+\frac{32}{5c+22}
+\left(h^2+\frac h5\right)
+\end{pmatrix}.
+\end{equation}
+Its determinant satisfies
+\[
+-(5c+22)\det M_1
+=9w^2(5c+22)-2h^2(32h+2-c).
+\]
+For \(h\in\mathbb C^\times\), the exact level-one singular-vector
+curve is
+\begin{equation}\label{eq:w3hol-level-one-null-curve}
+9w^2(5c+22)=2h^2(32h+2-c),
+\end{equation}
+with kernel vector
+\[
+\left(W_{-1}-\frac{3w}{2h}L_{-1}\right)|h,w\rangle.
+\]
+
+\section{The collision-kernel reconstruction}
+\label{sec:w3hol-r-matrix-channels}
+
+\begin{theorem}[Four collision channels;
+\ClaimStatusConditional]
+\label{thm:w3hol-r-channels}
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{ordered\ chiral\ bar},2,
+H_{W_3}^{\mathrm{bar}}+H_{W_3}^{\mathrm{coll}})\).
+With the local coordinate and \(d\log E\) convention fixed by
+\(H_{W_3}^{\mathrm{coll}}\), the OPE packet maps to
+\begin{align}
+K_{TT}^{\mathrm{coll}}(z)
+&=\frac{c/2}{z^3}+\frac{2T}{z},
+&\operatorname{poles}&=\{3,1\},
+\label{eq:w3hol-r-TT}\\
+K_{TW}^{\mathrm{coll}}(z)
+&=\frac{3W}{z},
+&\operatorname{poles}&=\{1\},
+\label{eq:w3hol-r-TW}\\
+K_{WT}^{\mathrm{coll}}(z)
+&=\frac{3W}{z},
+&\operatorname{poles}&=\{1\},
+\label{eq:w3hol-r-WT}\\
+K_{WW}^{\mathrm{coll}}(z)
+&=\frac{c/3}{z^5}
++\frac{2T}{z^3}
++\frac{\partial T}{z^2}
++\frac{\frac3{10}\partial^2T
++\frac{32}{5c+22}\Lambda}{z},
+&\operatorname{poles}&=\{5,3,2,1\}.
+\label{eq:w3hol-r-WW}
+\end{align}
+The candidate maximal collision order is
+\begin{equation}\label{eq:w3hol-kmax}
+k_{\max}^{\mathrm{coll}}=5.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The exact OPE has pole sets
+\(\{4,2,1\}\), \(\{2,1\}\), \(\{2,1\}\), and
+\(\{6,4,3,2,1\}\) in the four channels.  The residue convention in
+\(H_{W_3}^{\mathrm{coll}}\) pairs the singular product with
+\(d\log E\), lowering each retained pole order by one.  Applying this
+map term by term gives the displayed conditional kernel.
+\end{proof}
+
+\begin{remark}[The even collision pole]
+\label{rem:w3hol-even-pole}
+The term \(\partial T/(z-w)^3\) in the exact \(WW\) OPE produces the
+order-two term \(\partial T/z^2\) in the conditional collision
+kernel.  This term records the descendant channel of the weight-three
+self-product.
+\end{remark}
+
+\section{Modular trace and scalar conductor}
+\label{sec:w3hol-kappa}
+
+\begin{theorem}[The genus-one modular coordinate;
+\ClaimStatusOpen]
+\label{thm:w3hol-kappa-formula}
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{modular\ trace},5,
+H_{W_3}^{\mathrm{mod}}+H_{W_3}^{\mathrm{res}})\).
+The package \(H_{W_3}^{\mathrm{mod}}+H_{W_3}^{\mathrm{res}}\) must
+construct a trace for which
+\begin{equation}\label{eq:w3hol-kappa-w3}
+\operatorname{tr}_1
+\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathcal W_3^k)
+=\kappa_{\mathrm{ch}}(\mathcal W_3^k)\lambda_1.
+\end{equation}
+Computing \(\kappa_{\mathrm{ch}}(\mathcal W_3^k)\) from this trace is
+the genus-one \(W_3\) obligation.
+\end{theorem}
+
+\begin{remark}[Local norms and modular curvature]
+\label{rem:w3hol-channel-decomp}
+The exact leading OPE norms are
+\begin{equation}\label{eq:w3hol-kappa-channel}
+N_T=\frac c2,\qquad N_W=\frac c3.
+\end{equation}
+Their reciprocal-weight sum is the typed local diagnostic
+\(\frac12+\frac13=\frac56\).  The comparison
+from \((N_T,N_W)\) to a genus-one curvature belongs to
+\(H_{W_3}^{\mathrm{mod}}\).
+\end{remark}
+
+\begin{remark}[The anomaly ratio]
+\label{rem:w3hol-anomaly-ratio}
+On \(c\in\mathbb C^\times\), the modular anomaly ratio is defined by
+\begin{equation}\label{eq:w3hol-rho}
+\rho_{W_3}^{\mathrm{mod}}(k)
+:=\frac{\kappa_{\mathrm{ch}}(\mathcal W_3^k)}{c(k)}.
+\end{equation}
+Its evaluation is open with the same genus-one trace package.
+\end{remark}
+
+\begin{theorem}[The scalar Verdier sum;
+\ClaimStatusOpen]
+\label{thm:w3hol-kappa-sum}
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{bar\text{--}Verdier\ plus\ scalar\ trace},
+2\to5,
+H_{W_3}^{\mathrm{DS/bar}}+
+H_{W_3}^{\mathrm{mod}}+
+H_{W_3}^{\mathrm{rescale}})\).
+For a constructed Koszul pair, the scalar conductor is
+\begin{equation}\label{eq:w3hol-kappa-sum}
+K^\kappa(\mathcal W_3^k)
+:=
+\kappa_{\mathrm{ch}}(\mathcal W_3^k)
++\kappa_{\mathrm{ch}}\bigl((\mathcal W_3^k)^!\bigr).
+\end{equation}
+Its evaluation requires a family contraction
+\((\iota_k,p_k,h_k,\nu_k)\) on one factorization bar--cobar complex,
+\[
+dh_k+h_kd
+=\nu_k(\operatorname{id}-\iota_kp_k),
+\]
+and a trace map identifying \(\nu_k\) with the displayed scalar.
+\end{theorem}
+
+\begin{remark}[Theorem C and the family rescaling problem]
+\label{rem:w3hol-theorem-c-scope}
+Theorem~C enters after the presentation coalgebra, full bar,
+Ran--Verdier algebra, strict Koszul branch, and scalar trace have been
+constructed.  For \(W_3\), the proof obligation is the simultaneous
+construction of
+\[
+(\iota_k,p_k,h_k,\nu_k)
+\quad\text{and}\quad
+\operatorname{Tr}_{W_3}\colon
+\mathsf{BarCobar}_{W_3}\longrightarrow
+\mathsf{ScalTrace}_{W_3},
+\]
+with
+\(\operatorname{Tr}_{W_3}(\nu_k)=K^\kappa(\mathcal W_3^k)\).
+\end{remark}
+
+\section{Stable-graph and scalar-shadow obligations}
 \label{sec:w3hol-genus-2}
 
-\begin{theorem}[Genus-2 cross-channel free energy for \texorpdfstring{$\Walg_3$}{W3}; \ClaimStatusConditional]
+\begin{theorem}[Genus-two coloured stable-graph sum;
+\ClaimStatusOpen]
 \label{thm:w3hol-deltaF2}
-For $\Walg_3$ at generic $c$ on the surface $c(5c+22)\neq0$,
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{modular\ coloured\ graph},5,
+H_{W_3}^{\mathrm{bar}}+
+H_{W_3}^{\mathrm{proj}}+
+H_{W_3}^{\mathrm{sew}})\).
+The rank-two genus-two correction is the projected graph sum
 \begin{equation}\label{eq:w3hol-deltaF2}
-\delta F_2(\Walg_3) \;=\; \frac{c + 204}{16c}.
+\delta F_{2}^{\mathrm{cross}}(\mathcal W_3^k)
+:=
+\sum_{\substack{\Gamma\in\mathsf G_{2,0}\\
+\sigma:E(\Gamma)\to\{T,W\}\\
+\sigma\ \mathrm{uses\ both\ colours}}}
+\frac{\operatorname{Cont}_{\Gamma,\sigma}(\Theta_{\mathcal W_3})}
+{|\operatorname{Aut}(\Gamma,\sigma)|}.
 \end{equation}
-The decomposition over the four cross-channel graph topologies is
-\begin{equation}\label{eq:w3hol-deltaF2-graph-decomp}
-\delta F_2(\Walg_3)
-\;=\; \underbrace{\frac{3}{c}}_{\text{sunset}}
-\;+\; \underbrace{\frac{9}{2c}}_{\text{theta}}
-\;+\; \underbrace{\frac{1}{16}}_{\text{bridge-loop}}
-\;+\; \underbrace{\frac{21}{4c}}_{\text{barbell}}.
-\end{equation}
+The packages in the type signature must construct every vertex,
+propagator, projection, and automorphism factor.
 \end{theorem}
 
-\begin{proof}
-This is the $N=3$ specialization of
-Theorem~\ref{thm:multi-weight-genus-expansion}. The four terms
-correspond to the four genus-2 stable graph topologies on
-$\overline{\mathcal{M}}_{2}$ that contribute nontrivially when
-$\Walg_3$ has two generators of distinct conformal weight: the
-sunset (one genus-$0$ four-valent vertex with two self-loops), the
-theta (two genus-$0$ trivalent vertices joined by three bridges), the
-bridge-loop (one genus-$0$ trivalent vertex joined to one genus-$1$
-univalent vertex, with a self-loop on the genus-$0$ vertex), and the
-barbell (two genus-$0$ trivalent vertices, a self-loop at each end,
-and one connecting bridge).
-Summing,
-\[
-\frac{3}{c} + \frac{9}{2c} + \frac{1}{16} + \frac{21}{4c}
-\;=\; \frac{1}{c}\Bigl(3 + \tfrac{9}{2} + \tfrac{21}{4}\Bigr)
-+ \frac{1}{16}
-\;=\; \frac{51/4}{c} + \frac{1}{16}
-\;=\; \frac{204 + c}{16 c}
-\;=\; \frac{c + 204}{16c}. \qedhere
-\]
-\end{proof}
+\begin{equation}\label{eq:w3hol-deltaF2-graph-decomp}
+\delta F_{2}^{\mathrm{cross}}
+=
+\mathsf P_{2}^{W_3}
+\left(
+\sum_{\Gamma\in\mathsf G_{2,0}}
+\operatorname{Cont}_{\Gamma}(\Theta_{\mathcal W_3})
+\right).
+\end{equation}
+This equation fixes the mathematical type of the quantity before its
+evaluation.
 
-\begin{proposition}[Genus-3 finite stable-graph correction; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Genus-three finite-window problem;
+\ClaimStatusOpen]
 \label{prop:w3hol-deltaF3-finite-window}
-For generic \(c\) on the surface \(c(5c+22)\neq0\), on the diagonal
-\(T\)-/\(W\)-channel finite stable-graph projection over
-\(\overline{\mathcal M}_{3,0}\), with
-\[
-\eta_{TT}=\frac c2,\qquad \eta_{WW}=\frac c3,\qquad
-C_{TTT}=C_{TWW}=c,\qquad C_{TTW}=C_{WWW}=0,
-\]
-the genus-$3$ cross-channel correction is
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{finite\ coloured\ stable\ graphs},5,
+H_{W_3}^{\mathrm{bar}}+
+H_{W_3}^{\mathrm{proj}}+
+H_{W_3}^{\mathrm{sew}})\).
+The genus-three cross-channel coordinate is
 \begin{equation}\label{eq:w3hol-deltaF3}
-\delta F_3^{\mathrm{cross}}(\Walg_3)
-\;=\;
-\frac{5c^3 + 3792c^2 + 1{,}149{,}120\,c
- + 217{,}071{,}360}{138{,}240\,c^2}.
+\delta F_{3}^{\mathrm{cross}}(\mathcal W_3^k)
+:=
+\sum_{\substack{\Gamma\in\mathsf G_{3,0}\\
+\sigma:E(\Gamma)\to\{T,W\}\\
+\sigma\ \mathrm{uses\ both\ colours}}}
+\frac{\operatorname{Cont}_{\Gamma,\sigma}(\Theta_{\mathcal W_3})}
+{|\operatorname{Aut}(\Gamma,\sigma)|}.
 \end{equation}
-The scalar diagonal part is
+Under the modular trace package, its diagonal scalar comparison is
 \begin{equation}\label{eq:w3hol-genus3-scalar}
-\kappa(\Walg_3)\lambda_3^{\mathrm{FP}}
-=\frac{5c}{6}\cdot\frac{31}{967{,}680}
-=\frac{31c}{1{,}161{,}216},
+F_3^{\mathrm{diag}}(\mathcal W_3^k)
+:=
+\kappa_{\mathrm{ch}}(\mathcal W_3^k)
+\lambda_3^{\mathrm{FP}}.
 \end{equation}
-so
-\[
-\frac{\delta F_3^{\mathrm{cross}}(\Walg_3)}
-{\kappa(\Walg_3)\lambda_3^{\mathrm{FP}}}
-\xrightarrow{c\to\infty}
-\frac{42}{31}.
-\]
-This is a finite algebraic graph-sum statement. It is not a
-completed genus-$3$ HT partition function and it does not supply the
-higher-genus BV/BRST--bar comparison.
 \end{proposition}
 
-\begin{proof}
-Computation~\ref{comp:w3-genus3-cross} enumerates all \(42\) stable
-graphs of \(\overline{\mathcal M}_{3,0}\) and all channel assignments
-\(\sigma:E(\Gamma)\to\{T,W\}\). The \(\mathbb{Z}_2\)-parity
-\(W\mapsto -W\) kills exactly the odd-\(W\) vertex factors; \(34\)
-graphs have nonzero mixed-channel amplitude. The direct graph sum
-reconstructs the rational function
-\eqref{eq:w3hol-deltaF3}. The diagonal scalar part uses
-\(\lambda_3^{\mathrm{FP}}=31/967{,}680\) and
-\(\kappa(\Walg_3)=5c/6\). Taking leading terms gives
-\[
-\frac{(5c^3)/(138{,}240c^2)}
-{31c/1{,}161{,}216}
-=\frac{c/27{,}648}{31c/1{,}161{,}216}
-=\frac{42}{31}.
-\]
-\end{proof}
-
-\begin{corollary}[Failure of multi-generator universality; \ClaimStatusConditional]
+\begin{corollary}[Criterion for genuinely rank-two genus data;
+\ClaimStatusConditional]
 \label{cor:w3hol-multi-gen-fails}
-On the hypotheses of Theorem~\ref{thm:w3hol-deltaF2}, the
-cross-channel correction $\delta F_2(\Walg_3) = (c+204)/(16c)$ is
-nonzero for all $c > 0$, and for all $c \neq 0, -204$.
-Therefore the genus-2 free energy of $\Walg_3$ is \emph{not}
-proportional to $\lambda_2^{\mathrm{FP}}$:
-\begin{equation}
-F_2(\Walg_3) \;=\; \kappa(\Walg_3) \cdot \lambda_2^{\mathrm{FP}}
-+ \delta F_2(\Walg_3)
-\;\neq\; \kappa(\Walg_3) \cdot \lambda_2^{\mathrm{FP}}.
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{scalar\ plus\ cross\ projection},5,
+H_{W_3}^{\mathrm{mod}}+
+H_{W_3}^{\mathrm{proj}}+
+H_{W_3}^{\mathrm{sew}})\).
+If the constructed cross projection represents a nonzero class, then
+\begin{equation}\label{eq:w3hol-genus2-rank-two-splitting}
+F_2(\mathcal W_3^k)
+=F_2^{\mathrm{diag}}(\mathcal W_3^k)
++\delta F_2^{\mathrm{cross}}(\mathcal W_3^k)
 \end{equation}
-This gives the rank-2 negative witness for
-\hyperref[op:multi-generator-universality]{Open Problem on
-multi-generator universality}: on the verified $\Walg_3$ surface,
-multi-generator structure produces a nontrivial correction to the
-Faber--Pandharipande tower at $g \geq 2$.
+contains information beyond the diagonal scalar coordinate.
 \end{corollary}
 
-\begin{remark}[Large-$c$ limit]
+\begin{remark}[Asymptotic question]
 \label{rem:w3hol-large-c}
-As $c \to \infty$, the cross-channel correction asymptotes to the
-$c$-independent constant
+The large-\(c\) behaviour is defined after
+Equation~\eqref{eq:w3hol-deltaF2} has been constructed:
 \begin{equation}\label{eq:w3hol-large-c}
-\delta F_2(\Walg_3) \;\xrightarrow{c \to \infty}\; \frac{1}{16}.
+\delta F_{2,\infty}^{\mathrm{cross}}
+:=
+\lim_{c\to\infty}
+\delta F_2^{\mathrm{cross}}(\mathcal W_3^k).
 \end{equation}
-This is the bridge-loop contribution: the only genus-$2$ topology
-whose amplitude does not depend on the OPE level via \(1/c\). It is
-the residue of the \(C_{WWT}=c\) vertex cancelling the \(W\)-propagator
-\(\eta^{WW}=3/c\), then pairing with the genus-$1$ factor
-\(\kappa_T/24=c/48\).
+Existence and evaluation of this limit belong to
+\(H_{W_3}^{\mathrm{proj}}+H_{W_3}^{\mathrm{sew}}\).
 \end{remark}
 
-\begin{remark}[Uniform weight and cross-channel genus]
+\begin{remark}[Two weights]
 \label{rem:w3hol-uniform-weight-cross-channel}
-The genus-1 obstruction
-\(\mathrm{obs}_1(\Walg_3)=\kappa(\Walg_3)\lambda_1\) is
-universal (Theorem~\ref{thm:wn-obstruction}). The scalar formula
-does \emph{not} persist at higher genus.
-Theorem~\ref{thm:w3hol-deltaF2} and
-Proposition~\ref{prop:w3hol-deltaF3-finite-window} show that the
-universality is restricted to the uniform-weight locus: once the
-algebra has two generators of distinct conformal weight, the
-genus-$2$ and finite genus-$3$ free energies receive corrections that
-the scalar $\kappa \lambda_g^{\mathrm{FP}}$ cannot capture. The
-$\Walg_3$ example is the smallest manuscript witness to this
-phenomenon.
+The weights \(2\) and \(3\) define a two-colour graph problem.
+Diagonal and mixed colourings are independent projections of the
+same ordered Maurer--Cartan tensor.  This is the first family in the
+standard landscape where the mixed projection is a separate
+construction.
 \end{remark}
 
-\section{Propagator variance and mixing}
+\section{Propagator mixing}
 \label{sec:w3hol-propagator-variance}
 
-The propagator variance is the multi-channel non-autonomy
-invariant
-$\delta_{\mathrm{mix}} = \sum_i f_i^2/\kappa_i -
-(\sum_i f_i)^2/(\sum_i \kappa_i)$
-of Theorem~\ref{prop:propagator-variance}. It vanishes precisely
-when the gradient of the quartic contact contribution is parallel
-to the curvature direction.
-
-\begin{theorem}[Propagator variance for \texorpdfstring{$\Walg_3$}{W3}; \ClaimStatusConditional]
+\begin{theorem}[Propagator-mixing coordinate;
+\ClaimStatusOpen]
 \label{thm:w3hol-propagator-variance}
-The propagator variance of $\Walg_3$ at central charge $c$ is
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{two\text{-}channel\ scalar\ projection},5,
+H_{W_3}^{\mathrm{res}}+
+H_{W_3}^{\mathrm{proj}}+
+H_{W_3}^{\mathrm{sew}})\).
+Let \(G_{W_3}\) be the projected two-channel propagator metric,
+\(f_{W_3}\) the projected quartic gradient, and
+\(\mathbf 1=(1,1)\).  The mixing coordinate is
 \begin{equation}\label{eq:w3hol-prop-variance}
-\delta_{\mathrm{mix}}(\Walg_3)
-\;=\; \frac{1280\, P(c)^2}{c^3 (5c+22)^6},
+\delta_{\mathrm{mix}}(\mathcal W_3^k)
+:=
+\langle f_{W_3},G_{W_3}^{-1}f_{W_3}\rangle
+-
+\frac{\langle f_{W_3},\mathbf1\rangle^2}
+{\langle\mathbf1,G_{W_3}\mathbf1\rangle}.
 \end{equation}
-where the mixing polynomial is
-\begin{equation}\label{eq:w3hol-mixing-poly}
-P(\Walg_3) \;=\; 25c^2 + 100c - 428.
-\end{equation}
-On the positive-curvature chamber the variance is non-negative by
-Cauchy--Schwarz and vanishes only at the two roots of $P$,
-$c = -2 \pm \tfrac{4\sqrt{33}}{5}$. These are
-curvature-proportionality loci for the rational shadow metric:
-the diagonal flow on the joint $T$/$W$ line becomes autonomous
-there. No representation-theoretic enhancement is asserted.
+The packages in the type signature must construct
+\((G_{W_3},f_{W_3})\) from the full Gram blocks and the chain-level
+projection.
 \end{theorem}
 
-\begin{proof}
-By Theorem~\ref{prop:propagator-variance}, the propagator variance
-on a multi-channel algebra is
-$\delta_{\mathrm{mix}} = (\sum f_i^2 / \kappa_i) -
-(\sum f_i)^2 / (\sum \kappa_i)$
-where $f_i$ are the per-channel quartic gradient coefficients and
-$\kappa_i$ are the per-channel modular characteristics. For
-$\Walg_3$ we have $\kappa_T = c/2$, $\kappa_W = c/3$, and the
-finite-OPE quartic gradients
-\[
-f_T=\frac{200(c+14)}{c(5c+22)^2},
-\qquad
-f_W=\frac{640(15c+82)}{c(5c+22)^3}
-\]
-(Example~\ref{ex:w3-mixing-polynomial}). Substitution gives
-\[
-\frac{f_T^2}{c/2}+\frac{f_W^2}{c/3}
--\frac{(f_T+f_W)^2}{5c/6}
-=\frac{1280(25c^2+100c-428)^2}{c^3(5c+22)^6}.
-\]
-This is \eqref{eq:w3hol-prop-variance}.
-\end{proof}
+\begin{equation}\label{eq:w3hol-mixing-poly}
+P_{\mathrm{mix}}^{W_3}(c)
+:=
+\det\!\bigl(f_{W_3}(c),G_{W_3}(c)\mathbf1\bigr).
+\end{equation}
+This determinant records proportionality of the quartic gradient and
+the curvature direction once both vectors have been constructed.
 
-\begin{corollary}[Cauchy--Schwarz non-negativity on the positive chamber; \ClaimStatusConditional]
+\begin{corollary}[Positive-chamber inequality;
+\ClaimStatusConditional]
 \label{cor:w3hol-prop-variance-positive}
-The expression \eqref{eq:w3hol-prop-variance} is a square divided by
-$c^3(5c+22)^6$. It is non-negative on the positive-curvature chamber
-$c>0$. On real chambers with indefinite curvature this scalar
-rational function is no longer a positivity statement; the invariant
-meaning of $P(c)=0$ is the curvature-proportionality condition
-$f_i/\kappa_i$ independent of~$i$.
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{real\ positive\ propagator\ chamber},5,
+H_{W_3}^{\mathrm{proj}}+H_{W_3}^{\mathrm{pos}})\).
+If \(G_{W_3}\) is positive definite, then
+\[
+\delta_{\mathrm{mix}}(\mathcal W_3^k)\geq0.
+\]
+Equality is equivalent to linear dependence of
+\(f_{W_3}\) and \(G_{W_3}\mathbf1\).
 \end{corollary}
 
-\section{The shadow connection}
+\section{Scalar-shadow projections}
 \label{sec:w3hol-shadow-connection}
 
-The shadow connection $\nabla^{\mathrm{hol}}$ on the primary slice
-of $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}$ decomposes into a
-$T$-line piece and a $W$-line piece. Each piece is a logarithmic
-connection of the corresponding shadow metric
-(Theorem~\ref{thm:shadow-connection}).
-
-\begin{theorem}[Weighted shadow metric on the \texorpdfstring{$T$}{T}-line; \ClaimStatusProvedHere]
+\begin{theorem}[The \(T\)-line shadow problem;
+\ClaimStatusOpen]
 \label{thm:w3hol-Q-T}
-On the $T$-line (the primary slice generated by the stress-energy
-tensor) the weighted Riccati-metric shadow polynomial of $\Walg_3$ is
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{one\text{-}line\ scalar\ projection},5,
+H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}})\).
+The projected \(T\)-line metric is
 \begin{equation}\label{eq:w3hol-Q-T}
-Q_T(t) \;=\; c^2 + 12 c\, t +
-\frac{180 c + 872}{5c + 22}\, t^2.
+Q_T^{W_3}(t)
+:=
+\mathsf P_T\!\left(
+\operatorname{Sh}(\Theta_{\mathcal W_3});t
+\right).
 \end{equation}
-This is identical to the weighted Virasoro shadow metric. The $T$-line
-of $\Walg_3$ is autonomous in this Riccati-metric projection; it is not
-a statement about the full two-channel tower.
+Its comparison with the Virasoro metric requires an intertwining
+theorem for the inclusion generated by \(T\).
 \end{theorem}
 
-\begin{proof}
-On the \(T\)-line, the \(\Walg_3\) shadow data are the Virasoro data
-\[
-\kappa_T=\frac c2,\qquad \alpha_T=2,\qquad
-S_{4,T}=\frac{10}{c(5c+22)}
-\]
-(Computation~\ref{comp:w3-shadow-tower-data}). The one-line shadow
-metric has the form
-\[
-Q_L(t)=(2\kappa+3\alpha t)^2+16\kappa S_4t^2 .
-\]
-Substitution gives
-\[
-Q_T(t)=(c+6t)^2+\frac{80}{5c+22}t^2
-=c^2+12ct+\frac{180c+872}{5c+22}t^2.
-\]
-\end{proof}
-
-\begin{theorem}[Shadow metric on the \texorpdfstring{$W$}{W}-line; \ClaimStatusProvedHere]
+\begin{theorem}[The \(W\)-line shadow problem;
+\ClaimStatusOpen]
 \label{thm:w3hol-Q-W}
-On the $W$-line the shadow metric is
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{one\text{-}line\ scalar\ projection},5,
+H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}})\).
+The projected \(W\)-line metric is
 \begin{equation}\label{eq:w3hol-Q-W}
-Q_W(t) \;=\; \frac{4 c^2}{9} + \frac{40960}{3 (5c+22)^3}\,t^2.
+Q_W^{W_3}(t)
+:=
+\mathsf P_W\!\left(
+\operatorname{Sh}(\Theta_{\mathcal W_3});t
+\right).
 \end{equation}
-The metric is even in $t$, reflecting the $\mathbb{Z}_2$ parity
-$W \mapsto -W$ which kills all odd-degree contributions in the
-$W$-channel.
+The involution \(W\mapsto-W\) supplies its parity grading.
 \end{theorem}
 
-\begin{proof}
-On the pure \(W\)-line,
-\[
-\kappa_W=\frac c3,\qquad \alpha_W=0,\qquad
-S_{4,W}=\frac{2560}{c(5c+22)^3}
-\]
-(Computation~\ref{comp:w3-shadow-tower-data}). The same one-line
-metric formula gives
-\[
-Q_W(t)=\left(\frac{2c}{3}\right)^2
-+16\frac c3\frac{2560}{c(5c+22)^3}t^2
-=\frac{4c^2}{9}
-+\frac{40960}{3(5c+22)^3}t^2.
-\]
-The vanishing of \(\alpha_W\) is the \(W\mapsto -W\) parity
-statement, hence no odd power of \(t\) appears.
-\end{proof}
-
-\begin{theorem}[Critical discriminants and shadow class; \ClaimStatusConditional]
+\begin{theorem}[Projected discriminants;
+\ClaimStatusOpen]
 \label{thm:w3hol-discriminants}
-The critical discriminants of the $T$-line and the $W$-line shadow
-metrics are
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{one\text{-}line\ scalar\ projection},5,
+H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}})\).
+After the metrics in
+Theorems~\ref{thm:w3hol-Q-T} and~\ref{thm:w3hol-Q-W} have been
+constructed, define
 \begin{equation}\label{eq:w3hol-discriminants}
-\Delta_T \;=\; \frac{40}{5c + 22},
+\Delta_T^{W_3}:=\operatorname{Disc}_t Q_T^{W_3}(t),
 \qquad
-\Delta_W \;=\; \frac{20480}{3(5c + 22)^3}.
+\Delta_W^{W_3}:=\operatorname{Disc}_t Q_W^{W_3}(t).
 \end{equation}
-Both are nonzero for generic $c$, so both lines are class~M
-(infinite shadow depth). By
-Theorem~\ref{thm:single-line-dichotomy}, neither line terminates
-the shadow tower at finite degree; the full tower extends to
-arbitrary order on both lines.
+Their evaluation and shadow-depth interpretation are finite
+projection problems.
 \end{theorem}
 
-\begin{proof}
-For a one-line shadow metric the critical discriminant is
-\(\Delta=8\kappa S_4\). Using the two quartic contacts above gives
-\[
-\Delta_T=8\frac c2\frac{10}{c(5c+22)}
-=\frac{40}{5c+22},
-\]
-and
-\[
-\Delta_W=8\frac c3
-\frac{2560}{c(5c+22)^3}
-=\frac{20480}{3(5c+22)^3}.
-\]
-On the non-singular surface \(c(5c+22)\neq0\) both are nonzero.
-The single-line dichotomy therefore puts both lines in class~M.
-\end{proof}
-
-\begin{remark}[Quartic contact shadows]
+\begin{remark}[Exact exchange data and projected contacts]
 \label{rem:w3hol-S4}
-The quartic contact shadows on the two lines are
-\begin{equation}\label{eq:w3hol-S4}
-S_{4,T} \;=\; \frac{10}{c(5c+22)},
+The exact rank-one \(\Lambda\)-exchange ratios are
+\[
+\frac{(32/D(c))^2}{N_\Lambda}
+=\frac{10240}{cD(c)^3},
 \qquad
-S_{4,W} \;=\; \frac{2560}{c(5c+22)^3}.
+\frac{(16/D(c))^2}{N_\Lambda}
+=\frac{2560}{cD(c)^3}.
+\]
+They use OPE and mode normalizations, respectively.  The projected
+quartic contacts are defined by
+\begin{equation}\label{eq:w3hol-S4}
+S_{4,T}^{W_3}:=\mathsf P_T^{(4)}(\Theta_{\mathcal W_3}),
+\qquad
+S_{4,W}^{W_3}:=\mathsf P_W^{(4)}(\Theta_{\mathcal W_3}),
 \end{equation}
-The $T$-line value is identical to \(S_{4,\mathrm{Vir}}\)
-(Theorem~\ref{thm:w-virasoro-quartic-explicit}), confirming that the
-$T$-line of $\Walg_3$ inherits the Virasoro contact data
-unchanged. The $W$-line value is genuinely new and has the
-$(5c+22)^3$ denominator characteristic of the $W$-channel.
+under \(H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}}\).
 \end{remark}
 
-\section{Commuting Hamiltonians and the holographic shadow}
+\section{Hamiltonians and the holographic lift}
 \label{sec:w3hol-commuting-hamiltonians}
 
-The shadow connection at genus $0$ on $n$ marked points,
-$\nabla^{\mathrm{hol}}_{0,n}$, decomposes into commuting
-Hamiltonians. For $\Walg_3$ the Hamiltonians are differential
-operators of order at most $k_{\max} - 1$, where $k_{\max}$ is the
-maximal $r$-matrix pole order from
-Theorem~\ref{thm:w3hol-r-channels}.
-
-\begin{theorem}[Commuting differentials at \texorpdfstring{$N=3$}{N=3}; \ClaimStatusProvedHere]
+\begin{theorem}[Commuting Hamiltonians from the represented
+connection; \ClaimStatusConditional]
 \label{thm:w3hol-commuting-differentials}
-The shadow Hamiltonians
-$H_i(\Walg_3) = \mathrm{Sh}_{0,n}(\Theta_{\Walg_3})_i$ are
-differential operators of order at most $k_{\max} - 1 = 4$ acting
-on genus-0 $n$-point correlators of $\Walg_3$, and they commute
-pairwise:
+\emph{Type signature:}
+\((\mathrm{Open}\times\mathrm{CY},
+\mathrm{represented\ ordered\ bar},4,
+H_{W_3}^{\mathrm{coll}}+
+H_{W_3}^{\mathrm{flat}}+
+H_{W_3}^{\mathrm{OC}})\).
+Let
+\[
+H_i^{W_3}
+:=
+\rho_{\mathrm{conf}}
+\bigl(
+\operatorname{Sh}_{0,n}(\Theta_{\mathcal W_3})
+\bigr)_i.
+\]
+If \(H_{W_3}^{\mathrm{flat}}\) identifies the Maurer--Cartan curvature
+with the curvature of this representation, then
 \begin{equation}\label{eq:w3hol-commuting}
-[H_i(\Walg_3), H_j(\Walg_3)] \;=\; 0
-\qquad \forall\, i \neq j.
+[H_i^{W_3},H_j^{W_3}]=0
+\qquad(i\ne j).
 \end{equation}
-The order bound $k_{\max} - 1 = 4$ is the $W$-line contribution
-$2h_W - 1 - 1 = 4$ for the weight-3 generator.
+Under the collision-order comparison, the candidate differential
+order is bounded by \(k_{\max}^{\mathrm{coll}}-1=4\).
 \end{theorem}
 
-\begin{proof}
-The flatness of the shadow connection is the genus-0 projection of
-the MC equation $D\Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$, and
-the flatness condition is precisely the commutativity of the
-collision Hamiltonians. The order bound follows from the pole
-structure of $r(z)$ recorded in
-Theorem~\ref{thm:w3hol-r-channels}: a pole of order $k$ in
-$r_{ij}(z)$ contributes a derivative of order $k-1$ to the
-Hamiltonian $H_i$ acting on the $z_j$-coordinate, and the maximum
-pole is $k_{\max} = 5$ from the $W$--$W$ channel.
-\end{proof}
-
-\begin{remark}[Comparison with the GZ26 sphere reconstruction]
+\begin{remark}[Sphere reconstruction]
 \label{rem:w3hol-gz26}
-The 2026 paper~\textup{\cite{GZ26}} constructs commuting
-differential operators on $n$-pointed spheres for the Toda chain
-of $\mathfrak{sl}_3$ type. Theorem~\ref{thm:w3hol-commuting-differentials}
-has the same scalar order and commutativity profile after projecting
-$\mathrm{Sh}_{0,n}(\Theta_{\Walg_3})$ to the genus-$0$ comparison
-surface. Identifying the two systems requires the normalization and
-coordinate matching recorded in
-Remark~\ref{rem:sphere-reconstruction-gz26}; it is not an additional
-recovery theorem here. The Koszul
-conductor formula $K_N = 2(N-1)(2N^2 + 2N + 1)$ specializes at
-$N = 3$ to $K_3 = 100$, matching the central charge sum
-$c + c' = 100$.
+A comparison with a Toda or Gaudin differential system consists of a
+map between conformal-block bundles, a coordinate identification, and
+a normalization equality for the binary kernels.  These data form a
+specialization of
+\(H_{W_3}^{\mathrm{coll}}+H_{W_3}^{\mathrm{flat}}\).
 \end{remark}
+
+The seven entries assemble under \(H_{W_3}^{\mathrm{hol}}\):
+\[
+\mathcal H(\mathcal W_3^k)
+=
+\left(
+\mathcal W_3^k,\,
+(\mathcal W_3^k)^{\mathrm i},\,
+(\mathcal W_3^k)^!,\,
+Z_{\mathrm{ch}}^{\mathrm{der}}(\mathcal W_3^k),\,
+K_{\mathcal W_3}^{\mathrm{coll}},\,
+\Theta_{\mathcal W_3},\,
+\nabla^{\mathrm{hol}}
+\right).
+\]
+The exact local algebra supplies the first entry and the finite
+constraints on the remaining six.  The named packages supply the
+state transitions which turn those constraints into objects and
+comparison maps.
 
 \section{Computational surface}
 \label{sec:w3hol-verification}
 
-The exact-rational computation attached to this chapter records the
-following formulas. Each row is a constraint on the seven-entry datum,
-not an additional component.
-
 \begin{center}
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.25}
 \begin{tabular}{lll}
 \toprule
-\textbf{Invariant} & \textbf{Value} & \textbf{Anchor}\\
+\textbf{Datum} & \textbf{Status} & \textbf{Anchor}\\
 \midrule
-$\kappa(\Walg_3)$ & $5c/6$ & \S\ref{sec:w3hol-kappa}\\
-$\rho(\Walg_3)$ & $5/6$ & harmonic sum, exponents, channels\\
-$\kappa_T$ & $c/2$ & Virasoro projection\\
-$\kappa_W$ & $c/3$ & weight-$3$ two-point trace\\
-$c + c'$ & $100$ & DS formula and FdV strange formula\\
-$\kappa + \kappa^!$ & $250/3$ & $\rho \cdot K$\\
-$c^*$ & $50$ & fixed point of $c\mapsto100-c$\\
-$c_{\mathrm{crit}}$ & $100$ & BRST ghost cancellation\\
-$k_{\max}$ & $5$ & $2h_W-1$ and OPE pole shift\\
-$\delta F_2(\Walg_3)$ & $(c+204)/(16c)$ & graph sum and parity\\
-$\delta F_3^{\mathrm{cross}}(\Walg_3)$ & \eqref{eq:w3hol-deltaF3} & finite stable-graph window\\
-$\delta_{\mathrm{mix}}(\Walg_3)$ & $1280 P^2 / (c^3 (5c+22)^6)$ & Cauchy--Schwarz\\
-$P(\Walg_3)$ & $25c^2 + 100c - 428$ & gradient non-autonomy\\
-$S_{4,T}$ & $10/(c(5c+22))$ & Virasoro contact\\
-$S_{4,W}$ & $2560/(c(5c+22)^3)$ & $W$-line contact\\
-$\Delta_T$ & $40/(5c+22)$ & $8\kappa_T S_{4,T}$\\
-$\Delta_W$ & $20480/(3(5c+22)^3)$ & $8\kappa_W S_{4,W}$\\
-$\Lambda_0|h\rangle$ & $(h^2 - 9h/5)|h\rangle$ & mode expansion\\
+\(c(k)\) & exact & Fateev--Lukyanov DS formula\\
+\(c(k)+c(-k-6)=100\) & exact & rational-function arithmetic\\
+\(WW\to\Lambda,\partial\Lambda\) & exact & \(32/D(c),16/D(c)\)\\
+\(N_\Lambda\) & exact & \(cD(c)/10\)\\
+\(\Lambda_0|h,w\rangle\) & exact & \((h^2+h/5)|h,w\rangle\)\\
+\(\det M_1\) & exact & Equation~\eqref{eq:w3hol-level-one-null-curve}\\
+\(\mathcal A^{\mathrm i}\to\bar B^{\mathrm{ch}}(\mathcal A)\)
+& open & \(H_{W_3}^{\mathrm{pres}}\)\\
+\(\mathcal A^{\mathord{!}}\) & conditional
+& \(H_{W_3}^{\mathrm{DS/bar}}\)\\
+\(Z_{\mathrm{ch}}^{\mathrm{der}}(\mathcal A)\) comparison
+& open & \(H_{W_3}^{\mathrm{cen}}+H_{W_3}^{\mathrm{OC}}\)\\
+\(K_{\mathcal A}^{\mathrm{coll}}\) & conditional
+& \(H_{W_3}^{\mathrm{bar}}+H_{W_3}^{\mathrm{coll}}\)\\
+\(\kappa_{\mathrm{ch}},\rho_{W_3}^{\mathrm{mod}},K^\kappa\)
+& open & \(H_{W_3}^{\mathrm{mod}}+H_{W_3}^{\mathrm{rescale}}\)\\
+stable-graph sums & open
+& \(H_{W_3}^{\mathrm{proj}}+H_{W_3}^{\mathrm{sew}}\)\\
+scalar shadows & open
+& \(H_{W_3}^{\mathrm{res}}+H_{W_3}^{\mathrm{proj}}\)\\
+Hamiltonians & conditional
+& \(H_{W_3}^{\mathrm{flat}}+H_{W_3}^{\mathrm{OC}}\)\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\noindent\textbf{Engine.}
-The compute engine
+The companion engine
 \texttt{compute/lib/theorem\_w3\_holographic\_datum\_engine.py}
-implements the scalar formulas above with exact rational arithmetic
-(\texttt{Fraction}). The companion test file
-\texttt{compute/tests/test\_theorem\_w3\_holographic\_datum\_engine.py}
-exercises Bernoulli numbers, harmonic sums, channel decomposition,
-the $r$-matrix pole-shift rule, Faber--Pandharipande genus-$1$ and
-genus-$2$ formulas, the four graph terms in
-$\delta F_2^{\mathrm{cross}}$, the propagator variance
-Cauchy--Schwarz identity, the $T$- and $W$-line shadow metrics, the
-discriminants, the complementarity sum $250/3$, and the distinction
-between $c^*=50$ and $c_{\mathrm{crit}}=100$. The genus-$3$ row is
-implemented separately in
-\texttt{compute/lib/w3\_genus3\_cross\_channel.py} and tested by
-\texttt{compute/tests/test\_w3\_genus3\_cross\_channel.py}. These
-computations do not prove the derived-centre comparison, the DS/bar
-transport equivalence, or analytic sewing for a physical bulk.
-
-\medskip\noindent\textbf{Algebraic domain.}
-The formulas are family-specific. The $\Walg_3$ modular characteristic
-is $5c/6$, not the Virasoro value $c/2$. The collision residue has
-pole orders one below the OPE pole orders because $d\log E(z,w)$ has
-weight~$1$ in every channel. The complementarity sum is $250/3$.
-The genus-$1$ scalar formula does not extend to genus~$2$ or to the
-finite genus-$3$ window once the two weights \(2\) and \(3\) interact
-through the cross-channel graphs.
-
-\medskip
-\noindent
-On the conditional DS/bar transport locus, and only after the
-specified derived-centre comparison map \(\beta_{\mathrm{der}}\) and the relevant
-sewing completion are supplied, the algebraic surface of the rank-$2$
-holographic modular Koszul datum for $\Walg_3$ is
-\[
-\mathcal H(\Walg_3)=
-(\Walg_3^k,\,
-H^\ast B^{\mathrm{ch}}(\Walg_3^k),\,
-\Walg_3^{k'},\,
-Z^{\mathrm{der}}_{\mathrm{ch}}(\Walg_3^k),\,
-r_{\Walg_3}(z),\,
-\Theta_{\Walg_3},\,
-\nabla^{\mathrm{hol}})
-\]
-on the DS/bar transport locus, with $k'=-k-6$, $c'=100-c$, and
-the fourth entry interpreted as the chiral derived centre rather
-than the line/evaluation category.
+checks the exact rows symbolically and represents every reconstruction
+row by a typed open or conditional packet.  Its tests verify the
+central reflection, the \(32/16\) OPE normalization, \(N_\Lambda\),
+the \(\Lambda_0\) action, the level-one determinant, and every
+hypothesis boundary.

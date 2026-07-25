@@ -235,7 +235,7 @@ def certification_scope() -> Dict[str, Any]:
         'object_firewall': {
             'Omega(B(A))=A': 'bar-cobar inversion, not Koszul duality',
             'A^!': 'Verdier/continuous-linear dual branch under finite-type/completed hypotheses',
-            'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild bulk branch',
+            'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild closed-sector branch',
         },
         'kernel_constants': KERNEL_CONSTANTS,
     }

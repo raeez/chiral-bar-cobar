@@ -759,13 +759,13 @@ class TestHolographicDatum:
         )
 
     def test_object_branch_status_blocks_dual_bulk_conflation(self):
-        """A^!, A^i, bar-cobar inversion, and Hochschild bulk stay typed."""
+        """A^!, A^i, bar-cobar inversion, and Hochschild closed-sector stay typed."""
         result = holographic_datum_comparison(3, Fraction(2))
 
         assert result["object_branch_status"] == OBJECT_BRANCH_STATUS
         assert "Verdier/continuous-linear dual" in result["koszul_dual_branch"]
         assert result["derived_center_status"] == (
-            "ChirHoch^*(A,A), the Hochschild bulk object, not A^!"
+            "ChirHoch^*(A,A), the Hochschild closed-sector object, not A^!"
         )
         assert result["object_branch_status"]["Omega(B(A))"] == (
             "bar-cobar inversion recovering A, not Koszul duality"

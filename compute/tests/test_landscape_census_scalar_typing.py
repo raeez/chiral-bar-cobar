@@ -18,6 +18,12 @@ def squashed(text: str) -> str:
     return " ".join(text.split())
 
 
+def between(text: str, start: str, end: str) -> str:
+    start_index = text.index(start)
+    end_index = text.index(end, start_index)
+    return text[start_index:end_index]
+
+
 def test_landscape_census_types_fp_trace_as_scalar_or_exact_lane():
     body = compact(read())
 
@@ -38,7 +44,10 @@ def test_landscape_census_types_fp_trace_as_scalar_or_exact_lane():
             r"=\kappa(\cA)/24"
         ),
         r"F_2^{\mathrm{sc}}/F_1^{\mathrm{sc}}=7/240",
-        r"\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g",
+        (
+            r"\operatorname{obs}^{\mathrm{sc}}_1(\cA)"
+            r"=\kappa_{\mathrm{mod}}(\cA)\lambda_1"
+        ),
         r"\theta_1(\cA)=\kappa(\cA)\cdot\mu",
         (
             r"F_1(\mathcalW^k(\mathfrak{g}))"
@@ -109,3 +118,97 @@ def test_landscape_census_retired_untyped_phrases_do_not_reappear():
     )
     for phrase in retired_phrases:
         assert phrase not in text
+
+
+def test_principal_wn_modular_conductor_carries_both_hypotheses():
+    text = read()
+    wn_package = (
+        r"H_{\mathrm{diag}}^{g=1}+H_{W_N}^{\mathrm{DS/bar}}"
+    )
+    w3_package = (
+        r"H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}"
+    )
+
+    blocks = (
+        (
+            between(
+                text,
+                r"For the principal family, write",
+                r"{\scriptsize",
+            ),
+            wn_package,
+        ),
+        (
+            between(
+                text,
+                r"Principal \(\mathcal W_N\) &",
+                r"Critical affine \(V_{-h^\vee}(\fg)\) &",
+            ),
+            wn_package,
+        ),
+        (
+            between(
+                text,
+                r"\begin{remark}[Standard-family constants",
+                r"\begin{table}[ht]",
+            ),
+            wn_package,
+        ),
+        (
+            between(
+                text,
+                r"\label{cor:anomaly-ratio-ds}",
+                r"\begin{corollary}[Genus-",
+            ),
+            wn_package,
+        ),
+        (
+            between(
+                text,
+                r"\label{thm:census-witness-complementarity}",
+                r"\begin{proposition}[Archetype-by-archetype",
+            ),
+            w3_package,
+        ),
+        (
+            between(
+                text,
+                r"\label{prop:archetype-complementarity-bridge}",
+                r"\begin{proposition}[Mukai lattice arithmetic",
+            ),
+            w3_package,
+        ),
+        (
+            between(
+                text,
+                r"\label{thm:census-self-dual-locus}",
+                r"\begin{remark}[Three-path computation of",
+            ),
+            w3_package,
+        ),
+        (
+            between(
+                text,
+                r"\label{rem:koszul-conductor-explicit}",
+                r"\begin{proposition}[Fateev--Lukyanov",
+            ),
+            wn_package,
+        ),
+    )
+
+    for block, package in blocks:
+        assert package in block
+
+
+def test_principal_w3_separates_exact_central_and_conditional_modular_data():
+    text = read()
+    compact_text = compact(text)
+
+    assert r"K_3^c=100" in compact_text
+    assert "exact central conductor is $K_3^c=100$" in text
+    assert "conditional modular conductor is" in text
+    assert r"K_3^{\kappa_{\mathrm{mod}}}=250/3" in compact_text
+    assert r"\{0,\,13\}" in text
+    assert "unconditional scalar Verdier values" in text
+    assert r"\{0,\,13,\,250/3\}" in text
+    assert "conditional value $250/3$" in text

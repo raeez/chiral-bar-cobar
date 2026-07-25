@@ -54,13 +54,18 @@ identification; Theorems A, B, C, D, H are corollaries.
 
 | Theorem | Statement | Level | Hypothesis package |
 |:-------:|-----------|:-----:|--------------------|
-| **A** | Bar–cobar Koszul reflection $K^2 \simeq \mathrm{id}$ on $\mathrm{Kosz}(X)$ | 1 ↔ 2 | augmented + complete + finite-dim graded |
-| **B** | Strict bar–cobar inversion $\Omega(B(C)) \xrightarrow{\sim} C$ | 1 → 3 | Koszul locus; coderived / weight-completed off-locus for class M |
-| **C** | Complementarity per family stratum: $\kappa + \kappa^!$ ceiling | 5 | five $\kappa$-measurements per family; collapse pattern |
-| **D** | Modular characteristic $\mathrm{obs}_g = \kappa \cdot \lambda_g$ uniform-weight | 4 | $H^*(\overline{M}_{g,n})$ class; multi-weight via $\delta F_g^{\mathrm{cross}}$ |
-| **H** | Chiral Hochschild concentration $\subset \{0,1,2\}$ | 3 | finiteness + completion (class M needs completed / pro / $J$-adic) |
+| **A** | Enhanced associative bar–cobar reconstruction $\Omega_XB_X(A_b)\simeq A_b$; Verdier algebra $K_X(A_b)=\mathbb D_{\operatorname{Ran}}B_X(A_b)$ on the dualizable surface | 1 ↔ 2 | augmented/conilpotent Ran objects; $H_{\mathrm{fact}}$, $H_{\mathrm{conv}}$, $H_{\mathrm{VD}}$ for the three comparison lanes |
+| **B** | For a chosen quadratic presentation, $q_{A_b}\colon A_b^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\to B_X(A_b)$ is a quasi-isomorphism, equivalently $\Omega_X(A_b^{\mathrm i})\simeq A_b$ | 1 ↔ 2 | $H_{\mathrm{CL}}(A_b,A_b^{\mathrm i},\tau_{\mathrm i})$; $H_{\mathrm{PBW}}^{\mathrm{det}}$ for the detecting spectral sequence |
+| **C** | The ordinary centre local system gives $\mathbf C_g(A_b)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A_b))$ and its represented Verdier splitting; $K^\kappa$ is the later normalized scalar trace | 3 and 5 | strict-flat fibre comparison, represented Verdier involution, perfect pairing; derived-centre brace comparison and C2 BV package when supplied |
+| **D** | Four typed outputs: $\operatorname{Obs}^{\mathrm{def}}_g$, its pointed genus-one trace, the perfect Hodge object $\mathfrak O_g^K$, and the stable-graph scalar $F_g$ | 4–5 | $H_D^1$, $H_D^K$, $H_D^{\mathrm{tr}}$, $H_D^{\mathrm{graph}}$ |
+| **H** | Each family datum $H_H(A_b;S)$ gives a strong deformation retract of the derived chiral centre onto a complete model supported in $S$ | 3 | complete chart and family models, retract, filtration convergence, ordered-to-symmetric and bounded-to-chart comparisons |
 
-**Universal chain-homotopy** (load-bearing): $h_{A_b} = h_{\mathrm{LV}}/(\kappa + \kappa^!)$.
+**Family chain rescaling.**  Once maps $(\iota_A,p_A)$ and an operator
+$h_A$ satisfy
+$d_Ah_A+h_Ad_A=\nu_A(\mathrm{id}-\iota_Ap_A)$ with
+$\nu_A\in k^\times$, the operator $\nu_A^{-1}h_A$ is a contraction.
+Identifying $\nu_A$ with the algebra-level Verdier sum $K^\kappa(A)$
+is a further comparison to the scalar trace complex.
 
 ## Five archetypes × five-$\kappa$ stratification matrix
 
@@ -141,21 +146,25 @@ Six parts plus appendices:
 - **Part II** (Bar–Cobar Engine): Theorem A in parametric strength
   (four lanes L1 chain / L2 Quillen / L3 $(\infty,1)$ /
   L4 $(\infty,2)$-properad); Priddy / Positselski lane split;
-  universal chain-homotopy $h_{A_b} = h_{\mathrm{LV}}/\mathcal N(A_b)$
-  with $\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$
-  the Verdier-Ran-on-bar norm (distinct from the master-concordance
-  scalar Verdier sum $K^\kappa$; cf.
-  Convention~`conv:A-two-kappa-shriek`)
-- **Part III** (The Bulk): Theorem H Hochschild concentration ⊂
-  $\{0,1,2\}$ in completed ambient; Theorem B Positselski inversion
-  on Koszul locus; bar $\neq$ bulk firewall (MA-4)
+  family contractions obtained from
+  $d_Ah_A+h_Ad_A=\nu_A(\mathrm{id}-\iota_Ap_A)$ after constructing
+  the four pieces $(\iota_A,p_A,h_A,\nu_A)$ on one complex
+- **Part III** (The Bulk): Theorem H family-indexed support transport
+  in the completed derived centre; Theorem B quadratic recognition
+  through $q_A\colon A^{\mathrm i}\to B_X(A)$; a named open–closed
+  comparison carries the derived centre to a physical bulk realization
 - **Part IV** (Five-Archetype Landscape): the 5×5 $\kappa$
   stratification matrix, chart-class enumeration per archetype,
   archetype-by-archetype computation
-- **Part V** (Modular Tower): Theorem D genus tower
-  $\mathrm{obs}_g(A_b) = \kappa(A_b) \cdot \lambda_g$ on the
-  uniform-weight scalar lane, modular trace + clutching on the open
-  category, shadow-tower quadrichotomy with Borel-Riccati structure
+- **Part V** (Modular Tower): Theorem D four-stage trace tower:
+  $\operatorname{Obs}^{\mathrm{def}}_g$ in the deformation complex;
+  $\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_1
+  =\kappa\lambda_1$ under $H_D^1$;
+  $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ under $H_D^K$;
+  and $F_g=\kappa\lambda_g^{\mathrm{FP}}+
+  \delta F_g^{\mathrm{cross}}$ under $H_D^{\mathrm{graph}}$;
+  modular trace + clutching on the open category and the
+  shadow-tower quadrichotomy with weighted-Riccati structure
   $|\omega|^2(c) = c^2(5c+22)/[4(45c+218)]$
 - **Part VI** (Seven Faces and Frontier): seven faces of $r(z)$ as
   two GRT-orbits + Brown motivic bridge; KSDual as $\mathbb{Z}/2$-fixed

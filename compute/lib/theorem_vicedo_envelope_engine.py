@@ -125,7 +125,7 @@ def koszul_object_firewall(algebra: str = 'A') -> Dict[str, str]:
         ),
         'Z_ch^der(A)': (
             f'Z_ch^der({algebra}) = ChirHoch^*({algebra},{algebra}): '
-            'Hochschild bulk sector, not Koszul dual'
+            'Hochschild closed-sector sector, not Koszul dual'
         ),
         'Omega(B(A))': (
             f'Omega(B({algebra})) = {algebra}: bar-cobar inversion, '
@@ -1046,7 +1046,7 @@ class CFGComparison:
         swiss_cheese_match: whether the SC boundary comparison matches
         comparison_scope: finite comparison scope
         bar_complex_role: object-separation statement for B(A), A^i, A^!
-        derived_center_role: Hochschild/bulk lane statement
+        derived_center_role: Hochschild/closed-sector lane statement
         promotes_to_modular_koszul_theorem: always False for this diagnostic
     """
     lie_algebra: str
@@ -1071,7 +1071,7 @@ def cfg_comparison(lie_algebra: str, level: Any = None) -> CFGComparison:
     This function records only the finite boundary comparison:
       - B(V_k(g)) is the ordered bar coalgebra.
       - A^i=H^*(B(A)) and A^! is the Verdier/completed dual branch.
-      - Z_ch^der(A)=ChirHoch^*(A,A) is the Hochschild bulk sector.
+      - Z_ch^der(A)=ChirHoch^*(A,A) is the Hochschild closed-sector sector.
     """
     if level is None:
         level = k_sym
@@ -1089,7 +1089,7 @@ def cfg_comparison(lie_algebra: str, level: Any = None) -> CFGComparison:
             'A^! enters only after Verdier/completed duality'
         ),
         derived_center_role=(
-            'Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild bulk, not A^!'
+            'Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild closed-sector, not A^!'
         ),
         promotes_to_modular_koszul_theorem=False,
     )

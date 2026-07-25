@@ -39,7 +39,7 @@ LITERATURE SURVEYED:
   [CDG20] Costello-Dimofte-Gaiotto, "Boundary Chiral Algebras and
           Holomorphic Twists", arXiv:2005.00083, CMP 399 (2023).
           Constructs bulk and boundary algebras for free theories, LG models,
-          gauge theories with matter/CS. The bulk algebra is commutative with
+          gauge theories with matter/CS. The closed-sector algebra is commutative with
           shifted Poisson bracket. Boundary algebra is a module for the bulk.
 
   [FPW24] Fernandez-Paquette-Williams, "Twisted holography on AdS_3 x S^3 x K3",
@@ -54,7 +54,7 @@ SCOPE OF THIS ENGINE:
       H(A) = (A, A^i, A^!, C, r(z), Theta_A, nabla^hol),
 
   where A^i is the bar-dual coalgebra H^*(B(A)), A^! is the Verdier/Koszul
-  companion algebra, and C = Z_ch^der(A) is the chiral derived-centre bulk
+  companion algebra, and C = Z_ch^der(A) is the chiral derived-centre closed-sector
   slot. This file records comparison strings and scalar invariants from
   those slots. It is a typed scalar comparison surface, not a construction
   of the whole package, and it never identifies H(A) with any one of A,
@@ -87,7 +87,7 @@ COMPARISON STRUCTURE:
   We compare five projected aspects of H(A):
   1. Boundary algebra identification (our A vs Costello's boundary VOA)
   2. Verdier/Koszul companion (our A^! vs Costello's Koszul partner)
-  3. Bulk slot (our C = Z_ch^der(A) vs Costello's bulk geometry)
+  3. Closed-sector slot (our C = Z_ch^der(A) vs Costello's bulk geometry)
   4. R-matrix and Yangian (our r(z) vs Costello's R-matrix)
   5. Higher genus (our Theta_A genus tower vs Costello's scope)
 
@@ -112,7 +112,7 @@ ANTI-PATTERN COMPLIANCE:
   AP24: kappa + kappa' = 0 for KM/free fields; != 0 for W-algebras
   AP25: B(A) coalgebra, A^i = H^*B(A), A^! via Verdier, Omega(B(A)) = A
   AP27: bar propagator d log E(z,w) weight 1 always
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  AP33: H_k^! is the curved second-kind Sym branch, not H_{-k}
   AP34: bar-cobar inversion != open-to-closed; C = Z_ch^der(A), NOT bar
   AP39: kappa != c/2 in general
   AP44: lambda-bracket = OPE mode / n!
@@ -150,8 +150,8 @@ AP25_OBJECT_ROLES: Dict[str, str] = {
     "A^i": "bar-dual coalgebra H^*(B(A))",
     "A^!": "Verdier/Koszul companion algebra formed from A^i",
     "Omega(B(A))": "bar-cobar inverse recovering A",
-    "C": "C-slot bulk object Z_ch^der(A)",
-    "Z_ch^der(A)": "chiral Hochschild derived-centre bulk slot",
+    "C": "C-slot closed-sector object Z_ch^der(A)",
+    "Z_ch^der(A)": "chiral Hochschild derived-centre closed-sector slot",
 }
 
 
@@ -381,7 +381,7 @@ class OurSetup:
     The seven-entry holographic package is
     (A, A^i, A^!, C, r(z), Theta_A, nabla^hol). This record keeps the
     boundary A, the Verdier/Koszul companion A^!, and the derived-centre
-    bulk slot C separate; it does not construct A^i or identify
+    closed-sector slot C separate; it does not construct A^i or identify
     Omega(B(A)) with Koszul duality.
     """
     boundary_algebra: str
@@ -439,7 +439,7 @@ def costello_m2_brane() -> CostelloSetup:
     Koszul pairing: proved to all orders in perturbation theory in
     Costello's deformation setting. This comparison records that partner
     as a Costello-side Koszul object, not as Omega(B(A)) = A inversion and
-    not as the C = Z_ch^der(A) bulk slot.
+    not as the C = Z_ch^der(A) closed-sector slot.
 
     The "perturbation theory" here is in hbar (Omega deformation) and
     1/N (large-N expansion), NOT in the worldsheet genus.
@@ -561,7 +561,7 @@ def costello_cdg_boundary() -> CostelloSetup:
         ),
         key_reference="Costello-Dimofte-Gaiotto, arXiv:2005.00083",
         notes=(
-            "This is the general framework paper. The bulk algebra being "
+            "This is the general framework paper. The closed-sector algebra being "
             "commutative with shifted Poisson bracket is exactly our "
             "PVA descent result (Vol II, Parts II and IV)."
         ),
@@ -749,7 +749,7 @@ def compare_m2_brane(N: int = 1, k: int = 1) -> ComparisonResult:
         bulk_notes=(
             "Costello's DCA is a line/bulk symmetry algebra of supersymmetric "
             "operators in twisted SUGRA. It is compared to our C-slot only "
-            "after passing to protected bulk observables. Our C slot is "
+            "after passing to protected closed-sector observables. Our C slot is "
             "Z^der_ch(A), the chiral derived centre (Hochschild cochains), "
             "and is deliberately separate from A^i and A^!. The comparison "
             "is proved for boundary-linear theories "
@@ -787,7 +787,7 @@ def compare_m2_brane(N: int = 1, k: int = 1) -> ComparisonResult:
             "1. Explicit bulk geometry (11d SUGRA in Omega-background). "
             "2. All-orders perturbative control in hbar and 1/N. "
             "3. Concrete identification: boundary Yangian = double-loop algebra. "
-            "4. Direct construction of bulk algebra from SUGRA field content."
+            "4. Direct construction of closed-sector algebra from SUGRA field content."
         ),
     )
 

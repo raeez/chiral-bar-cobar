@@ -12,7 +12,7 @@ where:
   A = boundary chiral algebra of the holomorphic twist
   A^i = bar-dual coalgebra H^*(B(A))
   A! = Verdier/Koszul companion obtained from A^i on the Koszul locus
-  C = Z_ch^der(A), the chiral Hochschild bulk slot
+  C = Z_ch^der(A), the chiral Hochschild closed-sector slot
   r(z) = boundary collision residue (R-matrix)
   Theta_A = universal MC element (bar-intrinsic)
   nabla^hol = holographic shadow connection
@@ -569,12 +569,13 @@ class ABJMHolographicDatum:
         return f"A_ABJM({self.abjm.N},{self.abjm.k})!"
 
     @property
-    def bulk_tft(self) -> str:
-        """Descriptor for the C = Z_ch^der(A) comparison slot.
+    def closed_sector_description(self) -> str:
+        """Descriptor for C = Z_ch^der(A), the closed-sector slot.
 
-        The bulk of the holomorphic twist of ABJM is a 3d topological
-        theory of Rozansky-Witten type, with target the hyperkahler
-        manifold T*(C^N/Z_k).
+        The Rozansky-Witten target records the comparison model for the
+        closed-sector actor. Interpreting it as a physical bulk theory
+        requires an OCA/HT comparison theorem, not this scalar compute
+        package.
 
         At N=1: T*(C/Z_k) = resolution of A_{k-1} singularity.
         """
@@ -596,7 +597,7 @@ class ABJMHolographicDatum:
         return True
 
     def summary(self) -> Dict[str, str]:
-        """Human-readable summary preserving legacy keys plus scope guards."""
+        """Human-readable summary of typed slots plus scope guards."""
         return {
             "A": self.A_name,
             "A^i": self.A_bar_dual_name,
@@ -605,13 +606,13 @@ class ABJMHolographicDatum:
             "kappa(A)": str(self.abjm.kappa),
             "kappa(A!)": str(self.abjm.kappa_dual),
             "complementarity": str(self.abjm.complementarity_sum),
-            "C (bulk)": self.bulk_tft,
+            "C (closed-sector)": self.closed_sector_description,
             "r(z)": self.r_matrix_type,
             "shadow_depth": str(self.abjm.shadow_depth),
             "nabla^hol flat": str(self.connection_is_flat),
             "dual_slot_scope": "A! is a Verdier/Koszul companion scalar summary, not Omega(B(A))",
             "bar_cobar_scope": "Omega(B(A)) recovers A by inversion; it is not the A! slot",
-            "bulk_slot_scope": "C is Z_ch^der(A), distinct from A, B(A), A^i, and A!",
+            "closed_sector_slot_scope": "C is Z_ch^der(A), distinct from A, B(A), A^i, and A!",
             "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
         }
 
@@ -1036,7 +1037,7 @@ def abjm_datum_N1_k1() -> Dict[str, object]:
         "A_dual": "Verdier/Koszul companion summary for A_ABJM(1,1)",
         "kappa_A_dual": data.kappa_dual,
         "complementarity": data.complementarity_sum,
-        "C_bulk": datum.bulk_tft,
+        "C_closed_sector": datum.closed_sector_description,
         "r_matrix": r,
         "shadow_depth": data.shadow_depth,
         "F_1": abjm_free_energy_one_loop(1, 1),
@@ -1045,7 +1046,7 @@ def abjm_datum_N1_k1() -> Dict[str, object]:
         "C_k": float(abjm_C_k(1)),
         "dual_slot_scope": "A_dual is the Verdier/Koszul companion summary, not Omega(B(A))",
         "bar_cobar_scope": "Omega(B(A)) recovers A by inversion",
-        "bulk_slot_scope": "C_bulk represents C = Z_ch^der(A), distinct from A, B(A), A_i, and A_dual",
+        "closed_sector_slot_scope": "C_closed_sector represents C = Z_ch^der(A), distinct from A, B(A), A_i, and A_dual",
         "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
     }
 
@@ -1071,7 +1072,7 @@ def abjm_datum_N2_k1() -> Dict[str, object]:
         "F_1": abjm_free_energy_one_loop(2, 1),
         "dual_slot_scope": "A_dual is the Verdier/Koszul companion summary, not Omega(B(A))",
         "bar_cobar_scope": "Omega(B(A)) recovers A by inversion",
-        "bulk_slot_scope": "C = Z_ch^der(A) is distinct from A, B(A), A_i, and A_dual",
+        "closed_sector_slot_scope": "C = Z_ch^der(A) is distinct from A, B(A), A_i, and A_dual",
         "compute_package_scope": "six primary projections: scalar/descriptor package; not VOA reconstruction",
     }
 

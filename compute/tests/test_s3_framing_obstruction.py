@@ -6,7 +6,7 @@ every claim is verified by at least 2 independent methods.
 
 Test groups:
   1. Homotopy group computations (pi_k of classifying spaces)
-  2. Topological obstruction vanishing for CY3
+  2. Degree-three classifying-space groups in the chosen models
   3. Explicit CY3 examples (C^3, quintic, K3xE, conifold)
   4. BV obstruction analysis
   5. Mirror symmetry checks
@@ -15,11 +15,12 @@ Test groups:
   8. Cross-checks with existing CY modules
 """
 
-import math
-import pytest
-from pathlib import Path
 from fractions import Fraction
+import math
 
+import pytest
+
+from compute.lib.bcov_bar_complex import pv_k3_times_e, pv_quintic
 from compute.lib.s3_framing_obstruction import (
     # Homotopy groups
     pi_k_BO,
@@ -32,7 +33,10 @@ from compute.lib.s3_framing_obstruction import (
     K3_TIMES_E,
     MIRROR_QUINTIC,
     # Framing obstruction
+    FramingAnomalyComparison,
     FramingObstruction,
+    RepresentedBVClass,
+    RepresentedNullHomotopy,
     s_d_framing_obstruction,
     obstruction_c3,
     obstruction_quintic,
@@ -56,10 +60,6 @@ from compute.lib.s3_framing_obstruction import (
     d3_functor_existence_analysis,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-PREFACE_TEX = REPO_ROOT / "chapters/frame/preface.tex"
-
-
 # =========================================================================
 # 1. Homotopy group tests
 # =========================================================================
@@ -79,27 +79,26 @@ class TestHomotopyGroups:
         for n in range(1, 10):
             assert pi_k_BO(1, n) == "Z/2"
 
-    def test_pi_2_BO_spin(self):
-        """pi_2(BO(n)) = Z/2 for n >= 2 (spin structure obstruction)."""
-        for n in range(2, 10):
+    def test_pi_2_BO_unstable_and_stable_values(self):
+        """The loop equivalence reads pi_2 BO(n) from pi_1 O(n)."""
+        assert pi_k_BO(2, 1) == "0"
+        assert pi_k_BO(2, 2) == "Z"
+        for n in range(3, 10):
             assert pi_k_BO(2, n) == "Z/2"
 
-    def test_pi_3_BO_stable(self):
-        """pi_3(BO(n)) = Z for n >= 3 (first Pontryagin class).
+    def test_pi_3_BO_is_zero(self):
+        """The identity pi_3 BO(n)=pi_2 O(n) gives zero in every rank."""
+        for n in range(1, 10):
+            assert pi_k_BO(3, n) == "0"
 
-        Standard result: in stable range, pi_3(BO) = Z.
-        BUT: pi_3(BO(2)) = 0 (unstable).
-        """
-        for n in range(3, 10):
-            assert pi_k_BO(3, n) == "Z", f"pi_3(BO({n})) should be Z"
-
-    def test_pi_3_BO_2_unstable(self):
-        """pi_3(BO(2)) = 0 (unstable range).
-
-        BO(2) has pi_3 = 0 because O(2) has pi_2 = 0.
-        O(2) = S^1 x Z/2, and pi_2(S^1) = 0.
-        """
-        assert pi_k_BO(3, 2) == "0"
+    def test_pi_4_BO_unstable_rank_split(self):
+        """The fourth group records the unstable O(3) and O(4) factors."""
+        assert pi_k_BO(4, 1) == "0"
+        assert pi_k_BO(4, 2) == "0"
+        assert pi_k_BO(4, 3) == "Z"
+        assert pi_k_BO(4, 4) == "Z+Z"
+        for n in range(5, 10):
+            assert pi_k_BO(4, n) == "Z"
 
     # --- pi_k(BSp(2m)) ---
 
@@ -113,16 +112,17 @@ class TestHomotopyGroups:
         for m in range(1, 10):
             assert pi_k_BSp(2, m) == "0"
 
-    def test_pi_3_BSp_trivial_KEY(self):
+    def test_pi_3_BSp_is_zero(self):
         """pi_3(BSp(2m)) = 0 for all m >= 1.
 
-        THIS IS THE KEY RESULT: the topological S^3-framing obstruction
-        for CY3 categories VANISHES because pi_3(BSp) = 0.
+        This is the primary degree-three input from the chosen symplectic
+        structure-group model.
 
         Proof: pi_3(BSp(2m)) = pi_2(Sp(2m)).
         Sp(2) = SU(2) = S^3, so pi_2(Sp(2)) = pi_2(S^3) = 0.
         For m >= 2: the fibration Sp(2m-2) -> Sp(2m) -> S^{4m-1}
-        gives the long exact sequence, and pi_2 vanishes at each stage.
+        gives the long exact sequence, whose degree-two term is zero at
+        each stage.
         """
         for m in range(1, 20):
             assert pi_k_BSp(3, m) == "0", (
@@ -162,9 +162,7 @@ class TestHomotopyGroups:
         GL(n,C) deformation-retracts onto U(n).
         pi_3(BU(n)) = pi_2(U(n)) = 0 for all n >= 1 (Bott periodicity).
 
-        This is the SECOND proof that the topological S^3-framing
-        obstruction vanishes: even without using the symplectic structure,
-        the complex linear structure group already kills it.
+        This gives the complex-linear route to the same primary group.
         """
         assert pi_k_BGL_C(3) == "0"
 
@@ -174,53 +172,53 @@ class TestHomotopyGroups:
 
 
 # =========================================================================
-# 2. Topological obstruction vanishing for CY3
+# 2. Degree-three classifying-space groups for CY3 models
 # =========================================================================
 
 class TestTopologicalObstruction:
-    """The topological S^3-framing obstruction vanishes for ALL CY3.
+    """The chosen symplectic and complex-linear models have zero pi_3.
 
     Two independent proofs:
     Path 1: pi_3(BSp(2m)) = pi_2(Sp(2m)) = 0 (symplectic structure group).
     Path 2: pi_3(BGL(n,C)) = pi_2(U(n)) = 0 (complex structure group).
     """
 
-    def test_topological_obstruction_c3(self):
+    def test_primary_coordinate_c3(self):
         obs = obstruction_c3()
         assert obs.topological_obstruction == 0
 
-    def test_topological_obstruction_quintic(self):
+    def test_primary_coordinate_quintic(self):
         obs = obstruction_quintic()
         assert obs.topological_obstruction == 0
 
-    def test_topological_obstruction_mirror_quintic(self):
+    def test_primary_coordinate_mirror_quintic(self):
         obs = obstruction_mirror_quintic()
         assert obs.topological_obstruction == 0
 
-    def test_topological_obstruction_k3xe(self):
+    def test_primary_coordinate_k3xe(self):
         obs = obstruction_k3_times_e()
         assert obs.topological_obstruction == 0
 
-    def test_topological_obstruction_conifold(self):
+    def test_primary_coordinate_conifold(self):
         obs = obstruction_conifold()
         assert obs.topological_obstruction == 0
 
-    def test_universal_vanishing_path_1_symplectic(self):
+    def test_symplectic_primary_group(self):
         """Path 1: for ALL symplectic ranks, pi_3(BSp) = 0."""
         for m in range(1, 50):
             assert pi_k_BSp(3, m) == "0"
 
-    def test_universal_vanishing_path_2_complex(self):
+    def test_complex_primary_group(self):
         """Path 2: pi_3(BGL(C)) = 0 (complex structure group)."""
         assert pi_k_BGL_C(3) == "0"
 
-    def test_d1_also_vanishes(self):
-        """Consistency: d=1 framing also has no obstruction."""
+    def test_d1_primary_coordinate(self):
+        """The dimension-one primary coordinate equals zero."""
         obs = s_d_framing_obstruction(1, "elliptic_curve")
         assert obs.topological_obstruction == 0
 
-    def test_d2_also_vanishes(self):
-        """Consistency: d=2 framing also has no obstruction (for CY)."""
+    def test_d2_primary_coordinate(self):
+        """The supplied tangent Calabi--Yau class sets c_1(TX) to zero."""
         obs = s_d_framing_obstruction(2, "K3", mukai_rank=24)
         assert obs.topological_obstruction == 0
 
@@ -234,19 +232,24 @@ class TestExplicitCY3:
 
     # --- C^3 ---
 
-    def test_c3_obstruction_vanishes(self):
-        """C^3: trivial CY3, all obstructions vanish."""
+    def test_c3_primary_and_chain_state(self):
+        """The local model has a zero primary class and an open chain lane."""
         obs = obstruction_c3()
         assert obs.topological_obstruction == 0
-        assert obs.bv_obstruction_class == Fraction(0)
-        assert obs.framing_anomaly == Fraction(0)
-        assert obs.trivialization_exists is True
+        assert obs.scalar_shadow == Fraction(0)
+        assert obs.bv_obstruction_class is None
+        assert obs.framing_anomaly is None
+        assert obs.trivialization_exists is None
+        assert obs.bv_cocycle_supplied is False
+        assert obs.trivialization_supplied is False
+        assert obs.framing_anomaly_supplied is False
 
     def test_c3_is_rigid(self):
-        """C^3 has no moduli (rigid CY3)."""
+        """The affine local model occupies the rigid construction lane."""
         obs = obstruction_c3()
-        assert "rigid" in obs.chain_level_obstruction.lower() or \
-               "trivial" in obs.chain_level_obstruction.lower()
+        assert "rigid local model" in obs.chain_level_obstruction.lower()
+        assert obs.structure_group == "chosen local symplectic model"
+        assert "each supplied finite rank" in obs.obstruction_group
 
     # --- Quintic ---
 
@@ -271,29 +274,33 @@ class TestExplicitCY3:
         """Symplectic rank for quintic = 2*(1 + 101) = 204."""
         assert QUINTIC.symplectic_rank == 204
 
-    def test_quintic_topological_obstruction_vanishes(self):
+    def test_quintic_primary_coordinate(self):
         obs = obstruction_quintic()
         assert obs.topological_obstruction == 0
 
-    def test_quintic_bv_obstruction_nonzero(self):
-        """The BV (chain-level) obstruction for the quintic is NONZERO.
-
-        BV class = kappa = -25/3.
-        This is nonzero because the quintic has non-trivial moduli.
-        """
+    def test_quintic_scalar_and_bv_lanes_are_distinct(self):
+        """The exact Euler scalar precedes a represented BV cocycle."""
         obs = obstruction_quintic()
-        assert obs.bv_obstruction_class == Fraction(-25, 3)
-        assert obs.bv_obstruction_class != 0
+        assert obs.scalar_shadow == Fraction(-25, 3)
+        assert obs.bv_obstruction_class is None
+        assert obs.scalar_projection_agrees is None
+        assert obs.bv_cocycle_supplied is False
 
-    def test_quintic_bv_trivializable(self):
-        """The BV obstruction is trivializable via holomorphic CS."""
+    def test_quintic_chain_trivialization_is_a_construction_problem(self):
+        """The default state names the chain data required for a transition."""
         obs = obstruction_quintic()
-        assert obs.trivialization_exists is True
+        assert obs.trivialization_exists is None
+        assert "represented holomorphic Chern--Simons functional" in (
+            obs.trivialization_data
+        )
+        assert "BV comparison map" in obs.trivialization_data
+        assert "explicit null-homotopy" in obs.trivialization_data
 
-    def test_quintic_framing_anomaly(self):
-        """Framing anomaly for quintic = kappa = -25/3."""
+    def test_quintic_framing_anomaly_awaits_comparison(self):
+        """A three-dimensional comparison supplies the anomaly coordinate."""
         obs = obstruction_quintic()
-        assert obs.framing_anomaly == Fraction(-25, 3)
+        assert obs.scalar_shadow == Fraction(-25, 3)
+        assert obs.framing_anomaly is None
 
     # --- K3 x E ---
 
@@ -312,19 +319,18 @@ class TestExplicitCY3:
         """kappa(K3xE) = 0/24 = 0."""
         assert K3_TIMES_E.kappa_bcov == Fraction(0)
 
-    def test_k3xe_bv_obstruction_zero(self):
-        """K3xE: BV class = kappa = 0, so BV obstruction VANISHES.
-
-        But AP31 warning: kappa = 0 does NOT mean Theta = 0.
-        Higher-arity shadows can be nonzero.
-        """
+    def test_k3xe_zero_scalar_leaves_bv_lane_open(self):
+        """The zero Euler scalar and the BV deformation class stay separate."""
         obs = obstruction_k3_times_e()
-        assert obs.bv_obstruction_class == Fraction(0)
+        assert obs.scalar_shadow == Fraction(0)
+        assert obs.bv_obstruction_class is None
+        assert obs.trivialization_exists is None
 
-    def test_k3xe_still_nontrivial_moduli(self):
-        """K3xE has 42 moduli dimensions despite kappa = 0."""
-        assert K3_TIMES_E.symplectic_rank == 2 * (21 + 21)
-        assert K3_TIMES_E.symplectic_rank == 84
+    def test_k3xe_gauss_manin_rank(self):
+        """Kunneth gives rank H^3(K3 x E)=22 times 2=44."""
+        assert K3_TIMES_E.h3 == 22 * 2
+        assert K3_TIMES_E.symplectic_rank == 44
+        assert K3_TIMES_E.hh_total_dim == 96
 
     # --- Mirror quintic ---
 
@@ -345,10 +351,15 @@ class TestExplicitCY3:
     # --- Conifold ---
 
     def test_conifold_obstruction(self):
-        """Conifold: rigid complex structure, obstruction vanishes."""
+        """The conifold chart records its supplied scalar and chain state."""
         obs = obstruction_conifold()
         assert obs.topological_obstruction == 0
-        assert obs.trivialization_exists is True
+        assert obs.scalar_shadow == Fraction(1)
+        assert obs.bv_obstruction_class is None
+        assert obs.trivialization_exists is None
+        assert obs.bv_cocycle_supplied is False
+        assert obs.trivialization_supplied is False
+        assert obs.framing_anomaly_supplied is False
 
 
 # =========================================================================
@@ -356,36 +367,145 @@ class TestExplicitCY3:
 # =========================================================================
 
 class TestBVObstruction:
-    """Tests for the chain-level BV obstruction."""
+    """Tests for represented deformation classes and comparison data."""
 
-    def test_rigid_cy3_bv_trivial(self):
-        """Rigid CY3: BV obstruction is trivially zero."""
+    def test_rigid_cy3_default_state(self):
+        """Rigidity and a zero scalar leave representation as input data."""
         bv = bv_obstruction_cy3("C^3", Fraction(0), h21=0, rigid=True)
-        assert bv.bv_class == Fraction(0)
-        assert bv.is_trivializable is True
+        assert bv.scalar_shadow == Fraction(0)
+        assert bv.bv_class is None
+        assert bv.bcov_anomaly is None
+        assert bv.is_trivializable is None
+        assert bv.bv_cocycle_supplied is False
+        assert bv.bcov_comparison_supplied is False
+        assert bv.trivialization_supplied is False
 
-    def test_quintic_bv_nonzero(self):
-        """Quintic: BV class = kappa = -25/3 (nonzero)."""
+    def test_quintic_default_state(self):
+        """The quintic scalar occupies its own field before comparison."""
         bv = bv_obstruction_cy3("quintic", Fraction(-25, 3), h21=101)
-        assert bv.bv_class == Fraction(-25, 3)
-        assert bv.bv_class != 0
-        assert bv.is_trivializable is True
+        assert bv.scalar_shadow == Fraction(-25, 3)
+        assert bv.bv_class is None
+        assert bv.bcov_anomaly is None
+        assert bv.is_trivializable is None
 
-    def test_k3xe_bv_zero(self):
-        """K3xE: BV class = 0 despite having moduli."""
+    def test_k3xe_default_state(self):
+        """K3 x E supplies a zero scalar and an independent chain lane."""
         bv = bv_obstruction_cy3("K3xE", Fraction(0), h21=21)
-        # kappa = 0 means BV class is zero, even with moduli
-        # But the moduli are still there (AP31)
-        assert bv.bv_class == Fraction(0)
+        assert bv.scalar_shadow == Fraction(0)
+        assert bv.bv_class is None
+        assert bv.is_trivializable is None
 
-    def test_bv_equals_bcov(self):
-        """BV obstruction class = BCOV anomaly coefficient."""
-        bv = bv_obstruction_cy3("quintic", Fraction(-25, 3), h21=101)
-        assert bv.bcov_anomaly == Fraction(-25, 3)
-        assert bv.bv_class == bv.bcov_anomaly
+    def test_end_to_end_represented_bv_transitions(self):
+        """Representation and trivialization define two mathematically typed states."""
+        represented = RepresentedBVClass(
+            complex_name="Obs_loc(hCS_quintic)",
+            degree=1,
+            basis=("omega_BV_quintic", "eta_BV_quintic"),
+            coefficients=(Fraction(1), Fraction(0)),
+            incoming_basis=(),
+            incoming_differential=((), ()),
+            outgoing_differential=(
+                (Fraction(0), Fraction(0)),
+                (Fraction(0), Fraction(0)),
+            ),
+            scalar_functional=(Fraction(-25, 3), Fraction(0)),
+        )
+        framing_comparison = FramingAnomalyComparison(
+            theory_name="three-dimensional quintic comparison",
+            unit_framing_normalization=Fraction(1),
+        )
 
-    def test_all_examples_trivializable(self):
-        """ALL CY3 examples have trivializable BV obstruction."""
+        raw = s_d_framing_obstruction(
+            d=3,
+            name="quintic",
+            h11=1,
+            h21=101,
+            compact=True,
+        )
+        constructed = s_d_framing_obstruction(
+            d=3,
+            name="quintic",
+            h11=1,
+            h21=101,
+            compact=True,
+            represented_bv_class=represented,
+            framing_comparison=framing_comparison,
+        )
+
+        assert raw.scalar_shadow == constructed.scalar_shadow == Fraction(-25, 3)
+        assert raw.bv_obstruction_class is None
+        assert raw.trivialization_exists is None
+        assert raw.framing_anomaly is None
+        assert raw.bv_cocycle_supplied is False
+        assert raw.trivialization_supplied is False
+        assert raw.framing_anomaly_supplied is False
+        assert constructed.bv_obstruction_class == represented
+        assert constructed.bv_obstruction_class.complex_name == (
+            "Obs_loc(hCS_quintic)"
+        )
+        assert constructed.bv_obstruction_class.degree == 1
+        assert constructed.bv_obstruction_class.is_cocycle is True
+        assert constructed.bv_obstruction_class.boundary == (Fraction(0), Fraction(0))
+        assert constructed.bv_obstruction_class.scalar_projection == Fraction(-25, 3)
+        assert constructed.scalar_projection_agrees is True
+        assert constructed.null_homotopy is None
+        assert constructed.trivialization_exists is None
+        assert constructed.framing_anomaly == Fraction(-25, 3)
+        assert constructed.bv_cocycle_supplied is True
+        assert constructed.trivialization_supplied is False
+        assert constructed.framing_anomaly_supplied is True
+
+        quintic_bv = bv_obstruction_cy3(
+            "quintic",
+            Fraction(-25, 3),
+            h21=101,
+            represented_bv_class=represented,
+        )
+        assert quintic_bv.scalar_shadow == Fraction(-25, 3)
+        assert quintic_bv.bv_class == represented
+        assert quintic_bv.scalar_projection_agrees is True
+        assert quintic_bv.null_homotopy is None
+        assert quintic_bv.bcov_anomaly == Fraction(-25, 3)
+        assert quintic_bv.is_trivializable is None
+        assert quintic_bv.bv_cocycle_supplied is True
+        assert quintic_bv.bcov_comparison_supplied is True
+        assert quintic_bv.trivialization_supplied is False
+
+        zero_cocycle = RepresentedBVClass(
+            complex_name="Obs_loc(hCS_K3xE)",
+            degree=1,
+            basis=("omega_BV_K3xE",),
+            coefficients=(Fraction(1),),
+            incoming_basis=("h_hCS_K3xE",),
+            incoming_differential=((Fraction(1),),),
+            outgoing_differential=((Fraction(0),),),
+            scalar_functional=(Fraction(0),),
+        )
+        zero_homotopy = RepresentedNullHomotopy(
+            complex_name="Obs_loc(hCS_K3xE)",
+            degree=0,
+            source_basis=("h_hCS_K3xE",),
+            target_basis=("omega_BV_K3xE",),
+            coefficients=(Fraction(1),),
+            outgoing_differential=((Fraction(1),),),
+        )
+        k3xe_bv = bv_obstruction_cy3(
+            "K3xE",
+            Fraction(0),
+            h21=21,
+            represented_bv_class=zero_cocycle,
+            null_homotopy=zero_homotopy,
+        )
+        assert zero_homotopy.trivializes(zero_cocycle) is True
+        assert zero_cocycle.scalar_projection == 0
+        assert k3xe_bv.scalar_projection_agrees is True
+        assert k3xe_bv.null_homotopy == zero_homotopy
+        assert k3xe_bv.bcov_anomaly == 0
+        assert k3xe_bv.is_trivializable is True
+        assert k3xe_bv.trivialization_supplied is True
+
+    def test_default_examples_retain_open_chain_state(self):
+        """Each numerical example begins in the same unrepresented state."""
         examples = [
             ("C^3", Fraction(0), 0, True),
             ("quintic", Fraction(-25, 3), 101, False),
@@ -394,7 +514,123 @@ class TestBVObstruction:
         ]
         for name, kappa, h21, rigid in examples:
             bv = bv_obstruction_cy3(name, kappa, h21=h21, rigid=rigid)
-            assert bv.is_trivializable is True, f"{name} should be trivializable"
+            assert bv.scalar_shadow == kappa
+            assert bv.bv_class is None
+            assert bv.bcov_anomaly is None
+            assert bv.is_trivializable is None
+            assert bv.bv_cocycle_supplied is False
+            assert bv.bcov_comparison_supplied is False
+            assert bv.trivialization_supplied is False
+
+    def test_bv_input_types(self):
+        """The public API accepts represented classes and rational scalars."""
+        with pytest.raises(TypeError):
+            bv_obstruction_cy3(
+                "quintic",
+                Fraction(-25, 3),
+                represented_bv_class=Fraction(-25, 3),
+            )
+        with pytest.raises(TypeError):
+            bv_obstruction_cy3(
+                "quintic",
+                Fraction(-25, 3),
+                null_homotopy=Fraction(1),
+            )
+
+    def test_trivialization_state_requires_a_represented_class(self):
+        """A null-homotopy state begins from a named deformation cocycle."""
+        orphan_homotopy = RepresentedNullHomotopy(
+            complex_name="Obs_loc(hCS_quintic)",
+            degree=0,
+            source_basis=("h",),
+            target_basis=("omega",),
+            coefficients=(Fraction(1),),
+            outgoing_differential=((Fraction(1),),),
+        )
+        with pytest.raises(ValueError):
+            bv_obstruction_cy3(
+                "quintic",
+                Fraction(-25, 3),
+                null_homotopy=orphan_homotopy,
+            )
+        with pytest.raises(ValueError):
+            s_d_framing_obstruction(
+                d=3,
+                name="quintic",
+                h11=1,
+                h21=101,
+                null_homotopy=orphan_homotopy,
+            )
+
+    def test_cocycle_and_null_homotopy_equations_are_enforced(self):
+        """The engine computes both d(c)=0 and d(h)=c in the finite window."""
+        noncocycle = RepresentedBVClass(
+            complex_name="Obs_loc(hCS_quintic)",
+            degree=1,
+            basis=("omega",),
+            coefficients=(Fraction(1),),
+            incoming_basis=(),
+            incoming_differential=((),),
+            outgoing_differential=((Fraction(1),),),
+        )
+        assert noncocycle.boundary == (Fraction(1),)
+        assert noncocycle.is_cocycle is False
+        with pytest.raises(ValueError):
+            bv_obstruction_cy3(
+                "quintic",
+                Fraction(-25, 3),
+                represented_bv_class=noncocycle,
+            )
+
+        cocycle = RepresentedBVClass(
+            complex_name="Obs_loc(hCS_quintic)",
+            degree=1,
+            basis=("omega",),
+            coefficients=(Fraction(1),),
+            incoming_basis=(),
+            incoming_differential=((),),
+            outgoing_differential=((Fraction(0),),),
+        )
+        mismatched = RepresentedNullHomotopy(
+            complex_name="Obs_loc(hCS_quintic)",
+            degree=0,
+            source_basis=("h",),
+            target_basis=("omega",),
+            coefficients=(Fraction(1),),
+            outgoing_differential=((Fraction(2),),),
+        )
+        assert mismatched.image == (Fraction(2),)
+        assert mismatched.trivializes(cocycle) is False
+        with pytest.raises(ValueError):
+            bv_obstruction_cy3(
+                "quintic",
+                Fraction(-25, 3),
+                represented_bv_class=cocycle,
+                null_homotopy=mismatched,
+            )
+
+        with pytest.raises(ValueError, match=r"d\^2=0"):
+            RepresentedBVClass(
+                complex_name="two-step-window",
+                degree=1,
+                basis=("c",),
+                coefficients=(Fraction(1),),
+                incoming_basis=("h",),
+                incoming_differential=((Fraction(1),),),
+                outgoing_differential=((Fraction(1),),),
+            )
+
+        with pytest.raises(ValueError, match="annihilate incoming boundaries"):
+            RepresentedBVClass(
+                complex_name="cohomological-projection-window",
+                degree=1,
+                basis=("c",),
+                coefficients=(Fraction(1),),
+                incoming_basis=("h",),
+                incoming_differential=((Fraction(1),),),
+                outgoing_differential=((Fraction(0),),),
+                scalar_functional=(Fraction(-25, 3),),
+            )
 
 
 # =========================================================================
@@ -432,13 +668,16 @@ class TestMirrorSymmetry:
         assert result["kappa_sign_flip"] is True
         assert result["kappa_A"] == -result["kappa_B"]
 
-    def test_mirror_framing_anomaly_sum_zero(self):
-        """kappa(X) + kappa(X_mirror) = 0 for mirror pairs."""
+    def test_mirror_scalar_shadow_sum_zero(self):
+        """Mirror exchange makes the two Euler scalar shadows sum to zero."""
         result = mirror_obstruction_comparison(
             h11_A=1, h21_A=101,
             h11_B=101, h21_B=1,
         )
-        assert result["framing_anomaly_sum"] == 0
+        assert result["scalar_shadow_sum"] == 0
+        assert result["bv_obstruction_A"] is None
+        assert result["bv_obstruction_B"] is None
+        assert result["framing_anomaly_sum"] is None
 
     def test_k3xe_self_mirror(self):
         """K3 x E is self-mirror (h^{1,1} = h^{2,1} = 21)."""
@@ -450,10 +689,11 @@ class TestMirrorSymmetry:
         assert result["mirror_hodge_swap"] is True
         assert result["chi_A"] == 0
         assert result["kappa_A"] == 0
-        assert result["framing_anomaly_sum"] == 0
+        assert result["scalar_shadow_sum"] == 0
+        assert result["framing_anomaly_sum"] is None
 
     def test_mirror_topological_both_vanish(self):
-        """Topological obstruction vanishes for BOTH sides of mirror."""
+        """Both mirror entries have zero primary coordinates."""
         result = mirror_obstruction_comparison(
             h11_A=1, h21_A=101,
             h11_B=101, h21_B=1,
@@ -467,55 +707,96 @@ class TestMirrorSymmetry:
 # =========================================================================
 
 class TestFramingAnomaly:
-    """Tests for the Chern-Simons framing anomaly."""
+    """Tests for anomaly values after an explicit comparison theorem."""
 
-    def test_cs_anomaly_equals_kappa(self):
-        """Chern-Simons framing anomaly = kappa."""
-        assert chern_simons_framing_anomaly(Fraction(-25, 3)) == Fraction(-25, 3)
-        assert chern_simons_framing_anomaly(Fraction(0)) == Fraction(0)
-        assert chern_simons_framing_anomaly(Fraction(1)) == Fraction(1)
+    def test_cs_anomaly_comparison_gate(self):
+        """The supplied comparison carries the scalar into the anomaly lane."""
+        comparison = FramingAnomalyComparison(
+            theory_name="unit-normalized three-dimensional theory",
+            unit_framing_normalization=Fraction(1),
+        )
+        for kappa in (Fraction(-25, 3), Fraction(0), Fraction(1)):
+            assert chern_simons_framing_anomaly(kappa) is None
+            assert chern_simons_framing_anomaly(
+                kappa, comparison=comparison
+            ) == kappa
+
+    def test_unit_framing_normalization_scales_the_anomaly(self):
+        """The chosen unit shift multiplies the compared scalar."""
+        comparison = FramingAnomalyComparison(
+            theory_name="one-over-twenty-four normalization",
+            unit_framing_normalization=Fraction(1, 24),
+        )
+        assert chern_simons_framing_anomaly(
+            Fraction(-25, 3),
+            comparison=comparison,
+        ) == Fraction(-25, 72)
 
     def test_framing_phase_integer_kappa(self):
-        """For integer kappa, phase = 1 (no anomaly mod Z)."""
-        phase = framing_anomaly_phase(Fraction(1))
-        assert abs(phase - 1.0) < 1e-12
-
-        phase = framing_anomaly_phase(Fraction(0))
-        assert abs(phase - 1.0) < 1e-12
-
-        phase = framing_anomaly_phase(Fraction(12))
-        assert abs(phase - 1.0) < 1e-12
+        """Compared integral scalars exponentiate to the unit phase."""
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        for kappa in (Fraction(1), Fraction(0), Fraction(12)):
+            assert framing_anomaly_phase(kappa) is None
+            phase = framing_anomaly_phase(kappa, comparison=comparison)
+            assert phase is not None
+            assert abs(phase - 1.0) < 1e-12
 
     def test_framing_phase_rational_kappa(self):
         """For rational kappa = p/q, phase = exp(2 pi i p/q) (root of unity)."""
         # kappa = -25/3: phase = exp(-50 pi i / 3) = exp(2 pi i * (-25/3))
         # Since -25/3 = -8 - 1/3, the phase is exp(-2 pi i / 3)
         kappa = Fraction(-25, 3)
-        phase = framing_anomaly_phase(kappa)
+        assert framing_anomaly_phase(kappa) is None
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        phase = framing_anomaly_phase(kappa, comparison=comparison)
         # exp(-2 pi i / 3) = cos(-2pi/3) + i sin(-2pi/3) = -1/2 - i sqrt(3)/2
         expected_angle = 2 * math.pi * float(kappa)
         expected = complex(math.cos(expected_angle), math.sin(expected_angle))
+        assert phase is not None
         assert abs(phase - expected) < 1e-12
 
     def test_framing_order_integer(self):
         """Integer kappa has order 1."""
-        assert framing_anomaly_order(Fraction(0)) == 1
-        assert framing_anomaly_order(Fraction(1)) == 1
-        assert framing_anomaly_order(Fraction(12)) == 1
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        assert framing_anomaly_order(Fraction(0)) is None
+        assert framing_anomaly_order(
+            Fraction(0), comparison=comparison
+        ) == 1
+        assert framing_anomaly_order(
+            Fraction(1), comparison=comparison
+        ) == 1
+        assert framing_anomaly_order(
+            Fraction(12), comparison=comparison
+        ) == 1
 
     def test_framing_order_rational(self):
         """kappa = p/q in lowest terms has order q."""
-        assert framing_anomaly_order(Fraction(-25, 3)) == 3
-        assert framing_anomaly_order(Fraction(25, 3)) == 3
-        assert framing_anomaly_order(Fraction(1, 2)) == 2
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        assert framing_anomaly_order(
+            Fraction(-25, 3), comparison=comparison
+        ) == 3
+        assert framing_anomaly_order(
+            Fraction(25, 3), comparison=comparison
+        ) == 3
+        assert framing_anomaly_order(
+            Fraction(1, 2), comparison=comparison
+        ) == 2
 
     def test_quintic_framing_order(self):
-        """Quintic: kappa = -25/3, framing order = 3 (Z/3 anomaly)."""
-        assert framing_anomaly_order(QUINTIC.kappa_bcov) == 3
+        """A compared quintic scalar produces a phase of order three."""
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        assert framing_anomaly_order(QUINTIC.kappa_bcov) is None
+        assert framing_anomaly_order(
+            QUINTIC.kappa_bcov, comparison=comparison
+        ) == 3
 
     def test_k3xe_framing_order(self):
-        """K3xE: kappa = 0, framing order = 1 (no anomaly)."""
-        assert framing_anomaly_order(K3_TIMES_E.kappa_bcov) == 1
+        """A compared zero scalar produces the unit phase."""
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        assert framing_anomaly_order(K3_TIMES_E.kappa_bcov) is None
+        assert framing_anomaly_order(
+            K3_TIMES_E.kappa_bcov, comparison=comparison
+        ) == 1
 
 
 # =========================================================================
@@ -525,50 +806,57 @@ class TestFramingAnomaly:
 class TestStableRange:
     """Tests for the stable-range obstruction analysis."""
 
-    def test_d1_vanishes(self):
+    def test_d1_primary_input_is_resolved(self):
         result = stable_obstruction_vanishing(1)
-        assert result["obstruction_vanishes_for_cy"] is True
+        assert result["primary_input_resolved"] is True
+        assert result["categorical_framing_constructed"] is False
 
-    def test_d2_vanishes_with_cy(self):
-        """d=2: pi_2(BGL(C)) = Z, but CY kills it (c_1 = 0)."""
+    def test_d2_tangent_cy_class_resolves_primary_input(self):
+        """For d=2 the tangent Calabi--Yau class supplies c_1(TX)=0."""
         result = stable_obstruction_vanishing(2)
         assert result["pi_d_BU"] == "Z"
         assert result["vanishes_complex"] is False
-        assert result["cy_condition_kills"] is True
-        assert result["obstruction_vanishes_for_cy"] is True
+        assert result["tangent_cy_class_resolves_primary"] is True
+        assert result["primary_input_resolved"] is True
+        assert result["categorical_framing_constructed"] is False
 
-    def test_d3_vanishes_automatically(self):
-        """d=3: pi_3(BGL(C)) = 0, obstruction vanishes WITHOUT CY condition."""
+    def test_d3_complex_primary_group_is_zero(self):
+        """For d=3 the stable complex primary group is zero."""
         result = stable_obstruction_vanishing(3)
         assert result["pi_d_BU"] == "0"
         assert result["vanishes_complex"] is True
-        assert result["obstruction_vanishes_for_cy"] is True
+        assert result["primary_input_resolved"] is True
+        assert result["categorical_framing_constructed"] is False
 
-    def test_d3_symplectic_also_vanishes(self):
+    def test_d3_symplectic_primary_group_is_zero(self):
         """d=3: pi_3(BSp) = 0 as well."""
         result = stable_obstruction_vanishing(3)
         assert result["pi_d_BSp"] == "0"
         assert result["vanishes_symplectic"] is True
 
-    def test_d4_does_not_vanish(self):
-        """d=4: pi_4(BGL(C)) = Z (second Chern class), CY does NOT kill it."""
+    def test_d4_primary_class_requires_geometric_input(self):
+        """For d=4 the degree-four coordinate is the second Chern class."""
         result = stable_obstruction_vanishing(4)
         assert result["pi_d_BU"] == "Z"
         assert result["vanishes_complex"] is False
-        assert result["cy_condition_kills"] is False
-        assert result["obstruction_vanishes_for_cy"] is False
+        assert result["tangent_cy_class_resolves_primary"] is False
+        assert result["primary_input_resolved"] is False
+        assert result["categorical_framing_constructed"] is False
 
-    def test_d5_vanishes(self):
+    def test_d5_primary_group_is_zero(self):
         """d=5: pi_5(BGL(C)) = 0."""
         result = stable_obstruction_vanishing(5)
         assert result["vanishes_complex"] is True
-        assert result["obstruction_vanishes_for_cy"] is True
+        assert result["primary_input_resolved"] is True
+        assert result["categorical_framing_constructed"] is False
 
-    def test_odd_d_always_vanishes(self):
+    def test_odd_d_complex_primary_groups_are_zero(self):
         """For all ODD d, pi_d(BGL(C)) = 0."""
         for d in range(1, 20, 2):
             result = stable_obstruction_vanishing(d)
-            assert result["vanishes_complex"] is True, f"d={d} should vanish"
+            assert result["vanishes_complex"] is True
+            assert result["primary_input_resolved"] is True
+            assert result["categorical_framing_constructed"] is False
 
 
 # =========================================================================
@@ -592,21 +880,70 @@ class TestCrossChecks:
         assert MIRROR_QUINTIC.kappa_bcov == -QUINTIC.kappa_bcov
 
     def test_pontryagin_class_quintic(self):
-        """Pontryagin class data for quintic."""
+        """Hodge numbers determine ranks while curvature supplies p_1."""
         p1 = first_pontryagin_class_cy3(h11=1, h21=101)
         assert p1["dim_M_cs"] == 101
         assert p1["symplectic_half_rank"] == 102
         assert p1["symplectic_rank"] == 204
         assert p1["kappa"] == Fraction(-25, 3)
         assert p1["chi"] == -200
+        assert p1["gauss_manin_connection"] == "flat on the smooth locus"
+        assert "Weil--Petersson" in p1["tangent_connection"]
+        assert p1["p1_representative"] is None
+        assert p1["cs_transgression"] is None
 
     def test_hh_total_dim_quintic(self):
         """HH total dim for quintic = 4 + 2*1 + 2*101 = 208."""
+        assert QUINTIC.hh_cohomology_vector == (1, 0, 101, 4, 101, 0, 1)
         assert QUINTIC.hh_total_dim == 208
 
+        pv = pv_quintic()
+        hkr_vector = tuple(
+            sum(
+                dimension
+                for (polyvector_degree, sheaf_degree), dimension
+                in pv.pv_dims.items()
+                if polyvector_degree + sheaf_degree == degree
+            )
+            for degree in range(7)
+        )
+        assert hkr_vector == QUINTIC.hh_cohomology_vector
+
+    def test_hh_degree_distribution_mirror_quintic(self):
+        """Mirror symmetry exchanges h11 and h21 in the HKR degrees."""
+        assert MIRROR_QUINTIC.hh_cohomology_vector == (
+            1, 0, 1, 204, 1, 0, 1
+        )
+        assert MIRROR_QUINTIC.hh_total_dim == 208
+
     def test_hh_total_dim_k3xe(self):
-        """HH total dim for K3xE = 4 + 2*21 + 2*21 = 88."""
-        assert K3_TIMES_E.hh_total_dim == 88
+        """Kunneth gives dim HH(K3 x E) = 24*4 = 96."""
+        k3_vector = (1, 0, 22, 0, 1)
+        elliptic_vector = (1, 2, 1)
+        convolution = tuple(
+            sum(
+                k3_vector[i] * elliptic_vector[degree - i]
+                for i in range(len(k3_vector))
+                if 0 <= degree - i < len(elliptic_vector)
+            )
+            for degree in range(len(k3_vector) + len(elliptic_vector) - 1)
+        )
+        assert convolution == (1, 2, 23, 44, 23, 2, 1)
+        assert K3_TIMES_E.hh_cohomology_vector == convolution
+        assert K3_TIMES_E.hh_total_dim == 24 * 4 == 96
+
+        pv = pv_k3_times_e()
+        hkr_vector = tuple(
+            sum(
+                dimension
+                for (polyvector_degree, sheaf_degree), dimension
+                in pv.pv_dims.items()
+                if polyvector_degree + sheaf_degree == degree
+            )
+            for degree in range(7)
+        )
+        assert hkr_vector == convolution
+        assert pv.total_dim == 96
 
 
 # =========================================================================
@@ -614,47 +951,67 @@ class TestCrossChecks:
 # =========================================================================
 
 class TestSummaryAnalysis:
-    """Tests for the d=3 functor existence summary."""
+    """Tests for the typed d=3 framing and functor summary."""
 
-    def test_d3_functor_exists_abstractly(self):
-        """The d=3 functor exists abstractly (topological obstruction vanishes)."""
+    def test_primary_group_and_functor_status_are_separate(self):
+        """The zero test-sphere group supplies one input to the functor."""
         analysis = d3_functor_existence_analysis()
-        assert analysis["topological_obstruction_vanishes"] is True
-        assert analysis["d3_functor_exists_abstractly"] is True
+        assert analysis["primary_test_sphere_group_zero"] is True
+        assert analysis["factorization_stage"] == "Phi_3^FA"
+        assert analysis["specialization_stage"] == "Sp^ch_(Sigma_2,C)"
+        assert analysis["composite_functor"] == (
+            "Sp^ch_(Sigma_2,C) o Phi_3^FA"
+        )
+        assert analysis["factorization_stage_status"] == (
+            "conditional construction problem"
+        )
+        assert analysis["specialization_stage_status"] == (
+            "conditional construction problem"
+        )
+        assert analysis["composite_functor_status"] == (
+            "conditional construction problem"
+        )
+        assert analysis["factorization_stage_constructed"] is False
+        assert analysis["specialization_stage_constructed"] is False
+        assert analysis["chain_level_framing_constructed"] is False
 
-    def test_all_examples_topologically_trivial(self):
-        """All standard examples have vanishing topological obstruction."""
+    def test_all_examples_have_zero_primary_coordinate(self):
+        """Every listed example occupies the zero coordinate of this model."""
         analysis = d3_functor_existence_analysis()
-        for name, data in analysis["examples"].items():
-            assert data["topological_obstruction"] == 0, (
-                f"{name} should have vanishing topological obstruction"
-            )
+        for data in analysis["examples"].values():
+            assert data["topological_obstruction"] == 0
 
-    def test_all_examples_have_trivialization(self):
-        """All standard examples have trivializable BV obstruction."""
+    def test_example_trivialization_status_tracks_chain_data(self):
+        """Each summary entry begins before represented chain data are supplied."""
         analysis = d3_functor_existence_analysis()
-        for name, data in analysis["examples"].items():
-            assert data["trivialization_exists"] is True, (
-                f"{name} should have trivializable BV obstruction"
-            )
+        for name in ("C^3", "conifold", "quintic", "mirror_quintic", "K3xE"):
+            assert analysis["examples"][name]["trivialization_exists"] is None
+            assert analysis["examples"][name]["bv_cocycle_supplied"] is False
+            assert analysis["examples"][name]["trivialization_supplied"] is False
+            assert analysis["examples"][name]["framing_anomaly_supplied"] is False
 
-    def test_quintic_bv_nonzero_in_summary(self):
-        """Quintic BV class is nonzero in the summary."""
+    def test_quintic_summary_separates_scalar_and_bv_class(self):
+        """The summary stores the quintic scalar before the BV representative."""
         analysis = d3_functor_existence_analysis()
-        assert analysis["examples"]["quintic"]["bv_class"] == Fraction(-25, 3)
+        assert analysis["examples"]["quintic"]["scalar_shadow"] == Fraction(-25, 3)
+        assert analysis["examples"]["quintic"]["bv_class"] is None
 
-    def test_c3_bv_zero_in_summary(self):
-        """C^3 BV class is zero in the summary."""
+    def test_c3_summary_separates_scalar_and_bv_class(self):
+        """The local model likewise separates its scalar from a BV cocycle."""
         analysis = d3_functor_existence_analysis()
-        assert analysis["examples"]["C^3"]["bv_class"] == Fraction(0)
+        assert analysis["examples"]["C^3"]["scalar_shadow"] == Fraction(0)
+        assert analysis["examples"]["C^3"]["bv_class"] is None
 
-    def test_preface_records_d3_inf_categorical_resolution(self):
-        """The preface records CY-A_3 as proved, not chain-framing conditional."""
-        preface = PREFACE_TEX.read_text()
-        assert "proved for $d=2$ and $d=3$" in preface
-        assert "infty$-categorical" in preface
-        assert "conditional on chain-level S^3-framing for d=3" not in preface
-        assert "conditional on chain-level S³-framing for d=3" not in preface
+    def test_functor_summary_names_the_construction_data(self):
+        """The summary names the framing, quantization, and target comparison."""
+        analysis = d3_functor_existence_analysis()
+        requirement = analysis["d3_functor_construction_requires"]
+        assert "holomorphic Chern--Simons functional" in requirement
+        assert "specialization kernel" in requirement
+        assert "descent" in requirement
+        assert analysis["factorization_stage_constructed"] is False
+        assert analysis["specialization_stage_constructed"] is False
+        assert analysis["chain_level_framing_constructed"] is False
 
 
 # =========================================================================
@@ -664,12 +1021,12 @@ class TestSummaryAnalysis:
 class TestMultiPathVerification:
     """Multi-path verification: each key result checked 3+ ways."""
 
-    def test_topological_vanishing_3_paths(self):
-        """The topological S^3-framing obstruction vanishes, verified 3 ways.
+    def test_primary_test_sphere_group_3_paths(self):
+        """The primary test-sphere group is zero by three routes.
 
         Path 1: pi_3(BSp(2m)) = pi_2(Sp(2m)) = 0 for all m >= 1.
         Path 2: pi_3(BGL(n,C)) = pi_2(U(n)) = 0 (Bott periodicity).
-        Path 3: Stable range analysis says d=3 vanishes for CY.
+        Path 3: the stable-range table returns the same group.
         """
         # Path 1: symplectic
         for m in range(1, 10):
@@ -680,7 +1037,10 @@ class TestMultiPathVerification:
 
         # Path 3: stable range
         result = stable_obstruction_vanishing(3)
-        assert result["obstruction_vanishes_for_cy"] is True
+        assert result["pi_d_BU"] == "0"
+        assert result["pi_d_BSp"] == "0"
+        assert result["primary_input_resolved"] is True
+        assert result["categorical_framing_constructed"] is False
 
     def test_quintic_kappa_2_paths(self):
         """kappa(quintic) = -25/3, verified 2 ways.
@@ -694,8 +1054,8 @@ class TestMultiPathVerification:
         # Path 2: from CY3HodgeData
         assert QUINTIC.kappa_bcov == Fraction(-25, 3)
 
-    def test_mirror_kappa_sum_3_paths(self):
-        """kappa(X) + kappa(X_mirror) = 0, verified 3 ways.
+    def test_mirror_scalar_sum_3_paths(self):
+        """The two mirror Euler scalars sum to zero by three routes.
 
         Path 1: chi(X) + chi(X_mirror) = 0 (mirror symmetry).
         Path 2: Direct computation for quintic + mirror quintic.
@@ -713,29 +1073,26 @@ class TestMultiPathVerification:
             h11_A=1, h21_A=101,
             h11_B=101, h21_B=1,
         )
-        assert result["framing_anomaly_sum"] == 0
+        assert result["scalar_shadow_sum"] == 0
+        assert result["framing_anomaly_sum"] is None
 
-    def test_bv_obstruction_controls_quantization_3_paths(self):
-        """The BV obstruction is the quantization datum, verified for 3 examples.
-
-        For rigid CY3: BV = 0, quantization trivial.
-        For quintic: BV = kappa = -25/3, quantization = holomorphic CS.
-        For K3xE: BV = 0 (kappa = 0), but higher-arity obstructions exist.
-        """
-        # Rigid: trivial
+    def test_scalar_bv_and_gauss_manin_lanes_across_examples(self):
+        """Three examples preserve the scalar, chain, and H^3 distinctions."""
         obs_c3 = obstruction_c3()
-        assert obs_c3.bv_obstruction_class == 0
+        assert obs_c3.scalar_shadow == 0
+        assert obs_c3.bv_obstruction_class is None
 
-        # Quintic: nonzero
         obs_q = obstruction_quintic()
-        assert obs_q.bv_obstruction_class != 0
-        assert obs_q.trivialization_exists
+        assert obs_q.scalar_shadow == Fraction(-25, 3)
+        assert obs_q.bv_obstruction_class is None
+        assert obs_q.trivialization_exists is None
+        assert QUINTIC.symplectic_rank == QUINTIC.h3 == 204
 
-        # K3xE: zero kappa, but non-rigid
         obs_k = obstruction_k3_times_e()
-        assert obs_k.bv_obstruction_class == 0
-        # K3xE has 84 symplectic directions
-        assert K3_TIMES_E.symplectic_rank == 84
+        assert obs_k.scalar_shadow == 0
+        assert obs_k.bv_obstruction_class is None
+        assert K3_TIMES_E.symplectic_rank == K3_TIMES_E.h3 == 44
+        assert K3_TIMES_E.hh_total_dim == 96
 
 
 # =========================================================================
@@ -746,29 +1103,41 @@ class TestEdgeCases:
     """Edge cases and sanity checks."""
 
     def test_d3_framing_for_rigid_noncompact(self):
-        """Rigid non-compact CY3 (like C^3): everything trivial."""
+        """A rigid local chart still receives represented chain data explicitly."""
         obs = s_d_framing_obstruction(
             d=3, name="test_rigid",
             h11=0, h21=0, chi=0, kappa=Fraction(0),
             compact=False, rigid=True,
         )
         assert obs.topological_obstruction == 0
-        assert obs.bv_obstruction_class == Fraction(0)
+        assert obs.scalar_shadow == Fraction(0)
+        assert obs.bv_obstruction_class is None
+        assert obs.trivialization_exists is None
+        assert obs.framing_anomaly is None
 
-    def test_d_not_implemented(self):
-        """d >= 4 not yet implemented."""
+    def test_public_dimension_domain(self):
+        """The public construction domain currently consists of d=1,2,3."""
         with pytest.raises(NotImplementedError):
             s_d_framing_obstruction(4, "CY4")
 
     def test_framing_anomaly_zero_kappa(self):
-        """kappa = 0: no framing anomaly."""
-        assert chern_simons_framing_anomaly(Fraction(0)) == 0
-        assert framing_anomaly_order(Fraction(0)) == 1
-        phase = framing_anomaly_phase(Fraction(0))
+        """A supplied comparison sends the zero scalar to the unit phase."""
+        comparison = FramingAnomalyComparison("unit normalization", Fraction(1))
+        assert chern_simons_framing_anomaly(Fraction(0)) is None
+        assert framing_anomaly_order(Fraction(0)) is None
+        assert framing_anomaly_phase(Fraction(0)) is None
+        assert chern_simons_framing_anomaly(
+            Fraction(0), comparison=comparison
+        ) == 0
+        assert framing_anomaly_order(
+            Fraction(0), comparison=comparison
+        ) == 1
+        phase = framing_anomaly_phase(Fraction(0), comparison=comparison)
+        assert phase is not None
         assert abs(phase - 1.0) < 1e-12
 
     def test_cy3_with_large_hodge(self):
-        """CY3 with large Hodge numbers: obstruction still vanishes."""
+        """The degree-three primary group stays zero at large Hodge rank."""
         big_cy3 = CY3HodgeData(h11=1000, h21=500, name="big_CY3")
         assert big_cy3.euler == 2 * (1000 - 500)
         assert big_cy3.kappa_bcov == Fraction(1000, 24)
@@ -778,10 +1147,10 @@ class TestEdgeCases:
             compact=True,
         )
         assert obs.topological_obstruction == 0
-        assert obs.trivialization_exists is True
+        assert obs.trivialization_exists is None
 
     def test_self_mirror_cy3(self):
-        """Self-mirror CY3 (h11 = h21): kappa = 0, no framing anomaly."""
+        """Self-mirror Hodge data give the zero Euler scalar."""
         for n in [1, 5, 21, 100]:
             cy3 = CY3HodgeData(h11=n, h21=n, name=f"self_mirror_{n}")
             assert cy3.euler == 0

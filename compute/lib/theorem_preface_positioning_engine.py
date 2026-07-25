@@ -19,7 +19,7 @@ CLAIMS VERIFIED:
   C12 -- Prime form: section of K^{-1/2} boxtimes K^{-1/2}
   C13 -- Bar propagator d log E(z,w) has weight 1 (AP27)
   C14 -- r-matrix pole orders one less than OPE (AP19)
-  C15 -- H_k^! = Sym^ch(V*), NOT H_{-k} (AP33)
+  C15 -- H_k^! is the curved second-kind Sym branch, NOT H_{-k} (AP33)
   C16 -- Omega(B(A)) = A (inversion), NOT A^! (AP25)
   C17 -- D_Ran(B(A)) = A^!_infty (Verdier), NOT A (AP25)
   C18 -- kappa(V_Lambda) = rank(Lambda), NOT c/2 (AP48)

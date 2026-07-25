@@ -1,136 +1,115 @@
-r"""Tests for k3_yangian_wave19_phi12_zeta3333_coefficient.
+"""Independent tests for the repeated weight-twelve MZV scalar."""
 
-Module claims:
-    (1) c_12^(9) = zeta(3,3,3,3) / 12! ~ 6.180 * 10^{-13}.
-        12! = 479001600 (Shnider-Stasheff 1997 12-leg KZ simplex
-        volume).
-    (2) zeta(3, 3, 3, 3) = 0.00029599901391744549... to 50 digits
-        (Vermaseren 1999 MZDP database, Table 2).
-    (3) The KZ iterated-integral word for zeta(3,3,3,3) is
-        "100100100100" (12 letters, depth 4, four omega_1 separators).
-    (4) Partial-sum nested-series reconstruction of zeta(3,3,3,3)
-        converges to the Vermaseren value as N grows.
-    (5) Fake-Monster Phi_12 does NOT interfere with c_12^(9)
-        (Gritsenko-Nikulin 1998 Sec 4 vs Brown 2011 Thm 1.2:
-        independent lattice and motivic sectors).
-"""
-
-from __future__ import annotations
-
+from fractions import Fraction
+from itertools import permutations
 from math import factorial
 
+import mpmath as mp
 import pytest
 
 from compute.lib.k3_yangian_wave19_phi12_zeta3333_coefficient import (
-    fake_monster_non_interference_at_weight_12,
-    kz_12_simplex_volume_denominator,
-    kz_integral_weight_12_depth_4,
-    kz_word_depth,
-    kz_word_weight,
-    kz_word_zeta_3_3_3_3,
-    phi_12_coeff_9,
-    phi_12_coefficient_9_numeric,
-    zeta_3333_from_partial_sums,
-    zeta_3333_value,
-    zeta_3_3_3_3_value,
-    zeta_3_3_3_3_value_str,
+    run_tests,
+    weight12_scalar_status,
+    zeta3333_exact_polynomial,
+    zeta3333_finite_elementary_sum,
+    zeta3333_newton_numeric,
+    zeta3333_normalized_scalar,
+    zeta3333_tail_corrected_sum,
 )
 
 
-# ---------------------------------------------------------------------------
-# Smoke test
-# ---------------------------------------------------------------------------
-
-def test_smoke_exports_and_evaluate():
-    assert zeta_3333_value() > 0
-    assert phi_12_coeff_9() > 0
-    assert isinstance(kz_word_zeta_3_3_3_3(), str)
-
-
-# ---------------------------------------------------------------------------
-# (Identity) Vermaseren 1999 MZDP numerical value to 15 digits.
-# zeta(3,3,3,3) ~ 0.00029599901391744549
-# ---------------------------------------------------------------------------
-
-def test_zeta_3333_matches_vermaseren_to_15_digits():
-    vermaseren = 0.00029599901391744549
-    computed = zeta_3_3_3_3_value()
-    # 15-digit agreement as claimed in module docstring
-    assert abs(computed - vermaseren) < 5e-19, (
-        f"zeta(3,3,3,3) = {computed} disagrees with Vermaseren 1999 "
-        f"MZDP value {vermaseren}"
-    )
+def _cycle_lengths(permutation):
+    seen = set()
+    lengths = []
+    for start in range(len(permutation)):
+        if start in seen:
+            continue
+        current = start
+        length = 0
+        while current not in seen:
+            seen.add(current)
+            current = permutation[current]
+            length += 1
+        lengths.append(length)
+    return lengths
 
 
-def test_zeta_3333_50digit_string_is_decimal():
-    s = zeta_3_3_3_3_value_str()
-    # String should parse as a float with leading 0.00029...
-    assert s.startswith("0.0002959990139174454")
-    assert float(s) == zeta_3_3_3_3_value()
+def _permutation_oracle():
+    result = {}
+    for permutation in permutations(range(4)):
+        cycles = _cycle_lengths(permutation)
+        sign = -1 if (4 - len(cycles)) % 2 else 1
+        monomial = tuple(sorted(3 * length for length in cycles))
+        result[monomial] = result.get(monomial, Fraction(0)) + Fraction(
+            sign, factorial(4)
+        )
+    return {monomial: coefficient
+            for monomial, coefficient in result.items() if coefficient}
 
 
-# ---------------------------------------------------------------------------
-# (Identity) Shnider-Stasheff 1997: 12-leg KZ simplex volume = 1 / 12!
-# ---------------------------------------------------------------------------
-
-def test_shnider_stasheff_simplex_denominator_equals_12_factorial():
-    assert kz_12_simplex_volume_denominator() == factorial(12)
-    assert kz_12_simplex_volume_denominator() == 479_001_600
+def test_newton_identity_by_permutation_oracle():
+    assert zeta3333_exact_polynomial() == _permutation_oracle()
 
 
-# ---------------------------------------------------------------------------
-# (Identity) c_12^(9) = zeta(3,3,3,3) / 12!
-# ---------------------------------------------------------------------------
-
-def test_phi_12_coeff_9_formula():
-    expected = zeta_3_3_3_3_value() / factorial(12)
-    computed = phi_12_coefficient_9_numeric()
-    assert abs(computed - expected) < 1e-25
-    # Order of magnitude: ~ 6.18 * 10^{-13}
-    assert 6.17e-13 < computed < 6.20e-13
+def test_literal_newton_coefficients():
+    assert zeta3333_exact_polynomial() == {
+        (3, 3, 3, 3): Fraction(1, 24),
+        (3, 3, 6): Fraction(-1, 4),
+        (6, 6): Fraction(1, 8),
+        (3, 9): Fraction(1, 3),
+        (12,): Fraction(-1, 4),
+    }
 
 
-# ---------------------------------------------------------------------------
-# (KZ word structure) weight = 12, depth = 4, four omega_1 separators.
-# Zagier 1994 Progr. Math. 120 Prop 1.
-# ---------------------------------------------------------------------------
-
-def test_kz_word_structure_weight_12_depth_4():
-    word = kz_word_zeta_3_3_3_3()
-    assert kz_word_weight(word) == 12
-    assert kz_word_depth(word) == 4
-    # Four blocks of (100) pattern: first '1' at position 0, next at 3, 6, 9
-    ones = [i for i, ch in enumerate(word) if ch == "1"]
-    assert ones == [0, 3, 6, 9]
+def test_numerical_value_from_depth_one_zeta_values():
+    with mp.workdps(60):
+        value = zeta3333_newton_numeric(60)
+        expected = mp.mpf(
+            "0.000295999014043171835500960819133545583238160712113039954782"
+        )
+        assert abs(value - expected) < mp.mpf("1e-59")
 
 
-def test_kz_integral_metadata():
-    data = kz_integral_weight_12_depth_4()
-    assert data["weight"] == 12
-    assert data["depth"] == 4
-    assert data["block_structure"] == "(100)(100)(100)(100)"
+@pytest.mark.parametrize("cutoff,tolerance", [(10_000, "5e-17"), (50_000, "1e-19")])
+def test_finite_elementary_sum_is_independent_numerical_route(cutoff, tolerance):
+    with mp.workdps(50):
+        finite = zeta3333_tail_corrected_sum(cutoff, 50)
+        exact = zeta3333_newton_numeric(50)
+        assert abs(finite - exact) < mp.mpf(tolerance)
 
 
-# ---------------------------------------------------------------------------
-# (Independent numerical path) Partial-sum nested series converges to Vermaseren
-# ---------------------------------------------------------------------------
-
-def test_partial_sum_nested_series_converges_to_vermaseren():
-    # At N = 2000 the truncation error is O(1/N^2) = O(1/4e6),
-    # and after the Euler-Maclaurin L_3(N)/(2N^2) correction the error
-    # claim in the docstring is ~ 0.1% (4 sig. digits).
-    estimate = zeta_3333_from_partial_sums(N=2000)
-    true_value = zeta_3_3_3_3_value()
-    rel_err = abs(estimate - true_value) / true_value
-    assert rel_err < 0.01, (
-        f"partial-sum estimate {estimate} disagrees with Vermaseren "
-        f"{true_value} with relative error {rel_err}"
-    )
+def test_uncorrected_finite_sum_increases_toward_the_limit():
+    with mp.workdps(40):
+        short = zeta3333_finite_elementary_sum(2_000, 40)
+        long = zeta3333_finite_elementary_sum(10_000, 40)
+        exact = zeta3333_newton_numeric(40)
+        assert short < long < exact
 
 
-# ---------------------------------------------------------------------------
-# (Lattice non-interference) K3-BKM and Fake-Monster act on disjoint sectors.
-# ---------------------------------------------------------------------------
+def test_factorial_normalisation_remains_a_scalar():
+    with mp.workdps(50):
+        assert zeta3333_normalized_scalar(50) == (
+            zeta3333_newton_numeric(50) / factorial(12)
+        )
+    status = weight12_scalar_status()
+    assert status["simplex_denominator"] == factorial(12)
+    assert status["normalized_scalar_defined"]
+    assert status["normalized_scalar_is_pentagon_coefficient"] is False
 
-def test_fake_monster_does_not_interfere_with_c_12_9():
-    assert fake_monster_non_interference_at_weight_12() is True
+
+def test_primitive_and_chain_status():
+    status = weight12_scalar_status()
+    assert status["decomposable"]
+    assert status["primitive_projection"] == 0
+    assert status["graph_complex_class_constructed"] is False
+    assert status["word_to_cochain_map_constructed"] is False
+    assert status["cyclic_cochain_constructed"] is False
+    assert status["genus_comparison_constructed"] is False
+
+
+def test_validation_and_internal_checks():
+    with pytest.raises(ValueError):
+        zeta3333_finite_elementary_sum(3)
+    checks = run_tests()
+    assert checks
+    assert all(checks.values())

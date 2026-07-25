@@ -1,46 +1,10 @@
-"""
-Tests for the five-family closure of exceptional-type Yangian Koszul duality.
+"""Classical input checks for the exceptional Yangian programme.
 
-Chapter: chapters/examples/exceptional_yangian_koszul_duality_platonic.tex
-Main theorem:
-    thm:exceptional-yangian-koszul-duality-all-five-types
-Per-type propositions:
-    prop:exceptional-yangian-koszul-E6
-    prop:exceptional-yangian-koszul-E7
-    prop:exceptional-yangian-koszul-E8
-    prop:exceptional-yangian-koszul-F4
-    prop:exceptional-yangian-koszul-G2
-
-HZ-IV DISJOINT VERIFICATION PATHS
----------------------------------
-Each per-type proposition has three disjoint sources:
-
-  (a) PBW dimension / Cartan-matrix consistency
-      (derived from: GRW18 PBW theorem;
-       verified against: ExceptionalRootSystem Cartan-matrix arithmetic,
-       weyl_dim_explicit Weyl-character formula).
-
-  (b) Chevalley involution intrinsic verification
-      (derived from: Drinfeld's anti-automorphism extension;
-       verified against: direct root-system computation of the map
-       alpha_i -> -alpha_i and its involutivity).
-
-  (c) Bar-cohomology invariance under hbar -> -hbar
-      (derived from: the Koszul-duality theorem's statement;
-       verified against: tensor_product_decomposition Casimir data, which
-       is invariant under hbar -> -hbar because the Yang R-matrix depends
-       on hbar only as (1 - hbar * P / u), and the eigenvalue splitting
-       under Sym^2 / Alt^2 does not depend on the sign of hbar).
-
-These three paths are genuinely disjoint: (a) uses PBW dimension; (b) uses
-Cartan matrix involutivity; (c) uses tensor-product Casimir eigenvalue
-data.  No single compute source supplies more than one path.
-
-IMPORT-TIME ENFORCEMENT
------------------------
-The @independent_verification decorator asserts disjointness of
-derived_from and verified_against at decoration time.  Tautological
-decorations raise IndependentVerificationError before the tests run.
+These tests establish Cartan data, root counts, Weyl dimensions, diagram
+automorphisms, and elementary permutation-operator identities.  They do
+not evaluate an exceptional Yangian bar complex, prove PBW, construct an
+exceptional R-matrix, or establish Koszul duality.  Those theorem-level
+statements require their own algebraic implementations or cited inputs.
 """
 
 from __future__ import annotations
@@ -50,7 +14,6 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from compute.lib.independent_verification import independent_verification
 from compute.lib.yangian_rtt_exceptional import (
     ExceptionalRootSystem,
     EXCEPTIONAL_DATA,
@@ -105,50 +68,12 @@ def _is_involution(M):
 
 
 # ---------------------------------------------------------------------------
-# Path (a): PBW dimension and Cartan-matrix consistency for all five types
+# Root and representation data for all five exceptional types
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="thm:exceptional-yangian-pbw-grw18",
-    derived_from=[
-        "Guay-Regelskis-Wendlandt 2018 arXiv:1706.05176 Thm 3.2 PBW for "
-        "exceptional Yangians in Drinfeld's second presentation, cited "
-        "in Vol I chapters/examples/exceptional_yangian_koszul_duality_"
-        "platonic.tex thm:exceptional-yangian-pbw-grw18"
-    ],
-    verified_against=[
-        "Direct construction of positive roots via iterated simple "
-        "reflections in compute/lib/yangian_rtt_exceptional.py "
-        "ExceptionalRootSystem (no PBW input, purely combinatorial)",
-        "Weyl-character-formula evaluation of fundamental dimensions "
-        "via weyl_dim_explicit (no bar-complex input)",
-        "Bourbaki root-system table (dim g, rank, num pos roots, "
-        "dual Coxeter h^vee) stored in GROUND_TRUTH local dict, "
-        "derived from Humphreys GTM 9 Appendix",
-    ],
-    disjoint_rationale=(
-        "GRW18's PBW theorem (derived) asserts the existence of an "
-        "ordered-monomial basis of Y_hbar(g) compatible with the level "
-        "filtration; it is a structural theorem about the Yangian, NOT a "
-        "statement about root-system combinatorics.  The three verification "
-        "paths test Cartan-matrix arithmetic (positive-root enumeration, "
-        "Weyl-character formula), which depend only on the Cartan data and "
-        "have no input from the Yangian or any bar complex.  No shared "
-        "intermediate: GRW18 uses Serre relations + filtration lifting; "
-        "our verification uses classical Weyl-theoretic combinatorics."
-    ),
-)
-def test_exceptional_yangian_pbw_dimension_consistency():
-    """Each exceptional Yangian Y_hbar(g) has gr_r Y = g tensor t^r with
-    dim gr_r = dim g, for every level r.  We verify:
-
-    (1) the root-system data match Bourbaki: num positive roots, dim g,
-        dual Coxeter number;
-    (2) the Weyl dimension of fundamental representations matches the
-        standard Bourbaki list;
-    (3) the PBW hypothesis implies dim gr_r = dim g at every level.
-    """
+def test_exceptional_root_and_fundamental_representation_data():
+    """Root counts, Lie dimensions, and selected Weyl dimensions agree."""
     for name in EXCEPTIONAL_TYPES:
         rs = ExceptionalRootSystem(name)
         gt = GROUND_TRUTH[name]
@@ -187,53 +112,11 @@ def test_exceptional_yangian_pbw_dimension_consistency():
             f"{name} Weyl dim at {hw} = {d} != expected {expected_dim}"
         )
 
-    # (3) PBW consistency: dim gr_r Y(g) = dim g at every level r.
-    # This is implied by gr_F Y_hbar(g) ≅ U(g[t]) and dim U_r(g[t]) = dim g,
-    # not directly testable without implementing the full filtration,
-    # but we verify the dimension identity that PBW imposes.
-    for name in EXCEPTIONAL_TYPES:
-        rs = ExceptionalRootSystem(name)
-        # At level r, the graded piece has dimension dim g
-        # (independent of r, by PBW).
-        assert rs.dim_algebra == GROUND_TRUTH[name]["dim"], (
-            f"{name}: PBW consistency dim gr_r = dim g fails"
-        )
-
-
 # ---------------------------------------------------------------------------
-# Path (b): Chevalley involution intrinsic verification for all five types
+# Chevalley involution on the classical root lattice
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-template",
-    derived_from=[
-        "Drinfeld 1988 anti-automorphism argument lifting the Chevalley "
-        "involution of g to Y_hbar(g) with hbar -> -hbar, cited in "
-        "Vol I chapters/examples/exceptional_yangian_koszul_duality_"
-        "platonic.tex prop:exceptional-yangian-template Step 4"
-    ],
-    verified_against=[
-        "Direct root-system computation: the Chevalley involution of any "
-        "simple Lie algebra, defined as the anti-involution negating "
-        "all simple roots, acts on the alpha basis as -I, hence squares "
-        "to +I (Humphreys Thm 14.3, verified intrinsically from Cartan "
-        "matrix data, independent of the Yangian)",
-        "Outer-automorphism group Out(g) verification via Dynkin-diagram "
-        "automorphism count: E_6 has a diagram flip giving |Out| = 2; "
-        "E_7, E_8, F_4, G_2 have trivial diagram automorphism group",
-    ],
-    disjoint_rationale=(
-        "Drinfeld's anti-automorphism argument (derived) constructs the "
-        "Yangian-level involution using the RTT defining relations and the "
-        "Serre relations; it is a Hopf-algebraic theorem about Y_hbar(g).  "
-        "The Chevalley involution at the Lie-algebra level (verified (a)) "
-        "is a CLASSICAL fact proved from Cartan-matrix data, predating the "
-        "Yangian by 60 years.  The outer-automorphism-group enumeration "
-        "(verified (b)) is a Dynkin-diagram combinatorics check, disjoint "
-        "from both.  No path uses Yangian relations or bar-complex data."
-    ),
-)
 def test_chevalley_involution_all_exceptional_types():
     """Chevalley involution sigma_g on a simple Lie algebra g satisfies
     sigma_g(alpha_i) = -alpha_i for every simple root.  In the alpha basis,
@@ -302,55 +185,19 @@ def _count_cartan_automorphisms(A):
 
 
 # ---------------------------------------------------------------------------
-# Path (c): Bar-cohomology / R-matrix invariance under hbar -> -hbar
+# Scalar unitarity of the permutation-operator R-matrix
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="thm:exceptional-yangian-koszul-duality-all-five-types",
-    derived_from=[
-        "Theorem thm:exceptional-yangian-koszul-duality-all-five-types "
-        "in Vol I chapters/examples/exceptional_yangian_koszul_duality_"
-        "platonic.tex, which states Y_hbar(g)^! = Y_{-hbar}(g) for all "
-        "exceptional g, proved via Proposition prop:exceptional-yangian-"
-        "template with GRW18 PBW input"
-    ],
-    verified_against=[
-        "Direct computation of the Yang R-matrix R(u; hbar) = 1 - hbar P/u "
-        "and its inverse R^{-1}(u; hbar) = R(u; -hbar) on the symmetric "
-        "and antisymmetric subspaces, using only the permutation operator "
-        "P and its eigenvalues +-1 (no Yangian or bar-complex input)",
-        "Tensor-product Casimir data from the classical representation "
-        "theory of the exceptional Lie algebras: the decomposition of "
-        "V fund tensor V fund into Sym^2 + Alt^2, evaluated via the "
-        "dimension identity dim Sym^2 + dim Alt^2 = (dim V)^2 (purely "
-        "combinatorial)",
-    ],
-    disjoint_rationale=(
-        "The Koszul-duality theorem (derived) is an assertion about the "
-        "bar complex Omega_X(B^ord_X(Y)) and its counit.  The verification "
-        "paths compute the R-matrix and its inverse directly as operators "
-        "on finite-dimensional tensor-product representations, using only "
-        "the permutation operator and Casimir eigenvalues.  No bar "
-        "complex, no Drinfeld coproduct, no Chevalley involution is "
-        "invoked in the verification: the sign-flip is witnessed at the "
-        "R-matrix level, and the Koszul-duality statement holds iff the "
-        "R-matrix flip is the same as the Chevalley-induced involution -- "
-        "which is what the theorem asserts."
-    ),
-)
-def test_yang_r_matrix_hbar_sign_flip_exceptional_types():
-    """For each exceptional type, on the fundamental representation V:
+def test_permutation_r_matrix_scalar_unitarity_at_selected_dimensions():
+    """For the standard permutation-operator ansatz on a vector space V,
 
       R(u; hbar) = 1 - hbar * P / u         (Yang R-matrix)
-      R^{-1}(u; hbar) = R(u; -hbar)          (on {Sym, Alt} eigenspaces of P)
+      R(u; hbar) R(u; -hbar) = (1-hbar^2/u^2) Id.
 
-    holds because P^2 = I and (1 - xP)(1 + xP)/(1 - x^2) = 1 on Sym (P = +1)
-    and on Alt (P = -1).
-
-    We verify this identity directly on dim V-dimensional fundamental reps
-    for each exceptional type, confirming that the Koszul-duality sign
-    flip is realised at the R-matrix level.
+    This linear-algebra identity uses P^2=Id.  The selected dimensions
+    coincide with familiar exceptional representations; the identity
+    itself supplies no exceptional Yangian or bar-complex structure.
     """
     # Test dimensions chosen to match the smallest fundamental of each type.
     test_fundamentals = {
@@ -374,9 +221,8 @@ def test_yang_r_matrix_hbar_sign_flip_exceptional_types():
             # evaluates to (1 - hbar^2/u^2) on the {Sym, Alt} eigenbasis of P;
             # inverting gives R^{-1}(u; hbar) = (1 + hbar P/u) / (1 - hbar^2/u^2)
             # = R(u; -hbar) / (1 - hbar^2/u^2).  The normalization factor
-            # (1 - hbar^2/u^2) is scalar, so the Koszul-duality flip
-            # hbar -> -hbar is captured exactly up to a scalar normalisation.
-            # We test the eigenvalue identity on +-1 eigenvectors of P.
+            # (1 - hbar^2/u^2) is scalar.  We test this unitarity identity
+            # on the two eigenvalues of the permutation operator.
             for P_eigenvalue in (+1, -1):
                 R_plus = 1.0 - hbar * P_eigenvalue / u
                 R_minus = 1.0 + hbar * P_eigenvalue / u  # R(u; -hbar)
@@ -406,35 +252,12 @@ def test_yang_r_matrix_hbar_sign_flip_exceptional_types():
 
 
 # ---------------------------------------------------------------------------
-# Per-type propositions: dimension consistency
+# Per-type classical data
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-koszul-E6",
-    derived_from=[
-        "prop:exceptional-yangian-koszul-E6 in "
-        "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
-    ],
-    verified_against=[
-        "Direct E_6 Cartan-matrix computation in "
-        "compute/lib/yangian_rtt_exceptional.py CARTAN_MATRICES_"
-        "EXCEPTIONAL['E6'], independent of any Yangian structure",
-        "Bourbaki Lie-algebra table: E_6 has rank 6, dim 78, h^vee = 12, "
-        "|Out(E_6)| = 2",
-    ],
-    disjoint_rationale=(
-        "The proposition (derived) is a Koszul-duality claim about "
-        "Y_hbar(E_6).  The E_6 Cartan-matrix data (verified (a), (b)) are "
-        "classical root-system facts about the Lie algebra E_6, not about "
-        "its Yangian.  The Cartan matrix and outer-automorphism data are "
-        "input to the theorem, not output; the theorem asserts that these "
-        "data are enough (combined with the structural template) to force "
-        "the Koszul-duality isomorphism."
-    ),
-)
-def test_exceptional_yangian_E6_data_consistency():
-    """E_6-specific verification: Cartan matrix data, outer-automorphism
+def test_E6_classical_data_consistency():
+    """E_6 Cartan data, outer-automorphism
     group order, fundamental-representation dimensions.
     """
     rs = ExceptionalRootSystem("E6")
@@ -452,26 +275,7 @@ def test_exceptional_yangian_E6_data_consistency():
     assert _count_cartan_automorphisms(A) == 2, "E_6 Out = Z/2"
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-koszul-E7",
-    derived_from=[
-        "prop:exceptional-yangian-koszul-E7 in "
-        "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
-    ],
-    verified_against=[
-        "Direct E_7 Cartan-matrix computation in "
-        "compute/lib/yangian_rtt_exceptional.py CARTAN_MATRICES_"
-        "EXCEPTIONAL['E7']",
-        "Bourbaki Lie-algebra table: E_7 has rank 7, dim 133, h^vee = 18, "
-        "|Out(E_7)| = 1, 56-dim minuscule is symplectic self-dual",
-    ],
-    disjoint_rationale=(
-        "Koszul-duality claim at E_7 (derived) is verified against classical "
-        "E_7 root-system combinatorics (verified (a)) and Bourbaki tabulated "
-        "data (verified (b)).  Neither verification uses Yangian structure."
-    ),
-)
-def test_exceptional_yangian_E7_data_consistency():
+def test_E7_classical_data_consistency():
     rs = ExceptionalRootSystem("E7")
     assert rs.rank == 7
     assert rs.dim_algebra == 133
@@ -484,28 +288,7 @@ def test_exceptional_yangian_E7_data_consistency():
     assert _count_cartan_automorphisms(A) == 1, "E_7 Out = 1"
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-koszul-E8",
-    derived_from=[
-        "prop:exceptional-yangian-koszul-E8 in "
-        "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
-    ],
-    verified_against=[
-        "Direct E_8 Cartan-matrix computation, including 240-root system "
-        "enumeration via iterated simple reflections in "
-        "compute/lib/yangian_rtt_exceptional.py ExceptionalRootSystem",
-        "Bourbaki Lie-algebra table: E_8 has rank 8, dim 248, h^vee = 30, "
-        "|Out(E_8)| = 1, 248-dim adjoint is the smallest faithful "
-        "representation",
-    ],
-    disjoint_rationale=(
-        "E_8 Koszul-duality claim (derived) is verified against the 240-root "
-        "enumeration and Bourbaki data (verified (a), (b)).  Neither uses "
-        "Yangian structure; E_8's size does not obstruct the four-step "
-        "template which is finite-dimensional at each level."
-    ),
-)
-def test_exceptional_yangian_E8_data_consistency():
+def test_E8_classical_data_consistency():
     rs = ExceptionalRootSystem("E8")
     assert rs.rank == 8
     assert rs.dim_algebra == 248
@@ -520,27 +303,7 @@ def test_exceptional_yangian_E8_data_consistency():
     assert _count_cartan_automorphisms(A) == 1, "E_8 Out = 1"
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-koszul-F4",
-    derived_from=[
-        "prop:exceptional-yangian-koszul-F4 in "
-        "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
-    ],
-    verified_against=[
-        "Direct F_4 Cartan-matrix computation in "
-        "compute/lib/yangian_rtt_exceptional.py (non-simply-laced: "
-        "symmetrizer d = (1, 1, 2, 2))",
-        "Bourbaki Lie-algebra table: F_4 has rank 4, dim 52, h^vee = 9, "
-        "|Out(F_4)| = 1",
-    ],
-    disjoint_rationale=(
-        "F_4 Koszul-duality (derived) verified against Cartan-matrix "
-        "arithmetic (verified (a)) and Bourbaki data (verified (b)).  "
-        "The non-simply-laced symmetrizer enters the verification as "
-        "root-system data, not as Yangian data."
-    ),
-)
-def test_exceptional_yangian_F4_data_consistency():
+def test_F4_classical_data_consistency():
     rs = ExceptionalRootSystem("F4")
     assert rs.rank == 4
     assert rs.dim_algebra == 52
@@ -559,27 +322,7 @@ def test_exceptional_yangian_F4_data_consistency():
     assert _count_cartan_automorphisms(A) == 1, "F_4 Out = 1"
 
 
-@independent_verification(
-    claim="prop:exceptional-yangian-koszul-G2",
-    derived_from=[
-        "prop:exceptional-yangian-koszul-G2 in "
-        "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
-    ],
-    verified_against=[
-        "Direct G_2 Cartan-matrix computation in "
-        "compute/lib/yangian_rtt_exceptional.py (non-simply-laced: "
-        "symmetrizer d = (3, 1) in our convention)",
-        "Bourbaki Lie-algebra table: G_2 has rank 2, dim 14, h^vee = 4, "
-        "|Out(G_2)| = 1",
-    ],
-    disjoint_rationale=(
-        "G_2 Koszul-duality (derived) verified against rank-2 Cartan-matrix "
-        "arithmetic (verified (a)) and Bourbaki data (verified (b)).  The "
-        "triality-folding picture G_2 = D_4 / Z/3 provides a third "
-        "independent proof path but is not used for this consistency test."
-    ),
-)
-def test_exceptional_yangian_G2_data_consistency():
+def test_G2_classical_data_consistency():
     rs = ExceptionalRootSystem("G2")
     assert rs.rank == 2
     assert rs.dim_algebra == 14
@@ -603,9 +346,7 @@ def test_exceptional_yangian_G2_data_consistency():
 
 def test_five_family_coverage_non_trivial():
     """Smoke test: ensure all five exceptional types are testable via the
-    compute infrastructure, and that each has non-trivial content.  This
-    test is NOT decorated with @independent_verification because it is a
-    coverage check rather than a claim verification.
+    classical compute infrastructure, and that each has non-trivial data.
     """
     covered = set()
     for name in EXCEPTIONAL_TYPES:
@@ -620,11 +361,8 @@ def test_five_family_coverage_non_trivial():
     )
 
 
-def test_all_simple_type_closure_not_vacuous():
-    """Corollary cor:exceptional-yangian-all-simple covers all simple types.
-    We verify that the five exceptional types + the four classical families
-    (A_n, B_n, C_n, D_n) together exhaust Cartan-Killing classification.
-    """
+def test_cartan_killing_family_inventory():
+    """The Cartan--Killing inventory has four series and five exceptions."""
     # Classical types parameters (standard Dynkin).
     classical_families = {"A", "B", "C", "D"}
     exceptional_types = {"E6", "E7", "E8", "F4", "G2"}

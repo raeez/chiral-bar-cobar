@@ -1057,8 +1057,9 @@ def koszul_dual_k3xe() -> Dict[str, Any]:
     For the N=4 SCA, the duality is more complex because of the
     SU(2)_R structure.
 
-    For the free boson part: A_E = H_1, so A^!_E = Sym^ch(V*) with
-    kappa(A^!_E) = -1 (AP33: H_k^! != H_{-k}, but kappa(H_k^!) = -k).
+    For the free boson part: A_E = H_1, so A^!_E is the curved
+    second-kind Sym^ch(V*[1]) branch with scalar kappa(A^!_E) = -1.
+    AP33: this branch is not H_{-k}; only scalar kappa agrees.
 
     This function preserves the historical scalar compute value
     kappa(A^!_{K3xE}) = -3.  That is a kappa-projection convention for this
@@ -1075,11 +1076,11 @@ def koszul_dual_k3xe() -> Dict[str, Any]:
         "kappa_dual": -kappa_k3xe(),
         "dual_algebra": "A^! Verdier/Koszul branch for A_{K3xE}; full VOA not identified",
         "A_i": "H^*(B(A_{K3xE})), bar-dual coalgebra distinct from A^!",
-        "e_dual": "Sym^ch(V*) with kappa = -1",
+        "e_dual": "curved second-kind Sym^ch(V*[1]) branch with scalar kappa = -1",
         "bar_cobar_inversion": "Omega(B(A)) recovers A; this is not the construction of A^!",
         "complementarity": "scalar kappa projection only; full Theta complementarity is not negation",
         "status": "Exact VOA identification OPEN; scalar kappa value recorded for this compute package",
-        "warning": "AP24: complementarity can differ beyond free-field/KM scalar projections; AP33: H_k^! != H_{-k}",
+        "warning": "AP24: complementarity can differ beyond free-field/KM scalar projections; AP33: curved H_k^! branch is not H_{-k}",
         "scope": "sigma/CDR K3xE package; not the K3 boundary free-field package",
     }
 

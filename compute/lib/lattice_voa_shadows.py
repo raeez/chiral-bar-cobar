@@ -46,9 +46,11 @@ For an even lattice Lambda of rank r:
    the Verdier/continuous linear dual of that coalgebra, and its
    scalar curvature has the opposite sign.
 
-   SUBTLETY: Heisenberg is NOT self-dual.  H_k^! = Sym^ch(V*) with
-   curvature m_0 = -k*omega (prop:heisenberg-complementarity).  The
-   lattice VOA inherits this from its Cartan sector.
+   SUBTLETY: Heisenberg is NOT self-dual.  For k != 0, H_k^! is the
+   curved second-kind Sym^ch(V*[1]) branch with curvature
+   m_0 = -k*omega (prop:heisenberg-complementarity); uncurved Sym^ch(V*)
+   is only the k=0/associated-graded shadow.  The lattice VOA inherits
+   this from its Cartan sector.
 
    For non-unimodular lattices (D_4, A_2, E_6, E_7), the Koszul dual
    involves the dual lattice Lambda* and the inverse cocycle

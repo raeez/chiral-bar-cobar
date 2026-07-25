@@ -19,11 +19,14 @@ Verification strategy:
 import pytest
 from fractions import Fraction
 from pathlib import Path
-from sympy import Rational
+from sympy import Matrix, Rational
 
 from compute.lib.qec_koszul_code_engine import (
     # Weight dimensions
     koszul_firewall,
+    theorem_a_reconstruction_surface,
+    quadratic_comparison_cone,
+    theorem_b_certificate_from_cone,
     theorem_b_recovery_surface_from_family,
     partition_count,
     heisenberg_weight_dim,
@@ -88,12 +91,23 @@ def test_holographic_code_surface_is_algebraic_not_physical_qec():
     active = manuscript + "\n" + engine + "\n" + deep_engine
 
     assert r"\chapter{Algebraic code skeletons from Koszul duality}" in manuscript
-    assert "It is not a physical-bulk construction" in manuscript
-    assert "physical holographic reconstruction theorem is obtained" in manuscript
-    assert "only after adding a comparison map" in manuscript
+    assert "Chiral Koszulness is quadratic exactness" in manuscript
+    assert "A quasi-isomorphism $\\beta_T$" in manuscript
+    assert "physical Hermitian structure then formulate holographic recovery" in manuscript
     assert "Algebraic code skeletons from Koszul duality" in engine
-    assert "bar-cobar counit quasi-isomorphism" in engine
+    assert "epsilon_A: Omega_X B_X(A) -> A" in engine
+    assert "q_A: A^i -> B_X(A)" in engine
+    assert "Cone(q_A)" in engine
     assert "Exact physical QEC requires additional unitary" in deep_engine
+
+    engine_conflations = [
+        "Koszulness is equivalent to the ambient-qualified bar-cobar counit",
+        "Theorem B recovery is also ambient-qualified",
+        "raw_direct_sum_chain_qi",
+        "weight-completed pro-conilpotent / coderived",
+    ]
+    for phrase in engine_conflations:
+        assert phrase not in engine
 
     forbidden = [
         "The central theorem (G12): KOSZULNESS <=> AMBIENT-QUALIFIED EXACT QEC",
@@ -104,6 +118,201 @@ def test_holographic_code_surface_is_algebraic_not_physical_qec():
     ]
     for phrase in forbidden:
         assert phrase not in active
+
+
+def test_holographic_code_surface_separates_reconstruction_compression_and_fixed_c():
+    manuscript = HC_TEX.read_text(encoding="utf-8")
+
+    required = [
+        r"\cA^{\mathrm i}=C_X(sV,s^2R)",
+        r"q_\cA\colon\cA^{\mathrm i}\longrightarrow B_X(\cA)",
+        r"p_\cA\colon\Omega_X(\cA^{\mathrm i})\longrightarrow\cA",
+        r"\varepsilon_\cA\colon\Omega_XB_X(\cA)\xrightarrow{\sim}\cA",
+        r"\operatorname{Cone}(q_\cA)",
+        r"\mathsf D^{\mathrm{co}}(C\text{-}\mathsf{Comod})",
+        r"\mathsf D^{\mathrm{ctr}}(C\text{-}\mathsf{Contramod})",
+        "K5 & $q_\\cA$ and $p_\\cA$ quasi-isomorphisms",
+    ]
+    for fragment in required:
+        assert fragment in manuscript
+
+    conflations = [
+        r"\cA^{\mathrm i} = H^\bullet B(\cA)",
+        "Chiral Koszulness is equivalent to the bar-cobar counit",
+        "Koszulness condition~(K4) is exactly the bar-cobar counit",
+        "K4 & bar-cobar quasi-iso",
+        "strict quasi-isomorphism on the Koszul lane and coderived comparison",
+        r"\psi_\cA",
+    ]
+    for fragment in conflations:
+        assert fragment not in manuscript
+
+
+class TestReconstructionAndQuadraticCertificates:
+    """Independent Theorem A and exact finite Cone(q_A) checks."""
+
+    @staticmethod
+    def identity_cone():
+        # Independent finite model: q_0 = id on a one-dimensional
+        # degree-zero complex.  Cone(id) is the two-term complex k --id--> k.
+        return quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 1},
+            source_differentials={},
+            target_differentials={},
+            comparison_maps={0: Matrix([[1]])},
+        )
+
+    def test_theorem_a_is_family_independent_and_not_a_koszul_verdict(self):
+        surface = theorem_a_reconstruction_surface()
+        assert surface['theorem'] == 'A'
+        assert surface['map'] == 'epsilon_A: Omega_X B_X(A) -> A'
+        assert surface['enhanced_ran_reconstruction'] is True
+        assert surface['family_independent'] is True
+        assert surface['koszul_hypothesis_required'] is False
+        assert surface['chain_reconstruction'] is None
+        assert surface['physical_recovery'] is None
+
+    def test_completed_chain_realization_needs_its_named_package(self):
+        conditional = theorem_a_reconstruction_surface(completed=True)
+        certified = theorem_a_reconstruction_surface(
+            completed=True, chain_package_verified=True
+        )
+        assert conditional['chain_status'] == 'CONDITIONAL'
+        assert conditional['chain_reconstruction'] is None
+        assert conditional['completion_required'] is True
+        assert certified['chain_status'] == 'CERTIFIED'
+        assert certified['chain_reconstruction'] is True
+
+    def test_identity_comparison_has_acyclic_cone(self):
+        cone = self.identity_cone()
+        assert cone['homology_dimensions'] == {0: 0, 1: 0}
+        assert cone['homology_support'] == ()
+        assert cone['acyclic'] is True
+        assert cone['exact_arithmetic'] is True
+
+    def test_zero_comparison_exhibits_two_obstruction_groups(self):
+        # Direct oracle: Cone(0:k->k) = k[0] + k[1] with zero differential.
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 1},
+            source_differentials={},
+            target_differentials={},
+            comparison_maps={0: Matrix([[0]])},
+        )
+        assert cone['homology_dimensions'] == {0: 1, 1: 1}
+        assert cone['homology_support'] == (0, 1)
+        assert cone['acyclic'] is False
+
+    def test_identity_on_a_nontrivial_chain_complex_has_acyclic_cone(self):
+        # Limiting/symmetry oracle: Cone(id_C) is contractible for every C.
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1, 1: 1},
+            target_dimensions={0: 1, 1: 1},
+            source_differentials={1: Matrix([[1]])},
+            target_differentials={1: Matrix([[1]])},
+            comparison_maps={0: Matrix([[1]]), 1: Matrix([[1]])},
+        )
+        assert cone['acyclic'] is True
+        assert all(value == 0 for value in cone['homology_dimensions'].values())
+
+    def test_quasi_isomorphism_with_an_acyclic_target_summand_has_acyclic_cone(self):
+        # Independent oracle: B = k[0] plus the contractible pair
+        # k[1] --id--> k[0], while q includes A = k[0] into the first summand.
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 2, 1: 1},
+            source_differentials={},
+            target_differentials={1: Matrix([[0], [1]])},
+            comparison_maps={0: Matrix([[1], [0]])},
+        )
+        assert cone['homology_dimensions'] == {0: 0, 1: 0, 2: 0}
+        assert cone['acyclic'] is True
+
+    def test_comparison_must_be_a_chain_map(self):
+        with pytest.raises(ValueError, match='q_A is not a chain map'):
+            quadratic_comparison_cone(
+                source_dimensions={0: 1, 1: 1},
+                target_dimensions={0: 1, 1: 1},
+                source_differentials={1: Matrix([[1]])},
+                target_differentials={},
+                comparison_maps={0: Matrix([[1]]), 1: Matrix([[1]])},
+            )
+
+    def test_acyclic_cone_and_complete_packages_certify_theorem_b(self):
+        certificate = theorem_b_certificate_from_cone(
+            self.identity_cone(),
+            algebra_id='finite-identity',
+            presentation='finite identity model',
+            h_cl_verified=True,
+            strong_convergence_verified=True,
+        )
+        assert certificate['status'] == 'CERTIFIED'
+        assert certificate['koszul'] is True
+        assert certificate['exact_quadratic_recovery'] is True
+        assert certificate['obstruction'] == 'Cone(q_A)'
+        assert certificate['physical_recovery'] is None
+
+    def test_acyclic_cone_with_missing_hcl_is_an_incomplete_certificate(self):
+        certificate = theorem_b_certificate_from_cone(
+            self.identity_cone(),
+            algebra_id='finite-identity',
+            presentation='finite identity model',
+            h_cl_verified=False,
+            strong_convergence_verified=True,
+        )
+        assert certificate['status'] == 'INCOMPLETE_PACKAGE'
+        assert certificate['koszul'] is None
+        assert certificate['exact_quadratic_recovery'] is None
+
+    def test_nonzero_cone_homology_obstructs_quadratic_recovery(self):
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 1},
+            source_differentials={},
+            target_differentials={},
+            comparison_maps={0: Matrix([[0]])},
+        )
+        certificate = theorem_b_certificate_from_cone(
+            cone,
+            algebra_id='zero-model',
+            presentation='zero comparison model',
+            h_cl_verified=True,
+            strong_convergence_verified=True,
+        )
+        assert certificate['status'] == 'OBSTRUCTED_IN_FINITE_MODEL'
+        assert certificate['koszul'] is False
+        assert certificate['exact_quadratic_recovery'] is False
+        assert certificate['cone_homology_support'] == (0, 1)
+
+    def test_family_name_alone_carries_no_theorem_b_verdict(self):
+        for family in ('heisenberg', 'affine', 'betagamma', 'virasoro'):
+            surface = theorem_b_recovery_surface_from_family(family)
+            assert surface['status'] == 'UNVERIFIED'
+            assert surface['koszul'] is None
+            assert surface['exact_quadratic_recovery'] is None
+            assert surface['certificate_present'] is False
+            assert 'Cone(q_A)' in surface['reason']
+            assert 'D^co(C-Comod)' in surface['fixed_coalgebra_surface']
+
+    def test_explicit_certificate_transports_to_named_family_surface(self):
+        certificate = theorem_b_certificate_from_cone(
+            self.identity_cone(),
+            algebra_id='synthetic-family',
+            presentation='synthetic certified presentation',
+            h_cl_verified=True,
+            strong_convergence_verified=True,
+        )
+        surface = theorem_b_recovery_surface_from_family(
+            'synthetic-family', certificate
+        )
+        assert surface['status'] == 'CERTIFIED'
+        assert surface['koszul'] is True
+        assert surface['certificate_present'] is True
+        assert surface['family'] == 'synthetic-family'
+
+        with pytest.raises(ValueError, match='algebra_id must match'):
+            theorem_b_recovery_surface_from_family('different-family', certificate)
 
 
 # ===================================================================
@@ -240,9 +449,11 @@ class TestSymplecticCode:
         code = symplectic_code_at_weight('heisenberg', 2)
         firewall = code['koszul_firewall']
         assert 'finite-type' in firewall['verdier_koszul_dual']
-        assert 'completed cobar convergence' in firewall['verdier_koszul_dual']
-        assert 'Hochschild bulk object' in firewall['derived_centre']
+        assert 'continuity hypotheses' in firewall['verdier_koszul_dual']
+        assert 'Hochschild closed-sector object' in firewall['derived_centre']
         assert 'bar-cobar construction of A!' not in code['dual_lane']
+        assert code['theorem_c_status'] == 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE'
+        assert code['physical_recovery'] is None
 
 
 class TestAggregateCodeParameters:
@@ -285,10 +496,12 @@ class TestHeisenbergCodes:
         assert params['kappa'] == 1
         assert params['shadow_class'] == 'G'
         assert params['redundancy_channels'] == 0
-        assert params['exact_recovery'] is True
-        assert params['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
-        assert params['exact_recovery_ambient'] == params['recovery_surface']['ambient']
-        assert params['raw_direct_sum_chain_qi'] is True
+        assert params['universal_reconstruction'] is True
+        assert params['universal_reconstruction_status'] == 'PROVED_ELSEWHERE'
+        assert params['quadratic_koszul'] is None
+        assert params['quadratic_koszul_status'] == 'UNVERIFIED'
+        assert params['exact_quadratic_recovery'] is None
+        assert params['physical_recovery'] is None
         assert params['rate'] == Fraction(1, 2)
 
     def test_h1_dimensions(self):
@@ -297,6 +510,28 @@ class TestHeisenbergCodes:
         expected_K = 1 + 1 + 2 + 3 + 5 + 7  # p(0) + ... + p(5)
         assert params['K'] == expected_K
         assert params['N'] == 2 * expected_K
+
+    def test_quadratic_certificate_is_bound_to_the_specific_level(self):
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 1},
+            source_differentials={},
+            target_differentials={},
+            comparison_maps={0: Matrix([[1]])},
+        )
+        certificate = theorem_b_certificate_from_cone(
+            cone,
+            algebra_id='heisenberg:k=1',
+            presentation='synthetic H_1 finite model',
+            h_cl_verified=True,
+            strong_convergence_verified=True,
+        )
+        certified = heisenberg_code_parameters(
+            1, h_max=2, quadratic_certificate=certificate
+        )
+        assert certified['quadratic_koszul_status'] == 'CERTIFIED'
+        with pytest.raises(ValueError, match='algebra_id must match'):
+            heisenberg_code_parameters(2, h_max=2, quadratic_certificate=certificate)
 
     def test_table_length(self):
         table = heisenberg_code_parameter_table(10)
@@ -359,6 +594,8 @@ class TestKnillLaflamme:
         assert result['code_fraction'] == Rational(1, 2)
         assert result['self_dual'] is True
         assert result['kl_structural'] is True
+        assert result['theorem_c_status'] == 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE'
+        assert result['physical_recovery'] is None
 
     def test_path3_complementarity_c1(self):
         result = knill_laflamme_path3_complementarity(Rational(1))
@@ -370,6 +607,8 @@ class TestKnillLaflamme:
         result = verify_knill_laflamme_three_paths()
         assert result['all_paths_agree'] is True
         assert result['num_paths'] == 3
+        assert result['physical_recovery'] is None
+        assert result['physical_recovery_status'].startswith('CONDITIONAL_ON_BETA_T')
 
 
 # ===================================================================
@@ -425,39 +664,64 @@ class TestCodeDistance:
 # ===================================================================
 
 class TestEncodingDecoding:
-    """Bar-cobar encoding/decoding round-trip."""
+    """Universal reconstruction and quadratic compression."""
 
     def test_structure_heisenberg(self):
         result = encoding_decoding_structure('heisenberg', h=2)
-        assert result['round_trip'] == 'quasi-isomorphism'
-        assert result['exact_recovery'] is True
-        assert result['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
-        assert result['exact_recovery_ambient'] == result['recovery_surface']['ambient']
-        assert result['raw_direct_sum_chain_qi'] is True
-        assert result['recovery_surface']['raw_direct_sum_chain_qi'] is True
+        assert result['round_trip'] == 'enhanced Ran equivalence'
+        assert result['universal_reconstruction'] is True
+        assert result['universal_reconstruction_status'] == 'PROVED_ELSEWHERE'
+        assert result['quadratic_koszul'] is None
+        assert result['quadratic_koszul_status'] == 'UNVERIFIED'
+        assert result['physical_recovery'] is None
 
     def test_structure_virasoro(self):
-        result = encoding_decoding_structure('virasoro', h=4)
-        assert result['exact_recovery'] is True
-        assert result['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
-        assert result['exact_recovery_ambient'] == result['recovery_surface']['ambient']
-        assert result['raw_direct_sum_chain_qi'] is False
-        assert result['recovery_surface']['raw_direct_sum_chain_qi'] is False
-        assert result['recovery_surface']['completion_required'] is True
-        assert 'completed' in result['recovery_surface']['ambient'] or 'coderived' in result['recovery_surface']['ambient']
+        result = encoding_decoding_structure('virasoro', h=4, completed=True)
+        assert result['universal_reconstruction'] is True
+        assert result['theorem_a_surface']['completion_required'] is True
+        assert result['chain_reconstruction'] is None
+        assert result['chain_reconstruction_status'] == 'CONDITIONAL'
+        assert result['quadratic_koszul_status'] == 'UNVERIFIED'
+        assert result['physical_recovery'] is None
 
-    def test_theorem_b_surface_class_m_not_raw(self):
+    def test_theorem_b_surface_is_not_inferred_from_class_m(self):
         surface = theorem_b_recovery_surface_from_family('virasoro')
-        assert surface['exact_recovery'] is True
-        assert surface['status'] == 'AMBIENT_QUALIFIED'
-        assert surface['raw_direct_sum_chain_qi'] is False
-        assert surface['completion_required'] is True
+        assert surface['status'] == 'UNVERIFIED'
+        assert surface['koszul'] is None
+        assert surface['exact_quadratic_recovery'] is None
+        assert surface['certificate_present'] is False
+
+    def test_explicit_quadratic_certificate_flows_through_encoding(self):
+        cone = quadratic_comparison_cone(
+            source_dimensions={0: 1},
+            target_dimensions={0: 1},
+            source_differentials={},
+            target_differentials={},
+            comparison_maps={0: Matrix([[1]])},
+        )
+        certificate = theorem_b_certificate_from_cone(
+            cone,
+            algebra_id='synthetic-family',
+            presentation='synthetic identity presentation',
+            h_cl_verified=True,
+            strong_convergence_verified=True,
+        )
+        result = encoding_decoding_structure(
+            'synthetic-family', h=0, quadratic_certificate=certificate
+        )
+        assert result['quadratic_koszul'] is True
+        assert result['quadratic_koszul_status'] == 'CERTIFIED'
+        assert result['exact_quadratic_recovery'] is True
+        assert result['physical_recovery'] is None
 
     def test_round_trip_dimensions_heisenberg(self):
         """Dimensions preserved at each weight."""
         data = bar_cobar_round_trip_dimensions('heisenberg', 6)
         assert all(d['match'] for d in data)
         assert all(d['dim_in'] == d['dim_out'] for d in data)
+        assert all(d['source'] == 'Theorem A universal bar-cobar resolution'
+                   for d in data)
+        assert all(d['quadratic_koszul_verdict'] is None for d in data)
 
     def test_round_trip_dimensions_virasoro(self):
         data = bar_cobar_round_trip_dimensions('virasoro', 8)
@@ -468,23 +732,24 @@ class TestEncodingDecoding:
         assert all(d['match'] for d in data)
 
     def test_bar_cobar_firewall_note(self):
-        """Bar-cobar recovers A itself, not A!."""
+        """The note carries all typed recovery surfaces."""
         result = encoding_decoding_structure('heisenberg', h=1)
         note = result['bar_cobar_firewall_note']
         assert note == result['note_ap25']
-        assert 'Omega(B(A)) = A' in note
-        assert 'finite-type/completed hypotheses' in note
-        stale_ran_bar_identity = 'D_Ran(B(A)) = ' + 'B(A!)'
-        assert stale_ran_bar_identity not in note
+        assert 'universal Theorem A reconstruction' in note
+        assert 'Cone(q_A)' in note
+        assert 'fixed-C co/contra equivalence' in note
 
-    def test_koszul_firewall_separates_four_objects(self):
+    def test_koszul_firewall_separates_all_recovery_surfaces(self):
         firewall = koszul_firewall()
-        assert 'reconstruction of the input algebra' in firewall['bar_cobar_inversion']
-        assert 'Koszul-dual coalgebra' in firewall['bar_dual_coalgebra']
+        assert 'universal Theorem A' in firewall['bar_cobar_inversion']
+        assert 'quadratic coalgebra' in firewall['bar_dual_coalgebra']
+        assert 'Theorem B comparison' in firewall['quadratic_comparison']
+        assert 'Cone(q_A)' in firewall['quadratic_obstruction']
+        assert 'fixed-C' in firewall['fixed_coalgebra']
         assert 'A!_infty' in firewall['verdier_koszul_dual']
-        assert 'Hochschild bulk object' in firewall['derived_centre']
-        assert 'Do not identify' in firewall['forbidden_collapse']
-        assert 'finite-type/completed theorem' in firewall['forbidden_collapse']
+        assert 'Hochschild closed-sector object' in firewall['derived_centre']
+        assert 'finite-type/completed comparison theorem' in firewall['forbidden_collapse']
 
 
 # ===================================================================
@@ -500,6 +765,8 @@ class TestLogicalOperators:
         assert result['kappa_z'] == Rational(13, 2)
         assert result['commutation_nondegenerate'] is True
         assert result['complementarity_check']['self_dual'] is True
+        assert result['theorem_c_status'] == 'CONDITIONAL_ON_PERFECT_LAGRANGIAN_PACKAGE'
+        assert result['physical_recovery'] is None
 
     def test_virasoro_c1(self):
         result = logical_operators_from_koszul_pair('virasoro', c_val=Rational(1))
@@ -649,7 +916,7 @@ class TestCodeComparisons:
         assert result['physical_bulk_identification'] is False
         assert result['oca_comparison_required'] is True
         assert result['correspondences'][2][0] == 'Wedge reconstruction'
-        assert 'not physical bulk' in result['correspondences'][2][2]
+        assert 'Theorem A reconstructs the boundary chart A' in result['correspondences'][2][2]
 
     def test_steane_rate_mismatch(self):
         result = compare_with_steane()
@@ -706,12 +973,12 @@ class TestMultiPathCrossChecks:
             assert result['shadow_class'] == cls
             assert result['redundancy_channels'] == expected[cls]
 
-    def test_encoding_decoding_kl_consistent(self):
-        """Exact recovery (encoding/decoding) implies KL at genus 1."""
+    def test_universal_reconstruction_and_kl_model_remain_separate(self):
+        """Theorem A and an explicit rank-one KL model have distinct inputs."""
         enc = encoding_decoding_structure('heisenberg', h=0)
-        assert enc['exact_recovery'] is True
-        assert enc['exact_recovery_status'] == 'AMBIENT_QUALIFIED'
-        assert enc['raw_direct_sum_chain_qi'] is True
+        assert enc['universal_reconstruction'] is True
+        assert enc['quadratic_koszul'] is None
+        assert enc['physical_recovery'] is None
         kl = knill_laflamme_path2_direct()
         assert kl['kl_verified'] is True
 
@@ -749,6 +1016,10 @@ class TestFullDictionary:
                    for entry in d)
         assert all('physical inner product' in entry['physical_distance_status']
                    for entry in d)
+        assert all(entry['quadratic_koszul'] is None for entry in d)
+        assert all(entry['quadratic_koszul_status'] ==
+                   'UNVERIFIED_CERTIFICATE_REQUIRED' for entry in d)
+        assert all(entry['physical_recovery'] is None for entry in d)
 
     def test_heisenberg_entries(self):
         """H_1 through H_5 in dictionary."""
@@ -772,6 +1043,8 @@ class TestFullDictionary:
         assert 'Heisenberg' in report
         assert 'Lagrangian' in report
         assert 'rate = 1/2' in report
+        assert 'explicit Cone(q_A) certificate required' in report
+        assert 'Physical recovery: conditional' in report
 
     def test_virasoro_convergence(self):
         """Virasoro c=13 convergent, c=1/2 divergent."""

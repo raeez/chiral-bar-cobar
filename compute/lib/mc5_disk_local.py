@@ -1,8 +1,11 @@
-"""MC5 disk-local packet: BV-BRST = bar at the chain level on C₂ and C₃.
+"""MC5 disk-local packet: finite C2/C3 residue checks.
 
-This module verifies conj:disk-local-perturbative-fm — the identification
-of local perturbative BRST brackets with bar residue operations on FM
-compactification strata.
+This module records finite symbolic evidence for the disk-local
+perturbative/FM comparison: the selected C2 and C3 residue models match
+for the abelian CS, su(2) KM, and Virasoro examples below. It does not
+prove conj:disk-local-perturbative-fm, which still requires the
+compactified perturbative forms, FM orientation/Stokes comparison, and
+the genuswise analytic lift.
 
 The key identity (genus 0, disk-local):
   Q_{BRST}(a ⊗ b) = d_bar(a ⊗ b)
@@ -18,7 +21,8 @@ ON C₂ STRATA:
   Q_{BRST}(a ⊗ b) = {S, a ⊗ b}  (BV antibracket with action)
                = Σ_n a_{(n)}b  (perturbative Feynman rules)
 
-The identification: both extract the SAME residues from the OPE.
+In these finite models, both sides extract the same residues from the
+OPE.
 
 ON C₃ STRATA (the first non-trivial test):
   d_bar on B³ involves Arnold relations: η₁₂∧η₂₃ + η₂₃∧η₃₁ + η₃₁∧η₁₂ = 0
@@ -27,7 +31,7 @@ ON C₃ STRATA (the first non-trivial test):
 The two-coefficient packet: a_pert = a_bar, b_pert = b_bar
 where a,b are the two independent residue operations on C₃.
 
-Ground truth: concordance.tex (Front F, lines 1225-1273),
+Scope anchor: concordance.tex (physics boundary / MC5 stratum),
   bar_construction.tex (Arnold + residues),
   bv_brst.tex (BV formalism),
   conj:disk-local-perturbative-fm.

@@ -1,8 +1,9 @@
 """
 Guardrails for the ordered E1 all-genus theorem surface.
 
-The ordered E1 modular chapter proves the all-genus surfaces on the
-strict ordered Mittag-Leffler modular tower.
+The ordered E1 modular chapter states its all-genus surfaces on the
+strict ordered Mittag--Leffler modular tower, whose convergence and
+descent data form the explicit hypothesis package.
 """
 
 from __future__ import annotations
@@ -19,7 +20,7 @@ def _window_around(text: str, label: str, radius: int = 1300) -> str:
     return text[max(0, idx - radius) : idx + radius]
 
 
-def test_e1_all_genus_surfaces_are_proved_on_strict_ordered_tower():
+def test_e1_all_genus_surfaces_carry_the_strict_tower_package():
     tex = E1_TEX.read_text()
     labels = (
         "thm:e1-theorem-A-modular",
@@ -30,8 +31,7 @@ def test_e1_all_genus_surfaces_are_proved_on_strict_ordered_tower():
     )
     for label in labels:
         window = _window_around(tex, "\\label{" + label + "}")
-        assert "\\ClaimStatusProvedHere" in window
-        assert "\\ClaimStatusConditional" not in window
+        assert "\\ClaimStatusConditional" in window
 
 
 def test_e1_section_names_strict_ordered_tower_hypotheses():

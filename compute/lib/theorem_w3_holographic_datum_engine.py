@@ -1,940 +1,576 @@
-r"""Finite W_3 holographic datum compute surface.
+r"""Exact local W3 data and typed reconstruction boundaries.
 
-MATHEMATICAL CONTENT
-====================
+This module certifies the finite Zamolodchikov packet:
 
-The holographic modular Koszul package has seven structural entries:
+* the principal DS central charge and reflected central sum;
+* the 32/16 OPE normalization;
+* the norm and zero mode of Lambda;
+* the level-one Shapovalov matrix and singular-vector curve.
 
-    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
-
-This module records a finite W_3 projection of those entries.  It is not
-a construction of the full holographic package theorem: the full MC element,
-the full rank-2 holomorphic connection, the derived-centre comparison, and
-the finite-type/completed Verdier hypotheses remain external proof data.
-
-For W_3 at central charge c (generic, non-critical):
-
-1. A = W_3(c) with generators T (weight 2) and W (weight 3).
-   kappa(W_3) = 5c/6 from the harmonic sum formula kappa = c*(H_3 - 1).
-
-2. A^i = H^*(B^ch(A)): the bar-dual coalgebra projection. The chain
-   complex B^ch(A), its cohomology A^i, the cobar inversion
-   Omega^ch(B^ch(A)), and the Verdier branch A! are four different
-   objects.
-
-3. A! = W_3(100 - c): the Verdier/Koszul branch under c -> 100 - c
-   on the finite-type rectified surface.
-   kappa(A!) = 5(100 - c)/6.
-
-4. C = line/evaluation comparison category recorded here as Rep_q(sl_3).
-   This compute model does not identify it with Z_ch^der(A) without the
-   separate derived-centre comparison.
-
-5. r(z) = Res^coll_{0,2}(Theta_{W_3}): the binary collision residue.
-   Has contributions from TT, TW, and WW channels.
-   TT channel: (c/2)/z^3 + 2T/z (Virasoro subsector, poles {3,1}).
-   TW channel: 3W/z (pole {1} only).
-   WW channel: (c/3)/z^5 + 2T/z^3 + dT/z^2 + ... (poles {5,3,2,1}).
-
-6. Theta_A: finite scalar projections governed by thm:mc2-bar-intrinsic.
-   genus 1: obs_1 = kappa * lambda_1 = 5c/144.
-   genus 2: F_2 = kappa * lambda_2^FP + delta_F2^cross
-            where delta_F2(W_3) = (c + 204)/(16c)  (NONZERO for all c > 0).
-   This does not construct the full multiweight MC datum.
-
-7. nabla^hol: the recorded T-line and W-line scalar restrictions.
-   T-line: identical to Virasoro (autonomous).
-   W-line: even in t (Z_2 parity), purely imaginary branch points.
-   This is not the full rank-2 holomorphic connection matrix.
-
-FINITE INVARIANTS PROTECTED HERE:
-    kappa(W_3) = 5c/6
-    anomaly ratio rho(W_3) = 5/6
-    c + c' = 100  (central charge complementarity from the W_N formula)
-    kappa + kappa' = 250/3  (AP24: nonzero for W-algebras)
-    self-dual point c* = 50  (where kappa = kappa')
-    critical string point c_crit = 100  (where kappa_eff = 0; AP29: c* != c_crit)
-    shadow depth: class M (infinite) for both T-line and W-line
-    Q^contact_{Vir} = 10/[c(5c+22)]  (T-line quartic contact)
-    delta_F2(W_3) = (c + 204)/(16c)  (finite genus-2 cross-channel correction)
-    mixing polynomial P(W_3) = 25c^2 + 100c - 428
-
-MANUSCRIPT REFERENCES:
-    thm:mc2-bar-intrinsic (higher_genus_modular_koszul.tex)
-    thm:wn-obstruction (w_algebras.tex, eq:wn-kappa)
-    thm:w3-genus1-complementarity (w_algebras.tex)
-    thm:multi-weight-genus-expansion (higher_genus_modular_koszul.tex)
-    thm:shadow-connection (higher_genus_modular_koszul.tex)
-    thm:propagator-variance (higher_genus_modular_koszul.tex)
-    rem:propagator-weight-universality (AP27)
-    rem:ww-even-poles-census (landscape_census.tex)
-    cor:anomaly-ratio-ds (landscape_census.tex)
-    tab:shadow-connection-census (landscape_census.tex)
-    tab:propagator-variance-census (landscape_census.tex)
-
-ANTI-PATTERN AWARENESS:
-    AP1:  kappa(W_3) = 5c/6. Recompute from the W_N formula.
-    AP19: r-matrix poles one below OPE poles.  WW OPE {6,4,3,2,1} -> r {5,3,2,1}.
-    AP24: kappa + kappa' = 250/3 != 0.  Not zero for W-algebras.
-    AP26: BPZ inner product, not Fock, for weight >= 4 decomposition.
-    AP27: bar propagator d log E(z,w) is weight 1 for ALL channels.
-    AP29: self-dual c* = 50 != critical c_crit = 100.  Never conflate.
-    AP32: genus-1 universal, genus-2 FAILS for multi-weight.
-    AP39: kappa != c/2 for W_3. kappa = 5c/6.
-    AP44: OPE mode / n! for lambda-bracket conversion.
-    AP25: line/evaluation C is not the Hochschild bulk Z_ch^der(A).
-    AP-KERNEL: affine raw k*Omega_tr/z is not KZ Omega_KZ/((k+h^vee)z).
+Every passage from these local data to a presentation coalgebra, a
+Verdier partner, a collision kernel, a modular scalar, a stable-graph
+sum, a shadow metric, a Hamiltonian system, or a holographic lift is
+represented by a packet carrying its hypothesis package.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
-from functools import lru_cache
-from math import comb, factorial
-from typing import Any, Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Any, Mapping, Tuple
+
+import sympy as sp
 
 
-# ============================================================================
-# 1. Bernoulli numbers and Faber-Pandharipande (independent implementation)
-# ============================================================================
+TYPE_LOCAL = (
+    "Open quadrant; universal Zamolodchikov presentation; "
+    "Beilinson level 1; H_W3^univ"
+)
+TYPE_BAR = (
+    "Open quadrant; ordered completed chiral bar; "
+    "Beilinson level 2; H_W3^bar"
+)
+TYPE_MODULAR = (
+    "Open quadrant; modular trace presentation; "
+    "Beilinson level 5; H_W3^mod"
+)
 
-@lru_cache(maxsize=64)
-def bernoulli(n: int) -> Fraction:
-    """Exact Bernoulli number B_n via recurrence."""
-    if n == 0:
-        return Fraction(1)
-    if n == 1:
-        return Fraction(-1, 2)
-    if n % 2 == 1:
-        return Fraction(0)
-    s = Fraction(0)
-    for j in range(n):
-        bj = bernoulli(j)
-        if bj != 0:
-            s += Fraction(comb(n + 1, j)) * bj
-    return -s / Fraction(n + 1)
-
-
-def lambda_fp(g: int) -> Fraction:
-    r"""Faber-Pandharipande intersection number lambda_g^FP.
-
-    lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
-
-    g=1: 1/24,  g=2: 7/5760,  g=3: 31/967680.
-    """
-    if g < 1:
-        raise ValueError(f"lambda_g^FP requires g >= 1, got {g}")
-    B2g = bernoulli(2 * g)
-    return (Fraction(2 ** (2 * g - 1) - 1, 2 ** (2 * g - 1))
-            * abs(B2g) / Fraction(factorial(2 * g)))
+H_PRES = "H_W3^pres: topological generators, relations, and q_A comparison"
+H_BAR = "H_W3^bar: ordered configuration-space bar, signs, and completion"
+H_DS_BAR = "H_W3^DS/bar: PBW convergence, BRST concentration, and bar transport"
+H_VERDIER = "H_W3^Verdier: continuous Ran--Verdier duality and rectification"
+H_CENTER = "H_W3^cen: derived-centre chain model and family support"
+H_COLL = "H_W3^coll: collision residue retaining descendants and composites"
+H_MOD = "H_W3^mod: trace-compatible genus-one curvature"
+H_RES = "H_W3^res: chain-compatible residue functionals"
+H_PROJ = "H_W3^proj: full multi-channel scalar projection"
+H_SEW = "H_W3^sew: clutching propagators, graph weights, and convergence"
+H_FLAT = "H_W3^flat: representation of the MC equation on conformal blocks"
+H_LINE = "H_W3^line: line-category comparison"
+H_OC = "H_W3^OC: open--closed comparison with the derived centre"
+H_RESCALE = "H_W3^rescale: family contraction and scalar trace identification"
 
 
-# ============================================================================
-# 2. Harmonic numbers (exact rational arithmetic)
-# ============================================================================
+@dataclass(frozen=True)
+class ClaimPacket:
+    """A value together with its epistemic and type data."""
 
-def harmonic(n: int) -> Fraction:
-    """H_n = 1 + 1/2 + ... + 1/n (exact)."""
-    return sum(Fraction(1, j) for j in range(1, n + 1))
+    statement: str
+    status: str
+    value: Any = None
+    hypotheses: Tuple[str, ...] = ()
+    type_signature: str = ""
 
 
-# ============================================================================
-# 3. Component (A): the W_3 algebra
-# ============================================================================
+def exact(statement: str, value: Any, type_signature: str = TYPE_LOCAL) -> ClaimPacket:
+    return ClaimPacket(statement, "exact", value, (), type_signature)
 
-def w3_generators() -> Dict[str, Dict[str, Any]]:
-    """W_3 generator data: name, conformal weight, leading OPE pole order."""
+
+def open_claim(
+    statement: str,
+    *hypotheses: str,
+    type_signature: str,
+) -> ClaimPacket:
+    return ClaimPacket(statement, "open", None, tuple(hypotheses), type_signature)
+
+
+def conditional(
+    statement: str,
+    value: Any,
+    *hypotheses: str,
+    type_signature: str,
+) -> ClaimPacket:
+    return ClaimPacket(
+        statement,
+        "conditional",
+        value,
+        tuple(hypotheses),
+        type_signature,
+    )
+
+
+def _sym(value: Any) -> sp.Expr:
+    return sp.sympify(value)
+
+
+def _regular_d(c: Any) -> sp.Expr:
+    c_value = _sym(c)
+    d_value = sp.expand(5 * c_value + 22)
+    if d_value == 0:
+        raise ValueError("The Zamolodchikov normalization requires 5*c+22 invertible.")
+    return d_value
+
+
+def w3_generators() -> Mapping[str, Mapping[str, Any]]:
+    """Return the exact strong-generator packet."""
+
     return {
-        'T': {'weight': 2, 'max_ope_pole': 4, 'two_point_norm': 'c/2'},
-        'W': {'weight': 3, 'max_ope_pole': 6, 'two_point_norm': 'c/3'},
+        "T": {"weight": 2, "leading_self_ope": "c/2", "max_ope_pole": 4},
+        "W": {"weight": 3, "leading_self_ope": "c/3", "max_ope_pole": 6},
     }
 
 
-def kappa_w3(c: Fraction) -> Fraction:
-    """Total modular characteristic kappa(W_3) = 5c/6.
+def w3_central_charge(k: Any) -> sp.Expr:
+    """Return the principal W3 central charge."""
 
-    Three independent derivations:
-      Path 1: harmonic sum  kappa = c * (H_3 - 1) = c * 5/6
-      Path 2: channel sum   kappa = kappa_T + kappa_W = c/2 + c/3 = 5c/6
-      Path 3: anomaly ratio kappa = c * rho(sl_3) where rho = 1/2 + 1/3 = 5/6
-    """
-    return Fraction(5) * c / Fraction(6)
+    k_value = _sym(k)
+    if sp.simplify(k_value + 3) == 0:
+        raise ValueError("The principal DS formula requires k+3 invertible.")
+    return sp.factor(2 - 24 * (k_value + 2) ** 2 / (k_value + 3))
 
 
-def kappa_T(c: Fraction) -> Fraction:
-    """T-channel curvature kappa_T = c/2 (Virasoro subsector)."""
-    return c / Fraction(2)
+def reflected_level(k: Any) -> sp.Expr:
+    return -_sym(k) - 6
 
 
-def kappa_W(c: Fraction) -> Fraction:
-    """W-channel curvature kappa_W = c/3."""
-    return c / Fraction(3)
+def reflected_central_charge(k: Any) -> sp.Expr:
+    """Return the central charge evaluated at the reflected parameter."""
+
+    return sp.factor(w3_central_charge(reflected_level(k)))
 
 
-def kappa_from_harmonic(c: Fraction, N: int = 3) -> Fraction:
-    """kappa(W_N) = c * (H_N - 1) from the harmonic sum formula."""
-    return c * (harmonic(N) - Fraction(1))
+def reflected_central_sum(k: Any) -> sp.Expr:
+    """Return the exact rational-function sum."""
+
+    return sp.factor(w3_central_charge(k) + reflected_central_charge(k))
 
 
-def anomaly_ratio(N: int = 3) -> Fraction:
-    """Anomaly ratio rho(W_N) = H_N - 1 = sum_{s=2}^{N} 1/s.
-
-    Independent derivation: rho = sum_{i=1}^{r} 1/(m_i + 1)
-    where m_i are exponents of sl_N.
-    For sl_3: exponents are 1, 2, so rho = 1/2 + 1/3 = 5/6.
-    """
-    return harmonic(N) - Fraction(1)
-
-
-def anomaly_ratio_from_exponents(exponents: List[int]) -> Fraction:
-    """rho = sum 1/(m_i + 1) from Lie algebra exponents.
-
-    For sl_3: exponents = [1, 2], giving rho = 1/2 + 1/3 = 5/6.
-    """
-    return sum(Fraction(1, m + 1) for m in exponents)
-
-
-def principal_wn_central_charge_complementarity(N: int) -> Fraction:
-    """Feigin-Frenkel central-charge sum for principal W_N.
-
-    The local manuscript gives
-        c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1)
-    under k' = -k - 2N.  Hence N=2 gives 26 and N=3 gives 100.
-    """
-    if N < 2:
-        raise ValueError(f"principal W_N complementarity requires N >= 2, got {N}")
-    return Fraction(2 * (N - 1) * (2 * N**2 + 2 * N + 1))
-
-
-# ============================================================================
-# 4. Component (A^i): bar-dual coalgebra projection
-# ============================================================================
-
-def bar_dual_coalgebra_description() -> Dict[str, Any]:
-    """Bar-dual coalgebra projection A^i = H^*(B^ch(W_3)).
-
-    This entry records the coalgebra supplied by the chiral bar construction.
-    It is separate from the Verdier/Koszul branch A!, and the bar-cobar
-    inversion Omega B(A) ~= A is not used here as a duality statement.
-    """
-    return {
-        'name': 'H^*(B^ch(W_3))',
-        'object': 'A_i',
-        'symbol': 'A^i',
-        'source': 'chiral_bar_cohomology',
-        'bar_complex': 'B^ch(W_3)',
-        'cohomology_of': 'B^ch(W_3)',
-        'cobar_inversion': 'Omega^ch(B^ch(W_3)) ~= W_3',
-        'generators_inherited': ['T', 'W'],
-        'not_A_dual': True,
-        'not_cobar_inversion': True,
-        'not_derived_center': True,
+def reflected_central_packet(k: Any) -> ClaimPacket:
+    data = {
+        "k": _sym(k),
+        "k_reflected": reflected_level(k),
+        "c": w3_central_charge(k),
+        "c_reflected": reflected_central_charge(k),
+        "sum": reflected_central_sum(k),
+        "formal_midpoint": sp.Integer(50),
+        "mathematical_type": "reflected principal central arithmetic",
     }
+    return exact("principal W3 reflected central arithmetic", data)
 
 
-def typed_apart_objects() -> Dict[str, Dict[str, Any]]:
-    """Structural separation table for the five nearby objects.
+def reciprocal_weight_diagnostic() -> ClaimPacket:
+    """Return the generator-weight arithmetic with an explicit type."""
 
-    The table is intentionally syntactic: tests use it to keep the compute API
-    from collapsing bar duality, cobar inversion, Verdier duality, and the
-    Hochschild bulk centre into a single overloaded "dual" object.
-    """
-    return {
-        'B_A': {
-            'symbol': 'B^ch(W_3)',
-            'kind': 'chiral_bar_complex',
-            'role': 'coalgebra complex before taking bar cohomology',
-            'not_equal_to': ['A_i', 'A_dual', 'Omega_B_A', 'Z_ch_der_A'],
-        },
-        'A_i': {
-            'symbol': 'A^i',
-            'kind': 'bar_dual_coalgebra',
-            'role': 'H^*(B^ch(W_3))',
-            'not_equal_to': ['B_A', 'A_dual', 'Omega_B_A', 'Z_ch_der_A'],
-        },
-        'A_dual': {
-            'symbol': 'A^!',
-            'kind': 'Verdier_Koszul_branch',
-            'role': 'W_3(100 - c) on the rectified finite-type surface',
-            'not_equal_to': ['B_A', 'A_i', 'Omega_B_A', 'Z_ch_der_A'],
-        },
-        'Omega_B_A': {
-            'symbol': 'Omega^ch(B^ch(W_3))',
-            'kind': 'bar_cobar_inversion',
-            'role': 'inverts the bar construction back to W_3',
-            'identifies_with': 'A',
-            'not_duality': True,
-            'not_equal_to': ['B_A', 'A_i', 'A_dual', 'Z_ch_der_A'],
-        },
-        'Z_ch_der_A': {
-            'symbol': 'Z_ch^der(W_3)',
-            'kind': 'derived_Hochschild_bulk_center',
-            'role': 'bulk Hochschild object, not the line/evaluation category C',
-            'not_line_category': True,
-            'not_equal_to': ['B_A', 'A_i', 'A_dual', 'Omega_B_A'],
-        },
+    data = {
+        "weights": (2, 3),
+        "value": sp.Rational(1, 2) + sp.Rational(1, 3),
+        "mathematical_type": "reciprocal strong-generator weights",
     }
+    return exact("W3 reciprocal-weight diagnostic", data)
 
 
-# ============================================================================
-# 5. Component (A!): the Verdier/Koszul branch W_3(100 - c)
-# ============================================================================
-
-def w3_dual_central_charge(c: Fraction) -> Fraction:
-    """Dual central charge under Feigin-Frenkel: c' = 100 - c.
-
-    The c + c' = 100 identity follows from
-    k -> k' = -k - 6 and the DS central charge formula.
-    """
-    return Fraction(100) - c
-
-
-def kappa_w3_dual(c: Fraction) -> Fraction:
-    """kappa(W_3!) = 5(100 - c)/6 on the rectified finite-type surface."""
-    return kappa_w3(w3_dual_central_charge(c))
-
-
-def complementarity_sum(c: Fraction) -> Fraction:
-    """kappa(W_3) + kappa(W_3!) = 250/3.
-
-    AP24: this is NONZERO for W-algebras.
-    For comparison: Vir has kappa + kappa' = 13; sl_2 hat has 0.
-    """
-    return kappa_w3(c) + kappa_w3_dual(c)
-
-
-def self_dual_point() -> Fraction:
-    """Self-dual central charge c* = 50 where kappa(A) = kappa(A!).
-
-    AP29: c* = 50 differs from the critical string point c_crit = 100.
-    """
-    return Fraction(50)
-
-
-def critical_string_point() -> Fraction:
-    r"""Critical string point for W_3: c_crit = 100.
-
-    At c = 100: kappa_eff = kappa(matter) + kappa(ghost) = 0.
-    The W_3 ghost system has kappa(ghost) = -5*100/6 = -250/3.
-
-    AP29: c_crit = 100 != c* = 50.
-    """
-    return Fraction(100)
-
-
-def w3_central_charge_complementarity() -> Fraction:
-    """The central charge sum c + c' = 100 for W_3.
-
-    This is the N=3 instance of
-    c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1).
-    """
-    return principal_wn_central_charge_complementarity(3)
-
-
-# ============================================================================
-# 6. Component (C): line-operator category
-# ============================================================================
-
-def line_category_description() -> Dict[str, Any]:
-    """Line-operator category for W_3.
-
-    On the evaluation sector: Rep_q(sl_3) at q = exp(pi*i/(k+3)).
-    The categorical structure is controlled by MC3 (proved for all types).
-    This is not the Hochschild bulk object Z_ch^der(W_3).
-    """
-    return {
-        'type': 'Rep_q(sl_3)',
-        'sector': 'line/evaluation',
-        'quantum_parameter': 'q = exp(pi*i/(k+3))',
-        'mc3_status': 'PROVED (all simple types, cor:mc3-all-types)',
-        'thick_generation': 'evaluation modules generate (cor:dk2-thick-generation-all-types)',
-        'rank': 2,
-        'simple_type': 'A_2',
-        'not_bulk_category': True,
-        'not_derived_center': True,
-        'bulk_object': 'Z_ch^der(W_3)',
-        'comparison_status': 'line category C is compared with, not identified as, the derived centre',
+def leading_ope_norms(c: Any) -> ClaimPacket:
+    c_value = _sym(c)
+    data = {
+        "T": c_value / 2,
+        "W": c_value / 3,
+        "mathematical_type": "leading self-OPE norms",
     }
+    return exact("W3 leading self-OPE norms", data)
 
 
-# ============================================================================
-# 7. Component (r(z)): the spectral r-matrix
-# ============================================================================
+def lambda_norm(c: Any) -> sp.Expr:
+    """Return the exact Lambda norm."""
 
-def r_matrix_channels() -> Dict[str, Dict[str, Any]]:
-    """All r-matrix channels for W_3 and their pole structures.
+    c_value = _sym(c)
+    return sp.factor(c_value * (5 * c_value + 22) / 10)
 
-    AP19: r-matrix poles are ONE BELOW OPE poles (d log absorption).
-    OPE pole z^{-n} -> r-matrix pole z^{-(n-1)}.
-    Simple OPE poles (z^{-1}) drop entirely.
-    """
-    return {
-        'TT': {
-            'ope_poles': [4, 2, 1],
-            'rmatrix_poles': [3, 1],
-            'formula': '(c/2)/z^3 + 2T/z',
-            'parity': 'odd',
-            'note': 'Identical to Virasoro. All poles odd-order.',
-        },
-        'TW': {
-            'ope_poles': [2, 1],
-            'rmatrix_poles': [1],
-            'formula': '3W/z',
-            'parity': 'n/a (mixed weight)',
-            'note': 'W is primary of weight 3 under T.',
-        },
-        'WT': {
-            'ope_poles': [2, 1],
-            'rmatrix_poles': [1],
-            'formula': '3W/z',
-            'parity': 'n/a',
-            'note': 'Same structure as TW by skew-symmetry.',
-        },
-        'WW': {
-            'ope_poles': [6, 4, 3, 2, 1],
-            'rmatrix_poles': [5, 3, 2, 1],
-            'formula': '(c/3)/z^5 + 2T/z^3 + dT/z^2 + ...',
-            'parity': 'mixed (has even pole z^{-2})',
-            'note': ('Even pole at z^{-2} from dT/(z-w)^3 in WW OPE '
-                     '(rem:ww-even-poles-census). The WW OPE also has the '
-                     'odd-order pole z^{-3}, so the bosonic parity constraint '
-                     'has no force here.'),
-        },
+
+def lambda_virasoro_witness(c: Any) -> ClaimPacket:
+    c_value = _sym(c)
+    gram = {
+        "L_-2^2,L_-2^2": c_value * (c_value + 8) / 2,
+        "L_-4,L_-2^2": 3 * c_value,
+        "L_-4,L_-4": 5 * c_value,
     }
-
-
-def reference_kernel_formulas() -> Dict[str, str]:
-    """Canonical collision kernels used to guard KZ/Virasoro normalization.
-
-    The affine raw trace-form residue keeps the level prefix k. The KZ
-    connection uses the separate normalization Omega_KZ/((k+h^vee)z).
-    The Virasoro kernel is the collision residue after d log absorption.
-    """
-    return {
-        'affine_raw_trace_form': 'k*Omega_tr/z',
-        'affine_KZ': 'Omega_KZ/((k+h^vee)z)',
-        'heisenberg': 'k/z',
-        'virasoro': '(c/2)/z^3 + 2T/z',
-        'W3_TT': r_matrix_channels()['TT']['formula'],
-        'W3_TW': r_matrix_channels()['TW']['formula'],
-        'W3_WW': r_matrix_channels()['WW']['formula'],
+    state = {"L_-2^2": sp.Integer(1), "L_-4": sp.Rational(-3, 5)}
+    data = {
+        "state": state,
+        "gram": gram,
+        "norm": lambda_norm(c_value),
+        "L2_image_coefficient": (5 * c_value + 22) / 5,
     }
+    return exact("Virasoro construction of Lambda and its norm", data)
 
 
-def verify_pole_shift(channel: str) -> Dict[str, Any]:
-    """Verify AP19 pole-shift rule: OPE pole n -> r-matrix pole n-1.
+def lambda_zero(h: Any) -> sp.Expr:
+    h_value = _sym(h)
+    return sp.factor(h_value**2 + h_value / 5)
 
-    For each OPE pole z^{-n} with n >= 2, the r-matrix has pole z^{-(n-1)}.
-    OPE poles at z^{-1} (descendant) drop.
-    """
-    data = r_matrix_channels()[channel]
-    ope = data['ope_poles']
-    expected_r = sorted([n - 1 for n in ope if n >= 2], reverse=True)
-    actual_r = data['rmatrix_poles']
-    return {
-        'channel': channel,
-        'ope_poles': ope,
-        'expected_rmatrix_poles': expected_r,
-        'actual_rmatrix_poles': actual_r,
-        'consistent': expected_r == actual_r,
+
+def lambda_zero_packet(h: Any) -> ClaimPacket:
+    h_value = _sym(h)
+    data = {
+        "normal_ordered_TT_zero": h_value**2 + 2 * h_value,
+        "d2T_zero": 6 * h_value,
+        "lambda_zero": lambda_zero(h_value),
     }
+    return exact("Lambda_0 action on a W3 highest-weight vector", data)
 
 
-def r_matrix_total_pole_count() -> int:
-    """Total number of distinct r-matrix poles across all channels.
+def ww_ope_packet(c: Any) -> ClaimPacket:
+    """Return the complete singular WW OPE coefficients."""
 
-    TT: {3,1}, TW: {1}, WT: {1}, WW: {5,3,2,1}
-    Union: {1,2,3,5} -> 4 distinct orders.
-    """
-    all_poles = set()
-    for ch_data in r_matrix_channels().values():
-        all_poles.update(ch_data['rmatrix_poles'])
-    return len(all_poles)
-
-
-def max_r_matrix_pole_order() -> int:
-    """Maximum r-matrix pole order across all W_3 channels.
-
-    WW channel: z^{-5} (from weight-3 generator, 2h-1 = 5).
-    """
-    max_order = 0
-    for ch_data in r_matrix_channels().values():
-        if ch_data['rmatrix_poles']:
-            max_order = max(max_order, max(ch_data['rmatrix_poles']))
-    return max_order
-
-
-def max_pole_from_weight(h: int) -> int:
-    """Maximum r-matrix pole order = 2h - 1 for a weight-h generator.
-
-    h=1 (Heisenberg): max pole 1.
-    h=2 (Virasoro): max pole 3.
-    h=3 (W_3 W-current): max pole 5.
-    """
-    return 2 * h - 1
-
-
-# ============================================================================
-# 8. Component (Theta_A): the MC element and genus expansion
-# ============================================================================
-
-def obs_genus1(c: Fraction) -> Fraction:
-    """Genus-1 obstruction: obs_1 = kappa * lambda_1 = 5c/6 * 1/24 = 5c/144.
-
-    This is the W_3 scalar genus-1 projection of thm:genus-universality.
-    """
-    return kappa_w3(c) * lambda_fp(1)
-
-
-def F_genus1(c: Fraction) -> Fraction:
-    """Genus-1 free energy F_1(W_3) = 5c/144."""
-    return obs_genus1(c)
-
-
-def F_genus2_per_channel(c: Fraction) -> Fraction:
-    """Per-channel (kappa * lambda_2^FP) contribution to genus-2 free energy.
-
-    F_2^{per-channel} = kappa * lambda_2^FP = (5c/6) * (7/5760) = 7c/6912.
-    """
-    return kappa_w3(c) * lambda_fp(2)
-
-
-def delta_F2_cross(c: Fraction) -> Fraction:
-    """Genus-2 cross-channel correction for W_3.
-
-    delta_F2(W_3) = (c + 204) / (16c).
-
-    NONZERO for all c > 0. On this finite genus-2 surface,
-    F_2(W_3) != kappa * lambda_2^FP.
-
-    Local support paths:
-      Path 1: Direct genus-2 graph sum (mg_w3_genus2_graph_engine.py)
-      Path 2: Analytic formula from propagator variance
-      Path 3: Large-c limit: delta -> 1/16 (confirmed)
-      Path 4: Koszul duality: delta(c) + delta(100-c) is a rational function
-      Path 5: Z_2 parity: odd-W channels vanish (confirmed)
-    """
-    if c == Fraction(0):
-        raise ValueError("delta_F2 has pole at c = 0")
-    return (c + Fraction(204)) / (Fraction(16) * c)
-
-
-def F_genus2_total(c: Fraction) -> Fraction:
-    """Total genus-2 free energy for W_3.
-
-    F_2(W_3) = kappa * lambda_2^FP + delta_F2^cross
-             = 7c/6912 + (c + 204)/(16c).
-    """
-    return F_genus2_per_channel(c) + delta_F2_cross(c)
-
-
-def delta_F2_large_c_limit() -> Fraction:
-    """Large-c limit of delta_F2: (c+204)/(16c) -> 1/16 as c -> infinity."""
-    return Fraction(1, 16)
-
-
-def delta_F2_at_self_dual(c: Fraction = Fraction(50)) -> Fraction:
-    """Cross-channel correction at the self-dual point c = 50.
-
-    delta_F2(50) = (50 + 204)/(16*50) = 254/800 = 127/400.
-    """
-    return delta_F2_cross(c)
-
-
-def delta_F2_complementarity(c: Fraction) -> Fraction:
-    """delta_F2(c) + delta_F2(100 - c): complementarity sum of cross-channel.
-
-    This is a nontrivial rational function of c.
-    """
-    c_dual = Fraction(100) - c
-    return delta_F2_cross(c) + delta_F2_cross(c_dual)
-
-
-def finite_holographic_scope() -> Dict[str, Any]:
-    """Scope firewall for the W_3 compute surface.
-
-    The seven package labels are present, but each non-scalar entry is only
-    represented by the finite datum listed here. Tests assert this contract so
-    a finite scalar or line computation cannot be promoted to a full package
-    theorem by changing a docstring or output label.
-    """
-    return {
-        'entries': ('A', 'A_i', 'A_dual', 'C', 'r', 'Theta', 'nabla'),
-        'claim_status': 'finite_compute_projection',
-        'not_full_holographic_package_theorem': True,
-        'theta_scope': (
-            'genus-1 scalar obstruction and genus-2 scalar/cross-channel '
-            'free-energy projection only'
-        ),
-        'nabla_scope': (
-            'T-line and W-line scalar restrictions plus propagator variance; '
-            'not the full rank-2 holomorphic connection'
-        ),
-        'r_scope': 'binary collision residue channels TT, TW, WT, WW',
-        'external_obligations': [
-            'full multiweight MC element',
-            'full rank-2 holomorphic connection matrix',
-            'derived-centre comparison C -> Z_ch^der(A)',
-            'finite-type/completed hypotheses for the Verdier branch A!',
-        ],
+    c_value = _sym(c)
+    d_value = _regular_d(c_value)
+    alpha = sp.Integer(32) / d_value
+    data = {
+        "normalization": "Zamolodchikov/Bouwknegt--Schoutens",
+        "pole_6": {"vacuum": c_value / 3},
+        "pole_5": {},
+        "pole_4": {"T": sp.Integer(2)},
+        "pole_3": {"dT": sp.Integer(1)},
+        "pole_2": {"d2T": sp.Rational(3, 10), "Lambda": alpha},
+        "pole_1": {"d3T": sp.Rational(1, 15), "dLambda": alpha / 2},
+        "lambda_ope_coefficient": alpha,
+        "lambda_derivative_coefficient": alpha / 2,
+        "lambda_mode_coefficient": alpha / 2,
     }
+    return exact("complete singular Zamolodchikov WW packet", data)
 
 
-# ============================================================================
-# 9. Component (nabla^hol): the shadow connection
-# ============================================================================
+def lambda_mode_commutator_coefficient(m: Any, n: Any, c: Any) -> sp.Expr:
+    """Return the Lambda coefficient in the W-mode commutator."""
 
-def shadow_metric_T_line(c: Fraction, t: Fraction) -> Fraction:
-    """Shadow metric Q_T(t) on the T-line (Virasoro subsector).
-
-    Q_T(t) = c^2 + 12ct + [(180c + 872)/(5c + 22)] t^2.
-
-    This is autonomous (identical to Virasoro).
-    """
-    if 5 * c + 22 == 0:
-        raise ValueError("Shadow metric has pole at c = -22/5")
-    return c**2 + 12 * c * t + (180 * c + 872) * t**2 / (5 * c + 22)
+    packet = ww_ope_packet(c).value
+    return sp.factor(packet["lambda_mode_coefficient"] * (_sym(m) - _sym(n)))
 
 
-def shadow_metric_W_line(c: Fraction, t: Fraction) -> Fraction:
-    """Shadow metric Q_W(t) on the W-line.
-
-    Q_W(t) = 4c^2/9 + 40960/[3(5c+22)^3] * t^2.
-
-    Even in t (Z_2 parity: W -> -W kills odd arities).
-    """
-    if 5 * c + 22 == 0:
-        raise ValueError("Shadow metric has pole at c = -22/5")
-    return Fraction(4) * c**2 / Fraction(9) + Fraction(40960) * t**2 / (Fraction(3) * (5 * c + 22)**3)
-
-
-def critical_discriminant_T(c: Fraction) -> Fraction:
-    """Critical discriminant for T-line: Delta_T = 40/(5c + 22).
-
-    Delta = 8 * kappa_T * S4_T = 8 * (c/2) * 10/[c(5c+22)] = 40/(5c+22).
-    """
-    if 5 * c + 22 == 0:
-        raise ValueError("Discriminant has pole at c = -22/5")
-    return Fraction(40) / (5 * c + 22)
-
-
-def critical_discriminant_W(c: Fraction) -> Fraction:
-    """Critical discriminant for W-line: Delta_W = 20480/[3(5c+22)^3].
-
-    Delta = 8 * kappa_W * S4_W = 8 * (c/3) * 2560/[c(5c+22)^3]
-          = 20480/[3(5c+22)^3].
-    """
-    if 5 * c + 22 == 0:
-        raise ValueError("Discriminant has pole at c = -22/5")
-    return Fraction(20480) / (Fraction(3) * (5 * c + 22)**3)
-
-
-def S4_T(c: Fraction) -> Fraction:
-    """Quartic contact shadow for T-line: S4_T = 10/[c(5c+22)].
-
-    Identical to Q^contact_Vir.
-    """
-    if c == 0 or 5 * c + 22 == 0:
-        raise ValueError("S4_T has pole")
-    return Fraction(10) / (c * (5 * c + 22))
-
-
-def S4_W(c: Fraction) -> Fraction:
-    """Quartic contact shadow for W-line: S4_W = 2560/[c(5c+22)^3]."""
-    if c == 0 or 5 * c + 22 == 0:
-        raise ValueError("S4_W has pole")
-    return Fraction(2560) / (c * (5 * c + 22)**3)
-
-
-def shadow_depth() -> str:
-    """Shadow depth classification for W_3.
-
-    Both T-line and W-line have critical discriminant Delta != 0
-    for generic c, so both are class M (infinite depth).
-    """
-    return 'M'
-
-
-# ============================================================================
-# 10. Propagator variance (multi-channel non-autonomy)
-# ============================================================================
-
-def mixing_polynomial(c: Fraction) -> Fraction:
-    """Mixing polynomial P(W_3) = 25c^2 + 100c - 428.
-
-    The propagator variance is proportional to P^2.
-    Enhanced symmetry (autonomy) occurs at P = 0:
-    c = (-100 +/- sqrt(10000 + 42800)) / 50 = -2 +/- 4*sqrt(33)/5.
-    """
-    return 25 * c**2 + 100 * c - 428
-
-
-def propagator_variance(c: Fraction) -> Fraction:
-    """Propagator variance delta_mix for W_3.
-
-    delta_mix = 1280 * P^2 / [c^3 * (5c+22)^6]
-
-    where P = 25c^2 + 100c - 428.
-
-    Non-negative by Cauchy-Schwarz. Vanishes iff P = 0.
-    """
-    if c == 0 or 5 * c + 22 == 0:
-        raise ValueError("Propagator variance has pole")
-    P = mixing_polynomial(c)
-    return Fraction(1280) * P**2 / (c**3 * (5 * c + 22)**6)
-
-
-# ============================================================================
-# 11. W_3 OPE data (from w3_bar.py, independently coded)
-# ============================================================================
-
-def w3_ope_modes(c: Fraction) -> Dict[Tuple[str, str], Dict[int, Dict[str, Fraction]]]:
-    """All singular n-th products for W_3 generators.
-
-    Ground truth from manuscript comp:w3-nthproducts.
-    Convention: a_{(n)}b notation.
-    """
-    alpha = Fraction(16) / (22 + 5 * c)
-
-    return {
-        ('T', 'T'): {
-            3: {'vac': c / 2},
-            1: {'T': Fraction(2)},
-            0: {'dT': Fraction(1)},
-        },
-        ('T', 'W'): {
-            1: {'W': Fraction(3)},
-            0: {'dW': Fraction(1)},
-        },
-        ('W', 'T'): {
-            1: {'W': Fraction(3)},
-            0: {'dW': Fraction(2)},
-        },
-        ('W', 'W'): {
-            5: {'vac': c / 3},
-            3: {'T': Fraction(2)},
-            2: {'dT': Fraction(1)},
-            1: {'d2T': Fraction(3, 10), 'Lambda': alpha},
-            0: {'d3T': Fraction(1, 15), 'dLambda': alpha / 2},
-        },
-    }
-
-
-def leading_ope_pole(a: str, b: str, c: Fraction) -> Optional[Fraction]:
-    """Leading OPE pole coefficient (vacuum contribution).
-
-    T_{(3)}T = c/2,  W_{(5)}W = c/3.
-    Mixed channels have no vacuum contribution.
-    """
-    ope = w3_ope_modes(c)
-    pair = (a, b)
-    if pair not in ope:
-        return None
-    # Find highest mode with vacuum contribution
-    for n in sorted(ope[pair].keys(), reverse=True):
-        if 'vac' in ope[pair][n]:
-            return ope[pair][n]['vac']
-    return None
-
-
-def two_point_normalization(s: int, c: Fraction) -> Fraction:
-    """Two-point function normalization for weight-s generator: c/s.
-
-    From thm:wn-obstruction proof step 1:
-    <W^{(s)}(z) W^{(s)}(0)> = (c/s) * z^{-2s}.
-    """
-    return c / Fraction(s)
-
-
-# ============================================================================
-# 12. Structure constants (Frobenius algebra data)
-# ============================================================================
-
-def structure_constant_upper(i: str, j: str, k: str) -> Fraction:
-    """Upper-index structure constant C^k_{ij} from OPE modes.
-
-    C^T_{TT} = 2  (from T_{(1)}T = 2T)
-    C^W_{TW} = 3  (from T_{(1)}W = 3W)
-    C^T_{WW} = 2  (from W_{(3)}W = 2T)
-    All others vanish by Z_2 parity (W -> -W).
-    """
-    w_count = sum(1 for x in (i, j, k) if x == 'W')
-    if w_count % 2 == 1:
-        return Fraction(0)
-
-    pair = tuple(sorted([i, j]))
-    if pair == ('T', 'T') and k == 'T':
-        return Fraction(2)
-    if pair == ('T', 'W') and k == 'W':
-        return Fraction(3)
-    if pair == ('W', 'W') and k == 'T':
-        return Fraction(2)
-    return Fraction(0)
-
-
-def structure_constant_lower(i: str, j: str, k: str, c: Fraction) -> Fraction:
-    """Lower-index structure constant C_{ijk} = eta_{kk} * C^k_{ij}.
-
-    C_{TTT} = (c/2)*2 = c
-    C_{TWW} = (c/3)*3 = c
-    C_{WWT} = (c/2)*2 = c
-    Remarkable: all nonvanishing C_{ijk} = c.
-    """
-    metric_k = kappa_T(c) if k == 'T' else kappa_W(c)
-    return metric_k * structure_constant_upper(i, j, k)
-
-
-# ============================================================================
-# 13. Holographic package assembly
-# ============================================================================
-
-def holographic_datum(c: Fraction) -> Dict[str, Any]:
-    """Assemble finite projections of the seven holographic entries.
-
-    H(T) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol).
-    """
-    c_dual = w3_dual_central_charge(c)
-    k_A = kappa_w3(c)
-    k_A_dual = kappa_w3_dual(c)
-
-    return {
-        # Component (A): the algebra
-        'A': {
-            'name': 'W_3',
-            'central_charge': c,
-            'generators': w3_generators(),
-            'kappa': k_A,
-            'anomaly_ratio': anomaly_ratio(),
-            'shadow_class': shadow_depth(),
-            'F_1': F_genus1(c),
-        },
-        # Component (A^i): bar-dual coalgebra
-        'A_i': bar_dual_coalgebra_description(),
-        # Component (A!): the Verdier/Koszul branch
-        'A_dual': {
-            'name': 'W_3_dual',
-            'central_charge': c_dual,
-            'kappa': k_A_dual,
-            'complementarity_cc': c + c_dual,
-            'complementarity_kappa': k_A + k_A_dual,
-            'self_dual_point': self_dual_point(),
-            'branch': 'Verdier/continuous-linear dual under finite-type completion',
-            'not_bar_cobar_inversion': True,
-            'not_derived_center': True,
-        },
-        # Component (C): the line-operator category
-        'C': line_category_description(),
-        # Component (r(z)): the spectral r-matrix
-        'r': {
-            'scope': 'binary collision residue, not the full MC element',
-            'not_full_mc_element': True,
-            'channels': r_matrix_channels(),
-            'total_pole_count': r_matrix_total_pole_count(),
-            'max_pole_order': max_r_matrix_pole_order(),
-        },
-        # Component (Theta_A): the MC element
-        'Theta': {
-            'scope': 'finite scalar projections of Theta_A',
-            'mc_anchor': 'thm:mc2-bar-intrinsic',
-            'not_full_mc_element': True,
-            'missing_full_mc_data': [
-                'all higher arities',
-                'all multiweight brackets',
-                'complete signs and homotopies',
-                'all higher-genus graph corrections',
+def level_one_gram_matrix(c: Any, h: Any, w: Any) -> sp.Matrix:
+    c_value, h_value, w_value = map(_sym, (c, h, w))
+    d_value = _regular_d(c_value)
+    return sp.Matrix(
+        [
+            [2 * h_value, 3 * w_value],
+            [
+                3 * w_value,
+                -h_value / 5
+                + sp.Integer(32) / d_value * (h_value**2 + h_value / 5),
             ],
-            'genus_1': {
-                'obs_1': obs_genus1(c),
-                'formula': 'kappa * lambda_1 = 5c/144',
-                'status': 'finite scalar genus-1 projection',
-            },
-            'genus_2': {
-                'F_2_per_channel': F_genus2_per_channel(c),
-                'delta_F2_cross': delta_F2_cross(c),
-                'F_2_total': F_genus2_total(c),
-                'universality_status': 'scalar formula fails for W_3 at genus 2',
-                'not_full_genus_tower': True,
+        ]
+    )
+
+
+def level_one_null_polynomial(c: Any, h: Any, w: Any) -> sp.Expr:
+    """Return the exact determinant polynomial for the level-one curve."""
+
+    c_value, h_value, w_value = map(_sym, (c, h, w))
+    return sp.expand(
+        9 * w_value**2 * (5 * c_value + 22)
+        - 2 * h_value**2 * (32 * h_value + 2 - c_value)
+    )
+
+
+def level_one_packet(c: Any, h: Any, w: Any) -> ClaimPacket:
+    matrix = level_one_gram_matrix(c, h, w)
+    d_value = _regular_d(c)
+    data = {
+        "matrix": matrix,
+        "determinant": sp.factor(matrix.det()),
+        "null_polynomial": level_one_null_polynomial(c, h, w),
+        "determinant_identity": sp.simplify(
+            d_value * matrix.det() + level_one_null_polynomial(c, h, w)
+        ),
+        "kernel_vector_for_h_invertible": "W_-1 - (3*w)/(2*h) L_-1",
+    }
+    return exact("level-one W3 Shapovalov packet", data)
+
+
+def presentation_coalgebra_packet() -> ClaimPacket:
+    return open_claim(
+        "W3 presentation coalgebra C_X(s^-1 V,s^-2 R) and q_A",
+        H_PRES,
+        type_signature=TYPE_BAR,
+    )
+
+
+def ordered_bar_packet() -> ClaimPacket:
+    return open_claim(
+        "completed ordered W3 bar complex and twisting coderivation",
+        H_BAR,
+        type_signature=TYPE_BAR,
+    )
+
+
+def koszul_partner_packet(k: Any) -> ClaimPacket:
+    candidate = {
+        "formal_parameter": reflected_level(k),
+        "formal_central_charge": reflected_central_charge(k),
+        "candidate": "principal W3 at k_reflected",
+    }
+    return conditional(
+        "strict W3 Koszul partner at the reflected parameter",
+        candidate,
+        H_PRES,
+        H_BAR,
+        H_DS_BAR,
+        H_VERDIER,
+        type_signature=(
+            "Open quadrant; completed bar--Verdier presentation; "
+            "levels 1<->2; H_W3^DS/bar+H_W3^Verdier"
+        ),
+    )
+
+
+def derived_center_packet() -> ClaimPacket:
+    value = {
+        "formal_target": "Z_ch^der(W3)=C_ch^bullet(W3,W3)",
+        "comparison": open_claim(
+            "physical HT bulk to chiral derived-centre comparison",
+            H_CENTER,
+            H_OC,
+            type_signature=(
+                "Open x CY quadrants; open--closed presentation; "
+                "level 3; H_W3^cen+H_W3^OC"
+            ),
+        ),
+    }
+    return conditional(
+        "concrete W3 chiral derived-centre entry",
+        value,
+        H_CENTER,
+        type_signature=(
+            "Open quadrant; chiral Hochschild presentation; "
+            "level 3; H_W3^cen"
+        ),
+    )
+
+
+def collision_kernel_packet(c: Any) -> ClaimPacket:
+    ope = ww_ope_packet(c).value
+    candidate = {
+        "TT": {"poles": (3, 1), "formula": "(c/2)/z^3+2T/z"},
+        "TW": {"poles": (1,), "formula": "3W/z"},
+        "WT": {"poles": (1,), "formula": "3W/z"},
+        "WW": {
+            "poles": (5, 3, 2, 1),
+            "coefficients": {
+                "z^-5": _sym(c) / 3,
+                "z^-3*T": sp.Integer(2),
+                "z^-2*dT": sp.Integer(1),
+                "z^-1*d2T": sp.Rational(3, 10),
+                "z^-1*Lambda": ope["lambda_ope_coefficient"],
             },
         },
-        # Component (nabla^hol): the shadow connection
-        'nabla': {
-            'scope': 'T-line and W-line scalar restrictions',
-            'not_full_multiweight_connection': True,
-            'recorded_lines': ['T', 'W'],
-            'T_line_Delta': critical_discriminant_T(c),
-            'W_line_Delta': critical_discriminant_W(c),
-            'T_line_autonomous': True,
-            'W_line_Z2_parity': True,
-            'mixing_polynomial': mixing_polynomial(c),
-            'propagator_variance': propagator_variance(c),
+        "candidate_max_order": 5,
+        "source_type": "exact local OPE after the stated residue convention",
+    }
+    return conditional(
+        "ordered-bar W3 collision kernel",
+        candidate,
+        H_BAR,
+        H_COLL,
+        type_signature=TYPE_BAR,
+    )
+
+
+def maurer_cartan_packet() -> ClaimPacket:
+    return conditional(
+        "completed ordered W3 Maurer--Cartan element",
+        {
+            "ambient": "Conv(B^ord(W3),W3)",
+            "equation": "D Theta + 1/2[Theta,Theta]=0",
         },
+        H_PRES,
+        H_BAR,
+        type_signature=TYPE_BAR,
+    )
+
+
+def holomorphic_connection_packet() -> ClaimPacket:
+    return conditional(
+        "represented flat W3 holomorphic connection",
+        {"formula": "d-Sh_{0,n}(Theta_W3)"},
+        H_BAR,
+        H_RES,
+        H_FLAT,
+        type_signature=(
+            "Open quadrant; represented ordered bar; level 4; "
+            "H_W3^bar+H_W3^res+H_W3^flat"
+        ),
+    )
+
+
+def modular_kappa_packet() -> ClaimPacket:
+    return open_claim(
+        "genus-one scalar kappa_ch(W3)",
+        H_MOD,
+        H_RES,
+        type_signature=TYPE_MODULAR,
+    )
+
+
+def modular_rho_packet() -> ClaimPacket:
+    return open_claim(
+        "modular anomaly ratio kappa_ch(W3)/c",
+        H_MOD,
+        H_RES,
+        type_signature=TYPE_MODULAR,
+    )
+
+
+def scalar_conductor_packet() -> ClaimPacket:
+    return open_claim(
+        "scalar Verdier sum K^kappa(W3)",
+        H_DS_BAR,
+        H_VERDIER,
+        H_MOD,
+        H_RESCALE,
+        type_signature=(
+            "Open quadrant; bar--Verdier plus scalar trace; "
+            "levels 2->5; H_W3^DS/bar+H_W3^mod+H_W3^rescale"
+        ),
+    )
+
+
+def genus_graph_packet(genus: int) -> ClaimPacket:
+    if genus < 2:
+        raise ValueError("The coloured cross-channel packet starts at genus 2.")
+    return open_claim(
+        f"genus-{genus} coloured W3 stable-graph sum",
+        H_BAR,
+        H_PROJ,
+        H_SEW,
+        type_signature=(
+            "Open quadrant; modular coloured graphs; level 5; "
+            "H_W3^bar+H_W3^proj+H_W3^sew"
+        ),
+    )
+
+
+def scalar_shadow_packet(line: str) -> ClaimPacket:
+    if line not in {"T", "W", "mixed"}:
+        raise ValueError("The W3 scalar-shadow line is T, W, or mixed.")
+    return open_claim(
+        f"W3 {line}-line scalar shadow",
+        H_RES,
+        H_PROJ,
+        type_signature=(
+            "Open quadrant; scalar projection; level 5; "
+            "H_W3^res+H_W3^proj"
+        ),
+    )
+
+
+def propagator_mixing_packet() -> ClaimPacket:
+    return open_claim(
+        "W3 two-channel propagator-mixing coordinate",
+        H_RES,
+        H_PROJ,
+        H_SEW,
+        type_signature=(
+            "Open quadrant; two-channel scalar projection; level 5; "
+            "H_W3^res+H_W3^proj+H_W3^sew"
+        ),
+    )
+
+
+def hamiltonian_packet() -> ClaimPacket:
+    return conditional(
+        "commuting Hamiltonians from the represented W3 connection",
+        {"commutator": "[H_i,H_j]=0", "candidate_order_bound": 4},
+        H_COLL,
+        H_FLAT,
+        H_OC,
+        type_signature=(
+            "Open x CY quadrants; represented ordered bar; level 4; "
+            "H_W3^coll+H_W3^flat+H_W3^OC"
+        ),
+    )
+
+
+def line_comparison_packet(k: Any) -> ClaimPacket:
+    return conditional(
+        "W3 evaluation-line comparison",
+        {
+            "candidate": "Rep_q(sl3)",
+            "q": f"exp(pi*i/({_sym(k)}+3))",
+        },
+        H_LINE,
+        type_signature=(
+            "Open x CY quadrants; line-category presentation; level 4; "
+            "H_W3^line"
+        ),
+    )
+
+
+def holographic_lift_packet() -> ClaimPacket:
+    return open_claim(
+        "full W3 holographic lift",
+        H_PRES,
+        H_BAR,
+        H_DS_BAR,
+        H_VERDIER,
+        H_CENTER,
+        H_COLL,
+        H_MOD,
+        H_RES,
+        H_PROJ,
+        H_RESCALE,
+        H_SEW,
+        H_FLAT,
+        H_LINE,
+        H_OC,
+        type_signature=(
+            "Open x CY quadrants; seven-entry reconstruction; "
+            "levels 0--5; H_W3^hol"
+        ),
+    )
+
+
+def exact_local_packet(k: Any, h: Any = 0, w: Any = 0) -> Mapping[str, ClaimPacket]:
+    c_value = w3_central_charge(k)
+    return {
+        "central": reflected_central_packet(k),
+        "ope": ww_ope_packet(c_value),
+        "lambda": lambda_virasoro_witness(c_value),
+        "lambda_zero": lambda_zero_packet(h),
+        "level_one": level_one_packet(c_value, h, w),
     }
 
 
-# ============================================================================
-# 14. Cross-family comparison (multi-path verification helpers)
-# ============================================================================
+def holographic_datum(k: Any) -> Mapping[str, ClaimPacket]:
+    """Return the seven entries with their exact epistemic statuses."""
 
-def virasoro_kappa(c: Fraction) -> Fraction:
-    """kappa(Vir_c) = c/2.  For comparison with W_3."""
-    return c / Fraction(2)
-
-
-def virasoro_complementarity_sum() -> Fraction:
-    """kappa(Vir_c) + kappa(Vir_{26-c}) = 13."""
-    return Fraction(13)
-
-
-def sl2_hat_complementarity_sum() -> Fraction:
-    """kappa(sl_2_hat) + kappa(sl_2_hat!) = 0."""
-    return Fraction(0)
-
-
-def general_wn_cc_sum(N: int) -> Dict[str, Any]:
-    """Central charge complementarity sum c + c' for general W_N.
-
-    From the manuscript: c(k) + c(k') = 2(N-1)(2N^2 + 2N + 1).
-    For N=2 (Virasoro): 26
-    For N=3 (W_3): 100
-    """
-    return {'N': N, 'cc_sum': principal_wn_central_charge_complementarity(N)}
-
-
-def general_wn_kappa_sum(N: int) -> Dict[str, Any]:
-    """kappa + kappa' for general W_N.
-
-    kappa = c * (H_N - 1), kappa' = c' * (H_N - 1) = (cc_sum - c) * (H_N - 1).
-    So kappa + kappa' = cc_sum * (H_N - 1).
-
-    For N=2: 26 * (1/2) = 13.
-    For N=3: 100 * (5/6) = 250/3.
-    """
-    rho = anomaly_ratio(N)
-    cc_data = general_wn_cc_sum(N)
-    if cc_data['cc_sum'] is not None:
-        return {'N': N, 'kappa_sum': cc_data['cc_sum'] * rho}
-    return {'N': N, 'kappa_sum': None}
-
-
-# ============================================================================
-# 15. Numerical evaluation for cross-checks
-# ============================================================================
-
-def evaluate_datum_numerically(c_val: float) -> Dict[str, float]:
-    """Evaluate all key invariants numerically at a specific c value."""
-    c_f = Fraction(c_val).limit_denominator(10**12)
+    c_value = w3_central_charge(k)
+    chart = exact(
+        "principal W3 chart algebra",
+        {
+            "level": _sym(k),
+            "central_charge": c_value,
+            "generators": w3_generators(),
+            "ope": ww_ope_packet(c_value).value,
+        },
+    )
     return {
-        'c': float(c_f),
-        'c_dual': float(w3_dual_central_charge(c_f)),
-        'kappa': float(kappa_w3(c_f)),
-        'kappa_dual': float(kappa_w3_dual(c_f)),
-        'kappa_sum': float(complementarity_sum(c_f)),
-        'F_1': float(F_genus1(c_f)),
-        'F_2_per_channel': float(F_genus2_per_channel(c_f)),
-        'delta_F2': float(delta_F2_cross(c_f)),
-        'F_2_total': float(F_genus2_total(c_f)),
-        'Delta_T': float(critical_discriminant_T(c_f)),
-        'Delta_W': float(critical_discriminant_W(c_f)),
-        'mixing_poly': float(mixing_polynomial(c_f)),
-        'prop_variance': float(propagator_variance(c_f)),
+        "A": chart,
+        "A_i": presentation_coalgebra_packet(),
+        "A_dual": koszul_partner_packet(k),
+        "C": derived_center_packet(),
+        "K_coll": collision_kernel_packet(c_value),
+        "Theta": maurer_cartan_packet(),
+        "nabla": holomorphic_connection_packet(),
+    }
+
+
+def verification_surface(k: Any, h: Any = 0, w: Any = 0) -> Mapping[str, Any]:
+    """Return the exact packet, reconstruction packets, and total lift."""
+
+    return {
+        "exact_local": exact_local_packet(k, h, w),
+        "seven_entries": holographic_datum(k),
+        "modular": {
+            "kappa": modular_kappa_packet(),
+            "rho": modular_rho_packet(),
+            "K_kappa": scalar_conductor_packet(),
+        },
+        "graphs": {2: genus_graph_packet(2), 3: genus_graph_packet(3)},
+        "shadows": {
+            "T": scalar_shadow_packet("T"),
+            "W": scalar_shadow_packet("W"),
+            "mixed": scalar_shadow_packet("mixed"),
+        },
+        "mixing": propagator_mixing_packet(),
+        "hamiltonians": hamiltonian_packet(),
+        "line": line_comparison_packet(k),
+        "holographic_lift": holographic_lift_packet(),
     }

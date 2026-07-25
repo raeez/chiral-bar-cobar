@@ -662,9 +662,13 @@ class TestBershadsky:
         ]
 
     def test_kappa_complementarity(self):
-        """kappa_BP(k) + kappa_BP(-k-6) = 98/3."""
-        # VERIFIED: [DC] (1/6)*196 = 98/3;
-        # [LT] eq:bp-complementarity.
+        """Shifted-lane kappa sum: kappa^shift_BP(k) + kappa^shift_BP(-k-6) = 98/3.
+
+        The engine computes on the shifted conformal-vector scalar
+        (reflection sum 196); the standard FKR lane has K^c_BP = 50 and
+        conditional kappa complementarity 25/3 (eq:bp-complementarity).
+        """
+        # VERIFIED: [DC] (1/6)*196 = 98/3 on the shifted lane.
         for k_val in [0, 1, 2, 5]:
             r1 = bershadsky_polyakov(k_val)
             assert r1.kappa + r1.kappa_dual == Fraction(98, 3)

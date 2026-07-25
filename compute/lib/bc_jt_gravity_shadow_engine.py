@@ -1500,9 +1500,11 @@ def schwarzian_limit_data(c_values: List[float]) -> Dict[float, Dict[str, float]
     - Shadow connection becomes trivial
     - Shadow obstruction tower terminates at arity 2
 
-    The JT spectral curve y = sin(2 pi sqrt(x))/(4 pi) emerges in the
-    DOUBLE-SCALED limit where one zooms into a specific region of the
-    shadow metric.
+    The compact WP/JT comparison curve is x = z^2,
+    y_WP(z) = sin(2 pi z)/(4 pi).  Its relation to the physical
+    density requires the separate contour z = i sqrt(E), and the
+    DOUBLE-SCALED JT matrix integral is not certified by this scalar
+    shadow limit alone.
     """
     results = {}
     for c in c_values:

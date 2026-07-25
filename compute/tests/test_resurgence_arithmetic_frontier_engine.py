@@ -109,7 +109,7 @@ class TestExactScalarContract:
         assert "inversion, not Koszul duality" in (
             OBJECT_SEPARATION_FIREWALLS["bar_cobar_inversion"]
         )
-        assert "Hochschild bulk" in OBJECT_SEPARATION_FIREWALLS["hochschild_bulk"]
+        assert "Hochschild closed-sector" in OBJECT_SEPARATION_FIREWALLS["hochschild_bulk"]
 
     def test_frontier_status_is_non_certifying(self):
         from lib.resurgence_arithmetic_frontier_engine import (

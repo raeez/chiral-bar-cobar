@@ -263,13 +263,11 @@ if~$\cA$ belongs to class~$\mathbf{G}$.
 
 \begin{theorem}[$E_1$ framing;
 Proposition~\ref{prop:e1-framing}]\label{thm:intro-e1}
-The shadow obstruction tower
-$\{S_r\}_{r \ge 2}$ is the $\Sigma_n$-coinvariant image
-of the ordered $R$-matrix tower in the $E_1$ convolution
-algebra $\mathfrak{g}^{E_1}_\cA$: at degree~$2$,
-$\kappa = \mathrm{av}(r(z))$ for abelian algebras, and
-$\kappa = \mathrm{av}(r(z)) + \dim(\fg)/2$ for non-abelian
-affine Kac--Moody (where the Sugawara shift contributes).
+The shadow obstruction tower has scalar coordinates
+$S_n=\tau_{\cA,n}^{\mathrm{res}}q_n((\Theta_\cA^{E_1})_{0,n})$.
+At degree~$2$ this trace is $\kappa$ for abelian algebras and
+$\kappa_{\mathrm{dp}}$ for non-abelian affine Kac--Moody, where the
+Sugawara contribution $\dim(\fg)/2$ completes $\kappa$.
 \end{theorem}
 
 The shadow obstruction tower also carries a logarithmic
@@ -320,12 +318,13 @@ the tree-shadow correspondence: the degree-$r$ shadow is the
 closed-colour projection of the degree-$r$ mixed SC tree.
 
 \emph{The $E_1$ framing}
-(Theorem~\ref{thm:intro-e1}) identifies the shadow tower as
-a projection of a richer structure: the ordered $R$-matrix
-tower in the $E_1$ convolution algebra. The averaging map
-$\mathrm{av}$ is lossy: it discards the spectral parameter,
-the $R$-matrix, and the Yangian. The shadow tower is the
-$\Sigma_n$-coinvariant residue.
+(Theorem~\ref{thm:intro-e1}) identifies the shadow tower as a traced
+projection of the ordered Maurer--Cartan tower.  In arity~$n$, the
+averaging map gives the equivariant operator
+$q_n((\Theta_\cA^{E_1})_{0,n})$; the scalar shadow is obtained by
+$\tau_{\cA,n}^{\mathrm{res}}$.  Represented $R$-matrices and Yangian
+operators belong to the loci carrying their named representation and
+flatness packages.
 
 For the $\cW_3$ algebra at genus~$2$, the multi-channel
 stable graph sum produces a cross-channel correction
@@ -346,23 +345,24 @@ $c$-independent term.
 The shadow obstruction tower is a projection.
 The level-$2$ object before averaging is the ordered bar complex
 $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$ with its
-deconcatenation coproduct and spectral $R$-matrix
-$r(z) \in \mathfrak{g}^{E_1}_\cA$. The shadow tower
+deconcatenation coproduct and collision kernel
+$K_\cA^{\mathrm{coll}}(z)\in\mathfrak{g}^{E_1}_\cA$. The shadow tower
 $\{S_r\}$ and the algebraicity relation
 $H(t)^2 = t^4\, Q_L(t)$ are statements about the
-$\Sigma_n$-coinvariant image: the degree-$2$ scalar
-$\kappa$, given by $\mathrm{av}(r(z))$ in abelian and scalar
-families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
-non-abelian affine Kac--Moody, and its higher-degree
-extensions under the lossy averaging map
+$\Sigma_n$-homotopy-coinvariant image.  At degree~$2$ the operator
+class is $q_2(K_\cA^{\mathrm{coll}})$ and the scalar coordinate is
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$; this equals
+$\kappa$ in abelian and scalar families and $\kappa_{\mathrm{dp}}$
+on the non-abelian affine row, where $\dim(\fg)/2$ completes
+$\kappa$. Higher coordinates use $\tau_{\cA,n}^{\mathrm{res}}$ after
 $\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \to
 \mathfrak{g}^{\mathrm{mod}}_\cA$.
 
-The full $E_1$ tower retains the spectral parameter~$z$,
-the $R$-matrix, and the Yangian structure; the shadow
-tower discards the spectral parameter by averaging.
-Everything in this paper is the $\Sigma_n$-coinvariant
-projection of an $E_1$ object. The ordered bar is the
+The full $E_1$ tower carries the spectral parameter~$z$ and, on the
+named representation packages, the $R$-matrix and Yangian structure.
+Homotopy coinvariants retain the equivariant operators. The scalar
+tower in this paper applies $\tau_{\cA,n}^{\mathrm{res}}$ to those
+operators. The ordered bar is the
 primitive; the shadow tower is the shadow.
 
 \subsection{Context}\label{subsec:intro-context}
@@ -407,9 +407,13 @@ $a(z)b(w) \sim \sum_{n \ge 0} (a_{(n)}b)(w) \cdot
 
 The \emph{modular characteristic}
 $\kappa(\cA) \in \mathbb{Q}(c)$ is the genus-$1$ curvature
-scalar: $F_1(\cA) = \kappa(\cA)/24$. The Hodge class
-$\lambda_g := c_1(\mathbb{E}_g) \in H^2(\Mbar_g,
-\mathbb{Q})$ is the first Chern class of the Hodge bundle.
+scalar: $F_1(\cA) = \kappa(\cA)/24$. The Hodge class used in the
+scalar genus tower is the top Chern class
+\[
+\lambda_g := c_g(\mathbb{E}_g) \in H^{2g}(\Mbar_g,\mathbb{Q}).
+\]
+The first Chern class of the Hodge line is written
+\(\lambda_1=c_1(\det\mathbb E_g)\).
 The Faber--Pandharipande coefficients are
 $\lambda_g^{\mathrm{FP}} =
 \int_{\Mbar_{g,1}} \psi_1^{2g-2}\, \lambda_g$, with
@@ -533,15 +537,17 @@ symmetric (factorization) bar $B^\Sigma(\cA)$, the
 $\Sigma_n$-coinvariant quotient of the ordered bar
 $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$. The
 ordered bar carries a deconcatenation coproduct
-(coassociative, not cocommutative) and supports the spectral
-$R$-matrix $r(z) \in \mathfrak{g}^{E_1}_\cA$. The shadow
+(coassociative, with ordered deconcatenation) and supports the
+collision kernel $K_\cA^{\mathrm{coll}}(z)
+\in\mathfrak{g}^{E_1}_\cA$. The shadow
 obstruction tower $\{S_r\}$ and the algebraicity relation
 $H(t)^2 = t^4\, Q_L(t)$ are statements about the
-$\Sigma_n$-coinvariant image: the degree-$2$ scalar
-$\kappa$, given by $\mathrm{av}(r(z))$ in abelian and scalar
-families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
-non-abelian affine Kac--Moody, and its higher-degree
-extensions. The ordered bar is the level-$2$ object before averaging; the
+$\Sigma_n$-homotopy-coinvariant image. Its operator classes admit
+scalar coordinates
+$S_n=\tau_{\cA,n}^{\mathrm{res}}q_n((\Theta_\cA^{E_1})_{0,n})$.
+In degree~$2$, this is $\kappa$ in abelian and scalar families and
+$\kappa_{\mathrm{dp}}$ on the non-abelian affine row, where the
+Sugawara term completes $\kappa$. The ordered bar is the level-$2$ object before averaging; the
 shadow tower is its averaged projection.
 \end{remark}
 
@@ -1861,23 +1867,24 @@ projection of a richer $E_1$ structure.
 
 \begin{proposition}[$E_1$ framing of the shadow
 tower]\label{prop:e1-framing}
-The shadow obstruction tower $\{S_r\}_{r \ge 2}$ is the
-image of the ordered $R$-matrix tower under the averaging
+The shadow obstruction tower $\{S_r\}_{r \ge 2}$ is obtained from
+the homotopy-coinvariant ordered MC tower under the averaging
 map $\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \to
 \mathfrak{g}^{\mathrm{mod}}_\cA$. At degree~$2$:
 \begin{enumerate}[(i)]
 \item For abelian algebras (Heisenberg, free fields):
- $\kappa = \mathrm{av}(r(z))$, where
- $r^{\mathrm{Heis}}(z) = k/z$ (level prefix $k$ mandatory;
- at $k = 0$, the $r$-matrix vanishes).
+ $\kappa=\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$.
+ For Heisenberg,
+ $K_{\mathcal H}^{\mathrm{coll}}(z)=k\Omega_{\mathcal H}/z$.
 
 \item For non-abelian affine Kac--Moody $V_k(\fg)$
- (trace-form convention $r(z) = k\Omega/z$, where $\Omega$
+ (trace-form convention $K_\cA^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$, where $\Omega$
  is the inverse Killing form Casimir):
  \[
   \kappa(V_k(\fg))
   \;=\;
-  \mathrm{av}(r(z)) + \frac{\dim(\fg)}{2}
+  \tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})
+  + \frac{\dim(\fg)}{2}
   \;=\;
   \frac{k\,\dim(\fg)}{2h^\vee}
   + \frac{\dim(\fg)}{2}
@@ -1899,14 +1906,15 @@ T^c(s^{-1}\bar{\cA})$ carries the $E_1$ convolution algebra
 $\mathfrak{g}^{E_1}_\cA$, whose MC element
 $\Theta_\cA^{E_1}$ projects to~$\Theta_\cA$ under
 $\mathrm{av}$. The degree-$2$ component of
-$\Theta_\cA^{E_1}$ is the $R$-matrix $r(z)$, and its
-average is the scalar degree-$2$ shadow: it equals the modular
-characteristic~$\kappa$ on abelian families, while for
-non-abelian affine Kac--Moody the average is
-$\kappa_{\mathrm{dp}}$ and the full~$\kappa$ adds the
+$\Theta_\cA^{E_1}$ is the collision kernel
+$K_\cA^{\mathrm{coll}}(z)$. Its homotopy coinvariant remains the
+operator $q_2(K_\cA^{\mathrm{coll}})$, while the normalized trace is
+the modular characteristic~$\kappa$ on abelian families. For
+non-abelian affine Kac--Moody this trace is $\kappa_{\mathrm{dp}}$
+and the full~$\kappa$ adds the
 Sugawara correction from the simple-pole self-contraction of the
-ordered two-point function. The higher degrees follow by the same averaging
-applied to the degree-$r$ MC components.
+ordered two-point function. At higher degree the scalar coordinate is
+$\tau_{\cA,r}^{\mathrm{res}}q_r((\Theta_\cA^{E_1})_{0,r})$.
 \end{proof}
 
 \begin{remark}[What averaging
@@ -1927,11 +1935,12 @@ Virasoro modules.
 class}\label{subsec:r-matrix-tower}
 
 The $E_1$ convolution algebra
-$\mathfrak{g}^{E_1}_\cA$ carries a spectral $R$-matrix
-$r(z) \in \mathrm{End}(V \otimes V)((z))$ at degree~$2$,
-whose averaging produces the scalar degree-$2$ shadow:
-for abelian families this is~$\kappa$, while for non-abelian
-affine Kac--Moody it is~$\kappa_{\mathrm{dp}}$ and the full
+$\mathfrak{g}^{E_1}_\cA$ carries
+$K_\cA^{\mathrm{coll}}(z)$ at degree~$2$. A spectral $R$-operator
+arises on a represented CYBE/monodromy surface. The homotopy
+coinvariant retains the binary operator and the normalized trace is
+$\kappa$ for abelian families; for non-abelian affine Kac--Moody it
+is~$\kappa_{\mathrm{dp}}$ and the full
 modular characteristic is
 $\kappa = \kappa_{\mathrm{dp}} + \dim(\fg)/2$. The structure of $r(z)$
 varies by class.
@@ -1951,11 +1960,11 @@ vanishes; this is the abelian limit, not the critical level
 \begin{example}[Class $\mathbf{L}$: affine
 $\mathfrak{sl}_2$]\label{ex:r-sl2}
 In the trace-form convention:
-$r^{\mathrm{KM}}(z) = k\,\Omega/z$, where
+$r^{\mathrm{KM}}(z) = k\,\Omega_{\mathrm{tr}}/z$, where
 $\Omega = \sum_a t^a \otimes t_a$ is the inverse Killing
 form Casimir.
 Averaging over $\Sigma_2$-coinvariants:
-$\mathrm{av}(k\Omega/z)
+$\mathrm{av}(k\Omega_{\mathrm{tr}}/z)
 = k\,\mathrm{tr}(\Omega)/\dim(\fg)
 \cdot \dim(\fg)/(2h^\vee)
 = k\,\dim(\fg)/(2h^\vee)$.
@@ -2069,9 +2078,10 @@ The averaging map has the following properties:
  $\mathrm{av}(\Theta_\cA^{E_1}) = \Theta_\cA$.
 
 \item \emph{Degree-$2$ content.}\enspace
- At degree~$2$: $\mathrm{av}(r(z)) = \kappa$ for abelian
- algebras; $\mathrm{av}(r(z)) + \dim(\fg)/2 = \kappa$ for
- non-abelian KM (Sugawara shift).
+ At degree~$2$, $q_2(K_\cA^{\mathrm{coll}})$ is the operator class.
+ Its normalized trace is $\kappa$ for abelian algebras and
+ $\kappa_{\mathrm{dp}}$ for non-abelian KM; the Sugawara term
+ $\dim(\fg)/2$ completes the latter $\kappa$.
 \end{enumerate}
 \end{proposition}
 
@@ -2226,8 +2236,8 @@ data]\label{prop:koszul-transform}
  $\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = 13$.
 
 \item \emph{Heisenberg.}\enspace
- $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
- (the chiral symmetric algebra on the dual).
+ $\cH_k^!=(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$
+ (the curved second-kind chiral symmetric branch).
  Note: $\cH_k^! \ne \cH_{-k}$ (these are isomorphic as
  vertex algebras but not as Koszul duals; the Koszul dual
  has the same $\kappa$). The Koszul conductor is
@@ -2242,7 +2252,7 @@ is \emph{not} universal: it depends on the family.
 For affine Kac--Moody and free fields: $\varkappa = 0$.
 For Virasoro: $\varkappa = 13$.
 For $\cW_3$: $\varkappa = 250/3$.
-For Bershadsky--Polyakov: $\varkappa = 98/3$.
+For Bershadsky--Polyakov: conditionally $\varkappa = 25/3$.
 The statement ``$\kappa + \kappa' = 0$'' without a family
 qualifier is false for Virasoro and all $\cW_N$ with
 $N \ge 2$.
@@ -2250,7 +2260,7 @@ The scalar quantity $\varkappa = \kappa + \kappa^!$ is distinct
 from the Trinity ghost-charge conductor
 $K(\cA) := c(\cA) + c(\cA^!) = -c_{\mathrm{ghost}}(\BRST)$, which
 takes per-family values $K(\Vir) = 26$, $K(\cW_3) = 100$,
-$K(\mathrm{BP}) = 196$, $K(V_k(\fg)) = 2\dim\fg$,
+$K(\mathrm{BP}) = 50$, $K(V_k(\fg)) = 2\dim\fg$,
 $K(\cW_N) = 4N^3 - 2N - 2$. The two are related by
 $\varkappa = \varrho_{\cA}\cdot K$ with $\varrho_{\cW_N} = H_N - 1$,
 $\varrho_{\mathrm{KM}} = \varrho_{\mathrm{free}} = 0$,
@@ -2372,7 +2382,7 @@ level $k \ne 0$:
 The tower terminates at degree~$2$:
 $Q_L(t) = 4k^2$ (constant), $H(t) = 2k\, t^2$.
 Class~$\mathbf{G}$, $d_{\mathrm{alg}} = 0$.
-The genus-$g$ free energy is
+The genus-$g$ formal scalar coefficient is
 $F_g(\cH_k) = k \cdot \lambda_g^{\mathrm{FP}}$
 (UNIFORM-WEIGHT) for all $g \ge 1$.
 \end{proposition}
@@ -2481,9 +2491,9 @@ curvature scalar. The derivation: the OPE
 $J^a(z)J^b(w) \sim k\,\delta^{ab}/(z-w)^2
 + f^{abc} J^c(w)/(z-w)$ has a double pole $k\delta^{ab}$ and
 a simple pole $f^{abc} J^c$. The $R$-matrix in
-trace-form convention is $r(z) = k\Omega/z$ (with level
+trace-form convention is $r(z) = k\Omega_{\mathrm{tr}}/z$ (with level
 prefix $k$; at $k = 0$, $r(z) = 0$). Averaging:
-$\mathrm{av}(k\Omega/z) = k\,\dim(\fg)/(2h^\vee)$.
+$\mathrm{av}(k\Omega_{\mathrm{tr}}/z) = k\,\dim(\fg)/(2h^\vee)$.
 The Sugawara shift $\dim(\fg)/2$ arises from the
 simple-pole self-contraction through the adjoint Casimir
 eigenvalue $2h^\vee$. Total:
@@ -2722,9 +2732,14 @@ these special values. The large-$c$ asymptotic is
 $S_4 \sim 2/c^2$.
 \end{remark}
 
-\begin{theorem}[Virasoro shadow
+\begin{theorem}[Transferred Virasoro weighted-Riccati
 coefficients]\label{thm:virasoro-coefficients}
-The shadow coefficients through degree~$10$:
+\ClaimStatusConditional
+Equip $\Vir_c$ with an ordered residue package
+$\mathsf H_{\mathrm{res}}(\Vir_c;X)$ and a quadratic-transfer package
+whose chain comparison identifies the transferred scalar brackets with
+the one-dimensional weighted-Riccati master equation.  The resulting
+geometric coefficients through degree~$10$ are
 \begin{align*}
  S_2 &\;=\; c/2, \\[3pt]
  S_3 &\;=\; 2, \\[3pt]
@@ -3279,7 +3294,7 @@ Lattice & $0$ & yes \\
 \addlinespace
 $\Vir_c$ & $13$ & no \\
 $\cW_3$ & $250/3$ & no \\
-Bershadsky--Polyakov & $98/3$ & no \\
+Bershadsky--Polyakov & $25/3$ (conditional) & no \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -3297,7 +3312,7 @@ The scalar complementarity $\varkappa = \kappa + \kappa'$ is an
 invariant of the Koszul \emph{pair} $(\cA, \cA^!)$. It is
 distinct from the Trinity ghost-charge conductor
 $K(\cA) := c(\cA) + c(\cA^!) = -c_{\mathrm{ghost}}(\BRST)$
-(values $K(\Vir) = 26$, $K(\cW_3) = 100$, $K(\mathrm{BP}) = 196$,
+(values $K(\Vir) = 26$, $K(\cW_3) = 100$, $K(\mathrm{BP}) = 50$,
 $K(V_k(\fg)) = 2\dim\fg$), and distinct again from the central
 charge~$c$ (an invariant of the algebra alone). The three
 quantities are related by $\varkappa = \varrho_{\cA}\cdot K$ and
@@ -3336,7 +3351,7 @@ is the Faber--Pandharipande integral.
 \end{theorem}
 
 \begin{proof}[Proof sketch]
-The genus-$g$ free energy is a sum over stable graphs
+The genus-$g$ scalar coefficient is a sum over stable graphs
 $\Gamma$ of genus~$g$ with no marked points:
 \[
  F_g(\cA) \;=\;

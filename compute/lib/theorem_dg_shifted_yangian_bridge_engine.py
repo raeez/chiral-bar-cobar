@@ -42,7 +42,8 @@ For the free chiral multiplet (DNP Section 1.2):
 
 For pure gauge theory (g = sl_N, CS level k):
   A^! is a deformation of T^*[-1]g[lambda] (shifted cotangent loop algebra)
-  r(z) = Omega/z (Casimir r-matrix, single pole by AP19)
+  r_DNP(z) = hbar*Omega/z in gauge-theory normalization (often hbar=1);
+  this is not the affine trace-form current residue k*Omega/z.
   R(u) = 1 - hbar P/u  (Yang R-matrix in fundamental rep)
 
 The A_infty Yang-Baxter equation (DNP eq. 1.9):
@@ -281,7 +282,7 @@ class DNPGaugeTheory(DGShiftedYangianDNP):
     In the simplest case (pure CS, no matter):
       A^! = U(g[z^{-1}])  (modes of the loop algebra from singular part)
       m_k = 0 for k >= 3 (strict, since W = 0)
-      r(z) = Omega / z     (Casimir r-matrix)
+      r_DNP(z) = hbar*Omega / z     (unit hbar=1 in this engine)
       R(u) = 1 - hbar P/u  (Yang R-matrix in fundamental)
 
     With matter (superpotential W):
@@ -331,10 +332,11 @@ class DNPGaugeTheory(DGShiftedYangianDNP):
                         2 * self.h_vee)
 
     def casimir_r_matrix(self) -> str:
-        r"""The r-matrix for pure gauge theory: r(z) = Omega/z.
+        r"""The unit-normalized pure-gauge r-matrix: r_DNP(z) = Omega/z.
 
         This has a SINGLE pole at z = 0 (AP19: bar absorbs one power).
-        Omega is the quadratic Casimir tensor in g tensor g.
+        Omega is the quadratic Casimir tensor in g tensor g.  This is the
+        DNP/CS normalization, not the affine trace-form current residue.
         """
         return f"Omega_{self.g} / z"
 
@@ -445,7 +447,7 @@ class ModularYangianMK:
                         2 * self.h_vee)
 
     def r_matrix_genus0(self) -> str:
-        r"""Genus-0 coefficient r_{T,0}(z) = r_T(z) = Omega/z."""
+        r"""Genus-0 unit-normalized coefficient r_{T,0}(z) = Omega/z."""
         return f"Omega_{self.g} / z"
 
     def genus0_yb_equation(self) -> str:
@@ -491,8 +493,8 @@ def bridge_identification_genus0(g: str = "sl2", level: int = 1) -> Dict[str, An
     DNP r(z) = MK r_{T,0}(z) = Res^{coll}_{0,2}(Theta_A)
 
     For pure gauge theory with Lie algebra g at level k:
-      - DNP: r(z) = Omega/z (from line operator OPE, tree-level)
-      - MK:  r_{T,0}(z) = Omega/z (from bar collision residue, AP19)
+      - DNP: r_DNP(z) = hbar*Omega/z (unit hbar=1 below)
+      - MK:  r_{T,0}(z) = Omega/z in the same unit-normalized convention
 
     These agree. The identification is:
       r(z) = tau|_{deg 2} evaluated at spectral parameter z
@@ -508,7 +510,7 @@ def bridge_identification_genus0(g: str = "sl2", level: int = 1) -> Dict[str, An
         "kappa_value": mk.kappa(),
         "genus0_yb": mk.genus0_yb_equation(),
         "pole_order": 1,  # Single pole by AP19
-        "identification": "r(z) = tau|_{deg 2} = Res^{coll}_{0,2}(Theta_A)",
+        "identification": "unit-normalized r(z) = tau|_{deg 2} = Res^{coll}_{0,2}(Theta_A)",
     }
 
 

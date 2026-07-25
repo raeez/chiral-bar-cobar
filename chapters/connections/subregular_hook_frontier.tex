@@ -1,59 +1,62 @@
 
-% Repository-ready chapter file.
-% This file is written to be copied into the monograph as a chapter or appendix.
-% It uses only standard theorem environments and macros already present in the repo.
 \chapter{Subregular and hook-type \texorpdfstring{$W$}{W}-algebras from first principles}
 \label{chap:subregular-hook-frontier}
 
 \section{The governing question}
 
-The first non-principal frontier in affine $W$-algebra Koszul duality is the
-subregular or, more generally, hook-type locus. Three problems meet there.
+The subregular reduction of $V^k(\mathfrak{sl}_N)$ is the first
+non-principal family for which one can place the quantum
+Drinfeld--Sokolov presentation, the strong-generator OPE, and the
+candidate bar companion on the same page.  These three objects carry
+different kinds of information.  The Kazhdan--Li filtration controls
+the associated graded vertex Poisson algebra; the Feigin--Semikhatov
+realisation controls the singular OPE coefficients; the completed
+chiral bar construction controls twisting morphisms and derived
+reconstruction.  A theorem connecting them includes the comparison
+map as part of its hypotheses.
+
+The chapter therefore has two mathematical surfaces.
 
 \begin{enumerate}[label=(\roman*)]
-\item One wants a \emph{completed} bar--cobar theorem strong enough to see
- affine $W$-algebras as filtered quantizations of arc spaces of Slodowy slices.
-\item One wants a \emph{strict-versus-higher} criterion: when does the dual stop
- at curvature, unary, and binary operations, and when are genuine higher
- Taylor coefficients forced?
-\item One wants an \emph{exact coefficient packet} for the subregular family:
- not only the leading symbols, but the full lower-derivative fields entering
- the singular part of the operator product expansion.
+\item The \emph{exact OPE surface} consists of the filtered Slodowy
+ presentation, the Feigin--Semikhatov singular products, the Bell recursion,
+ and the centred Miura--Appell symbols.  These statements are algebraic and
+ are proved below or cited from the primary vertex-algebra literature.
+\item The \emph{derived comparison surface} asks whether those filtered data
+ determine the completed chiral bar homology, its Verdier dual, Theorem~H,
+ and a same-family companion.  Each such assertion is conditional on a named
+ convergence, comparison, and nondegeneracy package.
 \end{enumerate}
 
-We isolate a first-principles mechanism that
-answers these three questions simultaneously in the hook/subregular line. The
-result is a hybrid of PBW geometry, free-field recursion, and homological
-transfer. On the one hand, principal affine $W$-algebras become completed
-Koszul by a general filtered spectral-sequence theorem. On the other hand, the
-Feigin--Semikhatov realization of $\mathcal W_n^{(2)}$ produces an exact
-Bell-type recursion for \emph{all} singular coefficients in the $E$--$F$ OPE.
-This allows one to see the first higher homotopy operations directly in the
-OPE normal form.
-
-The dictionary between the filtration and the dual is:
+The load-bearing distinction is visible in the following table.
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ll}
-\textbf{Filtration side} & \textbf{Dual side} \\
+\textbf{Exact datum} & \textbf{Derived question} \\
 \hline
-$\operatorname{gr}_F A \cong \operatorname{Sym}_\partial(V)$ &
- $E_0 = \overline{B}(\operatorname{Sym}_\partial(V))$;\;
- $E_1 = \Lambda_\partial(sV)$ \\
-$V = (\mathfrak{g}^e)^*$, generators from the Slodowy slice &
- $A^! = H^*(\widehat{\overline{B}}(A))^\vee = \widehat{\Lambda}_\partial(sV)$ \\
-normal-ordering corrections in $F^{\leq p} \setminus F^{<p}$ &
- canonical $A_\infty$ Taylor coefficient $m_p$ \\
-canonical homotopy degree &
- maximal $r$ with $m_r \neq 0$
+$\operatorname{gr}_F A\cong\mathbb C[J_\infty S_f]$ &
+ convergence and collapse of the filtered chiral bar spectral sequence \\
+generator-degree-$r$ OPE monomial &
+ comparison with an arity-$r$ transferred operation \\
+$c_{\mathrm{BP}}(k)$ from the KRW/FKR conformal vector &
+ genus-$1$ modular curvature $\kappa_{\mathrm{BP}}(k)$ \\
+transpose of the nilpotent partition &
+ DS/bar transport and object-level Verdier companion
 \end{tabular}
 \end{center}
-\noindent
-For the Bershadsky--Polyakov algebra ($\mathcal{W}_3^{(2)}$), the
-correction is purely quadratic and the dual is strict (degree $2$).
-For $\mathcal{W}_4^{(2)}$ a genuine cubic term survives (degree $\geq 3$;
-Theorem~\ref{thm:w4-cubic}).
-In higher rank the canonical degree grows without bound.
+
+The Bershadsky--Polyakov algebra supplies the decisive worked case.  Its
+four strong generators $J,G^+,G^-,T$ are even, its standard central charge is
+\[
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50,
+\]
+and its modular characteristic remains an open genus-$1$ computation.  The
+secondary shifted conformal vector gives a different rational function whose
+reflection sum is~$196$; that number belongs exclusively to the shifted lane
+and remains separate from the standard FKR conductor.
 
 \section{Completed bar--cobar from the PBW--Slodowy mechanism}
 
@@ -77,7 +80,8 @@ the completed cobar of this homology reconstructs $A$ up to filtered
 quasi-isomorphism.
 \end{definition}
 
-\begin{theorem}[PBW--Slodowy collapse; \ClaimStatusProvedHere]
+\begin{theorem}[PBW--Slodowy input to the completed bar comparison;
+\ClaimStatusConditional]
 \label{thm:pbw-slodowy-collapse}
 \textup{[}Type signature:
 $(\mathrm{quadrant}=\mathrm{Open}\cap\mathrm{Chain},
@@ -86,7 +90,8 @@ $(\mathrm{quadrant}=\mathrm{Open}\cap\mathrm{Chain},
 \mathrm{hypothesis\ package}=
 \mathrm{exhaustive\ separated\ multiplicative\ filtration};
 \mathrm{finite\text{-}dimensional\ weight\ slices};
-\mathrm{Slodowy\text{-}slice\ free\ differential\ polynomial\ }\operatorname{gr}_F A)$\textup{]}
+\mathrm{Slodowy\text{-}slice\ free\ differential\ polynomial\ }\operatorname{gr}_F A;
+H_{\mathrm{PBW}}^{\mathrm{bar}})$\textup{]}
 Let $A$ be a filtered chiral algebra such that:
 \begin{enumerate}[label=(\roman*)]
 \item the filtration is exhaustive, separated, and multiplicative;
@@ -99,17 +104,29 @@ Let $A$ be a filtered chiral algebra such that:
 \]
 for a finite-dimensional vector space $V$.
 \end{enumerate}
-Then the completed bar spectral sequence of $A$, filtered by total
-$F$-degree, collapses at $E_1$ and
+Then the ordinary algebraic bar model of the associated graded has
+\[
+H_*\!\left(\overline B_{\mathrm{alg}}
+(\operatorname{Sym}_{\partial}V)\right)
+\cong \Lambda_{\partial}(sV).
+\]
+Here $H_{\mathrm{PBW}}^{\mathrm{bar}}$ denotes the additional package that
+identifies the associated-graded chiral collision complex with this algebraic
+bar model, proves complete convergence and strict Mittag--Leffler passage,
+eliminates higher differentials and extension classes, and supplies the
+completed twisting comparison.  Under
+$H_{\mathrm{PBW}}^{\mathrm{bar}}$ the actual chiral bar spectral sequence has
+$E_1^{\mathrm{PBW}}\cong\Lambda_{\partial}(sV)$ and one obtains
 \[
 H_*\!\left(\widehat{\overline B}(A)\right)
-\cong \widehat{\Lambda}_{\partial}(sV)
+\cong \widehat{\Lambda}_{\partial}(sV),
+\qquad
+\widehat{\Omega}\,\widehat{\Lambda}_{\partial}(sV)
+\xrightarrow{\sim} A.
 \]
-as completed coalgebras. In particular, $A$ is completed Koszul and admits a
-canonical completed cobar model
-\[
-\widehat{\Omega}\,\widehat{\Lambda}_{\partial}(sV)\xrightarrow{\simeq} A .
-\]
+The first display is the algebraic PBW computation.  The chiral comparison
+and completed Koszulity are the conclusions after the named package is
+supplied.
 \end{theorem}
 
 \begin{proof}
@@ -132,19 +149,15 @@ polynomial algebras on the generators $\partial^m v$; the reduced bar homology
 of an ordinary polynomial algebra is exterior on the suspension of the
 generators, and the tensor product over all derivatives gives the stated result.
 
-The $E_1$-page is concentrated on the diagonal, so every higher differential
-vanishes for bidegree reasons. Weightwise convergence follows from the
-finite-dimensionality hypothesis in each conformal weight. Thus the spectral
-sequence collapses at $E_1$, giving
-\[
-E_{\infty}\cong E_1\cong \Lambda_{\partial}(sV).
-\]
-After completion one obtains the stated identification of coalgebras. The
-canonical twisting cochain from the bar homology to $A$ yields the completed
-cobar reconstruction. This is exactly completed Koszulity.
+This proves the displayed algebraic bar calculation.  The first clause of
+$H_{\mathrm{PBW}}^{\mathrm{bar}}$ transports it to the chiral collision
+complex.  Its remaining clauses control higher differentials and the inverse
+limit.  The complete filtered comparison theorem and the universal twisting
+morphism then give the conditional bar-homology and cobar conclusions.
 \end{proof}
 
-\begin{corollary}[Principal affine \texorpdfstring{$W$}{W}-algebras are completed Koszul; \ClaimStatusProvedHere]
+\begin{corollary}[Principal affine \texorpdfstring{$W$}{W}-algebras:
+PBW page and conditional completed Koszulity; \ClaimStatusConditional]
 \label{cor:principal-w-completed-koszul}
 \textup{[}Type signature:
 $(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
@@ -152,14 +165,19 @@ $(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
 \mathrm{hypothesis\ package}=\mathrm{simple\ }\fg;
 f_{\mathrm{prin}}\mathrm{\ principal\ nilpotent};
 k\ne -h^\vee;
-\mathrm{Arakawa\ Kazhdan\text{-}filtration\ theorem\ for\ principal\ DS})$\textup{]}
+\mathrm{Arakawa\ Kazhdan\text{-}filtration\ theorem\ for\ principal\ DS};
+H_{\mathrm{PBW}}^{\mathrm{bar}})$\textup{]}
 Let $\mathfrak g$ be simple and let $f_{\mathrm{prin}}$ be principal. Assume
 $k\neq -h^\vee$. Then the universal affine $W$-algebra
-$\mathcal W^k(\mathfrak g,f_{\mathrm{prin}})$ is completed Koszul.
+$\mathcal W^k(\mathfrak g,f_{\mathrm{prin}})$ has free differential-polynomial
+PBW associated graded.  Under $H_{\mathrm{PBW}}^{\mathrm{bar}}$, its chiral
+bar spectral sequence has the exterior $E_1$ page and the algebra is completed
+Koszul.
 \end{corollary}
 
 \begin{proof}
-By Arakawa's theorem on the Li filtration in the principal case, the associated
+By Arakawa's theorem on the Li filtration in the principal case
+\cite{Arakawa07}, the associated
 graded of the universal affine $W$-algebra is the coordinate ring of the arc
 space of the Kostant slice:
 \[
@@ -173,23 +191,23 @@ its arc space is again affine and
 \cong \operatorname{Sym}_{\partial}\bigl((\mathfrak g^e)^*\bigr).
 \]
 Apply Theorem~\ref{thm:pbw-slodowy-collapse} with
-$V=(\mathfrak g^e)^*$.
+$V=(\mathfrak g^e)^*$.  The algebraic bar calculation follows directly; the
+named package gives the chiral and completed conclusions.
 \end{proof}
 
 \begin{remark}[Conditional extension to arbitrary nilpotent data]
 \label{rem:arbitrary-nilpotent-conditional}
-The same argument applies verbatim to $\mathcal W^k(\mathfrak g,f)$ whenever one
-has an associated-graded theorem of the form
+For a general nilpotent~$f$, an associated-graded theorem of the form
 \[
 \operatorname{gr}_{\mathrm{Li}}\mathcal W^k(\mathfrak g,f)
 \cong \mathbb C[J S_f],
 \qquad
 S_f=f+\mathfrak g^e.
 \]
-Since $S_f$ is affine, $\mathbb C[J S_f]$ is again a free differential
-polynomial algebra. Thus the completed-Koszul problem for general affine
-$W$-algebras reduces to establishing the relevant associated-graded
-identification.
+determines the PBW--Slodowy page.  Completed Koszulity additionally requires
+$H_{\mathrm{PBW}}^{\mathrm{bar}}$ for the chosen chiral bar model.  The arc
+space determines the associated graded; the quantum collision differential
+and its completion determine the bar homology.
 \end{remark}
 
 \section{Reduction to hook-type families in type \texorpdfstring{$A$}{A}}
@@ -208,9 +226,8 @@ reduction by stages is proved under compatibility conditions; and inverse
 Hamiltonian reduction for all affine $W$-algebras in type~$A$ at generic
 level is now available. These results supply the reduction-theoretic spine.
 The Koszul-duality statement along that spine is the conditional
-DS--bar-compatibility package of
-Theorem~\ref{thm:hook-transport-corridor}, not an unconditional
-hook-wide duality theorem.
+DS--bar-compatibility corridor of
+Theorem~\ref{thm:hook-transport-corridor}.
 
 \begin{principle}[Transport/orbit factorization]
 \label{princ:transport-orbit-factorization}
@@ -255,8 +272,8 @@ $(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
 \mathrm{Creutzig\text{--}Linshaw\text{--}Nakatsuka\text{--}Sato\ \textup{(}CLNS\textup{)} hook\ duality\ at\ generic\ }k;
 \mathrm{Genra\ reduction\ by\ stages\ at\ admissible\ }k;
 \mathrm{Butson\text{--}Nair\ geometric\ inverse\ Hamiltonian\ reduction};
-\mathrm{KSDual\ sublocus\ when\ }\eta=\eta^t;
-\mathrm{Vol\ III\ }(\Sigma_{d-1},C)\text{-specialisation\ for\ stage\text{-}2\ shadow\ at\ }d=3,\ C\ \mathrm{the\ Koszul\ comparison\ curve})$\textup{]}
+H_{\mathrm{hook}}^{\mathrm{DS/bar}};
+\mathrm{finite\text{-}type\ Verdier\ dual\ or\ completed\ continuous\ nondegenerate\ pairing})$\textup{]}
 Assume that, at generic level, bar--cobar/Koszul duality intertwines
 with the reduction and inverse-reduction functors along the hook
 network in type~$A$. Then for every hook partition
@@ -266,25 +283,20 @@ $\eta = (N-r, 1^r)$ in $\mathfrak{sl}_N$:
 \;\simeq\;
 \mathcal{W}^{-k-2N}(\mathfrak{sl}_N, f_{\eta^t}).
 \]
-The self-transpose hook partitions ($\eta=\eta^t$, e.g.\ $(2,1)$ in
-$\mathfrak{sl}_3$) lie in the KSDual sublocus
-\textup{(}Convention~\textup{\ref{conv:master-type-signature}};
-$\mathbb{Z}/2$-fixed locus of $\cA\mapsto\cA^!$\textup{)}, where
-the displayed equivalence is a strict involution rather than an
-adjunction with comparison map.
+For a self-transpose hook, the formula selects a same-family candidate at the
+reflected level.  Membership in KSDual is the stronger assertion that the
+Verdier comparison is an object-level fixed-point equivalence with a
+nondegenerate involutive pairing.  It is an additional clause, rather than a
+consequence of $\eta=\eta^t$.
 \end{theorem}
 
 \begin{proof}
-For the principal hook $\eta = (N)$, this is Feigin--Frenkel
-duality. The full hook-type family is obtained by inductive
-application of the inverse-reduction functors
-of~\cite{FehilyHook}, combined with the reduction-by-stages
-compatibility of~\cite{GenraStages} and the geometric inverse
-Hamiltonian reduction of~\cite{ButsonNair}. Under the stated
-compatibility hypothesis, each edge in the hook network transports
-the principal duality formula to the next hook node, and the BV dual
-orbit is the transposed partition since all type-$A$ orbits are
-special.
+The cited reduction and inverse-reduction results construct the hook network.
+The package $H_{\mathrm{hook}}^{\mathrm{DS/bar}}$ asserts that each edge lifts
+to the completed bar object, commutes with Verdier duality, and identifies the
+transposed target.  Induction along a path then transports the principal
+Feigin--Frenkel comparison to the stated candidate.  This proof is conditional
+exactly at the edge-lifting step.
 \end{proof}
 
 \begin{proposition}[Transport propagation lemma; \ClaimStatusProvedHere]
@@ -317,12 +329,10 @@ the path using edge compatibility~(ii).
 The hook-type corridor (Theorem~\ref{thm:hook-transport-corridor})
 is conjectured to follow from the formality route
 (Proposition~\ref{prop:ds-bar-formality}). This requires uniform
-DS/bar compatibility across the hook network. The type-$A$
-abelian-$\mathfrak{n}_+$ locus is not used here as a global theorem:
-``all hook partitions are abelian'' is not a proved input. The safe
-statement is that abelian cases support the filtration-formality
-mechanism case by case, while hook-wide transport remains a
-conditional corridor and $(3,2)$ in $\mathfrak{sl}_5$ is still the
+DS/bar compatibility across the hook network.  Abelian
+$\mathfrak n_+$ cases support the filtration-formality mechanism case by
+case.  Hook-wide transport remains a conditional corridor, and $(3,2)$ in
+$\mathfrak{sl}_5$ is the
 first explicit non-abelian audit surface
 (Remark~\ref{rem:abelian-nonabelian-nilradical}).
 \end{remark}
@@ -403,136 +413,94 @@ $(2,1,1)$ minimal & 9 & 3
 \end{tabular}
 \end{center}
 The hook partitions $(4)$, $(3,1)$, $(2,1,1)$ satisfy
-\eqref{eq:hook-ghost-constant}. The even partition $(2,2)$ is not
-hook-type but is included for completeness.
+\eqref{eq:hook-ghost-constant}. The even partition $(2,2)$ lies outside the
+hook family and is included as the first rectangular audit surface.
 \end{computation}
 
-The curvature of a hook-type $\mathcal{W}$-algebra decomposes
-as the affine curvature minus the ghost correction.
+The DS presentation supplies the following data before any modular-curvature
+comparison is attempted.
 
-\begin{proposition}[Hook-type compatibility criteria; \ClaimStatusConditional]
+\begin{proposition}[Hook-type data visible before DS/bar comparison;
+\ClaimStatusProvedElsewhere]
 \label{prop:ds-bar-hook-commutation}
 \index{DS reduction!bar commutation!hook type}
 For every hook partition $\eta = (N-r, 1^r)$ in
 $\mathfrak{sl}_N$ at generic level~$k$, the DS reduction
-$\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)$ satisfies the
-following three compatibility criteria with bar--cobar duality:
+$\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)$ carries the following
+reduction-theoretic data by Kac--Roan--Wakimoto~\cite{KRW03} and
+Arakawa~\cite{Arakawa07}:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Kappa via anomaly ratio}:
- $\kappa\bigl(\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)\bigr)
- = \varrho_\eta \cdot c(\eta, k)$,
- where $\varrho_\eta = \sum_i (-1)^{p_i}/h_i$ is the
- $k$-independent anomaly ratio of the strong generators
- (conformal weights $h_i$, parities $p_i$), and $c(\eta, k)$ is
- the KRW central charge. The kappa deficit
- $\kappa(\hat{V}_k) - \kappa(\mathcal{W}_\eta, k)$
- is a rational function of~$k$
- \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity})}.
 \item \emph{Generator matching}: the strong generating set of
  $\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)$ has
  $\dim(\mathfrak{sl}_N^{f_\eta})$ elements, coinciding with the
  BRST-surviving generators of the DS complex.
-\item \emph{Central charge threading}: the KRW central charge
- formula $c(k) = A - B/(k+N)$ for constants $A, B$ depending on
- $\eta$ is consistent with the Sugawara formula via the ghost
- subtraction.
+\item \emph{Central charge}: the Kac--Roan--Wakimoto formula computes
+ the central charge for the chosen good grading and conformal vector.
+\item \emph{Filtered classical limit}: the Kazhdan filtration identifies the
+ associated graded BRST cohomology with the arc algebra of the Slodowy slice
+ on the regular universal lane covered by the cited DS theorem.
 \end{enumerate}
+The modular characteristic, Theorem~H, completed bar collapse, and
+commutation of DS with Verdier/bar duality require independent comparison
+theorems.  In particular, the reciprocal-weight signed sum of a strong
+generating set is an OPE-spectrum diagnostic.  The genus-$1$ curvature gives
+the independent definition of~$\kappa$.
 \end{proposition}
 
 \begin{proof}
-Criterion~(i): at generic level the $\mathcal{W}$-algebra is freely
-generated (no null vectors), so $\kappa = \varrho \cdot c$ where
-$\varrho$ depends only on the strong-generator spectrum, not on~$k$.
-
-Criterion~(ii) is the Kazhdan filtration argument: the BRST
-complex has $E_1$-page concentrated on generators of
-$\fg^{f_\eta}$, and the spectral sequence degenerates at generic
-level by the absence of null vectors.
-
-Criterion~(iii) is a direct calculation from the KRW formula
-applied to hook partitions, verified for
-$\mathfrak{sl}_3$ ($\eta = (2,1)$: Bershadsky--Polyakov,
-$C_{(2,1)} = 2$, self-dual at $k = -3$),
-$\mathfrak{sl}_4$ (all hook partitions, see
-Computation~\ref{comp:sl4-hook-data}), and
-$\mathfrak{sl}_5$ (all hook partitions).
+The generator count and filtered classical limit are the standard BRST and
+Kazhdan-filtration conclusions for affine $W$-algebras.  The central charge is
+the KRW supertrace formula evaluated in the same conformal-vector convention.
+These statements precede any construction of a chiral bar comparison map.
 \end{proof}
 
-\begin{remark}[Transport-to-transpose kappa sum rule]
+\begin{remark}[Transport-to-transpose scalar audit]
 \label{rem:hook-kappa-sum-rule}
 \index{kappa@$\kappa$!transport sum rule}
-For a self-transpose partition $\eta = \eta^t$, the Koszul
-complementarity sum
-\[
-\kappa\bigl(\mathcal{W}^k(f_\eta)\bigr)
-+ \kappa\bigl(\mathcal{W}^{-k-2N}(f_{\eta})\bigr)
-\;=\; \varrho_\eta \cdot K_\eta,
-\]
-where $K_\eta = c(\eta, k) + c(\eta, k^\vee)$ is the
-$k$-independent Koszul conductor, is $k$-independent because
-the anomaly ratio $\varrho_\eta$ is $k$-independent
-(Proposition~\ref{prop:partition-dependent-complementarity}(iii)).
-For hook pairs $\eta \neq \eta^t$ with the same strong-generator
-spectrum (hence the same anomaly ratio
-$\varrho_\eta = \varrho_{\eta^t}$), the kappa sum
-$\kappa(\eta, k) + \kappa(\eta^t, k^\vee) = \varrho_\eta \cdot K_\eta$
-is likewise $k$-independent. Note that the kappa deficit
-$D(\eta, k) = \kappa(\hat{V}_k) - \kappa(\mathcal{W}_\eta, k)$
-is a rational function of~$k$ (not the combinatorial ghost constant
-$C^{\mathrm{gh}}_\eta$); the $k$-independence of the sum
-follows from the anomaly-ratio framework, not from ghost-constant
-additivity.
+The KRW central-charge functions can be tested under the candidate reflection
+$k\mapsto-k-2N$ and orbit transpose.  A level-independent sum is exact
+evidence on the conformal-anomaly lane.  A modular complementarity identity
+requires the genus-$1$ curvature on both sides and the DS/bar/Verdier package.
+For BP the exact standard central-charge sum is~$50$; its modular
+complementarity sum remains open.
 \end{remark}
 
-\section{A normal-form criterion for strictness and higher degree}
+\section{OPE generator degree and the derived comparison problem}
 
-\begin{definition}[Generator degree and canonical dual]
+\begin{definition}[Generator degree]
 Fix an ordered strong generating set $V=\langle X_1,\dots,X_N\rangle$ for a
 filtered-complete chiral algebra $A$. The \emph{generator degree} of a
 normally ordered differential monomial is the number of generators $X_i$ that
-appear in it, derivatives not counted separately. The reduced bar differential
-on the completed tensor coalgebra $T^c(s^{-1}V)$ decomposes into Taylor coefficients
-\[
-d = d_0 + d_1 + d_2 + d_3 + \cdots,
-\qquad
-d_r: s^{-1}V \longrightarrow (s^{-1}V)^{\otimes r}.
-\]
-We call the resulting completed curved $A_\infty$-algebra the
-\emph{canonical normalized completed dual} attached to the chosen normal form.
-Its maximal nonzero Taylor degree is the \emph{canonical homotopy degree}.
+appear in it; derivatives carry degree~$0$.  The maximal generator
+degree among the singular OPE coefficients is denoted
+$d_{\mathrm{OPE}}(A;V)$.  It is an invariant of the chosen normal form.
 \end{definition}
 
-\begin{theorem}[Generator-degree detection of canonical degree; \ClaimStatusProvedHere]
+\begin{theorem}[Generator-degree detection in an OPE normal form;
+\ClaimStatusProvedHere]
 \label{thm:canonical-degree-detection}
 Let $A$ be presented in a fixed normal form by strong generators
 $X_1,\dots,X_N$. Suppose that every singular OPE coefficient among these
 generators is a normally ordered differential polynomial of generator degree at
-most $d$. Then the canonical normalized completed dual has
-\[
-d_r = 0 \qquad (r>d).
-\]
-If, in addition, some singular coefficient contains a generator-degree-$d$ term
-that survives in the chosen normal form, then $d_d\neq 0$.
+most $d$. Then $d_{\mathrm{OPE}}(A;V)\le d$.  If one coefficient contains a
+nonzero degree-$d$ term in that normal form, then
+$d_{\mathrm{OPE}}(A;V)=d$.
 \end{theorem}
 
 \begin{proof}
-The Taylor coefficient $d_r$ is, by construction, dual to the generator-degree
-$r$ part of the singular OPE normal form. If no OPE coefficient contains terms
-of generator degree $>d$, then no Taylor coefficient of degree $>d$ can appear.
-Conversely, a nonzero degree-$d$ term in the fixed normal form contributes a
-nonzero degree-$d$ Taylor coefficient under dualization. Since we are speaking
-about the canonical normalized model attached to the chosen generating set, no
-additional minimal-model argument is needed here.
+This is the filtration of the normally ordered differential-polynomial algebra
+by the number of strong generators.  The upper bound and the equality follow
+directly from the definition.
 \end{proof}
 
-\begin{remark}[Strictness versus minimality]
-Theorem~\ref{thm:canonical-degree-detection} concerns the canonical completed
-dual attached to a chosen strong generating set. Whether the same degree
-survives after a full minimal-model transfer is a finer question. In the
-examples below, strictness for the Bershadsky--Polyakov algebra and the cubic
-obstruction for $\mathcal W_4^{(2)}$ survive every reasonable normalization.
-For higher $n$ we obtain an exact canonical-degree theorem and formulate a
-minimal-degree conjecture.
+\begin{remark}[The comparison required for a bar-dual statement]
+An identification between generator degree and a Taylor coefficient of a
+minimal or completed bar dual requires an explicit contraction, a proof that
+the chiral collision differential is represented by the chosen OPE
+polynomials, and a non-cancellation statement under homotopy transfer.  These
+data form a comparison package $H_{\mathrm{OPE/bar}}$.  The calculations below
+establish exact OPE degrees.  Their promotion to $A_\infty$ arities is an open
+problem under $H_{\mathrm{OPE/bar}}$.
 \end{remark}
 
 \section{Screening-fiber duality for inverse reduction}
@@ -591,8 +559,8 @@ d=d_{B^!}+d_{\mathcal F^!}+\sum_i\eta_iS_i^\vee.
 Under these three hypotheses, homological perturbation transfers this
 strict dg algebra to a minimal $A_\infty$ model for the completed
 dual. The higher multiplications are then precisely the Massey
-products created by the screening differential; the free-field factor
-contributes no additional higher operations.
+products created by the screening differential; the free-field factor remains
+on its strict quadratic lane.
 \end{remark}
 
 This construction is the homological content of inverse reduction: higher
@@ -941,220 +909,245 @@ H(z)F(w)\sim -\frac{F(w)}{z-w}.
 All remaining OPEs are linear or quadratic in the generators.
 \end{proposition}
 
-\begin{theorem}[Bershadsky--Polyakov is strict in canonical normal form; \ClaimStatusProvedHere]
+\begin{theorem}[Quadratic OPE degree of Bershadsky--Polyakov;
+\ClaimStatusProvedHere]
 \label{thm:bp-strict}
 \textup{[}Type signature:
 $(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
 \mathrm{level}=1\leftrightarrow 2,
 \mathrm{hypothesis\ package}=k\ne -3;
 \mathrm{Feigin\text{--}Semikhatov\ realisation};
-\mathrm{canonical\ normal\ form\ at\ generators\ }J,G^\pm,T)$\textup{]}
-For every $k\neq -3$, the canonical normalized completed dual of the
-Bershadsky--Polyakov algebra $\mathcal W_3^{(2)}(k)$ has
+\mathrm{OPE\ normal\ form\ at\ generators\ }J,G^\pm,T)$\textup{]}
+For every $k\neq-3$, the Feigin--Semikhatov generator presentation of
+$\mathcal W_3^{(2)}(k)$ has
 \[
-d_r=0 \qquad (r\geq 3).
+d_{\mathrm{OPE}}(\mathcal W_3^{(2)};J,G^+,G^-,T)=2.
 \]
-Equivalently, its canonical homotopy degree is $2$. The canonical
-$d=2$ statement is at the chosen normal form; the minimal-model
-transferred dual is conjectured to inherit the same maximal nonzero
-degree under the hook-minimal transfer conjecture, but
-``quadratic generator OPE'' alone does not entail equivalence with
-any all-loop quantum HT theory.
+The quadratic term is $3{:}JJ{:}$ in the simple pole of
+$G^+(z)G^-(w)$.
 \end{theorem}
 
 \begin{proof}
 The singular OPE coefficients in
-\eqref{eq:bp-ef}--\eqref{eq:bp-heis} have generator degree at most $2$.
-The only nonlinear term is the quadratic monomial $HH$ in the simple pole of
-$E(z)F(w)$. Apply Theorem~\ref{thm:canonical-degree-detection} with $d=2$.
+\eqref{eq:bp-ef}--\eqref{eq:bp-heis} have generator degree at most~$2$, and
+the displayed $HH$ coefficient is nonzero.  Apply
+Theorem~\ref{thm:canonical-degree-detection}.
 \end{proof}
 
-\begin{computation}[Modular characteristic of $\mathrm{BP}_k$; \ClaimStatusConditional]
+\begin{computation}[Bershadsky--Polyakov scalar audit;
+\ClaimStatusProvedHere]
 \label{comp:bp-kappa-three-paths}
 \index{Bershadsky--Polyakov!modular characteristic}
 \index{kappa@$\kappa$!Bershadsky--Polyakov}
-Three independent paths give
-$\kappa(\mathrm{BP}_k) = \varrho\cdot c_{\mathrm{BP}}(k)$
-where $\varrho = 1/6$ and
-$c_{\mathrm{BP}}(k) = 2 - 24(k{+}1)^2/(k{+}3)
-= -2(12k^2{+}23k{+}9)/(k{+}3)$:
-\begin{enumerate}
-\item \emph{Anomaly ratio}:
- the strong generators are
- $J_{h=1}^{\mathrm{bos}}$, $G^\pm_{\,h=3/2,\,\mathrm{ferm}}$,
- $T_{h=2}^{\mathrm{bos}}$.
- The anomaly ratio $\varrho = \sum_i (-1)^{p_i}/h_i$
- \textup{(}sign from fermion parity $p_i$\textup{)} gives
- \[
- \varrho(\mathrm{BP})
- = \frac{1}{1} - \frac{1}{3/2} - \frac{1}{3/2} + \frac{1}{2}
- = 1 - \tfrac{2}{3} - \tfrac{2}{3} + \tfrac{1}{2}
- = \frac{1}{6}.
- \]
- Since $c(\mathrm{BP}_k) = 2 - 24(k{+}1)^2/(k{+}3)$
- \textup{(}the Kac--Roan--Wakimoto central charge for the
- $\mathfrak{sl}_3$ subregular reduction\textup{)}, the modular
- characteristic is $\kappa = \varrho \cdot c = c_{\mathrm{BP}}(k)/6$.
-\item \emph{Deficit from affine $\mathfrak{sl}_3$}:
- the affine modular characteristic is
- $\kappa(\widehat{\mathfrak{sl}}_3, k) = 4(k+3)/3$.
- The kappa deficit
- $D((2{,}1), k) = \kappa(\widehat{\mathfrak{sl}}_3, k) - \kappa(\mathrm{BP}_k)$
- is a rational function of~$k$
- \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity}(ii))},
- verifiable by direct subtraction.
-\item \emph{Complementarity}:
- the Feigin--Frenkel dual level is $k^\vee = -k-6$, so the Koszul
- conductor is
- $K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k{-}6) = 196$
- \textup{(}independent of $k$\textup{)}, and the complementarity sum is
- \[
- \kappa(k) + \kappa(k^\vee)
- = \frac{c_{\mathrm{BP}}(k)}{6} + \frac{c_{\mathrm{BP}}(-k{-}6)}{6}
- = \frac{K_{\mathrm{BP}}}{6}
- = \frac{196}{6}
- = \frac{98}{3}
- = \varrho \cdot K_{\mathrm{BP}}.
- \]
-\end{enumerate}
-The critical level $k = -3$ is the pole of both $c$ and $\kappa$.
+Fehily--Kawasetsu--Ridout~\cite[Definition~2.1 and
+Eq.~\textup{(}2.2\textup{)}]{FKR20} use the ordinary bosonic vertex algebra
+with even generators $J,G^+,G^-,T$ and standard central charge
+\begin{equation}
+\label{eq:bp-standard-central-audit}
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3}.
+\end{equation}
+Writing $t=k+3$ gives
+\[
+c_{\mathrm{BP}}(k)=25-6t-\frac{24}{t},
+\qquad
+c_{\mathrm{BP}}(-k-6)=25+6t+\frac{24}{t},
+\]
+and hence
+\begin{equation}
+\label{eq:bp-standard-conductor-audit}
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\end{equation}
+The midpoint value~$25$ occurs at the regular fibres $k=-3\pm2i$;
+$k=-3$ is the common pole.
+
+The secondary shifted conformal vector has
+\begin{equation}
+\label{eq:bp-shifted-secondary-audit}
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+=2-\frac{24(k+1)^2}{k+3},
+\qquad
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
++c_{\mathrm{BP}}^{\mathrm{shift}}(-k-6)=196.
+\end{equation}
+Equations~\eqref{eq:bp-standard-central-audit} and
+\eqref{eq:bp-shifted-secondary-audit} belong to different conformal-vector
+conventions.
+
+The unsigned reciprocal-weight sum of the even strong generators is
+\[
+1+\frac23+\frac23+\frac12=\frac{17}{6}.
+\]
+It records only the strong-generator spectrum.  The modular characteristic
+$\kappa_{\mathrm{BP}}(k)$ is the coefficient of the non-separating genus-$1$
+curvature and is \ClaimStatusOpen{} pending a direct calculation including
+charged ghosts, neutral fields, the improvement term, and mixed channels.
 \end{computation}
 
-\begin{proposition}[Complementarity constant for $\mathrm{BP}_k$; \ClaimStatusConditional]
+\begin{proposition}[Standard Bershadsky--Polyakov central-charge conductor;
+\ClaimStatusProvedHere]
 \label{prop:bp-complementarity-constant}
 \index{Bershadsky--Polyakov!complementarity constant}
-\index{Koszul conductor!Bershadsky--Polyakov}
-The Koszul conductor
-$K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6)$
-equals~$196$, independent of the level~$k$.
+\index{central-charge conductor!Bershadsky--Polyakov}
+In the standard FKR conformal-vector convention,
+\[
+K^c_{\mathrm{BP}}
+:=c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\]
+The shifted secondary convention of
+\eqref{eq:bp-shifted-secondary-audit} has reflection sum~$196$.
 \end{proposition}
 
 \begin{proof}
-Direct calculation with $c_{\mathrm{BP}}(k) = 2 - 24(k{+}1)^2/(k{+}3)$
-\textup{(}FKR convention, cf.\ Computation~\textup{\ref{comp:bp-kappa-three-paths}):}
-\begin{align*}
-c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k{-}6)
-&= \left(2 - \frac{24(k{+}1)^2}{k{+}3}\right)
- + \left(2 - \frac{24(-k{-}5)^2}{-k{-}3}\right)\\
-&= 4 - \frac{24(k{+}1)^2}{k{+}3}
- + \frac{24(k{+}5)^2}{k{+}3}\\
-&= 4 + \frac{24\bigl((k{+}5)^2 - (k{+}1)^2\bigr)}{k{+}3}
- = 4 + \frac{24\cdot 8(k{+}3)}{k{+}3}
- = 4 + 192
- = 196.
-\end{align*}
+This is Equation~\eqref{eq:bp-standard-conductor-audit}.  The second
+statement is Equation~\eqref{eq:bp-shifted-secondary-audit}.
 \end{proof}
 
-\begin{remark}[Ghost subtraction failure]
+\begin{proposition}[Bershadsky--Polyakov subregular ledger; \ClaimStatusConditional]
+\label{prop:bp-subregular-standard-family-ledger}
+\index{Bershadsky--Polyakov!standard family ledger}
+\index{Drinfeld--Sokolov reduction!subregular}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1,
+\mathrm{hypothesis\ package}=k\ne -3;
+\mathrm{FKR\ standard\ conformal\ vector};
+\mathrm{Feigin\text{--}Semikhatov\ OPE\ normal\ form})$\textup{]}
+The Bershadsky--Polyakov algebra is the $n=3$ member of the subregular
+Drinfeld--Sokolov family. In the Feigin--Semikhatov normal form its strong
+generators are
+\begin{equation}
+\label{eq:bp-ledger-fields}
+H_{h=1}^{\mathrm{even}},\qquad
+E_{h=3/2}^{\mathrm{even}},\qquad
+F_{h=3/2}^{\mathrm{even}},\qquad
+T_{h=2}^{\mathrm{even}},
+\end{equation}
+with OPEs \eqref{eq:bp-ef}--\eqref{eq:bp-heis}. Its central charge is
+\begin{equation}
+\label{eq:bp-ledger-central-charge}
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad k\ne -3,
+\end{equation}
+with exact reflection identity
+\begin{equation}
+\label{eq:bp-ledger-conductors}
+K^c(\mathrm{BP}_k,\mathrm{BP}_{-k-6})=50.
+\end{equation}
+The shifted scalar $c_{\mathrm{BP}}^{\mathrm{shift}}$ has conductor~$196$
+and is recorded separately in
+\eqref{eq:bp-shifted-secondary-audit}.  The quantities
+$\kappa_{\mathrm{BP}}$, $\varrho_{\mathrm{BP}}$, and
+$K^\kappa_{\mathrm{BP}}$ are open genus-$1$ invariants.
+
+The BP instance of Theorem~H has \ClaimStatusConditional{} under the named
+package
+\[
+H_{\mathrm{BP}}^{H}:=
+H_{\mathrm{PBW}}^{\mathrm{bar}}
++\{\text{finite/perfect Verdier duality, strict ML completion,
+ordered acyclicity, averaging descent}\}.
+\]
+This package is the required bridge from finite OPE calculations to
+curve-level chiral Hochschild amplitude and growth.
+
+The shadow obstruction lines must be read separately:
+\begin{equation}
+\label{eq:bp-ledger-shadow-lines}
+T\text{-line}:\mathbf M,\ r_{\max}=\infty;\qquad
+H\text{-line}:\mathbf G,\ r_{\max}=2;\qquad
+E,F\text{-line}:\text{even charged channels}.
+\end{equation}
+The global class is the channel supremum.  The relevant subregular orbit is
+\begin{equation}
+\label{eq:bp-ledger-subregular-ds}
+\mathcal W_n^{(2)}(k)
+=H^0_{\mathrm{DS}}\!\left(V_k(\mathfrak{sl}_n),f_{\mathrm{sub}}\right),
+\qquad
+f_{\mathrm{sub}}\leftrightarrow (n-1,1),
+\end{equation}
+and $\mathcal W_3^{(2)}(k)=\mathrm{BP}_k$.
+
+For this subregular line, Theorem~\ref{thm:pbw-slodowy-collapse} computes the
+algebraic PBW bar input, and
+Theorem~\ref{thm:subregular-appell-formula} supplies the Appell formula for the
+singular $E$--$F$ coefficients.  The exact OPE-degree window is
+\begin{equation}
+\label{eq:bp-ledger-degree-window}
+d_{\mathrm{OPE}}(\mathcal W_n^{(2)})\ge r
+\qquad (2\le r\le n-1)
+\end{equation}
+on the centred symbolic normal form.  A statement about completed or minimal
+bar-dual Taylor coefficients requires $H_{\mathrm{OPE/bar}}$.
+\end{proposition}
+
+\begin{remark}[Genus-$1$ curvature calculation required]
 \label{rem:bp-ghost-subtraction-failure}
 \index{Bershadsky--Polyakov!ghost subtraction}
-The naive ghost-subtraction formula
-$\kappa(\mathrm{BP}_k) = \kappa(\widehat{V}_k(\mathfrak{sl}_3)) - C^{\mathrm{gh}}$
-for a constant $C^{\mathrm{gh}}$ is \emph{false}.
-The deficit
-$D((2{,}1), k) = \kappa(\widehat{V}_k) - \kappa(\mathrm{BP}_k)
-= (32k^2+94k+90)/(6(k+3))$
-is a rational function of~$k$, not a constant.
-The root cause is that $\kappa(\widehat{V}_k)$ is linear in~$k$
-(slope $\dim(\mathfrak{sl}_3)/(2h^\vee) = 4/3$),
-while $\kappa(\mathrm{BP}_k)$ is a ratio whose numerator and denominator
-are both linear in~$k$. Their difference cannot be constant.
-This is an instance of the general principle
-(Proposition~\ref{prop:partition-dependent-complementarity}(i)):
-the kappa deficit under DS reduction is rational in the level
-for all non-trivial nilpotents.
+The BP genus-$1$ curvature receives contributions from the charged ghost
+system, the neutral fields, the improvement of the stress tensor, and mixed
+collision channels.  A valid computation starts from the non-separating
+genus-$1$ contraction in the BRST model and descends it through a specified
+DS/bar comparison.  The central charge and the strong-generator spectrum
+supply consistency checks; the non-separating contraction determines the
+answer.
 \end{remark}
 
 \begin{theorem}[Bershadsky--Polyakov same-family companion;
 \ClaimStatusConditional]
 \label{thm:bp-koszul-self-dual}
-\index{Bershadsky--Polyakov!Koszul self-duality|textbf}
-\index{non-principal W-algebra!self-dual}
+\index{Bershadsky--Polyakov!same-family companion|textbf}
+\index{non-principal W-algebra!conditional companion}
 \index{hook-type duality!self-transpose}
 \textup{[}Type signature:
 $(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
 \mathrm{level}=1\leftrightarrow 2,
 \mathrm{hypothesis\ package}=k\ne -3;
-\mathrm{subregular\ DS/bar\ transport};
-\mathrm{KSDual\ sublocus\ since\ }(2,1)=(2,1)^t;
-\mathrm{Prochazka\text{--}closed\ OPE\ for\ }\mathrm{BP};
-\mathrm{Yamada\ analytic\ continuation\ at\ generic\ }k;
-\mathrm{modularity\ here\ refers\ to\ the\ open\text{-}category\ trace\ +\ clutching\ on\ }(X,D,\tau),\ \mathrm{not\ a\ closed\text{-}algebra\ property\ of\ }\mathrm{BP};
-\mathrm{Vol\ III\ }(\Sigma_2,C)\text{-specialisation\ at\ }d=3)$\textup{]}
-For $k \neq -3$ \textup{(}away from the critical level\textup{)}, assume the subregular DS/bar transport statement. Then the Bershadsky--Polyakov algebra
-$\mathcal W_k(\mathfrak{sl}_3, f_{\mathrm{sub}})$, the subregular
-non-principal $\mathcal W$-algebra of $\mathfrak{sl}_3$, has
-same-family Koszul companion under the hook-type transport duality.
-The hook partition
-$(2,1)$ is self-transpose, $(2,1)^t = (2,1)$, so $\mathrm{BP}$ lies in
-the KSDual sublocus and its Koszul dual is again Bershadsky--Polyakov
-at the Feigin--Frenkel dual level $k^\vee = -k - 6$. In the
-Kac--Roan--Wakimoto quadratic-numerator normalization the resulting
-invariants are
+H_{\mathrm{BP}}^{\mathrm{DS/bar}}=
+\{\mathrm{subregular\ hook\ DS/bar\ transport};
+\mathrm{finite\text{-}type\ bar\ dual\ or\ completed\ continuous\ nondegenerate\ Verdier\ pairing};
+\mathrm{comparison\ at\ regular\ level}\})$\textup{]}
+For $k\ne-3$, assume $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$.  Then the
+candidate Verdier--Koszul companion of
+$\mathrm{BP}_k=\mathcal W^k(\mathfrak{sl}_3,f_{(2,1)})$ is the same
+subregular family at reflected level:
 \[
-c_{\mathrm{BP}}(k) = 2 - \frac{24(k+1)^2}{k+3},
-\qquad
-\varrho_{\mathrm{BP}} = \frac{1}{6},
-\qquad
-\kappa_{\mathrm{BP}}(k) = \frac{1}{6}\,c_{\mathrm{BP}}(k),
+(\mathrm{BP}_k)^!\simeq\mathrm{BP}_{-k-6}.
 \]
-the Koszul conductor is
-$K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6) = 196$
-\textup{(}independent of $k$\textup{)}, and the complementarity sum is
+The self-transpose identity $(2,1)^t=(2,1)$ selects the family on the
+right-hand side.  KSDual membership additionally requires an object-level
+fixed-point equivalence with an involutive nondegenerate Verdier pairing and
+remains open.
+
+On the unconditional scalar lane one has
 \[
-\kappa_{\mathrm{BP}}(k) + \kappa_{\mathrm{BP}}(-k-6)
-\;=\; \varrho_{\mathrm{BP}}\cdot K_{\mathrm{BP}}
-\;=\; \frac{98}{3}
-\;\neq\; 0
-\] The shadow class of $\mathrm{BP}_k$
-is mixed: class~M on the $T$-line \textup{(}infinite shadow depth from
-the $TT$ OPE\textup{)} and class~G on the $J$-line \textup{(}abelian
-current\textup{)}. This is the first non-principal same-family
-companion fixed locus in the standard Lie-theoretic landscape; the
-algebraic Koszul self-duality interpretation is conditional on the
-subregular DS/bar transport hypothesis.
+c_{\mathrm{BP}}(k)=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\]
+The modular quantities $\kappa_{\mathrm{BP}}(k)$ and
+$K^\kappa_{\mathrm{BP}}$ await the genus-$1$ computation described in
+Remark~\ref{rem:bp-ghost-subtraction-failure}.
 \end{theorem}
 
 \begin{proof}
-The hook-type transport duality of \cite{FehilyHook} and
-\cite{CLNS24} gives, in type~$A$,
-$(\mathcal W_k(\mathfrak{sl}_N, f_\lambda))^! \;\simeq\;
-\mathcal W_{k^\vee_\lambda}(\mathfrak{sl}_N, f_{\lambda^t})$,
-with $\lambda^t$ the transpose partition. For the subregular
-nilpotent $f_{\mathrm{sub}} \in \mathfrak{sl}_3$ the partition is
-$\lambda = (2,1)$, and $(2,1)^t = (2,1)$. The Koszul dual is
-therefore again of the same hook type at the Feigin--Frenkel dual
-level. The numerical invariants follow from the Koszul-conductor
-formula evaluated at $N = 3$ in the Bershadsky--Polyakov
-quadratic-numerator normalization with anomaly ratio
-$\varrho_{\mathrm{BP}} = 1/6$ \textup{(}from
-$1 - 2/(3/2) - 2/(3/2) + 1/2$ on the
-$J^{\mathrm{bos}}_{h=1}$, $G^{\pm,\mathrm{ferm}}_{h=3/2}$,
-$T^{\mathrm{bos}}_{h=2}$ generator profile\textup{)}. The shadow class
-on each generator line is determined by the self-OPE pole structure:
-$TT$ has pole order four (class~M), and $JJ$ has pole order two with
-vanishing leading term (class~G abelian).
+The package $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ is exactly the premise
+needed to apply Theorem~\ref{thm:hook-transport-corridor} to the
+self-transpose partition $(2,1)$.  The scalar identity is
+Proposition~\ref{prop:bp-complementarity-constant}.
 \end{proof}
 
-\begin{remark}[Computational verification]
+\begin{remark}[Exact symbolic identities]
 \label{rem:bp-self-dual-verification}
-The Bershadsky--Polyakov self-duality is verified by~$63$ tests in
-\texttt{compute/lib/theorem\_nonprincipal\_line\_operators\_engine.py}.
-The dictionary
-$(c_{\mathrm{BP}}, \kappa_{\mathrm{BP}}, K_{\mathrm{BP}},
-\varrho_{\mathrm{BP}}, \kappa\text{-sum})
-= (2 - 24(k{+}1)^2/(k{+}3),\;
- c_{\mathrm{BP}}/6,\; 196,\; 1/6,\; 98/3)$
-is cross-checked against the independent engines
-\texttt{bp\_shadow\_tower.py},
-\texttt{hook\_type\_w\_duality.py}, and
-\texttt{wn\_central\_charge\_canonical.py}.
+The engine \texttt{compute/lib/bp\_koszul\_conductor\_engine.py}
+evaluates the standard FKR identity $K^c_{\mathrm{BP}}=50$, the shifted
+secondary identity $K^{c,\mathrm{shift}}_{\mathrm{BP}}=196$, the even parity
+of all four generators, and the open status of the genus-$1$ invariants.
+These exact symbolic evaluations establish the stated scalar formulas.
+The conditional DS/bar equivalence uses the categorical package in the
+theorem.
 \end{remark}
-
-% Verification note (2026-04-07):
-% BP central charge formula: c = 2 - 24(k+1)^2/(k+3), K = 196.
-% Verified at admissible k=-3/2: c=-2 (FKR 2020, Ridout-Wood 2015).
-% Propagated to all compute engines and test files.
 
 \subsection{\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} and the first cubic obstruction}
 
@@ -1193,28 +1186,19 @@ W(w)-\frac12(k+4)\partial T(w)
 The simple pole contains an explicit cubic term in $H$.
 \end{proposition}
 
-\begin{theorem}[\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} has canonical degree $3$; \ClaimStatusProvedHere]
+\begin{theorem}[Cubic OPE degree in
+\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)}; \ClaimStatusProvedHere]
 \label{thm:w4-cubic}
 \textup{[}Type signature:
 $(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
 \mathrm{level}=1\leftrightarrow 2,
 \mathrm{hypothesis\ package}=(k+2)(11k+32)\ne 0;
-\mathrm{Feigin\text{--}Semikhatov\ canonical\ normal\ form};
-\mathrm{Yamada\ generic\text{-}level\ finite\ presentation};
-\mathrm{Penkava\text{--}Vanhaecke\ PVA\text{-}to\text{-}quantum\ bridge\ for\ minimal\text{-}model\ passage};
-\mathrm{statement\ records\ a\ canonical\text{-}normal\text{-}form\ degree\text{-}3\ obstruction,\ not\ the\ full\ }A_\infty\text{-}\mathrm{minimal\ degree})$\textup{]}
-For every $k$ with $(k+2)(11k+32)\neq 0$, the canonical normalized completed
-dual of $\mathcal W_4^{(2)}(k)$ has
+\mathrm{Feigin\text{--}Semikhatov\ OPE\ normal\ form})$\textup{]}
+For every $k$ with $(k+2)(11k+32)\neq0$ and $3k+8\neq0$,
 \[
-d_3\neq 0.
+d_{\mathrm{OPE}}(\mathcal W_4^{(2)})\ge3.
 \]
-In particular, its canonical homotopy degree is at least $3$.
-The canonical-degree statement is at the chosen Feigin--Semikhatov
-normal form; promotion to a minimal-model statement
-\textup{(}the hook-minimal transfer conjecture\textup{)}
-requires the named PBW endpoint package
-\textup{(}Yamada finite presentation;
-Penkava--Vanhaecke PVA-to-quantum bridge\textup{)}.
+The witness is the $H^3$ coefficient in \eqref{eq:w4-ef}.
 \end{theorem}
 
 \begin{proof}
@@ -1223,17 +1207,18 @@ The coefficient of $H^3$ in \eqref{eq:w4-ef} is
 -\frac{8(k+2)(11k+32)}{3(3k+8)^2},
 \]
 which is nonzero under the stated genericity condition. This is a generator
-degree-$3$ term in the fixed Feigin--Semikhatov normal form. Therefore
-Theorem~\ref{thm:canonical-degree-detection} implies $d_3\neq 0$.
+degree-$3$ term in the fixed Feigin--Semikhatov normal form.
 \end{proof}
 
-\begin{remark}[Why the cubic term is essential]
+\begin{remark}[Meaning of the cubic term]
 The neutral weight-$3$ generator $W$ is characterized in the standard
 normalization by being Virasoro primary and regular with respect to $H$. Any
-redefinition preserving that normalization can alter linear and derivative terms
-but cannot eliminate the pure $H^3$ contribution in the raw $E$--$F$ pole
-without leaving the $H$-regular gauge. This is the first genuinely higher
-subregular case.
+redefinition preserving that normalization can alter linear and derivative
+terms.  The pure $H^3$ coefficient is the invariant cubic witness in the
+$H$-regular gauge. This is the first subregular OPE in
+which the centred normal form contains a cubic generator monomial.  Its
+interpretation as a nonzero transferred $m_3$ is conditional on
+$H_{\mathrm{OPE/bar}}$.
 \end{remark}
 
 \section{Explicit \texorpdfstring{$W_5^{(2)}$}{W5(2)} and \texorpdfstring{$W_6^{(2)}$}{W6(2)} symbols}
@@ -1338,50 +1323,37 @@ C_{6,5}
 \label{eq:w6-c5}
 \end{align}
 
-\begin{theorem}[Unbounded canonical degree in the subregular line; \ClaimStatusProvedHere]
+\begin{theorem}[Unbounded symbolic OPE degree in the subregular line;
+\ClaimStatusProvedHere]
 \label{thm:unbounded-canonical-degree}
 \textup{[}Type signature:
 $(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
 \mathrm{level}=1\leftrightarrow 2,
 \mathrm{hypothesis\ package}=\mathrm{generic\ level\ }k;
-\mathrm{Feigin\text{--}Semikhatov\ centered\ Appell\ normal\ form};
-\mathrm{Bell\text{-}recursion\ for\ raw\ singular\ coefficients};
-\mathrm{Prochazka\text{--}Rapcak\ }W_n^{(2)}\mathrm{\ closure\ for\ minimal\text{-}model\ passage};
-\mathrm{KZ\ analytic\ SDR\ for\ classical\text{-}to\text{-}quantum\ continuation})$\textup{]}
-For generic level $k$ and every $n\geq 3$, the canonical normalized completed
-dual of $\mathcal W_n^{(2)}(k)$ has nonzero Taylor coefficients in all degrees
-\[
-2\leq r\leq n-1.
-\]
-Equivalently, the canonical homotopy degree of the subregular family is
-unbounded as $n\to\infty$. The unboundedness statement is at the
-canonical-normal-form level; passage to the minimal-model transferred
-dual is conjectural \textup{(}the subregular minimal-degree conjecture\textup{)}.
+\mathrm{Feigin\text{--}Semikhatov\ centered\ Appell\ symbols};
+\mathrm{Bell\text{-}recursion\ for\ raw\ singular\ coefficients})$\textup{]}
+For every $n\ge3$, the centred Appell symbol of the weight-$r$ raw
+$E$--$F$ coefficient contains a nonzero degree-$r$ monomial for
+$2\le r\le n-1$.  Hence the symbolic OPE generator degree is unbounded as
+$n\to\infty$.
 \end{theorem}
 
 \begin{proof}
-For $n=3$ strictness gives canonical degree $2$ by
-Theorem~\ref{thm:bp-strict}. For $n=4$, degree $3$ is nonzero by
-Theorem~\ref{thm:w4-cubic}.
-
 For general $n$, Theorem~\ref{thm:subregular-appell-formula} shows that the
 weight-$r$ raw coefficient has symbolic expansion
 \[
 C_{n,r}(h_n,v)=e_r(v)+\binom{n-r+1}{1}e_{r-1}(v)h_n+\cdots+\binom{n}{r}h_n^r.
 \]
-The term $\binom{n}{r}h_n^r$ is nonzero for every $2\leq r\leq n-1$, hence the
-weight-$r$ singular coefficient contains a generator-degree-$r$ contribution in
-the standard centered normal form. Apply
-Theorem~\ref{thm:canonical-degree-detection}. Therefore the canonical completed
-dual has nonzero Taylor coefficients in each degree $r\leq n-1$.
+The term $\binom{n}{r}h_n^r$ is nonzero for every $2\leq r\leq n-1$,
+which proves the symbolic statement.
 \end{proof}
 
-\begin{conjecture}[Minimal degree survives generically; \ClaimStatusConjectured]
+\begin{conjecture}[OPE/bar arity comparison; \ClaimStatusConjectured]
 \label{conj:minimal-degree-subregular}
-For generic $k$, the minimal transferred completed dual of
-$\mathcal W_n^{(2)}(k)$ has maximal nonzero degree exactly $n-1$. Equivalently,
-the canonical degrees detected in
-Theorem~\ref{thm:unbounded-canonical-degree} survive minimal-model transfer.
+For generic~$k$, there is a package $H_{\mathrm{OPE/bar}}$ identifying the
+centred OPE generator filtration with the arity filtration of a specified
+completed bar-dual model of $\mathcal W_n^{(2)}(k)$.  Under that comparison,
+the degree-$r$ Appell witnesses survive transfer for $2\le r\le n-1$.
 \end{conjecture}
 
 \section{Primary renormalization and the full VOA}
@@ -1554,44 +1526,40 @@ it is a first-principles construction of the full coefficient packets.
 
 \section{Classification package beyond the principal case}
 
-The preceding sections divide the non-principal problem into two clean layers.
+The preceding sections divide the non-principal problem into two layers.
 
 \begin{enumerate}[label=(\alph*)]
-\item \emph{Completed Koszulity.} The PBW--Slodowy theorem shows that any
- affine $W$-algebra whose associated graded is a free differential polynomial
- algebra is completed Koszul. In particular, the principal case is solved, and
- any future arbitrary-nilpotent associated-graded theorem immediately upgrades
- to a completed-Koszul theorem.
-\item \emph{Strict versus higher duality.} The canonical homotopy degree is
- controlled by generator degree in the normalized OPEs. Along the subregular
- line:
+\item \emph{Filtered bar input.} The PBW--Slodowy theorem computes the
+ associated-graded bar page.  Completed Koszulity is the conditional output of
+ $H_{\mathrm{PBW}}^{\mathrm{bar}}$.
+\item \emph{OPE nonlinearity.} The centred normal form has the exact pattern
  \[
- \mathcal W_3^{(2)} \text{ is strict},\qquad
- \mathcal W_4^{(2)} \text{ is the first higher case},\qquad
- \mathcal W_n^{(2)} \text{ has unbounded canonical degree as } n\to\infty.
+ d_{\mathrm{OPE}}(\mathcal W_3^{(2)})=2,\qquad
+ d_{\mathrm{OPE}}(\mathcal W_4^{(2)})\ge3,\qquad
+ \sup_n d_{\mathrm{OPE}}(\mathcal W_n^{(2)})=\infty.
  \]
+ A bar-dual arity statement is the comparison conjecture
+ \ref{conj:minimal-degree-subregular}.
 \end{enumerate}
 
-Thus the hook/subregular family is no longer a fog of isolated examples. It is
-a coherent staircase of homotopy complexity. The first step is strict, the
-second is cubic, and thereafter the canonical degree grows linearly with the
-rank.
+Thus the hook/subregular family forms a coherent staircase of OPE
+nonlinearity.  The derived meaning of that staircase is a sharply stated open
+problem.
 
 \begin{conjecture}[Hook-type canonical-versus-minimal coincidence; \ClaimStatusConjectured]
 \label{conj:hook-canonical-minimal}
-For generic level, the maximal nonzero degree of the canonical normalized
-completed dual agrees with the maximal nonzero degree of the minimal transferred
-completed dual for every hook-type affine $W$-algebra in type $A$.
+For generic level, $H_{\mathrm{OPE/bar}}$ extends functorially along the
+hook-reduction graph and identifies the OPE generator filtration with the
+arity filtration of a minimal transferred completed dual.
 \end{conjecture}
 
 \begin{remark}[Geometric meaning]
 The PBW side of the story is controlled by Slodowy slices and their arc spaces.
 The reduction-to-hook-type side is controlled by inverse Hamiltonian reduction
-charts and reduction-by-stages along the nilpotent-orbit order. The homological
-interpretation proposed here is that the higher Taylor coefficients of the
-completed dual record precisely the failure of these quantized slices to remain
-quadratic after one chooses a strong generating set and performs the chiral
-normal ordering.
+charts and reduction-by-stages along the nilpotent-orbit order. The proposed
+homological interpretation asks whether the higher Taylor coefficients of a
+specified completed dual are detected by the nonlinear normal-ordering terms
+after transport through $H_{\mathrm{OPE/bar}}$.
 \end{remark}
 
 \section{Outlook}
@@ -1604,20 +1572,17 @@ Theorem~\ref{thm:triangular-primary-renormalization} out explicitly in weights
 $4$ and $5$, thereby producing the full primary-renormalized coefficient packets
 for $\mathcal W_5^{(2)}$ and $\mathcal W_6^{(2)}$ as concrete rational
 functions of $k$.
-\item Upgrade canonical degree to minimal degree by proving
+\item Construct the OPE/bar comparison by proving
 Conjecture~\ref{conj:minimal-degree-subregular} or, more ambitiously,
 Conjecture~\ref{conj:hook-canonical-minimal}.
 \item Transport the same machinery through the type-$A$ inverse-reduction
-network, thereby converting the hook-type classification into a generic
-classification theorem for strict versus higher completed duals in type $A$.
+network and verify the DS/bar edge package.
 \end{enumerate}
 
-What is already achieved here is substantial. The PBW/Slodowy mechanism gives a
-general completed-Koszul theorem. The exact Bell recursion writes every
-lower-derivative singular coefficient in the subregular $E$--$F$ OPE. The
-centered-Appell normal form reveals the growth of homotopy degree. And the
-subregular line emerges, at last, not as a collection of sporadic calculations
-but as a structured homological family.
+The exact output of the chapter is the PBW associated-graded page, the full
+Bell recursion for the raw singular packet, the Miura--Appell symbols, and the
+standard BP central-charge conductor.  The remaining obligations are the
+completed bar comparison, the genus-$1$ BP curvature, and DS/bar transport.
 
 \section{Nilpotent transport and the even-nilpotent dichotomy}
 
@@ -1627,7 +1592,8 @@ of the type-$A$ reduction graph. The next question is \emph{coverage}:
 for which ranks does the transport-closure of the hook vertices exhaust all
 partitions?
 
-\begin{proposition}[Nilpotent transport for type $A$; \ClaimStatusProvedHere]
+\begin{proposition}[Finite-rank transport audit for type $A$;
+\ClaimStatusConditional]
 \label{prop:nilpotent-transport-typeA}
 \index{nilpotent transport!type A}
 \index{reduction graph!transport closure}
@@ -1640,58 +1606,35 @@ $(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
 \mathrm{Creutzig\text{--}Fasquel\text{--}Linshaw\text{--}Nakatsuka\ \textup{(CFLN)}};
 \mathrm{Genra\text{--}Juillard\ stages};
 \mathrm{Butson\text{--}Nair\ inverse\ Hamiltonian\ reduction})$\textup{]}
-For $\mathfrak{sl}_N$ with $N = 2, \ldots, 8$, the transport-closure of
-the hook-type partitions $(N{-}r, 1^r)$, $0 \leq r \leq N{-}1$,
-equals all of $\operatorname{Par}(N)$ inside the reduction
-graph~$\Gamma_N$. Every non-hook partition~$\lambda$ is reachable
-from a hook via the closure-ordering Hasse diagram, and all transport
-edges carry BRST one-loop exactness at generic level.
+For $N=2,\ldots,8$, a finite combinatorial calculation shows that every
+partition of~$N$ lies in the closure-ordering component of a hook partition.
+Promotion of that Hasse-graph statement to the reduction graph~$\Gamma_N$
+requires a proved reduction or inverse-reduction functor for every chosen edge.
+Promotion further to Koszul transport requires
+$H_{\mathrm{hook}}^{\mathrm{DS/bar}}$ on every edge.
 \end{proposition}
 
 \begin{proof}
-For $N = 2, 3$, every partition is itself of hook type, so the statement
-is immediate.
-For $N = 4$: the non-hook partition $(2,2)$ is reached from the
-hook $(3,1)$ by the reduction $\mathcal{W}^k(\mathfrak{sl}_4, f_{(3,1)})
-\to \mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$
-(Creutzig--Fasquel--Linshaw--Nakatsuka~\cite{CFLN24}).
-For $N = 5$: the two non-hook partitions $(3,2)$ and $(2,2,1)$ are
-reached from $(4,1)$ and $(2,1,1,1)$ respectively via closure edges.
-For $N = 6, 7, 8$: the full Hasse diagram of the nilpotent-orbit closure
-ordering connects every partition to a hook partition via a chain of
-covering relations, each of which is realized by either a direct
-reduction or an inverse-reduction functor at generic level
-\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}.
-The BRST one-loop exactness at generic level follows from the
-Kazhdan filtration: the BRST spectral sequence degenerates at
-$E_1$ when the level avoids the critical and admissible values,
-giving a filtered quasi-isomorphism along each edge.
+The closure-ordering calculation is finite and direct.  The cited works
+construct substantial families of reduction and inverse-reduction edges,
+including the hook spine.  The statement that those results realise every
+covering edge through rank~$8$, and that each realised edge commutes with the
+completed chiral bar construction, is the conditional part of the
+proposition.
 \end{proof}
 
-\begin{remark}[Even-nilpotent dichotomy in complementarity]
+\begin{remark}[Even and self-transpose orbits as audit surfaces]
 \label{rem:even-nilpotent-dichotomy}
 \index{nilpotent orbit!even vs non-even}
 \index{complementarity!even-nilpotent dichotomy}
-The central charge complementarity sum
-$c(k, \lambda) + c(k^\vee, \lambda^t)$ is level-independent if and
-only if: \textup{(a)}~$\lambda = \lambda^t$ (self-transpose), or
-\textup{(b)}~both $\lambda$ and $\lambda^t$ are even nilpotents
-(all parts have the same parity).
-For non-even pairs, the half-integer eigenvalues of
-$\operatorname{ad}(h_\lambda)/2$ on the nilradical produce
-$k$-dependent corrections to the ghost central charge that prevent
-level-independence.
-For example, in $\mathfrak{sl}_4$:
-\begin{itemize}
-\item $(2,2) = (2,2)^t$ (self-transpose and even): the complementarity
- sum $c(k, (2{,}2)) + c(k^\vee, (2{,}2))$ is $k$-independent.
-\item $(3,1)^t = (2,1,1)$; neither partition is even: the sum
- $c(k, (3{,}1)) + c(k^\vee, (2{,}1{,}1))$ depends on~$k$.
-\end{itemize}
-The Bershadsky--Polyakov algebra ($\lambda = (2,1)$ in $\mathfrak{sl}_3$)
-is self-transpose, so its Koszul conductor
-$K_{\mathrm{BP}} = 196$ is level-independent
-(Proposition~\ref{prop:bp-complementarity-constant}).
+Even and self-transpose partitions give efficient tests of the KRW central
+charge under orbit transpose and level reflection.  These tests determine
+candidate scalar conductors in a fixed conformal-vector convention.  A
+classification of all level-independent sums requires a uniform evaluation of
+the KRW formula across good gradings.  A modular complementarity theorem
+requires, in addition, the genus-$1$ curvature and DS/bar/Verdier transport.
+For the self-transpose BP partition $(2,1)$, the standard scalar audit gives
+$K^c_{\mathrm{BP}}=50$.
 \end{remark}
 
 \begin{remark}[Beyond hook type: the rectangular partition $(2,2)$ in $\mathfrak{sl}_4$]
@@ -1704,43 +1647,33 @@ The hook-type corridor
 partitions of the form $(N{-}r, 1^r)$.
 The first partition lying outside this family is $(2,2)$ in
 $\mathfrak{sl}_4$: a self-transpose rectangular even nilpotent.
-Computational analysis
-(\texttt{non\_principal\_beyond\_hook\_engine.py}, 38~tests)
-yields the following structural data for
+The following data organise the first audit beyond the hook spine for
 $\mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$
 at generic level~$k \neq -4$:
 
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item \emph{Koszulness.}
- $\mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$ is chirally
- Koszul at generic level, by Arakawa's Kazhdan filtration
- theorem applied to the $(2,2)$-nilpotent. This is a special
- case of the universal statement: $\mathcal{W}^k(\fg, f)$ is
- Koszul at generic~$k$ for \emph{every} nilpotent~$f$, not
- only hooks. The obstruction beyond hooks is therefore not
- Koszulness but the DS--KD intertwining
- (Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}).
+\item \emph{Filtered surface.}
+ The Kazhdan--Li theorem supplies the Slodowy associated graded.  The
+ PBW--Slodowy bar page follows from
+ Theorem~\ref{thm:pbw-slodowy-collapse}.  Completed chiral Koszulity is
+ conditional on $H_{\mathrm{PBW}}^{\mathrm{bar}}$.
 
-\item \emph{Central charge and modular characteristic.}
- The KRW formula gives
- $c(k) = 7 - 48/(k+4)$, and the anomaly ratio is
- $\varrho_{(2,2)} = 5$, yielding
- $\kappa(k) = 35 - 240/(k+4)$.
- The strong generating set has $7$ bosonic generators
- ($3$ at weight~$1$, $4$ at weight~$2$) and no fermionic
- generators.
+\item \emph{Central charge and generator spectrum.}
+ In the displayed good-grading convention, direct evaluation of the KRW
+ formula gives
+ \[
+ c(k)=\frac{15k}{k+4}-12k-8
+ =\frac{-12k^2-41k-32}{k+4},
+ \]
+ The strong generating set has $7$ even generators
+ ($3$ at weight~$1$, $4$ at weight~$2$).  The modular characteristic requires a separate genus-$1$
+ curvature calculation.
 
-\item \emph{DS--KD commutation.}
- Since $(2,2)$ is self-transpose, the Koszul dual orbit is
- $(2,2)^t = (2,2)$ itself, and the Koszul dual level is
- $k^\vee = -k - 8$. The complementarity sum
- $c(k) + c(k^\vee) = 14$ is $k$-independent, and
- $\kappa(k) + \kappa(k^\vee) = 70$. The self-dual central
- charge is $c^* = 7$.
- DS--KD commutation is \textsc{proved} for $(2,2)$ by
- self-duality: since $\lambda = \lambda^t$ and the partition
- is rectangular, the self-transpose structure forces the
- intertwining diagram to commute.
+\item \emph{Candidate companion.}
+ Since $(2,2)$ is self-transpose, orbit transpose selects the same
+ $W$-family at candidate reflected level $k^\vee=-k-8$.  The
+ rectangular DS--bar/Verdier exchange package required to construct this
+ companion is open.  KSDual membership is a further fixed-point statement.
 
 \item \emph{BRST complex.}
  The nilradical $\mathfrak{n}_+$ under the $(2,2)$-grading
@@ -1751,15 +1684,14 @@ at generic level~$k \neq -4$:
  where $\mathfrak{n}_+$ is non-abelian with half-integer
  grades.
 
-\item \emph{Shadow depth.}
- The generator content (weights~$1$ and~$2$ only, no
- weight~$\geq 3$) places the shadow obstruction tower in
- class~$\mathsf{C}$ (contact type, $r_{\max} = 4$).
+\item \emph{Shadow audit.}
+ The weight-$1$ and weight-$2$ generator spectrum gives a finite OPE-channel
+ diagnostic.  The global shadow depth is determined by the modular MC
+ coefficients and therefore requires their direct calculation.
 \end{enumerate}
 
-\noindent\textit{The four-class partition beyond hooks.}
-The engine classifies all partitions $\lambda \vdash N$ into
-four structural classes for the DS--KD commutation problem:
+\noindent\textit{Audit classes beyond hooks.}
+The following partition types organise the comparison problem:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{llll}
@@ -1768,37 +1700,23 @@ four structural classes for the DS--KD commutation problem:
  \textbf{$c + c'$ status} & \textbf{DS--KD status} \\
 \midrule
 $\mathsf{A}$ (hook) & $\lambda = (N{-}r, 1^r)$ &
- $k$-independent & \textsc{proved} \\
+ family-by-family & conditional on $H_{\mathrm{hook}}^{\mathrm{DS/bar}}$ \\
 $\mathsf{B}$ (self-tr.\ rect.) & $\lambda = \lambda^t$, rectangular &
- $k$-independent & \textsc{proved} \\
-$\mathsf{C}$ (self-tr.\ non-hook) & $\lambda = \lambda^t$, not hook/rect.\ &
- $k$-independent & strong evidence \\
-$\mathsf{D}$ (non-self-tr.) & $\lambda \neq \lambda^t$, not hook &
- $k$-dependent & open \\
+ KRW audit & open comparison \\
+$\mathsf{C}$ (general self-tr.) & $\lambda = \lambda^t$, nonrectangular &
+ KRW audit & open comparison \\
+$\mathsf{D}$ (general pair) & $\lambda \neq \lambda^t$ &
+ KRW audit & open comparison \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent
-Class~$\mathsf{B}$: the $(2,2)$ partition above.
-Class~$\mathsf{C}$: the first instance is $(3,2,1)$ in
-$\mathfrak{sl}_6$, with $c + c' = 8$ ($k$-independent) and
-$\kappa + \kappa' = 104/15$; the categorical intertwining is
-conjectural.
-Class~$\mathsf{D}$: the first instance is $(3,2)/(2,2,1)$ in
-$\mathfrak{sl}_5$, with $c + c'$ depending on~$k$; both the
-complementarity constant and the intertwining are open.
-In all four classes, the $\mathcal{W}$-algebra is chirally
-Koszul at generic level (Arakawa). Transport-closure
-from hook vertices covers $\operatorname{Par}(N)$ for
-$N = 2, \ldots, 8$
-(Proposition~\ref{prop:nilpotent-transport-typeA}).
-The frontier is the full Fehily--Creutzig--Linshaw--Nakatsuka--Sato
-framework for arbitrary nilpotent orbits: proving DS--KD
-commutation beyond classes~$\mathsf{A}$ and~$\mathsf{B}$
-requires the categorical edge-compatibility of
-Proposition~\ref{prop:transport-propagation} along non-hook
-reduction edges.
+The $(2,2)$ partition is the first rectangular audit surface;
+$(3,2)$ in $\mathfrak{sl}_5$ is the first explicit non-hook surface with a
+non-abelian reduction algebra.  In each class the associated-graded Slodowy
+description, completed bar collapse, modular curvature, and DS--KD comparison
+remain distinct obligations.
 \end{remark}
 
 \begin{remark}[Scope of the subregular and minimal routes]
@@ -1809,82 +1727,37 @@ Two informal decomposition routes often attached to non-principal
 $\mathcal{W}$-algebras deserve explicit scoping.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Subregular via a principal--triplet--ghost decomposition.}
-For $\fg = \mathfrak{sl}_N$ with $N \geq 3$, the subregular
-partition $(N-1, 1)$ yields a $\mathcal{W}$-algebra whose
-structure at generic level is anticipated to admit a conformal
-embedding of $\cW^{k'}(\mathfrak{sl}_{N-2})$ tensored with an
-auxiliary $\mathfrak{sl}_2$-current sector and a $\beta\gamma$
-pair. This picture is classical for the first nontrivial case
-$N = 3$, where it degenerates to Bershadsky--Polyakov
-$\mathrm{BP} = \cW^k(\mathfrak{sl}_3, f_{(2,1)})$
-\textup{(}Computation~\textup{\ref{comp:bp-bar}})}, and the
-relevant $\beta\gamma$-type reduction is inscribed as
-Proposition~\ref{prop:ds-bar-hook-commutation}(iii). The general
-$N \geq 4$ decomposition is a structural expectation consistent
-with the Kac--Roan--Wakimoto \cite{KRW03} BRST construction and
-with Arakawa's generic-level Kazhdan filtration
-\cite{Arakawa07}, but the verbatim identification
-$\cW^k(\mathfrak{sl}_N, f_{\mathrm{subreg}}) \simeq
-\cW^{k'}(\mathfrak{sl}_{N-2}) \otimes \mathrm{sl}_2\text{-current}
-\otimes \beta\gamma$
-is inscribed here \emph{only} at $N = 3$. The propagation of
-Koszul-duality commutation along this decomposition is covered by
-Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}; the semisimple-Levi
-window $r \leq N - 3$ of
-Proposition~\ref{prop:hook-pbw} excludes the subregular partition
-$(N-1, 1)$ for every $N \geq 3$, so the subregular route is not a
-corollary of the hook-corridor theorem.
+The Feigin--Semikhatov free-field and screening realisations provide exact
+presentations of the subregular family in the ranges established in the cited
+literature.  A tensor-product decomposition into a smaller principal
+$W$-algebra, a current algebra, and a free field is a family-specific theorem
+and must be stated with its level map and screening cohomology.  This chapter
+uses only the BP presentation and the general Bell/Miura formulas proved above.
 \item \emph{Minimal via coset.}
-The minimal nilpotent orbit yields a $\mathcal{W}$-algebra
-$\cW^k(\fg, f_{\mathrm{min}})$ whose generator spectrum has a
-distinguished Heisenberg-plus-triplet form and admits a
-conjectural coset description generalising the
-Bershadsky--Polyakov case. In type $A$ with $\fg = \mathfrak{sl}_N$
-and $N \geq 4$, the minimal and subregular orbits differ
-(they coincide only at $N = 3$, where both are
-$(2,1)$). A verbatim theorem of the form ``minimal
-$\mathcal{W}$-algebra equals a specific coset at every $N$'' is
-not inscribed in this volume; the minimal route is documented at
-$N = 3$ (via BP) and sketched via the Kac--Roan--Wakimoto BRST
-complex \cite{KRW03} at generic level. Koszulness at generic
-level holds by Arakawa's Kazhdan filtration \cite{Arakawa07};
-Koszul-duality commutation is conditional under
-Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}.
+In type~$A$, the minimal and subregular orbits coincide for
+$\mathfrak{sl}_3$ and separate from rank~$4$ onward.  Coset descriptions are
+therefore indexed by the orbit, the level transformation, and the precise
+universal or simple quotient.  Completed Koszulity and DS/bar commutation are
+the subsequent comparison problems.
 \item \emph{Screening-kernel Koszul-locus preservation.}
-The statement ``the screening-kernel preserves the Koszul locus''
-is used implicitly in the hook-type corridor
-\textup{(}Theorem~\textup{\ref{thm:hook-transport-corridor})} and
-in the parabolic extension of the
-$\mathrm{MC4}^0$ SDR for non-principal hook-type
-(standalone \texttt{N4\_mc4\_completion.tex}). The precise
-content is: for a screening set
-$\{Q_\alpha\}_{\alpha \in \Delta_P^+}$ defining
-$\cW^k(\fg, f) = \bigcap_\alpha \ker Q_\alpha$ inside a parent
-lattice-or-Heisenberg--Fock VOA~$B$ at generic~$k$, the induced
-subalgebra inherits PBW-free strong generation from~$B$ whenever
-the screening kernel is compatible with the conformal weight
-grading and the Fock parent is itself Koszul. At generic~$k$
-the compatibility holds for hook partitions by direct
-conformal-weight matching; beyond the hook case the
-compatibility statement is the structural content of
-Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}.
+A screening presentation identifies a vertex subalgebra or a cohomology object
+inside a free-field parent.  Chiral Koszulity passes through that presentation
+only after exactness of the screening complex and compatibility of its
+filtration with the chiral bar differential are proved.  These clauses are the
+screening part of $H_{\mathrm{hook}}^{\mathrm{DS/bar}}$.
 \end{enumerate}
 \end{remark}
 
-\section{subregular / hook frontier and K3 anomalous classes}
+\section{Boundary of the chapter}
 \label{sec:subreg-supplement}
 
-\begin{remark}[Anomalous $M_{24}$ classes at the subregular hook frontier]
+\begin{remark}[Separation from the K3 moonshine programme]
 \label{rem:subreg-anomalous-classes}
-At the subregular / hook frontier, the Mathieu-moonshine anomalous classes of
-$M_{24}$, namely $\{7A, 7B, 11A, 23A, 23B\}$, are non-Mukai (not realised by any K3
-complex-structure polarisation; Gaberdiel--Hohenegger--Volpato $2012$) and carry
-non-trivial generalised-moonshine anomaly phases in $H^3(M_{24}, \mathrm{U}(1)) \supseteq
-\mathbb{Z}/12$ (generalised-Mathieu-moonshine 't~Hooft anomaly,
-Gaberdiel--Persson--Ronellenfitsch--Volpato 2013). The Serre functor on
-$D^b\mathrm{Coh}(K3)$ under the projective $\widetilde{M}_{24}$ cover induced by the
-$H^3$ anomaly acquires an order-$6$ cocycle (Bridgeland--Maciocia $2001$); the
-subregular hook frontier receives additional twist from the anomalous-class
-phases. Andrianov spinor $L$-function $L(s, \Delta_{10}) = L(s, \Delta_{E_6})\zeta(s-9)\zeta(s-8)$
-gives the Hecke eigenvalue structure at the anomalous primes.
+The present chapter concerns affine $W$-algebras obtained by quantum
+Drinfeld--Sokolov reduction and their prospective chiral bar companions.  The
+K3, Mathieu-moonshine, and paramodular denominator constructions occupy a
+separate CY/BKM row with their own categorical source and comparison functors.
+Any future bridge between the two programmes must name a functor from the
+subregular factorization category to the K3 Hall--Drinfeld datum and verify its
+effect on OPE, trace, and Verdier pairing.
 \end{remark}

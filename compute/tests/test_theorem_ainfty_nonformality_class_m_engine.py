@@ -13,10 +13,10 @@ KEY MATHEMATICAL CONTENT:
 
 MULTI-PATH VERIFICATION:
   Path A: Direct mode-sum computation of ell_3, ell_4.
-  Path B: Algebraic formula verification (S_3 = 2, S_4 = -(5c+22)/(10c)).
+  Path B: Algebraic formula verification (S_3 = 2, S_4 = 10/[c(5c+22)]).
   Path C: Cross-family consistency (G < L < C < M ordering).
   Path D: OPE pole-order analysis (heuristic -> shadow depth).
-  Path E: Critical discriminant (Delta = 0 <=> tower terminates).
+  Path E: Critical discriminant on the regular locus (Delta = 0 <=> tower terminates).
   Path F: Physical interpretation (loop exactness order).
 
 References:
@@ -254,12 +254,12 @@ class TestSwissCheeseBetagamma:
 # ============================================================================
 
 class TestVirasoroQuarticShadow:
-    """Verify S_4 = -(5c+22)/(10c) and Q^{contact} = 10/[c(5c+22)]."""
+    """Verify S_4 = Q^{contact} = 10/[c(5c+22)]."""
 
     def test_S4_formula_c26(self):
-        """S_4(c=26) = -(5*26+22)/(10*26) = -152/260 = -19/32.5 = ... exact check."""
+        """S_4(c=26) = 10/(26 * (5*26+22)) = 5/1976."""
         data = virasoro_quartic_shadow(F(26))
-        expected = -(F(5) * F(26) + F(22)) / (F(10) * F(26))
+        expected = F(10) / (F(26) * (F(5) * F(26) + F(22)))
         assert data["S4"] == expected
 
     def test_Q_contact_c26(self):
@@ -281,10 +281,12 @@ class TestVirasoroQuarticShadow:
             assert data["Delta"] != F(0), f"Delta = 0 at c={c_val}, unexpected"
             assert data["tower_infinite"] is True
 
-    def test_Delta_zero_at_c_minus_22_over_5(self):
-        """Delta = 0 at c = -22/5 (degenerate minimal model, tower truncates)."""
+    def test_singular_at_c_minus_22_over_5(self):
+        """At c = -22/5 the Zamolodchikov norm vanishes; S_4 is singular."""
         data = virasoro_quartic_shadow(F(-22, 5))
-        assert data["Delta"] == F(0), "Delta should vanish at c=-22/5"
+        assert data["S4"] is None
+        assert data["Delta"] is None
+        assert data["tower_infinite"] is None
 
 
 # ============================================================================
@@ -494,10 +496,11 @@ class TestShadowTowerTermination:
         assert data["terminates"] is False
         assert data["depth"] == float("inf")
 
-    def test_virasoro_degenerate_terminates(self):
-        """Virasoro at c=-22/5 has Delta=0, tower terminates."""
+    def test_virasoro_singular_not_termination(self):
+        """Virasoro at c=-22/5 is singular, not a finite termination point."""
         data = shadow_tower_terminates("Virasoro", c=F(-22, 5))
-        assert data["terminates"] is True
+        assert data["terminates"] is None
+        assert data["class"] == "singular"
 
     def test_affine_terminates(self):
         """Affine sl_2 tower terminates at depth 3."""

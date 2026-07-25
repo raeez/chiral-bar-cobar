@@ -119,7 +119,7 @@ def stage4_scope_certificate() -> Dict[str, object]:
                 "finite-type/completed hypotheses"
             ),
             "derived_center": (
-                "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/bulk, "
+                "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/closed-sector, "
                 "not Koszul dual"
             ),
         },

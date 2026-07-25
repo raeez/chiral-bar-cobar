@@ -113,7 +113,7 @@ OBJECT_FIREWALL: Dict[str, str] = {
         "completed hypotheses"
     ),
     "Omega(B(A))": "bar-cobar inversion recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk object",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector object",
 }
 """Typed firewall separating bar, Koszul-dual, and Hochschild objects."""
 

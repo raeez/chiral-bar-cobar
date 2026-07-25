@@ -134,13 +134,13 @@ def analytic_certification_status() -> Dict[str, Any]:
 
 
 def object_firewall_status() -> Dict[str, Any]:
-    r"""Bar, dual, and bulk objects kept distinct for downstream callers."""
+    r"""Bar, dual, and closed-sector objects kept distinct for downstream callers."""
     return {
         'A': 'chiral algebra',
         'B(A)': 'bar coalgebra',
         'A^i': 'bar-cohomology dual coalgebra',
         'A^!': 'Verdier continuous-linear dual algebra branch',
-        'Z_ch^der(A)': 'derived chiral centre, Hochschild/bulk branch',
+        'Z_ch^der(A)': 'derived chiral centre, Hochschild/closed-sector branch',
         'Omega(B(A))': 'bar-cobar inversion',
         'Omega_BA_is_koszul_duality': False,
         'bulk_is_koszul_dual': False,

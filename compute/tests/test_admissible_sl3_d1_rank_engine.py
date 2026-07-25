@@ -1,13 +1,13 @@
-r"""Tests for the admissible sl_3 Koszulness engine via Li-bar diagonal concentration.
+r"""Tests for the admissible sl_3 Li-bar diagnostic.
 
-THEOREM-LEVEL TESTS: Verifies that L_k(sl_3) is chirally Koszul at all
-admissible levels with denominator q <= 2, via the diagonal concentration
-of the E_1 page of the Li-bar spectral sequence.
+These tests verify diagonal concentration of the associated-graded
+Li-bar model. They do not prove chiral Koszulness of the simple quotient
+without the quotient-bar comparison and convergence package.
 
-KEY THEOREM: For q = 2 (including k = -3/2), the truncation degree d = 2
+KEY MODEL CHECK: For q = 2 (including k = -3/2), the truncation degree d = 2
 makes Tor^{k[x]/(x^2)} diagonal (Tor_n at weight n for all n).  By Kunneth,
 E_1 is entirely diagonal.  d_1 maps (p,p) to (p-1,p) which is off-diagonal
-and hence EMPTY.  Therefore d_1 = 0, E_2 = E_1 is diagonal, and L_k is Koszul.
+and hence EMPTY.  Therefore d_1 = 0 and E_2 = E_1 is diagonal in the model.
 
 VERIFICATION PATHS (3+ per claim, Multi-Path Mandate):
     Path 1: Tor diagonal concentration for d=2 (algebraic, unconditional)
@@ -18,7 +18,7 @@ VERIFICATION PATHS (3+ per claim, Multi-Path Mandate):
     Path 6: CE differential on diagonal (independent matrix computation)
 
 HONESTY NOTES (AP10 compliance):
-    - Tests for q=2 levels verify UNCONDITIONAL Koszulness.
+    - Tests for q=2 levels verify conditional/model-supported evidence.
     - Tests for q>=3 levels flag the verdict as CONDITIONAL.
     - No test claims unconditional Koszulness for q>=3 levels.
     - Cross-checks use INDEPENDENT computations.
@@ -387,15 +387,15 @@ class TestCEDifferential(unittest.TestCase):
 
 
 # =========================================================================
-# 7. THE THEOREM: d=2 Koszulness (UNCONDITIONAL)
+# 7. The q=2 Li-bar model diagnostic
 # =========================================================================
 
 class TestTheoremD2(unittest.TestCase):
-    """THE MAIN THEOREM: L_k(sl_3) is Koszul at all admissible levels with q=2.
+    """The q=2 Li-bar model is diagonal for admissible levels.
 
     PROOF: For q=2, d=2. Tor^{k[x]/(x^2)} is diagonal (Tor_n at weight n).
     By Kunneth: E_1 entirely diagonal. d_1 bidegree (-1,0) maps diagonal
-    to off-diagonal (empty). E_2 = E_1 diagonal. Koszul by Li-bar criterion.
+    to off-diagonal (empty). E_2 = E_1 diagonal in the model.
     """
 
     def test_tor_diagonal_key_lemma(self):
@@ -425,34 +425,34 @@ class TestTheoremD2(unittest.TestCase):
         self.assertEqual(e2.off_diagonal_e2, 0)
 
     def test_koszulness_k_minus_3_over_2(self):
-        """L_{-3/2}(sl_3) is UNCONDITIONALLY Koszul."""
+        """L_{-3/2}(sl_3) is conditionally/model-supported."""
         verdict = prove_koszulness(3, 2)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
         self.assertEqual(verdict.off_diagonal_survivors, 0)
 
     def test_koszulness_k_minus_1_over_2(self):
-        """L_{-1/2}(sl_3) is UNCONDITIONALLY Koszul."""
+        """L_{-1/2}(sl_3) is conditionally/model-supported."""
         verdict = prove_koszulness(5, 2)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
 
     def test_koszulness_k_plus_1_over_2(self):
-        """L_{1/2}(sl_3) is UNCONDITIONALLY Koszul."""
+        """L_{1/2}(sl_3) is conditionally/model-supported."""
         verdict = prove_koszulness(7, 2)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
 
-    def test_all_q2_levels_unconditional(self):
-        """ALL admissible levels with q=2 are Koszul."""
+    def test_all_q2_levels_conditional_model(self):
+        """All q=2 levels are model-supported, not unconditional."""
         for p in [3, 5, 7, 9, 11, 13]:
             if gcd(p, 2) != 1:
                 continue
             verdict = prove_koszulness(p, 2)
             self.assertTrue(verdict.is_koszul,
                 f'FAILS at p={p}, q=2: {verdict.evidence}')
-            self.assertEqual(verdict.confidence, 'unconditional',
-                f'Not unconditional at p={p}, q=2')
+            self.assertEqual(verdict.confidence, 'conditional-model',
+                f'Not conditional-model at p={p}, q=2')
 
     def test_euler_characteristic_d2(self):
         """Euler characteristic consistent for d=2."""
@@ -465,22 +465,22 @@ class TestTheoremD2(unittest.TestCase):
 # =========================================================================
 
 class TestIntegrableLevels(unittest.TestCase):
-    """Integrable levels: V_k = L_k, universally Koszul."""
+    """Integrable levels are finite/model-supported in this helper."""
 
     def test_level_1(self):
         verdict = prove_koszulness(4, 1)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
 
     def test_level_2(self):
         verdict = prove_koszulness(5, 1)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
 
     def test_level_3(self):
         verdict = prove_koszulness(6, 1)
         self.assertTrue(verdict.is_koszul)
-        self.assertEqual(verdict.confidence, 'unconditional')
+        self.assertEqual(verdict.confidence, 'conditional-model')
 
 
 # =========================================================================
@@ -572,17 +572,19 @@ class TestSweep(unittest.TestCase):
         results = sweep_admissible_sl3(max_p=8, max_q=3)
         self.assertGreater(len(results), 0)
 
-        unconditional = [v for v in results if v.confidence == 'unconditional']
+        model_supported = [v for v in results if v.confidence == 'conditional-model']
         conditional = [v for v in results if v.confidence == 'conditional']
+        self.assertGreater(len(model_supported), 0)
+        self.assertGreater(len(conditional), 0)
 
-        # All q=1,2 levels should be unconditional
+        # All q=1,2 levels are model-supported, not unconditional.
         for v in results:
             if v.level.q <= 2:
-                self.assertEqual(v.confidence, 'unconditional',
-                    f'p={v.level.p}, q={v.level.q} should be unconditional')
+                self.assertEqual(v.confidence, 'conditional-model',
+                    f'p={v.level.p}, q={v.level.q} should be conditional-model')
 
     def test_all_verdicts_are_koszul(self):
-        """All verdicts (unconditional or conditional) say Koszul."""
+        """All verdicts (model-supported or conditional) say Koszul."""
         results = sweep_admissible_sl3(max_p=8, max_q=3)
         for v in results:
             self.assertTrue(v.is_koszul)

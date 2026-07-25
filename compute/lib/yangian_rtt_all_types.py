@@ -8,8 +8,9 @@ Mathematical background
 -----------------------
 The bar construction B(V_k(hat{g})) produces a factorization coalgebra.
 The collision residue Res^{coll}_{0,2}(Theta_A) extracts the classical
-r-matrix r(z) = Omega/z (AP19: one pole order below the OPE).  The
-R-matrix is the formal exponential:
+r-matrix r_k(z) = k*Omega/z in trace-form normalization (AP19: one pole
+order below the OPE).  The RTT/Yangian convention below uses the
+unit-normalized Casimir kernel.  The R-matrix is the formal exponential:
 
     R(u) = 1 + r(u)/kappa + O(1/kappa^2)
 

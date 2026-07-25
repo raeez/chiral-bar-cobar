@@ -1,6 +1,7 @@
-r"""Tests for the BCOV L-infinity bar complex module.
+r"""Tests for the finite BCOV bar-carrier module.
 
-Tests the bar complex B(PV*(X)) of the BCOV L-infinity algebra for:
+Tests the cofree carrier, represented differential, and scalar-shadow
+lanes of the BCOV L-infinity input for:
     1. C^3 (flat space)
     2. Resolved conifold
     3. K3 x E (compact CY3)
@@ -13,8 +14,9 @@ VERIFICATION PATHS USED:
     (2) Cross-check against known invariants (Euler char, dimensions)
     (3) Consistency with shadow tower (F_g = kappa * a_hat_g)
     (4) Cross-geometry additivity / factorization checks
-    (5) Bar dimension generating function consistency
+    (5) Bar-carrier dimension generating function consistency
     (6) Ghost number grading Euler characteristic
+    (7) Represented state transitions and the identity d^2 = 0
 """
 
 import math
@@ -28,31 +30,34 @@ F = Fraction
 from compute.lib.bcov_bar_complex import (
     # Hodge diamonds
     k3_hodge, elliptic_hodge, product_hodge, k3_times_e_hodge,
-    quintic_hodge, conifold_hodge,
+    quintic_hodge,
     # Polyvector spaces
-    polyvector_space, pv_c3_constant, pv_c3_truncated, pv_conifold,
+    polyvector_space, pv_c3_constant, pv_c3_truncated, pv_conifold_effective_carrier,
     pv_k3, pv_elliptic, pv_k3_times_e, pv_quintic,
     # Schouten brackets
     schouten_bracket_c3_constant, schouten_bracket_c3_linear,
     schouten_bracket_k3_on_h11,
     # BCOV L-infinity
-    bcov_linf_c3, bcov_linf_conifold, bcov_linf_k3_times_e, bcov_linf_quintic,
-    # Bar complexes
-    bar_complex_c3, bar_complex_conifold, bar_complex_k3_times_e,
-    compute_bar_complex,
+    bcov_input_c3, bcov_input_conifold, bcov_input_k3_times_e, bcov_input_quintic,
+    # Bar carriers
+    bar_carrier_c3, bar_carrier_conifold, bar_carrier_k3_times_e,
+    bar_carrier_quintic,
+    compute_bar_carrier, RepresentedBarDifferential,
     # Yukawa couplings
     yukawa_conifold, yukawa_k3_times_e,
-    # BCOV anomaly
-    bcov_anomaly_genus1, bcov_anomaly_genus2,
-    # Shadow comparison
-    compare_shadow_bcov,
+    # Scalar-shadow coefficients
+    scalar_shadow_genus1, scalar_shadow_genus2,
+    bcov_quintic_constant_map_low_genus,
+    # Independently supplied scalar-series comparison
+    compare_shadow_to_bcov_series,
     # Consistency checks
     kappa_additivity_check, euler_characteristic_check,
     pv_dimension_check, ghost_number_check,
     # Full analyses
     full_analysis_c3, full_analysis_conifold, full_analysis_k3xe,
+    full_analysis_quintic,
     # Explicit dimensions
-    bar_dims_c3_explicit, bar_dims_conifold_explicit,
+    bar_carrier_dims_c3_explicit, bar_carrier_dims_conifold_explicit,
     # Schouten bracket on K3 x E
     schouten_bracket_k3xe_structure,
     # Internal helpers
@@ -130,9 +135,9 @@ class TestPolyvectorSpaces:
         for p in range(4):
             assert pv.pv_dims.get((p, 0), 0) == math.comb(3, p)
 
-    def test_pv_conifold_dim(self):
+    def test_pv_conifold_effective_carrier_dim(self):
         """PV*(conifold) = 3-dimensional."""
-        assert pv_conifold().total_dim == 3
+        assert pv_conifold_effective_carrier().total_dim == 3
 
     def test_pv_k3_dim(self):
         """PV*(K3) = 24-dimensional.
@@ -237,19 +242,24 @@ class TestSchoutenBrackets:
 
 
 # =========================================================================
-# Section 4: BCOV L-infinity algebra tests
+# Section 4: Finite carrier-profile tests
 # =========================================================================
 
-class TestBCOVLinf:
-    """Verify BCOV L-infinity algebra data."""
+class TestBCOVCarrierInputs:
+    """Verify the represented carrier inputs and scalar lanes."""
 
     def test_c3_kappa(self):
         """kappa(C^3) = 1."""
-        assert bcov_linf_c3().kappa == F(1)
+        data = bcov_input_c3()
+        assert data.scalar_lane == "equivariant_constant_map"
+        assert data.scalar_value == F(1)
 
     def test_conifold_kappa(self):
         """kappa(conifold) = 1 = chi/2 = 2/2."""
-        assert bcov_linf_conifold().kappa == F(1)
+        data = bcov_input_conifold()
+        assert data.scalar_lane == "effective_euler_half_shadow"
+        assert data.scalar_value == F(1)
+        assert data.bcov_one_loop_scalar is None
 
     def test_k3xe_kappa(self):
         """kappa_BKM(K3 x E) = 5 (weight of primitive Delta_5).
@@ -257,57 +267,62 @@ class TestBCOVLinf:
         This is the BKM/BPS lane, not the compact total-space
         kappa_cat(K3 x E)=0 and not the Heisenberg-Mukai value 3.
         """
-        assert bcov_linf_k3_times_e().kappa == F(5)
+        data = bcov_input_k3_times_e()
+        assert data.scalar_lane == "BKM"
+        assert data.scalar_value == F(5)
+        assert data.bcov_one_loop_scalar == F(0)
 
     def test_k3xe_scalar_lanes_are_distinct(self):
         """K3 x E has compact Euler, Heisenberg-Mukai, and BKM lanes."""
-        compact_euler = F(k3_times_e_hodge().euler, 2)
+        bcov_one_loop = bcov_input_k3_times_e().bcov_one_loop_scalar
         heisenberg_mukai = k3_hodge().chi_O + F(1)  # K3 plus level-one E.
-        bkm = bcov_linf_k3_times_e().kappa
+        bkm = bcov_input_k3_times_e().scalar_value
 
-        assert compact_euler == F(0)
+        assert bcov_one_loop == F(0)
         assert heisenberg_mukai == F(3)
         assert bkm == F(5)
-        assert len({compact_euler, heisenberg_mukai, bkm}) == 3
+        assert len({bcov_one_loop, heisenberg_mukai, bkm}) == 3
 
     def test_quintic_kappa(self):
-        """kappa(quintic) = -100 = chi/2 = -200/2."""
-        assert bcov_linf_quintic().kappa == F(-100)
+        """The quintic Euler-half and BCOV one-loop scalars are distinct."""
+        data = bcov_input_quintic()
+        assert data.scalar_lane == "euler_half_shadow"
+        assert data.scalar_value == F(-100)
+        assert data.bcov_one_loop_scalar == F(-25, 3)
+        assert data.scalar_value != data.bcov_one_loop_scalar
 
     def test_c3_class_G(self):
         """C^3 is shadow class G (Gaussian)."""
-        assert bcov_linf_c3().shadow_depth_class == "G"
+        assert bcov_input_c3().shadow_depth_class == "G"
 
     def test_conifold_class_G(self):
         """Conifold is shadow class G."""
-        assert bcov_linf_conifold().shadow_depth_class == "G"
+        assert bcov_input_conifold().shadow_depth_class == "G"
 
     def test_k3xe_class_M(self):
         """K3 x E is shadow class M (infinite tower from BKM)."""
-        assert bcov_linf_k3_times_e().shadow_depth_class == "M"
+        assert bcov_input_k3_times_e().shadow_depth_class == "M"
 
     def test_quintic_class_M(self):
         """Quintic is shadow class M (infinite GW tower)."""
-        assert bcov_linf_quintic().shadow_depth_class == "M"
+        assert bcov_input_quintic().shadow_depth_class == "M"
 
-    def test_btt_all_l2_vanish(self):
-        """All four geometries have l_2 = 0 on cohomology (BTT)."""
-        assert bcov_linf_c3().l2_nontrivial is False
-        assert bcov_linf_conifold().l2_nontrivial is False
-        assert bcov_linf_k3_times_e().l2_nontrivial is False
-        assert bcov_linf_quintic().l2_nontrivial is False
+    def test_only_constant_c3_has_a_represented_coderivation(self):
+        """The profile status controls construction of the differential."""
+        assert bcov_input_c3().coderivation_status == "represented_zero"
+        for data in (
+            bcov_input_conifold(),
+            bcov_input_k3_times_e(),
+            bcov_input_quintic(),
+        ):
+            assert data.coderivation_status == "open"
+            assert data.requires_coderivation_construction is True
 
-    def test_c3_no_yukawa(self):
-        """C^3 has no Yukawa coupling (no compact moduli)."""
-        assert bcov_linf_c3().yukawa_nonzero is False
-
-    def test_conifold_has_yukawa(self):
-        """Conifold has Yukawa coupling C_{ttt} = 1."""
-        assert bcov_linf_conifold().yukawa_nonzero is True
-
-    def test_k3xe_has_yukawa(self):
-        """K3 x E has Yukawa coupling from intersection form."""
-        assert bcov_linf_k3_times_e().yukawa_nonzero is True
+    def test_auxiliary_prepotential_cubics_are_separate_objects(self):
+        """Kähler prepotential data remains outside the carrier profile."""
+        assert yukawa_conifold().classical_cubic == {(0, 0, 0): F(1)}
+        assert yukawa_k3_times_e().classical_cubic == {(0, 1, 2): F(1)}
+        assert "yukawa_cubic" not in bcov_input_conifold()._fields
 
 
 # =========================================================================
@@ -317,20 +332,23 @@ class TestBCOVLinf:
 class TestScalarScopeAndObjectFirewalls:
     """Pin the compute-lane scalar scope of the BCOV bar module."""
 
-    def test_bar_complex_has_no_dual_or_centre_payload(self):
-        """B(A) carries source L-infinity data, not A^i, A^!, or centre data."""
-        bar = bar_complex_k3_times_e()
+    def test_bar_carrier_has_no_dual_or_centre_payload(self):
+        """The carrier record contains only its finite cohomological input."""
+        bar = bar_carrier_k3_times_e()
         fields = set(bar._fields)
 
-        assert bar.linf_data is not bar
-        assert bar.linf_data.name == "K3xE"
+        assert bar.carrier_input is not bar
+        assert bar.carrier_input.name == "K3xE"
         assert fields == {
             "name",
-            "linf_data",
-            "bar_dims",
-            "bar_euler",
+            "carrier_input",
+            "bar_carrier_dims",
+            "bar_carrier_graded_dims",
+            "differential",
+            "bar_cohomology_dims",
+            "bar_cohomology_graded_dims",
             "max_bar_degree",
-            "genus_amplitudes",
+            "scalar_shadow_amplitudes",
         }
         assert fields.isdisjoint({
             "ai",
@@ -343,33 +361,48 @@ class TestScalarScopeAndObjectFirewalls:
             "derived_center",
         })
 
-    def test_shadow_comparison_is_scalar_only(self):
-        """Shadow/BCOV agreement records scalar amplitudes only."""
-        comp = compare_shadow_bcov("K3xE", F(5), max_genus=3)
-        fields = set(comp._fields)
-        comparison_doc = " ".join((bcov.ShadowTowerComparison.__doc__ or "").split())
+    def test_missing_bcov_series_keeps_comparison_open(self):
+        """A shadow series alone produces an explicit open comparison."""
+        comp = compare_shadow_to_bcov_series(
+            "conifold",
+            "effective_euler_half_shadow",
+            {1: F(1, 24), 2: F(7, 5760)},
+        )
 
-        assert comp.agreement is True
-        assert comp.kappa_shadow == comp.kappa_bcov == F(5)
-        assert comp.genus_amplitudes_shadow == comp.genus_amplitudes_bcov
-        assert fields == {
-            "name",
-            "kappa_shadow",
-            "kappa_bcov",
-            "genus_amplitudes_shadow",
-            "genus_amplitudes_bcov",
-            "agreement",
-        }
-        assert fields.isdisjoint({
-            "voa",
-            "factorisation_algebra",
-            "factorization_algebra",
-            "derived_centre",
-            "derived_center",
-            "full_identification",
-        })
-        assert "This records equality of scalar amplitudes" in comparison_doc
-        assert "not a full VOA, factorisation-algebra, or derived-centre" in comparison_doc
+        assert comp.status == "open"
+        assert comp.bcov_series is None
+        assert comp.compared_genera == ()
+
+    def test_independent_equal_series_produces_agreement(self):
+        """Agreement follows from two supplied series in one named lane."""
+        shadow = {1: F(1, 24), 2: F(7, 5760)}
+        independently_computed = {1: F(1, 24), 2: F(7, 5760)}
+        comp = compare_shadow_to_bcov_series(
+            "unit comparison",
+            "lane_alpha",
+            shadow,
+            bcov_lane="lane_alpha",
+            bcov_series=independently_computed,
+            bcov_source="independent unit oracle",
+        )
+
+        assert comp.status == "agrees"
+        assert comp.compared_genera == (1, 2)
+        assert comp.discrepancies == {}
+
+    def test_k3xe_bkm_and_bcov_one_loop_lanes_remain_distinct(self):
+        """BKM weight five and BCOV one-loop scalar zero stay typed."""
+        comp = compare_shadow_to_bcov_series(
+            "K3xE",
+            "BKM",
+            {1: F(5, 24)},
+            bcov_lane="BCOV_one_loop",
+            bcov_series={1: F(0)},
+            bcov_source="K3xE Hodge Euler computation",
+        )
+
+        assert comp.status == "different_lanes"
+        assert comp.discrepancies == {1: (F(5, 24), F(0))}
 
     def test_holographic_package_boundary_is_documented(self):
         """The module pins H(T) as seven entries and not a computed payload."""
@@ -377,25 +410,125 @@ class TestScalarScopeAndObjectFirewalls:
         normalized_doc = " ".join(doc.split())
 
         assert "COMPUTE-LANE SCALAR SHADOW:" in doc
-        assert "kappa_Euler(X) = chi(X)/2" in doc
-        assert "do not identify the full VOA or the full factorisation algebra" in normalized_doc
+        assert "euler_half_shadow" in doc
+        assert "chi(X)/24 is stored separately" in normalized_doc
         assert "A, B(A), A^i, A^!, and the chiral derived centre" in doc
-        assert "It does not compute A^i, Verdier/Koszul dual A^!" in doc
+        assert "belong to their reconstruction layers" in doc
         assert "(A, A^i, A^!, C, r(z), Theta_A, nabla_hol)" in doc
         assert doc.count("A^i") >= 2
 
+    def test_c3_has_an_exact_zero_coderivation(self):
+        """The constant C^3 carrier is an actual zero-differential complex."""
+        bar = bar_carrier_c3(max_bar_degree=3)
+
+        assert bar.coderivation_constructed is True
+        assert bar.differential is not None
+        assert bar.differential.coderivation_verified is True
+        assert bar.differential.square_zero is True
+        assert bar.differential.apply({(2, 0): F(7)}) == {}
+        assert bar.bar_cohomology_computed is True
+        assert bar.bar_cohomology_dims == bar.bar_carrier_dims
+        assert bar.bar_cohomology_graded_dims == bar.bar_carrier_graded_dims
+
+    @pytest.mark.parametrize(
+        "bar",
+        [bar_carrier_conifold(), bar_carrier_k3_times_e()],
+    )
+    def test_open_profiles_keep_the_differential_slot_empty(self, bar):
+        """An open profile exposes the finite coderivation obligation."""
+        assert bar.carrier_input.requires_coderivation_construction is True
+        assert bar.differential is None
+        assert bar.coderivation_constructed is False
+        assert bar.yukawa_entered_coderivation is False
+        assert bar.bar_cohomology_computed is False
+        assert bar.bar_cohomology_dims is None
+
+    def test_represented_differential_changes_state_and_squares_to_zero(self):
+        """Sparse differential data performs a checked nontrivial transition."""
+        differential = RepresentedBarDifferential(
+            carrier_dims={1: 1, 2: 1, 3: 1},
+            basis_degrees={(1, 0): 2, (2, 0): 1, (3, 0): 0},
+            images={(3, 0): {(2, 0): F(2)}},
+            source="unit test finite carrier",
+        )
+
+        assert differential.apply({(3, 0): F(3)}) == {(2, 0): F(6)}
+        assert differential.apply(differential.apply({(3, 0): F(3)})) == {}
+        assert differential.square_zero is True
+        assert differential.coderivation_verified is False
+
+    def test_represented_differential_rejects_nonzero_square(self):
+        """The constructor enforces the chain identity on every basis state."""
+        with pytest.raises(ValueError, match=r"d\^2=0"):
+            RepresentedBarDifferential(
+                carrier_dims={1: 1, 2: 1, 3: 1},
+                basis_degrees={(1, 0): 2, (2, 0): 1, (3, 0): 0},
+                images={
+                    (3, 0): {(2, 0): F(1)},
+                    (2, 0): {(1, 0): F(1)},
+                },
+                source="invalid unit test carrier",
+            )
+
+    def test_represented_differential_enforces_degree_plus_one(self):
+        """Every nonzero matrix coefficient raises cohomological degree by one."""
+        with pytest.raises(ValueError, match="cohomological degree \\+1"):
+            RepresentedBarDifferential(
+                carrier_dims={1: 1, 2: 1},
+                basis_degrees={(1, 0): 0, (2, 0): 0},
+                images={(2, 0): {(1, 0): F(1)}},
+                source="degree-zero transition",
+            )
+
+    def test_supplied_grading_must_match_the_computed_carrier(self):
+        """A self-consistent grading cannot replace the carrier Hilbert series."""
+        fake_grading = {(1, index): 0 for index in range(7)}
+        fake_grading[(1, 7)] = 1
+        differential = RepresentedBarDifferential(
+            carrier_dims={1: 8},
+            basis_degrees=fake_grading,
+            images={(1, 0): {(1, 7): F(1)}},
+            source="self-consistent but geometrically false grading",
+        )
+
+        with pytest.raises(ValueError, match="computed carrier"):
+            compute_bar_carrier(
+                bcov_input_c3(),
+                max_bar_degree=1,
+                differential=differential,
+            )
+
 
 # =========================================================================
-# Section 5: Bar complex dimension tests
+# Section 5: Bar-carrier dimension tests
 # =========================================================================
 
-class TestBarComplexDimensions:
-    """Verify bar complex dimensions at each bar degree."""
+class TestBarCarrierDimensions:
+    """Verify cofree bar-carrier dimensions at each arity."""
+
+    def test_c3_arity_one_keeps_the_full_cohomological_grading(self):
+        """The desuspended constant-polyvector basis has four exact degrees."""
+        bar = bar_carrier_c3(max_bar_degree=2)
+        assert bar.bar_carrier_graded_dims[1] == {
+            -2: 1,
+            -1: 3,
+            0: 3,
+            1: 1,
+        }
+
+    @pytest.mark.parametrize(
+        "bar",
+        [bar_carrier_c3(), bar_carrier_conifold(), bar_carrier_k3_times_e(2)],
+    )
+    def test_graded_hilbert_series_recovers_total_carrier(self, bar):
+        """Summing every degree distribution recovers the direct count."""
+        for arity, degree_dims in bar.bar_carrier_graded_dims.items():
+            assert sum(degree_dims.values()) == bar.bar_carrier_dims[arity]
 
     def test_c3_bar_degree_1(self):
         """B^1(C^3) = s^{-1}(PV*(C^3)) = 8-dimensional."""
-        b = bar_complex_c3()
-        assert b.bar_dims[1] == 8
+        b = bar_carrier_c3()
+        assert b.bar_carrier_dims[1] == 8
 
     def test_c3_bar_degree_2(self):
         """B^2(C^3) = Sym^2(s^{-1}(PV*(C^3))).
@@ -423,13 +556,13 @@ class TestBarComplexDimensions:
           (0,0,1,1): 1*1*3*1 = 3
           Total: 1+3+6+0+3+3+1+9+3+3 = 32
         """
-        b = bar_complex_c3()
-        assert b.bar_dims[2] == 32
+        b = bar_carrier_c3()
+        assert b.bar_carrier_dims[2] == 32
 
     def test_conifold_bar_degree_1(self):
         """B^1(conifold) = 3-dimensional."""
-        b = bar_complex_conifold()
-        assert b.bar_dims[1] == 3
+        b = bar_carrier_conifold()
+        assert b.bar_carrier_dims[1] == 3
 
     def test_conifold_bar_degree_2(self):
         """B^2(conifold) = 5-dimensional.
@@ -444,8 +577,8 @@ class TestBarComplexDimensions:
           (1,1,0): 1, (1,0,1): 1, (0,1,1): 1
           Total: 1+1+0+1+1+1 = 5
         """
-        b = bar_complex_conifold()
-        assert b.bar_dims[2] == 5
+        b = bar_carrier_conifold()
+        assert b.bar_carrier_dims[2] == 5
 
     def test_conifold_bar_degree_3(self):
         """B^3(conifold) from Sym^3.
@@ -465,13 +598,13 @@ class TestBarComplexDimensions:
           (1,1,1): 1*1*1 = 1
           Total: 1+1+0+1+1+1+1+0+0+1 = 7
         """
-        b = bar_complex_conifold()
-        assert b.bar_dims[3] == 7
+        b = bar_carrier_conifold()
+        assert b.bar_carrier_dims[3] == 7
 
     def test_k3xe_bar_degree_1(self):
         """B^1(K3 x E) = 96-dimensional."""
-        b = bar_complex_k3_times_e()
-        assert b.bar_dims[1] == 96
+        b = bar_carrier_k3_times_e()
+        assert b.bar_carrier_dims[1] == 96
 
 
 # =========================================================================
@@ -512,57 +645,69 @@ class TestFaberPandharipande:
 
 
 # =========================================================================
-# Section 7: Genus-g amplitudes tests
+# Section 7: scalar-shadow coefficient tests
 # =========================================================================
 
-class TestGenusAmplitudes:
-    """Verify genus-g amplitudes F_g = kappa * a_hat_g."""
+class TestScalarShadowAmplitudes:
+    """Verify the independent scalar projection F_g^sc = kappa * a_hat_g."""
 
     def test_f1_c3(self):
         """F_1(C^3) = kappa/24 = 1/24."""
-        b = bar_complex_c3()
-        assert b.genus_amplitudes[1] == F(1, 24)
+        b = bar_carrier_c3()
+        assert b.scalar_shadow_amplitudes[1] == F(1, 24)
 
     def test_f1_conifold(self):
         """F_1(conifold) = 1/24."""
-        b = bar_complex_conifold()
-        assert b.genus_amplitudes[1] == F(1, 24)
+        b = bar_carrier_conifold()
+        assert b.scalar_shadow_amplitudes[1] == F(1, 24)
 
     def test_f1_k3xe(self):
         """F_1(K3 x E) = 5/24."""
-        b = bar_complex_k3_times_e()
-        assert b.genus_amplitudes[1] == F(5, 24)
+        b = bar_carrier_k3_times_e()
+        assert b.scalar_shadow_amplitudes[1] == F(5, 24)
 
     def test_f1_k3xe_uses_bkm_lane_not_euler_or_heisenberg(self):
         """The selected K3 x E scalar lane is BKM 5."""
-        b = bar_complex_k3_times_e()
+        b = bar_carrier_k3_times_e()
 
-        assert b.linf_data.kappa == F(5)
-        assert b.genus_amplitudes[1] == F(5, 24)
-        assert b.genus_amplitudes[1] != F(0)
-        assert b.genus_amplitudes[1] != F(3, 24)
+        assert b.carrier_input.scalar_lane == "BKM"
+        assert b.carrier_input.scalar_value == F(5)
+        assert b.scalar_shadow_amplitudes[1] == F(5, 24)
+        assert b.scalar_shadow_amplitudes[1] != F(0)
+        assert b.scalar_shadow_amplitudes[1] != F(3, 24)
 
-    def test_f1_quintic(self):
-        """F_1(quintic) = -100/24 = -25/6.
+    def test_quintic_euler_half_shadow_and_bcov_one_loop_are_separate(self):
+        """The two normalizations give -25/6 and -25/72, respectively."""
+        profile = bcov_input_quintic()
+        b = compute_bar_carrier(profile)
+        assert b.scalar_shadow_amplitudes[1] == F(-25, 6)
+        assert profile.bcov_one_loop_scalar == F(-25, 3)
+        assert profile.bcov_one_loop_scalar * _faber_pandharipande(1) == F(-25, 72)
 
-        Path 1: kappa * 1/24 = -100/24 = -25/6.
-        Path 2: from BCOV: F_1 = -chi/12 * log(discriminant) + ...
-        The constant-map scalar lane has kappa = chi/2 = -100.
-        """
-        linf = bcov_linf_quintic()
-        b = compute_bar_complex(linf)
-        assert b.genus_amplitudes[1] == F(-25, 6)
+    def test_quintic_bcov_constant_map_values_use_the_canonical_formula(self):
+        """The independent BCOV oracle gives F_1=-25/72 and F_2=5/144."""
+        constants = bcov_quintic_constant_map_low_genus()
+        assert constants == {1: F(-25, 72), 2: F(5, 144)}
+
+        chi = F(quintic_hodge().euler)
+        direct_genus_two = (
+            -F(1, 30)
+            * F(1, 6)
+            / (F(4) * F(2) * F(math.factorial(2)))
+            * (chi / F(2))
+        )
+        assert constants[2] == direct_genus_two
 
     def test_f2_c3(self):
         """F_2(C^3) = 7/5760."""
-        b = bar_complex_c3()
-        assert b.genus_amplitudes[2] == F(7, 5760)
+        b = bar_carrier_c3()
+        assert b.scalar_shadow_amplitudes[2] == F(7, 5760)
 
     def test_f2_k3xe(self):
         """F_2(K3 x E) = 5 * 7/5760 = 7/1152."""
-        b = bar_complex_k3_times_e()
-        assert b.genus_amplitudes[2] == F(5) * F(7, 5760)
-        assert b.genus_amplitudes[2] == F(7, 1152)
+        b = bar_carrier_k3_times_e()
+        assert b.scalar_shadow_amplitudes[2] == F(5) * F(7, 5760)
+        assert b.scalar_shadow_amplitudes[2] == F(7, 1152)
 
     def test_fg_scaling(self):
         """F_g(K3xE) / F_g(conifold) = kappa(K3xE) / kappa(conifold) = 5.
@@ -570,58 +715,73 @@ class TestGenusAmplitudes:
         The ratio of genus-g amplitudes should equal the ratio of kappas,
         since F_g = kappa * a_hat_g is linear in kappa.
         """
-        b_kxe = bar_complex_k3_times_e()
-        b_con = bar_complex_conifold()
+        b_kxe = bar_carrier_k3_times_e()
+        b_con = bar_carrier_conifold()
         for g in range(1, 4):
-            ratio = b_kxe.genus_amplitudes[g] / b_con.genus_amplitudes[g]
+            ratio = b_kxe.scalar_shadow_amplitudes[g] / b_con.scalar_shadow_amplitudes[g]
             assert ratio == F(5)
 
 
 # =========================================================================
-# Section 8: BCOV anomaly equation tests
+# Section 8: Scalar-shadow formula tests
 # =========================================================================
 
-class TestBCOVAnomaly:
-    """Verify BCOV holomorphic anomaly equation outputs."""
+class TestScalarShadowFormula:
+    """Verify the one-dimensional modular trace coefficients."""
 
     def test_genus1_formula(self):
-        """F_1 = kappa/24 via BCOV anomaly."""
+        """F_1^sc = kappa/24."""
         for kappa in [F(1), F(5), F(-100)]:
-            assert bcov_anomaly_genus1(kappa) == kappa / 24
+            assert scalar_shadow_genus1(kappa) == kappa / 24
 
     def test_genus2_formula(self):
-        """F_2 = kappa * 7/5760 via BCOV anomaly."""
+        """F_2^sc = kappa * 7/5760."""
         for kappa in [F(1), F(5)]:
-            assert bcov_anomaly_genus2(kappa) == kappa * F(7, 5760)
+            assert scalar_shadow_genus2(kappa) == kappa * F(7, 5760)
 
 
 # =========================================================================
 # Section 9: Shadow tower comparison tests
 # =========================================================================
 
-class TestShadowComparison:
-    """Verify shadow tower / BCOV agreement."""
+class TestIndependentScalarComparison:
+    """Verify status transitions for independently supplied series."""
 
-    def test_scalar_agreement_c3(self):
-        """Shadow and BCOV agree at scalar level for C^3."""
-        comp = compare_shadow_bcov("C3", F(1))
-        assert comp.agreement is True
+    def test_discrepant_series_are_reported(self):
+        comp = compare_shadow_to_bcov_series(
+            "discrepant compact lane",
+            "lane_alpha",
+            {1: F(1, 24), 2: F(7, 5760)},
+            bcov_lane="lane_alpha",
+            bcov_series={1: F(1, 24), 2: F(0)},
+            bcov_source="discrepant unit oracle",
+        )
 
-    def test_scalar_agreement_conifold(self):
-        """Shadow and BCOV agree at scalar level for conifold."""
-        comp = compare_shadow_bcov("conifold", F(1))
-        assert comp.agreement is True
+        assert comp.status == "differs"
+        assert comp.discrepancies == {2: (F(7, 5760), F(0))}
 
-    def test_scalar_agreement_k3xe(self):
-        """Shadow and BCOV agree at scalar level for K3 x E."""
-        comp = compare_shadow_bcov("K3xE", F(5))
-        assert comp.agreement is True
+    def test_partial_series_are_reported(self):
+        comp = compare_shadow_to_bcov_series(
+            "partial compact lane",
+            "lane_alpha",
+            {1: F(1, 24), 2: F(7, 5760)},
+            bcov_lane="lane_alpha",
+            bcov_series={1: F(1, 24)},
+            bcov_source="partial unit oracle",
+        )
 
-    def test_kappa_matches(self):
-        """kappa_shadow = kappa_bcov for all geometries."""
-        for name, kappa in [("C3", F(1)), ("con", F(1)), ("K3xE", F(5))]:
-            comp = compare_shadow_bcov(name, kappa)
-            assert comp.kappa_shadow == comp.kappa_bcov
+        assert comp.status == "incomplete"
+        assert comp.compared_genera == (1,)
+
+    def test_supplied_bcov_series_requires_provenance(self):
+        with pytest.raises(ValueError, match="provenance"):
+            compare_shadow_to_bcov_series(
+                "unsourced series",
+                "lane_alpha",
+                {1: F(1)},
+                bcov_lane="lane_alpha",
+                bcov_series={1: F(1)},
+            )
 
 
 # =========================================================================
@@ -670,7 +830,7 @@ class TestYukawaCouplings:
         y = yukawa_k3_times_e()
         assert y.n_moduli == 3
 
-    def test_k3xe_yukawa_nonzero(self):
+    def test_k3xe_yukawa_tensor_is_represented(self):
         """K3 x E has nonzero Yukawa coupling."""
         y = yukawa_k3_times_e()
         assert len(y.classical_cubic) > 0
@@ -710,46 +870,80 @@ class TestFullAnalysis:
     def test_c3_full(self):
         """Full C^3 analysis runs without error."""
         result = full_analysis_c3(max_bar=3, max_genus=3)
-        assert result["kappa"] == F(1)
+        assert result["scalar_lane"] == "equivariant_constant_map"
+        assert result["scalar_value"] == F(1)
         assert result["shadow_class"] == "G"
         assert result["pv_total_dim"] == 8
-        assert result["bar_dims"][1] == 8
+        assert result["bar_carrier_dims"][1] == 8
+        assert result["coderivation_constructed"] is True
+        assert result["bar_cohomology_dims"][1] == 8
+        assert result["bcov_comparison"].status == "open"
 
     def test_conifold_full(self):
         """Full conifold analysis runs without error."""
         result = full_analysis_conifold(max_bar=3, max_genus=3)
-        assert result["kappa"] == F(1)
+        assert result["scalar_lane"] == "effective_euler_half_shadow"
+        assert result["scalar_value"] == F(1)
+        assert result["bcov_one_loop_scalar"] is None
         assert result["shadow_class"] == "G"
         assert result["pv_total_dim"] == 3
-        assert result["bar_dims"][1] == 3
+        assert result["bar_carrier_dims"][1] == 3
+        assert result["coderivation_constructed"] is False
+        assert result["bar_cohomology_dims"] is None
+        assert result["bcov_comparison"].status == "open"
 
     def test_k3xe_full(self):
         """Full K3 x E analysis runs without error."""
         result = full_analysis_k3xe(max_bar=2, max_genus=3)
-        assert result["kappa"] == F(5)
+        assert result["scalar_lane"] == "BKM"
+        assert result["scalar_value"] == F(5)
+        assert result["bcov_one_loop_scalar"] == F(0)
         assert result["shadow_class"] == "M"
         assert result["pv_total_dim"] == 96
-        assert result["bar_dims"][1] == 96
+        assert result["bar_carrier_dims"][1] == 96
+        assert result["coderivation_constructed"] is False
+        assert result["bar_cohomology_dims"] is None
+        assert result["bcov_comparison"].bcov_lane == "BCOV_one_loop"
+        assert result["bcov_comparison"].status == "open"
+
+    def test_quintic_full_separates_shadow_and_bcov_constant_maps(self):
+        result = full_analysis_quintic(max_bar=2, max_genus=3)
+
+        assert result["pv_total_dim"] == 208
+        assert result["bar_carrier_dims"][1] == 208
+        assert result["bar_cohomology_dims"] is None
+        assert result["bcov_constant_map_low_genus"] == {
+            1: F(-25, 72),
+            2: F(5, 144),
+        }
+        assert result["bcov_comparison"].status == "different_lanes"
+        assert result["bcov_comparison"].bcov_source.endswith(
+            "prop:canonical-bcov-quintic"
+        )
+        assert result["bcov_comparison"].discrepancies == {
+            1: (F(-25, 6), F(-25, 72)),
+            2: (F(-35, 288), F(5, 144)),
+        }
 
 
 # =========================================================================
-# Section 14: Bar dimension generating function consistency
+# Section 14: Bar-carrier dimension generating-function consistency
 # =========================================================================
 
-class TestBarDimConsistency:
-    """Verify bar dimension consistency across methods."""
+class TestBarCarrierDimensionConsistency:
+    """Verify carrier dimensions by independent counting methods."""
 
     def test_c3_explicit_matches_computed(self):
         """Explicit bar dims for C^3 match computed values."""
-        explicit = bar_dims_c3_explicit()
-        computed = bar_complex_c3(max_bar_degree=4).bar_dims
+        explicit = bar_carrier_dims_c3_explicit()
+        computed = bar_carrier_c3(max_bar_degree=4).bar_carrier_dims
         for k in explicit:
             assert explicit[k] == computed[k], f"Bar degree {k}: {explicit[k]} != {computed[k]}"
 
     def test_conifold_explicit_matches_computed(self):
         """Explicit bar dims for conifold match computed values."""
-        explicit = bar_dims_conifold_explicit()
-        computed = bar_complex_conifold(max_bar_degree=4).bar_dims
+        explicit = bar_carrier_dims_conifold_explicit()
+        computed = bar_carrier_conifold(max_bar_degree=4).bar_carrier_dims
         for k in explicit:
             assert explicit[k] == computed[k]
 
@@ -757,22 +951,22 @@ class TestBarDimConsistency:
         """Bar degree 1 always equals dim(PV*(X)) (desuspension doesn't change total dim)."""
         for geom, expected in [("c3", 8), ("conifold", 3), ("k3xe", 96)]:
             if geom == "c3":
-                b = bar_complex_c3()
+                b = bar_carrier_c3()
             elif geom == "conifold":
-                b = bar_complex_conifold()
+                b = bar_carrier_conifold()
             else:
-                b = bar_complex_k3_times_e()
-            assert b.bar_dims[1] == expected
+                b = bar_carrier_k3_times_e()
+            assert b.bar_carrier_dims[1] == expected
 
-    def test_bar_dims_monotone_c3(self):
-        """Bar dimensions for C^3 should be non-decreasing up to stabilization.
+    def test_carrier_dims_monotone_c3(self):
+        """Carrier dimensions for C^3 grow through the retained arities.
 
         For an 8-dim graded space with both even and odd generators,
-        the bar dimensions grow.
+        the carrier dimensions grow.
         """
-        b = bar_complex_c3(max_bar_degree=4)
+        b = bar_carrier_c3(max_bar_degree=4)
         # Bar degree 1: 8, Bar degree 2: 32, Bar degree 3: should be larger
-        assert b.bar_dims[2] >= b.bar_dims[1]
+        assert b.bar_carrier_dims[2] >= b.bar_carrier_dims[1]
 
 
 # =========================================================================
@@ -804,7 +998,7 @@ class TestDesuspension:
         PV^{1,1}: BCOV deg 1, desusp 0 (even)
         PV^{3,0}: BCOV deg 2, desusp 1 (odd)
         """
-        pv = pv_conifold()
+        pv = pv_conifold_effective_carrier()
         bcov = pv.bcov_graded_dims
         assert bcov.get(-1, 0) == 1
         assert bcov.get(1, 0) == 1

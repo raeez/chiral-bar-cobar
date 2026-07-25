@@ -87,8 +87,10 @@ A^! directly from the bar coalgebra without the intervening A^i and the
 duality hypothesis.
 
 Omega(B(A)) -> A is bar-cobar inversion, not the construction of A^!.
-The chiral derived centre Z_ch^der(A) = ChirHoch^*(A,A) is the bulk
-derived centre; it is distinct from B(A), A^i, and A^!.
+Z_ch^der(A) = ChirHoch^*(A,A) is the closed-sector derived centre,
+the Hochschild closed-sector actor; it is distinct from B(A), A^i,
+and A^!. Identifying this actor with a physical bulk is an additional
+OCA comparison datum, not a consequence of Cech descent.
 
 The descent checks below concern Cech descent for D^b(Coh), QCoh, and
 Perf in the stated scheme-theoretic settings. They do not assert

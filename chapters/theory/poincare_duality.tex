@@ -46,18 +46,25 @@ universal ghost-charge sum across the Koszul pair.
 The MC element $\Theta_\cA$ lives in a convolution algebra built
 from two objects only: the bar coalgebra $\barB_X(\cA)$ and the
 algebra~$\cA$. The Verdier dual of the bar coalgebra produces a
-third object,
+third object, already an algebra:
 \begin{equation}\label{eq:homotopy-koszul-dual-def}
-\cA^!_\infty \;:=\; \mathbb{D}_{\Ran}\barB_X(\cA),
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA).
 \end{equation}
-a factorization algebra on $\Ran(X)$. On the finite Koszul locus,
-when the transferred post-Verdier $A_\infty$-structure is formal,
-this algebra has strict model
-$\cA^!=(\cA^i)^\vee$, where
-$\cA^i=H^\bullet(\barB_X(\cA))$ is the Koszul-dual coalgebra.
+For a quadratic presentation, the coalgebra map
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$ gives the algebra map
+\[
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}).
+\]
+On the finite Koszul locus, local finite duality identifies the target
+with $(\cA^{\mathrm i})^\vee$.  A chosen Koszul partner carries a
+separate map $\nu_\cA\colon K_X(\cA)\to\cA^!$, an equivalence under
+the pair package.  Here $\cA^{\mathrm i}$ is the quadratic coalgebra;
+when $q_\cA$ is a quasi-isomorphism it computes
+$H^\bullet(\barB_X(\cA))$.
 The cobar counit
-$\Omegach_X\barB_X(\cA)\xrightarrow{\sim}\cA$ is bar-cobar
-inversion, not Koszul duality.
+$\Omegach_X\barB_X(\cA)\xrightarrow{\sim}\cA$ gives bar--cobar
+reconstruction of the original algebra.
 
 Verdier duality is used on the bounded holonomic, equivalently
 constructible, Verdier-dualizable subcategory; in the completed
@@ -67,13 +74,14 @@ unbounded category of $\mathcal{D}$-modules. On this surface
 $\mathbb{D}_{\Ran} \colon
 D^b_{\mathrm{hol}}(\mathcal{D}\text{-mod}(\Ran(X)))
 \to D^b_{\mathrm{hol}}(\mathcal{D}\text{-mod}(\Ran(X)))$
-exchanges $!$-tensor and $*$-tensor. Hence it carries
-factorization coalgebras to factorization algebras:
+exchanges $!$-tensor and $*$-tensor. Hence it carries the bar
+coalgebra to the algebra whose operations are the Verdier transposes
+of the bar operations:
 \begin{center}
 \begin{tabular}{r@{\;$\longleftrightarrow$\;}l}
-bar coproduct $\Delta_{\barB}$ & chiral product $\mu$ of $\cA^!_\infty$, \\
-bar counit $\varepsilon_{\barB}$ & unit of $\cA^!_\infty$, \\
-bar differential $d_{\barB}$ & $A_\infty$-differential of $\cA^!_\infty$, \\
+bar coproduct $\Delta_{\barB}$ & product $\mu$ of $K_X(\cA)$, \\
+bar counit $\varepsilon_{\barB}$ & unit of $K_X(\cA)$, \\
+bar differential $d_{\barB}$ & differential of $K_X(\cA)$, \\
 logarithmic forms on $\overline{C}_n(X)$ & distributional
  currents on $C_n(X)$.
 \end{tabular}
@@ -86,17 +94,21 @@ The firewall is:
 \begin{tabular}{r@{\;:\quad}l}
 $\cA$ & chiral algebra, the boundary object, \\
 $\barB_X(\cA)$ & factorization coalgebra, the bar chain object, \\
-$\cA^i=H^\bullet(\barB_X(\cA))$ & Koszul-dual coalgebra on the
- finite or completed Koszul locus, \\
-$\cA^! = (\cA^i)^\vee$ & Verdier or continuous linear dual algebra,
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ & quadratic coalgebra of a chosen
+ presentation, with $q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$, \\
+$K_X(\cA)=\mathbb{D}_{\Ran}\barB_X(\cA)$ &
+ Verdier homotopy Koszul-dual algebra, \\
+$\nu_\cA\colon K_X(\cA)\to\cA^!$ & chosen-pair algebra map, \\
+$\cA^! = (\cA^{\mathrm i})^\vee$ & Verdier or continuous linear dual algebra,
  after finite-type or completed dualizability, \\
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
  = \ChirHoch^\bullet(\cA,\cA)$ & cochain-level chiral closed sector, not a
  bar object and not topological or categorical Hochschild.
 \end{tabular}
 \end{center}
-The genus-$g$ obstruction theory uses the post-Verdier algebra
-$\cA^!_\infty$ and its strict model~$\cA^!$. The cochain-level
+The genus-$g$ obstruction theory uses the Verdier algebra
+$K_X(\cA)$ and, after~$\nu_\cA$, its chosen strict partner~$\cA^!$.
+The cochain-level
 closed-sector object is $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; a
 physical bulk realization requires an additional open-closed comparison
 and analytic completion.
@@ -104,28 +116,25 @@ and analytic completion.
 \section{The intrinsic duality datum}
 
 \begin{problem}[Independent construction of Koszul dual]\label{prob:independent-dual}
-An identification of the bar coalgebra of $\mathcal{A}_1$ with the
-algebra $\mathcal{A}_2^!$ is typed only after the Verdier duality
-step is included.
-The left side is a factorization coalgebra. The right side is a
-factorization algebra. The correct pair of statements is
+The bar coalgebra of $\mathcal{A}_1$ first enters Verdier duality.
+The resulting algebra and its chosen-pair comparison are
 \[
 H^\bullet\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
 \simeq \mathcal{A}_1^i
-\qquad\text{and}\qquad
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
-\simeq \mathcal{A}_2\simeq\mathcal{A}_1^!
+\quad\text{and}\quad
+K_X(\mathcal A_1):=\mathbb{D}_{\Ran}
+\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
+\xrightarrow{\ \nu_{12}\ }\mathcal{A}_2\simeq\mathcal{A}_1^!
 \]
 for a finite-type Koszul pair after the Verdier-compatible
 identification, with continuous completions off it.
 The completed statement requires a separated complete
 bar filtration, finite-dimensional graded quotients, and continuous
-duals; without these hypotheses no algebra object is defined.
+duals; these hypotheses define the continuous Verdier algebra.
 The cobar equivalence
 $\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
 \simeq \mathcal{A}_1$
-is reconstruction of the original algebra, not construction of
-the dual algebra.
+reconstructs the original algebra.
 \end{problem}
 
 \begin{remark}[NAP duality]\label{rem:NAP-solution}
@@ -143,11 +152,9 @@ completed continuous sense, then Ayala--Francis duality gives:
 \]
 Here $\int_M$ is factorization homology, $\mathbb{D}$ is Verdier
 duality, $-M$ is $M$ with opposite orientation, and
-$\mathcal{A}^!$ denotes the algebra obtained after Verdier or
-continuous linear duality, not the bar coalgebra. The formula is a
-theorem under these compactness, orientation, support, and
-dualizability hypotheses; it is not a definition for an arbitrary
-chiral algebra.
+$\mathcal{A}^!$ denotes the chosen target of the pair map from the
+Verdier algebra. The formula is a theorem under these compactness,
+orientation, support, and dualizability hypotheses.
 
 Factorization homology is computed as a colimit over Weiss covers:
 \[\int_M \mathcal{A} = \operatorname{colim}_{\coprod_i D_i \hookrightarrow M} \bigotimes_i \mathcal{A}(D_i)\]
@@ -399,7 +406,8 @@ Theorem~\ref{thm:dual-differentials} reduces to:
 the residue $\operatorname{Res}_{z_1=z_2} J(z_1) J(z_2)\, d\log(z_1-z_2) = k$
 on the bar side is dual to the boundary-localization insertion
 $\delta(z_1-z_2)$ on the cobar side, recovering the
-level-$k$ pairing that identifies $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+level-$k$ pairing that identifies
+$\cH_k^!=(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$
 in \S\ref{sec:frame-koszul-dual}.
 \end{example}
 
@@ -418,7 +426,7 @@ delta current by a singular logarithmic form.
 
 \section{From Verdier duality to cooperad structure}
 
-\begin{construction}[Post-Verdier homotopy dual algebra]\label{const:A-dual-intrinsic}
+\begin{construction}[Verdier algebra and chosen Koszul partner]\label{const:A-dual-intrinsic}
 Let $\mathcal{A}$ be an augmented chiral algebra on a smooth
 projective oriented curve $X$, valued in regular holonomic
 $\mathcal{D}$-modules. Assume each Fulton--MacPherson component is
@@ -439,16 +447,15 @@ with coproduct induced by splitting configurations and differential
 given by internal differential, de~Rham differential, and Poincar\'e
 residue along collision divisors.
 
-Define the post-Verdier homotopy dual algebra by
+Define the Verdier homotopy Koszul-dual algebra by
 \[
-\mathcal{A}^!_\infty
-:=
+K_X(\mathcal A):=
 \mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\mathcal{A}).
 \]
-Its $n$-ary component is represented by distributional sections on
-$C_n(X)$:
+The $n$-ary component of $K_X(\mathcal A)$ is
+represented by distributional sections on $C_n(X)$:
 \[
-(\mathcal{A}^!_\infty)_n
+(K_X(\mathcal A))_n
 \simeq
 \mathbb{D}_{\overline{C}_n(X)}
 \!\left(
@@ -456,37 +463,46 @@ j_*j^*(\mathcal{A}^{\boxtimes n})
 \otimes \Omega^\bullet_{\log}(\overline{C}_n(X))
 \right).
 \]
-The bar coproduct dualizes to the product of
-$\mathcal{A}^!_\infty$, the bar counit dualizes to the unit, and
-the bar differential dualizes to the $A_\infty$ differential.
+The Verdier transposes of the bar coproduct, counit, and differential
+give the product, unit, and differential of $K_X(\mathcal A)$.
 
-On the finite Koszul locus, where the bar cohomology is finite in
-each graded piece,
+Choose a quadratic presentation
+$\mathcal A=T_X(V)/(R)$ and form its quadratic coalgebra
 \[
-\mathcal{A}^i := H^\bullet\barB_X^{\mathrm{ch}}(\mathcal{A})
+\mathcal{A}^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R),
+\qquad
+q_{\mathcal A}\colon\mathcal A^{\mathrm i}\longrightarrow
+\barB_X^{\mathrm{ch}}(\mathcal A).
 \]
-is the Koszul-dual coalgebra and
+On the finite Koszul locus, $q_{\mathcal A}$ is a quasi-isomorphism and
+the locally finite dual
 \[
-\mathcal{A}^! := (\mathcal{A}^i)^\vee
+\mathcal{A}^! := (\mathcal{A}^{\mathrm i})^\vee
 \]
-is the strict Koszul-dual algebra. The comparison
-$\mathcal{A}^!_\infty\simeq\mathcal{A}^!$ is formality of the
-post-Verdier algebra, not a definition of $\mathcal{A}^!$ as a
-coalgebra.
+is the strict Koszul-dual algebra.  The quadratic comparison
+has Verdier transpose
+\[
+\mathbb D(q_{\mathcal A})\colon K_X(\mathcal A)\longrightarrow
+\mathbb D_{\Ran}(\mathcal A^{\mathrm i}).
+\]
+A chosen Koszul pair supplies
+$\nu_{\mathcal A}\colon K_X(\mathcal A)\to\mathcal A^!$; formality and
+local finite duality make this map an equivalence.
 \end{construction}
 
 \begin{remark}\label{rem:intrinsic-nature}
-Construction~\ref{const:A-dual-intrinsic} uses no pre-existing dual
-partner and no orthogonal-relation presentation. The chain coalgebra
-is $\barB_X(\cA)$. The cohomological coalgebra is
-$\cA^i=H^\bullet\barB_X(\cA)$. The algebra is
-$\cA^!_\infty=\mathbb{D}_{\Ran}\barB_X(\cA)$, with strict model
-$\cA^!=(\cA^i)^\vee$ when finite Koszul formality holds.
+Construction~\ref{const:A-dual-intrinsic} forms the Verdier algebra
+from~$\cA$ alone. The chain coalgebra is $\barB_X(\cA)$. A subsequent
+quadratic presentation supplies
+$\cA^{\mathrm i}$ and $q_\cA$. The algebra is
+$K_X(\cA)=\mathbb{D}_{\Ran}\barB_X(\cA)$, with chosen strict target
+$\cA^!=(\cA^{\mathrm i})^\vee$ through~$\nu_\cA$ when finite Koszul formality
+holds.
 \end{remark}
 
 \subsection{Verification of coalgebra axioms}
 
-\begin{theorem}[Bar coalgebra and post-Verdier algebra; \ClaimStatusProvedHere]\label{thm:coalgebra-via-NAP}
+\begin{theorem}[Bar coalgebra and Verdier algebra; \ClaimStatusProvedHere]\label{thm:coalgebra-via-NAP}
 Under the hypotheses of Construction~\ref{const:A-dual-intrinsic},
 the direct-sum bar object $\barB_X^{\mathrm{ch}}(\mathcal{A})$ is a
 well-defined conilpotent chiral coalgebra. In the completed
@@ -504,9 +520,11 @@ For each homogeneous bar element $b$, there exists $N$ such that
 $\Delta^{(N)}(b) = 0$.
 \end{enumerate}
 Its Verdier dual, respectively continuous Verdier dual,
-$\mathcal{A}^!_\infty=\mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\mathcal{A})$
-is a factorization algebra whose multiplication, unit, and
-differential are the Verdier duals of these coalgebra operations.
+\[
+K_X(\mathcal A)=\mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\mathcal{A}),
+\]
+is a factorization algebra; its multiplication, unit, and differential
+are the Verdier transposes of these coalgebra operations.
 \end{theorem}
 
 \begin{proof}[Proof via geometric stratifications]
@@ -557,13 +575,13 @@ category. An element represented on $C_k(X)$ has at most $k$
 collision factors, so every iterated reduced coproduct of length
 $>k$ is zero. In the completed category this becomes
 pro-conilpotence. Applying $\mathbb{D}_{\Ran}$, or the continuous
-dual in the completed case, converts these coalgebra identities into
-the factorization-algebra identities for $\mathcal{A}^!_\infty$.
+dual in the completed case, transposes these coalgebra identities into
+the factorization-algebra identities for $K_X(\mathcal A)$.
 \end{proof}
 
-\section{The bar coalgebra, its cohomology, and the Verdier-dual algebra}
+\section{The bar coalgebra, its quadratic model, and its Verdier algebra}
 
-\begin{theorem}[Bar coalgebra, Koszul-dual coalgebra, and Verdier-dual algebra; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
+\begin{theorem}[Bar coalgebra, quadratic model, and Verdier algebra; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
 \index{Verdier duality!bar coalgebra and dual algebra|textbf}
 \index{non-abelian Poincare duality}
 \textup{[Regime: quadratic finite-type, with completed continuous
@@ -571,6 +589,9 @@ variant
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Let $\mathcal{A}$ be an augmented chiral algebra on a smooth curve $X$,
+with a quadratic presentation
+$\mathcal A=T_X(V)/(R)$ and quadratic coalgebra
+$\mathcal A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$,
 valued in bounded holonomic $\mathcal{D}$-modules in the
 Verdier-dualizable ambient. Assume that the configuration-space
 pushforwards $\pi_*(\mathcal{A}^{\boxtimes(n+1)} \otimes \omega^{\log}_{C_{n+1}(X)})$
@@ -586,29 +607,32 @@ Then:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is a conilpotent
  factorization coalgebra.
-\item Its cohomology
- $\mathcal{A}^i:=H^\bullet\bar{B}^{\mathrm{ch}}(\mathcal{A})$
- is the Koszul-dual coalgebra on the finite Koszul locus.
-\item Its Verdier dual
- $\mathcal{A}^!_\infty:=
- \mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A})$
- is a factorization algebra, equipped with the perfect finite-type
+\item The canonical quadratic comparison
+ $q_{\mathcal A}\colon\mathcal A^{\mathrm i}\to
+ \bar{B}^{\mathrm{ch}}(\mathcal A)$ is a quasi-isomorphism precisely
+ on the quadratic Koszul locus.
+\item Its Verdier algebra
+ $K_X(\mathcal A):=\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A})$
+ is equipped with the perfect finite-type
  evaluation pairing, respectively the continuous evaluation pairing,
  \[
  \bar{B}^{\mathrm{ch}}(\mathcal{A})\otimes
- \mathcal{A}^!_\infty \longrightarrow \omega_{\Ran}.
+ K_X(\mathcal A) \longrightarrow \omega_{\Ran}.
  \]
-\item If $\mathcal{A}$ is finite Koszul and the transferred
- post-Verdier $A_\infty$-structure is formal, then
+\item Verdier duality reverses the quadratic comparison to the
+ algebra map
  \[
- \mathcal{A}^!_\infty \simeq \mathcal{A}^!
- :=(\mathcal{A}^i)^\vee
+ \mathbb D(q_{\mathcal A})\colon K_X(\mathcal A)
+ \longrightarrow\mathbb D_{\Ran}(\mathcal A^{\mathrm i}).
  \]
- as factorization algebras.
+ On the finite Koszul locus this is a quasi-isomorphism.  A chosen
+ Koszul pair supplies
+ \[
+ \nu_{\mathcal A}\colon K_X(\mathcal A)\longrightarrow
+ \mathcal A^!:=(\mathcal A^{\mathrm i})^\vee,
+ \]
+ and the pair package makes~$\nu_{\mathcal A}$ an equivalence.
 \end{enumerate}
-No morphism
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})\to\mathcal{A}^!$
-is asserted. The former is a coalgebra, the latter an algebra.
 \end{theorem}
 
 \begin{proof}
@@ -631,37 +655,42 @@ The differential compatibility is componentwise:
 \mathbb{D}(d_{\text{res}}) &= d_{\delta} \quad \text{(delta function insertion)}\\
 \mathbb{D}(d_{\text{dR}}) &= d_{\text{dR}}^{\text{dist}} \quad \text{(de Rham on distributions)}
 \end{align*}
-so the dual object is the factorization algebra
-$\mathcal{A}^!_\infty$ of Construction~\ref{const:A-dual-intrinsic}.
+so the dual object is the Verdier algebra $K_X(\mathcal A)$ of
+Construction~\ref{const:A-dual-intrinsic}.
 The coalgebra coproduct on $\barB^{\mathrm{ch}}(\mathcal{A})$
-duals to the multiplication on $\mathcal{A}^!_\infty$, and the
-counit duals to the unit.
+dualizes to the multiplication on $K_X(\mathcal A)$; the bar counit
+dualizes to its unit.
 
 In the finite-type case Verdier duality gives, with the dimension
 shifts fixed by Theorem~\ref{thm:verdier-config},
 \[
-H^\bullet(\mathcal{A}^!_\infty)
+H^\bullet(K_X(\mathcal A))
 \cong
 H^\bullet(\bar{B}^{\mathrm{ch}}(\mathcal{A}))^\vee.
 \]
 In the completed case the right hand side is the continuous dual and
 requires the Mittag--Leffler condition for cohomology to commute with
-the inverse limit. On the finite Koszul locus the right hand side is
-$(\mathcal{A}^i)^\vee=\mathcal{A}^!$. Formality of the transferred
-$A_\infty$-structure, when available, identifies the homotopy dual
-algebra $\mathcal{A}^!_\infty$ with its strict model $\mathcal{A}^!$.
+the inverse limit.  The map $q_{\mathcal A}$ gives the asserted
+quadratic comparison, and contravariance gives
+$\mathbb D(q_{\mathcal A})$.  Local finite duality identifies
+$\mathbb D_{\Ran}(\mathcal A^{\mathrm i})$ with
+$(\mathcal A^{\mathrm i})^\vee$; the chosen pair map~$\nu_{\mathcal A}$
+records the further identification with~$\mathcal A^!$.
 \end{proof}
 
 \begin{example}[Heisenberg specialization]\label{ex:bar-dual-heisenberg}
 For $\cA = \cH_k$, Theorem~\ref{thm:bar-computes-dual} gives
-$H^\bullet\bar{B}^{\mathrm{ch}}(\cH_k)=\cH_k^i$ and
-$\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cH_k)
-\simeq(\cH_k)^!_\infty$. The bar complex is built from
+$q_{\cH_k}\colon\cH_k^{\mathrm i}\xrightarrow{\sim}
+\bar{B}^{\mathrm{ch}}(\cH_k)$ and the Verdier algebra
+$K_X(\cH_k)=\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cH_k)$.
+The bar complex is built from
 logarithmic forms on $\overline{C}_n(X)$; its Verdier dual is the
-factorization algebra represented by distributional currents on
-$C_n(X)$. Since $\cH_k$ is Koszul, the homotopy dual is formal and
-$(\cH_k)^!_\infty\simeq\cH_k^!
-= \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+algebra represented by distributional currents on $C_n(X)$.  The
+Heisenberg pair map is
+\[
+\nu_k\colon K_X(\cH_k)\xrightarrow{\sim}\cH_k^!
+= (\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)
+\]
 (cf.\ \S\ref{sec:frame-inversion}).
 \end{example}
 
@@ -674,7 +703,7 @@ coalgebra, its Verdier dual algebra, and the residue pairing.
 
 \emph{Degree 0.}
 \[\bar{B}^0(\mathcal{A}) = \mathcal{A}\]
-\[(\mathcal{A}^!_\infty)^{(0)} = \mathbb{D}(\mathcal{A}) \otimes \omega_X\]
+\[(K_X(\mathcal A))^{(0)} = \mathbb{D}(\mathcal{A}) \otimes \omega_X\]
 
 There is a canonical evaluation pairing
 \[
@@ -690,7 +719,7 @@ not supply such a Calabi--Yau pairing by itself.
 \[\bar{B}^1(\mathcal{A}) = \Gamma(\overline{C}_2(X), \mathcal{A}^{\boxtimes 2} \otimes \eta_{12})\]
 
 The dual is:
-\[(\mathcal{A}^!_\infty)^{(1)}
+\[(K_X(\mathcal A))^{(1)}
 = \mathcal{D}^*(C_2(X), (\mathbb{D}_X\mathcal{A})^{\boxtimes 2})\]
 
 The Verdier-dual representative is the boundary-localization class
@@ -716,7 +745,7 @@ delta currents supported on the diagonal.) This is the fundamental Verdier pairi
 \[\bar{B}^2(\mathcal{A}) = \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes (\eta_{12} \wedge \eta_{23} + \text{cyc}))\]
 
 The dual is:
-\[(\mathcal{A}^!_\infty)^{(2)}
+\[(K_X(\mathcal A))^{(2)}
 = \mathcal{D}^*(C_3(X),(\mathbb{D}_X\mathcal{A})^{\boxtimes 3})\]
 
 The corresponding representative is the iterated localization class
@@ -758,23 +787,25 @@ equipped with the antecedent twisting morphisms, compatible
 filtrations, conilpotent finite or completed Koszul coalgebras, and
 finite-type or continuous dualizability required in
 Definition~\ref{def:chiral-koszul-pair}. The Verdier-compatibility
-part of the chiral Koszul-pair datum is the pair of identifications
+part of the chiral Koszul-pair datum is the pair of algebra maps
 \begin{align}
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
+\nu_{12}\colon K_X(\mathcal A_1)
+=\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
 &\xrightarrow{\sim} \mathcal{A}_2,\\
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
+\nu_{21}\colon K_X(\mathcal A_2)
+=\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
 &\xrightarrow{\sim} \mathcal{A}_1.
 \end{align}
 Equivalently, on the finite Koszul locus,
 \[
-\mathcal{A}_i^i
-=H^\bullet\bar{B}^{\mathrm{ch}}(\mathcal{A}_i),
+q_i\colon\mathcal{A}_i^{\mathrm i}
+\xrightarrow{\sim}\bar{B}^{\mathrm{ch}}(\mathcal{A}_i),
 \qquad
-\mathcal{A}_i^!=(\mathcal{A}_i^i)^\vee,
+\mathcal{A}_i^!=(\mathcal{A}_i^{\mathrm i})^\vee,
 \]
 and the notation $\mathcal{A}_2\simeq\mathcal{A}_1^!$,
-$\mathcal{A}_1\simeq\mathcal{A}_2^!$ names the post-Verdier
-algebras, not the bar coalgebras.
+$\mathcal{A}_1\simeq\mathcal{A}_2^!$ names the targets of the pair
+maps.
 
 \emph{NAP shadow.}
 If the locally constant topological shadows of these chiral
@@ -788,14 +819,14 @@ does not replace the chiral twisting and filtration data.
 \end{proposition}
 
 \begin{proof}
-Theorem~\ref{thm:bar-computes-dual} separates the two assertions:
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the coalgebra and
-$\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the
-post-Verdier algebra. Definition~\ref{def:chiral-koszul-pair}
+Theorem~\ref{thm:bar-computes-dual} gives the coalgebra
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ and its Verdier algebra
+$K_X(\mathcal A)=\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A})$.
+Definition~\ref{def:chiral-koszul-pair}
 requires twisting morphisms, filtrations, Koszulness, and precisely
-the Verdier-compatible identifications of these post-Verdier algebras
-with the opposite algebra in the pair. Applying factorization
-homology gives the displayed NAP equivalence only after the
+the Verdier-compatible maps from these algebras to the opposite
+member of the pair. Applying factorization homology gives the
+displayed NAP equivalence after the
 Ayala--Francis hypotheses are imposed on the locally constant
 topological shadows.
 \end{proof}
@@ -806,32 +837,30 @@ completed continuous variant
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 If $(\mathcal{A}_1, \mathcal{A}_2)$ is a finite-type chiral Koszul
-pair with Verdier-dualizable bar components and formal post-Verdier
-dual algebras, then:
+pair with Verdier-dualizable bar components and locally finite
+quadratic models, then:
 \begin{align}
-H^\bullet\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
-&\simeq \mathcal{A}_1^i,\\
-H^\bullet\bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
-&\simeq \mathcal{A}_2^i,\\
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
-&\simeq \mathcal{A}_2\simeq\mathcal{A}_1^!,\\
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
-&\simeq \mathcal{A}_1\simeq\mathcal{A}_2^!,\\
+q_1\colon\mathcal A_1^{\mathrm i}
+&\xrightarrow{\sim}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1),\\
+q_2\colon\mathcal A_2^{\mathrm i}
+&\xrightarrow{\sim}\bar{B}^{\mathrm{ch}}(\mathcal{A}_2),\\
+\nu_{12}\colon K_X(\mathcal A_1)
+&\xrightarrow{\sim}\mathcal{A}_2\simeq\mathcal{A}_1^!,\\
+\nu_{21}\colon K_X(\mathcal A_2)
+&\xrightarrow{\sim}\mathcal{A}_1\simeq\mathcal{A}_2^!,\\
 \Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\mathcal{A}_i)
 &\simeq \mathcal{A}_i \qquad (i=1,2).
 \end{align}
 
-Thus $\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}$ is inversion on each
-member, while $\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}$ is the duality
-operation between the two members. In the completed case all four
-displayed duality lines are read with continuous duals and completed
-cobar.
+Thus $\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}$ reconstructs each
+member, while $K_X=\mathbb D_{\Ran}\bar B^{\mathrm{ch}}$ and the two
+maps~$\nu_{ij}$ realize duality between the members. In the completed
+case the Verdier algebras use continuous duals.
 \end{theorem}
 
 \begin{proof}
-The cohomology identifications are the definition of
-$\mathcal{A}_i^i$ on the finite Koszul locus. The Verdier
-identifications are exactly the compatibility data of
+The first two maps are the quadratic Koszul comparisons. The two
+maps~$\nu_{ij}$ are exactly the Verdier compatibility data of
 Definition~\ref{def:chiral-koszul-pair}, rewritten using
 Construction~\ref{const:A-dual-intrinsic}. The last line is the
 bar-cobar counit on the Koszul locus
@@ -843,8 +872,11 @@ same algebra from its own bar coalgebra.
 \begin{example}[Heisenberg specialization]\label{ex:symmetric-heisenberg}
 For the Koszul pair $(\cH_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$,
 Theorem~\ref{thm:symmetric-koszul} gives:
-$\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cH_k)
-\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+\[
+\nu_k\colon K_X(\cH_k)=\mathbb{D}_{\Ran}
+\bar{B}^{\mathrm{ch}}(\cH_k)
+\xrightarrow{\sim} \mathrm{Sym}^{\mathrm{ch}}(V^*)
+\]
 and
 $\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\cH_k)\simeq\cH_k$.
 This specializes to the Lie--Com exchange: the chiral Lie structure
@@ -889,11 +921,9 @@ derived object.
 \begin{remark}[Necessity of completion]\label{rem:why-completion}
 For non-quadratic chiral algebras (W-algebras, Yangians, etc.), the bar construction produces infinitely many generators in each degree:
 
-The bar complex is not finitely generated. The cohomological
-coalgebra $\mathcal{A}^i=H^\bullet\barB(\mathcal{A})$ therefore
-lives naturally in a completed conilpotent category, and the algebra
-$\mathcal{A}^!=(\mathcal{A}^i)^\vee$ is a continuous Verdier-linear
-dual.
+The bar complex has infinitely many bar-length components.  Its
+cohomology therefore lives naturally in a completed conilpotent
+category, and its continuous Verdier dual is a complete algebra.
 
 The Beilinson--Drinfeld remedy is $I$-adic completion:
 \[\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n\]
@@ -904,24 +934,28 @@ where $I = \ker(\epsilon: \bar{B}(\mathcal{A}) \to \mathbb{C})$ is the coaugment
 over the conilpotent filtration by bar degree (see Appendix~\ref{app:nilpotent-completion}), which organizes the bar complex by the number of collision points on~$\overline{C}_n(X)$.
 \end{remark}
 
-\begin{definition}[Completed dual coalgebra and dual algebra]\label{def:completed-dual}
-For a chiral algebra $\mathcal{A}$, define
+\begin{definition}[Completed Verdier algebra and coalgebra model]\label{def:completed-dual}
+For a chiral algebra $\mathcal{A}$, define its completed Verdier
+algebra by
 \[
-\widehat{\mathcal{A}^i}
-:=
-H^\bullet\widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A}),
-\qquad
-\widehat{\mathcal{A}^!}
-:=
-(\widehat{\mathcal{A}^i})^\vee_{\mathrm{cont}}.
-\]
-The completed homotopy dual algebra is
-\[
-\widehat{\mathcal{A}^{!}_{\infty}}
-:=
+\widehat K_X(\mathcal A):=
 \mathbb{D}^{\mathrm{cont}}_{\Ran}
 \widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A}).
 \]
+When a complete quadratic or minimal coalgebra model
+$\widehat{\mathcal A^{\mathrm i}}$ is supplied, its comparison and
+Verdier transpose are
+\[
+\widehat q_{\mathcal A}\colon\widehat{\mathcal A^{\mathrm i}}
+\longrightarrow\widehat{\bar B}^{\mathrm{ch}}(\mathcal A),
+\qquad
+\mathbb D(\widehat q_{\mathcal A})\colon\widehat K_X(\mathcal A)
+\longrightarrow\mathbb D^{\mathrm{cont}}_{\Ran}
+(\widehat{\mathcal A^{\mathrm i}}).
+\]
+The continuous dual
+$(\widehat{\mathcal A^{\mathrm i}})^\vee_{\mathrm{cont}}$ becomes a
+chosen strict partner through a separate pair map.
 The completion is taken with respect to the conilpotent
 bar-degree filtration, equivalently the powers of the coaugmentation
 ideal.
@@ -940,18 +974,19 @@ For chiral algebras satisfying:
 \end{enumerate}
 
 The completed bar construction is a complete conilpotent chiral
-coalgebra whose cohomology is the completed dual coalgebra:
-\[
-H^\bullet\widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A})
-\cong \widehat{\mathcal{A}^i}.
-\]
-Its continuous Verdier dual is the completed homotopy dual algebra:
+coalgebra. Its continuous Verdier dual is the completed homotopy
+dual algebra:
 \[
 \mathbb{D}^{\mathrm{cont}}_{\Ran}
 \widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A})
-\simeq
-\widehat{\mathcal{A}^{!}_{\infty}}.
+=\widehat K_X(\mathcal A).
 \]
+If a model~$\widehat{\mathcal A^{\mathrm i}}$ and a filtered
+quasi-isomorphism~$\widehat q_{\mathcal A}$ are supplied, then
+$\mathbb D(\widehat q_{\mathcal A})$ is a quasi-isomorphism of complete
+algebras.  A chosen completed Koszul pair further supplies
+$\widehat\nu_{\mathcal A}\colon\widehat K_X(\mathcal A)\to
+(\widehat{\mathcal A^{\mathrm i}})^\vee_{\mathrm{cont}}$.
 
 The completed cobar counit:
 \[
@@ -959,7 +994,7 @@ The completed cobar counit:
 \xrightarrow{\sim} \widehat{\mathcal{A}}
 \]
 recovers the completed algebra on the completed Koszul surface. It
-recovers $\mathcal{A}$ itself only when the completion map
+recovers $\mathcal{A}$ when the completion map
 $\mathcal{A}\to\widehat{\mathcal{A}}$ is an equivalence.
 \end{theorem}
 
@@ -981,8 +1016,7 @@ duality is defined by
 :=\varinjlim_n\mathbb{D}(\mathcal{F}/F^n).
 \]
 This is a completed duality convention controlled by the topology;
-it is not an unconditional commutation rule for arbitrary inverse
-limits.
+its domain consists of the stated complete inverse systems.
 
 \emph{Step 2: Completion filtration is compatible with Verdier duality.}
 The coaugmentation ideal
@@ -990,8 +1024,8 @@ $I=\ker(\epsilon:\bar{B}^{\text{ch}}\to\mathbb{C})$ defines the
 $I$-adic filtration. Each quotient $\bar{B}^{\text{ch}}/I^n$
 involves only configuration spaces $C_k(X)$ with $k\leq n$, hence is
 geometric. Polynomial growth (hypothesis (2)) controls the size of
-the graded pieces; it does not by itself imply Mittag--Leffler.
-The Mittag--Leffler condition is hypothesis (4), and gives
+the graded pieces.  Hypothesis~(4) supplies the Mittag--Leffler
+condition and gives
 $\varprojlim^1=0$ for the cohomology inverse system.
 
 \emph{Step 3: Lifting to completions.}
@@ -1015,10 +1049,10 @@ as a complete coalgebra, and
 \right)
 \]
 as its continuous Verdier-dual algebra. Taking cohomology gives
-$H^\bullet\widehat{\bar{B}}^{\mathrm{ch}}(\mathcal{A})
-\cong\widehat{\mathcal{A}^i}$, and continuous duality gives
-$H^\bullet\widehat{\mathcal{A}^{!}_{\infty}}
-\cong\widehat{\mathcal{A}^!}$.
+$H^\bullet\widehat K_X(\mathcal A)\cong
+H^\bullet(\widehat{\bar B}^{\mathrm{ch}}(\mathcal A))^\vee_{\mathrm{cont}}$.
+A supplied map~$\widehat q_{\mathcal A}$ dualizes to the
+complete algebra map of the statement.
 
 \emph{Step~4: Cobar.}
 By hypothesis~(1), each bar component is holonomic
@@ -1055,8 +1089,18 @@ $\bar{B}^{\mathrm{ch}}(W_3)$ with OPE coefficient
 $\frac{16}{22+5c}$ in the $W$--$W$ channel
 (Definition~\ref{def:lambda-complete}).
 
-\emph{Completed dual coalgebra, first associated-graded window.}
-\[\widehat{W_3^i} = \text{Free coalgebra}(L^*, W^*, \Lambda^*, (\Lambda^*)^{(2)}, (\Lambda^*)^{(3)}, \ldots)\]
+\emph{Completed coalgebra model, first associated-graded window.}
+Assume a complete coalgebra model
+$\widehat{W_3^{\mathrm i}}$ and a filtered quasi-isomorphism
+$\widehat q_{W_3}\colon\widehat{W_3^{\mathrm i}}\to
+\widehat{\bar B}^{\mathrm{ch}}(W_3)$ as in
+Definition~\ref{def:completed-dual}.  Its first associated-graded
+window is
+\[
+\operatorname{gr}^{(1)}\widehat{W_3^{\mathrm i}}
+=\operatorname{coFree}(L^*,W^*,\Lambda^*,
+(\Lambda^*)^{(2)},(\Lambda^*)^{(3)},\ldots).
+\]
 
 where $(\Lambda^*)^{(n)}$ are descendant towers. This display records
 the completed associated graded generated by the first composite
@@ -1073,8 +1117,15 @@ $W$--$W$ OPE.
 
 The completed dual algebra is the continuous Verdier-linear dual
 \[
-\widehat{W_3^!}:=(\widehat{W_3^i})^\vee_{\mathrm{cont}}.
+\widehat{W_3^!}:=(\widehat{W_3^{\mathrm i}})^\vee_{\mathrm{cont}}.
 \]
+The chain-level comparison is
+\[
+\mathbb D(\widehat q_{W_3})\colon
+\widehat K_X(W_3)\xrightarrow{\sim}
+\mathbb D^{\mathrm{cont}}_{\Ran}(\widehat{W_3^{\mathrm i}}),
+\]
+followed by the chosen-pair map to~$\widehat{W_3^!}$.
 
 \emph{The differential.}
 The differential on $\Lambda^*$ encodes the $W$--$W$ OPE:
@@ -1083,7 +1134,8 @@ since $W(z)W(w) \sim \frac{16}{22+5c}\frac{\Lambda(w)}{(z-w)^2} + \cdots$, the b
 with the remaining terms determined by the full $W$--$W$ OPE (see Definition~\ref{def:lambda-complete} and Computation~\ref{comp:w3-bar-degree2} for the explicit structure constants).
 
 \emph{Cobar reconstruction.}
-\[\Omega^{\text{ch}}(\widehat{W_3^i}) \simeq \widehat{W_3}\]
+\[\Omega^{\text{ch}}(\widehat{W_3^{\mathrm i}})
+\simeq \widehat{W_3}\]
 
 on the completed Koszul surface. The relation
 $\Lambda = :T \cdot T: - \frac{3}{10}\partial^2 T$ (with OPE
@@ -1097,22 +1149,26 @@ Maurer--Cartan component in the cobar complex.
 Assume the finite-type hypotheses of
 Theorem~\ref{thm:bar-computes-dual}, or the completed hypotheses of
 Theorem~\ref{thm:completion-koszul}.
-Construction~\ref{const:A-dual-intrinsic} defines the post-Verdier
+Construction~\ref{const:A-dual-intrinsic} defines the Verdier
 homotopy dual algebra
-$\cA^!_\infty=\mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\cA)$ with no
-pre-existing dual partner or orthogonal-relation presentation.
-Theorem~\ref{thm:bar-computes-dual} identifies
-$\cA^i=H^\bullet\barB_X^{\mathrm{ch}}(\cA)$ as the Koszul-dual
-coalgebra on the finite Koszul locus and
-$\cA^!=(\cA^i)^\vee$ as the strict Verdier-linear dual algebra.
+$K_X(\cA)=\mathbb{D}_{\Ran}\barB_X^{\mathrm{ch}}(\cA)$.
+For a quadratic presentation,
+Theorem~\ref{thm:bar-computes-dual} supplies
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X^{\mathrm{ch}}(\cA)$ and
+\[
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}).
+\]
+Local finite duality identifies the target with
+$\cA^!=(\cA^{\mathrm i})^\vee$ on the finite Koszul locus.
 For a Koszul pair $(\mathcal{A}_1,\mathcal{A}_2)$,
 Theorem~\ref{thm:symmetric-koszul} gives
 \[
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)
-\simeq \mathcal{A}_2\simeq\mathcal{A}_1^!,
+\nu_{12}\colon K_X(\mathcal A_1)
+\xrightarrow{\sim} \mathcal{A}_2\simeq\mathcal{A}_1^!,
 \qquad
-\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
-\simeq \mathcal{A}_1\simeq\mathcal{A}_2^!,
+\nu_{21}\colon K_X(\mathcal A_2)
+\xrightarrow{\sim} \mathcal{A}_1\simeq\mathcal{A}_2^!,
 \]
 and the cobar equivalences
 $\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}(\mathcal{A}_i)
@@ -1120,7 +1176,7 @@ $\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}(\mathcal{A}_i)
 \end{theorem}
 
 \begin{proof}
-The construction of $\cA^!_\infty$ is
+The construction of $K_X(\cA)$ is
 Construction~\ref{const:A-dual-intrinsic}. The coalgebra and
 algebra identifications are Theorem~\ref{thm:bar-computes-dual}.
 The symmetric pair statement is Theorem~\ref{thm:symmetric-koszul},
@@ -1132,7 +1188,7 @@ bar-cobar counit on the Koszul or completed Koszul surface.
 \end{proof}
 
 The completed bar construction (Theorem~\ref{thm:completion-koszul})
-extends this to non-quadratic algebras only after the separated
+extends this to non-quadratic algebras after the separated
 completion, Mittag--Leffler, proper-support, and continuous-duality
 hypotheses are imposed. The quantum corrections (curvature from
 periods on $\overline{\mathcal{M}}_g$) appear in

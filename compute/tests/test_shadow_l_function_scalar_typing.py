@@ -18,27 +18,21 @@ def squashed(text: str) -> str:
     return " ".join(text.split())
 
 
-def test_shadow_l_function_genus_slot_types_fp_term_as_scalar():
-    body = compact(read())
+def test_shadow_l_function_genus_slot_requires_chain_level_comparison():
+    text = read()
+    body = compact(text)
 
     required_forms = (
-        (
-            r"F_g(\cA)=F_g^{\mathrm{sc}}(\cA)"
-            r"=\kappa(\cA)\lambda_g^{\mathrm{FP}}"
-        ),
-        (
-            r"F_g^{\mathrm{sc}}(\cA)"
-            r"=\kappa(\cA)\lambda_g^{\mathrm{FP}}"
-        ),
-        (
-            r"F_g(\cA)=F_g^{\mathrm{sc}}(\cA)"
-            r"+\deltaF_g^{\mathrm{cross}}(\cA)"
-        ),
-        r"\Coeff_{r=2g-2}",
-        r"\Pi_g^{\mathrm{sh}}\Lsh(\cA)",
+        r"\mathsfH_{\mathrm{gen}}",
+        r"\ClaimStatusConditional",
+        r"\Pi_g^{\mathrm{sh}}\Lsh",
+        r":=[r=2g-2]\Lsh",
+        r"S_{2g-2}(\cA;\mathsfH_{\mathrm{res}})",
     )
     for required in required_forms:
         assert required in body
+
+    assert "chain-level shadow--Feynman comparison" in text
 
 
 def test_shadow_l_function_has_no_bare_full_fp_coefficient():

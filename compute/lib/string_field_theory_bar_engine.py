@@ -542,7 +542,8 @@ def open_closed_vertex(genus: int, n_closed: int, m_open: int,
     - Mixed (m>0, n>0): open-to-closed maps (brace operations)
 
     AP34: bar-cobar inversion recovers A (boundary), NOT the bulk.
-          The bulk is Z^der_ch(A) = Hochschild cochains.
+          Z^der_ch(A) = Hochschild cochains is the algebraic closed-sector
+          actor; physical bulk requires an OCA comparison.
     AP25: B(A), Omega(B(A)), D_Ran(B(A)), Z^der_ch(A) are FOUR distinct objects.
     """
     # Check stability
@@ -1218,7 +1219,8 @@ def ainfty_linfty_comparison() -> Dict[str, Any]:
         A-infinity (open) ⊂ Swiss-cheese (open+closed, genus 0)
                           ⊂ quantum L-infinity (all genera)
 
-    AP34: the open -> closed passage is via the derived center, NOT bar-cobar.
+    AP34: the open -> closed algebraic actor is the derived center, NOT
+    bar-cobar; physical bulk comparison is extra OCA data.
     AP25: B(A) classifies twisting morphisms; Z^der_ch = Hochschild cochains.
     """
     return {
@@ -1230,7 +1232,7 @@ def ainfty_linfty_comparison() -> Dict[str, Any]:
             "geometry": "moduli of disks M_{0,n+1}(D)",
         },
         "closed_sft": {
-            "algebraic_structure": "L-infinity on Z^der_ch(A) (bulk)",
+            "algebraic_structure": "L-infinity on Z^der_ch(A) (closed-sector)",
             "operations": "ell_n: Z^{otimes n} -> Z (graded antisymmetric)",
             "relations": "sum ell_i(ell_j(x_sigma), ...) = 0 (hom. Jacobi)",
             "bar_encoding": "Chevalley-Eilenberg complex of Z^der_ch",
@@ -1245,7 +1247,7 @@ def ainfty_linfty_comparison() -> Dict[str, Any]:
         },
         "hierarchy": "A-inf ⊂ SC^{ch,top} ⊂ quantum L-inf",
         "key_distinction": {
-            "open_to_closed": "derived center Z^der_ch(A), NOT bar-cobar (AP34)",
+            "open_to_closed": "derived center closed sector Z^der_ch(A), NOT bar-cobar (AP34)",
             "closed_to_open": "restriction / forgetful (information loss at genus 0)",
             "coupling_at_genus_0": "one-way: closed -> open only",
             "coupling_at_genus_geq_1": "annulus trace provides open -> closed",

@@ -155,12 +155,15 @@ where $\omega_g$ is the Arakelov $(1,1)$-form on the fibre
 and $\kappa(\cA) \in \Bbbk$ is the \emph{modular
 characteristic}. The modular characteristic is intrinsic to
 the chiral algebra; it is determined by the leading OPE
-singularity and is visible already at genus~$0$ as the
-$\Sigma_2$-coinvariant scalar shadow of the collision residue:
-for abelian and Virasoro-type families
-$\kappa(\cA) = \mathrm{av}(r(z))$, while for non-abelian
-affine Kac--Moody in the trace-form convention
-$\mathrm{av}(r(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+singularity and is visible already at genus~$0$ through the chain
+\[
+K_\cA^{\mathrm{coll}}\longmapsto
+q_2(K_\cA^{\mathrm{coll}})\longmapsto
+\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}}).
+\]
+The last term is $\kappa(\cA)$ for abelian and Virasoro-type
+families. For non-abelian affine Kac--Moody in the trace-form
+convention it is $\kappa_{\mathrm{dp}}(\cA)$ and
 $\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
 
 The failure of $d^2 = 0$ at genus~$g \ge 1$ is not a defect
@@ -176,19 +179,18 @@ infinitesimal avatar of this restoration.
 \label{ssec:genus-expansion}
 % ====================================================================
 
-For a modular Koszul chiral algebra~$\cA$ with a single
-generator (or more generally with all generators of the
-same conformal weight), the genus-$g$ obstruction class
-$\mathrm{obs}_g(\cA)$ is proportional to the top Chern class
-of the Hodge bundle:
+For a modular Koszul chiral algebra~$\cA$ and $g\geq2$, Theorem~D
+begins with
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)
+\in H^2(\operatorname{Def}_g(\cA))$.  Under $H_D^K$,
 \begin{equation}\label{eq:genus-universality}
-\mathrm{obs}_g(\cA)
-\;=\;
-\kappa(\cA) \cdot \lambda_g\,,
-\qquad g \ge 1\,.
+\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+\qquad
+\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g.
 \end{equation}
-The free energy $F_g(\cA) = \kappa(\cA) \cdot
-\lambda_g^{\mathrm{FP}}$, where
+On the scalar-diagonal graph lane the free energy is
+$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$, where
 \begin{equation}\label{eq:faber-pandharipande}
 \lambda_g^{\mathrm{FP}}
 \;=\;
@@ -201,7 +203,7 @@ $2g$-th Bernoulli number), packages the entire genus tower
 into the Hirzebruch $\hat{A}$-class:
 \begin{equation}\label{eq:ahat-generating}
 \sum_{g=1}^{\infty}
-F_g(\cA)\,\hbar^{2g-2}
+F_g^{\mathrm{sc}}(\cA)\,\hbar^{2g-2}
 \;=\;
 \frac{\kappa(\cA)}{\hbar^2}
 \bigl[\hat{A}(i\hbar) - 1\bigr]\,,
@@ -214,12 +216,11 @@ universal ratio $F_2/F_1 = 7/240$ is independent
 of~$\cA$. The series converges for
 $|\hbar| < 2\pi$, the first zero of $\sin(\hbar/2)$.
 
-The genus-$1$ identity
-$\mathrm{obs}_1 = \kappa \cdot \lambda_1$
-is unconditional: it holds for all modular Koszul chiral
-algebras, regardless of the number or weights of their
-generators. At genus $g \ge 2$, the story is more
-delicate.
+At genus~$1$, the pointed trace identity
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}
+=\kappa\lambda_1$ holds for every modular Koszul family.  At
+$g\ge2$, the graph output carries the cross-channel decomposition
+of Remark~\ref{rem:multi-weight}.
 
 \begin{remark}[Multi-weight correction]
 \label{rem:multi-weight}
@@ -340,29 +341,27 @@ B
 \]
 between augmented factorization algebras and conilpotent
 factorization coalgebras, with unit and counit the
-universal twisting morphisms. Verdier duality on\/
-$\Ran(X)$ intertwines the bar of\/~$\cA$ with the bar
-of its Koszul dual:
+universal twisting morphisms.  On the dualizable Ran surface,
+Verdier duality sends the bar coalgebra to the factorization algebra
 \begin{equation}\label{eq:verdier}
-\mathbb{D}_{\Ran}\bigl(B(\cA)\bigr)
-\;\simeq\;
-B(\cA^!)\,,
+K_X(\cA):=\mathbb{D}_{\Ran}B(\cA).
 \end{equation}
-as factorization coalgebras, or equivalently
-$\mathbb{D}_{\Ran}(B(\cA)) \simeq \cA^!_\infty$
-as the homotopy Koszul dual algebra.
+For a quadratic presentation, the comparison
+$q_\cA\colon\cA^{\mathrm i}\to B(\cA)$ has Verdier transpose
+\[
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}).
+\]
+A chosen Koszul pair supplies an algebra map
+$\nu_\cA\colon K_X(\cA)\to\cA^!$, an equivalence under the
+finite-type or completed pair hypotheses.
 \end{theorem}
 
-The adjunction is formal: it requires only the augmented
-factorization-algebra structure and the duality on~$\Ran(X)$.
-The intertwining~\eqref{eq:verdier} is a deeper statement:
-it says that the Verdier dual of the bar \emph{coalgebra}
-is the bar of the Koszul dual \emph{algebra}. The
-identification of the homotopy Koszul dual $\cA^!_\infty$
-(retaining full chain-level data) with the strict Koszul
-dual $\cA^! = (H^*(B(\cA)))^\vee$ (retaining only
-cohomology) is the content of Theorem~A on the Koszul
-locus, not a tautology.
+The adjunction uses the augmented factorization-algebra structure.
+The Verdier clause additionally uses dualizability and monoidal
+exchange on~$\Ran(X)$.  Equation~\eqref{eq:verdier} retains the full
+chain-level data; the pair map compares it with the strict algebra
+$\cA^!=(H^*(B(\cA)))^\vee$.
 
 % ====================================================================
 \subsection{Theorem B: bar-cobar inversion}
@@ -407,65 +406,73 @@ inversion requires completion.
 % ====================================================================
 
 \begin{theorem}[C]\label{thm:C}
-For a Koszul pair $(\cA, \cA^!)$ on~$X$ and each $g \ge 0$, the
-complementarity complex
+For a Koszul pair $(\cA, \cA^!)$ on~$X$, Theorem~C has three typed
+tiers.  \textsc{C0} is the strict flat fibre-centre comparison giving
+the ambient complex
 \[
 \mathbf{C}_g(\cA)
 \;:=\;
 R\Gamma\bigl(\overline{\cM}_g,\, \mathcal{Z}_\cA\bigr)
 \]
-decomposes into homotopy eigenspaces of the Verdier
-involution~$\sigma$:
+on the chirally Koszul datum.  \textsc{C1}, once the represented
+Verdier involution, perfectness, and nondegenerate anti-invariant
+Verdier pairing are supplied, decomposes this complex into homotopy
+eigenspaces:
 \begin{equation}\label{eq:complementarity}
 \mathbf{C}_g
 \;\simeq\;
 \mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!)\,.
 \end{equation}
-If the cyclic pairing is perfect and nondegenerate, then for
-$g \ge 1$ the summands $\mathbf{Q}_g(\cA) =
-\operatorname{fib}(\sigma - \mathrm{id})$ and
+For $g \ge 1$ the pairing has cohomological degree $-(3g-3)$, and
+the summands $\mathbf{Q}_g(\cA)=
+\operatorname{fib}(\sigma-\mathrm{id})$ and
 $\mathbf{Q}_g(\cA^!)=\operatorname{fib}(\sigma + \mathrm{id})$
-are Lagrangian for the $(-1)$-shifted symplectic pairing
-on\/~$\mathbf{C}_g$.
+are Lagrangian under the C1 hypotheses.  \textsc{C2} is the
+shifted-symplectic/BV upgrade; it is conditional on the C2 hypothesis
+package and is not supplied by the scalar conductor or by
+uniform-weight diagonalization alone.
 \end{theorem}
 
-The eigenspace decomposition (C1) is unconditional: it
-holds for all modular Koszul algebras at all genera. The
-scalar identity $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-on each summand (C2) requires the uniform-weight hypothesis
-at $g \ge 2$. The Lagrangian property, a
-$(-1)$-shifted symplectic statement in the sense of
-Pantev--To\"en--Vaqui\'e--Vezzosi, is conditional on
-perfectness and nondegeneracy of the cyclic pairing.
+The scalar identity $F_g=\kappa\lambda_g^{\mathrm{FP}}$ is the
+uniform-weight scalar trace shadow of C1 together with Theorem~D.  It
+is not the C2 shifted-symplectic upgrade.  The C2 statement requires
+the Pantev--To\"en--Vaqui\'e--Vezzosi shifted-symplectic package,
+cyclic closedness, skew-adjointness, modular-bracket compatibility,
+twisted-tensor acyclicity, and the stated BV/QME anomaly-killing
+inputs.
 
 % ====================================================================
-\subsection{Theorem D: the modular characteristic}
+\subsection{Theorem D: the four-stage modular trace}
 \label{ssec:thm-d}
 % ====================================================================
 
 \begin{theorem}[D]\label{thm:D}
-For a uniform-weight modular Koszul chiral algebra\/~$\cA$,
-the genus-$g$ obstruction class satisfies
-$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-\textup{(UNIFORM-WEIGHT)}
-for all\/ $g \ge 1$, where $\kappa(\cA)$ is a universal,
-additive, duality-constrained scalar fixed by the genus-$1$
-curvature and already visible in the leading OPE singularity
-of\/~$\cA$. The generating function is
-the Hirzebruch $\hat{A}$-class
-\textup{(}\eqref{eq:ahat-generating}\textup{)}.
-At genus\/~$1$, the identity is unconditional: it holds
-for all modular Koszul algebras regardless of weight
-structure. At $g \ge 2$ for multi-weight algebras, the full
-free energy acquires the explicit cross-channel correction
-$\delta F_g^{\mathrm{cross}}$.
+Let~$\cA$ be a cyclic chart algebra with modular characteristic
+$\kappa(\cA)$.  For $g\geq2$, its native genus-$g$ class is
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)\in
+H^2(\operatorname{Def}_g(\cA))$.  Under~$H_D^1$,
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)
+=\kappa(\cA)\lambda_1$.  Under~$H_D^K$,
+\[
+ \mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g(\mathfrak O_g^K(\cA))
+ =(-1)^g\kappa(\cA)\lambda_g.
+\]
+The package~$H_D^{\mathrm{tr}}$ supplies the deformation-to-$K$
+comparison.  Under~$H_D^{\mathrm{graph}}$,
+\[
+ F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
+ +\delta F_g^{\mathrm{cross}}(\cA).
+\]
+The scalar-diagonal graph package gives
+$\delta F_g^{\mathrm{cross}}(\cA)=0$.
 \end{theorem}
 
-The universality is the point: no matter how complicated
-the OPE structure, the genus tower is controlled by a
-single number. Theorem~D is the all-genera identity on the
-uniform-weight lane; at genus~$1$ it is unconditional
-(Remark~\ref{rem:multi-weight}).
+The $\hat A$-series evaluates the scalar-diagonal graph functional.
+The native class, the perfect object, the Hodge character, and this
+number lie in different ambient groups; $H_D^{\mathrm{tr}}$ is the
+map between the first two stages.
 
 % ====================================================================
 \subsection{Theorem H: chiral Hochschild cohomology}
@@ -473,27 +480,39 @@ uniform-weight lane; at genus~$1$ it is unconditional
 % ====================================================================
 
 \begin{theorem}[H]\label{thm:H}
-For the generic Virasoro and principal $\cW$-algebra
-families, the chiral Hochschild cohomology is concentrated
-in degrees $\{0,1,2\}$ with Hilbert polynomial
-$P(t)=1+t^2$. For affine Kac--Moody at generic level,
+Fix a finite set $S\subset\mathbb Z$.  A family datum
+$H_H(\cA;S)$ consists of a complete chart complex $Q_\cA$, a
+quasi-isomorphism to $C^\bullet_{\mathrm{ch}}(\cA,\cA)$, and a
+strong deformation retract
 \[
-\ChirHoch^1(V_k(\fg)) \cong \fg.
+ K_{\cA,S}\mathop{\xrightarrow{\ \iota\ }}Q_\cA
+ \mathop{\xrightarrow{\ p\ }}K_{\cA,S},
+ \qquad p\iota=\id,
+ \qquad dh+hd=\id-\iota p,
 \]
-At critical level, the cohomology is identified with the
-continuous Lie algebra cohomology by the
-Beilinson--Drinfeld comparison theorem.
+including the finite-window completion and ordered-to-symmetric
+comparison.  Then
+\[
+ \ChirHoch^n(\cA)\cong H^n(K_{\cA,S}),
+ \qquad
+ \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S.
+\]
+For finite-dimensional graded pieces, the Hilbert polynomial is
+$P_\cA(t)=\sum_{n\in S}\dim H^n(K_{\cA,S})t^n$.  A perfect
+degree-$d$ pairing with $\cA^!$ is an additional datum.
 \end{theorem}
 
 The chiral derived centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
 C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ is the universal
-bulk algebra: the algebra of operators in the interior
-that act on the boundary algebra~$\cA$. Theorem~H
-constrains its cohomology. For the Virasoro algebra,
-the total dimension of $\mathrm{ChirHoch}^*(\Vir_c)$ is
-at most~$4$; this is a finite-dimensionality statement,
-not a polynomial-ring statement.
+closed-sector algebra: the cochain-level operator algebra acting on
+the boundary algebra~$\cA$. A physical bulk interpretation requires
+the open--closed comparison datum. Theorem~H computes its cohomology
+from $K_{\cA,S}$.  Bakalov--De Sole--Kac compute the bounded
+Virasoro groups as one-dimensional in degrees $\{0,2,3\}$
+\cite[Theorem~7.2]{BDSK21}; a
+bounded-to-chart quasi-isomorphism transports that vector to the
+curve chart.
 
 % ====================================================================
 \subsection{The Koszulness meta-theorem}
@@ -515,10 +534,11 @@ conditions \textup{(i)--(v)} and \textup{(ix)--(x)} are the
 seven independent bidirectional equivalences. Item
 \textup{(vi)} follows from \textup{(v)}. Item \textup{(vii)}
 is conditional on the factorization-homology comparison and
-detection package. Item \textup{(viii)} is a one-way
-consequence on the Koszul locus. Under the shifted-symplectic
-hypothesis package, \textup{(xi)} is equivalent. Condition
-\textup{(xii)} implies \textup{(x)}; the converse is open.
+detection package. Item \textup{(viii)} is a one-way consequence
+of a family datum $H_H(\cA;S)$.
+Under the shifted-symplectic hypothesis package, \textup{(xi)} is
+equivalent. Condition \textup{(xii)} implies \textup{(x)}; the
+converse is open.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\cA$ is chirally Koszul.
 \item The PBW spectral sequence collapses at\/~$E_2$.
@@ -533,8 +553,11 @@ hypothesis package, \textup{(xi)} is equivalent. Condition
 \item Factorization homology
  $\int_{\Sigma_g}\!\cA$ is concentrated in degree~$0$
  for all~$g$.
-\item $\mathrm{ChirHoch}^*(\cA)$ is polynomial in
- degrees $\{0, 1, 2\}$.
+\item Under $H_H(\cA;S)$,
+ $\operatorname{Supp}\mathrm{ChirHoch}^\bullet(\cA)\subseteq S$,
+ with Hilbert polynomial
+ $\sum_{n\in S}\dim H^n(K_{\cA,S})t^n$ when the graded pieces
+ are finite dimensional.
 \item The Kac--Shapovalov determinant is nonzero in the
  bar-relevant range.
 \item Restriction to every FM boundary stratum is

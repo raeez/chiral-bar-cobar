@@ -1009,7 +1009,9 @@ def koszul_dual_kappa(family: str, **params) -> float:
     """Kappa of the Koszul dual (AP24, AP33).
 
     Virasoro: kappa(Vir_c^!) = kappa(Vir_{26-c}) = (26-c)/2
-    Heisenberg: kappa(H_k^!) = -k (AP33: H_k^! != H_{-k} but same kappa)
+    Heisenberg: scalar kappa(H_k^!) = -k.  AP33: at k != 0, H_k^!
+    is the curved second-kind Sym^ch(V*[1]) branch, not H_{-k}; only
+    scalar kappa agrees with kappa(H_{-k}).
     Affine: Feigin-Frenkel k -> -k - 2h^v
     """
     fam = family.lower()

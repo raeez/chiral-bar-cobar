@@ -59,8 +59,10 @@ $\lambda$.}\label{tab:betagamma-five-theorems}
  & \textbf{Anchor} \\
 \midrule
 A (adjunction) &
- $A^{\mathrm i}=H^\bullet(\bar B(A))$ and
- $A^!\simeq bc_\lambda$ for $A=\beta\gamma_\lambda$
+ $A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$,
+ $q_A\colon A^{\mathrm i}\xrightarrow{\sim}\bar B(A)$, and
+ $\nu_A\colon K_X(A)\xrightarrow{\sim}bc_\lambda$
+ for $A=\beta\gamma_\lambda$
  & Thm~\ref{thm:betagamma-bc-koszul} \\
 B (inversion) &
  $\Omega(\barB(\beta\gamma)) \xrightarrow{\sim}
@@ -74,9 +76,10 @@ D (modular char.) &
  = c/2 = 6\lambda^2{-}6\lambda{+}1$
  & Rem~\ref{rem:betagamma-shadow-archetype-free} \\
 H (chiral Hochschild) &
- $\ChirHoch^n(\beta\gamma_\lambda)=0$ for
- $n\notin\{0,1,2\}$
- & Thm~\ref{thm:hochschild-polynomial-growth} \\
+ $H_H(\beta\gamma_\lambda;S_{\beta\gamma})$ gives
+ $\operatorname{Supp}\ChirHoch^\bullet(\beta\gamma_\lambda)
+ \subseteq S_{\beta\gamma}$
+ & Thm~\ref{thm:main-koszul-hoch} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -113,15 +116,23 @@ $L_\infty$-formality &
 \noindent
 The five objects remain distinct throughout this chapter. For
 $A=\beta\gamma_\lambda$, $B(A)$ is the ordered bar coalgebra,
-$A^{\mathrm{i}}=H^\bullet(B(A))$ is the Koszul-dual coalgebra,
-$A^!=(A^{\mathrm{i}})^\vee\simeq bc_\lambda$ is the Verdier/Koszul
-dual algebra on finite-type truncations, and
+$A^{\mathrm{i}}=C_X(s^{-1}V,s^{-2}R)$ is the quadratic coalgebra,
+$K_X(A)=\mathbb D_{\Ran}B_X^\Sigma(A)$ is the symmetric Verdier
+algebra, and
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ is the
-cochain-level chiral closed sector. The identity $\Omega(B(A))\simeq A$ is
-bar--cobar inversion; it is not the assertion $B(A)=A^!$, and it is
-not a derived-centre computation. Theorem~H is the concentration of
-this last object in degrees $\{0,1,2\}$, not a statement about the
-bare bar coalgebra or about the Koszul-dual algebra.
+cochain-level chiral closed sector.  The maps
+$q_A\colon A^{\mathrm i}\to B_X^\Sigma(A)$ and
+$\nu_A\colon K_X(A)\xrightarrow{\sim}bc_\lambda$ give the quadratic
+and chosen-pair comparisons on finite-type truncations.  The identity
+$\Omega(B(A))\simeq A$ is bar--cobar inversion.  The family datum
+$H_H(A;S_{\beta\gamma})$ belongs to the derived-centre object and gives
+\[
+ \operatorname{Supp}\ChirHoch^\bullet(A,A)
+ \subseteq S_{\beta\gamma}.
+\]
+The bar coalgebra and the Koszul-dual algebra retain their respective
+types.  A perfect degree-$d$ chain pairing is the additional map that
+produces a degree reflection.
 
 \noindent
 The modular Koszul triple
@@ -306,16 +317,18 @@ $\mathrm{L}1,\mathrm{L}2,\mathrm{L}3,\mathrm{L}4$:
 The bar--cobar adjunction is realised by the explicit
 $\beta\gamma$ bar complex
 $\bar{B}^{\mathrm{ch}}(\beta\gamma_\lambda)$ of
-Theorem~\ref{thm:betagamma-bar-complex}; the witness chain
-homotopy is the contact one $h_C=h_{\mathrm{LV}}/\mathcal N(\beta\gamma_\lambda)$,
-where the level-$2$ Verdier-Ran-on-bar norm
-$\mathcal N(\beta\gamma_\lambda)=1$ is the free-field OPE
-normalisation (Convention~\ref{conv:A-two-kappa-shriek}), so
-$h_C=h_{\mathrm{LV}}$. This denominator is the level-$2$ norm, not
-the algebra-level complementarity ceiling
-$K^\kappa=\kappa+\kappa^!=0$ of the $\beta\gamma$/$bc$ free-field
-pair: the ceiling vanishes by Verdier sign-flip, while the homotopy
-denominator $\mathcal N=1$ is finite.
+Theorem~\ref{thm:betagamma-bar-complex}.  The L1 proof obligation is
+the construction of maps $(i_C,p_C,h_C)$ satisfying
+$d h_C+h_Cd=\nu_C(\mathrm{id}-i_Cp_C)$.  A solution in the
+free-field OPE normalisation has $\nu_C=1$ and hence contraction
+homotopy $\nu_C^{-1}h_C=h_C$.  A selected Loday--Vallette comparison
+may then identify this constructed homotopy with a representative
+$h_{\mathrm{LV}}$.  The cited bar-complex theorem supplies the
+complex and differential; the contraction datum is the additional
+L1 construction.  The level-$2$ scalar $\nu_C=1$ and the
+algebra-level complementarity ceiling
+$K^\kappa=\kappa+\kappa^!=0$ are carried by their respective
+comparison maps.
 \item \emph{$\mathrm{L}2$ (Quillen-equivalence).}
 The Vallette bar--cobar Quillen equivalence
 \cite[Theorem~2.1]{Val16} applies in the Francis--Gaitsgory
@@ -527,6 +540,101 @@ $\lambda = 0$: $c = +2$;
 $\lambda = 1/2$: $c = -1$ (symplectic bosons).
 \end{computation}
 
+\begin{proposition}[\texorpdfstring{$\beta\gamma$}{beta-gamma}
+standard-family ledger; \ClaimStatusConditional]
+\label{prop:betagamma-standard-family-ledger}
+\index{beta-gamma system@$\beta\gamma$ system!standard-family ledger}
+\index{bc system@$bc$ system!statistics convention}
+\index{symplectic boson!standard specialization}
+Let \(\beta\gamma_\lambda\) be the bosonic two-generator system with
+\[
+h_\beta=\lambda,\qquad h_\gamma=1-\lambda,\qquad
+\beta(z)\gamma(w)\sim\frac1{z-w},
+\]
+and no singular \(\beta\beta\) or \(\gamma\gamma\) OPE.  In the
+ordered bar presentation the first nonzero differential is the
+degree-two mixed contraction
+\begin{equation}\label{eq:betagamma-ledger-bar-d2}
+d[\beta|\beta]=0,\qquad d[\gamma|\gamma]=0,\qquad
+d[\beta|\gamma]=\mathbf 1,\qquad d[\gamma|\beta]=-\mathbf 1 .
+\end{equation}
+In degree three, the same simple-pole extraction gives, for example,
+\begin{equation}\label{eq:betagamma-ledger-bar-d3}
+d[\beta_1|\beta_2|\gamma_3]
+=[\beta_1|\mathbf 1]-[\mathbf 1|\beta_2],
+\end{equation}
+with the full lowest-weight skeleton recorded in
+Theorem~\ref{thm:betagamma-complete-bar}.  The simple pole therefore
+feeds the ordered bar differential, while the closed pole-valued
+collision \(r\)-matrix is regular after the \(d\log\)-absorption
+convention.
+
+The class-\(\mathsf C\) standard conformal-weight family has
+\begin{equation}\label{eq:betagamma-ledger-shadow}
+S_2=6\lambda^2-6\lambda+1,\qquad
+S_3=0,\qquad
+S_4=-\frac{5}{12},\qquad
+S_r=0\quad(r\ge5).
+\end{equation}
+The quartic term is the cyclic contact
+\(\mathfrak Q_{\beta\gamma}=\operatorname{cyc}(m_3)\) on the
+standard contact direction
+\textup{(}Theorem~\ref{thm:betagamma-quartic-birth}\textup{)}.  On the
+rank-one weight-changing line
+\[
+L_{\mathrm{w.c.}}=\mathbb C\eta,\qquad
+\eta=\partial_\lambda T_\lambda
+=\normord{\beta\,\partial\gamma}
+-\normord{(\partial\beta)\,\gamma},
+\]
+the transferred brackets vanish:
+\[
+\ell_2^{\mathrm{tr}}(\eta,\eta)=0,\qquad
+\ell_3^{\mathrm{tr}}(\eta,\eta,\eta)=0,\qquad
+\mu_{\beta\gamma}:=\langle\eta,m_3(\eta,\eta,\eta)\rangle=0
+\]
+\textup{(}Lemma~\ref{lem:betagamma-ell2-vanishing},
+Proposition~\ref{prop:betagamma-ell3-vanishing}, and
+Corollary~\ref{cor:betagamma-mu-vanishing}\textup{)}.  Thus the
+standard contact surface has a nonzero quartic coefficient, while the
+internal weight-changing line has no quartic scalar projection.
+
+The modular characteristics are
+\begin{equation}\label{eq:betagamma-ledger-kappa}
+\kappa(\beta\gamma_\lambda)
+=6\lambda^2-6\lambda+1,\qquad
+\kappa(bc_\lambda)=-(6\lambda^2-6\lambda+1),
+\end{equation}
+so \(K^\kappa(\beta\gamma_\lambda,bc_\lambda)=0\).  The Koszul dual
+is parity-changing:
+\[
+(\beta\gamma_\lambda)^!\simeq bc_\lambda,\qquad
+(bc_\lambda)^!\simeq\beta\gamma_\lambda .
+\]
+Here \(bc_\lambda\) is the two-generator fermionic ghost system with
+odd fields \(b,c\) of weights \(\lambda,1-\lambda\) and Clifford
+contact tensor \(b\otimes c+c\otimes b\).  It is not the
+single-generator free fermion \(\mathcal F\), whose Koszul partner is
+a one-generator bosonic symmetric chiral algebra.
+
+At \(\lambda=\tfrac12\), the bosonic system
+\(\beta\gamma_{1/2}\) is the rank-one symplectic boson:
+\[
+c_{\beta\gamma}=-1,\qquad \kappa(\beta\gamma_{1/2})=-\tfrac12.
+\]
+Its Koszul partner \(bc_{1/2}\) is instead the complex-fermion pair,
+with \(c_{bc}=1\) and \(\kappa(bc_{1/2})=\tfrac12\).  The
+\(\mathbb Z_2\)-equivariant bar statement at this point is
+\[
+H^\bullet(\bar B(\beta\gamma_{1/2}))^{\mathbb Z_2}
+\cong
+\bigl((\beta\gamma_{1/2})^{\mathrm i}\bigr)^{\mathbb Z_2},
+\]
+and the corresponding equivariant twisted Koszul resolution has only
+vacuum cohomology, over characteristic zero, as in
+Proposition~\ref{prop:symplectic-equivariant-cohomology}.
+\end{proposition}
+
 \section{Bar complex computation}
 
 The bar complex of $\beta\gamma$ computes the degree-by-degree
@@ -633,33 +741,39 @@ The explicit computation for degrees~1--3 proceeds as follows.
 
 \begin{theorem}[Bar cohomology of \texorpdfstring{$\beta\gamma$}{beta-gamma}; \ClaimStatusConditional]
 \label{thm:betagamma-bar-cohomology}
-For generic conformal weight $\lambda$, the geometric bar cohomology
-of the $\beta\gamma$ system is the Koszul-dual coalgebra
+For generic conformal weight $\lambda$, choose the quadratic
+presentation coalgebra
+$(\beta\gamma_\lambda)^{\mathrm i}
+=C_X(s^{-1}V,s^{-2}R)$ and its canonical comparison~$q_\lambda$.
+Under $H_{\mathrm{CL}}$,
 \[
-H^\bullet\!\bigl(\bar{B}_{\mathrm{geom}}(\beta\gamma_\lambda)\bigr)
-\;\cong\;(\beta\gamma_\lambda)^{\mathrm{i}},
-\qquad
-\bigl((\beta\gamma_\lambda)^{\mathrm{i}}\bigr)^\vee
-\;\cong\;
-(\beta\gamma_\lambda)^!
-\;\simeq\;
-bc_\lambda .
+H^\bullet(q_\lambda)\colon
+H^\bullet\!\bigl((\beta\gamma_\lambda)^{\mathrm i}\bigr)
+\xrightarrow{\;\sim\;}
+H^\bullet\!\bigl(\bar{B}_{\mathrm{geom}}
+(\beta\gamma_\lambda)\bigr).
 \]
-It is not concentrated in degree~$0$. The acyclic object is the
+Ran--Verdier duality forms
+$K_X(\beta\gamma_\lambda)$, and the chosen-pair map
+$\nu_\lambda\colon K_X(\beta\gamma_\lambda)
+\xrightarrow{\sim}(\beta\gamma_\lambda)^!$
+identifies the latter with $bc_\lambda$ on the finite-type completed
+pair locus.  The bar cohomology has positive-degree classes.  The
 twisted Koszul resolution
 $\beta\gamma_\lambda\otimes_{\tau}\bar{B}(\beta\gamma_\lambda)$,
-whose augmentation has cohomology $\mathbb{C}$.
+has augmentation cohomology $\mathbb{C}$.
 \end{theorem}
 
 \begin{proof}
 Theorem~\ref{thm:betagamma-bc-koszul} identifies the Verdier/Koszul
 dual algebra with $bc_\lambda$. Equivalently, the orthogonal
 complement of the antisymmetric $\beta\gamma$ relation is the
-Clifford relation for $bc_\lambda$. The bar construction computes the
-dual coalgebra before finite dualization:
-$H^\bullet(\bar B(A))=A^{\mathrm i}$ and
-$A^!=(A^{\mathrm i})^\vee$ on the finite-type truncations.
-Thus the positive bar cohomology classes are precisely the coalgebra
+Clifford relation for $bc_\lambda$.  The map
+$q_A\colon A^{\mathrm i}\to\bar B(A)$ compares the presentation
+coalgebra with the full bar; $H_{\mathrm{CL}}$ makes
+$H^\bullet(q_A)$ an isomorphism.  Finite-window Verdier duality and
+$\nu_A$ then carry the presentation data to the $bc$ partner.  Thus
+the positive bar cohomology classes correspond to the coalgebra
 generators and relations dual to the $bc$ system.
 
 The degree-$2$ calculation below already exhibits the distinction:
@@ -1481,10 +1595,13 @@ d^{(1)}([\beta|\gamma] \otimes \eta_{12}^{(1)})
 \bigl[P^{(1)}(u|\tau,\zeta)/u\bigr]
 \cdot \mathbb{1}
 \end{align}
-where $\eta_{12}^{(1)} = d\log\theta_1(z_1 - z_2|\tau)$ is the
-elliptic logarithmic form and $u=z_1-z_2$. After the rational
-double-pole term is subtracted, the normalized elliptic kernel records
-the coefficient of $u^{-1}$ in $P^{(1)}/u$. From
+where the holomorphic coefficient of $\eta_{12}^{(1)}$ is
+$\partial_u\log\theta_1(u|\tau)$ and the descended one-form also
+includes the Arakelov coefficient
+$2\pi i\,\operatorname{Im}(u)d u/\operatorname{Im}\tau$; here
+$u=z_1-z_2$. After the rational double-pole term is subtracted,
+the normalized elliptic kernel records the coefficient of $u^{-1}$ in
+$P^{(1)}/u$. From
 \eqref{eq:betagamma-propagator-expansion},
 $P^{(1)}/u = 1/u^2 + (\text{const})/u + \ldots$,
 so the genus-$1$ correction is the constant term in the Laurent
@@ -2287,7 +2404,8 @@ global gluing axioms, not of local algebra.
 Compare with the Heisenberg system (Overture), where
 $c_{\mathrm{Heis}} = 1$ already detects modular curvature. The
 Heisenberg is \emph{not} Koszul self-dual
-($\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$, not~$\cH_k$),
+($\cH_k^!=(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)$
+for \(k\ne0\), not~$\cH_k$),
 but its abelian OPE structure makes the two sides difficult to
 distinguish at the level of shadow invariants. The $\beta\gamma$
 system, also not self-dual ($(\beta\gamma)^{!} \simeq bc$),
@@ -3288,8 +3406,9 @@ D (modular char.) &
  $\kappa(\cA_{\beta\gamma}) = 6\lambda^2 - 6\lambda + 1$;\; $=1$ at $\lambda = 0,1$;\; $= -\tfrac{1}{2}$ at $\lambda = \tfrac{1}{2}$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\ChirHoch^n(\beta\gamma_\lambda)=0$ for
- $n\notin\{0,1,2\}$ \\
+ $H_H(\beta\gamma_\lambda;S_{\beta\gamma})$ gives
+ $\operatorname{Supp}\ChirHoch^\bullet(\beta\gamma_\lambda)
+ \subseteq S_{\beta\gamma}$ \\
 \bottomrule
 \end{tabular}
 \end{center}

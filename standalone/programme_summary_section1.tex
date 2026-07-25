@@ -321,8 +321,10 @@ kills the algebra. Both are needed, and both are consumed.
 
 \item \emph{Same pair.}
 $d_{\mathrm{res}}^{(ij)}\,d_{\mathrm{res}}^{(ij)} = 0$
-by the sign rule on desuspensions: extracting a residue
-twice at the same diagonal vanishes for degree reasons.
+because the first Poincar\'e residue removes the unique logarithmic
+normal factor along \(D_{ij}\).  After restriction to that divisor there
+is no second normal direction for the same diagonal; the desuspension
+sign only records the ordered-bar orientation.
 \end{enumerate}
 
 The result: $d_{\barB}^2 = 0$ if and only if the
@@ -373,8 +375,9 @@ The ordered bar is the level-$2$ chain object before averaging. The symmetric ba
 is a quotient that loses data: the non-cocommutative structure
 of the ordered bar carries the spectral $R$-matrix, the
 Knizhnik--Zamolodchikov associator, and the full quantum group
-deformation, none of which survive the passage to
-$\Sigma_n$-coinvariants.
+deformation. The part not represented in the descended symmetric
+target is the formal ordered information-loss conductor, not an
+informal metaphor for ignorance.
 
 \begin{remark}[Six bar complexes]\label{rem:six-bars}
 Six bar-type objects coexist. The Francis--Gaitsgory
@@ -385,8 +388,9 @@ inclusion $\mathrm{Lie}^c \hookrightarrow \Sym^c$
 (a quasi-isomorphism in characteristic zero, but a categorical
 distinction). The genus-graded bar $B^{(g)}(\cA)$ extends
 $\barB^\Sigma$ to families of curves over
-$\overline{\cM}_g$, where the differential acquires curvature
-$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$
+$\overline{\cM}_g$, where the fiberwise differential becomes curved
+with $m_1^2=[m_0^{(g)},-]$ and scalar diagonal
+$\kappa(\cA)\cdot\omega_g$
 (see~\S\ref{ssec:genus}).
 The modular bar $B^{\mathrm{mod}}(\cA)$ restores $D^2 = 0$
 by completing over the Feynman transform of the commutative
@@ -394,8 +398,9 @@ modular operad. The $E_1$-modular bar
 $B^{E_1\text{-}\mathrm{mod}}(\cA)$, an algebra over the
 Feynman transform of the associative modular operad, is the
 primitive among these; the modular bar is its
-$\Sigma_n$-coinvariant image. No two of these six objects
-are isomorphic in general.
+$\Sigma_n$-coinvariant image.  These six objects occupy distinct typed
+ambients, and every identification among them is represented by a
+comparison morphism.
 \end{remark}
 
 
@@ -404,34 +409,41 @@ are isomorphic in general.
 \label{ssec:three-operations}
 % ====================================================================
 
-The bar construction is a categorical logarithm:
-$B(\cA \otimes \cA') \simeq B(\cA) \oplus B(\cA')$.
-The logarithmic form
-$\eta_{ij} = d\log(z_i - z_j)$ is the integral kernel;
-the Arnold relation is the cocycle condition for~$\log$.
+Under the completed Eilenberg--Zilber comparison, the bar construction
+is comonoidal:
+$B(\cA \otimes \cA') \simeq B(\cA) \otimes B(\cA')$.
+The form $\eta_{ij}=d\log(z_i-z_j)$ is a local logarithmic generator
+with residue~$1$; Arnold's relation controls the codimension-two
+boundary compatibility of its residue contractions.
 
-Three distinct functors act on~$B(\cA)$ and produce three
-distinct outputs:
+Three constructions applied to~$B(\cA)$ produce three typed outputs:
 \begin{equation}\label{eq:three-functors}
 \begin{array}{lcll}
 \Omega(B(\cA)) &\simeq& \cA
  & \text{(cobar inversion: recovers the original)},\\[3pt]
-\mathbb{D}_{\Ran}(B(\cA)) &\simeq& \cA^!_\infty
- & \text{(Verdier duality: the homotopy Koszul dual)},
+\mathbb{D}_{\Ran}(B(\cA))
+ &=& K_X(\cA)
+ & \text{(Verdier duality: the chain-level Koszul algebra)},
  \\[3pt]
-(H^*(B(\cA)))^\vee &=& \cA^!
- & \text{(linear duality of bar cohomology: the strict dual)}.
+\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)
+ &\xrightarrow{\ q_\cA\ }&B_X(\cA)
+ & \text{(quadratic presentation comparison)}.
 \end{array}
 \end{equation}
-Cobar inversion recovers the original algebra~$\cA$ itself;
-it is a round-trip, not a duality. Verdier duality on
-$\Ran(X)$ converts the bar coalgebra into a factorization
-algebra~$\cA^!_\infty$, the homotopy Koszul dual retaining
-full chain-level data. That its cohomology recovers the
-strict Koszul dual~$\cA^!$ on the Koszul locus is the content
-of the Verdier intertwining theorem, not a tautology.
-Confusing any two of~\eqref{eq:three-functors} is a
-category error.
+Cobar inversion is the round-trip to the original algebra~$\cA$.
+Verdier duality on $\Ran(X)$ transposes the bar coproduct directly to
+the multiplication of the chain-level algebra $K_X(\cA)$.  Bar
+cohomology is the separate graded coalgebra $H^\bullet B_X(\cA)$.
+When $q_\cA$ is a quasi-isomorphism and local finite duality applies,
+\[
+\mathbb D(q_\cA)\colon K_X(\cA)
+\xrightarrow{\sim}\mathbb D_{\Ran}(\cA^{\mathrm i}),
+\qquad
+\nu_\cA\colon K_X(\cA)\xrightarrow{\sim}\cA^!
+\]
+give the presentation-dual and chosen-partner realizations.  Thus
+\eqref{eq:three-functors} separates reconstruction, chain-level
+duality, and strict quadratic duality by source and target.
 
 
 % ====================================================================
@@ -523,7 +535,7 @@ where $\Omega$ is the Casimir tensor and $k$ is the level.
 At $k = 0$ the $r$-matrix vanishes: no level, no collision
 data. The averaging map collapses $k\,\Omega$ to a scalar:
 \begin{equation}\label{eq:km-kappa}
-\mathrm{av}(k\,\Omega/z)
+\mathrm{av}(k\,\Omega_{\mathrm{tr}}/z)
 \;=\;
 \frac{k\,\dim(\fg)}{2h^\vee}
 \;=\;
@@ -578,9 +590,9 @@ graph sum use the standard Hodge bundle
 $\mathbb{E}_1 = R^0\pi_*\omega_\pi$.
 
 The Arnold relation acquires a defect, and the fibrewise bar
-differential satisfies
+differential becomes curved with scalar diagonal projection
 \begin{equation}\label{eq:curvature}
-d_{\mathrm{fib}}^{\,2}
+\operatorname{tr}_{\mathrm{diag}}\!\bigl(m_0^{(g)}\bigr)
 \;=\;
 \kappa(\cA) \cdot \omega_g\,,
 \end{equation}

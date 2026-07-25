@@ -62,8 +62,8 @@ References:
     ("rank-one Heisenberg algebra satisfies kappa(H_k) = k"),
     L1388 (G row of the (S_3, S_4, Delta, rho, kappa+kappa') table:
     five zeros), L1801 (verbatim formula), L2058-2107 (Verdier dual
-    H_k^! = Sym^ch(V^*) with kappa(H_k^!) = -k and complementarity
-    sum 0).
+    H_k^! is the curved Sym^ch(V^*[1]) branch with scalar
+    kappa(H_k^!) = -k and complementarity sum 0).
   - chapters/connections/master_concordance.tex L590-593 (Heisenberg
     Verdier partner row: K^kappa = 0).
   - chapters/examples/bershadsky_polyakov.tex Remark
@@ -123,7 +123,8 @@ ROW_G_ANCHOR_FN = lambda k: {
 #       (heisenberg_eisenstein.tex L40-50, Cor cor:uc-K-heisenberg
 #       in chapters/theory/universal_conductor_K_platonic.tex).
 #   (C) Verdier-Koszul complementarity kappa(H_k) + kappa(H_k^!) = 0
-#       with kappa(H_k^!) = -k (Sym^ch(V^*) reflected level), giving
+#       with scalar kappa(H_k^!) = -k on the curved Sym^ch(V^*[1])
+#       branch, giving
 #       kappa(H_k) = k by subtraction.
 # Path A is the inscription source; Paths B and C are disjoint
 # verification sources.
@@ -149,7 +150,8 @@ def kappa_heis_via_brst_resolution(k: Fraction) -> Fraction:
 
 def kappa_heis_via_complementarity(k: Fraction) -> Fraction:
     """Path C. Verdier complementarity: kappa(H_k) + kappa(H_k^!) = 0,
-    with kappa(H_k^!) = kappa(Sym^ch(V^*)) = -k. Hence kappa(H_k) = k.
+    with scalar kappa(H_k^!) = -k on the curved Sym^ch(V^*[1]) branch.
+    Hence kappa(H_k) = k.
 
     Source: landscape_census.tex L2058-2107; master_concordance.tex
     L590-593.
@@ -170,7 +172,8 @@ def kappa_heis_via_complementarity(k: Fraction) -> Fraction:
         "(heisenberg_eisenstein.tex L40-50; "
         "universal_conductor_K_platonic.tex Cor cor:uc-K-heisenberg)",
         "Verdier-Koszul complementarity kappa(H_k) + kappa(H_k^!) = 0 "
-        "with kappa(H_k^!) = -k from Sym^ch(V^*) reflected level "
+        "with scalar kappa(H_k^!) = -k from the curved Sym^ch(V^*[1]) "
+        "branch "
         "(landscape_census.tex L2058-2107; "
         "master_concordance.tex L590-593)",
     ],
@@ -238,25 +241,24 @@ def test_kappa_Heis_engine_three_methods_agree():
 
 
 # =====================================================================
-# Path 2 -- Verdier dual partner H_k^! = Sym^ch(V^*); K^kappa = 0
+# Path 2 -- Verdier dual partner H_k^! is curved Sym^ch(V^*[1]);
+# K^kappa = 0
 # =====================================================================
 #
 # Three independent paths for kappa(H_k^!) = -k:
-#   (A) Reflected-level Koszul dual: H_k^! = Sym^ch(V^*) at level -k
+#   (A) Curved Koszul dual branch with scalar level -k
 #       (heisenberg_eisenstein.tex L88-95).
 #   (B) Master concordance Heisenberg row: kappa^! = -k giving
 #       K^kappa = 0 directly (master_concordance.tex L590-593).
-#   (C) Symmetric-chiral algebra evaluation: Sym^ch(V^*) is the
-#       arithmetic Koszul dual of the polynomial ring; its trace form
-#       changes sign under Verdier duality, so kappa(Sym^ch(V^*))
-#       = -kappa(H) = -k.
+#   (C) Symmetric-chiral associated-graded evaluation: the scalar trace
+#       form changes sign under Verdier duality, so kappa(H_k^!) = -k.
 
 
 @independent_verification(
     claim="row-G::Verdier-partner-K-kappa-zero",
     derived_from=[
-        "Heisenberg Verdier dual H_k^! = Sym^ch(V^*) with reflected "
-        "level (heisenberg_eisenstein.tex L88-95)",
+        "Heisenberg Verdier dual H_k^! is the curved Sym^ch(V^*[1]) "
+        "branch with reflected scalar level (heisenberg_eisenstein.tex L88-95)",
     ],
     verified_against=[
         "Master concordance Heisenberg row K^kappa = "

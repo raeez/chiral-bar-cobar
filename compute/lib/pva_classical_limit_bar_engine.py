@@ -169,7 +169,7 @@ OBJECT_FIREWALLS = {
     "B(A)": "bar coalgebra",
     "A^i": "H^*(B(A)), dual coalgebra branch",
     "A^!": "Verdier/continuous dual branch under finite-type completion",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild/bulk centre",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild/closed-sector centre",
     "Omega(B(A))": "bar-cobar inversion back to A, not Koszul duality",
 }
 
@@ -886,7 +886,7 @@ def finite_window_diagnostics(pva: ClassicalPVA) -> FiniteWindowDiagnostics:
         excluded_objects=(
             "Omega(B(A))=A bar-cobar inversion",
             "A^! Verdier/continuous dual branch",
-            "Z_ch^der(A)=ChirHoch^*(A,A) Hochschild bulk centre",
+            "Z_ch^der(A)=ChirHoch^*(A,A) Hochschild closed-sector centre",
             "assembled holographic package",
         ),
         holographic_package_entries=HOLOGRAPHIC_PACKAGE_ENTRIES,

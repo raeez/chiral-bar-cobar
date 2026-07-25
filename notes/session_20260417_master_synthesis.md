@@ -84,18 +84,23 @@ Extension to full class M:
   thm:w-infty-motivic-rationality-all-r: S_r^{W_∞}(c, Ψ) ∈ Q(c, Ψ).
   thm:tempered-vir-motivic-rationality-all-r.
 
-### Exceptional Yangian Koszul duality
+### Exceptional Yangian finite-window obstruction package
 
 thm:exceptional-yangian-koszul-duality-all-five-types (in
 `chapters/examples/exceptional_yangian_koszul_duality_platonic.tex`):
-for each g ∈ {E_6, E_7, E_8, F_4, G_2}, Y(g)^! = Y(g)^{ℏ → -ℏ} via
-GRW18 PBW + Chevalley involution σ: e_i ↦ -f_i extending with
-hbar ↦ -hbar. Five case-by-case propositions:
+the old sign-flip statement for
+g ∈ {E_6, E_7, E_8, F_4, G_2}, based only on GRW18 PBW and an
+extended Chevalley involution, has been quarantined. The current Vol I surface reduces the
+exceptional cases to finite RTT/FRT obligations: construct the named
+module packet, prove PBW in that window, identify the inverse-kernel
+orthogonal complement, prove Drinfeld/RTT comparison, and check
+completed spectral-tower compatibility. Historical case labels:
   prop:exceptional-yangian-koszul-E6/E7/E8/F4/G2.
 
 cor:exceptional-yangian-all-simple: combines Molev 2007 (classical)
-with GRW18 (exceptional) to give Yangian Koszul duality unconditional
-for all simple Lie algebras.
+with GRW18 (exceptional) only as evidence for the obstruction package;
+it is not an unconditional Yangian Koszul-duality theorem for all
+simple Lie algebras.
 
 ## Computational-evidence layer (test files, all passing)
 
@@ -110,7 +115,7 @@ for all simple Lie algebras.
 - compute/tests/test_higher_kummer_arithmetic_duality.py (7 tests)
 - compute/tests/test_z_g_s_r_arithmetic_duality.py
 - compute/tests/test_motivic_shadow_full_class_m.py (25 tests)
-- compute/tests/test_exceptional_yangian_koszul_duality.py (10 tests)
+- compute/tests/test_yangian_rtt_exceptional.py (finite RTT obstruction tests)
 
 Each test carries HZ-IV @independent_verification decorators where
 ProvedHere status requires disjoint verification paths.

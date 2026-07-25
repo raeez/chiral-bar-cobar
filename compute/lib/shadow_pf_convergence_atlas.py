@@ -58,7 +58,7 @@ ANALYTIC_HYPOTHESIS_REQUIRED = "analytic_hypothesis_required"
 NOT_CERTIFIED = "not_certified"
 VERDIER_DUAL_BRANCH = "A^! Verdier/continuous-linear dual branch"
 BAR_COBAR_INVERSION_FIREWALL = "Omega(B(A))=A is bar-cobar inversion"
-HOCHSCHILD_BULK_FIREWALL = "Z_ch^der(A) is Hochschild/bulk, not Koszul dual"
+HOCHSCHILD_BULK_FIREWALL = "Z_ch^der(A) is Hochschild/closed-sector, not Koszul dual"
 
 
 # ============================================================================
@@ -790,7 +790,7 @@ def koszul_convergence_comparison(c_val: float) -> Dict[str, Any]:
 
     The function name is kept for compatibility.  The object A^! is the
     Verdier/continuous-linear dual branch in this atlas.  Omega(B(A))=A is
-    bar-cobar inversion, and Z_ch^der(A) is a Hochschild/bulk object; neither
+    bar-cobar inversion, and Z_ch^der(A) is a Hochschild/closed-sector object; neither
     is identified with this branch by this routine.
 
     Virasoro branch: A = Vir_c, A^! = Vir_{26-c}.  At c = 13 the diagnostic

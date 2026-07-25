@@ -3,10 +3,11 @@ r"""Knot invariants from the Yangian shadow tower.
 Mathematical foundation
 -----------------------
 The bar complex B(V_k(\hat{sl}_N)) produces a factorization coalgebra whose
-collision residue Res^{coll}_{0,2}(\Theta_A) is the r-matrix r(z) = \Omega/z
-(AP19: one pole order below the OPE).  The r-matrix exponentiates to the
-Yang R-matrix R(u) = uI + P, which at the DK bridge becomes the quantum
-group R-matrix R_q \in End(V \otimes V) for U_q(sl_N).
+trace-form collision residue Res^{coll}_{0,2}(\Theta_A) is the r-matrix
+r_k(z) = k\Omega_{\mathrm{tr}}/z (AP19: one pole order below the OPE).  After the
+standard Yangian/KZ normalization this gives the rational kernel that
+exponentiates to the Yang R-matrix R(u) = uI + P, which at the DK bridge
+becomes the quantum group R-matrix R_q \in End(V \otimes V) for U_q(sl_N).
 
 The passage from the rational Yangian R-matrix to knot invariants proceeds
 through the Drinfeld-Kohno theorem (DK bridge, proved for all simple types

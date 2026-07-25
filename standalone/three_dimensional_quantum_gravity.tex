@@ -70,7 +70,8 @@ the Virasoro algebra at central charge $c = 3\ell/(2G)$
 (Brown--Henneaux). We identify the \emph{algebraic holographic
 HT~sector} of this theory: the open Beilinson tower with
 boundary~$\partial = \Vir_c$, bulk
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c) \simeq \mathbb{C}[\![c]\!]$,
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$,
 and interaction the $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure
 on the pair $(Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c), \Vir_c)$. The
 ordered bar complex $\barB^{\mathrm{ord}}(\Vir_c)$ on
@@ -181,7 +182,8 @@ integral must also sum over topologies and saddle geometries.
 The \emph{algebraic holographic HT sector} of the gravitational theory
 is the open Beilinson tower
 $\partial = \Vir_c$, bulk
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c) \simeq \mathbb{C}[\![c]\!]$,
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$,
 interaction the $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure on
 $(Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c), \Vir_c)$. This sector is
 the level-3 / level-4 / level-5 Beilinson rungs of the gravitational
@@ -461,18 +463,17 @@ $\lambda_{12}, \lambda_{23}, \lambda_{34}$. The symmetric-point
 evaluation~\eqref{eq:vir-m4-sym} is verified by direct computation.
 \end{proof}
 
-\subsection{The classical $r$-matrix}
+\subsection{The collision kernel and its represented $r$-matrix}
 
-The classical $r$-matrix is obtained from the $\lambda$-bracket by
-the collision residue construction: the bar kernel $d\log(z-w)$
-absorbs one pole, so the $r$-matrix has poles one order lower than
-the OPE (the $d\log$ absorption principle).
+The collision kernel is obtained from the $\lambda$-bracket by the
+binary residue construction.  A represented classical $r$-matrix
+arises under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$.
 
 \begin{proposition}[Virasoro collision residue]
 \label{prop:vir-r-matrix}
 The collision residue of the Virasoro\/ $\lambda$-bracket is
 \begin{equation}\label{eq:vir-r-matrix}
-r^{\mathrm{coll}}(z) \;=\;
+K_{\Vir_c}^{\mathrm{coll}}(z) \;=\;
 \frac{c/2}{z^3} + \frac{2T}{z},
 \end{equation}
 % level-shift: level prefix c/2 present; at c=0, scalar part vanishes
@@ -494,8 +495,10 @@ $r^{\mathrm{coll}}$ vanishes: the abelian limit, consistent with
 $\kappa(\mathrm{Vir}_0) = 0$.
 \end{remark}
 
-\begin{proposition}[Yang--Baxter equation]
+\begin{proposition}[Represented Yang--Baxter equation]
 \label{prop:vir-ybe}
+Assume a representation~$\rho$ and
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(\Vir_c,\rho)$.  Then
 The CYBE
 \begin{equation}\label{eq:vir-cybe}
 [r_{12}(z_{12}),\, r_{13}(z_{13})]
@@ -503,7 +506,8 @@ The CYBE
 + [r_{13}(z_{13}),\, r_{23}(z_{23})]
 = 0
 \end{equation}
-holds for the collision residue~\eqref{eq:vir-r-matrix}. It is the
+holds for $r=\rho(K_{\Vir_c}^{\mathrm{coll}})$ from
+\eqref{eq:vir-r-matrix}. It is the
 projection to the binary collision stratum of the Arnold relation
 $\omega_{12} \wedge \omega_{23} + \omega_{23} \wedge \omega_{13}
 + \omega_{13} \wedge \omega_{12} = 0$ on\/
@@ -664,70 +668,65 @@ has been supplied.
 
 \subsection{Chiral Hochschild cohomology of the Virasoro algebra}
 
-\begin{theorem}[Chiral Hochschild cohomology of $\mathrm{Vir}_c$]
+\begin{theorem}[Bounded Virasoro cohomology and chart transport]
 \label{thm:vir-hochschild}
 \textbf{Type signature.} Quadrant: Open.
-Presentation: weight-completed / pro-object ambient (Class~$\mathbf M$
-chain-level on the original direct-sum complex remains conditional;
-see Frontier~F3).
+Presentation: bounded vertex cochains followed by a
+weight-completed curve chart.
 Level: 3 (derived chiral centre as universal closed sector).
-Hypothesis package: generic $c$ (Koszul locus); finite-dimensional
-graded augmented Virasoro vacuum module; Hochschild--Serre
-spectral-sequence convergence in the completed ambient.
+Hypothesis package: the Bakalov--De Sole--Kac bounded complex and a
+bounded-to-chart quasi-isomorphism
+\[
+ \chi^{\mathrm{bd}}_{\mathrm{Vir}_c}\colon
+ C^\bullet_{\mathrm{ch},b}(\mathrm{Vir}_c,\mathrm{Vir}_c)
+ \xrightarrow{\sim}
+ C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{Vir}_c},
+ \cA_{\mathrm{Vir}_c}).
+\]
 
-For generic~$c$, the chiral Hochschild cohomology of\/
-$\mathrm{Vir}_c$ is concentrated in degrees\/ $\{0, 1, 2\}$
-with Hilbert series\/ $P(t) = 1 + t^2$:
-\begin{align}
-\mathrm{ChirHoch}^0(\mathrm{Vir}_c) &= \mathbb{C},
-  \label{eq:hh0}\\
-\mathrm{ChirHoch}^1(\mathrm{Vir}_c) &= 0,
-  \label{eq:hh1}\\
-\mathrm{ChirHoch}^2(\mathrm{Vir}_c) &= \mathbb{C} \cdot
-  \Theta_c, \label{eq:hh2}\\
-\mathrm{ChirHoch}^n(\mathrm{Vir}_c) &= 0 \qquad
-  \text{for } n \ge 3 \text{ and generic } c, \label{eq:hhn}
-\end{align}
-where $\Theta_c \in \mathrm{ChirHoch}^2$ is the Gel'fand--Fuchs
-$2$-cocycle recording\/ $\partial_c\{T_\lambda T\} = \lambda^3/12$.
+Bakalov--De Sole--Kac compute, for every central charge~$c$,
+\begin{equation}\label{eq:hhn}
+ \dim H^n_{\mathrm{ch},b}(\mathrm{Vir}_c,\mathrm{Vir}_c)
+ =
+ \begin{cases}
+  1,&n\in\{0,2,3\},\\
+  0,&n\in\mathbb Z_{\geq0}\setminus\{0,2,3\}.
+ \end{cases}
+\end{equation}
+Hence $P^{\mathrm{bd}}_{\mathrm{Vir}_c}(t)=1+t^2+t^3$.
+The map $\chi^{\mathrm{bd}}_{\mathrm{Vir}_c}$ transports this
+dimension vector to the curve-chart chiral Hochschild complex.
 \end{theorem}
 
 \begin{proof}
-The Hochschild--Serre spectral sequence for $\mathrm{Vir}_c$
-collapses at $E_2$ for generic $c$. In degree~$0$: the centre of
-$\mathrm{Vir}_c$ is $\mathbb{C}$ (the Virasoro algebra is simple for
-generic $c$). In degree~$1$: every derivation is inner (the Virasoro
-algebra has $H^1(\mathrm{Vir}_c, \mathrm{Vir}_c) = 0$ for
-$c \ne 0$, since the only derivation $D$ satisfying
-$D[L_m, L_n] = [DL_m, L_n] + [L_m, DL_n]$ is $D = \mathrm{ad}(v)$
-for some $v$). In degree~$2$: the Gel'fand--Fuchs computation gives
-$H^2 = \mathbb{C}$ for generic $c$, generated by the central extension
-cocycle $\Theta_c(L_m, L_n) = \frac{1}{12}(m^3 - m)\delta_{m+n,0}$.
-In degree~$\ge 3$: vanishing by spectral sequence degeneration at
-generic $c$ (the singular locus in the $c$-plane where higher
-cohomology appears is discrete).
+The bounded calculation is \cite[Theorem~7.2]{BDSK21}.  Cohomology
+is invariant under the displayed quasi-isomorphism, which proves the
+chart statement.
 \end{proof}
 
-\begin{corollary}[The bulk of $3$d gravity]
+\begin{corollary}[The Virasoro universal closed sector]
 \label{cor:bulk-gravity}
-The derived chiral centre of\/ $\mathrm{Vir}_c$ is
+Under $\chi^{\mathrm{bd}}_{\mathrm{Vir}_c}$, the cohomology of the
+universal closed-sector dg algebra
 \begin{equation}\label{eq:bulk}
-Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
-\;\simeq\;
-\mathbb{C}[\![c]\!].
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
+ =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)
 \end{equation}
-The unique bulk observable is the central charge parameter:
-$3$d gravity has no local degrees of freedom.
+has Hilbert series $1+t^2+t^3$.  A Virasoro open--closed
+quasi-isomorphism
+$\Psi_{\mathrm{OCA}}\colon\cO^{\mathrm{phys}}_{\mathrm{bulk}}
+\xrightarrow{\sim}Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$
+transports this dg algebra to physical bulk observables.  The
+classical absence of local propagating gravitons follows separately
+from the Chern--Simons presentation of three-dimensional gravity.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:vir-hochschild}, the Hilbert series is
-$P(t) = 1 + t^2$. The degree-$0$ component $\mathbb{C}$ is the
-identity; the degree-$2$ component $\mathbb{C} \cdot \Theta_c$ is
-the deformation parameter $c$. The formal power series ring
-$\mathbb{C}[\![c]\!]$ is the completed algebra of functions on the
-one-dimensional formal moduli space parametrised by the central
-charge.
+Theorem~\ref{thm:vir-hochschild} gives the cohomology statement.
+The second assertion is transport along $\Psi_{\mathrm{OCA}}$.
+Ach\'ucarro--Townsend and Witten identify the classical gravitational
+field equations with flatness of the Chern--Simons connection
+\cite{AT86,Wit88}.
 \end{proof}
 
 \subsection{The Swiss-cheese structure and $E_3$-topologisation}
@@ -792,21 +791,22 @@ $T \in \mathrm{Vir}_c$ via the conformal Ward identity:
 \;=\;
 \frac{T(w)}{(z_0 - w)^2} + \frac{\partial T(w)}{z_0 - w}.
 \end{equation}
-This completes the \emph{Koszul triangle}: bulk
-$\xrightarrow{\;\beta_B\;}$ boundary
-$\xrightarrow{\;\bar{B}\;}$ lines
-$\xrightarrow{\;Z^{\mathrm{der}}\;}$ bulk.
-The bar complex is the universal coalgebra from which three functors
-extract the three vertices:
+These constructions form the algebraic
+closed-sector/boundary/line comparison diagram.  The bar complex
+supports three typed functors:
 \begin{enumerate}[label=(\roman*)]
 \item $\Omega(\bar{B}) \simeq \mathrm{Vir}_c$
   (cobar recovers the boundary; bar-cobar adjunction),
-\item $\Omega(D_{\mathrm{Ran}}(\bar{B})) \simeq
-  \mathrm{Vir}_{26-c}$ (Verdier dual followed by cobar gives
-  the Koszul dual; see Section~\ref{sec:koszul-s-duality}),
-\item $\mathrm{RHom}(\Omega(\bar{B}), \mathrm{Vir}_c)
-  \simeq \mathbb{C}[\![c]\!]$ (chiral Hochschild cochains give
-  the universal closed sector; a physical bulk requires the open--closed comparison).
+\item
+  \(K_X(\mathrm{Vir}_c)
+    :=\mathbb D_{\mathrm{Ran}}\bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\)
+  is the full-bar Verdier algebra, with a chosen comparison
+  \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\);
+\item $\mathrm{RHom}_{\mathrm{Vir}_c^e}
+  (\mathrm{Vir}_c,\mathrm{Vir}_c)
+  =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)$
+  is the universal algebraic closed sector.  An OCA realization
+  \(\Psi_{\mathrm{OCA}}\) supplies its physical bulk interpretation.
 \end{enumerate}
 
 % ================================================================
@@ -1070,13 +1070,16 @@ is part of F12 (Section~\ref{sec:f12-frontier}).
 
 \subsection{The Koszul dual}
 
-\begin{theorem}[Virasoro Koszul duality]
+\begin{conjecture}[Virasoro reflection comparison]
 \label{thm:vir-koszul}
-The Koszul dual of\/ $\mathrm{Vir}_c$ is\/ $\mathrm{Vir}_{26-c}$:
+Fix a completed Virasoro presentation and its Verdier/Koszul
+comparison \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\).
+The proposed reflection comparison is a quasi-isomorphism
 \begin{equation}\label{eq:vir-koszul}
-\mathrm{Vir}_c^! \;=\; \mathrm{Vir}_{26-c}.
+\chi_c\colon \mathrm{Vir}_c^! \xrightarrow{\;\sim\;}
+\mathrm{Vir}_{26-c}.
 \end{equation}
-The Koszul complementarity constant is
+Its scalar consequence is
 \begin{equation}\label{eq:complementarity}
 K(\mathrm{Vir}) \;=\;
 \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
@@ -1085,28 +1088,18 @@ K(\mathrm{Vir}) \;=\;
 \;=\; 13.
 \end{equation}
 Self-duality holds at\/ $c = 13$: $\mathrm{Vir}_{13}^!
-= \mathrm{Vir}_{13}$.
-\end{theorem}
+\simeq \mathrm{Vir}_{13}$ after choosing the coherence of
+\(\chi_{13}\).
+\end{conjecture}
 
-\begin{proof}
-The bar complex $\bar{B}(\mathrm{Vir}_c)$ is a dg coalgebra. The
-Ran-space Verdier dual $D_{\mathrm{Ran}}(\bar{B}(\mathrm{Vir}_c))$
-is a dg algebra. By the bar-cobar theorem (Theorem~A of Volume~I),
-the cobar of $D_{\mathrm{Ran}}(\bar{B})$ recovers an algebra: on
-the Koszul locus, this algebra is $\mathrm{Vir}_{26-c}$.
-
-The central charge shift $c \mapsto 26-c$ arises from the
-Shapovalov transposition: the Koszul dual of the Verma module at
-conformal weight $h$ over $\mathrm{Vir}_c$ is the contragredient
-Verma module at weight $h$ over $\mathrm{Vir}_{26-c}$. The
-shift by $26$ is the $bc$ ghost central charge: the Verdier duality
-functor on the bar complex has the same effect as coupling to the
-$bc$ ghost system.
-
-The complementarity~\eqref{eq:complementarity} is immediate from
-$\kappa(\mathrm{Vir}_c) = c/2$ and
-$\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2$.
-\end{proof}
+\begin{remark}[Comparison obligation]
+The scalar identity in~\eqref{eq:complementarity} follows directly
+from the two displayed central-charge parameters.  The categorical
+statement~\eqref{eq:vir-koszul} requires a chain map on the completed
+Virasoro bar model, compatibility with the Virasoro relations, and a
+quasi-isomorphism proof.  These three constructions constitute the
+reflection-comparison obligation.
+\end{remark}
 
 \subsection{The two critical central charges}
 
@@ -1242,43 +1235,56 @@ poles, and $\mathbf{L} \to \mathbf{M}$.
 The six preceding sections assembled the gravitational Koszul
 data from the single input~\eqref{eq:vir-lambda-bracket}.
 We now organise the output into the \emph{holographic modular
-Koszul datum}: a six-component package that encodes the complete
-algebraic content of $3$d gravity with negative cosmological
-constant.
+Koszul datum}: a seven-entry algebraic package.  It becomes a
+physical bulk datum only after the open--closed comparison and the
+line-comparison maps are supplied.
 
-\subsection{The six-fold package}
+\subsection{The seven-entry package}
 
 \begin{definition}[Holographic datum of $\mathrm{Vir}_c$]
 \label{def:holographic-datum}
 The \emph{holographic datum} of $3$d gravity at central charge
-$c = 3\ell/(2G)$ is the sextuple
+$c = 3\ell/(2G)$ is the seven-entry package
 \begin{equation}\label{eq:holographic-datum}
 \mathcal{H}(\mathrm{Vir}_c)
 \;=\;
 \bigl(
  \mathrm{Vir}_c,\;
- \mathrm{Vir}_{26-c},\;
- \mathcal{C}_c,\;
+ \mathrm{Vir}_c^{\mathrm i},\;
+ \mathrm{Vir}_c^!,\;
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c),\;
  r_c(z),\;
  \Theta_c,\;
  \nabla^{\mathrm{hol}}
 \bigr),
 \end{equation}
-where the six components are:
+where the seven components are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\mathrm{Vir}_c$: the \textbf{boundary algebra}, the
   Virasoro vertex algebra at central charge
   $c = 3\ell/(2G)$, with OPE~\eqref{eq:vir-ope} and
   $\kappa(\mathrm{Vir}_c) = c/2$;
   % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
-\item $\mathrm{Vir}_{26-c}$: the \textbf{Koszul dual}, the
-  line-operator algebra
-  (Theorem~\textup{\ref{thm:vir-koszul}}), with
-  $\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2$;
-\item $\mathcal{C}_c$: the \textbf{line category},
-  the dg-category of perfect $\mathrm{Vir}_c$-modules,
-  carrying the braided monoidal structure induced by
-  the $r$-matrix;
+\item Fix a quadratic-linear presentation
+  \(\mathrm{Vir}_c=T_X(V_c)/(R_c)\).  Its
+  \textbf{presentation coalgebra} is
+  \(\mathrm{Vir}_c^{\mathrm i}=C_X(s^{-1}V_c,s^{-2}R_c)\), with
+  \(q_c\colon\mathrm{Vir}_c^{\mathrm i}\to
+  \bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\).
+\item The \textbf{strict Koszul partner} \(\mathrm{Vir}_c^!\)
+  is reached from
+  \(K_X(\mathrm{Vir}_c)=\mathbb D_{\Ran}
+  \bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\)
+  through the chosen pair map
+  \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\).
+  Conjecture~\textup{\ref{thm:vir-koszul}} formulates the further
+  reflection comparison with \(\mathrm{Vir}_{26-c}\).
+\item $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$: the
+  \textbf{algebraic closed-sector object}.  The open--closed map
+  \(\Psi_{\mathrm{OCA}}\) realizes it in the physical bulk when the
+  OCA comparison package holds.  The line category is
+  $\mathrm{Vir}_c^!\text{-}\mathsf{mod}$ on the strict
+  line-comparison surface.
 \item $r_c(z) = (c/2)/z^3 + 2T/z$: the \textbf{classical
   $r$-matrix}
   % level-shift: level prefix c/2 present; at c=0 scalar part vanishes
@@ -1298,38 +1304,38 @@ where the six components are:
 \end{enumerate}
 \end{definition}
 
-\begin{remark}[The Koszul triangle]
+\begin{remark}[The algebraic closed/open/line triangle]
 \label{rem:koszul-triangle}
-The first three components form the \emph{bulk-boundary-line
-triangle}:
+Entries \textup{(i)}, \textup{(iii)}, and \textup{(iv)} form the
+\emph{algebraic closed/open/line triangle}:
 \begin{center}
 \begin{tabular}{@{}rcl@{}}
-\textbf{Bulk} & $=$ & $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
-  \simeq \mathbb{C}[\![c]\!]$ \\
+\textbf{Closed sector} & $=$ & $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
+  =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)$ \\
 \textbf{Boundary} & $=$ & $\mathrm{Vir}_c$ \\
-\textbf{Lines} & $=$ & $\mathrm{Vir}_{26-c}\text{-mod}$
+\textbf{Lines} & $=$ & $\mathrm{Vir}_c^!\text{-mod}$
   (on Koszul locus)
 \end{tabular}
 \end{center}
-The arrows are:
-bulk $\xrightarrow{\;\beta_B\;}$ boundary
-(the conformal Ward identity~\eqref{eq:bulk-boundary}),
-boundary $\xrightarrow{\;\bar{B}\;}$ lines
-(the bar complex followed by Verdier duality gives
-$\mathrm{Vir}_{26-c}$-modules),
-lines $\xrightarrow{\;Z^{\mathrm{der}}\;}$ bulk
-(chiral Hochschild cochains close the triangle).
+The closed-to-boundary edge is the Swiss-cheese restriction
+\(\rho_\partial\colon
+Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)\to\mathrm{Vir}_c\).
+The boundary-to-lines edge is the composite of \(q_c\), Ran-space
+Verdier duality, and \(\nu_c\).  The OCA comparison
+\(\Psi_{\mathrm{OCA}}\) maps the algebraic closed sector to the
+physical bulk observables.
 \end{remark}
 
-\subsection{Explicit computation of the six components}
+\subsection{Explicit computation of the seven-entry package}
 
-Each component of $\mathcal{H}(\mathrm{Vir}_c)$ admits a
-closed-form expression.
+The seven-entry package $\mathcal{H}(\mathrm{Vir}_c)$ is determined
+by $c$. Its nonformal numerical projections admit closed-form
+expressions.
 
 \begin{theorem}[The holographic datum: explicit form]
 \label{thm:holographic-explicit}
-The six components of\/ $\mathcal{H}(\mathrm{Vir}_c)$ are
-determined by the single datum $c$:
+The seven entries of\/ $\mathcal{H}(\mathrm{Vir}_c)$ are determined
+by the single datum $c$; their numerical projections include:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Boundary curvature:
   $\kappa(\mathrm{Vir}_c) = c/2$;
@@ -1376,7 +1382,7 @@ determined by the single datum $c$:
 \end{theorem}
 
 \begin{proof}
-Each component was computed in the preceding sections:
+Each listed projection was computed in the preceding sections:
 (i)~equation~\eqref{eq:complementarity};
 (ii)~Definition~\ref{def:shadow-tower} for $S_2$--$S_4$, and
 the quintic shadow from the shadow-metric expansion
@@ -1517,11 +1523,11 @@ theorem applied to the Hodge bundle on
 $\overline{\mathcal{M}}_g$. The agreement of the two derivations
 is a non-trivial consistency check.
 
-\subsection{The genus-$1$ free energy and the Weinberg soft theorem}
+\subsection{The genus-$1$ formal coefficient and the Weinberg soft theorem}
 
-\begin{theorem}[Genus-$1$ free energy]
+\begin{theorem}[Genus-$1$ formal coefficient]
 \label{thm:F1-derivation}
-The genus-$1$ free energy of\/ $\mathrm{Vir}_c$ is
+The genus-$1$ formal scalar coefficient of\/ $\mathrm{Vir}_c$ is
 (UNIFORM-WEIGHT):
 \begin{equation}\label{eq:F1-explicit}
 F_1(\mathrm{Vir}_c) \;=\;
@@ -1588,11 +1594,11 @@ This is the Casimir energy density. The integrated free energy
 is $F_1 = (c/2) \cdot (1/24)$.
 \end{proof}
 
-\subsection{The genus-$2$ free energy}
+\subsection{The genus-$2$ formal coefficient}
 
-\begin{theorem}[Genus-$2$ free energy]
+\begin{theorem}[Genus-$2$ formal coefficient]
 \label{thm:F2-derivation}
-The genus-$2$ free energy is (UNIFORM-WEIGHT):
+The genus-$2$ formal scalar coefficient is (UNIFORM-WEIGHT):
 \begin{equation}\label{eq:F2-explicit}
 F_2(\mathrm{Vir}_c) \;=\;
 \frac{7\,\kappa(\mathrm{Vir}_c)}{5760}
@@ -2941,14 +2947,14 @@ self-dual quantum gravity in the following sense:
 \label{rem:yangian-holographic}
 The gravitational Yangian at $c = 13$ is the most structured
 specialisation of the holographic datum
-$\mathcal{H}(\mathrm{Vir}_c)$: at $c = 13$, all six components
+$\mathcal{H}(\mathrm{Vir}_c)$: at $c = 13$, all seven entries
 are Koszul self-dual (invariant under $c \mapsto 26 - c$),
 the algebraic Page curve is symmetric, the genus tower has
 maximal symmetry, and the Yangian structure organises the
 infinite
 $A_\infty$ tower into a representation-theoretic framework.
-The holographic datum at generic $c$ carries the same six
-components but without the Koszul self-duality (specific to
+The holographic datum at generic $c$ carries the same seven
+entries but without the Koszul self-duality (specific to
 $c = 13$) that enables the Yangian interpretation.
 \end{remark}
 
@@ -3046,8 +3052,9 @@ The scope qualifications are: (i)~W$(p)$ triplet tempering is conjectural
 pending an Adamovi\'c--Milas character-amplitude bound
 (Gurarie 1993 + Flohr 1996 counterexamples); (ii)~non-tempered
 stratum is \emph{empty} only on the non-logarithmic subset;
-(iii)~the $\beta_N$ closed form differs at $N = 4$ (15 vs 16),
-parameter-question not structural; (iv)~super-Yangian canonical
+(iii)~the conditional harmonic $\beta_N$ law separates the two
+polynomial candidates at $N = 4$ ($13$ versus $15$ and $16$),
+a parameter-question not structural; (iv)~super-Yangian canonical
 pairing is sub-Sugawara. 3d quantum gravity with $\Lambda < 0$,
 the Virasoro climax at $c = 3\ell/(2G)$, and the
 $c$-linearity/self-duality structure are unconditional on the
@@ -3098,7 +3105,7 @@ algebraic identification proved here.
 The preceding sections constructed the algebraic holographic
 HT~sector of 3d gravity at $\Lambda < 0$: the open Beilinson tower
 with boundary $\Vir_c$, bulk $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
-\simeq \mathbb{C}[\![c]\!]$, and the
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$, and the
 $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure on the pair. The
 trace direction (operators $\to$ scalar shadow) is unconditional on
 the Virasoro Koszul locus: the genus tower
@@ -3188,8 +3195,10 @@ levels 3--5 of the Vol~I Beilinson tower:
 \begin{itemize}
 \item Level 1 (chart): $A_b = \Vir_c$.
 \item Level 2 (twisting): $\barB^{\mathrm{ord}}(\Vir_c)$.
-\item Level 3 (bulk): $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c) \simeq
-  \mathbb{C}[\![c]\!]$, with $E_3^{\mathrm{top}}$ structure
+\item Level 3 (bulk):
+  $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+  =C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$, with
+  $E_3^{\mathrm{top}}$ structure
   (cohomological + weight-completed scope; Class~$\mathbf M$).
 \item Level 4 (operator): BTZ MC elements, Wilson lines,
   $\Vir_{26-c}$-modules.
@@ -3227,6 +3236,11 @@ J.~D.~Brown and M.~Henneaux,
 \textit{Central charges in the canonical realization of asymptotic
 symmetries: an example from three-dimensional gravity},
 Comm.\ Math.\ Phys.\ \textbf{104} (1986), 207--226.
+
+\bibitem{BDSK21}
+B.~Bakalov, A.~De Sole, and V.~G.~Kac,
+\textit{Computation of cohomology of vertex algebras},
+Japan J. Math. \textbf{16} (2021), 81--154.
 
 \bibitem{BTZ92}
 M.~Ba\~nados, C.~Teitelboim, and J.~Zanelli,

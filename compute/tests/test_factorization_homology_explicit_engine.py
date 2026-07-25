@@ -1,15 +1,14 @@
 """Tests for compute/lib/factorization_homology_explicit_engine.py.
 
-EXPLICIT factorization-homology computations: int_X A as actual numbers
-for X = S^1, S^2, T^2, Sigma_g, T^2 x I, open disc, punctured sphere, and
-the modular-functor / WRT bridge.
+Finite topological-shadow tables for selected factorization-homology,
+Verlinde, modular-functor, and WRT comparison surfaces.
 
 Coverage (eight task groups + multi-path verification):
   1. int_{S^1} A (Heisenberg, free fermion): Hochschild homology, HKR
   2. int_{S^2} V_k(g): conformal blocks at genus 0 (rep count)
   3. int_{T^2} A (Virasoro, Heisenberg, sl_2): elliptic character
   4. int_{Sigma_g} V_k(sl_N): Verlinde dimension (sl_2, sl_3, all g)
-  5. int_{T^2 x I} A: Drinfeld center
+  5. topologized T^2 x I MTC shadow: Drinfeld-center global dimension
   6. Open / punctured: locality
   7. WRT cylinder bridge
   8. Modular functor table
@@ -20,6 +19,8 @@ The tests verify:
   - Cross-check against existing factorization_homology_engine.py
   - Concentration in degree 0 for Koszul families
   - Locality / E_2 recognition for open manifolds
+  - No identification of the Drinfeld center with raw chiral
+    factorization homology or the chiral derived center
 """
 
 from fractions import Fraction
@@ -28,6 +29,7 @@ import pytest
 
 from compute.lib.factorization_homology_explicit_engine import (
     LIE_DATA,
+    MODEL_SCOPE,
     central_charge_km,
     explicit_fh_summary,
     fh_as_modular_functor,
@@ -54,6 +56,12 @@ from compute.lib.factorization_homology_engine import (
 
 class TestLieData:
     """Local Lie data registry matches the standard literature."""
+
+    def test_model_scope_is_topological_shadow_table(self):
+        assert MODEL_SCOPE["status"] == "finite topological shadow table"
+        assert "MTC/CS-WRT topologization" in MODEL_SCOPE["requires"]
+        assert "raw chiral factorization homology" in MODEL_SCOPE["not_a_computation_of"]
+        assert "chiral derived center" in MODEL_SCOPE["not_a_computation_of"]
 
     def test_central_charge_sl2_levels(self):
         """c(sl_2_k) = 3k/(k+2)."""
@@ -272,11 +280,11 @@ class TestVerlindeHigherGenus:
 
 
 # =====================================================================
-# Group 5: int_{T^2 x I} A = Drinfeld center
+# Group 5: topologized T^2 x I MTC shadow
 # =====================================================================
 
 class TestDrinfeldCenter:
-    """Cylinder factorization homology = Drinfeld center."""
+    """Drinfeld-center global dimension after topologization."""
 
     def test_sl2_k1_drinfeld(self):
         """SU(2)_1: dim C = 1/S_{00}^2 = (k+2)/(2 sin^2(pi/(k+2))) = 4."""
@@ -287,6 +295,9 @@ class TestDrinfeldCenter:
         assert abs(r["dim_C"] - 2.0) < 1e-6
         # dim_Z(C) for a modular C is dim(C)^2 = 4
         assert abs(r["dim_Z_C"] - 4.0) < 1e-6
+        assert r["scope"] == "topologized MTC/WRT shadow only"
+        assert r["not_raw_chiral_factorization_homology"] is True
+        assert r["not_chiral_derived_center"] is True
 
     def test_sl2_k2_drinfeld(self):
         """SU(2)_2: dim C = 4/(2 sin^2(pi/4)) = 4/(2 * 1/2) = 4."""
@@ -327,6 +338,8 @@ class TestOpenLocality:
     def test_punctured_sphere_is_bimodule(self):
         r = fh_punctured_sphere("Virasoro")
         assert "bimodule" in r["result"]
+        assert r["module_structure"] == "left and right A-action"
+        assert "OCA" in r["derived_center_action"]
 
     def test_locality_universal(self):
         """Locality holds for every family."""

@@ -1,1102 +1,377 @@
-"""Tests for the chiral Hochschild cohomology engine.
+"""Independent guards for the typed chiral-Hochschild audit surface."""
 
-Verifies Theorem H computationally: ChirHoch*(A) concentrated in degrees
-{0, 1, 2} with polynomial P_A(t) = dim Z(A) + dim H^1·t + dim Z(A!)·t².
-
-Organized by:
-  I.   ChirHoch^0 = Z(A) (center computation)
-  II.  ChirHoch^2 = Z(A!)^∨ (Koszul dual center)
-  III. ChirHoch^1 (derivation analysis)
-  IV.  Hilbert polynomial P_A(t) (unified)
-  V.   Deformation-obstruction pairing
-  VI.  Koszul functoriality and FF involution
-  VII. W-algebra regime
-  VIII. Cross-family consistency
-  IX.  OPE-based verification
-  X.   Spectral sequence and concentration
-
-References:
-  thm:hochschild-polynomial-growth (chiral_hochschild_koszul.tex)
-  thm:main-koszul-hoch (chiral_hochschild_koszul.tex)
-  thm:w-algebra-hochschild (hochschild_cohomology.tex)
-"""
+from __future__ import annotations
 
 from pathlib import Path
 
 import pytest
-from sympy import Symbol, Rational
+from sympy import Rational, Symbol, simplify
 
 from compute.lib.chiral_hochschild_engine import (
-    # Data constructors
-    ChiralAlgebraData,
-    holographic_package_entries,
-    modular_koszul_primary_projections,
-    bar_koszul_derived_center_firewall,
-    heisenberg_data,
-    affine_sl2_data,
-    affine_sl3_data,
-    affine_slN_data,
-    betagamma_data,
-    bc_ghosts_data,
-    free_fermion_data,
-    virasoro_data,
-    w3_data,
-    wN_data,
-    # ChirHoch^0
-    center_dimension,
-    center_dimension_koszul_dual,
-    # ChirHoch^1
-    DerivationAnalysis,
-    derivation_analysis,
-    # Polynomial
-    HochschildPolynomial,
-    compute_hochschild_polynomial,
-    # W-algebra
-    WAlgebraHochschild,
-    compute_w_algebra_hochschild,
-    # Deformation-obstruction
-    DeformationObstruction,
-    deformation_obstruction_analysis,
-    all_deformations_unobstructed,
-    # Koszul duality
-    KoszulDualityRelation,
-    koszul_duality_check,
-    ff_involution_on_hochschild,
-    # Master
-    ChirHochResult,
-    compute_chirhoch,
-    compute_all_standard_families,
-    # Verification
-    verify_theorem_h_complete,
-    verify_universal_polynomial,
-    verify_km_h1_equals_dim_g,
-    verify_additivity_under_tensor,
-    verify_euler_char_additivity,
-    # Spectral sequence
-    hochschild_spectral_sequence_E2,
-    # Whitehead
-    whitehead_lemma_check,
-    # OPE checks
+    BOUNDED_TO_CHART_OBLIGATION,
+    THEOREM_H_REQUIRED_COMPONENTS,
+    BoundedToChartComparison,
+    FamilySupportDatum,
+    KoszulDualityDatum,
+    OpenChirHochComputation,
     _ope_derivation_check_heisenberg,
     _ope_derivation_check_virasoro,
     _ope_derivation_check_w3,
-    # Summary
+    affine_sl2_data,
+    affine_sl3_data,
+    affine_slN_data,
+    all_deformations_unobstructed,
+    bar_koszul_derived_center_firewall,
+    bc_ghosts_data,
+    betagamma_data,
+    bounded_cohomology_benchmark,
+    center_dimension,
+    center_dimension_koszul_dual,
+    compute_all_standard_families,
+    compute_chirhoch,
+    compute_hochschild_polynomial,
+    compute_w_algebra_hochschild,
+    deformation_obstruction_analysis,
+    derivation_analysis,
+    ff_involution_on_hochschild,
+    free_fermion_data,
+    hochschild_spectral_sequence_E2,
+    holographic_package_entries,
+    koszul_duality_check,
+    modular_koszul_primary_projections,
     summary_table,
+    verify_km_h1_equals_dim_g,
+    verify_theorem_h_complete,
+    verify_universal_polynomial,
+    virasoro_data,
+    w3_data,
+    wN_data,
+    whitehead_lemma_check,
+    heisenberg_data,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
-CHIRAL_CENTER_TEX = ROOT / "chapters" / "theory" / "chiral_center_theorem.tex"
-CHIRAL_HOCHSCHILD_TEX = (
-    ROOT / "chapters" / "theory" / "chiral_hochschild_koszul.tex"
-)
-THEOREM_A_TEX = ROOT / "chapters" / "theory" / "theorem_A_infinity_2.tex"
+ENGINE = ROOT / "compute/lib/chiral_hochschild_engine.py"
 
 
-def test_geometric_algebraic_chirhoch_switch_uses_named_proposition():
-    """Model switches use the named bridge, not remark-level identification."""
-    center = CHIRAL_CENTER_TEX.read_text()
-    target = CHIRAL_HOCHSCHILD_TEX.read_text()
-
-    assert r"\label{prop:geometric-algebraic-hochschild}" in center
-    assert r"Theorem~\ref{thm:geometric-equals-operadic-bar}" in center
-    assert "At genus~$\\ge 1$, the geometric model carries" in center
-    assert "curve-dependent data" in center
-
-    assert r"Proposition~\ref{prop:geometric-algebraic-hochschild}" in target
-    assert "logarithmic/completed finite-piece hypotheses" in target
-    assert (
-        r"comparison of Proposition~\ref{prop:geometric-algebraic-hochschild}"
-        in target
+def _comparison(data, status="assumed"):
+    benchmark = bounded_cohomology_benchmark(data)
+    assert benchmark is not None
+    return BoundedToChartComparison(
+        family=data.name,
+        map_name=f"chi_bd_{data.name}",
+        source_complex=benchmark.complex_name,
+        target_complex=f"Q_{data.name}",
+        quasi_isomorphism_status=status,
     )
-    assert r"Remark~\ref{rem:comparison-geometric-hoch}, this geometric" not in target
-    assert r"comparison of Remark~\ref{rem:comparison-geometric-hoch}" not in target
 
 
-def test_endch_spectral_variables_are_formal_laurent_not_fm_definition():
-    """End^ch_A is algebraic; FM geometry enters by comparison."""
-    center = CHIRAL_CENTER_TEX.read_text()
-    theorem_a = THEOREM_A_TEX.read_text()
-    active = "\n".join([center, theorem_a])
-    center_flat = " ".join(center.split())
-    active_flat = " ".join(active.split())
-
-    assert r"\label{rem:endch-spectral-variable-layering}" in center
-    assert r"\label{def:chiral-endomorphism-operad}" in center
-    assert "operation spaces are multilinear maps with values in iterated formal Laurent" in center_flat
-    assert "Fulton--MacPherson geometry enters only through a comparison theorem" in center_flat
-    assert "formal completion along the total diagonal" in center_flat
-    assert "geometric FM/log-form model, formal-disk" in center_flat
-    assert r"Proposition~\ref{prop:geometric-algebraic-hochschild}" in center
-    assert r"Proposition~\ref{prop:bd-algebraic-bridge}" in center
-    assert "it is not the definition\nof $\\End^{\\mathrm{ch}}_A$" in center
-    assert "after formal-disk restriction\nof ordered Ran configurations" in theorem_a
-
-    for forbidden in [
-        "Spectral parameters from FM_k(C)",
-        "End^ch_A is defined by FM",
-        "FM_k(C) defines End^ch_A",
-        "FM enters the definition of End^ch_A",
-        "formal variables on $\\Ran^{\\ord}(X)$",
-    ]:
-        if forbidden in active_flat:
-            raise AssertionError(f"forbidden phrase remained: {forbidden}")
-
-
-# ===================================================================
-# I. ChirHoch^0 = Z(A) — center computation
-# ===================================================================
-
-class TestChirHoch0:
-    """dim ChirHoch^0(A) = dim Z(A) = 1 for all standard families at generic level."""
-
-    def test_heisenberg_center(self):
-        """Z(H_k) = C at generic k."""
-        assert center_dimension(heisenberg_data()) == 1
-
-    def test_affine_sl2_center(self):
-        """Z(ŝl_2_k) = C at generic k (not critical level)."""
-        assert center_dimension(affine_sl2_data()) == 1
-
-    def test_affine_sl3_center(self):
-        """Z(ŝl_3_k) = C at generic k."""
-        assert center_dimension(affine_sl3_data()) == 1
-
-    def test_virasoro_center(self):
-        """Z(Vir_c) = C at generic c."""
-        assert center_dimension(virasoro_data()) == 1
-
-    def test_w3_center(self):
-        """Z(W_3) = C at generic c."""
-        assert center_dimension(w3_data()) == 1
-
-    def test_betagamma_center(self):
-        """Z(βγ) = C."""
-        assert center_dimension(betagamma_data()) == 1
-
-    def test_bc_ghosts_center(self):
-        """Z(bc) = C."""
-        assert center_dimension(bc_ghosts_data()) == 1
-
-    def test_free_fermion_center(self):
-        """Z(ψ) = C."""
-        assert center_dimension(free_fermion_data()) == 1
-
-    def test_affine_slN_center_parametric(self):
-        """Z(ŝl_N) = C for N = 2, ..., 10."""
-        for N in range(2, 11):
-            assert center_dimension(affine_slN_data(N)) == 1
-
-    def test_wN_center_parametric(self):
-        """Z(W_N) = C for N = 2, ..., 8."""
-        for N in range(2, 9):
-            assert center_dimension(wN_data(N)) == 1
-
-
-# ===================================================================
-# II. ChirHoch^2 = Z(A!)^∨ — Koszul dual center
-# ===================================================================
-
-class TestChirHoch2:
-    """dim ChirHoch^2(A) = dim Z(A!) = 1 for all standard families."""
-
-    def test_heisenberg_dual_center(self):
-        """Z(H_k!) = Z(Sym^ch(V*)) = C."""
-        assert center_dimension_koszul_dual(heisenberg_data()) == 1
-
-    def test_virasoro_dual_center(self):
-        """Z(Vir_{26-c}) = C (Koszul dual of Vir_c)."""
-        assert center_dimension_koszul_dual(virasoro_data()) == 1
-
-    def test_affine_sl2_dual_center(self):
-        """Z(ŝl_2_{-k-4}) = C (FF dual)."""
-        assert center_dimension_koszul_dual(affine_sl2_data()) == 1
-
-    def test_betagamma_dual_center(self):
-        """Z(bc) = C (βγ! = bc)."""
-        assert center_dimension_koszul_dual(betagamma_data()) == 1
-
-    def test_bc_dual_center(self):
-        """Z(βγ) = C (bc! = βγ)."""
-        assert center_dimension_koszul_dual(bc_ghosts_data()) == 1
-
-
-# ===================================================================
-# III. ChirHoch^1 — derivation analysis
-# ===================================================================
-
-class TestChirHoch1Heisenberg:
-    """ChirHoch^1(H_k) = C (level deformation k → k+ε)."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(heisenberg_data())
-        assert da.dim_chirhoch1 == 1
-
-    def test_outer_eq_total(self):
-        """For Heisenberg, all derivations are outer."""
-        da = derivation_analysis(heisenberg_data())
-        assert da.outer_derivations == da.total_derivations
-
-    def test_level_deformation_type(self):
-        da = derivation_analysis(heisenberg_data())
-        assert 'level_deformation' in da.derivation_types
-
-
-class TestChirHoch1AffineSl2:
-    """ChirHoch^1(ŝl_2_k) = sl_2 (dim = 3).
-
-    On the curve, the current algebra derivations J^a(z) contribute
-    dim(g) = 3 to ChirHoch^1. The level deformation is absorbed.
-    """
-
-    def test_dim_h1(self):
-        da = derivation_analysis(affine_sl2_data())
-        assert da.dim_chirhoch1 == 3
-
-    def test_equals_dim_g(self):
-        """dim ChirHoch^1 = dim(sl_2) = 3."""
-        data = affine_sl2_data()
-        da = derivation_analysis(data)
-        assert da.dim_chirhoch1 == data.lie_dim
-
-    def test_all_unobstructed(self):
-        da = derivation_analysis(affine_sl2_data())
-        assert all(v for v in da.obstruction_to_extension.values())
-
-    def test_level_tangent_not_extra_h1_basis(self):
-        """The level tangent is not counted in addition to dim(g)."""
-        da = derivation_analysis(affine_sl2_data())
-        assert da.derivation_types["current_algebra_derivations"] == 3
-        assert da.derivation_types["level_deformation"] == 0
-        assert "level_k" not in da.obstruction_to_extension
-        assert da.dim_chirhoch1 == 3
-
-
-class TestChirHoch1AffineSl3:
-    """ChirHoch^1(ŝl_3_k) = sl_3 (dim = 8)."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(affine_sl3_data())
-        assert da.dim_chirhoch1 == 8
-
-    def test_equals_dim_g(self):
-        data = affine_sl3_data()
-        da = derivation_analysis(data)
-        assert da.dim_chirhoch1 == data.lie_dim
-
-
-class TestChirHoch1Virasoro:
-    """ChirHoch^1(Vir_c) = 0 at generic c."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(virasoro_data())
-        assert da.dim_chirhoch1 == 0
-
-    def test_c_deformation_is_degree_2_not_degree_1(self):
-        da = derivation_analysis(virasoro_data())
-        assert 'central_charge_deformation' not in da.derivation_types
-
-    def test_unobstructed(self):
-        """There are no generic degree-1 Virasoro deformations to obstruct."""
-        da = derivation_analysis(virasoro_data())
-        for v in da.obstruction_to_extension.values():
-            assert v is True
-
-
-class TestChirHoch1W3:
-    """ChirHoch^1(W_3) = 0 at generic c.
-
-    W_3 has generators T (weight 2) and W (weight 3), but the only
-    continuous deformation parameter c belongs to Hochschild degree 2.
-    All apparent degree-1 deformations are gauge-equivalent.
-    """
-
-    def test_dim_h1(self):
-        da = derivation_analysis(w3_data())
-        assert da.dim_chirhoch1 == 0
-
-    def test_c_deformation_is_degree_2_not_degree_1(self):
-        da = derivation_analysis(w3_data())
-        assert 'central_charge_deformation' not in da.derivation_types
-
-    def test_unobstructed(self):
-        da = derivation_analysis(w3_data())
-        for v in da.obstruction_to_extension.values():
-            assert v is True
-
-
-class TestChirHoch1Betagamma:
-    """ChirHoch^1(βγ) = 0 on the curve-level chiral product surface."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(betagamma_data())
-        assert da.dim_chirhoch1 == 0
-
-    def test_charge_rescaling_is_inner(self):
-        da = derivation_analysis(betagamma_data())
-        assert da.derivation_types["charge_rescaling_inner_zero_mode"] == 1
-        assert da.inner_derivations == 1
-
-    def test_weight_deformation_is_parameter_metadata(self):
-        da = derivation_analysis(betagamma_data())
-        assert da.derivation_types["conformal_weight_not_chiral_derivation"] == 0
-        assert da.parameter_tangents["conformal_weight_lambda"] == 1
-
-
-class TestChirHoch1BcGhosts:
-    """ChirHoch^1(bc) = 0 (by Koszul duality with βγ)."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(bc_ghosts_data())
-        assert da.dim_chirhoch1 == 0
-
-    def test_matches_betagamma(self):
-        """dim ChirHoch^1(bc) = dim ChirHoch^1(βγ) by Koszul duality."""
-        da_bc = derivation_analysis(bc_ghosts_data())
-        da_bg = derivation_analysis(betagamma_data())
-        assert da_bc.dim_chirhoch1 == da_bg.dim_chirhoch1
-        assert da_bc.parameter_tangents["conformal_weight_lambda"] == 1
-
-
-class TestChirHoch1FreeFermion:
-    """ChirHoch^1(ψ) = 0; bilinear rescaling is degree 2."""
-
-    def test_dim_h1(self):
-        da = derivation_analysis(free_fermion_data())
-        assert da.dim_chirhoch1 == 0
-        assert da.parameter_tangents["bilinear_rescaling_degree_2"] == 1
-
-
-class TestChirHoch1KMParametric:
-    """dim ChirHoch^1(ŝl_N) = N²-1 for all N."""
-
-    @pytest.mark.parametrize("N,expected_dim", [
-        (2, 3), (3, 8), (4, 15), (5, 24), (6, 35), (7, 48), (8, 63),
-    ])
-    def test_dim_h1_slN(self, N, expected_dim):
+def _family_datum(family: str) -> FamilySupportDatum:
+    return FamilySupportDatum(
+        family=family,
+        support=(-1, 2, 5),
+        complete_chart_complex=f"Q_{family}",
+        chart_comparison_map=f"gamma_{family}",
+        support_model=f"K_{family},S",
+        inclusion=f"i_{family}",
+        projection=f"p_{family}",
+        contracting_homotopy=f"h_{family}",
+        incidence_and_bar_face_compatibility=f"incidence_{family}",
+        completion_and_averaging_map=f"mu_{family}",
+        model_dimensions={-1: 3, 2: 4, 5: 1},
+    )
+
+
+class TestExactFamilyArithmetic:
+    @pytest.mark.parametrize("N", range(2, 9))
+    def test_type_a_dimension_and_generator_count(self, N):
         data = affine_slN_data(N)
-        da = derivation_analysis(data)
-        assert da.dim_chirhoch1 == expected_dim
-        assert da.dim_chirhoch1 == N * N - 1
-        assert da.derivation_types["level_deformation"] == 0
-
-
-class TestChirHoch1WNParametric:
-    """dim ChirHoch^1(W_N) = 0 for principal W_N at generic c."""
-
-    @pytest.mark.parametrize("N", [2, 3, 4, 5, 6, 7, 8])
-    def test_dim_h1_wN(self, N):
-        if N == 2:
-            data = virasoro_data()
-        else:
-            data = wN_data(N)
-        da = derivation_analysis(data)
-        assert da.dim_chirhoch1 == 0
-
-
-# ===================================================================
-# IV. Hilbert polynomial P_A(t) — unified
-# ===================================================================
-
-class TestHilbertPolynomial:
-    """P_A(t) = 1 + dim(H^1)·t + t² for all standard quadratic families."""
-
-    def test_heisenberg(self):
-        poly = compute_hochschild_polynomial(heisenberg_data())
-        assert poly.coefficients == [1, 1, 1]
-
-    def test_affine_sl2(self):
-        poly = compute_hochschild_polynomial(affine_sl2_data())
-        assert poly.coefficients == [1, 3, 1]
-
-    def test_affine_sl3(self):
-        poly = compute_hochschild_polynomial(affine_sl3_data())
-        assert poly.coefficients == [1, 8, 1]
-
-    def test_betagamma(self):
-        poly = compute_hochschild_polynomial(betagamma_data())
-        assert poly.coefficients == [1, 0, 1]
-
-    def test_bc_ghosts(self):
-        poly = compute_hochschild_polynomial(bc_ghosts_data())
-        assert poly.coefficients == [1, 0, 1]
-
-    def test_free_fermion(self):
-        poly = compute_hochschild_polynomial(free_fermion_data())
-        assert poly.coefficients == [1, 0, 1]
-
-    def test_w_algebra_raises(self):
-        """W-algebras are not in quadratic regime — polynomial not defined."""
-        with pytest.raises(ValueError, match="quadratic"):
-            compute_hochschild_polynomial(virasoro_data())
-
-
-class TestPolynomialProperties:
-    """Properties of the Hochschild polynomial."""
-
-    def test_heisenberg_euler_char(self):
-        """χ(H_k) = P(-1) = 1 - 1 + 1 = 1."""
-        poly = compute_hochschild_polynomial(heisenberg_data())
-        assert poly.euler_characteristic == 1
-
-    def test_affine_sl2_euler_char(self):
-        """χ(ŝl_2) = 1 - 3 + 1 = -1."""
-        poly = compute_hochschild_polynomial(affine_sl2_data())
-        assert poly.euler_characteristic == -1
-
-    def test_affine_sl3_euler_char(self):
-        """χ(ŝl_3) = 1 - 8 + 1 = -6."""
-        poly = compute_hochschild_polynomial(affine_sl3_data())
-        assert poly.euler_characteristic == -6
-
-    def test_betagamma_euler_char(self):
-        """χ(βγ) = 1 - 0 + 1 = 2."""
-        poly = compute_hochschild_polynomial(betagamma_data())
-        assert poly.euler_characteristic == 2
-
-    def test_palindromic_all_families(self):
-        """P_A(t) is palindromic for all standard quadratic families
-        (because dim Z(A) = dim Z(A!) = 1 at generic level)."""
-        families = [
-            heisenberg_data(), affine_sl2_data(), affine_sl3_data(),
-            betagamma_data(), bc_ghosts_data(), free_fermion_data(),
-        ]
-        for data in families:
-            poly = compute_hochschild_polynomial(data)
-            assert poly.is_palindromic, f"Not palindromic: {data.name}"
-
-    def test_total_dim_heisenberg(self):
-        """P(1) = 1 + 1 + 1 = 3."""
-        poly = compute_hochschild_polynomial(heisenberg_data())
-        assert poly.total_dimension == 3
-
-    def test_total_dim_affine_sl2(self):
-        """P(1) = 1 + 3 + 1 = 5."""
-        poly = compute_hochschild_polynomial(affine_sl2_data())
-        assert poly.total_dimension == 5
-
-    def test_evaluate_at_t(self):
-        """P_A(t) evaluates correctly."""
-        poly = compute_hochschild_polynomial(affine_sl2_data())
-        assert poly.evaluate(0) == 1   # constant term
-        assert poly.evaluate(1) == 5   # total dimension
-        assert poly.evaluate(-1) == -1  # Euler characteristic
-
-    def test_symbolic_polynomial(self):
-        """Symbolic polynomial in t."""
-        poly = compute_hochschild_polynomial(heisenberg_data())
-        t = Symbol('t')
-        expr = poly.symbolic()
-        assert expr.subs(t, 0) == 1
-        assert expr.subs(t, 1) == 3
-
-
-class TestUniversalPolynomial:
-    """Verify P_A(t) = 1 + dim(H^1)·t + t² universally."""
-
-    def test_verify_universal(self):
-        result = verify_universal_polynomial()
-        assert result['all_passed'] is True
-
-    def test_all_p0_eq_1(self):
-        result = verify_universal_polynomial()
-        for name, data in result['families'].items():
-            assert data['p0_eq_1'], f"p0 ≠ 1 for {name}"
-
-    def test_all_p2_eq_1(self):
-        result = verify_universal_polynomial()
-        for name, data in result['families'].items():
-            assert data['p2_eq_1'], f"p2 ≠ 1 for {name}"
-
-
-# ===================================================================
-# V. Deformation-obstruction pairing
-# ===================================================================
-
-class TestDeformationObstruction:
-    """[ξ, ξ] ∈ ChirHoch^2 for ξ ∈ ChirHoch^1."""
-
-    def test_virasoro_c_unobstructed(self):
-        """Vir_c exists at all c ⟹ [ξ_c, ξ_c] = 0."""
-        assert all_deformations_unobstructed(virasoro_data())
-
-    def test_w3_c_unobstructed(self):
-        """W_3 exists at all generic c ⟹ [ξ_c, ξ_c] = 0."""
-        assert all_deformations_unobstructed(w3_data())
-
-    def test_affine_sl2_unobstructed(self):
-        """ŝl_2_k exists at all k ⟹ all deformations unobstructed."""
-        assert all_deformations_unobstructed(affine_sl2_data())
-
-    def test_heisenberg_unobstructed(self):
-        """H_k exists at all k ⟹ [ξ_k, ξ_k] = 0."""
-        assert all_deformations_unobstructed(heisenberg_data())
-
-    def test_betagamma_unobstructed(self):
-        assert all_deformations_unobstructed(betagamma_data())
-
-    def test_obstruction_list(self):
-        """Virasoro has no generic degree-1 deformation obstruction list."""
-        obs = deformation_obstruction_analysis(virasoro_data())
-        assert obs == []
-
-    def test_all_standard_unobstructed(self):
-        """All standard families have unobstructed deformations."""
-        families = [
-            heisenberg_data(), affine_sl2_data(), affine_sl3_data(),
-            betagamma_data(), bc_ghosts_data(), free_fermion_data(),
-            virasoro_data(), w3_data(),
-        ]
-        for data in families:
-            assert all_deformations_unobstructed(data), \
-                f"Obstructed deformation in {data.name}"
-
-
-# ===================================================================
-# VI. Koszul functoriality and FF involution
-# ===================================================================
-
-class TestKoszulDuality:
-    """ChirHoch^n(A) = ChirHoch^{2-n}(A!)^∨ ⊗ ω_X."""
-
-    def test_betagamma_bc_duality(self):
-        """βγ and bc are Koszul dual: Betti numbers reverse."""
-        rel = koszul_duality_check(betagamma_data(), bc_ghosts_data())
-        assert rel.relation_satisfied
-
-    def test_bc_betagamma_duality(self):
-        """Reverse direction: bc and βγ."""
-        rel = koszul_duality_check(bc_ghosts_data(), betagamma_data())
-        assert rel.relation_satisfied
-
-    def test_heisenberg_self_palindromic(self):
-        """H_k: Koszul dual has same dimensions."""
-        # H_k! = Sym^ch: same center dimension
-        rel = koszul_duality_check(heisenberg_data(), heisenberg_data())
-        assert rel.relation_satisfied
-
-    def test_affine_sl2_self_type(self):
-        """ŝl_2_k and ŝl_2_{-k-4} have same Betti numbers."""
-        rel = koszul_duality_check(affine_sl2_data(), affine_sl2_data())
-        assert rel.relation_satisfied
-
-
-class TestFFInvolution:
-    """Feigin-Frenkel involution on ChirHoch."""
-
-    def test_ff_sl2(self):
-        result = ff_involution_on_hochschild(affine_sl2_data())
-        assert result['ff_applicable'] is True
-        assert result['h_dual'] == 2  # h∨(sl_2) = 2
-        assert result['dimensions_match'] is True
-
-    def test_ff_sl3(self):
-        result = ff_involution_on_hochschild(affine_sl3_data())
-        assert result['ff_applicable'] is True
-        assert result['h_dual'] == 3
-
-    def test_ff_virasoro(self):
-        result = ff_involution_on_hochschild(virasoro_data())
-        assert result['dimensions_match'] is True
-        # Vir_c! = Vir_{26-c}
-        assert 'Vir_c! = Vir_{26-c}' in result['note']
-
-    def test_ff_betagamma(self):
-        result = ff_involution_on_hochschild(betagamma_data())
-        assert result['koszul_dual'] == 'bc_ghosts'
-
-    def test_ff_not_applicable_to_free_field(self):
-        """FF involution is specifically for KM algebras."""
-        result = ff_involution_on_hochschild(free_fermion_data())
-        assert result['ff_applicable'] is False
-
-
-class TestObjectFirewalls:
-    """Typed separation of bar, duality, inversion, and bulk."""
-
-    def test_derived_center_is_hochschild_not_dual_branch(self):
-        firewall = bar_koszul_derived_center_firewall()
-        assert firewall["Z_ch^der(A)"].startswith("RHom_{A^e}(A,A)")
-        assert "Hochschild derived-centre bulk" in firewall["Z_ch^der(A)"]
-        assert "Verdier" in firewall["A^!"]
-        assert firewall["Z_ch^der(A)"] != firewall["A^!"]
-
-    def test_bar_cobar_inversion_not_koszul_duality(self):
-        firewall = bar_koszul_derived_center_firewall()
-        assert firewall["Omega(B(A))"] == "bar-cobar inversion recovering A"
-        assert "cofibrant diagonal A-bimodule replacement" in firewall["two-sided bar"]
-        assert firewall["Omega(B(A))"] != firewall["A^!"]
-
-    def test_holographic_package_has_seven_entries(self):
-        assert holographic_package_entries() == (
-            "A", "A^i", "A^!", "C", "r(z)", "Theta_A", "nabla^hol",
-        )
-
-    def test_modular_compute_package_is_six_projection_surface(self):
-        projections = modular_koszul_primary_projections()
-        assert len(projections) == 6
-        assert projections != holographic_package_entries()
-        assert "A^!" not in projections
-        assert "C" not in projections
-
-
-# ===================================================================
-# VII. W-algebra regime
-# ===================================================================
-
-class TestWAlgebraVirasoro:
-    """ChirHoch*(Vir_c) Theorem-H bounded amplitude [0,2].
-
-    The Gelfand-Fuchs polynomial-ring model computes continuous Lie
-    cohomology of Witt, a different functor.
-    """
-
-    def test_gen_degrees_recorded(self):
-        """Strong-generator weights recorded for informational use."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.gen_degrees == [2]
-
-    def test_amplitude(self):
-        """Cohomological amplitude [0,2] per Theorem H."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.amplitude == (0, 2)
-
-    def test_total_dim_bounded(self):
-        """ChirHoch*(Vir_c) concentrated in {0,1,2}."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
-
-    def test_dim_in_range(self):
-        """ChirHoch^n(Vir_c) is nonzero only for n in {0,2}."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.dim_n(0) == 1
-        assert w.dim_n(1) == 0
-        assert w.dim_n(2) == 1
-
-    def test_dim_vanishes_above_2(self):
-        """ChirHoch^n(Vir_c) = 0 for n > 2 per Theorem H."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        for n in range(3, 15):
-            assert w.dim_n(n) == 0
-
-    def test_poincare_series(self):
-        """Bounded Poincare series: [1,0,1,0,0,...,0]."""
-        w = compute_w_algebra_hochschild(virasoro_data())
-        expected = [1, 0, 1] + [0] * 8
-        assert w.poincare_series(10) == expected
-
-
-class TestWAlgebraW3:
-    """ChirHoch*(W_3) Theorem-H bounded amplitude [0,2].
-
-    The polynomial-ring model C[Theta_1, Theta_2] with partition counts
-    belongs to continuous Lie cohomology, not this functor.
-    """
-
-    def test_gen_degrees_recorded(self):
-        """Strong-generator weights recorded for informational use."""
-        w = compute_w_algebra_hochschild(w3_data())
-        assert w.gen_degrees == [2, 3]
-
-    def test_amplitude(self):
-        """Cohomological amplitude [0,2] per Theorem H."""
-        w = compute_w_algebra_hochschild(w3_data())
-        assert w.amplitude == (0, 2)
-
-    def test_total_dim_bounded(self):
-        """ChirHoch*(W_3) concentrated in {0,1,2}."""
-        w = compute_w_algebra_hochschild(w3_data())
-        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
-
-    def test_first_values_bounded(self):
-        """dim ChirHoch^n bounded: 1 for n in {0,2}, 0 otherwise."""
-        w = compute_w_algebra_hochschild(w3_data())
-        expected = [1, 0, 1] + [0] * 10
-        assert w.poincare_series(12) == expected
-
-
-class TestWAlgebraWN:
-    """ChirHoch*(W_N) for higher N, Theorem-H bounded amplitude."""
-
-    def test_w4_gen_degrees_recorded(self):
-        """W_4: strong generators of weight 2, 3, 4 (informational)."""
-        w = compute_w_algebra_hochschild(wN_data(4))
-        assert w.gen_degrees == [2, 3, 4]
-
-    def test_w4_bounded(self):
-        """W_4 ChirHoch bounded by Theorem H."""
-        w = compute_w_algebra_hochschild(wN_data(4))
-        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
-        assert w.amplitude == (0, 2)
-
-    def test_w5_gen_degrees_recorded(self):
-        """W_5: strong generators of weight 2, 3, 4, 5 (informational)."""
-        w = compute_w_algebra_hochschild(wN_data(5))
-        assert w.gen_degrees == [2, 3, 4, 5]
-
-    def test_w5_bounded(self):
-        """W_5 ChirHoch bounded by Theorem H."""
-        w = compute_w_algebra_hochschild(wN_data(5))
-        series = w.poincare_series(10)
-        # Amplitude [0,2]: 1 in {0,2}, 0 elsewhere.
-        assert series[0] == 1
-        assert series[1] == 0
-        assert series[2] == 1
-        for n in range(3, 11):
-            assert series[n] == 0
-
-    def test_w_algebra_dim0_always_1(self):
-        """ChirHoch^0 = 1 (vacuum center) for all W_N per Theorem H."""
-        for N in range(2, 9):
-            w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.dim_n(0) == 1
-
-    def test_w_algebra_dim1_rigidity(self):
-        """ChirHoch^1 = 0 for principal W_N at generic c.
-
-        The central-charge parameter is a degree-2 deformation class,
-        not a degree-1 derivation.
-        """
-        for N in range(2, 9):
-            w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.dim_n(1) == 0
-
-    def test_virasoro_bounded_two_paths(self):
-        """Virasoro bounded total dim verified two ways.
-
-        Path 1: engine total_dim property.
-        Path 2: sum of Poincaré series entries up to any cutoff.
-        Path 3: Theorem H structural formula 1 + 0 + 1 = 2.
-        """
-        w = compute_w_algebra_hochschild(virasoro_data())
-        total_path1 = w.total_dim
-        total_path2 = sum(w.poincare_series(20))
-        total_path3 = 2  # Theorem H structural formula
-        assert total_path1 == total_path2 == total_path3
-
-    def test_wN_amplitude_cross_family(self):
-        """Cross-family check: amplitude [0,2] for W_2, W_3, W_4, W_5.
-
-        Path 1: engine amplitude property.
-        Path 2: Poincaré series vanishes strictly above degree 2.
-        """
-        for N in range(2, 6):
-            w = compute_w_algebra_hochschild(wN_data(N))
-            # Path 1
-            assert w.amplitude == (0, 2), f"W_{N}: amplitude wrong"
-            # Path 2
-            series = w.poincare_series(15)
-            for n in range(3, 16):
-                assert series[n] == 0, (
-                    f"W_{N}: ChirHoch^{n} = {series[n]} violates amplitude [0,2]")
-
-    def test_wN_total_dim_vs_structural_formula(self):
-        """Cross-family: total dim agrees with structural formula 1 + 0 + 1.
-
-        Path 1: engine total_dim.
-        Path 2: explicit sum 1 + 0 + 1 = 2.
-        Path 3: Theorem H bound <= 4.
-        """
-        for N in range(2, 6):
-            w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.total_dim == 2  # Path 1 vs Path 2
-            assert w.bounded_by_theorem_h is True  # Path 3
-            assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
-
-
-# ===================================================================
-# VIII. Cross-family consistency
-# ===================================================================
-
-class TestCrossFamilyConsistency:
-    """Consistency checks across families."""
-
-    def test_km_h1_equals_dim_g(self):
-        """dim ChirHoch^1(ĝ_k) = dim(g) for all simple g."""
-        result = verify_km_h1_equals_dim_g()
-        assert result['all_passed'] is True
-
-    def test_euler_char_multiplicativity(self):
-        """χ(A ⊗ B) = χ(A) · χ(B)."""
-        result = verify_euler_char_additivity(
-            heisenberg_data(), affine_sl2_data()
-        )
-        assert result['matches'] is True
-        assert result['P_product_full'] == [1, 4, 5, 4, 1]
-        assert result['chi_tensor_full'] == -1
-        assert result['product'] == -1
-
-    def test_tensor_product_polynomial(self):
-        """Raw Kunneth product is not silently truncated to Theorem-H amplitude."""
-        result = verify_additivity_under_tensor(
-            heisenberg_data(), affine_sl2_data()
-        )
-        assert result['applicable'] is True
-        assert result['P_A'] == [1, 1, 1]
-        assert result['P_B'] == [1, 3, 1]
-        assert result['P_product_full'] == [1, 4, 5, 4, 1]
-        assert result['higher_terms_vanish'] is False
-        assert result['requires_projection_or_resolution'] is True
-        assert result['euler_full'] == -1
-
-    def test_betagamma_bc_euler_product(self):
-        """χ(βγ) · χ(bc) = 2 · 2 = 4."""
-        r = verify_euler_char_additivity(betagamma_data(), bc_ghosts_data())
-        assert r['chi_A'] == 2
-        assert r['chi_B'] == 2
-        assert r['product'] == 4
-        assert r['chi_tensor_full'] == 4
-        assert r['P_product_full'] == [1, 0, 2, 0, 1]
-
-
-# ===================================================================
-# IX. OPE-based verification
-# ===================================================================
-
-class TestOPEVerification:
-    """OPE compatibility of derivations."""
-
-    def test_heisenberg_ope(self):
-        result = _ope_derivation_check_heisenberg()
-        assert result['consistent'] is True
-        assert result['dim_derivation_space'] == 1
-
-    def test_virasoro_ope(self):
-        result = _ope_derivation_check_virasoro()
-        assert result['consistent'] is True
-        assert result['outer_quotient_dim'] == 0
-        assert result['state_space_basis_weight_2'] == ['L_{-2}|0> = T']
-        assert result['translation_vacuum'] == 'L_{-1}|0> = 0, so ∂²|0> = 0'
-        assert result['central_charge_class_degree'] == 2
-
-    def test_w3_ope(self):
-        result = _ope_derivation_check_w3()
-        assert result['consistent'] is True
-        assert result['outer_quotient_dim'] == 0
-        assert result['state_space_basis_weight_2'] == ['T']
-        assert result['state_space_basis_weight_3'] == ['∂T', 'W']
-        assert result['central_charge_class_degree'] == 2
-
-    def test_no_stale_scratch_or_false_mode_surface(self):
-        engine_path = Path(__file__).resolve().parents[1] / "lib" / "chiral_hochschild_engine.py"
-        test_path = Path(__file__)
-        source = engine_path.read_text() + "\n" + test_path.read_text()
-        forbidden = [
-            "Act" + "ually",
-            "no " + "wa" + "it",
-            "h" + "m" + "m",
-            "per " + "CLAUDE",
-            "FRO" + "NTIER",
-            "A" + "P25",
-            "A" + "P94",
-            "A" + "P95",
-            "A" + "P10",
-            "REFU" + "TED",
-            "ag" + "ent",
-            "wa" + "ve",
-            "led" + "ger",
-            "polynomial ring " + "(infinite)",
-            "commuting with all " + "modes",
-            "T_{(0)} = " + "L_0",
-            "inner via " + "L_0",
-            "β·" + "∂²|0",
-            "[a_" + "{(n)}, b]",
-            "α_" + "{(0)}",
-        ]
-        for phrase in forbidden:
-            assert phrase not in source
-
-
-# ===================================================================
-# X. Spectral sequence and concentration
-# ===================================================================
-
-class TestSpectralSequence:
-    """E_2 page of Hochschild-to-ChirHoch spectral sequence."""
-
-    def test_heisenberg_E2_collapses(self):
-        """For Koszul Heisenberg: E_2^{p,q} = 0 for q > 0."""
-        E2 = hochschild_spectral_sequence_E2(heisenberg_data(), max_p=5, max_q=3)
-        for p in range(6):
-            for q in range(1, 4):
-                assert E2[p][q] == 0, f"E2[{p}][{q}] = {E2[p][q]} ≠ 0"
-
-    def test_heisenberg_E2_row0(self):
-        """E_2^{p,0} = dim ChirHoch^p."""
-        E2 = hochschild_spectral_sequence_E2(heisenberg_data(), max_p=5)
-        assert E2[0][0] == 1  # H^0
-        assert E2[1][0] == 1  # H^1
-        assert E2[2][0] == 1  # H^2
-        assert E2[3][0] == 0  # H^3 = 0 (concentration)
-        assert E2[4][0] == 0
-        assert E2[5][0] == 0
-
-    def test_virasoro_E2_row0(self):
-        """E_2^{p,0} = dim ChirHoch^p for Virasoro."""
-        E2 = hochschild_spectral_sequence_E2(virasoro_data(), max_p=10)
-        expected = [1, 0, 1] + [0] * 8
-        for p in range(11):
-            assert E2[p][0] == expected[p]
-
-
-# ===================================================================
-# XI. Whitehead lemma compatibility
-# ===================================================================
-
-class TestWhiteheadCompatibility:
-    """Whitehead H^n(g,g) = 0 is compatible with ChirHoch^1(ĝ_k) ≠ 0."""
-
-    def test_whitehead_sl2(self):
-        result = whitehead_lemma_check('A', 1)
-        assert result['H1_g_g'] == 0
-        assert result['H2_g_g'] == 0
-        assert result['dim_g'] == 3
-
-    def test_whitehead_sl3(self):
-        result = whitehead_lemma_check('A', 2)
-        assert result['H1_g_g'] == 0
-        assert result['dim_g'] == 8
-
-
-# ===================================================================
-# XII. Master computation
-# ===================================================================
-
-class TestMasterComputation:
-    """compute_chirhoch and compute_all_standard_families."""
-
-    def test_heisenberg_master(self):
-        result = compute_chirhoch(heisenberg_data())
-        assert result.dim_H0 == 1
-        assert result.dim_H1 == 1
-        assert result.dim_H2 == 1
-        assert result.polynomial is not None
-        assert result.polynomial.coefficients == [1, 1, 1]
-        assert result.all_unobstructed is True
-
-    def test_affine_sl2_master(self):
-        result = compute_chirhoch(affine_sl2_data())
-        assert result.dim_H0 == 1
-        assert result.dim_H1 == 3
-        assert result.dim_H2 == 1
-        assert result.poincare_polynomial == [1, 3, 1]
-
-    def test_virasoro_master(self):
-        result = compute_chirhoch(virasoro_data())
-        assert result.dim_H0 == 1
-        assert result.dim_H1 == 0
-        assert result.dim_H2 == 1
-        assert result.w_hochschild is not None
-        assert result.w_hochschild.gen_degrees == [2]
-
-    def test_w3_master(self):
-        result = compute_chirhoch(w3_data())
-        assert result.dim_H0 == 1
-        assert result.dim_H1 == 0
-        assert result.dim_H2 == 1
-        assert result.w_hochschild.gen_degrees == [2, 3]
-
-    def test_all_standard_families(self):
-        all_results = compute_all_standard_families()
-        assert len(all_results) >= 12
-        for name, result in all_results.items():
-            assert result.dim_H0 == 1, f"Z({name}) ≠ C"
-            assert result.dim_H2 == 1, f"Z({name}!) ≠ C"
-            assert result.dim_H1 >= 0, f"H^1({name}) < 0"
-            assert result.all_unobstructed, f"Obstructed deformation in {name}"
-
-
-class TestVerificationSuite:
-    """Full verification suite."""
-
-    def test_theorem_h_heisenberg(self):
-        checks = verify_theorem_h_complete(heisenberg_data())
-        assert checks['passed'] is True
-
-    def test_theorem_h_affine_sl2(self):
-        checks = verify_theorem_h_complete(affine_sl2_data())
-        assert checks['passed'] is True
-
-    def test_theorem_h_virasoro(self):
-        checks = verify_theorem_h_complete(virasoro_data())
-        assert checks['passed'] is True
-
-    def test_theorem_h_w3(self):
-        checks = verify_theorem_h_complete(w3_data())
-        assert checks['passed'] is True
-
-    def test_theorem_h_betagamma(self):
-        checks = verify_theorem_h_complete(betagamma_data())
-        assert checks['passed'] is True
-
-
-class TestSummaryTable:
-    """Summary table generation."""
-
-    def test_table_nonempty(self):
-        table = summary_table()
-        assert len(table) >= 12
-
-    def test_table_all_dim_h0_one(self):
-        table = summary_table()
-        for row in table:
-            assert row['dim_H0'] == 1, f"dim_H0 ≠ 1 for {row['family']}"
-
-    def test_table_all_unobstructed(self):
-        table = summary_table()
-        for row in table:
-            assert row['unobstructed'] is True, \
-                f"Obstructed for {row['family']}"
-
-    def test_table_w_algebra_rows_are_bounded(self):
-        table = summary_table()
-        w_rows = [row for row in table if row['regime'] == 'w_algebra']
-        assert w_rows
-        for row in w_rows:
-            assert row['P_A(t)'] == '1 + t² (Theorem-H bounded)'
-            assert row['chi'] == 2
-
-
-# ===================================================================
-# XIII. Data constructor tests
-# ===================================================================
-
-class TestDataConstructors:
-    """ChiralAlgebraData constructors."""
-
-    def test_heisenberg_is_free_field(self):
-        assert heisenberg_data().is_free_field()
-
-    def test_affine_sl2_is_km(self):
-        assert affine_sl2_data().is_km()
-
-    def test_virasoro_is_w_algebra(self):
-        assert virasoro_data().is_w_algebra()
-
-    def test_betagamma_not_km(self):
-        assert not betagamma_data().is_km()
-
-    def test_affine_slN_lie_dim(self):
-        for N in range(2, 8):
-            data = affine_slN_data(N)
-            assert data.lie_dim == N * N - 1
-
-    def test_wN_gen_weights(self):
+        assert data.lie_dim == N * N - 1
+        assert data.n_generators == N * N - 1
+        assert data.gen_weights == (1,) * (N * N - 1)
+        assert data.dual_coxeter() == N
+
+    @pytest.mark.parametrize(
+        ("N", "level", "expected"),
+        [(2, 1, Rational(1)), (3, 2, Rational(16, 5)), (4, 3, Rational(45, 7))],
+    )
+    def test_sugawara_central_charge(self, N, level, expected):
+        assert affine_slN_data(N, level).central_charge == expected
+
+    def test_symbolic_sugawara_formula(self):
+        level = Symbol("k")
+        assert simplify(affine_sl3_data().central_charge - 8 * level / (level + 3)) == 0
+
+    def test_free_field_metadata(self):
+        assert heisenberg_data().ope_summary["alpha_alpha_double_pole"] == Symbol("k")
+        assert betagamma_data().ope_summary["beta_gamma_simple_pole"] == 1
+        assert bc_ghosts_data().parity == (1, 1)
+        assert free_fermion_data().central_charge == Rational(1, 2)
+
+    def test_principal_w_generator_weights(self):
         for N in range(2, 8):
             data = wN_data(N)
-            assert data.gen_weights == list(range(2, N + 1))
+            assert data.gen_weights == tuple(range(2, N + 1))
             assert data.n_generators == N - 1
 
-    def test_symbolic_level(self):
-        """Default level is symbolic."""
+
+class TestBoundedBenchmarks:
+    def test_rank_one_even_superboson_vector(self):
+        benchmark = bounded_cohomology_benchmark(heisenberg_data())
+        assert benchmark.support == (0, 1)
+        assert benchmark.dimensions == {0: 2, 1: 1}
+        assert benchmark.vector == (2, 1)
+        assert benchmark.prefix(5) == (2, 1, 0, 0, 0, 0)
+        assert "Theorem 7.4" in benchmark.source
+
+    def test_virasoro_support_and_dimensions(self):
+        benchmark = bounded_cohomology_benchmark(virasoro_data())
+        assert benchmark.support == (0, 2, 3)
+        assert benchmark.dimensions == {0: 1, 2: 1, 3: 1}
+        assert benchmark.vector == (1, 0, 1, 1)
+        assert "Theorem 7.2" in benchmark.source
+
+    @pytest.mark.parametrize(
+        "data",
+        [affine_sl2_data(), betagamma_data(), bc_ghosts_data(), w3_data()],
+    )
+    def test_other_family_vectors_are_withheld(self, data):
+        assert bounded_cohomology_benchmark(data) is None
+
+
+class TestDefaultChartFirewall:
+    @pytest.mark.parametrize(
+        "data",
+        [
+            heisenberg_data(),
+            affine_sl2_data(),
+            betagamma_data(),
+            bc_ghosts_data(),
+            virasoro_data(),
+            w3_data(),
+        ],
+    )
+    def test_default_result_contains_no_chart_dimensions(self, data):
+        result = compute_chirhoch(data)
+        assert result.dim_H0 is None
+        assert result.dim_H1 is None
+        assert result.dim_H2 is None
+        assert result.support is None
+        assert result.dimensions is None
+        assert result.all_unobstructed is None
+        assert result.status.startswith("open")
+        assert result.hypothesis_package == THEOREM_H_REQUIRED_COMPONENTS
+
+    def test_numeric_compatibility_entry_points_are_open(self):
+        data = heisenberg_data()
+        assert center_dimension(data) is None
+        assert center_dimension_koszul_dual(data) is None
+
+    def test_polynomial_has_open_coefficients(self):
+        polynomial = compute_hochschild_polynomial(affine_sl2_data())
+        assert polynomial.coefficients == [None, None, None]
+        assert polynomial.total_dimension is None
+        assert polynomial.euler_characteristic is None
+        assert polynomial.is_palindromic is None
+        with pytest.raises(OpenChirHochComputation):
+            polynomial.evaluate(1)
+
+    def test_w3_packet_has_generator_data_and_open_chart(self):
+        packet = compute_w_algebra_hochschild(w3_data())
+        assert packet.gen_degrees == (2, 3)
+        assert packet.bounded_benchmark is None
+        assert packet.chart_support is None
+        assert packet.chart_dimensions is None
+        assert packet.dim_n(0) is None
+        assert packet.total_dim is None
+
+
+class TestExplicitTransport:
+    def test_open_comparison_does_not_transport_bounded_values(self):
+        data = virasoro_data()
+        result = compute_chirhoch(data, bounded_to_chart=_comparison(data, "open"))
+        assert result.support is None
+        assert result.dimensions is None
+        assert result.status == "open-bounded-to-chart-comparison"
+
+    def test_assumed_virasoro_comparison_gives_conditional_chart_values(self):
+        data = virasoro_data()
+        result = compute_chirhoch(data, bounded_to_chart=_comparison(data))
+        assert result.status == "conditional-assumed-bounded-to-chart"
+        assert result.support == (0, 2, 3)
+        assert result.dimensions == {0: 1, 2: 1, 3: 1}
+        assert result.dim_H0 == 1
+        assert result.dim_H1 == 0
+        assert result.dim_H2 == 1
+
+    def test_assumed_superboson_comparison_gives_conditional_vector(self):
+        data = heisenberg_data()
+        result = compute_chirhoch(data, bounded_to_chart=_comparison(data))
+        assert result.support == (0, 1)
+        assert result.dimensions == {0: 2, 1: 1}
+        assert result.poincare_polynomial == [2, 1, 0]
+
+    def test_family_support_datum_controls_arbitrary_support(self):
         data = affine_sl2_data()
-        assert isinstance(data.level, Symbol)
+        result = compute_chirhoch(data, family_datum=_family_datum(data.name))
+        assert result.status == "conditional-assumed-H_H"
+        assert result.support == (-1, 2, 5)
+        assert result.dimensions == {-1: 3, 2: 4, 5: 1}
+        assert result.poincare_polynomial is None
 
-    def test_numeric_level(self):
-        """Numeric level when provided."""
-        data = affine_sl2_data(k=1)
-        assert data.level == 1
+    def test_family_support_datum_names_every_required_component(self):
+        datum = _family_datum("affine_sl2")
+        assert set(datum.named_components) == set(THEOREM_H_REQUIRED_COMPONENTS)
 
-    def test_virasoro_central_charge(self):
-        data = virasoro_data(c=26)
-        assert data.central_charge == 26
+    def test_family_support_datum_requires_matching_family(self):
+        with pytest.raises(ValueError, match="differs"):
+            compute_chirhoch(
+                heisenberg_data(), family_datum=_family_datum("affine_sl2")
+            )
+
+
+class TestDerivationScope:
+    @pytest.mark.parametrize("N", (2, 3, 4, 5, 8))
+    def test_affine_zero_modes_are_known_inner_subspace_only(self, N):
+        analysis = derivation_analysis(affine_slN_data(N))
+        expected = N * N - 1
+        assert analysis.known_inner_zero_mode_dimension == expected
+        assert analysis.exact_ope_constraints["adjoint_zero_mode_dimension"] == expected
+        assert analysis.total_derivations is None
+        assert analysis.inner_derivations is None
+        assert analysis.outer_derivations is None
+        assert analysis.dim_chirhoch1 is None
+
+    def test_legacy_affine_report_withholds_h1(self):
+        report = verify_km_h1_equals_dim_g()
+        assert report["all_passed"] is None
+        for row in report["families"].values():
+            assert row["dim_H1"] is None
+            assert row["dim_g"] == row["known_inner_zero_mode_dimension"]
+
+    def test_heisenberg_ope_candidate_is_separate_from_chart_class(self):
+        packet = _ope_derivation_check_heisenberg()
+        assert packet["shift_singular_part"] == 0
+        assert packet["shift_is_generator_level_ope_compatible"] is True
+        assert packet["chart_outer_quotient_dim"] is None
+
+    def test_virasoro_ope_constraint_and_bounded_support(self):
+        packet = _ope_derivation_check_virasoro()
+        assert packet["ope_constraint"] == "D(c)=2ac"
+        assert packet["bounded_support"] == (0, 2, 3)
+        assert packet["chart_outer_quotient_dim"] is None
+
+    def test_w3_low_weight_ansatz_stays_open(self):
+        packet = _ope_derivation_check_w3()
+        assert packet["state_space_basis_weight_3"] == ("dT", "W")
+        assert packet["chart_outer_quotient_dim"] is None
+
+
+class TestDeformationAndDualityFirewalls:
+    def test_formal_parameter_family_is_separate_from_chart_class(self):
+        lanes = deformation_obstruction_analysis(virasoro_data())
+        formal, chart = lanes
+        assert formal.is_unobstructed is True
+        assert formal.cohomological_degree is None
+        assert chart.is_unobstructed is None
+        assert chart.obstruction_class is None
+        assert all_deformations_unobstructed(virasoro_data()) is None
+
+    def test_dual_betti_relation_remains_open(self):
+        relation = koszul_duality_check(betagamma_data(), bc_ghosts_data())
+        assert relation.betti_A is None
+        assert relation.betti_A_dual is None
+        assert relation.relation_satisfied is None
+
+    def test_degree_two_dual_lane_requires_support_and_pairing_data(self):
+        data = heisenberg_data()
+        comparison = _comparison(data)
+        assert center_dimension_koszul_dual(
+            data, bounded_to_chart=comparison
+        ) is None
+        pairing = KoszulDualityDatum(
+            family=data.name,
+            dual_family="curved_second_kind_dual",
+            pairing_map="pair_H",
+            cohomological_shift=2,
+        )
+        assert center_dimension_koszul_dual(
+            data,
+            duality_datum=pairing,
+            bounded_to_chart=comparison,
+        ) == 0
+
+    def test_affine_parameter_involution_is_exact(self):
+        data = affine_sl2_data(k=3)
+        packet = ff_involution_on_hochschild(data)
+        assert packet["h_dual"] == 2
+        assert packet["dual_level"] == -7
+        assert packet["parameter_involution_check"] is True
+        assert packet["dimensions_match"] is None
+
+    def test_virasoro_companion_parameter_does_not_supply_dimensions(self):
+        packet = ff_involution_on_hochschild(virasoro_data(c=7))
+        assert packet["dual_central_charge_candidate"] == 19
+        assert packet["dimensions_match"] is None
+
+
+class TestTypedObjectsAndFiniteChecks:
+    def test_object_firewall(self):
+        firewall = bar_koszul_derived_center_firewall()
+        assert firewall["B(A)"] == "ordered bar coalgebra before cohomology"
+        assert firewall["A^i"] == "bar-cohomology coalgebra H^*(B(A))"
+        assert firewall["Omega(B(A))"] == "bar--cobar reconstruction of A"
+        assert firewall["Z_ch^der(A)"].startswith("RHom_{A^e}(A,A)")
+        assert firewall["A^!"] != firewall["Z_ch^der(A)"]
+
+    def test_package_entry_counts(self):
+        assert len(holographic_package_entries()) == 7
+        assert len(modular_koszul_primary_projections()) == 6
+        assert set(holographic_package_entries()) != set(
+            modular_koszul_primary_projections()
+        )
+
+    def test_whitehead_calculation_is_type_separated(self):
+        sl2 = whitehead_lemma_check("A", 1)
+        sl3 = whitehead_lemma_check("A", 2)
+        assert (sl2["dim_g"], sl3["dim_g"]) == (3, 8)
+        assert sl2["H1_g_g"] == sl2["H2_g_g"] == 0
+        assert sl2["chiral_H1"] is None
+
+    def test_spectral_sequence_page_is_withheld(self):
+        packet = hochschild_spectral_sequence_E2(heisenberg_data(), 5, 3)
+        assert packet["shape"] == (6, 4)
+        assert packet["E2_page"] is None
+        assert packet["collapse"] is None
+
+
+class TestStatusReports:
+    def test_all_standard_rows_are_open_by_default(self):
+        rows = compute_all_standard_families()
+        assert rows
+        for result in rows.values():
+            assert result.dimensions is None
+            assert result.status.startswith("open")
+
+    def test_theorem_report_names_hypotheses(self):
+        report = verify_theorem_h_complete(virasoro_data())
+        assert report["passed"] is None
+        assert report["support"] is None
+        assert report["hypothesis_package"] == THEOREM_H_REQUIRED_COMPONENTS
+        assert BOUNDED_TO_CHART_OBLIGATION in report["resolution_obligation"]
+
+    def test_universal_polynomial_is_withheld(self):
+        report = verify_universal_polynomial()
+        assert report["all_passed"] is None
+        assert all(row["polynomial"] is None for row in report["families"].values())
+
+    def test_summary_contains_open_fields(self):
+        table = summary_table()
+        assert table
+        assert all(row["dim_H0"] is None for row in table)
+        assert all(row["support"] is None for row in table)
+
+    def test_retired_bureaucratic_stem_is_absent(self):
+        source = ENGINE.read_text(encoding="utf-8").lower()
+        assert ("cert" + "if") not in source

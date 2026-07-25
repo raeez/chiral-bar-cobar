@@ -44,7 +44,9 @@ at the MC point Theta_A, including:
 CRITICAL PITFALLS:
   - kappa(H_k) = k, kappa(Vir_c) = c/2, kappa(W_N) = c * (H_N - 1) (AP1)
   - kappa(A) + kappa(A!) = 0 for KM/free fields; = 13 for Virasoro (AP24)
-  - H_k^! = Sym^ch(V*) != H_{-k} (AP33)
+  - At k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch; it is not H_{-k} and not the uncurved polynomial centre.
+    Only scalar kappa agrees with kappa(H_{-k}) (AP33).
   - Shadow depth r_max does NOT determine Koszulness (AP14)
   - The tangent complex uses DESUSPENSION |s^{-1}v| = |v| - 1 (AP45)
 
@@ -105,7 +107,8 @@ def heisenberg_family(k: Fraction = Fraction(1)) -> FamilyParams:
     """Heisenberg at level k.  Class G, depth 2.
 
     kappa(H_k) = k.  kappa(H_k^!) = -k (AP24: sum = 0).
-    H_k^! = Sym^ch(V*), NOT H_{-k} (AP33).
+    At k != 0, H_k^! is the curved second-kind Sym^ch branch,
+    not H_{-k} and not the uncurved polynomial centre (AP33).
     """
     return FamilyParams(
         name=f"Heisenberg(k={k})",
@@ -360,7 +363,7 @@ def _tangent_cohomology_dim(fam: FamilyParams, degree: int) -> int:
     The modular cyclic deformation complex at the MC point Theta_A
     has cohomology concentrated in degrees 0, 1, 2 for Koszul algebras
     (by the Koszulness characterization programme, item (viii):
-    ChirHoch* polynomial in degrees {0,1,2}).
+    ChirHoch* amplitude [0,2] with Hilbert polynomial in t).
 
     At degree 0: infinitesimal automorphisms.
       For a single-generator algebra at generic level/charge: 0.
@@ -1195,7 +1198,7 @@ def koszul_derived_comparison(c: Fraction,
       vdim(A) = vdim(A!) = 0.
       K = 13.
 
-    For Heisenberg (A = H_k, A! = Sym^ch(V*)):
+    For Heisenberg (A = H_k, A! = curved second-kind Sym^ch(V*[1])):
       Both class G.  vdim(A) = vdim(A!) = -1.
       K = 0.
 

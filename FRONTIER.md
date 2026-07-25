@@ -27,22 +27,25 @@ snapshots `notes/claude_md_legacy_*.md` /
 
 The Master Reconstruction Theorem at the close of Part VI subsumes
 Theorems A through H as corollaries restratified by Beilinson-tower
-level; KSDual is the $\mathbb{Z}/2$-fixed sublocus where every
-forgetful step degenerates from adjunction to strict equivalence;
-cross-volume vertical equivalences to Vols II / III are inscribed at
+level, each scoped by its named hypothesis package. KSDual is the
+$\mathbb{Z}/2$-fixed sublocus computed in the finite-type curved
+Verdier--Koszul ambient and intersected with the uncurved Koszul
+locus; on the admissible fixed locus the chart-side bar--cobar lane is
+self-dual, while the higher projections retain their own hypotheses.
+Cross-volume vertical equivalences to Vols II / III are inscribed at
 levels 0, 2, and 4.
 
 ---
 
-## The proved core
+## The theorem spine
 
 | Theorem | Statement | Level | Status |
 |:-------:|-----------|:-----:|--------|
-| **A** | $K^2 \simeq \mathrm{id}$ on $\mathrm{Kosz}(X)$ | 1 ↔ 2 | ProvedHere on a fixed smooth curve at $(\infty,2)$-properad level (`thm:A-infinity-2`); modular-family extension over $\overline{M}_{g,n}$ conditional on Francis–Gaitsgory six-functor base-change + log-FM nodal-sewing |
-| **B** | $\Omega(B(C)) \xrightarrow{\sim} C$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ | 1 → 3 | ProvedHere on Koszul locus (class G/L explicit MacLane-splitting); class M chain-level original-complex genuinely false in $\mathrm{Ch}(\mathrm{Vect})$, true in completed / pro / weight-completed / $J$-adic ambients |
-| **C** | $\kappa + \kappa^!$ ceiling per family stratum | 5 (per stratum) | C0/C1 ProvedHere on Koszul locus; C2 shifted-symplectic / BV upgrade conditional on the BV package; +3-shift contradiction at $g=0$ resolved via `thm:theorem-C-g0` |
-| **D** | $\mathrm{obs}_g = \kappa \cdot \lambda_g$ uniform-weight, all $g \ge 1$ | 4 (on $\overline{M}_{g,n}$) | ProvedHere; multi-weight extension carries cross-channel correction $\delta F_g^{\mathrm{cross}}$; clutching-uniqueness pins the scalar |
-| **H** | $\mathrm{ChirHoch}^\bullet \subset \{0,1,2\}$ on Koszul locus, generic level | 3 | ProvedHere; Feigin–Frenkel companion at $k = -h^\vee$ (infinite-dim centre, non-exclusion) |
+| **A** | Enhanced associative bar–cobar reconstruction $\Omega_XB_X(A_b)\simeq A_b$; Verdier algebra $K_X(A_b)=\mathbb D_{\operatorname{Ran}}B_X(A_b)$ | 1 ↔ 2 | Francis–Gaitsgory equivalence on the pro-nilpotent Ran ambient; factorization, chain, and Verdier realizations carry $H_{\mathrm{fact}}$, $H_{\mathrm{conv}}$, and $H_{\mathrm{VD}}$ |
+| **B** | For a chosen quadratic presentation, $q_A\colon A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\to B_X(A)$ is a quasi-isomorphism, equivalently $\Omega_X(A^{\mathrm i})\simeq A$ | 1 ↔ 2 | Conditional under $H_{\mathrm{CL}}$; finite-window and toy instances are computed directly; $H_{\mathrm{PBW}}^{\mathrm{det}}$ governs the detecting spectral sequence |
+| **C** | $\mathbf C_g(A)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A))$ splits under the represented Verdier involution; the normalized Theorem-D trace yields the scalar ceiling $K^\kappa$ | 3 and 5 | C0/C1 on the strict-flat perfect locus; a supplied brace comparison connects the Theorem-H derived centre after $H^0$; C2 carries its BV package |
+| **D** | Four typed outputs: $\operatorname{Obs}^{\mathrm{def}}_g$, $\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_1=\kappa\lambda_1$, $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ with top character $(-1)^g\kappa\lambda_g$, and $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$ | 4–5 | Conditional under $H_D^1$, $H_D^K$, $H_D^{\mathrm{tr}}$, and $H_D^{\mathrm{graph}}$ |
+| **H** | Each family datum $H_H(A;S)$ gives a strong deformation retract of the derived chiral centre onto a complete model supported in $S$ | 3 | Conditional family support theorem; BDSK bounded supports and superboson finite models enter through named bounded-to-chart comparisons |
 
 **Master conjectures MC1–MC5** all proved at their inscribed scopes.
 MC3 proved on the evaluation-generated core (per AP47); MC5 analytic,
@@ -51,24 +54,22 @@ on the coderived / pro-object / weight-completed / $J$-adic ambient,
 while the raw direct-sum ambient $\mathrm{Ch}(\mathrm{Vect})$ remains
 the naive-ambient exception (concordance.tex:1980).
 
-**Universal chain-homotopy normalisation** (load-bearing):
-$h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$ where
-$\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$ is the
-Verdier-Ran-on-bar norm at level 2 (Convention
-`conv:A-two-kappa-shriek` of `theorem_A_infinity_2.tex`). Distinct
-from the algebra-level scalar Verdier sum $K^\kappa(A_b)$ of
-`master_concordance.tex`. Archetype witnesses
-$\mathcal N(\mathsf G)=1$, $\mathcal N(\mathsf L)=2(k+h^\vee)$,
-$\mathcal N(\mathsf C)=1$, $\mathcal N(\mathsf M)=c(5c+22)/10$,
-$\mathcal N(\mathsf B)=8$ inscribed in
-`chapters/theory/theorem_A_infinity_2.tex`.
+**Family chain-rescaling problem.**  Given
+$(\iota_A,p_A,h_A,\nu_A)$ on one factorization bar–cobar complex with
+\[
+d_Ah_A+h_Ad_A=\nu_A(\mathrm{id}-\iota_Ap_A),
+\]
+the operator $\nu_A^{-1}h_A$ is a contraction for
+$\nu_A\in k^\times$.  Constructing these four pieces gives the family
+theorem.  A further chain map to the scalar trace complex identifies
+$\nu_A$ with the algebra-level Verdier sum $K^\kappa(A)$.
 
 **Universal Borcherds-weight identity**:
 $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for
 $N \in \{1, 2, 3, 4, 6\}$ plus half- / quarter-integer continuations.
-Replaces the additive
-$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$,
-which fails at every $N$ including $N = 1$.
+This formula supersedes the additive identification of the BKM weight
+with the chiral and fibre scalars; the family computations distinguish
+the three lanes already at $N=1$.
 
 ---
 
@@ -89,10 +90,12 @@ character-amplitude bound is the candidate path.
 
 ### F2 — Multi-weight cross-channel correction
 
-Theorem D extension: $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-uniform-weight is proved; the multi-weight version carries an
-explicit $\delta F_g^{\mathrm{cross}}$. The closed form for
-$\delta F_g^{\mathrm{cross}}$ at $g \ge 2$ is open.
+The stable-graph package $H_D^{\mathrm{graph}}$ gives
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+
+\delta F_g^{\mathrm{cross}}$.  The scalar-diagonal lane has
+$\delta F_g^{\mathrm{cross}}=0$; multi-weight families carry the
+explicit cross-channel summand.  A closed expression for that summand
+at $g\ge2$ is the next construction problem.
 
 - **Hypothesis package**: Hodge bundle over $\overline{M}_{g,n}$ with
   multi-weight stratification; explicit cross-channel cocycle.
@@ -130,27 +133,34 @@ nodal-sewing data.
 
 ### F5 — Drinfeld-double global obstruction at $g \ge 1$
 
-The universal Drinfeld double $D(A, A^!)$ exists globally over
-$\overline{M}_{g,n}$ for $g = 0$ unconditionally and extends to
-$g = 1$ via Enriquez's $\mathrm{GRT}_1^{\mathrm{ell}}(\mathbb{Q})$.
-For $g \ge 2$, the explicit cohomological obstruction is
-$\mathrm{obs}^{(1)}_{\mathrm{double}} \in H^2(\mathfrak{grt}^{\mathrm{ell}},
-\mathfrak{sp}(A) \otimes \mathfrak{sp}(A^!))$
-with elliptic 2-cocycle $\omega_{\mathrm{ell}} = \wp(\tau) \cdot \langle\cdot,\cdot\rangle_{\mathfrak{sp}}$;
-**vanishes iff $r_{\max}(A) = 2$** (class G only). All of L, C, M, B
-are $g \ge 1$ obstructed.
+At genus one, the package $H_{\mathrm{F5}}^{\mathrm{desc}}(A)$
+constructs a represented comparison
+\[
+\Theta_{\mathrm{F5},A}\colon
+\Def_{\mathrm{KZB}}^\bullet(\rho_A)
+\longrightarrow \Def_{\mathrm{double}}^\bullet(A)
+\]
+and the class
+$\operatorname{Obs}^{(1)}_{\mathrm{double}}(A)
+=H^2(\Theta_{\mathrm{F5},A})[\omega_{\mathrm{KZB}}(\rho_A)]$.
+A null-homotopy gives the global lift.  Its proposed detection of
+$r_{\max}(A)=2$ is Conjecture
+`conj:level-4-F5-shadow-depth`.
 
-- **Hypothesis package**: $r_{\max}(A) = 2$.
-- **Reconstruction theorem**: vanishing of
-  $\mathrm{obs}^{(1)}_{\mathrm{double}}$ in
-  $H^2(\mathfrak{grt}^{\mathrm{ell}}, \cdot)$.
-- **Heal path**: explicit cocycle calculation per archetype.
+- **Hypothesis package**: complete double-deformation complex,
+  represented KZB action, chain map $\Theta_{\mathrm{F5},A}$, and
+  complete Maurer--Cartan obstruction theory.
+- **Reconstruction theorem**: represented boundary action
+  $\Xi_4$ together with a null-homotopy of the transported class.
+- **Heal path**: compute the represented KZB class and its first
+  higher-operation comparison for each archetype.
 
-### F6 — Theorem H on the nodal boundary without Koszul hypothesis
+### F6 — Theorem H on nodal and off-Koszul strata
 
-Hochschild concentration $\subset \{0, 1, 2\}$ on the smooth Koszul
-locus is proved. Extension to the nodal boundary without Koszul
-hypothesis is open.
+On a smooth chart, each datum $H_H(A;S)$ transports the derived centre
+to a complete family model supported in~$S$.  The nodal extension asks
+for compatible support models and strong deformation retracts across
+separating and irreducible clutching strata.
 
 - **Hypothesis package**: factorisation algebra on the nodal locus
   with non-Koszul stratification.
@@ -158,11 +168,11 @@ hypothesis is open.
 - **Heal path**: separating / non-separating nodal sewing of
   $\mathrm{ChirHoch}^\bullet$.
 
-### F7 — MC4 completion / H3 failure regime (coderived control)
+### F7 — MC4 completion with infinite graded pieces
 
-The non-finitely-generated MC4 regime, where the H3 finite-dim graded
-hypothesis fails, requires coderived-only $K^2 \simeq \mathrm{id}$
-control via Chenevier determinants at irregular primes.
+The infinitely generated MC4 regime calls for coderived bar--cobar
+round-trip control together with Chenevier determinants at irregular
+primes.
 
 - **Hypothesis package**: Chenevier-determinant control at
   $p \in \{691, 3617\}$ via Kubota–Leopoldt + Herbrand–Ribet.

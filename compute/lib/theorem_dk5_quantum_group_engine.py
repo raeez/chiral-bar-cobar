@@ -13,9 +13,9 @@ The chain of identifications for sl_2:
 
   1. BAR COLLISION RESIDUE -> R-MATRIX
      Res^{coll}_{0,2}(Theta_A) for A = V_k(sl_2) gives the classical
-     r-matrix r(z) = Omega/z (AP19: bar propagator absorbs one pole).
-     The Drinfeld-Kohno theorem identifies the KZ monodromy with the
-     quantum R-matrix R_q.
+     trace-form r-matrix r_k(z) = k*Omega/z (AP19: bar propagator
+     absorbs one pole).  The Drinfeld-Kohno theorem identifies the
+     KZ-normalized monodromy with the quantum R-matrix R_q.
 
   2. YANG R-MATRIX (rational limit)
      R(u) = I - hbar P/u  for sl_2 in the fundamental representation.
@@ -83,7 +83,7 @@ CONVENTIONS
 - Permutation operator P = sum_{i,j} e_{ij} tensor e_{ji}.
 - Basis ordering: |1,1>, |1,2>, |2,1>, |2,2> for C^2 tensor C^2.
 - Coproduct: Delta(E) = E tensor K + 1 tensor E (Drinfeld-Jimbo).
-- The r-matrix r(z) = Omega/z has pole order ONE BELOW OPE (AP19).
+- The trace-form r-matrix r_k(z)=k*Omega/z has pole order ONE BELOW OPE (AP19).
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 
 References

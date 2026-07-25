@@ -146,7 +146,7 @@ def k11_firewall_report() -> Dict:
             'under finite-type or completed hypotheses'
         ),
         'derived_center': (
-            'Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/bulk, not Koszul dual'
+            'Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild/closed-sector, not Koszul dual'
         ),
         'kernel_constants': {
             'affine_trace_raw': 'k*Omega_tr/z',
@@ -496,7 +496,7 @@ def verify_p3_dual_regularity(family: str, max_weight: int = 10) -> Dict:
             'family data. A^i=H^*(B(A)) is the bar-dual coalgebra, and '
             'Verdier/continuous linear duality carries A^i to A^! only under '
             'finite-type or completed hypotheses. Omega(B(A))=A remains '
-            'bar-cobar inversion; Z_ch^der(A) remains the Hochschild bulk.'
+            'bar-cobar inversion; Z_ch^der(A) remains the Hochschild closed-sector.'
         ),
     }
 
@@ -1432,7 +1432,7 @@ def what_remains_conditional() -> Dict:
             'Verdier/continuous linear duality carries A^i to A^! under '
             'finite-type or completed hypotheses. Omega(B(A))=A is '
             'bar-cobar inversion, and Z_ch^der(A)=ChirHoch^*(A,A) is the '
-            'Hochschild/bulk sector; neither object is identified with A^i '
+            'Hochschild/closed-sector sector; neither object is identified with A^i '
             'or A^!.'
         ),
         'still_open': [

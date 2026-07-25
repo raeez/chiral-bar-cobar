@@ -921,8 +921,9 @@ def koszul_complementarity_d3(N: int) -> Dict[str, Fraction]:
 
     The Feigin-Frenkel involution k -> -k - 2h^v applies to the
     sl_N factor (h^v = N). For the u(1) factor, the Koszul dual
-    of H_k is Sym^ch(V*) at level -k (AP33: H_k^! = Sym^ch(V*),
-    which has kappa = -k). So kappa_u1(A!) = -k = -1.
+    of H_k is the curved second-kind Sym branch with scalar kappa -k
+    (AP33: it is not H_{-k} and not the uncurved polynomial centre).
+    So kappa_u1(A!) = -k = -1.
 
     Corrected: kappa(gl_N, 1)^! = -kappa_sl(1) + (-1) = -[kappa_sl(1) + 1]
              = -kappa(gl_N, 1).
@@ -987,7 +988,7 @@ def full_twisted_holography_datum_d3(N: int) -> Dict[str, object]:
         "A_i": f"H^*(B^ch(gl_{N}(k=1)))",
         "A_dual": f"gl_{N}(k'=-{1+2*N})",
         "A^!": f"gl_{N}(k'=-{1+2*N})",
-        "C": "Z_ch^der(A) bulk slot after open-closed comparison",
+        "C": "Z_ch^der(A) closed-sector slot after open-closed comparison",
         "Theta_A": "shadow obstruction tower",
         "nabla^hol": "shadow connection",
         "projection_scope": "scalar/amplitude projection, not a complete bulk reconstruction",
@@ -1022,7 +1023,7 @@ def full_twisted_holography_datum_m2(N: int, k: int) -> Dict[str, object]:
         "A_i": f"H^*(B^ch(ABJM(N={N},k={k})))",
         "A_dual": f"ABJM(N={N},k={k})!",
         "A^!": f"ABJM(N={N},k={k})!",
-        "C": "Z_ch^der(A) bulk slot after open-closed comparison",
+        "C": "Z_ch^der(A) closed-sector slot after open-closed comparison",
         "Theta_A": "shadow obstruction tower",
         "nabla^hol": "shadow connection",
         "projection_scope": "reduced scalar/amplitude projection, not the full pre-BRST package",

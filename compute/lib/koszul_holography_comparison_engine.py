@@ -35,9 +35,9 @@ COSTELLO'S FOUR LAYERS OF KOSZUL DUALITY:
 
   Layer 3 (M2): Costello's "Holography and Koszul duality: the
       example of the M2 brane" [1705.02500]. Costello identifies a
-      boundary Yangian and a deformed bulk algebra by perturbative
+      boundary Yangian and a deformed closed-sector algebra by perturbative
       Koszul duality. In our framework this does not collapse the
-      post-Verdier algebra A! with the derived-centre bulk sector.
+      post-Verdier algebra A! with the derived-centre closed-sector.
       Holographic duality uses Koszul duality in this setting.
       Proved to all orders in perturbation theory (in hbar and 1/N).
       Genus 0 worldsheet ONLY.
@@ -70,10 +70,13 @@ ANTI-PATTERN COMPLIANCE:
   AP24: kappa + kappa' = 0 for KM/free; != 0 for W-algebras
   AP25: B(A) is a coalgebra; A^i = H*(B(A)) is the bar-dual coalgebra;
         A! is post-Verdier/continuous finite dual; Omega(B(A)) = A is
-        inversion; Z^der_ch(A) is the derived-centre bulk sector.
+        inversion; Z^der_ch(A) is the derived-centre closed-sector.
   AP27: bar propagator d log E(z,w) weight 1 always
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
-  AP34: bar-cobar != open-to-closed; bulk = derived center, NOT bar
+  AP33: at k != 0, H_k^! is the curved second-kind
+        Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved
+        polynomial centre; only scalar kappa agrees with kappa(H_{-k})
+  AP34: bar-cobar != open-to-closed; the derived-center closed sector is
+        not bar, and physical bulk requires OCA comparison
   AP39: kappa != c/2 in general
   AP48: kappa depends on full algebra, not Virasoro subalgebra
   AP50: A^!_infty != A^!; compatibility is Theorem A content, not tautology
@@ -225,7 +228,7 @@ def koszul_object_firewall() -> KoszulObjectFirewall:
         ),
         bulk_sector=(
             "Z^der_ch(A) = C^bullet_ch(A,A) is the chiral Hochschild "
-            "derived-centre bulk sector. It is not B(A), A^i, A!, or "
+            "derived-centre closed-sector. It is not B(A), A^i, A!, or "
             "Omega(B(A))."
         ),
         forbidden_collapses=(
@@ -461,14 +464,14 @@ def layer3_m2_holography() -> LayerComparison:
         costello_advantages=[
             "Derivation from M2 brane physics (11d SUGRA)",
             "All-orders proof in hbar and 1/N at genus 0",
-            "Concrete identification of bulk algebra from SUGRA",
+            "Concrete identification of closed-sector algebra from SUGRA",
             "Physical meaning: holographic duality",
         ],
         proved_vs_conjectural=(
             "MIXED: Costello's Koszul duality for M2 is PROVED "
             "perturbatively at genus 0. Our algebraic engine (Theorem A, "
             "genus tower) is PROVED at all genera. The IDENTIFICATION of "
-            "Costello's bulk algebra with our Z^der_ch(A) is CONJECTURAL "
+            "Costello's closed-sector algebra with our Z^der_ch(A) is CONJECTURAL "
             "beyond the boundary-linear sector."
         ),
         key_references=["Costello 1705.02500"],
@@ -776,8 +779,9 @@ def holography_status_m2() -> HolographyKoszulStatus:
         overall_status=(
             "MIXED: Koszul duality PROVED perturbatively at genus 0 "
             "(Costello). Our Theorem A proves the algebraic core at all "
-            "genera. The identification bulk = derived center is CONJECTURAL "
-            "beyond the boundary-linear sector."
+            "genera. The identification of the physical bulk with the "
+            "derived-center closed sector is CONJECTURAL beyond the "
+            "boundary-linear sector."
         ),
     )
 
@@ -849,8 +853,8 @@ def holography_status_celestial() -> HolographyKoszulStatus:
         bulk_identification_proved=False,
         bulk_identification_scope=(
             "The celestial bulk is the flat-space S-matrix; our algebraic "
-            "bulk is Z^der_ch. These are fundamentally different objects. "
-            "No formal identification."
+            "closed-sector actor is Z^der_ch. These are fundamentally "
+            "different objects. No formal identification."
         ),
         overall_status=(
             "LARGELY CONJECTURAL: collinear algebra identification PROVED. "
@@ -1010,10 +1014,11 @@ def full_synthesis() -> Dict[str, Any]:
                 "2. PHYSICAL INTERPRETATION: Costello provides the brane/SUGRA "
                 "derivation and identifies WHICH physical system the algebra "
                 "describes. Our framework is algebra-first. "
-                "3. BULK ALGEBRA: Costello identifies the bulk from SUGRA geometry "
-                "(U_{hbar,c}(Diff x gl_N) for M2). Our bulk is Z^der_ch(A) "
-                "(chiral derived center). The identification is conjectural "
-                "beyond boundary-linear theories. "
+                "3. BULK ALGEBRA: Costello identifies the physical bulk from "
+                "SUGRA geometry (U_{hbar,c}(Diff x gl_N) for M2). Our "
+                "algebraic closed-sector actor is Z^der_ch(A) (chiral "
+                "derived center). The OCA comparison is conjectural beyond "
+                "boundary-linear theories. "
                 "4. S-DUALITY: Costello's programme uses S-duality of 4d N=4. "
                 "Our Koszul duality is a DIFFERENT operation (Agent 3 finding): "
                 "in the sl_2 convention computed here, they coincide only at "
@@ -1029,7 +1034,7 @@ def full_synthesis() -> Dict[str, Any]:
         "Q3_holography_equals_koszul": {
             "thesis": (
                 "Costello's thesis: holographic duality in the holomorphic twist "
-                "IS Koszul duality between boundary and bulk algebras."
+                "IS Koszul duality between boundary and closed-sector algebras."
             ),
             "proved_components": [
                 "M2 brane: perturbative KD proved to all orders in hbar/1/N at genus 0",
@@ -1110,8 +1115,8 @@ def uncited_costello_papers() -> List[Dict[str, str]]:
             "title": "Boundary Chiral Algebras and Holomorphic Twists",
             "relevance": (
                 "General framework for boundary chiral algebras in 3d N=2. "
-                "Bulk = commutative with shifted Poisson. Directly relevant "
-                "to our PVA descent (Vol II Part IV)."
+                "Physical closed observables are commutative with shifted "
+                "Poisson. Directly relevant to our PVA descent (Vol II Part IV)."
             ),
             "should_cite": True,
         },

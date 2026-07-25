@@ -31,17 +31,21 @@ Independent verification sources (disjoint from the derivation path):
     derived-symplectic geometry. The derivation uses neither twisting
     morphisms nor the BD filtered comparison.
 
-This test registers the independent-verification relationship. The test
-body itself is a structural consistency check -- the actual numerical
-verifications live in the per-family engines (Heisenberg frame inversion,
-sl_2 bar H^2 = 5, Virasoro bar computation) whose results are consumed
-here as assertions that the three independent proof paths yield the
-same bar/cobar inversion outcome on the canonical witnesses.
+This test registers the independent-verification relationship and checks
+the registry entry it installs. The anchor comparison itself (Heisenberg
+frame inversion vs BD genus-0 acyclicity) is NOT yet implemented as a
+computation anywhere in compute/lib; the test skips with that obligation
+named rather than asserting an uncomputed agreement.
 """
 
 from __future__ import annotations
 
-from compute.lib.independent_verification import independent_verification
+import pytest
+
+from compute.lib.independent_verification import (
+    entries_for,
+    independent_verification,
+)
 
 
 @independent_verification(
@@ -74,19 +78,34 @@ from compute.lib.independent_verification import independent_verification
     ),
 )
 def test_theorem_A_bar_cobar_isomorphism_independent_structure():
-    """Structural consistency: the Heisenberg frame-inversion witness
-    (Section 'frame-inversion' of chiral_koszul_pairs.tex) and the
-    genus-0 BD-acyclicity witness (thm:BD-genus-zero) together confirm
-    that the bar-cobar unit/counit are weak equivalences on the canonical
-    anchor. The numerical content is delegated to the Heisenberg and
-    sl_2 engines; this test records the epistemic hand-off.
+    """Registry consistency plus an explicit open computational obligation.
+
+    The only content this harness genuinely computes is the
+    independent-verification registry relationship installed by the
+    decorator (source disjointness, module scan). That is asserted below.
+
+    The mathematical anchor comparison itself -- Heisenberg frame
+    inversion (Section 'frame-inversion' of chiral_koszul_pairs.tex)
+    against BD genus-0 acyclicity (thm:BD-genus-zero) -- has no
+    implemented computation in compute/lib: no engine exposes a
+    frame-inversion witness or a BD-acyclicity witness that could be
+    compared. The obligation is recorded as a skip so it stays visible
+    instead of silently passing.
     """
-    # Two independent anchors exist; their agreement is what Theorem A
-    # asserts. A hypothetical disagreement would surface in the named
-    # engines, not here.
-    anchors_agree = True
-    assert anchors_agree, (
-        "Theorem A anchors (Heisenberg frame inversion + BD genus-0 "
-        "acyclicity) should agree; investigate engine tests on "
-        "disagreement."
+    entries = entries_for("thm:bar-cobar-isomorphism-main")
+    assert entries, (
+        "decorator failed to register the IV relationship for "
+        "thm:bar-cobar-isomorphism-main"
+    )
+    assert all(not e.is_tautological() for e in entries), (
+        "IV registry entry for thm:bar-cobar-isomorphism-main is "
+        "tautological (derivation and verification sources overlap)"
+    )
+    assert all(not e.manuscript_read_paths for e in entries), (
+        "this module must not read manuscript .tex files at runtime"
+    )
+    pytest.skip(
+        "obligation: chain-level anchor comparison (Heisenberg frame "
+        "inversion vs BD genus-0 acyclicity) not yet implemented as a "
+        "computation; only the IV registry relationship is verified here"
     )

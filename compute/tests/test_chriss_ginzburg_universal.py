@@ -1,13 +1,14 @@
-"""Tests for the Chriss-Ginzburg universal engine.
+"""Exact and status-typed tests for the Chriss--Ginzburg engine.
 
-Verifies the CENTRAL PRINCIPLE: every algebraic structure in the monograph
-is a projection of the single MC element Theta_A in MC(g^mod_A).
+The engine collects projection surfaces of the Maurer--Cartan element
+``Theta_A``.  The Theorem-H projection preserves the distinction between a
+bounded BDSK benchmark and completed curve-chart cohomology.
 
 The test structure mirrors the mathematical architecture:
 1. Construction: Theta_A from chiral algebra data
 2. MC equation: D·Theta + ½[Theta,Theta] = 0 at each arity
 3. Projection table: each pi_* recovers a standalone module's output
-4. Five main theorems: all as MC consequences
+4. Five main theorem surfaces with their individual statuses
 5. Cross-family: all standard families verified
 6. Consistency: cross-projection identities
 """
@@ -20,6 +21,10 @@ from compute.lib.chriss_ginzburg_universal import (
     all_standard_mc_elements,
     chriss_ginzburg_master_table,
     ARCHETYPE_G, ARCHETYPE_L, ARCHETYPE_C, ARCHETYPE_M,
+)
+from compute.lib.theorem_h_hochschild_polynomial import (
+    BoundedToChartComparison,
+    cohomology_record,
 )
 
 
@@ -193,19 +198,40 @@ class TestProjections:
         assert theta.pi_complementarity_sum() == Fraction(0)
 
     def test_pi_hochschild_virasoro(self):
-        """AP94: Virasoro in bounded Koszul regime per Theorem H
-        (formerly the refuted polynomial-ring 'w_algebra' label)."""
+        """Virasoro bounded data and chart data occupy distinct ambients."""
         theta = UniversalMCElement.from_virasoro(c=1)
         h = theta.pi_hochschild_polynomial()
-        assert h["regime"] == "bounded_koszul"
-        assert h["polynomial"] == [1, 0, 1]
+        assert h["regime"] == "family_indexed_support"
+        assert h["ambient"] == "completed_curve_chart"
+        assert h["status"] == "open-family-support-datum"
+        assert h["polynomial"] is None
+        assert h["betti_numbers"] is None
+        assert h["bounded_benchmark"]["vector"] == [1, 0, 1, 1]
+        assert h["bounded_benchmark"]["ambient"] == "bounded_vertex_complex"
 
     def test_pi_hochschild_heisenberg(self):
-        """Heisenberg in bounded Koszul regime: P(t) = 1 + t + t^2."""
+        """The rank-one superboson bounded vector is (2,1)."""
         theta = UniversalMCElement.from_heisenberg(k=1)
         h = theta.pi_hochschild_polynomial()
-        assert h["regime"] == "bounded_koszul"
-        assert h["polynomial"] == [1, 1, 1]
+        assert h["regime"] == "family_indexed_support"
+        assert h["polynomial"] is None
+        assert h["bounded_benchmark"]["vector"] == [2, 1]
+
+    def test_pi_hochschild_named_transport_changes_chart_status(self):
+        theta = UniversalMCElement.from_heisenberg(k=1)
+        base = cohomology_record("heisenberg")
+        comparison = BoundedToChartComparison(
+            family=base.key,
+            map_name="chi_bd_H",
+            source_complex=base.bounded.complex_name,
+            target_complex="Q_H",
+            quasi_isomorphism_status="assumed",
+        )
+        h = theta.pi_hochschild_polynomial(bounded_to_chart=comparison)
+        assert h["status"] == "conditional-assumed-bounded-to-chart"
+        assert h["support"] == (0, 1)
+        assert h["polynomial"] == [2, 1]
+        assert h["betti_numbers"] == {0: 2, 1: 1}
 
     def test_pi_quartic_virasoro(self):
         theta = UniversalMCElement.from_virasoro(c=1)
@@ -298,19 +324,24 @@ class TestFiveTheorems:
     def test_theorem_h_from_mc(self):
         theta = UniversalMCElement.from_virasoro(c=1)
         thms = theta.five_theorems_from_mc()
-        assert thms["H"]["status"] == "proved"
+        assert thms["H"]["status"] == "open-family-support-datum"
+        assert thms["H"]["statement"] == "H_H(A;S) implies Supp ChirHoch(A) subset S"
+        assert thms["H"]["ambient"] == "completed_curve_chart"
+        assert thms["H"]["support"] is None
 
-    def test_all_five_proved(self):
+    def test_five_surfaces_retain_individual_statuses(self):
         theta = UniversalMCElement.from_virasoro(c=1)
         thms = theta.five_theorems_from_mc()
-        for label, data in thms.items():
-            assert data["status"] == "proved", f"Theorem {label} not proved from MC"
+        assert set(thms) == {"A", "B", "C", "D", "H"}
+        for label in ("A", "B", "C", "D"):
+            assert thms[label]["status"] == "proved"
+        assert thms["H"]["status"] == "open-family-support-datum"
 
     def test_all_families_five_theorems(self):
         for name, theta in all_standard_mc_elements().items():
             thms = theta.five_theorems_from_mc()
-            for label, data in thms.items():
-                assert data["status"] == "proved", f"{name} Thm {label}"
+            assert set(thms) == {"A", "B", "C", "D", "H"}, name
+            assert thms["H"]["status"] == "open-family-support-datum", name
 
 
 # =====================================================================
@@ -427,7 +458,9 @@ class TestMasterTable:
     def test_master_table_five_theorems(self):
         master = chriss_ginzburg_master_table()
         for entry in master:
-            assert entry["five_theorems"], f"{entry['family']} not all 5 theorems"
+            assert entry["five_theorem_surfaces_present"], entry["family"]
+            assert set(entry["five_theorem_statuses"]) == {"A", "B", "C", "D", "H"}
+            assert entry["five_theorem_statuses"]["H"] == "open-family-support-datum"
 
     def test_master_table_12_families(self):
         master = chriss_ginzburg_master_table()

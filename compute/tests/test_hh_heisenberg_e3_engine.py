@@ -1,8 +1,12 @@
-r"""Tests for the explicit E_3 structure on HH*(H_k).
+r"""Tests for the explicit E_3 structure on chiral HH*(H_k).
 
 Verifies Gerstenhaber bracket [HH^0, HH^1], [HH^1, HH^1], and all
-E_3 compatibility conditions on the Hochschild cohomology of the
-Heisenberg vertex algebra.
+E_3 compatibility conditions on the chiral Hochschild cohomology of
+the Heisenberg vertex algebra.
+
+Register convention: HH^* abbreviates the curve-level chiral
+Hochschild cohomology ChirHoch^*(H_k, H_k), not THH and not
+categorical Hochschild cohomology of a dg category.
 
 Organized by:
   I.    Heisenberg algebra data and kappa

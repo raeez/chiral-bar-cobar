@@ -146,10 +146,9 @@ class TestKappa:
         expected = 4.0 * (k + 3) / 3.0
         assert abs(kap - expected) < 1e-12
 
-    def test_kappa_critical_level_raises(self):
-        """kappa is undefined at k = -h^v."""
-        with pytest.raises(ValueError):
-            kappa_affine("A", 1, -2)  # critical for sl_2
+    def test_kappa_critical_level_is_zero(self):
+        """The polynomial scalar has critical value zero."""
+        assert kappa_affine("A", 1, -2) == 0
 
     @pytest.mark.parametrize("k", [1, 2, 3, 5])
     def test_central_charge_sl2(self, k):

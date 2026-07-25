@@ -402,7 +402,8 @@ class TestComplementarity:
         """Rank 1 matches Heisenberg: kappa(H_1) + kappa(H_1^!) = 0.
 
         This is the abelian case of the lattice complementarity.
-        H_1 has kappa = 1, H_1^! = Sym^ch(V*) with kappa = -1.
+        H_1 has kappa = 1, and H_1^! is the curved Sym^ch(V*[1])
+        branch with scalar kappa = -1.
         """
         comp = complementarity(1)
         assert comp['kappa'] == Rational(1)
@@ -741,7 +742,8 @@ class TestAP24Distinction:
     def test_heisenberg_not_self_dual(self):
         """H_k is NOT self-dual (AP: critical pitfall).
 
-        H_k^! = Sym^ch(V*) with curvature -k, NOT H_k itself.
+        H_k^! is the curved Sym^ch(V*[1]) branch with curvature -k,
+        NOT H_k itself.
         kappa(H_k) = k, kappa(H_k^!) = -k, so kappa + kappa' = 0.
         """
         comp = complementarity(1)

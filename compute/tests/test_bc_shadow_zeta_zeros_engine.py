@@ -758,7 +758,7 @@ class TestCrossFamily:
             assert abs(dual[r] - coeffs_16[r]) < 1e-8
 
     def test_heisenberg_dual_kappa_sign(self):
-        """Heisenberg dual: kappa' = -k (AP33: H_k^! != H_{-k})."""
+        """Heisenberg dual has scalar kappa' = -k; AP33 keeps the curved branch."""
         dual = koszul_dual_coefficients('heisenberg', 3.0, 10)
         assert abs(dual[2] - (-3.0)) < 1e-10
 

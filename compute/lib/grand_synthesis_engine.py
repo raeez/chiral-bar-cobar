@@ -94,7 +94,8 @@ ANTI-PATTERN COMPLIANCE:
   AP14: shadow depth != Koszulness (all standard families are Koszul)
   AP19: r-matrix poles one below OPE (d log absorption)
   AP25: bar != Verdier dual != cobar (three distinct functors)
-  AP34: bar-cobar != open-to-closed (bulk = derived center)
+  AP34: bar-cobar != open-to-closed; the derived center is the algebraic
+        closed-sector actor, while physical bulk requires OCA comparison
   AP42: scattering = shadow at motivic level, not naive BCH
   AP48: kappa depends on full algebra, not just Virasoro subalgebra
 """
@@ -521,7 +522,8 @@ class RMatrixAgreement:
 def verify_r_matrix_agreement(N: int = 2) -> RMatrixAgreement:
     """Verify r-matrix agreement for sl_N.
 
-    Bar collision residue (AP19): r(z) = Omega/z (one pole below OPE).
+    Bar collision residue in unit Yangian/Costello normalization
+    (AP19): r(z) = Omega/z (one pole below OPE).
     Costello 4d CS (1303.2632): tree-level exchange = Omega/z.
     Yangian RTT: classical r-matrix = Omega/z.
 
@@ -952,7 +954,7 @@ UNCITED_COSTELLO_PAPERS = [
         'title': 'Supersymmetric gauge theory and the Yangian',
         'annotation': (
             'Tree-level R-matrix from 4d CS perturbation theory; '
-            'our bar collision residue r(z) = Omega/z reproduces this.'
+            'our unit-normalized bar collision residue r(z) = Omega/z reproduces this.'
         ),
     },
     {

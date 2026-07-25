@@ -27,7 +27,7 @@ finite Borel or zeta-zero diagnostics here.
 Object firewall:
     A, B(A), A^i, A^!, and Z_ch^der(A) are distinct.  Omega(B(A))=A is
     bar-cobar inversion.  A^! is the Verdier/continuous linear dual branch.
-    Z_ch^der(A) is the Hochschild bulk.
+    Z_ch^der(A) is the Hochschild closed-sector.
 
 Kernel constants, sourced from chapters/examples/landscape_census.tex:
     affine raw collision residue: k*Omega_tr/z
@@ -108,7 +108,7 @@ OBJECT_FIREWALLS = {
     "distinct_objects": ("A", "B(A)", "A^i", "A^!", "Z_ch^der(A)"),
     "bar_cobar": "Omega(B(A))=A is bar-cobar inversion",
     "koszul_dual": "A^! is the Verdier/continuous-linear dual branch",
-    "bulk": "Z_ch^der(A) is the Hochschild bulk",
+    "bulk": "Z_ch^der(A) is the Hochschild closed-sector",
 }
 
 
@@ -703,7 +703,7 @@ def trans_series_c13(n_instanton=3, r_max=60, n_zeros=5, dps=30):
 
     At c = 13, kappa(Vir_c)=kappa(Vir_{26-c})=13/2 on the Verdier
     scalar Virasoro lane.  General Koszul-duality certification and
-    Hochschild-bulk identification require separate data beyond this
+    Hochschild closed-sector identification require separate data beyond this
     residue ansatz.
 
     The finite ansatz has the shape:
@@ -1112,7 +1112,7 @@ def complementarity_stokes_at_zero(n, c_val, dps=30):
         A_c(rho) <-> A_{26-c}(rho)
 
     At c = 13: A_c = A_{26-c} tautologically.  Koszul duality and
-    Hochschild-bulk identification require data beyond residue equality.
+    Hochschild closed-sector identification require data beyond residue equality.
     """
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")

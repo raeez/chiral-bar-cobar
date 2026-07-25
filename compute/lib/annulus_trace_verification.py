@@ -1,69 +1,27 @@
-"""Annulus trace calculation: HH_*(A_b) for standard families.
+r"""Finite annulus-trace table helper for standard-family metadata.
 
-Implements the Hochschild HOMOLOGY computation HH_*(A) for the standard
-landscape families (Heisenberg, affine sl_2, Virasoro, W_3), verifying:
+This module is a ledger accessor for the schematic row used in old
+annulus-trace sanity checks.  It does not build a Hochschild chain
+complex, does not compute a differential, and does not prove Theorem H.
+The table values are meaningful only after the manuscript's named
+hypotheses have already supplied the input:
 
-  (1) The cyclic bar complex B^cyc_n(A) dimensions at each degree
-  (2) Hochschild homology HH_n(A) for n in {0, 1, 2}
-  (3) Calabi-Yau duality HH_n(A) = HH^{2-n}(A)
-  (4) The annulus partition function Z_ann = Tr(Id) in HH_0
+  * the \(H_H\) chiral Hochschild concentration package;
+  * a specified Calabi-Yau trace/pairing that converts chains to
+    cochains with the chosen degree shift;
+  * the generic-parameter and completion assumptions for the family.
 
-The chiral Calabi-Yau structure (from the invariant pairing on A)
-gives the duality HH_n = HH^{2-n}, reflecting the self-duality of
-the annulus as a cobordism from S^1 to S^1.
+The ordinary Hochschild chain differential is \(b\).  The Connes
+operator \(B\) belongs to cyclic, negative-cyclic, or periodic cyclic
+homology; it is not part of the ordinary Hochschild differential.  The
+``cyclic bar'' count below is only a finite cyclic-word orbit count for
+tests of table shape.  It is not the vector-space dimension of the
+completed Hochschild chain complex.
 
-MATHEMATICAL CONTEXT:
-
-For a chirally Koszul algebra A on a smooth curve X of dimension 1,
-Theorem H gives:
-  ChirHoch^0(A) = Z(A)     (center, typically 1-dim)
-  ChirHoch^1(A) = HH^1     (outer derivations)
-  ChirHoch^2(A) = Z(A!)^v  (obstructions, dual of dual center)
-  ChirHoch^n(A) = 0         for n not in {0, 1, 2}
-
-The Calabi-Yau duality (from the nondegenerate invariant pairing
-on A = Li-Bland-Meinrenken type) gives:
-  HH_n(A) = HH^{2-n}(A)    for n in {0, 1, 2}
-
-So:
-  HH_0(A) = HH^2(A) = Z(A!)^v    (trace space)
-  HH_1(A) = HH^1(A)               (derivation/loop space)
-  HH_2(A) = HH^0(A) = Z(A)        (center)
-
-For all standard families at generic parameters:
-  HH_0 = HH_1 = HH_2 = 1
-
-The annulus partition function Z_ann = dim HH_0(A) = 1 counts the
-identity trace (the unique vacuum-to-vacuum amplitude on the annulus).
-
-CYCLIC BAR COMPLEX:
-
-The cyclic bar complex B^cyc_n(A) at degree n consists of
-cyclic tensors a_0 [a_1 | ... | a_n] (cyclically ordered,
-not just ordered).  Its dimension is related to the ordinary
-bar complex by:
-  dim B^cyc_n = dim B_n / (n+1)  (for free generators, cyclic quotient)
-
-The Hochschild homology is:
-  HH_n(A) = H_n(B^cyc_*(A), b + B)
-where b is the Hochschild boundary and B is Connes' periodicity operator.
-
-CRITICAL PITFALLS:
-  - HH_n (homology) != HH^n (cohomology) in general, but they are
-    isomorphic via the CY pairing for our families (with degree shift)
-  - The cyclic bar complex has degree shift: B^cyc_n sits in
-    homological degree n, not cohomological degree n
-  - For W-algebras (Virasoro, W_3), the CY duality holds at
-    GENERIC central charge; it can fail at special values (e.g., c=0)
-  - The annulus partition function Z_ann = Tr(Id) is the NUMBER 1,
-    not a function of modular parameters (that would be the full
-    annulus amplitude, which involves the modular parameter tau)
-
-References:
-  thm:thqg-annulus-trace (Vol I: annulus trace formula)
-  thm:hochschild-polynomial-growth (Vol I: Theorem H)
-  thm:main-koszul-hoch (Vol I: Koszul duality for Hochschild)
-  def:modular-cyclic-deformation-complex (Vol I: cyclic bar complex)
+The normalized scalar returned by :func:`annulus_partition_function` is
+the table entry for the identity trace after all of the above comparison
+data have been supplied.  It is not topological Hochschild homology, not
+a conformal annulus character, and not a chain-level computation.
 """
 
 from __future__ import annotations
@@ -104,35 +62,26 @@ _FAMILY_GENERATORS = {
 
 FAMILIES = ("Heisenberg", "Affine_sl2", "Virasoro", "W3")
 
+MODEL_SCOPE = {
+    "status": "finite schematic table",
+    "not_a_proof_of": ["Theorem H", "Calabi-Yau duality", "THH"],
+    "ordinary_hochschild_differential": "b",
+    "connes_operator": "cyclic/negative-cyclic enhancement only",
+}
+
 
 # ======================================================================
-#  Hochschild homology dimensions (from Theorem H + CY duality)
+#  Hochschild homology dimensions (table entries under H_H + CY data)
 # ======================================================================
 
 def hochschild_homology_dimension(family: str, degree: int) -> int:
-    """Dimension of HH_n(A) for a standard family.
+    r"""Schematic HH_n table entry for a generic standard-family row.
 
-    By Theorem H + CY duality:
-      HH_0(A) = HH^2(A) = dim Z(A!)^v = 1
-      HH_1(A) = HH^1(A) = dim Der(A)/Inn(A) = 1
-      HH_2(A) = HH^0(A) = dim Z(A) = 1
-      HH_n(A) = 0  for n not in {0, 1, 2}
-
-    This holds for ALL standard families at generic parameters:
-      - Heisenberg H_k (any k != 0)
-      - Affine sl_2 at level k (k != -2, the critical level)
-      - Virasoro Vir_c (any c)
-      - W_3 at generic c
-
-    For ChirHoch^1:
-      Heisenberg: level deformation k -> k + epsilon, dim = 1
-      Affine sl_2: level deformation, dim = 1
-        (the sl_2-valued derivations are INNER in the chiral sense)
-      Virasoro: central charge deformation c -> c + epsilon, dim = 1
-      W_3: central charge deformation c -> c + epsilon, dim = 1
-        (the W normalization is fixed by the Jacobi identity)
-
-    The CY duality HH_n = HH^{2-n} then gives HH_0 = HH_1 = HH_2 = 1.
+    The function records the old finite table after the \(H_H\) and
+    Calabi-Yau comparison hypotheses have been supplied elsewhere.  It
+    is not a chain-level calculation and must not be cited as
+    independent evidence for concentration, affine derivation
+    dimensions, or topological Hochschild homology.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
@@ -140,20 +89,12 @@ def hochschild_homology_dimension(family: str, degree: int) -> int:
     if degree < 0 or degree > 2:
         return 0
 
-    # For all four standard families at generic parameters:
-    # HH_0 = HH_1 = HH_2 = 1
+    # Finite table entry used by legacy tests under the model scope above.
     return 1
 
 
 def hochschild_cohomology_dimension(family: str, degree: int) -> int:
-    """Dimension of HH^n(A) = ChirHoch^n(A) for a standard family.
-
-    By Theorem H:
-      HH^0 = Z(A) = 1 (center = vacuum sector)
-      HH^1 = Der(A)/Inn(A) = 1 (level/cc deformation)
-      HH^2 = Z(A!)^v = 1 (dual center)
-      HH^n = 0 for n not in {0, 1, 2}
-    """
+    r"""Schematic HH^n table entry under the named \(H_H\) package."""
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
 
@@ -168,14 +109,7 @@ def hochschild_cohomology_dimension(family: str, degree: int) -> int:
 # ======================================================================
 
 def calabi_yau_pairing_check(family: str) -> Dict[str, object]:
-    """Verify HH_n(A) = HH^{2-n}(A) (Calabi-Yau duality).
-
-    The CY structure comes from the nondegenerate invariant pairing
-    on the vertex algebra A.  For all standard families with such a
-    pairing, HH_n = HH^{2-n}.
-
-    Returns a dict with comparison at each degree and overall verdict.
-    """
+    """Check internal consistency of the finite table with a CY shift."""
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
 
@@ -252,18 +186,20 @@ def _enumerate_weight_tuples_bar(weights: List[int],
 
 def cyclic_bar_dimension(family: str, degree: int,
                          weight_bound: int) -> int:
-    """Dimension of the cyclic bar complex B^cyc_n(A) at degree n.
+    """Finite cyclic-word orbit count at degree n.
 
-    The cyclic bar complex is the quotient of the bar complex by
-    cyclic permutations.  For the ordinary (non-reduced) cyclic bar
-    complex:
+    This counts generator-weight words modulo cyclic rotation in a
+    finite weight window.  It is a toy table-shape invariant, not the
+    dimension of the completed Hochschild chain complex.
+
+    For the ordinary word-orbit model:
 
       B^cyc_n(A) = B_n(A) / Z_{n+1}
 
     where Z_{n+1} is the cyclic group acting by rotating the tensor
     factors a_0, a_1, ..., a_n.
 
-    The dimension of the cyclic quotient depends on the symmetry of
+    The cyclic-word orbit count depends on the symmetry of
     the generators.  For generators of DISTINCT weights, there is no
     cyclic symmetry and dim B^cyc_n = dim B_n / (n+1).
 
@@ -271,7 +207,7 @@ def cyclic_bar_dimension(family: str, degree: int,
     weight-1 generators), some cyclic orbits have nontrivial stabilizer
     and the dimension is larger than the naive quotient.
 
-    We compute the exact dimension using Burnside's lemma:
+    We compute the exact orbit count using Burnside's lemma:
       dim B^cyc_n = (1/(n+1)) * sum_{d | (n+1)} phi(d) * (# tuples fixed by rotation d)
 
     For simplicity and exact arithmetic, we use the weight-based counting.
@@ -289,7 +225,7 @@ def cyclic_bar_dimension(family: str, degree: int,
     # Compute the bar complex dimension
     bar_dim = _bar_complex_dimension(r, degree, weight_bound, weights)
 
-    # For the cyclic quotient: use Burnside's lemma
+    # For the finite cyclic-word orbit count: use Burnside's lemma.
     # For (n+1)-tuples under Z_{n+1} rotation, the number of orbits is
     #   (1/(n+1)) * sum_{d | (n+1)} euler_phi(d) * N_d
     # where N_d = number of tuples with period dividing (n+1)/d.
@@ -366,28 +302,17 @@ def _euler_phi(n: int) -> int:
 # ======================================================================
 
 def annulus_partition_function(family: str) -> Fraction:
-    """The scalar annulus partition function Z_ann = Tr(Id) in HH_0.
+    """Normalized scalar identity-trace table entry.
 
-    For a chirally Koszul algebra A with CY structure, the annulus
-    partition function is:
-      Z_ann = dim HH_0(A) = 1
-
-    This counts the identity endomorphism trace: the unique vacuum-to-
-    vacuum propagator on the annulus S^1 x [0,1].
-
-    The value 1 is INDEPENDENT of the family parameters (level, central
-    charge) because HH_0 = Z(A!)^v is always 1-dimensional for the
-    standard families (the dual center is generated by the dual vacuum).
-
-    NOTE: this is the TOPOLOGICAL annulus partition function (the Euler
-    number of the trace space).  The full CONFORMAL annulus amplitude
-    depends on the modular parameter tau of the annulus and involves
-    the character ch(A, q) = Tr(q^{L_0}).  That is a different object.
+    The value is the legacy finite-table normalization after the annulus
+    trace comparison and CY trace datum have been supplied.  It is not
+    a conformal annulus amplitude, not a spectral THH invariant, and not
+    a computation of the completed chain complex.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
 
-    # Z_ann = dim HH_0 = 1 for all standard families
+    # Legacy normalized table value under MODEL_SCOPE.
     return Fraction(1)
 
 
@@ -396,9 +321,10 @@ def annulus_partition_function(family: str) -> Fraction:
 # ======================================================================
 
 def hochschild_package(family: str) -> Dict[str, object]:
-    """Complete Hochschild invariants for a standard family.
+    """Finite table package for a standard family.
 
-    Returns HH_n, HH^n, CY check, Z_ann, and cyclic bar data.
+    Returns the stored HH_n/HH^n rows, their internal CY-shift check,
+    and the normalized scalar annulus entry.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
@@ -423,11 +349,10 @@ def hochschild_package(family: str) -> Dict[str, object]:
 # ======================================================================
 
 def cross_family_hh_comparison() -> Dict[str, Dict[int, int]]:
-    """Compare HH_n across all standard families.
+    """Compare the finite HH_n table rows across standard families.
 
-    For all families at generic parameters, HH_n = 1 for n in {0,1,2}.
-    This universality is a consequence of the uniqueness of the
-    invariant pairing and the simplicity of the center.
+    This is a table-shape comparison.  It is not a proof that the
+    completed Hochschild chain complexes have equal dimensions.
     """
     return {
         family: {n: hochschild_homology_dimension(family, n) for n in range(3)}
@@ -448,12 +373,16 @@ def cy_duality_all_families() -> Dict[str, bool]:
 # ======================================================================
 
 def cyclic_homology_dimension(family: str, degree: int) -> int:
-    """Dimension of HC_n(A) (cyclic homology) via the SBI sequence.
+    """Schematic HC_n table row produced from the finite HH row.
+
+    If the finite HH row is supplied and the SBI sequence has the
+    stated split form, one obtains the displayed toy pattern.  The
+    function does not compute Connes' operator or a cyclic complex.
 
     The SBI (Connes) exact sequence:
       ... -> HH_n -> HC_n -> HC_{n-2} -> HH_{n-1} -> ...
 
-    For our 3-term Hochschild homology (concentrated in {0,1,2}):
+    For the 3-term input table (concentrated in {0,1,2}):
       HC_0 = HH_0 = 1
       HC_1 = HH_1 = 1 (since HC_{-1} = 0)
       HC_2 = HH_2 + HC_0 = 1 + 1 = 2
@@ -462,10 +391,8 @@ def cyclic_homology_dimension(family: str, degree: int) -> int:
       HC_{2k} = k+1 for k >= 0 (by periodicity: HC_{2k} = HC_{2k-2} + 1)
       HC_{2k+1} = 1 for k >= 0 (odd cyclic homology stabilizes)
 
-    NOTE: this is the PERIODIC pattern. The actual computation
-    depends on whether the S-operator HH_2 -> HH_0 is zero or not.
-    For the standard families with the canonical CY pairing, S = Id,
-    so HC_n grows linearly for even n.
+    NOTE: this is only the periodic pattern under a chosen S-operator.
+    The actual computation depends on the completed cyclic complex.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
@@ -479,15 +406,10 @@ def cyclic_homology_dimension(family: str, degree: int) -> int:
 
 
 def negative_cyclic_homology_dimension(family: str, degree: int) -> int:
-    """Dimension of HC^-_n(A) (negative cyclic homology).
+    """Schematic HC^-_n table row.
 
-    HC^-_n is the "completed" or "negative" version, relevant for
-    the Chern character and deformation theory.
-
-    For our families:
-      HC^-_0 = 1 (the universal Chern character lands here)
-      HC^-_1 = 1
-      HC^-_n = 0 for n >= 2 (negative cyclic homology is finite)
+    This is a placeholder finite pattern for legacy tests, not a
+    computation of a completed negative-cyclic complex.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
@@ -504,20 +426,15 @@ def negative_cyclic_homology_dimension(family: str, degree: int) -> int:
 def verify_hh_independence_of_parameters(family: str,
                                          param_values: List[Fraction]
                                          ) -> bool:
-    """Verify that HH_n dimensions are independent of level/cc.
+    """Check that this finite table ignores level/central-charge input.
 
-    For chirally Koszul families, HH_n(A) depends only on the
-    Koszul TYPE (quadratic vs W-algebra) and the number of generators,
-    not on the level k or central charge c.
-
-    This is because HH_n is computed from the Koszul dual pair,
-    which has the same structure at all non-critical levels.
+    This is not mathematical evidence for parameter independence; the
+    helper has no parameter in its data model.
     """
     base_dims = {n: hochschild_homology_dimension(family, n) for n in range(3)}
 
     for _ in param_values:
-        # The dimension computation is parameter-independent
-        # (it uses only the generator structure, not the level/cc)
+        # The table accessor is parameter-independent by construction.
         current_dims = {n: hochschild_homology_dimension(family, n) for n in range(3)}
         if current_dims != base_dims:
             return False
@@ -530,10 +447,9 @@ def verify_hh_independence_of_parameters(family: str,
 # ======================================================================
 
 def hochschild_euler_characteristic(family: str) -> int:
-    """Euler characteristic chi(HH_*) = sum (-1)^n dim HH_n.
+    """Euler characteristic of the finite HH_* table row.
 
-    For all standard families:
-      chi = dim HH_0 - dim HH_1 + dim HH_2 = 1 - 1 + 1 = 1.
+    For the stored row this is 1 - 1 + 1.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")
@@ -543,9 +459,9 @@ def hochschild_euler_characteristic(family: str) -> int:
 
 
 def hochschild_total_dimension(family: str) -> int:
-    """Total dimension sum dim HH_n = dim HH_0 + dim HH_1 + dim HH_2.
+    """Total dimension of the finite HH_* table row.
 
-    For all standard families: total = 1 + 1 + 1 = 3.
+    For the stored row this is 1 + 1 + 1.
     """
     if family not in _FAMILY_GENERATORS:
         raise ValueError(f"Unknown family: {family}")

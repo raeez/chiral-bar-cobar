@@ -11,15 +11,22 @@ MATHEMATICAL CONTENT:
 4. Shadow depth classification: T-line is class M (infinite), J-line is class G.
 5. Comparison with the principal DS output W_3.
 
-The BP algebra has generators J (wt 1), G+ (wt 3/2), G- (wt 3/2), T (wt 2),
-with central charge c_BP(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
+The BP algebra has generators J (wt 1), G+ (wt 3/2), G- (wt 3/2), T (wt 2).
+The standard Fehily-Kawasetsu-Ridout central charge is
+c_FKR(k) = -(2k+3)(3k+1)/(k+3), with central-charge conductor
+K^c_BP = c_FKR(k) + c_FKR(-k-6) = 50 (see bp_koszul_conductor_engine.py).
 
-WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the PRINCIPAL W_3
-formula c=2-3(2k+3)^2/(k+3), giving K=76. The correct BP formula gives K=196.
+CONVENTION: this module computes the shadow tower on the explicitly
+SHIFTED conformal-vector scalar c_BP(k) = 2 - 24(k+1)^2/(k+3), whose
+reflection sum is 196 (the secondary shifted lane, a change of stress
+tensor; it must not be cited as the FKR Koszul conductor, which is 50).
 
-Koszul conductor: K_BP = c_BP(k) + c_BP(-k-6) = 196.
+WARNING (AP1/AP3 correction 2026-04-08): an earlier version used the
+PRINCIPAL W_3 formula c=2-3(2k+3)^2/(k+3), giving K=76. Wrong family.
+
+Shifted-lane reflection sum: K_shift = c_BP(k) + c_BP(-k-6) = 196.
 Dual level: k' = -k - 6 (involution).
-Dual central charge: c'_BP = c_BP(-k-6) = 196 - c_BP(k).
+Dual central charge: c'_BP = c_BP(-k-6) = 196 - c_BP(k) (shifted lane).
 
 References:
     nonprincipal_ds_reduction.py: BP seed data
@@ -46,7 +53,10 @@ c = Symbol('c')
 # =============================================================================
 
 def bp_central_charge(level=None):
-    """BP central charge: c_BP(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
+    """Shifted conformal-vector BP scalar: c_BP(k) = 2 - 24(k+1)^2/(k+3).
+
+    This is the SHIFTED lane (reflection sum 196), not the standard FKR
+    central charge c_FKR(k) = -(2k+3)(3k+1)/(k+3) whose conductor is 50.
 
     WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the
     PRINCIPAL W_3 formula c=2-3(2k+3)^2/(k+3), giving K=76. Wrong family.
@@ -71,7 +81,11 @@ def bp_dual_central_charge(level=None):
 
 
 def bp_koszul_conductor():
-    """K_BP = c_BP(k) + c_BP(-k-6) = 196 (level-independent)."""
+    """Shifted-lane reflection sum: c_BP(k) + c_BP(-k-6) = 196 (level-independent).
+
+    The standard FKR central-charge conductor is K^c_BP = 50; the value 196
+    belongs exclusively to the shifted conformal-vector lane.
+    """
     s = simplify(bp_central_charge() + bp_dual_central_charge())
     return s
 

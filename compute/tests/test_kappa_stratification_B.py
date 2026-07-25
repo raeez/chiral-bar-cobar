@@ -23,13 +23,16 @@ Manuscript anchors:
   - CLAUDE.md (universal Borcherds-weight identity, line 39-44)
   - FRONTIER.md "5x5 kappa-stratification matrix" line 236-244
   - chapters/connections/master_concordance.tex Mukai-Heisenberg row
-    (lines 619-624, 631-642, 692-699): 2 c_+(Mukai(K3)) = 8;
+    (lines 619-624, 631-642, 692-699): Mukai arithmetic
+    2 c_+(Mukai(K3)) = 8 with chiral status under H_B;
     kappa_BKM(Delta_5) = 5; kappa^Heis_ch(K3 x E) = 3; kappa_cat = 0.
-  - chapters/examples/landscape_census.tex 5806-5870 Bruinier-Heegner
-    Chern-class reciprocity values (h_B normalisation).
+  - chapters/examples/landscape_census.tex source boundary: Mukai
+    arithmetic 2 c_+ = 8, Bruinier Lemma 5.1 cyclotomic-integrality
+    scope, and the conjectural H_B chiral comparison.
   - Vol III standalone/cy_d_kappa_stratification_vol3.tex Theorem
     "Borcherds weight" + Proposition "K3 x E spectrum"
-    (canonical c_N(0) = (10, 8, 6, 4, 2); weights = (5, 4, 3, 2, 1)).
+    (canonical c_N(0) = (10, 6, 4, 3, 2); weights = (5, 3, 2, 3/2, 1)
+    per Jatkar-Sen / Govindarajan-Krishna; fourth rung half-integral).
   - igusa-cusp-form/main.tex (Borcherds denominator on K3 x E,
     Delta_5 weight 5 anchor).
 
@@ -50,6 +53,15 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from compute.lib.independent_verification import independent_verification
+from compute.lib.theorem_c_b_family_mukai_engine import (
+    B_FAMILY_HYPOTHESES,
+    BRUINIER_LEMMA_5_1,
+    LUSZTIG_ROOT_ORDER_SCOPE,
+    b_family_scope,
+    mukai_c_plus,
+    mukai_rank,
+    mukai_signature,
+)
 
 
 # =====================================================================
@@ -260,10 +272,11 @@ def test_kappa_Heis_ch_K3xE_is_three_three_paths():
 #       kappa_BKM(Phi_N) = c_N(0) / 2.
 # At N = 1, weak Jacobi input is phi_{0,1} (the K3 elliptic genus Jacobi
 # form), c_1(0) = 10, weight = 5.  Vol III canonical table
-# (cy_d_kappa_stratification_vol3 Theorem 'Borcherds weight'):
-#       N             1   2   3   4   6
-#       c_N(0)       10   8   6   4   2
-#       kappa_BKM     5   4   3   2   1
+# (cy_d_kappa_stratification_vol3 Theorem 'Borcherds weight';
+# Jatkar-Sen / Govindarajan-Krishna values, fourth rung half-integral):
+#       N             1   2   3   4    6
+#       c_N(0)       10   6   4   3    2
+#       kappa_BKM     5   3   2   3/2  1
 #
 # Three paths for the Phi_1 = Delta_5 anchor:
 #   (A) Borcherds-weight identity c_1(0) / 2 = 10 / 2 = 5.
@@ -275,14 +288,14 @@ def test_kappa_Heis_ch_K3xE_is_three_three_paths():
 
 # Canonical CHL Phi_N table (Vol III cy_d_kappa_stratification_vol3,
 # Theorem "Borcherds weight"; Borcherds 1995 + Gritsenko-Nikulin 1996;
-# CHL/Dijkgraaf-Verlinde-Verlinde 1997).
-PHI_N_TABLE: Dict[int, Tuple[int, int]] = {
+# Jatkar-Sen 2006 + Govindarajan-Krishna 2009 weight ladder).
+PHI_N_TABLE: Dict[int, Tuple[int, Fraction]] = {
     # N: (c_N(0), kappa_BKM = wt(Phi_N))
-    1: (10, 5),  # Phi_1 = Delta_5 (Igusa cusp)
-    2: (8, 4),   # Z_2 CHL orbifold
-    3: (6, 3),   # Z_3 CHL orbifold
-    4: (4, 2),   # Z_4 CHL orbifold
-    6: (2, 1),   # Z_6 CHL orbifold
+    1: (10, Fraction(5)),      # Phi_1 = Delta_5 (Igusa cusp)
+    2: (6, Fraction(3)),       # Z_2 CHL orbifold
+    3: (4, Fraction(2)),       # Z_3 CHL orbifold
+    4: (3, Fraction(3, 2)),    # Z_4 CHL orbifold (half-integral weight)
+    6: (2, Fraction(1)),       # Z_6 CHL orbifold
 }
 
 
@@ -392,10 +405,10 @@ def test_kappa_fiber_K3_is_24_three_paths():
     ],
     verified_against=[
         "Independent Siegel-weight tabulation: "
-        "Phi_1 = Delta_5 weight 5; Phi_2 weight 4; Phi_3 weight 3; "
-        "Phi_4 weight 2; Phi_6 weight 1 "
-        "(Dijkgraaf-Verlinde-Verlinde 1997 'Counting dyons in N=4 "
-        "string theory' Table 1; CHL classification "
+        "Phi_1 = Delta_5 weight 5; Phi_2 weight 3; Phi_3 weight 2; "
+        "Phi_4 weight 3/2 (half-integral); Phi_6 weight 1 "
+        "(Jatkar-Sen 2006 'Dyon spectrum in CHL models'; "
+        "Govindarajan-Krishna 2009; CHL classification "
         "Sen-Vafa 1996; Gritsenko-Nikulin 1996)",
     ],
     disjoint_rationale=(
@@ -420,13 +433,15 @@ def test_universal_Borcherds_weight_identity():
             f"Siegel weight = {siegel_weight}"
         )
 
-    # Tabulated values: (5, 4, 3, 2, 1).
+    # Tabulated values: (5, 3, 2, 3/2, 1).
     weights = tuple(w for _, w in PHI_N_TABLE.values())
-    assert weights == (5, 4, 3, 2, 1)
+    assert weights == (
+        Fraction(5), Fraction(3), Fraction(2), Fraction(3, 2), Fraction(1),
+    )
 
-    # Tabulated c_N(0): (10, 8, 6, 4, 2).
+    # Tabulated c_N(0): (10, 6, 4, 3, 2).
     c_N_zeros = tuple(c for c, _ in PHI_N_TABLE.values())
-    assert c_N_zeros == (10, 8, 6, 4, 2)
+    assert c_N_zeros == (10, 6, 4, 3, 2)
 
 
 # =====================================================================
@@ -494,7 +509,7 @@ def test_half_and_quarter_integer_continuations():
     assert CLERY_GRITSENKO_TABLE[(1, 3)] == 2
 
     # Twice-weight tuple per Vol III: (10, 4, 6, 2, 4, 1, 3, 2),
-    # which is NOT the CHL constant table (10, 8, 6, 4, 2).
+    # which is NOT the CHL constant table (10, 6, 4, 3, 2).
     twice_weights_clery = tuple(
         2 * CLERY_GRITSENKO_TABLE[k] for k in [
             (1, 1), (2, 1), (1, 2), (3, 1),
@@ -502,7 +517,7 @@ def test_half_and_quarter_integer_continuations():
         ]
     )
     assert twice_weights_clery == (10, 4, 6, 2, 4, 1, 3, 2)
-    chl_2c_table = (10, 8, 6, 4, 2)
+    chl_2c_table = (10, 6, 4, 3, 2)
     assert twice_weights_clery != chl_2c_table  # programme discipline
 
 
@@ -578,12 +593,12 @@ def test_reject_additive_kappa_BKM_ansatz():
     # The structural rejection -- the same ansatz at N = 2 fails:
     # (kappa^Heis_ch, chi(O_fiber)) is the same K3 fibre data, so
     # any "ansatz of K3 fibre data" predicts the SAME 5 at N = 2,
-    # but the true value is 4.
-    n2_true_value = PHI_N_TABLE[2][1]  # 4
-    assert n2_true_value == 4
+    # but the true value is 3.
+    n2_true_value = PHI_N_TABLE[2][1]  # 3
+    assert n2_true_value == 3
     assert coincidence_prediction != n2_true_value, (
         "Additive ansatz of fibre data is N-independent; kappa_BKM "
-        "varies with N (5, 4, 3, 2, 1) and so cannot be such an ansatz."
+        "varies with N (5, 3, 2, 3/2, 1) and so cannot be such an ansatz."
     )
 
     # Likewise at N = 6 the true value is 1; coincidence_prediction = 5.
@@ -596,57 +611,38 @@ def test_reject_additive_kappa_BKM_ansatz():
 # Collapse pattern: r_max = 5
 # =====================================================================
 #
-# Class B carries shadow-depth ceiling r_max = 5 -- the Borcherds-shadow
-# tower terminates at depth 5 (the weight of Delta_5). This is the
-# load-bearing classification axis: the depth at which the shadow
-# vanishes. Verified by:
-#   (A) The five entries (5, 4, 3, 2, 1) of the Phi_N weight tower
-#       descend monotonically and the maximum is 5.
-#   (B) The chain-homotopy h_B = h_LV / (kappa + kappa^!) at K3 x E:
-#       kappa + kappa^! = 8 (Mukai/Koszul conductor 2 c_+(Mukai(K3)));
-#       leading depth coefficient is bounded by Phi_1 weight 5.
-#   (C) Class B Borcherds shadow finite at depth 5; not infinite
-#       (which would be Class M) and strictly above C-class ceiling 4.
+# Class B carries the shadow-depth ceiling r_max=5.  Its evidence lives
+# entirely in the Borcherds shadow lane: the Phi_N weights are
+# (5,3,2,3/2,1), Delta_5 has weight 5, and the five-archetype ledger assigns
+# the finite ceiling 5 to row B.  The Mukai arithmetic value 2c_+=8 is a
+# separate coordinate and plays no role in this depth calculation.
 
 @independent_verification(
-    claim="row-B::collapse-pattern-r_max-five",
+    claim="row-B::collapse-pattern-r_max-five-in-Borcherds-lane",
     derived_from=[
-        "PHI_N_TABLE weight column maximum 5 (Vol III canonical CHL row)",
+        "five-archetype shadow-depth ledger assigns r_max(B)=5",
     ],
     verified_against=[
-        "Master concordance Mukai-Heisenberg row "
-        "(chapters/connections/master_concordance.tex 619-642): "
-        "kappa + kappa^! = 8 = 2 c_+(Mukai(K3)) with kappa_BKM(Delta_5) "
-        "= 5 the leading scalar shadow",
-        "Five-archetype dichotomy r_max ceilings "
-        "{G:2, L:3, C:4, M:infinity, B:5} from CLAUDE.md "
-        "(Open Beilinson tower, line 88-91): row B uniquely registers "
-        "r_max = 5 by Borcherds shadow finiteness",
+        "Borcherds-Gritsenko weight theorem gives wt(Delta_5)=10/2=5",
+        "PHI_N_TABLE weight column (5,3,2,3/2,1) has maximum 5",
     ],
     disjoint_rationale=(
-        "Path A reads the maximum from the CHL weight tower. Path B "
-        "uses the Mukai-Koszul conductor identity 2 c_+(Mukai(K3)) = 8 "
-        "(independent of the weak Jacobi input). Path C is the "
-        "five-archetype shadow-depth dichotomy, which is a Vol I "
-        "definitional axis and not derived from any single Phi_N. "
-        "All three label the same depth 5."
+        "The classification ledger supplies the depth assignment; the "
+        "Borcherds weight theorem and the CHL weight table independently "
+        "pin the terminal numerical value in the same shadow lane. The "
+        "Mukai lattice conductor candidate is excluded from this check."
     ),
 )
 def test_collapse_pattern_r_max_is_five():
-    # Path A -- maximum of the CHL weight tower.
+    # Borcherds/CHL lane.
     weights = tuple(w for _, w in PHI_N_TABLE.values())
+    assert weights == (
+        Fraction(5), Fraction(3), Fraction(2), Fraction(3, 2), Fraction(1),
+    )
     assert max(weights) == 5
+    assert Fraction(PHI_N_TABLE[1][0], 2) == Fraction(5)
 
-    # Path B -- Mukai-Koszul conductor 2 c_+(Mukai(K3)) = 8 with leading
-    # shadow weight = 5 (Igusa cusp form).
-    mukai_koszul_conductor = 8
-    leading_shadow_weight = 5
-    assert mukai_koszul_conductor == 8
-    assert leading_shadow_weight == 5
-    # The depth ceiling = leading shadow weight in the Borcherds tower.
-    assert leading_shadow_weight == 5
-
-    # Path C -- five-archetype dichotomy.
+    # Five-archetype depth ledger.
     archetype_r_max = {
         "G": 2,
         "L": 3,
@@ -655,137 +651,146 @@ def test_collapse_pattern_r_max_is_five():
         "B": 5,
     }
     assert archetype_r_max["B"] == 5
-    # Class B uniquely realises r_max = 5 (not infinite -- Class M;
-    # not 4 -- Class C; not 3 -- Class L; not 2 -- Class G).
     finite_ceilings = [v for v in archetype_r_max.values() if v != float("inf")]
     assert max(finite_ceilings) == 5
-    # The 5 is uniquely Class B's ceiling.
     classes_with_5 = [k for k, v in archetype_r_max.items() if v == 5]
     assert classes_with_5 == ["B"]
 
 
 # =====================================================================
-# h_B -- universal chain-homotopy via Bruinier-Heegner Chern-class reciprocity
+# B-family source boundary: Mukai arithmetic, Bruinier scope, H_B obligations
 # =====================================================================
 #
-# CLAUDE.md essential constants line 119:
-#       "h_B Mukai-K3 Heisenberg via Bruinier-Heegner Chern-class
-#        reciprocity"
-# Universal chain-homotopy normalisation is h_{A_b} = h_LV / (kappa + kappa^!).
-# At Class B / K3 x E:
-#       kappa + kappa^! = 8 = 2 c_+(Mukai(K3))
-# (master concordance line 622). The Bruinier-Heegner Chern-class
-# reciprocity (Bruinier 2002 LNM 1780 Proposition 5.1 and Theorem 3.22)
-# pins the rank of the Heegner Chern-class shadow at the genus-2
-# Heegner discriminants D = 0, 1 mod 4. landscape_census.tex 5806-5870
-# gives the canonical values; the chain-homotopy normalisation reads
-# 1/8 (the universal denominator) at the leading admissible D.
+# The exact lattice statement is rk H~(K3,Z)=24, signature (4,20),
+# and therefore 2 c_+=8.  Bruinier LNM 1780 (2002), Lemma 5.1,
+# concerns cyclotomic integrality of vector-valued cusp-form Fourier
+# coefficients; in half-integral weight it uses N'=lcm(N,8).  Lusztig's
+# quantum group begins with a chosen root order.  The comparison of these
+# separately typed appearances of eight is conjectural under H_B, with
+# H_mod and H_quantum carrying the two missing comparison obligations.
 
 @independent_verification(
-    claim="row-B::h_B-Bruinier-Heegner-normalisation",
+    claim="row-B::Mukai-eight-source-boundary-under-H_B",
     derived_from=[
-        "Universal chain-homotopy h_{A_b} = h_LV / (kappa + kappa^!) "
-        "(CLAUDE.md essential constants)",
+        "landscape_census.tex B-family status ledger under H_B",
     ],
     verified_against=[
-        "Bruinier 2002 LNM 1780 Proposition 5.1 + Theorem 3.22 "
-        "Heegner-divisor reciprocity giving Chern-class denominator 8 "
-        "(landscape_census.tex 5806-5870; igusa-cusp-form Borcherds "
-        "denominator)",
-        "Mukai/Koszul conductor 2 c_+(Mukai(K3)) = 8 from Mukai 1987 "
-        "moduli of bundles on K3 (master_concordance.tex 622)",
+        "Mukai lattice H~(K3,Z)=U^4+E8(-1)^2 of signature (4,20)",
+        "Bruinier 2002 LNM 1780 Lemma 5.1 cyclotomic coefficient field",
+        "Lusztig 1990 quantum group at a chosen admissible root order",
     ],
     disjoint_rationale=(
-        "Path A: programme-level normalisation 1/(kappa + kappa^!). "
-        "Path B: Bruinier 2002 Heegner-reciprocity computation, "
-        "independent of any chain-homotopy structure. Path C: "
-        "Mukai-1987 lattice computation of c_+(Mukai(K3)). The three "
-        "computations of '8' have disjoint inputs (chain-homotopy "
-        "denominator, modular-form Heegner Chern class, even unimodular "
-        "lattice signature), each returning 8."
+        "The Mukai calculation proves the lattice value eight. Bruinier's "
+        "lemma fixes a coefficient field, while Lusztig fixes the ambient "
+        "root-order input. H_mod and H_quantum are explicit obligations "
+        "joining these source scopes to the proposed chiral conductor."
     ),
 )
-def test_h_B_Bruinier_Heegner_normalisation():
-    # Path A -- universal denominator kappa + kappa^! at row B.
-    kappa = 5  # leading kappa for Class B
-    kappa_dual = 3  # complement giving conductor 8
-    assert kappa + kappa_dual == 8
+def test_b_family_mukai_eight_has_source_correct_comparison_status():
+    assert mukai_rank() == 24
+    assert mukai_signature() == (4, 20)
+    assert mukai_c_plus() == 4
+    assert 2 * mukai_c_plus() == 8
 
-    # Path B -- Bruinier-Heegner Chern-class denominator (pinned at 8).
-    bruinier_heegner_denominator = 8
-    assert bruinier_heegner_denominator == 8
+    assert BRUINIER_LEMMA_5_1["source"].endswith("Lemma 5.1")
+    assert "cyclotomic" in BRUINIER_LEMMA_5_1["actual_statement"]
+    assert "lcm(N,8)" in BRUINIER_LEMMA_5_1["actual_statement"]
+    assert BRUINIER_LEMMA_5_1["humbert_torsion_order_8"] is False
+    assert BRUINIER_LEMMA_5_1["supports_mukai_conductor"] is False
 
-    # Path C -- Mukai/Koszul conductor 2 c_+(Mukai(K3)) = 8.
-    mukai_K3_signature_plus = 4
-    mukai_koszul_conductor = 2 * mukai_K3_signature_plus
-    assert mukai_koszul_conductor == 8
+    assert "chosen" in LUSZTIG_ROOT_ORDER_SCOPE["actual_scope"]
+    assert (
+        LUSZTIG_ROOT_ORDER_SCOPE["selects_order_8_from_mukai_lattice"]
+        is False
+    )
+    assert LUSZTIG_ROOT_ORDER_SCOPE["supports_mukai_conductor"] is False
 
-    # All three return 8 -- the chain-homotopy normaliser at row B.
-    assert (kappa + kappa_dual) == bruinier_heegner_denominator
-    assert (kappa + kappa_dual) == mukai_koszul_conductor
-
-    # The h_B normalisation factor is therefore 1/8.
-    h_B_normalisation = Fraction(1, 8)
-    assert h_B_normalisation == Fraction(1, 8)
+    scope = b_family_scope()
+    assert scope["candidate_value"] == Fraction(8)
+    assert scope["candidate_status"] == "conjectured-as-chiral-conductor-under-H_B"
+    assert scope["hypothesis_package"] == B_FAMILY_HYPOTHESES
+    assert any(item.startswith("H_mod") for item in B_FAMILY_HYPOTHESES)
+    assert any(item.startswith("H_quantum") for item in B_FAMILY_HYPOTHESES)
 
 
 # =====================================================================
-# Chart-class enumeration per F8
+# Chart-candidate typing per F8
 # =====================================================================
 #
 # F8 (FRONTIER.md line 148-162): for each archetype G/L/C/M/B,
-# enumerate the Morita-equivalence classes of chart presentations
-# (C, b). For row B (Mukai-K3 Heisenberg), the canonical chart
-# presentations are:
-#   (B-1) Mukai-vector chart (rk, c_1, ch_2) on Db(K3): one Morita class.
-#   (B-2) V_{Lambda_24} self-dual lattice chart (Niemeier sublattice
-#         presentation realising the Heisenberg subVOA after kappa-twist).
-# Two charts; verify they are Morita-equivalent at the chiral-Heisenberg
-# subVOA level (master_concordance.tex 640: V_{Lambda_24}^! = V_{Lambda_24}
-# gives kappa + kappa^! = 48, distinct from row B's 8 -- the lattice-VOA
-# chart is a SECOND MORITA CLASS, not equivalent to the K3-Mukai chart).
+# enumerate proposed chart presentations (C,b).  Row B currently has two
+# candidate presentations: a Mukai-vector chart on Db(K3) and a
+# V_{Lambda_24} positive-definite lattice chart.  Their exact arithmetic
+# data are differently typed: 2c_+(Mukai)=8 and 2rank(Lambda_24)=48.
+# A Morita-class separation by chiral conductors requires H_B for the
+# Mukai chart and a theorem that K^kappa is defined and Morita invariant
+# on both presentations.  The resulting classification remains conjectural.
 
 @independent_verification(
-    claim="row-B::F8-chart-class-enumeration",
+    claim="row-B::F8-chart-candidate-status-under-H_B",
     derived_from=[
-        "F8 frontier specification (FRONTIER.md 148-162)",
+        "F8 frontier specification proposes Mukai and Niemeier charts",
     ],
     verified_against=[
-        "Master concordance line 640 V_{Lambda_24}^! = V_{Lambda_24} "
-        "gives kappa + kappa^! = 48, NOT 8 (Class B Mukai-Koszul "
-        "conductor); two distinct Morita classes",
-        "Vol III standalone catalogue cy_d_kappa_stratification_vol3 "
-        "(K3 x E spectrum vs Niemeier lattice spectrum) treats the two "
-        "presentations as different worksheets",
+        "Mukai lattice arithmetic gives rank 24, signature (4,20), 2c_+=8",
+        "positive-definite rank-24 lattice arithmetic gives pair-rank 48",
+        "theorem_c_b_family_mukai_engine records H_B as the chiral bridge",
     ],
     disjoint_rationale=(
-        "Path A: F8 enumerates (C, b) Morita classes. Path B: the "
-        "complementarity values 8 vs 48 separate Mukai-K3 from "
-        "Niemeier-Lambda_24 charts. Path C: Vol III catalogue treats "
-        "them as different rows. Three structural arguments all "
-        "concluding 'at least two Morita classes for row B'."
+        "F8 supplies candidate presentations. The two lattice calculations "
+        "supply exact arithmetic of different types, while H_B supplies the "
+        "missing Mukai chiral realization. Morita separation is therefore "
+        "stored as a conjectural comparison rather than a proved count."
     ),
 )
-def test_F8_chart_class_enumeration_row_B():
-    chart_classes_row_B = {
+def test_F8_chart_candidates_keep_morita_separation_conjectural():
+    scope = b_family_scope()
+    chart_candidates_row_B = {
         "Mukai-K3 (Db(K3) Mukai vector)": {
-            "kappa_plus_kappa_dual": 8,
+            "exact_datum_name": "2c_plus",
+            "exact_datum_value": 2 * mukai_c_plus(),
+            "chiral_conductor_candidate": Fraction(8),
+            "chiral_status": scope["candidate_status"],
             "shadow_depth_max": 5,
         },
         "Niemeier V_{Lambda_24}": {
-            "kappa_plus_kappa_dual": 48,
+            "exact_datum_name": "2rank",
+            "exact_datum_value": 2 * 24,
+            "chiral_conductor_candidate": Fraction(48),
+            "chiral_status": "conditional-on-chart-and-Morita-invariance",
             "shadow_depth_max": 5,
         },
     }
-    # Two distinct Morita classes (different conductor invariants).
-    assert len(chart_classes_row_B) == 2
-    conductors = [v["kappa_plus_kappa_dual"] for v in chart_classes_row_B.values()]
-    assert conductors == [8, 48]
-    # Both share row B archetype (same shadow-depth ceiling).
-    depths = {v["shadow_depth_max"] for v in chart_classes_row_B.values()}
+    assert len(chart_candidates_row_B) == 2
+    exact_data = [
+        (record["exact_datum_name"], record["exact_datum_value"])
+        for record in chart_candidates_row_B.values()
+    ]
+    assert exact_data == [("2c_plus", 8), ("2rank", 48)]
+    assert chart_candidates_row_B["Mukai-K3 (Db(K3) Mukai vector)"][
+        "chiral_status"
+    ] == "conjectured-as-chiral-conductor-under-H_B"
+
+    morita_separation = {
+        "status": "conjectural-under-H_B",
+        "requirements": (
+            "H_chart",
+            "H_KD",
+            "H_scalar",
+            "Morita invariance of K^kappa on both constructed charts",
+        ),
+    }
+    assert morita_separation["status"] == "conjectural-under-H_B"
+    assert morita_separation["requirements"][:3] == (
+        "H_chart",
+        "H_KD",
+        "H_scalar",
+    )
+
+    depths = {
+        record["shadow_depth_max"] for record in chart_candidates_row_B.values()
+    }
     assert depths == {5}
-    # Confirm the two conductors are distinct (programme load-bearing).
-    assert 8 != 48
 
 
 # =====================================================================

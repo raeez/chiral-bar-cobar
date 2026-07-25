@@ -119,7 +119,7 @@ class TestTypedKoszulObjectConventions:
         assert "completed continuous dual" in branch
 
     def test_cobar_inversion_and_bulk_are_not_dual_branch(self):
-        """Omega(B(A)) recovers A; Z_ch^der(A) is Hochschild bulk."""
+        """Omega(B(A)) recovers A; Z_ch^der(A) is Hochschild closed-sector."""
         conv = koszul_object_conventions()
         objects = conv["objects"]
         assert objects["Omega(B(A))"]["kind"] == "bar-cobar inversion object"
@@ -127,7 +127,7 @@ class TestTypedKoszulObjectConventions:
             objects["Omega(B(A))"]["construction"]
         )
         assert "does not construct A^!" in conv["bar_cobar_inversion"]
-        assert objects["Z_ch^der(A)"]["kind"] == "derived-centre bulk slot"
+        assert objects["Z_ch^der(A)"]["kind"] == "derived-centre closed-sector slot"
         assert "ChirHoch^*(A,A)" in objects["Z_ch^der(A)"]["construction"]
 
     def test_source_has_no_stale_object_equalities(self):

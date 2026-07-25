@@ -50,7 +50,7 @@ Formulas verified
 - kappa(sl_2, k) = 3(k+2)/4
 - kappa_ghost = c_ghost/2 = 1
 - kappa(Vir_{c(k)}) = c(k)/2 = (k-4)/(2(k+2))
-- r^KM(z) = Omega/z (Casimir in fundamental)
+- r^KM_k(z) = k*Omega/z (trace-form Casimir in fundamental)
 - r^Vir(z) = (c/2)/z^3 + 2T/z (AP19: pole orders shifted by 1 from OPE)
 - CYBE: [r_12, r_13] + [r_12, r_23] + [r_13, r_23] = 0
 

@@ -869,7 +869,7 @@ class TestCertificationFirewalls:
         kernels = result['kernel_normalizations']
         assert objects['Omega(B(A))'] == 'bar-cobar inversion back to A, not Koszul duality'
         assert objects['A^!'] == 'Verdier/continuous-linear dual algebra branch'
-        assert objects['Z_ch^der(A)'] == 'derived chiral centre, i.e. Hochschild/bulk branch'
+        assert objects['Z_ch^der(A)'] == 'derived chiral centre, i.e. Hochschild/closed-sector branch'
         assert kernels['affine_raw_trace_form'] == 'k*Omega_tr/z'
         assert kernels['affine_KZ'] == 'Omega/((k+h^vee)z)'
         assert kernels['heisenberg'] == 'k/z'

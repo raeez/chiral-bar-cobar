@@ -35,16 +35,16 @@
 \chapter{The Universal Conductor: ordered-to-symmetric averaging}
 \label{chap:universal-conductor}
 
-\epigraph{The conductor is the map that forgets order without pretending
-that the lost order-data was never there.}{}
+\epigraph{The conductor maps ordered data to its symmetric image and
+records the homotopy fibre of the passage.}{}
 
 The universal conductor of Volume~I is the averaging morphism
 \[
  K_\cA \;=\; \Av_\cA \colon \gAE \longrightarrow \gAmod
 \]
 from the ordered convolution dg Lie algebra to the symmetric modular
-quotient. At chain level it is the Reynolds projector followed by the
-coinvariant quotient
+quotient. At chain level it is the coinvariant quotient, with the
+Reynolds idempotent furnishing its characteristic-zero splitting,
 \[
  B^{\Ord}(\cA)=T^c(s^{-1}\bar\cA)
  \longrightarrow
@@ -75,10 +75,13 @@ the averaging morphism:
 They are central-charge, modular-characteristic, and BRST-presentation
 numbers, respectively.
 
-$K$ has named chain-level and $(\infty,1)$-categorical witnesses. Its
-image is simultaneously a coinvariant quotient, a Reynolds
-fixed-point summand in characteristic zero, and a homotopy-coinvariant
-factorisation shadow. Its kernel contains the ordered classes that
+$K$ has named chain-level and $(\infty,1)$-categorical witnesses. In
+the untwisted characteristic-zero window its image is simultaneously a
+coinvariant quotient, a Reynolds fixed-point summand, and a
+homotopy-coinvariant factorisation shadow. In the general braided
+window it is the $L_R$-twisted derived coinvariant descent of the
+ordered bar. Its formal homotopy fibre is the ordered
+information-loss conductor; it contains the ordered classes that
 separate the four archetypes $G/L/C/M$. The landscape map
 $\mathfrak U\colon \cA\mapsto\{G,L,C,M\}$ is the supremal
 $G/L/C/M$ depth of the averaged shadow, checked row-by-row against the
@@ -92,17 +95,50 @@ calculation identifies them.
 \label{sec:uc-definition}
 
 An ordered chiral algebra $\cA$ on $X$ is
-\emph{conductor-eligible} if its ordered bar package carries a
-specified $\Sigma_\bullet$-action, or a specified
-$R$-twisted $\Sigma_\bullet$-descent datum, for which the ordered
-differential, residue operations, and convolution bracket are
-equivariant, and each arity is finite type or completed so that finite
-group averaging is continuous. The displayed formulas in this chapter
-use the untwisted case $R=\mathrm{id}$. In the twisted case
-$\Sigma_n$-coinvariants are replaced everywhere by the corresponding
-$R$-twisted coinvariants. Outside this conductor domain the aritywise
-Reynolds projection is only a linear shadow map; no dg Lie morphism is
-asserted.
+\emph{conductor-eligible} if its ordered bar package satisfies the
+following hypothesis package
+$\mathbf H_{\mathrm{uc}}(\cA)$:
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item the ordered arity-$n$ bar carrier is finite type or complete
+separated conilpotent in every arity, so finite group averaging and
+derived coinvariants commute with the inverse-limit filtration;
+\item the ordered differential, residue operations, and convolution
+bracket are equivariant for the chosen $\Sigma_\bullet$-descent datum;
+\item in the braided case, the meromorphic $R$-matrix satisfies the
+quantum Yang--Baxter equation and strong unitarity
+$R^{21}(-z)R^{12}(z)=\id$;
+\item the KZ/Cherednik local system $L_R$ determined by~$R$ is
+$\Sigma_n$-equivariant on $\Conf_n^{\ord}(X)$ and has regular-singular
+nearby-cycle extension to the relevant Fulton--MacPherson collision
+faces;
+\item the nearby cycles of $L_R$ are compatible with the chiral
+collision products used in the ordered bar differential.
+\item in every finite arity window where a single symmetric dg~Lie
+target is asserted, the local-system fibres \(R_n=(L_R)_{x_n}\) carry
+shuffle-compatible \(\Sigma_m\times\Sigma_n\)-equivariant
+coefficient-multiplication maps
+\[
+\mu_{m,n}\colon
+\operatorname{Ind}_{\Sigma_m\times\Sigma_n}^{\Sigma_{m+n}}
+(R_m\otimes R_n)\longrightarrow R_{m+n}
+\]
+so that the tensor-product twist produced by the ordered convolution
+bracket lands in the chosen arity-\((m+n)\) descent target.
+\item the symmetric bar target carries the shuffle/factorization
+coproduct obtained from finite direct image along
+$\Conf_n^{\ord}(X)\to\Conf_n(X)$, and the comparison with the
+aritywise coinvariant carrier intertwines this coproduct with collision
+factorization.  This is the coalgebra-upgrade datum.
+\end{enumerate}
+The displayed Reynolds formulas in this chapter use the untwisted case
+$R=\mathrm{id}$. In the twisted case every occurrence of ordinary
+$\Sigma_n$-coinvariants means the corresponding
+$L_R$-twisted derived completed coinvariants.  The package
+$\mathbf H_{\mathrm{uc}}(\cA)$ is precisely the domain on which the
+aritywise coinvariant descent carries the dg Lie and
+shuffle/factorization coalgebra structures.  The Reynolds fixed-point
+model receives the transported structures; broader aritywise windows
+retain its linear-shadow interpretation.
 
 \subsection{Chain-level witness}
 \label{subsec:uc-chain-level}
@@ -133,7 +169,56 @@ conductor} on the underlying arity-graded bar object is
  B^{\Ord}(\cA)=T^c(V)\longrightarrow B^{\Sigma}(\cA)=\Symm^c(V).
 \]
 When the ordered differential is $\Sigma_\bullet$-equivariant this is a
-chain map to the symmetric coinvariant quotient.
+chain map to the symmetric coinvariant quotient.  Since
+$q_n(\sigma v)=q_n(v)$,
+\begin{equation}
+\label{eq:uc-q-reynolds-is-q}
+q_n\circ\Av^{\mathrm{Rey}}_{\Sigma_n}=q_n.
+\end{equation}
+Thus $q_n$ is the descent map, while the Reynolds idempotent supplies
+its characteristic-zero fixed-point representative.  The notation
+$\Symm^c(V)$ in this chapter carries the shuffle/factorization
+coproduct specified in the final clause of
+$\mathbf H_{\mathrm{uc}}(\cA)$.
+
+The first coalgebra calculation fixes this convention.  For linearly
+independent $v,w\in V$, put
+\[
+a=[v|w]-[w|v].
+\]
+Then $K^{\mathrm{ch}}_{\cA,2}(a)=0$, while the reduced tensor
+deconcatenation gives
+\[
+(K^{\mathrm{ch}}_{\cA,1}\otimes K^{\mathrm{ch}}_{\cA,1})
+\,\bar\Delta_T(a)=v\otimes w-w\otimes v,
+\]
+a nonzero tensor.  Hence raw tensor deconcatenation has a different
+target type.  The coalgebra statement uses the
+shuffle/factorization coproduct supplied by the hypothesis package.
+
+In the $R$-twisted conductor domain, the preceding display is the
+untwisted model for the same descent. The chain-level target is
+\[
+ B^{\Sigma}_{X,n}(\cA)
+ \;\simeq\;
+ \bigl(B^{\Ord}_{X,n}(\cA)\otimes L_R\bigr)_{\Sigma_n}^{\mathbb L,\wedge},
+\]
+where $L_R$ is the $\Sigma_n$-equivariant local system fixed in
+$\mathbf H_{\mathrm{uc}}(\cA)$ and the superscript denotes derived
+completed coinvariants. The \emph{ordered information-loss conductor}
+in arity~$n$ is the homotopy fibre
+\[
+ \mathcal I_{\ord\to\Sigma,n}(\cA)
+ :=
+ \operatorname{Fib}\!\left(
+ B^{\Ord}_{X,n}(\cA)\otimes L_R
+ \longrightarrow
+ B^{\Sigma}_{X,n}(\cA)
+ \right).
+\]
+In the untwisted semisimple finite-arity window, Reynolds splitting
+identifies this homotopy fibre with the completed kernel of
+$q_n\circ\Av^{\mathrm{Rey}}_{\Sigma_n}$.
 \end{definition}
 
 \begin{definition}[Ordered-to-symmetric chiral homology descent;
@@ -165,6 +250,9 @@ $\frac{1}{n!}\sum_{\sigma\in\Sigma_n}\sigma$ followed by passage to
 coinvariants. This is the totalisation-level realisation of the
 ordered-to-symmetric descent of
 \eqref{eq:ordered-descent}.
+For nontrivial $R$, replace the summand by
+$C_\bullet(\Conf_n^{\Ord}(X),\cA^{\boxtimes n}\otimes L_R)$ and take
+the $L_R$-twisted derived completed $\Sigma_n$-coinvariant quotient.
 \end{definition}
 
 \subsection{$(\infty,1)$-categorical witness}
@@ -191,11 +279,145 @@ the left Kan extension along $q$, equivalently the homotopy
 coinvariants of the symmetric-group action. Its right adjoint is the
 ordered pullback $q^*$, whose fibrewise description is given by
 homotopy fixed points.
+With nontrivial $R$, the same notation means
+$q_!(\mathcal F\otimes L_R)$; the untwisted formula is the special case
+$L_R=\mathbb Q_{\mathrm{triv}}$.
 \end{definition}
+
+\begin{theorem}[Finite-window $R$-twisted descent for the differential
+and bracket]
+\label{thm:uc-r-twisted-dg-lie-descent}
+\ClaimStatusProvedHere
+\index{R-twisted descent!bar differential and bracket}
+\index{ordered-to-symmetric descent!dg Lie criterion}
+Type signature: \textup{(}Open quadrant, finite-window
+ordered-to-symmetric conductor presentation, Beilinson levels~$2$ and
+$5$, hypothesis package: characteristic zero, complete separated
+finite-window filtration, strong-unitary \(R\)-twisted
+\(\Sigma_\bullet\)-descent, regular-singular FM extension, and the
+shuffle-compatible coefficient multiplication of
+\(\mathbf H_{\mathrm{uc}}\)\textup{)}.
+Fix a finite arity/weight/filtration window and put
+\[
+C_n:=B^{\Ord}_{X,n}(\cA)_{\mathcal W},\qquad
+C_n\simeq\varprojlim_N C_n/F^N C_n .
+\]
+Let \(R_n=(L_R)_{x_n}\) be the finite-dimensional right
+\(\mathbb Q[\Sigma_n]\)-module determined by the \(R\)-twisted
+local-system fibre in that window, and define the completed twisted
+coinvariant bar piece
+\[
+B^{\Sigma,R}_{X,n}(\cA;\mathcal W)
+:=
+\varprojlim_N
+\left(
+R_n\otimes_{\mathbb Q[\Sigma_n]} C_n/F^N C_n
+\right).
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(bar differential)}
+If \(d_{B,n}\) is equivariant for the \(R\)-twisted
+\(\Sigma_n\)-descent datum, then it induces a continuous differential
+on \(B^{\Sigma,R}_{X,n}(\cA;\mathcal W)\).  Thus averaging commutes
+with \(d_B\) only under the stated equivariance.
+\item \textup{(convolution bracket)}
+Suppose the ordered convolution bracket
+\[
+[-,-]_{m,n}\colon
+C_m\widehat\otimes C_n\longrightarrow C_{m+n}
+\]
+is equivariant for the block inclusion
+\(\Sigma_m\times\Sigma_n\subset\Sigma_{m+n}\), and suppose the
+coefficient maps \(\mu_{m,n}\) of
+\(\mathbf H_{\mathrm{uc}}\) are supplied.  Then the bracket descends to
+a continuous chain map
+\[
+[-,-]^{R}_{m,n}\colon
+B^{\Sigma,R}_{X,m}(\cA;\mathcal W)
+\widehat\otimes
+B^{\Sigma,R}_{X,n}(\cA;\mathcal W)
+\longrightarrow
+B^{\Sigma,R}_{X,m+n}(\cA;\mathcal W).
+\]
+The coefficient map~\(\mu_{m,n}\) carries the natural tensor-product
+twist
+\(\operatorname{Ind}_{\Sigma_m\times\Sigma_n}^{\Sigma_{m+n}}
+(R_m\otimes R_n)\) into the fixed \(R_{m+n}\)-twisted symmetric
+bar piece.
+\item \textup{(dg Lie morphism criterion)}
+The descended ordered-to-symmetric map is a dg~Lie morphism exactly on
+the finite windows satisfying \textup{(i)} and \textup{(ii)}.  In the
+untwisted Reynolds model \(R_n=\mathbb Q_{\mathrm{triv}}\), the
+Reynolds representative
+\(R_{\Sigma_n}\colon C_n\to C_n^{\Sigma_n}\) is a dg~Lie morphism
+precisely when
+\[
+R_{\Sigma_{m+n}}([u,v])=0
+\quad
+\text{for all }
+u\in\ker R_{\Sigma_m},\ v\in\ker R_{\Sigma_n},
+\]
+equivalently when the Reynolds kernel is closed under the ordered
+bracket in the relevant arities.  The differential equivariance and
+bracket condition therefore mark the domain of the dg~Lie morphism;
+the same formula on a broader window is a continuous linear projection
+to a shadow.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~\textup{(i)} is the defining quotient calculation for twisted
+coinvariants.  The relations in
+\(R_n\otimes_{\mathbb Q[\Sigma_n]} C_n/F^NC_n\) are
+\[
+rg\otimes c-r\otimes gc,\qquad g\in\Sigma_n .
+\]
+If \(d_{B,n}(gc)=g\,d_{B,n}(c)\), then
+\[
+d(rg\otimes c-r\otimes gc)
+=rg\otimes d c-r\otimes g d c,
+\]
+so the differential preserves the relations on each finite quotient
+and hence on the completed inverse limit.  This is the
+bar-differential part of
+Lemma~\ref{lem:R-twisted-completed-coinvariants}.
+
+For~\textup{(ii)}, the same lemma identifies the completed twisted
+coinvariant with the equivariant-map model
+\(\operatorname{Hom}_{\Sigma_n}(R_n^\vee,C_n)\).  The ordered bracket
+of equivariant maps
+\(R_m^\vee\to C_m\) and \(R_n^\vee\to C_n\) is equivariant for
+\(\Sigma_m\times\Sigma_n\), hence gives a map with coefficient
+twist \(R_m\otimes R_n\).  Inducing from
+\(\Sigma_m\times\Sigma_n\) to \(\Sigma_{m+n}\) records the shuffle
+summation in the convolution bracket.  Composing with
+\(\mu_{m,n}\) is exactly the datum that lands in the chosen
+\(R_{m+n}\)-twisted target.  The tensor-product twist is the preceding
+coefficient object in this construction.
+
+Part~\textup{(iii)} is the comparison between the quotient model and
+the Reynolds representative.  In the untwisted characteristic-zero
+window, Lemma~\ref{lem:completed-reynolds-descent-ordered-arity}
+identifies completed coinvariants with invariants by the Reynolds
+idempotent.  Writing \(x=x_0+u\) and \(y=y_0+v\), with
+\(x_0,y_0\) invariant and \(u,v\) in the Reynolds kernels, one has
+\[
+R_{\Sigma_{m+n}}([x,y])
+=[x_0,y_0]+R_{\Sigma_{m+n}}([u,v]).
+\]
+The mixed terms vanish by equivariance.  Therefore
+\(R([x,y])=[R x,R y]\) for all \(x,y\) exactly when the displayed
+kernel condition holds.  Combining this with part~\textup{(i)} gives
+the stated dg~Lie criterion and the final linear-shadow warning.
+\end{proof}
 
 \begin{theorem}[\textbf{Universal conductor as ordered-to-symmetric descent}]
 \label{thm:uc-universal-conductor}
 \ClaimStatusProvedHere
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+conductor presentation, Beilinson levels~$2$ and~$5$, hypothesis
+package $\mathbf H_{\mathrm{uc}}(\cA)$ above\textup{)}.
 For every conductor-eligible ordered chiral algebra $\cA$ on a smooth
 complex curve $X$,
 the assignment
@@ -206,13 +428,15 @@ is a well-defined natural dg Lie morphism with the following two named
 witnesses.
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Chain-level witness.}
- $K_\cA$ is dual to the Reynolds--coinvariant map
- $K_{\cA}^{\mathrm{ch}}$ of
+ $K_\cA$ is dual to the coinvariant map
+ $K_{\cA}^{\mathrm{ch}}=q_\bullet$ of
  Definition~\ref{def:uc-reynolds-coinvariant} on
  $B^{\Ord}(\cA)\to B^{\Sigma}(\cA)$, equivalently to the
  totalisation-level descent
  $K_{X,\cA}^{\mathrm{hom}}$ of
- Definition~\ref{def:uc-totalization}.
+ Definition~\ref{def:uc-totalization}.  The identity
+ $q_\bullet\circ\Av^{\mathrm{Rey}}_{\Sigma_\bullet}=q_\bullet$
+ supplies the fixed-point representative.
 \item[\textup{(ii)}] \emph{$(\infty,1)$-categorical witness.}
  $K_\cA$ is induced by the homotopy-coinvariant functor
  $q_!\simeq(-)_{h\Sigma_\bullet}$ of
@@ -225,12 +449,16 @@ It satisfies:
  the conductor domain.
 \item[\textup{(b)}] $K_\cA$ is lossy on the nontrivial
  $\Sigma_\bullet$-isotypic ordered sector: it remembers the symmetric
- modular shadow and forgets the ordered commutator, associator, and
- higher braid data not represented by the trivial summand.
+ modular shadow. The discarded ordered commutator, associator, and
+ higher braid data form the formal conductor
+ $\mathcal I_{\ord\to\Sigma,\bullet}(\cA)$, the literal homotopy fibre
+ of the passage.
 \item[\textup{(c)}] $K_\cA$ is distinct from
  $\Omega(B(\cA))\to \cA$, from the bar-dual coalgebra
- $\cA^i=H^*(B^{\mathrm{ch}}(\cA))$, from Verdier-Koszul duality
- $\cA^i\mapsto \cA^!$, from the derived centre
+ $\cA^i=C_X(s^{-1}V,s^{-2}R)$ and its comparison
+ $q_\cA\colon\cA^i\to B^{\mathrm{ch}}(\cA)$, from the Verdier algebra
+ $K_X(\cA)=\mathbb D_{\Ran}B^{\mathrm{ch}}(\cA)$ and its pair map
+ $\nu_\cA\colon K_X(\cA)\to\cA^!$, from the derived centre
  $\DerZ(\cA)$, and from the categorical Drinfeld centre
  $\mathcal Z(\Rep^{E_1}(\cA))$.
 \end{enumerate}
@@ -244,24 +472,44 @@ $\Sigma_\bullet$-descent datum; in the untwisted symmetric case this is
 the usual compatibility of the collision forms with relabelling,
 together with the Arnold relation in the Orlik--Solomon algebra. Hence
 the Reynolds projector commutes with the differential, and the quotient
-$q_n\colon V^{\otimes n}\to \Symm^n(V)$ is a chain map. Without this
-equivariance the same formula is only an aritywise linear projection,
-not a dg Lie morphism. This proves the chain-level part.
+$q_n\colon V^{\otimes n}\to \Symm^n(V)$ is a chain map.  Equivariance
+is the condition that upgrades the aritywise linear projection to a dg
+Lie morphism. This proves the chain-level part.
+
+In the $R$-twisted case, the quantum Yang--Baxter equation supplies the
+triple-overlap cocycle for the elementary transpositions and strong
+unitarity gives the Coxeter involutivity relation
+$R^{21}(-z)R^{12}(z)=\id$. The regular-singular
+Fulton--MacPherson extension hypothesis gives nearby cycles of
+$L_R$ along collision faces, and the compatibility clause in
+$\mathbf H_{\mathrm{uc}}(\cA)$ identifies those nearby cycles with the
+chiral collision products in the ordered bar differential. Therefore
+the same argument applies to
+$B^{\Ord}_{X,n}(\cA)\otimes L_R$ after replacing ordinary
+coinvariants by derived completed $L_R$-twisted coinvariants, as in
+Theorem~\ref{thm:uc-r-twisted-dg-lie-descent},
+Corollary~\ref{cor:eight-cor-R-descent} and
+Lemma~\ref{lem:R-twisted-completed-coinvariants}.
 
 The factorisation-theoretic part is the ordered-to-symmetric descent
 already used in the ordered modular package: since
 $\Ran(X)=\Ranord(X)/\Sigma_\bullet$, left Kan extension along $q$
-identifies the symmetric object with fibrewise homotopy coinvariants.
+identifies the symmetric object with fibrewise homotopy coinvariants,
+or with fibrewise $L_R$-twisted homotopy coinvariants in the braided
+case.
 Passing to the dual convolution algebras gives the dg Lie morphism
 $K_\cA\colon \gAE\to \gAmod$.
 
 Finally, the source and target objects distinguish $K$ from the other
 load-bearing constructions. The bar--cobar counit
 $\Omega(B(\cA))\to \cA$ is an inversion map; the bar-dual coalgebra is
-$\cA^i=H^*(B^{\mathrm{ch}}(\cA))$; Verdier duality turns $\cA^i$ into
-the Koszul dual algebra $\cA^!$ only under the finite-type or completed
-continuous duality hypotheses; $\DerZ(\cA)$ is a bulk algebra built
-from chiral Hochschild cochains; and
+$\cA^i=C_X(s^{-1}V,s^{-2}R)$, equipped with
+$q_\cA\colon\cA^i\to B^{\mathrm{ch}}(\cA)$; its Koszul recognition
+statement is the quasi-isomorphism of~$q_\cA$.  Verdier duality forms
+$K_X(\cA)=\mathbb D_{\Ran}B^{\mathrm{ch}}(\cA)$, and the chosen
+Koszul-pair map $\nu_\cA\colon K_X(\cA)\to\cA^!$ reaches the dual
+algebra.  The object $\DerZ(\cA)$ is the algebraic
+closed-sector Hochschild cochain algebra; and
 $\mathcal Z(\Rep^{E_1}(\cA))$ is a braided monoidal category. The
 universal conductor is the ordered-to-symmetric projection.
 \end{proof}
@@ -272,10 +520,11 @@ universal conductor is the ordered-to-symmetric projection.
 \begin{theorem}[\textbf{Three descriptions of the image}]
 \label{thm:uc-trinity}
 \ClaimStatusProvedHere
-Let $V=s^{-1}\bar\cA$, work over characteristic zero, and restrict to
-the conductor domain. For each $n\geq 0$, the image of the universal
-conductor on $V^{\otimes n}$ is characterised by three independent
-descriptions.
+Let $V=s^{-1}\bar\cA$, work over characteristic zero, restrict to the
+conductor domain, and in the displayed formulas assume the untwisted
+finite-dimensional arity window. For each $n\geq 0$, the image of the
+universal conductor on $V^{\otimes n}$ is characterised by three
+independent descriptions.
 \begin{enumerate}
 \item[\textup{(Q)}] \emph{Quotient description.}
  \[
@@ -297,8 +546,8 @@ descriptions.
  \cong
  \Symm^n(V).
  \]
- Thus the image may be treated as a fixed-point object only after the
- characteristic-zero Reynolds splitting.
+ Thus the characteristic-zero Reynolds splitting represents the image
+ as a fixed-point object.
 \item[\textup{(H)}] \emph{Homotopy-coinvariant description.}
  On factorisation algebras the same image is the essential image of
  \[
@@ -312,7 +561,21 @@ descriptions.
 Consequently the answer to ``subalgebra, fixed point, or quotient?''
 is precise: the image is a coinvariant quotient by definition, a
 fixed-point summand after Reynolds splitting, and a sub-dg Lie algebra
-of $\gAmod$ only because $\gAmod$ is already the symmetric target.
+of the symmetric target~$\gAmod$.  The fixed-point summand receives the
+operations transported from the quotient.  For fixed-point
+representatives $x=\mathrm{Re}_m\widetilde x$ and
+$y=\mathrm{Re}_n\widetilde y$, the transported bracket is
+\[
+[x,y]_{\mathrm{tr}}
+=\mathrm{Re}_{m+n}[\widetilde x,\widetilde y].
+\]
+It agrees with the restriction of the ordered bracket precisely under
+the Reynolds-kernel criterion of
+Theorem~\ref{thm:uc-r-twisted-dg-lie-descent}.
+For nontrivial $R$, replace these symmetric-power displays by the
+$L_R$-twisted derived completed coinvariant image.  A chosen twisted
+descent equivalence supplies any subsequent comparison with
+$\Symm^n(V)$.
 \end{theorem}
 
 \begin{proof}
@@ -322,7 +585,9 @@ $K_{\cA,n}^{\mathrm{ch}}$ is the coinvariant quotient.
 Description~(F) is the characteristic-zero Reynolds splitting:
 averaging projects $V^{\otimes n}$ onto its $\Sigma_n$-invariant
 summand, and invariants are canonically identified with symmetric
-tensors. Description~(H) is the factorisation-theoretic reformulation
+tensors.  Equation~\eqref{eq:uc-q-reynolds-is-q} identifies this as a
+linear splitting of the coinvariant quotient; transport supplies its
+dg Lie operations. Description~(H) is the factorisation-theoretic reformulation
 of the quotient map $\Ranord(X)\to \Ran(X)$ from
 Definition~\ref{def:uc-homotopy-coinvariants}. The final sentence just
 unpacks the three descriptions.
@@ -331,7 +596,8 @@ unpacks the three descriptions.
 \begin{proposition}[Schur--Weyl kernel count]
 \label{prop:uc-kernel-dimension}
 \ClaimStatusProvedHere
-On a finite-dimensional purely even arity window with $d=\dim V$, one
+On an untwisted finite-dimensional purely even arity window with
+$d=\dim V$, one
 has
 \[
  \dim\ker(K_{\cA,n}^{\mathrm{ch}})
@@ -348,6 +614,102 @@ This is the explicit kernel count of
 Proposition~\ref{prop:ker-av-schur-weyl}: the image of averaging on
 $V^{\otimes n}$ is $\Symm^n(V)$ and stars-and-bars gives its
 dimension. Subtracting from $d^n$ yields the kernel dimension.
+\end{proof}
+
+\begin{theorem}[Degree-two conductor kernel and ordered
+\texorpdfstring{$r$}{r}-matrix data]
+\label{thm:uc-degree-two-rmatrix-kernel}
+\ClaimStatusProvedHere
+\index{averaging map!degree-two kernel}
+\index{ordered r-matrix!kernel of averaging}
+\index{braid data!higher averaging kernel}
+Type signature: \textup{(}Open quadrant, finite-window
+ordered-to-symmetric conductor presentation, Beilinson levels~$2$ and
+$5$, hypothesis package: characteristic zero, completed Reynolds
+descent of Theorem~\ref{thm:uc-r-twisted-dg-lie-descent}, and the
+finite-window generation hypothesis explicitly stated below\textup{)}.
+Let \(C_n(\cA;\mathcal W)\) be the arity-\(n\) finite-window ordered
+bar/convolution carrier, with completed Reynolds idempotent
+\[
+\mathrm{Re}_n=\frac1{n!}\sum_{\sigma\in\Sigma_n}\sigma .
+\]
+In arity \(2\), write \(s=(12)\).  Then the finite-window kernel of
+the conductor is
+\[
+\ker(K_{\cA,2}^{\mathrm{ch}})
+=
+\ker(\mathrm{Re}_2)
+=
+\operatorname{im}\!\left(\frac{1-s}{2}\right).
+\]
+If the arity-two ordered carrier is generated, as a completed
+\(\Sigma_2\)-module in the window~\(\mathcal W\), by the ordered
+two-particle residue coefficients \(r_{\cA,\alpha}(z)\), then
+\[
+\ker(K_{\cA,2}^{\mathrm{ch}})
+=
+\widehat{\operatorname{span}}\left\{
+r_{\cA,\alpha}^{-}(z):=
+\frac12\bigl(r_{\cA,\alpha}(z)-s\cdot r_{\cA,\alpha}(z)\bigr)
+\right\}_{\alpha}.
+\]
+Thus, on the degree-two residue-generated window, the kernel is
+exactly the ordered \(r\)-matrix data killed by symmetric averaging;
+the symmetric shadow keeps only
+\(\mathrm{Re}_2(r_{\cA,\alpha})\).
+
+More generally, for \(n\ge3\), let
+\(\mathcal B_n(\cA;\mathcal W)\) be a set of ordered braid,
+KZ-associator, Yangian, or surface-braid coefficients of the
+\(E_1\)-Maurer--Cartan tower in arity~\(n\).  Each coefficient
+\(\beta\in\mathcal B_n(\cA;\mathcal W)\) has a canonical kernel
+component
+\[
+\beta^-:=(1-\mathrm{Re}_n)\beta\in\ker(K_{\cA,n}^{\mathrm{ch}}).
+\]
+If \(\mathcal B_n(\cA;\mathcal W)\) generates the nontrivial
+\(\Sigma_n\)-isotypic part of \(C_n(\cA;\mathcal W)\), then these
+\(\beta^-\) generate \(\ker(K_{\cA,n}^{\mathrm{ch}})\).  On the broader
+domain the theorem identifies the displayed braid/associator classes
+in the kernel; the generation hypothesis supplies exhaustion.
+For an \(R\)-twisted descent, the same statements hold with
+\(\Sigma_n\) acting through the strong-unitary \(R\)-twisted descent
+datum and with the completed twisted coinvariant model of
+Theorem~\ref{thm:uc-r-twisted-dg-lie-descent}.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:uc-r-twisted-dg-lie-descent} and
+Lemma~\ref{lem:completed-reynolds-descent-ordered-arity}, completed
+coinvariants are identified with the image of the completed Reynolds
+idempotent.  Hence the kernel of the conductor representative in arity
+\(n\) is \(\ker(\mathrm{Re}_n)\).  For \(n=2\), the group
+\(\Sigma_2=\{1,s\}\) has Reynolds idempotent
+\[
+\mathrm{Re}_2=\frac{1+s}{2},
+\qquad
+1-\mathrm{Re}_2=\frac{1-s}{2}.
+\]
+Since \(1-\mathrm{Re}_2\) is the complementary idempotent, its image is
+exactly \(\ker(\mathrm{Re}_2)\).  Applying this projector to every
+ordered residue coefficient gives the displayed
+\(r_{\cA,\alpha}^{-}(z)\).  If those coefficients generate the
+arity-two carrier in the chosen window, their complementary
+projections generate the complementary summand, so the kernel is
+precisely their completed span.
+
+For \(n\ge3\), the same idempotent decomposition gives
+\[
+\beta=\mathrm{Re}_n(\beta)+(1-\mathrm{Re}_n)\beta
+\]
+for every ordered tower coefficient.  The second summand lies in the
+kernel by definition.  If the chosen braid, associator, Yangian, or
+surface-braid coefficients generate the nontrivial isotypic summand,
+then their complementary projections generate the kernel; otherwise
+only the displayed inclusion is justified.  The \(R\)-twisted case is
+the identical calculation with the twisted finite-group action and the
+coinvariant model of
+Theorem~\ref{thm:uc-r-twisted-dg-lie-descent}.
 \end{proof}
 
 \section{Kernel classes for the four archetypes}
@@ -445,7 +807,7 @@ $\frac c2[T](\eta_{12}+\eta_{13}+\eta_{23})$ survives, and that the
 Arnold relation cancels only quadratic wedge expressions. Third, the
 Virasoro and class-M rows of the census have $r_{\max}=\infty$ with
 nonzero higher shadows $S_4,S_5,\dots$; the kernel witness is the
-nontrivial ordered channel component, not extinction of the tower.
+nontrivial ordered channel component, while the tower continues.
 \end{proof}
 
 \section{The landscape map to \texorpdfstring{$\{G,L,C,M\}$}{G/L/C/M}}
@@ -490,11 +852,12 @@ column entry-by-entry. The row count is:
  G:5,\qquad L:2,\qquad C:4,\qquad M:10.
 \]
 These $21$ rows are exactly the census rows whose archetype column is
-one of $G,L,C,M$. The Yangian row is the separate $E_1$-RTT row with
-no Virasoro shadow depth and no scalar $c$ or $\kappa$ in this sense.
-The strict-$E_1$ quantum lattice row remains unclassified there, and the
-wild Kronecker row lies outside the domain because its bar spectral
-sequence does not collapse.
+one of $G,L,C,M$. The Yangian row is the separate $E_1$-RTT row, whose
+ordered RTT tower has a different type signature from Virasoro shadow
+depth and the scalars $c$ and~$\kappa$.  The strict-$E_1$ quantum
+lattice row remains a frontier entry.  The theorem's domain consists
+of rows with a collapsing bar spectral sequence, while the wild
+Kronecker row records the complementary frontier.
 \end{theorem}
 
 \begin{proof}
@@ -533,12 +896,11 @@ discriminant; and the family chapter supplies the infinite-tower
 witness, starting with the Virasoro collision-channel witness of
 Theorem~\ref{thm:uc-kernel-archetypes}(M).
 
-The Yangian row is typed in the census as $E_1$-RTT: it has an
-ordered RTT $R$-matrix tower and no Virasoro shadow depth. The theorem
-therefore does not fold it into class~M. The quantum lattice row is
-explicitly marked unknown in the census, so the theorem does not
-classify it. The Kronecker wild row is outside the domain because the
-modular-Koszul shadow tower does not exist there.
+The Yangian row is typed in the census as $E_1$-RTT and carries an
+ordered RTT $R$-matrix tower.  Class~M records an infinite Virasoro
+shadow tower, so the two rows retain separate type signatures.  The
+quantum lattice and wild Kronecker rows are marked as frontier entries;
+their completion and bar-collapse packages remain open.
 \end{proof}
 
 \begin{remark}[Census counts by archetype]
@@ -549,8 +911,8 @@ three independent ways: by direct count in the archetype table, by the
 completion-kinematics table of
 Section~\ref{sec:completion-kinematics-census}, and by the family
 chapter list attached to each row in the census. The theorem uses the
-intersection of those three surfaces and excludes the $E_1$-RTT
-Yangian row from the four-archetype count.
+intersection of those three surfaces; the $E_1$-RTT Yangian row belongs
+to its own census count.
 \end{remark}
 
 \section{Vol~III scope and boundary}
@@ -561,53 +923,60 @@ Yangian row from the four-archetype count.
 \ClaimStatusProvedHere
 The Vol~III RTT-Yangian / chiral-quantum-group comparison can
 compare ordered data with the symmetric modular shadow through the
-universal conductor only on the \emph{ordered Koszul locus}, namely
+universal conductor precisely on the \emph{ordered Koszul locus}, namely
 where the following three conditions hold simultaneously:
 \begin{enumerate}
 \item[\textup{(K1)}] the ordered counit
  \[
  \Omega(B^{\Ord}(\cA))\xrightarrow{\sim}\cA
  \]
- is a chain-level quasi-isomorphism, not merely a coderived one;
+ is a chain-level quasi-isomorphism in the stated raw or completed
+ pro-conilpotent ambient;
 \item[\textup{(K2)}] the ordered bar complex is pure enough for the
- shadow tower $\Theta^{E_1}_\cA$ to be defined without extra
- completion obstructions;
-\item[\textup{(K3)}] chiral Hochschild cohomology remains concentrated
- in degrees $\{0,1,2\}$.
+ shadow tower $\Theta^{E_1}_\cA$ to be defined with its completion
+ package internal to the construction;
+\item[\textup{(K3)}] a family datum $H_H(\cA;S_\cA)$ gives
+ $\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S_\cA$.
 \end{enumerate}
-Off this locus the first named failure modes are:
+The boundary is organized by the following named modes:
 \begin{enumerate}
 \item[\textup{(B1)}] \emph{bar non-purity:} ordered bar cohomology
  spreads into extra weights;
-\item[\textup{(B2)}] \emph{widened Hochschild amplitude:}
- $\mathrm{HH}^{\mathrm{ch},\bullet}(\cA)$ need not remain in $\{0,1,2\}$;
-\item[\textup{(B3)}] \emph{coderived-only inversion:} the counit is no
- longer a chain-level quasi-isomorphism;
-\item[\textup{(B4)}] \emph{RTT-Yangian bar obstruction:} the missing
- step is still the identification of $B(Y)$ as a factorisation
+\item[\textup{(B2)}] \emph{Hochschild support boundary:}
+ the finite-window retract or chart comparison required for
+ $H_H(\cA;S_\cA)$ acquires an unresolved column;
+\item[\textup{(B3)}] \emph{coderived inversion:} the counit represents
+ an equivalence after coderived localization;
+\item[\textup{(B4)}] \emph{RTT-Yangian bar obligation:} the open step
+ is the identification of $B(Y)$ as a factorisation
  coalgebra on $\Ran(C)$ with shuffle coproduct;
 \item[\textup{(B5)}] \emph{elliptic/toroidal boundary:} the KZB/Fay
- replacement of the Arnold kernel is only partial, so no toroidal
- analogue of the universal conductor theorem is inscribed.
+ replacement of the Arnold kernel is available at propagator level;
+ the toroidal factorisation comparison remains open.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 Condition~(K1) is the explicit chain-level content of the ordered
-Koszul locus. The failure off the locus is recorded in the ordered bar
-package: for class~M and beyond the counit survives only in the
-coderived sense. Condition~(K2) is the purity needed to define the
-ordered tower itself; its failure is the non-pure bar obstruction.
-Condition~(K3) is exactly the Vol~I/III Hochschild concentration
-boundary.
+Koszul locus.  At the boundary, the ordered bar package places the
+counit equivalence in the coderived ambient. Condition~(K2) is the
+purity needed to define the ordered tower itself; the corresponding
+boundary mode is bar cohomology spread.
+Condition~(K3) is exactly the Vol~I/III family-support boundary;
+De Sole--Kac variational Poisson cohomology is nonvanishing in
+unboundedly many degrees for Virasoro-type Poisson vertex algebras
+\cite{BDSK21}, so the (K3) concentration lives strictly on the stated
+Koszul/bounded locus, with the bounded-to-chart comparison part of
+$H_H(\cA;S_\cA)$.  A
+degree-$d$ perfect pairing is a separate comparison and governs the
+degree reflection on either side.
 
 The boundary terms are concrete obstructions. The RTT-Yangian
-obstruction is the missing factorisation-coalgebra identification in
+obstruction is the open factorisation-coalgebra identification in
 the Vol~III comparison.
 The elliptic/toroidal boundary is the point where the rational Arnold
-relation has been replaced by the Fay/KZB kernel only at the
-propagator level; the comparison with ordered-to-symmetric averaging
-remains open there.
+relation is replaced by the Fay/KZB kernel at the propagator level; the
+comparison with ordered-to-symmetric averaging remains open there.
 \end{proof}
 
 \begin{conjecture}[Universal trace comparison downstream of averaging]
@@ -618,31 +987,33 @@ Vol~III chiral quantum-group invariant must first factor through the
 ordered-to-symmetric averaging map
 $K_\cA\colon \gAE\to \gAmod$ on the ordered Koszul locus of
 Theorem~\ref{thm:uc-K-Atiyah}. The elliptic/KZB and toroidal regimes
-have no theorem asserting such a factorisation.
+carry this factorisation as an open construction problem.
 \end{conjecture}
 
 \section{Central-charge, \texorpdfstring{$\kappa$}{kappa}, and ghost scalar packages}
 \label{sec:uc-scalar-packages}
 
 The averaging conductor $K_\cA=\Av_\cA$ is a morphism of dg Lie
-algebras. The scalar packages live on witness lanes where the bar-dual
-coalgebra $A^i=H^*(B^{\mathrm{ch}}(A))$ is finite type in each weight,
-or carries a completed continuous Verdier pairing, so that
-$A^!=(A^i)^\vee$ is defined. A Virasoro element and a canonical BRST
-presentation are additional data.
+algebras.  Scalar packages arise after further functors and choices.
+A central-charge companion sum receives two conformal vectors.  A
+modular-characteristic sum also receives a normalization of~$\kappa$.
+A ghost scalar receives a concrete conformal BRST presentation,
+including its charged fields, neutral fields, and improvement term.
+The notation $A^!=(A^i)^\vee$ receives its algebra-level meaning on the
+finite-type or continuously completed Verdier lane.
 
 \begin{definition}[Three scalar conductor packages; \ClaimStatusDefinitional]
 \label{def:uc-scalar-packages}
-For such a Verdier pair $(A,A^!)$, set
+For a specified conformal companion pair $(A,A^!)$, set
 \[
  K^c(A,A^!) := c(A)+c(A^!),\qquad
  K^\kappa(A,A^!) := \kappa(A)+\kappa(A^!).
 \]
-For a chosen finite BRST presentation set
+For a chosen finite conformal BRST presentation~$\mathcal P$, set
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA)
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal P)
  :=
- -\,c_{\mathrm{ghost}}(\BRST_{\mathrm{can}}(\cA)).
+ -\,c_{\mathrm{ghost}}(\mathcal P).
 \]
 The first number is central-charge complementarity; the second is
 modular-characteristic complementarity; the third is a
@@ -652,11 +1023,12 @@ presentation-sensitive ghost central-charge scalar.
 \begin{corollary}[Heisenberg scalar packages]
 \label{cor:uc-K-heisenberg}
 \ClaimStatusProvedHere
-For the rank-one abelian-affine Heisenberg witness lane,
+For the rank-one abelian-affine Heisenberg scalar companion lane and
+the gauge presentation $\mathcal P_{\mathcal H}=bc(1)$,
 \[
  K^c(\mathcal H_k,\mathcal H_k^!)=0,\qquad
  K^\kappa(\mathcal H_k,\mathcal H_k^!)=0,\qquad
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal H_k)=2.
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal P_{\mathcal H})=2.
 \]
 \end{corollary}
 
@@ -664,8 +1036,8 @@ For the rank-one abelian-affine Heisenberg witness lane,
 The scalar Verdier partner has
 $\kappa(\mathcal H_k^!)=-\kappa(\mathcal H_k)$ and the same curved
 central projection gives $c(\mathcal H_k^!)=-c(\mathcal H_k)$ on this
-lane, so the two scalar Verdier sums vanish. The canonical
-abelian-affine gauge complex has one fermionic $bc(1)$ pair, whose
+lane, so the two scalar Verdier sums vanish. The specified
+abelian-affine gauge presentation has one fermionic $bc(1)$ pair, whose
 ghost central charge contributes $2$ to
 $K_{\mathrm{ghost}}^{\mathrm{leg}}$.
 \end{proof}
@@ -673,11 +1045,13 @@ $K_{\mathrm{ghost}}^{\mathrm{leg}}$.
 \begin{corollary}[Affine Kac--Moody scalar packages]
 \label{cor:uc-K-affine-KM}
 \ClaimStatusProvedHere
-For every non-critical affine Kac--Moody algebra,
+For a simple $\fg$, $k\ne-h^\vee$, and the gauge presentation
+$\mathcal P_{\mathrm{aff}}$ with one fermionic $bc(1)$ pair per Lie
+direction,
 \[
  K^c(V_k(\fg),V_{-k-2h^\vee}(\fg))
  =
- K_{\mathrm{ghost}}^{\mathrm{leg}}(V_k(\fg))
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal P_{\mathrm{aff}})
  =2\dim(\fg),
  \qquad
  K^\kappa(V_k(\fg),V_{-k-2h^\vee}(\fg))=0.
@@ -693,7 +1067,7 @@ characteristic
 =\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}
 \]
 changes sign under $k\mapsto k'$, hence the $\kappa$-sum is zero. The
-canonical Wakimoto gauge complex has $\dim(\fg)$ fermionic $bc(1)$
+specified gauge presentation has $\dim(\fg)$ fermionic $bc(1)$
 pairs, hence ghost scalar $2\dim(\fg)$.
 \end{proof}
 
@@ -726,11 +1100,12 @@ $\kappa(bc_\lambda)=c_{bc}(\lambda)/2$. Both Verdier sums vanish.
 \begin{corollary}[Virasoro scalar packages]
 \label{cor:uc-K-virasoro}
 \ClaimStatusProvedHere
-For the Virasoro Verdier pair $\Vir_c^!\simeq\Vir_{26-c}$,
+For the Virasoro companion pair and the reparametrisation presentation
+$\mathcal P_{\Vir}=bc(2)$,
 \[
  K^c(\Vir_c,\Vir_{26-c})
  =
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\Vir_c)
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal P_{\Vir})
  =26,\qquad
  K^\kappa(\Vir_c,\Vir_{26-c})=13.
 \]
@@ -744,96 +1119,133 @@ fermionic $bc(2)$ pair, and
 $2(6\cdot2^2-6\cdot2+1)=26$.
 \end{proof}
 
-\begin{corollary}[Principal \texorpdfstring{$W_N$}{WN} scalar packages]
+\begin{corollary}[Principal \texorpdfstring{$W_N$}{WN} scalar packages;
+\ClaimStatusConditional]
 \label{cor:uc-K-WN}
-\ClaimStatusProvedHere
-For principal $W_N$,
+Type signature: \textup{(}Open quadrant, principal DS and
+$W_N$-gravity presentations, Beilinson level~$5$, hypothesis package
+$H_{\mathrm{diag}}^{g=1}+H_{W_N}^{\mathrm{DS/bar}}$ for the modular
+companion statement\textup{)}.
+For the $W_N$-gravity presentation
+$\mathcal P_{W_N}=\{bc(j):2\leq j\leq N\}$, the exact spin sum is
 \[
- K^c(W_N,W_N^!)
- =
- K_{\mathrm{ghost}}^{\mathrm{leg}}(W_N)
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal P_{W_N})
  =
  \sum_{j=2}^{N}2(6j^2-6j+1)
  =
  4N^3-2N-2,
 \]
-and
+and the principal DS central-charge functions satisfy the exact
+reflection identity
+\[
+ c_N(k)+c_N(-k-2N)=4N^3-2N-2.
+\]
+On $H_{W_N}^{\mathrm{DS/bar}}$, the reflected algebra represents the
+Verdier--Koszul companion and hence
+\[
+ K^c(W_N,W_N^!)=4N^3-2N-2.
+\]
+On $H_{\mathrm{diag}}^{g=1}+H_{W_N}^{\mathrm{DS/bar}}$,
 \[
  K^\kappa(W_N,W_N^!)
  =
  (H_N-1)(4N^3-2N-2).
 \]
-In particular $K^\kappa(W_3,W_3^!)=250/3$.
+Under the same package, in particular
+$K^\kappa(W_3,W_3^!)=250/3$.
 \end{corollary}
 
 \begin{proof}
-The canonical principal Drinfeld--Sokolov complex has one fermionic
-$bc(j)$ ghost pair in each Casimir degree $j=2,\ldots,N$. Summing the
-per-spin contribution gives
+The specified $W_N$-gravity presentation has one fermionic $bc(j)$
+pair for each current spin $j=2,\ldots,N$. Summing the per-spin
+contribution gives
 \[
 \sum_{j=2}^{N}2(6j^2-6j+1)
 =4N^3-2N-2.
 \]
-The same closed form is the central-charge complementarity sum on the
-principal witness lane. The census normalisation
-$\kappa(W_N)=c(H_N-1)$ gives the displayed formula for
-$K^\kappa$. For $N=3$, $H_3-1=5/6$ and
+Writing $t=k+N$ in the principal DS formula gives
+\[
+c_N(k)=N-1-N(N^2-1)\frac{(t-1)^2}{t},
+\]
+while reflection sends $t$ to $-t$; addition gives the displayed
+central-charge identity.  The package $H_{W_N}^{\mathrm{DS/bar}}$
+supplies the companion interpretation.  The diagonal-trace package
+$H_{\mathrm{diag}}^{g=1}$ supplies
+$\kappa(W_N)=c(H_N-1)$, and the two packages together give the formula
+for $K^\kappa$. For $N=3$, $H_3-1=5/6$ and
 $(5/6)\cdot100=250/3$.
 \end{proof}
 
 \begin{corollary}[Bershadsky--Polyakov scalar packages]
 \label{cor:uc-K-BP}
-\ClaimStatusProvedHere
-For Bershadsky--Polyakov at $k\ne -3$, with Verdier partner
-$\BP_{-k-6}$,
+\ClaimStatusOpen
+Type signature: \textup{(}Open quadrant, standard
+Fehily--Kawasetsu--Ridout conformal presentation, Beilinson level~$5$,
+hypothesis package $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ for the
+same-family algebra interpretation\textup{)}.
+For $k\ne-3$, the standard central-charge function
+\cite[Eq.~\textup{(}2.2\textup{)}]{FKR20} satisfies
 \[
- K^c(\BP_k,\BP_{-k-6})
- =196,\qquad
- K^\kappa(\BP_k,\BP_{-k-6})=\frac{98}{3}.
+ c_{\BP}(k)+c_{\BP}(-k-6)=50.
 \]
-For the Drinfeld--Sokolov BRST presentation from $V_k(\mathfrak{sl}_3)$,
+On $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$, this identity becomes
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\BP_k;\mathrm{DS})
- =
- -c_{\mathrm{ghost}}\!\left(
- \BRST_{\mathrm{DS}}(V_k(\mathfrak{sl}_3),f_{\min})
- \right)
- =
- -\,\frac{6(4k^2+9k+3)}{k+3}.
+K^c(\BP_k,\BP_{-k-6})=50.
 \]
-Thus the BP ghost scalar is not the conductor constant $196$.
+The modular conductor $K^\kappa(\BP_k,\BP_{-k-6})$ is the open
+genus-one nonseparating-curvature calculation for the full minimal
+Drinfeld--Sokolov complex.  Fehily--Kawasetsu--Ridout's algebra is
+bosonic, so $J,T,G^+,G^-$ are even and give the reciprocal-weight
+diagnostic $1+2/3+2/3+1/2=17/6$.  A calculation yielding
+$\kappa(\BP_k)=c_{\BP}(k)/6$ would imply
+$K^\kappa(\BP_k,\BP_{-k-6})=25/3$.
+The exact total conformal shift from the affine input is
+\[
+ \Delta^{\mathrm{DS}}_{\BP}(k)
+ :=c_{\BP}(k)-c_{\mathrm{aff}}(k)=-(6k+1).
+\]
+Its charged-ghost, neutral-field, and conformal-improvement components
+are part of the chosen DS presentation.
 \end{corollary}
 
 \begin{proof}
-The Feigin--Semikhatov central charge is
+Fehily--Kawasetsu--Ridout give
 \[
- c_{\BP}(k)=2-\frac{24(k+1)^2}{k+3},
+ c_{\BP}(k)=-\frac{(2k+3)(3k+1)}{k+3}
+ =25-6(k+3)-\frac{24}{k+3},
  \qquad k\ne -3,
 \]
-and the Verdier level involution is $k'=-k-6$. Direct substitution gives
+and the Verdier level involution is $k'=-k-6$. Since $k'+3=-(k+3)$,
+the pole and linear terms are odd under the involution and cancel in
+the sum, giving
 \[
- c_{\BP}(k)+c_{\BP}(k')=196.
+ c_{\BP}(k)+c_{\BP}(k')=50.
 \]
-The census formula $\kappa(\BP_k)=c_{\BP}(k)/6$ gives
-$K^\kappa=196/6=98/3$.
+The central-charge identity is therefore proved directly.  The
+modular formula $K^\kappa=50/6=25/3$ is the conditional consequence of
+the proposed normalization $\kappa(\BP_k)=c_{\BP}(k)/6$.
 
-The DS BRST presentation begins with the affine algebra
+The DS reduction begins with the affine algebra
 $V_k(\mathfrak{sl}_3)$, whose central charge is
-$c_{\mathrm{aff}}(k)=8k/(k+3)$. Since
-$c_{\BP}(k)=c_{\mathrm{aff}}(k)-c_{\mathrm{ghost}}(k)$, the definition
-of $K_{\mathrm{ghost}}^{\mathrm{leg}}$ gives
+$c_{\mathrm{aff}}(k)=8k/(k+3)$. Direct subtraction gives
 \[
-K_{\mathrm{ghost}}^{\mathrm{leg}}(\BP_k;\mathrm{DS})
-=c_{\BP}(k)-c_{\mathrm{aff}}(k)
-=-\frac{6(4k^2+9k+3)}{k+3}.
+\Delta^{\mathrm{DS}}_{\BP}(k)
+=\frac{-(2k+3)(3k+1)-8k}{k+3}
+=-\frac{(6k+1)(k+3)}{k+3}
+=-(6k+1).
 \]
-This level-dependent presentation scalar is distinct from the
-level-independent central-charge conductor $K^c=196$.
+This level-dependent total shift and the level-independent companion
+sum~$50$ have separate type signatures.
 \end{proof}
 
-\begin{proposition}[K3/BKM scalar and taxonomy separation]
+\begin{proposition}[K3/BKM invariants and the Mukai comparison]
 \label{prop:uc-K3-BKM-scalar-separation}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
+Type signature: \textup{(}CY quadrant, Hall--Borcherds presentation,
+Beilinson level~$5$, hypothesis package
+$H_{\mathsf B}=(H_{\mathrm{chart}},H_{\mathrm{KD}},H_{\mathrm{scalar}},
+H_{\mathrm{mod}},H_{\mathrm{quant}})$ for the Mukai-to-chiral
+comparison\textup{)}.
 For the K3/BKM comparison row,
 \[
 \{\kappa_{\mathrm{cat}},
@@ -847,12 +1259,19 @@ The Borcherds weight of the Igusa denominator is
  \kappa_{\mathrm{BKM}}(\Delta_5)=5,
 \]
 the Igusa square $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ has weight
-$10$, and the Mukai-enhanced chiral scalar is
+$10$.  The Mukai lattice
 \[
- K^\kappa_{\mathcal B}=2c_+(\mathrm{Mukai}(K3))=8.
+\widetilde H(K3,\mathbb Z)\simeq U^4\oplus E_8(-1)^2
+\]
+has signature $(4,20)$, hence the lattice identity $2c_+=8$ is exact.
+Its Mukai-enhanced chiral interpretation is the
+\ClaimStatusConjectured{} comparison
+\[
+ K^{\kappa_{\mathrm{ch}}}_{\mathcal B}=2c_+=8
+ \qquad\text{under }H_{\mathsf B}.
 \]
 The corresponding Vol~III chiral object is a Hall--Drinfeld object
-built from CoHA data, not the Yangian row of the census:
+built from CoHA data:
 \[
  \mathbf H_{\Delta_5}^{\mathrm{tgt}}
  =
@@ -860,18 +1279,19 @@ built from CoHA data, not the Yangian row of the census:
  \mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})
  \right),
 \]
-before compact Hall recognition. It occupies a Hall--Borcherds
-taxonomic slot; it is neither the standard RTT Yangian $Y(\fg)$ nor a
-fifth $G/L/C/M$ archetype.
+before compact Hall recognition. It occupies the Hall--Borcherds
+taxonomic slot, while the standard RTT Yangian $Y(\fg)$ occupies the
+$E_1$-RTT slot and the $G/L/C/M$ labels measure Virasoro shadow depth.
 \end{proposition}
 
 \begin{proof}
 The four entries are subscripted invariants with different
 definitions. The BKM value is the Borcherds lift weight
 $c_{\Delta_5}(0)/2=5$, while the square has twice that weight. The
-Mukai value uses the positive signature
-$c_+(\mathrm{Mukai}(K3))=4$, giving $K^\kappa_{\mathcal B}=8$. These
-are the K3/BKM separations recorded in
+Mukai lattice has positive index~$4$, giving the exact arithmetic value
+$2c_+=8$.  The identification of this integer with
+$K^{\kappa_{\mathrm{ch}}}_{\mathcal B}$ is precisely the comparison
+carried by $H_{\mathsf B}$.  These are the K3/BKM separations recorded in
 Remarks~\ref{rem:landscape-1} and~\ref{rem:landscape-2} and in the
 Vol~III K3 comparison.
 
@@ -880,69 +1300,84 @@ Section~\ref{sec:concordance-supplement}: a Drinfeld Yangian requires a
 finite-rank symmetrisable Cartan datum and a split Manin triple, while
 the Borcherds--Kac--Moody algebra attached to $\Delta_5$ has imaginary
 simple roots and the K3 Hall package is a Manin-pair Hall--Drinfeld
-double. The census Yangian row is therefore $E_1$-RTT with no
-Virasoro shadow depth, whereas the K3/BKM row contributes the separate
-scalar package above.
+double. The census Yangian row is $E_1$-RTT; the K3/BKM row contributes
+the Hall--Borcherds scalar package above.
 \end{proof}
 
 \begin{corollary}[Family-wise scalar complementarity]
 \label{cor:uc-family-wise-kappa-bucket}
-\ClaimStatusProvedHere
-On the scalar Verdier lanes computed in this chapter,
+\ClaimStatusConditional
+The scalar ledger separates exact computations from named comparison
+packages:
 \[
-\begin{array}{c|c}
-\textup{family} & K^\kappa \\
+\begin{array}{c|c|c}
+\textup{family} & K^\kappa & \textup{status} \\
 \hline
-\mathcal H_k,\;V_k(\fg),\;\beta\gamma_\lambda & 0\\
-\Vir_c & 13\\
-\mathcal W_3 & 250/3\\
-\BP_k & 98/3\\
-\mathcal H_{\mathrm{Muk}}(K3) & 8
+\mathcal H_k,\;V_k(\fg),\;\beta\gamma_\lambda & 0 &
+\textup{computed on the stated lanes}\\
+\Vir_c & 13 & \textup{computed}\\
+\mathcal W_3 & 250/3 &
+\textup{conditional on }H_{\mathrm{diag}}^{g=1}
++H_{W_3}^{\mathrm{DS/bar}}\\
+\BP_k & \textup{open} &
+\textup{genus-one DS curvature; }25/3\textup{ is conditional}\\
+\mathcal H_{\mathrm{Muk}}(K3) & 8 &
+\textup{conjectural under }H_{\mathsf B}
 \end{array}
 \]
-Thus the classical scalar ceiling for the four archetype witnesses
-together with the two $\mathsf M$-extensions is
+Thus the unconditional Vol.~I scalar values are
 \[
- \{0,\,13,\,250/3,\,98/3\},
+ \{0,\,13\},
 \]
-and the Vol~III $\mathcal B$-row adjoins the fifth value $8$. These
-numbers are scalar Verdier sums. They are not the averaging morphism
-$K_\cA=\Av_\cA$, and they are not the Hochschild object
-$\DerZ(\cA)$.
+and the principal $W_3$ packages supply the conditional extension
+$\{250/3\}$.  The equation
+$\kappa_{\mathrm{BP}}=c_{\mathrm{BP}}/6$ would supply the conditional
+BP value~$25/3$, while $H_{\mathsf B}$ supplies the proposed
+Vol.~III $\mathcal B$-value~$8$.  These numbers are scalar companion
+sums.  The
+averaging morphism $K_\cA=\Av_\cA$ is a dg Lie map, and
+$\DerZ(\cA)$ is the chiral Hochschild cochain object.
 \end{corollary}
 
 \begin{proof}
-The entries are exactly the values proved in
+The unconditional Vol.~I entries are the values computed in
 Corollaries~\ref{cor:uc-K-heisenberg},
 \ref{cor:uc-K-affine-KM}, \ref{cor:uc-K-betagamma},
-\ref{cor:uc-K-virasoro}, \ref{cor:uc-K-WN}, and
-\ref{cor:uc-K-BP}, with the K3 value supplied by
-Proposition~\ref{prop:uc-K3-BKM-scalar-separation}. The $W_N$ formula
+and~\ref{cor:uc-K-virasoro}.  Corollary~\ref{cor:uc-K-WN} proves the
+central-charge and ghost-spin cubic and supplies the modular value on
+$H_{\mathrm{diag}}^{g=1}+H_{W_N}^{\mathrm{DS/bar}}$.
+Corollary~\ref{cor:uc-K-BP} supplies the exact central-charge
+complement~$50$ and formulates the remaining modular computation.
+Proposition~\ref{prop:uc-K3-BKM-scalar-separation}
+supplies the exact Mukai lattice integer and states the additional
+$H_{\mathsf B}$ comparison. The $W_N$ formula
 specialises at $N=3$ to
 $(H_3-1)(4\cdot3^3-2\cdot3-2)=(5/6)\cdot100=250/3$.
 
-The distinctness assertion follows from
+The type separation follows from
 Theorem~\ref{thm:uc-universal-conductor} and
 Definition~\ref{def:uc-scalar-packages}: $K_\cA$ is a dg Lie morphism
 from ordered to symmetric convolution data; $K^\kappa$ is a number
-attached only after choosing a Verdier scalar lane; and
+attached after choosing a scalar companion lane; and
 $\DerZ(\cA)$ is the chiral Hochschild derived centre.
 \end{proof}
 
 \begin{corollary}[Lattice matter presentation]
 \label{cor:uc-K-lattice}
 \ClaimStatusProvedHere
-For a lattice VOA $V_\Lambda$, the matter-convention free-boson
-presentation gives
+For a positive-definite lattice VOA $V_\Lambda$, the standard
+free-boson conformal vector gives the matter central charge
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(V_\Lambda)=\operatorname{rank}(\Lambda).
+ c_{\mathrm{matter}}(V_\Lambda)=\operatorname{rank}(\Lambda).
 \]
-This is a presentation scalar, distinct from $K_\cA=\Av_\cA$.
+The averaging conductor $K_\cA=\Av_\cA$ retains its map-valued type.
+A ghost scalar for $V_\Lambda$ receives a specified conformal ghost
+presentation as in Definition~\ref{def:uc-scalar-packages}.
 \end{corollary}
 
 \begin{proof}
-The free-boson presentation contributes one spin-$1$ bosonic pair per
-lattice direction.
+The lattice construction has one Heisenberg current per lattice
+direction, and each current contributes central charge~$1$.
 \end{proof}
 
 \section{Averaging and scalar identities}
@@ -953,7 +1388,8 @@ The universal conductor of Volume~I is the averaging map
  K_\cA=\Av_\cA\colon \gAE\longrightarrow \gAmod,
 \]
 with named witnesses
-$K_{\cA}^{\mathrm{ch}}=q_\bullet\circ\Av^{\mathrm{Rey}}_{\Sigma_\bullet}$
+$K_{\cA}^{\mathrm{ch}}
+=q_\bullet\circ\Av^{\mathrm{Rey}}_{\Sigma_\bullet}=q_\bullet$
 and $K^\infty=q_!\simeq(-)_{h\Sigma_\bullet}$. Its image is the
 symmetric quotient, equivalently the Reynolds fixed-point summand,
 equivalently the homotopy-coinvariant factorisation shadow
@@ -965,10 +1401,10 @@ $R_{\beta\gamma}$, and the Virasoro Arnold witness
 
 The map to $\{G,L,C,M\}$ is the $G/L/C/M$ depth of the averaged shadow
 and agrees with the $21$ $G/L/C/M$-classified census rows; the Yangian row
-is $E_1$-RTT and lies outside this four-archetype count
+occupies the separate $E_1$-RTT count
 (Theorem~\ref{thm:uc-landscape-universality}). The Vol~III comparison
-is restricted to the ordered Koszul locus, with named failure modes off
-that locus (Theorem~\ref{thm:uc-K-Atiyah}). The scalar packages are
+is restricted to the ordered Koszul locus, whose boundary has named
+modes (Theorem~\ref{thm:uc-K-Atiyah}). The scalar packages are
 separate:
 \[
  K^c,\qquad K^\kappa,\qquad K_{\mathrm{ghost}}^{\mathrm{leg}}.

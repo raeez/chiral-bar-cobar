@@ -126,7 +126,7 @@ EIGHT COMPUTATIONAL SECTORS:
    completed dualizable setting, H*(B(A)) is the bar-dual coalgebra A^i;
    the algebra A^! is obtained only after the Verdier/linear dual passage.
    The cobar Omega(B(A)) is reconstruction of A, not Koszul duality, and
-   Z^der_ch(A) is the Hochschild/derived-center bulk object.
+   Z^der_ch(A) is the Hochschild/derived-center closed-sector object.
 
 8. COMPARISON TABLE:
    ==========================================
@@ -148,7 +148,7 @@ Anti-patterns guarded against:
     AP25: keep B(A), A^i, A^!, Omega(B(A)), and Z^der_ch(A) typed apart
     AP34: bar-cobar inversion recovers A, NOT the bulk
     AP45: desuspension s^{-1} LOWERS degree by 1
-    AP-OC (Vol II): bar classifies twisting morphisms, NOT bulk observables
+    AP-OC (Vol II): bar classifies twisting morphisms, NOT closed-sector observables
     AP35-AP55 (Vol II): E_infinity = local = ALL vertex algebras
 
 References:
@@ -695,7 +695,7 @@ def ocha_dictionary() -> Dict[str, Dict[str, str]]:
 
 
 def bar_koszul_object_firewall() -> Dict[str, Any]:
-    """Typed AP25 firewall for bar, cobar, Koszul, and bulk objects.
+    """Typed AP25 firewall for bar, cobar, Koszul, and closed-sector objects.
 
     The output is deliberately textual: this engine computes tensor-coalgebra
     and low-arity bar data, while the object firewall records what those data
@@ -722,7 +722,7 @@ def bar_koszul_object_firewall() -> Dict[str, Any]:
                 "type": "cobar dg algebra",
                 "construction": "free algebra on the suspended reduced coalgebra, with cobar differential",
                 "output": "bar-cobar reconstruction of A under the usual cofibrancy/conilpotence hypotheses",
-                "not_output": "not the Koszul dual algebra and not the Hochschild bulk",
+                "not_output": "not the Koszul dual algebra and not the Hochschild closed-sector",
             },
             "A_i": {
                 "symbol": "A^i",
@@ -765,7 +765,7 @@ def bar_koszul_object_firewall() -> Dict[str, Any]:
             "Omega(B(A)) is reconstruction of A, not construction of A^!.",
             "A^i is a coalgebra; A^! is obtained only after the Verdier/linear dual passage.",
             "D_Ran(B(A)) is a hypothesis-qualified bar-side comparison, not an unconditional equality.",
-            "Z^der_ch(A) is the Hochschild bulk object, not B(A) and not A^!.",
+            "Z^der_ch(A) is the Hochschild closed-sector object, not B(A) and not A^!.",
         ],
     }
 
@@ -1019,7 +1019,7 @@ def full_comparison_summary() -> Dict[str, Any]:
         "key_distinctions": {
             "bar_not_bulk": (
                 "AP34/AP-OC: The bar complex classifies TWISTING MORPHISMS. "
-                "The bulk observables are the DERIVED CENTER Z^der_ch(A). "
+                "The closed-sector observables are the DERIVED CENTER Z^der_ch(A). "
                 "In SFT: the bar complex encodes open-string data; "
                 "the closed-string observables are a SEPARATE object."
             ),
@@ -1030,7 +1030,7 @@ def full_comparison_summary() -> Dict[str, Any]:
                 "A^i is H^*(B(A)) only under augmented Koszul hypotheses; "
                 "A^! is the Verdier/linear dual of A^i only after strict "
                 "finite-type or completed dualizable passage; "
-                "Z^der_ch(A)=C^bullet_ch(A,A) is the Hochschild bulk. "
+                "Z^der_ch(A)=C^bullet_ch(A,A) is the Hochschild closed-sector. "
                 "D_Ran(B(A)) names the hypothesis-qualified Verdier bar-side "
                 "comparison toward the A^! branch, not an unconditional "
                 "bar-of-dual equality."

@@ -222,7 +222,7 @@ class TestObjectAndKernelFirewalls:
         assert "bar cohomology coalgebra" in firewall["A^i"]
         assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
         assert "bar-cobar inversion" in firewall["Omega(B(A))"]
-        assert "chiral Hochschild derived-centre bulk" in firewall["Z_ch^der(A)"]
+        assert "chiral Hochschild derived-centre closed-sector" in firewall["Z_ch^der(A)"]
         assert "Omega(B(A)) != A^!" in firewall["forbidden_identifications"]
         assert "Z_ch^der(A) != A^!" in firewall["forbidden_identifications"]
 

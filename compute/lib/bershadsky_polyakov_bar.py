@@ -1,4 +1,4 @@
-r"""Bershadsky-Polyakov bar complex: chain-level computation.
+r"""Bershadsky--Polyakov OPE and PBW-character diagnostics.
 
 The Bershadsky-Polyakov algebra BP_k = W_k(sl_3, f_{min}) is the DS reduction
 of V_k(sl_3) at the MINIMAL nilpotent orbit (partition (2,1)).  It is the
@@ -7,24 +7,30 @@ Feigin-Semikhatov W_3^{(2)} normal form.
 
 GENERATORS (4 strong generators):
   J   (conformal weight 1,   bosonic,   J-charge 0)
-  G+  (conformal weight 3/2, fermionic, J-charge +1)
-  G-  (conformal weight 3/2, fermionic, J-charge -1)
+  G+  (conformal weight 3/2, bosonic,   J-charge +1)
+  G-  (conformal weight 3/2, bosonic,   J-charge -1)
   T   (conformal weight 2,   bosonic,   J-charge 0)
 
-CENTRAL CHARGE (Kac-Roan-Wakimoto 2003, Arakawa 2015, authoritative):
-  c(k) = 2 - 24(k+1)^2/(k+3)
+STANDARD CENTRAL CHARGE (Fehily--Kawasetsu--Ridout 2021, Eq. (2.2)):
+  c(k) = -(2k+3)(3k+1)/(k+3)
 
-  where k is the AFFINE sl_3 level (Fehily-Kawasetsu-Ridout 2020).
-  Verified: at admissible k=-3/2, c=-2 (literature match).
+  Here k is the affine sl_3 level and the conformal vector gives both
+  charged generators weight 3/2.  The companion involution k -> -k-6
+  yields the exact rational identity c(k)+c(-k-6)=50.
 
-  WARNING (AP1/AP3 correction, 2026-04-08): The PREVIOUS formula in this engine
-  was c(k) = 2 - 3(2k+3)^2/(k+3) = -(12k^2+34k+21)/(k+3), which is the
-  PRINCIPAL W_3 central charge, NOT the subregular Bershadsky-Polyakov.
-  That gave K_BP = 76 (wrong). The correct BP formula gives K_BP = 196.
+SECONDARY SHIFTED FORMULA:
+  c_shifted(k) = 2 - 24(k+1)^2/(k+3),
+  c_shifted(k)+c_shifted(-k-6)=196.
+  This rational function is retained under an explicit shifted name.  It is
+  distinct from the FKR Eq. (2.2) conformal vector used by the OPE packet.
 
-KOSZUL CONDUCTOR:  K_BP = c_BP(k) + c_BP(-k-6) = 196.
+GENUS-ONE STATUS:
+  The BP modular characteristic kappa has no proved formula in this engine.
+  The former value c/6 used the odd-parity signed reciprocal-weight sum.
+  Source-correct parity changes that diagnostic to 17/6, while its relation
+  to genus-one curvature remains an open computation.
 
-OPE (Feigin-Semikhatov BP convention, verified by super-skew-symmetry):
+OPE (Feigin--Semikhatov/FKR convention, ordinary skew-symmetry):
   T_(3)T = c/2,    T_(1)T = 2T,        T_(0)T = dT
   T_(1)J = J,      T_(0)J = dJ
   T_(1)G+ = 3/2 G+, T_(0)G+ = dG+
@@ -34,8 +40,8 @@ OPE (Feigin-Semikhatov BP convention, verified by super-skew-symmetry):
   J_(0)G+ = G+,    J_(0)G- = -G-
   G+_(2)G- = (k+1)(2k+3), G+_(1)G- = 3(k+1)J
   G+_(0)G- = 3:JJ: + (3(k+1)/2)dJ - (k+3)T
-  G-_(2)G+ = (k+1)(2k+3), G-_(1)G+ = -3(k+1)J
-  G-_(0)G+ = 3:JJ: - (3(k+1)/2)dJ - (k+3)T
+  G-_(2)G+ = -(k+1)(2k+3), G-_(1)G+ = 3(k+1)J
+  G-_(0)G+ = -3:JJ: + (3(k+1)/2)dJ + (k+3)T
   G+_(n)G+ = 0,    G-_(n)G- = 0
   G+_(1)T = 3/2 G+, G+_(0)T = 1/2 dG+
   G-_(1)T = 3/2 G-, G-_(0)T = 1/2 dG-
@@ -43,58 +49,73 @@ OPE (Feigin-Semikhatov BP convention, verified by super-skew-symmetry):
 
 BAR COMPLEX CONVENTIONS:
   Cohomological grading, |d| = +1.  Bar uses DESUSPENSION (s^{-1}).
-  For the SUPER bar complex: the bar differential picks up a Koszul sign
-  (-1)^{|a|*|b|} from permuting fermionic generators past each other.
-  G+ and G- are ODD (parity 1); T and J are EVEN (parity 0).
+  The target module computes the ordered tensor-bar carrier.  Every BP
+  generator is even before desuspension; signs on a symmetric/coinvariant
+  bar model must be supplied by that model's suspension convention.
 
 DS-BAR COMMUTATION:
   The central question: does B(DS_f(V_k(sl_3))) = DS_f(B(V_k(sl_3)))?
-  At the kappa/curvature level: YES (verified in ds_bar_commutation.py).
-  At the chain level: this module constructs B(BP_k) directly and allows
-  comparison with DS_f(B(V_k(sl_3))).
+  The generator-count and central-charge packets below are exact algebraic
+  diagnostics.  Chain-level DS--bar commutation and the BP genus-one
+  characteristic require separate proofs.
 
 References:
   - Bershadsky (1991), "Conformal field theories via Hamiltonian reduction"
   - Polyakov (1990), "Gauge transformations and diffeomorphisms"
-  - Kac-Roan-Wakimoto (2003), "Quantum reduction for affine superalgebras"
+  - Fehily--Kawasetsu--Ridout (2021), Definition 2.1, Eq. (2.2),
+    Proposition 2.2, arXiv:2007.03917
+  - Kac--Roan--Wakimoto (2003), "Quantum reduction for affine superalgebras"
   - Manuscript: subregular_hook_frontier.tex, ds_bar_commutation
 """
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
-from sympy import Rational, Symbol, cancel, expand, simplify, sympify
+from sympy import Rational, Symbol, simplify, sympify
+
+from compute.lib.bp_koszul_conductor_engine import (
+    BP_GENERATORS as CANONICAL_BP_GENERATORS,
+    BP_KAPPA_STATUS,
+    SHIFTED_BP_CONVENTION,
+    STANDARD_BP_CONVENTION,
+    compute_varrho as bp_reciprocal_weight_diagnostic,
+)
 
 
 # =============================================================================
 # Generator data
 # =============================================================================
 
-# Parity: 0 = bosonic (even), 1 = fermionic (odd)
+# Parity: 0 = bosonic (even), 1 = fermionic (odd).  The weights and
+# parities are imported from the canonical FKR convention surface.
+_CHARGES = {"J": 0, "G+": 1, "G-": -1, "T": 0}
 GENERATORS = {
-    "J":  {"weight": Rational(1),    "parity": 0, "charge": 0},
-    "G+": {"weight": Rational(3, 2), "parity": 1, "charge": 1},
-    "G-": {"weight": Rational(3, 2), "parity": 1, "charge": -1},
-    "T":  {"weight": Rational(2),    "parity": 0, "charge": 0},
+    name: {
+        "weight": Rational(weight.numerator, weight.denominator),
+        "parity": parity,
+        "charge": _CHARGES[name],
+    }
+    for name, (weight, parity) in CANONICAL_BP_GENERATORS.items()
 }
 
 GENERATOR_NAMES = ("J", "G+", "G-", "T")
 
 
 def bp_central_charge(level=None):
-    """BP central charge c(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
-
-    Koszul conductor: K_BP = c(k) + c(-k-6) = 196.
-    Verified at admissible k=-3/2: c=-2 (literature match).
-
-    WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the
-    PRINCIPAL W_3 formula c=2-3(2k+3)^2/(k+3), giving K=76. Wrong family.
-    """
+    """Standard FKR central charge ``-(2k+3)(3k+1)/(k+3)``."""
     if level is None:
         level = Symbol('k')
     k = sympify(level)
-    return 2 - 24 * (k + 1) ** 2 / (k + 3)
+    return sympify(STANDARD_BP_CONVENTION.formula, locals={"k": k})
+
+
+def bp_shifted_central_charge(level=None):
+    """Secondary shifted rational function with companion sum ``196``."""
+    if level is None:
+        level = Symbol('k')
+    k = sympify(level)
+    return sympify(SHIFTED_BP_CONVENTION.formula, locals={"k": k})
 
 
 def bp_dual_level(level=None):
@@ -105,12 +126,18 @@ def bp_dual_level(level=None):
 
 
 def bp_koszul_conductor():
-    """K_BP = c(k) + c(k') = c(k) + c(-k-6).
-
-    Returns the constant value (should be level-independent).
-    """
+    """Standard scalar companion sum ``c(k)+c(-k-6)=50``."""
     k = Symbol('k')
     return simplify(bp_central_charge(k) + bp_central_charge(bp_dual_level(k)))
+
+
+def bp_shifted_koszul_conductor():
+    """Companion sum of :func:`bp_shifted_central_charge`, equal to ``196``."""
+    k = Symbol('k')
+    return simplify(
+        bp_shifted_central_charge(k)
+        + bp_shifted_central_charge(bp_dual_level(k))
+    )
 
 
 # =============================================================================
@@ -131,7 +158,7 @@ def bp_primary_ope_normal_form(level=None) -> Dict[str, object]:
         "JJ_coefficient": Rational(3),
         "dJ_coefficient": Rational(3, 2) * (kk + 1),
         "T_coefficient": -(kk + 3),
-        "convention": "Feigin-Semikhatov BP W_3^{(2)}",
+        "convention": "FKR21 Definition 2.1 equal-weight even G generators",
     }
 
 
@@ -144,7 +171,7 @@ def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, obj
     OPE verified by:
       (1) Conformal Ward identity (T-generator OPEs)
       (2) U(1) Ward identity (J-charge conservation)
-      (3) Super-skew-symmetry (all reversed pairs)
+      (3) Ordinary vertex-algebra skew-symmetry (all reversed pairs)
       (4) Agreement with the Feigin-Semikhatov W_3^{(2)} normal form.
     """
     fs = bp_primary_ope_normal_form(level)
@@ -171,13 +198,13 @@ def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, obj
             0: {"dJ": Rational(1)},
         },
 
-        # ===== T x G+: G+ is primary of weight 3/2 (bosonic x fermionic) =====
+        # ===== T x G+: G+ is an even primary of weight 3/2 =====
         ("T", "G+"): {
             1: {"G+": Rational(3, 2)},
             0: {"dG+": Rational(1)},
         },
 
-        # ===== T x G-: G- is primary of weight 3/2 (bosonic x fermionic) =====
+        # ===== T x G-: G- is an even primary of weight 3/2 =====
         ("T", "G-"): {
             1: {"G-": Rational(3, 2)},
             0: {"dG-": Rational(1)},
@@ -189,12 +216,12 @@ def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, obj
             # No simple pole: J_{(0)}J = 0
         },
 
-        # ===== J x G+: charge +1 (bosonic x fermionic) =====
+        # ===== J x G+: charge +1 (even x even) =====
         ("J", "G+"): {
             0: {"G+": Rational(1)},
         },
 
-        # ===== J x G-: charge -1 (bosonic x fermionic) =====
+        # ===== J x G-: charge -1 (even x even) =====
         ("J", "G-"): {
             0: {"G-": Rational(-1)},
         },
@@ -205,18 +232,18 @@ def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, obj
             # J_{(0)}T = 0 (T has J-charge 0)
         },
 
-        # ===== G+ x G-: the KEY non-trivial OPE (fermionic x fermionic) =====
+        # ===== G+ x G-: the key charged even-even OPE =====
         ("G+", "G-"): {
             2: {"vac": g_pairing},
             1: {"J": g_j},
             0: {"JJ": jj_coeff, "dJ": dJ_coeff, "T": t_coeff},
         },
 
-        # ===== G- x G+: from super-skew-symmetry (fermionic x fermionic) =====
+        # ===== G- x G+: from ordinary skew-symmetry =====
         ("G-", "G+"): {
-            2: {"vac": g_pairing},
-            1: {"J": -g_j},
-            0: {"JJ": jj_coeff, "dJ": -dJ_coeff, "T": t_coeff},
+            2: {"vac": -g_pairing},
+            1: {"J": g_j},
+            0: {"JJ": -jj_coeff, "dJ": dJ_coeff, "T": -t_coeff},
         },
 
         # ===== G+ x G+ = 0 (charge conservation) =====
@@ -225,24 +252,24 @@ def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, obj
         # ===== G- x G- = 0 (charge conservation) =====
         ("G-", "G-"): {},
 
-        # ===== G+ x T: from super-skew-symmetry of T x G+ =====
+        # ===== G+ x T: from ordinary skew-symmetry of T x G+ =====
         ("G+", "T"): {
             1: {"G+": Rational(3, 2)},
             0: {"dG+": Rational(1, 2)},
         },
 
-        # ===== G- x T: from super-skew-symmetry of T x G- =====
+        # ===== G- x T: from ordinary skew-symmetry of T x G- =====
         ("G-", "T"): {
             1: {"G-": Rational(3, 2)},
             0: {"dG-": Rational(1, 2)},
         },
 
-        # ===== G+ x J: from super-skew-symmetry of J x G+ =====
+        # ===== G+ x J: from ordinary skew-symmetry of J x G+ =====
         ("G+", "J"): {
             0: {"G+": Rational(-1)},
         },
 
-        # ===== G- x J: from super-skew-symmetry of J x G- =====
+        # ===== G- x J: from ordinary skew-symmetry of J x G- =====
         ("G-", "J"): {
             0: {"G-": Rational(1)},
         },
@@ -270,16 +297,16 @@ def bp_curvature() -> Dict[str, object]:
 
     For T: m_0^(T) = T_{(3)}T|_vac = c/2
     For J: m_0^(J) = J_{(1)}J|_vac = (2k+3)/3
-    For G+, G-: the self-OPE vanishes (charge conservation), but the
-    CROSS inner product G+_{(2)}G- = (k+1)(2k+3) gives the curvature on the
-    fermionic sector.
+    For G+, G-: the self-OPE vanishes by charge conservation, while the
+    charged pairing G+_{(2)}G- = (k+1)(2k+3) gives an off-diagonal
+    leading-pole coefficient in the even charged sector.
     """
     k = Symbol('k')
     fs = bp_primary_ope_normal_form(k)
     return {
         "T": fs["central_charge"] / 2,
         "J": fs["J_level"],
-        "G+G-": fs["G_pairing"],  # cross-curvature on fermionic pair
+        "G+G-": fs["G_pairing"],  # off-diagonal even charged pairing
     }
 
 
@@ -291,16 +318,19 @@ def bp_vacuum_character_coeffs(max_weight: int) -> Dict[Rational, int]:
     """Dimension of BP vacuum module augmentation ideal at each weight.
 
     The BP algebra has generators at weights 1, 3/2, 3/2, 2.
-    PBW basis (with super ordering): products of J-modes, G+-modes, G--modes, T-modes.
+    FKR Definition 2.1 states that the universal algebra is strongly and
+    freely generated as an ordinary vertex algebra.  Hence all four mode
+    families have unrestricted bosonic occupation numbers.
 
     Character of the FULL vacuum module (including |0>):
-      ch(V_BP) = prod_{n>=1} (1+q^{n+1/2})^2 / ((1-q^n)(1-q^{n+1}))
-               = prod_{n>=1} (1+q^{n+1/2})^2 * prod_{n>=1} 1/(1-q^n) * prod_{n>=2} 1/(1-q^n)
+      ch(V_BP) = prod_{n>=1} 1/(1-q^n)
+                 * prod_{n>=2} 1/(1-q^n)
+                 * prod_{m>=0} 1/(1-q^{m+3/2})^2.
 
-    Simplified: contributions from each generator family:
+    Contributions from each generator family:
       J (weight 1):  prod_{n>=1} 1/(1-q^n)     [bosonic modes J_{-n}, n>=1]
-      G+ (weight 3/2): prod_{r>=3/2} (1+q^r)    [fermionic modes G+_{-r}, r>=3/2]
-      G- (weight 3/2): prod_{r>=3/2} (1+q^r)    [fermionic modes G-_{-r}, r>=3/2]
+      G+ (weight 3/2): prod_{m>=0} 1/(1-q^{m+3/2})
+      G- (weight 3/2): prod_{m>=0} 1/(1-q^{m+3/2})
       T (weight 2):  prod_{n>=2} 1/(1-q^n)     [bosonic modes T_{-n}, n>=2]
 
     We compute the augmentation ideal: subtract the vacuum |0>.
@@ -325,20 +355,14 @@ def bp_vacuum_character_coeffs(max_weight: int) -> Dict[Rational, int]:
         for i in range(half_n, max_half + 1):
             coeffs[i] += coeffs[i - half_n]
 
-    # G+ fermionic modes: G+_{-r} for r = 3/2, 5/2, 7/2, ...
-    # Fermionic: each mode can appear 0 or 1 times
-    r_half = 3  # r = 3/2 in half-integer units
-    while r_half <= max_half:
-        for i in range(max_half, r_half - 1, -1):
-            coeffs[i] += coeffs[i - r_half]
-        r_half += 2  # increment by 1 in weight = 2 in half-integer units
-
-    # G- fermionic modes: G-_{-r} for r = 3/2, 5/2, 7/2, ...
-    r_half = 3  # r = 3/2
-    while r_half <= max_half:
-        for i in range(max_half, r_half - 1, -1):
-            coeffs[i] += coeffs[i - r_half]
-        r_half += 2
+    # G+ and G- are two independent bosonic mode families.  Ascending
+    # coefficient updates implement each geometric factor 1/(1-q^r).
+    for _generator in ("G+", "G-"):
+        r_half = 3
+        while r_half <= max_half:
+            for i in range(r_half, max_half + 1):
+                coeffs[i] += coeffs[i - r_half]
+            r_half += 2
 
     # Convert to weight-indexed dictionary (subtract vacuum at weight 0)
     result = {}
@@ -390,7 +414,7 @@ def bp_augmentation_ideal_basis(max_weight: int) -> Dict[Rational, List[str]]:
             "dT", "d2J", "d(JJ)",  # T_{-3}|0>, J_{-3}|0>, J_{-2}J_{-1}|0>
             "J*T",                  # J_{-1}T_{-2}|0>
             "JJJ",                  # J_{-1}^3|0>
-            "G+*G-",               # G+_{-3/2}G-_{-3/2}|0>
+            "G+*G+", "G+*G-", "G-*G-",  # symmetric square of even G-sector
         ]
 
     return basis
@@ -401,12 +425,13 @@ def bp_augmentation_ideal_basis(max_weight: int) -> Dict[Rational, List[str]]:
 # =============================================================================
 
 def bp_bar_diff_deg2(a: str, b: str) -> Tuple[Dict[str, object], Dict[str, object]]:
-    """Bar differential D(a tensor b tensor eta) for BP generators a, b.
+    """Aggregate singular OPE coefficients for the ordered pair ``(a,b)``.
 
-    D extracts ALL singular OPE data.  For the SUPER bar complex, the
-    Koszul sign from permuting fermionic generators is accounted for
-    in the n-th products themselves (the skew-symmetry relations already
-    include parity signs).
+    This is the algebraic coefficient packet used by a degree-two bar
+    differential.  A geometric chiral-bar differential additionally needs
+    the configuration-space form, residue convention, and suspension sign.
+    Every BP generator is even, so the OPE reversal uses ordinary vertex-
+    algebra skew-symmetry.
 
     Returns (vac_component, bar1_component):
       vac_component: coefficient of |0> in B^0
@@ -454,9 +479,9 @@ def bp_bar_deg2_chain_dim(weight) -> int:
     At bar degree 2, we need pairs (a, b) with wt(a) + wt(b) = weight,
     each from the augmentation ideal.  Times dim Omega^1(Conf_2) = 1.
 
-    For the SUPER bar complex: fermionic pairs are SYMMETRIC (not anti-symmetric)
-    because two desuspensions cancel the sign.  So all ordered pairs (a, b)
-    with the correct weight contribute.
+    This function uses the ordered tensor-bar carrier.  Thus every ordered
+    pair with the required total weight contributes.  Symmetric or
+    coinvariant bar models require a separate quotient calculation.
     """
     w = Rational(weight)
     char = bp_vacuum_character_coeffs(int(w) + 1)
@@ -496,16 +521,10 @@ def bp_bar_deg3_chain_dim(weight) -> int:
 # =============================================================================
 
 def bp_pbw_character(max_weight: int) -> Dict[Rational, int]:
-    """Character of Sym^ch(BP_k[1]) = PBW-associated graded of the bar complex.
+    """Compatibility alias for the free strong-generator PBW character.
 
-    For the associated graded of B(BP_k), the PBW filtration gives:
-      gr B(BP_k) = Sym^ch(V_bar[1])
-    where V_bar is the augmentation ideal and [1] is the bar shift.
-
-    The character of Sym^ch(V[1]) at bar degree d is:
-      sum_{d-tuples from V_bar} product of vacuum dims
-
-    This returns the total character (all bar degrees) up to max_weight.
+    The result is the vacuum-module character.  A bar-degree character
+    additionally tracks tensor length and suspension parity.
     """
     return bp_vacuum_character_coeffs(max_weight)
 
@@ -537,7 +556,7 @@ def verify_pbw_deg2(max_weight: int = 8) -> Dict[str, bool]:
 # =============================================================================
 
 def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
-    """Generators of the Koszul dual BP_k^!.
+    """Conditional same-family companion packet for ``BP_k``.
 
     For a chirally Koszul algebra A, H^1(B(A)) is the degree-one piece of
     the bar-dual coalgebra A^i. The generator space of A^! is obtained
@@ -545,7 +564,7 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
 
     For BP_k = W_k(sl_3, f_{(2,1)}):
     - Self-transpose partition: (2,1)^t = (2,1)
-    - Predicted: BP_k^! = BP_{k'} where k' = -k-6 (Feigin-Frenkel dual)
+    - Conditional prediction: BP_k^! = BP_{k'} where k' = -k-6
     - Same generators at dual level: J, G+, G-, T with c' = c(-k-6)
     """
     k = Symbol('k')
@@ -555,8 +574,8 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
     return {
         "generators": {
             "J":  {"weight": Rational(1),    "parity": 0},
-            "G+": {"weight": Rational(3, 2), "parity": 1},
-            "G-": {"weight": Rational(3, 2), "parity": 1},
+            "G+": {"weight": Rational(3, 2), "parity": 0},
+            "G-": {"weight": Rational(3, 2), "parity": 0},
             "T":  {"weight": Rational(2),    "parity": 0},
         },
         "source_c": c,
@@ -564,6 +583,7 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
         "c_sum": simplify(c + c_dual),
         "is_self_transpose": True,
         "dual_level": bp_dual_level(k),
+        "duality_status": "CONDITIONAL_ON_DS_BAR_AND_KOSZUL_TRANSPORT",
     }
 
 
@@ -572,19 +592,14 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
 # =============================================================================
 
 def ds_bar_commutation_kappa() -> Dict[str, object]:
-    """DS-bar commutation data at the kappa level.
+    """Separate exact DS/OPE scalars from the open BP genus-one invariant.
 
-    kappa(BP_k) = rho * c(k) = (1/6) * c_BP(k)
-    where c_BP(k) = 2 - 24(k+1)^2/(k+3).
-
-    WARNING: the naive formula kappa(W) = kappa(V) - ghost_constant is FALSE.
-    kappa(V_k(sl_3)) = 4(k+3)/3, ghost_constant((2,1)) = 2, but
-    4(k+3)/3 - 2 != c_BP(k)/6.  The kappa deficit is a rational
-    function of k, not a constant.  See sl3_subregular_bar.py for the
-    three-path verification.
-
-    The correct formula: kappa(W) = anomaly_ratio(W) * c_KRW(W), where
-    the anomaly ratio rho = sum_i (-1)^{p_i}/h_i = 1/6 for BP.
+    The affine formula, the candidate ghost subtraction, the Virasoro
+    leading-pole coefficient ``c/2``, and the Heisenberg level are explicit
+    algebraic expressions.  They do not determine the full BP modular
+    characteristic.  Source-correct parity changes the reciprocal-weight
+    diagnostic from ``1/6`` to ``17/6``; a genus-one chiral/BRST curvature
+    calculation is still required.
     """
     k = Symbol('k')
     c = bp_central_charge(k)
@@ -593,11 +608,8 @@ def ds_bar_commutation_kappa() -> Dict[str, object]:
     dim_sl3 = 8
     kappa_affine = Rational(dim_sl3, 6) * (k + 3)  # dim(g)*(k+h^v)/(2*h^v)
 
-    # Ghost constant for partition (2,1)
-    ghost = Rational(2)
-
-    # DS-derived kappa
-    kappa_ds = kappa_affine - ghost
+    ghost_candidate = Rational(2)
+    naive_affine_minus_ghost = kappa_affine - ghost_candidate
 
     # Direct BP invariants.  The T-line has Virasoro curvature c/2;
     # the J-current level is independent of c/3 in FS normal form.
@@ -606,13 +618,22 @@ def ds_bar_commutation_kappa() -> Dict[str, object]:
 
     return {
         "kappa_affine": kappa_affine,
-        "ghost_constant": ghost,
-        "kappa_ds": kappa_ds,
+        "ghost_constant_candidate": ghost_candidate,
+        "naive_affine_minus_ghost": naive_affine_minus_ghost,
+        "naive_subtraction_status": "DIAGNOSTIC_ONLY",
         "kappa_T": kappa_T,
+        "kappa_T_meaning": "VIRASORO_LEADING_POLE_COEFFICIENT",
         "J_level": j_level,
-        "kappa_ds_simplified": simplify(kappa_ds),
+        "reciprocal_weight_diagnostic": Rational(
+            bp_reciprocal_weight_diagnostic().numerator,
+            bp_reciprocal_weight_diagnostic().denominator,
+        ),
         "kappa_T_simplified": simplify(kappa_T),
         "J_level_simplified": simplify(j_level),
+        "kappa_BP": None,
+        "kappa_complementarity": None,
+        "kappa_status": BP_KAPPA_STATUS.status,
+        "resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
     }
 
 
@@ -637,33 +658,29 @@ def ds_bar_commutation_generators() -> Dict[str, object]:
     }
 
 
-def ds_bar_commutation_central_charge() -> Dict[str, bool]:
-    """Verify central charge threading.
+def ds_bar_commutation_central_charge() -> Dict[str, object]:
+    """Compute the affine/BP central-charge difference.
 
-    c(BP_k) from KRW should equal c(V_k(sl_3)) adjusted by DS:
+    The exact input formulas are
       c(V_k(sl_3)) = 8k/(k+3)
-      c(BP_k) = 1 - 18/(k+3)
-
-    These are NOT equal; the DS reduction CHANGES the central charge
-    by removing the ghost contribution.  The relation is:
-      c(W) = c(V) - c_ghost
-    where c_ghost depends on the DS data.
+      c(BP_k) = -(2k+3)(3k+1)/(k+3).
+    Their difference records the total conformal-vector correction.  A
+    decomposition into charged ghosts, neutral fields, and improvement
+    terms belongs to the full BRST calculation.
     """
     k = Symbol('k')
     c_affine = 8 * k / (k + 3)  # c(V_k(sl_3)) = k*dim(g)/(k+h^v)
     c_bp = bp_central_charge(k)
 
-    # Ghost central charge: c_ghost = c_affine - c_bp
-    c_ghost = simplify(c_affine - c_bp)
+    correction = simplify(c_affine - c_bp)
 
     return {
         "c_affine": c_affine,
         "c_bp": c_bp,
-        "c_ghost": c_ghost,
-        "c_ghost_simplified": simplify(c_ghost),
-        # Verify c_ghost is the correct DS ghost central charge
-        # For (2,1): c_ghost should be a rational function of k
-        "c_ghost_at_k0": simplify(c_ghost.subs(k, 0)),
+        "total_correction": correction,
+        "total_correction_simplified": simplify(correction),
+        "total_correction_at_k0": simplify(correction.subs(k, 0)),
+        "decomposition_status": "FULL_BRST_FIELD_CONTENT_REQUIRED",
     }
 
 
@@ -671,8 +688,8 @@ def ds_bar_commutation_central_charge() -> Dict[str, bool]:
 # Arnold cancellation at degree 3
 # =============================================================================
 
-def bp_arnold_cancellation_deg3() -> bool:
-    """Vacuum leakage vanishes at bar degree 3.
+def bp_arnold_cancellation_deg3() -> Dict[str, object]:
+    """State the geometric obligation for degree-three vacuum leakage.
 
     At bar degree 3, the vacuum contribution from the leading pole
     requires a higher-order pole than the 2-form on Conf_3 provides.
@@ -684,11 +701,15 @@ def bp_arnold_cancellation_deg3() -> bool:
       TT: order 4 pole * simple pole = order 3 singularity -> Res = 0
       G+G-: order 3 pole * simple pole = order 2 singularity -> Res = 0
       JJ: order 2 pole * simple pole = order 1 singularity -> Res != 0
-    BUT the JJ case: J_{(1)}J = (2k+3)/3 is a SCALAR, so it maps to B^0,
-    not to B^1.  The B^0 component requires TWO vacuum contributions
-    from independent collisions, which cancel by the Arnold relation.
+    Turning this pole-counting heuristic into a bar-differential theorem
+    requires an explicit configuration-space residue model and its Arnold
+    relation.  This finite OPE module does not implement that geometry.
     """
-    return True
+    return {
+        "proved": False,
+        "status": "CONFIGURATION_SPACE_RESIDUE_MODEL_REQUIRED",
+        "evidence": "pole-order bookkeeping only",
+    }
 
 
 # =============================================================================
@@ -696,12 +717,10 @@ def bp_arnold_cancellation_deg3() -> bool:
 # =============================================================================
 
 def verify_skew_symmetry() -> Dict[str, bool]:
-    """Verify all super-skew-symmetry relations for BP n-th products.
+    """Verify ordinary skew-symmetry for the even BP generators.
 
-    For bosonic a, b: b_{(n)}a = sum (-1)^{n+j+1}/j! d^j(a_{(n+j)}b)
-    For one fermionic: same formula
-    For both fermionic: b_{(n)}a = -sum (-1)^{n+j+1}/j! d^j(a_{(n+j)}b)
-                                 = sum (-1)^{n+j}/j! d^j(a_{(n+j)}b)
+    For every pair ``a,b`` in this ordinary vertex algebra,
+    ``b_(n)a = sum_j (-1)^(n+j+1)/j! d^j(a_(n+j)b)``.
     """
     k = Symbol('k')
     fs = bp_primary_ope_normal_form(k)
@@ -713,45 +732,43 @@ def verify_skew_symmetry() -> Dict[str, bool]:
     expected = bp_nth_product("J", "T", 0).get("dJ", 0)
     results["J_(0)T = 0"] = (computed == 0) and (expected == 0)
 
-    # --- G-_(2)G+ via super-skew of G+_(2)G- ---
-    # G-_(2)G+ = (-1)^{2+0} G+_(2)G- = G+_(2)G-.
+    # --- G-_(2)G+ via ordinary skew of G+_(2)G- ---
+    # G-_(2)G+ = (-1)^3 G+_(2)G- = -G+_(2)G-.
     expected_val = bp_nth_product("G-", "G+", 2)
-    results["G-_(2)G+ = FS pairing"] = (
-        simplify(expected_val.get("vac") - fs["G_pairing"]) == 0
+    results["G-_(2)G+ = -FS pairing"] = (
+        simplify(expected_val.get("vac") + fs["G_pairing"]) == 0
     )
 
-    # --- G-_(1)G+ via super-skew ---
-    # G-_(1)G+ = (-1)^{1+0} G+_(1)G- + (-1)^{1+1} d(G+_(2)G-)
-    # = -3(k+1)J + 0
+    # --- G-_(1)G+ via ordinary skew ---
+    # G-_(1)G+ = G+_(1)G-; the derivative of the scalar leading term is 0.
     expected_val = bp_nth_product("G-", "G+", 1)
-    results["G-_(1)G+ = -3(k+1)J"] = (
-        simplify(expected_val.get("J") + fs["GJ_coefficient"]) == 0
+    results["G-_(1)G+ = 3(k+1)J"] = (
+        simplify(expected_val.get("J") - fs["GJ_coefficient"]) == 0
     )
 
-    # --- G-_(0)G+ via super-skew ---
-    # G-_(0)G+ = (-1)^{0+0} G+_(0)G- + (-1)^{0+1} d(G+_(1)G-) + ...
-    # = 3JJ + a*dJ -(k+3)T - d(3(k+1)J)
-    # = 3JJ - a*dJ -(k+3)T, with a = 3(k+1)/2.
+    # --- G-_(0)G+ via ordinary skew ---
+    # G-_(0)G+ = -G+_(0)G- + d(G+_(1)G-)
+    # = -3JJ + 3(k+1)/2*dJ + (k+3)T.
     expected_val = bp_nth_product("G-", "G+", 0)
-    results["G-_(0)G+: JJ coeff = 3"] = (expected_val.get("JJ") == 3)
-    results["G-_(0)G+: T coeff = -(k+3)"] = (
-        simplify(expected_val.get("T") - fs["T_coefficient"]) == 0
+    results["G-_(0)G+: JJ coeff = -3"] = (expected_val.get("JJ") == -3)
+    results["G-_(0)G+: T coeff = k+3"] = (
+        simplify(expected_val.get("T") + fs["T_coefficient"]) == 0
     )
-    results["G-_(0)G+: dJ coeff = -3(k+1)/2"] = (
-        simplify(expected_val.get("dJ") + fs["dJ_coefficient"]) == 0
+    results["G-_(0)G+: dJ coeff = 3(k+1)/2"] = (
+        simplify(expected_val.get("dJ") - fs["dJ_coefficient"]) == 0
     )
 
-    # --- G+_(0)J via super-skew of J_(0)G+ ---
+    # --- G+_(0)J via ordinary skew of J_(0)G+ ---
     # G+_(0)J = (-1)^{0+0+1} J_{(0)}G+ = -G+
     expected_val = bp_nth_product("G+", "J", 0)
     results["G+_(0)J = -G+"] = (expected_val.get("G+") == -1)
 
-    # --- G-_(0)J via super-skew of J_(0)G- ---
+    # --- G-_(0)J via ordinary skew of J_(0)G- ---
     # G-_(0)J = (-1)^{0+0+1} J_{(0)}G- = -(-G-) = G-
     expected_val = bp_nth_product("G-", "J", 0)
     results["G-_(0)J = G-"] = (expected_val.get("G-") == 1)
 
-    # --- G+_(0)T via super-skew of T_(0)G+ and T_(1)G+ ---
+    # --- G+_(0)T via ordinary skew of T_(0)G+ and T_(1)G+ ---
     # G+_(0)T = -T_{(0)}G+ + d(T_{(1)}G+) = -dG+ + (3/2)dG+ = (1/2)dG+
     expected_val = bp_nth_product("G+", "T", 0)
     results["G+_(0)T = 1/2 dG+"] = (expected_val.get("dG+") == Rational(1, 2))
@@ -768,12 +785,10 @@ def verify_skew_symmetry() -> Dict[str, bool]:
 # =============================================================================
 
 def bp_is_chirally_koszul() -> Dict[str, object]:
-    """Determine if BP_k is chirally Koszul.
+    """Record the PBW evidence and the remaining Koszul obligation.
 
-    The BP algebra is chirally Koszul by the PBW universality criterion
-    (prop:pbw-universality): it is freely strongly generated at generic k,
-    with all OPE singularities being "quadratic" in the chiral sense
-    (the highest pole involves at most bilinear composites of generators).
+    FKR prove free strong generation for the universal algebra.  Its OPE
+    singularities have generator degree at most two.
 
     The OPE structure:
       - JJ: pole 2 = scalar (quadratic)
@@ -783,13 +798,14 @@ def bp_is_chirally_koszul() -> Dict[str, object]:
       - TJ: pole 2 = J, pole 1 = dJ
       - TG±: pole 2 = G± (linear), pole 1 = dG± (derivative)
 
-    All poles involve at most QUADRATIC composites; the Feigin-Semikhatov
-    simple pole displays the :JJ: term explicitly.
-    Therefore BP_k is chirally Koszul.
+    These facts supply the quadratic PBW input.  Chiral Koszulness further
+    requires the bar spectral-sequence collapse on the stated generic or
+    completed locus.
     """
     return {
-        "is_koszul": True,
-        "criterion": "PBW universality (prop:pbw-universality)",
+        "is_koszul": None,
+        "status": "CONDITIONAL_ON_BAR_SPECTRAL_SEQUENCE_COLLAPSE",
+        "criterion": "PBW universality plus collapse hypothesis",
         "reason": "Feigin-Semikhatov normal form has generator degree <= 2; the :JJ: term is explicit",
         "n_generators": 4,
         "n_relations": 4,  # JJ, JG±, G+G-, TT (independent at quadratic level)
@@ -802,9 +818,10 @@ def bp_is_chirally_koszul() -> Dict[str, object]:
 # =============================================================================
 
 def bp_complementarity() -> Dict[str, object]:
-    """Central charge complementarity for BP.
+    """Standard FKR scalar companion identity for BP.
 
-    c(k) + c(k') should be a constant (the Koszul conductor K_BP).
+    The rational identity ``c(k)+c(-k-6)=50`` is exact.  Its promotion to
+    a Verdier--Koszul conductor is conditional on DS--bar/Koszul transport.
     """
     k = Symbol('k')
     c = bp_central_charge(k)
@@ -816,6 +833,8 @@ def bp_complementarity() -> Dict[str, object]:
         "c_dual": c_dual,
         "K_BP": K,
         "K_is_constant": simplify(K.diff(k)) == 0,
+        "scalar_status": "PROVED_RATIONAL_IDENTITY",
+        "koszul_interpretation_status": "CONDITIONAL_ON_DS_BAR_AND_KOSZUL_TRANSPORT",
     }
 
 
@@ -823,72 +842,102 @@ def bp_complementarity() -> Dict[str, object]:
 # Full verification suite
 # =============================================================================
 
-def verify_bp_bar_complex() -> Dict[str, bool]:
-    """Comprehensive verification of the BP bar complex computation."""
-    results = {}
+def verify_bp_bar_complex() -> Dict[str, object]:
+    """Return exact finite checks and separately typed open obligations."""
+    checks: Dict[str, bool] = {}
 
-    # 1. Central charge: c(k) = 2 - 24(k+1)^2/(k+3) (FKR 2020)
     k = Symbol('k')
     c = bp_central_charge(k)
-    results["c(k) = 2 - 24(k+1)^2/(k+3)"] = simplify(
-        c - (2 - 24*(k + 1)**2 / (k + 3))
+    checks["standard FKR central charge"] = simplify(
+        c + (2 * k + 3) * (3 * k + 1) / (k + 3)
+    ) == 0
+    checks["shifted rational function is explicitly separated"] = simplify(
+        bp_shifted_central_charge(k) - (2 - 24 * (k + 1) ** 2 / (k + 3))
     ) == 0
 
-    # 2. Koszul conductor
     K = bp_koszul_conductor()
-    results["K_BP is constant (k-independent)"] = simplify(K.diff(k)) == 0
-    results["K_BP = 196"] = simplify(K - 196) == 0
-
-    # 3. Special values
-    results["c(-3) undefined (critical)"] = True  # k=-3 is the critical level
-    results["c(0) = -6"] = simplify(bp_central_charge(0) - (-6)) == 0
-    results["c(1) = -22"] = simplify(
-        bp_central_charge(1) - (-22)
+    checks["standard scalar companion sum is constant"] = simplify(K.diff(k)) == 0
+    checks["standard scalar companion sum is 50"] = simplify(K - 50) == 0
+    checks["shifted scalar companion sum is 196"] = simplify(
+        bp_shifted_koszul_conductor() - 196
     ) == 0
+    checks["canonical convention record agrees"] = (
+        STANDARD_BP_CONVENTION.conductor == 50
+        and SHIFTED_BP_CONVENTION.conductor == 196
+    )
 
-    # 4. Bar differential at degree 2
+    checks["c(0) = -1"] = simplify(bp_central_charge(0) + 1) == 0
+    checks["c(1) = -5"] = simplify(bp_central_charge(1) + 5) == 0
+    checks["c(-3/2) = 0"] = simplify(
+        bp_central_charge(Rational(-3, 2))
+    ) == 0
+    checks["all strong generators are even"] = all(
+        data["parity"] == 0 for data in GENERATORS.values()
+    )
+    checks["bosonic PBW coefficient at weight 3 is 8"] = (
+        bp_vacuum_dim(3) == 8
+    )
+
     fs = bp_primary_ope_normal_form(k)
     vac, bar1 = bp_bar_diff_deg2("T", "T")
-    results["D(TT): vac = c(k)/2"] = simplify(vac.get("vac") - fs["central_charge"] / 2) == 0
-    results["D(TT): T coeff = 2"] = bar1.get("T") == 2
+    checks["TT packet: vacuum coefficient c(k)/2"] = simplify(
+        vac.get("vac") - fs["central_charge"] / 2
+    ) == 0
+    checks["TT packet: T coefficient 2"] = bar1.get("T") == 2
 
     vac, bar1 = bp_bar_diff_deg2("J", "J")
-    results["D(JJ): vac = (2k+3)/3"] = simplify(vac.get("vac") - fs["J_level"]) == 0
+    checks["JJ packet: vacuum coefficient (2k+3)/3"] = simplify(
+        vac.get("vac") - fs["J_level"]
+    ) == 0
 
     vac, bar1 = bp_bar_diff_deg2("G+", "G-")
-    results["D(G+G-): vac = FS pairing"] = simplify(vac.get("vac") - fs["G_pairing"]) == 0
-    results["D(G+G-): J coeff = 3(k+1)"] = simplify(bar1.get("J") - fs["GJ_coefficient"]) == 0
-    results["D(G+G-): JJ coeff = 3"] = bar1.get("JJ") == 3
-    results["D(G+G-): T coeff = -(k+3)"] = simplify(bar1.get("T") - fs["T_coefficient"]) == 0
-    results["D(G+G-): dJ coeff = 3(k+1)/2"] = simplify(bar1.get("dJ") - fs["dJ_coefficient"]) == 0
+    checks["G+G- packet: FS pairing"] = simplify(
+        vac.get("vac") - fs["G_pairing"]
+    ) == 0
+    checks["G+G- packet: J coefficient"] = simplify(
+        bar1.get("J") - fs["GJ_coefficient"]
+    ) == 0
+    checks["G+G- packet: JJ coefficient"] = bar1.get("JJ") == 3
+    checks["G+G- packet: T coefficient"] = simplify(
+        bar1.get("T") - fs["T_coefficient"]
+    ) == 0
+    checks["G+G- packet: dJ coefficient"] = simplify(
+        bar1.get("dJ") - fs["dJ_coefficient"]
+    ) == 0
 
     vac, bar1 = bp_bar_diff_deg2("G-", "G+")
-    results["D(G-G+): vac = FS pairing"] = simplify(vac.get("vac") - fs["G_pairing"]) == 0
-    results["D(G-G+): J coeff = -3(k+1)"] = simplify(bar1.get("J") + fs["GJ_coefficient"]) == 0
-    results["D(G-G+): dJ coeff = -3(k+1)/2"] = simplify(bar1.get("dJ") + fs["dJ_coefficient"]) == 0
+    checks["G-G+ packet: opposite leading coefficient"] = simplify(
+        vac.get("vac") + fs["G_pairing"]
+    ) == 0
+    checks["G-G+ packet: ordinary-skew J coefficient"] = simplify(
+        bar1.get("J") - fs["GJ_coefficient"]
+    ) == 0
+    checks["G-G+ packet: ordinary-skew dJ coefficient"] = simplify(
+        bar1.get("dJ") - fs["dJ_coefficient"]
+    ) == 0
 
-    # Vanishing OPEs
     vac_pp, bar1_pp = bp_bar_diff_deg2("G+", "G+")
-    results["D(G+G+) = 0"] = len(vac_pp) == 0 and len(bar1_pp) == 0
+    checks["G+G+ singular packet vanishes by charge"] = (
+        len(vac_pp) == 0 and len(bar1_pp) == 0
+    )
 
     vac_mm, bar1_mm = bp_bar_diff_deg2("G-", "G-")
-    results["D(G-G-) = 0"] = len(vac_mm) == 0 and len(bar1_mm) == 0
+    checks["G-G- singular packet vanishes by charge"] = (
+        len(vac_mm) == 0 and len(bar1_mm) == 0
+    )
+    checks.update(verify_skew_symmetry())
 
-    # 5. Skew-symmetry
-    results.update(verify_skew_symmetry())
-
-    # 6. Arnold cancellation
-    results["Arnold cancellation at deg 3"] = bp_arnold_cancellation_deg3()
-
-    # 7. Koszulness
-    koszul = bp_is_chirally_koszul()
-    results["BP is chirally Koszul"] = koszul["is_koszul"]
-
-    # 8. Complementarity
     comp = bp_complementarity()
-    results["K_BP is k-independent"] = comp["K_is_constant"]
+    checks["scalar companion identity is k-independent"] = comp["K_is_constant"]
 
-    return results
+    return {
+        "exact_checks": checks,
+        "kappa_status": BP_KAPPA_STATUS.status,
+        "kappa_BP": None,
+        "kappa_complementarity": None,
+        "arnold_status": bp_arnold_cancellation_deg3()["status"],
+        "koszul_status": bp_is_chirally_koszul()["status"],
+    }
 
 
 # =============================================================================
@@ -897,7 +946,7 @@ def verify_bp_bar_complex() -> Dict[str, bool]:
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("BERSHADSKY-POLYAKOV BAR COMPLEX: CHAIN-LEVEL VERIFICATION")
+    print("BERSHADSKY-POLYAKOV OPE AND PBW DIAGNOSTICS")
     print("=" * 65)
 
     print("\n--- Central charge ---")
@@ -918,9 +967,13 @@ if __name__ == "__main__":
         print(f"  m_0({name}) = {val}")
 
     print("\n--- Verification ---")
-    for name, ok in verify_bp_bar_complex().items():
+    verification = verify_bp_bar_complex()
+    for name, ok in verification["exact_checks"].items():
         status = "PASS" if ok else "FAIL"
         print(f"  [{status}] {name}")
+    print(f"  kappa status: {verification['kappa_status']}")
+    print(f"  Arnold status: {verification['arnold_status']}")
+    print(f"  Koszul status: {verification['koszul_status']}")
 
     print("\n--- Vacuum module dimensions ---")
     char = bp_vacuum_character_coeffs(6)

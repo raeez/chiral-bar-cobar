@@ -504,7 +504,7 @@ class TestHolographicDatum:
         )
 
     def test_holographic_package_dict_preserves_c_bulk_slot(self):
-        """The returned H(A) dictionary keeps C as the bulk slot."""
+        """The returned H(A) dictionary keeps C as the closed-sector slot."""
         result = costello_paquette_comparison(10)
         package = result["holographic_package"]
         assert tuple(package.keys()) == HOLOGRAPHIC_PACKAGE_ENTRIES
@@ -521,7 +521,7 @@ class TestHolographicDatum:
         cp_match = result["costello_paquette_match"]
 
         assert "Kodaira-Spencer" in package["C"]
-        assert "bulk-observable" in package["C"]
+        assert "closed-sector-observable" in package["C"]
         assert "Kodaira-Spencer" not in package["A^!"]
         assert "bulk" not in package["A^!"].lower()
         assert "C / Z_ch^der(A)" in cp_match["bulk_slot"]
@@ -555,7 +555,7 @@ class TestHolographicDatum:
             assert "(A^i)^vee" in slots["A^!"]
             assert "bulk" not in slots["A^!"].lower()
             assert slots["Z_ch^der(A)"].startswith("C / Z_ch^der")
-            assert "bulk-observable" in slots["Z_ch^der(A)"]
+            assert "closed-sector-observable" in slots["Z_ch^der(A)"]
             assert "A^!" not in slots["Z_ch^der(A)"]
 
     def test_object_separation_dictionary_names_inversion_and_bulk(self):

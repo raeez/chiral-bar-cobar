@@ -677,7 +677,7 @@ class TestCrossVerification:
         assert 'factorization algebra' in firewall['A_shriek_infty']['type']
         assert 'post-Verdier' in firewall['A_shriek']['type']
         assert 'inversion recovers A' in firewall['Omega_B_A']['role']
-        assert 'derived-center bulk' in firewall['Z_der_ch_A']['type']
+        assert 'derived-center closed-sector' in firewall['Z_der_ch_A']['type']
 
         notations = {entry['notation'] for entry in firewall.values()}
         assert len(notations) == len(firewall)

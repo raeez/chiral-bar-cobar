@@ -1592,24 +1592,25 @@ def linfty_ell4_virasoro(c: Fraction, N: int = 10) -> Dict[str, Any]:
     plus the K_4 (pentagon) correction.
 
     For Virasoro (class M): ell_4 != 0 (shadow depth infinite).
-    The quartic shadow S_4 = -(5c + 22) / (10c) encodes this.
+    The quartic shadow S_4 = 10/[c(5c + 22)] encodes this.
 
     The shadow-formality identification:
-      S_4(Vir) = ell_4^{(0),tr}(...) + correction = -(5c + 22)/(10c)
+      S_4(Vir) = ell_4^{(0),tr}(...) + correction = 10/[c(5c + 22)]
 
     S_4 IS c-dependent (unlike S_3 = 2).
-    The contact invariant Q^contact = 10/[c(5c+22)] from S_4.
+    It is the reciprocal of the Zamolodchikov norm c(5c+22)/10.
     """
-    if c == F(0):
+    five_c_plus_22 = F(5) * c + F(22)
+    if c == F(0) or five_c_plus_22 == F(0):
         return {
             "ell4_nonzero": True,
             "S4": None,  # diverges at c=0
             "Q_contact": None,
-            "explanation": "S_4 diverges at c=0 (degenerate Virasoro).",
+            "explanation": "S_4 diverges on c(5c+22)=0 (singular Virasoro norm).",
         }
 
-    S4 = -(F(5) * c + F(22)) / (F(10) * c)
-    Q_contact = F(10) / (c * (F(5) * c + F(22)))
+    S4 = F(10) / (c * five_c_plus_22)
+    Q_contact = S4
 
     return {
         "ell4_nonzero": True,
@@ -1617,7 +1618,7 @@ def linfty_ell4_virasoro(c: Fraction, N: int = 10) -> Dict[str, Any]:
         "Q_contact": Q_contact,
         "Q_contact_matches_manuscript": True,
         "explanation": (
-            f"ell_4 nonzero for Virasoro. S_4 = -(5c+22)/(10c) = {S4}. "
+            f"ell_4 nonzero for Virasoro. S_4 = 10/[c(5c+22)] = {S4}. "
             f"Q^contact = 10/[c(5c+22)] = {Q_contact}."
         ),
     }

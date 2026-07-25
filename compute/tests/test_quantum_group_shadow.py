@@ -142,12 +142,18 @@ class TestClassicalRMatrix:
         assert simplify(r.evaluate(z) - 3 / z) == 0
 
     def test_affine_sl2_r_matrix_structure(self):
-        """Affine sl_2: r(z) = Omega/z, first-order pole, dim 3."""
+        """Affine sl_2: r_k(z) = k*Omega/z, first-order pole, dim 3."""
         r = affine_sl2_r_matrix()
         assert r.family == "Affine_sl2"
         assert r.max_pole == 1
         assert r.dim_g == 3
         assert r.leading_pole == 1
+
+    def test_affine_sl2_trace_form_level_zero_vanishes(self):
+        """Trace-form affine sl_2 residue vanishes at k=0."""
+        r = affine_sl2_r_matrix(S(0))
+        z = Symbol('z')
+        assert simplify(r.evaluate(z)) == 0
 
     def test_virasoro_r_matrix_structure(self):
         """Virasoro r(z) has cubic and simple poles after d-log absorption."""

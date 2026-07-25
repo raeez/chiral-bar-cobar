@@ -149,9 +149,11 @@ CONVENTIONS (from CLAUDE.md):
     AP20: kappa(A) intrinsic to A, not to physical system
     AP24: kappa + kappa' = 0 for KM/free; = rho*K for W-algebras; = 13 for Vir
     AP25: B(A) coalgebra, A^i=H^*(B(A)), A^! from Verdier duality,
-          Omega(B(A))=A, Z_ch^der(A) bulk
+          Omega(B(A))=A, Z_ch^der(A) closed-sector
     AP29: delta_kappa != kappa_eff (distinct objects)
-    AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras
+    AP33: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+    centre; only scalar kappa agrees with kappa(H_{-k})
     AP39: kappa != c/2 for general VOA
     AP42: correct@sophisticated, false@naive: diagram commutes at motivic
           level but fails at naive kappa level

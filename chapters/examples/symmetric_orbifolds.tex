@@ -122,7 +122,7 @@ A (adjunction) &
  & Conj.~\ref{conj:symn-koszul-dual} \\
 B (inversion) &
  $\Omega(\widehat{\barB}(X_N^{\mathrm{id}}))\to X_N^{\mathrm{id}}$
- & Reynolds descent hypothesis; Prop.~\ref{conj:symn-inversion} \\
+ & Reynolds descent hypothesis; Prop.~\ref{prop:symn-inversion} \\
 C (complementarity) &
  finite-type identity sector:
  $\kappa+\kappa^!=N(\kappa(X)+\kappa(X^!))$
@@ -131,8 +131,10 @@ D (modular char.) &
  $\kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})=N\kappa(X)$
  & Prop.~\ref{prop:symn-kappa} \\
 H (chiral Hochschild) &
- $\operatorname{ChirHoch}^n(X_N^{\mathrm{id}})=0$ for $n>2$
- & completed PBW/perfect lane; Prop.~\ref{conj:symn-hochschild} \\
+ $H_H(X_N^{\mathrm{id}};S_N)$ gives
+ $\operatorname{Supp}\operatorname{ChirHoch}^\bullet
+ (X_N^{\mathrm{id}})\subseteq S_N$
+ & family-retract lane; Prop.~\ref{prop:symn-hochschild} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -195,9 +197,9 @@ Complementarity (identity sector) &
 \index{symmetric orbifold!modular characteristic}
 Let $N\geq1$, and let $X$ be a modular Koszul chiral algebra with
 finite-dimensional graded pieces, completed along the weight
-filtration, and with genus-$1$ scalar obstruction
-$\mathrm{obs}_1(X)=\kappa(X)\lambda_1$ defined as a finite scalar
-class. For the fixed-point chiral algebra
+filtration, and with finite pointed genus-$1$ trace
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X)
+=\kappa(X)\lambda_1$. For the fixed-point chiral algebra
 $X_N^{\mathrm{id}}=(X^{\otimes N})^{S_N}$,
 \[
  \kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})
@@ -217,8 +219,9 @@ diagonal obstruction cocycle equal to the sum of the $N$ copywise
 cocycles. Additivity of the scalar obstruction for independent
 tensor factors gives
 \[
- \mathrm{obs}_1(X^{\otimes N})
- = \sum_{i=1}^N \mathrm{obs}_1(X^{(i)})
+ \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X^{\otimes N})
+ = \sum_{i=1}^N
+   \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X^{(i)})
  = N\,\kappa(X)\lambda_1 .
 \]
 The Reynolds idempotent
@@ -353,7 +356,7 @@ $\Omega\barB(X)$.
 \end{conjecture}
 
 \begin{proposition}[Bar-cobar inversion under Reynolds descent;
-\ClaimStatusConditional]\label{conj:symn-inversion}
+\ClaimStatusConditional]\label{prop:symn-inversion}
 The bar-cobar counit
 $\Omega(\widehat{\barB}(X_N^{\mathrm{id}})) \to X_N^{\mathrm{id}}$
 is a quasi-isomorphism on the finite-type completed lane if $X$ is
@@ -388,7 +391,7 @@ In the identity sector, complementarity
 $X^{\otimes N}$ gives
 $\kappa(X^{\otimes N}) + \kappa((X^!)^{\otimes N}) =
 N(\kappa(X) + \kappa(X^!))$. The fixed-point comparison requires the
-same Reynolds descent as Proposition~\ref{conj:symn-inversion}. A
+same Reynolds descent as Proposition~\ref{prop:symn-inversion}. A
 twisted orbifold completion has its own chiral derived centre and
 its own chiral Hochschild complex; the physical $3$d bulk, if
 present, is related by an open--closed comparison rather than by
@@ -398,32 +401,31 @@ separate theorem.
 \end{remark}
 
 \begin{proposition}[Theorem H for the fixed-point sector;
-\ClaimStatusConditional]\label{conj:symn-hochschild}
-If $X_N^{\mathrm{id}}$ is chirally Koszul on the completed finite-type
-PBW lane and the compact-generation/perfectness hypotheses of
-Theorem~\ref{thm:hochschild-polynomial-growth} hold for the
-fixed-point chiral algebra, then
+\ClaimStatusConditional]\label{prop:symn-hochschild}
+Let $S_N\subset\mathbb Z$ be finite and assume the fixed-point chiral
+algebra carries the family datum $H_H(X_N^{\mathrm{id}};S_N)$.  Then
 \[
- \operatorname{ChirHoch}^n(X_N^{\mathrm{id}})=0
- \qquad (n>2).
+ \operatorname{ChirHoch}^n(X_N^{\mathrm{id}})
+ \cong H^n(K_{X_N^{\mathrm{id}},S_N}),
+ \qquad
+ \operatorname{Supp}\operatorname{ChirHoch}^\bullet
+ (X_N^{\mathrm{id}})\subseteq S_N.
 \]
-This is an ambient-curve statement. It does not compute the
-categorical Hochschild cohomology of the full twisted orbifold
-module category, and it does not apply automatically at singular
-quotient parameters where the hypotheses of
-Theorem~\ref{thm:hochschild-polynomial-growth} fail.
+This is an ambient-curve statement.  The categorical Hochschild
+cohomology of the full twisted orbifold module category and singular
+quotient charts carry their own family models and comparison maps.
+A companion family datum and a perfect degree-$d$ pairing supply the
+separate degree reflection.
 \end{proposition}
 
 \begin{proof}
-Theorem~\ref{thm:hochschild-polynomial-growth} is applied to the
-single chiral algebra $X_N^{\mathrm{id}}$ on a smooth projective
-curve. Its amplitude bound is the curve bound $[0,2]$. Twisted
-sectors are modules for $X_N^{\mathrm{id}}$ unless a separate
-$G$-crossed algebra has been constructed, so they are not inputs to
-this chiral Hochschild complex. The completed finite-type and
-perfectness hypotheses are precisely those required to make the
-Hochschild dimensions finite and the curve-level duality shift
-available.
+Theorem~\ref{thm:main-koszul-hoch} applied to
+$H_H(X_N^{\mathrm{id}};S_N)$ gives the displayed identification.
+Twisted sectors are modules for $X_N^{\mathrm{id}}$ in the present
+chart; a constructed $G$-crossed algebra supplies a distinct chiral
+Hochschild input.  Theorem~\ref{thm:hochschild-polynomial-growth}
+gives a polynomial Hilbert series when the groups
+$H^n(K_{X_N^{\mathrm{id}},S_N})$ are finite-dimensional.
 \end{proof}
 
 
@@ -938,9 +940,11 @@ The separating divisor $z\to 0$ gives
 \]
 The DMVV series differs from this reciprocal by the factor
 $p\,\phi_{10,1}$. Volume~III uses the reciprocal Siegel form as the
-genus-$2$ character of the K3 chiral bialgebra
-$\mathbf{H}_{\Delta_5}$; the first limit isolates the Jacobi
-coefficient, while the second is the genuine separating degeneration.
+target genus-$2$ character of the K3 chiral-bialgebra recognition
+object $\mathbf{H}_{\Delta_5}^{\mathrm{tgt}}$, conditional on the
+Hall/CoHA source, compact pairing, PBW/no-extra-relations theorem,
+and comparison maps. The first limit isolates the Jacobi coefficient,
+while the second is the genuine separating degeneration.
 \end{remark}
 
 \begin{proposition}[Hecke operators and the identity scalar;

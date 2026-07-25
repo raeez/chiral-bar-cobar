@@ -216,15 +216,12 @@ class TestLoopRatio:
         rho = virasoro_loop_ratio()
         assert limit(rho * c**4, c, oo) == Rational(48)
 
-    def test_loop_ratio_distinguishes_same_kappa(self):
+    def test_loop_ratio_not_constant_multiple_of_kappa(self):
         """
-        Two values of c with same kappa = c/2 have different rho^(1).
-        This proves the loop ratio carries information beyond kappa.
-
-        Well, c determines kappa = c/2 uniquely, so same kappa means same c.
-        But the POINT is that rho^(1) is a different function of c than kappa:
+        Along the Virasoro line, rho^(1) is a different function of c
+        than kappa:
         rho = 240/(c^3(5c+22)) while kappa = c/2.
-        So rho/kappa = 480/(c^4(5c+22)) is nontrivial.
+        Hence rho/kappa = 480/(c^4(5c+22)) is not constant.
         """
         rho = virasoro_loop_ratio()
         kappa = c / 2

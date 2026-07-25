@@ -1,763 +1,365 @@
 % !TEX root = ../../main.tex
-% ============================================================================
-% Extended shadow-tower census: W_3, Bershadsky--Polyakov, W_\infty[\Psi],
-% and super-Yangian gl(1|1) line data.
-%
-% The Virasoro shadow tower (shadow_tower_higher_coefficients.tex) is the
-% class-M prototype carrying a single denominator factor (5c+22) from the
-% Zamolodchikov weight-4 composite Lambda. This chapter extends the census
-% to four families for which additional denominator structure is forced
-% by the W-generator Zamolodchikov norm, producing (5c+22)^3 on the W-line
-% and a two-quadratic rational-in-k factorization on the BP T-line.
-%
-% Author: Raeez Lorgat.
-% ============================================================================
 
-\chapter{Extended shadow-tower families:
- $\mathcal{W}_3$, BP, $\mathcal{W}_\infty[\Psi]$, super-Yangian $\mathfrak{gl}(1|1)$}
+\chapter{Extended OPE lines and the shadow comparison problem}
 \label{chap:shadow-tower-extended-families}
 
-\providecommand{\ClaimStatusProvedHere}{\textsc{ProvedHere}}
-\providecommand{\ClaimStatusProvedElsewhere}{\textsc{ProvedElsewhere}}
-\providecommand{\ClaimStatusConditional}{\textsc{Conditional}}
-\providecommand{\ClaimStatusConjectured}{\textsc{Conjectured}}
-\providecommand{\ClaimStatusHeuristic}{\textsc{Heuristic}}
-\providecommand{\cW}{\mathcal{W}}
-
-\section*{Line-restricted shadow data}
+\section*{Line-restricted data}
 \label{sec:shadow-tower-extended-overview}
 
-The Virasoro shadow tower carries a single denominator factor $(5c + 22)$
-from the Zamolodchikov quasi-primary
-$\Lambda = {:TT:} - (3/10) \partial^2 T$, whose canonical two-point
-function is $\langle \Lambda | \Lambda \rangle = c(5c + 22) / 10$.
-On the Virasoro $T$-line, this produces $S_4 = 10 / [c(5c + 22)]$ and the
-cascade of higher coefficients $\{S_r\}_{r \ge 5}$ studied in the
-higher Virasoro shadow coefficients chapter
-(\texttt{chapters/theory/shadow\_tower\_higher\_coefficients.tex}).
+For a strongly generated vertex algebra, an OPE line records singular
+products involving one selected generator.  A shadow coefficient is a
+different object: it is obtained from the full ordered Maurer--Cartan
+tensor by a specified projection after the configuration-space residue
+maps have been constructed.  This chapter keeps these two levels
+separate for $\mathcal W_3$, Bershadsky--Polyakov,
+$\mathcal W_\infty$, and a super-Yangian test line.
 
-Beyond Virasoro, the standard landscape contains class-M
-chiral algebras with additional quasi-primary generators: $\cW_3$ has a
-weight-$3$ field $W$, $\mathrm{BP}_k$ has a weight-$1$ current $J$ and
-weight-$3/2$ super-currents $G^\pm$, $\cW_\infty[\Psi]$ has the infinite
-generator tower $\{W_s\}_{s \ge 2}$, and super-Yangians carry parity-odd
-fermionic lines. On each new line the master-equation base data
-$(\kappa_\ell, S_3^\ell, S_4^\ell)$ is not inherited from Virasoro, and
-the shadow tower may acquire a line-specific denominator factor reflecting the
-line-specific Zamolodchikov norm.
-
-This chapter records the closed forms of $S_3$ and
-$S_4$ on the distinguished lines where the quartic datum is known,
-fences the remaining quartic line data as open, and documents the
-degeneration structure at the $\cW_\infty[\Psi]$ free-limit endpoint
-$\Psi = 0$. Every entry is
-a scalar line projection of the ordered obstruction datum; no statement
-below identifies this projection with the full multi-generator shadow
-tensor.
-
-The symbol $S_2(A,\ell)=\kappa_\ell$ denotes line curvature. It is not
-the global modular characteristic $\kappa(A)$ of the algebra. The
-landscape census gives
+The common type signature is
 \[
-\kappa(\mathrm{Vir}_c)=c/2,\qquad
-\kappa(\mathcal W_3)=5c/6,\qquad
-\kappa(\mathrm{BP}_k)=c_{\mathrm{BP}}(k)/6.
+ (\text{Open quadrant},\ \text{OPE line presentation},\
+ \text{Beilinson levels }1\text{--}3,\
+ H_{\mathrm{line}}+H_{\mathrm{bar}}+H_{\mathrm{proj}}).
 \]
-The BP conductor $196$ is a central-charge conductor; its scalar
-modular-characteristic shadow is $196/6=98/3$.
+Here $H_{\mathrm{line}}$ fixes the two-point form and generator
+normalization, $H_{\mathrm{bar}}$ constructs the signed residue
+differential, and $H_{\mathrm{proj}}$ supplies a chain map from the
+multi-generator tensor to the scalar line.
 
-\section{Zamolodchikov quasi-primary norms: the denominator building blocks}
+\section{Zamolodchikov norms and the $\mathcal W_3$ OPE}
 \label{sec:zamolodchikov-norms}
 
-The three two-point norms below are the denominator sources for the
-line coefficients treated in this chapter.
+Set
+\[
+ \Lambda={:TT:}-\frac{3}{10}\partial^2T.
+\]
 
-\begin{proposition}[Canonical two-point norms]
+\begin{proposition}[Canonical two-point norms;
+\ClaimStatusProvedElsewhere]
 \label{prop:canonical-two-point-norms}
-\ClaimStatusProvedElsewhere
-Let $A$ be a standard-landscape chiral algebra containing the Virasoro
-sub-algebra at central charge $c$ and (where applicable) the $\cW_3$
-generator $W$ (weight $3$) with canonical Fateev--Lukyanov
-normalization. The canonical two-point Zamolodchikov norms are
-\begin{equation}
-\label{eq:zamolodchikov-norms}
-N_T \;=\; \langle T | T \rangle \;=\; c/2,
-\qquad
-N_W \;=\; \langle W | W \rangle \;=\; c/3,
-\qquad
-N_\Lambda \;=\; \langle \Lambda | \Lambda \rangle
-\;=\; \frac{c\,(5c + 22)}{10}.
+In Zamolodchikov normalization,
+\begin{equation}\label{eq:zamolodchikov-norms}
+ N_T=\langle T,T\rangle=\frac c2,
+ \qquad
+ N_W=\langle W,W\rangle=\frac c3,
+ \qquad
+ N_\Lambda=\langle\Lambda,\Lambda\rangle
+ =\frac{c(5c+22)}{10}.
 \end{equation}
-Here $\Lambda = {:TT:} - (3/10) \partial^2 T$ is the unique weight-$4$
-Virasoro quasi-primary composite.
 \end{proposition}
 
-\begin{proof}[Attribution and in-place derivation]
-The formula $N_T = c/2$ is the Virasoro double-pole coefficient. The
-formula $N_W = c/3$ is the Fateev--Lukyanov 1988 sextic-pole coefficient
-in $W(z) W(w) \sim (c/3)/(z-w)^6 + \ldots$ (cf.\
-\texttt{compute/lib/w3\_lambda\_brackets.py}: \texttt{WW\_lambda\_bracket\_from\_OPE}).
-The formula $N_\Lambda = c(5c + 22)/10$ is
-Zamolodchikov~\cite{Zam85} and Belavin--Polyakov--Zamolodchikov~\cite{BPZ84};
-for a self-contained derivation from the Virasoro algebra, work at
-level~$4$ in the vacuum Verma module $M_{c}(0)$. Using the state--field
-correspondence $|T\rangle = L_{-2}|0\rangle$,
-$|\partial^2 T\rangle = 2\,L_{-4}|0\rangle$, and
-$|{:}TT{:}\rangle = L_{-2}^{2}|0\rangle$, the Zamolodchikov combination
-is $|\Lambda\rangle = L_{-2}^{2}|0\rangle - \tfrac{3}{5}\,L_{-4}|0\rangle$.
-Three scalar products suffice:
-\begin{align*}
- \langle 0 | L_{2}^{2}\, L_{-2}^{2} | 0\rangle
- &= \langle 0|\, L_{2}\,(c+8)\, L_{-2}\,|0\rangle
- \;=\; (c+8)\cdot \tfrac{c}{2}
- \;=\; \tfrac{c(c+8)}{2},\\
- \langle 0 | L_{4}\, L_{-2}^{2} | 0\rangle
- &= \langle 0|\,\bigl( L_{-2} L_{4} + 6\, L_{2}\bigr)\, L_{-2}\,|0\rangle
- \;=\; 6\cdot \tfrac{c}{2}
- \;=\; 3c,\\
- \langle 0 | L_{4}\, L_{-4} | 0\rangle
- &= \langle 0|\,\bigl[L_{4}, L_{-4}\bigr]\,|0\rangle
- \;=\; \tfrac{4^{3}-4}{12}\, c
- \;=\; 5c,
-\end{align*}
-where the first line uses $L_{2}L_{-2}^{2}|0\rangle = (c+8)L_{-2}|0\rangle$
-obtained from $[L_{2},L_{-2}] = 4L_{0}+\tfrac{c}{2}$ and
-$L_{0}L_{-2}|0\rangle = 2 L_{-2}|0\rangle$, the second uses
-$[L_{4},L_{-2}]=6L_{2}$ together with $L_{2}|0\rangle = 0$, and the
-third is the Virasoro central term at $m+n=0$. Expanding
-$\langle \Lambda | \Lambda\rangle$ in the $(L_{-2}^{2},\,L_{-4})$ basis,
+\begin{proof}
+The first two identities are the leading coefficients in the $TT$ and
+$WW$ OPEs.  For the third, the level-four vacuum Gram matrix in the
+basis $(L_{-2}^2\mathbf1,L_{-4}\mathbf1)$ is
 \[
- \langle \Lambda | \Lambda\rangle
- \;=\; \tfrac{c(c+8)}{2}
- - 2\cdot\tfrac{3}{5}\cdot 3c
- + \tfrac{9}{25}\cdot 5c
- \;=\; \tfrac{5c^{2}+40c}{10} - \tfrac{18c}{5} + \tfrac{9c}{5}
- \;=\; \tfrac{5c^{2}+22c}{10}
- \;=\; \tfrac{c(5c+22)}{10},
+ \begin{pmatrix}
+  c(c+8)/2 & 3c\\
+  3c & 5c
+ \end{pmatrix}.
 \]
-recovering the Zamolodchikov norm directly from the Virasoro algebra
-without external input. The numerator is the Kac--Feigin--Fuchs level-$4$
-determinant signature \cite{KacNR79, FF82}, and the denominator $22+5c$
-is the universal quasi-primary-norm factor propagating into every
-$W$-line coefficient via Proposition~\ref{prop:fateev-lukyanov-alpha}.
+The vector of $\Lambda$ is $(1,-3/5)$, and direct multiplication gives
+$c(5c+22)/10$; see Zamolodchikov~\cite{Zam85} and the review
+\cite{BowSch93}.
 \end{proof}
 
-\begin{proposition}[Fateev--Lukyanov $W \cdot W$ coefficient at weight four]
+\begin{proposition}[Zamolodchikov-normalized $WW$ OPE;
+\ClaimStatusProvedElsewhere]
 \label{prop:fateev-lukyanov-alpha}
-\ClaimStatusProvedElsewhere
-In the $W_3$ OPE
+The singular part of the $\mathcal W_3$ OPE is
 \[
-W(z) W(w) \;\sim\; \frac{c/3}{(z-w)^6} + \frac{2 T(w)}{(z-w)^4}
- + \frac{\partial T(w)}{(z-w)^3}
- + \frac{(3/10) \partial^2 T(w) + \alpha \, \Lambda(w)}{(z-w)^2}
- + \frac{(1/15) \partial^3 T(w) + (\alpha/2) \partial \Lambda(w)}{(z-w)},
+\begin{aligned}
+W(z)W(w)\sim{}&\frac{c/3}{(z-w)^6}
+ +\frac{2T}{(z-w)^4}+\frac{\partial T}{(z-w)^3}\\
+&+\frac{\frac{3}{10}\partial^2T+\alpha\Lambda}{(z-w)^2}
+ +\frac{\frac{1}{15}\partial^3T+\frac{\alpha}{2}\partial\Lambda}{z-w},
+\end{aligned}
 \]
-the coefficient $\alpha$ is forced by the Jacobi identity to
-\begin{equation}
-\label{eq:alpha-coefficient}
-\alpha \;=\; \frac{16}{22 + 5c}.
+where
+\begin{equation}\label{eq:alpha-coefficient}
+ \alpha=\frac{32}{22+5c}.
 \end{equation}
+Consequently the derivative coefficient is
+$\alpha/2=16/(22+5c)$.  The mode commutator has coefficient
+$16(m-n)/(22+5c)$, which provides an independent normalization check.
 \end{proposition}
 
-\begin{proof}[Attribution]
-Bouwknegt--Schoutens~\cite{BowSch93} review, equation~(5.2); the
-derivation is the constraint that the triple bracket $[W, [W, W]]$
-closes on the Virasoro--$\cW_3$ algebra. The compute module
-\texttt{compute/lib/w3\_lambda\_brackets.py} implements the full Jacobi
-verification (\texttt{verify\_alpha\_from\_jacobi}). The denominator
-factor $22 + 5c$ is the universal $\cW_3$ quasi-primary-norm signature
-that propagates into every $W$-line shadow coefficient.
+\begin{proof}
+This is the standard Zamolodchikov $\mathcal W_3$ relation in
+Bouwknegt--Schoutens~\cite{BowSch93}.  Passing from the pole-two term
+$\alpha\Lambda$ and pole-one term $(\alpha/2)\partial\Lambda$ to modes
+produces $(\alpha/2)(m-n)\Lambda_{m+n}$, hence the displayed
+commutator coefficient.
 \end{proof}
 
-\section{$\cW_3$: $S_3$ and $S_4$ on both generator lines}
+\section{$\mathcal W_3$: exact OPE lines and open scalar projections}
 \label{sec:w3-s3-s4-closed-forms}
 
-\begin{theorem}[$\cW_3$ closed forms: $T$-line]
+\begin{theorem}[$T$-line comparison;
+\ClaimStatusConditional]
 \label{thm:w3-s3-s4-tline}
-\ClaimStatusProvedHere
-On the $T$-line of $\cW_3$ at central charge $c$,
-\begin{equation}
-\label{eq:w3-tline}
-S_3(\cW_3, T)(c) \;=\; 2,
-\qquad
-S_4(\cW_3, T)(c) \;=\; \frac{10}{c\,(5c + 22)}.
+The $T$-line of $\mathcal W_3$ is the Virasoro OPE at central charge
+$c$, with exact norm data
+\begin{equation}\label{eq:w3-tline}
+ (N_T,N_\Lambda)=\left(\frac c2,\frac{c(5c+22)}{10}\right).
 \end{equation}
-Both formulas are identical to the Virasoro $T$-line values at the same
-$c$: the $T$-generator of $\cW_3$ is a Virasoro sub-generator with the
-full stress-tensor OPE. The ordered bar subcomplex generated by $T$ is
-therefore the Virasoro ordered bar complex at central charge $c$, and
-the scalar shadow on this subcomplex has the Virasoro base triple
-$(c/2, 2, 10/(c(5c + 22)))$.
+Under $H_{\mathrm{bar}}+H_{\mathrm{proj}}$, its scalar shadow is the
+image of the Virasoro restricted Maurer--Cartan tensor.  The inverse
+norm $10/[c(5c+22)]$ is an exact rational function; its identification
+with a quartic shadow coefficient is part of the projection theorem.
 \end{theorem}
 
-\begin{proof}
-Cubic self-coupling: the OPE $T(z) T(w) T(v)$ produces $\partial T$ at
-the leading (single-pole) position, which normalizes on the $T$-line to
-$S_3^T = 2$. Quartic: the unique weight-$4$ composite on the $T$-line
-is $\Lambda$ with $\langle \Lambda | \Lambda \rangle = c(5c + 22)/10$;
-the master equation at $r = 4$ fixes $S_4^T = 10 / [c(5c + 22)]$.
-Both matches are independent of the presence of the $W$-generator: on
-the $T$-line the Fateev--Lukyanov $W \cdot T$ OPE restricts trivially
-(the $W$ field is not a $T$-composite).
-\end{proof}
-
-\begin{theorem}[$\cW_3$ closed forms: $W$-line with Zamolodchikov denominator]
+\begin{theorem}[$W$-line comparison;
+\ClaimStatusConditional]
 \label{thm:w3-w-line-s4-zamolodchikov}
-\ClaimStatusProvedHere
-On the $W$-line of $\cW_3$ at central charge $c \notin \{0, -22/5\}$,
-\begin{equation}
-\label{eq:w3-wline}
-S_3(\cW_3, W)(c) \;=\; 0,
-\qquad
-S_4(\cW_3, W)(c) \;=\; \frac{2560}{c\,(5c + 22)^3}.
+The involution $W\mapsto-W$ preserves the $\mathcal W_3$ OPE, and the
+exact $WW\to\Lambda$ coupling is $32/(22+5c)$.  A scalar quartic
+coefficient is therefore defined only after the full four-point tensor,
+its $TT$, $T\Lambda$, and $\Lambda\Lambda$ channels, and the projection
+map have been supplied:
+\begin{equation}\label{eq:w3-wline}
+ S_4(\mathcal W_3,W)
+ :=P_W^{(4)}\bigl(\Theta_{\mathcal W_3}^{(4)}\bigr),
+ \qquad
+ \text{status: open under }H_{\mathrm{bar}}+H_{\mathrm{proj}}.
 \end{equation}
-The cubic $S_3^W$ vanishes identically by the $\mathbb{Z}_2$ parity
-$W \mapsto -W$ of the $\cW_3$ OPE. The quartic $S_4^W$ carries the
-denominator factor $(5c + 22)^3$: the Virasoro quartic contact
-$10/[c(5c+22)]$ is multiplied by two copies of the
-Fateev--Lukyanov coupling $\alpha=16/(5c+22)$ in the
-$W \cdot W \to \Lambda$ channel.
 \end{theorem}
 
-\begin{proof}
-By $\mathbb{Z}_2$ parity $W \mapsto -W$ (a symmetry of the
-Fateev--Lukyanov OPE at generic $c$), every odd power of $W$ vanishes
-in a Wick contraction; in particular the three-point
-$\langle W | W | W \rangle$ is zero, which gives $S_3^W = 0$.
-
-For $S_4^W$, the weight-$4$ composite in the $W \cdot W$ OPE contains
-$\alpha\Lambda$ with $\alpha = 16 / (22 + 5c)$
-(Proposition~\ref{prop:fateev-lukyanov-alpha}). The quartic contact
-coefficient on the pure $W$-line is the pure-$W$ channel
-$Q_{WWWW}$ of Theorem~\ref{thm:w3-quartic-channel-decomposition}:
-\[
-Q_{WWWW}
-\;=\; Q_{TTTT}\,\alpha^2
-\;=\; \frac{10}{c(5c+22)}
-      \left(\frac{16}{5c+22}\right)^2
-\;=\; \frac{2560}{c(5c+22)^3}.
-\]
-The line-restricted shadow coefficient is this contact coefficient,
-because the $W$-line Hessian is $N_W=\kappa_W=c/3$ and the
-normalization of Theorem~\ref{thm:w-w3-mixed-shadow} already uses the
-trace-form $W$-norm. At $c=1,2,13$ the formula gives respectively
-$2560/19683$, $5/128$, and $2560/8560539$.
-\end{proof}
-
-\begin{remark}[Conditional denominator exponent pattern on the $W$-line]
+\begin{remark}[OPE denominator and shadow denominator]
 \label{rem:w3-w-line-denominator-pattern}
-Under the autonomous $W$-line scalar model, iterating the Riccati master
-equation with base $(c/3, 0, 2560/[c(5c+22)^3])$ produces the
-even-weight tower
-\begin{align*}
-S_4(\cW_3, W)(c) &= \frac{2560}{c\,(5c + 22)^3}, \\
-S_6(\cW_3, W)(c) &= \frac{-13\,107\,200}{c^3\,(5c + 22)^6}, \\
-S_8(\cW_3, W)(c) &= \frac{150\,994\,944\,000}{c^5\,(5c + 22)^9}, \\
-S_{10}(\cW_3, W)(c) &= \frac{-2\,319\,282\,339\,840\,000}{c^7\,(5c + 22)^{12}}.
-\end{align*}
-Every odd-weight coefficient vanishes by the $\mathbb{Z}_2$ parity.
-The denominator exponents grow as $(c^{2m - 3}, (5c + 22)^{3m - 3})$
-for $r = 2m \ge 4$. The integer sequence $\{2560, -13\,107\,200,
-150\,994\,944\,000, \ldots\}$ has fixed sign $(-1)^{m - 1}$; the
-exponents agree with Proposition~\ref{prop:w3-wline-closed-form}.
+The factors $c$, $5c+22$, and $22+5c$ arise respectively from the
+$W$ norm, the $\Lambda$ norm, and the $WW\Lambda$ coupling.  A
+denominator for $S_4$ also depends on the inverse Gram matrix of every
+four-point channel retained by $P_W^{(4)}$.  This gives a concrete
+finite computation for the open projection problem.
 \end{remark}
 
-\section{Bershadsky--Polyakov: $S_3$ and $S_4$ rational in $k$}
+\section{Bershadsky--Polyakov: standard conformal data}
 \label{sec:bp-s3-s4-closed-forms}
 
-\begin{definition}[Arakawa-normalized BP central charge;
-\ClaimStatusDefinitional{}]
+\begin{definition}[Standard BP central charge;
+\ClaimStatusDefinitional]
 \label{def:bp-arakawa-central-charge}
-The Bershadsky--Polyakov algebra
-$\mathrm{BP}_k = \cW^k(\mathfrak{sl}_3, f_{\min})$
-is the minimal-nilpotent Drinfeld--Sokolov reduction of
-$\mathfrak{sl}_3$ at level $k$. In the Arakawa normalization, and with
-the Fehily--Kawasetsu--Ridout convention~\cite{FKR20}, set
-\begin{equation}
-\label{eq:bp-arakawa-central-charge}
-c_{\mathrm{BP}}(k) \;=\; 2 - \frac{24\,(k + 1)^2}{k + 3}
-\;=\; \frac{-2\,(12 k^2 + 23 k + 9)}{k + 3},
+For the ordinary Bershadsky--Polyakov vertex algebra of
+Fehily--Kawasetsu--Ridout~\cite{FKR20}, set
+\begin{equation}\label{eq:bp-arakawa-central-charge}
+ c_{\mathrm{BP}}(k)
+ =-\frac{(2k+3)(3k+1)}{k+3}.
 \end{equation}
-and write $K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) +
-c_{\mathrm{BP}}(-k - 6) = 196$
-(Theorem~\ref{thm:bp-koszul-conductor-polynomial}).
+The four strong generators $J,G^+,G^-,T$ are even, of weights
+$1,3/2,3/2,2$.
 \end{definition}
 
-\begin{theorem}[BP closed forms: $T$-line rational in $k$]
+\begin{theorem}[BP $T$-line inverse norm;
+\ClaimStatusConditional]
 \label{thm:bp-t-line-rational-k}
-\ClaimStatusProvedHere
-On the $T$-line of $\mathrm{BP}_k$,
-\begin{equation}
-\label{eq:bp-tline-s3-s4}
-S_3(\mathrm{BP}_k, T) \;=\; 2,
-\qquad
-S_4(\mathrm{BP}_k, T)
-\;=\; \frac{5\,(k + 3)^2}{8\,(12 k^2 + 23 k + 9)\,(15 k^2 + 26 k + 3)}.
+The $T$-line is Virasoro at $c=c_{\mathrm{BP}}(k)$.  Its exact
+level-four inverse norm is
+\begin{equation}\label{eq:bp-tline-s3-s4}
+ \frac{10}{c_{\mathrm{BP}}(k)
+ (5c_{\mathrm{BP}}(k)+22)}
+ =\frac{10(k+3)^2}
+ {3(2k+3)(3k+1)(10k^2+11k-17)}.
 \end{equation}
-The two quadratic denominator factors are irreducible over $\mathbb{Q}$
-and coprime; their zero loci encode respectively
-$\{k : c_{\mathrm{BP}}(k) = 0\}$ (first quadratic) and
-$\{k : 5 \, c_{\mathrm{BP}}(k) + 22 = 0\}$ (second quadratic).
+Under $H_{\mathrm{bar}}+H_{\mathrm{proj}}$, this rational function
+enters the $T$-line quartic projection.  Cross-channel terms from
+$J,G^+,G^-$ remain part of the full BP tensor.
 \end{theorem}
 
 \begin{proof}
-The $T$-generator of $\mathrm{BP}_k$ is a Virasoro sub-generator at
-central charge $c_{\mathrm{BP}}(k)$, so
-Proposition~\ref{prop:w3-tline-virasoro-inheritance} gives
-$S_3^T = 2$ and $S_4^T = 10 / [c_{\mathrm{BP}}(5 c_{\mathrm{BP}} + 22)]$.
-Substituting \eqref{eq:bp-arakawa-central-charge}:
+The identities
 \[
-c_{\mathrm{BP}}(5 c_{\mathrm{BP}} + 22)
-\;=\; \frac{-2 (12 k^2 + 23 k + 9)}{k + 3}
-\cdot
-\frac{5 \cdot (-2)(12 k^2 + 23 k + 9) + 22(k + 3)}{k + 3}.
+ c_{\mathrm{BP}}(k)=-\frac{(2k+3)(3k+1)}{k+3},
+ \qquad
+ 5c_{\mathrm{BP}}(k)+22
+ =-\frac{3(10k^2+11k-17)}{k+3}
 \]
-Expanding the second factor:
-\[
-\frac{-10(12 k^2 + 23 k + 9) + 22(k + 3)}{k + 3}
-\;=\; \frac{-120 k^2 - 230 k - 90 + 22 k + 66}{k + 3}
-\;=\; \frac{-120 k^2 - 208 k - 24}{k + 3}
-\;=\; \frac{-8 (15 k^2 + 26 k + 3)}{k + 3}.
-\]
-Therefore
-\[
-c_{\mathrm{BP}}(5 c_{\mathrm{BP}} + 22)
-\;=\; \frac{-2 (12 k^2 + 23 k + 9)}{k + 3}
-\cdot
-\frac{-8 (15 k^2 + 26 k + 3)}{k + 3}
-\;=\; \frac{16\,(12 k^2 + 23 k + 9)(15 k^2 + 26 k + 3)}{(k + 3)^2}.
-\]
-Plugging into $S_4^T$:
-\[
-S_4(\mathrm{BP}_k, T)
-\;=\; \frac{10}{c_{\mathrm{BP}}(5 c_{\mathrm{BP}} + 22)}
-\;=\; \frac{10 \, (k + 3)^2}{16\,(12 k^2 + 23 k + 9)(15 k^2 + 26 k + 3)}
-\;=\; \frac{5\,(k + 3)^2}{8\,(12 k^2 + 23 k + 9)(15 k^2 + 26 k + 3)}.
-\]
-The irreducibility of the two quadratic factors over $\mathbb{Q}$
-follows from the discriminant computations: $\mathrm{disc}(12 k^2 + 23 k + 9)
-= 23^2 - 4 \cdot 12 \cdot 9 = 529 - 432 = 97$ (non-square) and
-$\mathrm{disc}(15 k^2 + 26 k + 3) = 26^2 - 4 \cdot 15 \cdot 3 =
-676 - 180 = 496 = 16 \cdot 31$ (the $16$ is a square, but
-$\sqrt{31}$ is irrational), both giving non-square discriminants over
-$\mathbb{Q}$. They are coprime because
-\[
-(15k^2+26k+3)-\frac54(12k^2+23k+9)=-\frac{11}{4}(k+3),
-\]
-while $12(-3)^2+23(-3)+9=48\ne0$.
+give the displayed formula by multiplication.
 \end{proof}
 
-\begin{theorem}[BP $J$-line and $G^\pm$ line]
+\begin{theorem}[BP charged-line OPE packet;
+\ClaimStatusProvedElsewhere]
 \label{thm:bp-other-lines}
-\ClaimStatusProvedHere
-On the $J$-line ($u(1)$-current, conformal weight $1$) of $\mathrm{BP}_k$,
+In the FKR convention,
 \[
-S_2(\mathrm{BP}_k, J) \;=\; k + \tfrac{1}{2},
-\qquad
-S_3(\mathrm{BP}_k, J) \;=\; 0,
-\qquad
-S_4(\mathrm{BP}_k, J) \;=\; 0,
+ J_{(1)}J=\frac{2k+3}{3},
+ \qquad
+ G^+_{(2)}G^-=(k+1)(2k+3),
+ \qquad
+ G^+_{(1)}G^-=3(k+1)J,
 \]
-and the line is class G (depth $2$, Gaussian).
-
-On the mixed $G^+ \cdot G^-$ line (conformal weight $3/2$) of $\mathrm{BP}_k$,
-$S_3(\mathrm{BP}_k, G^\pm) = 0$ by fermionic anti-symmetry, and the
-line has $k$-bounded Riccati asymptotic with $\kappa_{G^\pm} = 3/2$ in
-the line normalization of Chapter~\ref{chap:shadow-tower-other-class-m-platonic}.
-This statement does not determine the quartic coefficient on the
-$G^+G^-$ bilinear line.
+and
+\[
+ G^+_{(0)}G^-
+ =3{:JJ:}+\frac{3(k+1)}2\partial J-(k+3)T.
+\]
+The reverse products follow from ordinary vertex-algebra skew
+symmetry because $G^\pm$ are even.  These relations determine the OPE
+packet.  Their bar curvature and scalar shadow require
+$H_{\mathrm{bar}}+H_{\mathrm{proj}}$.
 \end{theorem}
 
-\begin{proof}
-The $J$-current of BP has OPE $J(z) J(w) \sim (k + 1/2) / (z - w)^2$
-with no singular terms beyond the double pole, so $J_{(0)} J = 0$ and
-the cubic structure constant $S_3^J = 0$ vanishes. The recursion on the
-$J$-line then forces $S_r^J = 0$ for every $r \ge 3$, giving class G
-(depth $2$).
-
-On the $G^\pm$ line, the anti-commutator $\{G^+, G^-\}$ produces $T$
-and $J$ composites (not $G$), which forces the three-point
-$\langle G^+ | G^+ | G^+ \rangle$ to vanish (the OPE $G^+(z) G^+(w)$
-is finite by super-anti-symmetry), hence $S_3^{G^\pm} = 0$.
-The line curvature $\kappa_{G^\pm}=3/2$ is the normalized
-mixed-pair curvature used in the BP line packet of
-Chapter~\ref{chap:shadow-tower-other-class-m-platonic}; it is independent
-of the full BP modular characteristic
-$\kappa(\mathrm{BP}_k)=c_{\mathrm{BP}}(k)/6$.
-\end{proof}
-
-The line invariants in this section are not the full derived-centre
-complementarity constants. For the principal algebra,
-$\kappa(\cW_3^k)=5c(k)/6$ and
-$\kappa(\cW_3^k)+\kappa((\cW_3^k)^!)=250/3$; for the minimal
-Bershadsky--Polyakov algebra,
-$\kappa(\mathrm{BP}_k)=c_{\mathrm{BP}}(k)/6$ and
-$\kappa(\mathrm{BP}_k)+\kappa(\mathrm{BP}_{-k-6})=98/3$
-(Proposition~\ref{prop:bp-complementarity}). The $T$-, $J$-, and
-$G^\pm$-line coefficients are projections of $\Theta_{\mathrm{BP}_k}$,
-not substitutes for the full-algebra $\kappa$.
-
-\begin{corollary}[Feigin--Frenkel complementarity on BP $T$-line]
+\begin{corollary}[BP reflected central sum;
+\ClaimStatusProvedHere]
 \label{cor:bp-feigin-frenkel-complementarity}
-\ClaimStatusProvedHere
-The Feigin--Frenkel involution $k \mapsto -k - 6$ sends
-$c_{\mathrm{BP}}(k)$ to $196 - c_{\mathrm{BP}}(k)$, so the sigma-invariant
+The critical level reflection $k\mapsto-k-6$ satisfies
 \[
-\Delta^{(4)}(k)
-\;=\; S_4(\mathrm{BP}_k, T) + S_4(\mathrm{BP}_{-k - 6}, T)
+ c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
 \]
-is a rational function in $k$ symmetric under $k \mapsto -k - 6$ and
-independent of the sign choice for the Koszul-dual pairing.
+The shifted secondary expression
+$2-24(k+1)^2/(k+3)$ has reflected sum $196$ and belongs to a separate
+ledger.  The genus-one quantities
+$\kappa_{\mathrm{BP}},\varrho_{\mathrm{BP}},K^\kappa_{\mathrm{BP}}$
+remain open pending the complete minimal-DS curvature calculation.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:bp-koszul-conductor-polynomial},
-$c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k - 6) = 196$. Writing
-$c' = 196 - c$,
-\[
-\Delta^{(4)}(k) \;=\; \frac{10}{c(5c + 22)} + \frac{10}{c'(5c' + 22)}
-\;=\; \frac{10}{c(5c + 22)} + \frac{10}{(196 - c)(1002 - 5c)},
-\]
-which is manifestly symmetric under $c \mapsto 196 - c$, hence under
-$k \mapsto -k - 6$.
+Substitution into~\eqref{eq:bp-arakawa-central-charge} and cancellation
+of the common denominator gives $50$.
 \end{proof}
 
-\section{$\cW_\infty[\Psi]$: Riccati degeneration at $\Psi = 0$ and $\Psi \to \infty$}
+\section{$\mathcal W_\infty$: coordinate and projection data}
 \label{sec:w-infinity-psi-degeneration}
 
-The Linshaw universal $\cW_\infty[\Psi]$ is the two-parameter family
-interpolating the $\cW_N$ truncations via the 't Hooft-like parameter
-$\Psi$. The Fateev--Lukyanov $\alpha$ coefficient on the $W$-line
-generalizes to a $\Psi$-dependent rational function; at the endpoints
-$\Psi = 0$ and $\Psi \to \infty$ the Riccati structure degenerates.
-
-\begin{theorem}[$\cW_\infty\lbrack\Psi\rbrack$ model endpoint specialization]
+\begin{theorem}[$\mathcal W_\infty$ endpoint comparison problem;
+\ClaimStatusConditional]
 \label{thm:w-infinity-psi-degeneration}
-\ClaimStatusConditional
-Assume the $W$-line of $\cW_\infty[\Psi]$ is normalized by the
-interpolating coefficient
-$\alpha_\infty(c,\Psi)=16\Psi/[(5c+22)(\Psi+1)]$ on the non-singular
-surface $c(5c+22)(\Psi+1)\ne0$. Then
-\begin{enumerate}[label=\textup{(\alph*)},nosep]
-\item the $\Psi$-dependent OPE coefficient satisfies
- $\alpha_\infty(c, 0) = 0$ and $\lim_{\Psi \to \infty} \alpha_\infty(c, \Psi)
- = 16/(5c + 22)$ (the Fateev--Lukyanov value);
-\item the $W$-line quartic $S_4(\cW_\infty[\Psi], W)$ vanishes at
- $\Psi = 0$; since $S_3^W=0$ by parity on this line, the pure
- $W$-line has finite Gaussian depth $2$ at the endpoint;
-\item $\lim_{\Psi \to \infty} S_4(\cW_\infty[\Psi], W)(c, \Psi) =
- 2560 / [c (5c + 22)^3]$ (recovery of the $\cW_3$ $W$-line value,
- Theorem~\ref{thm:w3-w-line-s4-zamolodchikov}).
-\end{enumerate}
-In the model interpolation $\alpha_\infty(c, \Psi) = 16 \Psi /
-[(5c + 22)(\Psi + 1)]$, the $W$-line quartic takes the closed form
-\begin{equation}
-\label{eq:w-infinity-s4}
-S_4(\cW_\infty[\Psi], W)(c, \Psi)
-\;=\; \frac{2560 \, \Psi^2}{c\,(5c + 22)^3\,(\Psi + 1)^2}.
+Choose a two-parameter universal $\mathcal W$ algebra, a coordinate
+$\Psi$ on its parameter surface, and a normalized weight-three field.
+Assume a comparison map to the finite $\mathcal W_N$ truncation loci
+and a flat line projection $P_W^{(4)}$.  Then the endpoint quartic is
+the specialization
+\begin{equation}\label{eq:w-infinity-s4}
+ S_4(\mathcal W_\infty[\Psi],W)
+ :=P_{W,\Psi}^{(4)}\bigl(\Theta_{\mathcal W_\infty[\Psi]}^{(4)}\bigr).
 \end{equation}
-The theorem is the scalar specialization of the displayed
-interpolation. It does not construct Linshaw's universal algebra at the
-endpoints and does not prove that this normalization is canonical.
+Computing this function requires the coordinate conversion from
+$\Psi$ to the standard universal OPE parameter and the full
+weight-four Gram matrix.  These data constitute the endpoint
+comparison package $H_{\mathcal W_\infty}^{(4)}$.
 \end{theorem}
 
-\begin{proof}
-At $\Psi = 0$, the Linshaw universal family degenerates on this line to
-the free limit, which has no composite weight-$4$ quasi-primary on the
-$W$-line beyond the free-boson diagonal; hence $\alpha_\infty(c, 0) = 0$.
-Together with $S_3^W=0$, this gives finite depth $2$ on the pure
-$W$-line. It does not assert that the ambient algebra is class~G:
-the $T$-line remains the Virasoro class-M line when
-$c(5c+22)\ne0$. At $\Psi \to \infty$, Linshaw's
-interpolation formula recovers the finite-$N$ Fateev--Lukyanov algebra
-with $\alpha \to 16/(5c + 22)$, which matches
-Proposition~\ref{prop:fateev-lukyanov-alpha}.
-
-The intermediate formula \eqref{eq:w-infinity-s4} is obtained by
-substituting the $\Psi$-interpolated coupling into the pure-line
-contact coefficient
-\[
-Q_{WWWW}(\Psi)=Q_{TTTT}\,\alpha_\infty(c,\Psi)^2,
-\qquad
-Q_{TTTT}=\frac{10}{c(5c+22)}.
-\]
-Thus
-\[
-Q_{WWWW}(\Psi)
-=\frac{10}{c(5c+22)}
- \left(\frac{16\Psi}{(5c+22)(\Psi+1)}\right)^2
-=\frac{2560\Psi^2}{c(5c+22)^3(\Psi+1)^2}.
-\]
-The limits in (a)--(c) follow by direct evaluation: at
-$\Psi = 0$ the numerator $2560 \Psi^2 = 0$; at
-$\Psi \to \infty$ the quotient $\Psi^2 / (\Psi + 1)^2 \to 1$ and the
-full formula recovers the $\cW_3$ value.
-\end{proof}
-
-\begin{remark}[Gaberdiel--Gopakumar truncation loci]
+\begin{remark}[Finite-rank truncation]
 \label{rem:gaberdiel-gopakumar-truncation}
-The Gaberdiel--Gopakumar truncation $\cW_\infty[\Psi] \twoheadrightarrow
-\cW_N$ at $\Psi = N$ and $\Psi = -N$ is a quotient statement for the
-ambient algebra, not an automatic equality of every pure-line shadow
-coefficient. Substituting $\Psi=N$ into \eqref{eq:w-infinity-s4} gives
-the value predicted by this interpolation model; identifying it with
-the finite $\cW_N$ $W$-line coefficient requires the finite-$N$ OPE
-normalization. This is the open $\mu$-dependence problem recorded in
-Remark~\ref{rem:w-infinity-mu-dependence-open} of
-Chapter~\ref{chap:shadow-tower-other-class-m-platonic}.
+A truncation morphism of universal $\mathcal W$ algebras induces a
+line comparison after the weight-three generators and two-point forms
+are matched.  This normalization map is the first obligation in
+$H_{\mathcal W_\infty}^{(4)}$.
 \end{remark}
 
-\section{Super-Yangian $\mathfrak{gl}(1|1)$: Koszul signs on fermionic lines}
+\section{Super-Yangian $\mathfrak{gl}(1|1)$: a typed parity line}
 \label{sec:sl11-fermionic-line-sign}
 
-The super-Yangian line packet used here is the chiralized
-$Y_\hbar(\mathfrak{gl}(1|1))^{\mathrm{ch}}$ on the standard defining
-super-vector space $V=\mathbb C^{1|1}$, so
-$\mathrm{sdim}(V)=1-1=0$. It is not the corner VOA
-$Y_{1,1,1}[\Psi]$: that algebra has a Heisenberg current with
-$\kappa=\Psi$ in Chapter~\ref{chap:y-algebras}. The present section
-records only the super-Yangian line signs.
-
-\begin{theorem}[Super-Yangian $\mathfrak{gl}(1|1)$ fermionic-line sign]
+\begin{theorem}[Parity-line comparison;
+\ClaimStatusConditional]
 \label{thm:super-yangian-fermionic-line-sign}
-\ClaimStatusProvedHere
-On the $E_1$-chiral super-Yangian $Y_\hbar(\mathfrak{gl}(1|1))^{\mathrm{ch}}$:
-\begin{enumerate}[label=\textup{(\alph*)},nosep]
-\item The $T$-line (Sugawara) is degenerate: $\mathrm{sdim}(V)=0$
- forces $c_{\mathrm{aff}} = k \cdot \mathrm{sdim}(V)/(k + h^\vee) = 0$ at every
- level, hence $\kappa_T = c_{\mathrm{aff}}/2 = 0$ identically.
-\item If the fermionic line is normalized by
- $\psi(z)\psi^\ast(w)\sim -k_{\mathrm{res}}(z-w)^{-2}$, the minus sign
- is the Koszul sign of the $\mathbb Z_2$-graded contraction. One may
- absorb it into a sign convention $\kappa_\psi=-k_{\mathrm{res}}$, but
- the table below keeps the sign explicit.
-\item On the parity-even $\psi\psi^\ast$ bilinear line, the two
- anti-commuting Wick contractions occur in pairs. Their signs cancel,
- giving $S_3^{\psi\psi^\ast}=+2$ after the usual line normalization.
-\end{enumerate}
+Let $V=\mathbb C^{1|1}$ and choose a chiral realization of
+$Y_\hbar(\mathfrak{gl}(1|1))$ together with an invariant form.  The
+odd basis lines of $V$ contribute Koszul signs to ordered tensor
+permutations, while an even bilinear $\psi\psi^*$ carries the product
+of two such signs.  A numerical line curvature requires the chosen
+invariant form, the current realization, and the residue map; these
+form $H_{\mathfrak{gl}(1|1)}^{\mathrm{line}}$.
 \end{theorem}
 
-\begin{proof}
-(a) Sugawara stress-tensor construction on $\widehat{\mathfrak{gl}(1|1)}$
-at level $k$ produces $T_{\mathrm{Sug}}$ with central charge
-$c = k \cdot \mathrm{sdim}(V)/(k + h^\vee) = 0$ when
-$\mathrm{sdim}(V)=0$ for $V=\mathbb C^{1|1}$. The $T$-line curvature is then
-trivially zero.
-
-(b) The fermionic $\psi$-$\psi^\ast$ OPE on the chiral super-Yangian
-reads $\psi(z) \psi^\ast(w) \sim -k_{\mathrm{res}}(z - w)^{-2}$ in the
-line-normalized double-pole convention, with the minus sign from the
-$\mathbb{Z}_2$-graded commutator. This is the sign-reversed Wick
-convention before any autonomous-line scalar reduction is imposed.
-
-(c) On the bilinear $\psi$-$\psi^\ast$ line the three-point
-$\langle (\psi \psi^\ast) | (\psi \psi^\ast) | (\psi \psi^\ast) \rangle$
-receives two contributions: (i) Wick-contracting the first pair in
-the first bilinear with the second pair, and (ii) the reverse. Each
-contribution has a minus sign from the fermionic super-Wick
-$\psi \cdot \psi^\ast \to -k_{\mathrm{res}}$; their product is
-$k_{\mathrm{res}}^2$, and after master-equation normalization the result
-is $S_3^{\mathrm{bilinear}} = +2$. The pure $\psi$-line
-$\langle \psi | \psi | \psi \rangle$ vanishes by super-anti-symmetry.
-\end{proof}
-
-\begin{remark}[Structural consequence: fermionic lines contribute positive
-$S_3$ on bilinear lines]
+\begin{remark}[Even bilinear line]
 \label{rem:fermionic-bilinear-positive-s3}
-The cancellation of parity signs on bilinear lines means that the
-line-restricted master equation
-(Proposition~\ref{prop:shadow-tower-master-equation-classM}) has the
-same cubic sign on composite even-parity lines as on bosonic lines,
-after the effective bilinear curvature is fixed. The pure fermionic
-line carries the parity-odd vanishing $S_3^{\mathrm{pure}} = 0$.
+The bilinear $\psi\psi^*$ has even parity.  Its cubic coefficient is a
+three-point contraction in the selected realization and is therefore
+computed after the normalization in
+$H_{\mathfrak{gl}(1|1)}^{\mathrm{line}}$ has been fixed.
 \end{remark}
 
-\section{Verified denominator patterns on distinguished lines}
+\section{Exact denominator factors}
 \label{sec:denominator-pattern-hypothesis}
 
-The closed forms of Sections~\ref{sec:w3-s3-s4-closed-forms} and
-\ref{sec:bp-s3-s4-closed-forms} determine denominator patterns on the
-three line packets for which the base data are proved in this chapter.
-
-\begin{theorem}[Denominator factorization patterns on verified and
-autonomous lines]
+\begin{theorem}[OPE denominator factorization;
+\ClaimStatusProvedHere]
 \label{thm:denominator-factorization-pattern}
-\ClaimStatusConditional
-On the non-singular surfaces indicated below, and on the autonomous
-pure-$W$ scalar line where explicitly stated, the following denominator
-patterns hold for the line-restricted shadow coefficients:
-\begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item Virasoro and every inherited $T$-line:
- \[
- \mathrm{den}(S_r)=c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}.
- \]
-\item $\cW_3$ pure $W$-line: odd coefficients vanish and, for $m\ge2$,
- \[
- \mathrm{den}(S_{2m})=c^{2m-3}(5c+22)^{3m-3}.
- \]
-\item BP $T$-line: after the Arakawa substitution
- \[
- A(k)=12k^2+23k+9,\qquad B(k)=15k^2+26k+3,
- \]
- the denominator of $S_r(\mathrm{BP}_k,T)$ is
- $A(k)^{r-3}B(k)^{\lfloor(r-2)/2\rfloor}$ up to the displayed
- numerator power of $(k+3)$.
+The exact denominator factors on the present OPE surface are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $N_\Lambda=c(5c+22)/10$ for every Virasoro $T$-line;
+\item $\alpha=32/(22+5c)$ and $\alpha/2=16/(22+5c)$ for the
+ $\mathcal W_3$ $WW$ OPE;
+\item $(2k+3)(3k+1)$ and $10k^2+11k-17$ for the BP $T$-line inverse
+ norm in~\eqref{eq:bp-tline-s3-s4}.
 \end{enumerate}
+Further powers in a scalar shadow denominator arise from the inverse
+Gram matrix and the contraction graph selected by $P^{(r)}$.
 \end{theorem}
 
-\begin{proof}
-The Virasoro formula is the rational denominator pattern of
-Theorem~\ref{thm:s-r-rational-denominator-pattern}; the $\cW_3$ $T$-line
-inherits it from Proposition~\ref{prop:w3-tline-virasoro-inheritance}.
-For the pure $W$-line, Proposition~\ref{prop:w3-wline-closed-form} gives
-the displayed coefficients through $S_{10}$, and the even recursion
-uses $S_4^W=2560/[c(5c+22)^3]$ as its quartic base; each multiplication
-by another $S_4^W$ contributes three more powers of $(5c+22)$ and two
-more net powers of $c$, giving $c^{2m-3}(5c+22)^{3m-3}$.
-
-For BP, Theorem~\ref{thm:bp-t-line-rational-k} substitutes
-$c=-2A(k)/(k+3)$ and $5c+22=-8B(k)/(k+3)$ into the Virasoro $T$-line
-formula. The factors $A(k)$ and $B(k)$ are irreducible and coprime by
-the discriminant computation and the Euclidean step in the proof of
-Theorem~\ref{thm:bp-t-line-rational-k}.
-\end{proof}
-
 \begin{table}[ht]
 \centering
-\caption{Denominator exponent pattern on verified line packets.}
+\caption{Typed denominator ledger.}
 \label{tab:denominator-exponent-pattern}
 \renewcommand{\arraystretch}{1.2}
-{\small
-\begin{tabular}{|l|l|c|c|c|c|c|}
-\hline
-Algebra / line & Base data & $r = 4$ & $r = 6$ & $r = 8$ & $r = 10$ \\
-\hline
-$\mathrm{Vir}_c$ ($T$) & $(2, 1, 1)$ & $(1, 1)$ & $(3, 2)$ & $(5, 3)$ & $(7, 4)$ \\
-$\cW_3$ ($T$) & $(2, 1, 1)$ & $(1, 1)$ & $(3, 2)$ & $(5, 3)$ & $(7, 4)$ \\
-$\cW_3$ ($W$) & $(3, 3, 1)$ & $(1, 3)$ & $(3, 6)$ & $(5, 9)$ & $(7, 12)$ \\
-$\cW_N$ ($W_s$, $s \ge 3$) & line-dependent & not asserted & not asserted & not asserted & not asserted \\
-$\mathrm{BP}_k$ ($T$, in $A,B$) & Virasoro substitution & $(1, 1)$ & $(3, 2)$ & $(5, 3)$ & $(7, 4)$ \\
-\hline
+\begin{tabular}{@{}l l l@{}}
+\toprule
+Line & exact rational datum & scalar shadow status \\
+\midrule
+Virasoro/$\mathcal W_3$ $T$ & $N_\Lambda=c(5c+22)/10$ & conditional on $P_T^{(4)}$ \\
+$\mathcal W_3$ $W$ & $\alpha=32/(22+5c)$ & open four-channel contraction \\
+BP $T$ & equation~\eqref{eq:bp-tline-s3-s4} & conditional on BP projection \\
+BP $J,G^\pm$ & Theorem~\ref{thm:bp-other-lines} & open mixed-channel tensor \\
+$\mathcal W_\infty$ $W$ & universal OPE parameter & open coordinate conversion \\
+\bottomrule
 \end{tabular}
-}% end small
 \end{table}
 
-\section{Extended line census for $S_3$ and $S_4$}
+\section{Extended line census}
 \label{sec:extended-census-table}
-
-Consolidating the closed forms of Sections~\ref{sec:w3-s3-s4-closed-forms}--
-\ref{sec:sl11-fermionic-line-sign} gives the scalar line table. The
-$\cW_\infty[\Psi]$ $W$-row is conditional on the interpolation
-coefficient in Theorem~\ref{thm:w-infinity-psi-degeneration}.
 
 \begin{table}[ht]
 \centering
-\caption{Extended scalar-line shadow coefficients through $S_4$.}
+\caption{Exact line inputs and comparison obligations.}
 \label{tab:extended-shadow-census}
-\renewcommand{\arraystretch}{1.4}
-{\small
-\begin{tabular}{|l|l|c|c|c|}
-\hline
-Algebra & Line & $S_2$ ($= \kappa_\ell$) & $S_3$ & $S_4$ \\
-\hline
-$\mathrm{Vir}_c$ & stress & $c/2$ & $2$ & $10 / [c(5c + 22)]$ \\
-\hline
-$\cW_3$ & $T$ & $c/2$ & $2$ & $10 / [c(5c + 22)]$ \\
-$\cW_3$ & $W$ & $c/3$ & $0$ & $2560 / [c(5c + 22)^3]$ \\
-\hline
-$\cW_\infty[\Psi]$ & $T$ & $c/2$ & $2$ & $10 / [c(5c + 22)]$ \\
-$\cW_\infty[\Psi]$ & $W$ & $c/3$ & $0$ & $2560 \Psi^2 / [c(5c + 22)^3 (\Psi + 1)^2]$ \\
-$\cW_\infty[\Psi = 0]$ & $W$ (finite-depth line) & $c/3$ & $0$ & $0$ \\
-\hline
-$\mathrm{BP}_k$ (Arakawa) & $T$ & $-(12k^2 + 23k + 9)/(k + 3)$ & $2$ & $5(k+3)^2 / [8(12k^2+23k+9)(15k^2+26k+3)]$ \\
-$\mathrm{BP}_k$ & $J$ & $k + 1/2$ & $0$ & $0$ \\
-$\mathrm{BP}_k$ & $G^\pm$ & $3/2$ & $0$ (super-anti-sym) & open \\
-\hline
-$Y_\hbar(\mathfrak{gl}(1|1))^{\mathrm{ch}}$ & $T$ (Sugawara) & $0$ (degenerate) & undefined & undefined \\
-$Y_\hbar(\mathfrak{gl}(1|1))^{\mathrm{ch}}$ & $\psi$ & $-k_{\mathrm{res}}$ & $0$ (super-anti-sym) & not a scalar line invariant \\
-$Y_\hbar(\mathfrak{gl}(1|1))^{\mathrm{ch}}$ & $\psi\,\psi^\ast$ (bilinear) & $\kappa_{\psi\psi^\ast}$ & $+2$ & open \\
-\hline
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l p{5.2cm}@{}}
+\toprule
+Algebra/line & exact datum & remaining comparison \\
+\midrule
+$\mathcal W_3/T$ & $N_T=c/2$, $N_\Lambda=c(5c+22)/10$ & scalar quartic projection \\
+$\mathcal W_3/W$ & $N_W=c/3$, $\alpha=32/(22+5c)$ & full four-point contraction \\
+BP/$T$ & standard $c_{\mathrm{BP}}(k)$ & BP multi-channel projection \\
+BP/$J,G^\pm$ & FKR OPE packet & bar curvature and genus-one trace \\
+$\mathcal W_\infty/W$ & chosen universal OPE coordinate & endpoint normalization \\
+$Y_\hbar(\mathfrak{gl}(1|1))/\psi$ & parity and invariant-form input & chiral realization and residue map \\
+\bottomrule
 \end{tabular}
-}% end small
 \end{table}
 
 \begin{remark}[$E_1$-ordered provenance]
 \label{rem:extended-e1-ordered-provenance}
-Every entry in Table~\ref{tab:extended-shadow-census} is a
-$\Sigma_n$-coinvariant projection of the $E_1$-ordered Maurer--Cartan
-datum $\Theta_A$ on a specified generator line. It is not the algebra
-$A$, the bar coalgebra $B(A)$, the Koszul dual algebra $A^!$, or the
-derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$. Full-algebra
-complementarity uses the full modular characteristic $\kappa(A)$; the
-entries here are line restrictions $S_r(A,\ell)$.
-
-The ordered $R$-matrix on the $\cW_3$
-$W$-line (trace-form convention) reads
-\[
-r_W(z) \;=\; \frac{c/3}{z^5}
-\;+\; \frac{2 T}{z^3}
-\;+\; \frac{\partial T}{z^2}
-\;+\; \frac{(3/10) \partial^2 T + \alpha \Lambda}{z}
-\qquad (\text{plus BPZ-allowed descendants}),
-\]
-with $\alpha = 16/(5c + 22)$; the symmetric $S_r(\cW_3, W)$ values are
-its $\mathrm{av}$-map projections. The BP $T$-line $R$-matrix is
-obtained from the Virasoro $R$-matrix by Arakawa substitution
-$c \mapsto c_{\mathrm{BP}}(k)$; the $\mathrm{av}$-map commutes with
-the substitution.
+The exact OPE coefficients live at Beilinson level~$1$.  The ordered
+bar differential lives at level~$2$ and uses Fulton--MacPherson
+residues.  A line shadow is a projection of the level-$2$ or level-$3$
+Maurer--Cartan tensor.  The maps in
+$H_{\mathrm{line}}+H_{\mathrm{bar}}+H_{\mathrm{proj}}$ connect these
+three object types.
 \end{remark}
 
 \section{Remaining quartic data}
 \label{sec:extended-families-frontier}
 
-Three line-level computations remain open.
-
-\begin{remark}[BP $G^\pm$ shadow closed form -- open]
+\begin{remark}[BP $G^+G^-$ quartic projection; Open]
 \label{rem:bp-gpm-closed-form-open}
-\ClaimStatusConjectured
-What is the explicit closed form of $S_4(\mathrm{BP}_k, G^\pm)$ on the
-mixed $G^+ \cdot G^-$ line? The base triple
-$(\kappa_{G^\pm}, S_3^{G^\pm}, S_4^{G^\pm})$ is known to have
-$\kappa_{G^\pm} = 3/2$ (level-independent) and $S_3 = 0$
-(super-anti-symmetry), but the quartic $S_4$ on the bilinear
-$G^+ G^-$ composite involves the FKR structure constant
-$2 (k + 1)(2k + 3)/3$ squared plus a cross-channel contribution
-through $J$. The candidate form
-\[
-S_4(\mathrm{BP}_k, G^\pm)
-\;\stackrel{?}{=}\;
-\frac{A \cdot (k + 1)^2 (2k + 3)^2}{(k + 3)^2 \cdot (\text{FKR denominator})}
-\]
-for an integer $A$ is to be determined by direct Wick computation on
-the BP bar complex.
+The FKR products in Theorem~\ref{thm:bp-other-lines} determine the
+quadratic input.  The quartic projection requires the $JJ$, $JT$,
+$TT$, and charged channels, their Gram matrix, and the signed
+configuration-space contractions.
 \end{remark}
 
-\begin{remark}[Exact $\cW_\infty\lbrack\Psi\rbrack$ $W_s$-line for $s \ge 4$ -- open]
+\begin{remark}[$\mathcal W_\infty$ higher-spin lines; Open]
 \label{rem:w-infinity-higher-ws-open}
-\ClaimStatusConjectured
-For $s \ge 4$ the $W_s$-line of $\cW_\infty[\Psi]$ has a
-$\Psi$-dependent base quartic $S_4(\cW_\infty[\Psi], W_s)(c, \Psi)$
-whose closed form is not yet determined. The conjectural structure
-$S_4 = \mathrm{rational\ in\ } c \cdot \mathrm{rational\ in\ } \Psi$
-with the $\Psi$-factor of the form $\Psi^{s - 2}/(\Psi + 1)^{s - 2}$
-generalizing \eqref{eq:w-infinity-s4} is consistent with the
-Gaberdiel--Gopakumar truncation $\cW_\infty[\Psi] \twoheadrightarrow
-\cW_N$ at $\Psi = \pm N$ but requires independent verification by
-direct OPE calculation at the $W_s$-line base.
+For $s\ge4$, compute the normalized $W_sW_s$ OPE, match it across the
+finite-rank truncation, and construct the projection
+$P_{W_s}^{(4)}$.  These three steps determine the first higher-spin
+quartic datum.
 \end{remark}
 
-\begin{remark}[Super-Yangian $\mathfrak{gl}(m|n)$ for $m \ne n$ -- open]
+\begin{remark}[Super-Yangian $\mathfrak{gl}(m|n)$ lines; Open]
 \label{rem:super-yangian-gl-mn-open}
-\ClaimStatusConjectured
-For super-Yangians $Y_\hbar(\mathfrak{gl}(m|n))^{\mathrm{ch}}$ with
-$m \ne n$, the super-dimension $\mathrm{sdim} = m - n$ is non-zero and
-the Sugawara $T$-line is non-degenerate. The leading asymptotic of the
-$T$-line shadow at $c_{\mathrm{aff}} \to \infty$ should be identical to
-the Virasoro asymptotic $8(-6)^{r - 4}/r$
-(Corollary~\ref{cor:super-yangian-tline-asymptotic}), but the
-sub-leading corrections involve super-trace contractions that may
-produce fermionic-line contributions at weight $\ge 4$. The
-quantitative form of these sub-leading corrections is an open question,
-tied to the super-Yangian analogue of the Zamolodchikov $\Lambda$ norm
-on the bosonic diagonal.
+For $m,n\ge0$, the required inputs are a nondegenerate invariant form
+on the chosen current presentation, a parity-compatible ordered bar
+model, and a scalar trace.  Their construction determines the
+bosonic, fermionic, and mixed line curvatures.
 \end{remark}

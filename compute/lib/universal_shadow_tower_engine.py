@@ -532,7 +532,7 @@ def heisenberg(k: Union[int, Fraction]) -> ShadowTowerResult:
 
     c = 1, weights = [1], kappa = k.
     Abelian OPE: alpha = 0, S_4 = 0.  Class G.
-    K = 0 (Koszul dual H_k^! = Sym^ch(V*), same kappa).
+    K = 0 (the curved second-kind Koszul dual has the same scalar kappa).
     Single generator: delta_F_2^cross = 0.
     """
     k = Fraction(k)

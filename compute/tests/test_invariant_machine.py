@@ -402,7 +402,7 @@ class TestKoszulDualNames:
 
     def test_heisenberg_not_self_dual(self):
         pkg = ChiralInvariantMachine("Heisenberg").compute()
-        assert pkg.koszul_dual_name == "Sym^ch(V*)"
+        assert pkg.koszul_dual_name == "curved Sym^ch(V*[1])"
 
     def test_free_fermion_dual_beta_gamma(self):
         pkg = ChiralInvariantMachine("free_fermion").compute()

@@ -221,7 +221,10 @@ objects.
  +\sum_{j\ne i}\frac{\Omega_{ij}}{(k+h^\vee)(z_i-z_j)}
  \qquad\textup{\cite{KZ84,Kohno87}}.
  \]
- It is not the affine level.
+ It is not the affine level, and it is not the trace-form collision
+ residue \(k\Omega_{\mathrm{tr}}/z\).  The conversion between
+ \(r_{\mathrm{coll}}\) and \(r_{\mathrm{KZ}}\) uses the scalar
+ normalisations of Appendix~\ref{sec:scalar-normalization-appendix}.
 \item The Yangian/RTT spectral parameter \(u\) is the meromorphic
  loop/evaluation coordinate in tensors such as \(R(u)\) and \(r(u)\).
  It is not the KZ coefficient.
@@ -563,26 +566,35 @@ the successive tangent and obstruction spaces:
 
 \begin{remark}[Object firewall for deformation quantization]
 \label{rem:defq-object-firewall}
-The deformation complex above separates five objects.
+Fix a quadratic presentation $A=T_X(V)/(R)$.  The deformation complex
+above separates the following typed objects:
 \[
-A,\qquad \barB(A),\qquad A^{\mathrm i},\qquad A^!,\qquad
+A,\qquad \barB(A),\qquad
+A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+H^\bullet\barB(A),\qquad
+K_X(A)=\mathbb D_{\Ran}\barB(A),\qquad A^!,\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(A).
 \]
 Here \(A=\mathcal A_{\mathrm{cl}}\) is the coisson input,
 \(\barB(A)\) is the reduced bar coalgebra whose coderivations form the
-shifted deformation dg Lie algebra, \(A^{\mathrm i}=H^\bullet\barB(A)\)
-is the Koszul dual coalgebra when the Koszul hypotheses hold, and
-\(A^!=\mathbb D(A^{\mathrm i})\) is the Verdier-dual Koszul dual
-algebra. The derived chiral centre
+shifted deformation dg Lie algebra, and
+\[
+q_A\colon A^{\mathrm i}\to\barB(A),\qquad
+\mathbb D(q_A)\colon K_X(A)\to\mathbb D_{\Ran}(A^{\mathrm i}),
+\qquad
+\nu_A\colon K_X(A)\to A^!
+\]
+are respectively the quadratic, dual quadratic, and Koszul-pair
+comparisons.  On the Koszul locus $H^\bullet(q_A)$ identifies
+presentation-coalgebra cohomology with bar cohomology. The derived chiral centre
 \[
 Z^{\mathrm{der}}_{\mathrm{ch}}(A)
 \simeq C^\bullet_{\mathrm{ch}}(A,A)
 \]
-is the Hochschild closed-sector object. Maurer--Cartan quantization lives in
-coderivations of \(\barB(A)\); it is not an element of \(A^!\) and not
-an element of the derived centre. The equality
-\(\Omega(\barB(A))\simeq A\), when it holds, is bar--cobar inversion,
-not Koszul duality.
+is the Hochschild closed-sector object. Maurer--Cartan quantization
+lives in coderivations of~\(\barB(A)\).  The counit
+\(\Omega(\barB(A))\to A\) records bar--cobar inversion, while
+\(K_X(A)\) records Verdier duality.
 \end{remark}
 
 \subsection{Maurer--Cartan elements as quantizations}
@@ -1253,15 +1265,49 @@ quantization still requires descent and obstruction control.
 
 \subsection{Relation to quadratic duality}
 
-The quadratic-duality theorem for chiral algebras \cite{GLZ22}
-works in the quadratic operadic lane. The deformation-quantization
-construction used here works with a filtered curved bar coalgebra.
-Its chain object is \(B(\mathcal A_{\mathrm{cl}})\); its intrinsic
-dual coalgebra is \(A^{\mathrm i}=H^\bullet B(\mathcal A_{\mathrm{cl}})\)
-when the Koszul hypotheses hold; the algebra \(A^!\) appears only
-after Verdier duality on \(A^{\mathrm i}\). The cobar counit
-\(\Omega B(\mathcal A_{\mathrm{cl}})\to\mathcal A_{\mathrm{cl}}\)
-is the reconstruction map, not the dualizing operation.
+Let \(\alpha\) be an augmentation-preserving descended
+Maurer--Cartan lift and let
+\(\mathcal A_\hbar\) be the resulting complete augmented filtered
+chiral algebra.  Its full completion-aware coalgebra is
+\(B_X(\mathcal A_\hbar)\).  In the pro-nilpotent chiral Ran ambient,
+under the hypothesis package
+\(H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}\),
+Theorem~A \textup{(}Theorem~\ref{thm:mr-A}\textup{)} supplies the
+universal reconstruction counit
+\[
+ \Omegach_X B_X(\mathcal A_\hbar)
+ \xrightarrow{\;\sim\;}\mathcal A_\hbar.
+\]
+
+A chosen complete quadratic presentation
+\(\mathcal A_\hbar=T_X(V)/(R)\) supplies the quadratic coalgebra and
+comparison
+\[
+ \mathcal A_\hbar^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),
+ \qquad
+ q_{\mathcal A_\hbar}\colon
+ \mathcal A_\hbar^{\mathrm i}\longrightarrow B_X(\mathcal A_\hbar).
+\]
+Theorem~B \textup{(}Theorem~\ref{thm:mr-B}\textup{)} recognizes the
+quadratic Koszul locus by the quasi-isomorphism property of this map,
+equivalently by the adjoint map
+\(\Omega_X(\mathcal A_\hbar^{\mathrm i})\to\mathcal A_\hbar\) and
+the two acyclic twisted tensor products, under
+\(H_{\mathrm{CL}}(\mathcal A_\hbar,
+\mathcal A_\hbar^{\mathrm i},\tau_{\mathrm i})\).  This is the
+quadratic operadic lane of~\cite{GLZ22}.  On the dualizable Ran locus,
+Verdier duality forms the algebra
+\(\mathcal A_\hbar^!=\mathbb D_{\Ran}
+(\mathcal A_\hbar^{\mathrm i})\).
+
+For a fixed complete chiral CDG-coalgebra~\(C\), the Positselski
+fixed-coalgebra lane~\cite{Positselski11} and the package
+\(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)\) supply the
+second-kind co--contra equivalence of
+Proposition~\ref{prop:mr-fixed-C-second-kind}.  A comparison from~\(C\)
+to an algebra~\(A\) through a twisting morphism~\(\tau\colon C\to A\)
+uses the additional package
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)\).
 
 \subsection{Connection to Ayala--Francis}
 
@@ -1278,34 +1324,59 @@ functor itself.
 
 \section{Connection to the main theorems}
 
-\begin{remark}[Main theorems for deformation quantization]
+\begin{remark}[Typed theorem interfaces for deformation quantization;
+\ClaimStatusConditional]
 \label{rem:deformation-three-theorems}
 \index{main theorems!deformation quantization}
-The local Kontsevich--chiral comparison realizes the genus-$0$ disk
-face of Theorem~A
-(Theorem~\ref{thm:bar-cobar-isomorphism-main})
-in the deformation-quantization setting:
-the bar construction on $\mathcal{A}_{\mathrm{cl}}$ via configuration
-space residues produces the local Maurer--Cartan coefficients whose
-cobar reconstruction is the filtered OPE
-(Theorem~\ref{thm:chiral-kontsevich}).
-The bridge from Kontsevich weights to chiral propagators is
-provided by the geometric--operadic comparison
-(Theorem~\ref{thm:geometric-equals-operadic-bar}).
-The local formality theorem (Theorem~\ref{thm:chiral-formality}) shows
-that, on the formal disk at genus~$0$, the deformation complex is
-identified with its polyvector model. It does not assert global
-higher-genus formality.
+Choose an augmentation-preserving descended Maurer--Cartan
+lift~\(\alpha\) and write
+\(\mathcal A_\hbar\) for its complete augmented filtered chiral
+algebra.  The local Kontsevich--chiral comparison
+\textup{(}Theorem~\ref{thm:chiral-kontsevich}\textup{)} identifies the
+disk boundary-factorisation identities defining~\(\alpha\) with the
+corresponding components of the completed chiral bar coderivation.
+The geometric--operadic comparison
+\textup{(}Theorem~\ref{thm:geometric-equals-operadic-bar}\textup{)}
+transports this disk model to the operadic bar construction.  In the
+pro-nilpotent chiral Ran ambient, under
+\(H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}\), Theorem~A
+\textup{(}Theorem~\ref{thm:mr-A}\textup{)} then
+gives the completion-aware universal reconstruction
+\[
+ \Omegach_X B_X(\mathcal A_\hbar)
+ \xrightarrow{\;\sim\;}\mathcal A_\hbar.
+\]
 
-Theorems~B and~C (Theorems~\ref{thm:higher-genus-inversion}
-and~\ref{thm:quantum-complementarity-main}) address the
-higher-genus extension. The open mathematical condition in
-\S\ref{sec:open-questions} is the existence of a log-FM modular
-\(L_\infty\) comparison whose finite-window quotients are compatible
-with Theorem~B's completed bar-cobar inversion and Theorem~C's
-Verdier complementarity. Bar-cobar inversion reconstructs the boundary
-algebra; it does not by itself transport the polyvector formality model
-or define the Koszul dual algebra.
+For a chosen complete quadratic presentation, Theorem~B
+\textup{(}Theorem~\ref{thm:mr-B}\textup{)} recognizes its Koszul locus
+through
+\[
+ q_{\mathcal A_\hbar}\colon
+ \mathcal A_\hbar^{\mathrm i}\longrightarrow B_X(\mathcal A_\hbar)
+\]
+and the package
+\(H_{\mathrm{CL}}(\mathcal A_\hbar,
+\mathcal A_\hbar^{\mathrm i},\tau_{\mathrm i})\).
+The higher-genus inversion theorem
+\textup{(}Theorem~\ref{thm:higher-genus-inversion}\textup{)} supplies
+the genus-wise modular realization of the reconstruction counit of
+Theorem~A under the modular pre-Koszul package~\(\mathrm{MK1--MK3}\).
+Theorem~C
+\textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}
+supplies the Verdier eigenspace decomposition under its represented
+involution package~\(\mathrm C_1\).  For a fixed chiral
+CDG-coalgebra~\(C\), Proposition~\ref{prop:mr-fixed-C-second-kind}
+supplies the independent second-kind co--contra equivalence under
+\(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)\); an algebra
+comparison through~\(\tau\colon C\to A\) uses
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)\).
+
+The local formality theorem \textup{(}Theorem~\ref{thm:chiral-formality}\textup{)}
+identifies the genus-$0$ disk deformation complex with its polyvector
+model.  The open higher-genus obligation in
+\S\ref{sec:open-questions} is a log-FM modular \(L_\infty\)
+comparison compatible with these four typed interfaces on every
+finite window.
 \end{remark}
 
 \section{Explicit Kontsevich weights via configuration space integrals}
@@ -2099,11 +2170,13 @@ The Jacobi Taylor data of \S\ref{sec:jacobi-coalgebra} describes the
 singularity of a map germ $F\colon (\mathbb{A}^n, p) \to
 (\mathbb{A}^r, 0)$. When $F$ arises as the gradient of a
 \emph{superpotential}, the story acquires a second character: the
-bulk algebra of the Landau--Ginzburg model is identified with
-functions on the \emph{derived critical locus}. The simplest case
-is the \emph{boundary-linear} superpotential $W(x,y) = \langle y,
-F(x) \rangle$, for which the identification is a direct consequence
-of the Hochschild--Kostant--Rosenberg theorem for dg algebras.
+algebraic closed-sector algebra of the Landau--Ginzburg model is
+identified with functions on the \emph{derived critical locus}. Its
+physical-bulk reading requires the Landau--Ginzburg open/closed
+comparison. The simplest case is the \emph{boundary-linear}
+superpotential $W(x,y) = \langle y, F(x) \rangle$, for which the
+closed-sector identification is a direct consequence of the
+Hochschild--Kostant--Rosenberg theorem for dg algebras.
 
 \subsection{The boundary algebra}
 
@@ -2633,18 +2706,37 @@ the Jacobi coalgebra of~$F$ via the cobar construction.
 
 The required higher-genus formality input is a Kontsevich-type
 \(L_\infty\) quasi-isomorphism on log-FM compactified configuration
-spaces over \(\overline{\mathcal M}_{g,n}\) for \(g\geq2\). Such a
-theorem must
-control four independent structures: the completed bar-cobar inversion
-of Theorem~B, the bar-dual coalgebra \(A^i\), the Verdier/Koszul
-dual \(A^!\) on the modular Koszul locus, and the complementarity
-eigenspace of Theorem~C.
+spaces over \(\overline{\mathcal M}_{g,n}\) for \(g\geq2\).  Its
+compatibility package has five independent clauses:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completion-aware universal unit and counit of Theorem~A
+ \textup{(}Theorem~\ref{thm:mr-A}\textup{)} in the pro-nilpotent
+ chiral Ran ambient and every modular finite window under
+ \(H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}\);
+\item for each chosen quadratic presentation, the comparison
+ \[
+ q_A\colon A^{\mathrm i}\longrightarrow B_X(A)
+ \]
+ and the quadratic recognition package~\(H_{\mathrm{CL}}\) of
+ Theorem~B \textup{(}Theorem~\ref{thm:mr-B}\textup{)};
+\item the Verdier/Koszul algebra
+ \(A^!=\mathbb D_{\Ran}(A^{\mathrm i})\) on the dualizable modular
+ Koszul locus;
+\item for each fixed complete chiral CDG-coalgebra~\(C\), the
+ second-kind co--contra equivalence under
+ \(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co-ctr}}(C)\), together with
+ \(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)\) whenever a
+ twisting morphism compares~\(C\) with~\(A\);
+\item the complementarity eigenspace of Theorem~C
+ \textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}
+ under its represented-involution package~\(\mathrm C_1\).
+\end{enumerate}
 
-The remaining open mathematical condition is the chain-level bridge from those
-higher-genus structures back to the explicit weights that appear at
-genus~$0$: higher-genus analogues of the Stokes identities and
-factorization relations for Kontsevich weights, compatible with the
-completed modular bar construction.
+The open proof obligation is the chain-level bridge from these
+higher-genus structures to the explicit genus-$0$ weights: a system
+of higher-genus Stokes identities and factorization relations for
+Kontsevich weights compatible with the completed modular bar
+construction and with all five clauses above.
 
 \section{Synthesis}
 \label{sec:defq-supplement}
@@ -2666,8 +2758,10 @@ quasi-Hopf-type data;
 choice of Drinfeld associator control monodromy and braided tensor
 coherence;
 \item the Etingof--Kazhdan quantization functor, which is an
-\(\hbar\)-adic quantization theorem for Lie bialgebras after choosing
-an associator;
+\(\hbar\)-adic quantization theorem only after specifying the source
+Lie bialgebra \((\mathfrak g,\delta)\), its completed/pro-nilpotent
+topology, a Drinfeld associator \(\Phi\), and the target
+QUE/quasi-Hopf category;
 \item the chiral Maurer--Cartan deformation object
 \(\Def_{\mathrm{ch}}(\cA_{\mathrm{cl}})[[\hbar]]\), whose MC elements
 are filtered chiral products with fixed associated graded;
@@ -3129,7 +3223,8 @@ additional hypotheses:
 \end{enumerate}
 If such a specialization exists and its first-order class is
 \(\delta_{\mathrm{GN}}\), then it has the same first-order direction as
-the corresponding formal EK quantization. Identifying the full formal
+the corresponding formal EK quantization for the specified completed
+Lie bialgebra, associator, topology, and quasi-Hopf target. Identifying the full formal
 gauge class still requires the rigidity hypothesis stated in
 Theorem~\ref{thm:defq-kazhdan-classical-limit}. The theorem does not
 assert convergence of the full BKM Kontsevich series.
@@ -3292,7 +3387,8 @@ independent inputs.
 The Lusztig value $\hbar^2=-1/8$ belongs to the integral-form and
 root-of-unity side of the K3 construction. Kontsevich formality and
 Etingof--Kazhdan quantization are formal \(\hbar\)-adic theorems at
-\(\hbar=0\). Connecting the formal neighbourhood to the Lusztig point
+\(\hbar=0\), after their source, completion topology, associator, and
+target categories have been fixed. Connecting the formal neighbourhood to the Lusztig point
 requires an independent specialization theorem; motivic Galois
 equivariance of associator coefficients does not provide it.
 \end{remark}

@@ -1,24 +1,31 @@
-"""Shadow channel decomposition: multi-channel shadow obstruction tower.
+"""Strict shadow channel decomposition and diagonal diagnostics.
 
-Proves and computes: the shadow obstruction tower of ANY modular Koszul
-chiral algebra decomposes into independent one-channel towers.
+This module models the strict diagonal lane of
+thm:shadow-channel-decomposition.  It does not promote arbitrary
+multi-channel modular Koszul chiral algebras to product-form
+one-channel towers.
 
-Key theorem (thm:shadow-channel-decomposition):
-  For A with dim H²_cyc = r, the shadow obstruction tower splits:
-    Θ_A = Σ_{i=1}^r κ_i · Θ_{η_i}
-  where each Θ_{η_i} is an independent one-channel tower satisfying
-  the MC equation [d_0, Θ_{η_i}] + ½[Θ_{η_i}, Θ_{η_i}] = 0.
+Key theorem surface (thm:shadow-channel-decomposition):
+  Under the strict channel-decoupling package H_SCD, the diagonal tower
+  splits as
+    Θ_A^diag = Σ_{i=1}^r κ_i · Θ_{η_i},
+  with each Θ_{η_i} satisfying its MC equation inside the corresponding
+  completed idempotent factor.
 
-Two cases:
-  (a) Non-abelian OPE → dim H²_cyc = 1 (Level 2 bootstrap). Trivially decomposed.
-  (b) Abelian OPE → all Gerstenhaber brackets vanish (ChirHoch³ = 0).
-      MC equation decouples. Each channel evolves independently.
+Outside H_SCD, the all-weight tower has a mixed component
+    Θ_A = Σ_i κ_i Θ_{η_i} + Θ_A^mix,
+whose scalar trace is the cross-channel correction δF_g^cross(A).
+
+The non-abelian/abelian dichotomy supplies examples only:
+  (a) Non-abelian OPE may force dim H²_cyc = 1 on the bootstrap lane.
+  (b) Abelian primary brackets do not by themselves kill transferred
+      higher brackets or mixed stable-graph terms.
 
 New computations:
   1. Multi-channel shadow algebra for rank-2 Heisenberg
-  2. Genus-1 multi-channel propagation
-  3. Cross-channel quartic contact invariant (vanishes for abelian)
-  4. Verification that non-abelian W₃ doesn't decouple (it's already one-channel)
+  2. Genus-1 diagonal multi-channel propagation
+  3. Primary quartic contact diagnostic (distinct from stable-graph mixing)
+  4. Verification that one-channel non-abelian examples have no mixed channel
 
 Mathematical reference: Theorem thm:shadow-channel-decomposition in
 higher_genus_modular_koszul.tex.
@@ -50,16 +57,19 @@ class MultiChannelShadow:
     """
 
     def __init__(self, dim_h2: int, is_abelian: bool,
-                 kappa_values: List[float] = None):
+                 kappa_values: List[float] = None,
+                 strict_channel_decoupled: bool = False):
         """
         Args:
             dim_h2: dimension of H²_cyc
             is_abelian: whether the OPE is abelian
             kappa_values: the scalar traces κ_i = tr(η_i) for each channel
+            strict_channel_decoupled: whether H_SCD is supplied
         """
         self.r = dim_h2
         self.is_abelian = is_abelian
         self.kappa = kappa_values or [1.0] * dim_h2
+        self.strict_channel_decoupled = strict_channel_decoupled or dim_h2 == 1
 
     @property
     def n_cubic_shadows(self) -> int:
@@ -70,7 +80,11 @@ class MultiChannelShadow:
 
     @property
     def n_quartic_shadows(self) -> int:
-        """Number of independent quartic shadow components."""
+        """Number of primary quartic contact components.
+
+        Stable-graph mixed corrections are not counted here; those live in
+        Θ_A^mix and δF_g^cross outside the strict diagonal lane.
+        """
         if self.is_abelian:
             return 0
         # Symmetric tensor: dim S⁴(ℂ^r) for the quartic part
@@ -97,9 +111,10 @@ class MultiChannelShadow:
         return 0.0
 
     def quartic_contact(self, i: int, j: int) -> float:
-        """The quartic contact invariant Q_{ij} = η_i · η_j in A^sh_{4,0}.
+        """The primary quartic contact invariant Q_{ij} = η_i · η_j.
 
-        For abelian: Q_{ij} = 0 (no contact structure).
+        For abelian primary OPEs: Q_{ij} = 0 (no primary contact structure).
+        This is not a statement about completed mixed stable-graph terms.
         For one-channel non-abelian: Q_{11} = Q_contact (e.g., 10/[c(5c+22)] for Vir).
         """
         if self.is_abelian:
@@ -113,26 +128,28 @@ class MultiChannelShadow:
         return sum(self.kappa)
 
     def genus_g_shadow(self, g: int) -> np.ndarray:
-        """The genus-g shadow vector Θ^(g) = Σ_i κ_i · η_i^(g).
+        """The strict diagonal genus-g shadow vector Θ^(g) = Σ_i κ_i · η_i^(g).
 
         Returns a vector of length r, representing the r-channel shadow at genus g.
-        For abelian algebras: Θ^(g) = diag(κ_1, ..., κ_r) · λ_g.
-        Each channel is independent.
+        Off the strict diagonal lane, add Θ_A^mix and δF_g^cross.
         """
         return np.array(self.kappa) * 1.0  # * lambda_g (tautological class)
 
     def verify_channel_independence(self) -> bool:
-        """Verify that channels evolve independently.
+        """Verify that channels evolve independently under H_SCD.
 
         This holds when:
-        (a) All Gerstenhaber brackets [η_i, η_j] = 0 (abelian case), OR
-        (b) r = 1 (one-channel)
+        (a) r = 1 (one-channel), or
+        (b) the strict channel-decoupling package H_SCD is supplied.
+
+        Abelian primary OPEs alone are not sufficient: transferred higher
+        brackets and mixed stable-graph terms may still contribute.
 
         Returns True if channels are independent.
         """
         if self.r == 1:
             return True
-        if self.is_abelian:
+        if self.strict_channel_decoupled:
             return True
         # Multi-channel non-abelian: brackets might not vanish
         return False
@@ -286,7 +303,8 @@ class HeisenbergShadow:
 
 def abelian_dichotomy_test(ope_bracket_nonzero: bool,
                            dim_v_prim: int,
-                           m_prim_rank: int) -> Dict:
+                           m_prim_rank: int,
+                           strict_channel_decoupled: bool = False) -> Dict:
     """Test the non-abelian/abelian dichotomy.
 
     Theorem (non-abelian/abelian dichotomy):
@@ -294,10 +312,9 @@ def abelian_dichotomy_test(ope_bracket_nonzero: bool,
       - If OPE is non-abelian (some φ_i_{(0)}φ_j ≠ 0):
         M_prim is generically injective → one-channel (Level 2)
       - If OPE is abelian (all φ_i_{(0)}φ_j = 0):
-        M_prim = 0 → multi-channel, channels independent
+        M_prim = 0 → multi-channel diagonal primary data
 
-    In both cases, the shadow obstruction tower decomposes into independent
-    one-channel towers.
+    Independent one-channel towers require H_SCD in the multi-channel case.
     """
     if ope_bracket_nonzero:
         # Non-abelian: bootstrap kills primitives
@@ -316,9 +333,18 @@ def abelian_dichotomy_test(ope_bracket_nonzero: bool,
             'type': 'abelian',
             'dim_H2_cyc': 1 + dim_v_prim,
             'one_channel': (dim_v_prim == 0),
-            'channels_independent': True,
+            'channels_independent': strict_channel_decoupled or dim_v_prim == 0,
             'cubic_shadow_structure': 'C = 0 (all brackets vanish)',
-            'shadow_tower': 'terminates at arity 2 per channel',
+            'shadow_tower': (
+                'strict diagonal one-channel factors'
+                if strict_channel_decoupled or dim_v_prim == 0
+                else 'diagonal primary data plus possible mixed transferred terms'
+            ),
+            'mixed_terms_status': (
+                'assumed zero by H_SCD'
+                if strict_channel_decoupled or dim_v_prim == 0
+                else 'not killed by abelian primary brackets alone'
+            ),
         }
 
 
@@ -327,12 +353,12 @@ def abelian_dichotomy_test(ope_bracket_nonzero: bool,
 # ========================================================================
 
 def genus1_multichannel_propagation(kappa_matrix: np.ndarray) -> Dict:
-    """Compute the genus-1 multi-channel shadow propagation.
+    """Compute the genus-1 strict diagonal multi-channel propagation.
 
     For a multi-channel algebra with r channels and κ-matrix K:
     - The genus-1 shadow is Θ^(1) = K · λ_1
     - The curvature is d²_fib = tr(K) · ω_1 · id
-    - Each channel contributes K_{ij} · λ_1 independently
+    - Each strict diagonal channel contributes K_{ij} · λ_1
 
     The separating clutching (genus 1 = genus 0 + genus 1):
     - ξ_sep^*(Θ^(1)) = Θ^(0) ⋆ Θ^(1) = K · (propagator)
@@ -341,7 +367,7 @@ def genus1_multichannel_propagation(kappa_matrix: np.ndarray) -> Dict:
     - ξ_ns^*(Θ^(1)) = Δ_ns(Θ^(0)) = tr(K) · (sewing kernel)
     - The trace appears because the non-separating sewing contracts an index
 
-    Key result: the non-separating sewing ONLY sees the trace tr(K),
+    Key diagonal-lane result: the non-separating sewing sees the trace tr(K),
     while the separating sewing sees the full matrix K. This means:
     - The scalar shadow (arity 2, genus 1) is tr(K) · λ_1
     - The channel-resolved shadow is K_{ij} · λ_1
@@ -369,6 +395,7 @@ def genus1_multichannel_propagation(kappa_matrix: np.ndarray) -> Dict:
         'ns_contribution': ns_contribution,
         'sep_contribution': sep_contribution,
         'channels_independent': True,
+        'mixed_terms_status': 'strict diagonal projection; add δF_g^cross off H_SCD',
         'trace_controls_curvature': True,
     }
 
@@ -395,9 +422,10 @@ def genus2_multichannel_clutching(kappa_matrix: np.ndarray) -> Dict:
     For abelian: Δ_ns(η_ij) = δ_ij · (ns-kernel), so only diagonal channels survive.
     Θ^(2)|_{δ_0} = tr(K) · (ns-kernel)
 
-    Key result: at genus 2, the separating clutching sees K² (matrix product),
-    while the non-separating clutching sees tr(K). The channel structure propagates
-    through matrix multiplication at separating boundaries.
+    Key strict-diagonal result: at genus 2, the separating clutching sees K²
+    (matrix product), while the non-separating clutching sees tr(K).  Off the
+    strict diagonal lane, this scalar diagnostic must be supplemented by
+    δF_2^cross.
     """
     r = kappa_matrix.shape[0]
     total_kappa = np.trace(kappa_matrix)
@@ -431,7 +459,7 @@ def genus2_multichannel_clutching(kappa_matrix: np.ndarray) -> Dict:
 # ========================================================================
 
 def cauchy_schwarz_shadow(kappa_matrix: np.ndarray) -> Dict:
-    """The Cauchy-Schwarz inequality for the shadow algebra.
+    """The Cauchy-Schwarz diagnostic for the strict diagonal shadow lane.
 
     For a multi-channel algebra with κ-matrix K:
         tr(K²) ≤ tr(K)²
@@ -440,7 +468,7 @@ def cauchy_schwarz_shadow(kappa_matrix: np.ndarray) -> Dict:
     some vector v, which means the algebra is effectively one-channel
     up to a change of basis).
 
-    This is a GENUINE invariant of the multi-channel structure:
+    This is a diagnostic of the diagonal multi-channel structure:
     - One-channel: tr(K²) = tr(K)² = κ² (equality)
     - Multi-channel: tr(K²) < tr(K)² (strict inequality)
 
@@ -449,15 +477,16 @@ def cauchy_schwarz_shadow(kappa_matrix: np.ndarray) -> Dict:
     - ρ = 1: effectively one-channel
     - ρ = 1/r: maximally spread (all channels equal)
 
-    At genus 2, the separating clutching gives a shadow proportional to K².
-    The trace tr(K²) appears in the genus-2 complementarity relation.
+    Under H_SCD, the genus-2 separating diagonal trace is proportional to K².
+    The trace tr(K²) appears in the diagonal part of the genus-2 relation.
     The inequality tr(K²) ≤ κ² means the genus-2 complementarity
     "loses information" compared to genus 1 — the off-diagonal channels
     contribute less than the diagonal ones.
 
-    This is the SHADOW CAUCHY-SCHWARZ INEQUALITY:
+    This is the strict diagonal SHADOW CAUCHY-SCHWARZ diagnostic:
         Q_2(A) ≤ Q_1(A)²
-    with equality iff A is one-channel.
+    with equality iff A is one-channel on the diagonal lane.  It is not the
+    full genus-2 complementarity formula when δF_2^cross is present.
     """
     r = kappa_matrix.shape[0]
     total_kappa = np.trace(kappa_matrix)

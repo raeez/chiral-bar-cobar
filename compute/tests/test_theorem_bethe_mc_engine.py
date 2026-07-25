@@ -111,7 +111,7 @@ class TestMCElement:
             assert abs(evals_sorted[i] - 0.5) < 1e-12
 
     def test_collision_residue_form(self):
-        """r(z) = Omega/z is a 4x4 matrix for any z != 0."""
+        """At default k=1, r_k(z) = k*Omega/z is a 4x4 matrix."""
         mc = MCElementData()
         r = collision_residue_sl2(mc)
         R = r(1.0)
@@ -120,12 +120,18 @@ class TestMCElement:
         assert np.allclose(R, mc.casimir_fund)
 
     def test_collision_residue_pole(self):
-        """r(z) ~ Omega/z: the residue at z=0 is Omega (AP19)."""
+        """At default k=1, r_k(z) ~ Omega/z and the residue is Omega."""
         mc = MCElementData()
         r = collision_residue_sl2(mc)
         # z * r(z) -> Omega as z -> 0
         for z in [0.1, 0.01, 0.001]:
             assert np.allclose(z * r(z), mc.casimir_fund, atol=1e-10)
+
+    def test_trace_form_level_zero_vanishes(self):
+        """Trace-form affine Bethe residue vanishes at level k=0."""
+        mc = MCElementData(level=0.0)
+        r = collision_residue_sl2(mc)
+        assert np.allclose(r(1.0), np.zeros((4, 4)))
 
 
 # ============================================================================

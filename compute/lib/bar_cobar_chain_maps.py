@@ -1,7 +1,12 @@
-"""Explicit chain maps for the bar-cobar quasi-isomorphism Omega(B(A)) -> A.
+"""Exact finite windows of the associative bar--cobar counit.
 
-Makes Theorem B (bar-cobar inversion on the Koszul locus) COMPUTATIONAL
-by constructing the actual chain maps, not just proving their existence.
+``FiniteOmegaBarComplex`` constructs the quotient of
+``Omega(B(A)) = T(s overline{B}(A))`` with total bar length at most ``P`` and
+cobar tensor length at most ``Q``.  Every bar word of lengths ``1, ..., P``
+that occurs in this window is present.  The matrices contain the internal
+differential of ``A``, the bar multiplication differential, and the cobar
+deconcatenation differential.  All ranks and homology dimensions are computed
+over ``QQ``.
 
 The key objects:
 1. Bar construction B(A) = (T^c(s^{-1}A_bar), d_B)
@@ -9,19 +14,20 @@ The key objects:
    - d_B = d_1 (internal) + d_2 (from multiplication)
    - d_B^2 = 0 when m_2 is associative
 
-2. Cobar construction Omega(C) = (T(s^{-1}C_bar), d_Omega)
-   - Free tensor algebra on desuspension of coaugmentation coideal
+2. Cobar construction Omega(C) = (T(s C_bar), d_Omega)
+   - Free tensor algebra on the suspension of the coaugmentation coideal
    - d_Omega = d_1 (internal) + d_2 (from comultiplication)
 
-3. Bar-cobar composition Omega(B(A))
-   - Free algebra on desuspension of bar elements
-   - Bigraded: (cobar tensor degree, bar tensor degree)
-   - Total differential from both bar and cobar structure
+3. Finite bar--cobar window
+   - A basis vector is a tuple of nonempty bar words
+   - Total bar length and cobar tensor length are recorded separately
+   - The total differential changes either bar length or cobar length
 
-4. Counit psi: Omega(B(A)) -> A
-   - The universal twisting morphism
-   - psi = augmentation: projects onto cobar degree 1, bar degree 1
-   - Quasi-isomorphism on Koszul locus (Theorem B)
+4. Counit epsilon: Omega(B(A)) -> A
+   - epsilon sends the cobar unit to the algebra unit
+   - epsilon sends ``s[s^{-1}a]`` to ``a``
+   - multiplicativity sends a tuple of length-one bar words to the product in A
+   - a cobar generator arising from a longer bar word maps to zero
 
 5. Twisting morphism tau: B(A) -> A
    - tau(s^{-1}a) = a on bar degree 1, zero elsewhere
@@ -29,7 +35,7 @@ The key objects:
 
 CONVENTIONS (from CLAUDE.md):
   - Cohomological grading, |d| = +1
-  - Bar uses DESUSPENSION (s^{-1} in bar construction)
+  - Bar uses desuspension ``s^{-1}``; cobar uses suspension ``s``
   - Koszul sign: swapping degree p and q elements gives (-1)^{pq}
   - A: algebra, B(A): bar coalgebra, A^i = H*(B(A)): dual coalgebra
   - A^! = (A^i)^v: Koszul dual algebra (VERDIER duality, not cobar)
@@ -46,9 +52,30 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from itertools import product as cartprod
 from math import factorial
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 from sympy import Matrix, Rational, Symbol, simplify, zeros, eye, Integer
+
+
+FINITE_CALCULATION_STATUS = "computed finite truncation"
+CONVERGENCE_STATUS = "unresolved beyond finite truncation"
+
+
+def finite_calculation_state(max_bar_length: int, max_cobar_length: int) -> Dict[str, object]:
+    """Describe the mathematical scope of a finite bar--cobar calculation."""
+    return {
+        "calculation_status": FINITE_CALCULATION_STATUS,
+        "convergence_status": CONVERGENCE_STATUS,
+        "computed_object": (
+            "Omega(B(A)) with total bar length <= "
+            f"{max_bar_length} and cobar length <= {max_cobar_length}"
+        ),
+        "global_quasi_isomorphism": "unresolved",
+        "remaining_convergence_obligation": (
+            "identify the P,Q -> infinity filtered object with the chosen completed "
+            "Omega(B(A)) and justify passage of cohomology through that limit"
+        ),
+    }
 
 
 # ============================================================================
@@ -150,20 +177,22 @@ def dual_numbers_dga() -> AugDGA:
 
 
 def matrix_2x2_upper_dga() -> AugDGA:
-    """Upper triangular 2x2 matrices as a dga. Basis: e_11, e_12, e_22.
+    """Upper triangular ``2 x 2`` matrices with a chosen augmentation.
 
-    e_11*e_11 = e_11, e_11*e_12 = e_12, e_12*e_22 = e_12, e_22*e_22 = e_22.
-    Others = 0 (e_12*e_12 = 0, etc.)
-    Augmentation: e_ij -> delta_{ij}? We use the path algebra viewpoint.
+    Basis: ``1, p=e_11, u=e_12``; then ``e_22=1-p``.  The augmentation is
+    the lower diagonal character, so ``p`` and ``u`` span its kernel.
     """
     dim = 3
     degrees = [0, 0, 0]
     diff = zeros(3, 3)
     mult: Dict[Tuple[int, int], Dict[int, Rational]] = {
-        (0, 0): {0: Rational(1)},  # e_11^2 = e_11
-        (0, 1): {1: Rational(1)},  # e_11*e_12 = e_12
-        (1, 2): {1: Rational(1)},  # e_12*e_22 = e_12
-        (2, 2): {2: Rational(1)},  # e_22^2 = e_22
+        (0, 0): {0: Rational(1)},
+        (0, 1): {1: Rational(1)},
+        (1, 0): {1: Rational(1)},
+        (0, 2): {2: Rational(1)},
+        (2, 0): {2: Rational(1)},
+        (1, 1): {1: Rational(1)},  # p^2 = p
+        (1, 2): {2: Rational(1)},  # p u = u
     }
     return AugDGA(dim, degrees, diff, mult, name="UT_2")
 
@@ -221,27 +250,24 @@ def lie_sl2_as_assoc() -> AugDGA:
 
 
 def polynomial_with_diff() -> AugDGA:
-    """k[x] / (x^3) with differential d(x) = x^2, |x| = 0, |x^2| = 1.
+    """A contractible square-zero pair adjoining the unit.
 
-    Basis: {1 (deg 0), x (deg 0), x^2 (deg 1)}.
-    d(1) = 0, d(x) = x^2, d(x^2) = 0.
-    d^2 = 0 since d(x^2) = 0.
-    Leibniz: d(x*x) = d(x)*x + x*d(x) = x^2*x + x*x^2 = 0 + 0 = 0. OK since x^3 = 0.
+    Basis: ``1`` in degree ``0``, ``x`` in degree ``0``, and ``y`` in degree
+    ``1``.  The differential is ``d(x)=y``.  Products inside the augmentation
+    ideal vanish, while the unit acts strictly.
     """
     dim = 3
     degrees = [0, 0, 1]
     diff = zeros(3, 3)
-    diff[2, 1] = Rational(1)  # d(x) = x^2
+    diff[2, 1] = Rational(1)  # d(x) = y
     mult: Dict[Tuple[int, int], Dict[int, Rational]] = {
         (0, 0): {0: Rational(1)},
         (0, 1): {1: Rational(1)},
         (1, 0): {1: Rational(1)},
         (0, 2): {2: Rational(1)},
         (2, 0): {2: Rational(1)},
-        (1, 1): {2: Rational(1)},  # x*x = x^2
-        # x*x^2 = x^3 = 0, x^2*x = 0, x^2*x^2 = 0
     }
-    return AugDGA(dim, degrees, diff, mult, name="k[x]/(x^3)_with_d")
+    return AugDGA(dim, degrees, diff, mult, name="k + (x -> y), I^2=0")
 
 
 # ============================================================================
@@ -313,10 +339,11 @@ class BarConstruction:
           = sum_{p=1}^{n-1} (-1)^{eps_p}
             [s^{-1}a_1|...|s^{-1}(a_p*a_{p+1})|...|s^{-1}a_n]
 
-        where eps_p = sum_{q=1}^{p-1} |s^{-1}a_q|
-        = sum_{q=1}^{p-1} (|a_q| - 1).
+        where eps_p = sum_{q=1}^{p} |s^{-1}a_q|
+        = sum_{q=1}^{p} (|a_q| - 1), including the left input of the
+        multiplication at position ``p``.
 
-        For generators all in degree 0: eps_p = -(p-1), so sign = (-1)^{p-1}.
+        For generators all in degree 0, the signs begin ``-1,+1,-1,...``.
 
         Returns matrix (dim B^{n-1}) x (dim B^n).
 
@@ -343,9 +370,9 @@ class BarConstruction:
         for col_idx, multi in enumerate(source):
             for p in range(n - 1):
                 # Koszul sign for the bar differential
-                # eps = sum of |s^{-1}a_q| for q < p (0-indexed)
-                # For degree-0 generators: |s^{-1}a_q| = -1, so eps = -p.
-                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                # The shifted multiplication has local sign
+                # (-1)^|s^-1 a_p| in addition to the coderivation prefix.
+                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p + 1))
                 sign = -1 if eps % 2 else 1
 
                 a_p = multi[p]
@@ -384,7 +411,7 @@ class BarConstruction:
 
         for col_idx, multi in enumerate(source):
             for p in range(n - 1):
-                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p + 1))
                 sign = -1 if eps % 2 else 1
 
                 a_p = multi[p]
@@ -419,7 +446,8 @@ class BarConstruction:
 
         for col_idx, multi in enumerate(source):
             for p in range(n):
-                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                # The shifted complex has d_{A[-1]} = -d_A.
+                eps = 1 + sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
                 sign = -1 if eps % 2 else 1
                 a_p = multi[p]
                 for k in self._aug_ideal_indices:
@@ -460,24 +488,478 @@ class BarConstruction:
 
 
 # ============================================================================
-# Cobar construction Omega(C)
+# Exact finite windows of Omega(B(A))
+# ============================================================================
+
+BarWord = Tuple[int, ...]
+OmegaWord = Tuple[BarWord, ...]
+
+
+def _sign(exponent: int) -> Rational:
+    """Return ``(-1)^exponent`` as an exact scalar."""
+    return Rational(-1 if exponent % 2 else 1)
+
+
+def _positive_compositions(total: int, parts: int) -> List[Tuple[int, ...]]:
+    """Ordered decompositions of ``total`` into ``parts`` positive integers."""
+    if parts == 0:
+        return [()] if total == 0 else []
+    if parts == 1:
+        return [(total,)] if total >= 1 else []
+    result: List[Tuple[int, ...]] = []
+    for first in range(1, total - parts + 2):
+        for tail in _positive_compositions(total - first, parts - 1):
+            result.append((first,) + tail)
+    return result
+
+
+def augmented_dga_axioms(dga: AugDGA) -> Dict[str, bool]:
+    """Check the finite-dimensional augmented cochain-DGA axioms exactly.
+
+    Basis vector ``e_0`` is the unit and the augmentation sends ``e_0`` to
+    ``1`` and ``e_i`` to ``0`` for ``i > 0``.
+    """
+    unit = True
+    for i in range(dga.dim):
+        unit &= dga.mult.get((0, i), {}) == {i: Rational(1)}
+        unit &= dga.mult.get((i, 0), {}) == {i: Rational(1)}
+
+    differential_degree = True
+    for target in range(dga.dim):
+        for source in range(dga.dim):
+            if dga.diff[target, source] != 0:
+                differential_degree &= dga.degrees[target] == dga.degrees[source] + 1
+
+    multiplication_degree = True
+    augmentation_multiplicative = True
+    for (left, right), outputs in dga.mult.items():
+        for target, coeff in outputs.items():
+            if coeff == 0:
+                continue
+            multiplication_degree &= (
+                dga.degrees[target] == dga.degrees[left] + dga.degrees[right]
+            )
+            if left > 0 and right > 0 and target == 0:
+                augmentation_multiplicative = False
+
+    augmentation_is_chain_map = all(dga.diff[0, j] == 0 for j in range(dga.dim))
+
+    leibniz = True
+    for i in range(dga.dim):
+        for j in range(dga.dim):
+            lhs: Dict[int, Rational] = {}
+            for k, coefficient in dga.mult.get((i, j), {}).items():
+                for target in range(dga.dim):
+                    value = coefficient * dga.diff[target, k]
+                    if value:
+                        lhs[target] = lhs.get(target, Rational(0)) + value
+
+            rhs: Dict[int, Rational] = {}
+            for k in range(dga.dim):
+                coefficient = dga.diff[k, i]
+                if coefficient:
+                    for target, value in dga.mult.get((k, j), {}).items():
+                        rhs[target] = rhs.get(target, Rational(0)) + coefficient * value
+            parity = _sign(dga.degrees[i])
+            for k in range(dga.dim):
+                coefficient = dga.diff[k, j]
+                if coefficient:
+                    for target, value in dga.mult.get((i, k), {}).items():
+                        rhs[target] = rhs.get(target, Rational(0)) + parity * coefficient * value
+
+            support = set(lhs) | set(rhs)
+            if any(simplify(lhs.get(k, 0) - rhs.get(k, 0)) != 0 for k in support):
+                leibniz = False
+
+    return {
+        "unit": unit,
+        "differential_degree_plus_one": differential_degree,
+        "multiplication_degree_zero": multiplication_degree,
+        "augmentation_multiplicative": augmentation_multiplicative,
+        "augmentation_is_chain_map": augmentation_is_chain_map,
+        "d_squared_zero": dga.d_squared_zero(),
+        "associative": dga.is_associative(),
+        "leibniz": leibniz,
+    }
+
+
+@dataclass
+class FiniteOmegaBarComplex:
+    """A finite quotient of ``Omega(B(A))`` over ``QQ``.
+
+    The bar convention is
+
+    ``[a_1|...|a_p] = s^{-1}a_1 tensor ... tensor s^{-1}a_p``.
+
+    Its cohomological degree is ``sum |a_i| - p``.  A cobar generator
+    ``s[a_1|...|a_p]`` has degree ``sum |a_i| - p + 1``.  For a tuple
+    ``(w_1,...,w_q)`` of bar words, the total degree is the sum of these
+    generator degrees.
+
+    On a bar word ``w`` the differential is
+
+    ``b_int(s^-1 a) = -s^-1(d_A a)`` and
+    ``b_mult(s^-1 a tensor s^-1 b) = (-1)^(|a|-1)s^-1(ab)``,
+
+    extended as a coderivation.  On a cobar generator it is
+
+    ``d(s w) = -s(b w) + sum (-1)^|w'| (s w')(s w'')``,
+
+    where the sum ranges over proper deconcatenations ``w = w'w''``.
+    The tensor-algebra differential uses the ordinary cohomological Leibniz
+    sign.  These formulas make the counit ``s[s^-1 a] -> a`` a chain map.
+
+    ``max_bar_length`` bounds the sum of the lengths of all bar words.
+    ``max_cobar_length`` bounds their number.  Cobar length above the latter
+    bound forms a differential ideal, so the displayed finite object is a
+    quotient complex.  The bar-length bound gives an increasing family of
+    subcomplexes.
+    """
+
+    dga: AugDGA
+    max_bar_length: int
+    max_cobar_length: int
+    allowed_bar_letter_lengths: Optional[Tuple[int, ...]] = None
+
+    _basis_cache: Optional[List[OmegaWord]] = field(default=None, init=False)
+    _degree_basis_cache: Dict[int, List[OmegaWord]] = field(default_factory=dict, init=False)
+    _matrix_cache: Dict[int, Matrix] = field(default_factory=dict, init=False)
+
+    def __post_init__(self) -> None:
+        if self.max_bar_length < 1:
+            raise ValueError("max_bar_length must be positive")
+        if self.max_cobar_length < 1:
+            raise ValueError("max_cobar_length must be positive")
+        if self.allowed_bar_letter_lengths is None:
+            self.allowed_bar_letter_lengths = tuple(range(1, self.max_bar_length + 1))
+        else:
+            lengths = tuple(sorted(set(self.allowed_bar_letter_lengths)))
+            if any(length < 1 or length > self.max_bar_length for length in lengths):
+                raise ValueError("allowed bar-letter lengths must lie in the finite window")
+            self.allowed_bar_letter_lengths = lengths
+
+        axioms = augmented_dga_axioms(self.dga)
+        failed = [name for name, value in axioms.items() if value is not True]
+        if failed:
+            raise ValueError("augmented cochain-DGA axioms failed: " + ", ".join(failed))
+
+    @property
+    def aug_indices(self) -> Tuple[int, ...]:
+        return tuple(range(1, self.dga.dim))
+
+    @property
+    def includes_all_bar_lengths(self) -> bool:
+        return self.allowed_bar_letter_lengths == tuple(range(1, self.max_bar_length + 1))
+
+    def bar_word_degree(self, word: BarWord) -> int:
+        return sum(self.dga.degrees[index] - 1 for index in word)
+
+    def cobar_generator_degree(self, word: BarWord) -> int:
+        return self.bar_word_degree(word) + 1
+
+    def degree(self, word: OmegaWord) -> int:
+        return sum(self.cobar_generator_degree(block) for block in word)
+
+    def bar_length(self, word: OmegaWord) -> int:
+        return sum(len(block) for block in word)
+
+    def cobar_length(self, word: OmegaWord) -> int:
+        return len(word)
+
+    def basis(self) -> List[OmegaWord]:
+        """Enumerate the cobar unit and every basis word in the finite window."""
+        if self._basis_cache is not None:
+            return self._basis_cache
+
+        result: List[OmegaWord] = [()]
+        allowed = set(self.allowed_bar_letter_lengths or ())
+        for cobar_length in range(1, self.max_cobar_length + 1):
+            for total_bar_length in range(cobar_length, self.max_bar_length + 1):
+                for lengths in _positive_compositions(total_bar_length, cobar_length):
+                    if any(length not in allowed for length in lengths):
+                        continue
+                    for flat_word in cartprod(self.aug_indices, repeat=total_bar_length):
+                        blocks: List[BarWord] = []
+                        cursor = 0
+                        for length in lengths:
+                            blocks.append(tuple(flat_word[cursor:cursor + length]))
+                            cursor += length
+                        result.append(tuple(blocks))
+
+        self._basis_cache = result
+        self._degree_basis_cache.clear()
+        for element in result:
+            self._degree_basis_cache.setdefault(self.degree(element), []).append(element)
+        return result
+
+    def basis_in_degree(self, degree: int) -> List[OmegaWord]:
+        self.basis()
+        return self._degree_basis_cache.get(degree, [])
+
+    def degrees(self) -> List[int]:
+        self.basis()
+        return sorted(self._degree_basis_cache)
+
+    def bidegree_dimensions(self) -> Dict[Tuple[int, int], int]:
+        """Dimensions indexed by ``(cobar length, total bar length)``."""
+        result: Dict[Tuple[int, int], int] = {}
+        for element in self.basis():
+            key = (self.cobar_length(element), self.bar_length(element))
+            result[key] = result.get(key, 0) + 1
+        return result
+
+    def _bar_internal_terms(self, word: BarWord) -> Iterable[Tuple[BarWord, Rational]]:
+        for position, index in enumerate(word):
+            prefix_degree = sum(self.dga.degrees[word[j]] - 1 for j in range(position))
+            shift_sign = _sign(prefix_degree + 1)
+            for target in self.aug_indices:
+                coefficient = self.dga.diff[target, index]
+                if coefficient:
+                    yield word[:position] + (target,) + word[position + 1:], shift_sign * coefficient
+
+    def _bar_multiplication_terms(self, word: BarWord) -> Iterable[Tuple[BarWord, Rational]]:
+        for position in range(len(word) - 1):
+            sign_exponent = sum(
+                self.dga.degrees[word[j]] - 1 for j in range(position + 1)
+            )
+            shift_sign = _sign(sign_exponent)
+            for target, coefficient in self.dga.mult.get(
+                (word[position], word[position + 1]), {}
+            ).items():
+                if target == 0 or coefficient == 0:
+                    continue
+                yield word[:position] + (target,) + word[position + 2:], shift_sign * coefficient
+
+    def differential_terms(self, element: OmegaWord) -> Dict[OmegaWord, Rational]:
+        """Return the full finite-window differential of one basis element."""
+        if element == ():
+            return {}
+
+        result: Dict[OmegaWord, Rational] = {}
+        allowed = set(self.allowed_bar_letter_lengths or ())
+
+        def add(target: OmegaWord, coefficient: Rational) -> None:
+            if coefficient == 0:
+                return
+            if len(target) > self.max_cobar_length:
+                return
+            if self.bar_length(target) > self.max_bar_length:
+                return
+            if any(len(block) not in allowed for block in target):
+                return
+            result[target] = simplify(result.get(target, Rational(0)) + coefficient)
+            if result[target] == 0:
+                del result[target]
+
+        for block_position, block in enumerate(element):
+            cobar_prefix_degree = sum(
+                self.cobar_generator_degree(element[j]) for j in range(block_position)
+            )
+            derivation_sign = _sign(cobar_prefix_degree)
+
+            for new_block, bar_coefficient in self._bar_internal_terms(block):
+                target = element[:block_position] + (new_block,) + element[block_position + 1:]
+                add(target, -derivation_sign * bar_coefficient)
+
+            for new_block, bar_coefficient in self._bar_multiplication_terms(block):
+                target = element[:block_position] + (new_block,) + element[block_position + 1:]
+                add(target, -derivation_sign * bar_coefficient)
+
+            for cut in range(1, len(block)):
+                left = block[:cut]
+                right = block[cut:]
+                split_sign = _sign(self.bar_word_degree(left))
+                target = element[:block_position] + (left, right) + element[block_position + 1:]
+                add(target, derivation_sign * split_sign)
+
+        return result
+
+    def differential_matrix(self, degree: int) -> Matrix:
+        """Matrix of ``d: Omega^degree -> Omega^(degree+1)`` over ``QQ``."""
+        if degree in self._matrix_cache:
+            return self._matrix_cache[degree]
+        source = self.basis_in_degree(degree)
+        target = self.basis_in_degree(degree + 1)
+        target_index = {element: row for row, element in enumerate(target)}
+        matrix = zeros(len(target), len(source))
+        for column, element in enumerate(source):
+            for image, coefficient in self.differential_terms(element).items():
+                if self.degree(image) != degree + 1:
+                    raise AssertionError("bar--cobar differential changed degree by a value other than one")
+                if image in target_index:
+                    matrix[target_index[image], column] += coefficient
+        self._matrix_cache[degree] = matrix
+        return matrix
+
+    def differentials(self) -> Dict[int, Matrix]:
+        return {degree: self.differential_matrix(degree) for degree in self.degrees()}
+
+    def verify_d_squared(self) -> Dict[int, bool]:
+        """Check every composable pair of finite-window differential matrices."""
+        result: Dict[int, bool] = {}
+        for degree in self.degrees():
+            first = self.differential_matrix(degree)
+            second = self.differential_matrix(degree + 1)
+            composite = second * first
+            result[degree] = composite.equals(zeros(composite.rows, composite.cols))
+        return result
+
+    def homology_dimensions(self) -> Dict[int, int]:
+        """Exact finite-window cohomology dimensions, grouped by total degree."""
+        dimensions = {degree: len(self.basis_in_degree(degree)) for degree in self.degrees()}
+        return cohomology_dims_exact(self.differentials(), dimensions)
+
+    def algebra_basis_in_degree(self, degree: int) -> List[int]:
+        return [index for index, value in enumerate(self.dga.degrees) if value == degree]
+
+    def algebra_differential_matrix(self, degree: int) -> Matrix:
+        source = self.algebra_basis_in_degree(degree)
+        target = self.algebra_basis_in_degree(degree + 1)
+        matrix = zeros(len(target), len(source))
+        for row_position, row in enumerate(target):
+            for column_position, column in enumerate(source):
+                matrix[row_position, column_position] = self.dga.diff[row, column]
+        return matrix
+
+    def counit_matrix(self, degree: int) -> Matrix:
+        """Matrix of the strict counit in one cohomological degree."""
+        source = self.basis_in_degree(degree)
+        target = self.algebra_basis_in_degree(degree)
+        target_index = {index: row for row, index in enumerate(target)}
+        matrix = zeros(len(target), len(source))
+        for column, element in enumerate(source):
+            if element == () and 0 in target_index:
+                matrix[target_index[0], column] = Rational(1)
+                continue
+            if any(len(block) != 1 for block in element):
+                continue
+
+            value: Dict[int, Rational] = {0: Rational(1)}
+            for block in element:
+                factor = block[0]
+                product_value: Dict[int, Rational] = {}
+                for left, left_coefficient in value.items():
+                    for output, structure_coefficient in self.dga.mult.get((left, factor), {}).items():
+                        product_value[output] = (
+                            product_value.get(output, Rational(0))
+                            + left_coefficient * structure_coefficient
+                        )
+                value = product_value
+            for index, coefficient in value.items():
+                if index in target_index:
+                    matrix[target_index[index], column] += coefficient
+        return matrix
+
+    def counit_chain_map(self) -> Dict[str, object]:
+        """Check ``epsilon d_OmegaB = d_A epsilon`` in every degree."""
+        degrees = sorted(set(self.degrees()) | set(self.dga.degrees))
+        identities: Dict[int, bool] = {}
+        residuals: Dict[int, Matrix] = {}
+        for degree in degrees:
+            left = self.counit_matrix(degree + 1) * self.differential_matrix(degree)
+            right = self.algebra_differential_matrix(degree) * self.counit_matrix(degree)
+            residual = left - right
+            residuals[degree] = residual
+            identities[degree] = residual.equals(zeros(residual.rows, residual.cols))
+        return {
+            "chain_map_at_degree": identities,
+            "is_chain_map": all(identities.values()),
+            "residuals": residuals,
+        }
+
+    def algebra_homology_dimensions(self) -> Dict[int, int]:
+        degrees = sorted(set(self.dga.degrees))
+        dimensions = {degree: len(self.algebra_basis_in_degree(degree)) for degree in degrees}
+        differentials = {degree: self.algebra_differential_matrix(degree) for degree in degrees}
+        return cohomology_dims_exact(differentials, dimensions)
+
+    def mapping_cone_homology_dimensions(self) -> Dict[int, int]:
+        """Compute the counit's mapping-cone cohomology over ``QQ``."""
+        complex_degrees = set(self.degrees())
+        algebra_degrees = set(self.dga.degrees)
+        cone_degrees = sorted(algebra_degrees | {degree - 1 for degree in complex_degrees})
+        dimensions: Dict[int, int] = {}
+        differentials: Dict[int, Matrix] = {}
+        for degree in cone_degrees:
+            a_source = self.algebra_basis_in_degree(degree)
+            c_source = self.basis_in_degree(degree + 1)
+            a_target = self.algebra_basis_in_degree(degree + 1)
+            c_target = self.basis_in_degree(degree + 2)
+            dimensions[degree] = len(a_source) + len(c_source)
+
+            matrix = zeros(len(a_target) + len(c_target), len(a_source) + len(c_source))
+            d_a = self.algebra_differential_matrix(degree)
+            epsilon = self.counit_matrix(degree + 1)
+            d_c = self.differential_matrix(degree + 1)
+            if d_a.rows and d_a.cols:
+                matrix[:len(a_target), :len(a_source)] = d_a
+            if epsilon.rows and epsilon.cols:
+                matrix[:len(a_target), len(a_source):] = epsilon
+            if d_c.rows and d_c.cols:
+                matrix[len(a_target):, len(a_source):] = -d_c
+            differentials[degree] = matrix
+
+        return cohomology_dims_exact(differentials, dimensions)
+
+    def finite_window_report(self) -> Dict[str, object]:
+        """Return exact matrices, homology, counit, and mathematical scope."""
+        cone_homology = self.mapping_cone_homology_dimensions()
+        degrees = self.degrees()
+        return {
+            **finite_calculation_state(self.max_bar_length, self.max_cobar_length),
+            "sign_convention": "cohomological |d|=+1; bar s^-1; cobar s",
+            "allowed_bar_letter_lengths": self.allowed_bar_letter_lengths,
+            "includes_all_bar_lengths": self.includes_all_bar_lengths,
+            "basis_dimension": len(self.basis()),
+            "basis_by_degree": {
+                degree: self.basis_in_degree(degree) for degree in degrees
+            },
+            "bidegree_dimensions": self.bidegree_dimensions(),
+            "differentials": self.differentials(),
+            "d_squared": self.verify_d_squared(),
+            "finite_window_homology": self.homology_dimensions(),
+            "A_homology": self.algebra_homology_dimensions(),
+            "counit_matrices": {
+                degree: self.counit_matrix(degree)
+                for degree in sorted(set(degrees) | set(self.dga.degrees))
+            },
+            "counit": self.counit_chain_map(),
+            "mapping_cone_homology": cone_homology,
+            "finite_window_counit_is_quasi_isomorphism": all(
+                dimension == 0 for dimension in cone_homology.values()
+            ),
+        }
+
+
+def finite_bar_cobar_report(
+    dga: AugDGA,
+    max_bar_length: int,
+    max_cobar_length: Optional[int] = None,
+    allowed_bar_letter_lengths: Optional[Sequence[int]] = None,
+) -> Dict[str, object]:
+    """Construct and compute one exact finite bar--cobar window."""
+    cobar_bound = max_cobar_length if max_cobar_length is not None else max_bar_length
+    allowed = tuple(allowed_bar_letter_lengths) if allowed_bar_letter_lengths is not None else None
+    complex_ = FiniteOmegaBarComplex(dga, max_bar_length, cobar_bound, allowed)
+    return complex_.finite_window_report()
+
+
+# ============================================================================
+# Quadratic-row diagnostic retained for comparison with earlier computations
 # ============================================================================
 
 @dataclass
-class CobarConstruction:
-    """The cobar construction Omega(C) = (T(s^{-1}C_bar), d_Omega).
+class MultiplicationDualComplex:
+    """The structure-constant transpose of multiplication on ``A_bar``.
 
-    For C = B(A), the cobar uses bar elements as "letters".
+    A formal generator ``u_i`` has degree ``|e_i|+1``.  If
+    ``e_j e_k = sum_i c^i_jk e_i``, set
 
-    In this implementation we identify the cobar generators coming from
-    bar-degree-1 letters with the underlying augmentation ideal, so
-      Omega^n = A_bar^{tensor n}.
+    ``delta(u_i) = sum_jk c^i_jk u_j tensor u_k``
 
-    The cobar differential d_Omega: Omega^n -> Omega^{n+1} comes from the
-    coalgebra structure (comultiplication = deconcatenation on B(A)):
-      d_2(a) = sum_{j,k: m_2(e_j, e_k) has component a} e_j tensor e_k
-
-    This is the DUAL of the bar multiplication map.
+    and extend ``delta`` as a derivation of the tensor algebra.  This auxiliary
+    complex records the quadratic transpose of multiplication.  The genuine
+    ``Omega(B(A))`` object is ``FiniteOmegaBarComplex``.
     """
     bar: BarConstruction
     max_cobar_degree: int
@@ -491,12 +973,7 @@ class CobarConstruction:
         return self.bar._aug_ideal_indices
 
     def _build_coproduct(self):
-        """Precompute: for each e_i in A_bar, find pairs (j,k) where m_2(e_j, e_k) -> e_i.
-
-        This is the reduced coproduct on B^1, derived from m_2.
-        Delta_red(s*a_i) = sum_{j,k} c^i_{jk} (s*a_j) tensor (s*a_k)
-        where m_2(a_j, a_k) = sum_i c^i_{jk} a_i.
-        """
+        """Transpose the multiplication structure constants."""
         if self._coproduct_cache is not None:
             return
         self._coproduct_cache = {}
@@ -511,7 +988,7 @@ class CobarConstruction:
                         self._coproduct_cache[i].append((j, k, coeff))
 
     def basis(self, n: int) -> List[Tuple[int, ...]]:
-        """Basis for Omega^n = A_bar^{tensor n}."""
+        """Tensor words of length ``n`` in the formal generators ``u_i``."""
         if n in self._basis_cache:
             return self._basis_cache[n]
         if n <= 0:
@@ -527,29 +1004,7 @@ class CobarConstruction:
         return len(self.aug_indices) ** n
 
     def differential(self, n: int) -> Matrix:
-        """Cobar differential d_Omega: Omega^n -> Omega^{n+1}.
-
-        d_Omega(a_1 | ... | a_n) = sum_p sum_{j,k: Delta(a_p) has j tensor k}
-            (-1)^{eps_p} (a_1 | ... | a_{p-1} | j | k | a_{p+1} | ... | a_n)
-
-        The sign eps_p = sum_{q<p} |s^{-1}(s a_q)| = sum_{q<p} |a_q|.
-        For degree-0 generators: eps_p = 0, so sign = +1 always.
-
-        More carefully, in the cobar with desuspended elements:
-        |s^{-1}(s a)| = |a|. For the bar differential sign to match,
-        the cobar sign at position p is (-1)^{sum_{q<p} (|a_q| - 1)}.
-        But for |a_q| = 0 (all our generators), this is (-1)^{-p} = (-1)^p.
-
-        Actually, let's be precise. The cobar element is
-        [s^{-1}(sa_1) | ... | s^{-1}(sa_n)]. The desuspension s^{-1}
-        applied to sa_i gives an element of degree |sa_i| - 1 = |a_i|.
-        The differential inserts a split: for each position p,
-        replace s^{-1}(sa_p) by s^{-1}(sa_j) | s^{-1}(sa_k) where
-        Delta_red(sa_p) has sa_j tensor sa_k.
-
-        Sign: (-1)^{sum_{q=1}^{p-1} |s^{-1}(sa_q)|} = (-1)^{sum_{q<p} |a_q|}.
-        For all degree 0: sign = (-1)^0 = +1.
-        """
+        """Extend the transposed multiplication by the graded Leibniz rule."""
         if n in self._diff_cache:
             return self._diff_cache[n]
 
@@ -579,8 +1034,8 @@ class CobarConstruction:
                 a_p = multi[p]
                 if a_p not in self._coproduct_cache:
                     continue
-                # Sign from desuspended degrees
-                eps = sum(self.bar.dga.degrees[multi[q]] for q in range(p))
+                # The multiplication-dual generators are suspended once.
+                eps = sum(self.bar.dga.degrees[multi[q]] + 1 for q in range(p))
                 sign = -1 if eps % 2 else 1
 
                 for j, k, coeff in self._coproduct_cache[a_p]:
@@ -592,7 +1047,7 @@ class CobarConstruction:
         return mat
 
     def verify_d_squared(self) -> Dict[int, bool]:
-        """Verify d_Omega^2 = 0 at each cobar degree."""
+        """Verify ``delta^2=0`` at every tensor length."""
         results = {}
         for n in range(1, self.max_cobar_degree):
             d_n = self.differential(n)
@@ -613,178 +1068,88 @@ class CobarConstruction:
 
 
 # ============================================================================
-# Bar-cobar composition Omega(B(A))
+# Finite bar data with the quadratic-row comparison object
 # ============================================================================
 
 @dataclass
 class BarCobarComposition:
-    """The bar-cobar composition Omega(B(A)).
+    """Finite bar data together with the genuine mixed-word cobar window.
 
-    This is the KEY object for Theorem B. It is a bigraded complex:
-    - Bar degree p: how many suspended generators are in each bar letter
-    - Cobar degree q: how many bar letters are tensored in the cobar
-
-    For the SIMPLEST version (bar letters = single generators):
-    Omega(B(A)) at (cobar_deg=q, bar_letter_deg=1) = A_bar^{tensor q}.
-    The cobar differential uses the coproduct on B(A).
-    The bar differential on each letter acts internally.
-
-    The FULL version uses bar letters of all degrees:
-    a letter in B^p(A) = (s^{-1}A_bar)^{tensor p} is a bar element.
-    Omega(B(A)) at cobar degree q uses q such letters.
-
-    We implement the full bigraded version for small total degree.
+    The bidegree is ``(q,p)``: ``q`` cobar generators and total bar length
+    ``p``.  Thus ``((a,b),(c,))`` lies in bidegree ``(2,3)``.
     """
     dga: AugDGA
     max_total_degree: int
 
     _bar: Optional[BarConstruction] = field(default=None, init=False)
-    _cobar: Optional[CobarConstruction] = field(default=None, init=False)
+    _multiplication_dual: Optional[MultiplicationDualComplex] = field(default=None, init=False)
+    _omega: Optional[FiniteOmegaBarComplex] = field(default=None, init=False)
 
     def __post_init__(self):
         self._bar = BarConstruction(self.dga, self.max_total_degree)
-        self._cobar = CobarConstruction(self._bar, self.max_total_degree)
+        self._multiplication_dual = MultiplicationDualComplex(
+            self._bar,
+            self.max_total_degree,
+        )
+        self._omega = FiniteOmegaBarComplex(
+            self.dga,
+            self.max_total_degree,
+            self.max_total_degree,
+        )
 
     @property
     def bar(self) -> BarConstruction:
         return self._bar
 
     @property
-    def cobar(self) -> CobarConstruction:
-        return self._cobar
+    def multiplication_dual(self) -> MultiplicationDualComplex:
+        """The tensor complex dual to multiplication on the augmentation ideal."""
+        return self._multiplication_dual
 
-    def bigraded_basis(self, cobar_deg: int, bar_deg: int) -> List[Tuple]:
-        """Basis for the (cobar_deg, bar_deg) component.
+    @property
+    def omega(self) -> FiniteOmegaBarComplex:
+        """The mixed-word finite quotient of ``Omega(B(A))``."""
+        return self._omega
 
-        At cobar_deg = q with each bar letter of degree p = 1:
-        this is (A_bar)^{tensor q}.
-
-        For bar_deg p > 1: each cobar letter is a bar element of degree p,
-        i.e., an element of (s^{-1}A_bar)^{tensor p}. Then the cobar component
-        has q such letters, giving total dimension (aug_dim^p)^q.
-
-        We simplify by using only bar-degree-1 letters (the standard
-        bar-cobar resolution uses all bar degrees, but the quasi-isomorphism
-        already works at bar-degree 1 for augmented algebras).
-        """
-        if bar_deg != 1:
-            # For higher bar degrees, we return the product basis
-            bar_basis_per_letter = self._bar.basis(bar_deg)
-            if cobar_deg <= 0:
-                return [()]
-            result = list(cartprod(bar_basis_per_letter, repeat=cobar_deg))
-            return result
-        # bar_deg = 1: each letter is a single generator from A_bar
-        return self._cobar.basis(cobar_deg)
+    def bigraded_basis(self, cobar_deg: int, bar_deg: int) -> List[OmegaWord]:
+        """Basis for cobar length ``cobar_deg`` and total bar length ``bar_deg``."""
+        return [
+            element for element in self.omega.basis()
+            if self.omega.cobar_length(element) == cobar_deg
+            and self.omega.bar_length(element) == bar_deg
+        ]
 
     def total_degree_basis(self, total: int) -> List[Tuple[int, int, Tuple]]:
-        """All basis elements of total degree = cobar_deg.
-
-        For the standard bar-cobar, total degree = cobar degree
-        (since we measure in cobar letters). Each cobar letter
-        is a desuspended bar element.
-
-        Returns list of (cobar_deg, bar_letter_deg, multi_index).
-        """
-        result = []
-        for q in range(0, total + 1):
-            basis_q = self._cobar.basis(q)
-            for b in basis_q:
-                result.append((q, 1, b))
-        return result
+        """All basis elements of cohomological degree ``total``."""
+        return [
+            (self.omega.cobar_length(element), self.omega.bar_length(element), element)
+            for element in self.omega.basis_in_degree(total)
+        ]
 
 
 # ============================================================================
-# The counit map psi: Omega(B(A)) -> A
+# Strict counit on a finite mixed-word window
 # ============================================================================
 
 def counit_map(dga: AugDGA, max_degree: int = 4) -> Dict[int, Matrix]:
-    """The counit psi: Omega(B(A)) -> A at each cobar degree.
+    """Return the strict counit matrices indexed by cohomological degree.
 
-    psi is the augmentation of the cobar:
-      psi_1: Omega^1 = A_bar -> A (inclusion of augmentation ideal)
-      psi_n: Omega^n -> A for n >= 2 (zero for the strict augmentation)
-
-    The augmentation psi: T(s^{-1}B_bar(A)) -> A is defined by:
-      psi sends the cobar generator corresponding to the bar letter
-      s^{-1}a to a on cobar degree 1 / bar degree 1
-      psi = 0 on cobar degree >= 2
-
-    This is NOT the full quasi-isomorphism map. The quasi-isomorphism
-    comes from the ACYCLICITY of the bar-cobar resolution: the augmentation
-    is a quasi-iso because the kernel is acyclic.
-
-    Returns {n: matrix} where matrix maps Omega^n (as A_bar^{tensor n}) to A.
+    The finite source has total bar length and cobar length bounded by
+    ``max_degree``.  Multiplicativity sends every tuple of singleton bar words
+    to the corresponding product in ``A``.
     """
-    aug_indices = list(range(1, dga.dim))
-    aug_dim = len(aug_indices)
-
-    result = {}
-
-    # Degree 1: psi_1 is the inclusion A_bar -> A
-    # Maps e_i (for i in aug_ideal) to e_i in A
-    mat1 = zeros(dga.dim, aug_dim)
-    for j, idx in enumerate(aug_indices):
-        mat1[idx, j] = Rational(1)
-    result[1] = mat1
-
-    # Degree n >= 2: psi_n = 0
-    for n in range(2, max_degree + 1):
-        result[n] = zeros(dga.dim, aug_dim ** n)
-
-    return result
+    omega_bar = FiniteOmegaBarComplex(dga, max_degree, max_degree)
+    degrees = sorted(set(omega_bar.degrees()) | set(dga.degrees))
+    return {degree: omega_bar.counit_matrix(degree) for degree in degrees}
 
 
 def counit_chain_map_verify(dga: AugDGA, max_degree: int = 3) -> Dict[str, object]:
-    """Verify that psi: Omega(B(A)) -> A is a chain map.
-
-    Condition: psi o d_Omega = d_A o psi at each degree.
-
-    Since d_A is the differential on A and d_Omega is the cobar differential,
-    the chain map condition at cobar degree n is:
-      psi_n * d_Omega^{n-1} = d_A * psi_{n-1}  (n >= 2)
-
-    For the augmentation: psi_n = 0 for n >= 2, so:
-      0 = d_A * psi_1  ... this requires d_A to kill the augmentation ideal.
-      psi_1 * d_Omega^0 = 0 ... this requires psi_1 * (image of d at degree 0) = 0.
-
-    When d_A = 0 (as for our basic examples), the chain map condition is
-    automatic: psi * d_Omega = 0 for the augmentation.
-
-    The INTERESTING part is that psi is a QUASI-ISOMORPHISM despite
-    being zero on higher cobar degrees. This is because the cobar complex
-    is exact in positive cobar degrees > 1 (for Koszul algebras).
-    """
-    bar = BarConstruction(dga, max_degree + 1)
-    cobar = CobarConstruction(bar, max_degree + 1)
-    psi = counit_map(dga, max_degree)
-
-    results = {"chain_map_at_degree": {}}
-
-    for n in range(1, max_degree + 1):
-        d_omega = cobar.differential(n)  # Omega^n -> Omega^{n+1}
-        psi_n = psi.get(n)
-        psi_n1 = psi.get(n + 1)
-
-        if psi_n is None or d_omega.rows == 0:
-            results["chain_map_at_degree"][n] = True
-            continue
-
-        # Chain map condition: psi_{n+1} * d_Omega^n = d_A * psi_n
-        # LHS
-        if psi_n1 is not None and psi_n1.cols == d_omega.rows:
-            lhs = psi_n1 * d_omega
-        else:
-            lhs = zeros(dga.dim, d_omega.cols) if d_omega.cols > 0 else zeros(dga.dim, 1)
-
-        # RHS: d_A * psi_n
-        rhs = dga.diff * psi_n
-
-        diff = lhs - rhs
-        results["chain_map_at_degree"][n] = diff.equals(zeros(diff.rows, diff.cols))
-
-    results["is_chain_map"] = all(results["chain_map_at_degree"].values())
-    return results
+    """Verify the strict counit on the complete finite mixed-word window."""
+    omega_bar = FiniteOmegaBarComplex(dga, max_degree, max_degree)
+    return {
+        **finite_calculation_state(max_degree, max_degree),
+        **omega_bar.counit_chain_map(),
+    }
 
 
 # ============================================================================
@@ -798,17 +1163,9 @@ def twisting_morphism_tau(dga: AugDGA) -> Dict[int, Matrix]:
       tau(s^{-1}a) = a  on B^1 = s^{-1}A_bar  (projection onto bar degree 1)
       tau = 0     on B^n for n >= 2
 
-    The Maurer-Cartan equation for twisting morphisms:
-      d(tau) + tau * tau = 0
-    where:
-      d(tau)(s^{-1}a_1|...|s^{-1}a_n)
-        = d_A(tau(s^{-1}a_1|...|s^{-1}a_n))
-          + (-1)^n tau(d_B(s^{-1}a_1|...|s^{-1}a_n))
-      (tau*tau)(s^{-1}a_1|...|s^{-1}a_n)
-        = sum_{p+q=n}
-          tau(s^{-1}a_1|...|s^{-1}a_p)
-          tensor
-          tau(s^{-1}a_{p+1}|...|s^{-1}a_n)
+    In the desuspended convention ``tau`` has degree ``+1`` and obeys
+    ``d_A tau + tau d_B - tau star tau = 0``.  The convolution product uses
+    the Koszul sign of the left bar factor.
 
     Returns {bar_degree: matrix from B^n to A}.
     """
@@ -830,58 +1187,18 @@ def twisting_morphism_tau(dga: AugDGA) -> Dict[int, Matrix]:
 
 
 def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object]:
-    """Verify the Maurer-Cartan equation for the twisting morphism tau.
+    """Verify the twisting equation in the desuspended bar convention.
 
-    The MC equation: partial(tau) + tau star tau = 0.
+    The map ``tau([a])=a`` has degree ``+1`` because the bar generator is
+    ``s^-1 a``.  With the convolution sign induced by graded tensor products,
+    the equation is
 
-    At bar degree 1: partial(tau)(s^{-1}a) = d_A(a) + tau(d_B(s^{-1}a))
-                     tau star tau at B^1 = 0 (no splitting of a single element)
-    So: d_A(a) = 0 for all a in A_bar (which holds when d_A = 0 on generators).
+    ``d_A tau + tau d_B - tau star tau = 0``.
 
-    At bar degree 2:
-      partial(tau)(s^{-1}a_1|s^{-1}a_2)
-        = d_A(tau(s^{-1}a_1|s^{-1}a_2)) + tau(d_B(s^{-1}a_1|s^{-1}a_2))
-        = 0 + tau(d_B(s^{-1}a_1|s^{-1}a_2))
-      tau star tau at B^2 = tau(s^{-1}a_1) * tau(s^{-1}a_2) = a_1 * a_2
-
-    MC at B^2: tau(d_B(s^{-1}a_1|s^{-1}a_2)) + a_1 * a_2 = 0.
-    d_B(s^{-1}a_1|s^{-1}a_2) = s^{-1}(a_1 * a_2)
-    (up to the bar sign convention on the first contraction).
-    tau(s^{-1}(a_1 * a_2)) = a_1 * a_2.
-    So: a_1 * a_2 + a_1 * a_2 = 2 * a_1 * a_2 ??? That can't be right.
-
-    CORRECTION: The MC equation is ∂τ + τ⋆τ = 0 with specific signs.
-    ∂τ(c) = d_A(τ(c)) - (-1)^{|τ|} τ(d_C(c))
-    For τ of degree -1 (the twisting morphism has degree -1): (-1)^{|τ|} = -1.
-    So ∂τ(c) = d_A(τ(c)) + τ(d_C(c)).
-
-    At B^2:
-      ∂τ(s^{-1}a_1|s^{-1}a_2)
-        = d_A(0) + τ(d_B(s^{-1}a_1|s^{-1}a_2))
-        = τ(s^{-1}(a_1·a_2))
-        = a_1·a_2
-      (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = τ(s^{-1}a_1)·τ(s^{-1}a_2) = a_1·a_2
-
-    Wait, the convolution product uses the COPRODUCT on the coalgebra.
-    (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = m_A(τ⊗τ)(Δ(s^{-1}a_1|s^{-1}a_2))
-    Δ(s^{-1}a_1|s^{-1}a_2)
-      = (s^{-1}a_1)⊗(s^{-1}a_2)
-    (deconcatenation coproduct, only nondegenerate splitting).
-    So (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = τ(s^{-1}a_1)·τ(s^{-1}a_2) = a_1·a_2.
-
-    MC: ∂τ + τ⋆τ = a_1·a_2 + a_1·a_2 = 2·a_1·a_2 ≠ 0???
-
-    The sign convention: the bar differential at degree 2 is
-    d_B(s^{-1}a_1|s^{-1}a_2) = -s^{-1}(a_1·a_2)
-    (with the standard sign (-1)^{|s^{-1}a_1|} = -1 for |a_1|=0).
-    So τ(d_B(s^{-1}a_1|s^{-1}a_2)) = -a_1·a_2.
-    Then ∂τ + τ⋆τ = -a_1·a_2 + a_1·a_2 = 0. CORRECT.
-
-    The sign in d_B:
-      d_B(s^{-1}a_1|s^{-1}a_2)
-        = (-1)^{|s^{-1}a_1|} s^{-1}(a_1·a_2)
-        = (-1)^1 s^{-1}(a_1·a_2)
-        = -s^{-1}(a_1·a_2).
+    On ``[a]`` the two internal terms are ``d_A a`` and ``-d_A a``.  On
+    ``[a|b]`` the multiplication part of ``tau d_B`` and the convolution term
+    carry the same coefficient ``(-1)^(|a|-1)``.  These are the two local
+    cancellations encoded by the matrix calculation below.
     """
     bar = BarConstruction(dga, max_bar_degree + 1)
     tau = twisting_morphism_tau(dga)
@@ -903,14 +1220,17 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
                 tau_val = tau[n].col(col_idx)
             term1 = dga.diff * tau_val
 
-            # Term 2: tau(d_B(element))
-            # d_B maps B^n -> B^{n-1}; tau maps B^{n-1} -> A
+            # Term 2: tau(d_B(element)), including internal and multiplication parts.
+            term2 = zeros(dga.dim, 1)
+            d_internal = bar.internal_differential(n)
+            if n in tau and tau[n].cols == d_internal.rows:
+                term2 += tau[n] * d_internal.col(col_idx)
+
             d_B = bar.differential(n)
             if n - 1 in tau and d_B.rows > 0:
                 d_B_col = d_B.col(col_idx) if col_idx < d_B.cols else zeros(d_B.rows, 1)
-                term2 = tau[n - 1] * d_B_col if tau[n - 1].cols == d_B.rows else zeros(dga.dim, 1)
-            else:
-                term2 = zeros(dga.dim, 1)
+                if tau[n - 1].cols == d_B.rows:
+                    term2 += tau[n - 1] * d_B_col
 
             # Term 3: (tau star tau)(element)
             # Uses deconcatenation coproduct:
@@ -920,6 +1240,9 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
                 for p in range(1, n):
                     left_multi = multi[:p]
                     right_multi = multi[p:]
+                    convolution_sign = _sign(
+                        sum(dga.degrees[index] - 1 for index in left_multi)
+                    )
 
                     # tau on left part (B^p)
                     left_basis = bar.basis(p)
@@ -951,10 +1274,10 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
                             if tau_l[i] != 0 and tau_r[j] != 0:
                                 prod = dga.mult.get((i, j), {})
                                 for k, c in prod.items():
-                                    term3[k] += tau_l[i] * tau_r[j] * c
+                                    term3[k] += convolution_sign * tau_l[i] * tau_r[j] * c
 
-            # MC equation: term1 + term2 + term3 = 0
-            total = term1 + term2 + term3
+            # MC equation: term1 + term2 - term3 = 0
+            total = term1 + term2 - term3
             for i in range(dga.dim):
                 mc_value[i, col_idx] = simplify(total[i])
 
@@ -970,7 +1293,7 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
 # ============================================================================
 
 def twisted_tensor_product_diff(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object]:
-    """Construct the twisted tensor product A otimes_tau B(A).
+    """Record the finite degrees required for the twisted differential.
 
     The differential on A tensor_tau C for C = B(A):
       d_tau = d_A tensor 1 + 1 tensor d_C + (m_A tensor id)(id tensor tau tensor id)(id tensor Delta_C)
@@ -979,35 +1302,20 @@ def twisted_tensor_product_diff(dga: AugDGA, max_bar_degree: int = 3) -> Dict[st
       x tensor c |-> sum_p x * tau(c') tensor c''
     where Delta(c) = sum c' tensor c'' (deconcatenation).
 
-    For the twisted tensor product to be a chain complex: d_tau^2 = 0 iff tau is a
-    twisting morphism (satisfies MC).
+    The identity ``d_tau^2 = 0`` is checked after the total differential has
+    been assembled across adjacent bar degrees.  This routine records the
+    current construction boundary.
     """
-    bar = BarConstruction(dga, max_bar_degree + 1)
-    tau = twisting_morphism_tau(dga)
-    aug_indices = list(range(1, dga.dim))
-    aug_dim = len(aug_indices)
-
-    results = {"d_tau_squared": {}}
-
-    for n in range(1, max_bar_degree + 1):
-        bar_basis = bar.basis(n)
-        dim_total = dga.dim * len(bar_basis)
-
-        # Build d_tau matrix
-        # Index: (algebra_idx, bar_basis_idx) -> flat index
-        def flat_idx(a_idx, b_flat):
-            return a_idx * len(bar_basis) + b_flat
-
-        d_tau = zeros(dim_total, dim_total) if n == 1 else None
-
-        # For n=1: A tensor B^1(A)
-        # Twisting term: x tensor sa_i -> x * a_i tensor 1 (goes to A tensor B^0 = A)
-        # The twisted tensor product is ACYCLIC at each bar degree > 0.
-        # This is the key content of bar-cobar inversion.
-
-        results["d_tau_squared"][n] = True  # Placeholder
-
-    return results
+    return {
+        "calculation_status": "index range computed",
+        "construction_status": "total twisted differential pending",
+        "computed_object": "bar-degree index set for A tensor_tau B(A)",
+        "target_object": "the total twisted differential d_tau and its square",
+        "d_tau_squared_state": "pending construction",
+        "d_tau_squared": {
+            n: None for n in range(1, max_bar_degree + 1)
+        },
+    }
 
 
 # ============================================================================
@@ -1059,80 +1367,8 @@ def cohomology_dims_exact(differentials: Dict[int, Matrix],
 # ============================================================================
 
 def verify_bar_cobar_quasi_iso(dga: AugDGA, max_degree: int = 4) -> Dict[str, object]:
-    """Verify that psi: Omega(B(A)) -> A is a quasi-isomorphism.
-
-    For a Koszul algebra A:
-      H^n(Omega(B(A))) = 0 for n >= 2  (cobar complex is exact in high degrees)
-      H^1(Omega(B(A))) = A             (the cobar recovers A at degree 1)
-
-    This is the CONTENT of Theorem B: bar-cobar inversion on the Koszul locus.
-
-    We verify this by computing the cohomology of the cobar complex
-    and checking it matches H^*(A).
-
-    Returns detailed verification data.
-    """
-    bar = BarConstruction(dga, max_degree + 1)
-    cobar = CobarConstruction(bar, max_degree + 1)
-
-    # Cobar differentials
-    cobar_diffs = {}
-    cobar_dims = {}
-    for n in range(1, max_degree + 1):
-        cobar_dims[n] = cobar.dim_at(n)
-        d = cobar.differential(n)
-        if d.rows > 0 and d.cols > 0:
-            cobar_diffs[n] = d
-
-    # Cohomology of the cobar complex
-    cobar_coh = cohomology_dims_exact(cobar_diffs, cobar_dims)
-
-    # Cohomology of A
-    a_coh = {}
-    if dga.diff.equals(zeros(dga.dim, dga.dim)):
-        # d_A = 0: H^*(A) = A in degree 0
-        for deg in set(dga.degrees):
-            a_coh[deg] = sum(1 for d in dga.degrees if d == deg)
-    else:
-        # Need to compute H^*(A) from the differential
-        for deg in sorted(set(dga.degrees)):
-            indices_deg = [i for i in range(dga.dim) if dga.degrees[i] == deg]
-            indices_next = [i for i in range(dga.dim) if dga.degrees[i] == deg + 1]
-            if not indices_deg:
-                continue
-            # d_A restricted to degree deg -> deg + 1
-            d_block = zeros(len(indices_next), len(indices_deg))
-            for r, nr in enumerate(indices_next):
-                for c, nc in enumerate(indices_deg):
-                    d_block[r, c] = dga.diff[nr, nc]
-            ker = kernel_dim_exact(d_block)
-            # Image from degree deg - 1
-            indices_prev = [i for i in range(dga.dim) if dga.degrees[i] == deg - 1]
-            if indices_prev:
-                d_prev = zeros(len(indices_deg), len(indices_prev))
-                for r, nr in enumerate(indices_deg):
-                    for c, nc in enumerate(indices_prev):
-                        d_prev[r, c] = dga.diff[nr, nc]
-                im = image_dim_exact(d_prev)
-            else:
-                im = 0
-            a_coh[deg] = ker - im
-
-    # The augmentation ideal A_bar has dim(A) - 1 generators (removing unit)
-    # The cobar at degree 1 should have cohomology = dim(A_bar)
-    # For algebras with trivial product (Heisenberg, abelian):
-    #   All cobar differentials are zero, so H^n(Omega) = dim(A_bar)^n.
-    #   The augmentation is a quasi-iso by formal argument (free resolution).
-    # For algebras with nontrivial product:
-    #   H^1(Omega) should = dim(A_bar) and H^n = 0 for n >= 2.
-
-    has_product = len(dga.mult) > 0 and any(
-        any(v != 0 for v in prods.values())
-        for prods in dga.mult.values()
-        if any(k != 0 for k in prods.keys())  # nontrivial product in aug ideal
-    )
-
-    # Check: does the algebra have a nontrivial product on the augmentation ideal?
+    """Compute one exact finite window and state the remaining limit problem."""
+    report = finite_bar_cobar_report(dga, max_degree, max_degree)
     aug_product = False
     aug_indices = list(range(1, dga.dim))
     for i in aug_indices:
@@ -1147,26 +1383,15 @@ def verify_bar_cobar_quasi_iso(dga: AugDGA, max_degree: int = 4) -> Dict[str, ob
         if aug_product:
             break
 
-    if aug_product:
-        # With nontrivial product on aug ideal: full quasi-iso check
-        aug_dim = len(aug_indices)
-        is_qi = (cobar_coh.get(1, 0) == aug_dim and
-                 all(cobar_coh.get(n, 0) == 0 for n in range(2, max_degree + 1)))
-    else:
-        # No product on aug ideal: cobar diffs are all zero.
-        # Quasi-iso holds by formal argument.
-        # H^1 = dim(A_bar), H^n = dim(A_bar)^n (but augmentation kills these).
-        aug_dim = len(aug_indices)
-        is_qi = (cobar_coh.get(1, 0) == aug_dim)
-
     return {
-        "cobar_cohomology": cobar_coh,
-        "A_cohomology": a_coh,
+        **report,
+        "cobar_cohomology": report["finite_window_homology"],
+        "A_cohomology": report["A_homology"],
         "aug_ideal_dim": len(aug_indices),
         "aug_has_product": aug_product,
-        "is_quasi_iso": is_qi,
-        "bar_d_squared": bar.verify_d_squared(),
-        "cobar_d_squared": cobar.verify_d_squared(),
+        "is_quasi_iso": None,
+        "bar_d_squared": BarConstruction(dga, max_degree).verify_d_squared(),
+        "cobar_d_squared": report["d_squared"],
     }
 
 
@@ -1357,10 +1582,10 @@ def verify_ainfty_relations(dga: AugDGA, max_n: int = 3) -> Dict[int, bool]:
 # Functoriality: algebra maps induce bar-cobar maps
 # ============================================================================
 
-def bar_cobar_functoriality(dga1: AugDGA, dga2: AugDGA,
-                             f: Matrix,
-                             max_degree: int = 3) -> Dict[str, object]:
-    """Given f: A -> A', construct Omega(B(f)): Omega(B(A)) -> Omega(B(A')).
+def multiplication_dual_functoriality(dga1: AugDGA, dga2: AugDGA,
+                                       f: Matrix,
+                                       max_degree: int = 3) -> Dict[str, object]:
+    """Construct tensor powers of an algebra map on the diagnostic basis.
 
     The bar functor is CONTRAVARIANT for coalgebras but the bar of an
     algebra map gives a coalgebra map B(f): B(A) -> B(A').
@@ -1368,10 +1593,9 @@ def bar_cobar_functoriality(dga1: AugDGA, dga2: AugDGA,
       B(f)(s^{-1}a_1|...|s^{-1}a_n)
         = s^{-1}f(a_1)|...|s^{-1}f(a_n).
 
-    The cobar functor then gives:
-    Omega(B(f)): Omega(B(A)) -> Omega(B(A')) at each cobar degree.
-
-    The key property: Omega(B(f)) is a quasi-isomorphism when f is.
+    On the quadratic comparison row these tensor powers give the displayed
+    diagnostic maps.  Extension to all bar lengths supplies the full map
+    ``Omega(B(f))``.
 
     f should be a matrix (dim2 x dim1) representing f: A -> A'.
     """
@@ -1395,21 +1619,21 @@ def bar_cobar_functoriality(dga1: AugDGA, dga2: AugDGA,
             fn = _kronecker(fn, f_aug)
         bar_maps[n] = fn
 
-    # Omega(B(f)) = B(f) at each cobar degree (since we use bar-degree-1 letters)
-    cobar_maps = bar_maps.copy()
+    # Tensor powers of f_aug on the quadratic comparison row.
+    dual_maps = bar_maps.copy()
 
     # Verify chain map property: Omega(B(f)) o d_Omega = d_Omega' o Omega(B(f))
     bar1 = BarConstruction(dga1, max_degree + 1)
     bar2 = BarConstruction(dga2, max_degree + 1)
-    cobar1 = CobarConstruction(bar1, max_degree + 1)
-    cobar2 = CobarConstruction(bar2, max_degree + 1)
+    dual1 = MultiplicationDualComplex(bar1, max_degree + 1)
+    dual2 = MultiplicationDualComplex(bar2, max_degree + 1)
 
     chain_map_ok = {}
     for n in range(1, max_degree):
-        d1 = cobar1.differential(n)
-        d2 = cobar2.differential(n)
-        fn = cobar_maps.get(n)
-        fn1 = cobar_maps.get(n + 1)
+        d1 = dual1.differential(n)
+        d2 = dual2.differential(n)
+        fn = dual_maps.get(n)
+        fn1 = dual_maps.get(n + 1)
         if fn is None or fn1 is None:
             chain_map_ok[n] = True
             continue
@@ -1424,8 +1648,9 @@ def bar_cobar_functoriality(dga1: AugDGA, dga2: AugDGA,
         chain_map_ok[n] = diff.equals(zeros(diff.rows, diff.cols))
 
     return {
+        "computed_target": "tensor powers on the multiplication-dual complex",
         "bar_maps": bar_maps,
-        "cobar_maps": cobar_maps,
+        "multiplication_dual_maps": dual_maps,
         "is_chain_map": chain_map_ok,
         "all_chain_map": all(chain_map_ok.values()),
     }
@@ -1453,9 +1678,9 @@ def bar_cobar_comparison_table(max_degree: int = 4) -> Dict[str, Dict[str, objec
 
     For each algebra:
     - Bar d^2 = 0 verification
-    - Cobar d^2 = 0 verification
+    - Total mixed-word cobar d^2 = 0 verification
     - Counit chain map verification
-    - Quasi-isomorphism verification
+    - Typed state of the quasi-isomorphism check
     - Twisting morphism MC verification
     - A-infinity operations
     """
@@ -1470,14 +1695,15 @@ def bar_cobar_comparison_table(max_degree: int = 4) -> Dict[str, Dict[str, objec
     results = {}
     for name, dga in algebras.items():
         bar = BarConstruction(dga, max_degree + 1)
-        cobar = CobarConstruction(bar, max_degree + 1)
+        omega = FiniteOmegaBarComplex(dga, max_degree, max_degree)
 
         results[name] = {
             "dim": dga.dim,
             "aug_dim": bar.aug_dim,
             "associative": dga.is_associative(),
             "bar_d_squared": bar.verify_d_squared(),
-            "cobar_d_squared": cobar.verify_d_squared(),
+            "cobar_d_squared": omega.verify_d_squared(),
+            "bidegree_dimensions": omega.bidegree_dimensions(),
             "counit_chain_map": counit_chain_map_verify(dga, max_degree),
             "quasi_iso": verify_bar_cobar_quasi_iso(dga, max_degree),
             "twisting_mc": verify_twisting_mc(dga, max_degree),
@@ -1497,9 +1723,8 @@ def heisenberg_bar_cobar(kappa_val: Rational = Rational(1)) -> Dict[str, object]
     No simple pole, so no Lie bracket: m_2 = 0 on the augmentation ideal.
 
     The bar complex B(H) has d_B = 0 (no product).
-    The cobar Omega(B(H)) = T(J) with d_Omega = 0.
-    Bar-cobar inversion: psi: T(J) -> H is the projection onto degree 1.
-    This is a quasi-isomorphism (trivially, since all differentials are zero).
+    The finite cobar window contains the suspended generators arising from
+    every positive bar length through the stated bound.
 
     The curvature kappa appears in the GENUS-1 bar complex (not genus 0).
     At genus 0, Heisenberg is a free field with zero bar differential.
@@ -1517,14 +1742,14 @@ def heisenberg_bar_cobar(kappa_val: Rational = Rational(1)) -> Dict[str, object]
     dga = AugDGA(dim, degrees, diff, mult, name=f"H_{kappa_val}")
 
     bar = BarConstruction(dga, 5)
-    cobar = CobarConstruction(bar, 5)
+    omega = FiniteOmegaBarComplex(dga, 4, 4)
 
     return {
         "dga": dga,
         "bar": bar,
-        "cobar": cobar,
+        "omega": omega,
         "bar_d_squared": bar.verify_d_squared(),
-        "cobar_d_squared": cobar.verify_d_squared(),
+        "cobar_d_squared": omega.verify_d_squared(),
         "quasi_iso": verify_bar_cobar_quasi_iso(dga, 4),
         "twisting_mc": verify_twisting_mc(dga, 3),
         "kappa": kappa_val,
@@ -1543,9 +1768,11 @@ def free_fermion_bar_cobar() -> Dict[str, object]:
     OPE: psi(z)psi(w) ~ 1/(z-w).
     Simple pole gives bracket: psi * psi = 1 (the vacuum).
 
-    In the augmentation ideal, psi * psi lands on the unit (index 0).
-    So the product on A_bar is zero (it maps to the unit, not back to A_bar).
-    The bar differential sends B^2 -> B^0 (via unit contraction), not B^1.
+    The relation ``psi^2=1`` selects a curved bar construction: projection
+    onto the vacuum fails the multiplicativity axiom for an augmentation.
+    The associative augmented engine therefore records this example through
+    its curvature term ``B^2 -> B^0`` and leaves the curved cobar construction
+    as a separate problem.
     """
     dim = 2
     degrees = [0, 0]
@@ -1559,15 +1786,13 @@ def free_fermion_bar_cobar() -> Dict[str, object]:
     dga = AugDGA(dim, degrees, diff, mult, name="FreeFermion")
 
     bar = BarConstruction(dga, 5)
-    cobar = CobarConstruction(bar, 5)
-
     return {
         "dga": dga,
         "bar": bar,
-        "cobar": cobar,
         "bar_d_squared": bar.verify_d_squared(),
-        "cobar_d_squared": cobar.verify_d_squared(),
-        "quasi_iso": verify_bar_cobar_quasi_iso(dga, 4),
+        "bar_cobar_scope": "curved bar--cobar construction required",
+        "curved_cobar_status": "curvature differential awaits construction",
+        "quasi_iso": None,
         "twisting_mc": verify_twisting_mc(dga, 3),
         "unit_contraction_B2": bar.unit_contraction(2),
     }
@@ -1591,12 +1816,9 @@ def sl2_affine_bar_cobar_genus0() -> Dict[str, object]:
     dga = lie_sl2_as_assoc()
 
     bar = BarConstruction(dga, 4)
-    cobar = CobarConstruction(bar, 4)
-
     return {
         "dga": dga,
         "bar": bar,
-        "cobar": cobar,
         "is_associative": dga.is_associative(),
         "bar_d_squared": bar.verify_d_squared(),
         "ainfty_ops": extract_ainfty_operations(dga, 3),

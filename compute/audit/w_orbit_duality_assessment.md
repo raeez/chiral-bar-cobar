@@ -1,5 +1,12 @@
 # conj:w-orbit-duality -- Frontier Assessment
 
+> Superseded status note (2026-06-18): references below to
+> admissible \(sl_2\) simple quotients as "Koszul at all admissible
+> levels" are historical audit text. Current status: finite
+> Shapovalov/character evidence only; theorem-level use requires the
+> quotient-bar spectral sequence, PBW/Shapovalov detection,
+> finite-window exactness, and strong convergence package.
+
 ## Location
 
 w_algebras.tex, line 471. Label: conj:w-orbit-duality.
@@ -37,8 +44,9 @@ g, the duality involves the Langlands dual g^v and the Spaltenstein dual of f.
   computation done (comp:bp-bar). The minimal orbit (2,1) is self-transpose
   so orbit type is preserved. Missing: actual non-principal DS/bar comparison.
 
-- **sl_2 admissible levels**: Koszul at all admissible levels (structural
-  argument from single-weight null vector).
+- **sl_2 admissible levels**: finite Shapovalov/character evidence,
+  conditional on the quotient-bar spectral-sequence and convergence
+  package.
 
 ## Relationship to conj:ds-kd-arbitrary-nilpotent
 

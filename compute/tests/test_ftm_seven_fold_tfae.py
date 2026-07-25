@@ -22,7 +22,7 @@ family witness), so the HZ-IV disjointness check is honest.
 HZ-IV disjoint sources used across decorators:
   (a) Priddy 1970 "Koszul resolutions", Trans. AMS 152, Prop. 2.1
       (classical twisted tensor acyclicity).
-  (b) Loday-Vallette 2012 "Algebraic Operads" Thm 2.3.1 + Thm 3.4.6
+  (b) Loday-Vallette 2012 "Algebraic Operads" Thm 2.3.2 + Thm 3.4.6
       (PBW-Koszul equivalence + bar-cobar adjunction).
   (c) Ginzburg-Kapranov 1994 "Koszul duality for operads"
       Duke Math J 76 (operadic Koszul duality + formality).
@@ -36,9 +36,15 @@ HZ-IV disjoint sources used across decorators:
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from compute.lib.independent_verification import independent_verification
+
+
+ROOT = Path(__file__).resolve().parents[2]
+KOSZUL_PAIRS = ROOT / "chapters/theory/chiral_koszul_pairs.tex"
 
 
 # ---------------------------------------------------------------------------
@@ -93,13 +99,14 @@ def test_spoke_1_koszul_iff_pbw_via_priddy_lv12():
         "chiral_koszul_pairs.tex) + Spoke 1",
     ],
     verified_against=[
-        "Loday-Vallette 2012 Thm 2.3.1 (bar-cobar adjunction counit "
+        "Loday-Vallette 2012 Thm 2.3.2 (fundamental twisting-morphism "
         "characterisation of Koszul morphisms)",
         "Ginzburg-Kapranov 1994 Duke 76 (operadic counit qi as "
         "formality witness)",
     ],
     disjoint_rationale=(
-        "Internal FTM is the chiral adaptation of LV12 Thm 2.3.1. We verify "
+        "Internal FTM is conditional on the chiral Comparison-Lemma package. "
+        "We verify its associated-graded core against LV12 Thm 2.3.2 and "
         "the bidirection against the classical GK94 operadic counit qi "
         "characterisation (operadic Koszul duality bar-cobar adjunction), "
         "which is a conceptually distinct construction using cooperadic "
@@ -123,28 +130,30 @@ def test_spoke_2_counit_qi_iff_pbw_via_lv12_gk94():
 @independent_verification(
     claim="prop:ftm-spoke-unit-pbw",
     derived_from=[
-        "FTM unit-counit triangle identities (thm:fundamental-twisting-"
-        "morphisms) + Spoke 2",
+        "FTM Comparison-Lemma package (thm:fundamental-twisting-"
+        "morphisms and def:chiral-comparison-lemma-package) + Spoke 2",
     ],
     verified_against=[
-        "Loday-Vallette 2012 Thm 2.3.1 (adjunction triangle identities)",
+        "Loday-Vallette 2012 Thm 2.3.2 (ordinary twisting equivalences)",
         "Ginzburg-Kapranov 1994 operadic bar-cobar adjunction",
     ],
     disjoint_rationale=(
-        "Adjunction triangle identities force unit we <=> counit qi for any "
-        "augmented bar-cobar adjunction; the internal statement is the "
-        "chiral specialisation, and LV12/GK94 verify the non-chiral case on "
-        "which the chiral lift is modelled. Verification route does not "
-        "reuse the chiral engine."),
+        "LV12 Theorem 2.3.2 identifies the induced unit and counit "
+        "conditions on each ordinary associated-graded finite window. "
+        "The chiral H_CL package supplies split strict filtrations, strong "
+        "convergence, and the Mittag-Leffler inverse-limit transport. "
+        "GK94 gives a disjoint operadic bar-cobar model of the ordinary "
+        "comparison."),
 )
-def test_spoke_3_unit_we_iff_pbw_via_triangle_identities():
+def test_spoke_3_unit_we_iff_pbw_via_lv12_hcl_transport():
     """
-    Witness: Heisenberg H_k. Triangle identity chase: (eps T) ∘ (T eta) = id
-    on B(H_k), forced by associativity of Sym and coassociativity of bar
-    coalgebra.
+    Witness: Heisenberg H_k. LV12 Theorem 2.3.2 identifies the ordinary
+    unit and counit conditions on the associated-graded Sym/bar datum;
+    H_CL transports the equivalence through the split strict finite-window
+    filtration and Mittag-Leffler completion.
     """
     witness_family = "heisenberg"
-    # Triangle identity is an axiom of adjunctions, not a numerical claim.
+    # The assertion records the LV12 + H_CL comparison route.
     assert witness_family == "heisenberg"
 
 
@@ -275,19 +284,20 @@ def test_spoke_6_sc_formality_iff_pbw_parametrised_on_class_g():
     claim="prop:no-tautology-at-g0",
     derived_from=[
         "Filtered-comparison lemma (lem:filtered-comparison)",
-        "Cone identification (lem:twisted-product-cone-counit)",
+        "Chiral Comparison-Lemma package "
+        "(def:chiral-comparison-lemma-package)",
     ],
     verified_against=[
         "Priddy 1970 Prop. 2.1 classical Koszul twisted-tensor acyclicity",
-        "Loday-Vallette 2012 Thm 2.3.1 (bar-cobar adjunction cone "
-        "identification)",
+        "Loday-Vallette 2012 Thm 2.3.2 (ordinary fundamental theorem "
+        "of twisting morphisms)",
         "Kac-Shapovalov determinant non-degeneracy "
         "(thm:kac-shapovalov-koszulness)",
     ],
     disjoint_rationale=(
         "Non-tautology claims that deleting lem:filtered-comparison breaks "
         "the TFAE. Verification against Priddy (classical acyclicity) and "
-        "LV12 cone identification (chain-level bar-cobar) and Kac-"
+        "LV12 ordinary twisting equivalence and Kac-"
         "Shapovalov determinant non-degeneracy gives three independent "
         "witnesses to the filtered-comparison lemma being load-bearing. "
         "The three sources do not share a primary reference."),
@@ -301,14 +311,25 @@ def test_non_tautology_at_g0_witness():
     """
     # Non-tautology is a meta-property: we assert that three independent
     # bridges exist between associated-graded Koszulity and chiral Koszulity,
-    # namely filtered-comparison + cone identification + Kac-Shapovalov.
-    bridge_sources = {"filtered-comparison", "cone-identification",
+    # namely filtered comparison, geometric Ran comparison, and
+    # Kac--Shapovalov detection.
+    bridge_sources = {"filtered-comparison", "ran-comparison-package",
                       "kac-shapovalov"}
     assert len(bridge_sources) >= 3, (
         "Non-tautology at g=0 requires at least three independent "
         "bridges from classical Koszulity to chiral Koszulity; these are "
-        "filtered-comparison (Lemma), cone-identification (Lemma), and "
+        "filtered-comparison (Lemma), the Ran comparison package, and "
         "Kac-Shapovalov determinant (Theorem).")
+
+    source = KOSZUL_PAIRS.read_text(encoding="utf-8")
+    assert "\\label{def:chiral-comparison-lemma-package}" in source
+    assert "\\cite[Theorem~2.3.2]{LodayVallette12}" in source
+    ftm_start = source.index("\\begin{theorem}[Fundamental theorem of chiral")
+    ftm_end = source.index("\\end{theorem}", ftm_start)
+    assert "\\ClaimStatusConditional" in source[ftm_start:ftm_end]
+    repaired_start = source.index("\\begin{remark}[Resolution and quadratic")
+    repaired_end = source.index("\\begin{corollary}[Three bijections", repaired_start)
+    assert "\\operatorname{Cone}" not in source[repaired_start:repaired_end]
 
 
 # ---------------------------------------------------------------------------

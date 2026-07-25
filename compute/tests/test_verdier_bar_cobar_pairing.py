@@ -1,16 +1,16 @@
-"""Tests for the Verdier pairing between bar and cobar complexes.
+"""Tests for finite bar-dual matrices and exact associative cobar windows.
 
-Verifies the deepest structural claim (Theorems A + B):
-  - Bar-cobar adjunction with Verdier intertwining on Ran(X)
-  - Bar-cobar inversion: Omega(B(A)) -> A quasi-iso on Koszul locus
-  - Perfect pairing <-,->: B(A) tensor Omega(B(A)) -> k
-  - Differential compatibility: <d_B x, y> = <x, d_Omega y>
+Verifies the implemented finite structures:
+  - Tensor-basis pairing matrices and their differential compatibility
+  - Exact finite-window counit matrices for Omega(B(A))
+  - Evaluation pairing on the finite tensor bases
+  - Rational homology of the mixed-word cobar complex
 
 CRITICAL DISTINCTIONS (CLAUDE.md):
   A != B(A) != A^i != A^!
   Omega(B(A)) = A (INVERSION, not duality)
   A^i = H*(B(A)); A^! = (A^i)^v after VERDIER/LINEAR duality
-  Z_ch^der(A) = ChirHoch^bullet(A,A) (bulk, not bar/cobar)
+  Z_ch^der(A) = ChirHoch^bullet(A,A) (closed-sector, not bar/cobar)
   Com^! = Lie (NOT coLie)
   Heisenberg NOT self-dual
   Virasoro self-dual at c=13, NOT c=26
@@ -28,6 +28,8 @@ from compute.lib.verdier_bar_cobar_pairing import (
     DGA,
     BarData,
     CobarData,
+    exact_augmented_model,
+    exact_bar_cobar_window,
     bar_complex_finite,
     cobar_complex_finite,
     bar_cobar_finite,
@@ -43,7 +45,7 @@ from compute.lib.verdier_bar_cobar_pairing import (
     verify_koszul_pair,
     bar_cobar_inversion_table,
     four_objects_distinguished,
-    typed_koszul_object_firewall,
+    typed_koszul_object_table,
     ce_sl2_verdier_pairing,
     pairing_dimensions_consistent,
     verify_bar_d_squared,
@@ -61,6 +63,13 @@ from compute.lib.verdier_bar_cobar_pairing import (
     _abelian_lie_dga,
     _exterior_dga,
 )
+
+
+def _assert_finite_scope(result):
+    assert result["calculation_status"] == "computed finite truncation"
+    assert result["convergence_status"] == "unresolved beyond finite truncation"
+    assert result["global_quasi_isomorphism"] == "unresolved"
+    assert result["is_quasi_iso"] is None
 
 
 # ===================================================================
@@ -213,7 +222,7 @@ class TestBarComplex:
 # ===================================================================
 
 class TestCobarComplex:
-    """Tests for the cobar complex Omega(B(A))."""
+    """Tests for the quadratic tensor-degree comparison object."""
 
     def test_cobar_basis_degree1(self):
         """Omega^1 has dimension dim(V)."""
@@ -427,7 +436,7 @@ class TestDifferentialCompatibility:
 # ===================================================================
 
 class TestBarCobarMap:
-    """Tests for the augmentation map Omega(B(A)) -> A."""
+    """Tests for the degree-one counit projection."""
 
     def test_map_identity_at_degree1(self):
         """The augmentation is the identity at tensor degree 1."""
@@ -454,32 +463,42 @@ class TestBarCobarMap:
 # ===================================================================
 
 class TestQuasiIsomorphism:
-    """Tests for Omega(B(A)) -> A being a quasi-isomorphism."""
+    """Tests for exact finite-window homology and filtered-limit scope."""
 
     def test_qi_heisenberg(self):
-        """Bar-cobar inversion exact for Heisenberg (trivial)."""
+        """Unitized Heisenberg data has two degree-zero homology classes."""
         dga = _heisenberg_dga(1.0)
         qi = verify_quasi_iso(dga, max_tensor=3)
-        assert qi["is_quasi_iso"]
+        _assert_finite_scope(qi)
+        assert qi["cobar_cohomology"] == {-2: 0, -1: 0, 0: 2}
+        assert qi["counit"]["is_chain_map"]
 
     def test_qi_abelian(self):
-        """Bar-cobar inversion for abelian algebra (trivial)."""
+        """A rank-two square-zero ideal gives three degree-zero classes."""
         dga = _abelian_lie_dga(2)
         qi = verify_quasi_iso(dga, max_tensor=3)
-        assert qi["is_quasi_iso"]
+        _assert_finite_scope(qi)
+        assert qi["cobar_cohomology"] == {-2: 0, -1: 0, 0: 3}
+
+    def test_qi_exterior_one_generator(self):
+        """The exterior generator survives in cohomological degree one."""
+        qi = verify_quasi_iso(_exterior_dga(1), max_tensor=3)
+        _assert_finite_scope(qi)
+        assert qi["cobar_cohomology"] == {0: 1, 1: 1, 2: 0, 3: 0}
+
+    def test_lie_bracket_has_an_associativity_obligation(self):
+        """The Lie bracket is classified before entering the associative engine."""
+        qi = verify_quasi_iso(_sl2_lie_dga(), max_tensor=3)
+        assert qi["calculation_status"] == "input lies outside the associative augmented engine"
+        assert "associative" in qi["remaining_input_obligation"]
+        assert qi["global_quasi_isomorphism"] == "unresolved"
 
     def test_qi_sl2_cobar_degree1(self):
-        """Cobar of bar of sl_2: H^1 has correct dimension.
-
-        For sl_2 with non-associative bracket, the cobar differential
-        has d^2 != 0, but the degree-1 component still recovers A.
-        """
+        """The associative engine records the sl_2 input obligation explicitly."""
         dga = _sl2_lie_dga()
         qi = verify_quasi_iso(dga, max_tensor=3)
-        cobar_coh = qi["cobar_cohomology"]
-        # The kernel of d_Omega: Omega^1 -> Omega^2 determines H^1
-        # For the Lie bracket, the coproduct encodes the bracket dually
-        assert cobar_coh.get(1, 0) >= 0
+        assert qi["cobar_cohomology"] == {}
+        assert qi["calculation_status"] == "input lies outside the associative augmented engine"
 
 
 # ===================================================================
@@ -546,13 +565,10 @@ class TestHeisenbergVerdierPairing:
             assert abs(val - expected) < 1e-10, f"At n={n}: got {val}, expected {expected}"
 
     def test_heisenberg_qi_exact(self):
-        """Bar-cobar inversion is exact for Heisenberg.
-
-        For Heisenberg (zero product), the bar-cobar adjunction
-        gives an exact inversion: the augmentation is a quasi-iso.
-        """
+        """The Heisenberg wrapper propagates the exact counit calculation."""
         result = heisenberg_verdier_pairing(1.0)
-        assert result["quasi_iso"]["is_quasi_iso"]
+        _assert_finite_scope(result["quasi_iso"])
+        assert result["quasi_iso"]["finite_window_counit_is_quasi_isomorphism"]
         assert result["quasi_iso"]["has_product"] is False
 
     def test_heisenberg_combinatorial_standalone(self):
@@ -638,17 +654,23 @@ class TestPairingDescends:
 # ===================================================================
 
 class TestKoszulPairVerification:
-    """Tests for verifying A and A^! form a Koszul pair."""
+    """Tests for propagation of finite counit calculations."""
 
     def test_koszul_pair_heisenberg(self):
-        """Heisenberg forms a Koszul pair (trivially)."""
+        """Heisenberg carries the finite-window result to the pair report."""
         result = verify_koszul_pair(_heisenberg_dga(1.0), max_tensor=3)
-        assert result["is_koszul_pair"]
+        assert result["calculation_status"] == "computed finite truncation"
+        assert result["convergence_status"] == "unresolved beyond finite truncation"
+        assert result["is_koszul_pair"] is None
+        _assert_finite_scope(result["quasi_iso"])
 
     def test_koszul_pair_abelian(self):
-        """Abelian algebra forms a Koszul pair."""
+        """Rank-two abelian data carries the same finite scope."""
         result = verify_koszul_pair(_abelian_lie_dga(2), max_tensor=3)
-        assert result["is_koszul_pair"]
+        assert result["calculation_status"] == "computed finite truncation"
+        assert result["convergence_status"] == "unresolved beyond finite truncation"
+        assert result["is_koszul_pair"] is None
+        _assert_finite_scope(result["quasi_iso"])
 
 
 # ===================================================================
@@ -687,16 +709,17 @@ class TestFourObjects:
     """Tests for the critical distinction: A, B(A), A^i, A^!, Omega(B(A)), Z."""
 
     def test_four_objects_sl2(self):
-        """A, B(A), A^i, A^!, Omega(B(A)), and Z are all distinguished for sl_2."""
+        """The type table separates the Lie input from the associative cobar target."""
         result = four_objects_distinguished(_sl2_lie_dga(), max_tensor=3)
         assert result["A_dim"] == 3
         assert result["B(A)_dims"][1] == 3
         assert result["B(A)_dims"][2] == 9
-        assert result["Omega(B(A))_dims"][1] == 3
+        assert result["Omega(B(A))_dims"] == {}
+        assert result["calculation_status"] == "input lies outside the associative augmented engine"
         assert result["Ai_is_coalgebra"] is True
         assert result["Adual_is_algebra"] is True
-        assert result["Omega_is_cobar_inversion"] is True
-        assert result["Zch_is_derived_center_bulk"] is True
+        assert result["Omega_is_cobar_inversion"] is None
+        assert result["Zch_is_derived_center_closed_sector"] is True
         assert result["Ai_Adual_same_dims_different_structure"] is True
         assert result["B_Ai_Adual_Omega_Z_typed_apart"] is True
 
@@ -710,10 +733,10 @@ class TestFourObjects:
         result = four_objects_distinguished(_sl2_lie_dga(), max_tensor=3)
         assert result["A_neq_BA"]
 
-    def test_typed_firewall_records_six_objects(self):
-        """The firewall types A, bar, bar-dual, Verdier dual, inversion, and bulk."""
-        firewall = typed_koszul_object_firewall(_sl2_lie_dga(), max_tensor=3)
-        assert firewall["typed_objects"] == (
+    def test_typed_object_table_records_six_objects(self):
+        """The type table records A, bar, dual, cobar, and derived centre."""
+        type_table = typed_koszul_object_table(_sl2_lie_dga(), max_tensor=3)
+        assert type_table["typed_objects"] == (
             "A",
             "B(A)",
             "A^i",
@@ -721,28 +744,30 @@ class TestFourObjects:
             "Omega(B(A))",
             "Z_ch^der(A)",
         )
-        assert firewall["objects"]["B(A)"]["kind"] == "conilpotent bar coalgebra"
-        assert firewall["objects"]["A^i"]["kind"] == "bar-dual coalgebra"
-        assert firewall["objects"]["A^!"]["kind"] == "Verdier/linear-dual algebra"
-        assert firewall["objects"]["A^!"]["source_object"] == "A^i"
-        assert firewall["objects"]["Omega(B(A))"]["kind"] == "cobar algebra and inversion object"
-        assert firewall["objects"]["Z_ch^der(A)"]["kind"] == "chiral Hochschild derived-centre bulk"
+        assert type_table["objects"]["B(A)"]["kind"] == "conilpotent bar coalgebra"
+        assert type_table["objects"]["A^i"]["kind"] == "bar-dual coalgebra"
+        assert type_table["objects"]["A^!"]["kind"] == "Verdier/linear-dual algebra"
+        assert type_table["objects"]["A^!"]["source_object"] == "A^i"
+        omega = type_table["objects"]["Omega(B(A))"]
+        assert omega["kind"] == "associative cobar construction awaiting associative input"
+        assert omega["calculation_status"] == "input lies outside the associative augmented engine"
+        assert type_table["objects"]["Z_ch^der(A)"]["kind"] == "chiral Hochschild derived-centre closed-sector"
 
-    def test_typed_firewall_branch_order(self):
+    def test_typed_object_table_branch_order(self):
         """Koszul duality, inversion, and bulk use different branches."""
-        firewall = typed_koszul_object_firewall(_heisenberg_dga(1.0), max_tensor=3)
-        assert firewall["branch_order"]["koszul_dual"] == ("B(A)", "A^i", "A^!")
-        assert firewall["branch_order"]["bar_cobar_inversion"] == ("B(A)", "Omega(B(A))", "A")
-        assert firewall["branch_order"]["bulk"] == ("A", "Z_ch^der(A)")
-        assert ("Omega(B(A)) = " + "A^!") in firewall["forbidden_shorthands"]
-        assert ("A^i", "A^!") in firewall["forbidden_collapses"]
+        type_table = typed_koszul_object_table(_heisenberg_dga(1.0), max_tensor=3)
+        assert type_table["branch_order"]["koszul_dual"] == ("B(A)", "A^i", "A^!")
+        assert type_table["branch_order"]["bar_cobar_inversion"] == ("B(A)", "Omega(B(A))", "A")
+        assert type_table["branch_order"]["bulk"] == ("A", "Z_ch^der(A)")
+        assert ("Omega(B(A)) = " + "A^!") in type_table["forbidden_shorthands"]
+        assert ("A^i", "A^!") in type_table["forbidden_collapses"]
 
-    def test_each_firewall_object_lists_the_others_as_distinct(self):
+    def test_each_typed_object_lists_the_others_as_distinct(self):
         """Every typed object rejects collapse onto every other typed object."""
-        firewall = typed_koszul_object_firewall(_abelian_lie_dga(2), max_tensor=3)
-        names = firewall["typed_objects"]
+        type_table = typed_koszul_object_table(_abelian_lie_dga(2), max_tensor=3)
+        names = type_table["typed_objects"]
         for name in names:
-            distinct_from = set(firewall["objects"][name]["distinct_from"])
+            distinct_from = set(type_table["objects"][name]["distinct_from"])
             assert distinct_from == set(names) - {name}
 
 
@@ -844,7 +869,7 @@ class TestCriticalPitfalls:
         """Heisenberg is NOT self-dual."""
         result = heisenberg_not_self_dual()
         assert result["self_dual"] is False
-        assert "commutative" in result["A_dual"].lower()
+        assert "curved Sym^ch" in result["A_dual"]
 
     def test_com_dual_is_lie_not_colie(self):
         """Com^! = Lie, NOT coLie (CLAUDE.md critical pitfall)."""
@@ -993,11 +1018,11 @@ class TestBarCobarStructural:
         assert np.abs(d[:, h_idx]).max() > 0, "d_Omega(h) should be nonzero"
 
     def test_inversion_heisenberg_all_levels(self):
-        """Bar-cobar inversion for Heisenberg at k=1,2,3,5."""
+        """The finite calculation is uniform across Heisenberg levels."""
         for k in [1, 2, 3, 5]:
             dga = _heisenberg_dga(float(k))
             qi = verify_quasi_iso(dga, max_tensor=3)
-            assert qi["is_quasi_iso"], f"Inversion fails at k={k}"
+            _assert_finite_scope(qi)
 
     def test_bar_cobar_functorial(self):
         """bar_cobar_finite returns consistent bar + cobar pair."""

@@ -103,7 +103,7 @@ def object_kernel_firewall() -> Dict[str, Any]:
         'bar_cobar_inversion': 'Omega(B(A)) = A',
         'bar_cobar_inversion_is_koszul_duality': False,
         'koszul_dual_branch': 'A^! is the Verdier/continuous-linear dual branch',
-        'bulk_branch': 'Z_ch^der(A) is Hochschild/bulk data, not Koszul dual data',
+        'bulk_branch': 'Z_ch^der(A) is Hochschild/closed-sector data, not Koszul dual data',
         'kernels': {
             'affine_raw_trace_form': 'k*Omega_tr/z',
             'kz_connection': 'Omega/((k+h^vee)z)',
@@ -435,9 +435,12 @@ def shadow_spectral_curve(c_val: float, t_val: float) -> float:
 
 
 def jt_spectral_curve(x_val: float) -> float:
-    r"""JT spectral curve y^2 = sin^2(2 pi sqrt(x)) / (16 pi^2).
+    r"""Compact WP/JT sine curve after choosing the branch z=sqrt(x).
 
-    Defined for x >= 0. The spectral curve has zeros at x = n^2/4 (n = 0, 1, 2, ...).
+    The coordinate-free comparison datum is x=z^2 and
+    y_WP(z)=sin(2*pi*z)/(4*pi).  This helper returns y_WP(sqrt(x))^2
+    on the real branch.  It does not certify the physical JT density or
+    the double-scaled matrix-integral completion.
     """
     if x_val < 0:
         return 0.0

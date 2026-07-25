@@ -106,7 +106,7 @@ $d^2$ need not vanish on the chain level.
 \end{definition}
 
 \begin{theorem}[Comodule-contramodule correspondence;
-\ClaimStatusConditional]
+\ClaimStatusProvedElsewhere]
 \label{thm:co-contra-correspondence-appendix}
 \index{comodule-contramodule correspondence}
 Let $(C, d, h)$ be a CDG-coalgebra. There is an equivalence of
@@ -124,7 +124,7 @@ contratensor product\textup{)}.
 \end{theorem}
 
 \begin{proof}[Reference]
-Positselski~\cite[Theorem~5.3]{Positselski11}. The chiral
+Positselski~\cite[Theorem~5.2]{Positselski11}. The chiral
 specialization is Theorem~\ref{thm:chiral-co-contra-correspondence}.
 \end{proof}
 
@@ -175,7 +175,7 @@ $D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{comod})$.
 The Koszul duality equivalence
 $D^{\mathrm{co}}(\barB^{(g)}(\cA)\text{-}\mathrm{comod})
 \simeq D^{\mathrm{ctr}}(\barB^{(g)}(\cA)\text{-}\mathrm{contra})$
-\textup{(}Theorem~\ref{thm:positselski-chiral-proved}\textup{)} is the chiral
+\textup{(}Theorem~\ref{thm:positselski-chiral-finite-type}\textup{)} is the chiral
 incarnation of the comodule-contramodule correspondence
 \eqref{eq:co-contra-equivalence}.
 \end{remark}
@@ -763,7 +763,8 @@ Let $(C, d, h)$ be a curved factorization coalgebra on~$X$.
 \end{enumerate}
 \end{definition}
 
-\begin{definition}[Coacyclic and contraacyclic factorization objects]
+\begin{definition}[Coacyclic and contraacyclic factorization objects;
+\ClaimStatusDefinitional]
 \label{def:coacyclic-fact}
 \index{coacyclic object!factorization|textbf}
 \index{contraacyclic object!factorization|textbf}
@@ -791,7 +792,8 @@ objects and morphisms respect the factorization isomorphisms), not
 through any additional axiom on the coacyclicity condition.
 \end{definition}
 
-\begin{definition}[Coderived and contraderived factorization categories]
+\begin{definition}[Coderived and contraderived factorization categories;
+\ClaimStatusDefinitional]
 \label{def:coderived-fact}
 \index{coderived category!factorization|textbf}
 \index{contraderived category!factorization|textbf}
@@ -808,6 +810,17 @@ D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact})
  \,\big/\, \mathrm{Acycl}^{\mathrm{ctr}}_{\mathrm{fact}}.
  \label{eq:contraderived-fact}
 \end{align}
+For a chiral CDG-coalgebra \(C\), this is the notation
+\[
+D^{\mathrm{co}}_{\mathrm{ch}}(C)
+\quad\text{and}\quad
+D^{\mathrm{ctr}}_{\mathrm{ch}}(C)
+\]
+used in Theorem~\ref{thm:chiral-positselski-weight-completed}: the
+subscript records that the homotopy categories, exact triples,
+coactions, contraactions, and second-kind acyclic subcategories are
+formed in the chiral/factorization ambient rather than in ordinary
+complexes of vector spaces.
 When $h = 0$ and $C$ is conilpotent,
 Theorem~\ref{thm:conilpotent-reduction} gives
 $D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
@@ -1095,199 +1108,159 @@ Koszul-locus generated-core duality of
 Theorem~\ref{thm:h-level-factorization-kd}.
 \end{remark}
 
-\begin{theorem}[Stratumwise chiral Positselski 7.2;
+\begin{theorem}[Stratumwise fixed-coalgebra co-contra correspondence;
 \ClaimStatusConditional]
 \label{thm:chiral-bar-cobar-positselski-7-2}
-\index{Positselski!chiral bar-cobar theorem|textbf}
-\index{bar-cobar inversion!stratumwise coderived theorem}
-\textup{[}Quadrant: Open; presentation: stratumwise chiral
-CDG-coalgebra; level: \(1\leftrightarrow2\); hypothesis package:
-\(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_S)\)\textup{].}
-Let \(S \subset \operatorname{Ran}_n(X)\) be a finite Ran stratum
-and let \(C_S\) be a conilpotent chiral CDG-coalgebra on \(S\)
-with finite-dimensional graded pieces. Assume the package
-\(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_S)\):
-\begin{enumerate}
-\item the de Rham realization on \(S\) identifies \(C_S\) with an
- ordinary conilpotent finite-type CDG-coalgebra object to which
- Positselski~\cite[Theorem~7.2]{Positselski11} applies;
-\item the chiral bar, cobar, coaction, and contraaction functors
- preserve the second-kind acyclic generators in the directions
- required by Theorem~\textup{\ref{thm:chiral-co-contra-correspondence}};
-\item the ordinary bar-cobar counit supplied by Positselski's theorem
- realizes, under the comparison in \textup{(1)}, the chiral
- bar-cobar counit on \(S\).
+\index{Positselski!chiral fixed-coalgebra correspondence|textbf}
+\textup{[Type signature: Open quadrant; stratumwise chiral
+CDG-coalgebra presentation; Beilinson level \(2\); hypothesis package
+\(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co\text{-}ctr}}(C_S)\).]}
+
+Let \(S\subset\operatorname{Ran}_n(X)\) be a finite Ran stratum and
+let \(C_S\) be a conilpotent chiral CDG-coalgebra on \(S\) with
+finite-dimensional graded pieces.  The package
+\(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co\text{-}ctr}}(C_S)\)
+consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a de Rham realization identifying \(C_S\) with a finite-type
+ ordinary CDG-coalgebra;
+\item chiral co-contra functors whose de Rham realizations are
+ Positselski's functors and which preserve the second-kind acyclic
+ generators;
+\item compatibility of the unit and counit transformations with the
+ chiral coaction, contraaction, and stratumwise factorization maps.
 \end{enumerate}
-Write \(\tau_{\geq 0}C_S\) for the chiral algebra recovered from
-this bar-cobar adjunction; in the application below,
-\(C_S=\barB_X^{\mathrm{fact}}(\cA)|_S\) and
-\(\tau_{\geq 0}C_S=\cA|_S\). Then the counit
+Under this package, the fixed coalgebra \(C_S\) carries an equivalence
 \[
-\varepsilon_{C_S}\colon
-\Omega^{\mathrm{ch}}(C_S)\longrightarrow \tau_{\geq 0}C_S
-\]
-is an isomorphism in the chiral coderived category
-\[
-D^{\mathrm{co}}(C_S\text{-}\mathrm{comod}^{\mathrm{ch}}).
+ D^{\mathrm{co}}
+ \bigl(C_S\text{-}\mathrm{comod}^{\mathrm{ch}}\bigr)
+ \simeq
+ D^{\mathrm{ctr}}
+ \bigl(C_S\text{-}\mathrm{contra}^{\mathrm{ch}}\bigr).
 \]
 \end{theorem}
 
 \begin{proof}
-This is the chiral, stratumwise form of
-Positselski~\cite[Theorem~7.2]{Positselski11}; the theorem is
-conditional precisely because the chiral realization data are extra
-structure, not consequences of the definitions of chiral
-CDG-coalgebras alone.
-
-By \(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_S)\)\textup{(1)}, the
-de Rham model of \(C_S\) is an ordinary conilpotent finite-type
-CDG-coalgebra on the stratum, so Positselski's theorem makes the
-ordinary bar-cobar counit an isomorphism in the corresponding
-coderived category. By \(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_S)\)
-\textup{(2)}, the passage back to chiral comodules preserves the
-second-kind acyclic subcategories, so the cone remains coacyclic in
-the chiral coderived category. By
-\(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_S)\)\textup{(3)}, this
-ordinary counit is the displayed chiral counit
-\(\varepsilon_{C_S}\). Hence \(\varepsilon_{C_S}\) becomes an
-isomorphism in the stated Verdier quotient.
+Positselski's fixed-coalgebra theorem gives
+\[
+ D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+ \simeq
+ D^{\mathrm{ctr}}(C\text{-}\mathrm{contra})
+\]
+for an ordinary CDG-coalgebra \(C\)
+\cite[Theorem~5.2]{Positselski11}.  Clause~\textup{(i)} supplies this
+theorem on the de Rham realization of \(C_S\).
+Clauses~\textup{(ii)}--\textup{(iii)} lift its two functors and their
+unit and counit through the chiral realization and the second-kind
+Verdier quotients.
 \end{proof}
 
-\begin{theorem}[Off-Koszul filtered bar-cobar comparison on Ran;
+\begin{definition}[Acyclic chiral twisting-comparison package;
+\ClaimStatusDefinitional]
+\label{def:acyclic-chiral-twisting-comparison}
+Let \(C\) be a chiral CDG-coalgebra, let \(A\) be a chiral
+CDG-algebra, and let \(\tau\colon C\to A\) be a twisting cochain.
+The package
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)\)
+consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a typed chiral cobar morphism
+ \(\varepsilon_\tau\colon\Omega^{\mathrm{ch}}C\to A\);
+\item finite-stratum de Rham comparisons carrying \(\tau\) and
+ \(\varepsilon_\tau\) to Positselski's ordinary twisting-cochain
+ construction;
+\item acyclicity of the ordinary twisting cochain on every finite
+ stratum, equivalently a quasi-isomorphism
+ \(\operatorname{Cob}(C_S)\xrightarrow{\sim}A_S\);
+\item exact factorization gluing and a Mittag--Leffler completion
+ assembling the stratumwise module-category comparisons.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Fixed-bar-coalgebra correspondence on Ran;
 \ClaimStatusConditional]
 \label{thm:off-koszul-ran-inversion}
-\index{bar-cobar inversion!off-Koszul|textbf}
-\index{coderived category!bar-cobar inversion}
-Let $\cA$ be a complete augmented chiral algebra on~$X$ with
-$\barB_X^{\mathrm{fact}}(\cA)$ lying in the verified filtered
-pro-conilpotent essential image and having finite-dimensional graded
-pieces. Then the bar-cobar counit
+\index{bar coalgebra!fixed-coalgebra co-contra correspondence|textbf}
+Let \(\cA\) be a complete augmented chiral algebra and set
+\(C=\bar B_X^{\mathrm{fact}}(\cA)\).  Assume the finite-stratum,
+factorization-gluing, and derived-limit hypotheses of
+Theorem~\ref{thm:fact-co-contra-general}.  Then
 \[
-\Omega_X \barB_X(\cA) \longrightarrow \cA
+ D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+ \simeq
+ D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact}).
 \]
-is an isomorphism in
-$D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$,
-without any strict Koszulness hypothesis on~$\cA$.
-Equivalently, its cone is coacyclic.
-The unrestricted curved bar-cobar Quillen equivalence for arbitrary
-off-Koszul chiral algebras is not asserted here.
+If the canonical twisting cochain
+\(\tau_{\cA}\colon C\to\cA\) also satisfies
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}
+(C,\cA,\tau_{\cA})\), its induced module and comodule comparison is an
+equivalence on the completed factorization subcategories specified by
+that package.
+
+The fixed-\(C\) co-contra equivalence has type signature
+\[
+(C;\ \mathrm{comodules},\mathrm{contramodules};\ 2;\
+\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co\text{-}ctr}}),
+\]
+while the algebra counit
+\(\Omega^{\mathrm{ch}}C\to\cA\) has type signature
+\[
+(C,\cA,\tau_{\cA};\ \mathrm{algebras};\ 1\leftrightarrow2;\
+\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}).
+\]
 \end{theorem}
 
 \begin{proof}
-Write $C = \barB_X^{\mathrm{fact}}(\cA)$ for the bar coalgebra
-(a conilpotent curved factorization coalgebra by
-Proposition~\ref{prop:bar-ran-well-defined}),
-and $\varepsilon \colon \Omega_X C \to \cA$ for the bar-cobar
-counit. Set
-$K := \operatorname{cone}(\varepsilon)$.
-We show $K$ is coacyclic in
-$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$ by the same three-step
-assembly used in the proof of
-Theorem~\ref{thm:fact-co-contra-general}.
-
-\emph{Step~1: Stratum-by-stratum inversion.}
-On each stratum $\operatorname{Ran}_n(X)$, the restriction
-$C_n = C|_{\operatorname{Ran}_n}$ is a conilpotent CDG-coalgebra
-with finite-dimensional graded pieces (as in the proof of
-Theorem~\ref{thm:fact-co-contra-general}, Step~1: near the
-generic point of $\operatorname{Ran}_n$, we have
-$C_n \simeq C_1^{\otimes n}$, which inherits the
-finite-dimensionality from~$C_1$).
-
-The restriction $\varepsilon_n$ of the bar-cobar counit to
-the~$n$-th stratum is the abstract bar-cobar counit for the
-CDG-coalgebra~$C_n$:
-\[
-\varepsilon_n \colon \Omega(C_n) \longrightarrow \cA|_n
-\quad \text{in} \;\;
-D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}}).
-\]
-By the stratumwise chiral Positselski theorem
-\textup{(}Theorem~\ref{thm:chiral-bar-cobar-positselski-7-2}\textup{)}
-applied to~$C_n$ with \(\tau_{\geq 0}C_n=\cA|_n\),
-$\varepsilon_n$ is an isomorphism in the chiral coderived
-category $D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}})$.
-\emph{Equivalently,}
-$K|_{\operatorname{Ran}_n(X)} = \operatorname{cone}(\varepsilon_n)$
-is coacyclic. The hypotheses used here are the explicit package
-\(\mathsf{Pos}^{\mathrm{ch}}_{7.2}(C_n)\): conilpotence,
-finite-dimensional graded pieces, and the chiral realization/exactness
-conditions of
-Theorem~\ref{thm:chiral-bar-cobar-positselski-7-2}. No strict
-Koszulness hypothesis is used in this stratumwise step.
-
-\emph{Step~2: Factorization compatibility of the bar-cobar
-counit.}
-The bar-cobar counit $\varepsilon$ is the adjunction counit of
-the $(\Omega_X, \barB_X)$-adjunction. Both $\Omega_X$ and
-$\barB_X$ are defined via factorization-compatible constructions
-(the cobar functor uses the factorization coproduct on~$C$, and
-the bar functor uses the chiral product on~$\cA$). On disjoint
-opens $U_1 \sqcup U_2$, the factorization isomorphisms for
-$\cA$ and~$C$ intertwine $\varepsilon_{U_1 \sqcup U_2}$
-with $\varepsilon_{U_1} \otimes \varepsilon_{U_2}$.
-Hence $\varepsilon$ is a morphism in the factorization
-CDG-comodule category.
-
-\emph{Step~3: Assembly via conservativity.}
-The global cone~$K$ restricts to the coacyclic object
-$K|_{\operatorname{Ran}_n(X)}$ on each stratum~$n$ by Step~1.
-By the conservativity clause of the stratified conservative
-restriction theorem
-\textup{(}Theorem~\ref{thm:stratified-conservative-restriction}\textup{)},
-$K$ is coacyclic in the factorization sense.
-Therefore $\varepsilon$ becomes an isomorphism in
-$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$.
+The first assertion is
+Theorem~\ref{thm:fact-co-contra-general} applied to the fixed bar
+coalgebra \(C\).  For ordinary CDG data, Positselski's
+twisting-cochain theorem identifies the corresponding
+module-category equivalence with acyclicity of the twisting cochain
+\cite[Theorem~6.5]{Positselski11}.  The package
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}\) transports that theorem
+through finite-stratum de Rham realization, factorization gluing, and
+completion.
 \end{proof}
 
-\begin{remark}[Closure of structural gap~H1]
+\begin{remark}[Structural gap~H1: proved categorical core and open algebra lane]
 \label{rem:H1-closure}
-\index{structural gaps!H1 closed}
-Theorem~\ref{thm:off-koszul-ran-inversion} resolves
-structural gap~H1 (Remark~\ref{rem:structural-gaps}):
-the coderived Ran-space formalism is now established.
-Combined with the strict Koszul-locus inversion of
-Theorem~\ref{thm:bar-cobar-inversion-qi}, this gives the strongest
-proved package on the present surface: ordinary quasi-isomorphism on
-the square-zero Koszul lane, coderived equivalence for all complete augmented
-chiral algebras with finite-dimensional bar complex, and no silent
-promotion of the off-Koszul curved statement back to ordinary
-cohomology. The remaining issue is exactly the flat-side collapse
-input needed for that promotion.
-
-The three-step proof (stratum-by-stratum Positselski,
-factorization compatibility, conservative assembly) is the
-factorization incarnation of Positselski's abstract
-coderived theory. The only input beyond the abstract theory is
-the CDG-factorization compatibility
-(\S\ref{subsec:CDG-factorization}), which ensures the
-curved structure and the Ran-space stratification are
-compatible.
+\index{structural gaps!H1 typed separation}
+Theorem~\ref{thm:off-koszul-ran-inversion} closes the fixed-coalgebra
+categorical part of structural gap~H1:
+\[
+ D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+ \simeq
+ D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact}).
+\]
+The algebra lane of H1 is the construction of
+\(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}
+(\bar B_X\cA,\cA,\tau_{\cA})\) for the canonical twisting cochain.
+Its load-bearing obligations are the typed cobar morphism, finite
+stratum comparison, acyclicity, factorization gluing, and exact
+completion listed in
+Definition~\ref{def:acyclic-chiral-twisting-comparison}.
+The strict Koszul lane supplies this package through the chiral
+Comparison Lemma; the general curved lane carries status
+\ClaimStatusOpen.
 \end{remark}
 
-\begin{remark}[Prior evidence]
+\begin{remark}[Primary-source map]
 \label{rem:off-koszul-evidence}
-\index{bar-cobar inversion!off-Koszul!evidence}
-Before the proof, four independent lines of evidence
-supported the theorem:
+\index{Positselski!primary-source map}
+The source architecture has three levels:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Abstract precedent.}
- The stratumwise chiral Positselski theorem
- \textup{(}Theorem~\ref{thm:chiral-bar-cobar-positselski-7-2}\textup{)}
- whose ordinary finite-type input is
- Positselski~\cite[Theorem~7.2]{Positselski11}.
-\item \emph{On-Koszul case.}
- The strict Koszul lane of
- Theorem~\ref{thm:bar-cobar-inversion-qi}.
-\item \emph{Spectral comparison.}
- The coderived bar-degree spectral sequence
- \textup{(}Proposition~\ref{prop:coderived-bar-degree-spectral-sequence}\textup{)}
- has the same strict associated-graded $E_1$ page on and off the
- Koszul locus; on the square-zero Koszul lane that page abuts to
- ordinary cohomology, while off the Koszul locus it controls
- coderived coacyclicity of the curved cone rather than ordinary
- cohomology.
-\item \emph{Completed Yangian case.}
- Corollary~\ref{cor:completed-bar-cobar-yangian}.
+\item Positselski's Theorem~5.2 gives the fixed-\(C\)
+ coderived--contraderived equivalence.
+\item Positselski's Theorem~6.5 treats a twisting cochain
+ \(\tau\colon C\to A\); its module-category equivalence is equivalent
+ to acyclicity of \(\tau\), expressed by the quasi-isomorphism
+ \(\operatorname{Cob}(C)\to A\).
+\item The Ran-space transport is the internal comparison theorem
+ encoded by
+ \(\mathsf{Pos}^{\mathrm{ch}}_{\mathrm{co\text{-}ctr}}\) and
+ \(\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}\).
 \end{enumerate}
+Thus the fixed-coalgebra theorem supplies the categorical ambient, and
+the acyclic-twisting theorem supplies the algebra comparison after its
+own hypothesis package has been verified.
 \end{remark}

@@ -187,7 +187,11 @@ def kappa_WN(N: int, c: float) -> float:
 # Dual kappa (AP24, AP33)
 
 def dual_kappa_heisenberg(k: float) -> float:
-    """kappa(H_k^!) = -k.  AP33: H_k^! != H_{-k}."""
+    """Scalar kappa(H_k^!) = -k.
+
+    AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch, not H_{-k}; only scalar kappa agrees with kappa(H_{-k}).
+    """
     return -float(k)
 
 

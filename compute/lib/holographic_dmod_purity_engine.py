@@ -26,7 +26,7 @@ Object discipline:
   B(A)          bar coalgebra; Omega(B(A)) recovers A by bar-cobar inversion
   A^i           H^*(B(A)), the bar-dual coalgebra
   A^!           Verdier/linear Koszul branch, not Omega(B(A))
-  Z_ch^der(A)   chiral Hochschild/derived-centre bulk algebra
+  Z_ch^der(A)   chiral Hochschild/derived-centre closed-sector algebra
   C             bulk/line channel of the holographic datum, not A, A^i, or A^!
 
 HOLOGRAPHIC DICTIONARY FOR D-MODULE PURITY
@@ -153,7 +153,7 @@ OBJECT_SEPARATION = {
     'B(A)': 'bar coalgebra; Omega(B(A)) recovers A by bar-cobar inversion',
     'A^i': 'H^*(B(A)), the bar-dual coalgebra',
     'A^!': 'Verdier/linear Koszul branch, distinct from A^i and Omega(B(A))',
-    'Z_ch^der(A)': 'chiral Hochschild/derived-centre bulk algebra',
+    'Z_ch^der(A)': 'chiral Hochschild/derived-centre closed-sector algebra',
     'C': 'bulk/line channel of H(T), distinct from A, A^i, A^!, Z_ch^der(A)',
 }
 

@@ -184,7 +184,7 @@ class TestBrownHenneaux:
         assert k == Fraction(5, 2)
 
     def test_kappa_is_half_c(self):
-        """kappa = c/2 always."""
+        """Brown-Henneaux/Virasoro normalization has kappa = c/2."""
         for ell in [1, 5, 10]:
             for G_N in [1, 2, 3]:
                 c = brown_henneaux_central_charge(ell, G_N)

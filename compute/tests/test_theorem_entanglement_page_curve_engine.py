@@ -1,11 +1,11 @@
 r"""Tests for the entanglement Page curve engine.
 
-Multi-path verification of:
+Verification of:
   (a) Renyi entropy universality: S_n = kappa * f_n * log(L/eps)
-  (b) Entanglement spectrum by shadow class (G/L/C/M)
-  (c) Page curve and transition: t_P = 3*S_BH/13, transition width
-  (d) QEC rate simplification after Holstein-Rivera
-  (e) Modular entanglement entropy S^mod_g at genus g
+  (b) formal spectrum and Page-branch candidates
+  (c) exact Theorem A / certificate-bound Theorem B status
+  (d) conditional entropy, QES/JLMS, Hilbert-QEC, and Page bridges
+  (e) scalar free-energy asymmetry at genus g
 
 Each numerical result is verified by at least 3 independent paths
 (Multi-Path Verification Mandate).
@@ -15,7 +15,12 @@ import math
 import unittest
 from fractions import Fraction
 
-from sympy import Rational, simplify, Abs, pi
+from sympy import Matrix, Rational, simplify, Abs, pi
+
+from compute.lib.qec_koszul_code_engine import (
+    quadratic_comparison_cone,
+    theorem_b_certificate_from_cone,
+)
 
 from compute.lib.theorem_entanglement_page_curve_engine import (
     # Section 1: Renyi universality
@@ -68,6 +73,29 @@ from compute.lib.entanglement_shadow_engine import (
 )
 
 
+def _quadratic_certificate(
+    algebra_id,
+    comparison_entry=1,
+    h_cl_verified=True,
+    strong_convergence_verified=True,
+):
+    """Build an exact one-term Theorem B certificate."""
+    cone = quadratic_comparison_cone(
+        source_dimensions={0: 1},
+        target_dimensions={0: 1},
+        source_differentials={},
+        target_differentials={},
+        comparison_maps={0: Matrix([[comparison_entry]])},
+    )
+    return theorem_b_certificate_from_cone(
+        cone,
+        algebra_id=algebra_id,
+        presentation='A = T(V)/(R), one-term finite model',
+        h_cl_verified=h_cl_verified,
+        strong_convergence_verified=strong_convergence_verified,
+    )
+
+
 # =========================================================================
 #  1. RENYI ENTROPY UNIVERSALITY
 # =========================================================================
@@ -109,6 +137,16 @@ class TestRenyiUniversality(unittest.TestCase):
         data = verify_renyi_universality(Rational(1), 2)
         self.assertTrue(data['paths_agree'])
         self.assertEqual(data['S_n'], Rational(1, 2))
+        self.assertIsNone(data['physical_renyi_entropy'])
+        self.assertEqual(
+            data['physical_renyi_status'],
+            'CONDITIONAL_ON_REPLICA_STATE_AND_ANALYTIC_CONTINUATION',
+        )
+
+    def test_renyi_identity_handles_n1_limiting_case(self):
+        data = verify_renyi_universality(Rational(1), 1)
+        self.assertTrue(data['paths_agree'])
+        self.assertEqual(data['S_n'], Rational(2, 3))
 
     def test_renyi_factorization_virasoro_c13(self):
         """S_n(Vir_13) = (13/2) * f_n at n=3.
@@ -142,6 +180,7 @@ class TestRenyiUniversality(unittest.TestCase):
         data = renyi_von_neumann_limit(Rational(1))
         self.assertTrue(data['paths_agree'])
         self.assertEqual(data['S_EE'], Rational(2, 3))
+        self.assertIsNone(data['physical_von_neumann_entropy'])
 
     def test_von_neumann_limit_virasoro_c13(self):
         """lim_{n->1} S_n = 13/3 for Virasoro at c=13."""
@@ -150,17 +189,21 @@ class TestRenyiUniversality(unittest.TestCase):
         self.assertEqual(data['S_EE'], Rational(13, 3))
 
     def test_renyi_spectrum_class_g_exact(self):
-        """Class G has exact scalar Renyi (no corrections)."""
+        """Class G has the scalar formula and scalar-only arity metadata."""
         data = renyi_spectrum_by_class('heisenberg')
         self.assertTrue(data['exact_at_scalar'])
+        self.assertTrue(data['scalar_formula_verified'])
         self.assertEqual(data['shadow_class'], 'G')
-        self.assertEqual(data['n_corrections'], 0)
+        self.assertEqual(data['supported_higher_arities'], [])
+        self.assertIsNone(data['n_corrections'])
+        self.assertIsNone(data['physical_renyi_spectrum'])
 
-    def test_renyi_spectrum_class_m_not_exact(self):
-        """Class M has infinite correction tower."""
+    def test_renyi_spectrum_class_m_has_unbounded_arity_metadata(self):
         data = renyi_spectrum_by_class('virasoro')
-        self.assertFalse(data['exact_at_scalar'])
+        self.assertTrue(data['exact_at_scalar'])
         self.assertEqual(data['shadow_class'], 'M')
+        self.assertEqual(data['supported_higher_arities'], list(range(3, 11)))
+        self.assertIsNone(data['correction_arities'])
 
 
 # =========================================================================
@@ -168,12 +211,14 @@ class TestRenyiUniversality(unittest.TestCase):
 # =========================================================================
 
 class TestEntanglementSpectrum(unittest.TestCase):
-    """Tests for entanglement spectrum by shadow class."""
+    """Tests for formal spectrum candidates and bridge status."""
 
     def test_thermal_spectrum_class_g(self):
-        """Class G spectrum is exactly thermal."""
+        """The equally spaced candidate is distinct from a physical spectrum."""
         spec = entanglement_spectrum_thermal(Rational(1), 5)
-        self.assertTrue(spec['is_thermal'])
+        self.assertIsNone(spec['is_thermal'])
+        self.assertTrue(spec['formal_spectrum_candidate'])
+        self.assertIsNone(spec['physical_spectrum'])
         self.assertEqual(spec['shadow_class'], 'G')
         self.assertEqual(spec['n_levels'], 5)
 
@@ -182,11 +227,12 @@ class TestEntanglementSpectrum(unittest.TestCase):
         spec = entanglement_spectrum_thermal(Rational(1), 10)
         self.assertEqual(spec['spacing'], Rational(1))
 
-    def test_class_m_spectrum_virasoro(self):
-        """Class M spectrum at c=26 is convergent (rho < 1)."""
+    def test_class_m_formal_bound_virasoro(self):
         spec = entanglement_spectrum_class_m(Rational(26), 5)
         self.assertEqual(spec['shadow_class'], 'M')
-        self.assertTrue(spec['convergent'])
+        self.assertIsNone(spec['convergent'])
+        self.assertTrue(spec['formal_geometric_bound_converges'])
+        self.assertIsNone(spec['physical_spectrum'])
         self.assertLess(spec['rho'], 1.0)
 
     def test_class_m_self_dual(self):
@@ -195,12 +241,16 @@ class TestEntanglementSpectrum(unittest.TestCase):
         self.assertTrue(spec['self_dual'])
 
     def test_spectral_complexity_classification(self):
-        """Four shadow classes have correct correction counts."""
+        """Four shadow classes retain their arity counts."""
         data = spectral_complexity_by_class()
-        self.assertEqual(data['G']['n_corrections'], 0)
-        self.assertEqual(data['L']['n_corrections'], 1)
-        self.assertEqual(data['C']['n_corrections'], 2)
-        self.assertEqual(data['M']['n_corrections'], -1)  # infinite
+        self.assertEqual(data['G']['formal_higher_arity_slots'], 0)
+        self.assertEqual(data['L']['formal_higher_arity_slots'], 1)
+        self.assertEqual(data['C']['formal_higher_arity_slots'], 2)
+        self.assertEqual(data['M']['formal_higher_arity_slots'], -1)
+        for cls in ['G', 'L', 'C', 'M']:
+            self.assertIsNone(data[cls]['n_corrections'])
+            self.assertIsNone(data[cls]['spectrum'])
+            self.assertIsNone(data[cls]['complexity'])
 
 
 # =========================================================================
@@ -208,16 +258,16 @@ class TestEntanglementSpectrum(unittest.TestCase):
 # =========================================================================
 
 class TestPageCurve(unittest.TestCase):
-    """Tests for the Page curve and transition."""
+    """Tests for formal branch candidates and the Page bridge."""
 
     def test_page_time_classical(self):
-        """t_P = 3*S_BH/13."""
+        """The chosen linear branches cross at 3*S_BH/13."""
         self.assertEqual(page_time_classical(Rational(100)), Rational(300, 13))
         self.assertEqual(page_time_classical(Rational(130)), Rational(30))
         self.assertEqual(page_time_classical(Rational(13)), Rational(3))
 
     def test_page_time_independence_of_c(self):
-        """Page time is independent of c.
+        """The formal branch crossing is independent of c.
 
         Multi-path: verify at c=1, c=7/10, c=13, c=26, c=50.
         """
@@ -225,36 +275,38 @@ class TestPageCurve(unittest.TestCase):
         self.assertTrue(all(checks.values()),
                         f"Failed: {[k for k, v in checks.items() if not v]}")
 
-    def test_page_entropy_at_transition_self_dual(self):
-        """At c=13: S_Page = S_BH/2 (exactly half).
+    def test_formal_transition_value_self_dual(self):
+        """At c=13 the formal branches meet at S_BH/2.
 
         Multi-path: radiation branch, island branch, direct formula.
         """
         data = page_entropy_at_transition(Rational(13), Rational(100))
         self.assertTrue(data['paths_agree'])
-        self.assertEqual(data['S_page'], Rational(50))
-        self.assertEqual(data['fraction'], Rational(1, 2))
+        self.assertEqual(data['formal_transition_value'], Rational(50))
+        self.assertEqual(data['formal_fraction'], Rational(1, 2))
+        self.assertIsNone(data['S_page'])
+        self.assertIsNone(data['page_time'])
 
-    def test_page_entropy_at_transition_critical(self):
-        """At c=26: S_Page = S_BH (full evaporation at Page time)."""
+    def test_formal_transition_value_c26(self):
         data = page_entropy_at_transition(Rational(26), Rational(100))
         self.assertTrue(data['paths_agree'])
-        self.assertEqual(data['S_page'], Rational(100))
-        self.assertEqual(data['fraction'], Rational(1))
+        self.assertEqual(data['formal_transition_value'], Rational(100))
+        self.assertEqual(data['formal_fraction'], Rational(1))
 
-    def test_page_entropy_fraction_monotone(self):
-        """S_Page/S_BH = c/26 is monotone increasing in c."""
+    def test_formal_transition_fraction_monotone(self):
         fractions = []
         for c in [Rational(1), Rational(6), Rational(13), Rational(20), Rational(26)]:
             data = page_entropy_at_transition(c, Rational(100))
-            fractions.append(data['fraction'])
+            fractions.append(data['formal_fraction'])
         for i in range(len(fractions) - 1):
             self.assertLess(fractions[i], fractions[i + 1])
 
     def test_page_quantum_correction_self_dual(self):
-        """At c=13: quantum correction to Page time vanishes."""
+        """The formal asymmetry coefficient vanishes at c=13."""
         data = page_time_quantum_correction(Rational(13))
-        self.assertEqual(data['delta_t_coefficient'], 0)
+        self.assertEqual(data['formal_delta_t_coefficient'], 0)
+        self.assertIsNone(data['delta_t_coefficient'])
+        self.assertIsNone(data['physical_page_time_correction'])
         self.assertTrue(data['self_dual'])
 
     def test_page_quantum_correction_convergence(self):
@@ -262,23 +314,25 @@ class TestPageCurve(unittest.TestCase):
         data = page_time_quantum_correction(Rational(26), max_genus=20)
         self.assertTrue(data['sum_converged'])
 
-    def test_page_transition_width_class_g(self):
-        """Class G has no quantum smearing of the Page transition."""
+    def test_page_width_class_g_is_bridge_pending(self):
         data = page_transition_width_by_class('heisenberg')
-        self.assertEqual(data['quantum_smearing'], 0)
+        self.assertIsNone(data['quantum_smearing'])
+        self.assertEqual(data['formal_arity_terms'], 0)
         self.assertEqual(data['shadow_class'], 'G')
 
-    def test_page_transition_width_class_m(self):
-        """Class M at c=26 has finite smearing (rho < 1)."""
+    def test_page_width_class_m_formal_bound(self):
         data = page_transition_width_by_class('virasoro', Rational(26), Rational(100))
-        self.assertGreater(data['quantum_smearing'], 0)
-        self.assertTrue(data['convergent'])
+        self.assertIsNone(data['quantum_smearing'])
+        self.assertGreater(data['formal_geometric_bound'], 0)
+        self.assertTrue(data['formal_geometric_bound_converges'])
 
-    def test_page_curve_full_self_dual(self):
-        """Full Page curve at c=13 is symmetric."""
+    def test_formal_page_branches_self_dual(self):
         data = page_curve_full(Rational(13), Rational(100), 5)
         self.assertTrue(data['self_dual'])
-        self.assertEqual(data['page_time'], Rational(300, 13))
+        self.assertEqual(data['formal_crossing_time'], Rational(300, 13))
+        self.assertIsNone(data['page_time'])
+        self.assertIsNone(data['s_page'])
+        self.assertEqual(len(data['formal_scalar_envelope']), 5)
 
     def test_page_curve_genus_corrections(self):
         """Genus corrections use correct Faber-Pandharipande coefficients.
@@ -291,55 +345,136 @@ class TestPageCurve(unittest.TestCase):
             expected_fg = kappa * faber_pandharipande(g)
             self.assertEqual(data['genus_corrections'][g]['F_g'], expected_fg)
 
+    def test_corrected_crossing_solves_implemented_branches(self):
+        c_val = Rational(26)
+        S_BH = Rational(100)
+        data = page_curve_full(c_val, S_BH, 5, max_genus=4)
+        t_cross = data['formal_crossing_time']
+        s_rad = c_val * t_cross / 6 + data['F_total']
+        s_island = (
+            S_BH - (26 - c_val) * t_cross / 6 + data['F_total_dual']
+        )
+        self.assertEqual(simplify(s_rad - s_island), 0)
+        self.assertEqual(
+            t_cross,
+            data['formal_classical_crossing_time']
+            + data['formal_genus_crossing_shift'],
+        )
+
 
 # =========================================================================
 #  4. QEC RATE WITH HOLSTEIN-RIVERA
 # =========================================================================
 
 class TestQECRate(unittest.TestCase):
-    """Tests for QEC rate simplification."""
+    """Tests for typed algebraic and physical QEC status."""
 
     def test_before_hr_chain_length(self):
         """Before HR: 4-step verification chain."""
         chain = qec_verification_chain_before_hr()
         self.assertEqual(chain['n_steps'], 4)
-        self.assertEqual(chain['rate'], Rational(1, 2))
+        self.assertIsNone(chain['rate'])
+        self.assertEqual(chain['lagrangian_fraction_candidate'], Rational(1, 2))
 
     def test_after_hr_chain_length(self):
-        """After HR: 2-step verification chain (P3 removed)."""
+        """The proposed post-HR lane remains source-qualified."""
         chain = qec_verification_chain_after_hr()
         self.assertEqual(chain['n_steps'], 2)
-        self.assertEqual(chain['hypothesis_removed'], 'P3 (properness/perfectness)')
+        self.assertIsNone(chain['hypothesis_removed'])
+        self.assertEqual(
+            chain['claimed_hypothesis_removed'], 'P3 (properness/perfectness)'
+        )
+        self.assertEqual(
+            chain['lane_status'],
+            'REQUIRES_THEOREM_C_AND_HOLSTEIN_RIVERA_PACKAGE',
+        )
 
-    def test_qec_rate_universal_half(self):
-        """R = 1/2 for all standard families after HR.
-
-        Universal across the landscape: all Koszul algebras have R = 1/2.
-        """
+    def test_family_labels_leave_theorem_b_and_rate_pending(self):
         for family in ['heisenberg', 'virasoro', 'affine', 'betagamma']:
             data = qec_rate_by_family_simplified(family)
-            self.assertEqual(data['rate'], Rational(1, 2),
-                             f"Rate != 1/2 for {family}")
-            self.assertEqual(data['verification_steps'], 2)
-            self.assertFalse(data['P3_needed'])
+            self.assertTrue(data['universal_reconstruction'])
+            self.assertIsNone(data['is_koszul'])
+            self.assertIsNone(data['exact_quadratic_recovery'])
+            self.assertEqual(data['quadratic_recovery_status'], 'UNVERIFIED')
+            self.assertIsNone(data['rate'])
+            self.assertIsNone(data['distance'])
+            self.assertIsNone(data['lagrangian_fraction'])
 
-    def test_qec_arity_proxy_universal_2(self):
-        """The arity proxy is 2; operational QEC distance is external."""
+    def test_qec_arity_floor_is_separate_from_distance(self):
         for family in ['heisenberg', 'virasoro', 'affine', 'betagamma']:
             data = qec_rate_by_family_simplified(family)
-            self.assertEqual(data['distance'], 2)
-            self.assertEqual(data['distance_kind'],
-                             'arity proxy; not Hilbert-space code distance')
+            self.assertEqual(data['arity_floor'], 2)
+            self.assertIsNone(data['distance'])
             self.assertIsNone(data['physical_distance'])
-            self.assertIn('physical inner product',
-                          data['physical_distance_status'])
+            self.assertEqual(
+                data['physical_distance_status'],
+                'CONDITIONAL_ON_HILBERT_ERROR_ALGEBRA_AND_RECOVERY_MAPS',
+            )
 
-    def test_qec_channels_by_class(self):
-        """Redundancy channels depend on shadow depth."""
-        self.assertEqual(qec_rate_by_family_simplified('heisenberg')['channels'], 0)
-        self.assertEqual(qec_rate_by_family_simplified('affine')['channels'], 1)
-        self.assertEqual(qec_rate_by_family_simplified('betagamma')['channels'], 2)
-        self.assertEqual(qec_rate_by_family_simplified('virasoro')['channels'], -1)
+    def test_higher_arity_slots_by_class(self):
+        self.assertEqual(qec_rate_by_family_simplified('heisenberg')['formal_higher_arity_slots'], 0)
+        self.assertEqual(qec_rate_by_family_simplified('affine')['formal_higher_arity_slots'], 1)
+        self.assertEqual(qec_rate_by_family_simplified('betagamma')['formal_higher_arity_slots'], 2)
+        self.assertEqual(qec_rate_by_family_simplified('virasoro')['formal_higher_arity_slots'], -1)
+        self.assertIsNone(qec_rate_by_family_simplified('virasoro')['channels'])
+
+    def test_exact_cone_certificate_transitions_theorem_b(self):
+        algebra_id = 'heisenberg:k=1'
+        data = qec_rate_by_family_simplified(
+            'heisenberg',
+            k=1,
+            algebra_id=algebra_id,
+            quadratic_certificate=_quadratic_certificate(algebra_id),
+        )
+        self.assertTrue(data['universal_reconstruction'])
+        self.assertTrue(data['is_koszul'])
+        self.assertTrue(data['exact_quadratic_recovery'])
+        self.assertEqual(data['quadratic_recovery_status'], 'CERTIFIED')
+        self.assertIsNone(data['rate'])
+
+    def test_obstructed_cone_transitions_theorem_b(self):
+        algebra_id = 'affine:sl2:k=1'
+        data = qec_rate_by_family_simplified(
+            'affine',
+            algebra_id=algebra_id,
+            quadratic_certificate=_quadratic_certificate(
+                algebra_id, comparison_entry=0
+            ),
+        )
+        self.assertFalse(data['is_koszul'])
+        self.assertFalse(data['exact_quadratic_recovery'])
+        self.assertEqual(
+            data['quadratic_recovery_status'], 'OBSTRUCTED_IN_FINITE_MODEL'
+        )
+
+    def test_incomplete_certificate_keeps_theorem_b_pending(self):
+        algebra_id = 'betagamma:lambda=1'
+        data = qec_rate_by_family_simplified(
+            'betagamma',
+            algebra_id=algebra_id,
+            quadratic_certificate=_quadratic_certificate(
+                algebra_id, strong_convergence_verified=False
+            ),
+        )
+        self.assertIsNone(data['is_koszul'])
+        self.assertEqual(data['quadratic_recovery_status'], 'INCOMPLETE_PACKAGE')
+
+    def test_mismatched_certificate_is_rejected(self):
+        certificate = _quadratic_certificate('virasoro:c=13')
+        with self.assertRaisesRegex(ValueError, 'algebra_id'):
+            qec_rate_by_family_simplified(
+                'virasoro',
+                c=26,
+                algebra_id='virasoro:c=26',
+                quadratic_certificate=certificate,
+            )
+
+    def test_theorem_c_hr_package_transitions_lagrangian_fraction_only(self):
+        data = qec_rate_by_family_simplified(
+            'heisenberg', theorem_c_hr_package_verified=True
+        )
+        self.assertEqual(data['lagrangian_fraction'], Rational(1, 2))
+        self.assertIsNone(data['rate'])
 
 
 # =========================================================================
@@ -347,7 +482,7 @@ class TestQECRate(unittest.TestCase):
 # =========================================================================
 
 class TestModularEntanglement(unittest.TestCase):
-    """Tests for the bar-Verdier modular entanglement S^mod_g."""
+    """Tests for the scalar free-energy-asymmetry coefficients."""
 
     def test_heisenberg_g1(self):
         """S^mod_1(H_1) = 1/12.
@@ -431,7 +566,7 @@ class TestModularEntanglement(unittest.TestCase):
             self.assertGreater(data['S_mod'][g], data['S_mod'][g + 1])
 
     def test_genus_tower_convergence(self):
-        """Total modular entanglement converges to closed form.
+        """The scalar asymmetry series converges to its closed form.
 
         sum S^mod_g = |kappa-kappa!| * ((1/2)/sin(1/2) - 1).
         """
@@ -439,6 +574,11 @@ class TestModularEntanglement(unittest.TestCase):
         self.assertAlmostEqual(float(data['total']),
                                data['total_closed_form'],
                                places=8)
+        self.assertIsNone(data['physical_modular_entanglement'])
+        self.assertEqual(
+            data['physical_modular_status'],
+            'CONDITIONAL_ON_TOMITA_JLMS_OPERATOR_ALGEBRA_PACKAGE',
+        )
 
     def test_genus_tower_self_dual_total_zero(self):
         """Total modular entanglement at c=13 is zero."""
@@ -455,32 +595,71 @@ class TestCrossChecks(unittest.TestCase):
     """Cross-family and cross-quantity consistency checks."""
 
     def test_full_analysis_self_dual(self):
-        """Full analysis at c=13: self-dual, S^mod = 0, R=1/2."""
+        """Full analysis separates scalar candidates from physical status."""
         data = full_page_curve_analysis(Rational(13), Rational(100))
         self.assertTrue(data['self_dual'])
-        self.assertEqual(data['qec_rate'], Rational(1, 2))
-        self.assertEqual(data['page_time'], Rational(300, 13))
+        self.assertIsNone(data['qec_rate'])
+        self.assertIsNone(data['page_time'])
+        self.assertEqual(data['formal_crossing_time'], Rational(300, 13))
+        self.assertTrue(data['universal_reconstruction'])
+        self.assertIsNone(data['is_koszul'])
+        self.assertEqual(data['quadratic_recovery_status'], 'UNVERIFIED')
         self.assertEqual(data['S_mod_1'], 0)
-        self.assertEqual(data['page_fraction'], Rational(1, 2))
+        self.assertEqual(data['formal_transition_fraction'], Rational(1, 2))
+        self.assertIsNone(data['page_fraction'])
 
     def test_full_analysis_critical(self):
         """Full analysis at c=26: critical string, S^mod_1 = 13/24."""
         data = full_page_curve_analysis(Rational(26), Rational(100))
         self.assertFalse(data['self_dual'])
         self.assertEqual(data['S_mod_1'], Rational(13, 24))
-        self.assertEqual(data['page_fraction'], Rational(1))
+        self.assertEqual(data['formal_transition_fraction'], Rational(1))
+
+    def test_full_analysis_certificate_transitions_only_theorem_b(self):
+        algebra_id = 'virasoro:c=13'
+        data = full_page_curve_analysis(
+            Rational(13),
+            Rational(100),
+            algebra_id=algebra_id,
+            quadratic_certificate=_quadratic_certificate(algebra_id),
+        )
+        self.assertTrue(data['exact_quadratic_recovery'])
+        self.assertEqual(data['quadratic_recovery_status'], 'CERTIFIED')
+        self.assertIsNone(data['qec_rate'])
+        self.assertIsNone(data['page_time'])
 
     def test_landscape_survey_completeness(self):
         """Survey covers at least 6 families."""
         survey = entanglement_landscape_survey()
         self.assertGreaterEqual(len(survey), 6)
 
-    def test_landscape_survey_universal_rate(self):
-        """All families in the survey have R = 1/2."""
+    def test_landscape_survey_keeps_theorem_b_and_rate_pending(self):
         survey = entanglement_landscape_survey()
         for row in survey:
-            self.assertEqual(row['qec_rate'], Rational(1, 2),
-                             f"Rate != 1/2 for {row['family']}")
+            self.assertTrue(row['universal_reconstruction'])
+            self.assertIsNone(row['is_koszul'])
+            self.assertIsNone(row['exact_quadratic_recovery'])
+            self.assertEqual(row['quadratic_recovery_status'], 'UNVERIFIED')
+            self.assertIsNone(row['qec_rate'])
+            self.assertIsNone(row['S_EE_scalar'])
+
+    def test_landscape_certificate_is_bound_to_one_algebra(self):
+        algebra_id = 'heisenberg:k=1'
+        survey = entanglement_landscape_survey(
+            {algebra_id: _quadratic_certificate(algebra_id)}
+        )
+        certified = [
+            row for row in survey
+            if row['quadratic_recovery_status'] == 'CERTIFIED'
+        ]
+        self.assertEqual([row['algebra_id'] for row in certified], [algebra_id])
+        self.assertTrue(certified[0]['exact_quadratic_recovery'])
+        self.assertIsNone(certified[0]['qec_rate'])
+
+    def test_landscape_rejects_mismatched_certificate(self):
+        certificate = _quadratic_certificate('heisenberg:k=2')
+        with self.assertRaisesRegex(ValueError, 'algebra_id'):
+            entanglement_landscape_survey({'heisenberg:k=1': certificate})
 
     def test_landscape_survey_universal_f2(self):
         """All families have f_2 = 1/2 (Renyi universality)."""

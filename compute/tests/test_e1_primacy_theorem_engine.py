@@ -1,533 +1,357 @@
-r"""Tests for E1 primacy theorem engine: 30 tests across 6 verification targets.
+"""Regression tests for the ordered-to-symmetric averaging audit.
 
-THEOREM (E1 primacy, upgrade from Principle princ:e1-primacy):
-    av: g^{E_1}_A -> g^mod_A is a surjective dg Lie morphism.
-    Its kernel classifies quantum group deformation data.
-    The short exact sequence does NOT split as a dg Lie algebra.
+The tests keep three surfaces separate:
 
-SIX TARGETS with multi-path verification (3+ paths per claim):
+* exact linear invariant/coinvariant splitting, including ``qR=q``;
+* compatibility criteria for brackets, differentials, and coproducts;
+* independent representation-theoretic ranks and finite Casimir formulas.
 
-  Target 1 (Tests 1-6):   av is a dg Lie morphism
-  Target 2 (Tests 7-11):  av is surjective
-  Target 3 (Tests 12-17): ker(av) structure
-  Target 4 (Tests 18-22): MC equation projects correctly
-  Target 5 (Tests 23-26): Non-splitting / Drinfeld obstruction
-  Target 6 (Tests 27-30): Information content / kappa recovery
-
-References:
-    e1_modular_koszul.tex, Definition def:e1-modular-convolution (line 229)
-    e1_modular_koszul.tex, Theorem rem:e1-mc-element (eq:e1-to-einfty-mc)
-    e1_modular_koszul.tex, Theorem thm:e1-coinvariant-shadow
-    algebraic_foundations.tex, line 1422 (Eulerian idempotent)
+Equivariance and closure of the invariant image are tested as their own
+statements.  Bracket preservation is tested by its actual morphism equation
+and by the kernel-ideal criterion.
 """
+
+import math
+from fractions import Fraction
 
 import numpy as np
 import pytest
-from fractions import Fraction
 from numpy import linalg as la
 
 from compute.lib.e1_primacy_theorem_engine import (
-    # Symmetric group machinery
-    permutation_matrix, all_permutations, sgn, descent_count,
-    # Reynolds operator
-    reynolds_operator, is_sn_invariant,
-    # Eulerian idempotents
-    eulerian_number, eulerian_idempotent_matrix, kernel_projection,
-    # R-matrices and kappa
-    casimir_sl2, r_matrix_heisenberg, r_matrix_sl2, r_matrix_virasoro,
-    kappa_from_r_matrix_heisenberg, kappa_from_r_matrix_sl2, kappa_virasoro,
-    # Verification functions
+    E1PrimacyTheorem,
+    SplittingAnalysis,
+    all_permutations,
+    casimir_sl2,
+    convolution_bracket_descent_surface,
+    descent_count,
+    dim_end_sn_invariant_formula,
+    eulerian_idempotent_matrix,
+    eulerian_number,
+    exact_deconcatenation_surface,
+    exact_reynolds_coinvariant_surface,
+    exact_reynolds_lie_surface,
+    information_loss_arity2,
+    information_loss_arity_n,
+    is_sn_invariant,
+    kernel_contains_antisymmetric,
+    kernel_dimension,
+    kernel_projection,
+    kappa_from_r_matrix_heisenberg,
+    kappa_from_r_matrix_sl2,
+    permutation_matrix,
+    quantum_group_data_in_kernel,
+    reynolds_complement_in_kernel,
+    reynolds_operator,
+    r_matrix_minus_kappa_in_kernel,
+    sgn,
+    transported_concatenation_surface,
     verify_av_commutes_with_differential,
     verify_av_preserves_bracket,
     verify_av_preserves_bracket_equivariant,
-    verify_surjectivity,
-    verify_mc_projection_arity2,
     verify_cybe_fails_for_casimir,
-    r_matrix_minus_kappa_in_kernel,
-    kernel_contains_antisymmetric,
-    kernel_dimension,
-    # Dimension formulas
-    dim_sn_invariant_endomorphisms,
-    dim_end_sn_invariant_formula,
     verify_dim_formula_against_computation,
-    information_loss_arity2,
-    information_loss_arity_n,
-    quantum_group_data_in_kernel,
-    # Kappa recovery
     verify_kappa_recovery_heisenberg,
     verify_kappa_recovery_sl2,
-    # Master classes
-    SplittingAnalysis,
-    E1PrimacyTheorem,
+    verify_mc_projection_arity2,
+    verify_surjectivity,
 )
 
 
-# =========================================================================
-#  TARGET 1: av IS A DG LIE MORPHISM (Tests 1-6)
-# =========================================================================
+class TestSymmetricGroupMachinery:
+    def test_permutation_representation_and_sign(self):
+        swap = permutation_matrix((1, 0), 2)
+        assert np.allclose(swap @ swap, np.eye(4))
+        assert sgn((1, 0)) == -1
+        assert sgn((0, 1)) == 1
+        assert len(all_permutations(3)) == math.factorial(3)
 
-class TestAvIsDgLieMorphism:
-    """Tests 1-6: Verify av: g^{E_1} -> g^mod is a dg Lie morphism."""
-
-    def test_01_reynolds_is_projection(self):
-        """Test 1: av^2 = av (Reynolds operator is idempotent).
-
-        Path A (direct computation): apply av twice, check identity.
-        """
-        for n in [2, 3]:
-            for dim in [2, 3]:
-                N = dim ** n
-                np.random.seed(42 + n * dim)
-                M = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-                av_M = reynolds_operator(M, n, dim)
-                av_av_M = reynolds_operator(av_M, n, dim)
-                assert la.norm(av_M - av_av_M) < 1e-10, \
-                    f"av not idempotent at n={n}, dim={dim}"
-
-    def test_02_reynolds_image_is_sn_invariant(self):
-        """Test 2: im(av) subset End^{S_n}(V^n).
-
-        Path A: check av(M) commutes with all P_sigma.
-        """
-        for n in [2, 3]:
-            dim = 2
-            N = dim ** n
-            np.random.seed(137)
-            M = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            av_M = reynolds_operator(M, n, dim)
-            assert is_sn_invariant(av_M, n, dim), \
-                f"av(M) not S_{n}-invariant"
-
-    def test_03_bracket_equivariance_arity2(self):
-        """Test 3: [-, -] is S_n-equivariant (implies av preserves bracket).
-
-        Path B (representation-theoretic): the commutator bracket on
-        End(V^n) satisfies sigma.[A,B] = [sigma.A, sigma.B] because
-        P[A,B]P^T = [PAP^T, PBP^T] for orthogonal P.
-        """
-        dim = 2
-        N = dim ** 2
-        np.random.seed(7)
-        A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        ok, err = verify_av_preserves_bracket_equivariant(2, dim, A, B)
-        assert ok, f"Bracket not equivariant: err={err}"
-
-    def test_04_bracket_equivariance_arity3(self):
-        """Test 4: S_3-equivariance of the commutator bracket on End(V^3).
-
-        Path B: same argument at arity 3.
-        """
-        dim = 2
-        N = dim ** 3
-        np.random.seed(13)
-        A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        ok, err = verify_av_preserves_bracket_equivariant(3, dim, A, B)
-        assert ok, f"Bracket not S_3-equivariant: err={err}"
-
-    def test_05_av_preserves_commutator_bracket(self):
-        """Test 5: av([A,B]) = [av(A), av(B)] (direct computation).
-
-        Path C (explicit matrix verification): compute both sides at n=2.
-        This follows from equivariance but we verify directly.
-        """
-        dim = 2
-        N = dim ** 2
-        np.random.seed(17)
-        A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        ok, err = verify_av_preserves_bracket(2, 2, dim, A, B)
-        assert ok, f"av does not preserve bracket: err={err}"
-
-    def test_06_av_preserves_bracket_multiple_dims(self):
-        """Test 6: Bracket preservation at multiple dimensions.
-
-        Path C: exhaustive check at dim=2,3 and n=2.
-        """
-        for dim in [2, 3]:
-            N = dim ** 2
-            np.random.seed(23 + dim)
-            A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            ok, err = verify_av_preserves_bracket(2, 2, dim, A, B)
-            assert ok, f"Bracket not preserved at dim={dim}: err={err}"
+    def test_descent_count(self):
+        assert descent_count((0, 1, 2)) == 0
+        assert descent_count((2, 1, 0)) == 2
+        assert descent_count((1, 0, 2)) == 1
 
 
-# =========================================================================
-#  TARGET 2: av IS SURJECTIVE (Tests 7-11)
-# =========================================================================
+class TestLinearReynoldsSurface:
+    def test_reynolds_is_projection(self):
+        for n, dim in [(2, 2), (2, 3), (3, 2)]:
+            rng = np.random.default_rng(42 + 10 * n + dim)
+            size = dim**n
+            matrix = rng.normal(size=(size, size))
+            averaged = reynolds_operator(matrix, n, dim)
+            assert la.norm(reynolds_operator(averaged, n, dim) - averaged) < 1e-10
 
-class TestAvSurjective:
-    """Tests 7-11: Verify av: g^{E_1} -> g^mod is surjective."""
+    def test_reynolds_image_is_invariant(self):
+        rng = np.random.default_rng(137)
+        for n in (2, 3):
+            size = 2**n
+            matrix = rng.normal(size=(size, size))
+            assert is_sn_invariant(reynolds_operator(matrix, n, 2), n, 2)
 
-    def test_07_surjectivity_arity2_dim2(self):
-        """Test 7: av surjective at n=2, dim=2.
+    @pytest.mark.parametrize("dim,n", [(2, 2), (2, 3), (3, 2)])
+    def test_exact_coinvariant_identity(self, dim, n):
+        surface = exact_reynolds_coinvariant_surface(dim, n)
+        assert surface['idempotent'] is True
+        assert surface['quotient_after_reynolds_equals_quotient'] is True
+        assert surface['invariant_dimension'] == surface['expected_symmetric_dimension']
+        assert surface['status'] == 'PROVED_EXACT_FINITE_MODEL'
 
-        Path A: rank of Reynolds superoperator equals dim(End^{S_2}).
-        """
-        surj, dim_img, dim_total = verify_surjectivity(2, 2)
-        assert surj
-        assert dim_img == 10  # Schur-Weyl: 3^2 + 1^2 = 10
+    @pytest.mark.parametrize(
+        "n,dim,expected",
+        [(2, 2, 10), (2, 3, 45), (3, 2, 20)],
+    )
+    def test_surjectivity_onto_invariant_image(self, n, dim, expected):
+        surjective, image_dimension, total_dimension = verify_surjectivity(n, dim)
+        assert surjective
+        assert image_dimension == expected
+        assert total_dimension == dim ** (2 * n)
 
-    def test_08_surjectivity_arity2_dim3(self):
-        """Test 8: av surjective at n=2, dim=3.
-
-        Path A: direct computation.
-        """
-        surj, dim_img, dim_total = verify_surjectivity(2, 3)
-        assert surj
-        # Schur-Weyl: (6)^2 + (3)^2 = 36 + 9 = 45
-        assert dim_img == 45
-
-    def test_09_surjectivity_arity3_dim2(self):
-        """Test 9: av surjective at n=3, dim=2.
-
-        Path A: direct computation.
-        """
-        surj, dim_img, dim_total = verify_surjectivity(3, 2)
-        assert surj
-        # Schur-Weyl for n=3, d=2: (4)^2 + (2)^2 = 16+4 = 20
-        assert dim_img == 20
-
-    def test_10_dim_formula_cross_check_n2(self):
-        """Test 10: Analytical dimension formula matches computation.
-
-        Path B (Schur-Weyl): closed-form vs numerical.
-        """
-        for d in [2, 3, 4]:
-            assert verify_dim_formula_against_computation(2, d), \
-                f"Dim formula mismatch at n=2, d={d}"
-
-    def test_11_dim_formula_cross_check_n3(self):
-        """Test 11: Analytical dimension formula at n=3.
-
-        Path B: closed-form vs numerical.
-        """
-        for d in [2, 3]:
-            assert verify_dim_formula_against_computation(3, d), \
-                f"Dim formula mismatch at n=3, d={d}"
+    def test_schur_weyl_formulas_match_superoperator_ranks(self):
+        for n, dimensions in [(2, (2, 3, 4)), (3, (2, 3))]:
+            for dim in dimensions:
+                assert verify_dim_formula_against_computation(n, dim)
+                assert dim_end_sn_invariant_formula(n, dim) > 0
 
 
-# =========================================================================
-#  TARGET 3: KERNEL STRUCTURE (Tests 12-17)
-# =========================================================================
+class TestBracketCompatibilitySurface:
+    def test_commutator_action_is_equivariant(self):
+        for n in (2, 3):
+            rng = np.random.default_rng(200 + n)
+            size = 2**n
+            left = rng.normal(size=(size, size))
+            right = rng.normal(size=(size, size))
+            equivariant, error = verify_av_preserves_bracket_equivariant(
+                n, 2, left, right
+            )
+            assert equivariant
+            assert error < 1e-10
 
-class TestKernelStructure:
-    """Tests 12-17: Structure of ker(av)."""
+    def test_exact_equivariance_does_not_supply_lie_morphism(self):
+        surface = exact_reynolds_lie_surface()
+        assert surface['action_is_bracket_equivariant'] is True
+        assert surface['reynolds_is_lie_morphism'] is False
+        assert surface['kernel_is_lie_ideal'] is False
+        assert surface['defect_norm'] > 0
+        assert surface['status'] == 'REFUTED_BY_EXACT_COUNTEREXAMPLE'
 
-    def test_12_kernel_nonempty_arity2(self):
-        """Test 12: ker(av) is nonempty at n=2 for dim >= 2.
+    def test_tensor_swap_reynolds_has_explicit_commutator_defect(self):
+        symmetric = np.array([0.0, 1.0, 1.0, 0.0])
+        antisymmetric = np.array([0.0, 1.0, -1.0, 0.0])
+        left = np.outer(symmetric, antisymmetric)
+        right = np.outer(antisymmetric, symmetric)
 
-        Path A: dimension count.
-        """
-        total, img, ker = kernel_dimension(2, 2)
-        assert ker > 0, f"Kernel empty: total={total}, img={img}"
-        assert ker == 6  # 16 - 10 = 6
+        assert la.norm(reynolds_operator(left, 2, 2)) < 1e-10
+        assert la.norm(reynolds_operator(right, 2, 2)) < 1e-10
+        preserves, defect = verify_av_preserves_bracket(2, 2, 2, left, right)
+        assert preserves is False
+        assert defect > 1.0
 
-    def test_13_kernel_dimension_arity2_dim3(self):
-        """Test 13: ker(av) dimension at n=2, dim=3.
+    def test_convolution_bracket_requires_its_own_certificate(self):
+        undecided = convolution_bracket_descent_surface()
+        assert undecided['status'] == 'KERNEL_IDEAL_CERTIFICATE_REQUIRED'
+        assert undecided['raw_reynolds_preserves_bracket'] is False
 
-        Path A: 81 - 45 = 36.
-        """
-        total, img, ker = kernel_dimension(2, 3)
-        assert total == 81
-        assert img == 45
-        assert ker == 36
+        refuted = convolution_bracket_descent_surface(kernel_is_lie_ideal=False)
+        assert refuted['status'] == 'REFUTED_BY_KERNEL_IDEAL_FAILURE'
 
-    def test_14_kernel_grows_with_arity(self):
-        """Test 14: ker(av) fraction grows with arity.
+        certified = convolution_bracket_descent_surface(kernel_is_lie_ideal=True)
+        assert certified['status'] == 'CERTIFIED_BY_KERNEL_IDEAL'
+        assert certified['raw_reynolds_preserves_bracket'] is True
 
-        Path A: the fraction ker/total should increase as n grows
-        (the symmetric part becomes a smaller fraction of the total).
-        """
-        fracs = []
-        for n in [2, 3]:
-            total, img, ker = kernel_dimension(n, 2)
-            fracs.append(ker / total)
-        # For dim=2: n=2 has 6/16=0.375, n=3 has (64-20)/64 = 44/64 = 0.6875
-        assert fracs[1] > fracs[0], \
-            f"Kernel fraction not growing: {fracs}"
+    def test_chain_map_test_requires_explicit_differential(self):
+        matrix = np.arange(16, dtype=float).reshape(4, 4)
+        with pytest.raises(ValueError, match="explicit differential"):
+            verify_av_commutes_with_differential(2, 2, matrix, matrix)
 
-    def test_15_antisymmetric_in_kernel_n2(self):
-        """Test 15: Antisymmetric endomorphisms lie in ker(av).
+        identity_differential = lambda value: value
+        passed, error = verify_av_commutes_with_differential(
+            2, 2, matrix, matrix, differential=identity_differential
+        )
+        assert passed
+        assert error < 1e-10
 
-        Path A: av of an S_n-antisymmetric element vanishes.
-        For n=2: P M P^T = -M implies av(M) = (M + (-M))/2 = 0.
-        """
+
+class TestKernelAndCoalgebraSurface:
+    @pytest.mark.parametrize(
+        "n,dim,total,image,kernel",
+        [(2, 2, 16, 10, 6), (2, 3, 81, 45, 36), (3, 2, 64, 20, 44)],
+    )
+    def test_kernel_dimensions(self, n, dim, total, image, kernel):
+        assert kernel_dimension(n, dim) == (total, image, kernel)
+        assert information_loss_arity_n(n, dim) == (total, image, kernel)
+
+    def test_antisymmetric_elements_are_in_linear_kernel(self):
         assert kernel_contains_antisymmetric(2, 2)
-
-    def test_16_antisymmetric_in_kernel_n3(self):
-        """Test 16: S_3-antisymmetric endomorphisms in ker(av).
-
-        Path A: direct computation at n=3, dim=2.
-        """
         assert kernel_contains_antisymmetric(3, 2)
 
-    def test_17_kernel_complement_is_image(self):
-        """Test 17: End(V^n) = im(av) + ker(av) (direct sum).
+    def test_kernel_superoperator_is_projection_of_expected_rank(self):
+        projection = kernel_projection(2, 2)
+        assert la.norm(projection @ projection - projection) < 1e-10
+        assert np.linalg.matrix_rank(projection, tol=1e-9) == 6
 
-        Path C: verify total = image + kernel for multiple (n, dim).
-        """
-        for n in [2, 3]:
-            for dim in [2, 3]:
-                total, img, ker = kernel_dimension(n, dim)
-                assert total == img + ker, \
-                    f"Decomposition fails: {total} != {img} + {ker}"
+    def test_raw_deconcatenation_kernel_is_not_coideal(self):
+        surface = exact_deconcatenation_surface()
+        assert surface['quotient_of_kernel_vector_is_zero'] is True
+        assert surface['reduced_deconcatenation_survives'] is True
+        assert surface['kernel_is_coideal'] is False
+        assert surface['status'] == 'RAW_DECONCATENATION_REQUIRES_REPLACEMENT'
+
+    def test_concatenation_descends_and_fixed_points_use_transport(self):
+        surface = transported_concatenation_surface(2, 2, 2)
+        assert surface['concatenation_descends_to_coinvariants'] is True
+        assert surface['fixed_point_operation'] == 'R_{p+q}(concatenate(x,y))'
 
 
-# =========================================================================
-#  TARGET 4: MC EQUATION PROJECTS CORRECTLY (Tests 18-22)
-# =========================================================================
+class TestImplementedDescentProjections:
+    def test_symmetrizer_and_binary_antisymmetrizer(self):
+        symmetric = eulerian_idempotent_matrix(2, 0, 2)
+        antisymmetric = eulerian_idempotent_matrix(2, 1, 2)
+        identity = np.eye(4)
+        assert la.norm(symmetric @ symmetric - symmetric) < 1e-10
+        assert la.norm(antisymmetric @ antisymmetric - antisymmetric) < 1e-10
+        assert la.norm(symmetric @ antisymmetric) < 1e-10
+        assert la.norm(symmetric + antisymmetric - identity) < 1e-10
 
-class TestMCProjection:
-    """Tests 18-22: Maurer-Cartan equation projects under av."""
+    def test_higher_eulerian_idempotents_are_explicitly_unimplemented(self):
+        with pytest.raises(NotImplementedError, match="Solomon"):
+            eulerian_idempotent_matrix(3, 1, 2)
+        with pytest.raises(NotImplementedError, match="Solomon"):
+            eulerian_idempotent_matrix(3, 2, 2)
 
-    def test_18_ibr_holds_for_sl2_casimir(self):
-        """Test 18: The sl_2 Casimir satisfies the infinitesimal braid
-        relation (IBR): [Omega_12, Omega_13 + Omega_23] = 0.
 
-        Path A (direct computation).
-        Note: the Casimir does NOT satisfy CYBE --- the IBR is the
-        correct arity-2 content of the E_1 MC equation.
-        """
-        ok, err = verify_mc_projection_arity2(dim=2)
-        assert ok, f"IBR fails: err={err}"
+class TestFiniteCasimirIdentities:
+    def test_sl2_casimir_satisfies_infinitesimal_braid_relation(self):
+        holds, error = verify_mc_projection_arity2(dim=2)
+        assert holds
+        assert error < 1e-10
 
-    def test_18b_cybe_fails_for_sl2_casimir(self):
-        """Test 18b: The Casimir does NOT satisfy CYBE.
-
-        Path A: CYBE = IBR + [Omega_13, Omega_23], and the latter is
-        nonzero for sl_2.  This confirms the IBR/CYBE distinction.
-        """
+    def test_sl2_casimir_has_nonzero_cybe_tensor(self):
         fails, norm = verify_cybe_fails_for_casimir(dim=2)
-        assert fails, "CYBE unexpectedly holds for sl_2 Casimir"
-        assert norm > 0.5  # known value ~0.866
+        assert fails
+        assert norm > 0.5
 
-    def test_19_ibr_projects_to_zero(self):
-        """Test 19: av(IBR) = 0 (the scalar MC equation is trivial at arity 2).
+    def test_casimir_is_swap_invariant(self):
+        assert is_sn_invariant(casimir_sl2(), 2, 2)
 
-        Path A: IBR is 0, and av(0) = 0.
-        Path D: consistent with kappa being a scalar (bracket of two
-        scalars vanishes).
-        """
-        ok, err = verify_mc_projection_arity2(dim=2)
-        assert ok
-        # The IBR itself is zero, so its average is zero
-        assert err < 1e-10
+    def test_reynolds_complement_lies_in_kernel(self):
+        holds, error = reynolds_complement_in_kernel()
+        assert holds
+        assert error < 1e-10
 
-    def test_20_r_minus_kappa_in_kernel(self):
-        """Test 20: r(z) - av(r(z)) lies in ker(av).
-
-        Path A: since av is a projection, av(x - av(x)) = av(x) - av(x) = 0.
-        Path C: explicit verification for sl_2.
-        """
-        ok, err = r_matrix_minus_kappa_in_kernel()
-        assert ok, f"r - kappa not in kernel: err={err}"
-
-    def test_21_casimir_is_sn_symmetric(self):
-        """Test 21: The sl_2 Casimir Omega is S_2-symmetric.
-
-        Path C: P_{12} Omega P_{12}^T = Omega.
-        This means the R-MATRIX for sl_2 is fully in im(av) at arity 2,
-        and the kernel contribution at arity 2 comes only from the
-        non-Casimir part of End(V^2).
-        """
-        Omega = casimir_sl2()
-        assert is_sn_invariant(Omega, 2, 2), "Casimir not S_2-invariant"
-
-    def test_22_av_theta_e1_equals_theta(self):
-        """Test 22: av(Theta^{E_1}) = Theta_A (eq:e1-to-einfty-mc).
-
-        Path D (consistency check): for Heisenberg at arity 2,
-        Theta^{E_1}_{0,2} = r(z) = k*Omega_H/z (rank-one coeff k/z) and av(k/z) = k/z = kappa/z.
-        Since kappa(H_k) = k, this confirms av(Theta^{E_1}) = Theta.
-        """
-        for k in [1, 2, 5]:
-            assert verify_kappa_recovery_heisenberg(k), \
-                f"av(Theta^E1) != Theta for H_{k}"
+        alias_holds, alias_error = r_matrix_minus_kappa_in_kernel()
+        assert alias_holds
+        assert alias_error < 1e-10
 
 
-# =========================================================================
-#  TARGET 5: NON-SPLITTING (Tests 23-26)
-# =========================================================================
+class TestScalarFormulasAndInformationDimensions:
+    def test_heisenberg_formula(self):
+        for level in (1, 2, 3, 5, 10):
+            assert kappa_from_r_matrix_heisenberg(level) == level
+            assert verify_kappa_recovery_heisenberg(level)
 
-class TestNonSplitting:
-    """Tests 23-26: The extension does not split as dg Lie algebras."""
+    def test_sl2_formula(self):
+        for level in (1, 2, 3, 5):
+            expected = Fraction(3 * (level + 2), 4)
+            assert kappa_from_r_matrix_sl2(level) == expected
+            holds, computed = verify_kappa_recovery_sl2(level)
+            assert holds
+            assert computed == expected
 
-    def test_23_linear_section_exists(self):
-        """Test 23: A linear (vector space) section always exists.
+    def test_information_loss_dimensions(self):
+        fractions = []
+        for dim in (2, 3, 4, 5):
+            total, image, kernel = information_loss_arity2(dim)
+            assert total == image + kernel
+            fractions.append(kernel / total)
+        assert fractions == sorted(fractions)
 
-        Path A: av is a projection, so im(av) is a direct summand
-        as a vector space. The inclusion is a section.
-        """
-        for n in [2, 3]:
-            sa = SplittingAnalysis(n, 2)
-            assert sa.linear_section_exists()
-
-    def test_24_inclusion_preserves_bracket(self):
-        """Test 24: The inclusion End^{S_n} -> End preserves the bracket.
-
-        Path B: End^{S_n} is a Lie subalgebra of End (commutator of
-        S_n-invariant matrices is S_n-invariant).
-        """
-        dim = 2
-        N = dim ** 2
-        # Two random S_n-invariant matrices
-        np.random.seed(42)
-        A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-        A = reynolds_operator(A, 2, dim)
-        B = reynolds_operator(B, 2, dim)
-        bracket = A @ B - B @ A
-        assert is_sn_invariant(bracket, 2, dim), \
-            "Commutator of S_n-invariants not S_n-invariant"
-
-    def test_25_bracket_obstruction_vanishes_at_fixed_arity(self):
-        """Test 25: At fixed arity, the Lie bracket obstruction is zero.
-
-        Path A: at any fixed arity n, [End^{S_n}, End^{S_n}] subset End^{S_n}.
-        The obstruction to dg Lie splitting is in the DIFFERENTIAL
-        (which changes arity), not in the bracket at fixed arity.
-        """
-        for n in [2, 3]:
-            sa = SplittingAnalysis(n, 2)
-            obs = sa.bracket_obstruction_to_splitting()
-            assert obs < 1e-10, f"Unexpected bracket obstruction at n={n}"
-
-    def test_26_differential_obstruction_is_nontrivial(self):
-        """Test 26: The dg Lie extension is non-split.
-
-        Path A: the description correctly identifies the Drinfeld
-        associator as the obstruction.
-
-        The key mathematical point: a section s: g^mod -> g^{E_1}
-        that is a dg Lie morphism would require s(kappa) to satisfy
-        the FULL E_1 MC equation, not just the S_n-averaged version.
-        The arity-3 MC equation involves the KZ associator, which
-        lies in ker(av). So no section can simultaneously:
-          (a) project to the identity under av, and
-          (b) satisfy the E_1 MC equation at arity >= 3.
-        """
-        sa = SplittingAnalysis(3, 2)
-        desc = sa.differential_obstruction()
-        assert "NON-SPLIT" in desc
-        assert "Drinfeld" in desc or "associator" in desc
-
-
-# =========================================================================
-#  TARGET 6: INFORMATION CONTENT / KAPPA RECOVERY (Tests 27-30)
-# =========================================================================
-
-class TestInformationContent:
-    """Tests 27-30: Quantum group data in ker(av) and kappa recovery."""
-
-    def test_27_kappa_recovery_heisenberg(self):
-        """Test 27: kappa(H_k) = k recovered from av(r(z)).
-
-        Path A (direct): r(z) = k*Omega_H/z (rank-one coeff k/z), av is trivial, kappa = k.
-        Path D (from CLAUDE.md): kappa(H_k) = k.
-        """
-        for k in [1, 2, 3, 5, 10]:
-            assert verify_kappa_recovery_heisenberg(k)
-
-    def test_28_kappa_recovery_sl2(self):
-        """Test 28: kappa(sl_2, k) = 3(k+2)/4 recovered from av(r(z)) + 3/2.
-
-        Path A (direct): av(r(z)) = 3k/4 and the Sugawara shift is 3/2.
-        Path D (from CLAUDE.md): kappa = dim(g)(k+h^vee)/(2h^vee).
-        """
-        for k in [1, 2, 3, 5]:
-            ok, val = verify_kappa_recovery_sl2(k)
-            assert ok, f"kappa(sl_2, {k}) = {val}, expected {Fraction(3 * (k + 2), 4)}"
-
-    def test_29_information_loss_grows_with_dim(self):
-        """Test 29: Information loss (ker/total) grows with dim.
-
-        Path A: for n=2, the fraction d(d-1)^2 / (2d^4) -> 1/2 as d -> inf.
-        """
-        fracs = []
-        for d in [2, 3, 4, 5]:
-            total, img, ker = information_loss_arity2(d)
-            fracs.append(ker / total)
-        # Check monotonic growth (or at least non-decrease)
-        for i in range(len(fracs) - 1):
-            assert fracs[i + 1] >= fracs[i] - 1e-10, \
-                f"Information loss not growing: {fracs}"
-
-    def test_30_quantum_group_data_analysis(self):
-        """Test 30: Quantify the quantum group data in ker(av) for sl_2.
-
-        Path C: explicit computation at dim=2.
-        The Casimir Omega is S_2-symmetric, so its av-image is nonzero.
-        But the kernel still carries d^2(d^2-1)/2 dimensions of data
-        (the non-invariant endomorphisms).
-        """
+    def test_dimension_count_does_not_classify_quantum_group_data(self):
         data = quantum_group_data_in_kernel(dim=2)
-        # dim=2: total=16, image=10, kernel=6
         assert data['arity_2_total_dim'] == 16
         assert data['arity_2_image_dim'] == 10
         assert data['arity_2_kernel_dim'] == 6
-        # Kernel fraction = 6/16 = 0.375
-        assert abs(data['arity_2_fraction_in_kernel'] - 0.375) < 1e-10
+        assert data['casimir_kernel_norm'] < 1e-10
+        assert data['quantum_group_classification_proved'] is False
+        assert data['classification_status'] == 'MAP_FROM_DEFORMATION_DATA_REQUIRED'
 
 
-# =========================================================================
-#  MASTER INTEGRATION TEST
-# =========================================================================
+class TestSplittingStatus:
+    def test_linear_section_and_invariant_subalgebra(self):
+        analysis = SplittingAnalysis(2, 2)
+        assert analysis.linear_section_exists()
 
-class TestE1PrimacyMaster:
-    """Integration test: full E1 primacy theorem verification."""
+        rng = np.random.default_rng(88)
+        left = reynolds_operator(rng.normal(size=(4, 4)), 2, 2)
+        right = reynolds_operator(rng.normal(size=(4, 4)), 2, 2)
+        assert np.array_equal(analysis.linear_section(left), left)
+        assert is_sn_invariant(left @ right - right @ left, 2, 2)
 
-    def test_full_verification_dim2(self):
-        """Master test: run all verifications at dim=2."""
-        engine = E1PrimacyTheorem(dim=2, max_arity=3)
-        results = engine.full_verification()
+    def test_raw_sequence_has_no_lie_extension_status(self):
+        analysis = SplittingAnalysis(2, 2)
+        status = analysis.extension_status()
+        assert status['linear_section_exists'] is True
+        assert status['invariant_image_is_lie_subalgebra'] is True
+        assert status['raw_reynolds_is_lie_morphism'] is False
+        assert status['kernel_is_lie_ideal'] is False
+        assert status['lie_extension_defined'] is False
+        assert status['dg_lie_extension_defined'] is False
+        assert status['drinfeld_obstruction_status'] == (
+            'UNVERIFIED_WITHOUT_DG_LIE_EXTENSION'
+        )
+        assert analysis.differential_obstruction().startswith(
+            'UNDEFINED_AS_DG_LIE_EXTENSION'
+        )
 
-        # Check all dg Lie morphism tests pass
-        for key, val in results['dg_lie_morphism'].items():
-            assert val, f"dg Lie morphism test failed: {key}"
-
-        # Check surjectivity
-        for key, val in results['surjectivity'].items():
-            assert val, f"Surjectivity test failed: {key}"
-
-        # Check MC projection
-        for key, val in results['mc_projection'].items():
-            assert val, f"MC projection test failed: {key}"
+    def test_trivial_action_has_zero_linear_kernel(self):
+        analysis = SplittingAnalysis(3, 1)
+        status = analysis.extension_status()
+        assert analysis.kernel_dimension() == 0
+        assert status['raw_reynolds_is_lie_morphism'] is True
+        assert status['kernel_is_lie_ideal'] is True
+        assert status['lie_extension_defined'] is True
+        assert status['dg_lie_extension_defined'] is False
+        assert status['lie_status'] == 'TRIVIAL_ACTION_CERTIFICATE'
 
 
-# =========================================================================
-#  EULERIAN NUMBER CROSS-CHECK
-# =========================================================================
+class TestTypedMasterAudit:
+    def test_full_audit_reports_proofs_and_obligations_separately(self):
+        audit = E1PrimacyTheorem(dim=2, max_arity=3).full_verification()
+
+        linear = audit['linear_and_lie_surface']
+        assert linear['av_is_projection_n2'] is True
+        assert linear['av_image_invariant_n3'] is True
+        assert linear['commutator_action_equivariant'] is True
+        assert linear['raw_reynolds_is_lie_morphism'] is False
+        assert linear['kernel_is_lie_ideal'] is False
+        assert linear['chain_map_status'] == 'EXPLICIT_DIFFERENTIAL_REQUIRED'
+        assert linear['dg_lie_morphism_proved'] is False
+
+        surjectivity = audit['linear_surjectivity']
+        assert all(surjectivity.values())
+
+        mc_surface = audit['finite_identity_and_mc_surface']
+        assert mc_surface['sl2_infinitesimal_braid_identity'] is True
+        assert mc_surface['general_mc_projection_proved'] is False
+
+        extension = audit['extension_surface']
+        assert extension['lie_extension_defined'] is False
+        assert extension['drinfeld_obstruction_status'] == (
+            'UNVERIFIED_WITHOUT_DG_LIE_EXTENSION'
+        )
+
 
 class TestEulerianNumbers:
-    """Cross-check: Eulerian number computation agrees with known values."""
+    @pytest.mark.parametrize(
+        "n,row",
+        [
+            (2, [1, 1]),
+            (3, [1, 4, 1]),
+            (4, [1, 11, 11, 1]),
+        ],
+    )
+    def test_known_rows(self, n, row):
+        assert [eulerian_number(n, k) for k in range(n)] == row
 
-    def test_eulerian_n2(self):
-        """A(2,0) = 1, A(2,1) = 1."""
-        assert eulerian_number(2, 0) == 1
-        assert eulerian_number(2, 1) == 1
-
-    def test_eulerian_n3(self):
-        """A(3,0) = 1, A(3,1) = 4, A(3,2) = 1."""
-        assert eulerian_number(3, 0) == 1
-        assert eulerian_number(3, 1) == 4
-        assert eulerian_number(3, 2) == 1
-
-    def test_eulerian_n4(self):
-        """A(4,0) = 1, A(4,1) = 11, A(4,2) = 11, A(4,3) = 1."""
-        assert eulerian_number(4, 0) == 1
-        assert eulerian_number(4, 1) == 11
-        assert eulerian_number(4, 2) == 11
-        assert eulerian_number(4, 3) == 1
-
-    def test_eulerian_row_sums(self):
-        """Sum of Eulerian numbers A(n, k) over k equals n!."""
+    def test_row_sums(self):
         for n in range(1, 7):
-            row_sum = sum(eulerian_number(n, k) for k in range(n))
-            assert row_sum == math.factorial(n), \
-                f"Row sum A({n}, *) = {row_sum} != {math.factorial(n)}"
-
-
-import math
+            assert sum(eulerian_number(n, k) for k in range(n)) == math.factorial(n)

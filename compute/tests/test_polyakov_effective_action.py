@@ -87,6 +87,10 @@ class TestKappa:
         """kappa(sl_3, k=1) = 8*(1+3)/(2*3) = 16/3."""
         assert kappa("affine", N=3, k=1) == Rational(16, 3)  # VERIFIED [DC] 8*(1+3)/(2*3)=32/6=16/3 [LC] k=-3->0
 
+    def test_affine_critical_scalar_values(self):
+        assert kappa("affine", N=2, k=-2) == 0
+        assert kappa("affine", N=3, k=-3) == 0
+
     def test_w3_c2(self):
         assert kappa("w3", c=2) == Rational(5, 3)
 

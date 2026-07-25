@@ -1,14 +1,24 @@
-r"""Tests for True Formula Census entry C18: Koszul complementarity per family.
+r"""Tests for the scalar companion table in census entry C18.
 
 C18 states:
     K(A) = kappa(A) + kappa(A^!) is:
         0       for KM / Heis / lattice / free
         13      for Vir
         250/3   for W_3
-        196     for Bershadsky-Polyakov  (central charge conductor K_BP)
 
-    (Note: 196 is the CENTRAL CHARGE conductor c_BP(k) + c_BP(-k-6).
-     The KAPPA conductor is varrho_BP * K_BP = 98/3.)
+The Bershadsky--Polyakov modular characteristic is an open genus-one
+calculation and therefore occupies a status lane outside this numerical
+table.
+
+For Bershadsky--Polyakov the canonical central-charge formula is
+
+    c_BP(k) = -(2k+3)(3k+1)/(k+3),
+
+with scalar companion sum ``50`` under ``k -> -k-6``.  All four strong
+generators are even, so the reciprocal-weight diagnostic is ``17/6``.  The
+formula ``2-24(k+1)^2/(k+3)`` occupies a separately named secondary lane whose
+conductor is ``196``.  The BP tests below certify these exact statements and
+the fail-loud boundary around the open modular characteristic.
 
 This test verifies C18 against THREE independent sources:
 
@@ -17,9 +27,11 @@ This test verifies C18 against THREE independent sources:
     Source 2: alpha_n_conductor_engine.py
         -- K_WN(N) = (H_N - 1) * alpha_N for W-algebras
     Source 3: bp_koszul_conductor_engine.py
-        -- K_BP = c_BP(k) + c_BP(-k-6) = 196 for Bershadsky-Polyakov
+        -- standard BP conductor 50, all-even diagnostic 17/6, open kappa lane
     Source 4: wn_central_charge_canonical.py
         -- kappa_complementarity_sum(N) from Fateev-Lukyanov formula
+    Source 5: true_formula_census_verifier.py
+        -- C10 aggregation and explicit status packet
 
 Every expected value has a # VERIFIED comment citing 2+ independent sources.
 
@@ -72,11 +84,35 @@ from alpha_n_conductor_engine import K_WN as alpha_K_WN, H_N as alpha_H_N
 
 # Source 3: bp_koszul_conductor_engine (Bershadsky-Polyakov)
 from bp_koszul_conductor_engine import (
+    BP_CONVENTIONS,
+    BP_GENERATORS,
+    BP_KAPPA_STATUS,
     K_BP,
     K_BP_EXACT,
+    K_BP_SHIFTED_EXACT,
+    K_BP_shifted,
+    SHIFTED_BP_CONVENTION,
+    STANDARD_BP_CONVENTION,
+    UnverifiedBPInvariantError,
+    c_BP,
+    c_BP_shifted,
+    compute_varrho,
+    dual_level as bp_companion_level,
+    kappa_BP,
     kappa_complementarity as bp_kappa_complementarity,
     KAPPA_COMPLEMENTARITY_EXACT as BP_KAPPA_COMPL_EXACT,
     VARRHO_BP,
+)
+
+# Source 5: repaired census consumer
+from true_formula_census_verifier import (
+    THEOREM_C_CERTIFIED_SCALAR_VALUES,
+    bp_kappa as census_bp_kappa,
+    bp_kappa_conductor as census_bp_kappa_conductor,
+    bp_kappa_status_report,
+    bp_reciprocal_weight_diagnostic,
+    run_all_checks,
+    verify_C10,
 )
 
 # Source 4: wn_central_charge_canonical (Fateev-Lukyanov)
@@ -101,7 +137,6 @@ C18_KAPPA_COMPLEMENTARITY = {
     "W_3":   Fraction(250, 3),  # VERIFIED [DC] (H_3-1)*alpha_3=(5/6)*100 [CF] alpha_n engine
     "W_4":   Fraction(533, 2),  # VERIFIED [DC] (H_4-1)*alpha_4=(13/12)*246 [CF] alpha_n engine
     "W_5":   Fraction(9394, 15),# VERIFIED [DC] (H_5-1)*alpha_5=(77/60)*488 [CF] alpha_n engine
-    "BP":    Fraction(98, 3),   # VERIFIED [DC] varrho*K_BP=(1/6)*196 [CF] bp_koszul engine
     "bg":    Fraction(0),       # VERIFIED [DC] kappa_bg+kappa_bc=0 [SY] c_bg+c_bc=0
     "bc":    Fraction(0),       # VERIFIED [DC] kappa_bc+kappa_bg=0 [SY] c_bg+c_bc=0
     "ff":    Fraction(0),       # VERIFIED [DC] 1/4+(-1/4)=0 [CF] free-field K=0
@@ -113,7 +148,12 @@ C18_CENTRAL_CHARGE_CONDUCTOR = {
     "Vir":  Fraction(26),       # VERIFIED [DC] c+(26-c)=26 [LT] C8
     "W_3":  Fraction(100),      # VERIFIED [DC] alpha_3=2*2*(18+6+1)=100 [CF] alpha_n engine
     "W_4":  Fraction(246),      # VERIFIED [DC] alpha_4=2*3*(32+8+1)=246 [CF] alpha_n engine
-    "BP":   Fraction(196),      # VERIFIED [DC] algebraic proof c(k)+c(-k-6)=196 [CF] bp_koszul engine
+    "BP":   Fraction(50),       # VERIFIED [DC] t=k+3 odd-part cancellation [CF] canonical BP engine
+}
+
+# Secondary conformal-vector formula, kept outside the canonical C18 table.
+BP_SHIFTED_CENTRAL_CHARGE_CONDUCTOR = {
+    "BP_shifted": Fraction(196),
 }
 
 
@@ -360,50 +400,139 @@ class TestC18WAlgebras:
 
 
 # ========================================================================
-# Group 5: Bershadsky-Polyakov -- K_BP = 196 (central charge), 98/3 (kappa)
+# Group 5: Bershadsky--Polyakov convention separation
 # ========================================================================
 
-class TestC18BershadksyPolyakov:
-    """Bershadsky-Polyakov: c_BP(k) + c_BP(-k-6) = 196, kappa sum = 98/3."""
+class TestC18BershadskyPolyakov:
+    """Exact BP central data and the open modular-characteristic lane."""
 
-    def test_central_charge_conductor_196(self) -> None:
-        """K_BP = c(k) + c(-k-6) = 196 (the C18 entry for BP)."""
-        # VERIFIED [DC] algebraic proof in bp_koszul_conductor_engine [LT] Fehily-Kawasetsu-Ridout
-        assert K_BP_EXACT == Fraction(196)
+    def test_convention_records(self) -> None:
+        """Canonical and secondary formulas carry disjoint typed records."""
+        assert STANDARD_BP_CONVENTION.name == "standard_fkr_equal_weight_G"
+        assert STANDARD_BP_CONVENTION.status == "proved-primary-source"
+        assert STANDARD_BP_CONVENTION.conductor == Fraction(50)
+        assert BP_CONVENTIONS["standard"] is STANDARD_BP_CONVENTION
+
+        assert SHIFTED_BP_CONVENTION.name == "explicit_shifted_formula"
+        assert SHIFTED_BP_CONVENTION.status == "computed-secondary"
+        assert SHIFTED_BP_CONVENTION.conductor == Fraction(196)
+        assert BP_CONVENTIONS["shifted"] is SHIFTED_BP_CONVENTION
+
+    @pytest.mark.parametrize(
+        "k, expected, expected_companion",
+        [
+            (0, Fraction(-1), Fraction(51)),
+            (1, Fraction(-5), Fraction(55)),
+            (-1, Fraction(1), Fraction(49)),
+            (Fraction(-1, 2), Fraction(2, 5), Fraction(248, 5)),
+        ],
+    )
+    def test_standard_charge_samples(
+        self, k: Fraction | int, expected: Fraction, expected_companion: Fraction
+    ) -> None:
+        """Hand substitutions into the factored standard formula."""
+        companion = bp_companion_level(k)
+        assert c_BP(k) == expected
+        assert c_BP(companion) == expected_companion
+        assert expected + expected_companion == Fraction(50)
 
     @pytest.mark.parametrize("k", [0, 1, -1, 2, -2, 5, 10, -4, 100])
-    def test_central_charge_conductor_level_independence(self, k: int) -> None:
-        """K_BP(k) = 196 for multiple levels."""
-        # VERIFIED [DC] each level independently [SY] level-independence
-        assert K_BP(k) == Fraction(196)
+    def test_standard_conductor_samples(self, k: int) -> None:
+        """The standard scalar companion sum is level-independent."""
+        assert K_BP(k) == K_BP_EXACT == Fraction(50)
 
-    def test_kappa_conductor_98_over_3(self) -> None:
-        """kappa_BP(k) + kappa_BP(-k-6) = varrho * K_BP = (1/6)*196 = 98/3."""
-        # VERIFIED [DC] varrho=1/6, K=196 [CF] bp_koszul_conductor_engine
-        assert BP_KAPPA_COMPL_EXACT == Fraction(98, 3)
-        assert C18_KAPPA_COMPLEMENTARITY["BP"] == Fraction(98, 3)
+    def test_modular_characteristic_apis_fail_loudly(self) -> None:
+        """Both canonical and census wrappers expose the open obligation."""
+        assert BP_KAPPA_COMPL_EXACT is None
+        assert VARRHO_BP is None
+        assert BP_KAPPA_STATUS.status == "open-genus-one-computation"
+        for function in (
+            kappa_BP,
+            bp_kappa_complementarity,
+            census_bp_kappa,
+            census_bp_kappa_conductor,
+        ):
+            with pytest.raises(UnverifiedBPInvariantError, match="genus-one curvature"):
+                function(0)
 
-    @pytest.mark.parametrize("k", [0, 1, -1, 2, 5, 10])
-    def test_kappa_conductor_level_independence(self, k: int) -> None:
-        """kappa complementarity at multiple levels."""
-        assert bp_kappa_complementarity(k) == Fraction(98, 3)
+    def test_all_even_reciprocal_weight_diagnostic(self) -> None:
+        """FKR parity gives ``1+2/3+2/3+1/2=17/6``."""
+        assert BP_GENERATORS == {
+            "J": (Fraction(1), 0),
+            "G+": (Fraction(3, 2), 0),
+            "G-": (Fraction(3, 2), 0),
+            "T": (Fraction(2), 0),
+        }
+        independent_sum = (
+            Fraction(1) + Fraction(2, 3) + Fraction(2, 3) + Fraction(1, 2)
+        )
+        assert independent_sum == Fraction(17, 6)
+        assert compute_varrho() == independent_sum
+        assert bp_reciprocal_weight_diagnostic() == independent_sum
 
-    def test_varrho_bp_is_one_sixth(self) -> None:
-        """Anomaly ratio varrho_BP = 1/6 from strong-generator data."""
-        # VERIFIED [DC] 1 - 2/3 - 2/3 + 1/2 = 1/6 [CF] sl3_subregular_bar
-        assert VARRHO_BP == Fraction(1, 6)
+    def test_census_status_packet(self) -> None:
+        """The consumer stores status separately from exact central data."""
+        packet = bp_kappa_status_report()
+        assert packet["kappa_value"] is None
+        assert packet["kappa_complementarity_value"] is None
+        assert packet["status"] == "open-genus-one-computation"
+        assert packet["reciprocal_weight_diagnostic"] == Fraction(17, 6)
+        former = packet["former_conditional_proposal"]
+        assert former["value"] == Fraction(25, 3)
+        assert former["status"] == "retracted-derivation"
 
-    def test_independent_algebraic_proof(self) -> None:
-        """Independent: c(k) + c(-k-6) = 4 + 192 = 196 via difference of squares."""
-        # VERIFIED [DC] (k+5)^2 - (k+1)^2 = (2k+6)*4 = 8(k+3) [DA] cancellation
-        # c(k) = 2 - 24(k+1)^2/(k+3)
-        # c(-k-6) = 2 + 24(k+5)^2/(k+3)
-        # sum = 4 + 24[(k+5)^2 - (k+1)^2]/(k+3) = 4 + 24*8(k+3)/(k+3) = 196
-        for k_val in [0, 1, 3, 7, -1, -2, 100]:
-            k = Fraction(k_val)
-            c_k = Fraction(2) - Fraction(24) * (k + 1)**2 / (k + 3)
-            c_kd = Fraction(2) - Fraction(24) * (-k - 5)**2 / (-k - 3)
-            assert c_k + c_kd == Fraction(196)
+    def test_c10_aggregates_exact_and_open_lanes(self) -> None:
+        """C10 certifies the exact data while retaining the open slot."""
+        result = verify_C10()
+        assert result["passed"] is True
+        assert result["computed"]["standard:k=0"] == Fraction(50)
+        assert result["computed"]["all-generators-even"] is True
+        assert result["computed"]["reciprocal-weight-diagnostic"] == Fraction(17, 6)
+        assert result["computed"]["kappa-value"] is None
+        assert result["computed"]["kappa-sum"] is None
+        assert result["computed"]["shifted-secondary:k=0"] == Fraction(196)
+
+    def test_companion_involution_and_critical_pole(self) -> None:
+        """The companion map is involutive and fixes the common pole."""
+        for k in [0, 1, -1, Fraction(1, 2), -3]:
+            assert bp_companion_level(bp_companion_level(k)) == Fraction(k)
+        assert bp_companion_level(-3) == Fraction(-3)
+        with pytest.raises(ZeroDivisionError):
+            c_BP(-3)
+
+    def test_symbolic_standard_identity(self) -> None:
+        """SymPy proves the standard identity in ``Q(k)``."""
+        sp = pytest.importorskip("sympy")
+        k = sp.Symbol("k", rational=True)
+        companion = -k - 6
+        c_value = -(2 * k + 3) * (3 * k + 1) / (k + 3)
+        c_companion = -(
+            (2 * companion + 3) * (3 * companion + 1) / (companion + 3)
+        )
+        assert sp.cancel(c_value + c_companion) == sp.Rational(50)
+
+        t = sp.Symbol("t", nonzero=True)
+        laurent_form = 25 - 6 * t - 24 / t
+        assert sp.cancel(laurent_form + laurent_form.subs(t, -t)) == 50
+
+    def test_shifted_secondary_identity(self) -> None:
+        """The shifted formula retains its separately named conductor ``196``."""
+        assert K_BP_SHIFTED_EXACT == Fraction(196)
+        assert BP_SHIFTED_CENTRAL_CHARGE_CONDUCTOR["BP_shifted"] == Fraction(196)
+        for k in [0, 1, -1, 2, -2, 5, 10, -4]:
+            assert K_BP_shifted(k) == Fraction(196)
+
+        sp = pytest.importorskip("sympy")
+        k = sp.Symbol("k", rational=True)
+        companion = -k - 6
+        shifted = 2 - 24 * (k + 1) ** 2 / (k + 3)
+        shifted_companion = 2 - 24 * (companion + 1) ** 2 / (companion + 3)
+        assert sp.cancel(shifted + shifted_companion) == sp.Rational(196)
+
+    def test_standard_and_shifted_values_differ(self) -> None:
+        """A concrete level distinguishes the two conformal vectors."""
+        assert c_BP(0) == Fraction(-1)
+        assert c_BP_shifted(0) == Fraction(-6)
 
 
 # ========================================================================
@@ -519,17 +648,25 @@ class TestC18CrossSourceConsistency:
         assert src2 == expected, f"FL: {src2} != {expected}"
         assert src3 == expected, f"landscape: {src3} != {expected}"
 
-    def test_bp_two_sources_agree(self) -> None:
-        """bp_koszul engine constant and function agree on kappa conductor."""
-        assert BP_KAPPA_COMPL_EXACT == Fraction(98, 3)
-        assert bp_kappa_complementarity(0) == BP_KAPPA_COMPL_EXACT
-        assert bp_kappa_complementarity(1) == BP_KAPPA_COMPL_EXACT
+    def test_bp_two_sources_agree_on_status(self) -> None:
+        """The canonical BP engine and census consumer expose one open lane."""
+        packet = bp_kappa_status_report()
+        assert BP_KAPPA_COMPL_EXACT is None
+        assert packet["kappa_complementarity_value"] is None
+        assert packet["status"] == BP_KAPPA_STATUS.status
+        assert packet["resolution_obligation"] == BP_KAPPA_STATUS.resolution_obligation
 
     def test_bp_central_charge_conductor_matches_c18(self) -> None:
-        """C18 lists BP with K=196 (central charge conductor)."""
-        # The CLAUDE.md C18 entry "196 for BP" refers to c+c'=196.
-        # The kappa conductor is varrho * 196 = 98/3.
+        """The canonical BP census entry uses central-charge sum ``50``."""
         assert K_BP_EXACT == C18_CENTRAL_CHARGE_CONDUCTOR["BP"]
+
+    def test_bp_shifted_conductor_has_secondary_type(self) -> None:
+        """The value ``196`` belongs only to the shifted convention record."""
+        assert SHIFTED_BP_CONVENTION.status == "computed-secondary"
+        assert K_BP_SHIFTED_EXACT == BP_SHIFTED_CENTRAL_CHARGE_CONDUCTOR[
+            "BP_shifted"
+        ]
+        assert K_BP_SHIFTED_EXACT != C18_CENTRAL_CHARGE_CONDUCTOR["BP"]
 
     @pytest.mark.parametrize("N", [2, 3, 4])
     def test_wn_central_charge_conductor_matches(self, N: int) -> None:
@@ -565,18 +702,18 @@ class TestC18SummaryTable:
         # VERIFIED [DC] (5/6)*100 [CF] three engines agree
         assert C18_KAPPA_COMPLEMENTARITY["W_3"] == Fraction(250, 3)
 
-    def test_bp_kappa_conductor_is_98_over_3(self) -> None:
-        """C18 (with BP): kappa conductor = varrho*K_BP = 98/3."""
-        # VERIFIED [DC] (1/6)*196 = 98/3 [CF] bp_koszul engine
-        assert C18_KAPPA_COMPLEMENTARITY["BP"] == Fraction(98, 3)
+    def test_bp_kappa_lane_is_status_only(self) -> None:
+        """C18 records the BP modular characteristic outside the numeric table."""
+        assert "BP" not in C18_KAPPA_COMPLEMENTARITY
+        assert bp_kappa_status_report()["kappa_complementarity_value"] is None
+        assert Fraction(25, 3) not in THEOREM_C_CERTIFIED_SCALAR_VALUES
 
-    def test_bp_central_charge_conductor_is_196(self) -> None:
-        """C18: BP central charge conductor K = c+c' = 196."""
-        # VERIFIED [DC] algebraic proof [NE] numerical at 9 levels [CF] bp_koszul engine
-        assert C18_CENTRAL_CHARGE_CONDUCTOR["BP"] == Fraction(196)
+    def test_bp_central_charge_conductor_is_50(self) -> None:
+        """C18 BP central-charge companion sum is ``50``."""
+        assert C18_CENTRAL_CHARGE_CONDUCTOR["BP"] == Fraction(50)
 
     def test_c18_completeness(self) -> None:
-        """All families in C18 are tested: zero-families, Vir, W_3, BP."""
+        """Every active numeric family in C18 has a certified test."""
         zero_families = {"Heis", "KM", "lat", "ff", "bg", "bc"}
         for fam in zero_families:
             assert C18_KAPPA_COMPLEMENTARITY[fam] == Fraction(0), f"{fam} should be 0"
@@ -584,4 +721,17 @@ class TestC18SummaryTable:
         assert C18_KAPPA_COMPLEMENTARITY["W_3"] == Fraction(250, 3)
         assert C18_KAPPA_COMPLEMENTARITY["W_4"] == Fraction(533, 2)
         assert C18_KAPPA_COMPLEMENTARITY["W_5"] == Fraction(9394, 15)
-        assert C18_KAPPA_COMPLEMENTARITY["BP"] == Fraction(98, 3)
+        assert "BP" not in C18_KAPPA_COMPLEMENTARITY
+        assert set(THEOREM_C_CERTIFIED_SCALAR_VALUES) == {
+            Fraction(0),
+            Fraction(13),
+            Fraction(250, 3),
+        }
+
+    def test_full_census_verifier_passes(self) -> None:
+        """C01--C10 pass with C10 carrying explicit BP status."""
+        results, summary = run_all_checks()
+        assert summary == {"total": 10, "passed": 10, "failed": 0}
+        c10 = next(result for result in results if result["name"].startswith("C10"))
+        assert c10["standard_convention"]["kappa_sum"] is None
+        assert c10["former_conditional_proposal"]["value"] == Fraction(25, 3)

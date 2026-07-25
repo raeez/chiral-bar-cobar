@@ -919,8 +919,8 @@ def chiral_hochschild_dim_cy(
 def chiral_comparison_K3xE() -> Dict[str, int]:
     """Compare chiral vs categorical deformation dimensions for K3 x E.
 
-    The monograph's Theorem H states that ChirHoch*(A) is polynomial
-    in degrees {0, 1, 2} for chirally Koszul algebras.
+    The monograph's Theorem H states that ChirHoch*(A) has amplitude
+    [0, 2] and Hilbert polynomial in t for chirally Koszul algebras.
 
     For the CDO of K3 x E:
         ChirHoch^2(CDO_{K3 x E}) = HH^2(K3 x E) = 23

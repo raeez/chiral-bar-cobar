@@ -1,1042 +1,1203 @@
-"""RED TEAM: DS-KD commutation obstruction analysis.
+r"""Adversarial audit of DS--bar/Koszul claims beyond the hook corridor.
 
-Attack on conj:ds-kd-arbitrary-nilpotent: does bar-cobar/Koszul duality
-COMMUTE with Drinfeld-Sokolov reduction for arbitrary nilpotent orbits?
+This module separates finite computation from homological promotion.  It
+computes, exactly:
 
-The hook-type corridor in type A is PROVED (thm:hook-transport-corridor).
-This module probes where the commutation FAILS or could fail, outside the
-proved corridor.
+* type-A partition transpose, orbit and centralizer dimensions;
+* the good-grading matrix units in ``n_+`` and their actual brackets;
+* strong-generator weights and parity;
+* Kac--Roan--Wakimoto central charges and formal level reflection;
+* finite Hasse-graph reachability;
+* type-B/type-C partition validity and dominance collapse;
+* the standard Bershadsky--Polyakov OPE as a normalization control;
+* the critical Sugawara denominator and elementary admissible-level
+  arithmetic.
 
-ATTACK AXES:
-
-A. Non-hook nilpotents in type A:
-   - sl_4, partition (2,2): the FIRST non-hook case (rectangular)
-   - sl_5, partition (3,2): another non-hook
-   - sl_6, partitions (3,3) and (2,2,2): multiple non-hooks
-   Key probe: does the kappa compatibility still hold? Does the ghost
-   constant formula still give a consistent complementarity sum?
-
-B. Derived functor obstruction:
-   DS = H^0(BRST) is a derived functor. Bar is also derived. Their
-   composition need not commute: there is a spectral sequence
-       E_2^{p,q} = H^p_bar(H^q_DS(-)) => H^{p+q}(bar . DS)
-   vs the alternate order
-       E_2^{p,q} = H^p_DS(H^q_bar(-)) => H^{p+q}(DS . bar)
-   If the DS spectral sequence has nonvanishing higher pages, the two
-   compositions diverge. The BRST differential d_DS and bar differential
-   d_bar satisfy d_DS^2 = 0 and d_bar^2 = 0 separately, but the
-   CROSS-DIFFERENTIAL d_DS . d_bar + d_bar . d_DS need not vanish.
-   When it does vanish, the bicomplexes give the same total cohomology.
-   When it does NOT, the obstruction lives in Ext.
-
-C. Non-special orbits in types B, C, D:
-   In type A all orbits are special. In types B, C, D there exist
-   non-special orbits. The BV duality is only defined on special orbits.
-   For non-special orbits, the Spaltenstein map d: O -> O^sp is a many-to-one
-   collapse. The KD dual W-algebra target is AMBIGUOUS: different non-special
-   orbits collapse to the same special orbit under d, so the inverse image
-   is not unique.
-
-D. Level-dependent failures:
-   - At critical level k = -h^v: Sugawara is undefined, DS might be degenerate
-   - At admissible levels: null vectors in V_k(g) may force null vectors
-     in W_k(g,f) that obstruct Koszulness
-   - Level shifts: the hook-type proof uses k -> -k-2N; for non-hook
-     non-principal, the correct level shift k -> k'(k,f) is UNKNOWN
-
-E. Quadratic ghost obstruction:
-   For non-hook nilpotents, the positive-grade nilpotent n_+ may be
-   NON-ABELIAN. When [n_+, n_+] != 0, the BRST differential has a
-   QUADRATIC ghost term (b-c-c type). This quadratic term is the primary
-   structural obstruction to DS-bar commutation: it means the DS complex
-   is not a simple Koszul complex but a genuinely nonlinear BRST resolution.
-
-References:
-  - conj:ds-kd-arbitrary-nilpotent (w_algebras_deep.tex ~l.1584)
-  - thm:hook-transport-corridor (subregular_hook_frontier.tex ~l.226)
-  - prop:ds-bar-hook-commutation (subregular_hook_frontier.tex ~l.359)
-  - conj:w-orbit-duality (w_algebras.tex ~l.373)
-  - rem:bv-orbit-identification (w_algebras_deep.tex ~l.1600)
+The same data leave DS--bar comparison, spectral-sequence degeneration,
+Ext obstruction classes, categorical transport, object-level Koszul
+duality, modular characteristics, and type-B/type-C orbit duality as typed
+proof obligations.  In particular, non-abelian ``n_+`` supplies the
+quadratic ghost term in the Chevalley--Eilenberg/BRST differential; a
+comparison-map calculation is still required before this structure can be
+identified with an obstruction to DS--bar commutation.
 """
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
+from enum import Enum
+from math import gcd
 from typing import Dict, List, Optional, Tuple
 
-from sympy import (
-    Rational, Symbol, cancel, expand, factor, simplify, sqrt, sympify,
-    Matrix, zeros
-)
+from sympy import Matrix, Rational, Symbol, simplify, sympify
 
+from compute.lib.ds_bar_commutation import (
+    bershadsky_polyakov_data,
+    ds_bar_commutation_check,
+    ds_good_grading_data,
+)
+from compute.lib.hook_type_w_duality import (
+    ClaimPacket,
+    ClaimStatus,
+    ghost_constant,
+    hook_dual_level_sl_n,
+    krw_central_charge,
+    reciprocal_weight_diagnostic_from_partition,
+    w_algebra_generator_data,
+)
 from compute.lib.nonprincipal_ds_orbits import (
     Partition,
     normalize_partition,
     partition_size,
     transpose_partition,
-    hook_partition,
-    centralizer_dimension_sl_n,
-    orbit_dimension_sl_n,
-    type_a_bv_dual,
     type_a_orbit_class,
     type_a_partition_sl2_triple,
-    ad_h_grade_multiplicities_sl_n,
 )
-from compute.lib.hook_type_w_duality import (
-    ghost_constant,
-    ds_kappa_from_affine,
-    hook_dual_level_sl_n,
-    krw_central_charge,
-    krw_central_charge_data,
-    w_algebra_generator_data,
-    complementarity_constant,
-)
-from compute.lib.ds_bar_commutation import (
-    dim_sl_n,
-    affine_kappa_sl_n,
-    affine_central_charge_sl_n,
-    ds_nilpotent_plus_dim,
-    ds_nilpotent_half_dim,
+from compute.lib.theorem_butson_inverse_reduction_engine import (
+    formal_central_scalar_sum,
+    type_a_centralizer_dimension,
+    type_a_orbit_dimension,
+    verify_transport_to_transpose,
 )
 
 
-k = Symbol('k')
+k = Symbol("k")
+
+KRW_SOURCE = "Kac--Roan--Wakimoto (2003), Theorem 2.1(a), equation (2.6)"
+BP_SOURCE = (
+    "Fehily--Kawasetsu--Ridout (2021), Definition 2.1, equations (2.1)--(2.2)"
+)
+
+H_DS_KD_COMPARISON = (
+    "H_DS-KD^comparison: a natural filtered chain map between completed "
+    "DS(B(V^k(g))) and B(W^k(g,f)), together with a quasi-isomorphism proof"
+)
+H_KAZHDAN_FORMALITY = (
+    "H_Kazhdan^formality: convergence, page identification, degeneration, "
+    "and extension control for the relevant BRST/bar filtrations"
+)
+H_BAR_BRST_BICOMPLEX = (
+    "H_bar-BRST^bicomplex: compatible completed bar and BRST differentials, "
+    "including every charged and neutral ghost term"
+)
+H_EXT_OBSTRUCTION = (
+    "H_Ext^obstruction: an identified deformation complex, a constructed "
+    "comparison class, and a proof that its vanishing is equivalent to the "
+    "DS--bar comparison"
+)
+H_MODULAR_GENUS_ONE = (
+    "H_modular^genus-one: direct genus-one characteristics in one "
+    "normalization, including charged ghosts, neutral fields, and the "
+    "stress-tensor improvement"
+)
+H_NONPRINCIPAL_LEVEL = (
+    "H_level^nonprincipal: an orbit-sensitive level transform derived from "
+    "an object-level comparison, with universal/simple presentations fixed"
+)
+H_CATEGORICAL_TRANSPORT = (
+    "H_transport^categorical: realized inverse-reduction functors on the "
+    "finite Hasse path, compatible with DS, bar, completion, and Verdier duality"
+)
+H_TRANSPOSE_DUALITY = (
+    "H_transpose^duality: an object-level equivalence between the source and "
+    "transpose reductions at the stated level transform"
+)
+H_BC_SPECIALNESS = (
+    "H_BC^specialness: a primary-source implementation of the Lusztig--"
+    "Spaltenstein special-orbit criterion, with type and rank conventions fixed"
+)
+H_BC_DUALITY = (
+    "H_BC^duality: the type-changing Spaltenstein/Barbasch--Vogan map, "
+    "including the rank-changing box operation, collapse, and special-piece data"
+)
+H_CRITICAL_PRESENTATION = (
+    "H_critical^presentation: a critical-level DS construction with its "
+    "conformal replacement, completion, and bar category specified"
+)
+H_SIMPLE_QUOTIENT = (
+    "H_simple^quotient: the maximal ideal of the affine vacuum algebra and "
+    "its BRST image, followed through the completed bar construction"
+)
 
 
-# =========================================================================
-# A. Non-hook nilpotent data
-# =========================================================================
+def _open(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    return ClaimPacket(
+        statement,
+        ClaimStatus.OPEN,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
 
-# Catalog of non-hook partitions for the red team attack
+
+def _conditional(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    return ClaimPacket(
+        statement,
+        ClaimStatus.CONDITIONAL,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
+
+
+class AuditSeverity(str, Enum):
+    """Severity of a failed inference on the audited claim surface."""
+
+    CRITICAL = "critical"
+    SERIOUS = "serious"
+    MODERATE = "moderate"
+    MINOR = "minor"
+
+
+@dataclass(frozen=True)
+class AuditFinding:
+    """One checkable attack packet with its exact repair obligation."""
+
+    claim_attacked: str
+    severity: AuditSeverity
+    status: ClaimStatus
+    exact_evidence: Tuple[str, ...]
+    failure_mode: str
+    obligations: Tuple[str, ...]
+    claim: ClaimPacket
+
+
+# -------------------------------------------------------------------------
+# Exact BRST bracket audit
+# -------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class MatrixUnit:
+    """A positive-good-grade matrix unit ``E_row,column``."""
+
+    row: int
+    column: int
+    grade: Rational
+
+
+@dataclass(frozen=True)
+class BracketWitness:
+    """A nonzero matrix-unit bracket inside ``n_+``."""
+
+    left: MatrixUnit
+    right: MatrixUnit
+    result: Tuple[Tuple[int, int, int], ...]
+    result_grade: Rational
+
+
+@dataclass(frozen=True)
+class BRSTBracketAudit:
+    """Exact good-grading Lie bracket and typed homological consequences."""
+
+    partition: Partition
+    N: int
+    grading: Dict[Rational, int]
+    positive_matrix_units: Tuple[MatrixUnit, ...]
+    n_plus_dim: int
+    g_half_dim: int
+    n_plus_is_abelian: bool
+    bracket_span_dimension: int
+    bracket_witnesses: Tuple[BracketWitness, ...]
+    quadratic_ghost_term_present: bool
+    ghost_constant_value: Rational
+    ext_obstruction: ClaimPacket
+    ds_bar_obstruction: ClaimPacket
+
+
+def _positive_matrix_units(partition: Partition) -> Tuple[MatrixUnit, ...]:
+    lam = normalize_partition(partition)
+    N = partition_size(lam)
+    triple = type_a_partition_sl2_triple(lam)
+    x_diagonal = tuple(Rational(triple.h[index, index], 2) for index in range(N))
+    return tuple(
+        MatrixUnit(left, right, x_diagonal[left] - x_diagonal[right])
+        for left in range(N)
+        for right in range(N)
+        if left != right and x_diagonal[left] - x_diagonal[right] > 0
+    )
+
+
+def _matrix_unit_bracket(
+    left: MatrixUnit,
+    right: MatrixUnit,
+) -> Tuple[Tuple[int, int, int], ...]:
+    coefficients: Dict[Tuple[int, int], int] = {}
+    if left.column == right.row:
+        entry = (left.row, right.column)
+        coefficients[entry] = coefficients.get(entry, 0) + 1
+    if right.column == left.row:
+        entry = (right.row, left.column)
+        coefficients[entry] = coefficients.get(entry, 0) - 1
+    return tuple(
+        (row, column, coefficient)
+        for (row, column), coefficient in sorted(coefficients.items())
+        if coefficient
+    )
+
+
+def _bracket_rank(N: int, witnesses: Tuple[BracketWitness, ...]) -> int:
+    if not witnesses:
+        return 0
+    columns = []
+    for witness in witnesses:
+        vector = [0] * (N * N)
+        for row, column, coefficient in witness.result:
+            vector[N * row + column] += coefficient
+        columns.append(Matrix(vector))
+    return int(Matrix.hstack(*columns).rank())
+
+
+def ghost_obstruction_analysis(N: int, partition: Partition) -> BRSTBracketAudit:
+    r"""Compute the actual brackets in ``n_+``.
+
+    The historical entry-point name is retained for callers.  Its result is
+    an audit: the finite bracket and quadratic ghost term are computed,
+    while the Ext class and DS--bar obstruction remain open packets.
+    """
+
+    lam = normalize_partition(partition)
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
+    grading = ds_good_grading_data(lam)
+    units = _positive_matrix_units(lam)
+    witnesses: List[BracketWitness] = []
+    for left_index, left in enumerate(units):
+        for right in units[left_index + 1 :]:
+            result = _matrix_unit_bracket(left, right)
+            if result:
+                witnesses.append(
+                    BracketWitness(
+                        left=left,
+                        right=right,
+                        result=result,
+                        result_grade=left.grade + right.grade,
+                    )
+                )
+    witness_tuple = tuple(witnesses)
+    rank = _bracket_rank(N, witness_tuple)
+    abelian = rank == 0
+    exact_evidence = (
+        f"dim n_+={len(units)}",
+        f"dim [n_+,n_+]={rank}",
+        f"positive grades={dict(grading.n_plus_grades)}",
+    )
+    return BRSTBracketAudit(
+        partition=lam,
+        N=N,
+        grading=dict(grading.n_plus_grades),
+        positive_matrix_units=units,
+        n_plus_dim=len(units),
+        g_half_dim=grading.g_half_dim,
+        n_plus_is_abelian=abelian,
+        bracket_span_dimension=rank,
+        bracket_witnesses=witness_tuple,
+        quadratic_ghost_term_present=not abelian,
+        ghost_constant_value=ghost_constant(lam),
+        ext_obstruction=_open(
+            f"Ext obstruction class for DS--bar comparison at partition {lam}",
+            H_EXT_OBSTRUCTION,
+            H_BAR_BRST_BICOMPLEX,
+            evidence=exact_evidence,
+        ),
+        ds_bar_obstruction=_open(
+            f"failure or vanishing of the DS--bar comparison at partition {lam}",
+            H_DS_KD_COMPARISON,
+            H_KAZHDAN_FORMALITY,
+            evidence=exact_evidence,
+        ),
+    )
+
+
+# -------------------------------------------------------------------------
+# Standard OPE normalization control
+# -------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class BershadskyPolyakovControl:
+    """Exact standard BP OPE packet used as the control reduction."""
+
+    level: object
+    generators: Tuple[Tuple[str, object, str], ...]
+    central_charge: object
+    formal_reflected_level: object
+    formal_central_sum: object
+    pole_orders: Tuple[Tuple[str, str, Tuple[int, ...]], ...]
+    jj_pole2: object
+    jg_plus_charge: object
+    jg_minus_charge: object
+    gpgm_pole3: object
+    gpgm_pole2_coefficient: object
+    gpgm_pole1: object
+    ll_pole4: object
+    source: str
+
+
+def bershadsky_polyakov_control(level=k) -> BershadskyPolyakovControl:
+    """Return the standard FKR BP OPE and its formal reflected scalar sum."""
+
+    level = sympify(level)
+    data = bershadsky_polyakov_data(level)
+    pole_orders = tuple(
+        (left, right, tuple(term.pole_order for term in terms))
+        for left, right, terms in data.ope_data.singular_products
+    )
+    return BershadskyPolyakovControl(
+        level=level,
+        generators=data.generators,
+        central_charge=data.central_charge,
+        formal_reflected_level=data.formal_reflected_level,
+        formal_central_sum=data.formal_central_sum,
+        pole_orders=pole_orders,
+        jj_pole2=data.jj_pole2,
+        jg_plus_charge=data.jg_charge,
+        jg_minus_charge=data.jg_minus_charge,
+        gpgm_pole3=data.gg_pole3,
+        gpgm_pole2_coefficient=data.gg_pole2_coeff,
+        gpgm_pole1=data.gg_pole1,
+        ll_pole4=data.tt_pole4,
+        source=data.source,
+    )
+
+
+# -------------------------------------------------------------------------
+# Non-hook type-A audit packets
+# -------------------------------------------------------------------------
+
+
 NON_HOOK_TARGETS: List[Tuple[int, Partition, str]] = [
-    (4, (2, 2), "sl_4 even: FIRST non-hook, self-transpose"),
-    (5, (3, 2), "sl_5 non-hook: not self-transpose"),
-    (6, (3, 3), "sl_6 rectangular: self-transpose"),
-    (6, (2, 2, 2), "sl_6 three-row: self-transpose"),
-    (6, (4, 2), "sl_6 non-hook two-row: not self-transpose"),
-    (6, (3, 2, 1), "sl_6 staircase: non-hook non-rectangular"),
+    (4, (2, 2), "sl_4 first non-hook rectangular orbit"),
+    (5, (3, 2), "sl_5 first non-even non-hook audit surface"),
+    (6, (3, 3), "sl_6 two-row rectangular audit surface"),
+    (6, (2, 2, 2), "sl_6 three-row rectangular audit surface"),
+    (6, (4, 2), "sl_6 two-row non-hook audit surface"),
+    (6, (3, 2, 1), "sl_6 self-transpose staircase audit surface"),
 ]
 
 
 @dataclass(frozen=True)
+class FormalCentralAudit:
+    """Exact reflected KRW central scalar, kept separate from modular data."""
+
+    partition: Partition
+    transpose: Partition
+    level: object
+    formal_reflected_level: object
+    source_central_charge: object
+    transpose_reflected_central_charge: object
+    formal_sum: object
+    derivative: Optional[object]
+    k_independent: Optional[bool]
+    source: str
+    modular_interpretation: ClaimPacket
+
+
+def formal_central_audit(
+    N: int,
+    partition: Partition,
+    level=k,
+) -> FormalCentralAudit:
+    lam = normalize_partition(partition)
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
+    level = sympify(level)
+    lam_t = transpose_partition(lam)
+    reflected = hook_dual_level_sl_n(N, level)
+    source_c = krw_central_charge(lam, level)
+    transpose_c = krw_central_charge(lam_t, reflected)
+    scalar_sum = formal_central_scalar_sum(lam, level)
+    derivative = simplify(scalar_sum.diff(level)) if isinstance(level, Symbol) else None
+    constant = derivative == 0 if derivative is not None else None
+    return FormalCentralAudit(
+        partition=lam,
+        transpose=lam_t,
+        level=level,
+        formal_reflected_level=reflected,
+        source_central_charge=source_c,
+        transpose_reflected_central_charge=transpose_c,
+        formal_sum=scalar_sum,
+        derivative=derivative,
+        k_independent=constant,
+        source=KRW_SOURCE,
+        modular_interpretation=_open(
+            f"modular interpretation of the reflected central scalar for {lam}",
+            H_MODULAR_GENUS_ONE,
+            H_NONPRINCIPAL_LEVEL,
+            evidence=(KRW_SOURCE, f"formal scalar sum={scalar_sum}"),
+        ),
+    )
+
+
+@dataclass(frozen=True)
 class NonHookProbe:
-    """Red-team probe for a non-hook nilpotent orbit."""
+    """Exact finite evidence and typed DS/KD obligations for one orbit."""
 
     N: int
     partition: Partition
     transpose: Partition
     is_self_transpose: bool
     orbit_class: str
-    # DS data
     centralizer_dim: int
     orbit_dim: int
+    generator_weights: Tuple[object, ...]
+    n_generators: int
+    n_even: int
+    n_odd: int
     ghost_constant: Rational
     n_plus_dim: int
     n_half_dim: int
-    # Kappa data
-    kappa_w: object  # kappa(W_k(sl_N, f_lambda))
-    kappa_dual_w: object  # kappa(W_{k'}(sl_N, f_{lambda^t}))
-    complementarity_sum: object  # kappa + kappa_dual (should be constant in k)
-    complementarity_is_constant: bool
-    # BRST structure
     nilpotent_plus_is_abelian: bool
+    bracket_span_dimension: int
     has_quadratic_ghost: bool
-    # Diagnosis
-    diagnosis: str
+    reciprocal_weight_diagnostic: Rational
+    formal_central: FormalCentralAudit
+    finite_transport_path: Tuple[Partition, ...]
+    finite_graph_reaches_transpose: bool
+    rho_source: ClaimPacket
+    rho_transpose: ClaimPacket
+    kappa_w: ClaimPacket
+    kappa_dual_w: ClaimPacket
+    modular_conductor: ClaimPacket
+    ds_bar_commutation: ClaimPacket
+    pbw_collapse: ClaimPacket
+    koszul_duality: ClaimPacket
+    categorical_transport: ClaimPacket
+    transpose_duality: ClaimPacket
+    ksdual_membership: ClaimPacket
+    findings: Tuple[AuditFinding, ...]
+
+    @property
+    def complementarity_sum(self):
+        """Compatibility alias for the formal central scalar sum."""
+
+        return self.formal_central.formal_sum
+
+    @property
+    def complementarity_is_constant(self) -> Optional[bool]:
+        """Compatibility alias for scalar ``k``-independence."""
+
+        return self.formal_central.k_independent
 
 
-def probe_non_hook(N: int, partition: Partition, level=Symbol('k')) -> NonHookProbe:
-    """Full probe of a non-hook nilpotent orbit in sl_N."""
+def _probe_findings(
+    lam: Partition,
+    bracket: BRSTBracketAudit,
+    central: FormalCentralAudit,
+    graph_reaches_transpose: bool,
+) -> Tuple[AuditFinding, ...]:
+    findings: List[AuditFinding] = []
+    comparison = _open(
+        f"DS--bar/Koszul comparison for non-hook partition {lam}",
+        H_DS_KD_COMPARISON,
+        H_KAZHDAN_FORMALITY,
+        H_BAR_BRST_BICOMPLEX,
+    )
+    findings.append(
+        AuditFinding(
+            claim_attacked="arbitrary-nilpotent DS--bar/Koszul commutation",
+            severity=AuditSeverity.SERIOUS,
+            status=ClaimStatus.OPEN,
+            exact_evidence=(
+                f"dim n_+={bracket.n_plus_dim}",
+                f"dim [n_+,n_+]={bracket.bracket_span_dimension}",
+                f"finite graph reaches transpose={graph_reaches_transpose}",
+            ),
+            failure_mode=(
+                "The finite orbit and BRST ledgers supply the comparison inputs.  "
+                "Completion requires the named chain map and its quasi-isomorphism proof."
+            ),
+            obligations=comparison.hypotheses,
+            claim=comparison,
+        )
+    )
+    if bracket.quadratic_ghost_term_present:
+        nonlinear = _open(
+            f"compatibility of the quadratic BRST ghost term with chiral bar for {lam}",
+            H_BAR_BRST_BICOMPLEX,
+            H_DS_KD_COMPARISON,
+        )
+        findings.append(
+            AuditFinding(
+                claim_attacked="spectral-sequence collapse from BRST combinatorics",
+                severity=AuditSeverity.SERIOUS,
+                status=ClaimStatus.OPEN,
+                exact_evidence=(
+                    f"dim [n_+,n_+]={bracket.bracket_span_dimension}",
+                    f"nonzero bracket witnesses={len(bracket.bracket_witnesses)}",
+                ),
+                failure_mode=(
+                    "The quadratic ghost term is present.  Its interaction with "
+                    "the bar differential requires a chain-level calculation."
+                ),
+                obligations=nonlinear.hypotheses,
+                claim=nonlinear,
+            )
+        )
+    modular = _open(
+        f"kappa complementarity for non-hook partition {lam}",
+        H_MODULAR_GENUS_ONE,
+        H_NONPRINCIPAL_LEVEL,
+    )
+    findings.append(
+        AuditFinding(
+            claim_attacked="non-hook modular kappa arithmetic",
+            severity=AuditSeverity.SERIOUS,
+            status=ClaimStatus.OPEN,
+            exact_evidence=(f"formal KRW central scalar={central.formal_sum}",),
+            failure_mode=(
+                "The rho and kappa surfaces carry open status.  A direct genus-one "
+                "calculation supplies the invariant required for modular arithmetic."
+            ),
+            obligations=modular.hypotheses,
+            claim=modular,
+        )
+    )
+    transport = _conditional(
+        f"categorical realization of the finite path from {lam} to {transpose_partition(lam)}",
+        H_CATEGORICAL_TRANSPORT,
+        H_TRANSPOSE_DUALITY,
+    )
+    findings.append(
+        AuditFinding(
+            claim_attacked="promotion of Hasse-graph reachability to duality",
+            severity=AuditSeverity.MODERATE,
+            status=ClaimStatus.CONDITIONAL,
+            exact_evidence=(f"finite graph reaches transpose={graph_reaches_transpose}",),
+            failure_mode=(
+                "Reachability settles the finite partition combinatorics.  Realized "
+                "functors and their bar/DS compatibility constitute the categorical step."
+            ),
+            obligations=transport.hypotheses,
+            claim=transport,
+        )
+    )
+    return tuple(findings)
+
+
+def probe_non_hook(N: int, partition: Partition, level=k) -> NonHookProbe:
+    """Return the complete finite audit and typed frontier for one partition."""
+
     lam = normalize_partition(partition)
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
     lam_t = transpose_partition(lam)
-    is_self_t = (lam == lam_t)
-
-    # Basic orbit data
-    cent_dim = centralizer_dimension_sl_n(lam)
-    orb_dim = orbit_dimension_sl_n(lam)
-    C_lam = ghost_constant(lam)
-    n_plus = ds_nilpotent_plus_dim(lam)
-    n_half = ds_nilpotent_half_dim(lam)
-    orb_class = type_a_orbit_class(lam)
-
-    # Kappa for W_k(sl_N, f_lambda)
-    kappa_w = ds_kappa_from_affine(lam, level)
-
-    # Kappa for the putative dual: W_{-k-2N}(sl_N, f_{lambda^t})
-    kv = hook_dual_level_sl_n(N, level)
-    kappa_dual_w = ds_kappa_from_affine(lam_t, kv)
-
-    # Complementarity sum
-    comp_sum = simplify(kappa_w + kappa_dual_w)
-    # Check if the sum is constant in k (no k-dependence)
-    comp_is_const = (simplify(comp_sum.diff(sympify(level))) == 0
-                     if hasattr(comp_sum, 'diff') else True)
-
-    # BRST structure: is n_+ abelian?
-    # For hook partitions (m, 1^r), n_+ is abelian.
-    # For non-hook partitions, n_+ may be non-abelian.
-    # Check: if the sl_2-grading has positive-grade pieces g_j with j >= 2,
-    # then [g_1, g_1] can land in g_2, making n_+ non-abelian.
-    triple = type_a_partition_sl2_triple(lam)
-    h_diag = [triple.h[i, i] for i in range(N)]
-    grading = ad_h_grade_multiplicities_sl_n(triple.h)
-
-    # n_+ is abelian iff there are no positive grades j, k with j+k
-    # also a positive grade. This means [g_j, g_k] cannot land in n_+.
-    positive_grades = {g: m for g, m in grading.items() if g > 0}
-    max_positive_grade = max(positive_grades.keys()) if positive_grades else 0
-    pos_grade_set = set(positive_grades.keys())
-
-    # Check for commutator landings within n_+
-    has_internal_bracket = False
-    for j in pos_grade_set:
-        for l in pos_grade_set:
-            if (j + l) in pos_grade_set:
-                has_internal_bracket = True
-                break
-        if has_internal_bracket:
-            break
-
-    n_plus_abelian = not has_internal_bracket
-
-    # Quadratic ghost term present iff n_+ non-abelian
-    has_quad_ghost = not n_plus_abelian
-
-    # Diagnosis
-    if n_plus_abelian:
-        if len(pos_grade_set) == 1:
-            diagnosis = (f"n_+ abelian (single grade {max_positive_grade}): "
-                         f"DS is Koszul-type, bar commutation plausible")
-        else:
-            diagnosis = (f"n_+ abelian (grades {sorted(pos_grade_set)}, no internal brackets): "
-                         f"DS is Koszul-type, bar commutation plausible")
-    else:
-        diagnosis = (f"n_+ NON-ABELIAN (grades {sorted(pos_grade_set)}, "
-                     f"internal brackets present): "
-                     f"BRST has quadratic ghost term, bar commutation OBSTRUCTED")
-
+    generators = w_algebra_generator_data(lam)
+    bracket = ghost_obstruction_analysis(N, lam)
+    central = formal_central_audit(N, lam, level)
+    ds_packet = ds_bar_commutation_check(lam, level)
+    transport = verify_transport_to_transpose(lam, level)
+    transpose_duality = _conditional(
+        f"object-level transpose duality from {lam} to {lam_t}",
+        H_TRANSPOSE_DUALITY,
+        H_DS_KD_COMPARISON,
+        H_NONPRINCIPAL_LEVEL,
+        evidence=(f"finite Hasse path={transport.hasse_path_to_transpose}",),
+    )
     return NonHookProbe(
         N=N,
         partition=lam,
         transpose=lam_t,
-        is_self_transpose=is_self_t,
-        orbit_class=orb_class,
-        centralizer_dim=cent_dim,
-        orbit_dim=orb_dim,
-        ghost_constant=C_lam,
-        n_plus_dim=n_plus,
-        n_half_dim=n_half,
-        kappa_w=kappa_w,
-        kappa_dual_w=kappa_dual_w,
-        complementarity_sum=comp_sum,
-        complementarity_is_constant=comp_is_const,
-        nilpotent_plus_is_abelian=n_plus_abelian,
-        has_quadratic_ghost=has_quad_ghost,
-        diagnosis=diagnosis,
+        is_self_transpose=lam == lam_t,
+        orbit_class=type_a_orbit_class(lam),
+        centralizer_dim=type_a_centralizer_dimension(lam),
+        orbit_dim=type_a_orbit_dimension(lam),
+        generator_weights=tuple(
+            sorted((weight for _, weight, _ in generators.strong_generators), key=sympify)
+        ),
+        n_generators=generators.f_centralizer_dimension,
+        n_even=generators.n_even,
+        n_odd=generators.n_odd,
+        ghost_constant=bracket.ghost_constant_value,
+        n_plus_dim=bracket.n_plus_dim,
+        n_half_dim=bracket.g_half_dim,
+        nilpotent_plus_is_abelian=bracket.n_plus_is_abelian,
+        bracket_span_dimension=bracket.bracket_span_dimension,
+        has_quadratic_ghost=bracket.quadratic_ghost_term_present,
+        reciprocal_weight_diagnostic=reciprocal_weight_diagnostic_from_partition(lam),
+        formal_central=central,
+        finite_transport_path=transport.hasse_path_to_transpose,
+        finite_graph_reaches_transpose=transport.graph_reaches_transpose,
+        rho_source=transport.source_rho,
+        rho_transpose=transport.transpose_rho,
+        kappa_w=transport.source_kappa,
+        kappa_dual_w=transport.transpose_kappa,
+        modular_conductor=transport.modular_conductor,
+        ds_bar_commutation=ds_packet.ds_bar_commutation,
+        pbw_collapse=ds_packet.pbw_collapse,
+        koszul_duality=transport.koszul_duality,
+        categorical_transport=transport.categorical_transport,
+        transpose_duality=transpose_duality,
+        ksdual_membership=transport.ksdual_membership,
+        findings=_probe_findings(
+            lam,
+            bracket,
+            central,
+            transport.graph_reaches_transpose,
+        ),
     )
 
 
 def probe_all_non_hooks() -> Dict[str, NonHookProbe]:
-    """Probe all non-hook targets."""
-    results = {}
-    for N, lam, desc in NON_HOOK_TARGETS:
-        key = f"sl_{N}_{lam}"
-        results[key] = probe_non_hook(N, lam)
-    return results
+    """Audit every catalogued non-hook partition."""
+
+    return {
+        f"sl_{N}_{lam}": probe_non_hook(N, lam)
+        for N, lam, _description in NON_HOOK_TARGETS
+    }
 
 
-# =========================================================================
-# B. Derived-functor obstruction: spectral sequence analysis
-# =========================================================================
+# -------------------------------------------------------------------------
+# Spectral-sequence audit
+# -------------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
-class SpectralSequenceObstruction:
-    """Obstruction data from the DS-bar spectral sequence."""
+class SpectralSequenceAudit:
+    """Finite filtration input with every spectral conclusion typed."""
 
     partition: Partition
     N: int
-    # DS spectral sequence data
-    # E_2^{0,0} = H^0_DS(H^0_bar(-)) -- the "commuting" term
-    # E_2^{p,q} with (p,q) != (0,0) -- the obstruction terms
-    ds_complex_dim: int  # dim of the BRST complex
-    bar_complex_dim: int  # dim of the bar complex (in low degrees)
-    # Key obstruction: does H^1_DS survive?
-    # If W_k(g,f) has H^1(BRST) != 0 (which happens at special levels),
-    # the DS reduction is not exact and the spectral sequence has higher terms
-    h1_ds_survives_at_generic_level: bool
-    # Obstruction class location
-    obstruction_bidegree: Optional[Tuple[int, int]]
-    obstruction_description: str
+    brst: BRSTBracketAudit
+    strong_generator_count: int
+    higher_brst_cohomology: ClaimPacket
+    kazhdan_degeneration: ClaimPacket
+    cross_differential: ClaimPacket
+    ds_bar_comparison: ClaimPacket
+    obstruction_class: ClaimPacket
+    findings: Tuple[AuditFinding, ...]
 
 
-def spectral_sequence_probe(N: int, partition: Partition) -> SpectralSequenceObstruction:
-    """Analyze the DS-bar spectral sequence obstruction.
+def spectral_sequence_probe(N: int, partition: Partition) -> SpectralSequenceAudit:
+    """Return exact filtration inputs and named spectral-sequence obligations."""
 
-    The key mathematical fact: DS reduction is EXACT at generic level
-    (the BRST spectral sequence degenerates at E_1 by the Kazhdan
-    filtration argument), so at generic k the two compositions agree.
-
-    The obstruction appears at SPECIAL levels:
-    - Critical: k = -h^v (DS is undefined)
-    - Admissible: k = -h^v + p/q with p, q coprime, q >= h^v
-      At admissible levels, DS may have higher BRST cohomology.
-    - Boundary of admissibility: where the Kazhdan filtration fails
-    """
     lam = normalize_partition(partition)
-
-    # DS complex dimension = dim(n_+) (fermionic ghosts)
-    # + dim(n_-) (anti-ghosts) in the full BRST complex
-    n_plus = ds_nilpotent_plus_dim(lam)
-
-    # Bar complex: at generic level, H^1(B(W)) = generators of W
-    cent_dim = centralizer_dimension_sl_n(lam)
-
-    # At generic level, DS is exact: E_1 degenerates, no obstruction
-    h1_survives_generic = False
-
-    # The obstruction is concentrated at special levels
-    # For non-hook partitions, the BRST differential has a quadratic ghost
-    # term that makes the spectral sequence DIFFERENT from the hook case.
-    # Even at generic level, the bicomplexity of bar + BRST introduces
-    # potential cross-term contributions.
-    triple = type_a_partition_sl2_triple(lam)
-    grading = ad_h_grade_multiplicities_sl_n(triple.h)
-    positive_grades = {g: m for g, m in grading.items() if g > 0}
-    max_pos = max(positive_grades.keys()) if positive_grades else 0
-    pos_set = set(positive_grades.keys())
-
-    # n_+ is abelian iff no two positive grades sum to another positive grade
-    has_bracket = any((j + l) in pos_set for j in pos_set for l in pos_set)
-
-    if not has_bracket:
-        # Abelian n_+: DS is Koszul-type, spectral sequence collapses
-        obstr_bideg = None
-        obstr_desc = (f"n_+ abelian (positive grades {sorted(pos_set)}), "
-                      f"spectral sequence collapses at E_1")
-    elif len(pos_set) == 2:
-        # Two positive grades with internal bracket: E_2 obstruction
-        obstr_bideg = (1, 1)
-        obstr_desc = (f"n_+ non-abelian (grades {sorted(pos_set)}, "
-                      f"internal brackets): "
-                      f"quadratic ghost gives E_2 obstruction at bidegree (1,1). "
-                      f"The cross-differential d_bar . d_DS may be nonzero.")
-    else:
-        # Multiple interacting grades: higher obstruction
-        obstr_bideg = (2, 1)
-        obstr_desc = (f"n_+ deeply non-abelian (grades {sorted(pos_set)}): "
-                      f"multiple ghost interactions, higher-order obstruction.")
-
-    return SpectralSequenceObstruction(
+    bracket = ghost_obstruction_analysis(N, lam)
+    generators = w_algebra_generator_data(lam)
+    exact_evidence = (
+        f"dim n_+={bracket.n_plus_dim}",
+        f"dim [n_+,n_+]={bracket.bracket_span_dimension}",
+        f"strong-generator count={generators.f_centralizer_dimension}",
+    )
+    higher = _open(
+        f"higher BRST cohomology for W^k(sl_{N},f_{lam})",
+        H_KAZHDAN_FORMALITY,
+        evidence=exact_evidence,
+    )
+    degeneration = _open(
+        f"Kazhdan/bar spectral-sequence degeneration for partition {lam}",
+        H_KAZHDAN_FORMALITY,
+        H_BAR_BRST_BICOMPLEX,
+        evidence=exact_evidence,
+    )
+    cross = _open(
+        f"completed cross-differential for the bar--BRST bicomplex at {lam}",
+        H_BAR_BRST_BICOMPLEX,
+        evidence=exact_evidence,
+    )
+    comparison = _open(
+        f"DS--bar comparison quasi-isomorphism for partition {lam}",
+        H_DS_KD_COMPARISON,
+        H_KAZHDAN_FORMALITY,
+        H_BAR_BRST_BICOMPLEX,
+        evidence=exact_evidence,
+    )
+    obstruction = _open(
+        f"identified Ext obstruction class for partition {lam}",
+        H_EXT_OBSTRUCTION,
+        H_DS_KD_COMPARISON,
+        evidence=exact_evidence,
+    )
+    finding = AuditFinding(
+        claim_attacked="spectral-sequence collapse and obstruction bidegree",
+        severity=AuditSeverity.SERIOUS,
+        status=ClaimStatus.OPEN,
+        exact_evidence=exact_evidence,
+        failure_mode=(
+            "Good-grading dimensions and Lie brackets determine the input "
+            "differential.  The filtered complexes and comparison map determine "
+            "page degeneration, higher cohomology, and any Ext bidegree."
+        ),
+        obligations=(H_KAZHDAN_FORMALITY, H_BAR_BRST_BICOMPLEX, H_EXT_OBSTRUCTION),
+        claim=obstruction,
+    )
+    return SpectralSequenceAudit(
         partition=lam,
         N=N,
-        ds_complex_dim=2 * n_plus,  # ghosts + anti-ghosts
-        bar_complex_dim=cent_dim,
-        h1_ds_survives_at_generic_level=h1_survives_generic,
-        obstruction_bidegree=obstr_bideg,
-        obstruction_description=obstr_desc,
+        brst=bracket,
+        strong_generator_count=generators.f_centralizer_dimension,
+        higher_brst_cohomology=higher,
+        kazhdan_degeneration=degeneration,
+        cross_differential=cross,
+        ds_bar_comparison=comparison,
+        obstruction_class=obstruction,
+        findings=(finding,),
     )
 
 
-# =========================================================================
-# C. Non-special orbits in types B, C, D
-# =========================================================================
+# -------------------------------------------------------------------------
+# Type-B/type-C finite partition audit
+# -------------------------------------------------------------------------
+
+
+def is_valid_type_b_partition(partition: Partition) -> bool:
+    """Return the type-B parity condition: even parts have even multiplicity."""
+
+    counts = Counter(normalize_partition(partition))
+    return all(part % 2 == 1 or multiplicity % 2 == 0 for part, multiplicity in counts.items())
+
+
+def is_valid_type_c_partition(partition: Partition) -> bool:
+    """Return the type-C parity condition: odd parts have even multiplicity."""
+
+    counts = Counter(normalize_partition(partition))
+    return all(part % 2 == 0 or multiplicity % 2 == 0 for part, multiplicity in counts.items())
+
+
+def is_valid_type_d_partition(partition: Partition) -> bool:
+    """Return the type-D parity condition, leaving very-even splitting separate."""
+
+    return is_valid_type_b_partition(partition)
+
+
+def _all_partitions(n: int) -> List[Partition]:
+    if n < 0:
+        raise ValueError("partition size must be nonnegative")
+    if n == 0:
+        return [()]
+    result: List[Partition] = []
+
+    def visit(remaining: int, largest: int, prefix: Tuple[int, ...]) -> None:
+        if remaining == 0:
+            result.append(prefix)
+            return
+        for part in range(min(remaining, largest), 0, -1):
+            visit(remaining - part, part, prefix + (part,))
+
+    visit(n, n, ())
+    return result
+
+
+def _dominates(left: Partition, right: Partition) -> bool:
+    """Return ``left >= right`` in dominance order for equal-size partitions."""
+
+    if sum(left) != sum(right):
+        return False
+    width = max(len(left), len(right))
+    left_sum = 0
+    right_sum = 0
+    for index in range(width):
+        left_sum += left[index] if index < len(left) else 0
+        right_sum += right[index] if index < len(right) else 0
+        if left_sum < right_sum:
+            return False
+    return True
+
+
+def _dominance_collapse(partition: Partition, validity) -> Partition:
+    lam = normalize_partition(partition)
+    candidates = [
+        candidate
+        for candidate in _all_partitions(sum(lam))
+        if validity(candidate) and _dominates(lam, candidate)
+    ]
+    greatest = [
+        candidate
+        for candidate in candidates
+        if all(_dominates(candidate, competitor) for competitor in candidates)
+    ]
+    if len(greatest) != 1:
+        raise ValueError(f"collapse is not uniquely determined for {lam}: {greatest}")
+    return greatest[0]
+
+
+def b_collapse(partition: Partition) -> Partition:
+    """Return the greatest B-valid partition dominated by ``partition``."""
+
+    return _dominance_collapse(partition, is_valid_type_b_partition)
+
+
+def c_collapse(partition: Partition) -> Partition:
+    """Return the greatest C-valid partition dominated by ``partition``."""
+
+    return _dominance_collapse(partition, is_valid_type_c_partition)
+
+
+def enumerate_type_b_orbits(n: int) -> List[Partition]:
+    """Enumerate the type-B_n partition labels of ``2n+1``."""
+
+    return [partition for partition in _all_partitions(2 * n + 1) if is_valid_type_b_partition(partition)]
+
+
+def enumerate_type_c_orbits(n: int) -> List[Partition]:
+    """Enumerate the type-C_n partition labels of ``2n``."""
+
+    return [partition for partition in _all_partitions(2 * n) if is_valid_type_c_partition(partition)]
+
+
+def is_special_type_b_orbit(partition: Partition) -> ClaimPacket:
+    """Return the specialness obligation with type-B conventions exposed."""
+
+    lam = normalize_partition(partition)
+    if not is_valid_type_b_partition(lam):
+        raise ValueError(f"{lam} does not satisfy the type-B parity condition")
+    return _open(
+        f"type-B specialness of orbit partition {lam}",
+        H_BC_SPECIALNESS,
+    )
+
 
 @dataclass(frozen=True)
 class TypeBCDOrbit:
-    """Orbit data in type B, C, or D."""
+    """Exact orbit-label validity with typed specialness and duality."""
 
     lie_type: str
     rank: int
     partition: Partition
-    is_valid_bc_partition: bool
-    is_special: bool
-    spaltenstein_image: Optional[Partition]
-    orbit_dim: Optional[int]
-    centralizer_dim: Optional[int]
-    bv_dual_exists: bool
-    diagnosis: str
+    is_valid_partition: bool
+    specialness: ClaimPacket
+    spaltenstein_image: ClaimPacket
+    bv_dual: ClaimPacket
+    finding: AuditFinding
 
 
-def is_valid_type_b_partition(partition: Partition) -> bool:
-    """Check if partition is a valid type B_n orbit label.
-
-    In type B_n = so_{2n+1}, nilpotent orbits correspond to partitions
-    of 2n+1 where EVEN parts occur with EVEN multiplicity.
-    """
+def _type_bc_orbit_audit(lie_type: str, rank: int, partition: Partition) -> TypeBCDOrbit:
     lam = normalize_partition(partition)
-    from collections import Counter
-    counts = Counter(lam)
-    for part, mult in counts.items():
-        if part % 2 == 0 and mult % 2 != 0:
-            return False
-    return True
-
-
-def is_valid_type_c_partition(partition: Partition) -> bool:
-    """Check if partition is a valid type C_n orbit label.
-
-    In type C_n = sp_{2n}, nilpotent orbits correspond to partitions
-    of 2n where ODD parts occur with EVEN multiplicity.
-    """
-    lam = normalize_partition(partition)
-    from collections import Counter
-    counts = Counter(lam)
-    for part, mult in counts.items():
-        if part % 2 == 1 and mult % 2 != 0:
-            return False
-    return True
-
-
-def is_valid_type_d_partition(partition: Partition) -> bool:
-    """Check if partition is a valid type D_n orbit label.
-
-    In type D_n = so_{2n}, nilpotent orbits correspond to partitions
-    of 2n where EVEN parts occur with EVEN multiplicity.
-    (Note: very even partitions give TWO orbits, but we ignore that here.)
-    """
-    lam = normalize_partition(partition)
-    from collections import Counter
-    counts = Counter(lam)
-    for part, mult in counts.items():
-        if part % 2 == 0 and mult % 2 != 0:
-            return False
-    return True
-
-
-def is_special_type_b_orbit(partition: Partition) -> bool:
-    """Check if a type B_n orbit is special.
-
-    A type-B orbit (partition of 2n+1 with even parts even mult) is
-    SPECIAL iff in the sequence of parts, there is no "gap" where an
-    even part appears between two distinct odd parts.
-
-    Explicit criterion (Collingwood-McGovern, Thm 6.3.7):
-    A B-partition lambda is special iff for every even part p of lambda,
-    the multiplicity of p equals the multiplicity of p in the
-    B-collapse of the transpose of lambda.
-
-    For small ranks we can verify directly against the known classification.
-
-    B_2 = so_5 orbits and specialness:
-      (5)           -> regular, SPECIAL
-      (3,1,1)       -> subregular, SPECIAL
-      (2,2,1)       -> minimal non-zero, NON-SPECIAL
-      (1,1,1,1,1)   -> zero, SPECIAL
-
-    B_3 = so_7 orbits and specialness:
-      (7)           -> SPECIAL (regular)
-      (5,1,1)       -> SPECIAL
-      (3,3,1)       -> SPECIAL
-      (3,2,2)       -> NON-SPECIAL
-      (3,1,1,1,1)   -> SPECIAL
-      (2,2,2,1)     -> NON-SPECIAL
-      (1,1,1,1,1,1,1) -> SPECIAL (zero)
-    """
-    lam = normalize_partition(partition)
-
-    # Direct method: compute the Barbasch-Vogan/Spaltenstein double dual
-    # and check if it gives back the original.
-    # d_BV(lambda) = B-collapse of transpose(lambda)
-    # lambda is special iff d_BV(d_BV^{-1}) = lambda, which for type B
-    # is equivalent to: B-collapse(transpose(C-collapse(transpose(lambda)))) = lambda
-    #
-    # But we need to be careful: transpose of a B-partition lands in
-    # a different type. For B <-> C duality:
-    # transpose of a B-partition gives a C-partition (possibly after collapse).
-
-    # Direct check for type B: a B-partition is special iff each even row
-    # appears with even multiplicity (which is already required for B-validity)
-    # AND additionally, when we look at the sequence of multiplicities,
-    # the pattern matches the Spaltenstein criterion.
-
-    # Simplest correct approach: use the round-trip criterion.
-    # Step 1: transpose lambda, get a partition (possibly not C-valid)
-    # Step 2: C-collapse to get a valid C-partition mu
-    # Step 3: transpose mu, get a partition (possibly not B-valid)
-    # Step 4: B-collapse to get a valid B-partition nu
-    # lambda is special iff nu == lambda
-
-    lam_t = transpose_partition(lam)
-    mu = c_collapse(lam_t)       # Valid C-partition
-    mu_t = transpose_partition(mu)
-    nu = b_collapse(mu_t)        # Valid B-partition
-    return normalize_partition(nu) == lam
-
-
-def b_collapse(partition: Partition) -> Partition:
-    """B-collapse: largest type-B partition dominated by input.
-
-    Type B_n: partitions of 2n+1 with even parts having even multiplicity.
-
-    Algorithm (Collingwood-McGovern, Nilpotent Orbits, Thm 6.3.3):
-    Given a partition mu, produce the B-collapse mu_B by iterating:
-      1. Find the largest even part p with odd multiplicity.
-      2. Find the largest i such that mu_i = p. Set mu_i = p-1.
-      3. Find the smallest j > i such that mu_j < mu_{j-1} (or j = end).
-         Set mu_j = mu_j + 1. (This redistributes the lost 1.)
-      4. Re-sort into nonincreasing order and repeat.
-
-    Terminates because each step strictly decreases in dominance order.
-    """
-    lam = list(normalize_partition(partition))
-    n = len(lam)
-    max_iters = sum(lam) * 10  # Safety bound
-    iters = 0
-    while iters < max_iters:
-        iters += 1
-        from collections import Counter
-        counts = Counter(lam)
-        # Find largest even part with odd multiplicity
-        violating = None
-        for part in sorted(counts.keys(), reverse=True):
-            if part > 0 and part % 2 == 0 and counts[part] % 2 != 0:
-                violating = part
-                break
-        if violating is None:
-            break  # Already a valid B-partition
-
-        # Find the LAST occurrence of this part
-        last_idx = len(lam) - 1 - lam[::-1].index(violating)
-        lam[last_idx] -= 1
-
-        # Find the first position after last_idx where we can add 1
-        # i.e., smallest j > last_idx such that lam[j] < lam[j-1]
-        # or j = len(lam) (append a new part)
-        placed = False
-        for j in range(last_idx + 1, len(lam)):
-            if lam[j] < lam[j - 1]:
-                lam[j] += 1
-                placed = True
-                break
-        if not placed:
-            lam.append(1)
-
-        lam = sorted([x for x in lam if x > 0], reverse=True)
-    return tuple(lam) if lam else (0,)
-
-
-def c_collapse(partition: Partition) -> Partition:
-    """C-collapse: largest type-C partition dominated by input.
-
-    Type C_n: partitions of 2n with odd parts having even multiplicity.
-
-    Same algorithm as B-collapse but targeting odd parts instead of even.
-    """
-    lam = list(normalize_partition(partition))
-    max_iters = sum(lam) * 10
-    iters = 0
-    while iters < max_iters:
-        iters += 1
-        from collections import Counter
-        counts = Counter(lam)
-        violating = None
-        for part in sorted(counts.keys(), reverse=True):
-            if part > 0 and part % 2 == 1 and counts[part] % 2 != 0:
-                violating = part
-                break
-        if violating is None:
-            break
-
-        last_idx = len(lam) - 1 - lam[::-1].index(violating)
-        lam[last_idx] -= 1
-
-        placed = False
-        for j in range(last_idx + 1, len(lam)):
-            if lam[j] < lam[j - 1]:
-                lam[j] += 1
-                placed = True
-                break
-        if not placed:
-            lam.append(1)
-
-        lam = sorted([x for x in lam if x > 0], reverse=True)
-    return tuple(lam) if lam else (0,)
-
-
-def enumerate_type_b_orbits(n: int) -> List[Partition]:
-    """All nilpotent orbits in B_n = so_{2n+1}.
-
-    These are partitions of 2n+1 with even parts having even multiplicity.
-    """
-    target = 2 * n + 1
-    return [p for p in _all_partitions(target) if is_valid_type_b_partition(p)]
-
-
-def enumerate_type_c_orbits(n: int) -> List[Partition]:
-    """All nilpotent orbits in C_n = sp_{2n}.
-
-    These are partitions of 2n with odd parts having even multiplicity.
-    """
-    target = 2 * n
-    return [p for p in _all_partitions(target) if is_valid_type_c_partition(p)]
-
-
-def _all_partitions(n: int) -> List[Partition]:
-    """All partitions of n (for small n only)."""
-    if n == 0:
-        return [()]
-    result = []
-    _partition_helper(n, n, [], result)
-    return result
-
-
-def _partition_helper(n: int, max_part: int, current: list, result: list):
-    if n == 0:
-        result.append(tuple(current))
-        return
-    for p in range(min(n, max_part), 0, -1):
-        _partition_helper(n - p, p, current + [p], result)
+    validity = is_valid_type_b_partition(lam) if lie_type == "B" else is_valid_type_c_partition(lam)
+    specialness = _open(
+        f"type-{lie_type} specialness of orbit partition {lam}",
+        H_BC_SPECIALNESS,
+    )
+    image = _open(
+        f"Spaltenstein image of type-{lie_type} partition {lam}",
+        H_BC_SPECIALNESS,
+        H_BC_DUALITY,
+    )
+    dual = _open(
+        f"Barbasch--Vogan dual of type-{lie_type} partition {lam}",
+        H_BC_DUALITY,
+    )
+    finding = AuditFinding(
+        claim_attacked=f"type-{lie_type} specialness and BV-dual assignment",
+        severity=AuditSeverity.SERIOUS,
+        status=ClaimStatus.OPEN,
+        exact_evidence=(f"partition parity validity={validity}",),
+        failure_mode=(
+            "Parity validity and same-size dominance collapse settle the finite "
+            "partition ledger.  The type-changing duality requires its box "
+            "operation and a source-backed special-piece construction."
+        ),
+        obligations=(H_BC_SPECIALNESS, H_BC_DUALITY),
+        claim=dual,
+    )
+    return TypeBCDOrbit(
+        lie_type=lie_type,
+        rank=rank,
+        partition=lam,
+        is_valid_partition=validity,
+        specialness=specialness,
+        spaltenstein_image=image,
+        bv_dual=dual,
+        finding=finding,
+    )
 
 
 def analyze_type_b2_orbits() -> Dict[str, TypeBCDOrbit]:
-    """Full orbit analysis for B_2 = so_5 = sp_4 (= C_2).
+    """Audit every B2 and C2 orbit label without promoting duality claims."""
 
-    B_2 orbits (partitions of 5, even parts even mult):
-      (5)       = regular
-      (3,1,1)   = subregular
-      (2,2,1)   = minimal (NON-SPECIAL in type B)
-      (1,1,1,1,1) = zero
-
-    C_2 orbits (partitions of 4, odd parts even mult):
-      (4)       = regular
-      (2,2)     = subregular (also the minimal non-zero)
-      (2,1,1)   = NON-VALID for C_2 (odd part 1 has mult 2... wait, (2,1,1): 1 appears twice = even, valid)
-      Actually: partitions of 4 with odd-mult-even:
-      (4): no odd parts -> valid
-      (3,1): odd parts 3 (mult 1) and 1 (mult 1) -> both odd mult -> INVALID
-      (2,2): no odd parts -> valid
-      (2,1,1): odd part 1, mult 2 (even) -> valid
-      (1,1,1,1): odd part 1, mult 4 (even) -> valid
-
-    So C_2 orbits: (4), (2,2), (2,1,1), (1,1,1,1).
-
-    KEY FINDING: B_2 = C_2 as Lie algebras (so_5 = sp_4), but the orbit
-    parametrizations are DIFFERENT. The BV duality map between B_2 and C_2
-    orbits is:
-      B_2 (5) <-> C_2 (4)      [regular <-> regular]
-      B_2 (3,1,1) <-> C_2 (2,2)  [subregular <-> subregular]
-      B_2 (2,2,1) <-> ???        [NON-SPECIAL, BV dual problematic]
-      B_2 (1,1,1,1,1) <-> C_2 (1,1,1,1)  [zero <-> zero]
-    """
-    results = {}
-
-    b2_orbits = enumerate_type_b_orbits(2)
-    for lam in b2_orbits:
-        is_spec = is_special_type_b_orbit(lam)
-        spalt = b_collapse(transpose_partition(lam)) if is_spec else None
-        results[f"B2_{lam}"] = TypeBCDOrbit(
-            lie_type="B",
-            rank=2,
-            partition=lam,
-            is_valid_bc_partition=True,
-            is_special=is_spec,
-            spaltenstein_image=spalt,
-            orbit_dim=None,  # Would need so_5 orbit dim formula
-            centralizer_dim=None,
-            bv_dual_exists=is_spec,
-            diagnosis=("SPECIAL: BV dual exists" if is_spec
-                       else "NON-SPECIAL: BV dual AMBIGUOUS, DS-KD target unclear"),
-        )
-
-    c2_orbits = enumerate_type_c_orbits(2)
-    for lam in c2_orbits:
-        results[f"C2_{lam}"] = TypeBCDOrbit(
-            lie_type="C",
-            rank=2,
-            partition=lam,
-            is_valid_bc_partition=True,
-            is_special=True,  # All C_2 orbits are special (small rank)
-            spaltenstein_image=c_collapse(transpose_partition(lam)),
-            orbit_dim=None,
-            centralizer_dim=None,
-            bv_dual_exists=True,
-            diagnosis="C_2 orbit, all special at this rank",
-        )
-
-    return results
+    result: Dict[str, TypeBCDOrbit] = {}
+    for lam in enumerate_type_b_orbits(2):
+        result[f"B2_{lam}"] = _type_bc_orbit_audit("B", 2, lam)
+    for lam in enumerate_type_c_orbits(2):
+        result[f"C2_{lam}"] = _type_bc_orbit_audit("C", 2, lam)
+    return result
 
 
-# =========================================================================
-# D. Level-dependent failure analysis
-# =========================================================================
+# -------------------------------------------------------------------------
+# Level audit
+# -------------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
-class LevelDependentFailure:
-    """Analysis of DS-KD commutation failure at special levels."""
+class LevelAudit:
+    """Exact level arithmetic with presentation-sensitive obligations."""
 
     partition: Partition
     N: int
     level_type: str
     level_value: object
-    # At this level, what happens?
-    ds_is_defined: bool
-    w_algebra_has_null_vectors: bool
-    pbw_koszulness_holds: bool
-    kappa_defined: bool
-    # Diagnosis
-    failure_mode: str
+    formal_reflected_level: object
+    formal_reflection_fixed: bool
+    affine_sugawara_denominator: object
+    affine_sugawara_denominator_vanishes: bool
+    basic_admissibility_arithmetic: Optional[bool]
+    universal_ds_reduction: ClaimPacket
+    conformal_presentation: ClaimPacket
+    simple_quotient_null_ideal: ClaimPacket
+    pbw_koszulness: ClaimPacket
+    ds_bar_comparison: ClaimPacket
+    modular_kappa: ClaimPacket
+    findings: Tuple[AuditFinding, ...]
 
 
-def analyze_critical_level(N: int, partition: Partition) -> LevelDependentFailure:
-    """Analyze DS-KD at the critical level k = -h^v = -N for sl_N."""
+def _level_audit(
+    N: int,
+    partition: Partition,
+    level_value,
+    level_type: str,
+    basic_admissibility_arithmetic: Optional[bool],
+) -> LevelAudit:
     lam = normalize_partition(partition)
-    kc = -N  # critical level for sl_N
-
-    return LevelDependentFailure(
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
+    level_value = sympify(level_value)
+    reflected = simplify(-level_value - 2 * N)
+    denominator = simplify(level_value + N)
+    critical = denominator == 0
+    universal = _conditional(
+        f"universal DS reduction at level {level_value} for partition {lam}",
+        H_CRITICAL_PRESENTATION if critical else H_DS_KD_COMPARISON,
+    )
+    conformal = _open(
+        f"conformal presentation at level {level_value} for partition {lam}",
+        H_CRITICAL_PRESENTATION if critical else H_NONPRINCIPAL_LEVEL,
+    )
+    simple = _open(
+        f"BRST image of the simple-quotient null ideal at level {level_value}",
+        H_SIMPLE_QUOTIENT,
+    )
+    pbw = _open(
+        f"PBW/bar collapse and Koszulness at level {level_value} for {lam}",
+        H_SIMPLE_QUOTIENT,
+        H_KAZHDAN_FORMALITY,
+    )
+    comparison = _open(
+        f"DS--bar comparison at level {level_value} for {lam}",
+        H_DS_KD_COMPARISON,
+        H_CRITICAL_PRESENTATION if critical else H_SIMPLE_QUOTIENT,
+    )
+    modular = _open(
+        f"modular kappa at level {level_value} for {lam}",
+        H_MODULAR_GENUS_ONE,
+        H_CRITICAL_PRESENTATION if critical else H_SIMPLE_QUOTIENT,
+    )
+    finding = AuditFinding(
+        claim_attacked=f"{level_type} DS/KD verdict",
+        severity=AuditSeverity.SERIOUS,
+        status=ClaimStatus.OPEN,
+        exact_evidence=(
+            f"k+N={denominator}",
+            f"formal reflection fixed={reflected == level_value}",
+            f"basic admissibility arithmetic={basic_admissibility_arithmetic}",
+        ),
+        failure_mode=(
+            "Level arithmetic identifies the Sugawara pole and the formal "
+            "reflection.  DS, bar, PBW, simple-quotient, and modular behavior "
+            "depend on the selected presentation and comparison package."
+        ),
+        obligations=tuple(dict.fromkeys(comparison.hypotheses + pbw.hypotheses)),
+        claim=comparison,
+    )
+    return LevelAudit(
         partition=lam,
         N=N,
-        level_type="critical",
-        level_value=kc,
-        ds_is_defined=False,  # Sugawara undefined at critical level
-        w_algebra_has_null_vectors=True,  # V_{-h^v}(g) is the vacuum module
-        pbw_koszulness_holds=False,  # PBW fails at critical level
-        kappa_defined=False,  # kappa diverges at k = -h^v
-        failure_mode=(
-            "FATAL: Sugawara construction undefined at k = -h^v. "
-            "DS reduction produces the Feigin-Frenkel center z(g), "
-            "not a W-algebra in the usual sense. Bar-cobar/KD is "
-            "undefined in the standard framework. The critical-level "
-            "W-algebra is a commutative algebra (the center), which is "
-            "trivially Koszul but in a degenerate sense."
-        ),
+        level_type=level_type,
+        level_value=level_value,
+        formal_reflected_level=reflected,
+        formal_reflection_fixed=reflected == level_value,
+        affine_sugawara_denominator=denominator,
+        affine_sugawara_denominator_vanishes=critical,
+        basic_admissibility_arithmetic=basic_admissibility_arithmetic,
+        universal_ds_reduction=universal,
+        conformal_presentation=conformal,
+        simple_quotient_null_ideal=simple,
+        pbw_koszulness=pbw,
+        ds_bar_comparison=comparison,
+        modular_kappa=modular,
+        findings=(finding,),
     )
+
+
+def analyze_critical_level(N: int, partition: Partition) -> LevelAudit:
+    """Audit the critical value ``k=-N`` for ``sl_N``."""
+
+    return _level_audit(N, partition, -N, "critical", None)
 
 
 def analyze_admissible_level(
-    N: int, partition: Partition, p: int, q: int
-) -> LevelDependentFailure:
-    """Analyze DS-KD at an admissible level k = -N + p/q.
+    N: int,
+    partition: Partition,
+    p: int,
+    q: int,
+) -> LevelAudit:
+    """Audit ``k=-N+p/q`` and record elementary admissibility arithmetic."""
 
-    Admissible levels for sl_N: k + N = p/q with p >= N, q >= 1,
-    gcd(p,q) = 1 (boundary admissible levels in the KW sense).
-
-    At admissible levels, V_k(g) has a maximal proper submodule and
-    the simple quotient L_k(g) is a VOA with finitely many simple
-    modules in category O. The W-algebra W_k(g,f) = DS(L_k(g)) may
-    differ from DS(V_k(g)).
-    """
-    lam = normalize_partition(partition)
-    k_val = Rational(-N * q + p, q)  # k = -N + p/q
-
-    # At admissible levels, V_k has null vectors that may propagate to W_k
-    # The simple quotient L_k has DIFFERENT bar complex from V_k
-    return LevelDependentFailure(
-        partition=lam,
-        N=N,
-        level_type=f"admissible (p={p}, q={q})",
-        level_value=k_val,
-        ds_is_defined=True,
-        w_algebra_has_null_vectors=True,  # Always at admissible levels
-        pbw_koszulness_holds=False,  # PBW applies to V_k, not L_k
-        kappa_defined=True,
-        failure_mode=(
-            f"CONDITIONAL: DS(V_k) vs DS(L_k) discrepancy. "
-            f"The universal algebra V_k is Koszul (prop:pbw-universality) "
-            f"but the simple quotient L_k may fail Koszulness. "
-            f"Bar-cobar applied to L_k sees the null vector ideal. "
-            f"For non-hook partition {lam}, the null vector structure "
-            f"of W_k(sl_{N}, f) at admissible k = {k_val} is UNKNOWN. "
-            f"This is a genuine attack vector: the hook-type proof uses "
-            f"GENERIC level and does not address simple quotients."
-        ),
+    if q <= 0:
+        raise ValueError("q must be positive")
+    value = Rational(-N * q + p, q)
+    arithmetic = p >= N and gcd(p, q) == 1
+    return _level_audit(
+        N,
+        partition,
+        value,
+        f"admissible-input (p={p}, q={q})",
+        arithmetic,
     )
 
 
-def analyze_colliding_level(N: int, partition: Partition) -> LevelDependentFailure:
-    """Analyze DS-KD at the colliding level k' = k, i.e. 2k + 2N = 0.
+def analyze_colliding_level(N: int, partition: Partition) -> LevelAudit:
+    """Audit the fixed point of ``k -> -k-2N``, namely ``k=-N``."""
 
-    At k = -N, which is the critical level, the dual level k' = -k-2N = k.
-    This is the self-dual point, but it coincides with the critical level.
-    """
+    return _level_audit(N, partition, -N, "formal-fixed/critical", None)
+
+
+# -------------------------------------------------------------------------
+# Compatibility arithmetic entry points
+# -------------------------------------------------------------------------
+
+
+def complementarity_sum_non_hook(N: int, partition: Partition):
+    """Return the exact formal reflected KRW central scalar sum."""
+
+    return formal_central_audit(N, partition).formal_sum
+
+
+def complementarity_sum_is_constant(
+    N: int,
+    partition: Partition,
+) -> Tuple[bool, object]:
+    """Return exact ``k``-independence and the scalar expression/value."""
+
+    audit = formal_central_audit(N, partition)
+    if audit.k_independent:
+        return True, simplify(audit.formal_sum.subs(k, 0))
+    return False, audit.formal_sum
+
+
+def kappa_sum_non_hook(N: int, partition: Partition) -> ClaimPacket:
+    """Return the unresolved modular-kappa complementarity claim."""
+
     lam = normalize_partition(partition)
-    k_self_dual = -N  # k such that -k-2N = k, i.e. 2k = -2N
-
-    return LevelDependentFailure(
-        partition=lam,
-        N=N,
-        level_type="self-dual/critical collision",
-        level_value=k_self_dual,
-        ds_is_defined=False,
-        w_algebra_has_null_vectors=True,
-        pbw_koszulness_holds=False,
-        kappa_defined=False,
-        failure_mode=(
-            f"DEGENERATE: The self-dual level k = -N coincides with "
-            f"the critical level. Both bar-cobar and DS are degenerate. "
-            f"No KD statement is possible at this level."
-        ),
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
+    return _open(
+        f"kappa(W^k(sl_{N},f_{lam})) + kappa(W^{{-k-2N}}(sl_{N},f_{transpose_partition(lam)}))",
+        H_MODULAR_GENUS_ONE,
+        H_NONPRINCIPAL_LEVEL,
     )
 
 
-# =========================================================================
-# E. Quadratic ghost obstruction: the n_+ abelianity criterion
-# =========================================================================
+def kappa_sum_is_constant(N: int, partition: Partition) -> ClaimPacket:
+    """Return the unresolved constancy claim without arithmetic on open packets."""
+
+    lam = normalize_partition(partition)
+    if partition_size(lam) != N:
+        raise ValueError(f"partition {lam} has size {partition_size(lam)}, expected {N}")
+    return _open(
+        f"k-independence of the non-hook kappa sum for partition {lam}",
+        H_MODULAR_GENUS_ONE,
+        H_NONPRINCIPAL_LEVEL,
+    )
+
+
+# -------------------------------------------------------------------------
+# Complete adversarial report
+# -------------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
-class GhostObstructionData:
-    """Detailed analysis of the quadratic ghost obstruction."""
-
-    partition: Partition
-    N: int
-    # ad(h) grading data
-    grading: Dict[int, int]
-    positive_grades: Dict[int, int]
-    max_positive_grade: int
-    # n_+ structure
-    n_plus_dim: int
-    n_plus_is_abelian: bool
-    # If non-abelian: identify the commutator [g_j, g_k] landing in g_{j+k}
-    commutator_landings: List[Tuple[int, int, int]]  # (j, k, j+k)
-    # Ghost complex structure
-    ghost_central_charge: Rational
-    # BRST differential order: 1 (linear) if abelian, 2+ if non-abelian
-    brst_differential_order: int
-    # Ext obstruction
-    ext_group_dimension: Optional[int]
-    ext_description: str
-
-
-def ghost_obstruction_analysis(N: int, partition: Partition) -> GhostObstructionData:
-    """Detailed ghost obstruction analysis for DS-bar commutation.
-
-    The KEY obstruction to DS-bar commutation for non-hook nilpotents
-    is the non-abelianity of n_+.
-
-    When n_+ is abelian (all hook partitions and some non-hooks like
-    the even orbit (2,2) in sl_4), the BRST differential is LINEAR
-    in the ghost fields: d_BRST(x) = sum_alpha [J_alpha, x] * c^alpha.
-    This is a Koszul-type resolution, and bar commutes with it.
-
-    When n_+ is non-abelian, the BRST differential has a QUADRATIC
-    ghost term: d_BRST includes terms of the form
-      c^alpha * c^beta * b_gamma  (ghost number +1)
-    arising from [n_alpha, n_beta] = n_gamma in n_+.
-    This quadratic term means the BRST complex is NOT a simple
-    Koszul complex, and bar-cobar commutation requires checking
-    the anticommutativity of the two differentials.
-
-    The obstruction class lives in
-      Ext^1_{BRST}(H^*(bar), H^*(bar))
-    which measures the failure of the natural comparison map
-      bar(DS(-)) -> DS(bar(-))
-    to be a quasi-isomorphism.
-    """
-    lam = normalize_partition(partition)
-    triple = type_a_partition_sl2_triple(lam)
-    grading = ad_h_grade_multiplicities_sl_n(triple.h)
-    positive = {g: m for g, m in grading.items() if g > 0}
-    max_pos = max(positive.keys()) if positive else 0
-
-    n_plus = ds_nilpotent_plus_dim(lam)
-
-    # n_+ is abelian iff there are no positive grades j, k with j+k
-    # also a positive grade (i.e., [g_j, g_k] cannot land in n_+).
-    pos_grade_set = set(positive.keys())
-    has_internal_bracket = False
-    for j in pos_grade_set:
-        for l in pos_grade_set:
-            if (j + l) in pos_grade_set:
-                has_internal_bracket = True
-                break
-        if has_internal_bracket:
-            break
-    n_abelian = not has_internal_bracket
-
-    # Identify commutator landings
-    comm_landings = []
-    if not n_abelian:
-        for j in positive:
-            for l in positive:
-                if j + l in pos_grade_set:
-                    comm_landings.append((j, l, j + l))
-
-    # Ghost central charge
-    C_lam = ghost_constant(lam)
-
-    # BRST order
-    brst_order = 1 if n_abelian else (2 if max_pos <= 2 else max_pos)
-
-    # Ext obstruction estimate
-    if n_abelian:
-        ext_dim = 0
-        ext_desc = "n_+ abelian: Ext^1 = 0, no obstruction"
-    else:
-        # The obstruction Ext^1 has dimension >= number of commutator relations
-        # in n_+, which is dim([n_+, n_+])
-        comm_dim = sum(grading.get(j + l, 0) for j, l, jl in comm_landings
-                       if jl > 0) if comm_landings else 0
-        # But this double-counts, so divide by 2
-        ext_dim_est = max(1, comm_dim // 2)
-        ext_dim = ext_dim_est
-        ext_desc = (
-            f"n_+ non-abelian: Ext^1 >= {ext_dim_est} from "
-            f"{len(comm_landings)} commutator landings. "
-            f"The bar differential and BRST differential "
-            f"generate a bicomplex with potential cross-terms "
-            f"at BRST order {brst_order}. "
-            f"This is the PRIMARY obstruction to DS-bar commutation "
-            f"for partition {lam} in sl_{N}."
-        )
-
-    return GhostObstructionData(
-        partition=lam,
-        N=N,
-        grading=dict(grading),
-        positive_grades=positive,
-        max_positive_grade=max_pos,
-        n_plus_dim=n_plus,
-        n_plus_is_abelian=n_abelian,
-        commutator_landings=comm_landings,
-        ghost_central_charge=C_lam,
-        brst_differential_order=brst_order,
-        ext_group_dimension=ext_dim,
-        ext_description=ext_desc,
-    )
-
-
-# =========================================================================
-# F. Kappa compatibility and complementarity sum for non-hook orbits
-# =========================================================================
-
-def complementarity_sum_non_hook(N: int, partition: Partition) -> object:
-    """Compute c(k) + c(k') for a non-hook W-algebra.
-
-    For the hook-type corridor, c(k) + c(k') is a constant independent
-    of k (the Koszul conductor). If this fails for non-hook orbits,
-    the entire duality ansatz k' = -k-2N is WRONG for these orbits.
-    """
-    lam = normalize_partition(partition)
-    lam_t = transpose_partition(lam)
-    level = Symbol('k')
-    kv = hook_dual_level_sl_n(N, level)
-
-    c_direct = krw_central_charge(lam, level)
-    c_dual = krw_central_charge(lam_t, kv)
-
-    return simplify(c_direct + c_dual)
-
-
-def complementarity_sum_is_constant(N: int, partition: Partition) -> Tuple[bool, object]:
-    """Check if c(k) + c(k') is constant (independent of k).
-
-    Returns (is_constant, value_or_expression).
-    """
-    cs = complementarity_sum_non_hook(N, partition)
-    level = Symbol('k')
-    deriv = simplify(cs.diff(level))
-    if deriv == 0:
-        # It's constant -- evaluate at k=0
-        val = cs.subs(level, 0)
-        return True, simplify(val)
-    else:
-        return False, cs
-
-
-def kappa_sum_non_hook(N: int, partition: Partition) -> object:
-    """Compute kappa(W_k(f)) + kappa(W_{k'}(f^t)) for non-hook orbits."""
-    lam = normalize_partition(partition)
-    lam_t = transpose_partition(lam)
-    level = Symbol('k')
-    kv = hook_dual_level_sl_n(N, level)
-
-    kappa_direct = ds_kappa_from_affine(lam, level)
-    kappa_dual = ds_kappa_from_affine(lam_t, kv)
-
-    return simplify(kappa_direct + kappa_dual)
-
-
-def kappa_sum_is_constant(N: int, partition: Partition) -> Tuple[bool, object]:
-    """Check if kappa sum is constant."""
-    ks = kappa_sum_non_hook(N, partition)
-    level = Symbol('k')
-    deriv = simplify(ks.diff(level))
-    if deriv == 0:
-        val = ks.subs(level, 0)
-        return True, simplify(val)
-    else:
-        return False, ks
-
-
-# =========================================================================
-# G. Complete red-team report
-# =========================================================================
-
-@dataclass(frozen=True)
-class RedTeamVerdict:
-    """Summary verdict from the red-team attack."""
+class DSKDAuditReport:
+    """A checkable report whose conclusions retain their epistemic types."""
 
     target: str
     partition: Partition
     N: int
-    # Checks
-    kappa_constant: bool
-    complementarity_constant: bool
-    n_plus_abelian: bool
-    spectral_sequence_collapses: bool
-    # Overall
-    ds_kd_plausible: bool
-    obstruction_severity: str  # "none", "mild", "severe", "fatal"
-    summary: str
+    probe: NonHookProbe
+    spectral_sequence: SpectralSequenceAudit
+    critical_level: LevelAudit
+    findings: Tuple[AuditFinding, ...]
 
 
-def full_red_team_report() -> List[RedTeamVerdict]:
-    """Run the complete red-team attack battery."""
-    verdicts = []
+def full_red_team_report() -> List[DSKDAuditReport]:
+    """Run the complete finite battery and collect typed residual obligations."""
 
-    for N, lam, desc in NON_HOOK_TARGETS:
+    reports: List[DSKDAuditReport] = []
+    for N, lam, description in NON_HOOK_TARGETS:
         probe = probe_non_hook(N, lam)
-        ss = spectral_sequence_probe(N, lam)
-        ghost = ghost_obstruction_analysis(N, lam)
-        kappa_const, kappa_val = kappa_sum_is_constant(N, lam)
-        comp_const, comp_val = complementarity_sum_is_constant(N, lam)
+        spectral = spectral_sequence_probe(N, lam)
+        critical = analyze_critical_level(N, lam)
+        reports.append(
+            DSKDAuditReport(
+                target=description,
+                partition=lam,
+                N=N,
+                probe=probe,
+                spectral_sequence=spectral,
+                critical_level=critical,
+                findings=probe.findings + spectral.findings + critical.findings,
+            )
+        )
+    return reports
 
-        # Determine severity
-        # NOTE: complementarity sum c(k)+c(k') being k-dependent is NOT
-        # necessarily fatal. The existing hook test test_31_211_k_dependent
-        # shows that even for the PROVED hook pair (3,1)/(2,1,1) in sl_4,
-        # c(k)+c(k') is k-dependent! The hook proof works via kappa
-        # compatibility + generator matching + Sugawara threading, not
-        # via central-charge constancy.
-        #
-        # However, if KAPPA sum is k-dependent, that IS fatal.
-        if not kappa_const:
-            severity = "fatal"
-            plausible = False
-            summary = (f"FATAL: kappa sum is k-dependent for {lam}. "
-                       f"The ghost constant formula fails.")
-        elif ghost.n_plus_is_abelian and kappa_const:
-            severity = "none"
-            plausible = True
-            comp_note = (" Complementarity sum is k-dependent (as for some hooks)."
-                         if not comp_const else "")
-            summary = (f"CLEAN: n_+ abelian, kappa constant. "
-                       f"DS-KD should commute for {lam} as for hooks.{comp_note}")
-        elif not ghost.n_plus_is_abelian and kappa_const:
-            severity = "mild"
-            plausible = True  # Plausible but not proved
-            comp_note = (" Complementarity k-dependent." if not comp_const
-                         else " Complementarity constant.")
-            summary = (f"MILD: n_+ non-abelian (BRST order {ghost.brst_differential_order}), "
-                       f"kappa constant.{comp_note} "
-                       f"DS-KD plausible via spectral sequence argument, "
-                       f"but quadratic ghost term requires verification. "
-                       f"Ext obstruction dim >= {ghost.ext_group_dimension}.")
-        else:
-            severity = "severe"
-            plausible = False
-            summary = f"SEVERE: multiple obstructions for {lam}."
 
-        verdicts.append(RedTeamVerdict(
-            target=desc,
-            partition=lam,
-            N=N,
-            kappa_constant=kappa_const,
-            complementarity_constant=comp_const,
-            n_plus_abelian=ghost.n_plus_is_abelian,
-            spectral_sequence_collapses=(ss.obstruction_bidegree is None),
-            ds_kd_plausible=plausible,
-            obstruction_severity=severity,
-            summary=summary,
-        ))
-
-    return verdicts
+__all__ = [
+    "AuditFinding",
+    "AuditSeverity",
+    "BP_SOURCE",
+    "BRSTBracketAudit",
+    "BershadskyPolyakovControl",
+    "BracketWitness",
+    "DSKDAuditReport",
+    "FormalCentralAudit",
+    "H_BAR_BRST_BICOMPLEX",
+    "H_BC_DUALITY",
+    "H_BC_SPECIALNESS",
+    "H_CATEGORICAL_TRANSPORT",
+    "H_CRITICAL_PRESENTATION",
+    "H_DS_KD_COMPARISON",
+    "H_EXT_OBSTRUCTION",
+    "H_KAZHDAN_FORMALITY",
+    "H_MODULAR_GENUS_ONE",
+    "H_NONPRINCIPAL_LEVEL",
+    "H_SIMPLE_QUOTIENT",
+    "H_TRANSPOSE_DUALITY",
+    "KRW_SOURCE",
+    "LevelAudit",
+    "MatrixUnit",
+    "NON_HOOK_TARGETS",
+    "NonHookProbe",
+    "SpectralSequenceAudit",
+    "TypeBCDOrbit",
+    "analyze_admissible_level",
+    "analyze_colliding_level",
+    "analyze_critical_level",
+    "analyze_type_b2_orbits",
+    "b_collapse",
+    "bershadsky_polyakov_control",
+    "c_collapse",
+    "complementarity_sum_is_constant",
+    "complementarity_sum_non_hook",
+    "enumerate_type_b_orbits",
+    "enumerate_type_c_orbits",
+    "formal_central_audit",
+    "full_red_team_report",
+    "ghost_obstruction_analysis",
+    "is_special_type_b_orbit",
+    "is_valid_type_b_partition",
+    "is_valid_type_c_partition",
+    "is_valid_type_d_partition",
+    "kappa_sum_is_constant",
+    "kappa_sum_non_hook",
+    "probe_all_non_hooks",
+    "probe_non_hook",
+    "spectral_sequence_probe",
+]

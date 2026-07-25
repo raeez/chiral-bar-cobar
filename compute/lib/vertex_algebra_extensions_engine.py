@@ -226,7 +226,8 @@ def bar_cohomology_change_sl2(k: int, max_bar_deg: int = 4,
     The answer depends on the interplay between:
     - The null vector at weight k+1
     - The Arnold relations in the bar complex
-    - The Koszul property of L_k (proved for all admissible sl_2)
+    - The Koszul property of L_k (finite evidence / conditional for
+      admissible sl_2 until the quotient-bar package is supplied)
 
     Returns a dictionary with:
     - 'universal_dims': vacuum module dims for V_k
@@ -1246,19 +1247,27 @@ def koszulness_beyond_free_generation() -> Dict[str, Dict[str, Any]]:
     1. Relations among generators create additional bar classes
     2. The PBW filtration may not degenerate at E_2
     3. But: the SIMPLE QUOTIENT L_k(g) may still be Koszul
-       (proved for sl_2 at all admissible levels)
+       (rank-one sl_2 has finite Shapovalov/character evidence, not a
+       theorem-level verdict in this helper)
     """
     catalog = {
         "L_k(sl_2) integer": {
             "freely_generated": False,
-            "koszul": True,
-            "proof": "Single-weight null vector + Kac-Wakimoto character (rem:admissible-koszul-status)",
+            "koszul": None,
+            "proof": (
+                "Finite single-weight null-vector evidence; not promoted "
+                "without quotient-bar exactness/convergence"
+            ),
             "scope": "all non-negative integer k",
         },
         "L_k(sl_2) admissible": {
             "freely_generated": False,
-            "koszul": True,
-            "proof": "Structural argument (rem:admissible-koszul-status): single weight",
+            "koszul": None,
+            "proof": (
+                "Finite Shapovalov/character evidence; requires quotient-bar "
+                "spectral sequence, PBW/Shapovalov detection, finite-window "
+                "exactness, and strong convergence"
+            ),
             "scope": "all admissible k = p/q - 2",
         },
         "L_k(sl_N) admissible, N >= 3": {

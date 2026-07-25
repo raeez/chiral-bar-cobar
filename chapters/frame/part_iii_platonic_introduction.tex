@@ -58,7 +58,7 @@ a vector of typed projections. The five-slot fingerprint
  \label{eq:part-iii-fingerprint}
 \end{equation}
 records the finite row data from which the central charge, the
-classical collision residue, the scalar conductor, and the shadow
+binary collision kernel, the scalar conductor, and the shadow
 class are read on the standard rows. In the language of
 Theorem~\ref{thm:fingerprint-completeness}
 \textup{(}Chapter~\ref{ch:three-invariants}\textup{)}, $\varphi$ is
@@ -137,8 +137,9 @@ $(\mathrm{Com}(\cH_{\kappa}, \cA), \cA/\mathrm{Com})$ at
 non-critical level and its degenerate
 $\mathrm{coset}_{\mathrm{FF}}$ at critical level.
 
-The classification is then the one the chiral bar demands. Part~\ref{part:standard-landscape}
-is the catalogue of charts on the moduli stack
+The resulting partition is the finite-atlas quotient that the chiral
+bar demands. Part~\ref{part:standard-landscape} is the catalogue of
+charts on the moduli stack
 $\cM_{\ChirAlg}^{\mathrm{std}}$: the objects are standard
 chiral-algebra packages, the fingerprint quotient records their
 finite row data, and the central-charge reading is the first
@@ -151,11 +152,11 @@ Part~\ref{part:standard-landscape} carries eight charts on
 $\cM_{\ChirAlg}^{\mathrm{std}}$.
 
 \begin{description}
- \item[\S III.0 Platonic introduction.]
+ \item[\S III.0 Structural introduction.]
  \label{sec:part-iii-0}
  Central-charge deficiency. The eight-section atlas and the five
- Platonic theorems replace scalar classification by the full
- fingerprint.
+ carrier theorems replace scalar classification by the full
+fingerprint.
 
  \item[\S III.1 Free-field atoms.]
  \label{sec:part-iii-1}
@@ -203,8 +204,9 @@ $\cM_{\ChirAlg}^{\mathrm{std}}$.
  \label{sec:part-iii-5}
  Chapter~\ref{ch:bershadsky-polyakov}, Chapter~\ref{ch:y-algebras},
  the Monster and Leech lattice moonshine chapters. Bershadsky--Polyakov
- as subregular DS reduction (hook-type, self-dual with Koszul
- conductor $K = 196$); Gaiotto--Rapcak $Y_{N_1, N_2, N_3}[\psi]$
+ as subregular DS reduction (hook-type, conditional Verdier companion
+ $\mathcal B^{-k-6}$, central-charge conductor
+ $K^c = 50$); Gaiotto--Rapcak $Y_{N_1, N_2, N_3}[\psi]$
  with $S_3$-triality permuting the coset slot; Monster $V^\natural$
  as $\Z/2$-orbifold of the Leech lattice VOA
  $V_{\Lambda_{24}}^+$. These families sit at distinguished
@@ -242,7 +244,7 @@ The standard form carries eight charts on a single moduli stack,
 with the Koszul involution, the Drinfeld--Sokolov transport, and the
 associator comparison action visible as structure on the atlas.
 
-\section{Five Platonic theorems}
+\section{Five carrier theorems}
 \label{sec:part-iii-five-theorems}
 
 The eight-section atlas is held together by five theorem surfaces.
@@ -345,70 +347,78 @@ determined by~$\varphi(\cA)$. Thus $c$ is a coset-dependent
 functional of the five fingerprint slots on the stated rows.
 \end{proof}
 
-\subsection{Theorem C: r-matrix from PBW and OPE}
+\subsection{Theorem C: collision kernel from PBW and OPE}
 \label{sec:part-iii-theorem-C}
 
-\begin{theorem}[The classical r-matrix is determined by PBW and
- OPE data; \ClaimStatusConditional]
+\begin{theorem}[The collision kernel is determined by PBW and OPE
+data; represented $r$-matrix under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$;
+\ClaimStatusConditional]
 \label{thm:part-iii-rmatrix-emergent-from-pbw}
 Let $\cA$ be a chiral algebra in the standard landscape with a chosen
 set of strong generators indexed by~$n_{\mathrm{strong}}$ and a PBW
-basis on the augmentation ideal. The classical r-matrix
+basis on the augmentation ideal. The binary ordered collision kernel
 \begin{equation}
- r(z) \;=\; \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
- \;\in\; \cA^! \otimes \cA^! [\![z^{-1}]\!]
+ K_\cA^{\mathrm{coll}}(z)
+ \;:=\; \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})
+ \;\in\; \End_\cA(2)\,\widehat\otimes\,\cO(*\Delta)
 \end{equation}
-is determined by the pair (PBW basis, OPE). Explicitly, for each
-stratum the formula is:
+is determined by the chosen PBW presentation and the OPE operation.
+Its standard-row formulas are:
 \begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
- \item Heisenberg (class~$G$): $r(z) = \kappa / z$, simple pole,
- level prefix~$\kappa$ mandatory (the trace-form convention in
- which $r(z)|_{\kappa=0}=0$ recovers the abelian limit).
+ \item Heisenberg (class~$G$):
+ $K_\cA^{\mathrm{coll}}(z)=\kappa\Omega_{\mathcal H}/z$.
  \item Affine $V_k(\fg)$ (class~$L$, trace-form convention):
- $r(z) = k\,\Omega_{\mathrm{tr}} / z$, where~$\Omega_{\mathrm{tr}}
- \in \fg \otimes \fg$ is the trace-form Casimir; $k = 0$ gives
- $r = 0$ consistent with the abelian limit.
- \item Virasoro (class~$M$): $r(z) = (c/2)/z^3 + 2T/z$, cubic and
+ $K_\cA^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$, where
+ $\Omega_{\mathrm{tr}}\in\fg\otimes\fg$ is the trace-form Casimir.
+ \item Virasoro (class~$M$):
+ $K_\cA^{\mathrm{coll}}(z)=(c/2)/z^3+2T/z$, cubic and
  simple pole (the descendant coefficient $T(w)/(z-w)^2$ is absorbed
  by the $d\log$ kernel into the simple-pole term).
- \item $\cW_N$ (class~$M$): $r(z) = \sum_{n=2}^{N} r^{(n)}(z)$
- with $r^{(n)}(z) = \kappa^{(n)}/z^{2n-1} + \text{(descendant
+ \item $\cW_N$ (class~$M$):
+ $K_\cA^{\mathrm{coll}}(z)=\sum_{n=2}^{N}K^{(n)}(z)$
+ with $K^{(n)}(z)=\kappa^{(n)}/z^{2n-1}+\text{(descendant
  corrections)}$, one component per stress tensor.
- \item $\beta\gamma, bc$ (class~$C$): $r(z) = 0$ at the level of
- the collision residue; the non-trivial content enters at the
- quartic shadow~$S_4$.
+ \item $\beta\gamma,bc$ (class~$C$): logarithmic absorption produces
+ a regular binary operation, and the first scalar contact coordinate
+ is $S_4$, obtained by arity-four residue/trace extraction.
 \end{enumerate}
-In every case the formula follows from the augmentation-ideal PBW
-decomposition, the OPE pole structure, and the collision residue of
-the universal MC element~$\Theta_\cA$. The r-matrix is therefore a
-functional of~$(p_{\max}, n_{\mathrm{strong}}, \mathrm{coset})$; it
-is not an independent datum.
+The homotopy coinvariant $q_2(K_\cA^{\mathrm{coll}})$ remains an
+operator class in $\End_\cA(2)_{h\Sigma_2}$. A chosen normalized
+functional
+$\tau_{\cA,2}^{\mathrm{res}}\colon
+\End_\cA(2)_{h\Sigma_2}\to\bC$
+produces its scalar coordinate. A specified representation
+$\rho_\cA\colon\End_\cA(2)\to\End(W^{\otimes2})$ together with
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(\cA;W)$ produces the classical
+$r$-matrix $r_\cA(z)=\rho_\cA(K_\cA^{\mathrm{coll}}(z))$.
 \end{theorem}
 \begin{proof}
-The collision residue~$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
-is computed directly from the degree-$2$ truncation of the shadow
-tower \textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}. The
+The kernel $K_\cA^{\mathrm{coll}}
+=\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA^{E_1})$
+is computed from the arity-two truncation of the ordered MC element
+\textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}. The
 PBW basis fixes the strong generators; the OPE pole structure
 determines the coefficients of the collision residue by reading off
 pole orders and Laurent coefficients. For each class:
 \begin{itemize}[leftmargin=*]
- \item Class~$G$: OPE has only a double pole, collision residue is
- a simple pole in~$z$, coefficient is the level.
- \item Class~$L$: OPE has a double pole carrying the Casimir, plus a
- simple pole carrying the Lie bracket; d-log absorption yields a
- single-pole r-matrix with Casimir weight. Sugawara shift relates
- the classical r-matrix to~$\kappa_{\mathrm{ch}}$ via
- $\mathrm{av}(r) + \dim\fg/2 = \kappa_{\mathrm{ch}}$ for non-abelian
- affine.
+ \item Class~$G$: the double OPE pole yields a simple collision pole
+ with level coefficient.
+ \item Class~$L$: the Casimir channel of the double pole yields the
+ trace-form simple-pole kernel. Its normalized scalar coordinate is
+ $\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$; adjoining
+ the Sugawara contribution $\dim\fg/2$ gives
+ $\kappa_{\mathrm{ch}}$ in the affine normalization of this volume.
  \item Class~$M$: quartic OPE pole forces a cubic plus simple pole
  collision residue; the cubic coefficient is~$c/2$, the simple
  coefficient is the stress tensor~$T$.
- \item Class~$C$: no positive binary collision pole remains after
- the $d\log$ absorption of the simple generator pole. The non-trivial
- shadow content enters through the quartic contact class, for
- $\beta\gamma$ with $S_4=-5/12$ and $r_{\max}=4$.
+ \item Class~$C$: logarithmic absorption sends the simple generator
+ pole to a regular binary operation.  For $\beta\gamma$, the quartic
+ contact class gives $S_4=-5/12$ and $r_{\max}=4$.
 \end{itemize}
-The pole-by-pole readings determine the collision residue. $\quad\square$
+Applying $q_2$ gives the equivariant operator class; applying
+$\tau_{\cA,2}^{\mathrm{res}}$ gives its scalar coordinate; applying
+$\rho_\cA$ under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ gives the
+represented classical $r$-matrix. $\quad\square$
 \end{proof}
 
 \subsection{Theorem D: associator action on the fingerprint quotient}
@@ -586,13 +596,18 @@ indexed by the Baily--Borel--Freitag stratification of
 $\overline{\mathcal A_2}$. Write
 $\mathfrak g_{\Delta_5} = \mathrm{Borch}(F_3,\phi^{K3}_{0,1})$ for
 the K3-BKM Lie superalgebra from the hyperbolic lattice
-$\Lambda_{\mathrm{Muk},II}^{2,1}$; its chiral bialgebra realisation
-$\mathbf H_{\Delta_5}$ has Weyl denominator
-$\Delta_5 \in S_5(K(1))$ (Gritsenko paramodular weight-$5$ cusp form).
+$\Lambda_{\mathrm{Muk},II}^{2,1}$.  Its compact Hall--Drinfeld
+recognition target \(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\) has Weyl
+denominator \(\Delta_5 \in S_5(K(1))\) (Gritsenko paramodular
+weight-$5$ cusp form).  The notation
+\(\mathbf H_{\Delta_5}\) is reserved for the recognized compact object
+carrying a finite Hall source, Hopf pairing, source-to-target comparison
+maps, a PBW presentation theorem, and a Mittag--Leffler inverse-limit
+passage.
 Four sibling functors index the chart:
 \begin{description}
- \item[$\Psi$] reflective interior, producing the generic
- $\mathbf H_{\Delta_5}$-points;
+ \item[$\Psi$] reflective interior, producing the generic target
+ comparison points;
  \item[$\Psi^{\deg}$] Klingen cusp, producing the super-affine
  degeneration;
  \item[$\Psi^{\mathrm{tor}}$] Humbert divisor, producing the
@@ -611,22 +626,25 @@ $G/L/C/M$ of Theorem~\ref{thm:part-iii-landscape-as-moduli-stack};
 the $FF$ companion is the critical-level degeneration of the
 reflective interior.
 
-\begin{theorem}[K3 master $L$-value identity on the atlas;
- \ClaimStatusProvedElsewhere]
+\begin{theorem}[K3 determinant comparison problem on the atlas;
+ \ClaimStatusOpen]
 \label{thm:part-iii-k3-master-L-value}
-The genus-$1$ free energy of $\mathbf H_{\Delta_5}$ on the
-paramodular K3 chart is
+Assume the compact Hall--Borcherds recognition package for the target
+\(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\).  Let
+$H_{\Delta_5}^{\mathrm{det}}$ consist of the genus-$1$ determinant
+line, its Quillen metric, a trace-class sewing operator, and a
+comparison with the automorphic line generated by~$\Delta_5$.  The
+required comparison is
 \[
-\log Z^{(1)}_{\mathbf H_{\Delta_5}}
-\;=\;-\log\bigl\|\Delta_5\bigr\|^2_{\mathrm{Quillen}}
-\;=\;-\log\Delta_5 \;-\; 24\,L'(0,\Delta_5,\mathrm{std}),
-\qquad
-24 = \chi_{\mathrm{top}}(K3),
+\log Z^{(1),\mathrm{sew}}_{\mathbf H_{\Delta_5}}
+\xrightarrow{\ H_{\Delta_5}^{\mathrm{det}}\ }
+-\log\bigl\|\Delta_5\bigr\|^2_{\mathrm{Quillen}}.
 \]
-by Bruinier--K\"uhn $2003$ composed with Bismut--Gillet--Soul\'e $1988$.
-The $L$-function is standard, not adjoint-spinor: Pitale--Saha--Schmidt
-$2014$ CAP factorisation combined with the Waldspurger squaring rule
-rule out $L'(0,\Delta_{10},\mathrm{ad}^0)$. The source theorem is
+The exact topological input is $\chi_{\mathrm{top}}(K3)=24$.
+An $L$-value refinement requires a theorem identifying the regularized
+determinant, the standard $L$-function normalization, and its
+coefficient.  This is the open analytic obligation of
+$H_{\Delta_5}^{\mathrm{det}}$; see
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{theorem}
 
@@ -638,8 +656,8 @@ comparison target for the paramodular chart at
 $\mathbf H_{\Delta_5}$. Interpreting it as an actual tangent line to
 the chiral-bialgebra chart requires a chiral trace map, compatibility
 with the completed Hall source, and comparison with the Heegner
-divisor class. Without these maps it is a source-recognition target,
-not a constructed deformation of the fingerprint coset slot.
+divisor class.  These maps form the construction package for an
+actual deformation of the fingerprint coset slot.
 \end{remark}
 
 \begin{remark}[Humbert--Heegner admissibility on the atlas]
@@ -652,7 +670,7 @@ index-$1$ K3 Jacobi form concentrates the tower at $n=3$ and $n=5$:
 the $H_3$ wall carries $\phi^{(3)}|_{H_3}$, and the one-term
 $n=5$ coherence is
 $\phi^{(5)}=2\cdot[\mathrm{gen}]^{\otimes 5}$ in the normalization of
-Theorem~\ref{thm:bc-unconditional-depth-reduction}. For admissible
+Theorem~\ref{thm:bc-polar-depth-reduction}. For admissible
 $n\ge11$ the polar coefficient vanishes.
 \end{remark}
 
@@ -668,8 +686,10 @@ exhaustiveness. At each step one slot of~$\varphi$ becomes active.
 The moduli filtration starts at the atlas
 (\S~\ref{sec:part-iii-7}) and descends through
 $G,L,C,M,\mathrm{FF}$. On each stratum the functional
-$\Psi_{\mathrm{coset}}$ specializes, the r-matrix is read from the
-PBW/OPE carrier, and the associator comparison action relates the
+$\Psi_{\mathrm{coset}}$ specializes, the collision kernel is read from
+the PBW/OPE carrier, its classical $r$-matrix is supplied on the
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ comparison surface, and the
+associator comparison action relates the
 $\Q$-rational charts. The two filtrations meet where the
 stratum-by-stratum content becomes the atlas of
 $\cM_{\ChirAlg}^{\mathrm{std}}$.
@@ -677,7 +697,7 @@ $\cM_{\ChirAlg}^{\mathrm{std}}$.
 \section{Comparison carriers}
 \label{sec:part-iii-dependency-map}
 
-The five Platonic theorems
+The five carrier theorem surfaces
 (\ref{thm:part-iii-landscape-as-moduli-stack},
 \ref{thm:part-iii-central-charge-is-emergent},
 \ref{thm:part-iii-rmatrix-emergent-from-pbw},
@@ -710,7 +730,7 @@ Chapter~\ref{ch:three-invariants}.
  \ref{thm:mc2-bar-intrinsic} \\
 \hline
 \ref{thm:part-iii-rmatrix-emergent-from-pbw}
- (r-matrix from PBW and OPE)
+ (collision kernel from PBW and OPE)
  & \S III.1, \S III.2, \S III.3
  & \ref{thm:mc2-bar-intrinsic},
  \ref{thm:pbw-koszulness-criterion} \\
@@ -742,7 +762,7 @@ The standard landscape is the fingerprint quotient of the finite-row
 chiral packages carried by
 $\cM_{\ChirAlg}^{\mathrm{std}}$. Every family is a
 $\mathbb{C}$-point of this moduli stack; its central charge,
-classical r-matrix, and Koszul conductor are explicit functionals of
+collision kernel, and Koszul conductor are explicit functionals of
 a five-slot fingerprint; its place in the Koszul involution is visible
 on the perfect Verdier lanes; its comparison with the other families
 is a transport law on the atlas.
@@ -761,7 +781,7 @@ moduli stack on the stated Koszul/PBW finite windows, $\varphi$ is
 the canonical fingerprint projection, and the maps~$\rho_i$ are the
 typed face comparisons. The classical Kac--Wakimoto census is the
 list of standard points with their finite row data; the central
-charge, r-matrix, and scalar conductor are read by the typed
+charge, collision kernel, and scalar conductor are read by the typed
 functionals above.
 \end{proposition}
 \begin{proof}
@@ -770,7 +790,7 @@ Theorem~\ref{thm:part-iii-landscape-as-moduli-stack} (stack
 existence), Theorem~\ref{thm:part-iii-central-charge-is-emergent}
 (central-charge functional),
 Theorem~\ref{thm:part-iii-rmatrix-emergent-from-pbw}
-(r-matrix functional),
+(collision-kernel functional and represented-CYBE comparison),
 Theorem~\ref{thm:part-iii-grt-orbit-structure}
 ($\GRT$ associator action), and
 Theorem~\ref{thm:part-iii-atlas-completeness}
@@ -784,5 +804,6 @@ families. Its strata are controlled by shadow depth and coset data;
 its Koszul involution is a Verdier-lane operation on typed packages;
 its Drinfeld--Sokolov transport is a functorial map between charts.
 The Kac--Wakimoto list supplies standard points. Central charge is a
-coset-dependent functional of the fingerprint, and the classical
-r-matrix is read from the PBW and OPE data.
+coset-dependent functional of the fingerprint, the collision kernel is
+read from the PBW and OPE data, and the classical $r$-matrix is its
+represented CYBE realization.

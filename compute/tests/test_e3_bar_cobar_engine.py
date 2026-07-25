@@ -659,7 +659,7 @@ class TestE3E2Reduction:
 
     def test_yangian_component_structure(self):
         yc = e3_yangian_component()
-        assert yc['dunn'] == 'E_3 = E_1 tensor E_2'
+        assert yc['dunn'] == 'E_3^{top} = E_1 tensor E_2 after topologisation'
         assert 'spectral parameter' in yc['e1_direction']
 
 

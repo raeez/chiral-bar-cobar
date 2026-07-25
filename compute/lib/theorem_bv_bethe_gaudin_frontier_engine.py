@@ -1181,7 +1181,7 @@ def shadow_gaudin_dictionary() -> Dict[str, str]:
     return {
         'MC element Theta_A|_{genus 0}':
             'Gaudin connection nabla^Gaudin',
-        'collision residue r(z) = Omega/z':
+        'unit-normalized collision residue r(z) = Omega/z':
             'classical r-matrix of the Gaudin model',
         'Bethe ansatz equations':
             'critical-point conditions for genus-0 MC free energy',

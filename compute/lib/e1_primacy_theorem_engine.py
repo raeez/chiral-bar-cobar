@@ -1,22 +1,25 @@
-r"""E1 primacy theorem engine: algebraic verification of the averaging map.
+r"""Finite-dimensional certificates for ordered-to-symmetric averaging.
 
-THEOREM (E1 primacy, proposed upgrade from Principle princ:e1-primacy):
+The module distinguishes the linear Reynolds projection from every
+additional algebraic structure placed on its source.  In characteristic
+zero the projection is idempotent, its image is the invariant subspace,
+and the quotient map ``q`` satisfies ``q R = q``.  These facts establish
+the invariant/coinvariant splitting.
 
-    av: g^{E_1}_A -> g^mod_A
+A Lie, dg Lie, or coalgebra statement requires a separate compatibility
+certificate.  For a Reynolds projection onto a Lie subalgebra, bracket
+preservation is equivalent to its kernel being a Lie ideal.  The exact
+``Z/2`` conjugation example supplied by
+``universal_conductor_type_engine`` has an equivariant commutator and a
+kernel which fails this criterion.  Likewise, the arity-two kernel of the
+symmetric tensor quotient fails the coideal test for raw
+deconcatenation.  Operations on the fixed-point model therefore use the
+operation transported through the invariant/coinvariant isomorphism.
 
-is a surjective dg Lie morphism whose kernel classifies the quantum
-group deformation data (R-matrix, KZ associator, higher Yangian
-coherences) invisible to the symmetric/modular theory.
-
-SIX VERIFICATION TARGETS:
-
-  (1) av is a dg Lie morphism: commutes with D, preserves [-,-]
-  (2) av is surjective (PBW in char 0)
-  (3) ker(av) = Sigma_n-noninvariant part, described via Eulerian
-      idempotent decomposition
-  (4) MC equation projects correctly: av(Theta^{E1}) = Theta_A
-  (5) ker(av) carries the quantum group data at each arity
-  (6) Splitting analysis: does a section s: g^mod -> g^{E1} exist?
+The representation-theoretic ranks, Schur--Weyl dimension formulas,
+Casimir identities, and scalar ``kappa`` formulas below remain independent
+finite computations.  They provide evidence only for the statements they
+calculate.
 
 The engine works at FINITE arity for explicit verification. We model
 the convolution algebras as follows:
@@ -30,12 +33,13 @@ the convolution algebras as follows:
   av(phi)    = (1/n!) sum_{sigma in S_n} sigma . phi . sigma^{-1}
              = Reynolds operator (projection to S_n-invariants)
 
-The differential D comes from the bar differential (edge contraction).
-The Lie bracket comes from operad composition (graph gluing).
+The finite model implements the carrier and symmetric-group action.  A bar
+differential and an operadic convolution bracket enter through explicit
+callables or compatibility certificates.
 
 MULTI-PATH VERIFICATION (per CLAUDE.md mandate, 3+ paths per claim):
 
-  Path A: Direct algebraic computation (Eulerian idempotents)
+  Path A: Direct algebraic computation (low-arity descent projections)
   Path B: Representation-theoretic (Schur-Weyl, Young symmetrizers)
   Path C: Explicit matrix verification at small n and dim(V)
   Path D: Consistency with known r-matrix / kappa values
@@ -55,10 +59,17 @@ import itertools
 import math
 from fractions import Fraction
 from functools import lru_cache
-from typing import Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 from numpy import linalg as la
+
+from compute.lib.universal_conductor_type_engine import (
+    arity_two_deconcatenation_obstruction,
+    concatenation_descends_to_coinvariants,
+    reynolds_coinvariant_certificate,
+    reynolds_lie_defect_certificate,
+)
 
 
 # =========================================================================
@@ -129,7 +140,7 @@ def reynolds_operator(M: np.ndarray, n: int, dim: int) -> np.ndarray:
     """
     N = dim ** n
     assert M.shape == (N, N), f"Expected ({N},{N}), got {M.shape}"
-    result = np.zeros_like(M)
+    result = np.zeros(M.shape, dtype=np.result_type(M.dtype, np.complex128))
     perms = all_permutations(n)
     for sigma in perms:
         P = permutation_matrix(sigma, dim)
@@ -173,150 +184,45 @@ def descent_count(sigma: Tuple[int, ...]) -> int:
 
 
 def eulerian_idempotent_matrix(n: int, j: int, dim: int) -> np.ndarray:
-    """The j-th Eulerian idempotent e_j acting on V^{tensor n}.
+    """Return the explicitly implemented low-arity descent projections.
 
-    The Eulerian idempotents {e_0, e_1, ..., e_{n-1}} are orthogonal
-    idempotents in Q[S_n] that sum to the identity:
-
-      e_j = sum_{sigma in S_n} alpha_j(sigma) * sigma
-
-    where alpha_j(sigma) depends on the descent statistic.
-    The j=0 component e_0 is the symmetrizer (projects to Sym^n),
-    and e_0 = (1/n!) sum_sigma sigma is the Reynolds operator on
-    group algebra elements.
-
-    More precisely, the first Eulerian idempotent e_1 (Loday's
-    convention, sometimes called the Lie idempotent) projects onto
-    the Lie-type component, while e_0 projects onto the symmetric
-    (commutative) component.
-
-    We use the explicit formula via the descent polynomial:
-      e_j = (1/n!) sum_{sigma: des(sigma)=j} f_j(sigma) * sigma
-
-    For computational purposes, we use the Garsia-Reutenauer
-    decomposition: in the group algebra Q[S_n], the elements
-    e_j = sum_sigma c_j(sigma) sigma where the coefficients
-    come from the descent algebra.
-
-    Simplified approach: we compute the projection via the
-    eigenspace decomposition of the "descent operator"
-    D = sum_sigma des(sigma)/n * sigma in Q[S_n].
-    The Eulerian idempotents are the spectral projections of D
-    onto the eigenvalue j/n.
-
-    For small n, we compute directly.
+    ``j=0`` denotes the symmetrizer on ``V**tensor n``.  At arity two,
+    ``j=1`` denotes the complementary antisymmetrizer.  A genuine family
+    of higher Eulerian idempotents requires the Solomon descent-algebra
+    coefficients; this engine has no such implementation and therefore
+    raises ``NotImplementedError`` for those cases.
     """
+    if n < 0 or dim < 1 or j < 0:
+        raise ValueError("n and j must be nonnegative and dim must be positive")
     N = dim ** n
     if n <= 1:
         if j == 0:
             return np.eye(N, dtype=complex)
-        else:
-            return np.zeros((N, N), dtype=complex)
+        raise NotImplementedError("only the arity-zero/one symmetrizer is implemented")
 
-    # Build the descent operator in End(V^{tensor n})
     perms = all_permutations(n)
-    # Group permutations by descent count
-    descent_groups: Dict[int, List[Tuple[int, ...]]] = {}
-    for sigma in perms:
-        d = descent_count(sigma)
-        if d not in descent_groups:
-            descent_groups[d] = []
-        descent_groups[d].append(sigma)
-
-    # Build D = sum_sigma (des(sigma)/n) * P_sigma
-    # But we need the Eulerian idempotents, not just D.
-    # Use the explicit Loday formula for the first Eulerian idempotent:
-    #   e_1^{Loday} = (1/n) sum_{sigma} sigma
-    # This is actually the symmetrizer = e_0 in our convention.
-    #
-    # The correct approach: build the full representation of Q[S_n]
-    # on V^{tensor n}, then compute the Eulerian idempotents from
-    # the descent algebra basis.
-    #
-    # For efficiency with small n, use the spectral decomposition
-    # of the left-regular representation restricted to the
-    # descent algebra.
-
-    # Approach: compute the "cumulative descent" operator
-    #   Phi = sum_{sigma in S_n} t^{des(sigma)+1} * P_sigma
-    # evaluated at roots of unity to extract spectral projections.
-    # The Eulerian idempotents satisfy:
-    #   e_j = sum_{k=0}^{n-1} (omega^{-jk}/n) * Phi(omega^k)
-    # where omega = e^{2*pi*i/n}.
-    #
-    # Actually, the simplest correct approach is:
-    # The symmetrizer S = (1/n!) sum_sigma P_sigma projects onto
-    # Sym^n(V) inside T^n(V). This is e_0.
-    # The antisymmetrizer A = (1/n!) sum_sigma sgn(sigma) P_sigma
-    # projects onto Lambda^n(V).
-    # The Eulerian e_j for general j requires the full Solomon
-    # descent algebra machinery.
-
-    # For our theorem, the key decomposition is:
-    #   T^n(V) = im(e_0) + ker(e_0)
-    # where im(e_0) = Sym^n(V) and ker(e_0) is the kernel of av.
-    # This is all we need for the E1 primacy theorem.
-
-    # Compute e_0 = symmetrizer = Reynolds operator
     if j == 0:
-        # e_0 = (1/n!) sum_sigma P_sigma
         result = np.zeros((N, N), dtype=complex)
         for sigma in perms:
             result += permutation_matrix(sigma, dim)
         return result / len(perms)
 
-    # For j >= 1, compute via complement:
-    # For j=1 specifically, on V^{tensor 2} with dim(V)=d,
-    # the antisymmetrizer gives the antisymmetric part.
-    # But for general n, we need the full Eulerian decomposition.
-
-    # General approach: eigenspace decomposition of the
-    # "descent generating function" operator.
-    # Build: D_op = sum_sigma des(sigma) * P_sigma / n!
-    D_op = np.zeros((N, N), dtype=complex)
-    for sigma in perms:
-        d = descent_count(sigma)
-        D_op += d * permutation_matrix(sigma, dim)
-    D_op /= len(perms)
-
-    # The Eulerian idempotents are spectral projections of D_op.
-    # Eigenvalues of D_op (acting via conjugation) correspond to
-    # j/n for the n possible descent counts 0, 1, ..., n-1.
-    # But D_op acts on V^{tensor n} by left multiplication,
-    # and the eigenvalues of D_op on V^{tensor n} are more
-    # subtle than j/n.
-
-    # Pragmatic approach for n <= 4:
-    # Compute e_0 (symmetrizer), then for j >= 1 use the
-    # orthogonal complement decomposition.
-    e0 = eulerian_idempotent_matrix(n, 0, dim)
-
     if j == 1 and n == 2:
-        # For n=2: T^2(V) = Sym^2(V) + Lambda^2(V)
-        # e_0 = symmetrizer, e_1 = antisymmetrizer
         result = np.zeros((N, N), dtype=complex)
         for sigma in perms:
             result += sgn(sigma) * permutation_matrix(sigma, dim)
         return result / len(perms)
 
-    # For general j >= 1:
-    # Return the complementary projection I - e_0 for j=1
-    # when we cannot compute exact Eulerian idempotents.
-    # This captures the full kernel of av.
-    if j == 1:
-        return np.eye(N, dtype=complex) - e0
-
-    # For j >= 2, return zero as a placeholder -- the engine
-    # focuses on the binary decomposition im(av) vs ker(av)
-    return np.zeros((N, N), dtype=complex)
+    raise NotImplementedError(
+        "higher Eulerian idempotents require a Solomon descent-algebra implementation"
+    )
 
 
 def kernel_projection(n: int, dim: int) -> np.ndarray:
     """Projection onto ker(av) = (I - e_0) acting on End(V^{tensor n}).
 
-    For an endomorphism M in End(V^{tensor n}):
-      av(M) = e_0 M e_0^T + cross terms... NO.
-    Actually av acts by conjugation: av(M) = (1/n!) sum P_sigma M P_sigma^T.
+    Averaging acts by conjugation:
+      av(M) = (1/n!) sum P_sigma M P_sigma^T.
     The kernel of av consists of M such that this sum vanishes.
 
     The Reynolds operator R(M) = (1/n!) sum P_sigma M P_sigma^T is
@@ -430,50 +336,27 @@ def r_matrix_virasoro(z: complex, c: complex = 1) -> complex:
 
 
 def kappa_from_r_matrix_heisenberg(k: complex) -> complex:
-    """Compute kappa = av(r(z)) for Heisenberg.
+    """Return the canonical Heisenberg normalization ``kappa(H_k)=k``.
 
     r(z) = k*Omega_H/z (rank-one coeff k/z) is already S_2-invariant (its coefficient is scalar after evaluation).
-    av_{r=2}(r(z)) = kappa = k (the residue at z=0 of k/z
-    integrated against the Sigma_2 averaging measure).
-
-    More precisely: av is the Reynolds operator on End(V tensor V).
-    For Heisenberg with dim(V)=1, End = C, and av = id.
-    So kappa(H_k) = k.
+    For a one-dimensional coefficient space the Reynolds action is the
+    identity.  The scalar formula and the residue coefficient therefore
+    agree in this special case.
     """
     return k
 
 
 def kappa_from_r_matrix_sl2(k: complex, h_dual: int = 2) -> complex:
-    """Compute the full kappa for sl_2 at level k.
+    """Return the canonical affine ``sl_2`` scalar formula.
 
-    r(z) = k * Omega / z. The S_2-coinvariant (trace over both
-    tensor factors divided by dim) gives:
-
-      av(r(z)) = (1/2) * tr_{12}(r(z)) per output component
-
-    Actually, the correct averaging is:
-      kappa = (1/n!) sum_{sigma in S_n} tr(sigma . r_res)
-    at arity 2, where r_res is the residue at z=0.
-
-    For sl_2: r_res = k * Omega.
-    Omega = (1/4)(XX + YY + ZZ).
-    P_{12} . Omega . P_{12}^T = Omega (Casimir is S_2-symmetric).
-    So av(Omega) = Omega, and we extract the scalar part.
-
-    The scalar part = (1/dim^2) tr(Omega) = 0... but this gives kappa = 0.
-
-    The issue: kappa is NOT simply the matrix trace. The coinvariant
-    map av: g^{E_1} -> g^mod at arity 2 sends the End(V^2)-valued
-    r-matrix to its S_2-invariant projection. The scalar projection
-    (the modular characteristic) is then obtained by evaluating on
-    the vacuum/identity state.
-
-    For affine KM in trace-form normalization:
-      av(r(z)) = k * dim(g) / (2 * h_dual)
-      kappa(g_k) = av(r(z)) + dim(g)/2.
-    For sl_2: dim(g) = 3, h_dual = 2, so
-      av(r(z)) = 3k/4
+    In the adopted trace-form normalization,
+    ``kappa(g_k)=dim(g)(k+h_dual)/(2*h_dual)``.  For ``sl_2``,
+    ``dim(g)=3`` and ``h_dual=2``, so
       kappa(sl_2, k) = 3(k+2)/4.
+
+    The finite matrix Reynolds operator leaves the ``sl_2`` Casimir
+    invariant.  A scalar evaluation map is extra data; this function
+    evaluates the stated affine formula directly.
     """
     dim_g = 3  # sl_2
     return Fraction(dim_g * k, 2 * h_dual) + Fraction(dim_g, 2)
@@ -485,69 +368,33 @@ def kappa_virasoro(c: complex) -> complex:
 
 
 # =========================================================================
-#  AVERAGING MAP: DG LIE MORPHISM VERIFICATION
+#  AVERAGING MAP: STRUCTURE-COMPATIBILITY AUDIT
 # =========================================================================
 
 def verify_av_commutes_with_differential(
     n: int, dim: int, phi: np.ndarray, d_phi: np.ndarray,
+    differential: Optional[Callable[[np.ndarray], np.ndarray]] = None,
     tol: float = 1e-10
 ) -> Tuple[bool, float]:
-    """Verify av(D(phi)) = D(av(phi)).
+    """Compare ``R(D(phi))`` with ``D(R(phi))`` for an explicit ``D``.
 
-    Here D is the bar differential acting on the ordered convolution algebra.
-    We check: Reynolds(D(phi)) = D(Reynolds(phi)).
-
-    In the finite-dimensional model, D acts by "edge contraction"
-    on the graph complex. At arity n, D maps to arity n-1 by contracting
-    an internal edge. For the purpose of testing av as a chain map,
-    we verify the commutativity on given (phi, D(phi)) pairs.
-
-    Parameters:
-        n: arity
-        dim: dimension of V
-        phi: an element of g^{E_1}(n), i.e., an N x N matrix, N = dim^n
-        d_phi: D(phi), the differential applied to phi
+    The callable is load-bearing data: invariance of ``R(D(phi))`` alone
+    is automatic and supplies no chain-map certificate.  ``d_phi`` is
+    checked against ``D(phi)`` before the chain-map square is evaluated.
+    This fixed-arity interface applies when ``D`` preserves the matrix
+    space; an arity-changing differential needs its source and target
+    Reynolds actions encoded separately.
     """
-    av_d_phi = reynolds_operator(d_phi, n, dim)
-    av_phi = reynolds_operator(phi, n, dim)
-    # For a genuine chain map test, we'd need D acting on the target too.
-    # Here we verify the simpler property:
-    # av(D(phi)) should be S_n-invariant (which it is since av projects)
-    # AND av should commute with D.
-    # Since D on the modular side is the S_n-averaged differential,
-    # we verify: av(D_E1(phi)) = D_mod(av(phi)).
-    # In our model, D_mod is the restriction of D_E1 to S_n-invariants,
-    # so D_mod(av(phi)) = av(D_E1(av(phi))) = av(D_E1(phi))
-    # (because D_E1 commutes with S_n action).
-    #
-    # The key property: D_E1 commutes with the S_n action.
-    # This means: for all sigma, P_sigma D_E1 = D_E1 P_sigma.
-    # Then: av(D_E1(phi)) = (1/n!) sum P_sigma D_E1(phi) P_sigma^T
-    #      = (1/n!) sum D_E1(P_sigma phi P_sigma^T)  [if D commutes with S_n]
-    #      = D_E1((1/n!) sum P_sigma phi P_sigma^T)
-    #      = D_E1(av(phi))
-    # which is exactly the chain map property.
+    if differential is None:
+        raise ValueError("an explicit differential is required for a chain-map test")
 
-    # Verify D commutes with S_n: check P_sigma d_phi P_sigma^T consistency
-    passed = True
-    max_err = 0.0
-    for sigma in all_permutations(n):
-        P = permutation_matrix(sigma, dim)
-        # If D commutes with sigma: P D(phi) P^T should equal D(P phi P^T)
-        lhs = P @ d_phi @ P.T
-        # We don't have D(P phi P^T) directly, but we can check
-        # that av(D(phi)) is S_n-invariant
-        pass
-
-    # Direct check: av(d_phi) should be S_n-invariant
-    av_dphi = reynolds_operator(d_phi, n, dim)
-    if not is_sn_invariant(av_dphi, n, dim, tol):
-        passed = False
-        max_err = float('inf')
-    else:
-        max_err = 0.0
-
-    return passed, max_err
+    computed_d_phi = differential(phi)
+    input_err = la.norm(computed_d_phi - d_phi)
+    lhs = reynolds_operator(computed_d_phi, n, dim)
+    rhs = differential(reynolds_operator(phi, n, dim))
+    square_err = la.norm(lhs - rhs)
+    err = max(float(input_err), float(square_err))
+    return err < tol, err
 
 
 def verify_av_preserves_bracket(
@@ -555,61 +402,33 @@ def verify_av_preserves_bracket(
     phi1: np.ndarray, phi2: np.ndarray,
     tol: float = 1e-10
 ) -> Tuple[bool, float]:
-    """Verify av([phi1, phi2]) = [av(phi1), av(phi2)] for S_n-INVARIANT inputs.
+    """Measure the fixed-arity Reynolds commutator defect.
 
-    CRITICAL DISTINCTION (found by this engine):
-
-    The Reynolds operator R(M) = (1/n!) sum P M P^T does NOT satisfy
-    R([A,B]) = [R(A), R(B)] for ARBITRARY matrices A, B.
-    This is because R is NOT an algebra morphism: R(AB) != R(A)R(B).
-
-    However, R DOES preserve the bracket when RESTRICTED TO THE
-    CONVOLUTION LIE BRACKET, which acts across arities by operad
-    composition. The proof uses S_n-equivariance of the operad
-    composition maps (not the matrix product).
-
-    At fixed arity, there is a weaker but true statement:
-    for S_n-INVARIANT inputs phi1, phi2 in im(av), we have
-    [phi1, phi2] is also S_n-invariant (im(av) is a Lie subalgebra
-    under the commutator), so av([phi1, phi2]) = [phi1, phi2]
-    = [av(phi1), av(phi2)].
-
-    This test verifies the subalgebra property: the commutator
-    of two S_n-invariant endomorphisms is S_n-invariant.
+    The returned error is
+    ``||R([phi1,phi2]) - [R(phi1),R(phi2)]||``.  Thus the boolean tests
+    the actual morphism equation on the supplied pair.  Closure of the
+    invariant subspace is a separate statement.
     """
-    n = n1  # For same-arity bracket
+    n = n1
     assert n1 == n2, "Same-arity bracket test"
-    N = dim ** n
-
-    # First symmetrize both inputs
+    bracket = phi1 @ phi2 - phi2 @ phi1
+    lhs = reynolds_operator(bracket, n, dim)
     av_phi1 = reynolds_operator(phi1, n, dim)
     av_phi2 = reynolds_operator(phi2, n, dim)
-
-    # Their commutator
-    bracket_av = av_phi1 @ av_phi2 - av_phi2 @ av_phi1
-
-    # Check: is the commutator S_n-invariant?
-    is_inv = is_sn_invariant(bracket_av, n, dim, tol)
-
-    # Also check: av of the commutator equals the commutator
-    # (since the commutator is already S_n-invariant)
-    av_bracket_av = reynolds_operator(bracket_av, n, dim)
-    err = la.norm(bracket_av - av_bracket_av)
-
-    return is_inv and err < tol, err
+    rhs = av_phi1 @ av_phi2 - av_phi2 @ av_phi1
+    err = float(la.norm(lhs - rhs))
+    return err < tol, err
 
 
 def verify_reynolds_not_algebra_morphism(
     n: int, dim: int,
     tol: float = 1e-10
 ) -> Tuple[bool, float]:
-    """Verify that Reynolds is NOT an algebra morphism: R(AB) != R(A)R(B).
+    """Produce a deterministic multiplicativity-defect certificate.
 
-    This is a KEY FINDING of the engine: the averaging map preserves
-    the CONVOLUTION Lie bracket (via equivariance), but does NOT
-    preserve the matrix product. The convolution bracket is defined
-    by operad composition across arities, not by matrix multiplication
-    at fixed arity.
+    The boolean records that ``||R(AB)-R(A)R(B)||`` is positive.  This
+    matrix calculation carries no implication for an independently
+    specified convolution operation.
     """
     N = dim ** n
     np.random.seed(42)
@@ -620,7 +439,6 @@ def verify_reynolds_not_algebra_morphism(
     RA_RB = reynolds_operator(A, n, dim) @ reynolds_operator(B, n, dim)
 
     err = la.norm(R_AB - RA_RB)
-    # Should be nonzero: Reynolds is NOT multiplicative
     return err > tol, err
 
 
@@ -629,21 +447,13 @@ def verify_av_preserves_bracket_equivariant(
     phi1: np.ndarray, phi2: np.ndarray,
     tol: float = 1e-10
 ) -> Tuple[bool, float]:
-    """Verify the equivariance-based proof that av preserves the bracket.
+    """Verify equivariance of the matrix commutator.
 
-    The convolution Lie bracket on g^{E_1} is the operad composition
-    bracket, which IS S_n-equivariant. In the endomorphism realization,
-    this means: for S_n-equivariant operations (like the OPE-induced
-    bracket), sigma . [phi1, phi2]_{conv} = [sigma.phi1, sigma.phi2]_{conv}.
-
-    We verify this equivariance property directly, which IMPLIES
-    av preserves the bracket (by the Reynolds operator argument).
-
-    For the matrix commutator bracket (NOT the convolution bracket),
-    equivariance holds trivially:
-      P[A,B]P^T = PAP^T * PBP^T - PBP^T * PAP^T = [PAP^T, PBP^T].
+    The identity
+    ``P[A,B]P^T = [PAP^T,PBP^T]`` proves equivariance.  A Reynolds
+    projection preserves this bracket precisely when its kernel is a Lie
+    ideal; equivariance by itself leaves that criterion undecided.
     """
-    N = dim ** n
     bracket = phi1 @ phi2 - phi2 @ phi1
     max_err = 0.0
 
@@ -659,6 +469,127 @@ def verify_av_preserves_bracket_equivariant(
         max_err = max(max_err, err)
 
     return max_err < tol, max_err
+
+
+def exact_reynolds_coinvariant_surface(
+    dim: int = 2, n: int = 2
+) -> Dict[str, object]:
+    """Expose the exact invariant/coinvariant splitting certificate.
+
+    The certificate is computed with rational SymPy matrices in the
+    tensor-word representation.  In particular it verifies ``R^2=R``
+    and ``qR=q`` without floating-point tolerance.
+    """
+    certificate = reynolds_coinvariant_certificate(dim, n)
+    return {
+        'dimension': certificate.dimension,
+        'arity': certificate.arity,
+        'tensor_dimension': certificate.tensor_dimension,
+        'invariant_dimension': certificate.invariant_dimension,
+        'expected_symmetric_dimension': certificate.expected_symmetric_dimension,
+        'idempotent': certificate.idempotent,
+        'quotient_after_reynolds_equals_quotient': (
+            certificate.quotient_after_reynolds_equals_quotient
+        ),
+        'status': 'PROVED_EXACT_FINITE_MODEL',
+    }
+
+
+def exact_reynolds_lie_surface() -> Dict[str, object]:
+    """Expose the smallest exact Reynolds Lie-defect certificate.
+
+    Conjugation by ``diag(1,-1)`` acts by Lie automorphisms on
+    ``gl_2``.  Its Reynolds kernel contains ``e12`` and ``e21``, while
+    their commutator is the invariant matrix ``diag(1,-1)``.  This is
+    the exact kernel-ideal obstruction.
+    """
+    certificate = reynolds_lie_defect_certificate()
+    return {
+        'first_kernel_element': certificate.first_kernel_element,
+        'second_kernel_element': certificate.second_kernel_element,
+        'bracket': certificate.bracket,
+        'averaged_bracket': certificate.averaged_bracket,
+        'bracket_of_averages': certificate.bracket_of_averages,
+        'defect': certificate.defect,
+        'defect_norm': float(certificate.defect.norm()),
+        'action_is_bracket_equivariant': True,
+        'reynolds_is_lie_morphism': certificate.reynolds_is_lie_morphism,
+        'kernel_is_lie_ideal': certificate.kernel_is_lie_ideal,
+        'criterion': 'REYNOLDS_LIE_MORPHISM_IFF_KERNEL_LIE_IDEAL',
+        'status': 'REFUTED_BY_EXACT_COUNTEREXAMPLE',
+    }
+
+
+def exact_deconcatenation_surface() -> Dict[str, object]:
+    """Expose the arity-two coideal obstruction for raw deconcatenation."""
+    obstruction = arity_two_deconcatenation_obstruction()
+    quotient_zero = obstruction.quotient_of_kernel_vector.is_zero_matrix
+    reduced_survives = (
+        not obstruction.reduced_deconcatenation_after_arity_one_quotients.is_zero_matrix
+    )
+    return {
+        'kernel_vector': obstruction.kernel_vector,
+        'quotient_of_kernel_vector': obstruction.quotient_of_kernel_vector,
+        'reduced_deconcatenation_after_arity_one_quotients': (
+            obstruction.reduced_deconcatenation_after_arity_one_quotients
+        ),
+        'quotient_of_kernel_vector_is_zero': quotient_zero,
+        'reduced_deconcatenation_survives': reduced_survives,
+        'kernel_is_coideal': obstruction.kernel_is_coideal,
+        'status': 'RAW_DECONCATENATION_REQUIRES_REPLACEMENT',
+    }
+
+
+def transported_concatenation_surface(
+    dim: int = 2, left_arity: int = 2, right_arity: int = 2
+) -> Dict[str, object]:
+    """Certify descent of concatenation and state its fixed-point transport.
+
+    Coinvariant concatenation descends because the orbit of a concatenated
+    word depends only on the two input orbits.  Under the characteristic-zero
+    identification of coinvariants with invariants, the corresponding
+    fixed-point product is represented by Reynolds averaging after
+    concatenation.
+    """
+    descends = concatenation_descends_to_coinvariants(
+        dim, left_arity, right_arity
+    )
+    return {
+        'dimension': dim,
+        'left_arity': left_arity,
+        'right_arity': right_arity,
+        'concatenation_descends_to_coinvariants': descends,
+        'fixed_point_operation': 'R_{p+q}(concatenate(x,y))',
+        'status': 'PROVED_EXACT_FINITE_MODEL' if descends else 'FAILED',
+    }
+
+
+def convolution_bracket_descent_surface(
+    kernel_is_lie_ideal: Optional[bool] = None,
+    transported_bracket_supplied: bool = False,
+) -> Dict[str, object]:
+    """State the proof obligation for a convolution-bracket projection.
+
+    A raw Reynolds representative preserves a Lie bracket exactly when
+    its kernel is a Lie ideal, assuming the image is the invariant Lie
+    subalgebra.  A separately specified transported bracket is a distinct
+    construction and carries its own compatibility data.
+    """
+    if transported_bracket_supplied:
+        status = 'TRANSPORT_DATA_SUPPLIED'
+    elif kernel_is_lie_ideal is True:
+        status = 'CERTIFIED_BY_KERNEL_IDEAL'
+    elif kernel_is_lie_ideal is False:
+        status = 'REFUTED_BY_KERNEL_IDEAL_FAILURE'
+    else:
+        status = 'KERNEL_IDEAL_CERTIFICATE_REQUIRED'
+    return {
+        'kernel_is_lie_ideal': kernel_is_lie_ideal,
+        'transported_bracket_supplied': transported_bracket_supplied,
+        'raw_reynolds_preserves_bracket': kernel_is_lie_ideal is True,
+        'criterion': 'REYNOLDS_LIE_MORPHISM_IFF_KERNEL_LIE_IDEAL',
+        'status': status,
+    }
 
 
 # =========================================================================
@@ -774,24 +705,15 @@ def kernel_contains_antisymmetric(n: int, dim: int,
     return la.norm(av_M) < tol
 
 
-def r_matrix_minus_kappa_in_kernel(
+def reynolds_complement_in_kernel(
     k: complex = 1, dim_g: int = 3, h_dual: int = 2,
     tol: float = 1e-8
 ) -> Tuple[bool, float]:
-    """Verify that r(z) minus its scalar shadow lies in ker(av) at z=1.
+    """Verify ``R(x-R(x))=0`` on the explicit ``sl_2`` Casimir matrix.
 
-    For sl_2: r(z) = k * Omega / z and av(r(z)) = 3k/4.
-    At a specific z: r(z) - kappa * (I/dim^2) should have
-    av(r(z) - kappa * normalization) = 0.
-
-    More precisely: the E_1 r-matrix r(z) maps under av to
-    its scalar degree-2 shadow. So:
-      av(r(z) - av(r(z))) = av(r(z)) - av(av(r(z)))
-                           = av(r(z)) - av(r(z)) = 0
-    since av is a projection (av^2 = av).
-    This means r(z) - av(r(z)) is in ker(av) for ANY r(z).
-
-    We verify this with explicit sl_2 data.
+    This is the projection identity for ``x=k*Omega`` at ``z=1``.  The
+    averaged matrix remains matrix-valued; the calculation does not derive
+    a scalar curvature or identify it with ``kappa``.
     """
     z = 1.0
     # r(z) = k * Omega / z
@@ -809,6 +731,19 @@ def r_matrix_minus_kappa_in_kernel(
     return err < tol, err
 
 
+def r_matrix_minus_kappa_in_kernel(
+    k: complex = 1, dim_g: int = 3, h_dual: int = 2,
+    tol: float = 1e-8
+) -> Tuple[bool, float]:
+    """Compatibility alias for :func:`reynolds_complement_in_kernel`.
+
+    The historical function name overstates the calculation: the operand
+    subtracted from the ``r``-matrix is its Reynolds average, rather than a
+    scalar ``kappa``.
+    """
+    return reynolds_complement_in_kernel(k, dim_g, h_dual, tol)
+
+
 # =========================================================================
 #  MC EQUATION PROJECTION
 # =========================================================================
@@ -817,21 +752,16 @@ def verify_mc_projection_arity2(
     dim: int = 2,
     tol: float = 1e-10
 ) -> Tuple[bool, float]:
-    """Verify: the sl_2 Casimir satisfies the infinitesimal braid relation
-    (IBR), and this projects correctly under av.
+    """Verify the finite ``sl_2`` infinitesimal braid identity and its average.
 
     The Casimir Omega = (1/4)(XX + YY + ZZ) = P/2 - I/4 satisfies
     the IBR (also called the 4T relation):
 
         [Omega_12, Omega_13 + Omega_23] = 0
 
-    This is the arity-2 content of the E_1 MC equation.  It is NOT
-    the classical Yang-Baxter equation (CYBE), which additionally
-    requires [Omega_13, Omega_23] = 0 --- this fails for sl_2.
-
-    Under av, the IBR projects to 0 = 0 (the scalar MC equation is
-    trivial at arity 2), consistent with kappa being a single number
-    whose self-bracket vanishes.
+    This calculation supplies the displayed matrix identity.  Identifying
+    it with a component of a Maurer--Cartan equation requires the actual
+    convolution complex, differential, signs, and arity maps.
     """
     Omega = casimir_sl2()  # 4x4
 
@@ -891,21 +821,15 @@ def verify_cybe_fails_for_casimir(
 # =========================================================================
 
 class SplittingAnalysis:
-    """Analyze whether the short exact sequence
-        0 -> ker(av) -> g^{E_1} -> g^mod -> 0
-    splits as dg Lie algebras.
+    """Separate linear splitting from Lie-extension data.
 
-    THEOREM (from this engine): The sequence does NOT split in general.
-    The obstruction to splitting is the Drinfeld associator:
-    at arity 3, the KZ associator Phi_KZ lives in ker(av) but its
-    MC equation involves r(z) from the image component, so a
-    section s: g^mod -> g^{E_1} with av . s = id cannot preserve
-    the MC equation unless the Drinfeld associator is trivial.
-
-    However, at arity 2, a partial section EXISTS: the scalar
-    curvature kappa can be lifted to kappa * I_{dim^2} (the identity
-    matrix times kappa), and this is compatible with av. The
-    obstruction appears at arity >= 3.
+    Reynolds averaging gives a split exact sequence of vector spaces.
+    The fixed subspace is a commutator Lie subalgebra, so its inclusion is
+    a Lie morphism.  The projection itself has a commutator defect and its
+    kernel fails the Lie-ideal criterion.  Consequently the raw sequence
+    has no Lie-extension status from which a dg-Lie splitting class could
+    be formed.  Associators enter only after a genuine cross-arity dg Lie
+    model and its extension maps have been supplied.
     """
 
     def __init__(self, n: int, dim: int):
@@ -935,81 +859,67 @@ class SplittingAnalysis:
         """The canonical linear section: inclusion of S_n-invariant
         endomorphisms into all endomorphisms.
 
-        This is a vector space section, not a Lie algebra section.
+        In the fixed-arity matrix model this inclusion also preserves the
+        commutator on the invariant subalgebra.  Its composite with the
+        Reynolds projection is the identity on invariant inputs.
         """
-        return M_symmetric  # just inclusion
+        if not is_sn_invariant(M_symmetric, self.n, self.dim):
+            raise ValueError("the canonical section is defined on invariant matrices")
+        return M_symmetric
 
     def bracket_obstruction_to_splitting(self, tol: float = 1e-10) -> float:
-        """Measure whether the linear section preserves the Lie bracket.
+        """Return a deterministic raw Reynolds commutator defect.
 
-        For two S_n-invariant matrices A, B:
-          [A, B] is S_n-invariant (commutator of invariants is invariant)
-
-        So [s(av(A)), s(av(B))] = [A, B] = s([av(A), av(B)])
-        if A, B are already S_n-invariant.
-
-        The inclusion s: End^{S_n} -> End IS a Lie algebra morphism
-        (a subalgebra inclusion). So the sequence splits at the
-        Lie algebra level (as vector space + Lie algebra, the
-        inclusion is a section).
-
-        The obstruction is at the DIFFERENTIAL level: the differential
-        D in g^{E_1} does NOT restrict to End^{S_n} in general
-        (it maps to different arities via edge contraction, and the
-        target arity's S_m action may differ from the source's S_n).
-
-        More precisely: the splitting obstruction lives in the
-        higher-arity components. At arity 2, the splitting is trivial
-        (End^{S_2} includes into End(V^2), and av . incl = id).
-        At arity >= 3, the differential mixes arities, and the
-        splitting requires the Drinfeld associator to be trivial.
+        The historical method name is retained for callers.  The value
+        concerns the projection ``R`` itself, rather than the inclusion of
+        its invariant image.
         """
-        if self.n == 2:
-            return 0.0  # no obstruction at arity 2
-
-        # At arity >= 3, the obstruction is nonzero in general.
-        # We measure it by checking if random S_n-invariant elements
-        # have commutators that stay S_n-invariant under the
-        # arity-changing differential.
-        np.random.seed(137)
+        np.random.seed(137 + self.n + self.dim)
         A = np.random.randn(self.N, self.N) + 1j * np.random.randn(self.N, self.N)
         B = np.random.randn(self.N, self.N) + 1j * np.random.randn(self.N, self.N)
-        A = reynolds_operator(A, self.n, self.dim)
-        B = reynolds_operator(B, self.n, self.dim)
+        _, defect = verify_av_preserves_bracket(
+            self.n, self.n, self.dim, A, B, tol
+        )
+        return defect
 
-        # At fixed arity, the commutator bracket preserves S_n-invariance
-        bracket = A @ B - B @ A
-        av_bracket = reynolds_operator(bracket, self.n, self.dim)
-        return la.norm(bracket - av_bracket)
+    def extension_status(self) -> Dict[str, object]:
+        """Return the typed status of the raw Reynolds sequence."""
+        defect = self.bracket_obstruction_to_splitting()
+        action_is_trivial = self.n <= 1 or self.dim == 1
+        if action_is_trivial:
+            raw_reynolds_is_lie_morphism: object = True
+            kernel_is_lie_ideal: object = True
+            lie_extension_defined: object = True
+            lie_status = 'TRIVIAL_ACTION_CERTIFICATE'
+        elif defect > 1e-10:
+            raw_reynolds_is_lie_morphism = False
+            kernel_is_lie_ideal = False
+            lie_extension_defined = False
+            lie_status = 'REFUTED_BY_FIXED_ARITY_WITNESS'
+        else:
+            raw_reynolds_is_lie_morphism = 'UNVERIFIED'
+            kernel_is_lie_ideal = 'UNVERIFIED'
+            lie_extension_defined = 'UNVERIFIED'
+            lie_status = 'ADDITIONAL_WITNESS_OR_PROOF_REQUIRED'
+        return {
+            'linear_section_exists': True,
+            'invariant_image_is_lie_subalgebra': True,
+            'raw_reynolds_is_lie_morphism': raw_reynolds_is_lie_morphism,
+            'kernel_is_lie_ideal': kernel_is_lie_ideal,
+            'lie_extension_defined': lie_extension_defined,
+            'dg_lie_extension_defined': False,
+            'drinfeld_obstruction_status': 'UNVERIFIED_WITHOUT_DG_LIE_EXTENSION',
+            'fixed_arity_commutator_defect': defect,
+            'lie_status': lie_status,
+        }
 
     def differential_obstruction(self) -> str:
-        """Describe the obstruction to a dg Lie splitting.
-
-        The sequence 0 -> ker(av) -> g^{E_1} -> g^mod -> 0
-        is a short exact sequence of dg Lie algebras.
-        The differential mixes arities (edge contraction changes n).
-        A Lie algebra section at each arity separately is trivial
-        (inclusion of End^{S_n} into End).
-        But a dg Lie section (compatible with the differential)
-        requires: the differential of a symmetric element stays
-        symmetric BEFORE averaging. This fails when the differential
-        introduces non-symmetric contributions (which are then killed
-        by averaging).
-
-        The Drinfeld associator is the arity-3 content of this failure:
-        the MC equation for Theta^{E_1} at arity 3 involves the
-        KZ associator Phi_KZ, which is NOT S_3-symmetric.
-        Its S_3-coinvariant is the cubic shadow C(A), which is
-        typically much smaller. The full Phi_KZ is needed for
-        the MC equation to hold, but it lives in ker(av).
-
-        CONCLUSION: The extension is NON-SPLIT as a dg Lie algebra
-        extension. The splitting obstruction class lives in
-        H^2(g^mod, ker(av)) and is represented by the Drinfeld
-        associator at the leading order.
-        """
-        return ("NON-SPLIT: obstruction class in H^2(g^mod, ker(av)) "
-                "represented by Drinfeld associator at arity 3")
+        """State the first unmet obligation for a dg-Lie splitting claim."""
+        return (
+            "UNDEFINED_AS_DG_LIE_EXTENSION: certify a Lie-ideal kernel, "
+            "an explicit differential, and its Reynolds compatibility "
+            "before forming a splitting or associator obstruction class"
+        )
 
 
 # =========================================================================
@@ -1046,28 +956,14 @@ def information_loss_arity_n(n: int, dim: int) -> Tuple[int, int, int]:
     return total, image, ker
 
 
-def quantum_group_data_in_kernel(dim: int = 2) -> Dict[str, float]:
-    """Quantify how much quantum group data lives in ker(av).
+def quantum_group_data_in_kernel(dim: int = 2) -> Dict[str, object]:
+    """Report kernel dimensions and the explicit Casimir decomposition.
 
-    For sl_2 (dim=2):
-    - Arity 2: r(z) = Omega/z has both symmetric and antisymmetric parts.
-      Omega = (1/4)(XX + YY + ZZ) = (1/2)P - (1/4)I
-      where P is the swap. P is symmetric, I is symmetric.
-      So Omega is FULLY S_2-symmetric: av(Omega) = Omega.
-      The spectral parameter z dependence (the z^{-1} pole) is
-      also preserved under av.
-
-      Wait: this means for sl_2, the r-matrix IS fully recovered
-      by kappa? No: kappa recovers a SCALAR (a number), while
-      r(z) = k*Omega/z is a MATRIX-valued function.
-      The averaging av(r(z)) extracts the scalar part only.
-      The matrix structure of Omega (which entries are nonzero,
-      the eigenvalue decomposition) is lost.
-
-    - Arity 3: the full KZ associator vs the cubic shadow.
-      The associator lives in exp(Lie(t12, t23)) and is
-      transcendental (involves all MZVs). The cubic shadow
-      is a single scalar.
+    Dimension alone classifies no deformation datum.  In the displayed
+    ``sl_2`` example the Casimir is invariant under the arity-two action,
+    so its Reynolds-kernel component vanishes.  Any identification of
+    kernel classes with ``R``-matrices, associators, or Yangian coherences
+    requires maps from those moduli problems into this kernel.
     """
     # Arity 2
     Omega = casimir_sl2()
@@ -1078,8 +974,6 @@ def quantum_group_data_in_kernel(dim: int = 2) -> Dict[str, float]:
     av_r = reynolds_operator(r_z, 2, dim)
     ker_r = r_z - av_r
 
-    # The "kernel part" carries the non-symmetric content of r(z)
-    # For the Casimir, this may be zero (Casimir IS symmetric)
     frac_in_kernel = la.norm(ker_r) / la.norm(r_z) if la.norm(r_z) > 0 else 0
 
     # For information content: dim of image vs kernel
@@ -1093,6 +987,8 @@ def quantum_group_data_in_kernel(dim: int = 2) -> Dict[str, float]:
         'casimir_kernel_norm': la.norm(ker_r),
         'casimir_image_norm': la.norm(av_r),
         'casimir_fraction_lost': frac_in_kernel,
+        'quantum_group_classification_proved': False,
+        'classification_status': 'MAP_FROM_DEFORMATION_DATA_REQUIRED',
     }
 
 
@@ -1101,78 +997,54 @@ def quantum_group_data_in_kernel(dim: int = 2) -> Dict[str, float]:
 # =========================================================================
 
 class E1PrimacyTheorem:
-    """Verification engine for the E1 primacy theorem.
+    """Aggregate exact certificates and unresolved proof obligations.
 
-    THEOREM. Let A be a cyclic E_1-chiral algebra. The averaging map
-      av: g^{E_1}_A -> g^mod_A
-    defined by eq. (eq:e1-to-einfty-projection) is:
-      (i)   a surjective dg Lie morphism,
-      (ii)  with kernel ker(av) = the S_n-noninvariant component of
-            End(V^{tensor n}) at each arity n,
-      (iii) the MC equation for Theta^{E_1}_A projects to the MC
-            equation for Theta_A under av,
-      (iv)  the short exact sequence
-              0 -> ker(av) -> g^{E_1} -> g^mod -> 0
-            does NOT split as a dg Lie algebra sequence; the
-            obstruction is classified by the Drinfeld associator
-            at arity 3,
-      (v)   ker(av) at arity r classifies the non-scalar quantum
-            group data: the full R-matrix (r=2), the KZ associator
-            (r=3), and higher Yangian coherences (r>=4).
-
-    STATUS: Parts (i)-(iii) are PROVED (the proofs in e1_modular_koszul.tex
-    are complete, modulo the claim on line 229 that av is a dg Lie morphism,
-    which follows from S_n-equivariance of the differential and bracket).
-    Part (iv) is a NEW RESULT established by this engine.
-    Part (v) is a STRUCTURAL OBSERVATION that follows from (ii).
+    The class retains its historical name for API stability.  Its output is
+    a typed audit surface.  Linear projection, invariant/coinvariant
+    splitting, rank formulas, and finite Casimir identities are certified.
+    A dg-Lie projection, a Maurer--Cartan projection theorem, a Drinfeld
+    splitting class, and a classification of quantum-group data require
+    structures absent from this finite matrix model.
     """
 
     def __init__(self, dim: int = 2, max_arity: int = 4):
         self.dim = dim
         self.max_arity = max_arity
 
-    def verify_dg_lie_morphism(self) -> Dict[str, bool]:
-        """Verify (i): av is a dg Lie morphism."""
-        results = {}
+    def verify_dg_lie_morphism(self) -> Dict[str, object]:
+        """Audit the data needed for a dg-Lie morphism claim."""
+        results: Dict[str, object] = {}
 
-        # Test 1: av is a well-defined linear map (projection)
         for n in range(2, min(self.max_arity + 1, 5)):
             N = self.dim ** n
             np.random.seed(n * 100 + 7)
             M = np.random.randn(N, N) + 1j * np.random.randn(N, N)
             av_M = reynolds_operator(M, n, self.dim)
-
-            # av(av(M)) = av(M) (projection)
             av_av_M = reynolds_operator(av_M, n, self.dim)
-            results[f'av_is_projection_n{n}'] = la.norm(av_M - av_av_M) < 1e-10
-
-            # av(M) is S_n-invariant
+            results[f'av_is_projection_n{n}'] = bool(
+                la.norm(av_M - av_av_M) < 1e-10
+            )
             results[f'av_image_invariant_n{n}'] = is_sn_invariant(
                 av_M, n, self.dim)
 
-        # Test 2: av preserves the commutator bracket
-        for n in range(2, min(self.max_arity + 1, 4)):
-            N = self.dim ** n
-            np.random.seed(n * 200 + 13)
-            A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            ok, err = verify_av_preserves_bracket_equivariant(
-                n, self.dim, A, B)
-            results[f'bracket_equivariant_n{n}'] = ok
-
-        # Test 3: S_n-equivariance of the commutator (implies chain map)
-        for n in range(2, min(self.max_arity + 1, 4)):
-            N = self.dim ** n
-            np.random.seed(n * 300 + 17)
-            A = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            B = np.random.randn(N, N) + 1j * np.random.randn(N, N)
-            ok, err = verify_av_preserves_bracket(n, n, self.dim, A, B)
-            results[f'bracket_preserved_n{n}'] = ok
-
+        exact = exact_reynolds_lie_surface()
+        results['commutator_action_equivariant'] = exact[
+            'action_is_bracket_equivariant'
+        ]
+        results['raw_reynolds_is_lie_morphism'] = exact[
+            'reynolds_is_lie_morphism'
+        ]
+        results['kernel_is_lie_ideal'] = exact['kernel_is_lie_ideal']
+        results['raw_lie_morphism_status'] = exact['status']
+        results['convolution_bracket_status'] = (
+            convolution_bracket_descent_surface()['status']
+        )
+        results['chain_map_status'] = 'EXPLICIT_DIFFERENTIAL_REQUIRED'
+        results['dg_lie_morphism_proved'] = False
         return results
 
     def verify_surjectivity(self) -> Dict[str, bool]:
-        """Verify (ii): av is surjective."""
+        """Verify surjectivity onto the invariant image."""
         results = {}
         for n in range(2, min(self.max_arity + 1, 5)):
             surj, dim_img, dim_total = verify_surjectivity(n, self.dim)
@@ -1181,7 +1053,7 @@ class E1PrimacyTheorem:
         return results
 
     def verify_kernel_structure(self) -> Dict[str, object]:
-        """Verify (ii) continued: kernel structure."""
+        """Compute linear kernels and audit their operation compatibility."""
         results = {}
 
         for n in range(2, min(self.max_arity + 1, 5)):
@@ -1189,55 +1061,47 @@ class E1PrimacyTheorem:
             results[f'total_n{n}'] = total
             results[f'image_n{n}'] = img
             results[f'kernel_n{n}'] = ker
-            # Kernel should be nonempty for n >= 2, dim >= 2
             if self.dim >= 2:
                 results[f'kernel_nonempty_n{n}'] = ker > 0
 
-        # Antisymmetric elements are in kernel
         for n in [2, 3]:
-            if self.dim ** n <= 64:  # computational limit
+            if self.dim ** n <= 64:
                 results[f'antisymmetric_in_kernel_n{n}'] = \
                     kernel_contains_antisymmetric(n, self.dim)
 
+        results['raw_deconcatenation'] = exact_deconcatenation_surface()
         return results
 
-    def verify_mc_projection(self) -> Dict[str, bool]:
-        """Verify (iii): MC equation projects correctly."""
-        results = {}
-
-        # CYBE projects to trivial identity
+    def verify_mc_projection(self) -> Dict[str, object]:
+        """Record the finite identities and the missing MC-complex data."""
+        results: Dict[str, object] = {}
         ok, err = verify_mc_projection_arity2(dim=self.dim)
-        results['cybe_projects'] = ok
-
-        # R-matrix minus kappa in kernel
-        ok, err = r_matrix_minus_kappa_in_kernel()
-        results['r_minus_kappa_in_kernel'] = ok
-
+        results['sl2_infinitesimal_braid_identity'] = bool(ok)
+        results['sl2_infinitesimal_braid_error'] = err
+        complement_ok, complement_err = reynolds_complement_in_kernel()
+        results['reynolds_complement_in_kernel'] = bool(complement_ok)
+        results['reynolds_complement_error'] = complement_err
+        results['general_mc_projection_proved'] = False
+        results['status'] = 'CONVOLUTION_COMPLEX_AND_CHAIN_MAP_REQUIRED'
         return results
 
     def verify_non_splitting(self) -> Dict[str, object]:
-        """Verify (iv): the extension does not split."""
-        results = {}
-
-        for n in range(2, min(self.max_arity + 1, 5)):
-            if self.dim ** n <= 64:
-                sa = SplittingAnalysis(n, self.dim)
-                results[f'linear_section_exists_n{n}'] = \
-                    sa.linear_section_exists()  # always True
-                obs = sa.bracket_obstruction_to_splitting()
-                results[f'bracket_obstruction_n{n}'] = obs
-                results[f'description_n{n}'] = sa.differential_obstruction()
-
+        """Audit whether a splitting obstruction is presently defined."""
+        analysis = SplittingAnalysis(2, self.dim)
+        results = analysis.extension_status()
+        results['first_unmet_obligation'] = analysis.differential_obstruction()
+        results['raw_reynolds_commutator_defect'] = (
+            analysis.bracket_obstruction_to_splitting()
+        )
         return results
 
     def verify_information_content(self) -> Dict[str, object]:
-        """Verify (v): quantum group data in the kernel."""
+        """Report dimension loss and the status of classification claims."""
         results = {}
 
         qg_data = quantum_group_data_in_kernel(self.dim)
         results.update(qg_data)
 
-        # Higher arity information loss
         for n in range(2, min(self.max_arity + 1, 5)):
             total, img, ker = information_loss_arity_n(n, self.dim)
             frac = ker / total if total > 0 else 0
@@ -1246,14 +1110,14 @@ class E1PrimacyTheorem:
         return results
 
     def full_verification(self) -> Dict[str, object]:
-        """Run all verifications."""
+        """Run the complete typed audit."""
         return {
-            'dg_lie_morphism': self.verify_dg_lie_morphism(),
-            'surjectivity': self.verify_surjectivity(),
-            'kernel_structure': self.verify_kernel_structure(),
-            'mc_projection': self.verify_mc_projection(),
-            'non_splitting': self.verify_non_splitting(),
-            'information_content': self.verify_information_content(),
+            'linear_and_lie_surface': self.verify_dg_lie_morphism(),
+            'linear_surjectivity': self.verify_surjectivity(),
+            'linear_kernel_and_coalgebra_surface': self.verify_kernel_structure(),
+            'finite_identity_and_mc_surface': self.verify_mc_projection(),
+            'extension_surface': self.verify_non_splitting(),
+            'dimension_and_classification_surface': self.verify_information_content(),
         }
 
 
@@ -1308,14 +1172,15 @@ def verify_dim_formula_against_computation(n: int, d: int) -> bool:
 # =========================================================================
 
 def verify_kappa_recovery_heisenberg(k: int = 1) -> bool:
-    """Verify av(r(z)) = kappa for Heisenberg.
+    """Check the canonical Heisenberg scalar formula ``kappa(H_k)=k``.
 
     Heisenberg: dim(V) = 1, r(z) = k*Omega_H/z (rank-one coeff k/z) (rank-one abelian).
     av is trivial (S_2 acts trivially on a 1-dim space).
     kappa(H_k) = k.
 
-    av(r(z)) should recover kappa = k (as the residue extraction
-    of the S_2-coinvariant of the scalar r-matrix).
+    Since the coefficient space is one-dimensional, this coincides with
+    its invariant and coinvariant representatives.  The function checks
+    the scalar normalization rather than a general reconstruction map.
     """
     # r(z) = k*Omega_H/z (rank-one coeff k/z), already rank-one abelian, already S_2-invariant
     # "kappa" = residue of r(z) at z=0 = k
@@ -1323,21 +1188,14 @@ def verify_kappa_recovery_heisenberg(k: int = 1) -> bool:
 
 
 def verify_kappa_recovery_sl2(k: int = 1) -> Tuple[bool, Fraction]:
-    """Verify the full kappa for sl_2 from av(r(z)) plus the Sugawara shift.
+    """Check the canonical formula ``kappa=3(k+2)/4`` for ``sl_2``.
 
     sl_2 at level k:
     r(z) = k * Omega / z, dim(g) = 3, h^vee = 2.
-    av(r(z)) = 3k/4 and kappa = 3(k+2)/4.
-
-    The "averaging" at arity 2 sends the End(C^2 tensor C^2)-valued
-    r-matrix to its scalar projection.
-
-    Path 1 (direct): av(r(z)) = 3k/4 and kappa = av(r(z)) + 3/2
-    Path 2 (Casimir trace): The S_2-coinvariant of Omega_{sl_2} is
-      av(Omega) = Omega (since Casimir is S_2-symmetric).
-      The SCALAR extraction from av(Omega) gives
-      tr(Omega) / dim = (dim(g)/dim(V)^2) * (standard normalization).
-    Path 3 (from CLAUDE.md formula): kappa(g_k) = dim(g)(k+h^vee)/(2h^vee)
+    The implemented ``kappa_from_r_matrix_sl2`` function evaluates the
+    closed formula ``dim(g)(k+h^vee)/(2h^vee)``.  Reynolds averaging of
+    the displayed Casimir leaves that matrix invariant and therefore does
+    not by itself perform the scalar extraction appearing in the formula.
     """
     expected = Fraction(3 * (k + 2), 4)
     computed = kappa_from_r_matrix_sl2(k, h_dual=2)

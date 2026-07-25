@@ -3,7 +3,10 @@ r"""Admissible Koszulness engine for sl_3 (rank 2, the first open case).
 OPEN PROBLEM: Is L_k(sl_3) chirally Koszul at admissible levels?
 
 STATUS:
-    sl_2 (rank 1): PROVED at all admissible levels.
+    sl_2 (rank 1): finite Shapovalov/character evidence; theorem
+        conditional on the quotient-bar spectral sequence, higher
+        differential detection, finite-window exactness, and strong
+        convergence package.
     sl_3 (rank 2): OPEN. This engine provides computational evidence.
     rank >= 3: OPEN. sl_3 is the minimal test case.
 
@@ -17,8 +20,8 @@ For sl_2 (rank 1, dim 3, h^v = 2):
       single lowering operator F.
     - Bar complex B(L_k(sl_2)) has max bar arity 3 (= dim sl_2).
     - The Li-bar E_1 page has at most 1 off-diagonal Cartan direction.
-    - [E, F] = H provides a single coupling that kills the
-      single off-diagonal direction. DONE.
+    - [E, F] = H provides the expected single coupling.  This is finite
+      evidence; it is not a theorem-level quotient-bar convergence proof.
 
 For sl_3 (rank 2, dim 8, h^v = 3):
     - TWO Cartan generators H_1, H_2.
@@ -1007,12 +1010,17 @@ def rank_comparison() -> Dict[str, object]:
             'num_cartan': 1,
             'max_bar_arity': 3,
             'null_type': 'single-generator (monomial in F)',
-            'koszulness': 'PROVED at all admissible levels',
+            'koszulness': (
+                'FINITE EVIDENCE / CONDITIONAL: requires quotient-bar '
+                'spectral sequence, PBW/Shapovalov detection, '
+                'finite-window exactness, and strong convergence'
+            ),
             'key_mechanism': (
                 'Single null vector direction. The bar complex has max '
                 'arity 3. The Li-bar E_1 has at most 1 off-diagonal '
                 'direction (from single Cartan Tor). The bracket '
-                '[E, F] = H kills it. QED.'
+                '[E, F] = H is the expected finite-window coupling; '
+                'the global quotient theorem is not promoted here.'
             ),
         },
         'sl_3': {

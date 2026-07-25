@@ -75,6 +75,8 @@ from compute.lib.nonprincipal_ds_orbits import (
     type_a_orbit_class,
 )
 from compute.lib.hook_type_w_duality import (
+    ClaimPacket,
+    ClaimStatus,
     anomaly_ratio_from_partition,
     ds_kappa_from_affine,
     krw_central_charge,
@@ -83,6 +85,15 @@ from compute.lib.hook_type_w_duality import (
 )
 
 k = Symbol('k')
+
+
+def _assert_unresolved(packet: ClaimPacket, status: ClaimStatus) -> None:
+    """Assert a typed open/conditional obligation (value withheld)."""
+
+    assert isinstance(packet, ClaimPacket)
+    assert packet.status is status
+    assert packet.value is None
+    assert packet.hypotheses
 
 
 # ===================================================================
@@ -143,11 +154,15 @@ class TestGeneratorSpectrum:
     """Strong generators of W^k(sl_5, f_{(3,2)}) and its transpose."""
 
     def test_32_generator_count(self):
-        """W^k(sl_5, f_{(3,2)}) has 8 strong generators: 4 bos + 4 ferm."""
+        """W^k(sl_5, f_{(3,2)}) has 8 strong generators, all even.
+
+        In type A every strong generator from the sl_2-block pairing is
+        even (non_principal_w_bar_engine.type_a_strong_generators).
+        """
         spec = generator_spectrum_32()
         assert len(spec.generators) == 8
-        assert spec.num_bosonic == 4
-        assert spec.num_fermionic == 4
+        assert spec.num_bosonic == 8
+        assert spec.num_fermionic == 0
 
     def test_32_conformal_weights(self):
         """Generator weights: h = 1, 3/2 (x2), 2 (x2), 5/2 (x2), 3.
@@ -172,11 +187,11 @@ class TestGeneratorSpectrum:
         assert weights == expected
 
     def test_221_generator_count(self):
-        """W^k(sl_5, f_{(2,2,1)}) has 12 strong generators: 8 bos + 4 ferm."""
+        """W^k(sl_5, f_{(2,2,1)}) has 12 strong generators, all even."""
         spec = generator_spectrum_221()
         assert len(spec.generators) == 12
-        assert spec.num_bosonic == 8
-        assert spec.num_fermionic == 4
+        assert spec.num_bosonic == 12
+        assert spec.num_fermionic == 0
 
     def test_221_conformal_weights(self):
         """Generator weights for (2,2,1): h = 1 (x4), 3/2 (x4), 2 (x4)."""
@@ -197,46 +212,56 @@ class TestCentralCharge:
     """KRW central charge for (3,2) and (2,2,1)."""
 
     def test_32_central_charge_formula(self):
-        """c(3,2; k) = (-120k^2-476k-820)/(k+5) via correct per-root-pair KRW.
+        """c(3,2; k) = (-30k^2 - 178k - 260)/(k+5) via per-root-pair KRW.
 
-        Path 1: from engine.
-        Path 2: direct per-root-pair computation.
-        # VERIFIED: [DC] per-root-pair formula; [CF] matches brst_sl5_subregular_engine
+        Path 1: from engine (canonical krw_central_charge oracle).
+        Path 2: direct per-root-pair recomputation from
+                x = h/2 = diag(1, 0, -1, 1/2, -1/2):
+                |x|^2 = 5/2, ghost sum 50, dim(g_{1/2})/2 = 2, so
+                c(k) = 24k/(k+5) - 30k - 52.
         """
         c = central_charge_32()
-        expected = (-120 * k**2 - 476 * k - 820) / (k + 5)
+        expected = (-30 * k**2 - 178 * k - 260) / (k + 5)
         assert simplify(c - expected) == 0
+        # Path 2: independent inline evaluation.
+        inline = 24 * k / (k + 5) - 30 * k - 52
+        assert simplify(c - inline) == 0
 
     def test_221_central_charge_formula(self):
-        """c(2,2,1; k) = (-60k^2-280k-512)/(k+5) via correct per-root-pair KRW.
+        """c(2,2,1; k) = -6(2k+5)(k+1)/(k+5) via per-root-pair KRW.
 
-        # VERIFIED: [DC] per-root-pair formula
+        x = h/2 = diag(1/2, -1/2, 1/2, -1/2, 0): |x|^2 = 1, ghost sum 4,
+        dim(g_{1/2})/2 = 2, so c(k) = 24k/(k+5) - 12k - 6.
         """
         c = central_charge_221()
-        expected = (-60 * k**2 - 280 * k - 512) / (k + 5)
+        expected = (-12 * k**2 - 42 * k - 30) / (k + 5)
         assert simplify(c - expected) == 0
+        inline = 24 * k / (k + 5) - 12 * k - 6
+        assert simplify(c - inline) == 0
 
     def test_32_central_charge_at_zero(self):
-        """c(3,2; 0) = -164.
+        """c(3,2; 0) = -260/5 = -52; c(3,2; 1) = -468/6 = -78.
 
-        Path 3: numerical evaluation.
-        # VERIFIED: [DC] (-0-0-820)/5 = -164
+        Path 3: numerical evaluation against the canonical anchors.
         """
-        assert simplify(central_charge_32(0) + 164) == 0
+        assert simplify(central_charge_32(0) + 52) == 0
+        assert simplify(central_charge_32(1) + 78) == 0
 
     def test_central_charge_vanishing_levels(self):
-        """With the correct formula, c(3,2;k) and c(2,2,1;k) have no real zeros.
+        """Real zeros of the canonical formulas are negative and non-generic.
 
-        The quadratic numerators have negative discriminants:
-        120k^2+476k+820: disc = 476^2-4*120*820 = 226576-393600 < 0.
-        60k^2+280k+512: disc = 78400-122880 < 0.
-        So c < 0 for all real k > -N. Verify at a few points.
+        c(3,2; k): numerator -30k^2 - 178k - 260 has discriminant
+        178^2 - 4*30*260 = 484 = 22^2, zeros k = -13/5 and k = -10/3.
+        c(2,2,1; k) = -6(2k+5)(k+1)/(k+5): zeros k = -1, -5/2.
+        All zeros lie in k < 0; for k >= 0 both central charges are
+        strictly negative.
         """
-        # c(3,2) is negative for all real k > -5
+        assert simplify(central_charge_32(Rational(-13, 5))) == 0
+        assert simplify(central_charge_32(Rational(-10, 3))) == 0
+        assert simplify(central_charge_221(-1)) == 0
+        assert simplify(central_charge_221(Rational(-5, 2))) == 0
         for kv in [0, 1, 10, 100]:
             assert central_charge_32(kv) < 0
-        # c(2,2,1) is negative for all real k > -5
-        for kv in [0, 1, 10, 100]:
             assert central_charge_221(kv) < 0
 
 
@@ -245,52 +270,42 @@ class TestCentralCharge:
 # ===================================================================
 
 class TestKappaAndAnomalyRatio:
-    """Modular characteristic and anomaly ratio."""
+    """rho and kappa are typed OPEN/CONDITIONAL packets.
+
+    No derivation of the anomaly ratio rho exists for these orbits (the
+    generator-weight reciprocal sum is not a derivation).  rho is
+    therefore an OPEN typed packet, and kappa = rho * c is CONDITIONAL
+    through it.  Nothing here fabricates a scalar rho.
+    """
 
     def test_32_anomaly_ratio(self):
-        """rho_{(3,2)} = 1/5.
+        """rho_{(3,2)} is an OPEN typed obligation, not a scalar.
 
-        Path 1: from engine.
-        Path 2: explicit sum: 1/1 - 2*(2/3) + 2*(1/2) - 2*(2/5) + 1/3
-                              = 1 - 4/3 + 1 - 4/5 + 1/3
-                              = (15 - 20 + 15 - 12 + 5)/15 = 3/15 = 1/5.
+        Named obligations: a nonseparating genus-one calculation, and a
+        theorem identifying rho with a specified modular channel.
         """
         spec = generator_spectrum_32()
-        assert spec.anomaly_ratio == Rational(1, 5)
-        # Path 2: recompute from first principles
-        rho = (Rational(1) - 2 * Rational(2, 3) + 2 * Rational(1, 2)
-               - 2 * Rational(2, 5) + Rational(1, 3))
-        assert rho == Rational(1, 5)
-        # Path 2b: canonical engine cross-check
-        assert anomaly_ratio_from_partition((3, 2)) == Rational(1, 5)
+        _assert_unresolved(spec.anomaly_ratio, ClaimStatus.OPEN)
+        # Canonical engine returns the same typed lane.
+        _assert_unresolved(
+            anomaly_ratio_from_partition((3, 2)), ClaimStatus.OPEN
+        )
 
     def test_221_anomaly_ratio(self):
-        """rho_{(2,2,1)} = 10/3.
-
-        Explicit: 4/1 - 4*(2/3) + 4/2 = 4 - 8/3 + 2 = (12 - 8 + 6)/3 = 10/3.
-        """
+        """rho_{(2,2,1)} is an OPEN typed obligation, not a scalar."""
         spec = generator_spectrum_221()
-        assert spec.anomaly_ratio == Rational(10, 3)
-        rho = 4 * Rational(1) - 4 * Rational(2, 3) + 4 * Rational(1, 2)
-        assert rho == Rational(10, 3)
+        _assert_unresolved(spec.anomaly_ratio, ClaimStatus.OPEN)
+        _assert_unresolved(
+            anomaly_ratio_from_partition((2, 2, 1)), ClaimStatus.OPEN
+        )
 
     def test_32_kappa_formula(self):
-        """kappa(3,2; k) = (1/5)*c = (-120k^2-476k-820)/(5(k+5)).
-
-        kappa = rho * c = (1/5) * c(3,2;k).
-        # VERIFIED: [DC] rho=1/5; [CF] matches ds_kappa_from_affine
-        """
-        kap = kappa_32()
-        expected = (-120 * k**2 - 476 * k - 820) / (5 * (k + 5))
-        assert simplify(kap - expected) == 0
+        """kappa(3,2) = rho * c passes through OPEN rho: typed CONDITIONAL."""
+        _assert_unresolved(kappa_32(), ClaimStatus.CONDITIONAL)
 
     def test_32_kappa_at_zero(self):
-        """kappa(3,2; 0) = -164/5.
-
-        Path 3: numerical evaluation.
-        # VERIFIED: [DC] (1/5)*(-164) = -164/5
-        """
-        assert simplify(kappa_32(0) - Rational(-164, 5)) == 0
+        """kappa at a numerical level is still a typed packet (rho OPEN)."""
+        _assert_unresolved(kappa_32(0), ClaimStatus.CONDITIONAL)
 
 
 # ===================================================================
@@ -301,39 +316,41 @@ class TestConductorAndComplementarity:
     """Koszul conductor and kappa complementarity for the (3,2)/(2,2,1) pair."""
 
     def test_conductor_formula(self):
-        """K(k) = c(3,2;k) + c(2,2,1;-k-10) = 12(-5k^2+37k+241)/(k+5).
+        """K(k) = c(3,2;k) + c(2,2,1;-k-10) = 110 - 18k = 2(55 - 9k).
 
         Path 1: from engine.
-        # VERIFIED: [DC] per-root-pair formula; k-dependent for non-self-transpose
+        Path 2: direct recomputation from the two canonical central
+                charges (the pole at k = -5 cancels; the sum is a
+                polynomial, yet still k-dependent).
         """
         K = koszul_conductor_32()
-        expected = 12 * (-5 * k**2 + 37 * k + 241) / (k + 5)
+        expected = 110 - 18 * k
         assert simplify(K - expected) == 0
+        # Path 2: recompute from the canonical central charges.
+        direct = simplify(central_charge_32() + central_charge_221(-k - 10))
+        assert simplify(K - direct) == 0
 
     def test_conductor_is_k_dependent(self):
         """The conductor for (3,2)/(2,2,1) is k-DEPENDENT.
 
-        This is a NEW phenomenon for non-self-transpose non-hook partitions.
-        Verify by evaluating at k=0 and k=1.
-        # VERIFIED: [DC] K(0)=2892/5, K(1)=546, different
+        K(k) = 110 - 18k: K(0) = 110, K(1) = 92.  Non-self-transpose
+        pairs have differing KRW quadratic coefficients, so no level
+        reflection makes the sum constant.
         """
         K0, K1, are_different = conductor_k_dependence_check()
         assert are_different is True
-        # K(0) = 12*241/5 = 2892/5
-        assert simplify(K0 - Rational(2892, 5)) == 0
-        # K(1) = 12*(-5+37+241)/6 = 12*273/6 = 546
-        assert simplify(K1 - 546) == 0
+        assert simplify(K0 - 110) == 0
+        assert simplify(K1 - 92) == 0
 
     def test_kappa_sum_k_dependent(self):
-        """kappa(3,2;k) + kappa(2,2,1;-k-10) is k-dependent.
+        """The kappa sum is a typed OPEN packet (passes through OPEN rho).
 
-        This follows from rho_{(3,2)} != rho_{(2,2,1)}.
+        kappa = rho * c with rho underived on both sides: the sum carries
+        the obligation instead of a rational function.  The exact,
+        rho-free shadow of the same phenomenon is the k-dependence of the
+        conductor (previous test).
         """
-        ks = kappa_sum_32()
-        # Evaluate at k=0 and k=1
-        ks0 = simplify(ks.subs(k, 0))
-        ks1 = simplify(ks.subs(k, 1))
-        assert simplify(ks0 - ks1) != 0
+        _assert_unresolved(kappa_sum_32(), ClaimStatus.OPEN)
 
     def test_self_transpose_conductor_k_independent(self):
         """Cross-family check: (3,1,1) = (3,1,1)^t is self-transpose.
@@ -449,19 +466,19 @@ class TestShadowDepth:
     def test_32_generically_nondegenerate(self):
         """c and 5c+22 are generically nonzero for (3,2).
 
-        With the correct KRW formula, c(3,2;k) < 0 for all real k > -5
-        (quadratic numerator has negative discriminant). So c is generically nonzero.
-        5c+22 is also generically nonzero (negative for large k).
+        c(3,2; k) = (-30k^2 - 178k - 260)/(k+5) vanishes only at
+        k = -13/5 and k = -10/3 (both negative), so c is generically
+        nonzero; 5c + 22 likewise vanishes only at isolated levels.
         """
         sd = shadow_depth_32()
         assert sd.c_is_generically_nonzero is True
         assert sd.five_c_plus_22_generically_nonzero is True
-        # c(3,2) is negative for all real k > -5 (no real zeros)
+        # c(3,2) is negative for all k >= 0.
         assert central_charge_32(0) < 0
         assert central_charge_32(1) < 0
-        # 5c+22 at k=1: 5*(-236)+22 = -1158, nonzero
+        # 5c+22 at k=1: 5*(-78) + 22 = -368, nonzero.
         c_at_1 = central_charge_32(Rational(1))
-        assert simplify(5 * c_at_1 + 22) != 0  # generically nonzero
+        assert simplify(5 * c_at_1 + 22) == -368
 
 
 # ===================================================================
@@ -491,11 +508,18 @@ class TestHookComparisonAndObstruction:
         assert (2, 2, 1) in non_hooks
 
     def test_obstruction_rho_mismatch(self):
-        """The anomaly ratio mismatch is the root of conductor k-dependence."""
+        """rho comparison is OPEN; conductor k-dependence is the computed
+        obstruction.
+
+        Both rho packets are typed OPEN (no derivation exists), so the
+        match verdict is None -- undetermined, not False.  The exact
+        obstruction is carried by the conductor (next test) and the
+        spectra mismatch.
+        """
         obs = hook_transport_obstruction_32()
-        assert obs.rho_source == Rational(1, 5)
-        assert obs.rho_target == Rational(10, 3)
-        assert obs.rho_match is False
+        _assert_unresolved(obs.rho_source, ClaimStatus.OPEN)
+        _assert_unresolved(obs.rho_target, ClaimStatus.OPEN)
+        assert obs.rho_match is None
 
     def test_obstruction_spectra_mismatch(self):
         """Generator spectra of (3,2) and (2,2,1) differ qualitatively.
@@ -544,14 +568,21 @@ class TestSevenFaceAndDSKD:
     def test_numerical_data_consistency(self):
         """Numerical data at k=1 is self-consistent.
 
-        Path 3: verify conductor = c_32 + c_221_dual.
+        Exact scalar lane: conductor = c_32 + c_221_dual, with the
+        canonical anchor c(3,2; 1) = (-30 - 178 - 260)/6 = -78.
+        Typed lane: the kappa entries pass through OPEN rho and are
+        ClaimPackets, never scalars.
         """
         nd = numerical_data_32(1)
         assert simplify(nd['conductor'] - (nd['c_32'] + nd['c_221_dual'])) == 0
-        assert simplify(nd['kappa_sum'] - (nd['kappa_32'] + nd['kappa_221_dual'])) == 0
-        # Check specific values
-        # c(3,2; 1) = (-120-476-820)/6 = -236
-        # VERIFIED: [DC] per-root-pair formula
-        assert simplify(nd['c_32'] - (-236)) == 0
+        # Canonical anchors.
+        assert simplify(nd['c_32'] - (-78)) == 0
+        assert simplify(nd['c_221_dual'] - nd['conductor'] + nd['c_32']) == 0
+        # K(1) = 110 - 18 = 92.
+        assert simplify(nd['conductor'] - 92) == 0
         # dual_level = -1 - 10 = -11
         assert simplify(nd['dual_level'] - (-11)) == 0
+        # Typed kappa lane.
+        _assert_unresolved(nd['kappa_32'], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(nd['kappa_221_dual'], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(nd['kappa_sum'], ClaimStatus.OPEN)

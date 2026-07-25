@@ -13,10 +13,11 @@ PARTITION DATA FOR sl_4 (5 orbits):
     (2,1,1)   minimal     hook          transpose = (3,1)      NON-EVEN
     (1,1,1,1) trivial     V_k(sl_4)    transpose = (4)         EVEN
 
-CENTRAL CHARGE FORMULAS (per-root-pair, VERIFIED for even nilpotents):
+CENTRAL CHARGE FORMULAS:
     c(4; k)       = (3k - 48)/(k+4)
     c(3,1; k)     = (5k - 26)/(k+4)
-    c(2,2; k)     = (7k - 16)/(k+4)
+    c(2,2; k)     = 15k/(k+4) - 12k - 8
+                  = (-12k^2 - 41k - 32)/(k+4)
     c(1,1,1,1; k) = 15k/(k+4)
 
     For the non-even orbit (2,1,1): the per-root-pair formula gives
@@ -27,14 +28,15 @@ CENTRAL CHARGE FORMULAS (per-root-pair, VERIFIED for even nilpotents):
 
 COMPLEMENTARITY c(k,lambda) + c(k',lambda^t) where k' = -k - 2N:
     (4) <-> (1,1,1,1):   c+c' = 18   (LEVEL-INDEPENDENT, VERIFIED)
-    (2,2) <-> (2,2):     c+c' = 14   (LEVEL-INDEPENDENT, VERIFIED)
+    (2,2) <-> (2,2):     c+c' = 110  (LEVEL-INDEPENDENT, VERIFIED)
     (3,1) <-> (2,1,1):   status DEPENDS on c(2,1,1) formula (OPEN)
 
 KEY RESULT: The self-transpose rectangular orbit (2,2) provides the
 first non-hook verification of the transport-to-transpose conjecture.
-c(2,2; k) + c(2,2; -k-8) = 14 (constant).  The anomaly ratio is
-rho(2,2) = 5 and kappa+kappa' = 70 (level-independent).  The self-dual
-central charge c* = 7 occurs at k* = 12 (where c(2,2; 12) = 7 = 14/2).
+c(2,2; k) + c(2,2; -k-8) = 110 (constant).  The anomaly ratio is
+rho(2,2) = 5 and kappa+kappa' = 550 (level-independent).  The self-dual
+central charge c* = 55 is the principal-value symmetric limit at the
+critical fixed point k = -4.
 
 References:
     - Butson-Nair [2508.18248]: inverse Hamiltonian reduction, all type A orbits
@@ -208,6 +210,13 @@ def central_charge_even(N: int, lam: Partition, k: Fraction) -> Fraction:
     if k + N == 0:
         raise ValueError(f"Critical level k = {k} = -h^v = -{N}")
 
+    if N == 4 and lam == (2, 2):
+        # KRW rectangular formula.  The linear per-root-pair shortcut is
+        # valid on the principal/trivial/subregular lanes below, but it
+        # misses the -12k(x|x) contribution on this first non-hook even
+        # orbit.  Here (x|x)=1 and there are four grade-one ghost roots.
+        return Fraction(15) * k / (k + N) - 12 * k - 8
+
     kN = k + N
     xd = x_diagonal(lam)
     xp = [-xi for xi in xd]
@@ -286,6 +295,8 @@ def central_charge_coefficients_even(N: int, lam: Partition) -> Tuple[Fraction, 
     r"""For even nilpotent: c(k) = (a*k + b)/(k+N).  Return (a, b)."""
     if not is_even_nilpotent(lam):
         raise ValueError("Only valid for even nilpotents")
+    if N == 4 and lam == (2, 2):
+        raise ValueError("The rectangular (2,2) formula has quadratic numerator")
     c1 = central_charge_even(N, lam, Fraction(1))
     c5 = central_charge_even(N, lam, Fraction(5))
     # a + b = (N+1)*c1, 5a + b = (N+5)*c5
@@ -404,6 +415,8 @@ def self_dual_level(lam: Partition) -> Optional[Fraction]:
     c_star = self_dual_central_charge(lam)
     if c_star is None:
         return None
+    if lam == (2, 2):
+        return None
     # c(k) = (a*k + b)/(k+N). Solve a*k+b = c_star*(k+N).
     # (a - c_star)*k = c_star*N - b. k* = (c_star*N - b)/(a - c_star).
     a, b = central_charge_coefficients_even(N, lam)
@@ -428,9 +441,9 @@ def duality_profile(lam: Partition) -> Dict:
     # Central charge at test level
     c_test = central_charge_sl4(lam, Fraction(1))
 
-    # Symbolic coefficients (even only)
+    # Symbolic linear coefficients (even only, excluding rectangular (2,2)).
     coeffs = None
-    if is_ev:
+    if is_ev and lam != (2, 2):
         coeffs = central_charge_coefficients_even(N, lam)
 
     # Complementarity
@@ -472,18 +485,19 @@ def full_sl4_analysis() -> Dict[Partition, Dict]:
 # Verification constants (multi-path)
 # ---------------------------------------------------------------------------
 
-# Even-orbit central charge coefficients: c(k) = (a*k + b)/(k+4)
+# Even-orbit central charge coefficients for the linear lanes:
+# c(k) = (a*k + b)/(k+4).  The rectangular (2,2) lane has quadratic
+# numerator and is recorded separately by the KRW formula above.
 VERIFIED_C_COEFFICIENTS = {
     (4,): (Fraction(3), Fraction(-48)),
     (3, 1): (Fraction(5), Fraction(-26)),
-    (2, 2): (Fraction(7), Fraction(-16)),
     (1, 1, 1, 1): (Fraction(15), Fraction(0)),
 }
 
 # Even-orbit complementarity constants
 VERIFIED_COMPLEMENTARITY = {
     (4,): Fraction(18),       # (4) <-> (1,1,1,1)
-    (2, 2): Fraction(14),     # (2,2) <-> (2,2) self-transpose
+    (2, 2): Fraction(110),    # (2,2) <-> (2,2) self-transpose
     (1, 1, 1, 1): Fraction(18),  # same pair as (4)
 }
 
@@ -497,9 +511,6 @@ VERIFIED_ANOMALY_RATIOS = {
 }
 
 # (2,2) self-dual data.
-# c* = C/2 = 14/2 = 7. Since c(k) = (7k-16)/(k+4), the equation c = 7
-# gives 7k-16 = 7k+28, which has no finite solution. The leading coefficient
-# a = 7 equals c*, so the self-dual level is formally k* = -N = -4 (the
-# critical level, which is also the FF involution fixed point). The self-dual
-# central charge c* = 7 is achieved only as a limit k -> -4.
-VERIFIED_22_SELF_DUAL_C = Fraction(7)
+# c* = C/2 = 110/2 = 55, achieved as the principal-value symmetric
+# limit at the critical FF fixed point k = -4.
+VERIFIED_22_SELF_DUAL_C = Fraction(55)

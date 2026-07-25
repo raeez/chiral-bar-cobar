@@ -1018,7 +1018,7 @@ class TestDangerousCoincidences:
         assert _eq(_kappa_w3(50), _kappa_w3(100 - 50))
 
     def test_heisenberg_not_self_dual(self):
-        """H_k is NOT self-dual: H_k^! = Sym^ch(V*) (curved commutative).
+        """H_k is NOT self-dual: H_k^! is the curved Sym^ch(V*[1]) branch.
         kappa(H_k) = k, kappa(H_k!) = -k. Self-dual only at k=0 (degenerate)."""
         k = 1
         assert _kappa_heisenberg(k) != _kappa_heisenberg(-k) or k == 0

@@ -214,7 +214,7 @@ class TestRecursion:
                 f"S_5 mismatch at c={c}: got {shadow[5]}, expected {expected}"
 
     def test_virasoro_S6(self):
-        """S_6 = 80*(45c+193) / [3*c^3*(5c+22)^2] (from the manuscript)."""
+        """The weighted-Riccati coefficient has the stated closed form."""
         for c in [1.0, 5.0, 13.0]:
             data = virasoro_shadow_data(c)
             shadow = shadow_coefficients_from_recursion(

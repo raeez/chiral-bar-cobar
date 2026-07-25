@@ -1,330 +1,186 @@
 % !TEX root = ../../main.tex
 %
-% Chapter: Higher Bernoulli--Virasoro prime separation
-%
-% Finite coefficient theorem: Bernoulli numerator witnesses in
-% B_12, B_16, B_18, B_20, B_22 occur in the SL_2 Verlinde leading
-% coefficient and are absent from primitive Virasoro coefficients
-% through r <= 13.
-%
-% Author: Raeez Lorgat.
+% Exact Bernoulli witnesses and the open Virasoro residue comparison.
 
-\chapter{Higher Bernoulli--Virasoro prime separation
-\texorpdfstring{$Z_g$ and $S_r$}{Z\_g and S\_r}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Bernoulli Witnesses and Virasoro Residue Comparison}
 \label{ch:higher-kummer-arithmetic-duality}
 
-\ClaimStatusProvedHere
+\section*{Two arithmetic objects}
 
-\section*{Prime separation}
+An odd prime \(p\) is Kummer-irregular when
+\(p\mid\operatorname{num}(B_{2m})\) for an even index
+\(2\le2m\le p-3\).  This classical condition applies directly to
+the Bernoulli coefficients of the \(\mathrm{SL}_2\) Verlinde
+polynomials.  A comparison with Virasoro higher residues begins after
+the ordered-residue package
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\) constructs the scalar
+coordinates and the arithmetic package fixes their primitive integer
+normalization.
 
-Throughout this chapter Kummer means cyclotomic Kummer irregularity:
-an odd prime $p$ is irregular when
-$p\mid \mathrm{num}(B_{2k})$ for some even index
-$2\leq 2k\leq p-3$. The objects are Bernoulli numbers, the
-$G=\mathrm{SL}_2$ Verlinde polynomial $Z_g(k)$, and the Virasoro
-Riccati recurrence of Theorem~\ref{thm:virasoro-shadow-recurrence}.
-Kummer surfaces, Igusa forms, Borcherds products, and Yangian
-constructions do not enter the proof.
-
-The Bernoulli window through $B_{22}$ contains the irregular-prime set
+The Bernoulli window through \(B_{22}\) contains the set
 \begin{equation}
-\label{eq:higher-irrkum-tower}
-\mathrm{IrrKum}_{\leq 22}
- \;:=\; \{691,\, 3617,\, 43867,\, 283,\, 617,\, 131,\, 593\},
+ \mathrm{IrrKum}_{\le22}
+ :=\{691,3617,43867,283,617,131,593\}.
+ \label{eq:higher-irrkum-tower}
 \end{equation}
-with genus witnesses $g=m+1$ through $g=12$. The Virasoro window
-through $r=13$ is the primitive integer coefficient spectrum obtained
-from
-\[
- S_r(\Vir_c)\,c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}.
-\]
-The finite coefficient statement is:
-each prime in~\eqref{eq:higher-irrkum-tower} occurs in the
-Bernoulli leading coefficient of $Z_g(k)$ at its stated genus and in
-no primitive Virasoro coefficient through $r=13$.
 
-\section{Bernoulli witness table: Theorem~\ref{thm:higher-kummer-z-g-presence}}
+\section{Exact Bernoulli witnesses}
 
-\begin{theorem}[Kummer-irregular primes witnessed on the $Z_g$ side]
-\label{thm:higher-kummer-z-g-presence}
+\begin{theorem}[Kummer-irregular primes in the Bernoulli window]
 \ClaimStatusProvedHere
-For every prime
-$p \in \{691,3617,43867,283,617,131,593\}$, the smallest
-even index $2m$ with $p \mid \mathrm{num}(B_{2m})$, and the corresponding
-genus $g(p) = m + 1$ at which $p$ is witnessed on the $Z_g$ leading
-coefficient, are:
+\label{thm:higher-kummer-z-g-presence}
+\emph{Type signature:}
+\textup{(Open/modular quadrants, \(\mathrm{SL}_2\) Verlinde-polynomial
+presentation, level \(5\),
+\(\mathsf H_{Z_g}^{\mathrm{Bern}}\)).}
+Here \(\mathsf H_{Z_g}^{\mathrm{Bern}}\) is the leading-coefficient
+formula of Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}
+together with the standard Bernoulli normalization.
+For every prime \(p\) in~\eqref{eq:higher-irrkum-tower}, the first
+displayed Bernoulli witness and its Verlinde genus are:
 \begin{center}
-\begin{tabular}{rcccc}
+\begin{tabular}{rccc}
 \hline
-$p$ & $2m$ & $g(p) = m+1$ & $\mathrm{num}(B_{2m})$ & Kummer-irregular? \\
+\(p\)&\(2m\)&\(g(p)=m+1\)&\(\lvert\operatorname{num}(B_{2m})\rvert\)\\
 \hline
-$691$ & $12$ & $7$ & $691$ & yes \\
-$3617$ & $16$ & $9$ & $3617$ & yes \\
-$43867$ & $18$ & $10$ & $43867$ & yes \\
-$283$ & $20$ & $11$ & $174611 = 283 \cdot 617$ & yes \\
-$617$ & $20$ & $11$ & $174611 = 283 \cdot 617$ & yes \\
-$131$ & $22$ & $12$ & $854513 = 11 \cdot 131 \cdot 593$ & yes \\
-$593$ & $22$ & $12$ & $854513 = 11 \cdot 131 \cdot 593$ & yes \\
+\(691\)&\(12\)&\(7\)&\(691\)\\
+\(3617\)&\(16\)&\(9\)&\(3617\)\\
+\(43867\)&\(18\)&\(10\)&\(43867\)\\
+\(283\)&\(20\)&\(11\)&\(174611=283\cdot617\)\\
+\(617\)&\(20\)&\(11\)&\(174611=283\cdot617\)\\
+\(131\)&\(22\)&\(12\)&\(854513=11\cdot131\cdot593\)\\
+\(593\)&\(22\)&\(12\)&\(854513=11\cdot131\cdot593\)\\
 \hline
 \end{tabular}
 \end{center}
-By
-Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}, each such prime
-$p$ divides the Bernoulli numerator in the leading coefficient
-\[
- [n^{2g(p)-4}]\,R_{g(p)-2}(n^2)
- =
- (-1)^{g(p)}
- \frac{2^{g(p)-1} B_{2g(p)-2}}{(2g(p)-2)!}.
-\]
-Since $p>2g(p)-2$ in every row of the table, the rational multiplier
-$(-1)^{g(p)}2^{g(p)-1}/(2g(p)-2)!$ is a $p$-adic unit. Thus $p$
-divides the numerator of the leading coefficient of $Z_{g(p)}(k)$ as
-a polynomial in $n=k+2$.
+Each \(p\) divides the numerator of the leading coefficient of
+\(Z_{g(p)}(k)\), written as a polynomial in \(n=k+2\).
 \end{theorem}
 
 \begin{proof}
-The even Bernoulli numerators through $B_{22}$ are
+The even Bernoulli numerators through \(B_{22}\) are
 \[
 \begin{array}{c|ccccccccccc}
-2m & 2&4&6&8&10&12&14&16&18&20&22\\ \hline
-|\mathrm{num}(B_{2m})|
-&1&1&1&1&5&691&7&3617&43867&174611&854513 .
+2m&2&4&6&8&10&12&14&16&18&20&22\\ \hline
+\lvert\operatorname{num}(B_{2m})\rvert
+&1&1&1&1&5&691&7&3617&43867&174611&854513.
 \end{array}
 \]
-Together with
-\[
-174611=283\cdot 617,\qquad
-854513=11\cdot 131\cdot 593,
-\]
-this gives the table and proves minimality of the displayed even
-index for each prime in the finite tower
-\(\{691,3617,43867,283,617,131,593\}\).
+The displayed factorizations give the seven primes and their first
+indices in this window.  Every witness satisfies \(2m\le p-3\), so
+Kummer's criterion applies.
 
-Kummer irregularity is the criterion
-$p\mid\mathrm{num}(B_{2k})$ for some $2\leq 2k\leq p-3$. The displayed
-witness indices satisfy
+By Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}, the relevant
+Verlinde coefficient equals
 \[
-\begin{array}{c|ccccccc}
-p&691&3617&43867&283&617&131&593\\ \hline
-2m&12&16&18&20&20&22&22\\
-p-3&688&3614&43864&280&614&128&590 ,
-\end{array}
+ (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
 \]
-so every listed prime is Kummer-irregular. The remaining prime factor
-$11$ of $\mathrm{num}(B_{22})$ is regular in this sense, since
-$22>11-3=8$ and $11$ divides none of the numerators
-$\mathrm{num}(B_2),\ldots,\mathrm{num}(B_8)$.
-
-Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} gives the leading
-coefficient in the form
-\[
- (-1)^g\,\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
-\]
-For $g \leq 12$, every prime appearing in $2^{g-1}(2g-2)!$ is at most
-$22$. Every Kummer-irregular prime in the table is at least $131$.
-No such prime can be introduced by the scalar multiplier, and none can
-be cancelled by its denominator. The Bernoulli numerator factor
-therefore survives in the reduced leading coefficient.
+For the seven rows, \(p>2g-2\); hence the rational multiplier is a
+\(p\)-adic unit.  The Bernoulli numerator factor therefore survives
+in the reduced coefficient.
 \end{proof}
 
-\begin{remark}[the regular factor $11 \mid B_{22}$]
+\begin{remark}[The factor (11) and the Kummer window]
 \label{rem:regular-factor-11}
-The case $p = 11$ illustrates the Kummer criterion's bite. The prime
-$11$ divides $\mathrm{num}(B_{22}) = 854513 = 11 \cdot 131 \cdot 593$.
-However $22 > 11 - 3 = 8$, so Kummer's criterion requires
-$2k \leq 8$, and $11 \nmid \mathrm{num}(B_2), \ldots,
-\mathrm{num}(B_8)$ (whose numerators are all $1$). Thus $11$ is
-\emph{regular} despite dividing $B_{22}$. The asymmetry reflects
-the cyclotomic class-field interpretation: regularity of $p$ is
-equivalent to $p$ not dividing the class number of
-$\mathbb{Q}(\zeta_p)$, which through the Herbrand--Ribet theorem
-depends only on Bernoulli numerators $B_{2k}$ with $2 \leq 2k \leq p-3$.
+The factor \(11\mid\operatorname{num}(B_{22})\) lies beyond the
+Kummer index window for \(p=11\), since the defining range ends at
+\(p-3=8\).  This illustrates the role of the index bound in the
+cyclotomic criterion.
 \end{remark}
 
-\section{Shadow-side absence: Theorem~\ref{thm:higher-kummer-s-r-absence-through-r-13}}
+\section{The Virasoro coefficient census}
 
-\begin{theorem}[Higher Kummer-irregular primes absent from $S_r(\Vir_c)$
-through $r = 13$]
-\label{thm:higher-kummer-s-r-absence-through-r-13}
-\ClaimStatusProvedHere
-For every prime $p$ in the higher Kummer-irregular tower
-$\mathrm{IrrKum}_{\leq 22} = \{691, 3617, 43867, 283, 617, 131, 593\}$
-of Theorem~\ref{thm:higher-kummer-z-g-presence}, no $p$ divides any
-primitive integer coefficient of the Virasoro numerator in the range
-$4 \leq r \leq 13$:
-\begin{equation}
-\label{eq:higher-kummer-s-r-absence}
-p \;\nmid\; a
-\qquad
-\text{for every }a\in C_r,\quad 4\leq r\leq 13 .
-\end{equation}
-Here $C_r$ is the set of coefficients of the primitive integer
-polynomial obtained from
-\[
- S_r(\Vir_c)\,c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}
-\]
-by clearing scalar denominators and dividing by the coefficient gcd.
-\end{theorem}
-
-\begin{proof}
-Theorem~\ref{thm:virasoro-shadow-recurrence} determines the weighted
-Virasoro coefficients by the recurrence
-\[
- S_r \;=\; -\,\frac{1}{r c}
- \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, S_j\, S_k,
- \qquad f(j, k) = 1 \text{ if } j < k, \quad f(j, j) = \tfrac{1}{2}.
-\]
-Starting from
-\[
-S_2=\frac c2,\qquad S_3=2,\qquad
-S_4=\frac{10}{c(5c+22)},\qquad
-S_5=\frac{-48}{c^2(5c+22)},
-\]
-iteration in $\mathbb Q(c)$ gives the following primitive coefficient
-sets:
-\[
-\begin{array}{r|l}
-r & C_r \\ \hline
-4 & \{1\}\\
-5 & \{-1\}\\
-6 & \{45,\ 193\}\\
-7 & \{-15,\ -61\}\\
-8 & \{2025,\ 16470,\ 33314\}\\
-9 & \{-2025,\ -15570,\ -29554\}\\
-10 & \{91125,\ 1050975,\ 3989790,\ 4969967\}\\
-11 & \{-91125,\ -990225,\ -3500190,\ -3988097\}\\
-12 & \{4100625,\ 59413500,\ 315017100,\ 717857460,\ 583976486\}\\
-13 & \{-455625,\ -6196500,\ -30285900,\ -61608540,\ -41821334\}.
-\end{array}
-\]
-Exact factorisation of the coefficients in this table gives the prime
-support
-\[
- \mathcal P_{\leq 13}
- =
- \{2,3,5,7,17,23,47,61,163,173,193,2111,2969,3121,3739,
- 7043,16657,38891,292351,746773,3988097\}.
-\]
-The intersection
-\[
-\mathcal P_{\leq 13}\cap
-\{691,3617,43867,283,617,131,593\}
-\]
-is empty. The initial weights $r=2,3$ have reduced numerator
-coefficients $\{1\}$ and $\{2\}$, so they contain none of the seven
-Bernoulli-window primes. This proves~\eqref{eq:higher-kummer-s-r-absence}
-in the nontrivial range and the corresponding absence through $r=13$.
-\end{proof}
-
-\begin{remark}[characteristic Virasoro primes]
-\label{rem:characteristic-s-r-primes}
-The prime support of the Virasoro coefficient spectrum through
-$r=13$ is
-\[
- \mathcal P_{\leq 13}
- =
- \{2,3,5,7,17,23,47,61,163,173,193,2111,2969,3121,3739,
- 7043,16657,38891,292351,746773,3988097\},
-\]
-and its intersection with~\eqref{eq:higher-irrkum-tower} is empty:
-\begin{equation}
-\label{eq:char-s-r-disjoint}
- \mathcal P_{\leq 13} \;\cap\; \mathrm{IrrKum}_{\leq 22}
- \;=\; \emptyset
-\end{equation}
-This is the finite disjointness used below. The prime $2111$
-already appears in $C_9$ through $29554=2\cdot 7\cdot 2111$.
-\end{remark}
-
-\begin{remark}[sharpness at $2111$]
-\label{rem:2111-sharpness}
-The global assertion that no Kummer-irregular prime appears in the
-Virasoro tower is false. Kummer's criterion applies to $2111$ because
-$2111\mid\mathrm{num}(B_{1038})$ and $1038\leq 2111-3$. At the same
-time $2111$ divides the constant coefficient in $C_9$:
-\[
-29554=2\cdot 7\cdot 2111.
-\]
-The theorem is therefore scoped to the Bernoulli window
-$2m\leq 22$, where the $Z_g$ witnesses are the seven primes in
-\eqref{eq:higher-irrkum-tower}.
-\end{remark}
-
-\section{Finite separation: Theorem~\ref{thm:higher-kummer-refined-duality}}
-
-\begin{theorem}[Finite Bernoulli--Virasoro separation through $r = 13$]
-\label{thm:higher-kummer-refined-duality}
-\ClaimStatusProvedHere
-Let $\mathrm{IrrKum}_{\leq 22} = \{691, 3617, 43867, 283, 617, 131, 593\}$
-denote the Kummer-irregular primes witnessed in
-$\mathrm{num}(B_{2m})$ for $2m \in \{12, 16, 18, 20, 22\}$
-(Theorem~\ref{thm:higher-kummer-z-g-presence}). With $C_r$ as in
-Theorem~\ref{thm:higher-kummer-s-r-absence-through-r-13}, define the
-shadow-side Kummer boundary
-\begin{equation}
- r_0(p) \;:=\; \min\bigl\{ r \geq 4 : p \mid a
- \text{ for some } a\in C_r\bigr\}
- \;\in\; \mathbb{Z}_{\ge 4} \cup \{\infty\},
-\end{equation}
-and the $Z_g$ genus boundary
-\begin{equation}
- g(p) \;:=\; \min\bigl\{ g \geq 2 : p \mid \mathrm{num}(B_{2g-2})\bigr\}
- \;\in\; \mathbb{Z}_{\ge 2} \cup \{\infty\}.
-\end{equation}
-Then for every prime $p$ in the tower:
-\begin{enumerate}
-\item (Bernoulli witness) $g(p)$ is finite and equals the value
-recorded in Theorem~\ref{thm:higher-kummer-z-g-presence}:
-\[
- (g(691), g(3617), g(43867), g(283), g(617), g(131), g(593))
- \;=\; (7, 9, 10, 11, 11, 12, 12).
-\]
-At $g = g(p)$, the prime $p$ divides the numerator of the leading
-coefficient of $Z_{g(p)}(k)$ as a polynomial in $n = k + 2$.
-\item (Shadow boundary) $r_0(p) > 13$; equivalently, $p$ does not
-divide any primitive integer coefficient in $C_r$ for any
-$4\leq r \leq 13$. In
-explicit form:
-\[
- (r_0(691), r_0(3617), r_0(43867), r_0(283), r_0(617), r_0(131), r_0(593))
- \;=\; (> 13, > 13, > 13, > 13, > 13, > 13, > 13).
-\]
+\begin{definition}[Arithmetic residue package]
+\ClaimStatusDefinitional
+The package \(\mathsf H_{\mathrm{Kum}}^{\le13}\) consists of:
+\begin{enumerate}[(i)]
+\item \(\mathsf H_{\mathrm{res}}^{\le13}(\Vir_c;X)\) and its scalar
+coordinates;
+\item a proved rational-function presentation in every arity;
+\item a canonical primitive integer normalization of each numerator;
+\item exact factorization certificates from two independent integer
+oracles;
+\item compatibility with changes of residue representative and gauge.
 \end{enumerate}
-Consequently the finite genus--shadow boundary is
+For a completed package, let \(C_r\) be the coefficient set of the
+primitive numerator polynomial and let
+\(\mathcal P_{\le13}:=\bigcup_{4\le r\le13}\operatorname{Supp}(C_r)\).
+\end{definition}
+
+\begin{problem}[Compute the Virasoro prime census through arity \(13\)]
+\ClaimStatusOpen
+\label{thm:higher-kummer-s-r-absence-through-r-13}
+\emph{Type signature:}
+\textup{(Open quadrant, ordered residue-bar and primitive numerator
+presentations, level \(2\),
+\(\mathsf H_{\mathrm{res}}^{\le13}
++\mathsf H_{\mathrm{Kum}}^{\le13}\)).}
+
+Construct \(\mathsf H_{\mathrm{Kum}}^{\le13}\), compute the sets
+\(C_r\), and decide the finite separation condition
 \begin{equation}
-\label{eq:boundary-inequality}
- g(p)\leq 12 < 14 \leq r_0(p)
- \qquad
- \text{for every }p\in\mathrm{IrrKum}_{\leq 22},
+ \mathcal P_{\le13}\cap\mathrm{IrrKum}_{\le22}=\varnothing.
+ \label{eq:higher-kummer-s-r-absence}
+ \label{eq:char-s-r-disjoint}
 \end{equation}
-with the convention $\infty\geq 14$.
-\end{theorem}
+The computation includes chain-level residue representatives and
+factorization certificates for every primitive coefficient.
+\end{problem}
 
-\begin{proof}
-Part (1) is Theorem~\ref{thm:higher-kummer-z-g-presence} combined
-with Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} (which
-transports $p \mid \mathrm{num}(B_{2g-2})$ to $p \mid
-\mathrm{num}([n^{2g-4}]R_{g-2}(n^2))$, and hence to the leading
-$Z_g(k)$ coefficient, by the $p$-adic-unit multiplier
-$(-1)^g2^{g-1}/(2g-2)!$; here $p>2g-2$ for every row in
-Theorem~\ref{thm:higher-kummer-z-g-presence}).
+\begin{remark}[Characteristic-prime certificate]
+\label{rem:characteristic-s-r-primes}
+The characteristic-prime set is an output of the arithmetic residue
+package.  Its certificate records each coefficient, its primitive
+normalization, and its exact factorization.
+\end{remark}
 
-Part (2) is Theorem~\ref{thm:higher-kummer-s-r-absence-through-r-13}.
+\begin{remark}[First overlap boundary]
+\label{rem:2111-sharpness}
+After the coefficient census is constructed, the first overlap with
+the full set of Kummer-irregular primes defines a further arithmetic
+invariant of the residue tower.  This boundary is computed from the
+certified sets \(C_r\).
+\end{remark}
 
-The displayed genus boundary follows from the table in part (1):
-$g(p)\leq 12$ for all seven primes. Part (2) gives
-$r_0(p)>13$, hence $14\leq r_0(p)$ if $r_0(p)$ is finite, and the
-same inequality holds by convention when $r_0(p)=\infty$.
-\end{proof}
+\section{Finite Bernoulli--Virasoro comparison}
 
-\begin{remark}[weight boundary]
+\begin{problem}[Determine the finite genus--residue separation]
+\ClaimStatusOpen
+\label{thm:higher-kummer-refined-duality}
+\emph{Type signature:}
+\textup{(Open/modular quadrants, primitive residue numerator and
+Bernoulli presentations, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{Kum}}^{\le13}
++\mathsf H_{Z_g}^{\mathrm{Bern}}\)).}
+For \(p\in\mathrm{IrrKum}_{\le22}\), define
+\[
+ r_0(p):=\inf\{r\ge4:p\in\operatorname{Supp}(C_r)\},
+ \qquad
+ g(p):=\min\{g\ge2:p\mid\operatorname{num}(B_{2g-2})\}.
+\]
+Use the convention \(\inf\varnothing=\infty\).
+Theorem~\ref{thm:higher-kummer-z-g-presence} gives
+\[
+ (g(691),g(3617),g(43867),g(283),g(617),g(131),g(593))
+ =(7,9,10,11,11,12,12).
+\]
+Complete the Virasoro census and determine whether it yields
+\begin{equation}
+ g(p)\le12<14\le r_0(p)
+ \qquad(p\in\mathrm{IrrKum}_{\le22}).
+ \label{eq:boundary-inequality}
+\end{equation}
+\end{problem}
+
+\begin{remark}[Weight and arity boundary]
 \label{rem:higher-kummer-weight-boundary}
-The proved boundary is~\eqref{eq:boundary-inequality}. It is a
-comparison between the genus witness $g(p)$ and the first possible
-Virasoro index $r_0(p)$. The stronger inequality
-$r_0(p)>2g(p)-2$ follows from the computation only for $p=691$, where
-$2g(p)-2=12$. For the remaining six primes the Bernoulli weights are
-$16,18,20,20,22,22$, beyond the verified shadow endpoint $r=13$.
+The Bernoulli index \(2g-2\) and the residue arity~\(r\) are separate
+gradings.  A comparison theorem records the map between them together
+with its normalization; the finite inequality above is the first
+test case.
 \end{remark}

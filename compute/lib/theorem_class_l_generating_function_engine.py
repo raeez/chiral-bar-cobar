@@ -146,7 +146,7 @@ OBJECT_FIREWALLS: Dict[str, str] = {
     "A^i": "bar-cohomology/Koszul-dual coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch under finite-type or completed hypotheses",
     "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
 }
 
 GENUS3_MANUSCRIPT_GENERIC_CLASS_L: Dict[Tuple[int, int], Fraction] = {

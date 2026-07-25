@@ -1,11 +1,13 @@
-r"""Conformal blocks as bar cohomology: precise identification at all genera.
+r"""Conformal-block dimensions and pointed-bar comparison targets.
 
 MATHEMATICAL FRAMEWORK
 ======================
 
 The bar complex B^{(g,n)}(A) of a chiral algebra A on a genus-g curve with
-n marked points computes the factorization homology of A.  At the H^0 level,
-this recovers the classical conformal blocks of the TUY theory.
+n marked points computes the derived coinvariant / factorization-homology
+side.  At the H^0 level it agrees with classical TUY conformal blocks only
+after the pointed-bar exactness, TUY/Hitchin comparison, sewing, and anomaly
+matching packages are supplied.
 
 GENUS-0 IDENTIFICATION
 =======================
@@ -14,8 +16,11 @@ At genus 0 with n insertions of modules M_1,...,M_n:
     CB(A; M_1,...,M_n; P^1) = (M_1 x ... x M_n) / A(P^1 \ {p_1,...,p_n})
 
 The bar complex B^{(0,n)}(A, M_1,...,M_n) at genus 0 computes:
-    H^0(B^{(0,n)}, d) = CB(A; M_i; P^1)
-    H^i(B^{(0,n)}, d) = higher derived conformal blocks (= 0 for rational A)
+    H^0(B^{(0,n)}, d) = derived coinvariant H^0
+    H^i(B^{(0,n)}, d) = higher derived coinvariants
+
+On the rational affine/TUY comparison lane, H^0 is identified with:
+    CB(A; M_i; P^1)
 
 For sl_2 at level k with n insertions of integrable modules:
     dim CB = sum of Verlinde fusion coefficients
@@ -30,8 +35,9 @@ GENUS-1 IDENTIFICATION
 At genus 1, the curved bar complex B^{(1)}(A) has curvature m_0 = kappa*omega_1.
 The period-corrected total differential D_1 = d_0 + F_1*d_1 has D_1^2 = 0.
 
-Zhu's theorem: dim H^0(B^{(1)}(A), D_1) = number of simple A(V)-modules
-for rational VOAs.  Equivalently, = rank of the Verlinde bundle on M_1.
+Zhu's theorem gives the genus-1 conformal-block rank for rational VOAs.
+The equality with dim H^0(B^{(1)}(A), D_1) is a comparison-lane statement,
+not a raw consequence of the bar complex alone.
 
 For sl_2 at level k: dim H^0(B^{(1)}, D_1) = k+1 (integrable reps).
     k=1: dim = 2
@@ -52,7 +58,7 @@ The Beauville-Laszlo gluing gives two factorization channels:
     (b) Nonseparating: Sigma_2 -> Sigma_1 with two points identified
         CB(g=2) receives sum_lambda CB^{lambda, lambda*}(g=1)
 
-The bar complex boundary maps encode BOTH channels simultaneously:
+The bar complex boundary maps model BOTH channels on the comparison lane:
     Delta_sep: B^{(g,n)} -> bigoplus B^{(g1,|S|+1)} x B^{(g2,|S^c|+1)}
     Delta_ns:  B^{(g,n)} -> B^{(g-1,n+2)}
 
@@ -137,7 +143,8 @@ CONVENTIONS (AP19, AP33, AP38, AP39, AP44, AP45, AP48):
     - kappa(Vir_c) = c/2
     - kappa(H_k) = k
     - The r-matrix has poles ONE LESS than the OPE (AP19)
-    - H_k^! = Sym^ch(V*), NOT H_{-k} (AP33: same kappa, different algebras)
+    - H_k^! is the curved second-kind Sym branch, NOT H_{-k}
+      (AP33: same scalar kappa, different object)
     - Bar uses DESUSPENSION |s^{-1}v| = |v| - 1 (AP45)
     - Cohomological grading |d| = +1
     - eta(q) = q^{1/24} * prod(1-q^n) (AP46)
@@ -800,12 +807,12 @@ def verify_propagation_of_vacua(lie_type: str, rank: int,
 
 
 # =========================================================================
-# 12. Chain-level structure: bar complex -> conformal blocks
+# 12. Chain-level structure: bar complex -> comparison target
 # =========================================================================
 
 def chain_level_identification(lie_type: str, rank: int, k: int,
                                 g: int) -> Dict[str, Any]:
-    r"""The chain map from B^{(g,n)}(A) to the sheaf of conformal blocks.
+    r"""The comparison map from B^{(g,n)}(A) to conformal-block data.
 
     The bar complex B^{(g)}(A) has:
         - bar degree k: (A_+)^{tensor k} contributions
@@ -816,7 +823,7 @@ def chain_level_identification(lie_type: str, rank: int, k: int,
         - d_0: fiber differential (genus-0 OPE collisions)
         - d_h: period corrections (genus-h contributions to curvature)
 
-    The chain map phi: B^{(g)} -> CB^{(g)} is defined by:
+    On the comparison lane, the map phi: B^{(g)} -> CB^{(g)} is modeled by:
         phi: [v_1 | ... | v_k] |-> integral over Conf_k(C) of
              v_1(z_1) ... v_k(z_k) * omega_{Conf}
     where omega_{Conf} is the configuration space form.
@@ -1022,11 +1029,11 @@ def shadow_free_energy(lie_type: str, rank: int, k: int, g: int) -> Fraction:
 # =========================================================================
 
 def genus_by_genus_identification_sl2(k: int, max_g: int = 4) -> Dict[str, Any]:
-    r"""Complete genus-by-genus identification: bar H^0 = conformal blocks.
+    r"""Genus-by-genus Verlinde data and expected bar comparison targets.
 
     For each genus g = 0, 1, ..., max_g, we compute:
         (a) Verlinde dimension V_{g,k} (conformal blocks)
-        (b) Expected bar H^0 dimension (= Verlinde)
+        (b) Expected pointed-bar H^0 dimension on the comparison lane
         (c) Shadow free energy F_g = kappa * lambda_g^FP
         (d) Factorization verification (separating + nonseparating)
         (e) Higher Zhu algebra data
@@ -1132,7 +1139,7 @@ def growth_comparison_sl2(k: int, max_g: int = 8) -> Dict[str, Any]:
 
 def full_diagnostic(lie_type: str = "A", rank: int = 1,
                     k: int = 1, max_g: int = 4) -> Dict[str, Any]:
-    r"""Complete diagnostic of conformal blocks = bar cohomology identification.
+    r"""Complete diagnostic of Verlinde data and bar comparison targets.
 
     Returns all verification results in a single report.
     """

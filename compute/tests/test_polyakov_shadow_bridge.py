@@ -669,17 +669,15 @@ class TestCrossChecks:
 # ======================================================================
 
 class TestCriticalLevels:
-    """Error handling at critical levels."""
+    """Separate the modular scalar from Sugawara critical poles."""
 
-    def test_affine_sl2_critical_raises(self):
-        """k = -2 is critical for sl_2."""
-        with pytest.raises(ValueError):
-            kappa("affine", lie_type="A", rank=1, k=-2)
+    def test_affine_sl2_critical_kappa_is_zero(self):
+        """The sl_2 modular scalar has critical value zero."""
+        assert kappa("affine", lie_type="A", rank=1, k=-2) == 0
 
-    def test_affine_sl3_critical_raises(self):
-        """k = -3 is critical for sl_3."""
-        with pytest.raises(ValueError):
-            kappa("affine", lie_type="A", rank=2, k=-3)
+    def test_affine_sl3_critical_kappa_is_zero(self):
+        """The sl_3 modular scalar has critical value zero."""
+        assert kappa("affine", lie_type="A", rank=2, k=-3) == 0
 
     def test_central_charge_critical_raises(self):
         """Central charge also raises at critical level."""

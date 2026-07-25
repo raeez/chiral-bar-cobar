@@ -270,31 +270,33 @@ class TestOperationComparisons:
 # ============================================================================
 
 class TestCDGBulkComparisons:
-    """Test CDG20 bulk algebra vs our derived center."""
+    """Test CDG20 closed-sector algebra vs our derived-centre actor."""
 
     def test_free_scalar_bulk_match(self):
-        """Free scalar: CDG bulk = our derived center at cohomology level."""
+        """Free scalar: CDG closed observables compare at cohomology level."""
         result = cdg_bulk_comparison_free()
         assert result.match_at_cohomology is True
         assert result.shifted_poisson is True
 
     def test_gauge_theory_bulk_match(self):
-        """Gauge theory: CDG bulk = our derived center."""
+        """Gauge theory: CDG closed observables compare with the derived centre."""
         result = cdg_bulk_comparison_gauge()
         assert result.match_at_cohomology is True
         assert result.shifted_poisson is True
 
     def test_lg_model_bulk_match(self):
-        """LG model: CDG bulk = Jacobian ring = our derived center."""
+        """LG model: CDG closed observables and derived centre give Jac(W)."""
         result = cdg_bulk_comparison_lg()
         assert result.match_at_cohomology is True
         assert result.shifted_poisson is True
 
-    def test_bulk_is_derived_center_not_bar(self):
-        """AP34: bulk = derived center, NOT bar complex.
+    def test_closed_sector_is_derived_center_not_bar(self):
+        """AP34: the closed-sector actor is the derived centre, not bar.
 
         The bar complex classifies twisting morphisms.
-        The bulk is Z^der_ch(A) = C^bullet_ch(A_b, A_b).
+        The algebraic closed-sector actor is
+        Z^der_ch(A) = C^bullet_ch(A_b, A_b); physical bulk comparison
+        requires the OCA datum.
         These are different objects (AP25, AP34).
         """
         for comparison in [cdg_bulk_comparison_free(),
@@ -302,7 +304,7 @@ class TestCDGBulkComparisons:
                            cdg_bulk_comparison_lg()]:
             assert 'HH' in comparison.our_bulk or 'C^bullet' in comparison.our_bulk \
                 or 'H*' in comparison.our_bulk, \
-                "Our bulk must reference derived center / Hochschild, not bar"
+                "Our closed-sector actor must reference derived center / Hochschild, not bar"
 
 
 class TestCSHTAGTGates:

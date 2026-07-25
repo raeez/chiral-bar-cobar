@@ -18,6 +18,7 @@ Organization:
 from __future__ import annotations
 
 from fractions import Fraction
+from pathlib import Path
 
 import pytest
 
@@ -151,12 +152,12 @@ class TestGL1ChernSimons:
             assert datum.theta_kappa == Fraction(k)
 
     def test_gl1_koszul_dual_is_not_h_minus_k(self):
-        """AP33: H_k^! = Sym^ch(V*), NOT H_{-k} as algebra.
-        But kappa(H_k^!) = -k = kappa(H_{-k})."""
+        """AP33: H_k^! is the curved Sym^ch branch, not H_{-k}.
+        Its kappa is -k, matching the scalar kappa of H_{-k}."""
         H = make_heisenberg(Fraction(3))
         H_dual = koszul_dual(H)
         assert H_dual.kappa == Fraction(-3)
-        # The name reflects that this is Sym^ch(V*), not H_{-3}
+        # The name reflects the curved Sym branch, not H_{-3}.
         assert "Sym" in H_dual.name or "!" in H_dual.name
         assert H_dual.family == "heisenberg_dual"
 
@@ -590,6 +591,10 @@ class TestKoszulPairs:
         assert pair["seven_entry_package"]["A^!"].name == pair["A_shriek"]
         assert "C = Z_ch^der(sl(2)_1)" in pair["C"]
         assert "Omega(B(A)) recovers sl(2)_1" in pair["bar_cobar_scope"]
+        assert "Z_ch^der(sl(2)_1)" in pair["closed_sector_slot_scope"]
+        assert "not B(A), not A^i, not A^!" in pair["closed_sector_slot_scope"]
+        assert "not Omega(B(A))" in pair["closed_sector_slot_scope"]
+        assert "bulk_slot_scope" not in pair
         assert "seven-entry scalar/typed-summary package" in pair["completion_status"]
 
     def test_object_firewall_direct_function(self):
@@ -608,8 +613,18 @@ class TestKoszulPairs:
         assert "H^*(B^ch(sl(3)_2))" in firewall["A^i"]
         assert "not Omega(B(A))" in firewall["A^!"]
         assert "bar-cobar inversion" in firewall["Omega(B(A))"]
-        assert "derived-centre bulk slot" in firewall["Z_ch^der(A)"]
+        assert "derived-centre closed-sector slot" in firewall["Z_ch^der(A)"]
         assert "Z_ch^der(A) != A^!" in firewall["forbidden_identifications"]
+
+    def test_holographic_datum_uses_closed_sector_field_name(self):
+        """AP34: the C-slot is not exposed as a physical-bulk descriptor."""
+        source = Path("compute/lib/twisted_holography_engine.py").read_text()
+        assert "closed_sector_description: str" in source
+        assert "closed_sector_descriptions" in source
+        assert "bulk_description" not in source
+        assert "bulk_slot_scope" not in source
+        assert "derived-centre bulk slot" not in source
+        assert "Hochschild bulk slot" not in source
 
     def test_koszul_pair_affine_sl2(self):
         A = make_affine_sl_N(2, Fraction(1))
@@ -912,12 +927,15 @@ class TestEdgeCases:
         # c = 1 - 2*3*(3+1)^2/(3+2) = 1 - 6*16/5 = 1 - 96/5 = -91/5
         assert W.central_charge == Fraction(-91, 5)
 
-    def test_holographic_datum_bulk_description(self):
+    def test_holographic_datum_closed_sector_description(self):
         H = make_heisenberg(Fraction(1))
         datum = extract_holographic_datum(H)
-        assert "Fock" in datum.bulk_description
+        assert "Fock" in datum.closed_sector_description
 
-    def test_holographic_datum_affine_bulk(self):
+    def test_holographic_datum_affine_closed_sector(self):
         A = make_affine_sl_N(3, Fraction(2))
         datum = extract_holographic_datum(A)
-        assert "Higher-spin" in datum.bulk_description or "W" in datum.bulk_description
+        assert (
+            "Higher-spin" in datum.closed_sector_description
+            or "W" in datum.closed_sector_description
+        )

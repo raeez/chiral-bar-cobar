@@ -64,7 +64,7 @@ where:
   A^i = H^*(B^ch(A))                 (bar-dual coalgebra, not A!)
   A! = (A^i)^vee ~= bc^{tensor 4}_{lambda=1}
        after finite-type Verdier/Koszul rectification
-  C = Z^der_ch(A) = ChirHoch^*(A,A)  (bulk/line comparison slot)
+  C = Z^der_ch(A) = ChirHoch^*(A,A)  (closed-sector/line comparison slot)
   r(z) = Res^{coll}_{0,2}(Theta_A)   (collision residue = r-matrix)
   Theta_A = D_A - d_0                (bar-intrinsic MC element)
   nabla^hol = d - Sh_{0,n}(Theta_A)  (holographic shadow connection)
@@ -769,7 +769,7 @@ def burns_holographic_datum() -> Dict[str, Any]:
     H = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)
 
     The returned legacy key 'bulk' is retained as an API alias for the C
-    slot.  It is the chiral Hochschild bulk/line comparison slot, not A,
+    slot.  It is the chiral Hochschild closed-sector/line comparison slot, not A,
     A^i, A!, or the bar-cobar inverse Omega B(A) ~= A.
     """
     data = BurnsSpaceData()
@@ -788,7 +788,7 @@ def burns_holographic_datum() -> Dict[str, Any]:
         'not_A_dual': 'A^i is coalgebraic; A! is obtained only after finite-type Verdier duality.',
     }
     c_slot = {
-        'description': 'C = Z^der_ch(A) = ChirHoch^*(A,A), the bulk/line comparison slot',
+        'description': 'C = Z^der_ch(A) = ChirHoch^*(A,A), the closed-sector/line comparison slot',
         'note': 'C is not A, not A^i, not A!, and not the bar-cobar inverse Omega B(A).',
     }
     compute_projection_package = {
@@ -822,7 +822,7 @@ def burns_holographic_datum() -> Dict[str, Any]:
             'route': dual['duality_route'],
             'bar_cobar_inversion_role': dual['bar_cobar_inversion_role'],
         },
-        # (4) C slot: chiral Hochschild bulk/line comparison
+        # (4) C slot: chiral Hochschild closed-sector/line comparison
         'C': c_slot,
         'bulk': c_slot,
         # (5) R-matrix

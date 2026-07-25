@@ -870,7 +870,7 @@ def darith_koszul_dual_comparison(family_id: str) -> Dict[str, Any]:
     same primes as c).
 
     Verified cases:
-      Heisenberg H_k <-> H_k^! = Sym^ch(V*): d_arith = 1 = 1
+      Heisenberg H_k <-> curved H_k^! = Sym^ch(V*[1]): d_arith = 1 = 1
       Virasoro c <-> Vir_{26-c}: d_arith same (denominators share {2, 5c+22, 5(26-c)+22})
       sl_2 level k <-> sl_2 level -k-4: d_arith = 1 = 1
     """
@@ -895,8 +895,11 @@ def _koszul_dual_table() -> Dict[str, Dict]:
     return {
         'heisenberg_k1': {
             'd_arith_A': 1, 'd_arith_A_dual': 1,
-            'dual_family': 'Sym^ch(V*)',
-            'mechanism': 'H_k^! = Sym^ch(V*): same theta structure, d_arith preserved',
+            'dual_family': 'curved Sym^ch(V*[1])',
+            'mechanism': (
+                'H_k^! = curved Sym^ch(V*[1]): same theta shadow, '
+                'd_arith preserved'
+            ),
         },
         'vir_c1': {
             'd_arith_A': 1, 'd_arith_A_dual': 1,

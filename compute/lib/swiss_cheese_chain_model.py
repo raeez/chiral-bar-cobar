@@ -32,7 +32,7 @@ conformal weight (sum of generator weights in input minus output weight,
 accounting for lambda-bracket polynomial degree) does not exceed W.
 
 Mathematical references:
-  thm:hochschild-bridge-genus0 (Vol II: bulk = CHC at genus 0)
+  thm:hochschild-bridge-genus0 (Vol II: closed colour = CHC at genus 0)
   thm:thqg-swiss-cheese (Vol I: universal open/closed pair)
   thm:thqg-brace-dg-algebra (Vol I: brace dg algebra structure)
   thm:hochschild-polynomial-growth (Vol I: Theorem H)
@@ -78,11 +78,11 @@ THEOREM_H_HYPOTHESES = (
     "genericity away from critical affine and non-generic simple quotient loci",
     "E_infty chiral completion",
     "strict Mittag-Leffler passage through finite conformal-weight windows",
-    "PBW/Arnold Shelton-Yuzvinsky contraction",
+    "residue-twisted bar concentration with Arnold-Priddy Koszul-complex input",
 )
 
 OCA_HYPOTHESES = (
-    "physical bulk observable complex O_bulk^phys(A) defined",
+    "physical closed-sector observable complex O_bulk^phys(A) defined",
     "open/closed comparison map OCA: O_bulk^phys(A) -> Z_ch^der(A) defined",
     "OCA quasi-isomorphism proved in the ambient completion",
 )
@@ -176,11 +176,11 @@ def physical_bulk_oca_scope(
     oca_map_defined: bool = False,
     oca_quasi_isomorphism_proved: bool = False,
 ) -> Dict[str, object]:
-    """Record whether the derived centre may be called physical bulk.
+    """Record whether OCA data certifies physical-bulk comparison.
 
     The finite Swiss-cheese dimension model computes the universal
     cochain closed sector Z_ch^der(A).  It does not construct a
-    holomorphic-topological field theory, its physical bulk observable
+    holomorphic-topological field theory, its physical closed-sector observable
     factorization algebra, or the OCA quasi-isomorphism.
     """
     hypotheses = {

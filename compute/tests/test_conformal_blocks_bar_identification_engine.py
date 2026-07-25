@@ -1,4 +1,4 @@
-r"""Tests for conformal blocks = bar cohomology identification at all genera.
+r"""Tests for Verlinde dimensions and pointed-bar comparison targets.
 
 Multi-path verification strategy:
     Path 1: S-matrix Verlinde formula (direct)
@@ -74,18 +74,18 @@ from compute.lib.conformal_blocks_bar_identification_engine import (
 
 
 # =========================================================================
-# Section 1: Genus-0 conformal blocks = bar H^0 at genus 0
+# Section 1: Genus-0 conformal-block ranks and bar comparison targets
 # =========================================================================
 
 class TestGenus0ConformalBlocks:
-    """Genus-0 conformal blocks = fusion coefficients = bar H^0 at genus 0."""
+    """Genus-0 conformal-block ranks and expected comparison targets."""
 
     def test_sl2_k1_trivial_3point(self):
         """sl_2 k=1: CB(V_0, V_0, V_0; P^1) = 1.
 
         Three vacuum insertions. The fusion N_{0,0}^0 = 1 (trivial x trivial = trivial).
-        This is the foundational test: the bar complex at genus 0 with three
-        trivial module insertions has H^0 = 1-dimensional.
+        This is the foundational comparison-lane target: the pointed bar
+        model should have one-dimensional H^0 after the comparison package.
         """
         assert genus0_3point_sl2(1, 0, 0, 0) == 1
 
@@ -168,7 +168,7 @@ class TestGenus0ConformalBlocks:
 
 
 # =========================================================================
-# Section 2: Genus-1 conformal blocks = bar H^0 at genus 1
+# Section 2: Genus-1 conformal-block ranks and comparison targets
 # =========================================================================
 
 class TestGenus1ConformalBlocks:
@@ -203,7 +203,7 @@ class TestGenus1ConformalBlocks:
             chi_{1/2}(tau) = theta_2(tau)^2 / (2 * eta(tau))
         where theta_i are Jacobi theta functions.
 
-        This is H^0 of the genus-1 bar complex B^{(1)}(sl_2_1).
+        This is the expected H^0 of the genus-1 bar comparison target.
         """
         assert genus1_blocks_sl2(1) == 2
 
@@ -219,11 +219,11 @@ class TestGenus1ConformalBlocks:
 
 
 # =========================================================================
-# Section 3: Genus-2 conformal blocks = bar H^0 at genus 2
+# Section 3: Genus-2 conformal-block ranks and comparison targets
 # =========================================================================
 
 class TestGenus2ConformalBlocks:
-    """Genus-2 identification: V_{2,k}(sl_2) = C(k+3,3) = bar H^0."""
+    """Genus-2 rank target: V_{2,k}(sl2) = C(k+3,3)."""
 
     KNOWN_GENUS2 = {
         1: 4, 2: 10, 3: 20, 4: 35, 5: 56,

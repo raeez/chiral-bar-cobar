@@ -613,7 +613,7 @@ class TestM5HolographicDatum:
             "kappa+kappa^!",
             "kappa+kappa!",
             "C",
-            "C (bulk)",
+            "C (closed-sector)",
             "r(z)",
             "Theta_A",
             "shadow_class",
@@ -639,8 +639,19 @@ class TestM5HolographicDatum:
         assert s["A!"] == s["A^!"]
         assert s["kappa(A!)"] == s["kappa(A^!)"]
         assert s["kappa+kappa!"] == s["kappa+kappa^!"]
-        assert s["C (bulk)"] == s["C"]
         assert s["nabla flat"] == s["nabla^hol flat"]
+
+    def test_summary_uses_closed_sector_C_slot(self):
+        D = make_m5_holographic_datum(3)
+        s = D.summary()
+        assert s["C (closed-sector)"] == s["C"]
+        assert "closed-sector channel" in s["C"]
+        assert "C (bulk)" not in s
+
+        source = Path("compute/lib/m5_brane_shadow_engine.py").read_text()
+        assert "closed_sector_description" in source
+        assert "bulk_description" not in source
+        assert '"C (bulk)"' not in source
 
 
 # ===========================================================================

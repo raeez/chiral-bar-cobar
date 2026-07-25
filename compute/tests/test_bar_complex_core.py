@@ -265,94 +265,55 @@ class TestSl2BarComplex:
 # ============================================================================
 
 class TestW3BarComplex:
-    """W3 algebra: two generators T (weight 2) and W (weight 3)."""
+    """W3 exact OPE data and the ordered-bar comparison boundary."""
 
-    def test_w3_curvature_values(self):
-        """m_0^(T) = c/2, m_0^(W) = c/3."""
-        from compute.lib.w3_bar import w3_curvature
+    def test_w3_leading_ope_norms(self):
+        """The leading two-point coefficients are c/2 and c/3."""
+        from compute.lib.w3_bar import w3_leading_ope_norms
         c = Symbol('c')
-        curv = w3_curvature()
-        assert curv["T"] == c / 2
-        assert curv["W"] == c / 3
+        norms = w3_leading_ope_norms()
+        assert norms["T"] == c / 2
+        assert norms["W"] == c / 3
 
-    def test_w3_curvature_ratio(self):
-        """Curvature ratio m_0^(W)/m_0^(T) = 2/3 (level-independent)."""
-        from compute.lib.w3_bar import w3_curvature_ratio
-        assert w3_curvature_ratio() == Rational(2, 3)
+    def test_w3_leading_norm_ratio(self):
+        from compute.lib.w3_bar import w3_leading_norm_ratio
+        assert w3_leading_norm_ratio() == Rational(2, 3)
 
-    def test_w3_TT_bar_diff_vacuum(self):
-        """D(T tensor T tensor eta): vacuum = c/2 (same as Virasoro)."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
+    def test_w3_TT_ope_packet(self):
+        from compute.lib.w3_bar import w3_nth_products
         c = Symbol('c')
-        vac, _ = w3_bar_diff_deg2("T", "T")
-        assert vac.get("vac") == c / 2
+        products = w3_nth_products()[("T", "T")]
+        assert products[3]["vac"] == c / 2
+        assert products[1]["T"] == 2
+        assert products[0]["dT"] == 1
 
-    def test_w3_TT_bar_diff_bar1(self):
-        """D(T tensor T tensor eta): bar1 = {T: 2, dT: 1}."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
-        _, bar1 = w3_bar_diff_deg2("T", "T")
-        assert bar1.get("T") == 2
-        assert bar1.get("dT") == 1
+    def test_w3_TW_WT_skew_packet(self):
+        from compute.lib.w3_bar import w3_nth_products
+        products = w3_nth_products()
+        assert products[("T", "W")][1] == products[("W", "T")][1] == {"W": 3}
+        assert products[("T", "W")][0] == {"dW": 1}
+        assert products[("W", "T")][0] == {"dW": 2}
 
-    def test_w3_TW_bar_diff_no_vacuum(self):
-        """D(T tensor W tensor eta) has no vacuum component."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
-        vac, _ = w3_bar_diff_deg2("T", "W")
-        assert len(vac) == 0
-
-    def test_w3_TW_bar_diff_bar1(self):
-        """D(T tensor W tensor eta): bar1 = {W: 3, dW: 1}."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
-        _, bar1 = w3_bar_diff_deg2("T", "W")
-        assert bar1.get("W") == 3
-        assert bar1.get("dW") == 1
-
-    def test_w3_WT_bar_diff_asymmetry(self):
-        """D(W tensor T): dW coefficient is 2 (not 1 as in TW -- asymmetric)."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
-        _, bar1_tw = w3_bar_diff_deg2("T", "W")
-        _, bar1_wt = w3_bar_diff_deg2("W", "T")
-        assert bar1_tw.get("dW") == 1
-        assert bar1_wt.get("dW") == 2
-        assert bar1_tw.get("dW") != bar1_wt.get("dW")
-
-    def test_w3_WW_bar_diff_vacuum(self):
-        """D(W tensor W tensor eta): vacuum component = c/3."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
+    def test_w3_WW_ope_packet(self):
+        from compute.lib.w3_bar import w3_nth_products
         c = Symbol('c')
-        vac, _ = w3_bar_diff_deg2("W", "W")
-        assert vac.get("vac") == c / 3
+        products = w3_nth_products()[("W", "W")]
+        assert products[5]["vac"] == c / 3
+        assert products[1]["d2T"] == Rational(3, 10)
+        assert products[0]["d3T"] == Rational(1, 15)
+        assert simplify(products[1]["Lambda"] - Rational(32, 1) / (22 + 5 * c)) == 0
+        assert simplify(products[0]["dLambda"] - Rational(16, 1) / (22 + 5 * c)) == 0
 
-    def test_w3_WW_bar_diff_composite_coefficients(self):
-        """D(W tensor W): d2T = 3/10, d3T = 1/15, Lambda = 16/(22+5c)."""
-        from compute.lib.w3_bar import w3_bar_diff_deg2
-        c = Symbol('c')
-        _, bar1 = w3_bar_diff_deg2("W", "W")
-        assert bar1.get("d2T") == Rational(3, 10)
-        assert bar1.get("d3T") == Rational(1, 15)
-        assert simplify(bar1.get("Lambda") - Rational(16, 1) / (22 + 5 * c)) == 0
-
-    @pytest.mark.parametrize("n,expected", [
-        (1, 2), (2, 5), (3, 16), (4, 52), (5, 171),
-    ])
-    def test_w3_bar_cohomology_dims(self, n, expected):
-        """W3 bar cohomology dims: known through degree 5."""
-        from compute.lib.bar_gf_algebraicity import w3_bar_dims
-        dims = w3_bar_dims(5)
-        assert dims[n - 1] == expected
-
-    @pytest.mark.parametrize("n", range(4, 11))
-    def test_w3_bar_recurrence(self, n):
-        """W3 bar recurrence: a_n = 4*a_{n-1} - 2*a_{n-2} - a_{n-3}."""
-        from compute.lib.bar_gf_algebraicity import w3_bar_dims
-        dims = w3_bar_dims(10)
-        assert dims[n - 1] == 4 * dims[n - 2] - 2 * dims[n - 3] - dims[n - 4]
-
-    def test_w3_rational_gf_verification(self):
-        """W3 rational GF: (1-x)(1-3x-x^2)P = x(2-3x)."""
-        from compute.lib.bar_gf_algebraicity import verify_w3_rational_gf
-        result = verify_w3_rational_gf(8)
-        assert result['all_zero']
+    def test_w3_bar_dimensions_and_gf_are_open(self):
+        from compute.lib.bar_cohomology_w3_explicit_engine import (
+            OpenW3BarCohomologyError,
+            w3_bar_dims,
+            w3_gf_from_formula,
+        )
+        with pytest.raises(OpenW3BarCohomologyError):
+            w3_bar_dims(5)
+        with pytest.raises(OpenW3BarCohomologyError):
+            w3_gf_from_formula(8)
 
     def test_w3_skew_symmetry(self):
         """W_{(0)}T = 2dW via skew-symmetry formula."""
@@ -360,7 +321,7 @@ class TestW3BarComplex:
         assert verify_skew_symmetry()
 
     def test_w3_complementarity(self):
-        """Central charge complementarity c + c' = 100."""
+        """The formal additive central reflection has sum 100."""
         from compute.lib.w3_bar import w3_complementarity_sum
         assert w3_complementarity_sum() == 100
 
@@ -730,9 +691,10 @@ class TestArnoldCancellation:
         assert result["form_space_dim"] == 24
 
     def test_w3_arnold_deg3(self):
-        """W3 vacuum leakage cancels at degree 3."""
-        from compute.lib.w3_bar import w3_arnold_cancellation_deg3
-        assert w3_arnold_cancellation_deg3() is True
+        """The degree-three Arnold cancellation awaits the residue model."""
+        from compute.lib.w3_bar import OpenW3BarError, w3_arnold_cancellation_deg3
+        with pytest.raises(OpenW3BarError):
+            w3_arnold_cancellation_deg3()
 
 
 # ============================================================================
@@ -873,18 +835,18 @@ class TestVirasoroBarChainDims:
 # ============================================================================
 
 class TestW3Degree3:
-    """W3 degree-3 bar complex structure."""
+    """Raw arity-three/top-form chain dimensions."""
 
     def test_w3_deg3_chain_dim_6(self):
         """dim B^3_6(W3) = 2."""
-        from compute.lib.w3_bar import w3_deg3_chain_dim
-        assert w3_deg3_chain_dim(6) == 2
+        from compute.lib.w3_bar_extended import ordered_top_form_chain_dim
+        assert ordered_top_form_chain_dim(3, 6) == 2
 
     def test_w3_deg3_chain_dim_below_6(self):
         """dim B^3_h(W3) = 0 for h < 6."""
-        from compute.lib.w3_bar import w3_deg3_chain_dim
+        from compute.lib.w3_bar_extended import ordered_top_form_chain_dim
         for h in range(0, 6):
-            assert w3_deg3_chain_dim(h) == 0
+            assert ordered_top_form_chain_dim(3, h) == 0
 
 
 # ============================================================================

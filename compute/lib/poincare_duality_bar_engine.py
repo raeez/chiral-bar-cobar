@@ -238,8 +238,9 @@ def heisenberg_pd_genus1_verification(k_val: int = 1) -> Dict[str, object]:
     The genus-1 Poincare duality identity (projected to the scalar
     shadow lane) reads
                 F_1(H_k) + F_1(H_k^!) = (kappa(H_k) + kappa(H_k^!)) / 24.
-    For Heisenberg: H_k^! = Sym^ch(V^*) with kappa(H_k^!) = -k (the
-    Feigin-Frenkel flip at the shadow level), so the right side is 0.
+    For Heisenberg at k != 0: H_k^! is the curved second-kind
+    Sym^ch(V^*[1]) branch with scalar kappa(H_k^!) = -k (the
+    level-reflection shadow), so the right side is 0.
 
     Multi-path:
       (a) direct: F_1(H_k) + F_1(H_k^!) = k/24 + (-k)/24 = 0

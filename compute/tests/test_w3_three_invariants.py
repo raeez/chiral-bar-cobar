@@ -14,10 +14,10 @@ HZ-IV VERIFICATION:
     derived_from: compute/lib/w3_wline_shadow_tower.py (a_m recurrence).
 
     verified_against: direct iteration of a_{m+1}/a_m = 6(2m-3)/(m+1)
-        from Vol I thm:w3-wline-closed-form; Vol II beta_N = (N+1)(N+2)/2
-        at N=3 is independent closed form from Banach completion analysis;
-        Vol I universal class M theorem (C_{T-line} = 6) is independent
-        Riccati c-cascade analysis.
+        from Vol I thm:w3-wline-closed-form; the Vol II low-rank datum
+        beta_{W_3}=10 from Banach completion analysis; Vol I universal
+        class M theorem (C_{T-line} = 6) is independent Riccati
+        c-cascade analysis.
 
     disjoint_rationale: the three invariants measure three different
         quantities — (a) leading-c projection of S_r on T-line, (b)
@@ -54,12 +54,13 @@ class TestW3ThreeInvariantsDistinct(unittest.TestCase):
             self.assertAlmostEqual(gap, expected_gap, places=6)
 
     def test_beta_formula_is_harmonic(self):
-        """beta_N = 12*(H_N - 1) is the Vol II first-principles closed form.
+        """The conjectural Vol II all-rank harmonic law gives beta_3 = 10.
 
         Supersedes earlier candidates (N+1)(N+2)/2 (RETRACTED) and
-        N^2 - N + 4. True value: beta_N = 12*(H_N - 1) for all N >= 2
-        (ProvedHere, Vol II chapters/theory/beta_N_closed_form_all_platonic.tex,
-        thm:beta-N-closed-form-proved-all-N).
+        N^2 - N + 4 as an all-rank candidate. Vol II labels
+        beta_N = 12*(H_N - 1) as the conjecture
+        conj:beta-N-harmonic-closed-form; the N=3 specialization is
+        the low-rank value used in this W_3 invariant check.
         """
         from fractions import Fraction
 

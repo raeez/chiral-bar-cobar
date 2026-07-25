@@ -603,9 +603,14 @@ def w_algebra_character_prediction() -> Dict[int, Dict[str, int]]:
 # ============================================================================
 
 def central_charge(level=None):
-    """Central charge c(3,2; k) = 2 - 108/(k+5) = 2(k-49)/(k+5).
+    r"""Central charge c(3,2; k) = (-30k^2 - 178k - 260)/(k+5).
 
-    Uses the KRW formula from the canonical hook_type_w_duality engine.
+    KRW (2003) Thm 2.1(a) eq. (2.6) with x = h/2 = diag(1,0,-1,1/2,-1/2):
+      c = 24k/(k+5) - 12k|x|^2 - sum_{m>0}(12m^2 - 12m + 2) - dim(g_{1/2})/2
+        = 24k/(k+5) - 30k - 50 - 2        (|x|^2 = 5/2, ghost sum 50)
+    Numerical anchor: c(1) = 4 - 82 = -78.
+
+    Delegates to the canonical hook_type_w_duality per-root-pair engine.
     """
     from compute.lib.hook_type_w_duality import krw_central_charge
     if level is None:

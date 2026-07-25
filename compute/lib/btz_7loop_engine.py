@@ -65,7 +65,7 @@ OBJECT FIREWALLS
 
 A, B(A), A^i, A^!, and Z_ch^der(A) are distinct objects.  Omega(B(A)) = A
 is bar-cobar inversion, not Koszul duality.  A^! is the Verdier/continuous
-linear-dual branch.  Hochschild cochains describe the bulk/derived centre,
+linear-dual branch.  Hochschild cochains describe the closed-sector/derived centre,
 not the Koszul dual.
 
 References:
@@ -953,7 +953,7 @@ def btz_c26_7loop(M: float = 10.0) -> Dict[str, Any]:
 
     kappa = 13.  Dual algebra Vir_0 has kappa = 0 (uncurved).
     This scalar complementarity does not identify A^!, B(A), or the
-    Hochschild bulk.
+    Hochschild closed-sector.
     """
     return entropy_7loop_full(26, M, algebra='virasoro')
 

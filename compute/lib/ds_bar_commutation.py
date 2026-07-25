@@ -1,715 +1,661 @@
-"""DS-bar commutation for hook-type W-algebras.
+r"""Exact type-A DS data with typed DS--bar and duality claims.
 
-Verifies that Drinfeld-Sokolov reduction commutes with the bar construction
-for hook-type nilpotents in sl_3 and sl_4:
+The ``sl_3`` subregular reduction is the Bershadsky--Polyakov algebra in the
+Fehily--Kawasetsu--Ridout normalization.  Its strong generators
+``J,G^+,G^-,L`` are even, with weights ``1,3/2,3/2,2`` and standard central
+charge
 
-    DS(B(V_k(sl_N))) = B(DS(V_k(sl_N))) = B(W_k(sl_N, f_lambda))
+``c_BP(k)=-(2k+3)(3k+1)/(k+3)``.
 
-at the level of generators, relations, and kappa invariants.
-
-Key results:
-  1. sl_3, f_{(2,1)}: the minimal W-algebra = N=2 superconformal algebra
-     - Self-transpose: (2,1)^t = (2,1)
-     - Self-dual at k = -3 (when k^v = -k-6 = k)
-     - Chirally Koszul (H^2(B(W)) generated purely by OPE relations)
-     - Koszul dual: W_{-k-6}(sl_3, f_{(2,1)})
-
-  2. sl_4, f_{(2,1,1)}: minimal W-algebra of sl_4
-     - Transpose: (2,1,1)^t = (3,1)
-     - Koszul dual: W_{-k-8}(sl_4, f_{(3,1)}) (genuinely non-self-dual)
-
-  3. DS-bar commutation: verified via three independent criteria:
-     (a) Generator matching: DS applied to bar generators of V_k(sl_N)
-         restricts to bar generators of W_k(sl_N, f_lambda)
-     (b) Kappa compatibility: kappa(DS(B(V_k))) = kappa(B(DS(V_k)))
-     (c) Central charge threading: c(W) obtained by DS from c(V_k)
-
-Mathematical context:
-  The N=2 SCA W_k(sl_3, f_{(2,1)}) has generators:
-    J (h=1, bosonic), G^+ (h=3/2, fermionic), G^- (h=3/2, fermionic), T (h=2, bosonic)
-  with OPE:
-    J(z)J(w) ~ (c/3)/(z-w)^2
-    J(z)G^pm(w) ~ pm G^pm(w)/(z-w)
-    G^+(z)G^-(w) ~ (c/3)/(z-w)^3 + 2J(w)/(z-w)^2 + (T(w) + dJ(w))/(z-w)
-    T(z)T(w) ~ (c/2)/(z-w)^4 + 2T(w)/(z-w)^2 + dT(w)/(z-w)
-  where c = 2 - 24/(k+3).
+This engine imports that OPE packet once from the canonical non-principal
+module.  It also computes exact affine arithmetic, good-grading BRST
+dimensions, KRW central charges, partition transpose, and formal level
+reflection.  DS--bar comparison, PBW collapse, chiral Koszulness,
+categorical transport, transpose duality, and KSDual membership return typed
+claim packets under named hypothesis packages.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, Optional, Tuple
 
-from sympy import Rational, Symbol, simplify, sympify, Matrix
+from sympy import Rational, Symbol, simplify, sympify
 
 from compute.lib.hook_type_w_duality import (
-    WAlgebraGeneratorData,
-    WAlgebraCentralCharge,
+    ClaimPacket,
+    ClaimStatus,
+    OpenInvariantError,
+    anomaly_ratio_from_partition,
     ds_kappa_from_affine,
     ghost_constant,
     hook_dual_level_sl_n,
+    kappa_complementarity_sum,
     krw_central_charge,
-    krw_central_charge_data,
-    levi_rho_norm_squared,
-    rho_shift_norm_squared,
+    reciprocal_weight_diagnostic_from_partition,
     w_algebra_generator_data,
-    weyl_vector_norm_squared_sl_n,
-    complementarity_constant,
+)
+from compute.lib.non_principal_beyond_hook_engine import (
+    BRSTComplexData,
+    brst_complex_analysis,
+)
+from compute.lib.non_principal_w_bar_engine import (
+    BershadskyPolyakovOPEData,
+    bershadsky_polyakov_central_charge,
+    bershadsky_polyakov_ope_data,
 )
 from compute.lib.nonprincipal_ds_orbits import (
+    Partition,
     normalize_partition,
     partition_size,
     transpose_partition,
-    type_a_partition_sl2_triple,
+)
+from compute.lib.theorem_butson_inverse_reduction_engine import (
+    verify_transport_to_transpose,
 )
 
 
-# ---------------------------------------------------------------------------
-# N=2 SCA structure constants (sl_3, f_{(2,1)})
-# ---------------------------------------------------------------------------
+k = Symbol("k")
+BP_OPE_SOURCE = (
+    "Fehily--Kawasetsu--Ridout (2021), Definition 2.1, equations (2.1)--(2.2)"
+)
+KRW_SOURCE = "Kac--Roan--Wakimoto (2003), Theorem 2.1(a), equation (2.6)"
+
+H_DS_BAR = (
+    "H_DS-bar: a filtered chain map between DS(B(V_k(sl_N))) and "
+    "B(W^k(sl_N,f)), strict convergence, and completion compatibility"
+)
+H_PBW_BAR = (
+    "H_PBW-bar: collapse and extension control for the PBW-to-chiral-bar "
+    "spectral sequence with a compatible twisting morphism"
+)
+H_BP_BAR = (
+    "H_BP-bar: a direct completed chiral-bar computation for the standard "
+    "Bershadsky--Polyakov OPE packet"
+)
+H_MODULAR = (
+    "H_DS-modular: direct genus-one characteristics before and after DS in "
+    "one normalization, with charged, neutral, and improvement channels"
+)
+H_TRANSPORT = (
+    "H_DS-transport: realized inverse-reduction functors along the finite "
+    "Hasse path, compatible with DS, bar, and Verdier completion"
+)
+H_KOSZUL = (
+    "H_DS-Koszul: DS--bar comparison, PBW/bar collapse, and a perfect "
+    "twisting comparison for source and target"
+)
+H_DUALITY = (
+    "H_transpose-duality: an object-level Koszul equivalence at formal "
+    "reflected level with explicit hypothesis package"
+)
+H_KSDUAL = (
+    "H_KSDual: fixed-point equivalence compatible with DS/bar and transpose "
+    "transport"
+)
+
+
+def _open(statement: str, *hypotheses: str, evidence: Tuple[str, ...] = ()) -> ClaimPacket:
+    return ClaimPacket(
+        statement,
+        ClaimStatus.OPEN,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
+
+
+def _conditional(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    return ClaimPacket(
+        statement,
+        ClaimStatus.CONDITIONAL,
+        None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
+
+
+def _ope_coefficient(
+    ope: BershadskyPolyakovOPEData,
+    left: str,
+    right: str,
+    pole: int,
+):
+    for source, target, terms in ope.singular_products:
+        if source == left and target == right:
+            for term in terms:
+                if term.pole_order == pole:
+                    return term.coefficient
+    raise KeyError((left, right, pole))
+
 
 @dataclass(frozen=True)
 class N2SCAData:
-    """Complete OPE data for the N=2 superconformal algebra."""
+    r"""Compatibility record carrying the standard BP OPE data.
 
-    central_charge: object  # c(k) = 2 - 24/(k+3)
+    The historical class name remains for import stability; the mathematical
+    object represented here is the Bershadsky--Polyakov algebra.
+    """
+
     level: object
-    # OPE structure constants (all as functions of c or k)
-    # J J ~ (c/3) / z^2
-    jj_pole2: object
-    # J G^pm ~ pm 1 / z  (charge pm 1)
-    jg_charge: int
-    # G^+ G^- ~ (c/3)/z^3 + 2J/z^2 + (T + dJ)/z
-    gg_pole3: object  # = c/3
-    gg_pole2_coeff: int  # = 2 (coefficient of J)
-    gg_pole1: str  # = "T + dJ"
-    # T T ~ (c/2)/z^4 + 2T/z^2 + dT/z
-    tt_pole4: object  # = c/2
+    central_charge: object
+    generators: Tuple[Tuple[str, object, str], ...]
+    ope_data: BershadskyPolyakovOPEData
+    formal_reflected_level: object
+    formal_central_sum: object
+    source: str
+
+    @property
+    def exact_pole_orders(self) -> Tuple[Tuple[str, str, int], ...]:
+        return tuple(
+            (left, right, max((term.pole_order for term in terms), default=0))
+            for left, right, terms in self.ope_data.singular_products
+        )
+
+    @property
+    def jj_pole2(self):
+        return _ope_coefficient(self.ope_data, "J", "J", 2)
+
+    @property
+    def jg_charge(self):
+        coefficient = _ope_coefficient(self.ope_data, "J", "G+", 1)
+        return simplify(coefficient / Symbol("G_plus"))
+
+    @property
+    def jg_minus_charge(self):
+        coefficient = _ope_coefficient(self.ope_data, "J", "G-", 1)
+        return simplify(coefficient / Symbol("G_minus"))
+
+    @property
+    def gg_pole3(self):
+        return _ope_coefficient(self.ope_data, "G+", "G-", 3)
+
+    @property
+    def gg_pole2_coeff(self):
+        coefficient = _ope_coefficient(self.ope_data, "G+", "G-", 2)
+        return simplify(coefficient / Symbol("J"))
+
+    @property
+    def gg_pole1(self):
+        return _ope_coefficient(self.ope_data, "G+", "G-", 1)
+
+    @property
+    def tt_pole4(self):
+        return _ope_coefficient(self.ope_data, "L", "L", 4)
 
 
-def n2_sca_data(level=Symbol('k')) -> N2SCAData:
-    """OPE data for the N=2 SCA = W_k(sl_3, f_{(2,1)})."""
-    k = sympify(level)
-    c = 2 - Rational(24, 1) / (k + 3)
-    return N2SCAData(
-        central_charge=c,
-        level=k,
-        jj_pole2=c / 3,
-        jg_charge=1,
-        gg_pole3=c / 3,
-        gg_pole2_coeff=2,
-        gg_pole1="T + dJ",
-        tt_pole4=c / 2,
+BershadskyPolyakovData = N2SCAData
+
+
+def bershadsky_polyakov_data(level=k) -> BershadskyPolyakovData:
+    r"""Return the canonical BP generator, OPE, and reflection packet."""
+
+    level = sympify(level)
+    ope = bershadsky_polyakov_ope_data(level)
+    reflected = hook_dual_level_sl_n(3, level)
+    central_charge = bershadsky_polyakov_central_charge(level)
+    return BershadskyPolyakovData(
+        level=level,
+        central_charge=central_charge,
+        generators=tuple(
+            (generator.label, generator.conformal_weight, generator.parity)
+            for generator in ope.generators
+        ),
+        ope_data=ope,
+        formal_reflected_level=reflected,
+        formal_central_sum=simplify(
+            central_charge + bershadsky_polyakov_central_charge(reflected)
+        ),
+        source=ope.source,
     )
 
 
-# ---------------------------------------------------------------------------
-# Bar complex for the N=2 SCA
-# ---------------------------------------------------------------------------
+def n2_sca_data(level=k) -> N2SCAData:
+    r"""Compatibility entry point for :func:`bershadsky_polyakov_data`."""
+
+    return bershadsky_polyakov_data(level)
+
 
 @dataclass(frozen=True)
 class BarComplexData:
-    """Bar complex data for a W-algebra in low degrees."""
+    r"""Exact BP bar input and typed higher-bar consequences."""
 
-    # Bar degree 0: ground field
-    h0_dim: int
-    # Bar degree 1: generators (desuspended)
-    h1_generators: Tuple[Tuple[str, object, str], ...]
-    h1_dim: int
-    # Bar degree 2: relations from OPE
-    h2_relations: Tuple[Tuple[str, str], ...]  # (name, description)
-    h2_dim: int
-    # Bar degree 3: syzygies (if any)
-    h3_dim: Optional[int]
-    # Koszulness: is H*(B(W)) concentrated in bar degree 1?
-    is_koszul: bool
-    # Euler characteristic: h0 - h1 + h2 - h3 + ...
-    euler_char: Optional[int]
+    partition: Partition
+    level: object
+    chain_degree_zero_dimension: int
+    chain_degree_one_generators: Tuple[Tuple[str, object, str], ...]
+    singular_ope_channels: Tuple[Tuple[str, str, int], ...]
+    ope_data: BershadskyPolyakovOPEData
+    higher_bar_cohomology: ClaimPacket
+    pbw_collapse: ClaimPacket
+    koszulness: ClaimPacket
+
+    @property
+    def h0_dim(self) -> int:
+        return self.chain_degree_zero_dimension
+
+    @property
+    def h1_generators(self) -> Tuple[Tuple[str, object, str], ...]:
+        return self.chain_degree_one_generators
+
+    @property
+    def h1_dim(self) -> int:
+        return len(self.chain_degree_one_generators)
+
+    @property
+    def is_koszul(self) -> ClaimPacket:
+        return self.koszulness
 
 
-def bar_complex_n2_sca(level=Symbol('k')) -> BarComplexData:
-    """Bar complex of the N=2 SCA = W_k(sl_3, f_{(2,1)}).
+def bar_complex_n2_sca(level=k) -> BarComplexData:
+    r"""Return the exact BP bar input and unresolved higher cohomology."""
 
-    Bar degree 1: 4 generators (J, G^+, G^-, T)
-    Bar degree 2: Relations from OPE. The N=2 SCA has 6 OPE pairs
-      (JJ, JG+, JG-, G+G-, TT, TG+/TG-/TJ combined via Virasoro Ward)
-      but the independent RELATIONS (= kernel of the multiplication map
-      on the free algebra modulo OPE) give:
-        - JJ relation: J is a u(1) current, OPE determines [J_m, J_n]
-        - JG^pm relations: G^pm have charge pm 1 under J
-        - G^+G^- relation: determines T + dJ as composite
-        - TT relation: Virasoro (one relation)
-        - TJ, TG^pm: conformal weight assignments (not independent)
-      Independent relations: 4 (JJ, JG+/JG-, G+G-, TT)
-      But conformal weight assignments (TJ, TG^pm) are determined by T,
-      so these are NOT independent bar-2 classes.
-
-    For the N=2 SCA, bar cohomology:
-      H^0 = k (ground field)
-      H^1 = k^4 (generators: J, G+, G-, T)
-      H^2 = k^4 (relations: JJ, JG+, JG-, G+G-)
-      H^3 = k (syzygy: Jacobi identity among G+, G-, J)
-      Higher: 0
-
-    Wait -- this is the QUADRATIC DUAL computation. For a Koszul algebra,
-    the bar cohomology H^*(B(W)) should be the Koszul dual COALGEBRA.
-    For the N=2 SCA, which IS Koszul (freely generated with quadratic
-    relations from the singular part of the OPE), the bar cohomology
-    is concentrated and gives W^!.
-
-    Actually, for vertex algebras the bar complex is DIFFERENT from the
-    associative bar complex. The chiral bar complex uses the full OPE
-    including all singular terms. A freely strongly generated VOA with
-    only quadratic OPE singularities (poles of order <= dim(gen)) has
-    PBW-type bar cohomology and is chirally Koszul.
-
-    The N=2 SCA: all OPE are quadratic in the sense of chiral Koszulness
-    (the highest pole in each OPE involves at most linear composites).
-    So it IS chirally Koszul by the PBW criterion (prop:pbw-universality
-    applied to the universal N=2 VOA at generic k).
-    """
-    k = sympify(level)
-    c = 2 - Rational(24, 1) / (k + 3)
-
-    generators = (
-        ("J", Rational(1), "bosonic"),
-        ("G^+", Rational(3, 2), "fermionic"),
-        ("G^-", Rational(3, 2), "fermionic"),
-        ("T", Rational(2), "bosonic"),
-    )
-
-    # Relations from the OPE (bar degree 2 classes)
-    # These are the QUADRATIC part of the bar differential image
-    relations = (
-        ("JJ", "J(z)J(w) ~ (c/3)/(z-w)^2: affine u(1) at level c/3"),
-        ("JG", "J(z)G^pm(w) ~ pm G^pm/(z-w): charge assignment"),
-        ("GG", "G^+(z)G^-(w) ~ (c/3)/(z-w)^3 + 2J/(z-w)^2 + (T+dJ)/(z-w): N=2 relation"),
-        ("TT", "T(z)T(w) ~ (c/2)/(z-w)^4 + 2T/(z-w)^2 + dT/(z-w): Virasoro"),
-    )
-
+    bp = bershadsky_polyakov_data(level)
     return BarComplexData(
-        h0_dim=1,
-        h1_generators=generators,
-        h1_dim=4,
-        h2_relations=relations,
-        h2_dim=4,
-        h3_dim=1,  # One Jacobi-type syzygy among J, G+, G-
-        is_koszul=True,  # PBW criterion: freely generated, universal
-        euler_char=1 - 4 + 4 - 1,  # = 0
+        partition=(2, 1),
+        level=bp.level,
+        chain_degree_zero_dimension=1,
+        chain_degree_one_generators=bp.generators,
+        singular_ope_channels=bp.exact_pole_orders,
+        ope_data=bp.ope_data,
+        higher_bar_cohomology=_open(
+            "completed higher chiral-bar cohomology of the BP algebra",
+            H_BP_BAR,
+            evidence=(BP_OPE_SOURCE,),
+        ),
+        pbw_collapse=_conditional(
+            "PBW-to-bar collapse for the BP algebra",
+            H_BP_BAR,
+            H_PBW_BAR,
+            evidence=(BP_OPE_SOURCE,),
+        ),
+        koszulness=_conditional(
+            "chiral Koszulness of the BP algebra",
+            H_BP_BAR,
+            H_PBW_BAR,
+            H_KOSZUL,
+        ),
     )
 
 
-# ---------------------------------------------------------------------------
-# DS on the bar complex of V_k(sl_3)
-# ---------------------------------------------------------------------------
+def dim_sl_n(N: int) -> int:
+    r"""Return ``dim sl_N=N^2-1``."""
+
+    if N < 2:
+        raise ValueError("N must be at least 2")
+    return N * N - 1
+
+
+def affine_kappa_sl_n(N: int, level=k):
+    r"""Return the canonical affine class-L characteristic convention."""
+
+    level = sympify(level)
+    return Rational(dim_sl_n(N), 2 * N) * (level + N)
+
+
+def affine_central_charge_sl_n(N: int, level=k):
+    r"""Return the Sugawara central charge of ``V^k(sl_N)``."""
+
+    level = sympify(level)
+    return simplify(level * dim_sl_n(N) / (level + N))
+
+
+def ds_good_grading_data(partition: Partition) -> BRSTComplexData:
+    r"""Return the canonical exact type-A good-grading packet."""
+
+    return brst_complex_analysis(normalize_partition(partition))
+
+
+def ds_nilpotent_plus_dim(partition: Partition) -> int:
+    r"""Return ``dim n_+`` for the good grading."""
+
+    return ds_good_grading_data(partition).n_plus_dim
+
+
+def ds_nilpotent_half_dim(partition: Partition) -> int:
+    r"""Return ``dim g_{1/2}`` for the good grading."""
+
+    return ds_good_grading_data(partition).g_half_dim
+
 
 @dataclass(frozen=True)
 class DSBarCommutationData:
-    """Data verifying DS-bar commutation for a given nilpotent."""
+    r"""Exact DS input data and typed comparison claims."""
 
     lie_algebra: str
     rank: int
     partition: Partition
-    # V_k(sl_N) data
-    affine_generators: int  # = dim(sl_N)
-    affine_kappa: object     # kappa(V_k(sl_N))
-    affine_central_charge: object  # c(V_k(sl_N))
-    # DS(V_k) = W_k data
+    level: object
+    affine_generators: int
+    affine_kappa: object
+    affine_central_charge: object
     w_generators: int
-    w_kappa: object
+    w_generator_weights: Tuple[Rational, ...]
+    w_num_even: int
+    w_num_odd: int
     w_central_charge: object
-    # Ghost contribution: BRST complex generators
-    ghost_dim: int  # = dim(n_+) for the nilpotent grading
+    positive_grade_multiplicities: Dict[Rational, int]
+    positive_subalgebra_is_abelian: bool
+    ghost_dim: int
+    neutral_half_dimension: int
     ghost_constant_value: object
-    # Commutation checks
-    kappa_commutes: bool    # kappa(DS(B(V))) = kappa(B(DS(V)))
-    generators_match: bool  # DS restricts generators correctly
-    c_threads: bool         # c(W) = DS(c(V))
+    reciprocal_weight_diagnostic: Rational
+    rho: ClaimPacket
+    w_kappa: ClaimPacket
+    pbw_collapse: ClaimPacket
+    ds_bar_commutation: ClaimPacket
+    koszulness: ClaimPacket
+    categorical_transport: ClaimPacket
 
-
-Partition = Tuple[int, ...]
-
-
-def dim_sl_n(N: int) -> int:
-    """Dimension of sl_N."""
-    return N * N - 1
-
-
-def affine_kappa_sl_n(N: int, level=Symbol('k')):
-    """Kappa for V_k(sl_N): kappa = dim(sl_N) * (k+N) / (2N)."""
-    k = sympify(level)
-    return Rational(dim_sl_n(N), 2 * N) * (k + N)
-
-
-def affine_central_charge_sl_n(N: int, level=Symbol('k')):
-    """Central charge of V_k(sl_N): c = k*dim(g)/(k+h^v)."""
-    k = sympify(level)
-    dim_g = dim_sl_n(N)
-    return k * dim_g / (k + N)
-
-
-def ds_nilpotent_plus_dim(partition: Partition) -> int:
-    """Dimension of n_+ for the nilpotent grading.
-
-    For partition lambda of N, the nilpotent radical n_+ of the
-    parabolic associated to the grading has dimension = sum of
-    dim(g_j) for j > 0 (using ad(x) = (1/2)*ad(h) eigenvalues).
-    """
-    lam = normalize_partition(partition)
-    N = partition_size(lam)
-    triple = type_a_partition_sl2_triple(lam)
-    h_diag = [triple.h[i, i] for i in range(N)]
-
-    count = 0
-    for i in range(N):
-        for j in range(N):
-            if i == j:
-                continue
-            # eigenvalue of ad(x) on E_{ij} is (h_i - h_j)/2
-            eigenval = Rational(h_diag[i] - h_diag[j], 2)
-            if eigenval > 0:
-                count += 1
-    return count
-
-
-def ds_nilpotent_half_dim(partition: Partition) -> int:
-    """Dimension of g_{1/2} for the nilpotent grading.
-
-    These are the directions that become fermionic ghosts in the
-    BRST complex (the 'odd' part of the DS reduction).
-    """
-    lam = normalize_partition(partition)
-    N = partition_size(lam)
-    triple = type_a_partition_sl2_triple(lam)
-    h_diag = [triple.h[i, i] for i in range(N)]
-
-    count = 0
-    for i in range(N):
-        for j in range(N):
-            if i == j:
-                continue
-            eigenval = Rational(h_diag[i] - h_diag[j], 2)
-            if eigenval == Rational(1, 2):
-                count += 1
-    return count
+    @property
+    def kappa_commutes(self) -> ClaimPacket:
+        return self.ds_bar_commutation
 
 
 def ds_bar_commutation_check(
-    partition: Partition, level=Symbol('k')
+    partition: Partition,
+    level=k,
 ) -> DSBarCommutationData:
-    """Verify DS-bar commutation for a given nilpotent in sl_N.
+    r"""Return exact DS arithmetic and the chain-level comparison packet."""
 
-    Three independent checks:
-    1. Kappa compatibility: kappa(W) = rho_lambda * c(lambda, k).
-       The anomaly ratio rho is k-independent (determined by generator
-       content).  The old ghost subtraction formula kappa = kappa_aff - C
-       was WRONG: rho changes under DS reduction.
-
-    2. Generator matching: DS applied to dim(sl_N) affine generators
-       produces dim(g^f) W-algebra generators + dim(n_+) constrained
-       (ghost) directions. The bar complex of W has H^1 = g^f.
-
-    3. Central charge threading: c(W_k(sl_N, f)) is obtained from
-       c(V_k(sl_N)) by the KRW formula, which is the same as applying
-       DS to the Sugawara construction.
-    """
     lam = normalize_partition(partition)
     N = partition_size(lam)
-    k = sympify(level)
-
-    # Affine data
-    aff_gens = dim_sl_n(N)
-    aff_kappa = affine_kappa_sl_n(N, k)
-    aff_c = affine_central_charge_sl_n(N, k)
-
-    # W-algebra data
-    w_gen_data = w_algebra_generator_data(lam)
-    w_gens = w_gen_data.f_centralizer_dimension
-    w_kappa = ds_kappa_from_affine(lam, k)
-    w_c = krw_central_charge(lam, k)
-
-    # Ghost data
-    ghost_dim = ds_nilpotent_plus_dim(lam)
-    C_lam = ghost_constant(lam)
-
-    # Check 1: Kappa compatibility via rho * c
-    from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-    rho = anomaly_ratio_from_partition(lam)
-    kappa_expected = rho * w_c
-    kappa_diff = simplify(w_kappa - kappa_expected)
-    kappa_ok = kappa_diff == 0
-
-    # Check 2: Generator matching
-    # dim(sl_N) = dim(g^f) + dim(g/g^f)
-    # dim(g/g^f) = dim(n_+) + dim(n_-) + (dim(g_0) - dim((g_0)^f))
-    # For the bar complex: H^1(B(W)) = g^f (generators of W)
-    # The constrained directions are killed by the BRST differential
-    generators_ok = (w_gens == w_gen_data.f_centralizer_dimension)
-
-    # Check 3: Central charge
-    # For principal: c(W_N) = c_principal computed from KRW
-    # For non-principal: c(W_k(f)) = leading - quadratic/(k+N)
-    # The Sugawara c(V_k) = k*dim(g)/(k+N) threads through DS correctly
-    # Verify: the KRW formula gives a RATIONAL function of k with
-    # denominator (k+N), matching the Sugawara denominator.
-    cc_data = krw_central_charge_data(lam)
-    c_from_krw = cc_data.central_charge.subs(Symbol('k'), k)
-    c_threads_ok = simplify(w_c - c_from_krw) == 0
-
+    level = sympify(level)
+    generators = w_algebra_generator_data(lam)
+    grading = ds_good_grading_data(lam)
+    transpose_profile = verify_transport_to_transpose(lam, level)
+    weights = tuple(
+        sorted(Rational(weight) for _, weight, _ in generators.strong_generators)
+    )
     return DSBarCommutationData(
         lie_algebra=f"sl_{N}",
         rank=N - 1,
         partition=lam,
-        affine_generators=aff_gens,
-        affine_kappa=aff_kappa,
-        affine_central_charge=aff_c,
-        w_generators=w_gens,
-        w_kappa=w_kappa,
-        w_central_charge=w_c,
-        ghost_dim=ghost_dim,
-        ghost_constant_value=C_lam,
-        kappa_commutes=kappa_ok,
-        generators_match=generators_ok,
-        c_threads=c_threads_ok,
+        level=level,
+        affine_generators=dim_sl_n(N),
+        affine_kappa=affine_kappa_sl_n(N, level),
+        affine_central_charge=affine_central_charge_sl_n(N, level),
+        w_generators=generators.f_centralizer_dimension,
+        w_generator_weights=weights,
+        w_num_even=generators.n_even,
+        w_num_odd=generators.n_odd,
+        w_central_charge=krw_central_charge(lam, level),
+        positive_grade_multiplicities=grading.n_plus_grades,
+        positive_subalgebra_is_abelian=grading.n_plus_is_abelian,
+        ghost_dim=grading.n_plus_dim,
+        neutral_half_dimension=grading.g_half_dim,
+        ghost_constant_value=ghost_constant(lam),
+        reciprocal_weight_diagnostic=reciprocal_weight_diagnostic_from_partition(lam),
+        rho=anomaly_ratio_from_partition(lam),
+        w_kappa=ds_kappa_from_affine(lam, level),
+        pbw_collapse=_conditional(
+            f"PBW-to-bar collapse after DS reduction at partition {lam}",
+            H_PBW_BAR,
+        ),
+        ds_bar_commutation=_conditional(
+            f"DS--bar comparison for W^{level}(sl_{N},f_{lam})",
+            H_DS_BAR,
+        ),
+        koszulness=_conditional(
+            f"chiral Koszulness for W^{level}(sl_{N},f_{lam})",
+            H_DS_BAR,
+            H_PBW_BAR,
+            H_KOSZUL,
+        ),
+        categorical_transport=transpose_profile.categorical_transport,
     )
 
 
-# ---------------------------------------------------------------------------
-# sl_3 minimal (N=2 SCA): self-dual case
-# ---------------------------------------------------------------------------
+def _critical_pole_for_bp() -> bool:
+    numerator_after_clearing = simplify(
+        (k + 3) * bershadsky_polyakov_central_charge(k)
+    )
+    return simplify(numerator_after_clearing.subs(k, -3)) != 0
 
-def sl3_minimal_data(level=Symbol('k')) -> Dict[str, object]:
-    """Complete data for W_k(sl_3, f_{(2,1)}) = N=2 SCA.
 
-    Key facts:
-    - Generators: J (h=1), G+ (h=3/2), G- (h=3/2), T (h=2)
-    - Central charge: c = 2 - 24/(k+3)
-    - Self-transpose: (2,1)^t = (2,1)
-    - Dual level: k^v = -k-6
-    - Self-dual point: k = -3 (critical level!)
-    - Koszul dual: W_{-k-6}(sl_3, f_{(2,1)}) = itself at dual level
-    """
-    k = sympify(level)
+def sl3_minimal_data(level=k) -> Dict[str, object]:
+    r"""Return the exact BP seed packet and typed homological claims."""
+
+    level = sympify(level)
     lam = (2, 1)
-    N = 3
-
-    gen_data = w_algebra_generator_data(lam)
-    cc_data = krw_central_charge_data(lam)
-    c = krw_central_charge(lam, k)
-    kappa = ds_kappa_from_affine(lam, k)
-    kv = hook_dual_level_sl_n(N, k)
-    kappa_dual = ds_kappa_from_affine(lam, kv)
-
-    # Self-dual point: k^v = k => -k-6 = k => k = -3
-    self_dual_level = Rational(-3)
-    c_at_self_dual = krw_central_charge(lam, self_dual_level)
-
+    generators = w_algebra_generator_data(lam)
+    reflected = hook_dual_level_sl_n(3, level)
+    bp = bershadsky_polyakov_data(level)
     return {
         "partition": lam,
         "transpose": transpose_partition(lam),
         "is_self_transpose": transpose_partition(lam) == lam,
-        "N": N,
-        "generators": gen_data,
-        "n_generators": gen_data.f_centralizer_dimension,
-        "n_bosonic": gen_data.n_bosonic,
-        "n_fermionic": gen_data.n_fermionic,
-        "central_charge": c,
-        "kappa": kappa,
-        "dual_level": kv,
-        "kappa_dual": kappa_dual,
-        "kappa_sum": simplify(kappa + kappa_dual),
-        "self_dual_level": self_dual_level,
-        "c_at_self_dual": simplify(c_at_self_dual),
+        "N": 3,
+        "generators": generators,
+        "n_generators": generators.f_centralizer_dimension,
+        "n_even": generators.n_even,
+        "n_odd": generators.n_odd,
+        "n_bosonic": generators.n_even,
+        "n_fermionic": generators.n_odd,
+        "central_charge": bp.central_charge,
+        "formal_reflected_level": reflected,
+        "formal_central_sum": bp.formal_central_sum,
+        "formal_fixed_level": Rational(-3),
+        "central_charge_has_pole_at_fixed_level": _critical_pole_for_bp(),
+        "reciprocal_weight_diagnostic": reciprocal_weight_diagnostic_from_partition(lam),
+        "rho": anomaly_ratio_from_partition(lam),
+        "kappa": ds_kappa_from_affine(lam, level),
+        "reflected_kappa": ds_kappa_from_affine(lam, reflected),
+        "modular_conductor": kappa_complementarity_sum(lam, level),
         "ghost_constant": ghost_constant(lam),
-        "complementarity_constant": complementarity_constant(lam),
-        "bar_complex": bar_complex_n2_sca(k),
-        "ds_bar_check": ds_bar_commutation_check(lam, k),
+        "bar_complex": bar_complex_n2_sca(level),
+        "ds_bar_check": ds_bar_commutation_check(lam, level),
     }
 
 
-# ---------------------------------------------------------------------------
-# sl_4 hook pair: genuinely non-self-dual
-# ---------------------------------------------------------------------------
+def sl4_hook_ds_bar_data(level=k) -> Dict[str, object]:
+    r"""Return exact data for the ``(2,1,1)`` and ``(3,1)`` hook pair."""
 
-def sl4_hook_ds_bar_data(level=Symbol('k')) -> Dict[str, object]:
-    """DS-bar commutation data for the sl_4 hook pair (2,1,1) <-> (3,1).
-
-    The minimal W-algebra W_k(sl_4, f_{(2,1,1)}) has:
-    - 9 generators: 5 bosonic + 4 fermionic
-    - Ghost constant C_{(2,1,1)} = 3
-    - Koszul dual: W_{-k-8}(sl_4, f_{(3,1)}) (subregular, 5 generators)
-
-    The subregular W-algebra W_k(sl_4, f_{(3,1)}) has:
-    - 5 generators: all bosonic (h = 1, 2, 2, 3, 3)
-    - Ghost constant C_{(3,1)} = 6
-    """
-    k = sympify(level)
-
-    minimal_check = ds_bar_commutation_check((2, 1, 1), k)
-    subregular_check = ds_bar_commutation_check((3, 1), k)
-
-    # Cross-duality: kappa sum at dual levels
-    kv = hook_dual_level_sl_n(4, k)
-    kappa_211 = ds_kappa_from_affine((2, 1, 1), k)
-    kappa_31_dual = ds_kappa_from_affine((3, 1), kv)
-    kappa_sum = simplify(kappa_211 + kappa_31_dual)
-
-    # The complementarity constant
-    comp_const = complementarity_constant((2, 1, 1))
-
+    level = sympify(level)
+    source = (2, 1, 1)
+    target = (3, 1)
+    reflected = hook_dual_level_sl_n(4, level)
+    duality = koszul_dual_identification(source, level)
     return {
-        "minimal_check": minimal_check,
-        "subregular_check": subregular_check,
-        "kappa_sum_at_dual_levels": kappa_sum,
-        "complementarity_constant": comp_const,
-        # For the non-self-transpose hook pair, the kappa sum is a rational
-        # function of k (different anomaly ratios), NOT a constant.
-        "kappa_sum_equals_comp": True,  # both checks now use rho*c correctly
+        "minimal_check": ds_bar_commutation_check(source, level),
+        "subregular_check": ds_bar_commutation_check(target, level),
+        "source_partition": source,
+        "transpose_partition": target,
+        "formal_reflected_level": reflected,
+        "formal_central_sum": simplify(
+            krw_central_charge(source, level)
+            + krw_central_charge(target, reflected)
+        ),
+        "source_kappa": ds_kappa_from_affine(source, level),
+        "transpose_kappa": ds_kappa_from_affine(target, reflected),
+        "modular_conductor": kappa_complementarity_sum(source, level),
+        "duality": duality,
     }
 
-
-# ---------------------------------------------------------------------------
-# Koszul dual identification
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class KoszulDualIdentification:
-    """Identification of the Koszul dual W-algebra."""
+    r"""Exact formal transpose data and typed object-level duality."""
 
     source_partition: Partition
     source_level: object
     dual_partition: Partition
     dual_level: object
     N: int
-    # Central charge data
-    source_c: object
-    dual_c: object
-    c_sum: object  # c + c^! (should be constant for self-dual pairs)
-    # Kappa data
-    source_kappa: object
-    dual_kappa: object
-    kappa_sum: object
-    # Self-duality
+    source_central_charge: object
+    dual_central_charge: object
+    formal_central_sum: object
+    formal_central_sum_k_independent: Optional[bool]
+    source_reciprocal_weight_diagnostic: Rational
+    dual_reciprocal_weight_diagnostic: Rational
+    source_rho: ClaimPacket
+    dual_rho: ClaimPacket
+    source_kappa: ClaimPacket
+    dual_kappa: ClaimPacket
+    modular_conductor: ClaimPacket
     is_self_transpose: bool
-    self_dual_level: Optional[object]  # k such that k^v = k (if self-transpose)
-    c_at_self_dual: Optional[object]
+    formal_fixed_level: object
+    self_dual_level: Optional[object]
+    hasse_path_to_transpose: Tuple[Partition, ...]
+    categorical_transport: ClaimPacket
+    bar_compatibility: ClaimPacket
+    koszul_duality: ClaimPacket
+    ksdual_membership: ClaimPacket
+
+    @property
+    def source_c(self):
+        return self.source_central_charge
+
+    @property
+    def dual_c(self):
+        return self.dual_central_charge
+
+    @property
+    def c_sum(self):
+        return self.formal_central_sum
 
 
 def koszul_dual_identification(
-    partition: Partition, level=Symbol('k')
+    partition: Partition,
+    level=k,
 ) -> KoszulDualIdentification:
-    """Identify the Koszul dual of W_k(sl_N, f_lambda).
+    r"""Return formal transpose arithmetic and the duality obligation."""
 
-    Prediction (transport-to-transpose conjecture):
-      W_k(sl_N, f_lambda)^! = W_{k^v}(sl_N, f_{lambda^t})
-    where k^v = -k - 2N.
-    """
     lam = normalize_partition(partition)
     N = partition_size(lam)
-    lam_t = transpose_partition(lam)
-    k = sympify(level)
-    kv = hook_dual_level_sl_n(N, k)
-
-    source_c = krw_central_charge(lam, k)
-    dual_c = krw_central_charge(lam_t, kv)
-    source_kappa = ds_kappa_from_affine(lam, k)
-    dual_kappa = ds_kappa_from_affine(lam_t, kv)
-
-    is_self_t = (lam == lam_t)
-    self_dual_k = None
-    c_at_sd = None
-    if is_self_t:
-        # k^v = k => -k - 2N = k => k = -N
-        self_dual_k = Rational(-N)
-        c_at_sd = simplify(krw_central_charge(lam, self_dual_k))
-
+    level = sympify(level)
+    profile = verify_transport_to_transpose(lam, level)
+    fixed_level = Rational(-N)
     return KoszulDualIdentification(
         source_partition=lam,
-        source_level=k,
-        dual_partition=lam_t,
-        dual_level=kv,
+        source_level=level,
+        dual_partition=profile.transpose,
+        dual_level=profile.formal_reflected_level,
         N=N,
-        source_c=source_c,
-        dual_c=dual_c,
-        c_sum=simplify(source_c + dual_c),
-        source_kappa=source_kappa,
-        dual_kappa=dual_kappa,
-        kappa_sum=simplify(source_kappa + dual_kappa),
-        is_self_transpose=is_self_t,
-        self_dual_level=self_dual_k,
-        c_at_self_dual=c_at_sd,
+        source_central_charge=profile.source_central_charge,
+        dual_central_charge=profile.transpose_reflected_central_charge,
+        formal_central_sum=profile.formal_central_sum,
+        formal_central_sum_k_independent=profile.formal_central_sum_k_independent,
+        source_reciprocal_weight_diagnostic=profile.source_reciprocal_weight_diagnostic,
+        dual_reciprocal_weight_diagnostic=profile.transpose_reciprocal_weight_diagnostic,
+        source_rho=profile.source_rho,
+        dual_rho=profile.transpose_rho,
+        source_kappa=profile.source_kappa,
+        dual_kappa=profile.transpose_kappa,
+        modular_conductor=profile.modular_conductor,
+        is_self_transpose=profile.is_self_transpose,
+        formal_fixed_level=fixed_level,
+        self_dual_level=fixed_level if profile.is_self_transpose else None,
+        hasse_path_to_transpose=profile.hasse_path_to_transpose,
+        categorical_transport=profile.categorical_transport,
+        bar_compatibility=_conditional(
+            f"DS--bar compatibility along transpose path for {lam}",
+            H_DS_BAR,
+            H_TRANSPORT,
+        ),
+        koszul_duality=_conditional(
+            f"object-level Koszul duality between {lam} and {profile.transpose}",
+            H_KOSZUL,
+            H_DUALITY,
+        ),
+        ksdual_membership=_conditional(
+            f"KSDual membership for partition {lam}",
+            H_KSDUAL,
+        ),
     )
 
 
-# ---------------------------------------------------------------------------
-# Comprehensive verification
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class DSBarAudit:
+    r"""Exact regression checks and typed theorem-level claims."""
 
-def verify_ds_bar_commutation() -> Dict[str, bool]:
-    """Complete verification of DS-bar commutation and Koszul duality."""
-    k = Symbol('k')
-    results: Dict[str, bool] = {}
+    exact_checks: Tuple[Tuple[str, bool], ...]
+    claims: Tuple[ClaimPacket, ...]
 
-    # === sl_3, f_{(2,1)} = N=2 SCA ===
+    @property
+    def all_exact_checks_pass(self) -> bool:
+        return all(value for _, value in self.exact_checks)
 
-    # 1. Partition data
-    results["(2,1) is self-transpose"] = transpose_partition((2, 1)) == (2, 1)
+    @property
+    def exact_check_count(self) -> int:
+        return len(self.exact_checks)
 
-    # 2. Generator content
-    gen = w_algebra_generator_data((2, 1))
-    results["sl_3 minimal: 4 generators"] = gen.f_centralizer_dimension == 4
-    results["sl_3 minimal: 2 bosonic"] = gen.n_bosonic == 2
-    results["sl_3 minimal: 2 fermionic"] = gen.n_fermionic == 2
 
-    # 3. Generator conformal weights
-    weights = sorted([w for (_, w, _) in gen.strong_generators])
-    results["sl_3 minimal: weights = [1, 3/2, 3/2, 2]"] = (
-        weights == [Rational(1), Rational(3, 2), Rational(3, 2), Rational(2)]
+def verify_ds_bar_commutation() -> DSBarAudit:
+    r"""Audit exact DS input data and expose the open comparison surface."""
+
+    bp = bershadsky_polyakov_data(k)
+    bp_ds = ds_bar_commutation_check((2, 1), k)
+    hook_min = ds_bar_commutation_check((2, 1, 1), k)
+    hook_sub = ds_bar_commutation_check((3, 1), k)
+    bp_duality = koszul_dual_identification((2, 1), k)
+    hook_duality = koszul_dual_identification((2, 1, 1), k)
+    exact_checks = (
+        ("BP partition is self-transpose", transpose_partition((2, 1)) == (2, 1)),
+        ("BP has four strong generators", bp_ds.w_generators == 4),
+        ("BP strong generators are even", bp_ds.w_num_even == 4 and bp_ds.w_num_odd == 0),
+        (
+            "BP weights are 1,3/2,3/2,2",
+            bp_ds.w_generator_weights == (1, Rational(3, 2), Rational(3, 2), 2),
+        ),
+        (
+            "BP central charge uses the FKR convention",
+            simplify(
+                bp.central_charge + (2 * k + 3) * (3 * k + 1) / (k + 3)
+            ) == 0,
+        ),
+        ("BP formal reflected central sum is 50", simplify(bp.formal_central_sum - 50) == 0),
+        ("BP n_plus dimension is 3", bp_ds.ghost_dim == 3),
+        ("BP g_half dimension is 2", bp_ds.neutral_half_dimension == 2),
+        ("BP positive subalgebra is nonabelian", bp_ds.positive_subalgebra_is_abelian is False),
+        ("BP ghost constant is 2", bp_ds.ghost_constant_value == 2),
+        ("sl4 hook partitions transpose", transpose_partition((2, 1, 1)) == (3, 1)),
+        ("sl4 minimal generators are even", hook_min.w_num_even == 9 and hook_min.w_num_odd == 0),
+        ("sl4 subregular generators are even", hook_sub.w_num_even == 5 and hook_sub.w_num_odd == 0),
+        ("BP formal fixed level is -3", bp_duality.formal_fixed_level == -3),
+        ("sl4 formal reflected level is -k-8", simplify(hook_duality.dual_level + k + 8) == 0),
     )
-
-    # 4. Central charge (correct per-root-pair KRW formula)
-    c = krw_central_charge((2, 1), k)
-    # Correct KRW: c = 2 - 24*(k+1)^2/(k+3) (BP formula, verified K_BP=196)
-    c_expected = 2 - 24 * (k + 1)**2 / (k + 3)
-    results["sl_3 minimal: c = 2 - 24(k+1)^2/(k+3)"] = simplify(c - c_expected) == 0
-
-    # 5. Ghost constant
-    C_21 = ghost_constant((2, 1))
-    results["sl_3 C_{(2,1)} = 2"] = C_21 == 2
-
-    # 6. Kappa = rho * c = (1/6) * (2 - 24(k+1)^2/(k+3))
-    kappa_21 = ds_kappa_from_affine((2, 1), k)
-    kappa_expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
-    results["sl_3 minimal: kappa = rho*c (BP)"] = (
-        simplify(kappa_21 - kappa_expected) == 0
+    claims = (
+        bar_complex_n2_sca(k).higher_bar_cohomology,
+        bar_complex_n2_sca(k).pbw_collapse,
+        bp_ds.ds_bar_commutation,
+        bp_ds.koszulness,
+        bp_duality.categorical_transport,
+        bp_duality.koszul_duality,
+        hook_min.ds_bar_commutation,
+        hook_sub.ds_bar_commutation,
+        hook_duality.bar_compatibility,
+        hook_duality.koszul_duality,
     )
+    return DSBarAudit(exact_checks=exact_checks, claims=claims)
 
-    # 7. Kappa anti-symmetry (self-transpose: sum is k-independent)
-    kv = hook_dual_level_sl_n(3, k)
-    kappa_dual = ds_kappa_from_affine((2, 1), kv)
-    kappa_sum = simplify(kappa_21 + kappa_dual)
-    results["sl_3 minimal: kappa sum is k-independent"] = (
-        simplify(kappa_sum.diff(k)) == 0
-    )
-    # Kappa sum = 98/3 = rho*K_BP = (1/6)*196
-    results["sl_3 minimal: kappa sum = 98/3"] = (
-        simplify(kappa_sum - Rational(98, 3)) == 0
-    )
-    comp = complementarity_constant((2, 1))
-    results["sl_3 complementarity constant = -4"] = comp == -4
 
-    # 8. Self-dual level
-    # k^v = k => -k-6 = k => k = -3
-    results["sl_3 minimal: self-dual at k = -3"] = (
-        simplify(hook_dual_level_sl_n(3, Rational(-3)) - Rational(-3)) == 0
-    )
-    c_self_dual = simplify(krw_central_charge((2, 1), Rational(-3)))
-    results["sl_3 minimal: c at self-dual = -∞ (critical level)"] = (
-        # k = -3 is the critical level k = -h^v, so Sugawara is undefined.
-        # Actually c = 2 - 24/(k+3), at k=-3 denominator = 0
-        True  # Sugawara is undefined at critical level, as expected.
-    )
-
-    # 9. DS-bar commutation for sl_3
-    check_21 = ds_bar_commutation_check((2, 1), k)
-    results["sl_3 DS-bar: kappa commutes"] = check_21.kappa_commutes
-    results["sl_3 DS-bar: generators match"] = check_21.generators_match
-    results["sl_3 DS-bar: c threads"] = check_21.c_threads
-    results["sl_3 DS-bar: ghost dim"] = check_21.ghost_dim == ds_nilpotent_plus_dim((2, 1))
-    results["sl_3 DS-bar: ghost constant = 2"] = check_21.ghost_constant_value == 2
-
-    # 10. Bar complex structure
-    bar = bar_complex_n2_sca(k)
-    results["sl_3 bar: H^1 dim = 4"] = bar.h1_dim == 4
-    results["sl_3 bar: H^2 dim = 4"] = bar.h2_dim == 4
-    results["sl_3 bar: H^3 dim = 1"] = bar.h3_dim == 1
-    results["sl_3 bar: Euler char = 0"] = bar.euler_char == 0
-    results["sl_3 bar: is Koszul"] = bar.is_koszul
-
-    # 11. N=2 SCA OPE structure
-    sca = n2_sca_data(k)
-    c_sca = sca.central_charge
-    results["N=2 SCA: JJ pole = c/3"] = simplify(sca.jj_pole2 - c_sca / 3) == 0
-    results["N=2 SCA: GG pole3 = c/3"] = simplify(sca.gg_pole3 - c_sca / 3) == 0
-    results["N=2 SCA: TT pole4 = c/2"] = simplify(sca.tt_pole4 - c_sca / 2) == 0
-
-    # 12. Koszul dual identification (sl_3)
-    kd_21 = koszul_dual_identification((2, 1), k)
-    results["sl_3 Koszul dual: self-transpose"] = kd_21.is_self_transpose
-    results["sl_3 Koszul dual: dual partition = (2,1)"] = kd_21.dual_partition == (2, 1)
-    results["sl_3 Koszul dual: self-dual level = -3"] = kd_21.self_dual_level == -3
-    results["sl_3 Koszul dual: kappa sum = 98/3"] = simplify(kd_21.kappa_sum - Rational(98, 3)) == 0
-
-    # === sl_4, f_{(2,1,1)} <-> f_{(3,1)} ===
-
-    # 13. Partition data
-    results["(2,1,1)^t = (3,1)"] = transpose_partition((2, 1, 1)) == (3, 1)
-    results["(3,1)^t = (2,1,1)"] = transpose_partition((3, 1)) == (2, 1, 1)
-
-    # 14. DS-bar commutation for sl_4 minimal
-    check_211 = ds_bar_commutation_check((2, 1, 1), k)
-    results["sl_4 minimal DS-bar: kappa commutes"] = check_211.kappa_commutes
-    results["sl_4 minimal DS-bar: generators match"] = check_211.generators_match
-    results["sl_4 minimal DS-bar: c threads"] = check_211.c_threads
-
-    # 15. DS-bar commutation for sl_4 subregular
-    check_31 = ds_bar_commutation_check((3, 1), k)
-    results["sl_4 subregular DS-bar: kappa commutes"] = check_31.kappa_commutes
-    results["sl_4 subregular DS-bar: generators match"] = check_31.generators_match
-    results["sl_4 subregular DS-bar: c threads"] = check_31.c_threads
-
-    # 16. Cross-duality kappa check
-    kv4 = hook_dual_level_sl_n(4, k)
-    kappa_211 = ds_kappa_from_affine((2, 1, 1), k)
-    kappa_31_dual = ds_kappa_from_affine((3, 1), kv4)
-    ksum_hook = simplify(kappa_211 + kappa_31_dual)
-    # Hook pair (2,1,1)+(3,1) has different anomaly ratios:
-    # rho(2,1,1) = 11/6, rho(3,1) = 17/6 => kappa sum is k-dependent
-    results["sl_4 hook: kappa sum well-defined"] = ksum_hook is not None
-
-    # 17. Koszul dual identification (sl_4)
-    kd_211 = koszul_dual_identification((2, 1, 1), k)
-    results["sl_4 minimal: dual = (3,1)"] = kd_211.dual_partition == (3, 1)
-    results["sl_4 minimal: not self-transpose"] = not kd_211.is_self_transpose
-    results["sl_4 minimal: dual level = -k-8"] = simplify(kd_211.dual_level + k + 8) == 0
-
-    kd_31 = koszul_dual_identification((3, 1), k)
-    results["sl_4 subregular: dual = (2,1,1)"] = kd_31.dual_partition == (2, 1, 1)
-
-    # 18. Ghost constants
-    results["sl_4 C_{(2,1,1)} = 3"] = ghost_constant((2, 1, 1)) == 3
-    results["sl_4 C_{(3,1)} = 6"] = ghost_constant((3, 1)) == 6
-
-    # 19. Nilpotent dimensions
-    # n_+ has grade 1/2 (2 dirs: E_{13}, E_{32}) + grade 1 (1 dir: E_{12}) = 3
-    results["sl_3 (2,1) n_+ dim = 3"] = ds_nilpotent_plus_dim((2, 1)) == 3
-    results["sl_3 (2,1) g_{1/2} dim = 2"] = ds_nilpotent_half_dim((2, 1)) == 2
-
-    # 20. DS-bar for all hook partitions in sl_3..sl_5
-    for N in range(3, 6):
-        for r in range(1, N):
-            lam = tuple([N - r] + [1] * r)
-            lam = normalize_partition(lam)
-            check = ds_bar_commutation_check(lam, k)
-            key = f"sl_{N} ({','.join(str(x) for x in lam)})"
-            results[f"{key}: kappa commutes"] = check.kappa_commutes
-            results[f"{key}: c threads"] = check.c_threads
-
-    # 21. Complementarity for hook pairs sl_3..sl_5
-    # Self-transpose: kappa sum is k-independent
-    # Non-self-transpose: kappa sum is well-defined but k-dependent
-    for N in range(3, 6):
-        for r in range(1, N - 1):
-            lam = tuple([N - r] + [1] * r)
-            lam = normalize_partition(lam)
-            lam_t = transpose_partition(lam)
-            kappa_source = ds_kappa_from_affine(lam, k)
-            kappa_target = ds_kappa_from_affine(lam_t, hook_dual_level_sl_n(N, k))
-            s = simplify(kappa_source + kappa_target)
-            key = f"sl_{N} ({','.join(str(x) for x in lam)}) <-> ({','.join(str(x) for x in lam_t)})"
-            if lam == lam_t:
-                results[f"{key}: kappa sum k-indep"] = simplify(s.diff(k)) == 0
-            else:
-                results[f"{key}: kappa sum well-defined"] = s is not None
-
-    return results
+__all__ = [
+    "ClaimPacket",
+    "ClaimStatus",
+    "OpenInvariantError",
+    "N2SCAData",
+    "BershadskyPolyakovData",
+    "BarComplexData",
+    "DSBarCommutationData",
+    "KoszulDualIdentification",
+    "DSBarAudit",
+    "bershadsky_polyakov_data",
+    "n2_sca_data",
+    "bar_complex_n2_sca",
+    "dim_sl_n",
+    "affine_kappa_sl_n",
+    "affine_central_charge_sl_n",
+    "ds_good_grading_data",
+    "ds_nilpotent_plus_dim",
+    "ds_nilpotent_half_dim",
+    "ds_bar_commutation_check",
+    "sl3_minimal_data",
+    "sl4_hook_ds_bar_data",
+    "koszul_dual_identification",
+    "verify_ds_bar_commutation",
+]

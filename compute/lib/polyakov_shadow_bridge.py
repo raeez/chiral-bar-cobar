@@ -235,10 +235,8 @@ def kappa(family: str, **params) -> Fraction:
         rank = params.get("rank", 1)
         k = Fraction(params.get("k", 1))
         dim_g, h_dual = _lie_dim_hdual(lie_type, rank)
-        if k + h_dual == 0:
-            raise ValueError(
-                f"Critical level k = -{h_dual}: kappa undefined"
-            )
+        # The polynomial modular scalar has critical value zero; the
+        # Sugawara central charge and KZ/DS comparisons carry the pole.
         return Fraction(dim_g) * (k + h_dual) / (2 * h_dual)
 
     elif family == "betagamma":

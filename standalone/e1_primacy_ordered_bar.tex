@@ -226,12 +226,13 @@ Stasheff's associahedra $K_n$ \cite{Stasheff63} carry more
 information than the symmetric groups $\Sigma_n$, and the
 Getzler--Jones \cite{GJ94} theory of $\En$-operads makes $\Eone$ the
 lowest rung of a ladder whose every step is non-commutative. The
-second is representation-theoretic: the classical $r$-matrix of an
-affine Kac--Moody algebra at level~$k$ is the content of the
-degree-$2$ genus-$0$ Maurer--Cartan element on the ordered side, and
-its $\Sigma_2$-average recovers the degree-$2$ scalar shadow: for
-Heisenberg this is~$\kappa$, while for non-abelian affine Kac--Moody
-it is $\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^\vee)$, with the full
+second is representation-theoretic: the degree-$2$ genus-$0$ ordered
+Maurer--Cartan element contains $K_\cA^{\mathrm{coll}}$. Its homotopy
+coinvariant remains operator-valued, while
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$ gives
+$\kappa$ for Heisenberg and
+$\kappa_{\mathrm{dp}}=k\dim(\fg)/(2h^\vee)$ for non-abelian affine
+Kac--Moody, with the full
 $\kappa$ obtained after adding the Sugawara shift $\dim(\fg)/2$. The
 third is operadic--holographic: the chiral Deligne--Tamarkin
 theorem (Theorem~\ref{thm:swiss-cheese-chiral-DT-standalone}
@@ -278,9 +279,11 @@ Ran-space blow-up along ordered collision diagonals.
 
 % FOUR OBJECTS:
 % 1. B(A) = bar coalgebra = T^c(s^{-1} A-bar) with deconcatenation + twist
-% 2. A^i = H^*(B(A)) = dual coalgebra (Koszul cohomology of bar)
-% 3. A^! = ((A^i)^v) = dual ALGEBRA (linear or Verdier dual)
-% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains = bulk
+% 2. A^i = C_X(s^{-1}V,s^{-2}R), with q_A:A^i -> B_X(A)
+% 3. H^*(B_X(A)) = bar cohomology; H(q_A) is the Koszul comparison
+% 4. K_X(A) = D_Ran B_X(A), with nu_A:K_X(A) -> A^!
+% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains
+%    = algebraic closed-sector actor; physical bulk requires OCA data
 
 \subsection{Summary of results}
 
@@ -293,7 +296,8 @@ The main results are:
   (Theorem~\ref{thm:e1-mc}).
 
 \item The \emph{averaging map} $\av_R\colon \gEone
-  \twoheadrightarrow \gmod$ as a surjective dg~Lie morphism
+  \twoheadrightarrow \gmod$ as a surjective dg~Lie morphism under the
+  strong-unitary descent and Reynolds-kernel package
   (Theorem~\ref{thm:av-surjective}), with the projection
   formula $\av_R(\Theta^{\Eone}_\cA) = \Theta_\cA$
   (Theorem~\ref{thm:av-mc-projection}).
@@ -755,7 +759,7 @@ boundary identity is the classical Yang--Baxter equation.
 \label{def:averaging-map}
 With the notation of Definition~\ref{def:e1-convolution}, and after a
 strong-unitary \(R\)-twisted descent datum has been fixed, the
-\emph{averaging map} is the dg~Lie morphism
+\emph{averaging map} is the chain projection
 \begin{equation}\label{eq:av-def}
   \av_R\colon \gEone \twoheadrightarrow \gmod,
   \qquad
@@ -768,28 +772,46 @@ strong-unitary \(R\)-twisted descent datum has been fixed, the
 where
 $\iota^{\mathrm{rib}}_{g,n}\colon \cM_\Com(g,n)
 \to \cM_\Ass(g,n)$
-is any section of the ribbon-forgetting quotient
-(Theorem~\ref{thm:fass-to-fcom}). The result is
-$\Sigma_n$-invariant by construction and independent of the choice
-of section up to boundary terms. This is the Reynolds operator for
-the external $\Sigma_n$-action: it takes external coinvariants
-after pullback along~$\iota^{\mathrm{rib}}$.
+is a chosen finite-window chain section of the ribbon-forgetting
+comparison from Theorem~\ref{thm:fass-to-fcom}. The result is
+$\Sigma_n$-invariant by construction. Changing the section changes
+the representative by a boundary only on the fixed comparison window;
+without that window and homotopy the displayed average is merely a
+linear projection. This is the Reynolds operator for the external
+$\Sigma_n$-action: it takes external coinvariants after pullback
+along~$\iota^{\mathrm{rib}}$.
+When the completed Reynolds kernel satisfies the bracket-ideal
+condition $[\ker(\av_R),\ker(\av_R)]\subseteq\ker(\av_R)$, this chain
+projection is a dg~Lie morphism.
 \end{definition}
 
 \begin{theorem}[$\av_R$ is a surjective dg~Lie morphism]
 \label{thm:av-surjective}
-Under the fixed strong-unitary \(R\)-twisted descent datum, the
-averaging map
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+convolution presentation, Beilinson levels~$2$ and~$5$, hypothesis
+package: finite-window chain section of the ribbon-forgetting
+comparison, strong-unitary \(R\)-twisted descent, completed
+Reynolds-kernel bracket ideal, and the coefficient-multiplication
+package of the universal conductor\textup{)}.
+Under the fixed strong-unitary \(R\)-twisted descent datum and the
+completed Reynolds-kernel bracket-ideal condition, the averaging map
 $\av_R\colon \gEone \twoheadrightarrow \gmod$
 is a surjective morphism of dg~Lie algebras. Without this descent
-datum there is only the ordered dg Lie algebra; no morphism to
+datum, section/homotopy datum, coefficient multiplication, and kernel
+condition there is only the ordered dg Lie algebra together with, at
+most, a chain projection to coinvariants; no dg~Lie morphism to
 \(\gmod\) is asserted.
 \end{theorem}
 
 \begin{proof}
-Surjectivity: every $\Sigma_n$-invariant homomorphism from
-$\cM_\Com(g,n)$ lifts, via any section of the ribbon-forgetting
-quotient, to a homomorphism from $\cM_\Ass(g,n)$.
+Surjectivity is a finite-window statement. On the chosen comparison
+window, the chain section
+\(\iota^{\mathrm{rib}}_{g,n}\) lifts a symmetric
+\(\Sigma_n\)-invariant homomorphism from \(\cM_\Com(g,n)\) to a
+ribbon representative in \(\cM_\Ass(g,n)\), and the Reynolds average
+returns the original invariant class. A different section gives the
+same target class only after the stated chain homotopy.
 Compatibility with the differential: the ribbon edge-contraction
 differential descends to the symmetric edge-contraction differential
 under \emph{$R$-twisted} external $\Sigma_n$-coinvariants
@@ -798,10 +820,14 @@ pole-free subclass ($R=\id$), reducing to naive coinvariants, and
 carries the Heisenberg monodromy $R(z) = \exp(k\hbar/z)$ on curved
 families. Under this twist the comparison between ribbon and
 commutative Feynman transforms~\cite{GK98} gives the differential
-compatibility. Compatibility with the Lie bracket:
-symmetrisation commutes with the convolution bracket on cooperadic
-Homs because operad composition in $\FMAss$ is
-$\Sigma_n$-equivariant.
+compatibility. Compatibility with the Lie bracket: equivariance of
+operad composition in $\FMAss$ gives the descended bracket on symmetric
+invariants after the conductor's coefficient-multiplication package is
+supplied, and the Reynolds-kernel bracket-ideal condition is exactly
+what prevents a bracket of two killed ordered components from
+reappearing in the symmetric quotient. This is the finite-window
+criterion of Theorem~\ref{thm:uc-r-twisted-dg-lie-descent}, written in
+the \(E_1\)-primacy notation.
 \end{proof}
 
 \subsection{Degree-$2$ averaging: the $r$-matrix projects to
@@ -858,22 +884,20 @@ Sugawara simple-pole contribution remains \( \dim(\fg)/2 \).
 The principal families:
 \begin{itemize}
 \item Heisenberg $\cH_k$:
-  $r(z) = k/z$,
+  $K_{\cH_k}^{\mathrm{coll}}(z)=k\Omega_{\mathcal H}/z$,
   $\kappa(\cH_k) = k$.
 
 \item Affine Kac--Moody $\widehat{\fg}_k$:
-  $r(z) = k\,\Omega_\fg/z$
-  (the level~$k$ survives $d\log$ absorption; at $k=0$ the
-  $r$-matrix vanishes identically),
-  $\av(r(z)) = \kappa_{\mathrm{dp}}
+  $K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_\fg/z$,
+  $\tau_{k,\fg}^{\mathrm{res}}q_2(K_{k,\fg}^{\mathrm{coll}})
+  = \kappa_{\mathrm{dp}}
   = k\,\dim(\fg)/(2h^\vee)$,
   and
   $\kappa(\widehat{\fg}_k)
   = \dim(\fg)(k+h^\vee)/(2h^\vee)$.
 
 \item Virasoro $\Vir_c$:
-  $r(z) = (c/2)/z^3 + 2T/z$
-  (cubic plus simple, not quartic),
+  $K_{\Vir_c}^{\mathrm{coll}}(z)=(c/2)/z^3+2T/z$,
   and $\kappa(\Vir_c) = c/2$.
 \end{itemize}
 \end{remark}
@@ -1024,7 +1048,9 @@ is intrinsic.
 
 Part~(iv) follows from Drinfeld's theorem~\cite{Drinfeld91} on the
 $\GRT_1$-torsor structure of associators, together with the
-Etingof--Kazhdan quantisation theorem~\cite{EK96}.
+Etingof--Kazhdan quantisation theorem~\cite{EK96} after the source
+Lie bialgebra, \(\hbar\)-adic topology, associator, and
+QUE/quasi-Hopf target are fixed.
 \end{proof}
 
 \begin{proposition}[Non-splitting at genus~$1$]
@@ -1099,7 +1125,8 @@ Let $\cA$ be a cyclic chiral algebra on~$X$.
   The averaging map
   $\av_R\colon \gEone \twoheadrightarrow \gmod$
   is a surjective dg~Lie morphism after a strong-unitary
-  \(R\)-twisted descent datum has been fixed.
+  \(R\)-twisted descent datum and the completed Reynolds-kernel
+  bracket-ideal condition have been fixed.
 
 \item \textup{(MC projection.)}
   $\av_R$ sends
@@ -1110,8 +1137,9 @@ Let $\cA$ be a cyclic chiral algebra on~$X$.
   $R$-matrix tower $(r(z), r_3, r_4, \ldots)$.
 
 \item \textup{(Bracket preservation.)}
-  $\av_R$ preserves the dg~Lie bracket by
-  $\Sigma_n$-equivariance of the operad composition maps.
+  $\av_R$ preserves the dg~Lie bracket by the combination of
+  $\Sigma_n$-equivariance of the operad composition maps and the
+  Reynolds-kernel bracket-ideal condition.
 
 \item \textup{(Non-splitting.)}
   For non-abelian families with a non-zero degree-$3$ associator
@@ -1142,9 +1170,10 @@ Reynolds operator
 $\phi \mapsto (1/n!)\sum_\sigma \sigma \cdot \phi$; surjectivity
 follows because $\av$ restricts to the identity on
 $\Sigma_n$-invariant elements, which span the target~$\gmod$.
-The bracket is preserved because operad composition in $\FMAss$ is
-$\Sigma_n$-equivariant: coinvariant projection converts
-$T^c$-convolution to $\Sym^c$-convolution
+Equivariance of operad composition in $\FMAss$ gives the chain-level
+coinvariant descent; the Reynolds-kernel bracket-ideal condition is the
+extra hypothesis that makes $\av_R$ a dg~Lie morphism. Together they
+convert $T^c$-convolution to $\Sym^c$-convolution
 (Theorem~\ref{thm:fass-to-fcom}).
 
 For~(iv), the antisymmetric linearised associator
@@ -1250,9 +1279,10 @@ $\Phi \colon (B, \cA, \mu) \to U(\cA)$ over $\id_\cA$.
 
 \begin{proof}[Citation]
 This is Volume~I, Chapter on the chiral derived centre, the chiral
-analogue of the Voronov Swiss-cheese formality
-theorem~\cite{Voronov99} and the Kontsevich--Soibelman Deligne
-conjecture~\cite{KS00}. Concretely, $\Phi(b)$ is the chiral
+analogue of the Voronov Swiss-cheese Deligne
+conjecture~\cite{Voronov99} and the Kontsevich--Soibelman Deligne
+conjecture~\cite{KS00}; the Swiss-cheese operad itself is not
+formal (Livernet), and the argument routes around formality. Concretely, $\Phi(b)$ is the chiral
 Hochschild cochain
 \[
   \Phi(b)_n(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1})
@@ -1420,12 +1450,13 @@ obtained from the genus-refined degree-$2$ projection of the $\Eone$
 Maurer--Cartan element is the $\Eone$ degree-$2$ characteristic
 package of~$\cA$. It is universal, additive, antisymmetric under
 opposite-duality, and satisfies
-$\av(r_0(z)) = \kappa(\cA)$ on abelian families, while for
+$\tau_{\cA,2}^{\mathrm{res}}q_2(r_0(z))=\kappa(\cA)$ on abelian families, while for
 non-abelian affine Kac--Moody
-$\av(r_0(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+$\tau_{\cA,2}^{\mathrm{res}}q_2(r_0(z))=\kappa_{\mathrm{dp}}(\cA)$ and
 $\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
-The coinvariant recovery
-$\av(R^{\Eone,\mathrm{bin}}) = \sum \hbar^{2g}\, F_g^{(2)}$
+The coefficientwise normalized trace
+$\tau_{\cA,2}^{\mathrm{res}}q_2(R^{\Eone,\mathrm{bin}})
+=\sum \hbar^{2g}F_g^{(2)}$
 is the scalar genus-$2$ modular characteristic series of
 Theorem~D.
 \end{theorem}
@@ -1460,12 +1491,11 @@ number per family, and the family formulas are distinct: for $\cW_N$
 the harmonic number is $H_N = \sum_{j=1}^N 1/j$ and must not be
 copied from a different family. Its degree-$2$ lift is a meromorphic
 function of a single variable, the collision coordinate~$z$. The
-statement $\av(r(z)) = \kappa$ says this exactly for Heisenberg,
-while for non-abelian affine Kac--Moody the same averaging recovers
-only $\kappa_{\mathrm{dp}}$ and the full $\kappa$ adds the Sugawara
-shift $\dim(\fg)/2$. The scalar shadow is still the
-$\Sigma_2$-average of a function. This is a strict projection;
-the full function $r(z)$ carries information about the braiding, the
+identity $\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})
+=\kappa$ holds for Heisenberg. On non-abelian affine Kac--Moody the
+trace is $\kappa_{\mathrm{dp}}$ and the Sugawara term
+$\dim(\fg)/2$ completes $\kappa$. The full operator
+$q_2(K_\cA^{\mathrm{coll}})$ carries information about the braiding, the
 quantum group, and the line-operator algebra that no scalar invariant
 can see.
 \end{remark}
@@ -1944,8 +1974,10 @@ illustrate every step of the $\Eone$ primacy thesis.
 
 For $\cH_k$ with OPE $J(z)J(w) \sim k/(z-w)^2$:
 \begin{itemize}
-\item $r(z) = k/z$ (equation~\eqref{eq:heis-r-matrix}).
-\item $\av(r(z)) = \kappa(\cH_k) = k$
+\item $K_{\cH_k}^{\mathrm{coll}}(z)=k\Omega_{\mathcal H}/z$
+  (equation~\eqref{eq:heis-r-matrix}).
+\item $\tau_{\cH_k,2}^{\mathrm{res}}q_2(K_{\cH_k}^{\mathrm{coll}})
+  =\kappa(\cH_k)=k$
   (the $\Sigma_2$-average of $k/z$ against $d\log(z)$ extracts
   the residue $k$, which is the full modular characteristic).
 \item $\ker(\av_2) = 0$ (one-dimensional representation).
@@ -2006,11 +2038,11 @@ No Drinfeld associator appears.
 For $\widehat{\fg}_k$ with $\fg$ simple, $\dim(\fg) = d$,
 $h^\vee$ the dual Coxeter number:
 \begin{itemize}
-\item $r(z) = k\,\Omega_\fg/z$
-  (equation~\eqref{eq:km-r-matrix}; trace-form convention;
-  at $k=0$ the $r$-matrix vanishes identically).
+\item $K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_\fg/z$
+  (equation~\eqref{eq:km-r-matrix}; trace-form convention).
 
-\item $\av(r(z)) = \kappa_{\mathrm{dp}}
+\item $\tau_{k,\fg}^{\mathrm{res}}q_2(K_{k,\fg}^{\mathrm{coll}})
+  = \kappa_{\mathrm{dp}}
   = k\,d/(2h^\vee)$ (double-pole channel).
 
 \item $\kappa(\widehat{\fg}_k) = d(k+h^\vee)/(2h^\vee)$
@@ -2212,7 +2244,7 @@ determine each other: the $R$-matrix, the $\Ainf$ structure, and the
 spectral coproduct. This section records the equivalence theorem,
 extends it to the $\mathfrak{gl}_N$ tower for all $N \geq 1$,
 exhibits the universal Miura coefficient, and recovers the
-Verlinde formula from ordered chiral homology.
+Verlinde formula through the ordered/TUY comparison lane.
 
 \subsection{The equivalence theorem}
 
@@ -2327,13 +2359,16 @@ gives $\Delta_z(T(u)) = T(u) \otimes T(u-z)$, and the
 coefficient of $z^{-1}$ in the cross-term recovers $r(z)$.
 
 The equivalence holds up to the choice of Drinfeld associator
-$\Phi$: the cohomological derived centre is
-associator-independent (proved for $\mathfrak{sl}_2$: the $\GRT_1$
-action shifts the degree-$3$ obstruction class by coboundaries),
-while the cochain-level derived centre is
-associator-dependent. Bar-side invariants ($\kappa$, shadow tower)
-are associator-free; cobar-side and coproduct-side depend
-on~$\Phi$. See~\cite[Chapter~9]{Lor26} for the full proof.
+$\Phi$. For $\mathfrak{sl}_2$, the cohomological bar-shadow is
+associator-independent: the $\GRT_1$ action shifts the degree-$3$
+obstruction class by coboundaries. For general $\fg$ this is a
+comparison hypothesis, not a theorem forced by the existence of the
+associator torsor. Bar-side invariants computed without the
+coproduct, such as $\kappa$ and the finite shadow tower, are
+associator-free; cobar-side and coproduct-side data depend on~$\Phi$.
+No categorical modular datum or Drinfeld-centre object is claimed to
+be $\GRT_1$-trivial from this argument. See~\cite[Chapter~9]{Lor26}
+for the full proof in the verified cases.
 \end{proof}
 
 \begin{remark}[Verification scope]
@@ -2490,26 +2525,37 @@ breaks the degeneracy: $1/3 \neq 2/3$.
 \subsection{Verlinde recovery}
 
 At integer level $k \geq 1$, the ordered chiral homology of
-$V_k(\mathfrak{sl}_2)$ on a genus-$g$ curve recovers the
-Verlinde formula.
+$V_k(\mathfrak{sl}_2)$ on a genus-$g$ curve reaches the
+TUY/Hitchin conformal-block sheaf only through the ordered-to-TUY
+comparison morphism.  After integrable truncation, boundary sewing,
+projectively flat connection, and determinant-anomaly matching are
+supplied, that target has the Verlinde rank.
 
 \begin{proposition}[Verlinde formula from ordered chiral homology]
 \label{prop:verlinde-standalone}
+\ClaimStatusConditional
+Type signature: \textup{(}Open quadrant, ordered-to-symmetric
+chiral-homology/conformal-block comparison presentation, Beilinson
+levels~$2$ and~$5$, hypothesis package: positive integral
+\(\widehat{\mathfrak{sl}}_2\) level, TUY/Hitchin finite-rank
+conformal-block sheaf, integrable-module truncation, KZB
+projectively flat connection, boundary sewing, determinant-anomaly
+matching, and the ordered-chain-to-TUY comparison morphism\textup{)}.
 Let $k \geq 1$ be a positive integer and
 $S_{jl} = \sqrt{2/(k+2)}\,\sin(\pi(j+1)(l+1)/(k+2))$
 the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
 level~$k$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Genus~$0$.)} The ordered chiral homology
-  recovers the unique vacuum:
+\item \textup{(Genus~$0$.)} Under the ordered-chain-to-TUY
+  comparison, the target is the unique vacuum:
   \begin{equation}\label{eq:verlinde-g0-standalone}
     Z_0(k)
     \;=\;
     \sum_{j=0}^{k} S_{0j}^2 \;=\; 1.
   \end{equation}
 
-\item \textup{(Genus~$1$.)} The ordered chiral homology
-  recovers the number of integrable representations:
+\item \textup{(Genus~$1$.)} Under the same comparison, the target
+  rank is the number of integrable representations:
   \begin{equation}\label{eq:verlinde-g1-standalone}
     Z_1(k) \;=\; \sum_{j=0}^{k} S_{0j}^0 \;=\; k+1.
   \end{equation}
@@ -2525,8 +2571,9 @@ level~$k$.
   $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
 
 \item \textup{(Handle attachment.)}
-  The ordered bar factorisation under non-separating sewing
-  recovers the TQFT handle-attachment formula: each
+  TUY non-separating factorisation, compared with ordered sewing
+  under the stated package, gives the TQFT handle-attachment formula:
+  each
   isospin channel $j$ contributes $H_j = S_{0j}^{-2}$, so
   \begin{equation}\label{eq:handle-standalone}
     Z_{g+1}(k)
@@ -2539,14 +2586,13 @@ level~$k$.
 \end{proposition}
 
 \begin{proof}
-The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$ on
-$\Sigma_g$ is computed using the KZ local system of
-Section~\ref{sec:heis-km}. At integer level, the representation
-category of $U_q(\mathfrak{sl}_2)$ at $q = e^{\pi i/(k+2)}$ is
-semisimple with $k + 1$ integrable modules $V_0, \ldots, V_k$.
-The KZ local system has finite monodromy, and the ordered bar
-complex factorises over the handle-sewing boundary strata
-of $\overline\cM_g$.
+On $\Sigma_g$, the ordered chain model attached to
+$V_k(\mathfrak{sl}_2)$ supplies the KZ local-system side of the comparison in
+Section~\ref{sec:heis-km}. At integer level, the integrable quotient
+of the root-of-unity \(U_q(\mathfrak{sl}_2)\) theory has
+$k + 1$ simple channels $V_0, \ldots, V_k$.  The TUY/Hitchin target is
+finite rank, and ordered sewing agrees with TUY sewing only under the
+comparison package stated above.
 
 At genus~$0$: unitarity of the modular $S$-matrix gives
 $\sum_l S_{0l}\,\overline{S_{0l}} = 1$; for the self-dual
@@ -2560,9 +2606,9 @@ the Zhu algebra $A(V_k(\mathfrak{sl}_2))
 \cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$.
 At genus $g \geq 2$: each isospin channel $j$ contributes
 $S_{0j}^{2 - 2g}$ by iterating the handle-attachment formula
-$g - 1$ times from $Z_1 = k + 1$, verifying factorisation of
-the ordered chiral homology under the separating and
-non-separating sewing maps.
+$g - 1$ times from $Z_1 = k + 1$, verifying TUY factorisation and the
+ordered sewing comparison under the separating and non-separating
+sewing maps.
 \end{proof}
 
 \subsection{The three tiers}
@@ -2594,8 +2640,9 @@ the equivalence theorem.
   $X^{(n)}$ (Theorem~\ref{thm:formality-failure-standalone}).
   The symmetric bar does not exist. The ordered bar is the only
   available construction, and the equivalence is the chiral
-  analogue of the Etingof--Kazhdan quantisation
-  theorem~\cite{EK96, EK00}.
+  analogue of the Etingof--Kazhdan quantisation theorem only after
+  the source Lie bialgebra, \(\hbar\)-adic topology, associator, and
+  QUE/quasi-Hopf target are fixed~\cite{EK96, EK00}.
 \end{enumerate}
 
 \bigskip
@@ -2606,10 +2653,11 @@ algebra: it records the full perturbative content as ordered
 collision data, and the bar-cobar inversion recovers the algebra
 from its logarithm. The symmetric bar is the $\Sigma_n$-invariant
 trace of this logarithm: a scalar shadow that retains
-$\kappa(\cA)$ but discards the $R$-matrix, the KZ associator, and
-every braid-group representation that makes the $\Eone$ theory
-strictly richer. The averaging map $\av_R$ is the sole information
-loss in the passage from the $\Eone$ primitive to the
+$\kappa(\cA)$ while the formal conductor fibre records the
+non-coinvariant part of the $R$-matrix, the KZ associator, and every
+braid-group representation that makes the $\Eone$ theory strictly
+richer. The averaging map $\av_R$ is the typed information-loss
+descent in the passage from the $\Eone$ primitive to the
 $E_\infty$ shadow. The five theorems of modular Koszul duality are
 the invariants that survive this loss: they are projections of a
 richer $\Eone$ structure --- the operadic circle, the chiral

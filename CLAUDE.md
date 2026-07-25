@@ -37,9 +37,10 @@ $(X, D, \tau)$:
 factorisation dg-category C^op on (X, D, τ)        [level 0: primitive]
         ↓  choose vacuum b ∈ C^op
 chart algebra  A_b = End_C(b)                       [level 1: chart]
-        ↓  Theorem A — chiral Koszul reflection K² ≃ id
+        ↓  Theorem A — reconstruction Ω_X B_X(A_b) ≃ A_b;
+           Verdier branch K_X(A_b) = D_Ran B_X(A_b)
 bar / twisting coalgebra  B(A_b) = T^c(s^{-1} Ā_b)  [level 2: twisting]
-        ↓  Theorem H — Hochschild concentration ⊂ {0,1,2}
+        ↓  Theorem H — family retract H_H(A_b;S) computes support in S
 derived chiral centre  Z^der_ch(A_b) ≃ ChirHoch^•   [level 3: BULK]
         ↓
 line / brane operators                              [level 4: operator]
@@ -51,10 +52,13 @@ Each forgetful step has a **reconstruction theorem** with named
 hypothesis package: Morita (1↔0), Theorem A (1↔2), Theorem H / B
 (1→3), Drinfeld-double (4→3), modular reconstruction (5→4).
 
-**KSDual** is the $\mathbb{Z}/2$-fixed sublocus under chiral /
-antichiral involution $A \mapsto A^!$. On KSDual, Theorem A is an
-equivalence (not just adjunction with comparison map), Theorem H is
-exact in $\{0,1,2\}$, the five-archetype dichotomy stabilises, and the
+**KSDual** is the $\mathbb{Z}/2$-fixed sublocus computed in the
+finite-type curved Verdier--Koszul ambient and intersected with the
+uncurved Koszul locus. On admissible KSDual, Theorem A is an
+equivalence on the chart-side bar--cobar lane; Theorem H remains
+conditional on its \(H_H\) package; the archetype label is rigid on the
+actual fixed locus; scalar anti-diagonal orbit pairs form a separate
+trace surface; and the
 Universal Trace Identity is the equivariant signature.
 
 **Vertical holographic equivalences** to Vols II / III at every level:
@@ -120,29 +124,37 @@ $\{\kappa_{\mathrm{cat}},\ \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},\
 
 | | Statement | Level | Hypothesis package |
 |---|---|---|---|
-| **A** | $K^2 \simeq \mathrm{id}$ on $\mathrm{Kosz}(X)$ | 1 ↔ 2 | augmented + complete + finite-dim graded |
-| **B** | $\Omega_X(B_X(C)) \xrightarrow{\sim} C$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ | 1 → 3 | Koszul locus |
-| **C** | $K^\kappa(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{alg}}(A_b)$ in family-stratum ceiling | 5 (per stratum) | five $\kappa$-measurements per family; collapse pattern; algebra-level Verdier sum, distinct from $\mathcal N(A_b)$ |
-| **D** | $\mathrm{obs}_g = \kappa \cdot \lambda_g$ | 4 (on $\overline{M}_{g,n}$) | $H^*(\overline{M}_{g,n})$ class |
-| **H** | $\mathrm{ChirHoch}^\bullet \subset \{0,1,2\}$ | 3 | finiteness + completion (Class M needs completed/pro/$J$-adic) |
+| **A** | enhanced associative bar--cobar equivalence in the pro-nilpotent Francis--Gaitsgory Ran ambient, hence universal reconstruction $\Omega_XB_X(A_b)\xrightarrow{\sim}A_b$; factorization restriction and chain realization on their named packages; Verdier algebra $K_X(A_b)=\mathbb D_{\operatorname{Ran}}B_X(A_b)$ on the dualizable Ran surface | 1 ↔ 2 | augmented Ran algebra / conilpotent Ran coalgebra; $H_{\mathrm{fact}}$ for factorization closure; $H_{\mathrm{conv}}$ for completed chain realization; $H_{\mathrm{VD}}$ for Verdier transport and biduality |
+| **B** | quadratic Koszul recognition for a chosen presentation $A_b=T_X(V)/(R)$: the canonical comparison $q_{A_b}\colon A_b^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\to B_X(A_b)$ is a quasi-isomorphism, equivalently $\Omega_X(A_b^{\mathrm i})\to A_b$ is a quasi-isomorphism | 1 ↔ 2 | connected positive-weight quadratic presentation; canonical twisting morphism; finite-window comparison; exhaustive complete filtrations, collectively $H_{\mathrm{CL}}(A_b,A_b^{\mathrm i},\tau_{\mathrm i})$; the detecting $E_2$-collapse formulation additionally carries $H_{\mathrm{PBW}}^{\mathrm{det}}$ |
+| **C** | C0 identifies the degree-zero strict-flat fibre with the ordinary centre local system $\mathcal Z(A_b)$; C1 splits $\mathbf C_g(A_b)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A_b))$ by the represented Verdier involution; a supplied brace comparison $\iota_Z^{\mathrm{der}}$ connects the Theorem H derived centre to this object after $H^0$ and the flat fibre-centre comparison; the scalar ceiling $K^\kappa(A_b)=\kappa(A_b)+\kappa^!_{\mathrm{alg}}(A_b)$ is the normalized trace shadow of C1 together with Theorem D; C2 is the separate shifted-symplectic upgrade | 3 and 5 (strict-flat centre-local-system cohomology, then modular trace per stratum) | C0 strict flat fibre-centre comparison; C1 represented Verdier involution + perfectness + nondegenerate anti-invariant pairing; $\iota_Z^{\mathrm{der}}$ and its $H^0$ comparison when Theorems C and H are related; C2 shifted-symplectic/BV package when explicitly supplied; five $\kappa$-measurements per family; algebra-level Verdier sum distinct from $\mathcal N(A_b)$ |
+| **D** | native class $\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\operatorname{Def}_g)$ for $g\ge2$; normalized pointed genus-one trace $\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}=+\kappa\lambda_1$; virtual object $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ and signed Hodge character $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$; graph scalar $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$ | 4--5 (deformation class, $K$-realization, Hodge character, and graph trace on their stable bases) | $H_D^1$ for the pointed loop trace; $H_D^K$ for the perfect virtual object; $H_D^{\mathrm{tr}}$ for deformation-to-$K$ comparison; $H_D^{\mathrm{graph}}$ for the stable-graph functional |
+| **H** | for each family datum $H_H(A_b;S)$, a strong deformation retract identifies $C^\bullet_{\mathrm{ch}}(A_b,A_b)=R\!\operatorname{Hom}_{A_b^e}(A_b,A_b)$ with a complete model supported in $S$, hence $\operatorname{Supp}\mathrm{ChirHoch}^\bullet(A_b)\subseteq S$ | 3 (derived chiral centre) | complete chart model; family support model; strong deformation retract; filtration convergence; ordered-to-symmetric comparison; a bar presentation additionally carries $\operatorname{Conv}(B_X(A_b),A_b)\xrightarrow{\sim}C^\bullet_{\mathrm{ch}}(A_b,A_b)$; BDSK bounded calculations enter through a named bounded-to-chart quasi-isomorphism |
 
-**Universal chain-homotopy** (load-bearing, connects Theorem A to
-Theorem C): $h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$ where
-$\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$ is the
-Verdier-Ran-on-bar norm at level 2 (Convention
-`conv:A-two-kappa-shriek` in `theorem_A_infinity_2.tex`). This is
-distinct from the algebra-level scalar Verdier sum $K^\kappa(A_b)$
-of `master_concordance.tex`; the two coincide only on class B (Mukai
-conductor = 8).
-Archetype witnesses: $h_G$ trivial; $h_L$ Sugawara $1/(2(k+h^\vee))$
-(diverges at critical level); $h_C$ free-field OPE; $h_M$
-weight-completed Felder BRST (Zamolodchikov norm $c(5c+22)/10$,
-which vanishes — and so $h_M$ diverges — at $c=0$ and $c=-22/5$
-Yang–Lee). The Borel-Riccati pole at $c=-218/45$ is a *separate*
-singularity (the secondary Borel-resummation pole of the shadow
-tower's radius $|\omega|^2 = c^2(5c+22)/[4(45c+218)]$); the
-Zamolodchikov norm at $c=-218/45$ evaluates to the finite value
-$436/405$, so the chain homotopy is finite there.
+**Family chain-rescaling problems** (the comparison surface joining
+Theorems A, C, and D).  Given chain maps
+$(\iota_A,p_A)$ and an operator $h_A$ satisfying
+\[
+ d_Ah_A+h_Ad_A
+ =\nu_A(\mathrm{id}_{C_A}-\iota_Ap_A),
+\]
+the rescaled operator $\nu_A^{-1}h_A$ is a contracting homotopy for
+$\nu_A\in k^\times$.  This elementary identity becomes a theorem
+about a family after $(\iota_A,p_A,h_A,\nu_A)$ have been constructed
+on the same factorization bar--cobar complex.  The five candidate
+scalars
+\[
+\{1,\;2(k+h^\vee),\;1,\;c(5c+22)/10,\;8\}
+\]
+therefore define five construction problems.  A further chain map to
+the scalar trace complex is the datum identifying $\nu_A$ with the
+algebra-level Verdier sum
+$K^\kappa(A)=\kappa(A)+\kappa(A^!)$.
+
+The Virasoro scalar $c(5c+22)/10$ vanishes at $c=0$ and
+$c=-22/5$.  The weighted-Riccati generating series carries the
+separate branch radius
+$|\omega|^2=c^2(5c+22)/[4(45c+218)]$ and branch collision
+$c=-218/45$, where the Zamolodchikov norm equals $436/405$.
 $h_B$ Mukai-K3 Heisenberg via Bruinier–Heegner Chern-class reciprocity.
 
 Three volumes: Vol I (this repo, ~2,700pp), Vol II
@@ -462,21 +474,23 @@ Memory is for cross-conversation context only.
 
 - $\kappa(V_k(\mathfrak{g})) = \dim(\mathfrak{g})(k+h^\vee)/(2h^\vee)$ (affine KM, trace form).
 - $\kappa(\mathrm{Vir}_c) = c/2$. $\kappa(\mathcal{H}_k) = k$. $\kappa(\mathcal{W}_N) = c(H_N - 1)$, $H_N = \sum_{j=1}^N 1/j$.
-- Virasoro shadow: $S_2 = c/2$, $S_3 = 2$, $S_4 = 10/[c(5c+22)]$, $S_5 = -48/[c^2(5c+22)]$, $S_6 = 80(45c+193)/[3c^3(5c+22)^2]$. Borel radius $|\omega|^2(c) = c^2(5c+22) / [4(45c+218)]$, Stokes pole $c_S = -218/45$.
-- Zamolodchikov norm: $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ for $\Lambda = {:}TT{:} - (3/10)\partial^2 T$.
+- Virasoro exact local datum: $\langle\Lambda|\Lambda\rangle=c(5c+22)/10$ for $\Lambda={:}TT{:}-(3/10)\partial^2T$.  Higher scalar coordinates are defined by an ordered residue package $\mathsf H_{\mathrm{res}}(\mathrm{Vir}_c;X)$.  The weighted-Riccati coefficient is $R_6=80(45c+193)/[3c^3(5c+22)^2]$; the distinct formal solution of $2R_2C_6^{\mathrm{rel}}+2R_3R_5+R_4^2=0$ is $C_6^{\mathrm{rel}}=4(240c+1031)/[c^3(5c+22)^2]$.  A singular-vector interpretation is supplied by an explicit level-six radical/decoupling map, and comparison with $S_6(\mathrm{Vir}_c;\mathsf H_{\mathrm{res}})$ is supplied by the normalized residue map.  The weighted Riccati series has geometric branch radius $|\omega|^2(c)=c^2(5c+22)/[4(45c+218)]$ and branch collision at $c=-218/45$.
 - $r$-matrix (level prefix MANDATORY): $r^{KM}(z) = k\,\Omega/z$; $r^{\mathrm{Heis}}(z) = k/z$; $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$.
 - Universal Borcherds-weight identity: $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ + half / quarter-integer continuations.
-- Universal chain-homotopy: $h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$ where $\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$ is the Verdier-Ran-on-bar norm (level 2). Witness values: $\mathcal N(\mathsf G)=1$, $\mathcal N(\mathsf L)=2(k+h^\vee)$, $\mathcal N(\mathsf C)=1$, $\mathcal N(\mathsf M)=c(5c+22)/10$, $\mathcal N(\mathsf B)=8$. Distinct from the algebra-level scalar Verdier sum $K^\kappa(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{alg}}(A_b)$ of `master_concordance.tex` (which gives $0$ for $\mathsf G,\mathsf L,\mathsf C$ and $13$ for $\mathsf M$).
+- Chain homotopies are part of the family reconstruction datum.  A scalar relation $dh+hd=\nu_A(\mathrm{id}-ip)$ follows after constructing the chain maps $(i,p,h)$ and the scalar action $\nu_A$ in the same complex.  Equality of $\nu_A$ with an algebra-level Verdier sum $K^\kappa(A_b)$ is a separate comparison theorem.
 - Desuspension: $|s^{-1}v| = |v| - 1$; cohomological grading $|d| = +1$.
 - Bar: $B(A_b) = T^c(s^{-1}\bar A_b)$, $\bar A_b = \ker \epsilon$.
 
-**Five objects, never conflate**:
-$A_b$ (chart algebra) — $B(A_b)$ (bar coalgebra) —
-$A_b^{i} = H^\star B(A_b)$ (cohomology coalgebra) —
-$A_b^{!}$ (Verdier dual) —
-$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ (derived centre = bulk).
-$\Omega(B(A_b)) = A_b$ is **inversion**, not Koszul duality.
-$A_b^{!}$ via **Verdier**. Bulk via **Hochschild** cochains.
+**Five typed objects**:
+$A_b$ (chart algebra) — $B_X(A_b)$ (full bar coalgebra) —
+$A_b^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ (quadratic coalgebra of a chosen
+presentation) — $A_{b,\infty}^{!}=\mathbb D_{\operatorname{Ran}}B_X(A_b)$
+(Verdier algebra) — $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ (derived
+centre).  The universal counit $\Omega_XB_X(A_b)\to A_b$ performs
+reconstruction.  The comparison $q_{A_b}\colon A_b^{\mathrm i}\to
+B_X(A_b)$ detects quadratic Koszulness.  Verdier duality constructs
+$A_{b,\infty}^{!}$, and Hochschild cochains construct the derived
+centre.
 
 ---
 

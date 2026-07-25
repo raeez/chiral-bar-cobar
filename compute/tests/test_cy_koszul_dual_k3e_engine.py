@@ -78,7 +78,7 @@ from compute.lib.cy_koszul_dual_k3e_engine import (
     bar_dim_2_k3_estimate,
     bar_dim_1_k3e,
     bar_dim_1_dual_k3e,
-    # Hochschild (bulk)
+    # Hochschild (closed sector)
     hochschild_dim_0_k3,
     hochschild_dim_1_k3,
     hochschild_dim_2_k3,

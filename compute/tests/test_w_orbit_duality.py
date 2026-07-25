@@ -1,4 +1,8 @@
-"""Tests for W-orbit duality (conj:w-orbit-duality verification).
+"""Finite evidence for W-orbit duality.
+
+These tests guard algebraic consequences and type-A consistency packets.
+They do not prove conj:w-orbit-duality, whose non-principal DS/Koszul
+intertwining and orbit-transport statements remain conjectural.
 
 Tests cover:
   1. Lie algebra data (type A, B, C, D)
@@ -8,15 +12,16 @@ Tests cover:
   5. Complementarity sums (Koszul conductors)
   6. Hook orbit BV duality
   7. Principal orbit recovery
-  8. Full type-A verification
+  8. Finite type-A consistency packet
   9. Hilbert series checks
   10. Non-simply-laced Langlands duality
   11. Orbit dimension and centralizer identities
-  12. Verified complementarity table
+  12. Computed complementarity table
 
 Ground truth references:
   - CLAUDE.md verified formulas
-  - thm:w-algebra-koszul-main, prop:bp-duality
+  - thm:w-algebra-koszul-main (conditional principal characteristic transport)
+  - conj:bp-duality (conjectural BP self-duality; conductor evidence)
   - rem:koszul-conductor-explicit in examples_summary.tex
   - comp:sl3-ds-hierarchy, comp:w3-curvature-dual in w_algebras_deep.tex
   - nonprincipal_ds_reduction.py (BP data)

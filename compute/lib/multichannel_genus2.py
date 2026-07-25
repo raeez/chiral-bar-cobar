@@ -23,7 +23,7 @@ Typed firewall used here:
 * A^! is the Verdier/continuous-linear dual branch under the stated
   finite-type or completed hypotheses.
 * Omega(B(A)) = A is bar-cobar inversion.
-* Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild bulk object.
+* Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild closed-sector object.
 """
 
 from __future__ import annotations
@@ -66,7 +66,7 @@ OBJECT_FIREWALL: Dict[str, str] = {
         "completed hypotheses"
     ),
     "Omega(B(A))": "bar-cobar inversion recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk object",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector object",
 }
 
 KERNEL_NORMALIZATIONS: Dict[str, str] = {

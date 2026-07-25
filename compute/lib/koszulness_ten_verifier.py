@@ -935,11 +935,13 @@ def verify_chirhoch_range(data: ChiralAlgebraData) -> Dict:
             'pass': True,
         }
     elif data.name == "sl2":
-        # ChirHoch^0 = Z(sl_2_k) = k (center), ChirHoch^1 = g (derivations)
-        # ChirHoch^2 = k (by duality with ChirHoch^0(dual))
+        # ChirHoch^0 = Z(sl_2_k) = k (center), ChirHoch^1 = 0 after
+        # quotienting the adjoint zero-mode prequotient by inner
+        # derivations.  ChirHoch^2 = k by duality with ChirHoch^0(dual).
         results['chirhoch_sl2_dims'] = {
-            'dim0': 1, 'dim1': 3, 'dim2': 1,
-            'polynomial': '1 + 3t + t^2',
+            'dim0': 1, 'dim1': 0, 'dim2': 1,
+            'zero_mode_prequotient_dim': 3,
+            'polynomial': '1 + t^2',
             'pass': True,
         }
 

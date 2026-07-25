@@ -26,7 +26,8 @@ KEY FORMULAS:
   - Genus-g: F_g(A) + F_g(A!) = (kappa + kappa!) * lambda_g^FP
 
 CRITICAL PITFALLS:
-  - Heisenberg is NOT self-dual: H_k^! = Sym^ch(V*), not H_{-k}
+  - Heisenberg is NOT self-dual: at k != 0, H_k^! is the curved
+    second-kind Sym^ch(V*[1]) branch, not H_{-k}
   - Virasoro self-dual at c = 13, NOT c = 26
   - The (-1)-shift means omega has cohomological degree -1
   - For affine g_k: kappa = dim(g)*(k+h^v)/(2*h^v), NOT c/2
@@ -213,7 +214,7 @@ def heisenberg_fh(k: int, g: int, rank: int = 1) -> Dict[str, Any]:
         raise ValueError(f"Genus must be >= 1, got {g}")
 
     kappa = Fraction(k) * rank
-    kappa_dual = -kappa  # H_k^! has kappa! = -k*rank
+    kappa_dual = -kappa  # scalar kappa(H_k^!) = -k*rank
     lambda_g = _lambda_fp(g)
     F_g = kappa * lambda_g
     F_g_dual = kappa_dual * lambda_g

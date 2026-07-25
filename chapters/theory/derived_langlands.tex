@@ -60,13 +60,18 @@ The $\mathfrak{sl}_2$ case makes the mechanism concrete. Here
 $h^\vee = 2$, $\dim(\mathfrak{sl}_2) = 3$, and the critical level
 is $k = -2$. The modular characteristic evaluates to
 $\kappa(\widehat{\mathfrak{sl}_2}_{-2}) = 3 \cdot (-2 + 2)/(2 \cdot
-2) = 0$: uncurved bar input and ordinary cohomology. The classical
-r-matrix $r(z) = k\Omega_{\mathrm{tr}}/z$ at $k = -2$ gives
-$r(z) = -2\Omega_{\mathrm{tr}}/z \neq 0$
-(equivalently, $r(z) = \Omega/((k{+}h^\vee)z)$ diverges at $k = -h^\vee$: this
-is the Sugawara singularity in the KZ normalisation);
-the r-matrix does not vanish and the OPE structure persists. What
-vanishes is the modular curvature scalar. The critical center is the
+2) = 0$: uncurved bar input and ordinary cohomology. The binary
+collision kernel in trace-form normalization is
+\[
+ K_{-2,\mathfrak{sl}_2}^{\mathrm{coll}}(z)
+ =-2\Omega_{\mathrm{tr}}/z.
+\]
+Under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ its represented image is the
+classical $r$-matrix.  The KZ-normalized expression
+$\Omega/((k+h^\vee)z)$ has a pole at the critical value, recording the
+Sugawara singularity of that comparison.  Thus the ordered collision
+operator persists while its normalized trace combines with the
+Sugawara shift to give modular curvature scalar zero. The critical center is the
 Feigin--Frenkel center; the bar complex records its
 differential-form extension through the vacuum Ext comparison.
 
@@ -644,11 +649,24 @@ Combine Corollary~\ref{cor:bar-computes-ext} with
 Frenkel--Teleman~\cite{FT06}.
 \end{proof}
 
-\begin{theorem}[Full oper differential-form identification;
+\begin{theorem}[Formal-disc bar-Ext oper differential forms;
 \ClaimStatusConditional]
 \label{thm:oper-bar-dl}
 \index{oper!derived identification}
-For all $n \geq 0$:
+\textup{[}Type signature:
+$(\mathrm{Open},
+\mathrm{critical\ affine\ bar\text{-}Ext/formal\text{-}disc\ oper},
+\mathrm{levels}=2\to 3,
+\mathrm{hypothesis\ package}=
+\mathrm{critical\ affine\ vacuum}
++\mathrm{uncurved\ genus\text{-}0\ bar}
++\mathrm{bar\text{-}Ext\ comparison}
++\mathrm{Frenkel\text{-}Teleman\ vacuum\ Ext}
++\mathrm{formal\text{-}smooth\ oper\ space})$.\textup{]}
+Let $\fg$ be simple and let $V_{\mathrm{crit}}$ be the critical vacuum
+module on the formal disc. In the completed critical vacuum
+bar-Ext ambient, for all $n \geq 0$ there is a natural graded-algebra
+isomorphism
 \begin{equation}\label{eq:hn-oper}
 H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
 \;\cong\;
@@ -657,48 +675,69 @@ H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
 \;=\;
 \Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
 \end{equation}
-Equivalently, the cohomology algebra of the critical bar complex
-agrees with the graded algebra of differential forms on the
-formal-disc oper space.
+Equivalently, the cohomology algebra of the completed critical
+vacuum bar surface agrees, through the bar-Ext comparison and
+Frenkel--Teleman, with the graded algebra of differential forms on
+the formal-disc oper space. This is not a chain quasi-isomorphism
+between the bar complex and a de Rham model, not a global localization
+statement, and not a Verdier/Koszul duality assertion.
 \end{theorem}
 
 \begin{proof}
-The argument combines two results, each proved independently:
+Set $A_{\mathrm{crit}}=\widehat{\fg}_{-h^\vee}$.
+The proof is a composition of two comparison theorems after the
+critical curvature term has been removed.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Bar computes Ext.}\quad
- Corollary~\ref{cor:bar-computes-ext}: for the chiral algebra
- $\widehat{\fg}_{-h^\vee}$ (whose modular curvature scalar vanishes at
- critical level by Corollary~\ref{cor:critical-level-universality}), the
- bar cohomology computes vacuum self-extensions:
+\item \emph{Critical uncurved bar lane.}\quad
+ Corollary~\ref{cor:critical-level-universality} says that the modular
+ curvature scalar of $A_{\mathrm{crit}}$ vanishes at critical level.
+ Hence the completed genus-$0$ vacuum bar complex lies in the
+ uncurved bar lane used by the bar-Ext comparison.
+\item \emph{Bar computes vacuum Ext.}\quad
+ Corollary~\ref{cor:bar-computes-ext}, under the hypotheses of
+ Theorem~\ref{thm:bar-cobar-isomorphism-main}, identifies the
+ cohomology of that completed critical bar surface with vacuum
+ self-extensions:
  \[
- H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+ H^n\bigl(\barB(A_{\mathrm{crit}})\bigr)
  \;\cong\;
- \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+ \mathrm{Ext}^n_{A_{\mathrm{crit}}}
  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
  \qquad \text{for all } n \geq 0.
  \]
  This is the chiral analogue of the standard bar-resolution
  identification (Loday--Vallette~\cite{LV12}), validated in the
- chiral setting by Main Theorem~A
- (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+ chiral setting only on the stated completed Koszul surface.
 \item \emph{Ext computes oper forms.}\quad
  Frenkel--Teleman~\cite{FT06} (\ClaimStatusProvedElsewhere):
  \[
- \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+ \mathrm{Ext}^n_{A_{\mathrm{crit}}}
  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
  \;\cong\;
  \Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
  \qquad \text{for all } n \geq 0.
  \]
+ Since the formal-disc oper space is formally smooth
+ (Frenkel--Gaitsgory~\cite{FG06}), its cotangent complex is classical,
+ so $\bigwedge^n\mathbb L_{\mathrm{Op}_{\fg^\vee}(D)}
+ =\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$.
 \end{enumerate}
-Composing (i) and (ii) gives $H^n(\barB(\widehat{\fg}_{-h^\vee}))
+Composing (ii) and (iii) gives
+$H^n(\barB(\widehat{\fg}_{-h^\vee}))
 \cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all~$n$.
 This is the same argument used in the proof of
-Corollary~\ref{cor:h3-oper} at $n = 3$; the argument is $n$-independent. This proves the cohomological
-identification with oper differential forms. It is not an
-identification of the bar complex with the derived structure sheaf of
-the oper space itself; for a classically smooth oper space, that
-derived structure sheaf remains concentrated in degree~$0$.
+Corollary~\ref{cor:h3-oper} at $n = 3$; the argument is
+$n$-independent.
+
+The objects remain distinct. The chain complex
+$\barB(A_{\mathrm{crit}})$, its cohomology
+$H^\bullet\barB(A_{\mathrm{crit}})$, the vacuum Ext algebra, and the
+algebra of oper differential forms are connected by the displayed
+comparisons; the theorem identifies only the resulting graded
+cohomology algebra. A chain quasi-isomorphism from the bar complex to
+a chosen de Rham dg-model, a global Frenkel--Gaitsgory localization
+statement, or a Verdier/Koszul duality statement would require
+additional data not supplied here.
 \end{proof}
 
 \begin{remark}[Bar-Ext comparison and PBW checks]
@@ -815,37 +854,39 @@ has no modular curvature correction and is an ordinary chain complex
 obstruction $d_{\mathrm{fib}}^2 = \kappa(\widehat{\fg}_k) \cdot \omega_g$ likewise
 vanishes.
 
-\emph{Second consequence: the $r$-matrix survives.} The classical
-$r$-matrix is $r^{\mathrm{KM}}(z) = \Omega/\bigl((k{+}h^\vee)z\bigr)$
-(Remark~\ref{rem:km-collision-residue-rmatrix}). In the
-trace-form normalisation $r(z) = k\,\Omega_{\mathrm{tr}}/z$, the
-critical level specializes to $r(z) = -h^\vee \cdot \Omega_{\mathrm{tr}}/z$; this is
-\emph{nonzero}. In trace-form normalization the binary symmetric
-shadow is
+\emph{Second consequence: the binary collision operator persists.}
+In trace-form normalization the ordered MC component is
 \[
-\operatorname{av}(r(z)) = \frac{k\,\dim(\fg)}{2h^\vee},
-\qquad
-\kappa(V_k(\fg))
-= \operatorname{av}(r(z))+\frac{\dim(\fg)}{2}.
+ K_{k,\fg}^{\mathrm{coll}}(z)
+ :=(\Theta_{V_k(\fg)}^{\Eone})_{0,2}
+ =k\,\Omega_{\mathrm{tr}}/z.
 \]
-Thus at $k=-h^\vee$ one has
-$\operatorname{av}(r(z))=-\dim(\fg)/2$ and
-$\kappa(V_{-h^\vee}(\fg))=0$. The averaging map sends the
-$r$-matrix to the scalar above; the shifted scalar
-$\operatorname{av}(r(z))+\dim(\fg)/2$ vanishes at the critical level. In
-particular, the degree-$2$ component
-$\Theta_{\cA}^{(0,2)} = r(z) = -h^\vee \cdot \Omega_{\mathrm{tr}}/z \neq 0$
-persists.
+Its homotopy coinvariant
+$q_2(K_{k,\fg}^{\mathrm{coll}})$ remains operator-valued.  The chosen
+trace-form functional and the Sugawara shift give
+\[
+ \tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})
+ =\frac{k\,\dim(\fg)}{2h^\vee},
+ \qquad
+ \kappa(V_k(\fg))
+ =\tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})
+ +\frac{\dim(\fg)}2.
+\]
+At $k=-h^\vee$ the operator kernel is
+$-h^\vee\Omega_{\mathrm{tr}}/z$, its normalized trace is
+$-\dim(\fg)/2$, and the Sugawara sum is
+$\kappa(V_{-h^\vee}(\fg))=0$.  Under
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, the represented kernel is the
+classical $r$-matrix of the corresponding comparison surface.
 
-This is the key structural distinction between the critical level
-$k = -h^\vee$ and the abelian limit $k = 0$
-(Remark~\ref{rem:two-critical-points}). At $k = 0$:
-the $r$-matrix $r(z) = k\,\Omega/z\big|_{k=0} = 0$ vanishes
-identically (while $\kappa(\widehat{\fg}_0) = \dim(\fg)/2 \neq 0$),
-so $\Theta_{\cA}$ loses its degree-$2$ component and reduces to the purely
-higher-degree tail. At $k = -h^\vee$: $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ but
-$r(z) \neq 0$, and $\Theta_{\cA}$ retains its full
-structure at all degrees $\geq 2$.
+The two distinguished levels therefore occupy different strata
+(Remark~\ref{rem:two-critical-points}).  At $k=0$ the collision
+kernel and its normalized trace specialize to zero, while the
+Sugawara term gives $\kappa(\widehat{\fg}_0)=\dim(\fg)/2$.  At
+$k=-h^\vee$ the ordered collision kernel is
+$-h^\vee\Omega_{\mathrm{tr}}/z$, while its normalized trace and the
+Sugawara term sum to zero.  The higher ordered MC components remain
+available at both levels.
 
 For $\fg = \mathfrak{sl}_2$ ($h^\vee = 2$,
 $\dim(\fg) = 3$,
@@ -901,10 +942,16 @@ $\Omega(\barB(\widehat{\fg}_{-h^\vee}))
 \xrightarrow{\;\sim\;} \widehat{\fg}_{-h^\vee}$
 (Theorem~\ref{thm:bar-cobar-inversion-qi})
 recovers the original algebra from its bar coalgebra. The Koszul dual
-coalgebra is
-$A^{\mathrm i}=H^\bullet B(A)$ on the Koszul locus; the Koszul dual
-algebra $A^!$ is obtained only after the Verdier/continuous duality
-step in the stated completed ambient. The Feigin--Frenkel center is
+coalgebra of a chosen quadratic presentation is
+\[
+A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+q_A\colon A^{\mathrm i}\longrightarrow B_X(A).
+\]
+On the Koszul locus, $H^\bullet(q_A)$ identifies its cohomology with
+$H^\bullet B_X(A)$.  Verdier duality forms
+$K_X(A)=\mathbb D_{\Ran}B_X(A)$, and a chosen comparison
+$\nu_A\colon K_X(A)\to A^!$ reaches the Koszul partner algebra in the
+stated completed ambient. The Feigin--Frenkel center is
 $H^0$ of the critical center lane, and the chiral derived centre is
 $\ChirHoch^\bullet(A,A)$.
 
@@ -996,17 +1043,23 @@ At admissible level the affine OPE contains the central double pole
 \[
  a(z)b(w)\sim \frac{k(a,b)}{(z-w)^2}+\frac{[a,b](w)}{z-w}.
 \]
-The central double pole is not itself the modular curvature scalar.
-In trace-form normalization its collision residue is the level-$k$
-$r$-matrix residue, while the genus-$1$ scalar extracted after the
-Sugawara shift is
+In trace-form normalization the central double pole determines the
+binary collision kernel
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$.  Its homotopy
+coinvariant is an operator, and the normalized trace followed by the
+Sugawara shift gives
 \[
+ \tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})
+ =\frac{k\,\dim(\fg)}{2h^\vee},
+ \qquad
  \kappa(V_k(\fg))
- = \frac{\dim(\fg)(k+h^\vee)}{2h^\vee}
+ =\tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})+\frac{\dim(\fg)}2
  = \frac{\dim(\fg)p_0}{2h^\vee q_0}
  \qquad
  (k=-h^\vee+p_0/q_0).
 \]
+Under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ the represented kernel is
+the level-$k$ classical $r$-matrix.
 Thus the critical level has vanishing scalar curvature, while an
 admissible noncritical level has rational nonzero scalar curvature.
 This statement belongs to the chosen completed curved bar model and
@@ -1091,9 +1144,11 @@ formal-disk continuous model satisfies the periodicity
 with period $2h = 4$ \textup{(}$h = 2$ for $\mathfrak{sl}_2$\textup{)}.
 The periodicity operator is cup product with the even generator
 $\Theta_1 \in \ChirHoch_{\mathrm{loc}}^4$. The global curve-level
-object $Z^{\mathrm{der}}_{\mathrm{ch}}$ is obtained only after the
-Fulton--MacPherson/logarithmic comparison and its amplitude bound; no
-Theorem~H concentration statement is invoked at critical level.
+object $Z^{\mathrm{der}}_{\mathrm{ch}}$ is obtained after the
+Fulton--MacPherson/logarithmic comparison.  Its support is governed by
+a critical family datum $H_H(\widehat{\mathfrak{sl}}_{2,-2};
+S_{\mathrm{crit}})$, independently of the formal-disk periodicity
+calculation.
 \end{proposition}
 
 \begin{proof}
@@ -1147,10 +1202,11 @@ For higher-rank affine algebras, strict periodicity of
 $\ChirHoch_{\mathrm{loc}}^*$ fails
 \textup{(}polynomial growth $O(n^{r-1})$, not periodic; see
 Theorem~\ref{thm:affine-periodicity-critical}\textup{)}.
-Theorem~H concerns the global curve-level chiral Hochschild amplitude
-on its stated non-critical Koszul locus and does not apply to the
-critical Feigin--Frenkel center. It is not categorical Hochschild
-cohomology of a product Calabi--Yau category.
+Theorem~H concerns the global curve-level chiral Hochschild complex.
+At the critical Feigin--Frenkel centre it requires a critical family
+datum $H_H(\cA_{\mathrm{crit}};S_{\mathrm{crit}})$.  Categorical
+Hochschild cohomology of a product Calabi--Yau category is a separate
+functor with its own comparison map.
 Extension to admissible levels requires the periodic CDG conjecture
 \textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
 In particular, periodicity does not transfer automatically across Koszul
@@ -1537,12 +1593,14 @@ At integral level $k$:
 \begin{remark}[Endpoint scalar checks]
 At the critical level $k = -h^\vee$, the affine formula
 $\kappa\bigl(V_k(\fg)\bigr) = \dim(\fg)\,(k+h^\vee)/(2h^\vee)$ gives
-$\kappa\bigl(V_{-h^\vee}(\fg)\bigr) = 0$, while the averaged
-$r$-matrix scalar is $-\dim(\fg)/2$. Thus criticality is detected by
-the shifted curvature scalar, not by vanishing of the averaged
-$r$-matrix. At the abelian level $k = 0$, the affine $r$-matrix
-$r^{\mathrm{KM}}(z)=k\Omega/z$ vanishes, while
-$\kappa(V_0(\fg))=\dim(\fg)/2$. These two endpoint checks force the
+$\kappa\bigl(V_{-h^\vee}(\fg)\bigr)=0$.  The collision-kernel trace is
+\[
+ \tau_{-h^\vee,\fg,2}^{\mathrm{res}}
+ q_2(K_{-h^\vee,\fg}^{\mathrm{coll}})=-\dim(\fg)/2,
+\]
+and the Sugawara term completes the shifted curvature scalar.  At
+$k=0$, the trace-form collision kernel is zero and the Sugawara term
+gives $\kappa(V_0(\fg))=\dim(\fg)/2$. These two endpoint checks force the
 shift in Conjecture~\ref{conj:bar-satake-shadow}. For simply-laced
 $\fg$, the complementarity relation
 $\kappa\bigl(V_k(\fg)\bigr) + \kappa\bigl(V_{k^\vee}(\fg^\vee)\bigr) = 0$
@@ -1577,13 +1635,21 @@ been constructed. The shadow invariants $\kappa^{\mathrm{KM}}$, $C$,
 and $Q$ then become scalar tests against categorical dimension,
 Casimir eigenvalue, and quadratic form. At degree~$2$, the required
 normalization is
-$\operatorname{av}(r(z))
-= k\,\dim(\fg)/(2h^\vee)$
+\[
+ K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z,
+ \qquad
+ \tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})
+ =\frac{k\,\dim(\fg)}{2h^\vee},
+\]
 and hence
-$\operatorname{av}(r(z)) + \dim(\fg)/2
-= \kappa^{\mathrm{KM}}\bigl(V_k(\fg)\bigr)
-= \dim(\fg)\,(k + h^\vee)/(2h^\vee)$
-for the level-$k$ $r$-matrix $r(z)=k\Omega/z$. A statement about the
+\[
+ \kappa^{\mathrm{KM}}\bigl(V_k(\fg)\bigr)
+ =\tau_{k,\fg}q_2(K_{k,\fg}^{\mathrm{coll}})
+  +\frac{\dim(\fg)}2
+ =\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}.
+\]
+Under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ the represented collision
+kernel is the level-$k$ trace-form classical $r$-matrix. A statement about the
 rank of the Satake fiber functor follows only after $\Psi_k$ is
 supplied.
 
@@ -3164,9 +3230,11 @@ semi-classical $r$-matrix is
  O(u^{-2}).
 \end{equation}
 Etingof--Kazhdan quantisation supplies the completed quasi-Hopf
-framework; identifying the output with $\mathbf H_{\Delta_5}$ is the
-recognition problem above, not a uniqueness theorem from an intrinsic
-$H^2$ line.
+framework only for the specified completed Lie bialgebra
+\((\frakg_{\Delta_5},\delta_{\mathrm{GN}})\), chosen associator,
+and \(\hbar\)-adic super-quasi-Hopf target. Identifying the output
+with $\mathbf H_{\Delta_5}$ is the recognition problem above, not a
+uniqueness theorem from an intrinsic $H^2$ line.
 \end{theorem}
 
 \begin{proof}

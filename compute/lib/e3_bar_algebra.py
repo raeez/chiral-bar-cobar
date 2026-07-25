@@ -9,8 +9,11 @@ CENTRAL FINDING (Negative Theorem):
     - Framed E_2 (BV) is strictly weaker than E_3
 
 POSITIVE RESULT:
-  The derived center Z^der_ch(A) = HH*(B(A), B(A)) carries E_3 structure
-  by the Higher Deligne Conjecture. This is a DIFFERENT object from B(A).
+  If the input to Higher Deligne is E_2 (for example the symmetric/chiral
+  Hochschild object obtained from E_infty descent), the derived center
+  Z^der_ch(A) = HH*(B(A), B(A)) carries E_3 structure.  For genuinely
+  E_1 input the same operation gives only E_2.  This is a DIFFERENT object
+  from B(A), and the input level is part of the type signature.
 
 The obstruction to extending E_2 to E_3 on B(A) lives in
 HH^3_{E_2}(B(A), B(A)).
@@ -162,7 +165,11 @@ def en_structure_on_bar(n_value):
         return {
             'exists': False,
             'obstruction': 'Requires R^3 geometry; curve provides only R^2',
-            'where_it_lives': 'The derived center Z^der_ch(A) carries E_3',
+            'where_it_lives': (
+                'The derived center of E_2/E_infty input carries E_3; '
+                'genuinely E_1 input gives only E_2'
+            ),
+            'input_scope': 'E_2 or E_infty for E_3; E_1 gives E_2',
         }
     return {'exists': False, 'reason': f'E_{n_value} requires R^{n_value}'}
 
@@ -191,7 +198,8 @@ def swiss_cheese_is_not_tensor():
 def derived_center_en_structure(n_bar):
     """If B(A) is E_n, then Z^der = HH*(B(A), B(A)) is E_{n+1}.
 
-    B(A) is E_2 => Z^der_ch(A) is E_3.
+    B(A) is E_2 => Z^der_ch(A) is E_3.  B(A) genuinely E_1 => its
+    derived center is only E_2; there is no automatic E_3 output.
 
     This is the Higher Deligne Conjecture (proved by various authors
     including Lurie, Francis, Costello-Gwilliam).

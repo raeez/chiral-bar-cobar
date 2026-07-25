@@ -16,7 +16,8 @@ CRITICAL REGRESSION CHECKS:
   AP19: r-matrix pole order one below OPE
   AP24: kappa+kappa' = 13 for Virasoro (NOT 0)
   AP29: delta_kappa != kappa_eff
-  AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras
+  AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+  branch, not H_{-k}; only scalar kappa agrees with kappa(H_{-k})
   AP39: kappa != c/2 for affine at rank > 1
 
 References:
@@ -158,7 +159,7 @@ class TestKoszulObjectFirewall:
 
         bulk = firewall["Z_ch^der(A)"]
         assert bulk.construction == "ChirHoch^*(A,A)"
-        assert bulk.branch == "Hochschild bulk"
+        assert bulk.branch == "Hochschild closed-sector"
         assert "B(A)" in bulk.distinct_from
         assert "A^!" in bulk.distinct_from
 

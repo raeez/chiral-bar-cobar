@@ -218,7 +218,7 @@ the shadow tower recursive structure.
 Search for 'thm:family-index' and 'thm:genus-universality'. Focus on the proof of
 thm:family-index and provide the independent computation.""")
 
-agent("P07_thm_H_upgrade", """THEOREM H: ChirHoch*(A) polynomial Hilbert series, concentrated in {0,1,2}.
+agent("P07_thm_H_upgrade", """THEOREM H: ChirHoch*(A) has amplitude [0,2] and Hilbert polynomial in t.
 
 TARGET: chapters/theory/chiral_hochschild_koszul.tex
 

@@ -7,8 +7,9 @@ value has a VERIFIED comment citing 2+ independent sources (AP10/HZ-6).
 Ground truth references:
   C1-C7:   central charges and kappa per family
   C18:     K(A) = kappa+kappa': 0 (KM/Heis/lattice/free), 13 (Vir),
-           250/3 (W_3), 98/3 (BP scalar lane)
-  C20:     K_BP = 196 on the self-transpose BP branch; k=-3 is a pole
+           250/3 (W_3); the BP scalar lane is open
+  C20:     K_BP = 50 in the standard BP conformal convention;
+           the explicitly shifted secondary formula has conductor 196
   AP136:   H_N = sum_{j=1}^N 1/j, NOT H_{N-1}
   B7:      WRONG: kappa(W_N) = c*H_{N-1}
   B9:      WRONG: kappa+kappa' = 0 universally
@@ -54,14 +55,18 @@ from compute.lib.koszul_conductor_table_engine import (
     WN_CC_SUMS,
     BP_DUALITY_HYPOTHESES,
     BP_STRONG_GENERATORS,
+    UnverifiedBPInvariantError,
     bp_c,
+    bp_c_shifted,
     bp_dual_c,
     bp_K_cc,
+    bp_K_cc_shifted,
     bp_K_kk,
     bp_j_line_scalar,
     bp_t_line_scalar,
     bp_g_mixed_pairing,
     bp_ds_ghost_leg_scalar,
+    bp_total_ds_conformal_shift,
     bp_scope_report,
     bc_c,
     bg_c,
@@ -445,17 +450,24 @@ class TestWN:
 # ===========================================================================
 
 class TestBershadskyPolyakov:
-    """BP: K_kk = 98/3, K_cc = 196 on the non-principal DS branch."""
+    """BP: standard and shifted conformal conventions remain distinct."""
 
-    def test_K_kk_98_over_3(self):
-        """K_kk(BP) = 98/3 on the scalar lane.  (C18, C20)"""
-        # VERIFIED: [DC] (1/6)*196=98/3, [LT] BP complementarity proposition
-        assert bp_K_kk() == Fraction(98, 3)
+    def test_standard_K_kk_is_open(self):
+        """The modular conductor awaits the genus-one DS computation."""
+        with pytest.raises(UnverifiedBPInvariantError, match="genus-one"):
+            bp_K_kk()
 
-    def test_K_cc_196(self):
-        """K_cc(BP) = 196 on the central-charge lane.  (C20)"""
-        # VERIFIED: [DC] c(0)+c(-6)=-6+202=196, [LT] BP self-duality proposition
-        assert bp_K_cc(Fraction(0)) == Fraction(196)
+    def test_standard_K_cc_50(self):
+        """The canonical central-charge conductor is 50."""
+        assert bp_c(Fraction(0)) == Fraction(-1)
+        assert bp_dual_c(Fraction(0)) == Fraction(51)
+        assert bp_K_cc(Fraction(0)) == Fraction(50)
+
+    def test_shifted_K_cc_196_is_secondary(self):
+        """The shifted formula retains its own conductor and public name."""
+        assert bp_c_shifted(Fraction(0)) == Fraction(-6)
+        assert bp_c_shifted(Fraction(-6)) == Fraction(202)
+        assert bp_K_cc_shifted(Fraction(0)) == Fraction(196)
 
     def test_bp_scope_report_nonprincipal_fields(self):
         """BP is subregular/minimal DS, not the principal W_N branch."""
@@ -467,6 +479,16 @@ class TestBershadskyPolyakov:
         assert scope["strong_generators"] == BP_STRONG_GENERATORS
         assert scope["duality_claim_requires_theorem"] is True
         assert scope["duality_hypothesis_package"] == BP_DUALITY_HYPOTHESES
+        assert scope["algebra_level_interpretation"] == "conditional-H_DS/bar"
+        assert scope["standard_convention_status"] == "proved-primary-source"
+        assert scope["shifted_convention_status"] == "computed-secondary"
+        assert scope["K_cc"] == Fraction(50)
+        assert scope["K_kappa"] is None
+        assert scope["anomaly_ratio"] is None
+        assert scope["kappa_status"] == "open-genus-one-computation"
+        assert scope["reciprocal_weight_diagnostic"] == Fraction(17, 6)
+        assert all(parity == "bosonic" for _, _, parity in BP_STRONG_GENERATORS)
+        assert scope["shifted_K_cc"] == Fraction(196)
 
     def test_bp_shadow_lines_are_separate(self):
         """The BP J-line, T-line, G-pairing, kappa, and ghost leg differ."""
@@ -474,14 +496,19 @@ class TestBershadskyPolyakov:
         scope = bp_scope_report(k)
         lines = scope["shadow_lines"]
         assert lines["J"]["scalar"] == Fraction(1)
-        assert lines["T"]["scalar"] == Fraction(-3)
+        assert lines["T"]["scalar"] == Fraction(-1, 2)
         assert lines["G_pairing"]["scalar"] == Fraction(3)
-        assert lines["full_kappa"]["scalar"] == Fraction(-1)
+        assert lines["G_pairing"]["class"] == "mixed_even"
+        assert lines["full_kappa"]["scalar"] is None
+        assert lines["full_kappa"]["status"] == "open-genus-one-computation"
+        assert lines["total_DS_conformal_shift"]["scalar"] == Fraction(-1)
         assert lines["DS_ghost_leg"]["presentation_dependent"] is True
-        assert lines["DS_ghost_leg"]["scalar"] == Fraction(-6)
+        assert lines["DS_ghost_leg"]["scalar"] is None
         assert bp_j_line_scalar(k) != bp_t_line_scalar(k)
-        assert bp_t_line_scalar(k) != bp_K_kk(k)
-        assert bp_ds_ghost_leg_scalar(k) != bp_K_kk(k)
+        with pytest.raises(UnverifiedBPInvariantError):
+            bp_K_kk(k)
+        with pytest.raises(UnverifiedBPInvariantError, match="charged ghosts"):
+            bp_ds_ghost_leg_scalar(k)
 
     def test_bp_fixed_real_level_is_pole_not_attained_self_duality(self):
         """k=-3 is fixed by k -> -k-6 but c_BP is undefined there."""
@@ -489,11 +516,11 @@ class TestBershadskyPolyakov:
         assert scope["level_fixed_by_sigma"] is True
         assert scope["central_charge_defined"] is False
         assert scope["real_level_self_dual_c_attained"] is False
-        assert scope["formal_self_dual_central_charge"] == Fraction(98)
-        assert scope["formal_self_dual_levels"] == ("k=-3+2i", "k=-3-2i")
+        assert "formal_self_dual_central_charge" not in scope
+        assert "formal_self_dual_levels" not in scope
         assert scope["missing_hypotheses"] == ("k_plus_3_nonzero",)
         assert scope["status"] == (
-            "critical_level_pole_not_attained_self_dual_real_level"
+            "fixed_level_is_common_pole; conductors_are_rational_function_identities"
         )
 
     def test_bp_line_scalar_helpers(self):
@@ -501,9 +528,11 @@ class TestBershadskyPolyakov:
         k = Fraction(1)
         assert bp_j_line_scalar(k) == Fraction(5, 3)
         assert bp_t_line_scalar(k) == bp_c(k) / 2
-        assert bp_t_line_scalar(k) == Fraction(-11)
+        assert bp_t_line_scalar(k) == Fraction(-5, 2)
         assert bp_g_mixed_pairing(k) == Fraction(10)
-        assert bp_ds_ghost_leg_scalar(k) == Fraction(-24)
+        assert bp_total_ds_conformal_shift(k) == Fraction(-7)
+        with pytest.raises(UnverifiedBPInvariantError, match="neutral fields"):
+            bp_ds_ghost_leg_scalar(k)
 
     def test_bp_c_symmetry(self):
         """c_BP(k) + c_BP(-k-6) is the same for multiple k values."""
@@ -511,6 +540,11 @@ class TestBershadskyPolyakov:
         val = bp_K_cc(Fraction(1))
         for k in [Fraction(0), Fraction(2), Fraction(5), Fraction(-1)]:
             assert bp_K_cc(k) == val, f"K_cc not constant at k={k}"
+        assert val == Fraction(50)
+
+    def test_bp_shifted_symmetry_stays_separate(self):
+        for k in [Fraction(0), Fraction(1), Fraction(2), Fraction(-1)]:
+            assert bp_K_cc_shifted(k) == Fraction(196)
 
 
 # ===========================================================================
@@ -621,9 +655,13 @@ class TestFullTable:
         # W_3: 250/3 (C18)
         assert table["W_3"]["K_kk"] == Fraction(250, 3)
 
-        # BP scalar lane: 98/3, central-charge lane: 196
-        assert table["BP"]["K_kk"] == Fraction(98, 3)
-        assert table["BP"]["K_cc"] == Fraction(196)
+        # BP canonical lane: exact central conductor and open modular conductor
+        assert table["BP"]["K_kk"] is None
+        assert table["BP"]["kappa"] is None
+        assert table["BP"]["kappa_dual"] is None
+        assert table["BP"]["kappa_status"] == "open-genus-one-computation"
+        assert table["BP"]["reciprocal_weight_diagnostic"] == Fraction(17, 6)
+        assert table["BP"]["K_cc"] == Fraction(50)
 
         # bc/bg: 0 (free)
         assert table["bc"]["K_kk"] == Fraction(0)
@@ -634,13 +672,15 @@ class TestFullTable:
         table = full_conductor_table(c_vir=Fraction(7))
         assert table["Virasoro"]["K_cc"] == Fraction(26)
 
-    def test_all_fractions(self):
-        """Every value in the table is a Fraction (no floats)."""
+    def test_all_numeric_values_are_exact(self):
+        """Every numerical table entry uses exact rational arithmetic."""
         table = full_conductor_table()
         for family, data in table.items():
             for key, val in data.items():
-                assert isinstance(val, Fraction), \
-                    f"{family}.{key} = {val} is {type(val)}, not Fraction"
+                assert not isinstance(val, float), f"{family}.{key} is a float"
+                if isinstance(val, (int, Fraction)):
+                    assert isinstance(val, Fraction), \
+                        f"{family}.{key} = {val} is {type(val)}, not Fraction"
 
     def test_table_completeness(self):
         """Table has entries for all expected families."""
@@ -665,10 +705,11 @@ class TestCrossFamilyConsistency:
         assert virasoro_K_kk(Fraction(1)) != Fraction(0)
         # W_3 K_kk=250/3 != 0.
         assert WN_CONDUCTORS[3] != Fraction(0)
-        # BP K_kk=98/3 != 0.
-        assert bp_K_kk() != Fraction(0)
+        # BP K_kk is status-typed until its genus-one computation closes.
+        with pytest.raises(UnverifiedBPInvariantError):
+            bp_K_kk()
 
     def test_kk_values_distinct(self):
-        """The four known K_kk values are all distinct."""
-        vals = {Fraction(0), Fraction(13), Fraction(250, 3), Fraction(98, 3)}
-        assert len(vals) == 4
+        """The three certified K_kk values are pairwise distinct."""
+        vals = {Fraction(0), Fraction(13), Fraction(250, 3)}
+        assert len(vals) == 3

@@ -620,8 +620,8 @@ class TestAdversarial:
         """Virasoro at c=13 (self-dual point) is still class M.
 
         Self-duality does NOT change the shadow depth class.
-        The full tower is self-dual (prop:c13-full-self-duality),
-        but it is still infinite.
+        The scalar and rational-shadow fixed-point diagnostics hold
+        (prop:c13-full-self-duality), but the class is still infinite.
         """
         vir13 = virasoro(Fraction(13))
         r = method2_discriminant(vir13)

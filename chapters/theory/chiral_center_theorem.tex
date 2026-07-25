@@ -1,6 +1,6 @@
 %% ============================================================
 %% CHIRAL CENTER THEOREM
-%% Self-contained module: definitions, brace algebra, Deligne--Tamarkin
+%% Typed operadic model, comparison criteria, and scalar firewalls
 %% ============================================================
 
 \section{The chiral endomorphism operad and the chiral center theorem}
@@ -8,333 +8,130 @@
 
 \index{chiral center theorem|textbf}
 \index{brace algebra!chiral|textbf}
-\index{Deligne--Tamarkin!chiral|textbf}
+\index{derived center!typed model}
 
-The center of a chiral algebra is too small. For the
-Virasoro algebra $\mathrm{Vir}_c$ at generic central charge,
-the ordinary center $Z(\mathrm{Vir}_c)$ is one-dimensional:
-it contains only the vacuum. Yet the algebra \emph{has}
-deformations: the central charge itself can be varied,
-$c \mapsto c + \epsilon$. This deformation is invisible
-to the center because the center sees only degree-$0$
-endomorphisms, while the deformation lives in cohomological
-degree~$2$. The naive deformation complex (infinitesimal
-automorphisms, first-order deformations, obstructions) captures
-the right numerical data in low degrees but carries no
-multiplicative structure, no bracket, no higher operations.
-The deficiency is structural: classifying local closed-sector
-actions on a fixed chiral boundary algebra requires a closed algebra
-inside the chiral Swiss-cheese category over that boundary. Neither
-the center nor the tangent complex is such an algebra.
+The ordinary chiral centre records degree-zero endomorphisms.  Product
+deformations and their obstructions live in the derived endomorphism
+object
+\begin{equation}\label{eq:cct-derived-centre}
+ Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+ :=
+ R\operatorname{End}_{A^e}(A)
+\end{equation}
+in the derived category of complete chiral \(A\)-bimodules.  This
+definition fixes the object before a bar resolution, a formal-disk
+model, or a geometric configuration-space model is chosen.
 
-The resolution is the chiral derived center
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
-= C^\bullet_{\mathrm{ch}}(\cA, \cA)$:
-the completed chiral Hochschild cochain complex,
-equipped with a brace dg algebra structure
-(Definition~\ref{def:chiral-hochschild-cochain-brace},
-Theorem~\ref{thm:brace-dg-algebra}).
-Its cohomology is denoted
-$\ChirHoch^\bullet(\cA,\cA)$. Thus the complex-level derived
-center is the brace dg algebra, while the non-derived chiral center is
-the degree-zero cohomology
-$Z_{\mathrm{ch}}(\cA)=\ChirHoch^0(\cA,\cA)$.
-Only degree-zero closed cochains define ordinary central classes.
-Higher Hochschild classes are deformations, obstructions, and
-closed-sector operations acting on the boundary algebra, not elements
-of the ordinary center.
-The brace structure is forced on the local completed surface: among
-continuous dg algebras receiving a map from every local closed algebra
-that acts on~$\cA$, the chiral Hochschild cochains are the terminal
-object.
-This is the content of the chiral Deligne--Tamarkin
-theorem (Theorem~\ref{thm:chiral-deligne-tamarkin}):
-the pair
-$\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
-is the terminal local chiral Swiss-cheese pair over~$\cA$.
-Every continuous local closed-sector action factors uniquely through
-this derived center. Physical realization requires a separate
-open/closed comparison map and analytic completion. This is not the Drinfeld center of a
-monoidal module category and not the naive center $H^0$ alone;
-categorical center comparisons require the compact-generator
-Hochschild identification of
-Theorem~\ref{thm:derived-center-hochschild}.
+The first structural question is therefore precise: which explicit
+cochain model computes \eqref{eq:cct-derived-centre}, and which
+operations survive the comparison?  The answer has two parts.  An
+actual dg operad of chiral operations supplies braces formally.
+A geometric or formal-Laurent realization computes the derived centre
+once a named quasi-isomorphism has been constructed.
 
-The theory produces sharp results. For the Virasoro algebra:
-$\ChirHoch^*(\mathrm{Vir}_c)$ is concentrated in degrees
-$\{0, 2\}$, with total dimension~$2$ and Hilbert series
-$P(t) = 1 + t^2$. The single degree-$2$ class is the
-central charge deformation. This is \emph{not}
-Gel'fand--Fuchs cohomology
-$H^*_{\mathrm{cont}}(\mathrm{Vect}(S^1); \bC)$,
-which is infinite-dimensional; it is not a polynomial
-ring $\bC[\Theta]$, which would give unbounded
-cohomological amplitude.
-For the generic PBW-completed standard families computed below, the
-displayed cohomology is finite-dimensional. In the general modular
-Koszul statement, Theorem~\ref{thm:hochschild-polynomial-growth}
-asserts bounded cohomological amplitude $\{0,1,2\}$ together with
-finite conformal-weight pieces and polynomial Hilbert growth; it is
-not a universal bound on the total dimension, and critical or
-unverified $E_1$-only loci remain outside this finite-total claim.
-
-\medskip
-\noindent\textbf{Standing assumptions.}
-Throughout this section:
-\begin{itemize}
-\item $(A, \{m_k\}_{k \ge 0})$ is a curved $\Ainf$-chiral
- algebra in the sense of
- Definition~\ref{def:curved-ainfty}, with
- $|m_k| = 2 - k$ (cohomological convention).
- When the curvature vanishes ($m_0 = 0$) and
- $m_k = 0$ for $k \ge 3$, this reduces to a
- strict chiral algebra with product $m_2$.
- We assume $A$ is \emph{logarithmic}: the
- $\lambda$-brackets
- $\{a_\lambda b\} \in A[\lambda]$ are polynomial in the
- spectral variable, ensuring convergence of integrals
- over the FM compactification. All standard examples
- (Heisenberg, Kac--Moody, Virasoro, $\cW$-algebras)
- satisfy this condition.
-\item The ground field is~$\mathbb{C}$.
- All graded vector spaces are $\mathbb{Z}$-graded.
-\item The conformal-weight grading is separated and complete, with
- finite-dimensional graded pieces. All products and Hom-spaces below
- are the continuous completed ones for this topology. On a finite
- conformal-weight window this reduces to the ordinary finite product
- and ordinary linear dual; no argument uses the full algebraic dual
- of an infinite product.
-\item \emph{Spectral variables.}
- The chiral OPE of sections $a, b \in A$ at
- nearby points $z, w$ on a formal disc is expanded
- in the formal variable $\lambda = z - w$:
+\begin{definition}[Operadic chart package;
+\ClaimStatusDefinitional]
+\label{def:cct-operadic-chart-package}
+For a complete augmented chiral algebra \(A\), the package
+\(H_{\mathrm{op}}(A)\) consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a complete one-coloured dg nonsymmetric operad
+ \(\mathcal P_A^{\mathrm{ch}}\) whose arity-\(n\) term models continuous
+ \(n\)-ary chiral operations on \(A\), including arity zero;
+\item continuous partial compositions in a fixed common expansion
+ domain, with the operadic unit and associativity identities;
+\item a suspension convention for which
  \[
- a(z) \, b(w)
- \;=\;
- \sum_{n \in \mathbb{Z}} (a_{(n)} b)(w)\, \lambda^{-n-1},
- \qquad
- \lambda = z - w.
+ \mathfrak g_A
+ :=
+ C^\bullet_{\mathcal P}(A,A)[1]
  \]
- A multilinear operation of arity~$n$ depends on
- $n - 1$ independent spectral variables
- $\lambda_1, \ldots, \lambda_{n-1}$, corresponding
- to the differences
- $\lambda_i = z_i - z_n$ for $i = 1, \ldots, n-1$.
-\item All tensor products are over~$\mathbb{C}$ unless
- otherwise indicated. The notation $V((\lambda))$
- denotes formal Laurent series $\sum_{n \gg -\infty} v_n \lambda^n$
- with $v_n \in V$.
-\end{itemize}
+ is a complete dg Lie algebra and the curved \(A_\infty\)-chiral
+ structure is an element \(m\in\mathfrak g_A^1\) satisfying
+ \[
+ d_{\mathcal P}m+\frac12[m,m]=0;
+ \]
+\item a cofibrant diagonal \(A\)-bimodule resolution and a continuous
+ cochain map
+ \[
+ \gamma_A\colon C^\bullet_{\mathcal P}(A,A)
+ \longrightarrow R\operatorname{End}_{A^e}(A);
+ \]
+\item finite conformal-weight quotients, an identification of the
+ complete cochain object with their inverse limit, and the derived-limit
+ condition
+ \[
+  \varprojlim\nolimits_N^1 H^{q-1}(C_{\mathcal P,\leq N})=0
+  \qquad(q\in\mathbb Z)
+ \]
+ whenever a cohomology calculation passes through that limit.
+\end{enumerate}
+\end{definition}
 
-%% ===========================================================
-%% 1. CHIRAL ENDOMORPHISM OPERAD
-%% ===========================================================
+The package separates four objects:
+\[
+ A,\qquad B_X(A),\qquad A^{\mathrm i},\qquad
+ Z^{\mathrm{der}}_{\mathrm{ch}}(A).
+\]
+Here \(B_X(A)\) is a complete pro-conilpotent coalgebra,
+\(A^{\mathrm i}\) is the quadratic coalgebra of a chosen presentation,
+and the derived centre is the endomorphism object
+\eqref{eq:cct-derived-centre}.  Comparison maps connect these objects;
+their types already distinguish them.
 
 \subsection{The chiral endomorphism operad}
 \label{subsec:chiral-endo-operad}
 
-\begin{definition}[Chiral endomorphism operad; \ClaimStatusDefinitional]
+\begin{definition}[Chiral endomorphism-operad chart;
+\ClaimStatusConditional]
 \label{def:chiral-endomorphism-operad}
-\index{endomorphism operad!chiral}
-For a graded vector space $A$, the \emph{chiral
-endomorphism operad} $\End^{\mathrm{ch}}_A$ is the
-$\mathbb{N}$-colored non-$\Sigma$ operad with:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Spaces.}\;
- For each $n \ge 0$, the space of $n$-ary operations is
- \begin{equation}\label{eq:endch-space}
- \End^{\mathrm{ch}}_A(n)
- \;:=\;
- \Hom_{\mathbb{C}}\!\Bigl(
- A^{\otimes n},\;
- A\bigl((\lambda_1)\bigr)
- \bigl((\lambda_2)\bigr)
- \cdots
- \bigl((\lambda_{n-1})\bigr)
- \Bigr),
- \end{equation}
- where the $\lambda_i$ are formal spectral variables.
- An element $f \in \End^{\mathrm{ch}}_A(n)$ of cohomological
- degree~$|f|$ is a graded-linear map
- \[
- f \colon
- A^{\otimes n} \longrightarrow
- A\bigl((\lambda_1)\bigr)\cdots\bigl((\lambda_{n-1})\bigr)
- \]
- that is $\mathbb{C}$-multilinear. We write
- $f(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})$
- for its value on homogeneous elements.
- By convention, $\End^{\mathrm{ch}}_A(0) = A$ and
- $\End^{\mathrm{ch}}_A(1) = \End(A)$.
-
-\item \emph{Grading.}\;
- The cohomological degree of $f \in \End^{\mathrm{ch}}_A(n)$
- is its degree as a graded-linear map:
- \[
- |f(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})|
- \;=\;
- |f| + |a_1| + \cdots + |a_n|.
- \]
- The \emph{suspended degree} (or \emph{brace degree}) is
- $\|f\| := |f| - 1$. This is the degree relevant for
- Koszul signs in brace operations.
-
-\item \emph{Partial compositions.}\;
- For $f \in \End^{\mathrm{ch}}_A(m)$ and
- $g \in \End^{\mathrm{ch}}_A(n)$,
- the $i$-th partial composition
- $f \circ_i g \in \End^{\mathrm{ch}}_A(m + n - 1)$,
- $1 \le i \le m$, is defined by \emph{spectral substitution}:
- \begin{equation}\label{eq:partial-composition}
- \boxed{
- \begin{aligned}
- &(f \circ_i g)(a_1, \ldots, a_{m+n-1};
- \mu_1, \ldots, \mu_{m+n-2})
- \\[4pt]
- &\quad:=\;
- (-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}
- \\[2pt]
- &\qquad\quad\times\;
- f\!\Bigl(
- a_1, \ldots, a_{i-1},\;
- g(a_i, \ldots, a_{i+n-1};
- \nu_1, \ldots, \nu_{n-1}),\;
- a_{i+n}, \ldots, a_{m+n-1};
- \\[2pt]
- &\qquad\qquad\qquad
- \mu_1, \ldots, \mu_{i-2},\;
- \mu_{i-1},\;
- \mu_{i+n-1}, \ldots, \mu_{m+n-2}
- \Bigr)
- \end{aligned}
- }
- \end{equation}
- where the spectral variables are related by the
- \emph{block-substitution rule}:
- \begin{equation}\label{eq:spectral-substitution}
- \begin{cases}
- \text{The outer variables } \lambda_j \text{ of } f
- \text{ are set to:} \\[2pt]
- \quad \lambda_j = \mu_j
- & \text{for } j = 1, \ldots, i-2, \\[2pt]
- \quad \lambda_{i-1} = \mu_{i-1} + \nu_1
- & \text{(the $i$-th input of $f$ receives
- the sum),} \\[2pt]
- \quad \lambda_j = \mu_{j + n - 1}
- & \text{for } j = i, \ldots, m - 1; \\[6pt]
- \text{The inner variables } \nu_k \text{ of } g
- \text{ are set to:} \\[2pt]
- \quad \nu_k = \mu_{i-1+k} - \mu_{i-1}
- & \text{for } k = 1, \ldots, n-1.
- \end{cases}
- \end{equation}
- The rule~\eqref{eq:spectral-substitution} encodes
- the coordinate change for nested collision of
- $n$~points near the $i$-th point of an $m$-point
- configuration. Concretely, if the outer points
- have coordinates $z_1, \ldots, z_m$ on a formal
- disc with $\lambda_j = z_j - z_m$, and the inner
- points have coordinates $w_1, \ldots, w_n$ near
- $z_i$ with $\nu_k = w_k - w_n$, then the
- combined $(m+n-1)$-point configuration has
- spectral variables $\mu_\ell = u_\ell - u_{m+n-1}$
- where $u_\ell$ are the merged coordinates.
-
- The Koszul sign $(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}$
- arises from commuting~$g$ (of suspended degree~$\|g\|$)
- past the first $i-1$ inputs of~$f$.
-\end{enumerate}
+Assume \(H_{\mathrm{op}}(A)\).  The symbol
+\(\End_A^{\mathrm{ch}}\) denotes the chosen dg operad
+\(\mathcal P_A^{\mathrm{ch}}\).  On a formal coordinate disc one may
+seek a Laurent chart
+\[
+ \End_{A,\mathrm{Laur}}^{\mathrm{ch}}(n)
+ =
+ \operatorname{Hom}_{\mathrm{cts}}
+ \!\left(A^{\widehat\otimes n},
+ A((z_1-z_n))\cdots((z_{n-1}-z_n))\right).
+\]
+This collection represents the operad once a common expansion
+convention and continuous substitution maps have been supplied and
+shown to satisfy the operadic identities.  Those requirements are
+clauses~\textup{(i)}--\textup{(ii)} of
+Definition~\ref{def:cct-operadic-chart-package}.
 \end{definition}
 
 \begin{remark}[Three layers of chiral spectral variables;
 \ClaimStatusProvedHere]
 \label{rem:endch-spectral-variable-layering}
-\index{chiral endomorphism operad!formal variables}
-\index{Fulton--MacPherson model!not the algebraic definition}
-The definition of $\End^{\mathrm{ch}}_A$ is algebraic: its operation
-spaces are multilinear maps with values in iterated formal Laurent
-series in the symbols $\lambda_i$. Fulton--MacPherson geometry enters
-only through a comparison theorem. In the geometric model, a cochain is
-a logarithmic $\cD$-module section on $\overline C_{n+1}(X)$; after
-formal completion along the total diagonal, the relative coordinates
-$z_i-z_{n+1}$ are expanded as the algebraic variables $\lambda_i$
-of Definition~\ref{def:chiral-endomorphism-operad}. Thus the three
-layers are distinct: geometric FM/log-form model, formal-disk
-restriction, and algebraic formal-Laurent operad. The comparison
-is Proposition~\ref{prop:geometric-algebraic-hochschild}, together
-with the BD-to-algebraic bridge
-Proposition~\ref{prop:bd-algebraic-bridge}; it is not the definition
-of $\End^{\mathrm{ch}}_A$.
+The geometric logarithmic \(\mathcal D\)-module model, its formal
+completion along a diagonal, and a Laurent-series chart are three
+typed layers.  Relative coordinates \(z_i-z_n\) belong to the second
+and third layers.  The Fourier variable in a vertex-algebra
+\(\lambda\)-bracket belongs to the translation-equivariant operadic
+description.  A coordinate/Fourier transform relates these variables
+after its expansion and sesquilinearity conventions are fixed.
 \end{remark}
 
 \begin{lemma}[Associativity of partial compositions;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{lem:partial-comp-assoc}
-The partial compositions satisfy the standard
-operadic associativity and equivariance axioms:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Sequential associativity.}\;
- For $i < j$:
- \[
- (f \circ_i g) \circ_{j+n-1} h
- \;=\;
- (-1)^{\|g\| \cdot \|h\|}
- \,(f \circ_j h) \circ_i g.
- \]
-\item \emph{Nested associativity.}\;
- For $1 \le j \le n$:
- \[
- (f \circ_i g) \circ_{i+j-1} h
- \;=\;
- f \circ_i (g \circ_j h).
- \]
-\end{enumerate}
+Under \(H_{\mathrm{op}}(A)\), the partial compositions of
+\(\End_A^{\mathrm{ch}}\) satisfy nested and disjoint operadic
+associativity.  In the Laurent chart this conclusion holds precisely
+when all iterated substitutions are defined in the same completed
+expansion ring.
 \end{lemma}
 
 \begin{proof}
-Both identities reduce to the statement that
-the block-substitution~\eqref{eq:spectral-substitution}
-is associative.
-
-For~(b) (nested associativity): the left-hand side
-first substitutes $g$ into the $i$-th slot of~$f$,
-then substitutes $h$ into the $(i+j-1)$-th slot
-(which was the $j$-th slot of~$g$). The right-hand
-side first substitutes $h$ into the $j$-th slot
-of~$g$, then substitutes the result into the $i$-th
-slot of~$f$. At the level of spectral variables,
-both sides perform the same three-level block
-substitution:
-\[
-\lambda^{(f)}_{\cdot}
-\;\leftarrow\;
-\lambda^{(f)}_{\cdot}(\nu^{(g)}_{\cdot})
-\;\leftarrow\;
-\lambda^{(f)}_{\cdot}(\nu^{(g)}_{\cdot}(\rho^{(h)}_{\cdot})),
-\]
-and the Koszul signs are identical because the
-suspended degree of $(g \circ_j h)$ equals
-$\|g\| + \|h\|$ and the elements past which the
-operations must be commuted are the same on both sides.
-
-For~(a) (sequential associativity): the two substitutions
-act on disjoint slots of~$f$, so the spectral variables
-are independent. The sign $(-1)^{\|g\| \cdot \|h\|}$
-arises from interchanging the order in which $g$
-and $h$ are commuted past the inputs of~$f$.
+Nested and disjoint associativity are axioms of the dg operad in
+\(H_{\mathrm{op}}(A)\).  The second sentence is their chart-level
+translation: equality in two different iterated Laurent rings has
+mathematical content after both expressions map to a common
+completion.
 \end{proof}
-
-The chiral endomorphism operad encodes multilinear operations
-with spectral parameters; partial composition encodes nested
-collisions. But an operad is not yet a cochain complex.
-To extract the deformation theory of a specific algebra
-$(A, \{m_k\})$, we must assemble these operation spaces into
-a single bigraded complex with a differential determined
-by~$m$.
-
-%% ===========================================================
-%% 2. CHIRAL HOCHSCHILD COCHAIN COMPLEX
-%% ===========================================================
 
 \subsection{The chiral Hochschild cochain complex}
 \label{subsec:chiral-hoch-cochain}
@@ -342,1610 +139,433 @@ by~$m$.
 \begin{definition}[Chiral Hochschild cochain complex;
 \ClaimStatusDefinitional]
 \label{def:chiral-hochschild-cochain-brace}
-\index{chiral Hochschild cochains!cochain complex}
-The \emph{chiral Hochschild cochain complex} of
-an $\Ainf$-chiral algebra $(A, \{m_k\})$ is the
-graded vector space
-\begin{equation}\label{eq:chiral-hoch-space}
-C^n_{\mathrm{ch}}(A, A)
-\;:=\;
-\prod_{k \ge 0}
- \Hom\!\Bigl(
- A^{\otimes k},\;
- A\bigl((\lambda_1)\bigr)\cdots
- \bigl((\lambda_{k-1})\bigr)
- \Bigr)^{n+1-k},
-\end{equation}
-equipped with the \emph{bigrading}:
-\begin{itemize}
-\item The \emph{external degree} (or \emph{cochain degree})
- is $n$, the total cohomological degree in the
- Hochschild complex.
-\item The \emph{internal degree} is the degree~$k$
- (the number of inputs).
-\end{itemize}
-An element $f \in C^n_{\mathrm{ch}}(A, A)$ is a sequence
-$f = (f_0, f_1, f_2, \ldots)$ where
-$f_k \in \End^{\mathrm{ch}}_A(k)$ has cohomological
-degree $n + 1 - k$.
-The total cochain space is
+The chart-derived chiral Hochschild complex is
 \[
-C^\bullet_{\mathrm{ch}}(A, A)
-\;=\;
-\prod_{n \in \mathbb{Z}} C^n_{\mathrm{ch}}(A, A)
-\;=\;
-\prod_{k \ge 0} \End^{\mathrm{ch}}_A(k)[1-k].
+ C^\bullet_{\mathrm{ch}}(A,A)
+ :=
+ R\operatorname{End}_{A^e}(A).
 \]
-The products are completed products in the conformal-weight topology,
-and the Hom-spaces consist of continuous maps. Equivalently,
-$C^\bullet_{\mathrm{ch}}(A,A)$ is the inverse limit over finite
-conformal-weight windows of the ordinary chiral Hochschild complexes
-on those finite windows.
-
-The \emph{chiral Hochschild differential} is
-\begin{equation}\label{eq:hoch-diff-bracket}
-\delta(f) := [m, f],
-\end{equation}
-where $m = (m_0, m_1, m_2, \ldots)$ is the $\Ainf$-structure
-viewed as an element of $C^1_{\mathrm{ch}}(A, A)$
-(degree $|m_k| = 2 - k$ gives total degree~$1$),
-and $[-,-]$ is the Gerstenhaber bracket defined below
-in Definition~\ref{def:gerstenhaber-bracket-chiral}.
+Under \(H_{\mathrm{op}}(A)\), the chosen operadic model is denoted
+\(C^\bullet_{\mathcal P}(A,A)\), with
+\[
+ C^\bullet_{\mathcal P}(A,A)[1]=\mathfrak g_A,
+ \qquad
+ d_m=d_{\mathcal P}+[m,-].
+\]
+The comparison \(\gamma_A\) of
+Definition~\ref{def:cct-operadic-chart-package} promotes this model to
+the derived centre when \(\gamma_A\) is a quasi-isomorphism.
 \end{definition}
 
-\begin{proposition}[Geometric--algebraic comparison for chiral Hochschild;
-\ClaimStatusProvedHere]
-\label{prop:geometric-algebraic-hochschild}
-\index{chiral Hochschild!geometric--algebraic comparison}
-Let $A$ be a chiral algebra on a smooth curve~$X$ satisfying the
-logarithmic and completed finite-piece hypotheses above. Assume also
-that the geometric model has holonomic $\cD$-module coefficients and
-that the bar model is cofibrant on every finite conformal-weight
-window. There is a natural quasi-isomorphism of completed cochain
-complexes
-\begin{equation}\label{eq:geom-alg-hochschild-comparison}
- \varphi \colon C^\bullet_{\mathrm{ch,geom}}(A, A)
- \xrightarrow{\;\sim\;}
- C^\bullet_{\mathrm{ch,alg}}(A, A)
-\end{equation}
-where:
+\begin{definition}[Geometric--algebraic comparison package;
+\ClaimStatusDefinitional]
+\label{def:cct-geometric-algebraic-package}
+The package \(H_{\mathrm{geom/alg}}(A)\) consists of:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $C^\bullet_{\mathrm{ch,geom}}(A, A)$ is the geometric
- chiral Hochschild complex of
- Theorem~\ref{thm:chiral-hochschild-differential},
- with cochains on $\overline{C}_{n+1}(X)$ and
- differential $d_{\mathrm{int}} + d_{\mathrm{fact}}
- + d_{\mathrm{config}}$;
-\item $C^\bullet_{\mathrm{ch,alg}}(A, A)$ is the algebraic
- chiral Hochschild complex
- \textup{(Definition~\ref{def:chiral-hochschild-cochain-brace})},
- with cochains in $\prod_{n \ge 0}
- \End^{\mathrm{ch}}_A(n{+}1)[-n]$ and
- differential $\delta f = [m, f]_{\mathrm{G}}$
- \textup{(Definition~\ref{def:gerstenhaber-bracket-chiral})};
-\item the map $\varphi$ evaluates a geometric cochain
- \textup{(}a section with logarithmic form on
- $\overline{C}_{n+1}(X)$\textup{)}
- by restricting to the formal completion of
- $\overline{C}_{n+1}(X)$ along the total diagonal
- and expanding in the relative coordinates
- $\lambda_i = z_i - z_{n+1}$,
- producing a formal-Laurent-series-valued
- multilinear map.
+\item a geometric logarithmic cochain complex
+ \(C^\bullet_{\mathrm{ch,geom}}(A,A)\) on a specified
+ Fulton--MacPherson or Ran model;
+\item a continuous restriction-and-expansion chain map
+ \[
+ \varphi_A\colon
+ C^\bullet_{\mathrm{ch,geom}}(A,A)
+ \longrightarrow C^\bullet_{\mathcal P}(A,A);
+ \]
+\item compatibility of \(\varphi_A\) with ordered operadic
+ compositions;
+\item a finite-window quasi-isomorphism proof;
+\item inverse-limit identifications for both complexes and vanishing
+ \(\varprojlim_N^1 H^{q-1}\) on both finite-window towers.
 \end{enumerate}
-The quasi-isomorphism is $E_1$-compatible: it
-intertwines the ordered compositions on both sides.
-At genus~$0$, it is an equivalence of $E_2$-algebras
-at the level of Gerstenhaber algebras (cohomology);
-the chain-level $E_2$-equivalence follows from
-formality of the FM operad (Kontsevich).
-At genus~$\ge 1$, the geometric model carries
-curve-dependent data \textup{(}Green's functions, period
-corrections\textup{)} invisible to the algebraic model.
+\end{definition}
+
+\begin{proposition}[Geometric--algebraic comparison criterion;
+\ClaimStatusConditional]
+\label{prop:geometric-algebraic-hochschild}
+Assume \(H_{\mathrm{op}}(A)+H_{\mathrm{geom/alg}}(A)\).  Then
+\[
+ \varphi_A\colon
+ C^\bullet_{\mathrm{ch,geom}}(A,A)
+ \xrightarrow{\sim}
+ C^\bullet_{\mathcal P}(A,A)
+\]
+is a quasi-isomorphism of complete cochain complexes and preserves the
+ordered brace operations.  If \(\gamma_A\) is also a
+quasi-isomorphism, both models compute
+\(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\).
 \end{proposition}
 
 \begin{proof}
-The argument parallels the bar complex comparison
-(Theorem~\ref{thm:geometric-equals-operadic-bar}).
-
-\emph{Step~1} (The map).
-A geometric cochain $\omega \in
-\Gamma\bigl(\overline{C}_{n+1}(X),\,
-j_*j^*A^{\boxtimes(n+1)} \otimes
-\Omega^n(\log D)\bigr)$
-is sent to
-$\varphi(\omega) \in \End^{\mathrm{ch}}_A(n{+}1)$
-by restricting $\omega$ to the formal completion along
-the total diagonal and expanding in the relative
-coordinates $\lambda_i = z_i - z_{n+1}$.
-This extracts the formal Laurent series in the spectral
-variables $\lambda_1, \ldots, \lambda_n$.
-
-\emph{Step~2} (Chain map).
-The geometric differential decomposes as
-$d_{\mathrm{int}} + d_{\mathrm{fact}} +
-d_{\mathrm{config}}$
-(Theorem~\ref{thm:chiral-hochschild-differential}).
-Under $\varphi$, $d_{\mathrm{int}}$ maps to the internal
-differential on~$A$; $d_{\mathrm{fact}}$ maps to the
-chiral multiplication insertions in
-$\delta = [m, -]$; and $d_{\mathrm{config}}$ maps to
-the formal residue contributions, by Stokes's theorem
-applied to the boundary strata of
-$\overline{C}_{n+1}(X)$.
-
-\emph{Step~3} (Quasi-isomorphism).
-The logarithmic comparison theorem (Deligne) gives
-$H^*\bigl(\Omega^*_{\overline{C}_{n+1}(X)}(\log D)\bigr)
-\cong H^*(C_{n+1}(X); \bC)$,
-and the operadic differential encodes precisely
-the boundary stratification combinatorics,
-as in Step~3 of the proof of
-Theorem~\ref{thm:geometric-equals-operadic-bar},
-applied to the dual ($\Hom$) setting:
-chiral Hochschild cochains are $\Hom$ out of
-the bar complex, and the logarithmic comparison
-extends to this $\Hom$-complex by the universal
-coefficient theorem for $\cD$-module coefficients
-(the key input is holonomicity of
-$j_*j^*A^{\boxtimes(n+1)}$, which holds under
-the standing finiteness assumptions; the extension
-then follows from the derived $\Hom$ adjunction
-applied to the cofibrant bar resolution). On each finite
-conformal-weight window this is an ordinary finite-dimensional
-comparison. Passing to the completed complex is exact because the
-transition maps between finite windows are surjective, so the inverse
-system satisfies the Mittag--Leffler condition.
-
-\emph{Step~4} ($E_1$-compatibility).
-The ordered composition on both sides is inherited from
-the ordered bar comparison
-(Theorem~\ref{thm:geometric-equals-operadic-bar}),
-since partial compositions $f \circ_i g$ on
-$\End^{\mathrm{ch}}_A$ correspond to collisions at
-ordered boundary strata.
-At genus~$0$, the curve-independence of
-$\FM_n(\bC)$ promotes the compatibility to $E_2$.
+Clause~\textup{(iv)} gives the quasi-isomorphism on every finite
+window.  Clause~\textup{(v)} identifies cohomology of the inverse
+limit with the inverse limit of the finite-window cohomologies.
+Clause~\textup{(iii)} gives brace compatibility.  Composition with
+\(\gamma_A\) gives the final statement.
 \end{proof}
 
 \begin{remark}[Algebraic vs.\ geometric content]
 \label{rem:comparison-geometric-hoch}
-The quasi-isomorphism of
-Proposition~\ref{prop:geometric-algebraic-hochschild}
-shows that the algebraic model retains the full
-cohomological information of the geometric one.
-What the algebraic model \emph{loses} is the integration
-data over $\FM_n(\bC)$: the geometric realization
-endows $C^\bullet_{\mathrm{ch}}(A, A)$ with additional
-integration structure, while the algebraic definition
-retains only the formal-variable residue operations and
-is therefore valid over any ground field.
+The formal operadic brace theorem below is independent of a curve.
+The construction of \(\varphi_A\), its compatibility with residues,
+and its completed quasi-isomorphism are geometric theorems.  Deligne's
+logarithmic de Rham comparison computes the cohomology of an open
+configuration space.  Identification with a coefficient-valued
+Hochschild complex and its brace operations is the additional content
+of \(H_{\mathrm{geom/alg}}(A)\).
 \end{remark}
-
-The cochain complex $(C^\bullet_{\mathrm{ch}}(A, A), \delta)$
-carries the differential $\delta = [m, -]$, but this uses
-only the single-insertion bracket. The deeper structure
-is the full system of multi-insertion operations: given a
-cochain~$f$ and cochains $g_1, \ldots, g_r$, one can
-insert the $g_j$ simultaneously into the slots of~$f$.
-These are the brace operations, and they encode the
-obstruction theory for deformations of arbitrary order.
-
-%% ===========================================================
-%% 3. BRACE OPERATIONS
-%% ===========================================================
 
 \subsection{Brace operations on chiral Hochschild cochains}
 \label{subsec:brace-ops-chiral}
 
-\begin{definition}[Brace operations; \ClaimStatusDefinitional]
+\begin{definition}[Operadic braces; \ClaimStatusDefinitional]
 \label{def:brace-operations-chiral}
-\index{brace operations!chiral Hochschild}
-For cochains $f \in C^\bullet_{\mathrm{ch}}(A, A)$
-whose active component has arity~$p$
-\textup{(}i.e., $f \in \End^{\mathrm{ch}}_A(p)$\textup{)}
-and $g_1, \ldots, g_r$ with active arities
-$q_1, \ldots, q_r$, the \emph{brace operation}
-\begin{equation}\label{eq:brace-def}
-f\{g_1, \ldots, g_r\}
-\;\in\;
-\End^{\mathrm{ch}}_A\!\bigl(p + q_1 + \cdots + q_r - r\bigr)
-\end{equation}
-is defined by the following explicit formula.
-Set $Q := q_1 + \cdots + q_r - r$ (the total number
-of ``extra'' inputs contributed by the $g_j$).
-Then
-\begin{equation}\label{eq:brace-explicit}
-\boxed{
-\begin{aligned}
-&f\{g_1, \ldots, g_r\}
- (a_1, \ldots, a_{p+Q};
- \mu_1, \ldots, \mu_{p+Q-1})
-\\[4pt]
-&\quad=\;
-\sum_{\substack{
- 1 \le i_1 < i_2 < \cdots < i_r \le p
-}}
-\varepsilon(\sigma;\, f,\, g_1, \ldots, g_r;\,
- a_1, \ldots, a_{p+Q})
-\\[4pt]
-&\qquad\quad\times\;
-f\Bigl(
- a_1, \ldots, a_{i_1 - 1 + \alpha_0},\;
- g_1\bigl(a_{i_1 + \alpha_0}, \ldots, a_{i_1 + \alpha_0 + q_1 - 1};\;
- \boldsymbol{\nu}^{(1)}\bigr),\;
-\\[2pt]
-&\qquad\qquad\;\;
- a_{i_1 + \alpha_0 + q_1}, \ldots, a_{i_2 - 1 + \alpha_1},\;
- g_2\bigl(a_{i_2 + \alpha_1}, \ldots;\;
- \boldsymbol{\nu}^{(2)}\bigr),\;
- \ldots,
-\\[2pt]
-&\qquad\qquad\;\;
- g_r\bigl(\ldots, a_{i_r + \alpha_{r-1} + q_r - 1};\;
- \boldsymbol{\nu}^{(r)}\bigr),\;
- a_{i_r + \alpha_{r-1} + q_r}, \ldots, a_{p+Q};\;
- \boldsymbol{\lambda}
-\Bigr),
-\end{aligned}
-}
-\end{equation}
-where:
-\begin{itemize}
-\item $\alpha_j := (q_1 - 1) + \cdots + (q_j - 1)$
- for $j = 0, 1, \ldots, r$
- (with $\alpha_0 = 0$) counts the accumulated
- extra inputs from $g_1, \ldots, g_j$.
-
-\item The \emph{inner spectral variables}
- $\boldsymbol{\nu}^{(j)} = (\nu^{(j)}_1, \ldots,
- \nu^{(j)}_{q_j - 1})$ for each $g_j$ are determined
- by the block-substitution
- rule~\eqref{eq:spectral-substitution} applied at
- insertion position~$i_j$.
-
-\item The \emph{outer spectral variables}
- $\boldsymbol{\lambda} = (\lambda_1, \ldots, \lambda_{p-1})$
- of~$f$ are obtained from the $\mu_\ell$ by the same
- block-substitution, with the slots corresponding to
- the inner variables of each $g_j$ collapsed.
-
-\item The \emph{Koszul sign} is
- \begin{equation}\label{eq:brace-sign-explicit}
- \boxed{
- \varepsilon
- \;=\;
- \prod_{j=1}^{r}
- (-1)^{\|g_j\| \cdot \sigma_j},
- }
- \end{equation}
- where the \emph{crossing number} of $g_j$ is
- \begin{equation}\label{eq:crossing-number}
- \sigma_j
- \;:=\;
- \sum_{s=1}^{i_j - 1 + \alpha_{j-1}}
- |a_s|
- \;+\;
- \sum_{\ell=1}^{j-1} \|g_\ell\|,
- \end{equation}
- and $\|g_j\| = |g_j| - 1$ is the suspended degree.
- The sign arises from commuting $g_j$ (of suspended
- degree~$\|g_j\|$) past:
- \begin{enumerate}[label=(\alph*)]
- \item all input elements $a_s$ that precede the
- block of inputs consumed by~$g_j$, contributing
- $\sum |a_s|$;
- \item all previously inserted operations
- $g_1, \ldots, g_{j-1}$, contributing
- $\sum \|g_\ell\|$.
- \end{enumerate}
- This is the standard Koszul sign rule applied in the
- desuspended cochain complex $s^{-1}C^\bullet_{\mathrm{ch}}$.
-\end{itemize}
+For a complete dg nonsymmetric operad \(\mathcal P\), the brace
+\(f\{g_1,\ldots,g_r\}\) is the signed sum over all ordered disjoint
+insertions of \(g_1,\ldots,g_r\) into the input slots of \(f\).
+The signs are the Koszul signs in the suspension fixed by
+\(H_{\mathrm{op}}(A)\), and the sum is continuous in the chosen
+completion.
 \end{definition}
 
 \begin{example}[Single brace]
 \label{ex:single-brace-chiral}
-For $r = 1$: $f\{g\}$ is a sum over the $p$ insertion
-positions $i_1 = 1, \ldots, p$:
-\begin{equation}\label{eq:single-brace}
-f\{g\}
-\;=\;
-\sum_{i=1}^{p}
-(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1+\alpha_0}|)}
-\;f \circ_i g
-\;=\;
-\sum_{i=1}^{p}
-(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}
-\;f \circ_i g,
-\end{equation}
-since $\alpha_0 = 0$. This is the pre-Lie product.
+The single brace is the operadic pre-Lie product
+\[
+ f\{g\}=\sum_i (-1)^{\epsilon_i}f\circ_i g.
+\]
+Each \(\epsilon_i\) is determined by moving the suspended operation
+\(g\) past the inputs preceding the \(i\)-th slot.
 \end{example}
 
 \begin{definition}[Gerstenhaber bracket; \ClaimStatusDefinitional]
 \label{def:gerstenhaber-bracket-chiral}
-\index{Gerstenhaber bracket!chiral}
-The \emph{Gerstenhaber bracket} on
-$C^\bullet_{\mathrm{ch}}(A, A)[1]$ is
-\begin{equation}\label{eq:gerstenhaber}
-[f, g]
-\;:=\;
-f\{g\}
-\;-\;
-(-1)^{\|f\| \cdot \|g\|}
-\;g\{f\},
-\end{equation}
-where $\|f\| = |f| - 1$, $\|g\| = |g| - 1$ are
-the suspended degrees.
+On the shifted complex
+\(\mathfrak g_A=C^\bullet_{\mathcal P}(A,A)[1]\), define
+\[
+ [f,g]
+ :=
+ f\{g\}-(-1)^{|f||g|}g\{f\}.
+\]
+This is a degree-zero bracket on \(\mathfrak g_A\), equivalently a
+degree-\((-1)\) Gerstenhaber bracket on the unshifted cochain complex.
 \end{definition}
 
 \begin{remark}[Cup product]
 \label{rem:cup-product}
-The \emph{cup product} is the concatenation composition
-$f \smile g := f \circ g$, \emph{not} a specialisation
-of the brace operation (the $r = 0$ brace $f\{\,\}$ is
-simply $f$ itself). Precisely, for arity-$p$ component~$f$ and
-arity-$q$ component~$g$:
-\[
-(f \smile g)(a_1, \ldots, a_{p+q};
- \mu_1, \ldots, \mu_{p+q-1})
-:=
-(-1)^{|g| \cdot (|a_1| + \cdots + |a_p|)}
-\,f(a_1, \ldots, a_p; \mu_1, \ldots, \mu_{p-1})
-\cdot
-g(a_{p+1}, \ldots, a_{p+q}; \mu_p, \ldots, \mu_{p+q-1}),
-\]
-where $\cdot$ denotes multiplication in
-$A((\lambda))\cdots$.
-This gives $(C^\bullet_{\mathrm{ch}}, \smile)$ the
-structure of an associative dg algebra; $\smile$ has cohomological
-degree~$0$. The Gerstenhaber bracket~\eqref{eq:gerstenhaber} has
-cohomological degree~$-1$ and is a derivation of the cup product in
-each variable.
+For a strict binary multiplication \(\mu\), the cup product is the
+standard operation obtained from \(\mu\{\!f,g\!\}\), with the
+suspension sign dictated by the operadic convention.  For an
+\(A_\infty\)-multiplication, the higher \(m_k\) supply its coherent
+homotopies.  The brace operations, cup product, and bracket therefore
+belong to one operadic structure.
 \end{remark}
 
-Three algebraic structures now coexist on
-$C^\bullet_{\mathrm{ch}}(A, A)$:
-the cup product (associative, degree~$0$),
-the Gerstenhaber bracket (Lie on the desuspension, degree~$-1$),
-and the full brace system (all degrees).
-The question is whether these structures are compatible
-with the differential $\delta = [m, -]$.
-They are: the chiral Hochschild cochains form a brace dg algebra.
-The proof of this fact occupies the next subsection and is the
-technical core of the chapter.
-
-%% ===========================================================
-%% 4. BRACE DG ALGEBRA THEOREM
-%% ===========================================================
-
-\subsection{The brace dg algebra structure}
+\subsection{Braces and the homotopy Gerstenhaber structure}
 \label{subsec:brace-dg-algebra}
 
-\begin{proposition}[Pre-Lie relation for the single brace; \ClaimStatusProvedHere]
+\begin{proposition}[Pre-Lie relation for the single brace;
+\ClaimStatusProvedHere]
 \label{prop:pre-lie-chiral}
-\index{pre-Lie!chiral braces}
-The single-brace operation on $C^\bullet_{\mathrm{ch}}(A, A)$
-satisfies the pre-Lie identity: for all $a, b, c$,
-\[
-a\{b\}\{c\} - a\{b\{c\}\}
-= (-1)^{\|b\| \cdot \|c\|}
-\bigl(a\{c\}\{b\} - a\{c\{b\}\}\bigr).
-\]
+The single brace associated with a dg nonsymmetric operad satisfies
+the graded pre-Lie identity.
 \end{proposition}
 
 \begin{proof}
-Both sides are double insertions into~$a$. On the
-left, $a\{b\}\{c\}$ inserts $b$ first (at position~$i$)
-then $c$ (at position~$j$), while $a\{b\{c\}\}$
-inserts $c$ into~$b$ first and then the composite
-into~$a$. The non-nested terms ($i \ne j$ and $c$ not
-inside~$b$) on the left are paired with the corresponding
-non-nested terms on the right (with~$b$ and $c$ exchanged)
-by the Koszul sign $(-1)^{\|b\|\|c\|}$ from transposing
-$b$ and $c$ in the desuspended complex. The nested terms
-($c$ inside~$b$, or $b$ inside~$c$) cancel on each side.
-The spectral substitutions
-match by the associativity of
-block-substitution (Lemma~\ref{lem:partial-comp-assoc}).
+Both sides enumerate the same rooted trees with two inserted vertices.
+Operadic associativity identifies the evaluations and the Koszul rule
+identifies their signs.  This is the pre-Jacobi identity of
+Gerstenhaber--Voronov
+\cite[identity~\textup{(}9\textup{)}]{GV95}.
 \end{proof}
 
-\begin{proposition}[Full brace identity; \ClaimStatusProvedHere]
+\begin{proposition}[Full brace identity;
+\ClaimStatusProvedHere]
 \label{prop:full-brace-chiral}
-\index{brace identity!full}
-The brace operations satisfy identity \textup{(B1)} of
-Theorem~\textup{\ref{thm:brace-dg-algebra}} below:
-\[
-f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
-=
-\sum \varepsilon' \,
-f\bigl\{H_0,\; g_1\{H_1\},\; \ldots,\; g_r\{H_r\}\bigr\},
-\]
-where the sum is over all ordered partitions preserving
-the linear order.
+The braces associated with a dg nonsymmetric operad satisfy the full
+ordered-partition brace identity.
 \end{proposition}
 
 \begin{proof}
-This follows from the associativity of operadic composition
-in $\End^{\mathrm{ch}}_A$. See the detailed proof given
-below in \S\ref{subsubsec:proof-brace-identity}.
+Both sides enumerate the same planar rooted trees, grouped according
+to whether each second-stage insertion lands in an outer slot or in a
+previously inserted operation.  This is the operadic brace identity
+of Gerstenhaber--Voronov
+\cite[identity~\textup{(}6\textup{)} and Theorem~3]{GV95}.
 \end{proof}
 
-\begin{theorem}[Brace dg algebra]
+\begin{theorem}[Operadic braces and homotopy Gerstenhaber structure;
+\ClaimStatusConditional]
 \label{thm:brace-dg-algebra}
-\index{brace algebra!dg structure}
-Let $(A, \{m_k\})$ be a curved $\Ainf$-chiral algebra.
-Then the triple
-$\bigl(C^\bullet_{\mathrm{ch}}(A, A),\, \delta,\,
-\{-\}\{-, \ldots, -\}\bigr)$
-is a \emph{brace dg algebra}: the brace operations
-satisfy the following four identities.
+\textup{[Type signature: Open quadrant; complete operadic chart
+presentation; Beilinson level \(3\); hypothesis package
+\(H_{\mathrm{op}}(A)\).]}
 
-\begin{enumerate}[label=\textup{(B\arabic*)}]
-\item \emph{Higher associativity (the brace identity).}\;
- For all $f, g_1, \ldots, g_r, h_1, \ldots, h_s$:
- \begin{equation}\label{eq:brace-identity}
- \boxed{
- \begin{aligned}
- &f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
- \\[4pt]
- &\quad=\;
- \sum_{\substack{
- s_0 + s_1 + \cdots + s_r = s \\
- s_j \ge 0
- }}
- \varepsilon'
- \;f\!\bigl\{
- h_1, \ldots, h_{s_0},\;
- g_1\{h_{s_0+1}, \ldots, h_{s_0+s_1}\},\;
- h_{s_0+s_1+1}, \ldots, h_{s_0+s_1+s_2^*},
- \\[2pt]
- &\qquad\qquad\qquad
- g_2\{h_{s_0+s_1+s_2^*+1}, \ldots\},\;
- \ldots,\;
- g_r\{\ldots, h_s\},\;
- h_{s-s_{r+1}+1}, \ldots
- \bigr\}
- \end{aligned}
- }
- \end{equation}
- where the sum is over all ordered partitions
- $\{h_1, \ldots, h_s\}
- = H_0 \sqcup H_1 \sqcup \cdots \sqcup H_r$
- with $|H_j| = s_j$, respecting the linear order
- (i.e., elements of $H_0$ precede those of~$H_1$,
- etc.), and the elements of $H_j$ for $j \ge 1$
- are inserted into~$g_j$ via a brace, while the
- elements of~$H_0$ are inserted into the remaining
- external slots of~$f$.
-
- More precisely: write
- $T_j = s_0 + s_1 + \cdots + s_j$ for the
- cumulative partition sizes. Then
- \begin{equation}\label{eq:brace-identity-precise}
- \text{RHS}
- \;=\;
- \sum
- \varepsilon'
- \;f\!\bigl\{
- h_1, \ldots, h_{T_0},\;
- g_1\{h_{T_0+1}, \ldots, h_{T_1}\},\;
- h_{T_1+1}, \ldots, h_{T_1+s_2^*},\;
- \ldots,\;
- g_r\{h_{T_{r-1}+1}, \ldots, h_{T_r}\}
- \bigr\}
- \end{equation}
- where $s_j^*$ denotes the number of $h$'s placed
- between $g_j$ and $g_{j+1}$ in the external slots.
-
- The sign $\varepsilon'$ is determined by the Koszul
- rule: each $g_j$ is commuted past the preceding
- $h$-operations via their suspended degrees, and
- each $h$-operation is commuted past the
- $a$-inputs and the preceding $g$'s via the
- standard rule~\eqref{eq:brace-sign-explicit}.
- Explicitly:
- \begin{equation}\label{eq:brace-identity-sign}
- \varepsilon'
- \;=\;
- \prod_{j=1}^{r}
- (-1)^{\|g_j\| \cdot
- (\|h_1\| + \cdots + \|h_{T_{j-1}}\|)}.
- \end{equation}
-
-\item \emph{Differential compatibility.}\;
- \begin{equation}\label{eq:delta-brace}
- \delta\bigl(f\{g_1, \ldots, g_r\}\bigr)
- \;=\;
- (\delta f)\{g_1, \ldots, g_r\}
- \;+\;
- \sum_{j=1}^{r}
- (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
- \;f\{g_1, \ldots, \delta g_j, \ldots, g_r\}.
- \end{equation}
-
-\item \emph{Unit.}\;
- The identity map $\mathrm{id}_A \in \End^{\mathrm{ch}}_A(1)$
- satisfies
- \[
- f\{\mathrm{id}_A\}
- = p \cdot f
- \quad\text{(sum of $p$ terms, each contributing $f$)},
- \]
- and $\mathrm{id}_A\{g\} = g$ for all~$g$.
-
-\item \emph{Vanishing.}\;
- $f\{g_1, \ldots, g_r\} = 0$ whenever $r > p$
- (one cannot insert more operations than the number
- of input slots).
-\end{enumerate}
-\ClaimStatusProvedHere{}
+Assume \(H_{\mathrm{op}}(A)\).  The underlying complete graded object
+\(C^\bullet_{\mathcal P}(A,A)\) carries the operadic braces.  The
+Maurer--Cartan twist \(d_m=d_{\mathcal P}+[m,-]\) makes
+\(\mathfrak g_A=C^\bullet_{\mathcal P}(A,A)[1]\) a complete dg Lie
+algebra.  Planar trees whose labelled vertices are cochains and whose
+unlabelled vertices are components of \(m\) define the completed
+minimal-operad action of Kontsevich--Soibelman
+\cite[\S\S5 and~7]{KS00}.  For a strict binary multiplication this action is
+the homotopy Gerstenhaber structure of Gerstenhaber--Voronov
+\cite[Theorem~3 and Corollary~4]{GV95}.  Its cohomology is a
+Gerstenhaber algebra.
 \end{theorem}
 
-Each identity reduces to the associativity of operadic
-composition in $\End^{\mathrm{ch}}_A$ combined with the
-$\Ainf$ axiom $m\{m\} = 0$.
-
 \begin{proof}
-Identity~\textup{(B1)} is Proposition~\ref{prop:full-brace-chiral},
-and the detailed ordered-partition/sign check is carried out in the
-next proof subsection. Identity~\textup{(B2)} is proved in the
-subsequent subsection by rewriting
-$\delta=[m,-]$ and expanding the operadic associativity relation
-against $m\{m\}=0$. Identities~\textup{(B3)} and~\textup{(B4)} are
-proved in the final proof subsection directly from the definition of
-brace insertion. Together these four verifications show that
-$\bigl(C^\bullet_{\mathrm{ch}}(A, A), \delta, \{-\}\{-, \ldots, -\}\bigr)$
-is a brace dg algebra.
+The brace identities follow from
+Propositions~\ref{prop:pre-lie-chiral}
+and~\ref{prop:full-brace-chiral}.  The Maurer--Cartan equation gives,
+for \(f\in\mathfrak g_A\),
+\[
+ d_m^2f
+ =
+ \left[d_{\mathcal P}m+\frac12[m,m],f\right]
+ =0.
+\]
+Both \(d_{\mathcal P}\) and \([m,-]\) are derivations of the shifted
+Lie bracket, so their sum \(d_m\) is a Lie differential.  The
+planar-tree differential splits
+unlabelled vertices and applies \(d_{\mathcal P}\) to their labels;
+the Maurer--Cartan equation identifies the resulting sum with zero.
+This is the chain-map identity for the minimal-operad action.  In the
+strict binary case it specializes to identities~\textup{(6)--(8)} of
+Gerstenhaber--Voronov~\cite{GV95}.  Completion is legitimate by the
+continuity clause of \(H_{\mathrm{op}}(A)\).
 \end{proof}
 
-\subsubsection{Proof of the brace identity (B1)}
+\subsubsection{Operadic proof of the brace identity}
 \label{subsubsec:proof-brace-identity}
+The proof of Proposition~\ref{prop:full-brace-chiral} is the rooted-tree
+bijection described there.  Operadic associativity and the Koszul rule
+identify the evaluations and their signs.
 
-\begin{proof}[Proof of \textup{(B1)}: the brace identity]
-We must show
-\[
-f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
-\;=\;
-\sum
-\varepsilon'
-\;f\bigl\{
- H_0,\; g_1\{H_1\},\; \ldots,\; g_r\{H_r\}
-\bigr\}.
-\]
-The proof has three parts.
-
-\medskip
-\noindent\emph{Part (a): Both sides enumerate the same
-set of planar labeled trees.}
-
-An element of the left-hand side is computed by:
-(i)~first inserting $g_1, \ldots, g_r$ into~$f$ at
-positions $i_1 < \cdots < i_r$ to get a composite
-of arity $p + Q$; (ii)~then inserting $h_1, \ldots, h_s$
-into this composite at positions
-$j_1 < \cdots < j_s$.
-
-Each such choice determines a planar rooted tree~$T$
-of depth at most~$2$ with:
-\begin{itemize}
-\item Root vertex labeled~$f$ with $p$ children,
-\item At most $r$ internal vertices at depth~$1$
- labeled $g_1, \ldots, g_r$, each with $q_k$ children,
-\item Leaves distributed among the external and internal
- vertices.
-\end{itemize}
-The depth-$2$ positions~$j_\ell$ either land in an
-external slot of~$f$ (not inside any~$g_k$) or in an
-internal slot of some~$g_k$. This gives a partition
-$\{h_1, \ldots, h_s\} = H_0 \sqcup H_1 \sqcup \cdots
-\sqcup H_r$, where $H_k$ ($k \ge 1$) is the set of
-$h_j$'s inserted inside~$g_k$, and $H_0$ is the set
-of $h_j$'s inserted into external slots of~$f$.
-
-Conversely, an element of the right-hand side is computed
-by choosing a partition
-$H_0, H_1, \ldots, H_r$ (respecting order),
-performing each brace $g_k\{H_k\}$ to get a composite,
-and then inserting these composites along with $H_0$ into~$f$.
-This determines the same planar tree~$T$.
-
-Therefore, both sides are indexed by the same set of
-planar labeled trees, and on each tree both sides
-evaluate to
-\[
-f\bigl(\ldots,
- g_k(\ldots, h_{j_\ell}(\ldots), \ldots),
- \ldots,
- h_{j_m}(\ldots),
- \ldots\bigr)
-\]
-applied to the inputs $(a_1, \ldots, a_N)$ with the
-appropriate spectral variables.
-
-\medskip
-\noindent\emph{Part (b): The spectral variable
-substitutions agree.}
-
-On the left-hand side, the spectral substitution is
-performed in two stages:
-\begin{enumerate}
-\item Substitute the $\nu^{(k)}$ variables of each
- $g_k$ into the $\lambda$-variables of~$f$ via
- rule~\eqref{eq:spectral-substitution}, producing
- intermediate variables.
-\item Substitute the $\rho^{(\ell)}$ variables of
- each $h_\ell$ into the intermediate variables via
- the same rule.
-\end{enumerate}
-On the right-hand side, the substitution is performed as:
-\begin{enumerate}
-\item For $k \ge 1$: substitute the $\rho^{(\ell)}$
- variables of each $h_\ell \in H_k$ into the
- $\nu^{(k)}$-variables of~$g_k$ (inner braces).
-\item Substitute the resulting variables of
- $g_k\{H_k\}$ and the variables of $h_\ell \in H_0$
- into the $\lambda$-variables of~$f$ (outer brace).
-\end{enumerate}
-
-Both procedures compute the same final spectral
-variable assignment: the block-substitution
-rule~\eqref{eq:spectral-substitution} is associative
-(Lemma~\ref{lem:partial-comp-assoc}(b)), so performing
-the substitutions in stages gives the same result as
-performing them in a different order. More precisely,
-the final variable assignment for each $h_\ell$ is the
-difference of its input coordinate from the last input
-coordinate, computed via the merged $(p + Q + R)$-point
-configuration, and this is independent of the order in
-which the two-level nesting is processed.
-
-\medskip
-\noindent\emph{Part (c): The signs agree.}
-
-We work in the desuspended complex
-$\bar{C}^\bullet := s^{-1}C^\bullet_{\mathrm{ch}}$,
-where each cochain $f$ of degree $|f|$ is replaced by
-$\bar{f} = s^{-1}f$ of degree $\|f\| = |f| - 1$.
-
-\emph{Left-hand side.}
-The brace $f\{g_1, \ldots, g_r\}$ produces the sign
-$\varepsilon = \prod_{j=1}^{r}
-(-1)^{\|g_j\| \cdot \sigma_j}$
-from~\eqref{eq:brace-sign-explicit}.
-The subsequent brace
-$(\cdots)\{h_1, \ldots, h_s\}$ produces an
-additional sign from commuting each $h_\ell$ past the
-appropriate elements. For an $h_\ell$ that lands in
-an external slot of~$f$ (i.e., $h_\ell \in H_0$), the
-Koszul sign counts the elements and operations that
-$h_\ell$ passes over, including $\|g_k\|$ for each
-$g_k$ that precedes it. For an $h_\ell$ that lands
-inside $g_k$ (i.e., $h_\ell \in H_k$), the sign factors
-as the product of commuting $h_\ell$ past
-(i)~everything preceding $g_k$ in the outer brace, and
-(ii)~the inputs of $g_k$ preceding the insertion point.
-
-\emph{Right-hand side.}
-The inner brace $g_k\{H_k\}$ produces a sign from
-commuting each $h_\ell \in H_k$ past the inputs of~$g_k$.
-The outer brace produces a sign from commuting each
-of $g_1\{H_1\}, \ldots, g_r\{H_r\}$ and each
-$h_\ell \in H_0$ past the elements preceding them.
-The suspended degree of $g_k\{H_k\}$ is
-$\|g_k\| + \sum_{\ell \in H_k} \|h_\ell\|$ (the brace
-shifts degree additively).
-
-We verify that the total signs agree. For each
-$h_\ell \in H_k$ ($k \ge 1$), the left-hand side
-contributes:
-\[
-(-1)^{\|h_\ell\| \cdot (\text{everything before } h_\ell
- \text{ in the composite } f\{g_1, \ldots, g_r\})}
-\]
-which decomposes as
-\[
-(-1)^{\|h_\ell\| \cdot
- (\text{before } g_k \text{ in } f)}
-\;\cdot\;
-(-1)^{\|h_\ell\| \cdot
- (\text{before insertion point inside } g_k)}.
-\]
-The right-hand side contributes the inner sign
-$(-1)^{\|h_\ell\| \cdot
- (\text{before insertion point inside } g_k)}$
-from the inner brace, and the outer sign includes
-\[
-(-1)^{\|g_k\{H_k\}\| \cdot
- (\text{before } g_k \text{ in } f)}
-=
-(-1)^{(\|g_k\| + \sum_{\ell' \in H_k} \|h_{\ell'}\|)
- \cdot (\text{before } g_k \text{ in } f)}.
-\]
-Expanding this outer sign and collecting all $h_\ell$
-contributions from $H_k$, we get
-\[
-(-1)^{\|g_k\| \cdot (\text{before } g_k)}
-\cdot
-\prod_{\ell \in H_k}
-(-1)^{\|h_\ell\| \cdot (\text{before } g_k)}.
-\]
-The first factor matches the $g_k$ contribution on the
-left-hand side, and the product matches the external
-passage of each $h_\ell \in H_k$. A similar analysis
-for $h_\ell \in H_0$ shows that the signs match directly,
-since $H_0$ elements only pass through external slots.
-
-By induction on the number of crossings, the total signs
-on both sides are equal.
-\end{proof}
-
-\subsubsection{Proof that \texorpdfstring{$\delta^2 = 0$}{delta\textasciicircum 2 = 0}}
+\subsubsection{The square of the twisted differential}
 \label{subsubsec:proof-delta-squared}
-
-\begin{proof}[Proof that $\delta^2 = 0$]
-We use the $\Ainf$ identity
-(Definition~\ref{def:curved-ainfty})
-and the brace algebra structure
-(Proposition~\ref{prop:full-brace-chiral}).
-
-\emph{Step 1: The $\Ainf$ identity is $m\{m\} = 0$.}
-The element $m = (m_0, m_1, m_2, \ldots) \in
-C^1_{\mathrm{ch}}(A, A)$ has total degree~$1$, hence
-suspended degree $\|m\| = 0$. The single-brace
-$m\{m\}$ has degree-$n$ component
+The shifted multiplication \(m\) has odd dg-Lie degree \(1\).
+Consequently the graded Jacobi identity gives
 \[
-(m\{m\})_n
-= \sum_{r+s+t=n}
- (-1)^{rs+t}\,
- m_{r+1+t}\bigl(
- \mathrm{id}^{\otimes r} \otimes m_s
- \otimes \mathrm{id}^{\otimes t}\bigr),
+ [m,[m,f]]=\frac12[[m,m],f],
 \]
-where the sign $(-1)^{rs+t}$ is the standard curved
-$\Ainf$ sign convention arising from the desuspension
-on inputs (note that~\eqref{eq:brace-sign-explicit}
-gives trivial Koszul signs when $\|m\| = 0$).
-The curved $\Ainf$ relations state precisely that
-$(m\{m\})_n = 0$ for all $n \ge 0$. Hence
-$m\{m\} = 0$ as an element of $C^2_{\mathrm{ch}}(A,A)$.
+and the displayed calculation in the proof of
+Theorem~\ref{thm:brace-dg-algebra} proves \(d_m^2=0\).
 
-\emph{Step 2: Brace expansion of $\delta^2$.}
-For any $f \in C^\bullet_{\mathrm{ch}}(A,A)$,
-expand $\delta^2(f) = [m, [m, f]]$ by writing
-$[m, g] = m\{g\} - g\{m\}$
-(since $\|m\| = 0$, there is no sign in the
-second term):
-\begin{align*}
-\delta^2(f) = [m, [m, f]]
-&= m\{[m, f]\} - [m, f]\{m\}
-\\
-&= m\{m\{f\} - f\{m\}\}
- - (m\{f\} - f\{m\})\{m\}
-\\
-&= m\{m\{f\}\} - m\{f\{m\}\}
- - m\{f\}\{m\} + f\{m\}\{m\}.
-\end{align*}
-By the brace identity
-(Proposition~\ref{prop:full-brace-chiral}),
-$m\{m\{f\}\} = m\{m\}\{f\} + m\{m, f\}$
-(partitioning $\{f\}$ into the inner brace of~$m$
-or the external slot). But $m\{m\} = 0$ by the
-$\Ainf$ identity, so
-$m\{m\{f\}\} = m\{m, f\}$. Similarly,
-$f\{m\}\{m\}$ splits via the brace identity.
-After combining all terms and using $m\{m\} = 0$
-repeatedly, the entire expression vanishes.
-
-\emph{Direct verification at low degree} (as a
-check). The degree-$0$ component of $\delta^2(f)_0$
-involves $m_1(m_1(f_0)) + m_2(m_0, f_0) - m_2(f_0, m_0)$,
-which vanishes by the $n = 1$ curved $\Ainf$
-relation $m_1^2 = [m_0, -]_{m_2}$ applied twice
-and the $n = 0$ relation $m_1(m_0) = 0$.
-\end{proof}
-
-\begin{remark}[{Why $\delta^2 = 0$ is not a Jacobi shortcut}]
+\begin{remark}[The Maurer--Cartan identity is the Jacobi input]
 \label{rem:half-jacobi}
-The Gerstenhaber bracket $[m,m] = m\{m\} - m\{m\} = 0$
-vanishes identically for degree reasons
-(graded antisymmetry with $\|m\| = 0$).
-The \emph{non-trivial content} is the $\Ainf$
-Maurer--Cartan equation $m\{m\} = 0$. In any graded Lie
-algebra, the graded Jacobi identity gives
-\[
-\bigl(1 - (-1)^{\|x\|}\bigr)\,[x,[x,f]]
-= [[x,x],f]
-\]
-for homogeneous $x$. When $\|x\|$ is odd, this yields the
-familiar shortcut
-$[x,[x,f]] = \tfrac{1}{2}[[x,x],f]$.
-When $\|x\|$ is even, the coefficient on the left vanishes,
-so Jacobi collapses to the tautology $[[x,x],f] = 0$.
-Applying this with $x = m$ and $\|m\| = 0$ shows that
-Jacobi gives no information about
-$\mathrm{ad}_m^2 = [m,[m,-]]$ here. The proof must
-therefore go through the brace expansion (Step~2 above),
-which uses $m\{m\} = 0$ constructively to cancel the
-individual terms.
+The square-zero statement uses the Maurer--Cartan equation in the
+shifted dg Lie algebra.  This convention keeps the \(A_\infty\)
+structure odd and removes the parity ambiguity produced by mixing
+shifted and unshifted brace degrees.
 \end{remark}
 
-\subsubsection{Proof of differential compatibility (B2)}
+\subsubsection{Differential compatibility}
 \label{subsubsec:proof-diff-compat}
-
-\begin{proof}[Proof of \textup{(B2)}]
-The differential is the twist of the brace algebra by the
-Maurer--Cartan element $m$:
-$\delta=\mathrm{ad}_m=[m,-]$, with $m\{m\}=0$. Expand
-$[m, f\{g_1,\ldots,g_r\}]$ using
-$[m,x]=m\{x\}-x\{m\}$ and apply the brace identity~\textup{(B1)} to the
-two composites
-$m\{f\{g_1,\ldots,g_r\}\}$ and
-$f\{g_1,\ldots,g_r\}\{m\}$. The ordered partitions split into three
-classes: $m$ acts on the outer cochain~$f$; $m$ acts inside exactly
-one input cochain~$g_j$; or two copies of~$m$ compose with each other.
-The last class is zero by $m\{m\}=0$. The first two classes give
-\begin{align*}
-[m, f\{g_1, \ldots, g_r\}]
-&= [m, f]\{g_1, \ldots, g_r\}
-\\
-&\quad+ \sum_{j=1}^{r}
- (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
- \,f\{g_1, \ldots, [m, g_j], \ldots, g_r\}
-\\
-&= (\delta f)\{g_1, \ldots, g_r\}
- + \sum_{j=1}^{r}
- (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
- \,f\{g_1, \ldots, \delta g_j, \ldots, g_r\}.
-\end{align*}
-The displayed sign is exactly the Koszul sign for moving the
-degree-one differential past the preceding desuspended entries
-$f,g_1,\ldots,g_{j-1}$. This is \textup{(B2)}.
-\end{proof}
-
-\subsubsection{Proofs of (B3) and (B4)}
-
-\begin{proof}[Proof of \textup{(B3)} and \textup{(B4)}]
-Identity~(B3) follows directly from the definition: $f\{\mathrm{id}_A\}$
-inserts $\mathrm{id}_A$ into each of the $p$~slots of~$f$, and
-since $\mathrm{id}_A$ applied to $a_i$ returns $a_i$, each
-term reproduces~$f$ with a spectral variable identification
-that is the identity substitution. The sum of $p$ copies
-gives $p \cdot f$. Similarly, $\mathrm{id}_A\{g\}$ inserts
-$g$ into the unique slot of~$\mathrm{id}_A$, giving~$g$.
-
-Identity~(B4) is immediate: $f$ has $p$~input slots, so
-one cannot choose $r > p$ distinct insertion positions.
-\end{proof}
-
-%% ===========================================================
-%% 5. LOCAL CHIRAL SWISS-CHEESE PAIR
-%% ===========================================================
+The minimal-operad differential and the evaluation of unlabelled
+vertices by \(m\) form the two sides of the chain-map identity.  Terms
+with two copies of \(m\) combine with the internal differential into
+\(d_{\mathcal P}m+\frac12[m,m]\).  For a strict multiplication,
+Gerstenhaber--Voronov identity~\textup{(8)} expresses the differential
+of a higher brace as the internal differential terms together with
+the adjacent cup-boundary terms.
 
 \subsection{Local chiral Swiss-cheese pairs}
 \label{subsec:local-swiss-cheese}
 
-\begin{definition}[Local chiral Swiss-cheese pair]
+\begin{definition}[Local chiral action datum;
+\ClaimStatusDefinitional]
 \label{def:local-swiss-cheese-pair}
-\index{Swiss-cheese pair!local chiral}
-A \emph{local chiral Swiss-cheese pair} over an
-$\Ainf$-chiral algebra $(A, \{m_k\})$ is a triple
-$(B, A, \{\mu_{p;q}\})$ where:
+A local chiral action datum over \(A\) consists of a complete cochain
+complex \(B\) carrying an action of the same completed minimal operad
+as in Theorem~\ref{thm:brace-dg-algebra}, together with continuous
+evaluation maps
+\[
+ \mu_{1;n}\colon B\widehat\otimes A^{\widehat\otimes n}
+ \longrightarrow A((z_1-z_n))\cdots((z_{n-1}-z_n))
+\]
+such that:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $B = (B, \delta_B, \{-\}\{-, \ldots, -\})$
- is a brace dg algebra (satisfying (B1)--(B4)
- of Theorem~\ref{thm:brace-dg-algebra}).
-
-\item $A = (A, \{m_k\})$ is the given $\Ainf$-chiral
- algebra.
-
-\item The \emph{mixed operations}
- \begin{equation}\label{eq:mixed-ops}
- \mu_{p;q} \colon
- B^{\otimes p} \otimes A^{\otimes q}
- \longrightarrow
- A\bigl((\lambda_1)\bigr)\cdots
- \bigl((\lambda_{p+q-1})\bigr),
- \end{equation}
- for $p \ge 0$, $q \ge 0$, $(p,q) \ne (0,0)$,
- are multilinear maps of total degree $2 - p - q$,
- satisfying the following \emph{Swiss-cheese
- codimension-$1$ identities}: for all
- $b_1, \ldots, b_p \in B$ and
- $a_1, \ldots, a_q \in A$,
- \begin{equation}\label{eq:swiss-cheese-identity}
- \boxed{
- \begin{aligned}
- 0 &=
- \sum_{\substack{
- r + s + t = q \\
- r, t \ge 0,\; s \ge 0
- }}
- (-1)^{\epsilon_1}
- \mu_{p;\, r+1+t}
- (b_1, \ldots, b_p;
- a_1, \ldots, a_r,
- m_s(a_{r+1}, \ldots, a_{r+s}),
- a_{r+s+1}, \ldots, a_q)
- \\
- &\quad+
- \sum_{j=1}^{p}
- (-1)^{\epsilon_2}
- \mu_{p-1;\, q+\mathrm{ar}(b_j)}
- (b_1, \ldots, \hat{b}_j, \ldots, b_p;
- \text{insert } b_j \text{ into } A\text{-slots})
- \\
- &\quad+
- \sum_{\substack{
- 1 \le j < k \le p
- }}
- (-1)^{\epsilon_3}
- \mu_{p-1;\, q}
- (b_1, \ldots, b_j\{b_k\}, \ldots,
- \hat{b}_k, \ldots, b_p;
- a_1, \ldots, a_q)
- \\
- &\quad+
- (-1)^{\epsilon_4}
- \delta_B(b_1) \text{-terms},
- \end{aligned}
- }
- \end{equation}
- where:
- \begin{itemize}
- \item The first sum encodes the $\Ainf$ identity
- applied to the $A$-inputs.
- \item The second sum is the \emph{closed-to-open}
- operation: the arity-$k_j$ component of $b_j \in B$
- acts on $k_j$ consecutive $A$-inputs via
- $\mu_{1; k_j}(b_j; a_{i}, \ldots, a_{i+k_j-1})$.
- \item The third sum is the brace interaction among
- the $B$-elements.
- \item The signs $\epsilon_1, \epsilon_2, \epsilon_3,
- \epsilon_4$ are determined by the Koszul rule
- applied to the bigraded inputs.
- \end{itemize}
-
- In the case $p = 0$, the identity reduces to the
- $\Ainf$ identity for~$A$. In the case $q = 0$,
- the identity reduces to the brace-algebra differential
- on~$B$.
+\item the arity components assemble to a continuous graded map
+ \(\Phi_\mu\colon B\to C^\bullet_{\mathcal P}(A,A)\);
+\item \(\Phi_\mu d_B=d_m\Phi_\mu\);
+\item for every planar-tree operation \(T\) in the completed minimal
+operad,
+ \[
+ \Phi_\mu\bigl(T_B(b_1,\ldots,b_r)\bigr)
+ =
+ T_{C^\bullet_{\mathcal P}(A,A)}\bigl(
+ \Phi_\mu(b_1),\ldots,\Phi_\mu(b_r)\bigr).
+ \]
 \end{enumerate}
-
-A \emph{morphism of local chiral Swiss-cheese pairs}
-$(B, A, \mu) \to (B', A, \mu')$ over a fixed~$A$ is a
-morphism of brace dg algebras $\Phi \colon B \to B'$
-such that
-$\mu'_{p;q}(\Phi(b_1), \ldots, \Phi(b_p);
- a_1, \ldots, a_q)
-= \mu_{p;q}(b_1, \ldots, b_p; a_1, \ldots, a_q)$
-for all $p, q$ and all inputs.
+The package \(H_{\mathrm{SC}}(B,A)\) is the assertion that these maps
+and identities have been constructed in the same expansion and
+completion conventions as \(H_{\mathrm{op}}(A)\).
 \end{definition}
 
 \begin{remark}[Relation to the operad-theoretic definition]
 \label{rem:swiss-cheese-operad}
-A local chiral Swiss-cheese pair in the sense above is
-an algebra over (the chain complex of) the two-colored
-Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$
-of Volume~II, restricted to
-the local data (a single open disc and a single closed
-disc). The brace algebra $B$ is the ``closed'' color
-and the $\Ainf$-chiral algebra $A$ is the ``open'' color.
-The mixed operations $\mu_{p;q}$ encode the insertion of
-closed observables into the open channel.
+An algebra over a two-coloured Swiss-cheese chain operad supplies such
+evaluation maps after restriction to one local closed disc and one
+local open disc.  Establishing this restriction for a proposed chiral
+Swiss-cheese operad is a separate comparison theorem.
 \end{remark}
-
-%% ===========================================================
-%% 6. THE UNIVERSAL SWISS-CHEESE PAIR
-%% ===========================================================
 
 \subsection{The universal pair: construction}
 \label{subsec:universal-pair-construction}
 
-\begin{construction}[The universal pair $U(\cA)$; \ClaimStatusDefinitional]
+\begin{construction}[The cochain action pair;
+\ClaimStatusConditional]
 \label{const:universal-pair}
-\index{universal Swiss-cheese pair}
-Given an $\Ainf$-chiral algebra $(A, \{m_k\})$,
-define the \emph{universal local chiral Swiss-cheese pair}
-$U(\cA) := (C^\bullet_{\mathrm{ch}}(A, A),\, A,\,
-\{\mu^{\mathrm{univ}}_{p;q}\})$
-with:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Brace algebra:}
- $B := C^\bullet_{\mathrm{ch}}(A, A)$ with the
- brace structure of
- Theorem~\ref{thm:brace-dg-algebra} and
- differential $\delta = [m, -]$.
-
-\item \emph{$\Ainf$-chiral algebra:} $A$ with its
- given structure $\{m_k\}$.
-
-\item \emph{Mixed operations:}
- Let $f_1, \ldots, f_p \in C^\bullet_{\mathrm{ch}}(A, A)$ be
- homogeneous cochains, and let $k_j$ denote the arity of the
- component of $f_j$ being evaluated. For
- $a_1, \ldots, a_q \in A$, the universal mixed operation is the
- ordered sum of all iterated evaluations:
- \begin{equation}\label{eq:universal-mixed}
- \boxed{
- \begin{aligned}
- &\mu^{\mathrm{univ}}_{p;q}
- (f_1, \ldots, f_p;\, a_1, \ldots, a_q;\,
- \lambda_1, \ldots, \lambda_{p+q-1})
- \\[4pt]
- &\quad:=\;
- \sum_{\substack{
- 1\le i_1<\cdots<i_p\le q\\
- i_{j+1}\ge i_j+k_j
- }}
- \varepsilon\,
- m_{q-\sum_j k_j+p}\Bigl(
- a_1,\ldots,
- f_1(a_{i_1},\ldots,a_{i_1+k_1-1};
-      \boldsymbol{\nu}^{(1)}),
- \ldots,
- f_p(a_{i_p},\ldots,a_{i_p+k_p-1};
-      \boldsymbol{\nu}^{(p)}),
- \ldots,a_q;\boldsymbol{\lambda}^{\mathrm{out}}
- \Bigr).
- \end{aligned}
- }
- \end{equation}
- The sum ranges over disjoint ordered blocks of open inputs.
- The sign~$\varepsilon$ is the Koszul sign obtained by moving each
- cochain $f_j$ past the preceding open inputs and preceding closed
- insertions in the desuspended complex. The spectral variables
- $\boldsymbol{\nu}^{(j)}$
- and $\boldsymbol{\lambda}^{\mathrm{out}}$
- are determined by the block-substitution
- rule~\eqref{eq:spectral-substitution}.
-
- In the simplest nontrivial case $p = 1$, $q = n$:
- \begin{equation}\label{eq:mixed-p1}
- \mu^{\mathrm{univ}}_{1;n}(f;\, a_1, \ldots, a_n;\,
- \lambda_1, \ldots, \lambda_n)
- \;=\;
- f(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1}),
- \end{equation}
- i.e., for a single closed insertion, the mixed
- operation is simply the \emph{evaluation} of the
- cochain~$f$ on the open inputs.
-\end{enumerate}
+Under \(H_{\mathrm{op}}(A)\), operadic cochains act on \(A\) by
+evaluation.  This defines the local pair
+\[
+ U(A):=\bigl(C^\bullet_{\mathcal P}(A,A),A,\operatorname{ev}\bigr).
+\]
 \end{construction}
 
-%% ===========================================================
-%% 7. CHIRAL DELIGNE--TAMARKIN THEOREM
-%% ===========================================================
-
-\subsection{The chiral Deligne--Tamarkin theorem}
+\subsection{The chiral Deligne--Tamarkin criterion}
 \label{subsec:chiral-deligne-tamarkin}
 
-\begin{theorem}[Chiral Deligne--Tamarkin]
+\begin{theorem}[Evaluation criterion for a local closed-sector action;
+\ClaimStatusConditional]
 \label{thm:chiral-deligne-tamarkin}
-\index{Deligne--Tamarkin theorem!chiral}
-\index{chiral center theorem|see{Deligne--Tamarkin}}
-Let $(A, \{m_k\})$ be a curved $\Ainf$-chiral algebra.
-The universal local chiral Swiss-cheese pair
-\[
-U(\cA) = \bigl(C^\bullet_{\mathrm{ch}}(A, A),\, A,\,
-\{\mu^{\mathrm{univ}}_{p;q}\}\bigr)
-\]
-of Construction~\textup{\ref{const:universal-pair}} is
-\emph{terminal} \textup{(}final\textup{)} in the category
-of local chiral Swiss-cheese pairs over~$A$.
+\textup{[Type signature: Open quadrant; local two-coloured action
+presentation; Beilinson level \(3\); hypothesis package
+\(H_{\mathrm{op}}(A)+H_{\mathrm{SC}}(B,A)\).]}
 
-More precisely: for any local chiral Swiss-cheese pair
-$(B, A, \{\mu_{p;q}\})$ over~$A$ whose operations are continuous for
-the same completed conformal-weight topology, there exists a
-\emph{unique} morphism of local chiral Swiss-cheese pairs
+Assume \(H_{\mathrm{op}}(A)+H_{\mathrm{SC}}(B,A)\).  The mixed
+operations define a unique continuous morphism of completed
+minimal-operad algebras
 \[
-\Phi \colon (B, A, \{\mu_{p;q}\})
- \longrightarrow U(\cA)
+ \Phi_\mu\colon B\longrightarrow C^\bullet_{\mathcal P}(A,A)
 \]
-over the identity on~$A$. The morphism~$\Phi$ sends
-$b \in B$ to the chiral cochain
-$\Phi(b) \in C^\bullet_{\mathrm{ch}}(A, A)$ defined by
-\[
-\Phi(b)(a_1, \ldots, a_n;\,
- \lambda_1, \ldots, \lambda_{n-1})
-:= (-1)^{|b|}\,\mu_{1;n}(b;\, a_1, \ldots, a_n;\,
- \lambda_1, \ldots, \lambda_{n-1}),
-\]
-where $\mu_{1;n}$ is evaluated on the $n-1$ open-sector
-spectral variables $\lambda_i = z_i - z_n$
-(the closed-open spectral variable is absorbed by the
-evaluation map), and the sign $(-1)^{|b|}$ is the Koszul
-sign arising from the desuspension convention on the
-Hochschild cochain complex
-(see Remark~\textup{\ref{rem:phi-koszul-sign}}).
-The element~$b$ acts on the open sector via the given mixed
-operation, and the resulting cochain is its image in the derived
-Hochschild center. Its class in the naive chiral center is obtained
-only when this cochain has degree~$0$, is $\delta$-closed, and is then
-passed to~$H^0$.
-\ClaimStatusProvedHere{}
+whose arity-\(n\) component is the specified map \(\mu_{1;n}\).
+If \(\gamma_A\) is a quasi-isomorphism, this morphism represents the
+induced action on \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\).
 \end{theorem}
 
-\begin{remark}[Meaning of the theorem]
-The chiral Deligne--Tamarkin theorem says that the completed
-chiral Hochschild cochain complex is the chiral Hochschild analogue
-of the \emph{derived Hochschild center}: it is the universal closed
-algebra that acts on the open sector. The categorical identification
-with derived endomorphisms of an identity functor is a further Morita
-statement, supplied only under the compact-generator hypotheses of
-Theorem~\ref{thm:derived-center-hochschild}. Every closed
-observable in any Swiss-cheese pair $(B, A, \mu)$ maps
-uniquely to a chiral Hochschild cochain via evaluation
-on the open sector. The center is the terminal object in this
-category: it receives maps from all closed algebras acting on~$A$,
-just as the center $Z(R)$ of a ring~$R$ is the largest
-central commutative subalgebra, i.e., the terminal object in the
-category of commutative algebras whose maps to~$R$ land in central
-endomorphisms.
-The analogy stops at this universal property: the naive center is
-$H^0$ of this complex, while the categorical Drinfeld center of a
-monoidal module category is a different construction unless an
-additional compact-generator Hochschild comparison has been supplied.
-
-This is the chiral analogue of the classical
-Deligne conjecture (proved by many authors) and
-its Swiss-cheese refinement by
-Voronov~\cite{Voronov99} and
-Kontsevich--Soibelman~\cite{KS00}.
-\end{remark}
-
-\begin{proof}[Proof of Theorem~\textup{\ref{thm:chiral-deligne-tamarkin}}]
-Let $(B, A, \{\mu_{p;q}\})$ be an arbitrary local chiral
-Swiss-cheese pair over~$A$. We must construct a unique
-morphism $\Phi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$
-of brace dg algebras, compatible with the mixed operations.
-
-\medskip
-\noindent\textbf{Step 1: Construction of $\Phi$.}
-
-For homogeneous $b \in B$, define the arity-$n$ component of
-$\Phi(b)$ for every $n\ge0$ by
-\begin{equation}\label{eq:phi-construction}
-\boxed{
-\Phi(b)_n(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1})
-\;:=\;
-(-1)^{|b|}\,
-\mu_{1;n}(b;\, a_1, \ldots, a_n;\,
- \lambda_1, \ldots, \lambda_{n-1}).
-}
-\end{equation}
-That is, $\Phi(b) \in C^{|b|}_{\mathrm{ch}}(A, A)$ is
-the cochain whose arity-$n$ component is obtained by letting $b$ act
-on $n$~open-sector elements via the mixed operation
-$\mu_{1;n}$, after restriction to the open-sector spectral
-variables, with the Koszul sign $(-1)^{|b|}$
-from the desuspension convention
-(Remark~\ref{rem:phi-koszul-sign}).
-
-\medskip
-\noindent\textbf{Step 2: $\Phi(b)$ is a chiral Hochschild
-cochain (sesquilinearity).}
-
-We must verify that
-$\Phi(b)_n \in \End^{\mathrm{ch}}_A(n)$, i.e., that
-$\Phi(b)_n(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})$
-is a well-defined element of
-$A((\lambda_1))\cdots((\lambda_{n-1}))$.
-
-The mixed operation $\mu_{1;n}$ is defined as a map
-$B \otimes A^{\otimes n} \to
-A((\lambda_1))\cdots((\lambda_n))$
-by the data of the Swiss-cheese pair. Since this map
-is $\mathbb{C}$-multilinear in the $A$-inputs by
-definition~\eqref{eq:mixed-ops}, its restriction along the evaluation
-map that absorbs the closed-open coordinate has target
-$A((\lambda_1))\cdots((\lambda_{n-1}))$. Hence $\Phi(b)_n$ is a
-well-defined element of $\End^{\mathrm{ch}}_A(n)$.
-
-The dependence on spectral variables is \emph{sesquilinear}
-in the sense that $\Phi(b)_n$ is a formal Laurent series
-in $\lambda_1, \ldots, \lambda_{n-1}$ with coefficients
-in $\Hom(A^{\otimes n}, A)$. This is guaranteed by the
-locality axiom implicit in
-Definition~\ref{def:local-swiss-cheese-pair}: the mixed
-operations are local in the sense that they arise from
-finite-order OPE data.
-
-\medskip
-\noindent\textbf{Step 3: $\Phi$ is a morphism of brace
-dg algebras.}
-
-We must show two things:
-\begin{enumerate}[label=(\alph*)]
-\item $\Phi$ intertwines the differentials:
- $\Phi(\delta_B(b)) = \delta(\Phi(b))
- = [m, \Phi(b)]$.
-\item $\Phi$ intertwines the brace operations:
- $\Phi(b\{b_1, \ldots, b_r\})
- = \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}$.
-\end{enumerate}
-
-\emph{Proof of (a):}
-The Swiss-cheese codimension-$1$
-identity~\eqref{eq:swiss-cheese-identity} with
-$(p,q) = (1, n)$ gives (in the standard
-sign convention of~\cite{KS00, DTT09}):
-\begin{equation}\label{eq:sc-p1q-careful}
-\mu_{1;n}(\delta_B b;\, \vec{a})
-+
-\sum_{r+s+t=n}
-(-1)^{r|b|}
-\mu_{1;\,r+1+t}(b;\,
- a_1, \ldots, a_r,\,
- m_s(a_{r+1}, \ldots, a_{r+s}),\,
- a_{r+s+1}, \ldots) = 0.
-\end{equation}
-The sign $(-1)^{r|b|}$ arises from commuting $b$ past
-$a_1, \ldots, a_r$. We rewrite both terms using the
-definition
-$\Phi(b) = (-1)^{|b|}\mu_{1;\cdot}(b; -)$
-from~\eqref{eq:phi-construction}.
-
-For the first term: since $|\delta_B b| = |b| + 1$,
-we have
-$\mu_{1;n}(\delta_B b;\, \vec{a})
-= (-1)^{|b|+1}\Phi(\delta_B b)(\vec{a})$,
-hence
-$(-1)^{|b|}\mu_{1;n}(\delta_B b;\, \vec{a})
-= (-1)^{2|b|+1}\Phi(\delta_B b)(\vec{a})
-= -\Phi(\delta_B b)(\vec{a})$.
-
-For the sum: the factor $(-1)^{|b|}$ converts each
-$\mu_{1;\,r+1+t}(b;\, \ldots)$ to $\Phi(b)(\ldots)$
-evaluated with $m_s$ inserted at position~$r+1$.
-The resulting expression is
-$\delta(\Phi(b))(\vec{a}) = [m, \Phi(b)](\vec{a})$,
-the chiral Hochschild differential acting by inserting $m_s$
-into all positions of $\Phi(b)$ with Koszul signs.
-
-Multiplying~\eqref{eq:sc-p1q-careful} by $(-1)^{|b|}$
-therefore gives
-\[
--\Phi(\delta_B b)(\vec{a})
-+ \delta(\Phi(b))(\vec{a}) = 0,
-\]
-hence
-\begin{equation}\label{eq:phi-desuspended}
-\Phi(\delta_B b) = \delta(\Phi(b)),
-\end{equation}
-confirming $\Phi \circ \delta_B = \delta \circ \Phi$.
-
-\begin{remark}[Koszul sign in~$\Phi$; \ClaimStatusDefinitional]
-\label{rem:phi-koszul-sign}
-The sign $(-1)^{|b|}$ in
-Definition~\eqref{eq:phi-construction} is the
-Koszul sign arising from the desuspension
-convention on the Hochschild cochain complex.
-Without it, the Swiss-cheese
-identity~\eqref{eq:sc-p1q-careful} would give
-$\Phi \circ \delta_B = -\delta \circ \Phi$
-(anti-chain map). The sign twist converts this to a
-genuine chain map, which is the standard convention
-in the desuspended formulation:
-in the desuspended complex, $\bar{b} = s^{-1}b$ has degree
-$\|b\| = |b| - 1$, and the map
-$\bar{\Phi}(\bar{b}) := s^{-1}\mu_{1;\cdot}(b; -)$
-intertwines the desuspended differentials without
-additional signs.
-\end{remark}
-
-\emph{Proof of (b):}
-We must show
-$\Phi\bigl(b\{b_1, \ldots, b_r\}\bigr)
-= \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}$.
-
-Evaluate the left-hand side on inputs
-$a_1, \ldots, a_N$:
-\begin{equation}\label{eq:phi-brace-lhs}
-\Phi\bigl(b\{b_1, \ldots, b_r\}\bigr)
- (a_1, \ldots, a_N)
-= (-1)^{|b\{b_1, \ldots, b_r\}|}\,
- \mu_{1;N}\bigl(b\{b_1, \ldots, b_r\};\,
- a_1, \ldots, a_N\bigr).
-\end{equation}
-
-Now consider the Swiss-cheese
-identity~\eqref{eq:swiss-cheese-identity} with
-$p = r + 1$ (inserting $b, b_1, \ldots, b_r$
-into the closed channel) and $q = N$. The terms
-involving brace composition among the $b_j$'s give
-precisely
-$\mu_{1;N}(b\{b_1, \ldots, b_r\}; \vec{a})$
-(the brace in~$B$ enters via the third sum
-in~\eqref{eq:swiss-cheese-identity}).
-
-The ``open-insertion'' terms give
-$\mu_{1;N}(b;\, \ldots,
-\mu_{1;k_j}(b_j;\, a_{\cdot}, \ldots),
-\ldots)$,
-which is precisely the iterated evaluation
-\[
-\Phi(b)\bigl(a_1, \ldots,
- \Phi(b_1)(a_{\cdot}, \ldots),
- \ldots,
- \Phi(b_r)(a_{\cdot}, \ldots),
- \ldots, a_N\bigr)
-\]
-summed over all ordered insertion positions.
-This is exactly
-$\Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}(a_1, \ldots, a_N)$
-by the definition of brace
-operations~\eqref{eq:brace-explicit}.
-
-More precisely, the Swiss-cheese identity at
-$(p, q) = (1+r, N)$ decomposes into three types of terms.
-The key is the sign tracking.
-
-\emph{Type~1} (independent open insertion).
-When $b_j$ acts at position~$i_j$ in the open sector,
-the Swiss-cheese identity produces
-\[
-(-1)^{\epsilon_j}\,
-\mu_{1;\, N-k_j+1}
-\bigl(b;\, a_1, \ldots, a_{i_j-1},\,
-\mu_{1;\, k_j}(b_j;\, a_{i_j}, \ldots),\,
-a_{i_j+k_j}, \ldots, a_N\bigr)
-\]
-with the Koszul sign
-$\epsilon_j = \|b_j\| \cdot (|a_1| + \cdots + |a_{i_j-1}|
-+ \sum_{\ell < j} \|b_\ell\|)$.
-After multiplying by $(-1)^{|b|}$ (the Phi-sign from
-$\Phi(b) = (-1)^{|b|} \mu_{1;\cdot}(b; -)$) and
-by $(-1)^{|b_j|}$ (from $\Phi(b_j)$), we obtain
-$(-1)^{|b|}\, (-1)^{|b_j|}\, (-1)^{\epsilon_j}$.
-Now $(-1)^{|b_j|} \cdot (-1)^{\epsilon_j}
-= (-1)^{(|b_j|-1)(|a_1|+\cdots) + (|a_1|+\cdots) + \cdots}
-= (-1)^{\|b_j\|\cdot\sigma_j} \cdot (-1)^{|a_1|+\cdots+|a_{i_j-1}|}$,
-which matches the brace sign~\eqref{eq:brace-sign-explicit}
-(crossing number $\sigma_j$) composed with the
-Phi-sign $(-1)^{|b|}$.
-
-\emph{Type~2} (brace composition among $b_j$'s).
-These terms contribute
-$\mu_{1;N}(b\{b_{j_1}, \ldots, b_{j_k}\}\{
-\text{remaining}\};\, \vec{a})$
-with the same sign structure, which assembles
-to $\Phi(b\{b_1, \ldots, b_r\})(\vec{a})$
-by the definition of the brace on~$B$.
-
-\emph{Type~3} ($\Ainf$ terms from the open sector).
-These contribute $\delta_B$ and $\delta$ terms, which
-cancel against each other by part~(a) (the differential
-intertwining $\Phi \circ \delta_B = \delta \circ \Phi$).
-
-After cancellation of Type~3 terms, the Swiss-cheese
-identity becomes:
-\[
-\Phi(b\{b_1, \ldots, b_r\})
-= \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\},
-\]
-where the signs on both sides are determined by the
-crossing numbers~$\sigma_j$ of~\eqref{eq:crossing-number}.
-
-\medskip
-\noindent\textbf{Step 4: Uniqueness.}
-
-Let $\Psi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$ be any
-morphism of local chiral Swiss-cheese pairs over~$A$. We
-must show $\Psi = \Phi$.
-
-A morphism of Swiss-cheese pairs over~$A$ must intertwine
-the mixed operations. In particular, for the $\mu_{1;n}$
-operations:
-\[
-\mu^{\mathrm{univ}}_{1;n}(\Psi(b);\, a_1, \ldots, a_n)
-= \mu_{1;n}(b;\, a_1, \ldots, a_n)
-\]
-for all $b \in B$ and all $a_1, \ldots, a_n \in A$.
-The left-hand side is $\Psi(b)(a_1, \ldots, a_n)$
-(by definition~\eqref{eq:mixed-p1} of the universal
-mixed operation, which includes the same Koszul sign).
-The right-hand side is
-$\Phi(b)(a_1, \ldots, a_n)$ (by
-definition~\eqref{eq:phi-construction}).
-Since this holds for all inputs $a_1, \ldots, a_n$,
-we have
-\begin{equation}\label{eq:uniqueness}
-\Psi(b) = \Phi(b)
-\qquad \text{for all } b \in B.
-\end{equation}
-Hence $\Psi = \Phi$, proving uniqueness.
-
-The key structural point is that elements of
-$C^\bullet_{\mathrm{ch}}(A, A)$ are \emph{defined}
-by their evaluations on inputs: a cochain \emph{is}
-the function it computes. Therefore the compatibility
-of the mixed operations forces $\Psi(b)$ to be the
-cochain that evaluates to $\mu_{1;n}(b; -)$, which is
-exactly~$\Phi(b)$.
+\begin{proof}
+Existence is clauses~\textup{(i)}--\textup{(iii)} of
+\(H_{\mathrm{SC}}(B,A)\).  A cochain in the chosen operadic model is
+determined by its arity components, so the equations
+\(\Phi_\mu(b)_n=\mu_{1;n}(b;-)\) force uniqueness.  Composition with
+\(\gamma_A\) gives the derived-centre action.
 \end{proof}
 
-%% ===========================================================
-%% 8. ADDITIONAL HYPOTHESES AND COROLLARIES
-%% ===========================================================
+\begin{remark}[Meaning of the theorem]
+The theorem is an evaluation criterion.  A terminal-object statement
+in an \(\infty\)-category of chiral Swiss-cheese algebras requires a
+definition of that category, coherent higher morphisms, and a proof of
+the corresponding mapping-space equivalence.  Those data form an open
+comparison problem.  Voronov's Swiss-cheese operad
+\cite{Voronov99} and the operadic Deligne theorem of
+Kontsevich--Soibelman~\cite{KS00} provide the classical templates.
+\end{remark}
+
+\begin{remark}[Koszul sign in the evaluation map;
+\ClaimStatusDefinitional]
+\label{rem:phi-koszul-sign}
+The suspension convention in \(H_{\mathrm{op}}(A)\) determines the
+sign relating \(\mu_{1;n}\) to the arity-\(n\) component of
+\(\Phi_\mu\).  A universal factor such as \((-1)^{|b|}\) becomes a
+theorem after the source and target suspension functors have been
+fixed.
+\end{remark}
+
+\begin{definition}[E3 topologization datum for a derived chiral centre;
+\ClaimStatusDefinitional]
+\label{def:e3-topologization-datum-derived-centre}
+An \(E_3\)-topologization datum consists of a completed BRST complex
+\((\mathcal B,Q)\), a minimal-operad-compatible map from
+\(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\), a degree-\((-1)\) operator
+\(G\), and coherent comparison data satisfying
+\[
+ [Q,G]=L_{-1}.
+\]
+The package also includes the framed-discs or Dunn-additivity
+comparison that converts the null-homotopy of translation into the
+extra topological direction.
+\end{definition}
+
+\begin{proposition}[E2 centre theorem versus E3 topologization;
+\ClaimStatusConditional]
+\label{prop:e2-center-not-e3-topologization}
+Assume the datum of
+Definition~\ref{def:e3-topologization-datum-derived-centre}.  For every
+\(Q\)-closed observable \(x\),
+\[
+ L_{-1}x=Q(Gx).
+\]
+Thus translation acts trivially on BRST cohomology.  The supplied
+framed-discs comparison then promotes the minimal-operad
+\(E_2\)-type structure to the stated \(E_3\)-topological structure.
+\end{proposition}
+
+\begin{proof}
+The displayed identity is the graded commutator equation
+\([Q,G]=L_{-1}\) evaluated on a \(Q\)-closed element.  The final
+statement is exactly the framed-discs comparison included in the
+topologization datum.
+\end{proof}
 
 \subsection{Additional hypotheses and corollaries}
 \label{subsec:additional-hypotheses}
 
 \begin{remark}[Faithfulness and injectivity]
 \label{rem:faithfulness-hypothesis}
-\index{Swiss-cheese pair!faithfulness}
-The uniqueness of $\Phi$ does \emph{not} require any
-additional hypothesis: Step~4 shows $\Phi$ is the
-\emph{only} Swiss-cheese morphism $B \to C^\bullet_{\mathrm{ch}}$
-over~$A$, for any $(B, A, \mu)$.
-
-However, $\Phi$ need not be injective. Injectivity holds
-if and only if the \emph{faithfulness condition} is
-satisfied:
-\begin{equation}\label{eq:faithfulness}
-\text{If } \mu_{1;n}(b;\, a_1, \ldots, a_n) = 0
-\;\;\text{for all } n \ge 0 \text{ and all } a_i \in A,
-\;\;\text{then } b = 0.
-\end{equation}
-For $B = C^\bullet_{\mathrm{ch}}(A, A)$ itself, this is
-automatic (a cochain \emph{is} its evaluation on inputs).
-For a general Swiss-cheese pair, the kernel of~$\Phi$
-consists of ``closed observables that act trivially on the
-open sector.''
-
-When $\Phi$ is injective, $(B, A, \mu)$ embeds as a
-sub-Swiss-cheese pair of $U(\cA)$. The terminality
-theorem says this embedding is unique.
+For a local action datum, \(\ker\Phi_\mu\) consists of the closed
+operations whose evaluations on all open inputs vanish.  The map is
+injective precisely when the open action is faithful.
 \end{remark}
 
-\begin{corollary}[The chiral center]
+\begin{corollary}[The chiral center;
+\ClaimStatusConditional]
 \label{cor:chiral-center}
-\index{chiral center}
-The \emph{chiral center} of an $\Ainf$-chiral
-algebra~$A$ is
+Assume \(H_{\mathrm{op}}(A)\) and that \(\gamma_A\) is a
+quasi-isomorphism.  Then
 \[
-Z_{\mathrm{ch}}(A)
-\;:=\;
-H^0\bigl(C^\bullet_{\mathrm{ch}}(A, A),\, \delta\bigr)
-\;=\;
-\ker(\delta \colon C^0_{\mathrm{ch}} \to C^1_{\mathrm{ch}})
- \,\big/\,
- \mathrm{im}(\delta \colon C^{-1}_{\mathrm{ch}}
- \to C^0_{\mathrm{ch}}).
+ Z_{\mathrm{ch}}(A)
+ :=
+ H^0\!\left(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\right)
+ \cong H^0\!\left(C^\bullet_{\mathcal P}(A,A)\right).
 \]
-By Theorem~\textup{\ref{thm:chiral-deligne-tamarkin}},
-$C^\bullet_{\mathrm{ch}}(A,A)$ is the universal target for
-closed observables acting on the open sector of~$A$. A closed
-observable $b$ in a Swiss-cheese pair $(B,A,\mu)$ determines an
-ordinary chiral-center class only when $\Phi(b)$ is a degree-zero
-$\delta$-cocycle; then $[\Phi(b)]\in Z_{\mathrm{ch}}(A)$.
-It is a commutative algebra under the cup product
-$\smile$ of Remark~\textup{\ref{rem:cup-product}}.
+The minimal-operad homotopy for the cup product makes this degree-zero
+cohomology a commutative algebra.
 \end{corollary}
 
 \begin{proof}
-The identification $Z_{\mathrm{ch}}(A) = H^0(C^\bullet_{\mathrm{ch}})$
-is tautological. The commutativity of the cup product
-on $H^0$ is the degree-zero case of the Gerstenhaber--Voronov
-homotopy commutativity of a brace dg algebra. Explicitly, the brace
-identity supplies a cochain homotopy whose boundary is
-$f\smile g-g\smile f$ for $\delta$-closed degree-zero cochains
-$f,g$. Thus the commutator of the cup product vanishes in
-cohomology, and $Z_{\mathrm{ch}}(A)$ is commutative.
+The quasi-isomorphism gives the displayed identification.  The
+operadic brace homotopy identifies the two orders of the cup product
+on cohomology.
 \end{proof}
 
-\begin{corollary}[Gerstenhaber structure on cohomology]
+\begin{corollary}[Gerstenhaber structure on cohomology;
+\ClaimStatusConditional]
 \label{cor:gerstenhaber-cohomology}
-\index{Gerstenhaber algebra!chiral Hochschild}
-The cohomology $H^\bullet(C^\bullet_{\mathrm{ch}}(A, A), \delta)$
-carries a canonical Gerstenhaber algebra structure:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item A graded commutative cup product
- $\smile \colon H^p \otimes H^q \to H^{p+q}$.
-\item A degree-$(-1)$ Lie bracket
- $[-,-] \colon H^p \otimes H^q \to H^{p+q-1}$
- \textup{(}the Gerstenhaber bracket\textup{)}.
-\item The Leibniz identity: $[f, g \smile h]
- = [f, g] \smile h + (-1)^{(|f|-1)|g|} g \smile [f, h]$.
-\end{enumerate}
-This structure is the chiral analogue of the classical
-Gerstenhaber algebra on Hochschild cohomology.
+Under the same hypotheses,
+\(H^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(A))\) carries the
+Gerstenhaber structure transported from the operadic cochain model.
 \end{corollary}
-
-\begin{proof}
-The cup product and Gerstenhaber bracket are defined at
-the cochain level and descend to cohomology because
-$\delta$ is a derivation of both operations
-(by~(B2) and the derivation property of $[-,-]$).
-The Leibniz identity on cochains follows from the brace
-identity~(B1) and descends to cohomology.
-\end{proof}
 
 \begin{remark}[Comparison with the classical Deligne conjecture]
 \label{rem:classical-deligne}
-In the classical (non-chiral) setting, the Deligne
-conjecture (proved by many authors:
-Kontsevich--Soibelman, McClure--Smith,
-Tamarkin, Voronov, Berger--Fresse, etc.)
-states that the Hochschild cochain complex
-$C^\bullet(A, A)$ of an associative algebra $A$ is an
-algebra over the chains on the little 2-discs operad $E_2$.
-The Swiss-cheese refinement (Voronov) promotes this
-to a two-colored statement: $(C^\bullet(A, A), A)$ is
-an algebra over the Swiss-cheese operad $\mathsf{SC}$,
-and is terminal (final) among such algebras.
-
-Theorem~\ref{thm:chiral-deligne-tamarkin} is the
-analogous statement for the chiral Swiss-cheese operad
-$\mathsf{SC}^{\mathrm{ch,top}}$
-(Volume~II), with the
-associative algebra replaced by an $\Ainf$-chiral
-algebra on a curve and the little 2-discs operad replaced by the
-Fulton--MacPherson operad $\FM(\mathbb{C})$.
-It is not a formal consequence of the classical Deligne
-conjecture: the chiral proof requires independent analysis
-of OPE residues on holomorphic configuration spaces.
-The proof strategy is identical: the map
-$\Phi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$ sends
-each closed observable to its evaluation on the open
-sector, and uniqueness follows from the fact that
-cochains are determined by their evaluations.
-
-The additional feature in the chiral setting is the
-\emph{spectral variables} $\lambda_1, \ldots, \lambda_{n-1}$,
-which replace the real parameters of configuration-space
-integrals. The block-substitution
-rule~\eqref{eq:spectral-substitution} is the algebraic
-encoding of the nested-collision geometry on
-$\FM_n(\mathbb{C})$.
+For an associative algebra, Hochschild cochains carry an \(E_2\)
+structure.  Kontsevich--Soibelman~\cite{KS00} give an operadic model,
+and Voronov~\cite{Voronov99} supplies the Swiss-cheese geometry.  The
+chiral theorem requires the additional construction of
+\(H_{\mathrm{op}}(A)\), the geometric comparison
+\(H_{\mathrm{geom/alg}}(A)\), and any desired two-coloured comparison.
 \end{remark}
 
 \begin{remark}[Bridge to the global open/closed theory]
 \label{rem:chiral-center-global-bridge}
-\index{chiral center theorem!global bridge}
-The chiral center theorem
-(Theorem~\ref{thm:chiral-deligne-tamarkin}) governs the
-\emph{local} theory: a single open disc with a single closed
-disc. The \emph{global} theory on a tangential log curve
-$(X, D, \tau)$ is developed in two directions:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Geometric.}
- The bordered Fulton--MacPherson compactification
- $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$
- (\S\ref{sec:bordered-fm}) provides the moduli of mixed
- interior--boundary configurations, and the open-closed
- modular convolution algebra
- $\mathfrak{g}^{\mathrm{oc}}_{\cA, \vec{\mathcal{M}}}$
- (Definition~\ref{def:oc-modular-convolution}) carries the
- dg~Lie structure with seven-component differential.
-
-\item \emph{Open/closed.}
- The open/closed realization
- (\S\ref{sec:thqg-open-closed-realization}) identifies the
- cohomology of the chiral derived center
- $H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA))
- = H^*(C^\bullet_{\mathrm{ch}}(\cA, \cA), \delta)$
- with the cochain-level open/closed closed-sector slot attached to~$\cA$
- (Theorem~\ref{thm:thqg-swiss-cheese}). A physical holographic
- realization requires the additional HT comparison data. The local-global bridge
- (Theorem~\ref{thm:thqg-local-global-bridge}) restricts the
- bordered FM convolution to a formal disc, recovering
- $C^\bullet_{\mathrm{ch}}(\cA, \cA)$.
-
-\item \emph{Modular.}
- The open/closed MC element $\Theta^{\mathrm{oc}}_\cA$
- (Construction~\ref{constr:thqg-oc-mc-element}) packages the
- bar-intrinsic MC element $\Theta_\cA$ with the boundary
- $A_\infty$-module data. Its shadow obstruction tower projections
- recover the nonlinear modular shadows
- $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ in the
- closed sector and boundary corrections in the open sector.
-\end{enumerate}
-In the language of this section: every global observable on
-$(X, D, \tau)$ restricts, via the local-global bridge, to an
-element of the universal pair $U(\cA)$. The chiral center
-theorem guarantees this restriction is unique.
+A global open/closed theory produces a local action on the chart
+derived centre once restriction to a formal disc, compatibility with
+the chart resolution, and completion have been supplied.  These are
+the local-global and OCA comparison packages.  The resulting map is
+the morphism of
+Theorem~\ref{thm:chiral-deligne-tamarkin}; a physical bulk
+interpretation belongs to the additional open/closed realization.
 \end{remark}
 
 
@@ -1953,1199 +573,498 @@ theorem guarantees this restriction is unique.
 %% EXPLICIT DERIVED CENTER COMPUTATIONS
 %% ===========================================================
 
-\subsection{Explicit derived center computations for standard families}
+\subsection{Bounded computations and derived-centre promotion}
 \label{subsec:derived-center-explicit}
-\index{derived center!explicit computations|textbf}
+\index{derived center!bounded comparison|textbf}
 
-The general theory identifies the chiral derived center
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with the completed brace dg
-algebra $C^\bullet_{\mathrm{ch}}(\cA,\cA)$. It is neither the bar
-coalgebra $\barB^{\mathrm{ch}}(\cA)$ nor the Verdier--Koszul dual
-algebra $\cA^!$; the bar object enters only as the two-sided diagonal
-resolution used to compute Hochschild cochains. Its cohomology
+The chapter uses two cochain functors.  Bakalov--De Sole--Kac form the
+bounded vertex complex
+\(C^\bullet_{\mathrm{ch},b}(V,V)\) from the bounded part of the
+translation-equivariant chiral operad.  The chart-derived centre is
 \[
-H^*\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)
-=
-H^*(C^\bullet_{\mathrm{ch}}(\cA, \cA), \delta)
-=
-\ChirHoch^\bullet(\cA,\cA)
+ C^\bullet_{\mathrm{ch}}(\cA_V,\cA_V)
+ =
+ R\operatorname{End}_{\cA_V^e}(\cA_V).
 \]
-is the graded vector space computed below. The standard families
-(Heisenberg, affine Kac--Moody, Virasoro) admit explicit
-computations of the completed scalar finite-window cohomology on the
-generic PBW/Koszul locus. Positive conformal-weight classes are
-excluded only where the stated finite-window acyclicity is invoked;
-Theorem~H supplies cohomological amplitude and finite graded pieces,
-not a universal total-dimension bound.
-These computations verify the general structure of Theorem~H
-(polynomial growth) and provide concrete generators, products,
-brackets, and BV operators.
+A statement about the first complex becomes a statement about the
+second through a specified bounded-to-chart quasi-isomorphism.
 
-\begin{proposition}[Scalar finite-window derived-center cohomology:
-Heisenberg, affine $\widehat{\mathfrak{sl}}_2$,
-Virasoro]
-\label{prop:derived-center-explicit}
-\index{derived center!Heisenberg|textbf}
-\index{derived center!affine Kac--Moody|textbf}
-\index{derived center!Virasoro|textbf}
+\begin{definition}[Finite-window promotion package;
+\ClaimStatusDefinitional]
+\label{def:cct-finite-window-promotion}
+For a vertex algebra \(V\) and its curve chart \(\cA_V\), the package
+\(H_{\mathrm{fw}}(V)\) consists of:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Heisenberg $\mathfrak{H}_k$.)}
- The chiral Hochschild cohomology is
+\item a cochain map
  \[
- \ChirHoch^n(\mathfrak{H}_k, \mathfrak{H}_k)
- \;=\;
- \begin{cases}
- \bC & n = 0, \\
- \bC & n = 1, \\
- \bC & n = 2, \\
- 0 & n \geq 3.
- \end{cases}
+ \chi_V^{\mathrm{bd}}\colon
+ C^\bullet_{\mathrm{ch},b}(V,V)
+ \longrightarrow
+ C^\bullet_{\mathrm{ch}}(\cA_V,\cA_V);
  \]
- The generators are:
- $1 \in \ChirHoch^0$ \textup{(}the vacuum, center of~$\mathfrak{H}_k$\textup{)},
- $\xi_k \in \ChirHoch^1$ \textup{(}the level deformation
- $k \mapsto k + \epsilon$\textup{)}, and
- $\eta \in \ChirHoch^2$ \textup{(}the dual-vacuum endpoint of the
- diagonal Ext computation, detected through the Verdier partner
- $\mathfrak{H}_k^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ but not
- an element of that algebra\textup{)}.
- In the scalar finite-window complex computed here, the surviving
- classes have conformal weight~$0$.
- The scalar finite-window cohomology of the derived-center complex is
- $H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathfrak{H}_k))
- \cong \bC \oplus \bC[-1] \oplus \bC[-2]$.
-
-\item \textup{(Affine $\widehat{\mathfrak{sl}}_2$ at generic level.)}
- At a level outside the Kac--Kazhdan reducibility walls
- \textup{(}in particular $k \neq -2$\textup{)}:
- \[
- \ChirHoch^0 = \bC, \qquad
- \ChirHoch^1 \cong \mathfrak{sl}_2, \qquad
- \ChirHoch^2 = \bC, \qquad
- \ChirHoch^n = 0 \text{ for } n \geq 3.
- \]
- Thus the total dimension is~$5$. Hence the uniform statement cannot
- be a total-dimension bound; it is the concentration in degrees
- $\{0,1,2\}$.
- The three-dimensional $\ChirHoch^1$ consists of the outer derivations
- of~$\widehat{\mathfrak{sl}}_{2,k}$:
- the current algebra deformations $J^a \mapsto J^a + \epsilon\, \phi^a$
- parametrized by $\mathfrak{sl}_2$ itself.
- The level-independence of these dimensions at such generic~$k$
- follows from the Koszul structure: the bar cohomology
- $H^*(B(\widehat{\mathfrak{sl}}_{2,k}))$ is concentrated in
- bar degree~$1$ \textup{(}chiral Koszulness\textup{)}, so the
- Ext computation reduces to the linear algebra of the generating
- space.
- At the critical level $k = -h^\vee = -2$, the center
- $\ChirHoch^0$ becomes infinite-dimensional:
- $\ChirHoch^0 = \mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})$,
- the Feigin--Frenkel center.
-
-\item \textup{(Virasoro $\mathrm{Vir}_c$.)}
- By Theorem~\textup{\ref{thm:hochschild-polynomial-growth}},
- $\ChirHoch^n(\mathrm{Vir}_c) = 0$ for $n > 2$. The nonvanishing
- degrees are:
- \[
- \ChirHoch^0 = \bC, \qquad
- \ChirHoch^1 = 0, \qquad
- \ChirHoch^2 = \bC \cdot \Theta,
- \]
- with Hilbert series $P(t) = 1 + t^2$.
- In the scalar finite-window Virasoro complex, the surviving
- $\ChirHoch^2$ class has conformal weight~$0$: the single deformation
- parameter is the central charge~$c$. The deformation class
- $\Theta \in \ChirHoch^2$ is the universal central charge deformation
- cocycle.
- Note that the continuous Lie algebra cohomology
- $H^*_{\mathrm{cont}}(\mathrm{Vect}(S^1);\,\bC)$
- (Gel'fand--Fuchs cohomology) is infinite-dimensional; it is a
- \emph{different object} from $\ChirHoch^*(\mathrm{Vir}_c)$,
- which is bounded in degrees $\{0, 2\}$ with total dimension~$2$.
- The former is computed from the topological Lie algebra of
- smooth vector fields on~$S^1$ (no central charge, no chiral
- structure); the latter is computed from the vertex algebra
- $\mathrm{Vir}_c$ on a formal disc via the chiral Hochschild
- complex of Definition~\ref{def:chiral-hochschild-cochain-brace}.
+\item a proof that \(\chi_V^{\mathrm{bd}}\) is a quasi-isomorphism on
+ each finite conformal-weight window;
+\item surjective transition maps and vanishing \(\varprojlim^1\) for
+ the completed tower;
+\item compatibility with any product, bracket, cyclic operator, or
+ family parameter used in the promoted conclusion.
 \end{enumerate}
-\ClaimStatusConditional{}
+\end{definition}
+
+\begin{proposition}[Bounded benchmarks and chart criterion;
+\ClaimStatusConditional]
+\label{prop:derived-center-explicit}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For a one-dimensional even space \(\mathfrak h\),
+Bakalov--De Sole--Kac compute
+\[
+ \dim H^n_{\mathrm{ch},b}(B_{\mathfrak h},B_{\mathfrak h})
+ =(2,1,0,0,\ldots)
+ \qquad\text{\cite[Theorem~7.4]{BDSK21}}.
+\]
+\item For the universal Virasoro vertex algebra, for every central
+charge \(c\), they compute
+\[
+ \dim H^n_{\mathrm{ch},b}(\operatorname{Vir}_c,\operatorname{Vir}_c)
+ =
+ \begin{cases}
+ 1,&n\in\{0,2,3\},\\
+ 0,&n\in\mathbb Z_{\ge0}\setminus\{0,2,3\},
+ \end{cases}
+ \qquad\text{\cite[Theorem~7.2]{BDSK21}}.
+\]
+\item Under \(H_{\mathrm{fw}}(V)\), either bounded calculation
+transports to
+\(\ChirHoch^\bullet(\cA_V)\).
+\item Universal affine vertex-algebra cohomology retains the status of
+\cite[Conjecture~7.5]{BDSK21}.  Principal
+\(\mathcal W\)-algebras require their own cochain model and
+bounded-to-chart comparison.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-\textbf{Part~(i).}
-The Heisenberg algebra $\mathfrak{H}_k$ is generated by a single
-weight-$1$ field $a(z)$ with OPE $a(z)\, a(w) \sim k/(z-w)^2$.
-Since $\mathfrak{H}_k$ is quadratic (only binary OPE), it is
-chirally Koszul
-(Corollary~\ref{cor:universal-koszul}), and the bar cohomology is
-$H^*(B(\mathfrak{H}_k)) = \operatorname{Sym}^{\mathrm{ch}}(V^*[1])$,
-the Koszul dual coalgebra generated in bar degree~$1$.
-
-The chiral Hochschild cohomology $\ChirHoch^n(\mathfrak{H}_k,
-\mathfrak{H}_k)$ for a chirally Koszul algebra with one
-weight-$1$ generator is computed on the completed scalar finite-window
-complex by the standard Ext argument:
-$\ChirHoch^n = \operatorname{Ext}^n_{\cA\text{-bimod}}(\cA, \cA)$.
-For the polynomial vertex algebra on one generator, the bimodule
-Ext groups are $\bC$ in degrees $0$, $1$, $2$ and zero thereafter,
-by the three-term resolution
-$0 \to \cA \otimes V^* \otimes \cA \to \cA \otimes V \otimes \cA
-\to \cA \otimes \cA \to \cA \to 0$
-(the Koszul resolution of the diagonal bimodule).
-The scalar weight-$0$ concentration follows from the fact that the
-generating space $V = \bC\cdot a$ is one-dimensional and the
-finite-window Koszul resolution has no positive-weight cohomology:
-all surviving cocycles are scalar multiples of the identity, level,
-and obstruction cocycles.
-
-\textbf{Part~(ii).}
-Affine $\widehat{\mathfrak{sl}}_{2,k}$ is generated by three
-weight-$1$ fields $J^a$ ($a = +, -, 0$) with OPE
-$J^a(z)\, J^b(w) \sim k\,\delta^{ab}/(z-w)^2 +
-f^{ab}_c\, J^c(w)/(z-w)$.
-This is again quadratic (all poles are $\leq 2$). Under the generic
-PBW/Koszul hypothesis in the statement, the Koszul resolution has
-generating space
-$V = \mathfrak{sl}_2$ (three-dimensional), giving
-$\ChirHoch^0 = \bC$ (center = vacuum at generic level),
-$\ChirHoch^1 \cong V = \mathfrak{sl}_2$ (outer derivations: the space of
-infinitesimal level-preserving deformations is parametrized by the
-Lie algebra itself), and $\ChirHoch^2 = \bC$ (the dual of the
-vacuum line in the Verdier--Koszul partner
-$\widehat{\mathfrak{sl}}_{2, -k-4}$ at generic dual level). This is
-the endpoint of the diagonal Hochschild Ext calculation, not an
-identification of
-$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$ with the
-center of the dual algebra.
-The vanishing $\ChirHoch^n = 0$ for $n \geq 3$ follows from the
-three-term Koszul resolution.
-At $k = -2$: the Sugawara construction is undefined, the
-Kac--Shapovalov determinant vanishes, and the center becomes the
-Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})$,
-which is a polynomial algebra on $\operatorname{rank}(\mathfrak{g})$
-generators (Feigin--Frenkel~\cite{FF}).
-
-\textbf{Part~(iii).}
-The Virasoro algebra has a single weight-$2$ generator $T$ with
-quartic pole ($T_{(3)} T = c/2$), so it is not quadratic.
-By Theorem~\ref{thm:hochschild-polynomial-growth}, the chiral
-Hochschild cohomology of a modular Koszul algebra has polynomial
-Hilbert series and is concentrated in degrees $\{0, 1, 2\}$.
-For the Virasoro algebra
-(single generator of weight~$2$), the Hilbert series is
-$P(t) = 1 + t^2$, giving total dimension~$2$:
-one copy of~$\bC$ in degree~$0$ (the vacuum) and one copy
-in degree~$2$ (the central charge deformation).
-The degree-$2$ generator $\Theta$ represents
-the deformation $c \mapsto c + \epsilon$.
-The scalar weight grading: $\Theta$ sits at conformal weight~$0$
-because the deformation $c \mapsto c + \epsilon$ does not shift
-conformal weights. The finite-window acyclicity supplied by
-Theorem~\ref{thm:hochschild-polynomial-growth}, with the Virasoro
-Jacobi identity as its local OPE input, makes all positive-weight
-degree-$2$ deformation candidates boundaries. Without that acyclicity
-hypothesis this proposition would assert only the degree range, not
-an all-weight total dimension.
+The first two clauses are the cited computations.  In the first,
+\(\Pi\mathfrak h\) is an odd line, so its super-symmetric powers occur
+in degrees zero and one.  The third clause is invariance of cohomology
+under the quasi-isomorphism and inverse-limit comparison in
+\(H_{\mathrm{fw}}(V)\).  The fourth records the status in the cited
+source and isolates the comparison theorem required for the
+additional families.
 \end{proof}
 
-The $\mathfrak{sl}_2$ computation in Part~(ii) already exhibits the
-essential phenomenon: the first chiral Hochschild group
-$\ChirHoch^1(V_k(\fg))$ is the adjoint representation of~$\fg$.
-This is not a coincidence special to rank one. For any simple Lie
-algebra, the affine vertex algebra $V_k(\fg)$ at generic level
-outside the Kac--Kazhdan reducibility walls is
-chirally Koszul with generating space $V = \fg$; the Koszul resolution
-is a three-term complex whose degree-$1$ piece is $\fg$ itself.
-Degree-$1$ Hochschild cochains are infinitesimal deformations of the
-current algebra: maps $J^a \mapsto J^a + \epsilon\,\phi^a$ preserving
-the OPE to first order. The space of such deformations is determined
-by the generating space alone, and the generating space is~$\fg$.
-The PBW degree-$1$ cochain space contains a canonical adjoint
-$\fg$-isotypic summand. The explicit generic-level
-cocycle-boundary computation below identifies this summand with the
-whole first cohomology.
-
-\begin{proposition}[Generic affine first chiral Hochschild group; \ClaimStatusConditional]
+\begin{proposition}[Affine inner-direction firewall;
+\ClaimStatusProvedHere]
 \label{prop:chirhoch1-affine-km}
-Let $\fg$ be a simple Lie algebra and let $V_k(\fg)$ be the affine
-vertex algebra at a generic level outside the Kac--Kazhdan
-reducibility walls \textup{(}in particular $k \neq -h^\vee$\textup{)}.
-Then
+Let \(V_k(\fg)\) be an affine vertex algebra.  For \(X\in\fg\), the
+zero mode
 \[
-\ChirHoch^1(V_k(\fg)) \;\cong\; \fg
+ \delta_X=(J^X)_{(0)}
 \]
-as $\fg$-modules. In particular,
+is an inner chiral derivation, and
 \[
-\dim \ChirHoch^1(V_k(\fg)) = \dim(\fg),
-\qquad
-\dim \ChirHoch^1(V_k(\mathfrak{sl}_N)) = N^2 - 1.
+ [\delta_X,\delta_Y]=\delta_{[X,Y]}.
 \]
+Consequently the adjoint current directions have zero image in
+\[
+ \operatorname{Der}_{\mathrm{ch}}(V_k(\fg))/
+ \operatorname{Inn}_{\mathrm{ch}}(V_k(\fg)).
+\]
+On a surface carrying an exhaustion theorem for all continuous outer
+derivations, this quotient equals zero.
 \end{proposition}
 
 \begin{proof}
-The affine vertex algebra $V_k(\fg)$ is generated by weight-$1$
-currents $\{J^a\}_{a=1}^{\dim(\fg)}$ with quadratic OPE
-\[
-J^a(z)\,J^b(w) \;\sim\;
-\frac{k\,\kappa^{ab}}{(z-w)^2}
-\;+\;
-\frac{f^{ab}_c\,J^c(w)}{z-w},
-\]
-%: level prefix k present; k=0 -> r=0 verified
-where $\kappa^{ab}$ is the Killing form and $f^{ab}_c$ are the
-structure constants. All OPE poles have order $\leq 2$, so $V_k(\fg)$
-is quadratic and chirally Koszul
-(Corollary~\ref{cor:universal-koszul}).
-
-The Koszul resolution of the diagonal bimodule takes the form
-\[
-0 \longrightarrow
-\cA \otimes \fg^* \otimes \cA \longrightarrow
-\cA \otimes \fg \otimes \cA \longrightarrow
-\cA \otimes \cA \longrightarrow
-\cA \longrightarrow 0,
-\]
-a three-term complex with generating space $V = \fg$. A degree-$1$
-Hochschild cochain is a $\fg$-equivariant map from the generating
-currents to the algebra:
-\[
-\phi \;\in\; \ChirHoch^1(V_k(\fg))
-\quad\Longleftrightarrow\quad
-J^a \;\longmapsto\; J^a + \epsilon\,\phi^a,
-\qquad
-\phi^a \in V_k(\fg).
-\]
-At this generic level, the Sugawara construction is nondegenerate:
-the Segal--Sugawara vector is a well-defined conformal vector, and
-the Kac--Shapovalov determinant is nonzero on every finite
-conformal-weight window used by the completed PBW resolution.
-No singular vectors enter those finite-window generating filtrations,
-and the critical-level degeneration of $\ChirHoch^0$ (which would promote
-the Feigin--Frenkel center into $\ChirHoch^1$) is absent.
-
-The canonical degree-$1$ cocycles are therefore parametrized by the
-generating space. The cochains
-$J^a \mapsto \epsilon\,\phi^a$ for $\phi \in \fg$ form exactly
-one copy of the adjoint $\fg$-module. The complementary PBW pieces are
-boundaries: finite-window nonvanishing of the Kac--Shapovalov
-determinant makes the positive-conformal-weight part of the Koszul
-resolution acyclic, and Whitehead's lemma kills the remaining
-finite-dimensional $\fg$-equivariant derivation complex away from the
-adjoint generating summand. Hence
-\[
-\ChirHoch^1(V_k(\fg)) \;\cong\; \fg.
-\]
-For $\fg = \mathfrak{sl}_N$, $\dim(\fg) = N^2 - 1$.
+The simple-pole coefficient of the affine OPE gives
+\((J^X)_{(0)}J^Y=J^{[X,Y]}\).  Zero modes therefore act by inner
+derivations and satisfy the displayed commutator identity.  Passing to
+the quotient kills their classes.
 \end{proof}
 
-\begin{remark}[Non-abelian dimension growth]
+\begin{remark}[Affine zero-mode firewall]
 \label{rem:sl2-chirhoch-dim5}
-At $\fg = \mathfrak{sl}_2$, the proposition gives
-$\dim \ChirHoch^1 = 3$. Combined with the one-dimensional groups
-$\ChirHoch^0 = \bC$ and $\ChirHoch^2 = \bC$ from
-Proposition~\ref{prop:derived-center-explicit}(ii), the total
-dimension of $\ChirHoch^*(V_k(\mathfrak{sl}_2))$ is
-$1 + 3 + 1 = 5$. No uniform total-dimension bound survives the first
-non-abelian example. The uniform statement is Theorem~H: concentration in
-degrees $\{0, 1, 2\}$ with polynomial growth, but no universal bound
-on the total dimension. The dimension of $\ChirHoch^1$ grows with
-$\dim(\fg)$: it is $8$ for $\mathfrak{sl}_3$, $15$ for
-$\mathfrak{sl}_4$, $248$ for type $E_8$.
-The rank-1 instance $\ChirHoch^2(V_k(\mathfrak{sl}_2)) = \bC$
-from Proposition~\ref{prop:derived-center-explicit}(ii) is an
-explicit witness for a uniform statement across all simple $\fg$:
-see Proposition~\ref{prop:chirhoch2-affine-km-general} below.
+The adjoint vector space in the current algebra and in the first
+bar-dual generator is a prequotient.  The remaining continuous
+derivations and the bounded-to-chart comparison determine the first
+chart Hochschild group.
 \end{remark}
 
-\begin{proposition}[Generic affine second chiral Hochschild group;
+\begin{proposition}[Generic affine second-cohomology criterion;
 \ClaimStatusConditional]
 \label{prop:chirhoch2-affine-km-general}
-Let $\fg$ be a simple Lie algebra and let $V_k(\fg)$ be the
-affine vertex algebra at a generic level outside the Kac--Kazhdan
-reducibility walls. Then
+Let \(V_k(\fg)\) lie on a generic finite-window PBW surface.  Assume a
+cofibrant diagonal resolution, a contraction of every positive-weight
+complement, strict Mittag--Leffler completion, and a chain
+identification of the degree-two endpoint with the vacuum line of the
+specified dual chart.  Then
 \[
-\ChirHoch^2(V_k(\fg)) \;=\; \bC,
-\qquad
-\dim \ChirHoch^*(V_k(\fg)) \;=\; \dim(\fg) + 2.
+ \ChirHoch^2(V_k(\fg))\cong\mathbb C.
 \]
+The Kac--Shapovalov determinant and the scalar centre of a dual affine
+algebra provide inputs to this package.  The diagonal chain map,
+contraction, and completion supply the remaining data needed to
+compute the diagonal Ext group.
 \end{proposition}
 
 \begin{proof}
-The affine vertex algebra $V_k(\fg)$ is quadratic (OPE poles
-of order $\leq 2$) and chirally Koszul at the stated generic level
-(Corollary~\ref{cor:universal-koszul}). On the completed PBW Koszul
-surface, the degree-$2$ term of the diagonal bimodule Ext
-calculation is the continuous dual of the vacuum line in the
-Koszul-dual affine algebra. This is a finite-window Ext computation,
-not a general identification of
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with the naive center of
-$\cA^!$; the full brace dg equivalence is the separate conjectural
-surface of Conjecture~\ref{conj:derived-center-koszul-equivalence}.
-The Verdier--Koszul partner of $V_k(\fg)$ on the generic affine
-lane is $V_{-k - 2h^\vee}(\fg)$. This is the
-Feigin--Frenkel level involution on the complementarity locus, not
-the bar-cobar counit $\Omega B(V_k(\fg))\to V_k(\fg)$. The Sugawara
-conformal structure transports across this involution with
-central-charge flip
-$c(k) + c(-k-2h^\vee) = 2\dim(\fg)$, compatible with the Trinity
-$K$ value $2\dim(\fg)$ for affine Kac--Moody.
-
-The condition that $k$ avoid the Kac--Kazhdan walls is preserved by
-the involution $k \mapsto -k - 2h^\vee$; in particular both levels
-are simultaneously non-critical. At such a dual level the
-Kac--Shapovalov determinant is nonzero on the relevant finite
-conformal-weight windows and the naive center
-$Z(V_{-k-2h^\vee}(\fg))$ collapses to the vacuum line:
-\[
-Z(V_{-k-2h^\vee}(\fg)) \;=\; \bC \cdot |0\rangle,
-\qquad \dim \;=\; 1,
-\]
-since the Feigin--Frenkel center only acquires its polynomial-on
--$\operatorname{rank}(\fg)$-generators structure at the critical
-level $k = -h^\vee$ (Feigin--Frenkel~\cite{FF}), and reduces to
-scalars off it. Hence $\ChirHoch^2(V_k(\fg)) = \bC$.
-
-Combining with $\ChirHoch^0(V_k(\fg)) = \bC$ (vacuum center at
-generic level), $\ChirHoch^1(V_k(\fg)) \cong \fg$
-(Proposition~\ref{prop:chirhoch1-affine-km}), and
-$\ChirHoch^{\geq 3}(V_k(\fg)) = 0$ (Theorem~H polynomial
-concentration, Theorem~\ref{thm:hochschild-polynomial-growth}):
-\[
-\dim \ChirHoch^*(V_k(\fg))
-\;=\; 1 + \dim(\fg) + 1
-\;=\; \dim(\fg) + 2.
-\]
-The rank-1 instance $\fg = \mathfrak{sl}_2$ recovers the explicit
-computation of
-Proposition~\ref{prop:derived-center-explicit}(ii) with
-total dimension $1 + 3 + 1 = 5$.
+The assumed contraction removes the positive-weight complement.  The
+endpoint comparison identifies the remaining degree-two cohomology
+with the one-dimensional vacuum line, and the Mittag--Leffler clause
+passes the calculation to the completion.
 \end{proof}
 
 \begin{remark}[Finite-window Kac--Shapovalov test]
 \label{rem:chirhoch2-affine-km-general-falsification}
-The argument reduces to vanishing of the Kac--Shapovalov
-determinant at the dual level $-k - 2h^\vee$. For
-$\fg = \mathfrak{sl}_3,\mathfrak{sl}_4$ and
-$k \in \{1,2,3\}$, a finite-window Kac--Shapovalov computation of
-$Z(V_{-k-2h^\vee}(\fg))=\bC$ gives an independent per-family
-witness for the generic proof. The
-exceptional types $E_{6,7,8}, F_4, G_2$ are covered by the
-general Koszul-duality proof.
+A finite-window determinant calculation tests the vacuum-centre input.
+A proof of Proposition~\ref{prop:chirhoch2-affine-km-general} also
+needs the diagonal chain map, its contraction, and completion.
 \end{remark}
 
-\begin{proposition}[Gerstenhaber bracket on
-$\ChirHoch^1(V_k(\mathfrak{sl}_2))$; \ClaimStatusConditional]
+\begin{proposition}[Affine Gerstenhaber bracket on inner directions;
+\ClaimStatusProvedHere]
 \label{prop:gerstenhaber-sl2-bracket}
-\index{Gerstenhaber bracket!affine sl2@affine $\mathfrak{sl}_2$|textbf}
-Let $V_k(\mathfrak{sl}_2)$ be the affine vertex algebra at generic
-level~$k$ outside the Kac--Kazhdan reducibility walls
-\textup{(}in particular $k \neq -2$\textup{)}.
-The Gerstenhaber bracket of degree~$-1$ on
-$\ChirHoch^*(V_k(\mathfrak{sl}_2))$
-restricts on $\ChirHoch^1 \times \ChirHoch^1 \to \ChirHoch^1$ to
-the $\mathfrak{sl}_2$ Lie bracket:
-\begin{align}
-[D_e,\, D_f] &= D_h, \label{eq:gerst-ef}\\
-[D_h,\, D_e] &= 2\,D_e, \label{eq:gerst-he}\\
-[D_h,\, D_f] &= -2\,D_f, \label{eq:gerst-hf}
-\end{align}
-where $D_X \in \ChirHoch^1(V_k(\mathfrak{sl}_2)) \cong
-\mathfrak{sl}_2$
-\textup{(}Proposition~\textup{\ref{prop:chirhoch1-affine-km})}
-is the outer derivation parametrized by $X \in \mathfrak{sl}_2$.
-More generally, for any simple~$\fg$ at the same generic level:
+The prequotient zero-mode derivations satisfy
 \[
-[D_X,\, D_Y] \;=\; D_{[X,Y]_{\fg}}
-\qquad
-\text{for all } X, Y \in \fg \cong \ChirHoch^1(V_k(\fg)).
+ [\delta_X,\delta_Y]=\delta_{[X,Y]}.
 \]
-In particular, the Gerstenhaber bracket on~$\ChirHoch^1$ is
-independent of the level~$k$.
+Their images in first Hochschild cohomology are zero, so the induced
+Gerstenhaber bracket on this inner subspace is zero.  Additional outer
+classes form a separate cohomological sector.
 \end{proposition}
 
 \begin{proof}
-We compute the bracket from the chiral brace product on the
-Koszul resolution. A degree-$1$ Hochschild cochain $D_X$ acts
-on the generating currents by $D_X(J^a) = X^a\,|0\rangle$
-for $X = \sum_a X^a\,\mathbf{e}_a \in \fg$.
-The normalized Gerstenhaber representative is the antisymmetrized
-single-brace:
-\[
-[D_X,D_Y](J^c)
-\;=\;
-\operatorname{Res}_{\lambda=0}\,
-\bigl(
-\{(D_X)_\lambda\,D_Y(J^{\,\cdot\,})\}
--
-\{(D_Y)_\lambda\,D_X(J^{\,\cdot\,})\}
-\bigr)(J^c).
-\]
-Using the $\lambda$-bracket of $V_k(\fg)$,
-\[
-\{J^a_\lambda\, J^b\}
-\;=\;
-k\,\kappa^{ab}\,\lambda
-\;+\;
-f^{ab}_{\ c}\,J^c,
-\]
-the residue at $\lambda = 0$ extracts the simple-pole
-(structure-constant) contribution. With the trace-form normalization
-of the degree-one Koszul-dual generators,
-\[
-[D_X,D_Y](J^c)
-\;=\;
-\sum_{a,b} X^a\,Y^b\,f^{ab}_{\ c}\,|0\rangle
-\;=\;
-[X, Y]^c\,|0\rangle.
-\]
-The double-pole term $k\,\kappa^{ab}\,\lambda$ does not
-contribute at $\lambda^0$; the bracket is therefore
-independent of the level~$k$.
-Therefore
-\[
-[D_X, D_Y] \;=\; D_{[X,Y]_{\fg}}.
-\]
-Substituting the $\mathfrak{sl}_2$ structure constants
-$[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$ gives the three
-displayed relations.
-
-On the basis $e,h,f$, the same structure-constant calculation checks
-graded antisymmetry and the Jacobi identity on the $27$ ordered
-triples. No level-dependent term appears.
+This is Proposition~\ref{prop:chirhoch1-affine-km} together with
+functoriality of the bracket under passage to cohomology.
 \end{proof}
 
-\begin{remark}[First non-abelian Gerstenhaber bracket verification]
+\begin{remark}[First non-abelian zero-mode bracket verification]
 \label{rem:first-nonabelian-gerstenhaber}
-For the Heisenberg algebra $\mathfrak{H}_k$ (abelian, class~G),
-$\ChirHoch^1 = \bC$ is one-dimensional and
-all Gerstenhaber brackets vanish
-(Proposition~\ref{prop:heisenberg-bv-structure}).
-Proposition~\ref{prop:gerstenhaber-sl2-bracket} is the first
-verification that the chiral Hochschild Gerstenhaber structure on the
-derived center carries nontrivial bracket data in the non-abelian
-case.
-The three-dimensional $\ChirHoch^1(V_k(\mathfrak{sl}_2))
-= \mathfrak{sl}_2$ with its Lie bracket is the simplest
-instance; for higher-rank $\fg$ the bracket is the full
-$\fg$ Lie bracket on a $\dim(\fg)$-dimensional space.
+For \(\fg=\mathfrak{sl}_2\), the current bracket is the first
+non-abelian prequotient example.  Its image vanishes because every
+current zero mode is inner.
 \end{remark}
 
-The Gerstenhaber Lie algebra $\ChirHoch^1(V_k(\fg)) \cong \fg$
-is an invariant of the affine vertex algebra;
-the Drinfeld--Sokolov functor $\mathrm{DS}_\chi \colon
-V_k(\mathfrak{sl}_2) \to \mathrm{Vir}_{c(k)}$ must be
-compatible with its vanishing on the Virasoro side.
-The following proposition verifies this compatibility:
-$\mathrm{DS}_*$ kills all three outer derivations of
-$V_k(\mathfrak{sl}_2)$ by three distinct mechanisms, one
-for each stratum of the $\mathfrak{sl}_2$ weight decomposition.
+\begin{definition}[DS--Hochschild comparison package;
+\ClaimStatusDefinitional]
+\label{def:cct-ds-hochschild-package}
+The package \(H_{\mathrm{DS/HH}}(k,\fg)\) consists of a functorial
+BRST model for Drinfeld--Sokolov reduction, a chain map between
+cofibrant diagonal resolutions, compatibility with operadic braces,
+and convergent finite-window completion.
+\end{definition}
 
-\begin{proposition}[DS--ChirHoch compatibility;
+\begin{proposition}[DS--ChirHoch compatibility criterion;
 \ClaimStatusConditional]
 \label{prop:ds-chirhoch-compatibility}
-\index{Drinfeld--Sokolov reduction!ChirHoch compatibility|textbf}
-\index{chiral Hochschild cohomology!DS compatibility}
-Let $k$ be generic outside the Kac--Kazhdan reducibility walls
-\textup{(}in particular $k \neq -2$\textup{)} and let
-$c(k) = 1 - 6(k+1)^2/(k+2)$ be the Virasoro central charge
-under principal Drinfeld--Sokolov reduction.
-The induced map
-\[
-\mathrm{DS}_* \;\colon\;
-\ChirHoch^1(V_k(\mathfrak{sl}_2))
-\;\longrightarrow\;
-\ChirHoch^1(\mathrm{Vir}_{c(k)})
-\]
-is zero. Concretely, the three outer derivations
-$D_e, D_h, D_f \in \ChirHoch^1(V_k(\mathfrak{sl}_2))
-\cong \mathfrak{sl}_2$
-\textup{(}Proposition~\textup{\ref{prop:chirhoch1-affine-km})}
-are annihilated by the following mechanisms:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $D_e$ \textup{(}$\mathfrak{h}$-eigenvalue~$+2$,
- $\mathfrak{n}_+$ direction\textup{):}
- BRST-exact. The DS differential
- $d_{\mathrm{BRST}} = \oint c(z)\, J^e(z)\,dz$ gauges the
- $\mathfrak{n}_+$-action; $D_e$ is
- $d_{\mathrm{BRST}}$-exact and vanishes in
- $H^0_{\mathrm{DS}}$.
-\item $D_h$ \textup{(}$\mathfrak{h}$-eigenvalue~$0$,
- Cartan direction\textup{):}
- becomes inner.
- Under DS, the Cartan current $J^h(z)$ enters the modified
- stress tensor
- $T_{\mathrm{DS}} = T_{\mathrm{Sug}} + \tfrac{1}{2}\,
- \partial J^h$;
- the derivation $D_h$ maps to $\mathrm{ad}(T)$, which
- is the inner derivation $[L_0, -]$ of\/
- $\mathrm{Vir}_{c(k)}$.
-\item $D_f$ \textup{(}$\mathfrak{h}$-eigenvalue~$-2$,
- $\mathfrak{n}_-$ direction\textup{):}
- becomes inner via the screening operator.
- Under DS, $J^f(z)$ maps to the screening current
- $V_-(z)$; the derivation $D_f$ maps to the derivation by
- the screening charge $Q_- = \oint V_-(z)\,dz$, which is
- inner for $\mathrm{Vir}_{c}$ at generic~$c$.
-\end{enumerate}
-Since each outer derivation of\/ $V_k(\mathfrak{sl}_2)$ is
-either killed or trivialized,
-$\mathrm{DS}_*(\ChirHoch^1) = 0$, consistent with
-$\ChirHoch^1(\mathrm{Vir}_{c(k)}) = 0$
-\textup{(}Proposition~\textup{\ref{prop:derived-center-explicit}(iii))}.
+Under \(H_{\mathrm{DS/HH}}(k,\fg)\), Drinfeld--Sokolov reduction
+induces a map on chart chiral Hochschild cohomology.  The affine
+current zero-mode directions map to zero because their source classes
+already vanish in the inner quotient.
 \end{proposition}
 
 \begin{proof}
-The DS functor is the BRST cohomology
-$H^0_{\mathrm{DS}}(-)$ of the complex
-$(V_k(\mathfrak{sl}_2) \otimes \mathrm{gh},\,
-d_{\mathrm{BRST}})$, where $\mathrm{gh}$ is the
-$bc$-ghost system for the positive root.
-Since BRST cohomology is a derived functor, it induces a
-map on Hochschild cohomology: an outer derivation
-$D \in \ChirHoch^1(V_k(\mathfrak{sl}_2))$ maps to the
-derivation $\mathrm{DS}_*(D)$ of\/ $\mathrm{Vir}_{c(k)}$
-defined by $\mathrm{DS}_*(D)(v) =
-H^0_{\mathrm{DS}}(D(\tilde{v}))$ for any
-$d_{\mathrm{BRST}}$-closed lift~$\tilde{v}$.
-
-\textbf{(i)} The derivation $D_e$ acts by
-$J^a \mapsto \delta^{a,e}\,|0\rangle$. In the DS complex,
-$J^e(z)$ is $d_{\mathrm{BRST}}$-exact: the ghost contraction
-$[d_{\mathrm{BRST}},\, b_{-1}]$ produces $J^e_0$. Hence
-$D_e$ is cohomologically trivial and
-$\mathrm{DS}_*(D_e) = 0$.
-
-\textbf{(ii)} Under DS, $J^h(z)$ enters the modified
-Virasoro field $T_{\mathrm{DS}}(z) =
-T_{\mathrm{Sug}}(z) + \tfrac{1}{2}\,\partial J^h(z)$.
-The derivation $D_h$ maps to $\mathrm{ad}(T_{\mathrm{DS}})
-= [T_{\mathrm{DS}}, -]$, which is the inner derivation
-by the conformal vector of\/ $\mathrm{Vir}_{c(k)}$.
-Inner derivations are trivial in $\ChirHoch^1$, so
-$\mathrm{DS}_*(D_h) = 0$ in cohomology.
-
-\textbf{(iii)} Under DS, $J^f(z)$ maps (via the Wakimoto
-realization) to the screening current
-$V_-(z) = f(z)\,e^{-\phi(z)/\sqrt{k+2}}$ of conformal
-weight~$1$. The derivation $D_f$ maps to
-$[Q_-, -]$ where $Q_- = \oint V_-(z)\,dz$ is the
-screening charge. At such a generic level ($k \neq -2$, hence
-$c \neq 1, 25$), the screening charge is a well-defined
-operator, and the derivation $[Q_-, -]$ is inner.
-Therefore $\mathrm{DS}_*(D_f) = 0$ in cohomology.
-
-\medskip\noindent
-Since $D_e, D_h, D_f$ span
-$\ChirHoch^1(V_k(\mathfrak{sl}_2)) \cong \mathfrak{sl}_2$
-(Proposition~\ref{prop:chirhoch1-affine-km}), the
-induced map $\mathrm{DS}_*$ is zero on~$\ChirHoch^1$.
-The image lies in
-$\ChirHoch^1(\mathrm{Vir}_{c(k)}) = 0$
-(Proposition~\ref{prop:derived-center-explicit}(iii)),
-confirming the compatibility.
-
-\medskip\noindent
-\textit{Dimension accounting.}
-The $\mathfrak{sl}_2$ weight decomposition gives
-$\dim(\mathfrak{n}_+) + \dim(\mathfrak{h})
-+ \dim(\mathfrak{n}_-) = 1 + 1 + 1 = 3 = \dim(\mathfrak{sl}_2)$,
-so the three mechanisms exhaust the full space.
-The generalization to $\mathfrak{sl}_N$ replaces the counts
-by $N(N{-}1)/2 + (N{-}1) + N(N{-}1)/2 = N^2 - 1
-= \dim(\mathfrak{sl}_N)$.
+The chain map in \(H_{\mathrm{DS/HH}}\) induces the cohomology map.
+Proposition~\ref{prop:chirhoch1-affine-km} identifies each current
+zero-mode class with zero before applying that map.
 \end{proof}
 
-\begin{remark}[Generalization to $\mathfrak{sl}_N$]
+\begin{remark}[Generalization to \(\mathfrak{sl}_N\)]
 \label{rem:ds-chirhoch-sl-n}
-For principal DS reduction
-$V_k(\mathfrak{sl}_N) \to \mathcal{W}_{N,c(k)}$,
-the same argument gives
-$\mathrm{DS}_*(\ChirHoch^1(V_k(\mathfrak{sl}_N))) = 0
-= \ChirHoch^1(\mathcal{W}_N)$.
-The $N^2 - 1$ outer derivations decompose into three strata:
-$N(N{-}1)/2$ positive-root derivations killed by BRST
-exactness, $N{-}1$ Cartan derivations absorbed into inner
-derivations via the Miura transform, and $N(N{-}1)/2$
-negative-root derivations absorbed via screening charges.
-The master commutative square
-(Theorem~\ref{thm:master-commutative-square})
-provides the functorial framework.
+The same inner-direction argument applies to every simple \(\fg\).
+A statement about all first cohomology classes of the DS quotient
+requires the full package \(H_{\mathrm{DS/HH}}(k,\fg)\) and a
+calculation of the target complex.
 \end{remark}
 
-\begin{proposition}[BV algebra structure on
-$H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathfrak{H}_k))$;
-\ClaimStatusProvedHere]
+\begin{conjecture}[Heisenberg cyclic/BV enhancement;
+\ClaimStatusConjectured]
 \label{prop:heisenberg-bv-structure}
-\index{BV algebra!Heisenberg derived center|textbf}
-\index{Gerstenhaber bracket!Heisenberg}
-The cohomology algebra of the derived-center complex
-$H^*(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathfrak{H}_k))
-= \bC\{1, \xi_k, \eta\}$
-carries the following BV algebra structure:
+A cyclic comparison for the Heisenberg chart is expected to transport
+the Connes operator to a BV operator on its chart-derived centre.
+A proof requires:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Product.)}
- The cup product on Hochschild cochains gives:
- \begin{align*}
- 1 \cdot f &= f \cdot 1 = f
- \quad \text{for all } f, \\
- \xi_k \cdot \xi_k &= k\, \eta, \\
- \xi_k \cdot \eta &= 0, \qquad
- \eta \cdot \eta = 0.
- \end{align*}
- The relation $\xi_k^2 = k\, \eta$ is the Yoneda product of the
- level deformation with itself: the curvature $\kappa = k$ appears
- as the coefficient.
-
-\item \textup{(BV operator.)}
- The BV operator $\Delta$ \textup{(}from the Connes $B$-operator\textup{)}
- satisfies:
- \[
- \Delta(1) = 0, \qquad
- \Delta(\xi_k) = 1, \qquad
- \Delta(\eta) = 0.
- \]
- For $k \neq 0$, the vanishing $\Delta(\eta) = 0$ is \emph{forced}
- by the BV relation applied to $f = g = \xi_k$: since the
- deformation is unobstructed
- \textup{(}$[\xi_k, \xi_k] = 0$, proved in the Gerstenhaber-bracket
- bullet below\textup{)},
- \[
- 0 = \Delta(\xi_k^2) - (\Delta \xi_k) \xi_k
- - (-1)^1 \xi_k (\Delta \xi_k)
- = k\, \Delta(\eta) - \xi_k + \xi_k
- = k\, \Delta(\eta),
- \]
- giving $\Delta(\eta) = 0$ for $k \neq 0$.
- At the degenerate level $k = 0$ the Yoneda product
- $\xi_0^2 = 0 \cdot \eta = 0$ collapses and this argument is
- uninformative; however $\Delta(\eta) = 0$ still holds, by direct
- evaluation of the Connes $B$-operator on the weight-zero
- dual-vacuum cocycle in the Sym$^{\mathrm{ch}}(V^*)$ resolution of
- the Koszul dual \textup{(}compare Proposition~\ref{prop:chirhoch-cdr}
- applied to the commutative chiral algebra $\mathfrak{H}_0 \cong
- \mathcal{O}(V)$\textup{)}.
-
-\item \textup{(Gerstenhaber bracket.)}
- The bracket $[-,-]$ of degree~$-1$ satisfies:
- \begin{gather*}
- [1, -] = 0, \qquad
- [\xi_k, \xi_k] = 0
- \quad \textup{(unobstructed deformation)}, \\
- [\xi_k, \eta] = -\eta, \qquad
- [\eta, \xi_k] = \eta, \qquad
- [\eta, \eta] = 0.
- \end{gather*}
- The relation $[\xi_k, \eta] = -\eta$ follows from the BV relation:
- since $\xi_k \cdot \eta = 0$ \textup{(}degree~$3$ vanishes\textup{)}
- and $\Delta(\eta) = 0$, one has
- $[\xi_k, \eta] = -(\Delta \xi_k) \cdot \eta = -1 \cdot \eta = -\eta$.
- Graded antisymmetry gives
- $[\eta, \xi_k] = -(-1)^{(2-1)(1-1)} [\xi_k, \eta] = \eta$.
+\item a bounded or finite-window cyclic cochain model;
+\item a quasi-isomorphism to the chart cyclic complex;
+\item compatibility of the Connes operator with completion;
+\item a direct calculation of products and brackets on representatives.
 \end{enumerate}
-All structure maps satisfy the BV relation of Getzler
-\textup{\cite{Getzler94}:}
-\[
-[f, g]
-\;=\;
-\Delta(f \cdot g) - (\Delta f) \cdot g
-- (-1)^{|f|}\, f \cdot (\Delta g).
-\]
-\end{proposition}
+The bounded dimension vector of
+Proposition~\ref{prop:derived-center-explicit}(i) supplies the graded
+vector-space input.  The four comparison clauses above determine the
+cyclic structure constants.
+\end{conjecture}
 
-\begin{proof}
-The computations are given inline. We verify the BV relation
-on all pairs of generators. There are six cases (up to graded
-symmetry):
-
-\textit{Case $(1, 1)$:}
-$[1,1] = 0$. RHS: $\Delta(1 \cdot 1) - (\Delta 1) \cdot 1
-- 1 \cdot (\Delta 1) = \Delta(1) - 0 - 0 = 0$. Match.
-
-\textit{Case $(1, \xi_k)$:}
-$[1, \xi_k] = 0$. RHS: $\Delta(\xi_k) - (\Delta 1) \xi_k
-- 1 \cdot (\Delta \xi_k) = 1 - 0 - 1 = 0$. Match.
-
-\textit{Case $(1, \eta)$:}
-$[1, \eta] = 0$. RHS: $\Delta(\eta) - (\Delta 1)\eta
-- 1 \cdot (\Delta \eta) = 0$. Match.
-
-\textit{Case $(\xi_k, \xi_k)$:}
-$[\xi_k, \xi_k] = 0$. RHS: $\Delta(k\eta) - (\Delta\xi_k)\xi_k
-+ \xi_k(\Delta\xi_k) = k \cdot 0 - \xi_k + \xi_k = 0$. Match.
-
-\textit{Case $(\xi_k, \eta)$:}
-$[\xi_k, \eta] = -\eta$. RHS: $\Delta(0) - (\Delta\xi_k)\eta
--(-1)^1 \xi_k (\Delta\eta) = 0 - \eta - 0 = -\eta$. Match.
-
-\textit{Case $(\eta, \eta)$:}
-$[\eta, \eta] = 0$. Both sides vanish since $\eta^2 = 0$,
-$\Delta\eta = 0$, and the bracket lands in the vanishing curve-level
-group $\ChirHoch^3_{\mathrm{curve}} = 0$. Match.
-\end{proof}
-
-\begin{proposition}[Chiral Hochschild cohomology of commutative chiral algebras
-{\cite{MSV99}}; \ClaimStatusProvedElsewhere]
+\begin{conjecture}[Chiral HKR comparison problem;
+\ClaimStatusConjectured]
 \label{prop:chirhoch-cdr}
-\index{chiral Hochschild cohomology!commutative chiral algebra|textbf}%
-\index{chiral de Rham complex!Hochschild identification}%
-Let $X$ be a smooth algebraic variety over~$\bC$ and let
-$\mathcal{O}_X^{\mathrm{ch}}$ denote its commutative chiral
-algebra \textup{(}the chiral structure sheaf\textup{)}.
-Then the chiral Hochschild cochain complex of
-$\mathcal{O}_X^{\mathrm{ch}}$ is quasi-isomorphic to the
-chiral de~Rham complex:
-\[
-C^\bullet_{\mathrm{ch}}(\mathcal{O}_X^{\mathrm{ch}},\,
-\mathcal{O}_X^{\mathrm{ch}})
-\;\simeq\;
-\Omega^{\mathrm{ch}}(X).
-\]
-In particular, the chiral Hochschild cohomology recovers the
-cohomology of the chiral de~Rham sheaf:
-\[
-\ChirHoch^n(\mathcal{O}_X^{\mathrm{ch}})
-\;\cong\;
-H^n(X,\, \Omega^{\mathrm{ch}}).
-\]
-\end{proposition}
+Let \(X\) be a smooth variety and
+\(\Omega_X^{\mathrm{ch}}\) its chiral de Rham sheaf.  A chiral HKR
+theorem would consist of a natural quasi-isomorphism from the selected
+chart Hochschild complex of a commutative chiral structure sheaf to a
+complex built from \(\Omega_X^{\mathrm{ch}}\), together with its
+descent and completion data.
+\end{conjecture}
 
 \begin{remark}[Attribution]
 \label{rem:chirhoch-cdr-attribution}
-The chiral de~Rham complex $\Omega^{\mathrm{ch}}(X)$ was
-introduced by Malikov, Schechtman, and
-Vaintrob~\cite{MSV99} as a sheaf of vertex superalgebras
-on any smooth variety~$X$. Locally, $\Omega^{\mathrm{ch}}(X)$
-is the $\beta\gamma$-$bc$ system associated to the tangent
-bundle of~$X$; globally, the patching data are controlled by
-the \v{C}ech cohomology of the transition automorphisms of the
-$\beta\gamma$ vertex algebra.
-
-The identification with chiral Hochschild cohomology follows
-from the general principle that Hochschild cochains of a
-commutative algebra compute its de~Rham complex: classically,
-$\HH^\bullet(C^\infty(M), C^\infty(M)) \simeq
-\Gamma(M, \bigwedge^\bullet T_M)$ by the
-Hochschild--Kostant--Rosenberg theorem, and the chiral
-analogue replaces the exterior algebra of polyvector fields
-with the vertex algebra of chiral differential forms.
-The Hochschild--Kostant--Rosenberg quasi-isomorphism in the
-chiral setting is established in~\cite{MSV99} via the local
-coordinate presentation and \v{C}ech descent.
-
-When $X$ is Calabi--Yau of dimension~$d$, the central charge
-of $\Omega^{\mathrm{ch}}(X)$ vanishes ($c_{\beta\gamma} +
-c_{bc} = 0$ per complex dimension), and the Witten genus of~$X$
-coincides with the graded character of
-$H^*(X, \Omega^{\mathrm{ch}})$. The modular
-characteristic in this case is $\kappa^{\mathrm{ch}} =
-\dim_\bC(X)$; see
-for a K3 surface, this gives $\kappa^{\mathrm{ch}} = 2$.
+Malikov--Schechtman--Vaintrob construct
+\(\Omega_X^{\mathrm{ch}}\) as a sheaf of vertex superalgebras
+\cite{MSV99}.  That construction supplies the proposed target.  The
+chart Hochschild quasi-isomorphism of
+Conjecture~\ref{prop:chirhoch-cdr} is the additional comparison
+problem.
 \end{remark}
 
-
-\begin{proposition}[Annulus trace for standard families; \ClaimStatusConditional]
+\begin{proposition}[Annulus-trace criterion;
+\ClaimStatusConditional]
 \label{prop:annulus-trace-standard}
-\index{annulus trace!standard families|textbf}
-The annulus trace $\operatorname{Tr}_\cA \colon \ChirHoch_*(\cA) \to
-H^*(\overline{\mathcal{M}}_{1,1})$
-\textup{(}Theorem~\textup{\ref{thm:thqg-annulus-trace})}
-satisfies:
+Assume a cyclic chart model, a compatible annulus trace
 \[
-\operatorname{Tr}_\cA(1)
-\;=\;
-\kappa(\cA) \cdot \lambda_1,
+ \operatorname{Tr}_{\cA}\colon
+ \ChirHoch_*(\cA)\longrightarrow
+ H^*(\overline{\mathcal M}_{1,1}),
 \]
-where $\lambda_1 \in H^2(\overline{\mathcal{M}}_{1,1})$ is the
-first Chern class of the Hodge bundle. The coefficient
-$\kappa(\cA)$ is the modular characteristic:
-\begin{center}
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{ll}
-Family & $\kappa(\cA)$ \\
-\hline
-Heisenberg $\mathfrak{H}_k$ & $k$ \\
-Affine $\widehat{\mathfrak{sl}}_{2,k}$ &
-$3(k+2)/4$ \\
-Virasoro $\mathrm{Vir}_c$ & $c/2$ \\
-$\mathcal{W}_3$ at central charge~$c$ & $5c/6$
-\end{tabular}
-\end{center}
-The complementarity sum $\kappa(\cA) + \kappa(\cA^!)$ is:
-$0$ for Heisenberg and affine Kac--Moody
-\textup{(}Feigin--Frenkel involution\textup{)},
-and $13$ for Virasoro \textup{(}$c/2 + (26-c)/2 = 13$,
-\emph{not} zero\textup{)}.
+and the family normalization \(H_{\mathrm{mod}}(\cA)\).  Then its
+vacuum value has the form
+\[
+ \operatorname{Tr}_{\cA}(1)=\kappa(\cA)\lambda_1.
+\]
+The coefficient is determined on families carrying both a genus-one
+curvature calculation and the trace comparison.
 \end{proposition}
 
 \begin{proof}
-The trace formula $\operatorname{Tr}_\cA(1) = \kappa(\cA)
-\cdot \lambda_1$ is the content of
-Theorem~\ref{thm:thqg-annulus-trace}, applied to each family.
-The value of $\kappa$ for each family is given by
-Theorem~\ref{thm:modular-characteristic}.
-
-The complementarity sum: for Heisenberg,
-$\kappa(\mathfrak{H}_k^!) = \kappa(\operatorname{Sym}^{\mathrm{ch}}(V^*))
-= -k$, so $\kappa + \kappa^! = 0$. For affine
-$\widehat{\mathfrak{sl}}_{2,k}$:
-the Feigin--Frenkel involution sends $k \mapsto -k - 2h^\vee = -k - 4$,
-so $\kappa^! = 3(-k-4+2)/4 = 3(-k-2)/4 = -3(k+2)/4 = -\kappa$,
-giving $\kappa + \kappa^! = 0$.
-For Virasoro: the Verdier--Koszul partner on the matter-ghost lane is
-$\mathrm{Vir}_{26-c}$
-\textup{(}Example~\ref{ex:virasoro-koszul-dual}\textup{)}, so
-$\kappa + \kappa^! = c/2 + (26-c)/2 = 13$.
-This non-vanishing is the complementarity asymmetry.
+This is the defining scalar projection in the stated cyclic and
+modular comparison package.  Family values enter through their
+independently verified genus-one curvature calculations.
 \end{proof}
 
-\subsection{Derived-centre complementarity (Theorem C, strengthened)}
+\subsection{Normalized scalar traces of Theorem~C eigensummands}
 \label{subsec:theorem-C-strengthened}
 
-\begin{theorem}[Derived-centre complementarity across the standard
-landscape; \ClaimStatusConditional]
-\label{thm:derived-centre-complementarity-strengthened}
-\index{Theorem C!derived-centre complementarity|textbf}
-\index{complementarity!ceiling theorem|textbf}
-\index{kappa plus kappa dual@$\kappa{+}\kappa^!$!ceiling}
-\textup{[Regime: curved-central, Koszul locus; scalar lane under
-Verdier duality on the bar coalgebra.]}
-Let $A$ be a standard chiral algebra of the Vol~I landscape -- a
-curved $\Ainf$-chiral algebra satisfying the standing assumptions of
-\textup{\S\ref{sec:chiral-center-theorem}}. Parts \textup{(a)} and
-\textup{(b)} concern the four shadow archetypes
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ with shadow-tower depth
-$r_{\max}\in\{2,3,4,\infty\}$
-\textup{(}Theorem~\textup{\ref{thm:quadrichotomy}}\textup{)}. Part
-\textup{(c)} enlarges only the \emph{computed scalar surface}, by
-adjoining the principal $\mathcal W_N$ tower and the Vol~III
-$\mathcal B$-row Mukai witness after their Verdier partners,
-anomaly ratios, and conductors have been verified. Let
-$A^!$ denote its Verdier dual on $\operatorname{Ran}(X)$
-\textup{(}the chiral Koszul partner on the stated Verdier lane, not
-the bar-cobar inversion counit
-$\Omega B(A)\to A$\textup{)} and
-write
+The scalar complementarity problem begins with the C1 eigensummands of
+$\mathbf C_g(A)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A))$.
+It asks for a genus-one characteristic \(\kappa(A)\), a specified
+Verdier--Koszul partner \(A^!\), and a Theorem~D trace comparison that
+transports both characteristics into the same scalar normalization.
+
+\begin{definition}[Scalar complementarity package;
+\ClaimStatusDefinitional]
+\label{def:cct-scalar-complementarity-package}
+The package \(H_C(A,A^!)\) consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the C0 strict-flat fibre--centre comparison defining the ordinary
+ centre local system~$\mathcal Z(A)$;
+\item the represented C1 involution~$\sigma$ and its projectors
+ $p^\pm$ on
+ $\mathbf C_g(A)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A))$;
+\item the continuous Verdier comparison defining \(A^!\);
+\item genus-one curvature computations defining
+ \(\kappa(A)\) and \(\kappa(A^!)\);
+\item diagonal degree-two representatives in the two C1 eigensummands
+ and the Theorem~D trace maps whose normalized values are
+ $\kappa(A)$ and~$\kappa(A^!)$;
+\item central-charge normalizations \(c(A)\), \(c(A^!)\), together with
+ a theorem identifying the family involution and the two trace
+ conventions;
+\item completion and averaging maps carrying these data to one scalar
+ lane.
+\end{enumerate}
+When \(c(A)\) is invertible, write
 \[
-K^\kappa(A) \;:=\; \kappa(A) + \kappa(A^!) ,
-\qquad
-\varrho(A) \;:=\; \kappa(A)/c(A),
-\qquad
-K(A) \;:=\; c(A) + c(A^!) .
+ \varrho(A):=\frac{\kappa(A)}{c(A)},\qquad
+ K^c(A,A^!):=c(A)+c(A^!),\qquad
+ K^\kappa(A,A^!):=\kappa(A)+\kappa(A^!).
 \]
-This theorem is a scalar central-charge statement. It does not assert
-an equivalence of the naive centers $Z(A)$ and $Z(A^!)$, an
-equivalence of the brace dg algebras
-$Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ and
-$Z^{\mathrm{der}}_{\mathrm{ch}}(A^!)$, or an identification with a
-Drinfeld center. The naive $H^0$ center pairing requires the
-finite-dimensional or completed finite-graded-piece hypotheses and
-central-orthogonality condition of
-Lemma~\ref{lem:naive-center-koszul-identification}; the derived
-brace equivalence is Conjecture~\ref{conj:derived-center-koszul-equivalence}.
-Ordinary-derived fiber-center statements require the flat perfect
-locus of Lemma~\ref{lem:perfectness-criterion}, and a PTVV
-shifted-symplectic realization requires the orientation,
-target-symplectic, tangent-identification, and compatibility data of
-Theorem~\ref{thm:C-PTVV-alternative}.
-The ordered $E_1$ bar and chiral Hochschild complexes are constructed
-before passing to $\Sigma_n$-coinvariants; $K^\kappa$ is the symmetric
-scalar projection after the averaging map. No assertion below recovers
-ordered cochains, brace operations, or physical closed-sector fields
-from the averaged scalar, and the $\mathcal B$-row in \textup{(c)}
-is not promoted to a derived-center equivalence without the completed
-PBW/perfectness hypotheses named in this paragraph.
-\textup{(a)} The scalar sum factors through the anomaly ratio:
+\end{definition}
+
+\begin{theorem}[Computed and open scalar complementarity lanes;
+\ClaimStatusConditional]
+\label{thm:scalar-trace-complementarity}
+\label{thm:derived-centre-complementarity-strengthened}
+\textup{[Type signature: Open quadrant; symmetric scalar trace
+presentation; Beilinson level \(5\); hypothesis package
+\(H_C(A,A^!)\).]}
+
+Under~$H_C(A,A^!)$, the quantity~$K^\kappa(A,A^!)$ is the sum of the
+two normalized Theorem~D trace outputs on the C1 eigensummands.
+
+\textup{(a)} If \(H_C(A,A^!)\) identifies
+\(\varrho(A)=\varrho(A^!)=\varrho\), then
 \begin{equation}\label{eq:thm-C-bridge}
-K^\kappa(A) \;=\; \varrho(A) \cdot K(A),
+ K^\kappa(A,A^!)=\varrho\,K^c(A,A^!).
 \end{equation}
-whenever $\varrho(A) = \varrho(A^!)$
-\textup{(}level-independence on the family of $A$,
-Corollary~\textup{\ref{cor:anomaly-ratio-ds}} for principal
-$\mathcal{W}$-algebras and checked directly on the witness
-families\textup{)}.
 
-\textup{(b)} On the four shadow-archetype witnesses and the two
-$\mathsf{M}$-family principal extensions at $\fg=\mathfrak{sl}_3$,
-$K^\kappa$ takes the values
+\textup{(b)} The unconditional Vol~I landmark values are
+\[
+ \mathcal S^{\mathrm{VolI,exact}}_\kappa=\{0,\;13\}.
+\]
+The package
+$H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}$ supplies the
+conditional principal-$\mathcal W_3$ extension
 \begin{equation}\label{eq:thm-C-ceiling}
-K^\kappa(A) \;\in\; \Bigl\{\, 0,\; 13,\; \frac{250}{3},\; \frac{98}{3} \,\Bigr\},
+ \mathcal S^{\mathrm{VolI,comparison}}_\kappa
+ =
+ \left\{0,\;13,\;\frac{250}{3}\right\}.
 \end{equation}
-realised as
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{c|c|c|c|c}
-Archetype & Witness & $\varrho$ & $K$ & $K^\kappa$ \\
+The status-separated calculations are:
+\[
+\begin{array}{c|c|c|c}
+\text{lane} & K^c & K^\kappa & \text{status}\\
 \hline
-$\mathsf{G}$ & $\cH_k$ & $1$ & $0$ & $0$ \\
-$\mathsf{L}$ & $\widehat{\fg}_k$ & $\mathrm{sym}\,0$ & $2\dim\fg$ & $0$ \\
-$\mathsf{C}$ & $\beta\gamma_\lambda$ & $1/2$ & $0$ & $0$ \\
-$\mathsf{M}$ & $\mathrm{Vir}_c$ & $1/2$ & $26$ & $13$ \\
-\hline
-$\mathsf{M}$-ext & $\mathcal{W}_3^k$ (principal) & $5/6$ & $100$ & $250/3$ \\
-$\mathsf{M}$-ext & $\mathrm{BP}_k$ (minimal) & $1/6$ & $196$ & $98/3$ \\
-\end{tabular}
-\end{center}
+\text{free/affine cancellation} & \text{family-specific} & 0 &
+\text{computed}\\
+\operatorname{Vir}_c & 26 & 13 & \text{computed}\\
+\mathcal W_3^{\mathrm{prin}} & 100 & 250/3 &
+H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}
+\end{array}
+\]
+The corresponding anomaly ratios are family-specific on the first row,
+$1/2$ on the Virasoro row, and conditionally $5/6$ on the principal
+$\mathcal W_3$ row.
 
-\textup{(c)} \emph{Exhaustiveness on the computed scalar landmark set.}
-Outside the six landmark witnesses of \textup{(b)}, the sum $K^\kappa(A)$
-realises additional values: for principal $\mathcal{W}_N^k(\mathfrak{sl}_N)$
-with $N\ge 3$,
+\textup{(c)} For the standard Fehily--Kawasetsu--Ridout conformal
+vector of the Bershadsky--Polyakov algebra
+\cite[Definition~2.1]{FKR20}, for \(k\in\mathbb C\setminus\{-3\}\),
+\[
+ c_{\mathrm{BP}}(k)
+ =
+ -\frac{(2k+3)(3k+1)}{k+3},
+ \qquad
+ c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\]
+Thus \(K^c_{\mathrm{BP}}=50\) is exact.  The strong generators
+\(J,G^+,G^-,T\) are even, and their reciprocal-weight diagnostic is
+\[
+ 1+\frac23+\frac23+\frac12=\frac{17}{6}.
+\]
+The characteristic \(\kappa_{\mathrm{BP}}\), the anomaly ratio
+\(\varrho_{\mathrm{BP}}\), and
+\(K^\kappa_{\mathrm{BP}}\) have status \ClaimStatusOpen{}: their
+genus-one computation is the open obligation.  The equation
+\(\kappa_{\mathrm{BP}}=c_{\mathrm{BP}}/6\), hence
+\(K^\kappa_{\mathrm{BP}}=25/3\), is retained as the explicit
+consequence of that conditional genus-one equation.
+
+\textup{(d)} The Mukai lattice of a K3 surface is
+\[
+ \widetilde H(K3,\mathbb Z)
+ \cong U^4\oplus E_8(-1)^2
+ =\mathrm{II}_{4,20}.
+\]
+It has rank \(24\), signature \((4,20)\), and the exact arithmetic
+value
+\[
+ 2c_+(\mathrm{II}_{4,20})=8.
+\]
+This is the Mukai-lattice calculation of \cite{Mukai1987}.
+Its interpretation as
+\(K^\kappa_{\mathsf B}=8\) is conjectural under
+\[
+ H_B=
+ H_{\mathrm{chart}}+H_{\mathrm{KD}}+H_{\mathrm{scalar}}
+ +H_{\mathrm{mod}}+H_{\mathrm{quantum}}.
+\]
+The number \(8\) is therefore a lattice theorem and a chiral
+complementarity candidate.
+
+\textup{(e)} For a principal \(\mathcal W_N\) family, the formula
 \begin{equation}\label{eq:thm-C-WN}
-K^\kappa(\mathcal{W}_N^k) \;=\; (H_N-1)\cdot K_N,
-\qquad
-H_N := \sum_{j=1}^N \frac{1}{j},\qquad
-K_N := 2r_N + 4h^\vee_N d_N,
+ K^\kappa(\mathcal W_N,\mathcal W_N^!)
+ =(H_N-1)K^c(\mathcal W_N,\mathcal W_N^!)
 \end{equation}
-with $r_N = N-1$, $h^\vee_N = N$, and
-$d_N=\dim\mathfrak{sl}_N=N^2-1$, hence
-$K_N=2(N-1)+4N(N^2-1)=2(N-1)(2N^2+2N+1)$; for the
-Mukai-enhanced $\mathcal{B}$-family witness on K3 one further obtains
-$K^\kappa = 8$ \textup{(}Proposition~\textup{\ref{prop:archetype-complementarity-bridge}},
-$\mathcal{B}$-row\textup{)}. The classical four-element set
-$\{0, 13, 250/3, 98/3\}$ on $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$
-is the \emph{classical landmark ceiling}, and the canonical five-element
-bucket $\{0, 8, 13, 250/3, 98/3\}$ on
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$ adjoins the
-$\mathsf{B}$-row Mukai-doubling witness $K^\kappa=8$
-\textup{(}Convention~\ref{conv:theorem-c-bucket}\textup{)}; neither set
-is a universal bound. Let $\mathcal{F}^{\mathrm{comp}}_\kappa$ denote
-the six families in \textup{(b)}, the principal $\mathcal{W}_N$ tower,
-and the $\mathcal{B}$-row Mukai witness. The computed scalar surface in
-this theorem is
-\begin{equation}\label{eq:thm-C-full-set}
-\mathcal{S}^{\mathrm{comp}}_\kappa
-\;:=\;
-\Bigl\{\; \varrho(A)\cdot K(A) \;:\;
- A \in \mathcal{F}^{\mathrm{comp}}_\kappa
- \Bigr\}
-\;=\;
-\bigl\{0\bigr\} \cup \bigl\{13, 250/3, 98/3\bigr\}
- \cup \bigl\{(H_N-1)K_N\bigr\}_{N\ge 4}
- \cup \bigl\{8\bigr\}_{\mathcal{B}},
-\end{equation}
-where the first bracket is the class-$\mathsf{G}/\mathsf{L}/\mathsf{C}$
-free-field locus, the second is the class-$\mathsf{M}$ four-element
-landmark set, the third is the principal-$\mathcal{W}_N$ tower for
-$N\ge 4$, and the fourth is the Lorentzian-lattice Mukai doubling of
-Vol~III. A new standard family enters this set only after the
-Verdier partner $A^!$, ratio equality $\varrho(A)=\varrho(A^!)$,
-and conductor value $K(A)$ have been verified; lifting the scalar
-value to a derived-center statement further requires the completed
-PBW/perfectness hypotheses named above.
+is a conditional family comparison for \(N\ge3\): it requires the
+genus-one characteristic, Verdier partner, and common ratio theorem
+in \(H_C\).  The \(N=3\) entry in
+\eqref{eq:thm-C-ceiling} is its first conditional landmark.
 \end{theorem}
 
 \begin{proof}
-\emph{Part (a).} Level-independence of $\varrho$ on the family of $A$
-gives $\kappa^! = \varrho\,c^!$, whence
-$K^\kappa = \kappa + \kappa^! = \varrho(c+c^!) = \varrho K$. The
-hypothesis is verified family-by-family in
-Corollary~\ref{cor:anomaly-ratio-ds} for principal $\mathcal{W}$
-and in the individual entries of
-Proposition~\ref{prop:archetype-complementarity-bridge}.
+Part~\textup{(a)} is the calculation
+\[
+ \kappa(A)+\kappa(A^!)
+ =\varrho c(A)+\varrho c(A^!)
+ =\varrho K^c(A,A^!).
+\]
+For Virasoro,
+\(c/2+(26-c)/2=13\).  For principal \(\mathcal W_3\),
+the exact central-charge reflection gives~\(100\); on
+$H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}$, the ratio
+\(5/6\) gives \(250/3\).  The free and affine lanes pair opposite scalar
+characteristics and give zero.
 
-\emph{Part (b).} Each row is pinned by the direct formula, the
-anomaly-ratio bridge, and the fixed-point check:
-\begin{itemize}
-\item \emph{Heisenberg} $\cH_k$. The OPE
-$J(z)J(w)\sim k/(z{-}w)^2$ gives $\kappa(\cH_k)=k$ and
-Theorem~\ref{thm:heisenberg-koszul-dual-early} gives
-$\kappa(\cH_k^!)=-k$, so $K^\kappa=0$. The anomaly-ratio bridge gives
-$\varrho=1$, $K=k+(-k)=0$, and $\varrho K=0$. The symmetry check uses
-the fixed point $\sigma_\cH(k)=k$, namely $k=0$, with
-$\kappa^*=0$ and $K^\kappa = 2\kappa^* = 0$.
+For BP, direct substitution under \(k\mapsto-k-6\) proves the
+central-charge identity.  The parity statement gives the displayed
+positive reciprocal-weight sum.  A genus-one curvature calculation
+with charged ghosts, neutral fields, improvement term, and mixed
+channels is the proof obligation for the three open invariants.
 
-\item \emph{Affine Kac--Moody} $\widehat{\fg}_k$.
-$\kappa(\widehat{\fg}_k)=\dim(\fg)(k+h^\vee)/(2h^\vee)$ and the
-Feigin--Frenkel involution $k\mapsto -k-2h^\vee$ sends
-$\kappa\mapsto -\kappa$, so $K^\kappa=0$. In the
-level-symmetrised form $\varrho_{\mathrm{sym}}=0$ with $K=2\dim\fg$,
-$\varrho_{\mathrm{sym}}K=0$. The fixed point
-$k=-h^\vee$ is a limiting scalar point of this involution: the
-formula gives $\kappa=0$, but the affine algebra is critical, the
-Feigin--Frenkel center jumps to opers, and the generic derived-center
-calculation above does not apply there.
-
-\item \emph{$\beta\gamma_\lambda$.}
-$\kappa(\beta\gamma_\lambda)=6\lambda^2-6\lambda+1$ with partner
-$\kappa(bc_\lambda)=-(6\lambda^2-6\lambda+1)$, so $K^\kappa=0$.
-$\varrho=1/2$ and $K=0$ by the Fock parity flip
-$c(bc_\lambda)=-c(\beta\gamma_\lambda)$. The involution
-$\sigma(\lambda)=1-\lambda$ has fixed point $\lambda_*=1/2$ and
-$\kappa^*=-1/2$, while the Verdier pair has zero scalar conductor
-\textup{(}the numerical shadow of the boson/fermion categorical
-non-self-duality is recorded in
-Theorem~\ref{thm:census-self-dual-locus}\textup{(}iii\textup{))}.
-
-\item \emph{Virasoro} $\mathrm{Vir}_c$. $\kappa=c/2$ and
-Proposition~\ref{prop:virasoro-generic-koszul-dual} gives
-$\mathrm{Vir}_c^!\simeq\mathrm{Vir}_{26-c}$, so
-$K^\kappa=c/2+(26-c)/2=13$. Equivalently, $\varrho=1/2$ and $K=26$
-\textup{(}Theorem~\ref{thm:central-charge-complementarity}\textup{)}.
-The fixed point of $\sigma(c)=26-c$ is $c_*=13$, with
-$\kappa^*=13/2$, $K^\kappa=2\kappa^*=13$.
-
-\item \emph{Principal $\mathcal{W}_3^k$.} DS reduction of
-$\mathfrak{sl}_3$ gives $\kappa(\mathcal{W}_3^k)=(5/6)c$ and
-Feigin--Frenkel $k\mapsto k'=-(k+6)+6/k$ gives
-$c+c'=100$, so $K^\kappa=5\cdot 100/6=250/3$. The bridge gives
-$\varrho=1/2+1/3=5/6$ from Corollary~\ref{cor:anomaly-ratio-ds},
-$K=2\cdot 2 + 4\cdot 3\cdot 8 = 100$ at $\fg=\mathfrak{sl}_3$.
-At the fixed point $c_*=50$,
-$\kappa^*=5\cdot 50/6=125/3$, $K^\kappa=2\cdot 125/3=250/3$.
-
-\item \emph{Bershadsky--Polyakov} $\mathrm{BP}_k$.
-Proposition~\ref{prop:bp-kappa} gives $\kappa=c/6$ and
-Proposition~\ref{prop:bp-self-duality} gives $c+c'=196$, so
-$K^\kappa=196/6=98/3$. Equivalently, $\varrho=1/6$ and $K=196$.
-At the fixed point $c_*=98$, $\kappa^*=98/6=49/3$,
-$K^\kappa=2\kappa^*=98/3$.
-\end{itemize}
-
-\emph{Part (c).} The $\mathcal{W}_N$-general expression
-follows from Corollary~\ref{cor:anomaly-ratio-ds}:
-$\varrho(\mathcal{W}_N)=\sum_{i=1}^{N-1}1/(m_i+1)=\sum_{j=2}^N 1/j=H_N-1$
-(exponents of $\mathfrak{sl}_N$ are $1,2,\ldots,N-1$). Combined with the
-Feigin--Frenkel conductor
-$K_N=2r_N+4h^\vee_N d_N$ of
-Theorem~\ref{thm:central-charge-complementarity}(b), the bridge
-gives~\eqref{eq:thm-C-WN}; at $N=4$, $\varrho=13/12$ and
-$K_4=246$, producing a value distinct from the four landmarks.
-The $\mathcal{B}$-family value $K^\kappa=8$ records the Mukai doubling
-$c_+(\mathrm{Mukai}(K3))=4$ via the Beilinson--Drinfeld
-Koszul-conductor identity
-$K^\kappa=2c_+(\mathrm{Mukai}(K3))$
-\textup{(}Proposition~\textup{\ref{prop:archetype-complementarity-bridge}},
-$\mathcal{B}$-row\textup{)}. Neither $8$ nor $(H_N-1)K_N$ with $N\ge 4$
-lies in $\{0,13,250/3,98/3\}$; the classical four-element set is the
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ landmark ceiling on the
-six-witness table, and the canonical five-element bucket
-$\{0,8,13,250/3,98/3\}$ on
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$ adjoins the
-$\mathsf{B}$-row Mukai-doubling witness at $K^\kappa=8$
-\textup{(}Convention~\ref{conv:theorem-c-bucket}\textup{)}; neither
-bucket is a universal bound on the full landscape. The computed scalar
-statement~\eqref{eq:thm-C-full-set} is then the disjoint union of the
-free-field zero locus
-($\mathsf{G}\cup\mathsf{L}\cup\mathsf{C}$), the four-element
-$\mathsf{M}$-landmark set, the principal-$\mathcal{W}_N$ tower for
-$N\ge 4$, and the $\mathcal{B}$-family.
+For K3, the block decomposition
+\(U^4\oplus E_8(-1)^2\), the Betti-number/signature calculation, and
+the explicit even unimodular Gram matrix give independent proofs of
+rank \(24\) and signature \((4,20)\).  The passage from
+\(2c_+=8\) to a chiral conductor is exactly the package \(H_B\).
+Part~\textup{(e)} is the same bridge calculation under its stated
+family hypotheses.
 \end{proof}
 
-\begin{remark}[Test families and the ceiling]
+\begin{equation}\label{eq:thm-C-full-set}
+ \mathcal S^\mathrm{comparison}_\kappa
+ =
+ \mathcal S^{\mathrm{VolI,exact}}_\kappa
+ \;\sqcup\;
+ \left\{\frac{250}{3}\right\}_{H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}}
+ \;\sqcup\;
+ \left\{\frac{25}{3}\right\}_{\kappa_{\mathrm{BP}}=c_{\mathrm{BP}}/6}
+ \;\sqcup\;
+ \{8\}_{H_B\text{-candidate}}.
+\end{equation}
+The status tags in this display are part of the notation: the first set
+comprises the unconditional Vol~I lanes; each further entry records the
+hypothesis package that produces it.  The Mukai entry is a conjectural
+chiral interpretation of exact lattice arithmetic.
+
+\begin{remark}[Test families and the scalar frontier]
 \label{rem:theorem-C-test-families}
-\index{Theorem C!test-family scope}
-Five natural families probe the scope of
-Theorem~\textup{\ref{thm:derived-centre-complementarity-strengthened}}:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Lattice VOA $V_\Lambda$ of rank~$r$.} $V_\Lambda$ is a
-rank-$r$ Heisenberg with Fock-module discrete extension; on the scalar
-lane $\kappa(V_\Lambda)=r$ and
-$\kappa(V_\Lambda^!)=-r$
-\textup{(}Theorem~\textup{\ref{thm:census-witness-complementarity}}
-and $\mathsf{G}$-row of
-Proposition~\textup{\ref{prop:archetype-complementarity-bridge}},
-extended multiplicatively in rank\textup{)}. Hence $K^\kappa=0$:
-lattice VOAs of every rank sit in the class-$\mathsf{G}$ zero locus.
-\item \emph{Triplet $(1,p)$ logarithmic VOA.} The triplet algebra
-$\mathcal{W}(p)$ of Kausch has $c = 1 - 6(p-1)^2/p$ and is of
-class~$\mathsf{M}$-logarithmic. On the scalar lane
-$\kappa = c/2 = (p - 6(p-1)^2/p)/2$, with Koszul dual in the same
-conformal family \textup{(}the Virasoro-type Verdier partner
-$c'=26-c$ after localising to the rational locus, not an
-identification with the triplet algebra;
-see Theorem~\textup{\ref{thm:census-witness-complementarity}}\textup{)},
-so $K^\kappa = 13$ on the rational scalar reduction. The logarithmic
-structure of the triplet does not shift the scalar sum; the
-complementarity ceiling is inherited from the Virasoro ambient.
-\item \emph{General principal $\mathcal{W}_N^k(\mathfrak{sl}_N)$ for
-$N\ge 4$.}~\eqref{eq:thm-C-WN} produces
-$K^\kappa = (H_N-1)K_N$; at $N=4$, $\varrho=13/12$ and
-$K_4 = 2\cdot 3 + 4\cdot 4\cdot 15 = 246$ gives
-$K^\kappa = (13/12)\cdot 246 = 533/2$, a value outside
-$\{0,13,250/3,98/3\}$ and outside the canonical five-element bucket
-$\{0,8,13,250/3,98/3\}$
-\textup{(}Convention~\ref{conv:theorem-c-bucket}\textup{)}. Neither the
-classical four-element $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$
-landmark ceiling nor its five-archetype enlargement survives to
-$\mathcal{W}_4$; this is the counterexample that separates
-the landmark ceilings from a universal bound.
-\item \emph{Non-principal $\mathcal{W}_3^{(2)}$ (Bershadsky--Polyakov).}
-The minimal-nilpotent DS reduction at $\mathfrak{sl}_3$ gives
-$\mathrm{BP}_k$, which sits in the $\mathsf{M}$-extension row with
-$K^\kappa = 98/3$ and $\varrho = 1/6$. The non-principal nilpotent
-orbit is captured by the $\mathsf{M}$-extension entry of the landmark
-table.
-\item \emph{Quantum group at root of unity
-$\mathfrak{u}_q(\mathfrak{sl}_2)$, $q = e^{2\pi i/\ell}$.} The
-small quantum group is categorically equivalent to the singlet-triplet
-chain of $(1,p)$ logarithmic VOAs at $p=\ell$, after Kazhdan--Lusztig.
-On the scalar chiral-algebra lane this reduces to the $(1,p)$-triplet
-of item~\textup{(ii)}, hence $K^\kappa=13$ modulo the scalar
-projection; at the categorical level the Drinfeld center
-$Z_{\mathrm{Dr}}(\mathrm{Rep}\,\mathfrak{u}_q)$ and the categorical
-derived centre
-$Z^{\mathrm{der}}(\mathrm{Rep}\,\mathfrak{u}_q)$ are \emph{not} scalar
-and are not the chiral Hochschild cochain complex of a curve algebra
-without an additional compact-generator/Hochschild comparison. The
-bridge~\eqref{eq:thm-C-bridge} no longer applies, consistent
-with the non-semisimple logarithmic structure. The scope of
-Theorem~\textup{\ref{thm:derived-centre-complementarity-strengthened}}
-is the scalar central-charge lane, not the categorical centre.
-\end{enumerate}
-Items~\textup{(i)}, \textup{(iv)}, and \textup{(v)} confirm the
-landmark table; item~\textup{(iii)} proves that the four-element set is
-not a universal bound and gives the strengthened ceiling of
-part~\textup{(c)}. Every value in~\eqref{eq:thm-C-full-set} is
-rational and determined, on the computed scalar surface, by the pair
-$(\varrho, K)$.
+Lattice and free-field families test the zero lane.  Virasoro tests
+the value \(13\), and principal \(\mathcal W_3\) tests the conditional
+value \(250/3\) under its diagonal-trace and DS/bar packages.
+Bershadsky--Polyakov tests the distinction between an exact
+central-charge conductor and an open modular characteristic.  The K3
+Mukai lattice tests the distinction between exact lattice arithmetic
+and a conjectural chiral comparison.  Principal \(\mathcal W_N\) for
+\(N\ge4\) tests the additional family package in
+\eqref{eq:thm-C-WN}.
 \end{remark}
 
-\section{Baily--Borel stratification of the complementarity value}
+\section{Open automorphic realization problem}
 \label{sec:complementarity-baily-borel}
 
-\begin{remark}[Three-chamber Baily--Borel face of the complementarity
-ceiling]
+\begin{remark}[Baily--Borel/Humbert comparison datum;
+\ClaimStatusConjectured]
 \label{rem:cct-baily-borel}
-\index{Baily--Borel stratification!complementarity chambers}
-The three landmark class-$\mathsf{M}$ and class-$\mathsf{G}/\mathsf{C}$
-values of
-Theorem~\textup{\ref{thm:derived-centre-complementarity-strengthened}}
-are realised geometrically at the three Baily--Borel strata of
-$\overline{\mathcal A}_2$:
+The Baily--Borel stratification
 \[
-\overline{\mathcal A}_2^{\mathrm{BB}}
-\;=\;
-\mathcal A_2 \,\sqcup\, \mathcal A_1^\sharp \,\sqcup\, \{\mathrm{Borel\ cusp}\}.
+ \overline{\mathcal A}_2^{\mathrm{BB}}
+ =
+ \mathcal A_2\sqcup\mathcal A_1\sqcup\mathcal A_0,
+ \qquad \mathcal A_0=\{\mathrm{cusp}\},
 \]
-\begin{itemize}
-\item At the generic Siegel-modular stratum $\mathcal A_2$
-\textup{(}class-$\mathsf{M}$ principal-$\mathcal{W}_3$ chamber\textup{)}:
-the principal $\mathcal W_3$ scalar is
-$\kappa_{\mathrm{ch}}(\mathcal W_3) +
-\kappa^!_{\mathrm{ch}}(\mathcal W_3) = 250/3$, with the
-class-$\mathcal S$ $A_1$-on-$\Sigma_{0,24}$ value $c_{2d}=-214$
-derived from Shapere--Tachikawa $c_{4d}=107/6$
-\textup{(}Vol~I Section~\textup{\ref{sec:thqg-open-closed-realization}}\textup{)}.
-The K3 Hall--Drinfeld object $\mathbf H_{\Delta_5}$ is not this
-class-$\mathsf M$ object; its separated scalars are
-$K^{\kappa_{\mathrm{ch}}}=8$ and
-$\kappa_{\mathrm{BKM}}(\Delta_5)=5$.
-\item At the Humbert divisor locus $\mathcal A_1^\sharp$, after
-semi-classical blow-down \textup{(}class-$\mathsf{C}$
-$\beta\gamma$-extension chamber\textup{)}: $\kappa + \kappa^! = 98/3$
-\textup{(}Bershadsky--Polyakov witness\textup{)}.
-\item At the Borel cusp, the unenhanced class-$\mathsf{G}$
-Heisenberg-type fibre has $\kappa+\kappa^!=0$. The
-Mukai-enhanced K3 fibre at the same boundary stratum is a separate
-$\mathcal{B}$-row witness: $K^{\kappa_{\mathrm{ch}}}=8$, equivalently
-$\kappa_{\mathrm{ch}}=K^{\kappa_{\mathrm{ch}}}/2=4
-=c_+(\mathrm{Mukai}(K3))$, as in Vol~III
-Chapter~\textup{\ref{V3-ch:k3-chiral-bialgebra-platonic}}.
-\end{itemize}
-The stratification parameterises the landmark set
-$\{0, 98/3, 250/3\}$ by the Baily--Borel boundary geometry of
-$\overline{\mathcal A}_2$; the value~$13$ appears on the Virasoro
-witness inside the generic stratum, and the value~$8$ appears on the
-Mukai-enhanced K3 witness at the cusp, with its recognition data in
-Vol~III.
+is the genus-two Siegel boundary stratification of
+Baily--Borel~\cite{BailyBorel66}.  A realization of the scalar
+complementarity lanes on these strata would require:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a functor from each specified chiral family to an automorphic
+ or Hodge-theoretic object on \(\overline{\mathcal A}_2^{\mathrm{BB}}\);
+\item a theorem identifying the chiral genus-one trace with a divisor,
+ Chern class, or boundary specialization on the target;
+\item compatibility with a specified Humbert-divisor inclusion and cusp
+ specialization;
+\item normalization checks distinguishing \(K^c\), \(K^\kappa\),
+ automorphic weight, and the Mukai lattice number.
+\end{enumerate}
+The present status is an open comparison problem.  The scalar values
+\(0\), \(13\), and \(250/3\) arise from their stated chiral
+calculations and comparison packages; BP and Mukai retain the statuses recorded in
+Theorem~\ref{thm:scalar-trace-complementarity}.
 \end{remark}

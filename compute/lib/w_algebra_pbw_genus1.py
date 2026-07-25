@@ -12,8 +12,10 @@ all-genera PBW theorem for principal W-algebras:
   - Hence every (1)-product from a higher-spin generator (s > 2) strictly
     raises conformal weight, while T_(1) = L_0 preserves weight.
 
-The explicit W_3 checks use the low-weight vacuum-module engine in
-`w3_bar_extended.py` to verify the first nontrivial case.
+The low-weight vacuum-module engine in ``w3_bar_extended.py`` computes the
+``L_0`` action on every displayed PBW state.  Homogeneous product degrees are
+exact bookkeeping.  The nonlinear ``W_(1)`` action on composite PBW states is
+recorded separately as an open construction problem.
 """
 
 from __future__ import annotations
@@ -21,7 +23,7 @@ from __future__ import annotations
 from typing import Dict, Iterable, List, Sequence, Tuple
 
 from compute.lib.lie_algebra import cartan_data
-from compute.lib.w3_bar_extended import W3VacuumModule, state_weight
+from compute.lib.w3_bar_extended import ClaimPacket, W3VacuumModule, state_weight
 
 
 Family = Tuple[str, int]
@@ -125,51 +127,57 @@ def verify_w3_d2_weight_pattern(
     max_weight: int = 8,
     c_val: float = 7.0,
 ) -> Dict[str, bool]:
-    """Verify the explicit W_3 d_2 pattern: T_(1) diagonal, W_(1) weight-raising."""
-    module = W3VacuumModule(max_weight=max_weight + 1, c_val=c_val)
-    stress_tensor = ((2,), ())
-    spin_three = ((), (3,))
+    """Compute the homogeneous nth-product target grades for ``W3``.
+
+    For homogeneous ``a,b``, ``wt(a_(1)b)=wt(a)+wt(b)-2``.  This
+    determines the grade containing the product whenever the product is
+    constructed.  The formula alone supplies neither its matrix entries nor
+    its identification with a PBW spectral-sequence differential.
+    """
     results: Dict[str, bool] = {}
 
     for weight in range(2, max_weight + 1):
-        t_ok = True
-        w_ok = True
-
-        for state in module.vbar_states_at_weight(weight):
-            t_vec = module.compute_nth_product(stress_tensor, state, 1)
-            for idx, coeff in enumerate(t_vec):
-                if abs(coeff) > 1e-12:
-                    target = module._all_states[idx]
-                    if state_weight(target) != weight:
-                        t_ok = False
-                        break
-            if not t_ok:
-                break
-
-            w_vec = module.compute_nth_product(spin_three, state, 1)
-            for idx, coeff in enumerate(w_vec):
-                if abs(coeff) > 1e-12:
-                    target = module._all_states[idx]
-                    if state_weight(target) <= weight:
-                        w_ok = False
-                        break
-            if not w_ok:
-                break
-
-        results[f"W3 T_(1) preserves weight {weight}"] = t_ok
-        results[f"W3 W_(1) raises weight from {weight}"] = w_ok
+        results[f"W3 T_(1) target grade at source weight {weight}"] = (
+            d2_target_weight(weight, 2) == weight
+        )
+        results[f"W3 W_(1) target grade at source weight {weight}"] = (
+            d2_target_weight(weight, 3) == weight + 1
+        )
 
     return results
+
+
+def w3_composite_w1_action_claim(max_weight: int = 8) -> ClaimPacket:
+    """Return the typed frontier for ``W_(1)`` on composite PBW states."""
+
+    return ClaimPacket(
+        f"W_(1) action on composite generic-W3 PBW states through weight {max_weight}",
+        "open",
+        None,
+        (
+            "H_W3^nl: a confluent nonlinear mode-algebra quotient on composite PBW states",
+            "compatibility of the quotient action with the homogeneous conformal-weight grading",
+        ),
+    )
 
 
 def verify_principal_w_pbw_genus1(
     families: Sequence[Family] = DEFAULT_FAMILIES,
     max_weight: int = 8,
     c_val: float = 7.0,
-) -> Dict[str, bool]:
-    """Run the full principal-W PBW support bundle."""
-    results: Dict[str, bool] = {}
+) -> Dict[str, object]:
+    """Return exact weight support and the open PBW/genus-one comparison."""
+    results: Dict[str, object] = {}
     results.update(verify_principal_weight_argument(families=families, max_weight=max_weight))
     results.update(verify_w3_l0_scalar(max_weight=max_weight, c_val=c_val))
     results.update(verify_w3_d2_weight_pattern(max_weight=max_weight, c_val=c_val))
+    results["PBW spectral-sequence identification"] = ClaimPacket(
+        "principal-W PBW differential is represented by the displayed (1)-product blocks",
+        "open",
+        None,
+        (
+            "H_W^PBW: complete separated filtration, identified pages, all differentials, and convergence",
+            "H_W^g1: trace-compatible genus-one comparison",
+        ),
+    )
     return results

@@ -96,7 +96,7 @@ class TestAP25VerdierBranch:
         assert firewall["bar_dual_coalgebra"] == "A^i = H^*(B(A))"
         assert "Verdier" in firewall["koszul_dual_algebra"]
         assert firewall["bar_cobar_inversion"] == "Omega(B(A)) = A"
-        assert firewall["derived_center"] == "Z_ch^der(A): bulk sector"
+        assert firewall["derived_center"] == "Z_ch^der(A): closed-sector actor"
 
     def test_presentations_carry_typed_branch(self):
         pres = identify_heisenberg_generators(Rational(1))
@@ -104,7 +104,9 @@ class TestAP25VerdierBranch:
         assert "Verdier" in pres.duality_branch
         assert "finite-type" in pres.verdier_hypotheses
         assert "Omega(B(A))=A" in pres.verdier_hypotheses
-        assert pres.object_firewall["koszul_dual_algebra"].startswith("Sym^ch(V*)")
+        assert pres.object_firewall["koszul_dual_algebra"].startswith(
+            "curved Sym^ch(V*[1])"
+        )
 
     def test_source_rejects_raw_linear_dual_shortcut(self):
         source = Path(bar_presentations.__file__).read_text()
@@ -116,7 +118,7 @@ class TestAP25VerdierBranch:
 
 
 # =========================================================================
-# 1. Heisenberg: H_k^! = Sym^ch(V*)
+# 1. Heisenberg: H_k^! is the curved second-kind Sym branch
 # =========================================================================
 
 class TestHeisenbergDualDimensions:
@@ -162,7 +164,7 @@ class TestHeisenbergDualDimensions:
 
 
 class TestHeisenbergPresentation:
-    """Full presentation of H_k^! = Sym^ch(V*)."""
+    """Full presentation of the curved second-kind Heisenberg dual branch."""
 
     def test_generator_count(self):
         pres = identify_heisenberg_generators(Rational(1))
@@ -170,7 +172,7 @@ class TestHeisenbergPresentation:
 
     def test_dual_name(self):
         pres = identify_heisenberg_generators(Rational(1))
-        assert pres.dual_name == "Sym^ch(V*)"
+        assert pres.dual_name == "curved Sym^ch(V*[1])"
 
     def test_kappa_values(self):
         pres = identify_heisenberg_generators(Rational(3))
@@ -187,7 +189,7 @@ class TestHeisenbergPresentation:
 
 
 class TestHeisenbergDualOPE:
-    """OPE of H_k^! = Sym^ch(V*) with curvature -k."""
+    """OPE shadow of the curved Heisenberg dual with curvature -k."""
 
     def test_curvature_negated(self):
         ope = heisenberg_dual_ope(Rational(3))

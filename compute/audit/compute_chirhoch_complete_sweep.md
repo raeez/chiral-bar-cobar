@@ -40,7 +40,7 @@ compute/lib/
   bc_nc_motives_shadow_engine.py      AUDITED (clean)
   bc_derived_moduli_shadow_engine.py  AUDITED (clean)
   factorization_homology_engine.py    AUDITED (clean)
-  annulus_trace_verification.py       AUDITED (clean)
+  annulus_trace_verification.py       AUDITED + FENCED
   swiss_cheese_chain_model.py         AUDITED (clean)
   derived_center_genus2_engine.py     AUDITED (clean, no ChirHoch hits)
   open_closed_derived_center.py       AUDITED (clean, no ChirHoch hits)
@@ -210,13 +210,16 @@ Heisenberg-type algebras:
 
 The K3xE engine treats ChirHoch^1 as `End(h) = h tensor h*` (576),
 while the standard Heisenberg convention in the canonical engine
-gives 1 (a single level-deformation class, with the full OPE
-current-algebra derivations counted as inner in the chiral sense).
+gives 1 (the fixed-fibre shift derivation; the level motion is a
+degree-2 product lane and is exact/gauge at nonzero level, with the
+full OPE current-algebra derivations counted as inner in the chiral
+sense).
 
 **Recommendation.** Reconcile the rank-24 Heisenberg convention with
 the canonical engine.  Either (a) the K3xE engine should reduce to
-Theorem H amplitude [0,2] with dim HH^1 = 1 (the level deformation),
-treating the 24 currents as inner via the current algebra; or
+Theorem H amplitude [0,2] with dim HH^1 = 1 (the shift derivation
+lane, rank-sensitive only after the lattice/Heisenberg package is made
+explicit), treating the 24 currents as inner via the current algebra; or
 (b) the canonical engine should be generalized to count rank when
 the rank is large.  This is a convention choice beyond AP94 scope;
 flagging for manual review.

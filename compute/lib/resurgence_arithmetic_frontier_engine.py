@@ -24,7 +24,7 @@ Firewalls:
     - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
     - A^! is the Verdier/continuous-linear dual branch under
       finite-type/completed hypotheses.
-    - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild bulk, not Koszul dual.
+    - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild closed-sector, not Koszul dual.
     - Kernel constants use the trace/KZ distinction:
       affine raw k*Omega_tr/z; KZ Omega/((k+h^vee)z);
       Heisenberg k/z; Virasoro (c/2)/z^3 + 2T/z.
@@ -127,7 +127,7 @@ OBJECT_SEPARATION_FIREWALLS = {
         "A^! is the Verdier/continuous-linear dual branch under "
         "finite-type/completed hypotheses"
     ),
-    "hochschild_bulk": "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild bulk",
+    "hochschild_bulk": "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild closed-sector",
     "scalar_projection": (
         "This engine computes scalar shadow projections, not full "
         "Maurer-Cartan data"

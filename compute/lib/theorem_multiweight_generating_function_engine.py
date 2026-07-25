@@ -82,9 +82,9 @@ BAR_KOSZUL_OBJECT_ROLES: Dict[str, str] = {
     "A^i": "bar cohomology coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual algebra branch",
     "Omega(B(A))": "bar-cobar inversion back to A",
-    "Z_ch^der(A)": "derived chiral centre ChirHoch^*(A,A), the bulk slot",
+    "Z_ch^der(A)": "derived chiral centre ChirHoch^*(A,A), the closed-sector slot",
 }
-"""Firewall preventing bar, dual, inversion, and Hochschild/bulk conflation."""
+"""Firewall preventing bar, dual, inversion, and Hochschild/closed-sector conflation."""
 
 
 @dataclass(frozen=True)

@@ -194,7 +194,7 @@ class TestDualKappa:
     """Verify Koszul dual kappa (AP24, AP33)."""
 
     def test_dual_heisenberg(self):
-        """kappa(H_k^!) = -k, so kappa + kappa^! = 0."""
+        """scalar kappa(H_k^!) = -k, so kappa + kappa^! = 0."""
         for k in range(1, 6):
             assert abs(kappa_heisenberg(k) + dual_kappa_heisenberg(k)) < 1e-12
 
@@ -1031,10 +1031,10 @@ class TestAPRegressions:
         assert abs(delta_kappa - kappa_eff) > 1.0
 
     def test_ap33_dual_neq_negative_level(self):
-        """AP33: H_k^! != H_{-k} (different algebras, same kappa)."""
-        # kappa(H_1^!) = -1 = kappa(H_{-1}) -- same kappa but different algebras
+        """AP33: the curved dual is not H_{-k}; only scalar kappa agrees."""
+        # kappa(H_1^!) = -1 = kappa(H_{-1}) -- same scalar, different objects.
         # At the level of shadow coefficients, they're the same
-        # But the algebras are different (Sym^ch(V*) vs V with level -k)
+        # But the curved second-kind Sym branch is not V with level -k.
         # We just verify the kappa values agree
         assert abs(dual_kappa_heisenberg(1) - kappa_heisenberg(-1)) < 1e-12
 
@@ -1126,7 +1126,7 @@ class TestCrossFamilyConsistency:
 # ============================================================================
 
 class TestTheoremH:
-    """Theorem H: polynomial ChirHoch => polynomial categorical zeta growth."""
+    """Theorem H: ChirHoch amplitude/Hilbert profile bounds categorical zeta growth."""
 
     def test_polynomial_growth_heisenberg(self):
         h = _heis(1)

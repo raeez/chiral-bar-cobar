@@ -54,7 +54,8 @@ ANTI-PATTERN COMPLIANCE:
     AP14: Shadow depth != Koszulness. ALL standard families are Koszul.
     AP19: Bar residue order = OPE pole - 1 (d log absorption).
     AP25: bar != Verdier dual != cobar.
-    AP34: bar-cobar != open-to-closed. Bulk = derived center.
+    AP34: bar-cobar != open-to-closed. The derived center is the algebraic
+    closed-sector actor; physical bulk requires OCA comparison.
     AP44: OPE mode coefficient / n! = lambda-bracket coefficient.
 """
 

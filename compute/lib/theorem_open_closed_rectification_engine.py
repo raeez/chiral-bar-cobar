@@ -35,7 +35,9 @@ COMPUTABLE WITNESSES:
 CRITICAL PITFALLS (from CLAUDE.md):
   AP19: r-matrix pole orders one LESS than OPE
   AP25: B(A) != D_Ran(B(A)) != Omega(B(A)) -- three distinct functors
-  AP33: H_k^! = Sym^ch(V*) != H_{-k}
+  AP33: at k != 0, H_k^! is the curved second-kind
+        Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved
+        polynomial centre; only scalar kappa agrees with kappa(H_{-k})
   AP34: bar-cobar inversion != open-to-closed passage
   AP44: OPE mode coefficient != lambda-bracket coefficient (1/n! factor)
 """
@@ -232,7 +234,8 @@ def kappa_dual(family: str, **params) -> Fraction:
 
     This is not bar-cobar inversion and not a derived-center
     computation.  For the Heisenberg row it returns the scalar of
-    Sym^ch(V*) on the Verdier lane, not an assertion H_k^! = H_{-k}.
+    the curved second-kind Sym^ch(V*[1]) branch on the Verdier lane;
+    it records only scalar kappa agreement with the negative-level shadow.
 
     For KM: k -> -k - 2h^v (Feigin-Frenkel involution)
     For Virasoro: c -> 26 - c
@@ -240,7 +243,8 @@ def kappa_dual(family: str, **params) -> Fraction:
     """
     if family == "Heisenberg":
         k = Fraction(params.get("k", 1))
-        return -k  # scalar lane only: H_k^! is Sym^ch(V*), not H_{-k}
+        # Scalar lane only: the curved H_k^! branch has kappa -k.
+        return -k
     elif family == "Affine_sl2":
         k = Fraction(params.get("k", 1))
         k_dual = -k - Fraction(4)  # -k - 2h^v, h^v = 2
@@ -423,24 +427,19 @@ class DerivedCenterSl2Level1:
 
     By Theorem H (polynomial growth on Koszul locus):
     Z^0 = Z(A) = center of affine sl_2 at level 1
-    Z^1 = outer derivations
+    Z^1 = 0 after quotienting inner zero-mode derivations
     Z^2 = obstructions (Verdier-dual obstruction line on the scalar lane)
 
     For generic level k != -2 (non-critical):
     dim Z^0 = 1 (the vacuum)
-    dim Z^1 = dim(sl_2) = 3 (current algebra outer derivations)
+    dim Z^1 = 0 (the adjoint sl_2 is only a zero-mode prequotient)
     dim Z^2 = 1 (the dual vacuum of the dual center)
 
-    RING STRUCTURE on Z^der:
-    The Gerstenhaber bracket [-, -] has degree -1:
-    - [Z^1, Z^1] -> Z^1 (Lie bracket of derivations)
-    - [Z^1, Z^2] -> Z^2 (action of derivations on obstructions)
-
-    For sl_2 at level 1: the Lie bracket on Z^1 = sl_2 is the
-    standard sl_2 bracket (from the current algebra OPE).
-
-    The cup product on Z^0 is trivial (Z^0 = C is the unit).
-    The cup product Z^1 x Z^1 -> Z^2 is the obstruction pairing.
+    PREQUOTIENT STRUCTURE:
+    before quotienting by the zero modes, the adjoint sl_2 slot carries
+    the standard current-algebra bracket and Killing pairing.  The
+    routines below keep that prequotient diagnostic because it is useful
+    for open/closed comparison, but it is not actual Z^1.
     """
 
     def __init__(self, k: int = 1):
@@ -455,7 +454,7 @@ class DerivedCenterSl2Level1:
         """Dimensions of Z^n for n = 0, 1, 2.
 
         Z^0 = 1 (center = vacuum at generic level)
-        Z^1 = 3 (dim sl_2 outer derivations from current algebra)
+        Z^1 = 0 (adjoint zero modes are inner)
         Z^2 = 1 (Verdier-dual obstruction line at the dual level -k-4)
 
         IMPORTANT: At the critical level k = -h^v = -2, Z^0 is
@@ -464,13 +463,13 @@ class DerivedCenterSl2Level1:
         """
         if self.k == -self.h_dual:
             raise ValueError("Critical level: center is infinite-dimensional")
-        return {0: 1, 1: self.dim_g, 2: 1}
+        return {0: 1, 1: 0, 2: 1}
 
     def gerstenhaber_bracket_z1z1(self) -> Dict[str, Any]:
-        """Gerstenhaber bracket [Z^1, Z^1] -> Z^1.
+        """Gerstenhaber bracket on the adjoint zero-mode prequotient.
 
-        Z^1 = sl_2 (the outer derivation Lie algebra).
-        The bracket [xi_a, xi_b] for xi_a, xi_b in Z^1 = sl_2 is:
+        The actual fixed-fiber Z^1 vanishes.  Before quotienting, the
+        bracket [xi_a, xi_b] for xi_a, xi_b in the sl_2 prequotient is:
           [xi_e, xi_f] = xi_h
           [xi_h, xi_e] = 2 xi_e
           [xi_h, xi_f] = -2 xi_f
@@ -481,8 +480,7 @@ class DerivedCenterSl2Level1:
           h(z)e(w) ~ 2e(w)/(z-w)
           h(z)f(w) ~ -2f(w)/(z-w)
 
-        The Gerstenhaber bracket on HH^1 reproduces the Lie bracket
-        of the underlying finite-dimensional Lie algebra.
+        This is a prequotient current calculation, not an HH^1 bracket.
         """
         # Structure constants of sl_2: [e,f] = h, [h,e] = 2e, [h,f] = -2f
         bracket_ef = ("h", Fraction(1))
@@ -495,26 +493,29 @@ class DerivedCenterSl2Level1:
             "[h,f]": bracket_hf,
             "lie_algebra": "sl_2",
             "is_standard_bracket": True,
+            "prequotient_only": True,
         }
 
     def cup_product_z1z1(self) -> Dict[str, Any]:
-        """Cup product Z^1 x Z^1 -> Z^2.
+        """Killing pairing on the adjoint zero-mode prequotient.
 
-        For unobstructed deformations: the cup product xi^2 for
-        xi in Z^1 (level deformation) maps to Z^2 (obstruction space).
+        For unobstructed parameter motion: the level deformation maps to
+        the degree-2 obstruction metadata.  The adjoint sl_2 slot itself
+        is prequotient-only, so this is not an actual Z^1 x Z^1 product.
         Since the deformation of hat{sl}_2 by level is UNOBSTRUCTED
         (hat{sl}_2 exists at all levels k != -2), the Gerstenhaber
         bracket [xi, xi] = 0 for the level deformation direction.
         But the cup product xi^2 may still be nonzero in Z^2.
 
-        For the 3-dimensional Z^1 = sl_2 with Killing form:
-        the cup product uses the Killing form pairing.
+        For the 3-dimensional prequotient sl_2 with Killing form, the
+        diagnostic pairing uses the Killing form.
         """
         return {
             "dimension_Z2": 1,
             "cup_product_rank": 1,  # The Killing form gives a nondegenerate pairing
             "killing_form_normalized": Fraction(2 * self.k),
             "is_nondegenerate": True,
+            "prequotient_only": True,
         }
 
     def annulus_trace_kappa(self) -> Dict[str, Any]:
@@ -1251,11 +1252,11 @@ def derived_center_three_term_check(family: str, **params) -> Dict[str, Any]:
                 "failed_hypothesis": "generic_level",
                 "reason": "critical level has Feigin-Frenkel center",
             }
-        dims = {0: 1, 1: 3, 2: 1}  # Z^1 = sl_2 (dim 3)
+        dims = {0: 1, 1: 0, 2: 1}  # adjoint sl_2 is prequotient-only
     elif family == "Virasoro":
-        dims = {0: 1, 1: 1, 2: 1}
+        dims = {0: 1, 1: 0, 2: 1}
     elif family == "W3":
-        dims = {0: 1, 1: 2, 2: 1}  # Z^1 = 2 (T and W derivations)
+        dims = {0: 1, 1: 0, 2: 1}
     else:
         raise ValueError(f"Not implemented for {family}")
 

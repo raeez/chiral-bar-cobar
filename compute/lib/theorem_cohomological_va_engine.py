@@ -112,7 +112,8 @@ Conventions
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(H_k) = k (AP39/AP48).
 - kappa(Vir_c) = c/2 (AP48).
-- Bar r-matrix r(z) = Omega/z has pole order ONE BELOW OPE (AP19).
+- Affine trace-form bar r-matrix r_k(z)=k*Omega/z has pole order
+  ONE BELOW OPE (AP19); unit Yangian/CYBE checks set k=1.
 - Bar propagator d log E(z,w) has weight 1 (AP27).
 - OPE modes: a_{(n)}b. lambda-bracket: {a_lambda b} = sum lambda^{(n)} a_{(n)}b
   where lambda^{(n)} = lambda^n / n! (AP44).

@@ -125,7 +125,7 @@ class TestDiagnosticFirewalls:
         objects = firewall['object_firewall']
         assert "bar-cobar inversion" in objects["Omega(B(A))"]
         assert "Verdier/continuous-linear dual branch" in objects["A^!"]
-        assert "Hochschild/bulk object" in objects["Z_ch^der(A)"]
+        assert "Hochschild/closed-sector object" in objects["Z_ch^der(A)"]
         assert firewall['certifies_chiral_mc'] is False
         assert firewall['certifies_koszul_duality'] is False
         assert firewall['certifies_analytic_continuation'] is False

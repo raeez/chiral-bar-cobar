@@ -60,3 +60,40 @@ def test_entanglement_has_no_bare_full_fp_free_energy():
     )
     for pattern in stale_regexes:
         assert re.search(pattern, body) is None, pattern
+
+
+def test_entanglement_jt_comparison_is_contour_scoped():
+    source = read()
+    block_start = source.index(r"\section{JT gravity as a conditional Schwarzian comparison}")
+    block_end = source.index(r"\section{Entanglement and Koszul conductor", block_start)
+    block = source[block_start:block_end]
+    flat = squashed(block)
+
+    required = (
+        "Conditional JT comparison from the shadow obstruction tower",
+        r"x=z^2",
+        r"y_{\mathrm{WP}}(z)=\frac{\sin(2\pi z)}{4\pi}",
+        r"\rho_0(E)=\frac{1}{i\pi}y_{\mathrm{WP}}(i\sqrt E)",
+        r"\frac{\sinh(2\pi\sqrt E)}{4\pi^2}",
+    )
+    for needle in required:
+        assert needle in block
+
+    required_flat = (
+        "not a theorem of the scalar shadow tower",
+        "not obtained from the scalar shadow obstruction tower alone",
+        "does not reconstruct the full JT",
+        "non-perturbative completion",
+        "requires the external topological recursion",
+    )
+    for needle in required_flat:
+        assert needle in flat
+
+    stale = (
+        "degenerates to the JT gravity genus expansion",
+        "whose topological recursion reproduces the JT amplitudes",
+        "obtained from the shadow obstruction tower in the",
+        "density of states in the Schwarzian quantum mechanics",
+    )
+    for needle in stale:
+        assert needle not in flat

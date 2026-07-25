@@ -34,6 +34,23 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 EN_KOSZUL_DUALITY_TEX = REPO_ROOT / "chapters/theory/en_koszul_duality.tex"
+ALGEBRAIC_FOUNDATIONS_TEX = (
+    REPO_ROOT / "chapters/theory/algebraic_foundations.tex"
+)
+ORDERED_ASSOCIATIVE_CHIRAL_KD_TEX = (
+    REPO_ROOT / "chapters/theory/ordered_associative_chiral_kd.tex"
+)
+YANGIANS_FOUNDATIONS_TEX = (
+    REPO_ROOT / "chapters/examples/yangians_foundations.tex"
+)
+EXCEPTIONAL_YANGIAN_KOSZUL_TEX = (
+    REPO_ROOT / "chapters/examples/exceptional_yangian_koszul_duality_platonic.tex"
+)
+YANGIANS_DRINFELD_KOHNO_TEX = (
+    REPO_ROOT / "chapters/examples/yangians_drinfeld_kohno.tex"
+)
+KAC_MOODY_TEX = REPO_ROOT / "chapters/examples/kac_moody.tex"
+SIGNS_AND_SHIFTS_TEX = REPO_ROOT / "appendices/signs_and_shifts.tex"
 
 from compute.lib.e1_from_chiral_bar_engine import (
     FR0, FR1,
@@ -85,6 +102,341 @@ def test_bar_product_space_requires_deligne_tamarkin_center_passage():
     assert "operation-space witness for the product operad" in source
     assert "not a chain-level Deligne--Tamarkin output" in source
     assert "requires passage to the derived chiral center" in source
+
+
+def test_chiral_operadic_hierarchy_is_metadata_visible():
+    """Einf/Pinf/Eone are chiral operadic notions, not topological E_n."""
+    source = ALGEBRAIC_FOUNDATIONS_TEX.read_text()
+
+    for label, env, status in (
+        ("def:einf-chiral", "definition", r"\ClaimStatusDefinitional"),
+        ("def:pinf-chiral", "definition", r"\ClaimStatusDefinitional"),
+        ("def:e1-chiral", "definition", r"\ClaimStatusDefinitional"),
+        ("prop:chiral-operadic-hierarchy", "proposition", r"\ClaimStatusDefinitional"),
+    ):
+        label_pos = source.index(rf"\label{{{label}}}")
+        start = source.rindex(rf"\begin{{{env}}}", 0, label_pos)
+        block = source[start:source.index(rf"\end{{{env}}}", start)]
+        assert status in block
+
+    hierarchy_pos = source.index(r"\label{prop:chiral-operadic-hierarchy}")
+    hierarchy_start = source.rindex(r"\begin{proposition}", 0, hierarchy_pos)
+    hierarchy = " ".join(
+        source[hierarchy_start:source.index(r"\end{proposition}", hierarchy_start)].split()
+    )
+    for required in (
+        r"\Einf\text{-chiral} \subset \Pinf\text{-chiral} \subset \Eone\text{-chiral}",
+        r"\((\mathcal D\text{-mod}(X),\otimes^{\mathrm{ch}})\)",
+        "higher chiral Lie operations zero",
+        r"\(\chirAss\)-multiplication",
+        "topological little-disks",
+    ):
+        assert required in hierarchy
+
+
+def test_e1_presentations_and_hypotheses_are_firewalled():
+    """Cross-presentation transport requires H1-H4; double-Ainf remains open."""
+    source = ALGEBRAIC_FOUNDATIONS_TEX.read_text()
+    theorem_pos = source.index(r"\label{thm:e1-chiral-notions-collapse}")
+    theorem_start = source.rindex(r"\begin{theorem}", 0, theorem_pos)
+    theorem = " ".join(
+        source[theorem_start:source.index(r"\end{proof}", theorem_start)].split()
+    )
+    warning_pos = source.index(r"\label{warn:multiple-e1-chiral}")
+    warning_start = source.rindex(r"\begin{warning}", 0, warning_pos)
+    warning = " ".join(
+        source[warning_start:source.index(r"\end{warning}", warning_start)].split()
+    )
+    conjecture_pos = source.index(r"\label{conj:double-ainfty-notion-D-relation}")
+    conjecture_start = source.rindex(r"\begin{conjecture}", 0, conjecture_pos)
+    conjecture = source[conjecture_start:source.index(r"\end{conjecture}", conjecture_start)]
+
+    for presentation in (
+        "Strict ChirAss-algebra",
+        r"$A_\infty$-algebra in the chiral endomorphism operad",
+        "Etingof--Kazhdan quantum vertex algebra",
+        r"$A_\infty$-algebra object in $\Eone$-chiral",
+        r"Factorization algebra on $\Ran^{\mathrm{ord}}(X)$",
+    ):
+        assert presentation in warning
+
+    for required in (
+        r"\ClaimStatusConditional",
+        "strictification adjunction",
+        "Quillen equivalence preserving augmentations",
+        r"Etingof--Kazhdan reconstruction functor",
+        "ordered Beilinson--Drinfeld realization",
+        "preserve the universal twisting morphism",
+        "conilpotent/completed bar filtration",
+        "No equivalence is asserted when one of",
+    ):
+        assert required in theorem
+
+    assert r"\ClaimStatusConjectured" in conjecture
+    assert "double-$A_\\infty$ category" in conjecture
+
+
+def test_ordered_e1_inputs_do_not_use_symmetric_bar_without_descent():
+    """Genuine E1/Yangian inputs use ordered HH until R-twisted descent exists."""
+    source = ORDERED_ASSOCIATIVE_CHIRAL_KD_TEX.read_text()
+    ordered_pos = source.index(r"\label{def:ordered-hochschild-e1-input}")
+    ordered_start = source.rindex(r"\begin{definition}", 0, ordered_pos)
+    ordered = " ".join(
+        source[ordered_start:source.index(r"\end{definition}", ordered_start)].split()
+    )
+    warning_pos = source.index(r"\label{warn:deligne-tamarkin-ordered-firewall}")
+    warning_start = source.rindex(r"\begin{warning}", 0, warning_pos)
+    warning = " ".join(
+        source[warning_start:source.index(r"\end{warning}", warning_start)].split()
+    )
+
+    for required in (
+        r"\HH^{\Eone,\mathrm{ord}}_{\mathrm{ch}}(A,A)",
+        "no $\\Sigma_n$-coinvariants",
+        "no symmetric/Ran descent",
+        "genuinely $\\Eone$ inputs",
+        "ordered Yangian",
+    ):
+        assert required in ordered
+
+    for required in (
+        r"\ClaimStatusConditional",
+        r"$\Einf$-chiral inputs",
+        r"Definition~\ref{def:ordered-hochschild-e1-input}",
+        "symmetric bar",
+        "not available for a Yangian or EK quantum vertex input",
+        r"$R$-twisted descent datum",
+    ):
+        assert required in warning
+
+
+def test_yangian_rtt_finite_window_prerequisites_are_visible():
+    """Yangian duality must pass through the finite RTT prerequisite package."""
+    source = YANGIANS_FOUNDATIONS_TEX.read_text()
+    label = r"\label{prop:yangian-rtt-finite-window-prerequisite-package}"
+    label_pos = source.index(label)
+    start = source.rindex(r"\begin{proposition}", 0, label_pos)
+    block = " ".join(
+        source[start:source.index(r"\end{proposition}", start)].split()
+    )
+
+    for required in (
+        r"\ClaimStatusConditional",
+        "ordered Laurent kernel",
+        r"$r_A(z)$",
+        r"$\kappa(A)$",
+        "spectral QYBE",
+        r"DK/EK/KZ or RTT/FRT quantization datum",
+        r"Definition~\ref{def:finite-yangian-module-packet}",
+        r"A^{\mathrm{RTT}}_{\le N}(K)",
+        r"Definition~\ref{def:finite-rtt-window-spectral-completion}",
+        r"Proposition~\ref{prop:finite-rtt-trace-pairing-nondegenerate}",
+        r"R_{\le N}^{\perp}",
+        r"\operatorname{im}\Phi_{R_\hbar^{-1},\le N}",
+        r"$R_\hbar^{-1}\sim R_{-\hbar}$",
+        r"Proposition~\ref{prop:yangian-koszul}",
+        r"Corollary~\ref{cor:yangian-bar-cobar}",
+        r"\Psi_{\mathrm{RTT}\to\mathrm{Dr}}",
+        "Drinfeld second presentation",
+        r"Theorem~\ref{thm:yangian-koszul-dual}",
+        r"Corollary~\ref{cor:sl3-finite-rtt-dual}",
+        r"Definition~\ref{def:affine-yangian-completion}",
+        r"\ref{def:shifted-yangian-completion}",
+        "conilpotent by bar degree",
+        "finite-dimensional homogeneous chain spaces",
+        r"Definition~\ref{def:generic-spectral-parameter-surface}",
+        r"Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}",
+        "orthogonal-style $P,Q$ matrix",
+    ):
+        assert required in block
+
+
+def test_finite_rtt_packet_definitions_back_yangian_prerequisites():
+    """The prerequisite package reuses the finite-packet definitions."""
+    foundation = YANGIANS_FOUNDATIONS_TEX.read_text()
+    exceptional = EXCEPTIONAL_YANGIAN_KOSZUL_TEX.read_text()
+
+    for label, env, status in (
+        (
+            "def:finite-yangian-module-packet",
+            "definition",
+            r"\ClaimStatusDefinitional",
+        ),
+        (
+            "def:finite-rtt-window-spectral-completion",
+            "definition",
+            r"\ClaimStatusDefinitional",
+        ),
+        (
+            "prop:finite-rtt-trace-pairing-nondegenerate",
+            "proposition",
+            r"\ClaimStatusProvedHere",
+        ),
+    ):
+        label_pos = exceptional.index(rf"\label{{{label}}}")
+        start = exceptional.rindex(rf"\begin{{{env}}}", 0, label_pos)
+        block = exceptional[start:exceptional.index(rf"\end{{{env}}}", start)]
+        assert status in block
+        assert rf"\ref{{{label}}}" in foundation
+
+    finite_window_pos = exceptional.index(
+        r"\label{def:finite-rtt-window-spectral-completion}"
+    )
+    finite_window_start = exceptional.rindex(
+        r"\begin{definition}", 0, finite_window_pos
+    )
+    finite_window = " ".join(
+        exceptional[
+            finite_window_start:exceptional.index(
+                r"\end{definition}", finite_window_start
+            )
+        ].split()
+    )
+    for required in (
+        "spectral Laurent completion",
+        r"\Phi_{K,\leq N}",
+        r"A_{\leq N}^{\mathrm{RTT}}(K)",
+        r"\operatorname{im}\Phi_{R_\hbar^{-1},\leq N}",
+        "trace pairing",
+        "Drinfeld second presentation",
+    ):
+        assert required in finite_window
+
+
+def test_dk_comparison_functor_is_evaluation_locus_firewalled():
+    """Drinfeld-Kohno transport is categorical and proved only on evaluation modules."""
+    source = YANGIANS_DRINFELD_KOHNO_TEX.read_text()
+
+    def block_for(label: str, env: str, end_env: str | None = None) -> str:
+        label_pos = source.index(rf"\label{{{label}}}")
+        start = source.rindex(rf"\begin{{{env}}}", 0, label_pos)
+        end_marker = rf"\end{{{end_env or env}}}"
+        return " ".join(source[start:source.index(end_marker, start)].split())
+
+    definition = block_for("def:dk-comparison-functor-evaluation", "definition")
+    remark = block_for("rem:dk-functor-evaluation-scope", "remark")
+    theorem = block_for("thm:derived-dk-yangian", "theorem", "proof")
+    conjecture = block_for("conj:full-dk-bridge", "conjecture")
+
+    for required in (
+        "braided monoidal functor",
+        r"\operatorname{Rep}^{\mathrm{eval}}_{\mathrm{fd}}",
+        r"Y_\hbar(\fg)",
+        r"U_{q_Y}(L\fg)",
+        r"V(a)_\hbar",
+        "quantum-loop evaluation module",
+        "derived functor on bounded derived categories",
+    ):
+        assert required in definition
+
+    for required in (
+        r"\ClaimStatusConditional",
+        "evaluation-generated Yangian category",
+        "proved only on that evaluation-generated surface",
+        "separate conditional extension problem",
+        "not a formal consequence",
+    ):
+        assert required in remark
+
+    for required in (
+        r"\ClaimStatusConditional",
+        "evaluation-generated subcategory",
+        "not the semisimplified tilting category",
+        "Then the square commutes on evaluation modules",
+    ):
+        assert required in theorem
+
+    for required in (
+        r"\ClaimStatusConjectured",
+        "extension of the evaluation-locus comparison",
+        r"full category~$\mathcal{O}$",
+        "compatible with evaluation modules",
+        "DK-4/DK-5 completion",
+    ):
+        assert required in conjecture
+
+
+def test_scalar_normalization_appendix_controls_kz_kappa_tables():
+    """The scalar appendix fixes collision/KZ, kappa, and conductor constants."""
+    source = SIGNS_AND_SHIFTS_TEX.read_text()
+    kac_moody = " ".join(KAC_MOODY_TEX.read_text().split())
+    ordered = " ".join(ORDERED_ASSOCIATIVE_CHIRAL_KD_TEX.read_text().split())
+
+    def convention(label: str) -> str:
+        label_pos = source.index(rf"\label{{{label}}}")
+        start = source.rindex(r"\begin{convention}", 0, label_pos)
+        return " ".join(source[start:source.index(r"\end{convention}", start)].split())
+
+    master = convention("conv:scalar-normalization-master")
+    collision = convention("conv:collision-kz-normalization")
+    kappa = convention("conv:scalar-kappa-normalizations")
+    conductor = convention("conv:scalar-conductor-checks")
+
+    for block in (master, collision, kappa, conductor):
+        assert r"\ClaimStatusDefinitional" in block
+
+    for required in (
+        "long roots have squared length~$2$",
+        r"dual Coxeter number is denoted $h^\vee$",
+        r"t:=k+h^\vee",
+        r"k\mapsto -k-2h^\vee",
+        "critical level is $k=-h^\\vee$",
+        "undefined",
+    ):
+        assert required in master
+
+    for required in (
+        r"r^{\mathrm{coll}}_{V_k(\fg)}(z)",
+        r"\frac{k\Omega_{\mathrm{tr}}}{z}",
+        r"r^{\mathrm{KZ}}_{V_k(\fg)}(z)",
+        r"\frac{\Omega_{\mathrm{KZ}}}{(k+h^\vee)z}",
+        r"\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}",
+        "not equal as functions of~$k$",
+    ):
+        assert required in collision
+
+    for required in (
+        r"\kappa(\mathcal H_\ell^{\oplus d})=d\ell",
+        r"\kappa(V_k(\fg))=\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}",
+        r"\kappa(\mathrm{Vir}_c)=\frac{c}{2}",
+        r"\kappa(\mathcal W_N)=c\,(H_N-1)",
+        "linear in the shifted level",
+        "not quadratic",
+        "not the Sugawara central charge",
+        r"c(V_k(\fg))=\frac{k\,\dim(\fg)}{k+h^\vee}",
+        r"\kappa(\mathcal W_3)=5c/6",
+    ):
+        assert required in kappa
+
+    for required in (
+        r"\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13",
+        r"c(\mathrm{Vir}_c)+c(\mathrm{Vir}_{26-c})=26",
+        r"K^c(\mathcal W_3)=100",
+        r"K^\kappa(\mathcal W_3)=\frac{5}{6}\cdot 100=\frac{250}{3}",
+        "derived chiral centre",
+    ):
+        assert required in conductor
+
+    for required in (
+        r"\label{comp:sugawara-central-charge-from-tt}",
+        "Single-contraction channel",
+        "normal-ordering relation",
+        r"\boxed{\;c(k, \fg) \;=\; \frac{k\,\dim\fg}{k + h^\vee}.\;}",
+        r"\kappa=(k+h^\vee)\dim\fg/(2h^\vee)",
+        "distinct invariants",
+        "Critical level",
+    ):
+        assert required in kac_moody
+
+    for required in (
+        r"r^{\mathrm{coll}}_{\cH}(z)=k\Omega_{\cH}/z",
+        r"R(z)=e^{k\hbar/z}",
+        "The rank-one tensor residue",
+        "becomes the trace-form Casimir kernel",
+        r"k\Omega_{\mathrm{tr}}/z",
+        "after KZ rescaling",
+    ):
+        assert required in ordered
 
 
 # ============================================================

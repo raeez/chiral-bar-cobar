@@ -116,7 +116,7 @@ def test_divisor_core_calculus_by_linear_algebra():
 @independent_verification(
     claim="thm:bar-cobar-platonic",
     derived_from=[
-        "Theorem A Platonic statement in bar_cobar_adjunction_inversion.tex",
+        "Theorem A bar--cobar statement in bar_cobar_adjunction_inversion.tex",
         "Vallette/Beilinson-Drinfeld proof lane cited by the manuscript",
     ],
     verified_against=[
@@ -126,7 +126,7 @@ def test_divisor_core_calculus_by_linear_algebra():
         "Heisenberg finite Koszul witness",
     ],
     disjoint_rationale=(
-        "The manuscript derives the Platonic theorem through the chiral "
+        "The manuscript derives the bar--cobar theorem through the chiral "
         "bar-cobar and Verdier lane. The test asks an independently "
         "encoded model-structure scope engine whether the algebraic "
         "bar-cobar counit is confirmed, not contradicted, and not confused "

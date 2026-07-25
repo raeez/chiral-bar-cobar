@@ -49,7 +49,9 @@ For Virasoro:
     NOT zero! The complementarity sum is 13 (AP24).
 
 For Heisenberg:
-    kappa(H_k) + kappa(H_{-k}) = k + (-k) = 0
+    kappa(H_k) + kappa(H_k^!) = k + (-k) = 0 at scalar-shadow
+    level.  At k != 0, H_k^! is the curved second-kind Sym branch,
+    not H_{-k}; only scalar kappa agrees with kappa(H_{-k}) (AP33).
 
 For affine KM:
     kappa(V_k(g)) + kappa(V_{-k-2h^v}(g)) = 0 (FF involution)
@@ -917,15 +919,15 @@ def ahat_generating_function_check(g_max: int = 8) -> Dict[str, Any]:
 # ============================================================================
 
 def heisenberg_complementarity(k: Fraction, g: int) -> Dict[str, Any]:
-    r"""Complementarity check for Heisenberg: F_g(H_k) + F_g(H_{-k}).
+    r"""Complementarity check for Heisenberg: scalar F_g(H_k) + F_g(H_k^!).
 
-    kappa(H_k) = k, kappa(H_{-k}) = -k.
+    kappa(H_k) = k, scalar kappa(H_k^!) = -k.
     Sum: kappa + kappa' = 0.
-    F_g(H_k) + F_g(H_{-k}) = 0 (anti-symmetric).
+    F_g(H_k) + F_g(H_k^!) = 0 at scalar-shadow level.
 
-    NOTE (AP33): H_k^! = Sym^ch(V*) is NOT H_{-k}. But kappa(H_k^!)
-    = -k = kappa(H_{-k}), so the complementarity formula gives the same
-    result.
+    NOTE (AP33): at k != 0, H_k^! is the curved second-kind Sym branch,
+    not H_{-k} and not the uncurved polynomial centre.  Only scalar
+    kappa agrees with kappa(H_{-k}).
     """
     if g < 1:
         raise ValueError(f"heisenberg_complementarity requires g >= 1, got {g}")

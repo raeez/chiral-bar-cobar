@@ -218,7 +218,8 @@ CONVENTIONS (from CLAUDE.md anti-patterns)
    AP25  three functors: bar coalgebra, Verdier dual, cobar inversion
    AP27  bar propagator weight 1 regardless of field weight
    AP32  multi-weight algebras: F_g != kappa * lambda_g at g >= 2
-   AP33  Heisenberg-style: H_k^! = Sym^ch(V*) not H_{-k}
+   AP33  Heisenberg-style: H_k^! is the curved second-kind
+         Sym^ch(V*[1]) branch, not H_{-k}
    AP34  bar-cobar inversion != open/closed passage
    AP39  kappa = c/2 only for Virasoro
    AP48  kappa depends on full algebra, not Virasoro subalgebra
@@ -1021,13 +1022,13 @@ class M5HolographicDatum:
 
     This compute record keeps the scalar/projection slots used by the
     legacy tests and exposes A^i explicitly so that the bar-dual coalgebra,
-    the Verdier/Koszul dual algebra, and the derived-centre bulk channel
+    the Verdier/Koszul dual algebra, and the derived-centre closed-sector channel
     are not identified.
 
     A         : boundary VOA W_{1+inf}[lambda=N]
     A^i       : H^*(B_ch(A)), the bar-dual coalgebra slot
     A^!       : Verdier/Koszul dual algebra ("phantom"/M-minus theory)
-    C         : Z_ch^der(A) bulk channel, modelled by twisted M-theory
+    C         : Z_ch^der(A) closed-sector channel, modelled by twisted M-theory
     r(z)      : boundary collision residue (W_infty r-matrix)
     Theta_A   : universal MC element of W_{1+inf}[lambda=N]
     nabla^hol : holographic shadow connection on M_{g,n}
@@ -1050,10 +1051,10 @@ class M5HolographicDatum:
         return f"A_M5({self.m5.N})^! = Verdier/Koszul phantom dual"
 
     @property
-    def bulk_description(self) -> str:
-        """C slot: derived-centre bulk channel, not A^i or A^!."""
+    def closed_sector_description(self) -> str:
+        """C slot: derived-centre closed-sector channel, not A^i or A^!."""
         return (
-            f"C_M5({self.m5.N}) = Z_ch^der(A_M5({self.m5.N})) bulk channel; "
+            f"C_M5({self.m5.N}) = Z_ch^der(A_M5({self.m5.N})) closed-sector channel; "
             f"twisted M-theory on AdS_7 x S^4 with N={self.m5.N} M5 branes"
         )
 
@@ -1107,8 +1108,8 @@ class M5HolographicDatum:
             "kappa(A!)": Fraction(2 - self.m5.N) ** 3,
             "kappa+kappa^!": self.kappa_sum_with_dual,
             "kappa+kappa!": self.kappa_sum_with_dual,
-            "C": self.bulk_description,
-            "C (bulk)": self.bulk_description,
+            "C": self.closed_sector_description,
+            "C (closed-sector)": self.closed_sector_description,
             "r(z)": self.collision_residue_type,
             "Theta_A": self.theta_description,
             "shadow_depth": self.m5.shadow_depth,

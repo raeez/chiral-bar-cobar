@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 r"""
-shadow_hecke_identification.py — Attack on the conjectural identification
-A^sh = Hecke algebra acting on the spectral decomposition of Z_A on M_{g,n}.
+shadow_hecke_identification.py — diagnostics for the conditional comparison
+between the shadow algebra and Hecke spectral data.
 
-THE CONJECTURE:
-  The shadow algebra A^sh = H_*(Def_cyc^mod(A)) IS the Hecke algebra acting on
-  the spectral decomposition of the partition function Z_A.  Specifically:
+THE COMPARISON SURFACE:
+  The shadow algebra A^sh = H_*(Def_cyc^mod(A)) is not identified here with
+  the Hecke algebra.  On finite-Hecke-span and prime-local surfaces it maps to
+  the moment algebra of the spectral decomposition of the partition function
+  Z_A.  Specifically:
 
   (1) Shadow at arity r <-> Hecke eigenspace of weight r/2
   (2) The shadow GF G_A(t) = -log L_A(t) where L_A(t) = prod(1 - lambda_j t)
       and lambda_j are Hecke eigenvalues
-  (3) The MC equation at arity r reproduces the Hecke multiplicativity relations
+  (3) The MC equation at arity r is structurally parallel to the corresponding
+      Hecke multiplicativity relation after Satake coordinates are chosen
   (4) Shadow depth d(A) = 1 + number of independent Hecke eigenvalues
 
 This module computes BOTH sides (shadow data and Hecke data) for five families:
@@ -20,7 +23,7 @@ This module computes BOTH sides (shadow data and Hecke data) for five families:
   Ising    (infinite algebra depth, finite partition-function decomposition)
   Virasoro (infinite tower)
 
-and tests the identification numerically.
+and tests the comparison numerically.
 
 CONVENTIONS:
   - Shadow data: kappa (arity 2), C (arity 3), Q (arity 4)
@@ -895,9 +898,11 @@ def compare_ring_structures(shadow_data, hecke_data, weight):
     - d-1 generators (kappa, C, Q, ...)
     - Relations: MC equation at each arity
 
-    The identification would mean: d (dim M_k) = depth - 1 (n generators).
-    But this is NOT generically true. The relationship is subtler:
-    the shadow algebra's MC relations should ENCODE the Hecke multiplicativity.
+    A literal identification would mean:
+    d (dim M_k) = depth - 1 (n generators). This is NOT generically true.
+    The relationship is subtler: the shadow algebra's MC relations provide
+    moment constraints which can be compared with Hecke multiplicativity only
+    after finite-Hecke-span and prime-local hypotheses are supplied.
     """
     sd = shadow_data
     sha = shadow_algebra_generators(sd)
@@ -1182,7 +1187,8 @@ def mc_vs_hecke_at_arity4():
       Hecke arity 4: lambda_4 + (quadratic in lambda_2) = known
 
     Both are QUADRATIC constraints at level 4 involving level-2 data.
-    The MC equation is the shadow-algebra version of Hecke multiplicativity.
+    This is a structural parallel under the comparison map, not an
+    identification of the MC bracket with Hecke multiplication.
     """
     # E_4 Hecke relation
     s3 = lambda n: sigma_k(n, 3)
@@ -1214,7 +1220,8 @@ def mc_vs_hecke_at_arity4():
             'The MC equation at arity 4 and the Hecke relation at T_2^2 '
             'are STRUCTURALLY parallel: both are quadratic constraints '
             'at level 4 determined by level-2 data plus a correction term. '
-            'The MC "quartic contact" plays the role of the Hecke p^{k-1} term.'
+            'The MC "quartic contact" is compared with the Hecke p^{k-1} '
+            'term only after the prime-local comparison map is supplied.'
         ),
     }
 
@@ -1356,16 +1363,16 @@ def leech_theta_eigenform_decomposition(nmax=10):
 def identification_summary():
     r"""Summary of the shadow-Hecke identification status.
 
-    PROVED (or verified):
-    1. Shadow depth = 1 + number of L-functions (for lattice VOAs). PROVED.
-    2. kappa encodes the leading Hecke eigenvalue (trivially). PROVED.
+    PROVED (or verified on the finite-span surfaces):
+    1. Shadow depth = 1 + number of L-functions for the listed lattice checks.
+    2. kappa encodes the leading identity-Hecke datum (trivially).
     3. Hecke multiplicativity relations hold (standard number theory). PROVED.
     4. MC equation and Hecke relations are structurally parallel. VERIFIED.
 
-    CONJECTURAL:
-    5. A^sh IS the Hecke algebra (not just parallel). CONJECTURAL.
-    6. Shadow GF G_A(t) determines the Hecke eigenvalues via Newton identities.
-       PARTIALLY VERIFIED (works for finite-depth, problematic for infinite).
+    CONDITIONAL / CONJECTURAL:
+    5. A^sh maps isomorphically to the relevant Hecke moment algebra.
+    6. Shadow GF G_A(t) determines the Hecke eigenvalues via Newton identities
+       after all finite-span and prime-local hypotheses are supplied.
     7. The quartic shadow Q encodes the cusp form contribution.
        VERIFIED for V_{Leech} (Q ~ tau(n) via eigenform decomposition).
     8. MC equation at arity r reproduces the Hecke relation at level r.
@@ -1384,25 +1391,26 @@ def identification_summary():
     """
     return {
         'proved': [
-            'Shadow depth = 1 + #L-functions (lattice VOAs)',
-            'kappa encodes leading Hecke data',
+            'Shadow depth = 1 + #L-functions (listed lattice checks)',
+            'kappa encodes leading identity-Hecke data',
             'Hecke multiplicativity holds',
             'MC/Hecke structural parallelism',
         ],
         'conjectural': [
-            'A^sh = Hecke algebra (full identification)',
-            'Shadow GF determines Hecke eigenvalues (Newton)',
+            'A^sh maps to the Hecke moment algebra on the comparison surface',
+            'Shadow GF determines Hecke eigenvalues after finite-span and prime-local input',
             'Quartic shadow = cusp form contribution',
-            'MC arity r = Hecke relation level r',
+            'MC arity r parallels Hecke relation level r',
         ],
         'obstruction': (
             'Mellin transform gap: shadow moments live in t-space, '
             'Hecke eigenvalues live in s-space. '
-            'Newton identities provide the bridge but require all moments.'
+            'Newton identities provide the bridge but require all moments, '
+            'finite-span stability, and the prime-local comparison map.'
         ),
         'resolution': (
             'The identification is via the SPECTRAL MEASURE: '
-            'A^sh controls moments, Hecke algebra controls eigenvalues, '
-            'and Newton identities are the dictionary.'
+            'A^sh controls moments on the comparison surface, Hecke algebra '
+            'controls eigenvalues, and Newton identities are the dictionary.'
         ),
     }

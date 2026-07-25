@@ -300,7 +300,7 @@ class TestCertificationScope(unittest.TestCase):
         )
         self.assertEqual(
             scope['object_firewall']['Z_ch^der(A)'],
-            'ChirHoch^*(A,A), the Hochschild bulk branch',
+            'ChirHoch^*(A,A), the Hochschild closed-sector branch',
         )
 
     def test_kernel_constants_preserved(self):
@@ -679,7 +679,7 @@ class TestComplementarityBookkeeping(unittest.TestCase):
         self.assertAlmostEqual(d['kappa_sum'], d['kappa_sum_expected'], places=8)
 
     def test_legacy_alias_is_not_object_identification(self):
-        """koszul_dual_check is a compatibility alias, not A^! or bulk data."""
+        """koszul_dual_check is a compatibility alias, not A^! or closed-sector data."""
         self.assertEqual(koszul_dual_check(50), complementarity_check(50))
 
     def test_delta_is_not_claimed_invariant(self):

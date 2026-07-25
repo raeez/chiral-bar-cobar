@@ -668,7 +668,7 @@ class TestLInfinityBrackets:
 
     For Virasoro: ell_3, ell_4 nonzero (class M, infinite shadow depth).
     S_3 = 2 (c-independent).
-    S_4 = -(5c+22)/(10c) (c-dependent).
+    S_4 = 10/[c(5c+22)] (c-dependent).
     """
 
     def test_ell3_virasoro_nonzero(self):
@@ -691,20 +691,20 @@ class TestLInfinityBrackets:
         assert data["ell4_nonzero"] is True
 
     def test_ell4_virasoro_S4_formula(self):
-        """S_4 = -(5c+22)/(10c)."""
+        """S_4 = 10/[c(5c+22)]."""
         c = F(1)
         data = linfty_ell4_virasoro(c)
-        expected = -(F(5) * c + F(22)) / (F(10) * c)
+        expected = F(10) / (c * (F(5) * c + F(22)))
         assert data["S4"] == expected
 
     def test_ell4_virasoro_S4_at_c_half(self):
         """S_4 at c = 1/2 (Ising central charge)."""
         c = F(1, 2)
         data = linfty_ell4_virasoro(c)
-        # S_4 = -(5/2 + 22)/(10/2) = -(49/2)/5 = -49/10
-        expected = -(F(5) * c + F(22)) / (F(10) * c)
+        # S_4 = 10 / [(1/2)(49/2)] = 40/49
+        expected = F(10) / (c * (F(5) * c + F(22)))
         assert data["S4"] == expected
-        assert data["S4"] == F(-49, 10)
+        assert data["S4"] == F(40, 49)
 
     def test_ell4_Q_contact_formula(self):
         """Q^contact = 10/[c(5c+22)]."""
@@ -722,12 +722,12 @@ class TestLInfinityBrackets:
         assert data["Q_contact"] == F(5, 1976)
 
     def test_ell4_S4_at_c_13(self):
-        """S_4 at c=13 (self-dual point): -(65+22)/(130) = -87/130."""
+        """S_4 at c=13 (self-dual point): 10/(13*87)."""
         c = F(13)
         data = linfty_ell4_virasoro(c)
-        expected = -(F(5) * F(13) + F(22)) / (F(10) * F(13))
+        expected = F(10) / (F(13) * (F(5) * F(13) + F(22)))
         assert data["S4"] == expected
-        assert data["S4"] == F(-87, 130)
+        assert data["S4"] == F(10, 1131)
 
 
 # ============================================================================

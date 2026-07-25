@@ -3,7 +3,8 @@
 Ground truth from the manuscript:
   - Com^! = Lie (chirCom^! = chirLie)
   - Sym^! = Lambda (exterior)
-  - Heisenberg != self-dual: H^! = Sym^ch(V*) (commutative chiral)
+  - Heisenberg != self-dual: at nonzero level, H^! is the curved
+    second-kind Sym^ch(V*[1]) branch
   - Free fermion dual: F^! = betagamma (via Lie <-> Com)
   - bc^! = betagamma and betagamma^! = bc
   - sl_2^! = sl_2 at dual level (Lie algebra Koszul self-dual)
@@ -47,9 +48,9 @@ KOSZUL_PAIRS = {
         "involution": True,  # (A^!)^! = A
     },
     "Heisenberg_Symch": {
-        "A": "Heisenberg", "A_dual": "Sym^ch(V*)",
+        "A": "Heisenberg", "A_dual": "curved Sym^ch(V*[1])",
         "operadic": "NOT self-dual (common error)",
-        "note": "H has 1 generator; Koszul dual is commutative chiral algebra",
+        "note": "H has 1 generator; at nonzero level the Koszul dual is the curved branch",
         "self_dual": False,
     },
     "sl2_sl2_dual": {
@@ -112,8 +113,8 @@ def check_involution(pair_name: str) -> bool:
 COMMON_ERRORS = {
     "Heisenberg_self_dual": {
         "claim": "H^! = H_{-k}",
-        "truth": "WRONG: H^! = Sym^ch(V*), a commutative chiral algebra",
-        "reason": "Heisenberg has 1 bosonic generator; dual is commutative, not Heisenberg",
+        "truth": "WRONG: at nonzero level H^! is the curved Sym^ch(V*[1]) branch",
+        "reason": "Heisenberg has 1 bosonic generator; dual is the curved branch, not Heisenberg",
     },
     "bosonization_is_koszul": {
         "claim": "bc-betagamma duality = bosonization",

@@ -112,7 +112,7 @@ OBJECT_FIREWALLS: Tuple[str, ...] = (
     'B(A) is the bar coalgebra T^c(s^{-1} Abar).',
     'A^i is the bar-cohomology coalgebra branch.',
     'A^! is the Verdier/continuous-linear dual branch under hypotheses.',
-    'Z_ch^der(A) is ChirHoch^*(A,A), the Hochschild/bulk object.',
+    'Z_ch^der(A) is ChirHoch^*(A,A), the Hochschild/closed-sector object.',
     'Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.',
 )
 

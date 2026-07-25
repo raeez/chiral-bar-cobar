@@ -146,7 +146,7 @@ BAR_OBJECT_FIREWALL = (
 BAR_OBJECT_RELATIONS = {
     'Omega(B(A))': 'bar-cobar inversion to A',
     'A^!': 'Verdier/continuous-linear dual branch',
-    'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild bulk',
+    'Z_ch^der(A)': 'ChirHoch^*(A,A), the Hochschild closed-sector',
 }
 
 

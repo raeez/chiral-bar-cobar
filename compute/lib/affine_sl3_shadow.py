@@ -2,7 +2,8 @@ r"""Shadow obstruction tower and r-matrix for affine sl_3 at level k.
 
 Computes the complete shadow obstruction tower for the affine Kac-Moody
 algebra sl_3-hat_k, verifying class L (Lie/tree) assignment, and the
-r-matrix r(z) = Omega/z with CYBE verification in the fundamental.
+trace-form r-matrix r(z) = k*Omega/z with CYBE verification in the
+unit-normalized fundamental convention.
 
 Shadow obstruction tower data for sl_3-hat_k:
     kappa = dim(sl_3)(k + h^vee) / (2 h^vee) = 8(k+3)/6 = 4(k+3)/3
@@ -19,9 +20,9 @@ The quartic obstruction o_4 = (1/2){C, C}_H is the Jacobiator, which
 vanishes by the Jacobi identity.  All higher obstructions vanish by
 induction.
 
-The r-matrix r(z) = Omega_{sl_3} / z is the collision residue of the
-bar propagator d log E(z,w) (AP19: bar absorbs one pole order from
-the OPE).  In the fundamental representation V = C^3:
+The trace-form r-matrix r_k(z) = k*Omega_{sl_3} / z is the collision
+residue of the bar propagator d log E(z,w) (AP19: bar absorbs one
+pole order from the OPE).  In the fundamental representation V = C^3:
     Omega = P - I/3    (standard sl_3 identity)
 where P is the permutation operator on V tensor V.
 
@@ -338,8 +339,8 @@ def verify_perfect_square(k_val=None) -> bool:
 # r-matrix from bar collision residue
 # ============================================================
 
-def sl3_r_matrix(z: complex) -> np.ndarray:
-    r"""r-matrix r(z) = Omega / z for sl_3 in the fundamental.
+def sl3_r_matrix(z: complex, level: complex = 1.0) -> np.ndarray:
+    r"""Trace-form r-matrix r_k(z) = k*Omega / z for sl_3 in the fundamental.
 
     The bar construction extracts the collision residue of d log E(z,w),
     which absorbs one pole order (AP19).  The OPE has poles at z^{-2}
@@ -347,16 +348,20 @@ def sl3_r_matrix(z: complex) -> np.ndarray:
     at z^{-1}.
 
     In V tensor V (9x9):
-        r(z) = Omega / z = (P - I/3) / z
+        r_k(z) = k*Omega / z = k*(P - I/3) / z
+
+    The default level=1 is the unit Casimir normalization used by the
+    CYBE verifier; the affine trace-form residue vanishes at level k=0.
 
     Args:
         z: Spectral parameter (nonzero complex number).
+        level: Affine trace-form level k.
 
     Returns:
         9x9 complex matrix.
     """
     Omega = casimir_tensor_fund()
-    return Omega / z
+    return level * Omega / z
 
 
 def sl3_R_matrix_yang(z: complex) -> np.ndarray:
@@ -411,12 +416,12 @@ def _embed_13(M: np.ndarray) -> np.ndarray:
 
 
 def verify_cybe(u: complex, v: complex) -> float:
-    r"""Verify the classical Yang-Baxter equation for r(z) = Omega/z.
+    r"""Verify the classical Yang-Baxter equation for unit r(z) = Omega/z.
 
     CYBE: [r_12(u), r_13(u+v)] + [r_12(u), r_23(v)] + [r_13(u+v), r_23(v)] = 0
 
-    This is the CLASSICAL YBE (commutators, not products).  The r-matrix
-    r(z) = Omega/z satisfies CYBE because Omega is the quadratic Casimir
+    This is the CLASSICAL YBE (commutators, not products).  The unit
+    Casimir r-matrix r(z) = Omega/z satisfies CYBE because Omega is the quadratic Casimir
     (invariant under the adjoint action) and [Omega_12, Omega_13 + Omega_23] = 0
     (the "infinitesimal braid relation").
 

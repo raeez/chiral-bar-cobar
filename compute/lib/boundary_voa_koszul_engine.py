@@ -115,7 +115,9 @@ CAUTION (AP1): kappa formulas are family-specific. Never copy between families.
 CAUTION (AP8): Virasoro self-dual at c=13; c=26 is a different string-theoretic value.
 CAUTION (AP19): r-matrix pole order one below OPE (d log absorption).
 CAUTION (AP24): kappa + kappa' = 0 for KM/free; != 0 for W-algebras.
-CAUTION (AP33): H_k^! = Sym^ch(V*) != H_{-k} as algebras.
+CAUTION (AP33): at k != 0, H_k^! is the curved second-kind
+Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+centre; only scalar kappa agrees with kappa(H_{-k}).
 CAUTION (AP39): kappa != c/2 for general VOA; kappa = c/2 only for Virasoro.
 CAUTION (AP48): kappa depends on full algebra, not Virasoro subalgebra.
 
@@ -250,7 +252,7 @@ OBJECT_SEPARATION: Dict[str, str] = {
     "Omega(B(A))": "bar-cobar inversion recovering A, not Koszul duality",
     "A^i": "bar-dual coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch under finite-type/completed hypotheses",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk, not Koszul dual",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild closed-sector, not Koszul dual",
     "r(z)": "arity-2 collision kernel / scalar projection, not full Theta_A",
     "Theta_A": "full ordered convolution Maurer-Cartan element, not computed here",
 }
@@ -277,7 +279,7 @@ def boundary_compute_firewall() -> Dict[str, Any]:
             "finite OPE/kernel checks do not construct open-closed holography",
             "scalar kappa and r(z) projections do not determine Theta_A",
             "Omega(B(A))=A is bar-cobar inversion, not Koszul duality",
-            "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild bulk, not A^!",
+            "Z_ch^der(A)=ChirHoch^*(A,A) is Hochschild closed-sector, not A^!",
         ),
     }
 

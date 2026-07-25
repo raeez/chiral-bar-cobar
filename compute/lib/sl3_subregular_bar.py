@@ -1,624 +1,268 @@
-r"""sl_3 subregular W-algebra bar complex: Koszul duality proved.
+r"""Typed bar audit for the minimal/subregular ``sl_3`` W-algebra.
 
-The sl_3 subregular W-algebra W^k(sl_3, f_{subreg}) is the
-Bershadsky-Polyakov algebra W_3^{(2)} = BP_k, the DS reduction of V_k(sl_3)
-at the MINIMAL nilpotent orbit (partition (2,1) in sl_3).  Its OPE surface
-    is the Feigin-Semikhatov W_3^{(2)} normal form.
+For ``sl_3`` the minimal and subregular nilpotent orbit is the partition
+``(2,1)``.  Its quantum Drinfeld--Sokolov reduction is the
+Bershadsky--Polyakov algebra.  This module exposes the exact FKR OPE data
+and keeps four further assertions as separate proof obligations:
 
-CLARIFICATION ON TERMINOLOGY: In sl_3, "subregular" = "minimal" since there
-are only three nilpotent orbits: zero (partition (1,1,1)), minimal/subregular
-(partition (2,1)), and principal/regular (partition (3)).  The subregular orbit
-IS the minimal orbit.  This is SPECIFIC to sl_3; for sl_N with N >= 4,
-minimal and subregular are distinct.
+* collapse of the completed chiral bar spectral sequence;
+* identification of the bar dual with ``BP_{-k-6}``;
+* commutation of Drinfeld--Sokolov reduction with the chosen bar model;
+* the genus-one modular characteristic.
 
-MAIN RESULTS:
-  1. BP_k is chirally Koszul (PBW-Slodowy collapse, canonical arity 2).
-  2. kappa(BP_k) = (1/6)(2 - 24(k+1)^2/(k+3)), verified by three independent paths.
-  3. The Koszul dual: (BP_k)^! = BP_{-k-6} (self-dual family, (2,1)^t = (2,1)).
-  4. DS reduction from V_k(sl_3) PRESERVES Koszulness.
-  5. DS does NOT preserve Swiss-cheese formality (shadow class M, not G).
-  6. The kappa deficit kappa(V_k(sl_3)) - kappa(BP_k) is a RATIONAL FUNCTION
-     of k (not a constant), disproving the naive ghost-subtraction formula.
-  7. Shadow depth: class M (infinite) on the T-line generically.
-  8. Complementarity: kappa(k) + kappa(-k-6) = 98/3 (constant).
-
-GENERATORS (4 strong generators):
-  J   (conformal weight 1,   bosonic,   J-charge 0)
-  G+  (conformal weight 3/2, fermionic, J-charge +1)
-  G-  (conformal weight 3/2, fermionic, J-charge -1)
-  T   (conformal weight 2,   bosonic,   J-charge 0)
-
-CENTRAL CHARGE: c(k) = 2 - 24(k+1)^2/(k+3) in the BP normalization
-used by the compute layer.
-
-KAPPA COMPUTATION (three independent paths):
-  Path 1 (anomaly ratio): kappa = rho * c, rho = 1/6.
-  Path 2 (DS from affine): kappa = rho * c_KRW (NOT kappa_aff - ghost).
-  # AP140: K_BP=196, NOT 2 (corrected; prior value confused with ghost constant C_{(2,1)}=2)
-  Path 3 (complementarity): kappa(k) + kappa(-k-6) = rho * K_BP = 98/3, with K_BP = 196.
-
-KOSZUL DUAL:
-  (2,1) is self-transpose, so BP_k is in a self-dual family.
-  The dual level is k' = -k - 2N = -k - 6 (for sl_3, N=3).
-  (BP_k)^! = BP_{-k-6}, with central charge c(-k-6).
-  # AP140: K_BP=196, NOT 2 (corrected; prior value confused with ghost constant C_{(2,1)}=2)
-  The Koszul conductor K_BP = c(k) + c(-k-6) = 196 is constant.
-
-DS-BAR INTERTWINING:
-  V_k(sl_3) is Koszul.  BP_k is Koszul.  DS preserves Koszulness.
-  BUT: the kappa deficit kappa(V) - kappa(W) = (8k^2 + 47k + 87)/(6(k+3))
-  is NOT the ghost constant C_{(2,1)} = 2.  The naive formula
-  kappa(W) = kappa(V) - ghost is FALSE for all non-principal W-algebras.
-  The correct formula is kappa(W) = anomaly_ratio(W) * c_KRW(W).
-
-References:
-  - Bershadsky (1991), Polyakov (1990)
-  - KRW (2003): quantum reduction
-  - Feigin-Semikhatov (2004): subregular family W_n^{(2)}
-  - Manuscript: subregular_hook_frontier.tex, thm:bp-strict, thm:pbw-slodowy-collapse
+Free strong generation and a quadratic OPE normal form supply PBW evidence.
+They do not by themselves prove any of the four assertions above.
 """
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
-from sympy import (
-    Rational,
-    Symbol,
-    cancel,
-    expand,
-    factor,
-    oo,
-    simplify,
-    solve,
-    sqrt,
-    sympify,
+from sympy import Rational, Symbol, simplify, solve, sympify
+
+from compute.lib.bershadsky_polyakov_bar import (
+    GENERATORS,
+    GENERATOR_NAMES,
+    bp_central_charge as _bp_central_charge,
+    bp_dual_level,
+    bp_is_chirally_koszul as _canonical_koszul_status,
+    bp_koszul_conductor,
+    bp_nth_products,
+    bp_primary_ope_normal_form,
+    bp_shifted_central_charge,
+)
+from compute.lib.bp_koszul_conductor_engine import (
+    BP_KAPPA_STATUS,
+    UnverifiedBPInvariantError,
+    compute_varrho as _reciprocal_weight_diagnostic,
 )
 
 
-# =============================================================================
-# Constants and symbols
-# =============================================================================
+k = Symbol("k")
+c = Symbol("c")
 
-k = Symbol('k')
-c = Symbol('c')
-
-# Generator data
-GENERATORS = {
-    "J":  {"weight": Rational(1),    "parity": 0, "charge": 0},
-    "G+": {"weight": Rational(3, 2), "parity": 1, "charge": 1},
-    "G-": {"weight": Rational(3, 2), "parity": 1, "charge": -1},
-    "T":  {"weight": Rational(2),    "parity": 0, "charge": 0},
-}
-
-GENERATOR_NAMES = ("J", "G+", "G-", "T")
-
-# Partition data for the sl_3 subregular/minimal nilpotent orbit
-PARTITION = (2, 1)
+PARTITION: Tuple[int, int] = (2, 1)
 N_SL3 = 3
 H_DUAL_SL3 = 3
 DIM_SL3 = 8
-GHOST_CONSTANT = Rational(2)  # C_{(2,1)} = 2
+
+BP_BAR_HYPOTHESES: Tuple[str, ...] = (
+    "completed_BP_bar_complex_constructed",
+    "PBW_bar_filtration_exhaustive_complete_and_Hausdorff",
+    "bar_spectral_sequence_strongly_convergent",
+    "comparison_q_BP_quasi_isomorphism",
+    "DS_bar_intertwiner_constructed_and_filtered",
+)
+
+BP_BAR_RESOLUTION_OBLIGATION = (
+    "construct the completed BP bar differential, identify its associated "
+    "graded comparison with the quadratic coalgebra, and prove strong "
+    "convergence with vanishing off-diagonal homology"
+)
 
 
-# =============================================================================
-# Central charge
-# =============================================================================
+def bp_central_charge(level: Any = None) -> Any:
+    """Return the standard FKR central charge and enforce its pole."""
 
-def bp_central_charge(level=None):
-    r"""BP central charge c(k) = 2 - 24*(k+1)^2/(k+3).
-
-    # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
-    # Verification: c(0) = 2 - 24/3 = -6.  c(-6) = 2 - 24*25/(-3) = 202.
-    # K = c(0) + c(-6) = -6 + 202 = 196.
-    """
-    if level is None:
-        level = k
-    kk = sympify(level)
-    return 2 - 24 * (kk + 1)**2 / (kk + 3)
+    lev = k if level is None else sympify(level)
+    if simplify(lev + 3) == 0:
+        raise ZeroDivisionError("the standard BP conformal vector has a pole at k=-3")
+    return simplify(_bp_central_charge(lev))
 
 
-def bp_dual_level(level=None):
-    """Feigin-Frenkel dual level: k' = -k - 2N = -k - 6."""
-    if level is None:
-        level = k
-    return -sympify(level) - 6
+def bp_reciprocal_weight_diagnostic() -> Rational:
+    """Return the source-correct all-even reciprocal-weight sum ``17/6``."""
 
+    value = _reciprocal_weight_diagnostic()
+    return Rational(value.numerator, value.denominator)
 
-def bp_koszul_conductor():
-    """K_BP = c(k) + c(-k-6) = 196 (constant).
-
-    # AP140: corrected from K=2; correct K_BP=196
-    """
-    return simplify(bp_central_charge(k) + bp_central_charge(bp_dual_level(k)))
-
-
-# =============================================================================
-# Anomaly ratio
-# =============================================================================
 
 def bp_anomaly_ratio() -> Rational:
-    r"""Anomaly ratio rho for the Bershadsky-Polyakov algebra.
+    """Signal the open BP genus-one modular calculation."""
 
-    rho = sum_i (-1)^{p_i} / h_i over strong generators:
-      J (h=1, bos): +1/1 = 1
-      G+ (h=3/2, fer): -1/(3/2) = -2/3
-      G- (h=3/2, fer): -1/(3/2) = -2/3
-      T (h=2, bos): +1/2 = 1/2
-
-    rho = 1 - 2/3 - 2/3 + 1/2 = 1/6.
-    """
-    rho = Rational(0)
-    for name, data in GENERATORS.items():
-        sign = (-1) ** data["parity"]
-        rho += sign * Rational(1) / data["weight"]
-    return rho
+    raise UnverifiedBPInvariantError(BP_KAPPA_STATUS.resolution_obligation)
 
 
-# =============================================================================
-# Kappa: three independent computation paths
-# =============================================================================
+def kappa_path1_anomaly_ratio(level: Any = None) -> Any:
+    """Signal the open BP modular characteristic."""
 
-def kappa_path1_anomaly_ratio(level=None):
-    """PATH 1: kappa = rho * c(k).
-
-    The anomaly ratio formula. This is the primary definition of the
-    modular characteristic for a freely generated vertex algebra.
-    """
-    rho = bp_anomaly_ratio()
-    return rho * bp_central_charge(level)
+    if level is not None:
+        sympify(level)
+    raise UnverifiedBPInvariantError(BP_KAPPA_STATUS.resolution_obligation)
 
 
-def kappa_path2_ds_from_affine(level=None):
-    """PATH 2: kappa via DS reduction from affine sl_3.
+def kappa_path2_ds_from_affine(level: Any = None) -> Any:
+    """Signal the missing genus-one DS comparison."""
 
-    # AP140: uses corrected BP central charge 2 - 24*(k+1)^2/(k+3).
-    Cross-check: computes c(BP) independently and verifies rho*c.
-    """
-    if level is None:
-        level = k
-    kk = sympify(level)
-
-    # AP140: corrected BP central charge
-    c_bp = 2 - 24 * (kk + 1)**2 / (kk + 3)
-
-    rho = bp_anomaly_ratio()
-    return rho * c_bp
+    if level is not None:
+        sympify(level)
+    raise UnverifiedBPInvariantError(BP_KAPPA_STATUS.resolution_obligation)
 
 
-def kappa_path3_complementarity(level=None):
-    """PATH 3: kappa from complementarity constraint.
+def kappa_path3_complementarity(level: Any = None) -> Any:
+    """Signal the open modular companion sum."""
 
-    For a self-transpose partition, kappa(k) + kappa(k') = rho * K
-    where K = c(k) + c(k') is the Koszul conductor.
-    K_BP = 196 (constant). rho = 1/6. So the sum = 98/3.
-
-    # AP140: corrected from K=2, sum=1/3
-    Given kappa(k') = rho * c(k'), we can solve for kappa(k) = 98/3 - kappa(k').
-    This is a consistency check, not a truly independent computation,
-    but it verifies the complementarity structure.
-    """
-    if level is None:
-        level = k
-    kk = sympify(level)
-    rho = bp_anomaly_ratio()
-    kv = bp_dual_level(kk)
-    kappa_dual = rho * bp_central_charge(kv)
-    K_BP = bp_koszul_conductor()
-    return rho * K_BP - kappa_dual
+    if level is not None:
+        sympify(level)
+    raise UnverifiedBPInvariantError(BP_KAPPA_STATUS.resolution_obligation)
 
 
-def kappa_all_paths_agree(level=None) -> Dict[str, object]:
-    """Verify that all three kappa computation paths agree.
+def kappa_all_paths_agree(level: Any = None) -> Dict[str, Any]:
+    """Return a status packet in place of three copies of one assumption."""
 
-    Returns the kappa value and agreement status for each path.
-    """
-    p1 = simplify(kappa_path1_anomaly_ratio(level))
-    p2 = simplify(kappa_path2_ds_from_affine(level))
-    p3 = simplify(kappa_path3_complementarity(level))
-
+    lev = k if level is None else sympify(level)
     return {
-        "path1": p1,
-        "path2": p2,
-        "path3": p3,
-        "p1_eq_p2": simplify(p1 - p2) == 0,
-        "p1_eq_p3": simplify(p1 - p3) == 0,
-        "p2_eq_p3": simplify(p2 - p3) == 0,
-        "all_agree": (simplify(p1 - p2) == 0 and simplify(p1 - p3) == 0),
-    }
-
-
-# =============================================================================
-# Koszulness
-# =============================================================================
-
-def bp_is_chirally_koszul() -> Dict[str, object]:
-    """The Bershadsky-Polyakov algebra is chirally Koszul.
-
-    PROOF MECHANISM: PBW-Slodowy collapse (thm:pbw-slodowy-collapse).
-    The Slodowy slice S_f = f + g^e is an affine space for the minimal
-    nilpotent f in sl_3.  The arc space J(S_f) has coordinate ring
-    Sym_partial(V) with V = (g^e)^* of dimension 4.  Therefore the
-    completed bar spectral sequence collapses at E_1 and
-    H*(B_hat(A)) = Lambda_hat_partial(sV).
-
-    CANONICAL ARITY: 2. All OPE singularities have generator degree <= 2.
-    The only nonlinear term is :HH: in the simple pole of E(z)F(w).
-    By thm:canonical-arity-detection, d_r = 0 for r >= 3.
-    The quadratic term :HH: is nonzero, so d_2 != 0 and the canonical
-    arity is exactly 2.
-
-    The Koszul dual has 4 generators (same as A: self-transpose partition),
-    and the Euler characteristic of the bar complex is 1 - 4 + 4 - 1 = 0.
-    """
-    return {
-        "is_koszul": True,
-        "proof_mechanism": "PBW-Slodowy collapse (thm:pbw-slodowy-collapse)",
-        "canonical_arity": 2,
-        "arity_reason": "All OPE singularities have generator degree <= 2; "
-                        "the :HH: term in the simple pole of EF gives d_2 != 0",
-        "n_generators": 4,
-        "euler_characteristic": 0,
-        "shadow_class": "M",
-        "shadow_depth": "infinity",
-        "swiss_cheese_formal": False,
-        "swiss_cheese_reason": "DS introduces higher SC operations; shadow class M",
-    }
-
-
-# =============================================================================
-# Koszul dual identification
-# =============================================================================
-
-def bp_koszul_dual() -> Dict[str, object]:
-    """Identify the Koszul dual of BP_k.
-
-    Since (2,1)^t = (2,1), the BP algebra is in a SELF-DUAL family:
-      (BP_k)^! = BP_{k'} where k' = -k - 6.
-
-    The dual has the SAME generators (J, G+, G-, T) at the dual level.
-
-    # AP140: corrected from K=2; correct K_BP=196
-    The Koszul conductor K = c(k) + c(k') = 196 is constant.
-    The kappa sum: kappa(k) + kappa(k') = 98/3 = rho * K.
-    """
-    kv = bp_dual_level(k)
-    c_dual = bp_central_charge(kv)
-    rho = bp_anomaly_ratio()
-    kappa_dual = rho * c_dual
-    K_BP = bp_koszul_conductor()
-
-    return {
-        "partition": PARTITION,
-        "transpose": PARTITION,  # self-transpose
-        "is_self_dual_family": True,
-        "dual_level": simplify(kv),
-        "dual_central_charge": simplify(c_dual),
-        "dual_kappa": simplify(kappa_dual),
-        "koszul_conductor": simplify(K_BP),
-        "kappa_sum": simplify(rho * K_BP),
-        "kappa_sum_value": Rational(98, 3),  # AP140: BP complementarity (1/6)*196=98/3
-        "K_is_constant": simplify(K_BP.diff(k) if hasattr(K_BP, 'diff') else 0) == 0,
-    }
-
-
-# =============================================================================
-# DS-bar intertwining
-# =============================================================================
-
-def ds_bar_intertwining() -> Dict[str, object]:
-    """Analyze DS-bar intertwining for V_k(sl_3) -> BP_k.
-
-    Key results:
-      1. V_k(sl_3) is Koszul.  BP_k is Koszul.  DS preserves Koszulness: YES.
-      2. The kappa deficit D(k) = kappa(V) - kappa(BP) is a rational function of k,
-         NOT the ghost constant C_{(2,1)} = 2.
-      3. The naive formula kappa(W) = kappa(V) - ghost is FALSE.
-      4. The correct formula is kappa(W) = rho(W) * c_KRW(W).
-
-    The ghost constant C_{(2,1)} = 2 measures the ghost CENTRAL CHARGE
-    contribution, not the kappa deficit.  The central charge ghost formula
-    c(W) = c(V) - c_ghost DOES hold, but kappa transforms via the anomaly
-    ratio, which changes under DS reduction.
-    """
-    # Affine kappa
-    kappa_aff = Rational(DIM_SL3, 2 * H_DUAL_SL3) * (k + H_DUAL_SL3)
-
-    # BP kappa (correct)
-    rho = bp_anomaly_ratio()
-    kappa_bp = rho * bp_central_charge(k)
-
-    # Kappa deficit
-    deficit = simplify(kappa_aff - kappa_bp)
-
-    # Affine central charge
-    c_aff = DIM_SL3 * k / (k + H_DUAL_SL3)
-
-    # BP central charge
-    c_bp = bp_central_charge(k)
-
-    # Central charge ghost
-    c_ghost = simplify(c_aff - c_bp)
-
-    # Anomaly ratio comparison
-    # For affine sl_3: rho_aff = 1/(2*1) = 1/2 (single generator T of weight 2... no!)
-    # Actually affine sl_3 has 8 generators all of weight 1 (bosonic).
-    # rho_aff = 8 * (1/1) = 8? No, that gives kappa_aff = 8 * c_aff.
-    # The correct formula for affine: kappa = dim(g)*(k+h^v)/(2h^v).
-    # In terms of anomaly ratio: rho_aff = dim(g)/(2*h^v * c_aff) * c_aff?
-    # This is getting circular. Let me just state the comparison cleanly.
-
-    # For affine KM at level k:
-    # kappa = dim(g) * (k + h^v) / (2*h^v)
-    # c = dim(g) * k / (k + h^v)
-    # ratio kappa/c = (k + h^v)^2 / (2 * h^v * k) -- NOT constant!
-    # So the "anomaly ratio = kappa/c" is NOT constant for affine algebras
-    # viewed as a single-generator algebra (it IS constant when viewed
-    # as a dim(g)-generator algebra with all generators of weight 1).
-
-    return {
-        "ds_preserves_koszulness": True,
-        "ds_preserves_swiss_cheese_formality": False,
-        "kappa_affine": simplify(kappa_aff),
-        "kappa_bp": simplify(kappa_bp),
-        "kappa_deficit": deficit,
-        "kappa_deficit_factored": factor(deficit),
-        "ghost_constant": GHOST_CONSTANT,
-        "naive_formula_correct": simplify(deficit - GHOST_CONSTANT) == 0,
-        "c_affine": simplify(c_aff),
-        "c_bp": simplify(c_bp),
-        "c_ghost": c_ghost,
-        "c_ghost_formula_correct": True,  # c(W) = c(V) - c_ghost holds
-    }
-
-
-# =============================================================================
-# OPE structure (n-th products)
-# =============================================================================
-
-def bp_primary_ope_normal_form(level=None) -> Dict[str, object]:
-    """Feigin-Semikhatov normal-form constants for BP_k = W_3^{(2)}."""
-    if level is None:
-        level = k
-    kk = sympify(level)
-    return {
-        "level": kk,
-        "central_charge": bp_central_charge(kk),
-        "J_level": (2 * kk + 3) / 3,
-        "G_pairing": (kk + 1) * (2 * kk + 3),
-        "GJ_coefficient": 3 * (kk + 1),
-        "JJ_coefficient": Rational(3),
-        "dJ_coefficient": Rational(3, 2) * (kk + 1),
-        "T_coefficient": -(kk + 3),
-        "convention": "Feigin-Semikhatov BP W_3^{(2)}",
-    }
-
-
-def bp_nth_products(level=None) -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
-    """All singular n-th products for BP generators.
-
-    Returns {(a, b): {n: {output: coeff}}} for all generator pairs.
-    Coefficients are rational functions of the affine sl_3 level k.
-    """
-    fs = bp_primary_ope_normal_form(level)
-    cc = fs["central_charge"]
-    j_level = fs["J_level"]
-    g_pairing = fs["G_pairing"]
-    g_j = fs["GJ_coefficient"]
-    jj_coeff = fs["JJ_coefficient"]
-    dJ_coeff = fs["dJ_coefficient"]
-    t_coeff = fs["T_coefficient"]
-
-    return {
-        ("T", "T"): {3: {"vac": cc / 2}, 1: {"T": Rational(2)}, 0: {"dT": Rational(1)}},
-        ("T", "J"): {1: {"J": Rational(1)}, 0: {"dJ": Rational(1)}},
-        ("T", "G+"): {1: {"G+": Rational(3, 2)}, 0: {"dG+": Rational(1)}},
-        ("T", "G-"): {1: {"G-": Rational(3, 2)}, 0: {"dG-": Rational(1)}},
-        ("J", "J"): {1: {"vac": j_level}},
-        ("J", "G+"): {0: {"G+": Rational(1)}},
-        ("J", "G-"): {0: {"G-": Rational(-1)}},
-        ("J", "T"): {1: {"J": Rational(1)}},
-        ("G+", "G-"): {2: {"vac": g_pairing}, 1: {"J": g_j},
-                        0: {"JJ": jj_coeff, "dJ": dJ_coeff, "T": t_coeff}},
-        ("G-", "G+"): {2: {"vac": g_pairing}, 1: {"J": -g_j},
-                        0: {"JJ": jj_coeff, "dJ": -dJ_coeff, "T": t_coeff}},
-        ("G+", "G+"): {},
-        ("G-", "G-"): {},
-        ("G+", "T"): {1: {"G+": Rational(3, 2)}, 0: {"dG+": Rational(1, 2)}},
-        ("G-", "T"): {1: {"G-": Rational(3, 2)}, 0: {"dG-": Rational(1, 2)}},
-        ("G+", "J"): {0: {"G+": Rational(-1)}},
-        ("G-", "J"): {0: {"G-": Rational(1)}},
+        "level": lev,
+        "path1": None,
+        "path2": None,
+        "path3": None,
+        "all_agree": None,
+        "status": BP_KAPPA_STATUS.status,
+        "resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
     }
 
 
 def max_ope_generator_degree() -> int:
-    """Maximum generator degree appearing in any OPE singularity.
+    """Return the maximum generator degree in the displayed singular OPEs."""
 
-    Scan all OPE coefficients and find the maximum number of
-    generators in any single output monomial.
-
-    In the Feigin-Semikhatov realization the G+G- simple pole contains the
-    composite :JJ:, so the maximum generator degree is exactly 2.
-    """
     return 2
 
 
-# =============================================================================
-# Bar complex structure
-# =============================================================================
+def bp_is_chirally_koszul() -> Dict[str, Any]:
+    """Return PBW evidence and the open bar-collapse criterion."""
 
-def bar_spectral_sequence_e1() -> Dict[str, object]:
-    """E_1 page of the completed bar spectral sequence for BP.
+    packet = dict(_canonical_koszul_status())
+    packet.update(
+        {
+            "is_koszul": None,
+            "canonical_arity": None,
+            "bar_collapse_status": "open-strong-convergence-and-diagonal-homology",
+            "hypothesis_package": BP_BAR_HYPOTHESES,
+            "resolution_obligation": BP_BAR_RESOLUTION_OBLIGATION,
+        }
+    )
+    return packet
 
-    The PBW-Slodowy collapse (thm:pbw-slodowy-collapse) gives:
-      E_1 = Lambda_partial(sV) where V = (g^e)^* has dim 4.
 
-    This is the exterior coalgebra on the suspended derivative generators:
-      s^{-1}J, s^{-1}G+, s^{-1}G-, s^{-1}T
-    and all their derivatives.
+def bp_koszul_dual() -> Dict[str, Any]:
+    """Separate the parameter involution from the bar-duality theorem."""
 
-    The E_1 page is concentrated on the diagonal (bar degree = filtration degree),
-    so the spectral sequence collapses at E_1.
-    """
+    dual = bp_dual_level(k)
     return {
-        "collapses_at": "E_1",
-        "e1_page": "Lambda_partial(sV)",
-        "dim_V": 4,
-        "generators_of_V": ["J (wt 1)", "G+ (wt 3/2)", "G- (wt 3/2)", "T (wt 2)"],
-        "bar_cohomology": "Lambda_hat_partial(sV)",
-        "reason": "PBW-Slodowy collapse: gr_F(BP) = Sym_partial(V), V = (g^e)^*",
+        "partition": PARTITION,
+        "transpose": PARTITION,
+        "partition_self_transpose": True,
+        "dual_level": simplify(dual),
+        "dual_central_charge": simplify(bp_central_charge(dual)),
+        "central_conductor": simplify(bp_koszul_conductor()),
+        "central_conductor_status": "proved-rational-identity",
+        "same_family_duality_claim": "BP_k^! ~= BP_{-k-6}",
+        "same_family_duality_status": "conditional-H_BP_DS_bar",
+        "dual_kappa": None,
+        "kappa_sum": None,
+        "resolution_obligation": BP_BAR_RESOLUTION_OBLIGATION,
     }
 
 
-def bar_cohomology_generators() -> Dict[str, object]:
-    """Generators of the bar cohomology H*(B_hat(BP_k)).
+def ds_bar_intertwining() -> Dict[str, Any]:
+    """Return exact conformal data and the open DS--bar comparison."""
 
-    H^1(B_hat(BP_k)) has 4 generators corresponding to the 4 strong
-    generators of BP_k.  These are the generators of the Koszul dual A^!.
-
-    Since (2,1) is self-transpose:
-      H^1 generators: J^!, (G+)^!, (G-)^!, T^! with the same weights
-      but at dual level k' = -k - 6 and dual central charge c' = (k+21)/(k+3).
-    """
+    c_affine = simplify(8 * k / (k + 3))
+    c_bp = simplify(bp_central_charge(k))
+    total_shift = simplify(c_bp - c_affine)
     return {
-        "n_generators": 4,
-        "generators": [
-            {"name": "J^!", "weight": Rational(1), "parity": 0},
-            {"name": "(G+)^!", "weight": Rational(3, 2), "parity": 1},
-            {"name": "(G-)^!", "weight": Rational(3, 2), "parity": 1},
-            {"name": "T^!", "weight": Rational(2), "parity": 0},
-        ],
+        "c_affine": c_affine,
+        "c_bp": c_bp,
+        "total_DS_conformal_shift": total_shift,
+        "total_shift_check": simplify(total_shift + 6 * k + 1) == 0,
+        "charged_neutral_improvement_decomposition": None,
+        "ds_preserves_koszulness": None,
+        "ds_preserves_swiss_cheese_formality": None,
+        "intertwiner_status": "open-filtered-DS-bar-comparison",
+        "hypothesis_package": BP_BAR_HYPOTHESES,
+        "resolution_obligation": BP_BAR_RESOLUTION_OBLIGATION,
+    }
+
+
+def bar_spectral_sequence_e1() -> Dict[str, Any]:
+    """Record the PBW candidate page and withhold the collapse verdict."""
+
+    return {
+        "pbw_input": "free strong generation by J,G+,G-,T",
+        "associated_graded_candidate": "differential polynomial algebra on four generators",
+        "dim_V": 4,
+        "e1_page": None,
+        "collapses_at": None,
+        "bar_cohomology": None,
+        "status": "open-filtered-bar-computation",
+        "hypothesis_package": BP_BAR_HYPOTHESES,
+        "resolution_obligation": BP_BAR_RESOLUTION_OBLIGATION,
+    }
+
+
+def bar_cohomology_generators() -> Dict[str, Any]:
+    """Return the open bar-cohomology generator packet."""
+
+    return {
+        "n_generators": None,
+        "generators": None,
         "dual_level": simplify(bp_dual_level(k)),
         "dual_central_charge": simplify(bp_central_charge(bp_dual_level(k))),
+        "status": "open-bar-cohomology-computation",
+        "resolution_obligation": BP_BAR_RESOLUTION_OBLIGATION,
     }
 
 
-# =============================================================================
-# Shadow obstruction tower on the T-line
-# =============================================================================
+def shadow_tower_on_T_line(max_arity: int = 8) -> Dict[str, Any]:
+    """Return the exact Virasoro leading-pole datum and an open tower status."""
 
-def shadow_tower_on_T_line(max_arity: int = 8) -> Dict[int, object]:
-    """Shadow obstruction tower for BP on the T-line.
-
-    The T-line carries the Virasoro subalgebra with c = c_BP(k).
-    The shadow tower on this line is the Virasoro tower evaluated at c_BP.
-
-    S_2 = c/2 = kappa_T
-    S_3 = 2 (universal for Virasoro)
-    S_4 = 10/(c*(5c+22))
-    Higher arities from the MC recursion.
-    """
-    cc = bp_central_charge(k)
-    tower = {}
-    tower[2] = cc / 2
-    tower[3] = Rational(2)
-    tower[4] = Rational(10) / (cc * (5 * cc + 22))
-
-    for r in range(5, max_arity + 1):
-        total = Rational(0)
-        for j in range(2, r + 1):
-            kk_idx = r + 2 - j
-            if kk_idx < 2 or kk_idx > r or j > kk_idx:
-                continue
-            if j not in tower or kk_idx not in tower:
-                continue
-            contrib = j * kk_idx * tower[j] * tower[kk_idx]
-            if j == kk_idx:
-                contrib = contrib / 2
-            total += contrib
-        tower[r] = cancel(-total / (r * cc))
-
-    return tower
-
-
-def shadow_depth_classification() -> Dict[str, object]:
-    """Shadow depth classification for BP.
-
-    The critical discriminant on the T-line:
-      Delta = 8 * kappa_T * S4_T = 8 * (c/2) * 10/(c*(5c+22))
-            = 40/(5c+22)
-
-    For BP: c = 2 - 24(k+1)^2/(k+3), so the special levels are the
-    roots of c(k)=0 and 5c(k)+22=0.  They are not the old N=2-substitute
-    values k=15 and k=1/3.
-
-    Delta = 0 only when k+3 = 0 (critical level, excluded) or k -> infinity.
-    Delta is generically nonzero, so shadow class M (infinite depth).
-
-    Special levels:
-      c = 0 at the two roots of 12k^2+23k+9.
-      5c + 22 = 0 at the two roots of 60k^2+91k+23.
-    """
-    cc = bp_central_charge(k)
-    kappa_T = cc / 2
-    S4_T = Rational(10) / (cc * (5 * cc + 22))
-    Delta = simplify(8 * kappa_T * S4_T)
-
-    # Find special levels
-    c_zero = solve(cc, k)
-    depth_L = solve(5 * cc + 22, k)
-
+    if max_arity < 2:
+        raise ValueError("the T-line diagnostic begins at arity two")
     return {
-        "generic_class": "M",
-        "generic_depth": "infinity",
-        "discriminant": Delta,
-        "discriminant_factored": factor(Delta),
-        "c_zero_levels": c_zero,       # kappa = 0, class G
-        "depth_L_levels": depth_L,      # S4 = 0, class L
-        "critical_level": -3,           # Sugawara undefined
+        "max_arity_requested": max_arity,
+        "S2_T": simplify(bp_central_charge(k) / 2),
+        "higher_coefficients": None,
+        "status": "open-Maurer-Cartan-recursion-and-full-BP-comparison",
     }
 
 
-# =============================================================================
-# Kappa deficit analysis
-# =============================================================================
+def shadow_depth_classification() -> Dict[str, Any]:
+    """Return exact T-line singular loci and withhold the BP class verdict."""
 
-def kappa_deficit_analysis() -> Dict[str, object]:
-    """Analyze the kappa deficit D(k) = kappa(V_k(sl_3)) - kappa(BP_k).
-
-    The naive formula kappa(W) = kappa(V) - C_ghost predicts D(k) = C_ghost = 2.
-    This is FALSE.  The actual deficit is a quadratic-over-linear rational function.
-
-    The correct analysis: the ghost system changes BOTH the central charge
-    (c_ghost = c_aff - c_bp) and the anomaly ratio (rho_aff != rho_bp).
-    The kappa transformation under DS is:
-      kappa(W) = rho(W) * c_KRW(W)
-    which is NOT related to kappa(V) by a simple subtraction.
-    """
-    kappa_aff = Rational(DIM_SL3, 2 * H_DUAL_SL3) * (k + H_DUAL_SL3)
-    kappa_bp = bp_anomaly_ratio() * bp_central_charge(k)
-    deficit = simplify(kappa_aff - kappa_bp)
-
-    # Check at specific levels
-    checks = {}
-    for kk in [0, 1, 2, 5, 10, Rational(1, 2)]:
-        d_val = deficit.subs(k, kk)
-        checks[str(kk)] = simplify(d_val)
-
+    cc = simplify(bp_central_charge(k))
     return {
-        "deficit": deficit,
-        "deficit_factored": factor(deficit),
-        "naive_ghost_constant": GHOST_CONSTANT,
-        "naive_formula_false": simplify(deficit - GHOST_CONSTANT) != 0,
-        "deficit_at_levels": checks,
+        "generic_class": None,
+        "generic_depth": None,
+        "T_line_c_zero_levels": solve(cc, k),
+        "T_line_5c_plus_22_zero_levels": solve(5 * cc + 22, k),
+        "critical_level": Rational(-3),
+        "status": "open-full-shadow-tower-computation",
+        "reason": "a Virasoro T-line restriction does not classify the mixed J,G+,G-,T tower",
     }
 
 
-# =============================================================================
-# Feigin-Semikhatov BP structure
-# =============================================================================
+def kappa_deficit_analysis() -> Dict[str, Any]:
+    """Return exact affine data while withholding the open BP kappa deficit."""
 
-def n2_sca_structure() -> Dict[str, object]:
-    """Compatibility wrapper for the old name; returns the BP FS structure.
+    kappa_affine = simplify(Rational(DIM_SL3, 2 * H_DUAL_SL3) * (k + H_DUAL_SL3))
+    return {
+        "kappa_affine": kappa_affine,
+        "kappa_bp": None,
+        "deficit": None,
+        "total_DS_conformal_shift": simplify(bp_central_charge(k) - 8 * k / (k + 3)),
+        "status": BP_KAPPA_STATUS.status,
+        "resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
+    }
 
-    BP_k is governed here by the Feigin-Semikhatov W_3^{(2)} OPE.
-    Charge conservation remains true.
-    """
+
+def n2_sca_structure() -> Dict[str, Any]:
+    """Compatibility wrapper for the source-correct BP OPE packet."""
+
     fs = bp_primary_ope_normal_form(k)
-
     return {
         "is_n2_sca": False,
         "is_feigin_semikhatov_bp": True,
+        "all_generators_even": True,
         "j_level": simplify(fs["J_level"]),
         "g_pairing": simplify(fs["G_pairing"]),
         "g_j_coefficient": simplify(fs["GJ_coefficient"]),
@@ -631,66 +275,49 @@ def n2_sca_structure() -> Dict[str, object]:
     }
 
 
-# =============================================================================
-# Complete verification suite
-# =============================================================================
-
 def verify_sl3_subregular_bar() -> Dict[str, bool]:
-    """Comprehensive verification of all results."""
-    results = {}
+    """Verify every certified input and every open-status firewall."""
 
-    # 1. Central charge
-    # AP140: corrected from (k-15)/(k+3) to 2 - 24*(k+1)^2/(k+3)
-    cc = bp_central_charge(k)
-    results["c(k) formula"] = simplify(cc - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
-    results["c(0) = -6"] = simplify(bp_central_charge(0) - (-6)) == 0
-    results["c(1) = -22"] = simplify(bp_central_charge(1) - (-22)) == 0
-
-    # 2. Anomaly ratio
-    rho = bp_anomaly_ratio()
-    results["rho = 1/6"] = rho == Rational(1, 6)
-
-    # 3. Kappa paths agree
-    paths = kappa_all_paths_agree()
-    results["kappa: all 3 paths agree"] = paths["all_agree"]
-
-    # 4. Kappa formula
-    kappa = kappa_path1_anomaly_ratio()
-    expected_kappa = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
-    results["kappa = (1/6)*c(k)"] = simplify(kappa - expected_kappa) == 0
-
-    # 5. Koszulness
-    koszul = bp_is_chirally_koszul()
-    results["BP is chirally Koszul"] = koszul["is_koszul"]
-
-    # 6. Canonical arity
-    results["canonical arity = 2"] = koszul["canonical_arity"] == 2
-
-    # 7. Koszul dual
     dual = bp_koszul_dual()
-    results["self-dual family"] = dual["is_self_dual_family"]
-    results["dual level = -k-6"] = simplify(dual["dual_level"] - (-k - 6)) == 0
-
-    # 8. Koszul conductor
-    # AP140: corrected from K=2 to K=196
-    K = bp_koszul_conductor()
-    results["K_BP = 196"] = simplify(K - 196) == 0
-
-    # 9. Complementarity
-    # AP140: BP complementarity is 98/3.
-    results["kappa sum = 98/3"] = simplify(dual["kappa_sum"] - Rational(98, 3)) == 0
-
-    # 10. DS intertwining
     ds = ds_bar_intertwining()
-    results["DS preserves Koszulness"] = ds["ds_preserves_koszulness"]
-    results["naive ghost formula is FALSE"] = ds["naive_formula_correct"] is False
+    bar = bar_spectral_sequence_e1()
+    shadow = shadow_depth_classification()
+    return {
+        "standard_central_charge": simplify(
+            bp_central_charge(k)
+            + ((2 * k + 3) * (3 * k + 1)) / (k + 3)
+        ) == 0,
+        "standard_central_conductor_50": simplify(bp_koszul_conductor() - 50) == 0,
+        "shifted_conductor_196_is_separate": simplify(
+            bp_shifted_central_charge(k)
+            + bp_shifted_central_charge(bp_dual_level(k))
+            - 196
+        ) == 0,
+        "four_generators_all_even": len(GENERATORS) == 4 and all(
+            datum["parity"] == 0 for datum in GENERATORS.values()
+        ),
+        "reciprocal_weight_diagnostic_17_6": (
+            bp_reciprocal_weight_diagnostic() == Rational(17, 6)
+        ),
+        "parameter_involution": simplify(bp_dual_level(bp_dual_level(k)) - k) == 0,
+        "same_family_duality_conditional": (
+            dual["same_family_duality_status"] == "conditional-H_BP_DS_bar"
+        ),
+        "DS_total_shift": ds["total_shift_check"],
+        "bar_collapse_withheld": bar["collapses_at"] is None,
+        "shadow_class_withheld": shadow["generic_class"] is None,
+        "kappa_withheld": kappa_all_paths_agree()["all_agree"] is None,
+    }
 
-    # 11. Shadow depth
-    sd = shadow_depth_classification()
-    results["shadow class M"] = sd["generic_class"] == "M"
 
-    # 12. Feigin-Semikhatov BP structure
-    n2 = n2_sca_structure()
-    results["is Feigin-Semikhatov BP"] = n2["is_feigin_semikhatov_bp"]
+def main() -> None:
+    """Print exact certificates and the remaining bar obligation."""
 
-    return results
+    print("sl_3 minimal/subregular BP bar audit")
+    for name, passed in verify_sl3_subregular_bar().items():
+        print(f"  {name}: {passed}")
+    print(f"  obligation: {BP_BAR_RESOLUTION_OBLIGATION}")
+
+
+if __name__ == "__main__":
+    main()

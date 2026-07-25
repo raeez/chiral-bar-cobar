@@ -625,7 +625,7 @@ def verify_root_count_at_n1() -> bool:
 
 
 def verify_complementarity_sum_zero() -> bool:
-    """Verify kappa + kappa' = 0 for all."""
+    """Verify kappa + kappa' = 0 for all 24 Niemeier lattice VOAs."""
     for label in ALL_NIEMEIER_LABELS:
         comp = complementarity(label)
         if comp['kappa_sum'] != 0:

@@ -130,7 +130,9 @@ def koszul_dual_coefficients(
     """Shadow coefficients of the Koszul dual A!.
 
     Uses the family-specific Koszul duality:
-        Heisenberg:  H_k^! has kappa = -k (but H_k^! != H_{-k}, see AP33).
+        Heisenberg:  H_k^! has scalar kappa = -k at shadow level; the
+                     object is the curved second-kind Sym^ch(V*[1])
+                     branch, not H_{-k} (AP33).
                      Shadow coeffs: S_2 = -k, S_r = 0 for r >= 3.
         Affine sl_2: V_k(sl_2)^! ~ V_{-k-4}(sl_2) at the level of shadows.
                      kappa' = 3(-k-4+2)/4 = 3(-k-2)/4 = -3(k+2)/4.
@@ -140,11 +142,12 @@ def koszul_dual_coefficients(
         Beta-gamma:  bg(lambda)^! has c' = 26 - c(lambda).
         W_3:         W_3(c)^! corresponds to W_3(c') with c' from duality.
 
-    CAUTION (AP33): H_k^! = Sym^ch(V*) != H_{-k}.
+    CAUTION (AP33): only scalar kappa agrees with kappa(H_{-k});
+    the Koszul-dual object is the curved second-kind Sym branch.
     CAUTION (AP24): kappa + kappa' = 13 for Virasoro, NOT 0.
     """
     if family == 'heisenberg':
-        # H_k^! has kappa = -k at the shadow level
+        # H_k^! has scalar kappa = -k at the shadow level.
         # This gives a single-term zeta with NEGATIVE coefficient
         result = {2: -float(param)}
         for r in range(3, max_r + 1):

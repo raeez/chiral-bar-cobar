@@ -1,11 +1,718 @@
 # Chiral I Strengthening PDF: Obligation Ledger
 
-Source: `/Users/raeez/Desktop/corrections/chiral1 Research Paper Strengthening.pdf`.
+Source:
+`materials/raw/2026-06-05-chiral1-research-paper-strengthening.pdf`
+(original path recorded in `references/source-provenance.md`).
 Extraction date: 2026-06-05.
 
 This note records the load-bearing mathematical obligations from the
 strengthening memo. It is not a replacement for the manuscript; it is a
 repair queue for theorem surfaces that must not silently overclaim.
+
+## 2026-06-18 -- Pass 574: Heisenberg two-point mixed-mode residue formula
+
+This pass harvests the exact finite-support mixed-mode formula behind
+the rank-one Heisenberg two-point residue calculation.  For
+\[
+ u_{\mathbf q}=\prod_{r\ge1}\alpha_{-r}^{q_r}\mathbf1
+\]
+with finite support,
+\[
+ d_1([\alpha|u_{\mathbf q}]\otimes\eta_{12})
+ =
+ k\sum_{r:q_r>0} r q_r\,u_{\mathbf q-\mathbf e_r}.
+\]
+For a fixed non-vacuum monomial this kills the positive Arnold kernel
+of the line-to-image summand at \(k\neq0\).  It does not prove full
+mixed-mode Fock-window acyclicity: on the raw ungraded polynomial span
+the same formula is \(L_k=k\sum r\partial_{x_r}\), and
+\(L_k(x_2-2x_1)=0\).  The full mixed-mode theorem still requires the
+graded residue-twisted/Koszul complex and finite-window homotopy data.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/residue_twisted_heisenberg_engine.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`: 24
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4704 claims:
+  `PH=1863 PE=450 CJ=349 H=31 CD=1745 O=2 DF=264 total=4704`,
+  with 2313 proved claims in the theorem registry.
+- `make phase0-index` passed with 2037 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 283 passed.
+- Status scans found
+  `prop:heisenberg-two-point-mixed-mode-residue-formula` as
+  `ProvedHere` in generated metadata/index surfaces.
+- `git diff --check` is clean for the touched tracked manuscript,
+  metadata, theorem-index, and ledger surfaces; a trailing-whitespace
+  scan is also clean for the untracked compute, matrix, and phase0
+  files touched by this pass.
+
+## 2026-06-18 -- Pass 573: Heisenberg two-point single-mode polynomial arbitrary-mode string
+
+This pass harvests the full single-mode polynomial extension of the
+rank-one Heisenberg two-point residue calculation.  For \(n,q\geq1\)
+and \(k\neq0\), put \(u_{n,q}=\alpha_{-n}^{q}\mathbf1\).  The
+two-point summand with first input \(\alpha\), second input
+\(u_{n,q}\), and OPE-mode component \(m=n\) has
+\[
+ d_1^{(n)}([\alpha|u_{n,q}]\otimes\eta_{12})
+ =\alpha_{(n)}u_{n,q}
+ =q\,n\,k\,u_{n,q-1}.
+\]
+Thus every positive Arnold line in the single-mode polynomial string
+\(\C[\alpha_{-n}]\) has zero \(H^1\).  This remains below the full
+ordered twisted-tensor acyclicity conjecture: mixed-mode oscillator
+monomials, full Fock-window linear combinations, clusters \(m\geq3\),
+multi-strata, and ordered-to-symmetric descent remain separate
+source-level obligations.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/residue_twisted_heisenberg_engine.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`: 20
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4703 claims:
+  `PH=1862 PE=450 CJ=349 H=31 CD=1745 O=2 DF=264 total=4703`,
+  with 2312 proved claims in the theorem registry.
+- `make phase0-index` passed with 2036 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 279 passed.
+- Status scans found
+  `prop:heisenberg-two-point-single-mode-polynomial-residue` as
+  `ProvedHere` in generated metadata/index surfaces.
+- `git diff --check` is clean for the touched tracked manuscript,
+  metadata, theorem-index, and ledger surfaces; a trailing-whitespace
+  scan is also clean for the untracked compute, matrix, and phase0
+  files touched by this pass.
+
+## 2026-06-18 -- Pass 572: Heisenberg two-point single-oscillator arbitrary-mode string
+
+This pass turns another local piece of the ordered positive-Arnold
+Theorem-H gap into a proved calculation.  For the rank-one Heisenberg
+algebra at \(k\neq0\), the two-point summand with first input
+\(\alpha\), second input \(v_n=\alpha_{-n}\mathbf1\), and OPE-mode
+component \(m=n\) has
+\[
+ d_1^{(n)}([\alpha|v_n]\otimes\eta_{12})
+ =\alpha_{(n)}v_n=nk\,\mathbf1 .
+\]
+Thus every positive Arnold line in the single-oscillator string
+\(\{\alpha_{-n}\mathbf1:n\geq1\}\) has zero \(H^1\).  This remains
+below the full ordered twisted-tensor acyclicity conjecture.  Pass 573
+later removes the same-mode higher-power residual; mixed-mode
+oscillator monomials, full Fock-window linear combinations, clusters
+\(m\geq3\), multi-strata, and ordered-to-symmetric descent remain
+separate source-level obligations.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/residue_twisted_heisenberg_engine.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`: 17
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4702 claims:
+  `PH=1861 PE=450 CJ=349 H=31 CD=1745 O=2 DF=264 total=4702`,
+  with 2311 proved claims in the theorem registry.
+- `make phase0-index` passed with 2035 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 276 passed.
+- Status scans found
+  `prop:heisenberg-two-point-single-oscillator-residue` as
+  `ProvedHere` in generated metadata/index surfaces.
+- `git diff --check` is clean for the touched tracked manuscript,
+  metadata, theorem-index, and ledger surfaces; a trailing-whitespace
+  scan is also clean for the untracked compute, matrix, and phase0
+  files touched by this pass.
+
+## 2026-06-18 -- Pass 571: Heisenberg two-point weight-one polynomial string
+
+This pass turns another part of the ordered positive-Arnold Theorem-H
+gap into a proved calculation.  For the rank-one Heisenberg algebra at
+\(k\neq0\), the two-point summand with first input \(\alpha\) and
+second input \(u_q=\alpha_{-1}^{q}\mathbf1\) has
+\[
+ d_1([\alpha|u_q]\otimes\eta_{12})
+ =\alpha_{(1)}u_q=qk\,u_{q-1}.
+\]
+Thus every positive Arnold line in the weight-one polynomial string
+\(\C[\alpha_{-1}]\) has zero \(H^1\).  This remains below the full
+ordered twisted-tensor acyclicity conjecture.  Pass 572 later removes
+the individual single-oscillator \(\alpha_{-n}\mathbf1\) residual, and
+Pass 573 removes the same-mode higher-power residual.  Mixed-mode
+oscillator monomials, full Fock-window linear combinations, clusters
+\(m\geq3\), multi-strata, and ordered-to-symmetric descent are still
+separate source-level obligations.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/residue_twisted_heisenberg_engine.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`: 14
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4701 claims:
+  `PH=1860 PE=450 CJ=349 H=31 CD=1745 O=2 DF=264 total=4701`,
+  with 2310 proved claims in the theorem registry.
+- `make phase0-index` passed with 2034 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 273 passed.
+- Status scans found
+  `prop:heisenberg-two-point-weight-one-polynomial-residue` as
+  `ProvedHere` in generated metadata/index surfaces.
+- `git diff --check` is clean for the touched manuscript, compute,
+  test, ledger, matrix, and regenerated metadata/index files.
+
+## 2026-06-18 -- Pass 570: Curved second-kind Heisenberg endpoint
+
+This pass removes the completed second-kind convergence residual from
+the rank-one Heisenberg lane.  In weight window \(N\), the curved
+Koszul dual decomposes into oscillator pairs
+\[
+  0\to \C e_n \xrightarrow{-kn} \C f_n\to 0,\qquad 1\le n\le N,
+\]
+plus the vacuum line.  For \(k\neq0\), each positive pair is
+contractible and the finite-window inverse system is strict
+Mittag--Leffler.  Thus the curved dual-vacuum endpoint is proved; the
+full Heisenberg Theorem-H corollary still requires ordered
+residue-twisted acyclicity and the ordered-to-symmetric/PBW descent
+package.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/curved_second_kind_heisenberg_engine.py`
+- `compute/tests/test_curved_second_kind_heisenberg_engine.py`
+- `compute/tests/test_heisenberg_curved_dual_scope.py`
+- `compute/tests/test_theorem_h_hochschild_polynomial.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/curved_second_kind_heisenberg_engine.py
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_external_review_harvest_completion_scope.py`:
+  244 passed.
+- `python3 scripts/generate_metadata.py` regenerated 4700 claims:
+  `PH=1859 PE=450 CJ=349 H=31 CD=1745 O=2 DF=264 total=4700`,
+  with 2309 proved claims in the theorem registry.
+- `make phase0-index` passed with 2033 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_curved_second_kind_heisenberg_engine.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 268 passed.
+- Fixed-string stale scans found no remaining `completed second-kind
+  convergence obligation`, `residual obligation is convergence`, or
+  `curved second-kind convergence obligation` on the touched Theorem-H
+  surfaces.
+- Status scans found `lem:curved-dual-centre-heisenberg` as
+  `ProvedHere` in generated metadata/index surfaces; remaining
+  conditional hits are downstream claims that still depend on ordered
+  acyclicity/descent, not stale lemma status.
+- `git diff --check` is clean for the touched manuscript, compute,
+  test, ledger, matrix, and regenerated metadata/index files.
+
+## 2026-06-18 -- Pass 569: Two-point Heisenberg residue-twisted Arnold summand
+
+This pass turns one piece of the remaining positive-Arnold Theorem-H
+gap into a proved calculation.  For the rank-one Heisenberg algebra at
+\(k\neq0\), the depth-one two-generator collision summand has
+\[
+ d_1([\alpha|\alpha]\otimes\eta_{12})
+ =\alpha_{(1)}\alpha=k\mathbf1,
+\]
+so the positive \(\operatorname{OS}(A_1)\)-Arnold line has zero
+cohomology.  The proof uses the already-inscribed arbitrary-mode
+bar-residue formula; it does not prove the full ordered
+twisted-tensor acyclicity conjecture.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_residue_twisted_heisenberg_engine.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/residue_twisted_heisenberg_engine.py
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_external_review_harvest_completion_scope.py`: 9
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4700 claims:
+  `PH=1858 PE=450 CJ=349 H=31 CD=1746 O=2 DF=264 total=4700`,
+  with 2308 proved claims in the theorem registry.
+- `make phase0-index` passed with 2033 indexed nodes and the
+  pre-existing open label `thm:hochschild-concentration-E1` still at 9
+  references.
+- `pytest -q
+  compute/tests/test_residue_twisted_heisenberg_engine.py
+  compute/tests/test_bar_ope_mode_bd_comparison_scope.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_engine_status_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 253 passed.
+- Stale-status scans found the new proposition as `ProvedHere` in
+  generated metadata/index surfaces and found no conditional metadata
+  drift.  The only full-conjecture scan hit is the intended negative
+  matrix sentence preserving the conjectural status of full ordered
+  twisted-tensor acyclicity.
+- `git diff --check` is clean for the touched manuscript, compute,
+  test, ledger, matrix, and regenerated metadata/index files.
+
+## 2026-06-18 -- Pass 568: Heisenberg finite-window ML certificate proved
+
+This pass harvests a positive Theorem-H subclaim without promoting the
+whole Heisenberg Hochschild calculation.  The rank-one Heisenberg
+finite-window proposition is now proved exactly where the proof really
+closes: partition-basis finiteness, normalized bar-length bound
+\(p\leq N\), and degreewise Mittag--Leffler stabilization.  The
+low-degree Hochschild witnesses, ordered residue-twisted acyclicity,
+and completed curved second-kind convergence remain conditional inputs
+for the full Theorem-H conclusion.
+
+Changed files:
+
+- `chapters/theory/chiral_hochschild_koszul.tex`
+- `compute/lib/kdh_certificate_engine.py`
+- `compute/tests/test_kdh_certificate_engine.py`
+- `compute/tests/test_theorem_h_hochschild_polynomial.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/kdh_certificate_engine.py
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `python3 scripts/generate_metadata.py` regenerated 4699 claims:
+  `PH=1857 PE=450 CJ=349 H=31 CD=1746 O=2 DF=264 total=4699`,
+  with 2307 proved claims in the theorem registry.
+- `make phase0-index` passed with the pre-existing open label
+  `thm:hochschild-concentration-E1` still at 9 references.
+- `pytest -q
+  compute/tests/test_kdh_certificate_engine.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_theorem_h_kdh_certificate_scope.py
+  compute/tests/test_theorem_h_engine_status_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 259 passed.
+- Fixed-string stale scans found no remaining old Heisenberg
+  finite-window title, stale conditional metadata for
+  `prop:heisenberg-theorem-h-window-certificate`, or promotion phrase
+  saying the finite-window result proves Theorem~H.
+- `git diff --check` is clean for the touched manuscript, compute,
+  test, ledger, matrix, and regenerated metadata/index files.
+
+## 2026-06-18 -- Pass 567: Vallette/GR17 ambient-transfer firewall
+
+This pass repairs the Theorem A ambient-transfer route without
+downgrading the theorem's actual target.  The manuscript now separates
+the proved \(k\)-linear Vallette bar--cobar Quillen equivalence from
+the conditional Ran factorization/properadic transfer.  Transport to
+\(\Fact(X)\) is the \(H_{\Fact}(X)\) package plus
+Hackney--Robertson/Hinich machinery; it is not a GR17 IV.5
+model-structure theorem.
+
+Changed files:
+
+- `chapters/theory/theorem_A_infinity_2.tex`
+- `standalone/references.bib`
+- `notes/first_principles_cache_comprehensive.md`
+- `compute/tests/test_factorization_ambient_citation_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_factorization_ambient_citation_scope.py
+  compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed.
+- `pytest -q compute/tests/test_factorization_ambient_citation_scope.py`:
+  4 passed.
+- `pytest -q
+  compute/tests/test_theorem_concordance_rectification_engine.py -k
+  "fg_ambient_package_is_conditional_not_gr17_citation or
+  morita_theorem_is_conditional_recognition_package"`: 2 passed.
+
+## 2026-06-18 -- Pass 566: Pointed-bar/conformal-block claim-surface sync
+
+This pass propagates the Pass 565 mathematical correction through the
+reader/tool claim surfaces.  Regenerated metadata now records the
+canonical pointed-bar/conformal-block bridge as conditional comparison
+data in the theorem index, JSONL claim ledger, label index, and
+dependency graph; the proved-surface theorem registry correctly
+excludes these conditional labels while recording the updated
+conditional count.  Pointed bar complexes compute derived coinvariants,
+while classical TUY/Hitchin conformal blocks require the finite-rank
+comparison, exactness, sewing, and determinant-anomaly packages.
+
+Changed files:
+
+- `standalone/theorem_index.tex`
+- `metadata/theorem_registry.md`
+- `metadata/claims.jsonl`
+- `metadata/label_index.json`
+- `metadata/dependency_graph.dot`
+- `notes/antipatterns_catalogue.md`
+- `notes/first_principles_cache_comprehensive.md`
+- `compute/tests/test_conformal_block_bar_comparison_scope.py`
+- `compute/tests/test_external_review_harvest_completion_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_conformal_block_bar_comparison_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_conformal_block_bar_comparison_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_determinant_anomaly_conformal_block_scope.py
+  compute/tests/test_generate_metadata_parser.py`: 21 passed.
+
+## 2026-06-18 -- Pass 565: Pointed bar versus conformal-block comparison gate
+
+This pass repairs the canonical conformal-block/bar bridge that
+underlies the ordered/TUY Verlinde lane.  The manuscript no longer says
+the pointed bar complex itself computes classical conformal blocks as a
+proved-here theorem.  It now says the pointed bar complex computes the
+derived coinvariant complex, and the identification with the
+TUY/Hitchin conformal-block space requires the finite-rank comparison,
+degree-\(0\) exactness, sewing, and determinant-anomaly packages.
+
+Changed files:
+
+- `chapters/theory/chiral_modules.tex`
+- `chapters/theory/configuration_spaces.tex`
+- `chapters/examples/kac_moody.tex`
+- `chapters/theory/theorem_C_refinements_platonic.tex`
+- `compute/lib/conformal_blocks_bar_identification_engine.py`
+- `compute/tests/test_conformal_blocks_bar_identification_engine.py`
+- `compute/tests/test_conformal_block_bar_comparison_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_conformal_block_bar_comparison_scope.py
+  compute/lib/conformal_blocks_bar_identification_engine.py
+  compute/tests/test_conformal_blocks_bar_identification_engine.py`
+  passed.
+- `pytest -q
+  compute/tests/test_conformal_block_bar_comparison_scope.py`: 4 passed.
+
+## 2026-06-18 -- Pass 564: Verlinde recovery through ordered/TUY comparison
+
+This pass repairs the conformal-block recovery language adjacent to the
+ordered-to-symmetric and Witten-gate review items.  The manuscript no
+longer says raw ordered chiral homology itself computes the
+TUY/Hitchin conformal-block sheaf.  The Verlinde dimension statement is
+now conditional on the ordered-chain-to-TUY comparison morphism together
+with positive integral level, integrable-module truncation, KZB
+projectively flat connection, boundary sewing, and determinant-anomaly
+matching.
+
+Changed files:
+
+- `chapters/theory/higher_genus_modular_koszul.tex`
+- `standalone/ordered_chiral_homology.tex`
+- `standalone/e1_primacy_ordered_bar.tex`
+- `standalone/en_chiral_operadic_circle.tex`
+- `chapters/frame/preface.tex`
+- `standalone/survey_modular_koszul_duality_v2.tex`
+- `compute/lib/verlinde_ordered_engine.py`
+- `compute/tests/test_determinant_anomaly_conformal_block_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_determinant_anomaly_conformal_block_scope.py`
+  passed.
+- `pytest -q
+  compute/tests/test_determinant_anomaly_conformal_block_scope.py`
+  passed.
+
+## 2026-06-18 -- Pass 563: Lossy descent kernel criterion
+
+This pass repairs the adjacent ordered-to-symmetric loss statement.
+The manuscript no longer says the averaging map is non-injective for
+every \(\Eone\)-chiral algebra in every arity \(n\ge2\).  It now gives
+the exact completed coinvariant kernel criterion: the kernel is
+generated by \(\sigma c-c\), or by the corresponding \(R\)-twisted
+balanced-tensor relations, and non-injectivity occurs precisely when a
+nontrivial ordered \(\Sigma_n\)-isotypic or \(R\)-twisted component
+survives in the chosen finite window.
+
+Changed files:
+
+- `standalone/ordered_chiral_homology.tex`
+- `standalone/introduction_full_survey.tex`
+- `compute/tests/test_ordered_symmetric_conductor_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_ordered_symmetric_conductor_scope.py` passed.
+- `pytest -q compute/tests/test_ordered_symmetric_conductor_scope.py`:
+  8 passed.
+
+## 2026-06-18 -- Pass 562: Symmetric-power descent is finite direct image, not coarse-stack equivalence
+
+This pass repairs the ordered chiral-homology symmetric-descent proof.
+The proof no longer says that \(\cD\)-modules on
+\([X^n/\Sigma_n]\) and on the coarse symmetric power \(X^{(n)}\) have
+equivalent categories merely because \(\Sigma_n\) is finite.  It now
+passes through equivariant descent to the quotient stack, finite direct
+image along \(X^n\to X^{(n)}\), and the Reynolds summand that defines
+the Beilinson--Drinfeld symmetric \(\cD\)-module, with regular
+extension across diagonals as a hypothesis.
+
+Changed files:
+
+- `standalone/ordered_chiral_homology.tex`
+- `compute/tests/test_ordered_symmetric_conductor_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_ordered_symmetric_conductor_scope.py` passed.
+- `pytest -q compute/tests/test_ordered_symmetric_conductor_scope.py`:
+  7 passed.
+
+## 2026-06-18 -- Pass 561: \(E_1\)-primacy averaging finite-window status
+
+This pass upgrades the standalone \(E_1\)-primacy averaging theorem to
+match the universal conductor theorem.  The averaging morphism is no
+longer stated there as an untyped global surjective dg Lie morphism:
+it is a conditional finite-window result requiring a chain section of
+the ribbon-forgetting comparison, strong-unitary \(R\)-twisted descent,
+the completed Reynolds-kernel bracket ideal, and the conductor
+coefficient-multiplication package.  Without those data the displayed
+average is only a linear projection to coinvariants.
+
+Changed files:
+
+- `standalone/e1_primacy_ordered_bar.tex`
+- `compute/tests/test_ordered_symmetric_conductor_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_ordered_symmetric_conductor_scope.py` passed.
+- `pytest -q compute/tests/test_ordered_symmetric_conductor_scope.py`:
+  6 passed.
+
+## 2026-06-18 -- Pass 560: Universal W-algebra critical PBW scope
+
+This pass repairs the detailed W-algebra existence surface left over
+from the PBW critical/admissible firewall.  The universal principal
+\(\mathcal W^k(\mathfrak g,f_{\mathrm{prin}})\) paragraph no longer
+says "chirally Koszul at every level."  It now states the
+generic/non-critical principal lane, separates the critical
+Feigin--Frenkel centre/Sugawara--KZ boundary, and sends
+admissible/simple-quotient levels to the null-vector obstruction
+calculation.
+
+Changed files:
+
+- `chapters/theory/existence_criteria.tex`
+- `compute/tests/test_w_algebra_critical_pbw_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+- `notes/external_review_harvest_matrix_20260617.md`
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_w_algebra_critical_pbw_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py` passed.
+- `pytest -q compute/tests/test_w_algebra_critical_pbw_scope.py
+  compute/tests/test_external_review_harvest_completion_scope.py
+  compute/tests/test_simple_quotient_bar_scope.py
+  compute/tests/test_theorem_h_engine_status_scope.py`: 20 passed.
+
+## 2026-06-18 -- Pass 559: PBW universality critical/admissible firewall
+
+This pass repairs the remaining compact-summary claim that PBW
+universality covers universal affine \(V_k(\mathfrak g)\) at every
+level "including critical and admissible."  The corrected surfaces state
+the verified universal non-critical PBW/Koszul lane, keep critical level
+on the Feigin--Frenkel centre/Sugawara/KZ degeneration boundary, and
+treat admissibility as a simple-quotient condition requiring the
+quotient-bar package.
+
+Changed files:
+
+- `chapters/frame/preface.tex`
+- `chapters/frame/preface_sections5_9_draft.tex`
+- `standalone/survey_modular_koszul_duality.tex`
+- `standalone/survey_modular_koszul_duality_v2.tex`
+- `standalone/survey_track_a_compressed.tex`
+- `notes/volume_I_platonic_reconstitution.md`
+- `compute/tests/test_simple_quotient_bar_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+
+Verification:
+
+- `pytest -q compute/tests/test_simple_quotient_bar_scope.py
+  compute/tests/test_theorem_h_engine_status_scope.py
+  compute/tests/test_langlands_fle_bridge_scope.py`: 16 passed.
+
+## 2026-06-18 -- Pass 558: Linshaw--Qi admissible rigidity scope
+
+This pass repairs a remaining compute-layer overpromotion of the
+Theorem-H admissible-level firewall.  The Linshaw--Qi helper had treated
+\(H^2_{1/2}(L_{-4/3}(\mathfrak{sl}_2),
+L_{-4/3}(\mathfrak{sl}_2))=0\) as if it also proved chiral Hochschild
+concentration and simple-quotient chiral Koszulness.  The corrected
+surface keeps Linshaw--Qi rigidity as proved, but marks the chiral
+Hochschild/Koszul row as conditional on the quotient-bar spectral
+sequence, PBW/Shapovalov detection, finite-window exactness, strong
+convergence, and the Huang-to-chiral-Hochschild comparison.
+
+Changed files:
+
+- `compute/lib/theorem_linshaw_rigidity_engine.py`
+- `compute/tests/test_theorem_linshaw_rigidity_engine.py`
+- `compute/tests/test_simple_quotient_bar_scope.py`
+- `notes/audit_repairs_ledger_20260610.md`
+
+Verification:
+
+- `pytest -q compute/tests/test_theorem_linshaw_rigidity_engine.py`: 44 passed.
+- `pytest -q compute/tests/test_theorem_linshaw_rigidity_engine.py
+  compute/tests/test_simple_quotient_bar_scope.py
+  compute/tests/test_theorem_h_engine_status_scope.py`: 56 passed.
 
 ## Fatal Gaps
 
@@ -40,8 +747,9 @@ repair queue for theorem surfaces that must not silently overclaim.
 
 6. **Theorem H hypotheses.**  Chiral Hochschild amplitude \([0,2]\)
    requires PBW chiral Koszulness, completion, finite-type/perfectness,
-   genericity, strict Mittag--Leffler passage, and the PBW/Arnold
-   contraction.  Outside that package the defect complex
+   genericity, strict Mittag--Leffler passage, localized residue-twisted
+   bar concentration, and Arnold--Priddy Koszul-complex input.  Outside
+   that package the defect complex
    \(K^\bullet_{\mathrm{DH}}(A)\) must be named.
 
 ## Current Repair Lane
@@ -82,9 +790,10 @@ The fourth pass repairs Theorem H hypothesis surfaces:
 - chiral Hochschild amplitude \([0,2]\) is stated only on the
   PBW chiral Koszul, finite-type/perfect, generic,
   \(E_\infty\)-completed, strict Mittag--Leffler surface;
-- the PBW/Arnold Shelton--Yuzvinsky contraction is named as the
-  collision-depth collapse mechanism, not replaced by bare
-  Fulton--MacPherson formality;
+- localized residue-twisted bar concentration is named as the
+  collision-depth collapse mechanism, with Arnold--Priddy
+  Koszul-complex acyclicity only as the fibre input, not replaced by
+  bare Fulton--MacPherson formality;
 - off that package the high-degree object is the Hochschild
   Koszul-defect complex
   \(\mathrm{KD}_{\mathrm H}^{\bullet}(A)\), with concentration allowed
@@ -483,8 +1192,9 @@ following:
   or completed strict-ML hypothesis package.
 - any Theorem H / `ChirHoch` amplitude \([0,2]\) surface records the
   PBW chiral Koszul, finite-type/perfect, genericity,
-  \(E_\infty\)-completion, strict Mittag--Leffler, and PBW/Arnold
-  contraction hypotheses, or else names
+  \(E_\infty\)-completion, strict Mittag--Leffler, localized
+  residue-twisted bar concentration, and Arnold--Priddy
+  Koszul-complex input hypotheses, or else names
   \(\mathrm{KD}_{\mathrm H}^{\bullet}(A)\) as the off-package defect
   complex.
 - no compute helper may return a degree-\(\{0,1,2\}\) Hochschild vector
@@ -1362,8 +2072,8 @@ surfaces.  Chiral Hochschild amplitude \([0,2]\) is no longer
 presented there as a uniform or unconditional consequence of the curve
 alone.  It is the level-\(3\) Open-chain theorem on the PBW chiral
 Koszul, \(E_\infty\)-completed, finite-type/perfect, generic
-non-critical, strict Mittag--Leffler, PBW/Arnold
-Shelton--Yuzvinsky surface.
+non-critical, strict Mittag--Leffler, localized residue-twisted
+bar-concentration surface with Arnold--Priddy Koszul-complex input.
 
 - `theorem_h_hochschild_polynomial.py` now exposes
   `theorem_h_scope_record()`, with the type signature
@@ -10993,3 +11703,6908 @@ check, not an independent computation.
   test file passed \(65/65\), and the engine witness reports
   `comp:ds-w3-degree2-rtt-miura-witness`, `intertwines=True`, with six
   killed off-diagonal RTT terms.
+
+## Three-hundred-seventy-first pass: closed-sector terminology and standard-family certification
+
+This pass backfills the rows 541--700 correction band.  The repair has
+two parts: the open/closed language now distinguishes the algebraic
+closed-sector actor from a physical bulk factorization algebra, and the
+standard-family census now exposes theorem status, ambient, and object
+scope before examples are used as evidence.
+
+- In `chapters/connections/concordance.tex`, the old "chiral Hochschild
+  bulk algebra" wording is replaced by "closed-sector algebra", and the
+  universal action theorem is described as an acting closed-sector
+  theorem rather than a bulk theorem.
+- In `chapters/connections/thqg_open_closed_realization.tex`, the
+  \(\mathsf{SC}^{\mathrm{ch,top}}\) parenthetical now says that
+  \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) is the algebraic
+  closed-sector actor.  A physical bulk comparison is explicitly an
+  additional OCA datum.
+- In `chapters/examples/landscape_census.tex`, three certification
+  tables are added after the master invariant chart:
+  theorem-status, ambient raw/finite/completed scope, and the five
+  object package \(A\), \(B(A)\)/\(A^i\), \(A^!\), and
+  \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\).  Examples missing all three
+  certification entries are quarantined as frontier illustrations and
+  are not evidence for scalar complementarity.
+- In the executable open/closed surfaces, references to the "Hochschild
+  bulk" were propagated to "Hochschild closed-sector" or
+  "derived-centre closed-sector" language.  API keys that still contain
+  `bulk` are retained only as compatibility keys; their values and
+  paired tests now state the OCA firewall.
+- The Gaiotto/HT, string-field, Koszul-holography, grand-synthesis, and
+  Swiss-cheese comparison engines now state the same rule: CDG or
+  physical closed observables compare with the manuscript's
+  derived-centre closed sector only under the relevant OCA or
+  cohomology-level comparison; bar-cobar inversion does not construct a
+  physical bulk.
+
+Verification:
+
+- Focused open/closed and standard-family suite:
+  `compute/.venv/bin/python -m pytest` on the derived-centre,
+  open/closed, Costello BV, Swiss-cheese, Koszul-holography, KZ,
+  modular-shadow, and \(W_4\) files passed \(1892/1892\), with only the
+  pre-existing KZ complex-cast warnings.
+- Paired propagation suite for the Gaiotto, grand-synthesis,
+  string-field, higher-ops bridge, Swiss-cheese, Koszul-holography,
+  Vol II Swiss-cheese, and open/closed rectification files passed
+  \(697/697\).
+- Metadata and adjacent standard-family tests passed \(402/402\).
+- `make metadata` regenerated \(4636\) tagged claims and \(2318\)
+  proved claims in the theorem registry.
+- Stale-claim scans for `bulk = derived center`,
+  `Z_ch^der = bulk`, `derived centre ... bulk`, and
+  `Hochschild ... bulk` now return only negative firewalls, comparison
+  slots, or local compatibility names.
+- Targeted `git diff --check` on touched compute, test, example, and
+  metadata surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-second pass: normalized chiral Hochschild cochain complex
+
+This pass repairs the local Theorem-H audit finding that
+`thm:chiral-hochschild-complex` displayed a Hochschild cochain
+complex beginning at `Hom(A,M)` and therefore omitted the degree-zero
+bar term whose coboundary kills inner derivations.
+
+- In `chapters/theory/koszul_pair_structure.tex`,
+  `thm:chiral-hochschild-complex` now uses the normalized two-sided
+  bar convention
+  \[
+    C^n_{\mathrm{ch}}(\mathcal A,M)
+    =
+    \operatorname{Hom}_{\mathcal D_X}
+    (\overline{\mathcal A}^{\widehat\otimes n},M),
+    \qquad C^0_{\mathrm{ch}}=M.
+  \]
+  The displayed complex begins
+  \(0\to M\to\operatorname{Hom}(\overline{\mathcal A},M)\to\cdots\).
+  The degree-zero differential is the chiral adjoint action
+  \(m\mapsto (a\mapsto Y_L(a,m)-(-1)^{|a||m|}Y_R(m,a))\), so
+  \(H^1\) is explicitly derivations modulo inner derivations.
+- The proof now identifies the normalized bar term
+  \(\mathcal A\widehat\otimes
+  \overline{\mathcal A}^{\widehat\otimes n}
+  \widehat\otimes\mathcal A\) before dualizing the two outer faces and
+  the \(n\) internal faces.  The assertion \(\delta^2=0\) is now sourced
+  from the two-sided bar differential rather than from the previously
+  misindexed display.
+- `thm:geometric-chiral-hochschild` now uses
+  \(\overline C_{n+2}(X)\), not \(\overline C_{n+1}(X)\), and records
+  that the two additional marked points are the output and evaluation
+  points of the two-sided bar correspondence, not extra Hochschild
+  inputs.  The proof's differential step correspondingly lives on
+  \(\overline C_{n+3}(X)\).
+- The cup-product definition in the same chapter now uses normalized
+  \(p+q\) inputs, and the unit is the class of
+  \(1_{\mathcal A}\in C^0_{\mathrm{ch}}(\mathcal A)=\mathcal A\), not
+  the identity map \(\mathcal A\to\mathcal A\).
+- In `chapters/theory/chiral_hochschild_koszul.tex`, the geometric
+  definition now states the same convention: degree \(n\) has \(n\)
+  normalized input slots plus output and evaluation points.
+
+Verification:
+
+- `make metadata` regenerated \(4636\) tagged claims and \(2318\)
+  proved claims in the theorem registry.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Focused stale scans for the old complex
+  \(0\to\operatorname{Hom}_{\mathcal D_X}(\mathcal A,M)\), the old
+  `A^{\otimes 3}` display, the old \(C_{n+1}(X)\) comparison in the
+  target theorem, and the old degree-zero identity-map unit are clean.
+- Targeted `git diff --check` on the edited theorem files, metadata,
+  and ledger surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-third pass: affine ChirHoch^1 zero-mode quotient firewall
+
+This pass closes the Theorem-H H-2/H-3 audit lane: the affine
+Kac--Moody adjoint copy is not fixed-fiber
+\(\ChirHoch^1\).  It is the zero-mode derivation prequotient and the
+bar-dual generator \((A^i)_1\).  After quotienting by the inner zero
+modes \((J^a)_{(0)}\), the normalized generic affine vector is
+\((1,0,1)\), total \(2\), not the old prequotient vector.
+
+- `chapters/theory/chiral_center_theorem.tex` now states
+  \(\ChirHoch^1(V_k(\mathfrak g))=0\) for simple \(\mathfrak g\) at
+  generic non-critical level, rewrites the affine \(\mathfrak{sl}_2\)
+  corollary, and fences the Gerstenhaber and DS computations as
+  prequotient calculations.
+- `chapters/theory/chiral_hochschild_koszul.tex`,
+  `chapters/theory/introduction.tex`,
+  `chapters/theory/en_koszul_duality.tex`,
+  `chapters/theory/three_hochschild_unification_platonic.tex`,
+  `chapters/connections/concordance.tex`,
+  `chapters/connections/master_reconstruction.tex`, and
+  `chapters/connections/master_concordance.tex` now propagate the same
+  quotient vector and prequotient/bar-dual distinction.
+- Compute oracles and tests for Theorem H, DS compatibility,
+  Gerstenhaber brackets, cross-volume bridges, E3/BV, derived-center
+  helpers, open/closed rectification, SC mixed sectors, and
+  three-Hochschild comparison now report affine \(\ChirHoch^1=0\) and
+  keep \(\dim\mathfrak g\) only as prequotient metadata.
+- Active notes (`notes/antipatterns_catalogue.md`,
+  `notes/audit_repairs_ledger_20260610.md`,
+  `notes/first_principles_cache_comprehensive.md`,
+  `notes/real_bug_findings_2026_05_09.md`,
+  `notes/wave_1_deep_verification_2026_05_09.md`) were updated so the
+  obsolete affine equality no longer appears as a live fact.
+
+Verification:
+
+- Combined focused suite passed \(1047/1047\):
+  `compute/tests/test_chiral_hochschild_engine.py`,
+  `test_chirhoch_dimension_engine.py`,
+  `test_theorem_h_hochschild_polynomial.py`,
+  `test_ds_chirhoch_compatibility_engine.py`,
+  `test_gerstenhaber_sl2_bracket_engine.py`,
+  `test_chirhoch_sl_n_outer_derivations_engine.py`,
+  `test_theorem_thm_h_e3_rectification_engine.py`,
+  `test_cross_volume_bridge.py`,
+  `test_theorem_H_hochschild_koszul.py`,
+  `test_hz_iv_decorators_wave1.py`,
+  `test_e3_bv_sl2_derived_center_engine.py`,
+  `test_derived_center_explicit.py`,
+  `test_theorem_open_closed_rectification_engine.py`,
+  `test_three_hochschild_unification.py`,
+  `test_sc_mixed_sector_engine.py`, and
+  `test_chirhoch_bershadsky_polyakov_engine.py`.
+- Additional focused propagation suite passed \(203/203\) after the
+  SC mixed-sector and three-Hochschild updates.
+- `make metadata` regenerated \(4636\) tagged claims and \(2317\)
+  proved claims in the theorem registry.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Fixed-string stale scans for the old positive affine equality and
+  old affine total now return no live positive claims; remaining hits
+  are corrected-zero statements, explicit prequotient constants, or
+  unrelated integer triples.
+- Targeted `git diff --check` on the edited source, test, and note
+  surfaces is clean.  A global `git diff --check` is still blocked by
+  pre-existing/generated whitespace in `out/main.log`.  No full LaTeX
+  build was run.
+
+## Three-hundred-seventy-fourth pass: ordered twisted-tensor acyclicity firewall
+
+This pass closes the live H-1/H-2 drift left after the affine quotient
+repair.  Theorem~H no longer says that
+Shelton--Yuzvinsky Koszulness contracts the Arnold algebra itself.
+The true mechanism is localized residue-twisted bar concentration at
+collision strata, with Shelton--Yuzvinsky/Priddy contributing only the
+Koszul-complex acyclicity input for the fibre Orlik--Solomon algebra.
+The ordered first-page statement remains conditional on
+`conj:ordered-twisted-tensor-acyclicity`.
+
+- `chapters/theory/chiral_hochschild_koszul.tex` now repairs the
+  sufficient-mechanism proposition, the FM-tower collapse prose, the
+  ordered concentration firewall, and the Theorem-H failure-mode
+  paragraph.
+- The affine `sl_2` and `sl_3` Hochschild corollary proofs now match
+  the zero-mode quotient statement: both have vector `(1,0,1)`, total
+  `2`, while the adjoint copy is only prequotient/bar-dual metadata.
+- The Theorem-H package language was propagated through
+  `master_reconstruction.tex`, `concordance.tex`,
+  `grand_unification_platonic.tex`, `theorem_h_off_koszul_platonic.tex`,
+  `three_hochschild_unification_platonic.tex`,
+  `hochschild_cohomology.tex`, the compute helpers, and the active
+  status notes.
+
+Verification:
+
+- Focused Theorem-H suite passed \(455/455\):
+  `test_chirhoch_dimension_engine.py`,
+  `test_theorem_h_hochschild_polynomial.py`,
+  `test_theorem_H_hochschild_koszul.py`,
+  `test_holographic_code_engine.py`, and
+  `test_swiss_cheese_chain_model.py`.
+- `make metadata` regenerated \(4636\) tagged claims and \(2317\)
+  proved claims in the theorem registry.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Fixed-string stale scans for the old PBW-plus-Arnold shorthand, old
+  Shelton--Yuzvinsky-contraction phrases, the old affine `sl_3` vector,
+  and the old affine `sl_10` positive \(H^1\) claim return no live
+  positive claims.  Remaining contraction hits are explicitly marked as
+  historical wrong-claim examples.
+- Targeted `git diff --check` on the edited theorem, compute, metadata,
+  and note surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-fifth pass: ordered-to-symmetric R-descent firewall
+
+This pass repairs the H-10 averaging proof surface.  The symmetric
+Theorem-H bound is no longer derived from the old asserted
+\(\Sigma_n\)-equivariant cochain-level contraction of the ordered complex,
+nor from the literal equality
+\(\ChirHoch^n(A)=(\ChirHoch^{\mathrm{ord},n}(A))_{\Sigma_n}\).
+The repaired proof uses the actual ordered-to-symmetric comparison:
+strong-unitary \(R\)-twisted descent in finite conformal-weight
+windows, reduction to pole-free Reynolds descent only on the
+commutative-chiral associated graded, and strict Mittag--Leffler
+passage to the completion.
+
+- `chapters/theory/chiral_hochschild_koszul.tex` now gives
+  `cor:hochschild-averaging-symmetric` the full hypothesis package:
+  the ordered twisted-tensor acyclicity input, \(E_\infty\)-chiral
+  completion, `prop:r-matrix-descent-vol1`, and the finite-window
+  strict-ML hypotheses of `rem:theorem-H-filter-exactness`.
+- The proof now explicitly rejects bare exact coinvariants as the
+  source of symmetric concentration and routes through
+  `cor:pole-free-descent` on the associated graded plus localized
+  bar-concentration collapse.
+- `chapters/theory/e1_modular_koszul.tex` was propagated so the
+  all-genus ordered \(E_1\) Theorem-H surface no longer says exact
+  finite-group coinvariants alone turn ordered concentration into the
+  symmetric complex.
+
+Verification:
+
+- `make metadata` regenerated \(4636\) tagged claims and \(2317\)
+  proved claims in the theorem registry; the dependency graph now has
+  \(7117\) edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Fixed-string stale scans for the old equivariant-null-homotopy,
+  standard-Koszul-homotopy, exact-coinvariant-descent, and literal
+  ordered-coinvariant equality phrases return no live positive claims.
+  Remaining hits are the audit ledger quoting the old false proof.
+- Targeted `git diff --check` on the edited theorem and metadata
+  surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-sixth pass: Heisenberg shift/level firewall
+
+This pass repairs the H-6 degree-convention surface.  The fixed generic
+Heisenberg fibre still has Poincare vector \((1,1,1)\), but its
+degree-\(1\) class is now consistently the shift derivation
+\(D(\alpha)=\mathbf 1\), not the level tangent.  The level motion
+\(k\mapsto k+\epsilon\) is recorded as a degree-\(2\) product lane and
+is exact/gauge at \(k\neq0\); the degree-\(2\) scalar Hochschild class
+is the curved dual-vacuum endpoint.
+
+- `compute/lib/chiral_hochschild_engine.py` now records
+  `shift_derivation: 1`, `level_deformation: 0`, and
+  `level_deformation_degree_2_exact_at_k_nonzero: 1` for Heisenberg.
+- `chapters/theory/chiral_hochschild_koszul.tex` now makes
+  `rem:chirhoch-derivation-types` conditional and aligns the affine row
+  with the zero-mode inner quotient: generic \(V_k(\fg)\) has
+  \(\ChirHoch^1=0\), while \(\dim\fg\) is prequotient/bar-dual
+  metadata.
+- `chapters/theory/chiral_center_theorem.tex` no longer proves the
+  Heisenberg entry by an uncurved polynomial-vertex-algebra
+  three-term resolution.  The proof now uses the curved second-kind
+  partner, the fixed-fibre shift derivation, and
+  `lem:curved-dual-centre-heisenberg`.
+- The correction was propagated through
+  `derived_center_explicit.py`, `chirhoch_dimension_engine.py`,
+  `theorem_h_hochschild_polynomial.py`,
+  `derived_center_genus2_engine.py`, their tests, and the active
+  first-principles/audit notes.
+
+Verification:
+
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_chiral_hochschild_engine.py -q` passed \(146/146\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_derived_center_explicit.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py -q` passed
+  \(416/416\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_theorem_H_hochschild_koszul.py -q` passed \(1/1\).
+- `compute/.venv/bin/python -m py_compile` passed on the touched
+  Theorem-H compute modules.
+- `make metadata` regenerated \(4637\) tagged claims, \(2317\) proved
+  claims, and \(7119\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Exact stale scans for `HH^1`/`ChirHoch^1` as level deformation now
+  leave only the H-6 audit record quoting the old false claim and a
+  BP/affine sentence explicitly saying the `ChirHoch^1` quotient is
+  zero while level deformation is degree \(2\).
+- Targeted `git diff --check` on the edited theorem, compute, metadata,
+  and note surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-seventh pass: product-moduli degree firewall
+
+This pass repairs the remaining H-6 product-moduli overclaim.  The
+standard-landscape statement no longer says that the ordinary product
+moduli functor has tangent \(\ChirHoch^1\).  The corrected convention is:
+\(\ChirHoch^1=\Der_{\mathrm{ch}}/\Inn_{\mathrm{ch}}\) is the
+fixed-product automorphism/stabilizer lane, while binary chiral-product
+deformations live in the shifted degree-\(2\) cyclic/Hochschild lane.
+Exact degree-\(2\) product cocycles are gauge-constant, and scalar
+degree-\(2\) endpoints do not automatically integrate to ordinary flat
+one-parameter product families.
+
+- `chapters/theory/chiral_hochschild_koszul.tex` now retitles and
+  rewrites `prop:smooth-formal-moduli-standard` as a lane-separation
+  statement.  The table separates the \(\ChirHoch^1\)
+  gauge/stabilizer lane from the degree-\(2\) product lane for
+  \(\cH_k\), \(V_k(\fg)\), \(\beta\gamma\), \(bc\), free fermion,
+  \(\Vir_c\), and principal \(\cW_N\).  \(\BP_k\) is explicitly not
+  asserted there.
+- The general Theorem-H convention paragraphs in
+  `chiral_hochschild_koszul.tex` now state that unshifted
+  \(\ChirHoch^1\) is the fixed-product derivation column and that the
+  shifted formal-moduli product tangent is the degree-\(2\) cyclic
+  class.
+- `compute/lib/theorem_thm_h_e3_rectification_engine.py` and its tests
+  now report \(\dim\ChirHoch^1(\Vir_c)=0\) and
+  \(\dim\ChirHoch^1(\cW_N)=0\) on the generic fixed-product lane; the
+  central-charge/DS-level motion is degree \(2\).  The W3 total
+  dimension in this surface is \(2\), not \(3\).
+- `compute/lib/chriss_ginzburg_universal.py` now projects affine,
+  \(\beta\gamma\), Virasoro, and W3 generic Hochschild polynomials
+  through the fixed-product quotient convention: \([1,0,1]\) rather
+  than inserting product parameters into degree \(1\).
+- `compute/tests/test_koszulness_ten_verifier.py` now expects the
+  affine \(\mathfrak{sl}_2\) zero-mode quotient
+  \(\ChirHoch^1=0\), with \(\dim\mathfrak{sl}_2\) treated as
+  prequotient metadata.
+- `notes/real_bug_findings_2026_05_09.md` and
+  `compute/lib/cross_volume_bridge.py` were aligned with the corrected
+  gauge/product-lane language.
+
+Open obligation:
+
+- `compute/lib/chirhoch_bershadsky_polyakov_engine.py` and
+  `compute/tests/test_chirhoch_bershadsky_polyakov_engine.py` still
+  advertise a Feigin--Semikhatov \(\BP_k\) degree-\(1\) value
+  \((J\text{-current}+c\text{-deformation})\).  This was not rewritten
+  by analogy.  The manuscript now excludes \(\BP_k\) from
+  `prop:smooth-formal-moduli-standard`; the remaining obligation is a
+  separate BP degree-lane computation deciding which \(J\)-current
+  classes survive the zero-mode inner quotient and placing the
+  \(c/k\)-motion in the correct degree.
+
+Verification:
+
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_theorem_thm_h_e3_rectification_engine.py -q`
+  passed \(91/91\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_chriss_ginzburg_universal.py -q` passed \(74/74\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_koszulness_ten_verifier.py -q` passed \(130/130\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_chiral_hochschild_engine.py -q` passed \(146/146\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_theorem_h_hochschild_polynomial.py -q` passed
+  \(216/216\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_derived_center_explicit.py -q` passed \(122/122\).
+- `make metadata` regenerated \(4638\) tagged claims, \(2317\)
+  proved claims, and \(7122\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Fixed-string stale scans for smooth-moduli tangent claims returned no
+  live hits.  Stale Virasoro/W central-charge-in-\(\ChirHoch^1\) hits
+  remain only in the quarantined BP engine/test surfaces named above
+  and in historical audit notes.
+- Targeted `git diff --check` on the edited theorem, compute, test,
+  note, and metadata surfaces is clean.  No full LaTeX build was run.
+
+## Three-hundred-seventy-eighth pass: BP fixed-product degree-lane firewall
+
+This pass closes the BP-specific obligation left by the previous
+product-moduli firewall.  The Feigin--Semikhatov
+\(\BP_k=\mathcal W^k(\mathfrak{sl}_3,f_{(2,1)})\) surface no longer
+places the \(J\)-current charge direction or the \(k/c\)-level motion
+in unshifted \(\ChirHoch^1\).  The corrected generic fixed-product
+polynomial is
+\[
+P_{\BP_k}(t)=1+t^2,
+\]
+with \(\ChirHoch^1(\BP_k)=0\).  The charge grading is inner
+\((J_{(0)})\), \(J\)-scaling fails the fixed double-pole coefficient
+\(J_{(1)}J=(2k+3)/3\), and level motion changes OPE coefficients, so
+it is degree-\(2\) product metadata rather than a degree-\(1\)
+derivation class.
+
+- `compute/lib/chirhoch_bershadsky_polyakov_engine.py` now reports
+  Betti vector \([1,0,1]\), total dimension \(2\), Euler
+  characteristic \(2\), and product-lane metadata for the \(J\)-level,
+  \(T\)-central charge, mixed \(G^+G^-\) pairing, and \(\kappa\)-line.
+  The old candidates are retained as rejected degree-\(1\) candidates.
+- `compute/tests/test_chirhoch_bershadsky_polyakov_engine.py` now tests
+  the fixed-product quotient directly: \(J_{(0)}\) is inner, the level
+  deformation is degree \(2\), and the Feigin--Semikhatov normal form
+  reduces the naive four generator directions to zero outer
+  derivations.
+- `chapters/examples/bershadsky_polyakov.tex` now states
+  `prop:bp-curve-level-chirhoch` with
+  \(\operatorname{OutDer}^{\mathrm{fix}}_{\mathrm{ch}}(\mathcal B^k)=0\)
+  and polynomial \(1+t^2\).  Its proof computes the \(J\)-double-pole
+  obstruction and records the BP scalar package as degree-two product
+  metadata, not the linear coefficient.
+
+Verification:
+
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_chirhoch_bershadsky_polyakov_engine.py -q` passed
+  \(56/56\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_chirhoch_bershadsky_polyakov_engine.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py -q` passed
+  \(418/418\).
+- Fixed-string stale scans over the BP engine, BP tests, and BP chapter
+  found no live old BP claims of \(1+2t+t^2\), \([1,2,1]\), or
+  \(J\)-current plus \(c\)-deformation in \(\ChirHoch^1\).
+- Targeted `git diff --check` on the edited BP engine, BP tests, and BP
+  chapter is clean.
+- `make metadata` regenerated \(4638\) tagged claims, \(2316\) proved
+  claims, and \(7122\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- No full LaTeX build was run.
+
+## Three-hundred-seventy-ninth pass: ordered bar/descent status split
+
+This pass repairs a live proved-here dependency fault on the
+bar-cobar spine.  The ordered bar construction, the
+\(\chirAss\)-dual cooperadic carrier, and the symmetric Ran quotient
+were partially fused in `bar_construction.tex`.  The corrected grammar
+is:
+
+- the ordered tensor carrier and ordered Ran factorisation are proved
+  directly on the ordered/Fulton--MacPherson surface;
+- the \((\chirAss)^{!,c}\)-carrier is conditional on the finite locally
+  free quadratic self-duality package for \(\chirAss\);
+- the symmetric Ran quotient is conditional on the
+  ordered-to-symmetric descent datum.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` now has the proved proposition
+  `prop:ordered-bar-carrier-ran-factorisation`, whose references are
+  only to proved ordered-bar/sign/local differential surfaces.
+- The conditional corollary
+  `cor:ordered-bar-chirass-dual-carrier` isolates the
+  \((\chirAss)^{!,c}\)-coalgebra statement under
+  `prop:chirAss-self-dual`.
+- The theorem `thm:ordered-bar-operadic-ran-descent` now carries only
+  the conditional descent from the ordered carrier to the symmetric Ran
+  quotient.
+- The theorem `thm:bd-ope-residue-full-poles` is now the proved
+  ordered BD/OPE boundary-residue statement.  The symmetric
+  BD/Cousin differential is the conditional corollary
+  `cor:bd-ope-symmetric-ran-differential`.
+- `thm:ordered-bar-complete-conilpotent-functor` now depends on the
+  proved ordered carrier proposition, not on the conditional symmetric
+  descent theorem.
+- `chapters/connections/concordance.tex` now records the same split:
+  ordered carrier proved, \(\chirAss\)-dual carrier conditional,
+  symmetric descent conditional.
+
+Verification:
+
+- `make metadata` regenerated \(4641\) tagged claims, \(2317\) proved
+  claims, and \(7126\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- A focused metadata audit of proved-here claims with actual
+  conditional/conjectural/open/heuristic claim references dropped from
+  six live cases to four; the two repaired bar-construction claims are
+  no longer in that list.
+- Targeted `git diff --check` on the edited bar-construction,
+  concordance, and metadata surfaces is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eightieth pass: proved-claim weak-dependency purge
+
+This pass repairs the remaining current metadata cases where a
+`\ClaimStatusProvedHere` claim block referenced an actual conditional
+or conjectural claim label.  The repair is not a cosmetic retagging:
+each surviving proved surface now carries only the portion that is
+actually proved at that status, while closed-sector or conjectural
+extensions are separated.
+
+Concrete changes:
+
+- `chapters/examples/heisenberg_eisenstein.tex` now splits
+  `prop:heisenberg-standard-family-ledger` into a proved ordered-bar
+  and scalar computation ledger, and a new conditional corollary
+  `cor:heisenberg-closed-sector-ledger` for the finite-window
+  derived-centre and scalar complementarity rows.
+- `chapters/examples/kac_moody.tex` no longer makes the proved affine
+  ledger depend on the conditional derived-centre proposition merely to
+  state the critical-level stopping rule.  The warning is now phrased
+  as a scope boundary, while the proved affine ledger keeps only its
+  OPE, ordered bar, shadow, \(r\)-data, and critical-centre facts.
+- `chapters/examples/logarithmic_w_algebras.tex` keeps
+  `rem:wp-c2-vs-koszul` proved as a logical separation of
+  \(C_2\)-cofiniteness, rationality, and Koszulness, without making it
+  depend on the conjectural triplet Koszulness label.
+- `chapters/theory/chiral_hochschild_koszul.tex` retags
+  `comp:boson-hochschild` as conditional, because its degree-\(2\)
+  endpoint depends on the completed second-kind curved-dual-centre
+  calculation `lem:curved-dual-centre-heisenberg`.  The fermion
+  computation remains proved and no longer cites the conditional boson
+  computation for its comparison sentence.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2316\) proved
+  claims, and \(7124\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The focused metadata audit for proved-here claims whose
+  `refs_in_block` resolve to conditional/conjectural/heuristic/open
+  claim labels now returns \(0\) cases.
+- Targeted `git diff --check` on the edited example, theory, and
+  metadata surfaces is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-first pass: FG/GLZ conditional PBW comparison firewall
+
+This pass repairs the concordance surface where the relationship to
+Francis--Gaitsgory and Gui--Li--Zeng had been advertised as a proved
+consequence of the monograph's \(\chirAss\) self-duality, although the
+local self-duality input
+`prop:chirAss-self-dual` is itself conditional.  The corrected surface
+keeps the comparison, but only under the named finite locally free
+\(\chirAss\) self-duality, PBW, quadratic Koszul, and finite-type
+pairing hypotheses.
+
+Concrete changes:
+
+- `chapters/connections/concordance.tex` now states the FG comparison
+  as a recovery of \(\chirCom\)-\(\chirLie\) duality under the finite
+  locally free \(\chirAss\) self-duality package and PBW filtration
+  hypotheses, not as an unconditional derivation from associative
+  self-duality.
+- `prop:glz-special-case` is retagged from `\ClaimStatusProvedHere`
+  to `\ClaimStatusConditional`, with the quadratic Koszul and
+  finite-type chiral pairing hypotheses made explicit.
+- `thm:fg-from-assch` is retagged from `\ClaimStatusProvedHere` to
+  `\ClaimStatusConditional` and now carries the type signature:
+  Open quadrant, operadic bar/Ran presentation, Beilinson level \(2\),
+  hypothesis package consisting of finite locally free \(\chirAss\)
+  self-duality, a quadratic Koszul \(\Einf\)-chiral algebra,
+  finite-type chiral pairings, and a PBW filtration whose associated
+  graded is the \(\chirCom\) bar complex.
+- The proof language now says that the FG framework is recovered as a
+  conditional special case under the PBW/finite-type package, avoiding
+  the false shadow-object move from conditional \(\chirAss\) duality to
+  an unconditional commutative/Lie result.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2314\) proved
+  claims, and \(7125\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The focused metadata audit for proved-here claims whose
+  `refs_in_block` resolve to conditional/conjectural/heuristic/open
+  claim labels still returns \(0\) cases.
+- Targeted `git diff --check` on the edited concordance and metadata
+  surfaces is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-second pass: log-FM and proved-surface dependency firewall
+
+This pass continues the signed log-FM obligation from the strengthening
+memo and extends the weak-dependency audit from `\ClaimStatusProvedHere`
+to the full proved surface, including `\ClaimStatusProvedElsewhere`.
+The repair separates external geometry and literature theorems from
+the manuscript's conditional chain-level transports.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_foundations.tex` now marks
+  `def:log-clutching-kernel` as definitional.  It retags
+  `thm:log-clutching-degeneration` as conditional: Mok supplies the
+  geometric degeneration correspondences, but their chain-level
+  interpretation as bar-compatible logarithmic clutching kernels
+  requires the signed log-FM residue-pushforward package
+  `def:signed-logfm-residue-pushforward-package`.
+- The same file retags `constr:log-fm-chain-map` as conditional.
+  The geometric log-FM compactification and stratification are external
+  Mok inputs; the pushforward on the chosen chain model and the
+  identification of invisible boundary relations with \(d_{\mathrm{pf}}\)
+  are part of the conditional signed residue-pushforward package.
+- `chapters/theory/en_koszul_duality.tex` retags `thm:e3-cs` as
+  conditional because its topological enhancement imports the
+  conditional cohomological topologization theorem.  The downstream
+  proved algebraic claims `thm:chiral-e3-structure`,
+  `lem:bv-p3-commutativity`, and `thm:chiral-e3-cfg` no longer cite
+  this conditional umbrella theorem for the HDC/CFG algebraic
+  deformation classification; they cite the external HDC/CFG inputs
+  directly.
+- `chapters/theory/higher_genus_modular_koszul.tex` retags
+  `const:vol1-homotopy-chiral-input` as conditional: MS24 supplies the
+  fixed-cover \(\mathrm{Ch}_\infty\) structure, while cover
+  independence and rectification are conditional on
+  `cor:rectification-ch-infty`.
+- `chapters/theory/ordered_associative_chiral_kd.tex` retags
+  `rem:grz-comparison` as conditional and removes the nested
+  proved-elsewhere status macro.  The type-\(A\) literature remains
+  external; the comparison with the manuscript's
+  \(\cW_{1+\infty}\) chiral quantum group is conditional on
+  `thm:w-infty-chiral-qg`.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The focused metadata audit for `\ClaimStatusProvedHere` claims whose
+  `refs_in_block` resolve to conditional/conjectural/heuristic/open
+  claim labels returns \(0\) cases.
+- The stronger audit for both `\ClaimStatusProvedHere` and
+  `\ClaimStatusProvedElsewhere` claims whose `refs_in_block` resolve
+  to conditional/conjectural/heuristic/open claim labels also returns
+  \(0\) cases.
+- Targeted `git diff --check` on the edited theory files and metadata
+  surfaces is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-third pass: conjecture-label status hygiene
+
+This pass repairs a pure claim-surface drift: several labels beginning
+`conj:` had already been promoted to proved or conditional theorem
+surfaces.  The mathematics was not demoted or upgraded in this pass;
+the labels were renamed so that the reference grammar matches the
+actual epistemic status of each claim.
+
+Concrete changes:
+
+- `chapters/examples/symmetric_orbifolds.tex` renames the conditional
+  Reynolds-descent surfaces from `conj:symn-inversion` and
+  `conj:symn-hochschild` to `prop:symn-inversion` and
+  `prop:symn-hochschild`, and updates the table and nearby
+  complementarity reference.
+- `chapters/examples/yangians_computations.tex` renames the proved
+  scalar-gauge inverse/sign-reversal statement from
+  `conj:yangian-spectral-selfdual` to
+  `prop:yangian-scalar-gauge-selfdual`, reflecting that the proved
+  statement is the normalized scalar-gauge result, not the old
+  spectral-shift conjecture.
+- `chapters/theory/chiral_hochschild_koszul.tex` renames the ambient
+  complementarity cluster:
+  `prop:ambient-self-duality`, `prop:one-sided-isotropy`,
+  `thm:ambient-complementarity`, `prop:derived-critical-locus-chk`,
+  and `prop:formal-legendre`; all internal and cross-file references
+  were updated.
+- `chapters/theory/shadow_tower_quadrichotomy_platonic.tex` renames
+  the proved fixed-node Sato--Tate limit from
+  `conj:stqp-gauss-kuzmin-asymptotic` to
+  `prop:stqp-gauss-kuzmin-asymptotic`.
+- `appendices/nonlinear_modular_shadows.tex` renames the conditional
+  nonlinear-phase standard-family theorem from
+  `conj:nms-nonlinear-phase-standard` to
+  `thm:nms-nonlinear-phase-standard`; the Heisenberg example reference
+  was updated.
+- `standalone/theorem_index.tex` was kept in sync with the renamed
+  labels.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The audit for `conj:*` labels whose status is not conjectured/open
+  now returns \(0\) cases.
+- The label-status conflict audit returns \(0\) cases.
+- The proved-here and full proved-surface weak-dependency audits both
+  still return \(0\) cases.
+- Targeted `git diff --check` on the edited source, standalone index,
+  and metadata surfaces is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-fourth pass: finite-stage Koszulness-moduli home-chart firewall
+
+This pass repairs a raw Theorem-B leakage risk in the Koszulness-moduli
+atlas.  The mathematical status is unchanged: the finite-stage
+representability and atlas statements remain proved in the manuscript,
+but their surface now says explicitly that the result lives on
+finite PBW/Artin/associator charts with the derived
+Mittag--Leffler completion hypotheses installed.  No unconditional
+raw bar-cobar inversion statement is asserted.
+
+Concrete changes:
+
+- `chapters/theory/koszulness_moduli_scheme.tex` adds the type
+  signature to `v1-thm:kms-moduli`: Open quadrant, finite-stage
+  PBW/associator-moduli presentation, Beilinson levels \(1\)--\(2\),
+  with finite PBW type, PBW--Artin finite-stage tests, framed
+  associator coordinates, finite weight quotients of
+  \(\mathrm{GRT}_1\), and derived Mittag--Leffler passage for the
+  completed inverse limit.
+- The former label `v1-thm:kms-fourteen-unconditional` is renamed to
+  `v1-thm:kms-fourteen-home-chart`.  The theorem now carries the type
+  signature: Open quadrant, finite-stage associator-chart atlas
+  presentation, Beilinson levels \(1\)--\(2\), with finite PBW type,
+  PBW--Artin finite stages, named home associator coordinate, finite
+  comparison complex \(T_{\Phi,N,m}\), filtered quasi-isomorphism
+  \(T_{\Phi,N,m}\simeq C_{\Phi,N,m}\), and compatible PBW completion
+  on the admissible locus.
+- Active references in `chapters/theory/koszulness_moduli_scheme.tex`
+  and `chapters/theory/chiral_koszul_pairs.tex` now point to
+  `v1-thm:kms-fourteen-home-chart`.
+- The conditional moduli surface
+  `chapters/theory/chiral_koszul_pairs.tex#thm:koszulness-moduli-kp`
+  now depends on the home-chart theorem label, not on an apparently
+  unconditional atlas label.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- `metadata/claims.jsonl`, `metadata/theorem_registry.md`,
+  `metadata/dependency_graph.dot`, `metadata/label_index.json`, and
+  `standalone/theorem_index.tex` contain
+  `v1-thm:kms-fourteen-home-chart`; active source and metadata surfaces
+  contain no `v1-thm:kms-fourteen-unconditional` label.
+- The focused proved-here and full proved-surface weak-dependency
+  audits both return \(0\) cases.
+- The remaining raw-inversion scan hit on `v1-thm:kms-moduli` is the
+  intended finite-stage completed counit under the explicit PBW,
+  PBW--Artin, associator-coordinate, and derived Mittag--Leffler
+  hypotheses; no stale "unconditional" label remains.
+- Targeted `git diff --check` on the edited source, standalone index,
+  metadata, and this ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-fifth pass: Verdier-component/completed-cobar firewall
+
+This pass repairs a direct MA-1/MA-13 object-type leak: several active
+surfaces still identified the raw Verdier dual
+\(\mathbb D_{\Ran}\bar B(\cA)\) with the homotopy Koszul dual algebra
+\(\cA^!_\infty\).  The canonical typed statement is now uniform:
+\[
+\cA^{!,\mathrm{co}}_\infty:=\mathbb D_{\Ran}\bar B(\cA),
+\qquad
+\cA^!_\infty:=\Omega_X^{\mathrm{cont}}
+\cA^{!,\mathrm{co}}_\infty .
+\]
+Verdier duality produces the component; completed cobar produces the
+factorization algebra.  No theorem status was downgraded.
+
+Concrete changes:
+
+- `chapters/theory/poincare_duality.tex` now makes the two-step
+  convention explicit at the chapter opening, in
+  `const:A-dual-intrinsic`, in `thm:coalgebra-via-NAP`, in
+  `thm:bar-computes-dual`, in `prop:koszul-pair-NAP`, in
+  `thm:symmetric-koszul`, in the Heisenberg specialization, and in
+  `thm:main-NAP-resolution`.
+- `chapters/theory/higher_genus_complementarity.tex` retitles
+  `lem:coalgebra-verdier-AF` as a post-cobar algebra-structure lemma
+  and rewrites the statement so \(\mathbb D_{\Ran}\bar B(\cA)\) is
+  \(\cA^{!,\mathrm{co}}_\infty\), not already \(\cA^!_\infty\).
+- `chapters/frame/heisenberg_frame.tex`, `chapters/frame/preface.tex`,
+  `chapters/frame/preface_section1_v2.tex`, and
+  `chapters/theory/introduction.tex` now state the same
+  Verdier-component/completed-cobar separation on overview surfaces.
+- The duplicated standalone surfaces
+  `standalone/programme_summary.tex`,
+  `standalone/programme_summary_section1.tex`,
+  `standalone/introduction_full_survey.tex`, and
+  `standalone/five_theorems_modular_koszul.tex` were kept in sync.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- The custom raw-Verdier detector for lines mentioning a Ran Verdier
+  dual and \(\cA^!_\infty\) without `\Omega`, completed cobar, or
+  \(\cA^{!,\mathrm{co}}_\infty\) returns \(0\) cases.
+- Metadata confirms the repaired surfaces:
+  `thm:coalgebra-via-NAP` is still `ProvedHere` with title
+  "Bar coalgebra and post-cobar Verdier algebra";
+  `thm:bar-computes-dual` is still `ProvedHere` with title
+  "Bar coalgebra, Koszul-dual coalgebra, and post-cobar
+  Verdier-dual algebra"; `lem:coalgebra-verdier-AF` is still
+  `ProvedHere` with title "Post-cobar algebra structure from the
+  Verdier component".
+- Targeted `git diff --check` on the edited source, standalone,
+  metadata, and this ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-sixth pass: MC5 BV/BRST coderived conditionality firewall
+
+This pass closes a status drift around MC5.  The theorem ledger marks
+`thm:bv-bar-coderived-vol1` and `thm:algebraic-string-dictionary` as
+conditional, while several overview and concordance surfaces still
+described the genus-\(0\) algebraic BRST/bar comparison and the
+all-genera coderived BV/bar comparison as proved or resolved.
+
+Concrete changes:
+
+- `chapters/connections/bv_brst.tex` now gives
+  `thm:bv-bar-coderived-vol1` its explicit type signature:
+  Open quadrant, BV/bar comparison presentation, Beilinson level \(4\)
+  compared with level \(2\), with hypothesis package consisting of the
+  genus-\(0\) geometric BV/bar comparison, harmonic factorization in
+  each genus, the three-obstruction chain analysis, curved weak
+  equivalences, and coacyclic/coderived localization.
+- The MC5 summaries in `chapters/theory/introduction.tex`,
+  `chapters/connections/editorial_constitution.tex`,
+  `chapters/connections/concordance.tex`,
+  `chapters/frame/preface.tex`,
+  `chapters/frame/preface_sections10_13_draft.tex`,
+  `chapters/frame/guide_to_main_results.tex`, and
+  `chapters/frame/part_iv_platonic_introduction.tex` now separate the
+  proved surfaces from the conditional ones: analytic HS-sewing and the
+  strict Mittag--Leffler pro-object / \(J\)-adic / filtered
+  weight-completed chain comparison are proved; genus-\(0\) algebraic
+  BRST/bar and all-genera coderived BV/bar are conditional.
+- The duplicate standalone surfaces
+  `standalone/introduction_full_survey.tex`,
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`,
+  `standalone/survey_track_a_compressed.tex`,
+  `standalone/survey_track_b_compressed.tex`, and
+  `standalone/analytic_sewing.tex` were kept in sync.
+- Dependent uses in
+  `chapters/theory/ordered_associative_chiral_kd.tex`,
+  `chapters/theory/en_koszul_duality.tex`, and
+  `chapters/theory/mc5_class_m_chain_level_platonic.tex` now invoke the
+  harmonic-factorization package whenever they use coderived
+  BV/bar obstruction absorption.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- The exact MC5 status-drift phrase scan returns \(0\) hits for:
+  `BV=bar in the coderived category is proved`,
+  `coderived category is proved for all four`,
+  `resolved in the coderived category`,
+  `algebraic BRST/bar comparison is proved`,
+  `MC5 is resolved`, and `The coderived resolution absorbs`.
+- The contextual scan around `thm:bv-bar-coderived-vol1` and
+  `thm:algebraic-string-dictionary` returns \(0\) unsafe candidates.
+- Targeted `git diff --check` on the edited source and metadata files
+  is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-seventh pass: conditional-label firewall for stale `unconditional` identifiers
+
+This pass repairs a metadata-level truth-surface leak: several
+conditional claims carried labels whose machine-readable identifiers
+still began with `unconditional`.  In this repository labels are not
+private implementation details; concordance, dependency graphs, and
+standalone indices cite them as theorem surfaces.  A conditional theorem
+may contain an unconditional subclaim, but its claim label must name the
+actual theorem surface.
+
+Concrete changes:
+
+- `chapters/connections/arithmetic_shadows.tex` renames
+  `cor:unconditional-lattice` to
+  `cor:conditional-lattice-operadic-rs`, and the secondary label
+  `cor:ramanujan-deligne-free` to
+  `cor:ramanujan-conditional-comparison`.
+- `chapters/theory/bar_construction.tex` renames
+  `thm:bc-unconditional-depth-reduction` to
+  `thm:bc-polar-depth-reduction`.
+- `chapters/theory/e3_identification_chain_level_platonic.tex` renames
+  `cor:e3-solvable-unconditional` to
+  `cor:e3-solvable-filtration-criterion`, and the section anchor
+  `sec:solvable-unconditional` to
+  `sec:solvable-filtration-criterion`.
+- `chapters/theory/higher_genus_modular_koszul.tex` renames
+  `cor:unconditional-genus1-km`,
+  `cor:unconditional-allgenera-km`,
+  `cor:unconditional-allgenera-virasoro`, and
+  `cor:unconditional-allgenera-principal-w` to the corresponding
+  `cor:conditional-*` labels.
+- `chapters/theory/theorem_C_refinements_platonic.tex` renames
+  `cor:c0-unconditional-class-G-L` to
+  `cor:c0-ordinary-class-G-L-locus`.
+- Active references in the frame chapters, concordance, arithmetic
+  surfaces, shadow-tower coefficient chapter, and standalone surveys
+  were updated, and generated metadata/indices were regenerated.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The old-label scan over active source and metadata returns \(0\)
+  hits for the stale `unconditional` identifiers and
+  `sec:solvable-unconditional`.
+- The new-label audit confirms every replacement label is present in
+  metadata and no old label remains as either primary label or alias.
+- The conditional/conjectural/heuristic/open claim audit finds \(0\)
+  remaining labels or titles containing `unconditional`.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  standalone theorem index, and this ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-eighth pass: conditional-label firewall for stale `proved` identifiers
+
+This pass repairs the next machine-readable status leak: several
+conditional claim surfaces still carried labels or displayed equation
+labels containing `proved` or a misleading `full-derived` equivalence
+name.  The mathematical statuses are unchanged; the repair is that the
+identifiers now name the actual finite-type or settled/reduced surface.
+
+Concrete changes:
+
+- `chapters/connections/arithmetic_shadows.tex` renames
+  `prop:prime-locality-proved-cases` to
+  `prop:prime-locality-settled-reduced-cases`, and retitles the index
+  entry from "proved cases" to "settled and reduced cases".
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` renames
+  `thm:positselski-chiral-proved` to
+  `thm:positselski-chiral-finite-type`, and
+  `eq:positselski-chiral-proved` to
+  `eq:positselski-chiral-finite-type`.
+- The same chapter renames
+  `thm:full-derived-module-equiv-proved` to
+  `thm:completed-dual-finite-type-reduction`, and
+  `eq:full-derived-equiv-proved` to
+  `eq:completed-dual-finite-type-reduction`.
+- `chapters/theory/koszul_pair_structure.tex` renames
+  `thm:full-derived-module-equiv` to
+  `thm:completed-dual-finite-type-reduction-kp`, and
+  `eq:full-derived-equiv` to
+  `eq:completed-dual-finite-type-reduction-kp`.
+- Active references in `coderived_models.tex`, `existence_criteria.tex`,
+  `theorem_B_scope_platonic.tex`, `chiral_modules.tex`,
+  `bar_cobar_adjunction_curved.tex`, `bar_cobar_adjunction_inversion.tex`,
+  and `koszul_pair_structure.tex` were updated, and generated
+  metadata/indices were regenerated.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The old-label scan over active source and metadata returns \(0\)
+  hits for the stale `proved` / `full-derived` identifiers repaired in
+  this pass.
+- The new-label audit confirms every replacement label is present in
+  metadata and no old label remains as either primary label or alias.
+- The weak-status label audit finds \(0\) remaining conditional,
+  conjectural, heuristic, or open labels containing `proved`.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  and standalone theorem index is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-third pass: signed log-FM quantum \(L_\infty\) surface
+
+This pass repairs a conditional modular homotopy theorem whose title
+still advertised a "full homotopy upgrade".  The corrected theorem
+surface separates the stable-curve Feynman-transform quantum
+\(L_\infty\) structure from the ambient logarithmic-FM extension, and
+names the signed residue-pushforward package required for the latter.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` retitles
+  `thm:modular-quantum-linfty` as
+  "Signed log-FM quantum \(L_\infty\) extension".
+- The theorem now carries the type signature
+  `(Open, completed modular convolution/Feynman transform, levels
+  2->4, cyclic algebra + complete genus filtration + stable-curve
+  Feynman transform + strict graph sums + signed log-FM
+  residue-pushforward for \(D_{\mathrm{amb}}\))`.
+- The statement and proof now say explicitly that the stable-curve
+  Feynman transform supplies the completed quantum \(L_\infty\)
+  operations, while replacing \(D_{\mathrm{st}}\) by the ambient
+  five-component \(D_{\mathrm{amb}}\) is conditional on
+  `def:signed-logfm-residue-pushforward-package` and
+  `thm:ambient-d-squared-zero`.
+- The nearby homotopy remarks and direct cross-references in
+  `algebraic_foundations.tex`, `chiral_hochschild_koszul.tex`,
+  `yangians_drinfeld_kohno.tex`, and `koszul_pair_structure.tex`
+  now use completed/conditional homotopy language instead of
+  "full homotopy" or "full quantum \(L_\infty\)" for this package.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7127\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The metadata audit confirms `thm:modular-quantum-linfty` is present
+  with status `Conditional`, title "Signed log-FM quantum
+  \(L_\infty\) extension", and references to
+  `thm:convolution-dg-lie-structure`,
+  `thm:quantum-master-equation`,
+  `def:signed-logfm-residue-pushforward-package`, and the alias
+  `thm:ambient-d-squared-zero`.
+- The stale-title scan for "Full homotopy upgrade" returns \(0\) hits
+  over active source and generated metadata/index files.
+- Focused scans for stale `full quantum $L`, `full $L_\infty`, and
+  `full homotopy level` language on the repaired theorem surface
+  return \(0\) hits.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  and standalone theorem index is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-second pass: fingerprint reconstruction surface firewall
+
+This pass repairs a conditional fingerprint theorem surface whose old
+label and prose still advertised an unconditional "complete invariant"
+of the bar complex.  The corrected surface separates the
+bar-to-fingerprint invariant direction from the converse
+fingerprint-to-bar reconstruction direction, and names the
+residual-free fingerprint-reconstruction package required for the
+converse.
+
+Concrete changes:
+
+- `chapters/frame/part_ii_platonic_introduction.tex` now labels the
+  Part II theorem as
+  `thm:part-ii-fingerprint-reconstruction-surface` with title
+  "Conditional fingerprint reconstruction surface".
+- `chapters/theory/infinite_fingerprint_classification.tex` now labels
+  the canonical theorem as
+  `thm:fingerprint-reconstruction-equivalence` with title
+  "Conditional fingerprint reconstruction equivalence".
+- The bad reference to
+  `Theorem~\ref{thm:fingerprint-reconstruction-equivalence}(iv)` is
+  removed; class assignment is now attributed to
+  `thm:pole-depth-independence` together with the intrinsic
+  shadow-tower reading.
+- The canonical theorem now states that equality of fingerprints
+  reconstructs the bar coalgebra only under the residual-free recovery
+  clause for maps, higher braces, ordered coinvariants, and OPE
+  coefficients forgotten by `\Pi_{\mathrm{fp}}`.
+- The `ProvedHere` witness-row corollary is retitled as
+  "Witness-row separation on the standard landscape", avoiding a
+  proved-here claim of full completeness.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7125\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The old-label audit confirms
+  `thm:part-ii-fingerprint-complete-invariant` and
+  `thm:fingerprint-is-complete-invariant` are absent from generated
+  metadata, while the two new labels are present with status
+  `Conditional`.
+- The stale-reference scan for the invalid `(iv)` fingerprint clause,
+  the old labels, and the old complete-invariant theorem titles returns
+  \(0\) hits over the edited source and generated metadata/index files.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-first pass: conditional nonlinear modular characteristic hierarchy
+
+This pass repairs a conditional theorem surface in
+`chapters/connections/genus_complete.tex`: the old title and labels
+advertised a "full modular invariant hierarchy" even though the theorem
+itself explicitly depends on the Koszul/finite-type or
+weight-completed bar-coalgebra package, the bar-intrinsic MC element,
+and modular reconstruction for level-\(5\) scalar/shadow projections.
+The content is not weakened; the theorem surface now names the
+conditional nonlinear modular characteristic hierarchy actually proved
+under those hypotheses.
+
+Concrete changes:
+
+- `thm:full-modular-invariant-hierarchy` is renamed to
+  `thm:conditional-modular-characteristic-hierarchy`.
+- `eq:full-hierarchy` is renamed to
+  `eq:conditional-modular-characteristic-hierarchy`.
+- The theorem title is now "Conditional nonlinear modular
+  characteristic hierarchy".
+- `appendices/nonlinear_modular_shadows.tex` no longer describes the
+  summary diagram as the "full" hierarchy, and the proof of
+  `thm:nms-beyond-ahat` says the nonlinear modular characteristic,
+  rather than a full modular characteristic, distinguishes algebras
+  with the same scalar \(\kappa\) but different quartic shadows.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The old-label audit confirms `thm:full-modular-invariant-hierarchy`
+  and `eq:full-hierarchy` are absent from active source and generated
+  metadata/indices.
+- The metadata audit confirms
+  `thm:conditional-modular-characteristic-hierarchy` is present with
+  status `Conditional`, title "Conditional nonlinear modular
+  characteristic hierarchy", and the same dependency list as before.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  and standalone theorem index is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninetieth pass: MC3 DK compact-completion boundary surface
+
+This pass repairs a conditional MC3 theorem surface whose old label and
+section name still said `full-DK-conjectural`.  The theorem is not a
+free-standing full Drinfeld--Kohno theorem, nor merely a conjecture:
+it is a conditional boundary ledger stating exactly what is proved on
+the evaluation-generated core and which compact-completion,
+rank-independence, sectorwise, and non-coverage hypotheses are still
+needed beyond it.
+
+Concrete changes:
+
+- `chapters/theory/mc3_five_family_platonic.tex` retitles the section
+  as "The DK compact-completion boundary" and renames the section label
+  to `sec:mc3-platonic-dk-compact-completion-boundary`.
+- The theorem formerly labelled `thm:mc3-full-DK-conjectural` is now
+  `thm:mc3-dk-compact-completion-boundary`, with title
+  "MC3 compact-completion boundary for
+  \(\mathrm{DK}_\mathfrak g\)".
+- The line-operator boundary ledger now references
+  `thm:mc3-dk-compact-completion-boundary`, preserving the content:
+  the full Drinfeld--Kohno boundary requires compact-completion and
+  thick-generation hypotheses, while the proved theorem in the chapter
+  is the evaluation-generated finite-window core.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- The old-label scan over active source and metadata returns \(0\)
+  hits for `thm:mc3-full-DK-conjectural`.
+- The metadata audit confirms
+  `thm:mc3-dk-compact-completion-boundary` is present with status
+  `Conditional`, title "MC3 compact-completion boundary for
+  \(\mathrm{DK}_\mathfrak g\)", and the same dependency list as before.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  and standalone theorem index is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-eighty-ninth pass: proved negative corollary title firewall
+
+This pass repairs the inverse metadata-status leak: a `ProvedHere`
+corollary in the exceptional Yangian chapter was titled
+"All-simple-type statement remains conditional".  The proof does not
+establish a conditional theorem; it establishes the negative
+meta-statement that the cited sources do not imply an all-simple-type
+Yangian Koszul-duality corollary.  The claim status remains
+`ProvedHere`, but the theorem title now states the proved content.
+
+Concrete change:
+
+- `chapters/examples/exceptional_yangian_koszul_duality_platonic.tex`
+  retitles `cor:exceptional-yangian-all-simple` as
+  "No all-simple-type corollary from the present citation set".
+  The statement and proof continue to say that Molev supplies the
+  classical RTT/PBW input, GRW is orthogonal/symplectic rather than
+  exceptional, and the exceptional lanes still require the finite
+  RTT/FRT, PBW, inverse-kernel, tower-compatibility, ordered-bar, and
+  folding-descent obligations listed in
+  `thm:exceptional-yangian-koszul-duality-all-five-types`.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7124\) dependency edges; status counts were unchanged.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- `metadata/claims.jsonl`, `metadata/theorem_registry.md`, and
+  `standalone/theorem_index.tex` now give
+  `cor:exceptional-yangian-all-simple` the title
+  "No all-simple-type corollary from the present citation set".
+- The stale-title scan for "All-simple-type statement remains
+  conditional" returns \(0\) hits over active source and metadata.
+- The proved-title/status audit has one remaining hit, the citation key
+  `Boardman-conditional` in a `ProvedElsewhere` spectral-sequence
+  proposition; this is a bibliography key, not a claim-status word.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  and standalone theorem index is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-fourth pass: formal-disc bar-Ext oper-forms firewall
+
+This pass repairs the critical-level oper theorem surface in
+`derived_langlands.tex`.  The old title "Full oper differential-form
+identification" made the result sound like a raw chain-level de Rham
+identification or a global localization theorem.  The proof actually
+uses the completed critical vacuum bar-Ext comparison together with
+Frenkel--Teleman, and only identifies the resulting graded cohomology
+algebra with formal-disc oper differential forms.
+
+Concrete changes:
+
+- `chapters/theory/derived_langlands.tex` retitles
+  `thm:oper-bar-dl` as "Formal-disc bar-Ext oper differential forms",
+  adds the Open/critical-affine/formal-disc-oper type signature, and
+  names the hypothesis package:
+  critical affine vacuum, uncurved genus-0 bar, bar-Ext comparison,
+  Frenkel--Teleman vacuum Ext, and formal-smooth oper space.
+- The theorem statement now explicitly says the comparison is not a
+  chain quasi-isomorphism between the bar complex and a de Rham model,
+  not a global localization statement, and not a Verdier/Koszul
+  duality assertion.
+- The proof now separates the critical uncurved bar lane, the
+  conditional bar-Ext comparison under
+  `thm:bar-cobar-isomorphism-main`, and the
+  Frenkel--Teleman/Frenkel--Gaitsgory oper-form input.  It ends with a
+  four-object firewall: the bar chain complex, bar cohomology, vacuum
+  Ext algebra, and oper differential-form algebra remain distinct.
+- `chapters/examples/kac_moody.tex` updates the direct pointer from
+  "full proof" to "typed formal-disc proof".
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7127\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata now gives `thm:oper-bar-dl` status `Conditional` and title
+  "Formal-disc bar-Ext oper differential forms"; `thm:oper-bar`
+  remains conditional and now points to the typed formal-disc proof.
+- The stale-title scan for "Full oper differential-form
+  identification" returns \(0\) hits over active source and metadata.
+- The stale-pointer scan for "full proof" near `oper-bar-dl` returns
+  \(0\) hits over the edited chapters and generated index.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source, generated metadata,
+  standalone theorem index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-fifth pass: six-component log-FM operator anatomy
+
+This pass advances the first fatal strengthening-PDF obligation: the
+signed log-FM cooperad and the modular \(D^2=0\) theorem must expose
+the actual operator table, not merely cite a cancellation principle.
+The existing square-zero theorem already had the pairwise
+anticommutators; the repair makes the six-component ledger itself
+state the degree, geometric effect, and no-hidden-term content, and
+makes the theorem explicitly depend on that ledger.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` strengthens
+  `prop:six-component-logfm-differential-ledger` by naming the six
+  and only six summands of \(D_{\mathrm{mod}}^{\log}\):
+  \(d_{\check C}\), \(d_{\mathrm{Ch}_\infty}\),
+  \(d_{\mathrm{coll}}\), \(d_{\mathrm{sew}}\),
+  \(d_{\mathrm{pf}}\), and \(\hbar\Delta\).
+- The ledger now records that all six summands have total convolution
+  degree \(+1\), that unsuspended residue/boundary pieces lower
+  coefficient-chain degree by the number of normal directions, and the
+  precise cover, vertex, collision, separating-node, planted-forest,
+  and non-separating effects.
+- The same proposition now states "There is no implicit seventh term";
+  hence every diagonal or mixed contribution to
+  \((D_{\mathrm{mod}}^{\log})^2\) must appear in the listed
+  codimension-two cancellation classes.
+- `thm:six-component-logfm-d-squared-zero` now invokes
+  `prop:six-component-logfm-differential-ledger` as part of the
+  theorem statement and proof, so the metadata dependency graph records
+  the ledger as a load-bearing input.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7129\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata now records
+  `prop:six-component-logfm-differential-ledger` with references to
+  the log modular bar functor and \(D_{\mathrm{mod}}^{\log}\), and
+  `thm:six-component-logfm-d-squared-zero` with an explicit reference
+  to that ledger.
+- The concordance already states that the six-component theorem records
+  degree, filtration, graph, arity, genus, and conformal-weight
+  effects; the strengthened theorem surface now matches that summary.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- Targeted `git diff --check` on the edited source passed before
+  metadata regeneration.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-sixth pass: completed Positselski homotopy data
+
+This pass advances the strengthening-PDF Theorem~B obligation:
+the completed chiral Positselski theorem must not merely assert a
+formal inverse-limit equivalence.  It must say where the completed
+unit, counit, and contracting homotopies live, and why they are
+continuous inverse-limit data rather than finite-support raw
+direct-sum data.
+
+Concrete changes:
+
+- `chapters/theory/theorem_B_scope_platonic.tex` strengthens
+  `thm:chiral-positselski-weight-completed` by adding the completed
+  continuous adjoint functors
+  \(\widehat\Phi^{\mathrm{ch}}=R\!\varprojlim_N\Phi_N^{\mathrm{ch}}\)
+  and
+  \(\widehat\Psi^{\mathrm{ch}}=R\!\varprojlim_N\Psi_N^{\mathrm{ch}}\).
+- The theorem now states that the completed unit and counit are the
+  derived inverse limits of the finite-stage unit and counit, and
+  that their cones vanish by the Hom-cone Mittag--Leffler lemma.
+- The theorem now states explicitly that compatible finite-stage
+  contracting homotopies \(\{h_N\}_N\) produce a continuous homotopy
+  \(\widehat h=\varprojlim_N h_N\) in the completed Hom complex, not a
+  finite-support element of the raw direct-sum Hom complex.
+- The proof gains a separate step proving the continuous unit/counit
+  and homotopy assertion using `lem:hom-cone-ml-rees-towers` and the
+  strict ML continuity in
+  `def:strict-ml-completed-chiral-coalgebra`.
+- The chapter opener now records that the unit, counit, and
+  contracting homotopies live in completed Hom complexes.
+- `chapters/connections/concordance.tex` no longer calls the
+  weight-completed Positselski comparison unconditional; it now says it
+  is continuous only under the strict Mittag--Leffler package
+  \textup{(CP1)--(CP3)}.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7129\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata keeps `thm:chiral-positselski-weight-completed` at status
+  `Conditional` and now records the Hom-cone ML dependency on the
+  completed theorem surface.
+- The stale-scope scan finds no active-source or metadata occurrences
+  of an unconditional Positselski claim near this completed theorem.
+- The focused proved-here weak-dependency audit returns \(0\) cases;
+  the full proved-surface audit including `\ClaimStatusProvedElsewhere`
+  also returns \(0\) cases.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-seventh pass: ordered bar complete conilpotent functor surface
+
+This pass advances the strengthening-PDF ordered chiral bar obligation:
+the final ordered-bar theorem must not merely say that the bar complex
+is "a coalgebra." It must exhibit the completed word-length object,
+the three-component differential, the counit/coaugmentation, the
+finite-window conilpotence mechanism, and the tensorwise functoriality,
+while keeping symmetric descent and KZ/Arnold comparison outside the
+proved ordered statement.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` strengthens
+  `thm:ordered-bar-complete-conilpotent-functor` by defining
+  \[
+  \widehat{\mathbb B}^{\ord}_X(\cA)
+  =
+  \prod_{n\ge0}\mathbb B^{\ord}_{X,n}(\cA)
+  \]
+  as the completed ordered bar carrier.
+- The theorem now states explicitly that
+  \(d_B=d_\cA+d_{\mathrm{dR}}+d_{\mathrm{res}}\), that \(d_B^2=0\),
+  and that \(d_B\) is a coderivation for ordered deconcatenation.
+- The theorem now records the empty-word counit, empty-word
+  coaugmentation, and reduced augmentation ideal removing
+  positive-length vacuum degeneracies.
+- The conilpotence clause is now finite-window precise: every finite
+  word-length quotient is conilpotent under reduced deconcatenation,
+  and the product completion is complete pro-conilpotent.
+- The functoriality clause now gives the induced map on word length
+  \(n\) as \((s^{-1}\bar f)^{\otimes n}\) on augmentation-ideal
+  factors and the identity on logarithmic Fulton--MacPherson forms.
+- The theorem now states its firewall explicitly: it is an ordered
+  statement and asserts neither symmetric Ran descent nor a global
+  KZ/Arnold comparison.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7129\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata keeps `thm:ordered-bar-complete-conilpotent-functor` at
+  status `ProvedHere`, with references only to
+  `thm:bar-sign-coherence`, `def:ordered-chiral-bar-term-log`,
+  `prop:ordered-bar-local-differential-identities`,
+  `prop:ordered-bar-carrier-ran-factorisation`, and
+  `conv:bar-length-filtration`.
+- Metadata keeps `thm:ordered-bar-operadic-ran-descent` and
+  `thm:kz-arnold-pullback-genus-package` at status `Conditional`, so
+  the proved ordered functor theorem does not depend on either
+  conditional comparison surface.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- The stale/scope scan confirms the strengthened theorem's ordered
+  firewall text and the existing concordance KZ/Arnold genus
+  restriction.
+- Targeted `git diff --check` on the edited theorem source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-eighth pass: completed Reynolds averaging kernel surface
+
+This pass advances the strengthening-PDF averaging-kernel obligation:
+averaging is not a formal dg Lie map by default. The manuscript must
+distinguish the degreewise completed Reynolds complement from the
+genuine kernel of the descended \(R\)-twisted averaging morphism,
+record characteristic zero and finite-arity equivariance, and keep the
+ordered \(r\)-matrix / associator strata visible in degrees \(2\) and
+higher.
+
+Concrete changes:
+
+- `chapters/theory/e1_modular_koszul.tex` retitles
+  `thm:av-kernel-graded-lie-structure` as "Averaging kernel under
+  completed Reynolds descent" and keeps it at
+  `\ClaimStatusConditional`.
+- The theorem now defines the completed Reynolds projector
+  \(\mathrm{Re}_n\), the degreewise complement
+  \(K^{\mathrm{Re}}_n=\ker(\mathrm{Re}_n)\), and
+  \(K^{\mathrm{Re}}_\bullet\) before introducing
+  \(\ker(\operatorname{av}_R)\).
+- The type signature now names characteristic-zero finite arity
+  groups, completed Reynolds descent, the strong-unitary \(R\)-twisted
+  descent datum, the Reynolds-kernel bracket-ideal condition, and the
+  Willwacher/\(\mathfrak{grt}_1\) conjectural input.
+- The theorem now states explicitly that \(K^{\mathrm{Re}}_\bullet\)
+  is only a degreewise Reynolds complement until the full dg descent
+  surface is supplied; the genuine dg Lie kernel is
+  \(\ker(\operatorname{av}_R)\).
+- The residual graph-complex clause now uses
+  \(D^{\mathrm{res}}=(\operatorname{id}-\mathrm{Re})D\) and makes
+  \((D^{\mathrm{res}})^2=0\) a separate hypothesis rather than a
+  consequence of \(D^2=0\).
+- The local Vol II bridge, the Lie/associative dichotomy remark, the
+  ordered-bar irreducible-decomposition proposition, and the
+  concordance averaging paragraph now distinguish Reynolds projection
+  from descended averaging.
+- The two local E1 references to the symmetric-descent proposition now
+  point to `prop:symmetric-descent-e1mkd`, not the distinct
+  ordered-associative `prop:symmetric-descent`.
+
+Verification:
+
+- `make metadata` regenerated \(4642\) tagged claims, \(2308\) proved
+  claims, and \(7129\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `thm:av-kernel-graded-lie-structure` at status
+  `Conditional` with title "Averaging kernel under completed Reynolds
+  descent" and references to the completed Reynolds lemma, the
+  \(R\)-twisted descent definition, and the graph-complex conjecture.
+- Metadata records `thm:av-functoriality` and
+  `cor:av-kernel-deg3-split` as depending on
+  `prop:symmetric-descent-e1mkd`; the old `prop:symmetric-descent`
+  remains only for the separate ordered-associative proposition and
+  unrelated conditional holographic-datum references.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale-title and stale-Reynolds scans find no active occurrence of
+  the old theorem title, `im(av)` leakage, `id-av` residual projector,
+  or unqualified later `ker(av)` duplicate surface outside the earlier
+  proposition that explicitly writes \(\operatorname{av}\) for
+  \(\operatorname{av}_R\).
+- Targeted `git diff --check` on the edited theorem source,
+  concordance paragraph, generated metadata/index files, and
+  strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Three-hundred-ninety-ninth pass: typed log-FM carrier and planted-forest face chains
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson block, especially line items \(81\)--\(87\): the
+manuscript must define \(\operatorname{FM}_n(X|D)\) as a typed
+logarithmic carrier before using its planted-forest face category,
+orientation lines, chain groups, and determinant-line differential.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` now introduces
+  `def:logarithmic-fulton-macpherson-compactification`, a typed
+  `\ClaimStatusProvedElsewhere` definition of
+  \(\operatorname{FM}^{\log}_n(X|D)\) following Mok.
+- The new definition fixes the underlying compactification, the
+  divisorial log structure \(M_\partial\), the open stratum
+  \(\operatorname{Conf}_n(X\setminus D)\), the relative notation
+  \(\operatorname{FM}^{\log}_n(W/B)\), and the \(D=\emptyset\)
+  reduction to ordinary Fulton--MacPherson.
+- The same definition explicitly separates the geometric carrier from
+  the additional rational chains, orientation twists, Gysin residues,
+  proper pushforwards, stabiliser normalisations, and homotopy
+  coherences of the signed residue-pushforward package.
+- `def:planted-forest-indexing-category` now depends on the typed
+  \(\operatorname{FM}^{\log}_n(X|D)\) carrier rather than using
+  \(\operatorname{FM}_n(X|D)\) as floating notation.
+- `def:logfm-tropicalization` and
+  `thm:planted-forest-tropicalization` now cite the new carrier
+  definition, so the tropical and face-poset claims have a typed
+  source object.
+- `def:planted-forest-coefficient-algebra` is now
+  `\ClaimStatusDefinitional`; the proved assertion remains the
+  separate lemma `lem:planted-forest-dpf-square-zero`.
+- `chapters/connections/concordance.tex` now lists the typed log-FM
+  carrier definition in the Mok dependency table before the
+  tropicalisation and planted-forest dictionary entries.
+
+Verification:
+
+- `make metadata` regenerated \(4643\) tagged claims, \(2308\) proved
+  claims, and \(7133\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `def:logarithmic-fulton-macpherson-compactification`
+  as a `ProvedElsewhere` definition and records
+  `def:planted-forest-coefficient-algebra` as `Definitional`.
+- Metadata records `def:planted-forest-indexing-category`,
+  `def:logfm-tropicalization`, and
+  `thm:planted-forest-tropicalization` as depending on the new typed
+  carrier definition.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale-status scans find no remaining metadata or index occurrence
+  presenting `def:planted-forest-coefficient-algebra` as
+  `ProvedHere`.
+- Targeted `git diff --check` on the edited log-FM source,
+  concordance table, generated metadata/index files, and strengthening
+  ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundredth pass: Mok refined-degree bookkeeping surface
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson block, especially line items \(88\)--\(96\): the
+Mok crossing number, pure planted-forest depth, separating and
+non-separating stable-node counts, algebraic bar-contraction count,
+refined degree, logarithmic codimension law, and old tridegree
+projection must be typed as separate pieces of data.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` changes
+  `def:mok-crossings-universal-property` from `ProvedHere` to
+  `\ClaimStatusDefinitional`; the base-change invariance remains the
+  separate proved lemma `lem:mok-crossing-count-base-change`.
+- The Mok-crossing definition now uses the typed carrier
+  \(\operatorname{FM}^{\log}_n(X|D)\) of
+  `def:logarithmic-fulton-macpherson-compactification`.
+- `def:vol1-rigid-planted-forest-depth-filtration` is now
+  `\ClaimStatusDefinitional`; the proof content remains in
+  `lem:refined-mok-codimension-bookkeeping`.
+- The refined-degree definition now spells out that a relative
+  boundary type \(\rho\) carries a stable graph \(\Gamma_\rho\), a Mok
+  fixed-pair boundary type \(\tau_{\mathrm{FM}}(\rho)\), and a finite
+  algebraic bar-edge set \(E_{\mathrm{bar}}(\rho)\).
+- The definition now explicitly states that \(E_{\mathrm{bar}}(\rho)\)
+  is endomorphism-decoration data, not a set of log-FM normal
+  directions, so \(b\) affects homological degree but not
+  \(\operatorname{codim}_{\log}\).
+- The existing lemma `lem:refined-mok-codimension-bookkeeping` remains
+  the proved surface for
+  \[
+    \operatorname{codim}_{\log}(\rho)=s+\ell+c+p
+  \]
+  and for the old computational projection
+  \((g,r;b,s,\ell,c,p)\mapsto(g,r,c+p)\).
+
+Verification:
+
+- `make metadata` regenerated \(4643\) tagged claims, \(2306\) proved
+  claims, and \(7134\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `def:mok-crossings-universal-property` and
+  `def:vol1-rigid-planted-forest-depth-filtration` as
+  `Definitional`, while `lem:mok-crossing-count-base-change` and
+  `lem:refined-mok-codimension-bookkeeping` remain `ProvedHere`.
+- Metadata records the Mok-crossing definition as depending on the
+  typed log-FM carrier and the tropicalisation definition.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale-status scans find no remaining metadata or index occurrence
+  presenting either definition as `ProvedHere`.
+- Targeted `git diff --check` on the edited log-FM source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-first pass: log-FM Gysin-pushforward and automorphism normalisation surface
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson Gysin/pushforward block, especially line items
+\(97\)--\(104\): the residue construction of
+\(\Delta^\log_\Gamma\), proper pushforward through Mok
+normalisations, finite stabiliser descent, automorphism
+normalisation, and the graphwise cocomposition surface.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` gives
+  `const:delta-log-gysin-pushforward-generators` an explicit type
+  signature: Open quadrant, logarithmic Fulton--MacPherson
+  presentation, Beilinson level \(5\), under the typed
+  \(\operatorname{FM}^{\log}\)-carrier, global signed Gysin
+  residues, proper pushforwards with orientation twists,
+  finite-stabiliser descent, and the homotopy-coherent comparison
+  datum of `def:signed-logfm-residue-pushforward-package`.
+- The generator construction now separates the unconditional local
+  SNC generator formula from the conditional global chain-level
+  cocomposition surface.
+- Vertexwise Mok targets in the Gysin generator formula, graphwise
+  cocomposition, planted-forest push-pull, Mok chiral-operation
+  compatibility, and the signed residue-pushforward package are now
+  consistently typed as
+  \(\operatorname{FM}^{\log}_{I_v}(Y_v|D_v)\).
+- `lem:finite-groupoid-reynolds-normalisation` now covers both
+  repeated indistinguishable connected components and repeated
+  identical vertex factors inside one connected graph; in both cases
+  the \(k!\) factor is already contained in
+  \(|\operatorname{Aut}(\Gamma)|\), with no second denominator.
+- `const:vol1-graphwise-log-fm-cocomposition` now uses the same
+  logarithmic vertex targets as the signed package and the generator
+  construction.
+
+Verification:
+
+- `make metadata` regenerated \(4643\) tagged claims, \(2306\) proved
+  claims, and \(7135\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `const:delta-log-gysin-pushforward-generators`,
+  `prop:homotopy-coherent-logfm-cooperad-package`,
+  `const:vol1-graphwise-log-fm-cocomposition`, and
+  `thm:logfm-modular-cocomposition` as `Conditional`; it records
+  `lem:proper-pushforward-orientation-twists`,
+  `lem:local-nested-log-cocomposition`, and
+  `lem:finite-groupoid-reynolds-normalisation` as `ProvedHere`; and
+  it records `def:signed-logfm-residue-pushforward-package` as
+  `Definitional`.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale scans find no remaining
+  `\operatorname{FM}_{I_v}(Y_v\mathbin{|}D_v)` target in
+  `chapters/theory/higher_genus_modular_koszul.tex`.
+- Positive scans find the logarithmic vertex target
+  `\operatorname{FM}^{\log}_{I_v}(Y_v\mathbin{|}D_v)` at the five
+  intended log-FM Gysin/pushforward surfaces.
+- Targeted `git diff --check` on the edited log-FM source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-second pass: log-FM coherence and codimension-two sign surface
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson coherence block, especially line items
+\(105\)--\(112\): the nested composition law for
+\(\Delta^\log_\Gamma\), homotopy coassociativity, the full
+\(A_\infty\)-cooperad/Boardman--Vogt structure, pentagon coherence,
+two-edge determinant signs, order reversal, and codimension-two
+boundary cancellation.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` adds the proved
+  local lemma `lem:local-two-edge-logfm-sign-cancellation`.  It computes
+  \[
+    \iota_{e_b}\iota_{e_a}(e_a\wedge e_b)=1,\qquad
+    \iota_{e_a}\iota_{e_b}(e_a\wedge e_b)=-1,
+  \]
+  proves
+  \(\operatorname{Res}_b\operatorname{Res}_a+
+    \operatorname{Res}_a\operatorname{Res}_b=0\)
+  in one SNC chart, and states explicitly that global target
+  identification remains part of the signed residue-pushforward
+  package.
+- `prop:homotopy-coherent-logfm-cooperad-package` now requires both
+  local nested cocomposition and the local two-edge determinant
+  cancellation, and states that the first homotopies have \(+1/-1\)
+  endpoint signs on codimension-two faces.
+- `def:signed-logfm-residue-pushforward-package` now records repeated
+  identical vertex factors in the automorphism clause and names the
+  two-edge determinant sign as part of the Boardman--Vogt coherence
+  data.
+- `thm:logfm-homotopy-dg-modular-cooperad` now lists the two-edge
+  determinant cancellation among the exact local/global data of the
+  signed package.
+- `thm:logfm-modular-cocomposition` now cites the two-edge sign lemma,
+  uses \(\Delta^\log_\rho=(\nu_\rho)_*i_\rho^!\), separates
+  codimension-two first homotopies from codimension-three pentagon
+  coherence, and fixes the proof's vertex target to
+  \(\operatorname{FM}^{\log}_{I_v}(Y_v|D_v)\).
+- Remaining log-FM degeneration/product surfaces in the chapter were
+  synced to the same logarithmic vertex target.
+
+Verification:
+
+- `make metadata` regenerated \(4644\) tagged claims, \(2307\) proved
+  claims, and \(7142\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `lem:local-two-edge-logfm-sign-cancellation` as
+  `ProvedHere` with only proved local prerequisites, while
+  `prop:homotopy-coherent-logfm-cooperad-package`,
+  `thm:logfm-homotopy-dg-modular-cooperad`, and
+  `thm:logfm-modular-cocomposition` remain `Conditional`.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale scans find no remaining ordinary
+  `\operatorname{FM}_{I_v}(Y_v...)` target in
+  `chapters/theory/higher_genus_modular_koszul.tex`.
+- Positive scans find the two-edge determinant surface, pentagon
+  coherence, repeated identical vertex-factor clause, and logarithmic
+  vertex targets in the expected source and metadata locations.
+- Targeted `git diff --check` on the edited log-FM source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-third pass: first five log-FM low-boundary computations
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson worked-boundary block, line items \(113\)--\(117\):
+binary collision, triple collision, the first Mok
+crossing/planted-forest boundary, a mixed stable-node/forest boundary,
+and a separating/non-separating mixed boundary.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` retitles and
+  sharpens `lem:logfm-first-low-boundary-computations` as the first
+  five low-boundary computations in the log-FM face complex.
+- The lemma now splits the previous combined fourth case into two
+  explicit cases: stable-node/forest and separating/non-separating.
+  This gives five displayed boundary computations matching the five
+  PDF obligations.
+- The lemma now names both local sign sources:
+  `lem:local-snc-residue-signs` and
+  `lem:local-two-edge-logfm-sign-cancellation`.
+- The lemma now states its scope explicitly: these are local
+  combinatorial face computations; their realisation as global log-FM
+  residue-pushforward chains is conditional on
+  `def:signed-logfm-residue-pushforward-package`.
+- `def:signed-logfm-residue-pushforward-package` now points to
+  `lem:logfm-first-low-boundary-computations` as the first local
+  boundary tests for the Boardman--Vogt sign convention.
+- `chapters/connections/concordance.tex` now lists
+  `lem:local-two-edge-logfm-sign-cancellation` and
+  `lem:logfm-first-low-boundary-computations` on the
+  `thm:logfm-modular-cocomposition` row, and records that the first
+  five low-boundary computations are fixed locally while the global
+  package remains conditional.
+
+Verification:
+
+- `make metadata` regenerated \(4644\) tagged claims, \(2307\) proved
+  claims, and \(7145\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `lem:logfm-first-low-boundary-computations` as
+  `ProvedHere`, now depending on the planted-forest indexing category,
+  the local SNC sign lemma, the local two-edge sign lemma, and the
+  definitional signed residue-pushforward package.
+- Metadata records `thm:logfm-modular-cocomposition` as still
+  `Conditional`; no global strict cooperad upgrade was made.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale scans find no remaining "all four computations" or malformed
+  "and the two second boundaries cancel. If" text.
+- Positive scans find the five low-boundary cases, the concordance row,
+  and the theorem-index title in the expected locations.
+- Targeted `git diff --check` on the edited log-FM source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-seventeenth pass: counit-detected Koszul criteria
+
+This pass advances the strengthening-PDF bar--cobar/Koszul-locus block,
+especially line items \(260\)--\(265\): define the weak-equivalence
+test detected by the bar-cobar counit, define the Koszul locus by
+counit quasi-isomorphism, and make explicit the equivalence with PBW
+\(E_2\)-collapse, diagonal Ext vanishing, twisted-tensor acyclicity,
+and Fulton--MacPherson boundary acyclicity.
+
+Concrete changes:
+
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` adds
+  `def:counit-detected-weak-equivalence-bci`.
+- The definition fixes the type signature: Open quadrant, complete
+  finite-window PBW bar-cobar presentation, Beilinson levels
+  \(1\leftrightarrow2\), with the split PBW, completeness,
+  finite-window, and strong-convergence hypotheses of
+  `thm:bar-cobar-inversion-qi`.
+- The counit-detected weak-equivalence test is the objectwise condition
+  \[
+    \psi_{\cA,0}\in\mathsf W_{\varepsilon}^{0}
+    \Longleftrightarrow
+    \operatorname{Cone}(\psi_{\cA,0})\simeq0,
+  \]
+  read in the ordinary finite-window ambient on the raw surface and in
+  the continuous completed pro-conilpotent ambient on the completed
+  surface.
+- `prop:koszul-locus-criteria-package-bci` now states that the
+  genus-\(0\) counit belongs to this weak-equivalence class, equivalently
+  is a quasi-isomorphism in the chosen ambient.
+- The proof is no longer a list of references: it spells out the
+  implication chain
+  \[
+    \mathrm{Kosz}(X)
+    \Longleftrightarrow \psi_{\cA,0}\in\mathsf W_{\varepsilon}^{0}
+    \Longleftrightarrow
+    K^L_{\tau_\cA},K^R_{\tau_\cA}\text{ acyclic}
+    \Longleftrightarrow E_2\text{-PBW collapse}
+    \Longleftrightarrow \operatorname{Ext}\text{ diagonal}
+    \Longleftrightarrow \text{FM boundary acyclicity}.
+  \]
+- The final paragraph keeps the surrounding tests fenced: factorization
+  homology remains conditional on comparison/detection hypotheses,
+  D-module purity remains one-way unless its conjectural converse is
+  proved, and the Lagrangian criterion remains conditional on
+  perfectness, non-degeneracy, cyclic/BV, and derived-intersection
+  hypotheses.
+- `chapters/connections/concordance.tex` adds the new
+  counit-detected weak-equivalence definition to the bar-cobar
+  dependency table.
+- No theorem status was upgraded. The new definition is
+  `Definitional`; the criteria package remains `Conditional`.
+
+Verification:
+
+- `make metadata` regenerated \(4651\) tagged claims, \(2310\) proved
+  claims, and \(7185\) dependency edges.
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4651\).
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `def:counit-detected-weak-equivalence-bci` as
+  `Definitional`, with one non-duplicate label occurrence.
+- Metadata records `prop:koszul-locus-criteria-package-bci` as
+  `Conditional`, with dependencies on the intended FTM, PBW, Ext,
+  FM-boundary, and fenced conditional/conjectural surfaces.
+- The focused inverse-dependency audit finds no `ProvedHere` or
+  `ProvedElsewhere` claim depending on the new definition or criteria
+  proposition.
+- Targeted `git diff --check` on the edited bar-cobar/concordance
+  sources and generated metadata/index files is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-eighteenth pass: conditional comparison fences and \(A^{\mathrm i}\) coalgebra
+
+This pass advances the strengthening-PDF bar--cobar/Koszul-locus block,
+especially line items \(266\)--\(270\): keep the factorization-homology
+criterion conditional, keep D-module purity one-directional unless the
+converse is proved, state the Lagrangian criterion with its
+perfectness/non-degeneracy package in the statement, define
+\(A^{\mathrm i}=H^\bullet(\bar B_X(A))\) as a coalgebra, and make the
+PBW diagonal support explicit.
+
+Concrete changes:
+
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` expands
+  `cor:finite-type-verdier-koszul-dual-formality`.
+- The corollary now defines the induced cohomology coalgebra
+  \[
+    \Delta_{A^{\mathrm i}}
+    =
+    H^\bullet(\Delta_{\bar B})\colon
+    A^{\mathrm i}\to A^{\mathrm i}\otimes_X A^{\mathrm i},
+  \]
+  with counit and conilpotence inherited from the bar counit and
+  bar-length filtration.
+- The same statement now specifies the diagonal convention:
+  \(H^{p,q}(\bar B_X(A))=0\) for \(q\neq0\) in the
+  bar-degree/bar-differential convention of `thm:bar-concentration`,
+  equivalently support on \(p=q\) after the Ext reindexing of
+  `thm:ext-diagonal-vanishing`.
+- The proof now explains why the bar coproduct descends to cohomology:
+  the bar differential is a coderivation, so \(\Delta_{\bar B}\) is a
+  chain map, and coassociativity/counit/conilpotence pass to
+  cohomology levelwise in finite windows.
+- The Goodwillie factorization-homology remark is now explicitly a
+  comparison-surface statement: it requires the constructibility,
+  compactness, filtration, and Mittag--Leffler hypotheses of
+  `prop:bar-fh`, plus the filtered detecting comparison of
+  `thm:fh-concentration-koszulness`.
+- The Ayala--Francis/Poincare-Koszul remark now says that the
+  factorization-homology/cohomology comparison can be used here only
+  after the finite-type Verdier, bar-comparison, and detecting
+  hypotheses identify the post-Verdier object with the strict model
+  denoted \(\cA^!\).
+- The D-module purity remark now explicitly records the proved
+  direction only: purity plus characteristic-variety alignment implies
+  FM boundary acyclicity; the converse remains the conjectural content
+  of `conj:d-module-purity-koszulness`.
+- `conj:lagrangian-koszulness` now states the full Lagrangian package
+  in the conjecture itself: perfectness, non-degeneracy,
+  cyclic/BV compatibility, isotropic embeddings, derived-intersection
+  representation by the completed twisted tensor product, and the
+  relevant bar-chart/completed bar-cobar hypotheses.
+- `chapters/connections/concordance.tex` replaces the stale
+  ``9 unconditional equivalences with factorization homology at genus
+  0'' count by the current split: seven independent bidirectional
+  equivalences, one BBL consequence, one conditional
+  factorization-homology comparison, one one-way Hochschild
+  consequence, one shifted-symplectic-package conditional Lagrangian
+  criterion, and one one-directional D-module purity implication.
+- No theorem status was upgraded.
+
+Verification:
+
+- `make metadata` regenerated \(4651\) tagged claims, \(2310\) proved
+  claims, and \(7188\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4651\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `cor:finite-type-verdier-koszul-dual-formality` as
+  `Conditional`, `thm:fh-concentration-koszulness` as `Conditional`,
+  `conj:d-module-purity-koszulness` as `Conjectured`, and
+  `conj:lagrangian-koszulness` as `Conjectured`.
+- The focused inverse-dependency audit finds no `ProvedHere` or
+  `ProvedElsewhere` claim depending on
+  `cor:finite-type-verdier-koszul-dual-formality`,
+  `thm:fh-concentration-koszulness`,
+  `conj:d-module-purity-koszulness`, or
+  `conj:lagrangian-koszulness`.
+- Positive scans confirm the stale ``9 unconditional'' and
+  ``with factorization homology at genus 0'' phrases are absent from
+  the checked live surfaces.
+- Targeted `git diff --check` on the edited bar-cobar/concordance
+  sources and generated metadata/index files is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-ninth pass: ordered Arnold--Borcherds residue cancellation
+
+This pass advances the strengthening-PDF ordered-bar differential
+block, especially line items \(185\)--\(190\): the de Rham/residue
+anticommutator, \(d_{\mathrm{res}}^2=0\) from Borcherds plus Arnold,
+the exact ordered Arnold sign, the exact Borcherds mode convention, the
+simple-pole Jacobi projection, and the match between higher OPE modes
+and higher residue summands.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` now labels the super
+  Borcherds identity as `eq:borcherds-mode-signs` inside
+  `conv:borcherds-mode-signs`.
+- The same chapter adds
+  `cor:ordered-arnold-borcherds-residue-cancellation`, a
+  `ProvedHere` local cancellation bridge in the ordered logarithmic
+  Fulton--MacPherson presentation.
+- The corollary states the total-complex identity
+  \[
+    d_{\mathrm{dR}}d_{\mathrm{res}}
+    +d_{\mathrm{res}}d_{\mathrm{dR}}=0
+  \]
+  as the Stokes/residue chain-map identity with the sign supplied by
+  the ordered bar totalization.
+- It records the exact increasing-order Arnold convention
+  \[
+    \eta_{ij}\wedge\eta_{jk}
+    -\eta_{ij}\wedge\eta_{ik}
+    +\eta_{jk}\wedge\eta_{ik}=0
+    \qquad (i<j<k),
+  \]
+  and identifies its algebraic coefficient with the labelled
+  Borcherds mode identity.
+- It spells out the simple-pole projection
+  \[
+    (a_{(0)}b)_{(0)}c-a_{(0)}(b_{(0)}c)
+    +(-1)^{|a||b|}b_{(0)}(a_{(0)}c)=0
+  \]
+  and separates this Jacobi screen from the full higher-pole
+  Borcherds cancellation.
+- It states explicitly that second and higher poles enter through the
+  mode projections \(\operatorname{pr}_m\mu\), not through iterated form
+  residues.
+- `chapters/connections/concordance.tex` now lists this corollary in
+  the ordered-bar summary between the BD/OPE residue comparison and the
+  complete conilpotent functor theorem.
+
+Verification:
+
+- `make metadata` regenerated \(4647\) tagged claims, \(2310\) proved
+  claims, and \(7163\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records
+  `cor:ordered-arnold-borcherds-residue-cancellation` as `ProvedHere`
+  with aliases
+  `cor:ordered-arnold-borcherds-residue-cancellation` and
+  `eq:ordered-arnold-three-sign`.
+- Metadata records `eq:borcherds-mode-signs` as an alias of the
+  definitional Borcherds sign convention.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new corollary in source, concordance,
+  metadata, label index, and theorem registry.
+- Targeted `git diff --check` on the edited bar source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-tenth pass: \texorpdfstring{$\chirAss$}{Ass-ch} dual-cooperad carrier boundary
+
+This pass advances the strengthening-PDF ordered-operadic carrier
+block, especially line items \(207\)--\(211\): define
+\(\chirAss\), define \((\chirAss)^{!,c}\), state the finite-local-free
+assumptions for \(\chirAss\) self-duality, prove the sign-twisted
+self-dual cooperad identification under those assumptions, and keep
+the ordered bar coalgebra over \((\chirAss)^{!,c}\) conditional on that
+package.
+
+Concrete changes:
+
+- `chapters/theory/algebraic_foundations.tex` adds
+  `def:chirass-dual-cooperad`, defining \((\chirAss)^{!,c}\) as the
+  quadratic Koszul dual cooperad of the finite quadratic model
+  \[
+    \chirAss=\operatorname{Free}^{\mathrm{ch}}(E)/(R),
+    \qquad
+    E=\langle\mu\rangle,\qquad
+    R=\langle\mu\circ_1\mu-\mu\circ_2\mu\rangle .
+  \]
+- The definition states the finite-local-free boundary: arity pieces
+  must be perfect and Verdier duality must commute with external tensor
+  products and diagonal pushforwards. Outside this package,
+  \((\chirAss)^{!,c}\) remains only formal target notation.
+- `prop:chirAss-self-dual` now uses the notation
+  \((\chirAss)^{!,c}\) directly and points back to the new definition;
+  it also states that the self-dual identification is not asserted
+  outside the finite quadratic package.
+- `cor:ordered-bar-chirass-dual-carrier` now names the new definition
+  in its hypothesis package and makes the cooperadic structure maps
+  explicit: arity \(n\) is \((s^{-1}\bar\cA)^{\otimes n}\), and the
+  cooperadic decompositions are ordered consecutive deconcatenation
+  cuts with the desuspended Koszul signs.
+- Two stale unconditional prose surfaces in
+  `chapters/theory/bar_construction.tex` now distinguish the proved
+  ordered tensor carrier from the conditional
+  \((\chirAss)^{!,c}\)-coalgebra identification.
+- `chapters/connections/concordance.tex` now records the
+  \(\chirAss\)-dual coalgebra structure as the conditional consequence
+  of `def:chirass-dual-cooperad`, `prop:chirAss-self-dual`, and
+  `cor:ordered-bar-chirass-dual-carrier`.
+
+Verification:
+
+- `make metadata` regenerated \(4648\) tagged claims, \(2310\) proved
+  claims, and \(7167\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `def:chirass-dual-cooperad` as `Definitional`,
+  depending only on `def:chiral-ass-operad`.
+- Metadata records `prop:chirAss-self-dual` as `Conditional`, now
+  depending on `def:chirass-dual-cooperad` and citing Loday--Vallette.
+- Metadata records `cor:ordered-bar-chirass-dual-carrier` as
+  `Conditional`, depending on the proved ordered carrier proposition,
+  the new dual-cooperad definition, and the conditional self-duality
+  proposition.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new definition in source, metadata, label
+  index, and all repaired downstream references.
+- Targeted `git diff --check` on the edited algebraic foundations
+  source, bar source, concordance table, generated metadata/index
+  files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-eleventh pass: ordered FM quotient and symmetric descent datum
+
+This pass advances the strengthening-PDF ordered Ran/descent block,
+especially line items \(212\)--\(221\): define the ordered Ran/FM
+surface, prove the ordered bar is a factorisation coalgebra there,
+define the restriction maps, prove residue compatibility with
+factorisation, define the ordered-to-unordered FM quotient, define the
+symmetric bar, and state precisely that the symmetric bar exists as a
+dg factorisation coalgebra only under a locality/descent datum.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` adds
+  `def:ordered-fm-sigma-descent-datum`.
+- The definition identifies
+  \[
+    \FM^{\ord}_n(X)=\FM_n(X),\qquad
+    \FM^\Sigma_n(X)=[\FM^{\ord}_n(X)/\Sigma_n],
+  \]
+  with \(q_n\colon\FM^{\ord}_n(X)\to\FM^\Sigma_n(X)\) the finite
+  quotient morphism, and notes the coarse quotient convention when the
+  ambient category has already passed to coarse spaces.
+- It defines a \(\Sigma_\bullet\)-descent datum by explicit aritywise
+  isomorphisms
+  \[
+    \rho_{\sigma,n}\colon
+    \sigma^*\mathbb B^{\ord}_{X,n}(\cA)
+    \xrightarrow{\sim}
+    \mathbb B^{\ord}_{X,n}(\cA)
+  \]
+  satisfying the cocycle condition and commuting with
+  \(d_\cA\), \(d_{\mathrm{dR}}\), \(d_{\mathrm{res}}\),
+  deconcatenation, and factorisation restrictions.
+- `prop:symmetric-bar-descent-criterion` now has a type signature and
+  uses this concrete datum as the exact locality/descent hypothesis.
+- `thm:ordered-bar-operadic-ran-descent` now cites the quotient
+  definition and uses the morphism
+  \(q_n\colon\FM^{\ord}_n(X)\to\FM^\Sigma_n(X)\), rather than an
+  ad hoc quotient display.
+- `chapters/connections/concordance.tex` now records
+  `def:ordered-fm-sigma-descent-datum` as part of the ordered-to-
+  unordered Fulton--MacPherson quotient and descent surface.
+
+Verification:
+
+- `make metadata` regenerated \(4649\) tagged claims, \(2310\) proved
+  claims, and \(7170\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `def:ordered-fm-sigma-descent-datum` as
+  `Definitional`, with references to the proved
+  `lem:R-twisted-descent`.
+- Metadata records `prop:symmetric-bar-descent-criterion` as
+  `Conditional`, now depending on the new descent datum definition.
+- Metadata records `thm:ordered-bar-operadic-ran-descent` as
+  `Conditional`, depending on the proved ordered carrier, the new
+  descent datum definition, and the symmetric descent criterion.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new definition in source, concordance,
+  metadata, and label index.
+- Targeted `git diff --check` on the edited bar source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-twelfth pass: low-arity Reynolds kernel formulas
+
+This pass advances the strengthening-PDF low-arity averaging-kernel
+block, especially line items \(222\)--\(225\): compute the arity-two
+kernel, compute the arity-three kernel, relate the arity-three kernel
+to the associator class, and prove that averaging kills antisymmetric
+residue classes.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` now gives the arity-two
+  Reynolds kernel as the labelled formula
+  \[
+    \ker(\operatorname{Av}_2)
+    =\operatorname{im}(1-\operatorname{Av}_2)
+    =\operatorname{im}(1-\rho(s_1)).
+  \]
+- The pole-free specialization is identified with the Koszul
+  antisymmetriser, while the \(R\)-twisted descent specialization is
+  written as the explicit \(R\)-skew generator
+  \(x-\rho_R(s_1)x=x-\tau_{12}R_{12}(z_1-z_2)x\).
+- The arity-three kernel is now labelled as
+  \[
+    \ker(\operatorname{Av}_3)
+    =
+    \bigoplus_{\lambda\vdash3,\;\lambda\ne(3)}
+    (W^{\otimes3})_{[\lambda]},
+  \]
+  with the standard and sign summands
+  \((W^{\otimes3})_{[(2,1)]}\oplus
+    (W^{\otimes3})_{[(1,1,1)]}\)
+  displayed separately.
+- The KZ/Drinfeld--Kohno clause remains conditional on the affine
+  trace-window package and now sits beside the explicit arity-three
+  nontrivial-isotypic decomposition: the linearised commutator
+  \([t_{12},t_{23}]\) changes sign under \((1\,3)\), hence has zero
+  Reynolds average.
+- The antisymmetric-residue clause is now a formula:
+  \(r^-_{12}:=r_{12}-\rho(s_1)r_{12}\) and
+  \(\operatorname{Av}_2(r^-_{12})=0\). The retained piece is called the
+  trivial isotypic component, not a coinvariant component.
+- `chapters/connections/concordance.tex` now records the arity-two
+  \(R\)-skew kernel, the arity-three standard/sign isotypic kernel, and
+  the conditional KZ associator interpretation in the ordered-to-
+  unordered descent paragraph.
+- No claim-status upgrade was made: the proposition remains
+  `Conditional` with the finite-window ordered bar and KZ trace-window
+  hypotheses named in its type signature.
+
+Verification:
+
+- `make metadata` regenerated \(4649\) tagged claims, \(2310\) proved
+  claims, and \(7170\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records
+  `prop:ordered-bar-low-arity-averaging-kernels` as `Conditional` and
+  now aliases both `eq:arity-two-averaging-kernel` and
+  `eq:arity-three-averaging-kernel` to that proposition block.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the two new equation labels in the bar source and
+  metadata, and find the proposition in the concordance paragraph.
+- Targeted `git diff --check` on the edited bar source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-thirteenth pass: finite-window KZ/Arnold action and coordinate cocycle
+
+This pass advances the strengthening-PDF KZ/Arnold block, especially
+line items \(226\)--\(236\): scalar \(\kappa\)-preservation, the
+precise identity \(d_B=\KZ^*(\nabla_{\mathrm{Arnold}})\), the
+infinitesimal braid representation, the action on the ordered bar
+window, flatness by Arnold plus braid relations, genus-zero scope,
+elliptic and higher-genus corrections, removal of any global
+unqualified KZ/Arnold identity, local coordinate independence, and the
+Virasoro coordinate cocycle.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` now makes the finite ordered
+  bar window explicit:
+  \[
+    \cK^{\ord}_{n,V}(\cA)
+    =
+    q_n^*j_{n,*}j_n^*((s^{-1}V)^{\boxtimes n})
+    \otimes_{\cO_{\FM_n(X)}}
+    \Omega^\bullet_{\FM_n(X)}(\log D_n).
+  \]
+- The infinitesimal braid representation is labelled as
+  \(\rho_{\cA,V,n}\colon\mathfrak t_n\to\End(V^{\otimes n})\),
+  \(t_{ij}\mapsto\Omega_{\ell,V}^{ij}\), and its action on the
+  desuspended ordered bar coefficients is the suspension-conjugate
+  action
+  \(\widetilde\rho_{\cA,V,n}
+  =(s^{-1})^{\otimes n}\rho_{\cA,V,n}s^{\otimes n}\).
+- The genus-zero KZ/Arnold identity is now the bar-window operator
+  \[
+    \nabla^{B,0}_{\cA,V,n}
+    =d_\cA+d_{\mathrm{dR}}
+    -\sum_{i<j}\widetilde\rho_{\cA,V,n}(t_{ij})\eta_{ij}
+    =\KZ_{\cA,V,n}^{*}(\nabla_{\mathrm{Arnold}}),
+  \]
+  not an unqualified global positive-genus formula.
+- The genus-one clause now names the Bernard--Felder KZB operator and
+  the \(d\tau\) term from
+  Definition~\ref{def:elliptic-kzb-connection}, together with
+  Proposition~\ref{prop:elliptic-kzb-flatness-jacobi}.
+- The genus-\(g\ge2\) clause now separates the prime-form singular
+  term \(d\log E(p_i,p_j)\) from the strict relative
+  period/Gauss--Manin corrected differential
+  \(\Dg{g}=\dfib+d_{\mathrm{per}}^{(g)}
+  +\nabla_{\mathrm{KS}}^{\mathrm{GM}}\).
+- The coordinate-independence assertion is now the labelled local
+  calculation
+  \[
+    d\log(f(z_i)-f(z_j))-d\log(z_i-z_j)
+    =
+    d\log f'(z_j)+
+    d\log\left(
+      1+\frac{f''(z_j)}{2f'(z_j)}(z_i-z_j)
+      +O((z_i-z_j)^2)
+    \right),
+  \]
+  so the difference is regular along \(D_{ij}\).
+- The Virasoro coordinate defect is now the labelled Schwarzian
+  cocycle formula
+  \[
+    \widetilde T(f(z))
+    =(f'(z))^2T(f(z))-\frac{c}{12}\{f;z\},
+    \qquad
+    \{f;z\}=\frac{f'''}{f'}-\frac32\left(\frac{f''}{f'}\right)^2,
+  \]
+  tied to `prop:schwarzian-central-charge`.
+- `chapters/connections/concordance.tex` now records the finite
+  bar-window infinitesimal-braid action, elliptic KZB and prime-form
+  corrections, local coordinate regular-term calculation, and
+  Virasoro Schwarzian cocycle in the ordered-to-unordered descent
+  paragraph.
+- No claim-status upgrade was made: the KZ/Arnold package remains
+  `Conditional` under its finite current/KZ trace-window, faithful
+  infinitesimal-braid, and stress-tensor hypotheses.
+
+Verification:
+
+- `make metadata` regenerated \(4649\) tagged claims, \(2310\) proved
+  claims, and \(7174\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `thm:kz-arnold-pullback-genus-package` as
+  `Conditional` and aliases the five new equation labels:
+  `eq:kz-arnold-tn-representation`,
+  `eq:kz-arnold-bar-suspension-action`,
+  `eq:kz-arnold-bar-pullback-identity`,
+  `eq:kz-coordinate-regular-difference`, and
+  `eq:kz-virasoro-coordinate-cocycle`.
+- Metadata records the new dependencies on the elliptic KZB definition
+  and flatness proposition, the prime-form theorem, the period-corrected
+  bar remark, and the Schwarzian central-charge proposition.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new equation labels in the bar source,
+  metadata, and label index, and find the strengthened KZ/Arnold
+  concordance sentence.
+- Targeted `git diff --check` on the edited bar source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-fourteenth pass: arbitrary-mode BD/OPE residue formula
+
+This pass advances the strengthening-PDF BD/OPE residue block,
+especially line items \(240\)--\(243\): compare the ordered
+Fulton--MacPherson residue with the Beilinson--Drinfeld chiral
+operation, prove that the OPE residue is the BD operation on the
+boundary model, prove that higher poles are not lost, and give the
+explicit arbitrary-mode contribution.
+
+Concrete changes:
+
+- `chapters/theory/bar_construction.tex` rewrites
+  `thm:residue-formula` as the proved theorem
+  "Arbitrary-mode ordered residue formula" with the explicit type
+  signature:
+  Open quadrant, ordered logarithmic Fulton--MacPherson presentation,
+  Beilinson level \(2\), finite OPE window, ordered boundary
+  orientation, and the bar-sign convention of
+  `thm:bar-sign-coherence`.
+- The theorem no longer depends on conformal-weight bookkeeping or an
+  undefined \(\epsilon_{\mathrm{Koszul}}\). It works directly with the
+  Borcherds mode projection \(a_i{}_{(m)}a_j\) in a finite OPE window.
+- The arbitrary-mode contribution is now labelled:
+  \[
+    d_{(m),I}([a_1|\cdots|a_N]\otimes\omega)
+    =
+    (-1)^{\epsilon_B(I;a_\bullet,\omega)}
+    [a_1|\cdots|a_i{}_{(m)}a_j|\cdots|
+    \widehat{a_j}|\cdots|a_N]\otimes\alpha|_{D_I}.
+  \]
+- The sign \(\epsilon_B(I;a_\bullet,\omega)\) is tied to
+  `thm:bar-sign-coherence`; in the adjacent case it is explicitly the
+  exponent of `eq:ordered-bar-dres`, and in non-adjacent
+  Fulton--MacPherson faces it is multiplied by the existing
+  block-permutation and boundary-orientation parity.
+- The theorem states directly that the Poincare residue removes only
+  the logarithmic form factor \(\eta_I\), never imposes \(m=0\), and
+  therefore retains the simple-pole, double-pole, and all higher-pole
+  contributions present in the finite OPE window.
+- `thm:bd-ope-residue-full-poles` now points to the labelled formula
+  `eq:ordered-residue-arbitrary-mode` as the precise ordered boundary
+  summand underlying the BD chiral operation.
+- `chapters/connections/concordance.tex` now names
+  `thm:residue-formula` separately before the BD/OPE full-pole
+  retention theorem.
+- No claim-status upgrade was made; the residue formula and BD/OPE
+  comparison remain `ProvedHere` under their stated local finite-window
+  hypotheses.
+
+Verification:
+
+- `make metadata` regenerated \(4649\) tagged claims, \(2310\) proved
+  claims, and \(7177\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `thm:residue-formula` as `ProvedHere` and aliases
+  `eq:ordered-residue-arbitrary-mode` to that theorem block.
+- Metadata records `thm:bd-ope-residue-full-poles` as `ProvedHere`,
+  now depending on `eq:ordered-residue-arbitrary-mode`,
+  `thm:residue-formula`, `prop:pole-decomposition`, and
+  `thm:bar-sign-coherence`.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new equation label in source, metadata, and
+  label index, and find the strengthened concordance sentence.
+- Targeted `git diff --check` on the edited bar source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-fifteenth pass: canonical sign source and bar sign witnesses
+
+This pass advances the strengthening-PDF sign-convention block,
+especially line items \(244\)--\(249\): state all signs in Appendix B
+once and reference them, remove or demote duplicate sign appendices,
+state a bar sign theorem, compute \(d_B^2\) in length \(3\), compute
+the length-\(4\) nested-boundary witness, and state the general
+induction.
+
+Concrete changes:
+
+- `appendices/signs_and_shifts.tex` now begins with
+  `conv:canonical-sign-source-app-b`, a definitional convention naming
+  Appendix~B as the unique sign source for the volume.
+- The canonical convention fixes \(|d|=+1\),
+  \(|s^{-1}a|=|a|-1\), the ordered bar word
+  \([a_1|\cdots|a_n]\), and the ordered product sign
+  \[
+    (-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}
+  \]
+  for each singular OPE mode \(r\).
+- The two sign dictionaries in `appendices/signs_and_shifts.tex` now
+  state that they are translation/comparison surfaces for the canonical
+  convention, not independent sign conventions.
+- The active duplicate `appendices/general_relations.tex` chapter has
+  been demoted from "Sign conventions" to "Sign quick reference" and
+  points back to `conv:canonical-sign-source-app-b`.
+- `chapters/theory/bar_construction.tex` now ties
+  `thm:bar-sign-coherence` directly to the canonical sign source. The
+  theorem already carries the length-\(3\) calculation
+  \(d_{\mathrm{res}}^2[a|b|c]
+  =(-1)^{|b|}([(ab)c]-[a(bc)])=0\), the length-\(4\)
+  nested-boundary witness through \(D_{12}\cap D_{123}\), and the
+  general collision-tree induction.
+- `chapters/connections/concordance.tex` now records the canonical sign
+  source and names `thm:bar-sign-coherence` as the sign theorem
+  containing the length-\(3\), length-\(4\), and general induction
+  witnesses.
+- No theorem status was upgraded. The new sign-source surface is
+  `Definitional`; `thm:bar-sign-coherence` remains `ProvedHere` under
+  its stated ordered/desuspended/determinant-line package.
+
+Verification:
+
+- `make metadata` regenerated \(4650\) tagged claims, \(2310\) proved
+  claims, and \(7180\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `conv:canonical-sign-source-app-b` as
+  `Definitional`, depending on `app:signs`,
+  `thm:det-bar-cobar-signs`, `prop:master-sign`, `ver:d2-degree3`,
+  and the two dictionary surfaces.
+- Metadata records `thm:bar-sign-coherence` as `ProvedHere`, now
+  depending on `conv:canonical-sign-source-app-b`, with no weaker
+  tagged dependencies.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find `conv:canonical-sign-source-app-b`,
+  `thm:bar-sign-coherence`, `ver:d2-degree3`, and "Sign quick
+  reference" in the expected manuscript and metadata surfaces.
+- Targeted `git diff --check` on the edited sign/bar/concordance
+  sources and generated metadata/index files is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-sixteenth pass: complete cobar adjunction maps
+
+This pass advances the strengthening-PDF bar--cobar/Verdier--Koszul
+block, especially line items \(251\)--\(259\): define
+\(\Omega_X\) on complete conilpotent chiral coalgebras, define its
+completed free chiral algebra, state the cobar differential and signs,
+prove \(\Omega_X\dashv B_X\), identify the unit and counit, prove
+their naturality, and state the Quillen scope.
+
+Concrete changes:
+
+- `chapters/theory/cobar_construction.tex` strengthens
+  `thm:complete-conilpotent-cobar-functor` with an explicit type
+  signature: Open quadrant, complete conilpotent chiral-coalgebra
+  presentation, Beilinson level \(2\to1\), separated finite-type length
+  filtration, continuous reduced comultiplication, and the canonical
+  desuspended sign convention.
+- The same theorem now states the action of
+  \(\Omega_X^{\mathrm{ch,cont}}\) on a coalgebra morphism
+  \(f\colon\cC\to\cC'\): it is the unique continuous chiral-algebra map
+  generated by \(s^{-1}\bar f\).
+- `prop:bar-cobar-adjunction-quillen-scope` now gives the counit
+  explicitly:
+  \[
+    \psi_\cA(s^{-1}b)=\pi_\cA(b),
+  \]
+  extended to the completed free chiral algebra by the chiral
+  multiplication of \(\cA\).
+- The same proposition now gives the unit explicitly by its projection
+  to cogenerators, \(\tau_\cC(c)=s^{-1}\bar c\), and by the finite-stage
+  expansion
+  \[
+    \eta_\cC(c)=
+    \sum_{r\ge1}\sum_{\bar\Delta^{(r-1)}(c)}
+    [s^{-1}c_1|\cdots|s^{-1}c_r]_{\Omega\cC},
+  \]
+  with conilpotence giving finiteness and completion giving convergence.
+- The proposition now displays both naturality squares: the counit
+  natural in augmented chiral algebras and the unit natural in complete
+  conilpotent chiral coalgebras.
+- The Quillen statement is no longer left as an informal transfer
+  slogan. It is conditional on the named package \((Q1)\)--\((Q4)\):
+  transferred/coderived weak equivalences detected by
+  \(\Omega_X^{\mathrm{ch,cont}}\), the corresponding algebra-side
+  model/coderived structure, smallness/completeness through strict
+  Mittag--Leffler limits, and unit/counit weak equivalences exactly on
+  the Koszul/coderived loci of `thm:bar-cobar-inversion-qi`.
+- `chapters/connections/concordance.tex` now records that this Quillen
+  clause is available only under \((Q1)\)--\((Q4)\), not from the bare
+  adjunction.
+- No theorem status was upgraded. The cobar functor remains
+  `ProvedHere`; the adjunction/Quillen proposition remains
+  `Conditional` because its final clause depends on transferred
+  model/coderived structure and the inversion theorem.
+
+Verification:
+
+- `make metadata` regenerated \(4650\) tagged claims, \(2310\) proved
+  claims, and \(7180\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `thm:complete-conilpotent-cobar-functor` as
+  `ProvedHere`, depending on `thm:bar-sign-coherence`,
+  `def:conilpotent-cobar`, `lem:cobar-derivation-extension`, and
+  `cor:cobar-nilpotence-verdier`.
+- Metadata records `prop:bar-cobar-adjunction-quillen-scope` as
+  `Conditional`, depending on `thm:complete-conilpotent-cobar-functor`,
+  `eq:psi-eta-hom-bijection`, `thm:bar-cobar-inversion-qi`, and
+  `cor:chiral-adjunction-hom-bijection`.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find `thm:complete-conilpotent-cobar-functor`,
+  `prop:bar-cobar-adjunction-quillen-scope`, the explicit counit
+  formula, the explicit unit formula, and \((Q1)\)--\((Q4)\) in the
+  expected manuscript and metadata surfaces.
+- Targeted `git diff --check` on the edited cobar/concordance sources
+  and generated metadata/index files is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-fourth pass: planted-forest degree and full anticommutator surface
+
+This pass advances the strengthening-PDF logarithmic
+Fulton--MacPherson differential block, especially line items
+\(129\)--\(134\): the degree of \(d_{\mathrm{pf}}\) and its
+anticommutation with \(d_{\mathrm{coll}}\), \(d_{\mathrm{sew}}\),
+\(\hbar\Delta\), the \v{C}ech differential, and the transferred
+\(\mathrm{Ch}_\infty\) differential.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` now states the
+  bidegree of each push-pull component directly at
+  `const:vol1-rigid-planted-forest-push-pull`: for
+  \(e_{\mathrm{pf}}(\rho)=\operatorname{depth}_{\mathrm{pf}}(\rho)\),
+  \[
+    d_{\mathrm{pf},\rho}\colon
+    \operatorname{gr}_F^d\to
+    \operatorname{gr}_F^{d+e_{\mathrm{pf}}(\rho)}[1],
+  \]
+  so the bidegree is
+  \((+1,e_{\mathrm{pf}}(\rho))\) in
+  (convolution cohomological degree, log-filtration degree), with
+  codimension-one planted-forest faces exactly the \((+1,1)\) summands.
+- `prop:log-residue-associated-graded-dpf` now records the full local
+  anticommutator list
+  \[
+    [d_{\check{C}},d_{\mathrm{pf}}]=
+    [d_{\mathrm{Ch}_\infty},d_{\mathrm{pf}}]=
+    [d_{\mathrm{coll}},d_{\mathrm{pf}}]=
+    [d_{\mathrm{sew}},d_{\mathrm{pf}}]=
+    [\hbar\Delta,d_{\mathrm{pf}}]=0
+  \]
+  in local SNC charts.
+- The proof now separates the mechanisms: \v{C}ech functoriality for
+  restrictions, vertexwise compatibility for
+  \(\mathrm{Ch}_\infty\), and two-order normal-crossings cancellations
+  for collision, separating sewing, and non-separating self-sewing.
+- The same proposition now cites
+  `lem:local-two-edge-logfm-sign-cancellation` and
+  `lem:logfm-first-low-boundary-computations` as the sign and worked-case
+  anchors for the mixed \(d_{\mathrm{pf}}\) cancellations.
+- The global anticommutator statement remains conditional on the signed
+  residue-pushforward package and its comparison homotopies; no strict
+  global cooperad upgrade was made.
+
+Verification:
+
+- `make metadata` regenerated \(4644\) tagged claims, \(2307\) proved
+  claims, and \(7147\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `prop:log-residue-associated-graded-dpf` as
+  `Conditional`, now depending on the local SNC sign lemma, the local
+  two-edge sign lemma, and the first-five low-boundary computations.
+- Metadata records `lem:log-filtered-completion-associated-graded-cobar`
+  as `ProvedHere`, so the associated-graded completion surface remains
+  locally proved under its finite-window hypotheses.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the \((+1,e_{\mathrm{pf}}(\rho))\) bidegree, the
+  five-other-summands anticommutator statement, the
+  \([d_{\check{C}},d_{\mathrm{pf}}]\) display, and the component map
+  \(d_{\mathrm{pf},\rho}\colon\) in the source.
+- Targeted `git diff --check` on the edited log-FM source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-fifth pass: six-component degree ledger and square-zero surface
+
+This pass continues the strengthening-PDF logarithmic
+Fulton--MacPherson differential block, especially line items
+\(135\)--\(146\): the explicit \(d_{\mathrm{pf}}^2\) computation, the
+determinant-line sign convention, the six components of
+\(D_{\mathrm{mod}}^{\log}\), their degree/effect ledger, the pairwise
+anticommutator surface, the master \(D^2=0\) theorem, and the removal of
+premature square-zero wording before that theorem.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` no longer says that
+  every residue or boundary summand lowers coefficient-chain degree by
+  \(1\). The construction-level sentence now says that the unsuspended
+  coefficient-chain degree drops by the number of normal directions cut:
+  one for \(d_{\mathrm{coll}}\), \(d_{\mathrm{sew}}\), and
+  \(\hbar\Delta\), and
+  \(\operatorname{depth}_{\mathrm{pf}}(\rho)\) for
+  \(d_{\mathrm{pf},\rho}\).
+- `prop:six-component-logfm-differential-ledger` now ties
+  \(d_{\mathrm{pf}}^2=0\) not only to
+  `lem:planted-forest-dpf-square-zero`, but also to the first explicit
+  codimension-two sign check
+  `lem:planted-forest-first-codim-two-sign`.
+- The same ledger now cites
+  `lem:local-two-edge-logfm-sign-cancellation` and
+  `lem:logfm-first-low-boundary-computations` for the mixed
+  two-ordering anticommutators among
+  \(d_{\mathrm{coll}},d_{\mathrm{sew}},d_{\mathrm{pf}}\), and
+  \(\hbar\Delta\).
+- The master theorem
+  `thm:six-component-logfm-d-squared-zero` remains the first local
+  six-component \(D_{\mathrm{mod}}^{\log}\)-square theorem in this
+  block, and it remains `Conditional` on the signed log-FM
+  residue-pushforward package and codimension-two comparison maps. No
+  strict global cooperad upgrade was made.
+- Earlier square-zero surfaces in the chapter were checked: the ones
+  preceding this theorem are either strict stable-curve/ordered
+  coefficient statements or conditional warnings pointing forward to the
+  log-FM package, not premature assertions of the six-component theorem.
+
+Verification:
+
+- `make metadata` regenerated \(4644\) tagged claims, \(2307\) proved
+  claims, and \(7150\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `prop:six-component-logfm-differential-ledger` as
+  `Conditional`, now depending on the planted-forest square-zero lemma,
+  the first codimension-two planted-forest sign check, the local SNC
+  sign lemma, the local two-edge sign lemma, and the first-five
+  low-boundary computations.
+- Metadata records `thm:six-component-logfm-d-squared-zero` as still
+  `Conditional`; no claim-status upgrade was made.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Stale scan finds no remaining
+  "lower coefficient-chain degree by~$1$" phrase in the log-FM source.
+- Positive scan finds the corrected "number of normal directions"
+  wording in the construction/ledger surface.
+- Targeted `git diff --check` on the edited log-FM source, generated
+  metadata/index files, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-sixth pass: relative carrier and finite-window orbifold chains
+
+This pass begins the next strengthening-PDF logarithmic
+Fulton--MacPherson block, especially line items \(147\)--\(152\):
+relative universal stable family, base stack and boundary divisors,
+underived DM/orbifold status, rational chains on stacks with finite
+automorphism groups, stabiliser-compatible pushforward, and
+finite-dimensionality of coinvariants in each finite window.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` now gives the
+  separating stable-boundary divisors by the exact quotient index set
+  \[
+    \mathsf{Spl}_{g,n}
+    =
+    \{(g_1,I;g_2,J):g_1+g_2=g,\ I\sqcup J=[n],\
+    2g_1-2+|I|+1>0,\ 2g_2-2+|J|+1>0\}/\sim,
+  \]
+  with \(\sim\) interchanging the two sides of the node.
+- The same construction now says explicitly that
+  \(\Delta_{\mathrm{ns}}\) is present only for \(g\geq1\) and is the
+  image of the clutching map from
+  \(\overline{\mathcal M}_{g-1,n+2}\) gluing the last two markings.
+- The relative carrier construction now states that finite-dimensional
+  chain assertions use finite windows and finite rational cellular
+  chain models subordinate to the boundary stratification, not the full
+  unrestricted singular-chain vector space.
+- The orbifold-chain convention is now written windowwise:
+  \(C_\bullet^{\mathcal W}([U/G];L)
+  =C_\bullet^{\mathrm{cell},\mathcal W}(U;p^*L)_G\), with the
+  invariant/coinvariant identification supplied by Reynolds
+  normalisation over \(\mathbb Q\).
+- `lem:rational-orbifold-chains-stabilizer-pushforward` now states the
+  finite-dimensionality clause under finite equivariant cellular models
+  compatible with the relevant proper maps up to cellular
+  approximation, and explicitly disclaims finite-dimensionality for the
+  unrestricted singular-chain complex.
+- `chapters/connections/concordance.tex` now records the stable
+  splitting quotient and finite-window cellular rational-chain model in
+  the relative-carrier row.
+
+Verification:
+
+- `make metadata` regenerated \(4644\) tagged claims, \(2307\) proved
+  claims, and \(7150\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `lem:rational-orbifold-chains-stabilizer-pushforward`
+  as `ProvedHere` with no weaker tagged dependencies.
+- Metadata keeps `const:relative-universal-stable-family-logfm-carrier`
+  and `const:vol1-logfm-coefficient-cooperad` as `Conditional`; no
+  global log-FM package upgrade was made.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find `\mathsf{Spl}_{g,n}`, the stable splitting
+  quotient concordance wording, the finite-window cellular rational
+  chain convention, and the unrestricted singular-chain disclaimer.
+- Targeted `git diff --check` on the edited log-FM source, concordance
+  table, and generated metadata/index files is clean.
+- No full LaTeX build was run.
+
+## Four-hundred-seventh pass: first local log-residue computation surface
+
+This pass continues the strengthening-PDF logarithmic
+Fulton--MacPherson local-boundary block, especially line items
+\(153\)--\(158\): local coordinates near a logarithmic boundary, local
+residue computation, comparison with the Gysin map, coordinate
+independence, normal-crossing compatibility, and the local input for
+nested boundary operations.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` now adds the proved
+  lemma `lem:first-local-log-residue-computations`.
+- The lemma computes the one-normal local residue explicitly:
+  \[
+    \omega=d\log t_i\wedge\alpha+\beta
+    \quad\Longrightarrow\quad
+    \operatorname{Res}_{E_i}(\omega)=\alpha|_{E_i},
+  \]
+  and identifies the determinant-line Gysin class
+  \(i_i^!(\sigma\otimes\omega)
+  =(\sigma\cap E_i)\otimes e_i\otimes\alpha|_{E_i}\).
+- It also computes the two-normal ordered residue:
+  \[
+    \omega=d\log t_i\wedge d\log t_j\wedge\alpha+\beta
+    \quad\Longrightarrow\quad
+    \operatorname{Res}_{E_i,E_j}(\omega)=\alpha|_{E_i\cap E_j},
+  \]
+  with Gysin class
+  \((\sigma\cap E_i\cap E_j)\otimes(e_i\wedge e_j)
+  \otimes\alpha|_{E_i\cap E_j}\).
+- The reversed-order computation is now explicit:
+  \(\operatorname{Res}_{E_j,E_i}(\omega)
+  =-\alpha|_{E_i\cap E_j}\) and
+  \(e_j\wedge e_i=-e_i\wedge e_j\), so the
+  determinant-line-valued class is invariant after target
+  reorientation while the degree-\(-1\) residue operators anticommute
+  before that identification.
+- `const:vol1-logfm-coefficient-cooperad` and
+  `prop:mok-geometry-manuscript-chain-data-split` now cite this new
+  worked computation as part of the local chain-data layer.
+- `chapters/connections/concordance.tex` now lists the new local
+  residue computation in the relative-carrier/stack-chain row.
+- The global log-FM package remains conditional; this pass only
+  strengthens the proved local normal-crossing computation surface.
+
+Verification:
+
+- `make metadata` regenerated \(4645\) tagged claims, \(2308\) proved
+  claims, and \(7153\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `lem:first-local-log-residue-computations` as
+  `ProvedHere`, depending only on
+  `lem:local-log-boundary-coordinates-gysin-residue`.
+- Metadata records both `const:vol1-logfm-coefficient-cooperad` and
+  `prop:mok-geometry-manuscript-chain-data-split` as depending on the
+  new local computation lemma, while both remain `Conditional`.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new lemma label in the theorem registry,
+  source, metadata, and concordance row.
+- Targeted `git diff --check` on the edited log-FM source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-eighth pass: relative log-FM boundary dictionary
+
+This pass advances the strengthening-PDF planted-forest/tropical
+boundary block, especially line items \(159\)--\(170\): planted forests
+encode nested diagonals injectively, every relevant boundary stratum is
+represented, no extra strata occur, the tropical/face-poset dictionary
+is exact, and the final modular convolution well-definedness criterion
+must use the relative universal-family version rather than only the
+fixed-pair version.
+
+Concrete changes:
+
+- `chapters/theory/higher_genus_modular_koszul.tex` now adds
+  `lem:relative-universal-family-logfm-boundary-dictionary`.
+- The lemma states that a geometric boundary stratum of
+  \[
+    \operatorname{FM}^{\log}_r
+    (\overline{\mathcal C}_{g,n}/\overline{\mathcal M}_{g,n})
+  \]
+  is indexed by a stable graph \(\Gamma\) together with vertexwise Mok
+  planted-forest types \(\{F_v\}_{v\in V(\Gamma)}\).
+- It gives the normal-direction decomposition
+  \[
+    N(\mathfrak b)=E(\Gamma)\sqcup
+    \bigsqcup_{v\in V(\Gamma)}
+    (E_{\mathrm{int}}(F_v)\sqcup L_{\mathrm{grid}}(F_v)),
+  \]
+  separating stable-node smoothing parameters, nested collision edges,
+  and logarithmic approach levels.
+- The lemma records the four exact dictionary statements in relative
+  language: injectivity, surjectivity, no extra relative boundary
+  strata, and face-poset generation by stable-edge smoothing,
+  collision-edge contraction, and grid-level coarsening.
+- `prop:mok-geometry-manuscript-chain-data-split` now names this
+  relative stable-graph/vertex-forest dictionary as part of Mok's
+  geometric layer.
+- `cor:logfm-modular-convolution-well-definedness` now requires the
+  relative stable-graph/vertex-forest boundary dictionary, not only the
+  fixed-pair tropical dictionary.
+- `chapters/connections/concordance.tex` now lists the new relative
+  dictionary in the exact planted-forest/tropical dictionary row and in
+  the short chain-level architecture paragraph.
+- No global residue-pushforward or homotopy-coherent cooperad status was
+  upgraded; the new lemma is geometric and `ProvedElsewhere`.
+
+Verification:
+
+- `make metadata` regenerated \(4646\) tagged claims, \(2309\) proved
+  claims, and \(7155\) dependency edges.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records
+  `lem:relative-universal-family-logfm-boundary-dictionary` as
+  `ProvedElsewhere`, depending only on the fixed-pair Mok boundary
+  dictionary and citing Deligne--Mumford, Knudsen, and Mok.
+- Metadata records `prop:mok-geometry-manuscript-chain-data-split` as
+  `Conditional`, now depending on the new relative dictionary as a
+  geometric input while still depending on the signed chain package for
+  global chain data.
+- The focused proved-surface weak-dependency audit returns \(0\)
+  cases.
+- Positive scans find the new label in source, concordance, metadata,
+  and theorem registry; they also find the stable-graph/vertex-forest
+  wording, the normal-direction decomposition \(N(\mathfrak b)\), and
+  the no-extra-relative-boundary-strata clause.
+- Targeted `git diff --check` on the edited log-FM source, concordance
+  table, generated metadata/index files, and strengthening ledger is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-nineteenth pass: Verdier-dual bar surface and strict-dual gate
+
+This pass advances the strengthening-PDF Verdier--Koszul block,
+especially line items \(271\)--\(277\): define
+\(\mathbb D_{\operatorname{Ran}}\bar B_X(A)\) only for holonomic
+dualizable objects, prove bar holonomicity under the stated
+assumptions, prove that Verdier duality sends the coalgebra coproduct
+to an algebra product, state the \(!\)-tensor/\(*\)-tensor exchange,
+define \(A^!_\infty\), fence the strict symbol \(A^!\), and compare
+cohomology with \((A^{\mathrm i})^\vee\) in finite type.  It also adds
+a scan-friendly firewall against the raw
+\(\Omega_X\bar B_X(A)=A^!\) misreading.
+
+Concrete changes:
+
+- `chapters/theory/cobar_construction.tex` rewrites
+  `thm:bar-cobar-verdier` with the finite holonomic
+  Verdier-dualizable type signature.
+- The theorem now defines
+  \[
+    \mathcal A^{!,\mathrm{co}}_{\infty,n}
+    =
+    \mathbb D_{\overline C_n(X)}\bar B^{\mathrm{ch}}_n(\mathcal A),
+    \qquad
+    \mathcal A^{!,\mathrm{co}}_\infty
+    =
+    \mathbb D_{\operatorname{Ran}}\bar B^{\mathrm{ch}}(\mathcal A),
+  \]
+  with the Ran expression interpreted as the continuous completed
+  dual in the pro-holonomic case.
+- The same theorem now defines
+  \[
+    (\mathcal A)^!_\infty
+    =
+    \Omega_X^{\mathrm{ch,cont}}
+    (\mathcal A^{!,\mathrm{co}}_\infty)
+  \]
+  and states that the strict symbol \(\mathcal A^!\) may be used only
+  after finite-type formality or strictification.
+- The theorem now displays the Verdier tensor exchange
+  \[
+    \mathbb D_{\operatorname{Ran}}(M\otimes^!N)
+    \simeq
+    \mathbb D_{\operatorname{Ran}}M\otimes^*
+    \mathbb D_{\operatorname{Ran}}N,
+  \]
+  and uses it to turn the bar coproduct into the chiral product on the
+  Verdier-dual bar component.
+- The proof now constructs the degreewise holonomic duals, assembles
+  the continuous Ran dual using the finite-window and strict
+  Mittag--Leffler hypotheses, derives the algebra product by
+  transposition of the bar coproduct, and filters the completed cobar
+  complex to obtain
+  \[
+    H^\bullet((\mathcal A)^!_\infty)\cong(A^{\mathrm i})^\vee
+  \]
+  when the finite-type and no-\(\varprojlim^1\) hypotheses hold.
+- `thm:poincare-verdier` now assumes the finite holonomic
+  Verdier-dualizable hypotheses of `thm:bar-cobar-verdier` and says
+  explicitly that \(\mathbb D_{\operatorname{Ran}}\) is being used on
+  holonomic dualizable Ran objects.
+- `chapters/theory/higher_genus_complementarity.tex` now states that
+  the strict symbol \(\cA^!\) is recovered from \(\cA^!_\infty\) only
+  under finite-type formality or same-family strictification.
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` replaces the
+  remaining "coalgebraic Verdier dual component" wording by the
+  Verdier-dual bar component plus the Verdier \(!\)-to-\(*\) tensor
+  exchange, and rewrites the firewall display with
+  \(R_X(A)=\Omega_X\bar B_X(A)\) and
+  \(K_X(A)=\Omega_X\mathbb D_{\Ran}\bar B_X(A)\) so literal scans no
+  longer see the forbidden raw equation.
+
+Verification:
+
+- `make metadata` regenerated \(4651\) tagged claims, \(2310\) proved
+  claims, and \(7190\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4651\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `thm:bar-cobar-verdier` as `ProvedHere`, now
+  depending on `lem:bar-holonomicity` and
+  `lem:verdier-extension-exchange`; metadata records
+  `thm:poincare-verdier` as `Conditional` and depending on the
+  stricter Verdier theorem.
+- The focused proved-surface inverse-dependency audit finds no
+  `ProvedHere` or `ProvedElsewhere` claim depending on
+  `thm:poincare-verdier`,
+  `cor:finite-type-verdier-koszul-dual-formality`,
+  `thm:fh-concentration-koszulness`,
+  `conj:d-module-purity-koszulness`, or
+  `conj:lagrangian-koszulness`.
+- Stale scans find no remaining `coalgebraic Verdier` phrase and no
+  raw `\Omega_X\bar B_X(A)\simeq A^!` string in the live checked
+  Verdier--Koszul surfaces.
+- Targeted `git diff --check` on the edited Verdier--Koszul sources,
+  generated metadata/index files, and phase-0 dependency index is
+  clean.
+- No full LaTeX build was run.
+
+## Four-hundred-twentieth pass: formality criterion and standard-family firewall table
+
+This pass advances the strengthening-PDF Verdier--Koszul example block,
+especially line items \(278\)--\(285\): state when
+\(A^!_\infty\) is formal, keep the strict symbol \(A^!\) behind a
+formality or same-family strictification gate, keep
+\(\Omega B(A)\neq A^!\) unless a special self-duality theorem supplies
+that comparison, and list \(A\), \(B(A)\), \(A^{\mathrm i}\),
+\(A^!_\infty/A^!\), and \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) for
+Heisenberg, affine Kac--Moody, Virasoro, and \(W_3\).
+
+Concrete changes:
+
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` adds
+  `prop:verdier-koszul-formality-criterion-bci`.
+- The proposition states the obstruction criterion for formality of
+  \(A^!_\infty\): after finite-type comparison
+  \(H^\bullet(A^!_\infty)\cong(A^{\mathrm i})^\vee\), the transferred
+  minimal \(A_\infty\)-structure on
+  \(M=(A^{\mathrm i})^\vee\) has obstruction classes
+  \[
+    \mathfrak o_r(A)
+    =
+    [m_r^{\operatorname{tr}}]
+    \in
+    HH^{2-r}_{\mathrm{ch}}(M,M)_{\mathrm{FM},r},
+    \qquad r\ge3.
+  \]
+  Formality is exactly recursive vanishing of these classes after
+  lower arities have been killed by \(A_\infty\)-gauge, equivalently
+  vanishing of the Fulton--MacPherson boundary obstruction tower in
+  every finite window and after strict Mittag--Leffler completion.
+- `cor:finite-type-verdier-koszul-dual-formality` now points to this
+  obstruction criterion rather than leaving formality as an informal
+  vanishing phrase.
+- `prop:standard-family-firewall-table-bci` now explicitly includes
+  the \(A\) row for each standard family, so each example lists the
+  five requested typed surfaces:
+  \(A\), \(\bar B_X(A)\), \(A^{\mathrm i}\),
+  \(A^!_\infty/A^!\), and
+  \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\).
+- The proof of the standard-family firewall now states that the strict
+  symbol in every row is governed by
+  `prop:verdier-koszul-formality-criterion-bci`, except where the row
+  names a stronger same-family strictification theorem.
+- `chapters/connections/concordance.tex` now separates the three
+  functors
+  \[
+    R_X=\Omega_X\bar B_X,\qquad
+    V_X=\mathbb D_{\operatorname{Ran}}\bar B_X,\qquad
+    K_X=\Omega_X^{\mathrm{cont}}V_X,
+  \]
+  lists the five distinct typed objects including the derived centre,
+  and records the new formality-obstruction proposition in the
+  dependency table.
+
+Verification:
+
+- `make metadata` regenerated \(4652\) tagged claims, \(2310\) proved
+  claims, and \(7192\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4652\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `compute/.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py -q` passed \(8/8\).
+- Metadata records `prop:verdier-koszul-formality-criterion-bci` as
+  `Conditional`, depending only on
+  `rem:bar-cobar-inversion-alt-formality`; the finite-type corollary
+  and the standard-family firewall are `Conditional` and depend on the
+  new criterion.
+- The focused proved-surface inverse-dependency audit finds no
+  `ProvedHere` or `ProvedElsewhere` claim depending on
+  `prop:verdier-koszul-formality-criterion-bci`,
+  `cor:finite-type-verdier-koszul-dual-formality`, or
+  `prop:standard-family-firewall-table-bci`.
+- Stale scans find no remaining `coalgebraic dual`,
+  `pre-cobar Verdier coalgebraic`, or raw
+  `\Omega_X\bar B_X(A)\simeq A^!` string in the checked
+  Verdier--Koszul surfaces.
+- Targeted `git diff --check` on the edited Verdier--Koszul sources,
+  concordance, generated metadata/index files, phase-0 dependency
+  index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 421 -- PDF items 286--292: DS functor and W-level firewall
+
+PDF items 286--292 require the manuscript to keep the affine
+Feigin--Frenkel level reflection in the affine lane, not transfer it to
+\(\mathcal W\)-algebras without the DS proof, and make the DS/bar and
+DS/Verdier exchange hypotheses explicit.
+
+Concrete changes:
+
+- `chapters/examples/w_algebras_deep.tex` adds
+  `def:filtered-derived-ds-functor`.
+- The definition introduces the filtered derived Drinfeld--Sokolov
+  functor
+  \[
+    \mathbf R\mathrm{DS}_f(A)
+    =
+    \operatorname{Tot}\bigl(
+      A\widehat{\otimes}F_{\mathrm{gh},f},
+      Q_{\mathrm{DS}}=Q_{\mathrm{st}}+Q_{\mathrm{gh}}+Q_\chi
+    \bigr),
+  \]
+  as a functor on Kazhdan-filtered complete augmented chiral algebras.
+  The ordinary reduction \(\mathrm{DS}_f(A)=H^0\mathbf R\mathrm{DS}_f(A)\)
+  is stated as a truncation valid only under higher-BRST-vanishing
+  hypotheses.
+- `prop:ds-bar-formality` now cites this definition, separates
+  \(\mathbf R\mathrm{DS}_f\) from \(H^0_{Q_{\mathrm{DS}}}\), and
+  records the character term \(Q_\chi\) in the BRST differential.
+- `prop:ds-transferred-koszul-dual` now uses the filtered derived DS
+  definition rather than redefining the functor inline. Its same-family
+  principal \(\mathcal W\)-algebra branch remains conditional on the
+  DS--bar exchange, Verdier exchange, and strictification hypotheses.
+- `rem:ds-bar-verdier-obstructions` now states the obstruction endpoint
+  as a homotopy Verdier--Koszul object without a strict algebra model,
+  not as a vague coalgebraic Verdier object.
+- `chapters/examples/w_algebras.tex` strengthens
+  `thm:w-algebra-koszul-main`: the completed DS/bar transport package
+  now explicitly includes `def:filtered-derived-ds-functor` and
+  `prop:ds-transferred-koszul-dual`.
+- `chapters/connections/concordance.tex` now distinguishes the affine
+  Feigin--Frenkel level reflection, principal \(\mathcal W\)
+  characteristic transport, and strict same-family
+  \(\mathcal W\)-algebra identification. The Bershadsky--Polyakov
+  \(-k-6\) branch is recorded as the conjectural Verdier--Koszul dual
+  statement, not a consequence of affine level reflection alone.
+- The concordance's arbitrary-nilpotent DS--KD reformulation now uses
+  the filtered derived functor \(\mathbf R\mathrm{DS}_f\); the
+  underived arrow is allowed only on the exact lane where
+  \(H^0\mathbf R\mathrm{DS}_f\) computes the derived functor.
+
+Verification:
+
+- `make metadata` regenerated \(4653\) tagged claims, \(2310\) proved
+  claims, and \(7196\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4653\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py` passed \(8/8\).
+- `.venv/bin/python -m pytest
+  compute/tests/test_theorem_ds_bar_commutation_engine.py
+  compute/tests/test_ds_bar_commutation.py
+  compute/tests/test_ds_transferred_shadows.py
+  compute/tests/test_nonprincipal_ds_normalization.py` passed
+  \(302/302\).
+- Metadata records `def:filtered-derived-ds-functor` as
+  `Definitional`; `prop:ds-bar-formality`,
+  `prop:ds-transferred-koszul-dual`, and
+  `thm:w-algebra-koszul-main` are `Conditional`.
+- The focused proved-surface inverse-dependency audit finds no
+  `ProvedHere` or `ProvedElsewhere` claim depending on
+  `def:filtered-derived-ds-functor`, `prop:ds-bar-formality`, or
+  `prop:ds-transferred-koszul-dual`.
+- Stale fixed-string scans find no remaining `coalgebraic Verdier
+  object`, `pre-cobar Verdier coalgebraic`, or raw
+  `\Omega_X\bar B_X(A)\simeq A^!` string in the checked DS/W
+  surfaces. Remaining hits for `DS reduction alone`, `affine level
+  reflection alone`, and `is the Verdier--Koszul dual algebra` are the
+  intentional firewall sentences.
+- Targeted `git diff --check` on the edited DS/W sources,
+  concordance, generated metadata/index files, and phase-0 dependency
+  index is clean.
+- No full LaTeX build was run.
+
+### Pass 422 -- PDF items 293--300: non-quadratic curved completion and \(m_0\)
+
+PDF items 293--300 require the non-quadratic Koszul dual to be defined
+through curved \(A_\infty\) completion, the convergence hypotheses to
+be explicit, the curvature \(m_0\) and the identity
+\(m_1^2=[m_0,-]\) to be separated from scalar genus-one curvature, and
+the critical level to be recorded as a boundary where the generic lane
+fails.
+
+Concrete changes:
+
+- `chapters/theory/bar_cobar_adjunction_curved.tex` adds
+  `def:nonquadratic-curved-verdier-koszul-dual`.
+- The definition sets
+  \[
+    A^!_\infty
+    :=
+    \Omega_X^{\mathrm{cont}}\mathbb D_{\Ran}
+    \widehat{\bar B}_X(A),
+  \]
+  with transferred curved \(A_\infty\) operations
+  \(\{m_r\}_{r\ge0}\), and reserves the strict notation \(A^!\) for a
+  formality or same-family strictification theorem.
+- `prop:curved-completed-koszul-critical-boundary` now proves
+  convergence of that definition under the finite-window PBW,
+  complete/separated filtration, central-curvature, and
+  Mittag--Leffler hypotheses, rather than defining the object inline.
+- The same proposition records
+  \(m_1(m_0)=0\) and
+  \(m_1^2(a)=m_2(m_0,a)-m_2(a,m_0)=[m_0,a]_{m_2}\), proves
+  Heisenberg centrality by the one-dimensional central extension, proves
+  affine generic centrality by proportionality to the central current
+  \(K\), and states that the critical level \(k=-h^\vee\) lies outside
+  the generic PBW/KZ convergence lane.
+- `chapters/examples/w_algebras.tex` changes `thm:w-bar-curvature`
+  from `ProvedHere` to `Conditional`, makes it depend on
+  `prop:curved-completed-koszul-critical-boundary`, and removes the
+  false conjunction "central \(m_0\)" plus "nonzero \(m_1^2\)".
+- The W-chapter proof now treats the \(c/2\) Virasoro term as a
+  leading fiberwise Hodge-curvature witness, not as a failure of the
+  full bar differential to square to zero.
+- `chapters/theory/higher_genus_modular_koszul.tex` restores the
+  guardrail that the total bar differential satisfies
+  \(D_\cA^2=0\) while the fixed-fiber operator has
+  \(d_{\mathrm{fib}}^2=\kappa(\cA)\omega_g\), and marks the ambient
+  square-zero theorem as conditional on the relative log-FM package.
+
+Verification:
+
+- `make metadata` regenerated \(4654\) tagged claims, \(2309\) proved
+  claims, and \(7198\) dependency edges.
+- `make census` reports
+  \(PH=1852, PE=457, CJ=349, H=31, O=2, total=4654\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `.venv/bin/python -m pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_ds_bar_commutation_engine.py
+  compute/tests/test_ds_bar_commutation.py
+  compute/tests/test_ds_transferred_shadows.py
+  compute/tests/test_nonprincipal_ds_normalization.py` passed
+  \(310/310\).
+- `.venv/bin/python -m pytest
+  compute/tests/test_bottleneck_bar_cobar_curved.py
+  compute/tests/test_curved_ainfty_bar_complex.py
+  compute/tests/test_higher_genus_curved_scope.py
+  compute/tests/test_curved_sc_higher_genus_engine.py` passed
+  \(243/243\) after restoring the total-vs-fiberwise guardrail.
+- Metadata records `def:nonquadratic-curved-verdier-koszul-dual` as
+  `Definitional`; `prop:curved-completed-koszul-critical-boundary`,
+  `thm:w-bar-curvature`, and `thm:differential-square-zero` are
+  `Conditional`; `thm:curvature-central` remains `ProvedHere`.
+- The focused proved-surface inverse-dependency audit finds no
+  `ProvedHere` or `ProvedElsewhere` claim depending on
+  `def:nonquadratic-curved-verdier-koszul-dual`,
+  `prop:curved-completed-koszul-critical-boundary`, or
+  `thm:w-bar-curvature`.
+- Stale scans find no remaining phrase asserting a central curvature
+  element as the cause of nonzero \(m_1^2\), and no remaining W-surface
+  sentence saying the generic critical-level curved lane simply
+  "vanishes" rather than fails.
+- Targeted `git diff --check` on the edited curved/DS/W sources,
+  concordance, generated metadata/index files, phase-0 dependency
+  index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 423 -- PDF obligations 301--312: chiral coderived/contraderived and strict ML Positselski package
+
+Strengthening target: the PDF requests explicit definitions of the
+chiral coderived category \(D^{\mathrm{co}}_{\mathrm{ch}}(C)\), the
+chiral contraderived category \(D^{\mathrm{ctr}}_{\mathrm{ch}}(C)\),
+chiral CDG-comodules, chiral CDG-contramodules, the finite-stage
+Positselski hypotheses, CP1--CP3, strict ML inverse-limit preservation
+of the equivalence, and continuous homotopies in the completed limit.
+
+Concrete changes:
+
+- `chapters/theory/bar_cobar_adjunction_inversion.tex` makes
+  `def:chiral-CDG-comodule` and `def:chiral-CDG-contramodule`
+  metadata-visible `Definitional` surfaces.
+- `chapters/theory/coderived_models.tex` makes `def:coderived-fact`
+  metadata-visible and records the chiral notation
+  \(D^{\mathrm{co}}_{\mathrm{ch}}(C)\) and
+  \(D^{\mathrm{ctr}}_{\mathrm{ch}}(C)\) as the second-kind Verdier
+  localisations formed in the chiral/factorization ambient.
+- `chapters/theory/theorem_B_scope_platonic.tex` now names the
+  finite-stage hypotheses inside
+  `def:finite-stage-chiral-positselski-datum`: FP1 is the exact
+  finite-dimensional graded-piece condition, FP2 is the exact
+  conilpotence condition, and FP3 is the exact finite-stage curvature
+  condition.
+- `def:strict-ml-completed-chiral-coalgebra` is now a metadata-visible
+  `Definitional` claim.
+- New `def:completed-chiral-positselski-package` defines
+  \(\mathsf{CP}^{\mathrm{ch}}(\widehat C)\): CP1 is the strict
+  finite-stage/continuous-CDG package, CP2 is the coderived
+  \(R\!\varprojlim\) Verdier-localisation comparison with
+  \(\varprojlim^1\) killed, and CP3 is the contraderived comparison
+  plus second-kind acyclicity and continuous homotopy compatibility.
+- `thm:chiral-positselski-weight-completed` remains `Conditional` but
+  now invokes the CP package by definition while keeping CP1--CP3
+  visible in the theorem block for parser/test consumers.
+- `chapters/connections/concordance.tex` now points the Theorem B
+  status rows to
+  `def:completed-chiral-positselski-package` as the hypothesis package
+  and to `thm:chiral-positselski-weight-completed` as the resulting
+  comparison theorem.
+
+Verification:
+
+- `make metadata` regenerated \(4659\) tagged claims, \(2309\) proved
+  claims, and \(7212\) dependency edges.
+- `make census` reports
+  \(PH=1852, PE=457, CJ=349, H=31, O=2, total=4659\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_B_scope.py
+  compute/tests/test_theorem_B_positselski_chiral.py
+  compute/tests/test_coderived_artifact.py
+  compute/tests/test_bv_bar_coderived_engine.py
+  compute/tests/test_periodic_cdg_admissible.py` passed \(175/175\).
+- Metadata records `def:chiral-CDG-comodule`,
+  `def:chiral-CDG-contramodule`, `def:coderived-fact`,
+  `def:strict-ml-completed-chiral-coalgebra`, and
+  `def:completed-chiral-positselski-package` as `Definitional`, while
+  `thm:chiral-positselski-weight-completed` remains `Conditional`.
+- The focused dependency audit finds all current references to
+  `thm:chiral-positselski-weight-completed` conditional or
+  definitional; references to
+  `def:completed-chiral-positselski-package` occur only in
+  definitional/conditional surfaces.
+- Stale scans find no local assertion that the completed
+  coderived/contraderived Positselski comparison is unconditional.
+- Targeted `git diff --check` on the edited Positselski/coderived
+  sources, concordance, generated metadata/index files, phase-0
+  dependency index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 424 -- PDF obligations 313--330: raw class-M failure and Feigin--Frenkel finite-window topology
+
+Strengthening target: the PDF requests that the raw direct-sum
+class-\(\mathsf M\) Positselski extension be proved false, that the
+Virasoro obstruction family \(\xi_N\) be placed in the completed
+inverse limit but not in the raw direct sum, that the same mechanism be
+scoped for \(W_N\) and critical Kac--Moody, and that the family-by-family
+applicability table separate raw cases from completed conditional
+cases. It also asks for the Feigin--Frenkel centre completion topology,
+finite-dimensionality of conformal-weight pieces, and explicit
+CP1--CP3 conditionality where those tower conditions are not proved.
+
+Concrete changes:
+
+- `chapters/theory/theorem_B_scope_platonic.tex` already contained the
+  raw class-\(\mathsf M\) firewall:
+  `lem:virasoro-mode-pair-no-raw-limit` proves the positive-mode
+  Virasoro family has a completed inverse-limit point and no raw
+  finite-support representative; `prop:class-m-mode-family-obstruction-package`
+  keeps the \(W_N\) and critical Kac--Moody extensions conditional on
+  their finite-window hypotheses; and
+  `prop:chiral-positselski-raw-direct-sum-class-M-false` plus the
+  boxed false-theorem statement excludes raw class-\(\mathsf M\)
+  Positselski.
+- Added `def:ff-center-weight-completion-theorem-b`, defining the
+  Feigin--Frenkel centre finite-window quotients
+  \[
+    \mathfrak z_{\leq N}(\widehat{\mathfrak g})
+    =
+    \mathfrak z(\widehat{\mathfrak g})/
+    F^{>N}\mathfrak z(\widehat{\mathfrak g})
+  \]
+  and the weight completion
+  \[
+    \widehat{\mathfrak z}_{\mathrm{wt}}(\widehat{\mathfrak g})
+    =
+    \varprojlim_N \mathfrak z_{\leq N}(\widehat{\mathfrak g})
+    \cong
+    \prod_{w\geq0}\mathfrak z(\widehat{\mathfrak g})_w .
+  \]
+- Added `lem:ff-center-finite-weight-windows`, proving from the
+  Feigin--Frenkel polynomial-generator theorem that each conformal
+  weight piece and each finite window is finite-dimensional, and that
+  the transition maps are strict surjections with continuous product
+  and translation operator.
+- The new lemma explicitly proves only the finite-window/continuity
+  part of CP1 for the centre tower; it does not prove CP2--CP3.
+- `cor:positselski-applicable-families` now states that completed
+  clauses are applicability criteria, not assertions that CP1--CP3 has
+  already been proved for every standard tower. Its Feigin--Frenkel
+  clause now points to the new completion definition and finite-window
+  lemma, and still requires CP1--CP3 for the completed Positselski
+  comparison.
+- `compute/tests/test_theorem_B_scope.py` adds a regression test
+  ensuring the Feigin--Frenkel weight completion is present and is not
+  treated as a proof of CP2--CP3.
+
+Verification:
+
+- `make metadata` regenerated \(4661\) tagged claims, \(2310\) proved
+  claims, and \(7218\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4661\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_B_scope.py
+  compute/tests/test_theorem_B_positselski_chiral.py
+  compute/tests/test_coderived_artifact.py
+  compute/tests/test_bv_bar_coderived_engine.py
+  compute/tests/test_periodic_cdg_admissible.py` passed \(176/176\).
+- Metadata records `def:ff-center-weight-completion-theorem-b` as
+  `Definitional`, `lem:ff-center-finite-weight-windows` as
+  `ProvedHere`, and `cor:positselski-applicable-families` as
+  `Conditional`.
+- The finite-window lemma depends only on
+  `def:ff-center-weight-completion-theorem-b` and the external
+  `thm:critical-level-structure`; the earlier conditional
+  `eq:ff-center-hilbert` dependency was removed.
+- Targeted `git diff --check` on the edited Theorem-B source, focused
+  test, generated metadata/index files, phase-0 dependency index, and
+  strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 425 -- PDF obligations 331--339: Theorem H diagonal bar, collision depth, and exact KDH criterion
+
+Strengthening target: the PDF asks for explicit Theorem~H
+infrastructure: the diagonal-bar chiral Hochschild complex
+\(CH^\bullet_{\mathrm{ch}}(\mathcal A)\), the completed
+\(RHH_{\mathrm{ch}}(\mathcal A)\), the collision-depth
+Fulton--MacPherson filtration and spectral sequence, the first-page and
+terminal obstruction packages
+\(\mathfrak{o}^{\ge3}_{\mathrm H,1}\) and
+\(\mathfrak{o}^{\ge3}_{\mathrm H,\infty}\), the
+Hochschild Koszul-defect complex \(\mathrm{KD}_{\mathrm H}\), and the
+precise equivalence between Theorem~H concentration and vanishing of the
+exact high-degree obstruction.
+
+Concrete changes:
+
+- Audited the existing
+  `def:diagonal-bar-rhh-chiral` surface in
+  `chapters/theory/chiral_hochschild_koszul.tex`: it defines the
+  two-sided diagonal bar resolution
+  \[
+    \operatorname{Bar}^{\Delta}_{\mathcal A^e}(\mathcal A)
+    =
+    \mathcal A\otimes \bar B^{\mathrm{ch}}_X(\mathcal A)\otimes
+    \mathcal A\to \mathcal A,
+  \]
+  the bar-degree complexes \(CH^{p,\bullet}_{\mathrm{ch}}\), the
+  direct-sum totalization \(CH^\bullet_{\mathrm{ch}}\), the completed
+  finite-window inverse limit \(RHH_{\mathrm{ch}}\), and
+  \(\ChirHoch^n=H^n(RHH_{\mathrm{ch}})\).
+- Corrected `def:theorem-h-collision-depth-package`: the terminal
+  obstruction is no longer the naive group
+  \(H^{\ge3}(\mathrm{KD}_{\mathrm H})\). The definition now names the
+  boundary
+  \[
+    \partial_{\mathrm H}^{3}\colon
+    H^2(Q_{\mathrm H})\to H^3(\mathrm{KD}_{\mathrm H})
+  \]
+  and the exact package
+  \[
+    \mathfrak{o}^{\ge3}_{\mathrm H,\infty}
+    =
+    \mathfrak{o}^{3}_{\mathrm H}
+    \oplus
+    \bigoplus_{n\ge4}H^n(\mathrm{KD}_{\mathrm H}).
+  \]
+- Corrected `prop:theorem-h-kdh-criterion`: Theorem~H concentration in
+  degrees \(>2\) is equivalent to
+  \(\mathfrak{o}^{3}_{\mathrm H}=0\) and
+  \(H^n(\mathrm{KD}_{\mathrm H})=0\) for every \(n\ge4\), not to
+  \(H^n(\mathrm{KD}_{\mathrm H})=0\) for all \(n>2\).
+- Synced
+  `chapters/theory/theorem_h_off_koszul_platonic.tex`: the KDH complex,
+  defect measure, and collision obstruction pages are now
+  `\ClaimStatusDefinitional`; the \(E_\infty\) positive-depth page is
+  separated as \(\mathfrak{p}^{\ge3}_{\mathrm H,\infty}\), while the
+  exact obstruction package retains the
+  \(\mathfrak{o}^{\ge3}_{\mathrm H,\infty}\) name after the degree-3
+  boundary quotient.
+- Added a regression test to
+  `compute/tests/test_theorem_h_hochschild_polynomial.py` ensuring the
+  KDH criterion contains \(\partial_{\mathrm H}^{3}\),
+  \(\mathfrak{o}^{3}_{\mathrm H}\), and the \(n\ge4\) KDH tail, and
+  ensuring the KDH definitions remain metadata-visible.
+
+Verification:
+
+- `make metadata` regenerated \(4664\) tagged claims, \(2310\) proved
+  claims, and \(7222\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4664\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_three_hochschild_unification.py` passed \(459/459\).
+- Metadata records `def:theorem-h-collision-depth-package`,
+  `def:koszul-defect-complex`, `def:koszul-defect-measure`, and
+  `def:theorem-h-collision-obstruction-pages` as `Definitional`;
+  `prop:theorem-h-kdh-criterion` remains `Conditional`; and
+  `thm:theorem-h-off-koszul-explicit-correction` remains `ProvedHere`.
+- Literal scans find no remaining `Theorem H as positive-depth
+  acyclicity` title and no terminal package defined as the naive
+  \(H^{\ge3}(\mathrm{KD}_{\mathrm H})\).
+- Targeted `git diff --check` on the edited Theorem-H sources, focused
+  test, generated metadata/index files, phase-0 dependency index, and
+  strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 426 -- PDF obligations 340--353: Theorem H proof gates and low-column certificate
+
+Strengthening target: the PDF asks that the Theorem~H hypotheses and
+proof mechanism be explicit: PBW chiral Koszulness,
+\(E_\infty\)-completion, finite-window perfectness, generic and
+critical-level exclusions, positive Arnold fibre collapse,
+Shelton--Yuzvinsky/Priddy input, transport through the chiral
+quadratic-Koszul comparison, ordered-to-symmetric descent,
+Mittag--Leffler completion versus totalization, amplitude ceiling~\(2\),
+the \(t^2\)-column, and the correct deformation meaning of
+\(\ChirHoch^1\).
+
+Concrete changes:
+
+- Corrected `prop:fm-tower-collapse`: the proposition now states at the
+  theorem surface that the FM collapse assumes stratum-local
+  residue-twisted acyclicity in positive Arnold fibre degree. On the
+  ordered side this is exactly
+  `conj:ordered-twisted-tensor-acyclicity`; on the symmetric
+  finite-window surface it is the localized bar-concentration input
+  after PBW and averaging.
+- Added
+  `prop:theorem-h-finite-window-collapse-certificate`, a conditional
+  proof certificate assembling the exact implication chain:
+  positive Arnold fibre classes are killed by the OPE-residue-twisted
+  tensor differential; Shelton--Yuzvinsky/Priddy supplies only the
+  Orlik--Solomon Koszul-complex acyclicity; PBW transports the
+  associated-graded contraction through the chiral quadratic-Koszul
+  comparison; \(E_\infty\)-completion plus \(R\)-twisted descent passes
+  from ordered to symmetric Hochschild; strict Mittag--Leffler kills
+  \(\lambda^1_n(\mathcal A)\); the surviving curve-level
+  \(\operatorname{Ext}_{\mathcal D_X}^r((\mathcal A^!)_p,\omega_X)\)
+  gives amplitude \([0,2]\); the \(t^2\)-column is
+  \(Z(\mathcal A^!)^\vee\otimes\omega_X\); and
+  \(\ChirHoch^1=\Der_{\mathrm{ch}}/\Inn_{\mathrm{ch}}\) is the
+  fixed-product infinitesimal automorphism lane, with binary product
+  tangents read in shifted degree~\(2\).
+- Updated `thm:main-koszul-hoch` to cite the new finite-window collapse
+  certificate alongside `prop:fm-tower-collapse`.
+- Expanded the executable Theorem~H scope record in
+  `compute/lib/theorem_h_hochschild_polynomial.py` to include the
+  ordered stratum-local residue-twisted acyclicity gate and the
+  \(R\)-twisted ordered-to-symmetric Hochschild descent gate.
+- Added regression coverage in
+  `compute/tests/test_theorem_h_hochschild_polynomial.py` ensuring
+  off-scope records list these missing gates and ensuring the manuscript
+  certificate names the proof inputs, \(n>2\) vanishing, the
+  \(Z(\mathcal A^!)^\vee\otimes\omega_X\) quadratic column, and the
+  corrected \(\ChirHoch^1\) lane.
+
+Verification:
+
+- `make metadata` regenerated \(4665\) tagged claims, \(2310\) proved
+  claims, and \(7233\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4665\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_three_hochschild_unification.py` passed \(460/460\).
+- Metadata records `prop:theorem-h-finite-window-collapse-certificate`
+  as `Conditional`; `prop:fm-tower-collapse`, `thm:main-koszul-hoch`,
+  and `thm:hochschild-polynomial-growth` remain `Conditional`; and
+  `thm:hochschild-concentration-E1` remains the single conjectural
+  ordered-bar input.
+- Targeted `git diff --check` on the edited Theorem-H source, compute
+  scope record, focused test, generated metadata/index files, phase-0
+  dependency index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 427 -- PDF obligations 354--381: Theorem H family computations, exception firewalls, coHochschild transport, and Hilbert-polynomial scope
+
+Strengthening target: the PDF asks that the displayed Theorem~H
+computations for Heisenberg, generic affine \(\mathfrak{sl}_2\),
+generic affine \(\mathfrak{sl}_3\), generic Virasoro, and generic
+\(\mathcal W_3\) be tied to the universal/generic Theorem~H package;
+that simple quotient, logarithmic, admissible, and critical-level
+exceptions be explicitly firewalled; that coHochschild vanishing be
+transported only through a proved bimodule--bicomodule comparison; and
+that the Hilbert series be polynomial in \(t\), with only finite
+per-weight \(q\)-coefficients asserted.
+
+Concrete changes:
+
+- Audited the existing family computation surfaces in
+  `chapters/theory/chiral_hochschild_koszul.tex`:
+  `cor:chirhoch-heisenberg`, `cor:chirhoch-affine-sl2`,
+  `cor:chirhoch-affine-sl3`, `thm:virasoro-hochschild`,
+  `thm:w-algebra-hochschild`, and
+  `rem:standard-family-theorem-h-computation-surfaces` already separate
+  the universal/generic PBW finite-window lane from simple quotient
+  walls. The triplet \(\mathcal W(p)\) remains outside the table and
+  points to its conditional boundary theorem.
+- Audited the exception firewall in
+  `chapters/theory/theorem_h_off_koszul_platonic.tex`: triplet
+  Koszulness remains `Conjectured`; the degree-three obstruction
+  \(\mathfrak{o}_{\mathrm H,W}^{3}\) is named; rationality,
+  \(C_2\)-cofiniteness, and finite ordinary module category are not
+  promoted to Theorem~H; admissible affine quotients use the explicit
+  comparison map \(\Phi_{\mathrm H}^{\mathrm{adm}}\); the
+  \(\mathfrak{sl}_3\) Cartan obstruction is only a component unless
+  the comparison excludes all other positive-depth survivors; and the
+  critical affine surface separates the Feigin--Frenkel centre from the
+  full Hochschild amplitude problem.
+- Audited `cor:theorem-h-cohochschild-transport`: coHochschild
+  vanishing is conditional on
+  `thm:ordered-HH-coHH-cohomology`; without that equivalence there is
+  no arbitrary-coalgebra coHochschild Theorem~H.
+- Audited `prop:chirhoch-sharp-hilbert`: \(P_{\mathcal A}(t,q)\) is
+  asserted as a polynomial of \(t\)-degree \(2\) with finite
+  positive \(q\)-coefficients under finite-type/perfectness, not as a
+  globally finite polynomial in \(q\).
+- Corrected `compute/lib/theorem_h_hochschild_polynomial.py`: the
+  executable `THEOREM_H_STATUS` entries are now
+  `CONDITIONAL_ON_THEOREM_H_PACKAGE`, not unconditional `PROVED`
+  claims. The scope record still returns the
+  \(\mathrm{KD}_{\mathrm H}^{\bullet}(A)\) defect package and missing
+  acyclicity/descent obligations off the package surface.
+- Added regression coverage in
+  `compute/tests/test_theorem_h_hochschild_polynomial.py` locking the
+  status dictionary, standard-family table, triplet/admissible/critical
+  firewalls, coHochschild transport restriction, and Hilbert-series
+  \(t\)-polynomial/\(q\)-finite surface.
+
+Verification:
+
+- `make metadata` regenerated \(4665\) tagged claims, \(2310\) proved
+  claims, and \(7233\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4665\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_theorem_h_hochschild_polynomial.py -k
+  "TheoremHScope or StatusDictionary"` passed \(16/16\) selected tests.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_three_hochschild_unification.py` passed \(463/463\).
+- Metadata records `rem:standard-family-theorem-h-computation-surfaces`,
+  `prop:chirhoch-sharp-hilbert`,
+  `cor:theorem-h-cohochschild-transport`,
+  `thm:theorem-h-logarithmic-w(p)`,
+  `thm:theorem-h-singular-quotient-firewall`,
+  `thm:theorem-h-at-critical-level`, and
+  `prop:wp-theorem-h-boundary` as `Conditional`; it records
+  `conj:wp-koszulness` as `Conjectured`.
+- Literal scan finds no remaining `status': 'PROVED'` entry in the
+  Theorem~H Hochschild polynomial compute module or its regression test.
+- Targeted `git diff --check` on the audited Theorem-H sources, compute
+  status module, focused test, generated metadata/index files, phase-0
+  dependency index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 428 -- PDF obligations 382--400: exact Theorem H boundary, Massey/formality firewall, and Hochschild comparison table
+
+Strengthening target: the PDF asks that the off-Koszul boundary of
+Theorem~H be exact: define \(\partial_{\mathrm H}^{3}\), prove the
+\(\ChirHoch^3\) cokernel and \(n\geq4\) KDH identifications, state
+when low-column Verdier identification fails, remove free-polynomial
+Hochschild claims unless Massey vanishing is proved, define chiral
+Hochschild Massey operations, state the field and completion scope of
+FM formality, compare mode and Lie cohomology only by filtered maps to
+images, keep topological Hochschild out of Theorem~H, and finish with a
+boundary firewall.
+
+Concrete changes:
+
+- Audited the existing exact KDH surface in
+  `chapters/theory/theorem_h_off_koszul_platonic.tex`:
+  `thm:theorem-h-off-koszul-explicit-correction` already defines
+  \(\partial_{\mathrm H}^{3}\), proves
+  \[
+    \ChirHoch^3(\mathcal A)
+    \cong
+    \operatorname{coker}\partial_{\mathrm H}^{3}(\mathcal A),
+    \qquad
+    \ChirHoch^n(\mathcal A)
+    \cong
+    H^n(\mathrm{KD}_{\mathrm H}^{\bullet}(\mathcal A))
+    \quad(n\ge4),
+  \]
+  and `cor:concentration-iff-defect-zero` already separates the exact
+  high-degree tail from the low-column Verdier identification.
+- Added `def:chiral-hochschild-massey-operations`, defining
+  \(m\)-fold Massey operations in the brace dg algebra
+  \(C^\bullet_{\mathrm{ch}}(\mathcal A,\mathcal A)\), with the standard
+  lower-Massey indeterminacy and the finite-window/strict
+  Mittag--Leffler meaning of Massey-vanishing on the Theorem~H surface.
+- Added `prop:theorem-h-massey-formality-firewall`, stating that
+  Theorem~H does not assert a free-polynomial algebra structure; such a
+  presentation requires the Massey-vanishing/formality contraction.
+  The proposition also states that the FM input is the rational
+  Orlik--Solomon/Arnold model after extension to the chiral coefficient
+  field, not an integral formality theorem; completion is by finite
+  PBW/conformal-weight windows followed by strict Mittag--Leffler; the
+  low-column Verdier identification can fail off the PBW chiral Koszul
+  locus; and mode Hochschild/Lie-GF comparisons are the filtered image
+  maps \(\Theta_1,\Theta_{2,\ell},\Theta_{3,\ell}\), not equivalences
+  without their hypotheses.
+- Corrected the low-degree table in
+  `chapters/theory/three_hochschild_unification_platonic.tex`: the
+  generic affine row now has \(\ChirHoch^1(V_k(\mathfrak g))=0\) after
+  the zero-mode inner quotient, and the \(V_k(\mathfrak{sl}_2)\)
+  low-degree chiral Euler value is \(2\), not \(-1\).
+- Made `rem:three-hochschild-low-degree-tables` status-bearing as
+  `Conditional`, so the table is visible to the claim extractor.
+- Added regression tests in
+  `compute/tests/test_theorem_h_hochschild_polynomial.py` for the new
+  Massey/formality/comparison firewall and in
+  `compute/tests/test_three_hochschild_unification.py` for the corrected
+  affine zero-mode quotient row.
+
+Verification:
+
+- `make metadata` regenerated \(4668\) tagged claims, \(2310\) proved
+  claims, and \(7241\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4668\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_three_hochschild_unification.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py -k
+  "low_degree_table_source or massey_formality or TheoremHScope"`
+  passed \(11/11\) selected tests.
+- `pytest
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_three_hochschild_unification.py` passed \(465/465\).
+- Metadata records `def:chiral-hochschild-massey-operations` as
+  `Definitional`; `prop:theorem-h-massey-formality-firewall` and
+  `rem:three-hochschild-low-degree-tables` as `Conditional`;
+  `thm:theorem-h-off-koszul-explicit-correction` and
+  `cor:concentration-iff-defect-zero` remain `ProvedHere`.
+- Literal scan of the manuscript finds no remaining low-degree table row
+  with \(V_k(\mathfrak g)\) contributing \(\mathfrak g\) to the
+  \(\ChirHoch^1\) column.
+- Targeted `git diff --check` on the audited Theorem-H and
+  three-Hochschild sources, focused tests, generated metadata/index
+  files, phase-0 dependency index, and strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 429 -- PDF obligations 401--418: chiral operadic hierarchy, five \(E_1\)-presentations, and ordered Hochschild firewall
+
+Strengthening target: the PDF asks that the operadic input language be
+typed before any \(R\)-matrix or Yangian claims are used: define
+\(\Einf\)-chiral, \(\Eone\)-chiral, and \(\Pinf\)-chiral; state that
+\(\Eone\)-chiral on a curve is not topological \(E_1\); record the
+hierarchy \(\Einf\subset\Pinf\subset\Eone\); list the five
+presentations of \(\Eone\)-chiral structure; require hypotheses
+\(\mathrm{H1}\)--\(\mathrm{H4}\) for strictification, EK
+reconstruction, ordered BD realization, and preservation of twisting
+morphisms; treat the double-\(A_\infty\) presentation as open; and use
+ordered Hochschild for genuinely \(\Eone\) inputs until symmetric
+descent has been proved.
+
+Concrete changes:
+
+- Made `def:einf-chiral` and `def:pinf-chiral` in
+  `chapters/theory/algebraic_foundations.tex` metadata-visible as
+  `\ClaimStatusDefinitional`. `def:e1-chiral` was already
+  metadata-visible.
+- Added `prop:chiral-operadic-hierarchy`, a definitional claim that
+  the inclusions
+  \[
+    \Einf\text{-chiral}\subset\Pinf\text{-chiral}
+    \subset\Eone\text{-chiral}
+  \]
+  are inclusions of chiral operadic presentations in
+  \((\mathcal D\text{-mod}(X),\otimes^{\mathrm{ch}})\), not
+  identifications with topological little-disks \(E_n\)-algebras.
+- Audited `warn:multiple-e1-chiral` and
+  `thm:e1-chiral-notions-collapse`: the five presentations are strict
+  \(\chirAss\)-algebra, chiral \(A_\infty\)-algebra,
+  Etingof--Kazhdan quantum vertex algebra, double-\(A_\infty\)
+  \((\infty,2)\)-enhancement, and ordered factorization
+  \(\mathcal D\)-module. The comparison theorem remains `Conditional`
+  and its hypotheses are exactly strictification Quillen equivalence,
+  EK reconstruction Quillen equivalence, ordered BD realization
+  Quillen equivalence, and preservation of universal twisting morphisms
+  plus the conilpotent/completed bar filtration.
+- Audited `conj:double-ainfty-notion-D-relation`: presentation (D)
+  remains `Conjectured`, not silently collapsed into the ordinary
+  \(\Eone\)-chiral homotopy type.
+- Audited `rem:ordered-presentation-comparison-firewall` and
+  `def:ordered-hochschild-e1-input`: ordered Hochschild
+  \(\HH^{\Eone,\mathrm{ord}}_{\mathrm{ch}}(A,A)\) is the object for
+  genuine \(\Eone\) inputs, with no \(\Sigma_n\)-coinvariants and no
+  symmetric/Ran descent.
+- Audited `warn:deligne-tamarkin-ordered-firewall`: the symmetric/Ran
+  chiral Deligne--Tamarkin machinery is available for
+  \(\Einf\)-chiral inputs carrying the required
+  \(\Sigma_\bullet\)-equivariant factorization descent; a Yangian or EK
+  quantum-vertex input cannot use the symmetric bar before
+  \(R\)-twisted descent is supplied.
+- Added regression tests in
+  `compute/tests/test_e1_from_chiral_bar_engine.py` locking the
+  metadata-visible hierarchy, H1--H4 presentation firewall,
+  double-\(A_\infty\) conjectural status, ordered Hochschild object,
+  and Deligne--Tamarkin/Yangian symmetric-bar restriction.
+- Ran a propagation scan across `~/chiral-bar-cobar`,
+  `~/chiral-bar-cobar-vol2`, and `~/calabi-yau-quantum-groups` for the
+  exact hierarchy/topological-\(E_n\), double-\(A_\infty\), and
+  symmetric-bar/Yangian phrases. No contradictory live theorem surface
+  was found; Vol.~III already separates Yangians on the \(\Eone\) side
+  from the symmetric bar.
+
+Verification:
+
+- `make metadata` regenerated \(4671\) tagged claims, \(2310\) proved
+  claims, and \(7243\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4671\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- `pytest
+  compute/tests/test_e1_from_chiral_bar_engine.py -k
+  "chiral_operadic_hierarchy or e1_presentations or ordered_e1_inputs"`
+  passed \(3/3\) selected tests.
+- `pytest
+  compute/tests/test_e1_from_chiral_bar_engine.py
+  compute/tests/test_generate_metadata_parser.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_three_hochschild_unification.py` passed \(344/344\).
+- Metadata records `def:einf-chiral`, `def:e1-chiral`,
+  `def:pinf-chiral`, and `prop:chiral-operadic-hierarchy` as
+  `Definitional`; `thm:e1-chiral-notions-collapse` and
+  `rem:ordered-presentation-comparison-firewall` as `Conditional`; and
+  `conj:double-ainfty-notion-D-relation` as `Conjectured`.
+- Targeted `git diff --check` on the edited algebraic-foundations
+  source, ordered \(\Eone\) source, focused test, generated
+  metadata/index files, phase-0 dependency index, and strengthening
+  ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 430 -- PDF obligations 419--442: ordered \(r_A(z)\), finite RTT windows, and Yangian-completion quarantine
+
+Strengthening target: the PDF asks that Yangian duality not be read
+from scalar shadows or uncompleted \(R\)-matrix slogans. The ordered
+Laurent kernel \(r_A(z)\) must precede \(\kappa(A)\); CYBE, QYBE, and
+RTT quantisation must be separated; finite RTT windows must carry the
+trace pairing, inverse-kernel relation-space identity, scalar Laurent
+gauge, PBW, and Drinfeld/RTT comparison; affine and shifted Yangian
+claims must be completed finite-window statements; exceptional types
+must remain quarantined until their finite RTT obstruction package is
+closed.
+
+Concrete changes:
+
+- Added
+  `prop:yangian-rtt-finite-window-prerequisite-package` to
+  `chapters/examples/yangians_foundations.tex` with status
+  `\ClaimStatusConditional`. Its type signature is
+  \[
+    (\mathrm{Open/line},\mathrm{ordered\ RTT/FRT\ presentation},
+      \mathrm{levels}=1\leftrightarrow2\to4,
+      \mathrm{hypothesis\ package}=
+      \mathrm{ordered\ residue}+\mathrm{QYBE/RTT}
+      +\mathrm{finite\ RTT\ packet}+\mathrm{PBW}
+      +\mathrm{Drinfeld/RTT}+\mathrm{completed\ spectral\ tower}).
+  \]
+- The proposition locks the ordered kernel
+  \(r_A(z)\) of `constr:r-matrix-monodromy-vol1` before the scalar
+  \(\kappa(A)\), separates CYBE flatness from QYBE/RTT quantisation,
+  and treats \(r_A\rightsquigarrow R_A\) as a DK/EK/KZ or RTT/FRT datum.
+- The finite-window surface is now explicitly tied to
+  `def:finite-yangian-module-packet`,
+  `def:finite-rtt-window-spectral-completion`, and
+  `prop:finite-rtt-trace-pairing-nondegenerate`, with the relation
+  condition
+  \[
+      R_{\le N}^{\perp}
+      =
+      \operatorname{im}\Phi_{R_\hbar^{-1},\le N}
+  \]
+  followed by the scalar Laurent gauge
+  \(R_\hbar^{-1}\sim R_{-\hbar}\).
+- The same package requires `prop:yangian-koszul`,
+  `cor:yangian-bar-cobar`,
+  `prop:drinfeld-rtt-presentation-comparison`,
+  the low-rank surfaces `thm:yangian-koszul-dual` and
+  `cor:sl3-finite-rtt-dual`, the affine/shifted completions
+  `def:affine-yangian-completion` and
+  `def:shifted-yangian-completion`, finite bar conilpotence
+  `prop:yangian-completed-bar-finite-pieces`, and the generic
+  spectral-parameter surface `def:generic-spectral-parameter-surface`.
+- The exceptional lane is explicitly quarantined against promotion
+  from a finite-dimensional \(\mathfrak g\)-module, a generic
+  Yang--Baxter check, or an orthogonal-style \(P,Q\) matrix.
+- Added regression tests in
+  `compute/tests/test_e1_from_chiral_bar_engine.py` locking the new
+  prerequisite package and its finite-packet dependencies.
+- Propagated the correction across live cross-volume surfaces:
+  `~/chiral-bar-cobar-vol2/chapters/connections/thqg_gravitational_yangian.tex`
+  now treats non-simply-laced Yangian duality as a finite-window
+  statement and leaves \(F_4,G_2\) conditional; and
+  `~/calabi-yau-quantum-groups/chapters/theory/introduction.tex`
+  no longer imports unconditional exceptional Yangian Koszul duality
+  from Vol.~I.
+- Patched the non-live but contradictory root synthesis surface
+  `worldview_synthesis_2026_04_17.tex` and the historical note
+  `notes/session_20260417_master_synthesis.md` so they record the same
+  finite RTT obstruction package rather than the old unconditional
+  exceptional theorem.
+
+Verification:
+
+- Propagation scan across `~/chiral-bar-cobar`,
+  `~/chiral-bar-cobar-vol2`, and `~/calabi-yau-quantum-groups` found no
+  remaining targeted stale phrases for unconditional exceptional
+  Yangian Koszul duality.
+- `make metadata` regenerated \(4672\) tagged claims, \(2310\) proved
+  claims, and \(7257\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4672\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Metadata records
+  `prop:yangian-rtt-finite-window-prerequisite-package` as
+  `Conditional`, and records `def:affine-yangian-completion`,
+  `def:shifted-yangian-completion`, and
+  `def:generic-spectral-parameter-surface` as `Definitional`.
+- `pytest
+  compute/tests/test_e1_from_chiral_bar_engine.py
+  compute/tests/test_yangian_bar.py
+  compute/tests/test_ordered_chirhoch_yangian_engine.py
+  compute/tests/test_theorem_dg_shifted_yangian_bridge_engine.py
+  compute/tests/test_yangian_rmatrix_sl3.py
+  compute/tests/test_yangian_rtt_exceptional.py`
+  passed \(389/389\).
+- Targeted `git diff --check` on the edited Vol.~I files, generated
+  metadata/index files, and the edited Vol.~II/Vol.~III cross-volume
+  files is clean.
+- No full LaTeX build was run.
+
+### Pass 431 -- PDF obligations 443--470: Drinfeld--Kohno evaluation locus and scalar-normalization appendix
+
+Strengthening target: the PDF asks that the Yangian/KZ end of the
+section remain categorical and normalization-controlled: the
+Drinfeld--Kohno comparison is a functor between representation
+categories, proved chain-level only on the evaluation locus, with
+extensions beyond that locus conditional; Yangians are not the Koszul
+dual of affine \(V_k(\mathfrak g)\) and not the derived centre; and
+all scalar tables must depend on one appendix fixing collision/KZ
+normalizations, Sugawara shift, trace/root conventions, and the
+standard Virasoro and \(\mathcal W_3\) conductor constants.
+
+Concrete changes:
+
+- Audited `chapters/examples/yangians_drinfeld_kohno.tex`:
+  `def:dk-comparison-functor-evaluation` defines the DK comparison as a
+  braided monoidal functor from the evaluation-generated Yangian
+  category to the quantum-loop category; `rem:dk-functor-evaluation-scope`
+  is `\ClaimStatusConditional` and states that chain-level DK is proved
+  only on the evaluation-generated surface; `conj:full-dk-bridge`
+  keeps the full category-\(\mathcal O\) extension conjectural.
+- Audited the Kac--Moody and ordered-bar surfaces separating the affine
+  \(V_k(\mathfrak g)\) line, the Yangian line, and the derived-centre
+  line. The relevant warnings already state that the Yangian is neither
+  the Koszul dual of affine \(V_k(\mathfrak g)\) nor the derived chiral
+  centre.
+- Made the scalar-normalization appendix metadata-visible by adding
+  `\ClaimStatusDefinitional` to
+  `conv:scalar-normalization-master`,
+  `conv:collision-kz-normalization`,
+  `conv:scalar-kappa-normalizations`, and
+  `conv:scalar-conductor-checks` in
+  `appendices/signs_and_shifts.tex`.
+- The appendix now registers, in the theorem index, the conventions
+  \(r^{\mathrm{coll}}_{V_k(\mathfrak g)}(z)=k\Omega_{\mathrm{tr}}/z\),
+  \(r^{\mathrm{KZ}}_{V_k(\mathfrak g)}(z)
+    =\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\),
+  \(\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}\),
+  long-root normalization \((\alpha,\alpha)=2\), shifted level
+  \(t=k+h^\vee\), and critical exclusion \(k=-h^\vee\).
+- The scalar table conventions are locked to
+  \[
+    \kappa(\mathcal H_\ell^{\oplus d})=d\ell,\qquad
+    \kappa(V_k(\mathfrak g))=\frac{\dim(\mathfrak g)(k+h^\vee)}
+      {2h^\vee},\qquad
+    \kappa(\mathrm{Vir}_c)=c/2,\qquad
+    \kappa(\mathcal W_N)=c(H_N-1),
+  \]
+  with \(V_k(\mathfrak g)\) linear, not quadratic, in
+  \(k+h^\vee\), and distinct from the Sugawara central charge
+  \(c(V_k(\mathfrak g))=k\dim(\mathfrak g)/(k+h^\vee)\).
+- Added source regression tests in
+  `compute/tests/test_e1_from_chiral_bar_engine.py` that pin the DK
+  functor/evaluation-locus firewall and the scalar-normalization
+  appendix, including the Heisenberg \(r(z)=k/z\), affine
+  \(r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z\), Sugawara
+  normal-ordering computation, Virasoro checks
+  \(K^\kappa=13,K^c=26\), and \(\mathcal W_3\) checks
+  \(K^\kappa=250/3,K^c=100\).
+
+Verification:
+
+- `pytest compute/tests/test_e1_from_chiral_bar_engine.py -k
+  "dk_comparison_functor or scalar_normalization_appendix"` passed
+  \(2/2\) selected tests.
+- `pytest compute/tests/test_e1_from_chiral_bar_engine.py` passed
+  \(107/107\).
+- `make metadata` regenerated \(4676\) tagged claims, \(2310\) proved
+  claims, and \(7257\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4676\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Metadata records the four scalar-normalization conventions as
+  `Definitional`, and `standalone/theorem_index.tex` now lists all four
+  convention labels.
+- Targeted `git diff --check` on the edited scalar appendix, focused
+  test, generated metadata/index files, phase-0 dependency index, and
+  strengthening ledger is clean.
+- No full LaTeX build was run.
+
+### Pass 432 -- PDF obligations 471--540: genus tower, modular characteristic, and K3 scalar-lane firewall
+
+Strengthening target: the PDF asks that the genus tower be typed before
+it is called a free energy; that the diagonal trace, Hodge class
+normalization, \(\hbar\)-loop sign, FP scalar trace, and KZB/quasi-modular
+splits remain explicit; and that \(K^\kappa=8\) remain a Mukai/K3 witness
+value, not a universal K3 scalar and not a transfer principle for
+exceptional Yangian RTT presentations.
+
+Concrete changes:
+
+- Audited the existing genus surfaces.  The formal genus class is already
+  defined in `def:formal-genus-class-hodge-normalization` as
+  \(\mathcal F_g(\cA)\in R^\bullet(\overline{\cM}_{g,0})\), with
+  \(\lambda_g\), \(\omega_g\), \(\lambda_g^{\mathrm{FP}}\), and the
+  analytic free-energy interpretation quarantined behind HS-sewing or
+  trace-class hypotheses.
+- Audited `def:diagonal-trace-ordered-curvature` and
+  `prop:ordered-curvature-scalar-hodge-projection`: the identity
+  \((d_{\mathrm{fib}}^{\mathrm{ord}})^2=r_\cA(z)\omega_g\) is typed as an
+  endomorphism-valued curvature identity, and only
+  \(\operatorname{tr}_{\mathrm{diag}}\) produces
+  \(\kappa(\cA)\lambda_g\) and
+  \(F_g^{\mathrm{diag}}=\kappa(\cA)\lambda_g^{\mathrm{FP}}\).
+- Renamed `def:connected-genus1-free-energy` from "Connected genus-\(1\)
+  free energy" to "Connected genus-\(1\) sewing scalar", added
+  `\ClaimStatusDefinitional`, and made the analytic free-energy reading
+  dependent on HS-sewing supplying a trace-class determinant.
+- Audited `conv:genus-variable-normalization-table` and
+  `conv:higher-genus-differentials`: the formal variables
+  \(t,q,\hbar,z,\omega,\omega_g,\mathcal F_g,F_g,
+  \operatorname{tr}_{\mathrm{diag}},\lambda_g^{\mathrm{FP}},
+  \kappa,K^\kappa\) and the \(\hbar\Delta\) loop sign are pinned in the
+  sign appendix and higher-genus foundation.
+- Strengthened `thm:k3-constants-five-lanes` so the Mukai conductor
+  \(K^{\kappa_{\mathrm{ch}}}_{\mathbf B}=2c_+(\mathrm{Mukai}(K3))=8\)
+  is explicitly not a universal scalar value.  Its proof now states that
+  an ordinary exceptional Yangian computation requires a finite RTT
+  packet, a finite module packet, and an explicit presentation
+  comparison; those data are not part of the K3\(\times E\) construction
+  or its Borcherds row.
+- Patched `appendices/first_principles_cache.md` row `W13-B-6` so the
+  \(8\) value is scoped to the specified Mukai/B-family witness and not
+  advertised as a universal K3 scalar or exceptional RTT transfer.
+- Added `compute/tests/test_genus_normalization_surfaces.py` to pin the
+  formal genus class, diagonal-trace curvature identity, genus-variable
+  normalization table, loop sign, absence of "free energy" in theorem /
+  definition titles on the checked genus files, K3 five-lane constants,
+  the concordance \(K^\kappa\) values, and the DK/root/K3 no-promotion
+  firewall.
+
+Verification:
+
+- `pytest compute/tests/test_genus_normalization_surfaces.py` passed
+  \(3/3\).
+- `pytest compute/tests/test_genus_normalization_surfaces.py
+  compute/tests/test_e1_from_chiral_bar_engine.py` passed \(110/110\).
+- `make metadata` regenerated \(4677\) tagged claims, \(2310\) proved
+  claims, and \(7260\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4677\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Propagation scans across Vols.~I--III found no remaining exact
+  `universally on B-family` or `not a universal value` stale phrases.
+  The remaining K3-promotion hits are the intended
+  `prop:exceptional-yangian-no-dk-root-k3-promotion` index/metadata
+  entries plus historical ledger material, not live transfer claims.
+- Targeted `git diff --check` on the edited genus/K3/cache/test files,
+  generated metadata/index files, and phase-0 dependency index is clean.
+- No full LaTeX build was run.
+
+### Pass 433 -- PDF obligations 541--600: chiral derived centre, OCA, and Theorem C complementarity
+
+Strengthening target: the PDF asks that the closed-sector language in
+Theorem C be typed before being physicalized.  The chiral derived centre
+is the algebraic object
+\[
+  Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+  =
+  R\operatorname{Hom}^{\mathrm{act}}_{\operatorname{Fact}_{A-A}}(A,A),
+\]
+with its brace / \(E_2\)-level structure only under chiral Deligne
+hypotheses; the Swiss-cheese output is the open--closed pair
+\((Z^{\mathrm{der}}_{\mathrm{ch}}(A),A)\), not the bar coalgebra
+itself; physical bulk language requires OCA input; and Theorem C must
+separate \(C0\), \(C1\), and \(C2\) rather than promoting scalar traces
+or BV/QME heuristics into unconditional Lagrangian characterizations.
+
+Concrete changes:
+
+- Added `\ClaimStatusDefinitional` to
+  `def:genus-g-derived-center` in
+  `chapters/connections/thqg_open_closed_realization.tex`, making the
+  derived-centre definition visible to the theorem registry.
+- Added `\ClaimStatusDefinitional` to
+  `def:complementarity-complexes` and
+  `def:ambient-complementarity-tangent-complex` in
+  `chapters/theory/higher_genus_complementarity.tex`, so the
+  \(Qg(A)\), \(Qg(A^!)\), and ambient tangent-complex surfaces are
+  indexed as definitions rather than ambient prose.
+- Audited the existing complementarity chain in
+  `chapters/theory/higher_genus_complementarity.tex`: the
+  derived-centre scalar trace remains a scalar shadow, \(K^\kappa\) is
+  stated as the trace shadow of \(C1\) together with Theorem D, and the
+  \(C2\) shifted-symplectic/BV upgrade remains conditional on the
+  PTVV-type hypotheses, cyclic pairing, skew-adjointness, and
+  transversality assumptions.
+- In
+  `chapters/theory/chiral_hochschild_koszul.tex`, strengthened the
+  standard-family computation remark to say that those computations are
+  checks of the derived-centre package, not definitions of the derived
+  centre.
+- In `chapters/theory/en_koszul_duality.tex`, tightened the centre
+  surjectivity constraint: the closed colour is controlled by the bar
+  coalgebra only together with the centre-generation comparison datum;
+  the bar coalgebra itself remains an \(E_1\) computational object, not
+  the closed colour.
+- Added
+  `compute/tests/test_derived_centre_complementarity_surfaces.py`, which
+  pins the chiral derived-centre/OCA/Swiss-cheese typing, the
+  bar-not-closed-colour firewall, presentation-indexed centre and
+  Drinfeld-centre separation, Theorem C \(C0/C1/C2\) separation, scalar
+  trace language, ambient formal-moduli hypotheses, and standard-family
+  computation scope.
+- Propagated the correction across live cross-volume surfaces:
+  `~/calabi-yau-quantum-groups/chapters/theory/drinfeld_center.tex`
+  now treats the Drinfeld centre via the chiral derived centre under
+  BZFN/Morita dualizability hypotheses rather than as equality with a
+  cochain complex, and states that physical bulk language requires OCA.
+- Patched Vol.~II
+  `chapters/connections/hochschild.tex`,
+  `chapters/theory/raviolo.tex`, and
+  `chapters/connections/bar-cobar-review.tex` so the Swiss-cheese
+  structure lives on the derived-centre/open pair, while the bar
+  construction remains the \(E_1\) computational coalgebra.
+- Patched Vol.~III
+  `chapters/theory/quantum_chiral_algebras.tex` and
+  `chapters/theory/cy_to_chiral.tex` so the derived centre is the
+  algebraic closed-sector comparison target; the physical bulk
+  interpretation is supplied only after the open--closed comparison
+  data, and the Drinfeld-centre comparison is categorical and
+  hypothesis-bound.
+
+Verification:
+
+- `pytest compute/tests/test_derived_centre_complementarity_surfaces.py`
+  passed \(5/5\).
+- `pytest
+  compute/tests/test_derived_centre_complementarity_surfaces.py
+  compute/tests/test_open_closed_derived_center.py
+  compute/tests/test_three_hochschild_unification.py
+  compute/tests/test_theorem_c_complementarity.py
+  compute/tests/test_derived_center_explicit.py
+  compute/tests/test_theorem_C_fiber_center.py`
+  passed \(325/325\).
+- `make metadata` regenerated \(4680\) tagged claims, \(2310\) proved
+  claims, and \(7266\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4680\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Targeted propagation scans across Vols.~I--III found no remaining
+  live stale advertisements that the bar complex is the Swiss-cheese
+  object or physical bulk, that the derived centre is physical bulk
+  without OCA, that presentation-indexed centres coincide by default,
+  or that the Drinfeld centre is literally the chiral derived-centre
+  cochain complex.  Remaining hits are explicit firewalls, scoped
+  comparison statements, or historical ledger material.
+- Targeted `git diff --check` on the edited Vol.~I theorem files,
+  generated metadata/index files, phase-0 dependency index, and the
+  edited Vol.~II/Vol.~III cross-volume files is clean.
+- No full LaTeX build was run.
+
+### Pass 434 -- PDF obligations 601--700: standard-family computation packet and quarantine tables
+
+Strengthening target: the PDF asks that the standard-family examples be
+certified family by family.  Heisenberg, affine Kac--Moody,
+\(\beta\gamma/bc\), Virasoro, \(\mathcal W_3/\mathcal W_N\),
+Bershadsky--Polyakov, \(N=2\) SCA, lattice/orbifold/moonshine/triplet,
+admissible quotient, super-Yangian, and exceptional rows must each
+record theorem status, ambient surface, and object package
+\((A,\bar B(A),A^{\mathrm i},A^!,Z^{\mathrm{der}}_{\mathrm{ch}}(A))\).
+Examples missing any of the three axes are quarantine examples, not
+evidence for Theorem C scalar complementarity.
+
+Concrete changes:
+
+- Made the standard-family certification packet in
+  `chapters/examples/landscape_census.tex` registry-visible by adding
+  `def:standard-family-certification-packet` with
+  `\ClaimStatusDefinitional`.
+- Split the formerly bundled frontier row in
+  `tab:standard-family-status` into separate rows for lattice and
+  quantum lattice, moonshine/Monster, symmetric orbifolds, triplet
+  \(\mathcal W(p)\), admissible affine quotients, super-Yangians, and
+  exceptional Yangian / exceptional affine rows.
+- Strengthened `tab:standard-family-ambient` with separate raw,
+  finite-window, and completed surfaces for moonshine/Monster,
+  symmetric orbifolds, triplet/admissible quotients, super/exceptional
+  Yangians, and exceptional affine Kac--Moody.
+- Strengthened `tab:standard-family-five-object-package` with explicit
+  five-object rows for moonshine/Monster, symmetric orbifold,
+  triplet/admissible quotient, super/exceptional Yangian, and
+  exceptional affine Kac--Moody.  These rows state that DMVV is a
+  character identity rather than a bar theorem, moonshine constants are
+  not K3/Mukai constants without comparison data, quotient bar
+  comparison is not automatic, and exceptional RTT data do not transfer
+  from \(A_n\) formulas.
+- Added
+  `compute/tests/test_standard_family_certification_surfaces.py`, which
+  pins the certification packet, the 601--657 standard-family anchors,
+  the split quarantine rows, the ambient/object-package axes, the
+  primary family computation anchors, and the absence of stale positive
+  promotions for the quarantined rows.
+
+Verification:
+
+- `pytest compute/tests/test_standard_family_certification_surfaces.py`
+  passed \(6/6\).
+- `pytest
+  compute/tests/test_standard_family_certification_surfaces.py
+  compute/tests/test_landscape_census_scalar_typing.py
+  compute/tests/test_landscape_census_verification.py
+  compute/tests/test_kappa_cross_family_consistency.py
+  compute/tests/test_e1_from_chiral_bar_engine.py`
+  passed \(266/266\).
+- `make metadata` regenerated \(4681\) tagged claims, \(2310\) proved
+  claims, and \(7266\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=457, CJ=349, H=31, O=2, total=4681\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Metadata records `def:standard-family-certification-packet` as
+  `Definitional`, and `standalone/theorem_index.tex` lists it.
+- Exact stale-positive scans across Vols.~I--III, excluding generated
+  HTML and the new guard test, found no remaining bundled frontier row,
+  no claim that DMVV is an ordered-bar theorem, no claim that moonshine
+  constants are K3/Mukai constants, and no claim that generic universal
+  affine Koszulness descends by default.  The remaining broad-pattern
+  hits are the intended negative firewall sentences in
+  `landscape_census.tex`.
+- Targeted `git diff --check` on the edited landscape census, new test,
+  generated metadata/index files, and phase-0 dependency index is clean.
+- No full LaTeX build was run.
+
+### Pass 435 -- PDF obligations 701--780: HDelta5 Hall--Borcherds recognition gates
+
+Strengthening target: the PDF asks that the K3 paramodular object
+surface distinguish the scalar Siegel--Borcherds target from the
+constructed compact Hall object.  The notation
+\(\mathbf H_{\Delta_5}\) may be used without superscript only after
+the finite Hall/CoHA source, compact Hopf pairing, comparison maps,
+PBW/no-extra-relations theorem, parity/radical data, and
+Mittag--Leffler inverse-limit passage are supplied.  Before that point
+the manuscript must speak of \(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\)
+and conditional scalar target identities, not constructed genus-one
+free energies or all-orders Hall associators.
+
+Concrete changes:
+
+- Patched `chapters/frame/guide_to_main_results.tex` and
+  `chapters/frame/part_ii_platonic_introduction.tex` so the K3
+  master \(L\)-value statements are conditional target identities.
+  Both now use \(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\), require the
+  compact Hall--Borcherds recognition package, call the output the
+  genus-\(1\) sewing scalar, and state that the scalar identity is not
+  a construction of the compact Hall object.
+- Propagated the same correction to the additional live frame
+  summaries `chapters/frame/preface.tex`,
+  `chapters/frame/part_iii_platonic_introduction.tex`, and
+  `chapters/frame/open_beilinson_tower_platonic.tex`.  The Part~III
+  atlas theorem was demoted from `\ClaimStatusProvedElsewhere` to
+  `\ClaimStatusConditional`.
+- Rephrased the paramodular sibling and pentagon surfaces so the four
+  functor lanes are target comparison lanes, and the Humbert--Heegner
+  pentagon constraints are scalar target constraints, not all-orders
+  associators on a Hall realisation.
+- Added
+  `compute/tests/test_hdelta5_hall_bkm_recognition_gates.py`, which
+  pins the Vol.~I target-language surfaces, the Vol.~III
+  Hall/CoHA-source recognition gates, finite-height BKM root/PBW/
+  coproduct recognition data, the \(\zeta_8\) and
+  \(\hbar^2=-1/8\) conditional specialisation discipline, the
+  two-stage \(\Phi_d^{(\Sigma_{d-1},C)}\) notation, and the separation
+  of the Mukai conductor \(K^\kappa=8\) from
+  \(\kappa_{\mathrm{BKM}}=5\), \(\kappa_{\mathrm{fiber}}=24\),
+  \(\kappa_{\mathrm{cat}}=0\), and
+  \(\kappa_{\mathrm{ch}}^{\mathrm{Heis}}=3\).
+
+Verification:
+
+- `pytest compute/tests/test_hdelta5_hall_bkm_recognition_gates.py`
+  passed \(7/7\).
+- `pytest
+  compute/tests/test_hdelta5_hall_bkm_recognition_gates.py
+  compute/tests/test_standard_family_certification_surfaces.py
+  compute/tests/test_genus_normalization_surfaces.py
+  compute/tests/test_theorem_c_b_family_mukai_engine.py
+  compute/tests/test_cy_bkm_algebra_engine.py
+  compute/tests/test_cy_borcherds_lift_engine.py
+  compute/tests/test_phi_n_humbert_heegner_admissible_triple_27_29_35.py
+  compute/tests/test_phi_n_humbert_heegner_admissible_triple_37_43_45.py`
+  passed \(492/492\).
+- `make metadata` regenerated \(4681\) tagged claims, \(2307\) proved
+  claims, and \(7266\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=454, CJ=349, H=31, O=2, total=4681\); metadata records
+  \(CD=1734\) and \(DF=258\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Exact stale-positive scans across Vols.~I--III found no remaining
+  live assertion that the genus-\(1\) free energy of
+  \(\mathbf H_{\Delta_5}\) is already constructed, no
+  `chiral bialgebra realisation \(\mathbf H_{\Delta_5}\)` promotion,
+  no statement that \(\mathbf H_{\Delta_5}\) is carved directly into
+  sibling functors, and no pentagon tower asserted on the compact Hall
+  object before source construction.  The remaining associator hits
+  are negative firewall sentences; the remaining scalar-target hits
+  are the intended conditional target language.
+- Targeted `git diff --check` on the edited frame files, new test,
+  generated metadata/index files, and phase-0 dependency index is clean.
+- No full LaTeX build was run.
+
+### Pass 436 -- PDF obligations 781--850: physical bulk, SC, and holographic datum gates
+
+Strengthening target: the PDF asks that the physics bridge distinguish
+the algebraic closed-sector object from the physical bulk, keep
+\(\mathsf{SC}^{\mathrm{ch,top}}\) on the derived-centre/open pair
+rather than on the bar complex, and replace the old six-component
+holographic package by the typed seven-entry datum with explicit
+open--closed and line-comparison gates.  The bar cohomology coalgebra,
+strict Koszul dual, derived chiral centre, line category, and physical
+bulk interpretation must occupy separate lanes.
+
+Concrete changes:
+
+- Corrected stale standalone holographic-datum surfaces in
+  `standalone/programme_summary_sections5_8.tex`,
+  `standalone/programme_summary.tex`,
+  `standalone/programme_summary_sections9_14.tex`,
+  `standalone/w3_holographic_datum.tex`,
+  `standalone/three_dimensional_quantum_gravity.tex`,
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`, and
+  `standalone/survey_track_b_compressed.tex`.
+- Replaced sextuple/six-component holographic packages by
+  \[
+  (\cA,\cA^{\mathrm i},\cA^!,
+    Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),
+    r(z),\Theta_\cA,\nabla^{\mathrm{hol}})
+  \]
+  or the local equivalent notation.
+- Made the line category a module category attached to the strict
+  Koszul dual only after the line-comparison theorem, not the
+  closed-sector entry.
+- Replaced statements that the derived chiral centre is already the
+  physical bulk by the typed open--closed comparison formulation.
+- Added `compute/tests/test_physics_open_closed_bridge_surfaces.py`,
+  pinning the live master datum, the THQG supplement, the
+  symmetric-bar/\(\mathsf E_3\) obstruction surface, and all edited
+  standalone summaries against the retired slogans.
+
+Verification:
+
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(5/5\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_open_closed_derived_center.py
+  compute/tests/test_swiss_cheese_chain_model.py
+  compute/tests/test_theorem_open_closed_rectification_engine.py
+  compute/tests/test_theorem_thm_h_e3_rectification_engine.py
+  compute/tests/test_bv_brst.py
+  compute/tests/test_bv_brst_chain_level.py`
+  passed \(425/425\).
+- Exact stale-positive scans across `chapters/`, `appendices/`, and
+  `standalone/` found no remaining holographic sextuple or
+  six-component-datum promotion, no uppercase derived-centre-is-bulk
+  assertion, and no bar/bulk or symmetric-bar/\(\mathsf E_3\)
+  promotion.  The one remaining `sextuple` hit is
+  `chapters/connections/genus_complete.tex`, where the object is the
+  unrelated genus-\(1\) modular datum, not a holographic datum.
+- Targeted `git diff --check` on the edited standalone files is clean;
+  `git diff --check --no-index /dev/null` on the new test file reports
+  no whitespace diagnostics.
+- No metadata regeneration was needed: this pass changed standalone
+  wording and added a surface guard, but did not change a status-bearing
+  live theorem surface.
+- No full LaTeX build was run.
+
+### Pass 437 -- PDF obligations 851--900: arithmetic and modular-form gates
+
+Strengthening target: the PDF asks that the arithmetic shadow tower,
+moment \(L\)-functions, Rankin--Selberg/CPS inputs, Hecke--Newton
+closure, prime-locality, Ramanujan bounds, and Borcherds/Igusa tails be
+kept off the theorem spine unless the required comparison hypotheses
+are named.  The key firewall is that the shadow algebra is not the
+Hecke algebra; on finite-Hecke-span and prime-local surfaces it maps to
+the Hecke moment algebra, and Deligne/CPS/Langlands inputs remain
+external.
+
+Concrete changes:
+
+- Patched `chapters/connections/arithmetic_shadows.tex` so the
+  lattice Ramanujan comparison route is explicitly
+  finite-Hecke-span \(+\) prime-locality \(+\) MC moments
+  \(\Rightarrow\) CPS \(\Rightarrow\) symmetric-power comparison
+  \(\Rightarrow\) Ramanujan, not a bare MC-implies-Hecke theorem.
+- Narrowed the prime-locality conjecture wording from "proved for
+  lattice VOAs" to the finite-Hecke-span lattice surface.
+- Rewrote the Newton--shadow--Hecke proposition so it asserts a
+  conditional moment-algebra comparison after a Hecke eigencomponent is
+  fixed, and explicitly forbids an algebra isomorphism
+  \(\cA^{\mathrm{sh}}\cong\mathbb T_{\mathrm{Hecke}}\) off that
+  surface.
+- Propagated the same finite-Hecke-span/prime-local/CPS language to
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`,
+  `standalone/survey_track_b_compressed.tex`, and
+  `standalone/introduction_full_survey.tex`.
+- Updated `compute/lib/shadow_hecke_identification.py` and
+  `compute/tests/test_shadow_hecke_identification.py` so the compute
+  surface speaks of a conditional comparison, not
+  \(A^{\mathrm{sh}}=\) Hecke algebra.
+- Extended `compute/tests/test_theorem_arithmetic_rectification_engine.py`
+  with textual guards for the finite-Hecke-span/prime-local route, the
+  no-shadow-equals-Hecke firewall, and the retired arithmetic slogans.
+
+Verification:
+
+- `pytest compute/tests/test_shadow_hecke_identification.py`
+  passed \(94/94\).
+- `pytest compute/tests/test_theorem_arithmetic_rectification_engine.py`
+  passed \(108/108\).
+- `pytest
+  compute/tests/test_theorem_arithmetic_rectification_engine.py
+  compute/tests/test_shadow_hecke_identification.py
+  compute/tests/test_hecke_newton_closure.py
+  compute/tests/test_lattice_prime_locality.py
+  compute/tests/test_operadic_rankin_selberg.py
+  compute/tests/test_vvmf_verifications.py`
+  passed \(440/440\).
+- Stale-positive scans across the arithmetic chapter, arithmetic
+  summaries, and compute layer found no remaining live assertion that
+  \(A^{\mathrm{sh}}\) is the Hecke algebra, no claim that the MC
+  equation alone supplies CPS automorphy or the Ramanujan bound, and no
+  identification of the MC bracket with Hecke multiplication.  The only
+  remaining appearances of retired slogans are negative assertions
+  inside the guard tests.
+- `make metadata` regenerated \(4681\) tagged claims, \(2307\) proved
+  claims, and \(7265\) dependency edges.
+- `make census` reports
+  \(PH=1853, PE=454, CJ=349, H=31, O=2, total=4681\); metadata records
+  \(CD=1734\) and \(DF=258\).
+- `make phase0-index` completed with the pre-existing open-label
+  surface `thm:hochschild-concentration-E1`; this pass introduced no
+  new open label.
+- Targeted `git diff --check` on the edited arithmetic chapter,
+  summaries, compute files, tests, and regenerated metadata/index files
+  is clean.
+- No full LaTeX build was run.
+
+### Pass 438 -- PDF obligations 901--1000: exposition-as-mathematics title and surface gates
+
+Strengthening target: the PDF asks that theorem and section surfaces
+use mathematical names rather than aspiration vocabulary; conjectural,
+conditional, ambient, proof-method, notation, hypothesis, dependency,
+and endpoint obligations must be executable gates rather than prose
+preferences.  The concrete repair in this pass closes the visible
+``Platonic theorem/form/endpoint'' title lane and pins it with direct
+manuscript guards, while the concordance rectification engine continues
+to carry the abstract gate families for obligations \(903\)--\(1000\).
+
+Concrete changes:
+
+- Replaced visible Vol~I title/prose surfaces in
+  `chapters/frame/part_ii_platonic_introduction.tex`,
+  `chapters/frame/part_iii_platonic_introduction.tex`,
+  `chapters/frame/part_iv_platonic_introduction.tex`,
+  `chapters/frame/open_beilinson_tower_platonic.tex`,
+  `chapters/connections/genus1_seven_faces.tex`,
+  `chapters/theory/mc5_class_m_chain_level_platonic.tex`,
+  `chapters/theory/theorem_B_scope_platonic.tex`,
+  `chapters/theory/genus_2_ddybe_platonic.tex`, and
+  `chapters/theory/chiral_climax_platonic.tex`.
+- The repaired language names structural theorem surfaces, carrier
+  theorems, the operadic fixed-point endpoint, pro-completed MC5
+  reconstruction, ambient-neutral Theorem~B form, and Vol~I
+  bar--cobar Theorem~A.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  full-line comments are ignored, optional theorem/proposition/remark
+  titles containing ``Platonic'' are blocked, and the repaired anchor
+  phrases are required.
+- Updated compute-facing wording in
+  `compute/tests/test_part_iii_platonic_introduction.py`,
+  `compute/tests/test_bar_cobar_bottleneck_iv.py`, and
+  `compute/tests/test_mc5_class_m_chain_level_platonic.py`.
+- Propagated the same title discipline to active cross-volume surfaces:
+  Vol~II `log_ht_monodromy*.tex`, `part_vi_platonic_introduction.tex`,
+  `programme_climax_platonic.tex`, `part_viii_synthesis.tex`,
+  `wn_tempered_closure_platonic.tex`,
+  `tempered_stratum_characterization_platonic.tex`,
+  `sc_chtop_heptagon.tex`,
+  `fractional_ghost_chain_level_platonic.tex`, and Vol~III
+  `geometric_langlands.tex`.  The Vol~II log-HT theorem title is now
+  "Resolved logarithmic HT monodromy theorem"; the Vol~III bridge now
+  cites "Vol~I bar--cobar Theorem~A".
+- Regenerated Vol~I metadata/index files with
+  `make metadata && make census && make phase0-index`.
+- Regenerated Vol~II metadata with
+  `python3 scripts/generate_metadata.py`.
+
+Verification:
+
+- `pytest
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_part_iii_platonic_introduction.py
+  compute/tests/test_bar_cobar_bottleneck_iv.py
+  compute/tests/test_genus_2_ddybe_platonic.py
+  compute/tests/test_mc5_class_m_chain_level_platonic.py
+  compute/tests/test_theorem_B_scope.py
+  compute/tests/test_hdelta5_hall_bkm_recognition_gates.py`
+  passed \(191/191\).
+- Vol~II targeted tests passed:
+  `pytest compute/tests/test_part_vi_platonic_introduction.py
+  compute/tests/test_w_inf_endpoint_iv.py
+  compute/tests/test_log_ht_monodromy_engine.py`
+  passed \(49/49\).
+- Vol~III targeted tests passed:
+  `pytest compute/tests/test_quintic_bridgeland_tilting.py
+  compute/tests/test_geometric_langlands_shadow.py`
+  passed \(202/202\).
+- Vol~I metadata regeneration reports \(4681\) tagged claims,
+  \(2307\) proved claims, \(7265\) dependency edges, and the
+  pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Vol~II metadata regeneration reports \(1935\) tagged claims,
+  \(1422\) proved claims, and \(671\) dependency edges.
+- Exact active-chapter scans across Vols.~I--III find no visible
+  `Platonic theorem`, `Platonic form`, `Platonic endpoint`,
+  `Platonic ideal`, or theorem-title environment containing
+  ``Platonic''.  Remaining occurrences are deliberate negative guards
+  in tests or anti-pattern/cache tables.
+- The only `??` scan hit in Vol~I is the pre-existing explanatory
+  comment in `standalone/survey_modular_koszul_duality_v2.tex` about
+  the default LaTeX placeholder.
+- Targeted `git diff --check` is clean for the edited Vol~I, Vol~II,
+  and Vol~III files and regenerated metadata surfaces.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 439: core theorem type-signature and proof-opening gates
+
+Scope: PDF obligations \(906\)--\(932\), concretely the requirement
+that theorem statements name their raw/finite/completed, ordered vs.
+symmetric, chain/derived/coderived, operadic-level, genus-scope,
+critical/genericity, finite-type, completion, dualizability,
+holonomicity, and base-change surfaces; and that proof openings name
+ambient category, differential, filtration, and spectral sequence when
+used.
+
+Concrete changes:
+
+- Added an explicit type signature to Theorem~A
+  (`thm:koszul-reflection`) in
+  `chapters/theory/theorem_A_infinity_2.tex`, separating the ordered
+  bar, symmetric descent, raw finite-window Koszul locus, and
+  weight-completed coderived off-Koszul continuation.
+- Added a proof-opening paragraph to Theorem~A naming the
+  factorization ambient, desuspended ordered bar differential,
+  total bar-weight filtration, and bar--cobar weight spectral
+  sequence.
+- Added explicit type signatures to the ordered Theorem~H input
+  (`thm:hochschild-concentration-E1`) and the completed symmetric
+  Theorem~H statement (`thm:main-koszul-hoch`) in
+  `chapters/theory/chiral_hochschild_koszul.tex`, separating the
+  conjectural ordered finite-window lane from the completed
+  symmetric finite-window/PBW lane.
+- Added proof-opening paragraphs to both Hochschild theorem proofs,
+  naming the ordered FM chain model, residue/collision differential,
+  PBW/conformal-weight filtration, and the collision-depth/FM
+  spectral sequences.
+- Added an explicit type signature to the global Theorem~B inversion
+  theorem (`thm:tbsp-global-inversion-all-admissible`) in
+  `chapters/theory/theorem_B_scope_platonic.tex`, separating strict
+  chain-level inversion on \(U^{\mathrm{adm}}\), named finite windows,
+  formal-wall completions, and global coderived assembly.
+- Added a proof-opening paragraph to global Theorem~B naming the
+  \v Cech cover, finite-window chain model, bar--cobar differential,
+  monodromy-refined total bar-weight and \(V\)-filtrations, finite-window
+  bar spectral sequence, and strict Mittag--Leffler derived-limit
+  comparison.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  all twelve theorem-signature gates must be present in the four core
+  theorem windows, and all proof-opening method anchors must be present.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(152/152\).
+- `pytest
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_theorem_A_bar_cobar_isomorphism.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_theorem_B_scope.py
+  compute/tests/test_theorem_B_positselski_chiral.py`
+  passed \(532/532\).
+- Targeted `git diff --check` is clean for
+  `chapters/theory/theorem_A_infinity_2.tex`,
+  `chapters/theory/chiral_hochschild_koszul.tex`,
+  `chapters/theory/theorem_B_scope_platonic.tex`, and
+  `compute/tests/test_theorem_concordance_rectification_engine.py`.
+- No metadata regeneration was run: theorem titles, labels, and
+  claim-status macros were not changed in this pass.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 477: AP34 closed-sector algebra in summary surfaces
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After Pass 476, several compact standalone summaries still described
+the chiral derived centre as a ``bulk sector'', ``closed (bulk)
+sector'', or ``universal bulk algebra'' even when no open--closed
+comparison datum had been named.
+
+Repair:
+
+- Rewrote `standalone/cy_to_chiral_functor.tex` so
+  \(C^\bullet_{\mathrm{ch}}(A,A)\) is the closed-sector--boundary
+  algebraic system and becomes a physical boundary--bulk system only
+  after the open--closed comparison map is constructed.
+- Replaced the `Zder(A_C)` bullet in
+  `standalone/cy_to_chiral_functor.tex`: the chiral Hochschild
+  cochain complex now encodes the algebraic closed-sector slot, with
+  physical bulk interpretation requiring OCA data.
+- Rewrote the derived-centre entry in
+  `standalone/N3_e1_primacy.tex`: the functor is the cochain-level
+  closed-sector actor, not the bar--cobar composite and not a
+  physical-bulk identification before comparison.
+- Replaced the duplicated programme-summary theorem language in
+  `standalone/programme_summary.tex` and
+  `standalone/programme_summary_sections2_4.tex`: the chiral derived
+  centre is now the universal closed-sector algebra, i.e. the
+  cochain-level operator algebra acting on the boundary algebra; a
+  physical bulk interpretation requires the open--closed comparison
+  datum.
+- Strengthened
+  `compute/tests/test_physics_open_closed_bridge_surfaces.py` with
+  guards requiring these replacements and blocking
+  `is the boundary--bulk system`, `encoding the bulk sector`,
+  `plays the role of the bulk`, `closed (bulk) sector`,
+  `is the universal bulk algebra`, and
+  `the algebra of operators in the interior` from the guarded files.
+
+Verification:
+
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(11/11\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(533/533\).
+- Source-only stale scan over the guarded files found no remaining
+  retired summary-surface phrases listed above.
+- Targeted `git diff --check` is clean for the touched standalone
+  files, test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface,
+  theorem title, or label changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 476: AP34 Loop--Connes and operator-action wording
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After Pass 475 cleaned the closed-sector--boundary--line triangle,
+the source concordance and standalone mirrors still carried the
+slogan "loops in the bulk are traces on the boundary", and programme
+summaries still said that bulk operators act/restrict to the boundary.
+
+Repair:
+
+- Replaced the Loop--Connes explanatory sentence in
+  `chapters/connections/concordance.tex` and
+  `chapters/connections/frontier_modular_holography_platonic.tex` by
+  the typed statement that genus creation in the cochain-level closed
+  sector is the open Connes trace mechanism viewed through the
+  derived-centre map.
+- Propagated the same Loop--Connes wording to
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`,
+  `standalone/survey_track_b_compressed.tex`, and
+  `standalone/introduction_full_survey.tex`.
+- Replaced the programme-summary phrases "bulk operators act on the
+  boundary" and "Bulk operators restrict to boundary operators" in
+  `standalone/programme_summary.tex` and
+  `standalone/programme_summary_sections5_8.tex` by closed-sector
+  operator action/restriction through the Swiss-cheese action, with
+  physical-bulk action/restriction requiring OCA data.
+- Rewrote the introduction survey so the chiral derived centre
+  classifies closed-sector operators, physical bulk action requires
+  the open--closed comparison datum, and
+  \(\Theta^{\mathrm{oc}}_{\mathcal A}\) records closed-sector module
+  contributions rather than "bulk module contributions".
+- Replaced the remaining introduction-survey
+  "bulk-boundary-line" / "bulk-boundary interaction" phrases by
+  closed-sector--boundary language.
+- Strengthened
+  `compute/tests/test_physics_open_closed_bridge_surfaces.py` with
+  guards requiring the closed-sector trace/operator wording and
+  blocking `loops in the bulk are traces on the boundary`,
+  `bulk operators act on the boundary`, `Bulk operators restrict to
+  boundary operators`, `classifies bulk operators`, `bulk module
+  contributions`, and the derived-centre/bulk-operator slogans from
+  the guarded source and standalone surfaces.
+
+Verification:
+
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(10/10\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(532/532\).
+- Source-only stale scan over the guarded source and standalone
+  surfaces found no remaining retired Loop--Connes/operator-action
+  slogans.
+- Targeted `git diff --check` is clean for the touched source,
+  standalone files, test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface,
+  theorem title, or label changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 475: AP34 standalone closed-sector triangle cleanup
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After Pass 474 removed the ``\(\bar B\) forgets the bulk'' phrase,
+standalone and supplement surfaces still carried stronger remnants:
+Hochschild cochains described as ``bulk'', the genus-zero
+``bulk-boundary-line triangle'', a derived-centre item described as
+the universal algebra of bulk operators, and an abelian Chern--Simons
+summary with `bulk = H_k`.
+
+Repair:
+
+- Replaced the comment-level slogan in
+  `standalone/e1_primacy_ordered_bar.tex` by the typed statement
+  that \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) is the algebraic
+  closed-sector actor and physical bulk requires OCA data.
+- Rewrote `standalone/ordered_chiral_homology.tex` so the two-structure
+  remark speaks of the algebraic closed-sector \(E_2\), distinct from
+  topological \(E_3\), with physical bulk interpretation requiring the
+  open--closed comparison datum.
+- Replaced the genus-zero Hochschild/bulk triangle paragraphs in
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`, and
+  `standalone/survey_track_a_compressed.tex` by the
+  closed-sector--boundary--line triangle
+  \(A_{\mathrm{cl}}\simeq Z_{\mathrm{der}}(B_\partial)
+    \simeq \mathrm{ChirHoch}^{\bullet}(A^!)\), with physical bulk
+  identification marked as extra open--closed comparison data.
+- Rewrote the derived-centre item in
+  `standalone/survey_modular_koszul_duality.tex` as the universal
+  algebraic closed-sector actor; closed-sector operators act on the
+  boundary, while physical bulk operators require OCA.
+- Tightened `standalone/survey_modular_koszul_duality_v2.tex`:
+  the \(\mathsf{SC}^{\mathrm{ch,top}}\) pair is now the algebraic
+  closed sector acting on the boundary, the overview says physical
+  realisation as a \(3\)-d HT bulk requires the open--closed/HT
+  comparison datum, and the abelian CS datum uses a closed-sector
+  descriptor rather than `bulk = H_k`.
+- Renamed the algebraic triangle references in
+  `chapters/connections/thqg_introduction_supplement.tex` and
+  `chapters/connections/thqg_introduction_supplement_body.tex` from
+  ``bulk-boundary-line'' to ``closed-sector--boundary--line'', while
+  preserving physical bulk only as the OCA/HT comparison target.
+- Strengthened
+  `compute/tests/test_physics_open_closed_bridge_surfaces.py` with
+  source guards requiring the closed-sector replacements and blocking
+  `Hochschild cochains = bulk`, `algebraic bulk \(E_2\)`,
+  `bulk chiral homology complex of Volume II`,
+  `bulk-boundary-line triangle`, `A_{\mathrm{bulk}}`,
+  `universal algebra of bulk operators`, `classifies bulk operators`,
+  `bulk acting on boundary`, and `bulk = H_k` from returning to the
+  guarded standalone/supplement surfaces.
+
+Verification:
+
+- `python3 -m py_compile
+  compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed.
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(9/9\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(531/531\).
+- Source-only stale scan over the guarded standalone and supplement
+  surfaces found no remaining retired phrases listed above.
+- Targeted `git diff --check` is clean for the touched supplement,
+  standalone files, test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface,
+  theorem title, or label changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 474: AP34 bar twisting versus bulk forgetfulness
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After Pass 473 repaired the strongest boundary-bar-duality slogan,
+the preface and standalone mirrors still used the phrase
+``\(\bar B\) forgets the bulk''.  That phrase is weaker than
+``bar is the bulk'', but it still suggests that the bar construction
+starts with bulk information and loses it, rather than being the
+level-2 twisting-coalgebra construction distinct from the level-3
+closed-sector actor and any physical bulk.
+
+Repair:
+
+- Replaced the phrase in `chapters/frame/preface.tex` and
+  `chapters/frame/preface_sections10_13_draft.tex` by:
+  \(\bar B\) records twisting-coalgebra data, not the closed sector
+  or physical bulk.
+- Replaced the same phrase in
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`, and
+  `standalone/survey_track_b_compressed.tex` by the compact
+  standalone wording: \(\bar B\) records twisting data, not
+  closed-sector or physical-bulk data.
+- Strengthened
+  `compute/tests/test_physics_open_closed_bridge_surfaces.py` with
+  visible-TeX guards requiring the replacement phrases and blocking
+  the retired `\barB$ forgets the bulk` wording from the preface and
+  standalone mirrors.
+
+Verification:
+
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(8/8\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(530/530\).
+- Source-only stale scan over `chapters/`, `standalone/`, and
+  `appendices/` found no remaining `\barB$ forgets the bulk` or
+  `forgets the bulk` surface.
+- Targeted `git diff --check` is clean for the touched preface,
+  standalone files, test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface,
+  theorem title, or label changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 473: AP34 boundary-bar and derived-centre wording
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After the executable C-slot cleanup, the remaining visible-TeX drift
+was a stale standalone boundary-bar-duality summary that identified
+the analytic boundary bar with a topological bar of the physical bulk,
+and a Vol~I arithmetic sentence that called the derived-centre
+comparison surface ``derived-centre bulk data''.
+
+Repair:
+
+- Replaced the arithmetic sentence in
+  `chapters/connections/arithmetic_shadows.tex` by the typed phrase
+  "derived-centre closed-sector data on that comparison surface",
+  preserving the warning that it is not an equality with scalar shadow
+  invariants.
+- Rewrote the Boundary bar duality summaries in
+  `standalone/survey_modular_koszul_duality.tex`,
+  `standalone/survey_modular_koszul_duality_v2.tex`, and
+  `standalone/survey_track_b_compressed.tex` so they match the source
+  conjecture in `chapters/connections/genus_complete.tex`: genus-zero
+  completed boundary modules are analytic comodules over
+  \(B^{\mathrm{an}}(\mathcal A_\partial)\), curved genus uses analytic
+  contramodules over the curved dual, and no physical-bulk
+  identification is asserted without the open--closed comparison datum.
+- Strengthened
+  `compute/tests/test_physics_open_closed_bridge_surfaces.py` with
+  visible-TeX guards requiring the source-faithful boundary-bar
+  summaries and blocking the retired phrases
+  `topological bar of the bulk factorization algebra`,
+  `B^{\\mathrm{top}}(\\mathrm{Fact}^{\\mathrm{bulk}}_T)`, and
+  `inside derived-centre bulk data`.
+
+Verification:
+
+- `pytest compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(7/7\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(529/529\).
+- Source-only stale scan over `chapters/`, `standalone/`, and
+  `appendices/` found no remaining
+  `topological bar of the bulk factorization algebra`,
+  `B^{\\mathrm{top}}(\\mathrm{Fact}^{\\mathrm{bulk}}_T)`,
+  `derived-centre bulk data`, or `derived-center bulk data` surface.
+- Targeted `git diff --check` is clean for the touched manuscript
+  files, standalone files, test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface,
+  theorem title, or label changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 472: AP34 residual `C_bulk` executable docstrings
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+After Passes 467--471, the remaining exact executable `C_bulk`
+surfaces were docstring-level symbols in the Burns \(F_2\) engine and
+the physics-horizon closed-string cobar conjecture.
+
+Repair:
+
+- Replaced the Burns package docstring
+  `H(Burns) = (A, A!, C_bulk, r(z), Theta_A, nabla^hol)` by the
+  typed seven-entry package
+  `H(Burns) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol)`, with
+  \(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) named as the Hochschild
+  closed-sector descriptor.
+- Replaced the physics-horizon formula `Omega(C_bulk)` by
+  `Omega(C_closed)`, explicitly described as the conjectural cobar
+  transform of the closed-sector complex and not the boundary
+  bar-cobar inversion \(\Omega B(A)\to A\).
+- Added source-level guards to
+  `compute/tests/test_theorem_burns_f2_engine.py` and
+  `compute/tests/test_physics_horizon.py` blocking `C_bulk` from
+  returning to the two source modules.
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/theorem_burns_f2_engine.py
+  compute/lib/physics_horizon.py`
+  passed.
+- `pytest
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(303/303\).
+- `pytest
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_theorem_burns_f2_engine.py
+  compute/tests/test_physics_horizon.py`
+  passed \(527/527\).
+- Source-only stale scan over
+  `compute/lib/theorem_burns_f2_engine.py` and
+  `compute/lib/physics_horizon.py` found no remaining `C_bulk` or
+  `Omega(C_bulk)` surface.
+- Targeted `git diff --check` is clean for the touched engines,
+  tests, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 471: AP34 twisted-holography pair scope key
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+Pass 468 had renamed the legacy twisted-holography datum field from
+`bulk_description` to `closed_sector_description`, but
+`verify_koszul_pair()` still exported the scope key `bulk_slot_scope`
+for the \(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) firewall text.
+
+Repair:
+
+- Renamed the `verify_koszul_pair()` scope key from
+  `bulk_slot_scope` to `closed_sector_slot_scope`.
+- Strengthened
+  `compute/tests/test_twisted_holography_engine.py` so the pair report
+  requires the closed-sector scope key, rejects the old key at runtime,
+  and checks that the \(C\)-slot text names
+  \(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) while keeping it distinct from
+  \(B(A)\), \(A^{\mathrm i}\), \(A^!\), and \(\Omega B(A)\).
+- Extended the existing AP34 source guard to block `bulk_slot_scope`
+  from returning to `compute/lib/twisted_holography_engine.py`.
+
+Verification:
+
+- `python3 -m py_compile compute/lib/twisted_holography_engine.py`
+  passed.
+- `pytest compute/tests/test_twisted_holography_engine.py` passed
+  \(124/124\).
+- `pytest
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(224/224\).
+- Source-only stale scan over
+  `compute/lib/twisted_holography_engine.py` found no remaining
+  `bulk_slot_scope`, `bulk_description`, `derived-centre bulk slot`, or
+  `Hochschild bulk slot` surface.
+- Targeted `git diff --check` is clean for the touched engine,
+  test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 470: AP34 ABJM closed-sector C-slot descriptor
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+Passes 467--469 repaired the deep twisted-holography, legacy
+twisted-holography, and M5 C-slot surfaces.  The ABJM compute package
+already stated that \(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) is the
+chiral Hochschild closed-sector slot, but its public datum API still
+exposed `bulk_tft`, the summary key `C (bulk)`, the scope key
+`bulk_slot_scope`, and the helper key `C_bulk`.
+
+Repair:
+
+- Renamed the `ABJMHolographicDatum` C-slot descriptor from
+  `bulk_tft` to `closed_sector_description`.
+- Replaced the summary alias `C (bulk)` by
+  `C (closed-sector)`.
+- Replaced the ABJM helper/scope keys `C_bulk` and
+  `bulk_slot_scope` by `C_closed_sector` and
+  `closed_sector_slot_scope`.
+- Updated `compute/tests/test_abjm_holographic_datum.py` to require
+  the closed-sector slot names and to keep `A`, `A^i`, `A!`, and
+  \(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) distinct.
+- Added a source-level guard blocking `bulk_tft`, `"C (bulk)"`,
+  `bulk_slot_scope`, and `C_bulk` from returning to
+  `compute/lib/abjm_holographic_datum.py`.
+
+Verification:
+
+- `python3 -m py_compile compute/lib/abjm_holographic_datum.py`
+  passed.
+- `pytest compute/tests/test_abjm_holographic_datum.py` passed
+  \(8/8\).
+- `pytest
+  compute/tests/test_abjm_holographic_datum.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_twisted_holography_engine.py`
+  passed \(224/224\).
+- Source-only stale scan over
+  `compute/lib/abjm_holographic_datum.py` found no remaining
+  `bulk_tft`, `C (bulk)`, `bulk_slot_scope`, or `C_bulk` surface.
+- Targeted `git diff --check` is clean for the touched engine,
+  test, and this ledger.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 469: AP34 M5 holographic datum C-slot alias
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+Passes 467--468 repaired the deep and legacy twisted-holography
+engines.  The M5 holographic datum already stated that
+\(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) is a closed-sector channel,
+but its API still exposed a `bulk_description` property and exported a
+summary key `C (bulk)`.
+
+Repair:
+
+- Renamed the `M5HolographicDatum` C-slot property from
+  `bulk_description` to `closed_sector_description`.
+- Replaced the summary alias `C (bulk)` by
+  `C (closed-sector)`.
+- Updated the M5 holographic-datum tests to require the
+  closed-sector alias and to reject the stale `C (bulk)` summary key.
+- Added a source-level guard in
+  `compute/tests/test_m5_brane_shadow_engine.py` blocking
+  `bulk_description`, `"C (bulk)"`, and the old bulk-channel wording
+  from returning to `compute/lib/m5_brane_shadow_engine.py`.
+
+Verification:
+
+- `python3 -m py_compile compute/lib/m5_brane_shadow_engine.py`
+  passed.
+- `pytest compute/tests/test_m5_brane_shadow_engine.py` passed
+  \(87/87\).
+- `pytest
+  compute/tests/test_phantom_m5_koszul_dual_engine.py
+  compute/tests/test_m5_brane_shadow_engine.py
+  compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(159/159\).
+- Source-only stale scan over
+  `compute/lib/m5_brane_shadow_engine.py` found no remaining
+  `bulk_description`, `C (bulk)`, `derived-centre bulk channel`, or
+  `bulk channel` surface.
+- Targeted `git diff --check` is clean for the touched engine and
+  test.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 468: AP34 legacy twisted-holography C-slot field
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane.
+Pass 467 repaired the deep twisted-holography engine.  The older
+`compute/lib/twisted_holography_engine.py` had already been narrowed
+to say that \(C=Z^{\mathrm{der}}_{\mathrm{ch}}(A)\) is the
+closed-sector slot, but the public datum field still used the legacy
+name `bulk_description`.
+
+Repair:
+
+- Renamed the `HolographicDatum` C-slot field from
+  `bulk_description` to `closed_sector_description`.
+- Updated the `C` property and object-firewall construction to read
+  the typed closed-sector field.
+- Renamed the construction-local dictionary and variable from
+  `bulk_descriptions`/`bulk` to
+  `closed_sector_descriptions`/`closed_sector`.
+- Updated the edge-case tests to assert against
+  `closed_sector_description`.
+- Added a source-level AP34 guard in
+  `compute/tests/test_twisted_holography_engine.py` blocking the old
+  `bulk_description`, `derived-centre bulk slot`, and
+  `Hochschild bulk slot` surfaces from returning.
+
+Verification:
+
+- `python3 -m py_compile compute/lib/twisted_holography_engine.py`
+  passed.
+- `pytest compute/tests/test_twisted_holography_engine.py` passed
+  \(124/124\).
+- `pytest
+  compute/tests/test_twisted_holography_engine.py
+  compute/tests/test_theorem_twisted_holography_deep_engine.py
+  compute/tests/test_physics_open_closed_bridge_surfaces.py`
+  passed \(213/213\).
+- Source-only stale scan over
+  `compute/lib/twisted_holography_engine.py` found no remaining
+  `bulk_description`, `derived-centre bulk slot`, or
+  `Hochschild bulk slot` surface.
+- Targeted `git diff --check` is clean for the touched engine and
+  test.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 467: AP34 deep twisted-holography closed-sector firewall
+
+Audit anchor: continuation of the AP25/AP34 four-functor hygiene lane
+after the AP33 Heisenberg-dual repairs.  The deep twisted-holography
+engine already had a correct AP34 header, but its derived-centre
+descriptor still exposed a `bulk_description` field and local
+docstrings still used bare `Bulk = ...` language for the Hochschild
+closed-sector slot.
+
+Repair:
+
+- Rewrote the deep twisted-holography axis summary so the Vol~II
+  comparison lane is a closed-sector/boundary/line comparison, not a
+  bar-to-physical-bulk implication.
+- Replaced the derived-centre dataclass field
+  `bulk_description` by `closed_sector_description`.
+- Renamed the local comparison class from
+  `BulkBoundaryLineTriangle` to
+  `ClosedSectorBoundaryLineTriangle`.
+- Renamed the AP34 boolean from `bar_is_not_bulk` to
+  `bar_is_not_closed_sector`.
+- Rewrote the affine and Heisenberg derived-centre docstrings so
+  they describe Hochschild closed-sector descriptors; any physical
+  bulk interpretation is explicitly conditional on OCA comparison
+  data.
+- Strengthened
+  `compute/tests/test_theorem_twisted_holography_deep_engine.py`
+  so source guards reject the stale bare-bulk phrases and the old
+  misleading symbols.
+
+Verification:
+
+- `python3 -m py_compile
+  compute/lib/theorem_twisted_holography_deep_engine.py` passed.
+- `pytest compute/tests/test_theorem_twisted_holography_deep_engine.py`
+  passed \(84/84\).
+- `pytest
+  compute/tests/test_physics_open_closed_bridge_surfaces.py
+  compute/tests/test_derived_centre_complementarity_surfaces.py
+  compute/tests/test_theorem_open_closed_rectification_engine.py`
+  passed \(64/64\).
+- Source-only stale scan over
+  `compute/lib/theorem_twisted_holography_deep_engine.py` found no
+  remaining `bulk_description`, `Bulk =`, `Bulk is`,
+  `bulk-boundary-line`, `BulkBoundaryLineTriangle`, or
+  `bar_is_not_bulk` surface.
+- Targeted `git diff --check` is clean for the touched engine and
+  test.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 466: standalone survey release-gate repair
+
+Audit anchor: external `make release` reached the standalone-paper
+stage and reported one failed paper,
+`survey_modular_koszul_duality_v2`, despite producing a PDF.  The
+standalone log contained a real fatal-pattern line:
+`Undefined control sequence` at
+`standalone/survey_modular_koszul_duality_v2.tex:6460`.
+
+Repair:
+
+- Inspected `.build_logs/standalone-survey_modular_koszul_duality_v2.log`
+  and the standalone source around the failing line.
+- The undefined command was `\Pthree` in the formal-disk
+  \(\mathsf P_3\) discussion.
+- Added the missing standalone preamble definition
+  `\providecommand{\Pthree}{\mathsf{P}_{3}}`, matching the live
+  `main.tex` convention and the existing standalone/main conversion
+  convention.
+- Left the mathematical sentence intact: the source already uses
+  \(\Pthree\) throughout the P3-bracket and E3-identification
+  surfaces, and the failure was a standalone macro-surface omission.
+
+Verification:
+
+- `make standalone` rebuilt only the missing
+  `out/survey_modular_koszul_duality_v2.pdf` and exited \(0\).
+- Fatal-pattern scan of
+  `.build_logs/standalone-survey_modular_koszul_duality_v2.log`
+  found no `Undefined control sequence`, `LaTeX Error`,
+  `Fatal error`, or `Emergency stop`.
+- No metadata regeneration was run: theorem titles, labels, and
+  claim-status macros were not changed.
+- No full `make release` rerun was performed in this pass.
+
+## 2026-06-17 -- Pass 465: AP33 CY/K3E curved-dual scalar lane
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall.  Pass 464 repaired non-BC theorem-facing
+comparison engines; this pass repairs the CY/K3E companion lane where
+the free-field Heisenberg scalar \(-k\) was still phrased too close
+to the false negative-level object.
+
+Repair:
+
+- Rewrote AP33 Heisenberg-dual wording in
+  `compute/lib/cy_twisted_holography_k3e_engine.py`,
+  `compute/lib/cy_factorization_envelope_k3_engine.py`,
+  `compute/lib/cy_grand_atlas_k3e_engine.py`, and
+  `compute/lib/cy_koszul_dual_k3e_engine.py`.
+- Updated the exposed returned labels
+  `dual_type`, `e_dual`, and AP33 warning strings so they describe the
+  curved second-kind \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\) branch
+  with scalar \(\kappa=-k\), not \(H_{-k}\) and not the uncurved
+  polynomial centre.
+- Updated explanatory AP33 test strings in
+  `compute/tests/test_cy_twisted_holography_k3e_engine.py` and
+  `compute/tests/test_cy_factorization_envelope_k3_engine.py`.
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` so the
+  AP33 source guard covers the CY/K3E cluster.
+- During verification, the CY twisted-holography suite exposed two
+  stale AP25 assertions still requiring the word `bulk` for
+  \(Z^{\mathrm{der}}_{\mathrm{ch}}(A_E)\).  The source and tests now
+  use the typed closed-sector slot \(C\) language instead.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- Initial CY/K3E run over the four focused suites found two stale AP25
+  closed-sector test failures in
+  `compute/tests/test_cy_twisted_holography_k3e_engine.py`.
+- After the AP25 closed-sector repair:
+  `pytest compute/tests/test_cy_twisted_holography_k3e_engine.py
+  compute/tests/test_cy_factorization_envelope_k3_engine.py
+  compute/tests/test_cy_grand_atlas_k3e_engine.py
+  compute/tests/test_cy_koszul_dual_k3e_engine.py` -> 546 passed.
+- `python3 -m py_compile` on the four touched CY/K3E compute library
+  modules passed.
+- Source-only stale scan over the patched CY/K3E cluster found no
+  remaining exact `H_k^! = Sym^ch(V*)`,
+  `H_k^! = Sym^{ch}(V*)`, `H_k^! != H_{-k}`,
+  `H_k^! = H_{-k}`, `same kappa, different algebras`,
+  or uncurved `Sym^ch(V*) with kappa` shorthand.
+- Targeted `git diff --check` is clean for the touched compute files
+  and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 464: AP33 theorem-facing comparison lane
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall.  Passes 460--463 repaired the bar-cobar,
+twisted-holography, and BC scalar lanes; this pass repairs the
+non-BC theorem-facing comparison engines where the Heisenberg scalar
+\(-k\) lane still risked being read as the object \(H_{-k}\).
+
+Repair:
+
+- Rewrote AP33 Heisenberg-dual wording in
+  `compute/lib/theorem_open_closed_rectification_engine.py`,
+  `compute/lib/theorem_four_dualities_engine.py`,
+  `compute/lib/koszul_holography_comparison_engine.py`,
+  `compute/lib/higher_dim_chiral_comparison_engine.py`,
+  `compute/lib/boundary_voa_koszul_engine.py`,
+  `compute/lib/mirror_koszul_comparison_engine.py`,
+  `compute/lib/symplectic_duality_engine.py`,
+  `compute/lib/poincare_duality_engine.py`, and
+  `compute/lib/shifted_symplectic_dag_engine.py`.
+- Kept scalar computations unchanged: \( \kappa(H_k^!)=-k \) remains
+  the scalar lane.  The repaired surfaces now say that for \(k\neq0\)
+  the object \(H_k^!\) is the curved second-kind
+  \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\) branch, not \(H_{-k}\) and
+  not the uncurved polynomial centre; only scalar \(\kappa\) agrees
+  with \(\kappa(H_{-k})\).
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` so the
+  AP33 source guard covers this theorem-facing comparison cluster.
+- During verification, `test_theorem_four_dualities_engine.py`
+  exposed an independent implementation error in
+  `compute/lib/theorem_four_dualities_engine.py`: `c_wn` documented
+  the Fateev--Lukyanov square
+  \((k+N-1)^2/(k+N)\) but the code omitted the square.  Restoring the
+  square gives the W\(_2\)=Virasoro check
+  \(c=-7\), \(c^!=33\), and
+  \(\kappa(W_2(c))+\kappa(W_2(c^!))=13\), as required by AP24.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- Initial cluster run over the nine comparison suites found one real
+  failure:
+  `TestWNExtension::test_w2_koszul_sum_is_13`, with the old code
+  giving \(-1/2+3/2=1\) instead of \(13\).
+- After correcting `c_wn`, targeted rerun
+  `pytest
+  compute/tests/test_theorem_four_dualities_engine.py::TestWNExtension::test_w2_koszul_sum_is_13`
+  -> 1 passed.
+- Direct exact check by module import gave
+  \(c=-7\), \(c^!=33\), sum \(13\).
+- `pytest compute/tests/test_theorem_open_closed_rectification_engine.py
+  compute/tests/test_theorem_four_dualities_engine.py
+  compute/tests/test_koszul_holography_comparison_engine.py
+  compute/tests/test_higher_dim_chiral_comparison_engine.py
+  compute/tests/test_boundary_voa_koszul_engine.py
+  compute/tests/test_mirror_koszul_comparison_engine.py
+  compute/tests/test_symplectic_duality_engine.py
+  compute/tests/test_poincare_duality_engine.py
+  compute/tests/test_shifted_symplectic_dag_engine.py` -> 914
+  passed.
+- `python3 -m py_compile` on the nine touched compute library modules
+  passed.
+- Source-only stale scan over the patched theorem-facing cluster found
+  no remaining exact `H_k^! = Sym^ch(V*)`,
+  `H_k^! = Sym^{ch}(V*)`, `H_k! = Sym^ch(V*)`,
+  `H_k^! != H_{-k}`, `H_k^! = H_{-k}`,
+  `Sym^ch(V*)`/`H_{-k}` comparison, or
+  `different algebras, same kappa` shorthand.
+- Targeted `git diff --check` is clean for the touched compute files
+  and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 463: AP33 BC atlas/deep-holography scalar lane
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall.  Passes 461--462 repaired the BC shadow and
+arithmetic scalar lanes; this pass repairs the remaining BC atlas and
+deep-holography surfaces where the scalar \(-k\) lane still sat too
+close to the false \(H_k^!=H_{-k}\) reading.
+
+Repair:
+
+- Rewrote AP33 Heisenberg-dual wording in
+  `compute/lib/bc_twisted_holography_deep_engine.py`,
+  `compute/lib/bc_grand_unified_atlas_engine.py`, and
+  `compute/lib/bc_grand_atlas_v2_engine.py`.
+- Kept the atlas arithmetic unchanged: `dual_kappa_heisenberg(k)`
+  still returns \(-k\).  The repaired prose now says that this is only
+  the scalar \(\kappa(H_k^!)\); for \(k\neq0\), the object \(H_k^!\)
+  is the curved second-kind \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\)
+  branch, not \(H_{-k}\) and not the uncurved polynomial centre.
+- Updated AP33 explanatory strings in
+  `compute/tests/test_bc_grand_unified_atlas_engine.py` and
+  `compute/tests/test_bc_grand_atlas_v2_engine.py`.
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` so the
+  AP33 source guard covers the BC atlas/deep-holography cluster.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- `pytest compute/tests/test_bc_twisted_holography_deep_engine.py
+  compute/tests/test_bc_grand_unified_atlas_engine.py
+  compute/tests/test_bc_grand_atlas_v2_engine.py` -> 435 passed.
+- `python3 -m py_compile` on the three touched BC compute library
+  modules passed.
+- Source-only stale scan over the patched cluster found no remaining
+  exact `H_k^! = Sym^ch(V*)`, `H_k^! = Sym^{ch}(V*)`,
+  `H_k! = Sym^ch(V*)`, `H_k^! != H_{-k}`,
+  `Sym^ch(V*)`/`H_{-k}` comparison, or
+  `different algebras, same kappa` shorthand.
+- Targeted `git diff --check` is clean for the touched compute files
+  and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 462: AP33 BC arithmetic-shadow scalar lane
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall.  Pass 461 repaired the first BC shadow-scalar
+cluster; this pass repairs the arithmetic/regulator BC engines where
+the scalar \(-k\) lane still risked being read as the object
+\(H_{-k}\).
+
+Repair:
+
+- Rewrote AP33 Heisenberg-dual prose in
+  `compute/lib/bc_ktheory_shadow_regulator_engine.py`,
+  `compute/lib/bc_arakelov_zeta_zeros_engine.py`,
+  `compute/lib/bc_arakelov_shadow_height_engine.py`,
+  `compute/lib/bc_bsd_shadow_engine.py`,
+  `compute/lib/bc_euler_system_shadow_engine.py`,
+  `compute/lib/bc_padic_hodge_shadow_engine.py`,
+  `compute/lib/bc_theta_correspondence_engine.py`, and
+  `compute/lib/bc_donaldson_thomas_shadow_engine.py`.
+- Kept every arithmetic return value unchanged.  These helpers record
+  the scalar \(\kappa(H_k^!)=-k\), while AP33 now states on the same
+  surface that the object \(H_k^!\), for \(k\neq0\), is the curved
+  second-kind \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\) branch, not
+  \(H_{-k}\) and not the uncurved polynomial centre.
+- Updated explanatory test strings in
+  `compute/tests/test_bc_bsd_shadow_engine.py`,
+  `compute/tests/test_bc_li_criterion_shadow_engine.py`, and
+  `compute/tests/test_bc_euler_system_shadow_engine.py`.
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` so the
+  AP33 source guard covers the arithmetic-shadow/regulator cluster.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- A single combined run over the nine arithmetic-shadow suites
+  collected 1087 tests but hit the repository's
+  `faulthandler_timeout = 120` while inside the long Li-criterion
+  file.  The command emitted no assertion failure before the timeout.
+- Split verification replaced that oversized invocation:
+  `pytest compute/tests/test_bc_ktheory_shadow_regulator_engine.py
+  compute/tests/test_bc_arakelov_zeta_zeros_engine.py
+  compute/tests/test_bc_arakelov_shadow_height_engine.py
+  compute/tests/test_bc_bsd_shadow_engine.py` -> 540 passed, with two
+  pre-existing `PytestReturnNotNoneWarning` warnings in the Arakelov
+  height tests.
+- `pytest
+  compute/tests/test_bc_li_criterion_shadow_engine.py::TestCrossFamilyConsistency::test_koszul_dual_relation_heisenberg`
+  -> 1 passed.
+- `pytest compute/tests/test_bc_euler_system_shadow_engine.py
+  compute/tests/test_bc_padic_hodge_shadow_engine.py
+  compute/tests/test_bc_theta_correspondence_engine.py
+  compute/tests/test_bc_donaldson_thomas_shadow_engine.py` -> 466
+  passed.
+- `python3 -m py_compile` on the eight touched BC compute library
+  modules passed.
+- Source-only stale scan over the patched arithmetic-shadow cluster
+  found no remaining exact `H_k^! = Sym^ch(V*)`,
+  `H_k^! = Sym^{ch}(V*)`, `H_k! = Sym^ch(V*)`,
+  `H_k^! != H_{-k}`, `kappa(H_k) + kappa(H_{-k})`, or
+  `H_k and H_{-k}` scalar/object shorthand.
+- Targeted `git diff --check` is clean for the touched compute files
+  and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 461: AP33 BC shadow-scalar propagation cluster
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall.  Pass 460 repaired the bar-cobar and
+twisted-holography cluster; this pass repairs the Benjamin-Chang
+shadow engines where the scalar \(\kappa=-k\) shadow had still been
+presented too close to the false object identity \(H_k^!=H_{-k}\).
+
+Repair:
+
+- Rewrote the AP33 pitfall surfaces in
+  `compute/lib/bc_derived_moduli_shadow_engine.py`,
+  `compute/lib/bc_nc_motives_shadow_engine.py`,
+  `compute/lib/bc_bridgeland_stability_engine.py`,
+  `compute/lib/bc_shadow_zeta_zeros_engine.py`,
+  `compute/lib/bc_shifted_symplectic_shadow_engine.py`, and
+  `compute/lib/bc_topological_string_shadow_engine.py`.
+  The BC cluster now says: at \(k\neq0\), \(H_k^!\) is the curved
+  second-kind \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\) branch; it is
+  not \(H_{-k}\) and not the uncurved polynomial centre.  Only scalar
+  \(\kappa\) agrees with \(\kappa(H_{-k})\).
+- Kept the BC scalar computations unchanged.  The zeta, Bridgeland,
+  motives, shifted-symplectic, derived-moduli, and topological-string
+  engines already compute the scalar \(-k\) shadow; this pass narrowed
+  the object language around that scalar.
+- Retitled the Heisenberg topological-string complementarity prose as
+  scalar \(F_g(H_k)+F_g(H_k^!)\) complementarity, rather than an
+  object-level comparison with \(H_{-k}\).
+- Updated the affected BC tests' explanatory strings in
+  `compute/tests/test_bc_derived_moduli_shadow_engine.py`,
+  `compute/tests/test_bc_nc_motives_shadow_engine.py`,
+  `compute/tests/test_bc_shadow_zeta_zeros_engine.py`, and
+  `compute/tests/test_bc_topological_string_shadow_engine.py`.
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` so the
+  AP33 source guard covers the repaired BC cluster.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- `pytest compute/tests/test_bc_derived_moduli_shadow_engine.py
+  compute/tests/test_bc_nc_motives_shadow_engine.py
+  compute/tests/test_bc_bridgeland_stability_engine.py
+  compute/tests/test_bc_shadow_zeta_zeros_engine.py
+  compute/tests/test_bc_shifted_symplectic_shadow_engine.py
+  compute/tests/test_bc_topological_string_shadow_engine.py` -> 706
+  passed.
+- `python3 -m py_compile` on the six touched BC compute library
+  modules passed.
+- Source-only stale scan over the patched BC cluster found no
+  remaining exact `H_k^! = Sym^ch(V*)`,
+  `H_k^! = Sym^{ch}(V*)`, `companion = Sym^ch(V*)`,
+  `F_g(H_k)`/`H_{-k}` complementarity phrasing, or
+  `kappa(H_k) + kappa(H_{-k})` scalar/object shorthand.
+- Targeted `git diff --check` is clean for the touched BC compute
+  files and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 460: AP33 curved Heisenberg-dual propagation cluster
+
+Audit anchor: continuation of `theorem-H/H-7` and the AP33
+shadow/object firewall exposed by the Pass 458 scan.
+
+Repair:
+
+- Propagated the corrected Heisenberg Koszul-dual language through the
+  bar-cobar and twisted-holography compute cluster.  The AP33 surface
+  now says: at \(k\neq0\), \(H_k^!\) is the curved second-kind
+  \(\mathrm{Sym}^{\mathrm{ch}}(V^*[1])\) branch with scalar
+  \(\kappa=-k\); it is not \(H_{-k}\), and it is not the uncurved
+  polynomial centre.
+- Updated behavior-level labels in
+  `compute/lib/bar_presentation_koszul_dual_engine.py`,
+  `compute/lib/sc_bar_cobar_inversion_engine.py`,
+  `compute/lib/twisted_holography_engine.py`, and
+  `compute/lib/twisted_holography_mc.py` so returned summaries no
+  longer expose the uncurved `Sym^ch(V*)` label as the Koszul-dual
+  object.
+- Updated companion wording in
+  `compute/lib/twisted_holography_comparison_engine.py` and
+  `compute/lib/twisted_holography_amplitudes.py`, and corrected the
+  affected tests
+  `compute/tests/test_bar_presentation_koszul_dual_engine.py` and
+  `compute/tests/test_sc_bar_cobar_inversion_engine.py`.
+- Extended `compute/tests/test_heisenberg_curved_dual_scope.py` to
+  cover the patched cluster and to assert the returned labels from the
+  bar-presentation, SC bar-cobar, twisted-holography, and MC
+  dictionary engines.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 7
+  passed.
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_bar_presentation_koszul_dual_engine.py
+  compute/tests/test_sc_bar_cobar_inversion_engine.py
+  compute/tests/test_twisted_holography_engine.py` -> 326 passed.
+- `pytest compute/tests/test_twisted_holography_mc.py
+  compute/tests/test_twisted_holography_comparison_engine.py
+  compute/tests/test_twisted_holography_amplitudes.py
+  compute/tests/test_minimal_resolution_chiral_engine.py` -> 334
+  passed, 1 skipped.
+- `python3 -m py_compile` on the six touched compute library modules
+  passed.
+- Source-only stale scan over the patched cluster found no remaining
+  exact `H_k^! = Sym^ch(V*)`, `Koszul dual H_k^! = Sym^ch`,
+  `companion = Sym^ch(V*)`, or `H_k^! = Sym^{ch}(V*)` AP33
+  shorthand.
+- Targeted `git diff --check` is clean for the touched compute files
+  and tests.
+- No metadata regeneration was run: no TeX claim-status surface
+  changed.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 459: Theorem H non-vacuity exactness split
+
+Audit anchor: `theorem-H/H-11` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Added `prop:heisenberg-theorem-h-window-certificate` to
+  `chapters/theory/chiral_hochschild_koszul.tex`.  The proposition
+  gives a concrete rank-one Heisenberg finite-window certificate:
+  finite partition basis in weight windows, normalized bar-length bound
+  \(p\leq N\), degreewise finite-dimensional truncation tower, and
+  vanishing of the finite-window
+  \(\lambda^1_n(\mathfrak H_k)\) Mittag--Leffler obstruction.
+- The proposition explicitly does not claim to prove the whole
+  Theorem-H package: ordered residue-twisted acyclicity
+  (`conj:ordered-twisted-tensor-acyclicity`) and completed
+  second-kind convergence in
+  `lem:curved-dual-centre-heisenberg` remain named residual inputs.
+- Rewrote `rem:theorem-H-filter-exactness` so the four obstruction
+  terms are no longer said to vanish generically “by the preceding
+  lemmas.”  The remark now separates:
+  positive-Arnold killing, row-support degeneration, strict
+  Mittag--Leffler/perfectness, and the Verdier/perfectness cone.
+- Corrected the remaining Theorem-H verification decorator wording in
+  `compute/tests/test_theorem_H_hochschild_koszul.py`: the proof path
+  now names collision-depth support degeneration after
+  residue-twisted bar concentration, not an FM-formality spectral
+  sequence collapse.  The Heisenberg degree-\(2\) path now names the
+  curved second-kind endpoint.
+- Extended `compute/tests/test_theorem_h_hochschild_polynomial.py`
+  with guards that the Heisenberg certificate remains conditional and
+  that the exactness criterion keeps the four obstruction mechanisms
+  separated.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_h_hochschild_polynomial.py::TestTheoremHScope
+  compute/tests/test_theorem_H_hochschild_koszul.py` -> 13 passed.
+- `pytest compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_fm_tower_support_degen_scope.py
+  compute/tests/test_theorem_h_engine_status_scope.py` -> 239 passed.
+- `make metadata` -> 4687 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1739 O=2 DF=263 total=4687`; dependency graph 7292 edges;
+  theorem registry 2303 proved claims; label index 15245 labels /
+  15606 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4687`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Source-only stale scan over the repaired Theorem-H files found no
+  remaining `FM-formality spectral sequence collapse`,
+  `FM-formality SS collapse`, or live generic claim that “these four
+  terms vanish by the preceding lemmas” outside the new negative guard.
+- Targeted `git diff --check` is clean for the touched source, tests,
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 458: Heisenberg curved-dual compute scope
+
+Audit anchor: `theorem-H/H-7` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Synchronized the compute/test surface with the already-repaired
+  manuscript statement of `lem:curved-dual-centre-heisenberg`.
+- Updated `compute/lib/chiral_hochschild_engine.py` so the
+  `\(\ChirHoch^2\)` scalar for non-augmented
+  \(\mathfrak H_k\), \(k\neq0\), is documented as the completed
+  second-kind centre of the curved dual
+  \((\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega)\), not as
+  \(Z(\mathrm{Sym}^{\mathrm{ch}}(V^*))=\mathbb C\).  The uncurved
+  commutative shadow is now explicitly recorded as product-centred and
+  inapplicable to the scalar line.
+- Updated the companion AP33 surfaces in
+  `compute/lib/derived_center_explicit.py`,
+  `compute/lib/theorem_preface_positioning_engine.py`,
+  `compute/lib/bc_derived_moduli_shadow_engine.py`,
+  `compute/lib/conformal_blocks_bar_identification_engine.py`,
+  `compute/lib/theorem_universal_chiral_genus_extension_engine.py`,
+  `compute/lib/open_closed_derived_center.py`,
+  `compute/lib/bar_presentation_koszul_dual_engine.py`, and
+  `compute/lib/universal_shadow_tower_engine.py` so they name the
+  curved second-kind Sym branch rather than the uncurved polynomial
+  algebra or \(H_{-k}\).
+- Updated the stale comments/docstrings in
+  `compute/tests/test_chiral_hochschild_engine.py`,
+  `compute/tests/test_derived_center_explicit.py`, and
+  `compute/tests/test_twisted_holography_engine.py`.
+- Added `compute/tests/test_heisenberg_curved_dual_scope.py` to guard
+  the engine language, adjacent AP33 surfaces, TeX anchors, and the
+  low-weight Heisenberg \(\HH^2\) scalar line.
+
+Verification:
+
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py` -> 6
+  passed.
+- `pytest compute/tests/test_heisenberg_curved_dual_scope.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_derived_center_explicit.py
+  compute/tests/test_twisted_holography_engine.py` -> 397 passed.
+- `python3 -m py_compile` on the nine touched compute library modules
+  passed.
+- `make metadata` -> 4686 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1738 O=2 DF=263 total=4686`; dependency graph 7289 edges;
+  theorem registry 2303 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Source-only stale scan over `compute/lib` and `compute/tests`
+  \textup{(}excluding the new guard's forbidden-string assertions\textup{)}
+  found no remaining `Z(H_k!) = Z(Sym^ch(V*)) = C`,
+  `H_k! = Sym^ch: same center dimension`,
+  `Heisenberg H_k: A! = Sym^ch(V*), center = C`,
+  `A! branch: Sym^ch(V*) after the`,
+  `H_k^! = Sym^ch(V*), NOT H_{-k}`, or
+  `Koszul dual H_k^! = Sym^ch(V*)` phrase.
+- Targeted `git diff --check` is clean for the touched compute files,
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 457: FM-tower support degeneration scope
+
+Audit anchor: `theorem-H/H-9` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired the remaining formality-driven framing in
+  `chapters/theory/chiral_hochschild_koszul.tex` at
+  `prop:fm-tower-collapse`.
+- The proposition is now named as collapse by collision-depth support,
+  not as an `FM-formality spectral sequence`.  The load-bearing
+  mechanism is the residue-twisted positive-fibre acyclicity together
+  with the single-row support
+  \(E_2^{r,s}(p)=0\) for \(s\neq p\).
+- The Arnold algebra paragraph now uses Kontsevich formality only as a
+  constant-fibre cohomology identification.  It explicitly says this
+  is not a degeneration argument for the coefficient-coupled chiral
+  Hochschild spectral sequence.
+- The proof now records that Proposition~\ref{prop:en-formality} does
+  not control the OPE-coupled differentials with \(\cD_X\)-module
+  coefficients; the collapse comes from the residue-twisted
+  bar-concentration input and the support calculation.
+- Added `compute/tests/test_fm_tower_support_degen_scope.py` to guard
+  the proposition title, the constant-fibre-only use of formality, the
+  absence of the old chain-level-correction slogan, and the
+  \(d_m\)-row-support degeneration argument.
+
+Verification:
+
+- `pytest compute/tests/test_fm_tower_support_degen_scope.py` -> 3
+  passed.
+- `pytest compute/tests/test_fm_tower_support_degen_scope.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_theorem_h_engine_status_scope.py` -> 231 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1738 O=2 DF=263 total=4686`; dependency graph 7289 edges;
+  theorem registry 2303 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Source-only stale scan found no remaining
+  `FM-formality spectral sequence`,
+  `Fulton--MacPherson!formality spectral sequence`,
+  `there are no higher chain-level corrections`,
+  `Deligne strictness`, `pure mixed Hodge structures`, or
+  `weight-changing differential` phrase in the repaired file.
+- Targeted `git diff --check` is clean for
+  `chapters/theory/chiral_hochschild_koszul.tex`,
+  `compute/tests/test_fm_tower_support_degen_scope.py`, the
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 456: affine derived-center bar-degree firewall
+
+Audit anchor: `theorem-H/H-2` from
+`notes/audit_repairs_ledger_20260610.md`, specifically the surviving
+supporting defect in `prop:derived-center-explicit`.
+
+Repair:
+
+- Repaired `chapters/theory/chiral_center_theorem.tex` at
+  `prop:derived-center-explicit`.  The proposition is now explicitly
+  `ClaimStatusConditional`.
+- Removed the false support sentence saying that
+  \(H^*(B(\widehat{\mathfrak{sl}}_{2,k}))\) is concentrated in bar
+  degree \(1\).  The affine finite-window derived-center statement no
+  longer relies on a nonexistent three-term diagonal Koszul
+  resolution.
+- Replaced it with the actual bar-degree firewall: \((A^i)_1\) carries
+  the adjoint \(\mathfrak{sl}_2\), but higher bar-degree pieces are
+  present; the explicit CE computation gives
+  \(\dim(A^i)_2=5\) at weight \(3\)
+  (`comp:sl2-ce-verification`).
+- Routed the scalar finite-window derived-center entry through the
+  conditional Theorem-H/PBW package: localized bar-concentration, the
+  normalized diagonal Hochschild complex, the zero-mode inner quotient
+  of `prop:chirhoch1-affine-km`, and the generic scalar centre of the
+  Koszul-dual affine partner.
+- Added `compute/tests/test_affine_derived_center_bar_degree_scope.py`
+  to guard the conditional status, the nonzero bar-degree-2 witness,
+  the absence of the false bar-degree-1 concentration, and the live
+  CE computation label.
+
+Verification:
+
+- `pytest compute/tests/test_affine_derived_center_bar_degree_scope.py`
+  -> 3 passed.
+- `pytest compute/tests/test_affine_derived_center_bar_degree_scope.py
+  compute/tests/test_chiral_hochschild_engine.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_derived_center_explicit.py
+  compute/tests/test_bar_cohomology_sl2_explicit_engine.py
+  compute/tests/test_bar_differential_sl2_matrices_engine.py` -> 614
+  passed.
+- `make metadata` -> 4686 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1738 O=2 DF=263 total=4686`; dependency graph 7289 edges;
+  theorem registry 2303 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Source-only stale scans found no remaining
+  `bar cohomology is concentrated in bar degree 1 (chiral
+  Koszulness)`, `three-term diagonal Koszul resolution`, or
+  affine `Ext^1`-as-Hochschild-input phrase in the repaired source.
+- Targeted `git diff --check` is clean for
+  `chapters/theory/chiral_center_theorem.tex`,
+  `compute/tests/test_affine_derived_center_bar_degree_scope.py`, the
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 455: Theorem H engine bookkeeping status
+
+Audit anchor: `theorem-H/H-3` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired the remaining Theorem-H engine-status wording in
+  `chapters/theory/chiral_hochschild_koszul.tex`.  The affine
+  \(\mathfrak{sl}_N\) breakdown is now explicitly described as
+  quotient/prequotient bookkeeping, not as a chain-level verification
+  of Theorem H.
+- The \(N=10\) row now records only
+  \(\dim\ChirHoch^1(V_k(\mathfrak{sl}_{10}))=0\), with
+  \(99=\dim\mathfrak{sl}_{10}\) retained as zero-mode prequotient and
+  bar-dual generator metadata.
+- Added `compute/tests/test_theorem_h_engine_status_scope.py` to guard
+  the manuscript wording and the engine data model:
+  `inner_derivations = total_derivations = dim(g)`,
+  `outer_derivations = dim_chirhoch1 = 0`, and the level deformation
+  recorded as degree-2 parameter metadata rather than a
+  \(\ChirHoch^1\) basis vector.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_h_engine_status_scope.py` -> 4
+  passed.
+- `pytest compute/tests/test_theorem_h_engine_status_scope.py
+  compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_chirhoch_dimension_engine.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py` -> 452 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1738 O=2 DF=263 total=4686`; dependency graph 7287 edges;
+  theorem registry 2303 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Source-only stale scans found no remaining
+  `recorded in the engine and checked` or
+  `verified in the chiral-Hochschild engine` phrase in the repaired
+  manuscript/engine surfaces.
+- Targeted `git diff --check` is clean for
+  `chapters/theory/chiral_hochschild_koszul.tex`,
+  `compute/tests/test_theorem_h_engine_status_scope.py`, the
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 454: Master corollary status scope
+
+Audit anchor: `foundations-master/A-8` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired the corollary layer in
+  `chapters/connections/master_reconstruction.tex` so the five
+  restratified corollaries retain their own claim statuses and
+  hypothesis packages.
+- Kept `cor:mr-B` Conditional and preserved its ambient-qualified
+  bar--cobar inversion statement: strict finite-stage loci versus the
+  chiral coderived / weight-completed / pro-conilpotent ambient.
+- Kept `cor:mr-C` ProvedHere on its scalar family-stratum reading, but
+  added that this corollary asserts only the scalar C0/C1 reading; the
+  shifted-symplectic/BV enhancement is a separate package.
+- Kept `cor:mr-D` ProvedHere, but scoped it to the uniform-weight
+  scalar-diagonal lane of `def:scalar-diagonal-hypothesis` and
+  `prop:scalar-obstruction-hodge-euler`; corrected
+  \(\lambda_g\) from \(H^2(\Mbar_{g,n})\) to
+  \(c_g(\mathbb E)\in H^{2g}(\Mbar_{g,n})\), the top Chern class of
+  the rank-\(g\) Hodge bundle.
+- Retagged `cor:mr-H` from `ClaimStatusProvedHere` to
+  `ClaimStatusConditional`, matching `thm:mr-H`.  The corollary now
+  names the full \(H_3\) package and says that the bare Koszul/PBW
+  locus gives the Hochschild Koszul-defect complex until the relevant
+  high-degree cohomology is proved zero; the Feigin--Frenkel critical
+  point \(k=-h^\vee\) is excluded.
+- Repaired summary prose in `chapters/theory/introduction.tex` and
+  `FRONTIER.md` so “Theorems A through H as corollaries” is always
+  qualified by named hypothesis packages, and so KSDual is described
+  as chart-side self-duality on the admissible fixed locus rather than
+  strict equivalence of every forgetful projection.
+- Added `compute/tests/test_master_corollary_status_scope.py` to guard
+  the corollary statuses, Theorem D lane/degree, Theorem H
+  conditionality, and summary-level package qualifiers.
+
+Verification:
+
+- `pytest compute/tests/test_master_corollary_status_scope.py` -> 5
+  passed.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_master_bourbaki_scope.py
+  compute/tests/test_master_ksdual_scope.py
+  compute/tests/test_master_corollary_status_scope.py` -> 246 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1851 PE=452 CJ=349 H=31
+  CD=1738 O=2 DF=263 total=4686`; dependency graph 7287 edges;
+  theorem registry 2303 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1851 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Targeted stale-phrase scans found no remaining
+  `every forgetful step degenerates from adjunction to strict
+  equivalence` or `with \lambda_g in H^2` formulation on the repaired
+  surfaces, and `cor:mr-H` is no longer tagged `ClaimStatusProvedHere`.
+- Targeted `git diff --check` is clean for `CLAUDE.md`,
+  `FRONTIER.md`, `chapters/connections/master_reconstruction.tex`,
+  `chapters/connections/master_concordance.tex`,
+  `chapters/theory/introduction.tex`,
+  `compute/tests/test_master_corollary_status_scope.py`, the
+  regenerated metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 453: KSDual fixed-locus scope
+
+Audit anchor: `foundations-master/A-7` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired the KSDual surface in
+  `chapters/connections/master_reconstruction.tex` so the fixed locus
+  is computed in the finite-type curved Verdier--Koszul ambient and
+  then intersected with the uncurved Koszul locus.
+- Replaced the false statement that KSDual makes every reconstruction
+  step an equivalence by the true chart-side statement: on admissible
+  KSDual, the level-\(1\)/level-\(2\) bar--cobar reflection is
+  self-dual, while the centre, line, and scalar projections remain
+  forgetful shadows with their own hypothesis packages.
+- Rewrote `def:mr-ksdual` to require \(A_b^!\in\Kosz(X,D,\tau)\) and
+  \(\sigma(A_b)\simeq A_b\) inside the uncurved Koszul locus after
+  computing the dual in \(\Kosz^{\mathrm{ft,curv}}\).  The definition
+  now states that vanishing of an anti-diagonal scalar sum is not a
+  KSDual membership criterion.
+- Rewrote `thm:mr-ksdual`: Theorem H remains conditional on \(H_3\);
+  the critical affine fixed point \(k=-h^\vee\) is excluded; level
+  \(3\) does not reconstruct level \(2\); the archetype label is
+  rigid only on the admissible algebra-level fixed locus.
+- Repaired `rem:mr-ksdual-witnesses` by moving Heisenberg and
+  \(\beta\gamma/bc\) from KSDual witnesses to scalar orbit pairs.
+  It now cites `rem:fourier-heisenberg-not-selfdual`, records the
+  Heisenberg \(k=0\) scalar intersection as degenerate, and keeps
+  actual fixed-point evidence to self-dual lattice/Mukai points and
+  the class-\(\mathsf M\) analytic-family fixed charges.
+- Repaired the later chain-homotopy norm paragraph so the
+  \(\kappa+\kappa^!=0\) anti-diagonal is a zero-norm/orbit-pair
+  condition, not a self-dual KSDual locus.
+- Aligned the KSDual rule surface in `CLAUDE.md` and the convention
+  surface in `chapters/connections/master_concordance.tex`, and
+  tightened `rem:ksdual-fixed-points-bucket` so its table is a
+  parameter relation / KSDual-status table rather than an automatic
+  algebra-level witness list.
+- Added `compute/tests/test_master_ksdual_scope.py` to guard the
+  curved ambient, the \(H_3\)-admissibility restriction, the
+  Heisenberg/\(\beta\gamma\) orbit-pair distinction, and the removal
+  of the old “five-archetype dichotomy stabilises” slogan.
+
+Verification:
+
+- `pytest compute/tests/test_master_ksdual_scope.py` -> 5 passed.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_master_bourbaki_scope.py
+  compute/tests/test_master_ksdual_scope.py` -> 241 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1852 PE=452 CJ=349 H=31
+  CD=1737 O=2 DF=263 total=4686`; dependency graph 7285 edges;
+  theorem registry 2304 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1852 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Targeted stale-phrase scans found no remaining
+  `five-archetype dichotomy stabilises`, `every reconstruction step is
+  an equivalence`, or `self-dual fixed point under sigma` formulation
+  on the repaired KSDual rule surfaces.
+- Targeted `git diff --check` is clean for `CLAUDE.md`,
+  `chapters/connections/master_reconstruction.tex`,
+  `chapters/connections/master_concordance.tex`,
+  `compute/tests/test_master_ksdual_scope.py`, the regenerated
+  metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 452: Master Reconstruction Bourbaki recovery scope
+
+Audit anchor: `foundations-master/A-6` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired `thm:mr-bourbaki` in
+  `chapters/connections/master_reconstruction.tex` by deleting the
+  false clauses that the structure is recovered from any one of its
+  five projections and that identity on any one level forces identity
+  on the whole tower.
+- Replaced omnidirectional recovery by the true chart-side recovery
+  pattern: levels \(0\), \(1\), and \(2\) determine one another under
+  \(H_0\cup H_1\), with level \(1\) recovering level \(0\) by
+  `thm:mr-morita` once the generator \(b\) is fixed, and level \(2\)
+  recovering level \(1\) by bar--cobar inversion through
+  `thm:mr-A`.
+- Split the scalar side into conditional descent only:
+  \(5\to4\) consumes the trace-plus-clutching system of
+  `thm:mr-modular`, strictly more than the bare scalar tuple
+  \((\kappa,Z_g,F_g)\); \(4\to3\) uses
+  `thm:mr-drinfeld-double`; `thm:mr-H` is now explicitly
+  formation-and-concentration from level \(1\) to level \(3\), not a
+  reconstruction theorem from level \(3\) to level \(2\).
+- Named the remaining \(3\to2\) inverse as the open
+  level-\(3\)-to-level-\(2\) reconstruction problem and invoked
+  `rem:mr-five-objects` to forbid identifying \(B(A_b)\) with
+  \(\DerZch(A_b)\).
+- Restricted rigidity to faithful chart-side projections only.  The
+  proof now treats identity at level \(2\) by corestricting
+  \(B(\phi)=T^c(s^{-1}\bar\phi)\) to the cogenerators
+  \(s^{-1}\bar A_b\), recovering \(\phi=\mathrm{id}_{A_b}\).
+- Added the non-faithful higher-level witnesses directly in the
+  proof: `lem:master-scalar-non-faithfulness`,
+  `thm:master-scalar-nonfaithful-witness-c16`, and the rank-one
+  Heisenberg sign automorphism \(\alpha\mapsto-\alpha\), which fixes
+  scalar traces while acting nontrivially on the current generator and
+  exchanging \(F_\lambda\) with \(F_{-\lambda}\).
+- Added `compute/tests/test_master_bourbaki_scope.py` to prevent the
+  false any-level recovery and rigidity language from returning.
+
+Verification:
+
+- `pytest compute/tests/test_master_bourbaki_scope.py` -> 4 passed.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_master_bourbaki_scope.py` -> 236 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1852 PE=452 CJ=349 H=31
+  CD=1737 O=2 DF=263 total=4686`; dependency graph 7281 edges;
+  theorem registry 2304 proved claims; label index 15244 labels /
+  15605 occurrences.
+- `make census` -> `PH=1852 PE=452 CJ=349 H=31 O=2 total=4686`.
+- `make phase0-index` -> unchanged pre-existing open label
+  `thm:hochschild-concentration-E1` with 9 refs.
+- Targeted stale-phrase scan on
+  `chapters/connections/master_reconstruction.tex` found no remaining
+  `any one of its five projections`, `identity on any one level`,
+  `identity at any level`, or `generate all five levels` formulation.
+- Targeted `git diff --check` is clean for
+  `chapters/connections/master_reconstruction.tex`,
+  `compute/tests/test_master_bourbaki_scope.py`, the regenerated
+  metadata files, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 451: modular MC fixed-fiber/relative-family split
+
+Audit anchor: `foundations-master/A-5` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Repaired `chapters/theory/configuration_spaces.tex` so the fixed
+  bordered FM compactification
+  `\overline C^{oc}_{k,\vec m}(X,D,\tau)` is built from boundary and
+  mixed blowups only; nodal divisors `D_Gamma^{nod}` are now explicitly
+  relative-modular-family strata, not boundary faces of the fixed-fiber
+  space.
+- Replaced the old four-type fixed-boundary statement by a typed
+  decomposition:
+  fixed fiber = Types I--III collision faces;
+  relative modular family = Types I--IV, with Type IV the pullback of
+  Deligne--Mumford nodal boundary.
+- Rewrote the opening of the modular MC section: fixed-fiber Stokes
+  supplies only the collision differential; separating bracket and
+  non-separating clutching are supplied by the relative modular-operad
+  square-zero identity.
+- Rewrote the proof of `thm:modular-mc-clutching` as a two-source
+  derivation:
+  Source 1 fixed-fiber Stokes gives
+  `d_int + d_bdy + d_mix`;
+  Source 2 the open-closed extension of `thm:bar-modular-operad` and
+  the Getzler--Kapranov edge decomposition give
+  `(1/2)[Theta,Theta]^oc` and `hbar Delta_clutch(Theta)`.
+- Removed the false assembly equation
+  `0 = int_{partial sigma} omega = Types I+II+III+IV(a)+IV(b)` and
+  replaced it by `eq:modular-two-source-assembly`, which explicitly
+  combines fixed-fiber collision Stokes with the relative modular
+  square-zero operator.
+- Added `compute/tests/test_modular_mc_clutching_scope.py` to guard
+  against reintroducing fixed-fiber Type IV faces, nodal blowups in the
+  fixed bordered FM result, or the old one-source Stokes assembly.
+
+Verification:
+
+- `pytest compute/tests/test_modular_mc_clutching_scope.py` -> 3 passed.
+- `pytest compute/tests/test_modular_mc_clutching_scope.py
+  compute/tests/test_bar_modular.py
+  compute/tests/test_bar_modular_operad_fcom.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_theorem_stokes_mc_engine.py` -> 213 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1852 PE=452 CJ=349 H=31
+  CD=1737 O=2 DF=263 total=4686`; dependency graph 7281 edges; theorem
+  registry 2304 proved; label index 15244 labels / 15605 occurrences.
+- `make census` -> same counts.
+- `make phase0-index` -> `ACTIVE_THEORY_FILES=66`, `INDEXED_NODES=2021`,
+  one pre-existing open label family:
+  `thm:hochschild-concentration-E1` with 9 refs.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_modular_mc_clutching_scope.py
+  compute/tests/test_bar_modular.py
+  compute/tests/test_bar_modular_operad_fcom.py
+  compute/tests/test_theorem_stokes_mc_engine.py` -> 245 passed.
+
+No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 450: genus-1 elliptic propagator normalization
+
+Audit anchor: `foundations-master/A-4` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Replaced the genus-1 propagator convention by the single normalized
+  form
+  \[
+  \eta_{ij}^{(1)}
+  =
+  \left[
+  \partial_u\log\theta_1(u|\tau)
+  +2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+  \right]_{u=z_i-z_j}(dz_i-dz_j).
+  \]
+- Patched the theorem-level surfaces in
+  `chapters/theory/fourier_seed.tex`,
+  `chapters/theory/higher_genus_foundations.tex`, and
+  `chapters/theory/configuration_spaces.tex`: the compensator is now a
+  `(1,0)` form with real-analytic coefficient, not a `(0,1)` form; the
+  proof records that a `(0,1)` form cannot cancel the `B`-cycle deficit
+  of the theta quotient.
+- Propagated the correction to live example/summary surfaces in
+  `chapters/examples/kac_moody.tex`,
+  `chapters/examples/beta_gamma.tex`, and
+  `chapters/examples/heisenberg_eisenstein.tex`, separating the
+  holomorphic coefficient `theta_1'/theta_1` from the descended
+  Arakelov-normalized one-form.
+- Rebuilt `def:elliptic-log-form` and
+  `thm:eta-properties-genus1` so the normalized form is doubly periodic,
+  has residue one, and satisfies
+  `d eta = 2 pi i (delta_D - q^* omega_tau)` as a current; the
+  holomorphic quotient alone carries the `-2 pi i` `B`-cycle shift.
+- Added `compute/tests/test_elliptic_propagator_normalization.py`, using
+  a direct period-`1,tau` theta series to check double periodicity,
+  holomorphic-quotient `B`-cycle deficit, oddness/symmetry, residue one,
+  and absence of the retired TeX normalizations from live surfaces.
+
+Verification:
+
+- `pytest compute/tests/test_elliptic_propagator_normalization.py`
+  -> 5 passed.
+- `pytest compute/tests/test_elliptic_propagator_normalization.py
+  compute/tests/test_fourier_seed_scalar_typing.py
+  compute/tests/test_higher_genus_curved_scope.py
+  compute/tests/test_genus_normalization_surfaces.py
+  compute/tests/test_example_genus_one_obstruction_scalar_typing.py
+  compute/tests/test_curvature_genus.py
+  compute/tests/test_curvature_genus_bridge.py`
+  -> 67 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1852 PE=452 CJ=349 H=31
+  CD=1737 O=2 DF=263 total=4686`; dependency graph 7281 edges; theorem
+  registry 2304 proved.
+- `make census` -> same counts.
+- `make phase0-index` -> `ACTIVE_THEORY_FILES=66`, `INDEXED_NODES=2021`,
+  one pre-existing open label family:
+  `thm:hochschild-concentration-E1` with 9 refs.
+
+No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 449: Theorem A ambient citation/status split
+
+Audit anchor: `foundations-master/A-3` from
+`notes/audit_repairs_ledger_20260610.md`.
+
+Repair:
+
+- Retagged `def:fg-ambient` in
+  `chapters/theory/theorem_A_infinity_2.tex` from a proved-elsewhere
+  Francis--Gaitsgory `(infty,2)` category assertion to a definitional
+  Ran factorization ambient: the sheaf-level base is
+  `Fact_Ran(X)=Alg^fact(Shv^DR(Ran(X)))`, while `Fact(X)` denotes the
+  chosen factorization/properadic enhancement used later.
+- Retagged `prop:fg-ambient-properties` from
+  `ClaimStatusProvedElsewhere` to `ClaimStatusConditional` and isolated
+  the package `H_Fact(X)`: Ran sheaf stability/presentability,
+  colimit-compatible Francis star-product, strict unit in the chosen
+  enhancement, and category-valued/unital `(infty,2)` mapping/properadic
+  structure.
+- Removed the false outsourcing of the enhancement to
+  `GR17 Chapter IV.5`, `GR17 Theorem 3.1.2`, and Francis `S4.2/S4.3`
+  from the Theorem A proof path; downstream mentions now refer to the
+  named conditional ambient package.
+- Updated the HZ-IV metadata in
+  `compute/tests/test_theorem_A_infinity_2.py` so the derivation source
+  is the conditional Ran/properadic enhancement package, not a GR17 IV.5
+  model-structure citation.
+- Added a regression guard in
+  `compute/tests/test_theorem_concordance_rectification_engine.py` that
+  checks the conditional status surface and forbids reintroducing
+  `Chapter~IV.5`, `Theorem~3.1.2`, `GR17 transfer`, and
+  `GR17 model-categorical localisation` in the Theorem A ambient surface.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_A_infinity_2.py` -> 7 passed.
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  -> 169 passed.
+- `make metadata` -> 4686 tagged claims; `PH=1852 PE=452 CJ=349 H=31
+  CD=1737 O=2 DF=263 total=4686`; dependency graph 7280 edges; theorem
+  registry 2304 proved.
+- `make census` -> same counts.
+- `make phase0-index` -> `ACTIVE_THEORY_FILES=66`, `INDEXED_NODES=2021`,
+  one pre-existing open label family:
+  `thm:hochschild-concentration-E1` with 9 refs.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py
+  compute/tests/test_theorem_A_infinity_2.py
+  compute/tests/test_theorem_concordance_rectification_engine.py`
+  -> 239 passed.
+
+No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 448: level-0 mixed-Ran open-sector definition
+
+Scope: audit item foundations-master/A-2 from
+`notes/audit_repairs_ledger_20260610.md`, concretely the live defect
+that the level-0 open datum used an undefined `factorization
+dg-category on \((X,D,\tau)\) in the Francis--Gaitsgory sense' and an
+undefined Verdier-symmetric monoidal structure on a nonexistent
+\(\Ran(X,D,\tau)\).
+
+Concrete changes:
+
+- Added `def:mr-mixed-ran-factorization-category` to
+  `chapters/connections/master_reconstruction.tex` before the open
+  holographic datum.  It defines the real-oriented blowup
+  \(\widetilde X_D\), boundary intervals \(I_p=S^1_p\setminus\{\tau_p\}\),
+  mixed configurations
+  \(\Conf^{\mathrm{oc}}_{I,\mathbf m}(X,D,\tau)\), the mixed Ran space
+  \(\Ran^{\mathrm{oc}}(X,D,\tau)\), and the category-valued
+  factorization package: constructible dg-cosheaf of dg-categories,
+  factorization equivalences, holomorphic locality, boundary local
+  constancy, local \(\SCchtop\) collision model, and clutching
+  compatibility.
+- Retagged `def:mr-open-datum` from `ProvedHere` to `Definitional`
+  and rewrote slot (4) to use the new open-sector factorization
+  dg-category definition instead of the unsupported
+  Francis--Gaitsgory/Verdier-symmetric/Ran phrase.
+- Added `rem:mr-primitive-chart-circularity`, recording that the
+  primitive level-0 object is the Morita class of the open-sector
+  factorization category, while current standard-family witnesses are
+  usually chart-presented.  The tautological presentation
+  \(A_b\text{-}\mathsf{mod}^{\fact}\) is a Morita model, not by itself
+  an independent construction of level~0.
+- Replaced the level-0 paragraph in
+  `chapters/connections/vertical_equivalence_level_0.tex` with the
+  same mixed-Ran/open-sector package and made
+  `subsec:thqg-open-sector-factorization-category` a real subsection
+  label.
+- Removed the old phantom
+  `subsec:thqg-open-sector-factorization-category` from `main.tex`.
+- Added direct guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the mixed-Ran definition, open datum, and vertical level-0 subsection
+  must carry the new category-valued package, and the old
+  Francis--Gaitsgory/Verdier-symmetric/Ran formulation is forbidden on
+  those surfaces.
+- Regenerated metadata with `make metadata`, `make census`, and
+  `make phase0-index` because this pass added one tagged definition,
+  one conditional remark, retagged the open datum, and moved a phantom
+  label to a real source label.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(168/168\).
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- `pytest compute/tests/test_theorem_A_infinity_2.py` passed \(7/7\).
+- Metadata regeneration reports \(4686\) tagged claims,
+  \(2306\) proved claims, \(1736\) conditional claims, \(262\)
+  definitional claims, and \(7277\) dependency edges.  The phase-0
+  index still has only the pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Targeted stale scans on the repaired level-0 files find no remaining
+  `Francis--Gaitsgory sense` or `Verdier-symmetric monoidal` phrase.
+  Source scan shows `subsec:thqg-open-sector-factorization-category`
+  now appears as the real label in `vertical_equivalence_level_0.tex`,
+  not as a phantom in `main.tex`.
+- Targeted `git diff --check` is clean for the touched master,
+  vertical-equivalence, `main.tex`, concordance-test, regenerated
+  metadata, and ledger files.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 447: level-0 Morita status correction
+
+Scope: audit item foundations-master/A-1 from
+`notes/audit_repairs_ledger_20260610.md`, concretely the live defect
+that `thm:mr-morita` was tagged `ProvedHere` while its proof consisted
+of a one-sentence citation claim and its \(H_0\) package conflated a
+small category with a presentable stable category.
+
+Concrete changes:
+
+- Retagged `thm:mr-morita` in
+  `chapters/connections/master_reconstruction.tex` from
+  `\ClaimStatusProvedHere` to `\ClaimStatusConditional`.
+- Rewrote the \(H_0\) package so it separates the presentable stable
+  factorization category \(\mathsf C\) from its essentially small
+  idempotent-complete compact subcategory \(\mathsf C^\omega\), and
+  states explicitly that the enriched Yoneda--Morita comparison must
+  be fully faithful and essentially surjective in the factorization
+  ambient.
+- Replaced the old proof by a conditional recognition proof: under
+  \(H_0\), the displayed functor is the enriched Yoneda functor for the
+  compact generator \(b\), and the equivalence follows from the
+  fully-faithful/essentially-surjective clauses.  Outside \(H_0\), the
+  factorization-Morita recognition theorem for the chart is named as an
+  open obligation.
+- Added a direct guard to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the Morita theorem must be Conditional, must contain the corrected
+  presentable/compact-subcategory separation and recognition-package
+  language, and must not contain the old small-presentable conflation
+  or the old citation-proof phrases.
+- Regenerated metadata with `make metadata`, `make census`, and
+  `make phase0-index` because this pass changed a theorem status.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(167/167\).
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- `pytest compute/tests/test_theorem_A_infinity_2.py` passed \(7/7\).
+- Metadata regeneration reports \(4684\) tagged claims,
+  \(2307\) proved claims, \(1735\) conditional claims, and \(7276\)
+  dependency edges.  The `metadata/claims.jsonl` line for
+  `thm:mr-morita` now reports status `Conditional`.
+- Targeted stale scans show no remaining `small, idempotent` or
+  `Lurie's Morita theorem` phrase in the repaired Morita theorem.
+- Targeted `git diff --check` is clean for the touched master,
+  concordance-test, regenerated metadata, and ledger files.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 446: Theorem H shift-normalization package
+
+Scope: audit item theorem-H/H-8 from
+`notes/audit_repairs_ledger_20260610.md`, concretely the live defect
+that the Theorem~H amplitude proof used the bare slogan
+\((p+2)-p=2\) to identify the ambient Fulton--MacPherson Verdier
+shift and the bar totalization shift.
+
+Concrete changes:
+
+- Added `def:theorem-h-shift-normalization-package` to
+  `chapters/theory/chiral_hochschild_koszul.tex`.  The package names
+  the actual degree data required at bar degree \(p\): the
+  dualizing-complex convention on \(\overline C_{p+2}(X)\) and \(X\),
+  the Kashiwara offset for the full-collision embedding, the Arnold
+  fibre form-degree after the \(\mathrm{KD}_{\mathrm H}\) twisted
+  collapse, the totalization regrading, and the proof that the
+  surviving term is
+  \(\Ext^r_{\cD_X}((\cA^!)_p,\omega_X)[2]\) independently of \(p\).
+- Rewrote `lem:hochschild-shift-computation` so its uniform shift is
+  conditional on this shift-normalization package.  The proof now says
+  explicitly that the ambient Verdier shift, full-collision
+  Kashiwara offset, Arnold fibre degree, and totalization convention
+  live in different complexes and cannot be collapsed by the displayed
+  integer arithmetic alone.
+- Rewrote the FM-tower collapse Step~6, the totalization-amplitude
+  discussion, the sharp Hilbert-series proof, and the Theorem~H
+  summary paragraph to cite the shift-normalization package and
+  support degeneration rather than FM-formality or the old shift
+  shortcut.
+- Updated `chapters/theory/higher_genus_foundations.tex` at
+  `def:bigraded-hochschild` and `rem:hochschild-shift-origin`: the
+  definition keeps the totalization regrading but now states that its
+  use in Theorem~H requires the Verdier--Kashiwara normalization
+  package; the remark no longer says the survivor lies on the
+  diagonal \(p=q\).
+- Updated `compute/tests/test_en_topologization_hochschild_integrity.py`
+  so the independent-verification guard checks for the named package,
+  Kashiwara offset, fibre form-degree, totalization regrading, and
+  absence of the bare shift shortcut.
+- Regenerated metadata with `make metadata`, `make census`, and
+  `make phase0-index` because this pass introduced a new tagged
+  definitional claim.
+
+Verification:
+
+- `pytest compute/tests/test_en_topologization_hochschild_integrity.py`
+  passed \(8/8\).
+- `pytest compute/tests/test_theorem_H_hochschild_koszul.py
+  compute/tests/test_theorem_h_hochschild_polynomial.py
+  compute/tests/test_chiral_hochschild_engine.py` passed \(370/370\).
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(166/166\).
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- Metadata regeneration reports \(4684\) tagged claims,
+  \(2308\) proved claims, \(7276\) dependency edges, and the
+  pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Targeted stale scans find no remaining live
+  `shift arithmetic`, `(p + 2) - p`, `geometric shift ... cancelled
+  by the totalization shift`, `diagonal p = q`, or
+  `FM-formality ... killed` phrases on the repaired Theorem~H shift
+  surfaces.  The remaining `(p+2)-p=2` occurrence is the negative
+  firewall sentence in the new definition, and the test guard checks
+  that it is not used as proof.
+- Targeted `git diff --check` is clean for the touched Theorem~H,
+  higher-genus, test, and regenerated metadata files.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 445: front type-correctness and final survivor diagram
+
+Scope: PDF obligations \(999\)--\(1000\), concretely the requirement
+that the first theorem pages prove the core theorem definitions are
+type-correct before use, and that the last theorem of the paper be a
+single commutative diagram showing exactly which invariants survive
+\(B_X^{\mathrm{ord}}(\cA)\to B_X^\Sigma(\cA)\) and which ordered data
+do not.
+
+Concrete changes:
+
+- Added `lem:intro-core-ordered-bar-type-correct` before the Modular
+  Ordered Bar Theorem in `chapters/theory/introduction.tex`.
+  The lemma gives the Open/chain level \(0\)--\(5\) type signature,
+  fixes \(B_X^{\mathrm{ord}}(\cA)\) as a level-2 complete conilpotent
+  factorization coalgebra, \(B_X^\Sigma(\cA)\) as the homotopy
+  coinvariant symmetric bar coalgebra in the same completed chain
+  ambient, \(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=
+  \ChirHoch^\bullet(\cA,\cA)\) as the level-3 derived chiral centre
+  rather than a bar coalgebra, and \(\kappa,K^\kappa,F_g\) as
+  level-5 scalar shadows only after modular trace and clutching.
+- Added `thm:final-surviving-invariants-diagram` to the end of
+  `main.tex`, after all included theorem-bearing material and before
+  the subject index, so it is the last theorem in source order.
+  The theorem displays a `tikzcd` diagram for the averaging map
+  \(B_X^{\mathrm{ord}}(\cA)\to B_X^\Sigma(\cA)\).  The non-surviving
+  side lists the ordered \(r\)-matrix, braid/associator torsor, channel
+  ordering, raw bar words, and line/brane operators before trace.  The
+  surviving side lists \(\kappa(\cA)\), \(K^\kappa(\cA)\),
+  \(\ChirHoch^{0,1,2}(\cA)\),
+  \(F_g^{\mathrm{sc}}=\kappa(\cA)\lambda_g^{\mathrm{FP}}\),
+  the all-weight cross-channel trace correction, and the finite-atlas
+  archetype/shadow-depth row under the stated hypotheses.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the front type-correctness lemma must precede
+  `thm:modular-ordered-bar-theorem`, and the final surviving-invariants
+  diagram must be the last theorem before `\printindex` with both the
+  surviving and non-surviving lists present.
+- Regenerated metadata with `make metadata`, `make census`, and
+  `make phase0-index` after adding the new tagged theorem surfaces.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(166/166\).
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- `pytest compute/tests/test_koszul_pairs.py` passed \(19/19\).
+- `pytest compute/tests/test_landscape_census_verification.py
+  compute/tests/test_landscape_census_scalar_typing.py
+  compute/tests/test_koszulness_landscape.py` passed \(234/234\).
+- Metadata regeneration reports \(4683\) tagged claims,
+  \(2308\) proved claims, \(7273\) dependency edges, and the
+  pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Targeted `git diff --check` is clean for `main.tex`,
+  `chapters/theory/introduction.tex`,
+  `compute/tests/test_theorem_concordance_rectification_engine.py`,
+  and the regenerated metadata files touched by this pass.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 444: notation, hypothesis index, and finite-atlas discipline
+
+Scope: PDF obligations \(981\)--\(998\), concretely the requirement
+that notation be fixed before the first theorem-bearing chapter; the
+symbols \(C,D,d,\Delta,\mathrm{FM},B,\mathrm{CH}/\mathrm{HH}/\mathrm{THH}\),
+and \(Z\) be distinguished; the hypothesis packages \(H1\)--\(H4\),
+CP1--CP3, D1--D5, FH, and OCA be indexed before use; `standard
+landscape' be a defined finite atlas rather than an unproved
+classification; and the abstract's physical/arithmetic comparison
+material be status-labelled.
+
+Concrete changes:
+
+- Expanded the front `Notation and conventions' surface in `main.tex`
+  into a real notation table before the preface include.  The table
+  now distinguishes curve/category/coalgebra uses of \(C\), divisor /
+  Verdier-duality / differential uses of \(D,d\), the three
+  \(\Delta\)-roles, \(\mathrm{FM}\), \(\mathrm{FM}^{\log}\),
+  \(\mathrm{FM}^{\mathrm{ord}}\), ordered/symmetric/modular-log bar
+  objects, chiral/algebraic/topological Hochschild theories, and the
+  three centre notions.
+- Added a front hypothesis index for \((H1)--(H3)\), analytic
+  \((H1)--(H4)\), \((CP1)--(CP3)\), \((D1)--(D5)\), \(FH\), and
+  \(OCA\), explicitly stating that identically named packages from
+  different owning surfaces are not interchangeable.
+- Added front finite-atlas language: `standard landscape' means the
+  finite standard-landscape atlas of Remark~\ref{rem:two-strata}; it
+  is an atlas unless a separate coverage theorem is cited.
+- Marked the abstract's final Vol~I/II/III comparison paragraph as a
+  status-labelled comparison surface rather than an additional
+  theorem-spine claim, and tightened its Vol~I phrase to the finite
+  standard-landscape atlas.
+- Replaced loose `standard landscape' / `classification' phrasing with
+  finite-atlas language in the Master Reconstruction, Guide to Main
+  Results, Part II opener, Part III opener, and the local
+  chiral-Koszul-pairs transition.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the front notation table must precede the preface, the hypothesis
+  index must carry every named package, the atlas language must appear
+  in the front matter / introduction / guide / master / part openers /
+  chiral-pairs surfaces, and the final abstract comparison paragraph
+  must be status-labelled.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(164/164\).
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- `pytest compute/tests/test_koszul_pairs.py` passed \(19/19\).
+- `pytest compute/tests/test_landscape_census_verification.py
+  compute/tests/test_landscape_census_scalar_typing.py
+  compute/tests/test_koszulness_landscape.py` passed \(234/234\).
+- Cross-volume search found many ordinary `standard landscape' uses in
+  live chapters, notes, standalones, compute docstrings, and generated
+  metadata.  This pass repaired the high-level Vol~I theorem-spine and
+  opener surfaces that were advertising classification language; the
+  remaining broad uses are atlas terminology under the new front
+  definition or require a separate targeted landscape-language sweep.
+- Targeted `git diff --check` is clean for the touched front matter,
+  frame, master, chiral-pairs, test, metadata-dirty, and ledger
+  surfaces.
+- No metadata regeneration was run: this pass did not add theorem
+  labels or claim-status macros.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 443: dependency, vacuum, level, and quadrant discipline
+
+Scope: PDF obligations \(965\)--\(980\), concretely the requirement
+that dependency arrows be proved implications only; comparison
+theorems be used under named hypotheses; `universal' and `canonical'
+language be restricted to proved universal properties or contractible
+choice spaces; chosen-vacuum and Morita data be explicit; the level
+alphabet be Open-only; and Open--CY transfers be marked proved or
+conjectural.
+
+Concrete changes:
+
+- Added
+  `def:mr-dependency-vacuum-level-quadrant-discipline` to
+  `chapters/connections/master_reconstruction.tex` immediately after
+  the open holographic datum type signature.
+- The new definition states that dependency arrows are only proved
+  implications under stated hypothesis packages, while conjectural
+  comparisons are comparison surfaces rather than graph arrows.
+- It fixes comparison prose to `under the hypotheses of', restricts
+  `universal' to proved universal properties, and restricts
+  `canonical' to uniqueness up to a contractible space of choices;
+  otherwise the object is only specified.
+- It defines the chosen vacuum datum as \((\cC^\op,b)\) over
+  \((X,D,\tau)\), separates Morita equivalence
+  \(\cC^\op\simeq A_b\text{-}\mathsf{mod}^{\fact}\) from any algebra
+  isomorphism, and states that vacuum-independence is only asserted
+  under the \(H_0\) chart-equivalence package.
+- It fixes the level alphabet \(0\)--\(5\) for the Open quadrant only,
+  forbids transferring CY claims by level signature alone, defines the
+  quadrant grid
+  \((\mathrm{Open}\cup\mathrm{CY})\times
+  (\mathrm{Cat}\cup\mathrm{Chain})\), and requires Open--CY structure
+  preservation to cite a named vertical equivalence theorem or be
+  marked conjectural.
+- Corrected the nearby primitive-data prose from `seven slots' to
+  `displayed slots' so the text no longer contradicts the nine listed
+  entries of `def:mr-open-datum`.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  dependency-language anchors must appear in both the Master
+  Reconstruction and Editorial Constitution surfaces, and the
+  Morita/level/quadrant anchors must appear at the Master
+  Reconstruction datum itself.
+- Regenerated metadata/title surfaces with `make metadata`,
+  `make census`, and `make phase0-index` because this pass introduced
+  a new tagged definitional claim.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(161/161\) before and after metadata regeneration.
+- `pytest compute/tests/test_master_integration.py
+  compute/tests/test_modular_master.py` passed \(63/63\).
+- Metadata regeneration reports \(4682\) tagged claims,
+  \(2307\) proved claims, \(7272\) dependency edges, and the
+  pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Cross-volume search in Vol~I, Vol~II, and Vol~III for the new
+  level-signature, quadrant-grid, chosen-vacuum, dependency-arrow, and
+  Open--CY comparison phrases found no competing live surface requiring
+  propagation; broad `under the hypotheses of' and canonical-choice
+  hits were unrelated uses.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 442: standard-family verification order gates
+
+Scope: PDF obligations \(959\)--\(963\), concretely the requirement
+that the verification spine run
+Heisenberg \(\to\) non-critical affine Kac--Moody \(\to\)
+\(\beta\gamma/bc\) \(\to\) Virasoro/\(\mathcal W_3\) class-\(\mathsf M\)
+completion, and only then the K3 Hall--Borcherds
+\(\mathbf H_{\Delta_5}\) target.
+
+Concrete changes:
+
+- Strengthened the `Standard-family certification packet` in
+  `chapters/examples/landscape_census.tex` with an explicit ordered
+  verification spine:
+  first Heisenberg, second non-critical affine Kac--Moody, third
+  \(\beta\gamma/bc\), then the class-\(\mathsf M\) Virasoro and
+  principal \(\mathcal W_3/\mathcal W_N\) completion test, and only
+  then \(\mathbf H_{\Delta_5}\) on its conditional recognition
+  surface.
+- Reordered the `Standard-family theorem status` table so the
+  \(\beta\gamma/bc\) row is the third verification row and the
+  Virasoro/principal-\(\mathcal W\) rows form the class-\(\mathsf M\)
+  completion test before the critical affine boundary branch.
+- Renamed the critical affine row as `Critical affine boundary` and
+  specified that it is a Sugawara-degeneration boundary, not a generic
+  specialization or a second verification theorem.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the ordered spine is checked in the census, guide, `main.tex`, and
+  editorial constitution, and the status table is checked to keep the
+  critical affine boundary after the class-\(\mathsf M\) test.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(159/159\).
+- `pytest
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_landscape_census_verification.py
+  compute/tests/test_landscape_census_scalar_typing.py
+  compute/tests/test_koszulness_landscape.py
+  compute/tests/test_koszulness_ten_verifier.py
+  compute/tests/test_triplet_koszulness_engine.py
+  compute/tests/test_kappa_stratification_G.py
+  compute/tests/test_kappa_stratification_L.py
+  compute/tests/test_kappa_stratification_C.py
+  compute/tests/test_kappa_stratification_M.py
+  compute/tests/test_kappa_stratification_B.py`
+  passed \(1104/1104\).
+- Cross-volume phrase sweep found no competing Vol~II or Vol~III
+  standard-family verification-order rule requiring propagation.
+- Targeted `git diff --check` is clean for
+  `chapters/examples/landscape_census.tex`,
+  `compute/tests/test_theorem_concordance_rectification_engine.py`,
+  and this ledger.
+- No metadata regeneration was run: theorem titles, labels, and
+  claim-status macros were not changed in this pass.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 441: canonical five-object firewall surface
+
+Scope: PDF obligations \(950\)--\(953\), concretely the requirement
+that duplicated theorem/remark surfaces not restate the same
+five-object firewall rhetorically, and that every later firewall use
+cross-reference the canonical firewall surface.
+
+Concrete changes:
+
+- Treated
+  `chapters/connections/master_concordance.tex`
+  (`conv:master-five-object-firewall` and
+  `thm:typed-verdier-koszul-firewall`) as the canonical firewall
+  surface.
+- Updated local firewall discussions to cite both the convention and
+  theorem instead of presenting an independent firewall definition:
+  `chapters/connections/master_reconstruction.tex`,
+  `chapters/frame/heisenberg_frame.tex`,
+  `chapters/theory/introduction.tex`,
+  `chapters/theory/algebraic_foundations.tex`,
+  `chapters/examples/logarithmic_w_algebras.tex`,
+  `chapters/theory/three_hochschild_unification_platonic.tex`,
+  `chapters/theory/chiral_koszul_pairs.tex`,
+  `chapters/connections/grand_unification_platonic.tex`,
+  `chapters/theory/koszulness_moduli_scheme.tex`, and
+  `chapters/connections/editorial_constitution.tex`.
+- Retained local mathematics as specializations: Heisenberg, triplet,
+  three-Hochschild, algebraic-foundation, Koszul-pair, and
+  derived-centre surfaces now identify themselves as specializations
+  of the canonical Typed Verdier--Koszul Firewall Theorem.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  the canonical theorem must state the ambient-category separation,
+  the asserted arrows, and the no-unlabelled-arrow rule; every local
+  firewall surface listed above must cite both the convention and the
+  theorem; the old duplicate-defining phrase
+  `Thus the five-object firewall is:` is blocked.
+- Regenerated metadata/title surfaces with
+  `make metadata && make census && make phase0-index` because local
+  firewall remark titles changed.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(157/157\).
+- `pytest
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_heisenberg_bar.py
+  compute/tests/test_heisenberg_bridge.py
+  compute/tests/test_heisenberg_fp_scalar_typing.py
+  compute/tests/test_wp_triplet_shadow_engine.py
+  compute/tests/test_wp_triplet_p2_tline_shadow.py
+  compute/tests/test_wp_triplet_full_shadow.py
+  compute/tests/test_triplet_koszulness_engine.py
+  compute/tests/test_koszul_pairs.py
+  compute/tests/test_grand_unification_scalar_typing.py
+  compute/tests/test_three_hochschild_unification.py`
+  passed \(353/353\) after metadata regeneration.
+- Metadata regeneration reports \(4681\) tagged claims,
+  \(2307\) proved claims, \(7271\) dependency edges, and the
+  pre-existing open-label surface
+  `thm:hochschild-concentration-E1`.
+- Cross-volume search in Vol~II and Vol~III found no live
+  `five-object firewall` surfaces requiring propagation.
+- Vol~I scan shows only specialization-titled local firewall remarks
+  and no remaining visible `Thus the five-object firewall is:` phrase.
+- Targeted `git diff --check` is clean for the touched manuscript
+  files, metadata surfaces, tests, and this ledger.
+- No full LaTeX build was run.
+
+## 2026-06-17 -- Pass 440: census table-status evidence gates
+
+Scope: PDF obligations \(944\)--\(949\), concretely the requirement
+that OPE/table rows supply full coefficients and normalization source,
+that table entries cite proof-bearing results, and that proved,
+conditional, and open statuses carry their respective proof,
+conditions, or obstruction complex.
+
+Concrete changes:
+
+- Strengthened the `Standard-family certification packet` in
+  `chapters/examples/landscape_census.tex`: OPE rows are certifying
+  only when full singular coefficients and a matching normalization
+  appendix or convention are supplied; certified rows must cite a
+  theorem, proposition, lemma, or computation; proved, conditional,
+  and frontier/open statuses now have explicit evidence requirements.
+- Updated the two open rows in
+  `tab:koszulness-landscape-census` so they name the relevant
+  obstruction complex instead of leaving the proof-mechanism column as
+  informal prose:
+  the \(L_1(\mathfrak{sl}_2)\) row now names the Li--bar/PBW
+  off-diagonal obstruction complex, and the triplet \(\cW(2)\) row
+  names the fixed-point Li--bar/PBW off-diagonal obstruction complex.
+- Added a post-table sentence identifying the open-row obstruction
+  complex with the Li--bar/PBW off-diagonal bar-cohomology complex
+  controlled by Theorem~\ref{thm:kac-shapovalov-koszulness} and
+  Remark~\ref{rem:li-bar-vs-kac-shapovalov}.
+- Added direct visible-TeX guards to
+  `compute/tests/test_theorem_concordance_rectification_engine.py`:
+  all six table-status gates must be anchored in the census
+  convention, and the two open Koszulness rows must name the
+  obstruction complex and cite the controlling theorem/remark.
+
+Verification:
+
+- `pytest compute/tests/test_theorem_concordance_rectification_engine.py`
+  passed \(154/154\).
+- `pytest
+  compute/tests/test_theorem_concordance_rectification_engine.py
+  compute/tests/test_landscape_census_verification.py
+  compute/tests/test_landscape_census_scalar_typing.py
+  compute/tests/test_koszulness_landscape.py
+  compute/tests/test_koszulness_ten_verifier.py
+  compute/tests/test_triplet_koszulness_engine.py`
+  passed \(569/569\).
+- Targeted `git diff --check` is clean for
+  `chapters/examples/landscape_census.tex`,
+  `compute/tests/test_theorem_concordance_rectification_engine.py`,
+  and this ledger.
+- No metadata regeneration was run: theorem titles, labels, and
+  claim-status macros were not changed in this pass.
+- No full LaTeX build was run.

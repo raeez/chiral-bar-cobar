@@ -196,10 +196,10 @@ of two-witness independent verification.
 
 ## Finding 5 — Compute-engine critical-level miscalibration (BUG)
 
-`compute/lib/chiral_hochschild_engine.py` returns the same generic
-formula for `dim ChirHoch^0(V_k(\fg)) = 1` and
-`dim ChirHoch^1(V_k(\fg)) = \dim\fg` at **all** levels, including
-the Feigin-Frenkel critical level $k = -h^\vee$.
+`compute/lib/chiral_hochschild_engine.py` formerly returned the same
+generic scalar-center formula and the same adjoint zero-mode
+prequotient count at **all** levels, including the Feigin-Frenkel
+critical level $k = -h^\vee$.
 
 Verified directly:
 ```
@@ -284,7 +284,7 @@ breakdown).
 | 𝒩(M) = c(5c+22)/10 Zamolodchikov-norm       | Verified at Yang-Lee zero; **bug fixed** (c=-218/45 was wrongly listed as zero) |
 | 𝒩(B) = 8 Mukai conductor                    | Verified — engine cy_bkm 9/9 cross-checks |
 | Theorem H ChirHoch ⊂ {0,1,2}                | Verified for 7 standard families; **engine bug FIXED** at critical level k=-h^∨ via critical-level guard (Finding 5) |
-| ChirHoch^1 = g for affine V_k(g)            | Verified for sl_N, N=2..10 (99 = dim sl_10) |
+| Affine zero-mode quotient for ChirHoch^1    | Corrected: quotient is zero; dim sl_N is prequotient metadata only |
 | Theorem D obs_g = κ·λ_g                     | Genus-1 predictions concrete for 6 families |
 | Universal Borcherds-weight κ_BKM = c_N(0)/2 | Verified for N ∈ {1,2,3,4,6} CHL ladder; scope correctly excludes N=8, N=12 |
 | K3×E anchor (0, 0, 3, 5, 24)                | Verified (cy_bkm 9/9 + entry-by-entry 3-paths) |
@@ -294,7 +294,7 @@ breakdown).
 | Borel-Riccati radius                         | $\rho^2 \cdot \omega^2 = 1$ identity verified; ρ^2 = (180c+872)/(c²(5c+22)), ω^2 = c²(5c+22)/[4(45c+218)] |
 | Chiral rigidity of Vir_c, W_3                | Verified at all c tested (no first-order chiral deformations) |
 | Level rigidity of V_k(g)                    | Verified — only adjoint deformations, no level deformation |
-| Smooth formal moduli for standard landscape | **NEW INSCRIPTION** prop:smooth-formal-moduli-standard. All 5 archetypes have unobstructed deformations; dim of smooth moduli = dim ChirHoch^1 |
+| Gauge/product deformation lanes for standard landscape | **REPAIRED** prop:smooth-formal-moduli-standard. \(\ChirHoch^1\) is the fixed-product automorphism lane, not product-moduli tangent; binary product deformations live in the degree-\(2\) cyclic-deformation lane, with exact/gauge cases separated. |
 | ChirHoch^2 dim = 1 across landscape         | Verified by engine: H_k, V_k(sl_2), βγ, Vir_c, W_3 all have dim H^2 = 1; non-trivial obstruction SPACE but vanishing obstruction MAP |
 | Universal Borcherds Weight Identity table   | **CLARIFIED**: multiple atlases exist (Vol I `guide_to_main_results.tex:308`). My earlier values (5, 2, 1, 1/2, 0) match the Cléry-Gritsenko 8-form atlas; the standard Gritsenko-CHL atlas is (5, 4, 3, 2, 1) with c_N(0) ∈ {10, 8, 6, 4, 2} (verified in `test_kappa_stratification_B.py`). Identity κ_BKM = c_N(0)/2 holds in every atlas; only the c_N(0) values differ. |
 | Class B kappa stratification 447 tests pass  | All G/L/B archetype-row tests pass: K3×E (0,0,3,5,24); CHL ladder N=1..6 with c_N(0) ∈ {10,8,6,4,2}; engine matches manuscript. |

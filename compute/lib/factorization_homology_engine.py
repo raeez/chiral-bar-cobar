@@ -225,8 +225,10 @@ def fh_genus1(family: str, **params) -> Dict[str, object]:
     integral_{E_tau} A = HH*(A) (Hochschild cohomology of A).
 
     At the scalar level, F_1(A) = kappa(A) / 24.  The full Hochschild
-    cohomology is richer: it carries the structure of an E_2-algebra
-    (by the higher Deligne conjecture, proved by Lurie).
+    cohomology is richer: it carries the structure of an algebraic
+    E_2-algebra (by the higher Deligne conjecture, proved by Lurie).
+    This is not a locally constant topological E_2 factorization algebra
+    unless a separate topologisation/formality package is supplied.
 
     For chirally Koszul algebras:
       H^0(integral_{E_tau} A) = the "genus-1 vacuum" (nonzero)

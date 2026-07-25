@@ -449,12 +449,13 @@ class TestHeisenbergKoszulDual:
     """Verify Heisenberg Koszul dual.
 
     Manuscript (free_fields.tex line 1016-1018):
-    H_k^! = (Sym^ch(V*), d=0, m_0 = -k*omega).
+    H_k^! is the curved second-kind Sym^ch(V*[1]) branch with
+    m_0 = -k*omega.
     H_k is NOT self-dual (thm:heisenberg-not-self-dual).
     """
 
     def test_heisenberg_not_self_dual(self):
-        """The Koszul dual Sym^ch(V*) is commutative, H_k is not.
+        """The curved Koszul dual branch is not H_k.
         This is a structural fact, not a formula to check."""
         # The dual is Com-type, the original is Lie-type.
         # Com^! = Lie is the classical Koszul duality.
@@ -908,7 +909,7 @@ class TestPotentialDiscrepancies:
     def test_heisenberg_not_self_dual(self):
         """CLAUDE.md: 'Heisenberg NOT self-dual'.
         Manuscript (free_fields.tex thm:heisenberg-not-self-dual): proved.
-        H_k^! = Sym^ch(V*) != H_k."""
+        H_k^! is the curved Sym^ch(V*[1]) branch, not H_k."""
         pass
 
     def test_w3_complementarity_computation_check(self):
@@ -1106,7 +1107,7 @@ class TestHeisenbergComplementarity:
     Manuscript (heisenberg_eisenstein.tex line 408, 842-843):
     At standard normalization kappa = 1: kappa = d = c.
 
-    For the Koszul dual Sym^ch(V*):
+    For the curved Koszul dual Sym^ch(V*[1]) branch:
     kappa(H_k^!) = -k (the negative of the level).
     So kappa + kappa' = k + (-k) = 0.
 

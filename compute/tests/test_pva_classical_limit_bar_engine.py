@@ -708,7 +708,7 @@ class TestFiniteWindowDiagnostics:
         assert len(diag.modular_koszul_projections) == 6
 
     def test_object_firewalls_distinguish_bar_dual_bulk(self):
-        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild bulk stay distinct."""
+        """A, B(A), A^i, A^!, Omega(B(A)), and Hochschild closed-sector stay distinct."""
         diag = finite_window_diagnostics(affine_sl2_classical_pva(Fraction(1)))
         assert diag.object_firewalls == OBJECT_FIREWALLS
         assert diag.object_firewalls["B(A)"] == "bar coalgebra"

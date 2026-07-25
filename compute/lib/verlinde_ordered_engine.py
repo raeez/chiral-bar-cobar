@@ -1,7 +1,8 @@
-r"""Verlinde formula from ordered chiral homology of V_k(sl_2).
+r"""Verlinde formula through ordered/TUY comparison for V_k(sl_2).
 
 Recovery of the Verlinde formula for the dimension of the space of
-conformal blocks from the ordered chiral homology framework.
+conformal blocks from the ordered chiral homology framework, after the
+ordered-chain-to-TUY comparison package is supplied.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -15,7 +16,8 @@ the ordered chiral chain complex
 
     C_n^{ord}(Sigma_g, V_k(sl_2))
 
-computes H^0 = conformal blocks (TUY) in degree 0.
+maps to the TUY/Hitchin conformal-block sheaf through the comparison
+morphism; it is not by itself identified with H^0.
 
 2. THE VERLINDE FORMULA
 
@@ -28,10 +30,10 @@ with no marked points is:
 where S_{jl} = sqrt(2/(k+2)) * sin(pi*(j+1)*(l+1)/(k+2))
 is the modular S-matrix for sl_2 at level k.
 
-3. RECOVERY FROM ORDERED CHIRAL HOMOLOGY
+3. RECOVERY THROUGH ORDERED/TUY COMPARISON
 
-The ordered chiral homology recovers the Verlinde formula through
-the following chain:
+The ordered chiral homology reaches the Verlinde formula through the
+following conditional chain:
 
   (a) The ordered bar complex B^{ord}(V_k(sl_2)) on Sigma_g carries
       the KZB connection with monodromy valued in the quantum group
@@ -41,10 +43,10 @@ the following chain:
       with k+1 integrable modules V_0, ..., V_k.  The monodromy
       decomposes along these modules.
 
-  (c) The symmetric coinvariants of the ordered chiral chain complex
-      (= factorization homology on the symmetric Ran space) recover
-      the conformal blocks:
-          (int_{Sigma_g}^{ord} V_k)_{Sigma_n} = H^0(M_{g,n}, V_k)
+  (c) The symmetric coinvariant shadow is identified with conformal
+      blocks only through the ordered-chain-to-TUY comparison morphism,
+      with integrable-level truncation, sewing, projective-flatness,
+      and determinant-anomaly matching supplied.
 
   (d) The Verlinde formula counts dim H^0 at n=0 via the modular
       S-matrix, which encodes the genus-1 monodromy (Section 7).
@@ -57,21 +59,21 @@ the following chain:
 4. GENUS-BY-GENUS IDENTIFICATION
 
   g=0: Z_0 = sum_j S_{0j}^2 = 1 (unitarity of S).
-       The ordered chiral homology at genus 0 with no marked points
-       is the space of vacua, one-dimensional by definition.
+       Under the ordered/TUY comparison, the genus-0 no-marked-point
+       target is the one-dimensional vacuum space.
 
   g=1: Z_1 = sum_j S_{0j}^0 = k+1.
-       The ordered chiral homology at genus 1 computes the characters
-       of integrable representations via the Zhu algebra:
+       Under the same comparison, the genus-1 target counts the
+       characters of integrable representations via the Zhu algebra:
        A(V_k(sl_2)) has k+1 simple modules.
        Section 7.2 (subsec:ell-degree0) confirms:
        the center Z(Y_hbar(sl_2)) at integrable level has
        dim = k+1, matching the Verlinde count.
 
   g>=2: Z_g = sum_j S_{0j}^{2-2g}.
-       The handle-attachment formula from ordered bar complex
-       factorization (sewing along separating/non-separating cycles)
-       produces the recursion Z_{g+1} = sum_j S_{0j}^{-2} * Z_g^{(j)}
+       TUY handle attachment, together with the ordered sewing
+       comparison along separating/non-separating cycles, produces
+       the recursion Z_{g+1} = sum_j S_{0j}^{-2} * Z_g^{(j)}
        where Z_g^{(j)} is the j-th sector contribution.
 
 CONVENTIONS
@@ -566,18 +568,19 @@ def verlinde_vs_shadow_comparison(k: int, max_g: int = 4
 # =========================================================================
 
 def genus1_ordered_identification(k: int) -> Dict[str, object]:
-    r"""Genus-1 identification: ordered chiral homology recovers Verlinde.
+    r"""Genus-1 identification through the ordered/TUY comparison.
 
-    At genus 1, the ordered chiral homology of V_k(sl_2) at
-    integrable level k recovers the Verlinde count Z_1 = k+1
-    through two independent routes:
+    At genus 1, the ordered chiral side of V_k(sl_2) at integrable
+    level k matches the TUY Verlinde count Z_1 = k+1 only through the
+    comparison package.  The numerical count has three routes:
 
     Route A (Zhu algebra): A(V_k(sl_2)) = U(sl_2)/(Casimir relations)
       has k+1 simple modules, matching Z_1 = k+1.
 
-    Route B (KZB monodromy): the degree-0 ordered chiral homology
-      is the center of the integrable quotient, which has
-      dim = k+1 (one basis element per integrable representation).
+    Route B (KZB monodromy / ordered comparison): the degree-0 ordered
+      center of the integrable quotient has dim = k+1 (one basis
+      element per integrable representation) and maps to the TUY
+      target under the comparison morphism.
 
     Route C (S-matrix): Z_1 = sum_{j=0}^{k} S_{0j}^0 = k+1.
 
@@ -601,8 +604,9 @@ def genus0_ordered_identification(k: int) -> Dict[str, object]:
     r"""Genus-0: Z_0 = 1 from unitarity.
 
     At genus 0 with no marked points, there is a unique conformal
-    block (the vacuum).  The ordered chiral homology recovers this
-    from the unitarity of the S-matrix: sum S_{0j}^2 = 1.
+    block (the vacuum).  Under the ordered/TUY comparison, the
+    ordered side matches this target; unitarity of the S-matrix gives
+    sum S_{0j}^2 = 1.
     """
     z0 = verlinde_dimension_exact(0, k)
     return {

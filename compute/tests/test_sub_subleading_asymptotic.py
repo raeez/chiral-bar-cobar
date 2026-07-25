@@ -1,9 +1,9 @@
 """
-Independent-verification tests for the sub-subleading asymptotic
+Independent-verification tests for the formal sub-subleading coefficient
 
     Gamma_r / A_r = 484/25 + 22 (r-4)(r-5)/45 + (r-4)(r-5)(r-6)(r-7)/972
 
-of the Virasoro shadow-tower coefficient S_r(Vir_c), proved in
+of the quadratic candidate sequence R_r(c), proved in
 chapters/theory/shadow_tower_sub_subleading_platonic.tex as
 thm:shadow-tower-sub-subleading-closed-form.
 
@@ -14,20 +14,19 @@ Derivation chain (A): variation-of-parameters on the sub-subleading
     Sum_{s=5}^{r} (s-5) = (r-4)(r-5)/2,
     Sum_{s=5}^{r} (s-5)(s-6)(s-7) = (r-4)(r-5)(r-6)(r-7)/4.
 
-Verification chain (B): direct Laurent expansion of the explicit
-  closed forms S_r(Vir_c) through r = 10 around c = infinity, reading
-  off the coefficient of c^(-2) in Phi_r = c^(r-2) * S_r.
+Verification chain (B): direct Laurent expansion of the independently
+  generated formal rational functions through r = 10 around infinity,
+  reading off the coefficient of c^(-2) in Phi_r = c^(r-2) * R_r.
 
-The two chains share only the initial data (kappa, S_3, S_4) and the
+The two chains share only the initial data and the
 integer master-equation coefficients f(j,k), j*k. Chain (A) is
 integer-recurrence algebra plus hockey-stick summation; chain (B) is
 symbolic Laurent expansion of the explicit quartic S_r closed form.
 
-Kummer-prime content: the quartic numerator polynomial
+Finite-field content: the quartic numerator polynomial
     N(r) = 25 r^4 - 550 r^3 + 16355 r^2 - 122870 r + 729048
-has sporadic divisibility by the Kummer-irregular prime 691 at r = 8
-(and at r in {315, 423, 658} in the residue class 691). This is a
-MODULAR COINCIDENCE in F_691, not a Bernoulli structural emergence.
+has roots at r in {8,315,423,658} modulo 691.  A Kummer interpretation
+requires the manuscript comparison package H_Kum.
 """
 
 from __future__ import annotations

@@ -17,10 +17,13 @@ trivial or controlled entirely by the Lie bracket. The lattice
 construction introduces charge geometry. An even lattice~$\Lambda$
 and a $2$-cocycle $\varepsilon$ select charges, screening
 operators, and a braiding depending on charge inner products.
-The bar complex acquires a cocycle twist; its intrinsic dual coalgebra
-$A^i=H^\bullet B(A)$ carries the inverse cocycle, while the Koszul
-dual algebra $A^!$ is obtained only after Verdier or continuous linear
-duality. The discriminant group~$D(\Lambda)$ enters the simple module
+The bar complex acquires a cocycle twist, and its cohomology
+$H^\bullet B(A)$ carries the inverse cocycle.  A quadratic
+presentation, when supplied, contributes
+$A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_A\colon A^{\mathrm i}\to B_X(A)$.  Verdier duality gives the
+algebra~$K_X(A)$, while a chosen lattice partner enters through
+$\nu_A\colon K_X(A)\to A^!$. The discriminant group~$D(\Lambda)$ enters the simple module
 envelope, not the vacuum state space. The genus tower detects the
 lattice theta function. Spectral
 $R$-matrices and line-operator tensor products of
@@ -642,6 +645,71 @@ $c_\varepsilon(\alpha,\beta)/(-1)^{\langle\alpha,\beta\rangle} \neq 1$,
 so the algebra is strictly $\Eone$.
 \end{proof}
 
+\begin{proposition}[Lattice cocycle and ordered-bar ledger;
+\ClaimStatusProvedHere]
+\label{prop:lattice-standard-cocycle-ledger}
+\index{lattice VOA!standard cocycle ledger}
+\index{quantum lattice algebra!root-of-unity ledger}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{cocycle\ presentation},
+\mathrm{level}=1\leftrightarrow 2,
+\mathrm{hypothesis\ package}=\Lambda\ \mathrm{even};
+\varepsilon\ \mathrm{normalized\ bimultiplicative};
+\mathrm{root\text{-}of\text{-}unity\ deformation\ datum\ on\ the\ deformed\ locus})$\textup{]}
+The standard lattice lane is governed by the following packet.
+First,
+\begin{equation}
+\label{eq:lattice-ledger-even-cocycle}
+\langle\alpha,\alpha\rangle\in 2\mathbb Z,\qquad
+\varepsilon(\alpha,\beta)\varepsilon(\alpha+\beta,\gamma)
+=\varepsilon(\alpha,\beta+\gamma)\varepsilon(\beta,\gamma)
+\end{equation}
+for all $\alpha,\beta,\gamma\in\Lambda$. Second, the locality condition
+for the unordered vertex-algebra structure is exactly
+\begin{equation}
+\label{eq:lattice-ledger-locality}
+\varepsilon(\alpha,\beta)
+=(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha).
+\end{equation}
+Equivalently, \eqref{eq:lattice-ledger-locality} is the Borcherds
+symmetry condition of \eqref{eq:lattice:borcherds-symmetry}.  It defines
+the symmetric $\Einf$ locus; the complementary cocycles define the
+ordered $\Eone$ locus.
+
+On the ordered side, the root-sector bar differential remembers the
+cocycle:
+\begin{equation}
+\label{eq:lattice-ledger-e1-deformation}
+d([e^\alpha\mid e^\beta]\otimes 1)
+=\varepsilon(\alpha,\beta)[e^{\alpha+\beta}]\otimes 1
+\quad\text{when }\langle\alpha,\beta\rangle=-1.
+\end{equation}
+For a root-of-unity deformation
+\[
+\varepsilon_{N,q}(\alpha,\beta)
+=\varepsilon_0(\alpha,\beta)\zeta_N^{q(\alpha,\beta)}
+\]
+with $N\ge3$ and $2q\ne0$, Theorem~\ref{thm:quantum-lattice-structure}
+gives a strictly ordered $\Eone$ quantum lattice algebra; at $N=2$ the
+antisymmetric phase has $2q=0$ and the deformation returns to the
+symmetric $\Einf$ locus.
+
+For the worked $A_2$ example, with
+$q(\alpha_1,\alpha_2)=1$, the adjacent ordered sector
+$\gamma=\alpha_1+\alpha_2$ has
+\begin{equation}
+\label{eq:lattice-ledger-A2-quantum}
+H^2_{\mathrm{adj}}(\barB^{\Eone}_\gamma)
+=\mathbb C\cdot\xi_{\alpha_1,\alpha_2},
+\qquad
+\xi_{\alpha_1,\alpha_2}\text{ as in }\eqref{eq:lattice:ordering-cycle},
+\end{equation}
+whereas the corresponding $\Einf$ adjacent quotient has
+$H^2_{\mathrm{adj}}=0$. Thus the $A_2$ quantum lattice computation
+belongs to the root-of-unity ordered-bar surface, while its symmetric
+lattice-VOA locality image is the zero class.
+\end{proposition}
+
 \begin{example}[Heisenberg sector of a lattice vertex algebra]
 \label{ex:lattice:heisenberg}
 The rank-$d$ Heisenberg vertex algebra with level matrix
@@ -839,6 +907,39 @@ count. The K3 lattice example is therefore the exact point where the
 Frenkel--Kac mechanism ceases to close on affine Kac--Moody and starts
 closing on Borcherds data.
 \end{example}
+
+\begin{proposition}[K3 Mukai lane separation; \ClaimStatusProvedHere]
+\label{prop:lattice-k3-mukai-lane-separation}
+\index{K3!Mukai lane separation}
+\index{kappa stratification@$\kappa$-stratification!K3 lane separation}
+The K3/Mukai constants used in the $B$-family row belong to distinct
+lanes:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|l|l}
+\textbf{lane} & \textbf{value} & \textbf{source}\\ \hline
+Mukai conductor &
+$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$ &
+ordered bar/Verdier complementarity\\
+Borcherds weight &
+$\kappa_{\mathrm{BKM}}(\Delta_5)=5$ &
+Gritsenko--Nikulin denominator product\\
+fibre Euler scalar &
+$\kappa_{\mathrm{fiber}}(K3)=24$ &
+rank of $\widetilde H(K3,\mathbb Z)$\\
+categorical scalar &
+$\kappa_{\mathrm{cat}}(K3\times E)=0$ &
+$\chi(\mathcal O_{K3})\chi(\mathcal O_E)=2\cdot0$\\
+Heisenberg chiral scalar &
+$\kappa^{\mathrm{Heis}}_{\mathrm{ch}}(K3\times E)=3$ &
+the three-dimensional $K3\times E$ chiral lane
+\end{tabular}
+\end{center}
+A named comparison theorem supplies each passage between lanes.  The
+Mukai conductor, Borcherds weight, and Mukai rank occupy the respective
+values
+$K^{\kappa_{\mathrm{ch}}}=8$, $\kappa_{\mathrm{BKM}}=5$, and~$24$.
+\end{proposition}
 
 \begin{example}[Explicit verification for \texorpdfstring{$\AffKM{sl}_2$}{sl2-hat} at level 1]
 \label{ex:lattice:sl2-fks}
@@ -1071,7 +1172,8 @@ The bar complex decomposes along the $E_8$-grading:
 \]
 The zero sector $\gamma = 0$ is the bar complex of the rank-8 Heisenberg algebra
 $\barBgeom(\cH_8)$, whose bar differential vanishes (the Heisenberg OPE has only
-a double pole, so $\cH_8^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+a double pole, so
+$\cH_8^!\simeq(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-8\omega)$
 by Theorem~\ref{thm:heisenberg-koszul-dual-early}).
 
 \emph{Step~2.} Root contributions.
@@ -1159,24 +1261,36 @@ In particular, if $\varepsilon$ is symmetric, so is $\varepsilon^{-1}$.
 \begin{theorem}[Dual coalgebra of lattice vertex algebra; \ClaimStatusProvedHere]
 \label{thm:lattice:koszul-dual}
 \index{Koszul dual!lattice VOA}
-The dual coalgebra of the lattice $\Eone$-chiral algebra
-$\Vlat_\Lambda^\varepsilon$ is:
+Write $A_\varepsilon=\Vlat_\Lambda^\varepsilon$ and choose its
+quadratic presentation
+$A_\varepsilon=T_X(V)/(R_\varepsilon)$.  Its presentation coalgebra
+and full-bar comparison are
+\[
+A_\varepsilon^{\mathrm i}=C_X(s^{-1}V,s^{-2}R_\varepsilon),
+\qquad
+q_\varepsilon\colon A_\varepsilon^{\mathrm i}
+\longrightarrow\barB^{\mathrm{ch}}(A_\varepsilon).
+\]
+On the lattice Koszul locus, the inverse-cocycle computation gives
 \begin{equation}\label{eq:lattice:koszul-dual}
-\bigl(\Vlat_\Lambda^\varepsilon\bigr)^i
-\;:=\;
-H^*\!\bigl(\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)\bigr)
-\;=\; (\Vlat_\Lambda^{\varepsilon^{-1}})^c,
+H^\bullet(q_\varepsilon)\colon
+H^\bullet(A_\varepsilon^{\mathrm i})
+\xrightarrow{\;\sim\;}
+H^\bullet\!\bigl(\barB^{\mathrm{ch}}(A_\varepsilon)\bigr)
+\xrightarrow{\;\sim\;}
+(\Vlat_\Lambda^{\varepsilon^{-1}})^c,
 \end{equation}
 the coalgebra structure on the lattice vertex algebra with inverse
-cocycle. Consequently the Koszul dual algebra
-$\bigl(\Vlat_\Lambda^\varepsilon\bigr)^!$ is the linear/Verdier dual of
-this coalgebra. More precisely:
+cocycle.  Ran--Verdier duality forms
+$K_X(A_\varepsilon)=\mathbb D_{\Ran}
+\barB_X(A_\varepsilon)$, and the chosen lattice-pair map
+$\nu_\varepsilon\colon K_X(A_\varepsilon)\to A_\varepsilon^!$
+is an equivalence on the finite-type or completed pair locus. More
+precisely:
 \begin{enumerate}[label=(\roman*)]
 \item The underlying graded vector space of
- $\bigl(\Vlat_\Lambda^\varepsilon\bigr)^i$ is the same completed
- charge Fock space as $\Vlat_\Lambda$; the superscript $i$ records
- the intrinsic bar-dual \emph{coalgebra} structure, not a second
- algebra structure.
+ $H^\bullet(A_\varepsilon^{\mathrm i})$ is the same completed charge
+ Fock space as $\Vlat_\Lambda$ on the lattice Koszul locus.
 \item The coalgebra structure is determined by $\varepsilon^{-1}$:
  the coproduct has structure constants
  $\varepsilon(\alpha,\beta)^{-1}$.
@@ -1186,8 +1300,7 @@ this coalgebra. More precisely:
 \end{theorem}
 
 \begin{proof}
-The bar coalgebra is computed by the bar construction, and its
-cohomology coalgebra gives the intrinsic dual coalgebra~$A^i$. The
+The bar coalgebra is computed by the bar construction. The
 product $\mu \colon \Vlat_\Lambda \otimes \Vlat_\Lambda \to \Vlat_\Lambda$
 has structure constants $\varepsilon(\alpha,\beta)$ from the group
 algebra multiplication $e^\alpha \cdot e^\beta =
@@ -1205,8 +1318,9 @@ bar-complex coproduct has structure constants
 $\varepsilon(\alpha,\beta)^{-1}$.
 Since $\varepsilon^{-1}$ is again a valid cocycle,
 $(\Vlat_\Lambda^{\varepsilon^{-1}})^c$ is a valid coalgebra, and the
-dual coalgebra is identified with it. The symbol $A^!$ is reserved for
-the Verdier or continuous linear dual algebra $(A^i)^\vee$.
+bar cohomology is identified with it.  The lattice Koszul comparison
+makes $H^\bullet(q_\varepsilon)$ an isomorphism.  Ran--Verdier
+duality and $\nu_\varepsilon$ then give the chosen partner algebra.
 \end{proof}
 
 \begin{theorem}[Koszul morphism for lattice algebras; \ClaimStatusProvedHere]
@@ -1279,16 +1393,17 @@ curvature parameter
 \;=\; -\operatorname{rank}(\Lambda).
 \end{equation}
 This identity is the scalar curvature relation on the Verdier-dual
-free-boson projection. It does not identify the dual with a
-positive-energy lattice VOA of negative central charge. Three cases
-illustrate the range of this identity.
+free-boson projection.  The positive-energy lattice VOA retains central
+charge~$\operatorname{rank}(\Lambda)$, while the Verdier-dual free-field
+algebra carries scalar curvature $-\operatorname{rank}(\Lambda)$. Three
+cases illustrate the range of this identity.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Rank~$1$ oscillator sector.}
 For the even rank-$1$ lattice
 $\Lambda=\mathbb Z\alpha$, $\langle\alpha,\alpha\rangle=2$, the
 zero-charge sector is the one-boson Heisenberg VOA with
 $\kappa_{\mathrm{latt}} = 1$. Its Verdier-dual free-field algebra is
-$\cH_1^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+$\cH_1^!\simeq(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-\omega)$
 with $\kappa_{\mathrm{latt}}(\cH_1^!) = -1$
 (Theorem~\ref{thm:heisenberg-koszul-dual-early}).
 The Koszul dual is the curved chiral symmetric algebra,
@@ -1347,7 +1462,7 @@ are stripped away and only the oscillator modes remain.
 \item \emph{Rank~$1$.}
  The zero-charge oscillator sector of the even rank-$1$ lattice VOA is
  a single free boson at level~$1$. Its Verdier-dual free-field algebra is
- $\cH_1^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+ $\cH_1^!\simeq(\mathrm{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-\omega)$
  (Theorem~\ref{thm:heisenberg-koszul-dual-early}):
  the curved commutative chiral algebra on the dual
  vector space, with curvature $m_0 = -\omega$.
@@ -1831,79 +1946,117 @@ of Part~\ref{part:bar-complex} applies throughout.
 \section{Chiral Hochschild cohomology of lattice algebras}
 \label{sec:lattice:hochschild}
 
-\begin{theorem}[Lattice chiral Hochschild cohomology; \ClaimStatusProvedHere]\label{thm:lattice:hochschild}
-For an even integral lattice $\Lambda$:
+\begin{proposition}[Charge decomposition of the lattice cochain model;
+\ClaimStatusProvedHere]\label{thm:lattice:hochschild}
+\label{prop:lattice-hochschild-charge-decomposition}
+Let $\Lambda$ be a positive-definite even integral lattice and write
+$\Vlat_\Lambda=\bigoplus_{\alpha\in\Lambda}\cH\otimes e^\alpha$.
+Form the finite window by projecting every input and the output to
+$(\Vlat_\Lambda)_{\leq N}$.  For every cochain degree~$n$ and
+conformal-weight cutoff~$N$, put
+\[
+ \Gamma_{n,N}:=
+ \left\{\beta-\sum_{i=1}^n\alpha_i\;\middle|\;
+ (\Vlat_\Lambda^{\alpha_i})_{\leq N}\neq0\ (1\leq i\leq n),
+ (\Vlat_\Lambda^\beta)_{\leq N}\neq0\right\}.
+\]
+This is a finite subset of~$\Lambda$, and the cochain space decomposes
+as
 \begin{equation}\label{eq:lattice:hochschild}
-\ChirHoch^n(\Vlat_\Lambda, \Vlat_\Lambda)
-\;=\; \bigoplus_{\alpha \in \Lambda}
-\ChirHoch^n(\Vlat_\Lambda, \Vlat_\Lambda^\alpha)
+C^n_{\mathrm{ch}}(\Vlat_\Lambda,\Vlat_\Lambda)_{\leq N}
+\cong
+\bigoplus_{\gamma\in\Gamma_{n,N}}
+C^n_{\mathrm{ch}}
+(\Vlat_\Lambda,\Vlat_\Lambda)^{[\gamma]}_{\leq N}.
 \end{equation}
-and the degree-zero component ($\alpha = 0$) is:
-\[
-\ChirHoch^n(\Vlat_\Lambda, \Vlat_\Lambda^0)
-\;\cong\; H^n(\Lambda, \Vlat_\Lambda^{\Lambda})
-\]
-where $\Vlat_\Lambda^\Lambda = \Vlat_\Lambda^0 = \cH$ denotes the
-$\Lambda$-invariants (the degree-zero sector under the lattice grading)
-and $H^n(\Lambda, -)$ is group cohomology of the free abelian group
-$\Lambda$. The non-zero sectors $\alpha \neq 0$ contribute additional
-classes that depend on the lattice geometry.
-\end{theorem}
+Here the charge-shift-$\gamma$ subcomplex consists of cochains whose
+restriction to inputs of charges $\alpha_1,\ldots,\alpha_n$ takes
+values in charge
+$\alpha_1+\cdots+\alpha_n+\gamma$.
+The differential preserves~$\gamma$, so these degreewise sums assemble
+into a $\Lambda$-graded cochain complex.  The complete chart model is
+the derived inverse limit of the finite windows; its charge expression
+is the degreewise conformal-weight-completed product of the charge
+complexes.
+\end{proposition}
 
 \begin{proof}
-The lattice vertex algebra decomposes as
-$\Vlat_\Lambda = \bigoplus_{\alpha \in \Lambda} \Vlat_\Lambda^\alpha$
-where $\Vlat_\Lambda^\alpha = \cH \otimes e^\alpha$ is the
-$\alpha$-isotypic component.
-
-The chiral Hochschild complex respects this grading:
-\[
-CC^n_{\mathrm{ch}}(\Vlat_\Lambda, \Vlat_\Lambda)
-= \bigoplus_{\alpha_1, \ldots, \alpha_n, \beta}
-\Hom(\Vlat_\Lambda^{\alpha_1} \otimes \cdots
-\otimes \Vlat_\Lambda^{\alpha_n}, \Vlat_\Lambda^\beta).
-\]
-The differential preserves $\sum_i \alpha_i = \beta$, and the
-resulting spectral sequence (filtering by lattice degree)
-collapses at $E_2$ to give:
-\[
-\ChirHoch^*(\Vlat_\Lambda, \Vlat_\Lambda)
-= \bigoplus_{\alpha \in \Lambda}
-\ChirHoch^*(\Vlat_\Lambda, \Vlat_\Lambda^\alpha).
-\]
-For $\alpha = 0$, this identifies with the group cohomology
-$H^*(\Lambda, \Vlat_\Lambda^{\Lambda})$ via the standard bar resolution
-for $\Lambda \cong \Z^d$.
+The lattice OPE satisfies
+$\Vlat_\Lambda^\alpha{}_{(m)}\Vlat_\Lambda^\beta
+\subseteq\Vlat_\Lambda^{\alpha+\beta}$.  Hence every term in the
+chiral Hochschild differential preserves output charge minus total
+input charge.  Positive definiteness makes the set of charges meeting
+a fixed conformal-weight window finite, giving
+\eqref{eq:lattice:hochschild}.  Passing through the finite-window
+transition maps gives the derived inverse-limit statement.
 \end{proof}
 
-\begin{corollary}[Unimodular case; \ClaimStatusProvedHere]\label{cor:lattice:hochschild-unimodular}
-For a unimodular lattice $\Lambda$ (so $D(\Lambda) = 0$), the chiral
-chiral Hochschild cohomology reduces to:
+\begin{definition}[Lattice Hochschild comparison package]
+\label{def:lattice-hochschild-comparison-package}
+The datum $H_{\Lambda}^{\mathrm{HH}}$ consists of a
+filtration-preserving $\Lambda$-module structure~$\rho$ on the
+oscillator space~$\cH$ and a filtration-preserving quasi-isomorphism
 \[
-\ChirHoch^n(\Vlat_\Lambda, \Vlat_\Lambda)
-\cong H^n(\Lambda, \cH)
+ \Xi_\Lambda\colon
+ \widehat C^\bullet_{\mathrm{ch}}
+ (\Vlat_\Lambda,\Vlat_\Lambda)^{[0]}
+ \xrightarrow{\;\sim\;}
+ \widehat C^\bullet(\Lambda;\cH_\rho)
+ :=R\!\varprojlim_N C^\bullet(\Lambda;(\cH_\rho)_{\leq N})
 \]
-where $\cH$ is the Heisenberg Fock space (the $\Lambda$-invariant
-sector when $\Lambda = \Lambda^*$).
-\end{corollary}
-\begin{proof}
-When $\Lambda$ is unimodular, $D(\Lambda) = \Lambda^*/\Lambda = 0$, so the discriminant contributions vanish and the chiral Hochschild complex reduces to the group cohomology complex $C^*(\Lambda, \mathbb{C})$ by the preceding theorem.
-\end{proof}
+from the charge-zero complete chiral cochain model to the ordinary
+group-cochain models completed in oscillator weight.  The datum also
+includes compatibility with the finite-window transition maps,
+vanishing of the relevant $\varprojlim^1$ groups, and the resulting
+Mittag--Leffler quasi-isomorphism from the ordinary inverse limit to the
+derived inverse limit.
+\end{definition}
 
-\begin{example}[\texorpdfstring{$A_1$}{A1} chiral Hochschild cohomology]\label{ex:lattice:hochschild-A1}
-For $\Lambda = A_1 \cong \Z$, the group cohomology of $\Z$ is:
+\begin{proposition}[Conditional group-cohomology comparison;
+\ClaimStatusConditional]\label{prop:lattice-hochschild-group-comparison}
+Under $H_{\Lambda}^{\mathrm{HH}}$,
 \[
-H^n(\Z, M) =
+H^n \widehat C^\bullet_{\mathrm{ch}}
+(\Vlat_\Lambda,\Vlat_\Lambda)^{[0]}
+\cong \widehat H^n(\Lambda;\cH_\rho),
+\qquad
+\widehat H^n(\Lambda;\cH_\rho)
+:=H^n\widehat C^\bullet(\Lambda;\cH_\rho).
+\]
+The construction of~$\Xi_\Lambda$ is the chain-level content of this
+comparison; the charge decomposition of
+Proposition~\ref{thm:lattice:hochschild} supplies its source grading.
+\end{proposition}
+
+\begin{remark}[Unimodularity and charge]
+\label{cor:lattice:hochschild-unimodular}
+\label{rem:lattice-unimodularity-charge}
+For a unimodular lattice, $D(\Lambda)=\Lambda^*/\Lambda$ has one
+element, so the irreducible-module labelling has a single
+discriminant sector.  The internal decomposition
+$\Vlat_\Lambda=\bigoplus_{\alpha\in\Lambda}\cH e^\alpha$ retains all
+lattice charges.  Thus the discriminant sector and the internal charge
+define independent gradings.
+\end{remark}
+
+\begin{example}[\texorpdfstring{$A_1$}{A1} charge-zero comparison]
+\label{ex:lattice:hochschild-A1}
+For $\Lambda=A_1\cong\Z$ and every finite oscillator window~$M$, the
+length-one free resolution of the trivial $\mathbb C[\mathbb Z]$-module
+gives
+\[
+H^n(\Z;M)=
 \begin{cases}
-M^\Z & n = 0, \\
-M_\Z & n = 1, \\
-0 & n \geq 2.
+M^\Z,&n=0,\\
+M_\Z,&n=1,\\
+0,&n\geq2.
 \end{cases}
 \]
-Hence $\ChirHoch^n(\Vlat_{A_1}, \Vlat_{A_1})$ is concentrated
-in degrees 0 and~1. This reflects the rigidity of the $\AffKM{sl}_2$
-current algebra at level~1: it has a 1-dimensional space of first-order
-deformations (the level) and no higher obstructions.
+The Mittag--Leffler clause in $H_{A_1}^{\mathrm{HH}}$ carries this
+support through the oscillator completion, placing the charge-zero
+chiral cohomology in degrees~$0$ and~$1$.  The full
+chiral cohomology additionally carries the completed nonzero-charge
+summands of~\eqref{eq:lattice:hochschild}.
 \end{example}
 
 
@@ -2025,8 +2178,8 @@ for all twenty-four lattices in the scalar lattice projection.
 \item $S_r^{\mathrm{latt}}(V_\Lambda) = 0$ for all $r \geq 3$ in
 that projection: every Niemeier lattice VOA has Gaussian
 lattice-shadow depth~$2$.
-This does not assert vanishing on affine current lines coming from
-norm-$2$ root systems.
+Affine current lines coming from norm-$2$ root systems carry their own
+cubic bracket shadows.
 \item The genus-$g$ scalar amplitude is
 $F_g(V_\Lambda) = 24\,\lambda_g^{\mathrm{FP}}$
 \textup{(}uniform-weight scalar projection\textup{}) for all $g \geq 1$,
@@ -2314,21 +2467,21 @@ in the abstract theory:
 \item \emph{Theorem~B} (Theorem~\ref{thm:higher-genus-inversion}).
  For positive-definite lattices satisfying the factorization
  hypotheses of Theorem~\ref{thm:lattice:factorization-koszul}, the
- bar-cobar counit is the inversion quasi-isomorphism. In the
- unimodular case the full simple-module envelope has no
- discriminant sectors; in the non-unimodular case the vacuum
- statement and the discriminant-module statement remain separate.
+ bar-cobar counit is the inversion quasi-isomorphism.  In the
+ unimodular case the full simple-module envelope has one discriminant
+ sector.  In the general case the vacuum statement and the
+ discriminant-module statement are two typed outputs.
 
 \item \emph{Theorem~C}
  (Theorem~\ref{thm:quantum-complementarity-main}).
- The central charge $c(\Vlat_\Lambda) = d$ is the lattice rank.
- The complementary sign belongs to the Verdier-dual scalar curvature
- parameter $\kappa_{\mathrm{latt}}(\Vlat_\Lambda^!)=-d$, not to the
- central charge of a second positive-energy VOA.
- The genus-$g$ obstruction class is
- $\operatorname{obs}_g = d \cdot \lambda_g$
- (Theorem~\ref{thm:lattice:hochschild}), with obstruction
- parameter $\kappa = d$ equal to the rank.
+ The positive-energy lattice VOA has central charge
+ $c(\Vlat_\Lambda)=d$.  Its Verdier-dual free-field projection has
+ scalar curvature parameter
+ $\kappa_{\mathrm{latt}}(\Vlat_\Lambda^!)=-d$.
+ Under~$H_D^K$ the genus-$g$ Hodge character is
+ $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^gd\lambda_g$
+ (Theorem~\ref{thm:genus-universality}), with modular
+ characteristic $\kappa=d$ equal to the rank.
 \end{enumerate}
 \end{remark}
 
@@ -3592,20 +3745,27 @@ abstract $\Eone$ theory
 Let $\cA$ be an $\Eone$-chiral algebra whose non-commutativity
 is controlled by a defining datum~$\delta$
 \textup{(}an $R$-matrix, a 2-cocycle, or a deformation parameter\textup{)}.
-Then the intrinsic bar-dual coalgebra $\cA^i$ has the same defining
-datum with \emph{inversion} $\delta^{-1}$, and the Koszul dual algebra
-$\cA^!$ is its Verdier dual:
+Choose a quadratic presentation
+$\cA=T_X(V)/(R)$ with
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^{\mathrm i}\to B_X(\cA)$.  Under
+$H_{\mathrm{CL}}$ and the family inversion comparison, the
+presentation coalgebra has defining datum~$\delta^{-1}$:
 \begin{equation}\label{eq:e1-inversion}
 \cA^{i,\mathrm{ch}} \cong \cA_{\delta^{-1}}^{\mathrm{ch},c},
 \qquad
-\cA^! = (\cA^i)^\vee.
+K_X(\cA)=\mathbb D_{\Ran}B_X(\cA)
+\xrightarrow{\ \nu_\cA\ }\cA^!.
 \end{equation}
+On the finite-type or completed pair locus, $\nu_\cA$ is an
+equivalence and
+$\cA^!\simeq\mathbb D_{\Ran}(\cA^{\mathrm i})$.
 The three instances proved in this monograph are:
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{l l l l}
 \textbf{$\Eone$ algebra $\cA$} & \textbf{Datum $\delta$}
- & \textbf{Bar-dual coalgebra $\cA^i$}
+ & \textbf{Presentation coalgebra $\cA^i$}
  & \textbf{Reference} \\
 \hline
 Lattice $\Vlat_\Lambda^\varepsilon$
@@ -4976,13 +5136,11 @@ maps isomorphically to the bar complex of $L(\AffKM{g}, 1)$ under
 FKS, and the Verdier intertwining commutes with this isomorphism
 because FKS preserves the cocycle structure.
 
-The bottom equivalence is therefore an independent proof of
-DK-0/1 for level-$1$ KM algebras, obtained without the RTT
-generators or thick-generation arguments of the Yangian approach.
-For $\fg = \mathfrak{sl}_N$, this recovers the $k = 1$ case of
-the type-$A$ finite-dimensional extension problem on the
-evaluation-generated locus; it does not assert the full
-finite-dimensional extension.
+The bottom equivalence is therefore a lattice bar-cobar proof of
+DK-0/1 for level-$1$ KM algebras.  For $\fg=\mathfrak{sl}_N$, its scope
+is the $k=1$ evaluation-generated locus of the type-$A$
+finite-dimensional extension problem.  The full finite-dimensional
+extension retains its conjectural status.
 \end{proof}
 
 
@@ -5317,49 +5475,54 @@ For lattice vertex algebras $V_\Lambda$: $\kappa = \operatorname{rank}(\Lambda)$
 \subsection{$\Eone$ chiral Hochschild cohomology for quantum lattice VOAs}
 \label{subsec:lattice:e1-hochschild}
 
-The $\Einf$ chiral Hochschild cohomology of lattice VOAs decomposes by lattice
-sector (Theorem~\ref{thm:lattice:hochschild}). The curvature-braiding
-orthogonality theorem
-(Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}) gives the
-same decomposition persists in the $\Eone$ setting, with the cocycle
-$\varepsilon_{N,q}$ introducing phase factors sector by sector.
+The complete symmetric cochain model carries the charge-shift
+decomposition of
+Proposition~\ref{prop:lattice-hochschild-charge-decomposition}.  The
+ordered $\Eone$ model carries the same grading; its residue
+differential records the cocycle~$\varepsilon_{N,q}$.
 
-\begin{theorem}[$\Eone$ lattice chiral Hochschild complex;
+\begin{proposition}[$\Eone$ lattice charge-shift complex;
 \ClaimStatusProvedHere]\label{thm:lattice:e1-hochschild}
+\label{prop:lattice:e1-hochschild-charge-shift}
 \index{Hochschild cohomology!E1-chiral lattice@$\Eone$-chiral lattice}
-For a quantum lattice algebra $V_\Lambda^{N,q}$:
+For a quantum lattice algebra $V_\Lambda^{N,q}$ attached to a
+positive-definite even lattice~$\Lambda$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The $\Eone$-chiral Hochschild cochain complex decomposes by
- lattice sector, and hence so does cohomology:
-\[
- CC^n_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})
+\item In cochain degree~$n$ and conformal-weight window~$M$, the
+ $\Eone$-chiral Hochschild cochains decompose into the finite charge
+ sum
+ \[
+ CC^n_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})_{\leq M}
  =
- \bigoplus_{\alpha\in\Lambda}
- CC^n_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^\alpha,
- \qquad
- \ChirHoch^n_{\Eone}(V_\Lambda^{N,q})
- = \bigoplus_{\alpha \in \Lambda}
- \ChirHoch^n_{\Eone}(V_\Lambda^{N,q})^\alpha .
+ \bigoplus_{\gamma\in\Gamma_{n,M}}
+ CC^n_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[\gamma]}_{\leq M}.
 \]
-\item In the Cartan sector ($\alpha = 0$), the $\Eone$ and $\Einf$
- chiral Hochschild cohomologies are isomorphic
- (the Cartan generators are $\Einf$ regardless of the cocycle).
-\item In non-zero sectors ($\alpha \neq 0$), the cocycle braiding
- $c_{N,q}(\alpha_i, \alpha_j) =
- (-1)^{\langle\alpha_i,\alpha_j\rangle} \zeta_N^{2q(\alpha_i,\alpha_j)}$
- multiplies the ordered collision terms in the chiral Hochschild
- differential. Thus the non-zero sector is the ordinary lattice
- Hochschild complex with the ordered residue maps twisted by this
- bicharacter.
-\item The $N$-torsion of the braiding creates $\bZ/N\bZ$ periodicity
- in the phase-twisted differential: after translating charges by
- $N\beta$, the ungraded ordered complexes in sectors $\alpha$ and
- $\alpha+N\beta$ are canonically identified. The conformal-weight
- grading is shifted by
- $\langle\alpha+N\beta,\alpha+N\beta\rangle/2
- -\langle\alpha,\alpha\rangle/2$.
+ The complete degree-$n$ cochain space is the derived inverse limit of
+ these finite sums.
+\item Evaluation on charge-zero inputs defines the oscillator
+ restriction
+ \[
+ \operatorname{res}_{\cH}\colon
+ CC^\bullet_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[0]}
+ \longrightarrow CC^\bullet_{\Eone,\mathrm{ch}}(\cH,\cH).
+ \]
+ This cochain map to the ordered Heisenberg complex is determined
+ entirely by~$\cH$.  A completed averaging quasi-isomorphism satisfying
+ Corollary~\ref{cor:hochschild-averaging-symmetric} transports this
+ ordered complex to the symmetric Heisenberg chart complex.
+\item On the charge-shift-$\gamma$ component, the ordered collision
+ merging charges $\alpha_i$ and~$\alpha_j$ carries the coefficient
+ $\varepsilon_{N,q}(\alpha_i,\alpha_j)$.  Its ratio to the
+ reversed-order coefficient is the commutator bicharacter
+ \[
+ c_{N,q}(\alpha_i,\alpha_j)
+ =\frac{\varepsilon_{N,q}(\alpha_i,\alpha_j)}
+ {\varepsilon_{N,q}(\alpha_j,\alpha_i)}
+ =(-1)^{\langle\alpha_i,\alpha_j\rangle}
+ \zeta_N^{2q(\alpha_i,\alpha_j)}.
+ \]
 \end{enumerate}
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
 The lattice decomposition
@@ -5367,44 +5530,99 @@ $V_\Lambda^{N,q}=\bigoplus_{\alpha\in\Lambda}
 V_{\Lambda,\alpha}^{N,q}$ is respected by multiplication, OPE
 residues, and the ordered Hochschild insertions. A cochain has a
 well-defined output charge minus total input charge, and the
-Hochschild differential preserves that difference. This gives the
-direct-sum decomposition in~\textup{(i)}.
+Hochschild differential preserves that difference.  The sets
+$\Gamma_{n,M}$ of
+Proposition~\ref{prop:lattice-hochschild-charge-decomposition} are
+finite.  This gives the finite direct-sum decomposition and derived
+inverse limit in~\textup{(i)}.
 
-For $\alpha=0$, all contributing fields lie in the Cartan oscillator
-subalgebra. The deformation cocycle is trivial on this oscillator
-sector, so the $\Eone$ ordering data reduce to the symmetric
-$\Einf$ Cartan complex. This is the same Cartan/curvature separation
-as Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}.
+For a charge-shift-zero cochain, evaluation on charge-zero inputs has
+charge-zero output.  Every term of the differential evaluated on such
+inputs uses the Heisenberg OPE, and the deformation cocycle is the unit
+scalar.  Hence
+$\operatorname{res}_{\cH}d=d_{\cH}\operatorname{res}_{\cH}$, and the
+map is determined entirely by~$\cH$.  The stated symmetric comparison is
+precisely the completed averaging quasi-isomorphism of
+Corollary~\ref{cor:hochschild-averaging-symmetric}.  This proves
+\textup{(ii)} and realizes the cochain-level Cartan/curvature separation
+of Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}.
 
-For non-zero lattice fields, the OPE coefficient of
+For lattice fields of charges $\alpha_i$ and~$\alpha_j$, the OPE
+coefficient of
 $e^{\alpha_i}(z)e^{\alpha_j}(w)$ is multiplied by the deformed
-cocycle $\varepsilon_{N,q}(\alpha_i,\alpha_j)$. Interchanging the two
-ordered inputs multiplies the corresponding collision term by the
-braiding bicharacter
+cocycle $\varepsilon_{N,q}(\alpha_i,\alpha_j)$.  Dividing this
+coefficient by the reversed-order coefficient gives
 \[
 c_{N,q}(\alpha_i,\alpha_j)
 =(-1)^{\langle\alpha_i,\alpha_j\rangle}
 \zeta_N^{2q(\alpha_i,\alpha_j)} .
 \]
-Thus the only change from the $\Einf$ lattice Hochschild complex is
-the insertion of these ordered phase factors in the residue
-differential. Since $q$ is valued in $\Z/N\Z$, translating every charge
-by $N\beta$ leaves all phases unchanged. The translation identifies
-the underlying ordered complexes, while the conformal weights shift by
-the displayed quadratic difference. This proves~\textup{(iii)} and
-\textup{(iv)}.
+Thus the ordered residue differential and its reversal carry the
+coefficients stated in~\textup{(iii)}.
 \end{proof}
 
-\begin{remark}[Non-zero sector computation]
+\begin{definition}[Lattice charge-periodicity datum;
+\ClaimStatusDefinitional]
+\label{def:lattice:e1-hochschild-periodicity}
+For $\beta\in\Lambda$, a periodicity datum
+$H_{\mathrm{per}}(N,q;\beta)$ consists of a family of continuous chain
+isomorphisms, indexed by $\gamma\in\Lambda$,
+\[
+ T_{N\beta,\gamma}\colon
+ CC^\bullet_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[\gamma]}
+ \xrightarrow{\;\sim\;}
+ CC^\bullet_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[\gamma+N\beta]},
+ \qquad
+ T_{N\beta}:=(T_{N\beta,\gamma})_{\gamma\in\Lambda},
+\]
+together with the proper filtration reindexing
+\[
+ \Delta_{N\beta}(\lambda)
+ :=\frac{(\lambda+N\beta,\lambda+N\beta)-(\lambda,\lambda)}2
+ =N(\lambda,\beta)+\frac{N^2(\beta,\beta)}2,
+\]
+where $\lambda$ is the output charge.  The family intertwines the
+lattice cocycle, residue powers, and completed transition maps.
+\end{definition}
+
+\begin{corollary}[Periodic transport of lattice Hochschild cohomology;
+\ClaimStatusConditional]
+\label{cor:lattice:e1-hochschild-periodicity}
+Under $H_{\mathrm{per}}(N,q;\beta)$, every $\gamma\in\Lambda$ carries
+an isomorphism
+\[
+ H^\bullet(T_{N\beta,\gamma})\colon
+ H^\bullet\!\left(
+ CC^\bullet_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[\gamma]}
+ \right)
+ \xrightarrow{\;\sim\;}
+ H^\bullet\!\left(
+ CC^\bullet_{\Eone,\mathrm{ch}}(V_\Lambda^{N,q})^{[\gamma+N\beta]}
+ \right).
+\]
+Its conformal filtration is transported by the charge-dependent
+reindexing~$\Delta_{N\beta}$.
+\end{corollary}
+
+\begin{proof}
+The chain isomorphism induces the displayed cohomology isomorphism.
+The identity defining~$\Delta_{N\beta}$ computes the difference of the
+two lattice conformal weights, while the transition-map compatibility
+carries the isomorphism through the completed inverse limit.
+\end{proof}
+
+\begin{remark}[Charge-shift computation]
 \label{rem:lattice:e1-hochschild-nonzero-computation}
-The remaining computation is the cohomology of the phase-twisted
-non-zero sector complex. It is a finite calculation on each reduced
-weight window: diagonalize the ordered residue differential with
-coefficients $c_{N,q}(\alpha_i,\alpha_j)$ on representatives of
-$\Lambda/N\Lambda$, then restore the conformal-weight shifts from the
-lattice norm. The theorem above gives the complex; it does not assert
-that every non-zero sector has dimension different from the
-$\Einf$ case.
+The cohomology of each phase-twisted charge-shift complex is a finite
+calculation on every reduced-weight window: form the ordered residue
+matrix from the OPE powers $(z_i-z_j)^{(\alpha_i,\alpha_j)}$ and the
+coefficients $\varepsilon_{N,q}(\alpha_i,\alpha_j)$, then compute its
+kernel and image.  A compatible family of periodicity data
+$H_{\mathrm{per}}(N,q;\beta)$ for generators of~$N\Lambda$ further
+reduces the charge labels to representatives of~$\Lambda/N\Lambda$;
+the functions~$\Delta_{N\beta}$ then restore the conformal filtration.
+A completed averaging comparison computes the corresponding symmetric
+chart classes.
 \end{remark}
 
 
@@ -5488,8 +5706,10 @@ $I_n$, $n \ge 4$ \textup{(higher charges)} & $S_n = 0$ for $n \ge 4$ \textup{(cl
 \bottomrule
 \end{tabular}
 \end{center}
-The classical $r$-matrix is $r(z) = k\Omega/z$ \textup{(}simple pole,
-one order below the OPE double pole by $d\log$ extraction\textup{)}.
+The classical collision $r$-matrix is
+$r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$
+\textup{(}simple pole, one order below the OPE double pole by
+$d\log$ extraction\textup{)}.
 \end{proposition}
 
 \begin{proof}
@@ -5503,14 +5723,19 @@ The higher conserved charges $I_n$ for $n \ge 4$ are nonzero
 outside the shadow obstruction tower: they contribute to the full
 $L_\infty$-algebra $\Definfmod(V_1(\mathfrak{sl}_2))$, not to
 the scalar shadow projections $S_n$.
-The $r$-matrix identification $r(z) = k\Omega/z$ follows from the
+The trace-form $r$-matrix identification
+$r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$ follows from the
 collision residue computation: the OPE
 $J^a(z)J^b(w) \sim k\kappa^{ab}/(z-w)^2 + f^{ab}{}_c J^c(w)/(z-w)$
 yields, after $d\log$ extraction,
-$r(z) = k\Omega/z$: the double pole $k\kappa^{ab}/(z{-}w)^2$
-shifts to $k\kappa^{ab}/(z{-}w)$ and the simple pole becomes
-regular in this scalar projection. Here
-$\Omega = \sum_a I^a \otimes I_a$ is the quadratic Casimir.
+$r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$: the double pole
+$k\kappa^{ab}/(z{-}w)^2$ shifts to
+$k\kappa^{ab}/(z{-}w)$ and the simple pole becomes regular in this
+scalar projection. Here
+$\Omega_{\mathrm{tr}} = \sum_a I^a \otimes I_a$ is the trace-form
+quadratic Casimir.  The collision normalisation is
+$k\Omega_{\mathrm{tr}}/z$; the KZ normalisation is
+\(\Omega_{\mathrm{KZ}}/((k+h^\vee)z)\).
 \end{proof}
 
 \subsection{XXZ spin chain: the minimal model shadow}%
@@ -5692,34 +5917,38 @@ Borcherds 1992 \emph{Invent.\ Math.}~109, Borcherds 1998
 \emph{Amer.\ J.\ Math.}~119 Prop~2.5.
 \end{remark}
 
-\begin{remark}[$\Psi$: universal automorphic-product CY functor (lattice face)]
+\begin{remark}[$\Psi$: conditional automorphic-product CY dictionary (lattice face)]
 \label{rem:latfnd-w17-universal-Psi}
-The lattice-theoretic content of the universal functor
+The lattice-theoretic content of the conditional recognition dictionary
 $\Psi: \mathrm{CY}^{\mathrm{Siegel-aut}}_2 \to \mathrm{QHopf}^{\mathrm{BKM}}$
 (defined in Vol.~III Chapter~\ref{ch:k3e-bkm-chapter}) reads: to a
 CY-$2$ Siegel-automorphic-product datum $(L,\phi_L,\Sigma(\phi_L))$
 consisting of an even lattice $L$ of signature $(n,2)$, a weak
 Jacobi form $\phi_L$ of weight~$0$ and index $L$, and its Borcherds
 singular-theta lift $\Sigma(\phi_L)$ (a Siegel-automorphic product
-on $D_L$), $\Psi$ assigns the Hall-Drinfeld double
-$\mathbf H_{\Sigma(\phi_L)}$ of the BKM algebra whose denominator
-identity is $\Sigma(\phi_L)$. The three basic evaluations are:
+on $D_L$), $\Psi$ assigns a target Hall--Drinfeld double
+$\mathbf H_{\Sigma(\phi_L)}^{\mathrm{tgt}}$ of the BKM algebra whose
+denominator identity is $\Sigma(\phi_L)$, conditional on the finite
+Hall/CoHA source, compact pairing, PBW exact-presentation theorem,
+source-to-target comparison maps, and Mittag--Leffler inverse limit.
+The three basic target evaluations are:
 \[
  \Psi(\mathrm{II}_{1,1}, J^{\mathrm{Monster}}, j(\sigma)-j(\tau))
- \;=\; \mathbf H_{\mathrm{Monster}},
+ \;\leadsto\; \mathbf H_{\mathrm{Monster}}^{\mathrm{tgt}},
 \]
 \[
  \Psi(\Lambda^{2,1}_{II}, \phi_{0,1}^{K3}, \Delta_5)
- \;=\; \mathbf H_{\Delta_5},
+ \;\leadsto\; \mathbf H_{\Delta_5}^{\mathrm{tgt}},
 \]
 \[
  \Psi(\mathrm{II}_{25,1}, \theta_{\Lambda_{24}}/\eta^{24}, \Phi_{12})
- \;=\; \mathbf H_{\mathrm{FakeMonster}}.
+ \;\leadsto\; \mathbf H_{\mathrm{FakeMonster}}^{\mathrm{tgt}}.
 \]
-Each evaluation is a \emph{distinct} Hall-Drinfeld double in
-$\mathrm{QHopf}^{\mathrm{BKM}}$; the three images are independent.
-Functoriality: lattice embeddings $L\hookrightarrow L'$ compatible
-with Jacobi-form pullback induce Hall-algebra morphisms
+Each recognition package constructs a distinct Hall--Drinfeld double
+in $\mathrm{QHopf}^{\mathrm{BKM}}$; the three target images are
+independent. Conditional functoriality:
+lattice embeddings $L\hookrightarrow L'$ compatible with Jacobi-form
+pullback induce Hall-algebra morphisms
 $\mathrm{CoHA}_L\to\mathrm{CoHA}_{L'}$, which extend to
 quasi-Hopf morphisms $\Psi(L,\cdot,\cdot)\to\Psi(L',\cdot,\cdot)$
 via the Schiffmann-Vasserot shuffle functoriality

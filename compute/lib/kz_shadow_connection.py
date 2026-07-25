@@ -6,10 +6,11 @@ The shadow obstruction tower at genus 0 produces the KZ connection:
 This is the arity-2 shadow connection.  Higher arities give
 L_infinity corrections from collision geometry on FM_n.
 
-The CYBE for r(z) = Omega/z follows from the Arnold relation on FM_3.
+The CYBE for the KZ-normalized kernel r(z)=Omega/((k+h^v)z) follows from
+the Arnold relation on FM_3.
 
 KEY PROVED IDENTIFICATIONS (thm:yangian-shadow-theorem):
-  (1) r(z) = Res^{coll}_{0,2}(Theta_A) = Omega/z
+  (1) r_KZ(z) = Res^{coll}_{0,2}(Theta_A) = Omega/((k+h^v)z)
   (2) KZ connection = shadow connection at genus 0, arity 2
   (3) CYBE follows from Arnold relation on FM_3(C)
   (4) IBR (infinitesimal braid relation) = flatness of KZ
@@ -996,8 +997,9 @@ def collision_residue(
     gives the classical r-matrix:
       r(z) = Omega / ((k + h^v) * z)
 
-    This is the PROVED identification (thm:yangian-shadow-theorem):
-      Res^{coll}_{0,2}(Theta_A) = Omega/z (up to normalization).
+    This is the PROVED KZ-normalized identification
+    (thm:yangian-shadow-theorem):
+      Res^{coll}_{0,2}(Theta_A) = Omega/((k+h^v)z).
 
     The r-matrix has:
     - Simple pole at z = 0
@@ -1058,7 +1060,7 @@ def shadow_to_kz_dictionary() -> Dict[str, Dict[str, str]]:
         },
         'r_matrix': {
             'shadow': 'Collision residue Res^{coll}_{0,2}(Theta_A)',
-            'kz': 'Classical r-matrix r(z) = Omega/z',
+            'kz': 'Classical KZ r-matrix r(z) = Omega/((k+h^v)z)',
             'identification': 'thm:collision-residue-twisting (PROVED)',
             'genus': '0',
             'arity': '2',

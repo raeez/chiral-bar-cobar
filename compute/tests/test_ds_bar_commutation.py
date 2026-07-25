@@ -1,21 +1,27 @@
-"""Tests for DS-bar commutation and hook-type Koszul duality.
+r"""Independent-oracle tests for exact DS data and typed DS--bar claims."""
 
-Verifies that Drinfeld-Sokolov reduction commutes with the bar construction
-for hook-type nilpotents in sl_3 and sl_4, and computes explicit Koszul duals.
-"""
+from pathlib import Path
 
 import pytest
 from sympy import Rational, Symbol, simplify
 
 from compute.lib.ds_bar_commutation import (
+    BarComplexData,
+    BershadskyPolyakovData,
+    ClaimPacket,
+    ClaimStatus,
+    DSBarAudit,
     DSBarCommutationData,
     KoszulDualIdentification,
     N2SCAData,
+    OpenInvariantError,
     affine_central_charge_sl_n,
     affine_kappa_sl_n,
     bar_complex_n2_sca,
+    bershadsky_polyakov_data,
     dim_sl_n,
     ds_bar_commutation_check,
+    ds_good_grading_data,
     ds_nilpotent_half_dim,
     ds_nilpotent_plus_dim,
     koszul_dual_identification,
@@ -24,295 +30,384 @@ from compute.lib.ds_bar_commutation import (
     sl4_hook_ds_bar_data,
     verify_ds_bar_commutation,
 )
-from compute.lib.hook_type_w_duality import (
-    complementarity_constant,
-    ds_kappa_from_affine,
-    ghost_constant,
-    hook_dual_level_sl_n,
-    krw_central_charge,
-    krw_central_charge_data,
-    w_algebra_generator_data,
-)
+from compute.lib.hook_type_w_duality import krw_central_charge
+from compute.lib.non_principal_w_bar_engine import bershadsky_polyakov_ope_data
 from compute.lib.nonprincipal_ds_orbits import (
-    normalize_partition,
+    homogeneous_f_centralizer_basis_sl_n,
     transpose_partition,
+    type_a_partition_sl2_triple,
 )
 
-k = Symbol('k')
+
+k = Symbol("k")
 
 
-# ===================================================================
-# sl_3 minimal = N=2 SCA
-# ===================================================================
-
-class TestSl3MinimalPartition:
-    def test_self_transpose(self):
-        assert transpose_partition((2, 1)) == (2, 1)
-
-    def test_generators_count(self):
-        gen = w_algebra_generator_data((2, 1))
-        assert gen.f_centralizer_dimension == 4
-
-    def test_generators_bosonic_fermionic(self):
-        gen = w_algebra_generator_data((2, 1))
-        assert gen.n_bosonic == 2
-        assert gen.n_fermionic == 2
-
-    def test_generator_weights(self):
-        gen = w_algebra_generator_data((2, 1))
-        weights = sorted([w for (_, w, _) in gen.strong_generators])
-        assert weights == [Rational(1), Rational(3, 2), Rational(3, 2), Rational(2)]
-
-    def test_central_charge(self):
-        """c(BP) = 2 - 24(k+1)^2/(k+3) via correct per-root-pair KRW.
-
-        # VERIFIED: [DC] known BP formula; [CF] K_BP=196; [NE] c(-3/2)=-2
-        """
-        c = krw_central_charge((2, 1), k)
-        assert simplify(c - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
-
-    def test_ghost_constant(self):
-        assert ghost_constant((2, 1)) == 2
-
-    def test_kappa_formula(self):
-        """kappa(BP) = (1/6) * c = (1/6)*(2-24(k+1)^2/(k+3)).
-
-        # VERIFIED: [DC] rho=1/6, c_BP=2-24(k+1)^2/(k+3);
-        # [NE] kappa(0) = (1/6)*(-6) = -1; kappa(1) = (1/6)*(-22) = -11/3
-        """
-        kappa = ds_kappa_from_affine((2, 1), k)
-        expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
-        assert simplify(kappa - expected) == 0
-
-    def test_kappa_anti_symmetry(self):
-        kv = hook_dual_level_sl_n(3, k)
-        s = simplify(ds_kappa_from_affine((2, 1), k) + ds_kappa_from_affine((2, 1), kv))
-        assert simplify(s.diff(k)) == 0
-
-    def test_complementarity_constant(self):
-        assert complementarity_constant((2, 1)) == -4
-
-    def test_self_dual_level(self):
-        # k^v = k => -k-6 = k => k = -3
-        assert simplify(hook_dual_level_sl_n(3, Rational(-3)) - Rational(-3)) == 0
-
-    def test_nilpotent_plus_dim(self):
-        assert ds_nilpotent_plus_dim((2, 1)) == 3
-
-    def test_nilpotent_half_dim(self):
-        assert ds_nilpotent_half_dim((2, 1)) == 2
+def _matrix_weight_oracle(partition):
+    triple = type_a_partition_sl2_triple(partition)
+    centralizer = homogeneous_f_centralizer_basis_sl_n(triple.f, triple.h)
+    return tuple(sorted(
+        Rational(1) - Rational(grade, 2)
+        for grade, basis in centralizer.items()
+        for _ in basis
+    ))
 
 
-class TestN2SCAOpe:
-    def test_ope_structure(self):
-        sca = n2_sca_data(k)
-        c = sca.central_charge
-        assert simplify(sca.jj_pole2 - c / 3) == 0
-        assert simplify(sca.gg_pole3 - c / 3) == 0
-        assert simplify(sca.tt_pole4 - c / 2) == 0
-        assert sca.jg_charge == 1
+def _good_grading_oracle(partition):
+    triple = type_a_partition_sl2_triple(partition)
+    n = sum(partition)
+    x_diagonal = [Rational(triple.h[index, index], 2) for index in range(n)]
+    positive_pairs = []
+    grades = {}
+    for left in range(n):
+        for right in range(n):
+            if left == right:
+                continue
+            grade = x_diagonal[left] - x_diagonal[right]
+            if grade > 0:
+                positive_pairs.append((left, right))
+                grades[grade] = grades.get(grade, 0) + 1
+    bracket_exists = any(
+        middle == next_left and left != right
+        for left, middle in positive_pairs
+        for next_left, right in positive_pairs
+    )
+    return {
+        "dimension": len(positive_pairs),
+        "grades": dict(sorted(grades.items())),
+        "half_dimension": grades.get(Rational(1, 2), 0),
+        "abelian": not bracket_exists,
+    }
 
 
-class TestSl3BarComplex:
-    def test_bar_dimensions(self):
+def _assert_unresolved(packet: ClaimPacket, status: ClaimStatus):
+    assert packet.status is status
+    assert packet.value is None
+    assert packet.hypotheses
+    with pytest.raises(OpenInvariantError):
+        packet.require_value()
+
+
+class TestStandardBershadskyPolyakovData:
+    def test_compatibility_entry_point_has_the_correct_object(self):
+        data = n2_sca_data(k)
+        assert isinstance(data, N2SCAData)
+        assert isinstance(data, BershadskyPolyakovData)
+        assert data == bershadsky_polyakov_data(k)
+        assert "Bershadsky" in data.source or "Fehily" in data.source
+
+    def test_generators_are_even_with_matrix_weights(self):
+        data = bershadsky_polyakov_data(k)
+        assert data.generators == (
+            ("J", 1, "even"),
+            ("G+", Rational(3, 2), "even"),
+            ("G-", Rational(3, 2), "even"),
+            ("L", 2, "even"),
+        )
+        assert tuple(weight for _, weight, _ in data.generators) == _matrix_weight_oracle((2, 1))
+
+    def test_standard_central_charge(self):
+        data = bershadsky_polyakov_data(k)
+        expected = -(2 * k + 3) * (3 * k + 1) / (k + 3)
+        assert simplify(data.central_charge - expected) == 0
+        assert simplify(data.central_charge - krw_central_charge((2, 1), k)) == 0
+        assert data.central_charge.subs(k, 0) == -1
+        assert data.central_charge.subs(k, 1) == -5
+
+    def test_formal_reflection_and_standard_sum(self):
+        data = bershadsky_polyakov_data(k)
+        assert simplify(data.formal_reflected_level + k + 6) == 0
+        assert simplify(data.formal_central_sum - 50) == 0
+
+    def test_primary_ope_coefficients(self):
+        data = bershadsky_polyakov_data(k)
+        assert simplify(data.jj_pole2 - (2 * k + 3) / 3) == 0
+        assert data.jg_charge == 1
+        assert data.jg_minus_charge == -1
+        assert simplify(data.gg_pole3 - (k + 1) * (2 * k + 3)) == 0
+        assert simplify(data.gg_pole2_coeff - 3 * (k + 1)) == 0
+        assert simplify(data.tt_pole4 - data.central_charge / 2) == 0
+
+    def test_primary_ope_pole_orders(self):
+        data = bershadsky_polyakov_data(k)
+        assert dict(((left, right), pole) for left, right, pole in data.exact_pole_orders) == {
+            ("L", "L"): 4,
+            ("L", "J"): 2,
+            ("L", "G+"): 2,
+            ("L", "G-"): 2,
+            ("J", "J"): 2,
+            ("J", "G+"): 1,
+            ("J", "G-"): 1,
+            ("G+", "G+"): 0,
+            ("G-", "G-"): 0,
+            ("G+", "G-"): 3,
+        }
+
+    def test_ope_packet_is_imported_canonically(self):
+        data = bershadsky_polyakov_data(k)
+        assert data.ope_data == bershadsky_polyakov_ope_data(k)
+
+
+class TestBPBarInput:
+    def test_exact_chain_input(self):
         bar = bar_complex_n2_sca(k)
+        assert isinstance(bar, BarComplexData)
+        assert bar.partition == (2, 1)
         assert bar.h0_dim == 1
         assert bar.h1_dim == 4
-        assert bar.h2_dim == 4
-        assert bar.h3_dim == 1
+        assert bar.h1_generators == bershadsky_polyakov_data(k).generators
+        assert bar.singular_ope_channels == bershadsky_polyakov_data(k).exact_pole_orders
 
-    def test_euler_characteristic(self):
+    def test_ope_channels_do_not_create_higher_cohomology_dimensions(self):
         bar = bar_complex_n2_sca(k)
-        assert bar.euler_char == 0
+        assert not hasattr(bar, "h2_dim")
+        assert not hasattr(bar, "h3_dim")
+        assert not hasattr(bar, "euler_char")
 
-    def test_is_koszul(self):
+    def test_higher_bar_claims_are_typed(self):
         bar = bar_complex_n2_sca(k)
-        assert bar.is_koszul
+        _assert_unresolved(bar.higher_bar_cohomology, ClaimStatus.OPEN)
+        _assert_unresolved(bar.pbw_collapse, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(bar.koszulness, ClaimStatus.CONDITIONAL)
+        assert bar.is_koszul is bar.koszulness
 
 
-class TestSl3DSBarCommutation:
-    def test_kappa_commutes(self):
-        check = ds_bar_commutation_check((2, 1), k)
-        assert check.kappa_commutes
+class TestAffineArithmetic:
+    @pytest.mark.parametrize(("N", "dimension"), [(2, 3), (3, 8), (4, 15), (5, 24)])
+    def test_dimension(self, N, dimension):
+        assert dim_sl_n(N) == dimension
 
-    def test_generators_match(self):
-        check = ds_bar_commutation_check((2, 1), k)
-        assert check.generators_match
+    def test_dimension_domain(self):
+        with pytest.raises(ValueError):
+            dim_sl_n(1)
 
-    def test_c_threads(self):
-        check = ds_bar_commutation_check((2, 1), k)
-        assert check.c_threads
+    @pytest.mark.parametrize("N", [2, 3, 4, 5])
+    def test_affine_formulas(self, N):
+        assert simplify(
+            affine_kappa_sl_n(N, k)
+            - Rational(N * N - 1, 2 * N) * (k + N)
+        ) == 0
+        assert simplify(
+            affine_central_charge_sl_n(N, k)
+            - k * (N * N - 1) / (k + N)
+        ) == 0
 
-    def test_ghost_constant(self):
-        check = ds_bar_commutation_check((2, 1), k)
-        assert check.ghost_constant_value == 2
-
-
-class TestSl3KoszulDual:
-    def test_self_dual_partition(self):
-        kd = koszul_dual_identification((2, 1), k)
-        assert kd.is_self_transpose
-        assert kd.dual_partition == (2, 1)
-
-    def test_self_dual_level(self):
-        kd = koszul_dual_identification((2, 1), k)
-        assert kd.self_dual_level == -3
-
-    def test_kappa_sum(self):
-        """Self-transpose (2,1): kappa sum = 98/3 = rho*K_BP = (1/6)*196.
-
-        # VERIFIED: [DC] rho=1/6, K_BP=196; [NE] kappa(1)+kappa(-7) = -11/3+109/3 = 98/3
-        """
-        kd = koszul_dual_identification((2, 1), k)
-        assert simplify(kd.kappa_sum - Rational(98, 3)) == 0
-
-    def test_dual_level(self):
-        kd = koszul_dual_identification((2, 1), k)
-        assert simplify(kd.dual_level + k + 6) == 0
+    @pytest.mark.parametrize("N", [2, 3, 4, 5])
+    def test_affine_characteristic_formal_reflection(self, N):
+        reflected = -k - 2 * N
+        assert simplify(
+            affine_kappa_sl_n(N, k) + affine_kappa_sl_n(N, reflected)
+        ) == 0
 
 
-# ===================================================================
-# sl_4 hook pair: (2,1,1) <-> (3,1)
-# ===================================================================
+class TestGoodGradingBRSTData:
+    @pytest.mark.parametrize(
+        ("partition", "dimension", "grades", "abelian", "half_dimension"),
+        [
+            ((2, 1), 3, {Rational(1, 2): 2, Rational(1): 1}, False, 2),
+            ((3,), 3, {Rational(1): 2, Rational(2): 1}, False, 0),
+            ((3, 1), 5, {Rational(1): 4, Rational(2): 1}, False, 0),
+            ((2, 1, 1), 5, {Rational(1, 2): 4, Rational(1): 1}, False, 4),
+            ((2, 2), 4, {Rational(1): 4}, True, 0),
+        ],
+    )
+    def test_hardcoded_good_grading_cases(
+        self,
+        partition,
+        dimension,
+        grades,
+        abelian,
+        half_dimension,
+    ):
+        data = ds_good_grading_data(partition)
+        assert data.n_plus_dim == dimension
+        assert data.n_plus_grades == grades
+        assert data.n_plus_is_abelian is abelian
+        assert data.g_half_dim == half_dimension
+        assert ds_nilpotent_plus_dim(partition) == dimension
+        assert ds_nilpotent_half_dim(partition) == half_dimension
 
-class TestSl4HookDSBar:
-    def test_minimal_kappa_commutes(self):
-        check = ds_bar_commutation_check((2, 1, 1), k)
-        assert check.kappa_commutes
-
-    def test_minimal_generators_match(self):
-        check = ds_bar_commutation_check((2, 1, 1), k)
-        assert check.generators_match
-
-    def test_minimal_c_threads(self):
-        check = ds_bar_commutation_check((2, 1, 1), k)
-        assert check.c_threads
-
-    def test_subregular_kappa_commutes(self):
-        check = ds_bar_commutation_check((3, 1), k)
-        assert check.kappa_commutes
-
-    def test_subregular_generators_match(self):
-        check = ds_bar_commutation_check((3, 1), k)
-        assert check.generators_match
-
-    def test_subregular_c_threads(self):
-        check = ds_bar_commutation_check((3, 1), k)
-        assert check.c_threads
-
-    def test_ghost_constants(self):
-        assert ghost_constant((2, 1, 1)) == 3
-        assert ghost_constant((3, 1)) == 6
-
-    def test_cross_kappa_sum(self):
-        data = sl4_hook_ds_bar_data(k)
-        assert data["kappa_sum_equals_comp"]
-
-
-class TestSl4KoszulDual:
-    def test_minimal_dual_is_subregular(self):
-        kd = koszul_dual_identification((2, 1, 1), k)
-        assert kd.dual_partition == (3, 1)
-        assert not kd.is_self_transpose
-
-    def test_subregular_dual_is_minimal(self):
-        kd = koszul_dual_identification((3, 1), k)
-        assert kd.dual_partition == (2, 1, 1)
-
-    def test_dual_level(self):
-        kd = koszul_dual_identification((2, 1, 1), k)
-        assert simplify(kd.dual_level + k + 8) == 0
-
-    def test_kappa_sum_well_defined(self):
-        """Kappa sum is a well-defined rational function.
-
-        For non-self-transpose pairs, the sum is k-dependent
-        because the two W-algebras have different anomaly ratios.
-        """
-        kd = koszul_dual_identification((2, 1, 1), k)
-        assert kd.kappa_sum is not None
+    @pytest.mark.parametrize("partition", [(2, 1), (3,), (3, 1), (2, 1, 1), (2, 2), (3, 2)])
+    def test_matrix_grading_oracle(self, partition):
+        expected = _good_grading_oracle(partition)
+        data = ds_good_grading_data(partition)
+        assert data.n_plus_dim == expected["dimension"]
+        assert data.n_plus_grades == expected["grades"]
+        assert data.g_half_dim == expected["half_dimension"]
+        assert data.n_plus_is_abelian is expected["abelian"]
 
 
-# ===================================================================
-# General hook sweep: sl_3 through sl_6
-# ===================================================================
+class TestTypedDSBarProfiles:
+    @pytest.mark.parametrize("partition", [(2, 1), (3,), (3, 1), (2, 1, 1), (2, 2), (3, 2)])
+    def test_exact_profile_data(self, partition):
+        data = ds_bar_commutation_check(partition, k)
+        assert isinstance(data, DSBarCommutationData)
+        N = sum(partition)
+        assert data.affine_generators == N * N - 1
+        assert simplify(data.affine_central_charge - affine_central_charge_sl_n(N, k)) == 0
+        assert simplify(data.affine_kappa - affine_kappa_sl_n(N, k)) == 0
+        assert data.w_generator_weights == _matrix_weight_oracle(partition)
+        assert data.w_generators == len(data.w_generator_weights)
+        assert data.w_num_even == data.w_generators
+        assert data.w_num_odd == 0
+        assert simplify(data.w_central_charge - krw_central_charge(partition, k)) == 0
 
-class TestHookSweep:
-    @pytest.mark.parametrize("N", [3, 4, 5, 6])
-    def test_ds_bar_commutation_principal(self, N):
-        """Principal nilpotent: DS-bar commutes."""
-        lam = (N,)
-        check = ds_bar_commutation_check(lam, k)
-        assert check.kappa_commutes
-        assert check.c_threads
+    @pytest.mark.parametrize("partition", [(2, 1), (3,), (3, 1), (2, 1, 1), (2, 2), (3, 2)])
+    def test_good_grading_fields_match_independent_oracle(self, partition):
+        data = ds_bar_commutation_check(partition, k)
+        expected = _good_grading_oracle(partition)
+        assert data.positive_grade_multiplicities == expected["grades"]
+        assert data.positive_subalgebra_is_abelian is expected["abelian"]
+        assert data.ghost_dim == expected["dimension"]
+        assert data.neutral_half_dimension == expected["half_dimension"]
+        assert data.ghost_constant_value == sum(
+            grade * multiplicity for grade, multiplicity in expected["grades"].items()
+        )
 
-    @pytest.mark.parametrize("N,r", [
-        (3, 1), (4, 1), (4, 2), (4, 3),
-        (5, 1), (5, 2), (5, 3), (5, 4),
-    ])
-    def test_ds_bar_commutation_hook(self, N, r):
-        """Hook nilpotents: DS-bar commutes."""
-        lam = normalize_partition(tuple([N - r] + [1] * r))
-        check = ds_bar_commutation_check(lam, k)
-        assert check.kappa_commutes
-        assert check.c_threads
-
-    @pytest.mark.parametrize("N,r", [
-        (3, 1), (4, 1), (4, 2), (5, 1), (5, 2), (5, 3),
-    ])
-    def test_kappa_anti_symmetry_hook_pairs(self, N, r):
-        """Kappa complementarity for hook transpose pairs.
-
-        Self-transpose: kappa sum is k-independent.
-        Non-self-transpose: kappa sum is a well-defined rational function
-        (different anomaly ratios prevent full k-cancellation).
-        """
-        lam = normalize_partition(tuple([N - r] + [1] * r))
-        lam_t = transpose_partition(lam)
-        kv = hook_dual_level_sl_n(N, k)
-        s = simplify(ds_kappa_from_affine(lam, k) + ds_kappa_from_affine(lam_t, kv))
-        if lam == lam_t:
-            assert simplify(s.diff(k)) == 0, f"Self-transpose {lam}: sum not constant"
-        else:
-            assert s is not None, f"Non-self-transpose {lam}: sum undefined"
-
-    @pytest.mark.parametrize("N", [3, 4, 5])
-    def test_koszul_dual_involutivity(self, N):
-        """Koszul duality is involutive: (W^!)^! = W."""
-        for r in range(1, N):
-            lam = normalize_partition(tuple([N - r] + [1] * r))
-            lam_t = transpose_partition(lam)
-            lam_tt = transpose_partition(lam_t)
-            assert lam == lam_tt
+    @pytest.mark.parametrize("partition", [(2, 1), (3,), (3, 1), (2, 1, 1), (2, 2), (3, 2)])
+    def test_modular_and_homological_fields_are_typed(self, partition):
+        data = ds_bar_commutation_check(partition, k)
+        _assert_unresolved(data.rho, ClaimStatus.OPEN)
+        _assert_unresolved(data.w_kappa, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.pbw_collapse, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.ds_bar_commutation, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.koszulness, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.categorical_transport, ClaimStatus.CONDITIONAL)
+        assert data.kappa_commutes is data.ds_bar_commutation
 
 
-# ===================================================================
-# Master verification
-# ===================================================================
-
-class TestMasterVerification:
-    def test_all_checks_pass(self):
-        results = verify_ds_bar_commutation()
-        failures = {k: v for k, v in results.items() if not v}
-        assert len(failures) == 0, f"Failures: {list(failures.keys())}"
-
-    def test_check_count(self):
-        results = verify_ds_bar_commutation()
-        assert len(results) >= 70
-
-
-# ===================================================================
-# sl_3 complete data bundle
-# ===================================================================
-
-class TestSl3DataBundle:
-    def test_bundle_completeness(self):
+class TestSl3SeedPacket:
+    def test_exact_seed_data(self):
         data = sl3_minimal_data(k)
+        assert data["partition"] == (2, 1)
+        assert data["transpose"] == (2, 1)
         assert data["is_self_transpose"]
         assert data["n_generators"] == 4
-        assert data["n_bosonic"] == 2
-        assert data["n_fermionic"] == 2
-        assert data["self_dual_level"] == Rational(-3)
+        assert data["n_even"] == 4
+        assert data["n_odd"] == 0
+        assert data["n_bosonic"] == 4
+        assert data["n_fermionic"] == 0
+        assert data["reciprocal_weight_diagnostic"] == Rational(17, 6)
         assert data["ghost_constant"] == 2
-        assert data["ds_bar_check"].kappa_commutes
-        assert data["bar_complex"].is_koszul
+
+    def test_standard_central_and_formal_fixed_level(self):
+        data = sl3_minimal_data(k)
+        expected = -(2 * k + 3) * (3 * k + 1) / (k + 3)
+        assert simplify(data["central_charge"] - expected) == 0
+        assert simplify(data["formal_reflected_level"] + k + 6) == 0
+        assert simplify(data["formal_central_sum"] - 50) == 0
+        assert data["formal_fixed_level"] == -3
+        assert data["central_charge_has_pole_at_fixed_level"]
+
+    def test_seed_frontier_fields_are_typed(self):
+        data = sl3_minimal_data(k)
+        _assert_unresolved(data["rho"], ClaimStatus.OPEN)
+        _assert_unresolved(data["kappa"], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data["reflected_kappa"], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data["modular_conductor"], ClaimStatus.OPEN)
+        _assert_unresolved(data["bar_complex"].koszulness, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data["ds_bar_check"].ds_bar_commutation, ClaimStatus.CONDITIONAL)
+
+
+class TestSl4HookPair:
+    def test_exact_pair_data(self):
+        data = sl4_hook_ds_bar_data(k)
+        assert data["source_partition"] == (2, 1, 1)
+        assert data["transpose_partition"] == (3, 1)
+        assert simplify(data["formal_reflected_level"] + k + 8) == 0
+        assert simplify(data["formal_central_sum"] - (188 + 18 * k)) == 0
+        assert data["minimal_check"].w_generators == 9
+        assert data["minimal_check"].w_num_even == 9
+        assert data["subregular_check"].w_generators == 5
+        assert data["subregular_check"].w_num_even == 5
+
+    def test_pair_claims_are_typed(self):
+        data = sl4_hook_ds_bar_data(k)
+        _assert_unresolved(data["source_kappa"], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data["transpose_kappa"], ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data["modular_conductor"], ClaimStatus.OPEN)
+        _assert_unresolved(data["duality"].koszul_duality, ClaimStatus.CONDITIONAL)
+
+
+class TestFormalTransposeAndDuality:
+    @pytest.mark.parametrize(
+        ("partition", "transpose", "reflected_shift"),
+        [
+            ((2, 1), (2, 1), 6),
+            ((2, 1, 1), (3, 1), 8),
+            ((3, 1), (2, 1, 1), 8),
+            ((3, 2), (2, 2, 1), 10),
+        ],
+    )
+    def test_exact_formal_data(self, partition, transpose, reflected_shift):
+        data = koszul_dual_identification(partition, k)
+        assert isinstance(data, KoszulDualIdentification)
+        assert data.dual_partition == transpose
+        assert simplify(data.dual_level + k + reflected_shift) == 0
+        assert data.formal_fixed_level == -sum(partition)
+        assert data.self_dual_level == (
+            -sum(partition) if partition == transpose else None
+        )
+        assert data.hasse_path_to_transpose[0] == partition
+        assert data.hasse_path_to_transpose[-1] == transpose
+
+    @pytest.mark.parametrize(
+        ("partition", "expected", "constant"),
+        [
+            ((2, 1), 50, True),
+            ((2, 1, 1), 188 + 18 * k, False),
+            ((3, 1), 44 - 18 * k, False),
+            ((3, 2), 110 - 18 * k, False),
+        ],
+    )
+    def test_formal_central_sums(self, partition, expected, constant):
+        data = koszul_dual_identification(partition, k)
+        assert simplify(data.formal_central_sum - expected) == 0
+        assert data.formal_central_sum_k_independent is constant
+
+    @pytest.mark.parametrize("partition", [(2, 1), (2, 1, 1), (3, 1), (3, 2)])
+    def test_modular_and_object_claims_are_typed(self, partition):
+        data = koszul_dual_identification(partition, k)
+        _assert_unresolved(data.source_rho, ClaimStatus.OPEN)
+        _assert_unresolved(data.dual_rho, ClaimStatus.OPEN)
+        _assert_unresolved(data.source_kappa, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.dual_kappa, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.modular_conductor, ClaimStatus.OPEN)
+        _assert_unresolved(data.categorical_transport, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.bar_compatibility, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.koszul_duality, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.ksdual_membership, ClaimStatus.CONDITIONAL)
+        assert not hasattr(data, "kappa_sum")
+
+
+class TestAuditSurface:
+    def test_exact_audit_checks_pass(self):
+        audit = verify_ds_bar_commutation()
+        assert isinstance(audit, DSBarAudit)
+        assert audit.exact_check_count == 15
+        assert audit.all_exact_checks_pass
+        assert all(value for _, value in audit.exact_checks)
+
+    def test_theorem_level_audit_claims_remain_unresolved(self):
+        audit = verify_ds_bar_commutation()
+        assert len(audit.claims) == 10
+        assert all(
+            packet.status in (ClaimStatus.OPEN, ClaimStatus.CONDITIONAL)
+            for packet in audit.claims
+        )
+        assert all(packet.value is None for packet in audit.claims)
+
+
+def test_source_excludes_legacy_promotions():
+    source = Path("compute/lib/ds_bar_commutation.py").read_text()
+    fragments = (
+        "is_koszul=" + "True",
+        "kappa_expected = rho * w_c",
+        "simplify(source_kappa + dual_kappa)",
+        "2 - 24 * (k + 1)",
+        '"fermionic"',
+        "h2_dim=4",
+        "h3_dim=1",
+        "kappa_sum_equals_comp",
+        "N=2 superconformal algebra",
+    )
+    assert all(source.find(fragment) == -1 for fragment in fragments)

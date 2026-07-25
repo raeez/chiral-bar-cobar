@@ -236,12 +236,13 @@ class TestTierClassification:
         result = classify_genus_extension(beta_gamma(1))
         assert result.tier == 2
 
-    def test_admissible_sl2_koszul(self):
-        """L_k(sl_2) at admissible level: Koszul is PROVED."""
+    def test_admissible_sl2_conditional_not_promoted(self):
+        """L_k(sl_2) at admissible level is not promoted to proved Koszulness."""
         A = admissible_level_simple_quotient("A", 1, 2, 3)
-        assert A.is_koszul is True
+        assert A.is_koszul is False
+        assert "quotient-bar" in A.notes
         result = classify_genus_extension(A)
-        assert result.tier == 2
+        assert result.tier == 0
 
     def test_admissible_sl3_koszul_open(self):
         """L_k(sl_3) at admissible level: Koszulness is OPEN for rank >= 2."""

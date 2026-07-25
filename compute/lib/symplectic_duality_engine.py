@@ -38,7 +38,7 @@ The symplectic duality interpretation:
 1. The chiral algebra A of a 4D N=2 SCFT has a Verdier/Koszul dual
    algebra A! related to the 3D mirror T^! via the Schur index/chiral
    algebra correspondence.  This is the Verdier branch, not the
-   bar-cobar counit Omega(B(A)) -> A and not the Hochschild bulk.
+   bar-cobar counit Omega(B(A)) -> A and not the Hochschild closed-sector.
 
 2. The (-1)-shifted symplectic structure on the ambient complementarity
    formal moduli problem M_comp(A) (thm:ambient-complementarity-fmp)
@@ -90,10 +90,12 @@ CONVENTION FIREWALL (compute-facing):
            while the completed/pro branch gives A!_inf or the completed
            algebra-side B(A!) object.
            Omega(B(A)) -> A is inversion, not Koszul duality.
-           Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild bulk, not B(A), A^i,
+           Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild closed-sector, not B(A), A^i,
            A!, Omega(B(A)), or D_Ran(B(A)).
     AP29: delta_kappa != kappa_eff (distinct objects)
-    AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras
+    AP33: at k != 0, H_k^! is the curved second-kind
+           Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved
+           polynomial centre; only scalar kappa agrees with kappa(H_{-k})
     AP39: kappa != c/2 for general VOA
     AP48: kappa depends on full algebra, not Virasoro subalgebra
 
@@ -273,7 +275,7 @@ def koszul_object_firewall() -> Dict[str, KoszulObjectConvention]:
             symbol="Z_ch^der(A)",
             kind="chiral derived centre",
             construction="ChirHoch^*(A,A)",
-            branch="Hochschild bulk",
+            branch="Hochschild closed-sector",
             output="bulk E_2/E_3-type Hochschild object, not a bar or Verdier object",
             distinct_from=all_other["Z_ch^der(A)"],
         ),
@@ -315,9 +317,10 @@ def kappa_wn(N: int, c) -> Fraction:
 # ===========================================================================
 
 def kappa_dual_heisenberg(k) -> Fraction:
-    """kappa(H_k^!) = -k.
+    """Scalar kappa(H_k^!) = -k.
 
-    AP33: H_k^! = Sym^ch(V*) != H_{-k} as algebras, but same kappa.
+    AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch, not H_{-k}; only scalar kappa agrees with kappa(H_{-k}).
     """
     return -_frac(k)
 
@@ -608,7 +611,7 @@ def a1_hypertoric_datum() -> GaugeTheoryDatum:
     simplest ALE space.  Its symplectic dual is T*(C) = C^2.
 
     Chiral algebra: Heisenberg H_k at level k = 1.
-    Koszul dual: H_k^! = Sym^ch(V*) with kappa = -1.
+    Koszul dual: the curved second-kind H_k^! branch has scalar kappa = -1.
 
     kappa(H_1) = 1, kappa(H_1^!) = -1, sum = 0.
     """
@@ -923,8 +926,8 @@ def verify_lagrangian_heisenberg(
 
     Class G: the simplest case.  Q_g(H_k) is spanned by kappa * lambda_g.
     The Verdier pairing pairs Q_g(H_k) with Q_g(H_k^!) perfectly.
-    The dual has scalar kappa -k, but H_k^! is Sym^ch(V*) rather than
-    the literal Heisenberg algebra H_{-k}.
+    The dual has scalar kappa -k, but H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch rather than the literal Heisenberg algebra H_{-k}.
     """
     kap = kappa_heisenberg(k)
     kap_dual = kappa_dual_heisenberg(k)

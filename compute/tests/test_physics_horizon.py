@@ -33,6 +33,8 @@ Ground truth references:
     poincare_duality_quantum.tex, free_fields.tex
 """
 
+from pathlib import Path
+
 import pytest
 from sympy import Rational, Symbol, simplify
 
@@ -187,8 +189,11 @@ class TestHeisenbergGenus1:
         data = heisenberg_genus1_bar(2)
         assert data["F1"] == Rational(1, 24)
 
-    def test_kappa_equals_c_over_2(self):
-        """kappa = c/2 for Heisenberg."""
+    def test_free_boson_stress_tensor_kappa_equals_c_over_2(self):
+        """Free-boson stress-tensor scalar lane has kappa = c/2.
+
+        This is not the rank-one Heisenberg level convention kappa(H_k)=k.
+        """
         data = heisenberg_genus1_bar(10)
         assert data["kappa"] == 5
 
@@ -321,7 +326,7 @@ class TestMatterGhostAnomaly:
 
 
 class TestKoszulDualKappaCancellation:
-    """kappa(A) + kappa(A!) = 0 for Koszul dual pairs."""
+    """Kappa complementarity is family-dependent for Koszul dual pairs."""
 
     def test_km_sl2_symbolic(self):
         """KM sl2: kappa + kappa' = 0 for symbolic k."""
@@ -683,7 +688,7 @@ class TestHolographicDictionary:
         assert "boundary-to-bulk" not in d["bar"]
 
     def test_cobar_recovers_boundary_chart(self):
-        """Cobar reconstruction returns the boundary algebra, not a bulk object."""
+        """Cobar reconstruction returns the boundary algebra, not a closed-sector object."""
         d = holographic_koszul_dictionary()
         assert "algebraic reconstruction" in d["cobar"]
         assert "A_boundary" in d["cobar"]
@@ -1160,6 +1165,14 @@ class TestClosedStringCobar:
     def test_verdier_exchange_proved(self):
         data = closed_string_cobar()
         assert "proved" in data["verdier_exchange"]
+
+    def test_closed_string_cobar_docstring_uses_closed_sector_symbol(self):
+        source = (
+            Path(__file__).parents[2] / "compute/lib/physics_horizon.py"
+        ).read_text()
+        assert "Omega(C_closed)" in source
+        assert "closed-sector complex" in source
+        assert "C_bulk" not in source
 
 
 class TestDBraneE1:

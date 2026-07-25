@@ -315,13 +315,18 @@ class TestCentralCharge:
     """Cross-check central charge with canonical engine."""
 
     def test_central_charge_cross_check(self):
-        """c(3,2; k) = (-120k^2-476k-820)/(k+5) via correct per-root-pair KRW.
+        """c(3,2; k) = (-30k^2 - 178k - 260)/(k+5) via per-root-pair KRW.
 
         Path 1: from brst engine.
         Path 2: from canonical krw_central_charge.
-        Path 3: numerical evaluation at k=1.
-
-        # VERIFIED: [DC] brst and krw agree; [NE] c(1) = -236
+        Path 3: independent inline recomputation from the KRW formula with
+                x = h/2 = diag(1, 0, -1, 1/2, -1/2):
+                  |x|^2 = 5/2,
+                  ghost sum over positive grades {1/2 x4, 1 x3, 3/2 x2, 2 x1}
+                    = 4(-1) + 3(2) + 2(11) + 1(26) = 50,
+                  dim(g_{1/2})/2 = 2,
+                  c(k) = 24k/(k+5) - 30k - 52.
+        Path 4: numerical evaluation at k=1: c(1) = 4 - 30 - 52 = -78.
         """
         kk = Symbol('k')
         # Path 1: brst engine.
@@ -329,7 +334,19 @@ class TestCentralCharge:
         # Path 2: canonical.
         c_canonical = krw_central_charge(PARTITION, kk)
         assert simplify(c_brst - c_canonical) == 0
-        # Path 3: numerical at k=1.
+        # Path 3: inline first-principles KRW evaluation.
+        x_diag = [Rational(1), Rational(0), Rational(-1),
+                  Rational(1, 2), Rational(-1, 2)]
+        x_norm = sum(v * v for v in x_diag)
+        grades = [x_diag[i] - x_diag[j]
+                  for i in range(5) for j in range(5)
+                  if x_diag[i] - x_diag[j] > 0]
+        ghost = sum(12 * m**2 - 12 * m + 2 for m in grades)
+        dim_half = sum(1 for m in grades if m == Rational(1, 2))
+        c_inline = (24 * kk / (kk + 5) - 12 * kk * x_norm
+                    - ghost - Rational(dim_half, 2))
+        assert simplify(c_brst - c_inline) == 0
+        # Path 4: numerical at k=1.
         c_at_1 = central_charge(level=1)
-        # (-120 - 476 - 820)/6 = -1416/6 = -236
-        assert c_at_1 == Rational(-236)
+        # (-30 - 178 - 260)/6 = -468/6 = -78
+        assert c_at_1 == Rational(-78)

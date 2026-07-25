@@ -23,7 +23,7 @@ is distinct from the six-primary-projection modular Koszul compute
 package.  The object A^! is the Verdier/continuous-linear dual branch
 of A^i under finite-type/completed hypotheses; Omega(B(A)) = A is
 bar-cobar inversion; Z_ch^der(A) = ChirHoch^*(A,A) is the
-Hochschild/derived-centre bulk object.
+Hochschild/derived-centre closed-sector object.
 """
 
 from __future__ import annotations
@@ -109,7 +109,7 @@ def typed_firewall_roles() -> Dict[str, str]:
             "finite-type/completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild bulk object",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild closed-sector object",
     }
 
 
@@ -1290,7 +1290,7 @@ def koszul_dual_curve(data: ShadowCurveData) -> Optional[ShadowCurveData]:
     not construct A^!.  The object A^! is obtained from A^i by
     Verdier/continuous-linear duality under finite-type/completed
     hypotheses; Omega(B(A)) recovers A by inversion, and Z_ch^der(A) is the
-    Hochschild bulk object.
+    Hochschild closed-sector object.
 
     Scalar branches tabulated here:
       * Virasoro: c -> 26-c, hence kappa + kappa' = 13.

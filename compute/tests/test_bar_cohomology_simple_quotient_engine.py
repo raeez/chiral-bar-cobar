@@ -1,22 +1,22 @@
-"""Tests for bar cohomology of simple quotients L_k(sl_2).
+"""Tests for finite diagnostics of simple quotients L_k(sl_2).
 
-Tests the explicit bar complex construction for simple quotients at
-admissible and integer levels, Koszulness verification, structural
-arguments, bar-Ext vs ordinary-Ext comparison, and the sweep over
+Tests the finite Shapovalov/character diagnostic for simple quotients at
+admissible and integer levels, the legacy universal-cohomology model,
+bar-Ext vs ordinary-Ext comparison, and the finite sweep over tested
 admissible levels.
 
 MATHEMATICAL CONTENT:
 The OPEN PROBLEM: is L_k(sl_2) Koszul (bar cohomology concentrated in
 degree 1) after the null-vector truncation?
 
-The STRUCTURAL ANSWER (for sl_2): YES, L_k(sl_2) is Koszul at ALL
-admissible levels. The key: sl_2 has dim g = 3, so the bar complex
-at the CE level has arities 1, 2, 3. The PBW spectral sequence
-E_2 page has at most 2 nonzero columns, forcing collapse at E_2
-regardless of the null vector structure.
+This test module does not prove that theorem-level statement.  It checks a
+finite diagnostic whose cohomology table uses the universal V_k(sl_2)
+bar-cohomology model.  The manuscript-level proof obligation is still the
+named PBW/Shapovalov detection, finite-window exactness, and strong
+convergence package.
 
-MULTI-PATH VERIFICATION:
-Path 1: Direct bar complex computation with explicit null truncation
+FINITE DIAGNOSTIC PATHS:
+Path 1: Shapovalov null-vector computation in the finite weight window
 Path 2: Structural argument from PBW spectral sequence collapse
 Path 3: Euler characteristic consistency
 Path 4: Cross-check with universal V_k (agree below h_null)
@@ -34,6 +34,7 @@ from fractions import Fraction
 from math import gcd, comb
 
 from compute.lib.bar_cohomology_simple_quotient_engine import (
+    MODEL_SCOPE,
     # Core data structures
     PBWState,
     BarChainData,
@@ -392,54 +393,57 @@ class TestBarChainDims(unittest.TestCase):
 # =========================================================================
 
 class TestKoszulnessStructural(unittest.TestCase):
-    """Test the structural argument for Koszulness of L_k(sl_2)."""
+    """Test the legacy structural diagnostic for L_k(sl_2)."""
 
     def test_k0_trivial_koszul(self):
-        """k=0: L_0 = C, trivially Koszul."""
+        """k=0: model verdict is Koszul because L_0 = C."""
         engine = SimpleQuotientBarEngine(2, 1, max_weight=3)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
+        self.assertTrue(analysis['not_proof_all_admissible'])
+        self.assertIn('PBW/Shapovalov', analysis['missing_proof_obligation'])
 
     def test_k1_koszul(self):
-        """k=1 (h_null=2): Koszul by structural argument."""
+        """k=1 (h_null=2): model-level Koszul verdict."""
         engine = SimpleQuotientBarEngine(3, 1, max_weight=4)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
+        self.assertIn('diagnostic', analysis['verdict_scope'])
 
     def test_k2_koszul(self):
-        """k=2 (h_null=3): Koszul (null at top arity)."""
+        """k=2 (h_null=3): model-level Koszul verdict."""
         engine = SimpleQuotientBarEngine(4, 1, max_weight=5)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
 
     def test_k3_koszul(self):
-        """k=3 (h_null=4 > dim sl_2): Koszul (null above bar range)."""
+        """k=3 (h_null=4 > dim sl_2): diagnostic null-above-range flag."""
         engine = SimpleQuotientBarEngine(5, 1, max_weight=6)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
         self.assertTrue(analysis['null_above_bar_range'])
 
     def test_admissible_koszul_p3q2(self):
-        """k=-1/2 (p=3,q=2): h_null=4 > 3, Koszul."""
+        """k=-1/2 (p=3,q=2): model-level Koszul verdict."""
         engine = SimpleQuotientBarEngine(3, 2, max_weight=6)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
 
     def test_admissible_koszul_p2q3(self):
-        """k=-4/3 (p=2,q=3): h_null=3 = dim sl_2, Koszul."""
+        """k=-4/3 (p=2,q=3): model-level Koszul verdict."""
         engine = SimpleQuotientBarEngine(2, 3, max_weight=5)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
 
     def test_admissible_koszul_p5q2(self):
-        """k=1/2 (p=5,q=2): h_null=8 > 3, Koszul."""
+        """k=1/2 (p=5,q=2): model-level Koszul verdict."""
         engine = SimpleQuotientBarEngine(5, 2, max_weight=6)
         analysis = engine.koszulness_structural_analysis()
         self.assertTrue(analysis['is_koszul'])
         self.assertTrue(analysis['null_above_bar_range'])
 
     def test_all_integrable_koszul(self):
-        """All integrable levels k=0,...,5 are Koszul."""
+        """All tested integrable levels return a model-level Koszul verdict."""
         for k in range(6):
             p = k + 2
             engine = SimpleQuotientBarEngine(p, 1, max_weight=min(k + 3, 6))
@@ -448,7 +452,7 @@ class TestKoszulnessStructural(unittest.TestCase):
                             f"k={k} (p={p}): not Koszul by structural argument")
 
     def test_ss_collapse_dimensional(self):
-        """For sl_2 (dim 3): spectral sequence collapses for dimensional reasons."""
+        """For sl_2 (dim 3): the legacy diagnostic records collapse data."""
         for p, q_val in [(3, 1), (4, 1), (5, 2), (3, 2)]:
             if gcd(p, q_val) != 1:
                 continue
@@ -468,7 +472,7 @@ class TestKoszulnessStructural(unittest.TestCase):
 # =========================================================================
 
 class TestBarCohomologyComputation(unittest.TestCase):
-    """Test full bar cohomology computation for L_k(sl_2)."""
+    """Test the legacy cohomology table for L_k(sl_2)."""
 
     def test_k1_bar_cohomology(self):
         """k=1: H^1(B(L_1)) = 3 (sl_2 generators)."""
@@ -483,19 +487,22 @@ class TestBarCohomologyComputation(unittest.TestCase):
         self.assertEqual(result.total_bar_cohom.get(1, 0), 3)
 
     def test_k1_koszul_computed(self):
-        """k=1: is_koszul flag is True."""
+        """k=1: legacy model is_koszul flag is True."""
         engine = SimpleQuotientBarEngine(3, 1, max_weight=4)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
+        self.assertTrue(result.not_proof_all_admissible)
+        self.assertTrue(result.uses_universal_cohomology_model)
+        self.assertEqual(result.model_scope, MODEL_SCOPE['status'])
 
     def test_k2_koszul_computed(self):
-        """k=2: is_koszul flag is True."""
+        """k=2: legacy model is_koszul flag is True."""
         engine = SimpleQuotientBarEngine(4, 1, max_weight=5)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
 
     def test_k3_koszul_computed(self):
-        """k=3: is_koszul flag is True (h_null = 4 > 3)."""
+        """k=3: legacy model is_koszul flag is True."""
         engine = SimpleQuotientBarEngine(5, 1, max_weight=6)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
@@ -840,7 +847,7 @@ class TestSweep(unittest.TestCase):
     """Test sweep over admissible levels."""
 
     def test_sweep_small(self):
-        """Small sweep: all levels should be Koszul."""
+        """Small sweep: all tested levels return model-level Koszul verdicts."""
         results = sweep_admissible_levels(max_p=5, max_q=2, max_weight=4)
         for r in results:
             self.assertTrue(r['is_koszul_structural'],
@@ -862,7 +869,7 @@ class TestSweep(unittest.TestCase):
                              f"k={r['k']}: H^2 = {r['bar_H2']} != 0")
 
     def test_sweep_structural_agrees_computed(self):
-        """Structural and computed Koszulness agree."""
+        """Structural diagnostic and legacy cohomology model agree."""
         results = sweep_admissible_levels(max_p=5, max_q=2, max_weight=4)
         for r in results:
             self.assertEqual(r['is_koszul_computed'],
@@ -892,7 +899,7 @@ class TestK1Deep(unittest.TestCase):
         self.assertGreater(q2, 0)
 
     def test_k1_is_koszul(self):
-        """k=1: L_1(sl_2) is Koszul."""
+        """k=1: legacy model returns a Koszul verdict."""
         engine = SimpleQuotientBarEngine(3, 1, max_weight=6)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
@@ -931,7 +938,7 @@ class TestK2Deep(unittest.TestCase):
         self.assertLess(q3, 22)
 
     def test_k2_koszul(self):
-        """k=2: L_2(sl_2) is Koszul."""
+        """k=2: legacy model returns a Koszul verdict."""
         engine = SimpleQuotientBarEngine(4, 1, max_weight=6)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
@@ -968,7 +975,7 @@ class TestKHalfAdmissible(unittest.TestCase):
         self.assertTrue(analysis['null_above_bar_range'])
 
     def test_k_half_koszul(self):
-        """k=1/2: L_{1/2}(sl_2) is Koszul."""
+        """k=1/2: legacy model returns a Koszul verdict."""
         engine = SimpleQuotientBarEngine(5, 2, max_weight=6)
         result = engine.compute_bar_cohomology()
         self.assertTrue(result.is_koszul)
@@ -1055,28 +1062,23 @@ class TestBarExtDimConsistency(unittest.TestCase):
 
 
 # =========================================================================
-# 22. The key theorem: sl_2 Koszulness is unconditional
+# 22. Scope of the simple-quotient sl_2 diagnostic
 # =========================================================================
 
-class TestKoszulnessUnconditional(unittest.TestCase):
-    """The MAIN RESULT: L_k(sl_2) is Koszul at ALL admissible levels.
-
-    This is the structural theorem that resolves the open problem
-    for sl_2. The proof is by the dimensional collapse of the PBW
-    spectral sequence: for dim(sl_2) = 3, the E_2 page has at most
-    2 nonzero columns, so higher differentials vanish.
-    """
+class TestKoszulnessDiagnosticScope(unittest.TestCase):
+    """The diagnostic must not be read as proof of all admissible levels."""
 
     def test_all_integrable_koszul(self):
-        """k = 0, 1, 2, 3, 4, 5: all Koszul."""
+        """k = 0, 1, 2, 3, 4, 5: model-level Koszul verdicts."""
         for k in range(6):
             p = k + 2
             engine = SimpleQuotientBarEngine(p, 1, max_weight=min(k + 3, 6))
             analysis = engine.koszulness_structural_analysis()
             self.assertTrue(analysis['is_koszul'], f"k={k}: not Koszul")
+            self.assertTrue(analysis['not_proof_all_admissible'])
 
     def test_all_tested_admissible_koszul(self):
-        """All tested admissible levels are Koszul."""
+        """All tested admissible levels return model-level Koszul verdicts."""
         test_cases = [(3, 2), (5, 2), (7, 2), (2, 3), (4, 3), (5, 3), (3, 4), (7, 4)]
         for p, q_val in test_cases:
             if gcd(p, q_val) != 1:
@@ -1086,15 +1088,16 @@ class TestKoszulnessUnconditional(unittest.TestCase):
             analysis = engine.koszulness_structural_analysis()
             self.assertTrue(analysis['is_koszul'],
                             f"k={Fraction(p, q_val) - 2}: not Koszul")
+            self.assertIn('not proof of all admissible', analysis['verdict_scope'])
 
     def test_structural_mechanism_for_large_null(self):
-        """For h_null > 3: the mechanism is 'null above bar range'."""
+        """For h_null > 3: diagnostic records the null-above-range mechanism."""
         engine = SimpleQuotientBarEngine(5, 2, max_weight=5)  # h_null = 8
         analysis = engine.koszulness_structural_analysis()
         self.assertIn('above', analysis['mechanism'].lower())
 
     def test_structural_mechanism_for_h_null_3(self):
-        """For h_null = 3: the mechanism involves top arity."""
+        """For h_null = 3: diagnostic records the top-arity mechanism."""
         engine = SimpleQuotientBarEngine(4, 1, max_weight=5)  # h_null = 3
         analysis = engine.koszulness_structural_analysis()
         self.assertIn('top arity', analysis['mechanism'].lower())

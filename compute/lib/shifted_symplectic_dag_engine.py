@@ -250,9 +250,11 @@ CONVENTIONS (typed Koszul/Ran object firewall):
     D_Ran(B(A)): Verdier-dual factorization algebra; only on that
          finite-type/completed branch does it compare with B(A^!).
     Omega(B(A)) -> A: bar-cobar inversion, not construction of A^!.
-    Z_ch^der(A): Hochschild derived-centre bulk slot, not bar/cobar.
+    Z_ch^der(A): Hochschild derived-centre closed-sector slot, not bar/cobar.
     AP29: delta_kappa != kappa_eff
-    AP33: H_k^! = Sym^ch(V*) != H_{-k}
+    AP33: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+    centre; only scalar kappa agrees with kappa(H_{-k})
     AP39: kappa != c/2 for general VOA
     AP45: desuspension LOWERS degree: |s^{-1}v| = |v| - 1
     AP48: kappa depends on full algebra
@@ -356,12 +358,12 @@ FORBIDDEN_KOSZUL_COLLAPSES: Tuple[str, ...] = (
 
 
 def koszul_object_conventions() -> Dict[str, Any]:
-    """Typed firewall for the bar, cobar, Verdier, and bulk objects.
+    """Typed firewall for the bar, cobar, Verdier, and closed-sector objects.
 
     The engine computes scalar invariants attached to A and to the
     post-Verdier A^! branch.  It must not identify the raw bar coalgebra,
     its cohomology coalgebra, the Verdier-dual algebra, the cobar inversion
-    object, or the Hochschild bulk slot.
+    object, or the Hochschild closed-sector slot.
     """
     objects = {
         "A": {
@@ -392,7 +394,7 @@ def koszul_object_conventions() -> Dict[str, Any]:
             ),
         },
         "Z_ch^der(A)": {
-            "kind": "derived-centre bulk slot",
+            "kind": "derived-centre closed-sector slot",
             "construction": "ChirHoch^*(A,A), separate from bar/cobar data",
         },
     }
@@ -413,7 +415,7 @@ def koszul_object_conventions() -> Dict[str, Any]:
         ),
         "bar_cobar_inversion": (
             "Omega(B(A)) -> A is the bar-cobar counit/inversion map; it "
-            "does not construct A^! and it is not the derived-centre bulk."
+            "does not construct A^! and it is not the derived-centre closed-sector."
         ),
         "forbidden_identifications": FORBIDDEN_KOSZUL_COLLAPSES,
         "forbidden_unqualified_shorthand": (

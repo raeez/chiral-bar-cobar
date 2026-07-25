@@ -1,234 +1,289 @@
-r"""Tests for theorem_c_b_family_mukai_engine.
-
-Verifies the B-row of the Vol I Theorem-C five-archetype ceiling
-{0, 8, 13, 250/3, 98/3} at the Mukai-enhanced K3 Heisenberg
-$\mathcal{H}_{\mathrm{Muk}}(K3)$:
-
-    K^{kappa_ch}(H_Muk(K3)) = 2 * c_+(Mukai(K3)) = 8.
-
-Three independent verification paths (Bruinier / Mukai / Lusztig),
-all converging on the integer 8.
-
-References:
-    prop:archetype-complementarity-bridge (landscape_census.tex)
-    rem:latfnd-2 (lattice_foundations.tex, three faces of 8)
-    Bruinier 2002 LNM 1780 Prop 5.1
-    Mukai 1987 Nagoya 81
-    Lusztig 1990 §5.7
-"""
-from __future__ import annotations
+r"""Tests for the K3 Mukai-lattice and B-row claim firewall."""
 
 from fractions import Fraction
+from pathlib import Path
 
-import pytest
+from sympy import Matrix
 
+from compute.lib.bp_koszul_conductor_engine import (
+    KAPPA_COMPLEMENTARITY_EXACT,
+    K_BP_EXACT,
+)
 from compute.lib.theorem_c_b_family_mukai_engine import (
-    B_FAMILY_SCOPE,
+    B_FAMILY_PACKAGE_NAME,
+    B_FAMILY_HYPOTHESES,
+    BRUINIER_LEMMA_5_1,
+    LUSZTIG_ROOT_ORDER_SCOPE,
     b_family_scope,
-    b_row_membership,
-    bruinier_equals_mukai,
-    bruinier_heegner_h1_order,
-    five_archetype_ceiling,
-    lusztig_identity_verification,
-    lusztig_root_of_unity_length,
+    bp_former_kappa_proposal,
+    bp_scalar_scope,
+    candidate_bridge_report,
+    e8_cartan_matrix,
+    hyperbolic_plane,
+    k3_betti_numbers,
+    k3_euler_characteristic,
+    k3_h2_gram_matrix,
+    k3_h2_signature_from_betti,
+    k3_signature_from_hirzebruch,
     mukai_c_minus,
     mukai_c_plus,
-    mukai_heisenberg_anomaly_ratio,
-    mukai_heisenberg_bridge_verification,
-    mukai_heisenberg_koszul_conductor,
-    mukai_heisenberg_self_dual_kappa,
-    mukai_heisenberg_trinity_conductor,
+    mukai_gram_matrix,
     mukai_rank,
+    mukai_scalar_candidates,
     mukai_signature,
+    mukai_signature_from_blocks,
+    mukai_signature_from_hirzebruch,
+    source_claim_audit,
+    theorem_c_candidate_values,
+    theorem_c_certified_values,
+    theorem_c_status_ledger,
+    verify_engine,
+    verify_mukai_lattice,
 )
 
 
-class TestMukaiLattice:
-    """Mukai lattice II_{4,20} primary data."""
+ENGINE = Path("compute/lib/theorem_c_b_family_mukai_engine.py")
 
-    def test_signature(self):
-        """Signature (4, 20)."""
+
+def fkr_standard_central_charge(level: int | Fraction) -> Fraction:
+    """FKR21, Eq. (2.2), evaluated independently of the engine."""
+
+    k = Fraction(level)
+    return -((2 * k + 3) * (3 * k + 1)) / (k + 3)
+
+
+class TestIntegralLattices:
+    def test_hyperbolic_plane(self):
+        u = hyperbolic_plane()
+        assert u == Matrix([[0, 1], [1, 0]])
+        assert u.det() == -1
+        assert u.rank() == 2
+
+    def test_e8_cartan_is_even_unimodular(self):
+        e8 = e8_cartan_matrix()
+        assert e8 == e8.T
+        assert e8.det() == 1
+        assert all(e8[index, index] == 2 for index in range(8))
+
+    def test_e8_positive_by_sylvester(self):
+        e8 = e8_cartan_matrix()
+        leading_minors = [e8[:size, :size].det() for size in range(1, 9)]
+        assert leading_minors == [2, 3, 4, 5, 6, 7, 8, 1]
+        assert all(value > 0 for value in leading_minors)
+
+    def test_k3_h2_gram(self):
+        gram = k3_h2_gram_matrix()
+        assert gram.shape == (22, 22)
+        assert gram.rank() == 22
+        assert abs(gram.det()) == 1
+        assert gram == gram.T
+
+    def test_mukai_gram(self):
+        gram = mukai_gram_matrix()
+        assert gram.shape == (24, 24)
+        assert gram.rank() == 24
+        assert gram.det() == 1
+        assert gram == gram.T
+        assert all(gram[index, index] % 2 == 0 for index in range(24))
+
+
+class TestThreeSignaturePaths:
+    def test_block_decomposition(self):
+        assert mukai_signature_from_blocks() == (4, 20)
+
+    def test_hirzebruch_signature(self):
+        assert k3_signature_from_hirzebruch() == -16
+        assert k3_h2_signature_from_betti() == (3, 19)
+        assert mukai_signature_from_hirzebruch() == (4, 20)
+
+    def test_betti_and_euler_path(self):
+        assert k3_betti_numbers() == (1, 0, 22, 0, 1)
+        assert k3_euler_characteristic() == 24
+
+    def test_paths_agree(self):
+        assert mukai_signature_from_blocks() == mukai_signature_from_hirzebruch()
         assert mukai_signature() == (4, 20)
 
-    def test_rank_is_24(self):
-        """rank II_{4,20} = 24 = 1 + 22 + 1 (Mukai 1987)."""
+    def test_rank_and_indices(self):
         assert mukai_rank() == 24
-
-    def test_c_plus_is_4(self):
-        """c_+ = 4, the positive-definite index."""
         assert mukai_c_plus() == 4
-
-    def test_c_minus_is_20(self):
-        """c_- = 20."""
         assert mukai_c_minus() == 20
 
-    def test_signature_sum_is_rank(self):
-        """c_+ + c_- = rank."""
-        assert mukai_c_plus() + mukai_c_minus() == mukai_rank()
+    def test_full_lattice_certificate(self):
+        certificate = verify_mukai_lattice()
+        assert certificate["status"] == "proved"
+        assert certificate["signature_by_blocks"] == (4, 20)
+        assert certificate["signature_by_hirzebruch"] == (4, 20)
+        assert certificate["gram_rank"] == 24
+        assert certificate["gram_determinant"] == 1
+        assert certificate["gram_even"] is True
+        assert certificate["e8_positive_by_sylvester"] is True
 
 
-class TestMukaiHeisenbergConductor:
-    """The B-row Koszul conductor K^{kappa_ch} = 2 c_+ = 8."""
+class TestScalarCandidates:
+    def test_arithmetic_values(self):
+        candidates = mukai_scalar_candidates()
+        assert candidates["positive_index"].value == Fraction(4)
+        assert candidates["pair_sum_candidate"].value == Fraction(8)
+        assert candidates["rank_double"].value == Fraction(48)
+        assert candidates["signature_ratio"].value == Fraction(1, 6)
 
-    def test_K_kappa_is_8(self):
-        """K^{kappa_ch}(H_Muk(K3)) = 8 (Mukai doubling)."""
-        assert mukai_heisenberg_koszul_conductor() == 8
+    def test_only_positive_index_is_proved_invariant(self):
+        candidates = mukai_scalar_candidates()
+        assert candidates["positive_index"].status == "proved-lattice-invariant"
+        assert candidates["pair_sum_candidate"].status == "computed-candidate"
+        assert "H_B" in candidates["pair_sum_candidate"].theorem_required
+        assert "H_scalar" in candidates["pair_sum_candidate"].theorem_required
+        assert "H_CFT" in candidates["rank_double"].theorem_required
+        assert "H_anom" in candidates["signature_ratio"].theorem_required
 
-    def test_K_kappa_equals_2_c_plus(self):
-        """K^{kappa_ch} = 2 * c_+(II_{4,20})."""
-        assert mukai_heisenberg_koszul_conductor() == 2 * mukai_c_plus()
-
-    def test_K_trinity_is_48(self):
-        """K_Trinity = c + c^! = 48 on the Mukai-self-dual convention."""
-        assert mukai_heisenberg_trinity_conductor() == 48
-
-    def test_K_trinity_equals_2_rank(self):
-        """K_Trinity = 2 * rank(II_{4,20}) = 48."""
-        assert mukai_heisenberg_trinity_conductor() == 2 * mukai_rank()
-
-    def test_anomaly_ratio_is_one_sixth(self):
-        """varrho(H_Muk) = c_+/rank = 1/6 (distinct from G-archetype varrho = 1)."""
-        assert mukai_heisenberg_anomaly_ratio() == Fraction(1, 6)
-
-    def test_bridge_verification(self):
-        """Anomaly-ratio bridge K^kappa = varrho * K_Trinity."""
-        result = mukai_heisenberg_bridge_verification()
-        assert result["K_kappa"] == Fraction(8)
-        assert result["K_trinity"] == Fraction(48)
-        assert result["varrho"] == Fraction(1, 6)
-        assert result["bridge_prediction"] == Fraction(8)
-        assert result["bridge_equals_K_kappa"] is True
-
-    def test_self_dual_kappa_is_4(self):
-        """Self-dual kappa^* = K^kappa/2 = 4 = c_+(Mukai(K3))."""
-        assert mukai_heisenberg_self_dual_kappa() == Fraction(4)
-        assert mukai_heisenberg_self_dual_kappa() == Fraction(mukai_c_plus())
+    def test_bridge_is_arithmetic_tautology(self):
+        report = candidate_bridge_report()
+        assert report["left_side"] == Fraction(8)
+        assert report["right_side"] == Fraction(8)
+        assert report["arithmetic_identity"] is True
+        assert report["epistemic_status"] == "tautological-lattice-arithmetic"
+        assert report["chiral_conductor_status"] == "conjectured"
+        assert report["hypothesis_package_name"] == B_FAMILY_PACKAGE_NAME
+        assert report["missing_hypotheses"] == B_FAMILY_HYPOTHESES
 
 
-class TestBruinierHeegnerReciprocity:
-    """Bruinier 2002 Prop 5.1: Humbert-H_1 torsion order = 8."""
+class TestPrimarySourceAudit:
+    def test_bruinier_actual_lemma(self):
+        assert BRUINIER_LEMMA_5_1["source"].endswith("Lemma 5.1")
+        assert "cyclotomic" in BRUINIER_LEMMA_5_1["actual_statement"]
+        assert "lcm(N,8)" in BRUINIER_LEMMA_5_1["actual_statement"]
+        assert BRUINIER_LEMMA_5_1["humbert_torsion_order_8"] is False
+        assert BRUINIER_LEMMA_5_1["supports_mukai_conductor"] is False
 
-    def test_h1_order_is_8(self):
-        """Torsion order of c_1(L^{Delta_5} | H_1) = 8."""
-        assert bruinier_heegner_h1_order() == 8
+    def test_lusztig_scope(self):
+        assert "chosen" in LUSZTIG_ROOT_ORDER_SCOPE["actual_scope"]
+        assert LUSZTIG_ROOT_ORDER_SCOPE["selects_order_8_from_mukai_lattice"] is False
+        assert LUSZTIG_ROOT_ORDER_SCOPE["supports_mukai_conductor"] is False
 
-    def test_bruinier_equals_mukai(self):
-        """Bruinier Heegner order = Mukai-doubling conductor."""
-        assert bruinier_equals_mukai() is True
+    def test_three_faces_claim_is_retracted(self):
+        audit = source_claim_audit()
+        claim = audit["former_three_faces_claim"]
+        assert claim["status"] == "retracted"
+        assert "neither" in claim["reason"]
 
-
-class TestLusztigRootOfUnity:
-    """Lusztig 1990 §5.7: root-of-unity length ell = 8."""
-
-    def test_length_is_8(self):
-        """ell = 8 at zeta^8 = 1."""
-        assert lusztig_root_of_unity_length() == 8
-
-    def test_universal_identity(self):
-        """hbar^2 * K^{kappa_ch} = -1 at ell = 8, hbar^2 = -1/8."""
-        result = lusztig_identity_verification()
-        assert result["hbar_squared"] == Fraction(-1, 8)
-        assert result["K_kappa"] == Fraction(8)
-        assert result["product"] == Fraction(-1)
-        assert result["identity_holds"] is True
+    def test_hbar_equality_is_normalization_only(self):
+        audit = source_claim_audit()
+        assert audit["hbar_identity"]["status"] == "normalization-tautology"
+        assert audit["hbar_identity"]["chiral_status"] == "conjectured-under-H_B"
+        assert "H_B supplies" in audit["hbar_identity"]["reason"]
 
 
-class TestThreeFacesCoincidence:
-    """Three faces of 8 (Bruinier / Mukai / Lusztig) all coincide."""
+class TestBFamilyProofObligations:
+    def test_scope_is_candidate(self):
+        scope = b_family_scope()
+        assert scope["scope"] == "K3 Mukai-lattice candidate"
+        assert scope["proved_input"] == (
+            "H~(K3,Z) has rank 24 and signature (4,20)"
+        )
+        assert scope["candidate_value"] == Fraction(8)
+        assert scope["candidate_status"] == "conjectured-as-chiral-conductor-under-H_B"
+        assert scope["hypothesis_package_name"] == B_FAMILY_PACKAGE_NAME == "H_B"
 
-    def test_three_faces_all_equal_8(self):
-        """Bruinier = Mukai = Lusztig = 8."""
-        assert bruinier_heegner_h1_order() == 8
-        assert mukai_heisenberg_koszul_conductor() == 8
-        assert lusztig_root_of_unity_length() == 8
+    def test_five_named_hypotheses(self):
+        scope = b_family_scope()
+        hypotheses = scope["hypothesis_package"]
+        assert hypotheses == B_FAMILY_HYPOTHESES
+        assert len(hypotheses) == 5
+        assert hypotheses[0].startswith("H_chart")
+        assert hypotheses[1].startswith("H_KD")
+        assert hypotheses[2].startswith("H_scalar")
+        assert hypotheses[3].startswith("H_mod")
+        assert hypotheses[4].startswith("H_quantum")
 
 
-class TestFiveArchetypeCeiling:
-    """Vol I Theorem C ceiling {0, 8, 13, 250/3, 98/3}."""
+class TestTheoremCCandidateSurface:
+    def test_bp_open_slot_stays_outside_numerical_ledger(self):
+        values = set(theorem_c_candidate_values())
+        assert Fraction(25, 3) not in values
+        assert Fraction(98, 3) not in values
 
-    def test_ceiling_has_five_values(self):
-        """The ceiling has exactly five distinct values."""
-        ceiling = five_archetype_ceiling()
-        assert len(set(ceiling)) == 5
+        bp_slot = bp_former_kappa_proposal()
+        assert bp_slot["value"] == Fraction(25, 3)
+        assert bp_slot["status"] == "former-conditional-proposal"
+        assert bp_slot["epistemic_status"] == "retracted-derivation"
+        assert "odd-parity" in bp_slot["invalidated_derivation"]
+        assert bp_slot["active_status"] == "open-genus-one-computation"
+        assert "genus-one curvature" in bp_slot["resolution_obligation"]
 
-    def test_ceiling_contents(self):
-        """Ceiling = {0, 8, 13, 98/3, 250/3}."""
-        expected = {
+    def test_bp_source_packet_separates_exact_and_open_lanes(self):
+        packet = bp_scalar_scope()
+
+        # Independent FKR Eq. (2.2) samples and the k -> -k-6 symmetry.
+        for level in (0, 1, -1, 2, -4):
+            companion = -Fraction(level) - 6
+            assert (
+                fkr_standard_central_charge(level)
+                + fkr_standard_central_charge(companion)
+                == Fraction(50)
+            )
+
+        assert K_BP_EXACT == Fraction(50)
+        assert packet["central_charge_conductor"] == Fraction(50)
+        assert packet["central_charge_status"] == "proved-primary-source"
+        assert packet["strong_generator_parities"] == (
+            ("J", 0),
+            ("G+", 0),
+            ("G-", 0),
+            ("T", 0),
+        )
+        assert packet["reciprocal_weight_diagnostic"] == (
+            Fraction(1) + Fraction(2, 3) + Fraction(2, 3) + Fraction(1, 2)
+        ) == Fraction(17, 6)
+        assert packet["kappa_value"] is None
+        assert KAPPA_COMPLEMENTARITY_EXACT is None
+        assert packet["kappa_complementarity_value"] is None
+        assert packet["kappa_status"] == "open-genus-one-computation"
+
+    def test_candidate_set(self):
+        assert set(theorem_c_candidate_values()) == {
             Fraction(0),
             Fraction(8),
             Fraction(13),
-            Fraction(98, 3),
             Fraction(250, 3),
         }
-        assert set(five_archetype_ceiling()) == expected
 
-    def test_b_row_in_ceiling(self):
-        """K^{kappa_ch}(H_Muk) = 8 is a member of the ceiling."""
-        assert b_row_membership() is True
+    def test_certified_set_excludes_both_open_lanes(self):
+        certified = set(theorem_c_certified_values())
+        assert certified == {Fraction(0), Fraction(13), Fraction(250, 3)}
+        assert Fraction(8) not in certified
+        assert Fraction(25, 3) not in certified
 
-
-class TestBFamilyScopeQualifier:
-    """Scope declaration for the B-family."""
-
-    def test_scope_string(self):
-        """Scope is 'Lorentzian-lattice-parametric'."""
-        scope = b_family_scope()
-        assert scope["scope"] == "Lorentzian-lattice-parametric"
-
-    def test_primary_sources(self):
-        """Primary sources: Bruinier, Mukai, Lusztig, Borcherds, Gritsenko-Nikulin."""
-        scope = b_family_scope()
-        sources_text = " | ".join(scope["primary_sources"])
-        assert "Bruinier 2002" in sources_text
-        assert "Mukai 1987" in sources_text
-        assert "Lusztig 1990" in sources_text
-        assert "Borcherds 1992" in sources_text
-        assert "Gritsenko-Nikulin 1998" in sources_text
-
-    def test_universal_identity(self):
-        """Universal identity: hbar^2 * K^{kappa_ch} = -1."""
-        scope = b_family_scope()
-        assert "hbar^2" in scope["universal_identity"]
-        assert "K^{kappa_ch}" in scope["universal_identity"]
-
-    def test_scope_caveat_is_present(self):
-        """Scope has a caveat about Lorentzian vs positive-definite lattices."""
-        scope = b_family_scope()
-        assert "Lorentzian" in scope["caveat"] or "indefinite" in scope["caveat"]
-
-    def test_distinct_from_G_archetype(self):
-        """varrho differs between G (=1) and B (=1/6)."""
-        scope = b_family_scope()
-        assert "varrho" in scope["distinct_from_G_archetype"]
+    def test_every_value_has_status(self):
+        ledger = theorem_c_status_ledger()
+        assert set(ledger) == set(theorem_c_candidate_values())
+        assert "conjectured B-row under H_B" in ledger[Fraction(8)]
+        assert Fraction(25, 3) not in ledger
+        assert "theorem-scoped" in ledger[Fraction(13)]
 
 
-class TestCeilingIntegrationWithStandardFamilies:
-    """Integration checks against the standard families from the complementarity engine."""
+class TestEngine:
+    def test_master_verification(self):
+        report = verify_engine()
+        assert report["status"] == "verified"
+        assert report["source_audit"]["former_three_faces_claim"]["status"] == "retracted"
+        assert (
+            report["b_family"]["candidate_status"]
+            == "conjectured-as-chiral-conductor-under-H_B"
+        )
+        assert report["theorem_c_certified"] == (
+            Fraction(0),
+            Fraction(13),
+            Fraction(250, 3),
+        )
+        assert report["bp_open_slot"]["active_status"] == "open-genus-one-computation"
+        assert report["bp_scope"]["central_charge_conductor"] == Fraction(50)
+        assert report["bp_scope"]["kappa_complementarity_value"] is None
 
-    def test_K3_Mukai_K_kappa_equals_B_row_value(self):
-        """The B-row value 8 coincides with Mukai-doubling 2 c_+."""
-        from compute.lib.theorem_c_b_family_mukai_engine import mukai_heisenberg_koszul_conductor
-        assert mukai_heisenberg_koszul_conductor() == 8
-
-    def test_varrho_times_K_reproduces_each_ceiling_value(self):
-        """The bridge K^kappa = varrho * K_Trinity reproduces each ceiling entry."""
-        # G: varrho = 1, K = 0  -> 0
-        # L: varrho = 0, K = 2 dim g -> 0
-        # C: varrho = 1/2, K = 0 -> 0
-        # M (Vir): varrho = 1/2, K = 26 -> 13
-        # M-ext (W_3): varrho = 5/6, K = 100 -> 250/3
-        # M-ext (BP): varrho = 1/6, K = 196 -> 98/3
-        # B (Mukai): varrho = 1/6, K = 48  -> 8
-
-        cases = [
-            ("G",  Fraction(1),      Fraction(0),    Fraction(0)),
-            ("L",  Fraction(0),      Fraction(100),  Fraction(0)),  # any positive K collapses by rho=0
-            ("C",  Fraction(1, 2),   Fraction(0),    Fraction(0)),
-            ("M",  Fraction(1, 2),   Fraction(26),   Fraction(13)),
-            ("W3", Fraction(5, 6),   Fraction(100),  Fraction(250, 3)),
-            ("BP", Fraction(1, 6),   Fraction(196),  Fraction(98, 3)),
-            ("B",  Fraction(1, 6),   Fraction(48),   Fraction(8)),
-        ]
-
-        for name, rho, K, expected in cases:
-            assert rho * K == expected, f"Bridge failed on {name}: {rho}*{K} != {expected}"
+    def test_fabricated_apis_are_absent(self):
+        source = ENGINE.read_text()
+        assert "bruinier_heegner_h1_order" not in source
+        assert "lusztig_root_of_unity_length" not in source
+        assert "mukai_heisenberg_koszul_conductor" not in source
+        assert "Humbert-H_1 reciprocity" not in source
+        assert "universal B-family identity" not in source

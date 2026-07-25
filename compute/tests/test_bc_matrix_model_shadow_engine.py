@@ -129,7 +129,7 @@ class TestFirewallsAndKernelNormalizations:
         firewall = bar_koszul_object_firewall()
         assert firewall["Omega(B(A))"] == "bar-cobar inversion, recovering A"
         assert "Verdier/continuous-linear dual branch" in firewall["A^!"]
-        assert firewall["Z_ch^der(A)"] == "ChirHoch^*(A,A), the Hochschild/bulk object"
+        assert firewall["Z_ch^der(A)"] == "ChirHoch^*(A,A), the Hochschild/closed-sector object"
         assert firewall["A^!"] != firewall["Z_ch^der(A)"]
 
     def test_matrix_model_scope_firewall(self):

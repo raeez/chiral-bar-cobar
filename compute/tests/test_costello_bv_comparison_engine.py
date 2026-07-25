@@ -982,13 +982,13 @@ class TestCostelloLiHolomorphicTwist:
         assert result["propagator_match"] is True
         assert "d log" in result["propagator_bar"]
 
-    def test_line_branch_is_koszul_dual_and_bulk_is_derived_center(self):
-        """Line branch is A^!_infty; bulk is the derived-centre sector."""
+    def test_line_branch_is_koszul_dual_and_closed_sector_is_derived_center(self):
+        """Line branch is A^!_infty; closed sector is the derived-centre sector."""
         result = costello_li_holomorphic_twist()
         assert result["koszul_dual_match"] is True
         assert "Koszul" in result["line_algebra"]
         assert "derived-centre" in result["bulk_algebra"]
-        assert "bulk is derived centre" in result["bulk_line_firewall"]
+        assert "closed sector is derived centre" in result["bulk_line_firewall"]
 
 
 # =========================================================================
@@ -1150,14 +1150,14 @@ class TestElliottSafronovClassification:
 
 
 # =========================================================================
-# Section 25: Derived Center = Bulk
+# Section 25: Derived Center OCA Comparison
 # =========================================================================
 
 class TestDerivedCenterVsBulk:
-    """Derived center Z^der_ch(A) = CG bulk observables."""
+    """Derived center Z^der_ch(A) = CG closed-sector observables."""
 
     def test_identification_holds(self):
-        """The identification of derived center with CG bulk holds."""
+        """The OCA comparison with CG closed-sector observables holds."""
         result = derived_center_vs_cg_bulk()
         assert result["identification"] is True
 
@@ -1172,14 +1172,14 @@ class TestDerivedCenterVsBulk:
         assert result["bar_is_not_bulk"] is True
 
     def test_bar_classifies_couplings(self):
-        """Bar classifies twisting morphisms, not bulk operators."""
+        """Bar classifies twisting morphisms, not closed-sector operators."""
         result = derived_center_vs_cg_bulk()
         assert "twisting morphisms" in result["bar_classifies"]
 
-    def test_center_classifies_bulk(self):
-        """Derived center classifies bulk operators."""
+    def test_center_classifies_closed_sector(self):
+        """Derived center classifies closed-sector operators."""
         result = derived_center_vs_cg_bulk()
-        assert "bulk" in result["center_classifies"]
+        assert "closed-sector operators" in result["center_classifies"]
 
 
 # =========================================================================

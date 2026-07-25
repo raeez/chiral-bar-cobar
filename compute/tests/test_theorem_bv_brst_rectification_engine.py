@@ -191,7 +191,7 @@ class TestObjectAndKernelGuards:
     """Prevent object conflation and level-normalization drift."""
 
     def test_bar_is_not_bulk(self):
-        """B(A) classifies twisting morphisms, not bulk operators."""
+        """B(A) classifies twisting morphisms, not closed-sector operators."""
         roles = object_role_table()
         assert 'twisting morphisms' in roles['B(A)'].role
         assert 'Z_der_ch(A)' in roles['B(A)'].not_equal_to

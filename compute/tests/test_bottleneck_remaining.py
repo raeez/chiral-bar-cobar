@@ -55,11 +55,12 @@ class TestE1ChiralKoszulDuality:
 
 
 class TestBarComputesKoszulDualComplete:
-    """thm:bar-computes-koszul-dual-complete (9 deps): H*(B(A)) = A^i.
-    The finite/completed dual branch identifies dimensions with A^!."""
+    """thm:bar-computes-koszul-dual-complete: under H_CL and H_res,
+    the roof B(A) <- A^i -> C_A^res identifies the coalgebra models;
+    H_D^bar and the chosen pair map supply the algebra partner."""
 
     def test_heisenberg_bar_gives_partition_dims(self):
-        """H^n(B(H)) = p(n-2): bar cohomology gives A^i/A^! dims."""
+        """H^n(B(H)) = p(n-2) on the computed bar-cohomology lane."""
         from compute.lib.bar_complex import bar_dim_heisenberg, partition_number
         for n in range(2, 8):
             assert bar_dim_heisenberg(n) == partition_number(n - 2)
@@ -100,8 +101,8 @@ class TestKMChiralKoszul:
 
 
 class TestBarCohomologyKoszulDual:
-    """cor:bar-cohomology-koszul-dual (7 deps): corollary that
-    bar cohomology H*(B(A)) is the Koszul dual coalgebra."""
+    """cor:bar-cohomology-koszul-dual: PBW collapse computes H*(B(A));
+    H(q_A) identifies it with presentation cohomology under H_CL."""
 
     def test_bar_dim_consistency_across_families(self):
         """Bar dimensions are consistent: Heis, sl2, Vir all have positive dims."""
@@ -883,7 +884,7 @@ class TestBarSemiInfiniteKM:
 # =====================================================================
 
 class TestHeisenbergKoszulDualEarly:
-    """thm:heisenberg-koszul-dual-early (10 deps): H^! = Sym^ch(V*)."""
+    """thm:heisenberg-koszul-dual-early: H^! is the curved Sym^ch(V*[1]) branch."""
 
     def test_heisenberg_not_self_dual(self):
         """Heisenberg is NOT self-dual (common error)."""
@@ -895,7 +896,7 @@ class TestHeisenbergKoszulDualEarly:
         """Koszul dual of Heisenberg is commutative chiral algebra."""
         from compute.lib.koszul_pairs import KOSZUL_PAIRS
         pair = KOSZUL_PAIRS['Heisenberg_Symch']
-        assert pair['A_dual'] == 'Sym^ch(V*)'
+        assert pair['A_dual'] == 'curved Sym^ch(V*[1])'
 
 
 class TestHeisenbergHigherGenus:

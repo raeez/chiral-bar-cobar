@@ -53,6 +53,7 @@ import cmath
 import math
 import sys
 import os
+from pathlib import Path
 from fractions import Fraction
 
 import numpy as np
@@ -115,6 +116,37 @@ from theorem_arithmetic_rectification_engine import (
     # Discriminant
     virasoro_shadow_discriminant, virasoro_shadow_field_discriminant,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+ARITHMETIC_SHADOWS = ROOT / "chapters/connections/arithmetic_shadows.tex"
+ARITH_STANDALONES = (
+    ROOT / "standalone/survey_modular_koszul_duality.tex",
+    ROOT / "standalone/survey_modular_koszul_duality_v2.tex",
+    ROOT / "standalone/survey_track_b_compressed.tex",
+    ROOT / "standalone/introduction_full_survey.tex",
+)
+SHADOW_HECKE_MODULE = ROOT / "compute/lib/shadow_hecke_identification.py"
+
+
+def _read(path: Path) -> str:
+    return path.read_text()
+
+
+def _squashed(path: Path) -> str:
+    return " ".join(_read(path).split())
+
+
+def _assert_required(path: Path, fragments: tuple[str, ...]) -> None:
+    text = _squashed(path)
+    for fragment in fragments:
+        assert fragment in text, f"{fragment!r} missing from {path}"
+
+
+def _assert_forbidden(path: Path, fragments: tuple[str, ...]) -> None:
+    text = _squashed(path)
+    for fragment in fragments:
+        assert fragment not in text, f"retired fragment {fragment!r} still in {path}"
 
 
 # =====================================================================
@@ -250,6 +282,60 @@ class TestArithmeticModularScopeGates:
         assert scope['ramanujan_comparison_claim_allowed'] is True
         assert scope['unconditional_ramanujan_claim_allowed'] is False
         assert scope['kim_sarnak_unconditional_bound_claim_allowed'] is True
+
+
+class TestArithmeticSurfaceTextGates:
+    """Textual guards for the arithmetic/modular claim surface."""
+
+    def test_chapter_keeps_hecke_newton_chain_conditional(self):
+        _assert_required(
+            ARITHMETIC_SHADOWS,
+            (
+                r"\text{finite-Hecke-span}+\text{prime-locality}+\mathrm{MC\ moments}",
+                "For lattice VOAs, finite-Hecke-span stability, prime-locality, Rankin--Selberg admissibility, and the MC moment recursion give the comparison chain",
+                "it is not an unconditional replacement for Deligne",
+                "Reduced on the finite-Hecke-span lattice surface",
+                "No algebra isomorphism $\\cA^{\\mathrm{sh}}\\cong\\mathbb T_{\\mathrm{Hecke}}$ is asserted outside this comparison surface.",
+                "This is the promised structural parallel, not an identification of the MC bracket with Hecke multiplication.",
+            ),
+        )
+
+    def test_standalone_surfaces_keep_finite_span_and_prime_local_gates(self):
+        for path in ARITH_STANDALONES:
+            _assert_required(
+                path,
+                (
+                    "conditional chain",
+                    "finite-Hecke-span stability + prime-locality + MC moment recursion",
+                    "Deligne",
+                ),
+            )
+
+    def test_compute_summary_does_not_promote_shadow_hecke_isomorphism(self):
+        _assert_required(
+            SHADOW_HECKE_MODULE,
+            (
+                "is not identified here with",
+                "finite-Hecke-span and prime-local surfaces",
+                "not an identification of the MC bracket with Hecke multiplication",
+                "A^sh maps to the Hecke moment algebra on the comparison surface",
+                "finite-span stability, and the prime-local comparison map",
+            ),
+        )
+
+    def test_retired_arithmetic_slogans_do_not_return(self):
+        forbidden = (
+            "A^sh = Hecke algebra",
+            "IS the Hecke algebra",
+            "MC equation supplies the Hecke decomposition",
+            "MC framework supplies the Hecke decomposition",
+            "Hecke--Newton closure gives: MC equation",
+            "MC arity r = Hecke relation level r",
+            "determines the Hecke eigenvalues of the spectral decomposition",
+            "full identification",
+        )
+        for path in (ARITHMETIC_SHADOWS, *ARITH_STANDALONES, SHADOW_HECKE_MODULE):
+            _assert_forbidden(path, forbidden)
 
     def test_009_hecke_newton_blocks_non_lattice_and_irrational_theorems(self):
         """Non-lattice and irrational extensions remain non-theorem lanes."""
@@ -952,7 +1038,7 @@ class TestAnomalyCancellation:
         assert not result['anomaly_cancels']
 
     def test_h04_c13_self_duality(self):
-        """Full tower self-duality at c=13."""
+        """c=13 scalar/rational-shadow fixed-point diagnostics."""
         result = c13_self_duality_check()
         assert result['kappa_equal']
         assert result['all_match']

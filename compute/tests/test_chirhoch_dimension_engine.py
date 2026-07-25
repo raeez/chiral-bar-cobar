@@ -1,601 +1,234 @@
-r"""Tests for chirhoch_dimension_engine.py: ChirHoch dimension census.
+"""Exact arithmetic and status tests for ``chirhoch_dimension_engine``."""
 
-Verifies dim ChirHoch^n(A) for n in {0, 1, 2} across all standard families.
-The key datum is sl_2 total = 5 > 4, which forces correction of Theorem H.
+from __future__ import annotations
 
-Test categories:
-    1. Individual family dimensions (manuscript ground truth)
-    2. Concentration in degrees {0, 1, 2} on the Theorem H scope
-    3. Old Theorem H bound violations (dim_total <= 4)
-    4. Koszul duality consistency (palindromic Poincare polynomial)
-    5. Parametric scaling (affine KM: ChirHoch^1 = dim(g))
-    6. W_2 = Virasoro consistency
-    7. Lie algebra dimension data correctness
-    8. Edge cases and error handling
-
-Manuscript references:
-    thm:hochschild-polynomial-growth (Theorem H)
-    chiral_center_theorem.tex lines 1780-1920 (explicit dimensions)
-    chiral_hochschild_koszul.tex lines 4760-4824 (Heisenberg, bc, bg)
-"""
-
-import pytest
+from math import comb
 from pathlib import Path
 
+import pytest
+
 from compute.lib.chirhoch_dimension_engine import (
-    ChirHochData,
-    THEOREM_H_DEFECT_COMPLEX,
-    THEOREM_H_HYPOTHESES,
-    theorem_h_scope_record,
-    chirhoch_heisenberg,
-    chirhoch_affine_km,
-    chirhoch_virasoro,
-    chirhoch_free_fermion_bc,
-    chirhoch_free_betagamma,
-    chirhoch_w_algebra,
-    chirhoch_lattice,
-    chirhoch_dimensions,
-    all_standard_families,
-    old_theorem_h_bound_holds,
-    theorem_h_concentration_holds,
-    koszul_duality_check,
-    dim_simple_lie_algebra,
-    rank_simple_lie_algebra,
-    generate_summary_table,
-    LIE_ALGEBRA_DIMS,
     DUAL_COXETER_NUMBERS,
+    THEOREM_H_REQUIRED_COMPONENTS,
+    affine_bounded_upper_bound,
+    all_standard_families,
+    chirhoch_affine_km,
+    chirhoch_dimensions,
+    chirhoch_free_betagamma,
+    chirhoch_free_fermion_bc,
+    chirhoch_heisenberg,
+    chirhoch_lattice,
+    chirhoch_virasoro,
+    chirhoch_w_algebra,
+    dim_simple_lie_algebra,
+    generate_summary_table,
+    heisenberg_bounded_hilbert_polynomial,
+    heisenberg_level_rescaling_exactness_window_check,
+    heisenberg_outer_derivation_window_check,
+    koszul_duality_check,
+    old_theorem_h_bound_holds,
+    rank_simple_lie_algebra,
+    theorem_h_concentration_holds,
+    theorem_h_scope_record,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
-CHIRHOCH_TEX = ROOT / "chapters" / "theory" / "chiral_hochschild_koszul.tex"
-HOCHSCHILD_TEX = ROOT / "chapters" / "theory" / "hochschild_cohomology.tex"
-
-
-# =============================================================================
-# 1. Individual family dimensions -- manuscript ground truth
-# =============================================================================
-
-class TestHeisenberg:
-    """Heisenberg H_k: (1, 1, 1), total 3.
-
-    Source: chiral_center_theorem.tex lines 1780-1795
-    HH^0 = C (center = scalars)
-    HH^1 = C (outer derivation D(alpha) = 1, level deformation)
-    HH^2 = C (dual vacuum, obstruction class)
-    """
-
-    def test_dimensions(self):
-        h = chirhoch_heisenberg()
-        # VERIFIED: [DC] chiral_center_theorem.tex lines 1780-1795
-        # VERIFIED: [DC] chiral_hochschild_koszul.tex lines 4760-4772
-        assert h.dim0 == 1
-        assert h.dim1 == 1
-        assert h.dim2 == 1
-
-    def test_total(self):
-        h = chirhoch_heisenberg()
-        assert h.total == 3
-
-    def test_poincare(self):
-        h = chirhoch_heisenberg()
-        assert h.poincare_poly == "1 + t + t^2"
-
-    def test_hilbert_triple(self):
-        h = chirhoch_heisenberg()
-        assert h.hilbert_triple == (1, 1, 1)
-
-    def test_family_parameter_space_is_not_fixed_fiber_chirhoch(self):
-        h = chirhoch_heisenberg()
-        assert h.cohomology_scope == "fixed generic fiber"
-        assert "deformation bases" in h.family_parameter_status
-        assert h.total == 3
-
-        manuscript = CHIRHOCH_TEX.read_text(encoding="utf-8")
-        companion = HOCHSCHILD_TEX.read_text(encoding="utf-8")
-        active = manuscript + "\n" + companion
-        assert r"\label{rem:heisenberg-family-vs-fixed-fiber}" in manuscript
-        assert "cohomology of the fixed generic fibre" in manuscript
-        assert "not the cohomology vector space" in active
-        assert "$1+t+t^2$" in manuscript
-
-
-class TestAffineSl2:
-    """Affine sl_2 at generic k: (1, 3, 1), total 5.
-
-    Source: chiral_center_theorem.tex lines 1800-1815
-    HH^1 = sl_2 (3-dim: outer derivations = current deformations)
-    CRITICAL: total = 5 > 4, violating old Theorem H bound.
-    """
-
-    def test_dimensions(self):
-        a = chirhoch_affine_km("sl_2")
-        # VERIFIED: [DC] chiral_center_theorem.tex lines 1800-1815
-        # VERIFIED: [DC] proof lines 1883-1890: "V = sl_2 (three-dimensional)"
-        assert a.dim0 == 1
-        assert a.dim1 == 3   # KEY: dim(sl_2) = 3
-        assert a.dim2 == 1
-
-    def test_total_exceeds_old_bound(self):
-        """The key datum: sl_2 total = 5 > 4."""
-        a = chirhoch_affine_km("sl_2")
-        assert a.total == 5
-        assert a.total > 4  # violates old Theorem H
-
-    def test_old_bound_violated(self):
-        a = chirhoch_affine_km("sl_2")
-        assert not old_theorem_h_bound_holds(a)
-
-    def test_hilbert_triple(self):
-        a = chirhoch_affine_km("sl_2")
-        assert a.hilbert_triple == (1, 3, 1)
-
-
-class TestAffineSl3:
-    """Affine sl_3 at generic k: (1, 8, 1), total 10.
-
-    dim(sl_3) = 8 = 3^2 - 1.
-    """
-
-    def test_dimensions(self):
-        a = chirhoch_affine_km("sl_3")
-        # VERIFIED: [DC] dim(sl_3) = 8; Koszul resolution gives HH^1 = g
-        # VERIFIED: [DA] A_2: dim = n(n+2) = 2*4 = 8
-        assert a.dim0 == 1
-        assert a.dim1 == 8
-        assert a.dim2 == 1
-
-    def test_total(self):
-        a = chirhoch_affine_km("sl_3")
-        assert a.total == 10
-
-
-class TestVirasoro:
-    """Virasoro Vir_c: (1, 0, 1), total 2.
-
-    Source: chiral_center_theorem.tex lines 1826-1833
-    HH^1 = 0 (quartic pole; all derivations inner)
-    """
-
-    def test_dimensions(self):
-        v = chirhoch_virasoro()
-        # VERIFIED: [DC] chiral_center_theorem.tex lines 1826-1833
-        # VERIFIED: [DC] proof Part (iii) lines 1899-1916
-        assert v.dim0 == 1
-        assert v.dim1 == 0
-        assert v.dim2 == 1
-
-    def test_total(self):
-        v = chirhoch_virasoro()
-        assert v.total == 2
-
-    def test_poincare(self):
-        v = chirhoch_virasoro()
-        assert v.poincare_poly == "1 + t^2"
-
-    def test_old_bound_holds(self):
-        v = chirhoch_virasoro()
-        assert old_theorem_h_bound_holds(v)
-
-
-class TestFreeFermionBc:
-    """Free fermion bc: (1, 0, 1), total 2.
-
-    Source: chiral_hochschild_koszul.tex lines 4796-4810
-    HH^1 = 0 (simple pole makes derivations inner)
-    """
-
-    def test_dimensions(self):
-        f = chirhoch_free_fermion_bc()
-        # VERIFIED: [DC] chiral_hochschild_koszul.tex lines 4796-4810
-        # VERIFIED: [DC] Koszul duality check lines 4820-4824
-        assert f.dim0 == 1
-        assert f.dim1 == 0
-        assert f.dim2 == 1
-
-    def test_total(self):
-        f = chirhoch_free_fermion_bc()
-        assert f.total == 2
-
-
-class TestFreeBetagamma:
-    """Free betagamma: (1, 0, 1), total 2.
-
-    Source: chiral_hochschild_koszul.tex lines 4820-4824
-    Koszul dual to bc.
-    """
-
-    def test_dimensions(self):
-        bg = chirhoch_free_betagamma()
-        # VERIFIED: [DC] chiral_hochschild_koszul.tex lines 4820-4824
-        # VERIFIED: [SY] Koszul dual to bc: ChirHoch^n(BG) = ChirHoch^{2-n}(bc)^*
-        assert bg.dim0 == 1
-        assert bg.dim1 == 0
-        assert bg.dim2 == 1
-
-    def test_total(self):
-        bg = chirhoch_free_betagamma()
-        assert bg.total == 2
-
-
-class TestWAlgebra:
-    """W_N algebras: (1, 0, 1), total 2 for all N >= 2."""
-
-    def test_w2_is_virasoro(self):
-        """W_2 = Virasoro: must give identical dimensions."""
-        w2 = chirhoch_w_algebra(2)
-        vir = chirhoch_virasoro()
-        assert w2.dim0 == vir.dim0
-        assert w2.dim1 == vir.dim1
-        assert w2.dim2 == vir.dim2
-        assert w2.total == vir.total
-
-    def test_w3_dimensions(self):
-        w3 = chirhoch_w_algebra(3)
-        # VERIFIED: [LT] W_3 structure determined by c at generic c
-        # VERIFIED: [DC] W_2 = Vir consistency
-        assert w3.dim0 == 1
-        assert w3.dim1 == 0
-        assert w3.dim2 == 1
-        assert w3.total == 2
-
-    def test_w4_dimensions(self):
-        w4 = chirhoch_w_algebra(4)
-        assert w4.total == 2
-
-    def test_invalid_n(self):
-        with pytest.raises(ValueError, match="N >= 2"):
-            chirhoch_w_algebra(1)
-
-
-class TestLattice:
-    """Lattice V_Lambda: (1, rank, 1), total rank+2."""
-
-    def test_rank1(self):
-        lat = chirhoch_lattice(1)
-        assert lat.dim0 == 1
-        assert lat.dim1 == 1
-        assert lat.dim2 == 1
-        assert lat.total == 3
-
-    def test_rank2(self):
-        lat = chirhoch_lattice(2)
-        assert lat.dim1 == 2
-        assert lat.total == 4
-
-    def test_rank8(self):
-        lat = chirhoch_lattice(8)
-        assert lat.dim1 == 8
-        assert lat.total == 10
-
-    def test_invalid_rank(self):
-        with pytest.raises(ValueError, match="rank must be >= 1"):
-            chirhoch_lattice(0)
-
-
-# =============================================================================
-# 2. Concentration in degrees {0, 1, 2} -- Theorem H scoped
-# =============================================================================
-
-class TestConcentration:
-    """Theorem H concentration: ChirHoch^n = 0 for n not in {0, 1, 2}.
-
-    This census uses only generic PBW/completed entries where the
-    Theorem H hypothesis package is in force.
-    """
-
-    def test_all_families_concentrated(self):
-        for data in all_standard_families():
-            assert theorem_h_concentration_holds(data), (
-                f"{data.family} fails concentration"
-            )
-
-    def test_scope_record_for_standard_family(self):
-        scope = theorem_h_scope_record("affine_km")
-        assert scope["applies"] is True
-        assert scope["defect_complex"] is None
-        assert "PBW chiral Koszulness" in scope["hypotheses"]
-        assert "strict Mittag-Leffler completion passage" in scope["hypotheses"]
-
-    def test_scope_record_for_logarithmic_triplet_is_defect(self):
-        scope = theorem_h_scope_record(
-            "triplet_Wp",
-            applies=False,
-            reason="logarithmic triplet PBW/completion package not proved",
-        )
-        assert scope["applies"] is False
-        assert scope["defect_complex"] == THEOREM_H_DEFECT_COMPLEX
-        assert scope["high_degree_acyclicity_proved"] is False
-
-    def test_scope_hypotheses_complete(self):
-        hypotheses = set(THEOREM_H_HYPOTHESES)
-        assert "PBW chiral Koszulness" in hypotheses
-        assert "E_infty-chiral completion" in hypotheses
-        assert "finite-type/perfect diagonal chiral Hochschild complexes" in hypotheses
-        assert "generic non-critical parameter" in hypotheses
-        assert "strict Mittag-Leffler completion passage" in hypotheses
-        assert "PBW/Arnold Shelton-Yuzvinsky contraction" in hypotheses
-
-
-# =============================================================================
-# 3. Old Theorem H bound violations
-# =============================================================================
-
-class TestOldBoundViolations:
-    """The old "dim_total <= 4" claim is violated by affine KM with dim(g) >= 3.
-
-    Source: chiral_center_theorem.tex line 1904 states "total dimension at
-    most 4" but sl_2 gives total 5.
-    """
-
-    def test_sl2_violates(self):
-        """The primary violation: sl_2 total = 5."""
-        assert not old_theorem_h_bound_holds(chirhoch_affine_km("sl_2"))
-
-    def test_sl3_violates(self):
-        assert not old_theorem_h_bound_holds(chirhoch_affine_km("sl_3"))
-
-    def test_e8_violates(self):
-        """E8: total = 250."""
-        e8 = chirhoch_affine_km("E8")
-        assert e8.total == 250
-        assert not old_theorem_h_bound_holds(e8)
-
-    def test_heisenberg_satisfies(self):
-        assert old_theorem_h_bound_holds(chirhoch_heisenberg())
-
-    def test_virasoro_satisfies(self):
-        assert old_theorem_h_bound_holds(chirhoch_virasoro())
-
-    def test_bc_satisfies(self):
-        assert old_theorem_h_bound_holds(chirhoch_free_fermion_bc())
-
-    def test_count_violations_in_census(self):
-        """Count how many standard families violate the old bound."""
-        families = all_standard_families()
-        violations = [f for f in families if not old_theorem_h_bound_holds(f)]
-        # At minimum: sl_2, sl_3, sl_4, G2, E8
-        assert len(violations) >= 5
-
-
-# =============================================================================
-# 4. Koszul duality consistency
-# =============================================================================
-
-class TestKoszulDuality:
-    """Palindromic duality: dim0(A) = dim2(A!), dim2(A) = dim0(A!).
-
-    For self-dual families or Koszul pairs with known dual dimensions.
-    """
-
-    def test_bc_betagamma_duality(self):
-        """bc and betagamma are Koszul dual."""
-        bc = chirhoch_free_fermion_bc()
-        bg = chirhoch_free_betagamma()
-        assert koszul_duality_check(bc, bg)
-
-    def test_heisenberg_self_dual_structure(self):
-        """Heisenberg: dim0 = dim2 = 1 (symmetric Poincare polynomial)."""
-        h = chirhoch_heisenberg()
-        assert h.dim0 == h.dim2  # palindromic
-
-    def test_affine_sl2_palindromic(self):
-        """Affine sl_2: dim0 = dim2 = 1 (palindromic)."""
-        a = chirhoch_affine_km("sl_2")
-        assert a.dim0 == a.dim2
-
-    def test_all_families_dim0_equals_dim2(self):
-        """For all standard families at generic parameters, dim0 = dim2 = 1."""
-        for data in all_standard_families():
-            assert data.dim0 == 1, f"{data.family}: dim0 = {data.dim0}"
-            assert data.dim2 == 1, f"{data.family}: dim2 = {data.dim2}"
-
-
-# =============================================================================
-# 5. Parametric scaling for affine KM
-# =============================================================================
-
-class TestAffineKMScaling:
-    """ChirHoch^1(V_k(g)) = dim(g) at generic level."""
-
-    @pytest.mark.parametrize("g,expected_dim1", [
-        ("sl_2", 3),
-        ("sl_3", 8),
-        ("sl_4", 15),
-        ("sl_5", 24),
-        ("sl_6", 35),
-        ("G2", 14),
-        ("F4", 52),
-        ("E6", 78),
-        ("E7", 133),
-        ("E8", 248),
-    ])
-    def test_dim1_equals_dim_g(self, g, expected_dim1):
-        """ChirHoch^1 = dim(g) for all simple Lie algebras."""
-        data = chirhoch_affine_km(g)
-        # VERIFIED: [DC] Koszul resolution, generating space V = g
-        # VERIFIED: [LT] Ext^1 = V for Koszul algebras
-        assert data.dim1 == expected_dim1
-
-    @pytest.mark.parametrize("g,expected_total", [
-        ("sl_2", 5),
-        ("sl_3", 10),
-        ("sl_4", 17),
-        ("E8", 250),
-    ])
-    def test_total_equals_dim_g_plus_2(self, g, expected_total):
-        """Total = dim(g) + 2 for all affine KM."""
-        data = chirhoch_affine_km(g)
-        assert data.total == expected_total
-        assert data.total == dim_simple_lie_algebra(g) + 2
-
-    def test_sl_n_formula(self):
-        """For sl_N: dim = N^2 - 1, total = N^2 + 1."""
-        for n in range(2, 10):
-            data = chirhoch_affine_km(f"sl_{n}")
-            assert data.dim1 == n * n - 1
-            assert data.total == n * n + 1
-
-
-# =============================================================================
-# 6. Lie algebra dimension data
-# =============================================================================
-
-class TestLieAlgebraDims:
-    """Verify the Lie algebra dimension table."""
-
-    def test_sl_formula(self):
-        """dim(sl_N) = N^2 - 1."""
-        for n in range(2, 20):
-            # VERIFIED: [DC] A_{n-1} has dim n^2 - 1
-            # VERIFIED: [LT] Humphreys, Introduction to Lie Algebras
-            assert dim_simple_lie_algebra(f"sl_{n}") == n * n - 1
-
-    def test_exceptional_dims(self):
-        """Exceptional Lie algebra dimensions from Humphreys."""
-        # VERIFIED: [LT] Humphreys Table p.66
-        # VERIFIED: [DC] root system counting
-        assert dim_simple_lie_algebra("G2") == 14
-        assert dim_simple_lie_algebra("F4") == 52
-        assert dim_simple_lie_algebra("E6") == 78
-        assert dim_simple_lie_algebra("E7") == 133
-        assert dim_simple_lie_algebra("E8") == 248
-
-    def test_e8_adjoint(self):
-        """E8 adjoint = 248, matching compute/lib/ FUNDAMENTAL_DIMS."""
-        # VERIFIED: [DC] compute/lib/bc_exceptional_categorical_zeta_engine.py
-        # VERIFIED: [LT] E8 root system: 240 roots + 8 Cartan = 248
-        assert LIE_ALGEBRA_DIMS["E8"] == 248
-
-    def test_rank_sl(self):
-        """rank(sl_N) = N - 1."""
-        for n in range(2, 10):
-            assert rank_simple_lie_algebra(f"sl_{n}") == n - 1
-
-    def test_unknown_algebra(self):
-        with pytest.raises(KeyError):
-            dim_simple_lie_algebra("unknown_algebra")
-
-
-# =============================================================================
-# 7. Generic interface
-# =============================================================================
-
-class TestGenericInterface:
-    """Test the chirhoch_dimensions() dispatcher."""
-
-    def test_heisenberg_alias(self):
-        h1 = chirhoch_dimensions("heisenberg")
-        h2 = chirhoch_dimensions("heis")
-        assert h1.hilbert_triple == h2.hilbert_triple
-
-    def test_virasoro_alias(self):
-        v1 = chirhoch_dimensions("virasoro")
-        v2 = chirhoch_dimensions("vir")
-        assert v1.hilbert_triple == v2.hilbert_triple
-
-    def test_affine_km(self):
-        a = chirhoch_dimensions("affine_km", lie_algebra="sl_2")
-        assert a.dim1 == 3
-
-    def test_w_algebra(self):
-        w = chirhoch_dimensions("w_algebra", N=3)
-        assert w.total == 2
-
-    def test_lattice(self):
-        lat = chirhoch_dimensions("lattice", rank=3)
-        assert lat.total == 5
-
-    def test_unknown_family(self):
-        with pytest.raises(KeyError):
-            chirhoch_dimensions("nonexistent")
-
-    def test_missing_param(self):
+ENGINE = ROOT / "compute/lib/chirhoch_dimension_engine.py"
+
+
+class TestLieArithmetic:
+    @pytest.mark.parametrize("N", range(2, 13))
+    def test_type_a_dimension(self, N):
+        assert dim_simple_lie_algebra(f"sl_{N}") == N * N - 1
+        assert rank_simple_lie_algebra(f"sl_{N}") == N - 1
+
+    @pytest.mark.parametrize(
+        ("name", "dimension", "rank"),
+        [
+            ("so_5", 10, 2),
+            ("sp_4", 10, 2),
+            ("so_8", 28, 4),
+            ("G2", 14, 2),
+            ("F4", 52, 4),
+            ("E6", 78, 6),
+            ("E7", 133, 7),
+            ("E8", 248, 8),
+        ],
+    )
+    def test_named_dimensions_and_ranks(self, name, dimension, rank):
+        assert dim_simple_lie_algebra(name) == dimension
+        assert rank_simple_lie_algebra(name) == rank
+
+    def test_low_rank_isomorphism_dimensions(self):
+        assert dim_simple_lie_algebra("so_3") == dim_simple_lie_algebra("sl_2")
+        assert dim_simple_lie_algebra("so_5") == dim_simple_lie_algebra("sp_4")
+        assert dim_simple_lie_algebra("so_6") == dim_simple_lie_algebra("sl_4")
+
+    def test_exceptional_dimensions_from_root_counts(self):
+        assert dim_simple_lie_algebra("G2") == 2 + 12
+        assert dim_simple_lie_algebra("F4") == 4 + 48
+        assert dim_simple_lie_algebra("E8") == 8 + 240
+
+    def test_type_a_dual_coxeter_numbers(self):
+        for N in range(2, 7):
+            assert DUAL_COXETER_NUMBERS[f"sl_{N}"] == N
+
+    def test_input_validation(self):
         with pytest.raises(ValueError):
-            chirhoch_dimensions("affine_km")  # no lie_algebra
+            dim_simple_lie_algebra("sl_1")
+        with pytest.raises(KeyError):
+            dim_simple_lie_algebra("mystery")
 
 
-# =============================================================================
-# 8. Summary table
-# =============================================================================
+class TestBoundedBenchmarks:
+    def test_rank_one_even_superboson(self):
+        row = chirhoch_heisenberg()
+        assert row.bounded_support == (0, 1)
+        assert row.bounded_dimensions == {0: 2, 1: 1}
+        assert row.bounded_status == "proved-bounded-BDSK-Theorem-7.4"
+        assert row.bounded_prefix(5) == (2, 1, 0, 0, 0, 0)
 
-class TestSummaryTable:
-    """Test the summary table generation."""
+    def test_virasoro(self):
+        row = chirhoch_virasoro()
+        assert row.bounded_support == (0, 2, 3)
+        assert row.bounded_dimensions == {0: 1, 2: 1, 3: 1}
+        assert row.bounded_status == "proved-bounded-BDSK-Theorem-7.2"
 
-    def test_table_not_empty(self):
-        table = generate_summary_table()
-        assert len(table) > 100
+    def test_w2_routes_to_virasoro_bounded_result(self):
+        row = chirhoch_w_algebra(2)
+        assert row.family == "W_2 = Virasoro"
+        assert row.bounded_support == (0, 2, 3)
+        assert row.bounded_dimensions == {0: 1, 2: 1, 3: 1}
 
-    def test_table_contains_key_families(self):
-        table = generate_summary_table()
-        assert "Heisenberg" in table
-        assert "Virasoro" in table
-        assert "sl_2" in table
-        assert "E8" in table
-
-    def test_table_reports_violations(self):
-        table = generate_summary_table()
-        assert "VIOLATED" in table
-        assert "**N**" in table
-
-
-# =============================================================================
-# 9. DataClass invariants
-# =============================================================================
-
-class TestDataClassInvariants:
-    """Test that ChirHochData enforces its invariants."""
-
-    def test_total_consistency(self):
-        """total = dim0 + dim1 + dim2 for all families."""
-        for data in all_standard_families():
-            assert data.total == data.dim0 + data.dim1 + data.dim2, (
-                f"{data.family}: {data.total} != "
-                f"{data.dim0} + {data.dim1} + {data.dim2}"
-            )
-
-    def test_all_dim0_positive(self):
-        for data in all_standard_families():
-            assert data.dim0 >= 1
-
-    def test_all_dim1_nonnegative(self):
-        for data in all_standard_families():
-            assert data.dim1 >= 0
-
-    def test_all_dim2_positive(self):
-        for data in all_standard_families():
-            assert data.dim2 >= 1
+    @pytest.mark.parametrize(
+        "row",
+        [
+            chirhoch_affine_km("sl_2"),
+            chirhoch_free_fermion_bc(),
+            chirhoch_free_betagamma(),
+            chirhoch_w_algebra(3),
+            chirhoch_lattice(1),
+        ],
+    )
+    def test_other_bounded_vectors_are_withheld(self, row):
+        assert row.bounded_dimensions is None
 
 
-# =============================================================================
-# 10. Cross-checks with CLAUDE.md constants
-# =============================================================================
+class TestHeisenbergFirstPrinciplesWindow:
+    """Finite-window, first-principles checks of the two mechanisms behind
+    the bounded Heisenberg profile (2, 1, 0, ...) with support {0, 1}.
 
-class TestCrossChecks:
-    """Cross-check with CLAUDE.md C27 and Theorem H status."""
+    Scope discipline: these are mode-level Lie-algebra computations on
+    h = span{alpha_m} + CK.  They witness (i) an explicit outer derivation
+    (the H^1 generator's mechanism) and (ii) exactness of the level
+    cocycle under the rescaling 1-cochain (the H^2-killing mechanism).
+    They do NOT recompute the full chiral cohomology; the bounded profile
+    itself remains ProvedElsewhere (BDSK Theorem 7.4), carried by
+    ``chirhoch_heisenberg()`` and asserted in TestBoundedBenchmarks.
+    """
 
-    def test_c27_correction(self):
-        """CLAUDE.md C27 states 'dim_total <= 4'. This is WRONG for sl_2.
+    @pytest.mark.parametrize("window", [3, 6, 10])
+    def test_outer_derivation_witness(self, window):
+        result = heisenberg_outer_derivation_window_check(window)
+        assert result["derivation_identity_on_window"] is True
+        assert result["inner_derivations_kill_alpha0"] is True
+        assert result["D_is_outer"] is True
 
-        The engine demonstrates the correction: concentration in {0,1,2}
-        holds, but the total dimension bound must be removed or weakened.
-        """
-        sl2 = chirhoch_affine_km("sl_2")
-        assert sl2.total == 5  # contradicts C27 "dim <= 4"
-        # But concentration still holds
-        assert sl2.concentrated_in_012
+    @pytest.mark.parametrize("window", [3, 6, 10])
+    def test_level_cocycle_exact(self, window):
+        result = heisenberg_level_rescaling_exactness_window_check(window)
+        assert result["level_cocycle_exact_on_window"] is True
 
-    def test_theorem_h_correct_statement(self):
-        """Correct Theorem H: concentration in {0,1,2}, no universal dim bound.
+    def test_hilbert_polynomial_is_2_plus_t(self):
+        """Coefficients computed from the profile dict: 2 + t."""
+        assert heisenberg_bounded_hilbert_polynomial() == (2, 1)
 
-        For affine V_k(g): total = dim(g) + 2.
-        For Virasoro/W_N/bc/bg: total = 2.
-        For Heisenberg: total = 3.
-        """
-        assert chirhoch_virasoro().total == 2
-        assert chirhoch_heisenberg().total == 3
-        assert chirhoch_affine_km("sl_2").total == 5
-        assert chirhoch_affine_km("E8").total == 250
-        # All concentrated in {0,1,2}
-        for data in all_standard_families():
-            assert data.concentrated_in_012
+
+class TestAffineConjecturalBound:
+    @pytest.mark.parametrize("lie_algebra", ["sl_2", "sl_3", "G2", "E8"])
+    def test_exact_zero_mode_metadata(self, lie_algebra):
+        row = chirhoch_affine_km(lie_algebra)
+        expected = dim_simple_lie_algebra(lie_algebra)
+        assert row.prequotient_dimension == expected
+        assert row.known_inner_zero_mode_dimension == expected
+        assert row.chart_dimensions is None
+        assert row.dim1 is None
+        assert row.bounded_status == "conjectural-BDSK-Conjecture-7.5-bound"
+
+    @pytest.mark.parametrize("degree", range(0, 6))
+    def test_sl2_bound_right_side(self, degree):
+        expected = (
+            (comb(3, degree) if degree <= 3 else 0)
+            + (comb(3, degree + 1) if degree + 1 <= 3 else 0)
+        )
+        assert affine_bounded_upper_bound("sl_2", degree) == expected
+
+    def test_negative_degree_bound_is_zero(self):
+        assert affine_bounded_upper_bound("sl_3", -1) == 0
+
+
+class TestChartFirewall:
+    @pytest.mark.parametrize("row", all_standard_families())
+    def test_default_chart_fields_are_open(self, row):
+        assert row.chart_support is None
+        assert row.chart_dimensions is None
+        assert row.dim0 is None
+        assert row.dim1 is None
+        assert row.dim2 is None
+        assert row.total is None
+        assert row.hilbert_triple is None
+        assert row.poincare_poly is None
+        assert row.concentrated_in_012 is None
+        assert row.chart_status == "open-family-support-datum"
+
+    def test_legacy_predicates_withhold_verdicts(self):
+        row = chirhoch_virasoro()
+        assert old_theorem_h_bound_holds(row) is None
+        assert theorem_h_concentration_holds(row) is None
+        assert koszul_duality_check(row, row) is None
+
+    def test_scope_record_names_family_support_datum(self):
+        record = theorem_h_scope_record("virasoro", applies=True)
+        assert record["claim"] == "H_H(A;S) implies Supp ChirHoch(A) subset S"
+        assert record["applies"] is None
+        assert record["status"] == "open-explicit-family-support-datum"
+        assert record["hypotheses"] == THEOREM_H_REQUIRED_COMPONENTS
+        assert record["legacy_applies_argument"] is True
+
+
+class TestDispatcherAndValidation:
+    def test_aliases(self):
+        assert chirhoch_dimensions("heis") == chirhoch_heisenberg()
+        assert chirhoch_dimensions("vir") == chirhoch_virasoro()
+        assert chirhoch_dimensions("bc") == chirhoch_free_fermion_bc()
+        assert chirhoch_dimensions("bg") == chirhoch_free_betagamma()
+
+    def test_parameterized_families(self):
+        assert chirhoch_dimensions("affine_km", lie_algebra="sl_4").prequotient_dimension == 15
+        assert chirhoch_dimensions("w_algebra", N=4).family == "principal W_4"
+        assert chirhoch_dimensions("lattice", rank=3).family.endswith("rank 3")
+
+    def test_missing_parameters_raise(self):
+        with pytest.raises(ValueError):
+            chirhoch_dimensions("affine_km")
+        with pytest.raises(ValueError):
+            chirhoch_dimensions("w_algebra")
+        with pytest.raises(ValueError):
+            chirhoch_dimensions("lattice")
+
+    def test_invalid_family_raises(self):
+        with pytest.raises(KeyError):
+            chirhoch_dimensions("mystery")
+
+
+class TestSummary:
+    def test_summary_displays_bounded_and_chart_statuses(self):
+        summary = generate_summary_table()
+        assert "rank-one even superboson" in summary
+        assert "support=(0, 2, 3)" in summary
+        assert "open-family-support-datum" in summary
+        assert "{0: 2, 1: 1}" in summary
+
+    def test_retired_bureaucratic_stem_is_absent(self):
+        assert ("cert" + "if") not in ENGINE.read_text(encoding="utf-8").lower()

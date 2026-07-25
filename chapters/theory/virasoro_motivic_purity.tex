@@ -1,698 +1,292 @@
-%% Virasoro Motivic Purity.
-%%
-%% Inscribes the theorem that every Virasoro shadow-tower coefficient
-%% S_r(Vir_c) is a rational function of c and that its motivic lift
-%% carries no multiple-zeta-value contribution. The upstream chapter
-%% motivic_shadow_tower.tex (Section 4, Propositions prop:s4-vir-mot
-%% and prop:s5-vir-mot) verified rationality at r = 4, 5 by direct
-%% substitution and cited the cohomological vanishing argument at the
-%% level of a remark; this theorem upgrades the statement to a
-%% theorem valid for all r >= 2 via the Riccati shadow-transport
-%% operator (Theorem thm:riccati-algebraicity,
-%% higher_genus_modular_koszul.tex).
-%%
-%% Scope: Virasoro Vir_c on the Koszul locus (generic c; the excluded
-%% minimal-model points c = c_{p,q} = 1 - 6(p - q)^2 / (p q) are
-%% treated separately and their shadow tower vanishes identically in
-%% the admissible weights by Feigin-Fuchs cohomology). The companion
-%% chapter motivic_shadow_tower.tex Proposition prop:s6-w3-mot remains
-%% valid only as a period-boundary statement: a spin-3 primary supplies
-%% a possible Arnold/KZ source, not a non-zero zeta coefficient. Section
-%% 6 makes the comparison explicit (cf. remark rem:vir-vs-w3-contrast).
-%%
-%% Macros are \providecommand-guarded.
-%% No bare kappa: the central-charge-level shadow invariant is
-%% written kappa_{ch}(Vir_c) = c/2 throughout; the generic shadow
-%% coefficient S_r(Vir_c) has no kappa label (it is a scalar rational
-%% function, not a categorical invariant).
+%% Virasoro residues and their motivic comparison problem.
 
 \providecommand{\MZV}{\mathrm{MZV}}
 \providecommand{\mot}{\mathrm{mot}}
-\providecommand{\num}{\mathrm{num}}
-\providecommand{\rat}{\mathrm{rat}}
 \providecommand{\Vir}{\mathrm{Vir}}
-\providecommand{\Walg}{\mathcal{W}}
-\providecommand{\cA}{\mathcal{A}}
-\providecommand{\cW}{\mathcal{W}}
-\providecommand{\wt}{\mathrm{wt}}
-\providecommand{\zet}{\zeta}
-\providecommand{\MC}{\mathrm{MC}}
-\providecommand{\Conf}{\mathrm{Conf}}
-\providecommand{\Res}{\operatorname{Res}}
-\providecommand{\kapch}{\kappa_{\mathrm{ch}}}
+\providecommand{\Walg}{\mathcal W}
+\providecommand{\cA}{\mathcal A}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusOpen}{}
 
-\chapter{Virasoro Motivic Purity}
+\chapter{Virasoro Residues and Motivic Comparison}
 \label{ch:virasoro-motivic-purity}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Prologue}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Local algebra, residues, and periods}
 
-The motivic shadow-tower programme (chapter
-\ref{ch:motivic-shadow-tower}) verified rationality of the first
-four Virasoro shadow coefficients,
+The Virasoro local layer is exact.  The operator product, the sphere
+Ward recursion, and the level-four vacuum Gram form give
 \[
- S_2(\Vir_c) = \tfrac{c}{2}, \qquad
- S_3(\Vir_c) = 2, \qquad
- S_4(\Vir_c) = \tfrac{10}{c(5c + 22)}, \qquad
- S_5(\Vir_c) = \tfrac{-48}{c^2(5c + 22)},
+ T(z)T(w)\sim \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w},
+ \qquad
+ N_\Lambda(c)=\frac{c(5c+22)}{10}.
 \]
-by direct substitution in the master-equation recursion and by
-independent Wick-reduction at $r = 5$. At $r = 4, 5$ the absence of
-motivic multiple zeta values was an observation, not a theorem:
-Propositions~\ref{prop:s4-vir-mot} and \ref{prop:s5-vir-mot} proved
-rational values, but the extrapolation to all $r \geq 2$ was stated
-as a remark (Remark~\ref{rem:w3-first-zeta3}, citing Feigin--Fuchs
-cohomology vanishing).
+Consequently every connected stress-tensor Ward function is a
+rational function on an ordered configuration space.  A scalar
+shadow coordinate requires the additional ordered-residue package
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\).  A motivic statement requires
+another comparison from the residue complex to a specified motivic
+period complex.  Rationality of the local integrand and Tate
+factorization of its period are distinct assertions.
 
-This chapter closes the extrapolation for the weighted Riccati-metric
-normalization. The mechanism is not
-cohomological vanishing at each weight separately; it is the
-Riccati algebraicity of the shadow generating function
-$H^{\rm wt}(t) = \sum_{r \geq 2} r\, \widehat S^{\rm wt}_r(\Vir_c)\, t^r$
-(Theorem~\ref{thm:riccati-algebraicity}, proved in
-higher\_genus\_modular\_koszul.tex). For Virasoro on a one-dimensional
-primary slice, $H^{\rm wt}(t)$ satisfies
-$(H^{\rm wt}(t))^2 = t^4\, Q(t)$ with
-$Q(t) \in \mathbb{Q}(c)[t]$ a quadratic polynomial determined
-entirely by $(\kapch(\Vir_c), S_3, S_4) = (c/2,\, 2,\, 10/[c(5c+22)])$.
-Taylor-expanding $H^{\rm wt}(t) = t^2\,\sqrt{Q(t)}$ around $t = 0$
-keeps every weighted coefficient in the rational field
-$\mathbb{Q}(c)$. The manuscript coefficients are treated by the
-finite-recurrence argument in
-Chapter~\ref{ch:virasoro-motivic-purity-all-r-platonic}.
-
-The motivic consequence is immediate. The only mechanism by which a
-motivic multiple zeta value $\zet^{\mot}(n_1, \ldots, n_k)$ could
-enter $\widehat S^{\rm wt,\mot}_r(\Vir_c)$ is via an Arnold period on
-$\Conf_r(\mathbb{C})$ that survives the averaging map and carries a
-non-trivial weight-$(n_1 + \cdots + n_k)$ motivic content. The
-Riccati transport tells us no such period enters in the weighted
-normalization: the generating function $H^{\rm wt}(t)$ is algebraic of
-degree $2$ over
-$\mathbb{Q}(c)[t]$, and algebraic functions have rational Taylor
-coefficients. Hence the period map
-$\per \colon \MZV^{\mot} \to \mathbb{R}$ restricted to
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$ is trivial: the motivic lift
-equals $\widehat S^{\rm wt}_r(\Vir_c) \otimes 1 \in \mathbb{Q}(c)
-\subset \MZV^{\mot}_0 \otimes \mathbb{Q}(c)$.
-
-The W-algebra picture sharpens the boundary. At $W_3$ and shadow degree
-$6$ (Proposition~\ref{prop:s6-w3-mot}), a spin-$3$ primary supplies the
-first local channel in which an Arnold/KZ period can occur. This does
-not prove that a $\zet^{\mot}(3)$ coefficient survives the
-ordered-to-symmetric averaging map. Virasoro has no such spin-$3$
-primary; every generator is the stress tensor $T(z)$, whose OPE is
-rational. The absence of non-stress-tensor primaries on Virasoro is
-precisely why the Riccati transport closes on the first three
-invariants $(\kapch, S_3, S_4)$ and produces rational output at every
-weight.
-
-The chapter is organised as follows.
-Section~\ref{sec:vmp-setup} fixes the setup and recalls the Riccati
-algebraicity. Section~\ref{sec:vmp-main} states the purity
-theorem. Section~\ref{sec:vmp-denominator} proves the weighted
-denominator bound $c^{r-3}(5c + 22)^{\lfloor (r-2)/2 \rfloor}$.
-Section~\ref{sec:vmp-transport}
-records the Riccati-transport preservation of rationality as a
-stand-alone theorem. Section~\ref{sec:vmp-no-mzv} gives the motivic
-coaction corollary: triviality on
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$.
-Section~\ref{sec:vmp-w-algebra-comparison} compares Virasoro to $W_3$
-and records the conditional finite-lane propagation along the
-Drinfeld--Sokolov stress-tensor projection.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Setup: shadow tower, Riccati transport, motivic lift}
+\section{Regularity and the comparison packages}
 \label{sec:vmp-setup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We recall only what is required. The shadow tower
-$\{S_r(\cA)\}_{r \geq 2}$ is defined in the characteristic-datum
-part (\ref{part:characteristic-datum}) as the sequence of
-$\MC$-coefficients of the universal Maurer--Cartan element
-$\Theta_{\cA}$ in the ordered convolution $E_1$ dGLA. For the
-Virasoro chiral algebra $\Vir_c$ at generic central charge $c$, the
-shadow tower is the sequence of scalar rational coefficients obtained
-from the single-line primary slice generated by the stress tensor
-$T(z)$ (Vol~I \S shadow-tower; landscape\_census.tex line corresponding
-to Virasoro).
-
-\begin{definition}[Generic central charge for Virasoro;
-\ClaimStatusDefinitional]
+\begin{definition}[Level-four and residue-regular charges]
+\ClaimStatusDefinitional
 \label{def:vmp-generic-c}
-The set of \emph{generic central charges} for $\Vir_c$ is
+The level-four regular locus is
 \[
- C^{\mathrm{gen}} \;=\; \mathbb{C} \setminus \bigl(\{0\} \cup \{-22/5\}
- \cup \{c_{p,q} : p, q \geq 2,\, \gcd(p,q) = 1\}\bigr),
+ C^{(4)}_{\mathrm{reg}}
+ :=\{c\in\mathbb C: c(5c+22)\ne0\}.
 \]
-where $c_{p,q} = 1 - 6(p - q)^2 / (p q)$ are the minimal-model central
-charges. At generic $c \in C^{\mathrm{gen}}$, the Shapovalov form on
-each Virasoro Verma module is non-degenerate in every weight, and the
-Zamolodchikov quasi-primary $\Lambda = {:}TT{:} -
-\tfrac{3}{10}\,\partial^2 T$ has non-zero norm
-$\langle \Lambda \mid \Lambda \rangle = c(5c+22)/10$; in particular
-$c \neq 0$ and $5c + 22 \neq 0$.
+For an arity bound \(R\), a charge is
+\emph{residue-regular through arity \(R\)} when the package
+\(\mathsf H_{\mathrm{res}}^{\le R}(\Vir_c;X)\) exists and every
+scalar contraction used through arity~\(R\) is defined.  The
+all-arity locus \(C^{\mathrm{res}}_{\mathrm{reg}}\) consists of
+charges carrying compatible packages for every~\(R\).
+Once such a compatible family is fixed, write
+\(C^{\mathrm{gen}}:=C^{\mathrm{res}}_{\mathrm{reg}}\) for the
+all-arity domain used by downstream comparison statements.
 \end{definition}
 
-\begin{remark}[\label{rem:vmp-exclusions}Three removed loci]
-The removal of $c = 0$ is forced by the $1/(r c)$ prefactor of the
-master-equation recursion: at $c = 0$ the shadow tower is undefined.
-The removal of $c = -22/5$ is forced by the Zamolodchikov quartic
-norm: at $c = -22/5$, $\Lambda$ is null and $S_4$ diverges; this is
-the Liouville barrier. Minimal-model points $c = c_{p,q}$ require
-separate treatment (the Verma module has a proper submodule; the
-shadow tower may vanish in certain weights by Feigin--Fuchs
-cohomology, rather than being given by the generic formula); the
-theorem below applies generically and the minimal-model points are
-limits, studied in the Frontier part.
+\begin{remark}[Radical and quotient lanes]
+\label{rem:vmp-exclusions}
+At \(c=0\) and \(c=-22/5\), the level-four invariant form has a
+radical.  The corresponding simple quotient carries its own residue
+package, built after passage to the radical quotient.  Higher Kac
+degeneracy loci are treated by the same typed quotient construction.
 \end{remark}
 
-\begin{theorem}[\label{thm:vmp-riccati-vir-recap}Riccati algebraicity
-for Virasoro, recapitulation]
-\ClaimStatusConditional
-The weighted Riccati-metric shadow generating function for Virasoro on
-the Koszul locus is
-\[
- H^{\rm wt}_{\Vir}(t) \;=\; \sum_{r \geq 2} r\, \widehat S^{\rm wt}_r(\Vir_c)\, t^r
- \;=\; t^2\,\sqrt{Q(t)},
-\]
-where $Q(t) = 4\, \kapch(\Vir_c)^2 + 12\, \kapch(\Vir_c)\, S_3\, t
-+ (9 S_3^2 + 16\, \kapch(\Vir_c)\, S_4)\, t^2 \in \mathbb{Q}(c)[t]$
-is a quadratic polynomial in $t$ with coefficients in $\mathbb{Q}(c)$.
-Explicitly, using $\kapch(\Vir_c) = c/2$, $S_3 = 2$,
-$S_4 = 10/[c(5c+22)]$:
-\[
- Q(t) \;=\; c^2 \;+\; 12\, c\, t
- \;+\; \left(36+\frac{80}{5c+22}\right)t^2
- \;=\; c^2 \;+\; 12 c\, t
- \;+\; \frac{180c+872}{5c+22}\,t^2.
-\]
-\end{theorem}
+\begin{problem}[Compare the formal Riccati lane with geometric residues]
+\ClaimStatusOpen
+\label{thm:vmp-riccati-vir-recap}
+\emph{Type signature:}
+\textup{(Open quadrant, formal weighted-series and ordered residue-bar
+presentations, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\)).}
 
-\begin{proof}
-Theorem~\ref{thm:riccati-algebraicity} (higher\_genus\_modular\_koszul.tex)
-is the conditional Riccati algebraicity input for a one-dimensional
-primary slice of a chirally Koszul algebra in the standard landscape;
-Virasoro fits this frame with the single primary $T(z)$, and the
-three invariants $(\kapch(\Vir_c), S_3, S_4)$ are obtained from the
-Virasoro OPE (Belavin--Polyakov--Zamolodchikov 1984) and from the
-Zamolodchikov norm computation (Zamolodchikov 1986). No additional
-content beyond the cited theorem and the family-specific values.
-\end{proof}
+A formal square-root series may be generated from chosen Virasoro
+seeds.  Construct a chain map from its coefficient model to the
+transferred scalar residue model and prove compatibility with the
+Maurer--Cartan equations, arity conventions, and normalizations.  The
+package \(\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\) records this
+comparison.
+\end{problem}
 
-\begin{definition}[\label{def:vmp-motivic-lift}Weighted motivic lift at
-Virasoro]
-In the notation of chapter~\ref{ch:motivic-shadow-tower}, the motivic
-lift $\widehat S^{\rm wt,\mot}_r(\Vir_c) \in \MZV^{\mot}_r \otimes
-\mathbb{Q}(c)$ is the element produced by applying the weighted
-Riccati-metric projection after replacing the KZ associator
-$\Phi_{\KZ}$ with the motivic associator $\Phi_{\KZ}^{\mot}$ throughout
-the construction of $\Theta_{\Vir_c}$; the period map $\per$ sends
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$ to
-$\widehat S^{\rm wt}_r(\Vir_c) \in \mathbb{Q}(c)$.
-\end{definition}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Virasoro motivic purity theorem}
-\label{sec:vmp-main}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{theorem}[\label{thm:virasoro-motivic-purity}Weighted Virasoro motivic
-purity]
-\ClaimStatusConditional
-Let $c \in C^{\mathrm{gen}}$. For every $r \geq 2$, the weighted
-Riccati-metric Virasoro shadow coefficient and its motivic lift satisfy
-\[
- \widehat S^{\rm wt}_r(\Vir_c) \;\in\; \mathbb{Q}(c), \qquad
- \widehat S^{\rm wt,\mot}_r(\Vir_c)
- = \widehat S^{\rm wt}_r(\Vir_c) \otimes 1
- \;\in\; \mathbb{Q}(c) \;\subset\; \MZV^{\mot}_0 \otimes \mathbb{Q}(c).
-\]
-In particular no motivic multiple zeta value appears in
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$: the $\mathbb{Q}$-linear component of
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$ along any basis element
-$\zet^{\mot}(n_1, \ldots, n_k)$ with $n_1 + \cdots + n_k \geq 2$ is
-zero.
-\end{theorem}
-
-\begin{proof}
-The proof has four steps.
-
-\emph{Step 1: base rationality.} Virasoro's first three invariants
-are rational:
-$\kapch(\Vir_c) = c/2 \in \mathbb{Q}(c)$ (landscape\_census.tex);
-$S_3 = 2 \in \mathbb{Q} \subset \mathbb{Q}(c)$ (three-point Ward
-identity of $T(z)$, recording the single non-central channel of the
-$T T$ OPE; computation in
-Theorem~\ref{thm:virasoro-shadow-recurrence} proof);
-$S_4 = 10/[c(5c+22)] \in \mathbb{Q}(c)$ (Shapovalov determinant at
-weight $2$ and Zamolodchikov $\Lambda$-norm; Proposition
-\ref{prop:s4-vir-mot}).
-
-\emph{Step 2: Riccati transport preserves rationality.} By
-Theorem~\ref{thm:vmp-riccati-vir-recap}, $H^{\rm wt}_{\Vir}(t) = t^2
-\sqrt{Q(t)}$ with $Q(t) \in \mathbb{Q}(c)[t]$ a quadratic polynomial.
-The formal Taylor expansion of $\sqrt{Q(t)}$ around $t = 0$ is
-\[
- \sqrt{Q(t)} \;=\; \sqrt{Q(0)}\, \sum_{n \geq 0} \binom{1/2}{n}\,
- \left(\frac{Q(t) - Q(0)}{Q(0)}\right)^n,
-\]
-with $\binom{1/2}{n} \in \mathbb{Q}$ the central binomial series
-coefficient and $Q(0) = 4\, \kapch(\Vir_c)^2 = c^2$. Since $c \neq 0$
-on $C^{\mathrm{gen}}$, choose the formal branch
-$\sqrt{Q(0)}=\sqrt{c^2}=c$, the one compatible with
-$H^{\rm wt}_{\Vir}(t) = c\, t^2 + O(t^3)$; note
-$H^{\rm wt}_{\Vir}$ is defined up to sign on
-$\sqrt{Q(0)}$, and the positive branch is fixed by the normalisation
-$2S_2 = c$. The Taylor expansion is therefore a
-$\mathbb{Q}(c)$-linear combination of products of the coefficients of
-$Q(t)$, each of which lies in $\mathbb{Q}(c)$; hence every coefficient
-of $H^{\rm wt}_{\Vir}(t)$ lies in $\mathbb{Q}(c)$.
-
-Explicitly, for $r \geq 2$,
-\[
- r\, \widehat S^{\rm wt}_r(\Vir_c) \;=\; [t^r]\, H^{\rm wt}_{\Vir}(t)
- \;=\; [t^{r-2}]\,\sqrt{Q(t)}
- \;\in\; \mathbb{Q}(c),
-\]
-and division by the non-zero rational integer $r$ keeps the result in
-$\mathbb{Q}(c)$.
-
-\emph{Step 3: motivic lift is trivial.} The weighted motivic lift
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)$ is defined in
-Definition~\ref{def:vmp-motivic-lift} as the image of
-$\widehat S^{\rm wt}_r(\Vir_c)$
-under the inclusion $\mathbb{Q}(c) \hookrightarrow
-\MZV^{\mot} \otimes \mathbb{Q}(c)$ induced by the motivic associator
-construction of
-Theorem~\ref{thm:shadow-tower-motivic-lift}. If
-$\widehat S^{\rm wt}_r(\Vir_c)$ is an
-element of the rational subfield $\mathbb{Q}(c) \subset \MZV^{\mot}_0
-\otimes \mathbb{Q}(c) \subset \MZV^{\mot} \otimes \mathbb{Q}(c)$, then
-$\widehat S^{\rm wt,\mot}_r(\Vir_c) = \widehat S^{\rm wt}_r(\Vir_c)
-\otimes 1$, and its $\mathbb{Q}$-linear
-expansion in the Brown basis of $\MZV^{\mot}$ has a single non-zero
-coefficient, namely along the unit $1 \in \MZV^{\mot}_0$.
-
-\emph{Step 4: period-map consistency.} Applying
-$\per \colon \MZV^{\mot} \to \mathbb{R}$ to
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)
-=\widehat S^{\rm wt}_r(\Vir_c)\otimes1$ recovers
-$\widehat S^{\rm wt}_r(\Vir_c)$ tautologically (rational numbers are fixed by the
-period map), consistent with
-Theorem~\ref{thm:shadow-tower-motivic-lift} Step~4. Since no
-$\zet^{\mot}(n_1, \ldots, n_k)$ term appears with $n_1 + \cdots + n_k
-\geq 2$, the motivic coaction has no positive-weight component on
-the weighted Virasoro shadow tower.
-\end{proof}
-
-\begin{remark}[\label{rem:vmp-convergence-of-sqrt}Formal vs.\
-analytic square root]
-The Taylor expansion of $\sqrt{Q(t)}$ around $t = 0$ used in Step~2
-is a \emph{formal} power-series identity in $\mathbb{Q}(c)[[t]]$; it
-does not require convergence or a branch cut (we operate in the formal
-power-series ring, not in a punctured disk). The discriminant
-$\Delta(Q)=144c^2-4c^2(180c+872)/(5c+22)
-=-320c^2/(5c+22)$ governs \emph{analytic} algebraicity (finite radius of
-convergence versus entire function), which is logically separate from
-formal rationality.
-\end{remark}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Denominator structure}
-\label{sec:vmp-denominator}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The closed-form computations at $r = 4, 5, 6, 7, 8$
-(chapter~\ref{ch:shadow-tower-higher-coefficients}) exhibit a uniform
-denominator structure. The following proposition gives the precise
-bound.
-
-\begin{proposition}[\label{prop:denominator-structure}Denominator of
-$\widehat S^{\rm wt}_r(\Vir_c)$]
-\ClaimStatusProvedHere
-For every $r \geq 2$, the reduced-form denominator of
-$\widehat S^{\rm wt}_r(\Vir_c) \in \mathbb{Q}(c)$ divides
-\[
- D_r \;=\; c^{\max(0, r-3)} \;\cdot\; (5c + 22)^{\lfloor (r-2)/2 \rfloor}.
-\]
-Explicitly: $D_2 = 1$, $D_3 = 1$, $D_4 = c(5c+22)$,
-$D_5 = c^2(5c+22)$, $D_6 = c^3(5c+22)^2$, $D_7 = c^4(5c+22)^2$,
-$D_8 = c^5(5c+22)^3$. In particular, the only irreducible factors of
-denominators across the Virasoro shadow tower are $c$ and $(5c+22)$;
-no new irreducible factor (such as $7c + 68$, $c + 1$, or $c + 2$)
-enters at any weight.
-\end{proposition}
-
-\begin{proof}
-The base cases $r = 2, 3$ are immediate:
-$\widehat S^{\rm wt}_2(\Vir_c) = c/2$ has
-denominator $1$ (we absorb the $2$ into the numerator); $S_3 = 2$ has
-denominator $1$. The case $r = 4$ is
-Proposition~\ref{prop:s4-vir-mot} with denominator $c(5c+22)$; the
-case $r = 5$ is Proposition~\ref{prop:s5-vir-mot} with denominator
-$c^2(5c+22)$. The weighted square-root metric coefficient at $r=6$ is
-$\widehat S^{\rm wt}_6 = 80(45c+193)/[3 c^3 (5c+22)^2]$, while the
-manuscript shadow coefficient is not used in this proposition. The remaining weighted
-closed forms through $r=8$ are
-$\widehat S^{\rm wt}_7 = -2880(15c + 61)/[7 c^4 (5c+22)^2]$,
-$\widehat S^{\rm wt}_8 = 80(2025 c^2 + 16470 c + 33314)/[c^5(5c+22)^3]$
-of Theorems~\ref{thm:s6-virasoro-closed-form},
-\ref{thm:s7-virasoro-closed-form}, \ref{thm:s8-virasoro-closed-form}.
-All eight cases satisfy the stated bound directly.
-
-For the induction step $r \geq 6$, apply the master-equation
-recurrence
-\[
- \widehat S^{\rm wt}_r(\Vir_c) \;=\; -\,\frac{1}{r c}
- \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k < r}}
- \varepsilon(j, k)\, j k\, \widehat S^{\rm wt}_j(\Vir_c)\,
- \widehat S^{\rm wt}_k(\Vir_c)
-\]
-(Theorem~\ref{thm:virasoro-shadow-recurrence}). Each product
-$\widehat S^{\rm wt}_j(\Vir_c)\,\widehat S^{\rm wt}_k(\Vir_c)$ has denominator dividing $D_j \cdot D_k$
-by the inductive hypothesis. The prefactor $1/(rc)$ contributes one
-additional factor of $c$ (absorbing into $c^{r-3}$ since the highest
-exponent $r - 3$ in $D_r$ exceeds the exponents $j - 3 + k - 3 = r -
-4$ by $1$). The power of $(5c + 22)$ in the denominator is bounded by
-$\max_{(j,k)}\lfloor (j-2)/2 \rfloor + \lfloor (k-2)/2 \rfloor$ over
-admissible pairs. In both parities this sum is at most
-$\lfloor (r - 2)/2 \rfloor$, by direct arithmetic:
-\begin{itemize}
-\item Even $r = 2m$: every admissible pair satisfies
-$\lfloor (j-2)/2 \rfloor+\lfloor (k-2)/2 \rfloor\leq m-1
-=\lfloor(r-2)/2\rfloor$.
-\item Odd $r = 2m + 1$: every admissible pair satisfies
-$\lfloor (j-2)/2 \rfloor+\lfloor (k-2)/2 \rfloor\leq m-1
-=\lfloor(r-2)/2\rfloor$.
-\end{itemize}
-Adding the fresh $1/(rc)$ contributes no new irreducible factor (the
-integer $r$ reduces in $\mathbb{Q}(c)$ to a rational scalar). Hence
-$D_r$ absorbs all denominators appearing in the inductive product, and
-the bound propagates.
-
-No new irreducible factor enters at any weight because the recurrence
-itself introduces only the factor $c$ (via $1/(rc)$); every other
-denominator contribution inherits from $D_j \cdot D_k$, and the
-bracket structure of Virasoro on a one-dimensional primary slice has
-exactly one non-central OPE channel (the $2 T(w)/(z-w)^2$ descendant
-exchange), whose iterated re-contraction against $\Lambda$-channels
-produces only $(5c + 22)$-factors. No admissible pair $(j, k)$ in the
-recurrence produces a $\mathbb{Q}$-irreducible factor of $c$ other
-than $c$ itself, and no admissible pair produces a
-$\mathbb{Q}(c)$-irreducible factor of $(5c + 22)$ other than
-$(5c + 22)$ itself.
-\end{proof}
-
-\begin{remark}[\label{rem:vmp-growth}Slow polynomial growth]
-The denominator $D_r$ grows as $c^{r-3}$ in the first generator and
-$(5c + 22)^{\lfloor (r-2)/2 \rfloor}$ in the second; the total
-$c$-degree of the denominator is $r - 3 + \lfloor (r-2)/2 \rfloor \leq
-3r/2$, linear in $r$. By contrast, the numerator degree in $c$ is
-bounded by Proposition~\ref{prop:s8-c-degree-bound} at $r \leq 8$ and
-by a parallel induction at general $r$; the ratio
-$\deg_c\mathrm{num}/\deg_c\mathrm{denom}$ has limit $1/2$, which is
-precisely the scalar rank-$1$ behaviour for a single-primary chiral
-algebra.
-\end{remark}
-
-\begin{remark}[\label{rem:vmp-c1-excluded}$c = 1$ specialisation
-remains rational]
-At $c = 1$ (free-boson point), $D_r$ specialises to
-$27^{\lfloor (r-2)/2 \rfloor}$: $D_6 = 3^6 = 729$,
-$D_7 = 27^2 = 729$, $D_8 = 27^3 = 19683$. The appearance of
-$3^9 = 19683$ in the denominator of
-$\widehat S^{\rm wt}_8(\Vir_1) = 4144720/19683$
-(chapter~\ref{ch:shadow-tower-higher-coefficients}) matches the Vol
-III $m_8 = 4144720/19683$ specialisation and confirms that the
-denominator is a pure power of $27 = (5 \cdot 1 + 22)$, with no
-extraneous prime. This is the prime-power denominator structure of
-the Vol~III $m_8 = 4144720/19683$ specialization: with
-$19683 = 3^9$ corresponds to Virasoro at $c = 1$, where
-$(5c + 22) = 27 = 3^3$, and the denominator of $S_8(\Vir_1) = D_8 =
-27^3 = 3^9$ matches exactly.
-\end{remark}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Rationality of the Riccati shadow-transport operator}
-\label{sec:vmp-transport}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{theorem}[\label{thm:virasoro-riccati-transport-rationality}
-Rationality of the weighted Riccati transport operator on Virasoro]
-\ClaimStatusConditional
-Let $\mathcal{T}^{\rm wt}_{\Vir} \colon \mathbb{Q}(c)^{\oplus 3} \to
-\mathbb{Q}(c)[[t]]$ be the \emph{weighted Riccati shadow-transport operator} on
-Virasoro:
-\[
- \mathcal{T}^{\rm wt}_{\Vir}(\kapch, S_3, S_4)
- \;=\; t^2\, \sqrt{4\, \kapch^2 + 12\, \kapch\, S_3\, t
- + (9 S_3^2 + 16\, \kapch\, S_4)\, t^2}.
-\]
-Then:
+\begin{definition}[Motivic residue package]
+\ClaimStatusDefinitional
+\label{def:vmp-motivic-lift}
+For a constructed ordered-residue package, the motivic comparison
+package \(\mathsf H_{\mathrm{mot}}\) consists of:
 \begin{enumerate}[(i)]
-\item $\mathcal{T}^{\rm wt}_{\Vir}$ sends rational triples to formal power
-series in $\mathbb{Q}(c)[[t]]$; in particular it preserves the
-$\mathbb{Q}(c)$-subring of the formal power-series ring.
-\item Extracting the $t^r$-coefficient and dividing by $r$ yields
-$\widehat S^{\rm wt}_r(\Vir_c) \in \mathbb{Q}(c)$ for every $r \geq 2$.
-\item Composition with the motivic lift map
-$\iota^{\mot} \colon \mathbb{Q}(c) \hookrightarrow \MZV^{\mot}
-\otimes \mathbb{Q}(c)$ factors through the rational sub-comodule:
-$\iota^{\mot} \circ [t^r]\, \mathcal{T}^{\rm wt}_{\Vir}
-=\widehat S^{\rm wt,\mot}_r(\Vir_c)
-\in \MZV^{\mot}_0 \otimes \mathbb{Q}(c) = \mathbb{Q}(c)$.
+\item a graded motivic period complex \(\mathcal P^{\mot}\) with its
+de Rham coaction;
+\item a collision-compatible chain map from the ordered correlator
+complex to \(\mathcal P^{\mot}\);
+\item a comparison from \(\mathcal P^{\mot}\) to the scalar
+contraction in \(\mathsf H_{\mathrm{res}}\);
+\item compatibility with the ordered-to-symmetric averaging map and
+with the period homomorphism;
+\item declared Tate twists, weight conventions, and regularizations.
 \end{enumerate}
+The resulting class is denoted
+\[
+ S_r^{\mot}(\Vir_c;\mathsf H_{\mathrm{res}},\mathsf H_{\mathrm{mot}}).
+\]
+\end{definition}
+
+\section{The conditional purity criterion}
+\label{sec:vmp-main}
+
+\begin{theorem}[Tate-factorization criterion for Virasoro residues]
+\ClaimStatusConditional
+\label{thm:virasoro-motivic-purity}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, ordered residue and motivic-period
+presentations, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}
++\mathsf H_{\mathrm{Tate}}\)).}
+
+Assume \(\mathsf H_{\mathrm{res}}\) and
+\(\mathsf H_{\mathrm{mot}}\).  Suppose the Tate-factorization package
+\(\mathsf H_{\mathrm{Tate}}\) supplies, for every~\(r\), a
+factorization of the motivic residue class through the unit-motive
+summand
+\[
+ \mathbb Q(0)\otimes\mathbb Q(c)
+ \longrightarrow \mathcal P^{\mot}\otimes\mathbb Q(c).
+\]
+Then
+\[
+ S_r^{\mot}(\Vir_c)
+ =S_r(\Vir_c;\mathsf H_{\mathrm{res}})\otimes1
+ \in\mathbb Q(0)\otimes\mathbb Q(c),
+\]
+and its reduced positive-weight motivic coaction vanishes.
 \end{theorem}
 
 \begin{proof}
-\emph{(i)} The argument of the square root is a quadratic polynomial
-in $t$ with coefficients in $\mathbb{Q}(c)$. Formal square roots of
-power series $P(t) = P(0) + t\, P'(0) + \ldots$ with non-zero constant
-term $P(0) \neq 0$ in $\mathbb{Q}(c)$ are defined in
-$\mathbb{Q}(c)[[t]]$ via the binomial series (after possibly extending
-by $\sqrt{P(0)}$). For
-$P(t) = Q(t) = c^2 + 12 c\, t + \ldots$ with $c \neq 0$, we have
-$\sqrt{Q(0)} = c \in \mathbb{Q}(c)$, and the extension is trivial:
-$\sqrt{Q(t)} = c\, \sqrt{1 + (Q(t) - c^2)/c^2}$ expands via
-$\sum_{n \geq 0} \binom{1/2}{n}\, ((Q(t) - c^2)/c^2)^n$, which is a
-formal power series in $\mathbb{Q}(c)[[t]]$ because
-$\binom{1/2}{n} \in \mathbb{Q}$ and $(Q(t) - c^2)/c^2$ has no constant
-term. Multiplying by the $t^2$ prefactor keeps the result in
-$\mathbb{Q}(c)[[t]]$.
-
-\emph{(ii)} By Theorem~\ref{thm:vmp-riccati-vir-recap},
-$\mathcal{T}^{\rm wt}_{\Vir}(\kapch(\Vir_c), 2, 10/[c(5c+22)])
-= H^{\rm wt}_{\Vir}(t) =
-\sum_{r \geq 2} r\, \widehat S^{\rm wt}_r(\Vir_c)\, t^r$; extracting the $t^r$-
-coefficient and dividing by $r \in \mathbb{Q}^{\times}$ gives
-$\widehat S^{\rm wt}_r(\Vir_c) \in \mathbb{Q}(c)$.
-
-\emph{(iii)} The motivic lift map $\iota^{\mot}$ is by construction
-the composition of the inclusion $\mathbb{Q}(c) \hookrightarrow
-\MZV^{\mot}_0 \otimes \mathbb{Q}(c)$ (Brown 2012 Thm.\ 1.1:
-$\MZV^{\mot}_0 = \mathbb{Q}$) with the identity on $\mathbb{Q}(c)$-
-coefficients. Therefore
-$\iota^{\mot}(\widehat S^{\rm wt}_r(\Vir_c))
-=\widehat S^{\rm wt}_r(\Vir_c)\otimes 1$ lies in the weight-$0$
-graded component, in agreement with
-the Theorem~\ref{thm:virasoro-motivic-purity} conclusion.
+The factorization places the class in the unit-motive summand.  The
+period comparison identifies its scalar coefficient with the
+ordered-residue contraction.  The reduced positive-weight coaction
+vanishes on \(\mathbb Q(0)\), which proves the assertion.
 \end{proof}
 
-\begin{remark}[\label{rem:vmp-binary-bracket-closure}Binary-bracket
-closure is the mechanism]
-The deep reason Virasoro's Riccati transport preserves
-$\mathbb{Q}(c)$-rationality is \emph{binary-bracket closure}: the
-Virasoro OPE $T(z) T(w)$ is a quadratic polynomial in
-$1/(z - w)$ with rational residues (central term $c/2$, stress
-exchange $2 T(w)$, descendant $\partial T(w)$), and no higher primary
-enters. The shadow tower's recursion combines only binary products
-$S_j S_k$ with rational prefactors $\varepsilon(j, k)\, j k / (r c)$;
-no triple or higher iterated bracket appears. For algebras with
-ternary or higher brackets (e.g.\ $W_3$, which has a spin-$3$ primary
-$W(z)$ with $W W$ OPE producing a weight-$3$ Arnold period), the
-Riccati transport acquires additional terms and rationality may be
-broken; this is the content of
-Section~\ref{sec:vmp-w-algebra-comparison}.
+\begin{remark}[Formal algebraicity and motivic periods]
+\label{rem:vmp-convergence-of-sqrt}
+Formal algebraicity controls coefficients of the auxiliary formal
+series.  The package \(\mathsf H_{\mathrm{mot}}\) controls periods of
+the geometric residue cycles.  The comparison
+\(\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\) connects these two
+statements.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{No MZV contribution: motivic coaction is trivial}
+\section{Denominator and growth obligations}
+\label{sec:vmp-denominator}
+
+\begin{problem}[Determine the divisor of the residue coefficients]
+\ClaimStatusOpen
+\label{prop:denominator-structure}
+\emph{Type signature:}
+\textup{(Open quadrant, scalar residue presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{den}}\)).}
+
+Construct the scalar coordinates and determine their reduced divisors
+as rational functions of~\(c\).  The denominator package
+\(\mathsf H_{\mathrm{den}}\) contains a proof of rational dependence,
+an exact divisor calculation in each arity, and a uniform induction
+compatible with the transferred brackets.  The local factor
+\(c(5c+22)\) enters through the norm of~\(\Lambda\); its
+multiplicity in arity~\(r\) is part of this problem.
+\end{problem}
+
+\begin{remark}[Uniform asymptotic package]
+\label{rem:vmp-growth}
+Growth in~\(r\), Laurent order at \(c=\infty\), and the analytic
+radius of a generating series are governed by
+\(\mathsf H_{\mathrm{asymp}}\).  This package includes uniform bounds
+and an order-of-limits theorem.
+\end{remark}
+
+\begin{remark}[The free-boson specialization]
+\label{rem:vmp-c1-excluded}
+At \(c=1\), the exact local Gram factor specializes to
+\(N_\Lambda(1)=27/10\).  Higher residue values at this charge are
+obtained by specializing a constructed residue tower.  A comparison
+with categorical coefficients in Volume~III requires a named
+cross-volume chain map.
+\end{remark}
+
+\section{Rational transfer as a conditional algebraic statement}
+\label{sec:vmp-transport}
+
+\begin{theorem}[Rationality under a finite scalar transfer package]
+\ClaimStatusConditional
+\label{thm:virasoro-riccati-transport-rationality}
+\emph{Type signature:}
+\textup{(Open quadrant, transferred scalar presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{rat}}\)).}
+
+Assume the transferred scalar Maurer--Cartan equation is triangular in
+arity, every transfer kernel lies in \(\mathbb Q(c)\), and every
+linear coefficient solved at the next arity is invertible in
+\(\mathbb Q(c)\).  Then all recursively constructed scalar
+coordinates lie in \(\mathbb Q(c)\).
+\end{theorem}
+
+\begin{proof}
+The initial coordinates belong to \(\mathbb Q(c)\) by hypothesis.
+At arity~\(r\), triangularity expresses the next coordinate as the
+inverse linear coefficient times a finite polynomial in earlier
+coordinates and transfer kernels.  The field \(\mathbb Q(c)\) is
+closed under these operations.  Induction on~\(r\) gives the result.
+\end{proof}
+
+\begin{remark}[Local binary OPE and transferred brackets]
+\label{rem:vmp-binary-bracket-closure}
+The Virasoro OPE determines the local binary collision terms.  Higher
+transferred brackets encode homotopies of the residue complex.  The
+package \(\mathsf H_{\mathrm{rat}}\) proves their scalar kernels and
+thereby turns local rationality into rationality of the transferred
+coordinates.
+\end{remark}
+
+\section{Motivic coaction}
 \label{sec:vmp-no-mzv}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{corollary}[\label{cor:virasoro-no-mzv-contribution}Motivic
-coaction on the weighted Virasoro shadow tower is trivial]
+\begin{corollary}[Unit-motive coaction]
 \ClaimStatusConditional
-For every $r \geq 2$ and every $c \in C^{\mathrm{gen}}$, the motivic
-coaction $\Delta^{\mot}$ on $\widehat S^{\rm wt,\mot}_r(\Vir_c)$ is trivial:
-\[
- \Delta^{\mot}\bigl(\widehat S^{\rm wt,\mot}_r(\Vir_c)\bigr)
- \;=\; 1 \otimes \widehat S^{\rm wt,\mot}_r(\Vir_c)
- \;+\; \widehat S^{\rm wt,\mot}_r(\Vir_c) \otimes 1,
-\]
-with no $\zet^{\mot}(2n+1)$-term for any $n \geq 1$.
+\label{cor:virasoro-no-mzv-contribution}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, motivic scalar presentation,
+levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}
++\mathsf H_{\mathrm{Tate}}\)).}
+Under the hypotheses of
+Theorem~\ref{thm:virasoro-motivic-purity}, every Virasoro motivic
+residue has zero reduced positive-weight coaction.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:virasoro-motivic-purity},
-$\widehat S^{\rm wt,\mot}_r(\Vir_c) \in
-\MZV^{\mot}_0 \otimes \mathbb{Q}(c)$. The coaction
-$\Delta^{\mot}$ acts as the identity on weight-$0$ elements of
-$\MZV^{\mot}$ (Brown 2012 Prop.\ 2.1: weight-$0$ is the group-like
-component of the motivic Galois Hopf algebra); explicitly, for
-$q \in \mathbb{Q} \subset \MZV^{\mot}_0$,
-$\Delta^{\mot}(q) = q \otimes 1 = 1 \otimes q$. Hence the coaction on
-$\widehat S^{\rm wt,\mot}_r(\Vir_c)
-=\widehat S^{\rm wt}_r(\Vir_c) \otimes 1$ is
-$1 \otimes \widehat S^{\rm wt,\mot}_r(\Vir_c)
-+ \widehat S^{\rm wt,\mot}_r(\Vir_c) \otimes 1$
-(primitive), and no $\zet^{\mot}(2n+1)$-generator of the Hopf algebra
-appears because every such generator has weight $\geq 3 > 0$.
-
-In particular, at $r \leq 5$ (where
-Theorem~\ref{thm:grt-motivic-coaction} would a priori permit a
-$\sigma_{r-j}^W \otimes S_j^{\mot}$ term for $3 \leq r - j \leq r$),
-the coaction evaluates to trivial on Virasoro: the Willwacher
-cocycle $\sigma^W$ acts on the \emph{universal} associator
-$\Phi_{\KZ}^{\mot}$ but the \emph{averaged projection} onto Virasoro's
-scalar shadow kills every non-rational component. This is consistent
-with the direct computation
-$\Delta^{\mot}(S_2^{\mot}(\Vir_c)) = \Delta^{\mot}(c/2) = c/2 \otimes 1
-= 1 \otimes c/2$ (rational scalars are primitive).
+Theorem~\ref{thm:virasoro-motivic-purity} places every class in
+\(\mathbb Q(0)\otimes\mathbb Q(c)\), and the reduced
+positive-weight coaction vanishes on this summand.
 \end{proof}
 
-\begin{remark}[\label{rem:vmp-grt-action-trivial-on-vir}$\mathrm{GRT}$
-acts trivially on the weighted Virasoro shadow tower]
-Theorem~\ref{thm:grt-motivic-coaction} asserts that
-$\GRT(\mathbb{Q})$ coacts on the motivic shadow tower. For Virasoro
-specifically, Corollary~\ref{cor:virasoro-no-mzv-contribution} shows
-the coaction restricts to the trivial action: $\GRT(\mathbb{Q})$-
-torsor elements acting on the weighted Virasoro face of the shadow
-tower leave every $\widehat S^{\rm wt,\mot}_r(\Vir_c)$ invariant.
-This is the motivic-side
-expression of Virasoro's single-generator rigidity: $\GRT$ acts on
-the multi-generator data (associator), but Virasoro's scalar shadow
-is insensitive to the multi-generator content because it lives in the
-rational subfield $\mathbb{Q}(c)$.
+\begin{remark}[Grothendieck--Teichm\"uller action]
+\label{rem:vmp-grt-action-trivial-on-vir}
+Under \(\mathsf H_{\mathrm{Tate}}\), the motivic Galois action on the
+Virasoro scalar residue factors through the action on the unit
+motive.  Constructing \(\mathsf H_{\mathrm{Tate}}\) is the geometric
+content of this statement.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Comparison with $W_3$ and finite-lane propagation}
+\section{Comparison with principal \texorpdfstring{$\mathcal W$}{W}-algebras}
 \label{sec:vmp-w-algebra-comparison}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{remark}[\label{rem:vir-vs-w3-contrast}Where $W_3$ can acquire a
-period]
-Virasoro has one generator ($T(z)$ of conformal weight $2$); its OPE
-$T(z) T(w)$ has three channels (central $c/2$, stress exchange
-$2 T(w)$, descendant $\partial T(w)$), all rational in $c$. The
-shadow-tower Riccati transport closes on the three invariants
-$(\kapch(\Vir_c), S_3, S_4)$, none of which involves a weight-$3$
-Arnold period.
-
-Principal $W_3 = W_3(sl_3)$ has two generators ($T(z)$ of weight $2$
-and $W(z)$ of weight $3$); the $W W$ OPE contains higher collision
-channels absent from the Virasoro line. These channels are possible
-sources of Arnold/KZ periods. They become actual motivic contributions
-only after the corresponding period pairing is computed and shown to
-survive ordered-to-symmetric averaging
-(Proposition~\ref{prop:s6-w3-mot}).
-
-In short: weighted Virasoro motivic purity is proved for every weight because
-the stress tensor is Virasoro's only primary and its OPE is
-$\mathbb{Q}(c)$-rational. The $W_3$ spin-$3$ primary marks the first
-period boundary; it does not by itself prove non-purity.
+\begin{remark}[The first additional generator lane]
+\label{rem:vir-vs-w3-contrast}
+Virasoro has the stress-tensor generator and rational Ward
+correlators.  Principal \(\mathcal W_3\) adds a spin-three generator
+and a multivariable residue complex.  Each generator lane acquires a
+motivic meaning through its own collision-compatible period map and
+averaging comparison.
 \end{remark}
 
-\begin{remark}[\label{rem:vmp-wn-propagation-bound}Possible period
-window for $\Walg_N$]
-Generalising Remark~\ref{rem:vir-vs-w3-contrast}: principal
-$\Walg_N = \Walg_N(sl_N)$ has generators of conformal weights
-$\{2, 3, \ldots, N\}$. A spin-$k$ primary with $k \geq 3$ can
-contribute an Arnold period only if its ordered period pairing survives
-the symmetric shadow projection. Consequently the weighted Virasoro
-rationality theorem extends automatically only to the stress-tensor projection. For
-non-stress-tensor generator lines, the expected period boundary is a
-computation, not a theorem. For $N = 3$,
-Proposition~\ref{prop:s6-w3-mot} identifies the first possible
-boundary; it does not assert a non-zero motivic coefficient.
+\begin{remark}[Finite-lane comparison for \texorpdfstring{$\mathcal W_N$}{WN}]
+\label{rem:vmp-wn-propagation-bound}
+Principal \(\mathcal W_N\) has generator weights
+\(2,3,\ldots,N\).  The stress-tensor lane receives the Virasoro local
+input, while every additional lane contributes separate transfer
+kernels and period cycles.  The multivariable package records their
+mixed brackets.
 \end{remark}
 
-\begin{corollary}[\label{cor:vir-purity-propagates-to-dress-reduced}
-Motivic purity in the Drinfeld--Sokolov reduction chain]
-\ClaimStatusConditional
-Let $\Walg$ be a principal $\Walg$-algebra obtained as a
-Drinfeld--Sokolov reduction of affine $\hat{sl}_N$. The DS ghost
-cohomology is rational at the chain-level by Arakawa 2007 and
-Kac--Roan--Wakimoto 2003; hence the shadow-tower projection of
-$\Walg$ onto its Virasoro sub-algebra (the stress-tensor component)
-inherits weighted rationality, and the Virasoro scalar projection of
-$\widehat S^{\rm wt,\mot}_r(\Walg)$ equals
-$\widehat S^{\rm wt,\mot}_r(\Vir_{c(\Walg)}) \in
-\mathbb{Q}(c(\Walg))$ for every $r \geq 2$.
+\begin{problem}[Transport the motivic package through Drinfeld--Sokolov reduction]
+\ClaimStatusOpen
+\label{cor:vir-purity-propagates-to-dress-reduced}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, Drinfeld--Sokolov and ordered-residue
+presentations, levels \(1\leftrightarrow2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{DS}\to\mathrm{res}}
++\mathsf H_{\mathrm{mot}}\)).}
+Construct a chain map from the Drinfeld--Sokolov complex to the
+ordered-residue complexes of the source and reduced
+\(\mathcal W_N\)-algebra.  Prove compatibility with scalar
+contractions, motivic period maps, and the stress-tensor projection.
+This comparison determines the image of the Virasoro Tate package
+under reduction.
+\end{problem}
 
-Non-stress-tensor contributions to $S_r^{\mot}(\Walg)$ (arising from
-spin-$\geq 3$ primaries) require their own finite-lane or period-pairing
-calculation.
-\end{corollary}
-
-\begin{proof}
-DS reduction $H_{\mathrm{DS}}^0(\hat{sl}_N, V) = \Walg$ is exact at
-the chain level on principal nilpotents (Arakawa 2007 Thm.\ 4.3). The
-reduction intertwines the Virasoro sub-algebra of $\hat{sl}_N$ (the
-Sugawara stress tensor) with the Virasoro sub-algebra of $\Walg$
-(the leading $T(z)$ of the $\Walg$-stress-tensor series), with a
-rational shift of central charge $c(\Walg) = c(\hat{sl}_N) - 12
-|\rho|^2 (k + h^\vee)^{-1}$ (Kac--Roan--Wakimoto 2003; landscape\_
-census.tex, $\Walg$ row for $sl_N$). Restricting the shadow tower
-of $\Walg$ to the Virasoro sub-algebra gives the weighted Virasoro
-coefficient $\widehat S^{\rm wt,\mot}_r(\Vir_{c(\Walg)})$, and by
-Theorem~\ref{thm:virasoro-motivic-purity} this weighted sub-shadow
-tower is rational in $c(\Walg)$. The full $\Walg$-shadow tower contains
-additional non-Virasoro components from spin-$\geq 3$ primaries. Their
-motivic weight is not decided by the Virasoro projection.
-\end{proof}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Epilogue}
+\section{The comparison frontier}
 \label{sec:vmp-epilogue}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The weighted Virasoro motivic purity theorem
-(Theorem~\ref{thm:virasoro-motivic-purity}) completes the arithmetic
-characterisation of the weighted Virasoro shadow tower. Three consequences
-close loose ends left open in chapter~\ref{ch:motivic-shadow-tower}.
-
-First, the weighted extrapolation from $r \leq 5$ to all $r \geq 2$ is
-grounded in the Riccati algebraicity of $H^{\rm wt}_{\Vir}(t)$, not in
-a weight-by-weight cohomological vanishing.
-The Feigin--Fuchs vanishing argument of
-Remark~\ref{rem:w3-first-zeta3} is a separate fact about Virasoro
-module cohomology; it is not used in the proof above.
-
-Second, the $\mathrm{GRT}$-torsor action on the motivic shadow tower
-(Theorem~\ref{thm:grt-motivic-coaction}) restricts to the trivial
-action on Virasoro (Remark~\ref{rem:vmp-grt-action-trivial-on-vir}).
-This is a family-specific restriction of the universal coaction.
-Higher families ($W_N$, $N \geq 3$) may carry non-trivial
-$\mathrm{GRT}$-action from spin-$\geq 3$ period pairings, but this must
-be checked on the chosen ordered-to-symmetric shadow lane. Virasoro is
-the \emph{$\mathrm{GRT}$-trivial} stratum.
-
-Third, the denominator bound
-(Proposition~\ref{prop:denominator-structure}) gives a concrete
-arithmetic finiteness for the Virasoro shadow tower: the full tower
-embeds in the two-generator multiplicative monoid $\langle c,\,
-5c + 22 \rangle$ inside $\mathbb{Q}(c)^{\times}$. No prime factor of
-the shadow tower denominator escapes this monoid; in particular, at
-$c = 1$, every $S_r(\Vir_1) \in \mathbb{Z}[1/27]$ is a $27$-adic
-rational, explaining the Vol III specialisation
-$m_8 = 4144720/19683 = 4144720/27^3$.
-
-The frontier is the motivic classification of $W_N$ shadow towers for
-$N \geq 4$: the possible period boundary of
-Remark~\ref{rem:vmp-wn-propagation-bound} must be tested by explicit
-Arnold/KZ pairings and by the ordered-to-symmetric averaging map. That
-programme lies outside the scope of the Virasoro chapter.
+The exact Ward and Gram calculations provide the local source.  The
+ordered-residue package constructs the scalar invariant.  The motivic
+package lifts its chain representative to a period class.  Tate
+factorization, denominator control, and Drinfeld--Sokolov propagation
+are the three named obligations that complete Virasoro motivic
+purity.

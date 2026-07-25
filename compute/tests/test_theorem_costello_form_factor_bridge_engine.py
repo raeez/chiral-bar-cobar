@@ -741,7 +741,7 @@ class TestTwistedHolography:
         assert "Koszul-dual coalgebra" in firewall["A^i"]
         assert "Verdier/continuous linear dual" in firewall["A^!"]
         assert "bar-cobar reconstruction" in firewall["Omega(B(A))"]
-        assert "derived-centre bulk" in firewall["Z_ch^der(A)"]
+        assert "derived-centre closed-sector" in firewall["Z_ch^der(A)"]
         assert firewall["A^i"] != firewall["A^!"]
         assert firewall["Omega(B(A))"] != firewall["A^!"]
         assert firewall["Z_ch^der(A)"] != firewall["B(A)"]

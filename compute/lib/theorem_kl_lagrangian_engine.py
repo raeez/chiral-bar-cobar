@@ -24,7 +24,7 @@ theorem.
 
 PATH 1 (VERDIER ANTI-INVOLUTION):
   Theorem C provides Q_g(A) + Q_g(A^!) =
-  H*(M_g_bar, Z_ch^der(A)), where Z_ch^der(A) is the bulk/derived
+  H*(M_g_bar, Z_ch^der(A)), where Z_ch^der(A) is the closed-sector/derived
   centre.
   The Verdier duality sigma satisfies <sigma(v), sigma(w)>_D = -<v,w>_D.
   The eigenspaces V+ = Q_g(A), V- = Q_g(A^!) are isotropic:
@@ -69,7 +69,7 @@ CONVENTIONS (from CLAUDE.md anti-patterns):
   AP24: kappa + kappa' = 13 for Virasoro
   AP25: B(A) is a coalgebra; A^i = H^*(B(A)); A^! comes from A^i by
         Verdier/linear duality under finite-type/completed hypotheses;
-        Omega(B(A)) = A is inversion; Z_ch^der(A) is bulk/derived centre
+        Omega(B(A)) = A is inversion; Z_ch^der(A) is closed-sector/derived centre
   AP31: kappa = 0 leaves Theta as separate data
   AP45: desuspension LOWERS degree: |s^{-1}v| = |v| - 1
 
@@ -124,7 +124,7 @@ AP25_OBJECT_CHAIN = {
         'finite-type or completed hypotheses.'
     ),
     'inversion': 'Omega(B(A)) = A is bar-cobar inversion.',
-    'derived_centre': 'Z_ch^der(A) is the bulk/derived centre.',
+    'derived_centre': 'Z_ch^der(A) is the closed-sector/derived centre.',
 }
 
 HOLOGRAPHIC_PACKAGE_ENTRIES = (
@@ -551,7 +551,7 @@ def path2_lagrangian_proof(n: int, g: int = 1) -> Dict:
 
     1. C_g(A) = R Gamma(M_g_bar, Z_ch^der(A)) carries a
        (-(3g-3))-shifted symplectic form omega, where Z_ch^der(A) is
-       the bulk/derived centre.
+       the closed-sector/derived centre.
 
     2. Q_g(A) is Lagrangian in (C_g(A), omega):
        (a) omega|_{Q_g(A)} = 0 (isotropy)
@@ -791,7 +791,7 @@ def bar_cobar_recovery_structure(family: str, h_max: int = 6) -> Dict:
             'B(A) is a coalgebra; A^i = H^*(B(A)); A^! is obtained '
             'from A^i by Verdier/linear duality under finite-type or '
             'completed hypotheses. Omega(B(A)) = A is inversion, '
-            'recovering A itself. Z_ch^der(A) is the bulk/derived centre.'
+            'recovering A itself. Z_ch^der(A) is the closed-sector/derived centre.'
         ),
         'mechanism': (
             'Bar coalgebra = encoding. Cobar = decoding. '

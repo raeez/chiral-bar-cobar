@@ -35,6 +35,7 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     # Shadow data
     virasoro_weighted_riccati_shadow,
     virasoro_manuscript_shadow,
+    virasoro_relation_shadow,
     w3_shadow,
     heisenberg_shadow,
     affine_sl2_shadow,
@@ -66,6 +67,7 @@ from compute.lib.theorem_genus4_multiweight_engine import (
     virasoro_S6_from_convolution,
     virasoro_S6_from_shadow_metric,
     virasoro_S6_manuscript_null_state,
+    virasoro_relation_s6,
     virasoro_S7_from_convolution,
     virasoro_S7_from_shadow_metric,
     # Comparison table
@@ -338,28 +340,37 @@ class TestShadowCoefficients:
         assert vir['S_7'] == virasoro_S7_from_convolution(c)
         assert vir['S_7'] == virasoro_S7_from_shadow_metric(c)
 
-    def test_manuscript_S6_null_state_formula(self):
-        """Manuscript S_6 is thm:S6-Vir-closed, not the weighted coefficient."""
+    def test_formal_relation_coefficient(self):
+        """The quadratic order-six relation has the stated exact solution."""
         c = Fraction(1)
         expected = Fraction(4) * (240 * c + 1031) / (c**3 * (5 * c + 22)**2)
         assert expected == Fraction(5084, 729)
-        assert virasoro_S6_manuscript_null_state(c) == expected
-        assert virasoro_manuscript_shadow(c)['S_6'] == expected
+        assert virasoro_relation_s6(c) == expected
+        assert virasoro_relation_shadow(c)['C_6_rel'] == expected
 
-    def test_weighted_and_manuscript_S6_are_distinct(self):
-        """The weighted Riccati metric coefficient is not the manuscript S_6."""
+    def test_legacy_relation_aliases_are_semantically_explicit(self):
+        """Historical API names delegate to the formal relation output."""
+        c = Fraction(13)
+        canonical = virasoro_relation_s6(c)
+        assert virasoro_S6_manuscript_null_state(c) == canonical
+        assert virasoro_manuscript_shadow(c)['S_6'] == canonical
+        assert "Compatibility alias" in virasoro_manuscript_shadow.__doc__
+        assert "radical/decoupling map" in virasoro_S6_manuscript_null_state.__doc__
+
+    def test_weighted_and_relation_outputs_are_distinct(self):
+        """The weighted-Riccati and relation constructions are distinct."""
         for c_val in [1, 10, 26, 50]:
             c = Fraction(c_val)
             weighted = virasoro_weighted_riccati_shadow(c)['S_6']
-            manuscript = virasoro_manuscript_shadow(c)['S_6']
-            assert weighted != manuscript
+            relation = virasoro_relation_shadow(c)['C_6_rel']
+            assert weighted != relation
 
     def test_S6_positive(self):
-        """Weighted and manuscript S_6 are positive for all tested c > 0."""
+        """Both order-six formal outputs are positive for tested c > 0."""
         for c_val in [1, 10, 26, 50, 100]:
             c = Fraction(c_val)
             assert virasoro_weighted_riccati_shadow(c)['S_6'] > 0
-            assert virasoro_manuscript_shadow(c)['S_6'] > 0
+            assert virasoro_relation_shadow(c)['C_6_rel'] > 0
 
     def test_S7_negative(self):
         """Weighted S_7 < 0 for all tested c > 0."""
@@ -384,20 +395,20 @@ class TestShadowCoefficients:
         assert vir['S_5'] == Fraction(-48) / (26 ** 2 * (5 * 26 + 22))
 
     def test_virasoro_singular_levels_rejected(self):
-        """Both Virasoro normalisations reject c=0 and c=-22/5."""
+        """Both formal constructions have poles at c=0 and c=-22/5."""
         for bad_c in [Fraction(0), Fraction(-22, 5)]:
             with pytest.raises(ValueError):
                 virasoro_weighted_riccati_shadow(bad_c)
             with pytest.raises(ValueError):
-                virasoro_manuscript_shadow(bad_c)
+                virasoro_relation_shadow(bad_c)
 
-    def test_w3_t_line_carries_both_s6_normalisations(self):
-        """W3 T-line exposes weighted and manuscript S_6 separately."""
+    def test_w3_t_line_carries_both_order_six_constructions(self):
+        """The W3 T-line exposes weighted and relation outputs separately."""
         data = w3_shadow(Fraction(26))
         assert data['T_normalization'] == 'weighted_riccati'
         assert data['S_6_T_weighted'] == virasoro_weighted_riccati_shadow(26)['S_6']
-        assert data['S_6_T_manuscript'] == virasoro_manuscript_shadow(26)['S_6']
-        assert data['S_6_T_weighted'] != data['S_6_T_manuscript']
+        assert data['C_6_T_relation'] == virasoro_relation_shadow(26)['C_6_rel']
+        assert data['S_6_T_weighted'] != data['C_6_T_relation']
 
 
 # ============================================================================

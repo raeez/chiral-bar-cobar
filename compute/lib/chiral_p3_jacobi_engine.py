@@ -17,10 +17,12 @@ through sl2-p3-ff) in chapters/theory/en_koszul_duality.tex and verifies:
       verified at the polynomial level (ignoring the D-module partial
       correction, which encodes sesquilinearity).
 
-  (4) The CFG P_3 bracket on the derived center HH*(V_k(sl_2)):
-      {X, Y} = (1/(k+2)) (X,Y) for X,Y in HH^1 = sl_2
-      (Proposition prop:e3-explicit-sl2, eq:e3-p3-killing).
-      Jacobi trivially satisfied (output is scalar, {gen, scalar} = 0).
+  (4) The CFG P_3 bracket on the zero-mode prequotient model:
+      {X, Y} = (1/(k+2)) (X,Y) for X,Y in the sl_2[-1] prequotient
+      slot (Proposition prop:e3-explicit-sl2, eq:e3-p3-killing).
+      The normalized fixed-fiber ChirHoch^1 is zero after quotienting
+      these inner zero modes.  Jacobi is trivially satisfied here
+      (output is scalar, {gen, scalar} = 0).
 
   (5) Leibniz rule for the PVA lambda-bracket on products.
 

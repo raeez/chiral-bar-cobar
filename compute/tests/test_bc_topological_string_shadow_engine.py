@@ -707,7 +707,7 @@ class TestHeisenbergComplementarity(unittest.TestCase):
             self.assertEqual(result['F_g_sum'], Fraction(0))
 
     def test_antisymmetric(self):
-        """F_g(H_k) = -F_g(H_{-k})."""
+        """The scalar shadow with kappa -k gives the antisymmetric check."""
         for g in range(1, 4):
             F_plus = heisenberg_free_energy(Fraction(3), g)
             F_minus = heisenberg_free_energy(Fraction(-3), g)

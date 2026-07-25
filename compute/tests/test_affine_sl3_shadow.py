@@ -10,7 +10,7 @@ Verifies:
   - S_r = 0 for all r >= 4 (termination)
   - Koszul duality: k' = -k-6, kappa + kappa' = 0, c + c' = 16
   - F_1 = (k+3)/18, F_1 complementarity
-  - r-matrix r(z) = Omega/z where Omega = P - I/3
+  - trace-form r-matrix r_k(z) = k*Omega/z where Omega = P - I/3
   - Classical Yang-Baxter equation (CYBE)
   - Quantum Yang-Baxter equation (YBE) for Yang R-matrix
   - Cubic shadow nonzero from structure constants
@@ -280,7 +280,7 @@ class TestCasimir:
         assert err < 1e-10
 
     def test_r_matrix_pole_order(self):
-        """r(z) = Omega/z has a single pole at z = 0 (AP19)."""
+        """Unit r(z) = Omega/z has a single pole at z = 0 (AP19)."""
         import numpy as np
         r1 = _mod.sl3_r_matrix(1.0)
         r2 = _mod.sl3_r_matrix(2.0)
@@ -288,6 +288,11 @@ class TestCasimir:
         Omega_from_r1 = 1.0 * r1
         Omega_from_r2 = 2.0 * r2
         assert np.linalg.norm(Omega_from_r1 - Omega_from_r2) < 1e-10
+
+    def test_trace_form_level_zero_vanishes(self):
+        """Trace-form affine residue r_k(z)=k*Omega/z vanishes at k=0."""
+        import numpy as np
+        assert np.linalg.norm(_mod.sl3_r_matrix(1.0, level=0)) < 1e-12
 
 
 # ============================================================

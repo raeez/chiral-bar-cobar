@@ -812,7 +812,7 @@ def quantum_r_matrix_heisenberg(k: Fraction = Fraction(1)) -> QuantumRMatrixExpa
 def quantum_r_matrix_affine_sl2(k: Fraction = Fraction(1)) -> QuantumRMatrixExpansion:
     r"""Quantum R-matrix for affine sl_2.
 
-    r^{cl}(z) = Omega/z  (pole order 1 after AP19 d-log).
+    r^{cl}_k(z) = k*Omega/z  (pole order 1 after AP19 d-log).
     (The double pole k*delta/z^2 in the OPE becomes the simple pole k*Omega/z
     after d-log absorption.)
 

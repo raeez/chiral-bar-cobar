@@ -104,7 +104,7 @@ Normalization firewalls:
     * A^! is the Verdier/continuous-linear dual branch under finite-type
       or completed hypotheses.
     * Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
-    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/bulk object.
+    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/closed-sector object.
 """
 
 from __future__ import annotations
@@ -160,7 +160,7 @@ def bar_koszul_firewall_summary() -> Dict[str, str]:
             "completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
     }
 
 

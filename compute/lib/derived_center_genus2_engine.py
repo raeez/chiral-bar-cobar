@@ -1,8 +1,8 @@
-r"""Genus-2 chiral derived center: bulk algebra structure beyond genus 1.
+r"""Genus-2 chiral derived center: closed-sector algebra structure beyond genus 1.
 
 The chiral derived center
 Z^der_ch(A) = C^bullet_ch(A, A)
-is the derived bulk algebra of the boundary chiral algebra A
+is the derived closed-sector algebra of the boundary chiral algebra A
 (thm:thqg-swiss-cheese).  At genus 0, the Swiss-cheese operad enforces
 one-way information flow (closed -> open only).  At genus 1, the annulus
 trace Delta_ns(Tr_A) = kappa * lambda_1 gives the first open-to-closed map.
@@ -35,7 +35,7 @@ MATHEMATICAL CONTENT:
      OC^{(2)}: B^{(2)}(A) -> Z_ch^{(2)}(A)
    with OC^{(2)}(Theta^{(2)}_A) = F_2(A) * omega_2 at scalar level.
 
-4. BULK ALGEBRA PRODUCT at genus 2 via pair-of-pants decomposition
+4. CLOSED-SECTOR ALGEBRA PRODUCT at genus 2 via pair-of-pants decomposition
      Z_ch^{(2)} = Z_ch^{(1)} tensor_{Z_ch^{(0)}} Z_ch^{(1)}
    (separating degeneration structure).
 
@@ -58,12 +58,12 @@ OBJECT FIREWALL:
   - A^! is obtained from A^i by Verdier/linear duality under finite-type
     or completed hypotheses.
   - Omega(B(A)) ~= A is bar-cobar inversion, not open-to-closed passage.
-  - Z^der_ch(A) is the derived center/bulk algebra, distinct from B(A),
+  - Z^der_ch(A) is the derived center/closed-sector algebra, distinct from B(A),
     A^i, and A^!.
 
 The genus-2 open/closed map sends bar-level genus data into the derived
 center.  It does not construct A^! and does not identify the bar coalgebra
-or its cohomology with the bulk.
+or its cohomology with the closed-sector actor.
 
 Reference anchors:
   thm:thqg-swiss-cheese, thm:thqg-annulus-trace,
@@ -525,8 +525,8 @@ def sp4_representation_on_H1(family: str) -> Dict:
 
     The representation on Hochschild cohomology:
       HH^0: trivial (vacuum is MCG-invariant)
-      HH^1: trivial (level deformation is MCG-invariant)
-      HH^2: trivial (obstruction is MCG-invariant)
+      HH^1: trivial (fixed-fiber shift derivation is MCG-invariant)
+      HH^2: trivial (curved dual-vacuum endpoint is MCG-invariant)
     because the scalar-level HH^* is 1-dimensional in each degree.
 
     The chain-level HH carries a NONTRIVIAL Sp(4,Z) action through

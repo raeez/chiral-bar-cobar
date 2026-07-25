@@ -7,7 +7,7 @@ r"""Tests for the complete Niemeier shadow atlas.
   4. Shadow obstruction tower universality (all 24 have identical shadow data)
   5. Genus expansion (F_1=1, F_2=7/240, proportional to kappa)
   6. Planted-forest corrections (all zero)
-  7. Complementarity (kappa + kappa' = 0 for all)
+  7. Complementarity (kappa + kappa' = 0 for all 24 Niemeier lattice VOAs)
   8. Self-duality (all 24 are unimodular)
   9. Theta series (r(0)=1, r(1)=|R|, integrality, non-negativity)
   10. Root count collisions (5 pairs identified)

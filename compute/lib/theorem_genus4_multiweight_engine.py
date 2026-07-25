@@ -19,9 +19,9 @@ This engine records the finite-window genus-4 W3 computation:
    (cor:shadow-visibility-genus: g_min(S_r) = floor(r/2) + 1).
    S_6^wt = 80(45c + 193) / [3 c^3 (5c+22)^2]
    S_7^wt = -2880(15c + 61) / [7 c^4 (5c+22)^2]
-4. Manuscript null-state sextic Virasoro shadow:
-   S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2].
-   This is distinct from S_6^wt; the two normalisations are firewalled.
+4. Formal order-six Virasoro relation coefficient:
+   C_6^rel = 4(240c + 1031) / [c^3(5c+22)^2].
+   This is distinct from S_6^wt; the two constructions are firewalled.
 5. Cross-genus growth analysis over a finite positive-c window.
    The data show rapid growth of cross-channel corrections.
    They are not an all-genus factorial-growth proof.
@@ -38,7 +38,7 @@ PROVED:
   - delta_F_4 > 0 for all c > 0 (all numerator coefficients positive)
   - F_4(Heisenberg) = k * lambda_4^FP (class G, no corrections)
   - S_6^wt, S_7^wt from the weighted convolution recursion f^2 = Q_L
-  - S_6^ms from thm:S6-Vir-closed, distinct from S_6^wt
+  - C_6^rel from thm:S6-Vir-closed, distinct from S_6^wt
 
 CONJECTURAL:
   - The genus-4 planted-forest formula (the full polynomial in kappa, S_3, ..., S_7)
@@ -70,7 +70,7 @@ Shadow data (Virasoro, from landscape_census.tex and quintic_shadow_engine.py):
     S_5 = -48/[c^2(5c+22)]
     weighted S_6^wt = 80(45c + 193) / [3 c^3 (5c+22)^2]
     weighted S_7^wt = -2880(15c + 61) / [7 c^4 (5c+22)^2]
-    manuscript S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2]
+    formal C_6^rel = 4(240c + 1031) / [c^3(5c+22)^2]
 """
 
 from __future__ import annotations
@@ -223,7 +223,8 @@ def virasoro_weighted_riccati_shadow(c: Number) -> Dict[str, Any]:
     Formulas from quintic_shadow_engine.py, derived via the convolution
     recursion S_r = a_{r-2}/r where a_n are Taylor coefficients of sqrt(Q_L).
 
-    This is not the manuscript null-state normalisation at arity 6.
+    The order-six formal relation coefficient belongs to a distinct
+    construction.
     """
     c = _as_virasoro_c(c)
     denom1 = c * (5 * c + 22)
@@ -239,28 +240,35 @@ def virasoro_weighted_riccati_shadow(c: Number) -> Dict[str, Any]:
     }
 
 
-def virasoro_manuscript_shadow(c: Number) -> Dict[str, Any]:
-    r"""Manuscript null-state Virasoro shadow through the proved sextic term.
+def virasoro_relation_shadow(c: Number) -> Dict[str, Any]:
+    r"""Return the Virasoro seeds and formal relation coefficient.
 
-    The sextic coefficient is the theorem-level normalisation of
-    thm:S6-Vir-closed:
-
-        S_6^ms = 4(240c + 1031) / [c^3(5c+22)^2].
-
-    It differs from the weighted Riccati metric coefficient
-    S_6^wt = 80(45c + 193) / [3c^3(5c+22)^2].
+    The coefficient ``C_6^rel`` is the unique solution of
+    ``2 R_2 C_6^rel + 2 R_3 R_5 + R_4^2 = 0``.  A singular-vector
+    interpretation is supplied by an explicit level-six
+    radical/decoupling map.
     """
     c = _as_virasoro_c(c)
     denom1 = c * (5 * c + 22)
     denom2 = (5 * c + 22) ** 2
     return {
         'kappa': c / 2,
-        'normalization': 'manuscript_null_state',
+        'normalization': 'formal_relation',
         'S_3': Fraction(2),
         'S_4': Fraction(10) / denom1,
         'S_5': Fraction(-48) / (c * denom1),
-        'S_6': Fraction(4) * (240 * c + 1031) / (c ** 3 * denom2),
+        'C_6_rel': Fraction(4) * (240 * c + 1031) / (c ** 3 * denom2),
     }
+
+
+def virasoro_manuscript_shadow(c: Number) -> Dict[str, Any]:
+    """Compatibility alias carrying formal-relation semantics.
+
+    The historical ``S_6`` key aliases ``C_6_rel``.  A level-six
+    radical/decoupling map supplies the singular-vector interpretation.
+    """
+    data = virasoro_relation_shadow(c)
+    return {**data, 'S_6': data['C_6_rel']}
 
 
 def virasoro_shadow(c: Number) -> Dict[str, Any]:
@@ -268,9 +276,18 @@ def virasoro_shadow(c: Number) -> Dict[str, Any]:
     return virasoro_weighted_riccati_shadow(c)
 
 
+def virasoro_relation_s6(c: Number) -> Fraction:
+    """Return ``C_6^rel`` from the formal quadratic relation."""
+    return virasoro_relation_shadow(c)['C_6_rel']
+
+
 def virasoro_S6_manuscript_null_state(c: Number) -> Fraction:
-    """Manuscript sextic coefficient from thm:S6-Vir-closed."""
-    return virasoro_manuscript_shadow(c)['S_6']
+    """Compatibility alias for :func:`virasoro_relation_s6`.
+
+    The returned value carries formal-relation semantics.  A level-six
+    radical/decoupling map supplies the singular-vector interpretation.
+    """
+    return virasoro_relation_s6(c)
 
 
 def w3_shadow(c: Number) -> Dict[str, Any]:
@@ -278,12 +295,12 @@ def w3_shadow(c: Number) -> Dict[str, Any]:
 
     Two channels: T (weight 2, kappa_T = c/2), W (weight 3, kappa_W = c/3).
     Total kappa(W_3) = 5c/6.
-    T-line stores the weighted Riccati Virasoro data at c.  The manuscript
-    null-state S_6 is carried separately to prevent normalisation leakage.
+    The T-line stores the weighted-Riccati Virasoro data and the distinct
+    formal order-six relation coefficient.
     """
     c = _as_fraction(c, "c")
     vir = virasoro_weighted_riccati_shadow(c)
-    vir_ms = virasoro_manuscript_shadow(c)
+    vir_rel = virasoro_relation_shadow(c)
     return {
         'kappa_T': vir['kappa'],
         'kappa_W': c / 3,
@@ -294,7 +311,7 @@ def w3_shadow(c: Number) -> Dict[str, Any]:
         'S_5_T': vir['S_5'],
         'S_6_T_weighted': vir['S_6'],
         'S_7_T_weighted': vir['S_7'],
-        'S_6_T_manuscript': vir_ms['S_6'],
+        'C_6_T_relation': vir_rel['C_6_rel'],
     }
 
 
@@ -943,7 +960,7 @@ def full_verification_summary() -> Dict[str, Any]:
     # 6. S_6, S_7 cross-verification
     c = Fraction(26)
     vir = virasoro_weighted_riccati_shadow(c)
-    vir_ms = virasoro_manuscript_shadow(c)
+    vir_rel = virasoro_relation_shadow(c)
     summary['S6_weighted_cross'] = {
         'from_weighted_shadow_dict': vir['S_6'],
         'from_convolution': virasoro_S6_from_convolution(c),
@@ -952,9 +969,9 @@ def full_verification_summary() -> Dict[str, Any]:
                       == virasoro_S6_from_shadow_metric(c)),
     }
     summary['S6_normalization_firewall'] = {
-        'manuscript_null_state': vir_ms['S_6'],
+        'formal_relation': vir_rel['C_6_rel'],
         'weighted_riccati': vir['S_6'],
-        'distinct': vir_ms['S_6'] != vir['S_6'],
+        'distinct': vir_rel['C_6_rel'] != vir['S_6'],
     }
     summary['S7_cross'] = {
         'from_weighted_shadow_dict': vir['S_7'],

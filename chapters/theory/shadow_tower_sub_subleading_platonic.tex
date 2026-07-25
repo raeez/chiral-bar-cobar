@@ -1,521 +1,255 @@
-%% Sub-subleading Virasoro Shadow-Tower Asymptotics.
-%%
-%% Closed form for the coefficient Gamma_r = lim_{c -> infinity} c^2
-%% (c^(r-2) S_r(Vir_c) - A_r - B_r/c), the next Laurent datum after the
-%% leading A_r = 8 (-6)^(r-4) / r (shadow_tower_higher_coefficients.tex,
-%% thm:shadow-tower-asymptotic-closed-form) and the subleading
-%% B_r = -A_r [22/5 + (r-4)(r-5)/18]
-%% (thm:shadow-tower-subleading-closed-form).
-%%
-%% Main theorem: Gamma_r/A_r = 484/25 + 22(r-4)(r-5)/45 +
-%% (r-4)(r-5)(r-6)(r-7)/972, proved by a second-order variation-of-
-%% parameters telescope on the Phi := c^(r-2) S_r Laurent recurrence.
-%%
-%% Kummer content: the integer quartic N(r) = 25 r^4 - 550 r^3 + 16355
-%% r^2 - 122870 r + 729048 (common numerator over LCM denominator 24300)
-%% has sporadic divisibility by the Kummer-irregular prime 691 at r = 8
-%% and at the other three roots of N(r) = 0 mod 691 (namely r in {315,
-%% 423, 658}). This is a modular coincidence in F_691, not a Bernoulli
-%% structural emergence. The same polynomial never hits 3617 (the next
-%% Kummer-irregular leading prime, tied to B_16) through r = 15.
-%%
-%% Vol I theory sequence. Depends on: shadow_tower_higher_coefficients.tex
-%% (A_r, B_r, sigma_r combinatorial identities), miura_transfer.tex
-%% (thm:miura-cross-universality) for the Zamolodchikov-channel pole
-%% structure, and higher_genus_modular_koszul.tex (thm:obstruction-
-%% recursion) for the master-equation recurrence.
-%%
-%% The closed form Gamma_r/A_r is stated here and checked by
-%% compute/tests/test_sub_subleading_asymptotic.py. Vol II and Vol III
-%% do not currently carry a sub-subleading asymptotic claim.
-%%
-%% All local macros are providecommand-guarded.
+%% Formal sub-subleading Virasoro recurrence and its geometric comparison.
 
-\providecommand{\cA}{\mathcal{A}}
-\providecommand{\cF}{\mathcal{F}}
 \providecommand{\Vir}{\mathrm{Vir}}
-\providecommand{\MC}{\mathrm{MC}}
-\providecommand{\wt}{\mathrm{wt}}
-\providecommand{\Res}{\operatorname{Res}}
 \providecommand{\ClaimStatusProvedHere}{}
-\providecommand{\ClaimStatusProvedElsewhere}{}
-\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusOpen}{}
 
-\chapter{Sub-subleading Asymptotic Layer of the Virasoro Shadow Tower}
+\chapter{The Sub-subleading Virasoro Recurrence}
 \label{ch:shadow-tower-sub-subleading-platonic}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Prologue}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Formal sequence and residue sequence}
 
-Write $\Phi_r(c) := c^{r-2} S_r(\Vir_c)$ for the rescaled shadow
-coefficient. Through the subleading layer
-(\ref{thm:shadow-tower-subleading-closed-form},
-Vol~I chapter \emph{Higher Virasoro Shadow Coefficients}) the large-$c$
-Laurent expansion takes the form
-\[
- \Phi_r(c) \;=\; A_r + \frac{B_r}{c} + \frac{\Gamma_r}{c^2} + \frac{\Delta_r}{c^3} + \cdots,
-\]
-with $A_r = 8(-6)^{r-4}/r$ and $B_r = -A_r[22/5 + (r-4)(r-5)/18]$.
-The next Laurent datum $\Gamma_r$ is a closed rational function of $r$,
-obtained by a second-order variation-of-parameters telescope on the
-master-equation recurrence. The apparently Kummer-irregular arithmetic
-at $r = 8$, where the numerator of $\Gamma_8$ carries the prime $691$,
-is a modular coincidence in $\mathbb{F}_{691}$; no Bernoulli structural
-mechanism is present, and the next Kummer-irregular prime $3617$ is
-absent through $r = 15$.
+This chapter computes one coefficient of a formal quadratic
+recurrence.  Its geometric interpretation belongs to a separate
+comparison package.  Let \(R_r(c)\) denote the formal sequence and let
+\(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\) denote the scalar extracted
+from an ordered residue package.  The package
+\(\mathsf H_{\mathrm{asymp}}\) consists of an identification
+\(S_r=R_r\) together with a common large-\(c\) domain and a termwise
+Laurent expansion.  Every asymptotic assertion about the geometric
+residue tower below carries
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\).
 
-Section~\ref{sec:stss-setup} fixes notation: $\Phi_r$, the Laurent
-recurrence in $\Phi$, the base cases $\Phi_3 = 2c$ and
-$\Phi_4 = A_4 + B_4/c + \Gamma_4/c^2 + \cdots$ with the explicit
-$S_4 = 10/[c(5c+22)]$ expansion. Section~\ref{sec:stss-recurrence}
-extracts the sub-subleading recurrence and its source-ratio closed
-form (Lemma~\ref{lem:gamma-source-ratio-closed-form}).
-Section~\ref{sec:stss-closed-form} states and proves the main theorem
-(Theorem~\ref{thm:shadow-tower-sub-subleading-closed-form}).
-Section~\ref{sec:stss-kummer} addresses the $r = 8$ arithmetic and
-establishes sporadicity
-(Remark~\ref{rem:gamma-691-emergence-sporadic},
-Remark~\ref{rem:gamma-irregular-primes-dense-but-structureless}).
-Section~\ref{sec:stss-verification} records the independent
-verification paths.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Setup}
+\section{The formal Laurent problem}
 \label{sec:stss-setup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fix $\cA = \Vir_c$ with $c$ a generic central charge. Let
-$\{S_r(\Vir_c)\}_{r \ge 2}$ denote the ordered-bar shadow tower
-(Vol~I, \ref{part:bar-complex}). The master-equation recurrence
-(\ref{thm:virasoro-shadow-recurrence}) reads
+\begin{definition}[Rescaled formal sequence]
+\label{def:phi-laurent}
+\ClaimStatusDefinitional
+Set \(R_3(c)=2\), \(R_4(c)=10/[c(5c+22)]\), and for \(r\ge5\) define
 \[
- S_r \;=\; -\,\frac{1}{rc}
- \sum_{\substack{j+k=r+2\\ 3 \le j \le k < r}}
- f(j,k)\, j k\, S_j S_k,
+ R_r(c)=-\frac1{rc}
+ \sum_{\substack{j+k=r+2\\3\le j\le k<r}}
+ \epsilon_{j,k}\,jkR_j(c)R_k(c),
  \qquad
- f(j,k) =
- \begin{cases}
- 1 & j < k,\\
- 1/2 & j = k,
- \end{cases}
+ \epsilon_{j,k}=\begin{cases}1,&j<k,\\[2pt]\frac12,&j=k.\end{cases}
 \]
-with initial data $\kappa = c/2$, $S_3 = 2$, $S_4 = 10/[c(5c+22)]$.
-
-\begin{definition}[\label{def:phi-laurent}Rescaled Phi and its Laurent
-data]
-\ClaimStatusProvedHere
-Define $\Phi_r(c) := c^{r-2} S_r(\Vir_c)$. The large-$c$ Laurent
-expansion
+Write \(\Phi_r(c)=c^{r-2}R_r(c)\).  Its formal Laurent expansion is
 \[
- \Phi_r(c) \;=\; A_r + \frac{B_r}{c} + \frac{\Gamma_r}{c^2}
- + \frac{\Delta_r}{c^3} + \cdots
+ \Phi_r(c)=A_r+\frac{B_r}{c}+\frac{\Gamma_r}{c^2}+O(c^{-3}).
 \]
-records the \emph{leading} ($A_r$), \emph{subleading} ($B_r$),
-\emph{sub-subleading} ($\Gamma_r$) and deeper Laurent coefficients.
 \end{definition}
 
-\begin{lemma}[\label{lem:phi-recurrence}Phi-recurrence]
+\begin{lemma}[Rescaled recurrence]
+\label{lem:phi-recurrence}
 \ClaimStatusProvedHere
-The rescaled coefficient $\Phi_r$ satisfies, for all $r \ge 5$,
+For \(r\ge5\),
 \[
- \Phi_r \;=\; -\,\frac{6(r-1)}{r}\, \Phi_{r-1}
- \;-\; \frac{1}{rc}
- \sum_{\substack{j+k=r+2\\ 4 \le j \le k \le r-2}}
- f(j,k)\, j k\, \Phi_j\, \Phi_k.
+ \Phi_r=-\frac{6(r-1)}r\Phi_{r-1}
+ -\frac1{rc}
+ \sum_{\substack{j+k=r+2\\4\le j\le k\le r-2}}
+ \epsilon_{j,k}\,jk\Phi_j\Phi_k.
 \]
-The first term on the right-hand side is the contribution of the
-$(j,k) = (3, r-1)$ pair in the original recurrence, after substituting
-$\Phi_3 = 2c$ and $S_{r-1} = \Phi_{r-1}/c^{r-3}$; the sum is over the
-remaining pairs $4 \le j \le k \le r-2$.
 \end{lemma}
 
 \begin{proof}
-Multiply the master-equation recurrence by $c^{r-2}$ and substitute
-$S_j = \Phi_j/c^{j-2}$, $S_k = \Phi_k/c^{k-2}$, and use $j+k-4 = r-2$
-to clear all but a single power of $c$ from the sum. Isolate the
-$(3, r-1)$ contribution using $\Phi_3 = 2c$.
+Substitute \(R_j=c^{2-j}\Phi_j\) into the defining recurrence and
+separate the pair \((3,r-1)\).
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The sub-subleading recurrence}
-\label{sec:stss-recurrence}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Matching the coefficient of $c^{-2}$ in
-Lemma~\ref{lem:phi-recurrence} yields a linear recurrence for
-$\Gamma_r$. The structural point is that the source at this Laurent
-order is purely $B$-linear: no $B_j B_k$ cross-product contributes.
-
-\begin{proposition}[\label{prop:gamma-recurrence}Gamma recurrence]
-\ClaimStatusProvedHere
-For $r \ge 5$,
+The leading two formal coefficients are
 \[
- \Gamma_r \;=\; -\,\frac{6(r-1)}{r}\, \Gamma_{r-1}
- \;-\; \sigma_r^{(\gamma)},
+ A_r=\frac{8(-6)^{r-4}}r,
+ \qquad
+ B_r=-A_r\left(\frac{22}{5}
+ +\frac{(r-4)(r-5)}{18}\right).
 \]
-where the source is
+They may also be taken as the hypotheses for the following coefficient
+extraction.
+
+\section{The coefficient recurrence}
+\label{sec:stss-recurrence}
+
+\begin{proposition}[Formal recurrence for \(\Gamma_r\)]
+\label{prop:gamma-recurrence}
+\ClaimStatusProvedHere
+For \(r\ge5\),
 \[
- \sigma_r^{(\gamma)}
- \;:=\; \frac{1}{r}
- \sum_{\substack{j+k=r+2\\ 4 \le j \le k \le r-2}}
- f(j,k)\, j k\, \bigl(A_j B_k + B_j A_k\bigr).
+ \Gamma_r=-\frac{6(r-1)}r\Gamma_{r-1}-\sigma_r^{(\Gamma)},
+\]
+where
+\[
+ \sigma_r^{(\Gamma)}=
+ \frac1r\sum_{\substack{j+k=r+2\\4\le j\le k\le r-2}}
+ \epsilon_{j,k}\,jk(A_jB_k+B_jA_k).
 \]
 \end{proposition}
 
 \begin{proof}
-The coefficient of $c^{-1}$ in $\Phi_j \Phi_k$ equals
-$A_j B_k + B_j A_k$ (the two Laurent datums combine linearly). The
-factor $1/(rc)$ in Lemma~\ref{lem:phi-recurrence} converts a $c^{-1}$
-coefficient in the sum to a $c^{-2}$ coefficient in $\Phi_r$; the
-$-6(r-1)/r$ transport term preserves Laurent order, contributing
-$-6(r-1)/r \cdot \Gamma_{r-1}$ at $c^{-2}$. No quadratic $B_j B_k$
-term enters at this order: $B_j B_k$ appears first in the $c^{-2}$
-coefficient of $\Phi_j \Phi_k$, which the $1/(rc)$ prefactor would
-transmit to $c^{-3}$ in $\Phi_r$ (i.e., to $\Delta_r$).
+Extract the coefficient of \(c^{-2}\) in
+Lemma~\ref{lem:phi-recurrence}.  The external factor \(c^{-1}\)
+selects the coefficient \(A_jB_k+B_jA_k\) from each product.
 \end{proof}
 
-The source has a closed form.
-
-\begin{lemma}[\label{lem:gamma-source-ratio-closed-form}Source-ratio
-closed form]
+\begin{lemma}[Closed source ratio]
+\label{lem:gamma-source-ratio-closed-form}
 \ClaimStatusProvedHere
-For $r \ge 5$,
+For \(r\ge5\),
 \[
- \frac{\sigma_r^{(\gamma)}}{A_r}
- \;=\; -\,\frac{44(r-5)}{45}
- \;-\; \frac{(r-5)(r-6)(r-7)}{243}.
+ \frac{\sigma_r^{(\Gamma)}}{A_r}
+ =-\frac{44(r-5)}{45}
+ -\frac{(r-5)(r-6)(r-7)}{243}.
 \]
 \end{lemma}
 
 \begin{proof}
-The factored identity $j A_j = 8(-6)^{j-4}$ gives $j k\, A_j A_k =
-64(-6)^{j+k-8} = 64(-6)^{r-6}$, independent of the partition $(j,k)$
-of $r+2$. Write $B_j/A_j = -[22/5 + (j-4)(j-5)/18]$, so
+The identity \(jA_j=8(-6)^{j-4}\) makes
+\(jkA_jA_k=64(-6)^{r-6}\) independent of the partition
+\(j+k=r+2\).  Symmetrization converts the polynomial part into
 \[
- A_j B_k + B_j A_k
- \;=\; A_j A_k\, \bigl[(B_j/A_j) + (B_k/A_k)\bigr]
- \;=\; -A_j A_k \Bigl[\tfrac{44}{5}
- + \tfrac{(j-4)(j-5) + (k-4)(k-5)}{18}\Bigr].
+ \sum_{j=4}^{r-2}(j-4)(j-5)
+ =\frac{(r-5)(r-6)(r-7)}3.
 \]
-Therefore
-\[
- \sigma_r^{(\gamma)}
- \;=\; -\,\frac{1}{r}
- \sum f(j,k)\, j k\, A_j A_k
- \Bigl[\tfrac{44}{5} + \tfrac{(j-4)(j-5) + (k-4)(k-5)}{18}\Bigr].
-\]
-Split into the $(22/5)$-part and the polynomial part.
-
-The $(22/5)$-part uses the subleading identity
-$\sum f(j,k) j k A_j A_k / r = A_r (r-5)/9$
-(\ref{thm:shadow-tower-subleading-closed-form}, proof), giving
-$-\,(44/5) \cdot A_r (r-5)/9 = -44 A_r (r-5)/45$.
-
-For the polynomial part, symmetrise over $(j,k) \mapsto (k,j)$ to see
-that
-\[
- \sum f(j,k) \bigl[(j-4)(j-5) + (k-4)(k-5)\bigr]
- \;=\; \sum_{j=4}^{r-2} (j-4)(j-5);
-\]
-the $f(j,j) = 1/2$ diagonal contributes
-$(1/2) \cdot 2 (j-4)(j-5) = (j-4)(j-5)$ exactly as the off-diagonal
-pair does. Setting $m := j-4$,
-\[
- \sum_{j=4}^{r-2} (j-4)(j-5)
- \;=\; \sum_{m=0}^{r-6} m(m-1)
- \;=\; \frac{(r-7)(r-6)(r-5)}{3}
-\]
-(hockey-stick identity). Using $jk A_j A_k = 64(-6)^{r-6}$ and
-$A_r = 288(-6)^{r-6}/r$ the polynomial contribution is
-\[
- -\,\frac{1}{18 r} \cdot 64(-6)^{r-6} \cdot \frac{(r-7)(r-6)(r-5)}{3}
- \;=\; -\,\frac{(r-5)(r-6)(r-7)}{243}\, A_r,
-\]
-after dividing by $A_r = 288(-6)^{r-6}/r$. Combining gives the
-stated closed form.
+Substitution of \(B_j/A_j\) gives the displayed ratio.
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Closed form for the sub-subleading coefficient}
+\section{Closed form and geometric comparison}
 \label{sec:stss-closed-form}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}[\label{thm:shadow-tower-sub-subleading-closed-form}
-Sub-subleading Virasoro shadow asymptotic]
+\begin{theorem}[Formal sub-subleading coefficient]
+\label{thm:shadow-tower-sub-subleading-closed-form}
 \ClaimStatusProvedHere
-For $r \ge 4$ the sub-subleading coefficient of the Virasoro shadow
-tower is
+For \(r\ge4\),
 \[
  \frac{\Gamma_r}{A_r}
- \;=\; \frac{484}{25}
- \;+\; \frac{22(r-4)(r-5)}{45}
- \;+\; \frac{(r-4)(r-5)(r-6)(r-7)}{972}.
+ =\frac{484}{25}
+ +\frac{22(r-4)(r-5)}{45}
+ +\frac{(r-4)(r-5)(r-6)(r-7)}{972}.
 \]
-Equivalently, writing $\phi_r := -B_r/A_r = 22/5 + (r-4)(r-5)/18$,
+Equivalently, with
+\(\phi_r=22/5+(r-4)(r-5)/18\),
 \[
  \frac{\Gamma_r}{A_r}
- \;=\; \phi_r^2 \;-\; \frac{(r-4)(r-5)(r^2 - 7 r + 9)}{486}.
+ =\phi_r^2-
+ \frac{(r-4)(r-5)(r^2-7r+9)}{486}.
 \]
 \end{theorem}
 
 \begin{proof}
-The transport prefactor in Proposition~\ref{prop:gamma-recurrence}
-absorbs into $A_r$: from $A_r = -6(r-1)/r \cdot A_{r-1}$,
+Since \(A_r=-6(r-1)A_{r-1}/r\), division by \(A_r\) turns
+Proposition~\ref{prop:gamma-recurrence} into a first-difference
+equation.  Starting from \(\Gamma_4/A_4=484/25\), use
+Lemma~\ref{lem:gamma-source-ratio-closed-form} and the identities
 \[
- -\,\frac{6(r-1)}{r} \cdot \frac{\Gamma_{r-1}}{A_r}
- \;=\; -\,\frac{6(r-1)}{r} \cdot \frac{A_{r-1}}{A_r} \cdot
- \frac{\Gamma_{r-1}}{A_{r-1}}
- \;=\; \frac{\Gamma_{r-1}}{A_{r-1}},
+ \sum_{s=5}^{r}(s-5)=\frac{(r-4)(r-5)}2,
+ \quad
+ \sum_{s=5}^{r}(s-5)(s-6)(s-7)
+ =\frac{(r-4)(r-5)(r-6)(r-7)}4.
 \]
-since $A_{r-1}/A_r = -r/[6(r-1)]$. The recurrence in
-$G_r := \Gamma_r/A_r$ therefore collapses to
-\[
- G_r \;=\; G_{r-1} \;-\; \frac{\sigma_r^{(\gamma)}}{A_r}.
-\]
-
-Substituting the source-ratio closed form
-(Lemma~\ref{lem:gamma-source-ratio-closed-form}) and iterating from
-the base case $G_4 = 484/25$:
-\[
- G_r \;=\; \frac{484}{25}
- \;+\; \frac{44}{45} \sum_{s=5}^{r} (s-5)
- \;+\; \frac{1}{243} \sum_{s=5}^{r} (s-5)(s-6)(s-7).
-\]
-The two sums evaluate via hockey-stick:
-\[
- \sum_{s=5}^{r} (s-5) \;=\; \sum_{t=0}^{r-5} t
- \;=\; \frac{(r-4)(r-5)}{2},
-\]
-\[
- \sum_{s=5}^{r} (s-5)(s-6)(s-7)
- \;=\; 6 \sum_{t=0}^{r-5} \binom{t}{3}
- \;=\; 6 \binom{r-4}{4}
- \;=\; \frac{(r-4)(r-5)(r-6)(r-7)}{4}.
-\]
-Substituting:
-\[
- G_r
- \;=\; \frac{484}{25}
- \;+\; \frac{44}{45} \cdot \frac{(r-4)(r-5)}{2}
- \;+\; \frac{1}{243} \cdot \frac{(r-4)(r-5)(r-6)(r-7)}{4}
- \;=\; \frac{484}{25}
- \;+\; \frac{22(r-4)(r-5)}{45}
- \;+\; \frac{(r-4)(r-5)(r-6)(r-7)}{972}.
-\]
-
-To derive the alternative form, expand $\phi_r^2$:
-\[
- \phi_r^2
- \;=\; \Bigl(\frac{22}{5} + \frac{(r-4)(r-5)}{18}\Bigr)^2
- \;=\; \frac{484}{25} + \frac{22(r-4)(r-5)}{45} + \frac{[(r-4)(r-5)]^2}{324}.
-\]
-Compare $\phi_r^2$ to $G_r$: the difference is
-\[
- G_r - \phi_r^2
- \;=\; \frac{(r-4)(r-5)(r-6)(r-7)}{972}
- - \frac{(r-4)^2 (r-5)^2}{324}.
-\]
-Factor $(r-4)(r-5)/972$ out:
-\[
- G_r - \phi_r^2
- \;=\; \frac{(r-4)(r-5)}{972}
- \bigl[(r-6)(r-7) - 3(r-4)(r-5)\bigr].
-\]
-Expand the bracket: $(r-6)(r-7) - 3(r-4)(r-5) = r^2 - 13 r + 42 - 3(r^2 - 9 r + 20)
-= -2r^2 + 14 r - 18 = -2(r^2 - 7 r + 9)$. Therefore
-\[
- G_r - \phi_r^2
- \;=\; -\,\frac{2(r-4)(r-5)(r^2 - 7 r + 9)}{972}
- \;=\; -\,\frac{(r-4)(r-5)(r^2 - 7 r + 9)}{486},
-\]
-as stated.
-
-For a coefficient-level check, direct Laurent expansion of the explicit
-$S_r(\Vir_c)$ quartics for $4 \leq r \leq 10$ gives the same
-$\Gamma_r/A_r$ values.
+The second formula follows by expansion.
 \end{proof}
 
-\begin{remark}[\label{rem:gamma-base-case}Base cases]
-At $r = 4$ and $r = 5$ the $(r-4)(r-5)$ factor kills both polynomial
-terms, giving the constant $G_4 = G_5 = 484/25$. This constant equals
-$(B_4/A_4)^2$ and represents the ``Riccati square'' of the subleading
-phase: the sub-subleading layer \emph{initialises} as the square of
-the subleading, and the structural polynomial $(r-4)(r-5)(r^2-7 r+9)/486$
-measures the departure from pure squaring.
+\begin{remark}[Initial value]
+\label{rem:gamma-base-case}
+At \(r=4,5\) the polynomial increments vanish and
+\(\Gamma_r/A_r=484/25\).  This is the square of the initial
+subleading ratio.
 \end{remark}
 
-\begin{remark}[\label{rem:gamma-riccati-origin}Riccati interpretation]
-The quadratic $\sqrt{Q_L}$ Riccati expansion
-(Theorem~\ref{thm:riccati-algebraicity}) predicts that $\Phi_r$ is a
-truncated binomial expansion of a square root, so the Laurent coefficients
-$A_r, B_r, \Gamma_r, \ldots$ follow a Taylor hierarchy with each
-successive layer contributing a polynomial correction to the
-previous square. The theorem makes this hierarchy explicit for the
-second layer: $\Gamma_r = A_r \phi_r^2 + \text{(quartic correction)}$.
+\begin{remark}[Relation with a Riccati model]
+\label{rem:gamma-riccati-origin}
+The formula is intrinsic to the recurrence of
+Definition~\ref{def:phi-laurent}.  A Riccati generating function gives
+another presentation of the same formal sequence once its coefficient
+comparison has been proved.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Kummer-irregular prime 691 at $r = 8$}
+\begin{remark}[Residue-tower interpretation]
+\ClaimStatusConditional
+Under \(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\), the
+coefficient \(\Gamma_r\) is the sub-subleading Laurent coefficient of
+\(c^{r-2}S_r(\Vir_c;\mathsf H_{\mathrm{res}})\).  Constructing this
+package is the geometric proof obligation.
+\end{remark}
+
+\section{Congruence data of the formal quartic}
 \label{sec:stss-kummer}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Clearing the common denominator $\mathrm{LCM}(25, 45, 972) = 24300$
-in Theorem~\ref{thm:shadow-tower-sub-subleading-closed-form} yields
-an integer quartic.
-
-\begin{lemma}[\label{lem:gamma-numerator-quartic-polynomial}Gamma
-numerator polynomial]
+\begin{lemma}[Integral numerator]
+\label{lem:gamma-numerator-quartic-polynomial}
 \ClaimStatusProvedHere
-$\Gamma_r / A_r = N(r)/24300$ where
+Writing \(\Gamma_r/A_r=N(r)/24300\) gives
 \[
- N(r) \;=\; 25 r^4 - 550 r^3 + 16355 r^2 - 122870 r + 729048.
+ N(r)=25r^4-550r^3+16355r^2-122870r+729048.
 \]
 \end{lemma}
 
 \begin{proof}
-Direct expansion of the three-term closed form over common
-denominator $24300$. The integer-coefficient reduction $N(r)$ is
-unique modulo multiplication by a positive rational constant, and
-the coefficients follow from
-\[
- \frac{484}{25} \cdot 24300 \;=\; 470448, \qquad
- \frac{22}{45} \cdot 24300 \;=\; 11880, \qquad
- \frac{1}{972} \cdot 24300 \;=\; 25,
-\]
-and the integer expansion of $(r-4)(r-5)(r-6)(r-7) = r^4 - 22 r^3 +
-179 r^2 - 638 r + 840$. Collecting:
-\[
- N(r)
- \;=\; 470448 + 11880(r-4)(r-5) + 25(r-4)(r-5)(r-6)(r-7).
-\]
-Expanding and simplifying gives the stated form.
+Put the three terms of
+Theorem~\ref{thm:shadow-tower-sub-subleading-closed-form} over the
+common denominator \(24300\) and expand.
 \end{proof}
 
-\begin{lemma}[\label{lem:gamma-numerator-irreducible}Irreducibility
-over $\mathbb{Q}$]
+\begin{lemma}[Irreducibility of the numerator]
+\label{lem:gamma-numerator-irreducible}
 \ClaimStatusProvedHere
-The polynomial $N(r)$ is irreducible over $\mathbb{Q}$.
+The polynomial \(N\) is primitive and irreducible in
+\(\mathbb Q[r]\).
 \end{lemma}
 
 \begin{proof}
-Content-free: the coefficients $(25, -550, 16355, -122870, 729048)$
-have gcd $1$ in $\mathbb{Z}$, so any non-trivial factorisation over
-$\mathbb{Q}$ would descend to one over $\mathbb{Z}$ (Gauss's lemma).
-Rational roots: by the rational root theorem, any $p/q$ root has
-$p \mid 729048$ and $q \mid 25$, giving a finite check. One verifies
-by direct substitution that no such candidate is a root. For a
-factorisation $N(r) = (a r^2 + b r + c)(a' r^2 + b' r + c')$ with
-$a a' = 25$, the candidate matching $(a, a') \in \{(1, 25), (5, 5),
-(25, 1)\}$ leads to over-determined systems in $(b, b', c, c')$ that
-have no integer solutions (checked in the verification test suite
-via sympy Q-factorisation).
+Its reduction modulo \(7\) is
+\[
+ 4r^4+3r^3+3r^2+r+5\in\mathbb F_7[r].
+\]
+The finite-field irreducibility criterion gives
+\[
+ \gcd\!\left(N(r),r^{49}-r\right)=1,
+ \qquad
+ r^{2401}-r\equiv0\pmod{N(r),7}.
+\]
+Thus its reduction has degree four over \(\mathbb F_7\).  Gauss's
+lemma lifts irreducibility to \(\mathbb Q\).
 \end{proof}
 
-\begin{remark}[\label{rem:gamma-691-emergence-sporadic}The $691$ at
-$r = 8$ is a modular coincidence]
+\begin{remark}[The residue class modulo \(691\)]
+\label{rem:gamma-691-emergence-sporadic}
 \ClaimStatusProvedHere
-$N(8) = 613608 = 2^3 \cdot 3 \cdot 37 \cdot 691$ carries the
-Kummer-irregular prime $691$. This is a modular coincidence:
-$N(r) \bmod 691$ is a degree-$4$ polynomial in $\mathbb{F}_{691}[r]$
-with \emph{exactly four} roots $r \in \{8, 315, 423, 658\}$, the
-maximum possible for a degree-$4$ polynomial over a field. The
-polynomial attains its maximum root count, so the existence of
-\emph{some} small-$r$ integer at which $691 \mid N(r)$ is forced by
-counting, not by a Bernoulli structural mechanism.
-
-Concretely, $B_{12} = -691/2730$ is the first Bernoulli number
-carrying the prime $691$, but the shadow position $r = 8$ does not
-correspond to weight $12$ under any natural correspondence:
-the shadow-Feynman bijection $F_g \leftrightarrow S_{2g-2}$ maps
-$S_8$ to $F_5$ (genus-$5$), which involves $B_8 = -1/30$ (no $691$)
-and $B_{10} = 5/66$ (no $691$), not $B_{12}$. The sporadicity is
-confirmed by the absence of the next Kummer-irregular prime $3617$
-from $N(r)$ through $r = 15$: if the emergence were Bernoulli-driven,
-$3617$ (which divides the numerator of $B_{16}$) would appear at a
-weight-$16$-linked shadow position, and it does not.
-\end{remark}
-
-\begin{remark}[\label{rem:gamma-irregular-primes-dense-but-structureless}
-Irregular primes appear densely but structurelessly]
-\ClaimStatusProvedHere
-Factorising $N(r)$ for $r \in \{4, \ldots, 15\}$ produces the prime
-set
+The exact factorization
 \[
- \{2, 3, 5, 11, 13, 19, 29, 37, 43, 47, 53, 691, 811, 1423, 3067\}.
+ N(8)=613608=2^3\cdot3\cdot37\cdot691
 \]
-Only $691$ is a Kummer-irregular leading prime. The other primes
-that appear are small regular primes (no $p < 691$ is Kummer-
-irregular at the leading level) or large primes without Bernoulli
-content. The pattern is exactly what one expects from the statistics
-of values of an irreducible integer polynomial of degree $4$: primes
-of size roughly $N(r)^{1/4}$ dominate, with sporadic large prime
-factors arising from the full value $N(r)$. No Bernoulli-congruence
-signal is present.
+is a congruence of the formal recurrence.  The roots of \(N\) in
+\(\mathbb F_{691}\) are
+\(8,315,423,658\).  A Bernoulli or Kummer interpretation requires a
+separate comparison package \(\mathsf H_{\mathrm{Kum}}\) connecting
+this recurrence to a Bernoulli-valued geometric invariant.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Independent verification}
+\begin{remark}[Prime values of an integral quartic]
+\label{rem:gamma-irregular-primes-dense-but-structureless}
+The prime divisors of \(N(r)\) record the arithmetic of this integral
+quartic.  Their interpretation as geometric Kummer data begins after
+\(\mathsf H_{\mathrm{Kum}}\) supplies the relevant motive, integral
+lattice, and reduction map.
+\end{remark}
+
+\section{Verification surface}
 \label{sec:stss-verification}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The verification surface separates each closed-form identity from the
-calculation used to discover it. The principal independent checks are:
+The formal identities admit four independent checks: coefficient
+extraction from the recurrence, substitution of the closed form,
+symbolic expansion of \(N(r)\), and finite-field factorization.  The
+geometric lane has two additional checks: construction of
+\(\mathsf H_{\mathrm{res}}\) and uniform control of the Laurent
+expansion in \(\mathsf H_{\mathrm{asymp}}\).
 
-\begin{itemize}
-\item The variation-of-parameters telescope is checked against the
-Laurent expansion of the explicit $S_r(\Vir_c)$ quartics for
-$4 \leq r \leq 10$; the shared input is only the closed form for
-$S_r(\Vir_c)$, not the derivation of $\Gamma_r$.
-\item Lemma~\ref{lem:gamma-source-ratio-closed-form} is checked both
-from the $jkA_jA_k$ identity with hockey-stick summation and by
-pair-by-pair numerical evaluation from the explicit $A_j,B_j$.
-\item The recurrence for the telescoping variable is checked by
-iterative evaluation and by substitution into the closed polynomial in
-$r$, with only the base value $G_4=484/25$ common to both calculations.
-\item The numerator polynomial is checked by symbolic expansion and by
-integer substitution into
-$N(r)=25r^4-550r^3+16355r^2-122870r+729048$.
-\item The occurrence of $691$ is checked by modular root enumeration in
-$\mathbb{F}_{691}$ and by the independent absence of Bernoulli content.
-\item The absence of $3617$ through $r=15$ is checked by exhaustive
-prime-factor enumeration against the Kummer witness set.
-\item Irreducibility of $N(r)$ over $\mathbb{Q}$ is checked by the
-rational-root theorem and by exact polynomial factorisation.
-\item The identity relating $\Gamma_r$ to the subleading square is checked
-from the direct closed form and from the Riccati-square expression
-$G_r-\phi_r^2$.
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Summary}
+\section{Status}
 \label{sec:stss-summary}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The sub-subleading asymptotic of the Virasoro shadow tower is
-captured by a polynomial of degree $4$ in $r$ divided by a Laurent
-hierarchy governed by $A_r$. The main contributions are a constant
-``Riccati-square'' term $484/25$, a quadratic hockey-stick term
-$22(r-4)(r-5)/45$, and a quartic hockey-stick term
-$(r-4)(r-5)(r-6)(r-7)/972$.
-
-The apparent emergence of the Kummer-irregular prime $691$ at
-$r = 8$ is a modular coincidence in $\mathbb{F}_{691}$: the polynomial
-$N(r) = 25 r^4 - 550 r^3 + 16355 r^2 - 122870 r + 729048$ attains the
-maximum root count mod $691$, and $r = 8$ happens to be one of the
-four roots $\{8, 315, 423, 658\}$. No Bernoulli structural identity
-is at work. The next Kummer-irregular prime $3617$ does not appear
-through $r = 15$, confirming the absence of structure.
-
-The number-theoretic content of the Virasoro shadow tower lives at the
-\emph{leading} layer $A_r$ (pure $2^a 3^b$ rationals) and
-at the genus-tower image $F_g \leftrightarrow S_{2g-2}$ via the
-Bernoulli normalisation
-\[
- [n^{2g-4}]R_{g-2}(n^2)
- =
- (-1)^g\,\frac{2^{g-1}B_{2g-2}}{(2g-2)!},
-\]
-where Kummer congruences act. The sub-subleading layer $\Gamma_r$ is
-rational in $r$ with no Kummer content; the $691$ at $r = 8$ is
-accidental.
+The quartic formula is proved for the formal quadratic recurrence.
+Its Virasoro residue interpretation is conditional on
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\), and its
+Bernoulli interpretation is governed by \(\mathsf H_{\mathrm{Kum}}\).

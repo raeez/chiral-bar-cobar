@@ -3,29 +3,34 @@ r"""Tests for holographic_entanglement_qec_engine.py.
 Verification strategy (multi-path, per CLAUDE.md mandate):
 
 1. RT FROM COMPLEMENTARITY: 3 derivation paths (direct, replica, complementarity)
-2. QUANTUM EXTREMAL SURFACE: area dominance, genus corrections, QES shift
-3. KNILL-LAFLAMME: isotropy proof, genus-1 automatic, higher genus conditional
-4. SHADOW DEPTH = CODE STRUCTURE: G/L/C/M classification, distance, rate
-5. ENTANGLEMENT WEDGE: bar-cobar encoding/decoding, subregion duality
+2. QES CANDIDATES: formal coefficients plus the geometric bridge obligation
+3. KNILL-LAFLAMME: isotropy input plus Hilbert/error-algebra obligations
+4. SHADOW DEPTH: G/L/C/M arity profiles, with physical parameters pending
+5. RECONSTRUCTION: universal Theorem A, certificate-bound Theorem B, OCA bridge
 6. MODULAR FLOW: shadow connection, temperature, flow velocity
 7. JLMS FORMULA: decomposition, positivity, complementarity consistency
 8. TENSOR NETWORK: MERA analogy, bond dimension, depth
 9. HOLOGRAPHIC RENYI: spectrum, monotonicity, min-entropy, cosmic brane
 10. HAYDEN-PRESKILL: scrambling, decoupling, Page curve
 
-Cross-checks (AP10 prevention):
-- RT = n->1 limit of Renyi (2 independent computations)
-- Complementarity sum = 26/3 (Theorem C projection)
-- Area identification: 1/(4G_N) = c/6 matches kappa = c/2
-- Renyi monotonicity for ALL standard families
-- S_inf = S_1 / 2 universally
-- Code rate = 1/2 universally (Lagrangian)
+Cross-checks:
+- scalar ``n -> 1`` replica limit;
+- Virasoro complementarity coefficient;
+- formal RT-dictionary coefficient identity;
+- scalar replica monotonicity and limiting value;
+- exact Cone(q_A) certificate transitions and bridge separation.
 """
 
 import pytest
-from sympy import Rational, pi, oo
+from sympy import Matrix, Rational, pi, oo
+
+from compute.lib.qec_koszul_code_engine import (
+    quadratic_comparison_cone,
+    theorem_b_certificate_from_cone,
+)
 
 from compute.lib.holographic_entanglement_qec_engine import (
+    physical_bridge_surfaces,
     # Section 1: RT from complementarity
     rt_from_kappa,
     rt_from_complementarity,
@@ -91,6 +96,30 @@ from compute.lib.entanglement_shadow_engine import (
 )
 
 
+def _quadratic_certificate(
+    algebra_id: str,
+    *,
+    comparison_entry: int = 1,
+    h_cl_verified: bool = True,
+    strong_convergence_verified: bool = True,
+):
+    """Build an exact one-term Theorem B certificate."""
+    cone = quadratic_comparison_cone(
+        source_dimensions={0: 1},
+        target_dimensions={0: 1},
+        source_differentials={},
+        target_differentials={},
+        comparison_maps={0: Matrix([[comparison_entry]])},
+    )
+    return theorem_b_certificate_from_cone(
+        cone,
+        algebra_id=algebra_id,
+        presentation='A = T(V)/(R), one-term finite model',
+        h_cl_verified=h_cl_verified,
+        strong_convergence_verified=strong_convergence_verified,
+    )
+
+
 # ===================================================================
 # 1. RYU-TAKAYANAGI FROM COMPLEMENTARITY
 # ===================================================================
@@ -126,10 +155,12 @@ class TestRTFromComplementarity:
             assert direct == compl
 
     def test_rt_area_identification_consistent(self):
-        """1/(4G_N) * Area = (2*kappa/3) * log(L/eps)."""
+        """The two formal coefficients agree; the RT bridge stays explicit."""
         for c_val in [1, 13, 26]:
             data = rt_area_identification(c_val)
             assert data['consistent'] is True
+            assert data['physical_rt_identification'] is None
+            assert data['physical_rt_status'] == 'CONDITIONAL_ON_ADS_CFT_RT_QES_BRIDGE'
 
     def test_rt_area_identification_c26_values(self):
         """At c=26: 1/(4G_N) = 13/3, kappa = 13."""
@@ -138,10 +169,11 @@ class TestRTFromComplementarity:
         assert data['kappa'] == Rational(13)
 
     def test_three_derivations_agree(self):
-        """All three derivation paths agree for multiple c values."""
+        """All scalar normalization paths agree for multiple c values."""
         for c_val in [1, Rational(1, 2), 13, 26, Rational(7, 10)]:
             data = rt_three_derivations(c_val)
             assert data['all_agree'] is True, f"Paths disagree at c={c_val}"
+            assert data['physical_rt'] is None
 
     def test_rt_linearity_in_kappa(self):
         """RT is linear in kappa: S(a*kappa) = a*S(kappa)."""
@@ -164,7 +196,7 @@ class TestRTFromComplementarity:
 # ===================================================================
 
 class TestQuantumExtremalSurface:
-    """QES: S_gen = Area/(4G_N) + S_bulk."""
+    """Formal shadow candidates and the QES bridge surface."""
 
     def test_qes_area_positive(self):
         """Area contribution is positive for positive kappa."""
@@ -172,21 +204,27 @@ class TestQuantumExtremalSurface:
         assert qes['S_area'] > 0
 
     def test_qes_area_equals_rt(self):
-        """Area contribution equals the RT formula."""
+        """The scalar candidate matches the RT-side coefficient."""
         kappa = Rational(13, 2)
         qes = quantum_extremal_surface(kappa, 1)
         rt = rt_from_kappa(kappa, 1)
         assert qes['S_area'] == rt
+        assert qes['physical_qes'] is None
+        assert qes['physical_qes_status'] == 'CONDITIONAL_ON_ADS_CFT_RT_QES_BRIDGE'
 
     def test_qes_bulk_subleading(self):
         """Bulk corrections are subleading (ratio < 1)."""
         ratio = qes_area_vs_bulk_ratio(Rational(13, 2), 1)
         assert ratio['ratio'] < 1
 
-    def test_qes_semiclassical_at_large_kappa(self):
-        """At large kappa, bulk/area ratio is small."""
-        ratio = qes_area_vs_bulk_ratio(Rational(13), 1)
-        assert ratio['ratio'] < Rational(1, 100)
+    def test_formal_ratio_is_kappa_scale_invariant(self):
+        ratio_1 = qes_area_vs_bulk_ratio(Rational(1), 1)
+        ratio_13 = qes_area_vs_bulk_ratio(Rational(13), 1)
+        assert ratio_1['ratio'] == ratio_13['ratio']
+        assert ratio_13['ratio'] < Rational(1, 100)
+        assert ratio_13['formal_small_correction'] is True
+        assert ratio_13['kappa_scale_invariant'] is True
+        assert ratio_13['semiclassical'] is None
 
     def test_qes_genus_corrections_decay(self):
         """Genus corrections decay: |F_g| decreases with g."""
@@ -196,17 +234,19 @@ class TestQuantumExtremalSurface:
             assert abs(corrections[i]['F_g']) >= abs(corrections[i + 1]['F_g'])
 
     def test_qes_symmetric_shift_zero(self):
-        """QES position shift is zero for symmetric bipartition."""
+        """Parity fixes the formal symmetric candidate."""
         shift = qes_shift_genus1(Rational(13, 2))
-        assert shift['symmetric_shift'] == 0
+        assert shift['formal_symmetric_shift'] == 0
+        assert shift['symmetric_shift'] is None
+        assert shift['physical_qes_shift'] is None
 
     def test_qes_gen_larger_than_area(self):
         """S_gen >= S_area (bulk entropy is non-negative at leading order)."""
         for kappa in [Rational(1), Rational(13, 2), Rational(13)]:
             qes = quantum_extremal_surface(kappa, 1)
-            # S_bulk can be negative at higher order; at leading order it is positive
-            # The test verifies the structure exists
+            # This checks the exact formal sum implemented by the engine.
             assert qes['S_gen'] is not None
+            assert qes['physical_qes'] is None
 
 
 # ===================================================================
@@ -214,18 +254,20 @@ class TestQuantumExtremalSurface:
 # ===================================================================
 
 class TestKnillLaflamme:
-    """Knill-Laflamme conditions from Theorem C."""
+    """Theorem C input and the physical Knill--Laflamme obligation."""
 
-    def test_kl_genus1_automatic(self):
-        """At genus 1, KL is automatic (dim Q_1 = 1)."""
+    def test_genus1_compression_lemma_and_physical_status(self):
         kl = knill_laflamme_from_complementarity(1)
-        assert kl['kl_satisfied'] is True
+        assert kl['kl_satisfied'] is None
+        assert kl['formal_compression_lemma'] is True
         assert kl['dim_Q_g'] == 1
+        assert kl['physical_kl_status'] == (
+            'CONDITIONAL_ON_HILBERT_ERROR_ALGEBRA_AND_RECOVERY_MAPS'
+        )
 
-    def test_kl_genus2_conditional(self):
-        """At genus 2, KL is conditional on MC structure."""
+    def test_genus2_requires_physical_error_products(self):
         kl = knill_laflamme_from_complementarity(2)
-        assert kl['kl_satisfied'] == 'conditional'
+        assert kl['kl_satisfied'] is None
         assert kl['isotropy_proved'] is True
 
     def test_kl_isotropy_all_genera(self):
@@ -235,10 +277,11 @@ class TestKnillLaflamme:
             assert kl['isotropy_proved'] is True
 
     def test_error_algebra_virasoro(self):
-        """Virasoro error algebra is Vir_{26-c}."""
+        """The Virasoro dual-family candidate is recorded separately."""
         ea = kl_error_algebra_structure('virasoro')
         assert ea['dual_family'] == 'Vir_{26-c}'
         assert ea['shadow_class'] == 'M'
+        assert ea['physical_error_algebra'] is None
 
     def test_error_algebra_heisenberg(self):
         """Heisenberg error algebra: class G, 0 redundancy."""
@@ -251,11 +294,11 @@ class TestKnillLaflamme:
         assert ea['shadow_class'] == 'L'
 
     def test_kl_by_genus_progression(self):
-        """KL status progression: automatic at g=1, conditional at g>=2."""
+        """Every genus retains the Hilbert/error-algebra bridge status."""
         data = kl_conditions_by_genus(Rational(13, 2), 4)
-        assert data[1]['status'] == 'proved (automatic)'
-        for g in [2, 3, 4]:
-            assert data[g]['status'] == 'conditional on MC structure'
+        for g in [1, 2, 3, 4]:
+            assert data[g]['status'] == 'PHYSICAL_BRIDGE_REQUIRED'
+            assert data[g]['kl_satisfied'] is None
 
 
 # ===================================================================
@@ -263,58 +306,59 @@ class TestKnillLaflamme:
 # ===================================================================
 
 class TestShadowDepthCode:
-    """Shadow depth determines code parameters."""
+    """Shadow depth determines arity profiles only."""
 
     def test_class_G_parameters(self):
-        """Class G: repetition code, 0 redundancy."""
+        """Class G has the scalar-only arity profile."""
         p = shadow_depth_code_parameters('heisenberg')
         assert p['shadow_class'] == 'G'
         assert p['n_redundancy'] == 0
-        assert p['code_type'] == 'repetition'
-        assert p['code_notation'] == '[2,1,1]'
+        assert p['code_type'] == 'arity_profile_G'
+        assert p['code_notation'] is None
+        assert p['n_logical'] is None
+        assert p['n_physical'] is None
 
     def test_class_L_parameters(self):
-        """Class L: single-channel code, 1 redundancy."""
+        """Class L adds one higher-arity slot."""
         p = shadow_depth_code_parameters('affine')
         assert p['shadow_class'] == 'L'
         assert p['n_redundancy'] == 1
-        assert p['code_notation'] == '[3,1,2]'
+        assert p['code_notation'] is None
+        assert p['higher_arity_slots'] == 1
 
     def test_class_C_parameters(self):
-        """Class C: two-channel code, 2 redundancy."""
+        """Class C adds two higher-arity slots."""
         p = shadow_depth_code_parameters('betagamma')
         assert p['shadow_class'] == 'C'
         assert p['n_redundancy'] == 2
-        assert p['code_notation'] == '[4,1,3]'
+        assert p['code_notation'] is None
+        assert p['higher_arity_slots'] == 2
 
     def test_class_M_parameters(self):
-        """Class M: exact QEC, infinite redundancy."""
+        """Class M records an unbounded arity tower."""
         p = shadow_depth_code_parameters('virasoro')
         assert p['shadow_class'] == 'M'
         assert p['n_redundancy'] == -1  # infinite
-        assert p['code_type'] == 'exact_qec'
+        assert p['code_type'] == 'arity_profile_M'
+        assert p['physical_code_parameters'] is None
 
-    def test_code_rate_universal(self):
-        """Code rate = 1/2 for ALL families (Lagrangian)."""
+    def test_physical_code_rate_requires_realization(self):
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
-            assert code_rate_by_class(family) == Rational(1, 2)
+            assert code_rate_by_class(family) is None
 
-    def test_code_distance_monotone(self):
-        """Code distance increases with shadow class: G < L < C < M."""
-        d_G = code_distance_effective('heisenberg')
-        d_L = code_distance_effective('affine')
-        d_C = code_distance_effective('betagamma')
-        d_M = code_distance_effective('virasoro')
-        assert d_G == 1
-        assert d_L == 2
-        assert d_C == 3
-        assert d_M == -1  # infinite
+    def test_physical_code_distance_requires_error_model(self):
+        for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
+            assert code_distance_effective(family) is None
 
-    def test_all_families_n_logical_1(self):
-        """All families have 1 logical qubit (kappa)."""
+    def test_family_labels_leave_hilbert_parameters_pending(self):
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             p = shadow_depth_code_parameters(family)
-            assert p['n_logical'] == 1
+            assert p['n_logical'] is None
+            assert p['n_physical'] is None
+            assert p['recovery_channels'] is None
+            assert p['physical_code_status'] == (
+                'CONDITIONAL_ON_HILBERT_ERROR_ALGEBRA_AND_RECOVERY_MAPS'
+            )
 
 
 # ===================================================================
@@ -322,29 +366,100 @@ class TestShadowDepthCode:
 # ===================================================================
 
 class TestEntanglementWedge:
-    """Entanglement wedge from bar-cobar adjunction."""
+    """Typed algebraic reconstruction and the OCA/subregion bridge."""
 
-    def test_exact_reconstruction_koszul(self):
-        """Koszul algebras have exact reconstruction."""
+    def test_family_labels_leave_theorem_b_unverified(self):
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             ew = entanglement_wedge_from_bar_cobar(family)
-            assert ew['exact_reconstruction'] is True
+            assert ew['universal_reconstruction'] is True
+            assert ew['exact_reconstruction'] is None
+            assert ew['exact_reconstruction_status'] == 'UNVERIFIED'
+            assert ew['is_koszul'] is None
 
-    def test_reconstruction_map_is_cobar(self):
-        """Reconstruction map is the cobar functor Omega."""
+    def test_reconstruction_map_is_universal_epsilon(self):
         ew = entanglement_wedge_from_bar_cobar('virasoro')
-        assert ew['reconstruction_map'] == 'Omega (cobar functor)'
+        assert ew['reconstruction_map'] == 'epsilon_A: Omega_X B_X(A) -> A'
+        assert ew['theorem_a_surface']['theorem'] == 'A'
 
     def test_encoding_map_is_bar(self):
-        """Encoding map is the bar functor B."""
+        """Encoding is the bar object assignment."""
         ew = entanglement_wedge_from_bar_cobar('virasoro')
-        assert ew['encoding_map'] == 'B (bar functor)'
+        assert ew['encoding_map'] == 'B_X (bar object assignment)'
 
-    def test_subregion_duality(self):
-        """Subregion duality: W(A) union W(A^c) = Bulk."""
+    def test_bar_and_physical_bulk_have_separate_slots(self):
+        ew = entanglement_wedge_from_bar_cobar('virasoro')
+        assert ew['bar_slot'] == 'B_X(A): twisting/coupling coalgebra'
+        assert ew['physical_bulk_claim'] is None
+        assert ew['bulk_slot'] == (
+            'Z^der_ch(A) = ChirHoch^*(A,A) after derived-centre/BRST comparison'
+        )
+        assert ew['physical_entanglement_wedge_status'] == (
+            'CONDITIONAL_ON_OCA_DERIVED_CENTRE_AND_SUBREGION_MAPS'
+        )
+
+    def test_subregion_duality_requires_regional_bridge(self):
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             check = subregion_duality_check(family)
-            assert check['subregion_duality'] is True
+            assert check['algebraic_complementarity'] is None
+            assert check['subregion_duality'] is None
+
+    def test_theorem_c_package_transitions_only_algebraic_complementarity(self):
+        check = subregion_duality_check(
+            'virasoro', theorem_c_package_verified=True
+        )
+        assert check['algebraic_complementarity'] is True
+        assert check['subregion_duality'] is None
+
+    def test_exact_cone_certificate_transitions_theorem_b(self):
+        algebra_id = 'virasoro:c=13'
+        certificate = _quadratic_certificate(algebra_id)
+        ew = entanglement_wedge_from_bar_cobar(
+            'virasoro',
+            c=13,
+            algebra_id=algebra_id,
+            quadratic_certificate=certificate,
+        )
+        assert ew['universal_reconstruction'] is True
+        assert ew['is_koszul'] is True
+        assert ew['exact_reconstruction'] is True
+        assert ew['exact_reconstruction_status'] == 'CERTIFIED'
+        assert ew['physical_entanglement_wedge'] is None
+
+    def test_obstructed_cone_transitions_theorem_b(self):
+        algebra_id = 'affine:sl2:k=1'
+        certificate = _quadratic_certificate(algebra_id, comparison_entry=0)
+        ew = entanglement_wedge_from_bar_cobar(
+            'affine',
+            algebra_id=algebra_id,
+            quadratic_certificate=certificate,
+        )
+        assert ew['is_koszul'] is False
+        assert ew['exact_reconstruction'] is False
+        assert ew['exact_reconstruction_status'] == 'OBSTRUCTED_IN_FINITE_MODEL'
+
+    def test_incomplete_certificate_keeps_theorem_b_pending(self):
+        algebra_id = 'betagamma:lambda=1'
+        certificate = _quadratic_certificate(
+            algebra_id, strong_convergence_verified=False
+        )
+        ew = entanglement_wedge_from_bar_cobar(
+            'betagamma',
+            algebra_id=algebra_id,
+            quadratic_certificate=certificate,
+        )
+        assert ew['is_koszul'] is None
+        assert ew['exact_reconstruction'] is None
+        assert ew['exact_reconstruction_status'] == 'INCOMPLETE_PACKAGE'
+
+    def test_mismatched_certificate_is_rejected(self):
+        certificate = _quadratic_certificate('virasoro:c=13')
+        with pytest.raises(ValueError, match='algebra_id'):
+            entanglement_wedge_from_bar_cobar(
+                'virasoro',
+                c=26,
+                algebra_id='virasoro:c=26',
+                quadratic_certificate=certificate,
+            )
 
     def test_greedy_heisenberg_1_layer(self):
         """Heisenberg (class G): 1 greedy layer."""
@@ -365,11 +480,19 @@ class TestEntanglementWedge:
         assert ga['terminates'] is True
 
     def test_greedy_virasoro_infinite(self):
-        """Virasoro (class M): infinite layers (convergent)."""
+        """Virasoro has an unbounded formal layer sequence."""
         ga = greedy_algorithm_from_bar_filtration('virasoro')
         assert ga['n_layers'] == -1
         assert ga['terminates'] is False
+        assert ga['convergent'] is None
+        assert ga['physical_greedy_decoder'] is None
+
+    def test_explicit_convergence_package_is_recorded(self):
+        ga = greedy_algorithm_from_bar_filtration(
+            'virasoro', convergence_verified=True
+        )
         assert ga['convergent'] is True
+        assert ga['convergence_status'] == 'CERTIFIED'
 
 
 # ===================================================================
@@ -385,11 +508,13 @@ class TestModularFlow:
         assert mh['K_scalar'] == Rational(13, 3)
 
     def test_modular_hamiltonian_equals_rt(self):
-        """K^{scalar} = S_EE at leading order."""
+        """The shadow scalar equals the entropy-side candidate."""
         for kappa in [Rational(1, 2), Rational(13, 2), Rational(13)]:
             mh = modular_hamiltonian_from_shadow(kappa)
             rt = rt_from_kappa(kappa, 1)
             assert mh['K_scalar'] == rt
+            assert mh['S_EE'] is None
+            assert mh['physical_modular_hamiltonian'] is None
 
     def test_modular_flow_stationary_at_origin(self):
         """Modular flow velocity v(0) = 0 (for alpha=0)."""
@@ -400,23 +525,28 @@ class TestModularFlow:
         """Shadow connection monodromy = -1 (Koszul sign)."""
         flow = modular_flow_from_connection(Rational(13, 2))
         assert flow['monodromy'] == -1
+        assert flow['physical_modular_flow'] is None
 
     def test_modular_temperature_rindler(self):
-        """Entanglement temperature = 1/(2*pi) (Rindler/BW)."""
+        """The Rindler candidate is recorded beside the modular bridge."""
         mt = modular_temperature(Rational(13, 2))
-        assert mt['T_ent'] == 1 / (2 * pi)
-        assert mt['beta_ent'] == 2 * pi
+        assert mt['rindler_temperature_candidate'] == 1 / (2 * pi)
+        assert mt['rindler_beta_candidate'] == 2 * pi
+        assert mt['T_ent'] is None
+        assert mt['beta_ent'] is None
 
     def test_trivial_flow_class_G(self):
-        """Class G (S_4=0): trivial flow."""
+        """S_4=0 gives a stationary shadow connection."""
         flow = modular_flow_from_connection(Rational(1), S4_val=0)
-        assert flow['flow_type'] == 'trivial'
+        assert flow['shadow_connection_type'] == 'stationary'
+        assert flow['flow_type'] is None
         assert flow['Delta_crit'] == 0
 
     def test_nontrivial_flow_class_M(self):
-        """Class M (S_4 != 0): nontrivial flow."""
+        """A nonzero S_4 gives a nonstationary shadow connection."""
         flow = modular_flow_from_connection(Rational(13, 2), S4_val=Rational(1, 10))
-        assert flow['flow_type'] == 'nontrivial'
+        assert flow['shadow_connection_type'] == 'nonstationary'
+        assert flow['flow_type'] is None
         assert flow['Delta_crit'] != 0
 
 
@@ -425,38 +555,45 @@ class TestModularFlow:
 # ===================================================================
 
 class TestJLMS:
-    """JLMS formula from complementarity."""
+    """Scalar candidates and the operator-algebraic JLMS bridge."""
 
     def test_jlms_area_contribution(self):
         """Area contribution = (2*kappa/3)*log(L/eps)."""
         jlms = jlms_formula(Rational(13, 2))
         assert jlms['area_contribution'] == Rational(13, 3)
 
-    def test_jlms_decomposition_valid(self):
-        """JLMS decomposition is valid (Lagrangian splitting)."""
+    def test_jlms_decomposition_requires_operator_bridge(self):
         jlms = jlms_formula(Rational(13, 2))
-        assert jlms['decomposition_valid'] is True
+        assert jlms['decomposition_valid'] is None
+        assert jlms['physical_jlms'] is None
+        assert jlms['physical_jlms_status'] == (
+            'CONDITIONAL_ON_TOMITA_JLMS_OPERATOR_ALGEBRA_PACKAGE'
+        )
 
-    def test_jlms_positivity(self):
-        """Relative entropy positivity from JLMS."""
+    def test_relative_entropy_requires_state_data(self):
         bound = jlms_relative_entropy_bound(Rational(13, 2))
-        assert bound['positivity'] is True
+        assert bound['positivity'] is None
+        assert bound['shadow_correction_bound'] is None
+        assert 'specified normalized states' in bound[
+            'relative_entropy_positivity_theorem'
+        ]
 
     def test_jlms_complementarity_c13(self):
         """JLMS + complementarity: K_A + K_{A!} = 26/3 at c=13."""
         data = jlms_complementarity_consistency(Rational(13))
         assert data['K_sum'] == Rational(26, 3)
-        assert data['consistent'] is True
+        assert data['scalar_identity_holds'] is True
+        assert data['consistent'] is None
 
     def test_jlms_complementarity_c1(self):
         """JLMS + complementarity at c=1."""
         data = jlms_complementarity_consistency(Rational(1))
-        assert data['consistent'] is True
+        assert data['scalar_identity_holds'] is True
 
     def test_jlms_complementarity_c26(self):
         """JLMS + complementarity at c=26."""
         data = jlms_complementarity_consistency(Rational(26))
-        assert data['consistent'] is True
+        assert data['scalar_identity_holds'] is True
 
     def test_jlms_area_equals_rt(self):
         """JLMS area contribution matches RT formula."""
@@ -471,12 +608,14 @@ class TestJLMS:
 # ===================================================================
 
 class TestTensorNetwork:
-    """Bar complex as a MERA-like tensor network."""
+    """Bar arity filtration and the tensor-network bridge."""
 
     def test_class_G_finite_layers(self):
         """Class G: finite layers."""
         tn = bar_complex_as_tensor_network('heisenberg')
-        assert tn['is_exact'] is True
+        assert tn['is_exact'] is None
+        assert tn['exact_contraction_status'] == 'UNVERIFIED'
+        assert tn['universal_reconstruction'] is True
         assert tn['shadow_class'] == 'G'
 
     def test_class_M_infinite_layers(self):
@@ -484,30 +623,47 @@ class TestTensorNetwork:
         tn = bar_complex_as_tensor_network('virasoro')
         assert 'infinite' in tn['n_layers']
 
-    def test_all_families_exact(self):
-        """All standard families have exact contraction (Koszul)."""
+    def test_family_labels_leave_exact_contraction_unverified(self):
         for family in ['heisenberg', 'affine', 'betagamma', 'virasoro']:
             tn = bar_complex_as_tensor_network(family)
-            assert tn['is_exact'] is True
+            assert tn['is_exact'] is None
+            assert tn['physical_tensor_network'] is None
+
+    def test_certificate_transitions_algebraic_contraction_only(self):
+        algebra_id = 'heisenberg:k=1'
+        tn = bar_complex_as_tensor_network(
+            'heisenberg',
+            k=1,
+            algebra_id=algebra_id,
+            quadratic_certificate=_quadratic_certificate(algebra_id),
+        )
+        assert tn['is_exact'] is True
+        assert tn['exact_contraction_status'] == 'CERTIFIED'
+        assert tn['physical_tensor_network'] is None
 
     def test_bond_dimension_normalized(self):
         """Bond dimension at arity 2 is normalized to 1."""
         bd = bond_dimension_from_shadow(Rational(13, 2), 2)
-        assert bd['chi'] == 1
+        assert bd['normalized_shadow_ratio'] == 1
+        assert bd['chi'] is None
+        assert bd['bond_dimension'] is None
 
     def test_mera_depth_ordering(self):
         """MERA depth: G < L < C < M."""
         data = mera_depth_vs_shadow_depth()
-        assert data['G']['mera_depth'] == 1
-        assert data['L']['mera_depth'] == 2
-        assert data['C']['mera_depth'] == 3
-        assert data['M']['mera_depth'] == 'infinite (convergent)'
+        assert data['G']['arity_layers'] == 1
+        assert data['L']['arity_layers'] == 2
+        assert data['C']['arity_layers'] == 3
+        assert data['M']['arity_layers'] == 'unbounded'
+        assert all(data[cls]['mera_depth'] is None for cls in data)
 
-    def test_all_convergent(self):
-        """All MERA-like networks are convergent."""
+    def test_network_convergence_requires_norm_control(self):
         data = mera_depth_vs_shadow_depth()
         for cls in ['G', 'L', 'C', 'M']:
-            assert data[cls]['convergent'] is True
+            assert data[cls]['convergent'] is None
+            assert data[cls]['status'] == (
+                'CONDITIONAL_ON_EXPLICIT_TENSORS_ISOMETRIES_AND_NORM_CONTROL'
+            )
 
 
 # ===================================================================
@@ -515,7 +671,14 @@ class TestTensorNetwork:
 # ===================================================================
 
 class TestHolographicRenyi:
-    """Holographic Renyi entropy from shadow."""
+    """Scalar replica candidates and the entropy bridge."""
+
+    def test_entropy_bridge_is_explicit(self):
+        bridge = physical_bridge_surfaces()['entropy']
+        assert bridge['physical_conclusion'] is None
+        assert bridge['status'] == (
+            'CONDITIONAL_ON_REPLICA_STATE_AND_ANALYTIC_CONTINUATION'
+        )
 
     def test_renyi_n1_equals_von_neumann(self):
         """S_1 = von Neumann = (2*kappa/3)."""
@@ -527,7 +690,7 @@ class TestHolographicRenyi:
         assert holographic_renyi_entropy(Rational(13, 2), 2, 1) == Rational(13, 4)
 
     def test_renyi_matches_scalar_formula(self):
-        """Holographic Renyi matches renyi_entropy_scalar."""
+        """The public candidate matches the canonical scalar formula."""
         kappa = Rational(13, 2)
         for n in [2, 3, 4, 5]:
             hre = holographic_renyi_entropy(kappa, n, 1)
@@ -562,7 +725,7 @@ class TestHolographicRenyi:
         assert s_inf == Rational(13, 6)
 
     def test_cosmic_brane_tension_n1(self):
-        """Cosmic brane tension vanishes at n=1 (no brane)."""
+        """The tension candidate equals zero at n=1."""
         assert cosmic_brane_tension(1, Rational(26)) == 0
 
     def test_cosmic_brane_tension_n2(self):
@@ -583,39 +746,43 @@ class TestHolographicRenyi:
 # ===================================================================
 
 class TestHaydenPreskill:
-    """Hayden-Preskill scrambling and Page curve."""
+    """Shadow monodromy, scalar envelope, and chaos/Page bridge."""
 
     def test_monodromy_koszul_sign(self):
         """Shadow connection monodromy = -1."""
         hp = hayden_preskill_scrambling(Rational(13, 2))
         assert hp['monodromy'] == -1
 
-    def test_lyapunov_saturates_mss(self):
-        """Lyapunov exponent saturates the MSS bound."""
+    def test_mss_saturation_requires_otoc_dynamics(self):
         hp = hayden_preskill_scrambling(Rational(13, 2))
-        assert hp['lyapunov_saturates_MSS'] is True
+        assert hp['lyapunov_saturates_MSS'] is None
+        assert hp['scrambling_time'] is None
+        assert hp['chaos_page_status'] == (
+            'CONDITIONAL_ON_DYNAMICS_OTOC_EVAPORATION_AND_ISLANDS'
+        )
 
-    def test_decoupling_koszul(self):
-        """Decoupling mechanism is Koszul (MC reconstruction)."""
+    def test_decoupling_requires_physical_dynamics(self):
         dt = decoupling_time(Rational(13, 2))
-        assert dt['scrambling_is_koszul'] is True
+        assert dt['scrambling_is_koszul'] is None
+        assert dt['decoupling_time'] is None
 
-    def test_page_point_c13(self):
-        """c=13 is the Page point (S_A = S_{A!})."""
+    def test_scalar_self_dual_point_c13(self):
         pt = page_time_from_complementarity(Rational(13))
-        assert pt['is_page_point'] is True
+        assert pt['scalar_self_dual_point'] is True
+        assert pt['is_page_point'] is None
+        assert pt['page_time'] is None
         assert pt['S_A'] == Rational(13, 3)
 
-    def test_page_growing_c_lt_13(self):
-        """For c < 13: S_A < S_{A!} (growing phase)."""
+    def test_scalar_branch_c_lt_13(self):
         pt = page_time_from_complementarity(Rational(1))
-        assert pt['phase'] == 'growing'
+        assert pt['scalar_branch'] == 'A'
+        assert pt['phase'] is None
         assert pt['S_A'] < pt['S_Ac']
 
-    def test_page_declining_c_gt_13(self):
-        """For c > 13: S_A > S_{A!} (declining phase)."""
+    def test_scalar_branch_c_gt_13(self):
         pt = page_time_from_complementarity(Rational(26))
-        assert pt['phase'] == 'declining'
+        assert pt['scalar_branch'] == 'A_dual'
+        assert pt['phase'] is None
         assert pt['S_A'] > pt['S_Ac']
 
     def test_page_symmetry(self):
@@ -624,21 +791,17 @@ class TestHaydenPreskill:
             pt = page_time_from_complementarity(Rational(c_val))
             assert pt['S_total'] == Rational(26, 3)
 
-    def test_page_curve_has_cusp(self):
-        """Page curve profile has a cusp at c=13."""
+    def test_scalar_envelope_changes_branch_at_self_duality(self):
         profile = page_curve_profile()
-        # Find the page point
-        page_points = [p for p in profile if p['phase'] == 'page_point']
-        # At c=13 exactly: S_A = S_Ac
-        # Due to discrete sampling, check near c=12 and c=14
         for p in profile:
             if p['c'] == 12:
-                assert p['phase'] == 'growing'
+                assert p['scalar_branch'] == 'A'
             elif p['c'] == 14:
-                assert p['phase'] == 'declining'
+                assert p['scalar_branch'] == 'A_dual'
+            assert p['physical_page_curve'] is None
 
     def test_page_curve_endpoints(self):
-        """Page curve: S(c=0) = 0, S(c=26) = 26/3."""
+        """The scalar branches have the expected endpoints."""
         profile = page_curve_profile()
         assert profile[0]['S_A'] == 0  # c=0
         assert profile[-1]['S_A'] == Rational(26, 3)  # c=26
@@ -676,27 +839,51 @@ class TestCrossChecks:
         assert cross_check_min_entropy_half_vn() is True
 
     def test_full_census_structure(self):
-        """Full census has correct structure and all families Koszul."""
+        """The census has universal A and pending algebra-bound B surfaces."""
         census = full_qec_census()
         assert len(census) >= 6
         for entry in census:
-            assert entry['kl_genus_1'] is True
-            assert entry['exact_reconstruction'] is True
+            assert entry['universal_reconstruction'] is True
+            assert entry['kl_genus_1'] is None
+            assert entry['exact_reconstruction'] is None
+            assert entry['exact_reconstruction_status'] == 'UNVERIFIED'
+            assert entry['is_koszul'] is None
+            assert entry['page_curve'] is None
             assert entry['kappa'] is not None
 
+    def test_census_certificate_is_bound_to_one_algebra(self):
+        algebra_id = 'virasoro:c=13'
+        census = full_qec_census(
+            {algebra_id: _quadratic_certificate(algebra_id)}
+        )
+        certified = [
+            entry for entry in census
+            if entry['exact_reconstruction_status'] == 'CERTIFIED'
+        ]
+        assert [entry['algebra_id'] for entry in certified] == [algebra_id]
+        assert certified[0]['exact_reconstruction'] is True
+        assert certified[0]['physical_entanglement_wedge'] is None
+
+    def test_census_rejects_mismatched_certificate(self):
+        certificate = _quadratic_certificate('virasoro:c=26')
+        with pytest.raises(ValueError, match='algebra_id'):
+            full_qec_census({'virasoro:c=13': certificate})
+
     def test_census_rt_entropy_positive(self):
-        """All census entries have positive RT entropy."""
+        """All scalar entropy candidates are positive."""
         census = full_qec_census()
         for entry in census:
-            assert entry['rt_entropy'] > 0
+            assert entry['scalar_entropy_candidate'] > 0
+            assert entry['rt_entropy'] is None
 
     def test_census_renyi_2_less_than_vn(self):
-        """S_2 <= S_1 for all census entries (Renyi monotonicity)."""
+        """The scalar n=2 candidate satisfies monotonicity."""
         census = full_qec_census()
         for entry in census:
             kappa = entry['kappa']
             s_vn = von_neumann_entropy_scalar(kappa, 1)
-            assert entry['renyi_2'] <= s_vn
+            assert entry['scalar_replica_candidate_n2'] <= s_vn
+            assert entry['renyi_2'] is None
 
     def test_rt_additivity_heisenberg(self):
         """RT is additive: S(H_k1 + H_k2) = S(H_k1) + S(H_k2).

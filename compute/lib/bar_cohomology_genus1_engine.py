@@ -73,7 +73,8 @@ CONVENTIONS
 - kappa(H_k) = k, kappa(Vir_c) = c/2, kappa(sl_2_k) = 3(k+2)/4 (AP1, AP39)
 - eta(q) = q^{1/24} * prod(1-q^n) (AP46: the q^{1/24} is NOT optional)
 - The r-matrix has pole orders ONE LESS than the OPE (AP19)
-- H_k^! = Sym^ch(V*) != H_{-k} (AP33: same kappa, different algebras)
+- H_k^! is the curved second-kind Sym^ch(V*[1]) branch, not H_{-k}
+  (AP33: same scalar kappa, different algebras)
 
 Ground truth:
     sl2_genus1_bar_cohomology.py (sl_2 Verlinde, CE differentials)

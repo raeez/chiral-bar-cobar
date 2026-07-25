@@ -122,7 +122,8 @@ CONVENTIONS
     - kappa(sl_N, k) = dim(g)(k+h^v)/(2h^v) (AP1/AP39)
     - Bar propagator d log E(z,w) is weight 1 (AP27)
     - r-matrix poles one below OPE (AP19)
-    - H_k^! = Sym^ch(V*) != H_{-k} (AP33)
+    - At k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+      branch, not H_{-k} and not the uncurved polynomial centre (AP33)
     - kappa != c/2 in general (AP39/AP48)
 
 REFERENCES

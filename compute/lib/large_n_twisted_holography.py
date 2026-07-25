@@ -152,7 +152,7 @@ class HolographicDatum:
     ))
     bar_dual_coalgebra_status: str = "A^i = H^*B(A) is typed but not reconstructed here"
     line_category_status: str = "C is a line-category slot requiring categorical input"
-    derived_center_status: str = "Z_ch^der(A) is the bulk object and is not constructed here"
+    derived_center_status: str = "Z_ch^der(A) is the closed-sector object and is not constructed here"
 
     @property
     def A_shriek(self) -> ChiralAlgebraData:
@@ -227,7 +227,7 @@ class GravitationalPhaseSpace:
     Q_g(A) = F_g(A) = kappa(A) * lambda_g^FP
     Q_g(A^!) = F_g(A^!) = kappa(A^!) * lambda_g^FP
 
-    The bulk object, when present, belongs to Z_ch^der(A).  This dataclass
+    The closed-sector object, when present, belongs to Z_ch^der(A).  This dataclass
     stores only the scalar Faber-Pandharipande values, not the derived centre.
     When kappa(A) + kappa(A^!) = 0 on the affine comparison surface, the
     scalar sum Q_g(A) + Q_g(A^!) vanishes.
@@ -295,7 +295,7 @@ def object_firewall() -> Dict[str, str]:
         "A^i": "dual coalgebra H^*B(A)",
         "A^!": "dual algebra (A^i)^vee, via Verdier/linear duality",
         "Omega(B(A))": "cobar inversion recovering A, not Koszul duality",
-        "Z_ch^der(A)": "chiral derived centre / bulk, not A^! and not B(A)",
+        "Z_ch^der(A)": "chiral derived centre / closed-sector, not A^! and not B(A)",
     }
 
 
@@ -451,7 +451,7 @@ def feigin_frenkel_dual(A: ChiralAlgebraData) -> ChiralAlgebraData:
         )
 
     if A.dual_coxeter == 0:
-        # Heisenberg: dual is Sym^ch(V*), not another Heisenberg
+        # Heisenberg: dual is the curved Sym^ch(V*[1]) branch, not another Heisenberg
         return ChiralAlgebraData(
             name=f"({A.name})!",
             dim=0,

@@ -58,7 +58,7 @@ the open/closed HT comparison datum.
    The total dimension is 2^3 * infinity (polynomial algebra is infinite-dim),
    but we compute truncated by polynomial degree.
 
-   For comparison with W_{1+infty}: the bulk algebra for the C^3 brane is
+   For comparison with W_{1+infty}: the closed-sector algebra for the C^3 brane is
    the deformation quantization of functions on C^3 (the Weyl algebra),
    which maps to the W_{1+infty} vertex algebra.
 
@@ -939,7 +939,7 @@ def w1_infty_comparison(max_deg: int = 6) -> Dict[str, Any]:
     (Prochazka-Rapcak 2019, Rapcak-Soibelman-Yang-Zhao 2020).
 
     The derived center HH*(Ext*(O_0, O_0), Ext*(O_0, O_0)) computes
-    the closed-string bulk observables. For C^3:
+    the closed-string closed-sector observables. For C^3:
     - HH^0 = C (vacuum)
     - HH^1 = C^6 (the 6 = 3+3 infinitesimal symmetries of C^3:
               3 translations + 3 rotations in the CY sense)

@@ -15,8 +15,8 @@ Run via `compute/lib/chiral_hochschild_engine.py`.
 | Family               | $h^0$ | $h^1$ | $h^2$ | $P_A(t)$        | concentration |
 |----------------------|------:|------:|------:|-----------------|---------------|
 | Heisenberg $H_k$     | 1     | 1     | 1     | $1 + t + t^2$   | ✓             |
-| $V_k(\mathfrak{sl}_2)$ generic | 1 | 3 | 1 | $1 + 3t + t^2$ | ✓             |
-| $V_k(\mathfrak{sl}_3)$ generic | 1 | 8 | 1 | $1 + 8t + t^2$ | ✓             |
+| $V_k(\mathfrak{sl}_2)$ generic | 1 | 0 | 1 | $1 + t^2$ | ✓             |
+| $V_k(\mathfrak{sl}_3)$ generic | 1 | 0 | 1 | $1 + t^2$ | ✓             |
 | $\beta\gamma$ system | 1     | 2     | 1     | $1 + 2t + t^2$  | ✓             |
 | free fermion $\psi$  | 1     | 1     | 1     | $1 + t + t^2$   | ✓             |
 | $\mathrm{Vir}_c$ generic | 1 | 0 | 1 | (W-regime)        | ✓             |

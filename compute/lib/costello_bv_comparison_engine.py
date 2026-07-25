@@ -1466,7 +1466,7 @@ def costello_li_holomorphic_twist() -> Dict[str, object]:
         "propagator_cl": "P^{hol}(z,w) = dw/(w-z) after holomorphic twist",
         "propagator_bar": "eta(z,w) = d log(z-w) on FM boundary",
         "koszul_dual_match": True,
-        "bulk_line_firewall": "bulk is derived centre; line branch is A^!_infty",
+        "bulk_line_firewall": "closed sector is derived centre; physical bulk requires HT/OCA comparison; line branch is A^!_infty",
         "status": "proved at genus 0; Swiss-cheese structure proved in Vol II",
     }
 
@@ -1699,11 +1699,11 @@ def elliott_safronov_classification(algebra: str, **params) -> Dict[str, object]
 
 
 # =========================================================================
-# Section 23: Derived Center = Bulk (CG vs our framework)
+# Section 23: Derived Center OCA Comparison (CG vs our framework)
 # =========================================================================
 
 def derived_center_vs_cg_bulk() -> Dict[str, object]:
-    """Compare our derived center Z^der_ch(A) with CG bulk observables.
+    """Compare our derived center Z^der_ch(A) with CG closed-sector observables.
 
     OUR FRAMEWORK (thm:thqg-swiss-cheese, AP25, AP34):
       The chiral derived center Z^der_ch(A) = C^*_ch(A, A) (Hochschild

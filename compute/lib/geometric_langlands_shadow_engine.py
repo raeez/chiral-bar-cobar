@@ -1224,7 +1224,7 @@ def bar_koszul_object_firewall() -> Dict[str, Dict[str, str]]:
         },
         'Z_der_ch_A': {
             'notation': 'Z_der_ch(A) = C^*_ch(A, A)',
-            'type': 'chiral Hochschild/derived-center bulk object',
+            'type': 'chiral Hochschild/derived-center closed-sector object',
             'role': 'algebraic closed sector; not B_X(A), A^i, A!, or Omega_X(B_X(A))',
         },
     }
@@ -1280,7 +1280,7 @@ def full_langlands_dictionary() -> Dict[str, Dict[str, str]]:
         },
         'derived_center': {
             'bar_cobar': (
-                'Z_der_ch(A) = C^*_ch(A, A) -- chiral Hochschild bulk; '
+                'Z_der_ch(A) = C^*_ch(A, A) -- chiral Hochschild closed-sector; '
                 'not B_X(A), A^i, A!, or Omega_X(B_X(A))'
             ),
             'geom_langlands': (
@@ -1331,8 +1331,8 @@ def full_langlands_dictionary() -> Dict[str, Dict[str, str]]:
         },
         'kz_connection': {
             'bar_cobar': (
-                'r-matrix r(z) = Res^{coll}_{0,2}(Theta_A) = Omega/z '
-                '(genus-0 binary shadow)'
+                'KZ-normalized r-matrix r(z) = Res^{coll}_{0,2}(Theta_A) '
+                '= Omega/((k+h^v)z) (genus-0 binary shadow)'
             ),
             'geom_langlands': (
                 'KZ connection nabla = d - (Omega/((k+h^v)(z_i-z_j))) d(z_i-z_j). '

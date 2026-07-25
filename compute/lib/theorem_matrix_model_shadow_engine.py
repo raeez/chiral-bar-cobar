@@ -46,7 +46,7 @@ Canonical local constants:
 Object firewall:
     A, B(A), A^i, A^!, and Z_ch^der(A) are distinct.  Omega(B(A)) = A
     is bar-cobar inversion, not Koszul duality.  A^! lies on the
-    Verdier/continuous-linear dual branch.  Hochschild/bulk data are not
+    Verdier/continuous-linear dual branch.  Hochschild/closed-sector data are not
     Koszul dual data.
 
 Verified here:
@@ -105,7 +105,7 @@ OBJECT_FIREWALLS = {
     'B(A)': 'bar coalgebra T^c(s^-1 Abar)',
     'A^i': 'bar cohomology coalgebra H^*B(A)',
     'A^!': 'Verdier/continuous-linear dual algebra branch',
-    'Z_ch^der(A)': 'derived chiral centre, i.e. Hochschild/bulk branch',
+    'Z_ch^der(A)': 'derived chiral centre, i.e. Hochschild/closed-sector branch',
     'Omega(B(A))': 'bar-cobar inversion back to A, not Koszul duality',
 }
 

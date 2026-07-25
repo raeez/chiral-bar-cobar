@@ -317,7 +317,7 @@ class TestDNPGaugeTheory:
         assert gt.kappa() == Rational(16, 3)
 
     def test_sl2_casimir_r_matrix(self):
-        """r(z) = Omega_{sl2} / z for pure gauge sl_2."""
+        """Unit-normalized DNP r(z) = Omega_{sl2} / z for pure gauge sl_2."""
         gt = DNPGaugeTheory(g="sl2")
         assert "Omega_sl2" in gt.casimir_r_matrix()
         assert "/ z" in gt.casimir_r_matrix()

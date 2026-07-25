@@ -93,7 +93,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .DEFAULT_GOAL := all
 
-.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
+.PHONY: all modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(ICLOUD_MAIN_PREREQ) standalone
@@ -143,7 +143,20 @@ icloud: $(ICLOUD_MAIN_PREREQ) standalone
 	@echo "  Vol I PDFs copied to iCloud (5 folders)."
 
 ## all: Full build — manuscript + working notes → out/
-all: $(STAMP) working-notes
+all: $(STAMP) working-notes modular-koszul-core
+
+## modular-koszul-core: Build the core standalone paper → out/
+modular-koszul-core:
+	@mkdir -p $(LOG_DIR) $(OUT_DIR)
+	@if [ -f $(OUT_DIR)/modular_koszul_core.pdf ] && [ $(OUT_DIR)/modular_koszul_core.pdf -nt standalone/modular_koszul_core.tex ]; then \
+		echo "  ✓  out/modular_koszul_core.pdf (up to date)"; \
+	else \
+		echo "  ── Building modular_koszul_core.tex ──"; \
+		cd standalone && TEXINPUTS=".:..:$$TEXINPUTS" $(TEX) $(TEXFLAGS) modular_koszul_core.tex >../$(LOG_DIR)/standalone-modular_koszul_core.log 2>&1 && \
+		TEXINPUTS=".:..:$$TEXINPUTS" $(TEX) $(TEXFLAGS) modular_koszul_core.tex >>../$(LOG_DIR)/standalone-modular_koszul_core.log 2>&1 && \
+		cd .. && cp standalone/modular_koszul_core.pdf $(OUT_DIR)/ && \
+		echo "  ✓  out/modular_koszul_core.pdf"; \
+	fi
 
 $(STAMP): $(SOURCES) $(BUILD_SCRIPT)
 	@echo "══════════════════════════════════════════════════════════"
@@ -436,6 +449,7 @@ standalone:
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
 	@failures=0; \
 	for paper in \
+		modular_koszul_core \
 		shadow_towers shadow_towers_v2 shadow_towers_v3 \
 		seven_faces classification_trichotomy virasoro_r_matrix \
 		w3_holographic_datum bp_self_duality three_parameter_hbar \

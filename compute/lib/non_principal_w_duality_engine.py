@@ -1,61 +1,17 @@
-r"""Non-principal W-algebra Koszul duality engine: beyond hook type.
+r"""Type-A nilpotent-orbit arithmetic with typed modular claims.
 
-Systematic computation and verification of Koszul duality for ALL non-principal
-W-algebras W^k(sl_N, f_lambda) in type A, with emphasis on:
+Partition transposition, dominance order, centralizer dimensions, generator
+weights, and Kac--Roan--Wakimoto central charges are exact.  The reciprocal
+generator-weight sum is an arithmetic diagnostic.  Its promotion to the
+genus-one anomaly ratio, modular characteristic, modular conductor, full
+shadow class, or object-level Koszul duality is represented by a
+``ClaimPacket`` carrying the relevant comparison hypotheses.
 
-(A) sl_3 WITH ALL NILPOTENT ORBITS:
-    - Principal (3): W_3 algebra, generators at h=2,3.  Class M.
-    - Subregular/minimal (2,1): Feigin-Semikhatov W_3^{(2)}
-      (Bershadsky-Polyakov).
-      Self-transpose.  Generators: J(1), G+(3/2), G-(3/2), T(2).
-      c_BP(k) = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020).  rho = 1/6.  kappa = rho*c.
-
-(B) sl_4 WITH ALL NILPOTENT ORBITS:
-    - Principal (4): W_4, generators at h=2,3,4.
-    - Subregular (3,1): 5 generators (1@h=1, 3@h=2, 1@h=3), all bosonic.
-    - Hook/minimal (2,1,1): 9 generators (5 bos + 4 ferm).
-    - Even (2,2): self-transpose, 7 generators, all bosonic.
-
-(C) DS-KOSZUL COMMUTATION TEST (structural, at generator level):
-    Does Koszul(DS_f(V_k)) = DS_{f^t}(V_{k'})?
-    Tested at the level of generator counts, anomaly ratios, and
-    complementarity invariants.
-
-(D) HOOK-TYPE DUALITY (PROVED by Fehily, CLNS 2022-2023):
-    (W_k(sl_N, f_{(N-r,1^r)}))^! = W_{k'}(sl_N, f_{(r+1,1^{N-r-1})})
-    with k' = -k - 2N.
-
-(E) TRANSPORT PROPAGATION BEYOND HOOK TYPE:
-    The transport graph Gamma_N has vertices = Par(N) and edges from
-    dominance-order covers.  Hook seeds + principal = proved vertices.
-    Transport closure = all reachable partitions.
-
-(F) SHADOW DEPTH: On the T-line (Virasoro restriction), the Virasoro
-    shadow tower at c = c(lambda, k) determines the generic shadow class.
-
-CRITICAL NOTE ON CENTRAL CHARGES (Beilinson Principle):
-    The function krw_central_charge from hook_type_w_duality.py uses the
-    SIMPLIFIED formula c = A - B/(k+N) which is LINEAR in k in the numerator.
-    The CORRECT formula has a QUADRATIC numerator (e.g., for BP:
-    c = 2 - 3(2k+3)^2/(k+3), not c = 1 - 18/(k+3)).
-    This engine provides CORRECT central charge formulas for all cases
-    via correct_central_charge(), independent of the oversimplified KRW.
-    The anomaly ratios, generator data, shadow depth classifications,
-    and transport graph structure are INDEPENDENT of this issue and
-    remain valid.
-
-    Known correct formulas:
-      sl_2, (2):   c = 1 - 6(k+1)^2/(k+2)         [Feigin-Fuchs]
-      sl_3, (3):   c = 2 - 24(k+2)^2/(k+3)         [Fateev-Lukyanov]
-      sl_3, (2,1): c = 2 - 3(2k+3)^2/(k+3)         [Bershadsky-Polyakov]
-      sl_4, (4):   c = 3 - 60(k+3)^2/(k+4)         [Fateev-Lukyanov]
-      Principal W_N: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-
-Multi-path verification for each kappa value:
-    Path 1: kappa = rho_lambda * c_correct(lambda, k) (anomaly ratio)
-    Path 2: Complementarity: kappa + kappa_dual at dual level
-    Path 3: Numerical evaluation at test levels
-    Path 4: Cross-check with known BP / principal formulas
+The Bershadsky--Polyakov central charge is
+``-((2k+3)(3k+1))/(k+3)`` in the standard convention.  Its four represented
+strong generators are even, so their reciprocal-weight diagnostic is
+``17/6``.  A genus-one trace theorem is the additional datum defining
+``rho`` and ``kappa``.
 
 References:
   - Kac-Roan-Wakimoto (2003): quantum reduction for arbitrary nilpotent
@@ -96,22 +52,51 @@ from compute.lib.nonprincipal_ds_orbits import (
     homogeneous_f_centralizer_basis_sl_n,
 )
 from compute.lib.hook_type_w_duality import (
+    H_HOOK_DS_BAR,
     WAlgebraGeneratorData,
     anomaly_ratio_from_partition,
+    ds_kappa_from_affine,
     ghost_constant,
     kappa_complementarity_sum,
+    krw_central_charge,
     levi_rho_norm_squared,
+    reciprocal_weight_diagnostic_from_partition,
     rho_shift_norm_squared,
     w_algebra_generator_data,
     weyl_vector_norm_squared_sl_n,
 )
+from compute.lib.non_principal_w_bar_engine import ClaimPacket, ClaimStatus
 
 
 k = Symbol('k')
 
 
+def _open(statement: str, *hypotheses: str, evidence: Tuple[str, ...] = ()) -> ClaimPacket:
+    return ClaimPacket(
+        statement=statement,
+        status=ClaimStatus.OPEN,
+        value=None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
+
+
+def _conditional(
+    statement: str,
+    *hypotheses: str,
+    evidence: Tuple[str, ...] = (),
+) -> ClaimPacket:
+    return ClaimPacket(
+        statement=statement,
+        status=ClaimStatus.CONDITIONAL,
+        value=None,
+        evidence=evidence,
+        hypotheses=tuple(hypotheses),
+    )
+
+
 # =============================================================================
-# 1. CORRECT central charge formulas (independent of oversimplified KRW)
+# 1. Exact type-A central-charge formulas
 # =============================================================================
 
 def _principal_central_charge(N: int, level=None):
@@ -128,15 +113,11 @@ def _principal_central_charge(N: int, level=None):
 
 
 def _bp_central_charge(level=None):
-    """Correct central charge for Bershadsky-Polyakov = W^k(sl_3, f_{(2,1)}).
-
-    c(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
-    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
-    """
+    """Standard Bershadsky--Polyakov central charge."""
     if level is None:
         level = k
     lev = sympify(level)
-    return 2 - 24 * (lev + 1)**2 / (lev + 3)
+    return -((2 * lev + 3) * (3 * lev + 1)) / (lev + 3)
 
 
 def _affine_central_charge(N: int, level=None):
@@ -151,61 +132,24 @@ def _affine_central_charge(N: int, level=None):
 
 
 def correct_central_charge(partition: Partition, level=None):
-    """Correct central charge for W^k(sl_N, f_lambda).
-
-    Uses known exact formulas for:
-      - Principal (N): Fateev-Lukyanov
-      - Trivial (1^N): Sugawara
-      - sl_3 minimal/subregular (2,1): Bershadsky-Polyakov
-
-    For other orbits: uses the SAME formula as krw_central_charge from
-    hook_type_w_duality.py, with a WARNING that this formula is the
-    oversimplified version (linear numerator instead of quadratic).
-    The oversimplified formula is still useful for structural tests
-    (sign of kappa, complementarity patterns, etc.) even though its
-    numerical values are wrong.
-
-    Returns (c_value, is_exact) where is_exact=True means the formula
-    is verified correct, False means it uses the oversimplified KRW.
-    """
+    """Return the exact type-A KRW central charge and its resolved flag."""
     lam = normalize_partition(partition)
     N = partition_size(lam)
     if level is None:
         level = k
     lev = sympify(level)
 
-    # Principal
-    if lam == (N,):
-        return _principal_central_charge(N, lev), True
-
-    # Trivial
-    if lam == (1,) * N:
-        return _affine_central_charge(N, lev), True
-
-    # BP = sl_3 minimal/subregular
-    if N == 3 and lam == (2, 1):
-        return _bp_central_charge(lev), True
-
-    # All other cases: use the oversimplified KRW formula
-    # (WARNING: this is wrong -- see docstring of this module)
-    from compute.lib.hook_type_w_duality import krw_central_charge
-    return krw_central_charge(lam, lev), False
+    return krw_central_charge(lam, lev), True
 
 
 def correct_kappa(partition: Partition, level=None):
-    """Correct kappa = rho * c for W^k(sl_N, f_lambda).
-
-    Returns (kappa_value, is_exact) where is_exact=True means the
-    central charge used was verified correct.
-    """
+    """Return the typed modular-characteristic packet."""
     lam = normalize_partition(partition)
     if level is None:
         level = k
     lev = sympify(level)
 
-    rho = anomaly_ratio_from_partition(lam)
-    c_val, is_exact = correct_central_charge(lam, lev)
-    return cancel(rho * c_val), is_exact
+    return ds_kappa_from_affine(lam, lev)
 
 
 def dual_level(N: int, level=None):
@@ -240,30 +184,31 @@ class NonPrincipalDualityProfile:
     # Central charge and kappa
     central_charge: object
     central_charge_exact: bool  # True if formula is verified correct
-    anomaly_ratio: Rational
-    kappa: object
-    kappa_exact: bool
+    reciprocal_weight_diagnostic: Rational
+    anomaly_ratio: ClaimPacket
+    kappa: ClaimPacket
 
     # Shadow data (on T-line)
-    shadow_class: str
-    shadow_depth: object
+    shadow_class: ClaimPacket
+    shadow_depth: ClaimPacket
 
     # Koszul duality data
     dual_partition: Partition
     dual_level: object
     dual_central_charge: object
     dual_central_charge_exact: bool
-    dual_anomaly_ratio: object
-    dual_kappa: object
+    dual_reciprocal_weight_diagnostic: Rational
+    dual_anomaly_ratio: ClaimPacket
+    dual_kappa: ClaimPacket
 
     # Complementarity
-    kappa_sum: object
+    kappa_sum: ClaimPacket
     c_sum: object
-    kappa_sum_is_constant: bool
+    kappa_sum_is_constant: Optional[bool]
     c_sum_is_constant: bool
 
     # Duality status
-    duality_status: str
+    duality_status: ClaimPacket
 
 
 def _shadow_class_from_c(c_val) -> Tuple[str, object]:
@@ -290,46 +235,53 @@ def compute_duality_profile(partition: Partition) -> NonPrincipalDualityProfile:
     # Generator data
     gen_data = w_algebra_generator_data(lam)
 
-    # Central charge and kappa (using correct formulas where available)
+    # Exact central-charge arithmetic and typed modular lifts.
     c_val, c_exact = correct_central_charge(lam)
+    diagnostic = reciprocal_weight_diagnostic_from_partition(lam)
     rho = anomaly_ratio_from_partition(lam)
-    kappa_val = cancel(rho * c_val)
-    kappa_ex = c_exact
+    kappa_packet = ds_kappa_from_affine(lam, k)
 
-    # Shadow class on T-line
-    sh_class, sh_depth = _shadow_class_from_c(c_val)
+    sh_class = _open(
+        f"full shadow class of W(sl_{N},{lam})",
+        "the complete Maurer--Cartan tower with collision normalization",
+    )
+    sh_depth = _open(
+        f"full shadow depth of W(sl_{N},{lam})",
+        "the complete Maurer--Cartan tower with collision normalization",
+    )
 
     # Dual level and dual algebra invariants
     kv = dual_level(N)
 
-    # Dual partition data
-    if lam_t != (1,) * N:
-        rho_t = anomaly_ratio_from_partition(lam_t)
-        c_dual, c_dual_exact = correct_central_charge(lam_t, kv)
-        kappa_dual = cancel(rho_t * c_dual)
-    else:
-        rho_t = Rational(0)
-        c_dual = _affine_central_charge(N, kv)
-        c_dual_exact = True
-        dim_g = N * N - 1
-        kappa_dual = cancel(dim_g * (kv + N) / (2 * N))
+    dual_diagnostic = reciprocal_weight_diagnostic_from_partition(lam_t)
+    rho_t = anomaly_ratio_from_partition(lam_t)
+    c_dual, c_dual_exact = correct_central_charge(lam_t, kv)
+    kappa_dual = ds_kappa_from_affine(lam_t, kv)
 
-    # Complementarity
-    kappa_s = simplify(kappa_val + kappa_dual)
+    conductor = kappa_complementarity_sum(lam, k)
     c_s = simplify(c_val + c_dual)
-
-    kappa_const = (k not in kappa_s.free_symbols
-                   if hasattr(kappa_s, 'free_symbols') else True)
     c_const = (k not in c_s.free_symbols
                if hasattr(c_s, 'free_symbols') else True)
 
-    # Duality status
+    # Object-level duality status.
     if is_princ:
-        status = 'proved_principal'
+        status = _conditional(
+            f"principal object-level Koszul duality for sl_{N}",
+            H_HOOK_DS_BAR,
+            "the Verdier and genus-one hypotheses of thm:w-algebra-koszul-main",
+        )
     elif is_hook_p:
-        status = 'proved_hook'
+        status = _conditional(
+            f"hook object-level Koszul duality for {lam}",
+            H_HOOK_DS_BAR,
+            "a reduction-by-stages theorem for the supplied hook corridor",
+        )
     else:
-        status = 'conjectural'
+        status = _open(
+            f"object-level Koszul duality for {lam}",
+            "a filtered DS/bar comparison for the specified nilpotent orbit",
+            "continuous Verdier duality and the transpose comparison",
+        )
 
     return NonPrincipalDualityProfile(
         partition=lam,
@@ -345,20 +297,21 @@ def compute_duality_profile(partition: Partition) -> NonPrincipalDualityProfile:
         generator_weights=gen_data.strong_generators,
         central_charge=c_val,
         central_charge_exact=c_exact,
+        reciprocal_weight_diagnostic=diagnostic,
         anomaly_ratio=rho,
-        kappa=kappa_val,
-        kappa_exact=kappa_ex,
+        kappa=kappa_packet,
         shadow_class=sh_class,
         shadow_depth=sh_depth,
         dual_partition=lam_t,
         dual_level=kv,
         dual_central_charge=c_dual,
-        dual_central_charge_exact=c_dual_exact if lam_t != (1,)*N else True,
+        dual_central_charge_exact=c_dual_exact,
+        dual_reciprocal_weight_diagnostic=dual_diagnostic,
         dual_anomaly_ratio=rho_t,
         dual_kappa=kappa_dual,
-        kappa_sum=kappa_s,
+        kappa_sum=conductor,
         c_sum=c_s,
-        kappa_sum_is_constant=kappa_const,
+        kappa_sum_is_constant=None,
         c_sum_is_constant=c_const,
         duality_status=status,
     )
@@ -381,8 +334,7 @@ def sl3_all_profiles() -> Dict[Partition, NonPrincipalDualityProfile]:
 def sl3_subregular_ope_data(level=None):
     r"""OPE data for W_k(sl_3, f_{(2,1)}) in Feigin-Semikhatov normal form.
 
-    Generators: J (h=1, bosonic), G+ (h=3/2, fermionic),
-                G- (h=3/2, fermionic), T (h=2, bosonic).
+    Generators: J (h=1), G+ (h=3/2), G- (h=3/2), T (h=2), all even.
 
     This is the Bershadsky-Polyakov W_3^{(2)} algebra.  The four-generator
     display below is the BP/Feigin-Semikhatov OPE surface used by this
@@ -399,18 +351,18 @@ def sl3_subregular_ope_data(level=None):
       r_{G+G-}(z) = (c/3)/z^2 + 2J/z
       r_{TT}(z) = (c/2)/z^3 + 2T/z
 
-    Central charge: c = 2 - 3(2k+3)^2/(k+3).
+    Central charge: c = -((2k+3)(3k+1))/(k+3).
     """
     if level is None:
         level = k
     lev = sympify(level)
-    c_val = cancel(2 - 3 * (2 * lev + 3)**2 / (lev + 3))
+    c_val = cancel(-((2 * lev + 3) * (3 * lev + 1)) / (lev + 3))
 
     return {
         'generators': [
             ('J', Rational(1), 'bosonic'),
-            ('G+', Rational(3, 2), 'fermionic'),
-            ('G-', Rational(3, 2), 'fermionic'),
+            ('G+', Rational(3, 2), 'bosonic'),
+            ('G-', Rational(3, 2), 'bosonic'),
             ('T', Rational(2), 'bosonic'),
         ],
         'central_charge': c_val,
@@ -469,7 +421,7 @@ def sl4_duality_pairs() -> List[Dict]:
     p211 = profiles[(2, 1, 1)]
     pairs.append({
         'type': 'non-self-dual',
-        'status': 'proved_hook',
+        'status': p31.duality_status,
         'partition_A': (3, 1),
         'partition_B': (2, 1, 1),
         'rho_A': p31.anomaly_ratio,
@@ -483,7 +435,7 @@ def sl4_duality_pairs() -> List[Dict]:
     p22 = profiles[(2, 2)]
     pairs.append({
         'type': 'self-dual',
-        'status': 'conjectural',
+        'status': p22.duality_status,
         'partition': (2, 2),
         'rho': p22.anomaly_ratio,
         'kappa_sum': p22.kappa_sum,
@@ -528,6 +480,12 @@ def ds_koszul_generator_test(partition: Partition) -> Dict[str, Any]:
     rho_lam = anomaly_ratio_from_partition(lam)
     rho_lam_t = (anomaly_ratio_from_partition(lam_t)
                  if gen_lam_t is not None else None)
+    diagnostic_lam = reciprocal_weight_diagnostic_from_partition(lam)
+    diagnostic_lam_t = (
+        reciprocal_weight_diagnostic_from_partition(lam_t)
+        if gen_lam_t is not None
+        else None
+    )
 
     return {
         'partition': lam,
@@ -542,7 +500,14 @@ def ds_koszul_generator_test(partition: Partition) -> Dict[str, Any]:
                               if gen_lam_t else N * N - 1)),
         'rho_source': rho_lam,
         'rho_target': rho_lam_t,
-        'rho_equal': (rho_lam == rho_lam_t if rho_lam_t is not None else False),
+        'rho_equal': None,
+        'diagnostic_source': diagnostic_lam,
+        'diagnostic_target': diagnostic_lam_t,
+        'diagnostic_equal': (
+            diagnostic_lam == diagnostic_lam_t
+            if diagnostic_lam_t is not None
+            else False
+        ),
         'source_bosonic': gen_lam.n_bosonic,
         'source_fermionic': gen_lam.n_fermionic,
         'target_bosonic': (gen_lam_t.n_bosonic if gen_lam_t else None),
@@ -570,13 +535,15 @@ def hook_duality_level(N: int, r: int) -> Dict[str, Any]:
 
     rho_lam = anomaly_ratio_from_partition(lam)
     rho_lam_t = anomaly_ratio_from_partition(lam_t)
+    diagnostic_lam = reciprocal_weight_diagnostic_from_partition(lam)
+    diagnostic_lam_t = reciprocal_weight_diagnostic_from_partition(lam_t)
 
     c_lam, c_lam_exact = correct_central_charge(lam)
     c_lam_t, c_lam_t_exact = correct_central_charge(lam_t, kv)
 
-    kappa_lam = cancel(rho_lam * c_lam)
-    kappa_lam_t = cancel(rho_lam_t * c_lam_t)
-    kappa_sum_val = simplify(kappa_lam + kappa_lam_t)
+    kappa_lam = ds_kappa_from_affine(lam, k)
+    kappa_lam_t = ds_kappa_from_affine(lam_t, kv)
+    kappa_sum_val = kappa_complementarity_sum(lam, k)
     c_sum_val = simplify(c_lam + c_lam_t)
 
     return {
@@ -587,12 +554,12 @@ def hook_duality_level(N: int, r: int) -> Dict[str, Any]:
         'dual_level': kv,
         'rho_source': rho_lam,
         'rho_target': rho_lam_t,
+        'diagnostic_source': diagnostic_lam,
+        'diagnostic_target': diagnostic_lam_t,
         'kappa_source': kappa_lam,
         'kappa_target': kappa_lam_t,
         'kappa_sum': kappa_sum_val,
-        'kappa_sum_is_constant': (k not in kappa_sum_val.free_symbols
-                                  if hasattr(kappa_sum_val, 'free_symbols')
-                                  else True),
+        'kappa_sum_is_constant': None,
         'c_source': c_lam,
         'c_target': c_lam_t,
         'c_source_exact': c_lam_exact,
@@ -694,7 +661,7 @@ def transport_graph_edges(N: int) -> List[Tuple[Partition, Partition]]:
 
 
 def transport_closure_from_hooks(N: int) -> Dict[str, Any]:
-    """Compute the transport closure of hook + principal partitions."""
+    """Compute the candidate dominance closure of the hook partitions."""
     hooks = set()
     for r in range(1, N - 1):
         hooks.add(hook_partition(N, r))
@@ -724,28 +691,37 @@ def transport_closure_from_hooks(N: int) -> Dict[str, Any]:
         'N': N,
         'all_nontrivial_partitions': sorted(all_nontrivial, reverse=True),
         'hook_seeds': sorted(hooks, reverse=True),
-        'transport_closure': sorted(visited_nontrivial, reverse=True),
-        'closure_size': len(visited_nontrivial),
+        'candidate_dominance_closure': sorted(visited_nontrivial, reverse=True),
+        'candidate_closure_size': len(visited_nontrivial),
         'total_nontrivial': len(all_nontrivial),
         'coverage_fraction': (Rational(len(visited_nontrivial), len(all_nontrivial))
                               if all_nontrivial else Rational(1)),
-        'fully_covered': visited_nontrivial == all_nontrivial,
-        'unreached': sorted(all_nontrivial - visited_nontrivial, reverse=True),
+        'candidate_fully_connected': visited_nontrivial == all_nontrivial,
+        'unreached_by_dominance': sorted(
+            all_nontrivial - visited_nontrivial,
+            reverse=True,
+        ),
+        'transport_realization': _open(
+            f"DS transport realization of the dominance corridor in sl_{N}",
+            "a quantum DS reduction functor for every selected dominance edge",
+            "compatibility of edge composition with the completed chiral bar construction",
+        ),
     }
 
 
 def transport_propagation_summary(max_N: int = 8) -> List[Dict]:
-    """Summary of transport propagation coverage for sl_3 through sl_max_N."""
+    """Summary of candidate dominance connectivity and transport status."""
     results = []
     for N in range(3, max_N + 1):
         closure = transport_closure_from_hooks(N)
         results.append({
             'N': N,
             'total_nontrivial': closure['total_nontrivial'],
-            'closure_size': closure['closure_size'],
+            'candidate_closure_size': closure['candidate_closure_size'],
             'coverage_fraction': closure['coverage_fraction'],
-            'fully_covered': closure['fully_covered'],
-            'unreached': closure['unreached'],
+            'candidate_fully_connected': closure['candidate_fully_connected'],
+            'unreached_by_dominance': closure['unreached_by_dominance'],
+            'transport_realization': closure['transport_realization'],
         })
     return results
 
@@ -755,7 +731,7 @@ def transport_propagation_summary(max_N: int = 8) -> List[Dict]:
 # =============================================================================
 
 def anomaly_ratio_table(N: int) -> List[Dict]:
-    """Table of anomaly ratios for all non-trivial partitions of sl_N."""
+    """Table of exact diagnostics and typed anomaly-ratio claims."""
     results = []
     for lam in _partitions_of_n(N):
         if lam == (1,) * N:
@@ -763,6 +739,7 @@ def anomaly_ratio_table(N: int) -> List[Dict]:
 
         gen_data = w_algebra_generator_data(lam)
         rho = anomaly_ratio_from_partition(lam)
+        diagnostic = reciprocal_weight_diagnostic_from_partition(lam)
 
         rho_bos = Rational(0)
         rho_fer = Rational(0)
@@ -781,6 +758,7 @@ def anomaly_ratio_table(N: int) -> List[Dict]:
             'rho_bosonic': rho_bos,
             'rho_fermionic': rho_fer,
             'rho_total': rho,
+            'reciprocal_weight_diagnostic': diagnostic,
         })
 
     return results
@@ -801,7 +779,7 @@ def non_hook_partition_analysis(N: int) -> List[Dict]:
     non_hooks = all_parts - hooks
 
     closure = transport_closure_from_hooks(N)
-    reached = set(tuple(p) for p in closure['transport_closure'])
+    reached = set(tuple(p) for p in closure['candidate_dominance_closure'])
 
     results = []
     for lam in sorted(non_hooks, reverse=True):
@@ -812,9 +790,10 @@ def non_hook_partition_analysis(N: int) -> List[Dict]:
             'transpose': lam_t,
             'is_self_transpose': lam == lam_t,
             'orbit_class': profile.orbit_class,
-            'reached_by_transport': lam in reached,
-            'dual_reached': lam_t in reached,
-            'both_reached': lam in reached and lam_t in reached,
+            'in_candidate_dominance_closure': lam in reached,
+            'dual_in_candidate_dominance_closure': lam_t in reached,
+            'both_in_candidate_dominance_closure': lam in reached and lam_t in reached,
+            'transport_realization': closure['transport_realization'],
             'anomaly_ratio': profile.anomaly_ratio,
             'shadow_class': profile.shadow_class,
             'num_generators': profile.num_generators,
@@ -878,10 +857,7 @@ def self_dual_partitions(N: int) -> List[Dict]:
 # =============================================================================
 
 def complementarity_constant_table(N: int) -> List[Dict]:
-    """Table of kappa + kappa' complementarity values for all partitions of N.
-
-    AP24: kappa + kappa' = 0 is NOT universal.
-    """
+    """Table of exact central sums and typed modular-conductor claims."""
     results = []
     for lam in _partitions_of_n(N):
         if lam == (1,) * N:
@@ -896,7 +872,13 @@ def complementarity_constant_table(N: int) -> List[Dict]:
             'is_self_transpose': lam == lam_t,
             'anomaly_ratio': profile.anomaly_ratio,
             'dual_anomaly_ratio': profile.dual_anomaly_ratio,
-            'rho_equal': profile.anomaly_ratio == profile.dual_anomaly_ratio,
+            'reciprocal_weight_diagnostic': profile.reciprocal_weight_diagnostic,
+            'dual_reciprocal_weight_diagnostic': profile.dual_reciprocal_weight_diagnostic,
+            'rho_equal': None,
+            'diagnostic_equal': (
+                profile.reciprocal_weight_diagnostic
+                == profile.dual_reciprocal_weight_diagnostic
+            ),
             'kappa_sum': profile.kappa_sum,
             'kappa_sum_is_constant': profile.kappa_sum_is_constant,
             'c_sum': profile.c_sum,
@@ -911,7 +893,7 @@ def complementarity_constant_table(N: int) -> List[Dict]:
 # =============================================================================
 
 def fehily_clns_hook_predictions(N: int) -> List[Dict]:
-    """Verify Fehily-CLNS predictions for hook-type duality in sl_N."""
+    """Return exact central checks and typed hook-comparison packets."""
     results = []
     for r in range(1, N - 1):
         data = hook_duality_level(N, r)
@@ -920,12 +902,10 @@ def fehily_clns_hook_predictions(N: int) -> List[Dict]:
         for test_k in [Rational(1), Rational(2), Rational(5), Rational(10)]:
             c_val = data['c_source'].subs(k, test_k)
             c_dual_val = data['c_target'].subs(k, test_k)
-            kappa_val = data['kappa_source'].subs(k, test_k)
-            kappa_dual_val = data['kappa_target'].subs(k, test_k)
             num_checks.append({
                 'k': test_k,
                 'c_sum': float(simplify(c_val + c_dual_val)),
-                'kappa_sum': float(simplify(kappa_val + kappa_dual_val)),
+                'kappa_status': data['kappa_sum'].status.value,
             })
 
         data['numerical'] = num_checks
@@ -940,12 +920,7 @@ def fehily_clns_hook_predictions(N: int) -> List[Dict]:
 
 def kappa_multipath_verification(partition: Partition,
                                  test_levels: Optional[List] = None) -> Dict:
-    """Multi-path verification of kappa for W^k(sl_N, f_lambda).
-
-    Path 1: kappa = rho * c_correct (anomaly ratio with correct c)
-    Path 2: Complementarity: kappa + kappa_dual at dual level
-    Path 3: Numerical evaluation at test levels
-    """
+    """Return exact central evaluations and typed modular obligations."""
     lam = normalize_partition(partition)
     lam_t = transpose_partition(lam)
     N = partition_size(lam)
@@ -954,38 +929,31 @@ def kappa_multipath_verification(partition: Partition,
         test_levels = [Rational(n) for n in [1, 2, 3, 5, 10, 50]]
 
     rho = anomaly_ratio_from_partition(lam)
+    diagnostic = reciprocal_weight_diagnostic_from_partition(lam)
     c_val, c_exact = correct_central_charge(lam)
-    kappa_p1 = cancel(rho * c_val)
+    kappa_packet = ds_kappa_from_affine(lam, k)
 
     # Path 2: complementarity
     kv = dual_level(N)
-    if lam_t != (1,) * N:
-        rho_t = anomaly_ratio_from_partition(lam_t)
-        c_dual, _ = correct_central_charge(lam_t, kv)
-        kappa_dual = cancel(rho_t * c_dual)
-    else:
-        dim_g = N * N - 1
-        kappa_dual = cancel(dim_g * (kv + N) / (2 * N))
-    kappa_sum = simplify(kappa_p1 + kappa_dual)
-    sum_is_const = (k not in kappa_sum.free_symbols
-                    if hasattr(kappa_sum, 'free_symbols') else True)
+    rho_t = anomaly_ratio_from_partition(lam_t)
+    dual_diagnostic = reciprocal_weight_diagnostic_from_partition(lam_t)
+    c_dual, _ = correct_central_charge(lam_t, kv)
+    kappa_dual = ds_kappa_from_affine(lam_t, kv)
+    kappa_sum = kappa_complementarity_sum(lam, k)
 
     # Path 3: numerical
     numerical = []
     for kv_test in test_levels:
-        v1 = kappa_p1.subs(k, kv_test)
+        v1 = simplify(c_val.subs(k, kv_test))
         kv_dual_val = -kv_test - 2 * N
-        if lam_t != (1,) * N:
-            c_d, _ = correct_central_charge(lam_t, kv_dual_val)
-            v_dual = cancel(rho_t * c_d)
-        else:
-            v_dual = cancel((N * N - 1) * (kv_dual_val + N) / (2 * N))
+        c_d, _ = correct_central_charge(lam_t, kv_dual_val)
+        v_dual = simplify(c_d)
         sum_val = simplify(v1 + v_dual)
         numerical.append({
             'k': kv_test,
-            'kappa': v1,
-            'kappa_dual': v_dual,
-            'sum': sum_val,
+            'central_charge': v1,
+            'dual_central_charge': v_dual,
+            'central_sum': sum_val,
         })
 
     return {
@@ -993,10 +961,14 @@ def kappa_multipath_verification(partition: Partition,
         'transpose': lam_t,
         'N': N,
         'anomaly_ratio': rho,
-        'kappa_formula': kappa_p1,
+        'reciprocal_weight_diagnostic': diagnostic,
+        'dual_anomaly_ratio': rho_t,
+        'dual_reciprocal_weight_diagnostic': dual_diagnostic,
+        'kappa_formula': kappa_packet,
+        'dual_kappa': kappa_dual,
         'c_exact': c_exact,
         'kappa_sum': kappa_sum,
-        'sum_is_constant': sum_is_const,
+        'sum_is_constant': None,
         'numerical': numerical,
     }
 
@@ -1020,14 +992,14 @@ def verify_non_principal_w_duality() -> Dict[str, bool]:
     results["W_3 c exact"] = ex_w3
     results["W_3 c(k=0) = -30"] = simplify(c_w3.subs(k, 0) + 30) == 0
 
-    # BP
+    # Bershadsky--Polyakov, standard convention.
     c_bp, ex_bp = correct_central_charge((2, 1))
     results["BP c exact"] = ex_bp
-    # BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
-    results["BP c(k=0) = -6"] = simplify(c_bp.subs(k, 0) + 6) == 0
-    results["BP c(k=1) = -22"] = simplify(c_bp.subs(k, 1) + 22) == 0
-    results["BP c = 2-24(k+1)^2/(k+3)"] = simplify(
-        c_bp - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
+    results["BP c(k=0) = -1"] = simplify(c_bp.subs(k, 0) + 1) == 0
+    results["BP c(k=1) = -5"] = simplify(c_bp.subs(k, 1) + 5) == 0
+    results["BP standard central charge"] = simplify(
+        c_bp + ((2 * k + 3) * (3 * k + 1)) / (k + 3)
+    ) == 0
 
     # W_4
     c_w4, ex_w4 = correct_central_charge((4,))
@@ -1039,30 +1011,40 @@ def verify_non_principal_w_duality() -> Dict[str, bool]:
     profiles_3 = sl3_all_profiles()
 
     p3 = profiles_3[(3,)]
-    results["sl3 principal rho = 5/6"] = p3.anomaly_ratio == Rational(5, 6)
-    results["sl3 principal class M"] = p3.shadow_class == 'M'
+    results["sl3 principal diagnostic = 5/6"] = (
+        p3.reciprocal_weight_diagnostic == Rational(5, 6)
+    )
+    results["sl3 principal rho open"] = p3.anomaly_ratio.status is ClaimStatus.OPEN
+    results["sl3 principal full shadow open"] = p3.shadow_class.status is ClaimStatus.OPEN
 
     bp = profiles_3[(2, 1)]
     results["sl3 BP self-transpose"] = bp.is_self_transpose
-    results["sl3 BP rho = 1/6"] = bp.anomaly_ratio == Rational(1, 6)
-    results["sl3 BP class M"] = bp.shadow_class == 'M'
+    results["sl3 BP diagnostic = 17/6"] = (
+        bp.reciprocal_weight_diagnostic == Rational(17, 6)
+    )
+    results["sl3 BP rho open"] = bp.anomaly_ratio.status is ClaimStatus.OPEN
+    results["sl3 BP full shadow open"] = bp.shadow_class.status is ClaimStatus.OPEN
     results["sl3 BP c exact"] = bp.central_charge_exact
 
-    # BP rho decomposition: 1 - 2/3 - 2/3 + 1/2 = 1/6
-    results["BP rho decomposition"] = (
-        Rational(1) - Rational(2, 3) - Rational(2, 3) + Rational(1, 2)
-        == Rational(1, 6))
+    results["BP even-generator diagnostic"] = (
+        Rational(1) + 2 * Rational(2, 3) + Rational(1, 2)
+        == Rational(17, 6)
+    )
 
     # --- sl_4 profiles ---
     profiles_4 = sl4_all_profiles()
 
     p4 = profiles_4[(4,)]
-    results["sl4 principal rho = 13/12"] = p4.anomaly_ratio == Rational(13, 12)
+    results["sl4 principal diagnostic = 13/12"] = (
+        p4.reciprocal_weight_diagnostic == Rational(13, 12)
+    )
 
     p31 = profiles_4[(3, 1)]
     results["sl4 (3,1) transpose = (2,1,1)"] = p31.transpose == (2, 1, 1)
     results["sl4 (3,1) is hook"] = p31.is_hook
-    results["sl4 (3,1) proved hook"] = p31.duality_status == 'proved_hook'
+    results["sl4 (3,1) conditional hook"] = (
+        p31.duality_status.status is ClaimStatus.CONDITIONAL
+    )
     results["sl4 (3,1) 5 generators"] = p31.num_generators == 5
     results["sl4 (3,1) all bosonic"] = p31.num_fermionic == 0
 
@@ -1070,19 +1052,23 @@ def verify_non_principal_w_duality() -> Dict[str, bool]:
     results["sl4 (2,1,1) transpose = (3,1)"] = p211.transpose == (3, 1)
     results["sl4 (2,1,1) is hook"] = p211.is_hook
     results["sl4 (2,1,1) 9 generators"] = p211.num_generators == 9
-    results["sl4 (2,1,1) 4 fermionic"] = p211.num_fermionic == 4
+    results["sl4 (2,1,1) represented generators even"] = p211.num_fermionic == 0
 
     p22 = profiles_4[(2, 2)]
     results["sl4 (2,2) self-transpose"] = p22.is_self_transpose
     results["sl4 (2,2) not hook"] = not p22.is_hook
-    results["sl4 (2,2) conjectural"] = p22.duality_status == 'conjectural'
+    results["sl4 (2,2) duality open"] = p22.duality_status.status is ClaimStatus.OPEN
     results["sl4 (2,2) 7 generators"] = p22.num_generators == 7
 
     # --- Anomaly ratios ---
     rho_table = anomaly_ratio_table(4)
     for entry in rho_table:
-        results[f"sl4 rho well-defined {entry['partition']}"] = (
-            entry['rho_total'] is not None)
+        results[f"sl4 rho typed {entry['partition']}"] = (
+            entry['rho_total'].status is ClaimStatus.OPEN
+        )
+        results[f"sl4 diagnostic exact {entry['partition']}"] = isinstance(
+            entry['reciprocal_weight_diagnostic'], Rational
+        )
 
     # --- DS generator test ---
     for lam in [(2, 1), (3, 1), (2, 1, 1), (2, 2)]:
@@ -1092,14 +1078,19 @@ def verify_non_principal_w_duality() -> Dict[str, bool]:
     # --- Transport propagation ---
     for N in range(3, 7):
         closure = transport_closure_from_hooks(N)
-        results[f"sl_{N} transport fully covered"] = closure['fully_covered']
+        results[f"sl_{N} candidate dominance graph connected"] = (
+            closure['candidate_fully_connected']
+        )
+        results[f"sl_{N} DS transport open"] = (
+            closure['transport_realization'].status is ClaimStatus.OPEN
+        )
 
     # --- Hook duality catalog ---
     catalog = hook_duality_catalog(max_N=6)
     for entry in catalog:
         lam = entry['partition']
         results[f"hook well-defined sl_{entry['N']} {lam}"] = (
-            entry['kappa_source'] is not None)
+            entry['kappa_source'].status is ClaimStatus.CONDITIONAL)
 
     # --- Self-dual partitions ---
     sd3 = self_dual_partitions(3)

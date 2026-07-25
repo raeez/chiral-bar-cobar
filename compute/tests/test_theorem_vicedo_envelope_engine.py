@@ -692,7 +692,7 @@ class TestPackageFirewalls:
         assert 'ordered bar coalgebra' in firewall['B(A)']
         assert 'bar-dual coalgebra' in firewall['A^i']
         assert 'Verdier' in firewall['A^!']
-        assert 'Hochschild bulk' in firewall['Z_ch^der(A)']
+        assert 'Hochschild closed-sector' in firewall['Z_ch^der(A)']
         assert 'not Koszul duality' in firewall['Omega(B(A))']
         assert 'Hochschild' not in firewall['A^!']
 
@@ -795,7 +795,7 @@ class TestCFGComparison:
         assert 'ordered bar coalgebra' in result.bar_complex_role
         assert 'A^i=H^*(B(A))' in result.bar_complex_role
         assert 'after Verdier' in result.bar_complex_role
-        assert 'Hochschild bulk' in result.derived_center_role
+        assert 'Hochschild closed-sector' in result.derived_center_role
 
     def test_cfg_for_multiple_algebras(self):
         """CFG construction works for sl_2, sl_3, so_5."""

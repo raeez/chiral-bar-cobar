@@ -690,7 +690,7 @@ def verify_e1_dimensions(d: int, w: int) -> Dict:
 
 @dataclass
 class KoszulnessVerdictD3:
-    """Koszulness verdict for L_k(sl_3) at d >= 3."""
+    """Model-level Koszulness verdict for L_k(sl_3) at d >= 3."""
     d: int
     level: AdmissibleLevel
     e2_results: List[E2DirectResult]
@@ -699,7 +699,7 @@ class KoszulnessVerdictD3:
 
 
 def analyze_koszulness_d3(p: int, q: int, max_weight: int = 6) -> KoszulnessVerdictD3:
-    """Analyze Koszulness at d = q >= 3 via direct E_2 computation."""
+    """Analyze the finite Li-bar obstruction model at d = q >= 3."""
     from math import gcd as _gcd
     if _gcd(p, q) != 1:
         raise ValueError(f'p={p}, q={q} not coprime')
@@ -721,7 +721,11 @@ def analyze_koszulness_d3(p: int, q: int, max_weight: int = 6) -> KoszulnessVerd
         parts.append(f'  wt={r.weight}: E_1={r.e1_dim}, d_1_rank={r.d1_rank}, E_2={r.e2_dim} [{diag}]')
 
     if has_survivors:
-        parts.append(f'OFF-DIAGONAL E_2 survivors detected. NOT chirally Koszul.')
+        parts.append(
+            'OFF-DIAGONAL E_2 survivors detected in the finite model. '
+            'Simple-quotient theorem status still requires the quotient-bar '
+            'comparison and convergence package.'
+        )
     else:
         parts.append(f'No off-diagonal E_2 survivors in computed range. Koszulness POSSIBLE.')
 

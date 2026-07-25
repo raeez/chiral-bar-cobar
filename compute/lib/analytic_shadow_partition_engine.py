@@ -85,7 +85,7 @@ Firewalls:
   - Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
   - A^! is the Verdier/continuous-linear dual branch under finite-type
     or completed hypotheses.
-  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/bulk, not Koszul dual.
+  - Z_ch^der(A) = ChirHoch^*(A,A) is Hochschild/closed-sector, not Koszul dual.
 """
 
 from __future__ import annotations
@@ -153,7 +153,7 @@ OBJECT_FIREWALLS: Dict[str, str] = {
     "A^i": "bar cohomology coalgebra H^*B(A)",
     "A^!": "Verdier continuous-linear dual algebra branch",
     "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild bulk, not Koszul dual",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), Hochschild closed-sector, not Koszul dual",
 }
 
 

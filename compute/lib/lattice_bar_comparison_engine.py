@@ -766,7 +766,7 @@ def e1_noncocommutativity(u: complex = 2.0) -> Dict[str, Any]:
     restriction to the line does not.
     """
     def R(v):
-        return v * I4 + 1j * PERM_2
+        return v * I4 + PERM_2
 
     R_u = R(u)
     R_u_swapped = PERM_2 @ R(u) @ PERM_2
@@ -805,7 +805,7 @@ def e1_noncocommutativity(u: complex = 2.0) -> Dict[str, Any]:
         "transfer_cyclic_invariant": transfer_invariant,
         "transfer_diff": transfer_diff,
         "comment": (
-            "The R-matrix R(u) = uI + iP is swap-symmetric (P R P = R). "
+            "The R-matrix R(u) = uI + P is swap-symmetric (P R P = R). "
             "The MONODROMY MATRIX M(u) = prod L_j is NOT invariant under "
             "permutation of inhomogeneities -- this is the E_1 noncocommutativity. "
             "The transfer matrix T(u) = Tr_aux M(u) IS invariant by cyclicity "
@@ -826,15 +826,17 @@ def collision_residue_to_r_matrix(k: float = 1.0) -> Dict[str, Any]:
         Theta_A (MC element)
         -> Res^{coll}_{0,2}(Theta_A) (collision residue at genus 0, arity 2)
         -> r(z) = Omega/z (classical r-matrix, AP19: one pole below OPE)
-        -> R(u) = u I + i P (quantized Yang R-matrix)
+        -> R(u) = u I + P (quantized Yang R-matrix)
 
     The Casimir Omega in fund x fund of sl_2:
         Omega = sum_a T^a x T_a = P - I/2
     where P is the permutation operator.
 
-    The QUANTIZATION R(u) = u I + i P comes from exponentiating:
-        R(u) = 1 + i r(u) + O(1/u^2) = 1 + i Omega/u + ...
-    At leading order: R(u) ~ u I + i P (absorbing the -I/2 into the u term).
+    The additive Yang normalization is
+        R(u) = u I + P.
+    Its large-\(u\) expansion has leading non-scalar part \(P/u\);
+    the scalar \(I/2\) separating \(P\) from \(\Omega=P-I/2\)
+    commutes with the CYBE/YBE operators.
 
     VERIFICATION: R(u) satisfies the Yang-Baxter equation iff r(z)
     satisfies the classical Yang-Baxter equation (CYBE).
@@ -868,9 +870,9 @@ def collision_residue_to_r_matrix(k: float = 1.0) -> Dict[str, Any]:
     cybe_lhs = (r12 @ r13 - r13 @ r12) + (r12 @ r23 - r23 @ r12) + (r13 @ r23 - r23 @ r13)
     cybe_err = float(la.norm(cybe_lhs))
 
-    # Step 4: Quantum R-matrix R(u) = u I + i P
+    # Step 4: Quantum R-matrix R(u) = u I + P
     def R(u):
-        return u * I4 + 1j * PERM_2
+        return u * I4 + PERM_2
 
     # Step 5: Verify YBE
     u_test = 3.0 + 0.5j
@@ -885,18 +887,18 @@ def collision_residue_to_r_matrix(k: float = 1.0) -> Dict[str, Any]:
     ybe_rhs = R23 @ R13 @ R12
     ybe_err = float(la.norm(ybe_lhs - ybe_rhs))
 
-    # Step 6: Classical limit: R(u/eta) -> I + (i/eta) Omega/u as eta -> 0?
-    # Actually R(u) = u I + i P. The classical r-matrix is obtained by:
-    #   R(u) = u I + i P  =>  r_{class}(u) = (R(u) - u I)/i = P
+    # Step 6: Classical limit: R(u)/u -> I + P/u as u -> infinity.
+    # The classical r-matrix is obtained by:
+    #   R(u) = u I + P  =>  r_class(u) = (R(u) - u I) = P
     # And Omega = P - I/2, so r(u) = Omega/u gives r_{class} = P/u + I/(2u).
     # The identification uses Omega, not P directly.  The correct extraction:
-    #   lim_{u->inf} u * (R(u)/u - I) = i P, so r(z) ~ P/z ~ (Omega + I/2)/z
+    #   lim_{u->inf} u * (R(u)/u - I) = P, so r(z) ~ P/z ~ (Omega + I/2)/z
     # The I/2 is a scalar that commutes with everything and doesn't affect CYBE.
 
     return {
         "casimir": "Omega = P - I/2",
         "classical_r_matrix": "r(z) = Omega/z",
-        "quantum_R_matrix": "R(u) = u I + i P",
+        "quantum_R_matrix": "R(u) = u I + P",
         "cybe_error": cybe_err,
         "cybe_holds": cybe_err < 1e-10,
         "ybe_error": ybe_err,
@@ -927,18 +929,18 @@ def rtt_from_mc(u: complex = 2.0, v: complex = 1.0) -> Dict[str, Any]:
     where Theta_1 encodes the R-matrix and Theta_2 encodes the T-matrix.
 
     We verify the RTT relation numerically for the Yang R-matrix
-    R(u) = u I + i P and the monodromy matrix T(u) of an L-site chain.
+    R(u) = u I + P and the monodromy matrix T(u) of an L-site chain.
     """
     L = 3  # Use 3-site chain for nontrivial test
     phys_dim = 2 ** L
 
     def R(w):
-        return w * I4 + 1j * PERM_2
+        return w * I4 + PERM_2
 
     # Build monodromy matrix M(u) using ABCD decomposition
     def monodromy_ABCD(spec_u):
         data = e1_composition_lattice(
-            lambda w: w * I4 + 1j * PERM_2, L, u=spec_u
+            lambda w: w * I4 + PERM_2, L, u=spec_u
         )
         return data["monodromy_A"], data["monodromy_B"], data["monodromy_C"], data["monodromy_D"]
 
@@ -1047,7 +1049,7 @@ def ybe_as_mc3(z1: complex = 1.0, z2: complex = 2.0, z3: complex = 3.0
 
     # Quantum YBE
     def R(u):
-        return u * I4 + 1j * PERM_2
+        return u * I4 + PERM_2
 
     R12_q = embed_12(R(z12))
     R13_q = embed_13(R(z13))
@@ -1311,7 +1313,7 @@ def r_matrix_from_bar_differential(k: float = 1.0) -> Dict[str, Any]:
         Omega = J^+ x J^- + J^- x J^+ + 2 J^0 x J^0
               = P - I/2
 
-    The R-matrix is R(u) = u I + i P = u I + i(Omega + I/2).
+    The R-matrix is R(u) = u I + P = u I + (Omega + I/2).
     """
     # Compute Omega in the fundamental from the bar differential
     # Omega_{(a,alpha),(b,beta)} = sum_c f^{abc} * (T^c)_{alpha,beta}
@@ -1359,7 +1361,7 @@ def r_matrix_from_bar_differential(k: float = 1.0) -> Dict[str, Any]:
         "Omega_equals_P_minus_half_I": diff_P < 1e-12,
         "Omega_explicit_match": diff_explicit < 1e-12,
         "diff_from_casimir": diff_P,
-        "R_matrix": "R(u) = u I + i(Omega + I/2) = u I + i P",
+        "R_matrix": "R(u) = u I + (Omega + I/2) = u I + P",
         "bar_origin": (
             "The Casimir Omega is extracted from the bar differential via "
             "d[J^a|J^b] = f^{abc}[J^c]. The structure constants f^{abc} "
@@ -1380,8 +1382,8 @@ def full_lattice_bar_dictionary() -> Dict[str, str]:
     """
     return {
         "R_matrix": (
-            "LATTICE: R(u) = u I + i P (Yang R-matrix). "
-            "BAR: collision residue Res^{coll}_{0,2}(Theta_A) = Omega/z, "
+            "LATTICE: R(u) = u I + P (Yang R-matrix). "
+            "BAR: level-1/unit collision residue Res^{coll}_{0,2}(Theta_A) = Omega/z, "
             "quantized to R(u) via Drinfeld-Kohno."
         ),
         "RTT_relation": (
@@ -1401,7 +1403,7 @@ def full_lattice_bar_dictionary() -> Dict[str, str]:
             "BAR: consequence of MC at arity 3 (YBE) via trace over aux."
         ),
         "Bethe_equations": (
-            "LATTICE: a(u_j)/d(u_j) = -prod (u_j-u_k+i)/(u_j-u_k-i). "
+            "LATTICE: a(u_j)/d(u_j) = -prod (u_j-u_k+1)/(u_j-u_k-1). "
             "BAR: saddle-point conditions dF/du_j = 0 of MC free energy."
         ),
         "coproduct_factorization": (
@@ -1429,8 +1431,10 @@ def full_lattice_bar_dictionary() -> Dict[str, str]:
         ),
         "Koszul_duality": (
             "LATTICE: Y(g) (Yangian) is the symmetry algebra. "
-            "BAR: Y(g) = Koszul dual A^!_line of affine g chiral algebra "
-            "(DK correspondence, thm:e1-duality-main)."
+            "BAR: Y(g) is the RTT line-operator companion obtained under "
+            "the DK/evaluation comparison; it is not the strict chiral "
+            "Koszul dual of the affine vertex algebra without the ordered "
+            "PBW, completion, and comparison hypotheses (thm:e1-duality-main)."
         ),
     }
 
@@ -1479,9 +1483,13 @@ def transfer_eigenvalue_comparison(L: int = 4, M: int = 1) -> Dict[str, Any]:
     r"""Compare transfer matrix eigenvalue from Bethe roots vs exact diag.
 
     The algebraic Bethe ansatz gives:
-        Lambda(u) = a(u) prod (u-u_k-i)/(u-u_k) + d(u) prod (u-u_k+i)/(u-u_k)
+        Lambda(u) = a(u) prod (u-u_k-1)/(u-u_k) + d(u) prod (u-u_k+1)/(u-u_k)
 
-    This should match the actual eigenvalue of T(u) on the Bethe eigenstate.
+    This local finite-chain comparison is only a convention diagnostic:
+    the transfer matrix built by :func:`e1_composition_lattice` and the
+    duplicated analytic Bethe formula are not identified here by a proved
+    normalization theorem.  The function reports the mismatch rather than
+    asserting equality.
     """
     try:
         from scipy import optimize
@@ -1511,18 +1519,18 @@ def transfer_eigenvalue_comparison(L: int = 4, M: int = 1) -> Dict[str, Any]:
 
     for u_test in u_test_vals:
         # Analytic formula
-        a_val = (u_test + 0.5j) ** L
-        d_val = (u_test - 0.5j) ** L
+        a_val = (u_test + 1.0) ** L
+        d_val = u_test ** L
         prod1, prod2 = 1.0 + 0j, 1.0 + 0j
         for uk in roots:
             denom = u_test - uk
             if abs(denom) > 1e-15:
-                prod1 *= (u_test - uk - 1j) / denom
-                prod2 *= (u_test - uk + 1j) / denom
+                prod1 *= (u_test - uk - 1.0) / denom
+                prod2 *= (u_test - uk + 1.0) / denom
         Lambda_analytic = a_val * prod1 + d_val * prod2
 
         # Numerical: eigenvalues of T(u_test)
-        data = e1_composition_lattice(lambda w: w * I4 + 1j * PERM_2, L, u=u_test)
+        data = e1_composition_lattice(lambda w: w * I4 + PERM_2, L, u=u_test)
         T = data["transfer_matrix"]
         T_evals = la.eigvals(T)
 
@@ -1537,13 +1545,23 @@ def transfer_eigenvalue_comparison(L: int = 4, M: int = 1) -> Dict[str, Any]:
             "match": min_dist < 1e-4,
         })
 
+    all_match = all(r["match"] for r in results)
+
     return {
         "success": True,
+        "comparison_status": (
+            "open_normalization_gap" if not all_match else "verified"
+        ),
+        "open_obligation": (
+            "identify the finite-chain transfer-matrix normalization with "
+            "the algebraic Bethe eigenvalue formula"
+            if not all_match else ""
+        ),
         "L": L,
         "M": M,
         "roots": roots.tolist(),
         "checks": results,
-        "all_match": all(r["match"] for r in results),
+        "all_match": all_match,
     }
 
 

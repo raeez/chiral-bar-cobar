@@ -65,15 +65,19 @@ def test_raw_direct_sum_failure_remains_real():
     tex = MC5_TEX.read_text()
     assert "raw direct-sum failure" in tex
     assert "genuine obstruction on that raw surface" in tex
-    assert "not identify" in tex
+    assert r"\mathrm{Ch}(\mathrm{Vect})" in tex
+    assert "pro-ambient / $J$-adic topological / weight-completed ambient" in tex
 
 
 def test_frontier_summary_does_not_reclose_mc5():
     intro = INTRO_TEX.read_text()
-    window = _window_around(intro, "\\label{sec:mc-frontier-intro}", 2400)
+    window = " ".join(
+        _window_around(intro, "\\label{sec:mc-frontier-intro}", 2400).split()
+    )
     assert "MC5 separates into several surfaces" in window
     assert "strict Mittag" in window
-    assert "does not identify" in window
+    assert "bounded direct-sum ambient" in window
+    assert "direct-sum-to-completion morphism kept as a distinct comparison map" in window
 
     stale_fragments = (
         "proved on the canonical " + "pro-object",

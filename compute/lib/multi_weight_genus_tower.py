@@ -151,7 +151,7 @@ OBJECT_FIREWALL: Dict[str, str] = {
     "A^i": "bar cohomology coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch",
     "Omega(B(A))": "bar-cobar inversion recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
 }
 
 
@@ -182,7 +182,7 @@ def modular_koszul_primary_projections() -> Tuple[str, ...]:
 
 
 def object_firewall() -> Dict[str, str]:
-    """Typed roles for bar, Verdier dual, inversion, and Hochschild bulk."""
+    """Typed roles for bar, Verdier dual, inversion, and Hochschild closed-sector."""
     return dict(OBJECT_FIREWALL)
 
 

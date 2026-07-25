@@ -540,7 +540,7 @@ class TestCYBEHeisenberg:
 
 
 class TestCYBEAffineSl2:
-    """Affine sl_2: r(z) = Omega/z where Omega = sum_a T^a tensor T_a.
+    """Affine sl_2: trace-form r_k(z)=k*Omega/z; unit CYBE uses Omega/z.
 
     The CYBE for r(z) = Omega/z with spectral parameter:
       [r_{12}(z_{12}), r_{13}(z_{13})] + [r_{12}(z_{12}), r_{23}(z_{23})]

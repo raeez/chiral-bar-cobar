@@ -48,7 +48,7 @@ Normalization firewalls:
     * A^! is the Verdier/continuous-linear dual branch under finite-type or
       completed hypotheses.
     * Omega(B(A)) = A is bar-cobar inversion, not the construction of A^!.
-    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/derived-centre bulk.
+    * Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/derived-centre closed-sector.
     * Kernel constants: affine raw collision k*Omega_tr/z; affine KZ
       coefficient Omega/((k+h^vee)z); Virasoro (c/2)/z^3 + 2T/z.
 
@@ -112,7 +112,7 @@ def modular_koszul_primary_projections() -> Tuple[str, ...]:
 
 
 def typed_object_firewall() -> Dict[str, str]:
-    """Typed roles for bar, Verdier, inversion, and bulk objects."""
+    """Typed roles for bar, Verdier, inversion, and closed-sector objects."""
     return {
         "A": "input chiral algebra",
         "B(A)": "ordered bar coalgebra before cohomology",
@@ -122,7 +122,7 @@ def typed_object_firewall() -> Dict[str, str]:
             "completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
     }
 
 

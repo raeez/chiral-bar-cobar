@@ -18,9 +18,12 @@ Anti-patterns guarded:
     AP48: kappa(A) != c/2 for non-Virasoro
 """
 
-import math
-import pytest
 from fractions import Fraction
+from pathlib import Path
+import math
+import re
+
+import pytest
 
 from compute.lib.theorem_concordance_rectification_engine import (
     TITLE_ENVIRONMENT_GATES, THEOREM_SIGNATURE_GATES,
@@ -68,6 +71,573 @@ from compute.lib.theorem_concordance_rectification_engine import (
     # Audit
     audit_concordance_claims, check_new_references_coverage,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def theorem_environment(relative_path, label):
+    """Return the canonical TeX theorem environment carrying ``label``."""
+    text = (ROOT / relative_path).read_text(encoding="utf-8")
+    token = rf"\label{{{label}}}"
+    label_position = text.index(token)
+    start = text.rfind(r"\begin{theorem}", 0, label_position)
+    end = text.find(r"\end{theorem}", label_position)
+    assert start >= 0, f"theorem start missing for {label}"
+    assert end >= 0, f"theorem end missing for {label}"
+    return text[start:end + len(r"\end{theorem}")]
+
+PLATONIC_TITLE_SURFACES = (
+    "chapters/frame/part_ii_platonic_introduction.tex",
+    "chapters/frame/part_iii_platonic_introduction.tex",
+    "chapters/frame/part_iv_platonic_introduction.tex",
+    "chapters/frame/open_beilinson_tower_platonic.tex",
+    "chapters/connections/genus1_seven_faces.tex",
+    "chapters/theory/mc5_class_m_chain_level_platonic.tex",
+    "chapters/theory/theorem_B_scope_platonic.tex",
+    "chapters/theory/genus_2_ddybe_platonic.tex",
+    "chapters/theory/chiral_climax_platonic.tex",
+)
+
+FORBIDDEN_VISIBLE_PLATONIC_TITLE_PHRASES = (
+    "Platonic theorem",
+    "Platonic theorems",
+    "Five Platonic",
+    "Platonic form",
+    "Platonic endpoint",
+    "Platonic ideal",
+    "The Platonic theorem",
+    "Platonic Theorem",
+    "Platonic reconstitution",
+    "Platonic replacement",
+    "Platonic backbone",
+    "Platonic reading",
+)
+
+OPTIONAL_TITLE_WITH_PLATONIC = re.compile(
+    r"\\begin\{(?:theorem|proposition|lemma|corollary|conjecture|"
+    r"definition|remark|principle|construction|computation|calculation)"
+    r"\}\[[^\]]*Platonic"
+)
+
+THEOREM_SIGNATURE_GATE_NAMES = tuple(name for name, _ in THEOREM_SIGNATURE_GATES)
+TABLE_STATUS_GATE_NAMES = tuple(name for name, _ in TABLE_STATUS_GATES)
+
+CORE_THEOREM_SIGNATURE_SURFACES = {
+    "Theorem A": {
+        "path": "chapters/theory/theorem_A_infinity_2.tex",
+        "label": "thm:koszul-reflection",
+        "anchors": (
+            "Open quadrant",
+            "chiral Ran presentation",
+            "Beilinson level $1\\leftrightarrow2$",
+            "hypothesis package",
+            "$H_{\\mathrm{fact}}$",
+            "$H_{\\mathrm{conv}}$",
+            "$H_{\\mathrm{VD}}$",
+            "H_{\\mathrm{CL}}",
+        ),
+    },
+    "Ordered Theorem H": {
+        "path": "chapters/theory/chiral_hochschild_koszul.tex",
+        "label": "thm:hochschild-concentration-E1",
+        "anchors": (
+            "Open quadrant",
+            "ordered chain presentation",
+            "Beilinson level~$3$",
+            "hypothesis package",
+            "finite-window retracts",
+            "Mittag--Leffler completion",
+        ),
+    },
+    "Theorem H": {
+        "path": "chapters/theory/chiral_hochschild_koszul.tex",
+        "label": "thm:main-koszul-hoch",
+        "anchors": (
+            "Open quadrant",
+            "chain presentation",
+            "Beilinson level~$3$",
+            "hypothesis package",
+            r"H_H(\cA;S)",
+        ),
+    },
+    "Global Theorem B": {
+        "path": "chapters/theory/theorem_B_scope_platonic.tex",
+        "label": "thm:tbsp-global-inversion-all-admissible",
+        "anchors": (
+            "Open quadrant",
+            "chiral bar chain presentation",
+            "Beilinson level",
+            "completed chiral coalgebra ambient",
+            "hypotheses named below",
+        ),
+    },
+}
+
+CORE_THEOREM_PROOF_OPENINGS = {
+    "Theorem A": {
+        "path": "chapters/theory/theorem_A_infinity_2.tex",
+        "label": r"\label{thm:koszul-reflection}",
+        "anchors": (
+            "Proposition~4.1.2",
+            "pro-nilpotent stable",
+            "nonunital augmentation ideals",
+            "Theorem~2.3.2",
+            "$H_{\\mathrm{VD}}$",
+        ),
+    },
+    "Ordered Theorem H": {
+        "path": "chapters/theory/chiral_hochschild_koszul.tex",
+        "label": r"\label{thm:hochschild-concentration-E1}",
+        "anchors": (
+            "natural stratum retracts",
+            "strong deformation retract",
+            "Homotopy coinvariants",
+            "averaging quasi-isomorphism",
+        ),
+    },
+    "Theorem H": {
+        "path": "chapters/theory/chiral_hochschild_koszul.tex",
+        "label": r"\label{thm:main-koszul-hoch}",
+        "anchors": (
+            "homotopy inverse",
+            "Bakalov--De Sole--Kac",
+            "Theorems~7.4 and~7.2",
+            "quasi-isomorphism",
+        ),
+    },
+    "Global Theorem B": {
+        "path": "chapters/theory/theorem_B_scope_platonic.tex",
+        "label": r"\label{thm:tbsp-global-inversion-all-admissible}",
+        "anchors": (
+            r"\v Cech cover",
+            "finite-window chiral chain model",
+            "chiral bar differential",
+            "monodromy-refined total bar-weight",
+            "finite-window bar spectral sequence",
+            "strict Mittag--Leffler",
+        ),
+    },
+}
+
+LANDSCAPE_TABLE_STATUS_SURFACE = {
+    "path": "chapters/connections/editorial_constitution.tex",
+    "label": "OPE tables include all coefficients",
+    "anchors": (
+        "OPE tables include all coefficients needed by the",
+        "identify the normalization appendix",
+        "cite the theorem or",
+        "proposition proving each entry",
+        "proof is in the manuscript or cited by theorem number",
+        "lists the exact conditions",
+        "names the obstruction complex",
+    ),
+}
+
+LANDSCAPE_OPEN_STATUS_ANCHORS = {
+    "path": "chapters/examples/landscape_census.tex",
+    "label": r"\label{tab:koszulness-landscape-census}",
+    "anchors": (
+        "Li--bar/PBW off-diagonal obstruction complex",
+        "fixed-point Li--bar/PBW off-diagonal obstruction complex",
+        r"\ref{thm:kac-shapovalov-koszulness}",
+        r"\ref{rem:li-bar-vs-kac-shapovalov}",
+    ),
+}
+
+CANONICAL_FIREWALL_SURFACE = {
+    "path": "chapters/connections/master_concordance.tex",
+    "label": r"\label{thm:typed-verdier-koszul-firewall}",
+    "anchors": (
+        r"\ref{conv:master-five-object-firewall}",
+        "five different ambient categories",
+        "The typed morphisms are",
+        "The quadratic inclusion is",
+        "The counit has target",
+    ),
+}
+
+FIREWALL_CROSS_REFERENCE_SURFACES = {
+    "Master Reconstruction": {
+        "path": "chapters/connections/master_reconstruction.tex",
+        "label": r"\label{rem:mr-five-objects}",
+    },
+    "Heisenberg Frame": {
+        "path": "chapters/frame/heisenberg_frame.tex",
+        "label": r"\label{sec:frame-koszul-dual}",
+        "extra": ("specialization",),
+    },
+    "Algebraic Foundations": {
+        "path": "chapters/theory/algebraic_foundations.tex",
+        "label": r"\label{rem:five-object-firewall-algebraic-foundations}",
+        "extra": ("canonical firewall", "specialization"),
+    },
+    "Triplet": {
+        "path": "chapters/examples/logarithmic_w_algebras.tex",
+        "label": r"\label{rem:wp-five-object-firewall}",
+        "extra": ("triplet specialization",),
+    },
+    "Three Hochschild": {
+        "path": "chapters/theory/three_hochschild_unification_platonic.tex",
+        "label": r"\label{rem:five-object-firewall-three-hochschild}",
+    },
+    "Chiral Koszul Pairs": {
+        "path": "chapters/theory/chiral_koszul_pairs.tex",
+        "label": r"\label{rem:five-object-firewall-kp}",
+        "extra": ("canonical",),
+    },
+    "Grand Unification": {
+        "path": "chapters/connections/grand_unification_platonic.tex",
+        "label": r"\label{thm:grand-unification-platonic}",
+    },
+    "Koszulness Moduli": {
+        "path": "chapters/theory/koszulness_moduli_scheme.tex",
+        "label": r"\label{v1-thm:kms-meta-koszulness}",
+        "extra": ("derived-centre specialization",),
+    },
+    "Editorial Constitution": {
+        "path": "chapters/connections/editorial_constitution.tex",
+        "label": r"\label{conv:const-theorem-proof-obligation-gate}",
+    },
+}
+
+FORBIDDEN_LOCAL_FIREWALL_DEFINITIONS = (
+    "Thus the five-object firewall is:",
+)
+
+VERIFICATION_SPINE_SURFACES = {
+    "Guide": {
+        "path": "chapters/frame/guide_to_main_results.tex",
+        "label": "The represented Vol~I witnesses are\nHeisenberg",
+        "anchors": (
+            "Heisenberg",
+            "affine Kac--Moody at\nnon-critical level",
+            "$\\beta\\gamma$",
+            "Virasoro with principal\n$\\mathcal W_N$",
+            "Borcherds--Kac--Moody object $\\mathbf H_{\\Delta_5}$",
+        ),
+    },
+    "Editorial Constitution": {
+        "path": "chapters/connections/editorial_constitution.tex",
+        "label": "The verification order is Heisenberg",
+        "anchors": (
+            "Heisenberg",
+            "affine Kac--Moody",
+            "\\(\\beta\\gamma\\)",
+            "Virasoro/\\(\\mathcal W_3\\)",
+            "\\(\\mathbf H_{\\Delta_5}\\)",
+        ),
+    },
+}
+
+STANDARD_FAMILY_STATUS_ORDER = {
+    "path": "chapters/examples/landscape_census.tex",
+    "label": r"\label{tab:standard-family-status}",
+    "anchors": (
+        "Heisenberg \\(\\cH_k\\)",
+        "Affine \\(V_k(\\fg)\\)",
+        "\\(\\beta\\gamma_\\lambda\\), \\(bc_\\lambda\\)",
+        "\\(\\Vir_c\\)",
+        "Principal \\(\\mathcal W_N\\)",
+        "Critical affine \\(V_{-h^\\vee}(\\fg)\\)",
+    ),
+}
+
+DEPENDENCY_LANGUAGE_SURFACES = {
+    "Master Reconstruction": {
+        "path": "chapters/connections/master_reconstruction.tex",
+        "label": r"\label{def:mr-dependency-vacuum-level-quadrant-discipline}",
+        "anchors": (
+            "dependency arrow",
+            "proved implication",
+            "comparison problem carries its mathematical status",
+            "Every use of a comparison theorem names its",
+            "displayed universal",
+            "contractible space of choices",
+            "specified",
+        ),
+    },
+}
+
+MORITA_LEVEL_QUADRANT_SURFACE = {
+    "path": "chapters/connections/master_reconstruction.tex",
+    "label": r"\label{def:mr-dependency-vacuum-level-quadrant-discipline}",
+    "anchors": (
+        "The chosen vacuum datum is the pair",
+        "Level~0 is",
+        "level~1 is",
+        r"Theorem~\ref{thm:mr-morita}",
+        "Morita-equivalent",
+        "The level alphabet is fixed once for the Open quadrant",
+        "This alphabet belongs to the Open quadrant",
+        "The CY quadrant carries its own typed alphabet",
+        "The quadrant grid is",
+        "Each Open--CY comparison map names",
+        "vertical equivalence theorem",
+        "structures it",
+        "frontier map carries the status",
+    ),
+}
+
+MORITA_THEOREM_STATUS_SURFACE = {
+    "path": "chapters/connections/master_reconstruction.tex",
+    "label": "thm:mr-morita",
+    "anchors": (
+        r"\ClaimStatusProvedHere",
+        "stable presentable open-sector",
+        "factorization compact generator",
+        "assemble into equivalences",
+        "Hypothesis package $H_0$",
+        "exact and colimit preserving",
+        "preserve compact",
+    ),
+    "forbidden": (
+        r"\ClaimStatusConditional",
+    ),
+}
+
+FG_AMBIENT_STATUS_SURFACE = {
+    "path": "chapters/theory/theorem_A_infinity_2.tex",
+    "label": r"\label{prop:fg-ambient-properties}",
+    "anchors": (
+        r"Conditional factorization ambient package",
+        r"\ClaimStatusConditional",
+        r"\label{prop:fg-ambient-properties}",
+        "The hypothesis package",
+        r"$H_{\Fact}(X)$ consists",
+        "Ran sheaf ambient",
+        r"\Fact_{\Ran}(X)",
+        "Francis--Gaitsgory star-product extends",
+        "factorization unit",
+        "model enhancement is cofibrantly generated",
+        r"Under $H_{\Fact}(X)$",
+    ),
+    "window_forbidden": (
+        r"\ClaimStatusProvedElsewhere",
+        "Theorem~7.2.1",
+    ),
+    "file_forbidden": (
+        r"\cite[Chapter~IV.5",
+        "Theorem~3.1.2",
+        "GR17 transfer",
+        "GR17 model-categorical localisation",
+    ),
+}
+
+OPEN_SECTOR_FACTOR_PACKAGE_SURFACES = {
+    "Master Mixed Ran Definition": {
+        "path": "chapters/connections/master_reconstruction.tex",
+        "label": r"\label{def:mr-mixed-ran-factorization-category}",
+        "anchors": (
+            r"\ClaimStatusDefinitional",
+            r"\widetilde X_D",
+            r"I_p:=S^1_p\setminus\{\tau_p\}\cong\mathbb R",
+            r"\Conf^{\mathrm{oc}}_{I,\mathbf m}(X,D,\tau)",
+            r"\Ran^{\mathrm{oc}}(X,D,\tau)",
+            "constructible dg-cosheaf of dg-categories",
+            "factorization equivalences",
+            "holomorphic locality",
+            "local constancy on each boundary interval",
+            r"\SCchtop",
+            "clutching compatibility",
+            "category-valued factorization package",
+            "definition above supplies",
+            "category-valued open-sector case",
+        ),
+        "forbidden": (
+            "Verdier-symmetric\nmonoidal structure on $\\Ran(X,D,\\tau)$",
+            "in the\nFrancis--Gaitsgory sense",
+        ),
+    },
+    "Master Open Datum": {
+        "path": "chapters/connections/master_reconstruction.tex",
+        "label": r"\label{def:mr-open-datum}",
+        "anchors": (
+            r"\ClaimStatusDefinitional",
+            "primitive open chart datum",
+            r"\mathfrak D_{\mathrm{op}}",
+            "stable presentable open-sector factorization",
+            "factorization compact",
+            r"A_b(U):=\RHom",
+            "vacuum character",
+            r"\mathsf{OpenDatum}(X,D,\tau)",
+        ),
+        "forbidden": (
+            "Francis--Gaitsgory sense",
+            "Verdier-symmetric",
+            r"\Ran(X,D,\tau)",
+        ),
+    },
+    "Vertical Level 0": {
+        "path": "chapters/connections/vertical_equivalence_level_0.tex",
+        "label": r"\label{subsec:thqg-open-sector-factorization-category}",
+        "anchors": (
+            "Open-sector factorization category",
+            "stable presentable factorisation category",
+            r"\Ran^{\mathrm{oc}}(X,D,\tau)",
+            "compact-opposite cosheaf",
+            "factorisation compact generator",
+            r"Theorem~\ref{thm:mr-morita}",
+            "mixed-Ran construction supplies the geometry",
+            "Morita theory",
+        ),
+        "forbidden": (
+            "Francis--Gaitsgory sense",
+            "Verdier-symmetric",
+            r"\Ran(X, D, \tau)",
+        ),
+    },
+}
+
+FRONT_NOTATION_HYPOTHESIS_SURFACE = {
+    "path": "main.tex",
+    "label": r"\section*{Notation and hypothesis packages}",
+    "before": r"\include{chapters/frame/preface}",
+    "notation_anchors": (
+        "A tangential logarithmic curve",
+        "factorization dg-category",
+        r"$A_b=\operatorname{RHom}_{\cC}(b,b)$",
+        "complete conilpotent factorization coalgebra",
+        r"$q_\cA\colon\cA^{\mathrm i}\to B_X^{\mathrm{ch}}(\cA)$",
+        "ordered bar model",
+        "$Z^{\\mathrm{der}}_{\\mathrm{ch}}(\\cA)$",
+        "Chiral Hochschild cochains",
+        r"$\Delta_{\mathrm{diag}}$",
+        r"$\Delta_{\mathrm{co}}$",
+        r"$\Delta_{\mathrm{disc}}$",
+        r"\textit{standard landscape}",
+        "finite atlas",
+    ),
+    "hypothesis_anchors": (
+        "Hypothesis index.",
+        "\\textup{(H1)--(H3)}",
+        "convergence model for Theorem~A",
+        "\\textup{(H1)--(H4)}$_{\\mathrm{HT}}$",
+        r"$H_{\mathrm{loc}}(\cA;U)$",
+        r"$H_{\mathrm{BC}}(X)$",
+        r"$H_{\mathrm{fact}}^R$",
+        r"$H_{\mathbb D}(\cA)$",
+        r"$\mathsf{CP}^{\mathrm{ch}}(\widehat C)$",
+        r"Definition~\ref{def:completed-chiral-positselski-package}",
+        r"$H_{\mathrm{mod}}(\cA)$",
+        r"$H_H(\cA;S)$",
+        r"$\mathsf{FH}_{\Sigma}(\cA)$",
+        r"\textup{OCA}$(T,\cA)$",
+    ),
+}
+
+STANDARD_LANDSCAPE_ATLAS_SURFACES = {
+    "Front Matter": {
+        "path": "main.tex",
+        "label": r"\textit{standard landscape}",
+        "anchors": (
+            "finite atlas of explicit vertex-algebra families",
+            "each family theorem names the subatlas",
+            "carrying its hypotheses",
+        ),
+    },
+}
+
+ABSTRACT_STATUS_SURFACE = {
+    "path": "main.tex",
+    "label": "The book therefore presents",
+    "anchors": (
+        "tower of reconstruction theorems",
+        "four coordinates",
+        "quadrant, presentation",
+        "Beilinson level, and hypothesis package",
+        "proved foundation",
+        "precise comparison data",
+    ),
+}
+
+FRONT_TYPE_CORRECTNESS_SURFACE = {
+    "path": "chapters/theory/introduction.tex",
+    "label": r"\label{lem:intro-core-ordered-bar-type-correct}",
+    "before": r"\label{thm:modular-ordered-bar-theorem}",
+    "anchors": (
+        "Type correctness of the core ordered-bar datum",
+        "Type signature:",
+        r"B_X^{\mathrm{ord}}(\cA)",
+        r"B_X^\Sigma(\cA)",
+        "same completed\nchain ambient",
+        "finite-type/equivariant-descent",
+        "derived chiral centre",
+        "a chiral Hochschild\ncochain object",
+        "are level~5 scalar shadows after the modular trace\nand clutching package has been applied",
+        "physical bulk/OCA object and its boundary-to-bulk morphism\nbelong to the physical category",
+        "typed domain, codomain, centre,\nand scalar-shadow lane",
+    ),
+}
+
+FINAL_SURVIVING_INVARIANTS_SURFACE = {
+    "path": "main.tex",
+    "label": r"\label{thm:final-surviving-invariants-diagram}",
+    "before": r"\printindex",
+    "anchors": (
+        "Functorial descent of specified invariants under",
+        r"\begin{tikzcd}",
+        r"B_X^{\mathrm{ord}}(\cA)",
+        r"B_X^\Sigma(\cA)",
+        r"\operatorname{Av}",
+        r"\phi_j^{\mathrm{ord}}",
+        "homotopy fiber",
+        "lies in the kernel",
+        r"\phi_j\colon B_X^\Sigma(\cA)\to Y_j",
+        r"\prod_{j\in J}Y_j",
+        "canonical ordered pullback",
+        "conservativity theorem",
+        "joint conservativity",
+        "separate\nreconstruction problem",
+    ),
+}
+
+
+def _visible_tex(relative_path: str) -> str:
+    """Return TeX content with full-line comments removed."""
+    text = (ROOT / relative_path).read_text()
+    return "\n".join(
+        line for line in text.splitlines()
+        if not line.lstrip().startswith("%")
+    )
+
+
+def _window_after_label(relative_path: str, label: str, chars: int = 5000) -> str:
+    """Return visible TeX immediately after a theorem label."""
+    visible = _visible_tex(relative_path)
+    start = visible.find(label)
+    assert start >= 0, f"{relative_path}: missing {label}"
+    return visible[start:start + chars]
+
+
+def _proof_window_after_label(relative_path: str, label: str, chars: int = 4000) -> str:
+    """Return the proof opening after a theorem label."""
+    visible = _visible_tex(relative_path)
+    start = visible.find(label)
+    assert start >= 0, f"{relative_path}: missing {label}"
+    proof_start = visible.find(r"\begin{proof", start)
+    assert proof_start >= 0, f"{relative_path}: missing proof after {label}"
+    return visible[proof_start:proof_start + chars]
+
+
+def _assert_tex_anchor(window: str, anchor: str, context: str) -> None:
+    """Assert an anchor with TeX line wrapping ignored."""
+    normalized_window = re.sub(r"\s+", " ", window)
+    normalized_anchor = re.sub(r"\s+", " ", anchor)
+    assert (
+        anchor in window or normalized_anchor in normalized_window
+    ), context
+
+
+def _assert_ordered_anchors(window: str, anchors: tuple[str, ...], context: str) -> None:
+    """Assert anchors occur in order with TeX line wrapping ignored."""
+    normalized_window = re.sub(r"\s+", " ", window)
+    start = 0
+    for anchor in anchors:
+        normalized_anchor = re.sub(r"\s+", " ", anchor)
+        index = normalized_window.find(normalized_anchor, start)
+        assert index >= 0, f"{context}: {anchor}"
+        start = index + len(normalized_anchor)
 
 
 # ============================================================
@@ -318,6 +888,76 @@ class TestTheoremProofSurfaceGates:
         assert scope['blocked_components'] == []
 
 
+class TestExpositionSurfaceTextGates:
+    """Direct manuscript guards for the repaired exposition/title surfaces."""
+
+    def test_visible_surfaces_have_no_platonic_theorem_language(self):
+        """Obligation 901 blocks Platonic theorem/form/endpoint titles."""
+        for relative_path in PLATONIC_TITLE_SURFACES:
+            visible = _visible_tex(relative_path)
+            assert not OPTIONAL_TITLE_WITH_PLATONIC.search(visible), relative_path
+            for phrase in FORBIDDEN_VISIBLE_PLATONIC_TITLE_PHRASES:
+                assert phrase not in visible, f"{relative_path}: {phrase}"
+
+    def test_replacement_terms_anchor_repaired_surfaces(self):
+        """The replacement language names the mathematical surface exactly."""
+        required = {
+            "chapters/frame/part_ii_platonic_introduction.tex": (
+                "five structural theorem surfaces",
+                "Structural theorem surface",
+                "structural completeness",
+                "structural form",
+            ),
+            "chapters/frame/part_iii_platonic_introduction.tex": (
+                "Five carrier theorems",
+                "carrier theorems replace scalar classification",
+            ),
+            "chapters/frame/part_iv_platonic_introduction.tex": (
+                "Five carrier theorems",
+                "Six coordinate charts for the apex carrier",
+            ),
+            "chapters/frame/open_beilinson_tower_platonic.tex": (
+                "The operadic fixed-point endpoint",
+                "The endpoint is canonical",
+            ),
+            "chapters/connections/genus1_seven_faces.tex": (
+                "Vol~I bar--cobar Theorem~A",
+            ),
+            "chapters/theory/mc5_class_m_chain_level_platonic.tex": (
+                "pro-completed reconstruction",
+                "Chain-level MC5 class M in the pro-ambient",
+                "Summary: the pro-completed form",
+            ),
+            "chapters/theory/theorem_B_scope_platonic.tex": (
+                "ambient-neutral form",
+            ),
+            "chapters/theory/chiral_climax_platonic.tex": (
+                "Ambient-neutral statement of the programme",
+            ),
+        }
+        for relative_path, anchors in required.items():
+            visible = _visible_tex(relative_path)
+            for anchor in anchors:
+                assert anchor in visible, f"{relative_path}: {anchor}"
+
+    def test_core_theorem_signatures_are_visible_in_manuscript(self):
+        """Core statements display quadrant, presentation, level, and package."""
+        assert tuple(CORE_THEOREM_SIGNATURE_SURFACES)
+        for theorem_name, config in CORE_THEOREM_SIGNATURE_SURFACES.items():
+            environment = theorem_environment(config["path"], config["label"])
+            assert "Type signature" in environment, theorem_name
+            assert r"\ClaimStatus" in environment, theorem_name
+            for anchor in config["anchors"]:
+                _assert_tex_anchor(environment, anchor, f"{theorem_name}: {anchor}")
+
+    def test_core_theorem_proof_openings_name_method_data(self):
+        """Obligations 918--932 are visible in the proof openings."""
+        for theorem_name, config in CORE_THEOREM_PROOF_OPENINGS.items():
+            window = _proof_window_after_label(config["path"], config["label"])
+            for anchor in config["anchors"]:
+                _assert_tex_anchor(window, anchor, f"{theorem_name}: {anchor}")
+
+
 class TestAdvancedProofAndTableStatusGates:
     """Executable gates for proof methods and table-status evidence."""
 
@@ -465,6 +1105,38 @@ class TestAdvancedProofAndTableStatusGates:
         assert scope['conditional_status_claim_allowed'] is True
         assert scope['open_status_claim_allowed'] is True
 
+    def test_landscape_table_status_discipline_is_visible(self):
+        """The table convention names evidence for every status."""
+        window = _window_after_label(
+            LANDSCAPE_TABLE_STATUS_SURFACE["path"],
+            LANDSCAPE_TABLE_STATUS_SURFACE["label"],
+            chars=2500,
+        )
+        assert table_status_scope(
+            ope_tables_used=True,
+            ope_tables_full_coefficients=True,
+            ope_coefficients_match_normalization_appendix=True,
+            table_entries_cite_theorem_or_proposition=True,
+            proved_table_status_used=True,
+            proved_table_status_has_manuscript_proof=True,
+            conditional_table_status_used=True,
+            conditional_table_status_lists_exact_conditions=True,
+            open_table_status_used=True,
+            open_table_status_names_obstruction_complex=True,
+        )["all_gates_satisfied"]
+        for anchor in LANDSCAPE_TABLE_STATUS_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"table-status discipline: {anchor}")
+
+    def test_open_koszulness_table_rows_name_obstruction_complex(self):
+        """Open table statuses name the obstruction complex rather than a blank."""
+        window = _window_after_label(
+            LANDSCAPE_OPEN_STATUS_ANCHORS["path"],
+            LANDSCAPE_OPEN_STATUS_ANCHORS["label"],
+            chars=7000,
+        )
+        for anchor in LANDSCAPE_OPEN_STATUS_ANCHORS["anchors"]:
+            _assert_tex_anchor(window, anchor, f"open-status anchor: {anchor}")
+
     def test_aggregate_proof_table_defaults_block_table_status(self):
         """The aggregate 933--949 scope starts blocked without supplied evidence."""
         scope = proof_table_obligation_scope()
@@ -560,6 +1232,42 @@ class TestManuscriptStructureAndComparisonGates:
         assert scope['all_gates_satisfied'] is True
         assert scope['structure_placement_complete'] is True
 
+    def test_five_object_firewall_has_single_canonical_theorem(self):
+        """Obligations 952--953 anchor the firewall in one canonical theorem."""
+        window = _window_after_label(
+            CANONICAL_FIREWALL_SURFACE["path"],
+            CANONICAL_FIREWALL_SURFACE["label"],
+            chars=3500,
+        )
+        for anchor in CANONICAL_FIREWALL_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"canonical firewall: {anchor}")
+
+    def test_local_firewall_surfaces_cross_reference_canonical_theorem(self):
+        """Local firewall discussions are specializations, not new definitions."""
+        for surface_name, config in FIREWALL_CROSS_REFERENCE_SURFACES.items():
+            window = _window_after_label(config["path"], config["label"], chars=5500)
+            _assert_tex_anchor(
+                window,
+                r"\ref{conv:master-five-object-firewall}",
+                f"{surface_name}: convention reference",
+            )
+            _assert_tex_anchor(
+                window,
+                r"\ref{thm:typed-verdier-koszul-firewall}",
+                f"{surface_name}: theorem reference",
+            )
+            for anchor in config.get("extra", ()):
+                _assert_tex_anchor(window, anchor, f"{surface_name}: {anchor}")
+
+    def test_local_firewall_surfaces_do_not_define_new_firewall(self):
+        """Later surfaces must not introduce a second firewall definition."""
+        for phrase in FORBIDDEN_LOCAL_FIREWALL_DEFINITIONS:
+            for surface_name, config in FIREWALL_CROSS_REFERENCE_SURFACES.items():
+                if surface_name == "Editorial Constitution":
+                    continue
+                window = _window_after_label(config["path"], config["label"], chars=5500)
+                assert phrase not in window, f"{surface_name}: {phrase}"
+
     def test_verification_order_blocks_early_h_delta(self):
         """H_Delta is not allowed before the class-M completion test."""
         scope = verification_order_scope(
@@ -584,6 +1292,30 @@ class TestManuscriptStructureAndComparisonGates:
         )
         assert scope['all_gates_satisfied'] is True
         assert scope['verification_order_complete'] is True
+
+    def test_verification_spine_is_visible_and_ordered(self):
+        """Obligations 959--963 are anchored in the live manuscript spine."""
+        for surface_name, config in VERIFICATION_SPINE_SURFACES.items():
+            window = _window_after_label(config["path"], config["label"], chars=2500)
+            _assert_ordered_anchors(window, config["anchors"], surface_name)
+
+    def test_standard_family_table_orders_the_verification_rows(self):
+        """The standard table places the critical boundary after the generic rows."""
+        window = _window_after_label(
+            STANDARD_FAMILY_STATUS_ORDER["path"],
+            STANDARD_FAMILY_STATUS_ORDER["label"],
+            chars=6000,
+        )
+        _assert_ordered_anchors(
+            window,
+            STANDARD_FAMILY_STATUS_ORDER["anchors"],
+            "standard-family table order",
+        )
+        _assert_tex_anchor(
+            window,
+            "proved here / proved elsewhere",
+            "critical affine boundary status",
+        )
 
     def test_dependency_language_blocks_conjectural_arrows_and_loose_words(self):
         """Dependency arrows, comparison therefore, universal, and canonical are gated."""
@@ -623,6 +1355,13 @@ class TestManuscriptStructureAndComparisonGates:
         assert scope['all_gates_satisfied'] is True
         assert scope['universal_language_allowed'] is True
         assert scope['canonical_language_allowed'] is True
+
+    def test_dependency_language_discipline_visible_in_manuscript(self):
+        """Obligations 965--969 are anchored in live TeX, not only in gate logic."""
+        for surface_name, config in DEPENDENCY_LANGUAGE_SURFACES.items():
+            window = _window_after_label(config["path"], config["label"], chars=3500)
+            for anchor in config["anchors"]:
+                _assert_tex_anchor(window, anchor, f"{surface_name}: {anchor}")
 
     def test_morita_level_quadrant_blocks_unproved_transfers(self):
         """Vacuum, Morita, level, and quadrant transfers have separate gates."""
@@ -673,6 +1412,64 @@ class TestManuscriptStructureAndComparisonGates:
         assert scope['vacuum_independence_claim_allowed'] is True
         assert scope['morita_equivalence_claim_allowed'] is True
         assert scope['cross_quadrant_structure_preservation_claim_allowed'] is True
+
+    def test_morita_level_quadrant_discipline_visible_in_master(self):
+        """Obligations 970--980 are stated at the Master Reconstruction datum."""
+        window = _window_after_label(
+            MORITA_LEVEL_QUADRANT_SURFACE["path"],
+            MORITA_LEVEL_QUADRANT_SURFACE["label"],
+            chars=6000,
+        )
+        for anchor in MORITA_LEVEL_QUADRANT_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"Morita/quadrant: {anchor}")
+
+    def test_morita_theorem_records_the_factorization_package(self):
+        """The level-0 theorem states its factorization-Morita hypotheses."""
+        window = theorem_environment(
+            MORITA_THEOREM_STATUS_SURFACE["path"],
+            MORITA_THEOREM_STATUS_SURFACE["label"],
+        )
+        for anchor in MORITA_THEOREM_STATUS_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"Morita theorem: {anchor}")
+        for forbidden in MORITA_THEOREM_STATUS_SURFACE["forbidden"]:
+            assert forbidden not in window, f"forbidden Morita theorem phrase: {forbidden}"
+
+    def test_fg_ambient_package_has_a_bounded_conditional_scope(self):
+        """The Theorem A factorization enhancement has its own package."""
+        config = FG_AMBIENT_STATUS_SURFACE
+        visible = _visible_tex(config["path"])
+        label_start = visible.find(config["label"])
+        assert label_start >= 0, "missing Francis--Gaitsgory ambient property label"
+        proposition_start = visible.rfind(r"\begin{proposition}", 0, label_start)
+        assert proposition_start >= 0, "missing proposition opening before ambient label"
+        proposition_end = visible.find(r"\end{proposition}", label_start)
+        assert proposition_end >= 0, "missing factorization ambient proposition end"
+        window = visible[
+            proposition_start:proposition_end + len(r"\end{proposition}")
+        ]
+        for anchor in config["anchors"]:
+            _assert_tex_anchor(window, anchor, f"FG ambient package: {anchor}")
+        for forbidden in config["window_forbidden"]:
+            assert forbidden not in window, f"forbidden FG ambient phrase: {forbidden}"
+        for forbidden in config["file_forbidden"]:
+            assert forbidden not in visible, f"retired FG ambient dependency: {forbidden}"
+
+    def test_open_sector_factorization_package_is_defined_before_use(self):
+        """The level-0 open category must be a defined mixed-Ran package."""
+        for surface_name, config in OPEN_SECTOR_FACTOR_PACKAGE_SURFACES.items():
+            visible = _visible_tex(config["path"])
+            label_start = visible.find(config["label"])
+            assert label_start >= 0, f"{surface_name}: missing label"
+            definition_start = visible.rfind(r"\begin{definition}", 0, label_start)
+            subsection_start = visible.rfind(r"\subsection", 0, label_start)
+            start = max(definition_start, subsection_start)
+            if start < 0:
+                start = label_start
+            window = visible[start:label_start + 4200]
+            for anchor in config["anchors"]:
+                _assert_tex_anchor(window, anchor, f"{surface_name}: {anchor}")
+            for forbidden in config["forbidden"]:
+                assert forbidden not in window, f"{surface_name}: forbidden phrase {forbidden}"
 
     def test_aggregate_manuscript_structure_defaults_block_everything(self):
         """The aggregate 950--980 scope starts blocked without supplied evidence."""
@@ -789,6 +1586,17 @@ class TestNotationHypothesisAbstractGates:
         assert scope['all_gates_satisfied'] is True
         assert scope['notation_discipline_complete'] is True
 
+    def test_front_notation_table_precedes_theorem_spine(self):
+        """Obligations 981--991 are visible before the theorem-bearing chapters."""
+        visible = _visible_tex(FRONT_NOTATION_HYPOTHESIS_SURFACE["path"])
+        start = visible.find(FRONT_NOTATION_HYPOTHESIS_SURFACE["label"])
+        end = visible.find(FRONT_NOTATION_HYPOTHESIS_SURFACE["before"])
+        assert start >= 0, "front notation section missing"
+        assert end > start, "front notation section must precede the preface include"
+        window = visible[start:end]
+        for anchor in FRONT_NOTATION_HYPOTHESIS_SURFACE["notation_anchors"]:
+            _assert_tex_anchor(window, anchor, f"front notation: {anchor}")
+
     def test_hypothesis_reference_blocks_early_refs_and_classification(self):
         """Hypothesis packages, missing refs, and landscape classification are gated."""
         scope = hypothesis_reference_scope(
@@ -824,6 +1632,21 @@ class TestNotationHypothesisAbstractGates:
         assert scope['landscape_classification_allowed'] is False
         assert scope['landscape_atlas_language_required'] is True
 
+    def test_hypothesis_index_and_atlas_language_visible(self):
+        """Obligations 992--996 are pinned to live front and theorem surfaces."""
+        visible = _visible_tex(FRONT_NOTATION_HYPOTHESIS_SURFACE["path"])
+        start = visible.find(FRONT_NOTATION_HYPOTHESIS_SURFACE["label"])
+        end = visible.find(FRONT_NOTATION_HYPOTHESIS_SURFACE["before"])
+        assert start >= 0 and end > start
+        window = visible[start:end]
+        for anchor in FRONT_NOTATION_HYPOTHESIS_SURFACE["hypothesis_anchors"]:
+            _assert_tex_anchor(window, anchor, f"front hypothesis index: {anchor}")
+
+        for surface_name, config in STANDARD_LANDSCAPE_ATLAS_SURFACES.items():
+            atlas_window = _window_after_label(config["path"], config["label"], chars=2200)
+            for anchor in config["anchors"]:
+                _assert_tex_anchor(atlas_window, anchor, f"{surface_name}: {anchor}")
+
     def test_abstract_front_back_blocks_nonspine_unlabelled_claims(self):
         """Abstract claims outside the theorem spine and unlabelled conjectures are blocked."""
         scope = abstract_front_back_scope(
@@ -854,6 +1677,48 @@ class TestNotationHypothesisAbstractGates:
         assert scope['all_gates_satisfied'] is True
         assert scope['conjectural_physics_arithmetic_abstract_allowed'] is True
         assert scope['final_surviving_invariants_diagram_complete'] is True
+
+    def test_abstract_final_paragraph_states_the_typed_claim_discipline(self):
+        """The abstract closes with the four-coordinate theorem discipline."""
+        visible = _visible_tex(ABSTRACT_STATUS_SURFACE["path"])
+        abstract_end = visible.find(r"\end{abstract}")
+        start = visible.find(ABSTRACT_STATUS_SURFACE["label"])
+        assert start >= 0, "typed reconstruction paragraph missing"
+        assert abstract_end > start, "typed reconstruction paragraph must be in abstract"
+        window = visible[start:abstract_end]
+        for anchor in ABSTRACT_STATUS_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"abstract status: {anchor}")
+
+    def test_front_type_correctness_precedes_core_theorem(self):
+        """Obligation 999 makes the first theorem pages type-check the core objects."""
+        visible = _visible_tex(FRONT_TYPE_CORRECTNESS_SURFACE["path"])
+        start = visible.find(FRONT_TYPE_CORRECTNESS_SURFACE["label"])
+        end = visible.find(FRONT_TYPE_CORRECTNESS_SURFACE["before"])
+        assert start >= 0, "front type-correctness lemma missing"
+        assert end > start, "type-correctness lemma must precede the core theorem"
+        lemma_start = visible.rfind(r"\begin{lemma}", 0, start)
+        assert lemma_start >= 0, "front type-correctness lemma environment missing"
+        window = visible[lemma_start:end]
+        for anchor in FRONT_TYPE_CORRECTNESS_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"front type-correctness: {anchor}")
+
+    def test_final_surviving_invariants_diagram_is_last_theorem(self):
+        """Obligation 1000 makes the last theorem the surviving-invariants diagram."""
+        visible = _visible_tex(FINAL_SURVIVING_INVARIANTS_SURFACE["path"])
+        label_start = visible.find(FINAL_SURVIVING_INVARIANTS_SURFACE["label"])
+        assert label_start >= 0, "final surviving-invariants theorem missing"
+        theorem_start = visible.rfind(r"\begin{theorem}", 0, label_start)
+        assert theorem_start >= 0, "final surviving-invariants theorem environment missing"
+        next_theorem = visible.find(
+            r"\begin{theorem}",
+            label_start + len(FINAL_SURVIVING_INVARIANTS_SURFACE["label"]),
+        )
+        assert next_theorem == -1, "final surviving-invariants diagram must be the last theorem"
+        index_start = visible.find(FINAL_SURVIVING_INVARIANTS_SURFACE["before"], label_start)
+        assert index_start > label_start, "final theorem must precede the subject index"
+        window = visible[theorem_start:index_start]
+        for anchor in FINAL_SURVIVING_INVARIANTS_SURFACE["anchors"]:
+            _assert_tex_anchor(window, anchor, f"final surviving diagram: {anchor}")
 
     def test_aggregate_notation_hypothesis_abstract_defaults_block_everything(self):
         """The aggregate 981--1000 scope starts blocked without supplied evidence."""
@@ -943,22 +1808,22 @@ class TestMCStatus:
 
 
 class TestMainTheorems:
-    """Verify concordance claims about five main theorems."""
+    """Compare the theorem-lane ledger with the canonical TeX surfaces."""
 
-    def test_theorem_a_proved(self):
-        assert MAIN_THEOREMS['A'] == 'PROVED'
+    @pytest.mark.parametrize("name", ("A", "B", "C", "D", "H"))
+    def test_advertised_theorem_status_is_conditional(self, name):
+        record = MAIN_THEOREMS[name]
+        assert record['status'] == 'CONDITIONAL'
+        environment = theorem_environment(record['source'], record['label'])
+        assert r"\ClaimStatusConditional" in environment
 
-    def test_theorem_b_proved(self):
-        assert MAIN_THEOREMS['B'] == 'PROVED'
-
-    def test_theorem_c_proved(self):
-        assert MAIN_THEOREMS['C'] == 'PROVED'
-
-    def test_theorem_d_proved(self):
-        assert MAIN_THEOREMS['D'] == 'PROVED'
-
-    def test_theorem_h_proved(self):
-        assert MAIN_THEOREMS['H'] == 'PROVED'
+    @pytest.mark.parametrize("name", ("A", "B", "C", "D", "H"))
+    def test_each_theorem_records_its_proved_core(self, name):
+        record = MAIN_THEOREMS[name]
+        assert record['proved_core_status'] in {
+            'PROVED_HERE', 'PROVED_ELSEWHERE'
+        }
+        assert record['proved_core'].strip()
 
 
 # ============================================================
@@ -1352,13 +2217,16 @@ class TestSpectralDiscriminant:
 # ============================================================
 
 class TestE1Theory:
-    """Verify concordance E1 modular theory claims."""
+    """Compare the ordered modular ledger with its theorem bodies."""
 
-    def test_all_e1_theorems_proved(self):
-        """All five E1 theorems proved at all genera."""
-        for thm, status in E1_FIVE_THEOREMS.items():
-            assert status['genus_0'] == 'PROVED', f"{thm} not proved at genus 0"
-            assert status['all_genera'] == 'PROVED', f"{thm} not proved at all genera"
+    @pytest.mark.parametrize("name", tuple(E1_FIVE_THEOREMS))
+    def test_e1_theorem_status_is_conditional(self, name):
+        record = E1_FIVE_THEOREMS[name]
+        assert record['status'] == 'CONDITIONAL'
+        assert record['genus_0'] == 'CONDITIONAL'
+        assert record['all_genera'] == 'CONDITIONAL'
+        environment = theorem_environment(record['source'], record['label'])
+        assert r"\ClaimStatusConditional" in environment
 
 
 # ============================================================

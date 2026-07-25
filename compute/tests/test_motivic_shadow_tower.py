@@ -29,8 +29,16 @@ from __future__ import annotations
 from fractions import Fraction
 
 import pytest
+import sympy as sp
 
 from compute.lib.independent_verification import independent_verification
+from compute.lib.shadow_tower_higher_vir import s5_riccati_candidate
+from compute.lib.virasoro_ward_correlators import (
+    ResidueProjectionRequired,
+    require_residue_projection,
+    standard_points,
+    virasoro_connected_correlator,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -50,27 +58,18 @@ def _s4_vir(c: Fraction) -> Fraction:
 
 
 def _s5_vir_from_master_eq(c: Fraction) -> Fraction:
-    """S_5(Vir_c) via the master-equation recursion
-    S_5 = -(1/(5c)) * (j*k*S_j*S_k summed over j+k=7, j,k>=3)
-    The only pair is (j,k) = (3,4) with eps(3,4) = 1.
-    S_3 = 2, S_4 = 10/[c(5c+22)] (from Shapovalov path).
-    This is the DERIVATION-side formula, included as sanity.
-    """
+    """Arity-five output of the unordered weighted-Riccati recurrence."""
+
     s3 = Fraction(2)
     s4 = _s4_vir(c)
-    # S_5 = -(1/(5c)) * eps(3,4) * 3 * 4 * S_3 * S_4 * 2
-    # factor of 2 because (j,k) and (k,j) are counted separately in
-    # the symmetric sum; equivalently 2*3*4 = 24 coefficient.
-    return -Fraction(24) / (Fraction(5) * c) * s3 * s4
+    # The recurrence sums over unordered pairs.  At arity five its sole
+    # pair is (3,4), counted once with coefficient 3*4.
+    return -Fraction(12) / (Fraction(5) * c) * s3 * s4
 
 
-def _s5_vir_from_wick_independent(c: Fraction) -> Fraction:
-    """S_5(Vir_c) computed via the VERIFICATION path: direct Wick
-    contraction on the genus-1 propagator theta'_1/theta_1 through
-    weight 5 using Feigin-Fuchs vanishing H^2(Vir_c, Vir_c)_{wt=5}=0
-    at generic c, which forces the rational identity
-    S_5(Vir_c) = -48 / [c^2 (5c+22)] termwise.
-    """
+def _s5_riccati_closed_form(c: Fraction) -> Fraction:
+    """Closed form of the same formal weighted-Riccati coefficient."""
+
     return Fraction(-48) / (c ** 2 * (5 * c + 22))
 
 
@@ -88,33 +87,9 @@ def _asymptotic_s4_leading(c: Fraction) -> Fraction:
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="thm:shadow-tower-motivic-lift",
-    derived_from=[
-        "Brown 2012 motivic MZV coaction (arXiv:1102.1312)",
-        "Drinfeld 1990 KZ associator expansion",
-        "Master-equation shadow recursion (Vol I working_notes.tex)",
-    ],
-    verified_against=[
-        "Deligne-Goncharov 2005 motivic fundamental group (Ann. Sci. ENS 38)",
-        "Borel-Moore period integrals on Conf_n(C) (algebraic de Rham)",
-    ],
-    disjoint_rationale=(
-        "The derivation uses Brown's motivic coaction on MZV plus the "
-        "Drinfeld KZ associator expansion into the master-equation "
-        "recursion. The verification path uses Deligne-Goncharov's prior "
-        "construction of the motivic fundamental group of "
-        "P^1 \\ {0,1,infty} plus Borel-Moore period integrals on "
-        "configuration spaces, which computes the period map's image "
-        "independently of the associator expansion and of Brown's later "
-        "2012 theorem. Deligne-Goncharov is the 2005 prequel; Brown is "
-        "the 2012 completion; the two cite each other but provide "
-        "independent evaluations of the same period pairings."),
-)
-def test_shadow_tower_motivic_lift_exists_for_s2_s3_s4_s5():
-    """The motivic lift of S_r(Vir_c) for r in {2,3,4,5} exists and
-    reduces to rational coefficients (no zet(3), zet(5) enter at
-    these weights for Vir)."""
+def test_weighted_riccati_sequence_is_rational_through_arity_five():
+    """The displayed formal coefficients belong to ``Q(c)`` at ``c=13``."""
+
     c = Fraction(13)  # self-dual point
 
     # S_2(Vir_c) = c/2 = kappa.
@@ -130,12 +105,20 @@ def test_shadow_tower_motivic_lift_exists_for_s2_s3_s4_s5():
     assert s4 == Fraction(10) / (Fraction(13) * (5 * Fraction(13) + 22))
     assert s4 == Fraction(10, 13 * 87)  # 5*13+22 = 87
 
-    # S_5 rational: agreement of master-equation and independent Wick.
-    s5_master = _s5_vir_from_master_eq(c)
-    s5_wick = _s5_vir_from_wick_independent(c)
-    assert s5_master == s5_wick, (
-        f"Master-eq S_5={s5_master} vs Wick S_5={s5_wick}; "
-        "motivic-lift rationality check failed")
+    # R_5 rational: unordered recurrence and its simplified formula agree.
+    s5_recurrence = _s5_vir_from_master_eq(c)
+    s5_closed = _s5_riccati_closed_form(c)
+    assert s5_recurrence == s5_closed
+
+
+def test_five_point_ward_correlator_retains_configuration_variables():
+    """``G_5^conn`` and an ordered scalar occupy distinct typed lanes."""
+
+    points = standard_points(5)
+    connected = virasoro_connected_correlator(points, sp.Integer(13))
+    assert connected.free_symbols == set(points)
+    with pytest.raises(ResidueProjectionRequired):
+        require_residue_projection(5)
 
 
 @independent_verification(
@@ -181,38 +164,16 @@ def test_s4_vir_mot_rational():
         "leading coefficient must be 2/c^2, not 2/(5c^2) [AP178]")
 
 
-@independent_verification(
-    claim="prop:s5-vir-mot",
-    derived_from=[
-        "Master-equation shadow recursion (Vol I working_notes.tex)",
-        "Brown 2012 motivic MZV coaction (arXiv:1102.1312)",
-    ],
-    verified_against=[
-        "Feigin-Fuchs 1984 Virasoro cohomology",
-        "Borel-Moore period integrals on Conf_n(C) (algebraic de Rham)",
-    ],
-    disjoint_rationale=(
-        "Derivation: S_5(Vir_c) = -48/[c^2(5c+22)] computed via the "
-        "master-equation recursion applied to the motivic-lifted S_4. "
-        "Verification: Feigin-Fuchs 1984 Virasoro cohomology gives "
-        "H^2(Vir_c,Vir_c)_{wt=5} = 0 at generic c, forcing the weight-5 "
-        "shadow coefficient to be rational (no zet(5) contribution). "
-        "Borel-Moore period computation on Conf_5(C) gives the weight-5 "
-        "period lattice as Q-span of {zet(5), zet(2)zet(3)}, both of "
-        "which are killed by averaging at Vir due to Cartan rank 1. "
-        "These two machineries (FF spectral sequence + BM period "
-        "integrals) independently force S_5 to be rational and to "
-        "equal the master-equation value."),
-)
-def test_s5_vir_mot_rational():
-    """S_5(Vir_c) is rational across a range of c; motivic lift has
-    no zeta(3) or zeta(5) content (Feigin-Fuchs vanishing)."""
+def test_s5_weighted_riccati_candidate_is_rational():
+    """The arity-five recurrence output is the stated element of ``Q(c)``."""
+
     for c_int in [2, 5, 13, 100]:
         c = Fraction(c_int)
-        s5_wick = _s5_vir_from_wick_independent(c)
+        s5_candidate = s5_riccati_candidate(
+            sp.Rational(c.numerator, c.denominator)
+        )
         expected = Fraction(-48, c_int ** 2 * (5 * c_int + 22))
-        assert s5_wick == expected, (
-            f"S_5(Vir_{c_int}) = {s5_wick}, expected {expected}")
+        assert s5_candidate == sp.Rational(expected.numerator, expected.denominator)
 
 
 @independent_verification(

@@ -934,7 +934,7 @@ class TestEdgeCasesAndAPGuards:
             assert kap + kap_dual == Fraction(13)
 
     def test_AP33_heisenberg_not_selfdual(self):
-        """AP33: H_k^! = Sym^ch(V*) != H_{-k}. kappa(H_k^!) = -k."""
+        """AP33: H_k^! is the curved Sym^ch(V*[1]) branch; scalar kappa is -k."""
         # The Koszul dual has kappa = -k (opposite sign), not kappa = k.
         kap = kappa_heisenberg(3)
         kap_dual = -kap  # This is kappa(H_k^!)

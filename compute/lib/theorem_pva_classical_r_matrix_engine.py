@@ -48,9 +48,9 @@ MATHEMATICAL CONTENT
    PVA r-matrix:
      r^{PVA}(z) = \Omega/z + k\delta/z^2 = (bracket part)/z + (metric part)/z^2
 
-   where \Omega = \sum_a T^a \otimes T_a is the Casimir tensor.
+   where \Omega_tr = \sum_a T^a \otimes T_a is the trace-form Casimir tensor.
    After AP19 d-log absorption:
-     r^{coll}(z) = k\Omega/z  (the simple-pole part from the double pole)
+     r^{coll}(z) = k\Omega_{\mathrm{tr}}/z  (the simple-pole part from the double pole)
 
    Classical Yang-Baxter equation (CYBE):
      [r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0
@@ -626,7 +626,8 @@ def verify_cybe_heisenberg(k: Fraction = Fraction(1)) -> Dict[str, Any]:
 def verify_cybe_sl2(k: Fraction = Fraction(1)) -> Dict[str, Any]:
     r"""Verify CYBE for affine sl_2.
 
-    The r-matrix is r(z) = k * \Omega / z where \Omega is the Casimir.
+    The collision r-matrix is r(z) = k * \Omega_tr / z where
+    \Omega_tr is the trace-form Casimir.
 
     The CYBE for r(z) = \Omega/z is:
         [\Omega_{12}/z_{12}, \Omega_{13}/z_{13}]

@@ -177,7 +177,7 @@ Shadow class $\mathbf G$.
 \item \emph{Tier (b): VA with poles.} Affine Kac--Moody
 $\widehat\fg_k$, Virasoro, principal $\cW_N$, $\beta\gamma$,
 non-principal $\cW$-algebras. The classical $r$-matrix is
-$k\Omega/z$ (affine) or $(c/2)/z^3 + 2T/z$ (Virasoro) or the
+$k\Omega_{\mathrm{tr}}/z$ (affine) or $(c/2)/z^3 + 2T/z$ (Virasoro) or the
 DS-reduced analogue. The level prefix is load-bearing:
 at $k = 0$, the affine $r$-matrix vanishes.
 Shadow class $\mathbf L$, $\mathbf C$, or $\mathbf M$ depending
@@ -223,7 +223,7 @@ $\mathbf G$.
 
 \medskip\noindent\textbf{Algebraic face.} The Koszul dual is
 the curved symmetric chiral algebra
-$\cH_k^! = (\Sym^{\ch}(V^*), m_0 = -k\omega)$, not a flat VOA.
+$\cH_k^! = (\Sym^{\ch}(V^*[1]), m_0 = -k\omega)$, not a flat VOA.
 The $r$-matrix is scalar, $r(z) = k/z^0$ (degree-zero central
 element), and the spectral $R$-matrix is $R(z) = \exp(k/z)$
 (Tier (a)). Line-operator category $\cC = \mathsf{Vect}$:
@@ -279,8 +279,8 @@ profile: loop$\circ$loop and sep$\circ$loop active,
 planted-forest absent. Shadow class $\mathbf L$.
 
 \medskip\noindent\textbf{Algebraic face.} The classical
-$r$-matrix is $r_{\cl}(z) = k\,\Omega/z$ with $\Omega = \sum_a
-J^a \otimes J^a$; it vanishes identically at $k = 0$, as it
+$r$-matrix is $r_{\cl}(z) = k\,\Omega_{\mathrm{tr}}/z$ with
+$\Omega_{\mathrm{tr}} = \sum_a J^a \otimes J_a$; it vanishes identically at $k = 0$, as it
 must. The CYBE is the Arnold relation on $\FM_3(\bC)$
 evaluated on the Casimir. The Koszul dual is the
 chiral Chevalley--Eilenberg object at the Feigin--Frenkel dual level:
@@ -630,7 +630,7 @@ depth & $3$ & $\infty$\\
 $\Theta^{(2)}_{\mathrm{pf}}$ & $0$ & $\neq 0$
 \end{tabular}
 \end{center}
-The Casimir $r$-matrix $k\Omega/z$ specialises to
+The Casimir $r$-matrix $k\Omega_{\mathrm{tr}}/z$ specialises to
 $r_c^{W_3}(z)$; the curvature shifts; the shadow depth jumps
 $3 \to \infty$; the planted-forest shell activates. At the
 critical level $k = -3$: $\kappa \to 0$ on the affine side,
@@ -809,11 +809,13 @@ Lefschetz $L$ & bracket with $\kappa(\cA)$
 \end{center}
 For even unimodular lattice VOAs $V_\Lambda$ with
 $\Theta_\Lambda = c_E E_{r/2} + \sum_j c_j f_j$, the
-Hecke--Newton closure gives: MC equation $\Rightarrow$
-prime-local CG closure $\Rightarrow$ CPS automorphy
+Hecke--Newton closure gives the conditional chain:
+finite-Hecke-span stability + prime-locality + MC moment recursion
+$\Rightarrow$ prime-local CG closure $\Rightarrow$ CPS automorphy
 $\Rightarrow \Sym^{r-1}(f)$ $\Rightarrow$ Ramanujan bound.
 Deligne's theorem supplies the bound itself; the MC framework
-supplies the systematic Hecke decomposition.
+supplies the comparison from chiral bar-cobar moments to the finite
+Hecke span, not an independent proof of the bound.
 
 \subsection*{Polyakov--bar-cobar dictionary}
 
@@ -1018,8 +1020,9 @@ A_b
 \Theta^{\oc}_\cA
 \]
 records successive lossy functors: $\cC_{\op}$ is Morita
-invariant; $A_b$ depends on $b$; $\barB$ forgets the bulk;
-$\Theta_\cA$ is the closed-sector MC element;
+invariant; $A_b$ depends on $b$; $\barB$ records twisting data,
+not closed-sector or physical-bulk data; $\Theta_\cA$ is the
+closed-sector MC element;
 $\Theta^{\oc}_\cA$ restores open/closed data. Modularity is
 determined by the open sector: a cyclic trace on $\End(b)$
 seeds the Calabi--Yau structure, the annulus identification
@@ -1189,7 +1192,7 @@ the boundary into three pairwise collision divisors, one for
 each side of the Yang--Baxter equation
 $R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}$.
 
-\medskip\noindent\emph{Bulk $=$ derived centre.} Let
+\medskip\noindent\emph{Closed sector $=$ derived centre.} Let
 $\cB_\partial$ be the boundary factorization algebra on $\bR$.
 Its derived centre
 $Z_{\der}(\cB_\partial) = R\Hom_{\cB_\partial\text{-bimod}}
@@ -1197,8 +1200,9 @@ $Z_{\der}(\cB_\partial) = R\Hom_{\cB_\partial\text{-bimod}}
 computes endomorphisms of the identity bimodule. The
 $E_1$-structure gives
 $Z_{\der}(\cB_\partial) \simeq \HH^\bullet(\cB_\partial)$ as
-$E_2$-algebra. The Swiss-cheese structure identifies the
-holomorphic bulk with this $E_2$-algebra.
+$E_2$-algebra. The Swiss-cheese structure maps the algebraic
+closed-sector actor to this $E_2$-algebra; identifying a holomorphic
+physical bulk with it requires the open--closed comparison datum.
 
 \subsection*{10.7.\enspace Curved Swiss-cheese at $g \ge 1$}
 
@@ -1236,8 +1240,9 @@ $\mathfrak S$; Theorem~B (bar-cobar inversion) reconstructs
 the Lagrangian from its clean self-intersection; Theorem~C
 (complementarity) is two Lagrangians whose intersection
 carries a $(-1)$-shifted symplectic structure; Theorem~D is
-the Kodaira--Spencer class; Theorem~H (chiral Hochschild polynomial
-growth) is the HKR theorem for the Lagrangian embedding.
+the Kodaira--Spencer class; under a specified chart comparison,
+Theorem~H is the strong-deformation-retract support theorem for the
+Lagrangian Hochschild chart.
 
 \subsection*{10.9.\enspace Factorization-primary hierarchy}
 
@@ -1481,15 +1486,19 @@ Gui--Li--Zeng picture.
 The open/closed world (Section~10) supplies the 3d geometric
 framework; the modular PVA quantisation programme
 (Section~11) supplies the obstruction theory. The holographic
-modular Koszul datum packages both into a single algebraic
-object: a six-component structure that records the boundary
-algebra, its Koszul dual, the line-operator category, the
-spectral $R$-matrix, the universal MC element, and the modular
-shadow connection. Every ingredient constructed so far (the
-bar complex, the shadow tower, the Swiss-cheese structure, the
-PVA descent, the genus expansion) is a projection of this
-datum. The datum is the smallest package from which the full
-correspondence reconstructs.
+modular Koszul datum packages the algebraic comparison surface into
+a seven-entry object: boundary algebra, presentation coalgebra,
+strict Koszul dual, derived closed sector,
+spectral $R$-matrix,
+universal MC element, and modular shadow connection. The line
+category is recovered from the strict dual on the line-comparison
+surface, while the derived centre occupies the closed-sector entry.
+The full-bar Verdier algebra
+$K_X(\cA)=\mathbb D_{\Ran}\bar B_X(\cA)$ is the typed comparison
+object between the presentation coalgebra and the strict dual. Every ingredient
+constructed so far (the bar complex, the shadow tower, the
+Swiss-cheese structure, the PVA descent, the genus expansion) is a
+typed projection of this datum.
 
 \subsection*{12.1.\enspace The holographic modular Koszul datum}
 
@@ -1497,27 +1506,36 @@ Every 3d HT system $T$ is controlled by
 \[
 \cH(T)
 \;=\;
-(\cA,\; \cA^!,\; \cC,\; r(z),\; \Theta_\cA,\; \nabla^{\hol}),
+(\cA,\; \cA^{\mathrm i},\; \cA^!,\;
+ \cZ^{\der}_{\ch}(\cA),\; K_\cA^{\mathrm{coll}}(z),\;
+ \Theta_\cA,\; \nabla^{\hol}),
 \]
 where:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\cA$ is the boundary chiral algebra on a curve $X$,
 restricted from the holomorphic boundary
 $\{0\} \times X \subset \bR_+ \times X$.
-\item $\cA^!$ is the strict chiral Koszul dual,
-$\cA^! = (\cA^{\mathrm i})^\vee$ with $\cA^{\mathrm i} = H^*(\barB(\cA))$.
-Holographically, $\cA^!$ is a dg-shifted Yangian: the bar
-complex $\barB(A_b)$ is an $E_1$ coassociative coalgebra, and $\cA^!$ is
-its linear dual. The $\SCchtop$ datum is the pair
-$(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$ of chiral derived center
-and boundary algebra.
-\item $\cC \simeq \cA^!\text{-mod}$ is the braided tensor
-category of line operators: objects are topological defect
-lines, morphisms junction operators, braiding from crossing
-in the holomorphic plane.
-\item $r(z) \in \cA^! \otimes \cA^!(\!(z^{-1})\!)$ is the
-classical $r$-matrix satisfying CYBE, the binary genus-$0$
-shadow $r(z) = \Res^{\coll}_{0,2}(\Theta_\cA)$.
+\item A chosen quadratic presentation
+$\cA=T_X(V)/(R)$ supplies
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_\cA\colon\cA^{\mathrm i}\to\barB_X(\cA)$.  On the Koszul locus,
+$H^\bullet(q_\cA)$ identifies presentation-coalgebra cohomology with
+bar cohomology.
+\item Verdier duality forms
+$K_X(\cA)=\mathbb D_{\Ran}\barB_X(\cA)$, and a chosen pair map
+$\nu_\cA\colon K_X(\cA)\to\cA^!$ supplies the strict partner.
+Its module category becomes the line-operator category under the
+line-comparison theorem.
+\item $\cZ^{\der}_{\ch}(\cA)$ is the derived chiral centre. The
+$\SCchtop$ datum is the pair
+$(\cZ^{\der}_{\ch}(\cA),\,\cA)$ of closed and open colours; the bar
+complex itself is not the closed colour.
+\item $K_\cA^{\mathrm{coll}}(z)=
+\Res^{\coll}_{0,2}(\Theta_\cA^{E_1})\in
+\End_\cA(2)\widehat\otimes\cO(*\Delta)$ is the binary genus-$0$
+collision kernel. Under $H_{\mathrm{CYBE}}^{\mathrm{rep}}(\cA;W)$,
+$r_\cA(z)=\rho_\cA(K_\cA^{\mathrm{coll}}(z))$ is the represented
+classical $r$-matrix.
 \item $\Theta_\cA \in \MC(\gAmod)$ is the universal MC element
 from the bar-intrinsic construction $\Theta_\cA := D_\cA - d_0$,
 always MC because $D_\cA^2 = 0$.
@@ -1586,9 +1604,10 @@ $\mathbf M$ (Virasoro: $Q^{\contact} = 10/[c(5c+22)]$).
 \item \emph{Boundary-defect realisation.} $\cA_\partial(T)$
 and $\cA^!_\partial(T)$ are the two algebras of $\cH(T)$ for
 every 3d HT system, with $\cC \simeq \cA^!\text{-mod}$.
-\item \emph{Yangian-shadow.} In full derived generality, the
-collision residue recovers the dg-shifted Yangian $r(z)$ at
-the chain level, including higher $A_\infty$ homotopies.
+\item \emph{Yangian-shadow.} On a locus carrying
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and the Yangian comparison package,
+the represented collision kernel supplies the dg-shifted Yangian
+$r$-operator together with its higher $A_\infty$ homotopies.
 \item \emph{Sphere reconstruction.} The Gaiotto--Zhang (2026)
 commuting differentials on the non-planar sphere algebra are
 the scalar shadow $\mathrm{Sh}_{0,n}(\Theta_\cA)$; sphere
@@ -1689,7 +1708,7 @@ holographic model remains the principal open bridge.
 Base case: shadow class $\mathbf G$, shadow depth $2$, trivial
 line-operator category, scalar $R$-matrix. For $\cA = \cH_k$:
 \begin{align*}
-\cA &= \cH_k, & \cA^! &= \Sym^{\ch}(V^*),
+\cA &= \cH_k, & \cA^! &= (\Sym^{\ch}(V^*[1]),m_0=-k\omega),
  & \cC &= \mathsf{Vect},\\
 r(z) &= k/z, & R(z) &= \exp(k/z),
  & \Theta_{\cH_k} &= k\cdot\eta\otimes\Lambda.
@@ -1703,7 +1722,7 @@ lines, vanishing quartic, no moduli dependence.
 \subsection*{12.8.\enspace Affine $\widehat{\mathfrak{sl}}_2$ holographic datum}
 
 First nontrivial example: class $\mathbf L$, shadow depth $3$,
-Yang's $r(z) = k\,\Omega/z$, line-operator category
+Yang's $r(z) = k\,\Omega_{\mathrm{tr}}/z$, line-operator category
 $Y(\mathfrak{sl}_2)\text{-mod}$, KZ shadow connection,
 quantum-group representation theory from genus-$0$ monodromy.
 \[
@@ -1789,13 +1808,20 @@ with $q = e^{2\pi i/(k+2)}$.
 The datum:
 \begin{align*}
 \cA &= \cA_{M2,\infty},
- & \cA^! &= Y^{\dg}_\hbar(\mathfrak{psl}(2|2)),\\
-\cC &= \Rep(U_q(\widehat{\mathfrak{psl}}(2|2))),
- & r(z) &= k\,\Omega_{\mathfrak{psl}(2|2)}/z,\\
-\Theta_{M2} &= \sum_\Gamma
- \tfrac{W^{\log\FM}_\Gamma}{|\Aut(\Gamma)|}\otimes\Phi^{M2}_\Gamma,
- & \nabla^{\hol}_{g,n} &= d - \mathrm{Sh}_{g,n}(\Theta_{M2}).
+ & \cA^{\mathrm i} &= C_X(s^{-1}V_{M2},s^{-2}R_{M2}),\\
+H^\bullet\barB_X(\cA)&=H^\bullet\barB_X(\cA_{M2,\infty}),
+ &K_X(\cA)&=\mathbb D_{\Ran}\barB_X(\cA),\\
+\cA^! &= Y^{\dg}_\hbar(\mathfrak{psl}(2|2)),
+ & \cZ^{\der}_{\ch}(\cA) &= C^\bullet_{\ch}(\cA,\cA),\\
+r(z) &= k\,\Omega_{\mathfrak{psl}(2|2)}/z,
+ & \Theta_{M2} &= \sum_\Gamma
+ \tfrac{W^{\log\FM}_\Gamma}{|\Aut(\Gamma)|}\otimes\Phi^{M2}_\Gamma,\\
+\nabla^{\hol}_{g,n} &= d - \mathrm{Sh}_{g,n}(\Theta_{M2}).
 \end{align*}
+The maps
+$q_{M2}\colon\cA^{\mathrm i}\to\barB_X(\cA)$ and
+$\nu_{M2}\colon K_X(\cA)\to\cA^!$ are part of the M2 comparison
+package.
 Shadow tower: cubic nonzero (nonabelian current subalgebra);
 quartic nonzero ($16/(22 + 5c(N))$); quintic
 $\{\mathfrak C_{M2}, Q^{\contact}_{M2}\}_H \neq 0$; tower
@@ -1805,7 +1831,9 @@ log-FM strata to the holographic genus expansion. The quartic
 contact invariant is the first obstruction to planarity: it
 distinguishes the full string-theoretic amplitude from its
 planar limit. The modular Koszul datum $\cH(M2)$ packages the
-complete holographic correspondence into a single MC problem.
+algebraic comparison surface into a seven-entry MC-controlled tuple;
+the physical holographic correspondence additionally requires the
+open--closed and line-comparison maps.
 
 \bigskip\noindent\emph{Summary.}\enspace Sections~1--2
 constructed the bar complex from $\eta = d\log(z_1 - z_2)$ and
@@ -1820,7 +1848,7 @@ Section~9 proved scalar saturation and the Koszulness
 meta-theorem. Sections~10--11 transported the machine to
 three dimensions via the Swiss-cheese operad and the modular
 PVA quantisation obstruction theory. Section~12 packaged
-the full holographic correspondence into a six-component
+the algebraic open/closed comparison surface into a seven-entry
 modular Koszul datum controlled by a single MC equation.
 
 
@@ -1828,10 +1856,11 @@ modular Koszul datum controlled by a single MC equation.
 \section*{13.\quad Completion and the frontier}
 % ====================================================================
 
-The holographic datum of Section~12 packages a chiral algebra,
-its Koszul dual, the line-operator category, the spectral
-$R$-matrix, the universal MC element, and the shadow connection
-into a single algebraic object. The frontier consists of
+The holographic datum of Section~12 packages a chiral algebra, its
+bar-cohomology coalgebra, its strict Koszul dual, its derived closed
+sector, the spectral $R$-matrix, the universal MC element, and the
+shadow connection into a single algebraic object. The line-operator
+category is read on the separate line-comparison surface. The frontier consists of
 structural questions the packaging forces: the completed
 bar-cobar problem by infinite-type algebras, the analytic
 sewing problem by $g \ge 1$ curvature, the factorization
@@ -1920,8 +1949,8 @@ completion.
 The analytic sewing package is established at all genera, together
 with the algebraic genus tower. The full genuswise BV/BRST/bar
 identification remains conjectural. At genus~$0$, the algebraic
-BRST/bar comparison is proved
-(Theorem~\ref{thm:algebraic-string-dictionary}); the tree-level
+BRST/bar comparison is conditional at
+Theorem~\ref{thm:algebraic-string-dictionary}; the tree-level
 amplitude pairing is conditional on
 Corollary~\ref{cor:string-amplitude-genus0}; bar-cobar inversion
 $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ is Theorem~B. At
@@ -2042,9 +2071,11 @@ $V_\Lambda$ is vertex-algebraic completion by lattice theta
 functions.
 \item \emph{Analytic realisation criterion} (conjectural):
 HS-sewing on $\cA$ plus dual HS on $\cA^!$ should suffice.
-\item \emph{Boundary bar duality} (conjectural):
-$B^{\mathrm{an}}(\cA_\partial) \simeq
-B^{\mathrm{top}}(\mathrm{Fact}^{\mathrm{bulk}}_T)$.
+\item \emph{Boundary bar duality} (conjectural): genus-$0$
+completed boundary modules are expected to be analytic comodules
+over $B^{\mathrm{an}}(\cA_\partial)$; curved genus uses analytic
+contramodules over the curved dual. This is not a physical-bulk
+identification without the open--closed comparison datum.
 \end{enumerate}
 
 \subsection*{13.3.\enspace Factorization envelopes and the modular Koszul datum}
@@ -2165,8 +2196,9 @@ projections:
 \Theta_\cA&:\qquad\varprojlim_r\Theta_\cA^{\le r}
  &&\text{(universal MC element)}.
 \end{align*}
-Theorems~A--D and Theorem~H are proved projections at the
-scalar level $\kappa$. The holographic datum
+Theorems~A--D occupy their respective reconstruction, recognition,
+complementarity, and modular-trace levels; Theorem~H occupies the
+derived-centre support level. The holographic datum
 $\cH(T) = (\cA, \cA^!, \cC, r(z), \Theta_\cA, \nabla^{\hol})$
 packages $\Theta_\cA$ and its projections into the data of a
 3d HT field theory.
@@ -2181,11 +2213,14 @@ independent proved tests:
 \item $D_\cA^2 = 0$: the bar differential squares to zero at
 all genera and degrees (Theorems~\ref{thm:bar-modular-operad},
 \ref{thm:quantum-diff-squares-zero}).
-\item $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ for
-uniform-weight algebras at all genera , and
-unconditionally at genus~$1$ for all families; for multi-weight
-algebras at $g \ge 2$ (all-weight), with cross-channel
-correction $\delta F_g^{\cross}$
+\item Theorem~D separates
+$\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\operatorname{Def}_g)$ for
+$g\geq2$,
+the $H_D^1$ trace $\kappa\lambda_1$, the $H_D^K$ object
+$\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ and its signed
+Hodge character, their $H_D^{\mathrm{tr}}$ comparison, and the
+$H_D^{\mathrm{graph}}$ functional
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\cross}$
 (Theorem~\ref{thm:modular-characteristic},
 Theorem~\ref{thm:multi-weight-genus-expansion}).
 \item $Q_g(\cA) + Q_g(\cA^!) = H^*(\overline\cM_g, Z(\cA))$:
@@ -2223,8 +2258,9 @@ detecting when a boundary datum cannot arise from a planar
 holographic realisation. The Loop--Connes principle
 $\beta_{\der}^*(\Delta_{\mathrm{open}}) = \Lambda_P$:
 closed genus creation is the image of the open BV operator
-under the derived-centre map; loops in the bulk are traces on
-the boundary.
+under the derived-centre map; genus creation in the cochain-level
+closed sector is the open Connes trace mechanism viewed through that
+map.
 
 \medskip\noindent\textbf{Cyclic trace, ribbon structure, and $1/N$.}
 A bare modular graph sum does not define a literal 't~Hooft

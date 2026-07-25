@@ -574,9 +574,11 @@ def weight_2_primary_genus1_contribution() -> Rational:
     to kappa via the B-cycle monodromy.  Each boson contributes kappa = k.
 
     For the stress tensor T: T(z)T(w) ~ (c/2)/(z-w)^4 + 2T/(z-w)^2 + dT/(z-w).
-    The d-log extraction reduces pole orders by 1 (AP19).  The genus-1
-    vacuum trace Tr(q^{L_0-c/24} * T) = -(c/24) * E_2(tau) contributes
-    kappa = c/2 through the E_2 anomaly.
+    The d-log extraction reduces pole orders by 1 (AP19).  The scalar
+    genus-1 curvature extracts the mode coefficient T_(3)T = c/2.  The
+    determinant-line shadow eta^{-c/2} has E_2 coefficient -c/48,
+    whereas the generic Virasoro vacuum Ward block has constant term
+    -c/24 plus oscillator terms from prod_{n>=2}(1-q^n)^{-1}.
 
     For weight-2 primaries phi_i: phi_i(z) phi_j(w) ~ <phi_i,phi_j>/(z-w)^4
     + (phi_i * phi_j)/(z-w)^2 + ...

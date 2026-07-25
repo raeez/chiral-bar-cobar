@@ -1,29 +1,11 @@
-"""
-Independent-verification tests for the Virasoro Motivic Purity chapter
-(chapters/theory/virasoro_motivic_purity.tex).
+"""Exact algebraic checks for the formal Virasoro Riccati series.
 
-Each ProvedHere claim is backed by a test decorated with
-@independent_verification, asserting disjointness between the
-derivation source (how the formula was produced in the chapter)
-and the verification source (what the test compares against).
-
-Disjoint-source menu for this chapter:
-
-  DERIVATION SIDE (what the .tex proof uses):
-    - "Riccati algebraicity theorem (Vol I thm:riccati-algebraicity)"
-    - "Master-equation shadow recursion (Vol I shadow_tower_higher_coefficients.tex)"
-    - "Binomial series expansion of sqrt(Q(t))"
-    - "Brown 2012 motivic MZV inclusion Q subset MZV^mot_0 (arXiv:1102.1312)"
-
-  VERIFICATION SIDE (independent machinery):
-    - "Belavin-Polyakov-Zamolodchikov 1984 OPE rationality in Virasoro"
-    - "Feigin-Fuchs 1984 explicit Virasoro cohomology at minimal models"
-    - "Brown 2012 period map Q -> R is identity on rationals"
-    - "Direct sympy polynomial arithmetic in Q(c)"
-    - "Arakawa 2007 DS reduction rationality (Invent. Math. 169)"
-    - "Shapovalov determinant formula (classical, pre-programme)"
-
-No AI attribution. All work attributed to Raeez Lorgat.
+The coefficients tested here are ``R_r(c)`` defined by
+``t^2 sqrt(Q_L(t)) = sum r R_r(c) t^r``.  Rationality of these formal
+coefficients is an algebraic statement in ``Q(c)[[t]]``.  The Ward engine
+produces the canonical coordinate functions ``G_r`` and ``G_r^conn``.
+An ordered scalar ``S_r(Vir_c; H_res)`` additionally uses an Arnold class
+and a normalized residue projection.
 """
 
 from __future__ import annotations
@@ -33,12 +15,21 @@ from fractions import Fraction
 import pytest
 import sympy as sp
 
-from compute.lib.independent_verification import independent_verification
+from compute.lib.shadow_tower_higher_vir import (
+    s5_riccati_candidate,
+    s6_relation_candidate,
+    s6_riccati_candidate,
+)
+from compute.lib.virasoro_ward_correlators import (
+    ResidueProjectionRequired,
+    require_residue_projection,
+    standard_points,
+    virasoro_connected_correlator,
+)
 
 
 # ---------------------------------------------------------------------------
-# Closed-form helpers (verification side; independent of the master-equation
-# recursion used in the .tex proof).
+# Local seeds and simplified weighted-Riccati formulas.
 # ---------------------------------------------------------------------------
 
 
@@ -48,29 +39,28 @@ def _s2_vir(c):
 
 
 def _s3_vir():
-    """S_3(Vir_c) = 2 from the BPZ three-point Ward identity. NO c-dependence;
-    verification: independent of the master-equation recursion."""
+    """Return the local three-point normalization ``R_3=2``."""
     return sp.Integer(2)
 
 
 def _s4_vir_shapovalov(c):
-    """S_4(Vir_c) from the Zamolodchikov Lambda-norm <Lambda|Lambda> =
-    c(5c+22)/10; multiplicity-1 matrix element gives S_4 = 10/[c(5c+22)].
-    Shapovalov-determinant derivation, independent of the Riccati transport."""
+    """The seed ``R_4=10/[c(5c+22)]`` from the Lambda norm.
+
+    Here ``<Lambda|Lambda>=c(5c+22)/10``.
+    This is the level-four seed supplied to the Riccati series."""
     return sp.Rational(10) / (c * (5 * c + 22))
 
 
-def _s5_vir_closed_form(c):
-    """S_5(Vir_c) = -48/[c^2(5c+22)], verified via BPZ-Wick 5-point connected
-    residue (compute/lib/s5_vir_wick.py). Independent of master-equation
-    recursion."""
-    return sp.Rational(-48) / (c**2 * (5 * c + 22))
+def _s5_riccati_closed_form(c):
+    """Return the simplified arity-five coefficient of ``H_Ricc``."""
+
+    return s5_riccati_candidate(c)
 
 
-def _s6_vir_closed_form(c):
-    """S_6(Vir_c) = 80(45c+193)/[3 c^3 (5c+22)^2]; closed form from
-    shadow_tower_higher_coefficients.tex Theorem thm:s6-virasoro-closed-form."""
-    return sp.Rational(80) * (45 * c + 193) / (sp.Integer(3) * c**3 * (5 * c + 22) ** 2)
+def _s6_riccati_closed_form(c):
+    """Return the simplified arity-six coefficient of ``H_Ricc``."""
+
+    return s6_riccati_candidate(c)
 
 
 def _s7_vir_closed_form(c):
@@ -103,8 +93,8 @@ def _truncate_poly_in_t(expr, t, deg_max):
 
 def _riccati_H_expansion(c, r_max):
     """Expand H(t) = t^2 sqrt(Q(t)) to order t^{r_max} in Q(c)[[t]].
-    Verification path: binomial series, independent of master-equation
-    recursion.
+    The binomial series implements coefficient extraction from the defining
+    square root.
 
     Implementation: sp.series(sp.sqrt(.)) with rational-function c
     coefficients is pathologically slow at order >= 9, so we factor
@@ -135,7 +125,7 @@ def _riccati_H_expansion(c, r_max):
 
 
 def _extract_S_r_from_riccati(c, r):
-    """S_r(Vir_c) = (1/r) [t^r] H(t). Verification path via Riccati."""
+    """Return ``R_r(c)=(1/r)[t^r]H_Ricc(t)``."""
     t = sp.Symbol("t")
     H = _riccati_H_expansion(c, r + 1)
     coeff = sp.Poly(H, t).nth(r)
@@ -147,23 +137,6 @@ def _extract_S_r_from_riccati(c, r):
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="thm:virasoro-motivic-purity",
-    derived_from=[
-        "Riccati algebraicity theorem (Vol I thm:riccati-algebraicity)",
-        "Binomial series expansion of sqrt(Q(t))",
-    ],
-    verified_against=[
-        "Belavin-Polyakov-Zamolodchikov 1984 OPE rationality in Virasoro",
-        "Shapovalov determinant formula (classical, pre-programme)",
-    ],
-    disjoint_rationale=(
-        "Derivation uses formal square-root in Q(c)[[t]] via binomial series; "
-        "verification uses the BPZ OPE residue table (central c/2, stress 2T, "
-        "descendant dT) and the Shapovalov norm <Lambda|Lambda>=c(5c+22)/10 "
-        "derived directly from the Virasoro commutator algebra. No shared "
-        "derivation path."),
-)
 def test_s2_s3_s4_virasoro_all_rational():
     """Base case: first three invariants are rational at c=1,2,13,25."""
     c = sp.Symbol("c")
@@ -178,33 +151,14 @@ def test_s2_s3_s4_virasoro_all_rational():
     assert sp.Poly(num, c).is_ground
 
 
-@independent_verification(
-    claim="thm:virasoro-motivic-purity",
-    derived_from=[
-        "Riccati algebraicity theorem (Vol I thm:riccati-algebraicity)",
-        "Binomial series expansion of sqrt(Q(t))",
-    ],
-    verified_against=[
-        "Shapovalov determinant formula (classical, pre-programme)",
-        "Direct sympy polynomial arithmetic in Q(c)",
-    ],
-    disjoint_rationale=(
-        "The Riccati expansion produces a formal power series in "
-        "Q(c)[[t]] via the binomial series coefficients binom(1/2, n); "
-        "the verification compares against the closed-form rational "
-        "functions obtained independently from Shapovalov determinants "
-        "and OPE inner products. The two paths share only the OPE "
-        "residue table, not a derivation chain."),
-)
 def test_riccati_matches_closed_forms_r4_through_r8():
-    """For c symbolic and r = 4, 5, 6, 7, 8: Riccati binomial expansion
-    matches the closed-form rational functions of Vol I shadow_tower_
-    higher_coefficients. Each agreement is a Q(c)-rational identity."""
+    """Coefficient extraction agrees with the simplified ``R_r(c)`` forms."""
+
     c = sp.Symbol("c")
     expected = {
         4: _s4_vir_shapovalov(c),
-        5: _s5_vir_closed_form(c),
-        6: _s6_vir_closed_form(c),
+        5: _s5_riccati_closed_form(c),
+        6: _s6_riccati_closed_form(c),
         7: _s7_vir_closed_form(c),
         8: _s8_vir_closed_form(c),
     }
@@ -217,50 +171,48 @@ def test_riccati_matches_closed_forms_r4_through_r8():
         )
 
 
-@independent_verification(
-    claim="thm:virasoro-motivic-purity",
-    derived_from=[
-        "Binomial series expansion of sqrt(Q(t))",
-    ],
-    verified_against=[
-        "Direct sympy polynomial arithmetic in Q(c)",
-    ],
-    disjoint_rationale=(
-        "The purity claim is: every S_r(Vir_c) lies in the rational "
-        "function field Q(c). The Riccati derivation produces a formal "
-        "power series whose coefficients must be checked for "
-        "rationality; sympy's .is_rational_function(c) flag verifies "
-        "this directly on the sympy expression, independent of how the "
-        "coefficient was generated."),
-)
+def test_connected_ward_functions_precede_scalar_extraction():
+    """The Ward and residue constructions expose their respective types."""
+
+    for arity in (5, 6):
+        points = standard_points(arity)
+        connected = virasoro_connected_correlator(points, sp.Symbol("c"))
+        assert connected.free_symbols == set(points) | {sp.Symbol("c")}
+        with pytest.raises(ResidueProjectionRequired):
+            require_residue_projection(arity)
+
+
+def test_weight_six_relation_and_riccati_constructions_are_distinct():
+    """The formal relation and weighted-Riccati rules give distinct outputs."""
+
+    c = sp.Symbol("c")
+    riccati = s6_riccati_candidate(c)
+    relation = s6_relation_candidate(c)
+    expected_difference = -sp.Rational(4) * (180 * c + 767) / (
+        3 * c**3 * (5 * c + 22) ** 2
+    )
+    assert sp.factor(relation - riccati - expected_difference) == 0
+
+    r2 = c / 2
+    r3 = sp.Integer(2)
+    r4 = sp.Rational(10) / (c * (5 * c + 22))
+    r5 = s5_riccati_candidate(c)
+    assert sp.factor(2 * r2 * relation + 2 * r3 * r5 + r4**2) == 0
+    assert sp.factor(_extract_S_r_from_riccati(c, 6) - riccati) == 0
+
+
 def test_riccati_coefficients_are_rational_functions_of_c():
-    """Every Taylor coefficient of H(t) extracted from Riccati lies in
+    """Every Taylor coefficient of ``H_Ricc(t)`` lies in
     Q(c) -- the field of rational functions. Verified by sympy's
     is_rational_function predicate."""
     c = sp.Symbol("c")
     for r in range(4, 9):
         S_r = _extract_S_r_from_riccati(c, r)
         assert S_r.is_rational_function(c), (
-            f"S_{r}(Vir_c) is not a rational function of c: {S_r}"
+            f"R_{r}(c) left Q(c): {S_r}"
         )
 
 
-@independent_verification(
-    claim="thm:virasoro-motivic-purity",
-    derived_from=[
-        "Master-equation shadow recursion (Vol I shadow_tower_higher_coefficients.tex)",
-    ],
-    verified_against=[
-        "Belavin-Polyakov-Zamolodchikov 1984 OPE rationality in Virasoro",
-    ],
-    disjoint_rationale=(
-        "The master-equation recursion S_r = -(1/(rc)) sum eps(j,k) j k "
-        "S_j S_k preserves Q(c)-rationality at every step because the "
-        "prefactor 1/(rc) and the product S_j S_k are both rational "
-        "functions of c; the verification is against the BPZ OPE "
-        "residue table, which is pre-programme Virasoro-representation "
-        "theory data."),
-)
 def test_master_equation_preserves_rationality():
     """At c=1: direct substitution gives rational numerics. At c symbolic:
     sympy verifies rational-function predicate. Test across 4 values."""
@@ -269,7 +221,7 @@ def test_master_equation_preserves_rationality():
             S_r = _extract_S_r_from_riccati(c_val, r)
             # At numeric c, result must be a pure rational number.
             assert S_r.is_rational, (
-                f"S_{r}(Vir_c) at c={c_val} not rational: {S_r}"
+                f"R_{r}({c_val}) left Q: {S_r}"
             )
 
 
@@ -278,31 +230,15 @@ def test_master_equation_preserves_rationality():
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="prop:denominator-structure",
-    derived_from=[
-        "Master-equation shadow recursion (Vol I shadow_tower_higher_coefficients.tex)",
-    ],
-    verified_against=[
-        "Direct sympy polynomial arithmetic in Q(c)",
-    ],
-    disjoint_rationale=(
-        "The denominator bound D_r = c^{r-3} (5c+22)^{ceil((r-2)/2)} is "
-        "derived inductively from the recursion's prefactor structure; "
-        "the verification factors each closed-form denominator via sympy "
-        "and checks the factorisation matches the bound. The two paths "
-        "share only the closed-form values (known independently from "
-        "the master equation AND the Riccati expansion)."),
-)
 def test_denominator_bound_r4_through_r8():
-    """Denominator of S_r(Vir_c) divides c^{r-3} (5c+22)^{ceil((r-2)/2)}."""
+    """The denominator of ``R_r(c)`` divides the stated polynomial bound."""
     import math
 
     c = sp.Symbol("c")
     closed_forms = {
         4: _s4_vir_shapovalov(c),
-        5: _s5_vir_closed_form(c),
-        6: _s6_vir_closed_form(c),
+        5: _s5_riccati_closed_form(c),
+        6: _s6_riccati_closed_form(c),
         7: _s7_vir_closed_form(c),
         8: _s8_vir_closed_form(c),
     }
@@ -323,27 +259,13 @@ def test_denominator_bound_r4_through_r8():
         )
 
 
-@independent_verification(
-    claim="prop:denominator-structure",
-    derived_from=[
-        "Master-equation shadow recursion (Vol I shadow_tower_higher_coefficients.tex)",
-    ],
-    verified_against=[
-        "Direct sympy polynomial arithmetic in Q(c)",
-    ],
-    disjoint_rationale=(
-        "Proposition claims only two irreducible c-factors (c, 5c+22) "
-        "appear in any S_r denominator. Verification factors each closed-"
-        "form denominator explicitly via sympy.factor and asserts the "
-        "factorisation contains only those two irreducibles."),
-)
 def test_only_two_irreducible_factors_in_denominator():
     """No new irreducible factor (7c+68, c+1, c+2, ...) ever enters."""
     c = sp.Symbol("c")
     closed_forms = {
         4: _s4_vir_shapovalov(c),
-        5: _s5_vir_closed_form(c),
-        6: _s6_vir_closed_form(c),
+        5: _s5_riccati_closed_form(c),
+        6: _s6_riccati_closed_form(c),
         7: _s7_vir_closed_form(c),
         8: _s8_vir_closed_form(c),
     }
@@ -377,24 +299,6 @@ def test_only_two_irreducible_factors_in_denominator():
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="thm:virasoro-riccati-transport-rationality",
-    derived_from=[
-        "Riccati algebraicity theorem (Vol I thm:riccati-algebraicity)",
-        "Binomial series expansion of sqrt(Q(t))",
-    ],
-    verified_against=[
-        "Belavin-Polyakov-Zamolodchikov 1984 OPE rationality in Virasoro",
-        "Shapovalov determinant formula (classical, pre-programme)",
-    ],
-    disjoint_rationale=(
-        "The transport operator T_Vir sends the rational triple "
-        "(kappa, S_3, S_4) to a power series in Q(c)[[t]]. The "
-        "verification inputs the BPZ OPE residues directly "
-        "(kappa = c/2, S_3 = 2, S_4 via Zamolodchikov norm) and "
-        "checks the output series coefficients are rational in c. "
-        "No shared derivation chain beyond the OPE table."),
-)
 def test_transport_output_is_formal_power_series_in_Qc():
     """Riccati transport output is a formal power series with Q(c)
     coefficients."""
@@ -409,33 +313,12 @@ def test_transport_output_is_formal_power_series_in_Qc():
 
 
 # ---------------------------------------------------------------------------
-# Tests for cor:virasoro-no-mzv-contribution
+# Rational specializations of the formal series
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="cor:virasoro-no-mzv-contribution",
-    derived_from=[
-        "Brown 2012 motivic MZV inclusion Q subset MZV^mot_0 (arXiv:1102.1312)",
-        "Riccati algebraicity theorem (Vol I thm:riccati-algebraicity)",
-    ],
-    verified_against=[
-        "Brown 2012 period map Q -> R is identity on rationals",
-        "Feigin-Fuchs 1984 explicit Virasoro cohomology at minimal models",
-    ],
-    disjoint_rationale=(
-        "Corollary: motivic coaction on S_r^mot(Vir_c) is trivial (only "
-        "primitive terms 1 otimes x + x otimes 1). The derivation uses "
-        "Brown's weight-0 identification MZV^mot_0 = Q; verification "
-        "checks (a) the rational purity of S_r numerically (period map "
-        "trivial), and (b) consistency with Feigin-Fuchs cohomology "
-        "vanishing at minimal models (a separate published fact about "
-        "Virasoro that would falsify purity if a zeta-value appeared "
-        "in the character formula)."),
-)
-def test_period_map_identity_on_rational_shadow():
-    """At any rational c, S_r(Vir_c) is rational, and the period map acts
-    as identity; hence the motivic lift has no zeta contribution."""
+def test_rational_specializations_of_weighted_riccati_series():
+    """At rational ``c``, each displayed weighted-Riccati output is rational."""
     for c_val in (
         Fraction(1),
         Fraction(1, 2),
@@ -446,78 +329,29 @@ def test_period_map_identity_on_rational_shadow():
         c_sp = sp.Rational(c_val.numerator, c_val.denominator)
         for r in (4, 5, 6, 7, 8):
             S_r = _extract_S_r_from_riccati(c_sp, r)
-            # Rational value confirms no transcendental zeta entered.
             assert S_r.is_rational, (
-                f"S_{r}(Vir_{c_val}) has transcendental content: {S_r}"
+                f"R_{r}({c_val}) left Q: {S_r}"
             )
 
 
 # ---------------------------------------------------------------------------
-# Tests for cor:vir-purity-propagates-to-dress-reduced (class-M propagation)
+# Rational substitution along the principal W_3 central-charge family
 # ---------------------------------------------------------------------------
 
 
-@independent_verification(
-    claim="cor:vir-purity-propagates-to-dress-reduced",
-    derived_from=[
-        "Master-equation shadow recursion (Vol I shadow_tower_higher_coefficients.tex)",
-        "Arakawa 2007 DS reduction rationality (Invent. Math. 169)",
-    ],
-    verified_against=[
-        "Belavin-Polyakov-Zamolodchikov 1984 OPE rationality in Virasoro",
-        "Direct sympy polynomial arithmetic in Q(c)",
-    ],
-    disjoint_rationale=(
-        "Corollary: the Virasoro sub-algebra of a DS-reduced W-algebra "
-        "inherits rational shadow coefficients. The derivation uses "
-        "Arakawa's exactness of DS reduction + the central-charge "
-        "shift formula. The verification substitutes concrete W_N "
-        "central charges (c(W_3) at affine sl_3 at level k) and "
-        "checks the Virasoro-projected S_r lies in Q(c(W_3))."),
-)
-def test_virasoro_purity_under_central_charge_shift_W3():
-    """At W_3 central charge c(W_3) = 2 - 24(k+2)/k at sl_3 level k,
-    the Virasoro sub-algebra shadow S_r stays rational in the parameter.
-    Verified at a representative level k=4 (non-critical)."""
+def test_weighted_riccati_series_under_W3_central_charge_substitution():
+    """A rational central-charge substitution preserves ``Q``-rationality."""
     k = sp.Symbol("k")
     # c(V_k(sl_3)) = k * dim(sl_3) / (k + h^v) = 8 k / (k + 3).
     c_affine = sp.Rational(8) * k / (k + 3)
     # DS shift: c(W_3) = c_affine - 12 |rho|^2 / (k + h^v); rho.rho = 4 for sl_3.
     # We use the universal W_3 central charge formula directly
     # (Fateev-Lukyanov 1988) c(W_3) = 50 - 24/(k+3) - 24(k+3).
-    # For the test we simply verify purity: any rational c(W_3) gives
-    # rational S_r on the Virasoro sub-algebra.
     c_w3 = sp.Integer(50) - sp.Rational(24) / (k + 3) - sp.Rational(24) * (k + 3)
     # Substitute k = 4: c(W_3) at k=4.
     c_val = c_w3.subs(k, 4)
     for r in (4, 5, 6, 7, 8):
         S_r = _extract_S_r_from_riccati(c_val, r)
         assert S_r.is_rational, (
-            f"At c(W_3, k=4) = {c_val}, S_{r} is not rational: {S_r}"
+            f"R_{r}(c(W_3,4)) left Q at c={c_val}: {S_r}"
         )
-
-
-# ---------------------------------------------------------------------------
-# Sanity self-test: the tests themselves use disjoint sources.
-# ---------------------------------------------------------------------------
-
-
-def test_sources_disjoint_self_check():
-    """The @independent_verification decorator already asserts disjointness
-    at import time; this test documents the invariant for future auditors."""
-    from compute.lib.independent_verification import registry
-
-    claims = [
-        "thm:virasoro-motivic-purity",
-        "prop:denominator-structure",
-        "thm:virasoro-riccati-transport-rationality",
-        "cor:virasoro-no-mzv-contribution",
-        "cor:vir-purity-propagates-to-dress-reduced",
-    ]
-    for claim in claims:
-        entries = [e for e in registry() if e.claim == claim]
-        assert entries, f"No verification entry registered for {claim}"
-        for e in entries:
-            assert not e.is_tautological(), (
-                f"Tautological verification for {claim}: {e}"
-            )

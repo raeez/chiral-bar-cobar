@@ -195,27 +195,25 @@ d_{\mathrm{fib}}^2
 \subsection*{The genus tower}
 
 With $D_g^2 = 0$ restored, the bar complex defines a flat family of
-cochain complexes over $\overline{\cM}_g$; the obstruction to
-triviality of this family is a characteristic class. For
-uniform-weight algebras (single-generator, or multi-generator with
-all generators of the same conformal weight), it takes the form
+cochain complexes over $\overline{\cM}_g$.  Its native deformation
+class lies in $H^2(\Def_g)$.  Under $H_D^K$, the K-theoretic and
+signed Hodge outputs are
 \[
-\mathrm{obs}_g(\cA)
-\;=\;
-\kappa(\cA)\cdot\lambda_g
-\;\in\;
-H^*(\overline{\cM}_g),
+\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
 \qquad
-\lambda_g\;=\;c_g(\mathbb E),
+\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g,
+\quad \lambda_g=c_g(\mathbb E_g),
 \]
 where $\mathbb E = \pi_*\omega_\pi$ is the \emph{Hodge bundle}:
 the vector bundle on $\overline{\cM}_g$ whose fibre over a
 point $[C]$ is the $g$-dimensional space
 $H^0(C, \omega_C)$ of holomorphic differentials on~$C$.
-At genus~$1$ this factorization holds unconditionally for all
-families; for multi-weight families at genus~$g \geq 2$ the scalar
-formula \emph{fails}: a cross-channel correction from
-mixed-propagator boundary graphs appears
+At genus~$1$, the pointed trace identity
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}
+=\kappa\lambda_1$ holds for every family.  For multi-weight
+families at genus~$g \geq 2$, mixed-propagator boundary graphs supply
+the cross-channel correction
 (Theorem~\ref{thm:multi-weight-genus-expansion}).
 
 Grothendieck--Riemann--Roch applied to the universal curve
@@ -224,7 +222,7 @@ total obstruction: the Chern character of $R\pi_*\omega_\pi$
 involves the Todd class of the relative tangent bundle~$T_\pi$,
 which is the $\hat A$-genus. The generating function:
 \[
-\sum_{g\ge 1}\mathrm{obs}_g(\cA)\cdot x^{2g}
+\sum_{g\ge 1}F_g^{\mathrm{sc}}(\cA)\cdot x^{2g}
 \;=\;
 \kappa(\cA)\cdot\bigl(\hat A(ix)-1\bigr).
 \]
@@ -294,7 +292,7 @@ dimension. At the scalar level, complementarity reduces to
 For $\mathcal{W}$-algebras the sum $\kappa+\kappa^!$ is a nonzero
 constant: $13$ for Virasoro, $250/3$ for~$\mathcal{W}_3$.
 
-\subsection*{Feigin--Frenkel duality}
+\subsection*{Feigin--Frenkel centre and the critical-level reflection}
 
 The Sugawara construction produces the Virasoro field
 \[
@@ -311,19 +309,21 @@ $\mathfrak z(\widehat{\fg}_{-h^\vee})$, isomorphic to the
 algebra of functions on the space of local ${}^L\fg$-opers
 on the formal disc.
 
-The Feigin--Frenkel involution
+The critical-level reflection
 \[
-k\;\longleftrightarrow\;-k-2h^\vee
+\iota_{\mathrm{crit}}(k)\;=\;-k-2h^\vee
 \]
-is Koszul duality on configuration spaces: it interchanges~$\cA$
-and~$\cA^!$ while preserving the bar-cobar adjunction. At the
-level of modular characteristics,
+is the scalar level transform visible on the affine Koszul lane; it
+is not the Feigin--Frenkel centre theorem and not, by itself, an
+identification of the chiral Koszul dual object. At the level of
+modular characteristics,
 $\kappa(\widehat{\fg}_k)+
 \kappa(\widehat{\fg}_{-k-2h^\vee})=0$:
-complementarity is a direct consequence. At the critical
-level, the Koszul dual is the Langlands-dual critical-level
-algebra~$\widehat{{}^L\fg}_{-{}^Lh^\vee}$, not a
-renormalised copy of the original.
+complementarity is a direct consequence of this reflection. The
+actual Feigin--Frenkel theorem enters at the fixed critical level,
+where the centre is the oper algebra for the Langlands dual group.
+The chiral Koszul dual still passes through the Verdier-dual bar and
+the chiral CE construction, not through a bare relabelling of~$k$.
 
 \subsection*{The total space}
 
@@ -962,11 +962,14 @@ differential $D^{E_1}_\cA$ on $T^c(s^{-1}\bar\cA)$ produces the
 ordered MC element $\Theta^{E_1}_\cA \in
 \operatorname{MC}(\mathfrak{g}^{\mathrm{mod},E_1}_\cA)$. The
 coinvariant projection sends $\Theta^{E_1}_\cA \mapsto \Theta_\cA$:
-the modular MC element is the $\Sigma_n$-averaged shadow of the
-ordered one. At degree~$2$, this recovers
-$\mathrm{av}(r(z)) = \kappa(\cA)$ in the abelian and scalar
-families, while non-abelian affine Kac--Moody obeys
-$\mathrm{av}(r(z)) + \dim(\fg)/2 = \kappa(V_k(\fg))$.
+the modular MC element is the $\Sigma_n$-homotopy-coinvariant shadow
+of the ordered one. At degree~$2$ it retains
+$q_2(K_\cA^{\mathrm{coll}})$ as an operator class. The normalized
+functional gives
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})=\kappa(\cA)$
+in abelian and scalar families; on the non-abelian affine row it gives
+$\kappa_{\mathrm{dp}}$, and the Sugawara contribution
+$\dim(\fg)/2$ completes $\kappa(V_k(\fg))$.
 
 \subsection*{4.3.\enspace Universal modular twisting morphism}
 
@@ -1124,15 +1127,19 @@ graphs contribute.
 \medskip
 \noindent\textbf{The clutching identity.}\enspace
 On each rigid boundary stratum~$\rho$ of the log-FM
-compactification, the restriction of~$\Theta_\cA$ factors as a
-tensor product over vertices of the dual graph:
+compactification, the signed residue-pushforward image of
+~$\Theta_\cA$ factors as a tensor product over vertices of the dual
+graph:
 \[
-\Theta_\cA\big|_\rho
+\Delta^{\log}_{\mathrm{pf},\rho}(\Theta_\cA)
 \;=\;
-(\kappa_\rho)_*\!\left(
 \bigotimes_{v\in V(S_\rho)}\Theta_{\cA,v}
-\right).
 \]
+Here
+$\Delta^{\log}_{\mathrm{pf},\rho}
+=(\kappa_\rho)_*(\operatorname{pr}_\rho)_*i_\rho^!$ includes the
+Gysin residue, proper pushforward, determinant-line sign, and
+finite-automorphism normalisation of the signed log-FM package.
 The amplitude on the degenerate curve equals the product
 of amplitudes on the irreducible components, sewn by propagators
 along the nodes: the MC-level incarnation of the sewing axiom.

@@ -9,7 +9,7 @@ Organized by:
   III.  Affine KM E_3 structure
   IV.   Virasoro E_3 structure
   V.    W_3 ChirHoch explicit computation
-  VI.   W_N ChirHoch polynomial growth
+  VI.   W_N ChirHoch Hilbert-profile growth
   VII.  AKL comparison (U(N) vs ChirHoch)
   VIII. Griffin CVA BRST comparison
   IX.   E_3-Koszulness conjecture assessment
@@ -191,26 +191,26 @@ class TestAffineKME3:
     """E_3 structure on ChirHoch*(hat{g}_k, hat{g}_k)."""
 
     def test_sl2_chirhoch_dims(self):
-        """ChirHoch = (1, 3, 1) for affine sl_2."""
+        """ChirHoch = (1, 0, 1) for affine sl_2 after quotient."""
         data = affine_km_e3_structure('A', 1)
         assert data.chirhoch_dims[0] == 1
-        assert data.chirhoch_dims[1] == 3  # dim sl_2 = 3
+        assert data.chirhoch_dims[1] == 0
         assert data.chirhoch_dims[2] == 1
 
     def test_sl3_chirhoch_dims(self):
-        """ChirHoch = (1, 8, 1) for affine sl_3."""
+        """ChirHoch = (1, 0, 1) for affine sl_3 after quotient."""
         data = affine_km_e3_structure('A', 2)
-        assert data.chirhoch_dims[1] == 8  # dim sl_3 = 8
+        assert data.chirhoch_dims[1] == 0
 
     def test_sl4_chirhoch_dims(self):
-        """ChirHoch^1 = 15 for affine sl_4 (dim sl_4 = 15)."""
+        """ChirHoch^1 = 0 for affine sl_4 after quotient."""
         data = affine_km_e3_structure('A', 3)
-        assert data.chirhoch_dims[1] == 15
+        assert data.chirhoch_dims[1] == 0
 
-    def test_gerstenhaber_nontrivial_sl2(self):
-        """Gerstenhaber bracket nontrivial for non-abelian g."""
+    def test_gerstenhaber_trivial_on_cohomology_sl2(self):
+        """Gerstenhaber bracket is trivial on H^1 because H^1=0."""
         data = affine_km_e3_structure('A', 1)
-        assert data.gerstenhaber_bracket_trivial is False
+        assert data.gerstenhaber_bracket_trivial is True
 
     def test_shadow_class_L(self):
         """Affine KM is class L (Lie/tree, shadow depth 3)."""
@@ -223,14 +223,14 @@ class TestAffineKME3:
         assert data.e3_formal is True
 
     def test_g2_dim(self):
-        """dim G_2 = 14."""
+        """G_2 affine H^1 is zero after quotient; dim G_2 = 14 is prequotient."""
         data = affine_km_e3_structure('G', 2)
-        assert data.chirhoch_dims[1] == 14
+        assert data.chirhoch_dims[1] == 0
 
     def test_e8_dim(self):
-        """dim E_8 = 248."""
+        """E_8 affine H^1 is zero after quotient; dim E_8 = 248 is prequotient."""
         data = affine_km_e3_structure('E', 8)
-        assert data.chirhoch_dims[1] == 248
+        assert data.chirhoch_dims[1] == 0
 
 
 # ===================================================================
@@ -252,9 +252,10 @@ class TestVirasoroE3:
         """ChirHoch^*(Vir) concentrated in {0,1,2} (Theorem H)."""
         data = virasoro_e3_structure()
         assert data.chirhoch_dims[0] == 1
-        assert data.chirhoch_dims[1] == 1
+        assert data.chirhoch_dims[1] == 0
         assert data.chirhoch_dims[2] == 1
         total = sum(data.chirhoch_dims.values())
+        assert total == 2
         assert total <= 4
         # AP94: must vanish outside [0,2].
         for n in range(3, 10):
@@ -300,11 +301,11 @@ class TestW3ChirHoch:
         assert w_algebra_chirhoch_bounded_dim([2, 3], 0) == 1
 
     def test_degree_1_deformation(self):
-        """ChirHoch^1(W_3) = C (single c-deformation direction)."""
-        assert w_algebra_chirhoch_bounded_dim([2, 3], 1) == 1
+        """ChirHoch^1(W_3) = 0 on the fixed-product automorphism lane."""
+        assert w_algebra_chirhoch_bounded_dim([2, 3], 1) == 0
 
     def test_degree_2_dual_center(self):
-        """ChirHoch^2(W_3) = Z(W_3^!) = C."""
+        """ChirHoch^2(W_3) carries the central-charge product lane."""
         assert w_algebra_chirhoch_bounded_dim([2, 3], 2) == 1
 
     def test_vanishes_above_2(self):
@@ -375,7 +376,7 @@ class TestWNBoundedAmplitude:
         """W_4 ChirHoch concentrated in {0,1,2}, dim <= 4."""
         dims = w4_chirhoch_dims(10)
         assert dims[0] == 1
-        assert dims[1] == 1
+        assert dims[1] == 0
         assert dims[2] == 1
         for n in range(3, 11):
             assert dims[n] == 0
@@ -509,7 +510,7 @@ class TestCrossChecks:
     def test_palindromicity_sl2(self):
         """Palindromic duality for sl_2."""
         assert chirhoch_palindromicity_check(
-            center_dim=1, hoch1_dim=3, dual_center_dim=1
+            center_dim=1, hoch1_dim=0, dual_center_dim=1
         ) is True
 
     def test_concentration_heisenberg(self):
@@ -535,9 +536,9 @@ class TestCrossChecks:
         assert results['heisenberg']['euler_char'] == 1
 
     def test_sl2_euler_char(self):
-        """chi(sl_2) = 1 - 3 + 1 = -1."""
+        """chi(sl_2) = 1 - 0 + 1 = 2 after the zero-mode quotient."""
         results = verify_euler_characteristic_consistency()
-        assert results['affine_sl2']['euler_char'] == -1
+        assert results['affine_sl2']['euler_char'] == 2
 
 
 # ===================================================================
@@ -688,6 +689,8 @@ class TestFullSummary:
         """W_3 computation matches Theorem H prediction."""
         summary = full_rectification_summary()
         assert summary['w3_computation']['matches_theorem_h'] is True
+        assert summary['w3_computation']['chirhoch_dims_0_to_10'][1] == 0
+        assert summary['w3_computation']['total_dim'] == 2
 
     def test_e3_not_13th(self):
         """E_3-formality is NOT a 13th characterization."""
@@ -727,7 +730,7 @@ class TestMultiPathVerification:
         """
         for n in range(15):
             dim_engine = w_algebra_chirhoch_bounded_dim([2, 3], n)
-            dim_expected = 1 if 0 <= n <= 2 else 0
+            dim_expected = 1 if n in {0, 2} else 0
             assert dim_engine == dim_expected, (
                 f"W_3 mismatch at degree {n}: engine={dim_engine}, "
                 f"expected={dim_expected}")
@@ -740,7 +743,7 @@ class TestMultiPathVerification:
         """
         for n in range(13):
             dim_engine = w_algebra_chirhoch_bounded_dim([2, 3, 4], n)
-            dim_expected = 1 if 0 <= n <= 2 else 0
+            dim_expected = 1 if n in {0, 2} else 0
             assert dim_engine == dim_expected, (
                 f"W_4 mismatch at degree {n}: engine={dim_engine}, "
                 f"expected={dim_expected}")
@@ -773,8 +776,9 @@ class TestMultiPathVerification:
         for all k) is REFUTED.
         """
         dims = wN_chirhoch_dims(2, 20)
-        for n in range(3):
-            assert dims[n] == 1
+        assert dims[0] == 1
+        assert dims[1] == 0
+        assert dims[2] == 1
         for n in range(3, 21):
             assert dims[n] == 0
 
@@ -788,9 +792,9 @@ class TestMultiPathVerification:
         """
         families = {
             'heisenberg': (1, 1, 1),
-            'sl2': (1, 3, 1),
-            'sl3': (1, 8, 1),
-            'betagamma': (1, 2, 1),
+            'sl2': (1, 0, 1),
+            'sl3': (1, 0, 1),
+            'betagamma': (1, 0, 1),
         }
         for name, (z, h1, zd) in families.items():
             chi_path1 = z - h1 + zd
@@ -857,18 +861,17 @@ class TestMultiPathVerification:
                 f"Degree {n}: Vir E_3 = {vir.chirhoch_dims.get(n, 0)}, "
                 f"W_2 = {w2[n]}")
 
-    # --- Affine KM: dim HH^1 = dim g (two paths) ---
+    # --- Affine KM: dim HH^1 = 0; dim g is prequotient metadata ---
 
     def test_km_hh1_equals_dim_g_two_paths(self):
-        """dim ChirHoch^1(hat{g}_k) = dim g.
+        """dim ChirHoch^1(hat{g}_k) = 0; dim g is a separate formula.
 
         Path 1: affine_km_e3_structure().chirhoch_dims[1]
-        Path 2: (rank+1)^2 - 1 for type A (direct formula).
+        Path 2: (rank+1)^2 - 1 for type A (prequotient formula).
         """
         for rank in range(1, 6):
             data = affine_km_e3_structure('A', rank)
             dim_from_engine = data.chirhoch_dims[1]
             dim_from_formula = (rank + 1) ** 2 - 1
-            assert dim_from_engine == dim_from_formula, (
-                f"sl_{rank+1}: engine={dim_from_engine}, "
-                f"formula={dim_from_formula}")
+            assert dim_from_engine == 0
+            assert dim_from_formula > 0

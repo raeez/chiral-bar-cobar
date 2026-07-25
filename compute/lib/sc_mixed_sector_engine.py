@@ -28,7 +28,7 @@ WHAT THE MIXED SECTOR CONTROLS (five manifestations):
         on a single boundary state.  Dimension = cooperad_dim * gen_dim^3.
 
     M2. BRACE RELATIONS: The higher pre-Lie identities on C^*_ch(A,A)
-        constrain how multiple bulk operators compose when acting on boundary.
+        constrain how multiple closed-sector operators compose when acting on boundary.
         The brace f{g_1,...,g_r} encodes simultaneous insertion of r bulk
         operators into a boundary computation.  The mixed MC equation ensures
         these are compatible with the A-infinity structure.
@@ -274,14 +274,14 @@ def line_defect_screening_matches_positions(max_m: int = 8) -> Dict[int, bool]:
 def multi_bulk_screening_dim(k: int, m: int) -> Dict[str, Any]:
     """Dimension of the k-bulk screening at boundary order m.
 
-    When k bulk operators screen through a line with m boundary insertions:
-      - Lie(k) = (k-1)! Lie monomials determine how the k bulk operators
+    When k closed-sector operators screen through a line with m boundary insertions:
+      - Lie(k) = (k-1)! Lie monomials determine how the k closed-sector operators
         compose among themselves (bracket structure).
-      - C(k+m, m) shuffles determine how the composed bulk operators
+      - C(k+m, m) shuffles determine how the composed closed-sector operators
         interleave with the m boundary insertions.
       - Total: (k-1)! * C(k+m, m).
 
-    Physical: the bulk operators first compose via their OPE (Lie structure),
+    Physical: the closed-sector operators first compose via their OPE (Lie structure),
     then the resulting composite screens through the boundary (shuffle).
     """
     cooperad = mixed_cooperad_dim(k, m)
@@ -415,10 +415,11 @@ def affine_sl2_mixed_sector() -> Dict[str, Any]:
     Three channels, so the mixed sector is nontrivial.
 
     The derived center at degree 0 is Z^0 = center of the vertex algebra.
-    At degree 1: Z^1 = derivations (dim = dim(g) for affine).
-    At degree 2: Z^2 = obstructions.
+    At degree 1: Z^1 = 0 after the adjoint zero-mode quotient.
+    At degree 2: Z^2 = obstructions.  The adjoint dim(g) slot remains
+    as prequotient module data.
 
-    The module structure encodes how bulk operators (elements of Z^der)
+    The module structure encodes how closed-sector operators (elements of Z^der)
     act on boundary states (elements of the 3-generator space).
     """
     gen_dim = 3
@@ -433,7 +434,7 @@ def affine_sl2_mixed_sector() -> Dict[str, Any]:
         'action_11': action_11,
         'action_12': action_12,
         'action_21': action_21,
-        'derived_center_degree_1': 'dim(sl_2) = 3 (inner derivations)',
+        'derived_center_degree_1': '0 after quotient; dim(sl_2)=3 is prequotient metadata',
         'module_structure': 'adjoint action + higher corrections',
         'mixed_mc_trivial': False,
     }
@@ -445,9 +446,9 @@ def virasoro_mixed_sector() -> Dict[str, Any]:
     Virasoro: single generator T of weight 2.  gen_dim = 1.
     Like Heisenberg, only one channel => mixed-sector convolution is minimal.
 
-    But the derived center is RICHER than Heisenberg:
+    But the mixed module structure is richer than Heisenberg:
       Z^0 = k (center)
-      Z^1 = k (the Virasoro field T itself as a derivation, weight 2)
+      Z^1 = 0 at fixed generic central charge
       Z^2 = k (the quartic obstruction, weight 4)
 
     The module structure of Vir over Z^der is nontrivial because T acts
@@ -466,7 +467,7 @@ def virasoro_mixed_sector() -> Dict[str, Any]:
         'shadow_class': 'M',
         'action_11': action_11,
         'action_12': action_12,
-        'derived_center': 'three-term Gerstenhaber algebra (Z^0, Z^1, Z^2)',
+        'derived_center': 'bounded scalar derived center (Z^0, Z^2; Z^1=0)',
         'module_structure': 'nonlinear self-action via T_{(1)}T = 2T',
         'mixed_mc_trivial': False,
         'shadow_depth': 'infinite',

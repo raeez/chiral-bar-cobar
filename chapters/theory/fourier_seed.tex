@@ -121,13 +121,19 @@ On the elliptic curve
 $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, the
 propagator acquires a period correction:
 \begin{equation}\label{eq:fourier-genus1-propagator}
-\eta^{(1)}_{ij} = d\log\theta_1(z_i - z_j \,|\, \tau)
-+ \frac{2\pi i}{\operatorname{Im}\tau}\,
- \operatorname{Im}(z_i - z_j)\,d\bar{z}_i,
+\eta^{(1)}_{ij}
+=
+\left[
+\partial_u\log\theta_1(u\,|\,\tau)
++2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+\right]_{u=z_i-z_j}
+(dz_i-dz_j),
 \end{equation}
 where $\theta_1(u|\tau)$ is the Jacobi theta function with simple
-zero at $u = 0$. The correction descends the theta quotient to
-$E_\tau \times E_\tau$. For
+zero at $u = 0$. The correction is a $(1,0)$-form with
+real-analytic coefficient; it descends the theta quotient to
+$E_\tau \times E_\tau$ and satisfies
+$\eta^{(1)}_{ji}=\eta^{(1)}_{ij}$. For
 \[
 \mathcal A^{(1)}_{123}:=
 \eta^{(1)}_{12}\wedge\eta^{(1)}_{23}
@@ -148,22 +154,31 @@ contribution as a logarithmic current.
 \end{proposition}
 
 \begin{proof}
-The holomorphic part
-$\partial_{z_i}\!\log\theta_1(z_i - z_j|\tau)\,dz_i$ has the
-required simple pole at $z_i = z_j$ (since $\theta_1$ vanishes
-simply at the origin) but picks up monodromy
+Set $u=z_i-z_j$ and $du=dz_i-dz_j$. The holomorphic coefficient
+$\partial_u\log\theta_1(u|\tau)$ has the required simple pole of
+residue~$1$ at $u=0$ (since $\theta_1$ vanishes simply at the
+origin) and is $A$-periodic, but it picks up $B$-cycle monodromy
 $\partial_u\!\log\theta_1(u + \tau|\tau)
- = \partial_u\!\log\theta_1(u|\tau) - 2\pi i$
-around the $B$-cycle. The correction term
-$\frac{2\pi i}{\operatorname{Im}\tau}\operatorname{Im}(z_i - z_j)
-\,d\bar{z}_i$
-compensates this monodromy, making $\eta^{(1)}_{ij}$ single-valued.
+ = \partial_u\!\log\theta_1(u|\tau) - 2\pi i$.
+The deficit multiplies the $(1,0)$-form~$du$. Since
+$\operatorname{Im}(u+\tau)=\operatorname{Im}u+\operatorname{Im}\tau$,
+the coefficient
+$2\pi i\,\operatorname{Im}u/\operatorname{Im}\tau$ shifts by
+$+2\pi i$ under the same period and multiplies the same~$du$. A
+$(0,1)$-form cannot cancel this $(1,0)$ monodromy. Oddness of the
+coefficient, together with $d(z_j-z_i)=-du$, gives
+$\eta^{(1)}_{ji}=\eta^{(1)}_{ij}$.
 
-Single-valuedness forces a non-holomorphic de~Rham component. In
-Arakelov normalization the logarithmic current $d\eta^{(1)}_{ij}$ is
-the difference between the diagonal residue current and the normalized
-volume form; equivalently its off-diagonal cohomology class is
-represented by $2\pi i\,\omega_\tau$ (Faltings~\cite{Fal84}).
+Single-valuedness forces a non-holomorphic coefficient, not an
+anti-holomorphic one-form. In Arakelov normalization, with
+$q_{ij}(z)=z_i-z_j$, the logarithmic current is
+\[
+d\eta^{(1)}_{ij}
+=
+2\pi i\,\bigl(\delta_{D_{ij}}-q_{ij}^{*}\omega_\tau\bigr),
+\]
+so away from the diagonal the smooth term is
+$-2\pi i\,q_{ij}^{*}\omega_\tau$ (Faltings~\cite{Fal84}).
 
 The genus-$0$ Arnold cancellation used
 $u_{12}+u_{23}+u_{31}=0$ inside a single affine coordinate. On
@@ -396,7 +411,7 @@ in degree~$1$, reflecting chiral Koszulness.
 \begin{remark}[Heisenberg is not self-dual]
 \label{rem:fourier-heisenberg-not-selfdual}
 $\mathcal{H}_k^! =
-(\operatorname{Sym}^{\mathrm{ch}}(V^*),m_0=-k\,\omega)$, not
+(\operatorname{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\,\omega)$, not
 $\mathcal{H}_{-k}$. Self-duality would require the Koszul dual to
 be a Heisenberg algebra at the dual level. Instead,
 $\mathcal{H}_k^!$ is the curved chiral symmetric algebra, a free
@@ -407,24 +422,34 @@ with a nontrivial OPE.
 \begin{proposition}[The five duality objects and the suspension;
 \ClaimStatusConditional]
 \label{prop:fourier-five-duality-objects}
-Let $\cA$ be an augmented chiral algebra whose bar pieces are
-finite-type holonomic $\mathcal D$-modules on $\Ran(X)$ after the
-chosen Koszul contraction. Then the following objects have different
-targets:
+Let $\cA=T_X(V)/(R)$ be an augmented quadratically presented chiral
+algebra whose bar pieces are finite-type holonomic
+$\mathcal D$-modules on $\Ran(X)$ after the chosen Koszul contraction.
+Then the following five objects have different targets:
 \begin{equation}\label{eq:fourier-five-objects}
 \cA,\qquad
 \barB_X(\cA)=T^c(s^{-1}\bar\cA),\qquad
-\cA^i:=H^\bullet(\barB_X(\cA)),\qquad
-\cA^!:=\mathbb{D}_{\Ran}(\cA^i),\qquad
+\cA^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R),\qquad
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA),\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
 \end{equation}
+The comparison maps are
+\[
+q_\cA\colon\cA^{\mathrm i}\longrightarrow\barB_X(\cA),
+\qquad
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}),
+\qquad
+\nu_\cA\colon K_X(\cA)\longrightarrow\cA^!.
+\]
 The bar-cobar counit
 \begin{equation}\label{eq:fourier-counit-not-dual}
 \Omega_X\barB_X(\cA)\longrightarrow \cA
 \end{equation}
-is inversion on the Koszul locus. The Koszul dual algebra is obtained
-by Verdier duality from the Koszul-dual coalgebra~$\cA^i$, not by
-applying~$\Omega_X$ to the raw bar coalgebra.
+reconstructs~$\cA$ on the Koszul locus.  Local finite duality
+identifies $\mathbb D_{\Ran}(\cA^{\mathrm i})$ with the strict
+quadratic algebra~$(\cA^{\mathrm i})^\vee$; the chosen-pair
+map~$\nu_\cA$ realizes~$\cA^!$.
 \end{proposition}
 
 \begin{proof}
@@ -440,13 +465,12 @@ the counit~\eqref{eq:fourier-counit-not-dual}, so
 $\Omega_X\barB_X(\cA)$ reconstructs~$\cA$ when the Koszul hypotheses
 of Theorem~\ref{thm:bar-cobar-inversion-qi} hold.
 
-The finite-type holonomicity hypothesis makes Verdier duality on the
-Ran bar cohomology defined in the ordinary derived category. Under
-Theorem~\ref{thm:bar-cobar-isomorphism-main}, this produces the
-homotopy Koszul-dual factorization algebra, and formality identifies
-it with the strict algebra~$\cA^!$. The derived chiral centre has a
-third target: Hochschild cochains of~$\cA$. None of the five objects in
-\eqref{eq:fourier-five-objects} is a substitute for another.
+The finite-type holonomicity hypothesis defines Verdier duality on the
+Ran bar in the ordinary derived category and produces~$K_X(\cA)$.
+Contravariance gives~$\mathbb D(q_\cA)$; formality and the pair package
+make~$\nu_\cA$ an equivalence with the strict algebra~$\cA^!$.  The
+derived chiral centre has the independent Hochschild target displayed
+in~\eqref{eq:fourier-five-objects}.
 \end{proof}
 
 \subsection*{Computation~(c): $X = E_\tau$,
@@ -932,14 +956,15 @@ The Fourier language in this chapter has the following precise
 mathematical content:
 \begin{enumerate}[label=\textup{(\Alph*)}]
 \item \emph{Verdier seed.}
- On the finite-type Verdier/Koszul lane,
- \[
- \mathbb{D}_{\Ran}\barB_X(\cA)\simeq \cA^!_\infty
- \]
- \textup{(}Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{)}.
- If the homotopy dual is formal, this identifies with the strict
- algebra~$\cA^!$. The target is the post-Verdier dual algebra, not
- the raw bar coalgebra $\barB_X(\cA^!)$.
+On the finite-type Verdier/Koszul lane,
+\[
+ K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA),\qquad
+ \nu_\cA\colon K_X(\cA)\longrightarrow\cA^!
+\]
+\textup{(}Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{)}.
+ The first object is the homotopy dual algebra.  A chosen Koszul pair
+ with formal transferred structure makes~$\nu_\cA$ an equivalence to
+ the strict algebra~$\cA^!$.
 \item \emph{Inversion.}
  On the strict conilpotent Koszul locus,
  \[
@@ -957,10 +982,9 @@ mathematical content:
  genus-$0$ case treated separately. This is the Verdier/Lagrangian
  shadow of Parseval, not a norm identity on a Hilbert space.
 \item \emph{Characteristic function.}
- On the uniform-weight scalar-diagonal lane,
-\[
-\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g.
-\]
+ Under~$H_D^K$ the Hodge character is
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g$.
 At the all-weight numerical level, the scalar coefficient is
 $F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$, and the
 full coefficient is

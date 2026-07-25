@@ -122,7 +122,7 @@ def typed_object_firewall() -> Dict[str, str]:
             "completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
     }
 
 

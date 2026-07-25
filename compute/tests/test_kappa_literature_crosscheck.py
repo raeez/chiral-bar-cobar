@@ -124,7 +124,8 @@ class TestHeisenbergKappa:
     def test_complementarity(self):
         """kappa(H_k) + kappa(H_{-k}) = 0.
 
-        Heisenberg Koszul dual: H_k^! = H_{-k}.
+        Heisenberg scalar shadow: kappa(H_k^!) = kappa(H_{-k}) = -k.
+        The object H_k^! is the curved branch, not H_{-k}.
         """
         for k in [1, 2, 3, Rational(5, 2)]:
             assert kappa_heisenberg(k) + kappa_heisenberg(-k) == 0

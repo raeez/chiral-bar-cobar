@@ -967,7 +967,8 @@ def virasoro_complementarity_genus2(c_val=None) -> Dict:
 def heisenberg_complementarity_genus2(k_val=None) -> Dict:
     r"""Complementarity for Heisenberg: H_k vs H_k^!.
 
-    CRITICAL: H_k^! = Sym^ch(V*) != H_{-k}.  Heisenberg is NOT self-dual.
+    CRITICAL: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k}.  Heisenberg is NOT self-dual.
     kappa(H_k) = k, kappa(H_k^!) = -k.
     kappa + kappa' = 0  (anti-symmetry for free fields).
     F_2 + F_2' = 0.

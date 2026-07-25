@@ -1,24 +1,25 @@
-r"""BCOV L-infinity bar complex for Calabi-Yau manifolds.
+r"""Finite BCOV bar-carrier computations for Calabi--Yau manifolds.
 
-Computes the bar complex B(PV*(X)) of the BCOV L-infinity algebra of
-polyvector fields on CY manifolds, for three standard geometries:
+Computes the graded carrier of the bar construction on the
+cohomological or explicitly effective polyvector carriers of four
+geometries:
 
     1. C^3 (flat space)
     2. Resolved conifold O(-1)+O(-1) -> P^1
     3. K3 x E (compact CY3)
+    4. The quintic threefold
 
 MATHEMATICAL FRAMEWORK
 ======================
 
-The B-model topological string on a CY d-fold X has as its algebraic
-backbone the L-infinity algebra structure on the space of polyvector
-fields (Kodaira-Spencer field theory, BCOV 1994):
+The Dolbeault polyvector complex of a CY d-fold X is
 
     PV^{p,q}(X) = H^q(X, /\^p T_X)
 
-with L-infinity brackets:
-    l_2 = Schouten-Nijenhuis bracket
-    l_k (k >= 3) from the Kodaira-Spencer / BCOV action
+It carries the Dolbeault differential and the Schouten--Nijenhuis
+bracket.  A finite transferred L-infinity model additionally requires
+explicit multilinear operations on the chosen carrier.  This module
+records those operations only through a represented coderivation.
 
 For a CY d-fold, the CY condition omega_X = O_X gives /\^p T_X = Omega^{d-p}_X,
 so:
@@ -34,12 +35,12 @@ The Schouten-Nijenhuis bracket has bidegree (-1, 0) in (p, q), giving
 |[alpha, beta]_SN| = |alpha| + |beta| on the shifted grading. This is
 the correct L-infinity convention: l_2 has degree 0 on g = PV*[1].
 
-BAR COMPLEX
-===========
+BAR CONSTRUCTION
+================
 
-The bar complex of the L-infinity algebra g = PV*(X) is:
+The bar construction of the L-infinity algebra g = PV*(X) is:
 
-    B(g) = (T^c(s^{-1} g), d_bar)
+    B(g) = (Sym^c(s^{-1} g), d_bar)
 
 where:
     d_bar = d_1 + d_2 + d_3 + ...
@@ -50,31 +51,40 @@ where:
 For COMPACT CY with dbar-cohomology representatives, d_1 = 0 on
 cohomology. The bar complex reduces to:
 
-    B(H*(g)) = (T^c(s^{-1} H*(g)), d_2 + d_3 + ...)
+    B(H*(g)) = (Sym^c(s^{-1} H*(g)), d_2 + d_3 + ...)
+
+The finite routines below determine the dimensions of
+``Sym^k(s^{-1}H(PV(X)))``.  They determine a bar complex precisely when
+a represented square-zero coderivation is also present.  The constant
+polyvector model of C^3 carries the exact zero coderivation.  The
+The conifold, K3 x E, and quintic profiles expose an open coderivation
+slot; their finite coderivations and bar cohomology remain separate
+construction problems.
 
 COMPUTE-LANE SCALAR SHADOW:
 
-The functions below use a scalar modular characteristic kappa_compute.
-For the compact Euler lane one has kappa_Euler(X) = chi(X)/2 when that
-lane is selected. Other lanes, such as the K3 x E BKM/BPS automorphic
-readout, carry different scalar values. These scalars compare constant
-map/shadow amplitudes; they do not identify the full VOA or the full
-factorisation algebra.
+The functions below use a named scalar-shadow input.  The
+``euler_half_shadow`` lane has value chi(X)/2.  The BCOV one-loop
+normalization chi(X)/24 is stored separately, as is the K3 x E BKM/BPS
+automorphic readout.  These lane names prevent their numerical values
+from being merged.
 
-The bar amplitudes F_g^{bar} at genus g give, in the selected compute lane:
-    F_g^{bar} = kappa_compute * lambda_g^{FP}   (scalar shadow)
-    F_g^{BCOV} = F_g^{bar} + instanton corrections
+The independent scalar-shadow coefficients are, in the selected lane:
+    F_g^{sc} = kappa_compute * lambda_g^{FP}.
 
-The instanton corrections come from higher-arity projections of the
-bar MC element, involving the Yukawa couplings C_{ijk} (genus-0 l_3)
-and their higher-genus descendants.
+The BCOV amplitudes require higher-arity projections of a represented
+bar Maurer--Cartan element, including the Yukawa couplings C_{ijk} and
+their higher-genus descendants.  The carrier calculation supplies the
+domain for that construction; the scalar-shadow formula supplies an
+independent one-dimensional projection.
 
 OBJECT FIREWALL:
 
 A, B(A), A^i, A^!, and the chiral derived centre are different objects.
-This module computes BCOV polyvector data and the bar coalgebra on
-g = PV*(X). It does not compute A^i, Verdier/Koszul dual A^!, or the
-derived centre. If the holographic package H(T) is mentioned downstream,
+This module computes polyvector carriers and the represented part of
+the bar coalgebra on g = PV*(X).  The objects A^i, Verdier/Koszul dual
+A^!, and the derived centre belong to their reconstruction layers. If
+the holographic package H(T) is mentioned downstream,
 it has seven entries:
     (A, A^i, A^!, C, r(z), Theta_A, nabla_hol)
 
@@ -88,28 +98,23 @@ This is infinite-dimensional. The L-infinity brackets are:
     l_3 from the Kodaira-Spencer cubic vertex ~ C_{ijk}
 
 For the FORMAL neighborhood of the origin (constant + linear terms),
-the truncated space is finite-dimensional and the bar complex is
-explicitly computable.
+the truncated carrier is finite-dimensional.  The present module
+constructs its coderivation on the constant-polyvector subspace.
 
 For the COHOMOLOGICAL reduction (on the equivariant cohomology of
 the torus action), PV*(C^3) reduces to a 1-dimensional space in
 each sector, and kappa = 1.
 
-CONIFOLD SPECIFICS
-==================
+CONIFOLD EFFECTIVE CARRIER
+==========================
 
-The resolved conifold Y = O(-1) + O(-1) -> P^1 has:
-    h^{1,1} = 1 (the P^1 class)
-    h^{2,1} = 0
-    chi(Y) = 2 (topological Euler characteristic)
-
-PV^{p,q}(Y) for compact-support cohomology:
-    PV^{0,0} = H^0(O_Y) = 1-dim (function 1)
-    PV^{1,1} = H^1(/\ T_Y) = 1-dim (Kahler deformation)
-    PV^{2,1} = H^1(/\^2 T_Y) = H^1(Omega_Y) = 0 (no complex structure def.)
-    PV^{3,0} = H^0(/\^3 T_Y) = H^0(Omega^0) ~ 1-dim
-
-In the compact-cycle Euler compute lane, kappa_Euler(conifold) = chi/2 = 1.
+The resolved conifold is non-compact, so a finite polyvector
+cohomology model depends on support and boundary conditions.  This
+module retains a three-vector effective carrier with degrees -2, 0,
+and 1 after desuspension.  A geometric comparison with compactly
+supported or logarithmic polyvectors is an explicit open input.  The
+topological value chi(P^1)=2 supplies the separate effective
+Euler-half scalar one.
 
 K3 x E SPECIFICS
 ================
@@ -159,10 +164,11 @@ REFERENCES:
 from __future__ import annotations
 
 import math
-from collections import defaultdict
+from collections import Counter, defaultdict
 from fractions import Fraction
 from functools import lru_cache
-from typing import Any, Dict, List, NamedTuple, Optional, Sequence, Tuple
+from dataclasses import dataclass
+from typing import Any, Dict, List, Mapping, NamedTuple, Optional, Sequence, Tuple
 
 F = Fraction
 
@@ -236,26 +242,6 @@ def quintic_hodge() -> HodgeDiamond:
         (3, 0): 1, (2, 1): 101, (1, 2): 101, (0, 3): 1,
         (3, 1): 0, (2, 2): 1, (1, 3): 0,
         (3, 2): 0, (2, 3): 0,
-        (3, 3): 1,
-    })
-
-
-def conifold_hodge() -> HodgeDiamond:
-    """Resolved conifold O(-1)+O(-1)->P^1, as non-compact CY3.
-
-    For the resolved conifold, the relevant cohomology (compact support
-    or intersection cohomology) has:
-        h^{1,1} = 1 (the P^1 class)
-        h^{2,1} = 0
-
-    We model this as a "Hodge diamond" with just the nonzero entries.
-    The non-compact geometry means the standard Hodge diamond is not
-    quite right; we use the effective cohomology relevant for the
-    B-model.
-    """
-    return HodgeDiamond(dim=3, data={
-        (0, 0): 1,
-        (1, 1): 1,
         (3, 3): 1,
     })
 
@@ -390,34 +376,22 @@ def pv_c3_constant() -> PolyvectorSpace:
     return pv_c3_truncated(max_deg=0)
 
 
-def pv_conifold() -> PolyvectorSpace:
-    r"""Polyvector fields on the resolved conifold.
+def pv_conifold_effective_carrier() -> PolyvectorSpace:
+    r"""Three-vector effective carrier for the resolved conifold.
 
-    The resolved conifold has a compact P^1 and is non-compact overall.
-    The relevant cohomology for the B-model (with appropriate boundary
-    conditions) gives:
-
-    PV^{0,0} = H^0(O_Y) = 1-dim (constant function)
-    PV^{1,0} = H^0(T_Y) = 0 (no holomorphic vector fields preserving CY structure)
-    PV^{1,1} = H^1(T_Y) = 1-dim (the Kahler deformation = size of P^1)
-    PV^{2,0} = H^0(/\^2 T_Y) = 0
-    PV^{2,1} = H^1(/\^2 T_Y) = H^1(Omega_Y) = 0
-    PV^{3,0} = H^0(/\^3 T_Y) = H^0(O_Y) = 1-dim (holomorphic volume form dual)
-    PV^{3,1} = H^1(/\^3 T_Y) = H^1(O_Y) = 0
-
-    Total: 3-dimensional (in the effective cohomology).
-
-    NOTE: This is the B-model perspective. The single compact cycle
-    (the P^1) gives rise to a single BPS state, and the bar complex
-    is essentially trivial (class G, shadow depth 2).
+    The bidegrees ``(0,0)``, ``(1,1)``, and ``(3,0)`` are formal labels
+    chosen to retain the unit, one middle generator, and the volume
+    generator.  They give desuspended degrees ``-2``, ``0``, and ``1``.
+    A support-sensitive geometric realization is a separate comparison
+    problem, and the present profile leaves its coderivation open.
     """
     return PolyvectorSpace(
         name="conifold",
         cy_dim=3,
         pv_dims={
-            (0, 0): 1,   # constant function
-            (1, 1): 1,   # Kahler deformation (t = size of P^1)
-            (3, 0): 1,   # volume form dual
+            (0, 0): 1,   # unit label
+            (1, 1): 1,   # effective middle label
+            (3, 0): 1,   # volume label
         },
         total_dim=3,
     )
@@ -554,82 +528,81 @@ def schouten_bracket_k3_on_h11() -> SchoutenBracketData:
 
 
 # =========================================================================
-# Section 3: BCOV L-infinity brackets
+# Section 3: Finite carrier profiles and scalar lanes
 # =========================================================================
 
-class BCOVLinfData(NamedTuple):
-    """Data for the BCOV L-infinity algebra on PV*(X).
+class BCOVCarrierInput(NamedTuple):
+    """Finite inputs available to the carrier engine.
 
-    l_1 = 0 (on cohomology)
-    l_2 = Schouten bracket (may vanish on cohomology by BTT)
-    l_3 = Kodaira-Spencer cubic coupling (Yukawa coupling C_{ijk})
-    l_k for k >= 4 from BCOV action (loop corrections)
+    The record contains the selected polyvector carrier, the status of
+    its full bar coderivation, and one named scalar lane.  A profile with
+    ``coderivation_status='open'`` carries no bracket maps.
     """
     name: str
     pv: PolyvectorSpace
-    l2_nontrivial: bool
-    yukawa_nonzero: bool   # whether l_3 = C_{ijk} is nonzero
-    kappa: Fraction         # selected compute-lane scalar characteristic
+    coderivation_status: str
+    scalar_lane: str
+    scalar_value: Fraction
+    bcov_one_loop_scalar: Optional[Fraction]
     shadow_depth_class: str  # G, L, C, or M
 
+    @property
+    def requires_coderivation_construction(self) -> bool:
+        return self.coderivation_status == "open"
 
-def bcov_linf_c3() -> BCOVLinfData:
-    """BCOV L-infinity data for C^3.
+
+def bcov_input_c3() -> BCOVCarrierInput:
+    """Finite BCOV carrier inputs for C^3.
 
     C^3 is the simplest CY3: flat, no compact cycles, no instantons.
 
-    On the equivariant cohomology:
-    - l_2 = 0 (abelian on the 1-dim equivariant sector)
-    - l_3 = trivial (no moduli to deform)
-    - kappa = 1 (from the equivariant localization; the MacMahon function
-      M(q) = prod 1/(1-q^n)^n has kappa = 1 contribution at genus g)
+    On the eight-dimensional constant-polyvector carrier, every
+    Schouten bracket vanishes and the selected higher operations are
+    zero.  Hence the represented coderivation is exactly zero.  The
+    separate equivariant scalar lane has value one.
 
-    Shadow depth class: G (Gaussian, all higher shadows vanish).
-    The bar complex is trivially acyclic except at bar degree 1.
+    Shadow depth class: G.  On constant polyvectors every represented
+    bracket vanishes, so the exact bar coderivation is zero and the bar
+    cohomology equals the full cofree carrier in every retained arity.
 
     The DT partition function is Z^{C^3} = M(-q) (MacMahon), which
     is the exponential of genus-g constant map contributions.
     """
     pv = pv_c3_constant()
-    return BCOVLinfData(
+    return BCOVCarrierInput(
         name="C3",
         pv=pv,
-        l2_nontrivial=False,
-        yukawa_nonzero=False,
-        kappa=F(1),
+        coderivation_status="represented_zero",
+        scalar_lane="equivariant_constant_map",
+        scalar_value=F(1),
+        bcov_one_loop_scalar=None,
         shadow_depth_class="G",
     )
 
 
-def bcov_linf_conifold() -> BCOVLinfData:
-    """BCOV L-infinity data for the resolved conifold.
+def bcov_input_conifold() -> BCOVCarrierInput:
+    """Finite BCOV carrier inputs for the resolved conifold.
 
-    The resolved conifold O(-1)+O(-1) -> P^1 has:
-    - kappa_Euler = chi/2 = 2/2 = 1 in this compute lane
-    - l_2 = 0 on the 3-dim cohomology (BTT unobstructedness)
-    - l_3 = C_{ttt} = 1 (the single Yukawa coupling, from the cubic
-      prepotential F_0 = t^3/6 for the single Kahler modulus t)
-
-    The conifold prepotential is:
-        F_0 = t^3/6 + (instantons) = t^3/6 + sum_{d>=1} n_d Li_3(e^{-dt})
-    where n_d = 1 for all d (single BPS state of each degree).
-    The classical cubic gives C_{ttt} = d^3 F_0 / dt^3 = 1.
-
-    Shadow depth class: G (single compact cycle, shadow terminates at arity 2).
+    The three-dimensional carrier is an explicit effective truncation
+    for the non-compact geometry.  Its bar coderivation is open.  The
+    effective Euler-half scalar lane has value chi/2=1.  The auxiliary
+    A-model prepotential cubic is recorded separately by
+    :func:`yukawa_conifold` as an auxiliary comparison object.
     """
-    pv = pv_conifold()
-    return BCOVLinfData(
+    pv = pv_conifold_effective_carrier()
+    return BCOVCarrierInput(
         name="conifold",
         pv=pv,
-        l2_nontrivial=False,
-        yukawa_nonzero=True,
-        kappa=F(1),
+        coderivation_status="open",
+        scalar_lane="effective_euler_half_shadow",
+        scalar_value=F(1),
+        bcov_one_loop_scalar=None,
         shadow_depth_class="G",
     )
 
 
-def bcov_linf_k3_times_e() -> BCOVLinfData:
-    r"""BCOV L-infinity data for K3 x E.
+def bcov_input_k3_times_e() -> BCOVCarrierInput:
+    r"""Finite BCOV carrier inputs for K3 x E.
 
     K3 x E is a compact CY3 with:
         chi(K3 x E) = chi(K3) * chi(E) = 24 * 0 = 0
@@ -651,80 +624,213 @@ def bcov_linf_k3_times_e() -> BCOVLinfData:
     3. Borcherds product formula: c_{phi_{0,1}}(0)/2 = 10/2 = 5
     4. Igusa-square check: Phi_10^{un}=Delta_5^2 has weight 10
 
-    L-infinity structure:
-    - l_2 = 0 on cohomology (BTT for K3 x E: unobstructed deformations)
-    - l_3 nonzero: Yukawa couplings from the cubic prepotential.
-      For K3 x E with moduli (t, tau, sigma), the prepotential has
-      a cubic piece F_0^{cubic} = t * tau * sigma (intersection form).
-    - Higher l_k: encoded by the BKM/BPS infinite tower in this scalar lane.
+    The 96-dimensional Hodge-theoretic carrier is exact.  Its
+    transferred multilinear operations and bar coderivation remain
+    open data.  The auxiliary Kähler prepotential cubic is recorded
+    separately by :func:`yukawa_k3_times_e`.
 
-    Shadow depth class: M (infinite tower from BKM Borcherds product).
-    The bar complex has infinite shadow depth in the compute lane because
-    the DT partition function is controlled by the reciprocal Igusa square
-    Phi_10^{-1}=Delta_5^{-2} up to the chosen scalar normalisation. This
-    scalar statement is not a full VOA identification.
+    Shadow depth class: M records the infinite BKM scalar-shadow tower
+    controlled by the reciprocal Igusa square
+    Phi_10^{-1}=Delta_5^{-2}.  The full finite coderivation is an
+    additional operation.
     """
     pv = pv_k3_times_e()
-    return BCOVLinfData(
+    return BCOVCarrierInput(
         name="K3xE",
         pv=pv,
-        l2_nontrivial=False,
-        yukawa_nonzero=True,
-        kappa=F(5),
+        coderivation_status="open",
+        scalar_lane="BKM",
+        scalar_value=F(5),
+        bcov_one_loop_scalar=F(0),
         shadow_depth_class="M",
     )
 
 
-def bcov_linf_quintic() -> BCOVLinfData:
-    """BCOV L-infinity data for the quintic CY3.
+def bcov_input_quintic() -> BCOVCarrierInput:
+    """Finite BCOV carrier inputs for the quintic CY3.
 
     chi(quintic) = -200.
-    kappa_Euler = chi/2 = -100 in the compact CY3 Euler compute lane.
+    The Euler-half shadow has value chi/2=-100.  The canonical BCOV
+    one-loop scalar is stored separately as chi/24=-25/3.
 
     The quintic has h^{2,1} = 101 complex structure deformations
     and h^{1,1} = 1 Kahler modulus (for the B-model).
 
-    L-infinity:
-    - l_2 = 0 on cohomology (BTT)
-    - l_3 = C_{ijk} Yukawa couplings (101^3 tensor, computed from
-      period integrals via mirror symmetry to genus-0 GW invariants)
-    - Higher: from BCOV recursion (holomorphic anomaly equation)
+    The Hodge-theoretic carrier is exact.  Period-derived interaction
+    tensors and the resulting bar coderivation remain open data.
 
     Shadow depth class: M (infinite GW tower).
     """
     pv = pv_quintic()
-    return BCOVLinfData(
+    return BCOVCarrierInput(
         name="quintic",
         pv=pv,
-        l2_nontrivial=False,
-        yukawa_nonzero=True,
-        kappa=F(-100),
+        coderivation_status="open",
+        scalar_lane="euler_half_shadow",
+        scalar_value=F(-100),
+        bcov_one_loop_scalar=F(-25, 3),
         shadow_depth_class="M",
     )
 
 
 # =========================================================================
-# Section 4: Bar complex of the BCOV L-infinity algebra
+# Section 4: Finite graded-symmetric bar carrier
 # =========================================================================
 
-class BCOVBarComplex(NamedTuple):
-    """Bar complex B(PV*(X)) of the BCOV L-infinity algebra.
+BarBasisIndex = Tuple[int, int]
+BarState = Dict[BarBasisIndex, Fraction]
 
-    B(g) = (T^c(s^{-1} g), d_bar) where g = PV*(X) with L-infinity structure.
 
-    The bar degree k component is:
-        B^k = Sym^k(s^{-1} g) (graded cofree coalgebra)
+@dataclass(frozen=True)
+class RepresentedBarDifferential:
+    """A finite square-zero differential on a chosen bar-carrier basis.
 
-    Dimensions at each bar degree, and the Euler characteristic of each
-    piece, determine the genus-g amplitudes via the bar MC equation.
+    ``carrier_dims[k]`` numbers the basis vectors in bar arity ``k``;
+    ``basis_degrees[(k,i)]`` records their cohomological degrees.
+    ``images[(k, i)]`` is the sparse image of the ``i``-th basis vector
+    in that arity.  This object checks the actual state transition and
+    the identity ``d^2=0``.  The flag ``coderivation_verified`` records
+    whether the co-Leibniz identity has also been established on the
+    represented carrier.  Within this module that stronger assertion is
+    made intrinsically only for the zero differential.
     """
+
+    carrier_dims: Mapping[int, int]
+    basis_degrees: Mapping[BarBasisIndex, int]
+    images: Mapping[BarBasisIndex, Mapping[BarBasisIndex, Fraction]]
+    source: str
+    coderivation_verified: bool = False
+    uses_yukawa: bool = False
+
+    def __post_init__(self) -> None:
+        dims = dict(self.carrier_dims)
+        if any(k < 1 or dim < 0 for k, dim in dims.items()):
+            raise ValueError("bar arities and carrier dimensions must be nonnegative")
+        expected_basis = {
+            (arity, index)
+            for arity, dim in dims.items()
+            for index in range(dim)
+        }
+        if set(self.basis_degrees) != expected_basis:
+            raise ValueError("basis_degrees must grade every represented carrier basis vector")
+        for (arity, index), image in self.images.items():
+            if arity not in dims or not 0 <= index < dims[arity]:
+                raise ValueError("differential source index lies outside the carrier")
+            for (target_arity, target_index), coefficient in image.items():
+                if target_arity not in dims or not 0 <= target_index < dims[target_arity]:
+                    raise ValueError("differential target index lies outside the carrier")
+                Fraction(coefficient)
+                if (
+                    Fraction(coefficient)
+                    and self.basis_degrees[(target_arity, target_index)]
+                    != self.basis_degrees[(arity, index)] + 1
+                ):
+                    raise ValueError("represented differential must have cohomological degree +1")
+        if self.coderivation_verified and not self.is_zero:
+            raise ValueError(
+                "nonzero coderivations require an explicit coproduct-level verifier"
+            )
+        if not self.square_zero:
+            raise ValueError("represented bar differential must satisfy d^2=0")
+
+    @property
+    def is_zero(self) -> bool:
+        return all(
+            Fraction(coefficient) == 0
+            for image in self.images.values()
+            for coefficient in image.values()
+        )
+
+    def apply(self, state: Mapping[BarBasisIndex, Fraction]) -> BarState:
+        """Apply the represented differential to a sparse carrier state."""
+        result: BarState = {}
+        for basis_index, coefficient in state.items():
+            arity, index = basis_index
+            if arity not in self.carrier_dims or not 0 <= index < self.carrier_dims[arity]:
+                raise ValueError("state index lies outside the represented carrier")
+            for target, matrix_coefficient in self.images.get(basis_index, {}).items():
+                value = result.get(target, F(0)) + F(coefficient) * F(matrix_coefficient)
+                if value:
+                    result[target] = value
+                elif target in result:
+                    del result[target]
+        return result
+
+    @property
+    def square_zero(self) -> bool:
+        for arity, dim in self.carrier_dims.items():
+            for index in range(dim):
+                if self.apply(self.apply({(arity, index): F(1)})):
+                    return False
+        return True
+
+
+def _basis_degrees_from_distribution(
+    carrier_graded_dims: Mapping[int, Mapping[int, int]],
+) -> Dict[BarBasisIndex, int]:
+    """Choose a degree-ordered basis for each finite carrier arity."""
+    result: Dict[BarBasisIndex, int] = {}
+    for arity, degree_dims in carrier_graded_dims.items():
+        index = 0
+        for degree, dimension in sorted(degree_dims.items()):
+            for _ in range(dimension):
+                result[(arity, index)] = degree
+                index += 1
+    return result
+
+
+def zero_bar_coderivation(
+    carrier_graded_dims: Mapping[int, Mapping[int, int]],
+    source: str,
+) -> RepresentedBarDifferential:
+    """Construct the exact zero coderivation on a finite bar carrier."""
+    carrier_dims = {
+        arity: sum(degree_dims.values())
+        for arity, degree_dims in carrier_graded_dims.items()
+    }
+    return RepresentedBarDifferential(
+        carrier_dims=carrier_dims,
+        basis_degrees=_basis_degrees_from_distribution(carrier_graded_dims),
+        images={},
+        source=source,
+        coderivation_verified=True,
+        uses_yukawa=False,
+    )
+
+
+class BCOVBarCarrier(NamedTuple):
+    """Finite bar-construction record with an explicit epistemic boundary.
+
+    ``bar_carrier_graded_dims`` gives the actual cohomological grading
+    of the cofree graded-symmetric carrier.  ``bar_cohomology_dims`` and
+    its graded refinement are populated only on the exact
+    zero-coderivation lane, where carrier and cohomology coincide.
+    ``scalar_shadow_amplitudes`` are independent modular trace values;
+    they are inputs to comparison with BCOV amplitudes rather than
+    outputs of the bar differential.
+    """
+
     name: str
-    linf_data: BCOVLinfData
-    bar_dims: Dict[int, int]        # bar degree k -> total dimension
-    bar_euler: Dict[int, int]       # bar degree k -> Euler characteristic
+    carrier_input: BCOVCarrierInput
+    bar_carrier_dims: Dict[int, int]
+    bar_carrier_graded_dims: Dict[int, Dict[int, int]]
+    differential: Optional[RepresentedBarDifferential]
+    bar_cohomology_dims: Optional[Dict[int, int]]
+    bar_cohomology_graded_dims: Optional[Dict[int, Dict[int, int]]]
     max_bar_degree: int
-    # Genus-g amplitudes from the scalar shadow
-    genus_amplitudes: Dict[int, Fraction]  # g -> F_g = kappa * lambda_g^FP
+    scalar_shadow_amplitudes: Dict[int, Fraction]
+
+    @property
+    def coderivation_constructed(self) -> bool:
+        return bool(self.differential and self.differential.coderivation_verified)
+
+    @property
+    def yukawa_entered_coderivation(self) -> bool:
+        return bool(self.differential and self.differential.uses_yukawa)
+
+    @property
+    def bar_cohomology_computed(self) -> bool:
+        return self.bar_cohomology_dims is not None
 
 
 def _graded_sym_dim(dims: Dict[int, int], k: int) -> int:
@@ -741,6 +847,33 @@ def _graded_sym_dim(dims: Dict[int, int], k: int) -> int:
         return 0
 
     return _partition_sym(tuple(degrees), tuple(sorted(dims.items())), k, 0)
+
+
+def _graded_sym_distribution(dims: Mapping[int, int], k: int) -> Dict[int, int]:
+    """Cohomological-degree distribution of ``Sym^k(V)``.
+
+    This is an independent Hilbert-series computation: even generators
+    contribute symmetric powers and odd generators exterior powers.
+    """
+    states: Dict[Tuple[int, int], int] = {(0, 0): 1}
+    for degree, multiplicity in sorted(dims.items()):
+        updated: Dict[Tuple[int, int], int] = defaultdict(int)
+        max_power = k if degree % 2 == 0 else min(k, multiplicity)
+        for (used, total_degree), coefficient in states.items():
+            for power in range(min(max_power, k - used) + 1):
+                if degree % 2 == 0:
+                    factor = math.comb(multiplicity + power - 1, power)
+                else:
+                    factor = math.comb(multiplicity, power)
+                updated[(used + power, total_degree + power * degree)] += (
+                    coefficient * factor
+                )
+        states = dict(updated)
+    return {
+        total_degree: dimension
+        for (used, total_degree), dimension in states.items()
+        if used == k and dimension
+    }
 
 
 @lru_cache(maxsize=8192)
@@ -810,19 +943,30 @@ def _faber_pandharipande(g: int) -> Fraction:
     return abs(a[g])
 
 
-def compute_bar_complex(linf: BCOVLinfData,
+def compute_bar_carrier(profile: BCOVCarrierInput,
                         max_bar_degree: int = 4,
-                        max_genus: int = 5) -> BCOVBarComplex:
-    """Compute the bar complex of the BCOV L-infinity algebra.
+                        max_genus: int = 5,
+                        differential: Optional[RepresentedBarDifferential] = None,
+                        ) -> BCOVBarCarrier:
+    """Compute a finite bar carrier and attach represented differential data.
 
-    The bar complex B(g) for g = PV*(X) with L-infinity structure:
+    The cofree carrier underlying B(g) for g = PV*(X) is:
         B^k = Sym^k(s^{-1} g)
 
     The desuspension s^{-1} shifts the BCOV degree down by 1 (AP45).
 
-    At each bar degree k, we compute the dimension and Euler characteristic.
+    For the constant-polyvector C^3 model, the vanishing operations supply
+    the exact zero coderivation.  Every profile with open coderivation
+    status returns its carrier together with an empty differential slot.  A supplied
+    represented differential must match the computed carrier and satisfy
+    ``d^2=0``; its co-Leibniz status remains visible in its type.
     """
-    pv = linf.pv
+    if max_bar_degree < 1:
+        raise ValueError("max_bar_degree must be positive")
+    if max_genus < 1:
+        raise ValueError("max_genus must be positive")
+
+    pv = profile.pv
 
     # Compute s^{-1}(PV*(X)) graded dimensions
     # BCOV degree of alpha in PV^{p,q} is |alpha| = p + q - 1
@@ -834,33 +978,63 @@ def compute_bar_complex(linf: BCOVLinfData,
 
     desuspended_dims = dict(desuspended_dims)
 
-    # Compute bar dimensions at each bar degree
-    bar_dims: Dict[int, int] = {}
+    # Compute the graded cofree carrier at each bar arity.
+    carrier_dims: Dict[int, int] = {}
+    carrier_graded_dims: Dict[int, Dict[int, int]] = {}
     for k in range(1, max_bar_degree + 1):
-        bar_dims[k] = _graded_sym_dim(desuspended_dims, k)
+        degree_distribution = _graded_sym_distribution(desuspended_dims, k)
+        carrier_graded_dims[k] = degree_distribution
+        carrier_dims[k] = sum(degree_distribution.values())
+        if carrier_dims[k] != _graded_sym_dim(desuspended_dims, k):
+            raise ArithmeticError("graded Hilbert series disagrees with direct carrier count")
 
-    # Euler characteristics at each bar degree
-    # For the Euler characteristic, we need the graded Euler char of Sym^k
-    # This is more complex; for now we record the dimension.
-    bar_euler: Dict[int, int] = {}
-    for k in range(1, max_bar_degree + 1):
-        # For abelian L-infinity (l_2 = 0), the bar differential is zero
-        # at the E_1 page, so the Euler char equals the dimension.
-        # For nontrivial l_2, we'd need the actual differential.
-        bar_euler[k] = bar_dims[k]  # placeholder; exact for BTT case
+    if (
+        differential is None
+        and profile.coderivation_status == "represented_zero"
+    ):
+        differential = zero_bar_coderivation(
+            carrier_graded_dims,
+            source=f"{profile.name}: vanishing cohomological brackets",
+        )
 
-    # Genus-g amplitudes from the scalar shadow
-    genus_amps: Dict[int, Fraction] = {}
+    if differential is not None and dict(differential.carrier_dims) != carrier_dims:
+        raise ValueError("represented differential carrier does not match Sym^c(s^-1 g)")
+    if differential is not None:
+        for arity, expected_distribution in carrier_graded_dims.items():
+            represented_distribution = Counter(
+                degree
+                for (basis_arity, _), degree in differential.basis_degrees.items()
+                if basis_arity == arity
+            )
+            if represented_distribution != Counter(expected_distribution):
+                raise ValueError(
+                    "represented differential grading does not match the computed carrier"
+                )
+
+    cohomology_dims: Optional[Dict[int, int]] = None
+    cohomology_graded_dims: Optional[Dict[int, Dict[int, int]]] = None
+    if differential is not None and differential.coderivation_verified and differential.is_zero:
+        cohomology_dims = dict(carrier_dims)
+        cohomology_graded_dims = {
+            arity: dict(degree_dims)
+            for arity, degree_dims in carrier_graded_dims.items()
+        }
+
+    # Independent genus-g scalar-shadow coefficients.
+    scalar_shadow: Dict[int, Fraction] = {}
     for g in range(1, max_genus + 1):
-        genus_amps[g] = linf.kappa * _faber_pandharipande(g)
+        scalar_shadow[g] = profile.scalar_value * _faber_pandharipande(g)
 
-    return BCOVBarComplex(
-        name=linf.name,
-        linf_data=linf,
-        bar_dims=bar_dims,
-        bar_euler=bar_euler,
+    return BCOVBarCarrier(
+        name=profile.name,
+        carrier_input=profile,
+        bar_carrier_dims=carrier_dims,
+        bar_carrier_graded_dims=carrier_graded_dims,
+        differential=differential,
+        bar_cohomology_dims=cohomology_dims,
+        bar_cohomology_graded_dims=cohomology_graded_dims,
         max_bar_degree=max_bar_degree,
-        genus_amplitudes=genus_amps,
+        scalar_shadow_amplitudes=scalar_shadow,
     )
 
 
@@ -868,11 +1042,14 @@ def compute_bar_complex(linf: BCOVLinfData,
 # Section 5: Specific computations for the three geometries
 # =========================================================================
 
-def bar_complex_c3(max_bar_degree: int = 4) -> BCOVBarComplex:
-    """Bar complex of the BCOV L-infinity on C^3.
+def bar_carrier_c3(
+    max_bar_degree: int = 4,
+    max_genus: int = 5,
+) -> BCOVBarCarrier:
+    """Exact zero-differential bar complex on constant polyvectors of C^3.
 
     On constant polyvectors: 8-dimensional, all brackets zero.
-    The bar complex is the cofree coalgebra on s^{-1}(PV^*(C^3)):
+    The bar carrier is the cofree coalgebra on s^{-1}(PV^*(C^3)):
 
     PV^{0,0} = 1-dim, BCOV degree -1, desuspended degree -2
     PV^{1,0} = 3-dim, BCOV degree 0, desuspended degree -1
@@ -886,29 +1063,45 @@ def bar_complex_c3(max_bar_degree: int = 4) -> BCOVBarComplex:
       Degree 0: 3 even generators -> Sym powers
       Degree 1: 1 odd generator -> Ext powers
     """
-    return compute_bar_complex(bcov_linf_c3(), max_bar_degree)
+    return compute_bar_carrier(bcov_input_c3(), max_bar_degree, max_genus)
 
 
-def bar_complex_conifold(max_bar_degree: int = 4) -> BCOVBarComplex:
-    """Bar complex of the BCOV L-infinity on the resolved conifold.
+def bar_carrier_conifold(
+    max_bar_degree: int = 4,
+    max_genus: int = 5,
+) -> BCOVBarCarrier:
+    """Bar carrier of the cohomological BCOV model of the resolved conifold.
 
     3-dimensional PV space:
     PV^{0,0} = 1-dim, desuspended degree -2
     PV^{1,1} = 1-dim, desuspended degree 0
     PV^{3,0} = 1-dim, desuspended degree 1
 
-    All three are in different degrees, with 1-dim each.
+    All three are in different degrees, with 1-dim each.  The Yukawa
+    finite coderivation is required before bar cohomology is read.
     """
-    return compute_bar_complex(bcov_linf_conifold(), max_bar_degree)
+    return compute_bar_carrier(bcov_input_conifold(), max_bar_degree, max_genus)
 
 
-def bar_complex_k3_times_e(max_bar_degree: int = 4) -> BCOVBarComplex:
-    """Bar complex of the BCOV L-infinity on K3 x E.
+def bar_carrier_k3_times_e(
+    max_bar_degree: int = 4,
+    max_genus: int = 5,
+) -> BCOVBarCarrier:
+    """Bar carrier of the cohomological BCOV model of K3 x E.
 
     96-dimensional PV space with rich structure.
     kappa_BKM = 5 (from the primitive Gritsenko-Nikulin denominator Delta_5).
+    Its transferred finite coderivation remains an open construction.
     """
-    return compute_bar_complex(bcov_linf_k3_times_e(), max_bar_degree)
+    return compute_bar_carrier(bcov_input_k3_times_e(), max_bar_degree, max_genus)
+
+
+def bar_carrier_quintic(
+    max_bar_degree: int = 4,
+    max_genus: int = 5,
+) -> BCOVBarCarrier:
+    """Bar carrier of the quintic polyvector cohomology profile."""
+    return compute_bar_carrier(bcov_input_quintic(), max_bar_degree, max_genus)
 
 
 # =========================================================================
@@ -983,94 +1176,119 @@ def yukawa_k3_times_e() -> YukawaCoupling:
 
 
 # =========================================================================
-# Section 7: BCOV holomorphic anomaly from the bar MC equation
+# Section 7: One-dimensional scalar-shadow coefficients
 # =========================================================================
 
-def bcov_anomaly_genus1(kappa: Fraction) -> Fraction:
-    """F_1 from the BCOV anomaly equation at genus 1.
-
-    F_1 = kappa/24
-
-    At genus 1, the holomorphic anomaly equation gives:
-        dbar_i F_1 = (1/2) Cbar^{jk}_i G_{jk}
-    where G_{jk} is the Zamolodchikov metric.
-
-    The holomorphic part is:
-        F_1^{hol} = -log(det G) - (chi/12 - 1) log(|f|^2) + const
-    where f is the holomorphic discriminant.
-
-    In the shadow tower:
-        F_1 = kappa * a_hat_1 = kappa * (1/24)
-    """
+def scalar_shadow_genus1(kappa: Fraction) -> Fraction:
+    """Return the genus-one scalar shadow ``kappa/24``."""
     return kappa * F(1, 24)
 
 
-def bcov_anomaly_genus2(kappa: Fraction, S4: Fraction = F(0)) -> Fraction:
-    """F_2 from the BCOV anomaly equation at genus 2.
+def scalar_shadow_genus2(kappa: Fraction) -> Fraction:
+    """Return the genus-two scalar shadow ``7*kappa/5760``."""
+    return kappa * F(7, 5760)
 
-    F_2 = kappa * (7/5760) + corrections from S_4
 
-    At genus 2, the holomorphic anomaly equation involves F_1 and
-    the Yukawa coupling. The scalar shadow gives:
-        F_2^{scalar} = kappa * a_hat_2 = kappa * 7/5760
+def bcov_quintic_constant_map_low_genus() -> Dict[int, Fraction]:
+    r"""Compute the canonical quintic BCOV constants at genera one and two.
 
-    The S_4-dependent correction (from the quartic contact term):
-        delta F_2 = S_3(10*S_3 - kappa)/48   (planted-forest correction)
+    The genus-one normalization is
+    ``(chi/24) * (1/24)``.  At genus two the BCOV constant-map formula is
 
-    For BCOV: S_4 contributes to the non-holomorphic completion.
+        (-1)^(g-1) |B_2g| |B_(2g-2)|
+        -------------------------------- * chi/2,
+           2g (2g-2) (2g-2)!
+
+    with ``g=2``, ``|B_4|=1/30``, and ``|B_2|=1/6``.
     """
-    base = kappa * F(7, 5760)
-    # Add quartic correction if S4 is provided
-    # (For simple CY models this is typically zero at the scalar level)
-    return base
+    chi = F(quintic_hodge().euler)
+    one_loop_scalar = chi / F(24)
+    genus_one = one_loop_scalar / F(24)
+    genus_two = (
+        -F(1, 30)
+        * F(1, 6)
+        / (F(4) * F(2) * F(math.factorial(2)))
+        * (chi / F(2))
+    )
+    return {1: genus_one, 2: genus_two}
 
 
 # =========================================================================
-# Section 8: Shadow tower comparison
+# Section 8: Independently supplied scalar-series comparison
 # =========================================================================
 
-class ShadowTowerComparison(NamedTuple):
-    """Comparison between BCOV amplitudes and shadow tower invariants.
+class ScalarSeriesComparison(NamedTuple):
+    """Comparison of a shadow series with a sourced BCOV series."""
 
-    For the scalar compute lane attached to a CY3 X:
-    - The shadow tower Theta_A gives F_g^{shadow} at each genus g
-    - The BCOV recursion gives F_g^{BCOV} at each genus g
-    - These agree at the scalar level (constant map contribution)
-    - They may differ by instanton corrections (higher arity)
-
-    This records equality of scalar amplitudes. It is not a full VOA,
-    factorisation-algebra, or derived-centre identification.
-    """
     name: str
-    kappa_shadow: Fraction
-    kappa_bcov: Fraction
-    genus_amplitudes_shadow: Dict[int, Fraction]
-    genus_amplitudes_bcov: Dict[int, Fraction]
-    agreement: bool  # True if scalar levels match
+    shadow_lane: str
+    bcov_lane: Optional[str]
+    bcov_source: Optional[str]
+    shadow_series: Dict[int, Fraction]
+    bcov_series: Optional[Dict[int, Fraction]]
+    compared_genera: Tuple[int, ...]
+    discrepancies: Dict[int, Tuple[Fraction, Fraction]]
+    status: str
 
 
-def compare_shadow_bcov(name: str, kappa: Fraction,
-                        max_genus: int = 5) -> ShadowTowerComparison:
-    """Compare shadow tower and BCOV amplitudes.
+def compare_shadow_to_bcov_series(
+    name: str,
+    shadow_lane: str,
+    shadow_series: Mapping[int, Fraction],
+    *,
+    bcov_lane: Optional[str] = None,
+    bcov_series: Optional[Mapping[int, Fraction]] = None,
+    bcov_source: Optional[str] = None,
+) -> ScalarSeriesComparison:
+    """Compare a shadow series with caller-supplied, sourced BCOV data.
 
-    At the selected compute-lane scalar level, both give
-    F_g = kappa * a_hat_g.
+    Absence of BCOV data returns ``status='open'``.  Distinct scalar
+    lanes return ``status='different_lanes'``.  Equality is tested only
+    when both the lane and the independently supplied genus values agree.
     """
-    shadow_amps: Dict[int, Fraction] = {}
-    bcov_amps: Dict[int, Fraction] = {}
+    shadow = {g: F(value) for g, value in shadow_series.items()}
+    if bcov_series is None:
+        return ScalarSeriesComparison(
+            name=name,
+            shadow_lane=shadow_lane,
+            bcov_lane=bcov_lane,
+            bcov_source=bcov_source,
+            shadow_series=shadow,
+            bcov_series=None,
+            compared_genera=(),
+            discrepancies={},
+            status="open",
+        )
 
-    for g in range(1, max_genus + 1):
-        fp = _faber_pandharipande(g)
-        shadow_amps[g] = kappa * fp
-        bcov_amps[g] = kappa * fp  # Same at scalar level
+    if not bcov_source:
+        raise ValueError("a supplied BCOV series requires a provenance string")
 
-    return ShadowTowerComparison(
+    bcov = {g: F(value) for g, value in bcov_series.items()}
+    common = tuple(sorted(set(shadow) & set(bcov)))
+    discrepancies = {
+        g: (shadow[g], bcov[g])
+        for g in common
+        if shadow[g] != bcov[g]
+    }
+    if bcov_lane != shadow_lane:
+        status = "different_lanes"
+    elif set(shadow) != set(bcov):
+        status = "incomplete"
+    elif discrepancies:
+        status = "differs"
+    else:
+        status = "agrees"
+
+    return ScalarSeriesComparison(
         name=name,
-        kappa_shadow=kappa,
-        kappa_bcov=kappa,
-        genus_amplitudes_shadow=shadow_amps,
-        genus_amplitudes_bcov=bcov_amps,
-        agreement=True,
+        shadow_lane=shadow_lane,
+        bcov_lane=bcov_lane,
+        bcov_source=bcov_source,
+        shadow_series=shadow,
+        bcov_series=bcov,
+        compared_genera=common,
+        discrepancies=discrepancies,
+        status=status,
     )
 
 
@@ -1120,7 +1338,6 @@ def euler_characteristic_check() -> bool:
     k3 = k3_hodge()
     e = elliptic_hodge()
     k3xe = k3_times_e_hodge()
-    con = conifold_hodge()
     qui = quintic_hodge()
 
     assert k3.euler == 24
@@ -1158,7 +1375,7 @@ def pv_dimension_check() -> bool:
     pv_e = pv_elliptic()
     pv_kxe = pv_k3_times_e()
     pv_c3 = pv_c3_constant()
-    pv_con = pv_conifold()
+    pv_con = pv_conifold_effective_carrier()
 
     assert pv_k.total_dim == 24
     assert pv_e.total_dim == 4
@@ -1196,11 +1413,11 @@ def ghost_number_check() -> bool:
 
 
 # =========================================================================
-# Section 10: Bar complex dimensions — explicit computation
+# Section 10: Bar-carrier dimensions — explicit computation
 # =========================================================================
 
-def bar_dims_c3_explicit() -> Dict[int, int]:
-    """Explicit bar complex dimensions for C^3.
+def bar_carrier_dims_c3_explicit() -> Dict[int, int]:
+    """Explicit bar-carrier dimensions for C^3.
 
     s^{-1}(PV*(C^3)) has dimensions:
       degree -2: 1 (even -> sym powers)
@@ -1224,12 +1441,12 @@ def bar_dims_c3_explicit() -> Dict[int, int]:
 
     Bar degree 3: Sym^3 of the above.
     """
-    b = bar_complex_c3(max_bar_degree=4)
-    return b.bar_dims
+    b = bar_carrier_c3(max_bar_degree=4)
+    return b.bar_carrier_dims
 
 
-def bar_dims_conifold_explicit() -> Dict[int, int]:
-    """Explicit bar complex dimensions for the conifold.
+def bar_carrier_dims_conifold_explicit() -> Dict[int, int]:
+    """Explicit bar-carrier dimensions for the conifold.
 
     s^{-1}(PV*(conifold)) has dimensions:
       degree -2: 1 (from PV^{0,0}, even -> sym)
@@ -1246,8 +1463,8 @@ def bar_dims_conifold_explicit() -> Dict[int, int]:
       (0,1,1): 1*1 = 1
       Total: 1+1+0+1+1+1 = 5
     """
-    b = bar_complex_conifold(max_bar_degree=4)
-    return b.bar_dims
+    b = bar_carrier_conifold(max_bar_degree=4)
+    return b.bar_carrier_dims
 
 
 # =========================================================================
@@ -1345,64 +1562,125 @@ def f2_from_kappa(kappa: Fraction) -> Fraction:
 # =========================================================================
 
 def full_analysis_c3(max_bar: int = 4, max_genus: int = 5) -> Dict[str, Any]:
-    """Complete BCOV bar complex analysis for C^3."""
-    linf = bcov_linf_c3()
-    bar = bar_complex_c3(max_bar)
-    comp = compare_shadow_bcov("C3", linf.kappa, max_genus)
+    """Finite carrier, zero coderivation, and scalar analysis for C^3."""
+    profile = bcov_input_c3()
+    bar = bar_carrier_c3(max_bar, max_genus)
+    comp = compare_shadow_to_bcov_series(
+        "C3",
+        profile.scalar_lane,
+        bar.scalar_shadow_amplitudes,
+    )
 
     return {
         "geometry": "C^3",
-        "kappa": linf.kappa,
-        "shadow_class": linf.shadow_depth_class,
-        "pv_total_dim": linf.pv.total_dim,
-        "pv_ghost_graded": linf.pv.ghost_graded_dims,
-        "l2_nontrivial": linf.l2_nontrivial,
-        "yukawa_nonzero": linf.yukawa_nonzero,
-        "bar_dims": bar.bar_dims,
-        "genus_amplitudes": bar.genus_amplitudes,
-        "shadow_comparison": comp,
+        "scalar_lane": profile.scalar_lane,
+        "scalar_value": profile.scalar_value,
+        "bcov_one_loop_scalar": profile.bcov_one_loop_scalar,
+        "shadow_class": profile.shadow_depth_class,
+        "pv_total_dim": profile.pv.total_dim,
+        "pv_ghost_graded": profile.pv.ghost_graded_dims,
+        "coderivation_status": profile.coderivation_status,
+        "bar_carrier_dims": bar.bar_carrier_dims,
+        "bar_carrier_graded_dims": bar.bar_carrier_graded_dims,
+        "coderivation_constructed": bar.coderivation_constructed,
+        "bar_cohomology_dims": bar.bar_cohomology_dims,
+        "bar_cohomology_graded_dims": bar.bar_cohomology_graded_dims,
+        "scalar_shadow_amplitudes": bar.scalar_shadow_amplitudes,
+        "bcov_comparison": comp,
     }
 
 
 def full_analysis_conifold(max_bar: int = 4, max_genus: int = 5) -> Dict[str, Any]:
-    """Complete BCOV bar complex analysis for the resolved conifold."""
-    linf = bcov_linf_conifold()
-    bar = bar_complex_conifold(max_bar)
-    comp = compare_shadow_bcov("conifold", linf.kappa, max_genus)
+    """Finite carrier and scalar analysis for the resolved conifold."""
+    profile = bcov_input_conifold()
+    bar = bar_carrier_conifold(max_bar, max_genus)
+    comp = compare_shadow_to_bcov_series(
+        "conifold",
+        profile.scalar_lane,
+        bar.scalar_shadow_amplitudes,
+    )
 
     return {
         "geometry": "resolved conifold",
-        "kappa": linf.kappa,
-        "shadow_class": linf.shadow_depth_class,
-        "pv_total_dim": linf.pv.total_dim,
-        "pv_ghost_graded": linf.pv.ghost_graded_dims,
-        "l2_nontrivial": linf.l2_nontrivial,
-        "yukawa_nonzero": linf.yukawa_nonzero,
-        "bar_dims": bar.bar_dims,
-        "genus_amplitudes": bar.genus_amplitudes,
-        "shadow_comparison": comp,
+        "scalar_lane": profile.scalar_lane,
+        "scalar_value": profile.scalar_value,
+        "bcov_one_loop_scalar": profile.bcov_one_loop_scalar,
+        "shadow_class": profile.shadow_depth_class,
+        "pv_total_dim": profile.pv.total_dim,
+        "pv_ghost_graded": profile.pv.ghost_graded_dims,
+        "coderivation_status": profile.coderivation_status,
+        "bar_carrier_dims": bar.bar_carrier_dims,
+        "bar_carrier_graded_dims": bar.bar_carrier_graded_dims,
+        "coderivation_constructed": bar.coderivation_constructed,
+        "bar_cohomology_dims": bar.bar_cohomology_dims,
+        "bar_cohomology_graded_dims": bar.bar_cohomology_graded_dims,
+        "scalar_shadow_amplitudes": bar.scalar_shadow_amplitudes,
+        "bcov_comparison": comp,
         "yukawa": yukawa_conifold(),
     }
 
 
 def full_analysis_k3xe(max_bar: int = 4, max_genus: int = 5) -> Dict[str, Any]:
-    """Complete BCOV bar complex analysis for K3 x E."""
-    linf = bcov_linf_k3_times_e()
-    bar = bar_complex_k3_times_e(max_bar)
-    comp = compare_shadow_bcov("K3xE", linf.kappa, max_genus)
+    """Finite carrier and BKM scalar analysis for K3 x E."""
+    profile = bcov_input_k3_times_e()
+    bar = bar_carrier_k3_times_e(max_bar, max_genus)
+    comp = compare_shadow_to_bcov_series(
+        "K3xE",
+        profile.scalar_lane,
+        bar.scalar_shadow_amplitudes,
+        bcov_lane="BCOV_one_loop",
+    )
     schouten = schouten_bracket_k3xe_structure()
 
     return {
         "geometry": "K3 x E",
-        "kappa": linf.kappa,
-        "shadow_class": linf.shadow_depth_class,
-        "pv_total_dim": linf.pv.total_dim,
-        "pv_bcov_graded": linf.pv.bcov_graded_dims,
-        "l2_nontrivial": linf.l2_nontrivial,
-        "yukawa_nonzero": linf.yukawa_nonzero,
-        "bar_dims": bar.bar_dims,
-        "genus_amplitudes": bar.genus_amplitudes,
-        "shadow_comparison": comp,
+        "scalar_lane": profile.scalar_lane,
+        "scalar_value": profile.scalar_value,
+        "bcov_one_loop_scalar": profile.bcov_one_loop_scalar,
+        "shadow_class": profile.shadow_depth_class,
+        "pv_total_dim": profile.pv.total_dim,
+        "pv_bcov_graded": profile.pv.bcov_graded_dims,
+        "coderivation_status": profile.coderivation_status,
+        "bar_carrier_dims": bar.bar_carrier_dims,
+        "bar_carrier_graded_dims": bar.bar_carrier_graded_dims,
+        "coderivation_constructed": bar.coderivation_constructed,
+        "bar_cohomology_dims": bar.bar_cohomology_dims,
+        "bar_cohomology_graded_dims": bar.bar_cohomology_graded_dims,
+        "scalar_shadow_amplitudes": bar.scalar_shadow_amplitudes,
+        "bcov_comparison": comp,
         "schouten_structure": schouten,
         "yukawa": yukawa_k3_times_e(),
+    }
+
+
+def full_analysis_quintic(max_bar: int = 4, max_genus: int = 5) -> Dict[str, Any]:
+    """Finite carrier plus independent low-genus BCOV arithmetic for Q_5."""
+    profile = bcov_input_quintic()
+    bar = bar_carrier_quintic(max_bar, max_genus)
+    bcov_constants = bcov_quintic_constant_map_low_genus()
+    comparison = compare_shadow_to_bcov_series(
+        "quintic",
+        profile.scalar_lane,
+        {
+            genus: value
+            for genus, value in bar.scalar_shadow_amplitudes.items()
+            if genus in bcov_constants
+        },
+        bcov_lane="BCOV_constant_map",
+        bcov_series=bcov_constants,
+        bcov_source="landscape_census.tex:prop:canonical-bcov-quintic",
+    )
+    return {
+        "geometry": "quintic",
+        "scalar_lane": profile.scalar_lane,
+        "scalar_value": profile.scalar_value,
+        "bcov_one_loop_scalar": profile.bcov_one_loop_scalar,
+        "pv_total_dim": profile.pv.total_dim,
+        "coderivation_status": profile.coderivation_status,
+        "bar_carrier_dims": bar.bar_carrier_dims,
+        "bar_carrier_graded_dims": bar.bar_carrier_graded_dims,
+        "bar_cohomology_dims": bar.bar_cohomology_dims,
+        "scalar_shadow_amplitudes": bar.scalar_shadow_amplitudes,
+        "bcov_constant_map_low_genus": bcov_constants,
+        "bcov_comparison": comparison,
     }

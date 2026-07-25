@@ -63,7 +63,7 @@ The Verdier/Koszul branch model has potential V^!(x) built from the
 shadow tower S_r(A^!) under the finite-type or completed hypotheses
 where A^! is the Verdier/continuous-linear dual of A^i.  This is
 distinct from bar-cobar inversion Omega(B(A)) = A and from the
-Hochschild/bulk object Z_ch^der(A) = ChirHoch^*(A,A).
+Hochschild/closed-sector object Z_ch^der(A) = ChirHoch^*(A,A).
 
 CONVENTIONS
 ===========
@@ -130,7 +130,7 @@ BAR_KOSZUL_FIREWALL: Dict[str, str] = {
         "or completed hypotheses"
     ),
     "Omega(B(A))": "bar-cobar inversion, recovering A",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk object",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/closed-sector object",
 }
 
 MATRIX_MODEL_SCOPE_FIREWALL: Dict[str, str] = {

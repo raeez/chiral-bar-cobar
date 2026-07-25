@@ -957,7 +957,8 @@ def burns_S5_T_line() -> Dict[str, Any]:
 def burns_full_datum() -> Dict[str, Any]:
     """The complete modular Koszul datum for Burns space holography.
 
-    H(Burns) = (A, A!, C_bulk, r(z), Theta_A, nabla^hol)
+    H(Burns) = (A, A^i, A!, C, r(z), Theta_A, nabla^hol),
+    where C = Z_ch^der(A) is the Hochschild closed-sector descriptor.
 
     with the genus tower F_g = 4 * lambda_g^FP providing all-loop
     self-dual gravitational amplitudes.

@@ -1,93 +1,53 @@
-r"""
-Virasoro shadow-tower coefficients S_6, S_7, S_8 as closed-form rational
-functions of the central charge c.
+r"""Formal weighted-Riccati coefficients from Virasoro local data.
 
-Context
--------
-The Vol I shadow tower {S_r(A)}_{r>=2} classifies chiral algebras through the
-Maurer-Cartan coefficient sequence of the universal Theta_A in the ordered
-convolution dGLA. For Virasoro at central charge c, the initial data is
+The vacuum Virasoro algebra canonically determines the sphere Ward
+correlators ``G_n`` and their connected cumulants ``G_n^conn``.  They are
+rational functions on ``Conf_n(P^1)``; see
+``compute.lib.virasoro_ward_correlators``.  An ordered scalar coordinate
+``S_n`` additionally uses ``H_res(Vir_c; X)``, an Arnold class, and a
+normalized residue projection.
 
-    S_2(Vir_c) = kappa(Vir_c) = c/2
-    S_3(Vir_c) = 2                                (Vol I normalisation)
-    S_4(Vir_c) = 10 / (c (5c + 22))               (FM178)
-    S_5(Vir_c) = -48 / (c^2 (5c + 22))            (thm:s5-vir-closed-form)
+This module computes a different, completely specified object.  Put
 
-The denominator factor (5c + 22) is the Zamolodchikov quasi-primary norm
-of Lambda = :TT: - (3/10) d^2 T (weight-4 scalar quasi-primary): the
-standard identity <Lambda|Lambda> = c (5c + 22) / 10.
+    kappa = c/2,
+    R_3 = 2,
+    R_4 = 10 / (c (5c + 22)),
 
-Higher Virasoro shadow coefficients (r >= 6) are determined by the
-master-equation recursion (derivation chain A)
+and define the weighted-Riccati series
 
-    S_r = -(1/(2 r kappa)) * SUM_{j+k=r+2, 3 <= j <= k < r} f(j,k) * j*k * S_j * S_k,
+    Q_L(t) = 4 kappa^2 + 12 kappa R_3 t
+             + (9 R_3^2 + 16 kappa R_4) t^2,
+    H_Ricc(t) = t^2 sqrt(Q_L(t)) = sum_{r >= 2} r R_r t^r.
 
-where f(j,k) = 1 for j < k and f(j,k) = 1/2 for j = k (chain A, from
-shadow_tower_ope_recursion.py). Independently, the Riccati sqrt(Q_L) Taylor
-expansion (chain B, from shadow_tower_recursive.py)
+Equivalently, its coefficients obey
 
-    Q_L(t) = 4 kappa^2 + 12 kappa S_3 t + (9 S_3^2 + 16 kappa S_4) t^2
-    H(t)   = t^2 sqrt(Q_L(t)) = SUM_{r>=2} r S_r t^r
+    R_r = -(1/(2 r kappa))
+          sum_{j+k=r+2, 3 <= j <= k < r} f(j,k) j k R_j R_k,
 
-yields the same S_r as a quadratic Riccati discriminant. Agreement of
-chain A with chain B is the content of thm:riccati-algebraicity
-(higher_genus_modular_koszul.tex); verified below through r = 8.
+where ``f(j,k)=1`` for ``j<k`` and ``f(j,j)=1/2``.  The sum is over
+unordered pairs.  Hence
 
-Closed forms
-------------
-Running the recursion with (kappa, S_3, S_4) = (c/2, 2, 10/(c(5c+22))) gives:
+    R_5 = -48 / (c^2 (5c + 22)),
+    R_6 = 80 (45 c + 193) / (3 c^3 (5c + 22)^2).
 
-    S_6(Vir_c) = 80 (45 c + 193) / [3 c^3 (5c + 22)^2]
-    S_7(Vir_c) = -2880 (15 c + 61) / [7 c^4 (5c + 22)^2]
-    S_8(Vir_c) = 80 (2025 c^2 + 16470 c + 33314) / [c^5 (5c + 22)^3]
+The formal order-six relation
 
-Pole structure: (5c + 22)^{floor((r-2)/2)} for r = 6, 7, 8 (increments on
-every even-r doubling of the Lambda-channel contraction) and c^{r-3} at
-c -> 0 (abelian limit).
+    2 R_2 C_6^rel + 2 R_3 R_5 + R_4^2 = 0
 
-Falsification tests (chain B disjoint)
----------------------------------------
-At c = 1:
-    S_6(1) = 19040 / 2187     (= 80 * 238 / (3 * 27^2))
-    S_7(1) = -24320 / 567     (= -2880 * 76 / (7 * 81))
-    S_8(1) = 4144720 / 19683  (Vol III m_8 identity at c=1 specialisation)
+defines the distinct candidate
 
-At c = 1/2 (Ising minimal model):
-    S_6(1/2) = 551680 / 7203
-    S_7(1/2) = -12625920 / 16807
-    S_8(1/2) = 861291520 / 117649
+    C_6^rel = 4 (240 c + 1031) / (c^3 (5c + 22)^2),
 
-At c = 13 (Virasoro self-dual, Vir^! = Vir_{26-c} fixed):
-    S_6(13) = 62240 / 49887279
-    S_7(13) = -81920 / 168138607
-    S_8(13) = 47171920 / 244497554379
+on the regular domain ``c(5c+22) != 0``.  This relation supplies an
+algebraic coefficient.  A singular-vector interpretation begins with an
+explicit level-six radical/decoupling map from the vacuum-Verma radical to
+the chosen quotient or residue model.
 
-Large-c asymptotics
--------------------
-    S_r(Vir_c) ~ A_r / c^{r-2},  c -> infinity,
-with A_6 = 48, A_7 = -1728/7, A_8 = 1296. These leading coefficients are
-pure 2^a 3^b rationals and contain no Kummer prime (691 at r=12, 3617 at
-r=16); the motivic Kummer-congruence prediction of
-thm:kummer-from-motivic applies to Z_g closed-form numerators, not to
-the Virasoro shadow asymptotics directly. The shadow-Feynman bijection
-F_g <-> S_{2g-2} transmits Kummer content to Z_g through the genus
-Bernoulli normalisation, which is a SEPARATE assertion from leading-c
-behaviour of S_r itself.
-
-Manuscript references
----------------------
-    thm:s6-virasoro-closed-form (shadow_tower_higher_coefficients.tex)
-    thm:s7-virasoro-closed-form (shadow_tower_higher_coefficients.tex)
-    thm:s8-virasoro-closed-form (shadow_tower_higher_coefficients.tex)
-    thm:virasoro-shadow-recurrence (shadow_tower_higher_coefficients.tex)
-    thm:riccati-algebraicity (higher_genus_modular_koszul.tex)
-    thm:miura-cross-universality (miura_transfer.tex)
-
-Dependencies
-------------
-    compute/lib/shadow_tower_ope_recursion.py : chain A (MC recursion)
-    compute/lib/shadow_tower_recursive.py     : chain B (sqrt Q_L)
-    compute/lib/s5_vir_wick.py                : S_5 = -48/(c^2(5c+22))
+Thus ``R_6^Ricc`` and ``C_6^rel`` are exact outputs of two named formal
+constructions.  A comparison with an ordered scalar
+``S_6(Vir_c; H_res)`` is supplied by the corresponding residue map.  The
+historical function names in this module return weighted-Riccati outputs so
+that existing callers retain their algebraic-series semantics.
 """
 
 from __future__ import annotations
@@ -100,20 +60,26 @@ import sympy as sp
 # ---------------------------------------------------------------------------
 
 
-def s6_virasoro(c):
-    """Return S_6(Vir_c) = 80 (45 c + 193) / [3 c^3 (5c + 22)^2].
+def s5_riccati_candidate(c):
+    """Return the exact arity-five coefficient of ``H_Ricc``."""
+
+    c = sp.sympify(c)
+    return -sp.Rational(48) / (c**2 * (5 * c + sp.Rational(22)))
+
+
+def s6_riccati_candidate(c):
+    """Return ``R_6^Ricc = 80(45c+193)/(3c^3(5c+22)^2)``.
 
     Parameters
     ----------
     c : sympy expression or rational
-        Central charge. For generic c the return is a rational function
-        of c with poles at c = 0 (order 3) and 5 c + 22 = 0 (order 2).
+        Central charge.  The regular domain is ``c(5c+22) != 0``; the
+        rational continuation has poles at ``c=0`` and ``5c+22=0``.
 
     Returns
     -------
     sympy.Expr
-        The closed-form value of the genus-0 6-input Virasoro shadow
-        coefficient.
+        The arity-six coefficient of the weighted-Riccati series.
     """
     c = sp.sympify(c)
     return sp.Rational(80) * (45 * c + sp.Rational(193)) / (
@@ -121,8 +87,51 @@ def s6_virasoro(c):
     )
 
 
+def s6_relation_candidate(c):
+    """Return ``C_6^rel = 4(240c+1031)/(c^3(5c+22)^2)``.
+
+    This is the exact solution of the formal relation
+    ``2 R_2 C_6^rel + 2 R_3 R_5 + R_4^2 = 0`` with the local seeds stated
+    in the module docstring.  Its regular domain is
+    ``c(5c+22) != 0``.  A singular-vector interpretation requires an
+    explicit level-six radical/decoupling map.
+    """
+
+    c = sp.sympify(c)
+    return sp.Rational(4) * (240 * c + sp.Rational(1031)) / (
+        c**3 * (5 * c + sp.Rational(22)) ** 2
+    )
+
+
+def s6_null_candidate(c):
+    """Compatibility alias for :func:`s6_relation_candidate`.
+
+    The alias carries the formal-relation semantics of
+    ``2 R_2 C_6^rel + 2 R_3 R_5 + R_4^2 = 0``.  A singular-vector reading
+    begins after an explicit level-six radical/decoupling map has been
+    supplied.
+    """
+
+    return s6_relation_candidate(c)
+
+
+WEIGHT_SIX_RELATION_SEMANTICS = {
+    "canonical_function": "s6_relation_candidate",
+    "defining_relation": "2 R_2 C_6^rel + 2 R_3 R_5 + R_4^2 = 0",
+    "domain": "c(5c+22) != 0",
+    "status": "formal relation candidate",
+    "singular_vector_requirement": "explicit level-six radical/decoupling map",
+}
+
+
+def s6_virasoro(c):
+    """Compatibility name for the weighted-Riccati coefficient."""
+
+    return s6_riccati_candidate(c)
+
+
 def s7_virasoro(c):
-    """Return S_7(Vir_c) = -2880 (15 c + 61) / [7 c^4 (5c + 22)^2].
+    """Return the arity-seven weighted-Riccati coefficient.
 
     Parameters
     ----------
@@ -132,7 +141,7 @@ def s7_virasoro(c):
     Returns
     -------
     sympy.Expr
-        Weight-7 Virasoro shadow coefficient.
+        Arity-seven weighted-Riccati coefficient.
     """
     c = sp.sympify(c)
     return sp.Rational(-2880) * (15 * c + sp.Rational(61)) / (
@@ -141,7 +150,7 @@ def s7_virasoro(c):
 
 
 def s8_virasoro(c):
-    """Return S_8(Vir_c) = 80 (2025 c^2 + 16470 c + 33314) / [c^5 (5c + 22)^3].
+    """Return the arity-eight weighted-Riccati coefficient.
 
     Parameters
     ----------
@@ -151,8 +160,8 @@ def s8_virasoro(c):
     Returns
     -------
     sympy.Expr
-        Weight-8 Virasoro shadow coefficient. At c = 1 specialises to
-        4144720 / 19683 (matches Vol III m_8 identity).
+        Arity-eight weighted-Riccati coefficient.  At ``c=1`` its value is
+        ``4144720/19683``.
     """
     c = sp.sympify(c)
     return sp.Rational(80) * (
@@ -163,7 +172,7 @@ def s8_virasoro(c):
 
 
 def s10_virasoro(c):
-    """Return S_10(Vir_c) = 256 (91125 c^3 + 1050975 c^2 + 3989790 c + 4969967) / [c^7 (5c+22)^4].
+    """Return the arity-ten weighted-Riccati coefficient.
 
     Derived main-thread 2026-04-17 via the master-equation recurrence at r=10
     (j+k=12, cross-terms (3,9), (4,8), (5,7), and diagonal (6,6) with factor 1/2).
@@ -180,7 +189,7 @@ def s10_virasoro(c):
     Returns
     -------
     sympy.Expr
-        Weight-10 Virasoro shadow coefficient. Rational in c, no MZV contribution.
+        Arity-ten weighted-Riccati coefficient in ``Q(c)``.
     """
     c = sp.sympify(c)
     return sp.Rational(256) * (
@@ -192,7 +201,7 @@ def s10_virasoro(c):
 
 
 def s9_virasoro(c):
-    """Return S_9(Vir_c) = -1280 (2025 c^2 + 15570 c + 29554) / [3 c^6 (5c + 22)^3].
+    """Return the arity-nine weighted-Riccati coefficient.
 
     Derived main-thread 2026-04-17 via the master-equation recurrence at r=9
     (j+k=11, cross-terms (3,8), (4,7), (5,6)). The Kummer-irregular primes
@@ -211,7 +220,7 @@ def s9_virasoro(c):
     Returns
     -------
     sympy.Expr
-        Weight-9 Virasoro shadow coefficient.
+        Arity-nine weighted-Riccati coefficient.
     """
     c = sp.sympify(c)
     return -sp.Rational(1280) * (
@@ -227,7 +236,7 @@ def s9_virasoro(c):
 
 
 def leading_asymptotic(r):
-    """Closed form of A_r = lim_{c -> oo} c^(r-2) * S_r(Vir_c).
+    """Large-``c`` leading term of the weighted-Riccati coefficient.
 
     Theorem: A_r = 8 * (-6)^(r-4) / r for r >= 4.
 
@@ -250,7 +259,7 @@ def leading_asymptotic(r):
 
 
 def subleading_asymptotic(r):
-    """Closed form of B_r = lim_{c -> oo} c * (c^(r-2) * S_r - A_r).
+    """Large-``c`` subleading term of the weighted-Riccati coefficient.
 
     Theorem (thm:shadow-tower-subleading-closed-form):
 
@@ -289,7 +298,7 @@ def subleading_asymptotic(r):
 
 
 def sub_subleading_asymptotic(r):
-    """Closed form of Gamma_r = lim c^2 * (c^(r-2) S_r - A_r - B_r/c).
+    """Second large-``c`` correction of the weighted-Riccati coefficient.
 
     Theorem (thm:shadow-tower-sub-subleading-closed-form):
 
@@ -335,7 +344,7 @@ def sub_subleading_asymptotic(r):
 
 
 def sub_sub_subleading_asymptotic(r):
-    """Closed form of Delta_r = lim c^3 * (c^(r-2) S_r - A_r - B_r/c - Gamma_r/c^2).
+    """Third large-``c`` correction of the weighted-Riccati coefficient.
 
     Theorem (thm:shadow-tower-tier-4-closed-form, main-thread 2026-04-17):
 
@@ -558,7 +567,7 @@ def sub_subleading_source_ratio(r):
 
 
 def virasoro_shadow_recurrence(S_prev, r, c):
-    r"""Master-equation recurrence for the r-th Virasoro shadow coefficient.
+    r"""Formal recurrence for the ``r``-th weighted-Riccati coefficient.
 
     Implements the shadow transport operator
 
@@ -584,7 +593,7 @@ def virasoro_shadow_recurrence(S_prev, r, c):
     Returns
     -------
     sympy.Expr
-        The coefficient S_r obtained by applying the recursion to S_prev.
+        The coefficient ``R_r`` obtained from the unordered-pair recurrence.
 
     Raises
     ------
@@ -616,7 +625,7 @@ def virasoro_shadow_recurrence(S_prev, r, c):
 
 
 def virasoro_shadow_sequence(c, max_r=8):
-    """Return {2: S_2, 3: S_3, 4: S_4, ..., max_r: S_{max_r}} for Vir_c.
+    """Return the weighted-Riccati sequence through ``max_r``.
 
     Uses initial data (kappa, S_3, S_4) = (c/2, 2, 10/(c(5c+22))) and
     iterates virasoro_shadow_recurrence.
@@ -631,7 +640,7 @@ def virasoro_shadow_sequence(c, max_r=8):
     Returns
     -------
     dict[int, sympy.Expr]
-        Map from r to S_r(Vir_c), r = 2, ..., max_r, simplified by
+        Map from ``r`` to ``R_r(c)``, simplified by
         sp.cancel.
     """
     if max_r < 4:
@@ -648,16 +657,14 @@ def virasoro_shadow_sequence(c, max_r=8):
 
 
 # ---------------------------------------------------------------------------
-# Boundary-value tables (for independent verification tests)
+# Boundary values of the weighted-Riccati sequence
 # ---------------------------------------------------------------------------
 #
-# Verified values at three boundary points. Each row is derived
-# independently from the closed-form rational expression AND from the
-# chain-A recursion (see test_shadow_tower_higher.py for the disjoint
-# verification).
+# These exact substitutions test the closed formulas and the recurrence at
+# three regular values of the central charge.
 
 BOUNDARY_VALUES = {
-    # (r, c) -> S_r(Vir_c)
+    # (r, c) -> R_r(c)
     (6, 1): sp.Rational(19040, 2187),
     (7, 1): sp.Rational(-24320, 567),
     (8, 1): sp.Rational(4144720, 19683),
@@ -667,6 +674,12 @@ BOUNDARY_VALUES = {
     (6, 13): sp.Rational(62240, 49887279),
     (7, 13): sp.Rational(-81920, 168138607),
     (8, 13): sp.Rational(47171920, 244497554379),
+}
+
+
+WEIGHT_SIX_RELATION_VALUES = {
+    central_charge: sp.cancel(s6_relation_candidate(central_charge))
+    for central_charge in (sp.Integer(1), sp.Rational(1, 2), sp.Integer(13))
 }
 
 
@@ -681,9 +694,8 @@ LEADING_ASYMPTOTIC = {
 
 
 # Sub-subleading coefficients Gamma_r = lim_{c -> infinity} c^2 (c^(r-2) S_r - A_r - B_r/c).
-# Each value verified by two independent chains (Laurent expansion of
-# s_r_virasoro closed form AND variation-of-parameters telescope). See
-# test_sub_subleading_asymptotic.py for the disjoint verification.
+# Each value is checked both by Laurent expansion of the displayed rational
+# function and by the variation-of-parameters identity.
 SUB_SUBLEADING_ASYMPTOTIC = {
     4: sp.Rational(968, 25),
     5: sp.Rational(-23232, 125),

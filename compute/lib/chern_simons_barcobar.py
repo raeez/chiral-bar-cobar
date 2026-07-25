@@ -123,11 +123,10 @@ def lie_data(type_: str, rank: int) -> Tuple[int, int]:
 def kappa_affine(type_: str, rank: int, level: float) -> float:
     """Modular characteristic kappa(g_k) = dim(g)*(k + h^v)/(2*h^v).
 
-    Raises ValueError at the critical level k = -h^v.
+    The polynomial scalar has critical value zero.  The Sugawara
+    central charge below retains its critical pole.
     """
     dim_g, h_dual = lie_data(type_, rank)
-    if abs(level + h_dual) < 1e-15:
-        raise ValueError(f"Critical level k = -{h_dual}: kappa undefined")
     return dim_g * (level + h_dual) / (2.0 * h_dual)
 
 

@@ -1,15 +1,16 @@
-"""Tests for shadow channel decomposition (thm:shadow-channel-decomposition).
+"""Tests for strict shadow channel decomposition diagnostics.
 
 Verifies:
   1. Multi-channel shadow algebra for rank-N Heisenberg
-  2. Channel independence (abelian → decoupled)
+  2. Channel independence only under the strict decoupling package
   3. Shadow Cauchy-Schwarz inequality: tr(K²) ≤ tr(K)²
   4. Genus-2 clutching via matrix multiplication
   5. Non-abelian/abelian dichotomy
 
-The Cauchy-Schwarz shadow inequality is a NEW invariant:
+The Cauchy-Schwarz shadow ratio is a strict diagonal diagnostic:
   ρ = tr(K²)/κ² ∈ [1/r, 1]
 measures "channel spread". ρ = 1 iff effectively one-channel.
+It is not the full genus-2 complementarity formula when δF_2^cross is present.
 """
 
 # VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
@@ -49,11 +50,15 @@ class TestMultiChannelShadow:
         assert s.verify_channel_independence()
 
     def test_three_channel_abelian(self):
-        s = MultiChannelShadow(3, is_abelian=True)
+        s = MultiChannelShadow(3, is_abelian=True, strict_channel_decoupled=True)
         assert s.r == 3
         assert s.n_cubic_shadows == 0
         assert s.n_gerstenhaber_brackets == 3
-        assert s.verify_channel_independence()  # abelian → independent
+        assert s.verify_channel_independence()
+
+    def test_abelian_without_decoupling_is_not_enough(self):
+        s = MultiChannelShadow(3, is_abelian=True)
+        assert not s.verify_channel_independence()
 
     def test_abelian_cubic_vanishes(self):
         s = MultiChannelShadow(2, is_abelian=True)
@@ -139,7 +144,17 @@ class TestDichotomy:
         assert r['type'] == 'abelian'
         assert r['dim_H2_cyc'] == 4
         assert not r['one_channel']
+        assert not r['channels_independent']
+        assert r['mixed_terms_status'] == 'not killed by abelian primary brackets alone'
+
+    def test_abelian_multi_channel_strict_package(self):
+        r = abelian_dichotomy_test(
+            ope_bracket_nonzero=False,
+            dim_v_prim=3,
+            m_prim_rank=0,
+            strict_channel_decoupled=True)
         assert r['channels_independent']
+        assert r['mixed_terms_status'] == 'assumed zero by H_SCD'
 
     def test_abelian_rank1_one_channel(self):
         r = abelian_dichotomy_test(
@@ -158,6 +173,7 @@ class TestGenus1Propagation:
         r = genus1_multichannel_propagation(K)
         assert r['total_kappa'] == 2.0
         assert r['channels_independent']
+        assert 'δF_g^cross' in r['mixed_terms_status']
         assert np.allclose(r['genus1_shadow'], K)
 
     def test_general_metric(self):

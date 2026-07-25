@@ -13,11 +13,12 @@ MATHEMATICAL FRAMEWORK
    For affine g_k, the OPE has poles at z^{-2} (curvature) and z^{-1}
    (bracket).  The bar propagator d\log E(z,w) absorbs one power (AP19):
 
-       r(z) = Omega / z     where Omega = sum_a T^a tensor T_a
+       r_k(z) = k*Omega / z     where Omega = sum_a T^a tensor T_a
 
    is the quadratic Casimir in g tensor g.
 
-   In the fundamental representation of sl_N:
+   The unit Casimir convention used by the CYBE tests sets k=1.  In the
+   fundamental representation of sl_N:
        Omega = P - I/N
    where P is the permutation operator.  So r^{fund}(z) = (P - I/N)/z.
 
@@ -313,16 +314,19 @@ def sp2N_casimir_fundamental(N: int) -> np.ndarray:
     return Omega
 
 
-def classical_r_matrix_fundamental(lie_type: str, N: int, z: complex) -> np.ndarray:
-    r"""Classical r-matrix r(z) = Omega/z in the fundamental representation.
+def classical_r_matrix_fundamental(lie_type: str, N: int, z: complex,
+                                   level: complex = 1.0) -> np.ndarray:
+    r"""Classical trace-form r-matrix r_k(z) = k*Omega/z in the fundamental representation.
 
-    The bar complex collision residue (AP19: pole absorbed) gives r(z) = Omega/z
-    where Omega is the Casimir tensor in the fundamental representation.
+    The bar complex collision residue (AP19: pole absorbed) gives
+    r_k(z) = k*Omega/z where Omega is the Casimir tensor in the fundamental
+    representation.  The default level=1 is the unit Casimir normalization.
 
     Args:
         lie_type: "A" for sl_{N+1}, "B" for so_{2N+1}, "C" for sp_{2N}, "D" for so_{2N}.
         N: rank parameter.
         z: spectral parameter (nonzero).
+        level: Affine trace-form level k.
 
     Returns:
         The r-matrix as a d^2 x d^2 matrix where d = dim(fundamental).
@@ -337,7 +341,7 @@ def classical_r_matrix_fundamental(lie_type: str, N: int, z: complex) -> np.ndar
         Omega = soN_casimir_fundamental(2 * N)
     else:
         raise ValueError(f"Unknown Lie type: {lie_type}")
-    return Omega / z
+    return level * Omega / z
 
 
 def casimir_eigenvalue_fundamental(lie_type: str, N: int) -> float:
@@ -1255,7 +1259,7 @@ def yangian_R_rational_slN(u: complex, N: int) -> np.ndarray:
 
     This is the rational solution of the YBE (additive convention).
 
-    The bar complex collision residue gives r(z) = Omega/z = (P - I/N)/z.
+    The unit-normalized bar collision residue gives r(z) = Omega/z = (P - I/N)/z.
     The Yangian R-matrix is the QUANTUM version:
         R(u) = u * I + P
 

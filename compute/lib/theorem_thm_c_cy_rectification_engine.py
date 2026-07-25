@@ -224,7 +224,7 @@ def koszul_object_firewall():
             'not': ('A!', 'B_X(A!)', 'Z_der_ch(A)'),
         },
         'Z_der_ch(A)': {
-            'kind': 'derived chiral centre / Hochschild bulk object',
+            'kind': 'derived chiral centre / Hochschild closed-sector object',
             'construction': 'Hochschild cochains C^bullet_ch(A, A)',
             'not': ('B_X(A)', 'A^i', 'A!', 'Omega_X(B_X(A))'),
         },
@@ -559,7 +559,7 @@ def proper_cy_on_bar(family, params):
         'does_not_prove': (
             'family-level perfectness over M_g_bar',
             'Theorem C complementarity',
-            'full Hochschild/bulk data',
+            'full Hochschild/closed-sector data',
         ),
         'reason': 'HR24 Thm 1.1(b): smooth CY on A => proper CY on B(A)'
         if has_proper_cy else
@@ -606,7 +606,8 @@ def verify_k11_hypotheses(family, params):
 
     # (P3): dual regularity.
     # For standard Koszul pairs:
-    #   Heisenberg: H_k^! = Sym^ch(V*), smooth CY for k != 0
+    #   Heisenberg: H_k^! is the curved second-kind Sym^ch(V*[1]) branch
+    #   for k != 0; the uncurved Sym^ch(V*) is only its shadow.
     #   Affine KM V_k(g): V_k(g)^! = V_{-k-2h^v}(g), smooth CY for k != -2h^v
     #   Virasoro Vir_c: Vir_c^! = Vir_{26-c}, smooth CY for generic c
     #   bc: bc^! = betagamma, always smooth CY
@@ -616,7 +617,10 @@ def verify_k11_hypotheses(family, params):
         # H_k^! has kappa = -k, nondegenerate for k != 0
         dual_smooth = smooth_cy_exists_heisenberg(-Fraction(k))
         p3 = dual_smooth['has_smooth_cy']
-        p3_reason = f"H_k^! = Sym^ch(V*) with level -k: {dual_smooth['reason']}"
+        p3_reason = (
+            "H_k^! = curved second-kind Sym^ch(V*[1]) with level -k: "
+            f"{dual_smooth['reason']}"
+        )
     elif family == 'affine_km':
         g_type = params.get('g_type', 'A')
         rank = params.get('rank', 1)

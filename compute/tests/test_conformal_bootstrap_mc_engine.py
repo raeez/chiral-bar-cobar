@@ -702,7 +702,7 @@ class TestBootstrapLandscape:
         assert len(results) == 9
 
     def test_landscape_kappa_correct(self):
-        """kappa = c/2 throughout the landscape."""
+        """kappa = c/2 throughout this Virasoro/minimal-model scan."""
         results = bootstrap_landscape_scan()
         for r in results:
             c_f = float(r['c'])

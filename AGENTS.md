@@ -55,7 +55,17 @@ matrix** $\{\kappa_{\mathrm{cat}}, \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
 \kappa^{\mathrm{Heis}}_{\mathrm{ch}}, \kappa_{\mathrm{BKM}},
 \kappa_{\mathrm{fiber}}\}$. K3 × E anchors row B at $(0, 0, 3, 5, 24)$.
 
-**Universal chain-homotopy**: $h_{A_b} = h_{\mathrm{LV}} / \mathcal N(A_b)$ where $\mathcal N(A_b) = \kappa(A_b) + \kappa^!_{\mathrm{LV}}(A_b)$ is the Verdier-Ran-on-bar norm at level 2 (Convention `conv:A-two-kappa-shriek` of `theorem_A_infinity_2.tex`). Distinct from the algebra-level scalar Verdier sum $K^\kappa(A_b)$ of `master_concordance.tex`. Connects Theorem A to Theorem C.
+**Family chain-rescaling problem.**  Given chain maps $(\iota_A,p_A)$
+and an operator $h_A$ on one factorization bar--cobar complex with
+\[
+d_Ah_A+h_Ad_A=\nu_A(\mathrm{id}-\iota_Ap_A),
+\]
+the rescaled operator $\nu_A^{-1}h_A$ is a contraction for
+$\nu_A\in k^\times$.  A family theorem constructs
+$(\iota_A,p_A,h_A,\nu_A)$ on the same complex.  A further chain map to
+the scalar trace complex identifies $\nu_A$ with the algebra-level
+Verdier sum $K^\kappa(A)=\kappa(A)+\kappa(A^!)$.  The five displayed
+scalars are five construction problems joining Theorems A, C, and D.
 
 **Manuscript layout** (six-part platonic ideal):
 

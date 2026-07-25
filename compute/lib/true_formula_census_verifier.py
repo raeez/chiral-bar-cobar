@@ -1,7 +1,10 @@
-"""True Formula Census verification engine.
+"""Exact verification of the scalar formulas in the landscape census.
 
-Independently recomputes the canonical Wave 12-2 formulas used in the
-standard landscape census and cross-checks them against the census values.
+Each check evaluates a formula from ``chapters/examples/landscape_census.tex``
+by exact arithmetic.  The Bershadsky--Polyakov check imports the canonical
+normalization from ``bp_koszul_conductor_engine``; this keeps the standard
+Fehily--Kawasetsu--Ridout conformal vector, the open genus-one characteristic,
+and the secondary shifted formula in separate named lanes.
 
 Checks covered:
   C01. kappa(Heis_k) = k
@@ -13,22 +16,22 @@ Checks covered:
   C07. E_8 fundamental irrep dimensions
   C08. H_N = sum_{j=1}^N 1/j exactly
   C09. Complementarity sums by family
-  C10. K_BP = 196 for Bershadsky-Polyakov W_3^(2)
+  C10. BP standard conductor 50; all-even diagnostic 17/6; open kappa lane;
+       shifted conductor 196
 
 Anti-pattern coverage:
   AP1   family-specific kappa formulas
-  AP24  complementarity is not universal across families
+  AP24  family-dependent complementarity sums
   AP116 boundary checks for summation indices
   AP126/AP141 explicit level prefix in the r-matrix
   AP129 reciprocal swap mistakes in rational formulas
-  AP136 H_N - 1 is not H_{N-1}
+  AP136 distinction between H_N - 1 and H_{N-1}
   AP137 bc / beta-gamma sign complementarity
-  AP140 K_BP = 196, not 2
+  AP140 separation of the standard and shifted BP conformal conventions
 
 References:
-  - compute/audit/true_formula_census_draft_wave12.md
   - chapters/examples/landscape_census.tex
-  - CLAUDE.md
+  - compute/lib/bp_koszul_conductor_engine.py
 """
 
 from __future__ import annotations
@@ -37,51 +40,75 @@ from fractions import Fraction
 from functools import lru_cache
 from typing import Dict, Iterable, List, Sequence, Tuple, Union
 
+if __package__:
+    from . import bp_koszul_conductor_engine as _bp_engine
+else:
+    import bp_koszul_conductor_engine as _bp_engine
+
+
+BP_KAPPA_COMPLEMENTARITY_EXACT = _bp_engine.KAPPA_COMPLEMENTARITY_EXACT
+BP_GENERATORS = _bp_engine.BP_GENERATORS
+BP_KAPPA_STATUS = _bp_engine.BP_KAPPA_STATUS
+K_BP_EXACT = _bp_engine.K_BP_EXACT
+K_BP_SHIFTED_EXACT = _bp_engine.K_BP_SHIFTED_EXACT
+SHIFTED_BP_CONVENTION = _bp_engine.SHIFTED_BP_CONVENTION
+STANDARD_BP_CONVENTION = _bp_engine.STANDARD_BP_CONVENTION
+VARRHO_BP = _bp_engine.VARRHO_BP
+UnverifiedBPInvariantError = _bp_engine.UnverifiedBPInvariantError
+_bp_standard_conductor = _bp_engine.K_BP
+_bp_shifted_conductor = _bp_engine.K_BP_shifted
+_bp_standard_central_charge = _bp_engine.c_BP
+_bp_shifted_central_charge = _bp_engine.c_BP_shifted
+_bp_reciprocal_weight_diagnostic = _bp_engine.compute_varrho
+bp_companion_level = _bp_engine.dual_level
+_bp_standard_kappa = _bp_engine.kappa_BP
+_bp_standard_kappa_sum = _bp_engine.kappa_complementarity
+
 
 Scalar = Union[int, Fraction]
-StructuredValue = Union[Scalar, Tuple[int, ...], Dict[str, Scalar]]
+StructuredValue = object
 ResultDict = Dict[str, object]
+
+
+THEOREM_C_CERTIFIED_SCALAR_VALUES: Tuple[Fraction, ...] = (
+    Fraction(0),
+    Fraction(13),
+    Fraction(250, 3),
+)
 
 
 TRUE_FORMULA_CENSUS_REFERENCES: Dict[str, str] = {
     "C01": (
-        "True Formula Census Wave 12-2 C1; "
-        "chapters/examples/landscape_census.tex tab:master-invariants."
+        "chapters/examples/landscape_census.tex, Heisenberg census row."
     ),
     "C02": (
-        "True Formula Census Wave 12-2 C2; "
         "chapters/examples/landscape_census.tex Virasoro row."
     ),
     "C03": (
-        "True Formula Census Wave 12-2 C3; "
         "chapters/examples/landscape_census.tex affine KM rows."
     ),
     "C04": (
-        "True Formula Census Wave 12-2 C4 and C19; "
         "chapters/examples/landscape_census.tex principal W_N rows."
     ),
     "C05": (
-        "True Formula Census Wave 12-2 C5; "
         "chapters/examples/landscape_census.tex bc ghosts row."
     ),
     "C06": (
-        "True Formula Census Wave 12-2 C6 and C7; "
-        "compute/audit/true_formula_census_draft_wave12.md."
+        "chapters/examples/landscape_census.tex beta-gamma row."
     ),
     "C07": (
-        "True Formula Census Wave 12-2 C16; Bourbaki tables; "
-        "compute/lib/bc_exceptional_categorical_zeta_engine.py FUNDAMENTAL_DIMS['E8']."
+        "Weyl dimension computation in this module; "
+        "compute/lib/bc_exceptional_categorical_zeta_engine.py."
     ),
     "C08": (
-        "True Formula Census Wave 12-2 C19; CLAUDE.md AP116/AP136."
+        "Exact definition H_N=sum_{j=1}^N 1/j in landscape_census.tex."
     ),
     "C09": (
-        "True Formula Census Wave 12-2 C7, C8, C18; "
         "chapters/examples/landscape_census.tex complementarity rows."
     ),
     "C10": (
-        "True Formula Census Wave 12-2 C20; "
-        "chapters/examples/landscape_census.tex BP row."
+        "chapters/examples/landscape_census.tex BP row; "
+        "compute/lib/bp_koszul_conductor_engine.py convention records."
     ),
 }
 
@@ -171,27 +198,89 @@ def kappa_bg(lambda_weight: Scalar) -> Fraction:
 
 
 def virasoro_dual_c(c: Scalar) -> Fraction:
-    """Return the Virasoro same-family dual central charge 26 - c."""
+    """Return the Virasoro census companion parameter ``26-c``."""
     return Fraction(26) - _as_fraction(c)
 
 
 def kac_moody_dual_level(k: Scalar, h_dual: int) -> Fraction:
-    """Return the Feigin-Frenkel dual level -k - 2 h^vee."""
+    """Return the affine census involution ``-k-2h^vee``."""
     return -_as_fraction(k) - 2 * h_dual
 
 
 def bp_central_charge(k: Scalar) -> Fraction:
-    """Return c_BP(k) = 2 - 24 * (k + 1)^2 / (k + 3)."""
-    level = _as_fraction(k)
-    if level == -3:
-        return Fraction(98)
-    return 2 - Fraction(24) * (level + 1) ** 2 / (level + 3)
+    r"""Return the standard BP charge
+    ``-(2k+3)(3k+1)/(k+3)``.
+
+    The implementation is imported from the canonical BP engine.  It has a
+    pole at ``k=-3``.
+    """
+
+    return _bp_standard_central_charge(_as_fraction(k))
 
 
 def bp_koszul_conductor(k: Scalar) -> Fraction:
-    """Return K_BP(k) = c(k) + c(-k - 6)."""
-    level = _as_fraction(k)
-    return bp_central_charge(level) + bp_central_charge(-level - 6)
+    r"""Return the standard scalar companion sum ``c(k)+c(-k-6)=50``.
+
+    Algebra-level Verdier--Koszul interpretation carries the separate
+    subregular DS/bar transport hypothesis; this function computes the scalar
+    rational identity.
+    """
+
+    return _bp_standard_conductor(_as_fraction(k))
+
+
+def bp_kappa(k: Scalar) -> Fraction:
+    r"""Fail loudly while the BP genus-one characteristic remains open."""
+
+    return _bp_standard_kappa(_as_fraction(k))
+
+
+def bp_kappa_conductor(k: Scalar) -> Fraction:
+    r"""Fail loudly while the BP companion characteristic remains open."""
+
+    return _bp_standard_kappa_sum(_as_fraction(k))
+
+
+def bp_reciprocal_weight_diagnostic() -> Fraction:
+    r"""Return the all-even reciprocal-weight diagnostic ``17/6``.
+
+    This number records the source-correct parity calculation.  Its role is
+    diagnostic; the genus-one curvature computation determines ``kappa_BP``.
+    """
+
+    return _bp_reciprocal_weight_diagnostic()
+
+
+def bp_kappa_status_report() -> ResultDict:
+    """Return the active BP status and the retracted former proposal."""
+
+    return {
+        "kappa_value": None,
+        "kappa_complementarity_value": BP_KAPPA_COMPLEMENTARITY_EXACT,
+        "status": BP_KAPPA_STATUS.status,
+        "resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
+        "reciprocal_weight_diagnostic": bp_reciprocal_weight_diagnostic(),
+        "reciprocal_weight_status": "computed-parity-diagnostic-only",
+        "former_conditional_proposal": {
+            "value": Fraction(25, 3),
+            "status": "retracted-derivation",
+            "invalidated_derivation": BP_KAPPA_STATUS.invalidated_derivation,
+        },
+    }
+
+
+def bp_shifted_central_charge(k: Scalar) -> Fraction:
+    r"""Return the secondary shifted formula
+    ``2-24(k+1)^2/(k+3)``.
+    """
+
+    return _bp_shifted_central_charge(_as_fraction(k))
+
+
+def bp_shifted_conductor(k: Scalar) -> Fraction:
+    r"""Return the explicitly named shifted-formula conductor ``196``."""
+
+    return _bp_shifted_conductor(_as_fraction(k))
 
 
 def kappa_from_rmatrix(
@@ -201,8 +290,8 @@ def kappa_from_rmatrix(
     """Recover kappa from an r-matrix with an explicit level prefix.
 
     AP126/AP141 guard:
-      The bare form Omega / z is forbidden. The level prefix must remain
-      visible, and the k = 0 specialization must force vanishing.
+      The level prefix is part of the input, and the ``k=0`` specialization
+      vanishes.
     """
     if level_prefix is None:
         raise ValueError(
@@ -304,12 +393,12 @@ def _make_result(
 def verify_C01() -> ResultDict:
     """C01. Canonical formula: kappa(Heis_k) = k.
 
-    Anti-pattern guard:
-      AP1: do not import the Virasoro factor 1/2 into Heisenberg.
-      AP126/AP141: any Heisenberg r-matrix must keep the level prefix.
+    Convention guard:
+      AP1: the Heisenberg row has coefficient ``1``.
+      AP126/AP141: the Heisenberg r-matrix retains its level prefix.
 
     Citation:
-      True Formula Census Wave 12-2 C1 and landscape_census.tex.
+      ``landscape_census.tex``, Heisenberg census row.
     """
     expected = {
         "k=0": Fraction(0),
@@ -327,12 +416,12 @@ def verify_C01() -> ResultDict:
 def verify_C02() -> ResultDict:
     """C02. Canonical formula: kappa(Vir_c) = c / 2.
 
-    Anti-pattern guard:
-      AP1: Virasoro is the unique standard family with kappa = c / 2.
-      AP24: the Virasoro complementarity sum is 13, not 0.
+    Convention guard:
+      AP1: the Virasoro row uses the factor ``1/2``.
+      AP24: its displayed scalar companion sum is ``13``.
 
     Citation:
-      True Formula Census Wave 12-2 C2 and landscape_census.tex.
+      ``landscape_census.tex``, Virasoro census row.
     """
     expected = {
         "c=0": Fraction(0),
@@ -350,12 +439,12 @@ def verify_C02() -> ResultDict:
 def verify_C03() -> ResultDict:
     """C03. Canonical formula: kappa(V_k(g)) = dim(g)(k + h^vee)/(2 h^vee).
 
-    Anti-pattern guard:
-      AP1: the Sugawara shift +h^vee must remain.
-      AP126/AP141: the affine r-matrix keeps its explicit level prefix.
+    Convention guard:
+      AP1: the affine row includes the Sugawara shift ``+h^vee``.
+      AP126/AP141: the affine r-matrix retains its level prefix.
 
     Citation:
-      True Formula Census Wave 12-2 C3 and landscape_census.tex.
+      ``landscape_census.tex``, affine Kac--Moody census rows.
     """
     expected = {
         "sl_2@k=1": Fraction(9, 4),
@@ -385,12 +474,12 @@ def verify_C03() -> ResultDict:
 def verify_C04() -> ResultDict:
     """C04. Canonical formula: kappa(W_N) = c * (H_N - 1).
 
-    Anti-pattern guard:
-      AP136: use H_N - 1, not H_{N-1}.
-      AP116: substitute N = 2 to recover the Virasoro boundary value c / 2.
+    Convention guard:
+      AP136: the coefficient is ``H_N-1``.
+      AP116: ``N=2`` recovers the Virasoro boundary value ``c/2``.
 
     Citation:
-      True Formula Census Wave 12-2 C4 and C19; landscape_census.tex.
+      ``landscape_census.tex``, principal ``W_N`` census rows.
     """
     expected = {
         "W_3(c=1)": Fraction(5, 6),
@@ -408,12 +497,11 @@ def verify_C04() -> ResultDict:
 def verify_C05() -> ResultDict:
     """C05. Canonical formula: c_bc(lambda) = 1 - 3 * (2 lambda - 1)^2.
 
-    Anti-pattern guard:
-      AP129: reciprocal or sign swaps fail at lambda = 2.
-      The bosonic string ghost check must return c_bc(2) = -26.
+    Normalization checks:
+      The value at ``lambda=2`` is ``c_bc(2)=-26``.
 
     Citation:
-      True Formula Census Wave 12-2 C5 and landscape_census.tex.
+      ``landscape_census.tex``, ``bc`` census row.
     """
     expected = {
         "lambda=1/2": Fraction(1),
@@ -429,12 +517,12 @@ def verify_C05() -> ResultDict:
 def verify_C06() -> ResultDict:
     """C06. Canonical formula: c_bg(lambda) = 2 * (6 lambda^2 - 6 lambda + 1).
 
-    Anti-pattern guard:
-      AP137: beta-gamma must cancel the bc value at the same lambda.
-      The superghost check must return c_bg(3/2) = 11.
+    Normalization checks:
+      The same-weight beta--gamma and ``bc`` values cancel, and
+      ``c_bg(3/2)=11``.
 
     Citation:
-      True Formula Census Wave 12-2 C6 and C7.
+      ``landscape_census.tex``, beta--gamma census row.
     """
     expected = {
         "lambda=1/2": Fraction(-1),
@@ -452,12 +540,12 @@ def verify_C06() -> ResultDict:
 def verify_C07() -> ResultDict:
     """C07. Canonical data: the E_8 fundamental dimensions form a fixed set.
 
-    Anti-pattern guard:
-      Wave 10-8 / AP-style memory pollution inserted 779247, which is not
-      a fundamental E_8 dimension.
+    Verification route:
+      Reflection closure produces the 120 positive roots, and the Weyl
+      dimension formula computes all eight entries independently.
 
     Citation:
-      True Formula Census Wave 12-2 C16; Bourbaki tables; local E_8 engines.
+      Weyl dimension formula evaluated below; local exceptional-data engine.
     """
     expected = E8_FUNDAMENTAL_DIMENSIONS
     computed = compute_e8_fundamental_dimensions()
@@ -469,12 +557,12 @@ def verify_C07() -> ResultDict:
 def verify_C08() -> ResultDict:
     """C08. Canonical formula: H_N = sum_{j=1}^N 1 / j exactly.
 
-    Anti-pattern guard:
-      AP116: the upper index is N, not N - 1.
-      AP136: H_{N-1} is not H_N - 1.
+    Indexing checks:
+      The upper index is ``N``; ``H_N-1`` and ``H_{N-1}`` are kept as
+      distinct expressions.
 
     Citation:
-      True Formula Census Wave 12-2 C19; CLAUDE.md AP116/AP136.
+      Exact harmonic-number definition in ``landscape_census.tex``.
     """
     expected = {
         "H_1": Fraction(1),
@@ -500,12 +588,12 @@ def verify_C08() -> ResultDict:
 def verify_C09() -> ResultDict:
     """C09. Canonical complementarity sums are family-specific.
 
-    Anti-pattern guard:
-      AP24: KM and free families sum to 0, while Virasoro sums to 13.
-      AP137: bc / beta-gamma cancellation is a same-weight free-field check.
+    Family checks:
+      The displayed affine and free-field sums are ``0``; the Virasoro sum
+      is ``13``.  The ``bc``/beta--gamma pair is evaluated at equal weight.
 
     Citation:
-      True Formula Census Wave 12-2 C7, C8, C18; landscape_census.tex.
+      ``landscape_census.tex``, family complementarity rows.
     """
     expected = {
         "Heisenberg(k=3)": Fraction(0),
@@ -531,24 +619,80 @@ def verify_C09() -> ResultDict:
 
 
 def verify_C10() -> ResultDict:
-    """C10. Canonical value: K_BP = 196 for Bershadsky-Polyakov W_3^(2).
+    r"""C10. Separate exact BP data from the open genus-one lane.
 
-    Anti-pattern guard:
-      AP140: do not confuse the global Koszul conductor with the local
-      ghost constant 2.
+    In the standard FKR census lane,
 
-    Citation:
-      True Formula Census Wave 12-2 C20 and landscape_census.tex.
+    ``c_BP(k)=-(2k+3)(3k+1)/(k+3)``,
+    ``c_BP(k)+c_BP(-k-6)=50``.
+
+    The generators ``J,G^+,G^-,T`` are even, so the reciprocal-weight
+    diagnostic is ``1+2/3+2/3+1/2=17/6``.  This diagnostic has its own
+    type.  The BP modular characteristic and its companion sum remain open
+    pending the full genus-one curvature computation.
+
+    The secondary shifted lane
+    ``c_shifted(k)=2-24(k+1)^2/(k+3)`` has conductor ``196``.
     """
+    kappa_status = bp_kappa_status_report()
     expected = {
-        "k=0": Fraction(196),
-        "k=-3": Fraction(196),
+        "standard:k=0": Fraction(50),
+        "standard:k=1": Fraction(50),
+        "standard:k=-1/2": Fraction(50),
+        "all-generators-even": True,
+        "reciprocal-weight-diagnostic": Fraction(17, 6),
+        "kappa-value": None,
+        "kappa-sum": None,
+        "kappa-status": "open-genus-one-computation",
+        "shifted-secondary:k=0": Fraction(196),
     }
     computed = {
-        "k=0": bp_koszul_conductor(0),
-        "k=-3": bp_koszul_conductor(-3),
+        "standard:k=0": bp_koszul_conductor(0),
+        "standard:k=1": bp_koszul_conductor(1),
+        "standard:k=-1/2": bp_koszul_conductor(Fraction(-1, 2)),
+        "all-generators-even": all(
+            parity == 0 for _weight, parity in BP_GENERATORS.values()
+        ),
+        "reciprocal-weight-diagnostic": bp_reciprocal_weight_diagnostic(),
+        "kappa-value": kappa_status["kappa_value"],
+        "kappa-sum": kappa_status["kappa_complementarity_value"],
+        "kappa-status": kappa_status["status"],
+        "shifted-secondary:k=0": bp_shifted_conductor(0),
     }
-    return _make_result("C10", "Bershadsky-Polyakov conductor", expected, computed)
+    result = _make_result(
+        "C10", "Bershadsky-Polyakov convention separation", expected, computed
+    )
+    result["standard_convention"] = {
+        "name": STANDARD_BP_CONVENTION.name,
+        "status": STANDARD_BP_CONVENTION.status,
+        "conductor": K_BP_EXACT,
+        "kappa_sum": BP_KAPPA_COMPLEMENTARITY_EXACT,
+        "kappa_status": BP_KAPPA_STATUS.status,
+    }
+    result["parity_diagnostic"] = {
+        "strong_generators": tuple(
+            (name, parity) for name, (_weight, parity) in BP_GENERATORS.items()
+        ),
+        "reciprocal_weight_sum": bp_reciprocal_weight_diagnostic(),
+        "status": "computed-parity-diagnostic-only",
+    }
+    result["shifted_convention"] = {
+        "name": SHIFTED_BP_CONVENTION.name,
+        "status": SHIFTED_BP_CONVENTION.status,
+        "conductor": K_BP_SHIFTED_EXACT,
+    }
+    result["former_conditional_proposal"] = kappa_status[
+        "former_conditional_proposal"
+    ]
+    result["passed"] = bool(result["passed"]) and (
+        STANDARD_BP_CONVENTION.status == "proved-primary-source"
+        and SHIFTED_BP_CONVENTION.status == "computed-secondary"
+        and all(parity == 0 for _weight, parity in BP_GENERATORS.values())
+        and bp_reciprocal_weight_diagnostic() == Fraction(17, 6)
+        and VARRHO_BP is None
+        and BP_KAPPA_COMPLEMENTARITY_EXACT is None
+    )
+    return result
 
 
 CHECK_FUNCTIONS = (

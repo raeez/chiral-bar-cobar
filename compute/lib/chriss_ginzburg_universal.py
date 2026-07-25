@@ -21,7 +21,7 @@ THE PROJECTION TABLE:
            ->  d_B         (bar differential)
            ->  <.,. >      (Verdier pairing)
            ->  kappa+kappa! (complementarity)
-           ->  P_A(t)      (Hochschild polynomial)
+           ->  H_H(A;S)    (family-indexed Hochschild support record)
            ->  {F_n}       (Borcherds operations)
            ->  {L(s,f)}    (L-function periods)
            ->  D_A(u)      (Euler-Koszul defect)
@@ -584,80 +584,103 @@ class UniversalMCElement:
         else:
             return Fraction(0)
 
-    def pi_hochschild_polynomial(self) -> Dict[str, Any]:
-        """pi_Hoch: Hochschild polynomial/data from H*(Def_cyc, d_Theta).
+    def pi_hochschild_polynomial(
+        self,
+        *,
+        bounded_to_chart: Optional[Any] = None,
+        family_datum: Optional[Any] = None,
+        perfect_pairing: Optional[Any] = None,
+    ) -> Dict[str, Any]:
+        """Return the family-indexed Theorem-H record seen by this engine.
 
-        Under Theorem H every Koszul chiral algebra lives in the
-        bounded Koszul regime with amplitude [0, 2] and dim <= 4.
-        P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2.
+        The Maurer--Cartan element determines a candidate cyclic deformation
+        complex.  A completed curve-chart cohomology vector enters through a
+        named bounded-to-chart quasi-isomorphism or a datum ``H_H(A;S)``.
+        Bounded BDSK values remain in their bounded vertex ambient.  A perfect
+        degree-``d`` pairing is carried as a separate duality input.
 
-        AP94 rectification: the prior "W-algebra polynomial ring
-        regime" (ChirHoch*(W^k) = C[theta_1, ..., theta_r], infinite
-        polynomial growth) was REFUTED by Theorem H and has been
-        removed; Virasoro and W_3 are now bounded 3-term polynomials.
-
-        Returns dict with 'regime', 'polynomial', 'generators',
-        'betti_numbers'.
+        The historical method name remains as a compatibility surface.
+        ``polynomial`` and ``betti_numbers`` refer to the completed curve
+        chart and therefore remain ``None`` while chart transport is open.
         """
-        if self.family in ("heisenberg", "lattice"):
-            return {
-                "regime": "bounded_koszul",
-                "polynomial": [1, self.n_strong_gen, 1],
-                "betti_numbers": {0: 1, 1: self.n_strong_gen, 2: 1},
-                "generators": self.gen_weights,
-                "euler_char": 2 - self.n_strong_gen,
-            }
+        from compute.lib.theorem_h_hochschild_polynomial import cohomology_record
+
+        if self.family == "heisenberg":
+            family, params = "heisenberg", {}
+        elif self.family == "lattice":
+            family, params = "lattice", {"rank": self.n_strong_gen}
         elif self.family in ("affine_sl2", "affine"):
-            return {
-                "regime": "bounded_koszul",
-                "polynomial": [1, self.n_strong_gen, 1],
-                "betti_numbers": {0: 1, 1: self.n_strong_gen, 2: 1},
-                "generators": self.gen_weights,
-                "euler_char": 2 - self.n_strong_gen,
-            }
+            family, params = "affine_sl2", {}
         elif self.family == "betagamma":
-            return {
-                "regime": "bounded_koszul",
-                "polynomial": [1, 2, 1],
-                "betti_numbers": {0: 1, 1: 2, 2: 1},
-                "generators": [1, 0],
-                "euler_char": 0,
-            }
+            family, params = "betagamma", {}
         elif self.family == "virasoro":
-            # Theorem H bounded: P(t) = 1 + t + t^2, total dim = 3.
-            # ChirHoch^0 = Z(Vir_c) = 1, ChirHoch^1 = 1 (c-deformation),
-            # ChirHoch^2 = Z(Vir_c^!) = 1.  The prior polynomial-ring
-            # model (ChirHoch^*(Vir_c) = C[Theta], unbounded) is
-            # REFUTED per AP94/AP95: that is continuous Lie cohomology
-            # of the Witt algebra (Gelfand-Fuchs), a different functor.
-            return {
-                "regime": "bounded_koszul",
-                "polynomial": [1, 1, 1],
-                "betti_numbers": {0: 1, 1: 1, 2: 1},
-                "generators": [2],
-                "strong_gen_weights": [2],
-                "euler_char": 1,
-            }
+            family, params = "virasoro", {}
         elif self.family == "w3":
-            # Theorem H bounded: P(t) = 1 + t + t^2, total dim = 3.
-            # ChirHoch^0 = Z(W_3) = 1, ChirHoch^1 = 1 (c-deformation),
-            # ChirHoch^2 = Z(W_3^!) = 1.  The prior polynomial-ring
-            # model (C[Theta_1, Theta_2], unbounded) is REFUTED per
-            # AP94/AP95 (Gelfand-Fuchs continuous Lie cohomology).
-            return {
-                "regime": "bounded_koszul",
-                "polynomial": [1, 1, 1],
-                "betti_numbers": {0: 1, 1: 1, 2: 1},
-                "generators": [2, 3],
-                "strong_gen_weights": [2, 3],
-                "euler_char": 1,
-            }
+            family, params = "w3", {}
         else:
             return {
-                "regime": "unknown",
+                "family_key": self.family,
+                "ambient": "completed_curve_chart",
+                "regime": "family_indexed_support",
+                "status": "open-family-support-datum",
+                "support": None,
+                "dimensions": None,
                 "polynomial": None,
+                "betti_numbers": None,
+                "bounded_benchmark": None,
+                "affine_conjectural_bound": None,
+                "perfect_pairing_status": None,
                 "generators": self.gen_weights,
             }
+
+        record = cohomology_record(
+            family,
+            comparison=bounded_to_chart,
+            family_datum=family_datum,
+            perfect_pairing=perfect_pairing,
+            **params,
+        )
+        bounded = None
+        if record.bounded.dimensions is not None:
+            bounded = {
+                "ambient": record.bounded.ambient.value,
+                "support": record.bounded.support,
+                "dimensions": dict(record.bounded.dimensions),
+                "vector": list(record.bounded.vector or ()),
+                "status": record.bounded.status,
+                "source": record.bounded.source,
+            }
+        affine_bound = None
+        if record.bounded_affine_bound is not None:
+            affine_bound = {
+                "ambient": record.bounded_affine_bound.ambient.value,
+                "formula": "dim Lambda^n(g) + dim Lambda^(n+1)(g)",
+                "lie_dimension": record.bounded_affine_bound.lie_dimension,
+                "status": record.bounded_affine_bound.status,
+                "source": record.bounded_affine_bound.source,
+            }
+        dimensions = (
+            None if record.chart.dimensions is None else dict(record.chart.dimensions)
+        )
+        return {
+            "family_key": record.key,
+            "ambient": record.chart.ambient.value,
+            "regime": record.regime,
+            "status": record.chart.status,
+            "support": record.chart.support,
+            "dimensions": dimensions,
+            "cohomology_vector": record.poincare,
+            "polynomial": record.poincare,
+            "betti_numbers": dimensions,
+            "bounded_benchmark": bounded,
+            "affine_conjectural_bound": affine_bound,
+            "perfect_pairing_status": (
+                None
+                if record.perfect_pairing is None
+                else record.perfect_pairing.perfectness_status
+            ),
+            "generators": list(record.generator_weights),
+        }
 
     def pi_borcherds_obstruction(self, n: int) -> Fraction:
         """pi_Borcherds: F_n = o_n (shadow obstruction class at arity n).
@@ -1026,21 +1049,15 @@ class UniversalMCElement:
             return True
 
     def verify_hochschild_is_projection(self) -> bool:
-        """Verify theorem_h_hochschild_polynomial.py results are projections of Theta_A.
-
-        The standalone module classifies families into quadratic/W-algebra regimes.
-        The projection pi_Hoch must give the same regime and polynomial data.
-        """
+        """Check that the projection preserves the typed chart ambient."""
         try:
-            from compute.lib.theorem_h_hochschild_polynomial import FAMILY_DATA
-            family_key = self.family
-            if family_key == "affine":
-                family_key = "affine_sl2"
-            if family_key not in FAMILY_DATA:
-                return True
-            data = FAMILY_DATA[family_key]
             hoch = self.pi_hochschild_polynomial()
-            return hoch["regime"] == data["regime"]
+            return (
+                hoch["ambient"] == "completed_curve_chart"
+                and hoch["regime"] == "family_indexed_support"
+                and hoch["polynomial"] is None
+                and hoch["betti_numbers"] is None
+            )
         except ImportError:
             return True
 
@@ -1181,8 +1198,8 @@ class UniversalMCElement:
             },
             {
                 "projection": "pi_hochschild",
-                "formula": "H*(Def_cyc, d_Theta)",
-                "value": self.pi_hochschild_polynomial().get("regime", "unknown"),
+                "formula": "H_H(A;S) gives Supp ChirHoch(A) subset S",
+                "value": self.pi_hochschild_polynomial().get("status", "unknown"),
                 "verified": verifications.get("hochschild", False),
                 "source_module": "theorem_h_hochschild_polynomial",
             },
@@ -1335,25 +1352,25 @@ class UniversalMCElement:
         }
 
     def theorem_h_from_mc(self) -> Dict[str, Any]:
-        """Theorem H (Hochschild polynomial) = H*(Def_cyc, d_Theta).
-
-        The chiral Hochschild cohomology is the cohomology of the
-        cyclic deformation complex twisted by Theta_A.
-        """
+        """Return the family-indexed Theorem-H obligation at level three."""
         hoch = self.pi_hochschild_polynomial()
         return {
             "theorem": "H",
-            "statement": "ChirHoch*(A) polynomial, Koszul-functorial",
-            "mc_source": "H*(Def_cyc(A), d_Theta) = ChirHoch*(A)",
-            "projection": "pi_hochschild",
+            "statement": "H_H(A;S) implies Supp ChirHoch(A) subset S",
+            "mc_source": "candidate cyclic deformation complex twisted by Theta_A",
+            "projection": "family-indexed completed-chart record",
             "regime": hoch.get("regime", "unknown"),
-            "status": "proved",
+            "ambient": hoch.get("ambient"),
+            "support": hoch.get("support"),
+            "status": hoch.get("status", "open-family-support-datum"),
         }
 
     def five_theorems_from_mc(self) -> Dict[str, Dict[str, Any]]:
-        """ALL FIVE main theorems as MC consequences.
+        """Return the five theorem surfaces with their individual statuses.
 
-        Every theorem is a projection of the single MC element Theta_A.
+        The Maurer--Cartan element supplies common deformation data.  Each
+        theorem surface retains its own reconstruction and comparison
+        hypotheses; in particular, Theorem H retains ``H_H(A;S)``.
         """
         return {
             "A": self.theorem_a_from_mc(),
@@ -1455,6 +1472,10 @@ def chriss_ginzburg_master_table() -> List[Dict[str, Any]]:
     master = []
     for name, theta in elements.items():
         verified, total = theta.projection_count()
+        theorem_statuses = {
+            label: surface["status"]
+            for label, surface in theta.five_theorems_from_mc().items()
+        }
         master.append({
             "family": name,
             "kappa": theta.kappa_value,
@@ -1464,9 +1485,9 @@ def chriss_ginzburg_master_table() -> List[Dict[str, Any]]:
             "total_projections": total,
             "all_verified": verified == total,
             "mc_equation_holds": all(theta.verify_mc_equation(max_arity=8).values()),
-            "five_theorems": all(
-                t["status"] == "proved"
-                for t in theta.five_theorems_from_mc().values()
+            "five_theorem_surfaces_present": (
+                set(theorem_statuses) == {"A", "B", "C", "D", "H"}
             ),
+            "five_theorem_statuses": theorem_statuses,
         })
     return master

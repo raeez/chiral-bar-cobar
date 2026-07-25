@@ -5,10 +5,13 @@ from __future__ import annotations
 from fractions import Fraction
 from itertools import combinations, permutations
 from math import factorial
+from pathlib import Path
 
 from sympy import Matrix, Rational, kronecker_product, simplify, symbols
 
 from compute.lib.independent_verification import independent_verification
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 # ---------------------------------------------------------------------------
@@ -324,23 +327,40 @@ def test_chiral_hochschild_differential_square_zero_in_finite_model():
         "FM collision-depth filtration proof",
     ],
     verified_against=[
-        "integer shift identity (p+2)-p=2 for p=0..20",
-        "curve D-module Ext amplitude [0,2] as a dimension-one check",
-        "first-quadrant spectral sequence degree bookkeeping",
+        "named Verdier--Kashiwara shift-normalization package",
+        "no bare integer shift identity used as proof",
+        "curve D-module Ext amplitude [0,2] retained as the dimension-one endpoint",
     ],
     disjoint_rationale=(
-        "The lemma derives the shift through FM strata and Verdier duality. "
-        "The test checks only the independent integer degree bookkeeping and "
-        "the curve-amplitude bound."
+        "The lemma derives the shift through FM strata, Verdier duality, "
+        "Kashiwara offsets, and totalization. The test blocks the former "
+        "integer shortcut and checks that the named normalization package is "
+        "present at both the theorem and higher-genus definition surfaces."
     ),
 )
-def test_hochschild_shift_is_uniform_two():
-    for p in range(21):
-        geometric_shift = p + 2
-        totalization_shift = -p
-        assert geometric_shift + totalization_shift == 2
-        surviving_total_degrees = {r + 2 for r in (0, 1, 2)}
-        assert surviving_total_degrees == {2, 3, 4}
+def test_hochschild_shift_requires_named_normalization():
+    chiral = (ROOT / "chapters/theory/chiral_hochschild_koszul.tex").read_text()
+    higher = (ROOT / "chapters/theory/higher_genus_foundations.tex").read_text()
+    theorem_window = chiral[
+        chiral.find(r"\label{def:theorem-h-shift-normalization-package}"):
+        chiral.find(r"\label{prop:fm-tower-collapse}")
+    ]
+    higher_window = higher[
+        higher.find(r"\label{def:bigraded-hochschild}"):
+        higher.find(r"\section{Higher-genus configuration spaces}")
+    ]
+
+    assert r"\label{def:theorem-h-shift-normalization-package}" in theorem_window
+    assert "Kashiwara offset" in theorem_window
+    assert "fibre form-degree contribution" in theorem_window
+    assert "totalization regrading" in theorem_window
+    assert "not a formal\ninteger identity" in theorem_window
+    assert r"\Ext^r_{\cD_X}\bigl((\cA^!)_p,\omega_X\bigr)[2]" in theorem_window
+    assert "Verdier--Kashiwara degree\nnormalization package" in higher_window
+    assert "not by itself\na proof of the uniform Hochschild duality shift" in higher_window
+    assert "not the bare slogan" in higher_window
+    assert "(p+2)-p=2" not in chiral.replace(r"``\((p+2)-p=2\)''", "")
+    assert "diagonal $p = q$" not in higher_window
 
 
 @independent_verification(

@@ -44,11 +44,17 @@ from compute.lib.theorem_ds_koszul_hook_engine import (
     verify_ds_kd_hook,
 )
 from compute.lib.hook_type_w_duality import (
+    ClaimPacket,
+    ClaimStatus,
     anomaly_ratio_from_partition,
     ds_kappa_from_affine,
     hook_dual_level_sl_n,
     krw_central_charge,
     w_algebra_generator_data,
+)
+from compute.lib.non_principal_w_bar_engine import (
+    bershadsky_polyakov_central_charge,
+    bershadsky_polyakov_shifted_central_charge,
 )
 from compute.lib.nonprincipal_ds_orbits import (
     hook_partition,
@@ -57,6 +63,15 @@ from compute.lib.nonprincipal_ds_orbits import (
 
 
 k = Symbol('k')
+
+
+def _assert_unresolved(packet: ClaimPacket, status: ClaimStatus) -> None:
+    """Assert a typed comparison boundary."""
+
+    assert isinstance(packet, ClaimPacket)
+    assert packet.status is status
+    assert packet.value is None
+    assert packet.hypotheses
 
 
 # ===================================================================
@@ -69,31 +84,31 @@ class TestPBWFiltration:
         """sl_3, f=(2,1): Bershadsky-Polyakov is Koszul."""
         data = pbw_filtration_analysis((2, 1))
         assert data.N == 3
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_sl4_31_koszul(self):
         """sl_4, f=(3,1): subregular hook is Koszul."""
         data = pbw_filtration_analysis((3, 1))
         assert data.N == 4
-        assert data.e2_collapse is True
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.e2_collapse, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_sl4_211_koszul(self):
         """sl_4, f=(2,1,1): minimal hook is Koszul."""
         data = pbw_filtration_analysis((2, 1, 1))
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_sl5_41_koszul(self):
         data = pbw_filtration_analysis((4, 1))
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_sl5_2111_koszul(self):
         data = pbw_filtration_analysis((2, 1, 1, 1))
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_sl6_51_koszul(self):
         data = pbw_filtration_analysis((5, 1))
-        assert data.w_is_koszul is True
+        _assert_unresolved(data.w_is_koszul, ClaimStatus.CONDITIONAL)
 
     def test_n_plus_dim_sl3_21(self):
         """n_+ for sl_3, (2,1): grade 1 (dim 1) + grade 1/2 (dim 2) = 3."""
@@ -108,18 +123,26 @@ class TestPBWFiltration:
     def test_brst_ss_page_principal(self):
         """Principal nilpotent: SS collapses at E_2."""
         result = brst_spectral_sequence_page((3,))
-        assert result["collapse_page"] == 2
+        assert result["candidate_collapse_page"] == 2
+        _assert_unresolved(result["collapse"], ClaimStatus.CONDITIONAL)
         assert result["g_0_reductive"] is True
 
     def test_brst_ss_page_hook(self):
         """Hook nilpotent: SS collapses at E_1 or E_2."""
         result = brst_spectral_sequence_page((2, 1))
-        assert result["collapse_page"] <= 2
+        assert result["candidate_collapse_page"] <= 2
+        _assert_unresolved(result["collapse"], ClaimStatus.CONDITIONAL)
 
     def test_both_sides_koszul_sl4(self):
         """Both W_k(3,1) and W_{k'}(2,1,1) are Koszul."""
-        assert pbw_filtration_analysis((3, 1)).w_is_koszul is True
-        assert pbw_filtration_analysis((2, 1, 1)).w_is_koszul is True
+        _assert_unresolved(
+            pbw_filtration_analysis((3, 1)).w_is_koszul,
+            ClaimStatus.CONDITIONAL,
+        )
+        _assert_unresolved(
+            pbw_filtration_analysis((2, 1, 1)).w_is_koszul,
+            ClaimStatus.CONDITIONAL,
+        )
 
 
 # ===================================================================
@@ -129,14 +152,16 @@ class TestPBWFiltration:
 class TestFehilyCLNS:
 
     def test_affine_kd_sl3(self):
-        """Affine KD: kappa(V_k(sl_3)) + kappa(V_{k'}(sl_3)) = 0."""
+        """Affine kappa cancellation is exact; affine KD remains typed."""
         data = fehily_clns_duality((2, 1))
-        assert data.affine_kd_holds is True
+        assert data.affine_kappa_sum_zero is True
+        _assert_unresolved(data.affine_kd, ClaimStatus.CONDITIONAL)
 
     def test_affine_kd_sl4(self):
         """Affine KD: kappa(V_k(sl_4)) + kappa(V_{k'}(sl_4)) = 0."""
         data = fehily_clns_duality((3, 1))
-        assert data.affine_kd_holds is True
+        assert data.affine_kappa_sum_zero is True
+        _assert_unresolved(data.affine_kd, ClaimStatus.CONDITIONAL)
 
     def test_c_sum_constant_self_transpose(self):
         """c-sum is k-independent for SELF-TRANSPOSE (2,1) in sl_3."""
@@ -177,35 +202,50 @@ class TestFehilyCLNS:
             pass
 
     def test_diagram_commutes_sl3(self):
-        """Full diagram for sl_3 (2,1)."""
+        """The source-domain reduction-by-stages theorem stays conditional."""
         data = fehily_clns_duality((2, 1))
-        assert data.diagram_commutes is True
+        _assert_unresolved(data.fehily_embedding, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.clns_edge_comparison, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(
+            data.genra_juillard_reduction_by_stages,
+            ClaimStatus.CONDITIONAL,
+        )
+        _assert_unresolved(data.diagram_commutes, ClaimStatus.CONDITIONAL)
 
     def test_diagram_commutes_sl4_31(self):
         """Full diagram for sl_4 (3,1)."""
         data = fehily_clns_duality((3, 1))
-        assert data.diagram_commutes is True
+        _assert_unresolved(data.diagram_commutes, ClaimStatus.CONDITIONAL)
 
     def test_rho_match_self_transpose(self):
         """Self-transpose (2,1) in sl_3: anomaly ratios match."""
         data = fehily_clns_duality((2, 1))
-        assert data.rho_match is True
-        assert data.source_rho == Rational(1, 6)
+        _assert_unresolved(data.rho_match, ClaimStatus.OPEN)
+        _assert_unresolved(data.source_rho, ClaimStatus.OPEN)
+        _assert_unresolved(data.dual_rho, ClaimStatus.OPEN)
+        assert data.partition == data.transpose
 
     def test_rho_differ_non_self_transpose(self):
         """Non-self-transpose (3,1) in sl_4: anomaly ratios DIFFER."""
         data = fehily_clns_duality((3, 1))
-        assert data.rho_match is False
-        assert data.source_rho != data.dual_rho
+        _assert_unresolved(data.rho_match, ClaimStatus.OPEN)
+        assert data.partition != data.transpose
 
     def test_c_sum_value_sl3_21(self):
-        """c-sum for self-transpose (2,1) in sl_3 = 196 (= K_BP).
-
-        # VERIFIED: [DC] c_BP(k)+c_BP(-k-6) = 196 from per-root-pair KRW
-        """
+        """Standard BP reflection gives 50; the shifted lane gives 196."""
         data = fehily_clns_duality((2, 1))
         assert data.c_sum_k_independent is True
-        assert simplify(data.c_sum_value - 196) == 0
+        assert simplify(data.c_sum_value - 50) == 0
+        assert simplify(
+            bershadsky_polyakov_central_charge(k)
+            + bershadsky_polyakov_central_charge(-k - 6)
+            - 50
+        ) == 0
+        assert simplify(
+            bershadsky_polyakov_shifted_central_charge(k)
+            + bershadsky_polyakov_shifted_central_charge(-k - 6)
+            - 196
+        ) == 0
 
 
 # ===================================================================
@@ -215,40 +255,47 @@ class TestFehilyCLNS:
 class TestTransportPropagation:
 
     def test_principal_proved_sl3(self):
-        """DS-KD for principal of sl_3 is proved."""
+        """The principal same-orbit input retains its completion hypotheses."""
         data = transport_propagation_analysis((2, 1))
-        assert data.principal_ds_kd_proved is True
+        _assert_unresolved(data.principal_ds_kd, ClaimStatus.CONDITIONAL)
+        assert "(1, 1, 1)" in data.principal_ds_kd.evidence[0]
 
     def test_principal_proved_sl4(self):
         data = transport_propagation_analysis((3, 1))
-        assert data.principal_ds_kd_proved is True
+        _assert_unresolved(data.principal_ds_kd, ClaimStatus.CONDITIONAL)
 
     def test_hasse_distance_sl3(self):
         """(2,1) is distance 1 from principal (3) in sl_3."""
         data = transport_propagation_analysis((2, 1))
-        assert data.hasse_distance == 1
+        assert data.hook_spine_count == 1
+        assert data.path_available
 
     def test_hasse_distance_sl4_31(self):
         """(3,1) is distance 1 from principal (4)."""
         data = transport_propagation_analysis((3, 1))
-        assert data.hasse_distance == 1
+        assert data.hook_spine_count == 1
+        assert data.path_available
 
     def test_hasse_distance_sl4_211(self):
         """(2,1,1) is distance 2 from principal (4)."""
         data = transport_propagation_analysis((2, 1, 1))
-        assert data.hasse_distance == 2
+        assert data.hook_spine_count == 2
+        assert data.path_available
 
     def test_propagation_sl3(self):
         data = transport_propagation_analysis((2, 1))
-        assert data.propagation_holds is True
+        _assert_unresolved(data.reduction_by_stages, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.propagation, ClaimStatus.OPEN)
 
     def test_propagation_sl4_31(self):
         data = transport_propagation_analysis((3, 1))
-        assert data.propagation_holds is True
+        _assert_unresolved(data.reduction_by_stages, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.propagation, ClaimStatus.OPEN)
 
     def test_propagation_sl5_41(self):
         data = transport_propagation_analysis((4, 1))
-        assert data.propagation_holds is True
+        _assert_unresolved(data.reduction_by_stages, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(data.propagation, ClaimStatus.OPEN)
 
 
 # ===================================================================
@@ -258,44 +305,46 @@ class TestTransportPropagation:
 class TestShadowTower:
 
     def test_self_transpose_kappa_sum_sl3(self):
-        """Self-transpose (2,1): kappa sum is k-independent."""
+        """Self-transpose combinatorics leaves the conductor claim open."""
         data = shadow_tower_comparison((2, 1))
         assert data.is_self_transpose is True
-        assert data.kappa_sum_k_independent is True
+        _assert_unresolved(data.kappa_sum, ClaimStatus.OPEN)
+        _assert_unresolved(data.kappa_sum_k_independent, ClaimStatus.OPEN)
 
     def test_non_self_transpose_kappa_sum_sl4(self):
         """Non-self-transpose (3,1): kappa sum is k-DEPENDENT (different rho)."""
         data = shadow_tower_comparison((3, 1))
         assert data.is_self_transpose is False
-        assert data.kappa_sum_k_independent is False
+        _assert_unresolved(data.kappa_sum, ClaimStatus.OPEN)
+        _assert_unresolved(data.kappa_sum_k_independent, ClaimStatus.OPEN)
 
     def test_structural_compatible_sl3(self):
         data = shadow_tower_comparison((2, 1))
-        assert data.structurally_compatible is True
+        _assert_unresolved(data.structurally_compatible, ClaimStatus.OPEN)
 
     def test_structural_compatible_sl4_31(self):
         data = shadow_tower_comparison((3, 1))
-        assert data.structurally_compatible is True
+        _assert_unresolved(data.structurally_compatible, ClaimStatus.OPEN)
 
     def test_structural_compatible_sl4_211(self):
         data = shadow_tower_comparison((2, 1, 1))
-        assert data.structurally_compatible is True
+        _assert_unresolved(data.structurally_compatible, ClaimStatus.OPEN)
 
     def test_structural_compatible_sl5(self):
         for lam in [(4, 1), (3, 1, 1), (2, 1, 1, 1)]:
             data = shadow_tower_comparison(lam)
-            assert data.structurally_compatible is True, f"Failed for {lam}"
+            _assert_unresolved(data.structurally_compatible, ClaimStatus.OPEN)
 
     def test_anomaly_ratios_recorded(self):
         data = shadow_tower_comparison((3, 1))
-        assert data.source_rho == Rational(17, 6)
-        assert data.dual_rho == Rational(11, 6)
+        _assert_unresolved(data.source_rho, ClaimStatus.OPEN)
+        _assert_unresolved(data.dual_rho, ClaimStatus.OPEN)
 
     def test_depth_classes(self):
-        """Shadow depth classes are computed for both sides."""
+        """Full shadow classes remain open beyond weight diagnostics."""
         data = shadow_tower_comparison((2, 1))
-        assert data.source_shadow_class in ("G", "L", "C", "M")
-        assert data.dual_shadow_class in ("G", "L", "C", "M")
+        _assert_unresolved(data.source_shadow_class, ClaimStatus.OPEN)
+        _assert_unresolved(data.dual_shadow_class, ClaimStatus.OPEN)
 
 
 # ===================================================================
@@ -306,18 +355,18 @@ class TestCrossMethod:
 
     def test_all_methods_sl3_21(self):
         result = verify_ds_kd_hook((2, 1))
-        assert result.all_methods_agree is True
-        assert result.ds_kd_commutes is True
+        _assert_unresolved(result.overall_verdict, ClaimStatus.OPEN)
+        _assert_unresolved(result.ds_kd_commutes, ClaimStatus.CONDITIONAL)
 
     def test_all_methods_sl4_31(self):
         result = verify_ds_kd_hook((3, 1))
-        assert result.all_methods_agree is True
-        assert result.ds_kd_commutes is True
+        _assert_unresolved(result.overall_verdict, ClaimStatus.OPEN)
+        _assert_unresolved(result.ds_kd_commutes, ClaimStatus.CONDITIONAL)
 
     def test_all_methods_sl4_211(self):
         result = verify_ds_kd_hook((2, 1, 1))
-        assert result.all_methods_agree is True
-        assert result.ds_kd_commutes is True
+        _assert_unresolved(result.overall_verdict, ClaimStatus.OPEN)
+        _assert_unresolved(result.ds_kd_commutes, ClaimStatus.CONDITIONAL)
 
     def test_is_hook(self):
         for lam in [(2, 1), (3, 1), (2, 1, 1), (4, 1)]:
@@ -339,10 +388,10 @@ class TestCrossMethod:
 
     def test_sl5_311_full(self):
         result = verify_ds_kd_hook((3, 1, 1))
-        assert result.pbw_source_koszul is True
-        assert result.pbw_dual_koszul is True
-        assert result.clns_diagram_commutes is True
-        assert result.transport_propagation_holds is True
+        _assert_unresolved(result.pbw_source_koszul, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(result.pbw_dual_koszul, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(result.clns_diagram_commutes, ClaimStatus.CONDITIONAL)
+        _assert_unresolved(result.transport_propagation, ClaimStatus.OPEN)
 
 
 # ===================================================================
@@ -387,14 +436,13 @@ class TestNumerical:
                 assert r["c_sum"] == first, f"c-sum varies at k={r['k']}"
 
     def test_self_transpose_kappa_constant_sl3(self):
-        """Self-transpose (2,1): kappa sum is constant numerically."""
+        """Numerical central charges coexist with typed modular packets."""
         results = numerical_self_transpose_kappa((2, 1))
-        if len(results) >= 2:
-            first = results[0]["kappa_sum"]
-            for r in results[1:]:
-                assert r["kappa_sum"] == first, (
-                    f"Kappa sum varies: {first} vs {r['kappa_sum']} at k={r['k']}"
-                )
+        for row in results:
+            _assert_unresolved(row["rho"], ClaimStatus.OPEN)
+            _assert_unresolved(row["kappa_source"], ClaimStatus.CONDITIONAL)
+            _assert_unresolved(row["kappa_dual"], ClaimStatus.CONDITIONAL)
+            _assert_unresolved(row["kappa_sum"], ClaimStatus.OPEN)
 
 
 # ===================================================================
@@ -409,11 +457,12 @@ class TestCatalog:
         assert len(catalog) > 0
         for entry in catalog:
             assert entry["is_hook"] is True
-            assert entry["pbw_source_koszul"] is True, f"N={entry['N']}, {entry['partition']}"
-            assert entry["pbw_dual_koszul"] is True, f"N={entry['N']}, {entry['partition']}"
-            assert entry["clns_holds"] is True, f"N={entry['N']}, {entry['partition']}"
-            assert entry["transport_holds"] is True, f"N={entry['N']}, {entry['partition']}"
-            assert entry["ds_kd_commutes"] is True, f"N={entry['N']}, {entry['partition']}"
+            _assert_unresolved(entry["pbw_source_koszul"], ClaimStatus.CONDITIONAL)
+            _assert_unresolved(entry["pbw_dual_koszul"], ClaimStatus.CONDITIONAL)
+            _assert_unresolved(entry["clns_holds"], ClaimStatus.CONDITIONAL)
+            assert entry["transport_status"] is ClaimStatus.OPEN
+            assert entry["ds_kd_status"] is ClaimStatus.CONDITIONAL
+            assert entry["ds_kd_hypotheses"]
 
     def test_catalog_count(self):
         """Catalog has correct number of hook partitions (excluding principal).
@@ -434,8 +483,14 @@ class TestCatalog:
                 assert len(sd) == 0, f"Self-dual hook for even N={N}"
 
     def test_anomaly_ratio_duality_sl4(self):
-        """Anomaly ratio duality: rho(3,1) from (3,1) = rho_dual from (2,1,1)."""
+        """Transpose swaps exact KRW coefficients while rho stays open."""
         data_31 = anomaly_ratio_duality((3, 1))
         data_211 = anomaly_ratio_duality((2, 1, 1))
-        assert data_31["rho_source"] == data_211["rho_dual"]
-        assert data_31["rho_dual"] == data_211["rho_source"]
+        for packet in (
+            data_31["rho_source"], data_31["rho_dual"],
+            data_211["rho_source"], data_211["rho_dual"],
+            data_31["rho_equal"], data_211["rho_equal"],
+        ):
+            _assert_unresolved(packet, ClaimStatus.OPEN)
+        assert data_31["quadratic_coeff_source"] == data_211["quadratic_coeff_dual"]
+        assert data_31["quadratic_coeff_dual"] == data_211["quadratic_coeff_source"]

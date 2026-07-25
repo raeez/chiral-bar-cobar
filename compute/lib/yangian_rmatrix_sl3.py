@@ -2,8 +2,8 @@ r"""Yangian R-matrix from the bar complex for sl_3 --- first non-sl_2 extraction
 
 Extracts R(z) = Res^{coll}_{0,2}(\Theta_A) for the sl_3 affine Kac--Moody
 algebra at level k. The bar propagator d\log E(z,w) extracts the collision
-residue of the MC element, yielding the r-matrix r(z) = k\Omega/z where
-\Omega is the quadratic Casimir tensor in sl_3 \otimes sl_3 (AP19: one pole
+residue of the MC element, yielding the r-matrix r(z) = k\Omega_{\mathrm{tr}}/z where
+\Omega_tr is the trace-form quadratic Casimir tensor in sl_3 \otimes sl_3 (AP19: one pole
 order below the OPE).
 
 Mathematical structure

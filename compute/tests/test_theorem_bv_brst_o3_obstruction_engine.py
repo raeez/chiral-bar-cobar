@@ -554,8 +554,8 @@ class TestFullSynthesis:
         assert 'vanish' in summary['class_C'].lower()
         assert 'genuine' in summary['class_M'].lower()
 
-    def test_pole_order_threshold_classification(self):
-        """Pole-order classification matches shadow class."""
+    def test_o3_pole_order_threshold_inputs(self):
+        """Pole-order threshold inputs match the O3 obstruction rows."""
         threshold = pole_order_threshold()
         cls = threshold['classification']
         assert cls['G']['max_fundamental_pole'] == 1

@@ -200,7 +200,8 @@ def kappa_w3(central_charge):
 def kappa_dual_heisenberg(level):
     r"""kappa(H_k^!) = -k.
 
-    Heisenberg Koszul dual: H_k^! = Sym^ch(V*) != H_{-k}.
+    Heisenberg Koszul dual: at k != 0, H_k^! is the curved
+    second-kind Sym^ch(V*[1]) branch, not H_{-k}.
     (AP: Heisenberg NOT self-dual.)
     Anti-symmetry: kappa + kappa! = 0.
     """
@@ -570,7 +571,8 @@ def atlas_heisenberg():
 
     kappa = k, alpha = 0, S_4 = 0, Delta = 0.
     Q_L(t) = 4k^2 (constant, no t-dependence).
-    Koszul dual: H_k^! = Sym^ch(V*), kappa! = -k.
+    Koszul dual: curved second-kind Sym^ch(V*[1]) branch, scalar
+    kappa! = -k.
     """
     kap = k
     alpha_val = Rational(0)

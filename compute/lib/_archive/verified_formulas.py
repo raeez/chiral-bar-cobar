@@ -41,7 +41,7 @@ _KOSZUL_DUALS = {
     "Lie": "Com",
     "Sym": "Lambda",        # VF011: Sym^! = Lambda
     "Lambda": "Sym",
-    "Heisenberg": "Sym_ch", # VF013: H^! = Sym^ch(V*)
+    "Heisenberg": "curved_Sym_ch", # VF013: H^! is curved Sym^ch(V*[1])
     "free_fermion": "beta_gamma",  # VF014: F^! = beta-gamma
     "beta_gamma": "free_fermion",
 }

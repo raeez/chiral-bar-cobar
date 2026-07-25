@@ -64,7 +64,8 @@ Conventions
 - kappa(Vir_c) = c/2 (AP48).
 - OPE modes: a_{(n)}b, lambda-bracket: {a_lambda b} = sum lambda^{(n)} a_{(n)}b
   where lambda^{(n)} = lambda^n / n! (AP44).
-- The bar r-matrix r(z) = Omega/z has pole order ONE BELOW OPE (AP19).
+- The affine trace-form bar r-matrix r_k(z)=k*Omega/z has pole order
+  ONE BELOW OPE (AP19); unit Yangian/CYBE checks set k=1.
 - Jacobiator: Jac(a,b,c) = [a,[b,c]] + cyclic permutations with Koszul signs.
 - Two-element cover of P^1 is strict (F_n = 0 for n >= 3).
 - Three-element cover produces nontrivial F_3 (Jacobiator homotopy).

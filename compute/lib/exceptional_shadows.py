@@ -417,7 +417,7 @@ def cybe_type(name: str) -> str:
 def verify_cybe_from_jacobi(name: str) -> Dict[str, Any]:
     """Verify that CYBE follows from Jacobi identity.
 
-    For affine KM with r(z) = Omega/z, the mCYBE is equivalent to:
+    For affine KM with trace-form r_k(z)=k*Omega/z, the mCYBE is equivalent to:
       f^{ab}_e f^{ec}_d + f^{ac}_e f^{be}_d + f^{bc}_e f^{ae}_d
         = (structure constants of the Casimir insertion)
 

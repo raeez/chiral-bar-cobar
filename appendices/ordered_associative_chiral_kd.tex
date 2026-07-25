@@ -40,11 +40,17 @@
 The ordered bar complex $\Barchord(A)$ of a chiral algebra~$A$
 is the cofree coalgebra $T^c(s^{-1}\bar{A})$ with differential extracting
 collision residues at consecutive points and coproduct from interval-cutting.
-Its finite-type continuous linear dual, after passing through the
-Koszul-dual coalgebra $A^i=H^\bullet\Barchord(A)$, is the line-side
-Koszul-dual algebra
+For a chosen quadratic presentation $A=T_X(V)/(R)$, set
+\[
+ A^i:=C_X(s^{-1}V,s^{-2}R),
+ \qquad
+ q_A\colon A^i\longrightarrow\Barchord(A).
+\]
+Under the chiral Koszul comparison package $H_{\mathrm{CL}}(A)$, the
+map $H^\bullet(q_A)$ is an isomorphism.  The finite-type continuous
+dual of the presentation coalgebra is the line-side Koszul-dual algebra
 $A^!_{\mathrm{line}}=(A^i)^\vee_{\mathrm{cont}}$; Verdier duality
-enters only after symmetric/Ran descent.
+enters after symmetric/Ran descent.
 For affine Kac--Moody inputs this algebra is the dg-shifted Yangian.
 
 \begin{remark}[$\Eone$-chiral notion used in this appendix]
@@ -105,8 +111,9 @@ The annulus is the self-cotensor:
 \]
 The associative dual carries the open boundary formalism.
 The ordered bar complex is the resolving $\Eone$-chiral coalgebra.
-On the Koszul locus its cohomology is the Koszul-dual coalgebra
-$A^i$, and the line-side Koszul-dual algebra is
+The presentation coalgebra $A^i=C_X(s^{-1}V,s^{-2}R)$ maps to it by
+$q_A$.  Under $H_{\mathrm{CL}}(A)$, the comparison
+$H^\bullet(q_A)$ is an isomorphism, and the line-side Koszul-dual algebra is
 $A^!_{\mathrm{line}}=(A^i)^\vee_{\mathrm{cont}}$.
 In finite-type ordered statements below, a bare $A^!$ abbreviates this
 line-side continuous dual; a closed/Ran Verdier dual is never inferred
@@ -474,45 +481,50 @@ having an ordered bar complex. The construction is the $R$-matrix.
 
 \subsection*{The spectral Kohno connection}
 
-\begin{construction}[$R$-matrix as monodromy of the Kohno connection]
-\ClaimStatusProvedHere
+\begin{construction}[Collision kernel and represented Kohno connection]
+\ClaimStatusConditional
 \label{constr:r-matrix-monodromy-vol1}
 \index{R-matrix!from monodromy|textbf}
 \index{monodromy!R-matrix}
 \index{Kohno connection}
-The bar differential on $\Barchord(A)$ extracts, at each
-collision $z_i=z_j$, the collision residue
-$r_{ij}(z_i-z_j)\in\operatorname{End}(\bar A\otimes\bar A)\otimes
-\mathcal{O}(*\Delta)$. By the bar kernel convention (the $d\log$
-kernel absorbs one power), the collision residue $r(z)$ has pole
-orders one less than the OPE.
-
-These residues define a flat connection on the trivial bundle
+The bar differential on $\Barchord(A)$ extracts, at each collision
+$z_i=z_j$, an ordered operator
+\[
+ K^{\mathrm{coll}}_{A,ij}(z_i-z_j)
+ \in\End_A(2)\otimes\mathcal O(*\Delta).
+\]
+By the bar-kernel convention, its pole orders are one less than the
+corresponding OPE pole orders. A represented Kohno connection requires
+the package $H_{\mathrm{CYBE}}^{\mathrm{rep}}(A;W)$: a map
+$\rho_A\colon\End_A(2)\to\End(W^{\otimes2})$ such that
+$r_A(z):=\rho_A(K_A^{\mathrm{coll}}(z))$ has infinitesimal-braid
+insertions. Under this package the connection on the trivial bundle
 over $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$ with fibre
-$\bar A^{\otimes n}$:
+$W^{\otimes n}$ is
 \begin{equation}\label{eq:kohno-connection}
 \nabla
 \;=\;
 d
 \;-\;
 \sum_{1\leq i<j\leq n}
-r_{ij}(z_i-z_j)\,d(z_i-z_j).
+r_{A,ij}(z_i-z_j)\,d(z_i-z_j).
 \end{equation}
-Here $r_{ij}$ acts in the $(i,j)$ tensor slots of~$\bar A^{\otimes n}$
-and $r_{ij}(z_{ij})\,dz_{ij}$ is the connection $1$-form
+Here $r_{A,ij}$ acts in the $(i,j)$ tensor slots of~$W^{\otimes n}$
+and $r_{A,ij}(z_{ij})\,dz_{ij}$ is the connection $1$-form
 on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$.
 For instance, when
-$r^{\mathrm{coll}}(z)=k\Omega_{\cH}/z$ with
+$K_{\cH}^{\mathrm{coll}}(z)=k\Omega_{\cH}/z$ with
 $\Omega_{\cH}=J\otimes J$ on the Heisenberg current line, its
-rank-one coefficient gives $k\,dz/z$. For affine Kac--Moody the collision residue in trace-form
-normalization is $r^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$; the
+rank-one coefficient gives $k\,dz/z$. For affine Kac--Moody the
+collision kernel in trace-form normalization is
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\Omega_{\mathrm{tr}}/z$; the
 KZ/Yangian form $\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ is the rescaled
-Casimir-and-coupling normalization, not the trace-form collision residue.
+Casimir-and-coupling coordinate on the represented comparison surface.
 
 \emph{Flatness.}
 Let
 \[
-A_\nabla=\sum_{i<j}r_{ij}(z_{ij})\,dz_{ij}.
+A_\nabla=\sum_{i<j}r_{A,ij}(z_{ij})\,dz_{ij}.
 \]
 The flatness condition is the Maurer--Cartan equation
 \[
@@ -545,8 +557,11 @@ Yang--Baxter constraint
 \;=\;0,
 \end{equation}
 together with the differential identities of the logarithmic forms.
-It is not a consequence of the consecutive Stasheff relation alone.
-Flatness of~$\nabla$ is part of the $R$-matrix descent datum.
+Its proof uses the full Arnold--Kohno relation together with the
+represented infinitesimal-braid identities.
+Flatness of~$\nabla$ is the represented-CYBE clause of
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(A;W)$ and is part of the
+$R$-matrix descent datum.
 
 \emph{The $R$-matrix.}
 At $n=2$, the ordered configuration space
@@ -561,10 +576,10 @@ R(z)
 \operatorname{Mon}_\gamma(\nabla)
 \;=\;
 \mathcal{P}\exp\!\Bigl(
-\oint_\gamma r(z)\,dz
+\oint_\gamma r_A(z)\,dz
 \Bigr)
 \;\in\;
-\operatorname{End}(\bar A\otimes\bar A)[\![z^{-1}]\!],
+\operatorname{End}(W^{\otimes2})[\![z^{-1}]\!],
 \end{equation}
 where $z=z_1-z_2$ is the relative coordinate and $\mathcal{P}$ denotes
 path-ordering.
@@ -789,23 +804,26 @@ of the modular operad ($\mathrm{FCom}$ for the chiral and
 Feigin--Ginzburg variants, $F\!\Ass$ for the ordered variant).
 \end{remark}
 
-\begin{remark}[The $R$-matrix as Maurer--Cartan element]
+\begin{remark}[Binary MC kernel and represented $r$-matrix]
 \label{rem:r-matrix-mc-vol1}
 \index{R-matrix!Maurer--Cartan interpretation}
-The classical $r$-matrix
-$r(z)\in\operatorname{End}(\bar A\otimes\bar A)
-\otimes\mathcal{O}(*\Delta)$
-is the binary genus-$0$ collision projection
-$\Res^{\mathrm{coll}}_{0,2}(\Theta_A^{E_1})$ of the ordered universal
-Maurer--Cartan element. The governing equation is
+The binary genus-$0$ collision projection of the ordered universal MC
+element is
+\[
+K_A^{\mathrm{coll}}(z)
+:=\Res^{\mathrm{coll}}_{0,2}(\Theta_A^{E_1})
+\in\End_A(2)\widehat\otimes\mathcal O(*\Delta).
+\]
+The governing equation is
 \[
 D\Theta_A^{E_1}
 +\tfrac{1}{2}[\Theta_A^{E_1},\Theta_A^{E_1}]=0.
 \]
-Projecting its degree-$3$ part to triple binary collisions and using
-the Arnold relation gives the CYBE~\eqref{eq:cybe-vol1}; the CYBE is
-not the linearisation but the quadratic binary shadow of this MC
-equation. The YBE on $R(z)$ is its monodromy form. The $R$-matrix is
+Projecting its degree-$3$ part to triple binary collisions gives the
+operadic binary-boundary relation.  The package
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(A;W)$ carries its three represented
+insertions to CYBE~\eqref{eq:cybe-vol1}; the YBE on $R(z)$ is its
+monodromy form. The $R$-matrix is
 the descent datum because the convolution dg~Lie algebra governing
 $\Sigma_n$-equivariant structures on local systems over
 $\mathrm{Conf}_n$ is the Gerstenhaber--Schack complex of bilinear
@@ -2388,10 +2406,14 @@ genus-zero datum $\kappa(\cH_k)=k$.
 \begin{theorem}[Collision residue and $R$-matrix;
 \ClaimStatusProvedHere]
 \label{thm:heisenberg-rmatrix}
+\emph{Type signature.} Open quadrant; ordered bar at level~$2$ and
+Fock-module representation at level~$4$; package
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(\cH_k;\mathrm{Fock}_k)$ supplied by
+commuting rank-one tensor insertions.
 The collision residue of the Heisenberg OPE on
 $\Conf_2^{<}(\bC)$ is
 \begin{equation}\label{eq:heisenberg-collision-residue}
-r^{\mathrm{coll}}(z)
+K_{\cH_k}^{\mathrm{coll}}(z)
 \;=\;
 \frac{k}{z},
 \end{equation}
@@ -2414,12 +2436,10 @@ The spectral $R$-matrix on modules is
 \begin{equation}\label{eq:heisenberg-R-matrix}
 R(z) \;=\; e^{k\hbar/z}.
 \end{equation}
-Since $\cH_k$ is $E_\infty$-chiral, this $R$-matrix is
-\emph{derived} from the local OPE via analytic continuation:
-it is the monodromy of the flat connection
-$\nabla = d - r^{\mathrm{coll}}(z)\,dz$, not independent
-input. The Yang--Baxter equation is satisfied trivially
-because $R(z)$ is scalar \textup{(}$\cH_k$ has rank~$1$\textup{)}.
+The Fock representation sends $K_{\cH_k}^{\mathrm{coll}}$ to the
+scalar connection form $k\,dz/z$.  Commutativity of its three tensor
+insertions proves CYBE, and its monodromy gives the displayed
+$R$-matrix.
 \end{theorem}
 
 \begin{proof}
@@ -2429,7 +2449,7 @@ normal coordinate $z=z_1-z_2$, contraction with this logarithmic
 kernel lowers the double OPE pole by one order and extracts the
 simple collision kernel
 \[
-r^{\mathrm{coll}}(z)
+K_{\cH_k}^{\mathrm{coll}}(z)
 \;=\;
 \frac{k}{z}.
 \]
@@ -2535,14 +2555,15 @@ has a simple pole, which falls in class~G.
 \begin{remark}[Contrast with the chiral \textup{(}symmetric\textup{)}
 Koszul dual]
 \label{rem:heisenberg-chiral-vs-ordered}
-The chiral Koszul dual of $\cH_k$ (Vol~I) is the
-commutative chiral algebra
+The chiral Koszul dual of $\cH_k$ (Vol~I) is the curved
+second-kind commutative chiral algebra
 \[
 \cH_k^{!,\mathrm{ch}}
 \;=\;
-\operatorname{Sym}^{\mathrm{ch}}(V^*),
+(\operatorname{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega),
 \]
-a free commutative vertex algebra on one generator.
+a free commutative associated-graded algebra on one shifted
+generator with curvature.
 The ordered Koszul dual $Y(\mathfrak{u}(1))$ carries
 strictly more structure: the spectral parameter~$u$
 (arising from the FM stratification in the ordered
@@ -2702,9 +2723,10 @@ The Heisenberg R-matrix $R(z) = \exp(k\hbar/z)$
 (Theorem~\ref{thm:heisenberg-rmatrix}) is an infinite power
 series; the free-field collision-residue monodromy is trivial, while
 the regular contact transport terminates at linear order. This dichotomy
-reflects the pole-order classification: double pole with scalar
-residue (class~G) versus simple pole whose pole residue drops but whose
-regular contact class is nilpotent (class~C).
+reflects the composite-closed support-packet classification: the
+Heisenberg packet is binary and scalar (class~G), whereas the
+$\beta\gamma$ generator pole is simple but its closed contact envelope
+is finite and nilpotent (class~C).
 \end{remark}
 
 \begin{theorem}[Wakimoto bar complex descent;
@@ -5817,7 +5839,7 @@ the ordered logarithmic propagator $\eta = d\log(z_1 - z_2)$.
 A pole of order~$p$ in the OPE contributes a term
 $c^K_{IJ;p-1}\,(z_1 - z_2)^{-p}$ to the structure constants.
 The $d\log$ kernel absorbs one power of the pole
-(the collision residue $r(z)$ has pole orders one less than the OPE),
+(the collision kernel $K_A^{\mathrm{coll}}(z)$ has pole orders one less than the OPE),
 producing a residue of order $p - 1$ in the collision variable.
 This residue has pole/normal-jet depth $p{-}1$ along the same
 geometric collision divisor; it is not a statement that the degree-$2$
@@ -6172,8 +6194,9 @@ contributes multiple zeta values $\zeta(2), \zeta(3), \ldots$,
 periods of mixed Tate motives over~$\mathbb{Z}$.
 
 	\item \emph{The symmetric image}: the averaging map $\mathrm{av}$
-	keeps the $R$-twisted coinvariant combinations. The scalar
-	symmetric bar invariants used in the shadow classification
+	keeps the $R$-twisted coinvariant operator classes.  The chosen
+	functionals $\tau_{A,n}^{\mathrm{res}}$ then produce the scalar
+	symmetric-bar coordinates used in the shadow classification
 	(curvature~$\kappa$, complementarity class~$C$, shadow
 	tower~$Q$) are rational residues, hence periods of the trivial
 	motive~$\mathbb{Q}(0)$. Ordered iterated-integral classes that are
@@ -6730,7 +6753,7 @@ framework:
 The $R$-matrix is the regularised holonomy of the derived additive KZ
 connection on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{A}^1)$, with
 connection one-form built from OPE residues
-(Theorem~\ref{thm:derived-additive-kz}, Volume~II).
+(Theorem~\ref{thm:spectral-derived-additive-kz}).
 The Yang--Baxter equation is the Ward identity for the flat connection:
 $\mathbb{D}_n^2=0$. Strictification requires that the spectral Drinfeld
 obstruction class vanish, which holds for all simple Lie algebras because
@@ -6799,7 +6822,7 @@ This is the content of the Yangian recognition theorem
 (Theorem~\ref*{thm:yangian-recognition}, recorded from Volume~II).
 The RTT presentation of $Y_\hbar(\mathfrak{g})$ is read off from
 the regularised holonomy of the derived additive KZ connection
-(Theorem~\ref{thm:derived-additive-kz}). The identification
+(Theorem~\ref{thm:spectral-derived-additive-kz}). The identification
 $Y_\hbar(\mathfrak{g})\simeq Q_0^0(\mathfrak{g})$ is the
 Levendorski\u{\i}--Drinfeld theorem.
 \end{proof}
@@ -8228,11 +8251,10 @@ formal Dirichlet series.
 \index{shadow depth!landscape classification|textbf}
 % ================================================================
 
-The ordered bar complex $\Barchord(A)$ carries two layers of data:
-the collision residue $r^{\mathrm{coll}}(z)$, which records the
-holomorphic colour of the Swiss-cheese algebra, and
-the $R$-matrix $R(z)$, which governs the passage from
-ordered to symmetric configurations. The following table
+The ordered bar complex $\Barchord(A)$ carries the collision kernel
+$K_A^{\mathrm{coll}}(z)$.  On families equipped with
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and a strong-unitary monodromy
+package, its represented image gives an $R$-matrix for descent. The following table
 collects this data for all standard families.
 
 Every entry is an $\mathsf{E}_\infty$-chiral algebra
@@ -8250,15 +8272,15 @@ of the $\mathsf{E}_1$ core of Volume~II: genuinely $\mathsf{E}_1$-chiral algebra
 Etingof--Kazhdan quantum vertex algebras, which lie outside
 the Beilinson--Drinfeld framework.
 
-\begin{theorem}[$\mathsf{E}_1$ ordered bar landscape;
-\ClaimStatusProvedHere]%
+\begin{theorem}[$\mathsf{E}_1$ ordered collision-kernel landscape;
+\ClaimStatusConditional]%
 \label{thm:e1-ordered-bar-landscape}%
 \index{ordered bar complex!landscape theorem|textbf}%
 \index{collision residue!landscape|textbf}%
 \index{R-matrix!landscape|textbf}%
 Let\/ $A$ be a strongly admissible augmented associative chiral
 algebra from the standard landscape. The ordered bar complex\/
-$\Barchord(A)$ has the following invariants, where\/ $r^{\mathrm{coll}}(z)$
+$\Barchord(A)$ has the following invariants, where\/ $K_A^{\mathrm{coll}}(z)$
 denotes the collision residue
 \textup{(}the OPE kernel after the $d\log$ bar propagator
 absorbs one pole order\textup{)},
@@ -8267,7 +8289,9 @@ $\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$,
 $r_{\max}$ is the shadow depth,
 $A^!_{\mathrm{line}}$ is the ordered Koszul dual governing the
 line category, and
-``formal'' means the transferred $\Ainf$ operations
+and every $R(z)$ entry carries the corresponding
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and monodromy comparison package.
+Here ``formal'' means the transferred $\Ainf$ operations
 $m_k$ vanish on cohomology for all $k$ greater than the shadow depth:
 \begin{center}
 \small
@@ -8277,8 +8301,8 @@ $m_k$ vanish on cohomology for all $k$ greater than the shadow depth:
 \textbf{Family}
  & \textbf{Class}
  & \makecell{\textbf{OPE} \\ \textbf{poles}}
- & \textbf{Collision residue}~$r^{\mathrm{coll}}(z)$
- & \textbf{$R$-matrix}~$R(z)$
+ & \textbf{Collision kernel}~$K_A^{\mathrm{coll}}(z)$
+ & \makecell{\textbf{represented $R$-matrix}\\\textbf{under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$}}
  & $r_{\max}$
  & $A^!_{\mathrm{line}}$
  & \textbf{Formal?} \\
@@ -8383,30 +8407,30 @@ $W_s(z)W_s(w)$ has poles up to order $2s$ for the
 spin-$s$ generator of $\mathcal{W}_N$, giving
 maximal pole $2N$ at the top spin.
 
-\emph{Collision residues.}
+\emph{Collision kernels.}
 The $d\log$ bar kernel absorbs one pole order
 (the $d\log$ absorption principle; see Section~\ref{def:bar-differential-complete}):
-the collision residue $r^{\mathrm{coll}}(z)$ from an OPE pole of
+the collision kernel $K_A^{\mathrm{coll}}(z)$ from an OPE pole of
 order~$d$ has pole of order~$d{-}1$. For Heisenberg:
 double-pole $k/(z{-}w)^2$ gives
-$r^{\mathrm{coll}}_{\cH}=k\Omega_{\cH}/z$, whose rank-one coefficient
+$K_{\cH}^{\mathrm{coll}}=k\Omega_{\cH}/z$, whose rank-one coefficient
 is $k/z$.
 For affine $\widehat{\mathfrak{g}}_k$: the trace-form Casimir
 $\Omega_{\mathrm{tr}} = \sum_a t^a \otimes t_a$ produces
-$r^{\mathrm{coll}} = k\Omega_{\mathrm{tr}}/z$; the KZ/Yangian
+$K_{k,\fg}^{\mathrm{coll}} = k\Omega_{\mathrm{tr}}/z$; the KZ/Yangian
 normalization rewrites the same monodromy datum as
 $\Omega/((k+h^\vee)z)$ with $\Omega=2h^\vee\Omega_{\mathrm{tr}}$.
 For $\beta\gamma$/$bc$: the simple-pole OPE $1/(z{-}w)$ is absorbed
-completely, so $r^{\mathrm{coll}}=0$; the nilpotent operator
-$\Theta$ is a regular contact class, not a pole-valued collision
-residue.
+completely, so the pole-valued kernel is zero; the nilpotent operator
+$\Theta$ is the regular contact class.
 For Virasoro: quartic pole gives
 $(c/2)/z^3 + 2T/z$ (the $\partial T/(z{-}w)$ term of the OPE is
 absorbed completely, producing no pole in the collision residue).
 
-\emph{$R$-matrices.}
-The $R$-matrix is the monodromy of the connection
-$\nabla = d - r^{\mathrm{coll}}(z)\,dz$ on
+\emph{Represented $R$-matrices.}
+Under the family package $H_{\mathrm{CYBE}}^{\mathrm{rep}}$, the
+$R$-matrix is the monodromy of the represented connection
+$\nabla=d-\rho_A(K_A^{\mathrm{coll}}(z))\,dz$ on
 $\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$.
 For abelian algebras ($\mathcal{H}_k$, $V_\Lambda$):
 the connection is scalar and
@@ -8442,9 +8466,11 @@ obstruction), so $r_{\max} = \infty$ and the Swiss-cheese
 structure is \emph{non-formal}.
 
 \emph{Ordered Koszul duals.}
-For affine $\widehat{\mathfrak{g}}_k$: the ordered Koszul dual is
-the Yangian $Y_\hbar(\mathfrak{g})$
-(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}).
+For affine $\widehat{\mathfrak{g}}_k$: under the ordered PBW,
+completion, and Drinfeld--Kohno comparison hypotheses, the ordered
+line-operator companion is the Yangian $Y_\hbar(\mathfrak{g})$
+(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}); this is not a
+bare identification with the strict symmetric chiral Koszul dual.
 For Virasoro and $\mathcal{W}_N$: the ordered Koszul dual is the
 dg-shifted Yangian $Y^{\mathrm{dg}}$, a dg algebra with
 infinitely many cohomological generators reflecting

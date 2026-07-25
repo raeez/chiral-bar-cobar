@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 r"""
-Tests for shadow_hecke_identification.py — the conjectural identification
-A^sh = Hecke algebra acting on the spectral decomposition of Z_A on M_{g,n}.
+Tests for shadow_hecke_identification.py — the conditional comparison between
+the shadow algebra and Hecke spectral data.
 
 TARGET: 50+ tests covering all 8 sections of the identification programme.
 """
@@ -744,6 +744,14 @@ class TestIdentificationSummary:
         """Summary proposes Newton identity resolution."""
         result = identification_summary()
         assert 'Newton' in result['resolution']
+
+    def test_summary_does_not_assert_shadow_equals_hecke_algebra(self):
+        """The full algebra identification is not promoted to a theorem."""
+        result = identification_summary()
+        joined = " ".join(result['proved'] + result['conjectural'])
+        assert 'A^sh = Hecke algebra' not in joined
+        assert 'comparison surface' in joined
+        assert 'finite-span' in result['obstruction']
 
 
 # ============================================================

@@ -233,8 +233,9 @@ def kappa(family: str, **params) -> Fraction:
         k = params.get("k", 1)
         dim_g, h_dual = _lie_dim_hdual(lie_type, rank)
         k_frac = Fraction(k)
-        if k_frac == -h_dual:
-            raise ValueError(f"Critical level k = -{h_dual}: kappa undefined")
+        # The affine modular scalar is the polynomial trace-form invariant.
+        # It extends to the critical level with value zero.  Sugawara central
+        # charge and KZ/DS comparison packages have their own critical poles.
         return Fraction(dim_g) * (k_frac + h_dual) / (2 * h_dual)
 
     elif family == "betagamma":

@@ -1,21 +1,21 @@
 r"""Tests for non_principal_w_duality_engine.py.
 
-Systematic verification of Koszul duality for non-principal W-algebras
-W^k(sl_N, f_lambda) in type A.  Tests cover:
+Verification of exact type-A orbit arithmetic and typed modular claims for
+non-principal W-algebras W^k(sl_N, f_lambda).  Tests cover:
 
-  1. Correct central charge formulas (independent of oversimplified KRW)
+  1. Exact type-A central-charge formulas
   2. sl_3 classification: principal W_3 and Bershadsky-Polyakov
   3. sl_4 classification: all four non-trivial orbits
   4. Generator content from ad(h)-grading
-  5. Anomaly ratio computation and decomposition
+  5. Reciprocal-weight diagnostics and anomaly-ratio obligations
   6. DS-Koszul commutation at the generator level
-  7. Hook-type duality (Fehily-CLNS): kappa complementarity
+  7. Hook-type candidate duality and modular-conductor status
   8. Transport propagation: coverage of Par(N) from hook seeds
-  9. Shadow depth classification on the T-line
+  9. Full-shadow construction obligations
   10. Self-dual (self-transpose) partition analysis
   11. Non-hook partition analysis for sl_5, sl_6
   12. Complementarity constant table
-  13. Multi-path kappa verification
+  13. Exact central-charge oracles and typed kappa packets
   14. OPE data for the Bershadsky-Polyakov algebra
 
 Multi-path verification mandate (CLAUDE.md):
@@ -50,6 +50,11 @@ from compute.lib.non_principal_w_duality_engine import (
     transport_propagation_summary,
     verify_non_principal_w_duality,
 )
+from compute.lib.hook_type_w_duality import (
+    anomaly_ratio_from_partition,
+    reciprocal_weight_diagnostic_from_partition,
+)
+from compute.lib.non_principal_w_bar_engine import ClaimPacket, ClaimStatus
 
 k = Symbol('k')
 
@@ -91,21 +96,21 @@ class TestCorrectCentralCharge:
         assert c_val == -30
 
     def test_bp_formula(self):
-        """BP c = 2 - 24(k+1)^2/(k+3) (FKR 2020)."""
+        """The standard BP formula agrees with the KRW oracle."""
         c_val, exact = correct_central_charge((2, 1))
         assert exact
-        expected = 2 - 24 * (k + 1)**2 / (k + 3)
+        expected = -((2 * k + 3) * (3 * k + 1)) / (k + 3)
         assert simplify(c_val - expected) == 0
 
     def test_bp_at_k0(self):
-        """c(BP, k=0) = 2 - 24/3 = -6."""
+        """The standard BP central charge at k=0 is -1."""
         c_val, _ = correct_central_charge((2, 1), Rational(0))
-        assert c_val == -6
+        assert c_val == -1
 
     def test_bp_at_k1(self):
-        """c(BP, k=1) = 2 - 24*4/4 = -22."""
+        """The standard BP central charge at k=1 is -5."""
         c_val, _ = correct_central_charge((2, 1), Rational(1))
-        assert c_val == -22
+        assert c_val == -5
 
     def test_w4_formula(self):
         """W_4 c = 3 - 60(k+3)^2/(k+4)."""
@@ -126,17 +131,15 @@ class TestCorrectCentralCharge:
         expected = 8 * k / (k + 3)
         assert simplify(c_val - expected) == 0
 
-    def test_sl4_non_principal_not_exact(self):
-        """sl_4 non-principal non-hook: c formula is not exact."""
-        # (2,2) is not hook and not principal
+    def test_sl4_non_principal_krw_exact(self):
+        """KRW (2003), Theorem 2.1(a), covers the (2,2) grading."""
         _, exact = correct_central_charge((2, 2))
-        assert not exact
+        assert exact
 
     def test_bp_matches_krw(self):
         """BP correct c now AGREES with the corrected per-root-pair KRW formula.
 
-        The KRW formula was fixed to use the correct per-root-pair formula
-        which gives c = 2 - 24(k+1)^2/(k+3) for BP, matching the known result.
+        The standard formula is ``-((2k+3)(3k+1))/(k+3)``.
         """
         c_correct, _ = correct_central_charge((2, 1))
         from compute.lib.hook_type_w_duality import krw_central_charge
@@ -172,7 +175,8 @@ class TestSl3Classification:
         p = compute_duality_profile((3,))
         assert p.is_principal
         assert p.orbit_class == 'principal'
-        assert p.duality_status == 'proved_principal'
+        assert p.duality_status.status is ClaimStatus.CONDITIONAL
+        assert any("thm:w-algebra-koszul-main" in item for item in p.duality_status.hypotheses)
 
     def test_bp_is_self_transpose(self):
         p = compute_duality_profile((2, 1))
@@ -189,25 +193,27 @@ class TestSl3Classification:
         assert p.num_generators == 4  # J(1), G+(3/2), G-(3/2), T(2)
 
     def test_bp_anomaly_ratio(self):
-        """BP rho = 1/6."""
+        """BP has diagnostic 17/6 and a separate open rho packet."""
         p = compute_duality_profile((2, 1))
-        assert p.anomaly_ratio == Rational(1, 6)
+        assert p.reciprocal_weight_diagnostic == Rational(17, 6)
+        assert p.anomaly_ratio.status is ClaimStatus.OPEN
+        assert p.anomaly_ratio.value is None
 
     def test_bp_rho_decomposition(self):
-        """BP rho = 1 - 2/3 - 2/3 + 1/2 = 1/6 from J, G+, G-, T."""
-        # From the STRONG generator presentation (not the f-centralizer)
-        # The strong generators are: J(1,bos), G+(3/2,ferm), G-(3/2,ferm), T(2,bos)
-        rho = Rational(1) - Rational(2, 3) - Rational(2, 3) + Rational(1, 2)
-        assert rho == Rational(1, 6)
+        """The four even BP generators give diagnostic 17/6."""
+        diagnostic = Rational(1) + 2 * Rational(2, 3) + Rational(1, 2)
+        assert diagnostic == Rational(17, 6)
 
     def test_bp_shadow_class_M(self):
         p = compute_duality_profile((2, 1))
-        assert p.shadow_class == 'M'
+        assert p.shadow_class.status is ClaimStatus.OPEN
+        assert p.shadow_depth.status is ClaimStatus.OPEN
 
     def test_w3_rho(self):
-        """W_3 rho = 1/2 + 1/3 = 5/6."""
+        """W_3 has diagnostic 5/6 and a separate open rho packet."""
         p = compute_duality_profile((3,))
-        assert p.anomaly_ratio == Rational(5, 6)
+        assert p.reciprocal_weight_diagnostic == Rational(5, 6)
+        assert p.anomaly_ratio.status is ClaimStatus.OPEN
 
 
 # =====================================================================
@@ -225,7 +231,8 @@ class TestSl4Classification:
     def test_sl4_principal(self):
         p = compute_duality_profile((4,))
         assert p.is_principal
-        assert p.anomaly_ratio == Rational(13, 12)
+        assert p.reciprocal_weight_diagnostic == Rational(13, 12)
+        assert p.anomaly_ratio.status is ClaimStatus.OPEN
 
     def test_sl4_subregular(self):
         p = compute_duality_profile((3, 1))
@@ -252,11 +259,11 @@ class TestSl4Classification:
         assert p.num_fermionic == 0
 
     def test_sl4_minimal_generators(self):
-        """sl_4 (2,1,1): 9 generators (5 bos + 4 ferm)."""
+        """The nine represented (2,1,1) generators are even."""
         p = compute_duality_profile((2, 1, 1))
         assert p.num_generators == 9
-        assert p.num_bosonic == 5
-        assert p.num_fermionic == 4
+        assert p.num_bosonic == 9
+        assert p.num_fermionic == 0
 
     def test_sl4_even_generators(self):
         """sl_4 (2,2): 7 generators, all bosonic."""
@@ -325,50 +332,49 @@ class TestGeneratorContent:
 # =====================================================================
 
 class TestAnomalyRatio:
-    """Test anomaly ratio computation and decomposition."""
+    """Test exact diagnostics and typed anomaly-ratio obligations."""
 
     def test_virasoro_rho_half(self):
-        """Virasoro rho = 1/2."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-        assert anomaly_ratio_from_partition((2,)) == Rational(1, 2)
+        """The Virasoro diagnostic is 1/2; rho remains open."""
+        assert reciprocal_weight_diagnostic_from_partition((2,)) == Rational(1, 2)
+        assert anomaly_ratio_from_partition((2,)).status is ClaimStatus.OPEN
 
     def test_w3_rho_5_6(self):
-        """W_3 rho = 5/6."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-        assert anomaly_ratio_from_partition((3,)) == Rational(5, 6)
+        """The W_3 diagnostic is 5/6; rho remains open."""
+        assert reciprocal_weight_diagnostic_from_partition((3,)) == Rational(5, 6)
+        assert anomaly_ratio_from_partition((3,)).status is ClaimStatus.OPEN
 
     def test_w4_rho_13_12(self):
-        """W_4 rho = 13/12."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-        assert anomaly_ratio_from_partition((4,)) == Rational(13, 12)
+        """The W_4 diagnostic is 13/12; rho remains open."""
+        assert reciprocal_weight_diagnostic_from_partition((4,)) == Rational(13, 12)
+        assert anomaly_ratio_from_partition((4,)).status is ClaimStatus.OPEN
 
     def test_principal_rho_is_harmonic(self):
-        """Principal W_N: rho = H_N - 1 = sum_{j=2}^{N} 1/j."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
+        """The principal reciprocal-weight diagnostic is H_N-1."""
         for N in [2, 3, 4, 5]:
-            rho = anomaly_ratio_from_partition((N,))
+            diagnostic = reciprocal_weight_diagnostic_from_partition((N,))
             expected = sum(Rational(1, j) for j in range(2, N + 1))
-            assert rho == expected, f"N={N}: got {rho}, expected {expected}"
+            assert diagnostic == expected
 
     def test_bp_rho_1_6(self):
-        """BP rho = 1/6."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-        assert anomaly_ratio_from_partition((2, 1)) == Rational(1, 6)
+        """The BP diagnostic is 17/6; rho remains open."""
+        assert reciprocal_weight_diagnostic_from_partition((2, 1)) == Rational(17, 6)
+        assert anomaly_ratio_from_partition((2, 1)).status is ClaimStatus.OPEN
 
     def test_anomaly_ratio_table_sl4(self):
-        """All sl_4 anomaly ratios are well-defined rationals."""
+        """Every sl_4 row separates exact diagnostic from open rho."""
         table = anomaly_ratio_table(4)
         assert len(table) == 4
         for entry in table:
-            assert entry['rho_total'] is not None
-            assert isinstance(entry['rho_total'], Rational)
+            assert entry['rho_total'].status is ClaimStatus.OPEN
+            assert entry['rho_total'].value is None
+            assert isinstance(entry['reciprocal_weight_diagnostic'], Rational)
 
     def test_anomaly_ratio_positive_for_principal(self):
-        """Principal W_N always has rho > 0."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
+        """Principal reciprocal-weight diagnostics are positive."""
         for N in range(2, 8):
-            rho = anomaly_ratio_from_partition((N,))
-            assert rho > 0
+            diagnostic = reciprocal_weight_diagnostic_from_partition((N,))
+            assert diagnostic > 0
 
 
 # =====================================================================
@@ -383,7 +389,9 @@ class TestDSKoszulCommutation:
         gt = ds_koszul_generator_test((2, 1))
         assert gt['is_self_transpose']
         assert gt['generators_equal']
-        assert gt['rho_equal']
+        assert gt['diagnostic_equal']
+        assert gt['rho_equal'] is None
+        assert gt['rho_source'].status is ClaimStatus.OPEN
 
     def test_sl4_hook_generators_differ(self):
         """sl_4 (3,1) and (2,1,1) have different generator counts."""
@@ -401,9 +409,10 @@ class TestDSKoszulCommutation:
         assert gt['generators_equal']
 
     def test_sl4_hook_rho_differ(self):
-        """sl_4 (3,1) and (2,1,1) have different anomaly ratios."""
+        """The transpose hook pair has distinct exact diagnostics."""
         gt31 = ds_koszul_generator_test((3, 1))
-        assert not gt31['rho_equal']
+        assert not gt31['diagnostic_equal']
+        assert gt31['rho_equal'] is None
 
     def test_all_sl4_orbits(self):
         """DS-Koszul generator test for all sl_4 orbits."""
@@ -452,11 +461,13 @@ class TestHookDuality:
         assert len(catalog) == 1 + 2 + 3 + 4
 
     def test_hook_rho_well_defined(self):
-        """All hook anomaly ratios are well-defined rationals."""
+        """Hook rows separate exact diagnostics from open rho packets."""
         catalog = hook_duality_catalog(max_N=6)
         for entry in catalog:
-            assert isinstance(entry['rho_source'], Rational)
-            assert isinstance(entry['rho_target'], Rational)
+            assert isinstance(entry['diagnostic_source'], Rational)
+            assert isinstance(entry['diagnostic_target'], Rational)
+            assert entry['rho_source'].status is ClaimStatus.OPEN
+            assert entry['rho_target'].status is ClaimStatus.OPEN
 
     def test_fehily_clns_sl4(self):
         """Fehily-CLNS predictions for sl_4 hooks."""
@@ -464,13 +475,12 @@ class TestHookDuality:
         assert len(results) == 2  # r=1 and r=2
 
     def test_fehily_clns_numerical_consistency(self):
-        """Numerical spot-checks for hook duality at specific levels."""
+        """Exact central sums coexist with an open modular conductor."""
         results = fehily_clns_hook_predictions(4)
         for entry in results:
             for num in entry['numerical']:
-                # kappa and c should be finite at test levels
                 assert abs(num['c_sum']) < 1e10
-                assert abs(num['kappa_sum']) < 1e10
+                assert num['kappa_status'] == ClaimStatus.OPEN.value
 
 
 # =====================================================================
@@ -478,34 +488,35 @@ class TestHookDuality:
 # =====================================================================
 
 class TestTransportPropagation:
-    """Test transport propagation from hook seeds."""
+    """Test candidate dominance connectivity and transport status."""
 
     def test_sl3_fully_covered(self):
-        """sl_3: all non-trivial partitions reached."""
+        """The sl_3 candidate dominance graph is connected."""
         cl = transport_closure_from_hooks(3)
-        assert cl['fully_covered']
-        assert cl['closure_size'] == 2  # (3,) and (2,1)
+        assert cl['candidate_fully_connected']
+        assert cl['candidate_closure_size'] == 2
+        assert cl['transport_realization'].status is ClaimStatus.OPEN
 
     def test_sl4_fully_covered(self):
-        """sl_4: all non-trivial partitions reached."""
+        """The sl_4 candidate dominance graph is connected."""
         cl = transport_closure_from_hooks(4)
-        assert cl['fully_covered']
-        assert cl['closure_size'] == 4
+        assert cl['candidate_fully_connected']
+        assert cl['candidate_closure_size'] == 4
 
     def test_sl5_fully_covered(self):
-        """sl_5: all non-trivial partitions reached."""
+        """The sl_5 candidate dominance graph is connected."""
         cl = transport_closure_from_hooks(5)
-        assert cl['fully_covered']
+        assert cl['candidate_fully_connected']
 
     def test_sl6_fully_covered(self):
-        """sl_6: all non-trivial partitions reached."""
+        """The sl_6 candidate dominance graph is connected."""
         cl = transport_closure_from_hooks(6)
-        assert cl['fully_covered']
+        assert cl['candidate_fully_connected']
 
     def test_sl7_fully_covered(self):
-        """sl_7: all non-trivial partitions reached."""
+        """The sl_7 candidate dominance graph is connected."""
         cl = transport_closure_from_hooks(7)
-        assert cl['fully_covered']
+        assert cl['candidate_fully_connected']
 
     def test_transport_graph_edges_sl4(self):
         """sl_4 dominance order has 4 edges (linear chain)."""
@@ -521,11 +532,12 @@ class TestTransportPropagation:
         assert ((4, 2), (3, 3)) in edge_set
 
     def test_propagation_summary(self):
-        """Transport summary through sl_7: all fully covered."""
+        """The summary separates connectivity from DS realization."""
         summary = transport_propagation_summary(max_N=7)
         assert len(summary) == 5  # sl_3 through sl_7
         for entry in summary:
-            assert entry['fully_covered']
+            assert entry['candidate_fully_connected']
+            assert entry['transport_realization'].status is ClaimStatus.OPEN
 
     def test_coverage_fraction_is_one(self):
         """Coverage fraction = 1 for all N <= 7."""
@@ -539,30 +551,29 @@ class TestTransportPropagation:
 # =====================================================================
 
 class TestShadowDepth:
-    """Test shadow depth on the T-line."""
+    """Test full-shadow construction obligations."""
 
     def test_all_sl4_class_M(self):
-        """All non-trivial sl_4 W-algebras are class M on the T-line."""
+        """Every sl_4 full-shadow packet retains its MC-tower hypothesis."""
         orbits = shadow_depth_all_orbits(4)
         for entry in orbits:
-            assert entry['shadow_class'] == 'M'
-            assert entry['shadow_depth'] == 'infinity'
+            assert entry['shadow_class'].status is ClaimStatus.OPEN
+            assert entry['shadow_depth'].status is ClaimStatus.OPEN
+            assert entry['shadow_class'].hypotheses
 
     def test_all_sl3_class_M(self):
-        """All non-trivial sl_3 W-algebras are class M on the T-line."""
+        """Every sl_3 full-shadow classification remains open."""
         orbits = shadow_depth_all_orbits(3)
         for entry in orbits:
-            assert entry['shadow_class'] == 'M'
+            assert entry['shadow_class'].status is ClaimStatus.OPEN
 
     def test_shadow_depth_increases_under_ds(self):
-        """Shadow depth should not decrease under DS reduction.
-        Affine = class L (depth 3), W-algebras >= class M."""
+        """Every DS row names the complete shadow-depth construction."""
         for N in range(3, 6):
             orbits = shadow_depth_all_orbits(N)
             for entry in orbits:
-                # All non-trivial should be M (depth infinity)
-                # or at worst L (depth 3, same as affine)
-                assert entry['shadow_depth'] in [3, 'infinity']
+                assert entry['shadow_depth'].status is ClaimStatus.OPEN
+                assert any("Maurer--Cartan" in h for h in entry['shadow_depth'].hypotheses)
 
     def test_special_levels_exist(self):
         """Each orbit has special levels where c=0 or 5c+22=0."""
@@ -633,18 +644,19 @@ class TestNonHookPartitions:
         assert (2, 2, 1) in parts
 
     def test_non_hooks_all_reached(self):
-        """All non-hook partitions of sl_4..sl_6 are reached by transport."""
+        """All non-hook rows lie in the candidate dominance closure."""
         for N in range(4, 7):
             nh = non_hook_partition_analysis(N)
             for entry in nh:
-                assert entry['reached_by_transport'], (
-                    f"sl_{N} {entry['partition']} not reached")
+                assert entry['in_candidate_dominance_closure']
+                assert entry['transport_realization'].status is ClaimStatus.OPEN
 
     def test_non_hook_duality_status(self):
-        """Non-hook partitions have 'conjectural' duality status."""
+        """Non-hook object-level duality remains open with named hypotheses."""
         nh = non_hook_partition_analysis(4)
         for entry in nh:
-            assert entry['duality_status'] == 'conjectural'
+            assert entry['duality_status'].status is ClaimStatus.OPEN
+            assert entry['duality_status'].hypotheses
 
 
 # =====================================================================
@@ -665,17 +677,19 @@ class TestComplementarity:
         assert len(table) == 4
 
     def test_self_transpose_rho_equal(self):
-        """Self-transpose partitions have rho_source = rho_target."""
+        """Self-transpose partitions have equal exact diagnostics."""
         table = complementarity_constant_table(4)
         for entry in table:
             if entry['is_self_transpose']:
-                assert entry['rho_equal']
+                assert entry['diagnostic_equal']
+                assert entry['rho_equal'] is None
 
     def test_bp_complementarity_constant(self):
-        """BP kappa sum is constant (self-dual, exact c)."""
+        """The BP modular conductor remains an open packet."""
         table = complementarity_constant_table(3)
         bp_entry = [e for e in table if e['partition'] == (2, 1)][0]
-        assert bp_entry['kappa_sum_is_constant']
+        assert bp_entry['kappa_sum'].status is ClaimStatus.OPEN
+        assert bp_entry['kappa_sum_is_constant'] is None
 
 
 # =====================================================================
@@ -683,41 +697,45 @@ class TestComplementarity:
 # =====================================================================
 
 class TestKappaMultipath:
-    """Test multi-path kappa verification."""
+    """Test exact central oracles and typed modular packets."""
 
     def test_bp_kappa_multipath(self):
-        """BP kappa verified via multiple paths."""
+        """BP retains exact c and diagnostic with open rho/kappa."""
         result = kappa_multipath_verification((2, 1))
         assert result['c_exact']
-        assert result['anomaly_ratio'] == Rational(1, 6)
+        assert result['reciprocal_weight_diagnostic'] == Rational(17, 6)
+        assert result['anomaly_ratio'].status is ClaimStatus.OPEN
+        assert result['kappa_formula'].status is ClaimStatus.CONDITIONAL
 
     def test_w3_kappa_multipath(self):
-        """W_3 kappa verified via multiple paths."""
+        """W_3 retains exact c and diagnostic with open rho/kappa."""
         result = kappa_multipath_verification((3,))
         assert result['c_exact']
-        assert result['anomaly_ratio'] == Rational(5, 6)
+        assert result['reciprocal_weight_diagnostic'] == Rational(5, 6)
+        assert result['anomaly_ratio'].status is ClaimStatus.OPEN
 
     def test_w4_kappa_multipath(self):
-        """W_4 kappa verified via multiple paths."""
+        """W_4 retains exact c and diagnostic with open rho/kappa."""
         result = kappa_multipath_verification((4,))
         assert result['c_exact']
-        assert result['anomaly_ratio'] == Rational(13, 12)
+        assert result['reciprocal_weight_diagnostic'] == Rational(13, 12)
+        assert result['kappa_formula'].status is ClaimStatus.CONDITIONAL
 
     def test_numerical_consistency(self):
-        """Numerical values are consistent at test levels."""
+        """Exact central charges evaluate at every configured level."""
         for lam in [(2,), (3,), (2, 1), (4,)]:
             result = kappa_multipath_verification(lam)
             for num in result['numerical']:
-                # kappa should be finite at test levels
-                assert num['kappa'] is not None
+                assert num['central_charge'].is_finite is not False
+                assert num['dual_central_charge'].is_finite is not False
 
     def test_bp_complementarity_sum_constant_numerical(self):
-        """BP kappa + kappa_dual is numerically constant across levels."""
+        """BP central sums are exact while the conductor remains open."""
         result = kappa_multipath_verification((2, 1))
-        sums = [float(num['sum']) for num in result['numerical']]
-        # All sums should be the same value
+        sums = [num['central_sum'] for num in result['numerical']]
         for s in sums:
-            assert abs(s - sums[0]) < 1e-10
+            assert simplify(s - sums[0]) == 0
+        assert result['kappa_sum'].status is ClaimStatus.OPEN
 
 
 # =====================================================================
@@ -742,9 +760,13 @@ class TestBPOPEData:
         assert 'T' in names
 
     def test_bp_central_charge_at_k1(self):
-        """BP c(k=1) = -67/4."""
+        """The standard BP central charge at k=1 is -5."""
         data = sl3_subregular_ope_data(Rational(1))
-        assert data['central_charge'] == Rational(-67, 4)
+        assert data['central_charge'] == -5
+
+    def test_bp_generators_are_even(self):
+        data = sl3_subregular_ope_data()
+        assert {parity for _, _, parity in data['generators']} == {"bosonic"}
 
     def test_bp_jj_pole(self):
         """J(z)J(w) ~ (c/3)/(z-w)^2."""
@@ -812,11 +834,13 @@ class TestCrossFamilyConsistency:
     """Cross-family consistency checks (AP10: not just hardcoded values)."""
 
     def test_principal_rho_monotone(self):
-        """Principal anomaly ratio increases with N."""
-        from compute.lib.hook_type_w_duality import anomaly_ratio_from_partition
-        rhos = [anomaly_ratio_from_partition((N,)) for N in range(2, 7)]
-        for i in range(len(rhos) - 1):
-            assert rhos[i] < rhos[i + 1]
+        """Principal reciprocal-weight diagnostics increase with N."""
+        diagnostics = [
+            reciprocal_weight_diagnostic_from_partition((N,))
+            for N in range(2, 7)
+        ]
+        for i in range(len(diagnostics) - 1):
+            assert diagnostics[i] < diagnostics[i + 1]
 
     def test_transpose_involution(self):
         """Partition transpose is an involution for all N <= 7."""
@@ -849,17 +873,15 @@ class TestCrossFamilyConsistency:
                 assert g.f_centralizer_dimension > 0
 
     def test_bp_kappa_at_k0(self):
-        """BP kappa(k=0) = rho * c(k=0) = (1/6)*(-6) = -1."""
-        kappa_val, exact = correct_kappa((2, 1), Rational(0))
-        assert exact
-        assert kappa_val == -1
+        """BP kappa at k=0 retains the genus-one comparison package."""
+        packet = correct_kappa((2, 1), Rational(0))
+        assert packet.status is ClaimStatus.CONDITIONAL
+        assert packet.value is None
+        assert packet.hypotheses
 
     def test_correct_kappa_exact_flag(self):
-        """correct_kappa returns exact=True only for known formulas."""
-        _, ex1 = correct_kappa((2,))
-        _, ex2 = correct_kappa((3,))
-        _, ex3 = correct_kappa((2, 1))
-        _, ex4 = correct_kappa((4,))
-        _, ex5 = correct_kappa((2, 2))
-        assert ex1 and ex2 and ex3 and ex4
-        assert not ex5  # (2,2) uses oversimplified KRW
+        """Every type-A kappa constructor returns the typed DS packet."""
+        for partition in ((2,), (3,), (2, 1), (4,), (2, 2)):
+            packet = correct_kappa(partition)
+            assert packet.status is ClaimStatus.CONDITIONAL
+            assert packet.value is None

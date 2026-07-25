@@ -890,7 +890,7 @@ def genus1_mc_torus_one_point(c_val, h_ext=None):
         <phi_h(z)>_{torus} = Tr_{H} phi_h q^{L_0 - c/24}
 
     For the stress tensor T (h=2):
-        <T>_{torus} = -2 pi i * partial_tau log Z(tau)
+        <T>_{torus} = q partial_q log Z(tau)
 
     For a general primary phi_h:
         <phi_h>_{torus} = sum_i C_{ii phi_h} chi_i(q)
@@ -899,11 +899,11 @@ def genus1_mc_torus_one_point(c_val, h_ext=None):
     through the genus-1, arity-1 component.
 
     For the VIRASORO algebra (single generator T with h=2):
-        <T>_{torus} = -2 pi i partial_tau log Z
-                    = -2 pi i partial_tau [(-c/24) log q + ...]
-                    = (pi c / (6 Im tau)) * (1 + ...)
+        <T>_{torus} = q partial_q log Z_1^Vir
+                    = -c/24 + sum_{n>=2} n q^n/(1-q^n)
 
-    This is the Eisenstein series E_2(tau) contribution.
+    This is not a pure E_2 multiple.  The determinant-line shadow
+    eta^{-kappa} has E_2 coefficient -kappa/24 = -c/48.
 
     The genus-1 shadow at arity 1: Sh^{(1,1)} constrains the
     torus one-point function of the generating field.
@@ -916,10 +916,10 @@ def genus1_mc_torus_one_point(c_val, h_ext=None):
     kappa = kappa_virasoro(c_r)
     F_1 = F_g_shadow(kappa, 1)
 
-    # The torus one-point function of T:
-    # <T>_{g=1} is proportional to E_2(tau)
-    # <T>_{g=1} = -(c/24) * E_2(tau) up to normalization
-    # The integrated version over M_{1,0} gives F_1 = kappa/24.
+    # The generic Virasoro vacuum one-point function has Casimir
+    # constant -c/24 plus oscillator terms from product n >= 2.  The
+    # determinant-line shadow has E_2 coefficient -kappa/24 = -c/48.
+    # The integrated scalar Hodge trace is F_1 = kappa/24.
 
     # AP15: E_2(tau) is QUASI-MODULAR, not holomorphic.
     # E_2(-1/tau) = tau^2 E_2(tau) + (6 tau)/(pi i)
@@ -929,7 +929,10 @@ def genus1_mc_torus_one_point(c_val, h_ext=None):
         'c': c_r,
         'kappa': kappa,
         'F_1': F_1,
-        'torus_one_point_T': -kappa / 12,  # coefficient of E_2*(tau) in <T>
+        'torus_one_point_T': -c_r / 24,  # constant term of generic vacuum block
+        'determinant_line_E2_coefficient': -kappa / 24,
+        'generic_vacuum_character_product_starts_at': 2,
+        'torus_one_point_is_pure_E2_multiple': False,
         'eisenstein_connection': 'E_2* quasi-modular (AP15)',
         'mc_genus1_arity1': True,
     }

@@ -43,6 +43,7 @@ from compute.lib.theorem_transport_transpose_sl4_engine import (
     kappa_complementarity_is_level_independent,
     kappa_sl4,
     self_dual_central_charge,
+    self_dual_level,
     sl4_orbit_data,
     transpose,
     x_diagonal,
@@ -222,10 +223,10 @@ class TestCentralChargeEven:
             assert c == expected
 
     def test_rectangular_c_formula(self):
-        """c(W^k(sl_4, f_{(2,2)}), k) = (7k-16)/(k+4)."""
+        """c(W^k(sl_4, f_{(2,2)}), k) = 15k/(k+4)-12k-8."""
         for kv in [Fraction(1), Fraction(5), Fraction(10)]:
             c = central_charge_even(4, (2, 2), kv)
-            expected = (7 * kv - 16) / (kv + 4)
+            expected = 15 * kv / (kv + 4) - 12 * kv - 8
             assert c == expected
 
     def test_principal_c_at_k1(self):
@@ -237,8 +238,8 @@ class TestCentralChargeEven:
         assert central_charge_even(4, (1, 1, 1, 1), Fraction(1)) == Fraction(3)
 
     def test_rectangular_c_at_k1(self):
-        """c(W^1(sl_4, f_{(2,2)})) = (7-16)/5 = -9/5."""
-        assert central_charge_even(4, (2, 2), Fraction(1)) == Fraction(-9, 5)
+        """c(W^1(sl_4, f_{(2,2)})) = 15/5 - 12 - 8 = -17."""
+        assert central_charge_even(4, (2, 2), Fraction(1)) == Fraction(-17)
 
     def test_coefficients_match_verified(self):
         """Symbolic coefficients c = (ak+b)/(k+4) match hardcoded values."""
@@ -258,8 +259,8 @@ class TestCentralChargeEven:
             central_charge_even(4, (4,), Fraction(-4))
 
     def test_c_is_rational_function(self):
-        """c(k) is exactly (ak+b)/(k+4) at 6 test levels."""
-        for lam in [(4,), (3, 1), (2, 2), (1, 1, 1, 1)]:
+        """The linear lanes have c(k) exactly (ak+b)/(k+4)."""
+        for lam in [(4,), (3, 1), (1, 1, 1, 1)]:
             a, b = central_charge_coefficients_even(4, lam)
             for kv in [Fraction(1), Fraction(2), Fraction(3),
                        Fraction(5), Fraction(7), Fraction(11)]:
@@ -267,8 +268,8 @@ class TestCentralChargeEven:
                 assert c == (a * kv + b) / (kv + 4)
 
     def test_c_leading_behavior(self):
-        """As k -> inf, c -> a (the leading coefficient)."""
-        for lam in [(4,), (3, 1), (2, 2), (1, 1, 1, 1)]:
+        """As k -> inf, c -> a on the linear lanes."""
+        for lam in [(4,), (3, 1), (1, 1, 1, 1)]:
             a, _ = central_charge_coefficients_even(4, lam)
             c_large = central_charge_even(4, lam, Fraction(10000))
             # c ~ a - stuff/k, so c is close to a for large k
@@ -289,10 +290,10 @@ class TestComplementarity:
             assert s == 18
 
     def test_rectangular_self_complementarity(self):
-        """c(2,2;k) + c(2,2;-k-8) = 14 for all k."""
+        """c(2,2;k) + c(2,2;-k-8) = 110 for all k."""
         for kv in [Fraction(1), Fraction(3), Fraction(5), Fraction(7)]:
             s = central_charge_complementarity(4, (2, 2), kv)
-            assert s == 14
+            assert s == 110
 
     def test_principal_trivial_level_independent(self):
         """c-complementarity is level-independent for (4) <-> (1,1,1,1)."""
@@ -316,11 +317,11 @@ class TestComplementarity:
         assert c_4 == c_1111
 
     def test_rectangular_complementarity_at_many_levels(self):
-        """Exhaustive test: c(2,2;k)+c(2,2;k')=14 for 20 levels."""
+        """Exhaustive test: c(2,2;k)+c(2,2;k')=110 for 20 levels."""
         for p in range(1, 21):
             kv = Fraction(p)
             s = central_charge_complementarity(4, (2, 2), kv)
-            assert s == 14, f"Failed at k={kv}: c+c' = {s}"
+            assert s == 110, f"Failed at k={kv}: c+c' = {s}"
 
     def test_principal_complementarity_at_many_levels(self):
         """Exhaustive test: c(4;k)+c(1,1,1,1;k')=18 for 20 levels."""
@@ -338,11 +339,11 @@ class TestKappaComplementarity:
     """Modular characteristic kappa complementarity."""
 
     def test_rectangular_kappa_complementarity(self):
-        """kappa(2,2;k) + kappa(2,2;k') = 70 for all k."""
-        # rho(2,2) = 5 and c+c' = 14, so kappa+kappa' = 5*14 = 70
+        """kappa(2,2;k) + kappa(2,2;k') = 550 for all k."""
+        # rho(2,2) = 5 and c+c' = 110, so kappa+kappa' = 5*110 = 550
         for kv in [Fraction(1), Fraction(3), Fraction(5), Fraction(7)]:
             ks = kappa_complementarity((2, 2), kv)
-            assert ks == 70
+            assert ks == 550
 
     def test_rectangular_kappa_level_independent(self):
         """kappa complementarity is level-independent for self-transpose (2,2)."""
@@ -365,9 +366,9 @@ class TestKappaComplementarity:
         assert kappa_sum == rho * C
 
     def test_kappa_at_k1_rectangular(self):
-        """kappa(2,2; k=1) = 5 * (-9/5) = -9."""
+        """kappa(2,2; k=1) = 5 * (-17) = -85."""
         kap = kappa_sl4((2, 2), Fraction(1))
-        assert kap == -9
+        assert kap == -85
 
 
 # =====================================================================
@@ -391,37 +392,27 @@ class TestRectangularOrbit:
         assert transpose((2, 2)) == (2, 2)
 
     def test_22_c_complementarity_proved(self):
-        """c(2,2;k)+c(2,2;-k-8) = 14 (VERIFIED, level-independent)."""
+        """c(2,2;k)+c(2,2;-k-8) = 110 (VERIFIED, level-independent)."""
         assert complementarity_is_level_independent((2, 2))
-        assert complementarity_constant_even((2, 2)) == 14
+        assert complementarity_constant_even((2, 2)) == 110
 
     def test_22_self_dual_central_charge(self):
-        """The self-dual central charge c* = 14/2 = 7."""
-        assert self_dual_central_charge((2, 2)) == 7
+        """The self-dual central charge c* = 110/2 = 55."""
+        assert self_dual_central_charge((2, 2)) == 55
 
-    def test_22_c_at_self_dual_is_not_achievable(self):
-        """c(k) = 7 has no solution: 7k-16 = 7k+28 is impossible.
-
-        The FF fixed point k* = -4 is the critical level.
-        The self-dual central charge c* = 7 is achieved only in the
-        limit k -> -4, which is the critical level singularity.
-        """
-        # c(k) = (7k-16)/(k+4). For c = 7: 7k-16 = 7(k+4) = 7k+28.
-        # -16 = 28: no solution.
-        # So the leading coefficient a=7 equals c*, meaning the self-dual
-        # level is formally infinite (or the critical level).
-        a, _ = central_charge_coefficients_even(4, (2, 2))
-        c_star = self_dual_central_charge((2, 2))
-        assert a == c_star  # This means (a-c*) = 0, no finite k* solution
+    def test_22_self_dual_value_is_principal_value(self):
+        """The self-dual value is a principal-value limit at k=-4."""
+        assert self_dual_level((2, 2)) is None
+        assert dual_level(4, Fraction(-4)) == Fraction(-4)
 
     def test_22_anomaly_ratio_matches_transpose(self):
         """rho(2,2) = rho((2,2)^t) since (2,2) is self-transpose."""
         assert anomaly_ratio_sl4((2, 2)) == anomaly_ratio_sl4(transpose((2, 2)))
 
     def test_22_kappa_complementarity(self):
-        """kappa(2,2;k)+kappa(2,2;k') = 70 = 5*14."""
+        """kappa(2,2;k)+kappa(2,2;k') = 550 = 5*110."""
         assert kappa_complementarity_is_level_independent((2, 2))
-        assert kappa_complementarity((2, 2), Fraction(1)) == 70
+        assert kappa_complementarity((2, 2), Fraction(1)) == 550
 
 
 # =====================================================================

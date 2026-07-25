@@ -122,7 +122,7 @@ def typed_firewall_objects() -> Tuple[str, ...]:
 
 
 def object_firewall_summary(algebra_name: str = "A") -> Dict[str, object]:
-    """Typed separation of the bar, dual, inversion, and bulk branches."""
+    """Typed separation of the bar, dual, inversion, and closed-sector branches."""
     return {
         "A": f"{algebra_name}: source chiral algebra",
         "B(A)": f"B({algebra_name}): chiral bar coalgebra complex",
@@ -137,7 +137,7 @@ def object_firewall_summary(algebra_name: str = "A") -> Dict[str, object]:
         ),
         "Z_ch^der(A)": (
             f"Z_ch^der({algebra_name}): chiral Hochschild "
-            "derived-centre bulk"
+            "derived-centre closed-sector"
         ),
         "forbidden_identifications": (
             "B(A) != A^i",

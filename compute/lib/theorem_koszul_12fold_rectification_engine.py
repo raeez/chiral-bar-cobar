@@ -15,7 +15,7 @@ UNCONDITIONAL EQUIVALENCES (i)-(x):
   (v)   Bar-cobar counit quasi-isomorphism                            PROVED
   (vi)  Barr-Beck-Lurie comparison equivalence                        PROVED
   (vii) Factorization homology degree-0 concentration                 PROVED
-  (viii)ChirHoch polynomial, degrees {0,1,2}                          CONDITIONAL
+  (viii)ChirHoch amplitude [0,2], Hilbert polynomial                  CONDITIONAL
   (ix)  Kac-Shapovalov det != 0 in bar-relevant range                 PROVED
   (x)   FM boundary acyclicity                                        PROVED
 
@@ -230,7 +230,7 @@ def _build_registry():
         ),
         KoszulItem(
             number='(viii)',
-            name='ChirHoch polynomial in degrees {0,1,2}',
+            name='ChirHoch amplitude [0,2] with Hilbert polynomial',
             status='one-way-consequence',
             proof_direction='forward_only',
             condition=(

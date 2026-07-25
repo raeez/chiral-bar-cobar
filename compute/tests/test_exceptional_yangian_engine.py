@@ -1,13 +1,9 @@
-"""Tests for the exceptional Yangian R-matrix engine.
+"""Tests for the exceptional Lie-theoretic compute layer.
 
-FRONTIER COMPUTATION: verifies R-matrix spectral decompositions,
-Yang-Baxter equation, RTT relations, Drinfeld polynomials, quantum
-deformation, and modular characteristic for all exceptional types
-(G_2, E_6, E_7, E_8).
-
-Multi-path verification: every major result is checked via 3+ independent
-paths (Casimir construction, spectral decomposition, direct computation,
-algebraic identity, trace condition).
+The suite checks root data, Casimir spectra, selected tensor-square
+decompositions, formal Drinfeld-polynomial labels, and the auxiliary
+classical-group calculations.  Status tests keep the exceptional
+Yang--Baxter, RTT, bar-comparison, and quantum-R obligations explicit.
 
 References:
     - compute/lib/exceptional_yangian_engine.py
@@ -421,10 +417,12 @@ class TestSpectralE6(unittest.TestCase):
         self.assertEqual(len(set(round(e, 10) for e in eigenvalues)),
                          len(eigenvalues))
 
-    def test_ybe_spectral(self):
-        """Yang-Baxter via spectral decomposition."""
+    def test_ybe_requires_triple_tensor_data(self):
+        """The tensor-square spectrum leaves the recoupling problem explicit."""
         result = self.sd.yang_baxter_spectral_check(1.5, 2.3)
-        self.assertTrue(result['passes'])
+        self.assertTrue(result['tensor_square_data_complete'])
+        self.assertFalse(result['ybe_evaluated'])
+        self.assertIsNone(result['passes'])
 
     def test_c_lambda_values(self):
         """Check specific c_lambda values for E_6."""
@@ -474,9 +472,11 @@ class TestSpectralE7(unittest.TestCase):
         self.assertAlmostEqual(c_dict[133], -21.0/2, places=8)
         self.assertAlmostEqual(c_dict[1463], 3.0/2, places=8)
 
-    def test_ybe_spectral(self):
+    def test_ybe_requires_triple_tensor_data(self):
         result = self.sd.yang_baxter_spectral_check(1.5, 2.3)
-        self.assertTrue(result['passes'])
+        self.assertTrue(result['tensor_square_data_complete'])
+        self.assertFalse(result['ybe_evaluated'])
+        self.assertIsNone(result['passes'])
 
 
 class TestSpectralE8(unittest.TestCase):
@@ -518,9 +518,11 @@ class TestSpectralE8(unittest.TestCase):
         omega7_comp = [c for c in summary['components'] if c['dim'] == 30380][0]
         self.assertAlmostEqual(omega7_comp['c_lambda'], 0.0, places=10)
 
-    def test_ybe_spectral(self):
+    def test_ybe_requires_triple_tensor_data(self):
         result = self.sd.yang_baxter_spectral_check(1.5, 2.3)
-        self.assertTrue(result['passes'])
+        self.assertTrue(result['tensor_square_data_complete'])
+        self.assertFalse(result['ybe_evaluated'])
+        self.assertIsNone(result['passes'])
 
 
 class TestSpectralG2(unittest.TestCase):
@@ -559,9 +561,11 @@ class TestSpectralG2(unittest.TestCase):
         adj = [c for c in summary['components'] if c['dim'] == 14][0]
         self.assertAlmostEqual(adj['c_lambda'], 0.0, places=10)
 
-    def test_ybe_spectral(self):
+    def test_ybe_requires_triple_tensor_data(self):
         result = self.sd.yang_baxter_spectral_check(1.5, 2.3)
-        self.assertTrue(result['passes'])
+        self.assertTrue(result['tensor_square_data_complete'])
+        self.assertFalse(result['ybe_evaluated'])
+        self.assertIsNone(result['passes'])
 
 
 # =====================================================================
@@ -606,7 +610,7 @@ class TestKappaFormula(unittest.TestCase):
 
 
 class TestKappaMultiPath(unittest.TestCase):
-    """Multi-path verification of kappa."""
+    """Internal consistency of the configured kappa formula."""
 
     def test_paths_agree(self):
         for name in ["G2", "E6", "E7", "E8"]:
@@ -628,7 +632,7 @@ class TestKappaMultiPath(unittest.TestCase):
 # =====================================================================
 
 class TestClassicalRMatrix(unittest.TestCase):
-    """Classical r-matrix eigenvalues from the bar complex."""
+    """Unit Casimir-kernel eigenvalues on tensor squares."""
 
     def test_e6_trace_zero(self):
         result = classical_r_matrix_eigenvalues("E6")
@@ -663,15 +667,15 @@ class TestClassicalRMatrix(unittest.TestCase):
 # =====================================================================
 
 class TestYBEDirect(unittest.TestCase):
-    """Direct Yang-Baxter verification for small representations."""
+    """Direct checks for the auxiliary orthogonal-group R-matrix."""
 
-    def test_g2_ybe(self):
-        """YBE for generic 7-dim R-matrix (G_2 fundamental)."""
+    def test_orthogonal_dimension_seven(self):
+        """YBE for the O(7) rational R-matrix."""
         result = yang_baxter_generic_orthogonal(7, 2.5, 1.5, 2.3)
         self.assertTrue(result['passes'])
 
-    def test_g2_ybe_alt_params(self):
-        """YBE for 7-dim with different kappa. Note the existing generic
+    def test_orthogonal_dimension_seven_alt_params(self):
+        """O(7) YBE at a second regular spectral point.  The generic
         check uses the additive YBE: R12(u) R13(u+v) R23(v), so
         all three spectral parameters u, v, u+v must avoid poles."""
         result = yang_baxter_generic_orthogonal(7, 2.5, 1.5, 3.7)
@@ -684,28 +688,19 @@ class TestYBEDirect(unittest.TestCase):
 
 
 class TestYBEMultiPath(unittest.TestCase):
-    """Multi-path YBE verification."""
+    """Exceptional status reports retain the triple-tensor obligation."""
 
-    def test_g2_multipath(self):
-        result = yang_baxter_multipath("G2", 1.5, 2.3)
-        self.assertTrue(result.get('path1_spectral', False) or
-                        result.get('path2_direct', False) or
-                        result.get('path3_algebraic', False))
-
-    def test_e6_multipath(self):
-        result = yang_baxter_multipath("E6", 1.5, 2.3)
-        self.assertTrue(result.get('path1_spectral', False) or
-                        result.get('path3_algebraic', False))
-
-    def test_e7_multipath(self):
-        result = yang_baxter_multipath("E7", 1.5, 2.3)
-        self.assertTrue(result.get('path1_spectral', False) or
-                        result.get('path3_algebraic', False))
-
-    def test_e8_multipath(self):
-        result = yang_baxter_multipath("E8", 1.5, 2.3)
-        self.assertTrue(result.get('path1_spectral', False) or
-                        result.get('path3_algebraic', False))
+    def test_type_specific_status(self):
+        for name in ("G2", "E6", "E7", "E8"):
+            with self.subTest(name=name):
+                result = yang_baxter_multipath(name, 1.5, 2.3)
+                self.assertFalse(result['exceptional_ybe_evaluated'])
+                self.assertIsNone(result['passes'])
+                self.assertEqual(result['status'],
+                                 'open_triple_tensor_recoupling')
+                self.assertTrue(
+                    result['tensor_square_spectrum']
+                    ['tensor_square_data_complete'])
 
 
 # =====================================================================
@@ -713,30 +708,33 @@ class TestYBEMultiPath(unittest.TestCase):
 # =====================================================================
 
 class TestRTT(unittest.TestCase):
-    """RTT relations via spectral decomposition."""
+    """RTT status after the tensor-square Casimir computation."""
 
     def test_e6_rtt(self):
         result = rtt_spectral_check("E6", 1.5, 2.3)
-        self.assertTrue(result['rtt_passes'])
-        self.assertEqual(result['rtt_implication_status'], 'finite_window_spectral_only')
+        self.assertIsNone(result['rtt_passes'])
+        self.assertTrue(result['tensor_square_data_complete'])
+        self.assertEqual(result['rtt_implication_status'],
+                         'open_triple_tensor_and_pbw')
         self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
         self.assertFalse(result['an_rtt_extrapolation'])
 
     def test_e7_rtt(self):
         result = rtt_spectral_check("E7", 1.5, 2.3)
-        self.assertTrue(result['rtt_passes'])
+        self.assertIsNone(result['rtt_passes'])
         self.assertEqual(result['missing_hypotheses'],
-                         EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[4:])
+                         EXCEPTIONAL_RTT_FINITE_WINDOW_HYPOTHESES[3:])
 
     def test_e8_rtt(self):
         result = rtt_spectral_check("E8", 1.5, 2.3)
-        self.assertTrue(result['rtt_passes'])
+        self.assertIsNone(result['rtt_passes'])
         self.assertFalse(result['full_exceptional_rtt_presentation_proved'])
 
     def test_g2_rtt(self):
         result = rtt_spectral_check("G2", 1.5, 2.3)
-        self.assertTrue(result['rtt_passes'])
-        self.assertEqual(result['rtt_implication_status'], 'finite_window_spectral_only')
+        self.assertIsNone(result['rtt_passes'])
+        self.assertEqual(result['rtt_implication_status'],
+                         'open_triple_tensor_and_pbw')
 
     def test_scope_report_blocks_type_a_extrapolation(self):
         for name in ["G2", "E6", "E7", "E8"]:
@@ -798,11 +796,13 @@ class TestDrinfeldPolynomials(unittest.TestCase):
 # =====================================================================
 
 class TestQuantumDeformation(unittest.TestCase):
-    """Perturbative quantum R-matrix expansion."""
+    """Auxiliary Casimir exponential and its epistemic boundary."""
 
     def test_e6_expansion_exists(self):
         result = quantum_r_matrix_expansion("E6", max_order=4)
         self.assertEqual(result['type'], "E6")
+        self.assertEqual(result['series'], 'exp(hbar*Omega)')
+        self.assertFalse(result['exceptional_quantum_r_matrix_constructed'])
         self.assertIn('components', result)
 
     def test_e7_expansion_leading(self):
@@ -838,27 +838,28 @@ class TestQuantumDeformation(unittest.TestCase):
 # =====================================================================
 
 class TestPoleStructure(unittest.TestCase):
-    """AP19: r-matrix poles are ONE LESS than OPE poles."""
+    """OPE and unit-Casimir pole inventories remain separate."""
 
     def test_e6_pole_structure(self):
         result = verify_pole_structure("E6")
-        self.assertTrue(result['ap19_satisfied'])
+        self.assertIsNone(result['ap19_satisfied'])
+        self.assertFalse(result['bar_collision_map_evaluated'])
         self.assertEqual(result['r_matrix_pole_orders'], [1])
 
     def test_e7_pole_structure(self):
         result = verify_pole_structure("E7")
-        self.assertTrue(result['ap19_satisfied'])
+        self.assertIsNone(result['ap19_satisfied'])
 
     def test_e8_pole_structure(self):
         result = verify_pole_structure("E8")
-        self.assertTrue(result['ap19_satisfied'])
+        self.assertIsNone(result['ap19_satisfied'])
 
     def test_g2_pole_structure(self):
         result = verify_pole_structure("G2")
-        self.assertTrue(result['ap19_satisfied'])
+        self.assertIsNone(result['ap19_satisfied'])
 
-    def test_pole_reduction_by_one(self):
-        """OPE has poles at z^{-2}, z^{-1}; r-matrix at z^{-1} only."""
+    def test_two_recorded_pole_inventories(self):
+        """The OPE and auxiliary kernel inventories retain their orders."""
         for name in ["G2", "E6", "E7", "E8"]:
             with self.subTest(name=name):
                 result = verify_pole_structure(name)
@@ -1078,11 +1079,11 @@ class TestFullComputation(unittest.TestCase):
 
 
 # =====================================================================
-# 17. Specific numerical value tests (independent verification)
+# 17. Specific numerical value tests
 # =====================================================================
 
 class TestNumericalValues(unittest.TestCase):
-    """Independent numerical verification of specific values."""
+    """Exact-value checks against the configured representation data."""
 
     def test_e6_c2_fund_exact(self):
         """C_2(27 of E_6) = 52/3 exactly."""

@@ -16,7 +16,7 @@ Path 1 (Saddle-point of MC free energy):
 
         Theta_{0,N}(z_1,...,z_N) = sum_{i<j} r(z_i - z_j)
 
-    where r(z) = Omega/z is the collision residue (AP19).  The associated
+    where the trace-form residue is r_k(z)=k*Omega/z (AP19).  The associated
     free energy on the Bethe vacuum sector is:
 
         F(u_1,...,u_M; theta_1,...,theta_N)
@@ -49,7 +49,8 @@ Path 3 (ODE/IM):
     the Bethe roots as turning points.
 
 Path 4 (R-matrix -> transfer matrix -> Bethe):
-    From r(z) = Omega/z (collision residue), construct R(u) = u I + P
+    From trace-form r_k(z)=k*Omega/z, pass to the normalized Yangian
+    kernel and construct R(u) = u I + P
     (Yang R-matrix).  Then T(u) = Tr_0 prod_j R_{0,j}(u - theta_j)
     is the transfer matrix.  Diagonalizing T(u)|psi> = Lambda(u)|psi>
     via the algebraic Bethe ansatz gives:
@@ -77,7 +78,7 @@ Conventions
 - Cohomological grading (|d| = +1), bar uses desuspension (AP45).
 - kappa(sl_2, k) = 3(k+2)/4 (AP1).
 - kappa(Vir_c) = c/2 (AP48).
-- Bar r-matrix r(z) = Omega/z has pole order ONE BELOW OPE (AP19).
+- Bar trace-form r-matrix r_k(z)=k*Omega/z has pole order ONE BELOW OPE (AP19).
 - R(u) = u I + P is the Yang R-matrix (additive spectral parameter).
 - a(u) = (u+1)^L, d(u) = u^L for homogeneous chain.
 - Periodic boundary conditions throughout.
@@ -159,7 +160,7 @@ class MCElementData:
 
     The MC element Theta_A lives in MC(Def_cyc^mod(A)).
     The genus-0 arity-2 projection gives the classical r-matrix:
-        r(z) = Res^{coll}_{0,2}(Theta_A) = Omega/z
+        r_k(z) = Res^{coll}_{0,2}(Theta_A) = k*Omega/z
     where Omega is the Casimir tensor (AP19: pole order one below OPE).
 
     For affine sl_2 at level k:
@@ -179,15 +180,15 @@ class MCElementData:
         return CASIMIR_SL2.copy()
 
     def classical_r_matrix(self, z: complex) -> np.ndarray:
-        """Classical r-matrix r(z) = Omega/z.
+        """Trace-form classical r-matrix r_k(z) = k*Omega/z.
 
         AP19: the bar r-matrix has pole order ONE BELOW the OPE.
         The sl_2 OPE has poles at z^{-2} (Casimir) and z^{-1} (currents).
-        The r-matrix has a single pole at z^{-1}: r(z) = Omega/z.
+        The trace-form r-matrix has a single pole at z^{-1}: r_k(z)=k*Omega/z.
         """
         if abs(z) < 1e-15:
             raise ValueError("r-matrix singular at z=0")
-        return self.casimir_fund / z
+        return self.level * self.casimir_fund / z
 
     def quantum_R_matrix(self, u: complex) -> np.ndarray:
         """Quantum Yang R-matrix R(u) = u I + P.
@@ -207,7 +208,7 @@ def collision_residue_sl2(mc_data: MCElementData) -> Callable:
     """Return the classical r-matrix as the collision residue of Theta_A.
 
     This is the map:
-        Theta_A -> Res^{coll}_{0,2}(Theta_A) = r(z) = Omega/z
+        Theta_A -> Res^{coll}_{0,2}(Theta_A) = r_k(z) = k*Omega/z
 
     The collision residue extracts the leading singularity of the MC element
     as two insertion points collide on the curve.
@@ -1224,8 +1225,8 @@ def mc_to_bethe_full_chain(L: int, M: int,
     verifying each link in the chain.
 
     Steps:
-        1. MC element at level k -> collision residue r(z) = Omega/z
-        2. r(z) -> R(u) = u*I + P (quantization)
+        1. MC element at level k -> trace-form collision residue r_k(z)=k*Omega/z
+        2. normalized r(z) -> R(u) = u*I + P (quantization)
         3. R(u) satisfies YBE (= arity-3 MC)
         4. T(u) = Tr_aux prod R_{a,j}(u) (transfer matrix)
         5. [T(u), T(v)] = 0 (integrability from YBE)
@@ -1242,7 +1243,7 @@ def mc_to_bethe_full_chain(L: int, M: int,
     # Step 1: MC element -> collision residue
     mc = MCElementData(level=level)
     chain['kappa'] = mc.kappa
-    chain['step1_collision_residue'] = 'r(z) = Omega/z'
+    chain['step1_collision_residue'] = f'r_k(z) = {level}*Omega/z'
 
     # Step 2: r(z) -> R(u) = uI + P
     R_test = mc.quantum_R_matrix(1.0)

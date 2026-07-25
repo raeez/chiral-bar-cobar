@@ -36,7 +36,7 @@ a bulk operator O_bulk as a boundary operator on region A:
 
     O_bulk = sum_i alpha_i O^A_i
 
-For the shadow tower, the bulk operators are the shadow coefficients
+For the shadow tower, the closed-sector operators are the shadow coefficients
 (kappa, S_3, S_4, ...) and the boundary operators are restrictions of
 the modular Hamiltonian and its powers to the subregion A.
 

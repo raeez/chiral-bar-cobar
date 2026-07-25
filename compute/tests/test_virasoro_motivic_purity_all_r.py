@@ -1,30 +1,10 @@
-"""
-Independent-verification tests for the Virasoro Motivic Purity All-r
-Platonic chapter (chapters/theory/virasoro_motivic_purity_all_r_platonic.tex).
+"""Independent checks for the formal Virasoro Riccati sequence.
 
-Each ProvedHere claim in that chapter is backed by a test decorated with
-@independent_verification, asserting disjointness between the derivation
-path (used in the .tex proof) and the verification path (used in the test).
-
-The companion chapter virasoro_motivic_purity.tex already establishes the
-Riccati route; the present chapter adds a structurally distinct
-master-equation-recursion induction + a class-M extension + a structural
-theorem (shadow tower is associator-free). Accordingly, the test file
-uses four disjoint verification sources:
-
-  (a) Brown 2012 motivic MZV coaction triviality on Q subset MZV^mot_0
-  (b) Induction on Riccati recurrence Q-linearity (INDEPENDENT of the
-      master-equation recurrence used in the .tex proof: we verify the
-      inductive hypothesis by the Riccati expansion rather than rederiving
-      it from the master equation).
-  (c) Explicit SymPy verification at r = 12, 13, 14, 15 (numeric checks
-      beyond the pre-existing r <= 11 verification window).
-  (d) Drinfeld-Kontsevich associator is MZV-valued while the shadow
-      tower is rational; the comparison documents the associator-
-      dependence of the chiral coproduct versus the associator-freedom
-      of the shadow tower.
-
-No AI attribution. All work attributed to Raeez Lorgat.
+These computations establish rationality and finite coefficient
+agreement for a formal algebraic generating function.  They do not
+identify that sequence with the geometric ordered-residue tower.  The
+manuscript records that identification in the packages H_res and H_quad,
+and records motivic Tate factorization in H_mot and H_Tate.
 """
 
 from __future__ import annotations
@@ -124,14 +104,14 @@ def _S_r_via_riccati(c, r):
 
 
 # ---------------------------------------------------------------------------
-# Tests for thm:virasoro-s-r-motivic-purity-all-r
+# Tests for the formal Riccati sequence
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="thm:virasoro-s-r-motivic-purity-all-r",
+    claim="formal-virasoro-riccati-rationality",
     derived_from=[
-        "Master-equation shadow recursion (Vol I thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence on the candidate sequence R_r",
         "Strong induction on r with Q-rational base (kappa_ch, S_3, S_4)",
     ],
     verified_against=[
@@ -170,9 +150,9 @@ def test_s_r_rational_through_r_11_via_riccati():
 
 
 @independent_verification(
-    claim="thm:virasoro-s-r-motivic-purity-all-r",
+    claim="formal-virasoro-riccati-rationality",
     derived_from=[
-        "Master-equation shadow recursion (Vol I thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence on the candidate sequence R_r",
         "Strong induction on r with Q-rational base (kappa_ch, S_3, S_4)",
     ],
     verified_against=[
@@ -218,9 +198,9 @@ def test_s_r_rational_at_r_12_through_15_via_riccati():
 
 
 @independent_verification(
-    claim="thm:virasoro-s-r-motivic-purity-all-r",
+    claim="formal-virasoro-riccati-rationality",
     derived_from=[
-        "Master-equation shadow recursion (Vol I thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence on the candidate sequence R_r",
     ],
     verified_against=[
         "Brown 2012 motivic MZV inclusion Q subset MZV^mot_0 (arXiv:1102.1312)",
@@ -257,19 +237,19 @@ def test_s_r_numeric_at_rational_c():
             S_r = sp.together(S_r)
             assert S_r.is_rational, (
                 f"S_{r}(Vir_c={c_val}) not rational: {S_r} "
-                f"(transcendental leak would falsify motivic purity)"
+                f"(the formal rationality check has failed)"
             )
 
 
 # ---------------------------------------------------------------------------
-# Tests for thm:class-M-motivic-purity-algebras-with-Q-rational-OPE
+# Tests for formal central-charge substitutions
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="thm:class-M-motivic-purity-algebras-with-Q-rational-OPE",
+    claim="formal-class-m-central-charge-substitution",
     derived_from=[
-        "Master-equation shadow recursion (Vol I thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence on the candidate sequence R_r",
         "Strong induction on r with Q-rational base in parameter field F",
     ],
     verified_against=[
@@ -277,8 +257,7 @@ def test_s_r_numeric_at_rational_c():
         "Fateev-Lukyanov 1988 W_3 central charge formula",
     ],
     disjoint_rationale=(
-        "The class-M theorem extends purity to any chirally Koszul algebra "
-        "with Q-rational OPE. Verification: substitute the affine-KM "
+        "The check substitutes the affine-KM "
         "central charge c(V_k(sl_3)) = 8k/(k+3) and the W_3 central charge "
         "c(W_3) = 50 - 24/(k+3) - 24(k+3) into the Virasoro shadow formulas "
         "and check the Virasoro sub-algebra shadow coefficients stay in "
@@ -314,9 +293,9 @@ def test_class_m_propagation_to_affine_km_and_w3():
 
 
 @independent_verification(
-    claim="thm:class-M-motivic-purity-algebras-with-Q-rational-OPE",
+    claim="formal-class-m-central-charge-substitution",
     derived_from=[
-        "Master-equation shadow recursion (Vol I thm:virasoro-shadow-recurrence)",
+        "Formal quadratic recurrence on the candidate sequence R_r",
     ],
     verified_against=[
         "Direct sympy polynomial arithmetic at integer lattice parameters",
@@ -351,12 +330,12 @@ def test_class_m_propagation_to_lattice_voa():
 
 
 # ---------------------------------------------------------------------------
-# Tests for prop:mzv-would-enter-at-what-weight
+# Tests for the coefficient field of the formal sequence
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="prop:mzv-would-enter-at-what-weight",
+    claim="formal-riccati-period-content",
     derived_from=[
         "Brown 2012 motivic MZV weight grading MZV^mot = oplus MZV^mot_w",
         "Master-equation shadow recursion",
@@ -366,9 +345,7 @@ def test_class_m_propagation_to_lattice_voa():
         "Numerical rationality at 6 c-values crossed with 10 r-values",
     ],
     disjoint_rationale=(
-        "The proposition: no odd-zeta coefficient can enter S_r^mot(Vir_c) "
-        "at any weight. Derivation uses Brown's weight-grading of "
-        "MZV^mot. Verification: compute S_r at rational c and check it "
+        "The check computes the formal coefficient at rational c and verifies it "
         "is itself a pure rational number (which would rule out any "
         "transcendental contribution including all odd zetas). The "
         "Riccati path provides an additional algebraicity check "
@@ -401,37 +378,30 @@ def test_no_odd_zeta_at_any_tested_weight():
 
 
 # ---------------------------------------------------------------------------
-# Tests for thm:structural-reason-for-purity
+# Tests for formal algebraicity
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="thm:structural-reason-for-purity",
+    claim="formal-riccati-coefficients-rational",
     derived_from=[
         "Etingof-Kazhdan 1998 Drinfeld-associator-dependence of chiral coproduct",
         "Drinfeld 1990 KZ associator is MZV^mot-valued",
     ],
     verified_against=[
-        "Bar-complex construction B(A) = T^c(s^{-1} bar A) is associator-free",
+        "Formal binomial expansion over Q(c)",
         "Brown 2012 period map trivial on Q",
     ],
     disjoint_rationale=(
-        "Derivation: the Drinfeld associator Phi_KZ is the UNIQUE carrier "
-        "of MZV content in the Etingof-Kazhdan quantisation of the chiral "
-        "coproduct. Verification: the bar complex B(A) = T^c(s^{-1} bar A) "
-        "is constructed from OPE residues only (deconcatenation coproduct "
-        "+ bar differential from residue products); no associator appears "
-        "in the construction, hence no MZV content can enter the shadow "
-        "tower. The two paths are structurally distinct: derivation "
-        "inspects what enters Phi_KZ; verification inspects what does "
-        "NOT enter B(A)."
+        "The check is internal to the formal generating function: its "
+        "binomial coefficients and input rational functions lie in Q(c). "
+        "A geometric or motivic interpretation requires the manuscript's "
+        "separate residue and Tate-factorization packages."
     ),
 )
-def test_structural_associator_freedom_of_shadow():
-    """Structural check: the Riccati generating function H(t) (which
-    derives directly from the bar complex) has NO MZV-valued coefficients
-    at any tested order; hence the shadow tower is structurally
-    associator-free.
+def test_formal_riccati_coefficients_are_rational():
+    """The formal Riccati generating function has rational-function
+    coefficients at every tested order.
 
     One Poly built, all coefficients scanned. sp.simplify replaced by
     sp.together (cheaper) since the rational-function predicate works on
@@ -445,47 +415,39 @@ def test_structural_associator_freedom_of_shadow():
         coeff = sp.together(poly.nth(r))
         # Coefficient of H(t) at t^r must be rational in c.
         assert coeff.is_rational_function(c), (
-            f"H(t) coefficient at t^{r} is not in Q(c) (would indicate "
-            f"structural associator leak): {coeff}"
+            f"H(t) coefficient at t^{r} is not in Q(c): {coeff}"
         )
         # And must contain no zeta, pi constants.
         free = coeff.atoms(sp.zeta, sp.pi.func)
         assert not free, (
             f"H(t) coefficient at t^{r} contains transcendental "
-            f"constants {free} -- structural associator leak"
+            f"constants {free} -- formal coefficient-field failure"
         )
 
 
 # ---------------------------------------------------------------------------
-# Tests for cor:item-19-closed
+# Agreement of two formal presentations
 # ---------------------------------------------------------------------------
 
 
 @independent_verification(
-    claim="cor:item-19-closed",
+    claim="formal-recurrence-riccati-table-agreement",
     derived_from=[
-        "Theorem thm:virasoro-s-r-motivic-purity-all-r (master-equation)",
-        "Theorem thm:virasoro-motivic-purity (Riccati)",
-        "Theorem thm:structural-reason-for-purity (associator-free)",
+        "Formal quadratic recurrence",
+        "Formal Riccati generating function",
     ],
     verified_against=[
         "Brown 2012 period map Q -> R is identity on rationals",
-        "Three independent proof paths converge on same conclusion",
+        "Exact symbolic coefficient comparison",
     ],
     disjoint_rationale=(
-        "The corollary claims item 19 of the frontier list is closed. "
-        "Derivation: three proof paths (Riccati, master-equation, "
-        "structural). Verification: Brown's period-map identity plus "
-        "convergence of the three paths on the same S_r values at "
-        "r = 4..15. The three paths share only the base triple; the "
-        "convergence is the verification."
+        "The computation compares two formal presentations on a finite "
+        "coefficient window.  It leaves the geometric residue comparison "
+        "and motivic realization as separate obligations."
     ),
 )
-def test_three_proof_paths_converge():
-    """At each r in 4..8, the master-equation induction, the Riccati
-    expansion, and the closed-form tables agree as Q(c)-rational
-    functions. This is the numerical manifestation of the three-path
-    convergence that closes item 19."""
+def test_formal_riccati_and_table_coefficients_agree():
+    """The Riccati expansion and the formal table agree for r=4..8."""
     c = sp.Symbol("c")
     t = sp.Symbol("t")
     H = _riccati_H(c, 9)
@@ -508,8 +470,7 @@ def test_three_proof_paths_converge():
         diff = sp.simplify(S_r_riccati - expected)
         assert diff == 0, (
             f"Paths diverge at r={r}: Riccati gives {S_r_riccati}, "
-            f"closed-form gives {expected}; item 19 closure would be "
-            f"falsified."
+            f"formal table gives {expected}."
         )
 
 
@@ -524,11 +485,11 @@ def test_sources_disjoint_self_check():
     from compute.lib.independent_verification import registry
 
     claims = [
-        "thm:virasoro-s-r-motivic-purity-all-r",
-        "thm:class-M-motivic-purity-algebras-with-Q-rational-OPE",
-        "prop:mzv-would-enter-at-what-weight",
-        "thm:structural-reason-for-purity",
-        "cor:item-19-closed",
+        "formal-virasoro-riccati-rationality",
+        "formal-class-m-central-charge-substitution",
+        "formal-riccati-period-content",
+        "formal-riccati-coefficients-rational",
+        "formal-recurrence-riccati-table-agreement",
     ]
     for claim in claims:
         entries = [e for e in registry() if e.claim == claim]

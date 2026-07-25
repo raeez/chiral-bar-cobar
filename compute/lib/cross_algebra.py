@@ -39,7 +39,7 @@ ALGEBRA_REGISTRY = {
         "curvature_m0": "k",            # m_0 = k (double pole J_{(1)}J = k; manuscript: free_fields.tex)
         "kappa_formula": "k",          # kappa = k (the level; manuscript: free_fields.tex:1235)
         "complementarity_sum": None,  # no DS reduction
-        "koszul_dual": "Sym^ch(V*)",
+        "koszul_dual": "curved Sym^ch(V*[1])",
         "self_dual": False,
         "spectral_collapse": 1,
     },

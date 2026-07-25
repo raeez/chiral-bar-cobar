@@ -2,7 +2,8 @@
 Tests for E_3-algebra structure on bar complex — 45+ tests.
 
 Central finding: B(A) is E_2, NOT E_3. The derived center Z^der_ch(A)
-carries E_3 by Higher Deligne Conjecture.
+carries E_3 by Higher Deligne only for E_2/E_infty input; genuinely E_1
+input gives only E_2.
 """
 
 import pytest
@@ -136,6 +137,7 @@ class TestEnOnBar:
     def test_e3_lives_on_derived_center(self):
         info = en_structure_on_bar(3)
         assert 'derived center' in info.get('where_it_lives', '').lower()
+        assert info.get('input_scope') == 'E_2 or E_infty for E_3; E_1 gives E_2'
 
 
 # ============================================================

@@ -174,7 +174,7 @@ OBJECT_FIREWALLS = {
     "A^i": "bar cohomology/Koszul-dual coalgebra H^*(B(A))",
     "A^!": "Verdier/continuous-linear dual branch under finite-type or completed hypotheses",
     "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
-    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre bulk",
+    "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/derived-centre closed-sector",
 }
 
 GENUS4_FINITE_SCOPE_CERTIFICATION = {

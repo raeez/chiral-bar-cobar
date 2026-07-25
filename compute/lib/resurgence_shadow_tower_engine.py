@@ -17,7 +17,7 @@ Consequences certified by the local manuscript and compute surfaces:
 What is not certified here.  Scalar coefficients, finite Pade windows, and
 finite arity-shadow windows do not by themselves prove Borel summability,
 median resummation, a Stokes automorphism, alien derivatives, a unique
-nonperturbative completion, or a Koszul-dual bulk sector.  Functions retaining
+nonperturbative completion, or a Koszul-dual closed-sector actor.  Functions retaining
 legacy names such as ``stokes_multiplier_n`` or ``median_borel_sum`` therefore
 return formal diagnostics or analytic hypotheses, not promoted theorems.
 
@@ -110,14 +110,14 @@ def certification_report() -> Dict[str, Any]:
 
 
 def object_firewall() -> Dict[str, str]:
-    """Canonical separation of algebra, bar, Verdier dual, and bulk objects."""
+    """Canonical separation of algebra, bar, Verdier dual, and closed-sector objects."""
     return {
         'A': 'algebra',
         'B(A)': 'bar coalgebra T^c(s^{-1} Abar)',
         'Omega(B(A))': 'bar-cobar inversion of A, not Koszul duality',
         'A^i': 'bar cohomology coalgebra H^* B(A)',
         'A^!': 'Verdier/continuous-linear dual algebra branch',
-        'Z_ch^der(A)': 'Hochschild derived centre/bulk, not Koszul dual',
+        'Z_ch^der(A)': 'Hochschild derived centre/closed-sector, not Koszul dual',
     }
 
 
@@ -1263,7 +1263,7 @@ def koszul_complementarity_np(c_val: float, hbar: float,
     is not certified as a nonperturbative completion.  A, B(A), A^i,
     A^!, and Z_ch^der(A) remain distinct: Omega(B(A)) = A is bar-cobar
     inversion; A^! is the Verdier/continuous-linear dual branch; the
-    Hochschild bulk is not Koszul dual.
+    Hochschild closed-sector is not Koszul dual.
     """
     kappa = kappa_virasoro(c_val)
     kappa_dual = kappa_virasoro(26.0 - c_val)  # Verdier scalar branch for Vir
@@ -1292,7 +1292,7 @@ def koszul_complementarity_np(c_val: float, hbar: float,
         'F_np': F_np,
         'F_np_certification': FINITE_WINDOW_DIAGNOSTIC,
         'nonperturbative_completion_certified': False,
-        'dual_branch': 'Verdier scalar branch A^!, not bar-cobar inversion and not Hochschild bulk',
+        'dual_branch': 'Verdier scalar branch A^!, not bar-cobar inversion and not Hochschild closed-sector',
         'object_firewall': object_firewall(),
         'exact': exact,
         'is_self_dual': is_self_dual,

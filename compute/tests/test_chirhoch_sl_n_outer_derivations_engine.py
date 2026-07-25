@@ -1,62 +1,49 @@
-r"""Tests for chirhoch_sl_n_outer_derivations_engine.py.
+"""Independent arithmetic guards for the affine type-A H1 audit."""
 
-Verifies the affine sl_N FR4 surface
+from __future__ import annotations
 
-    dim ChirHoch^1(V_k(sl_N)) = dim(sl_N) = N^2 - 1
-
-for N = 2, ..., 8 at generic level.
-"""
+import pytest
 
 from compute.lib.chirhoch_sl_n_outer_derivations_engine import (
+    CHART_H1_OBLIGATION,
+    affine_sl_n_outer_derivation_audit,
     compute_chirhoch1_affine_sl_n,
     verify_fr4_conjecture,
 )
 
 
-def test_chirhoch1_affine_sl2():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 3
-    assert compute_chirhoch1_affine_sl_n(2) == expected
-    assert verify_fr4_conjecture()[2] == (expected, expected, True)
+@pytest.mark.parametrize("N", range(2, 9))
+def test_exact_adjoint_zero_mode_dimension(N):
+    audit = affine_sl_n_outer_derivation_audit(N)
+    expected = N * N - 1
+    assert audit.lie_dimension == expected
+    assert audit.adjoint_zero_mode_dimension == expected
+    assert audit.known_inner_zero_mode_dimension == expected
 
 
-def test_chirhoch1_affine_sl3():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 8
-    assert compute_chirhoch1_affine_sl_n(3) == expected
-    assert verify_fr4_conjecture()[3] == (expected, expected, True)
+@pytest.mark.parametrize("N", range(2, 9))
+def test_full_chart_quotient_is_withheld(N):
+    audit = affine_sl_n_outer_derivation_audit(N)
+    assert audit.chart_chirhoch1_dimension is None
+    assert compute_chirhoch1_affine_sl_n(N) is None
+    assert audit.status == "open-complete-chiral-derivation-quotient"
+    assert audit.resolution_obligation == CHART_H1_OBLIGATION
 
 
-def test_chirhoch1_affine_sl4():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 15
-    assert compute_chirhoch1_affine_sl_n(4) == expected
-    assert verify_fr4_conjecture()[4] == (expected, expected, True)
+def test_family_report_contains_exact_arithmetic_and_open_status():
+    report = verify_fr4_conjecture()
+    assert set(report) == set(range(2, 9))
+    for N, audit in report.items():
+        assert audit.lie_dimension == N * N - 1
+        assert audit.chart_chirhoch1_dimension is None
 
 
-def test_chirhoch1_affine_sl5():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 24
-    assert compute_chirhoch1_affine_sl_n(5) == expected
-    assert verify_fr4_conjecture()[5] == (expected, expected, True)
+def test_critical_level_has_separate_scope():
+    with pytest.raises(ValueError, match="critical"):
+        affine_sl_n_outer_derivation_audit(5, -5)
 
 
-def test_chirhoch1_affine_sl6():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 35
-    assert compute_chirhoch1_affine_sl_n(6) == expected
-    assert verify_fr4_conjecture()[6] == (expected, expected, True)
-
-
-def test_chirhoch1_affine_sl7():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 48
-    assert compute_chirhoch1_affine_sl_n(7) == expected
-    assert verify_fr4_conjecture()[7] == (expected, expected, True)
-
-
-def test_chirhoch1_affine_sl8():
-    # VERIFIED [DC] dim(sl_N)=N^2-1 [LT] Frenkel-Ben-Zvi: HH^1(V_k(g))=g as g-module
-    expected = 63
-    assert compute_chirhoch1_affine_sl_n(8) == expected
-    assert verify_fr4_conjecture()[8] == (expected, expected, True)
+@pytest.mark.parametrize("value", [1, 0, -2, 2.5, "sl2"])
+def test_invalid_rank(value):
+    with pytest.raises(ValueError):
+        affine_sl_n_outer_derivation_audit(value)

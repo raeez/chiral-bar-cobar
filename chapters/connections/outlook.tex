@@ -43,27 +43,24 @@ statement is used as proof input for a Vol~I theorem.
  shifted-symplectic/BV upgrade only under perfectness and
  non-degeneracy
  & C0/C1 \ClaimStatusProvedHere; C2 \ClaimStatusConditional \\
-\textbf{D} & Modular characteristic
- & $F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
- +\delta F_g^{\mathrm{cross}}(\cA)$, with
- $F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$; on the uniform-weight
- scalar lane,
- $\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$
+\textbf{D} & Modular trace
+ & $\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\Def_g)$ for $g\geq2$;
+ $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ under $H_D^K$;
+ $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$
+ under $H_D^{\mathrm{graph}}$
  \textup{(}Thms~\ref{thm:modular-characteristic},
  \ref{thm:genus-universality}\textup{)}
- & scalar lane \ClaimStatusProvedHere; all-weight/cross-channel
- \ClaimStatusConditional \\
+ & four comparison packages \ClaimStatusConditional \\
 \textbf{H} & Chiral Hochschild
- & Chiral, not topological or categorical, Hochschild cohomology:
- amplitude $[0,2]$ for PBW Koszul inputs with
- $E_\infty$-chiral completion; symmetric $E_1$-only and
- non-generic class~M cases remain conjectural
- \textup{(}Thm~\ref{thm:main-koszul-hoch},
- Cor.~\ref{cor:hochschild-averaging-symmetric},
- Conjs.~\ref{conj:hochschild-concentration-E1-only},
- \ref{conj:hochschild-concentration-class-M-non-generic}\textup{)}
- & generic PBW surface \ClaimStatusProvedHere; exceptional surfaces
- \ClaimStatusConjectured
+ & A family datum $H_H(\cA;S)$ gives
+ $\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S$.
+ Bakalov--De Sole--Kac give support $\{0,2,3\}$ for Virasoro and
+ dimensions $(2,1,0,\ldots)$ for the rank-one even superboson after a
+ bounded-to-chart quasi-isomorphism.  A perfect degree-$d$ pairing
+ supplies the separate Koszul-dual degree reflection
+ \textup{(}Thm~\ref{thm:main-koszul-hoch}\textup{)}
+ & family support \ClaimStatusConditional; bounded benchmarks
+ \ClaimStatusProvedElsewhere
 \end{tabular}
 \end{center}
 
@@ -72,14 +69,18 @@ The five objects remain distinct throughout:
 \[
 \cA,\qquad
 \barB^{\mathrm{ch}}(\cA),\qquad
-\cA^i := H^*(\barB^{\mathrm{ch}}(\cA)),\qquad
-\cA^! := \mathbb D_X(\cA^i),\qquad
+\cA^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R),\qquad
+K_X(\cA):=\mathbb D_{\Ran}\barB^{\mathrm{ch}}(\cA),\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
 \]
-The counit $\Omegach\barBch(\cA)\to\cA$ is bar-cobar inversion.
-It is not the definition of the Verdier-side Koszul dual~$\cA^!$,
-and $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the chiral Hochschild
-derived centre, not a bar coalgebra.
+The counit $\Omegach\barBch(\cA)\to\cA$ is bar--cobar reconstruction.
+The maps
+$q_\cA\colon\cA^{\mathrm i}\to\barBch_X(\cA)$,
+$\mathbb D(q_\cA)\colon K_X(\cA)\to
+\mathbb D_{\Ran}(\cA^{\mathrm i})$, and
+$\nu_\cA\colon K_X(\cA)\to\cA^!$ give the quadratic, Verdier, and
+chosen-pair comparisons.  The last object is the chiral Hochschild
+derived centre.
 
 \smallskip\noindent
 The modular $L_\infty$ convolution algebra
@@ -242,7 +243,6 @@ Calabi--Yau realizations belong to the compatibility statements in
 
 \section{Factorization-envelope technology}
 \label{sec:concordance-nishinaka-vicedo}
-\index{Nishinaka|textbf}
 \index{Vicedo|textbf}
 \index{factorization envelope!Lie conformal|textbf}
 
@@ -255,10 +255,12 @@ datum $\Pi_X(L)$ (Construction~\ref{constr:v1-platonic-package})
 organizes the resulting data into a modular package with six primary
 entries: factorization envelope, bar coalgebra, universal MC class,
 determinant line, spectral branch object, and quartic resonance class.
-The bar entry is not the Koszul dual algebra. It first produces the
-bar-dual coalgebra \(A^i=H^*(B(A))\); Verdier duality then gives
-\(A^!\) only on the finite-type or completed Koszul surface. The
-successive shadows descend from this typed package.
+The bar entry is the full coalgebra~$B_X(A)$. A presentation supplies
+$A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and
+$q_A\colon A^{\mathrm i}\to B_X(A)$; Verdier duality supplies
+$K_X(A)=\mathbb D_{\Ran}B_X(A)$ and~$\mathbb D(q_A)$. A chosen pair
+supplies $\nu_A\colon K_X(A)\to A^!$ on the finite-type or completed
+Koszul surface. The successive shadows descend from this typed package.
 
 % ======================================================================
 
@@ -350,9 +352,10 @@ non-rational lattice algebras, or roots of unity.
  Theorem~\ref{thm:bar-cobar-isomorphism-main}. The carrier is
  six-functor base change for the Ran prestack over
  $\overline{\mathcal M}_{g,n}$, including boundary divisors. The
- precise consequence is the genus-$g\geq2$ scalar lane of
- Theorem~D and clutching uniqueness for
- $\mathrm{obs}_g(\cA)/\kappa(\cA)=\lambda_g$.
+ precise consequence is the genus-$g\geq2$ $H_D^K$ lane of
+ Theorem~D and clutching uniqueness for the sign-normalized Hodge
+ character $(-1)^g\operatorname{ch}_g(\mathfrak O_g^K)/\kappa
+ =\lambda_g$.
 \item \emph{Pronilpotent modular-graph closure.} The carrier is a
  pronilpotent modular convolution algebra in which the
  weight-completed $\Theta_\cA$ is the connected stable-graph
@@ -463,7 +466,8 @@ K_\kappa(\cA,\cA^!) := \kappa(\cA) + \kappa(\cA^!).
 On the scalar Verdier surface where the Koszul partner and conductor
 have been constructed, Proposition~\ref{prop:complementarity-landscape}
 and Proposition~\ref{prop:bp-complementarity} give the values
-$0$, $13$, $(H_N-1)K_N$ for principal $\mathcal W_N$, and $98/3$
+$0$, $13$, $(H_N-1)K_N$ for principal $\mathcal W_N$, and the
+conditional $25/3$
 for Bershadsky--Polyakov. Thus principal $\mathcal W_3$ gives
 $250/3$, while principal $\mathcal W_4$ gives $533/2$ and already
 lies outside the finite Theorem~C landmark buckets. The conjectural
@@ -517,9 +521,9 @@ $\cW_3$ & $250/3 \approx 83$ &
  Prop.~\ref{prop:complementarity-landscape}(iii) \\
 $\cW_4$ & $533/2 = 266.5$ &
  Prop.~\ref{prop:complementarity-landscape}(iii) \\
-Bershadsky--Polyakov ($\kappa$-sum) & $98/3 \approx 33$
+Bershadsky--Polyakov ($\kappa$-sum, conditional) & $25/3 \approx 8.3$
  & Prop.~\ref{prop:bp-complementarity} \\
-Bershadsky--Polyakov ($c$-sum) & $196$
+Bershadsky--Polyakov ($c$-sum) & $50$
  & Prop.~\ref{prop:bp-complementarity} \\
 \end{tabular}
 \end{center}

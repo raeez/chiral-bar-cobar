@@ -63,7 +63,7 @@ CAUTION (AP24): kappa(Vir_c) + kappa(Vir_{26-c}) = 13, NOT 0.
 CAUTION (AP25): B(A) is a coalgebra; A^i=H^*(B(A)); A! comes from
                 A^i by Verdier/linear duality under finite-type or
                 completed hypotheses. Omega(B(A))=A is inversion.
-                Z_ch^der(A) is the bulk/derived centre.
+                Z_ch^der(A) is the closed-sector/derived centre.
 CAUTION (AP31): kappa = 0 does NOT imply Theta_A = 0.
 """
 

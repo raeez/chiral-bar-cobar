@@ -2,12 +2,13 @@
 genus-2 doubly-dynamical Yang-Baxter equation inscription
 (chapters/theory/genus_2_ddybe_platonic.tex).
 
-Four decorated tests, one per main theorem/corollary:
+Five decorated tests, one per main theorem/proposition/corollary:
 
 1. thm:genus-2-kzb-connection-platonic   (ProvedElsewhere, CEE09)
 2. thm:fay-trisecant-genus-2-specific    (ProvedElsewhere, Fay 1973 Cor. 2.5)
-3. thm:g2-face-model-bypass-scope-restricted (ProvedHere, scope-restricted)
-4. cor:g2-chi-minus-12                   (ProvedHere)
+3. thm:g2-face-model-bypass-scope-restricted (ProvedHere, exact degeneration)
+4. prop:g2-generic-ddybe-finite-window-evidence (NumericalEvidence)
+5. cor:g2-chi-minus-12                   (ProvedHere)
 
 Disjointness rationale recorded per decorator. Each test derives its
 expected value from a source DISJOINT from the source used to construct
@@ -18,6 +19,8 @@ Attribution: Raeez Lorgat. No AI attribution.
 """
 
 from __future__ import annotations
+
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -30,7 +33,10 @@ from compute.lib.face_model_ddybe_engine import (
     verify_g2_to_g1_degeneration,
     theta_g2_odd,
     theta1,
+    theta1_prime0,
 )
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 # ===================================================================
@@ -137,50 +143,57 @@ def test_fay_three_term_identity_at_genus_zero():
 @independent_verification(
     claim="thm:fay-trisecant-genus-2-specific",
     derived_from=[
-        "Fay 1973 Cor 2.5 three-term identity for the Szego kernel",
+        "Fay 1973 Cor 2.5 normalised Szego/prime-form identity",
     ],
     verified_against=[
-        "Jacobi identity for theta_1 at g=1 (sum of three products of theta_1)",
-        "Szego kernel formula S(z,w) = theta_1'(0) theta_1(z-w+e)/(theta_1(z-w) theta_1(e))",
+        "Weierstrass wp lattice sum with periods (1, tau)",
+        "Torus theta-prime form with the theta_1'(0, tau)^2 prefactor",
     ],
     disjoint_rationale=(
-        "The g=1 Szego kernel is constructed from theta_1 and an odd "
-        "half-period e; Fay Cor 2.5 is then a non-trivial consequence of "
-        "the classical Jacobi three-term theta identity "
-        "theta_1(u+v)theta_1(u-v)theta_1(w)^2 + cyclic = 0. The Jacobi "
-        "identity is proved in Whittaker-Watson Ch. 21 via Fourier-series "
-        "manipulation, disjoint from the theta-addition derivation."
+        "The right side uses the theta-prime-normalised Fay torus form; "
+        "the left side computes wp(a)-wp(b) from the defining lattice "
+        "sum. The lattice sum and the theta product are disjoint "
+        "representations of the same elliptic function identity, so the "
+        "test catches missing normalisation factors such as theta_1'(0)^2."
     ),
 )
-def test_fay_three_term_identity_at_genus_one_numerical():
-    """At g=1, verify the three-term Szego identity numerically using
-    theta_1 at tau=i, an odd half-period e=(1+tau)/2.
+def test_fay_torus_theta_prime_prefactor_identity():
+    """At g=1, verify the theta-prime-normalised Fay identity:
+
+        wp(a)-wp(b) =
+        -theta_1'(0)^2 theta_1(a+b) theta_1(a-b)
+        / (theta_1(a)^2 theta_1(b)^2).
+
+    The formerly asserted bare cyclic product of Szego kernels is not
+    this identity and fails numerically.
     """
     tau = 1.0j
-    e = 0.5 * (1.0 + tau)  # odd half-period
 
-    def theta1_prime0(t: complex) -> complex:
-        # Derivative of theta_1 at z=0 via series
-        q = np.exp(1j * np.pi * t)
-        s = 0.0 + 0.0j
-        for n in range(30):
-            s += (-1) ** n * (2 * n + 1) * q ** ((n + 0.5) ** 2)
-        return 2.0 * np.pi * s
+    def wp_lattice(z: complex, t: complex, cutoff: int = 180) -> complex:
+        total = 1.0 / (z * z)
+        for m in range(-cutoff, cutoff + 1):
+            for n in range(-cutoff, cutoff + 1):
+                if m == 0 and n == 0:
+                    continue
+                period = m + n * t
+                total += 1.0 / (z + period) ** 2 - 1.0 / period ** 2
+        return total
 
+    a = 0.2 + 0.1j
+    b = 0.33 + 0.07j
+    lhs = wp_lattice(a, tau) - wp_lattice(b, tau)
     t1p0 = theta1_prime0(tau)
-
-    def S(z: complex, w: complex) -> complex:
-        # Szego kernel with odd half-period e
-        return (t1p0 * theta1(z - w + e, tau)
-                / (theta1(z - w, tau) * theta1(e, tau)))
-
-    z1, z2, z3 = 0.2, 0.5, 0.8
-    S12 = S(z1, z2)
-    S23 = S(z2, z3)
-    S31 = S(z3, z1)
-    lhs = S12 * S23 + S23 * S31 + S31 * S12
-    assert abs(lhs) < 1e-6, (
-        f"g=1 Fay three-term failed: {lhs}"
+    rhs = (
+        -t1p0 * t1p0
+        * theta1(a + b, tau)
+        * theta1(a - b, tau)
+        / (theta1(a, tau) ** 2 * theta1(b, tau) ** 2)
+    )
+    residual = abs(lhs - rhs)
+    relative = residual / max(abs(lhs), abs(rhs), 1.0)
+    assert relative < 2e-7, (
+        f"g=1 Fay theta-prime normalisation failed: residual={residual}, "
+        f"relative={relative}"
     )
 
 
@@ -221,7 +234,7 @@ def test_ddybe_diagonal_omega_factorises_exactly():
     Felder R-matrix on the first tensor factor (up to the scalar
     theta_3 factor which cancels in weight ratios).
 
-    This is regime (i) of thm:g2-face-model-bypass-scope-restricted.
+    This is part (i) of thm:g2-face-model-bypass-scope-restricted.
     """
     tau = 1.0j
     result = verify_g2_to_g1_degeneration(
@@ -239,7 +252,7 @@ def test_ddybe_diagonal_omega_factorises_exactly():
 
 
 @independent_verification(
-    claim="thm:g2-face-model-bypass-scope-restricted",
+    claim="prop:g2-generic-ddybe-finite-window-evidence",
     derived_from=[
         "Face-model Boltzmann weights from Definition def:g2-face-boltzmann "
         "(theta ratios in chapter genus_2_ddybe_platonic.tex)",
@@ -261,7 +274,7 @@ def test_ddybe_diagonal_omega_factorises_exactly():
     ),
 )
 def test_ddybe_generic_omega_numerical_T4():
-    """Regime (ii) of thm:g2-face-model-bypass-scope-restricted:
+    """Numerical-evidence proposition for generic Omega:
     generic-Omega DDYBE to residual < 10^{-4} (tier T4 of the tolerance
     ladder).
     """
@@ -410,6 +423,44 @@ def test_tolerance_ladder_monotonic():
     """
     T1, T2, T3, T4 = 1e-12, 1e-10, 1e-6, 1e-4
     assert T1 < T2 < T3 < T4
+
+
+def test_ddybe_status_surfaces_are_split():
+    """The DDYBE chapter must not bury generic-Omega numerical evidence
+    inside the exact degeneration theorem.
+    """
+    text = (REPO_ROOT / "chapters/theory/genus_2_ddybe_platonic.tex").read_text()
+    theorem_start = text.index(
+        r"\begin{theorem}[Exact diagonal/separating degeneration to Felder DYBE;"
+    )
+    theorem_end = text.index(r"\end{theorem}", theorem_start)
+    theorem_text = text[theorem_start:theorem_end]
+    proposition_start = text.index(
+        r"\begin{proposition}[Generic-\texorpdfstring{$\Omega$}{Omega} DDYBE"
+    )
+    proposition_end = text.index(r"\end{proposition}", proposition_start)
+    proposition_text = text[proposition_start:proposition_end]
+
+    assert r"\ClaimStatusProvedHere" in theorem_text
+    assert r"\ClaimStatusNumericalEvidence" in proposition_text
+    assert "not a proof of the" in proposition_text
+    assert "full generic-$\\Omega$ DDYBE" in proposition_text
+    assert "relative < 1e-4" not in theorem_text
+    assert r"\texttt{conj:g2-ddybe} carries \texttt{\ClaimStatusConjectured}" in text
+
+
+def test_engine_label_anchor_remark_is_current():
+    """The local corrigendum must no longer claim that the engine labels
+    are undeclared; they are declared in the main higher-genus chapter.
+    """
+    text = (REPO_ROOT / "chapters/theory/genus_2_ddybe_platonic.tex").read_text()
+    higher = (REPO_ROOT / "chapters/theory/higher_genus_modular_koszul.tex").read_text()
+
+    assert r"\label{prop:g2-nonsep-degen}" in higher
+    assert r"\label{prop:g2-sep-degen}" in higher
+    assert "both labels are now declared" in text
+    assert "not declared in" not in text
+    assert r"Remark~\ref{rem:g2-nonseparating-untested}" in text
 
 
 if __name__ == "__main__":

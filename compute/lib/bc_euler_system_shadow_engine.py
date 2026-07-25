@@ -192,7 +192,8 @@ def get_kappa(family: str, param: float) -> float:
 def get_koszul_dual_param(family: str, param: float) -> float:
     """Koszul dual parameter. AP24: kappa + kappa' = 0 for KM, = 13 for Vir."""
     if family == "heisenberg":
-        return -param  # H_k^! has kappa = -k (AP33: H_k^! != H_{-k} as algebras)
+        # Scalar kappa(H_k^!) = -k; AP33 keeps the object on the curved branch.
+        return -param
     elif family == "virasoro":
         return 26.0 - param  # Vir_c^! = Vir_{26-c}
     elif family == "affine_sl2":

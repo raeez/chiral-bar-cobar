@@ -82,7 +82,7 @@ class TestStructuralFirewalls:
         )
 
     def test_duality_firewall(self):
-        """A^!, B(A), A^i, and the Hochschild bulk are not conflated."""
+        """A^!, B(A), A^i, and the Hochschild closed-sector are not conflated."""
         firewall = typed_duality_firewall()
         assert firewall["roles"]["Omega(B(A))"] == "bar-cobar inversion recovering A"
         assert "Verdier/continuous-linear dual" in firewall["roles"]["A^!"]

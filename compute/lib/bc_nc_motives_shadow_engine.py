@@ -24,7 +24,8 @@ MATHEMATICAL CONTENT:
 
 3. HOCHSCHILD HOMOLOGY AS NC DE RHAM:
    HH_*(B(A)) = chiral Hochschild homology.
-   Theorem H: ChirHoch*(A) polynomial in degrees {0, 1, 2} for Koszul A.
+   Theorem H: ChirHoch*(A) has amplitude [0, 2] and Hilbert polynomial
+   in t for Koszul A.
 
 4. CYCLIC HOMOLOGY AND SHADOW PERIODS:
    HC_*(D) = cyclic homology.  The shadow period = pairing with Theta_A.
@@ -51,7 +52,9 @@ CRITICAL PITFALLS (from CLAUDE.md):
   - AP20: kappa(A) vs kappa_eff distinction.
   - AP24: kappa + kappa' != 0 for Virasoro (sum = 13).
   - AP25/AP34: B(A) != D_Ran(B(A)) != Omega(B(A)).
-  - AP33: H_k^! = Sym^ch(V*) != H_{-k}.
+  - AP33: at k != 0, H_k^! is the curved second-kind Sym^ch(V*[1])
+    branch; it is not H_{-k} and not the uncurved polynomial centre.
+    Only scalar kappa agrees with kappa(H_{-k}).
   - AP48: kappa depends on the full algebra, not the Virasoro subalgebra.
 
 Verification paths (multi-path mandate, >= 3 per claim):
@@ -130,7 +133,8 @@ def kappa(family: str, **params) -> Fraction:
 def kappa_dual(family: str, **params) -> Fraction:
     """Modular characteristic of the Koszul dual kappa(A!).
 
-    Heisenberg H_k:  H_k^! = Sym^ch(V*), kappa(H_k^!) = -k  (AP33)
+    Heisenberg H_k:  H_k^! is the curved second-kind Sym^ch(V*[1])
+                     branch, with kappa(H_k^!) = -k  (AP33)
     Affine sl_2:     kappa(A!) = 3(-k-2*h^v+h^v)/(2h^v) = -kappa  (FF involution)
     Virasoro Vir_c:  Vir_c^! = Vir_{26-c}, kappa = (26-c)/2  (AP24: sum = 13, NOT 0)
     W_3:             kappa_dual = 5*(c_dual)/6 where c_dual uses FF involution
@@ -364,8 +368,8 @@ def shadow_k1_monodromy(family: str, **params) -> Optional[int]:
 def hh_dimension(family: str, degree: int, **params) -> Optional[int]:
     """Dimension of HH_n(B(A)) = chiral Hochschild homology in degree n.
 
-    Theorem H (thm:hochschild-polynomial-growth): For Koszul A, ChirHoch*(A)
-    is polynomial in degrees {0, 1, 2}.
+    Theorem H (thm:hochschild-polynomial-growth): For Koszul A,
+    ChirHoch*(A) has amplitude [0, 2] and Hilbert polynomial in t.
 
     Heisenberg H_k (quadratic, rank 1):
       HH_0 = k[x]     (polynomial ring in one variable)  => dim = infinity
@@ -928,7 +932,7 @@ def verify_k0_koszul_duality(family: str, **params) -> bool:
         rank_A_dual = rank_A
     elif family == "Heisenberg":
         rank_A_dual = k0_rank("Heisenberg", k=-params.get("k", Fraction(1)))
-        # H_k^! has rank 1 as well (Sym^ch(V*) has single Fock module)
+        # The curved second-kind Sym branch has rank 1 in this shadow model.
         rank_A_dual = 1
     else:
         rank_A_dual = rank_A

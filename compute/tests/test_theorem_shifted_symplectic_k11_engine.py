@@ -170,7 +170,7 @@ class TestAP25K11ConventionFirewall:
         assert report['bar_cobar_inversion'] == (
             'Omega(B(A))=A is bar-cobar inversion, not Koszul duality'
         )
-        assert 'Hochschild/bulk' in report['derived_center']
+        assert 'Hochschild/closed-sector' in report['derived_center']
         assert report['kernel_constants'] == {
             'affine_trace_raw': 'k*Omega_tr/z',
             'affine_kz': 'Omega/((k+h^vee)z)',

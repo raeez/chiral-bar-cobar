@@ -25,9 +25,11 @@ Verification paths (multi-path mandate: 3+ per claim):
   - Shadow metric and classification (Section L)
 """
 
-import pytest
 from fractions import Fraction
 from math import factorial
+from pathlib import Path
+
+import pytest
 
 from sympy import Rational, bernoulli, Symbol, sin, series
 
@@ -844,3 +846,13 @@ class TestFullDatum:
         """S_5 three methods agree in full datum."""
         datum = burns_full_datum()
         assert datum['S_5']['all_agree']
+
+    def test_full_datum_docstring_uses_closed_sector_c_slot(self):
+        """AP34: the Burns holographic package names C as closed-sector."""
+        source = (
+            Path(__file__).parents[2]
+            / "compute/lib/theorem_burns_f2_engine.py"
+        ).read_text()
+        assert "C = Z_ch^der(A)" in source
+        assert "Hochschild closed-sector descriptor" in source
+        assert "C_bulk" not in source

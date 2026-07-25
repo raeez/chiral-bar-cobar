@@ -1,6 +1,6 @@
 % !TEX root = ../../main.tex
 % ============================================================================
-% Part II; Platonic Introduction.
+% Part II; structural introduction.
 %
 % The Characteristic Datum Part opens with a deficiency. Classical
 % conformal field theory recognizes ONE shadow coordinate: the central
@@ -9,7 +9,7 @@
 % the rational landscape inherits this one-coordinate reading; every
 % "structural" theorem ends at $c$.
 %
-% The Platonic formulation says the
+% The structural formulation says the
 % one-coordinate reading is a shadow. The Koszul depth $\kappa(\cA)$
 % is the $r=2$ rung of an infinite shadow ladder
 % $S_\bullet(\cA) = \{S_2, S_3, S_4, S_5, S_6, S_7, S_8, \ldots\}$;
@@ -18,17 +18,18 @@
 % and the coset type $\mathrm{coset}(\cA)$ are four further invariants
 % genuinely independent of $\kappa$. Their assembly
 % $\varphi(\cA) = (p_{\max}, r_{\max}, \chi_{\VOA}, n_{\mathrm{strong}},
-% \mathrm{coset})$ is a complete invariant of the bar-complex structure
-% of $\cA$ (Theorem~\ref{thm:part-ii-fingerprint-complete-invariant});
+% \mathrm{coset})$ is the conditional reconstruction datum for the
+% bar-complex finite-window structure of $\cA$
+% (Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface});
 % the familiar four-class assignment G/L/C/M is its lossy coarse
 % projection onto the second coordinate.
 %
-% This chapter is the Platonic introduction to Part~II: a replacement of
+% This chapter is the structural introduction to Part~II: a replacement of
 % the single-coordinate framing to a fingerprint theorem schema with
-% one Platonic invariant and seven shadows. The eight sections of the
-% reconstituted Part~II are laid out, the five Platonic theorems stated,
+% one structural invariant and seven shadows. The eight sections of the
+% reconstituted Part~II are laid out, the five structural surfaces stated,
 % and the dependency map between existing Part~II chapters and the
-% Platonic theorems exhibited.
+% structural theorems exhibited.
 %
 % Structure:
 % \S0 Deficiency of the one-coordinate theory.
@@ -39,7 +40,7 @@
 % \S5 Higher $S_r$ coefficients through $r = 8$.
 % \S6 Chiral moonshine as a fingerprint orbit.
 % \S7 Higher-genus fingerprint.
-% \S8 Platonic endpoint: the completeness theorem.
+% \S8 Structural endpoint: the completeness theorem.
 %
 % Reconstituted $2026$-$04$-$16$ (Raeez Lorgat).
 % ============================================================================
@@ -48,20 +49,20 @@
 \label{ch:part-ii-platonic-introduction}
 
 The Bar--Cobar Engine of Part~\ref{part:bar-cobar-engine} produces, for
-each chart algebra $A_b = \End_\cC(b)$, a bar coalgebra $B(A_b)$ whose
-Koszul depth $\kappa(A_b)$ is the linear leading term of an entire
-shadow-obstruction tower
-$S_\bullet(A_b) = (S_2, S_3, S_4, S_5, \ldots)$. The Virasoro operator
+each chart algebra $A_b = \End_\cC(b)$, a bar coalgebra $B(A_b)$.
+Its ordered scalar residue tower is defined after a package
+$\mathsf H_{\mathrm{res}}(A_b;X)$ specifies the residue complex,
+collision maps, and scalar contractions.  The Virasoro operator
 product expansion
 \begin{equation}
  T(z)\,T(w) \;\sim\; \frac{c/2}{(z-w)^4}
  \;+\; \frac{2\,T(w)}{(z-w)^2}
  \;+\; \frac{\partial T(w)}{z-w}
 \end{equation}
-emits the central charge $c$, recovered as
-$\kappa(\Vir_c) = c/2 = S_2(\Vir_c)$. The classical narrative reads
-off this scalar and stops: one chiral algebra, one shadow, one
-coordinate.
+has central coefficient $c/2=\kappa(\Vir_c)$.  This coefficient is the
+arity-two local input for the normalized scalar coordinate supplied by
+$\mathsf H_{\mathrm{res}}$.  Higher coordinates require the transferred
+residue construction.
 
 The one-coordinate reading is a shadow. Every chiral algebra in
 the standard landscape carries, in addition to $\kappa$, four
@@ -74,39 +75,41 @@ of each other:
  \label{eq:part-ii-fingerprint}
 \end{equation}
 The first slot is the operator-product pole order; the second is
-the shadow depth (the index at which the shadow tower stabilizes or
-diverges); the third is the Hodge-filtered chiral Euler character;
+the depth of a constructed scalar residue tower; the third is the
+Hodge-filtered chiral Euler character;
 the fourth is the minimal strong-generator count of the
 strong-generating set compatible with the PBW filtration; the fifth
 is the isomorphism class of the commutant pair
 $(\Com(H_\kappa, \cA), \cA/\Com)$. The five-tuple $\varphi(\cA)$
-is a complete invariant of the bar-complex structure of $\cA$
-(Theorem~\ref{thm:part-ii-fingerprint-complete-invariant}); the
+is the conditional reconstruction datum for the bar-complex
+finite-window structure of $\cA$
+(Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}); the
 familiar four-class labelling of the standard landscape as
 $\mathrm{G}/\mathrm{L}/\mathrm{C}/\mathrm{M}$ is the lossy coarse
 projection of $\varphi$ onto the $r_{\max}$ coordinate restricted
 to $\kappa \ne 0$ (Theorem~\ref{thm:part-ii-quadrichotomy-coarse-projection}).
 
-The Virasoro climax of classical CFT, in this formulation, is
-the assertion that $\Vir_c$ has fingerprint
+The exact Virasoro local calculation fixes the pole-order and
+strong-generator slots.  Its typed fingerprint therefore begins
 \begin{equation}
- \varphi(\Vir_c) \;=\;
- \bigl(\,4,\; \infty,\; \chi_{\VOA}(\Vir_c),\; 1,\;
+ \varphi_{\mathrm{loc}}(\Vir_c) \;=\;
+ \bigl(\,4,\; r_{\max}^{\mathrm{res}},\; \chi_{\VOA}(\Vir_c),\; 1,\;
  \mathrm{coset}_{\mathrm{Vir}}\,\bigr),
 \end{equation}
-i.e.\ a single rung in an infinite stratification. The Feigin--Fuchs
-determinant
+where $r_{\max}^{\mathrm{res}}$ is determined by a compatible
+all-arity residue package.  The exact level-four vacuum Gram
+determinant is
 \begin{equation}
- \det G^{\Vir}_{\mathrm{wt} = 2}(c) \;=\; \tfrac{1}{2}\,c^2(5c + 22)
+ \det G^{\Vir}_{4}(c) \;=\; \tfrac{1}{2}\,c^2(5c + 22).
 \end{equation}
-produces, via the motivic shadow-tower lift
-(Theorem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}), the
-denominator bound $c^{r-3}(5c + 22)^{\lfloor (r-2)/2 \rfloor}$ for
-$S_r(\Vir_c)$ in the range $4\le r\le 8$; the weight-$1/2$ McKay--Thompson
+The multiplicity of this factor in higher scalar coordinates belongs
+to the denominator package of
+Chapter~\ref{ch:shadow-tower-higher-coefficients}.  The weight-$1/2$
+McKay--Thompson
 series of $V^\natural$ lift to universal elements of the twining
 fingerprint
 (Theorem~\ref{thm:part-ii-moonshine-via-fingerprint}); and the
-Platonic endpoint
+structural endpoint
 (Theorem~\ref{thm:part-ii-platonic-completeness}) assembles the
 five slots into a single canonical moduli-theoretic object.
 
@@ -114,7 +117,7 @@ five slots into a single canonical moduli-theoretic object.
 
 Part~II reconstituted carries eight sections indexed by shadow
 coordinate. The characteristic-datum chapters of the Bar--Cobar Engine
-are retained; this Platonic introduction orients the reader by
+are retained; this structural introduction orients the reader by
 laying out the deficiency, the ladder, the section architecture,
 and the five theorems.
 
@@ -183,59 +186,43 @@ charge is its weight-$2$ shadow.
 \section{The shadow tower}
 \label{sec:part-ii-shadow-tower}
 
-The Platonic backbone of Part~II is the shadow obstruction
-tower, inscribed in
-Appendix~\ref{app:nonlinear-modular-shadows}. We recall its
-definition and the five rungs $S_2$ through $S_8$ for use as a
-structural reference throughout Part~II.
+The structural backbone of Part~II is the ordered scalar residue
+tower.  Its local inputs and construction obligations are recorded in
+Chapter~\ref{ch:shadow-tower-higher-coefficients}.
 
 \begin{definitionref}[Shadow obstruction tower;
  recalling Definition~\ref{def:shadow-obstruction-tower}]
 \label{def:part-ii-shadow-tower-recall}
 Let $\cA$ be a chirally Koszul chiral algebra with bar complex
-$B(\cA) = T^c(s^{-1}\bar\cA)$. The $r$-th shadow coefficient
-$S_r(\cA) \in \mathbb{Q}(\mathrm{parameters})$ is the coefficient
-of $\lambda_g^{r-1}$ in the bar-Maurer--Cartan generating
-function
+$B(\cA) = T^c(s^{-1}\bar\cA)$.  Assume an ordered-residue package
+$\mathsf H_{\mathrm{res}}(\cA;X)$ and let
+$s_\cA$ be the transferred scalar Maurer--Cartan element.  Write
 \begin{equation}
- \Theta_\cA \;=\; \sum_{r \ge 2} S_r(\cA)\,\lambda_g^{r-1}
- \;\in\; \mathfrak{g}^{\mathrm{mod}}_\cA,
+ s_\cA \;=\; \sum_{r\ge2}
+ S_r(\cA;\mathsf H_{\mathrm{res}})e_r.
 \end{equation}
-where $\lambda_g = c_1(\mathbb{L})$ is the first Chern class of
-the Hodge line bundle on
-$\overline{\mathcal{M}}_{g,n}$. The shadow depth is
+The residue depth is
 \begin{equation}
- r_{\max}(\cA) \;=\; \sup\bigl\{\,r \ge 2 : S_r(\cA) \ne 0,\;
- \text{tower stabilizes or diverges at } r\,\bigr\}
+ r_{\max}^{\mathrm{res}}(\cA;\mathsf H_{\mathrm{res}})
+ :=\sup\bigl\{r\ge2:S_r(\cA;\mathsf H_{\mathrm{res}})\ne0\bigr\}
  \;\in\; \{2, 3, 4, \ldots, \infty\}.
 \end{equation}
 \end{definitionref}
 
-The known coefficients for the Virasoro algebra are recorded in
-Chapter~\ref{ch:shadow-tower-higher-coefficients}:
-\begin{align}
- S_2(\Vir_c) &\;=\; c/2
- \;=\; \kappa(\Vir_c), \\
- S_3(\Vir_c) &\;=\; 2, \\
- S_4(\Vir_c) &\;=\; \frac{10}{c\,(5c + 22)}, \\
- S_5(\Vir_c) &\;=\; \frac{-48}{c^2\,(5c + 22)}, \\
- S_6(\Vir_c) &\;=\; \text{Theorem~\ref{thm:s6-virasoro-closed-form}}, \\
- S_7(\Vir_c) &\;=\; \text{Theorem~\ref{thm:s7-virasoro-closed-form}}, \\
- S_8(\Vir_c) &\;=\; \text{Theorem~\ref{thm:s8-virasoro-closed-form}}.
-\end{align}
-The pattern $\mathrm{den}(S_r)\mid c^{r-3}(5c + 22)^{\lfloor (r-2)/2
-\rfloor}$ for $4\le r\le 8$ is recovered motivically from the
-Feigin--Fuchs Shapovalov determinant at weight $2$; see
-Section~\ref{sec:part-ii-motivic}.
+For Virasoro, the exact inputs are the operator product, the Ward
+correlators, and the level-four Gram form.
+Problems~\ref{thm:s6-virasoro-closed-form},~\ref{thm:s7-virasoro-closed-form},
+and~\ref{thm:s8-virasoro-closed-form} ask for the corresponding
+chain-level residue computations.
 
 \section{G/L/C/M as coarse projection}
 \label{sec:part-ii-glcm}
 
 The four-class assignment $\mathrm{G}/\mathrm{L}/\mathrm{C}/\mathrm{M}$
-of the standard landscape was introduced as a finite classification
-indexed by shadow depth. Under the Platonic reading, this
-assignment is a lossy coarse projection of the five-slot
-fingerprint.
+on the finite standard-landscape atlas is indexed by shadow depth.
+Under the fingerprint reading, this assignment is a lossy coarse
+projection of the five-slot fingerprint, not a classification of
+arbitrary chiral algebras.
 
 \begin{theorem}[Quadrichotomy is coarse projection of
  fingerprint; \ClaimStatusConditional]
@@ -263,8 +250,11 @@ with explicit witnesses as follows.
  $\varphi(V_k(\fsl_2)) = (2, 3, \chi^{KM}, 3, \mathrm{coset}_{KM})$.
  \item C: $\beta\gamma$-system with $\varphi(\beta\gamma) =
  (1, 4, \chi^{\beta\gamma}, 2, \mathrm{coset}_{\beta\gamma})$.
- \item M: Virasoro $\Vir_c$ with $\varphi(\Vir_c) = (4, \infty,
- \chi^{\Vir}_c, 1, \mathrm{coset}_{\Vir})$.
+ \item M: the Virasoro row with
+ $\varphi(\Vir_c)=(4,r_{\max}^{\mathrm{res}},
+ \chi^{\Vir}_c,1,\mathrm{coset}_{\Vir})$; its placement at
+ $r_{\max}^{\mathrm{res}}=\infty$ is the all-arity residue
+ construction problem.
 \end{itemize}
 At $\kappa(\cA) = 0$, a fifth stratum $\mathrm{FF}$
 \textup{(}Feigin--Frenkel\textup{)} appears as a fully canonical
@@ -278,11 +268,14 @@ is the full coarse projection of $\varphi$.
 \end{theorem}
 
 \begin{proof}
-The fingerprint $\varphi$ is complete by
-Theorem~\ref{thm:part-ii-fingerprint-complete-invariant}; class
-assignment via shadow depth is
-Theorem~\ref{thm:fingerprint-is-complete-invariant}(iv) of
-Chapter~\ref{ch:infinite-fingerprint}. The explicit witnesses are
+The fingerprint $\varphi$ records the finite-window row data by
+Theorem~\ref{thm:fingerprint-completeness}; the conditional
+reconstruction surface is
+Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}. Class
+assignment via shadow depth is the $r_{\max}$-separation theorem
+\textup{(}Theorem~\ref{thm:pole-depth-independence}\textup{)}
+together with the intrinsic shadow-tower reading of
+Theorem~\ref{thm:fingerprint-reconstruction-equivalence}. The explicit witnesses are
 computed in Appendix~\ref{app:nonlinear-modular-shadows}
 \textup{(}Heisenberg, $V_k(\fsl_2)$\textup{)},
 Chapter~\ref{chap:beta-gamma} \textup{(}$\beta\gamma$\textup{)}, and
@@ -305,20 +298,36 @@ Section~\ref{sec:fingerprint-non-injective-on-class}.
 \label{sec:part-ii-fingerprint}
 
 The five-slot fingerprint
-$\varphi(\cA) \in \mathcal{F}$ is a complete invariant.
+$\varphi(\cA) \in \mathcal{F}$ is a finite-window datum. It becomes
+a bar-complex reconstruction invariant only on the residual-free
+fingerprint-reconstruction surface.
 
-\begin{theorem}[Fingerprint is complete invariant of bar-complex
- structure; \ClaimStatusConditional]
-\label{thm:part-ii-fingerprint-complete-invariant}
+\begin{theorem}[Conditional fingerprint reconstruction surface;
+ \ClaimStatusConditional]
+\label{thm:part-ii-fingerprint-reconstruction-surface}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{fingerprint/bar\ reconstruction},
+\mathrm{level}=1\leftrightarrow2,
+\mathrm{hypothesis\ package}=\mathrm{standard\ landscape}
++\mathrm{slot\ independence}
++\mathrm{bar\text{-}intrinsic\ MC}
++\mathrm{residual\text{-}free\ finite\text{-}window\ reconstruction})$.\textup{]}
 For any two chirally Koszul chiral algebras $\cA, \cB$ in the
-standard landscape, $\varphi(\cA) = \varphi(\cB)$ if and only if
-$B(\cA) \simeq B(\cB)$ as augmented coaugmented conilpotent
-$E_1$-chiral coassociative coalgebras. In particular, the
-five coordinates are independent
+standard landscape, an isomorphism
+$B(\cA) \simeq B(\cB)$ of augmented coaugmented conilpotent
+$E_1$-chiral coassociative coalgebras implies
+$\varphi(\cA) = \varphi(\cB)$. Conversely, if the
+residual-free fingerprint-reconstruction package holds for the pair
+$(\cA,\cB)$---i.e.\ the finite-row data, higher braces, ordered
+coinvariants, and OPE coefficients forgotten by the projection
+$\Pi_{\mathrm{fp}}$ are already recovered from the five slots in the
+chosen completed landscape row---then
+$\varphi(\cA)=\varphi(\cB)$ implies
+$B(\cA) \simeq B(\cB)$. In particular, the five coordinates are
+independent
 \textup{(}Theorem~\ref{thm:pole-depth-independence},
 Proposition~\ref{prop:chi-strong-coset-independence}\textup{)} and
-jointly complete \textup{(}the reconstruction
-Theorem~\ref{thm:fingerprint-reconstructs-bar-complex}\textup{)}.
+jointly reconstructive only under the stated residual-free package.
 The projection
 $\Pi_{\mathrm{coarse}}: \mathcal{F} \to \{\mathrm{G}, \mathrm{L},
 \mathrm{C}, \mathrm{M}, \mathrm{FF}\}$ is a genuine quotient with
@@ -340,8 +349,9 @@ filtration on $B(\cA)$; $\mathrm{coset}$ is the iso class of the
 commutant pair realized inside $B(\cA)$.
 
 Reverse \textup{(}equality of fingerprint implies bar-complex
-isomorphism\textup{)}: Theorem~\ref{thm:fingerprint-is-complete-invariant}
-of Chapter~\ref{ch:infinite-fingerprint} constructs an explicit
+isomorphism on the residual-free surface\textup{)}:
+the hypothesis package of
+Theorem~\ref{thm:fingerprint-reconstruction-equivalence} supplies a
 reconstruction functor
 \begin{equation}
  \Phi_{\mathrm{recon}}\colon \mathcal{F}
@@ -349,7 +359,7 @@ reconstruction functor
  \mathrm{aug}, \mathrm{conil}}_{/X}
 \end{equation}
 such that $\Phi_{\mathrm{recon}}(\varphi(\cA)) \simeq B(\cA)$ for
-all $\cA$ in the standard landscape; the five slots determine,
+all $\cA$ in the stated residual-free completed row; the five slots determine,
 in order, the collision-differential structure, the shadow
 stabilization pattern, the Hodge bigrading, the generator-relation
 data, and the commutant decomposition, with successive slots
@@ -359,148 +369,79 @@ Theorem~\ref{thm:pole-depth-independence} and
 Proposition~\ref{prop:chi-strong-coset-independence}.
 \end{proof}
 
-The fingerprint theorem is the Platonic replacement of the
-four-class narrative: one complete invariant, one coarse
-projection, one canonical stratification.
+The fingerprint theorem is the structural replacement of the
+four-class narrative: one conditional reconstruction surface, one
+coarse projection, one canonical stratification.
 
-\section{Motivic shadow tower}
+\section{Motivic residue comparison}
 \label{sec:part-ii-motivic}
 
-The shadow coefficients $S_r$ lift to motivic periods.
+The exact Virasoro Ward and Gram calculations provide the local
+source for a motivic comparison.  The ordered-residue package
+constructs the scalar class, and the motivic package of
+Definition~\ref{def:vmp-motivic-lift} maps its chain representative
+to a motivic period complex.
 
-\begin{theorem}[Motivic purity of $S_r(\Vir_c)$ through $r \le 8$;
- \ClaimStatusConditional]
+\begin{problem}[Construct the motivic Virasoro residues through arity \(8\)]
+\ClaimStatusOpen
 \label{thm:part-ii-motivic-purity-virasoro-r-le-8}
-Let $\Vir_c$ be the Virasoro chiral algebra at central charge
-$c$ in the generic regime. For each $r \in \{2, 3, 4, 5, 6, 7,
-8\}$, there is a motivic lift
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, ordered residue and motivic-period
+presentations, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}^{\le8}
++\mathsf H_{\mathrm{mot}}^{\le8}\)).}
+
+Construct compatible packages
+\(\mathsf H_{\mathrm{res}}^{\le8}(\Vir_c;X)\) and
+\(\mathsf H_{\mathrm{mot}}^{\le8}\).  For every
+\(2\le r\le8\), produce a class
+\[
+ S_r^{\mot}(\Vir_c)
+ \in\mathcal P_r^{\mot}\otimes\mathbb Q(c)
+\]
+whose period is the ordered scalar residue.  Determine its reduced
+coaction, its Tate twists, and the divisor of its rational-function
+specialization,
 \begin{equation}
- S_r^{\mot}(\Vir_c) \;\in\; \mathrm{MZV}^{\mot}_{r-2}
- \otimes \mathbb{Q}(c),
-\end{equation}
-assuming the motivic shadow-lift construction of
-Theorem~\textup{\ref{thm:shadow-tower-motivic-lift}}, with Brown
-period map specialization $\mathrm{per}(S_r^{\mot}) =
-S_r \in \mathbb{Q}(c)$. The first two rungs are
-$S_2=c/2$ and $S_3=2$. For $r\in\{4,5,6,7,8\}$, the denominator of
-$S_r(\Vir_c)$ as a rational function of $c$ divides
-\begin{equation}
- D_r(c)
- \;=\; c^{r-3}\,(5c + 22)^{\lfloor (r-2)/2 \rfloor},
- \qquad r \in \{4, 5, 6, 7, 8\},
+ D_r^{\mathrm{res}}(c)
+ :=\operatorname{div}_c
+ \bigl(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\bigr).
  \label{eq:part-ii-motivic-denominator}
 \end{equation}
-recovered from the Feigin--Fuchs Shapovalov determinant
-$\det G^{\Vir}_{\mathrm{wt}=2}(c) = \tfrac{1}{2}c^2(5c+22)$ by
-motivic lift along the rational-function factorization. The
-motivic coaction
-\begin{equation}
- \Delta^{\mot}: \mathrm{MZV}^{\mot}_{r-2}
- \;\longrightarrow\; \bigoplus_{r_1 + r_2 = r-2}
- \mathrm{MZV}^{\mot}_{r_1} \otimes \mathrm{MZV}^{\mot,\,\mathrm{dR}}_{r_2}
-\end{equation}
-	acts trivially on the Virasoro shadow coefficients: by
-	Theorem~\ref{thm:virasoro-motivic-rationality-all-r} every
-	$S_r(\Vir_c)$ is a rational function of~$c$, so its motivic lift is
-	Tate-rational. In particular, the weight-$2$ rung
-	$S_2^{\mot} = \kappa^{\mot} = (c/2)^{\mot}$ is primitive, and the
-	higher Virasoro rungs still carry no non-trivial motivic coaction.
-	Non-trivial motivic content belongs to higher-primary families such
-	as $\mathcal W_3$, not to the Virasoro rational tower.
-\end{theorem}
+Tate factorization is governed by
+\(\mathsf H_{\mathrm{Tate}}^{\le8}\); denominator control is governed
+by \(\mathsf H_{\mathrm{den}}^{\le8}\).
+\end{problem}
 
-\begin{proof}
-The motivic lift $S_r^{\mot}$ is constructed in
-Theorem~\ref{thm:shadow-tower-motivic-lift} of
-Chapter~\ref{ch:motivic-shadow-tower} via the Brown motivic
-multiple-zeta framework: weight-$(r-2)$ MZVs
-($\zeta^{\mot}(w_1, \ldots, w_\ell)$ with $\sum w_i = r-2$)
-span $\mathrm{MZV}^{\mot}_{r-2}$ over $\mathbb{Q}$; the shadow
-coefficient $S_r(\Vir_c)$ lies in the
-$\mathbb{Q}(c)$-subspace generated by the period map.
-
-The denominator formula~\eqref{eq:part-ii-motivic-denominator}:
-verified case-by-case via
-Proposition~\ref{prop:s4-vir-mot} ($r=4$: denominator $c(5c+22)$),
-Proposition~\ref{prop:s5-vir-mot} ($r=5$: denominator
-$c^2(5c+22)$), Proposition~\ref{prop:s6-w3-mot}, and
-Theorems~\ref{thm:s6-virasoro-closed-form},
-\ref{thm:s7-virasoro-closed-form},
-\ref{thm:s8-virasoro-closed-form}. The factor $c^{r-3}$ comes
-from the Virasoro recurrence after the $S_3=2$ rung removes one central
-factor from the naive $c^{r-2}$ count over the first nontrivial
-successive bar degrees \textup{(} convention: $S_2 = c/2$, not
-$c/12$\textup{)}; the factor $(5c + 22)^{\lfloor (r-2)/2
-\rfloor}$ comes from the even-level Shapovalov factor at each
-pair of weight-$2$ bar insertions.
-
-The motivic coaction structure comes from the Brown coproduct on
-$\mathrm{MZV}^{\mot}_\bullet$
-\textup{(}Definition~\ref{def:mot-coaction}\textup{)} composed
-with the shadow recurrence
-\textup{(}Theorem~\ref{thm:virasoro-shadow-recurrence} of
-Chapter~\ref{ch:shadow-tower-higher-coefficients}\textup{)} that
-expresses $S_r$ in terms of $\{S_{r'}: r' < r\}$ via the
-Frobenius shadow-transport operator. The weight-$2$ rung is
-primitive because $\mathrm{grt}_2 = 0$
-\textup{(}Theorem~\ref{thm:kappa-vs-beta-split}\textup{)}; higher
-rungs inherit Ihara-bracket structure from the free graded
-$\mathrm{grt}$-action.
-
-\emph{Independent verification path.} The closed-form $S_6$
-through $S_8$ rational functions were verified by SymPy
-denominator-factorization on the motivic lift independently of
-the Feigin--Fuchs route; the two computations agree, providing
-a genuine disjoint source for the denominator pattern
-\textup{(}independent verification check
-\texttt{test\_motivic\_purity\_denominator\_through\_r\_8}\textup{)}.
-\end{proof}
-
-The denominator pattern extends conjecturally to all $r \ge 2$
-(Conjecture~\ref{conj:motivic-purity-all-r}); verification
-through $r = 8$ is unconditional.
-
-\section{Higher shadow coefficients}
+\section{Higher residue coordinates}
 \label{sec:part-ii-higher-s-r}
 
-The closed-form Virasoro shadow coefficients $S_6$, $S_7$, $S_8$
-extend the chain beyond the historical $S_4$ boundary.
-
-\begin{propositionref}[Virasoro shadow through $r = 8$;
- recalling Theorems
- \ref{thm:s6-virasoro-closed-form},
- \ref{thm:s7-virasoro-closed-form},
- \ref{thm:s8-virasoro-closed-form}]
+\begin{problem}[Compute the Virasoro scalar coordinates through arity \(8\)]
+\ClaimStatusOpen
 \label{prop:part-ii-virasoro-shadow-through-r-8}
-The Virasoro shadow tower has closed rational forms:
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue-bar presentation,
+level \(2\), \(\mathsf H_{\mathrm{res}}^{\le8}\)).}
+Assume \(\mathsf H_{\mathrm{res}}^{\le8}(\Vir_c;X)\) and write
+\(s_{\Vir_c}\) for its transferred scalar Maurer--Cartan element.
+The coordinates to be computed are
 \begin{align}
- S_6(\Vir_c) &\;=\;
- \frac{P_6(c)}{c^4\,(5c + 22)^2},
- \label{eq:s6-virasoro} \\
- S_7(\Vir_c) &\;=\;
- \frac{P_7(c)}{c^5\,(5c + 22)^2},
- \label{eq:s7-virasoro} \\
- S_8(\Vir_c) &\;=\;
- \frac{P_8(c)}{c^6\,(5c + 22)^3},
+ S_6(\Vir_c;\mathsf H_{\mathrm{res}})
+ &=\operatorname{pr}_6(s_{\Vir_c}),
+ \label{eq:s6-virasoro}\\
+ S_7(\Vir_c;\mathsf H_{\mathrm{res}})
+ &=\operatorname{pr}_7(s_{\Vir_c}),
+ \label{eq:s7-virasoro}\\
+ S_8(\Vir_c;\mathsf H_{\mathrm{res}})
+ &=\operatorname{pr}_8(s_{\Vir_c}).
  \label{eq:s8-virasoro}
 \end{align}
-with polynomials $P_r(c) \in \mathbb{Z}[c]$ of degree bounded by
-$r - 2$ \textup{(}explicit formulas in
-Theorem~\ref{thm:s6-virasoro-closed-form}ff\textup{)}. At each
-$r$, the leading large-$c$ asymptotic is
-$S_r(\Vir_c) \sim r\,c^{2-r}/5^{\lfloor (r-2)/2 \rfloor}$ times a
-$\mathbb{Z}$-rational; the boundary value
-$S_r(\Vir_{c = c_{\mathrm{crit}}^r})$ at the pole-locus of the
-denominator is the anomalous residue governed by the Kazhdan
-degeneracy at weight $r - 1$.
-\end{propositionref}
-
-The extension of the closed-form calculus from $r = 4$ to $r = 8$
-converts the old narrative "$S_2$ is the Koszul depth; $S_3$,
-$S_4$ are constants" into a concrete ladder of seven coefficients
-controlling the shadow obstruction tower completely through bar
-weight $7$; this is the operational backbone of the Platonic
-reading.
+Derive these coordinates from collision-compatible chain
+representatives and verify them through a second contraction model.
+Problems~\ref{thm:s6-virasoro-closed-form},~\ref{thm:s7-virasoro-closed-form},
+and~\ref{thm:s8-virasoro-closed-form} record the corresponding
+construction obligations.
+\end{problem}
 
 \section{Chiral moonshine via fingerprint}
 \label{sec:part-ii-moonshine}
@@ -515,18 +456,19 @@ Let $V^\natural$ be the Monster vertex operator algebra
 \textup{(}Frenkel--Lepowsky--Meurman\textup{)}, realized as the
 FLM $\mathbb{Z}/2$-orbifold extension
 $V_{\Lambda_{\mathrm{Leech}}}^+\oplus
-V_{\Lambda_{\mathrm{Leech}}}^{T,+}$ of the Leech lattice VOA.
+V_{\Lambda_{\mathrm{Leech}}}^{T,+}$ of the Leech lattice VOA\@.
 The fingerprint $\varphi(V^\natural)$ is
 \begin{equation}
  \varphi(V^\natural) \;=\;
- \bigl(\,4,\; \infty,\; \chi_{\VOA}(V^\natural),\;
+ \bigl(\,4,\; r_{\max}^{\mathrm{res}}(V^\natural),\;
+ \chi_{\VOA}(V^\natural),\;
  n_{\mathrm{Griess}}(V^\natural),\;
  \mathrm{coset}_{V^\natural}\,\bigr),
 \end{equation}
 recording $p_{\max}(V^\natural) = 4$ from the stress-tensor OPE,
-$r_{\max}(V^\natural) = \infty$ from the Virasoro sub-VOA at
-$c = 24$ \textup{(}placing $V^\natural$ in class $\mathrm{M}$, with
-$\kappa(V^\natural) = 12$\textup{)}, and
+$\kappa(V^\natural)=12$ from the central term, and a residue-depth
+slot determined by $\mathsf H_{\mathrm{res}}(V^\natural;X)$, together
+with
 $n_{\mathrm{Griess}}(V^\natural)$ from the PBW-compatible
 weight-$2$ Griess generators. The condition
 $\dim V^\natural_1=0$ removes affine currents; it does not make
@@ -563,20 +505,20 @@ Fingerprint of $V^\natural$: $p_{\max}(V^\natural) = 4$ by the
 stress-tensor OPE
 \textup{(}$V^\natural$ contains the Virasoro sub-VOA at $c = 24$,
 whose $TT$ self-OPE has quartic pole\textup{)};
-$r_{\max}(V^\natural) = \infty$ follows because the inherited
-Virasoro sub-VOA carries the full Virasoro shadow tower with
-non-vanishing $S_r$ at every $r \ge 2$ \textup{(}class $\mathrm{M}$,
-$\kappa(V^\natural) = c/2 = 12$\textup{)};
+the residue-depth slot is computed from a compatible scalar
+contraction on the inherited Virasoro sub-VOA and its embedding into
+$V^\natural$; the local central coefficient gives
+$\kappa(V^\natural)=c/2=12$;
 $\chi_{\VOA}(V^\natural)$ is the Hodge-filtered chiral Euler
 character, explicitly the $J$-function $J(\tau) = q^{-1} +
 \textup{196884}\,q + \cdots$ \textup{(}normalized so that the
 constant term vanishes\textup{)};
 $n_{\mathrm{Griess}}(V^\natural)$ records the minimal
 PBW-compatible strong generators in the weight-$2$ Griess algebra.
-$V^\natural_1=0$ by Frenkel--Lepowsky--Meurman, so no affine
-weight-one current is present; the Virasoro vector nevertheless
-generates only the Virasoro sub-VOA. The integer in the fourth slot
-is therefore a Griess-algebra invariant, not the number~$1$; and
+$V^\natural_1=0$ by Frenkel--Lepowsky--Meurman.  The Virasoro vector
+generates its Virasoro sub-VOA, while PBW strong generation uses the
+weight-two Griess algebra.  The fourth slot is therefore a
+Griess-algebra invariant; and
 $\mathrm{coset}_{V^\natural}$ encodes the Leech-lattice orbifold via
 the triple $(V_\Lambda, \mathbb{Z}/2, V^\natural_{\mathrm{tw}})$.
 The integer $196884$, the dimension of the weight-$2$ Griess
@@ -657,21 +599,21 @@ is obtained from $\varphi_0(\cA)$ by:
 The genus tower of fingerprints $\{\varphi_g(\cA)\}_{g \ge 0}$ is
 governed by the shadow obstruction tower
 $\{S_r(\cA)\}_{r \ge 2}$ via the uniform-weight formula
-$\mathrm{obs}_g(\cA) = \kappa(\cA)\,\lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{)} and its all-weight correction
-$\delta F_g^{\mathrm{cross}}$
-\textup{(}ALL-WEIGHT\textup{)}.
+the Hodge character
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g$ under~$H_D^K$ and the graph functional
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$
+under~$H_D^{\mathrm{graph}}$.
 \end{proposition}
 
 \begin{proof}
 Pole order and shadow depth are algebraic invariants of $B(\cA)$,
 independent of the curve on which chiral factorization homology
 is computed; $\chi_{\VOA}$ and $\mathrm{coset}$ acquire genus
-dependence through the curvature formula
-$\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{)} of Theorem~D and its
-multi-weight correction
-$\delta F_g^{\mathrm{cross}}$ (ALL-WEIGHT) of
+dependence through the perfect-object formula
+$\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g)$ under
+$H_D^K$ and the graph correction
+$\delta F_g^{\mathrm{cross}}$ under~$H_D^{\mathrm{graph}}$ of
 Theorem~\ref{thm:multi-weight-genus-expansion}; the explicit
 genus-$g$ modular-bootstrap formula for $\chi_{\VOA, g}$ is
 computed in Chapter~\ref{chap:higher-genus}. The coset clutching
@@ -680,16 +622,16 @@ Proposition~\ref{prop:clutching-coset}.
 \end{proof}
 
 The higher-genus fingerprint is a corollary of the genus-$0$
-fingerprint and the shadow tower; no new slot is needed at higher
-genus.
+fingerprint and the shadow tower; the same five slots carry the
+higher-genus data.
 
-\section{Platonic endpoint: completeness}
+\section{Typed endpoint: completeness}
 \label{sec:part-ii-platonic-endpoint}
 
-The five Platonic theorems of Part~II assemble into a single
-completeness theorem.
+The five Part~II structural surfaces assemble into a single
+conditional endpoint.
 
-\begin{theorem}[Platonic completeness of Part~II;
+\begin{theorem}[Typed completeness of Part~II;
  \ClaimStatusConditional]
 \label{thm:part-ii-platonic-completeness}
 There is a canonical map
@@ -697,15 +639,17 @@ There is a canonical map
  \varphi\colon \mathrm{StdLand}^{\mathrm{chirKosz}}
  \;\longrightarrow\; \mathcal{F},
  \qquad \cA \;\longmapsto\;
- (p_{\max}, r_{\max}, \chi_{\VOA}, n_{\mathrm{strong}},
+ (p_{\max}, r_{\max}^{\mathrm{res}}, \chi_{\VOA}, n_{\mathrm{strong}},
  \mathrm{coset})
 \end{equation}
 from the standard landscape of chirally Koszul chiral algebras to
 the fingerprint space $\mathcal{F}$ with the following properties.
 \begin{enumerate}[(i)]
- \item \textup{(}Complete invariant;
- Theorem~\ref{thm:part-ii-fingerprint-complete-invariant}\textup{)}
- $\varphi$ is injective on bar-complex isomorphism classes.
+\item \textup{(}Conditional reconstruction;
+ Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}\textup{)}
+ $\varphi$ is invariant under bar-complex isomorphism and becomes
+ injective on bar-complex isomorphism classes on the residual-free
+ fingerprint-reconstruction surface.
  \item \textup{(}Coarse projection;
  Theorem~\ref{thm:part-ii-quadrichotomy-coarse-projection}\textup{)}
  The four-class assignment
@@ -713,13 +657,12 @@ the fingerprint space $\mathcal{F}$ with the following properties.
  \mathrm{C}, \mathrm{M}\}$ is a lossy quotient with explicit
  witnesses $H_k, V_k(\fsl_2), \beta\gamma, \Vir_c$. A fifth
  stratum $\mathrm{FF}$ appears canonically at $\kappa = 0$.
- \item \textup{(}Motivic lift;
- Theorem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}\textup{)}
- The $r_{\max}$ coordinate lifts to motivic periods
- $S_r^{\mot}(\Vir_c) \in \mathrm{MZV}^{\mot}_{r-2}$ through
- $r \le 8$; the denominator pattern for $r\ge4$,
- $c^{r-3}(5c + 22)^{\lfloor (r-2)/2 \rfloor}$, is a
- Feigin--Fuchs Shapovalov consequence.
+ \item \textup{(}Motivic comparison problem;
+ Problem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}\textup{)}
+ The packages $\mathsf H_{\mathrm{res}}^{\le8}$ and
+ $\mathsf H_{\mathrm{mot}}^{\le8}$ define the construction problem
+ for motivic scalar residues through arity~$8$; Tate factorization and
+ denominator divisors are named subproblems.
  \item \textup{(}Moonshine twining;
  Theorem~\ref{thm:part-ii-moonshine-via-fingerprint}\textup{)}
  The fingerprint $\varphi(V^\natural)$ of the Monster VOA lifts
@@ -757,32 +700,40 @@ $\mathfrak g_{\Delta_5} = \mathrm{Borch}(F_3,\phi^{K3}_{0,1})$ for
 the K3-BKM Lie superalgebra produced by Borcherds lift from the
 hyperbolic lattice $\Lambda_{\mathrm{Muk},II}^{2,1}$: a rank-$3$
 hyperbolic core orthogonal to the rank-$24$ Mukai lattice. Its
-chiral bialgebra realisation $\mathbf H_{\Delta_5}$ carries the
-Weyl denominator $\Delta_5 \in S_5(K(1))$, the Gritsenko paramodular
-weight-$5$ cusp form.
+compact Hall--Drinfeld recognition target
+\(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\) has Weyl denominator
+\(\Delta_5 \in S_5(K(1))\), the Gritsenko paramodular weight-$5$
+cusp form.  The notation \(\mathbf H_{\Delta_5}\) is reserved for the
+recognized compact object carrying a finite Hall source, Hopf pairing,
+source-to-target comparison maps, a PBW presentation theorem, and a
+Mittag--Leffler inverse-limit passage.
 
-\begin{theorem}[K3 master L-value identity for Part~II;
- \ClaimStatusProvedElsewhere]
+\begin{theorem}[K3 determinant comparison problem for Part~II;
+ \ClaimStatusOpen]
 \label{thm:part-ii-k3-master-L-value}
-The genus-$1$ free energy of $\mathbf H_{\Delta_5}$ is the
-Quillen--Arakelov norm of $\Delta_5$:
+Assume the compact Hall--Borcherds recognition package for the target
+\(\mathbf H_{\Delta_5}^{\mathrm{tgt}}\).  The additional package
+$H_{\Delta_5}^{\mathrm{det}}$ consists of the genus-$1$ determinant
+line, its Quillen metric, a trace-class sewing operator, and a
+comparison with the automorphic line generated by~$\Delta_5$.  The
+required comparison is
 \[
-\log Z^{(1)}_{\mathbf H_{\Delta_5}}
-\;=\;-\log\bigl\|\Delta_5\bigr\|^2_{\mathrm{Quillen}}
-\;=\;-\log\Delta_5 \;-\; 24\,L'(0,\Delta_5,\mathrm{std}),
+\log Z^{(1),\mathrm{sew}}_{\mathbf H_{\Delta_5}}
+\xrightarrow{\ H_{\Delta_5}^{\mathrm{det}}\ }
+-\log\bigl\|\Delta_5\bigr\|^2_{\mathrm{Quillen}}.
 \]
-with $24 = \chi_{\mathrm{top}}(K3)$ the Bismut--Gillet--Soul\'e
-coefficient (Bruinier--K\"uhn $2003$ + Bismut--Gillet--Soul\'e $1988$).
-The $L$-function is standard, not adjoint-spinor: Pitale--Saha--Schmidt
-$2014$ CAP factorisation plus the Waldspurger squaring rule rule out
-$L'(0,\Delta_{10},\mathrm{ad}^0)$.
-Cross-reference Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+The exact topological input is $\chi_{\mathrm{top}}(K3)=24$.
+An $L$-value refinement requires a theorem identifying the regularized
+determinant, the standard $L$-function normalization, and its
+coefficient.  This is the open analytic obligation of
+$H_{\Delta_5}^{\mathrm{det}}$; see
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{theorem}
 
 At the K3 base point the one-coordinate shadow $\kappa$ rises to
 a five-coordinate fingerprint by inheriting the slots of
 $\Psi_\bullet$, so the fingerprint theorem
-(Theorem~\ref{thm:part-ii-fingerprint-complete-invariant}) reads
+(Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}) reads
 the Quillen norm slot-by-slot. The Baily--Borel--Freitag
 stratification of $\overline{\mathcal A_2}$ produces four sibling
 functors $\{\Psi,\Psi^{\deg},\Psi^{\mathrm{tor}},\Psi^{\mathrm{metap}}\}$
@@ -802,8 +753,9 @@ is the critical-level degeneration of the reflective interior.
 \begin{remark}[Humbert--Heegner admissibility filtration on
 the pentagon tower]
 \label{rem:part-ii-humbert-heegner}
-The pentagon tower $\{\phi^{(n)}\}_{n\ge 3}$ of $\mathbf H_{\Delta_5}$
-satisfies
+On the scalar Siegel--Borcherds target, any constructed pentagon tower
+\(\{\phi^{(n)}\}_{n\ge 3}\) compatible with the Humbert--Heegner gates
+must satisfy
 \[
 \phi^{(n)} \;=\; 0
 \qquad\text{unless}\qquad
@@ -813,15 +765,17 @@ D_n \;=\; (n-3)/2 \;\in\; \{0,1\}\pmod 4,
 \]
 and the first admissible non-vanishing rung is
 $\phi^{(5)} = 2\,[\mathrm{gen}]^{\otimes 5}$ in the normalization of
-Theorem~\ref{thm:bc-unconditional-depth-reduction}. For admissible
+Theorem~\ref{thm:bc-polar-depth-reduction}. For admissible
 $n\ge 11$ the polar coefficient vanishes. The admissibility condition
 on $(D_n\pmod 4)$ is a Heegner-divisor reading of the shadow
-denominator pattern.
+denominator pattern.  An all-orders associator on a Hall realisation
+additionally requires the compact Hall source, comparison maps, and
+pentagon identities on that source.
 \end{remark}
 
 \begin{remark}[Bloch--Kato Selmer deformation of the fingerprint]
 \label{rem:part-ii-selmer-deformation}
-The fingerprint $\varphi(\mathbf H_{\Delta_5})$ admits a
+The target fingerprint $\varphi(\mathbf H_{\Delta_5}^{\mathrm{tgt}})$ admits a
 one-parameter arithmetic deformation: the Bloch--Kato Selmer group
 $\dim H^1_f(\mathbb Q,\mathrm{std}\,\rho_{\Delta_5}) = 1$ supplies
 the paramodular cyclotomic Hida-family tangent along which the
@@ -832,19 +786,13 @@ at the K3 base point.
 
 \begin{remark}[Metaplectic $\mathrm{grt}_1^{(1/2)}$ on the shadow tower]
 \label{rem:part-ii-metaplectic-grt}
-The motivic Galois action on the shadow tower
-(Theorem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}) lifts
-at the K3 base point to a non-split extension
-$\mathrm{grt}_1^{(1/2)}\twoheadrightarrow\mathrm{grt}_1$ by even-weight
-generators carrying Saito--Kurokawa motivic content, with
-fundamental bracket
-\[
-[\widetilde\sigma_2,\widetilde\sigma_2] \;=\; 288\,\widetilde\sigma_4,
-\qquad 288 \;=\; \tau(2)^2/2.
-\]
-The Ramanujan tau value $\tau(2)^2/2 = 288$ is the first
-metaplectic structure constant; it refines the Ihara bracket on
-$\mathrm{grt}_2$.
+The K3 comparison asks for a morphism from the motivic residue package
+of Theorem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8} to a
+metaplectic motivic Lie algebra carrying the Saito--Kurokawa classes.
+The target normalization may use the exact arithmetic identity
+$\tau(2)^2/2=288$.  A bracket formula requires the comparison
+morphism, its grading convention, and a chain representative for the
+target classes.
 \end{remark}
 
 \section{Reading order within Part II}
@@ -852,74 +800,68 @@ $\mathrm{grt}_2$.
 
 A reader approaching Part~II may follow two orders. The
 \emph{fingerprint order} starts at
-\S\ref{sec:part-ii-fingerprint} (complete invariant) and descends
-to the individual coordinates; each section verifies one slot or
-one theorem. The \emph{shadow-tower order} starts at
-\S\ref{sec:part-ii-shadow-tower} (the $r = 2$ rung) and ascends
-through $r = 3, 4, \ldots, 8$ to the motivic lift; each step adds
-one coefficient.
+\S\ref{sec:part-ii-fingerprint} (conditional reconstruction) and descends
+to the individual coordinates.  The \emph{residue order} starts with
+the exact Virasoro OPE and Gram form, continues with
+$\mathsf H_{\mathrm{res}}$, and then introduces the motivic and
+asymptotic comparison packages.
 
-We recommend the shadow-tower order for the first reading: the
-Koszul depth $\kappa = S_2$ is the most familiar coordinate, the
-closed-form shadow coefficients through $r = 8$ are already
-computed in
-Chapter~\ref{ch:shadow-tower-higher-coefficients}, and the
-fingerprint acquires operational meaning only after the shadow
-coordinate has been traced explicitly. The fingerprint order is
-suitable for a second reading, when the Platonic $\mathcal{F}$
+We recommend the residue order for the first reading: the central OPE
+coefficient and the level-four Gram form are concrete, while
+Chapter~\ref{ch:shadow-tower-higher-coefficients} states the precise
+chain construction for higher scalar coordinates.  The fingerprint
+order is
+suitable for a second reading, when the fingerprint $\mathcal{F}$
 picture guides the interpretation of every structural invariant as
 a fingerprint slot.
 
 \medskip
 
-The characteristic datum of Part~II is not the central charge but
-the fingerprint. The central charge is the $r = 2$ shadow of a
-five-slot invariant; the four-class quadrichotomy is its coarse
-projection; the Monster's $194$ conjugacy classes are the moonshine
-orbit; the motivic denominator bound
-$c^{r-3}(5c + 22)^{\lfloor (r-2)/2\rfloor}$ for $r\ge4$ is the
-Feigin--Fuchs Shapovalov trace through $r = 8$.
-Part~II reconstituted carries all five.
+The characteristic datum of Part~II is the fingerprint.  The central
+OPE coefficient supplies its local scalar input; the residue package
+constructs higher scalar coordinates; the motivic and denominator
+packages formulate the arithmetic comparison.
 
 \section{Dependency map}
 \label{sec:part-ii-dependency-map}
 
-The five Platonic theorems of Part~II rest on a concrete chain of
-inscribed theorems across Part~II and its cross-volume anchors.
+The five structural surfaces of Part~II rest on concrete local
+anchors and named comparison packages.
 
 \begin{center}
 \begin{tabular}{p{3.5cm}|p{6cm}|p{5cm}}
 \hline
-\textbf{Platonic theorem} & \textbf{Anchor chapters (Part II)}
+\textbf{Structural theorem surface} & \textbf{Anchor chapters (Part II)}
  & \textbf{Cross-volume anchors} \\
 \hline
-\ref{thm:part-ii-fingerprint-complete-invariant}
-(fingerprint complete)
+Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}
+(conditional fingerprint reconstruction)
  & Chapter~\ref{ch:infinite-fingerprint}
  (\texttt{infinite\_fingerprint\_classification})
  & Vol II
  Infinite Fingerprint; Vol III
  $\varphi(K3)$, $\varphi(X_{\mathrm{CY}_3})$. \\
 \hline
-\ref{thm:part-ii-quadrichotomy-coarse-projection}
+Theorem~\ref{thm:part-ii-quadrichotomy-coarse-projection}
 (coarse projection)
  & Chapter~\ref{ch:infinite-fingerprint}
- \S\ref{sec:quadrichotomy-coarse}
+ \S\ref{sec:coarse-projection-fibres}
  & Vol II \texttt{}; Vol III
  \texttt{fingerprint-stratification-CY}. \\
 \hline
-\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}
-(motivic purity $r \le 8$)
- & Chapter~\ref{ch:motivic-shadow-tower}
- (\texttt{motivic\_shadow\_tower});
+Problem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}
+(motivic residue problem $r \le 8$)
+ & Chapter~\ref{ch:virasoro-motivic-purity}
+ (\texttt{virasoro\_motivic\_purity});
  Chapter~\ref{ch:shadow-tower-higher-coefficients}
  (\texttt{shadow\_tower\_higher\_coefficients})
- & Brown
- Thm 1.1 \textup{(}MZV motivic\textup{)}; Feigin--Fuchs
- Shapovalov $\det G^{\Vir}_{\mathrm{wt}=2}$; SymPy
- denominator-verification engine. \\
+ & Exact Ward correlators and level-four Gram form;
+ $\mathsf H_{\mathrm{res}}^{\le8}$,
+ $\mathsf H_{\mathrm{mot}}^{\le8}$, and
+ $\mathsf H_{\mathrm{Tate}}^{\le8}$ are the named construction
+ packages. \\
 \hline
-\ref{thm:part-ii-moonshine-via-fingerprint}
+Theorem~\ref{thm:part-ii-moonshine-via-fingerprint}
 (moonshine twining)
  & Chapter~\ref{chap:chiral-moonshine-unified}
  (\texttt{chiral\_moonshine\_unified})
@@ -927,28 +869,29 @@ inscribed theorems across Part~II and its cross-volume anchors.
  FLM Monster VOA construction; Conway--Norton; Vol II
  \texttt{thm:v-natural-e3-topological}. \\
 \hline
-\ref{thm:part-ii-platonic-completeness}
-(Platonic completeness)
+Theorem~\ref{thm:part-ii-platonic-completeness}
+(structural completeness)
  & assembled from (i)-(v)
  & all. \\
 \hline
 \end{tabular}
 \end{center}
 
-\section{Source-disjoint closures within Part~II}
+\section{Status records within Part~II}
 \label{sec:part-ii-hz-iv-closures}
 
-The five Platonic theorems of Part~II carry five source-disjoint
-verification records, one per theorem.
+The five structural surfaces of Part~II carry one status record each.
+Proved rows list independent checks; open rows list the construction
+package that closes the claim.
 
 \begin{center}
 \begin{tabular}{p{4cm}|p{5cm}|p{6cm}}
 \hline
-\textbf{Theorem} & \textbf{Derived from} & \textbf{Verified
-against} \\
+\textbf{Surface} & \textbf{Input} & \textbf{Verification or remaining
+obligation} \\
 \hline
-\ref{thm:part-ii-fingerprint-complete-invariant}
-(fingerprint complete)
+Theorem~\ref{thm:part-ii-fingerprint-reconstruction-surface}
+(conditional fingerprint reconstruction)
  & Bar-complex isomorphism invariants
  \textup{(}pole order, shadow depth, $\chi_{\VOA}$,
  $n_{\mathrm{strong}}$, $\mathrm{coset}$\textup{)}
@@ -957,7 +900,7 @@ against} \\
  verified on $\{H_k, V_k(\fsl_n), \beta\gamma,
  \Vir_c, V^\natural\}$. \\
 \hline
-\ref{thm:part-ii-quadrichotomy-coarse-projection}
+Theorem~\ref{thm:part-ii-quadrichotomy-coarse-projection}
 (coarse projection)
  & Shadow tower
  depth-indexed classification
@@ -966,18 +909,15 @@ against} \\
  assignment for $\cW$-algebra families; independent
  landscape census. \\
 \hline
-\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}
-(motivic purity)
- & Brown MZV
- framework \textup{(}Brown 2012 Thm 1.1\textup{)};
- shadow recurrence
- \textup{(}Theorem~\ref{thm:virasoro-shadow-recurrence}\textup{)}
- & SymPy denominator-factorization of
- closed-form $S_6, S_7, S_8$; independent Feigin--Fuchs
- Shapovalov route $\det G^{\Vir}_{\mathrm{wt}=2} =
- c^2(5c + 22)/2$. \\
+Problem~\ref{thm:part-ii-motivic-purity-virasoro-r-le-8}
+(motivic residue construction)
+ & Ordered Ward correlator complex and
+ $\mathsf H_{\mathrm{res}}^{\le8}$
+ & Motivic period comparison, ordered-to-symmetric averaging, and
+ Tate-factorization checks; exact local anchor
+ $\det G^{\Vir}_{4}=c^2(5c+22)/2$. \\
 \hline
-\ref{thm:part-ii-moonshine-via-fingerprint}
+Theorem~\ref{thm:part-ii-moonshine-via-fingerprint}
 (moonshine twining)
  & Frenkel--Lepowsky--Meurman
  $V^\natural$ construction; McKay--Thompson
@@ -987,11 +927,11 @@ against} \\
  against $194$ Monster classes; independent ATLAS conjugacy
  class lookup. \\
 \hline
-\ref{thm:part-ii-platonic-completeness}
+Theorem~\ref{thm:part-ii-platonic-completeness}
 (completeness)
- & Theorems (i)-(v) assembled
- & Constructive reconstruction
- $\Phi_{\mathrm{recon}}$ verified on $\{H_k, V_k(\fsl_2),
+ & Structural surfaces (i)--(v) assembled
+ & Residual-free reconstruction
+ $\Phi_{\mathrm{recon}}$ tested on $\{H_k, V_k(\fsl_2),
  \beta\gamma, \Vir_c, V_{\Lambda_{\mathrm{Leech}}},
  V^\natural\}$ (six-family disjoint test suite). \\
 \hline
@@ -1006,7 +946,7 @@ genuinely cross-verified.
 
 \medskip
 
-The Platonic form of Part~II is specified. The existing chapters
+The structural form of Part~II is specified. The existing chapters
 of the Characteristic Datum are the concrete realizations of the
 five slots; this introduction orients the reader and the subsequent
 arguments.

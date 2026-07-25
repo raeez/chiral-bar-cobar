@@ -454,7 +454,7 @@ class TestGetzlerKapranovInvolution:
     def test_double_feynman_heisenberg(self):
         """For Heisenberg, FT(H_kappa) = bar complex = kappa-dual.
         FT^2(H_kappa) ~ H_kappa (bar-cobar inversion)."""
-        # The bar complex of H_kappa has Koszul dual H_kappa^! = Sym^ch(V*)
+        # The bar complex of H_kappa has curved Sym^ch(V*[1]) dual branch
         # Applying FT again: FT(H_kappa^!) ~ H_kappa (involution)
         # This is the content of bar-cobar inversion (Theorem B)
         # Verified here by checking kappa(A) = kappa(cobar(bar(A))):

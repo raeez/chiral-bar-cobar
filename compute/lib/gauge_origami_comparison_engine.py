@@ -960,7 +960,8 @@ def koszul_matter_comparison(c_val):
     For affine KM: A = V_k(g), A! via Feigin-Frenkel
         kappa(V_k) + kappa(A!) = 0  (true for KM)
 
-    For Heisenberg: A = H_k, A! = H_{-k}^* (Sym^ch(V^*))
+    For Heisenberg: A = H_k, A! is the curved second-kind
+    Sym^ch(V^*[1]) branch; H_{-k} is only the scalar-shadow match.
         kappa(H_k) + kappa(H_k^!) = k + (-k) = 0
 
     Returns comparison data.

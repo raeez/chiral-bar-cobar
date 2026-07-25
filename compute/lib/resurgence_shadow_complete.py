@@ -81,7 +81,7 @@ OBJECT_FIREWALLS = {
     'B(A)': 'bar coalgebra T^c(s^{-1}Abar)',
     'A^i': 'bar cohomology dual coalgebra H^*B(A)',
     'A^!': 'Verdier/continuous-linear dual algebra branch',
-    'Z_ch^der(A)': 'derived centre/bulk Hochschild branch',
+    'Z_ch^der(A)': 'derived centre/closed-sector Hochschild branch',
     'bar_cobar': 'Omega(B(A))=A is inversion, not Koszul duality',
 }
 

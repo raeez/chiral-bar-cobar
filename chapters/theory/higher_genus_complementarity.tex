@@ -5,10 +5,47 @@
 % Guarded by \providecommand for portability across standalone extraction.
 \providecommand{\BRST}{\mathrm{BRST}}
 
+\begin{convention}[Stable modular base and dimension;
+\ClaimStatusDefinitional]
+\label{conv:theorem-c-stable-base}
+\index{Theorem C!stable modular base}
+For a stable pair \((g,n)\), so \(2g-2+n>0\), set
+\[
+ d_{g,n}:=3g-3+n,
+ \qquad
+ \mathbf C_{g,n}(\cA)
+ :=R\Gamma\!\left(\overline{\mathcal M}_{g,n},\mathcal Z(\cA)\right).
+\]
+The genus shorthand uses
+\[
+ n_g:=
+ \begin{cases}
+  3,&g=0,\\
+  1,&g=1,\\
+  0,&g\geq2,
+ \end{cases}
+ \qquad
+ \overline{\mathcal M}_g:=\overline{\mathcal M}_{g,n_g},
+ \qquad
+ d_g:=d_{g,n_g},
+ \qquad
+ \mathbf C_g:=\mathbf C_{g,n_g}.
+\]
+Thus every genus-indexed modular object in this section lives on a
+stable Deligne--Mumford stack.  Theorem~C summands retain both indices:
+the stable low-genus bases are written \((0,3)\) and \((1,1)\), while
+the unpointed higher-genus base is written \((g,0)\) for \(g\geq2\).
+The active Theorem~C notation always displays the marking index.
+\end{convention}
+
 Classical Koszul duality over a point already distinguishes the bar
 coalgebra $B(\cA)$, the inversion $\Omega(B(\cA)) \simeq \cA$, the
-dual coalgebra $\cA^i = H^*(B(\cA))$, and the dual algebra
-$\cA^! = ((\cA^i)^\vee)$.
+quadratic presentation coalgebra
+$\cA^i=C_X(s^{-1}V,s^{-2}R)$ with
+$q_\cA\colon\cA^i\to B(\cA)$, the bar cohomology
+$H^\bullet B(\cA)$, and the dual algebras
+$K_X(\cA)=\mathbb D_{\Ran}B(\cA)$ and~$\cA^!$ connected by the
+chosen Koszul-pair map~$\nu_\cA$.
 Already at genus~$0$ on a curve, the Fulton--MacPherson
 compactifications $\overline{C}_n(X)$ and the Arnold forms
 $\eta_{ij} = d\log(z_i - z_j)$ supply configuration-space geometry
@@ -17,8 +54,8 @@ define the bar differential, the scalar projection of the spectral
 $r$-matrix which gives the modular characteristic
 $\kappa(\cA)$ on the standard landscape, and the higher operations
 $m_n$ for $n \geq 3$ that determine whether the shadow tower
-terminates. At genus~$g \geq 1$, the Hodge bundle
-$\mathbb{E}_g=\pi_*\omega_\pi$ on $\overline{\mathcal{M}}_g$
+terminates. At stable genus~$g$, the Hodge bundle
+$\mathbb{E}_g=\pi_*\omega_\pi$ on $\overline{\mathcal{M}}_{g,n_g}$
 introduces a curvature two-form
 $\omega_{\mathbb{E}}=c_1(\det\mathbb{E}_g)$, and on the scalar
 diagonal of the curved fiber bar model
@@ -27,47 +64,58 @@ diagonal of the curved fiber bar model
   =
   \kappa(\cA)\cdot\omega_{\mathbb{E}}.
 \]
-This scalar curvature identity is not Theorem~C. It is the genus-$g$
-curvature surface on which Theorem~D projects to the Hodge class
-$\lambda_g=c_g(\mathbb{E}_g)$ and to the Faber--Pandharipande number
-$\lambda_g^{\mathrm{FP}}$. Theorem~C acts on a different object: the
+This scalar curvature identity belongs to the genus-$g$ curvature
+surface.  For $g\geq2$, Theorem~D first produces
+$\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\Def_g)$; the package
+$H_D^{\mathrm{tr}}$ carries it to
+$\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$, whose degree-$g$
+Chern character is $(-1)^g\kappa\lambda_g$.  The graph functional
+then gives $F_g^{\mathrm{sc}}=\kappa\lambda_g^{\mathrm{FP}}$ on the
+scalar diagonal. Theorem~C acts on a different object: the
 strict flat ambient complex
-$\mathbf{C}_g(\cA)=R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$.
-When the Verdier--Koszul involution is represented on this complex,
-its eigenspaces give
+$\mathbf{C}_{g,n}(\cA)=
+R\Gamma(\overline{\mathcal{M}}_{g,n},\mathcal{Z}(\cA))$.
+When the Verdier--Koszul involutions and the anti-equivariant
+genuine-partner comparison of
+Definition~\ref{def:complementarity-complexes} are represented, their
+eigenspaces give
 \begin{equation}\label{eq:complementarity-chapter-opening}
- H^*\bigl(\overline{\mathcal{M}}_g,\,\mathcal{Z}(\cA)\bigr)
+ H^*\bigl(\overline{\mathcal{M}}_{g,n},\,\mathcal{Z}(\cA)\bigr)
  \;=\;
- Q_g(\cA) \;\oplus\; Q_g(\cA^!),
+ Q_{g,n}(\cA) \;\oplus\;
+ (\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!),
 \end{equation}
-with $Q_g(\cA)=\ker(\sigma-\mathrm{id})$ and
-$Q_g(\cA^!)=\ker(\sigma+\mathrm{id})$ after passage to cohomology.
+where \(Q_{g,n}(\cA)\) and \(Q_{g,n}(\cA^!)\) are the genuine
+positive eigensummands of their respective centre complexes and
+\(\chi^-_{\cA;g,n}\) identifies the negative \(\cA\)-summand with
+the positive \(\cA^!\)-summand.
 If the strict flat ambient complex is perfect and the Verdier pairing
 is non-degenerate and anti-invariant, these eigenspaces are
-Lagrangian and Verdier-dual to one another; without those hypotheses
-they are only complementary eigenspaces.
+Lagrangian and Verdier-dual to one another.  Before the pairing package
+is supplied, the complementary eigenspace decomposition acquires its
+Lagrangian refinement.
 
 The scalar complementarity constants are the shadow of this
 eigenspace theorem after Theorem~D has been applied on its scalar
 lane. On the computed standard landscape the constants are
 \[
-\begin{array}{c|c}
-\text{family} & \kappa(\cA)+\kappa(\cA^!) \\ \hline
-\text{free fields and affine Kac--Moody} & 0 \\
-\mathrm{Vir}_c=\cW_2 & 13 \\
-\cW_3 & 250/3 \\
-\text{Bershadsky--Polyakov} & 98/3 \\
-\text{Vol III Mukai-enhanced K3 Heisenberg witness} & 8
+\begin{array}{c|c|c}
+\text{family} & \kappa(\cA)+\kappa(\cA^!) & \text{status} \\ \hline
+\text{free fields and affine Kac--Moody} & 0 & \text{computed} \\
+\mathrm{Vir}_c=\cW_2 & 13 & \text{computed} \\
+\cW_3 & 250/3 & \text{computed} \\
+\text{Bershadsky--Polyakov} & \text{open} & \text{genus-one DS curvature} \\
+\text{Vol III Mukai-enhanced K3 Heisenberg witness} & 8 &
+\text{conjectural under }H_{\mathsf B}
 \end{array}
 \]
 For principal $\cW_N$ the general formula is
 $\kappa+\kappa^!=\varrho_NK_N$, with
 $\varrho_N=H_N-1$ and
-$K_N=2(N-1)(2N^2+2N+1)$. These are scalar identities. They do
-not identify the bar coalgebra with the Koszul dual, do not identify
-the center local system with the chiral derived center, and do not
-construct the bar-side BV pairing. Those are separate objects and
-separate open mathematical conditions.
+$K_N=2(N-1)(2N^2+2N+1)$. These are scalar identities.  The bar
+coalgebra comparison, the derived-centre comparison, and the bar-side
+BV pairing are separate objects carried by their named reconstruction
+maps and hypothesis packages.
 
 Theorem~C (Theorem~\ref{thm:quantum-complementarity-main})
 therefore has three layers with distinct hypotheses.
@@ -88,54 +136,52 @@ therefore has three layers with distinct hypotheses.
  $\mathcal{H}^0(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA))
  \cong \mathcal{Z}_{\cA}$
  \textup{(}Theorem~\textup{\ref{thm:fiber-center-identification})}.
- Only this ordinary flat-perfect realization produces the ambient
- complex on which~\textup{(C1)} and~\textup{(C2)} operate.
+ This ordinary flat-perfect realization produces the ambient complex
+ on which~\textup{(C1)} and~\textup{(C2)} operate.
 
 \item \emph{Verdier eigenspace decomposition and perfect duality
 \textup{(}strict flat representative\textup{)}.}\;
  For every chiral Koszul pair $(\cA, \cA^!)$ on a smooth projective
- curve~$X$ and every genus $g \geq 0$ for which the Verdier
- involution is represented on the strict flat ambient complex, the
- cohomology of that ambient complex splits as
+ curve~$X$ and every stable pair \((g,n)\), represent strict-flat
+ centre complexes for both partners, cochain involutions
+ \(\sigma_{\cA},\sigma_{\cA^!}\), and the anti-equivariant comparison
+ \(j_Z\) of Definition~\ref{def:complementarity-complexes}.  The
+ restricted map \(\chi^-_{\cA;g,n}\) identifies the negative
+ \(\cA\)-summand with the genuine positive \(\cA^!\)-summand, and
  \begin{equation}\label{eq:complementarity-summary}
- H^*(\overline{\mathcal{M}}_g,\,\mathcal{Z}(\cA))
+ H^*(\overline{\mathcal{M}}_{g,n},\,\mathcal{Z}(\cA))
  \;=\;
- Q_g(\cA) \;\oplus\; Q_g(\cA^!),
+ Q_{g,n}(\cA) \;\oplus\;
+ (\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!).
  \end{equation}
-where $Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
-$Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$ are the eigenspaces of
- the Verdier involution~$\sigma$. This is the $\mathrm{C}_{1a}$
- homotopy-eigenspace statement and uses only the represented
- involution plus Lemma~\ref{lem:involution-splitting}. For
- $g \geq 1$, if the strict flat ambient complex is perfect
+ This is the $\mathrm{C}_{1a}$ homotopy-eigenspace statement. If the
+ strict flat ambient complex is perfect
  \textup{(}for example by the flat perfect locus of
  Theorem~\ref{thm:fiber-center-identification} and
  Lemma~\ref{lem:perfectness-criterion}\textup{)} and the Verdier
  pairing is non-degenerate and anti-invariant, then the
  $\mathrm{C}_{1b}$ perfect-duality statement identifies
- $Q_g(\cA) \cong Q_g(\cA^!)^\vee$. At $g=0$, this
- perfect-duality clause is not invoked: in the unmarked ambient
- convention the point class is $\sigma$-fixed, so
- $Q_0(\cA)=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA))$ and
- $Q_0(\cA^!)=0$
- \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}.
- The nontrivial genus-$0$ Beilinson--Drinfeld content belongs to
- the pointed spaces $\overline{\mathcal M}_{0,n}$, $n\geq3$, and
- the Arnold-algebra pairing there, not to the
- $-(3g{-}3)$ shifted Verdier formula.
+ $Q_{g,n}(\cA) \cong Q_{g,n}(\cA^!)^\vee[-d_{g,n}]$.
+ The cases \((0,3)\), \((1,1)\), and \((g,0)\) for \(g\geq2\)
+ are the canonical genus representatives of
+ Convention~\ref{conv:theorem-c-stable-base}.
 
 \item \emph{Shifted-symplectic Lagrangian upgrade
  \textup{(}conditional on the $\mathrm{C}_2$ package\textup{)}.}\;
- For $g\geq1$, when the $\mathrm{C}_2$ shifted-symplectic hypothesis package of
+ For a stable pair \((g,n)\), when the $\mathrm{C}_2$
+ shifted-symplectic hypothesis package of
  Definition~\textup{\ref{def:C2-shifted-symplectic-hypothesis-package}}
  is supplied, the complex
- $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,
- \mathcal{Z}(\cA))$ carries a $({-}(3g{-}3))$-shifted symplectic
+ $\mathbf{C}_{g,n}(\cA) = R\Gamma(\overline{\mathcal{M}}_{g,n},
+ \mathcal{Z}(\cA))$ carries a $(-d_{g,n})$-shifted symplectic
  structure \textup{(}PTVV
- \cite{PTVV13}\textup{)}, and the summands $\mathbf{Q}_g(\cA)$ and
- $\mathbf{Q}_g(\cA^!)$ are Lagrangian subspaces: isotropic of half
- rank, with $\mathbf{Q}_g(\cA) \simeq
- \mathbf{Q}_g(\cA^!)^\vee[-(3g{-}3)]$.
+ \cite{PTVV13}\textup{)}, and the summands
+ $\mathbf{Q}_{g,n}(\cA)$ and
+ $(\chi^-_{\cA;g,n})^{-1}\mathbf{Q}_{g,n}(\cA^!)$ are Lagrangian
+ inside~$\mathbf C_{g,n}(\cA)$.  Equivalently, the genuine summands in
+ their respective centre complexes satisfy the cross-duality
+ $\mathbf{Q}_{g,n}(\cA) \simeq
+ \mathbf{Q}_{g,n}(\cA^!)^\vee[-d_{g,n}]$.
  This is the geometric home of the finite-window shadow
  tower~$\Theta_{\cA}^{\leq r}$
  \textup{(}Appendix~\textup{\ref{app:nonlinear-modular-shadows})}.
@@ -145,13 +191,145 @@ is substantive:
 perfectness, nondegeneracy, cyclic closure, bracket compatibility,
 twisted-tensor acyclicity, and BV/QME compatibility are separate
 inputs.  The scalar identity
-$\kappa(\cA)+\kappa(\cA^!)=K^\kappa(\cA)$ does not supply them.
+$\kappa(\cA)+\kappa(\cA^!)=K^\kappa(\cA)$ is their
+one-dimensional trace consequence.
 The $\mathrm{C}_0$ coderived class exists unconditionally on the
 Koszul locus, while the fiber--center identification is the
 ordinary-derived realization on the flat perfect locus; the
 S-level decomposition~(C1) is read on that strict flat
 representative; the H-level Lagrangian upgrade~(C2) is the
 geometric content of the nonlinear theory.
+
+\begin{definition}[Scalar trace of the derived centre;
+\ClaimStatusDefinitional]
+\label{def:derived-centre-scalar-trace-kappa}
+\index{derived centre!scalar trace to kappa@scalar trace to \(\kappa\)}
+\index{Theorem C!scalar trace lane}
+Assume the strict flat centre-comparison datum of~\(\mathrm{C}_0\) has
+been fixed, and fix a Theorem--D trace pair
+\((g,n)=(1,1)\) or \((g,n)=(g,0)\) with \(g\geq2\).  For either partner
+\(\cB\in\{\cA,\cA^!\}\), let the degree-two diagonal residue class
+\[
+ \theta_{\cB}^{(2)}
+ \in
+ H^2\!\left(Z^{\mathrm{der}}_{\mathrm{ch}}(\cB)\right)_{\mathrm{diag}}
+\]
+be carried to the stable modular centre by a named realization map
+\[
+ \rho_{\cB;g,n}\colon
+ H^2\!\left(Z^{\mathrm{der}}_{\mathrm{ch}}(\cB)\right)_{\mathrm{diag}}
+ \longrightarrow
+ H^2\!\left(\mathbf C_{g,n}(\cB)\right)_{\mathrm{diag}},
+ \qquad
+ \vartheta_{\cB;g,n}^{(2)}
+ :=\rho_{\cB;g,n}(\theta_{\cB}^{(2)}).
+\]
+The map \(\rho_{\cB;g,n}\) is part of the strict-flat
+fibre--centre realization and is required to intertwine the
+represented involutions.  The \emph{scalar
+\(\kappa\)-trace} is the scalar projection
+\[
+ \operatorname{tr}_{\kappa,\cB;g,n}\colon
+ H^2\!\left(\mathbf C_{g,n}(\cB)\right)_{\mathrm{diag}}
+ \longrightarrow \mathbb C
+\]
+obtained by applying the diagonal residue trace and then the modular
+trace functional of Theorem~\ref{thm:modular-characteristic}.  It is
+normalised by
+\[
+ \operatorname{tr}_{\kappa,\cB;g,n}
+   (\vartheta_{\cB;g,n}^{(2)})=\kappa(\cB),
+ \qquad
+ \operatorname{Tr}_{D,g,n}(\vartheta_{\cB;g,n}^{(2)})
+ =\operatorname{tr}_{\kappa,\cB;g,n}
+   (\vartheta_{\cB;g,n}^{(2)})\,\lambda_g
+ =\kappa(\cB)\lambda_g .
+\]
+This projection retains the scalar diagonal of the cochain derived
+centre.  The open/closed comparison, centre reconstruction, and the
+shifted-symplectic BV/QME structure enter through their respective
+hypothesis packages.
+\end{definition}
+
+\begin{proposition}[Scalar conductor as the C1 trace shadow;
+\ClaimStatusConditional]
+\label{prop:scalar-conductor-c1-trace-shadow}
+\index{scalar conductor!trace shadow of C1}
+\index{Theorem C!scalar conductor as C1 shadow}
+Let \((\cA,\cA^!)\) be a chiral Koszul pair and let
+\((g,n)=(1,1)\) or \((g,0)\) with \(g\geq2\).  Supply the
+\(\mathrm{C}_0\) strict-flat centre models, the
+\(\mathrm{C}_1\) genuine-partner datum
+\((\sigma_{\cA},\sigma_{\cA^!},j_Z,\chi^-_{\cA;g,n})\) of
+Definition~\ref{def:complementarity-complexes}, and the scalar traces
+of Definition~\ref{def:derived-centre-scalar-trace-kappa}.  Assume the
+same symbols denote the induced maps on degree-two cohomology, and
+assume the \emph{trace--eigenclass compatibility} equations
+\[
+ p_{\cA}^{+}\vartheta_{\cA;g,n}^{(2)}
+ =\vartheta_{\cA;g,n}^{(2)},
+ \qquad
+ p_{\cA^!}^{+}\vartheta_{\cA^!;g,n}^{(2)}
+ =\vartheta_{\cA^!;g,n}^{(2)},
+\]
+and set
+\[
+ \widetilde\theta_{\cA^!}^{-}
+ :=(\chi^-_{\cA;g,n})^{-1}(\vartheta_{\cA^!;g,n}^{(2)})
+ \in H^2(\mathbf Q^-_{g,n}(\cA)),
+ \qquad
+ \operatorname{tr}^{-}_{\kappa,\cA;g,n}
+ :=\operatorname{tr}_{\kappa,\cA^!;g,n}\circ\chi^-_{\cA;g,n}.
+\]
+Then the scalar Verdier conductor is the scalar trace shadow of the
+\(\mathrm{C}_1\) eigenspace decomposition together with Theorem~D:
+\[
+ K^\kappa(\cA)
+ :=
+ \operatorname{tr}_{\kappa,\cA;g,n}(\vartheta_{\cA;g,n}^{(2)})
+ +
+ \operatorname{tr}^{-}_{\kappa,\cA;g,n}
+   (\widetilde\theta_{\cA^!}^{-})
+ =
+ \kappa(\cA)+\kappa(\cA^!).
+\]
+Equivalently, at genus~\(g\) on the uniform-weight scalar lane,
+\[
+ \operatorname{Tr}_{D,g,n}(\vartheta_{\cA;g,n}^{(2)})
+ +
+ \operatorname{Tr}_{D,g,n}(\vartheta_{\cA^!;g,n}^{(2)})
+ =
+ K^\kappa(\cA)\lambda_g .
+\]
+The scalar \(K^\kappa(\cA)\) is the one-dimensional trace shadow;
+the eigenspace complexes, derived centres, and \(\mathrm{C}_2\)
+Lagrangian/BV structure remain the corresponding source objects.
+\end{proposition}
+
+\begin{proof}
+Trace--eigenclass compatibility places
+\(\vartheta_{\cA;g,n}^{(2)}\) in the genuine positive
+\(\cA\)-summand and \(\vartheta_{\cA^!;g,n}^{(2)}\) in the genuine
+positive \(\cA^!\)-summand.
+The map \(\chi^-_{\cA;g,n}\) transports the latter class to the
+negative summand of the \(\cA\)-ambient complex, and its transported
+trace satisfies
+\[
+ \operatorname{tr}^{-}_{\kappa,\cA;g,n}
+ (\widetilde\theta_{\cA^!}^{-})
+ =\operatorname{tr}_{\kappa,\cA^!;g,n}
+   (\vartheta_{\cA^!;g,n}^{(2)})
+ =\kappa(\cA^!).
+\]
+The corresponding normalization for \(\cA\) gives \(\kappa(\cA)\).
+Theorem~D,
+recorded here as Theorem~\ref{thm:modular-characteristic}, then
+multiplies each scalar by the top Hodge class \(\lambda_g\).  Adding
+the two scalar traces gives the stated formula for \(K^\kappa(\cA)\)
+and its genus-\(g\) Hodge projection.  The construction factors through
+the displayed scalar traces, so its value is precisely the scalar
+shadow of the represented \(\mathrm C_1\) data.
+\end{proof}
 
 \begin{proposition}[Hodge curvature and scalar projection;
 \ClaimStatusConditional]
@@ -166,10 +344,11 @@ fiberwise bar identity is the degree-$2$ class
   \qquad
   \dfib^{\,2}=\kappa(\cA)\omega_{\mathbb{E}}
 \]
-on the scalar diagonal. The genus-$g$ scalar obstruction is the
-top-Hodge projection
+on the scalar diagonal.  Under~$H_D^K$, the genus-$g$ top-Hodge
+projection is
 \[
-  \operatorname{obs}_g(\cA)=\kappa(\cA)\lambda_g,
+  \operatorname{ch}_g(\mathfrak O_g^K(\cA))
+  =(-1)^g\kappa(\cA)\lambda_g,
   \qquad
   \lambda_g=c_g(\mathbb{E}_g),
 \]
@@ -226,7 +405,9 @@ pairwise typed differently:
 \[
 \cA,\qquad
 \barB^{\mathrm{ch}}(\cA),\qquad
-\cA^i:=H^*(\barB^{\mathrm{ch}}(\cA)),\qquad
+\cA^i:=C_X(s^{-1}V,s^{-2}R),\qquad
+H^\bullet\barB^{\mathrm{ch}}(\cA),\qquad
+K_X(\cA):=\mathbb D_{\Ran}\barB^{\mathrm{ch}}(\cA),\qquad
 \cA^!,\qquad
 \mathcal{Z}(\cA),\qquad
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
@@ -239,27 +420,29 @@ Theorem~H uses the chiral Hochschild complex
 $\ChirHoch^\bullet(\cA,\cA)$, the chiral derived center.
 The fiber--center identification~\textup{(C0)} identifies the
 degree-$0$ flat fiber cohomology sheaf with $\mathcal{Z}(\cA)$ on
-the flat perfect locus; it does not identify the raw curved bar
-object with the chiral derived center, it does not identify
-$\cA^i$ with $\cA^!$ before dualization, and it does not identify
-$\Omega\barB(\cA)$ with $\cA^!$.
+the flat perfect locus.  Quadratic recognition is carried by
+$H^\bullet(q_\cA)$, Verdier comparison by
+$\mathbb D(q_\cA)$ and~$\nu_\cA$, and inversion by
+$\Omega\barB(\cA)\to\cA$.
 \end{proposition}
 
 \begin{proof}
-The six objects have different functor signatures. The algebra
+The displayed objects have different functor signatures. The algebra
 $\cA$ is a chiral algebra on~$X$; $\barB^{\mathrm{ch}}(\cA)$ is a
-factorization coalgebra; $\cA^i$ is the bar cohomology coalgebra;
-$\cA^!$ is the Verdier/Koszul dual algebra obtained from
-dualizing the finite-type bar-cohomology object in the appropriate
-completed category; the sheaf $\mathcal{Z}(\cA)$ is the degree-$0$
+factorization coalgebra; $\cA^i$ is the quadratic presentation
+coalgebra; $H^\bullet\barB^{\mathrm{ch}}(\cA)$ is bar cohomology;
+$K_X(\cA)$ is the Verdier dual algebra of the full bar coalgebra; and
+$\cA^!$ is the chosen Koszul partner supplied by~$\nu_\cA$.
+The sheaf $\mathcal{Z}(\cA)$ is the degree-$0$
 center local system appearing after flat fiber concentration; and
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the full chiral
 Hochschild cochain object with its brace operations. The maps
 among them are comparison functors or projections. A scalar equality
 for $\kappa$, a Verdier eigenspace decomposition of
 $R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$, and
-Theorem~H's Hochschild concentration therefore live in different
-categories and cannot be substituted for one another.
+Theorem~H's family-indexed Hochschild support from $H_H(\cA;S)$
+therefore live in different categories and are related only through
+the displayed comparison functors.
 \end{proof}
 
 \begin{remark}[Calabi--Yau exchange and the perfectness hypothesis]
@@ -302,7 +485,8 @@ Kodaira--Spencer map
 $\rho\colon Z(\cA)\to\mathrm{End}(H^*(\overline{\mathcal{M}}_g))$,
 and the eigenspace decomposition gives
 $H^*(\overline{\mathcal{M}}_g,Z(\cA))
-=Q_g(\cA)\oplus Q_g(\cA^!)$.
+=Q_{g,n_g}(\cA)\oplus
+(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$.
 \end{remark}
 
 \begin{remark}[Algebraic structure]
@@ -321,9 +505,13 @@ For $\mathcal{H}_\kappa$ at genus~$1$
 (Convention~\ref{conv:heisenberg-kappa-notation}: level $=$ modular
 characteristic $\kappa(\mathcal{H}_\kappa) = \kappa$):
 $H^*(\overline{\mathcal{M}}_{1,1})=\mathbb{Q}\oplus\mathbb{Q}\lambda$,
-$Q_1(\mathcal{H}_\kappa)=\mathbb{C}\cdot\kappa$ (central extension),
-$Q_1(\mathcal{H}_\kappa^!)=\mathbb{C}\cdot\lambda$ (curved structure),
-and $Q_1\oplus Q_1^!=H^0\oplus H^2=\mathbb{C}^2$.
+$Q_{1,1}(\mathcal{H}_\kappa)=\mathbb{C}\cdot\kappa$ is the positive
+branch, and the genuine partner
+$Q_{1,1}(\mathcal{H}_\kappa^!)=\mathbb{C}\cdot\lambda$ transports to
+the negative branch.  Hence
+$Q_{1,1}(\mathcal H_\kappa)\oplus
+(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal H_\kappa^!)=H^0\oplus H^2=\mathbb C^2$.
 \end{remark}
 
 \begin{remark}[Complementarity as transversality of boundary conditions]
@@ -349,44 +537,86 @@ Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}.
 
 \subsection{Statement of the theorem}
 
-\begin{definition}[Deformation-obstruction complexes: H-level]
+\begin{definition}[Deformation-obstruction complexes: H-level;
+\ClaimStatusDefinitional]
 \label{def:complementarity-complexes}
 \index{deformation-obstruction complexes|textbf}
-Let $(\cA, \cA^!)$ be a chiral Koszul pair on~$X$.
-The \emph{ambient complex} at genus~$g$ is
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on~$X$, and fix a stable
+pair \((g,n)\).  Represent strict-flat centre complexes for both
+partners,
 \[
-\mathbf{C}_g(\cA) := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA)),
+ \mathbf C_{g,n}(\cA)
+ =R\Gamma(\overline{\mathcal M}_{g,n},\mathcal Z(\cA)),
+ \qquad
+ \mathbf C_{g,n}(\cA^!)
+ =R\Gamma(\overline{\mathcal M}_{g,n},\mathcal Z(\cA^!)),
 \]
-where $\mathcal{Z}(\cA)$ is the center local system.
-The Verdier involution $\sigma$ acts on $\mathbf{C}_g(\cA)$ as a
-cochain-level endomorphism with $\sigma^2 = \mathrm{id}$
-(Theorem~\ref{thm:verdier-bar-cobar}). Let
-$p^\pm=\frac{1}{2}(\mathrm{id}\pm\sigma)$.
-Define the \emph{deformation-obstruction complexes} as the strict
-idempotent eigensummands:
-\begin{equation}\label{eq:complementarity-fiber}
-\mathbf{Q}_g(\cA) := \operatorname{im}(p^+ \colon
-\mathbf{C}_g \to \mathbf{C}_g), \qquad
-\mathbf{Q}_g(\cA^!) := \operatorname{im}(p^- \colon
-\mathbf{C}_g \to \mathbf{C}_g).
-\end{equation}
-The \emph{cohomological shadows} (S-level) are defined by:
-\begin{align}\label{eq:shadow-spaces}
-Q_g(\cA) &:= H^*(\mathbf{Q}_g(\cA))
-= \ker(\sigma - \mathrm{id} \mid H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))),\\
-Q_g(\cA^!) &:= H^*(\mathbf{Q}_g(\cA^!))
-= \ker(\sigma + \mathrm{id} \mid H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))).
+together with cochain involutions \(\sigma_{\cA}\) and
+\(\sigma_{\cA^!}\).  The \emph{genuine-partner comparison datum} is
+a cochain quasi-isomorphism induced by the derived-centre comparison,
+\[
+ j_Z:=R\Gamma\!\left(H^0(\iota_Z^{\mathrm{der}})\right)
+ \colon \mathbf C_{g,n}(\cA)\xrightarrow{\;\simeq\;}
+ \mathbf C_{g,n}(\cA^!),
+ \qquad
+ \sigma_{\cA^!}j_Z=-j_Z\sigma_{\cA}.
+\]
+A specified strictification of this identity represents an
+anti-equivariant homotopy comparison.  Set
+\[
+ p_{\cA}^{\pm}:=\tfrac12(\mathrm{id}\pm\sigma_{\cA}),
+ \qquad
+ p_{\cA^!}^{\pm}:=\tfrac12(\mathrm{id}\pm\sigma_{\cA^!}).
+\]
+The genuine positive eigensummands and the negative ambient summand are
+\begin{align}
+ \mathbf Q_{g,n}(\cA)&:=\operatorname{im}(p_{\cA}^{+}),&
+ \mathbf Q_{g,n}^{-}(\cA)&:=\operatorname{im}(p_{\cA}^{-}),\\
+ \mathbf Q_{g,n}(\cA^!)&:=\operatorname{im}(p_{\cA^!}^{+})
+ \subset \mathbf C_{g,n}(\cA^!).
 \end{align}
+Anti-equivariance gives
+\(j_Zp_{\cA}^{-}=p_{\cA^!}^{+}j_Z\), hence the restricted
+quasi-isomorphism
+\begin{equation}\label{eq:genuine-partner-minus-comparison}
+ \chi^-_{\cA;g,n}:=
+ j_Z\big|_{\mathbf Q^-_{g,n}(\cA)}
+ \colon \mathbf Q^-_{g,n}(\cA)
+ \xrightarrow{\;\simeq\;}\mathbf Q_{g,n}(\cA^!).
+\end{equation}
+Thus the H-level decomposition, with the genuine partner transported
+into the \(\cA\)-ambient complex, is
+\begin{equation}\label{eq:complementarity-fiber}
+ \mathbf C_{g,n}(\cA)
+ \simeq \mathbf Q_{g,n}(\cA)\oplus
+ (\chi^-_{\cA;g,n})^{-1}\mathbf Q_{g,n}(\cA^!).
+\end{equation}
+The S-level objects are
+\begin{align}\label{eq:shadow-spaces}
+ Q_{g,n}(\cA)&:=H^*(\mathbf Q_{g,n}(\cA)),\\
+ Q_{g,n}(\cA^!)&:=H^*(\mathbf Q_{g,n}(\cA^!)),
+\end{align}
+and \(H^*(\chi^-_{\cA;g,n})\) identifies the latter with the
+negative eigenspace in
+\(H^*(\overline{\mathcal M}_{g,n},\mathcal Z(\cA))\).
+Every formula records its ambient object explicitly: the genuine
+summand \(\mathbf Q_{g,n}(\cA^!)\) lies in
+\(\mathbf C_{g,n}(\cA^!)\), while its realization inside
+\(\mathbf C_{g,n}(\cA)\) is
+\((\chi^-_{\cA;g,n})^{-1}\mathbf Q_{g,n}(\cA^!)\).
+These complexes constitute the \(\mathrm C_1\) centre lane.  Their
+scalar traces give the conductor shadow, while an open/closed
+comparison supplies a physical bulk interpretation.
 \end{definition}
 
 \begin{remark}[H/M/S layers; Convention~\ref{conv:hms-levels}]
-The idempotent summands~\eqref{eq:complementarity-fiber} are the
-H-level objects; the bar complexes
+The summands and genuine-partner map in
+\eqref{eq:complementarity-fiber} are the H-level objects; the bar complexes
 $(\bar{B}^{(g)}(\cA), \Dg{g})$ are M-level models; the kernel
 decomposition~\eqref{eq:shadow-spaces} is the S-level shadow.
 The involution-splitting lemma
-(Lemma~\ref{lem:involution-splitting}) makes the passage automatic
-in characteristic~$0$, with no cone contribution.
+(Lemma~\ref{lem:involution-splitting}) gives the passage to
+cohomological eigenspaces in characteristic~$0$.
 \end{remark}
 
 \begin{lemma}[Involution splitting in characteristic~\texorpdfstring{$0$}{0}; \ClaimStatusProvedHere]
@@ -543,6 +773,11 @@ perfect, so $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is perfect.
 \index{fiber--center identification|textbf}
 \textup{[}Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+\textup{[}Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\),
+with \(H_{\mathrm C_{1b}}^{\mathrm{pair}}\) and
+\(H_{\mathrm C_2}^{\mathrm{BV}}\) attached to their stated clauses.\textup{]}
 
 \smallskip\noindent
 Assume $\cA$ carries a modular pre-Koszul datum
@@ -707,34 +942,37 @@ ten-input datum:
 \begin{enumerate}[label=\textup{(C2.\arabic*)}]
 \item the $\mathrm{C}_0$ strict flat fiber-center comparison of
 Theorem~\ref{thm:fiber-center-identification};
-\item the $\mathrm{C}_1$ represented Verdier involution and homotopy
-eigenspace decomposition of
+\item the $\mathrm{C}_1$ represented involutions, anti-equivariant
+genuine-partner map \(j_Z\), restricted comparison \(\chi^-_{\cA;g,n}\),
+and homotopy eigenspace decomposition of
 Theorem~\ref{thm:quantum-complementarity-main};
 \item uniform-weight perfectness of the strict flat relative bar family,
 with finite weight spaces, flat fiber cohomology, and dual regularity
 as in Lemma~\ref{lem:perfectness-criterion} and
 Proposition~\ref{prop:lagrangian-perfectness};
 \item a nondegenerate cyclic Verdier pairing on
-$\mathbf{C}_g(\cA)$, anti-invariant under the represented involution,
+$\mathbf{C}_{g,n}(\cA)$ of degree \(-d_{g,n}\), anti-invariant under
+the represented involution,
 as in Proposition~\ref{prop:lagrangian-eigenspaces};
 \item a finite modular envelope for the genus-truncated deformation
 objects, compatible with the filtered modular truncations of
 Proposition~\ref{prop:modular-deformation-truncation};
-\item closedness of the cyclic two-form on each finite window, so that
-the PTVV constant-form construction applies without a residual de Rham
-boundary term;
+\item closedness of the cyclic two-form on each finite window, together
+with a vanishing residual de Rham boundary class, so that the PTVV
+constant-form construction applies;
 \item skew-adjointness of the differential for the cyclic pairing;
 \item compatibility of the modular bracket with the cyclic pairing;
 \item acyclicity of the twisted tensor kernel used in the bar-chart
 transport square of Lemma~\ref{lem:bar-chart-lagrangian-lift};
 \item the ambient BV/QME input, namely the config-space BV bracket and
 the bracket-compatible Verdier functor of
-Theorems~\ref{thm:config-space-bv} and~\ref{thm:bv-functor}, with the
-anomaly terms killed on the chosen finite window.
+Theorems~\ref{thm:config-space-bv} and~\ref{thm:bv-functor}, together
+with chosen null-homotopies for the anomaly terms on the finite window.
 \end{enumerate}
-The package is a hypothesis list, not a theorem.  Supplying only the
-scalar Verdier sum or only the uniform-weight diagonal condition does
-not certify~$\mathrm{C}_2$.
+The package is the hypothesis list consumed by the theorem.  The
+$\mathrm{C}_2$ conclusion uses the scalar Verdier sum, the
+uniform-weight diagonal condition, and the remaining BV-perfectness
+and pairing clauses together.
 \end{definition}
 
 The Heisenberg complementarity
@@ -750,19 +988,28 @@ perfect duality, and Lagrangian upgrade; \ClaimStatusConditional]
 \index{Lagrangian!complementarity|textbf}
 \textup{[}Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+\textup{[}Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\),
+with \(H_{\mathrm C_{1b}}^{\mathrm{pair}}\) and
+\(H_{\mathrm C_2}^{\mathrm{BV}}\) attached to their stated clauses.\textup{]}
 
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$ over $\mathbb{C}$, with $\mathcal{A}$ a sheaf of chiral algebras in
 the sense of Beilinson--Drinfeld \cite[Chapter 3]{BD04} and $\mathcal{A}^!$
 its Koszul dual (Theorem~\ref{thm:chiral-koszul-duality}).
-Write $\mathbf{C}_g(\cA)$, $\mathbf{Q}_g(\cA)$, $\mathbf{Q}_g(\cA^!)$
-for the ambient complex and homotopy eigenspaces of
-Definition~\textup{\ref{def:complementarity-complexes}}.
-Fix a genus $g\geq0$ for which the ordinary flat representative of
-\textup{(C0)} is available, the center-comparison datum
-$\iota_Z$ is fixed, and the Verdier--Koszul involution
-$\sigma$ is represented by a cochain involution on
-$\mathbf{C}_g(\cA)$.
+Fix a stable pair \((g,n)\).  Write
+$\mathbf{C}_{g,n}(\cA)$, $\mathbf{Q}_{g,n}(\cA)$,
+$\mathbf{Q}_{g,n}^{-}(\cA)$, and $\mathbf{Q}_{g,n}(\cA^!)$
+for the centre complexes and genuine eigensummands of
+Definition~\textup{\ref{def:complementarity-complexes}}.  Assume the
+ordinary flat representatives of \textup{(C0)} are available for both
+partners and fix the genuine-partner datum
+\[
+ (\sigma_{\cA},\sigma_{\cA^!},j_Z,\chi^-_{\cA;g,n}),
+ \qquad
+ \sigma_{\cA^!}j_Z=-j_Z\sigma_{\cA}.
+\]
 
 \smallskip\noindent
 \textbf{H-level \textup{(}homotopy\textup{)}.}
@@ -770,110 +1017,84 @@ $\mathbf{C}_g(\cA)$.
 \item \emph{\(\mathrm{C}_{1a}\): homotopy eigenspace decomposition.}
  By Lemma~\textup{\ref{lem:involution-splitting}(a)},
  \begin{equation}\label{eq:complementarity-decomp}
- \mathbf{C}_g(\cA) \;\simeq\;
- \mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
+ \mathbf{C}_{g,n}(\cA) \;\simeq\;
+ \mathbf{Q}_{g,n}(\cA) \;\oplus\;
+ (\chi^-_{\cA;g,n})^{-1}\mathbf{Q}_{g,n}(\cA^!),
  \end{equation}
- functorially in~$(\cA,\cA^!)$.
+ functorially in represented Koszul-pair data commuting with both
+ involutions and with~\(j_Z\).
 
-\item \emph{\(\mathrm{C}_{1b}\): perfect duality for $g \geq 1$.}
- Assume $g \geq 1$, assume that $\mathbf{C}_g(\cA)$ is a perfect
+\item \emph{\(\mathrm{C}_{1b}\): perfect duality.}
+ Assume that $\mathbf{C}_{g,n}(\cA)$ is a perfect
  complex and that its eigensummands are therefore perfect direct
  summands, and assume that Verdier duality induces a
  non-degenerate cochain-level pairing
- $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_g(\cA)$
- of cohomological degree $-(3g{-}3)$, anti-symmetric under the
- Verdier involution~$\sigma$. Under these hypotheses, each summand in
+ $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_{g,n}(\cA)$
+ of cohomological degree $-d_{g,n}$, anti-invariant under the
+ Verdier involution~$\sigma_{\cA}$. Under these hypotheses, each summand in
  \eqref{eq:complementarity-decomp} is Lagrangian, and
  $\langle -, - \rangle_{\mathbb{D}}$ restricts to a
  perfect pairing
- $\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!) \to \mathbb{C}[-{(3g{-}3)}]$,
- so $\mathbf{Q}_g(\cA) \simeq \mathbf{Q}_g(\cA^!)^\vee[-(3g{-}3)]$.
+ $\mathbf{Q}_{g,n}(\cA) \otimes \mathbf{Q}_{g,n}(\cA^!)
+ \to \mathbb{C}[-d_{g,n}]$,
+ so $\mathbf{Q}_{g,n}(\cA) \simeq
+ \mathbf{Q}_{g,n}(\cA^!)^\vee[-d_{g,n}]$.
 
 \item \emph{Functoriality.}
- The decomposition is natural in morphisms of Koszul pairs
- and compatible with the conformal weight and
- cohomological degree gradings.
+ The decomposition is natural in morphisms of represented Koszul-pair
+ data commuting with \(\sigma_{\cA}\), \(\sigma_{\cA^!}\), and
+ \(j_Z\), and is compatible with conformal weight and cohomological
+ degree.
 \end{enumerate}
 
 \smallskip\noindent
 \textbf{S-level \textup{(}cohomological shadow\textup{)}.}
-Setting $\mathcal{H}_g(\cA) := H^*(\overline{\mathcal{M}}_g,
+Setting $\mathcal{H}_{g,n}(\cA) := H^*(\overline{\mathcal{M}}_{g,n},
 \mathcal{Z}(\cA))$, Lemma~\textup{\ref{lem:involution-splitting}(b)}
 gives:
 \begin{equation}\label{eq:verdier-symplectic-pairing}
-\mathcal{H}_g(\cA) \;=\;
-Q_g(\cA) \;\oplus\; Q_g(\cA^!),
+\mathcal{H}_{g,n}(\cA) \;=\;
+Q_{g,n}(\cA) \;\oplus\;
+(H^*\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!),
 \end{equation}
-where the cohomological shadows
-$Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
-$Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$
-\textup{(}Definition~\textup{\ref{def:complementarity-complexes}}\textup{)}
-are the $\pm 1$ eigenspaces of~$\sigma$.
+where each displayed \(Q\)-space is the positive eigenspace in the
+genuine centre complex of the indicated partner; the inverse image is
+the negative eigenspace of \(\sigma_{\cA}\).
 If the perfectness and pairing hypotheses in the H-level
-$\mathrm{C}_{1b}$ clause hold, then for
-$g \geq 1$ they are Lagrangians for the induced pairing
-on~$\mathcal{H}_g$, and
+$\mathrm{C}_{1b}$ clause hold, they are Lagrangians for the induced
+pairing on~$\mathcal{H}_{g,n}$, and
 \begin{equation}\label{eq:quantum-duality}
-Q_g(\cA) \cong Q_g(\cA^!)^\vee.
+Q_{g,n}(\cA) \cong Q_{g,n}(\cA^!)^\vee[-d_{g,n}].
 \end{equation}
-At genus $0$, the shifted Verdier-pairing clause above is not
-used. In the unmarked ambient convention, the unique point class is
-$\sigma$-fixed, so
-\[
-Q_0(\cA)=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA)),
-\qquad
-Q_0(\cA^!)=0.
-\]
-The nontrivial genus-$0$ chiral operations are instead the
-Beilinson--Drinfeld pointed theory on $\overline{\mathcal M}_{0,n}$,
-$n\geq3$, governed by the Arnold algebra.
 \end{theorem}
 
 \begin{proof}
-The ordinary flat representative supplied by~\textup{(C0)} places the
-ambient object in the category of cochain complexes, and the hypothesis
-on~$\sigma$ says that this representative carries a cochain involution.
-The idempotents
+The ordinary flat representatives supplied by~\textup{(C0)} place the
+two centre objects in cochain complexes.  Lemma~\ref{lem:involution-splitting}(a)
+gives
 \[
- p^\pm=\tfrac12(\mathrm{id}\pm\sigma)
+ \mathbf C_{g,n}(\cA)
+ =\mathbf Q_{g,n}(\cA)\oplus\mathbf Q^-_{g,n}(\cA).
 \]
-are therefore cochain maps. Lemma~\ref{lem:involution-splitting}(a)
-gives the direct-sum decomposition
-\[
-\mathbf{C}_g(\cA)
-=
-\operatorname{im}(p^+) \oplus \operatorname{im}(p^-)
-=
-\mathbf{Q}_g(\cA)\oplus\mathbf{Q}_g(\cA^!),
-\]
-which is the H-level assertion. Applying cohomology gives
-\[
-H^*(\mathbf{C}_g(\cA))
-=
-\ker(\sigma-\mathrm{id})\oplus\ker(\sigma+\mathrm{id})
-=
-Q_g(\cA)\oplus Q_g(\cA^!)
-\]
-by Lemma~\ref{lem:involution-splitting}(b), and
-$H^*(\mathbf{C}_g(\cA))=
-H^*(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$ by definition of the
-ambient complex.
+Anti-equivariance gives
+\(j_Zp^-_{\cA}=p^+_{\cA^!}j_Z\).  Since \(j_Z\) is a
+quasi-isomorphism and both source and target split into strict
+idempotent summands, its restriction
+\(\chi^-_{\cA;g,n}\colon\mathbf Q^-_{g,n}(\cA)\to
+\mathbf Q_{g,n}(\cA^!)\) is a quasi-isomorphism.  Substitution gives
+\eqref{eq:complementarity-decomp}; applying cohomology gives
+\eqref{eq:verdier-symplectic-pairing}.
 
-For $g\geq1$, assume perfectness/reflexivity of
-$\mathbf{C}_g(\cA)$ and its direct-summand eigenspaces, and assume
-that the Verdier pairing is non-degenerate and anti-invariant.
+Assume perfectness/reflexivity of $\mathbf{C}_{g,n}(\cA)$ and its
+direct-summand eigenspaces, and assume that the Verdier pairing is
+non-degenerate and anti-invariant.
 Lemma~\ref{lem:involution-splitting}(c) makes the two summands
 isotropic and maximal. Since direct summands of a perfect complex are
 perfect, the non-degenerate cross-pairing is a perfect pairing of
-derived duals of degree $-(3g{-}3)$, hence
-$\mathbf{Q}_g(\cA)\simeq
-\mathbf{Q}_g(\cA^!)^\vee[-(3g{-}3)]$ and, on cohomology,
-$Q_g(\cA)\cong Q_g(\cA^!)^\vee$. At $g=0$ the moduli space is a point
-in this unmarked ambient convention and the Verdier orientation class is
-fixed; no $-(3g{-}3)$ shifted Lagrangian pairing is asserted there.
-The projector $p^+$ is the identity on the point class and $p^-$
-vanishes. Naturality follows because morphisms of Koszul pairs commute
-with the represented Verdier involution and hence with the projectors.
+derived duals of degree $-d_{g,n}$.  Transport along
+\(\chi^-_{\cA;g,n}\) gives the asserted duality with the genuine
+\(\cA^!\)-summand. Naturality follows because morphisms of represented
+Koszul-pair data commute with both involutions and with~\(j_Z\).
 \end{proof}
 
 \begin{remark}\label{rem:lagrangian-decomp}
@@ -882,21 +1103,15 @@ What one algebra sees as deformation, its dual sees as obstruction.
 
 \begin{remark}[External independence of Theorem~C]
 \label{rem:theorem-c-mok-independence}
-Theorem~C depends on three inputs: the genus
-filtration spectral sequence (standard), Poincar\'e--Verdier
-duality on FM compactifications (standard algebraic
-geometry, no external preprint), and the involution-splitting
-lemma (linear algebra in characteristic~$0$).
-In particular, Theorem~C does \emph{not} depend on the
-ambient-level $D^2 = 0$
-(Theorem~\textup{\ref{thm:ambient-d-squared-zero}},
-which uses \textup{[}Mok25\textup{]}) or on the full
-bar-intrinsic MC element $\Theta_\cA$
-(Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}).
-The only curvature input is the scalar $\kappa(\cA)$,
-which comes from the convolution-level
-$D^2 = 0$ (unconditional on the fixed smooth-curve carrier, not the
-relative log-FM enhancement).
+The linear decomposition in Theorem~C uses the stable modular centre
+complexes, the two represented involutions, the anti-equivariant
+genuine-partner comparison~$j_Z$, and the involution-splitting lemma.
+The perfect-duality clause additionally uses Poincar\'e--Verdier
+duality on the stable Deligne--Mumford base.  The ambient-level
+$D^2=0$ theorem and the bar-intrinsic Maurer--Cartan element
+$\Theta_\cA$ belong to the subsequent nonlinear enhancement.  The
+scalar curvature~$\kappa(\cA)$ enters after projection through the
+Theorem--D trace lane.
 \end{remark}
 
 \begin{remark}[Elementary model presentation;
@@ -904,18 +1119,27 @@ Convention~\ref{conv:proof-architecture}]
 \label{rem:theorem-c-model}
 \label{rem:complementarity-model}% backward-compatible label
 \index{complementarity!model presentation}
-\emph{Step~B} (M-level): The homotopy eigenspace
-$\mathbf{Q}_g(\cA)=\operatorname{fib}(\sigma-\mathrm{id})$ is modeled by
-$\operatorname{im}(p^+)$ with $p^+=\tfrac{1}{2}(\mathrm{id}+\sigma)$
-on $C_g=R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$.
+Fix a stable pair~$(g,n)$.  \emph{Step~B} (M-level): the homotopy
+eigenspace
+$\mathbf{Q}_{g,n}(\cA)=\operatorname{fib}(\sigma_\cA-\mathrm{id})$
+is modeled by $\operatorname{im}(p_\cA^+)$ on
+$C_{g,n}=R\Gamma(\overline{\mathcal{M}}_{g,n},\mathcal{Z}(\cA))$.
 The Lagrangian property is $\langle p^+x,p^+y\rangle=0$
 (Lemma~\ref{lem:involution-splitting}(c)), after the
 perfectness and non-degenerate pairing hypotheses of
 $\mathrm{C}_{1b}$ have been supplied.
 Taking cohomology gives the S-level decomposition
-$\mathcal{H}_g=Q_g(\cA)\oplus Q_g(\cA^!)$; model independence
-(Proposition~\ref{prop:model-independence}) lifts to H-level.
-For the Heisenberg at genus~$1$: $Q_1=H^0$, $Q_1^!=H^2$.
+$\mathcal{H}_{g,n}=Q_{g,n}(\cA)\oplus
+(H^*\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!)$.  Its H-level lift is
+canonical relative to the displayed strict flat representative,
+centre comparison~$\iota_Z$, and represented involution~$\sigma$,
+encoded by $\sigma_\cA$, $\sigma_{\cA^!}$, and~$j_Z$.
+Chosen quasi-isomorphism zigzags compare the underlying admissible bar
+presentations.  Contractibility of the comparison space for the triples
+$(\mathbf C_{g,n}(\cA),\mathbf C_{g,n}(\cA^!),
+\sigma_\cA,\sigma_{\cA^!},j_Z)$ remains an open problem.
+For the pointed Heisenberg calculation at~$(1,1)$:
+$Q_{1,1}=H^0$ and the transported partner branch is~$H^2$.
 \end{remark}
 
 \begin{remark}[Comparison with literature]
@@ -930,16 +1154,22 @@ is explained by our complementarity at critical level.
 \end{remark}
 
 \begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-c}
-For $g\geq1$, the complex
-$\mathbf{C}_g(\cA)=R\Gamma(\overline{\mathcal{M}}_g,
-\mathcal{Z}(\cA))$ carries a $-(3g{-}3)$-shifted symplectic structure
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}
+\cup H_{\mathrm C_{1b}}^{\mathrm{pair}}\).]}
+For a stable pair \((g,n)\), the complex
+$\mathbf{C}_{g,n}(\cA)=R\Gamma(\overline{\mathcal{M}}_{g,n},
+\mathcal{Z}(\cA))$ carries a $-d_{g,n}$-shifted symplectic structure
 (PTVV~\cite{PTVV13}; Proposition~\ref{prop:ptvv-lagrangian})
 under the perfectness and nondegeneracy hypotheses recorded there.
-The decomposition $\mathbf{C}_g\simeq\mathbf{Q}_g(\cA)\oplus
-\mathbf{Q}_g(\cA^!)$ is a Lagrangian fibration with $\sigma$ acting
-as anti-symplectomorphism only in that paired regime; the tangent
-and obstruction complexes are then Serre dual. The S-level
-eigenspace decomposition is the decategorification.
+The decomposition
+$\mathbf{C}_{g,n}(\cA)\simeq\mathbf{Q}_{g,n}(\cA)\oplus
+(\chi^-_{\cA;g,n})^{-1}\mathbf{Q}_{g,n}(\cA^!)$ is a Lagrangian
+polarization in that paired regime, with~$\sigma$ acting as an
+anti-symplectomorphism.  Its tangent and obstruction complexes are
+Serre dual, and passage to cohomology gives the S-level eigenspace
+decomposition.
 \end{remark}
 
 \begin{remark}[PTVV comparison]
@@ -956,39 +1186,33 @@ formal moduli problem. This is the correct PTVV comparison for the
 bar--cobar moduli space; on the linear side it is the constant-form
 model of \cite[Example~1.4]{PTVV13}.
 
-Second, the scalar complementarity identity
-$\kappa(\cA)+\kappa(\cA^!)=K$ is not a direct consequence of PTVV.
-PTVV controls shifted symplectic forms, isotropic structures, and
-Lagrangian maps
-\textup{(}Definition~\textup{2.8}, Theorem~\textup{2.9}\textup{)};
-it does not by itself produce the scalar conductor~$K$.
-In this chapter the scalar formula is obtained only after the
-Verdier eigenspace decomposition of~$\mathrm{C}_1$ is projected to the
-scalar lane by Theorem~D and the family computations of
+Second, PTVV controls shifted symplectic forms, isotropic structures,
+and Lagrangian maps
+\textup{(}Definition~\textup{2.8}, Theorem~\textup{2.9}\textup{)}.
+The scalar complementarity identity
+$\kappa(\cA)+\kappa(\cA^!)=K$ arises from the represented
+$\mathrm C_1$ eigenspace decomposition after projection by Theorem~D
+and the family computations of
 Table~\ref{tab:complementarity-landscape}.
 
-Third, the perfect-duality content of~$\mathrm{C}_{1b}$ is consistent
-with PTVV, but the precise comparison is polarization, not derived
-intersection. Proposition~\ref{prop:ptvv-lagrangian} shows that
-$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ satisfy the PTVV
+Third, the perfect-duality content of~$\mathrm{C}_{1b}$ is a
+polarization statement. Proposition~\ref{prop:ptvv-lagrangian} shows
+that $\mathbf{Q}_{g,0}(\cA)$ and
+$(\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)$ satisfy the PTVV
 Lagrangian conditions, for $g\geq2$, inside the ambient
-$(-(3g{-}3))$-shifted space $\mathbf{C}_g(\cA)$.
+$(-d_{g,0})$-shifted space $\mathbf{C}_{g,0}(\cA)$.
 The derived-intersection theorem of PTVV
 \textup{(}Theorem~\textup{2.9}\textup{)} enters the
 cotangent-normal-form package
-\textup{(}Theorem~\textup{\ref{thm:shifted-cotangent-normal-form}}\textup{)},
-not as the statement of~$\mathrm{C}_1$ itself.
+\textup{(}Theorem~\textup{\ref{thm:shifted-cotangent-normal-form}}\textup{)}.
 
 Fourth, PTVV transgression
 \textup{(}Theorem~\textup{2.5}\textup{)} and the AKSZ refinements of
 Calaque--Haugseng--Scheimbauer~\cite{CHS25} and
 Calaque--Safronov~\cite{CS24} are compatible with the shift conventions
-of our fiberwise construction, but they do not justify the shortcut
-``$(-1)$ on $\mathcal{M}_{\mathrm{comp}}$ integrates to $0$ on the
-genus-$g$ field space.'' The correct comparison is that a
-$0$-shifted pairing on the center local system, pushed forward along a
-base of dimension $3g{-}3$ for $g\geq1$, gives the
-$(-(3g{-}3))$-shifted Verdier pairing of
+of our fiberwise construction.  A $0$-shifted pairing on the centre
+local system, pushed forward along a stable base of dimension
+$d_{g,n}$, gives the $(-d_{g,n})$-shifted Verdier pairing of
 Proposition~\ref{prop:ptvv-lagrangian}. The present proof reaches that
 pairing through fiber--center identification and Verdier duality; the
 AKSZ route is an alternative geometric packaging of the same
@@ -1178,7 +1402,7 @@ Theorem~\textup{\ref{thm:ss-quantum}} converges genuswise to
 $H^{p+q}(\barB^{(g)}_{\mathrm{flat}}(\cA))$. Since
 $\overline{\mathcal{M}}_g$ has finite cohomological dimension, it
 stabilizes at a finite page; in the crude cohomological-dimension
-bound one may take $E_r=E_\infty$ for $r>6g-5$.
+bound one may take $E_r=E_\infty$ for $r>2d_{g,n_g}+1$.
 \end{lemma}
 
 \begin{proof}
@@ -1186,12 +1410,12 @@ Three conditions must be verified.
 
 \emph{(1) Finite cohomological dimension of the base.}
 The Deligne--Mumford--Knudsen stack
-$\overline{\mathcal{M}}_g$ is a smooth proper
-Deligne--Mumford stack of dimension $3g - 3$. For any
+$\overline{\mathcal{M}}_g=\overline{\mathcal M}_{g,n_g}$ is a smooth
+proper Deligne--Mumford stack of dimension $d_{g,n_g}$. For any
 constructible sheaf $\mathcal{F}$ on
 $\overline{\mathcal{M}}_g$,
 $H^i(\overline{\mathcal{M}}_g, \mathcal{F}) = 0$ for
-$i > 2(3g-3) = 6g - 6$
+$i > 2d_{g,n_g}$
 (Artin vanishing for proper DM stacks,
 \cite[\S4.1]{Olsson16}).
 
@@ -1246,11 +1470,11 @@ H^{p+q}\bigl(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})\bigr).
 \end{equation}
 After the flat fiber--center comparison and the represented Verdier
 involution~$\sigma$ are in place, the Theorem~C space
-$Q_g(\mathcal{A})$ is the $+1$ Verdier projection
+$Q_{g,n_g}(\mathcal{A})$ is the $+1$ Verdier projection
 $p^+H^*(\mathbf{C}_g(\mathcal{A}))$, not the definition of the
 Leray graded object. The comparison map
 $G_g(\mathcal{A})\to H^*(\mathbf{C}_g(\mathcal{A}))$ lands in
-$Q_g(\mathcal{A})$ precisely when the class is represented by the
+$Q_{g,n_g}(\mathcal{A})$ precisely when the class is represented by the
 $j_*$-extended $\mathcal{A}$-bar sector.
 \end{lemma}
 
@@ -1272,7 +1496,7 @@ H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))
 = E_\infty^{*,*,g}.
 \end{equation}
 Definition~\ref{def:complementarity-complexes} reserves the notation
-$Q_g(\mathcal{A})$ for the Verdier eigenspace
+$Q_{g,n_g}(\mathcal{A})$ for the Verdier eigenspace
 $\ker(\sigma-\mathrm{id})$. The comparison between these two objects
 uses the fiber--center identification and
 Lemma~\ref{lem:eigenspace-decomposition-complete}: $j_*$-extended
@@ -1283,7 +1507,7 @@ $-1$ eigenspace.
 \emph{Explicit description.} An element of $G_g(\mathcal{A})$ is
 represented by a $\Dg{g}$-closed relative class
 $\omega \in \barB^{(g)}_{\mathrm{flat}}(\mathcal{A})$ modulo the
-next Leray filtration step. Its image in $Q_g(\mathcal{A})$ is
+next Leray filtration step. Its image in $Q_{g,n_g}(\mathcal{A})$ is
 $p^+[\omega]$ after the center comparison. On the curved fiber model
 one retains the corresponding coderived class whenever
 $\kappa(\mathcal{A}) \neq 0$.
@@ -1291,7 +1515,7 @@ $\kappa(\mathcal{A}) \neq 0$.
 \emph{Example.} For the Heisenberg algebra at $g=1$, the $p^+$
 projection of the genus-$1$ correction class is
 \begin{equation}
-Q_1(\mathcal{H}_\kappa)
+Q_{1,1}(\mathcal{H}_\kappa)
 = \operatorname{span}\{\kappa \cdot \lambda_1\} \cong \mathbb{C}
 \end{equation}
 Here $\kappa$ is the level parameter and $\lambda_1 = c_1(\mathbb{E})$ is the Hodge class;
@@ -1338,8 +1562,9 @@ Theorem~\ref{thm:fiber-center-identification}(iii).
 
 The relative Leray spectral sequence, the correction object
 $G_g(\mathcal{A})$, and the flat fiber cohomology sheaf are separated
-from the Verdier eigenspaces $Q_g(\mathcal{A})$ and
-$Q_g(\mathcal{A}^!)$.
+from the genuine Verdier eigenspaces $Q_{g,n_g}(\mathcal{A})$ in
+$\mathbf C_{g,n_g}(\mathcal A)$ and $Q_{g,n_g}(\mathcal{A}^!)$ in
+$\mathbf C_{g,n_g}(\mathcal A^!)$.
 \end{proof}
 
 \subsection{Verdier duality on fibers}
@@ -1532,6 +1757,10 @@ H^{p+d-q}(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}^!))
 
 \begin{corollary}[Leray corrections and Verdier eigenspaces; \ClaimStatusConditional]
 \label{cor:quantum-dual-complete}
+\textup{[Type signature: Open quadrant; strict-flat Leray and
+centre-local-system presentations; Beilinson levels~2 and~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}
+\cup H_{\mathrm C_{1b}}^{\mathrm{pair}}\).]}
 For each genus $g \geq 1$ and every Koszul dual chiral pair
 $(\mathcal{A}, \mathcal{A}^!)$ satisfying the fixed-genus
 perfectness hypotheses on the Leray correction objects, Verdier
@@ -1545,16 +1774,19 @@ perfectness/reflexivity and non-degenerate anti-invariant pairing
 hypotheses of
 Theorem~\textup{\ref{thm:quantum-complementarity-main}} hold, then
 \[
-Q_g(\mathcal{A}) \cong Q_g(\mathcal{A}^!)^\vee .
+Q_{g,n_g}(\mathcal{A})
+\cong Q_{g,n_g}(\mathcal{A}^!)^\vee[-d_{g,n_g}] .
 \]
-At genus $0$, in the unmarked ambient convention and not as a
-$-(3g{-}3)$ shifted Verdier pairing, the cohomological-shadow
-eigenspaces are instead
-$Q_0(\mathcal{A}) = H^0(\overline{\mathcal{M}}_0, Z(\mathcal{A}))$
-and $Q_0(\mathcal{A}^!) = 0$
-\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main}}\textup{)}.
-The pointed genus-$0$ theory on $\overline{\mathcal M}_{0,n}$,
-$n\geq3$, remains the Beilinson--Drinfeld/Arnold-algebra surface.
+At the stable genus-zero base \((g,n)=(0,3)\), the same conclusion
+uses \(d_{0,3}=0\).  If the centre complex is generated by the unit,
+\(\sigma_{\cA}\) fixes that generator, and anti-equivariance makes
+\(\sigma_{\cA^!}\) act by \(-1\) on its image, then
+\[
+ Q_{0,3}(\cA)=H^0(\overline{\mathcal M}_{0,3},Z(\cA)),
+ \qquad Q_{0,3}(\cA^!)=0.
+\]
+For a general coefficient involution, Theorem~C retains its two
+coefficient eigensummands on \(\overline{\mathcal M}_{0,3}\).
 \end{corollary}
 
 \begin{proof}[Proof of Corollary~\ref{cor:quantum-dual-complete}]
@@ -1571,7 +1803,8 @@ sequences and, after the perfectness/reflexivity and finite-type
 pairing hypotheses are imposed, the perfect cross-pairing between the
 two Verdier eigenspaces:
 \begin{equation}
-Q_g(\mathcal{A}) \cong Q_g(\mathcal{A}^!)^\vee
+Q_{g,n_g}(\mathcal{A})
+\cong Q_{g,n_g}(\mathcal{A}^!)^\vee[-d_{g,n_g}]
 \qquad (g\geq1).
 \end{equation}
 \end{proof}
@@ -1764,16 +1997,23 @@ the KS class $\partial/\partial\tau$ to give $\lambda_1$ (Mumford isomorphism).
 
 \emph{Verdier involution and eigenspace decomposition.}
 
-The anti-commutativity~\eqref{eq:verdier-ks-anticommute} is the key to the
-eigenspace decomposition. We construct a canonical involution on $H^*(\overline{
-\mathcal{M}}_g, Z(\mathcal{A}))$ whose $\pm 1$ eigenspaces give $Q_g(\mathcal{A})$
-and $Q_g(\mathcal{A}^!)$.
+The anti-commutativity~\eqref{eq:verdier-ks-anticommute} supplies the
+sign compatibility for the eigenspace decomposition.  The represented
+involution on $H^*(\overline{\mathcal{M}}_g,Z(\mathcal A))$ has positive
+eigenspace $Q_{g,n_g}(\mathcal A)$ and negative eigenspace
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal A^!)$.
 
 \begin{lemma}[Verdier involution on moduli cohomology; \ClaimStatusConditional]
 \label{lem:verdier-involution-moduli}
-For a chiral Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, Verdier duality on
-$\overline{C}_n(X)$ together with the Koszul pairing $\mathcal{A} \otimes
-\mathcal{A}^! \to \mathcal{O}_X$ induces an involution:
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
+For a chiral Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, supply the
+$\mathrm C_0$ strict-flat centre models, the derived-centre comparison,
+and a strictification for which Verdier duality on
+$\overline C_n(X)$ together with the Koszul pairing
+$\mathcal A\otimes\mathcal A^!\to\mathcal O_X$ represents a cochain
+involution
 \begin{equation}
 \sigma: H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) \xrightarrow{\sim}
 H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))
@@ -1799,14 +2039,20 @@ The composition $(\mathbb{D}')^\vee \circ \mathbb{D}: H^*(\barB^{(g)}_{\mathrm{f
 \to H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))$ is the identity (by involutivity of Verdier
 duality on compact smooth varieties, see Theorem~\ref{thm:verdier-duality-config-complete}).
 
-Now, the $E_2$ page of the Leray spectral sequence
-(Theorem~\ref{thm:ss-quantum}) identifies both $Q_g(\mathcal{A})$ and
-$Q_g(\mathcal{A}^!)$ as subquotients of $H^*(\overline{\mathcal{M}}_g,
-Z(\mathcal{A}))$, provided the following $H^0$ center-comparison datum is supplied.
+The $E_2$ pages of the two Leray spectral sequences
+(Theorem~\ref{thm:ss-quantum}) place the genuine summands
+$Q_{g,n_g}(\mathcal A)$ and $Q_{g,n_g}(\mathcal A^!)$ in their own
+centre complexes.  The following $H^0$ centre-comparison datum
+transports the second summand to
+$H^*(\overline{\mathcal M}_g,Z(\mathcal A))$.
 
 \begin{lemma}[Derived-center comparison and its $H^0$ shadow;
 \ClaimStatusConditional]
 \label{lem:center-isomorphism}
+\textup{[Type signature: Open quadrant; derived chiral-centre and
+strict-flat centre-local-system presentations; Beilinson level~3;
+derived Morita comparison plus the \(H^0\) fibre--centre hypothesis
+package.]}
 Let $(\mathcal{A},\mathcal{A}^!)$ be a Koszul chiral pair. The
 functorial center object controlled by derived Koszul--Morita
 equivalence is the chiral Hochschild derived center
@@ -1838,8 +2084,8 @@ coefficients in the same local system. The scalar transpose
 \end{lemma}
 
 \begin{proof}[Proof of Sublemma]
-This is a datum, not a consequence of module Koszul duality alone. The
-$E_1$ module Koszul equivalence
+The comparison is a named datum added to the module Koszul package.
+The $E_1$ module Koszul equivalence
 (Theorem~\ref{thm:e1-module-koszul-duality}) gives, under its stated
 hypotheses,
 \begin{equation}
@@ -1862,12 +2108,9 @@ comparison
  Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal A^!)
 \]
 as a brace dg algebra, hence as an \(E_2\)-algebra after
-Deligne--Tamarkin rectification. It is not, without taking \(H^0\)
-and imposing the ordinary flat fiber--center comparison, an
-isomorphism of the naive center local systems used in Theorem~C.
-The forgetful passage from the brace dg algebra to the associative
-regular-module endomorphism algebra therefore gives no center
-local-system isomorphism by itself. Once the \(H^0\)-shadow
+Deligne--Tamarkin rectification.  Taking \(H^0\) and applying the
+ordinary flat fibre--centre comparison produces the centre local
+systems used in Theorem~C.  Once the \(H^0\)-shadow
 \(\iota_Z=H^0(\iota_Z^{\mathrm{der}})\) is part of the strict flat
 package, it transports the coefficients of the \(\mathcal{A}^!\)
 Leray sequence to the coefficient system for \(\mathcal{A}\), which
@@ -1901,6 +2144,9 @@ $\mathbb{D}^2 = \mathrm{id}$ on the compact smooth variety $\overline{C}_n(X)$
 
 \begin{lemma}[Eigenspace decomposition; \ClaimStatusConditional]
 \label{lem:eigenspace-decomposition-complete}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
 The involution $\sigma$ decomposes moduli cohomology into $\pm 1$
 eigenspaces:
 \begin{equation}
@@ -1911,8 +2157,9 @@ H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^-
 where $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^\pm = \ker(\sigma \mp
 \mathrm{id})$. These eigenspaces are identified with the quantum corrections:
 \begin{align}
-Q_g(\mathcal{A}) &= H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^+\\
-Q_g(\mathcal{A}^!) &= H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^-
+Q_{g,n_g}(\mathcal{A}) &= H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^+\\
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
+&= H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^-
 \end{align}
 \end{lemma}
 
@@ -1922,12 +2169,15 @@ H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$, the eigenvalues of $\sigma$ are
 $\pm 1$, and $V = V^+ \oplus V^-$ (standard linear algebra over $\mathbb{C}$;
 the projectors are $\pi^\pm = \frac{1}{2}(\mathrm{id} \pm \sigma)$).
 
-\emph{Identification of $V^+$ with $Q_g(\mathcal{A})$.}
+\emph{Identification of $V^+$ with $Q_{g,n_g}(\mathcal{A})$.}
 By construction, $\sigma$ acts on $E_\infty^{*,*,g}$ by exchanging the contributions
-from $\mathcal{A}$ and $\mathcal{A}^!$. A class $\alpha \in Q_g(\mathcal{A}) =
-\mathrm{gr}^g H^*(\bar{B}(\mathcal{A}))$ maps under $\mathbb{D}$ to a class in
-$Q_g(\mathcal{A}^!)^\vee$. Under the identification with moduli cohomology,
-$\alpha$ contributes to $V^+$ because:
+from $\mathcal{A}$ and $\mathcal{A}^!$.  A class
+$\alpha\in Q_{g,n_g}(\mathcal A)=H^*(\operatorname{im}p^+_{\mathcal A})$
+is obtained by applying~$p^+_{\mathcal A}$ after the Leray-to-centre
+comparison of Lemma~\ref{lem:quantum-from-ss}.  Verdier duality maps
+its genuine representative to
+$Q_{g,n_g}(\mathcal A^!)^\vee[-d_{g,n_g}]$.  The following
+$j_*/j_!$ model records the positive sign:
 \begin{enumerate}
 \item The bar complex of $\mathcal{A}$ uses $j_*$-extension.
 \item The cobar complex of $\mathcal{A}$ (equivalently, the bar of $\mathcal{A}^!$)
@@ -1938,25 +2188,25 @@ uses $j_!$-extension.
 $\sigma: E_2^{p,q}(\mathcal{A}) \to E_2^{p,d-q}(\mathcal{A})$.
 By the fiber cohomology vanishing
 (Lemma~\ref{lem:fiber-cohomology-center}), the classes
-$Q_g(\mathcal{A})$ live on the $q = 0$ row of the $E_2$ page.
+$Q_{g,n_g}(\mathcal{A})$ live on the $q = 0$ row of the $E_2$ page.
 Poincar\'e duality sends $H^q$ to $H^{d-q}$ with sign $(-1)^q$;
 at $q = 0$ the sign is $(-1)^0 = +1$. Therefore elements of
-$Q_g(\mathcal{A})$ have eigenvalue~$+1$.
+$Q_{g,n_g}(\mathcal{A})$ have eigenvalue~$+1$.
 \end{enumerate}
 
-\emph{Identification of $V^-$ with $Q_g(\mathcal{A}^!)$.}
+\emph{Identification of $V^-$ with the transported genuine partner.}
 The bar complex of $\mathcal{A}^!$ on configuration spaces uses
 $j_!$-extension (compact support), dual to the $j_*$-extension used
 by $\bar{B}^{(g)}(\mathcal{A})$
 (Lemma~\ref{lem:verdier-extension-exchange}).
 By the same fiber cohomology vanishing applied to the Koszul dual,
-elements of $Q_g(\mathcal{A}^!)$ also live on the $q = 0$ row of
+elements of $Q_{g,n_g}(\mathcal{A}^!)$ also live on the $q = 0$ row of
 \emph{their own} $E_2$ page.
 
-However, the Verdier involution $\sigma$ on
-$\mathcal{H}_g(\mathcal{A})$ identifies $Q_g(\mathcal{A}^!)$ not
-through its own spectral sequence but through the $j_! \leftrightarrow j_*$
-interchange. Concretely, $\sigma$ sends
+The Verdier involution $\sigma$ on
+$\mathcal{H}_g(\mathcal{A})$ identifies
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)$
+through the $j_! \leftrightarrow j_*$ interchange. Concretely, $\sigma$ sends
 $j_!$-extended classes to $j_*$-extended classes.
 The eigenvalue is determined by the anti-commutativity
 of~$\sigma$ with the Kodaira--Spencer action
@@ -1991,8 +2241,9 @@ The Verdier involution exchanges $j_*$ and $j_!$
 (Lemma~\ref{lem:verdier-extension-exchange}), hence exchanges
 $\mathcal{A}$-contributions and $\mathcal{A}^!$-contributions.
 The identification of the $+1$-eigenspace with
-$Q_g(\mathcal{A})$ and the $-1$-eigenspace with
-$Q_g(\mathcal{A}^!)$ then follows from the Verdier intertwining
+$Q_{g,n_g}(\mathcal{A})$ and the $-1$-eigenspace with
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)$
+then follows from the Verdier intertwining
 $\mathbb{D}_{\mathrm{Ran}}\, \bar{B}(\mathcal{A}) \simeq
 \cA^!_\infty$ (Theorem~\ref{thm:verdier-bar-cobar}):
 at the level of centers,
@@ -2014,13 +2265,21 @@ carry genuinely different deformation-theoretic content.
 
 \begin{lemma}[Obstructions vs.\ deformations; \ClaimStatusConditional]
 \label{lem:obs-def-split-complete}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\),
+with the deformation interpretation carried by the stated Koszul
+comparison.]}
 In the decomposition of Lemma~\ref{lem:eigenspace-decomposition-complete}:
 \begin{enumerate}
-\item Elements of $Q_g(\mathcal{A}) = V^+$ correspond to \emph{obstructions}
+\item Elements of $Q_{g,n_g}(\mathcal{A}) = V^+$ correspond to \emph{obstructions}
 to extending $\mathcal{A}$ from genus $g-1$ to genus $g$
-\item Elements of $Q_g(\mathcal{A}^!) = V^-$ correspond to \emph{deformations}
-of $\mathcal{A}^!$ at genus $g$
-\item What $\mathcal{A}$ sees as obstruction, $\mathcal{A}^!$ sees as deformation
+\item Elements of
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)=V^-$
+form the transported genuine obstruction branch of~$\mathcal A^!$;
+the Koszul deformation--obstruction comparison identifies this branch
+with deformations of~$\mathcal A$ at genus~$g$
+\item Interchanging the Koszul pair exchanges the two roles.
 \end{enumerate}
 \end{lemma}
 
@@ -2034,26 +2293,32 @@ Lemma~\ref{lem:quantum-from-ss}, their Leray graded pieces form
 $G_g(\cA)$; after the fiber--center comparison and Verdier projection,
 the $j_*$-extended $\cA$ sector lies in~$V^+$ by the previous lemma.
 
-Conversely, the bar complex $\bar{B}^{(g)}(\mathcal{A}^!)$ computes obstructions
-for $\mathcal{A}^!$, which correspond to \emph{deformations} of $\mathcal{A}$
-by Koszul duality: the deformation complex of $\mathcal{A}$ is quasi-isomorphic
-to the obstruction complex of $\mathcal{A}^!$ (Theorem~\ref{thm:chiral-koszul-duality}).
-These lie in $V^-$.
+The bar complex $\bar{B}^{(g)}(\mathcal{A}^!)$ computes the genuine
+obstruction branch of~$\mathcal A^!$.  The supplied Koszul comparison
+identifies the deformation complex of~$\mathcal A$ with this obstruction
+complex (Theorem~\ref{thm:chiral-koszul-duality}), and
+$H^*\chi^-_{\mathcal A;g,n_g}$ transports the resulting branch to~$V^-$.
 \end{proof}
 
 \emph{Eigenspace intersection.}
 
-\begin{lemma}[Trivial eigenspace intersection; \ClaimStatusConditional]
+\begin{lemma}[Complementary eigenspace intersection; \ClaimStatusConditional]
 \label{lem:trivial-intersection-complete}
-The cohomological-shadow eigenspaces intersect trivially:
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
+The cohomological-shadow eigenspaces form a direct pair:
 \begin{equation}
-Q_g(\mathcal{A}) \cap Q_g(\mathcal{A}^!) = 0
+Q_{g,n_g}(\mathcal{A}) \cap
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!) = 0
 \end{equation}
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:trivial-intersection-complete}]
-By Lemma~\ref{lem:eigenspace-decomposition-complete}, $Q_g(\mathcal{A}) = V^+$ and
-$Q_g(\mathcal{A}^!) = V^-$ are the $+1$ and $-1$ eigenspaces of the involution
+By Lemma~\ref{lem:eigenspace-decomposition-complete},
+$Q_{g,n_g}(\mathcal{A})=V^+$ and
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)=V^-$
+are the $+1$ and $-1$ eigenspaces of the involution
 $\sigma$. Since $+1 \neq -1$ (we work over $\mathbb{C}$, characteristic $\neq 2$),
 eigenspaces for distinct eigenvalues of any linear operator intersect trivially:
 \[
@@ -2065,9 +2330,13 @@ V^+ \cap V^- = 0. \qedhere
 
 \begin{lemma}[Verdier eigenspace exhaustion; \ClaimStatusConditional]
 \label{lem:exhaustion-complete}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
 The Verdier eigenspaces exhaust the moduli space cohomology:
 \begin{equation}
-Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
+Q_{g,n_g}(\mathcal{A}) \oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
 = H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A})).
 \end{equation}
 \end{lemma}
@@ -2080,22 +2349,30 @@ uniquely into $\pm 1$ eigenvectors via the projectors
 $\pi^+ = \frac{1}{2}(\mathrm{id} + \sigma)$ and
 $\pi^- = \frac{1}{2}(\mathrm{id} - \sigma)$. Therefore:
 \begin{equation}
-V = V^+ \oplus V^- = Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
+V = V^+ \oplus V^-
+=Q_{g,n_g}(\mathcal{A})\oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
 \end{equation}
 and in particular $\dim V^+ + \dim V^- = \dim V$.
 
 \emph{Verification at small genera.}
 
-\emph{Genus $0$}: $\overline{\mathcal{M}}_0 = \mathrm{pt}$, so
-$\dim H^* = 1$. The involution $\sigma$ acts as $+1$ on $H^0$ (identity class),
-giving $Q_0(\mathcal{A}) = \mathbb{C}$, $Q_0(\mathcal{A}^!) = 0$. Dimension check:
-$1 + 0 = 1$. This is the genus-$0$ exception to the duality clause in
-Theorem~\ref{thm:quantum-complementarity-main}.
+\emph{Stable genus $0$}: $\overline{\mathcal{M}}_{0,3}=\mathrm{pt}$.
+For a one-dimensional unit coefficient complex on which
+\(\sigma_{\cA}=+1\), anti-equivariance gives
+\(\sigma_{\cA^!}=-1\) on the compared line.  Hence
+$Q_{0,3}(\mathcal{A})=\mathbb C$ and
+$Q_{0,3}(\mathcal{A}^!)=0$, with dimension check $1+0=1$.
+An arbitrary coefficient complex decomposes by its represented
+coefficient involution.
 
 \emph{Genus $1$}: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$ ($H^0 \oplus H^2$).
-For the Heisenberg algebra: $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$
-(central extension, eigenvalue $+1$) and $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C}
-\cdot \lambda$ (curvature, eigenvalue $-1$). Dimension check: $1 + 1 = 2$.
+For the Heisenberg algebra:
+$Q_{1,1}(\mathcal{H}_\kappa)=\mathbb{C}\cdot\kappa$ is the
+positive branch, while
+$(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal{H}_\kappa^!)=\mathbb{C}\cdot\lambda$ is the negative
+branch.  Their dimensions add to~$2$.
 
 \emph{Genus $2$}: $\dim H^*(\overline{\mathcal{M}}_2) = 8$
 (Poincar\'e polynomial $1 + 3t^2 + 3t^4 + t^6$).
@@ -2107,7 +2384,9 @@ hypothesis of Corollary~\ref{cor:virasoro-quantum-dim}),
 Theorem~\ref{thm:self-dual-halving} gives
 $\dim V^+ = \dim V^- = 4$. For every Koszul chiral algebra
 $\cA$ with trivial center satisfying the hypotheses above,
-$\dim Q_2(\cA) + \dim Q_2(\cA^!) = 8$.
+$\dim Q_{2,0}(\cA)+\dim Q_{2,0}(\cA^!)=8$; the second dimension
+equals that of its transported realization under
+$H^*\chi^-_{\cA;2,0}$.
 Detailed genus-$2$ complementarity dimensions are verified in
 Part~\ref{part:characteristic-datum} (\S\ref{subsec:genus2-complementarity-verification}).
 \end{proof}
@@ -2118,16 +2397,20 @@ The Kodaira--Spencer and Verdier package gives:
 $\mathbb{D} \circ \nabla_{\kappa(v)}^z =
 -\nabla_{\kappa(v)}^{\iota_Z(z)} \circ \mathbb{D}$
 \item a Verdier involution $\sigma$ with $\sigma^2 = \mathrm{id}$
-\item Direct sum: $Q_g(\mathcal{A}) \cap Q_g(\mathcal{A}^!) = 0$ as eigenspaces of
-$\sigma$
-\item Exhaustion: $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) = H^*(\overline{
-\mathcal{M}}_g, Z(\mathcal{A}))$ because $\sigma^2 = \mathrm{id}$
+\item Directness:
+$Q_{g,n_g}(\mathcal{A})\cap
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)=0$.
+\item Exhaustion:
+$Q_{g,n_g}(\mathcal{A})\oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
+=H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A}))$.
 \end{enumerate}
 
 Therefore:
 \begin{equation}
-Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g,
-Z(\mathcal{A}))
+Q_{g,n_g}(\mathcal{A})\oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
+\cong H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A}))
 \end{equation}
 
 This completes the proof of Theorem~\ref{thm:quantum-complementarity-main}. \qedhere
@@ -2158,10 +2441,12 @@ the cochain-level splitting: the projectors
 $p^\pm = \tfrac{1}{2}(\mathrm{id} \pm \sigma)$ are cochain maps
 whose images provide a quasi-isomorphic direct sum decomposition
 $\mathbf{C}_g \simeq \operatorname{im}(p^+) \oplus \operatorname{im}(p^-)$.
-Model independence
-(Proposition~\ref{prop:model-independence}) ensures the
-decomposition depends only on the Koszul pair $(\cA, \cA^!)$,
-not on auxiliary choices.
+The decomposition is canonical relative to the chosen strict flat
+representative, the supplied map~$\iota_Z$, and the represented
+involution~$\sigma$.  Chosen quasi-isomorphism zigzags compare
+admissible presentations of the underlying bar object.  A contractible
+comparison space for the enhanced triples
+$(\mathbf C_g(\cA),\iota_Z,\sigma)$ is an open construction problem.
 \end{remark}
 
 \begin{remark}[Geometric substrate (Volume~II)]
@@ -2180,8 +2465,10 @@ Verdier pairing of Proposition~\ref{prop:lagrangian-eigenspaces}.
 \label{prop:lagrangian-eigenspaces}
 \index{Lagrangian!eigenspaces|textbf}
 \index{Verdier duality!pairing on moduli}
-Let $(\cA, \cA^!)$ be a chiral Koszul pair, let $g\geq1$, and let
-$V = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+Let $(\cA, \cA^!)$ be a chiral Koszul pair, let \((g,n)\) be stable,
+fix the genuine-partner datum of
+Definition~\ref{def:complementarity-complexes}, and let
+$V = H^*(\overline{\mathcal{M}}_{g,n}, \mathcal{Z}(\cA))$.
 Assume that the strict flat ambient complex is perfect, so that
 $V$ is finite-dimensional in each relevant cohomological degree and
 the natural double-dual map is an isomorphism. Assume also that the
@@ -2195,14 +2482,15 @@ $\sigma$ is anti-symplectic for this pairing.
  \[
  \langle -, - \rangle_{\mathbb{D}} \colon V \otimes V \to \mathbb{C}
  \]
- of cohomological degree $-(3g-3)$ \textup{(}the shift coming from
- $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$\textup{)}.
+ of cohomological degree $-d_{g,n}$ \textup{(}the shift coming from
+ $\dim_{\mathbb{C}} \overline{\mathcal{M}}_{g,n}=d_{g,n}$\textup{)}.
 \item The Verdier involution $\sigma$ is an \emph{anti-involution}
  for this pairing:
  $\langle \sigma(v), \sigma(w) \rangle_{\mathbb{D}} = -\langle v, w \rangle_{\mathbb{D}}$
  for all $v, w \in V$.
 \item Consequently, the eigenspaces
- $V^+ = Q_g(\cA)$ and $V^- = Q_g(\cA^!)$
+ $V^+ = Q_{g,n}(\cA)$ and
+ $V^-=(H^*\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!)$
  are \emph{Lagrangian} with respect to
  $\langle -, - \rangle_{\mathbb{D}}$: the pairing restricts to
  zero on each eigenspace, and $V = V^+ \oplus V^-$ is a Lagrangian
@@ -2213,18 +2501,18 @@ $\sigma$ is anti-symplectic for this pairing.
 \begin{proof}
 \emph{Part (i).}
 The center local system $\mathcal{Z}(\cA)$ on
-$\overline{\mathcal{M}}_g$ is a constructible sheaf. Under the
+$\overline{\mathcal{M}}_{g,n}$ is a constructible sheaf. Under the
 perfectness hypothesis, Verdier duality gives a perfect pairing
-$H^k(\overline{\mathcal{M}}_g, \mathcal{Z}) \otimes
-H^{(3g-3)-k}(\overline{\mathcal{M}}_g, \mathbb{D}\mathcal{Z})
+$H^k(\overline{\mathcal{M}}_{g,n}, \mathcal{Z}) \otimes
+H^{d_{g,n}-k}(\overline{\mathcal{M}}_{g,n}, \mathbb{D}\mathcal{Z})
 \to \mathbb{C}$.
 The Koszul pairing identifies $\mathbb{D}\mathcal{Z}(\cA) \cong
-\mathcal{Z}(\cA^!) \cong \mathcal{Z}(\cA)$
-(the last isomorphism by the \(H^0\) center comparison of
-Lemma~\ref{lem:center-isomorphism}), so the
-pairing lands on $V \otimes V$. Non-degeneracy follows from Verdier
+\mathcal{Z}(\cA^!)$. Transport along the represented
+genuine-partner map~$j_Z^{-1}$ returns the second factor to the
+$\cA$-ambient complex, so the pairing lands on $V \otimes V$.
+Non-degeneracy follows from Verdier
 duality for constructible sheaves on the smooth Deligne--Mumford
-stack $\overline{\mathcal{M}}_g$.
+stack $\overline{\mathcal{M}}_{g,n}$.
 
 \emph{Part (ii).}
 This is exactly the anti-symplectic compatibility assumed in the
@@ -2253,7 +2541,9 @@ decomposition without further hypotheses. Under the additional
 perfectness/reflexivity hypothesis and the non-degenerate
 anti-invariant Verdier pairing of
 Proposition~\ref{prop:lagrangian-eigenspaces}, the eigenspaces
-$Q_g(\cA)$ and $Q_g(\cA^!)$ become complementary Lagrangians.
+$Q_{g,n}(\cA)$ and the transported genuine partner
+$(H^*\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!)$ become complementary
+Lagrangians.
 The $(-1)$-shifted bar-side symplectic structure requires the
 separate BV package of
 Theorem~\ref{thm:shifted-symplectic-complementarity}.
@@ -2279,6 +2569,11 @@ bar chart factors through Theorem~\ref{thm:fiber-center-identification}.
 \label{lem:bar-chart-lagrangian-lift}
 \index{Lagrangian!bar-chart transport}
 \index{fiber--center identification!transport to bar chart}
+\textup{[Type signature: Open quadrant; strict-flat bar-chart and
+centre-local-system presentations; Beilinson levels~2 and~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}
+\cup H_{\mathrm C_{1b}}^{\mathrm{pair}}\) plus the paired chart map
+\(\iota_g\).]}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair, let $g \geq 1$, and assume
 the hypotheses of Theorem~\ref{thm:fiber-center-identification}.
 Write
@@ -2304,7 +2599,8 @@ $\chi_g := \gamma_g \circ \iota_g$. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\chi_g \colon L_g \xrightarrow{\sim} \mathbf{C}_g(\cA)$ is a
  quasi-isomorphism intertwining the involutions and the pairings.
-\item If $\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are
+\item If $\mathbf{Q}_{g,n_g}(\cA)$ and
+ $(\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!)$ are
  complementary Lagrangians in $\mathbf{C}_g(\cA)$, then the
  homotopy eigenspaces
  \[
@@ -2314,8 +2610,9 @@ $\chi_g := \gamma_g \circ \iota_g$. Then:
  \]
  are complementary Lagrangians in $L_g$.
 \item On cohomology,
- $H^*(L_g^+) = Q_g(\cA)$ and
- $H^*(L_g^-) = Q_g(\cA^!)$.
+ $H^*(L_g^+) = Q_{g,n_g}(\cA)$ and
+ $H^*(L_g^-) =
+ (H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$.
 \end{enumerate}
 \end{lemma}
 
@@ -2337,9 +2634,11 @@ projectors
 $p^\pm=\tfrac{1}{2}(\mathrm{id}\pm\sigma)$ from
 $\mathbf{C}_g(\cA)$ to $L_g$ along~$\chi_g$. Because~$\chi_g$
 intertwines pairings, isotropy of
-$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ pulls back to isotropy of
+$\mathbf{Q}_{g,n_g}(\cA)$ and
+$(\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!)$ pulls back to isotropy of
 $L_g^+$ and $L_g^-$. Since $\chi_g$ is a quasi-isomorphism and
-$\mathbf{C}_g(\cA)=\mathbf{Q}_g(\cA)\oplus \mathbf{Q}_g(\cA^!)$ is a
+$\mathbf{C}_g(\cA)=\mathbf{Q}_{g,n_g}(\cA)\oplus
+(\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!)$ is a
 Lagrangian polarization, Lemma~\ref{lem:involution-splitting}(c)
 implies that $L_g^+$ and $L_g^-$ are complementary Lagrangians. Part
 (\textup{iii}) is Lemma~\ref{lem:involution-splitting}(b) applied to
@@ -2367,7 +2666,9 @@ x \longmapsto \{x,-\}_{\mathrm{BV}} \colon
 is a quasi-isomorphism on the Koszul locus after the
 bracket-compatible Verdier comparison. Then the
 genus-$1$ complementarity
-$Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!)
+$Q_{1,1}(\mathcal{H}_\kappa)\oplus
+(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal{H}_\kappa^!)
 \cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we
 computed in~\S\ref{sec:frame-complementarity} admits the following
 bar-side $(-1)$-shifted symplectic refinement.
@@ -2382,21 +2683,24 @@ curve $X$.
  has degree~$+1$, hence defines a $(-1)$-shifted Poisson structure.
  Under the bracket-compatible Verdier comparison of
  Theorem~\textup{\ref{thm:bv-functor}}, refined on the Koszul locus by
- Theorem~\textup{\ref{thm:verdier-bar-cobar}} to
- $\mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))
- \simeq \cA^!_\infty$, the adjoint map
+ Theorem~\textup{\ref{thm:verdier-bar-cobar}} to the Verdier algebra
+ \[
+ K_X(\cA)=\mathbb{D}_{\operatorname{Ran}}
+ (\barB^{\mathrm{ch}}(\cA)),
+ \]
+ and then by the chiral Koszul-pair map
+ $\nu_{12}\colon K_X(\cA)\xrightarrow{\sim}\cA^!$, the adjoint map
  \[
  x \longmapsto \{x,-\}_{\mathrm{BV}} \colon
  \barB^{\mathrm{ch}}(\cA)
  \longrightarrow
  \mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))[1]
- \simeq
- \cA^!_\infty[1]
+ \xrightarrow{\ \nu_{12}[1]\ }
+ \cA^![1]
  \]
- is precisely the cyclic duality quasi-isomorphism assumed above. On
- the Koszul locus, the underlying complex
- of $\cA^!_\infty$ is equivalent to $\barB^{\mathrm{ch}}(\cA^!)$.
- Therefore this Poisson structure is non-degenerate.
+ is precisely the cyclic duality quasi-isomorphism assumed above.
+ Therefore this Poisson structure is non-degenerate under the stated
+ cyclic nondegeneracy package.
 
 \item \emph{Formal moduli is $(-1)$-shifted symplectic.}
  The dg Lie algebra $L_g := \barB^{(g)}(\cA)[1]$, with Lie bracket
@@ -2418,7 +2722,9 @@ curve $X$.
  eigenspace decomposition $L_g = L_g^+ \oplus L_g^-$ provides
  complementary Lagrangian subspaces lifting the ambient Verdier
  polarization, and
- $H^*(L_g^+) = Q_g(\cA)$, $H^*(L_g^-) = Q_g(\cA^!)$.
+ $H^*(L_g^+) = Q_{g,n_g}(\cA)$,
+ $H^*(L_g^-) =
+ (H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$.
 \end{enumerate}
 \end{theorem}
 
@@ -2476,7 +2782,9 @@ $\mathbf{C}_g(\cA)$, and
 Lemma~\ref{lem:bar-chart-lagrangian-lift} pulls that polarization back
 to the $\sigma$-eigenspaces of~$L_g$. Thus
 $L_g^+$ and~$L_g^-$ are complementary Lagrangians, and their
-cohomology groups are $Q_g(\cA)$ and $Q_g(\cA^!)$.
+cohomology groups are $Q_{g,n_g}(\cA)$ and the transported genuine
+partner
+$(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$.
 \end{proof}
 
 \begin{remark}[Diagonal scalar locus]
@@ -2521,6 +2829,10 @@ graphs as the correction term.
 \label{lem:finite-window-complementarity}
 \index{finite-window completion!complementarity}
 \index{completion!Verdier eigenspaces}
+\textup{[Type signature: Open quadrant; complete filtered strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_{1a}}^{\mathrm{partner}}\) plus filtration compatibility,
+with \(H_{\mathrm C_{1b}}^{\mathrm{pair}}\) for the Lagrangian clause.]}
 Let $\mathbf{C}_g(\cA)$ be the strict flat ambient complex of
 Theorem~\ref{thm:quantum-complementarity-main}, equipped with a
 complete separated decreasing filtration $F^\bullet$ by conformal
@@ -2537,10 +2849,14 @@ sum of complexes
 \[
   \mathbf{C}_g^{\leq N}(\cA)
   =
-  \mathbf{Q}_{g,\leq N}(\cA)
+  \mathbf{Q}^{+}_{g,n_g,\leq N}(\cA)
   \oplus
-  \mathbf{Q}_{g,\leq N}(\cA^!).
+  \mathbf{Q}^{-}_{g,n_g,\leq N}(\cA).
 \]
+When the genuine-partner map preserves the filtration, it induces
+$\chi^-_{\cA;g,n_g,\leq N}\colon
+\mathbf Q^-_{g,n_g,\leq N}(\cA)\xrightarrow{\sim}
+\mathbf Q_{g,n_g,\leq N}(\cA^!)$.
 If the Verdier pairing is perfect modulo $F^{N+1}$ and
 anti-invariant under $\sigma$, then the two finite-window summands
 are complementary Lagrangians in
@@ -2552,9 +2868,9 @@ condition on cohomology, then
   \simeq
   \varprojlim_N \mathbf{C}_g^{\leq N}(\cA)
   =
-  \varprojlim_N \mathbf{Q}_{g,\leq N}(\cA)
+  \varprojlim_N \mathbf{Q}^{+}_{g,n_g,\leq N}(\cA)
   \oplus
-  \varprojlim_N \mathbf{Q}_{g,\leq N}(\cA^!)
+  \varprojlim_N \mathbf{Q}^{-}_{g,n_g,\leq N}(\cA)
 \]
 and the completed Lagrangian statement is the inverse limit of the
 finite-window statements.
@@ -2596,15 +2912,20 @@ controlled by $\Definfmod(\cA)$.
 \label{prop:ptvv-lagrangian}
 \index{PTVV!Lagrangian embedding|textbf}
 \index{Lagrangian!PTVV sense|textbf}
+\textup{[Type signature: Open quadrant; unpointed strict-flat
+centre-local-system presentation; Beilinson level~3; \(g\geq2\) and
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}
+\cup H_{\mathrm C_{1b}}^{\mathrm{pair}}\).]}
 Assume the cochain-level complementarity decomposition, the
 perfectness/reflexivity hypothesis, and the non-degenerate Verdier pairing of
 Theorem~\textup{\ref{thm:quantum-complementarity-main}}. For a chiral
 Koszul pair $(\cA, \cA^!)$ and $g \geq 2$, the cochain
 complex
-$C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
-carries a $(-(3g{-}3))$-shifted symplectic structure in the sense of
+$C_{g,0} := R\Gamma(\overline{\mathcal{M}}_{g,0}, \mathcal{Z}(\cA))$
+carries a $(-d_{g,0})$-shifted symplectic structure in the sense of
 Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}, and
-\(\mathbf{Q}_g(\cA)\), \(\mathbf{Q}_g(\cA^!)\) embed as complementary
+\(\mathbf{Q}_{g,0}(\cA)\) and
+\((\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)\) embed as complementary
 Lagrangians in the
 PTVV sense.
 \end{proposition}
@@ -2622,10 +2943,10 @@ form on a linear space~\cite[Example~1.4]{PTVV13}.
 Perfectness identifies $V^*$ with the derived dual, and
 non-degeneracy of the pairing translates to non-degeneracy of the
 $2$-form.
-The Verdier pairing on $C_g$
+The Verdier pairing on $C_{g,0}$
 (Proposition~\ref{prop:lagrangian-eigenspaces}(i)) is a
-non-degenerate symmetric pairing of degree $-(3g{-}3)$, so $C_g$
-carries a $(-(3g{-}3))$-shifted symplectic structure.
+non-degenerate symmetric pairing of degree $-d_{g,0}$, so $C_{g,0}$
+carries a $(-d_{g,0})$-shifted symplectic structure.
 
 \emph{PTVV Lagrangian conditions.}
 A \emph{Lagrangian} in a linear $n$-shifted symplectic space
@@ -2637,20 +2958,23 @@ satisfying~\cite[Definition~2.8]{PTVV13}:
 \item \emph{Non-degeneracy:} the induced map
  $L \to (V/L)^{\vee}[n]$ is a quasi-isomorphism.
 \end{enumerate}
-For $L = \mathbf{Q}_g(\cA)$:
+For $L = \mathbf{Q}_{g,0}(\cA)$:
 \begin{itemize}
 \item Condition~(a) is
  Proposition~\ref{prop:lagrangian-eigenspaces}(iii):
  $\langle v, w \rangle_{\mathbb{D}} = 0$ for
- $v, w \in \mathbf{Q}_g(\cA)$.
+ $v, w \in \mathbf{Q}_{g,0}(\cA)$.
 \item Condition~(b): Since
- $C_g = \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+ $C_{g,0}=\mathbf{Q}_{g,0}(\cA)\oplus
+ (\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)$
  (Theorem~\ref{thm:quantum-complementarity-main}), we have
- $C_g / \mathbf{Q}_g(\cA) \cong \mathbf{Q}_g(\cA^!)$, and the induced map
- $\mathbf{Q}_g(\cA) \to
- \mathbf{Q}_g(\cA^!)^{\vee}[-(3g{-}3)]$ is a
+ $C_{g,0}/\mathbf{Q}_{g,0}(\cA)\cong
+ (\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)$, and the induced map
+ $\mathbf{Q}_{g,0}(\cA)\to
+ ((\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!))^{\vee}[-d_{g,0}]$ is a
  quasi-isomorphism: the Verdier pairing restricted to
- $\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!)$ is perfect of degree $-(3g{-}3)$
+ $\mathbf{Q}_{g,0}(\cA)\otimes
+ (\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)$ is perfect of degree $-d_{g,0}$
  by~\eqref{eq:quantum-duality}.
 \end{itemize}
 The same argument applies with $\cA$ and~$\cA^!$ exchanged.
@@ -2660,7 +2984,7 @@ The same argument applies with $\cA$ and~$\cA^!$ exchanged.
 \index{Pantev--To\"en--Vaqui\'e--Vezzosi}
 Complementarity carries two shifted symplectic structures:
 (i)~Verdier on the ambient complex
-($(-(3g{-}3))$-shifted,
+($(-d_{g,0})$-shifted for $g\geq2$,
 Proposition~\ref{prop:ptvv-lagrangian});
 (ii)~ambient cyclic deformation theory
 ($(-1)$-shifted,
@@ -2668,7 +2992,9 @@ Theorem~\ref{thm:ambient-complementarity-fmp}).
 Conditional on Theorem~\ref{thm:shifted-symplectic-complementarity},
 there is also a direct bar-side $(-1)$-shifted strict chart on
 $L_g = \barB^{(g)}(\cA)[1]$. In each proved incarnation,
-$Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians; the
+$Q_{g,n_g}(\cA)$ and
+$(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$ are complementary
+Lagrangians; the
 different realizations are compatible via the spectral sequence
 $E_2^{p,q,g}\Rightarrow H^{p+q}_{\mathrm{chiral}}$.
 \end{remark}
@@ -2759,6 +3085,10 @@ Costello--Gwilliam~\cite{CG17}, Volume~2, Chapter~5).
 
 \begin{conjecture}[Physical comparison datum; \ClaimStatusConjectured]
 \label{conj:physical-complementarity}
+\textup{[Type signature: Open-to-physical comparison; strict-flat
+centre and BRST presentations; Beilinson levels~3--5;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\)
+plus the displayed BRST trace package.]}
 Let $(\cA,\cA^!)$ be a chiral Koszul pair satisfying the hypotheses of
 Theorem~\ref{thm:quantum-complementarity-main}. A physical
 realization of this pair consists of the following extra data:
@@ -2780,7 +3110,8 @@ m_0^! = -\kappa\,\omega_{\mathrm{cen}},
 \]
 and the genus-$g$ quantum corrections split as the two Verdier
 eigenspaces
-$\mathbf Q_g(\cA)\oplus\mathbf Q_g(\cA^!)$ of
+$\mathbf Q_{g,n_g}(\cA)\oplus
+(\chi^-_{\cA;g,n_g})^{-1}\mathbf Q_{g,n_g}(\cA^!)$ of
 Theorem~\ref{thm:quantum-complementarity-main}. In gauge-theoretic
 examples, the conjectural electric/magnetic language is the assertion
 that the two BRST trace models above are the two physical sectors of
@@ -2804,6 +3135,10 @@ Examples~\ref{ex:heisenberg-complementarity-explicit} and
 
 \begin{corollary}[Mapping-class equivariance; \ClaimStatusConditional]
 \label{cor:modular-properties}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\)
+plus mapping-class equivariance.]}
 Assume the center local system $\mathcal Z(\cA)$ and the
 Verdier--Koszul involution $\sigma$ in
 Theorem~\ref{thm:quantum-complementarity-main} are equivariant for the
@@ -2812,7 +3147,8 @@ $\mathcal M_g$, with quasi-unipotent extension across the boundary of
 $\overline{\mathcal M}_g$. Then the decomposition
 \[
 H^*(\overline{\mathcal M}_g,\mathcal Z(\cA))
-=Q_g(\cA)\oplus Q_g(\cA^!)
+=Q_{g,n_g}(\cA)\oplus
+(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)
 \]
 is preserved by monodromy. On the Siegel/Hodge projection this gives
 compatibility with the induced $\operatorname{Sp}(2g,\mathbb Z)$
@@ -2827,7 +3163,8 @@ hypothesis this action commutes with the cochain representative of
 the Verdier involution~$\sigma$. Therefore monodromy preserves the
 two eigenspaces $\ker(\sigma-\mathrm{id})$ and
 $\ker(\sigma+\mathrm{id})$, which are
-$Q_g(\cA)$ and $Q_g(\cA^!)$ by
+$Q_{g,n_g}(\cA)$ and
+$(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$ by
 Theorem~\ref{thm:quantum-complementarity-main}. The quasi-unipotent
 boundary extension lets the same argument pass to
 $\overline{\mathcal M}_g$ through the Deligne canonical extension.
@@ -2837,87 +3174,90 @@ $\operatorname{Sp}(2g,\mathbb Z)$ on the Hodge bundle and its Chern
 classes.
 \end{proof}
 
-\begin{corollary}[Uniqueness of quantum corrections; \ClaimStatusConditional]
+\begin{corollary}[Reconstruction of the genuine partner summand;
+\ClaimStatusConditional]
 \label{cor:uniqueness-quantum}
-Given genus-$g$ corrections with $g \geq 1$ for a chiral algebra
-$\mathcal{A}$, the
-Koszul dual corrections $Q_g(\mathcal{A}^!)$ are \emph{uniquely determined} by:
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\),
+with \(H_{\mathrm C_{1b}}^{\mathrm{pair}}\) for the duality formula.]}
+For a stable genus base \((g,n_g)\), the quotient by the positive
+summand reconstructs the transported genuine partner:
 \begin{equation}
-Q_g(\mathcal{A}^!) \cong \left(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) / Q_g(
-\mathcal{A})\right)^\vee
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal A^!)
+\cong
+H^*(\overline{\mathcal M}_g,Z(\mathcal A))/Q_{g,n_g}(\mathcal A).
 \end{equation}
-where the dual is taken with respect to Verdier duality.
-
-This identification is constructive.
+Applying~$H^*\chi^-_{\mathcal A;g,n_g}$ recovers the genuine summand
+inside $H^*(\mathbf C_{g,n_g}(\mathcal A^!))$.  Under the perfect
+anti-invariant Verdier pairing,
+\[
+Q_{g,n_g}(\mathcal A)
+\cong Q_{g,n_g}(\mathcal A^!)^\vee[-d_{g,n_g}].
+\]
 \end{corollary}
 
 \begin{proof}[Proof of Corollary~\ref{cor:uniqueness-quantum}]
-By the direct sum property (Lemma~\ref{lem:trivial-intersection-complete}) and exhaustion
-(Lemma~\ref{lem:exhaustion-complete}), we have:
+Directness and exhaustion
+(Lemmas~\ref{lem:trivial-intersection-complete}
+and~\ref{lem:exhaustion-complete}) give
 \begin{equation}
-H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) = Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
+H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A}))
+=Q_{g,n_g}(\mathcal{A})\oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!).
 \end{equation}
-
-Thus:
-\begin{equation}
-Q_g(\mathcal{A}^!) = H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) / Q_g(\mathcal{A})
-\end{equation}
-as vector spaces.
-
-By Verdier duality (Corollary~\ref{cor:quantum-dual-complete}):
-\begin{equation}
-Q_g(\mathcal{A}^!) \cong Q_g(\mathcal{A})^\vee
-\end{equation}
-
-Combining these gives the stated formula.
-
-The algorithm is: compute $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$, compute $Q_g(\mathcal{A})$ via the bar spectral sequence, and take the Verdier-orthogonal complement.
-See Examples \ref{ex:heisenberg-complementarity-explicit} and \ref{ex:kac-moody-complementarity-explicit}.
+Taking the quotient gives the transported-partner formula.  The map
+$H^*\chi^-_{\mathcal A;g,n_g}$ returns it to the genuine partner
+centre complex.  Corollary~\ref{cor:quantum-dual-complete} supplies
+the shifted cross-duality under~$H_{\mathrm C_{1b}}^{\mathrm{pair}}$.
+Constructively, one computes the Leray object~$G_g(\mathcal A)$,
+applies the fibre--centre comparison and~$p^+_{\mathcal A}$, and then
+takes the displayed quotient.  Examples~\ref{ex:heisenberg-complementarity-explicit}
+and~\ref{ex:kac-moody-complementarity-explicit} realize this procedure.
 \end{proof}
 
-\begin{corollary}[Vanishing results; \ClaimStatusProvedHere]
+\begin{corollary}[Vanishing loci of the two summands;
+\ClaimStatusConditional]
 \label{cor:vanishing-quantum}
-If $\mathcal{A}$ has no quantum corrections at genus $g$, meaning $Q_g(\mathcal{A}) = 0$,
-then:
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
+On the locus $Q_{g,n_g}(\mathcal A)=0$, the transported genuine
+partner exhausts the ambient cohomology:
 \begin{equation}
-Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!)
+\cong H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A})).
 \end{equation}
-
-Conversely, if \emph{both} $Q_g(\mathcal{A}) = 0$ and $Q_g(\mathcal{A}^!) = 0$, then:
+Simultaneous vanishing of the two genuine summands is equivalent to
 \begin{equation}
-H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) = 0
+H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A}))=0.
 \end{equation}
-meaning the center acts trivially on moduli space cohomology.
 \end{corollary}
 
 \begin{proof}[Proof of Corollary~\ref{cor:vanishing-quantum}]
-\emph{First statement}: By the decomposition theorem:
+The decomposition theorem gives
 \begin{equation}
-H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) = Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
+H^*(\overline{\mathcal{M}}_g,Z(\mathcal{A}))
+=Q_{g,n_g}(\mathcal{A})\oplus
+(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal{A}^!).
 \end{equation}
-
-If $Q_g(\mathcal{A}) = 0$, then $Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g,
-Z(\mathcal{A}))$.
-
-\emph{Second statement}: If both vanish, then by exhaustion:
-\begin{equation}
-0 = \dim Q_g(\mathcal{A}) + \dim Q_g(\mathcal{A}^!) = \dim H^*(\overline{\mathcal{M}}_g,
-Z(\mathcal{A}))
-\end{equation}
-
-Thus $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) = 0$.
+Substitution proves the first formula.  Directness and exhaustion make
+simultaneous vanishing equivalent to vanishing of the ambient
+cohomology.
 \end{proof}
 
 \begin{remark}[Examples of vanishing]
-At genus~$0$ in the unmarked ambient convention:
-$Q_0(\cA)=\mathbb{C}$, $Q_0(\cA^!)=0$ (tree-level,
-no obstruction). This is separate from the pointed
-$\overline{\mathcal M}_{0,n}$, $n\geq3$, Beilinson--Drinfeld
-surface.
-For TFTs: $Q_g(\cA)=0$ for all~$g$.
-For $bc$--$\beta\gamma$: opposite obstructions cancel in the
-complementarity sum (Theorem~\ref{thm:fermion-all-genera}), but
-individual $Q_g$ need not vanish.
+At the stable tree-level base \(\overline{\mathcal M}_{0,3}\), a
+one-dimensional unit coefficient complex with
+\(\sigma_{\cA}=+1\) and anti-equivariant partner comparison gives
+$Q_{0,3}(\cA)=\mathbb C$ and $Q_{0,3}(\cA^!)=0$.
+The general pointed genus-zero theory retains the coefficient
+eigenspaces together with the Beilinson--Drinfeld/Arnold operations.
+For TFTs the computed branch satisfies $Q_{g,n_g}(\cA)=0$ on every
+stable base.  For $bc$--$\beta\gamma$,
+Theorem~\ref{thm:fermion-all-genera} computes cancellation in the
+scalar complementarity sum while the individual eigensummands retain
+their separate values.
 \end{remark}
 
 \subsection{Self-dual algebras and critical level}
@@ -2926,55 +3266,61 @@ individual $Q_g$ need not vanish.
 \index{quantum corrections!self-dual halving}
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3; stable pair
+\((g,n)\); \(H_{\mathrm C_0}\cup
+H_{\mathrm C_{1a}}^{\mathrm{partner}}\) plus a balanced self-duality
+representative.]}
 
 Let $(\cA, \cA^!)$ be a Koszul chiral pair
-(Definition~\ref{def:chiral-koszul-pair}), and fix $g \geq 1$ in
+(Definition~\ref{def:chiral-koszul-pair}), and fix a stable pair
+\((g,n)\) in
 the ordinary flat regime of Theorem~\ref{thm:quantum-complementarity-main}.
 Let $\sigma$ be the represented Verdier involution on
 \[
- \mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA)).
+ \mathbf C_{g,n}(\cA)=R\Gamma(\overline{\mathcal M}_{g,n},\mathcal Z(\cA)).
 \]
 Assume that a self-duality isomorphism
 $f\colon \cA\xrightarrow{\sim}\cA^!$ induces a cochain automorphism
-$\tau_f$ of $\mathbf C_g(\cA)$, after the center comparison, with
+$\tau_f$ of $\mathbf C_{g,n}(\cA)$, after the centre comparison, with
 \begin{equation}\label{eq:balanced-self-dual-antiequivariance}
  \tau_f\sigma=-\sigma\tau_f .
 \end{equation}
 Then
 \begin{equation}\label{eq:self-dual-halving}
-\dim Q_g(\cA) \;=\; \dim Q_g(\cA^!)
-\;=\; \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_g, Z(\cA))
+\dim Q_{g,n}(\cA) \;=\; \dim Q_{g,n}(\cA^!)
+\;=\; \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_{g,n}, Z(\cA))
 \end{equation}
-whenever the displayed cohomology is finite-dimensional. Without
-\eqref{eq:balanced-self-dual-antiequivariance}, self-duality of the
-underlying chiral algebra implies no halving statement. The defect is
-the trace of the Verdier involution:
+whenever the displayed cohomology is finite-dimensional.  For an
+arbitrary represented self-duality, the trace of the Verdier
+involution measures the imbalance:
 \begin{equation}\label{eq:self-dual-trace-defect}
-\dim Q_g(\cA)-\dim Q_g(\cA^!)
+\dim Q_{g,n}(\cA)-\dim Q_{g,n}(\cA^!)
 =
 \operatorname{Tr}\!\left(\sigma\mid
-H^*(\mathbf C_g(\cA))\right).
+H^*(\mathbf C_{g,n}(\cA))\right).
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-Let $V=H^*(\mathbf C_g(\cA))$. Theorem~\ref{thm:quantum-complementarity-main}
+Let $V=H^*(\mathbf C_{g,n}(\cA))$. Theorem~\ref{thm:quantum-complementarity-main}
 identifies
 \[
-Q_g(\cA)=V^+=\ker(\sigma-\mathrm{id}),\qquad
-Q_g(\cA^!)=V^-=\ker(\sigma+\mathrm{id}).
+Q_{g,n}(\cA)=V^+=\ker(\sigma-\mathrm{id}),\qquad
+(H^*\chi^-_{\cA;g,n})^{-1}Q_{g,n}(\cA^!)
+=V^-=\ker(\sigma+\mathrm{id}).
 \]
 If $x\in V^+$, then
 $\sigma(\tau_f x)=-\tau_f(\sigma x)=-\tau_f x$, hence
 $\tau_f x\in V^-$. The same calculation with $V^-$ gives
 $\tau_f(V^-)=V^+$, so $\tau_f$ identifies the two eigenspaces and
 \[
-\dim Q_g(\cA)=\dim Q_g(\cA^!).
+\dim Q_{g,n}(\cA)=\dim Q_{g,n}(\cA^!).
 \]
 The direct-sum decomposition gives
 \[
-\dim Q_g(\cA) + \dim Q_g(\cA^!)
-= \dim H^*(\overline{\mathcal{M}}_g, Z(\cA))
+\dim Q_{g,n}(\cA) + \dim Q_{g,n}(\cA^!)
+= \dim H^*(\overline{\mathcal{M}}_{g,n}, Z(\cA))
 \]
 and therefore the halving formula.
 
@@ -2982,50 +3328,59 @@ For the defect formula, use the eigenspace decomposition again:
 \[
 \operatorname{Tr}(\sigma\mid V)
 =\dim V^+ - \dim V^-
-=\dim Q_g(\cA)-\dim Q_g(\cA^!).
+=\dim Q_{g,n}(\cA)-\dim Q_{g,n}(\cA^!).
 \]
-An isomorphism $\cA\simeq\cA^!$ alone does not determine how the
-induced automorphism interacts with~$\sigma$; the anti-equivariance
-condition is the missing datum.
+The equation~\eqref{eq:balanced-self-dual-antiequivariance} makes the
+trace zero and is precisely the balanced-representative datum used by
+the halving clause.
 \end{proof}
 
 \begin{corollary}[Virasoro quantum corrections under balanced self-duality; \ClaimStatusConditional]
 \label{cor:virasoro-quantum-dim}
 \index{Virasoro algebra!quantum corrections}
+\textup{[Type signature: Open quadrant; strict-flat
+centre-local-system presentation; Beilinson level~3; stable pair
+\((g,n)\); Virasoro self-duality plus the balanced-representative
+hypothesis package.]}
 The Virasoro algebra at $c = 13$ is chiral Koszul self-dual
 ($\mathrm{Vir}_{13}^! = \mathrm{Vir}_{26-13} = \mathrm{Vir}_{13}$,
 Proposition~\ref{prop:virasoro-generic-koszul-dual}).
 Assume that this self-duality is represented on
-$\mathbf C_g(\mathrm{Vir}_{13})$ by a balanced automorphism
+$\mathbf C_{g,n}(\mathrm{Vir}_{13})$ by a balanced automorphism
 $\tau_{13}$ satisfying
-$\tau_{13}\sigma=-\sigma\tau_{13}$. Then for all $g \geq 1$:
+$\tau_{13}\sigma=-\sigma\tau_{13}$. Then for every stable pair
+\((g,n)\) with finite-dimensional cohomology:
 \begin{equation}\label{eq:virasoro-quantum-dim}
-\dim Q_g(\mathrm{Vir}_{13})
-= \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_g).
+\dim Q_{g,n}(\mathrm{Vir}_{13})
+= \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_{g,n}).
 \end{equation}
-Explicitly: $\dim Q_1(\mathrm{Vir}_{13}) = 1$ and
-$\dim Q_2(\mathrm{Vir}_{13}) = 4$.
-Note: $c = 0$ is the unique \emph{uncurved} point ($\kappa = 0$),
-but $\mathrm{Vir}_0^! = \mathrm{Vir}_{26} \neq \mathrm{Vir}_0$,
-so the halving formula does not apply there.
+Explicitly: $\dim Q_{1,1}(\mathrm{Vir}_{13}) = 1$ and
+$\dim Q_{2,0}(\mathrm{Vir}_{13}) = 4$.
+The uncurved point $c=0$ belongs to the two-object orbit
+$\mathrm{Vir}_0^!=\mathrm{Vir}_{26}$; the balanced fixed point used
+by the halving formula is $c=13$.
 \end{corollary}
 
 \begin{proof}
 Apply Theorem~\ref{thm:self-dual-halving} with
 $\cA = \mathrm{Vir}_{13}$ and the balanced representative
 $\tau_{13}$. Since $Z(\mathrm{Vir}_{13}) = \mathbb{C}$,
-$H^*(\overline{\mathcal{M}}_g, Z(\cA))
-= H^*(\overline{\mathcal{M}}_g)$.
+$H^*(\overline{\mathcal{M}}_{g,n}, Z(\cA))
+= H^*(\overline{\mathcal{M}}_{g,n})$.
 At genus~1: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$,
-giving $\dim Q_1 = 1$. At genus~2:
+giving $\dim Q_{1,1}=1$. At genus~2:
 $\dim H^*(\overline{\mathcal{M}}_2) = 8$
 (Poincar\'e polynomial $1 + 3t^2 + 3t^4 + t^6$),
-giving $\dim Q_2 = 4$.
+giving $\dim Q_{2,0}=4$.
 \end{proof}
 
 \begin{corollary}[Critical level scalar uncurving; \ClaimStatusConditional]
 \label{cor:critical-uncurving}
 \index{critical level!uncurving}
+\textup{[Type signature: Open quadrant; curved scalar and strict-flat
+centre-local-system presentations; Beilinson levels~2, 3, and~5;
+scalar uncurving plus the named \(\mathrm C_0/\mathrm C_1\) hypothesis
+package for the displayed decomposition.]}
 At the critical level $k = -h^\vee$, the uniform-weight scalar
 obstruction class vanishes for all $g \geq 1$:
 \begin{equation}\label{eq:critical-uncurving}
@@ -3044,9 +3399,10 @@ and the Feigin--Frenkel center gives the center local system, then
 the critical-level ambient complex admits the Verdier eigenspace
 decomposition
 \begin{equation}\label{eq:critical-complementarity}
-Q_g(V_{-h^\vee}(\mathfrak g))
+Q_{g,n_g}(V_{-h^\vee}(\mathfrak g))
 \;\oplus\;
-Q_g(V_{-h^\vee}(\mathfrak g)^!)
+(H^*\chi^-_{V_{-h^\vee}(\mathfrak g);g,n_g})^{-1}
+Q_{g,n_g}(V_{-h^\vee}(\mathfrak g)^!)
 \;=\;
 H^*\!\bigl(\overline{\mathcal{M}}_g,\,
 \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))\bigr)
@@ -3054,19 +3410,20 @@ H^*\!\bigl(\overline{\mathcal{M}}_g,\,
 where $\mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))$ is the
 Feigin--Frenkel center
 (Remark~\ref{rem:feigin-frenkel-center}; \cite{Feigin-Frenkel}).
-The scalar vanishing alone does not identify the full curved bar
-object with a strict cochain complex, does not compute the individual
-eigenspaces, and does not identify the Koszul dual with a
-$\mathcal W$-algebra.
+The scalar vanishing governs the scalar diagonal.  The full ambient
+decomposition is carried by the \(\mathrm C_0/\mathrm C_1\) package;
+the represented involution computes the individual eigenspaces, and a
+separate Drinfeld--Sokolov comparison identifies any resulting
+$\mathcal W$-algebra realization.
 \end{corollary}
 
 \begin{proof}
-From Table~\ref{tab:obstruction-summary}, the genus-$g$ obstruction for
-$V_k(\mathfrak g)$ on the uniform-weight scalar lane is
+From Table~\ref{tab:obstruction-summary}, the genus-$g$ signed Hodge
+component for $V_k(\mathfrak g)$ is
 \[
-\mathrm{obs}_g(V_k(\mathfrak g))
-=\kappa(V_k(\mathfrak g))\lambda_g
-= \frac{(k+h^\vee)\dim(\mathfrak{g})}{2h^\vee}\lambda_g
+\operatorname{obs}^{\mathrm{Hdg}}_g(V_k(\mathfrak g))
+=(-1)^g\kappa(V_k(\mathfrak g))\lambda_g
+=(-1)^g\frac{(k+h^\vee)\dim(\mathfrak{g})}{2h^\vee}\lambda_g
 \]
 \textup{(}UNIFORM-WEIGHT\textup{)}.
 At $k = -h^\vee$, the coefficient $k + h^\vee$ vanishes, proving
@@ -3108,7 +3465,7 @@ planar ($g=0$) contributions of one theory match the non-planar ($g \geq 1$)
 contributions of the dual theory.
 
 \item \emph{Gopakumar--Vafa invariants}: The generating function for Gopakumar--Vafa
-invariants packages both $Q_g(\mathcal{A})$ and $Q_g(\mathcal{A}^!)$ into a single
+invariants packages both $Q_{g,n_g}(\mathcal{A})$ and $Q_{g,n_g}(\mathcal{A}^!)$ into a single
 modular form.
 \end{itemize}
 \end{conjecture}
@@ -3125,6 +3482,10 @@ applied to the conjectural Koszul pair yields these identifications.
 
 \begin{example}[Heisenberg algebra: complete genus-1 computation]
 \label{ex:heisenberg-complementarity-explicit}
+\textup{[Type signature: Open quadrant; pointed strict-flat bar and
+centre-local-system presentations; Beilinson levels~2 and~3;
+\((g,n)=(1,1)\) and the represented \(\mathrm C_0/\mathrm C_1\)
+hypothesis package.]}
 
 \emph{Setup}: The Heisenberg algebra $\mathcal{H}_\kappa$ at level $\kappa$ has:
 \begin{equation}
@@ -3140,7 +3501,7 @@ H^*(\overline{\mathcal{M}}_{1,1}) = \mathbb{Q}[\lambda] / (\lambda^2) = \mathbb{
 \oplus \mathbb{Q}\lambda
 \end{equation}
 
-\emph{Step 1: Compute $Q_1(\mathcal{H}_\kappa)$}.
+\emph{Step 1: Compute $Q_{1,1}(\mathcal{H}_\kappa)$}.
 
 The genus-1 bar complex is:
 \begin{equation}
@@ -3155,12 +3516,11 @@ d^{(1)} = \sum_{i<j} \operatorname{Res}_{D_{ij}} \circ K^{(1)}_{ij}
 \end{equation}
 where $K^{(1)}(z,w|\tau) = \theta_1'(z-w|\tau)/\theta_1(z-w|\tau)$ is the genus-$1$ chiral propagator (Remark~\ref{rem:wp-config-space}).
 
-The failure of this \emph{fiberwise} collision differential $d_{\mathrm{fib}}$
-to square to zero is measured by the quasi-periodicity of the propagator
-around the $B$-cycle
-(cf.\ Remark~\ref{rem:differential-notation} for the distinction between
-$d_{\mathrm{fib}}$ and the total differential $d^{(1)}_{\mathrm{total}}$,
-which \emph{does} square to zero by Theorem~\ref{thm:genus1-d-squared}).
+The \emph{fiberwise} collision operator $d_{\mathrm{fib}}$ is curved;
+its curvature is measured by the quasi-periodicity of the propagator
+around the $B$-cycle.  The total differential
+$d^{(1)}_{\mathrm{total}}$ includes the Gauss--Manin correction and is
+square-zero by Theorem~\ref{thm:genus1-d-squared}.
 The propagator satisfies $K^{(1)}(z+\tau) = K^{(1)}(z) - 2\pi i$, so:
 \begin{equation}
 (d_{\mathrm{fib}})^2 = \kappa \cdot \omega_1 \cdot \operatorname{id}
@@ -3169,14 +3529,22 @@ where $\omega_1 \in H^2(\overline{\mathcal{M}}_{1,1})$ is the fundamental class 
 
 This curvature identifies the obstruction coefficient
 $\kappa(\mathcal{H}_\kappa) = \kappa$.
-Taking cohomology of the total differential
-$d^{(1)}_{\mathrm{total}}$:
+Taking cohomology of the total differential first gives the Leray
+correction object; the represented fibre--centre comparison and
+positive projector then give
 \begin{equation}
-Q_1(\mathcal{H}_\kappa) = H^*(\bar{B}^{(1)}(\mathcal{H}_\kappa),\,
-d^{(1)}_{\mathrm{total}}) = \mathbb{C} \cdot \kappa
+G_1(\mathcal H_\kappa)
+=\operatorname{gr}^{\bullet}_{\mathrm{Leray}}
+H^*(\bar B^{(1)}(\mathcal H_\kappa),d^{(1)}_{\mathrm{total}}),
+\qquad
+Q_{1,1}(\mathcal H_\kappa)
+=\operatorname{im}\!\left(
+p^+_{\mathcal H_\kappa}\mid H^*(\mathbf C_{1,1}(\mathcal H_\kappa))
+\right)
+=\mathbb C\cdot\kappa.
 \end{equation}
 
-\emph{Step 2: Compute $Q_1(\mathcal{H}_\kappa^!)$ using complementarity}.
+\emph{Step 2: Compute $Q_{1,1}(\mathcal{H}_\kappa^!)$ using complementarity}.
 
 The Koszul dual of the Heisenberg algebra is the curved Chevalley--Eilenberg algebra (cf.\ Part~\ref{part:characteristic-datum}):
 \begin{equation}
@@ -3186,38 +3554,55 @@ where $V^*$ is the linear dual of the generating space~$V$, the curvature
 $m_0 = -\kappa \cdot c$ encodes the obstruction, and
 $\kappa(\mathcal{H}_\kappa^!) = -\kappa$
 (since $h^\vee = 0$ for the Heisenberg).
-Note: $\mathcal{H}_\kappa^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)
-\neq \mathcal{H}_{-\kappa}$; the Koszul dual is generated by~$V^*$,
-not by~$V$ at level~$-\kappa$
+The algebra $\mathcal{H}_\kappa^!=\mathrm{Sym}^{\mathrm{ch}}(V^*)$
+is generated by the linear dual~$V^*$; the level-inverted Heisenberg
+algebra generated by~$V$ is a separate presentation
 \textup{(}Remark~\textup{\ref{rem:km-complementarity-vs-feigin-frenkel})}.
 
 By the complementarity theorem:
 \begin{equation}
-Q_1(\mathcal{H}_\kappa^!) = \left(H^*(\overline{\mathcal{M}}_{1,1}, Z(\mathcal{H}_\kappa))
-/ Q_1(\mathcal{H}_\kappa)\right)^\vee
+(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal{H}_\kappa^!)
+=H^*(\overline{\mathcal{M}}_{1,1},Z(\mathcal{H}_\kappa))
+/Q_{1,1}(\mathcal{H}_\kappa)
 \end{equation}
 
 Since $H^*(\overline{\mathcal{M}}_{1,1}) = \mathbb{C} \oplus \mathbb{C}\lambda$ and
-$Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$ (which pairs with $H^0 = \mathbb{C}$),
+$Q_{1,1}(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$ (which pairs with $H^0 = \mathbb{C}$),
 we have:
 \begin{equation}
-Q_1(\mathcal{H}_\kappa^!) = (\mathbb{C}\lambda)^\vee = \mathbb{C} \cdot \lambda^\vee
+(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal{H}_\kappa^!)=\mathbb C\lambda,
+\qquad
+Q_{1,1}(\mathcal H_\kappa^!)
+=H^*\chi^-_{\mathcal H_\kappa;1,1}(\mathbb C\lambda).
 \end{equation}
 
-\emph{Interpretation}: $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$ (the central extension appears as an obstruction) and $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C} \cdot \lambda$ (the first Chern class appears as a deformation).
+\emph{Interpretation}: $Q_{1,1}(\mathcal{H}_\kappa)=
+\mathbb C\cdot\kappa$ records the central-extension branch, while the
+genuine partner $Q_{1,1}(\mathcal H_\kappa^!)$ transports to the Hodge
+line~$\mathbb C\lambda$.
 
 Together they span:
 \begin{equation}
-Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!) = \mathbb{C} \oplus \mathbb{C}
+Q_{1,1}(\mathcal{H}_\kappa)\oplus
+(H^*\chi^-_{\mathcal H_\kappa;1,1})^{-1}
+Q_{1,1}(\mathcal{H}_\kappa^!)=\mathbb{C}\oplus\mathbb{C}
 = H^*(\overline{\mathcal{M}}_{1,1})
 \end{equation}
 
-\emph{Verification}: We can verify this directly by computing the cobar complex of
-the curved commutative algebra $\mathrm{CE}(\mathfrak{h}_{-\kappa})$ and showing its genus-$1$ contributions are $\mathbb{C} \cdot \lambda$.
+\emph{Verification}: the cobar complex of the curved commutative
+algebra $\mathrm{CE}(\mathfrak h_{-\kappa})$, followed by the genuine
+partner comparison, yields the genus-$1$ Hodge line
+$\mathbb C\cdot\lambda$.
 \end{example}
 
 \begin{example}[Kac--Moody scalar lane at critical level]
 \label{ex:kac-moody-complementarity-explicit}
+\textup{[Type signature: Open quadrant; scalar-curvature and
+strict-flat centre-local-system presentations; Beilinson levels~2,
+3, and~5; critical affine family plus the named
+\(\mathrm C_0/\mathrm C_1\) hypothesis package.]}
 
 \emph{Setup}: The affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ at level $k$
 has:
@@ -3261,14 +3646,15 @@ H^*\!\left(
 \mathrm{Fun}(\mathrm{Op}_{\mathfrak g^\vee}(D))
 \right)
 =
-Q_g(V_{-h^\vee}(\mathfrak g))
+Q_{g,n_g}(V_{-h^\vee}(\mathfrak g))
 \oplus
-Q_g(V_{-h^\vee}(\mathfrak g)^!).
+(H^*\chi^-_{V_{-h^\vee}(\mathfrak g);g,n_g})^{-1}
+Q_{g,n_g}(V_{-h^\vee}(\mathfrak g)^!).
 \]
 This displayed equality is the Verdier eigenspace splitting of the
-ambient center complex. It does not compute the individual
-eigenspaces and does not identify them with a quadratic Casimir line
-or a Hodge line without an explicit critical-level bar computation.
+ambient centre complex.  An explicit critical-level bar computation
+determines the individual eigenspaces and any quadratic-Casimir or
+Hodge-line realization.
 
 \begin{remark}[Distinction from Feigin--Frenkel duality]
 \label{rem:km-complementarity-vs-feigin-frenkel}
@@ -3276,15 +3662,19 @@ or a Hodge line without an explicit critical-level bar computation.
 The \emph{Koszul} dual branch appearing in complementarity is
 obtained by Verdier duality on the bar coalgebra. The
 $\mathcal{W}$-algebra in the Feigin--Frenkel theorem is obtained
-from the affine algebra by quantum Drinfeld--Sokolov reduction. The
-DS functor may intertwine the two structures under its own
-hypotheses, but it is not the bar-cobar inversion functor and it is
-not the definition of $\cA^!$ in Theorem~C.
+from the affine algebra by quantum Drinfeld--Sokolov reduction.  A
+comparison theorem for the DS functor, with its own hypothesis
+package, is the map that can relate these two constructions; Theorem~C
+defines~$\cA^!$ through the bar--Verdier lane.
 \end{remark}
 \end{example}
 
 \begin{example}[\texorpdfstring{$\beta\gamma$}{beta-gamma} system: Koszul dual to free fermions]
 \label{ex:betagamma-fermion-koszul-duality}
+\textup{[Type signature: Open quadrant; pointed strict-flat
+centre-local-system presentation; Beilinson level~3;
+\((g,n)=(1,1)\), the displayed Koszul-pair comparison, and the
+represented \(\mathrm C_0/\mathrm C_1\) hypothesis package.]}
 
 \emph{Setup}: The $\beta\gamma$ system (symplectic bosons) with OPE:
 \begin{equation}
@@ -3316,18 +3706,21 @@ Via bar construction and duality:
 
 \emph{Genus 1 computation}:
 \begin{equation}
-Q_1(\beta\gamma) = \mathbb{C} \cdot [\beta\gamma]
+Q_{1,1}(\beta\gamma) = \mathbb{C} \cdot [\beta\gamma]
 \end{equation}
 where $[\beta\gamma]$ is the first descendant of the identity operator.
 
 Since $(\beta\gamma)^! \cong \mathcal{F}$ (free fermions):
 \begin{equation}
-Q_1((\beta\gamma)^!) = Q_1(\mathcal{F}) = \mathbb{C} \cdot [\psi \partial\psi]
+Q_{1,1}((\beta\gamma)^!) = Q_{1,1}(\mathcal{F}) = \mathbb{C} \cdot [\psi \partial\psi]
 \end{equation}
 
 By complementarity:
 \begin{equation}
-Q_1(\beta\gamma) \oplus Q_1(\mathcal{F}) = \mathbb{C} \cdot [\beta\gamma] \oplus \mathbb{C} \cdot [\psi \partial\psi]
+Q_{1,1}(\beta\gamma)\oplus
+(H^*\chi^-_{\beta\gamma;1,1})^{-1}Q_{1,1}(\mathcal F)
+=\mathbb C\cdot[\beta\gamma]\oplus
+\mathbb C\cdot[\psi\partial\psi].
 \end{equation}
 
 \emph{Physical interpretation.} The bosonization correspondence exchanges fermionic $\psi^2 = 0$ with symplectic bosonic $[\beta,\gamma] = 1$, and exterior algebra with symmetric-type algebra.
@@ -3343,14 +3736,20 @@ Z_{E_\tau}[\beta\gamma] = q^{-1/12} (1 + 2q + 5q^2 + 10q^3 + \cdots)
 \end{equation}
 where the coefficients are the number of bicoloured partitions
 $p_{-2}(n) = \sum_{k=0}^n p(k)p(n-k)$.
-The leading $q^0$ coefficient ($= 1$) corresponds to $Q_1(\beta\gamma)$,
-confirming $\dim Q_1(\beta\gamma) = 1$.
+The represented \(\mathrm C_1\) projector identifies
+$Q_{1,1}(\beta\gamma)$, and the leading $q^0$ coefficient~$1$ gives
+the independent dimension check
+$\dim Q_{1,1}(\beta\gamma)=1$.
 \end{example}
 
 \subsection{Higher genus: genus 2 explicit computations}
 
 \begin{example}[Heisenberg at genus 2]
 \label{ex:heisenberg-genus-2-complementarity}
+\textup{[Type signature: Open quadrant; unpointed strict-flat
+centre-local-system presentation; Beilinson level~3;
+\((g,n)=(2,0)\) and the represented \(\mathrm C_0/\mathrm C_1\)
+hypothesis package.]}
 
 \emph{Setup}: For genus $g=2$, the moduli space has dimension $\dim \overline{
 \mathcal{M}}_2 = 3$. The cohomology is:
@@ -3369,37 +3768,44 @@ P_t(H^*(\overline{\mathcal{M}}_2)) = 1 + 3t^2 + 3t^4 + t^6
 \emph{Genus-$2$ complementarity for Heisenberg.}
 By Theorem~\ref{thm:quantum-complementarity-main},
 \begin{equation}
-Q_2(\mathcal{H}_\kappa) \oplus Q_2(\mathcal{H}_\kappa^!)
+Q_{2,0}(\mathcal{H}_\kappa)\oplus
+(H^*\chi^-_{\mathcal H_\kappa;2,0})^{-1}
+Q_{2,0}(\mathcal{H}_\kappa^!)
 = H^*(\overline{\mathcal{M}}_2),
 \qquad
 \dim H^*(\overline{\mathcal{M}}_2) = 8.
 \end{equation}
 The individual dimensions
-$\dim Q_2(\mathcal{H}_\kappa)$ and $\dim Q_2(\mathcal{H}_\kappa^!)$
+$\dim Q_{2,0}(\mathcal{H}_\kappa)$ and $\dim Q_{2,0}(\mathcal{H}_\kappa^!)$
 are determined by the Verdier involution on
 $H^*(\overline{\mathcal{M}}_2, Z(\mathcal{H}_\kappa))$; their
 computation requires the explicit genus-$2$ bar complex
 (\S\ref{subsec:genus2-complementarity-verification}).
-The complementarity sum $\dim Q_2 + \dim Q_2^! = 8$ is
-unconditional.
+On the represented \(\mathrm C_0/\mathrm C_1\) locus, directness and
+exhaustion give
+$\dim Q_{2,0}(\mathcal H_\kappa)+
+\dim Q_{2,0}(\mathcal H_\kappa^!)=8$.
 \end{example}
 
 \begin{remark}[Open: non-abelian quantum corrections at higher genus]%
 \label{rem:nonabelian-Qg-open}%
 \index{quantum corrections!non-abelian open problem}%
-The explicit $Q_g$ computations above are for the abelian
+The explicit stable-genus computations above are for the abelian
 Heisenberg algebra, whose bar complex
 $T^c(s^{-1}\bar{\mathcal H}_k)$ is the cofree exterior coalgebra
 on the desuspended generators with no further relations. For
 non-abelian algebras ($\widehat{\mathfrak{sl}}_{2,k}$,
 principal $\mathcal{W}_N$, and lattice VOAs), the
-complementarity decomposition $Q_g(\cA) \oplus Q_g(\cA^!)
-= C_g(\cA)$ is \emph{proved} at all genera
-(Theorem~\ref{thm:quantum-complementarity-main}),
-but the individual dimensions $\dim Q_g(\cA)$ are
-\emph{not computed} for $g \geq 2$.
+represented \(\mathrm C_0/\mathrm C_1\) package gives, for $g\geq2$,
+the conditional decomposition
+$Q_{g,0}(\cA)\oplus
+(H^*\chi^-_{\cA;g,0})^{-1}Q_{g,0}(\cA^!)
+=H^*(\mathbf C_{g,0}(\cA))$
+(Theorem~\ref{thm:quantum-complementarity-main}).  Explicit
+higher-genus bar calculations will determine the individual
+dimensions~$\dim Q_{g,0}(\cA)$.
 
-The sharpest test case is $Q_1(\widehat{\mathfrak{sl}}_{2,k})$
+The sharpest test case is $Q_{1,1}(\widehat{\mathfrak{sl}}_{2,k})$
 as a function of the level~$k$: by comparison with the Verlinde
 formula (equation~\eqref{eq:verlinde-general}), one expects
 $\dim H^0(\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k}), \Dg{1})
@@ -3410,11 +3816,15 @@ invariant hierarchy (Remark~\ref{rem:four-levels}).
 
 \subsection{Algorithmic computation of quantum corrections}
 
-We conclude with a practical algorithm for computing $Q_g(\mathcal{A})$ and verifying
+We conclude with a practical algorithm for computing $Q_{g,n_g}(\mathcal{A})$ and verifying
 complementarity.
 
 \begin{remark}[Computing quantum corrections]\label{rem:quantum-corrections}
-Given a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, the quantum correction space $Q_g(\mathcal{A})$ is computed as follows
+\textup{[Type signature: Open quadrant; relative flat-bar and
+strict-flat centre-local-system presentations; Beilinson levels~2
+and~3; \(H_{\mathrm C_0}\cup
+H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
+Given a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, the quantum correction space $Q_{g,n_g}(\mathcal{A})$ is computed as follows
 (see Remark~\ref{rem:differential-notation} for notation).
 \begin{enumerate}
 \item Compute the center $Z(\mathcal{A}) = \{z \in \mathcal{A} : [z, a] = 0 \text{ for all } a\}$.
@@ -3428,13 +3838,25 @@ at chain level that $\dfib^{\,2} = \kappa(\mathcal{A}) \cdot \omega_g$;
 this curvature measures the obstruction coefficient
 $\kappa(\mathcal{A})$ and is interpreted coderivedly before passing to
 the flat differential~$\Dg{g}$.
-\item Take cohomology of the total differential:
-$Q_g(\mathcal{A}) = H^*(\bar{B}^{(g)}(\mathcal{A}),\, \Dg{g})$.
-\item Verify complementarity: $\dim Q_g(\mathcal{A}) + \dim Q_g(\mathcal{A}^!) = \dim H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$.
+\item Form the Leray correction object
+$G_g(\mathcal A)=\operatorname{gr}^{\bullet}_{\mathrm{Leray}}
+H^*(\bar B^{(g)}(\mathcal A),\Dg{g})$, apply the \(\mathrm C_0\)
+fibre--centre comparison, and project with
+$p^+_{\mathcal A}=\tfrac12(\mathrm{id}+\sigma_{\mathcal A})$.  The
+result is $Q_{g,n_g}(\mathcal A)$.
+\item Verify complementarity inside the \(\mathcal A\)-ambient complex:
+$\dim Q_{g,n_g}(\mathcal A)+\dim Q_{g,n_g}(\mathcal A^!)
+=\dim H^*(\overline{\mathcal M}_g,\mathcal Z(\mathcal A))$,
+where the second dimension is represented by
+$(H^*\chi^-_{\mathcal A;g,n_g})^{-1}Q_{g,n_g}(\mathcal A^!)$.
 \end{enumerate}
 \end{remark}
 
 \begin{example}[Algorithm applied to Heisenberg]
+\textup{[Type signature: Open quadrant; pointed relative flat-bar and
+strict-flat centre-local-system presentations; Beilinson levels~2
+and~3; \((g,n)=(1,1)\) and the represented
+\(\mathrm C_0/\mathrm C_1\) hypothesis package.]}
 For $\mathcal{H}_\kappa$ at genus 1:
 \begin{enumerate}
 \item $Z(\mathcal{H}_\kappa) = \mathbb{C} \cdot \mathbb{1} \oplus \mathbb{C} \cdot
@@ -3450,9 +3872,11 @@ $(d^{(1)}_{\mathrm{total}})^2 = 0$
 $d_{\mathrm{fib}} = \sum_{i<j} \operatorname{Res}_{D_{ij}} \cdot \eta_{ij}^{(1)}$ satisfies
 $(d_{\mathrm{fib}})^2 = \kappa \cdot \omega_1 \neq 0$,
 identifying the obstruction coefficient $\kappa(\mathcal{H}_\kappa) = \kappa$.
-\item $Q_1(\mathcal{H}_\kappa) = H^*(\bar{B}^{(1)}(\mathcal{H}_\kappa),\,
-d^{(1)}_{\mathrm{total}}) = \mathbb{C} \cdot \kappa$.
-\item $\dim Q_1(\mathcal{H}_\kappa) + \dim Q_1(\mathcal{H}_\kappa^!) = 1 + 1 = 2 =
+\item The Leray object of
+$H^*(\bar B^{(1)}(\mathcal H_\kappa),d^{(1)}_{\mathrm{total}})$
+maps through the fibre--centre comparison, and its positive projection
+is $Q_{1,1}(\mathcal H_\kappa)=\mathbb C\cdot\kappa$.
+\item $\dim Q_{1,1}(\mathcal{H}_\kappa) + \dim Q_{1,1}(\mathcal{H}_\kappa^!) = 1 + 1 = 2 =
 \dim H^*(\overline{\mathcal{M}}_{1,1})$.
 \end{enumerate}
 \end{example}
@@ -3638,6 +4062,10 @@ $\cW_7$
 \label{rem:complementarity-index-theory}
 \index{complementarity!index-theoretic derivation}
 \index{index theory!complementarity}
+\textup{[Type signature: Open quadrant; strict-flat centre and scalar
+trace presentations; Beilinson levels~3 and~5;
+\(H_{\mathrm C_0}\cup H_{\mathrm C_{1a}}^{\mathrm{partner}}\)
+plus the Theorem~D scalar-trace package.]}
 There is a second derivation of the scalar complementarity constant
 that does not add the explicit $\kappa$-formulas term by term.
 Write
@@ -3656,7 +4084,8 @@ eigenspace splitting
 \[
 \mathbf{C}_g(\cA)
 \;\simeq\;
-\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!).
+\mathbf{Q}_{g,n_g}(\cA)\oplus
+(\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!).
 \]
 On the proved uniform-weight lane, and at genus~$1$ for every standard
 family, define the normalized scalar index
@@ -3677,7 +4106,13 @@ coefficient:
 \chi_g^{\mathrm{sh}}(\cA) \;=\; \kappa(\cA).
 \]
 Thus $\kappa(\cA)$ is the Euler characteristic of the shadow tower
-after dividing by the universal Hodge factor.
+after dividing by the universal Hodge factor. Equivalently, on the
+strict flat centre-comparison surface, it is the
+\(\operatorname{tr}_{\kappa}\)-image of the degree-two diagonal
+derived-centre residue class of
+Definition~\ref{def:derived-centre-scalar-trace-kappa}; this is a
+scalar trace shadow, not a reconstruction of the derived centre or
+of a physical bulk object.
 
 Passing to the total Verdier-self-dual bar package gives
 \[
@@ -3734,25 +4169,19 @@ $k' = -k - 2h^\vee$ gives
 so the total bar-cobar index vanishes on the scalar lane:
 $K_\kappa(\widehat{\fg}) = 0$.
 
-For Bershadsky--Polyakov, Proposition~\ref{prop:bp-kappa} gives
-$\kappa(\mathcal{B}^k) = c(k)/6$, while
-Proposition~\ref{prop:bp-self-duality} gives
-$c(k) + c(-k-6) = 196$. Therefore
+For Bershadsky--Polyakov, the standard
+Fehily--Kawasetsu--Ridout conformal vector gives the exact identity
 \[
-K_\kappa(\mathcal{B})
-\;=\;
-\kappa(\mathcal{B}^k) + \kappa(\mathcal{B}^{-k-6})
-\;=\;
-\frac{c(k) + c(-k-6)}{6}
-\;=\;
-\frac{196}{6}
-\;=\;
-\frac{98}{3}.
+K^c_{\mathrm{BP}}
+=c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
 \]
-Thus the same bar-cobar package carries two related invariants: the
-unnormalized central-charge conductor $c + c'$ and the scalar
-complementarity constant $K_\kappa = \kappa + \kappa'$. For
-Bershadsky--Polyakov the former is $196$ and the latter is $98/3$.
+The four strong generators $J,T,G^+,G^-$ are even.  Consequently the
+modular characteristic requires the complete genus-one
+nonseparating-curvature calculation for the minimal-DS complex.  Its
+status is \ClaimStatusOpen.  A result
+$\kappa_{\mathrm{BP}}=c_{\mathrm{BP}}/6$ would imply the conditional
+value $K^\kappa_{\mathrm{BP}}=25/3$.  The exact central conductor and
+the open modular conductor therefore occupy separate scalar lanes.
 \end{remark}
 
 \begin{remark}[The Koszul conductor polynomial]
@@ -3778,11 +4207,12 @@ $\kappa(\cW_N) = \kappa(\cW_N^!) = \varrho_N K_N/2$.
 If a balanced anti-equivariant self-duality representative is
 constructed on the genus-$g$ ambient complex, then the
 complementarity splitting
-$Q_g(\cA) \oplus Q_g(\cA^!)$ is a balanced decomposition
-with $\dim Q_g(\cA) = \dim Q_g(\cA^!)$
+$Q_{g,n_g}(\cA)\oplus
+(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)$ is a balanced decomposition
+with $\dim Q_{g,n_g}(\cA) = \dim Q_{g,n_g}(\cA^!)$
 (Theorem~\ref{thm:self-dual-halving}).
-The Virasoro chiral Koszul self-dual point is $c = 13$ (not $c = 26$;
-see Corollary~\ref{cor:virasoro-quantum-dim}).
+The Virasoro chiral Koszul self-dual point is $c=13$
+(Corollary~\ref{cor:virasoro-quantum-dim}).
 The critical value $c = 26$, where $\kappa(\mathrm{Vir}_{26}^!)
 = 0$, is the point where the \emph{dual} bar complex becomes
 uncurved (Theorem~\ref{thm:critical-dimension}). These two
@@ -4541,7 +4971,10 @@ The last step uses the pairing between logarithmic forms and compactly supported
 The Ayala--Francis duality for a chiral algebra $\mathcal{A}$ is:
 \[\int_{\text{Conf}_n(X)} \mathcal{A} \simeq \mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \bar{B}(\mathcal{A})\right)\]
 where $\bar{B}(\mathcal{A})$ is the bar coalgebra computing the dual
-coalgebra $\mathcal{A}^i = H^*(\barB(\mathcal{A}))$, and
+factorization-chain object.  For a quadratic presentation
+$\mathcal A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$, the comparison
+$q_{\mathcal A}\colon\mathcal A^{\mathrm i}\to\barB(\mathcal A)$
+identifies its cohomology with bar cohomology on the Koszul locus, and
 $\mathbb{D}_{\text{top}}$ is topological (linear) duality.
 \end{lemma}
 
@@ -4600,22 +5033,14 @@ Applying AF-dual (Lemma~\ref{lem:AF-dual-chiral}):
 
 \emph{Step 3: Compare the two paths.}
 
-We need to show:
-\[\left(R\Gamma(\text{Conf}_n(X), \mathcal{A})^{\boxtimes n}\right)^\vee \simeq \mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \bar{B}(\mathcal{A})\right)\]
-
-By the Verdier intertwining (Theorem~\ref{thm:bar-cobar-verdier}):
-\[\mathbb{D}_{\operatorname{Ran}}\bar{B}(\mathcal{A}) \simeq \cA^!_\infty
-\qquad\text{(factorization \emph{algebra}, not coalgebra)}\]
-
-Therefore:
-\begin{align*}
-\mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \bar{B}(\mathcal{A})\right)
-&\simeq \mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \mathcal{A}^\vee\right) \\
-&\simeq \left(\int_{\text{Conf}_n(X)} \mathcal{A}\right)^\vee && \text{(AF duality)} \\
-&\simeq \left(R\Gamma(\text{Conf}_n(X), \mathcal{A})^{\boxtimes n}\right)^\vee && \text{(definition of factorization homology)}
-\end{align*}
-
-The two paths agree. \qedhere
+Lemma~\ref{lem:DR-verdier-compat} identifies the upper-right route
+with the topological dual of
+$\operatorname{DR}(\mathcal M_n)$.  The factorization-chain
+comparison identifies this object with
+$\mathbb D_{\mathrm{top}}(\int_{\operatorname{Conf}_n(X)}\cA)$.
+Lemma~\ref{lem:AF-dual-chiral} identifies the lower route with the
+same topological dual.  Naturality of these two comparisons gives the
+commutative square. \qedhere
 \end{proof}
 
 \subsection*{Part 5: full theorem conclusion}
@@ -4764,39 +5189,39 @@ The logarithmic forms $\Omega^n_{\log}$ provide the integration measure, and tak
 $\Sigma_n$-coinvariants gives the symmetric quotient.
 \end{proof}
 
-\emph{Step 4: Homotopy Koszul Dual via Verdier Duality}
+\emph{Step 4: Verdier algebra of the bar coalgebra}
 
-The homotopy Koszul dual $\cA^!_\infty$ is characterized by
-Verdier duality on the bar coalgebra
-(Convention~\ref{conv:bar-coalgebra-identity}):
-\[\cA^!_\infty \simeq \mathbb{D}_{\text{Ran}(X)}(\bar{B}(\mathcal{A}))\]
-The strict Koszul dual $\cA^!$ is recovered on cohomology
-by Theorem~\ref{thm:chiral-koszul-duality}.
+Verdier duality on the bar coalgebra gives the algebra
+\[
+K_X(\cA):=\mathbb{D}_{\text{Ran}(X)}(\bar{B}(\mathcal{A})).
+\]
+A chiral Koszul pair carries a separate equivalence
+$\nu_{12}\colon K_X(\cA)\xrightarrow{\sim}\cA^!$.
 
-\begin{lemma}[Algebra structure from Verdier dual; \ClaimStatusProvedHere]\label{lem:coalgebra-verdier-AF}
-Under $\text{DR}$, the algebra structure on $\cA^!_\infty$ comes from
-applying Verdier duality to the coalgebra
-$\bar{B}(\mathcal{A})$: Verdier duality converts the
-factorization coalgebra $\bar{B}(\cA)$ into the factorization
-algebra $\cA^!_\infty$.
+\begin{lemma}[Algebra structure on the Verdier dual of the bar;
+\ClaimStatusConditional]\label{lem:coalgebra-verdier-AF}
+Assume the finite-window dualizability, tensor-exchange, and
+completion hypotheses of Theorem~\ref{thm:bar-cobar-verdier}.
+Then $K_X(\cA)$ is a factorization algebra whose multiplication is the
+Verdier transpose of bar deconcatenation.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma]
-The multiplication $\mu: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ dualizes to:
-\[\mathbb{D}(\mu): \mathbb{D}(\mathcal{A}) \to \mathbb{D}(\mathcal{A} \otimes \mathcal{A})
-\simeq \mathbb{D}(\mathcal{A}) \otimes \mathbb{D}(\mathcal{A})\]
-
-Applying $\text{DR}$:
-\[\text{DR}(\mathbb{D}(\mu)): \text{DR}(\mathcal{A})^* \to \text{DR}(\mathcal{A})^*
-\otimes \text{DR}(\mathcal{A})^*\]
-
-This is the coproduct structure on the coalgebra.
-
-In factorization terms, this says:
-\[\Delta: \int_X \mathcal{A}^! \to \int_{X \sqcup X} \mathcal{A}^!
-= \left(\int_X \mathcal{A}^!\right) \otimes \left(\int_X \mathcal{A}^!\right)\]
-
-which is the Ayala--Francis coalgebra structure.
+The bar coalgebra has deconcatenation
+\[
+ \Delta_B\colon B_X(\cA)\longrightarrow
+ B_X(\cA)\widehat\otimes B_X(\cA).
+\]
+Contravariance and tensor exchange give
+\[
+ \mathbb D B_X(\cA)\widehat\otimes\mathbb D B_X(\cA)
+ \xrightarrow{\ \sim\ }
+ \mathbb D(B_X(\cA)\widehat\otimes B_X(\cA))
+ \xrightarrow{\ \mathbb D(\Delta_B)\ }
+ \mathbb D B_X(\cA).
+\]
+Coassociativity of $\Delta_B$ gives associativity of this
+multiplication, and completion follows from the stated hypotheses.
 \end{proof}
 
 \emph{Step 5: Full Compatibility}
@@ -5234,7 +5659,7 @@ For (iii), the Hochschild complex of $\int_\gamma\cA$ computes
 the factorization homology of the annulus $\gamma \times [0,1]$
 by \cite[Theorem~5.5.3.10]{HA}. The identification of the handle
 (where the two boundary circles are identified) introduces a trace
-map $\mathrm{tr} \colon HH_*(\int_\gamma\cA) \to
+map $\mathrm{tr} \colon \HH^{E_1}_\bullet(\int_\gamma\cA) \to
 \int_{\text{handle}}\cA$. The curvature arises because this trace
 map, when lifted to chains, satisfies $d_{\mathrm{tr}}^2 =
 \mcurv \cdot \lambda_1$ (the Hodge class), which is the content of
@@ -5332,10 +5757,11 @@ adjunction, addressed in Chapter~\ref{ch:en-koszul-duality}.
 
 The preceding sections prove that complementarity decomposes the
 genus-$g$ cohomology into two dual packages:
-$Q_g(\cA) \oplus Q_g(\cA^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\cA))$.
-This is the \emph{linear shadow} of a deeper geometric fact. The
-correct theorem is not an additive splitting of vector spaces. The
-correct theorem is that there is \emph{one} ambient deformation problem,
+$Q_{g,n_g}(\cA)\oplus
+(H^*\chi^-_{\cA;g,n_g})^{-1}Q_{g,n_g}(\cA^!)
+\cong H^*(\overline{\mathcal{M}}_g,Z(\cA))$ on the represented
+\(\mathrm C_0/\mathrm C_1\) locus.  This is the \emph{linear shadow}
+of a deeper geometric fact: there is \emph{one} ambient deformation problem,
 equipped with a $(-1)$-shifted symplectic structure, and the two dual
 packages are realized inside it as \emph{complementary Lagrangians}.
 Once that geometry is installed, the scalar characteristic
@@ -5412,7 +5838,8 @@ for which the kernel differential is skew-adjoint.
 \end{enumerate}
 \end{definition}
 
-\begin{definition}[Ambient complementarity tangent complex]
+\begin{definition}[Ambient complementarity tangent complex;
+\ClaimStatusDefinitional]
 \label{def:ambient-complementarity-tangent-complex}
 Given an ambient complementarity datum, the
 \emph{ambient complementarity tangent complex} is
@@ -5429,6 +5856,60 @@ A tangent vector in $T_{\mathrm{comp}}(\cA)$ is a first-order
 deformation of $\cA$, a first-order deformation of $\cA^!$, and a
 first-order deformation of the universal kernel, constrained by the
 linearized Maurer--Cartan equation.
+\end{definition}
+
+\begin{definition}[Complementarity formal moduli problems;
+\ClaimStatusDefinitional]
+\label{def:complementarity-formal-moduli}
+\index{formal moduli problem!complementarity|textbf}
+\index{derived intersection!complementarity}
+Assume the ambient complementarity datum of
+Definition~\ref{def:ambient-complementarity-datum} is represented by
+complete filtered dg Lie algebras or cyclic \(L_\infty\)-algebras in
+the Lurie--Pridham sense. Define:
+\[
+\mathcal M_{\cA}:=\mathrm{MC}(T_{\cA}),\qquad
+\mathcal M_{\cA^!}:=\mathrm{MC}(T_{\cA^!}),\qquad
+\mathcal M_{\mathrm{comp}}(\cA):=\mathrm{MC}(T_{\mathrm{comp}}(\cA)),
+\]
+where
+\[
+T_{\cA}:=\operatorname{fib}(\nabla_{\cA}\colon L_{\cA}\to K_{\cA}),
+\qquad
+T_{\cA^!}:=\operatorname{fib}(\nabla_{\cA^!}\colon L_{\cA^!}\to K_{\cA})
+\]
+and \(T_{\mathrm{comp}}(\cA)\) is
+Definition~\ref{def:ambient-complementarity-tangent-complex}. The
+maps
+\[
+i_{\cA}\colon \mathcal M_{\cA}\to\mathcal M_{\mathrm{comp}}(\cA),
+\qquad
+i_{\cA^!}\colon \mathcal M_{\cA^!}\to\mathcal M_{\mathrm{comp}}(\cA)
+\]
+are induced by the inclusions of one-sided tangent complexes into the
+homotopy-fibre tangent complex.
+
+The derived intersection
+\[
+\mathcal M_{\cA}\times^h_{\mathcal M_{\mathrm{comp}}(\cA)}
+\mathcal M_{\cA^!}
+\]
+is represented, when the comparison has been constructed, by the
+Maurer--Cartan functor of the twisted tensor kernel
+\[
+K^{\mathrm{comp}}_{\tau}(\cA,\cA^!)
+:=
+\operatorname{fib}\!\left(
+L_{\cA}\oplus L_{\cA^!}\xrightarrow{\nabla_{\cA}-\nabla_{\cA^!}}
+K_{\cA}\right),
+\]
+with differential twisted by the universal kernel
+\(\tau_{\cA}\). This representation is a theorem only after the
+filtered dg Lie model for the homotopy pullback and the kernel
+comparison maps are supplied; otherwise it is the missing converse
+datum. Acyclicity of \(K^{\mathrm{comp}}_{\tau}(\cA,\cA^!)\) implies
+transversality of the two Lagrangian maps, while the converse
+requires the same homotopy-pullback model and perfectness hypotheses.
 \end{definition}
 
 \begin{theorem}[Ambient complementarity in tangent form]
@@ -5483,10 +5964,11 @@ assume that $T_{\mathrm{comp}}(\cA)$ is represented by a complete
 filtered dg~Lie algebra or cyclic $L_\infty$-algebra with a closed
 invariant non-degenerate pairing of degree~$-1$, and that the
 one-sided complexes are filtered $L_\infty$ subalgebras with
-Lagrangian tangent maps. Then $T_{\mathrm{comp}}(\cA)$ integrates to a
-formal moduli problem $\mathcal{M}_{\mathrm{comp}}(\cA)$ carrying
-a canonical $(-1)$-shifted symplectic structure, and the one-sided
-deformation problems define Lagrangian maps
+Lagrangian tangent maps. Then the formal moduli problems of
+Definition~\ref{def:complementarity-formal-moduli} exist, the ambient
+one \(\mathcal{M}_{\mathrm{comp}}(\cA)\) carries a canonical
+$(-1)$-shifted symplectic structure, and the one-sided deformation
+problems define Lagrangian maps
 \[
 \mathcal{M}_{\cA}
 \longrightarrow
@@ -5513,7 +5995,11 @@ every complete filtered dg~Lie algebra $\fg$ integrates to a
 formal moduli problem $\mathcal{M}_\fg$
 whose tangent complex is $\fg[1]$.
 Applied to $\fg = \Defcyc^{\mathrm{mod}}(\cA)$, this gives
-the formal moduli problem $\mathcal{M}_{\mathrm{comp}}(\cA)$.
+the ambient formal moduli problem
+$\mathcal{M}_{\mathrm{comp}}(\cA)$ of
+Definition~\ref{def:complementarity-formal-moduli}; applying the same
+construction to the one-sided tangent dg Lie algebras gives
+$\mathcal M_\cA$ and $\mathcal M_{\cA^!}$.
 
 The cyclic pairing on $\Defcyc^{\mathrm{mod}}(\cA)$ is a
 non-degenerate invariant pairing of degree~$-1$. By the
@@ -5545,22 +6031,22 @@ $(-1)$-shifted symplectic formal moduli problem.
 At fixed genus $g\geq2$,
 Proposition~\ref{prop:ptvv-lagrangian}
 uses the linear derived stack attached to
-$C_g = R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$:
+$C_{g,0}=R\Gamma(\overline{\mathcal{M}}_{g,0},\mathcal{Z}(\cA))$:
 the Verdier pairing gives the constant
-$(-(3g{-}3))$-shifted symplectic form of
+$(-d_{g,0})$-shifted symplectic form of
 \cite[Example~1.4]{PTVV13}, and the perfect subcomplexes whose
 cohomology groups are denoted
-$Q_g(\cA)$ and $Q_g(\cA^!)$
+$Q_{g,0}(\cA)$ and
+$(H^*\chi^-_{\cA;g,0})^{-1}Q_{g,0}(\cA^!)$
 satisfy the Lagrangian conditions of
 \cite[Definition~2.8, Theorem~2.9]{PTVV13}.
 
-This matches the PTVV framework, but it does not identify
-complementarity with a derived-intersection computation, and it does
-not derive the scalar conductor identity
-$\kappa(\cA)+\kappa(\cA^!)=K$ from shifted symplectic geometry alone.
-The conductor formula still enters only after the Verdier
-eigenspace decomposition is projected to the scalar lane and the
-family-specific computations of Theorem~D are used.
+This is the polarization form of the PTVV framework.  The
+derived-intersection construction belongs to the cotangent-normal-form
+lane, while the scalar conductor identity
+$\kappa(\cA)+\kappa(\cA^!)=K$ enters after the Verdier eigenspace
+decomposition is projected to the scalar lane and the family-specific
+computations of Theorem~D are applied.
 \end{remark}
 
 \begin{theorem}[Global Lagrangian complementarity across genera:
@@ -5678,23 +6164,26 @@ enter the isotropy check.
 \begin{remark}[Verdier and Calabi--Yau shifted structures]
 \label{rem:fm116-scope-global-upgrade}
 Theorem~\textup{\ref{thm:lagrangian-complementarity-global-upgrade}}
-is the $(-(3g-3+n))$-shifted \emph{Verdier-symplectic} upgrade;
-it does \emph{not} claim PTVV-for-$\mathrm{CY}_d$ on the moduli stack.
-The distinction is mathematical: Verdier-on-$\overline{\mathcal{M}}_{g,n}$
+is the $(-d_{g,n})$-shifted \emph{Verdier-symplectic} upgrade.
+Verdier-on-$\overline{\mathcal{M}}_{g,n}$
 is an intrinsic pairing built from Serre duality and Verdier self-dual
 $\mathcal{Z}(\cA)$; PTVV-for-$\mathrm{CY}_d$ is the external pairing built
 from a Calabi--Yau target and lives on mapping stacks of the target.
-These two structures are related only through the chiral-to-CY
-functor of Vol~III, which is \emph{not} invoked here.
+The chiral-to-CY functor of Vol~III is the comparison map relating
+these two structures; the present theorem uses the Verdier lane.
 \end{remark}
 
 \begin{remark}[Global form of Theorem~C]
 \label{rem:platonic-upgrade-lagrangian-global}
 Theorem~\textup{\ref{thm:quantum-complementarity-main}} (Theorem~C)
-delivers a genus-wise Lagrangian decomposition; Theorem~\textup{\ref{thm:ambient-complementarity-fmp}}
-delivers a $(-1)$-shifted ambient picture. The global form combines
-both: the $(-(3g-3+n))$-shifted Verdier-symplectic modular tangent
-bundle admits a \emph{single} global Lagrangian section whose
+delivers the genus-wise Lagrangian decomposition under
+$H_{\mathrm C_{1b}}^{\mathrm{pair}}$;
+Theorem~\textup{\ref{thm:ambient-complementarity-fmp}}
+delivers a $(-1)$-shifted ambient picture under its cyclic formal-moduli
+package.  Under the clutching-coherence hypotheses of
+Theorem~\ref{thm:lagrangian-complementarity-global-upgrade}, the
+$(-d_{g,n})$-shifted Verdier-symplectic modular tangent bundle admits a
+\emph{single} global Lagrangian section whose
 specializations at fixed genus recover Theorem~C and whose shadow
 at the cyclic deformation side recovers Theorem~\textup{\ref{thm:ambient-complementarity-fmp}}.
 The bridge between the two shifted structures is the
@@ -6154,23 +6643,25 @@ beyond the $\hat{A}$-genus.
 
 In the finite-rank paired regime, complementarity admits a
 linear comparison model. The decomposition
-$\mathbf{C}_g(\cA) \simeq \mathbf{Q}_g(\cA) \oplus
-\mathbf{Q}_g(\cA^!)$ of Theorem~\ref{thm:quantum-complementarity-main}
+$\mathbf{C}_g(\cA)\simeq\mathbf{Q}_{g,n_g}(\cA)\oplus
+(\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!)$ of
+Theorem~\ref{thm:quantum-complementarity-main}
 is an idempotent splitting of the genus-$g$ ambient center complex.
 Under the non-degenerate Verdier pairing hypotheses it becomes a
 pair of dual Lagrangian polarizations: one branch is the
 $+1$-eigenspace of the represented Verdier involution, the other is
 the $-1$-eigenspace, and the two branches exhaust the ambient
-cohomology of moduli space. This is a typed linear comparison. No
-bulk factorization algebra is constructed here.
+cohomology of moduli space. This is a typed linear comparison; a
+physical bulk factorization algebra belongs to the separate OCA lane.
 
 The linear model is the following for $g\geq2$. The genus-$g$ ambient complex
-$\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,
+$\mathbf{C}_{g,0}(\cA) = R\Gamma(\overline{\mathcal{M}}_{g,0},
 \mathcal{Z}(\cA))$ is a shifted-symplectic linear space in the sense of
 Proposition~\ref{prop:ptvv-lagrangian}, with a
-$(-(3g{-}3))$-shifted symplectic form.
-The two complementary branches $\mathbf{Q}_g(\cA)$ and
-$\mathbf{Q}_g(\cA^!)$ are Lagrangian subspaces of this phase space,
+$(-d_{g,0})$-shifted symplectic form.
+The two complementary branches $\mathbf{Q}_{g,0}(\cA)$ and
+$(\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)$ are Lagrangian
+subspaces of this phase space,
 and the finite-rank passage from one polarization to the other is the
 formal Fourier transform. Quantizing the linearized phase space
 produces a Heisenberg algebra, a Fock representation, a Weyl algebra,
@@ -6191,13 +6682,13 @@ invisible to the scalar curvature $\kappa$.
 
 \medskip
 \noindent\emph{Finite-rank hypothesis.}\;
-Every theorem in this section is derived from the proved core of
-Theorems~A--D together with finite-rank linear algebra on perfect
-dg models. The only additional assumption is that we work on
+The theorems in this section use the conditional comparison surfaces
+of Theorems~A--D together with finite-rank linear algebra on perfect
+dg models.  Explicit Gaussian calculations use
 finite-rank parity-even models when carrying out explicit Gaussian
 calculations; the graded extension follows by the standard Koszul
-sign rule. No conjectural input is required until the closing
-conjecture on bulk enhancement.
+sign rule.  Each conclusion below retains the comparison hypotheses
+on which its linear model depends.
 
 \subsection{The protected dual transform}
 \label{subsec:holo-comp-protected-transform}
@@ -6205,6 +6696,10 @@ conjecture on bulk enhancement.
 \begin{definition}[Protected dual transform]
 \label{def:holo-comp-protected-transform}
 \index{dual transform!protected|textbf}
+\textup{[Type signature: Open quadrant; coderived factorization and
+strict-flat centre-local-system presentations; Beilinson levels~2
+and~3; \(H_{\mathrm{VD}}\cup
+H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
 Let $X$ be a smooth projective curve and let $\cA$ be a modular
 Koszul chiral algebra on~$X$. The \emph{protected dual transform} is
 \begin{equation}\label{eq:holo-comp-protected-transform}
@@ -6213,12 +6708,12 @@ Koszul chiral algebra on~$X$. The \emph{protected dual transform} is
 \mathbb{D}_{\operatorname{Ran}} \, \barB_X(\cA)
 \in D^{\mathrm{co}}\!\bigl(\operatorname{Fact}(X)\bigr).
 \end{equation}
-For each $g \geq 0$, the \emph{dual cofiber} is
+For each stable pair \((g,n)\), the \emph{dual cofiber} is
 \begin{equation}\label{eq:holo-comp-cofiber}
-\mathbf{H}^{\mathrm{hol}}_g(\cA)
+\mathbf{H}^{\mathrm{hol}}_{g,n}(\cA)
 :=
-\cofib\!\bigl(\mathbf{Q}_g(\cA)
-\longrightarrow \mathbf{C}_g(\cA)\bigr).
+\cofib\!\bigl(\mathbf{Q}_{g,n}(\cA)
+\longrightarrow \mathbf{C}_{g,n}(\cA)\bigr).
 \end{equation}
 \end{definition}
 
@@ -6226,6 +6721,10 @@ For each $g \geq 0$, the \emph{dual cofiber} is
 \ClaimStatusConditional]
 \label{thm:holo-comp-bulk-reconstruction}
 \index{dual transform!protected|textbf}
+\textup{[Type signature: Open quadrant; coderived factorization and
+strict-flat centre-local-system presentations; Beilinson levels~2
+and~3; \(H_{\mathrm{VD}}\cup H_{\mathrm{conv}}\cup
+H_{\mathrm C_{1a}}^{\mathrm{partner}}\).]}
 Let $\cA$ be a modular Koszul chiral algebra on~$X$. Assume the
 Verdier bar--cobar comparison and higher-genus inversion are available
 for $\cA$ and $\cA^!$ on the Koszul locus, and form the cofiber in the
@@ -6236,13 +6735,15 @@ strict flat ambient representative. Then:
 \item \emph{Anti-involution.}\;
  $\mathbb{H}_X^2(\cA) \simeq \cA$.
 \item \emph{Cofiber identification.}\;
- For every $g \geq 0$,
- $\mathbf{H}^{\mathrm{hol}}_g(\cA) \simeq \mathbf{Q}_g(\cA^!)$.
+ For every stable pair \((g,n)\),
+ $\mathbf{H}^{\mathrm{hol}}_{g,n}(\cA)\simeq
+ (\chi^-_{\cA;g,n})^{-1}\mathbf{Q}_{g,n}(\cA^!)$.
 \end{enumerate}
 In particular, the protected transform $\mathbb{H}_X$ identifies
-canonically with the Koszul-dual branch and is a contravariant
-involution in the stated coderived category. No bulk factorization
-algebra is constructed in this theorem.
+with the Koszul-dual branch and is a contravariant involution in the
+stated coderived category.  Its cofiber clause is the transported
+\(\mathrm C_1\) partner; a physical bulk factorization algebra is the
+output of the separate OCA comparison.
 \end{theorem}
 
 \begin{proof}
@@ -6259,18 +6760,20 @@ inversion (Theorem~\ref{thm:higher-genus-inversion}),
 Applying the same argument to $\cA^!$ and using
 $(\cA^!)^! \simeq \cA$ gives the anti-involution. For the cofiber,
 the involution-splitting (Lemma~\ref{lem:involution-splitting})
-gives $\mathbf{C}_g(\cA) \simeq \mathbf{Q}_g(\cA) \oplus
-\mathbf{Q}_g(\cA^!)$; the canonical inclusion of the first summand
-has cofiber the second.
+gives $\mathbf{C}_{g,n}(\cA)\simeq\mathbf{Q}_{g,n}(\cA)\oplus
+(\chi^-_{\cA;g,n})^{-1}\mathbf{Q}_{g,n}(\cA^!)$; the canonical
+inclusion of the first summand has cofiber the transported second
+summand.
 \end{proof}
 
 \subsection{Shifted cotangent realization and spectral reciprocity}
 \label{subsec:holo-comp-cotangent-spectral}
 
-Fix a genus $g \geq 1$ and write
-$d_g := 3g - 3$,
-$V_g(\cA) := \mathbf{Q}_g(\cA)$,
-$W_g(\cA) := \mathbf{Q}_g(\cA^!)[d_g]$.
+Fix an unpointed stable genus $g \geq 2$ together with the
+genuine-partner comparison \(\chi^-_{\cA;g,0}\), and write
+$V_g(\cA) := \mathbf{Q}_{g,0}(\cA)$,
+$W_g(\cA) :=
+(\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)[d_{g,0}]$.
 By Theorem~\ref{thm:quantum-complementarity-main},
 $W_g(\cA) \simeq V_g(\cA)^\vee$.
 
@@ -6278,22 +6781,29 @@ $W_g(\cA) \simeq V_g(\cA)^\vee$.
 \ClaimStatusConditional]
 \label{thm:holo-comp-cotangent-realization}
 \index{cotangent realization!shifted|textbf}
+\textup{[Type signature: Open quadrant; unpointed strict-flat
+centre-local-system presentation; Beilinson level~3; \(g\geq2\),
+\(H_{\mathrm C_{1a}}^{\mathrm{partner}}\cup
+H_{\mathrm C_{1b}}^{\mathrm{pair}}\), with balanced protected
+self-duality for clause~\textup{(iii)}.]}
 Let $\cA$ be a modular Koszul chiral algebra. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Cotangent decomposition.}\;
- $\mathbf{C}_g(\cA) \simeq V_g(\cA) \oplus V_g(\cA)^\vee[-d_g]$.
+ $\mathbf{C}_{g,0}(\cA) \simeq V_g(\cA) \oplus V_g(\cA)^\vee[-d_{g,0}]$.
 \item \emph{Transposition.}\;
- $\mathbf{H}^{\mathrm{hol}}_g(\cA) \simeq V_g(\cA)^\vee[-d_g]$.
+ $\mathbf{H}^{\mathrm{hol}}_{g,0}(\cA) \simeq V_g(\cA)^\vee[-d_{g,0}]$.
 \item \emph{Protected self-duality.}\;
- If $\mathbb{H}_X(\cA) \simeq \cA$, then
- $V_g(\cA) \simeq V_g(\cA)^\vee[-d_g]$.
+ If a protected self-duality $\mathbb{H}_X(\cA)\simeq\cA$ is
+ compatible with the represented partner datum, then
+ $V_g(\cA) \simeq V_g(\cA)^\vee[-d_{g,0}]$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-By complementarity,
-$\mathbf{Q}_g(\cA^!) \simeq W_g(\cA)[-d_g] \simeq
-V_g(\cA)^\vee[-d_g]$. Substituting into the direct-sum
+By complementarity, the transported partner satisfies
+$(\chi^-_{\cA;g,0})^{-1}\mathbf{Q}_{g,0}(\cA^!)
+\simeq W_g(\cA)[-d_{g,0}]
+\simeq V_g(\cA)^\vee[-d_{g,0}]$. Substituting into the direct-sum
 decomposition proves (i); (ii) follows from
 Theorem~\ref{thm:holo-comp-bulk-reconstruction}(iii);
 (iii) follows because protected self-duality identifies $\cA$ with
@@ -6303,23 +6813,32 @@ $\cA^!$.
 The cotangent realization has immediate spectral consequences.
 
 \begin{corollary}[Spectral reciprocity and palindromicity;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:holo-comp-spectral-reciprocity}
 \index{spectral reciprocity!palindromicity|textbf}
+\textup{[Type signature: Open quadrant; unpointed strict-flat
+centre-local-system presentation; Beilinson level~3; \(g\geq2\),
+\(H_{\mathrm C_{1a}}^{\mathrm{partner}}\cup
+H_{\mathrm C_{1b}}^{\mathrm{pair}}\), with balanced protected
+self-duality for clauses~\textup{(ii)--(iii)}.]}
 Assume $V_g(\cA)$ has finite-dimensional cohomology and set
 $P_g(\cA; u) := \sum_i \dim H^i(V_g(\cA))\, u^i$. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Spectral reciprocity.}\;
- $P_g(\cA^!; u) = u^{d_g}\, P_g(\cA; u^{-1})$.
+ $P_g(\cA^!; u) = u^{d_{g,0}}\, P_g(\cA; u^{-1})$,
+ where $P_g(\cA^!;u)$ is computed from the genuine complex
+ $\mathbf Q_{g,0}(\cA^!)$.
 \item \emph{Protected self-dual palindromicity.}\;
- If $\mathbb{H}_X(\cA) \simeq \cA$, then
- $P_g(\cA; u) = u^{d_g}\, P_g(\cA; u^{-1})$.
+ If the balanced protected self-duality of
+ Theorem~\textup{\ref{thm:holo-comp-cotangent-realization}(iii)} is
+ supplied, then
+ $P_g(\cA; u) = u^{d_{g,0}}\, P_g(\cA; u^{-1})$.
 \item \emph{Even-genus Euler vanishing.}\;
- If $\mathbb{H}_X(\cA) \simeq \cA$ and $g$ is even, then
+ Under the same balanced protected self-duality, if $g$ is even, then
  $\chi(V_g(\cA)) = 0$.
 \item \emph{Determinant parity.}\;
  \begin{equation}\label{eq:holo-comp-det-parity}
- \Det\!\bigl(\mathbf{C}_g(\cA)\bigr)
+ \Det\!\bigl(\mathbf{C}_{g,0}(\cA)\bigr)
  \cong
  \begin{cases}
  \C, & g \text{ odd}, \\[4pt]
@@ -6330,13 +6849,14 @@ $P_g(\cA; u) := \sum_i \dim H^i(V_g(\cA))\, u^i$. Then:
 \end{corollary}
 
 \begin{proof}
-The transposition
-$\mathbf{Q}_g(\cA^!) \simeq V_g(\cA)^\vee[-d_g]$ gives (i) on
+The transposition of the genuine partner, transported by
+$\chi^-_{\cA;g,0}$, gives
+$\mathbf Q_{g,0}(\cA^!)\simeq V_g(\cA)^\vee[-d_{g,0}]$ and hence (i) on
 cohomology. Protected self-duality forces palindromicity.
-Evaluating at $u = -1$ and using the parity of $d_g = 3g - 3$
+Evaluating at $u = -1$ and using the parity of $d_{g,0}=3g-3$
 (odd when $g$ is even) gives (iii). For (iv), duality gives
-$\Det(V^\vee) \cong \Det(V)^{-1}$, and a shift by $[-d_g]$
-inverts the determinant line iff $d_g$ is odd. The direct-sum
+$\Det(V^\vee) \cong \Det(V)^{-1}$, and a shift by $[-d_{g,0}]$
+inverts the determinant line iff $d_{g,0}$ is odd. The direct-sum
 formula then yields~\eqref{eq:holo-comp-det-parity}.
 \end{proof}
 
@@ -6346,9 +6866,9 @@ The Virasoro algebra is chiral Koszul self-dual at $c = 13$
 ($\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$). At the self-dual
 point the Poincar\'e polynomial of $V_g(\mathrm{Vir}_{13})$ is
 forced to be palindromic when the protected self-duality hypothesis
-holds. For the Heisenberg algebra, which is not protected self-dual,
-the reciprocity law instead relates
-$V_g(\mathcal{H})$ to $V_g(\mathcal{H}^!)$ via the shift by $d_g$;
+holds. For the Heisenberg pair, the two-object reciprocity law relates
+$V_g(\mathcal{H})$ to the genuine partner complex
+$\mathbf Q_{g,0}(\mathcal H^!)$ via the shift by $d_{g,0}$;
 the two eigenspaces can carry different spectral data.
 \end{remark}
 
@@ -6732,10 +7252,9 @@ $\tfrac{1}{2m}\operatorname{Tr}((C_1 B_2)^m)$ therefore probes the
 $2m$-th jet of the product of complementarity potentials at a
 sewing node. In particular, $\mathfrak{N}_g$ is a quartic
 invariant: it sits at the same degree as the quartic contact
-shadow $\mathfrak{Q}_{\cA}$ and, for uniform-weight algebras
-(or any multi-generator family at genus~$1$) where
-\(\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g\)
-\textup{(}UNIFORM-WEIGHT\textup{)} is proved, is controlled by the same data.
+shadow $\mathfrak{Q}_{\cA}$ and, on the $H_D^K$ surface where
+\(\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g\), is controlled by the same data.
 This is the mechanism by which the Gaussian sewing calculus
 recovers algebra-dependent modular information beyond $\kappa$.
 \end{remark}
@@ -6797,6 +7316,10 @@ Remark~\texttt{rem:ainfty-coproduct-shadow}.
 \index{shadow connection!flatness}
 \index{Virasoro!critical dimension}
 \index{W-algebra@$\mathcal{W}$-algebra!critical dimension}
+\textup{[Type signature: Open quadrant; curved scalar and strict-flat
+centre-local-system presentations; Beilinson levels~2, 3, and~5;
+Maurer--Cartan flatness plus the named \(\mathrm C_0/\mathrm C_1\)
+hypothesis package for clause~\textup{(iii)}.]}
 The modular shadow connection
 $\nabla^{\mathrm{hol}}_{g,n} =
 d - \operatorname{Sh}_{g,n}(\Theta_\cA)$
@@ -6831,15 +7354,16 @@ At $c = c_{\mathrm{crit}}$:
  $\operatorname{obs}^{\mathrm{scal}}_g(\cA_{c_{\mathrm{crit}}}^!)
  =0$ for every $g\geq1$;
 \item the complementarity splitting
- $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)
+ $\mathbf{Q}_{g,n_g}(\cA)\oplus
+ (\chi^-_{\cA;g,n_g})^{-1}\mathbf{Q}_{g,n_g}(\cA^!)
  \simeq H^*(\overline{\cM}_g, \cZ_\cA)$
- remains the Verdier eigenspace splitting of the strict flat ambient
- complex; it requires the C0/C1 hypotheses and is not a consequence
- of scalar vanishing alone.
+ is the Verdier eigenspace splitting of the strict-flat ambient
+ complex under the C0/C1 hypotheses.  The scalar vanishing supplies
+ its level-$5$ coefficient.
 \end{enumerate}
-No termination of the higher shadow tower follows from
-$\kappa(\cA_c^!)=0$ unless the higher shadow tensors
-$\operatorname{Sh}_r(\cA_c^!)$ vanish by an independent computation.
+Termination of the higher shadow tower is the further condition
+$\operatorname{Sh}_r(\cA_c^!)=0$ for all sufficiently large~$r$,
+verified by an independent higher-operation computation.
 \end{theorem}
 
 \begin{proof}
@@ -6864,8 +7388,8 @@ Proposition~\ref{prop:hodge-curvature-scalar-projection} to the dual:
 \]
 The final clause is Theorem~\ref{thm:quantum-complementarity-main}:
 the direct sum is the idempotent splitting of the represented
-Verdier involution on $\mathbf C_g(\cA)$, not a scalar curvature
-calculation.
+Verdier involution on $\mathbf C_g(\cA)$; the scalar curvature
+calculation supplies its level-$5$ projection.
 \end{proof}
 
 \begin{remark}[Complementarity at higher degrees]
@@ -6945,9 +7469,9 @@ realized by $26$ free bosons) contributes
 $\kappa_{\mathrm{matter}} = 13$, while the $bc$ ghost system
 (central charge $c_{\mathrm{ghost}} = -26$) contributes
 $\kappa_{\mathrm{ghost}} = -13$, and their sum vanishes. In
-bar-cobar language, the ghost sector \emph{is} the Koszul
-dual~$\cA^!$: the BRST differential is the bar differential, ghost
-number is the cohomological degree. Two distinct identities are at
+bar--cobar language, an OCA/BRST comparison may identify the ghost
+complex with a realization of the Koszul partner~$\cA^!$ and match
+ghost number with cohomological degree. Two distinct identities are at
 play:
 the complementarity sum
 $\kappa(\cA) + \kappa(\cA^!) = 13$ holds for \emph{all}~$c$
@@ -6964,6 +7488,10 @@ sector; \ClaimStatusConditional]
 \label{prop:non-critical-liouville}
 \index{Liouville sector!complementarity}
 \index{Virasoro algebra!non-critical curvature}
+\textup{[Type signature: Open-to-physical comparison; curved scalar
+and strict-flat centre/BRST presentations; Beilinson levels~2--5;
+Virasoro \(\mathrm C_0/\mathrm C_1\) package plus the Polyakov
+BRST comparison datum.]}
 For $c \neq 0$, the Virasoro bar complex is curved:
 $d_{\barB}^2 = \kappa(\mathrm{Vir}_c) \cdot \omega_g$ with
 $\kappa(\mathrm{Vir}_c) = c/2$. In Polyakov's non-critical
@@ -6977,15 +7505,18 @@ Liouville curvature is
 \;=\; 13,
 \]
 which is the residual anomaly absorbed by the ghost sector
-$\cA^! = \mathrm{Vir}_{26-c}$. The ambient complementarity
-theorem \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
-encodes Polyakov's total anomaly cancellation
-$c_{\mathrm{matter}} + c_{\mathrm{Liouville}} + c_{\mathrm{ghost}}
-= 0$: the matter sector contributes
-$Q_g(\mathrm{Vir}_c)$, the Liouville sector contributes
-$Q_g(\mathrm{Vir}_{26-c})$, and complementarity forces
-$Q_g(\mathrm{Vir}_c) + Q_g(\mathrm{Vir}_{26-c})
-= H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathrm{Vir}_c))$.
+under the Polyakov BRST comparison datum.  Algebraically,
+$\mathrm{Vir}_{26-c}$ is the genuine Koszul partner and
+Theorem~\textup{\ref{thm:quantum-complementarity-main}} gives
+\[
+Q_{g,n_g}(\mathrm{Vir}_c)\oplus
+(H^*\chi^-_{\mathrm{Vir}_c;g,n_g})^{-1}
+Q_{g,n_g}(\mathrm{Vir}_{26-c})
+=H^*(\overline{\mathcal M}_g,\mathcal Z(\mathrm{Vir}_c)).
+\]
+The BRST comparison promotes this algebraic decomposition to the
+matter--Liouville--ghost interpretation and the physical equation
+$c_{\mathrm{matter}}+c_{\mathrm{Liouville}}+c_{\mathrm{ghost}}=0$.
 \end{proposition}
 
 \begin{proof}
@@ -7118,13 +7649,15 @@ orthogonal sums.
 
 \begin{proposition}[B-family scalar conductor comparison; \ClaimStatusConditional]
 \label{rem:hgc-B-family}
-Assume the Vol.~III Mukai--Heisenberg witness is imported with
-Mukai lattice
+Let the Mukai lattice be
 \[
   H^*(K3,\mathbb Z) \simeq II_{4,20},
   \qquad c_+\!\left(II_{4,20}\right)=4,
 \]
-and with the scalar normalization
+so the exact lattice arithmetic is $2c_+=8$.  Under the comparison
+package
+$H_{\mathsf B}=(H_{\mathrm{chart}},H_{\mathrm{KD}},H_{\mathrm{scalar}},
+H_{\mathrm{mod}},H_{\mathrm{quant}})$, the proposed chiral normalization is
 \[
   K^{\kappa_{\mathrm{ch}}}\!\left(\mathcal H_{\mathrm{Muk}}(K3)\right)
   =2\,c_+\!\left(II_{4,20}\right).
@@ -7133,38 +7666,35 @@ Then
 \[
   K^{\kappa_{\mathrm{ch}}}\!\left(\mathcal H_{\mathrm{Muk}}(K3)\right)=8,
   \qquad
-  \{0,13,250/3,98/3\}\cup\{8\}
-  =\{0,8,13,250/3,98/3\}.
+  K^\kappa_{\mathrm{computed}}=\{0,13,250/3\}.
 \]
-If, in addition, the Vol.~III Humbert--Lusztig normalizations
+The open ledger adjoins the BP conditional candidate~$25/3$ and the
+Mukai-to-chiral candidate~$8$ with their distinct packages.  If the
+additional Vol.~III normalization hypotheses
 \[
   \hbar^2 K^{\kappa_{\mathrm{ch}}}=-1,
   \qquad
   \ell=K^{\kappa_{\mathrm{ch}}}
 \]
-are imposed, then $\hbar^2=-1/8$ and $\ell=8$. These are scalar
-normalization comparisons. They do not identify the ambient center
-complex $\mathbf C_g(\cA)$, the derived chiral center
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, a K3 sigma-model, a
-Mukai--Heisenberg algebra, a Borcherds--Kac--Moody algebra, a Lusztig
-root-of-unity category, or a Humbert monodromy category.
+are supplied, substitution gives $\hbar^2=-1/8$ and $\ell=8$.
+These are scalar normalization comparisons.  The ambient center
+complex, derived chiral center, K3 sigma-model, Mukai--Heisenberg
+algebra, Borcherds--Kac--Moody algebra, root-of-unity category, and
+Humbert monodromy category each require their own construction maps.
 \end{proposition}
 
 \begin{proof}
 Mukai's K3 lattice convention gives
 $H^*(K3,\mathbb Z)\simeq II_{4,20}$, so the positive rank is
-$c_+(II_{4,20})=4$ \cite{Mukai1987}. Under the displayed scalar
-normalization this gives $K^{\kappa_{\mathrm{ch}}}=2\cdot4=8$, and
-adjoining this scalar to the four standard archetype constants gives
-the stated five-element bucket. The equations
+$c_+(II_{4,20})=4$ \cite{Mukai1987}.  This proves the lattice value
+$2c_+=8$.  The package $H_{\mathsf B}$ promotes that arithmetic to the
+proposed chiral conductor.  The equations
 $\hbar^2K^{\kappa_{\mathrm{ch}}}=-1$ and
 $\ell=K^{\kappa_{\mathrm{ch}}}$ then give $\hbar^2=-1/8$ and
-$\ell=8$ by substitution. No derived-centre or Hochschild statement
-follows from these equalities: Theorem~\ref{thm:quantum-complementarity-main}
+$\ell=8$ by substitution.  Theorem~\ref{thm:quantum-complementarity-main}
 acts on a center local system over $\overline{\mathcal M}_g$ together
-with a represented Verdier involution, and neither datum is constructed
-in this proposition for the K3, Humbert, Lusztig, or Borcherds--Kac--Moody
-objects.
+with a represented Verdier involution; those data belong to the
+construction packages named in the statement.
 \end{proof}
 
 \begin{proposition}[Separating-node automorphic scalar; \ClaimStatusConditional]

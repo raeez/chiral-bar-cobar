@@ -66,7 +66,7 @@ The comparison theorem:
 
 Form factors:
   In the 4d CS framework, form factors are computed as correlation
-  functions of order defects with bulk operators.  In our framework,
+  functions of order defects with closed-sector operators.  In our framework,
   they arise as higher-arity collision residues of Theta_A.  The
   genus-0 arity-k form factor is:
       F_k(z_1, ..., z_k) = Res^{coll}_{0,k}(Theta_A)
@@ -260,7 +260,7 @@ def bar_quantum_R_matrix_yang(u: complex, N: int) -> np.ndarray:
 
     This is the additive Yang R-matrix for sl_N in the fundamental.
     It arises from the bar-cobar construction as follows:
-    the collision residue gives r(z) = Omega/z = (P - I/N)/z.
+    the unit-normalized collision residue gives r(z) = Omega/z = (P - I/N)/z.
     The quantum R-matrix is (up to normalization):
         R(u) = u I + P
     which satisfies the Yang-Baxter equation.
@@ -808,7 +808,7 @@ def koszul_duality_comparison() -> Dict[str, str]:
         "costello_R_matrix": "from gauge-theory propagator exchange",
         "our_bar": "B(A) factorization coalgebra",
         "our_dual": "A^! from Verdier/linear duality of bar",
-        "our_R_matrix": "Res^{coll}_{0,2}(Theta_A) = Omega/z",
+        "our_R_matrix": "unit-normalized Res^{coll}_{0,2}(Theta_A) = Omega/z",
         "identification_level": "genus-0, arity-2 (tree-level)",
         "higher_genus": "our framework has modular Yangian; 4d CS has no direct higher-genus analogue",
         "higher_arity": "CYBE (arity 3) agrees; quartic and higher from graph sums",

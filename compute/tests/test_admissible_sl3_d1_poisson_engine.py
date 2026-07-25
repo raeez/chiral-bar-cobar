@@ -1,7 +1,10 @@
 r"""Tests for admissible sl_3 d_1 Poisson differential at q >= 3.
 
-THEOREM-LEVEL TESTS: For L_k(sl_3) at admissible level k = p/q - 3 with
-denominator q >= 3, the bar cohomology H^2(B(L_k)) is NON-ZERO.
+MODEL-LEVEL TESTS: for L_k(sl_3) at admissible level k = p/q - 3 with
+denominator q >= 3, the finite Li-bar/Poisson model detects
+off-diagonal E_2 survivors.  Promoting this to a theorem about
+H^2(B(L_k)) requires the quotient-bar comparison and convergence
+package.
 
 KEY FINDING: E_inf^{2,d} = rank(g) = 2 for d = q = 3.  The surviving
 classes correspond to the Cartan subalgebra h = span(H1, H2) at Tor_2.
@@ -616,9 +619,9 @@ class TestEulerCharacteristic(unittest.TestCase):
 class TestStructuralResults(unittest.TestCase):
     """Key structural conclusions."""
 
-    def test_non_koszul_verdict_d3(self):
-        """L_k(sl_3) at q=3 is NOT chirally Koszul."""
-        # E_inf^{2,3} = 2 > 0, so H^2(B(L_k)) is nonzero.
+    def test_non_koszul_model_verdict_d3(self):
+        """The q=3 finite model has a non-Koszul obstruction witness."""
+        # The finite model has E_2^{2,3} = 2 > 0.
         e_inf = 8 - 6  # E_1 dim - d_1_in rank
         self.assertEqual(e_inf, 2)
         self.assertGreater(e_inf, 0)

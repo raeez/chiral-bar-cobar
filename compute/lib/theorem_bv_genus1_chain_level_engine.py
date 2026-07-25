@@ -276,7 +276,7 @@ def validate_bv_bar_hypotheses(
             )
         elif hypotheses.target == ChiralObject.DERIVED_CENTER:
             failures.append(
-                'Z_ch^der(A) is the chiral Hochschild bulk object, not B(A)'
+                'Z_ch^der(A) is the chiral Hochschild closed-sector object, not B(A)'
             )
 
     if hypotheses.ambient == ComparisonAmbient.STRICT_CHAIN:
@@ -369,7 +369,7 @@ def object_boundary_witness(
             'available_on_supplied_surface': finite_type_or_completed_koszul,
         },
         ChiralObject.DERIVED_CENTER.value: {
-            'role': 'chiral Hochschild cochain bulk object',
+            'role': 'chiral Hochschild cochain closed-sector object',
             'is_chain_coalgebra': False,
             'is_compute_target': False,
             'equals_bar_coalgebra': False,

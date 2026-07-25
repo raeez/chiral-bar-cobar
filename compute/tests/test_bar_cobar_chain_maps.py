@@ -1,13 +1,13 @@
-"""Comprehensive test suite for bar_cobar_chain_maps.py.
+"""Tests for exact finite windows of the associative bar--cobar counit.
 
 Tests cover:
  1. DGA construction (AugDGA) for all standard families
  2. Bar construction: d^2 = 0 at each bar degree
- 3. Cobar construction: d^2 = 0
- 4. Bar-cobar composition: bigraded structure and total d^2 = 0
+ 3. Mixed-word cobar differential: d^2 = 0
+ 4. Bigraded basis and exact finite-window homology
  5. Twisting morphism tau: MC equation d(tau) + tau*tau = 0
  6. Counit chain map psi: chain map property d*psi = psi*d
- 7. Quasi-isomorphism verification: H*(psi) induces isomorphism
+ 7. Typed containment of the full counit theorem
  8. A-infinity extraction: transferred operations satisfy Stasheff relations
  9. Koszul sign conventions: explicit sign checks
 10. Cross-checks with existing modules (bar_complex.py, verdier_bar_cobar_pairing.py)
@@ -26,8 +26,11 @@ from sympy import Matrix, Rational, zeros, eye, simplify
 from compute.lib.bar_cobar_chain_maps import (
     AugDGA,
     BarConstruction,
-    CobarConstruction,
+    MultiplicationDualComplex,
     BarCobarComposition,
+    FiniteOmegaBarComplex,
+    augmented_dga_axioms,
+    finite_bar_cobar_report,
     truncated_polynomial_dga,
     dual_numbers_dga,
     matrix_2x2_upper_dga,
@@ -46,13 +49,20 @@ from compute.lib.bar_cobar_chain_maps import (
     verify_bar_cobar_quasi_iso,
     extract_ainfty_operations,
     verify_ainfty_relations,
-    bar_cobar_functoriality,
+    multiplication_dual_functoriality,
     bar_cobar_comparison_table,
     heisenberg_bar_cobar,
     free_fermion_bar_cobar,
     sl2_affine_bar_cobar_genus0,
     _kronecker,
 )
+
+
+def _assert_finite_scope(result):
+    assert result["calculation_status"] == "computed finite truncation"
+    assert result["convergence_status"] == "unresolved beyond finite truncation"
+    assert result["global_quasi_isomorphism"] == "unresolved"
+    assert result["is_quasi_iso"] is None
 
 
 # ============================================================================
@@ -124,11 +134,12 @@ class TestDGAConstruction:
         assert ut.is_associative()
 
     def test_upper_triangular_products(self):
-        """UT_2: e_11*e_12 = e_12, e_12*e_22 = e_12, e_12*e_12 = 0."""
+        """UT_2 in the basis (1,p,u) has p^2=p and pu=u."""
         ut = matrix_2x2_upper_dga()
-        assert ut.mult[(0, 1)] == {1: Rational(1)}  # e_11*e_12 = e_12
-        assert ut.mult[(1, 2)] == {1: Rational(1)}  # e_12*e_22 = e_12
-        assert (1, 1) not in ut.mult  # e_12*e_12 = 0
+        assert ut.mult[(0, 2)] == {2: Rational(1)}
+        assert ut.mult[(1, 1)] == {1: Rational(1)}
+        assert ut.mult[(1, 2)] == {2: Rational(1)}
+        assert (2, 2) not in ut.mult
 
     def test_lie_sl2_not_associative(self):
         """sl_2 with Lie bracket is NOT associative."""
@@ -144,11 +155,12 @@ class TestDGAConstruction:
         assert sl2.mult[(H, F)] == {F: Rational(-2)}
 
     def test_polynomial_with_diff_d_squared_zero(self):
-        """k[x]/(x^3) with d(x) = x^2: d^2 = 0 since d(x^2) = 0."""
+        """The square-zero pair d(x)=y is a cohomological DGA."""
         pwd = polynomial_with_diff()
         assert pwd.d_squared_zero()
         assert pwd.is_associative()
         assert pwd.degrees == [0, 0, 1]
+        assert all(augmented_dga_axioms(pwd).values())
 
     def test_free_assoc_is_truncated_poly(self):
         """free_assoc_on_one_generator(n) = truncated_polynomial_dga(n+1)."""
@@ -224,15 +236,15 @@ class TestBarConstruction:
 
         Bar basis B^1 = {(1,), (2,)} = {x, x^2}.
         Bar basis B^2 = {(1,1), (1,2), (2,1), (2,2)}.
-        d_B^2(s^{-1}x|s^{-1}x) = s^{-1}(x*x) = s^{-1}(x^2), mapping (1,1) -> (2,).
+        d_B^2(s^{-1}x|s^{-1}x) = -s^{-1}(x*x) = -s^{-1}(x^2).
         d_B^2(others involving x^2) = 0 since x*x^2 = x^3 = 0.
         """
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 3)
         d2 = bar.differential(2)
         assert d2.shape == (2, 4)
-        # Column 0 = (1,1): maps to (2,) with coefficient 1
-        assert d2[1, 0] == Rational(1)
+        # Column 0 = (1,1): maps to (2,) with the suspension sign -1
+        assert d2[1, 0] == Rational(-1)
         # All other columns are zero
         assert d2[0, 0] == 0
         for j in range(1, 4):
@@ -255,58 +267,47 @@ class TestBarConstruction:
 
 
 # ============================================================================
-# Section 3: Cobar construction d^2 = 0
+# Section 3: Multiplication-transpose complex
 # ============================================================================
 
-class TestCobarConstruction:
-    """Tests for CobarConstruction and cobar differential d^2 = 0."""
+class TestMultiplicationDualComplex:
+    """Tests for the tensor complex dual to multiplication on the ideal."""
 
-    def test_cobar_dual_numbers_d_squared(self):
-        """Cobar of dual numbers: d^2 = 0 (trivially, product on aug ideal = 0)."""
+    def test_dual_numbers_d_squared(self):
+        """The multiplication transpose squares to zero for dual numbers."""
         bar = BarConstruction(dual_numbers_dga(), 5)
-        cobar = CobarConstruction(bar, 5)
+        cobar = MultiplicationDualComplex(bar, 5)
         results = cobar.verify_d_squared()
         for n, ok in results.items():
             assert ok, f"Cobar d^2 != 0 at degree {n} for dual numbers"
 
-    def test_cobar_trunc_poly_3_d_squared(self):
-        """Cobar of k[x]/(x^3): d^2 = 0 at degree 1 but fails at degree 2.
-
-        k[x]/(x^3) is NOT quadratic (x^2 = x*x is a degree-2 relation).
-        The cobar coproduct derived from the product does not give d^2 = 0
-        at all degrees because the algebra is not Koszul. This is expected:
-        cobar d^2 = 0 requires the coalgebra to be strictly coassociative
-        from the bar construction's deconcatenation, but the reduced coproduct
-        inherits non-quadratic structure.
-        """
+    def test_trunc_poly_3_d_squared(self):
+        """Associativity gives delta^2=0 for k[x]/(x^3)."""
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 5)
-        cobar = CobarConstruction(bar, 5)
+        cobar = MultiplicationDualComplex(bar, 5)
         results = cobar.verify_d_squared()
-        # Degree 1: d^2 = 0 (d^1 composed with d^2 has correct cancellation)
-        assert results[1] is True
-        # Degree 2: d^2 != 0 for this non-quadratic algebra
-        assert results[2] is False
+        assert all(results.values())
 
-    def test_cobar_exterior_d_squared(self):
-        """Cobar of Lambda(1): d^2 = 0."""
+    def test_exterior_d_squared(self):
+        """The exterior-algebra multiplication transpose squares to zero."""
         bar = BarConstruction(exterior_on_one_generator(), 5)
-        cobar = CobarConstruction(bar, 5)
+        cobar = MultiplicationDualComplex(bar, 5)
         results = cobar.verify_d_squared()
         for n, ok in results.items():
             assert ok, f"Cobar d^2 != 0 at degree {n} for Lambda(1)"
 
-    def test_cobar_dims(self):
-        """Cobar Omega^n has dimension = (aug_dim)^n."""
+    def test_tensor_dimensions(self):
+        """Tensor length n has dimension (dim A_bar)^n."""
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 4)
-        cobar = CobarConstruction(bar, 4)
+        cobar = MultiplicationDualComplex(bar, 4)
         assert cobar.dim_at(1) == 2   # aug_dim = 2
         assert cobar.dim_at(2) == 4
         assert cobar.dim_at(3) == 8
 
-    def test_cobar_trunc_poly_3_explicit_diff(self):
-        """Cobar of k[x]/(x^3): d_Omega^1 maps x^2 to (x, x).
+    def test_trunc_poly_3_explicit_transpose(self):
+        """For k[x]/(x^3), delta(u_{x^2}) contains u_x tensor u_x.
 
         Coproduct: Delta(x^2) = x tensor x (from m_2(x,x) = x^2).
         So d_Omega(x^2) = x tensor x = basis element (1, 1) in Omega^2.
@@ -314,7 +315,7 @@ class TestCobarConstruction:
         """
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 4)
-        cobar = CobarConstruction(bar, 4)
+        cobar = MultiplicationDualComplex(bar, 4)
         d1 = cobar.differential(1)
         assert d1.shape == (4, 2)
         # Column 1 (x^2, index 2 mapped to position 1 in aug basis): maps to (1,1) = row 0
@@ -323,15 +324,15 @@ class TestCobarConstruction:
         for i in range(4):
             assert d1[i, 0] == 0
 
-    def test_cobar_dual_numbers_all_diffs_zero(self):
-        """For dual numbers (trivial product on aug ideal), all cobar diffs are zero."""
+    def test_dual_numbers_all_differentials_zero(self):
+        """The square-zero ideal gives a zero multiplication transpose."""
         bar = BarConstruction(dual_numbers_dga(), 4)
-        cobar = CobarConstruction(bar, 4)
+        cobar = MultiplicationDualComplex(bar, 4)
         for n in range(1, 4):
             d = cobar.differential(n)
             if d.rows > 0 and d.cols > 0:
                 assert d.equals(zeros(d.rows, d.cols)), \
-                    f"Cobar diff at degree {n} should be zero for dual numbers"
+                    f"Multiplication transpose at degree {n} should vanish"
 
 
 # ============================================================================
@@ -342,32 +343,27 @@ class TestBarCobarComposition:
     """Tests for BarCobarComposition bigraded structure."""
 
     def test_bigraded_basis_bar_deg_1(self):
-        """Bigraded basis at (q, 1) = cobar basis Omega^q."""
+        """Bidegree (1,1) contains the suspended length-one bar words."""
         dga = truncated_polynomial_dga(3)
         bcc = BarCobarComposition(dga, 3)
-        # At (1, 1): same as Omega^1
         basis_11 = bcc.bigraded_basis(1, 1)
-        assert basis_11 == [(1,), (2,)]
+        assert basis_11 == [((1,),), ((2,),)]
 
     def test_bigraded_basis_bar_deg_2(self):
-        """Bigraded basis at (q, 2) uses bar-degree-2 letters."""
+        """Bidegree (1,2) contains one length-two bar word."""
         dga = dual_numbers_dga()
         bcc = BarCobarComposition(dga, 3)
         basis_12 = bcc.bigraded_basis(1, 2)
-        # Bar-degree-2 letters for dual numbers: B^2 = {(1,1)}
-        # 1 cobar letter of type B^2: just [((1,1),)]
-        assert len(basis_12) == 1
+        assert basis_12 == [((1, 1),)]
 
     def test_total_degree_basis(self):
-        """Total degree basis collects all cobar degrees."""
+        """The total degree records bar and cobar suspensions together."""
         dga = dual_numbers_dga()
         bcc = BarCobarComposition(dga, 3)
-        tdb = bcc.total_degree_basis(2)
-        # Cobar degrees 0, 1, 2 all with bar_letter_deg = 1
-        cobar_degs = [t[0] for t in tdb]
-        assert 0 in cobar_degs
-        assert 1 in cobar_degs
-        assert 2 in cobar_degs
+        tdb = bcc.total_degree_basis(0)
+        assert (0, 0, ()) in tdb
+        assert any(q == 1 and p == 1 for q, p, _ in tdb)
+        assert any(q == 2 and p == 2 for q, p, _ in tdb)
 
     def test_bar_cobar_composition_bar_property(self):
         """BarCobarComposition bar property returns the bar construction."""
@@ -375,21 +371,121 @@ class TestBarCobarComposition:
         bcc = BarCobarComposition(dga, 3)
         assert bcc.bar.dga is dga
 
-    def test_bar_cobar_composition_cobar_property(self):
-        """BarCobarComposition cobar property returns the cobar construction."""
+    def test_bar_cobar_composition_multiplication_dual_property(self):
+        """The comparison object retains the quadratic-row diagnostic."""
         dga = dual_numbers_dga()
         bcc = BarCobarComposition(dga, 3)
-        assert bcc.cobar.bar is bcc.bar
+        assert bcc.multiplication_dual.bar is bcc.bar
+
+    def test_bar_cobar_composition_omega_property(self):
+        """The omega property carries all mixed bar-word lengths."""
+        bcc = BarCobarComposition(dual_numbers_dga(), 3)
+        assert bcc.omega.includes_all_bar_lengths
+        assert ((1, 1),) in bcc.omega.basis()
+        assert ((1,), (1, 1)) in bcc.omega.basis()
 
     def test_bigraded_basis_cobar_deg_0(self):
-        """Bigraded basis at cobar degree 0 is [()]."""
+        """The cobar unit has bidegree (0,0)."""
         dga = dual_numbers_dga()
         bcc = BarCobarComposition(dga, 3)
-        assert bcc.bigraded_basis(0, 1) == [()]
+        assert bcc.bigraded_basis(0, 0) == [()]
 
 
 # ============================================================================
-# Section 5: Twisting morphism tau and MC equation
+# Section 5: Full finite Omega(B(A)) engine
+# ============================================================================
+
+class TestFiniteOmegaBarComplex:
+    """First-principles checks for the mixed bar/cobar differential."""
+
+    def test_dual_numbers_basis_contains_every_bar_length(self):
+        """For one augmentation generator, ordered compositions give 8 vectors."""
+        complex_ = FiniteOmegaBarComplex(dual_numbers_dga(), 3, 3)
+        assert len(complex_.basis()) == 8
+        assert complex_.bidegree_dimensions() == {
+            (0, 0): 1,
+            (1, 1): 1,
+            (1, 2): 1,
+            (1, 3): 1,
+            (2, 2): 1,
+            (2, 3): 2,
+            (3, 3): 1,
+        }
+        assert complex_.allowed_bar_letter_lengths == (1, 2, 3)
+
+    def test_bar_and_cobar_parts_are_both_present(self):
+        """For k[x]/x^3, one source has a multiplication term and a split term."""
+        complex_ = FiniteOmegaBarComplex(truncated_polynomial_dga(3), 2, 2)
+        assert complex_.differential_terms(((1, 1),)) == {
+            ((2,),): Rational(1),
+            ((1,), (1,)): Rational(-1),
+        }
+
+    def test_internal_part_is_present(self):
+        """The suspended bar differential carries d(x)=y to d(s[s^-1x])=s[s^-1y]."""
+        complex_ = FiniteOmegaBarComplex(polynomial_with_diff(), 2, 2)
+        assert complex_.differential_terms(((1,),))[((2,),)] == Rational(1)
+
+    def test_full_differential_squares_to_zero(self):
+        """Internal, multiplication, and deconcatenation terms cancel exactly."""
+        for dga in (
+            dual_numbers_dga(),
+            exterior_on_one_generator(),
+            truncated_polynomial_dga(3),
+            polynomial_with_diff(),
+        ):
+            complex_ = FiniteOmegaBarComplex(dga, 3, 3)
+            assert all(complex_.verify_d_squared().values())
+
+    def test_counit_is_multiplicative(self):
+        """The word s[x]s[x] maps to x^2 in k[x]/x^3."""
+        complex_ = FiniteOmegaBarComplex(truncated_polynomial_dga(3), 2, 2)
+        degree_zero_basis = complex_.basis_in_degree(0)
+        column = degree_zero_basis.index(((1,), (1,)))
+        target = complex_.algebra_basis_in_degree(0)
+        row = target.index(2)
+        assert complex_.counit_matrix(0)[row, column] == Rational(1)
+        assert complex_.counit_chain_map()["is_chain_map"]
+
+    def test_dual_numbers_homology_by_direct_dimension_count(self):
+        """The composition complexes in bar lengths 2 and 3 are acyclic."""
+        complex_ = FiniteOmegaBarComplex(dual_numbers_dga(), 3, 3)
+        assert complex_.differential_matrix(-2).rank() == 1
+        assert complex_.differential_matrix(-1).rank() == 2
+        report = finite_bar_cobar_report(dual_numbers_dga(), 3, 3)
+        assert report["finite_window_homology"] == {-2: 0, -1: 0, 0: 2}
+        assert report["A_homology"] == {0: 2}
+        assert report["mapping_cone_homology"] == {-3: 0, -2: 0, -1: 0, 0: 0}
+        assert report["finite_window_counit_is_quasi_isomorphism"]
+
+    def test_exterior_algebra_grading(self):
+        """For |e|=1, the two surviving classes lie in degrees 0 and 1."""
+        report = finite_bar_cobar_report(exterior_on_one_generator(), 3, 3)
+        assert report["finite_window_homology"] == {0: 1, 1: 1, 2: 0, 3: 0}
+        assert report["A_homology"] == {0: 1, 1: 1}
+        assert report["counit"]["is_chain_map"]
+
+    def test_higher_bar_length_mutation_changes_homology(self):
+        """Keeping only length-one bar generators leaves two extra dual-number classes."""
+        full = FiniteOmegaBarComplex(dual_numbers_dga(), 3, 3)
+        mutated = FiniteOmegaBarComplex(
+            dual_numbers_dga(),
+            3,
+            3,
+            allowed_bar_letter_lengths=(1,),
+        )
+        assert full.homology_dimensions() == {-2: 0, -1: 0, 0: 2}
+        assert mutated.homology_dimensions() == {0: 4}
+        assert mutated.mapping_cone_homology_dimensions() == {-1: 2, 0: 0}
+
+    def test_finite_scope_is_explicit(self):
+        """The report distinguishes the computed window from its filtered limit."""
+        report = verify_bar_cobar_quasi_iso(dual_numbers_dga(), 3)
+        _assert_finite_scope(report)
+
+
+# ============================================================================
+# Section 6: Twisting morphism tau and MC equation
 # ============================================================================
 
 class TestTwistingMorphism:
@@ -423,23 +519,17 @@ class TestTwistingMorphism:
         mc = verify_twisting_mc(dga, 3)
         assert mc["mc_satisfied"]
 
-    def test_mc_trunc_poly_3_fails_at_degree_2(self):
-        """MC equation for k[x]/(x^3): fails at bar degree 2.
+    def test_mc_trunc_poly_3(self):
+        """The universal twisting morphism satisfies MC for k[x]/(x^3).
 
         At B^2: tau(d_B(s^{-1}x|s^{-1}x)) + tau(s^{-1}x)*tau(s^{-1}x).
-        d_B(s^{-1}x|s^{-1}x) = s^{-1}(x*x) = s^{-1}(x^2) at position (2,) in B^1.
-        tau(s^{-1}(x^2)) = x^2. tau(s^{-1}x)*tau(s^{-1}x) = x*x = x^2.
-        Total = x^2 + x^2 = 2*x^2 != 0.
-
-        This is because the bar differential sign convention: d_B at p=0
-        gives +s(x*x), not -s(x*x), so the cancellation fails.
-        MC holds for quadratic algebras (dual numbers) but not for
-        algebras with aug-ideal products of the same sign as tau*tau.
+        The bar term is ``-x^2`` and the convolution product is ``+x^2``.
         """
         dga = truncated_polynomial_dga(3)
         mc = verify_twisting_mc(dga, 3)
         assert mc["mc_at_degree"][1] is True
-        assert mc["mc_at_degree"][2] is False
+        assert mc["mc_at_degree"][2] is True
+        assert mc["mc_satisfied"]
 
     def test_mc_exterior(self):
         """MC equation for exterior algebra Lambda(1)."""
@@ -447,16 +537,13 @@ class TestTwistingMorphism:
         mc = verify_twisting_mc(ext, 3)
         assert mc["mc_satisfied"]
 
-    def test_mc_trunc_poly_4_fails_at_degree_2(self):
-        """MC equation for k[x]/(x^4): fails at bar degree 2.
-
-        Same mechanism as k[x]/(x^3): nontrivial product on augmentation
-        ideal means tau*tau is not cancelled by tau(d_B).
-        """
+    def test_mc_trunc_poly_4(self):
+        """The same suspension sign proves MC for k[x]/(x^4)."""
         dga = truncated_polynomial_dga(4)
         mc = verify_twisting_mc(dga, 3)
         assert mc["mc_at_degree"][1] is True
-        assert mc["mc_at_degree"][2] is False
+        assert mc["mc_at_degree"][2] is True
+        assert mc["mc_satisfied"]
 
     def test_mc_free_fermion_fails_at_degree_2(self):
         """Free fermion: MC fails at bar degree 2 because psi*psi = unit.
@@ -476,25 +563,25 @@ class TestTwistingMorphism:
 # ============================================================================
 
 class TestCounitChainMap:
-    """Tests for the counit map psi: Omega(B(A)) -> A."""
+    """Tests for the strict counit on the mixed-word finite window."""
 
-    def test_counit_degree_1_is_inclusion(self):
-        """psi_1: Omega^1 = A_bar -> A is the inclusion."""
+    def test_counit_contains_unit_and_augmentation_ideal(self):
+        """The degree-zero matrix sends the cobar unit, x, and x^2 identically."""
         dga = truncated_polynomial_dga(3)
         psi = counit_map(dga, 3)
-        mat = psi[1]
-        assert mat.shape == (3, 2)
-        # Includes x (index 1) and x^2 (index 2)
-        assert mat[1, 0] == Rational(1)
-        assert mat[2, 1] == Rational(1)
+        complex_ = FiniteOmegaBarComplex(dga, 3, 3)
+        basis = complex_.basis_in_degree(0)
+        mat = psi[0]
+        assert mat[0, basis.index(())] == Rational(1)
+        assert mat[1, basis.index(((1,),))] == Rational(1)
+        assert mat[2, basis.index(((2,),))] == Rational(1)
 
-    def test_counit_higher_degree_zero(self):
-        """psi_n = 0 for n >= 2 (augmentation)."""
-        dga = dual_numbers_dga()
-        psi = counit_map(dga, 4)
-        for n in range(2, 5):
-            mat = psi[n]
-            assert mat.equals(zeros(mat.rows, mat.cols))
+    def test_counit_multiplies_cobar_words(self):
+        """For k[x]/x^3, the two-factor word maps to x^2."""
+        dga = truncated_polynomial_dga(3)
+        complex_ = FiniteOmegaBarComplex(dga, 3, 3)
+        basis = complex_.basis_in_degree(0)
+        assert counit_map(dga, 3)[0][2, basis.index(((1,), (1,)))] == Rational(1)
 
     def test_chain_map_dual_numbers(self):
         """psi is a chain map for dual numbers."""
@@ -528,31 +615,29 @@ class TestCounitChainMap:
 # ============================================================================
 
 class TestQuasiIsomorphism:
-    """Tests for quasi-isomorphism psi: Omega(B(A)) -> A."""
+    """Tests for exact finite-window homology and the stated limit problem."""
 
     def test_qi_dual_numbers(self):
-        """Dual numbers: cobar is a quasi-iso (no product on aug ideal)."""
+        """The dual-number window has the cohomology of its target algebra."""
         result = verify_bar_cobar_quasi_iso(dual_numbers_dga(), 3)
-        assert result["is_quasi_iso"]
+        _assert_finite_scope(result)
         assert result["aug_ideal_dim"] == 1
         assert not result["aug_has_product"]
+        assert result["cobar_cohomology"] == {-2: 0, -1: 0, 0: 2}
+        assert result["finite_window_counit_is_quasi_isomorphism"]
 
     def test_qi_trunc_poly_3(self):
-        """k[x]/(x^3): cobar cohomology H^1 = aug_dim, H^n for n >= 2.
-
-        For Koszul algebras: H^n(Omega) = 0 for n >= 2.
-        k[x]/(x^3) is NOT Koszul (it is not quadratic), so H^2 may be nonzero.
-        """
+        """The k[x]/x^3 window recovers three degree-zero classes."""
         result = verify_bar_cobar_quasi_iso(truncated_polynomial_dga(3), 3)
-        # H^1 of cobar should equal aug_dim
-        assert result["cobar_cohomology"].get(1, 0) == 1
-        # This algebra has nonzero H^2 since x^2 generates nontrivially
-        # The cobar cohomology pattern tells us about Koszulness
+        _assert_finite_scope(result)
+        assert result["cobar_cohomology"] == {-2: 0, -1: 0, 0: 3}
+        assert result["counit"]["is_chain_map"]
 
     def test_qi_exterior(self):
-        """Exterior algebra Lambda(1): quasi-iso check."""
+        """The exterior grading survives in finite-window homology."""
         result = verify_bar_cobar_quasi_iso(exterior_on_one_generator(), 3)
-        assert result["is_quasi_iso"]
+        _assert_finite_scope(result)
+        assert result["cobar_cohomology"] == {0: 1, 1: 1, 2: 0, 3: 0}
 
     def test_qi_bar_d_squared(self):
         """Quasi-iso check includes bar d^2 = 0 verification."""
@@ -562,7 +647,7 @@ class TestQuasiIsomorphism:
             assert ok
 
     def test_qi_cobar_d_squared(self):
-        """Quasi-iso check includes cobar d^2 = 0 verification."""
+        """The report checks the total mixed-word differential."""
         result = verify_bar_cobar_quasi_iso(dual_numbers_dga(), 3)
         cobar_d2 = result["cobar_d_squared"]
         for n, ok in cobar_d2.items():
@@ -743,23 +828,18 @@ class TestKoszulSigns:
 
         For k[x]/(x^3) with all generators in degree 0:
         d_B(s^{-1}x|s^{-1}x) = (-1)^{|s^{-1}x|} * s^{-1}(x*x) = (-1)^1 * s^{-1}(x^2) = -s^{-1}(x^2).
-        But the code computes eps = sum of |s^{-1}a_q| for q < p.
-        At p=0: eps = 0, sign = +1. So d_B(s^{-1}x|s^{-1}x) at p=0 is +s^{-1}(x*x).
-        This is the sign convention from the code: the first contraction
-        (p=0) has sign +1, and the sign alternates from there.
         """
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 3)
         d2 = bar.differential(2)
-        # (1,1) -> (2,) with coefficient +1 (the p=0 contraction)
-        assert d2[1, 0] == Rational(1)
+        assert d2[1, 0] == Rational(-1)
 
     def test_bar_diff_sign_alternation(self):
         """Bar differential of k[x]/(x^3) at degree 3: signs alternate.
 
         d_B^3(s^{-1}x|s^{-1}x|s^{-1}x):
-          p=0: (+1)*s^{-1}(x*x)|s^{-1}x = s^{-1}(x^2)|s^{-1}x -> (2,1) with +1
-          p=1: (-1)*s^{-1}x|s^{-1}(x*x) = s^{-1}x|s^{-1}(x^2) -> (1,2) with -1
+          p=0: -s^{-1}(x*x)|s^{-1}x gives (2,1) with -1
+          p=1: +s^{-1}x|s^{-1}(x*x) gives (1,2) with +1
         """
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 4)
@@ -771,10 +851,8 @@ class TestKoszulSigns:
         col_111 = basis_3.index((1, 1, 1))
         row_21 = basis_2.index((2, 1))
         row_12 = basis_2.index((1, 2))
-        # p=0 contraction of (1,1,1): x*x = x^2, gives (2,1), sign +1
-        assert d3[row_21, col_111] == Rational(1)
-        # p=1 contraction of (1,1,1): x*x = x^2, gives (1,2), sign -1
-        assert d3[row_12, col_111] == Rational(-1)
+        assert d3[row_21, col_111] == Rational(-1)
+        assert d3[row_12, col_111] == Rational(1)
 
 
 # ============================================================================
@@ -943,9 +1021,10 @@ class TestHeisenberg:
         assert result["twisting_mc"]["mc_satisfied"]
 
     def test_heisenberg_quasi_iso(self):
-        """Heisenberg: bar-cobar is a quasi-isomorphism."""
+        """Heisenberg propagates the exact finite-window calculation."""
         result = heisenberg_bar_cobar()
-        assert result["quasi_iso"]["is_quasi_iso"]
+        _assert_finite_scope(result["quasi_iso"])
+        assert result["quasi_iso"]["counit"]["is_chain_map"]
 
     def test_heisenberg_kappa_parameter(self):
         """Heisenberg: kappa parameter is stored correctly."""
@@ -973,7 +1052,7 @@ class TestFreeFermion:
             assert ok
 
     def test_free_fermion_unit_contraction(self):
-        """Free fermion: psi*psi = 1, so unit contraction B^2 -> B^0 is [[1]].
+        """Free fermion: the shifted curvature term B^2 -> B^0 is [[-1]].
 
         The product psi*psi = 1 (unit, index 0) means the bar differential
         sends s^{-1}psi|s^{-1}psi -> 1 in B^0, captured by unit_contraction.
@@ -982,13 +1061,13 @@ class TestFreeFermion:
         uc = result["unit_contraction_B2"]
         # B^2 has dim 1 (one generator in aug ideal), B^0 has dim 1
         assert uc.shape == (1, 1)
-        assert uc[0, 0] == Rational(1)
+        assert uc[0, 0] == Rational(-1)
 
-    def test_free_fermion_cobar_d_squared(self):
-        """Free fermion: cobar d^2 = 0."""
+    def test_free_fermion_curved_cobar_scope(self):
+        """The relation psi^2=1 is routed to the curved cobar construction."""
         result = free_fermion_bar_cobar()
-        for n, ok in result["cobar_d_squared"].items():
-            assert ok
+        assert result["bar_cobar_scope"] == "curved bar--cobar construction required"
+        assert result["curved_cobar_status"] == "curvature differential awaits construction"
 
 
 # ============================================================================
@@ -1031,14 +1110,14 @@ class TestFunctoriality:
         """Identity map on dual numbers: Omega(B(id)) is a chain map."""
         dga = dual_numbers_dga()
         f = eye(dga.dim)
-        result = bar_cobar_functoriality(dga, dga, f, 3)
+        result = multiplication_dual_functoriality(dga, dga, f, 3)
         assert result["all_chain_map"]
 
     def test_identity_map_trunc_poly(self):
         """Identity map on k[x]/(x^3): functoriality holds."""
         dga = truncated_polynomial_dga(3)
         f = eye(dga.dim)
-        result = bar_cobar_functoriality(dga, dga, f, 3)
+        result = multiplication_dual_functoriality(dga, dga, f, 3)
         assert result["all_chain_map"]
 
     def test_inclusion_is_chain_map(self):
@@ -1051,7 +1130,7 @@ class TestFunctoriality:
         f = zeros(3, 2)
         f[0, 0] = Rational(1)  # 1 -> 1
         f[1, 1] = Rational(1)  # eps -> x
-        result = bar_cobar_functoriality(dga1, dga2, f, 3)
+        result = multiplication_dual_functoriality(dga1, dga2, f, 3)
         assert result["all_chain_map"]
 
 
@@ -1133,19 +1212,25 @@ class TestKronecker:
 # ============================================================================
 
 class TestTwistedTensorProduct:
-    """Tests for the twisted tensor product A tensor_tau B(A)."""
+    """Tests for the stated scope of the separate twisted tensor product."""
 
     def test_twisted_d_squared_dual_numbers(self):
-        """Twisted tensor product d^2 = 0 for dual numbers."""
+        """Dual numbers retain the stated pending construction."""
         result = twisted_tensor_product_diff(dual_numbers_dga(), 3)
+        assert result["calculation_status"] == "index range computed"
+        assert result["construction_status"] == "total twisted differential pending"
+        assert result["d_tau_squared_state"] == "pending construction"
         for n, ok in result["d_tau_squared"].items():
-            assert ok
+            assert ok is None
 
     def test_twisted_d_squared_trunc_poly(self):
-        """Twisted tensor product d^2 = 0 for k[x]/(x^3)."""
+        """The k[x]/(x^3) report carries the same stated scope."""
         result = twisted_tensor_product_diff(truncated_polynomial_dga(3), 3)
+        assert result["calculation_status"] == "index range computed"
+        assert result["construction_status"] == "total twisted differential pending"
+        assert result["d_tau_squared_state"] == "pending construction"
         for n, ok in result["d_tau_squared"].items():
-            assert ok
+            assert ok is None
 
 
 # ============================================================================
@@ -1153,23 +1238,21 @@ class TestTwistedTensorProduct:
 # ============================================================================
 
 class TestPolynomialWithDiff:
-    """Tests for the algebra k[x]/(x^3) with d(x) = x^2."""
+    """Tests for the square-zero pair d(x)=y."""
 
     def test_internal_differential_at_bar_1(self):
-        """Internal differential at bar degree 1 maps x -> x^2.
+        """The shifted internal differential maps s^-1x to -s^-1y.
 
-        Basis B^1 = {x, x^2}. The internal differential applies d_A to each factor.
-        d_1(s^{-1}x) = s^{-1}(d(x)) = s^{-1}(x^2), so column 0 has entry 1 at row 1 (for x^2).
-        d_1(s^{-1}x^2) = s^{-1}(d(x^2)) = 0.
+        Basis B^1 = {x, y}; the differential on A[-1] is -d_A.
         """
         pwd = polynomial_with_diff()
         bar = BarConstruction(pwd, 3)
         d1_int = bar.internal_differential(1)
         assert d1_int.shape == (2, 2)
-        assert d1_int[1, 0] == Rational(1)  # d(x) = x^2
+        assert d1_int[1, 0] == Rational(-1)
         assert d1_int[0, 0] == 0
         assert d1_int[0, 1] == 0
-        assert d1_int[1, 1] == 0  # d(x^2) = 0
+        assert d1_int[1, 1] == 0
 
     def test_bar_d_squared_with_internal(self):
         """Bar of polynomial_with_diff: d_2^2 = 0 (mult component alone).
@@ -1207,32 +1290,32 @@ class TestConsistency:
         d2 = bar.differential(2)
         assert d1 is d2
 
-    def test_cobar_basis_caching(self):
-        """Cobar basis is cached."""
+    def test_multiplication_dual_basis_caching(self):
+        """The multiplication-dual basis is cached."""
         bar = BarConstruction(dual_numbers_dga(), 3)
-        cobar = CobarConstruction(bar, 3)
+        cobar = MultiplicationDualComplex(bar, 3)
         b1 = cobar.basis(2)
         b2 = cobar.basis(2)
         assert b1 is b2
 
-    def test_cobar_diff_caching(self):
-        """Cobar differential is cached."""
+    def test_multiplication_dual_diff_caching(self):
+        """The multiplication-dual differential is cached."""
         bar = BarConstruction(dual_numbers_dga(), 3)
-        cobar = CobarConstruction(bar, 3)
+        cobar = MultiplicationDualComplex(bar, 3)
         d1 = cobar.differential(1)
         d2 = cobar.differential(1)
         assert d1 is d2
 
     def test_bar_cobar_dual_numbers_self_consistent(self):
-        """Dual numbers: bar d^2, cobar d^2, chain map, MC all consistent."""
+        """Dual numbers: bar, multiplication transpose, counit, and MC agree."""
         dga = dual_numbers_dga()
         bar = BarConstruction(dga, 4)
-        cobar = CobarConstruction(bar, 4)
+        cobar = MultiplicationDualComplex(bar, 4)
 
         # Bar d^2 = 0
         for n, ok in bar.verify_d_squared().items():
             assert ok
-        # Cobar d^2 = 0
+        # Multiplication transpose squares to zero.
         for n, ok in cobar.verify_d_squared().items():
             assert ok
         # Chain map
@@ -1241,9 +1324,9 @@ class TestConsistency:
         # MC
         mc = verify_twisting_mc(dga, 3)
         assert mc["mc_satisfied"]
-        # Quasi-iso
+        # Finite mixed-word calculation
         qi = verify_bar_cobar_quasi_iso(dga, 3)
-        assert qi["is_quasi_iso"]
+        _assert_finite_scope(qi)
 
     def test_all_standard_families_bar_d_squared(self):
         """All associative standard algebras satisfy bar d^2 = 0.

@@ -1,15 +1,14 @@
-r"""Explicit factorization homology computations: int_X A as ACTUAL NUMBERS.
+r"""Finite topological-shadow tables for factorization-homology examples.
 
 This module is the computational counterpart to the bar-complex / factorization-
 homology bridge.  Where existing engines (factorization_homology_engine.py,
 factorization_homology_genus_engine.py) compute the SCALAR projection F_g =
-kappa * lambda_g^FP, this engine computes EXPLICIT VALUES of int_X A for
-specific choices of X (S^1, S^2, T^2, Sigma_g, T^2 x I, open disc, punctured
-sphere) and specific choices of A (Heisenberg, sl_2 affine, Virasoro, sl_N
-affine, etc.).
+kappa * lambda_g^FP, this engine records finite table values for selected
+topological, Verlinde, and modular-functor shadows.  It is not a chain-level
+computation of raw chiral factorization homology, and it does not identify
+critical centers, chiral derived centers, Drinfeld centers, or bar cohomology.
 
-The computations rest on these identifications, all of which are theorems
-in either the manuscript or the standard literature:
+The table entries rest on separate comparison packages:
 
   (FH-S1)   int_{S^1} A_assoc = HH_*(A_assoc)
             (Goodwillie / Loday: factorization homology of E_1-algebras
@@ -28,25 +27,31 @@ in either the manuscript or the standard literature:
   (FH-Sg)   int_{Sigma_g} V_k(sl_N) = Verlinde dimension dim V_{g,k}^{sl_N}
             (Beauville normalization, positive integer)
 
-  (FH-Cyl)  int_{T^2 x I} A = Z(D(A)) where D(A) is the Drinfeld center
-            (cobordism to T^2 boundary at top and bottom; Drinfeld double
-             classification of fully extended (3,2,1)-TQFTs from a fusion
-             category, [Lurie09, KapustinSaulina10])
+  (FH-Cyl)  Topologized MTC/WRT shadow only.  If a chiral algebra has first
+            been replaced by a modular tensor category C(A) through the
+            CS/WRT topologization package, the fully extended cylinder datum
+            involves the Drinfeld center category Z(C(A)) ~= C(A) boxtimes
+            C(A)^op.  This module reports its global dimension.  It is not
+            factorization homology of a raw chiral chain complex and not the
+            chiral derived center.
 
   (FH-Open) int_{D^2} A = A and int_{S^2 \ pt} A = A (locality)
             (For open contractible X, factorization homology recovers A
              itself; for open punctured sphere, the answer is A as a
-             module over its own derived center)
+             boundary bimodule.  A derived-center action requires the
+             Swiss-cheese/OCA comparison datum.)
 
   (FH-WRT)  int_{Sigma_g x I, A} = Z^WRT(Sigma_g x I; A)
             (Witten-Reshetikhin-Turaev: factorization homology of an
-             E_3-algebra on a 3-manifold = WRT invariant.  For a chiral
-             algebra A with associated MTC C(A), this gives the WRT
-             invariant of the associated TQFT.)
+             locally constant topological E_3-algebra on a 3-manifold =
+             WRT invariant.  For a chiral algebra A with associated MTC
+             C(A), this uses the MTC/CS topologisation package; it is not
+             factorization homology of a raw chiral chain complex.)
 
-  (FH-TQFT) The cobordism category Bord_2 -> Vect via Sigma -> int_Sigma A
-            is a 2D modular functor (Segal): the genus-g partition function
-            is the trace of the cylinder map on int_{S^1} A.
+  (FH-TQFT) After the same topologization package, the cobordism category
+            Bord_2 -> Vect via Sigma -> int_Sigma A is a 2D modular functor
+            (Segal): the genus-g partition function is the trace of the
+            cylinder map on int_{S^1} A.
 
 CONVENTIONS
 ===========
@@ -100,6 +105,17 @@ LIE_DATA = {
     "sl3": {"dim": 8,  "rank": 2, "h_dual": 3, "N": 3},
     "sl4": {"dim": 15, "rank": 3, "h_dual": 4, "N": 4},
     "sl5": {"dim": 24, "rank": 4, "h_dual": 5, "N": 5},
+}
+
+MODEL_SCOPE = {
+    "status": "finite topological shadow table",
+    "requires": ["MTC/CS-WRT topologization", "modular-functor normalization"],
+    "not_a_computation_of": [
+        "raw chiral factorization homology",
+        "chiral derived center",
+        "critical center",
+        "bar cohomology",
+    ],
 }
 
 
@@ -574,24 +590,25 @@ def fh_higher_genus_verlinde(N: int, k: int, g: int) -> Dict[str, object]:
 
 
 # ---------------------------------------------------------------------------
-# 5. int_{T^2 x I} A = Drinfeld center / WRT cylinder amplitude
+# 5. Topologized T^2 x I shadow: Drinfeld center global dimension
 # ---------------------------------------------------------------------------
 
 def fh_torus_cylinder_drinfeld_center(N: int, k: int) -> Dict[str, object]:
-    r"""int_{T^2 x I} V_k(sl_N) = dim Z(C(V_k(sl_N))) where C is the
-    associated MTC and Z is the Drinfeld center.
+    r"""Global dimension of the topologized Drinfeld-center shadow.
 
-    For a modular tensor category C, dim Z(C) = (dim C)^2 = (sum_i d_i^2)^2
-    where d_i are quantum dimensions.  But for an MTC (modular = factorizable),
-    Z(C) = C * C^op so dim Z(C) = (dim C)^2.
+    Input type: a modular tensor category C(V_k(sl_N)) supplied by the
+    CS/WRT topologization package.  Output type: the scalar global
+    dimension of Z(C).  This is not raw chiral factorization homology on
+    T^2 x I and not the chiral derived center.
 
-    However, the Drinfeld center construction realizes Z(C) as the
-    representation category of the Drinfeld double D(H) when C = Rep(H).
-    For the modular tensor category from sl_N at level k, we have
+    For a modular tensor category C, Z(C) ~= C boxtimes C^op, so
+    dim Z(C) = (dim C)^2 = (sum_i d_i^2)^2.  For the modular tensor
+    category from sl_N at level k, we have
 
       dim C = sum_lambda d_lambda^2 = 1/S_{00}^2
 
-    and the (T^2 x I) factorization homology computes dim Z(C) = (1/S_{00}^2)^2.
+    and this table reports the topological/MTC shadow
+    dim Z(C) = (1/S_{00}^2)^2.
 
     Numerically, for sl_2 at level k:
       S_{00} = sqrt(2/(k+2)) sin(pi/(k+2))
@@ -605,6 +622,7 @@ def fh_torus_cylinder_drinfeld_center(N: int, k: int) -> Dict[str, object]:
             "N": N, "k": k,
             "dim_C": None,
             "dim_Z": None,
+            "scope": "topologized MTC/WRT shadow only",
             "note": "Only N=2 implemented in closed form.",
         }
     K = k + 2
@@ -619,7 +637,11 @@ def fh_torus_cylinder_drinfeld_center(N: int, k: int) -> Dict[str, object]:
         "dim_Z_C": dim_Z,
         "formula_dim_C": "(k+2) / (2 sin^2(pi/(k+2)))",
         "formula_dim_Z": "dim(C)^2  (factorizable / modular)",
-        "note": "T^2 x I cylinder factorization homology = Drinfeld center.",
+        "scope": "topologized MTC/WRT shadow only",
+        "requires": "CS/WRT topologization to a modular tensor category",
+        "not_raw_chiral_factorization_homology": True,
+        "not_chiral_derived_center": True,
+        "note": "Reports global dimension of Z(C) for the topologized MTC.",
     }
 
 
@@ -652,22 +674,24 @@ def fh_open_disc(family: str, **params) -> Dict[str, object]:
 
 
 def fh_punctured_sphere(family: str, **params) -> Dict[str, object]:
-    r"""int_{S^2 \ pt} A = A as a module over Z(A).
+    r"""int_{S^2 \ pt} A = A as a boundary bimodule.
 
     The once-punctured sphere is homotopic to the open disc, so by locality
     int_{S^2 \ pt} A = int_{D^2} A = A.
 
-    BUT the once-punctured sphere has a distinguished module structure
+    The once-punctured sphere has a distinguished module structure
     coming from the puncture: A acts on the answer by the action at the
-    deleted point.  So the result is naturally an A-bimodule (or, after
-    the Z(A) action, a module over the chiral derived center Z^der_ch(A)).
+    deleted point.  So the result is naturally an A-bimodule.  A module
+    action of the chiral derived center requires a separate Swiss-cheese
+    or OCA comparison datum; it is not equivalent to locality.
     """
     return {
         "family": family,
         "X": "S^2 minus a point",
         "result": "A as an A-bimodule (action at deleted point)",
         "dim": "infinite",
-        "module_structure": "left and right A-action; equivalently Z^der_ch(A)-module",
+        "module_structure": "left and right A-action",
+        "derived_center_action": "requires Swiss-cheese/OCA comparison datum",
         "reference": "Lurie HA 5.5.4; AF15.",
     }
 
@@ -870,7 +894,7 @@ def explicit_fh_summary() -> Dict[str, object]:
         v = fh_higher_genus_verlinde(N, k, g)
         summary["4_higher_genus_verlinde"][f"sl{N}_k{k}_g{g}"] = v["dim"]
 
-    # 5. T^2 x I (Drinfeld center)
+    # 5. T^2 x I topologized MTC shadow (Drinfeld-center global dimension)
     summary["5_drinfeld_center"] = {}
     for k in [1, 2, 3, 4]:
         d = fh_torus_cylinder_drinfeld_center(N=2, k=k)

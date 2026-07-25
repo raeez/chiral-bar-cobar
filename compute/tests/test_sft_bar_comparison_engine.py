@@ -619,7 +619,7 @@ class TestFullSummary:
 
 
 class TestAP25ObjectFirewall:
-    """Guard against collapsing bar, cobar, Koszul, and bulk objects."""
+    """Guard against collapsing bar, cobar, Koszul, and closed-sector objects."""
 
     def test_firewall_lists_typed_objects(self):
         """The five AP25 objects have separate typed records."""
@@ -666,14 +666,14 @@ class TestAP25ObjectFirewall:
         assert stale_dran_bar_dual not in (sft_engine.__doc__ or "")
 
     def test_cobar_reconstructs_a_not_koszul_dual_or_bulk(self):
-        """Omega(B(A)) is reconstruction, while Z^der_ch(A) is Hochschild bulk."""
+        """Omega(B(A)) is reconstruction, while Z^der_ch(A) is Hochschild closed-sector."""
         objects = bar_koszul_object_firewall()["objects"]
         cobar = objects["Omega_B_A"]
         derived_center = objects["Z_der_ch_A"]
 
         assert "reconstruction of A" in cobar["output"]
         assert "not the Koszul dual algebra" in cobar["not_output"]
-        assert "not the Hochschild bulk" in cobar["not_output"]
+        assert "not the Hochschild closed-sector" in cobar["not_output"]
         assert "C^*_ch(A, A)" in derived_center["construction"]
         assert "bulk" in derived_center["role"]
 

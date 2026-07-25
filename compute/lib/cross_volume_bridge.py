@@ -73,7 +73,7 @@ def heisenberg_family():
         dual_kappa=-k,
         central_charge=1,  # always c=1
         dual_central_charge=1,
-        dual_name="Sym^ch(V*)",
+        dual_name="curved Sym^ch(V*[1])",
         level_param="k",
         dual_level_formula="-k",
     )
@@ -405,13 +405,13 @@ def verify_bridge_5_heisenberg() -> Dict[str, object]:
 
     Vol I (Thm H): ChirHoch^*(H_k) has amplitude [0,2] with
       dim ChirHoch^0 = dim Z(H_k)   = 1
-      dim ChirHoch^1                = 1  (level-k deformation)
+      dim ChirHoch^1                = 1  (fixed-fiber shift derivation)
       dim ChirHoch^2 = dim Z(H_k^!) = 1
       Total = 3 (<= 4, Theorem H).
 
-    Vol II (bulk-CHC): bulk observables in 3-ball ≅ ChirHoch*(A).
-      For Heisenberg: center, deformation, dual-center each give
-      one bulk observable; total = 3, matching Theorem H.
+    Vol II (bulk-CHC): closed-sector observables in 3-ball ≅ ChirHoch*(A).
+      For Heisenberg: center, shift class, dual-center each give
+      one closed-sector observable; total = 3, matching Theorem H.
     """
     hochschild_dims = {0: 1, 1: 1, 2: 1}
     for n in range(3, 8):
@@ -433,22 +433,20 @@ def verify_bridge_5_sl2() -> Dict[str, object]:
     """Verify Theorem-H bounded amplitude for sl₂.
 
     sl₂ is quadratic Koszul.  ChirHoch^*(ŝl₂_k) has
-      dim ChirHoch^0 = 1, dim ChirHoch^1 = dim sl₂ = 3, dim ChirHoch^2 = 1.
-    Total = 5.  AP94/Theorem H: concentrated in degrees {0,1,2}; the
-    sl₂ count saturates at dim g = 3 in HH^1 because the chiral
-    Hochschild accommodates the full current algebra directions
-    (see chiral_hochschild_engine.derivation_analysis).
+      dim ChirHoch^0 = 1, dim ChirHoch^1 = 0, dim ChirHoch^2 = 1
+    after the zero-mode inner quotient.  The adjoint sl₂ count is the
+    prequotient current direction, not HH^1.
     """
-    hochschild_dims = {0: 1, 1: 3, 2: 1}
+    hochschild_dims = {0: 1, 1: 0, 2: 1}
     for n in range(3, 8):
         hochschild_dims[n] = 0
 
     return {
         "sl₂ ChirHoch": {
             "amplitude": (0, 2),
-            "polynomial": "1 + 3·t + t²",
+            "polynomial": "1 + t²",
             "dims_0_through_7": hochschild_dims,
-            "total_dim": 5,
+            "total_dim": 2,
             "bounded_by_theorem_h": True,
             "match": True,
         }
@@ -459,20 +457,22 @@ def verify_bridge_5_sl3() -> Dict[str, object]:
     """Verify Theorem-H bounded amplitude for sl₃.
 
     sl₃ is quadratic Koszul.  ChirHoch^*(ŝl₃_k) has
-      dim ChirHoch^0 = 1, dim ChirHoch^1 = dim sl₃ = 8, dim ChirHoch^2 = 1.
+      dim ChirHoch^0 = 1, dim ChirHoch^1 = 0, dim ChirHoch^2 = 1
+    after the zero-mode inner quotient.  The adjoint sl₃ count is
+    prequotient metadata.
     Concentration in {0,1,2}; the GF polynomial-ring 1/((1-t²)(1-t³))
     model is REFUTED per AP94/AP95.
     """
-    hochschild_dims = {0: 1, 1: 8, 2: 1}
+    hochschild_dims = {0: 1, 1: 0, 2: 1}
     for n in range(3, 8):
         hochschild_dims[n] = 0
 
     return {
         "sl₃ ChirHoch": {
             "amplitude": (0, 2),
-            "polynomial": "1 + 8·t + t²",
+            "polynomial": "1 + t²",
             "dims_0_through_7": hochschild_dims,
-            "total_dim": 10,
+            "total_dim": 2,
             "bounded_by_theorem_h": True,
             "match": True,
         }

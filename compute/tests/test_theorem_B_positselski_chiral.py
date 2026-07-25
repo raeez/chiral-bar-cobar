@@ -1,96 +1,124 @@
-"""
-Independent verification decorator for Theorem B
-(\\label{thm:positselski-chiral-proved}).
+"""Scope certificate for Theorem B and its neighbouring derived lanes.
 
-Theorem B (chiral Positselski equivalence): for a Koszul chiral algebra
-A on a smooth curve X, the curved chiral bar coalgebra
-C = Bbar^ch(A) is a conilpotent chiral CDG-coalgebra, and there is an
-equivalence of triangulated categories
-    D^co(C-comod^{conil,ch}) ~ D^ctr(C-contra^ch)
-between the coderived category of conilpotent chiral CDG-comodules and
-the contraderived category of chiral CDG-contramodules. When C has
-finite-dim graded pieces, the right-hand side rewrites as the
-contraderived category of complete modules over the graded dual
-C^* = Hom_{D_X}(C, omega_X).
-
-Derivation source (the manuscript's proof path):
-  - chiral Phi/Psi adjoint pair on the chiral CDG-(co/contra)module
-    categories;
-  - bicomplex totalization of the conilpotent resolution against the
-    curvature term;
-  - conilpotent contracting homotopy + coacyclic cone argument in the
-    chiral setting.
-
-Independent verification sources (disjoint from the derivation path):
-  - Keller 2009 arXiv:0905.3845 deformation-theoretic bar-cobar
-    adjunction. Keller works over a field with finite-dim augmentation
-    ideals and obtains the comodule-contramodule equivalence via
-    deformation theory; no chiral/D-module machinery and no CDG
-    curvature-bicomplex machinery.
-  - Positselski 2011 "Two kinds of derived categories, Koszul duality,
-    and comodule-contramodule correspondence", Mem. AMS 212 Theorem 7.3
-    (= "Theorem 7.2" in older drafts). This is the classical
-    co-contra correspondence for conilpotent CDG-coalgebras over a
-    field; the proof uses the relative bar resolution of the
-    contramodule side and the cobar resolution of the comodule side
-    over a classical (non-chiral) CDG-coalgebra.
-
-This test registers the independent-verification relationship between the
-chiral version (derived_from) and two classical versions (verified_against).
-The role of verify-independence is to certify that no classical source is
-secretly being reused in the chiral proof -- the chiral Phi/Psi and the
-classical Positselski Phi/Psi are different functors with different
-inputs.
+The canonical theorem is quadratic Koszul recognition for
+``q_A: A^i -> B_X(A)``.  Universal bar--cobar reconstruction belongs to
+Theorem A.  Positselski's Correspondence Theorem 5.2 concerns a fixed CDG
+coalgebra, while his Theorem 6.5 concerns modules attached to an acyclic
+twisting cochain.  These tests keep the four type signatures distinct.
 """
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from compute.lib.independent_verification import independent_verification
 
 
+ROOT = Path(__file__).resolve().parents[2]
+TARGET = ROOT / "chapters/theory/theorem_B_scope_platonic.tex"
+
+
+def _environment(text: str, label: str) -> str:
+    """Return the theorem-like environment containing ``label``."""
+    index = text.index(label)
+    starts = [
+        text.rfind(r"\begin{theorem}", 0, index),
+        text.rfind(r"\begin{proposition}", 0, index),
+        text.rfind(r"\begin{corollary}", 0, index),
+    ]
+    start = max(starts)
+    ends = [
+        text.find(r"\end{theorem}", index),
+        text.find(r"\end{proposition}", index),
+        text.find(r"\end{corollary}", index),
+    ]
+    end = min(candidate for candidate in ends if candidate >= 0)
+    return text[start:end]
+
+
 @independent_verification(
-    claim="thm:positselski-chiral-proved",
+    claim="thm:theorem-B-scope-quadratic-recognition",
     derived_from=[
-        "chiral Phi/Psi adjoint pair on chiral CDG-(co/contra)module "
-        "categories over D_X",
-        "bicomplex totalization against the curvature term for chiral "
-        "bar coalgebra",
-        "conilpotent contracting homotopy + coacyclic cone in the chiral "
-        "setting",
+        "quadratic chiral comparison q_A and hypothesis package H_CL",
+        "PBW/bar filtration comparison in the chiral de Rham model",
     ],
     verified_against=[
-        "Keller 2009 arXiv:0905.3845 deformation-theoretic bar-cobar "
-        "adjunction over a field",
-        "Positselski 2011 Mem. AMS 212 Theorem 7.3 classical "
-        "comodule-contramodule correspondence over a field",
+        "Loday--Vallette 2012 Theorem 2.3.2 fundamental theorem of "
+        "twisting morphisms",
+        "Loday--Vallette 2012 Theorem 3.4.6 Koszul criterion",
     ],
     disjoint_rationale=(
-        "The derivation uses CHIRAL Phi/Psi functors between categories "
-        "of D_X-modules on a smooth curve X and explicit chiral CDG "
-        "curvature-bicomplex totalization. Keller 2009 works over a "
-        "field with finite-dim augmentation ideals and gives a "
-        "deformation-theoretic proof that does not see D_X or the "
-        "chiral structure; Positselski 2011 is the classical co-contra "
-        "correspondence over a field (not over D_X). The chiral-case "
-        "proof cannot be reduced to either classical statement without "
-        "the chiral Phi/Psi pair, and the classical statements are "
-        "consumed as inspiration, not as lemmas. Source sets are "
-        "disjoint."
+        "The manuscript derives the chiral transport from its explicit "
+        "comparison package, while Loday--Vallette supplies the independent "
+        "ordinary quadratic criterion over a point."
     ),
 )
-def test_theorem_B_positselski_chiral_independent_structure():
-    """Structural consistency: the Positselski equivalence descends on
-    the genus-0 quadratic surface to the classical module-Koszul duality
-    (Theorem thm:e1-module-koszul-duality). The two classical verification
-    sources (Keller, Positselski) independently certify that genus-0
-    target.
-    """
-    # The chiral statement restricts on the genus-0 quadratic surface to
-    # a classical statement that BOTH Keller and Positselski prove.
-    # Agreement of the chiral restriction with the classical statement
-    # is the non-tautological witness.
-    chiral_restricts_to_classical = True
-    assert chiral_restricts_to_classical, (
-        "Chiral Positselski on genus-0 quadratic surface must match "
-        "classical Keller/Positselski module Koszul duality."
+def test_theorem_b_is_quadratic_recognition():
+    tex = TARGET.read_text()
+    theorem = _environment(
+        tex, r"\label{thm:theorem-B-scope-quadratic-recognition}"
     )
+    flat = " ".join(theorem.split())
+
+    for token in (
+        r"A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)",
+        r"q_A\colon A^{\mathrm i}\to B_X(A)",
+        r"\Omega_X(A^{\mathrm i})\to A",
+        r"K^L_{\tau_{\mathrm i}}",
+        r"K^R_{\tau_{\mathrm i}}",
+        r"H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})",
+        "Theorem~2.3.2",
+        "Theorem~3.4.6",
+    ):
+        assert token in flat
+
+    assert r"D^{\mathrm{co}}" not in flat
+    assert r"D^{\mathrm{ctr}}" not in flat
+
+
+def test_fixed_coalgebra_correspondence_has_its_own_hypotheses():
+    tex = TARGET.read_text()
+    finite = _environment(
+        tex, r"\label{thm:chiral-positselski-at-each-weight}"
+    )
+    completed = _environment(
+        tex, r"\label{thm:chiral-positselski-weight-completed}"
+    )
+    lane = " ".join((finite + completed).split())
+
+    for token in (
+        "fixed-coalgebra",
+        r"D^{\mathrm{co}}",
+        r"D^{\mathrm{ctr}}",
+        "(CP1)",
+        "(CP2)",
+        "(CP3)",
+        "strict Mittag",
+    ):
+        assert token in lane
+
+    assert "q_A" not in lane
+    assert r"A^{\mathrm i}" not in lane
+
+
+def test_opening_types_the_four_lanes_and_retires_the_conflation():
+    tex = TARGET.read_text()
+    opening = tex[:9000]
+
+    for token in (
+        "belongs to Theorem~A",
+        "Theorem~5.2",
+        "Theorem~6.5",
+        r"q_A\colon A^{\mathrm i}\longrightarrow B_X(A)",
+        r"\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}",
+    ):
+        assert token in opening
+
+    retired_phrases = (
+        "Theorem~B (chiral Positselski)",
+        "chiral Positselski (Theorem~B)",
+        "Module-level Theorem B",
+        "Theorem B as $\\eta_C$",
+    )
+    for phrase in retired_phrases:
+        assert phrase not in tex

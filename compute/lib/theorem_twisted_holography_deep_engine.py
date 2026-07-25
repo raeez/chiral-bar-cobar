@@ -16,10 +16,13 @@ Axis 1 — Zeng's boundary and defect via Koszul comparison:
       - The comparison uses the same adjunction and Verdier lanes as
         Theorem A. The bar-cobar counit Omega(B(A)) -> A belongs to the
         reconstruction lane.
-      - The bulk algebra is the derived center
+      - The closed-sector algebra is the derived center
         Z^der_ch(A) = C^*_ch(A_b, A_b), distinct from A and A^!.
-      - This is the bulk-boundary-line triangle of Vol II, eq:global-corrected-triangle:
-        A_bulk ~ Z_der(B_partial) ~ Z_der(C_line) ~ HH^*_ch(A^!_line).
+      - This is the closed-sector/boundary/line comparison lane of Vol II,
+        eq:global-corrected-triangle:
+        C_A ~ Z_der(B_partial) ~ Z_der(C_line) ~ HH^*_ch(A^!_line).
+        A physical bulk identification is extra OCA data, not a consequence
+        of the bar, Verdier, or Hochschild construction alone.
 
 Axis 2 — Garner-Paquette scattering with charged sources:
     Garner-Paquette [2408.11092] extend Koszul duality to scattering off
@@ -51,7 +54,8 @@ Axis 3 — Omega-background -> VOA:
       - Bar-cobar inversion Omega(B(A)) ~ A recovers A from its logarithm.
       - The bar complex records the OPE logarithm: Omega(B(A)) = A is
         reconstruction, D_Ran(B(A)) is the Verdier surface for the A^!
-        branch, and C^*_ch(A,A) = Z_der is the bulk.
+        branch, and C^*_ch(A,A) = Z_der is the Hochschild closed-sector
+        slot.  It becomes a physical bulk only after an OCA comparison.
 
 Axis 4 — Reproducible computations:
     From the shadow obstruction tower, we can reproduce:
@@ -78,7 +82,7 @@ IMPLEMENTATION:
     This engine implements:
     1. Boundary chiral algebra for SU(N) CS on AdS_3 (= affine sl_N at level k).
     2. Koszul dual computation and comparison with B(A) for affine sl_N.
-    3. Derived center computation (bulk algebra) via Hochschild.
+    3. Derived center computation (closed-sector algebra) via Hochschild.
     4. Celestial OPE from genus-0 shadow projections.
     5. Collinear splitting function test.
     6. Zeng's boundary modular class (one-wheel sum).
@@ -90,7 +94,8 @@ ANTI-PATTERN COMPLIANCE:
     AP19: r-matrix pole order one below OPE (d log absorption).
     AP24: kappa + kappa' = 0 for KM; != 0 for W-algebras.
     AP25: B(A) != D_Ran(B(A)) != Omega(B(A)).
-    AP33: H_k^! = Sym^ch(V*) != H_{-k}.
+    AP33: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k}.
     AP34: bar-cobar inversion != open-to-closed; derived center is the
     algebraic closed-sector vertex.
     AP39: kappa != c/2 in general.
@@ -303,8 +308,9 @@ class KoszulDualAlgebra:
         finite-type or completed hypotheses.
       - A^!_infty = D_Ran(B(A)) is the homotopy Verdier surface.
       - Omega(B(A)) ~= A is bar-cobar inversion; it does not construct A^!.
-      - H_k^! = Sym^ch(V*) shares kappa with H_{-k} while remaining a
-        different chiral algebra (AP33).
+      - H_k^! is the curved second-kind Sym^ch(V*[1]) branch. It
+        shares scalar kappa with H_{-k} while remaining a different
+        chiral algebra (AP33).
     """
     name: str
     original: BoundaryChiralAlgebra
@@ -333,8 +339,9 @@ def compute_koszul_dual(A: BoundaryChiralAlgebra) -> KoszulDualAlgebra:
     For Heisenberg H_k:
       kappa^! = -k = -kappa(A)
       kappa + kappa' = 0 (anti-symmetric).
-      H_k^! = Sym^ch(V*) (AP33), with the same kappa as H_{-k} and a
-      different chiral-algebra structure.
+      H_k^! is the curved second-kind Sym^ch(V*[1]) branch (AP33),
+      with the same scalar kappa as H_{-k} and a different
+      chiral-algebra structure.
     """
     kappa_A = A.kappa
 
@@ -513,7 +520,7 @@ def verify_cybe_from_mc(A: BoundaryChiralAlgebra) -> Dict[str, Any]:
 
 
 # ============================================================================
-# Section 4: Derived center (bulk algebra)
+# Section 4: Derived center (closed-sector algebra)
 # ============================================================================
 
 @dataclass(frozen=True)
@@ -530,14 +537,15 @@ class DerivedCenter:
       - C^*_ch(A,A) = Z^der is the closed-sector cochain model.
 
     For affine sl(N)_k:
-      Bulk = commutative chiral algebra with shifted Poisson bracket (CDG20).
-      At large N: bulk ~ W_{1+infty} at c = N (Gaberdiel-Gopakumar duality).
+      The closed-sector descriptor is a commutative chiral algebra with
+      shifted Poisson bracket (CDG20).  At large N, the comparison model is
+      W_{1+infty} at c = N (Gaberdiel-Gopakumar duality).
     """
     algebra_name: str
     is_commutative_with_poisson: bool
     hochschild_description: str
     poisson_bracket_shift: int  # (-1)-shifted for HT theories
-    bulk_description: str
+    closed_sector_description: str
 
     @property
     def is_derived_center(self) -> bool:
@@ -551,19 +559,20 @@ class DerivedCenter:
 
 
 def compute_derived_center(A: BoundaryChiralAlgebra) -> DerivedCenter:
-    """Compute the derived center (bulk algebra) of a boundary chiral algebra.
+    """Compute the derived center (closed-sector algebra) of a boundary chiral algebra.
 
     Z^der_ch(A) = C^*_ch(A_b, A_b) (chiral Hochschild cochains of boundary).
 
     For affine sl(N)_k:
-      Bulk is a commutative chiral algebra with (-1)-shifted Poisson bracket
-      (Costello-Dimofte-Gaiotto [2005.00083]).
+      The Hochschild closed-sector descriptor is a commutative chiral algebra
+      with (-1)-shifted Poisson bracket (Costello-Dimofte-Gaiotto [2005.00083]).
       The Poisson bracket encodes the holomorphic symplectic structure of the
       target space.
 
     For Heisenberg H_k:
-      Bulk = Fock space C[d phi, d^2 phi, ...] (polynomial in jet variables).
-      This is the commutative vertex algebra of free bosons in the bulk.
+      The closed-sector descriptor is the Fock jet algebra
+      C[d phi, d^2 phi, ...].  This is the commutative vertex algebra of free
+      boson jets before any physical-bulk OCA comparison is supplied.
     """
     if A.lie_type == "abelian":
         desc = "Fock space C[d phi, d^2 phi, ...]"
@@ -578,25 +587,25 @@ def compute_derived_center(A: BoundaryChiralAlgebra) -> DerivedCenter:
         is_commutative_with_poisson=True,
         hochschild_description=hoch_desc,
         poisson_bracket_shift=-1,
-        bulk_description=desc,
+        closed_sector_description=desc,
     )
 
 
 # ============================================================================
-# Section 5: The bulk-boundary-line triangle
+# Section 5: The closed-sector/boundary/line triangle
 # ============================================================================
 
 @dataclass(frozen=True)
-class BulkBoundaryLineTriangle:
-    """The corrected bulk-boundary-line Koszul triangle.
+class ClosedSectorBoundaryLineTriangle:
+    """The corrected closed-sector/boundary/line comparison triangle.
 
-    A_bulk ~ Z_der(B_partial) ~ Z_der(C_line) ~ HH^*_ch(A^!_line)
+    C_A ~ Z_der(B_partial) ~ Z_der(C_line) ~ HH^*_ch(A^!_line)
     C_line ~ A^!_line-mod  (on the chirally Koszul locus).
 
     Three vertices on three different spaces:
-      - Bulk: A_bulk ~ O(T*[-1]L)   (polyvector fields on Lagrangian)
-      - Boundary: B_partial = O(L)   (functions on Lagrangian)
-      - Lines: C_line = S_b-mod      (modules for self-intersection algebra)
+      - Closed sector: C_A ~ O(T*[-1]L) before OCA physical-bulk comparison.
+      - Boundary: B_partial = O(L) (functions on Lagrangian).
+      - Lines: C_line = S_b-mod (modules for self-intersection algebra).
 
     The connection is the Lagrangian condition T_L M / TL ~ T*L[-1].
     """
@@ -607,7 +616,7 @@ class BulkBoundaryLineTriangle:
     triangle_consistent: bool
 
     @property
-    def bulk_is_derived_center_of_boundary(self) -> bool:
+    def closed_sector_is_derived_center_of_boundary(self) -> bool:
         return True
 
     @property
@@ -615,18 +624,18 @@ class BulkBoundaryLineTriangle:
         return True
 
     @property
-    def bar_is_not_bulk(self) -> bool:
+    def bar_is_not_closed_sector(self) -> bool:
         """AP34: bar-cobar inversion != open-to-closed."""
         return True
 
 
-def construct_triangle(A: BoundaryChiralAlgebra) -> BulkBoundaryLineTriangle:
-    """Construct the finite bulk-boundary-line descriptor."""
+def construct_triangle(A: BoundaryChiralAlgebra) -> ClosedSectorBoundaryLineTriangle:
+    """Construct the finite closed-sector/boundary/line descriptor."""
     dual = compute_koszul_dual(A)
     center = compute_derived_center(A)
     line_desc = f"C_line ~ ({dual.name})-mod"
 
-    return BulkBoundaryLineTriangle(
+    return ClosedSectorBoundaryLineTriangle(
         boundary=A,
         koszul_dual=dual,
         derived_center=center,
@@ -714,7 +723,7 @@ def construct_holographic_datum(A: BoundaryChiralAlgebra) -> HolographicDatum:
             "B(A)": "ordered bar coalgebra",
             "A^i": "bar-dual coalgebra H^*(B(A))",
             "A^!": "strict Verdier/Koszul branch under finite-type or completed hypotheses",
-            "C": "chiral derived centre Z^der_ch(A), the bulk slot",
+            "C": "chiral derived centre Z^der_ch(A), the closed-sector slot",
             "Omega(B(A))": "bar-cobar inversion returning A, not Koszul duality",
         },
         full_mc_data_reconstructed=False,

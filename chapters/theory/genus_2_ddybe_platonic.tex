@@ -1,7 +1,7 @@
 % ========================================================
 % chapters/theory/genus_2_ddybe_platonic.tex
 %
-% Platonic-ideal inscription of the genus-2 doubly-dynamical
+% Structural inscription of the genus-2 doubly-dynamical
 % Yang-Baxter equation. Separates the generic Omega
 % weight-zero check at 10^{-12} from the full engine tolerance 1e-4
 % and disambiguates the two statements called
@@ -27,9 +27,10 @@
 \providecommand{\ClaimStatusProvedHere}{\textsf{ProvedHere}}
 \providecommand{\ClaimStatusProvedElsewhere}{\textsf{ProvedElsewhere}}
 \providecommand{\ClaimStatusConjectured}{\textsf{Conjectured}}
+\providecommand{\ClaimStatusNumericalEvidence}{\textsf{NumericalEvidence}}
 
-\chapter[Genus-$2$ doubly-dynamical Yang-Baxter, Platonic]
-{Genus-$2$ doubly-dynamical Yang-Baxter equation: Platonic ideal}
+\chapter[Genus-$2$ doubly-dynamical Yang-Baxter]
+{Genus-$2$ doubly-dynamical Yang-Baxter equation}
 \label{ch:genus-2-ddybe-platonic}
 
 \section*{Preface to this chapter}
@@ -40,7 +41,7 @@ surface is computed in Proposition~\ref{prop:g2-degree2} and gives
 Euler characteristic $\chi=-12$. The generic-$\Omega$
 doubly-dynamical Yang--Baxter equation (DDYBE) is weaker: the
 $10^{-12}$ agreement belongs to the single-entry weight-zero check,
-while the full three-term identity is certified by the engine
+while the full three-term identity is evaluated by the engine
 (\texttt{face\_model\_ddybe\_engine.py},
 \texttt{verify\_face\_ddybe\_g2}) only to tolerance
 $\mathrm{relative}<10^{-4}$. The chapter keeps these facts on
@@ -57,23 +58,25 @@ Four statements form the genus-$2$ package:
  \emph{Verification: CEE09.}
 \item \textbf{Fay trisecant identity, correct name}
  (\cref{thm:fay-trisecant-genus-2-specific}): Fay's 1973
- Corollary~2.5 is the three-term Szeg\H{o} sum identity on
- $C_3(X)$ for all $g\ge 0$. A distinct four-factor theta-null
- product identity holds only on the theta divisor; the two
- statements are not interchangeable.
+ Corollary~2.5 is the normalised Szeg\H{o}/prime-form
+ identity on $C_3(X)$ for all $g\ge 0$; in the torus
+ normalisation it contains the load-bearing
+ $\vartheta_1'(0,\tau)^2$ factor. A distinct four-factor
+ theta-null product identity holds only on the theta divisor;
+ the two statements are not interchangeable.
  \emph{Verification: Fay 1973.}
-\item \textbf{Face-model DDYBE, scope-restricted}
- (\cref{thm:g2-face-model-bypass-scope-restricted}): the
- genus-$2$ face-model DDYBE is satisfied
- \emph{exactly} at diagonal $\Omega$ by degeneration to two
- independent genus-$1$ Felder copies, and
- \emph{numerically} at generic $\Omega$ to relative residual
- $<10^{-4}$ ($4$ generic-$\Omega$ compute tests, plus a
- tier-(T3) diagonal-$\Omega$ consistency check). The
- separating-degeneration regime carries no genuinely $g=2$
- content.
- \emph{Verification: exact on the diagonal and numerical at generic
- \(\Omega\) for the conjectural full DDYBE.}
+\item \textbf{Face-model DDYBE: exact degeneration plus finite-window evidence}
+ (\cref{thm:g2-face-model-bypass-scope-restricted,prop:g2-generic-ddybe-finite-window-evidence}):
+ the diagonal/separating face-model degeneration is a theorem,
+ because the genus-$2$ theta series factorises and the equation
+ reduces to a genus-$1$ Felder DYBE. Generic off-diagonal
+ $\Omega$ checks are numerical evidence only: relative residual
+ $<10^{-4}$ at finitely many parameter points ($4$ generic-$\Omega$
+ compute tests, one second-$\Omega$ spot check, plus a tier-(T3)
+ diagonal-$\Omega$ consistency check).
+ \emph{Verification: exact on the diagonal/separating locus;
+ numerical finite-window evidence at generic \(\Omega\) for the
+ conjectural full DDYBE.}
 \item \textbf{Euler characteristic at degree~$2$}
  (\cref{cor:g2-chi-minus-12}): $\chi=-12$ follows from the
  rank-$4$ KZB local system on $\Sigma_2\setminus\{0\}$ via
@@ -247,54 +250,64 @@ content.
 \section{Fay trisecant: the correct identification}
 \label{sec:g2-fay}
 
-\begin{theorem}[Fay trisecant, three-term Szeg\H{o} form;
+\begin{theorem}[Fay trisecant, normalised Szeg\H{o}/prime-form form;
 \ClaimStatusProvedElsewhere]
 \label{thm:fay-trisecant-genus-2-specific}
-\index{Fay trisecant identity!three-term Szeg\H{o} form}
+\index{Fay trisecant identity!normalised Szeg\H{o} form}
 Let $X$ be a smooth projective curve of any genus $g\ge 0$,
 equipped with a choice of odd non-singular theta
-characteristic $\delta$ (which exists for all $g$). The
-associated Szeg\H{o} kernel $S(z,w)=S_\delta(z,w)$ is a section
-of $K_X^{1/2}\boxtimes K_X^{1/2}(\Delta)$ with a simple pole
-along the diagonal and no other poles. Then on
-$C_3(X)=\Conf_3^{\mathrm{ord}}(X)$:
+characteristic $\delta$ where the Szeg\H{o} kernel is defined.
+Fay's Corollary~2.5 is a theta-addition identity for the
+normalised prime-form/Szeg\H{o} kernels on $C_3(X)$; after
+pullback to a three-point Fulton--MacPherson boundary and
+contraction with the Arnold--Kohno/IHX tensor relation, it gives
+the Stokes cancellation used by the bar complex. It is not the
+bare scalar equality
+$S_{12}S_{23}+S_{23}S_{31}+S_{31}S_{12}=0$ for an arbitrarily
+normalised scalar kernel.
+
+In the genus-$1$ normalisation with periods $(1,\tau)$,
+$\vartheta_1=\vartheta_1(-\mid\tau)$, and Weierstrass
+$\wp=\wp(-,\tau)$, the torus specialisation is
 \begin{equation}\label{eq:fay-three-term}
- S(z_1,z_2)\,S(z_2,z_3) \;+\;
- S(z_2,z_3)\,S(z_3,z_1) \;+\;
- S(z_3,z_1)\,S(z_1,z_2) \;=\; 0.
+ \wp(a,\tau)-\wp(b,\tau)
+ =
+ -\,\frac{
+ \vartheta_1(a+b,\tau)\,\vartheta_1(a-b,\tau)}
+ {\vartheta_1(a,\tau)^2\,\vartheta_1(b,\tau)^2}
+ \,\vartheta_1'(0,\tau)^2 .
 \end{equation}
-At $g=0$: $S(z,w)=1/(z-w)$ and~\eqref{eq:fay-three-term}
-is the partial-fraction identity. At $g=1$:
-$S(z,w) = \theta_1'(0)\,\theta_1(z-w+e)/(\theta_1(z-w)\,\theta_1(e))$
-with $e$ an odd half-period, and~\eqref{eq:fay-three-term}
-follows from the Jacobi identity. At $g=2$: the Szeg\H{o}
-kernel is built from the prime form $E$ and the genus-$2$
-theta with odd characteristic, and~\eqref{eq:fay-three-term}
-follows from the Riemann addition formula for theta
-functions.
+At $g=0$ the same identity degenerates to the rational
+partial-fraction relation. At $g=2$ the corresponding statement is
+the full prime-form/theta-characteristic identity on
+$\operatorname{Jac}(X)$, with the same normalisation discipline:
+theta-prime and prime-form factors are part of the identity.
 \end{theorem}
 
 \begin{proof}[Proof and attribution]
 This is Corollary~2.5 of Fay~\cite{Fay73}, proved uniformly
 for all $g\ge 0$ via the addition formula for theta
-functions on $\mathrm{Jac}(X)$. The three-term identity
-is the \emph{trisecant} identity for the Szeg\H{o} kernel;
-the Szeg\H{o}-kernel simple-pole structure is
-independent of the theta-function construction (Bergman 1958,
-Fay 1973 Ch.~1), providing a verification pathway disjoint
-from the theta-addition route.
+functions on $\mathrm{Jac}(X)$. In genus~$1$ the displayed
+formula is the standard theta-prime-normalised torus form, also
+recorded in Mumford's \emph{Tata Lectures on Theta I}, Ch.~I
+\S5. The Szeg\H{o}-kernel simple-pole structure is independent
+of the theta-function construction (Bergman 1958, Fay 1973
+Ch.~1), providing a verification pathway disjoint from the
+theta-addition route.
 \end{proof}
 
-\begin{remark}[Name disambiguation: Szeg\H{o} three-term vs
+\begin{remark}[Name disambiguation: Szeg\H{o}/prime-form vs
 theta-nulls quartic]
 \label{rem:fay-name-disambiguation}
 Two distinct identities are called ``Fay trisecant'' in the
-literature; the bar-complex argument uses the Szeg\H{o} three-term
-form~\eqref{eq:fay-three-term}.
+literature; the bar-complex argument uses the normalised
+Szeg\H{o}/prime-form identity whose torus form is
+\eqref{eq:fay-three-term}.
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Three-term Szeg\H{o} form}
+\item \emph{Normalised Szeg\H{o}/prime-form form}
  (\eqref{eq:fay-three-term}, Fay 1973 Cor.~2.5): universal
- on $C_3(X)$ at all $g\ge 0$; no divisor condition.
+ on $C_3(X)$ at all $g\ge 0$ after the prime-form and
+ theta-characteristic normalisations; no divisor condition.
 \item \emph{Four-theta-nulls quartic identity}
  (Fay 1973 Cor.~4.8 and variants, ``trisecant formula'' in
  the Schottky-locus literature): a product of four theta
@@ -318,16 +331,19 @@ $\Omega^*_{\log}(\FM_n^{\mathrm{ord}}(\Sigma_2))\otimes
 (s^{-1}\bar\cA)^{\otimes n}$ receives a three-propagator
 Stokes term at each 3-boundary
 $D_{\{i,j,k\}}\subset\FM_n$. The vanishing of this Stokes
-term is equivalent to~\eqref{eq:fay-three-term}
-(identification via $S=d\log E$). The theta-nulls quartic
-identity would govern a four-point interaction only on
-the Schottky locus, which is a proper codimension
-subvariety of $\HHH_2$; the bar complex is defined over
-the full $\HHH_2$ interior, so only identity~(a) suffices.
+term is the section-level consequence of Fay's normalised
+prime-form/Szeg\H{o} identity, together with the
+Arnold--Kohno/IHX tensor contraction. The unnormalised scalar
+product $S_{12}S_{23}+S_{23}S_{31}+S_{31}S_{12}$ is not used as
+a standalone equality. The theta-nulls quartic identity would
+govern a four-point interaction only on the Schottky locus, which
+is a proper codimension subvariety of $\HHH_2$; the bar complex
+is defined over the full $\HHH_2$ interior, so only identity~(a)
+suffices.
 \end{remark}
 
 % ========================================================
-\section{Face-model DDYBE: scope-restricted theorem}
+\section{Face-model DDYBE: exact degeneration and numerical evidence}
 \label{sec:g2-face-model-bypass}
 
 The Baxter--Felder face-model construction replaces the
@@ -373,16 +389,18 @@ the four Boltzmann weights, with
 $\boldsymbol\lambda=(\lambda_1,\lambda_2)\in\fh^*\oplus\fh^*$.
 \end{definition}
 
-\begin{theorem}[Face-model DDYBE, scope-restricted;
-\ClaimStatusConditional]
+\begin{theorem}[Exact diagonal/separating degeneration to Felder DYBE;
+\ClaimStatusProvedHere]
 \label{thm:g2-face-model-bypass-scope-restricted}
 \index{doubly-dynamical Yang-Baxter equation!face-model,
-scope-restricted}
+exact degeneration}
 The face-model $R$-matrix $R^{\mathrm{face}}$ of
 Definition~\ref{def:g2-face-boltzmann}
-satisfies the doubly-dynamical Yang-Baxter equation
-\eqref{eq:ddybe} in the following three regimes, of
-qualitatively distinct status.
+satisfies the exact diagonal/separating degeneration statements
+below. These statements are theorem-level because they consume only
+theta-series factorisation and the genus-$1$ Felder
+dynamical Yang--Baxter theorem; they do not prove the full
+generic-$\Omega$ system \eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textbf{Diagonal $\Omega$ regime (exact):}
  at $\Omega=\mathrm{diag}(\tau_1,\tau_2)$ with
@@ -412,32 +430,6 @@ qualitatively distinct status.
  diagonal specialisation does not witness nontrivial doubly-
  dynamical content; it is a consistency check against the
  genus-$1$ theorem.
-\item \textbf{Generic $\Omega$ regime (numerical, residual
- $<10^{-4}$):} for generic $\Omega\in\HHH_2$ with
- $\Omega_{12}\ne 0$, the DDYBE holds to relative residual
- $<10^{-4}$, as verified by the engine
- \texttt{compute/lib/face\_model\_ddybe\_engine.py} function
- \texttt{verify\_face\_ddybe\_g2}, which asserts
- \texttt{result['passed']} under the threshold
- \texttt{relative < 1e-4}, across four distinct
- $(z,w,\boldsymbol\lambda,\eta)$ parameter tuples sharing the
- single $\Omega$ value
- $\Omega_0 = \begin{pmatrix}1.1\mathrm{i} & 0.15+0.05\mathrm{i}\\
- 0.15+0.05\mathrm{i} & 1.3\mathrm{i}\end{pmatrix}$
- (two distinct $\boldsymbol\lambda$, two distinct $(z,w)$ spectral
- pairs, $\eta=0.25, 0.2, 0.4$: levels $k=2,3$ and strong-coupling
- $\eta=0.4$), plus a second-$\Omega$ spot check at
- $\Omega_1 = \begin{pmatrix}2\mathrm{i} & 0.3+0.1\mathrm{i}\\
- 0.3+0.1\mathrm{i} & 1.5\mathrm{i}\end{pmatrix}$.
- The sweep covers a positive-codimension subset of the
- three-complex-dimensional moduli $\HHH_2$ and provides
- pointwise, not uniform, evidence; the bulk of the sampling
- concentrates at the single point $\Omega_0$, with a single
- second-$\Omega$ witness. A sixth test at
- $\Omega=\mathrm{diag}(1\mathrm{i},1.3\mathrm{i})$,
- $\boldsymbol\lambda=(\lambda_1,0)$ is included as a diagonal-$\Omega$
- sanity check at tier~(T3); it carries no genuinely $g=2$
- content by regime~(i).
 \item \textbf{Separating-degeneration regime
  (factorised-limit, no genuinely $g=2$ content):} at the
  separating boundary $\Omega=\mathrm{diag}(\tau_1,\tau_2)$,
@@ -448,7 +440,7 @@ qualitatively distinct status.
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Proof of~(i)]
+\begin{proof}
 Substitute $\Omega=\mathrm{diag}(\tau_1,\tau_2)$ into the
 genus-$2$ Riemann theta series
 $\Theta_\delta(z\mid\Omega)=\sum_{n\in\ZZ^2+\delta_1}
@@ -483,7 +475,51 @@ $(\lambda_2,\tau_2)$. The DDYBE~\eqref{eq:ddybe} is now a
 single instance of Felder's DYBE (Felder 1994 Theorem 3.1,
 Etingof-Varchenko 1998 Theorem 1.1), which is a theorem.
 
-\emph{Proof of~(ii) (numerical evidence).}
+The separating-degeneration statement is the same factorised-limit
+calculation read as a boundary statement in
+$\overline{\cM}_2$: the $\Omega_{12}\to0$ boundary has two elliptic
+components, and the $e_1$-direction face weight sees only the
+$\tau_1$ component after the common $\theta_3(0|\tau_2)$ factor is
+cancelled. Thus the boundary equation is a single genus-$1$ Felder
+DYBE and carries no genuinely genus-$2$ content.
+\end{proof}
+
+\begin{proposition}[Generic-\texorpdfstring{$\Omega$}{Omega} DDYBE
+finite-window residuals; \ClaimStatusNumericalEvidence]
+\label{prop:g2-generic-ddybe-finite-window-evidence}
+\index{doubly-dynamical Yang-Baxter equation!generic genus-$2$ numerical evidence}
+For generic $\Omega\in\HHH_2$ with $\Omega_{12}\ne 0$, the
+face-model DDYBE residual is \(<10^{-4}\) in the finite windows
+listed below. This is numerical evidence for
+Conjecture~\textup{\ref{conj:g2-ddybe}}, not a proof of the
+full generic-$\Omega$ DDYBE and not a uniform estimate on
+\(\HHH_2\).
+
+The engine \texttt{compute/lib/face\_model\_ddybe\_engine.py}
+function \texttt{verify\_face\_ddybe\_g2} asserts
+\texttt{result['passed']} under the threshold
+\texttt{relative < 1e-4}, across four distinct
+$(z,w,\boldsymbol\lambda,\eta)$ parameter tuples sharing the
+single $\Omega$ value
+$\Omega_0 = \begin{pmatrix}1.1\mathrm{i} & 0.15+0.05\mathrm{i}\\
+0.15+0.05\mathrm{i} & 1.3\mathrm{i}\end{pmatrix}$
+(two distinct $\boldsymbol\lambda$, two distinct $(z,w)$ spectral
+pairs, $\eta=0.25, 0.2, 0.4$: levels $k=2,3$ and strong-coupling
+$\eta=0.4$), plus a second-$\Omega$ spot check at
+$\Omega_1 = \begin{pmatrix}2\mathrm{i} & 0.3+0.1\mathrm{i}\\
+0.3+0.1\mathrm{i} & 1.5\mathrm{i}\end{pmatrix}$.
+The sweep covers a positive-codimension subset of the
+three-complex-dimensional moduli $\HHH_2$ and provides
+pointwise, not uniform, evidence; the bulk of the sampling
+concentrates at the single point $\Omega_0$, with a single
+second-$\Omega$ witness. A sixth test at
+$\Omega=\mathrm{diag}(1\mathrm{i},1.3\mathrm{i})$,
+$\boldsymbol\lambda=(\lambda_1,0)$ is included as a diagonal-$\Omega$
+sanity check at tier~(T3); it carries no genuinely $g=2$
+content by Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}.
+\end{proposition}
+
+\begin{proof}[Numerical verification protocol]
 The 4x4 matrices $R^{\mathrm{face}}(z,\boldsymbol\lambda,\Omega)$
 are evaluated at $N=8$ lattice-truncation terms for the
 genus-$2$ Riemann theta, following the standard exponential
@@ -518,14 +554,12 @@ residual drops to $10^{-6}$ at $N=12$ is now a regression gate,
 not a standalone empirical remark. This is \emph{numerical
 evidence} for \texttt{conj:g2-ddybe} at finitely many parameter
 points, not a proof and not a uniform bound across $\HHH_2$.
-
-\emph{Proof of~(iii) (factorised-limit).}
-Direct consequence of (i).
 \end{proof}
 
-\begin{remark}[What regime~(ii) does and does not establish]
+\begin{remark}[What the numerical-evidence proposition does and does not establish]
 \label{rem:g2p-regime-ii-scope}
-Regime~(ii) establishes: the face-model DDYBE
+Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}
+establishes: the face-model DDYBE
 \eqref{eq:ddybe} holds to one part in $10^4$ across
 $(z,w,\boldsymbol\lambda,\eta)$ parameter instances
 sampled at two distinct $\Omega$ values
@@ -615,15 +649,16 @@ scalar product identity
  \Theta_\delta((z+\eta)e_1\mid\Omega),
 \]
 which is the Riemann-addition corollary governing Boltzmann-
-weight unitarity. It is distinct from the three-term Szeg\H{o}
-trisecant identity~\eqref{eq:fay-three-term}
-$S_{12}S_{23}+S_{23}S_{31}+S_{31}S_{12}=0$
-(Fay 1973 Cor.~2.5) which governs the bar-complex Stokes
-analysis in Remark~\ref{rem:why-a-not-b}. Both are theta
-identities due to Fay; only~\eqref{eq:fay-three-term} is
-the trisecant form. The bar-complex argument uses the trisecant form in
-the bar-differential $d_{\mathrm{bar}}^2 = 0$ proof and the
-Boltzmann-unitarity form in the face-model numerical checks.
+weight unitarity. It is distinct from the normalised
+Szeg\H{o}/prime-form Fay identity~\eqref{eq:fay-three-term}
+(Fay 1973 Cor.~2.5), whose torus form contains the
+$\vartheta_1'(0,\tau)^2$ prefactor and which governs the
+bar-complex Stokes analysis in Remark~\ref{rem:why-a-not-b}.
+Both are theta identities due to Fay; only~\eqref{eq:fay-three-term}
+is the trisecant form. The bar-complex argument uses the
+trisecant form in the bar-differential $d_{\mathrm{bar}}^2 = 0$
+proof and the Boltzmann-unitarity form in the face-model
+numerical checks.
 \end{remark}
 
 \begin{remark}[Non-separating degeneration: genuine open content]
@@ -706,17 +741,25 @@ not a doubly-dynamical invariant.
 
 \begin{remark}[Scope of the genus-$2$ DDYBE checks]
 \label{rem:g2-corrigenda}
-The genus-$2$ DDYBE checks separate into two statements:
+The genus-$2$ DDYBE checks separate into three statements:
 \begin{enumerate}[label=\textup{(\alph*)}]
+\item The diagonal/separating face-model degeneration is exact:
+ Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}
+ reduces it to Felder's genus-$1$ DYBE.
 \item The single-entry weight-zero check has agreement at
  $10^{-12}$; the generic-$\Omega$ DDYBE computation has numerical
- evidence at \texttt{relative < 1e-4} across five compute tests.
-\item The DDYBE face-model statement remains conjectural:
+ evidence at \texttt{relative < 1e-4} across five compute tests,
+ recorded in
+ Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
+\item The full generic-$\Omega$ DDYBE face-model statement remains
+ conjectural:
  \texttt{conj:g2-ddybe} carries \texttt{\ClaimStatusConjectured}.
-\item Fay~1973 Corollary~2.5 is the Szeg\H{o} three-term identity and
- holds uniformly at all $g\ge 0$ by direct application. It is
- distinct from the four-theta-nulls quartic identity on the theta
- divisor and from the numerically tested Boltzmann-weight unitarity
+\item Fay~1973 Corollary~2.5 is the normalised
+ Szeg\H{o}/prime-form trisecant identity and holds uniformly at
+ all $g\ge 0$ by direct application. Its torus form contains the
+ load-bearing $\vartheta_1'(0,\tau)^2$ prefactor. It is distinct
+ from the four-theta-nulls quartic identity on the theta divisor
+ and from the numerically tested Boltzmann-weight unitarity
  identity
  $\alpha\beta-\gamma\delta = \Theta(z-\eta)/\Theta(z+\eta)$.
 \item There are $30$ face-model tests: four genuinely
@@ -732,21 +775,24 @@ The genus-$2$ DDYBE checks separate into two statements:
 \end{enumerate}
 \end{remark}
 
-\begin{remark}[Dangling labels in the engine docstring]
+\begin{remark}[Engine label anchors]
 \label{rem:engine-docstring-corrigenda}
 The docstring of
-\texttt{compute/lib/genus2\_ddybe\_engine.py} references two
-labels \texttt{prop:g2-nonsep-degen} and
-\texttt{prop:g2-sep-degen} that are not declared in
-\texttt{higher\_genus\_modular\_koszul.tex}. The intended
-content is:
+\texttt{compute/lib/genus2\_ddybe\_engine.py} references
+\texttt{prop:g2-nonsep-degen} and
+\texttt{prop:g2-sep-degen}; both labels are now declared in
+\texttt{higher\_genus\_modular\_koszul.tex}. This local DDYBE
+chapter uses the following anchors for the same content:
 \begin{itemize}
 \item \texttt{prop:g2-nonsep-degen}: at the non-separating
  boundary $\Omega_{22}\to i\infty,\Omega_{12}\to 0$,
  the face-model $R$-matrix and DDYBE degenerate to a
  single genus-$1$ Felder DYBE in variable
  $\tau=\Omega_{11}$. This content is present in
- Remark~\ref{rem:g2p-g1-limit} above.
+ Remark~\ref{rem:g2p-g1-limit} above. It is not the
+ off-diagonal non-separating frontier with $\Omega_{12}$ fixed
+ nonzero, which remains open in
+ Remark~\ref{rem:g2-nonseparating-untested}.
 \item \texttt{prop:g2-sep-degen}: at the separating boundary
  $\Omega_{12}\to 0$ with $\Omega_{11},\Omega_{22}$ fixed,
  the DDYBE reduces to a single genus-$1$ Felder DYBE in
@@ -756,11 +802,10 @@ content is:
  Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
  and carries no genuinely genus-$2$ content.
 \end{itemize}
-The engine docstring should reference
-\texttt{rem:g2p-g1-limit} for the non-separating degeneration
-and Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
-for the separating degeneration. These two anchors state exactly
-the genus-$1$ Felder reductions used by the computation.
+These anchors state exactly the genus-$1$ Felder reductions used by
+the degeneration computations, while the finite-window generic
+off-diagonal tests are kept on the numerical-evidence surface
+Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
 \end{remark}
 
 % ========================================================
@@ -776,7 +821,7 @@ Flat KZB connection on
  $\overline{\cM}_{2,n}\times\HHH_2$
  & CEE09 &
  \cref{thm:genus-2-kzb-connection-platonic} \\
-Fay trisecant (Szeg\H{o} three-term) at all $g$
+Fay trisecant (normalised Szeg\H{o}/prime-form) at all $g$
  & Fay 1973 &
  \cref{thm:fay-trisecant-genus-2-specific} \\
 DDYBE at diagonal $\Omega$ (exact)
@@ -784,10 +829,10 @@ DDYBE at diagonal $\Omega$ (exact)
  \cref{thm:g2-face-model-bypass-scope-restricted}(i) \\
 DDYBE at generic $\Omega$ (numerical, $<10^{-4}$, 4 tests)
  & Four generic-\(\Omega\) residual tests at \(<10^{-4}\) &
- \cref{thm:g2-face-model-bypass-scope-restricted}(ii) \\
+ \cref{prop:g2-generic-ddybe-finite-window-evidence} \\
 DDYBE at separating boundary (factorised limit)
  & Exact factorised limit &
- \cref{thm:g2-face-model-bypass-scope-restricted}(iii) \\
+ \cref{thm:g2-face-model-bypass-scope-restricted}(ii) \\
 $\chi=-12$ at degree~$2$, $g=2$, $s=1$
  & Euler-characteristic computation &
  \cref{cor:g2-chi-minus-12} \\

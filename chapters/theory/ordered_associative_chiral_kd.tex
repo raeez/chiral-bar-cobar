@@ -43,9 +43,14 @@ The ordered bar complex $\Barchord(A)$ of a chiral algebra~$A$
 is the cofree coalgebra $T^c(s^{-1}\bar{A})$ with differential extracting
 collision residues at consecutive points and coproduct from interval-cutting.
 Its finite-type continuous linear dual, after passing through the
-Koszul-dual coalgebra $A^i=H^\bullet\Barchord(A)$, is the
-line-side Koszul-dual algebra $A^!_{\mathrm{line}}=(A^i)^\vee$;
-Verdier duality enters only after symmetric/Ran descent.
+quadratic presentation coalgebra
+$A^i=C_X(s^{-1}V,s^{-2}R)$ and its ordered comparison
+$q_A^{\mathrm{ord}}\colon A^i\to\Barchord(A)$, is the line-side
+Koszul-dual algebra $A^!_{\mathrm{line}}=(A^i)^\vee$ on the
+finite-type ordered Koszul locus.  There
+$H^\bullet(q_A^{\mathrm{ord}})$ identifies the presentation-coalgebra
+cohomology with $H^\bullet\Barchord(A)$.  Verdier duality enters after
+symmetric/Ran descent.
 For affine Kac--Moody inputs this algebra is the dg-shifted Yangian.
 
 \begin{remark}[$\Eone$-chiral notion used in this chapter]
@@ -67,6 +72,31 @@ on the ordered Koszul locus through the chiral quantum-group equivalence
 completed $\cW_{1+\infty}[\Psi]$ and $\cW_N[\Psi]$ theorem surfaces
 inscribed below\textup{)}; the ordered associative comparison does \emph{not}
 appeal to notions \textup{(D)}, \textup{(E)}.
+\end{remark}
+
+\begin{remark}[Presentation comparison firewall for ordered $\Eone$ inputs]
+\label{rem:ordered-presentation-comparison-firewall}
+\ClaimStatusConditional{}
+Definitions~\ref{def:einf-chiral}, \ref{def:pinf-chiral}, and
+\ref{def:e1-chiral} fix the hierarchy
+\[
+\Einf\text{-chiral}\subset \Pinf\text{-chiral}\subset
+\Eone\text{-chiral}
+\]
+inside the BD chiral tensor category, and
+Remark~\ref{rem:En-terminology} separates this usage from
+topological little-disks $E_1$.  All comparison among the five
+presentations of Warning~\ref{warn:multiple-e1-chiral} is imported
+only through Theorem~\ref{thm:e1-chiral-notions-collapse}: strict
+$\chirAss$ rectification, Etingof--Kazhdan reconstruction, ordered
+BD realization, and preservation of twisting morphisms are its
+hypotheses \textup{(H1)--(H4)}.  Hence no argument in this chapter
+transports a bar, Hochschild complex, twisting morphism, or Koszul
+dual across presentations \textup{(A)}, \textup{(B)}, \textup{(C)},
+or \textup{(E)} unless that theorem, or an equivalent comparison
+package, is explicitly invoked.  Presentation \textup{(D)}, the
+double-$A_\infty$ enhancement, remains outside the collapse theorem
+by Conjecture~\ref{conj:double-ainfty-notion-D-relation}.
 \end{remark}
 
 \begin{remark}[Bridge to the Koszul Reflection Theorem]
@@ -123,8 +153,11 @@ The annulus is the self-cotensor:
 \HH^{\mathrm{ch}}_\bullet(A)\simeq C_\Delta \square_{C^e}^{\mathbf R} C_\Delta.
 \]
 The ordered bar complex is the resolving $\Eone$-chiral coalgebra.
-On the Koszul locus its cohomology is the Koszul-dual coalgebra
-$A^i$, and the Koszul-dual algebra is $A^!=(A^i)^\vee$.
+On the Koszul locus the comparison
+$q_A^{\mathrm{ord}}\colon A^i\to\Barchord(A)$ is a
+quasi-isomorphism, so $H^\bullet(q_A^{\mathrm{ord}})$ gives the
+cohomological identification.  Finite-type duality gives the
+Koszul-dual algebra $A^!=(A^i)^\vee$.
 The associative dual already remembers the open boundary formalism.
 
 \section{The strongly admissible regime and the foundational inputs}
@@ -280,6 +313,49 @@ For an $A$-bimodule $M$ and a $C$-bicomodule $N$, define
 \]
 When $M=A$ and $N=C_\Delta$ we omit coefficients.
 \end{definition}
+
+\begin{definition}[Ordered Hochschild complex for genuine $\Eone$-chiral inputs;
+\ClaimStatusDefinitional]
+\label{def:ordered-hochschild-e1-input}
+\index{Hochschild complex!ordered $\mathbb{E}_1$-chiral}
+Let $A$ be a strongly admissible associative chiral algebra in the
+presentation fixed by Remark~\ref{rem:ord-assoc-notion-fixed}, and
+let $C=\Barchord(A)$.  The \emph{ordered Hochschild cochain complex}
+of $A$ is
+\[
+\HH^{\Eone,\mathrm{ord}}_{\mathrm{ch}}(A,A)
+:=
+\RHom_{A^e}^{\mathrm{ord}}(A,A),
+\]
+where the superscript ``ord'' means that the derived endomorphism is
+computed using the ordered simplicial bar resolution
+$B^\Delta_\bullet(A)$, with no $\Sigma_n$-coinvariants and no
+symmetric/Ran descent.  Under the ordered bar--cobar hypotheses this
+is equivalently the coalgebraic complex
+\[
+\HH^{\Eone,\mathrm{ord}}_{\mathrm{ch}}(A,A)
+\simeq
+\Coext_{C^e}^\bullet(C_\Delta,C_\Delta).
+\]
+This is the Hochschild object used for genuinely $\Eone$ inputs such
+as ordered Yangian and Etingof--Kazhdan quantum-vertex presentations.
+\end{definition}
+
+\begin{warning}[Deligne--Tamarkin and symmetric-bar firewall]
+\label{warn:deligne-tamarkin-ordered-firewall}
+\index{Deligne--Tamarkin theorem!ordered $\mathbb{E}_1$ firewall}
+\ClaimStatusConditional{}
+The symmetric/Ran form of the chiral Deligne--Tamarkin machinery is
+available for $\Einf$-chiral inputs carrying the required
+$\Sigma_\bullet$-equivariant factorization descent; see
+Remark~\ref{rem:center-scope-e-inf}.  For a genuinely ordered
+$\Eone$ input one must use
+Definition~\ref{def:ordered-hochschild-e1-input}.  The symmetric bar
+$\BarchSig(A)$, and hence any chiral Deligne--Tamarkin comparison
+that consumes it, is not available for a Yangian or EK quantum vertex
+input until the $R$-twisted descent datum of
+Proposition~\ref{lem:R-twisted-descent} has been proved.
+\end{warning}
 
 \section{Ordered bar coalgebras and the chiral shuffle theorem}
 \label{sec:shuffle}
@@ -485,11 +561,25 @@ having an ordered bar complex. The construction is the $R$-matrix.
 \index{monodromy!R-matrix}
 \index{Kohno connection}
 The bar differential on $\Barchord(A)$ extracts, at each
-collision $z_i=z_j$, the collision residue
-$r_{ij}(z_i-z_j)\in\operatorname{End}(\bar A\otimes\bar A)\otimes
+collision $z_i=z_j$, the collision kernel
+$K_{A,ij}^{\mathrm{coll}}(z_i-z_j)
+\in\operatorname{End}(\bar A\otimes\bar A)\otimes
 \mathcal{O}(*\Delta)$. By the bar kernel convention (the $d\log$
-kernel absorbs one power), the collision residue $r(z)$ has pole
+kernel absorbs one power), $K_A^{\mathrm{coll}}(z)$ has pole
 orders one less than the OPE.
+For a fixed input algebra we write the ordered two-point kernel as
+\begin{equation}\label{eq:ordered-classical-r-kernel-A}
+r_A(z)
+:=
+\operatorname{Res}^{\mathrm{coll}}_{z_1-z_2=z}
+\bigl(d_{\Barchord(A)}\bigr)_{(s^{-1}\bar A)^{\otimes 2}}
+\in
+\operatorname{End}(\bar A\otimes\bar A)\otimes k((z)).
+\end{equation}
+This operator-valued Laurent kernel is the primary ordered datum.
+Any scalar invariant such as $\kappa(A)$ is obtained only later by
+averaging, tracing, or passing to the modular shadow; it is not the
+source from which $r_A(z)$ is reconstructed.
 
 These residues define a flat connection on the trivial bundle
 over $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$ with fibre
@@ -563,6 +653,30 @@ R(z)
 \end{equation}
 where $z=z_1-z_2$ is the relative coordinate and $\mathcal{P}$ denotes
 path-ordering.
+We write $R_A(z)$ when the input algebra matters.  A quantization of
+the ordered classical kernel is a kernel in the completed spectral
+Laurent algebra
+\[
+R_A(z)\in
+\operatorname{End}(\bar A\otimes\bar A)((z^{-1}))[[\hbar]]
+\]
+with semiclassical expansion
+\[
+R_A(z)=\id+\hbar r_A(z)+O(\hbar^2),
+\]
+satisfying the spectral quantum Yang--Baxter equation
+\begin{equation}\label{eq:qybe-ordered-rkernel-A}
+R_{A,12}(z_{12})\,R_{A,13}(z_{13})\,R_{A,23}(z_{23})
+=
+R_{A,23}(z_{23})\,R_{A,13}(z_{13})\,R_{A,12}(z_{12}).
+\end{equation}
+In a quasi-Hopf or EK presentation the corresponding modified
+Yang--Baxter equation is the associator-twisted braided hexagon; in
+the strict RTT normalization it is exactly
+\eqref{eq:qybe-ordered-rkernel-A}.  The passage
+$r_A\rightsquigarrow R_A$ is therefore a quantization datum
+\textup{(}DK/EK, KZ monodromy, or an RTT/FRT kernel\textup{)}, not a
+formal consequence of the CYBE alone.
 
 At general~$n$, the pure braid group
 $P_n=\pi_1(\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C}))$
@@ -1015,31 +1129,25 @@ $(\iota^!)^2=(\iota^2)^!$, so $\iota^2=\id$ implies
 $(\iota^!)^2=\id$.
 \end{proof}
 
-\begin{remark}[Ordered Verdier duality does not exist]
+\begin{remark}[Symmetric Verdier algebra and the ordered opposite]
 \label{rem:ordered-verdier-nonexistence-opposite}
 \index{Verdier duality!ordered bar|textbf}
-The Verdier intertwining
-$\mathbb{D}_{\Ran}\,\barBch(\cA) \simeq \barBch(\cA^!)$
-\textup{(}Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}\textup{)}
-is a statement about the \emph{symmetric} bar on unordered
-$\Ran(X)$. The naive ordered analogue
-$\mathbb{D}_{\Ran}\,\barB^{\mathrm{ord}}(\cA)$ is
-\emph{undefined}: Verdier duality on $\Ran(X)$ requires
-the cosheaf/factorization property, which uses the
-\emph{symmetric} monoidal structure on disjoint-open covers.
-The ordered bar lives on $\mathrm{Conf}^<_n(X)$ (ordered
-configurations), which is \emph{not} a factorization space
-in the Beilinson--Drinfeld sense.
-The correct $\Eone$~analogue of Verdier intertwining is the
+Verdier duality for the symmetric Ran bar forms the algebra
+\[
+ K_X(\cA):=\mathbb D_{\Ran}\barBch_X(\cA).
+\]
+A Koszul-pair datum supplies the separate algebra map
+\(\nu_\cA\colon K_X(\cA)\to\cA^!\).  The ordered bar lives on
+$\mathrm{Conf}^<_n(X)$ and carries the
 \emph{opposite-coalgebra duality}
 of Theorem~\textup{\ref{thm:opposite}}: the reversal involution
 $\mathsf{R}_A$ provides
 $\barB^{\mathrm{ord}}(\cA)^{\mathrm{op}} \simeq
 \barB^{\mathrm{ord}}(\cA^{\mathrm{op}})$,
-which is an ordered (non-commutative) replacement for Verdier.
-The development of a full ``ribbon $\Ran$'' framework in which
-$\mathbb{D}_{\Ran}$ extends to ordered configurations is an open
-problem.
+which is the ordered noncommutative comparison available in the
+present ambient.  A full ribbon-$\Ran$ enhancement would extend
+Verdier duality to ordered configurations; its construction is an
+open problem.
 \end{remark}
 
 \begin{lemma}[Closure of admissibility under opposite and enveloping constructions]
@@ -2628,14 +2736,15 @@ has a simple pole, which falls in class~G.
 \begin{remark}[Contrast with the chiral \textup{(}symmetric\textup{)}
 Koszul dual]
 \label{rem:heisenberg-chiral-vs-ordered}
-The chiral Koszul dual of $\cH_k$ (Vol~I) is the
-commutative chiral algebra
+The chiral Koszul dual of $\cH_k$ (Vol~I) is the curved
+second-kind commutative chiral algebra
 \[
 \cH_k^{!,\mathrm{ch}}
 \;=\;
-\operatorname{Sym}^{\mathrm{ch}}(V^*),
+(\operatorname{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\omega),
 \]
-a free commutative vertex algebra on one generator.
+a free commutative associated-graded algebra on one shifted
+generator with curvature.
 The ordered Koszul dual $Y(\mathfrak{u}(1))$ carries
 strictly more structure: the spectral parameter~$u$
 (arising from the FM stratification in the ordered
@@ -3540,33 +3649,32 @@ coproduct on $\mathrm{Vir}_c$ has no non-primitive corrections at
 any degree; the mechanism is ghost-number filtration, not a
 cancellation.
 
-\begin{theorem}[Gravitational coproduct primitivity; \ClaimStatusProvedHere]
+\begin{theorem}[Virasoro generator coproduct primitivity;
+\ClaimStatusConditional]
 \label{thm:grav-coproduct-primitive}
 Let\/ $\Delta_z^{\mathrm{Vir}}$ denote the coproduct on the
 Virasoro algebra obtained by Drinfeld--Sokolov reduction from the
-affine coproduct on~$\widehat{\mathfrak{sl}}_2$. Then\/
-$\Delta_z^{\mathrm{Vir}}$ is strictly primitive at all degrees:
+affine coproduct on~$\widehat{\mathfrak{sl}}_2$, on the principal
+DS ghost-zero projection surface. Then the linear component is
+primitive on the Virasoro generator:
 \begin{equation}\label{eq:grav-coproduct-primitive}
 (p \otimes p) \circ \Delta_z^{\mathrm{Vir}}(T)
 \;=\;
 T \otimes 1 + 1 \otimes T,
 \end{equation}
-where $p$ is the projection to ghost number~$0$.
+where $p$ is the projection to ghost number~$0$. The all-degree
+vanishing of nonlinear generator-level coproduct components is the
+conditional signed ghost-defect statement isolated in Volume~II,
+Theorem~\textup{\ref*{V2-thm:gravitational-primitivity}}.
 \end{theorem}
 
 \begin{proof}
-The BRST charge $h = c + \phi\, b$ carries ghost degree~$-1$. Every
-HPL tree correction to the coproduct at degree~$r \ge 2$ passes through
-$h$-decorated internal edges, producing elements of ghost number
-$\neq 0$ on at least one tensor factor. Source trees (root on
-the left) contribute ghost~$+1$; target trees (root on the right)
-contribute ghost~$-1$ on one factor. In both cases,
-$p \otimes p$ kills the correction.
-
-The vanishing is not an accident of low degree. The ghost-number
-filtration is an exact functor on the category of transferred
-operations, and DS reduction preserves the filtration strictly.
-The statement holds at all degrees simultaneously.
+The displayed formula is the degree-one generator computation: the
+split affine Casimir terms contain weight-one current factors, and
+the projection \(p\otimes p\) to the Virasoro ghost-zero cohomology
+kills them.  Nonlinear HPL coproduct corrections require the signed
+tree count of the Volume~II theorem.  The slogan
+\(\mathrm{gh}(h)=-1\) is not by itself the proof of all arities.
 \end{proof}
 
 \begin{remark}[The $(m,\Delta)$-complexity plane]
@@ -3575,7 +3683,8 @@ The contrast between product and coproduct complexity is absolute.
 The transferred product $m_z^{\mathrm{Vir}}$ is infinitely
 complicated: the full $\Ainf$ tower is nonzero at all degrees
 (class~$\mathbf{M}$, shadow depth $r_{\max} = \infty$).
-The transferred coproduct is trivial. In the
+The transferred coproduct is generator-trivial on the signed
+ghost-defect surface. In the
 $(m,\Delta)$-complexity plane, gravity sits at $(\infty, 0)$:
 infinite product complexity, zero coproduct complexity.
 Gauge theory (affine Kac--Moody) sits at
@@ -3955,71 +4064,44 @@ one-dimensionality argument of Step~4 fails, and the
 strictification mechanism requires new input.
 \end{remark}
 
-\begin{remark}[Universal curvature invariant
-$\hbar^{2}\,K^{\kappa_{\mathrm{ch}}} = -1$]
+\begin{remark}[Line-side square-root convention at nonzero curvature;
+\ClaimStatusConditional]
 \label{rem:oackd-3}
-\index{curvature invariant!$K^{\kappa_{\mathrm{ch}}}$}%
-\index{Bruinier reciprocity!three faces}%
-\index{universal $\hbar^{2} K^{\kappa_{\mathrm{ch}}} = -1$}%
-The KM curvature identity
-\eqref{eq:km-yangian-curvature},
-$\kappa(Y_\hbar(\fg)) = -\dim(\fg)\cdot(k+h^\vee)/(2h^\vee)$,
-hides a sharper invariant that survives the passage to the BKM slot
-of Remark~\ref{rem:oackd-1}. Define the
-\emph{chiral curvature modulus}
+\index{curvature normalization!line-side product}%
+\index{deformation parameter!square-root convention}%
+The scalar Verdier conductor of Theorem~C is the additive invariant
+$K^\kappa(A,A^!)=\kappa(A)+\kappa(A^!)$.  A line-operator comparison
+introduces a different, presentation-dependent product
 \[
-K^{\kappa_{\mathrm{ch}}}(A)
+P^{\kappa}_{\mathrm{line}}(A)
 \;:=\;
-\kappa(A)\cdot\kappa\bigl(A^!_{\mathrm{line}}\bigr),
+\kappa_{\mathrm{vert}}(A)\,
+\kappa_{\mathrm{line}}\bigl(A^!_{\mathrm{line}}\bigr).
 \]
-i.e.\ the product of the chiral curvature on the vertex side with
-the chiral curvature on the line-side Koszul dual, read in the
-trace-form convention fixed by Remark~\ref{rem:ord-assoc-notion-fixed}.
-On the B-family of the CY-$2$ input \textup{(}the compact
-Hall--Drinfeld double after the compact passage datum of
-Remark~\ref{rem:oackd-1}\textup{)}, the modulus takes the value
-$K^{\kappa_{\mathrm{ch}}} = 8$,
-and this common value admits three genuinely independent derivations
-through Bruinier reciprocity for the Igusa form on the
-imaginary-root directions (automorphic face), through the lattice
-Borcherds denominator \cite{Borcherds1992} specialised to
-$\mathrm{II}_{3,19}$ (vertex face), and through the
-Schiffmann--Vasserot shuffle presentation of the CoHA
-(spectral face). For the standard slots whose line-side deformation
-parameter is constructed in this chapter, the rescaling
-$\kappa \mapsto \hbar\,\kappa$ that converts the trace-form curvature
-into the deformation-parameter curvature removes the family
-dependence:
+Here both factors belong to the same trace convention and require an
+independently constructed line-side dual.  On the locus
+$P^{\kappa}_{\mathrm{line}}(A)\in\CC^\times$, a choice of square root
+defines a deformation parameter by
 \[
-\hbar^{2}\,K^{\kappa_{\mathrm{ch}}}(A)
+\hbar^{2}\,P^{\kappa}_{\mathrm{line}}(A)
 \;=\;
 -1.
 \]
-For affine KM and Heisenberg this is the substitution
-$\hbar=(k+h^\vee)^{-1}$ or $\hbar=k^{-1}$ into the trace-form
-curvature. For $\beta\gamma$, Virasoro, and $\mathcal W_N$ it is the
-same calculation after the contact or DS-transport normalisation
-already recorded in their ordered-bar computations. For the BKM/K3
-slot it is conditional on the compact Hall--Drinfeld passage datum and
-on the value $K^{\kappa_{\mathrm{ch}}}=8$ above. No assertion is made
-here for an arbitrary modular Koszul algebra before both the
-line-side curvature and the deformation parameter have been
-constructed.
+Thus the displayed equation records the chosen line-side
+normalisation; its mathematical content lies in an independent
+construction of $P^{\kappa}_{\mathrm{line}}$ and of $\hbar$.  The
+zero-product lanes, including the computed Heisenberg and affine
+additive conductors, carry their trace normalisation directly.
 
-This is the scoped cross-family landscape invariant: the bar and
-cobar channels of the chain-level chiral Koszul duality are in
-reciprocal balance once $\hbar$ is fixed by the corresponding
-line-side normalisation. The identity is sharper than the
-family-by-family complementarity values of Theorem~C (Volume~I): those values
-$\kappa+\kappa^{!}\in\{0,8,13,250/3,98/3\}$ on the canonical
-five-archetype $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$
-landmark ceiling (the classical four-archetype subset
-$\{0,13,250/3,98/3\}$ restricts to $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$)
-record the family-dependent additive offset of $\kappa$, while
-$\hbar^{2}\,K^{\kappa_{\mathrm{ch}}}$
-records the family-independent multiplicative pairing. The two
-invariants are orthogonal witnesses of the same underlying duality
-structure.
+For the K3 lattice, the exact arithmetic statement is
+$2c_+=2\cdot4=8$ for the Mukai lattice of signature $(4,20)$.
+Identifying this integer with a chiral conductor requires the
+comparison package $H_{\mathsf B}$; identifying it further with
+$P^{\kappa}_{\mathrm{line}}$ requires a compact Hall object, its
+line-side dual, and a common trace form.  Under those hypotheses the
+chosen branch gives $\hbar^2=-1/8$.  The computed additive conductors
+in Volume~I are $\{0,13,250/3\}$.  The BP value $25/3$ and the Mukai
+value $8$ remain separate open comparison ledgers.
 \end{remark}
 
 
@@ -4588,7 +4670,8 @@ Hall--Drinfeld double $\cA = \mathbf{H}_{\Delta_5}$, when the compact
 passage datum of Remark~\ref{rem:oackd-1} has been supplied. The finite Rees
 hCS--Hall maps alone give only a bounded positive-half target and do
 not construct $\cA$. The chain-level ordered Koszul dual
-$\cA^!_{\mathrm{line}}=(H^\bullet\Barchord(\cA))^\vee$ produced by
+$\cA^!_{\mathrm{line}}=(\cA^i)^\vee$ is produced from the quadratic
+comparison $q_\cA^{\mathrm{ord}}\colon\cA^i\to\Barchord(\cA)$ by
 finite-type ordered linear duality and the opposite-coalgebra duality
 of Theorem~\textup{\ref{thm:opposite}} is, on the
 quadratic stratum $R_{\mathrm{quad}}$ of
@@ -4627,21 +4710,19 @@ denominator identity is
 Theorem~$10.1$\textup{)}.
 
 \smallskip
-\noindent\emph{Specialisation via Theorem~C.}
-The $\hbar$-parameter is fixed by the universal curvature identity
-$\hbar^{2}\,K^{\kappa_{\mathrm{ch}}}=-1$ of
-Remark~\textup{\ref{rem:oackd-3}}. For the K3 BKM slot
-$K^{\kappa_{\mathrm{ch}}}=8$ \textup{(}Bruinier\,2002,
-Proposition~$5.1$; Vol~I,
-Remark~\textup{\ref{rem:climax-k3-face}}\textup{)}, so
+\noindent\emph{Conditional line-side normalisation.}
+The Mukai lattice has signature $(4,20)$, hence the exact lattice
+integer $2c_+=8$.  Supply the compact comparison package
+$H_{\mathsf B}$, construct the line-side curvature in the same trace
+convention, and identify
+$P^\kappa_{\mathrm{line}}=2c_+$.  The square-root convention of
+Remark~\textup{\ref{rem:oackd-3}} then gives
 \[
  \hbar^{2}_{\mathrm{K3}} \;=\; -\tfrac{1}{8}.
 \]
-The specialisation $\hbar^{2} = -1/8$ is not a free parameter: it is
-the unique value at which the ordered bar--cobar composite closes
-strictly on the ordered Koszul locus
-$\overline{\mathcal{A}_2}\setminus H_1$ of
-Remark~\textup{\ref{rem:k3-koszul-structure-precise}}.
+This equation is conditional on the three comparison inputs just
+listed.  A proof of strict ordered bar--cobar closure at this branch is
+an additional obligation in the compact Hall programme.
 
 \smallskip
 \noindent\emph{Arthur-packet witness.}
@@ -6372,6 +6453,70 @@ $2\pi i$, and the $B$-cycle monodromy is the geometric mechanism that
 implements this exponentiation.
 \end{proof}
 
+\begin{proposition}[Quantum-group convention bridge for DK/KZ readouts;
+\ClaimStatusProvedHere]
+\label{prop:dk-q-convention-bridge}
+\index{quantum group parameter!KZ convention bridge}
+\index{monodromy!self versus mutual}
+\index{framing square root!DK convention}
+\textup{[}Type signature:
+$(\mathrm{Open/line},\mathrm{KZ\ monodromy\ readout},
+\mathrm{levels}=1\to4,
+\mathrm{hypothesis\ package}=\mathrm{affine\ evaluation\ surface}
+\ +\ \mathrm{chosen\ Drinfeld\ associator}
+\ +\ \mathrm{half\text{-}monodromy\ convention})$\textup{].}
+On the affine evaluation surface the additive parameter is
+\[
+\hbar=(k+h^\vee)^{-1}.
+\]
+The full $B$-cycle/self-monodromy factor is
+\begin{equation}
+\label{eq:dk-full-monodromy-q-square}
+q^2=e^{2\pi i\hbar},
+\end{equation}
+and the quantum-group braiding parameter is the framing square root
+\begin{equation}
+\label{eq:dk-half-monodromy-q}
+q=e^{\pi i\hbar}=e^{\pi i/(k+h^\vee)}.
+\end{equation}
+With this convention, the KZ local monodromy around
+$z_i=z_j$ is
+\begin{equation}
+\label{eq:dk-kz-monodromy-sign}
+\exp(2\pi i\,\hbar\,\Omega_{ij}),
+\end{equation}
+while the braided tensor category uses the half-braiding
+$P\circ R$ whose diagonal framing contribution is the square root
+\eqref{eq:dk-half-monodromy-q}.  The modular $T$-matrix convention is
+\begin{equation}
+\label{eq:dk-t-matrix-convention}
+T_{ii}=\exp\bigl(2\pi i(h_i-c/24)\bigr),
+\end{equation}
+so self-monodromy \textup{(}twist/framing of one object\textup{)} and
+mutual monodromy \textup{(}double braiding of two objects\textup{)}
+are related by the ribbon identity, not by equality of the two
+numbers.  Converting between KZ, quantum-group, and modular
+$T$-matrix conventions therefore requires carrying the square root
+\eqref{eq:dk-half-monodromy-q}, the associator gauge, and the
+orientation of the loop around the diagonal.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:yangian-quantum-group} identifies the full
+$B$-cycle monodromy as $e^{2\pi i\hbar}=q^2$ and the standard
+quantum-group parameter as its half-monodromy square root
+$q=e^{\pi i\hbar}$.  The KZ connection has residue
+$\hbar\Omega_{ij}$ along the diagonal $z_i=z_j$, hence a positively
+oriented loop has monodromy
+$\exp(2\pi i\hbar\Omega_{ij})$.  Passing from this full local
+monodromy to the braided tensor category chooses the Drinfeld
+associator and the square-root framing convention, producing the
+half-braiding parameter in \eqref{eq:dk-half-monodromy-q}.  The
+formula for $T_{ii}$ is the standard conformal-block twist convention;
+the ribbon identity then separates the twist of one object from the
+mutual double braiding of two objects.
+\end{proof}
+
 \begin{conjecture}[Yangian--quantum group deformation beyond the affine lineage]
 \ClaimStatusConjectured
 \label{conj:yangian-quantum-group-general}
@@ -6642,7 +6787,7 @@ the ordered logarithmic propagator $\eta = d\log(z_1 - z_2)$.
 A pole of order~$p$ in the OPE contributes a term
 $c^K_{IJ;p-1}\,(z_1 - z_2)^{-p}$ to the structure constants.
 The $d\log$ kernel absorbs one power of the pole
-(the collision residue $r(z)$ has pole orders one less than the OPE),
+(the collision kernel $K_A^{\mathrm{coll}}(z)$ has pole orders one less than the OPE),
 producing a residue of order $p - 1$ in the collision variable.
 This residue has pole/normal-jet depth $p{-}1$ along the same
 geometric collision divisor; it is not a statement that the degree-$2$
@@ -6807,6 +6952,64 @@ vanishes; the remaining kernel is exactly the ordinary
 symmetry/coinvariant span
 \(\langle\alpha-\epsilon(\sigma)\tau_\sigma\alpha\rangle\).
 \end{proof}
+
+\begin{proposition}[Averaging, Reynolds, and \(R\)-twisted descent gate;
+\ClaimStatusConditional]
+\label{prop:averaging-reynolds-rtwisted-gate}
+\index{averaging map!Reynolds and R-twisted gate}
+\index{R-twisted coinvariants!bar differential}
+\index{kernel of averaging!degree two and higher}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{ordered\ bar\ descent},
+\mathrm{level}=2\to5,
+\mathrm{hypothesis\ package}=\mathrm{char}\,0
+\ +\ \mathrm{completed\ equivariance}
+\ +\ \mathrm{strong\ unitary}\ R
+\ +\ \mathrm{finite\ arity})$\textup{].}
+The universal conductor used in this chapter is the filtered morphism
+\[
+\mathrm{av}_\cA\colon
+\mathfrak g^{E_1}_\cA\longrightarrow \mathfrak g^{\mathrm{mod}}_\cA
+\]
+induced aritywise by the Reynolds operator
+\[
+\mathrm{Av}_n=\frac1{n!}\sum_{\sigma\in\Sigma_n}\rho(\sigma).
+\]
+The scalar \(1/n!\) requires characteristic zero, and on completed
+arity \(n\) the operator is the continuous endomorphism induced by the
+finite group algebra action on each finite conformal-weight window and
+then passed to the strict inverse limit.
+
+If the \(\Sigma_n\)-action is compatible with the bar differential,
+\(\rho(\sigma)d_B=d_B\rho(\sigma)\), then
+\(\mathrm{Av}_n d_B=d_B\mathrm{Av}_n\), so averaging is a chain map.
+If, in addition, the action is by dg Lie automorphisms of the ordered
+convolution algebra, then \(\mathrm{av}_\cA\) is a dg Lie morphism.
+Without those equivariance hypotheses it is only a continuous linear
+projection on the underlying completed vector space.
+
+For a strong-unitary \(R\)-twisted descent datum, define the
+\(R\)-twisted coinvariant complex by
+\[
+C_{\Sigma_n,R}
+:=
+C\Big/
+\left\langle x-\rho_R(\sigma)x:\sigma\in\Sigma_n,\ x\in C\right\rangle .
+\]
+When \(\rho_R(\sigma)\) commutes with \(d_B\), the quotient inherits
+the bar differential.  When \(\rho_R(\sigma)\) acts by dg Lie
+automorphisms, the quotient also inherits the convolution bracket.
+In degree \(2\) the kernel of \(\mathrm{av}\) is the ordered
+antisymmetric residue, equivalently the ordered \(r\)-matrix datum:
+\[
+\ker(\mathrm{av}_2)=\bigwedge\nolimits^2 V
+\]
+on a finite generator window \(V\).  In higher degree, the nontrivial
+isotypic summands of the \(\Sigma_n\)-action carry the braid and
+associator data; Proposition~\ref{prop:ker-av-schur-weyl} gives their
+bare tensor-power dimensions, while passage to chiral-centre
+cohomology is a separate theorem or conjecture in each family.
+\end{proposition}
 
 \begin{remark}[Physical meaning: the soft graviton hierarchy]
 \label{rem:tridegree-physical}
@@ -7445,9 +7648,10 @@ The Heisenberg R-matrix $R(z) = \exp(k\hbar/z)$
 (Theorem~\ref{thm:heisenberg-rmatrix}) is an infinite power
 series; the free-field collision-residue monodromy is trivial, while
 the regular contact transport terminates at linear order. This
-dichotomy reflects the pole-order classification: double pole with
-scalar residue (class~G) versus simple pole whose pole residue drops
-but whose regular contact class is nilpotent (class~C).
+dichotomy reflects the composite-closed support-packet classification:
+the Heisenberg packet is binary and scalar (class~G), whereas the
+$\beta\gamma$ generator pole is simple but its closed contact envelope
+is finite and nilpotent (class~C).
 \end{remark}
 
 \begin{theorem}[Wakimoto bar complex descent;
@@ -8689,9 +8893,11 @@ obstruction), so $r_{\max} = \infty$ and the $A_\infty$-chiral
 structure is \emph{non-formal}.
 
 \emph{Ordered Koszul duals.}
-For affine $\widehat{\mathfrak{g}}_k$: the ordered Koszul dual is
-the Yangian $Y_\hbar(\mathfrak{g})$
-(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}).
+For affine $\widehat{\mathfrak{g}}_k$: under the ordered PBW,
+completion, and Drinfeld--Kohno comparison hypotheses, the ordered
+line-operator companion is the Yangian $Y_\hbar(\mathfrak{g})$
+(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}); this is not a
+bare identification with the strict symmetric chiral Koszul dual.
 For Virasoro and $\mathcal{W}_N$: the ordered bar-dual lies on the
 completed infinite-generator surface; under the Volume~II
 $\mathsf{E}_1$ hypotheses its finite windows are represented by the
@@ -9135,7 +9341,9 @@ The chiral Drinfeld formula
 $S(z) = \sigma \circ \Delta^{\mathrm{ch}}
 \circ (\Delta^{\mathrm{ch},\mathrm{op}})^{-1}$
 defines the vertex $R$-matrix once the Drinfeld--Kohno or
-Etingof--Kazhdan quantization datum has been supplied.  The
+Etingof--Kazhdan quantization datum has been supplied: source Lie
+bialgebra, \(\hbar\)-adic/pro-nilpotent topology, associator, and
+QUE/quasi-Hopf target.  The
 pentagon for~$\Phi$ gives the braid coherence; the QYBE is the
 hexagon consequence for the induced braiding.  Coassociativity alone
 recovers the classical CYBE at the infinitesimal residue level and
@@ -9176,75 +9384,56 @@ $\mathrm{GRT}_1(\bQ)$ acts transitively on the set of admissible
 associators, so
 Theorem~\textup{\ref{thm:chiral-qg-equiv}} produces a
 $\mathrm{GRT}_1(\bQ)$-torsor of equivalences rather than a single
-canonical one. At the level of the derived centre and of cohomology,
-this torsor action is trivial: the cohomological image of the
-equivalence is associator-independent (checked for $\mathfrak{sl}_2$
-and extended structurally to all simple $\fg$). At the cochain level,
-different associator representatives produce coproducts related by a
-gauge transformation whose cohomology class vanishes; the
-equivalences are homotopic but not equal. The statement of
-Theorem~\textup{\ref{thm:chiral-qg-equiv}} is therefore canonical at
-$\mathrm{H}^0$ and non-canonical up to $\mathrm{GRT}_1(\bQ)$ at the
-cochain level. Throughout the chapter we read the equivalence at
-$\mathrm{H}^0$ unless a specific associator class is fixed.
+canonical one. The invariant actually used below is narrower: for the
+verified $\mathfrak{sl}_2$ and affine Kac--Moody checks, the
+bar-side $\mathrm{H}^0$ shadow \textup{(}$\kappa$, the shadow tower,
+and the cohomology class of the ordered Maurer--Cartan datum
+\textup{)} is unchanged after replacing $\Phi$ by a
+$\mathrm{GRT}_1(\bQ)$-transport. For a general simple $\fg$ this
+associator-independence is a comparison hypothesis in the ordered
+Koszul/descent package, not a formal consequence of the
+$\mathrm{GRT}_1$ action. It does not prove
+$\mathrm{GRT}_1$-triviality of categorical modular data, the
+Drinfeld centre, the line category, or any root-of-unity BKM
+$S$-matrix. At the cochain level, different associator
+representatives produce coproducts related by the supplied gauge
+transformation inside the chosen descent datum; the representatives
+are homotopic in that datum but are not equal. The statement of
+Theorem~\textup{\ref{thm:chiral-qg-equiv}} is therefore canonical
+only after passing to the specified $\mathrm{H}^0$ bar-shadow quotient
+and remains non-canonical up to $\mathrm{GRT}_1(\bQ)$ at the
+cochain/coproduct level. Throughout the chapter a stronger
+chain-level claim requires fixing a specific associator class.
 \end{remark}
 
-\begin{remark}[Igusa form as the gauge invariant of the
-compact Hall--Drinfeld double]
+\begin{remark}[Automorphic normalization and the compact Hall
+recognition problem; Open]
 \label{rem:oackd-4}
-\index{Igusa form!as gauge invariant}%
-\index{$H^2(\fg_{\Delta_5})^{\ZZ/2,K(1)}$}%
+\index{Igusa form!compact Hall recognition problem}%
 \index{automorphic kernel!Siegel genus two}%
-The Drinfeld associator torsor $\mathrm{GRT}_1(\bQ)$ of
-Remark~\ref{rem:chiral-qg-grt1-torsor} witnesses the gauge ambiguity
-on the affine side; its BKM counterpart admits a sharper
-classification. For the compact Hall--Drinfeld double of
-Remark~\ref{rem:oackd-1}, attached to the signature-$(2,1)$
-Manin pair $(\fg_{\Delta_5}, \fn_+^{\mathrm{imag}} +
-\fh^{\mathrm{imag},\mathrm{rk}\,23})$, the relevant
-$H^2$ is not the deformation-cohomology
-$H^2(\fg,\fg\otimes\fg)$ of the spectral Drinfeld obstruction
-(Definition~\ref{def:spectral-drinfeld-class-oackd}) but the
-equivariant cohomology
+The established automorphic input is the Borcherds product
+normalisation.  In theta normalisation the weight-$5$ form
+$\Delta_5$ has leading coefficient $64$; the monic product is
+$D_5=64^{-1}\Delta_5$, and
 \[
-H^2\bigl(\fg_{\Delta_5}\bigr)^{\ZZ/2,\,K(1)}
+  \Phi_{10}^{\mathrm{un}}=\Delta_5^2,
+  \qquad
+  \Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2.
 \]
-computed with respect to the $\ZZ/2$-Fricke involution and the
-$K(1)$-local refinement of the K3 Fock lattice. This group is
-one-dimensional, with canonical generator the weight-$5$ Maass-spin
-Igusa square root \(\Delta_5\), satisfying
-\(\Phi_{10}^{\mathrm{un}}=\Delta_5^2\). The primitive BKM denominator
-line is the
-\(\Delta_5\)-line; in monic Borcherds normalisation
-\(D_5=64^{-1}\Delta_5\). The OP square is
-\(\Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2\), and the scalar
-branch is
-\(Z^X_{\mathrm{OP/DT}}=-(\Phi_{10}^{\mathrm{OP}})^{-1}
-=-4096\,\Delta_5^{-2}\). These are orientation-forgetful
-normalisations and do not supply the Hall double, the compact CoHA, or
-the gauge class. The scalar \(64\) and its square are checked, with this
-normalisation, by
+The coefficient $64$ and its square are checked, in this convention, by
 \texttt{igusa-cusp-form/compute/verify\_square\_root.py} and
 \texttt{calabi-yau-quantum-groups/compute/lib/borcherds\_denominator\_phi10\_engine.py};
-those computations check the Borcherds/Gritsenko coefficient
-normalisation, not compact Hall data. The classification statement
-\[
-H^2\bigl(\fg_{\Delta_5}\bigr)^{\ZZ/2,\,K(1)}
-\;\cong\;
-\CC\cdot\Delta_5
-\]
-identifies $\Delta_5$ as the unique (up to scalar) gauge invariant
-of the compact Hall--Drinfeld double. Concretely, $\Delta_5$ plays the
-role that the Drinfeld associator $\Phi$ plays for simple $\fg$:
-where $\Phi$ is a cochain representative of the trivial class in
-$H^2(\fg,\fg\otimes\fg)$ (since the class vanishes for every simple
-$\fg$ by Theorem~\ref{thm:km-yangian}, Step~$4$), here the class does
-\emph{not} vanish and its nonzero value is recorded by a single
-automorphic form. The Bruinier-reciprocity identity of
-Remark~\ref{rem:oackd-3} rests on this classification: the three
-faces of $K^{\kappa_{\mathrm{ch}}}=8$ are three representations of the
-same one-dimensional cohomology class as $\Delta_5$ specialised through
-three different integral transforms.
+they establish the scalar automorphic face.
+
+The compact Hall statement requires a separately defined deformation
+complex for the completed Hall--Drinfeld double, together with the
+Fricke action, orientation data, and a comparison map from its
+cohomology to the Borcherds-product line.  The recognition target is a
+one-dimensional image generated by $\Delta_5$.  Establishing that
+target, its injectivity range, and its relation to the Mukai integer
+$2c_+=8$ is an open theorem obligation.  This formulation keeps the
+automorphic denominator, the Hall object, and the chiral conductor as
+three typed layers joined by explicit comparison maps.
 \end{remark}
 
 \begin{corollary}[The ordered bar encodes all three structures]
@@ -10144,10 +10333,13 @@ absorption), providing the boundary algebra of higher-spin
 holographic gravity.
 \end{remark}
 
-\begin{remark}[GRZ comparison]
+\begin{remark}[GRZ comparison; \ClaimStatusConditional]
 \label{rem:grz-comparison}
 Theorem~\ref{thm:w-infty-chiral-qg} has three comparison surfaces
-in the type-$A$ literature.
+in the type-$A$ literature. The cited type-$A$ results are external;
+the identification with the ordered $\cW_{1+\infty}$ chiral quantum
+group of this manuscript is conditional on the hypothesis package of
+Theorem~\ref{thm:w-infty-chiral-qg}.
 
 \smallskip
 \noindent\emph{(1) Corner truncations.}
@@ -10199,7 +10391,6 @@ stage, not on the primitive bar coalgebra.
 
 \smallskip
 \noindent\emph{Spectral-parameter firewall.}
-\ClaimStatusProvedElsewhere{}
 This convention does not license erasure of spectral parameters
 from associative Yangians or from topological Drinfeld-centre
 language. The associative Yangian $Y(\mathfrak g)$ has evaluation modules
@@ -10799,7 +10990,7 @@ carry spin-dependent coefficients. At spin~$3$ the unique
 composite correction
 $(1 - \Psi)/(2\Psi^2)$ on $J \otimes {:}J^2{:} + {:}J^2{:} \otimes J$
 is established in
-Proposition~\textup{\ref{prop:spin3-coproduct}} above.
+Proposition~\textup{\ref{prop:spin3-miura-coprod}} above.
 For $s \geq 4$ no closed form for the composite corrections is
 established in this volume.
 \end{remark}
@@ -12123,323 +12314,227 @@ lift of the BRST differential to the ordered bar coalgebra beyond the
 principal and hook-type regimes.
 \end{remark}
 
-\subsection{Coderived chiral coproduct for class~M}
+\subsection{The additional datum of a chiral coproduct}
 \label{subsec:coderived-chiral-coproduct}
 
-The chiral bialgebra equivalence
-(Theorem~\ref{thm:chiral-qg-equiv}) is restricted to the ordered Koszul
-locus: the arrow $\beta$ from $A_\infty$-maps to the chiral
-coproduct applies the cobar functor $\Omega$ to the deconcatenation
-coproduct $\Delta$ on~$\barB^{\mathrm{ord}}(\cA)$, and the
-identification $\cA \simeq \Omega(\barB^{\mathrm{ord}}(\cA))$
-is a quasi-isomorphism only on the ordered Koszul locus. For raw
-direct-sum class~$\mathsf{M}$ bar complexes, without a strict
-completed/Yangian comparison package, the bar-cobar counit is
-\emph{not} a chain-level quasi-isomorphism but \emph{is} an
-isomorphism in the coderived category $D^{\mathrm{co}}$
-(Theorem~\ref{thm:off-koszul-ran-inversion}). This does not
-contradict the completed positive-energy/Yangian surfaces of
-Theorems~\ref{thm:w-infty-chiral-qg} and
-\ref{thm:glN-chiral-qg}: those theorems work in a completed
-strict presentation, not in the raw direct-sum bar ambient.
-The deconcatenation coproduct, being a purely combinatorial
-structure on the cofree tensor coalgebra, survives intact and
-has a coderived image. This gives the following conjectural
-coderived extension of the chiral quantum group equivalence.
+For an augmented chiral algebra $\cA$, the ordered bar object
+$B^{\mathrm{ord}}(\cA)$ carries its deconcatenation coalgebra
+structure.  Under the Ran reconstruction package $H_A$, the counit
+$\Omega B^{\mathrm{ord}}(\cA)\to\cA$ gives an algebra model for
+$\cA$.  A coproduct
+$\cA\to\cA\widehat\otimes\cA$ is a further structure: it belongs to
+the theory of bialgebra objects and requires compatibility with the
+chiral product.  The fixed-coalgebra theorem
+\ref{thm:off-koszul-ran-inversion} compares second-kind module
+categories over $B^{\mathrm{ord}}(\cA)$.  Its source and target are
+module categories over this fixed coalgebra.
 
-\begin{conjecture}[Coderived chiral coproduct; \ClaimStatusConjectured]
+\begin{definition}[Chiral bialgebra lifting datum;
+\ClaimStatusDefinitional]
+\label{def:chiral-bialgebra-lifting-datum}%
 \label{conj:coderived-chiral-coproduct}%
-\index{coderived category!chiral coproduct|textbf}%
-\index{coproduct!chiral!coderived extension}%
-\index{chiral quantum group!coderived extension}%
-Let $\cA$ be a complete augmented chiral algebra with
-finite-dimensional graded/conformal pieces, so that continuous
-duals and completed tensor products are defined, of arbitrary
-shadow class.
+Let $\cA$ be a complete augmented chiral algebra.  A chiral bialgebra
+lifting datum on $\cA$ consists of
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Coderived chiral coproduct.)}
- The deconcatenation coproduct
- $\Delta \colon \barB^{\mathrm{ord}}(\cA) \to
- \barB^{\mathrm{ord}}(\cA) \otimes
- \barB^{\mathrm{ord}}(\cA)$
- is a CDG-coalgebra map. Applying the coderived cobar functor
- $\Omega^{\mathrm{co}}$ of
- Theorem~\textup{\ref{thm:off-koszul-ran-inversion}} produces a
- morphism in $D^{\mathrm{co}}$:
- \[
- \Delta^{\mathrm{ch,co}}
- \;=\; \Omega^{\mathrm{co}}(\Delta)
- \colon \cA
- \;\longrightarrow\;
- \cA \mathbin{\hat\otimes}^{\mathrm{co}} \cA,
- \]
- where $\hat\otimes^{\mathrm{co}}$ is the completed tensor
- product in $D^{\mathrm{co}}$.
-\item \textup{(Coderived coassociativity.)}
- The strict coassociativity of deconcatenation
- $(\Delta \otimes \id) \circ \Delta
- = (\id \otimes \Delta) \circ \Delta$
- descends through $\Omega^{\mathrm{co}}$ to coassociativity
- up to conjugation by a Drinfeld associator
- $\Phi \in \exp(\hat{\mathfrak{t}}_3)$ in $D^{\mathrm{co}}$:
- \[
- (\Delta^{\mathrm{ch,co}} \otimes \id)
- \circ \Delta^{\mathrm{ch,co}}
- \;=\;
- \Phi^{-1} \cdot
- (\id \otimes \Delta^{\mathrm{ch,co}})
- \circ \Delta^{\mathrm{ch,co}}
- \cdot \Phi.
- \]
-\item \textup{(Class-by-class agreement.)}
- For classes~$\mathsf{G}$, $\mathsf{L}$, and~$\mathsf{C}$
- \textup{(}where chain-level bar-cobar inversion holds\textup{)},
- $\Delta^{\mathrm{ch,co}}$ agrees with the chain-level chiral
- coproduct $\Delta^{\mathrm{ch}}$ of
- Theorem~\textup{\ref{thm:chiral-qg-equiv}}.
- For raw direct-sum class~$\mathsf{M}$ inputs with no strict
- completed/Yangian comparison package, $\Delta^{\mathrm{ch,co}}$
- is the canonical coproduct produced by deconcatenation and equips
- the input with a coderived chiral quantum group structure. When
- a weight-completed or Yangian positive-energy package supplies a
- strict completed coproduct, its image in $D^{\mathrm{co}}$ agrees
- with $\Delta^{\mathrm{ch,co}}$.
+\item a continuous morphism of augmented chiral algebras
+\[
+ \Delta_{\cA}\colon\cA\longrightarrow
+ \cA\widehat\otimes\cA;
+\]
+\item the coassociative and counital identities
+\[
+ (\Delta_{\cA}\widehat\otimes\id)\Delta_{\cA}
+ = (\id\widehat\otimes\Delta_{\cA})\Delta_{\cA},
+ \qquad
+ (\epsilon\widehat\otimes\id)\Delta_{\cA}
+ =\id
+ = (\id\widehat\otimes\epsilon)\Delta_{\cA};
+\]
+\item a filtered comparison between the bar construction of
+$\Delta_{\cA}$ and the chosen completed tensor product, compatible
+with the Ran factorization maps and the finite-window transition
+morphisms.
 \end{enumerate}
-\end{conjecture}
+We denote the space of such data by $\mathsf{BiLift}(\cA)$.
+\end{definition}
 
-\begin{remark}[Structure of the coderived coproduct conjecture]
+\begin{proposition}[The dual-number obstruction;
+\ClaimStatusProvedHere]
+\label{prop:dual-number-bialgebra-obstruction}
+Let $k$ have characteristic zero and let
+$A=k[\epsilon]/(\epsilon^2)$ with $\epsilon$ even of degree zero and
+with its standard augmentation.
+\textup{[Type signature: Open quadrant; augmented associative
+presentation over a point; Beilinson level~$1$; hypothesis package
+$\operatorname{char}k=0$.]}
+Then
+\[
+ \mathsf{BiLift}(A)=\varnothing.
+\]
+Consequently, a functorial coproduct on augmented associative or
+chiral algebras requires additional input restricting the source
+category.
+\end{proposition}
+
+\begin{proof}
+Counitality forces every candidate to have the form
+\[
+ \Delta_A(\epsilon)
+ =\epsilon\otimes1+1\otimes\epsilon
+  +a\,\epsilon\otimes\epsilon,
+ \qquad a\in k.
+\]
+Since $\Delta_A$ is an algebra morphism, the relation
+$\epsilon^2=0$ gives
+\[
+ 0=\Delta_A(\epsilon^2)=\Delta_A(\epsilon)^2
+   =2\,\epsilon\otimes\epsilon.
+\]
+The tensor $\epsilon\otimes\epsilon$ is a basis vector and
+$2\in k^\times$, giving the required contradiction.
+\end{proof}
+
+\begin{remark}[Four type signatures at level~2]
 \label{rem:coderived-chiral-coproduct-structure}%
 \index{coderived category!chiral coproduct!mechanism}%
-The conjecture combines three proved inputs with two unproved ones.
-It separates three ambients. The raw direct-sum class~$\mathsf M$
-bar complex has no ordinary chain-level bar-cobar inverse in
-$\Ch(\Vect)$. Completed positive-energy/Yangian presentations can
-carry strict completed coproducts, as in
-Theorems~\ref{thm:w-infty-chiral-qg} and
-\ref{thm:glN-chiral-qg}. The coderived coproduct is the universal
-off-locus construction and is required to be the image of those
-strict completed coproducts whenever such a completed presentation
-exists.
-
-The three proved inputs are:
+Four constructions meet in the completed level-$2$ ambient:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item The deconcatenation coproduct $\Delta$ on the cofree tensor
- coalgebra $T^c(s^{-1}\bar\cA)$ is strictly coassociative and the
- bar differential $d_{\barB}$ is a coderivation with respect
- to~$\Delta$
- (Construction~\ref{constr:deconcatenation}): $\Delta$ is a
- CDG-coalgebra map for the curved bar complex at every genus.
-\item The coderived bar-cobar inversion
- $\Omega^{\mathrm{co}}(\barB(\cA)) \simeq \cA$ in
- $D^{\mathrm{co}}$ holds without Koszulness hypothesis
- (Theorem~\ref{thm:off-koszul-ran-inversion}).
-\item The coderived BV$=$bar identification absorbs all
- $m_0$-proportional obstructions for every shadow class
- (Theorem~\ref{thm:bv-bar-coderived-vol1}).
+\item The bar coalgebra has the coassociative chain map
+$\Delta_B\colon B(\cA)\to B(\cA)\otimes B(\cA)$.
+\item The universal twisting morphism gives the algebra counit
+$\varepsilon_{\cA}\colon\Omega B(\cA)\to\cA$ in the Ran
+reconstruction ambient.
+\item Positselski's theorem compares coderived comodules and
+contraderived contramodules over the fixed coalgebra $B(\cA)$.
+\item A bialgebra lifting datum gives an algebra morphism
+$\Delta_{\cA}\colon\cA\to\cA\widehat\otimes\cA$ and its
+coassociative, counital, and factorization compatibilities.
 \end{enumerate}
-
-The two unproved inputs are:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\setcounter{enumi}{3}
-\item \emph{Coderived K\"unneth comparison.}
- The natural map
- $\Omega^{\mathrm{co}}(C_1 \otimes C_2) \to
- \Omega^{\mathrm{co}}(C_1) \hat\otimes^{\mathrm{co}}
- \Omega^{\mathrm{co}}(C_2)$
- must be an isomorphism in $D^{\mathrm{co}}$ for CDG-coalgebras
- with finite-dimensional graded pieces. On the Koszul locus, this
- is the standard Eilenberg--Zilber quasi-isomorphism for DG
- coalgebras. In $D^{\mathrm{co}}$, the comparison requires
- Positselski's theory of the derived tensor product for CDG
- comodules; its factorization-algebraic version has not been
- developed.
-\item \emph{Coderived Dunn additivity for the tensor product.}
- The coassociativity-up-to-$\Phi$ statement requires that the
- Drinfeld associator $\Phi$, which is an algebraic
- (group-like, uncurved) element of the completed braid algebra,
- acts correctly in $D^{\mathrm{co}}$. Since $\Phi$ is a
- quasi-isomorphism in the ordinary derived category and has no
- curvature dependence, this should follow from the comparison
- $D^{\mathrm{co}} \simeq D$ on uncurved objects, but the
- interaction with the curved target
- $\cA \hat\otimes^{\mathrm{co}} \cA$ requires care.
-\end{enumerate}
-
-The obstruction structure parallels
-Conjecture~\textup{\ref{conj:coderived-e3}}: input~(d) here
-is the coproduct analogue of the coderived tensor product issue
-flagged in Remark~\textup{\ref{rem:coderived-e3-structure}}.
-A proof of either conjecture's tensor-product input would resolve
-the other.
+The first two constructions reconstruct an algebra from its bar
+coalgebra; the third compares its module categories.  The fourth
+equips that algebra with a coproduct.  Completed K\"unneth maps,
+Drinfeld associators, and
+Dunn additivity enter after the fourth datum has been constructed.
 \end{remark}
 
 \begin{remark}[Relation to the coderived $\Ethree$ conjecture]
 \label{rem:coderived-coproduct-vs-e3}%
 \index{coderived category!chiral coproduct!relation to $\Ethree$}%
-Conjecture~\ref{conj:coderived-chiral-coproduct} and
-Conjecture~\ref{conj:coderived-e3} are complementary extensions
-of the Koszul-locus theory to class~$\mathsf{M}$.
-The $\Ethree$ conjecture extends the \emph{closed sector}
-(derived chiral center) to $D^{\mathrm{co}}$; the coproduct
-conjecture extends the \emph{open sector} (chiral quantum group
-structure) to $D^{\mathrm{co}}$. Together they would give a
-full coderived $\mathsf{SC}^{\mathrm{ch,top}}$-algebra structure
-for class~$\mathsf{M}$: the coproduct $\Delta^{\mathrm{ch,co}}$
-as the open color, the derived center as the closed color, and
-the $\Ethree$ as the compatibility between the two colors.
-The shared obstruction (coderived K\"unneth/Dunn additivity)
-ensures that the two conjectures stand or fall together.
+The $\Ethree$ structure belongs to the derived chiral centre.  A
+bialgebra lifting datum belongs to the open algebra $\cA$.  An
+open--closed comparison between them is an additional Swiss-cheese
+operation with its own chain model.  Thus a coderived K\"unneth theorem
+for the closed centre and a chiral bialgebra lift for the open algebra
+form independent construction problems before the open--closed map is
+defined.
 \end{remark}
 
-\begin{definition}[Coderived chiral bialgebra; \ClaimStatusConjectured]
+\begin{definition}[Completed chiral bialgebra; \ClaimStatusDefinitional]
 \label{def:coderived-chiral-bialgebra}%
 \index{coderived chiral bialgebra|textbf}%
 \index{coderived category!chiral bialgebra|textbf}%
 \index{bialgebra!coderived chiral|textbf}%
-A \emph{coderived chiral bialgebra} is an object~$C$ in the
-coderived category $\Dco((\mathrm{Ass}^{\mathrm{ch}})^!\text{-}\mathrm{coalg})$
-equipped with:
+A \emph{completed chiral bialgebra} is a complete augmented chiral
+dg algebra $(\cA,m,d,\epsilon)$ together with a continuous augmented
+algebra morphism
+\[
+ \Delta_{\cA}\colon\cA\longrightarrow
+ \cA\widehat\otimes\cA
+\]
+such that
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(Coalgebra structure.)}
- A coassociative coproduct
- $\Delta \colon C \to C \otimes C$
- in the category of CDG-coalgebras.
-\item \textup{(Coderivation differential.)}
- A differential $d_C$ on~$C$ that is a \emph{coderivation} of~$\Delta$:
+\item $\Delta_{\cA}$ is coassociative and counital;
+\item the differential is simultaneously a derivation of $m$ and a
+coderivation of $\Delta_{\cA}$:
  \[
- \Delta \circ d_C
+ \Delta_{\cA} \circ d
  \;=\;
- (d_C\otimes\id+\id\otimes d_C)\circ\Delta .
+ (d\widehat\otimes\id+\id\widehat\otimes d)
+ \circ\Delta_{\cA};
  \]
- The compatibility is automatic from the coderivation property and
- requires no separate axiom.
-\item \textup{(Coderived acyclicity.)}
- The failure $d_C^2 \neq 0$ \textup{(}curvature from
- genus~$\geq 1$ contributions\textup{)} is exact in~$\Dco$:
-the CDG-comodule $(C, d_C)$ represents a well-defined object
- in the Verdier quotient
- $\Dco = \mathrm{Hot}/\mathrm{Acycl}^{\mathrm{co}}$.
+\item $m$, $\Delta_{\cA}$, $d$, and $\epsilon$ are continuous for the
+chosen completion and compatible with factorization gluing.
 \end{enumerate}
-A morphism of coderived chiral bialgebras is a CDG-coalgebra
-map that intertwines both~$\Delta$ and~$d_C$ in~$\Dco$.
+Curved CDG objects require the corresponding curvature identity in
+the chosen monoidal CDG category; passage to a coderived category
+localizes module objects and preserves this curvature datum.
 \end{definition}
 
-\begin{proposition}[The ordered bar complex is a coderived chiral bialgebra;
-\ClaimStatusConditional]
+\begin{proposition}[The ordered bar complex is a chiral coalgebra;
+\ClaimStatusProvedHere]
 \label{prop:bar-is-coderived-chiral-bialgebra}%
 \index{bar complex!ordered!coderived chiral bialgebra structure}%
 \index{coderived chiral bialgebra!from ordered bar complex}%
 Let $\cA$ be a complete augmented chiral algebra with
-finite-dimensional graded/conformal pieces. The ordered bar complex
-$\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ is a
-coderived chiral bialgebra, with:
+finite-dimensional graded pieces, and assume the completed tensor
+coalgebra is defined in the chosen Ran factorization category.
+\textup{[Type signature: Open quadrant; ordered completed bar
+presentation; Beilinson level~$2$; pro-nilpotent chiral Ran ambient;
+hypothesis packages $H_{\mathrm{fact}}\cup H_{\mathrm{conv}}$.]}
+Then
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\Delta$ the deconcatenation coproduct
- \textup{(}Construction~\textup{\ref{constr:deconcatenation}}\textup{)},
- which is strictly coassociative;
+\item the ordered bar object
+$B^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)$ carries the strictly
+coassociative deconcatenation coproduct $\Delta_B$;
 \item $d_{\barB} = \sum_k \hat{m}_k^{\mathrm{ch}}$ the bar
- differential, which is a coderivation of~$\Delta$ by
- construction \textup{(}each $\hat{m}_k^{\mathrm{ch}}$ is the
- unique coderivation lifting $m_k^{\mathrm{ch}}$
- through the cofree coalgebra\textup{)};
-\item the coderived acyclicity condition holds by
- Theorem~\textup{\ref{thm:off-koszul-ran-inversion}}
- and Theorem~\textup{\ref{thm:bv-bar-coderived-vol1}}: the
- bar-cobar counit $\Omega^{\mathrm{co}}(\barB^{\mathrm{ord}}(\cA))
- \xrightarrow{\;\sim\;} \cA$ is an isomorphism in~$\Dco$
- without any Koszulness hypothesis.
+ differential is the unique coderivation extending the suspended
+ operations $m_k^{\mathrm{ch}}$;
+\item in the flat case $m_0=0$, the $A_\infty$ identities give
+$d_{\barB}^2=0$; in the curved case they give the corresponding CDG
+curvature identity.
 \end{enumerate}
-On the Koszul locus \textup{(}classes~$\mathsf{G}$, $\mathsf{L}$,
-$\mathsf{C}$\textup{)}, the coderived structure reduces to
-a strict DG-bialgebra \textup{(}$d_{\barB}^2 = 0$
-at chain level\textup{)}.
-For raw direct-sum class~$\mathsf{M}$ bar complexes without a
-strict completed/Yangian comparison package, the coderived category
-is essential: $d_{\barB}^2 \neq 0$ at chains, but $d_{\barB}^2$ is
-coacyclic. In a completed/Yangian package this proposition records
-the coderived shadow of the stricter completed chain-level structure,
-not a denial of that structure.
+These assertions give a coalgebra object.  Promotion to a completed
+chiral bialgebra is equivalent to adjoining a datum from
+$\mathsf{BiLift}(\cA)$ and checking its bar comparison.
 \end{proposition}
 
 \begin{proof}
-Part~(a) is Construction~\ref{constr:deconcatenation}: the
+Part~\textup{(a)} is Construction~\ref{constr:deconcatenation}: the
 deconcatenation coproduct on the cofree tensor coalgebra
 $T^c(s^{-1}\bar\cA)$ is strictly coassociative by inspection.
-Part~(b) is the universal property of cofree coalgebras:
+Part~\textup{(b)} is the universal property of cofree coalgebras:
 a coderivation of $T^c(V)$ is determined by its projection
 to~$V$, so each lifted operation $\hat{m}_k^{\mathrm{ch}}$
-is automatically a coderivation of~$\Delta$.
+is a coderivation of~$\Delta_B$.
 The compatibility
 \[
-\Delta\circ d_{\barB}
+\Delta_B\circ d_{\barB}
 =
-(d_{\barB}\otimes\id+\id\otimes d_{\barB})\circ\Delta
+(d_{\barB}\otimes\id+\id\otimes d_{\barB})\circ\Delta_B
 \]
 follows because a sum of coderivations is a coderivation.
-Part~(c): the coderived bar-cobar inversion
-(Theorem~\ref{thm:off-koszul-ran-inversion}) gives
-$\Omega^{\mathrm{co}}(\barB^{\mathrm{ord}}(\cA)) \simeq \cA$
-in~$\Dco$ for arbitrary shadow class; this uses the
-coderived BV$=$bar identification
-(Theorem~\ref{thm:bv-bar-coderived-vol1}) to absorb the
-$m_0$-proportional obstructions.
-On the Koszul locus the conilpotent reduction theorem
-(Theorem~\ref{thm:conilpotent-reduction}) identifies
-$\Dco$ with the ordinary derived category, so the coderived
-bialgebra is a genuine DG-bialgebra.
+Part~\textup{(c)} is the arity-zero component of the same
+$A_\infty$ coderivation equation.  The definition of a bialgebra then
+shows exactly which additional datum remains.
 \end{proof}
 
-\begin{remark}[Primitive coderived bialgebra and Hochschild readouts]
+\begin{remark}[Independent structures and their comparison maps]
 \label{rem:coderived-bialgebra-hochschild-readouts}%
 \index{primitive coderived bialgebra|textbf}%
 \index{coderived chiral bialgebra!projections}%
-The coderived chiral bialgebra $\barB^{\mathrm{ord}}(\cA)$ is
-the single level-$2$ ordered object from which
-the apparently heterogeneous landscape of products, coproducts,
-and intertwining maps is recovered by applying different functors.
-The deconcatenation coproduct~$\Delta$ encodes the chiral
-coproduct (via cobar,
-Conjecture~\ref{conj:coderived-chiral-coproduct}).
-The bar differential~$d_{\barB}$ as coderivation of~$\Delta$
-encodes the RTT relation, the vertex bialgebra axiom, and the
-OPE-coproduct intertwining: these are the
-\emph{same} coderivation property read in different
-coordinates.
+The coderivation $d_{\barB}$ determines the chiral
+$A_\infty$ operations by corestriction to the cogenerators.  This is
+the intrinsic content of the ordered bar coalgebra.
 The derived chiral center
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ belongs to the Hochschild component:
 under the finite-type Koszul hypotheses of
 Theorems~\ref{thm:HH-coHH-homology} and
 \ref{thm:HH-coHH-cohomology}, it is computed by the chiral
-Hochschild cochain complex. The $\mathsf{E}_3$ enhancement is the
-additional coderived assertion of
-Conjecture~\ref{conj:coderived-e3}; it is not a consequence of the
-bar--cobar counit alone.
-
-The variety of structures that appear in the
-literature (CoHA multiplication, Yangian coproduct,
-W-algebra OPE, quantum group R-matrix, vertex
-bialgebra axioms) are projections of this single coderived
-chiral bialgebra through different forgetful functors:
+Hochschild cochain complex.  The following structures require their
+displayed additional data:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\Delta \mapsto \Delta^{\mathrm{ch,co}}$ via the cobar
- functor: the chiral quantum group coproduct;
-\item $d_{\barB} \mapsto m_k^{\mathrm{ch}}$ via projection to
- cogenerators: the $A_\infty$ operations (scattering amplitudes);
-\item $\Delta + d_{\barB}$ jointly $\mapsto$ the RTT equation
- $R \Delta(a) = \Delta^{\mathrm{op}}(a) R$ via the universal
- R-matrix;
-\item $\barB^{\mathrm{ord}} \mapsto \barB^{\Sigma}$ via
- $\Sigma_n$-coinvariants: the symmetric bar and its shadow tower
- $(\kappa, C, Q, \ldots)$.
+\item a Yangian or quantum-group coproduct requires
+$\mathsf{BiLift}(\cA)$;
+\item an RTT presentation requires an $R$-matrix satisfying the
+Yang--Baxter equation and
+$R\Delta(a)=\Delta^{\mathrm{op}}(a)R$;
+\item an $\mathsf E_3$ enhancement requires the brace operations of
+Conjecture~\ref{conj:coderived-e3};
+\item the symmetric bar requires an equivariant comparison from the
+ordered configuration model to $\Sigma_n$-coinvariants.
 \end{enumerate}
-The coderivation identity
-\[
-\Delta\circ d_{\barB}
-=
-(d_{\barB}\otimes\id+\id\otimes d_{\barB})\circ\Delta
-\]
-is the universal compatibility from which all specific compatibilities
-are derived by functoriality.
+Comparison among these structures is itself a theorem with source,
+target, and compatibility hypotheses.
 \end{remark}
 
 \subsection{The \texorpdfstring{$\mathcal{W}_3$}{W\_3} ordered bar complex via DS transport}
@@ -12794,7 +12889,7 @@ framework:
 The $R$-matrix is the regularised holonomy of the derived additive KZ
 connection on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{A}^1)$, with
 connection one-form built from OPE residues
-(Theorem~\ref{thm:derived-additive-kz}, Volume~II).
+(Theorem~\ref{thm:spectral-derived-additive-kz}).
 The Yang--Baxter equation is the Ward identity for the flat connection:
 $\mathbb{D}_n^2=0$. Strictification requires that the spectral Drinfeld
 obstruction class vanish, which holds for all simple Lie algebras because
@@ -12863,7 +12958,7 @@ This is the content of the Yangian recognition theorem
 (Theorem~\ref*{thm:yangian-recognition}, recorded from Volume~II).
 The RTT presentation of $Y_\hbar(\mathfrak{g})$ is read off from
 the regularised holonomy of the derived additive KZ connection
-(Theorem~\ref{thm:derived-additive-kz}). The identification
+(Theorem~\ref{thm:spectral-derived-additive-kz}). The identification
 $Y_\hbar(\mathfrak{g})\simeq Q_0^0(\mathfrak{g})$ is the
 Levendorski\u{\i}--Drinfeld theorem.
 \end{proof}
@@ -13027,70 +13122,37 @@ MC classes to agree. The gauge equivalence is constructed order by
 order and passes to the $\lambda$-adic limit.
 \end{proof}
 
-\begin{remark}[Universal $\Phi$-trace identity]
+\begin{conjecture}[CY-to-chiral trace comparison;
+\ClaimStatusConjectured]
 \label{rem:oackd-6}
-\index{$\Phi$-trace identity!universal}%
-\index{CY-to-chiral functor!$\Phi$!trace identity}%
-\index{automorphic supertrace!$\Phi$-intertwining}%
-Theorem~\ref{thm:e3-identification-km} identifies the derived chiral
-centre of $V_k(\fg)$ with a Chern--Simons $\Ethree$-algebra for
-every simple $\fg$. The companion intertwining theorem on the
-CY-to-chiral side, Volume~III, couples this identification to an
-automorphic invariant and closes the following diagram into a
-\emph{single cross-volume trace equation}. For every input $(Y,A)$
-where $Y$ is a Calabi--Yau surface (K3, abelian surface) and
-$A = V_k(\fg)$ is an affine chiral algebra living on the
-holomorphic direction of $Y\times E$, let
+\index{$\Phi$-trace comparison}%
+\index{CY-to-chiral functor!$\Phi$!trace comparison}%
+Let $Y$ be a Calabi--Yau surface and let
 \[
-\Phi \;=\; \SpCh_{\Sigma_2, E} \circ \PhiFA_3
-\;\colon\;
-D^b_{\mathrm{CY}\text{-}3}(Y\times E)
-\longrightarrow
-\mathrm{ChirAlg}_E
+\Phi=\SpCh_{\Sigma_2,E}\circ\PhiFA_3
+\colon D^b_{\mathrm{CY}\text{-}3}(Y\times E)
+\longrightarrow \mathrm{ChirAlg}_E
 \]
-be the CY-to-chiral two-stage factorisation of
-Part~\ref{part:v1-frontier}: stage~$1$ produces the canonical
-$E_3$-holomorphic factorisation algebra
-$\PhiFA_3(D^b_{\mathrm{CY}\text{-}3}(Y \times E))$ on the CY$_3$
-variety $Y\times E$ (pinned by Kontsevich--Tamarkin $E_3$-formality
-and Costello--Gwilliam--Li locality); stage~$2$ specialises along
-the $Y$-fibre $\Sigma_2 = p_Y^{-1}(\mathrm{pt}) \subset Y \times E$
-and restricts to the reference curve $E$
-(Volume~III Theorem~\textup{phi-two-stage-factorisation};
-established in Volume~III).
-Then the chiral supertrace of the identity on the
-ordered bar complex $\barB^{\mathrm{ord}}(A)$ and the automorphic
-supertrace of the realised positive critical CoHA on $Y$ are
-intertwined by this stage-$2$ shadow:
+denote the proposed two-stage CY-to-chiral comparison.  Choose an
+object $\mathcal E$ and an equivalence
+$\theta\colon\Phi(\mathcal E)\simeq A$.  Assume the package
+$H_{\Phi\text{-}\mathrm{tr}}$: proper trace-class completions on both
+sides, vanishing-cycle and orientation data for the compact CoHA,
+compatibility of $\theta$ with the two trace maps, and convergence of
+the ordered-bar supertrace.  The expected comparison is
 \[
 \operatorname{STr}^{\mathrm{ch}}_{\barB^{\mathrm{ord}}(A)}(\id)
 \;=\;
-\operatorname{STr}^{\mathrm{aut}}_{\Phi^{-1}(A)}(\id).
+\operatorname{STr}^{\mathrm{aut}}_{\mathcal E}(\id).
 \]
-Finite Rees hCS--Hall maps provide the bounded comparison classes
-entering this trace only before completion; the displayed equality is a
-compact-CoHA statement and requires the vanishing-cycle realisation
-and orientation data named in Remark~\ref{rem:oackd-1}.
-This is the \emph{universal $\Phi$-trace identity}: its left-hand side
-is a curve-local invariant computed from the collision-residue
-$r$-matrix of Theorem~\ref{thm:e1-ordered-bar-landscape}, and its
-right-hand side is a global automorphic invariant computed from the
-Igusa-form gauge class of Remark~\ref{rem:oackd-4}. The equality
-is both stronger than the family-by-family chiral/dual curvature
-identities of Theorem~D (Volume~I) and dual, in a specific sense, to
-the universal curvature modulus
-$\hbar^{2}\,K^{\kappa_{\mathrm{ch}}}=-1$ of
-Remark~\ref{rem:oackd-3}: the modulus identity is
-multiplicative and curve-local, the $\Phi$-trace identity is additive
-and cross-volume. Read together, the two identities pin down the
-chain-level Koszul reflection at the level of secondary invariants,
-one per side of the adjunction. At the locus where $\Phi$ is invertible
-(e.g.\ affine Kac--Moody with rank $23$ K3 input), the identity
-reduces to the $\Ethree$-centre identification of
-Theorem~\ref{thm:e3-identification-km}; at the BKM locus
-(Remark~\ref{rem:oackd-1}), the identity becomes the authoritative
-statement, replacing the no-longer-applicable Yangian strictification.
-\end{remark}
+The left side is curve-local; the right side belongs to the compact
+global Hall realization.  A proof must construct the trace-preserving
+comparison itself.  The finite Rees hCS--Hall maps furnish bounded
+comparison classes and supply evidence in finite windows.  This
+conjecture is logically separate from the line-side square-root
+convention of Remark~\ref{rem:oackd-3} and from the automorphic
+recognition problem of Remark~\ref{rem:oackd-4}.
+\end{conjecture}
 
 \begin{conjecture}[Trigonometric and elliptic ordered chiral homology]
 \label{conj:trig-elliptic-ordered}
@@ -13135,7 +13197,7 @@ $V_{-h^\vee}(\mathfrak{sl}_2)$ ($h^\vee = 2$, so $k = -2$):
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\kappa = 3(k+2)/4 = 0$: the bar complex is uncurved.
 \item In the trace-form convention,
- $r(z) = k\,\Omega/z = -2\,\Omega/z$ is finite and nonzero.
+ $r(z) = k\,\Omega_{\mathrm{tr}}/z = -2\,\Omega/z$ is finite and nonzero.
  The monodromy eigenvalues
  $\exp(2\pi i\,k\,\lambda_J)$ are
  $\exp(-4\pi i) = 1$ on $\operatorname{Sym}^2 V$ and
@@ -13246,11 +13308,14 @@ $\kappa$ & $3(k{+}2)/4$ & $3(k{+}2)/4$ & $0$ \\
 Integrable and critical are opposite extremes: integrable
 has finite but nontrivial monodromy with finite center;
 critical has trivial monodromy with infinite center.
-The ordered chiral homology detects both extremes through
-$\ker(\av)$: at critical level, the entire $r$-matrix
-$r(z) = -2\,\Omega/z$ lives in $\ker(\av)$ because
-$\av(r(z)) = -\dim(\fg)/2$ and
-$\kappa = \av(r(z)) + \dim(\fg)/2 = 0$.
+The ordered chiral homology detects both extremes through the
+coinvariant operator and its trace. At critical level,
+$K_{-h^\vee,\fg}^{\mathrm{coll}}(z)
+=-h^\vee\Omega_{\mathrm{tr}}/z$ has the homotopy coinvariant
+$q_2(K_{-h^\vee,\fg}^{\mathrm{coll}})$, while
+$\tau_{-h^\vee,\fg}^{\mathrm{res}}q_2
+(K_{-h^\vee,\fg}^{\mathrm{coll}})=-\dim(\fg)/2$ and
+$\kappa=-\dim(\fg)/2+\dim(\fg)/2=0$.
 \end{remark}
 
 \begin{remark}[$N = 3$ explicit calculation]
@@ -13499,8 +13564,9 @@ variable, satisfying the modified \emph{dynamical} CYBE
 \]
 (Etingof--Varchenko \cite{EV98}). The rearrangement of the
 $\zeta_\tau(z_{12})\zeta_\tau(z_{13})$ products required by the
-dynamical-CYBE identity uses the Szeg\H{o} three-term
-\textup{(}Fay trisecant\textup{)} specialisation on the torus,
+dynamical-CYBE identity uses the theta-prime-normalised
+Szeg\H{o}/prime-form \textup{(}Fay trisecant\textup{)}
+specialisation on the torus,
 \[
 \wp(a,\tau) - \wp(b,\tau)
 \;=\; -\,\frac{\vartheta_1(a+b,\tau)\,\vartheta_1(a-b,\tau)}

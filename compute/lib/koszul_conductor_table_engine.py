@@ -12,8 +12,8 @@ The Koszul conductor K_kk is the invariant called K(A) in the monograph
   K_kk = 0       for KM, Heisenberg, lattice, free families
   K_kk = 13      for Virasoro
   K_kk = 250/3   for W_3
-  K_kk = 98/3    for Bershadsky-Polyakov
-  K_cc = 196     for Bershadsky-Polyakov central charges
+  K_cc = 50      for the standard Bershadsky--Polyakov central charges
+  K_kk = open    for Bershadsky--Polyakov pending genus-one DS curvature
 
 All arithmetic uses fractions.Fraction for exact rational results.
 
@@ -27,11 +27,48 @@ Canonical references:
   C6.  c_bg(lambda) = 2*(6*lambda^2 - 6*lambda + 1)
   C7.  c_bc(lambda) + c_bg(lambda) = 0
   C18. K(A) = kappa(A) + kappa(A^!)
-  C20. K_BP = c_BP(k) + c_BP(-k-6) = 196
+  C20. K_BP = c_BP(k) + c_BP(-k-6) = 50 in the canonical census lane
+
+The secondary shifted formula ``2-24(k+1)^2/(k+3)`` has conductor 196.
+It is retained under explicitly shifted names and never enters the canonical
+cross-family table.
 """
 
 from fractions import Fraction
 from typing import Any, Dict, Tuple
+
+try:
+    from compute.lib.bp_koszul_conductor_engine import (
+        BP_KAPPA_STATUS,
+        K_BP_EXACT,
+        K_BP_SHIFTED_EXACT,
+        SHIFTED_BP_CONVENTION,
+        STANDARD_BP_CONVENTION,
+        UnverifiedBPInvariantError,
+        K_BP as _canonical_bp_conductor,
+        K_BP_shifted as _shifted_bp_conductor,
+        c_BP as _canonical_bp_c,
+        c_BP_shifted as _shifted_bp_c,
+        compute_varrho as _bp_reciprocal_weight_diagnostic,
+        dual_level as _bp_dual_level,
+        kappa_BP as _canonical_bp_kappa,
+    )
+except ModuleNotFoundError:  # direct execution from compute/lib
+    from bp_koszul_conductor_engine import (
+        BP_KAPPA_STATUS,
+        K_BP_EXACT,
+        K_BP_SHIFTED_EXACT,
+        SHIFTED_BP_CONVENTION,
+        STANDARD_BP_CONVENTION,
+        UnverifiedBPInvariantError,
+        K_BP as _canonical_bp_conductor,
+        K_BP_shifted as _shifted_bp_conductor,
+        c_BP as _canonical_bp_c,
+        c_BP_shifted as _shifted_bp_c,
+        compute_varrho as _bp_reciprocal_weight_diagnostic,
+        dual_level as _bp_dual_level,
+        kappa_BP as _canonical_bp_kappa,
+    )
 
 
 AFFINE_CONDUCTOR_HYPOTHESES: Tuple[str, ...] = (
@@ -382,8 +419,8 @@ BP_DUALITY_HYPOTHESES: Tuple[str, ...] = (
 
 BP_STRONG_GENERATORS: Tuple[Tuple[str, Fraction, str], ...] = (
     ("J", Fraction(1), "bosonic"),
-    ("G+", Fraction(3, 2), "fermionic"),
-    ("G-", Fraction(3, 2), "fermionic"),
+    ("G+", Fraction(3, 2), "bosonic"),
+    ("G-", Fraction(3, 2), "bosonic"),
     ("T", Fraction(2), "bosonic"),
 )
 
@@ -394,45 +431,49 @@ def _bp_is_critical(k: Fraction) -> bool:
 
 
 def bp_c(k: Fraction) -> Fraction:
-    """Central charge of Bershadsky-Polyakov W(sl_3, f_sub) at level k.
+    """Standard Bershadsky--Polyakov central charge.
 
-    Canonical formula:
-      c_BP(k) = 2 - 24*(k+1)^2/(k+3)
-
-    The dual level is k' = -k - 6 and the central-charge conductor is
-    c_BP(k) + c_BP(k') = 196.
+    ``c_BP(k)=-(2k+3)(3k+1)/(k+3)`` and ``k'=-k-6``.
     """
-    k = Fraction(k)
-    return Fraction(2) - Fraction(24) * (k + 1) ** 2 / (k + 3)
+    return _canonical_bp_c(Fraction(k))
+
+
+def bp_c_shifted(k: Fraction) -> Fraction:
+    """Secondary shifted-conformal-vector formula."""
+
+    return _shifted_bp_c(Fraction(k))
 
 
 def bp_dual_c(k: Fraction) -> Fraction:
     """c_BP at dual level k' = -k - 6."""
-    return bp_c(-Fraction(k) - 6)
+    return bp_c(_bp_dual_level(Fraction(k)))
 
 
 def bp_K_cc(k: Fraction) -> Fraction:
-    """K_cc(BP) = c_BP(k) + c_BP(-k-6) = 196."""
-    return bp_c(k) + bp_dual_c(k)
+    """Canonical standard-convention conductor ``K_cc(BP)=50``."""
+
+    return _canonical_bp_conductor(Fraction(k))
+
+
+def bp_K_cc_shifted(k: Fraction) -> Fraction:
+    """Secondary shifted-formula conductor ``196``."""
+
+    return _shifted_bp_conductor(Fraction(k))
 
 
 def bp_kappa(k: Fraction) -> Fraction:
-    """kappa(BP_k) = c_BP(k) / 6.
+    """Signal the open BP genus-one curvature computation."""
 
-    This is the scalar modular characteristic recorded in the manuscript
-    for the subregular sl_3 reduction.
-    """
-    return bp_c(k) / Fraction(6)
+    return _canonical_bp_kappa(Fraction(k))
 
 
 def bp_K_kk(k: Fraction = Fraction(0)) -> Fraction:
-    """K_kk(BP) = kappa + kappa' = 98/3.
+    """Signal the open BP modular-characteristic companion sum."""
 
-    The number 196 belongs to K_cc(BP) = c + c'.  Multiplying by the
-    BP anomaly ratio 1/6 gives the scalar complementarity constant 98/3.
-    """
     k = Fraction(k)
-    return bp_kappa(k) + bp_kappa(-k - 6)
+    if _bp_is_critical(k):
+        bp_c(k)
+    raise UnverifiedBPInvariantError(BP_KAPPA_STATUS.resolution_obligation)
 
 
 def bp_j_line_scalar(k: Fraction) -> Fraction:
@@ -447,15 +488,30 @@ def bp_t_line_scalar(k: Fraction) -> Fraction:
 
 
 def bp_g_mixed_pairing(k: Fraction) -> Fraction:
-    """BP odd mixed pairing <G+,G-> = (k+1)(2k+3)."""
+    """BP even mixed pairing <G+,G-> = (k+1)(2k+3)."""
     k = Fraction(k)
     return (k + 1) * (2 * k + 3)
 
 
-def bp_ds_ghost_leg_scalar(k: Fraction) -> Fraction:
-    """Presentation-dependent DS ghost leg scalar for BP."""
+def bp_total_ds_conformal_shift(k: Fraction) -> Fraction:
+    """Exact total shift ``c_BP(k)-c_aff(sl3,k)=-(6k+1)``."""
+
     k = Fraction(k)
-    return -Fraction(6) * (4 * k**2 + 9 * k + 3) / (k + 3)
+    if _bp_is_critical(k):
+        bp_c(k)
+    return -(Fraction(6) * k + 1)
+
+
+def bp_ds_ghost_leg_scalar(k: Fraction) -> Fraction:
+    """Signal the open charged/neutral/improvement decomposition."""
+
+    k = Fraction(k)
+    if _bp_is_critical(k):
+        bp_c(k)
+    raise UnverifiedBPInvariantError(
+        "decompose the exact BP DS conformal shift into charged ghosts, "
+        "neutral fields, and conformal improvement"
+    )
 
 
 def bp_scope_report(k: Fraction) -> Dict[str, Any]:
@@ -463,9 +519,10 @@ def bp_scope_report(k: Fraction) -> Dict[str, Any]:
 
     BP is the subregular/minimal sl_3 Drinfeld-Sokolov branch
     W^k(sl_3, f_(2,1)), not the principal W_N branch.  The orbit is
-    self-transpose, but same-family Koszul duality is theorem-scoped
-    and the fixed real level k=-3 is a pole of c_BP(k), not an
-    attained self-dual VOA point.
+    self-transpose.  Same-family Verdier--Koszul duality carries the
+    subregular DS/bar transport package.  The fixed level ``k=-3`` is the
+    common pole of both conformal-vector formulas, while both conductor
+    identities live in the rational-function field.
     """
     k = Fraction(k)
     critical = _bp_is_critical(k)
@@ -477,19 +534,26 @@ def bp_scope_report(k: Fraction) -> Dict[str, Any]:
         "ds_orbit": "subregular/minimal",
         "is_principal_W_N": False,
         "strong_generators": BP_STRONG_GENERATORS,
-        "dual_level": -k - 6,
-        "level_fixed_by_sigma": k == -k - 6,
+        "dual_level": _bp_dual_level(k),
+        "level_fixed_by_sigma": k == _bp_dual_level(k),
         "central_charge_defined": not critical,
         "self_transpose_orbit": True,
-        "same_family_duality_claim": "BP_k^! ~= BP_{-k-6}",
+        "same_family_duality_claim": "BP_k^! ~= BP_{-k-6} under H_DS/bar",
         "duality_claim_requires_theorem": True,
         "duality_hypothesis_package": BP_DUALITY_HYPOTHESES,
-        "formal_self_dual_central_charge": Fraction(98),
-        "formal_self_dual_levels": ("k=-3+2i", "k=-3-2i"),
         "real_level_self_dual_c_attained": False,
-        "K_cc": Fraction(196),
-        "K_kappa": Fraction(98, 3),
-        "anomaly_ratio": Fraction(1, 6),
+        "standard_convention": STANDARD_BP_CONVENTION.name,
+        "standard_convention_status": STANDARD_BP_CONVENTION.status,
+        "K_cc": K_BP_EXACT,
+        "K_kappa": None,
+        "anomaly_ratio": None,
+        "kappa_status": BP_KAPPA_STATUS.status,
+        "kappa_resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
+        "reciprocal_weight_diagnostic": _bp_reciprocal_weight_diagnostic(),
+        "shifted_convention": SHIFTED_BP_CONVENTION.name,
+        "shifted_convention_status": SHIFTED_BP_CONVENTION.status,
+        "shifted_K_cc": K_BP_SHIFTED_EXACT,
+        "algebra_level_interpretation": "conditional-H_DS/bar",
         "missing_hypotheses": (
             ("k_plus_3_nonzero",) if critical else tuple()
         ),
@@ -498,19 +562,28 @@ def bp_scope_report(k: Fraction) -> Dict[str, Any]:
         report["shadow_lines"] = {
             "J": {"class": "G", "scalar": None},
             "T": {"class": "M", "scalar": None},
-            "G_pairing": {"class": "mixed_fermionic", "scalar": None},
-            "full_kappa": {"scalar": None},
+            "G_pairing": {"class": "mixed_even", "scalar": None},
+            "full_kappa": {
+                "scalar": None,
+                "status": BP_KAPPA_STATUS.status,
+            },
+            "total_DS_conformal_shift": {"scalar": None},
             "DS_ghost_leg": {
                 "presentation_dependent": True,
                 "scalar": None,
+                "status": "open_charged_neutral_improvement_decomposition",
             },
         }
         report["status"] = (
-            "critical_level_pole_not_attained_self_dual_real_level"
+            "fixed_level_is_common_pole; conductors_are_rational_function_identities"
         )
     else:
         report["central_charge"] = bp_c(k)
         report["dual_central_charge"] = bp_dual_c(k)
+        report["shifted_central_charge"] = bp_c_shifted(k)
+        report["shifted_dual_central_charge"] = bp_c_shifted(
+            _bp_dual_level(k)
+        )
         report["shadow_lines"] = {
             "J": {
                 "class": "G",
@@ -519,24 +592,30 @@ def bp_scope_report(k: Fraction) -> Dict[str, Any]:
             "T": {
                 "class": "M",
                 "scalar": bp_t_line_scalar(k),
-                "quartic_formula": (
-                    "5(k+3)^2/[8(12k^2+23k+9)(15k^2+26k+3)]"
-                ),
+                "conformal_convention": STANDARD_BP_CONVENTION.name,
             },
             "G_pairing": {
-                "class": "mixed_fermionic",
+                "class": "mixed_even",
                 "scalar": bp_g_mixed_pairing(k),
+                "status": "presentation-dependent OPE scalar",
             },
             "full_kappa": {
-                "scalar": bp_kappa(k),
-                "anomaly_ratio": Fraction(1, 6),
+                "scalar": None,
+                "anomaly_ratio": None,
+                "status": BP_KAPPA_STATUS.status,
+                "resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
+            },
+            "total_DS_conformal_shift": {
+                "scalar": bp_total_ds_conformal_shift(k),
+                "status": "proved_exact_total_shift",
             },
             "DS_ghost_leg": {
                 "presentation_dependent": True,
-                "scalar": bp_ds_ghost_leg_scalar(k),
+                "scalar": None,
+                "status": "open_charged_neutral_improvement_decomposition",
             },
         }
-        report["status"] = "subregular_DS_nonprincipal_conductor_lane"
+        report["status"] = "standard_subregular_DS_central_lane_with_open_kappa"
     return report
 
 
@@ -651,11 +730,11 @@ def full_conductor_table(k_km: Fraction = Fraction(1),
                          lam_bc: Fraction = Fraction(2),
                          k_bp: Fraction = Fraction(1),
                          lattice_rank: int = 8,
-                         ) -> Dict[str, Dict[str, Fraction]]:
+                         ) -> Dict[str, Dict[str, Any]]:
     """Build the full Koszul conductor table for all families.
 
-    Returns dict of family -> {c, c_dual, K_cc, kappa, kappa_dual, K_kk}.
-    Parameters allow evaluating at specific points.
+    Returns typed family packets.  Open numerical invariants appear as
+    ``None`` together with a status and resolution obligation.
     """
     table = {}
 
@@ -705,9 +784,13 @@ def full_conductor_table(k_km: Fraction = Fraction(1),
         "c": bp_c(k_bp),
         "c_dual": bp_dual_c(k_bp),
         "K_cc": bp_K_cc(k_bp),
-        "kappa": bp_kappa(k_bp),
-        "kappa_dual": bp_kappa(-k_bp - 6),
-        "K_kk": bp_K_kk(),
+        "kappa": None,
+        "kappa_dual": None,
+        "K_kk": None,
+        "kappa_status": BP_KAPPA_STATUS.status,
+        "kappa_resolution_obligation": BP_KAPPA_STATUS.resolution_obligation,
+        "reciprocal_weight_diagnostic": _bp_reciprocal_weight_diagnostic(),
+        "total_DS_conformal_shift": bp_total_ds_conformal_shift(k_bp),
     }
 
     # bc-betagamma

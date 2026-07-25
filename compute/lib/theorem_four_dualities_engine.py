@@ -57,7 +57,9 @@ CONVENTIONS
 ===========
     AP1:  kappa formulas recomputed per family, never copied
     AP24: kappa + kappa' = 0 for KM/free; = rho*K for W-algebras
-    AP33: H_k^! = Sym^ch(V*) != H_{-k}
+    AP33: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+    centre; only scalar kappa agrees with kappa(H_{-k})
     AP39: kappa != c/2 for general VOA
     AP42: correct@sophisticated, false@naive
 
@@ -144,7 +146,7 @@ def c_wn(N: int, k: Num) -> Fraction:
     kN = k_f + N_f
     if kN == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - N_f * (N_f ** 2 - 1) / kN
+    return Fraction(N - 1) - N_f * (N_f ** 2 - 1) * (k_f + N_f - 1) ** 2 / kN
 
 
 def kappa_wn(N: int, c: Num) -> Fraction:

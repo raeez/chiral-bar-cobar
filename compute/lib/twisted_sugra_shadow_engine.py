@@ -155,7 +155,7 @@ References:
   toroidal_elliptic.tex: rem:four-kappas
   higher_genus_modular_koszul.tex: thm:mc2-bar-intrinsic
   topological_string_shadow_engine.py: shadow_free_energy, constant_map_Fg
-  bcov_bar_complex.py: BCOVLinfData, polyvector_space
+  bcov_bar_complex.py: BCOVCarrierInput, polyvector_space
 """
 
 from __future__ import annotations

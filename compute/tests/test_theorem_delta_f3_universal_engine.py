@@ -116,7 +116,7 @@ class TestScopeFirewalls(unittest.TestCase):
         self.assertIn("bar cohomology coalgebra", roles["A^i"])
         self.assertIn("Verdier/continuous-linear dual branch", roles["A^!"])
         self.assertIn("bar-cobar inversion", roles["Omega(B(A))"])
-        self.assertIn("Hochschild/derived-centre bulk", roles["Z_ch^der(A)"])
+        self.assertIn("Hochschild/derived-centre closed-sector", roles["Z_ch^der(A)"])
         self.assertEqual(
             len({"A", "B(A)", "A^i", "A^!", "Omega(B(A))", "Z_ch^der(A)"}),
             6,

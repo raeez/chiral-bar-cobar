@@ -1,7 +1,7 @@
 \chapter{Entanglement entropy from modular Koszul duality}
 \label{chap:entanglement-modular-koszul}
 \index{entanglement entropy!from modular Koszul duality|textbf}
-\index{Ryu--Takayanagi formula!algebraic derivation|textbf}
+\index{Ryu--Takayanagi formula!algebraic reconstruction (conditional)|textbf}
 \index{quantum extremal surface!shadow connection|textbf}
 
 % ======================================================================
@@ -72,14 +72,22 @@ log curve $(X,D,\tau)$.  The bar coalgebra
 $B(A_b)=T^c(s^{-1}\bar A_b)$ at level~$2$ is the twisting object;
 inversion is the level-$1$ reconstruction
 $\Omega B(A_b)\xrightarrow{\sim}A_b$ (Theorem~B on the Koszul
-locus), not the closed-sector object.  The level-$3$ closed-sector
+locus). The level-$3$ closed-sector
 object is the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
 \simeq C^\bullet_{\mathrm{ch}}(A_b,A_b)$,
-constructed from chiral Hochschild cochains; the Hochschild concentration
-$\subset\{0,1,2\}$ (Theorem~H) controls its amplitude.  Verdier duality
-$A_b\mapsto A_b^!$ is a separate functor on a fourth object, and the
-bar cohomology $A_b^{\mathrm i}=H^\bullet B(A_b)$ is a fifth.  The
+constructed from chiral Hochschild cochains.  A family support datum
+$H_H(A_b;S)$ identifies its cohomology with
+$H^\bullet(K_{A_b,S})$ and places its support in~$S$
+(Theorem~H).  Verdier duality
+ forms the algebra
+$K_X(A_b)=\mathbb D_{\Ran}B_X(A_b)$ from the full bar coalgebra.
+A chosen quadratic presentation supplies
+$A_b^{\mathrm i}=C_X(s^{-1}V_b,s^{-2}R_b)$ and
+$q_{A_b}\colon A_b^{\mathrm i}\to B_X(A_b)$; its recognition theorem is
+the quasi-isomorphism of~$q_{A_b}$.  The pair map
+$\nu_{A_b}\colon K_X(A_b)\to A_b^!$ reaches the chosen Koszul partner.
+The
 displayed entanglement formulas are scalar shadows at level~$5$, the
 Lagrangian capacity bounds and topological-entanglement coefficients
 sit at level~$4$ (line and brane operators), the modular-flow
@@ -87,8 +95,9 @@ candidate lives on the centre at level~$3$, the bar-cobar
 encoding/decoding adjunction is the level-$1$$\leftrightarrow$
 level-$2$ reconstruction package, and every cross-level identification
 named below cites the reconstruction theorem with its hypothesis
-package.  No formula in this chapter substitutes $B(A_b)$ for the
-bulk, nor identifies $A_b^!$ with the bar object.
+package. Thus $B(A_b)$ retains its role as the level-$2$ twisting
+object, $A_b^!$ retains its Verdier--Koszul type, and the derived
+centre retains its level-$3$ closed-sector type.
 
 % ======================================================================
 %
@@ -109,10 +118,17 @@ Let $\cA=A_b=\End_{\mathcal C^{\mathrm{op}}}(b)$ be the chart algebra
 at a chosen vacuum~$b$ on a smooth genus-$0$ curve~$X$ with a
 distinguished tangent direction at~$0$, with bar coalgebra
 $B(\cA)=T^c(s^{-1}\bar\cA)$ (level~$2$ on the open Beilinson
-tower), bar cohomology
-$\cA^{\mathrm i}=H^\bullet B(\cA)=\barB_X^{\mathrm{ch}}(\cA)$, and,
-when the finite-type Verdier dual exists,
-$\cA^!:=D_{\Ran}(\cA^{\mathrm i})$.  Let $\kappa(\cA)$ be its modular
+tower).  Fix a quadratic presentation
+$\cA=T_X(V)/(R)$ with
+\[
+\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+q_\cA\colon\cA^{\mathrm i}\longrightarrow B_X(\cA).
+\]
+The full symmetric bar coalgebra is
+$B_X(\cA)=\barB_X^{\mathrm{ch}}(\cA)$, with cohomology
+$H^\bullet B_X(\cA)$.  On the finite-type Verdier surface set
+$K_X(\cA)=D_{\Ran}B_X(\cA)$ and choose
+$\nu_\cA\colon K_X(\cA)\to\cA^!$.  Let $\kappa(\cA)$ be its modular
 characteristic and let $c(\cA)$ be the Virasoro central charge of a
 chosen stress tensor.  The scalar entropy calculation below depends on
 a \emph{local replica datum} carrying three load-bearing hypotheses,
@@ -186,7 +202,7 @@ general relationship between $\kappa$ and~$c$ is family-dependent
 \subsection{Calabrese--Cardy in central-charge normalization}
 
 \begin{theorem}[Entanglement entropy at the scalar level;
-\ClaimStatusProvedHere]
+\ClaimStatusProvedElsewhere]
 \label{thm:ent-scalar-entropy}
 \index{Calabrese--Cardy formula!central-charge normalization}
 \index{entanglement entropy!scalar level|textbf}
@@ -927,6 +943,40 @@ $\bar L_0-c/24=(M\ell-J)/2$, then the symbols
 $h_{\mathrm{eff}},\bar h_{\mathrm{eff}}$ below are those charges and
 no further subtraction is made.
 
+\begin{proposition}[Character-asymptotic and BTZ entropy gate;
+\ClaimStatusConditional]
+\label{prop:ent-character-btz-gate}
+\index{entropy!character-asymptotic gate}
+\index{BTZ black hole!modular-invariance gate}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{scalar\ character\ asymptotics},
+\mathrm{level}=5,
+\mathrm{hypothesis\ package}=\mathrm{modular\ invariance}
+\ +\ \mathrm{Cardy\ vacuum\ dominance}
+\ +\ \mathrm{Brown\text{--}Henneaux}
+\ +\ \mathrm{large\ charge/large\ }N\ \mathrm{regime})$\textup{].}
+The algebraic entropy formulas in this chapter are character
+asymptotics: they estimate coefficients of graded characters,
+partition functions, or shadow generating functions.  They become
+physical von~Neumann, Bekenstein--Hawking, or BTZ entropies only after
+a Hilbert-space interpretation and the relevant modular-invariance
+package have been supplied.
+
+For BTZ, the necessary gate is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item modular invariance of the torus partition function;
+\item Cardy vacuum dominance in the high-temperature transform;
+\item Brown--Henneaux normalization $c=3\ell/(2G_N)$;
+\item effective weights $h_{\mathrm{eff}},\bar h_{\mathrm{eff}}$ in
+the semiclassical large-charge regime;
+\item a fixed one-loop ensemble, since matter zero modes or ensemble
+changes alter logarithmic corrections.
+\end{enumerate}
+Without these hypotheses, the same formulas remain coefficient
+asymptotics of the boundary character and are not gravitational
+entropy theorems.
+\end{proposition}
+
 \begin{theorem}[BTZ entropy from the modular characteristic;
 \ClaimStatusConditional]
 \label{thm:ent-btz-entropy}
@@ -935,14 +985,14 @@ no further subtraction is made.
 plus one-loop determinant on the BTZ background.  Level: $5$ (Cardy
 saddle) with genus expansion of \emph{level-$5$} free energies driven
 by the level-$2$ bar object.  Hypothesis package:
-Brown--Henneaux $c=3\ell/(2G)$; modular invariance of the genus-$1$
+Brown--Henneaux $c=3\ell/(2G_N)$; modular invariance of the genus-$1$
 torus partition function; vacuum dominance in the high-temperature
 limit; effective weights $h_{\mathrm{eff}},\bar h_{\mathrm{eff}}>0$;
 the standard BTZ one-loop ensemble (changes in matter content or
 ensemble alter the $-3/2$ coefficient).
 
 Let $\mathrm{Vir}_c$ be the Virasoro algebra at central
-charge $c = 3\ell/(2G)$ \textup{(}Brown--Henneaux\textup{)}.
+charge $c = 3\ell/(2G_N)$ \textup{(}Brown--Henneaux\textup{)}.
 For a BTZ black hole of mass~$M$ and angular momentum~$J$, write the
 effective Brown--Henneaux weights as
 \[
@@ -1089,13 +1139,16 @@ coefficient $-3/2$ in~\eqref{eq:ent-btz-log} is a separate
 one-loop determinant statement.
 \end{remark}
 
-\begin{proposition}[BTZ complementarity; \ClaimStatusConditional]
+\begin{proposition}[BTZ scalar complementarity; \ClaimStatusConditional;
+licensing $\beta+\gamma+\delta$]
 \label{prop:ent-btz-complementarity}
 \index{BTZ black hole!complementarity}
-For the Koszul pair
-$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, the BTZ
-entropy satisfies the following scalar complementarity identity,
-whenever the effective weights are positive for both central charges:
+For the same-family Virasoro comparison pair
+$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, after the Cardy/BTZ
+modular-invariance and vacuum-dominance hypotheses are imposed, the
+BTZ entropy satisfies the following scalar complementarity identity on
+the real range \(0\le c\le26\), whenever the shifted effective weights
+\(h-c/24\) and \(h-(26-c)/24\) are nonnegative:
 \begin{equation}\label{eq:ent-btz-complementarity}
 S_{\mathrm{BH}}(\mathrm{Vir}_c;\, h)
 + S_{\mathrm{BH}}(\mathrm{Vir}_{26-c};\, h)
@@ -1105,9 +1158,11 @@ S_{\mathrm{BH}}(\mathrm{Vir}_c;\, h)
  + \sqrt{\tfrac{(26-c)\,(h - (26-c)/24)}{6}}
 \Bigr).
 \end{equation}
-In the semiclassical regime $h \gg c/24$, this simplifies to
+In the semiclassical regime where \(h\) dominates both vacuum shifts,
+this simplifies to
 $2\pi\sqrt{h/6}\,(\sqrt{c} + \sqrt{26-c})$,
-with maximum at $c = 13$ \textup{(}self-dual point\textup{)},
+with maximum on \(0\le c\le26\) at the comparison fixed point
+\(c = 13\),
 where $\sqrt{c} + \sqrt{26-c} = 2\sqrt{13}$.
 The one-loop free energy sum
 $F_1(\mathrm{Vir}_c) + F_1(\mathrm{Vir}_{26-c})
@@ -1117,11 +1172,12 @@ $K = 13$.
 \end{proposition}
 
 \begin{proof}
-By additivity of $\kappa$:
+By additivity of the scalar curvature projection,
 $F_1(c) + F_1(26-c) = c/48 + (26-c)/48 = 26/48 = 13/24$.
 Substituting $c$ and $26-c$ into~\eqref{eq:ent-btz-leading} gives
 the displayed entropy sum.
-The maximum of $f(c) = \sqrt{c} + \sqrt{26-c}$ is at
+On the real interval \(0\le c\le26\), the maximum of
+$f(c) = \sqrt{c} + \sqrt{26-c}$ is at
 $f'(c) = 0$, giving $c = 13$, where
 $f(13) = 2\sqrt{13}$ (concavity of $\sqrt{\cdot}$).
 \end{proof}
@@ -1462,7 +1518,7 @@ The shadow obstruction tower continues as:
 
 \begin{remark}[Analytic-continuation input]
 Under $\ell \mapsto i\ell$, the Brown--Henneaux formula
-$c = 3\ell/(2G)$ maps to an imaginary central charge.
+$c = 3\ell/(2G_N)$ maps to an imaginary central charge.
 In Convention~B (real section), one takes
 $\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$ as a real
 parameter directly, yielding real free energies.
@@ -1479,25 +1535,38 @@ correspondence (Strominger~\cite{Strominger01}).
 %
 % ======================================================================
 
-\section{JT gravity as Schwarzian limit of the shadow obstruction tower}
+\section{JT gravity as a conditional Schwarzian comparison}
 \label{sec:ent-jt}
 \index{JT gravity!from shadow tower|textbf}
 \index{Weil--Petersson volumes!shadow tower}
 
-\begin{conjecture}[JT gravity from the shadow obstruction tower;
+\begin{conjecture}[Conditional JT comparison from the shadow obstruction tower;
 \ClaimStatusConjectured]
 \label{conj:ent-jt-shadow}
 \index{JT gravity|textbf}
-In the Schwarzian limit $c \to \infty$ with
-$\ell = 2Gc/3$ held fixed, the Virasoro shadow obstruction tower
-degenerates to the JT gravity genus expansion:
+Fix a Schwarzian/JT comparison datum: a large-\(c\)
+Virasoro--Schwarzian scaling, a local coordinate \(z\) with
+\(x=z^2\), the compact Weil--Petersson curve
+\[
+y_{\mathrm{WP}}(z)=\frac{\sin(2\pi z)}{4\pi},
+\]
+an Eynard--Orantin recursion kernel, and an energy-contour convention.
+In the Schwarzian limit \(c\to\infty\) with \(\ell=2Gc/3\) held fixed,
+the Virasoro shadow obstruction tower supplies only the scalar input
+for this comparison:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Spectral curve.}
  The shadow metric $Q_{\mathrm{Vir}}(t)$, after rescaling
- $t \mapsto t/\sqrt{c}$, limits to a trigonometric spectral
- curve whose topological recursion reproduces the JT amplitudes.
- The JT spectral curve $y = \sin(2\pi\sqrt{x})/(4\pi)$
- governs the matrix integral of Saad--Shenker--Stanford~\cite{SSS19}.
+ $t \mapsto t/\sqrt{c}$, is compared with the compact
+ Weil--Petersson normalization
+ \(x=z^2,\ y_{\mathrm{WP}}(z)=\sin(2\pi z)/(4\pi)\).
+ The notation \(y=\sin(2\pi\sqrt{x})/(4\pi)\) is only this formula
+ after a branch of \(\sqrt{x}\) has been chosen.
+ The physical JT density is obtained only after the contour convention:
+ \[
+ \rho_0(E)=\frac{1}{i\pi}y_{\mathrm{WP}}(i\sqrt E)
+ =\frac{\sinh(2\pi\sqrt E)}{4\pi^2}.
+ \]
 
 \item \emph{Genus expansion.}
  The JT partition function is
@@ -1509,9 +1578,10 @@ degenerates to the JT gravity genus expansion:
  \end{equation}
  where $Z_g(\beta)$ is expressed in terms of
  Weil--Petersson volumes $V_{g,1}(b)$ via the Laplace
- transform. The initial data
+ transform. This WP/JT volume statement is external input, not a
+ theorem of the scalar shadow tower. The initial data
  $V_{1,1}(b) = (b^2 + 4\pi^2)/48$
- matches the genus-$1$ shadow amplitude $F_1 = \kappa/24$
+ can be compared with the genus-$1$ shadow amplitude $F_1 = \kappa/24$
  after integration against the JT measure.
 
 \item \emph{Shadow CohFT reconstruction.}
@@ -1526,8 +1596,8 @@ F_g^{\mathrm{sc}}
 on the uniform-weight scalar lane, with
  $\lambda_g^{\mathrm{FP}}
  = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$
- matches the leading-order JT amplitude
- in the limit $S_0 \to \infty$.
+ gives the scalar comparison term. It does not reconstruct the full
+ JT \((2g)!\)-divergent series or its non-perturbative completion.
 \end{enumerate}
 \end{conjecture}
 
@@ -1537,15 +1607,15 @@ Schwarzian mode~$\{f, z\}$ as the surviving degree of
 freedom. The shadow connection
 $\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$
 degenerates to a trigonometric connection whose flat
-sections are related to the Bessel function kernel of the
-JT matrix integral. The genus-$1$ matching:
+sections can be compared with the Bessel function kernel of the
+JT matrix integral after the Schwarzian/JT datum has been fixed.
+The genus-$1$ scalar check:
 $V_{1,1}(0) = \pi^2/12$ and
 $F_1 = \kappa/24 = c/48$; in the Schwarzian limit,
 the Laplace transform of $V_{1,1}(b)$ gives
-$Z_1(\beta) = (c/48)\beta^{-1}$, consistent with the
-shadow obstruction tower at genus~$1$. The higher-genus matching
-requires the full topological recursion, which agrees with
-the shadow CohFT reconstruction
+$Z_1(\beta) = (c/48)\beta^{-1}$ after normalization. The
+higher-genus comparison requires the external topological recursion
+and is not forced by the scalar shadow CohFT reconstruction
 (Corollary~\ref{cor:topological-recursion-mc-shadow})
 at the level of tautological intersection numbers.
 \end{remark}
@@ -1555,8 +1625,9 @@ at the level of tautological intersection numbers.
 \index{JT gravity!matrix model}
 The JT spectral density
 $\rho(E) = \sinh(2\pi\sqrt{E})/(4\pi^2)$ is obtained from the
-shadow obstruction tower in the $c \to \infty$ limit as the
-density of states in the Schwarzian quantum mechanics.
+compact sine curve only after the energy-contour convention
+\(z=i\sqrt E\) has been supplied. It is not obtained from the scalar
+shadow obstruction tower alone.
 The shadow partition function
 $Z^{\mathrm{sh}} = \exp(\sum F_g\,\hbar^{2g})$
 converges absolutely (Bernoulli decay
@@ -1943,20 +2014,26 @@ Kerler--Lyubashenko ribbon centre/coend package of $\mathcal C_N$.
 The functor must be compatible with the ribbon trace and the
 Kerler--Lyubashenko coend.
 Kazhdan--Lusztig at a root of unity and its logarithmic extensions
-provide the expected bridge; the bridge is an additional input, not
-a consequence of the Calabrese--Cardy calculation.
+provide the expected bridge. This bridge is an additional input; the
+Calabrese--Cardy calculation supplies its scalar boundary invariant.
 
-Theorem~C governs the chiral derived centre and its
-complementarity.  Theorem~H governs the chiral Hochschild complex
-$\ChirHoch^\bullet$ and its amplitude $\{0,1,2\}$.  Neither theorem
-identifies the categorical Hochschild group
+Theorem~C governs the strict-flat centre-local-system complex
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$
+and its represented Verdier eigenspaces.  Theorem~H governs the
+derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+=\ChirHoch^\bullet(\cA,\cA)$ through the family datum $H_H(\cA;S)$
+and the resulting support~$S$.  A supplied brace comparison
+$\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, transports the
+Theorem~H object to the coefficient system of Theorem~C.  The
+categorical Hochschild group
 $\mathrm{HH}^{\mathrm{cat}}_0(\mathcal C)$, the topological
 Hochschild theory of a ring spectrum, and the ribbon-category
-coend trace.  Under the functor $\mathfrak F_N$, the equality
+coend trace remain in their native categories.  Under the functor
+$\mathfrak F_N$, the equality
 $\gamma_N(\mathbf H_{\Delta_5})=\log\mathcal D_N$ says that the
 finite-stage topological entanglement coefficient is the logarithmic
-volume of the bulk ribbon centre; without that bridge it remains a
-three-dimensional TQFT invariant.  Passing from $\gamma_N$ to
+volume of the bulk ribbon centre. Prior to this bridge,
+$\gamma_N$ is a three-dimensional TQFT invariant. Passing from $\gamma_N$ to
 $\gamma_\infty$ requires the trace-class Mittag--Leffler completion
 named in Theorem~\ref{thm:ent-topological-entanglement}.
 \end{remark}

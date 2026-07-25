@@ -519,16 +519,18 @@ binary packet is in hand the only remaining independent local
 comparison is the ternary one.
 \end{proof}
 
-\begin{proposition}[Two-channel reduction after compactifying the
+\begin{proposition}[Two-channel reduction for a compactified logarithmic
  ternary packet; \ClaimStatusProvedHere]
 \label{prop:compactified-ternary-two-channel}
-\textup{(}\emph{quadrant} Open, \emph{presentation} chart $A_b$,
-\emph{level} 1 of the Beilinson tower,
-\emph{hypothesis package} disk chart $U \subset X$; perturbative and
-bar ternary forms representable by logarithmic $1$-forms on
-$\overline{\mathcal{M}}_{0,4} \cong \bP^1$ with poles only at the
-three boundary points; residue theorem on
-$\bP^1$.\textup{)}
+\textup{(}\emph{quadrant} geometric/logarithmic comparison lemma for
+the Open disk-local lane, \emph{presentation} logarithmic $1$-forms on
+$\overline{\mathcal{M}}_{0,4} \cong \bP^1$,
+\emph{level} local ternary boundary stratum,
+\emph{hypothesis package} two already constructed logarithmic
+$1$-forms on $\overline{\mathcal{M}}_{0,4} \cong \bP^1$, poles only at
+the three boundary points, the same boundary-channel labelling and
+orientation convention, the residue theorem on~$\bP^1$, and
+$H^0(\bP^1,\Omega^1_{\bP^1})=0$.\textup{)}
 Fix a holomorphic disk chart $U \subset X$, and suppose the
 perturbative ternary bracket and the local bar $m_3$-operation are
 represented by logarithmic $1$-forms on
@@ -540,6 +542,10 @@ channels
 implies comparison in the third channel as well.
 Equivalently, after compactification the ternary packet has only two
 independent boundary-channel checks.
+This proposition proves only the purely logarithmic $\bP^1$ residue
+reduction: it does not construct the perturbative ternary form, does
+not compare it with the bar form, and does not prove
+Conjecture~\ref{conj:v1-disk-local-perturbative-fm}.
 \end{proposition}
 
 \begin{proof}
@@ -559,12 +565,16 @@ $H^0(\bP^1,\Omega^1_{\bP^1}) = 0$, hence $\delta = 0$.
 In particular, the third boundary residue is forced by the first two.
 \end{proof}
 
-\begin{remark}[Application to the disk-local ternary packet]
+\begin{remark}[Conditional application to the disk-local ternary packet]
 Proposition~\ref{prop:compactified-ternary-two-channel} applies in
 particular to the compactified ternary comparison sought in
-Conjecture~\ref{conj:v1-disk-local-perturbative-fm}. Once the local
-ternary forms are constructed on $\overline{M}_{0,4}$, only two
-boundary-channel checks remain independent.
+Conjecture~\ref{conj:v1-disk-local-perturbative-fm} only after the
+compactified perturbative and bar logarithmic forms have been
+constructed on $\overline{M}_{0,4}$ with the stated pole and
+orientation conventions. Under that conditional application, the
+proposition reduces the ternary comparison from three residue
+equalities to two. It does not supply the compactification/Stokes
+upgrade or the perturbative/FM identification.
 \end{remark}
 
 \begin{corollary}[Genus-\texorpdfstring{$0$}{0} post-compactification ternary target;
@@ -647,12 +657,12 @@ dt = -u^{-2}\,du,\qquad
 \]
 and a nonzero constant term $c$ would contribute a double pole at
 $u=0$.
-Hence
+Hence, using \(d\log(1-t)=dt/(t-1)\),
 \[
 \omega = a\,\frac{dt}{t}+b\,\frac{dt}{t-1}
-= a\, d\log t - b\, d\log(1-t).
+= a\, d\log t + b\, d\log(1-t).
 \]
-Setting $A=a$ and $B=-b$ gives existence.
+Setting $A=a$ and $B=b$ gives existence.
 
 For uniqueness, if
 $A\, d\log t + B\, d\log(1-t)=0$, then the residues at
@@ -1306,17 +1316,20 @@ problem, not to the local collision blow-up alone.
 The Feynman-diagram reading is governed by three algebraic constraints.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Universal conductor.} The genus-$1$ free energy
- $F_1=\kappa(\cA)/24$ is the scalar projection of
- $\mathrm{obs}_1(\cA)=\kappa(\cA)\lambda_1$.  In a BV model it is
+ $F_1=\kappa(\cA)/24$ is the graph evaluation of the pointed trace
+ $\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)
+ =\kappa(\cA)\lambda_1$.  In a BV model it is
  seen as a one-loop anomaly term; algebraically it is the genus-$1$
  Hodge-line contribution of Chapter~\ref{chap:universal-conductor}.
 \item \emph{Climax identity.} The bar differential is the signed sum
- of collision residues of the chiral product, with
- $\eta_{ij}=d\log(z_i-z_j)$ supplying the Arnold logarithmic form:
- $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
- of Chapter~\ref{ch:climax-theorem}.  This is an algebraic residue
- theorem.  The off-shell/on-shell reading is the separate conjectural
- pairing of Conjecture~\ref{conj:physical-pairing}.
+ of collision residues of the chiral product, with the affine/formal
+ representative $\eta_{ij}=d\log(z_i-z_j)$ supplying the Arnold
+ logarithmic form.  Chapter~\ref{ch:climax-theorem} states this as a
+ typed KZ--Arnold bar-superconnection theorem whose bar operator is
+ obtained only after Fulton--MacPherson boundary-residue realization.
+ This is an algebraic residue theorem.  The off-shell/on-shell reading
+ is the separate conjectural pairing of
+ Conjecture~\ref{conj:physical-pairing}.
 \item \emph{Shadow-Feynman dictionary.} The
  $A_\infty$ operations $m_k$ are stable-tree and stable-graph
  operations.  The shadow coefficients $S_r$ are degree-$r$
@@ -1449,100 +1462,36 @@ The Vol.~III K3 one-loop compute suite checks the leading Heegner
 labels against EOT 2011 Table~1.
 \end{remark}
 
-\begin{remark}[Four-loop diagrammatic expansion on $K3\times\bC^2$;
-\ClaimStatusConditional]
+\begin{remark}[Four-loop comparison problem on $K3\times\bC^2$;
+\ClaimStatusOpen]
 \label{rem:feyn-4loop-explicit-expansion}
 \index{4-loop Feynman!explicit expansion}
 \index{K3 4-loop enumeration}
-Under the normalization and BV-to-Heegner comparison of
-\texttt{chapters/connections/bv\_brst.tex}, the four-loop BV obstruction
-of twisted $11$D~SUGRA on $\bR^3\times K3\times\bC^2$ is represented by
-the eleven connected four-loop vacuum topologies tabulated in
-Table~\ref{tab:feyn-4loop-topologies}.  The table is a transported
-consistency packet from Theorem~\ref*{thm:bvbrst-4loop-feynman-sum};
-this chapter does not independently enumerate the four-loop graph
-complex.  The symmetry factors $|\mathrm{Aut}(\Gamma)|$ use Kreimer's
-four-loop Hopf algebra entries~\cite[\S 3, Table 2]{Kreimer1998} and
-the Bogner--Weinzierl tensor-reduction
-database~\cite[Appendix B]{BognerWeinzierl2017}.
-\begin{table}[ht]
-\centering
-\small
-\begin{tabular}{clrc}
-\toprule
-$\#$ & Topology $\Gamma$ & $\mathrm{Amp}(\Gamma)/[H_4]$ & pair \\
-\midrule
-$1$ & Wheel $W_4$ & $+576$ & (a) \\
-$2$ & Double theta $\Theta\Theta$ & $+72$ & (b) \\
-$3$ & Ladder $\mathrm{Lad}_4$ & $-576$ & (a) \\
-$4$ & Box with diagonals $\Box^{\mathrm{diag}}_4$ & $-72$ & (b) \\
-$5$ & Two-triangle $\Delta\Delta$ & $-48$ & (c) \\
-$6$ & Dumbbell-tadpole $\Theta\!+\!\mathrm{tad}$ & $0$ &; \\
-$7$ & Pretzel $\mathcal{P}$ & $+48$ & (c) \\
-$8$ & $Z$-snake $Z_4$ & $0$ &; \\
-$9$ & Sunrise-square $\mathrm{Sun}_4$ & $+12$ & (d) \\
-$10$ & Figure-eight-loop $8\!+\!\mathrm{loop}$ & $0$ &; \\
-$11$ & Tadpole-tadpole $T^2$ & $0$ &; \\
-\midrule
-& total & $+12$ & \\
-\bottomrule
-\end{tabular}
-\caption{The eleven connected four-loop Feynman topologies on
-$K3\times\bC^2$ and their amplitudes as multiples of the Humbert class
-$[H_4]$. Cancellation pairs: (a) wheel--ladder by CGP open-closed
-reflection; (b) $\Theta\Theta$--$\Box^{\mathrm{diag}}$ by Humbert
-$H_1\leftrightarrow H_4$ parity; (c) two-triangle--pretzel by
-Borcherds singular-theta parity; (d) sunrise-square is the residual
-Gritsenko--Nikulin witness of $c_{\phi_{-2,1}}(4) = 12$ at Humbert
-discriminant $-4$. Proof:
-Vol~I~\cite[Theorem~\ref*{thm:bvbrst-4loop-feynman-sum}]{Lorgat1}
-at \texttt{chapters/connections/bv\_brst.tex}
-\S\ref*{subsec:bvbrst-4loop-enumeration}.}
-\label{tab:feyn-4loop-topologies}
-\end{table}
-The net sum is $c_4 = +12\cdot[H_4] = c_{\phi_{-2,1}}(4)\cdot[H_4]$,
-matching the Gritsenko--Nikulin denominator identity
-\cite[Thm.~2.1]{GritsenkoNikulin1998} and the four independent
-cross-verification paths (DT, heterotic, DMVV, direct Jacobi-form
-expansion). The cross-volume triangle of identifications: Vol~I
-(BV-cohomology side), Vol~II (Wilson-line counterterm in the HT
-bulk-boundary-line triangle), Vol~III (Cartan-matrix root vector of
-$\mathfrak{g}_{\Delta_5}$ at discriminant $-4$).
+The number-theoretic target is the Humbert-divisor coefficient of the
+Borcherds product of $\phi_{0,1}$.  A four-loop physics comparison
+requires the twisted-supergravity BV complex, its connected vacuum
+graphs, propagators, symmetry factors, regularized amplitudes, and a
+chain map from the BV obstruction complex to the Heegner divisor
+complex.  The current source contains the target coefficient and the
+comparison problem; the graph integral remains to be constructed.
+Gritsenko--Nikulin determine the divisor multiplicities from the
+Fourier coefficients of $\phi_{0,1}$.  This arithmetic calculation is
+the target of the proposed BV-to-Heegner map and supplies no graph
+amplitude before that map and its regularization have been built.
 \end{remark}
 
-\begin{remark}[Diagrammatic moves and the 5-loop extension]
+\begin{remark}[Five-loop comparison problem; \ClaimStatusOpen]
 \label{rem:feyn-5loop-companion}
 \index{4-loop!diagrammatic moves}
 \index{5-loop!cancellation}
-The four 4-loop cancellation pairs of
-Table~\ref{tab:feyn-4loop-topologies} are exhibited as explicit
-diagrammatic moves with sign-verification in Vol~I
-\texttt{chapters/connections/bv\_brst.tex}
-\S\ref*{subsec:bvbrst-4loop-moves}: pair (a) wheel-ladder by
-CGP open-closed reflection $\sigma^{\mathrm{CGP}}$
-(Proposition~\ref*{prop:bvbrst-4loop-pair-a}), pair (b)
-$\Theta\Theta$-$\Box^{\mathrm{diag}}$ by Humbert
-$\iota_{H_1, H_4}$-involution with eigenvalue $-1$ from
-Bruinier~\cite[Thm.~2.1]{Bruinier2002}
-(Proposition~\ref*{prop:bvbrst-4loop-pair-b}), pair (c)
-two-triangle-pretzel by Borcherds singular-theta parity
-$\varepsilon_{\mathrm{BST}}$~\cite[\S 10]{Borcherds1998}
-(Proposition~\ref*{prop:bvbrst-4loop-pair-c}), and tadpole
-vanishing via Costello $\chi(K3)/24$-subtraction
-(Proposition~\ref*{prop:bvbrst-4loop-tadpole-vanish}).
-
-The 5-loop extension is a companion calculation, not a new theorem in
-this chapter.  Kreimer's Hopf algebra gives~\cite[\S 3,
-eq.~(16)]{Kreimer1998} $d_5 = 33$ connected topologies in the relevant
-vacuum class.  The detailed cancellation packets are those of Vol~I
-Theorem~\ref*{thm:bvbrst-5loop-sum}.  After the BV-to-Heegner
-normalization is imposed, the graph-weighted sum satisfies
-\[
-c_5 = c_{\phi_{-2,1}}(5)\cdot[H_5] = 0,
-\]
-because an index-$1$ weak Jacobi form has nonzero discriminant
-coefficients only in classes $0$ or $3$ modulo~$4$, while
-$5\equiv 1\pmod 4$.
+The five-loop comparison has the same type signature as the
+four-loop problem: a connected BV graph complex and its regularized
+amplitude map on the physics side, a Humbert-divisor coefficient on
+the automorphic side, and a chain map between them.  The arithmetic
+coefficient is determined from the Fourier expansion of
+$\phi_{0,1}$.  Its identification with a five-loop obstruction is the
+equation defining the conjectural comparison map~$\Psi_5$ in
+Chapter~\ref{ch:v1-bv-brst}.
 \end{remark}
 
 \begin{remark}[Refinement off self-dual; \ClaimStatusConjectured]

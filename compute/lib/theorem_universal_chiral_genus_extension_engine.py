@@ -181,7 +181,10 @@ def heisenberg(k: int = 1) -> ChiralAlgebraData:
         is_positive_energy=True,
         shadow_depth=2,
         regime="quadratic",
-        notes="Free boson.  Koszul dual H_k^! = Sym^ch(V*), NOT H_{-k}.",
+        notes=(
+            "Free boson.  Koszul dual H_k^! is the curved second-kind "
+            "Sym branch, NOT H_{-k}."
+        ),
     )
 
 
@@ -454,10 +457,12 @@ def admissible_level_simple_quotient(
     """Simple quotient L_k(g) at admissible level k = p/q - h^v.
 
     The UNIVERSAL algebra V^k(g) is Koszul at all levels.
-    The SIMPLE QUOTIENT L_k(g) at admissible levels may fail
-    Koszulness for rank >= 2 (the bar-Ext vs ordinary-Ext gap).
-    For sl_2: L_k(sl_2) IS Koszul at all admissible levels.
-    For sl_3 and higher: OPEN.
+    The SIMPLE QUOTIENT L_k(g) at admissible levels is not admitted to
+    the proved Koszul engine by rationality alone. Rank-one sl_2 has
+    finite Shapovalov/character evidence, but theorem-level Koszulness
+    still requires the quotient-bar spectral-sequence and convergence
+    package. Rank >= 2 remains open/obstructed by the bar-Ext versus
+    ordinary-Ext gap.
     """
     lie_data = _lie_algebra_data(lie_type, rank)
     h_vee = lie_data["h_vee"]
@@ -467,8 +472,10 @@ def admissible_level_simple_quotient(
     c = Fraction(k * dim_g, k + h_vee)
     kap = Fraction(dim_g * (k + h_vee), 2 * h_vee)
 
-    # For sl_2 at admissible levels: Koszul is proved
-    is_koszul = (lie_type == "A" and rank == 1)
+    # Simple admissible quotients are not promoted into the proved
+    # Koszul engine without their quotient-bar package.
+    is_promoted_koszul = False
+    sl2_conditional = (lie_type == "A" and rank == 1)
 
     return ChiralAlgebraData(
         name=f"L_{p}/{q}({lie_type}_{rank})",
@@ -478,14 +485,23 @@ def admissible_level_simple_quotient(
         num_generators=dim_g + 1,
         generator_weights=(1,) * dim_g + (2,),
         max_pole_order=2,
-        has_pbw=is_koszul,  # PBW may fail for simple quotient
-        is_koszul=is_koszul,
-        has_hs_sewing=is_koszul,
+        has_pbw=False,  # PBW may fail for simple quotient
+        is_koszul=is_promoted_koszul,
+        has_hs_sewing=False,
         is_positive_energy=True,
-        shadow_depth=3 if is_koszul else -1,
-        regime="curved-central",
-        notes=f"Admissible level k={p}/{q}-{h_vee}. "
-              f"Simple quotient. Koszul: {'proved' if is_koszul else 'open'}.",
+        shadow_depth=-1,
+        regime="admissible-quotient",
+        notes=(
+            f"Admissible level k={p}/{q}-{h_vee}. Simple quotient. "
+            "Universal algebra is Koszul; the quotient is not promoted "
+            "to the proved Koszul engine. "
+            + (
+                "Rank-one sl2 still needs the quotient-bar spectral "
+                "sequence and convergence package."
+                if sl2_conditional
+                else "Higher rank is open/obstructed by quotient null vectors."
+            )
+        ),
     )
 
 

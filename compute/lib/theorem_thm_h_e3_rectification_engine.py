@@ -84,11 +84,10 @@ C. GRIFFIN's CVA BRST:
 D. W_3 ChirHoch COMPUTATION (BOUNDED, per AP94):
    ChirHoch*(W_3) is concentrated in {0, 1, 2} with
      dim ChirHoch^0 = dim Z(W_3) = 1
-     dim ChirHoch^1 = 2 (= number of W-algebra strong generators
-                          contributing to outer derivations: stress
-                          tensor direction and spin-3 direction)
-     dim ChirHoch^2 = dim Z(W_3^!) = 1
-   Total dim <= 4.  The old Gelfand-Fuchs polynomial-ring model
+     dim ChirHoch^1 = 0 on the fixed-product automorphism lane
+     dim ChirHoch^2 = 1 (central-charge / DS-level product lane,
+                         equivalently the dual-centre scalar slot)
+   Total dim = 2 <= 4.  The old Gelfand-Fuchs polynomial-ring model
    C[Theta_1, Theta_2] with unbounded partition counts is a
    DIFFERENT functor (AP94, AP95) and has been removed.
 
@@ -383,9 +382,9 @@ def heisenberg_e3_structure(kappa: Any = 1) -> E3StructureData:
 def affine_km_e3_structure(lie_type: str = 'A', rank: int = 1) -> E3StructureData:
     """E_3 structure on ChirHoch*(hat{g}_k, hat{g}_k).
 
-    Affine KM: quadratic, ChirHoch = (1, dim g, 1).
-    Gerstenhaber bracket: [,] on ChirHoch^1 = g is the LIE BRACKET.
-    This is NONTRIVIAL for non-abelian g.
+    Affine KM: quadratic, ChirHoch = (1, 0, 1) after the zero-mode
+    inner quotient.  The adjoint g still carries a nontrivial zero-mode
+    prequotient bracket, but it is not ChirHoch^1.
     Class L: shadow depth 3, braces B_1 != 0 but B_k = 0 for k >= 2.
     """
     # Dimension of the Lie algebra
@@ -412,11 +411,11 @@ def affine_km_e3_structure(lie_type: str = 'A', rank: int = 1) -> E3StructureDat
 
     return E3StructureData(
         algebra_name=f'affine_{lie_type}{rank}',
-        chirhoch_dims={0: 1, 1: dim_g, 2: 1},
+        chirhoch_dims={0: 1, 1: 0, 2: 1},
         cup_product_trivial=False,
-        gerstenhaber_bracket_trivial=(dim_g <= 1),  # trivial only for abelian
+        gerstenhaber_bracket_trivial=True,
         e3_linking_trivial=True,  # concentration forces degree <= 2
-        brace_max_nonzero=1,  # class L: B_1 = bracket
+        brace_max_nonzero=1,  # class L: prequotient B_1 bracket
         shadow_class='L',
         e3_formal=True,
     )
@@ -433,9 +432,9 @@ def virasoro_e3_structure() -> E3StructureData:
 
     For generic c:
       dim ChirHoch^0(Vir_c) = dim Z(Vir_c)   = 1
-      dim ChirHoch^1(Vir_c)                  = 1 (c-deformation)
-      dim ChirHoch^2(Vir_c) = dim Z(Vir_c^!) = 1
-      Total = 3.
+      dim ChirHoch^1(Vir_c)                  = 0 (fixed-product gauge lane)
+      dim ChirHoch^2(Vir_c)                  = 1 (central-charge product lane)
+      Total = 2.
 
     Shadow class is M (infinite shadow DEPTH r_max), but this is
     about the r-modular shadow tower on the bar complex, NOT the
@@ -443,11 +442,11 @@ def virasoro_e3_structure() -> E3StructureData:
     vs algebraic depth vs cohomological amplitude are distinct.
 
     The E_3 structure:
-    - Cup product on a 3-dimensional total space (classes in {0,1,2}).
-    - Gerstenhaber bracket: degree -1. For Virasoro the only nonzero
-      ChirHoch^1 x ChirHoch^1 -> ChirHoch^1 pairing is the commutator
-      of the c-derivation with itself, which vanishes (single
-      1-parameter deformation).
+    - Cup product on the two endpoint classes in degrees {0,2}.
+    - Gerstenhaber bracket: degree -1.  Since the fixed-product
+      automorphism lane ChirHoch^1 is zero at generic c, the
+      degree-1 bracket is vacuous.  The central-charge motion is a
+      degree-2 product-deformation lane, not a degree-1 derivation.
     - E_3 linking: degree -2, maps ChirHoch^i x ChirHoch^j ->
       ChirHoch^{i+j-2}.  Since concentration caps i+j <= 4 and
       linking target must be in [0,2], the only nontrivial linking
@@ -455,13 +454,13 @@ def virasoro_e3_structure() -> E3StructureData:
       is trivial (single class).
     - Braces: concentration caps all brace operations at tree level.
     """
-    dims = {0: 1, 1: 1, 2: 1}
+    dims = {0: 1, 1: 0, 2: 1}
 
     return E3StructureData(
         algebra_name='virasoro',
         chirhoch_dims=dims,
         cup_product_trivial=False,
-        gerstenhaber_bracket_trivial=True,  # 1-parameter deformation self-commutes
+        gerstenhaber_bracket_trivial=True,  # H^1 is zero on this lane
         e3_linking_trivial=True,  # single class in ChirHoch^2
         brace_max_nonzero=0,  # bounded amplitude caps braces
         shadow_class='M',  # shadow DEPTH class; cohomology amplitude [0,2]
@@ -481,8 +480,8 @@ def virasoro_e3_structure() -> E3StructureData:
 # the number of monomials in a polynomial ring are REMOVED.
 # Replacement: w_algebra_chirhoch_bounded_dim returns the Theorem-H
 # bounded values (0 outside {0,1,2}, dim ChirHoch^0 = dim Z = 1,
-# dim ChirHoch^1 = n_generators - number_of_W_constraints (class M
-# contribution to outer derivations), dim ChirHoch^2 = 1).
+# dim ChirHoch^1 = 0 on the fixed-product automorphism lane, and
+# dim ChirHoch^2 = 1 for the central-charge / DS-level product lane).
 
 def w_algebra_chirhoch_bounded_dim(gen_weights: List[int], degree: int) -> int:
     """Dimension of ChirHoch^degree(W) under Theorem-H amplitude [0,2].
@@ -493,17 +492,12 @@ def w_algebra_chirhoch_bounded_dim(gen_weights: List[int], degree: int) -> int:
     For a W-algebra with r strong generators at generic central
     charge:
       dim ChirHoch^0 = dim Z(W^k(g))   = 1  (vacuum center)
-      dim ChirHoch^1                    = 1  (c-deformation; the
-                                             other W generators do
-                                             not produce new outer
-                                             derivations in the
-                                             chiral Hochschild
-                                             complex because they
-                                             are strongly generated
-                                             by the stress tensor
-                                             at the level of MC
-                                             deformations)
-      dim ChirHoch^2 = dim Z(W^k(g)^!) = 1
+      dim ChirHoch^1                    = 0  (no fixed-product outer
+                                             derivation at generic
+                                             central charge)
+      dim ChirHoch^2                    = 1  (central-charge / DS-level
+                                             product lane; dual-centre
+                                             scalar slot)
       dim ChirHoch^n = 0 for n not in {0, 1, 2}
     """
     if degree < 0 or degree > 2:
@@ -511,7 +505,7 @@ def w_algebra_chirhoch_bounded_dim(gen_weights: List[int], degree: int) -> int:
     if degree == 0:
         return 1
     if degree == 1:
-        return 1
+        return 0
     return 1  # degree == 2
 
 
@@ -536,7 +530,7 @@ def w3_chirhoch_dims(max_degree: int = 20) -> Dict[int, int]:
     """ChirHoch^n(W_3) for n = 0, ..., max_degree (bounded by Theorem H).
 
     Per AP94, ChirHoch^*(W_3) is concentrated in {0,1,2}.
-    Values: {0: 1, 1: 1, 2: 1, n: 0 for n > 2}.
+    Values: {0: 1, 1: 0, 2: 1, n: 0 for n > 2}.
     """
     return {
         n: w_algebra_chirhoch_bounded_dim([2, 3], n)
@@ -814,8 +808,9 @@ def chirhoch_palindromicity_check(gen_weights: Optional[List[int]] = None,
         # Palindromic: P_A(t) = t^2 * P_{A!}(1/t)
         #   = t^2 * (dual_center_dim + hoch1_dual/t + center_dim/t^2)
         #   = center_dim + hoch1_dual * t + dual_center_dim * t^2
-        # This requires hoch1_dim = hoch1_dual (HH^1 self-dual).
-        # For Heisenberg: 1 = 1. For sl_2: 3 = 3. Check.
+        # This also requires the degree-1 lane to match its dual.
+        # The helper checks endpoint duality; callers supply matching
+        # fixed-product automorphism dimensions for the families at hand.
         return center_dim == dual_center_dim  # at generic level
     return True
 
@@ -830,8 +825,8 @@ def w3_chirhoch_explicit_at_weights() -> Dict[str, Any]:
 
     For W_3 at generic c:
       dim ChirHoch^0 = 1  (center of W_3, spanned by vacuum)
-      dim ChirHoch^1 = 1  (c-deformation class)
-      dim ChirHoch^2 = 1  (dual center)
+      dim ChirHoch^1 = 0  (fixed-product automorphism lane)
+      dim ChirHoch^2 = 1  (central-charge product lane / dual-center slot)
       dim ChirHoch^n = 0  for n > 2
     """
     dims = w3_chirhoch_dims(10)
@@ -854,11 +849,11 @@ def verify_chirhoch_concentration_quadratic(family: str,
     """
     quadratic_families = {
         'heisenberg': [1, 1, 1],
-        'affine_sl2': [1, 3, 1],
-        'affine_sl3': [1, 8, 1],
-        'betagamma': [1, 2, 1],
-        'bc_ghosts': [1, 2, 1],
-        'free_fermion': [1, 1, 1],
+        'affine_sl2': [1, 0, 1],
+        'affine_sl3': [1, 0, 1],
+        'betagamma': [1, 0, 1],
+        'bc_ghosts': [1, 0, 1],
+        'free_fermion': [1, 0, 1],
     }
     if family not in quadratic_families:
         return True  # W-algebra regime not tested here
@@ -874,15 +869,17 @@ def verify_euler_characteristic_consistency() -> Dict[str, Any]:
 
     For quadratic: chi = dim Z(A) - dim HH^1 + dim Z(A!)
     By Koszul duality: dim Z(A) = dim Z(A!) (at generic level).
-    So chi = 2 * dim_Z - dim_HH1.
+    So chi = 2 * dim_Z - dim_HH1.  Here HH^1 means the
+    fixed-product automorphism lane; conformal-weight, level, and
+    bilinear-product motions live in degree-2 or metadata.
     """
     results = {}
     families = {
         'heisenberg': (1, 1, 1),  # (Z, HH1, Z!)
-        'affine_sl2': (1, 3, 1),
-        'affine_sl3': (1, 8, 1),
-        'betagamma': (1, 2, 1),
-        'bc_ghosts': (1, 2, 1),
+        'affine_sl2': (1, 0, 1),
+        'affine_sl3': (1, 0, 1),
+        'betagamma': (1, 0, 1),
+        'bc_ghosts': (1, 0, 1),
     }
     for name, (z, h1, zd) in families.items():
         chi = z - h1 + zd
@@ -1003,7 +1000,7 @@ def full_rectification_summary() -> Dict[str, Any]:
         'w3_computation': {
             'chirhoch_dims_0_to_10': w3_chirhoch_dims(10),
             'amplitude': (0, 2),
-            'total_dim': 3,
+            'total_dim': 2,
             'bounded_by_theorem_h': True,
             'matches_theorem_h': True,
         },

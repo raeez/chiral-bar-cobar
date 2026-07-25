@@ -12,93 +12,208 @@ binary collision residue
  \qquad
  \Theta_\cA = D_\cA-d_0.
 \]
-It is neither the chiral algebra $\cA$, nor the bar coalgebra
-$B(\cA)$, nor the Verdier--Koszul dual algebra $\cA^!$, nor the
-derived chiral centre.  Bar--cobar inversion recovers $\cA$;
-Verdier duality produces $\cA^!$; chiral Hochschild cochains produce
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.  The tables below record the
+It is the binary component of the twisting morphism
+$\theta_\cA\colon B(\cA)\to\cA$.  Bar--cobar inversion recovers
+$\cA$; Verdier duality produces $\cA^!$; chiral Hochschild cochains
+produce $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.  The tables below record the
 normalizations under which the same collision residue appears as
 twisting morphism, line-operator twist, Poisson-vertex $r$-matrix,
 commuting Hamiltonian seed, Yangian classical limit, Sklyanin tensor,
 and Gaudin generator.
 \end{abstract}
 
-\section{The five objects and three lanes}
+\section{Five objects and their comparison morphisms}
 \label{sec:master-concordance-five-objects}
 
-\begin{convention}[Five-object firewall; \ClaimStatusDefinitional]
+\begin{convention}[Five typed objects; \ClaimStatusDefinitional]
 \label{conv:master-five-object-firewall}
-For an augmented chiral algebra $\cA$ on a curve, the dictionary uses
-five different objects:
+Let $\cA=T(V)/(R)$ be an augmented quadratic chiral algebra on a
+curve.  The five objects are
 \[
 \begin{array}{rcl}
 \cA && \text{the chiral algebra;}\\[2pt]
 B(\cA)=T^c(s^{-1}\bar\cA) && \text{the ordered bar coalgebra,
-with }\bar\cA=\ker\epsilon;\\[2pt]
-\cA^{\mathrm i}=H^\bullet B(\cA) && \text{the Koszul-dual
-coalgebra;}\\[2pt]
-\cA^!=((\cA^{\mathrm i})^\vee) && \text{the post-Verdier
-dual algebra;}\\[2pt]
+with }\bar\cA=\fib(\epsilon);\\[2pt]
+\cA^{\mathrm i}=C(s^{-1}V,s^{-2}R) && \text{the quadratic
+coalgebra of the chosen presentation;}\\[2pt]
+\cA^!=\mathbb D_{\Ran}(\cA^{\mathrm i}) && \text{the strict
+Verdier--Koszul dual algebra in the finite-type dualizable ambient;}\\[2pt]
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
- = C^\bullet_{\mathrm{ch}}(\cA,\cA) && \text{the closed-sector
-cochain object, i.e. the derived chiral centre.}
+ = C^\bullet_{\mathrm{ch}}(\cA,\cA) && \text{the chart cochain
+centre.}
 \end{array}
 \]
-The three arrows are different:
+They are joined by the typed morphisms
 \[
-\Omega B(\cA)\xrightarrow{\sim}\cA
-\quad\text{is inversion,}\qquad
-\mathbb{D}_{\Ran}B(\cA)\rightsquigarrow \cA^!
-\quad\text{is Verdier--Koszul duality,}
+\tau_{\mathrm i}\colon\cA^{\mathrm i}\longrightarrow\cA,
+\qquad
+q_\cA\colon\cA^{\mathrm i}\longrightarrow B(\cA),
+\qquad
+\epsilon_\cA\colon\Omega B(\cA)\longrightarrow\cA,
 \]
-and
 \[
-\cA\longmapsto C^\bullet_{\mathrm{ch}}(\cA,\cA)
-\quad\text{is the Hochschild-centre construction.}
+\mathbb D_{\Ran}(q_\cA)\colon
+\mathbb D_{\Ran}B(\cA)\longrightarrow\cA^!,
+\qquad
+\mathfrak Z(\cA):=C^\bullet_{\mathrm{ch}}(\cA,\cA).
 \]
-The inversion counit never enters the centre lane, and no Hochschild
-complex is a substitute for the Verdier dual algebra.
+The package
+$H_{\mathrm{CL}}(\cA,\cA^{\mathrm i},\tau_{\mathrm i})$ makes
+$q_\cA$ a quasi-isomorphism;
+$H_1$ makes $\epsilon_\cA$ a quasi-isomorphism; and $H_{\mathrm{VD}}$
+defines the displayed Verdier dual morphism in the completed ambient.
 \end{convention}
+
+\begin{theorem}[The five objects and their ambient categories;
+\ClaimStatusProvedHere]
+\label{thm:typed-verdier-koszul-firewall}
+\index{Verdier--Koszul duality!typed objects}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{five\ typed\ objects},
+\mathrm{levels}=1\leftrightarrow2\to3,
+\mathrm{hypothesis\ package}=\mathrm{augmented}
+\ +\ \mathrm{complete}
+\ +\ \mathrm{Verdier\ dualizable}
+\ +\ \mathrm{chiral\ Hochschild\ defined})$\textup{].}
+The five objects of Convention~\ref{conv:master-five-object-firewall}
+belong to five different ambient categories:
+\[
+\begin{array}{c|c}
+\text{object} & \text{ambient}\\ \hline
+\cA &
+\operatorname{Alg}^{\mathrm{aug,comp}}_{\chirAss}(D_X)\\[2pt]
+B_X^{\mathrm{ord}}(\cA) &
+\operatorname{Coalg}^{\mathrm{conil,comp}}_{\chirAss^!}(D_X)\\[2pt]
+\cA^{\mathrm i} &
+\operatorname{Coalg}^{\mathrm{quad}}_{\chirAss^!}(D_X)\\[2pt]
+\cA^! &
+\operatorname{Alg}^{\mathrm{post}\text{-}\mathbb D_{\Ran},
+\mathrm{comp}}_{\chirAss}(D_X)\\[2pt]
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) &
+\operatorname{Ch}\bigl(C^\bullet_{\mathrm{ch}}(\cA,\cA)\bigr).
+\end{array}
+\]
+The typed morphisms are
+\[
+B_X^{\mathrm{ord}}(\cA)\to B_X^\Sigma(\cA)
+\quad(\text{equivariant descent}),\qquad
+\Omega_XB_X^{\mathrm{ord}}(\cA)\to\cA
+\quad(\text{bar--cobar counit}),
+\]
+\[
+\mathbb D_{\Ran}B_X^{\mathrm{ord}}(\cA)\rightsquigarrow\cA^!
+\quad(\text{Verdier--Koszul construction}),\qquad
+C^\bullet_{\mathrm{ch}}(\cA,\cA)\to
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\quad(\text{definition of the derived chiral centre}).
+\]
+The quadratic inclusion is
+\(q_\cA\colon\cA^{\mathrm i}\to B_X^{\mathrm{ord}}(\cA)\).
+The counit has target \(\cA\), the Verdier morphism has target
+\(\cA^!\), and the open--closed morphism of
+Convention~\ref{conv:master-oca} compares physical bulk observables
+with \(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\).
+\end{theorem}
+
+\begin{proof}
+The ambient categories have different variance and structure:
+augmented algebras, conilpotent coalgebras, quadratic coalgebras,
+post-Verdier completed algebras, and cochain complexes.  The bar--cobar
+counit is the adjunction counit in the algebra/coalgebra pair and has
+target \(\cA\).  Verdier--Koszul duality applies
+\(\mathbb D_{\Ran}\) to the bar-side comparison and lands in the dual
+algebra.  The derived chiral centre is the Hochschild cochain
+construction in the bimodule category.  These constructions give the
+displayed sources and targets.
+\end{proof}
+
+\begin{proposition}[Terminal ordered-to-symmetric survival diagram;
+\ClaimStatusConditional]
+\label{prop:master-ordered-symmetric-survival-diagram}
+\index{ordered-to-symmetric survival diagram}
+\index{averaging map!surviving invariants}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{ordered/symmetric\ bar},
+\mathrm{level}=2\to5,
+\mathrm{hypothesis\ package}=\mathrm{equivariant\ descent}
+\ +\ \mathrm{strict\ ML\ completion}
+\ +\ \mathrm{proved\ trace\ map})$\textup{].}
+Let \(\cA\) be an augmented chiral algebra satisfying the stated
+completion and equivariance hypotheses, and let
+\[
+\mathrm{av}\colon B^{\mathrm{ord}}(\cA)\longrightarrow B^\Sigma(\cA)
+\]
+be the ordered-to-symmetric averaging map.  The terminal information
+flow is the commutative diagram
+\[
+\begin{array}{ccccc}
+B^{\mathrm{ord}}(\cA)
+& \xrightarrow{\ \mathrm{av}\ }
+& B^\Sigma(\cA)
+& \xrightarrow{\ \Tr_{\mathrm{mod},\log}\ }
+& \{\kappa,S_3,S_4,\ldots\}_{\mathrm{scalar}} \\[4pt]
+\Big\downarrow{\scriptstyle \pi_{\mathrm{ord}}}
+&&
+\Big\downarrow{\scriptstyle \pi_{\Sigma}}
+&&
+\Big\downarrow{\scriptstyle \mathrm{id}} \\[4pt]
+\{r_\cA,\beta_{\mathrm{br}},\Phi_{\mathrm{assoc}},
+\Theta_\cA^{\ge3}\}_{\mathrm{ordered}}
+& \xrightarrow{\ \mathrm{coinv}\ }
+& \{\kappa(\cA),S_3^\Sigma,S_4^\Sigma,\ldots\}
+& \xrightarrow{\ \mathrm{trace}\ }
+& \{\kappa,S_3,S_4,\ldots\}_{\mathrm{scalar}} .
+\end{array}
+\]
+The diagram asserts the displayed arrows.  Averaging carries the
+coinvariant scalar classes through \(\pi_\Sigma\), and the modular trace
+carries them to the scalar target.  The ordered \(r\)-matrix, braid and
+associator, non-symmetric line operators, Yetter--Drinfeld--Schauenburg
+brackets, and the physical and CY realizations remain objects of their
+respective source theories.  Their transport is specified by a morphism
+with displayed source, target, and hypotheses.
+\end{proposition}
 
 \begin{convention}[Primitive structural datum]
 \label{conv:master-primitive-datum}
-The Open quadrant fixes a primitive datum of seven structural
-elements,
+The Open quadrant begins with the pointed factorization datum
 \[
-\bigl(X,\;D,\;\tau;\;\;\cC^{\mathrm{op}},\;b,\;A_b,\;
-\Theta_\cC,\;Z^{\mathrm{der}}_{\mathrm{ch}}(\cC),\;\Tr_\cC\bigr),
+ \mathfrak D_{\mathrm{op}}
+ =\bigl(X,D,\tau;\mathsf C,b,\varepsilon_b\bigr).
 \]
-in the order of construction along the Beilinson tower:
-\begin{enumerate}[label=\textup{(\arabic*)}]
-\item the tangential log curve $(X, D, \tau)$, with $X$ a smooth
-projective curve, $D\subset X$ a divisor of marked points, and
-$\tau$ a tangential structure at $D$;
-\item the factorisation dg-category $\cC^{\mathrm{op}}$ on
-$(X,D,\tau)$, level $0$ in the Beilinson tower;
-\item the chosen vacuum $b\in\cC^{\mathrm{op}}$;
-\item the chart algebra $A_b=\End_\cC(b)$, level $1$;
-\item the Maurer--Cartan twisting datum $\Theta_\cC=D_{A_b}-d_0$,
-producing the bar coalgebra $B(A_b)=T^c(s^{-1}\bar A_b)$ at
-level $2$;
-\item the derived chiral centre
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cC) \simeq
-C^\bullet_{\mathrm{ch}}(A_b,A_b)$, level $3$, the
-\emph{universal closed sector} \textup{(}physical bulk only after the
-open--closed comparison
-$\mathrm{OCA}\colon\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(\cA)
-\xrightarrow{\sim} Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is supplied;
-see Convention~\ref{conv:master-oca}\textup{)};
-\item the modular trace $\Tr_\cC$, with clutching on the open
-category, producing the level-$5$ scalar shadow.
-\end{enumerate}
-The chart algebra $A_b$ is not the primitive open object;
-$\cC^{\mathrm{op}}$ on $(X,D,\tau)$ is.  The bar coalgebra $B(A_b)$
-is not the level-$3$ closed-sector object;
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cC)$ is the universal closed-sector
-cochain object.  It becomes a physical bulk only after the OCA
-comparison above is supplied.  The modular shadow is not a
-closed-algebra property; it is the image of $\Tr_\cC$ on the open
-category.
+Here $(X,D,\tau)$ is a smooth projective curve with reduced marked
+divisor and tangential structure, $\mathsf C$ is a stable presentable
+factorization category, $b=(b_U)$ is a factorization compact generator,
+and
+\[
+ \varepsilon_b\colon
+ A_b=\RHom_{\mathsf C}(b,b)\longrightarrow\mathbf1_{\mathrm{fact}}
+\]
+is a morphism of unital factorization $E_1$-algebras.  The six levels
+are formed from this datum as follows:
+\[
+\begin{array}{c|l}
+0 & \cC^{\mathrm{op}}=(\mathsf C^\omega)^{\mathrm{op}},\\
+1 & (A_b,\varepsilon_b),\\
+2 & B_{\varepsilon_b}(A_b)=T^c(s^{-1}\bar A_b),\quad
+    \theta_b\colon B_{\varepsilon_b}(A_b)\to A_b,\\
+3 & Z_{\mathrm{ch}}^{\mathrm{chart}}(A_b)
+    =C^\bullet_{\mathrm{ch}}(A_b,A_b),\\
+4 & \mathsf{Line}^{\mathrm{int}}(\mathsf C),\quad
+    (\mathrm{RMod}^{\mathrm{fact}}_{A_b^e},A_b),\quad
+    \mathsf{Line}^{!}(A_b)=\mathrm{Perf}(A_b^!),\\
+5 & \mathfrak F,\quad
+    \operatorname{Obs}^{\mathrm{def}}_g(A_b),\quad
+    \mathfrak O^K_{g,n}(A_b),\quad
+    \operatorname{obs}^{\mathrm{Hdg}}_{g,n}(A_b),\quad
+    F_{g,n}(A_b;\alpha).
+\end{array}
+\]
+The level-$3$ physical interpretation is carried by the open--closed
+morphism of Convention~\ref{conv:master-oca}.  At level~$5$ the
+category-valued modular functor $\mathfrak F$ and its realization are
+additional data; its scalar projection produces the displayed Hodge
+classes and numerical insertions.
 \end{convention}
 
 \begin{convention}[Type-signature discipline; KSDual; vertical
@@ -111,232 +226,238 @@ Every theorem statement carries a four-component type signature
 \]
 where \emph{quadrant} ranges over
 $(\mathrm{Open}\cup\mathrm{CY})\times(\mathrm{Cat}\cup\mathrm{Chain})$,
-\emph{presentation} names the lane (chain-level, $(\infty,1)$-
-categorical, factorisation, scalar),
+\emph{presentation} names the chain-level, $(\infty,1)$-categorical,
+factorisation, or scalar realization,
 \emph{level} names the Beilinson-tower height
 $0,1,2,3,4,5$ (or a cross-level pair $i\leftrightarrow j$, $i\to j$),
-and \emph{hypothesis package} is the explicit list of conditions on
-the chart algebra, the chosen vacuum, and the ambient.
-
-For every cross-level equality, a second six-field
-\emph{anatomy header}
+and \emph{hypothesis package} lists the conditions on the chart
+algebra, chosen generator, and ambient category.  A comparison is
+written in the form
 \[
-(\textit{Status},\;\textit{Ambient},\;\textit{Source},\;
-\textit{Target},\;\textit{Map},\;\textit{Residuals})
+ \mathcal X\xrightarrow[H]{\ f\ }\mathcal Y
+ \qquad(\textit{status};\ \textit{ambient}),
 \]
-records the claim's structure: \emph{Status}
-\textup{(}proved / conditional / heuristic / retracted\textup{)};
-\emph{Ambient} \textup{(}raw chain / weight-completed / pro / coderived
-/ contraderived / Banach / Tate\textup{)}; \emph{Source} and
-\emph{Target} objects; named \emph{Map} \textup{(}the comparison
-morphism\textup{)}; and explicit \emph{Residuals} \textup{(}named
-obstructions discharged, e.g.\ $\mathrm{OCA}$
-\textup{(}Convention~\ref{conv:master-oca}\textup{)},
-$(\beta,\delta,\varepsilon,\tau)$
-\textup{(}Convention~\ref{conv:master-hall-borcherds-datum}\textup{)},
-$\mathrm{T1}{-}\mathrm{T5}$
-\textup{(}Convention~\ref{conv:master-topologisation}\textup{)},
-or the scalar non-faithfulness lemma
-\textup{(}Lemma~\ref{lem:master-scalar-non-faithfulness}\textup{)}\textup{)}.
+so that its source, target, morphism, assumptions, status, and ambient
+category appear together.
 
-Every cross-level equality invokes a \emph{named reconstruction
-theorem} with explicit hypothesis package; no hypothesis is
-suppressed.  KSDual is the $\mathbb{Z}/2$-fixed sublocus under the
-chiral/antichiral involution $\cA\mapsto\cA^!$.  On KSDual,
-Theorem~A is an equivalence rather than an adjunction with
-comparison map, Theorem~H is exact in $\{0,1,2\}$, and the
-five-archetype dichotomy stabilises.
+The Verdier--Koszul reflection
+$\sigma(A)=A^!$ acts on the maximal $\infty$-groupoid of the
+finite-type curved, weight-completed ambient.  Its homotopy-fixed locus
+over the uncurved Koszul charts is
+$\KSDual(X,D,\tau)$ of Definition~\ref{def:mr-ksdual}.  A point is a
+triple $(A_b,\varphi_b,H_b)$ with
+\[
+ \varphi_b\colon A_b\xrightarrow{\sim}A_b^!,
+ \qquad
+ H_b\colon\sigma(\varphi_b)\circ\varphi_b\simeq\eta_{A_b},
+\]
+together with the higher $\mathbb Z/2$ coherence.  Theorem~A supplies
+the separate bar--cobar equivalence under $H_1$; Theorem~H carries its
+family-indexed deformation-retract hypotheses.
 
-Cells admitting holographic vertical equivalence to Vol~II or
-Vol~III carry both Open- and CY-quadrant statements, with the
-equivalence theorem named.  The vertical pairings on the Beilinson
-tower are: level~$0$ to Vol~III via 6d hCS with the quartic anomaly
-$\int_X\Tr_{\mathrm{ad}}(A(F_A)^3)$; level~$1$ to Vol~III via
-$\Phi_d^{\mathrm{FA}}$; level~$2$ to Vol~III via
-$\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}$ specialisation;
-level~$3$ to Vol~II via $\mathsf{SC}^{\mathrm{ch,top}}$-brace
-bulk; level~$4$ to Vol~III via the Drinfeld double
-$G(X)=D(Y^+(X))$ after Hall pairing, completion, integral form, and
-descent; level~$5$ to Vol~III via
-$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ and to Vol~II via
-gravity-line completion.
+The six Open--CY comparison morphisms are the maps
+$\Xi_{V0}$, $\chi_{V1}$, $B_C(\chi_{V1})$,
+$\mathrm{OCA}_{\mathcal T}$, $\rho_{V4}$, and the level-$5$ modular
+and scalar comparisons of
+Theorem~\ref{thm:mr-vertical-dictionary}.  Their hypothesis packages
+$H_{V0},\ldots,H_{V5}$ state the precise domains on which these maps
+are equivalences.
 \end{convention}
 
-\begin{convention}[Reconstruction theorems on the Beilinson tower]
+\begin{convention}[Reconstruction and formation maps on the Beilinson tower]
 \label{conv:master-reconstruction-tower}
-Each forgetful step in the Open Beilinson tower has a named
-reconstruction theorem with explicit hypothesis package:
+The Open Beilinson fork consists of the following typed maps:
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
-\begin{tabular}{|p{1.4cm}|p{4.4cm}|p{8.0cm}|}
+\begin{tabular}{|p{1.7cm}|p{4.5cm}|p{7.7cm}|}
 \hline
-\textbf{Step} & \textbf{Theorem} & \textbf{Hypothesis package} \\
+\textbf{Levels} & \textbf{Map} & \textbf{Hypothesis package and status} \\
 \hline\hline
-$1\leftrightarrow 0$ &
-Morita reconstruction &
-$A_b=\End_\cC(b)$ generates $\cC^{\mathrm{op}}$;
-$\cC^{\mathrm{op}}$ presentable; the chosen vacuum $b$ is
-compact and a generator. \\
+$0\leftrightarrow1$ &
+Factorization Morita &
+$U\mapsto\mathsf C(U)$ is stable presentable; its structure functors
+are exact, colimit preserving, and compact preserving; the compatible
+family $b_U$ compactly generates every chart and satisfies the
+factorisation K\"unneth equivalence.  Under $H_0$ this is an
+equivalence. \\
 \hline
-$1\leftrightarrow 2$ &
-Theorem~A
-(chiral Koszul reflection $K^2\simeq\mathrm{id}$) &
-augmented + complete + finite-dimensional graded;
-on KSDual the reflection upgrades to an equivalence.\\
+$1\leftrightarrow2$ &
+Associative chiral bar--cobar, Theorem~A &
+The reduced associative operad lies in the pro-nilpotent
+Francis--Gaitsgory Ran ambient.  The package
+$H_1=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}$ places the augmented
+factorization algebras and divided-power conilpotent factorization
+coalgebras in complete chain models.  The unit and counit are
+equivalences on this domain.\\
 \hline
-$1\to 3$ &
-Theorem~H / Theorem~B
-($\ChirHoch^\bullet$ concentration; bar--cobar inversion) &
-finiteness + completion; class~$M$ requires the
-completed/pro/$J$-adic ambient, and the strict inversion
-$\Omega B(A_b)\simeq A_b$ holds on the Koszul locus. \\
+$1\to3$ &
+Chiral cochain-center formation &
+$A_b\mapsto Z_{\mathrm{ch}}^{\mathrm{chart}}(A_b)$ is functorial.
+Under $H_Z$, the map
+$\chi_b\colon Z_{\mathrm{ch}}^{\mathrm{chart}}(A_b)\to
+Z_{\mathrm{ch}}^{\mathrm{int}}(\mathsf C)$ is an equivalence. \\
 \hline
-$4\to 3$ &
-Drinfeld-double reconstruction &
-$r_{\max}(A_b)=2$, with the genus-$g\geq 1$ obstruction in family
-F$5$ controlled by the bar propagator and the line-operator
-braiding. \\
+$1\to4$ &
+Intrinsic and Koszul-dual operator formation &
+Factorization Eilenberg--Watts gives
+$\mathsf{Line}^{\mathrm{int}}(\mathsf C)\simeq
+\mathrm{RMod}^{\mathrm{fact}}_{A_b^e}$ under $H_0$.
+The packages $H_{\mathrm{CL}}$, $H_{\mathrm{VD}}$, and
+$H_{\mathrm{line}}$ form and realize
+$\mathsf{Line}^{!}(A_b)=\mathrm{Perf}(A_b^!)$. \\
 \hline
-$5\to 4$ &
-Modular reconstruction &
-the modular trace $\Tr_\cC$ is defined, and clutching on the open
-category (open factorisation along the gluing curve) is exact;
-the closed shadow has modular consequences as the image of
-$\Tr_\cC$ on the open category. \\
+$5\to4$ &
+Genus-zero restriction and realization &
+Brochier--Woike genus-zero restriction applies under $H_5$.
+The package $H_{\mathrm{real}}$ specifies an equivalence from the
+resulting balanced braided algebra to
+$\mathsf{Line}^{\mathrm{int}}(\mathsf C)$. \\
+\hline
+$5\to\mathrm{Scal}$ &
+Hodge and numerical projection &
+Under~$H_D^K$,
+$\mathfrak O^K_{g,n}(A_b)=\kappa(A_b)\lambda_{-1}(\mathbb E_g)$ and
+$\operatorname{ch}_g(\mathfrak O^K_{g,n})
+=(-1)^g\kappa(A_b)\lambda_g$.  Under~$H_D^{\mathrm{graph}}$, an
+insertion
+$\alpha\in H^{2(2g-3+n)}(\overline{\mathcal M}_{g,n})$ gives
+$F_{g,n}=F^{\mathrm{sc}}_{g,n}+\delta F^{\mathrm{cross}}_{g,n}$. \\
 \hline
 \end{tabular}
 \end{center}
-The Master Reconstruction Theorem of Vol~I is the assertion that
-these five reconstruction theorems together, with KSDual as the
-$\mathbb{Z}/2$-fixed sublocus and the vertical equivalences of
-Convention~\ref{conv:master-type-signature}, exhibit the Open
-Beilinson tower as the exact form of the
-ordered chiral bar--cobar theory.  Theorems~A,~B,~C,~D,~H are
-its corollaries.
+The first two rows are reconstruction equivalences.  The remaining
+rows form the center, operator, modular, and scalar branches.  Their
+joint statement is Theorem~\ref{thm:mr-master}; its equivariant
+restriction to the homotopy-fixed locus is
+Theorem~\ref{thm:mr-ksdual}.
 \end{convention}
 
 \begin{convention}[Open--closed comparison; OCA]
 \label{conv:master-oca}
 The derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
-= C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is the \emph{universal closed
-sector} of the chart algebra $\cA = A_b$: it is constructed from
-$\cA$ alone, by chiral Hochschild cochains, internal to the boundary
-theory. It is \emph{not automatically} the physical bulk of a realised
-holomorphic--topological QFT.
-
-A physical-bulk statement for a QFT $T$ whose boundary chart algebra
-is $\cA$ requires a separately constructed \emph{open--closed algebra
-comparison} \textup{(}OCA\textup{)}
+= C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is the chart cochain center of
+$\cA=A_b$.  For a holomorphic--topological theory $T$ with boundary
+chart algebra $\cA$, an open--closed morphism has type
 \[
 \mathrm{OCA}_T\colon
 \mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(T)
-\xrightarrow{\;\sim\;}
+\longrightarrow
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),
 \]
-a quasi-isomorphism compatible with the
-$\mathsf{SC}^{\mathrm{ch,top}}$-action of the closed colour on $\cA$
-\textup{(}Vol~II \texttt{thm:sc-chtop-deligne}\textup{)}. Without
-$\mathrm{OCA}_T$, $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ remains the
-universal closed sector internal to the boundary theory; the equality
-``derived chiral centre $=$ physical bulk'' is not a theorem but a
-named comparison hypothesis. The pair
-$(\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(T), \cA)$ becomes the
-physical $\mathsf{SC}^{\mathrm{ch,top}}$-bulk--boundary system only
-after $\mathrm{OCA}_T$ is exhibited.
+together with compatibility with the
+$\mathsf{SC}^{\mathrm{ch,top}}$-action on the pair
+$(\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(T),\cA)$; see Vol~II,
+\texttt{thm:sc-chtop-deligne}.  On a sector where
+$\mathrm{OCA}_T$ is a quasi-isomorphism, it identifies the physical
+bulk observables with the chart cochain center.
 
-The map $\mathrm{OCA}_T$ is constructed on the holomorphic--topological
-locus where Vol~II's Costello--Gwilliam factorisation calculus applies
-and the local formal-Darboux theorem
-\textup{(}\texttt{thqg\_open\_closed\_realization.tex}\textup{)} provides
-the bulk model. Off that locus, the residual is named and the bulk
-claim is $\ClaimStatusConditional$.
+The hypothesis package $H_{\mathrm{OCA}}$ consists of the
+Costello--Gwilliam factorization model on the
+holomorphic--topological locus, the local formal-Darboux comparison of
+\texttt{thqg\_open\_closed\_realization.tex}, global descent, and the
+displayed $\mathsf{SC}^{\mathrm{ch,top}}$ compatibility.  The physical
+bulk identification carries status $\ClaimStatusConditional$ on the
+domain specified by $H_{\mathrm{OCA}}$.
 \end{convention}
 
-\begin{proposition}[OCA discharge for the 3d B-model on
-$T^*\mathbb{A}^n$ via HKR; $\ClaimStatusProvedHere$]
-\label{prop:master-oca-bmodel}
-For the 3d topological B-model on the cotangent target
-$T^*\mathbb{A}^n$ with boundary algebra
-$A = \mathcal{O}(\mathbb{A}^n) = k[x_1, \ldots, x_n]$
-\textup{(}Dirichlet boundary condition\textup{),} the open--closed
-comparison quasi-isomorphism $\mathrm{OCA}$ exists and is the
-Hochschild--Kostant--Rosenberg isomorphism. Explicitly,
+\begin{proposition}[Physical-bulk comparison through the open--closed map;
+\ClaimStatusConditional]
+\label{prop:master-oca-holography-gate}
+\index{physical bulk observables!open--closed comparison}
+\index{holography!open--closed quasi-isomorphism}
+\textup{[}Type signature:
+$(\mathrm{Open}\leftrightarrow\mathrm{HT\ bulk},
+\mathrm{chain\ comparison},\mathrm{level}=3,
+\mathrm{hypothesis\ package}=\mathrm{OCA}_T
+\ \mathrm{quasi\text{-}isomorphism}
+\ +\ \mathsf{SC}^{\mathrm{ch,top}}\mathrm{\ compatibility})$
+\textup{].}
+For a holomorphic--topological theory $T$ with boundary chart algebra
+$\cA$, write
 \[
-\mathrm{OCA}\colon
-\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(T^*\mathbb{A}^n)
- \;=\; \Lambda^\bullet T_{\mathbb{A}^n}
- \;=\; k[x_1, \ldots, x_n] \otimes \Lambda^\bullet[\xi_1, \ldots, \xi_n]
-\;\xrightarrow{\;\sim\;}\;
-Z^{\mathrm{der}}_{\mathrm{ch}}(A)
- \;=\; \mathrm{HH}^\bullet(A, A),
+\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(T)
 \]
-with $\xi_i$ corresponding to the inner derivation
-$\partial / \partial x_i$ in cohomological degree~$+1$.
+for the BRST complex of physical local bulk observables in the chosen
+Costello--Gwilliam analytic completion.  The open--closed comparison
+map is a chain map
+\begin{equation}
+\label{eq:master-oca-map-gate}
+\mathrm{OCA}_T\colon
+\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(T)
+\longrightarrow
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+=C^\bullet_{\mathrm{ch}}(\cA,\cA)
+\end{equation}
+compatible with the closed-colour action on the boundary algebra.
+If
+\begin{equation}
+\label{eq:master-oca-quasi-isomorphism-gate}
+\mathrm{OCA}_T\ \text{is a quasi-isomorphism}
+\end{equation}
+then~\eqref{eq:master-oca-map-gate} identifies the BRST complex of
+physical bulk observables with the derived chiral center of the
+boundary chart.  In general, the two displayed complexes are joined by
+the open--closed map~\eqref{eq:master-oca-map-gate}.
+\end{proposition}
+
+\begin{proposition}[HKR on an affine chart;
+$\ClaimStatusProvedElsewhere$, physical realization
+$\ClaimStatusConditional$]
+\label{prop:master-oca-bmodel}
+Let $A=k[x_1,\ldots,x_n]$.  The HKR antisymmetrization map
+\[
+ \operatorname{HKR}\colon
+ \Lambda_A^p\operatorname{Der}_k(A)longrightarrow C^p(A,A)
+\]
+is given by
+\[
+ \operatorname{HKR}(X_1\wedge\cdots\wedge X_p)
+ (a_1,\ldots,a_p)
+ =\frac1{p!}\sum_{\sigma\in S_p}\!\operatorname{sgn}(\sigma)
+ \prod_{j=1}^pX_{\sigma(j)}(a_j).
+\]
+It induces
+\[
+ A\otimes\Lambda^\bullet
+ \langle\partial_{x_1},\ldots,\partial_{x_n}\rangle
+ \xrightarrow{\sim}\mathrm{HH}^\bullet(A,A).
+\]
+For a physical theory $T$ with boundary chart $A$, a quasi-isomorphism
+$\beta_T\colon\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(T)	o
+\Gamma(\mathbb A^n,\Lambda^\bullet T_{\mathbb A^n})$ makes
+$\operatorname{HKR}\circ\beta_T$ the open--closed comparison.
 \end{proposition}
 
 \begin{proof}
-The bulk physical operator algebra in the 3d topological B-model on
-a cotangent target $T^*X$ is identified with the polyvector fields
-$\Lambda^\bullet T_X$ via the cotangent BV
-quantisation~\cite[Ch.~11]{CG-vol2}: the Costello--Gwilliam
-factorisation algebra reduces, on the unique critical locus
-$X \hookrightarrow T^*X$, to the polynomial-coefficient exterior
-algebra in the cotangent direction, with cohomological grading from
-ghost number $|\xi_i| = +1$.
-
-For $X = \mathbb{A}^n$ with global trivialisation
-$T_{\mathbb{A}^n} \cong \mathbb{A}^n \times k^n$:
-\[
-\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(T^*\mathbb{A}^n)
- \;=\; \mathcal{O}(\mathbb{A}^n) \otimes \Lambda^\bullet(k^n)
- \;=\; k[x_1, \ldots, x_n] \otimes \Lambda^\bullet[\xi_1, \ldots, \xi_n].
-\]
-
 The Hochschild--Kostant--Rosenberg theorem~\cite{HKR62}
-\textup{(}see also \cite[\S 9.4.4]{Wei94}\textup{)} asserts that for
-a smooth commutative $k$-algebra $A$,
+gives, for every smooth commutative $k$-algebra $A$,
 \[
 \mathrm{HH}^\bullet(A, A)
  \;\cong\; \Lambda^\bullet_A \, \mathrm{Der}_k(A).
 \]
-Applied to the polynomial ring $A = k[x_1, \ldots, x_n]$
-\textup{(}smooth\textup{):}
-$\mathrm{Der}_k(A)$ is the free $A$-module on
-$\partial / \partial x_i$, and
-\[
-\mathrm{HH}^\bullet(A, A)
- \;=\; A \otimes \Lambda^\bullet \langle
- \partial / \partial x_1, \ldots, \partial / \partial x_n
- \rangle.
-\]
-Identifying $\xi_i \leftrightarrow \partial / \partial x_i$ \textup{(}both
-in cohomological degree $+1$\textup{)} yields the stated
-quasi-isomorphism. This identification is the
-$\mathrm{OCA}$ quasi-isomorphism, exhibiting the 3d B-model on
-$T^*\mathbb{A}^n$ as a concrete physical realisation in which the
-universal closed sector coincides with the physical bulk.
+For the polynomial ring,
+$\operatorname{Der}_k(A)=\bigoplus_iA\partial_{x_i}$.  The displayed
+antisymmetrization realizes the theorem.  Composition with
+$\beta_T$ proves the conditional physical statement.
 \end{proof}
 
 \begin{remark}[Scope and extension]
 \label{rem:master-oca-bmodel-scope}
-The HKR identification extends to $X$ smooth affine over $k$ by the
+The algebraic HKR identification extends to $X$ smooth affine over $k$ by the
 same argument, with the trivialisation $T_X$ replaced by the
 $\mathcal O_X$-module of derivations. For $X$ smooth projective, the
 sheafy HKR \textup{(}polyvector fields = $\bigoplus_p
-H^q(X, \Lambda^p T_X)$ in bigraded $(p, q)$\textup{)} together with
-the Hodge--de Rham spectral sequence supplies the closed-sector
-identification at the level of sheaf cohomology; the OCA at this
-level is the Calaque--Van~den~Bergh sheafy HKR. Beyond the
-cotangent-target setting the construction of physical bulk requires
-the full Costello--Gwilliam BV factorisation calculus, and the OCA
-becomes a non-trivial theorem rather than a direct
-HKR application.
+H^q(X, \Lambda^p T_X)$ in bigraded $(p, q)$\textup{)} computes the
+Hochschild groups of $\mathrm{Perf}(X)$.  Compatibility of products
+and brackets uses the Todd-twisted derived HKR map.  A physical
+application additionally constructs
+$\beta_T\colon\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(T)\to
+\mathrm R\Gamma(X,\Lambda^\bullet T_X)$ in the chosen BV
+factorization model.
 \end{remark}
 
-\begin{lemma}[OCA extension: smooth affine and smooth projective via
-sheafy HKR; $\ClaimStatusProvedHere$ on smooth affine,
-$\ClaimStatusConditional$ on smooth projective on full Costello--Gwilliam
-BV identification]
+\begin{lemma}[HKR for smooth affine and smooth projective schemes;
+$\ClaimStatusProvedElsewhere$]
 \label{lem:master-oca-sheafy-hkr-extension}
 The OCA of Proposition~\ref{prop:master-oca-bmodel} extends:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -344,21 +465,19 @@ The OCA of Proposition~\ref{prop:master-oca-bmodel} extends:
 For $A = \mathcal O(X)$ the regular function ring of a smooth affine
 variety $X$,
 \[
-\mathrm{OCA}_X\colon
+\operatorname{HKR}_X\colon
 \Gamma(X, \Lambda^\bullet T_X)
 \;\xrightarrow{\;\sim\;}\;
 \mathrm{HH}^\bullet(A, A),
 \]
 the HKR isomorphism for smooth commutative algebras.
-\item \emph{Smooth projective $X$ over $k$ \textup{(}conditional on
-the Costello--Gwilliam BV bulk identification\textup{).}}
-The 3d B-model on $T^*X$ with derived boundary category
-$D^b(\mathrm{Coh}(X))$ has OCA the sheafy HKR
+\item \emph{Smooth projective $X$ over $k$.}
+The category $\mathrm{Perf}(X)$ has sheafified HKR decomposition
 \[
-\mathrm{OCA}_X\colon
+\operatorname{HKR}_X\colon
 \mathrm R\Gamma\bigl(X, \Lambda^\bullet T_X\bigr)
 \;\xrightarrow{\;\sim\;}\;
-\mathrm{HH}^\bullet\bigl(D^b(\mathrm{Coh}(X))\bigr)
+\mathrm{HH}^\bullet\bigl(\mathrm{Perf}(X)\bigr)
 \;=\;
 \bigoplus_{p+q = \bullet} H^q\bigl(X, \Lambda^p T_X\bigr).
 \]
@@ -386,24 +505,17 @@ Calaque--Willwacher~\cite{CalaqueWillwacher21} for the higher-genus
 operadic refinement\textup{).} The Hodge decomposition of polyvector
 field sheaf cohomology gives the bigraded RHS.
 
-The conditional status reflects that the 3d B-model physical-bulk
-operator algebra on $T^*X$ for projective $X$ requires the full
-Costello--Gwilliam BV factorisation calculus
-\textup{(}\cite[Ch.~11--14]{CG-vol2}\textup{);} that this physical
-bulk equals derived polyvector fields on $X$ is the Rozansky--Witten
-identification, established for hyperkähler $X$ in the appropriate
-holomorphic-topological twist and conjectural in full generality.
+This is the algebraic HKR statement.  A physical open--closed theorem
+is obtained after constructing the bulk-to-polyvector map $\beta_T$
+and its compatibility with the boundary action.
 \end{proof}
 
-\begin{corollary}[OCA for Rozansky--Witten on $T^*K3$;
-$\ClaimStatusProvedHere$ on the HKR / Hodge identification,
-$\ClaimStatusConditional$ on the Rozansky--Witten bulk identification]
+\begin{corollary}[Hochschild cohomology of $K3$;
+$\ClaimStatusProvedHere$]
 \label{cor:master-oca-rozansky-witten-k3}
-For $Y = K3$ smooth projective, the 3d B-model on $T^*K3$
-\textup{(}the Rozansky--Witten model on $K3$\textup{)} has bulk
-Hochschild cohomology
+For a smooth projective K3 surface,
 \[
-\mathrm{HH}^p\bigl(D^b(\mathrm{Coh}(K3))\bigr) =
+\mathrm{HH}^p\bigl(\mathrm{Perf}(K3)\bigr) =
 \begin{cases}
 1 & p = 0,\,4,\\
 22 & p = 2,\\
@@ -411,6 +523,10 @@ Hochschild cohomology
 \end{cases}
 \qquad\sum_p \dim \mathrm{HH}^p = 24.
 \]
+If a Rozansky--Witten boundary condition supplies a quasi-isomorphism
+$\beta_{\mathrm{RW}}$ from physical bulk observables to derived
+polyvectors, then HKR identifies its physical bulk cohomology with
+these groups.
 \end{corollary}
 
 \begin{proof}
@@ -441,40 +557,28 @@ Mukai--C{\u a}ld{\u a}raru identity
 $\dim \mathrm{HH}^*(\mathrm{Coh}(X)) = \dim H^*(X, \mathbb C)$ for
 smooth projective $X$.
 
-The conditional status on Rozansky--Witten reflects that the
-identification of this Hochschild cohomology with the physical bulk
-of the 3d B-model on $T^*K3$ uses the Rozansky--Witten interpretation
-of the cotangent BV theory; the identification is established for
-hyperk{\"a}hler targets including $K3$ \textup{(}Rozansky--Witten 1997;
-Roberts--Willerton 2010\textup{).}
+The physical interpretation is carried by the map
+$\beta_{\mathrm{RW}}$ stated in the corollary.
 \end{proof}
 
-\begin{corollary}[OCA hierarchy across K3 Hilbert schemes via
-Mukai--C{\u a}ld{\u a}raru + Göttsche; $\ClaimStatusProvedHere$ on the
-total-dim count, $\ClaimStatusConditional$ on the
-hyperk{\"a}hler B-model bulk identification]
+\begin{corollary}[Hochschild dimensions of K3 Hilbert schemes;
+$\ClaimStatusProvedHere$]
 \label{cor:master-oca-k3-hilbert-hierarchy}
 For each $n \geq 1$, the Hilbert scheme $K3^{[n]}$ is a smooth
-projective hyperk{\"a}hler $2n$-fold; the 3d B-model on $T^*K3^{[n]}$
-\textup{(}the Rozansky--Witten model on $K3^{[n]}$\textup{)} has bulk
-Hochschild cohomology of total dimension
-$\dim \mathrm{HH}^*(D^b(\mathrm{Coh}(K3^{[n]}))) = \dim H^*(K3^{[n]},
+projective hyperk{\"a}hler $2n$-fold, and
+$\dim \mathrm{HH}^*(\mathrm{Perf}(K3^{[n]})) = \dim H^*(K3^{[n]},
 \mathbb C)$, computed by Göttsche~\cite{Gottsche1990}:
 \[
 \sum_{n \geq 0} q^n\, \dim H^*(K3^{[n]}, \mathbb C)
 \;=\;
-\prod_{m \geq 1}
- \frac{(1 + q^m)^{2 \cdot 1}\,(1 + q^m)^{2 \cdot 1}}
-      {(1 - q^m)^{20}\,(1 - q^m)^{2 \cdot 2}}.
+\prod_{m \geq 1}(1-q^m)^{-24}.
 \]
 The first several values:
 $\dim H^*(K3^{[1]}) = 24$,
 $\dim H^*(K3^{[2]}) = 324$,
-$\dim H^*(K3^{[3]}) = 3200$, ...
-extending the K3 OCA discharge of
-Corollary~\ref{cor:master-oca-rozansky-witten-k3}
-\textup{(}the $n = 1$ case\textup{)} to an infinite hyperk{\"a}hler
-hierarchy of OCA witnesses.
+$\dim H^*(K3^{[3]}) = 3200$.
+A Rozansky--Witten bulk comparison for $K3^{[n]}$ transports these
+groups to physical bulk cohomology.
 \end{corollary}
 
 \begin{proof}
@@ -485,15 +589,16 @@ gives $\dim \mathrm{HH}^*(K3^{[n]}) = \dim H^*(K3^{[n]}, \mathbb C)$
 by Mukai--C{\u a}ld{\u a}raru. Göttsche's generating-function formula
 gives the explicit dimensions \textup{(}derived from the symmetric
 product / Hilbert-scheme decomposition and the K3 Hodge structure;
-see \cite{Gottsche1990}\textup{).} The Rozansky--Witten
-identification of physical bulk with derived polyvector fields holds
-on hyperk{\"a}hler targets including all $K3^{[n]}$.
+see \cite{Gottsche1990}\textup{).} Under the Rozansky--Witten bulk
+comparison, these derived polyvector fields give the physical local
+observables for the corresponding hyperk{\"a}hler target.
 \end{proof}
 
 \begin{remark}[Cross-link to K3$\times$E gravity-line residual]
 \label{rem:master-oca-rw-k3-cross-link}
-Corollary~\ref{cor:master-oca-rozansky-witten-k3} discharges OCA for
-the K3 factor of $K3 \times E$. The full gravity-line algebra
+Corollary~\ref{cor:master-oca-rozansky-witten-k3} computes the
+algebraic HKR target for the K3 factor of $K3 \times E$. The proposed
+gravity-line algebra
 of $K3 \times E$ involves additionally:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item the elliptic fibre $E$ contribution
@@ -504,19 +609,17 @@ Convention~\ref{conv:master-hall-borcherds-datum}\textup{);}
 \textup{(}beyond the rigid HKR / Hodge identification used
 here\textup{).}
 \end{enumerate}
-The Rozansky--Witten / OCA discharge above gives the
-\emph{abelian} Hochschild structure of the K3 factor; the
-non-abelian Hall structure required for the K3-BKM identification
-is the residual $(\delta, \varepsilon)$ of
+The HKR calculation above gives the finite-dimensional Hochschild
+Gerstenhaber structure of the K3 factor.  The Hall correspondences
+required for the K3-BKM comparison are carried by the maps
+$(\delta,\varepsilon)$ of
 Remark~\ref{rem:master-witness-K3E-ramification}.
 \end{remark}
 
-\begin{corollary}[OCA for 3d B-model on $T^*E$ via sheafy HKR;
-$\ClaimStatusProvedHere$ on the HKR / Hodge identification,
-$\ClaimStatusConditional$ on the Rozansky--Witten bulk identification]
+\begin{corollary}[Hochschild cohomology of an elliptic curve;
+$\ClaimStatusProvedHere$]
 \label{cor:master-oca-bmodel-elliptic}
-For $Y = E$ a smooth elliptic curve, the 3d B-model on $T^*E$ has
-bulk Hochschild cohomology
+For a smooth elliptic curve $E$,
 \[
 \mathrm{HH}^p\bigl(D^b(\mathrm{Coh}(E))\bigr) =
 \begin{cases}
@@ -526,6 +629,8 @@ bulk Hochschild cohomology
 \end{cases}
 \qquad \sum_p \dim \mathrm{HH}^p = 4.
 \]
+A bulk-to-polyvector quasi-isomorphism transports this calculation to
+the corresponding physical theory.
 \end{corollary}
 
 \begin{proof}
@@ -572,23 +677,22 @@ Corollary~\ref{cor:master-oca-bmodel-schouten}\textup{).}
 
 The K3-BKM algebra $\mathfrak g_{\Delta_5}$ that appears in the
 $K3 \times E$ gravity-line setup is \emph{infinite-dimensional}
-\textup{(}one generator per primitive Mukai vector with finite
-root-multiplicities given by $\Delta_5$ Fourier coefficients\textup{),}
-hence not the abelian Hochschild structure here. The Hall enhancement
-$Y^+_{\mathrm{Hall}}(K3)$ generates this infinite-dimensional
-structure by integrating over the moduli stack of K3 stable sheaves;
-the $(\delta, \varepsilon)$ layers of
-Convention~\ref{conv:master-hall-borcherds-datum} are precisely
-the gap between the abelian $96$-dim Künneth structure and
-the full Hall-algebra structure of the K3-BKM gravity-line algebra.
+and graded by the Lorentzian root lattice of the $\Delta_5$
+denominator, with root multiplicities given by the coefficients of
+$\phi_{0,1}$,
+whereas the Hochschild space above has dimension~$96$ and carries the
+polyvector cup product and Schouten bracket.  The Hall enhancement
+$Y^+_{\mathrm{Hall}}(K3)$ is formed by correspondences on the moduli
+stack of K3 stable sheaves.  The maps $(\delta,\varepsilon)$ of
+Convention~\ref{conv:master-hall-borcherds-datum} compare its
+root-graded Hall operations with the K3-BKM gravity-line algebra.
 \end{remark}
 
-\begin{corollary}[OCA for the quintic CY 3-fold;
-$\ClaimStatusProvedHere$ on HKR/Hodge,
-$\ClaimStatusConditional$ on B-model bulk identification]
+\begin{corollary}[Hochschild cohomology of the quintic threefold;
+$\ClaimStatusProvedHere$]
 \label{cor:master-oca-quintic}
 For $Y = Y_5$ the quintic Calabi--Yau threefold in $\mathbb P^4$, the
-3d B-model on $T^*Y_5$ has bulk Hochschild cohomology
+Hochschild cohomology of $\mathrm{Perf}(Y_5)$ has dimension vector
 \[
 \bigl(\dim \mathrm{HH}^p(D^b(\mathrm{Coh}(Y_5)))\bigr)_{p = 0,\ldots,6}
 \;=\;
@@ -622,12 +726,11 @@ By sheafy HKR
 Total $1 + 0 + 101 + 4 + 101 + 0 + 1 = 208 = \dim H^*(Y_5, \mathbb C)$,
 consistent with the Mukai--C{\u a}ld{\u a}raru identity.
 
-The $\mathrm{HH}^3 = 4$ contribution carries the four protected
-generators \textup{(}volume class, Kähler class, anti-canonical class,
-top class\textup{);} the $\mathrm{HH}^2 = 101$ and $\mathrm{HH}^4 =
-101$ contributions are the complex-structure deformations of the
-quintic, which under mirror symmetry exchange with the Kähler-moduli
-side of the mirror quintic $\tilde Y_5$.
+The four one-dimensional summands of $\mathrm{HH}^3$ are
+$H^0(\mathcal O_Y)$, $H^1(\Omega_Y^1)$,
+$H^2(\Omega_Y^2)$, and $H^3(\Omega_Y^3)$.  The
+$101$-dimensional terms in degrees $2$ and $4$ arise from
+$H^1(\Omega_Y^2)$ and $H^2(\Omega_Y^1)$, respectively.
 \end{proof}
 
 \begin{remark}[Mirror exchange visible in OCA]
@@ -637,19 +740,25 @@ $\tilde Y_5$, exchanging $h^{1, 1} \leftrightarrow h^{2, 1}$:
 $\tilde h^{1, 1} = 101$, $\tilde h^{2, 1} = 1$. At the level of
 Hochschild cohomology,
 $\bigl(\dim \mathrm{HH}^p(\tilde Y_5)\bigr) =
-(1, 0, 1, 4, 1, 0, 1)$ \textup{(}by the analogous HKR computation
-with swapped Hodge numbers\textup{),} so $\dim \mathrm{HH}^*(\tilde Y_5) = 8$,
-whereas $\dim \mathrm{HH}^*(Y_5) = 208$. Under mirror symmetry, the
-A-model of $Y_5$ \textup{(}counting Kähler-moduli deformations,
-controlled by $h^{1, 1} = 1$\textup{)} matches the B-model of $\tilde
-Y_5$ \textup{(}counting complex-moduli deformations, controlled by
-$\tilde h^{2, 1} = 1$\textup{);} the OCA discharge of
-Corollary~\ref{cor:master-oca-quintic} therefore witnesses the
-mirror-pair structure at the bulk operator-algebra level.
+(1,0,1,204,1,0,1).
+Indeed, the middle term is
+\[
+ \dim\mathrm{HH}^3(\tilde Y_5)
+ =h^{0,0}+h^{1,1}+h^{2,2}+h^{3,3}
+ =1+101+101+1=204.
+\]
+Thus $\dim\mathrm{HH}^*(\tilde Y_5)=208$, equal to the total Betti
+number of the mirror.  The exchange
+$h^{1,1}\leftrightarrow h^{2,1}$ moves the two $101$-dimensional
+summands from degrees $2$ and $4$ for $Y_5$ to degree~$3$ for
+$\tilde Y_5$.  This is the HKR form of the exchange between Kähler
+and complex-structure directions.
 \end{remark}
 
 \begin{corollary}[Schouten--Nijenhuis bracket as closed-colour
-$\mathsf{SC}^{\mathrm{ch,top}}$-brace; $\ClaimStatusProvedHere$]
+$\mathsf{SC}^{\mathrm{ch,top}}$-brace;
+$\ClaimStatusProvedElsewhere$, physical realization
+$\ClaimStatusConditional$]
 \label{cor:master-oca-bmodel-schouten}
 Under the OCA identification of
 Proposition~\ref{prop:master-oca-bmodel}, the closed-colour
@@ -663,10 +772,9 @@ $\Lambda^\bullet T_{\mathbb A^n}$:
  \;\xleftrightarrow{\;\mathrm{HKR}\;}\;
 [-, -]_{SN}\bigl|_{\Lambda^\bullet T_{\mathbb A^n}}.
 \]
-Consequently the bulk operator algebra of the 3d B-model on
-$T^*\mathbb A^n$ inherits a Gerstenhaber \textup{(}equivalently
-$E_2$-algebra\textup{)} structure from the
-$\mathsf{SC}^{\mathrm{ch,top}}$ closed colour.
+Consequently a physical open--closed comparison compatible with
+braces transports this Gerstenhaber structure to the bulk operator
+complex.
 \end{corollary}
 
 \begin{proof}
@@ -678,54 +786,61 @@ Gerstenhaber algebra. Kontsevich~\cite{Kon99} promotes this to a
 brace algebra and ultimately to an $E_2$-algebra structure compatible
 with the $\mathsf{SC}^{\mathrm{ch,top}}$ closed colour.
 
-For $A = k[x_1, \ldots, x_n]$, the HKR isomorphism
-\textup{(}Proposition~\ref{prop:master-oca-bmodel}\textup{)} sends a
-Hochschild cochain
+For $A=k[x_1,\ldots,x_n]$, the HKR map of
+Proposition~\ref{prop:master-oca-bmodel} identifies Hochschild classes
+with polyvector fields.  The Schouten bracket is determined by
 \[
-\partial_{x_{i_1}} \wedge \cdots \wedge \partial_{x_{i_p}}
- \cdot f(x) \;\in\; \mathrm{HH}^p(A, A)
+ [f,g]_{SN}=0,
+ \qquad
+ [X,f]_{SN}=X(f),
+ \qquad
+ [X,Y]_{SN}=[X,Y]_{\mathrm{Lie}},
 \]
-to the corresponding polyvector field
-$f(x) \, \xi_{i_1} \wedge \cdots \wedge \xi_{i_p}
-\in \Lambda^p T_{\mathbb A^n}$. Under this identification the
-Gerstenhaber bracket on $\mathrm{HH}^\bullet$ becomes the
-Schouten--Nijenhuis bracket
+and the graded biderivation rule
 \[
-[X, Y]_{SN}
- \;=\; \mathcal L_X Y - (-1)^{(|X|-1)|Y|}\, \iota_{dY} X
+ [P,Q\wedge R]_{SN}
+ =[P,Q]_{SN}\wedge R
+ +(-1)^{(|P|-1)|Q|}Q\wedge[P,R]_{SN}.
 \]
-on $\Lambda^\bullet T_{\mathbb A^n}$ \textup{(}see, e.g.,
-\cite[\S 9.4]{Wei94}, or, in the chiral / curved generalisation,
-\cite{CL20}\textup{).}
+HKR intertwines this bracket with the Gerstenhaber bracket on
+cohomology; see~\cite[\S9.4]{Wei94}.
 \end{proof}
 
-\begin{lemma}[Scalar non-faithfulness; $\ClaimStatusProvedHere$]
+\begin{lemma}[A fibre of the graded Euler series;
+$\ClaimStatusProvedHere$]
 \label{lem:master-scalar-non-faithfulness}
-The graded Euler character
+The graded Euler series
 \[
-\chi\colon \mathrm{FiltCh}_{\mathsf{SC}^{\mathrm{ch,top}}}
+\chi\colon \operatorname{Ob}(\mathrm{FiltCh}_k)
 \longrightarrow \mathbb Z(\!(q)\!)
 \]
-is not faithful. An equality $\chi(C) = \chi(C')$ does not determine
-\textup{(}i\textup{)} a quasi-isomorphism $C \simeq C'$;
-\textup{(}ii\textup{)} an
-$\mathsf{SC}^{\mathrm{ch,top}}$-morphism;
-\textup{(}iii\textup{)} a Hall product; \textup{(}iv\textup{)} a
-Drinfeld pairing; \textup{(}v\textup{)} a current-envelope locality
-structure; or \textup{(}vi\textup{)} a derived-centre trace map.
+has fibres containing several quasi-isomorphism classes.  Consequently
+a Hall product, Drinfeld pairing, current-envelope locality structure,
+derived-centre trace, or
+$\mathsf{SC}^{\mathrm{ch,top}}$-action requires its own morphisms and
+identities in addition to the value of $\chi$.
 \end{lemma}
 
 \begin{proof}
-Choose a filtered acyclic complex $K$ with $\chi(K) = 0$. Then
-$\chi(C) = \chi(C \oplus K)$, while $C$ and $C \oplus K$ may carry
-inequivalent filtered products, coproducts, trace maps, or
-open--closed mixed operations. Equivalently, replace a filtered
-differential $d$ by $d + \delta$ with $\delta$ of higher filtration
-degree: the associated-graded Euler characteristic is unchanged, so
-$\chi$ does not see $\delta$; the chain-level product structure does.
+Place every vector space in filtration weight~$0$.  Let
+\[
+ C=k[0],\qquad
+ K=\bigl(k[0]\oplus k[1],d=0\bigr),\qquad
+ C'=C\oplus K.
+\]
+Then $\chi(K)=1-1=0$, hence $\chi(C')=\chi(C)=1$.  Their homology
+dimensions are
+\[
+ \dim H^\bullet(C)=1,
+ \qquad
+ \dim H^\bullet(C')=3.
+\]
+Thus $C$ and $C'$ represent distinct quasi-isomorphism classes in one
+Euler-series fibre.  Additional algebraic operations contain still
+finer data.
 \end{proof}
 
-\begin{theorem}[Heterotic non-faithfulness witness at $c = 16$;
+\begin{theorem}[A rank-$16$ graded-character fibre;
 $\ClaimStatusProvedHere$]
 \label{thm:master-scalar-nonfaithful-witness-c16}
 The lattice vertex operator algebras
@@ -746,7 +861,9 @@ rank~$16$ \textup{(}\cite{Bor86, FLM88}\textup{)} satisfy
 \qquad
 E_8(q) = 1 + 480\sum_{n\geq 1}\sigma_7(n)\,q^n;
 \]
-\item non-isomorphic chiral algebra structure, hence inequivalent as
+\item distinct weight-one Lie algebras
+$\mathfrak e_8\oplus\mathfrak e_8$ and $\mathfrak d_{16}$, which
+distinguish their chiral algebra structures and their
 $\mathsf{SC}^{\mathrm{ch,top}}$-objects on the open colour.
 \end{enumerate}
 This is the concrete realisation of
@@ -781,30 +898,28 @@ Lie algebras attached to the norm-$2$ vectors of $L$:
 \]
 both of dimension $496$, both of rank $16$, both with level-$1$
 Sugawara central charge $16$ \textup{(}consistent with
-\textup{(}ii\textup{)}\textup{)}. The horizontal Lie algebras are
-nonetheless non-isomorphic: $\mathfrak e_8 \oplus \mathfrak e_8$ has
-two simple summands of rank $8$ each, while $\mathfrak d_{16}$ is
-simple of rank $16$. Equivalently, their Dynkin diagrams differ
+\textup{(}ii\textup{)}\textup{)}. The horizontal Lie algebras have
+different decomposition types: $\mathfrak e_8 \oplus \mathfrak e_8$
+has two simple summands of rank $8$ each, whereas $\mathfrak d_{16}$
+is simple of rank $16$. Equivalently, their Dynkin diagrams differ
 \textup{(}two disconnected copies of $E_8$ versus the connected
 $D_{16}$ fork\textup{),} and so do the multisets of fundamental
 degrees: $\{2,8,12,14,18,20,24,30\}^{\sqcup 2}$ for
 $\mathfrak e_8 \oplus \mathfrak e_8$ versus
 $\{2,4,6,\ldots,28,30,16\}$ for $\mathfrak d_{16}$ \textup{(}where
 the extra $16$ is the Pfaffian degree\textup{).} The OPEs on
-$(\cA)_1 \otimes (\cA)_1$ therefore have inequivalent affine
-Lie-algebra structure, and $\cA_1 \not\simeq \cA_2$ as chiral
-algebras, hence as $\mathsf{SC}^{\mathrm{ch,top}}$-objects on the
-open colour.
+$(\cA)_1\otimes(\cA)_1$ therefore recover distinct affine Lie
+algebras.  This distinguishes $\cA_1$ from $\cA_2$ as chiral algebras
+and as $\mathsf{SC}^{\mathrm{ch,top}}$-objects on the open colour.
 \end{proof}
 
 \begin{remark}[K3$\times$E ramification: the load-bearing application;
 construction~\textup{(2)} $\ClaimStatusConditional$]
 \label{rem:master-witness-K3E-ramification}
-The $c = 16$ witness of
-Theorem~\ref{thm:master-scalar-nonfaithful-witness-c16} secures the
-general principle: equal graded character does not determine chiral
-algebra. The K3$\times$E case is the load-bearing application of this
-principle.
+The $c=16$ example of
+Theorem~\ref{thm:master-scalar-nonfaithful-witness-c16} exhibits two
+chiral algebras in one graded-character fibre.  The K3$\times E$ case
+uses this fibre phenomenon.
 
 The scalar identity $Z_{\mathrm{BPS}}^{K3 \times E} =
 (\Phi_{10}^{\mathrm{un}})^{-1} = \Delta_5^{-2}$ specifies a graded
@@ -822,40 +937,37 @@ $\mathrm{Cur}_E\bigl(D(Y^+_{\mathrm{Hall}}(K3))\bigr)$
 completion theorem of
 Convention~\ref{conv:master-hall-borcherds-datum}\textup{).}
 \end{enumerate}
-The identification of \textup{(2)} with \textup{(1)} is precisely the
-content of the four-part datum $(\beta, \delta, \varepsilon, \tau)$.
-Until that datum is constructed, \textup{(1)} and \textup{(2)} are
-candidate chain-level objects sharing the same scalar character; by
-Lemma~\ref{lem:master-scalar-non-faithfulness}, the scalar character
-alone does not certify their identification. The $c = 16$ witness
-shows that distinct chain-level objects with equal graded character
-exist within the standard landscape, so the
-$\mathbf H_{\Delta_5} \overset{?}{\simeq}
-\mathrm{Cur}_E(D(Y^+_{\mathrm{Hall}}(K3)))$ identification is a
-genuine theorem to be proved, not a tautology.
+The four-part datum $(\beta,\delta,\varepsilon,\tau)$ defines the
+comparison from~\textup{(2)} to~\textup{(1)}.  At the present status,
+the two chain complexes lie in the same scalar-character fibre.
+Lemma~\ref{lem:master-scalar-non-faithfulness} shows that this fibre
+contains several chiral-algebra equivalence classes.  Thus an
+equivalence
+\[
+ \mathbf H_{\Delta_5}\simeq
+ \mathrm{Cur}_E\bigl(D(Y^+_{\mathrm{Hall}}(K3))\bigr)
+\]
+is the precise theorem governed by the four comparison maps.
 
-The load-bearing layers within $(\beta, \delta, \varepsilon, \tau)$
-are $(\delta, \varepsilon)$: the positive-half comparison $\beta$
-fixes only the action on
-$U^{\mathrm{ch}}(\mathfrak n_+(\mathfrak g_{\Delta_5}))$, while
-$(\delta, \varepsilon)$ activate the Drinfeld pairing of the Hall
-algebra and the current locality along $E$, which together encode
-K3 Donaldson--Thomas wall-crossing
-\textup{(}\cite{KontsevichSoibelman}\textup{)} and pick out the
-physical chain-level object.
+The map $\beta$ specifies the positive-half action on
+$U^{\mathrm{ch}}(\mathfrak n_+(\mathfrak g_{\Delta_5}))$.  The maps
+$\delta$ and $\varepsilon$ add the Drinfeld pairing of the Hall
+algebra and current locality along $E$.  Together these are the data
+required to compare K3 Donaldson--Thomas wall-crossing
+\textup{(}\cite{KontsevichSoibelman}\textup{)} with the proposed
+gravity-line object.
 \end{remark}
 
 \begin{remark}
 \label{rem:master-scalar-shadow-promotion}
-Every promotion of a scalar character identity at level~$5$
+The scalar character identity at level~$5$
 \textup{(}e.g.\ the denominator
 $Z_{\mathrm{BPS}}^{K3\times E}(Z)
  = (\Phi_{10}^{\mathrm{un}}(Z))^{-1}
- = \Delta_5(Z)^{-2}$\textup{)} to a chain-level operator-algebra
-statement at level~$4$ \textup{(}a gravity-line algebra\textup{)} must
-exhibit the four-part datum $(\beta, \delta, \varepsilon, \tau)$ of
-Convention~\ref{conv:master-hall-borcherds-datum}. Without that
-datum, the scalar identity is a shadow, not a chain object.
+ = \Delta_5(Z)^{-2}$\textup{)} lies in the scalar target.  The
+four-part datum $(\beta,\delta,\varepsilon,\tau)$ of
+Convention~\ref{conv:master-hall-borcherds-datum} supplies the
+comparison with a level-$4$ gravity-line algebra.
 \end{remark}
 
 \begin{convention}[Hall--Borcherds gravity-line chain datum
@@ -884,13 +996,15 @@ gravitational boundary line algebra
  = (\Phi_{10}^{\mathrm{un}})^{-1} = \Delta_5^{-2}.
 \]
 \end{enumerate}
-The proof proceeds by finite windows
-$W = (\text{height},\; \text{charge},\; \text{weight})$. For each
-$W$ the eight checks are required:
+The comparison is formed through finite truncations
+$W=(\text{height},\text{charge},\text{weight})$.  For each $W$ one
+constructs maps $\beta_W$, $\delta_W$, $\varepsilon_W$, and
+$\tau_W$ and proves the following eight assertions:
 \begin{enumerate}[label=\textup{(C\arabic*)}]
 \item the finite Hall source exists;
 \item the root multiplicities match $\Delta_5$;
-\item PBW closure holds with no extra roots;
+\item the associated graded of the PBW filtration has the prescribed
+root spaces;
 \item parity signs match super-root multiplicities;
 \item the Hall pairing is non-degenerate after completion;
 \item the Drinfeld double respects current locality on $E$;
@@ -899,324 +1013,200 @@ with the trace;
 \item the inverse limit over $W$ is Mittag--Leffler, or otherwise
 controlled.
 \end{enumerate}
-Without these eight checks the result is a scalar shadow
-\textup{(}Lemma~\ref{lem:master-scalar-non-faithfulness}\textup{)},
-not a chain object. The three open completion layers
-\textup{(}Drinfeld doubling of the positive half, current enveloping
-and weight completion along $E$, filtered
-$\mathsf{SC}^{\mathrm{ch,top}}$-morphism property\textup{)} are the
-active obstructions on the $K3 \times E$ row.
-Every finite Hall--Borcherds gate in the manuscript is a finite-window
-projection of this datum; it is not a separate weaker hypothesis.
+These assertions produce an inverse system of chain-level comparison
+maps.  Its limit gives $(\beta,\delta,\varepsilon,\tau)$ under the
+Mittag--Leffler clause.
 
-\emph{Semi-classical content of $\beta$ is established.} At the
-classical limit \textup{(}leading order in $\hbar$\textup{),}
-Gritsenko--Nikulin~\cite[\S 5, Thm.~5.3]{GritsenkoNikulin1998}
-construct the Lie bialgebra structure attached to $\Delta_5$ on
-$\Lambda^{2,1}_{\mathrm{Muk}}\otimes\mathbb C$: the brackets are
-$\mathfrak g_{\Delta_5}$ brackets, and the cobracket on
-imaginary-root generators $x_\beta$, $\beta \in \Phi^{\mathrm{imag}}_{\Delta_5}$, is
+Gritsenko--Nikulin construct the automorphic product
+\cite[Example~2.4, equation~(2.16)]{GritsenkoNikulin1998}
 \[
-\delta(x_\beta) =
-\sum_{\beta_1 + \beta_2 = \beta}
- \mathrm{mult}(\beta_1)\cdot\mathrm{mult}(\beta_2)\cdot
- [x_{\beta_1}\wedge x_{\beta_2}]\cdot
- \partial_Z\log\Phi_{10}^{\mathrm{un}}(Z)\bigl|_{\beta_1,\beta_2}.
+ \Delta_5(Z)
+ =(qrs)^{1/2}
+ \prod_{(n,l,m)>0}
+ \bigl(1-q^nr^ls^m\bigr)^{f_1(nm,l)},
 \]
-Vol~I Chapter~\ref{ch:derived-langlands} reproduces this cobracket
-from the $r$-matrix $r(u, Z)$ of the chiral algebra attached to
-$\Delta_5$ \textup{(}Remark~\ref{rem:dl-kazhdan-gn-consistency}
-in \texttt{derived\_langlands.tex}\textup{);} the residual obstruction
-is therefore not at the semi-classical level $\beta_{\mathrm{cl}}$
-but at the quantum-completion lift from semi-classical Lie bialgebra
-to chain-level $E_1$-chiral bialgebra, and at the subsequent three
-completion layers $(\delta, \varepsilon)$ above.
+where $f_1(n,l)$ are the Fourier coefficients of the weak Jacobi form
+$\phi_{0,1}$.  Their Section~5.1.1 interprets this product as an
+automorphic correction of a rank-three Lorentzian Kac--Moody system.
+This determines the denominator and the root multiplicities.  A Lie
+bialgebra cobracket, its quantization, the Hall comparison, and the
+current-envelope map are the additional structures represented by
+$\beta$, $\delta$, and $\varepsilon$ above; their present status is
+$\ClaimStatusConjectured$.
 \end{convention}
 
-\begin{lemma}[$\delta$ at the abelian Cartan window: trivial Drinfeld
-doubling with Mukai pairing; $\ClaimStatusProvedHere$ on the
-classical Drinfeld-double formalism]
+\begin{lemma}[Classical double of the zero abelian Lie bialgebra;
+$\ClaimStatusProvedHere$]
 \label{lem:master-delta-cartan-window}
-Restrict the K3-BKM positive half to its Cartan part:
-$Y^+_{\mathrm{Hall}}(K3)\bigl|_{\mathfrak h} =
-U(\mathfrak h_{\Delta_5})$, where
-$\mathfrak h_{\Delta_5} \cong \Lambda^{2,1}_{\mathrm{Muk}} \otimes
-\mathbb C$ is the rank-$3$ abelian Cartan subalgebra. The Drinfeld
-doubling of this Cartan window is the trivial classical doubling
+Let $\mathfrak h$ be a finite-dimensional vector space with the
+abelian Lie bracket and zero cobracket.  Its classical Drinfeld double
+is
 \[
-D\bigl(\mathfrak h_{\Delta_5}\bigr)
-\;=\;
-\mathfrak h_{\Delta_5} \;\oplus\; \mathfrak h^*_{\Delta_5},
+D(\mathfrak h)=\mathfrak h\oplus\mathfrak h^*.
 \]
-a Manin triple $(\mathfrak h \oplus \mathfrak h^*, \mathfrak h,
-\mathfrak h^*)$ with bracket
+Its Lie bracket is zero, and its invariant bilinear form is
 \[
-[X, Y]_D = 0,
-\qquad
-[\xi, \eta]_D = 0,
-\qquad
-[X, \xi]_D = \langle X, \xi\rangle_{\mathrm{Muk}}
-\quad
-\text{for } X, Y \in \mathfrak h,\;
-\xi, \eta \in \mathfrak h^*,
+ \langle x+\xi,y+\eta\rangle_D
+ =\xi(y)+\eta(x).
 \]
-where $\langle \cdot, \cdot\rangle_{\mathrm{Muk}}$ is the Mukai pairing
-on $\Lambda^{2,1}_{\mathrm{Muk}}$ identifying $\mathfrak h \cong
-\mathfrak h^*$. The cobracket on the Cartan-only sector vanishes
-identically; non-trivial cobracket contributions $\delta(x_\alpha)$
-for $\alpha \in \Phi^{\mathrm{imag}}_{\Delta_5}$ arise only when
-imaginary roots are included
-\textup{(}per Gritsenko--Nikulin~\cite[\S 5,
-Thm.~5.3]{GritsenkoNikulin1998}; cf.~the cobracket formula above\textup{).}
+Thus $(D(\mathfrak h),\mathfrak h,\mathfrak h^*)$ is the Manin triple
+associated with the zero abelian Lie bialgebra.  The evaluation pairing
+is a bilinear form on the double.
 \end{lemma}
 
 \begin{proof}
-For an abelian Lie algebra $\mathfrak h$ with non-degenerate
-pairing $\langle\cdot,\cdot\rangle$, the Drinfeld double $D(\mathfrak
-h)$ is constructed as the Manin triple $(\mathfrak h \oplus
-\mathfrak h^*, \mathfrak h, \mathfrak h^*)$ with the canonical pairing
-\textup{(}Etingof--Schiffmann~\cite[\S 4]{EtingofSchiffmann98}\textup{).}
-The bracket on $D(\mathfrak h)$ is determined by:
-\begin{itemize}[noitemsep]
-\item $\mathfrak h$ has trivial bracket \textup{(}abelian by
-hypothesis\textup{);}
-\item $\mathfrak h^*$ inherits a bracket from the cobracket $\delta$
-on $\mathfrak h$: $\delta(X) = \sum a_i \otimes b_i \in \mathfrak h
-\otimes \mathfrak h$ gives $[X^*, Y^*]_{\mathfrak h^*} = \sum
-\langle a_i, X^*\rangle\langle b_i, Y^*\rangle \cdot \xi$ for
-$\xi \in \mathfrak h^*$;
-\item mixed bracket $[X, \xi]_D = \langle X, \xi\rangle$ by Manin-triple
-construction.
-\end{itemize}
-For the K3-BKM Cartan, the cobracket on Cartan-only generators is
-zero \textup{(}the cobracket structure on $\mathfrak g_{\Delta_5}$
-takes Cartan-only inputs to imaginary-root-supported outputs, which
-vanish in the Cartan-only restriction\textup{).} Hence
-$[\xi, \eta]_D = 0$ on the Cartan-only window. The Mukai pairing
-gives the canonical mixed bracket.
-
-This is the simplest finite-window discharge of the $\delta$ layer:
-at the Cartan-only sector, $\delta$ is the trivial Manin triple of an
-abelian Lie algebra with Mukai pairing; the non-trivial $\delta$ on
-imaginary-root windows remains the open residual.
+The bracket on $\mathfrak h^*$ is dual to the cobracket on
+$\mathfrak h$, and the mixed bracket is the sum of the two coadjoint
+actions.  The zero bracket and zero cobracket make all three terms
+zero.  The evaluation form is non-degenerate, invariant, and restricts
+to zero on each summand; hence the two summands are Lagrangian.  This
+is the standard double construction
+\cite[\S4]{EtingofSchiffmann98}.
 \end{proof}
 
-\begin{lemma}[$\varepsilon$ at the abelian Cartan window:
-lattice Heisenberg current algebra on $E$; $\ClaimStatusProvedHere$]
+\begin{lemma}[Heisenberg current algebra from a bilinear form;
+$\ClaimStatusProvedHere$]
 \label{lem:master-epsilon-cartan-window}
-For the Cartan part of the K3-BKM positive half $\mathfrak h_{\Delta_5}
-\cong \Lambda^{2,1}_{\mathrm{Muk}} \otimes \mathbb C$, the current
-envelope along $E$ of this Cartan window is the lattice Heisenberg
-vertex algebra on $\Lambda^{2,1}_{\mathrm{Muk}}$ realised on the
-elliptic curve $E$:
+Let $\mathfrak h$ be a finite-dimensional vector space and
+$\kappa\colon\mathfrak h\otimes\mathfrak h\to k$ a symmetric
+bilinear form.  On a formal disc, the central extension
 \[
-\mathrm{Cur}_E\bigl(\mathfrak h_{\Delta_5}\bigr)
-\;=\;
-V_{\Lambda^{2,1}_{\mathrm{Muk}}}(E),
+ \widehat{\mathfrak h((t))}_\kappa
+ =\mathfrak h((t))\oplus kK
 \]
-generated by Heisenberg currents $\{J^\alpha(z)\}_{\alpha \in
-\Lambda^{2,1}_{\mathrm{Muk}}}$ with OPE
+has bracket
 \[
-J^\alpha(z)\, J^\beta(w)
- \;\sim\;
- \frac{\langle \alpha, \beta\rangle_{\mathrm{Muk}}}{(z - w)^2},
+ [x\otimes f,y\otimes g]
+ =\kappa(x,y)\operatorname{Res}(f\,dg)K.
 \]
-where $\langle \cdot, \cdot\rangle_{\mathrm{Muk}}$ is the
-signature-$(2, 1)$ Mukai pairing on the K3-BKM Cartan lattice.
+Its chiral envelope on a smooth curve $E$ is the Heisenberg chiral
+algebra $\mathcal H_{\mathfrak h,\kappa,E}$ with OPE
+\[
+ J^x(z)J^y(w)\sim\frac{\kappa(x,y)}{(z-w)^2}.
+\]
 \end{lemma}
 
 \begin{proof}
-For an abelian Lie algebra $\mathfrak h$ with non-degenerate
-symmetric bilinear pairing $\kappa\colon \mathfrak h \otimes
-\mathfrak h \to \mathbb C$, the chiral current envelope
-$\mathrm{Cur}_X(\mathfrak h)$ over a smooth curve $X$ is the
-rank-$\dim_{\mathbb C} \mathfrak h$ Heisenberg vertex algebra on $X$
-at level $\kappa$
-\textup{(}\cite[\S 2.5]{FrenkelBenZvi}\textup{).}
-
-For $\mathfrak h = \mathfrak h_{\Delta_5} \cong
-\Lambda^{2,1}_{\mathrm{Muk}} \otimes \mathbb C$ with the Mukai
-pairing as $\kappa$, the construction over $X = E$ gives the
-rank-$3$ lattice Heisenberg vertex algebra at signature-$(2, 1)$
-level, whose OPE is precisely the stated formula. The level value
-on each pair $(\alpha, \beta) \in \Lambda^{2,1}_{\mathrm{Muk}}$
-is the Mukai pairing $\langle \alpha, \beta\rangle_{\mathrm{Muk}}$.
-
-This discharges $\varepsilon$ at the abelian Cartan window; the
-non-trivial $\varepsilon$ on imaginary-root windows of $\mathfrak
-g_{\Delta_5}$ requires the full Schiffmann--Vasserot Hall envelope
-construction \textup{(}\cite{SMMV23}\textup{),} which remains the
-open Vol~III residual.
+Antisymmetry follows from
+$\operatorname{Res}(f\,dg)=-\operatorname{Res}(g\,df)$, and the
+centrality of $K$ gives the Jacobi identity.  Chiral induction from
+this local Lie algebra gives the stated current algebra
+\cite[\S2.5]{FrenkelBenZvi}.  An application to a Cartan subalgebra of
+$\mathfrak g_{\Delta_5}$ therefore begins with an explicitly chosen
+form $\kappa$ and a comparison from the Hall Cartan to
+$\mathcal H_{\mathfrak h,\kappa,E}$.
 \end{proof}
 
-\begin{lemma}[$\tau$ at the abelian Cartan window: lattice Heisenberg
-trace as leading-order $\Delta_5^{-2}$ contribution;
-$\ClaimStatusProvedHere$ on the lattice Heisenberg part]
+\begin{lemma}[Heisenberg character and the $\Delta_5^{-2}$ comparison;
+$\ClaimStatusConditional$]
 \label{lem:master-tau-cartan-window}
-At the Cartan window of $\varepsilon$, the trace of the lattice
-Heisenberg $V_{\Lambda^{2,1}_{\mathrm{Muk}}}(E)$ of
-Lemma~\ref{lem:master-epsilon-cartan-window} in its derived chiral
-centre is the standard chiral character
+The vacuum character of a rank-$r$ Heisenberg chiral algebra is
 \[
-\mathrm{Tr}_{Z^{\mathrm{der}}_{\mathrm{ch}}}(\varepsilon|_{\mathrm{Cartan}})
- \;=\; \frac{\theta_{\Lambda^{2,1}_{\mathrm{Muk}}}(Z)}{\eta(\tau)^3},
+ \chi_{\mathcal H_r}(\tau)=\eta(\tau)^{-r}.
 \]
-where $\theta_{\Lambda^{2,1}_{\mathrm{Muk}}}(Z)$ is the Siegel theta
-function of the K3-BKM Cartan lattice and $\eta(\tau)^3$ is the
-rank-$3$ Heisenberg vacuum partition function.
+For a positive-definite even lattice $L$ of rank $r$, its lattice
+vertex algebra has character $\theta_L(\tau)/\eta(\tau)^r$.  The
+Lorentzian rank-three root lattice of the $\Delta_5$ denominator lies
+in a different analytic domain: its theta series requires a specified
+regularization and convergence theorem.
 
-The full $\tau$ identity of the level-$5{\to}4$ Hall--Borcherds datum,
-$\mathrm{Tr}_{Z^{\mathrm{der}}_{\mathrm{ch}}}(\varepsilon) =
-(\Phi_{10}^{\mathrm{un}})^{-1} = \Delta_5^{-2}$,
-agrees with this lattice character only at the leading
-$e^{-2 \cdot 2\pi i \langle \rho_{\Delta_5}, Z\rangle}$ Weyl-vector
-factor of the Borcherds-product expansion
+The exact scalar target is
 \[
-\Delta_5(Z)
- \;=\;
- e^{2\pi i \langle \rho_{\Delta_5}, Z\rangle}\,
- \prod_{\alpha \in \Phi^{+,\mathrm{imag}}_{\Delta_5}}
- \bigl(1 - e^{2\pi i \langle \alpha, Z\rangle}\bigr)^{\mathrm{mult}(\alpha)}.
+ \Delta_5(Z)^{-2}
+ =(qrs)^{-1}
+ \prod_{(n,l,m)>0}
+ \bigl(1-q^nr^ls^m\bigr)^{-2f_1(nm,l)}.
 \]
-The genuine imaginary-root product
-$\prod_\alpha (1 - e^{2\pi i \langle \alpha, Z\rangle})^{\mathrm{mult}(\alpha)}$
-is the Borcherds completion beyond the lattice Heisenberg leading
-term; computing it chain-level for $K3 \times E$ requires the
-Schiffmann--Vasserot Hall envelope of K3 stable sheaves at each
-imaginary root window \textup{(}\cite{SMMV23}\textup{).}
+The trace comparison asks for a graded chain object whose superdimension
+in degree $(n,l,m)$ is $-2f_1(nm,l)$, together with the sewing map
+$\tau$ that identifies its completed trace with this product.
 \end{lemma}
 
 \begin{proof}
-The lattice Heisenberg vertex algebra $V_L$ on a rank-$r$ even
-lattice $L$ has chiral character
-$\chi(V_L)(\tau, z) = \theta_L(\tau, z) / \eta(\tau)^r$
-\textup{(}standard; \cite[\S 2]{FrenkelBenZvi}\textup{).} For
-$L = \Lambda^{2,1}_{\mathrm{Muk}}$ of rank $3$, the formula
-yields the stated expression. The Borcherds product expansion of
-$\Delta_5$ is the denominator identity of $\mathfrak g_{\Delta_5}$
-\textup{(}\cite[Thm.~6.1]{Gritsenko1999}\textup{);} expansion as
-$e^{\rho}\prod (1 - e^{\alpha})^{\mathrm{mult}(\alpha)}$ in
-$\mathfrak g_{\Delta_5}$ characters shows the lattice-only piece
-$\theta_{\Lambda}$ matches the Weyl-vector factor at leading order,
-while the imaginary-root product is the Borcherds completion
-contributing the higher-order Fourier coefficients.
+The Heisenberg and positive-definite lattice character formulae are
+standard \cite[\S2]{FrenkelBenZvi}.  Squaring the reciprocal of
+Gritsenko--Nikulin's product
+\cite[Example~2.4, equation~(2.16)]{GritsenkoNikulin1998}
+gives the displayed three-variable product.  The construction of
+$\tau$ is precisely the chain-level trace problem in
+Convention~\ref{conv:master-hall-borcherds-datum}.
 \end{proof}
 
-\begin{remark}[Cartan-window discharge of $(\beta, \delta, \varepsilon,
-\tau)$: synthesis]
+\begin{remark}[Established and conditional components of
+$(\beta,\delta,\varepsilon,\tau)$]
 \label{rem:master-hb-cartan-window-synthesis}
-The four parts $(\beta, \delta, \varepsilon, \tau)$ of the K3-BKM
-Hall--Borcherds chain datum
-\textup{(}Convention~\ref{conv:master-hall-borcherds-datum}\textup{)}
-admit Cartan-window discharges:
+The preceding results separate four mathematical statements:
 \begin{itemize}[noitemsep]
-\item $\beta$ at semi-classical level: Gritsenko--Nikulin Lie bialgebra
-on $\Lambda^{2,1}_{\mathrm{Muk}}$
-\textup{(}Convention reference; not chain-level\textup{);}
-\item $\delta$ at Cartan: trivial Manin triple
-\textup{(}Lemma~\ref{lem:master-delta-cartan-window}\textup{);}
-\item $\varepsilon$ at Cartan: lattice Heisenberg
-$V_{\Lambda^{2,1}_{\mathrm{Muk}}}(E)$
-\textup{(}Lemma~\ref{lem:master-epsilon-cartan-window}\textup{);}
-\item $\tau$ at Cartan: lattice character
-$\theta_{\Lambda^{2,1}_{\mathrm{Muk}}}/\eta^3$ as leading-order
-contribution to $\Delta_5^{-2}$
-\textup{(}Lemma~\ref{lem:master-tau-cartan-window}\textup{).}
+\item Gritsenko--Nikulin's product determines the automorphic
+denominator and the integers $f_1(nm,l)$.
+\item A chosen zero abelian Lie bialgebra has the double of
+Lemma~\ref{lem:master-delta-cartan-window}.
+\item A chosen symmetric form on a Cartan space gives the Heisenberg
+current algebra of Lemma~\ref{lem:master-epsilon-cartan-window}.
+\item The equality of a completed chain-level trace with
+$\Delta_5^{-2}$ is the conditional map $\tau$ of
+Lemma~\ref{lem:master-tau-cartan-window}.
 \end{itemize}
-
-These four Cartan-window pieces together form the smallest finite
-discharge of the full $(\beta, \delta, \varepsilon, \tau)$ datum.
-The residual content at larger windows comprises:
-\begin{itemize}[noitemsep]
-\item Quantum-completion lift of $\beta_{\mathrm{cl}}$ to chain-level
-$E_1$-chiral bialgebra
-\textup{(}Etingof--Kazhdan quantisation gate, established formally
-in \texttt{derived\_langlands.tex}; concretisation to $\mathfrak
-g_{\Delta_5}$ open\textup{);}
-\item Imaginary-root contributions to $\delta$
-\textup{(}Gritsenko--Nikulin cobracket formula on imaginary roots,
-chain-level lift open\textup{);}
-\item Schiffmann--Vasserot Hall envelope for $\varepsilon$ at
-imaginary-root windows \textup{(}\cite{SMMV23}; chain-level
-construction open\textup{);}
-\item Borcherds-product imaginary-root completion for the full
-$\tau = \Delta_5^{-2}$ identity \textup{(}the product over imaginary
-roots in $\mathfrak g_{\Delta_5}$, with multiplicities from
-$\Delta_5$ Fourier coefficients\textup{).}
-\end{itemize}
-Each Cartan-window discharge is a leading-order witness; the full
-Hall--Borcherds existence theorem requires the imaginary-root
-completions of Vol~III \cite{SMMV23}.
+The Hall--Borcherds theorem therefore asks for a specified Lie
+bialgebra on the Hall side, its completed Drinfeld double, a chiral
+current realization on $E$, and a trace map recovering the exact
+three-variable product.
 \end{remark}
 
-\begin{convention}[Topologisation obstructions T1--T5; \ClaimStatusDefinitional]
+\begin{convention}[Chain data for a topological chiral enhancement;
+\ClaimStatusDefinitional]
 \label{conv:master-topologisation}
-For a chirally Koszul algebra $\cA$ with conformal vector $T$, the raw
-chain-level topologisation of the closed sector
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ to an
-$E_3^{\mathrm{top}}$-algebra
-\textup{(}stress-tensor null-homotopy $T = [Q, G]$ in a complete
-filtered BV ambient\textup{)} requires the following five obstructions
-to be exhibited:
+Let $V$ be a chiral algebra with conformal vector $T$.  A
+\emph{topological chiral enhancement} is specified in a complete
+filtered chain model by the following data:
 \begin{enumerate}[label=\textup{(T\arabic*)}]
-\item construct $G$ and prove $[Q, G] = T$ as a compatible homotopy
-of the holomorphic translation generator;
-\item prove compatibility with the filtration / completion of the
-ambient $\cC_\rho$;
-\item prove finite propagation in the holomorphic direction, or
-explicitly remain in the completed ambient;
-\item prove the transferred $E_3$-operations are independent of the
-SDR choices;
-\item verify anomaly cancellation in $H^1 / H^2$ of the convolution
-complex.
+\item a degree-one derivation $Q$ with $Q^2=0$, an odd field $G$, and
+the identity $[Q,G]=T$;
+\item a complete exhaustive filtration preserved by $Q$, $G$, and the
+chiral operations;
+\item continuity of the operations for the chosen completion and a
+finite-propagation estimate on every bounded-weight quotient;
+\item an action of the stated topological operad together with a
+homotopy-transfer comparison for two choices of contraction;
+\item a null-homotopy of the anomaly cocycle in the deformation
+complex of that operad action.
 \end{enumerate}
-For class~$\mathsf L$ affine Kac--Moody at non-critical level,
-T1--T5 may be constructed raw chain-level if finite propagation is
-proved. For class~$\mathsf M$ Virasoro / principal $\mathcal W$-families,
-the safe theorem is in the weight-completed / pro / Banach ambient
-unless raw finite propagation is separately verified. Vol~II
-\texttt{thm:casimir-antighost-commutativity} constructs the symmetrised
-antighost primitive $G^{(n)} = h(P_n)$ for the principal-Casimir
-tower via the Euler--Koszul homotopy of the
-current--antighost subspace and proves
-$[Q_{\mathrm{tot}}, G^{(n)}] = W^{(n)}$ on cohomology, discharging T1
-and the antighost-commutativity component of T4 on that row; T2
-\textup{(}filtered ambient compatibility\textup{)} is implicit in
-the filtered local BV vertex algebra ambient; T3
-\textup{(}finite propagation\textup{)} and the SDR-independence
-component of T4 remain to be verified separately on each non-Casimir
-tower, and T5 \textup{(}anomaly cancellation in $H^1/H^2$\textup{)}
-is implicit via Koszul--Tate acyclicity in positive antighost number
-on the Casimir row.
+The identity in T1 makes holomorphic translation $Q$-exact on
+cohomology.  An $E_3^{\mathrm{top}}$ conclusion uses the operadic
+action and comparison homotopies in T4.  Each theorem below states
+exactly which entries of this package it constructs.
 \end{convention}
 
-\begin{theorem}[Raw chain-level T1--T5 discharge for $\mathrm{Vir}_{26}$
-via bosonic-string BRST; $\ClaimStatusProvedHere$]
+\begin{theorem}[Bosonic-string BRST identities at matter central
+charge $26$; $\ClaimStatusProvedElsewhere$]
 \label{thm:master-vir-26-bc-brst-topologisation}
 At matter central charge $c_m = 26$, the Virasoro algebra
 $\mathrm{Vir}_{26}$ tensored with the conformal-weight-$(2, -1)$
 fermionic ghost system $(b, c)$ of central charge $c_{bc} = -26$
-admits a raw chain-level discharge of all five topologisation
-obstructions T1--T5
-\textup{(}Convention~\ref{conv:master-topologisation}\textup{)}.
-Explicitly, let
+carries the BRST current
 \[
 T_{bc} = -2{:}b\partial c{:} - {:}\partial b\, c{:},
 \qquad
 T_{\mathrm{tot}} = T_m + T_{bc},
 \]
-so that $c_{\mathrm{tot}} = c_m + c_{bc} = 0$. Define
 \[
-Q_{\mathrm{BRST}}
- = \oint \frac{dz}{2\pi i}\,
-   {:}c(z)\bigl(T_m + \tfrac12 T_{bc}\bigr)(z){:},
+j_{\mathrm{BRST}}
+= {:}c(T_m+\tfrac12T_{bc}){:}+\tfrac32\partial^2c,
+\qquad
+Q_{\mathrm{BRST}}=\oint\frac{dz}{2\pi i}\,j_{\mathrm{BRST}}(z),
 \qquad
 G = b.
 \]
-Then $Q_{\mathrm{BRST}}^2 = 0$ at $c_m = 26$ and
+Then
 \[
+Q_{\mathrm{BRST}}^2=0,
+\qquad
 [Q_{\mathrm{BRST}}, b(z)] = T_{\mathrm{tot}}(z).
 \]
+These identities give T1 and the BRST anomaly cancellation entering
+T5 of Convention~\ref{conv:master-topologisation}.  A chosen complete
+filtered model and a chain action of the desired topological operad
+supply T2--T4.
 \end{theorem}
 
 \begin{proof}
@@ -1225,11 +1215,11 @@ is $c_{bc}(h) = -2(6h^2 - 6h + 1)$
 \textup{(}Polchinski~\cite[eq.~(2.5.12)]{Pol98}\textup{);} at $h = 2$
 this gives $c_{bc} = -26$.
 
-BRST nilpotence $Q_{\mathrm{BRST}}^2 = 0$ at $c_m = 26$ is the
-critical-dimension cancellation~\cite[\S 4.3]{Pol98}: the OPE
-$j_{\mathrm{BRST}}(z) j_{\mathrm{BRST}}(w)$ has a residue proportional
-to $c_{\mathrm{tot}} = c_m + c_{bc}$, which vanishes exactly when
-$c_m = 26$.
+The standard BRST OPE calculation gives
+$Q_{\mathrm{BRST}}^2=(c_m-26)\mathfrak a_{\mathrm{Vir}}$, where
+$\mathfrak a_{\mathrm{Vir}}$ is the ghost-number-two Virasoro anomaly
+operator; see~\cite[\S4.3]{Pol98}.  Its coefficient vanishes at
+$c_m=26$.
 
 The identity $[Q_{\mathrm{BRST}}, b(z)] = T_{\mathrm{tot}}(z)$ follows
 from
@@ -1237,509 +1227,275 @@ from
 j_{\mathrm{BRST}}(z) b(w)
  \;\sim\; \frac{T_{\mathrm{tot}}(w)}{z - w} + \cdots,
 \]
-which is computed using $b(z) c(w) \sim 1/(z - w)$ and the standard
-$cT_m$, $cT_{bc}$ OPEs, then contour deformation
-$\oint_w dz/(2\pi i)$ extracts the first-order pole.
-
-The five T-axioms now follow.
-
-\textbf{T1} \textup{(}construct $G$ with $[Q, G] = T$\textup{):}
-$G = b$, $Q = Q_{\mathrm{BRST}}$, $[Q, b] = T_{\mathrm{tot}}$ as above.
-
-\textbf{T2} \textup{(}filtration / completion compatibility\textup{):}
-the ghost-number filtration $\mathrm{gh}(b) = -1$,
-$\mathrm{gh}(c) = +1$, $\mathrm{gh}(Q_{\mathrm{BRST}}) = +1$ is bounded
-below on each conformal-weight piece and preserved by both
-$Q_{\mathrm{BRST}}$ and $G$.
-
-\textbf{T3} \textup{(}finite propagation\textup{):}
-each mode $b_n$, $c_n$, $L^{\mathrm{tot}}_n$ shifts $L_0$ by $-n$
-\textup{(}so weight-bounded subspaces map to weight-bounded
-subspaces\textup{);} $Q_{\mathrm{BRST}}$ and $G$ act on each
-weight-bounded subspace with bounded mode-shift, so propagation is
-finite.
-
-\textbf{T4} \textup{(}SDR-independence of transferred
-$E_3$-operations\textup{):}
-BRST cohomology
-$H^\bullet(\mathrm{Vir}_{26} \otimes V_{bc}, Q_{\mathrm{BRST}})$
-is invariant under canonical transformations preserving the
-$(L_n, b_n, c_n)$ algebra; the transferred $E_3$-structure is the
-topological-string operator product algebra of~\cite{FGZ86}, which
-is SDR-independent by the standard homotopy-transfer argument
-applied to the Koszul resolution of the ghost vacuum.
-
-\textbf{T5} \textup{(}anomaly cancellation in $H^1/H^2$\textup{):}
-$Q_{\mathrm{BRST}}^2 = 0$ \emph{is} the anomaly cancellation
-condition. Concretely,
-$Q_{\mathrm{BRST}}^2 = (1/2)\{Q_{\mathrm{BRST}}, Q_{\mathrm{BRST}}\}$
-is proportional to the Virasoro central extension class
-$c_{\mathrm{tot}} \in H^2(\mathrm{Witt}, \mathbb C) \cong \mathbb C$,
-which vanishes at $c_{\mathrm{tot}} = c_m + c_{bc} = 0$.
+which follows from $b(z)c(w)\sim(z-w)^{-1}$ and the standard
+stress-tensor OPEs.  The residue of the first-order pole gives the
+displayed commutator.
 \end{proof}
 
-\begin{remark}[Off-critical $\mathrm{Vir}_c$; class~$\mathsf M$
-completion route]
+\begin{remark}[The Virasoro anomaly away from the critical point]
 \label{rem:master-vir-noncritical-completed}
-For $c_m \neq 26$ the BRST nilpotence fails:
-$Q_{\mathrm{BRST}}^2 \neq 0$ on the operator product algebra, and T5
-is obstructed in the raw chain ambient. The class~$\mathsf M$
-topologisation in the safe weight-completed / pro / Banach ambient
-proceeds via Felder's screening BRST for the Coulomb-gas free-boson
-realisation of $\mathrm{Vir}_c$: the screening charges
-$S_\pm = \oint{:}e^{\alpha_\pm \phi(z)}{:}\, dz$ parametrised by the
-background charge satisfy a nilpotency condition on the
-weight-completed Fock module, providing a substitute BRST that
-recovers T1--T5 in the completed ambient at arbitrary~$c$. The
-K3$\times$E gravity-line residual of
-Remark~\ref{rem:master-witness-K3E-ramification} sits on this
-completed lane: the Vol~III chain-level construction of
-$\mathbf H_{\Delta_5}$ requires the weight-completed / pro ambient
-because the underlying Virasoro central charge of the gravity-line
-sector is not~$26$.
+For the reparametrization BRST operator of
+Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}, the anomaly
+class is
+\[
+ [Q_{\mathrm{BRST}}^2]
+ =(c_m-26)[\mathfrak a_{\mathrm{Vir}}].
+\]
+The critical locus is therefore $c_m=26$.  Completion transports this
+class to the completed deformation complex with the same coefficient.
+Felder screening differentials form a separate family of complexes,
+described in Corollary~\ref{cor:master-screening-brst-c-lt-minus-1}.
 \end{remark}
 
-\begin{theorem}[Generalised matter-ghost BRST T1--T5 discharge at
-arbitrary matter central charge $c \geq -1$;
-$\ClaimStatusProvedHere$]
+\begin{theorem}[Conformal-weight constraint for the
+reparametrization BRST current; $\ClaimStatusProvedHere$]
 \label{thm:master-generalized-matter-ghost-brst}
-Let $\mathfrak A$ be any conformal vertex algebra with Virasoro
-generator $T_{\mathfrak A}$ and central charge $c_{\mathfrak A} \geq
--1$. Choose a fermionic ghost system $bc(h, 1-h)$ with weights given
-by the two real roots of $h(h-1) = (c_{\mathfrak A} - 2)/12$,
-explicitly
+Let $T_m$ have conformal weight~$2$, and let $bc(h,1-h)$ be a
+fermionic ghost system with
 \[
-h_\pm \;=\; \tfrac{1}{2}\bigl(1 \pm \sqrt{(c_{\mathfrak A} + 1)/3}\bigr).
+ \operatorname{wt}(b)=h,
+ \qquad
+ \operatorname{wt}(c)=1-h.
 \]
-Then the ghost central charge $c_{bc}(h_\pm) =
--2(6 h_\pm^2 - 6 h_\pm + 1) = -c_{\mathfrak A}$, and the combined
-system $\mathfrak A \otimes V_{bc(h_+, h_-)}$ discharges T1--T5
-raw chain-level via
+Conformal covariance of a reparametrization BRST current with leading
+term ${:}cT_m{:}$ forces
 \[
-T_{\mathrm{tot}} = T_{\mathfrak A} + T_{bc},
-\quad
-Q_{\mathrm{BRST}} = \oint \frac{dz}{2\pi i}\, {:}c(z)
-\bigl(T_{\mathfrak A} + \tfrac{1}{2} T_{bc}\bigr)(z){:},
-\quad
-G = b,
+ \operatorname{wt}({:}cT_m{:})=1,
+ \qquad h=2,
+ \qquad (\operatorname{wt}(b),\operatorname{wt}(c))=(2,-1).
 \]
-with $Q_{\mathrm{BRST}}^2 = 0$ \textup{(}from
-$c_{\mathfrak A} + c_{bc} = 0$\textup{)} and
-$[Q_{\mathrm{BRST}}, b(z)] = T_{\mathrm{tot}}(z)$.
-
-In particular:
-\begin{itemize}[noitemsep]
-\item $\mathfrak A = \mathrm{Vir}_{26}$, ghosts $bc(2, -1)$: recovers
-the bosonic-string BRST of
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}.
-\item $\mathfrak A = \beta\gamma$ at conformal weight $\lambda \in
-\mathbb R$ \textup{(}with $c = 12\lambda^2 - 12\lambda + 2 \geq -1$
-always, since $c + 1 = 12(\lambda - 1/2)^2 + 0 \geq 0$\textup{)},
-ghosts $bc(\lambda, 1-\lambda)$ fermionic: T1--T5 discharge for
-$\beta\gamma$ at every real weight $\lambda$, including the
-$\lambda = 1/2$ symplectic boson \textup{(}$c = -1$\textup{)} paired
-with the $bc(1/2, 1/2)$ NS fermion \textup{(}$c = +1$\textup{);}
-\item $\mathfrak A = \mathrm{Vir}_c$ minimal model at $c = 1 - 6/m(m+1) \in
-(0, 1)$ for $m \geq 2$: ghosts $bc(h_\pm, h_\mp)$ with real weights
-$h_\pm \in (0, 1)$ depending on $m$.
-\end{itemize}
+For this ghost system $c_{bc}=-26$, and the BRST anomaly coefficient
+is $c_m-26$.  Thus the reparametrization construction of
+Theorem~\ref{thm:master-vir-26-bc-brst-topologisation} is selected by
+the simultaneous weight and anomaly equations.
 \end{theorem}
 
 \begin{proof}
-The fermionic $bc(h, 1-h)$ system has stress tensor
-$T_{bc} = -h\, {:}b\partial c{:} - (1-h)\, {:}\partial b\, c{:}$ and
-central charge $c_{bc}(h) = -2(6h^2 - 6h + 1)$
-\textup{(}\cite[eq.~(2.5.12)]{Pol98}\textup{).} Setting
-$c_{bc}(h) = -c_{\mathfrak A}$ gives the quadratic
-$12h^2 - 12h + 2 + c_{\mathfrak A} = 0$, equivalently
-$h(h-1) = (c_{\mathfrak A} - 2)/12$, with discriminant $1 + (c_{\mathfrak A} - 2)/3 =
-(c_{\mathfrak A} + 1)/3$; real roots exist iff
-$c_{\mathfrak A} \geq -1$.
-
-The BRST construction proceeds as in
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}: $T_{bc}$ has
-the OPE structure of a fermionic stress tensor, $T_{\mathfrak A}$
-commutes with $T_{bc}$ \textup{(}matter and ghost sectors are
-independent\textup{),} and the only OPE singularity of
-$j_{\mathrm{BRST}}(z) j_{\mathrm{BRST}}(w)$ at leading order is the
-conformal-anomaly term proportional to $c_{\mathfrak A} + c_{bc} = 0$,
-so $Q_{\mathrm{BRST}}^2 = 0$ on the operator product algebra.
-
-The bracket $[Q_{\mathrm{BRST}}, b(z)] = T_{\mathrm{tot}}(z)$ follows
-from the OPE
-$j_{\mathrm{BRST}}(z) b(w) \sim T_{\mathrm{tot}}(w) / (z - w) + \cdots$
-by the same contour-deformation argument as in
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}, using
-$b(z) c(w) \sim 1/(z - w)$ \textup{(}fermionic\textup{)} and the
-universal structure of the BRST current independent of matter type.
-
-T2--T4 follow as in
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}: ghost-number
-filtration with $\mathrm{gh}(b) = -1$, $\mathrm{gh}(c) = +1$; bounded
-mode shifts of $T, b, c$; SDR-independence of BRST cohomology under
-canonical transformations.
-
-T5 is the anomaly cancellation: $Q_{\mathrm{BRST}}^2 = 0$ on the full
-operator product algebra is equivalent to $c_{\mathrm{tot}} = 0$,
-which holds by construction.
+The field ${:}cT_m{:}$ has weight $(1-h)+2=3-h$; setting this equal
+to~$1$ gives $h=2$.  The central-charge formula
+\[
+ c_{bc}(h)=-2(6h^2-6h+1)
+\]
+then gives $c_{bc}(2)=-26$
+\cite[equation~(2.5.12)]{Pol98}.  The standard BRST OPE gives anomaly
+coefficient $c_m+c_{bc}=c_m-26$.
 \end{proof}
 
-\begin{remark}[Coverage and limits]
+\begin{remark}[Three distinct BRST constructions]
 \label{rem:master-generalized-brst-coverage}
-Theorem~\ref{thm:master-generalized-matter-ghost-brst} provides
-raw chain-level T1--T5 discharge for the entire $c \geq -1$ portion
-of the chiral algebra landscape: this includes
-all Virasoro minimal models \textup{(}$c \in (0, 1)$\textup{);} all
-$\beta\gamma$ systems \textup{(}$c = 12\lambda^2 - 12\lambda + 2 \geq
--1$ for all $\lambda$\textup{);} the symplectic boson \textup{(}$c =
--1$\textup{);} all bosonic-string matter \textup{(}$c = 26$\textup{);}
-and any standard-landscape chart algebra with $c \geq -1$.
-
-The remaining open T1--T5 cases are matter algebras with
-$c_{\mathfrak A} < -1$ \textup{(}for which no real fermionic ghost
-partner exists; raw chain discharge fails, but the weight-completed
-ambient route below applies\textup{);} and matter without a stress
-tensor.
-
-Non-Casimir higher-spin towers in class~$\mathsf M$
-\textup{(}e.g., $\cW_\infty[\lambda]$ outside principal limit,
-hook-type $\cW$-algebras, subregular nilpotent
-$\cW$-algebras\textup{)} have stress tensor $T = T^{(2)}$ that is a
-Virasoro primary at central charge $c_{\mathfrak A}$. Provided
-$c_{\mathfrak A} \geq -1$, the
-generalised matter-ghost BRST above discharges T1--T5 at the
-stress-tensor level: the higher-spin currents
-$\{T^{(n)}\}_{n \geq 3}$ ride along as part of the matter algebra
-without affecting the T1--T5 statement, which concerns only $T = T^{(2)}$
-\textup{(}Convention~\ref{conv:master-topologisation}\textup{).}
-
-The strictly stronger question of \emph{per-spin antighost
-commutativity} \textup{(}whether each higher-spin current $T^{(n)}$
-admits a chain-level antighost $G^{(n)}$ with
-$[Q, G^{(n)}] = T^{(n)}$, supplying $E_{n+1}^{\mathrm{top}}$
-structure on $H^\bullet(\mathfrak A, Q)$ in a graded sense\textup{)}
-is open for non-Casimir higher-spin towers; for principal-Casimir
-$\cW_N$ this is established via Vol~II
-\texttt{thm:casimir-antighost-commutativity} \textup{(}Euler--Koszul
-homotopy on the current-antighost subspace\textup{).} The non-Casimir
-per-spin antighost residual is a higher T-axiom beyond
-T1--T5.
+The reparametrization BRST complex uses the $(2,-1)$ ghost system and
+the critical equation $c_m=26$.  Felder complexes use screening
+operators between Coulomb-gas Fock modules.  An $N=2$ topological
+twist uses one supercurrent as $Q$ and the other as $G$.  These three
+constructions have distinct chain complexes and distinct nilpotency
+identities.  A higher-spin $\mathcal W$-algebra uses the full BRST
+master equation of
+Corollary~\ref{cor:master-per-spin-antighost-linear-Winf}.
 \end{remark}
 
-\begin{corollary}[Per-spin antighost commutativity for linear
-$\cW_\infty[0]$ via per-spin extended bc-BRST;
-$\ClaimStatusProvedHere$ on the linear / classical limit]
+\begin{corollary}[The higher-spin BRST master equation;
+$\ClaimStatusConditional$]
 \label{cor:master-per-spin-antighost-linear-Winf}
-For matter $\mathfrak A = \cW_\infty[0]$ \textup{(}linear /
-classical $\cW_\infty$ algebra: stress tower
-$\{T^{(n)}\}_{n \geq 2}$ of conformal weights $(2, 3, 4, \ldots)$
-with vanishing higher-spin commutators in the classical
-limit\textup{),} introduce per-spin fermionic ghost systems
-$\{bc^{(n)}(n, 1-n)\}_{n \geq 2}$ with central charges
-$c_{gh}^{(n)} = -2(6n^2 - 6n + 1)$. Choose the matter central
-charges $c^{(n)}_{matter}$ to cancel:
-$c^{(n)}_{matter} + c^{(n)}_{gh} = 0$ for each $n$.
-
-Define spin-$n$ BRST currents and total charge
+Let $\mathcal W$ be generated by fields $W^{(s)}$ of conformal weight
+$s$ with specified OPE structure constants.  Introduce ghosts
+$b_s,c_s$ of weights $(s,1-s)$.  A higher-spin BRST charge has the
+form
 \[
-j^{(n)}_{\mathrm{BRST}} = {:}c^{(n)}\bigl(T^{(n)} + \tfrac{1}{2} T^{(n)}_{gh}\bigr){:},
-\qquad
-Q_{\mathrm{tot}} = \sum_{n \geq 2} \oint j^{(n)}_{\mathrm{BRST}}.
+ Q_{\mathcal W}
+ =\oint\left(
+ \sum_s c_sW^{(s)}
+ +\sum_{r,s,t}C_{rs}^{t}{:}c_rc_sb_t{:}
+ +\text{higher ghost terms}
+ \right).
 \]
-Antighost partners $G^{(n)} = b^{(n)}$. Then on the combined
-matter $\otimes$ ghost system:
-\begin{itemize}[noitemsep]
-\item $[Q_{\mathrm{tot}}, G^{(n)}] = T^{(n)}_{\mathrm{tot}} = T^{(n)}
-+ T^{(n)}_{gh}$ for every $n \geq 2$ \textup{(}per-spin antighost
-commutativity\textup{);}
-\item $Q_{\mathrm{tot}}^2 = 0$ \textup{(}T5 per spin: each spin
-sector's anomaly cancels independently via
-$c^{(n)}_{matter} + c^{(n)}_{gh} = 0$, and inter-spin terms vanish
-in the linear $\cW_\infty[0]$ limit because the higher-spin
-generators of $\cW_\infty[0]$ have vanishing mutual OPEs at the
-linear level\textup{).}
-\end{itemize}
+The coefficients and higher terms solve the master equation
+$Q_{\mathcal W}^2=0$.  Under this equation,
+\[
+ [Q_{\mathcal W},b_s]=W^{(s)}_{\mathrm{tot}}
+\]
+is the per-spin antighost identity.  For
+$\mathcal W_\infty[\lambda]$, the mixed OPEs among different spins
+enter the quadratic and higher ghost terms.  A proof consists of an
+explicit solution of this master equation in a stated completion.
 \end{corollary}
 
 \begin{proof}
-Each spin sector reduces to the construction of
-Theorem~\ref{thm:master-generalized-matter-ghost-brst} applied at
-that spin: matter $T^{(n)}$ paired with $bc^{(n)}$ ghosts at
-matched central charge gives spin-$n$ BRST nilpotence
-$(Q^{(n)})^2 = 0$ and $[Q^{(n)}, b^{(n)}] = T^{(n)}_{\mathrm{tot}}$.
-
-The total BRST $Q_{\mathrm{tot}} = \sum_n Q^{(n)}$ has
-$Q_{\mathrm{tot}}^2 = \sum_n (Q^{(n)})^2 + 2 \sum_{m < n}
-Q^{(m)} Q^{(n)} = 0 + 0 = 0$ because:
-\begin{itemize}[noitemsep]
-\item each $(Q^{(n)})^2 = 0$ by per-spin matching;
-\item $\{Q^{(m)}, Q^{(n)}\} = 0$ for $m \neq n$ because the OPE
-$j^{(m)}_{\mathrm{BRST}}(z) j^{(n)}_{\mathrm{BRST}}(w)$ involves
-$T^{(m)} T^{(n)}$ matter OPE, which vanishes at the linear
-$\cW_\infty[0]$ level \textup{(}commuting higher-spin currents\textup{),}
-together with $c^{(m)} c^{(n)}$ ghost OPE vanishing for $m \neq n$
-\textup{(}different ghost sectors are independent\textup{).}
-\end{itemize}
-
-Per-spin antighost $[Q_{\mathrm{tot}}, b^{(n)}] = [Q^{(n)}, b^{(n)}]
-= T^{(n)}_{\mathrm{tot}}$ since $b^{(n)}$ commutes with $Q^{(m)}$
-for $m \neq n$ \textup{(}different ghost sectors\textup{).}
-
-For non-linear $\cW_\infty[\lambda]$ at $\lambda \neq 0$, the
-higher-spin generators have non-trivial mutual OPEs
-$T^{(m)}(z) T^{(n)}(w) \sim \cdots$ involving lower-spin generators,
-which contributes additional terms to $\{Q^{(m)}, Q^{(n)}\}$; the
-per-spin commutativity then requires correction terms beyond the
-simple sum, and the discharge becomes the Vol~II Euler--Koszul
-construction \textup{(}\texttt{thm:casimir-antighost-commutativity}\textup{).}
+The coefficient of each ghost monomial in $Q_{\mathcal W}^2$ is the
+Chevalley--Eilenberg relation for the corresponding OPE bracket,
+together with its quantum anomaly.  Solving these equations gives a
+differential.  Contracting the BRST current with $b_s$ extracts the
+constraint paired with $c_s$ and its ghost correction, which is
+$W^{(s)}_{\mathrm{tot}}$.
 \end{proof}
 
-\begin{corollary}[T1--T5 in the weight-completed ambient for matter
-at $c_{\mathfrak A} < -1$ via Felder screening BRST;
-$\ClaimStatusProvedHere$ on the weight-completed Fock module]
+\begin{corollary}[Felder screening complexes;
+$\ClaimStatusProvedElsewhere$]
 \label{cor:master-screening-brst-c-lt-minus-1}
-For matter $\mathfrak A$ with central charge $c_{\mathfrak A} < -1$
-\textup{(}e.g., free-boson Coulomb-gas algebra at background charge
-$\alpha_0$ with $1 - 12\alpha_0^2 < -1$; class~$\mathsf M$
-non-principal-Casimir towers at high negative
-$c$\textup{),} the matter--bc ghost matching of
-Theorem~\ref{thm:master-generalized-matter-ghost-brst} fails in the
-raw chain ambient \textup{(}the required bc weight
-$h = (1 \pm \sqrt{(c_{\mathfrak A} + 1)/3})/2$ is complex\textup{).}
-
-In the weight-completed / pro / Banach ambient of the Vol~II
-$\gamma$-completed comparison theorem, the Felder screening BRST applies:
-realise $\mathfrak A$ as a sub-VOA of a free-boson Coulomb-gas
-algebra $\mathcal F_{\alpha_0}$ at appropriate background charge,
-and define the screening charges
+For coprime integers $p,q\geq2$, the Coulomb-gas realization at
 \[
-S_\pm \;=\; \oint \frac{dz}{2\pi i}\, {:}e^{\alpha_\pm \phi(z)}{:}
+ c_{p,q}=1-6\frac{(p-q)^2}{pq}
 \]
-parametrised by the Coulomb-gas roots. The sum
-$Q_{\mathrm{scr}} = S_+ + S_-$ \textup{(}or in non-singlet form,
-the action of each $S_\pm$ separately on appropriate Fock
-modules\textup{)} satisfies $Q_{\mathrm{scr}}^2 = 0$ on the
-weight-completed Fock module \textup{(}Felder 1989;
-\cite[\S 15]{FrenkelBenZvi}\textup{).} The construction provides
-T1--T5 discharge in the weight-completed ambient, not raw chain.
-
-This complements
-Theorem~\ref{thm:master-generalized-matter-ghost-brst} by extending
-T1--T5 coverage to the $c < -1$ region of the standard landscape,
-with the caveat that the discharge lives in the weight-completed
-ambient \textup{(}per the completed-ambient ``ordinary $=$ completed ambient''
-discipline\textup{)} rather than raw chain.
-
-Combined coverage: raw chain T1--T5 holds for
-$c \geq -1$ via
-Theorem~\ref{thm:master-generalized-matter-ghost-brst}; weight-completed
-T1--T5 holds for $c < -1$ via Felder screening; principal-Casimir
-class~$\mathsf M$ holds raw chain via Vol~II
-\texttt{thm:casimir-antighost-commutativity}; N=2 SCAs hold raw chain
-at every $c$ via
-Theorem~\ref{thm:master-n2-topological-twist-topologisation}. Modulo
-non-Casimir higher-spin towers and matter without a stress tensor,
-this covers the standard chiral-algebra landscape.
+carries screening operators
+\[
+ S_\pm=\oint\frac{dz}{2\pi i}
+ {:}e^{\alpha_\pm\phi(z)}{:}.
+\]
+Suitable powers of these operators give the differentials in Felder's
+complexes of Fock modules, and the resulting cohomology realizes the
+irreducible Virasoro minimal-model modules; see
+\cite[\S15]{FrenkelBenZvi}.  This is a resolution theorem.  A
+topological chiral enhancement adds a field $G$ and the identity
+$[Q,G]=T$ of Convention~\ref{conv:master-topologisation} for the
+chosen differential $Q$.
 \end{corollary}
 
-\begin{theorem}[Raw chain-level T1--T5 discharge for N=2 superconformal
-VOAs via topological twist; $\ClaimStatusProvedHere$]
+\begin{theorem}[$N=2$ topological-twist identities;
+$\ClaimStatusProvedElsewhere$]
 \label{thm:master-n2-topological-twist-topologisation}
 Let $\mathfrak A$ be an N=2 superconformal vertex operator algebra at
-arbitrary central charge $c$, with generators
+central charge $c$, with generators
 $(T, J, G^+, G^-)$ satisfying the standard N=2 SCA OPE
-\textup{(}\cite[Ch.~5]{FrenkelBenZvi}\textup{).} The A-twist
+\cite[Chapter~5]{FrenkelBenZvi}.  Define the A-twist by
 \[
-T_{\mathrm{top}}(z) = T(z) + \tfrac{1}{2}\partial J(z),
+T_A = T + \tfrac{1}{2}\partial J,
 \qquad
-Q = \oint \frac{dz}{2\pi i}\, G^+(z),
+Q_A = \oint \frac{dz}{2\pi i}\, G^+(z),
 \qquad
-G = \tfrac{1}{2}\, G^-,
+G_A = \tfrac{1}{2}G^-.
 \]
-discharges all five topologisation obstructions T1--T5
-\textup{(}Convention~\ref{conv:master-topologisation}\textup{)} raw
-chain-level at \emph{every} central charge $c$.
+Then
+\[
+Q_A^2=0,
+\qquad
+\{Q_A,G_A(z)\}=T_A(z).
+\]
+The B-twist interchanges $+$ and $-$ and uses
+$T_B=T-\frac12\partial J$.  These identities give T1 and make
+holomorphic translation exact on BRST cohomology.  The remaining
+entries of Convention~\ref{conv:master-topologisation} are properties
+of the chosen completion and operadic chain model.
 \end{theorem}
 
 \begin{proof}
-\textbf{T1.} The N=2 SCA OPE is
+The defining N=2 OPEs include
 \[
 G^+(z) G^-(w) \;\sim\; \frac{2c/3}{(z-w)^3} + \frac{2 J(w)}{(z-w)^2}
  + \frac{2T(w) + \partial J(w)}{z - w} + \mathrm{reg}.
 \]
-Hence
+Taking the zero-mode residue gives
 \[
-\{Q, G(z)\}
+\{Q_A, G_A(z)\}
  = \tfrac{1}{2} \oint_z \frac{dw}{2\pi i}\, G^+(w) G^-(z)
  = \tfrac{1}{2}\bigl(2T(z) + \partial J(z)\bigr)
- = T_{\mathrm{top}}(z).
+ = T_A(z).
 \]
-
-\textbf{T5} \textup{(}anomaly cancellation, raw chain at every
-$c$\textup{).}
-$U(1)$ $R$-charge conservation forces $G^+(z) G^+(w) \sim 0$
-\textup{(}both fields carry $R$-charge $+1$; the OPE residue
-would carry $R$-charge $+2$, but no operator of $R$-charge
-$\pm 2$ exists in the N=2 SCA generator set\textup{).} Therefore
+The OPE $G^+(z)G^+(w)$ is regular by the N=2 relations, hence
 \[
-Q^2 = \tfrac{1}{2}\{Q, Q\}
+Q_A^2 = \tfrac{1}{2}\{Q_A, Q_A\}
  = \tfrac{1}{2}\oint dz\, dw\, G^+(z) G^+(w) = 0
- \quad \text{at every } c.
+ \quad \text{for every } c.
 \]
-No central-charge constraint is required: unlike the
-bosonic-string BRST of
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation} which forces
-$c_{\mathrm{tot}} = 0$, the N=2 topological twist is anomaly-free
-intrinsically.
-
-\textbf{T2.} $R$-charge grading $\mathrm{gh}(J) = 0$,
-$\mathrm{gh}(G^\pm) = \pm 1$, $\mathrm{gh}(T) = 0$ gives a
-$\mathbb Z$-graded ghost-number filtration; $Q$ raises ghost number
-by $+1$, $G$ lowers by $-1$.
-
-\textbf{T3.} Each generator's modes $T_n, J_n, G^\pm_n$ shift $L_0$
-by $-n$; each weight-bounded subspace is preserved by both
-$Q$ and $G$ with bounded mode-shift.
-
-\textbf{T4.} BRST cohomology $H^\bullet(\mathfrak A, Q)$ is invariant
-under canonical transformations preserving the N=2 SCA generator
-structure; the transferred $E_3$-operations on
-$H^\bullet(\mathfrak A, Q)$ are SDR-independent by standard
-homotopy-transfer applied to the $Q$-acyclic complement.
+The B-twist follows from the OPE with the two supercurrents exchanged.
 \end{proof}
 
-\begin{remark}[Scope of the N=2 twist; comparison with $\mathrm{Vir}_{26}$
-BRST and complementary discharge routes]
+\begin{remark}[The two topological differentials]
 \label{rem:master-n2-twist-scope}
-Theorem~\ref{thm:master-n2-topological-twist-topologisation} applies
-to \emph{every} N=2 superconformal VOA at \emph{every} central
-charge, structurally cleaner than the $\mathrm{Vir}_{26}$
-bosonic-string BRST of
-Theorem~\ref{thm:master-vir-26-bc-brst-topologisation} which works
-only at $c_m = 26$. The N=2 family includes:
+The A- and B-twists use the square-zero operators
+$Q_A=G^+_0$ and $Q_B=G^-_0$.  Examples carrying this N=2 algebra
+include
 \begin{itemize}[noitemsep]
 \item N=2 minimal models at $c = 3k/(k+2)$, $k \in \mathbb Z_{\geq 1}$
 \textup{(}a discrete subfamily of class~$\mathsf M$\textup{);}
 \item Kazama--Suzuki cosets $\widehat{\mathfrak g}_k /
-\widehat{\mathfrak h}$ for hermitian-symmetric $\mathfrak g /
-\mathfrak h$ \textup{(}partial class~$\mathsf L$ realisation\textup{);}
+\widehat{\mathfrak h}$ for Hermitian symmetric pairs;
 \item N=2 sigma models on Calabi--Yau targets
-\textup{(}A-model / B-model worldsheet vertex algebras\textup{).}
+\textup{(}the physical A- and B-model constructions\textup{).}
 \end{itemize}
-The three complementary discharge routes
-\textup{[}principal-Casimir antighost commutativity for class~$\mathsf
-M$ $\mathcal W$-families \textup{(}Vol~II
-\texttt{thm:casimir-antighost-commutativity}\textup{);} bosonic-string
-BRST at $c_m = 26$
-\textup{(}Theorem~\ref{thm:master-vir-26-bc-brst-topologisation}\textup{);}
-N=2 topological twist
-\textup{(}Theorem~\ref{thm:master-n2-topological-twist-topologisation}\textup{)]}
-cover overlapping portions of the standard landscape. The remaining
-explicit open cases for raw chain-level T1--T5 are: pure
-$\mathrm{Vir}_c$ at $c \neq 26$ with no N=2 extension; generic
-$\beta\gamma$ at conformal weight $\lambda$ without N=2 enhancement;
-non-Casimir higher-spin towers in class~$\mathsf M$ outside the
-principal-W family.
+Each example inherits the identities of
+Theorem~\ref{thm:master-n2-topological-twist-topologisation}.  Its
+completed topological operad action is constructed in the specific
+model.
 \end{remark}
 
-\begin{corollary}[Kazama--Suzuki coset T1--T5 discharge via N=2
-worldsheet topological twist; $\ClaimStatusProvedHere$]
+\begin{corollary}[Kazama--Suzuki cosets and the two twists;
+$\ClaimStatusProvedElsewhere$]
 \label{cor:master-n2-twist-kazama-suzuki}
-For $G / H$ a hermitian-symmetric Lie-group pair \textup{(}so that
-$\mathfrak g / \mathfrak h$ carries a complex structure invariant
-under the adjoint $\mathfrak h$-action; examples include
-$SU(n+1)/(SU(n) \times U(1))$,
-$SO(2n+2)/(SO(2n) \times U(1))$,
-$Sp(n+1)/(Sp(n) \times Sp(1))$,
-$E_6/(SO(10) \times U(1))$,
-$E_7/(E_6 \times U(1))$, plus the two exceptional cases\textup{)} and
-$k \geq 1$ a level, the Kazama--Suzuki construction
+Let $(G,H)$ be a Hermitian symmetric pair and let $k$ lie in the
+admissible level range of Kazama--Suzuki.  Their coset
 \[
 M_{G/H}(k)
- \;=\; \bigl(\widehat{\mathfrak g}_k \otimes \mathcal F^{\mathfrak g/\mathfrak h}\bigr) /
-       \widehat{\mathfrak h}_{k'},
+ =\operatorname{Com}\!\left(
+ \widehat{\mathfrak h}_{k'},
+ \widehat{\mathfrak g}_k\otimes
+ \mathcal F^{\mathfrak g/\mathfrak h}
+ \right)
 \]
-where $\mathcal F^{\mathfrak g/\mathfrak h}$ is the free fermion
-algebra transforming in the complex tangent representation of
-$\mathfrak h$ on $\mathfrak g / \mathfrak h$ and $k' = k + g^\vee(G)
-- g^\vee(H)$ is the induced $\widehat{\mathfrak h}$ level
-\textup{(}Goddard--Kent--Olive coset BRST\textup{),} is an N=2
-superconformal vertex algebra at central charge
-$c_{KS}(G/H; k) = \dim_\mathbb{C}(G/H) \cdot
-k / (k + g^\vee(G))$ \textup{(}Kazama--Suzuki 1989\textup{).} By
-Theorem~\ref{thm:master-n2-topological-twist-topologisation}, both
-the A-twist and B-twist of $M_{G/H}(k)$ discharge T1--T5 raw
-chain-level at every hermitian-symmetric $G/H$ and every level
-$k \geq 1$, with no fine-tuning of central charge.
+carries generators $(T,J,G^+,G^-)$ satisfying the N=2 OPE
+\cite[equations~(3.27)--(3.30)]{KazamaSuzuki1989}.  Consequently its
+A- and B-twists satisfy the two square-zero and stress-tensor
+homotopy identities of
+Theorem~\ref{thm:master-n2-topological-twist-topologisation}.
 \end{corollary}
 
 \begin{proof}
-Kazama--Suzuki 1989 establishes the N=2 superconformal structure on
-$M_{G/H}(k)$: the generators $(T, J, G^+, G^-)$ are constructed from
-the affine currents $J_{\mathfrak g, n}$ and the free fermion modes
-$\psi^a_n$, $\bar\psi^a_n$ transforming in the complex tangent
-representation of $\mathfrak g / \mathfrak h$. The N=2 OPE relations
-are verified by direct computation
-\textup{(}Kazama--Suzuki 1989, eq. (3.27)--(3.30)\textup{).}
-
-Once $M_{G/H}(k)$ is established as an N=2 SCA, the topological
-twist of Theorem~\ref{thm:master-n2-topological-twist-topologisation}
-applies directly: $T_{\mathrm{top}} = T + (1/2) \partial J$,
-$Q = \oint G^+$, $G = (1/2) G^-$, with $\{Q, G\} = T_{\mathrm{top}}$
-and $Q^2 = 0$ via $U(1)$ $R$-charge conservation. T1--T5 discharge
-as in the proof of
-Theorem~\ref{thm:master-n2-topological-twist-topologisation}, with
-no central-charge constraint.
+Apply the N=2 OPE calculation of
+Theorem~\ref{thm:master-n2-topological-twist-topologisation} to the
+Kazama--Suzuki generators.
 \end{proof}
 
-\begin{corollary}[Calabi--Yau sigma model T1--T5 discharge via N=2
-worldsheet topological twist; $\ClaimStatusProvedHere$]
+\begin{corollary}[Calabi--Yau sigma models and the A/B twists;
+$\ClaimStatusConditional$]
 \label{cor:master-n2-twist-cy-sigma}
-For $Y$ a smooth Calabi--Yau $d$-fold, the chiral half of the
-N$=(2,2)$ sigma model on $Y$ is an N$=2$ superconformal vertex
-algebra at central charge $c = 3d$. By
-Theorem~\ref{thm:master-n2-topological-twist-topologisation}, both
-the A-twist and the B-twist of this N=2 SCA discharge T1--T5 raw
-chain-level, giving the A-model and B-model topological vertex
-operator algebras of Witten~\cite{Witten91}. The discharge is
-uniform across the CY moduli space, and applies in particular to:
-elliptic curves \textup{(}$d = 1$, $c = 3$\textup{);} K3 and abelian
-surfaces \textup{(}$d = 2$, $c = 6$\textup{);} the quintic and other
-CY$_3$ \textup{(}$d = 3$, $c = 9$\textup{);} Calabi--Yau $d$-folds
-for arbitrary~$d \geq 1$.
+Let the nonlinear sigma model of a smooth Calabi--Yau $d$-fold $Y$
+admit an N$=(2,2)$ superconformal realization with chiral central
+charge $c=3d$.  Each chiral half then carries the two differentials
+of Theorem~\ref{thm:master-n2-topological-twist-topologisation}.  Their
+physical realizations are Witten's A- and B-model twists
+\cite{Witten91}.  A rigorous factorization model supplies the
+completion, descent, and operadic action in T2--T5.
 \end{corollary}
 
 \begin{proof}
-The chiral N$=(2,2)$ worldsheet on $Y$ smooth Calabi--Yau is the
-canonical realisation of the N$=2$ SCA at $c = 3d$
-\textup{(}Hori et al., \emph{Mirror Symmetry}, Ch.~11\textup{).} Both
-A-twist and B-twist are instances of the A-twist construction of
-Theorem~\ref{thm:master-n2-topological-twist-topologisation} \textup{(}the
-B-twist being its mirror, with $G^+ \leftrightarrow G^-$ exchange\textup{);}
-the T1--T5 discharge applies directly. The central-charge-independent
-nilpotency $Q^2 = 0$ via $U(1)$ $R$-charge conservation in particular
-ensures T5 holds for every $Y$, with no anomaly from $c = 3d$.
+The formal implication follows from the N=2 OPEs.  The geometric
+interpretation is the A/B-twist construction of~\cite{Witten91}.
 \end{proof}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{|p{3.0cm}|p{4.0cm}|p{6.5cm}|}
 \hline
-\textbf{Lane} & \textbf{Functorial operation} & \textbf{Theorem surface} \\
+\textbf{Construction} & \textbf{Morphism} & \textbf{Statement} \\
 \hline\hline
-Inversion & $\Omega B(\cA)\to\cA$ &
-Theorem~B: strict quasi-isomorphism on the Koszul locus; outside
-that locus the chiral Positselski statement lives in the
-coderived/contraderived ambient. \\
+Universal reconstruction &
+$\epsilon_\cA\colon\Omega B(\cA)\to\cA$ &
+Theorem~A is the universal bar--cobar counit equivalence in the
+complete enhanced associative Ran ambient under $H_1$. \\
 \hline
-Verdier--Koszul & $\mathbb{D}_{\Ran}B(\cA)\rightsquigarrow\cA^!$ &
-Theorem~A supplies the Verdier-intertwined bar--cobar adjunction;
-Theorem~C reads the complementary genus-$g$ eigenspaces and scalar
-Verdier sums. \\
+Quadratic recognition &
+$q_\cA\colon\cA^{\mathrm i}\to B(\cA)$ &
+Theorem~B recognizes the locus on which $q_\cA$ is a
+quasi-isomorphism for the chosen quadratic presentation; equivalently,
+$\Omega(\cA^{\mathrm i})\to\cA$ is a quasi-isomorphism. \\
+\hline
+Fixed-$C$ second kind &
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})\simeq
+D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact})$ &
+For a fixed chiral CDG-coalgebra $C$, the co--contra equivalence is the
+separate second-kind statement governed by its acyclic twisting
+package. \\
+\hline
+Verdier--Koszul &
+$\mathbb D_{\Ran}(q_\cA)\colon
+\mathbb D_{\Ran}B(\cA)\to\cA^!$ &
+Verdier duality sends the quadratic comparison
+$q_\cA\colon\cA^{\mathrm i}\to B(\cA)$ to the displayed algebra map
+in the finite-type dualizable ambient.  It is an equivalence under
+$H_{\mathrm{CL}}\cup H_{\mathrm{VD}}$. \\
 \hline
 Chiral closed sector & $\cA\mapsto C^\bullet_{\mathrm{ch}}(\cA,\cA)$ &
-Theorem~H concerns chiral Hochschild cochains only.  Topological
-and categorical Hochschild theories are separate objects. \\
+Theorem~H concerns the chart cochain complex.  Comparison maps to
+categorical Hochschild cochains, THH, or a physical bulk carry their
+own source, target, and hypotheses. \\
 \hline
 \end{tabular}
 \end{center}
@@ -1756,11 +1512,16 @@ Chapter~\ref{ch:landscape-census}.  On the standard landscape,
 \kappa(V_k(\fg)) &=
 \frac{\dim(\fg)(k+h^\vee)}{2h^\vee},
 &
-\kappa(\mathrm{Vir}_c) &= \frac c2,\\
-\kappa(\mathcal W_N) &= c(H_N-1),
-&
-H_N &= \sum_{j=1}^{N}\frac1j.
+\kappa(\mathrm{Vir}_c) &= \frac c2.
 \end{aligned}
+\]
+On
+$H_{\mathrm{diag}}^{g=1}+H_{W_N}^{\mathrm{DS/bar}}$, the principal
+family has
+\[
+\kappa(\mathcal W_N)=c(H_N-1),
+\qquad
+H_N=\sum_{j=1}^{N}\frac1j.
 \]
 For the Virasoro shadow tower on the non-singular surface
 $c(5c+22)\neq 0$,
@@ -1792,10 +1553,9 @@ r_{\mathrm{KZ}}(z)=\frac{\Omega}{(k+h^\vee)z},
 \qquad
 \Omega=2h^\vee\Omega_{\mathrm{tr}},
 \]
-is a different normalization of monodromy data.  It is not the
-trace-form rational function $k\Omega_{\mathrm{tr}}/z$; in trace
-form the level prefix forces $r^{\mathrm{coll}}|_{k=0}=0$, while
-the KZ residue at $k=0$ is $\Omega/(h^\vee z)$.
+is the monodromy normalization.  The trace-form collision function is
+$k\Omega_{\mathrm{tr}}/z$.  Their values at $k=0$ are respectively
+$\Omega/(h^\vee z)$ and~$0$.
 
 \section{The seven-face atlas}
 \label{sec:master-concordance-seven-faces}
@@ -1845,8 +1605,8 @@ comparison morphisms are defined:
 \end{array}
 \]
 Here $\mathcal R_{\mathrm{Dr}}(Y_\hbar(\fg))$ is the classical
-Drinfeld-Yangian carrier; it is not the Vol~III Hall--Drinfeld double
-or a BKM denominator algebra.  The maps
+Drinfeld--Yangian carrier.  The Vol~III Hall--Drinfeld double and the
+BKM denominator algebra are separate target objects.  The maps
 $\rho_i:\mathcal T_1\to\mathcal T_i$ are precisely the comparison
 morphisms supplied by the hypotheses above.
 Then the seven expressions
@@ -1873,10 +1633,10 @@ under the typed comparison morphisms $\rho_i$.  Equivalently,
 \times_{\mathcal N_\cA}\mathcal T_7,
 \]
 where $\mathcal N_\cA$ is the normalization object generated by the
-chosen rational function $r_\cA(z)$.  This is an equality of images in
-the fibre product, not an equivalence of the seven carriers and not an
-identification of $\Omega B(\cA)$, $\cA^!$, or
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+chosen rational function $r_\cA(z)$.  Thus the theorem identifies the
+seven displayed images in the fibre product.  The carriers retain
+their respective categories, and $\Omega B(\cA)$, $\cA^!$, and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ retain their typed definitions.
 \end{theorem}
 
 \begin{proof}
@@ -1895,9 +1655,8 @@ Drinfeld row, Drinfeld's Yangian theorem and the
 Semenov-Tian-Shansky Sklyanin bracket place the classical Yangian
 $r$-matrix and the Sklyanin tensor over the same rational
 normalization after the scalar $\hbar=(k+h^\vee)^{-1}$ is fixed; these
-are F5 and F6.  This step does not identify a Vol~III
-Hall--Drinfeld/CoHA carrier or a BKM denominator algebra with a
-Drinfeld Yangian.  Each arrow is therefore a morphism out of the same
+are F5 and F6.  The Vol~III Hall--Drinfeld/CoHA and BKM comparisons
+require their own morphisms.  Each arrow is therefore a morphism out of the same
 pair
 $(\Theta_\cA,\operatorname{Res}^{\mathrm{coll}}_{0,2})$, so the
 seven images agree in the stated fibre product.
@@ -1939,7 +1698,7 @@ CY shadow Hamiltonians on constructed loci \\
 F5: Drinfeld Yangian $r$-matrix &
 \texttt{yangians\_drinfeld\_kohno.tex} &
 dg-shifted factorization Yangian &
-Hall--Drinfeld/CoHA positive half; not
+Hall--Drinfeld/CoHA positive half, a target distinct from
 $Y_\hbar(\mathfrak g_{\Delta_5})$ \\
 \hline
 F6: Sklyanin tensor &
@@ -1996,51 +1755,75 @@ $r_{\max}$. \\
 \end{tabular}
 \end{center}
 
-\section{The five theorem surfaces}
+\section{The five named theorems}
 \label{sec:master-concordance-theorem-surfaces}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{|p{1.1cm}|p{4.0cm}|p{8.4cm}|}
 \hline
-\textbf{Thm} & \textbf{Name} & \textbf{Cross-volume surface} \\
+\textbf{Thm} & \textbf{Name} & \textbf{Typed statement} \\
 \hline\hline
-A & Bar--cobar adjunction &
-Vol~I constructs the chiral bar--cobar adjunction and its
-Verdier-intertwined counit.  Vol~II carries the open-colour
-specialization in $\mathsf{SC}^{\mathrm{ch,top}}$.  Vol~III sees it only
-after Stage-$2$ specialization to a reference curve:
+A & Universal bar--cobar reconstruction &
+Vol~I constructs the chiral bar--cobar adjunction.  Its unit and the
+counit
+$\epsilon_\cA\colon\Omega B(\cA)\to\cA$ are equivalences in the
+complete enhanced associative Ran ambient under $H_1$, with the
+counit carrying target $\cA$.  Verdier duality separately forms the
+algebra $\mathbb D_{\Ran}B(\cA)$.  Vol~II carries the open-colour
+specialization in $\mathsf{SC}^{\mathrm{ch,top}}$.  Vol~III carries the
+Stage-$2$ specialization to a reference curve:
 $\Phi_d^{(\Sigma_{d-1},C)}
 =\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi_d^{\mathrm{FA}}$. \\
 \hline
-B & Bar--cobar inversion / chiral Positselski &
-Strict inversion $\Omega B(\cA)\simeq\cA$ holds on the Koszul locus.
-Off the strict lane, the theorem is the weight-completed
-coderived/contraderived equivalence; raw direct-sum class-$M$
-chain inversion is false. \\
+B & Quadratic Koszul recognition &
+For a chosen quadratic presentation
+$\cA=T(V)/(R)$, Theorem~B recognizes the locus on which
+$q_\cA\colon\cA^{\mathrm i}\to B(\cA)$ is a quasi-isomorphism.
+Equivalently, $\Omega(\cA^{\mathrm i})\to\cA$ is a quasi-isomorphism;
+the chiral transport uses the package $H_{\mathrm{CL}}$. \\
 \hline
-C & Derived-centre complementarity &
-The geometric statement is the complementarity of the
-$\cA$ and $\cA^!$ eigenspaces under Verdier duality.  The scalar
-shadow is family-dependent:
-$K^\kappa(\cA)=\kappa(\cA)+\kappa(\cA^!)$ is not universally zero. \\
+-- & Fixed-$C$ second-kind equivalence &
+For a fixed chiral CDG-coalgebra $C$, the equivalence
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})\simeq
+D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact})$
+is the independent second-kind equivalence governed by
+$\mathsf{Tw}^{\mathrm{ch}}_{\mathrm{acyc}}(C,A,\tau)$. \\
 \hline
-D & Obstruction tower &
-On the uniform-weight scalar lane,
-$\operatorname{obs}_g(\cA)=\kappa(\cA)\lambda_g$.
-At all weights one has the cross-channel expansion
+C & Centre-local-system complementarity &
+C0 identifies the strict-flat degree-zero fibre with
+$\mathcal Z(\cA)$; C1 decomposes
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$
+by the represented Verdier involution.  A supplied
+$\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, connects the
+Theorem~H derived centre to this coefficient system.  Theorem~D gives
+the scalar trace
+$K^\kappa(\cA)=\kappa(\cA)+\kappa(\cA^!)$. \\
+\hline
+D & Deformation, Hodge, and graph traces &
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)$ lies in
+$H^2(\Def_g(\cA))$ for $g\geq2$.  Under~$H_D^1$, the pointed class
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}
+=\kappa(\cA)\lambda_1$.  Under~$H_D^K$,
+$\mathfrak O_g^K=\kappa(\cA)\lambda_{-1}(\mathbb E_g)$ and
+$\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa(\cA)\lambda_g$.
+The package~$H_D^{\mathrm{tr}}$ supplies their derived comparison.
+Under~$H_D^{\mathrm{graph}}$,
 $F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
-+\delta F_g^{\mathrm{cross}}(\cA)$, with
-$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$ and
-the correction zero at
-$g=1$ and on the uniform-weight lane. \\
++\delta F_g^{\mathrm{cross}}(\cA)$, where
+$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$. \\
 \hline
-H & Chiral Hochschild concentration &
-The theorem concerns $\ChirHoch^\bullet(\cA)$, not topological or
-categorical Hochschild theory.  On the generic Koszul/PBW locus it
-has amplitude $[0,2]$ and the affine row satisfies
-$\ChirHoch^1(V_k(\fg))\cong\fg$; critical and admissible
-class-$M$ levels lie outside this generic statement. \\
+H & Family-indexed chiral Hochschild support &
+For a finite set $S\subset\mathbb Z$, the package $H_H(\cA;S)$
+constructs an incidence-compatible strong deformation retract from a
+complete chart-cochain model to a complex supported in $S$; it then
+gives
+$\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S$.
+The bounded vertex-algebra benchmarks of
+Bakalov--De Sole--Kac have supports $\{0,2,3\}$ for Virasoro and
+dimension vector $(2,1,0,\ldots)$ for the rank-one even free
+superboson.  Chartwise transport uses a separately named comparison
+map. \\
 \hline
 \end{tabular}
 \end{center}
@@ -2048,8 +1831,8 @@ class-$M$ levels lie outside this generic statement. \\
 \section{The shadow classes}
 \label{sec:master-concordance-classification}
 
-The standard landscape is separated by the shadow depth
-$r_{\max}$, not by the pole order alone.
+For the four displayed census families, the pole order and shadow
+depth are the following separate invariants.
 \[
 \begin{array}{c|c|c|c|l}
 \textbf{Class} & p_{\max} & k_{\max} & r_{\max} &
@@ -2075,6 +1858,9 @@ The class-$C$ quartic obstruction is carried by the standard
 conformal-weight family, with
 $S_2=6\lambda^2-6\lambda+1$, $S_3=0$,
 $S_4=-5/12$, and $S_r=0$ for $r\geq5$.
+The scope of this table is exactly the listed witnesses.  The
+class-$\mathsf B$ Hall/Borcherds depth uses the distinct filtration
+defined in the K3 row of Chapter~\ref{ch:landscape-census}.
 
 \section{The three depths}
 \label{sec:master-concordance-three-invariants}
@@ -2116,23 +1902,49 @@ The scalar Verdier sum
 \[
 K^\kappa(\cA):=\kappa(\cA)+\kappa(\cA^!)
 \]
-is family-dependent. Here $\cA^!$ is the \emph{algebra-level Verdier
-dual}: Feigin--Frenkel level shift $k\mapsto -k-2h^\vee$ for
-class~$\mathsf L$, $c\mapsto 26-c$ for class~$\mathsf M$, ghost-pair
-flip for class~$\mathsf C$. This is distinct from the
-\emph{bar-level Verdier dual} $\kappa^!_{\mathrm{LV}}(\cA)$ obtained
-by applying $\mathbb D_{\Ran}$ to the bar coalgebra, which enters the
-universal chain-homotopy normalisation
-$h_{A_b}=h_{\mathrm{LV}}/\mathcal N(A_b)$ with
-$\mathcal N(\cA)=\kappa(\cA)+\kappa^!_{\mathrm{LV}}(\cA)$
-(Convention~\ref{conv:A-two-kappa-shriek},
-\texttt{theorem\_A\_infinity\_2.tex}). The two scalars coincide on
-class~$\mathsf B$ \textup{(}Mukai conductor $K^\kappa = \mathcal N
-= 8$\textup{)} but differ on every other archetype: $K^\kappa = 0$
-for $\mathsf G,\mathsf L,\mathsf C$ \textup{(}Feigin--Frenkel
-pattern\textup{)} while $\mathcal N$ takes witness values
-$1,\,2(k+h^\vee),\,1$ respectively; on class~$\mathsf M$,
-$K^\kappa = 13$ while $\mathcal N(\mathrm{Vir}_c) = c(5c+22)/10$.
+is family-dependent. On the Theorem~C surface it is the scalar trace
+shadow of the two \(\mathrm{C}_1\) Verdier eigensummands of
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$
+after the Theorem~D modular trace
+\textup{(}Proposition~\ref{prop:scalar-conductor-c1-trace-shadow}\textup{)};
+the number records the final scalar image.  The Theorem~H derived
+centre reaches the C0 coefficient system through the supplied brace
+comparison~$\iota_Z^{\mathrm{der}}$, its $H^0$ shadow, and the strict-flat
+fibre--centre identification.  The trace map and the \(\mathrm{C}_2\)
+shifted-symplectic datum remain preceding typed objects. Here $\cA^!$ is the
+\emph{algebra-level Verdier dual}: Feigin--Frenkel level shift
+$k\mapsto -k-2h^\vee$ for
+class~$\mathsf L$, $c\mapsto 26-c$ for the Virasoro row of
+class~$\mathsf M$, and ghost-pair flip for class~$\mathsf C$.
+For the Bershadsky--Polyakov row, write
+$H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ for the package consisting of a
+regular level $k\ne-3$, a finite-type bar dual or a completed
+continuous nondegenerate Verdier pairing, and subregular hook-type
+DS/bar transport.  On this package the comparison theorem identifies
+$\mathrm{BP}_k^!\simeq\mathrm{BP}_{-k-6}$.
+Convention~\ref{conv:A-two-kappa-shriek} introduces a separate
+chain-level scalar $\nu_A$ through
+\[
+ d_Ah_A+h_Ad_A
+ =\nu_A(\mathrm{id}-\iota_Ap_A).
+\]
+An identity $\nu_A=K^\kappa(A)$ requires a chain map from this
+deformation retract to the scalar trace complex.  The current family
+values
+\[
+ \nu_{\mathsf G}=1,
+ \quad
+ \nu_{\mathsf L}=2(k+h^\vee),
+ \quad
+ \nu_{\mathsf C}=1,
+ \quad
+ \nu_{\mathsf M}=\frac{c(5c+22)}{10},
+ \quad
+ \nu_{\mathsf B}=8
+\]
+are conditional construction targets in
+Remark~\ref{rem:A-h-three-paths}.  The scalar Verdier sums computed
+from the displayed partner formulas are listed separately below.
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{|p{3.6cm}|p{3.2cm}|p{3.2cm}|p{3.0cm}|}
@@ -2160,110 +1972,182 @@ $13$ &
 $\kappa=c/2$ \\
 \hline
 Principal $\mathcal W_3^k$ &
-dual DS level &
-$250/3$ &
-$\kappa=(5/6)c$, $c+c'=100$ \\
+$\mathcal W_3^{-k-6}$ on $H_{W_3}^{\mathrm{DS/bar}}$ &
+$250/3$ on
+$H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}$ &
+$K_3^c=100$ exactly;
+$\kappa=(5/6)c$ on $H_{\mathrm{diag}}^{g=1}$ \\
 \hline
 Bershadsky--Polyakov $\mathrm{BP}_k$ &
-$\mathrm{BP}_{-k-6}$ &
-$98/3$ &
-$\kappa=c/6$, $c+c'=196$ \\
+$\mathrm{BP}_{-k-6}$ on $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ &
+open &
+$K^c=50$ exactly; genus-one $\kappa$ calculation open \\
 \hline
 Mukai-enhanced K3 Heisenberg &
 Vol~III $\mathsf B$-row witness &
 $8$ &
-$2c_+(\mathrm{Mukai}(K3))=8$ \\
+$2c_+(\mathrm{Mukai}(K3))=8$ exactly;
+chiral interpretation conjectural under $H_{\mathsf B}$ \\
 \hline
 \end{tabular}
 \end{center}
-The classical Vol~I $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$
-landmark ceiling is
+The unconditional scalar values in the displayed Vol.~I witness rows
+are
 \[
-\{0,\,13,\,250/3,\,98/3\}.
+\{0,\,13\}.
 \]
-The Vol~III Mukai-enhanced $\mathsf B$-row adjoins $8$, giving the
-five-archetype bucket
+The exact principal central conductor is $K_3^c=100$.  On
+$H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}$, its modular
+image is the conditional value $K_3^\kappa=250/3$, giving the
+comparison set
 \[
-\{0,\,8,\,13,\,250/3,\,98/3\}.
+\{0,\,13,\,250/3\}.
 \]
-The number $8$ is the Mukai/Koszul conductor
-$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))$; it is not the
-Borcherds weight $\kappa_{\mathrm{BKM}}(\Delta_5)=5$.
+The BP value $25/3$ is conditional on its genus-one curvature
+calculation, and the Mukai-enhanced value~$8$ is conditional on
+$H_{\mathsf B}$.
+
+\begin{remark}[Bershadsky--Polyakov conformal-vector conventions]
+\label{rem:master-bp-convention-separation}
+The Fehily--Kawasetsu--Ridout conformal vector gives the rational
+identities
+\[
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50,
+\]
+Fehily--Kawasetsu--Ridout define an ordinary bosonic vertex algebra,
+so $J,T,G^+,G^-$ are even.  Their reciprocal-weight diagnostic is
+$1+2/3+2/3+1/2=17/6$.  The modular characteristic is
+\ClaimStatusOpen{} pending the complete genus-one minimal-DS curvature
+calculation.  A result $\kappa_{\mathrm{BP}}=c_{\mathrm{BP}}/6$
+would imply $K^\kappa_{\mathrm{BP}}=25/3$.
+The explicitly shifted secondary conformal vector carries the
+computed scalar identity
+\[
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+=2-\frac{24(k+1)^2}{k+3},
+\qquad
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
++c_{\mathrm{BP}}^{\mathrm{shift}}(-k-6)=196.
+\]
+The value~$196$ belongs to this computed-secondary scalar convention,
+whose role is convention comparison.  Both rational functions have a
+common pole at $k=-3$, the fixed point of $k\mapsto-k-6$.
+The algebra-level same-family comparison uses the first conformal
+vector and the conditional package $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$.
+\end{remark}
+
+The exact Mukai-lattice number is
+$2c_+(\mathrm{Mukai}(K3))=8$; its proposed chiral interpretation is
+$K^{\kappa_{\mathrm{ch}}}=8$ under $H_{\mathsf B}$.  The Borcherds
+weight $\kappa_{\mathrm{BKM}}(\Delta_5)=5$ is a distinct scalar
+invariant of the automorphic product.
 Self-dual lattice VOAs have their own lattice-dual scalar, e.g.
 $V_{\Lambda_{24}}^!\cong V_{\Lambda_{24}}$ gives
-$\kappa+\kappa^!=48$; that value is not a Feigin--Frenkel
-level-shift complementarity constant.
+$\kappa+\kappa^!=48$; this is the lattice-dual scalar rather than a
+Feigin--Frenkel level-shift complementarity constant.
 
-\begin{remark}[KSDual fixed points across the standard landscape;
-\ClaimStatusComputed]
+\begin{remark}[Parameter involutions and KSDual candidates;
+scalar relations $\ClaimStatusComputed$, object data
+$\ClaimStatusConditional$]
 \label{rem:ksdual-fixed-points-bucket}
 \index{KSDual sublocus!archetype-by-archetype fixed point}%
-Each archetype carries a Feigin--Frenkel-type level shift
-$\cA\mapsto\cA^!$, and the $\Z/2$-fixed sublocus
-\textup{(}KSDual\textup{)} reduces to a single point in each
-parameter family:
+Each row carries a scalar parameter involution or orbit relation.  The
+table records its fixed parameters.  An object of $\KSDual$ is the
+triple $(A,\varphi,H)$ of Definition~\ref{def:mr-ksdual}; construction
+of $\varphi\colon A\simeq A^!$ and its coherence $H$ is the
+object-level problem.
 \begin{center}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Archetype & Family & Level shift & KSDual fixed point\\
+Archetype & Family & Parameter relation & Fixed-parameter candidate\\
 \midrule
-$\mathsf G$ & $\cH_k$ & $k\mapsto -k$ & $k = 0$ \textup{(}vacuum\textup{)}\\
+$\mathsf G$ & $\cH_k$ & $k\mapsto -k$ & $k = 0$\\
 $\mathsf L$ & $V_k(\fg)$ & $k\mapsto -2h^\vee - k$ & $k = -h^\vee$ \textup{(}critical\textup{)}\\
-$\mathsf C$ & $\beta\gamma_\lambda \leftrightarrow bc_\lambda$ & cousin family & no intrinsic fixed point\\
+$\mathsf C$ & $\beta\gamma_\lambda \leftrightarrow bc_\lambda$ & family exchange &
+an equivalence $\beta\gamma_\lambda\simeq bc_\lambda$\\
 $\mathsf M_{\mathrm{Vir}}$ & $\Vir_c$ & $c\mapsto 26 - c$ & $c = 13$\\
 $\mathsf M_{\cW_3}$ & $\cW_3^k$ & $c\mapsto 100 - c$ & $c = 50$\\
-$\mathsf M_{\BP}$ & $\BP_k$ & $k\mapsto -k - 6$ & $c = 98$\\
+$\mathsf M_{\BP}$ & $\BP_k$ & $k\mapsto -k - 6$ &
+$k=-3$ \,\textup{(}fixed pole; comparison boundary\textup{)}\\
 $\mathsf B$ & Mukai-K3 & lattice involution & K3 Mukai-self-dual\\
 \bottomrule
 \end{tabular}
 \end{center}
-The KSDual fixed point of each $\mathsf M$-family is the central charge
-$c_*$ where $c_* = K^c/2$: $13 = 26/2$, $50 = 100/2$, $98 = 196/2$.
-At each KSDual point the chiral Verdier reflection at level~$2$ is an
-\emph{equivalence} \textup{(}rather than an adjunction with comparison
-map\textup{);} Theorem~A$\dual$ becomes self-dual; the modular shadow
-on $\overline{\cM}_{1,n}$ \textup{(}level~$5$\textup{)} carries the
-signature self-dual phase.
+The scalar companion midpoints of the three displayed
+$\mathsf M$-families are
+\[
+c^{\mathrm{mid}}_{\mathrm{Vir}}=13=26/2,
+\qquad
+c^{\mathrm{mid}}_{\cW_3}=50=100/2,
+\qquad
+c^{\mathrm{mid}}_{\mathrm{BP}}=25=50/2.
+\]
+At an object-level KSDual point, the map
+$\varphi\colon A\xrightarrow{\sim}A^!$ is the level-$2$ equivalence.
+An equivariant modular realization transports this involution to the
+level-$5$ trace data.
+For BP, $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ identifies the regular
+companion pairs at level~$2$; the fixed parameter $k=-3$ lies at the
+common pole and marks the boundary of this regular comparison locus.
 
-The class $\mathsf G$ KSDual point $k = 0$ is degenerate: the rank-one
-vacuum Heisenberg $\cH_0$ is the trivial chiral algebra; the level
-shift is non-trivial only for $k\ne 0$. The class $\mathsf L$ KSDual
-point $k = -h^\vee$ is the critical-level singularity at which the
-Feigin--Frenkel centre $Z(V_{-h^\vee}(\fg))$ is infinite-dimensional
-and the chain-homotopy norm $\mathcal N(\mathsf L) = 2(k+h^\vee)$
-diverges \textup{(}\S\ref{sec:uc-scalar-packages} of Vol~I;
-Theorem~H is excluded at this point\textup{).}
+At $k=0$, $\cH_0$ is the commutative rank-one current vertex algebra;
+its collision form vanishes.  At the affine fixed parameter
+$k=-h^\vee$, the Feigin--Frenkel centre
+$Z(V_{-h^\vee}(\fg))$ is infinite-dimensional and the candidate
+rescaling scalar $\nu_{\mathsf L}=2(k+h^\vee)$ vanishes.  A
+deformation retract using $\nu_{\mathsf L}^{-1}$ is therefore defined
+on the localized noncritical parameter ring.  Theorem~H at the
+critical point requires its own family support package.
 
-\emph{Real-vs-complex level for $\cW_3$ and $\BP$.}
-The KSDual fixed central charges $c = 50$ for $\cW_3$ and $c = 98$
-for $\BP$ are attained on the real $c$-axis but require
-\emph{complex} level $k$. Solving $c_{\cW_3}(k) = 50 - 24[(k+3) +
-4/(k+3)] = 50$ gives $k + 3 = \pm 2i$, i.e.\ $k_* = -3 \pm 2i$;
-solving $c_{\BP}(k) = 2 - 24(k+1)^2/(k+3) = 98$ gives the same
-shifted-level locus $k+3 = \pm 2i$. The KSDual point therefore lives
-on the analytically continued parameter family, not on the
-finite-real $k$-line. For $\Vir_c$ the parameter is $c$ itself, so the
-fixed point $c = 13$ is in the real domain; for $\cW_3$ and $\BP$ the
-$c$-parameter is reached only at imaginary shifted level. The shadow
-tower and chain-level Theorem~A statements therefore extend to the
-KSDual point along the analytic family, not via the real-level
-construction.
+\emph{Complex scalar-midpoint fibres for $\cW_3$ and $\BP$.}
+By the Fateev--Lukyanov principal-DS formula of
+Remark~\ref{rem:koszul-conductor-explicit},
+\[
+c_{\cW_3}(k)
+=2-\frac{24(k+2)^2}{k+3}
+=50-24\left((k+3)+\frac{1}{k+3}\right).
+\]
+Consequently
+\[
+c_{\cW_3}(k)=50
+\qquad\Longleftrightarrow\qquad
+(k+3)^2+1=0
+\qquad\Longleftrightarrow\qquad
+k=-3\pm i.
+\]
+These two regular principal-DS levels are exchanged by
+$k\mapsto-k-6$.  The standard BP scalar midpoint is
+$c^{\mathrm{mid}}_{\mathrm{BP}}=25$.
+Indeed,
+\[
+-\frac{(2k+3)(3k+1)}{k+3}=25
+\qquad\Longleftrightarrow\qquad
+k=-3\pm2i.
+\]
+These two regular BP levels are exchanged by $k\mapsto-k-6$.
+The parameter involution fixes $k=-3$, where the central-charge
+function has its pole.  Thus $c=25$ is the regular scalar-midpoint
+fibre, and $H_{\mathrm{BP}}^{\mathrm{DS/bar}}$ supplies its
+same-family Verdier--Koszul interpretation.
 \end{remark}
 
 \section{Cross-volume specialization}
 \label{sec:master-concordance-cross-volume}
 
-Vol~II and Vol~III do not add inverse arrows to the Vol~I
-bar--cobar lane.  They specialize it.
+Vol~I contains the bar--cobar reconstruction arrows.  Vol~II and
+Vol~III carry specialization functors from the reconstructed data.
 
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Vol~II uses the two-coloured dioperad
-$\mathsf{SC}^{\mathrm{ch,top}}$.  Its mixed operations are
-directional: the closed colour acts on the open colour, and the open
-colour does not act back on the closed colour.  The open-colour
-bar--cobar comparison supplies line modules over the Koszul dual; the
-closed-sector cochain object is still the chiral Hochschild complex.
+$\mathsf{SC}^{\mathrm{ch,top}}$.  Its closed-output operations have
+closed inputs, while its open-output operations admit both closed and
+open inputs.  The open-colour bar--cobar comparison supplies line
+modules over the Koszul dual, and the closed cochain object is the
+chiral Hochschild complex.
 \item Vol~III uses the two-stage factorisation
 \[
 \Phi_d^{(\Sigma_{d-1},C)}
@@ -2272,18 +2156,19 @@ closed-sector cochain object is still the chiral Hochschild complex.
 \]
 Stage~$1$ produces an $E_d$ holomorphic factorisation algebra.
 Stage~$2$ integrates along $\Sigma_{d-1}$ and restricts to a reference
-curve $C$, producing an $E_1$-chiral shadow.  This specialization is
-not inversion.
+curve $C$, producing an $E_1$-chiral object.  Its type is a CY-to-open
+specialization functor.
 \item The shared Theorem~A surface is the curve-side $E_1$ chiral
 shadow after Stage~$2$.  A single CY$_d$ category may therefore have
 many $E_1$ shadows, indexed by $(\Sigma_{d-1},C)$.
 \end{enumerate}
 
-The five-level Beilinson tower of
-Convention~\ref{conv:master-primitive-datum} carries a vertical
-equivalence at every level to its Vol~II or Vol~III companion
+The six-level Beilinson fork of
+Convention~\ref{conv:master-primitive-datum} carries a typed vertical
+comparison morphism at every level to its Vol~II or Vol~III companion
 \textup{(}\texttt{thm:mr-vertical-dictionary} in
-\texttt{master\_reconstruction.tex}\textup{);} the dedicated chapters
+\texttt{master\_reconstruction.tex}\textup{).}  Each equivalence claim
+uses its displayed package $H_{Vj}$.  The dedicated chapters
 exist for levels $0$ and $4$
 \textup{(}\texttt{vertical\_equivalence\_level\_0.tex},
 \texttt{vertical\_equivalence\_level\_4.tex}\textup{).}  The
@@ -2295,12 +2180,12 @@ equivalences as direct consequences of the dictionary theorem.
 $A_b$ $\leftrightarrow$ $\Phi_d^{\mathrm{FA}}$ at chosen vacuum;
 $\ClaimStatusConditional$ on hypothesis package $H_{V1}$]
 \label{lem:master-vertical-level-1}
-Suppose the Open vacuum $b \in \cC^{\mathrm{op}}$ on the factorisation
-dg-category over $(X, D, \tau)$ corresponds via the vacuum-target
+Suppose the Open factorization compact generator $b\in\mathsf C^\omega$
+over $(X,D,\tau)$ corresponds via the vacuum-target
 correspondence to a CY-$d$ target $c$ in the CY-side category
 $\mathrm{CY}_d\text{-Cat}$. Then the chart algebra
 \[
-A_b \;=\; \End_{\cC}(b)
+A_b \;=\; \RHom_{\mathsf C}(b,b)
 \quad\text{(Open, level~$1$)}
 \]
 is quasi-isomorphic as an $E_1$-chiral algebra to the evaluation of
@@ -2425,11 +2310,13 @@ identification $\Phi_{10}^{\mathrm{un}} = \Delta_5^2$
 $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$
 reads off the modular weight of $\Phi_N$ from the constant Fourier
 coefficient of the input weak Jacobi form. For
-$\Delta_5 = \mathrm{Grit}(\eta^9 \vartheta_1)$ the input weak Jacobi
-form is $\eta^9 \vartheta_1$ with $c_5(0) = 10$, hence
-$\kappa_{\mathrm{BKM}}(\Delta_5) = 5$ \textup{(}canonical preamble
-normalisation;
-\cite[\S 4]{Gritsenko1999}\textup{).}
+$\Delta_5$, the additive construction uses
+$\mathrm{Grit}(\eta^9\vartheta_1)$, whereas the multiplicative
+Borcherds product uses the weak Jacobi form $\phi_{0,1}$ with
+constant coefficient $f_1(0,0)=10$.  The multiplicative weight formula
+therefore gives
+$\kappa_{\mathrm{BKM}}(\Delta_5)=10/2=5$
+\cite[Example~2.4, equation~(2.16)]{GritsenkoNikulin1998}.
 
 Both \textup{(1)} and \textup{(2)} are scalar invariants determined
 by the single modular form $\Delta_5$: the first via inversion and
@@ -2445,8 +2332,8 @@ completion of hypothesis $H_{V5}$
 \label{sec:master-concordance-boundary}
 
 The seven-face atlas is a theorem on the comparison locus of
-Theorem~\ref{thm:master-seven-face}.  Five open mathematical conditions remain
-outside that locus.
+Theorem~\ref{thm:master-seven-face}.  Its extension requires five
+further constructions.
 \begin{enumerate}
 \item The term-by-term comparison between the $\mathcal W_N$
 Hamiltonians produced by $\Theta_{\mathcal W_N}$ and the operators
@@ -2457,15 +2344,15 @@ correction
 $\delta F_g^{\mathrm{cross}}(\cA)$; the seven-face scalar statement
 uses the uniform-weight projection.
 \item Arbitrary-nilpotent non-principal $\mathcal W$-algebra
-BV duality is known only on the stated hook-type corridor.
-\item The Drinfeld-centre presentation of the closed sector does not
-follow from bar--cobar inversion or Verdier duality alone; it requires
-the separate chiral Hochschild comparison.
-\item The Vol~III K3 row compares with F5--F6 only through the
-Hall--Drinfeld/CoHA carrier.  It is not a Drinfeld Yangian
-$Y_\hbar(\mathfrak g_{\Delta_5})$; the constants
+BV duality is established on the stated hook-type corridor; the
+arbitrary-nilpotent extension asks for the corresponding BV map.
+\item A Drinfeld-centre presentation of the closed sector asks for a
+separate braided comparison with the categorical chiral center.
+\item The Vol~III K3 row uses the Hall--Drinfeld/CoHA carrier for its
+F5--F6 comparison.  The Drinfeld Yangian
+$Y_\hbar(\mathfrak g_{\Delta_5})$ is a distinct carrier.  The constants
 $K^{\kappa_{\mathrm{ch}}}(\mathrm{Mukai}(K3))=8$,
 $\kappa_{\mathrm{BKM}}(\Delta_5)=5$,
 $\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E)=3$, and
-$\kappa_{\mathrm{cat}}(K3\times E)=0$ live on distinct scalar lanes.
+$\kappa_{\mathrm{cat}}(K3\times E)=0$ are distinct scalar invariants.
 \end{enumerate}

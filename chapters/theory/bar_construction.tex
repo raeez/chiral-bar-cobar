@@ -32,9 +32,10 @@ ordered tensor coalgebra and its symmetric shadow.
 
 Locality of the chiral product forces a nilpotent coalgebra.
 The OPE has poles of finite order along the diagonal; the logarithmic
-kernel $\eta_{ij} = d\log(z_i - z_j)$ on the Fulton--MacPherson
-compactification $\FM_n(X)$ extracts their residues; and the
-Arnold relation makes $d^2 = 0$ at genus~$0$.
+normal form \(\eta_{ij}\), represented on an affine/formal genus-zero
+screen by \(d\log(z_i-z_j)\), extracts their residues on the
+Fulton--MacPherson compactification \(\FM_n(X)\); and the Arnold
+relation makes \(d^2=0\) on that genus-zero screen.
 The primitive construction is the ordered bar
 $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$: the cofree
 tensor coalgebra with deconcatenation coproduct, carrying the
@@ -81,13 +82,17 @@ and proves $\dzero^2 = 0$; the key input is the Arnold relation
 Remark~\ref{rem:costello-gwilliam-factorization}).
 
 The three-component decomposition is not the structural endpoint.
-The full ordered bar differential is the pullback of one universal flat
-connection along the KZ functor:
+On the genus-$0$ affine/tangent KZ window, the finite-window ordered
+bar superconnection is the pullback of one universal operator-valued
+flat connection along the KZ functor:
 \[
- \dbar \;=\; \KZ^{*}(\nabla_{\Arn})
+\nabla^{B,0}_{\cA,V,n}
+=d_\cA+d_{\mathrm{dR}}
+-\sum_{i<j}\widetilde\rho_{\cA,V,n}(t_{ij})\,\eta_{ij}
+=\KZ_{\cA,V,n}^{*}(\nabla_{\Arn})
 \]
 in the category $\ConnConf_{\mathbb{P}^1}$ of meromorphic flat
-connections on configuration spaces with KZ-type coefficients
+superconnections on configuration spaces with KZ-type coefficients
 \textup{(}Theorem~\ref{thm:climax-vol1-platonic} of
 Chapter~\ref{chap:climax-platonic}, equation~\eqref{eq:climax-equation-G2}\textup{)}.
 Arnold's universal flat connection
@@ -96,16 +101,18 @@ $U(\mathfrak{t}_n)$-bundle over $\Conf_n^{\mathrm{ord}}(X)$ is the
 initial object of $\ConnConf_{\mathbb{P}^1}$
 \textup{(}Definition~\ref{def:connconf-platonic}\textup{)};
 every chiral algebra $\cA$ supplies the structure morphism
-$\KZ(\cA)$ that pulls $\nabla_{\Arn}$ back to $\dbar$ on
-$B^{\mathrm{ord}}(\cA)$. The Arnold three-term identity
+\(\KZ(\cA)\) that pulls \(\nabla_{\Arn}\) back to the bar
+superconnection; the ordered bar differential on
+\(B^{\mathrm{ord}}(\cA)\) is obtained by FM-boundary residue
+realization. The Arnold three-term identity
 \eqref{eq:arnold-three-term} is the codimension-two compatibility that
 forces $\dbar^2 = 0$ \textup{(}Case~(ii) of
 Theorem~\ref{thm:bar-nilpotency-complete}\textup{)}; the classical
 Yang--Baxter equation on the family
 $\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
 incarnation. The three-component form is computationally explicit;
-Theorem~\ref{thm:climax-vol1-platonic} identifies it with a single
-universal pullback.
+Theorem~\ref{thm:climax-vol1-platonic} identifies it with the
+residue-realized form of a single universal pullback.
 
 \smallskip
 \noindent\textit{Notation.}
@@ -142,50 +149,54 @@ The Ran-space bar is the coinvariant shadow
 \]
 with coshuffle coproduct. The quotient
 $\pi_\Sigma\colon B^{\mathrm{ord}}_X(\cA)\twoheadrightarrow
-\barB_X(\cA)$ is the averaging/coinvariant map; it forgets the
-non-symmetric ordered kernel unless an additional acyclicity theorem
-is invoked. Throughout this chapter, the unqualified notation
+\barB_X(\cA)$ is the averaging/coinvariant map.  Its fibre is the
+non-symmetric ordered kernel; a separate acyclicity theorem governs
+reconstruction of that fibre. Throughout this chapter, the unqualified notation
 $\barB_X(\cA)$ refers to this symmetric factorization coalgebra on
 unordered $\operatorname{Ran}(X)$; the ordered tensor coalgebra is
 always written $B^{\mathrm{ord}}_X(\cA)$.
 
-The symmetric bar coalgebra computes the dual coalgebra
+Fix a quadratic presentation
+$\cA=T_X(\mathcal V)/(R)$.  It defines the presentation coalgebra and
+its canonical comparison
 \[
-\cA^i \;:=\; H^*(\barB_X(\cA)).
+\cA^i:=C_X(s^{-1}\mathcal V,s^{-2}R),
+\qquad
+q_\cA\colon\cA^i\longrightarrow\barB_X(\cA).
 \]
-Thus $\barB_X(\cA)$, $\cA^i$, and $\cA^!$ are distinct objects.
+The full bar coalgebra has cohomology
+$H^\bullet(\barB_X(\cA))$.  Quadratic Koszulness is the assertion that
+$q_\cA$ is a quasi-isomorphism; equivalently,
+$H^\bullet(q_\cA)$ identifies $H^\bullet(\cA^i)$ with bar cohomology.
+Diagonal concentration refers to the bar-weight/cohomological
+bigrading.  Concentration in a single bar degree is the stronger
+Gaussian special case.
 
-When $\cA$ is Koszul, the bar coalgebra has cohomology concentrated
-in bar degree~$1$, so $\cA^i$ is concentrated there. The Koszul dual
-\emph{algebra}~$\cA^! = ((\cA^i)^\vee)$ is a
-separate object: it has generators $\mathcal{V}^\vee =
+On a finite-type quadratic lane, the presentation-dual algebra
+$\mathbb D_{\Ran}(\cA^i)$ has generators $\mathcal{V}^\vee =
 \mathcal{H}om_{\mathcal{O}_X}(\mathcal{V}, \omega_X)$
 ($\mathcal{D}_X$-module dual of the generators of~$\cA$) and
 relations~$R^\perp$ (orthogonal complement under the residue
-pairing). In the classical setting (algebras on a point),
-$\cA^!$ is the graded linear dual of the concentrated dual
-coalgebra~$\cA^i$. In the chiral setting, $\cA^!$ is characterized by
-Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
-Verdier duality on $\operatorname{Ran}(X)$ sends the bar
-\emph{coalgebra} to the homotopy Koszul dual \emph{algebra},
+pairing).  Verdier duality on the full bar coalgebra forms the algebra
 \[
-\mathbb{D}_{\operatorname{Ran}}\, \barB_X(\cA)
-\;\simeq\; \cA^!_\infty,
+K_X(\cA):=\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA),
+\qquad
+\mathbb D(q_\cA)\colon
+K_X(\cA)\longrightarrow\mathbb D_{\operatorname{Ran}}(\cA^i).
 \]
+A chosen Koszul-pair datum supplies
+$\nu_\cA\colon K_X(\cA)\to\cA^!$; it is an equivalence on the named
+finite or completed Koszul surface.
 \begin{remark}[Verdier side of Theorem~A]
-Theorem~A is a statement about the symmetric bar
+The Verdier construction uses the symmetric bar
 $\barB_X(\cA)$ on unordered $\operatorname{Ran}(X)$.
-It is not a statement about the ordered bar
-$B^{\mathrm{ord}}_X(\cA)$.
 The functor $\mathbb{D}_{\operatorname{Ran}}$ is defined on
 factorization $\mathcal{D}$-modules on $\operatorname{Ran}(X)$;
-the expression $\mathbb{D}_{\operatorname{Ran}}\, B^{\mathrm{ord}}_X(\cA)$
-is therefore not part of the theorem.
-The ordered bar lives on ordered configuration spaces and does not
-itself carry the symmetric factorization datum required for this
-Verdier intertwining.
-To compare the ordered bar with Theorem~A, one must first pass to
-its $\Sigma_n$-coinvariant quotient $\barB_X(\cA)$.
+the ordered bar lives on ordered configuration spaces.
+The coinvariant map
+$\pi_\Sigma\colon B_X^{\mathrm{ord}}(\cA)\to\barB_X(\cA)$
+supplies the passage from the ordered configuration model to the
+symmetric Ran ambient before Verdier duality is applied.
 \end{remark}
 \begin{remark}[Chiral and line duals]
 Two duals must remain separated:
@@ -199,7 +210,7 @@ The cobar--bar counit
 $\Omega_X(\barB_X(\cA)) \xrightarrow{\sim} \cA$
 (Theorem~\ref{thm:bar-cobar-inversion-qi})
 is a \emph{resolution} of~$\cA$: the cobar of the bar coalgebra
-recovers~$\cA$ itself, not its dual.
+recovers~$\cA$.  The Verdier algebra is formed separately by~$K_X$.
 
 The bar-dual identity has a precise witness: the \emph{canonical
 twisting morphism}
@@ -244,16 +255,22 @@ leading coefficient~(D).
 \hline
 $\barB_X(\cA)$ & factorization coalgebra
  & bar coalgebra \\[2pt]
-$\cA^i = H^*(\barB_X(\cA))$ & factorization coalgebra
- & dual coalgebra \\[2pt]
+$\cA^i=C_X(s^{-1}\mathcal V,s^{-2}R)$ & factorization coalgebra
+ & quadratic presentation coalgebra; $q_\cA\colon\cA^i\to\barB_X(\cA)$
+ \\[2pt]
+$H^\bullet(\barB_X(\cA))$ & graded factorization coalgebra
+ & bar cohomology; identified with $H^\bullet(\cA^i)$ by
+   $H^\bullet(q_\cA)$ on the Koszul locus \\[2pt]
 $\cA^!$ & chiral algebra
- & $= ((\cA^i)^\vee)$; generators $= \mathcal{V}^\vee$,
- relations $= R^\perp$ \\[2pt]
+ & chosen Koszul partner; finite presentation model
+   $\mathbb D_{\Ran}(\cA^i)$ has generators $\mathcal{V}^\vee$ and
+   relations $R^\perp$ \\[2pt]
 $\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$
- & factorization \emph{algebra}
- & $\simeq \cA^!_\infty$ (Theorem~A) \\[2pt]
+ & Verdier--Koszul chiral algebra
+ & $=:K_X(\cA)$; maps by $\mathbb D(q_\cA)$ to
+   $\mathbb D_{\Ran}(\cA^i)$ and by $\nu_\cA$ to $\cA^!$ \\[2pt]
 $\Omega_X(\barB_X(\cA))$ & chiral algebra
- & $\simeq \cA$ (resolution, not $\cA^!$)
+ & $\simeq \cA$ (Ran reconstruction)
 \end{tabular}
 \end{center}
 \end{convention}
@@ -293,7 +310,7 @@ Proposition~\ref{prop:pole-decomposition}).
 In two-dimensional conformal field theory, the operator product expansion (OPE)
 \[\phi_i(z)\phi_j(w) = \sum_{k} \frac{C_{ij}^k}{(z-w)^{h_i+h_j-h_k}} \phi_k(w) + \text{(less singular)}\]
 encodes the structure constants $C_{ij}^k$ (fusion rules) and conformal weights $h_i$; associativity of multiple OPEs constrains the $C_{ij}^k$.
-The bar construction geometrizes this data: $\overline{C}_n(X)$ parametrizes insertion points, $D_{ij}$ encodes the collision $z_i \to z_j$, $\eta_{ij} = d\log(z_i - z_j)$ carries the singularities, and $\operatorname{Res}_{D_{ij}}$ extracts the OPE coefficients.
+The bar construction geometrizes this data: $\overline{C}_n(X)$ parametrizes insertion points, $D_{ij}$ encodes the collision $z_i \to z_j$, the logarithmic normal form \(\eta_{ij}\) carries the singularity (locally \(d\log(z_i-z_j)\) on an affine/formal screen), and $\operatorname{Res}_{D_{ij}}$ extracts the OPE coefficients.
 \end{remark}
 
 \begin{remark}[Parallel track: the BV complex]\label{rem:bv-parallel-track}
@@ -363,7 +380,12 @@ The entire bar differential comes from the curvature component $d_{\mathrm{curva
 \end{example}
 
 \begin{remark}[Logarithmic forms are forced]\label{rem:why-log-forced}
-Three requirements distinguish logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ among meromorphic 1-forms with poles along diagonals, and together determine them uniquely.
+On an affine genus-zero collision screen, three requirements
+distinguish the logarithmic representative
+\(\eta_{ij}=d\log(z_i-z_j)\) among meromorphic \(1\)-forms with poles
+along diagonals, and together determine the local normal form
+uniquely. Globally, the same object is the logarithmic normal form
+along \(D_{ij}\) together with its coordinate-change cocycle.
 
 \emph{Conformal invariance.}
 Under a conformal transformation $z \mapsto f(z)$, a direct computation gives
@@ -516,8 +538,8 @@ genus-$0$ square-zero relation after translating conventions.
 \label{rem:nilpotence-periodicity}
 \index{nilpotence-periodicity correspondence|textbf}
 \index{periodicity!as exponential of nilpotence}
-The logarithmic form~$\eta_{ij} = d\log(z_i - z_j)$ is not an
-incidental choice of kernel: the bar construction is the
+The logarithmic representative~$\eta_{ij}=d\log(z_i-z_j)$ is not an
+incidental choice of kernel on the affine genus-zero screen: the bar construction is the
 \emph{categorical logarithm} for chiral algebras, mapping
 multiplicative structure (the OPE) to additive/nilpotent structure
 (the bar differential with $\dzero^2 = 0$). The cobar construction
@@ -724,69 +746,56 @@ parity from Convention~\ref{conv:orientations-enhanced}. The symmetric
 bar differential is the $\Sigma_{p+1}$-coinvariant image of this
 ordered coderivation.
 
-The three components are:
-\[d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}\]
-
-\emph{Component 1: Internal differential $d_{\text{internal}}$.}
-
-If $\mathcal{A}$ has an internal differential $d_\mathcal{A}: \mathcal{A} \to \mathcal{A}$ (e.g., from a BRST complex or de Rham differential), we apply it to each tensor factor:
-\[d_{\text{internal}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = \sum_{i=0}^n (-1)^{\epsilon_i} \left(\phi_0 \otimes \cdots \otimes d_\mathcal{A}(\phi_i) \otimes \cdots \otimes \phi_n \otimes \omega\right)\]
-where $\epsilon_i$ is the Koszul sign:
-\[\epsilon_i = \sum_{j=0}^{i-1} |\phi_j| + \sum_{j=0}^{i-1} 1 = \text{(total degree before } \phi_i\text{)}\]
-
-\emph{Component 2: Residue differential $d_{\text{residue}}$.}
-
-The main geometric operation composes the Poincar\'e residue of the
-normal logarithmic form with the OPE-mode projections of the chiral
-product:
+Thus
 \[
-d_{\text{residue}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right)
+d_B=d_{\cA}+d_{\mathrm{dR}}+d_{\mathrm{res}},
+\]
+and the signs are not independent notation. They are fixed by the
+desuspended ordered tensor coalgebra and by the orientation convention
+for Fulton--MacPherson boundary divisors. In the adjacent ordered
+chart, for
+\([a_1|\cdots|a_n]\otimes\alpha
+=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n\otimes\alpha\), the local
+formulas are
+\[
+d_{\cA}([a_1|\cdots|a_n]\otimes\alpha)
 =
-\sum_{0 \leq i < j \leq n}
-\sum_{m\ge0}
-(-1)^{\sigma_{ij}}\,
-\left((\phi_i)_{(m)}\phi_j\right)\otimes
-\text{(other factors)}
-\otimes
-\operatorname{Res}^{\mathrm{form}}_{D_{ij}}(\omega).
+\sum_i
+(-1)^{\sum_{q<i}(|a_q|-1)}
+[a_1|\cdots|-d_{\cA}a_i|\cdots|a_n]\otimes\alpha,
 \]
-where:
-\begin{itemize}
-\item $\mu: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ is the OPE (chiral product), decomposed into modes $( - )_{(m)}( - )$
-\item $D_{ij} \subset \overline{C}_{n+1}(\Sigma_g)$ is the divisor where $z_i = z_j$
-\item $\operatorname{Res}^{\mathrm{form}}_{D_{ij}}$ is the Poincar\'e residue of the logarithmic form factor along $D_{ij}$ (see \S\ref{sec:residue-calculus} below)
-\item $\sigma_{ij}$ is a sign determined by:
- \begin{enumerate}
- \item Position of $i,j$ in the tensor product (Koszul sign)
- \item Orientation of $D_{ij}$ as boundary (geometric sign)
- \item Grading of fields $\phi_i, \phi_j$ (super sign)
- \end{enumerate}
-\end{itemize}
-
-Equivalently,
 \[
-\sigma_{ij}
-\equiv
-\epsilon_{\mathrm{desusp}}(i,j)
-+\epsilon_{\mathrm{or}}(D_{ij})
-\pmod 2,
+d_{\mathrm{dR}}([a_1|\cdots|a_n]\otimes\alpha)
+=
+(-1)^{\sum_i |a_i|}
+[a_1|\cdots|a_n]\otimes d_{\mathrm{dR}}\alpha,
 \]
-where $\epsilon_{\mathrm{desusp}}(i,j)$ is the Koszul parity of the
-shuffle on the desuspended factors $s^{-1}\phi_k$ and
-$\epsilon_{\mathrm{or}}(D_{ij})$ is the parity of the boundary
-orientation of the collision divisor~$D_{ij}$. This convention is the
-one used in the deconcatenation coderivation and descends to the
-coshuffle convention after taking coinvariants.
-
-\emph{Component 3: Form differential $d_{\text{form}}$.}
-
-Apply the de Rham differential to the form component:
-\[d_{\text{form}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = (-1)^{\sum_{i=0}^n |\phi_i|} \left(\phi_0 \otimes \cdots \otimes \phi_n \otimes d_{\text{dR}}(\omega)\right)\]
-where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on forms.
+and
+\[
+d_{\mathrm{res}}([a_1|\cdots|a_n]\otimes\alpha)
+=
+\sum_{i=1}^{n-1}\sum_{r\ge0}
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}
+[a_1|\cdots|a_i{}_{(r)}a_{i+1}|\cdots|a_n]
+\otimes
+\operatorname{Res}^{\mathrm{form}}_{D_{i,i+1}}(\alpha).
+\]
+For a non-adjacent full-FM face, the adjacent formula is conjugated by
+the order-preserving shuffle on the desuspended factors and multiplied
+by the boundary-orientation parity of
+Convention~\ref{conv:orientations-enhanced}. The consecutive-block
+\(\chirAss\) quotient has only adjacent word-contractions; it is not
+the full pairwise FM screen. These local formulas and their
+anticommutation identities are proved in
+Proposition~\ref{prop:ordered-bar-local-differential-identities}. The
+finite-output and product-completion hypotheses under which the
+aritywise sums define a complete conilpotent functor are part of
+Theorem~\ref{thm:ordered-bar-complete-conilpotent-functor}.
 
 \end{definition}
 
-\begin{definition}[Ordered chiral bar term with logarithmic coefficients]
+\begin{definition}[Ordered chiral bar term with logarithmic coefficients;
+\ClaimStatusDefinitional]
 \label{def:ordered-chiral-bar-term-log}
 \index{ordered chiral bar!logarithmic coefficient complex}
 \index{tensor powers!external, chiral, factorization}
@@ -817,6 +826,31 @@ q_n^*j_{n,*}j_n^*((s^{-1}\bar\cA)^{\boxtimes n})
 \otimes_{\cO_{\FM_n(X)}}
 \Omega^\bullet_{\FM_n(X)}(\log D_n).
 \]
+Before taking global sections, the arity-$n$ ordered bar object is the
+right $\cD_{X^n}$-module
+\[
+\mathbb B^{\ord}_{X,n}(\cA)
+:=
+(q_n)_+
+\cK^{\ord}_n(\cA)
+\in D(\cD_{X^n}),
+\]
+where $(q_n)_+$ is the de~Rham direct image. The ordered Ran object is
+the collection
+\[
+\mathbb B^{\ord}_X(\cA)
+:=\bigoplus_{n\ge0}\mathbb B^{\ord}_{X,n}(\cA)
+\quad\text{on}\quad
+\Ran^{\ord}(X)=\coprod_{n\ge0}U_n(X),
+\]
+with factorization restrictions along products of pairwise disjoint
+opens. Thus the slogan
+\[
+B_X^{\ord}(\cA)=T^c(s^{-1}\bar\cA)
+\]
+means the underlying ordered tensor coalgebra of this aritywise
+$\cD$-module system after forgetting the FM logarithmic coefficient
+complex.
 The $n$-th ordered chiral bar term is
 \[
 B^{\ord}_{X,n}(\cA)
@@ -889,6 +923,19 @@ d_{\mathrm{res}}([a|b|c]\otimes\alpha)
 [a|b_{(r)}c]\otimes\Res_{D_{23}}\alpha .
 \end{aligned}
 \]
+On the full pairwise Fulton--MacPherson screen, rather than the
+strict adjacent $\chirAss$ quotient, the same convention includes the
+non-adjacent face
+\[
+\sum_{r\ge0}
+(-1)^{|a|+(|b|-1)(|c|-1)+\epsilon_{\mathrm{or}}(D_{13})}
+[a_{(r)}c|b]\otimes\Res_{D_{13}}\alpha,
+\]
+where the block $\{1,3\}$ is ordered by its least original label and
+$\epsilon_{\mathrm{or}}(D_{13})$ is the boundary-orientation parity of
+Convention~\ref{conv:orientations-enhanced}. In the consecutive-block
+ordered $\chirAss$ quotient this $D_{13}$ term is absent; in the full
+FM model it is one of the three Arnold faces.
 With the signs of
 Convention~\ref{conv:A-infinity-2-ordered-bar-signs} and
 Computation~\ref{comp:bar-signs-2-1},
@@ -905,6 +952,21 @@ Consequently $d_B^2=0$. The deconcatenation coproduct
 \sum_{p=0}^{n}
 [a_1|\cdots|a_p]\otimes[a_{p+1}|\cdots|a_n]
 \]
+is the consecutive-cut convention, hence has no additional sign. For an
+ordered factorisation cut obtained by first permuting the desuspended
+word into blocks \(I\sqcup J=\{1,\ldots,n\}\), the convention is
+\[
+\Delta_{I\mid J}[a_1|\cdots|a_n]
+=
+\epsilon_{\mathrm{Kos}}\!\bigl(\pi_{I,J};
+s^{-1}a_1,\ldots,s^{-1}a_n\bigr)
+[a_I]\otimes[a_J],
+\]
+where \(\pi_{I,J}\) is the unique shuffle putting the labels of \(I\)
+before the labels of \(J\), and \(\epsilon_{\mathrm{Kos}}\) is the usual
+Koszul sign for permuting the desuspended homogeneous factors; \(a_I\)
+and \(a_J\) denote the corresponding subwords in their induced orders.
+With these signs the coproduct
 is coassociative, $d_B$ is a coderivation for it, and
 $B_X^{\ord}(\cA)$ is conilpotent by word length. Its completion
 $\widehat B_X^{\ord}(\cA)=\prod_{n\ge0}B^{\ord}_{X,n}(\cA)$ is complete
@@ -928,7 +990,12 @@ de~Rham sign in~\eqref{eq:ordered-bar-ddR} is the geometric
 totalization sign of Definition~\ref{def:bar-differential-complete}.
 The displayed length-$2$ and length-$3$ identities are the special
 cases computed in
-Computation~\ref{comp:bar-signs-2-1}.
+Computation~\ref{comp:bar-signs-2-1}. For the full pairwise
+length-$3$ screen, the $D_{13}$ term is obtained by moving the
+desuspended factor $s^{-1}c$ across $s^{-1}b$, giving the shuffle sign
+$(-1)^{(|b|-1)(|c|-1)}$, then applying the same binary projection
+$b_2^{(r)}(s^{-1}a\otimes s^{-1}c)=(-1)^{|a|}s^{-1}(a_{(r)}c)$ and the
+boundary-orientation sign of $D_{13}$.
 
 The diagonal identities follow from the three source complexes:
 $d_\cA^2=0$ because $\cA$ is dg, $d_{\mathrm{dR}}^2=0$ for logarithmic forms,
@@ -962,21 +1029,76 @@ away the scalar vacuum term. This is exactly the reduced-bar
 normalization.
 \end{proof}
 
+\begin{definition}[Ordered Fulton--MacPherson quotient and symmetric
+descent datum; \ClaimStatusDefinitional]
+\label{def:ordered-fm-sigma-descent-datum}
+\index{Fulton--MacPherson compactification!ordered quotient}
+\index{symmetric bar!descent datum}
+For \(n\ge0\), the ordered Fulton--MacPherson compactification is the
+labelled compactification
+\[
+\FM^{\ord}_n(X):=\FM_n(X),
+\]
+whose open stratum is \(U_n(X)\). The symmetric group \(\Sigma_n\)
+acts by relabelling markings and collision trees; it preserves the
+normal-crossings boundary \(D_n=\FM_n(X)\setminus U_n(X)\). The
+unordered Fulton--MacPherson target is the finite quotient stack
+\[
+\FM^\Sigma_n(X):=[\FM^{\ord}_n(X)/\Sigma_n],
+\]
+or its coarse quotient when the ambient category has already been
+restricted to coarse spaces. The quotient morphism is denoted
+\[
+q_n\colon \FM^{\ord}_n(X)\longrightarrow \FM^\Sigma_n(X).
+\]
+
+A \(\Sigma_\bullet\)-descent datum on the ordered bar system
+\(\mathbb B^{\ord}_{X,\bullet}(\cA)\) consists, for every \(n\) and
+every \(\sigma\in\Sigma_n\), of isomorphisms
+\[
+\rho_{\sigma,n}\colon
+\sigma^*\mathbb B^{\ord}_{X,n}(\cA)
+\xrightarrow{\ \sim\ }
+\mathbb B^{\ord}_{X,n}(\cA)
+\]
+satisfying the usual cocycle
+\[
+\rho_{\sigma\tau,n}
+=\rho_{\sigma,n}\circ\sigma^*(\rho_{\tau,n})
+\]
+after the standard identification of pullbacks. These isomorphisms
+must commute with \(d_\cA\), \(d_{\mathrm{dR}}\),
+\(d_{\mathrm{res}}\), the ordered deconcatenation coproduct, and the
+factorisation restriction maps for disjoint opens. In the pole-free
+case \(\rho_{\sigma,n}\) is the Koszul-signed permutation action. In
+the with-poles ordered \(\Eone\)-chiral case it is the
+strong-unitary \(R\)-twisted action generated by adjacent
+\(\tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1})\), when the
+Yang--Baxter and unitarity relations of
+Lemma~\ref{lem:R-twisted-descent} are satisfied.
+\end{definition}
+
 \begin{proposition}[Symmetric bar descent criterion;
 \ClaimStatusConditional]
 \label{prop:symmetric-bar-descent-criterion}
 \index{symmetric bar!descent criterion}
 \index{ordered-to-symmetric bar descent}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+Fulton--MacPherson/Ran presentation descended to the symmetric Ran
+quotient, Beilinson level~$2$, hypothesis package: the descent datum of
+Definition~\ref{def:ordered-fm-sigma-descent-datum}, or equivalently
+the pole-free equivariant datum / strong-unitary \(R\)-twisted datum in
+the relevant case\textup{)}.
 The symmetric bar
 \[
 B^\Sigma_X(\cA):=\bigl(B_X^{\ord}(\cA)\bigr)_{\Sigma_\bullet}
 \]
 exists as a dg factorization coalgebra on $\Ran(X)$ precisely when the
 ordered coefficient system on $\Ran^{\ord}(X)$ carries a
-$\Sigma_\bullet$-descent datum compatible with the OPE residue
-differential, the de~Rham differential, and deconcatenation. In the
-pole-free symmetric case this is ordinary equivariant descent. In the
-with-poles $\Eone$-chiral case it is the strong-unitary
+\(\Sigma_\bullet\)-descent datum of
+Definition~\ref{def:ordered-fm-sigma-descent-datum}. In the pole-free
+symmetric case this is ordinary equivariant descent. In the with-poles
+$\Eone$-chiral case it is the strong-unitary
 $R$-twisted descent of Lemma~\ref{lem:R-twisted-descent}; without that
 locality/descent datum, $B^\Sigma_X(\cA)$ is only a formal quotient of
 graded objects and not a well-defined dg factorization coalgebra.
@@ -999,6 +1121,286 @@ strong-unitary $R$-twisted descent package. This is the criterion
 already isolated in Definition~\ref{def:ordered-fact-dmod},
 Theorem~\ref{thm:three-bar-complexes}, and
 Lemma~\ref{lem:R-twisted-descent}.
+\end{proof}
+
+\begin{proposition}[Ordered bar carrier and ordered Ran factorisation;
+\ClaimStatusProvedHere]
+\label{prop:ordered-bar-carrier-ran-factorisation}
+\index{ordered chiral bar!tensor carrier}
+\index{ordered Ran space!bar factorisation coalgebra}
+Type signature: \textup{(}Open quadrant, ordered
+$\cD$-module/Fulton--MacPherson/Ran presentation, Beilinson level~$2$,
+hypothesis package: augmented complete finite-window chiral
+$\Eone$ algebra, holonomic/excision factorisation descent, and the sign package of
+Theorem~\ref{thm:bar-sign-coherence}\textup{)}.
+Let $\cA$ be an augmented chiral algebra satisfying the stated
+finite-window hypotheses. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The ordered bar object
+$\mathbb B_X^{\ord}(\cA)$ of
+Definition~\ref{def:ordered-chiral-bar-term-log} is, after forgetting
+the logarithmic FM coefficient system, exactly the cofree ordered
+tensor coalgebra
+$T^c(s^{-1}\bar\cA)$ with deconcatenation.
+\item On the ordered Ran space
+\[
+\Ran^{\ord}(X)=\coprod_{n\ge0}U_n(X),
+\]
+the aritywise objects $\mathbb B^{\ord}_{X,n}(\cA)$ form a
+factorisation coalgebra. For pairwise disjoint opens
+$V_1,\ldots,V_k\subset X$ and $n=n_1+\cdots+n_k$, the restriction map is
+the composite
+\[
+\mathbb B^{\ord}_{X,n}(\cA)|_{U_{n_1}(V_1)\times\cdots\times U_{n_k}(V_k)}
+\longrightarrow
+\boxtimes_{\alpha=1}^k
+\mathbb B^{\ord}_{V_\alpha,n_\alpha}(\cA|_{V_\alpha}),
+\]
+obtained by restricting external tensor factors and logarithmic forms
+and then applying the ordered deconcatenation cut at the block
+boundaries.
+\item Residues are compatible with this factorisation product. A
+collision divisor meeting
+$U_{n_1}(V_1)\times\cdots\times U_{n_k}(V_k)$ lies entirely inside one
+block, since the opens are disjoint; hence the Poincare residue acts
+on that block and commutes with the external product on the other
+blocks, with the Koszul sign already fixed in
+Proposition~\ref{prop:ordered-bar-local-differential-identities}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~\textup{(i)} is the definition of the ordered reduced bar term
+together with the universal property of the cofree tensor coalgebra:
+the coefficient object is \(s^{-1}\bar\cA\), the coproduct is
+deconcatenation, and the logarithmic FM factor records the collision
+forms without changing the ordered tensor carrier.
+
+For~\textup{(ii)}, restrict the FM space to the open locus where the
+first $n_1$ labels lie in $V_1$, the next $n_2$ labels lie in $V_2$,
+and so on. Since the opens are pairwise disjoint, no cross-block
+diagonal meets this locus. The FM boundary and logarithmic form system
+therefore factor as the product of the FM boundary systems in the
+blocks. The coefficient system
+$j_{n,*}j_n^*((s^{-1}\bar\cA)^{\boxtimes n})$ restricts to the
+external product of the lower-arity coefficient systems, and
+deconcatenation at the block boundaries gives the displayed
+factorisation map. The cosheaf/factorisation assertion follows from
+the holonomic/excision hypothesis, as in
+Theorem~\ref{thm:bar-NAP-homology}.
+
+For~\textup{(iii)}, on a product of disjoint opens the divisor
+$D_{ij}$ is empty unless labels $i$ and $j$ lie in the same block. If
+they do lie in the same block, the local logarithmic normal parameter
+is a coordinate on that block's FM factor. Poincare residue extracts
+that normal factor and leaves all other blocks untouched; moving the
+residue past the other coefficient factors gives exactly the Koszul
+sign appearing in~\eqref{eq:ordered-bar-dres}. Hence
+$d_{\mathrm{res}}$ is compatible with the factorisation product.
+\end{proof}
+
+\begin{corollary}[\texorpdfstring{$\chirAss$}{chiral associative}
+dual-cooperad carrier; \ClaimStatusConditional]
+\label{cor:ordered-bar-chirass-dual-carrier}
+\index{associative chiral operad!Koszul dual cooperad}
+\index{ordered chiral bar!conditional operadic carrier}
+Type signature: \textup{(}Open quadrant, ordered
+$\cD$-module/Fulton--MacPherson/Ran presentation, Beilinson level~$2$,
+hypothesis package:
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation} plus the
+definition of the quadratic dual cooperad
+\((\chirAss)^{!,c}\) in
+Definition~\ref{def:chirass-dual-cooperad} and the
+finite locally free quadratic self-duality package of
+Proposition~\ref{prop:chirAss-self-dual}\textup{)}.
+Under the finite locally free hypotheses of
+Proposition~\ref{prop:chirAss-self-dual}, the associative chiral
+operad has quadratic dual cooperad
+\[
+(\chirAss)^{!,c}\cong(\chirAss\otimes\operatorname{sgn})^c,
+\]
+and the ordered bar object \(\mathbb B_X^{\ord}(\cA)\) is a coalgebra
+over this cooperad: arity \(n\) is
+\((s^{-1}\bar\cA)^{\otimes n}\), and every cooperadic decomposition
+map is the ordered consecutive deconcatenation cut, with the Koszul
+signs of the desuspended factors. Without those finite locally free
+hypotheses, the
+proved carrier is the ordered tensor coalgebra and ordered Ran
+factorisation of
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation}; the
+\((\chirAss)^{!,c}\)-identification is not asserted.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation} gives the
+ordered tensor coalgebra \(T^c(s^{-1}\bar\cA)\) with deconcatenation.
+Definition~\ref{def:chirass-dual-cooperad} defines
+\((\chirAss)^{!,c}\) only in the finite quadratic model where dual
+arity pieces exist.
+Proposition~\ref{prop:chirAss-self-dual}, under its finite locally
+free hypotheses, identifies the relevant quadratic dual cooperad with
+the sign-twisted coassociative chiral cooperad. The cofree coalgebra
+over that cooperad is exactly the ordered tensor coalgebra on
+\(s^{-1}\bar\cA\); its structure maps are the consecutive cuts of
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation}. Hence
+the cooperadic carrier follows under the stated hypotheses and only
+under those hypotheses.
+\end{proof}
+
+\begin{theorem}[Ordered bar descent to the symmetric Ran quotient;
+\ClaimStatusConditional]
+\label{thm:ordered-bar-operadic-ran-descent}
+\index{ordered chiral bar!symmetric descent}
+\index{symmetric bar!conditional factorisation coalgebra}
+Type signature: \textup{(}Open quadrant, ordered
+$\cD$-module/Fulton--MacPherson/Ran presentation compared with the
+symmetric Ran quotient, Beilinson level~$2$, hypothesis package:
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation} plus the
+ordered-to-symmetric descent datum of
+Definition~\ref{def:ordered-fm-sigma-descent-datum} and
+Proposition~\ref{prop:symmetric-bar-descent-criterion}\textup{)}.
+The labelled Fulton--MacPherson compactification maps to the unordered
+compactification by the finite quotient
+\[
+q_n\colon
+\FM^{\ord}_n(X)\longrightarrow \FM^\Sigma_n(X)
+\]
+of Definition~\ref{def:ordered-fm-sigma-descent-datum}.
+If the descent criterion of
+Proposition~\ref{prop:symmetric-bar-descent-criterion} is satisfied,
+then the symmetric bar
+\[
+B^\Sigma_X(\cA)=(B_X^{\ord}(\cA))_{\Sigma_\bullet}
+\]
+is a dg factorisation coalgebra on $\Ran(X)$ and the quotient
+$B_X^{\ord}(\cA)\to B^\Sigma_X(\cA)$ is a morphism of dg coalgebras.
+Without the descent datum, only the ordered factorisation coalgebra of
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation} is
+asserted.
+\end{theorem}
+
+\begin{proof}
+The labelled carrier and ordered factorisation structure are
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation}. The
+action of $\Sigma_n$ relabels the markings and preserves the
+normal-crossings boundary, giving the finite map from the labelled
+compactification to its unordered quotient. Descent of the bar
+differential and coalgebra structure through this quotient is precisely
+the content of
+Proposition~\ref{prop:symmetric-bar-descent-criterion}. Under that
+criterion the quotient map commutes with $d_\cA$, $d_{\mathrm{dR}}$,
+$d_{\mathrm{res}}$, and deconcatenation, hence is a morphism of dg
+coalgebras. If the criterion is not supplied, the coinvariant quotient
+has not been shown to carry a compatible dg factorisation coalgebra
+structure.
+\end{proof}
+
+\begin{proposition}[First averaging kernels and the associator
+class; \ClaimStatusConditional]
+\label{prop:ordered-bar-low-arity-averaging-kernels}
+\index{averaging map!low arity kernel}
+\index{ordered bar!arity two and three averaging kernel}
+\index{Drinfeld associator!arity-three averaging kernel}
+Type signature: \textup{(}Open quadrant, ordered tensor/Fulton--
+MacPherson presentation, Beilinson level~$2$, hypothesis package:
+characteristic zero finite-window ordered bar plus, for the
+associator clause, the affine KZ/Drinfeld--Kohno trace-window
+package\textup{)}.
+Let $W=s^{-1}\bar\cA$ be a finite homogeneous window of the ordered bar
+and let
+\[
+\operatorname{Av}_n=\frac1{n!}\sum_{\sigma\in\Sigma_n}\rho(\sigma)
+\]
+be the Reynolds projection for the Koszul-signed
+\textup{(}or $R$-twisted, when the descent datum is present\textup{)}
+$\Sigma_n$-action on $W^{\otimes n}$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item In arity~$2$,
+\begin{equation}\label{eq:arity-two-averaging-kernel}
+\ker(\operatorname{Av}_2)
+=\operatorname{im}(1-\operatorname{Av}_2)
+=\operatorname{im}\bigl(1-\rho(s_1)\bigr),
+\qquad s_1=(12).
+\end{equation}
+In the pole-free Koszul-signed specialization this is
+\[
+\ker(\operatorname{Av}_2)
+=
+\operatorname{span}\{\,x\otimes y
+-(-1)^{|x||y|}y\otimes x\,\},
+\]
+with $|x|,|y|$ the desuspended degrees. In the \(R\)-twisted case the
+generator is instead
+\[
+x-\rho_R(s_1)x
+=x-\tau_{12}R_{12}(z_1-z_2)x .
+\]
+This is the antisymmetric or \(R\)-skew residue channel discarded by
+the symmetric bar.
+\item In arity~$3$,
+\begin{equation}\label{eq:arity-three-averaging-kernel}
+\ker(\operatorname{Av}_3)
+=
+\operatorname{im}(1-\operatorname{Av}_3)
+=
+\bigoplus_{\lambda\vdash3,\;\lambda\ne(3)}
+(W^{\otimes3})_{[\lambda]},
+\end{equation}
+the sum of the standard and sign isotypic components. Equivalently it
+is generated by differences \(u-\rho(\sigma)u\), and, in characteristic
+zero, is the direct sum
+\[
+(W^{\otimes3})_{[(2,1)]}\oplus(W^{\otimes3})_{[(1,1,1)]}.
+\]
+\item Under the affine KZ/Drinfeld--Kohno package, the linearised
+associator class $[t_{12},t_{23}]$ belongs to the arity-$3$ kernel:
+it changes sign under the transposition exchanging the outer labels
+and therefore has zero Reynolds average. Its symmetric shadow is not
+the Lie commutator but the associative degree-$3$ part of
+$\operatorname{Av}_3(\Phi_{\mathrm{KZ}})$.
+\item Every antisymmetric residue class is killed by averaging. More
+precisely, for an ordered residue tensor
+\[
+r^-_{12}:=r_{12}-\rho(s_1)r_{12}
+\]
+one has \(\operatorname{Av}_2(r^-_{12})=0\). More generally,
+\(\operatorname{Av}_n\) kills every nontrivial
+$\Sigma_n$-isotypic component and retains exactly the trivial
+isotypic component, in agreement with
+Proposition~\ref{prop:sn-irrep-decomposition-bar}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Over characteristic zero, the group algebra of $\Sigma_n$ is
+semisimple and the Reynolds operator is the idempotent projector onto
+the trivial isotypic component. For \(n=2\), the group has two
+elements, so
+\[
+\operatorname{Av}_2=\tfrac12(1+\rho(s_1)),\qquad
+1-\operatorname{Av}_2=\tfrac12(1-\rho(s_1)),
+\]
+and \(\ker(\operatorname{Av}_2)=\operatorname{im}(1-\rho(s_1))\).
+In the pole-free specialization \(\rho(s_1)\) is the Koszul-signed
+flip, giving the displayed antisymmetriser. In the \(R\)-twisted case
+\(\rho(s_1)=\tau_{12}R_{12}(z_1-z_2)\), giving the displayed
+\(R\)-skew generator. This proves~\textup{(i)}.
+For \(n=3\), semisimplicity gives the decomposition into the three
+partitions $(3)$, $(2,1)$, and $(1,1,1)$; removing the trivial
+component gives~\textup{(ii)}.
+
+For~\textup{(iii)}, the Drinfeld--Kohno generators satisfy
+$t_{ij}=t_{ji}$ and the KZ associator has linearised commutator
+$[t_{12},t_{23}]$ in degree~$3$. The transposition $(1\,3)$ sends this
+commutator to $[t_{32},t_{21}]=[t_{23},t_{12}]
+=-[t_{12},t_{23}]$. Hence the Reynolds sum pairs this term with its
+negative and annihilates it. The remaining symmetric contribution comes
+from the associative products in the full KZ associator, as recorded in
+Remark~\ref{rem:lie-associative-dichotomy} and
+Corollary~\ref{cor:av-kernel-deg3-split}. Part~\textup{(iv)} is the
+same Reynolds-projection calculation in arbitrary arity; the displayed
+residue tensor \(r^-_{12}\) is in the image of
+\(1-\rho(s_1)\), hence has zero Reynolds average by~\textup{(i)}.
 \end{proof}
 
 \begin{convention}[Length filtration; \ClaimStatusDefinitional]
@@ -1060,29 +1462,39 @@ $d_{\text{form}}$ is the de~Rham differential on configuration space,
 enforcing Ward identities
 (Lemma~\ref{lem:ddr-preserves-log}).
 
-Nilpotency $d^2 = 0$ is \emph{not} automatic. Among the nine cross-terms in
-$(d_1 + d_2 + d_3)^2$, the critical one is
-$d_{\text{residue}}^2 = 0$: this requires the full Borcherds
-identity, not merely Jacobi
-(Proposition~\ref{prop:pole-decomposition}). The remaining
-cross-terms vanish by Stokes
-($\{d_{\text{form}}, d_{\text{residue}}\} = 0$) and the
+Nilpotency $d^2 = 0$ is \emph{not} automatic. Among the nine
+cross-terms in $(d_1+d_2+d_3)^2$, the critical residue-residue terms
+require the Borcherds identity for OPE modes together with the Arnold
+relation for logarithmic forms and the signed residue-orientation
+package. Pure mode Jacobi with the form and boundary signs suppressed
+does not prove the bar differential square-zero. In the
+consecutive-block \(\chirAss\) quotient this is the Stasheff
+associativity cancellation for adjacent word-contractions; in the full
+FM screen it uses all pairwise collision divisors. See
+Proposition~\ref{prop:pole-decomposition},
+Proposition~\ref{prop:ordered-bar-local-differential-identities}, and
+Theorem~\ref{thm:bar-sign-coherence}. The remaining cross-terms vanish
+by Stokes ($\{d_{\text{form}},d_{\text{residue}}\}=0$) and the
 derivation property.
 \end{remark}
 
-\begin{remark}[Bar differential as pullback of the Arnold connection]
+\begin{remark}[Bar differential from the KZ--Arnold superconnection]
 \label{rem:dbar-as-kz-pullback}
 \index{bar differential!as KZ pullback@as $\KZ^*(\nabla_{\mathrm{Arnold}})$}%
 \index{climax theorem!bar differential identification}%
 The three-component differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{form}}$ of
-Definition~\ref{def:bar-differential-complete} is not assembled by hand:
-it is the pullback of one universal flat connection on the open
-configuration space $\Conf_n^{\mathrm{ord}}(X)$ along a faithful
-structure morphism induced by $\cA$. This is the structural identity
-\textup{(}G2\textup{)} of Chapter~\ref{chap:climax-platonic}:
+Definition~\ref{def:bar-differential-complete}, restricted to the
+genus-$0$ affine/tangent KZ window, is the residue realization of the
+bar superconnection obtained by pulling back one universal flat
+operator-valued connection along a faithful structure morphism induced
+by \(\cA\). This is the structural identity \textup{(}G2\textup{)} of
+Chapter~\ref{chap:climax-platonic}:
 \[
- d_{\mathrm{bar}} \;=\; \KZ^{*}(\nabla_{\mathrm{Arnold}}),
+\nabla^{B,0}_{\cA,V,n}
+=d_\cA+d_{\mathrm{dR}}
+-\sum_{i<j}\widetilde\rho_{\cA,V,n}(t_{ij})\,\eta_{ij}
+=\KZ_{\cA,V,n}^{*}(\nabla_{\mathrm{Arnold}}),
 \]
 where $\nabla_{\mathrm{Arnold}} = d - \sum_{i<j} t_{ij}\,\eta_{ij}$ is
 Arnold's universal flat connection on the trivial
@@ -1094,41 +1506,405 @@ the KZ functor of
 Construction~\ref{constr:kz-functor-platonic} sends the universal
 infinitesimal braid generator $t_{ij}$ to the OPE-derived
 $r$-matrix $r^{(ij)}(z_{ij})\cdot z_{ij}$ on
-$\End\bigl(B^{\mathrm{ord}}(\cA)\bigr)$. The three components of $d$
-then collapse:
+$\End\bigl(B^{\mathrm{ord}}(\cA)\bigr)$. Applying the
+Fulton--MacPherson boundary/residue realization to this
+superconnection gives the three components of \(d\):
 \begin{itemize}
 \item the residue component
 $d_{\mathrm{residue}} = \sum_{i<j} \mathrm{Res}_{D_{ij}}\,\mu(\phi_i,\phi_j)$
 is the chain-level expression of $\KZ^{*}(t_{ij}\eta_{ij})$ at the
 collision divisor (\S\ref{ssec:climax-platonic-path-A-fm}, Path~A);
-\item the de~Rham component $d_{\mathrm{form}}$ is $\KZ^{*}$ of
-$d$ in $\nabla_{\mathrm{Arnold}}$;
+\item the de~Rham component $d_{\mathrm{form}}$ is induced by the
+exterior differential in $\nabla_{\mathrm{Arnold}}$;
 \item the internal component $d_{\mathrm{internal}}$ is the lift of
 $d$ on the coefficient bundle to the family parameter and contributes
 no new term beyond the $\cA$-internal differential.
 \end{itemize}
+The slogan \(d_{\mathrm{bar}}=\KZ^*(\nabla_{\mathrm{Arnold}})\)
+means precisely this residue-realized superconnection identity; it is
+not a literal equality between a chain differential and a connection.
 The Arnold three-term relation~\eqref{eq:arnold-three-term} of
 Theorem~\ref{thm:arnold-cohomology-platonic} is precisely
 the codimension-two compatibility that forces $d^2 = 0$
 \textup{(}Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}\textup{)};
 the classical Yang--Baxter equation on the family
 $\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
-incarnation. The per-family bar differentials are not independent data: every
-bar differential is the pullback of the single universal flat
-connection $\nabla_{\mathrm{Arnold}}$ along the structure morphism
-induced by $\cA \to \End(B^{\mathrm{ord}}(\cA))$. The unification
-is Theorem~\ref{thm:climax-vol1-platonic}.
+incarnation. The per-family genus-$0$ affine KZ differentials are not
+independent data: each is obtained from this pulled-back
+superconnection and its residue realization along the structure
+morphism induced by \(\cA \to \End(B^{\mathrm{ord}}(\cA))\). The genus
+split and the positive-genus corrections are stated in
+Theorem~\ref{thm:kz-arnold-pullback-genus-package}.
 \end{remark}
 
-\begin{remark}[The bar coalgebra over $(\chirAss)^!$, not over
+\begin{theorem}[KZ/Arnold pullback package by genus;
+\ClaimStatusConditional]
+\label{thm:kz-arnold-pullback-genus-package}
+\index{KZ connection!bar pullback}
+\index{Arnold connection!genus restriction}
+\index{infinitesimal braid Lie algebra!bar representation}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+configuration presentation, Beilinson level~$2$, hypothesis package:
+finite current/KZ trace-window with invariant pairing, faithful
+infinitesimal-braid action on the displayed commutator span, and, for
+coordinate changes, a conformal stress tensor implementing the Virasoro
+action\textup{)}.
+Let $V\subset\bar\cA$ be a finite homogeneous current window with
+invariant form $\ell_V$ and tensor
+$\Omega_{\ell,V}=\sum_{\alpha,\beta}\ell_V(e_\alpha,e_\beta)
+e^\alpha\otimes e^\beta$. Let
+\[
+\cK^{\ord}_{n,V}(\cA)
+=
+q_n^*j_{n,*}j_n^*((s^{-1}V)^{\boxtimes n})
+\otimes_{\cO_{\FM_n(X)}}
+\Omega^\bullet_{\FM_n(X)}(\log D_n)
+\subset \cK^{\ord}_n(\cA)
+\]
+be the corresponding finite ordered bar window. For each $n$ define
+\begin{equation}\label{eq:kz-arnold-tn-representation}
+\rho_{\cA,V,n}\colon\mathfrak t_n\longrightarrow
+\End(V^{\otimes n}),
+\qquad
+\rho_{\cA,V,n}(t_{ij})=\Omega_{\ell,V}^{ij},
+\end{equation}
+and let
+\begin{equation}\label{eq:kz-arnold-bar-suspension-action}
+\widetilde\rho_{\cA,V,n}(x)
+=(s^{-1})^{\otimes n}\rho_{\cA,V,n}(x)s^{\otimes n}
+\end{equation}
+be the suspension-conjugate action on \((s^{-1}V)^{\otimes n}\).
+Here $\mathfrak t_n$ is the infinitesimal braid Lie algebra generated
+by $t_{ij}=t_{ji}$ subject to
+\[
+[t_{ij},t_{k\ell}]=0\quad
+\text{for disjoint pairs},\qquad
+[t_{ij},t_{ik}+t_{jk}]=0\quad
+\text{for triples}.
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item On an affine genus-$0$ tangent screen the KZ pullback identity
+acts on \(\cK^{\ord}_{n,V}(\cA)\) by
+\[
+\nabla^{B,0}_{\cA,V,n}
+=d_\cA+d_{\mathrm{dR}}
+-\sum_{i<j}\widetilde\rho_{\cA,V,n}(t_{ij})\,\eta_{ij}
+=\KZ_{\cA,V,n}^{*}(\nabla_{\mathrm{Arnold}}).
+\label{eq:kz-arnold-bar-pullback-identity}
+\]
+Its singular collision part is the simple-pole/current-window summand
+of the ordered bar differential. This is the precise meaning of
+$d_B=\KZ^*(\nabla_{\mathrm{Arnold}})$; it is not a global
+positive-genus identity.
+\item Universally, flatness of
+$\nabla_{\mathrm{Arnold}}=d-\sum_{i<j}t_{ij}\eta_{ij}$ is equivalent
+to the Arnold three-term relation for the forms together with the
+infinitesimal braid relations for the generators. After applying
+$\rho_{\cA,V,n}$, the same statement holds modulo
+$\ker\rho_{\cA,V,n}$.
+\item At genus~$1$ the affine form \(\eta_{ij}=d\log(z_i-z_j)\) is
+replaced by the normalized elliptic propagator
+\(\eta^{(1)}_{ij}\), and the KZ connection is replaced by the
+Bernard--Felder KZB connection
+\[
+\nabla^{B,1}_{\cA,V,n}
+=d-\hbar\sum_{i<j}
+\widetilde\rho_{\cA,V,n}(t_{ij})\,
+\wp_1(z_{ij},\tau)\,dz_{ij}
+-\frac{\hbar}{2\pi i}\sum_iD_i\,d\tau
+\]
+of Definition~\ref{def:elliptic-kzb-connection}. The cyclic Arnold sum
+acquires the period correction
+\(\mathcal P_{ijk}(\tau)\) of
+Proposition~\ref{prop:elliptic-arnold-relations}, and flatness is the
+KZB statement of Proposition~\ref{prop:elliptic-kzb-flatness-jacobi}.
+\item For genus \(g\ge2\), the propagator is built from Fay's prime
+form \(E(p_i,p_j)\) of
+Theorem~\ref{thm:prime-form-properties}; on a fixed fiber the local
+singular term is \(d\log E(p_i,p_j)\), while the strict relative
+differential is the period/Gauss--Manin corrected operator
+\(\Dg{g}=\dfib+d_{\mathrm{per}}^{(g)}
++\nabla_{\mathrm{KS}}^{\mathrm{GM}}\) of
+Remark~\ref{rem:period-integrals-bar}. Thus a formula involving only
+\(\nabla_{\mathrm{Arnold}}\) is confined to genus~\(0\) or to the
+associated graded tangent screen.
+\item The local collision operator is coordinate independent: if
+$w=f(z)$ is an \'{e}tale coordinate change and \(f'(z_j)\ne0\), then
+\begin{equation}\label{eq:kz-coordinate-regular-difference}
+d\log(f(z_i)-f(z_j))-d\log(z_i-z_j)
+=d\log f'(z_j)
++d\log\!\left(
+1+\frac{f''(z_j)}{2f'(z_j)}(z_i-z_j)+O((z_i-z_j)^2)
+\right),
+\end{equation}
+a form regular along \(D_{ij}\). Hence the Poincar\'e residue along
+\(D_{ij}\) is unchanged. If the chiral algebra carries a stress tensor
+with central charge \(c\), a projective coordinate change is lifted
+through the Virasoro action and the defect from tensorial
+transformation is the Schwarzian cocycle
+\begin{equation}\label{eq:kz-virasoro-coordinate-cocycle}
+\widetilde T(f(z))
+=(f'(z))^2T(f(z))-\frac{c}{12}\{f;z\},
+\qquad
+\{f;z\}=\frac{f'''}{f'}-\frac32\left(\frac{f''}{f'}\right)^2 .
+\end{equation}
+If no stress tensor is part of the structure, only the $\cD$-module
+coordinate naturality is asserted.
+\item For an \'{e}tale map of curves $u\colon Y\to X$, pullback
+commutes with ordered FM collision divisors, logarithmic residues, and
+the ordered bar differential:
+$u^*\mathbb B^{\ord}_X(\cA)\simeq
+\mathbb B^{\ord}_Y(u^*\cA)$. For a smooth base change of curve
+families the same statement holds after de~Rham direct image under the
+usual holonomic finiteness and proper-support hypotheses.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first assertion is the definition of the KZ structure morphism on
+the finite current window: the universal generator $t_{ij}$ acts by the
+Casimir tensor in the $i,j$ factors, while the universal form is
+$\eta_{ij}=d\log(z_i-z_j)$. This gives the displayed pulled-back
+connection. Conjugation by \(s^{\otimes n}\) transports this action to
+the desuspended coefficient factor of \(\cK^{\ord}_{n,V}(\cA)\). The
+residue part of the bar differential is the same collision operator
+after applying the form residue; the full bar still contains the
+internal differential and all OPE modes recorded in
+Proposition~\ref{prop:pole-decomposition}.
+
+For flatness, compute
+\[
+\nabla_{\mathrm{Arnold}}^2
+=-\sum_{i<j}t_{ij}\,d\eta_{ij}
++\frac12\sum [t_{ij},t_{k\ell}]\,\eta_{ij}\wedge\eta_{k\ell}.
+\]
+Since $d\eta_{ij}=0$, disjoint-pair curvature terms are exactly
+$[t_{ij},t_{k\ell}]$, and triple terms are the product of the
+infinitesimal braid commutator with the Arnold cyclic sum. Thus the
+universal connection is flat precisely when those two families of
+relations hold. A representation can kill extra commutators; hence the
+fixed-window statement is the corresponding modulo-kernel assertion.
+
+The genus split is Proposition~\ref{prop:arnold-higher-genus},
+Proposition~\ref{prop:elliptic-arnold-relations},
+Definition~\ref{def:elliptic-kzb-connection},
+Proposition~\ref{prop:elliptic-kzb-flatness-jacobi},
+Theorem~\ref{thm:prime-form-properties}, and
+Remark~\ref{rem:period-integrals-bar}. For the coordinate statement,
+Taylor expansion gives
+\[
+f(z_i)-f(z_j)
+=f'(z_j)(z_i-z_j)
+\left(1+\frac{f''(z_j)}{2f'(z_j)}(z_i-z_j)
+  +O((z_i-z_j)^2)\right).
+\]
+Taking \(d\log\) gives
+\eqref{eq:kz-coordinate-regular-difference}. The final two summands in
+that display are regular along \(D_{ij}\), so the logarithmic residue
+is the same as the residue of \(d\log(z_i-z_j)\). The Virasoro
+coordinate defect is exactly the stress-tensor transformation law
+\eqref{eq:schwarzian-transformation} of
+Proposition~\ref{prop:schwarzian-central-charge}, written in the same
+sign convention in \eqref{eq:kz-virasoro-coordinate-cocycle}. The
+\'{e}tale and smooth-base-change statements follow from base change for
+logarithmic forms and holonomic $\cD$-module de~Rham direct image.
+\end{proof}
+
+\begin{proposition}[Coordinate independence of the collision-residue
+bar differential; \ClaimStatusProvedHere]
+\label{prop:bar-residue-coordinate-independence}
+\index{bar differential!coordinate independence of residue part}
+\index{Poincare residue!coordinate independence}
+Type signature: \textup{(}Open quadrant, ordered FM/logarithmic
+collision-residue presentation, Beilinson level~$2$, hypothesis
+package: local affine/formal collision screen, \'{e}tale coordinate
+change, logarithmic forms with simple pole along \(D_{ij}\), and the
+fixed residue-orientation convention of
+Appendix~\ref{app:signs}\textup{)}.
+Let \(z\) and \(w=f(z)\) be two \'{e}tale coordinates near a collision
+divisor \(D_{ij}\), with \(f'(z_j)\ne0\).  Put \(u=z_i-z_j\) and
+\[
+v=w_i-w_j=f(z_i)-f(z_j).
+\]
+Then \(v=u\,g\), where \(g\) is invertible along \(D_{ij}\), and
+\[
+d\log v=d\log u+d\log g .
+\]
+The second summand is regular along \(D_{ij}\).  Therefore, for every
+logarithmic form \(\alpha\) whose pole along \(D_{ij}\) is at most
+simple,
+\[
+\operatorname{Res}_{D_{ij}}\!\bigl(\alpha\wedge d\log(w_i-w_j)\bigr)
+=
+\operatorname{Res}_{D_{ij}}\!\bigl(\alpha\wedge d\log(z_i-z_j)\bigr),
+\]
+with the same determinant-line sign convention.  Consequently the
+collision-residue summand \(d_{\mathrm{res}}\) of the ordered bar
+differential is independent of the local affine/formal coordinate used
+to represent the logarithmic normal form \(\eta_{ij}\).
+
+This proposition concerns the residue part of the bar differential
+only.  The transformation law for the full KZ/projective connection is
+stronger: when a conformal stress tensor \(T\) with central charge \(c\)
+is part of the structure, projective coordinate change contributes the
+Schwarzian/Virasoro cocycle of
+\eqref{eq:kz-virasoro-coordinate-cocycle}; without that stress-tensor
+datum no Virasoro cocycle is asserted.
+\end{proposition}
+
+\begin{proof}
+Taylor expansion at \(z_j\) gives
+\[
+f(z_i)-f(z_j)
+=
+(z_i-z_j)
+\left(
+ f'(z_j)+\frac{f''(z_j)}{2}(z_i-z_j)+O((z_i-z_j)^2)
+\right).
+\]
+Thus \(v=u\,g\), with
+\[
+g=f'(z_j)+\frac{f''(z_j)}{2}u+O(u^2),
+\qquad
+g|_{D_{ij}}=f'(z_j)\ne0 .
+\]
+Since \(g\) is invertible on the collision screen, \(d\log g\) has no
+logarithmic pole along \(u=0\).  In the local decomposition of a
+logarithmic form,
+\[
+\omega=d\log u\wedge \omega_0+\omega_1,
+\]
+the Poincare residue is \(\omega_0|_{u=0}\); adding a regular
+one-form to \(d\log u\) does not change this coefficient.  Hence the
+two displayed residues agree, including the determinant-line sign
+fixed by the order in which \(d\log u\) is moved to the residue slot.
+Applying this equality to the coefficient forms in the ordered bar
+construction proves coordinate independence of \(d_{\mathrm{res}}\).
+The last paragraph is precisely the separation between residue
+naturality and the stress-tensor transformation law already recorded
+in Theorem~\ref{thm:kz-arnold-pullback-genus-package}.
+\end{proof}
+
+\begin{corollary}[\'{E}tale and holonomic base-change naturality of
+the ordered bar differential; \ClaimStatusProvedHere]
+\label{cor:ordered-bar-differential-base-change}
+\index{bar differential!etale naturality@\'{e}tale naturality}
+\index{bar differential!smooth base change}
+\index{smooth base change!ordered bar differential}
+Type signature: \textup{(}Open quadrant, ordered
+Fulton--MacPherson/logarithmic \(\cD\)-module presentation,
+Beilinson level~$2$, hypothesis package: augmented complete
+finite-window \(\Eone\)-chiral algebra; for \'{e}tale pullback, the
+usual pullback of chiral \(\cD\)-modules; for smooth base change, a
+smooth proper family of curves, relative FM stages, holonomic finite
+bar windows, and proper-support de~Rham direct-image base
+change\textup{)}.
+Let \(u\colon Y\to X\) be an \'{e}tale map of smooth curves and let
+\(u_n\colon\FM_n(Y)\to\FM_n(X)\) be the induced map on ordered
+Fulton--MacPherson compactifications. For every augmented finite-window
+\(\Eone\)-chiral algebra \(\cA\) on \(X\) there is a natural
+identification
+\[
+\Phi_{u,n}\colon
+u_n^*\mathbb B^{\ord}_{X,n}(\cA)
+\xrightarrow{\ \sim\ }
+\mathbb B^{\ord}_{Y,n}(u^*\cA)
+\]
+under which the three summands of the ordered bar differential commute:
+\[
+\Phi_{u,n}\,u_n^*d_\cA=d_{u^*\cA}\,\Phi_{u,n},\qquad
+\Phi_{u,n}\,u_n^*d_{\mathrm{dR}}
+=d_{\mathrm{dR}}\,\Phi_{u,n},
+\]
+and
+\[
+\Phi_{u,n}\,u_n^*d_{\mathrm{res}}^X
+=d_{\mathrm{res}}^Y\,\Phi_{u,n}.
+\]
+Equivalently,
+\[
+\Phi_{u,n}\,u_n^*d_B^X=d_B^Y\,\Phi_{u,n}.
+\]
+
+Now let
+\[
+\begin{tikzcd}
+\mathcal X' \arrow[r,"g"] \arrow[d,"\pi'"] &
+\mathcal X \arrow[d,"\pi"]\\
+S' \arrow[r,"h"] & S
+\end{tikzcd}
+\]
+be a cartesian smooth base change of smooth proper curve families.
+Assume the arity-\(n\) relative ordered bar windows are holonomic
+\(\cD\)-complexes on \(\FM_n(\mathcal X/S)\) and have proper support
+over \(S\). Then the standard holonomic \(\cD\)-module base-change
+isomorphism for de~Rham direct image identifies
+\[
+h^*\,R(\pi_n)_+
+\bigl(\mathbb B^{\ord}_{\mathcal X/S,n}(\cA),d_B\bigr)
+\;\cong\;
+R(\pi'_n)_+
+\bigl(\mathbb B^{\ord}_{\mathcal X'/S',n}(g^*\cA),d_B\bigr),
+\]
+and this isomorphism intertwines \(d_\cA\), \(d_{\mathrm{dR}}\),
+\(d_{\mathrm{res}}\), and hence \(d_B\). Without the holonomic
+finite-window and proper-support hypotheses this corollary asserts only
+the aritywise pullback identity before relative de~Rham pushforward.
+\end{corollary}
+
+\begin{proof}
+For an \'{e}tale map \(u\), the formal neighbourhood of a diagonal in
+\(Y^n\) is the pullback of the formal neighbourhood of the corresponding
+diagonal in \(X^n\). Thus
+\[
+u_n^{-1}(D^X_{ij})=D^Y_{ij}
+\]
+and the relative normal parameter on \(Y\) is obtained from the one on
+\(X\) by an \'{e}tale coordinate change. Proposition~\ref{prop:bar-residue-coordinate-independence}
+therefore gives the residue identity
+\[
+u_n^*\Res_{D^X_{ij}}=\Res_{D^Y_{ij}}\,u_n^*
+\]
+on logarithmic forms. The chiral product is a morphism of
+\(\cD\)-modules, so \'{e}tale pullback carries
+\[
+\mu_{\cA}\colon j_*j^*(\cA\boxtimes\cA)\to\Delta_!\cA
+\]
+to the chiral product \(\mu_{u^*\cA}\). Hence the OPE-mode projections
+and the residue operation commute with pullback, proving the displayed
+identity for \(d_{\mathrm{res}}\). The identities for \(d_\cA\) and
+\(d_{\mathrm{dR}}\) are the ordinary functoriality of the internal
+differential and of logarithmic de~Rham forms. Summing the three
+identities gives naturality of \(d_B\).
+
+For the family statement, the same argument applies on the relative FM
+spaces \(\FM_n(\mathcal X/S)\) before pushforward. Under the stated
+holonomic finite-window and proper-support hypotheses, holonomic
+\(\cD\)-module de~Rham direct image satisfies smooth/proper base change
+\textup{(}Hotta--Takeuchi--Tanisaki~\cite[\S1.7]{HTT08}\textup{)}.
+The three components \(d_\cA\), \(d_{\mathrm{dR}}\), and
+\(d_{\mathrm{res}}\) are morphisms of the corresponding relative
+holonomic complexes, and the base-change isomorphism is functorial for
+such morphisms. It therefore carries the relative complex with
+differential \(d_B\) to the pulled-back relative complex with the
+differential of \(g^*\cA\). This proves the asserted pushed-forward
+base-change identity and also explains why the holonomic/proper-support
+hypotheses are not optional after de~Rham direct image.
+\end{proof}
+
+\begin{remark}[The ordered bar carrier, not
 $\mathrm{SC}^{\mathrm{ch,top}}$]
 \label{rem:bar-not-sc-coalgebra}
 %
 \index{Swiss-cheese!emerges on derived centre, not on bar}%
-The bar coalgebra $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ is a
-single coassociative coalgebra over the chiral cooperad $(\chirAss)^!$
-with a single degree-$+1$ differential $d_{\mathrm{bar}}$ and the
-deconcatenation coproduct. It is \emph{not} a Swiss-cheese coalgebra:
+The bar object $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ is a
+single ordered coassociative coalgebra with a single degree-$+1$
+differential $d_{\mathrm{bar}}$ and the deconcatenation coproduct. Under
+the finite locally free \(\chirAss\)-self-duality package of
+Corollary~\ref{cor:ordered-bar-chirass-dual-carrier}, this is
+equivalently a coalgebra over the chiral cooperad
+\((\chirAss)^{!,c}\). It is \emph{not} a Swiss-cheese coalgebra:
 the $\mathrm{SC}^{\mathrm{ch,top}}$ structure emerges on
 the derived-centre pair
 $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$ via the chiral Hochschild
@@ -1502,6 +2278,84 @@ graded associative algebra), see Verification~\ref{ver:d2-degree3} and
 Proposition~\ref{prop:master-sign} in Appendix~\ref{app:signs}.
 \end{remark}
 
+\begin{theorem}[Bar sign theorem; \ClaimStatusProvedHere]
+\label{thm:bar-sign-coherence}
+\index{bar differential!sign theorem}
+\index{bar signs!determinant-line normalization}
+\index{Fulton--MacPherson!nested boundary sign}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+Fulton--MacPherson presentation, Beilinson level~$2$, hypothesis
+package: desuspended ordered bar convention of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}, enhanced
+orientation convention of
+Convention~\ref{conv:orientations-enhanced}, and determinant-line
+normalization of the canonical sign source in Appendix~\ref{app:signs},
+Convention~\ref{conv:canonical-sign-source-app-b}\textup{)}.
+All displayed bar-sign conventions in this chapter agree with the
+determinant-line signs of Theorem~\ref{thm:det-bar-cobar-signs} and the
+master sign formula of Proposition~\ref{prop:master-sign}. In
+particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the local length-$2$ and length-$3$ formulas of
+Computation~\ref{comp:bar-signs-2-1} agree with the geometric residue
+signs of Convention~\ref{conv:orientations-enhanced};
+\item for $[a|b|c]$ the product part satisfies
+\[
+d_{\mathrm{res}}^2[a|b|c]
+=(-1)^{|b|}\bigl([(ab)c]-[a(bc)]\bigr)=0;
+\]
+\item for $[a|b|c|d]$, the nested boundary through the triple
+collision of the first three inputs gives
+\[
+d_{\mathrm{res}}^2[a|b|c|d]\big|_{D_{12}\cap D_{123}}
+=(-1)^{|b|}\bigl([(ab)c|d]-[a(bc)|d]\bigr)=0,
+\]
+with the same formula after multiplying by the prefix sign for any
+other consecutive triple;
+\item the general $n$ case follows by induction on the collision tree:
+disjoint codimension-two faces cancel by residue anticommutation, and
+nested codimension-two faces reduce to the length-$3$ associativity
+calculation with the determinant-line prefix sign.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:LV-sign-comparison} identifies the geometric signs with
+the operadic signs through the determinant-line isomorphism, while
+Theorem~\ref{thm:det-bar-cobar-signs} and
+Proposition~\ref{prop:master-sign} give the canonical desuspended
+formula. The length-$3$ computation is
+Verification~\ref{ver:d2-degree3}: applying the product differential
+twice gives
+$(-1)^{|b|}((ab)c-a(bc))$.
+
+For the displayed length-$4$ nested face, first use
+\[
+d_{\mathrm{res}}[a|b|c|d]
+=(-1)^{|a|}[ab|c|d]
+ +(-1)^{|a|+|b|-1}[a|bc|d]
+ +(-1)^{|a|+|b|+|c|}[a|b|cd].
+\]
+The component supported on $D_{12}\cap D_{123}$ is obtained from the
+first two summands only. Applying $d_{\mathrm{res}}$ again to the first
+two slots gives
+\[
+(-1)^{|a|}(-1)^{|a|+|b|}[(ab)c|d]
+ +(-1)^{|a|+|b|-1}(-1)^{|a|}[a(bc)|d],
+\]
+which is the displayed
+$(-1)^{|b|}([(ab)c|d]-[a(bc)|d])$. Associativity kills it. A different
+consecutive triple only inserts the determinant-line prefix sign
+$(-1)^{\sum_{q<i}(|a_q|-1)}$ before the same calculation.
+
+Every codimension-two FM face is either disjoint or nested. The
+disjoint case is residue anticommutation from
+Convention~\ref{conv:orientations-enhanced}; the nested case contracts
+one internal edge of a collision tree and reduces to the length-$3$
+calculation. Induction on the number of internal edges gives the
+general $n$ statement.
+\end{proof}
+
 \begin{remark}[Boundary mechanism]\label{rem:d-squared-synthesis}\label{rem:geometric-miracle}
 The three mechanisms entering the proof of $d^2 = 0$,
 the Borcherds identity (algebra), Stokes' theorem (topology), and
@@ -1514,10 +2368,35 @@ on $\operatorname{Ran}(X)$ forces the compatibility
 see \S\ref{sec:selection-principle} for the selection principle).
 \end{remark}
 
+\begin{convention}[Borcherds mode signs; \ClaimStatusDefinitional]
+\label{conv:borcherds-mode-signs}
+\index{Borcherds identity!mode signs}
+\index{OPE modes!Borcherds convention}
+For homogeneous fields \(a,b,c\) we use the super Borcherds convention
+\begin{equation}\label{eq:borcherds-mode-signs}
+\begin{aligned}
+&\sum_{j\ge0}\binom{m}{j}
+  (a_{(n+j)}b)_{(m+k-j)}c  \\
+&\qquad =
+\sum_{j\ge0}(-1)^j\binom{n}{j}
+a_{(m+n-j)}\bigl(b_{(k+j)}c\bigr)
+-(-1)^n(-1)^{|a||b|}
+\sum_{j\ge0}(-1)^j\binom{n}{j}
+b_{(n+k-j)}\bigl(a_{(m+j)}c\bigr),
+\end{aligned}
+\end{equation}
+with \(|a|\) denoting parity before desuspension.  After desuspension
+the additional bar signs are exactly those of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}; no second
+Borcherds sign convention is used elsewhere in this chapter.
+\end{convention}
+
 \begin{proposition}[Pole decomposition of the bar differential; \ClaimStatusProvedHere]\label{prop:pole-decomposition}
 \index{bar differential!pole decomposition}
 \index{bar differential!bracket component}
 \index{bar differential!curvature component}
+Use the mode-sign convention of
+Convention~\ref{conv:borcherds-mode-signs}.
 The residue differential decomposes by OPE mode:
 \begin{equation}\label{eq:pole-decomposition}
 d_{\mathrm{res}}
@@ -1622,6 +2501,85 @@ d_{\mathrm{bracket}}^2
 and the scalarity just proved gives the displayed compensation formula.
 \end{proof}
 
+\begin{corollary}[Ordered Arnold--Borcherds residue cancellation;
+\ClaimStatusProvedHere]
+\label{cor:ordered-arnold-borcherds-residue-cancellation}
+\index{bar differential!Arnold--Borcherds cancellation}
+\index{residue differential!de Rham compatibility}
+\index{OPE modes!higher residues}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+Fulton--MacPherson presentation, Beilinson level~$2$, hypothesis
+package: augmented dg chiral algebra, the mode signs of
+Convention~\ref{conv:borcherds-mode-signs}, and the bar sign package
+of Theorem~\ref{thm:bar-sign-coherence}\textup{)}.
+In the sign convention used in
+Proposition~\ref{prop:ordered-bar-local-differential-identities}, the
+mixed de~Rham/residue term and the pure residue square vanish:
+\[
+d_{\mathrm{dR}}d_{\mathrm{res}}
++d_{\mathrm{res}}d_{\mathrm{dR}}=0,\qquad
+d_{\mathrm{res}}^2=0.
+\]
+The first identity is the total-complex form of the logarithmic
+residue-chain-map identity
+\[
+\Res_{D_{ij}}\circ d_{\mathrm{dR}}
+=d_{\mathrm{dR},D_{ij}}\circ\Res_{D_{ij}},
+\]
+with the anticommutation sign supplied by
+\eqref{eq:ordered-bar-ddR}.  For the second identity, the ordered
+three-point Arnold relation is, for \(i<j<k\),
+\begin{equation}\label{eq:ordered-arnold-three-sign}
+\eta_{ij}\wedge\eta_{jk}
+-\eta_{ij}\wedge\eta_{ik}
++\eta_{jk}\wedge\eta_{ik}=0,
+\end{equation}
+which is the cyclic convention of Theorem~\ref{thm:arnold-three}
+written with increasing wedge order and
+\(\eta_{ab}=\eta_{ba}\). The algebraic coefficient multiplying
+\eqref{eq:ordered-arnold-three-sign} is exactly the super Borcherds
+identity \eqref{eq:borcherds-mode-signs}.
+
+After projecting to the simple-pole summand \(d_{(0)}\), this becomes
+the super-Jacobi identity
+\[
+(a_{(0)}b)_{(0)}c-a_{(0)}(b_{(0)}c)
++(-1)^{|a||b|}b_{(0)}(a_{(0)}c)=0,
+\]
+equivalently the Arnold/Jacobi screen of
+Theorem~\ref{thm:arnold-jacobi}. For \(m\ge1\), the same residue
+operation sees the higher OPE mode \(a_{(m)}b\): the form residue
+removes the single logarithmic normal factor, while the projection
+\(\operatorname{pr}_m\mu\) selects pole order \(m+1\). Thus second and
+higher poles enter \(d_{\mathrm{res}}\) through Borcherds mode
+projections, not through iterated form residues.
+\end{corollary}
+
+\begin{proof}
+The de~Rham statement is the standard residue exact sequence for
+normal-crossings logarithmic forms, inserted into the totalization
+signs of \eqref{eq:ordered-bar-ddR} and
+\eqref{eq:ordered-bar-dres}. This is the mixed
+\(\{d_{\mathrm{dR}},d_{\mathrm{res}}\}\) calculation in
+Theorem~\ref{thm:bar-nilpotency-complete}.
+
+For \(d_{\mathrm{res}}^2\), disjoint collision divisors cancel because
+Poincar\'e residues anticommute. Repeating the same divisor gives zero
+because the first residue removes its unique logarithmic normal
+factor. The only remaining case is a triple collision. Rewriting the
+cyclic Arnold relation of Theorem~\ref{thm:arnold-three} in increasing
+wedge order gives \eqref{eq:ordered-arnold-three-sign}; the ordered
+bar signs are those of Theorem~\ref{thm:bar-sign-coherence}. The
+coefficient of these three logarithmic two-forms is precisely the
+Borcherds identity in the mode convention
+\eqref{eq:borcherds-mode-signs}, so the triple-overlap contribution
+vanishes. Setting \(m=n=k=0\) in
+\eqref{eq:borcherds-mode-signs} gives the displayed simple-pole
+Jacobi identity. The assertion about higher residues is
+Theorem~\ref{thm:bd-ope-residue-full-poles}, equivalently the
+modewise decomposition of Proposition~\ref{prop:pole-decomposition}.
+\end{proof}
+
 \begin{remark}[Bicomplex obstruction]\label{rem:bicomplex-obstruction}
 \index{bar complex!bicomplex structure}
 Proposition~\ref{prop:pole-decomposition} shows that the pole-order
@@ -1717,15 +2675,15 @@ algebra and the one-form factors wedged:
 +[r^{13}(z_{13}),r^{23}(z_{23})]
 =0 .
 \end{equation}
-The scalar attached to the same degree-two window is the averaged trace
-of the tensor coefficient of~$dz/z$:
+The scalar attached to the same degree-two window is the normalized
+trace of the homotopy-coinvariant operator:
 \begin{equation}\label{eq:kappa-degree-two-trace}
 \kappa_{\mathrm{tr},V}(\cA)
 \;:=\;
 \frac{1}{\operatorname{rk}V}\,
 \operatorname{contr}_{(\,,\,)_V}
 \!\left(\operatorname{Coeff}_{dz/z}
-r^{\mathrm{coll}}_{\cA,V}\right)
+q_2(K^{\mathrm{coll}}_{\cA,V})\right)
 \;=\;
 \frac{1}{\operatorname{rk}V}
 \sum_\alpha \ell_V(e_\alpha,e^\alpha).
@@ -1778,11 +2736,51 @@ and the parenthesized rational function is zero. This proves the CYBE
 on the finite current trace-window surface.
 
 Formula~\eqref{eq:kappa-degree-two-trace} is the contraction of the
-$V\otimes V$ coefficient of $dz/z$ against the same trace pairing.
+$V\otimes V$ coefficient of $q_2(K^{\mathrm{coll}}_{\cA,V})$ against
+the same trace pairing.
 The contraction of a tensor defined from a bilinear form is invariant
 under change of homogeneous dual basis. For a rank-one Heisenberg
 window $V=\bC J$ with $(J,J)_V=1$ and $\ell_V(J,J)=k$, the tensor
-residue is $k\,J\otimes J\,dz/z$ and the averaged trace is~$k$.
+residue is $k\,J\otimes J\,dz/z$ and the normalized trace is~$k$.
+\end{proof}
+
+\begin{corollary}[Averaging preserves the scalar conductor;
+\ClaimStatusConditional]
+\label{cor:averaging-preserves-scalar-kappa}
+\index{averaging map!scalar conductor}
+\index{scalar conductor!averaging invariance}
+Work under the finite current trace-window hypotheses of
+Proposition~\ref{prop:operator-valued-collision-residue-trace} and
+assume the family normalization identifies
+$\kappa(\cA)=\kappa_{\mathrm{tr},V}(\cA)$ on that window. Then the
+ordered-to-symmetric Reynolds projection preserves this scalar:
+\[
+\operatorname{contr}_{(\,,\,)_V}
+\operatorname{Coeff}_{dz/z}
+\operatorname{Av}_2
+\bigl(r^{\mathrm{coll}}_{\cA,V}(z)\bigr)
+=
+\operatorname{contr}_{(\,,\,)_V}
+\operatorname{Coeff}_{dz/z}
+r^{\mathrm{coll}}_{\cA,V}(z).
+\]
+Equivalently, averaging kills the nontrivial $\Sigma_2$-isotypic
+collision data but leaves the trivial scalar trace, hence leaves the
+declared scalar $\kappa(\cA)$ unchanged.
+\end{corollary}
+
+\begin{proof}
+The contraction against the invariant pairing is a
+$\Sigma_2$-equivariant trace functional on $V\otimes V$. It vanishes on
+the antisymmetric summand
+$\ker(\operatorname{Av}_2)$ described in
+Proposition~\ref{prop:ordered-bar-low-arity-averaging-kernels} and is
+the identity on the trivial summand. Therefore applying
+$\operatorname{Av}_2$ before taking the coefficient of $dz/z$ and the
+trace contraction gives the same scalar as tracing first. The
+hypothesis that $\kappa(\cA)$ is this finite-window trace is exactly the
+normalization needed to turn the invariant trace into the manuscript's
+scalar conductor.
 \end{proof}
 
 \begin{corollary}[Functoriality; \ClaimStatusConditional]\label{cor:bar-functorial}
@@ -2353,37 +3351,43 @@ this as
 $\bar{B}(k)\circ\bar{B}(f) = \bar{B}(g)\circ\bar{B}(h)$.
 \end{proof}
 
-\begin{proposition}[Model independence; \ClaimStatusConditional]
+\begin{proposition}[Based comparison of bar models; \ClaimStatusProvedHere]
 \label{prop:model-independence}
 \index{model independence}
 Let $\cA$ be a chiral algebra on~$X$.
-Any two admissible\footnote{An admissible presentation is a
-dg factorization coalgebra computing $\bar{B}_X(\cA)$ in the homotopy
-category: it is built from sections of $\cA^{\boxtimes(n+1)}$ over
-open substacks of $\operatorname{Ran}(X)$ and its differential restricts
-to the collision-residue map on each boundary stratum.}
-dg presentations of the bar object
-$\mathcal{B}_X(\cA)$ are connected by a contractible space of
-quasi-isomorphisms. In particular, any two such models give
-canonically isomorphic cohomology, spectral sequences, and generating
-functions.
+Let $B_1$ and $B_2$ be admissible dg factorisation-coalgebra models,
+equipped with specified equivalences
+\[
+ u_i\colon B_i\xrightarrow{\;\sim\;}\mathcal B_X(\cA),
+ \qquad i=1,2,
+\]
+to a fixed bar object.  Then the mapping space between
+$(B_1,u_1)$ and $(B_2,u_2)$ in the slice
+$\infty$-category
+$\mathsf{dgCoalg}_{X,/\mathcal B_X(\cA)}$ is contractible.  Hence
+cohomology and every functorial filtered invariant of the two based
+models are identified through a contractible space of maps over
+$\mathcal B_X(\cA)$.
+
+After forgetting the maps~$u_i$, the equivalence component carries the
+natural action of
+$\operatorname{Aut}(\mathcal B_X(\cA))$.  Thus an unbased comparison
+is a choice in the corresponding automorphism torsor.
 \end{proposition}
 
 \begin{proof}
-Both presentations are cofibrant-fibrant objects in the model structure
-on conilpotent dg coalgebras over $\operatorname{Ran}(X)$
-(that is, dg coalgebras whose iterated reduced coproduct vanishes on
-every section; see Definition~\ref{def:conilpotent-chiral-coalgebra})
-(Positselski~\cite{Positselski11}, Theorem~8.1). Cofibrant-fibrant
-replacements in this model structure are unique up to a contractible
-space of weak equivalences: the mapping space
-$\operatorname{Map}(B_1, B_2)$ between two such replacements is
-contractible whenever both compute the same homotopy object.
-The configuration-space model $\bar{B}_X(\cA)$ is cofibrant by
-freeness of the coalgebra generators and fibrant by the Cousin
-filtration (Theorem~\ref{thm:chevalley-cousin}). Any other admissible
-model shares these properties by the same arguments, whence the
-mapping space between them is contractible.
+In the slice $\infty$-category over $\mathcal B_X(\cA)$, each
+$(B_i,u_i)$ is equivalent to the terminal object
+$(\mathcal B_X(\cA),\mathrm{id})$.  The mapping space from any object
+to a terminal object is contractible, and equivalence with the target
+preserves mapping spaces.  This proves the based assertion.
+
+For the unbased assertion, choose one equivalence
+$f\colon B_1\xrightarrow{\sim}B_2$.  Composition identifies every
+other equivalence in the same component with
+$\alpha\circ f$ for a homotopy automorphism~$\alpha$ of~$B_2$.
+Transport along~$u_2$ identifies this automorphism space with
+$\operatorname{Aut}(\mathcal B_X(\cA))$.
 \end{proof}
 
 \subsection{Coalgebra structure}
@@ -2736,7 +3740,12 @@ The differences are as follows.
 \textbf{Loday--Vallette (Operadic)} & \textbf{Ours (Geometric)} \\
 \hline
 $d_{op}(s a_1 \otimes \cdots \otimes s a_n)$ & $d_{geom}(a_1 \otimes \cdots \otimes a_n \otimes \omega_n)$ \\
-Sign: $(-1)^{|a_1| + \cdots + |a_{i-1}|}$ & Sign: $(-1)^{\epsilon_i}$ (from form degree) \\
+Sign: $(-1)^{|a_1| + \cdots + |a_{i-1}|}$ &
+Internal sign:
+$(-1)^{\sum_{q<i}(|a_q|-1)}$; residue sign:
+$(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}$ plus the FM
+boundary-orientation parity of
+Proposition~\ref{prop:ordered-bar-local-differential-identities}. \\
 Suspension degree $|s a_i| = |a_i| + 1$ & Form degree $|\omega| = n$ \\
 \hline
 \end{tabular}
@@ -2781,8 +3790,9 @@ Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.
 For a residue face \(D_{ij}\), the operadic cocomposition sign is the
 sign obtained by moving the suspended collision block through the
 preceding suspended factors. Under \(\iota_n\) this is the sign obtained
-by moving the logarithmic normal form \(d\log(z_i-z_j)\) through the
-preceding coefficient factors before applying the Poincare residue.
+by moving the local affine/formal representative \(d\log(z_i-z_j)\) of
+the logarithmic normal form through the preceding coefficient factors
+before applying the Poincare residue.
 The outward-normal convention supplies the same normal-orientation
 character. Thus \(\iota_n d_{\bar B}\iota_n^{-1}\) is the geometric
 operator \(d_{\mathrm{dR}}+d_{\mathrm{res}}\) with the signs used in
@@ -2830,8 +3840,12 @@ whose three terms are:
  (a_{i+1} \otimes \cdots \otimes a_n),
  \]
  a sum over the\/ $n+1$ consecutive cuts.
- This is the Koszul dual cooperad of\/ $\chirAss$ and is the
- level-$2$ ordered object carrying the $R$-matrix tower.
+ Under the finite locally free quadratic package of
+ Definition~\ref{def:chirass-dual-cooperad} and
+ Proposition~\ref{prop:chirAss-self-dual}, this ordered tensor
+ cooperad is the chiral cooperad \((\chirAss)^{!,c}\); without that
+ package it remains the proved level-$2$ ordered tensor carrier
+ carrying the $R$-matrix tower.
 \item \textup{(Symmetric/coshuffle bar.)}
  $\mathrm{Sym}^c(s^{-1}\bar\cA)$:
  the cofree cocommutative coassociative conilpotent
@@ -3162,87 +4176,189 @@ That extra identification is not part of the present chiral bar
 formalism.
 \end{remark}
 
-\begin{theorem}[Residue formula; \ClaimStatusProvedHere]\label{thm:residue-formula}
+\begin{theorem}[Arbitrary-mode ordered residue formula;
+\ClaimStatusProvedHere]\label{thm:residue-formula}
 \index{residue!iterated}
-Following Beilinson--Drinfeld \cite[§3.7.4, p.228]{BD04},
-let $\mathcal{A}$ be generated by fields $\phi_\alpha(z)$ with conformal weights $h_\alpha$ and OPE:
+\index{OPE modes!arbitrary-mode bar residue}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+Fulton--MacPherson presentation, Beilinson level~$2$, hypothesis
+package: finite OPE window in a dg chiral algebra, ordered
+boundary-orientation convention
+\ref{conv:orientations-enhanced}, and bar-sign convention
+\ref{thm:bar-sign-coherence}\textup{)}.
+Let \(V\subset\bar\cA\) be a finite homogeneous window closed under
+the finitely many singular products \(a_{(m)}b\) occurring in the
+window. For homogeneous \(a_1,\ldots,a_N\in V\), write
+\([a_1|\cdots|a_N]=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_N\).
+Let \(D_I\), \(I=\{i,j\}\) with \(i<j\), be a pairwise collision
+divisor and write
+a logarithmic form near \(D_I\) as
+\[
+\omega=\eta_I\wedge\alpha+\beta,\qquad
+\eta_I=d\log(z_i-z_j),
+\]
+with \(\alpha,\beta\) logarithmic forms having no normal
+\(d\log(z_i-z_j)\)-factor. The \(m\)-th OPE-mode contribution of the
+ordered residue differential along \(D_I\) is
+\begin{equation}\label{eq:ordered-residue-arbitrary-mode}
+d_{(m),I}\bigl([a_1|\cdots|a_N]\otimes\omega\bigr)
+=
+(-1)^{\epsilon_B(I;a_\bullet,\omega)}
+[a_1|\cdots|a_i{}_{(m)}a_j|\cdots|
+\widehat{a_j}|\cdots|a_N]\otimes\alpha|_{D_I}.
+\end{equation}
+The parity \(\epsilon_B(I;a_\bullet,\omega)\) is the unique parity
+fixed by Theorem~\ref{thm:bar-sign-coherence}; for the adjacent
+ordered face \(I=\{i,i+1\}\) and \(\omega=\eta_{i,i+1}\wedge\alpha\),
+it is
+\[
+\epsilon_B(I;a_\bullet,\omega)
+\equiv
+\sum_{q<i}(|a_q|-1)+|a_i|
+\pmod 2,
+\]
+the exponent in \eqref{eq:ordered-bar-dres}. For non-adjacent FM
+faces, the same formula is multiplied by the block-permutation and
+boundary-orientation parity of
+Convention~\ref{conv:orientations-enhanced}.
+If the normal factor \(\eta_I\) is absent, then
+\(\operatorname{Res}^{\mathrm{form}}_{D_I}(\omega)=0\), hence the
+summand is zero.
 
-\footnote{The distributional nature of operator products requires care in defining
-products of distributions. We follow Hörmander's theory of wavefront sets: the OPE
-is well-defined when wavefront sets are in general position. See Hörmander,
-\textit{Analysis of Linear Partial Differential Operators I}, Theorem 8.2.10, or
-Costello--Gwilliam Vol. 1, \S2.4 for the QFT perspective.}
-
+The cases \(m=0\), \(m=1\), and \(m\ge2\) are respectively the
+simple-pole bracket, double-pole, and higher-pole contributions. The
+Poincar\'e residue removes only the logarithmic form factor
+\(\eta_I\); it never imposes \(m=0\). The pole order is selected
+solely by the mode projection of the Beilinson--Drinfeld chiral
+operation:
 \[
-\phi_\alpha(z)\phi_\beta(w) \sim \sum_{\gamma} \sum_{r=0}^{N_{\alpha\beta}}
-\frac{C^{\gamma,r}_{\alpha\beta} \partial^r\phi_\gamma(w)}{(z-w)^{h_\alpha + h_\beta - h_\gamma - r}}
-+ \text{regular}
+\operatorname{pr}_m\mu_{\mathrm{BD}}(a_i,a_j)
+=a_i{}_{(m)}a_j .
 \]
-where the sum is finite (quasi-finite OPE). Write
-\[
-P_{\alpha\beta}^{\gamma,r}=h_\alpha+h_\beta-h_\gamma-r
-\]
-for the pole order of the displayed term. If
-\[
-\omega=\eta_{i_1j_1}\wedge\cdots\wedge\eta_{i_kj_k}
-\]
-and $(i,j)=(i_s,j_s)$ occurs once, then the $m$-th pole-mode
-summand of the residue differential is
-\[
-\begin{aligned}
-d_{(m),ij}&\bigl(
-\phi_{\alpha_1}(z_1)\otimes\cdots\otimes
-\phi_{\alpha_{N}}(z_N)\otimes \omega\bigr)  \\
-&=
-(-1)^{s-1+\epsilon_{\mathrm{Koszul}}}
-\sum_{\substack{\gamma,r\\P_{\alpha_i\alpha_j}^{\gamma,r}=m+1}}
-C^{\gamma,r}_{\alpha_i\alpha_j}\,
-\phi_{\alpha_1}\otimes\cdots\otimes
-\partial^r\phi_\gamma\otimes\cdots\otimes
-\widehat{\phi_{\alpha_i},\phi_{\alpha_j}}\otimes\cdots
-\otimes
-\eta_{i_1j_1}\wedge\cdots\wedge\widehat{\eta_{ij}}\wedge\cdots
-\wedge\eta_{i_kj_k}.
-\end{aligned}
-\]
-Here $N$ is the number of tensor factors. If no factor $\eta_{ij}$ is
-present, the form residue along $D_{ij}$ is zero. The case $m=0$ is
-the bracket component; the case $m=1$ is the double-pole component;
-all $m\ge2$ are higher-pole components.
-The Poincar\'e residue removes the logarithmic form factor
-$\eta_{ij}$; it does not impose the condition $P=1$ on the OPE.
-The condition $P=m+1$ is instead the choice of OPE mode
-$a_{(m)}b$ in the chiral product.
 \end{theorem}
 
 \begin{proof}
-Near $D_{ij}$, we use blow-up coordinates $(u, \epsilon, \theta)$ where:
+Near \(D_I\), put \(t=z_i-z_j\). Every logarithmic form has the
+normal decomposition
 \[
-z_i = u + \frac{\epsilon}{2}e^{i\theta}, \quad z_j = u - \frac{\epsilon}{2}e^{i\theta}
+\omega=d\log t\wedge\alpha+\beta,\qquad
+\operatorname{Res}^{\mathrm{form}}_{D_I}(\omega)=\alpha|_{D_I}.
 \]
-The logarithmic form becomes:
+The BD chiral product decomposes on the chosen OPE window as the
+finite sum of mode projections
 \[
-\eta_{ij} = d\log(\epsilon e^{i\theta}) = d\log\epsilon + id\theta
+\mu_{\mathrm{BD}}=\sum_{m\ge0}\operatorname{pr}_m\mu_{\mathrm{BD}},
+\qquad
+\operatorname{pr}_m\mu_{\mathrm{BD}}(a_i,a_j)=a_i{}_{(m)}a_j.
 \]
-The OPE gives:
+Thus the boundary operation obtained by first taking the logarithmic
+form residue and then applying the \(m\)-th mode projection is exactly
+\eqref{eq:ordered-residue-arbitrary-mode}. The sign is not a new
+convention: for adjacent collisions it is the exponent of
+\eqref{eq:ordered-bar-dres}; for non-adjacent FM faces it is the same
+desuspended bar sign together with the block and boundary-orientation
+parity fixed in Convention~\ref{conv:orientations-enhanced}. Since
+the decomposition of \(\mu_{\mathrm{BD}}\) is over all singular modes
+in the finite window, no higher pole can be lost by the form-residue
+operation.
+\end{proof}
+
+\begin{theorem}[BD chiral operation and full OPE residue;
+\ClaimStatusProvedHere]
+\label{thm:bd-ope-residue-full-poles}
+\index{Beilinson--Drinfeld!chiral operation and bar residue}
+\index{OPE residue!full pole retention}
+\index{bar differential!arbitrary OPE mode}
+Type signature: \textup{(}Open quadrant, symmetric
+Beilinson--Drinfeld/Ran presentation compared with the ordered
+logarithmic Fulton--MacPherson presentation, Beilinson level~$2$,
+hypothesis package: chiral algebra locality, ordered-to-symmetric
+comparison only after a separate descent datum, and the sign package
+of Theorem~\ref{thm:bar-sign-coherence}\textup{)}.
+On the formal neighbourhood of a pairwise diagonal, the OPE residue
+used in the ordered logarithmic bar is the Beilinson--Drinfeld chiral
+operation
 \[
-\phi_{\alpha_i}(z_i)\phi_{\alpha_j}(z_j) = \sum_{\gamma,r}
-\frac{C^{\gamma,r}_{\alpha_i\alpha_j} \partial^r\phi_\gamma(u)}{(\epsilon e^{i\theta})^{h_{\alpha_i} + h_{\alpha_j} - h_\gamma - r}}
-+ O(\epsilon^0)
+\mu_{\mathrm{BD}}\colon
+j_*j^*(\cA\boxtimes\cA)\longrightarrow \Delta_!\cA
 \]
-The form residue extracts the coefficient of $d\log\epsilon$ in the
-logarithmic form factor:
+written on the Fulton--MacPherson boundary. In a local coordinate
+normal to the diagonal,
 \[
-\operatorname{Res}^{\mathrm{form}}_{D_{ij}}
-(d\log\epsilon\wedge\alpha+\beta)=\alpha|_{D_{ij}}.
+a(z)b(w)\sim
+\sum_{m\ge0}(a_{(m)}b)(w)(z-w)^{-m-1}
+\quad\Longleftrightarrow\quad
+\operatorname{pr}_m\mu_{\mathrm{BD}}(a,b)=a_{(m)}b .
 \]
-Independently, the chiral product is decomposed into its mode
-projections; the term of pole order $m+1$ is precisely
-$(\phi_{\alpha_i})_{(m)}\phi_{\alpha_j}$. Combining these two
-operations gives the displayed formula. The sign is the Koszul sign
-for moving the normal logarithmic factor to the first position before
-taking the Poincar\'e residue, together with the sign from moving the
-two desuspended field factors into the collision position.
+This theorem is the ordered boundary statement before taking
+coinvariants. No singular OPE mode is discarded: for arbitrary tensor
+length and arbitrary pole order, the contribution of the $m$-th mode
+\(a_{(m)}b\) is exactly the summand
+\eqref{eq:ordered-residue-arbitrary-mode} of
+Theorem~\ref{thm:residue-formula}. Higher poles are therefore part of
+$d_{\mathrm{res}}$; only an additional current-window hypothesis may
+project them to a scalar trace or remove them from a specific
+comparison. This bar-residue statement is not the polar connection
+kernel: the logarithmic form supplies the normal orientation and does
+not multiply the OPE pole by a second propagator pole.
+\end{theorem}
+
+\begin{proof}
+The chiral product in the sense of Beilinson--Drinfeld
+\cite[\S\S3.3--3.4]{BD04} is the $\cD$-module morphism from the
+extension across the complement of the diagonal to the diagonal
+pushforward. Its local-coordinate expansion along the diagonal is the
+singular OPE expansion, so the \(m\)-th normal coefficient is
+\(\operatorname{pr}_m\mu_{\mathrm{BD}}(a,b)=a_{(m)}b\). The FM
+boundary divisor $D_{ij}$ is the normal-crossings resolution of that
+same diagonal collision. Applying the Poincar\'e residue to the
+logarithmic normal form and then applying \(\mu_{\mathrm{BD}}\) is
+therefore the boundary model for the BD operation. The ordered complex
+keeps the labelled \(E_1\) lift before quotienting.
+
+The arbitrary-mode formula is
+\eqref{eq:ordered-residue-arbitrary-mode}. The form residue removes
+only the logarithmic form factor $\eta_{ij}$.
+The pole order is selected separately by the OPE-mode projection
+$\operatorname{pr}_m\mu_{\mathrm{BD}}\), so the construction includes
+every $m\ge0$ term. Proposition~\ref{prop:pole-decomposition} records
+the same fact at the level of the differential
+$d_{\mathrm{res}}=\sum_{m\ge0}d_{(m)}$. The signs in the displayed
+formula are those fixed by Theorem~\ref{thm:bar-sign-coherence}.
+\end{proof}
+
+\begin{corollary}[Symmetric BD residue after descent;
+\ClaimStatusConditional]
+\label{cor:bd-ope-symmetric-ran-differential}
+\index{Beilinson--Drinfeld!symmetric residue after descent}
+\index{symmetric bar!conditional BD differential}
+Type signature: \textup{(}Open quadrant, symmetric
+Beilinson--Drinfeld/Ran presentation, Beilinson level~$2$, hypothesis
+package: the ordered residue theorem
+\ref{thm:bd-ope-residue-full-poles} plus the ordered-to-symmetric
+descent datum of
+Proposition~\ref{prop:symmetric-bar-descent-criterion}\textup{)}.
+If the descent criterion of
+Proposition~\ref{prop:symmetric-bar-descent-criterion} is satisfied,
+then the symmetric quotient of the ordered residue differential is the
+Cousin/factorisation differential on the Beilinson--Drinfeld Ran
+coalgebra. Without that descent datum this quotient is only a graded
+coinvariant shadow and is not asserted to be a dg factorisation
+coalgebra.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:bd-ope-residue-full-poles} identifies the ordered
+Fulton--MacPherson boundary residue with the BD chiral operation and
+retains all pole modes. Proposition~\ref{prop:symmetric-bar-descent-criterion}
+is exactly the compatibility condition that makes the
+$\Sigma_\bullet$-coinvariant differential, de~Rham differential, and
+coalgebra structure descend to the unordered Ran quotient. Under that
+condition the quotient of the ordered residue is therefore the
+BD Ran-side Cousin differential. If the condition is absent, the same
+coinvariant object has no asserted differential compatible with
+factorisation, so the symmetric statement stops at the formal graded
+quotient.
 \end{proof}
 
 \subsection{Uniqueness and functoriality}
@@ -3355,6 +4471,127 @@ Any other natural isomorphism $\eta': F \Rightarrow G$ must agree on $\mathcal{O
 hence on free algebras by external product, hence on all algebras by locality.
 \end{proof}
 
+\begin{theorem}[Ordered bar as a complete conilpotent functor;
+\ClaimStatusProvedHere]
+\label{thm:ordered-bar-complete-conilpotent-functor}
+\index{ordered bar!complete conilpotent functor}
+\index{complete conilpotent dg coalgebra!ordered bar}
+Type signature: \textup{(}Open quadrant, ordered logarithmic
+Fulton--MacPherson/Ran presentation, Beilinson level~$2$, hypothesis
+package: augmented complete finite-window $\Eone$-chiral algebra,
+holonomic/excision descent on disjoint opens, finite output in every
+fixed word-length window, and the sign package of
+Theorem~\ref{thm:bar-sign-coherence}\textup{)}.
+Let
+\[
+\widehat{\mathbb B}^{\ord}_X(\cA)
+        :=\prod_{n\geq 0}\mathbb B^{\ord}_{X,n}(\cA)
+\]
+be the completed ordered bar carrier of
+Definition~\ref{def:ordered-chiral-bar-term-log}. The assignment
+\[
+\cA\longmapsto
+\bigl(\widehat{\mathbb B}_X^{\ord}(\cA),d_B,\Delta_{\mathrm{dec}},
+\varepsilon_B,F^\bullet\bigr)
+\]
+extends to a functor from augmented $\Eone$-chiral algebras on $X$ to
+complete conilpotent dg coalgebras on the ordered Ran space:
+\[
+B_X^{\ord}\colon
+\mathsf{ChirAlg}^{\Eone,\mathrm{aug,comp}}_X
+\longrightarrow
+\mathsf{dgCoalg}^{\mathrm{conil,comp}}(\Ran^{\ord}(X)).
+\]
+More precisely:
+\begin{enumerate}
+\item the differential is
+\[
+d_B=d_\cA+d_{\mathrm{dR}}+d_{\mathrm{res}},
+\]
+satisfies \(d_B^2=0\), and is a coderivation for the
+deconcatenation coproduct \(\Delta_{\mathrm{dec}}\);
+\item \(\varepsilon_B\) is projection to word length~\(0\), the
+coaugmentation is the unit word, and the reduced augmentation ideal
+removes all positive-length vacuum degeneracies;
+\item the filtration \(F^\bullet\) is the completed word-length
+filtration, every finite word-length quotient is conilpotent under
+the reduced deconcatenation coproduct, and the product completion is
+therefore complete pro-conilpotent;
+\item for a morphism \(f\colon\cA\to\cA'\), the induced coalgebra map is
+the tensorwise map \(s^{-1}\bar f\) on augmentation-ideal factors and
+the identity on the logarithmic Fulton--MacPherson form factor.
+\end{enumerate}
+This is an ordered statement. It asserts neither descent to the
+symmetric Ran quotient nor a global KZ/Arnold comparison; those require
+separate locality and genus hypotheses.
+\end{theorem}
+
+\begin{proof}
+For an augmented complete finite-window \(\Eone\)-chiral algebra
+\(\cA\), Definition~\ref{def:ordered-chiral-bar-term-log} gives the
+aritywise logarithmic Fulton--MacPherson \(\cD\)-module
+\(\mathbb B^{\ord}_{X,n}(\cA)\). Taking the product over word length
+gives \(\widehat{\mathbb B}^{\ord}_X(\cA)\), and the finite-output
+hypothesis ensures that the internal differential, de Rham
+differential, and residue/OPE collision differential are continuous
+for this completion.
+
+Proposition~\ref{prop:ordered-bar-local-differential-identities}
+computes the three summands
+\[
+d_\cA,\qquad d_{\mathrm{dR}},\qquad d_{\mathrm{res}}
+\]
+on ordered logarithmic charts and proves the identities
+\[
+d_\cA^2=d_{\mathrm{dR}}^2=d_{\mathrm{res}}^2=0,\qquad
+d_\cA d_{\mathrm{dR}}+d_{\mathrm{dR}}d_\cA=
+d_\cA d_{\mathrm{res}}+d_{\mathrm{res}}d_\cA=
+d_{\mathrm{dR}}d_{\mathrm{res}}+d_{\mathrm{res}}d_{\mathrm{dR}}=0.
+\]
+Hence \(d_B=d_\cA+d_{\mathrm{dR}}+d_{\mathrm{res}}\) is square-zero.
+The same proposition checks that \(d_B\) is a coderivation for
+ordered deconcatenation; Theorem~\ref{thm:bar-sign-coherence} supplies
+the global sign compatibility for passing between ordered charts.
+Proposition~\ref{prop:ordered-bar-carrier-ran-factorisation} supplies
+the factorisation restrictions on disjoint ordered opens, so the
+coalgebra object lives on \(\Ran^{\ord}(X)\).
+
+The counit is projection to the empty word and the coaugmentation is
+inclusion of the empty word. Passing to the reduced augmentation ideal
+removes positive-length words containing a vacuum factor by the
+normalization in
+Proposition~\ref{prop:ordered-bar-local-differential-identities}. The
+word-length filtration is complete and is preserved by \(d_B\) and by
+\(\Delta_{\mathrm{dec}}\) by
+Convention~\ref{conv:bar-length-filtration}. On a word of length
+\(n\), the \(N\)-fold reduced deconcatenation is zero for \(N>n\);
+therefore every finite word-length quotient is conilpotent. The full
+product object is the inverse limit of these conilpotent finite
+quotients, which is the asserted complete pro-conilpotence.
+
+Let \(f\colon\cA\to\cA'\) be a morphism in
+\(\mathsf{ChirAlg}^{\Eone,\mathrm{aug,comp}}_X\). Since \(f\) preserves
+augmentations, it restricts to \(\bar f\colon\bar\cA\to\bar\cA'\). The
+map on word length \(n\) is
+\[
+(s^{-1}\bar f)^{\otimes n}\otimes
+\mathrm{id}_{\Omega^\bullet_{\log}(\FM_X(n))},
+\]
+with the evident ordered Ran pullback on the carrier. Preservation of
+the internal differential gives compatibility with \(d_\cA\);
+preservation of the \(\Eone\)-chiral OPE products gives compatibility
+with \(d_{\mathrm{res}}\); the identity on the logarithmic
+Fulton--MacPherson form factor gives compatibility with
+\(d_{\mathrm{dR}}\). Tensorwise application also commutes with
+deconcatenation, the empty-word counit, the coaugmentation, and
+\(F^\bullet\). Identities and composition are checked in each word
+length, hence the construction is functorial.
+
+No quotient by the symmetric group is used in the argument, and no
+KZ/Arnold pullback identity is invoked. The theorem therefore remains
+strictly ordered and finite-window complete.
+\end{proof}
+
 \subsection{Bar complex as chiral coalgebra}
 
 \begin{theorem}[Bar complex is chiral; \ClaimStatusConditional]\label{thm:bar-chiral}
@@ -3403,12 +4640,15 @@ augmented chiral algebra, the Fulton--MacPherson compactification of its
 configuration spaces, and the logarithmic kernel
 $\eta_{ij}=d\log(z_i-z_j)$ assemble into the dg factorization coalgebra
 $\barB_X(\cA)$, with the Arnold relation enforcing $\dzero^2=0$ at
-genus~$0$. The symmetric bar is the $\Sigma_n$-coinvariant projection of
-the primitive ordered bar
-$B^{\mathrm{ord}}_X(\cA)=T^c(s^{-1}\bar\cA)$. On the PBW/Koszul
-$E_\infty$ surface this projection preserves the cohomology used in
-Theorem~H; outside that surface it is only the averaging map and need not
-preserve the ordered cohomology. The cobar--bar adjunction
+genus~$0$. The symmetric bar is the universal-conductor descent of the
+primitive ordered bar
+$B^{\mathrm{ord}}_X(\cA)=T^c(s^{-1}\bar\cA)$: ordinary
+$\Sigma_n$-coinvariants in the untwisted characteristic-zero splitting,
+and $L_R$-twisted derived completed coinvariants in the braided case.
+On the PBW/Koszul $E_\infty$ surface this descent preserves the
+cohomology used in Theorem~H; outside that surface it is only the
+averaging map and need not preserve the ordered cohomology. The
+cobar--bar adjunction
 (Chapter~\ref{chap:cobar-construction}) inverts this construction on
 the Koszul locus; the fiberwise curvature
 $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$
@@ -3476,9 +4716,12 @@ Mukai-lattice grading $\Lambda_{\mathrm{Muk}}$.
 Let $d_B = d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar d_{\mathrm{assoc}}
 + \hbar^2 d_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}$ be the bar differential of
 Remark~\ref{rem:barconstr-1} and let $d_A$ be the BKM differential on
-$\mathbf{H}_{\Delta_5}$ (Chevalley--Eilenberg differential of
-$\mathfrak{g}_{\Delta_5}$ lifted to its
-Etingof--Kazhdan quantisation; Borcherds 1988 \S 4).
+$\mathbf{H}_{\Delta_5}$ (Chevalley--Eilenberg differential of the
+completed Lie bialgebra
+$(\mathfrak{g}_{\Delta_5},\delta_{\mathrm{GN}})$ lifted, after a
+chosen associator and pro-\(\hbar\)-adic topology are fixed, to the
+specified Etingof--Kazhdan super-quasi-Hopf target; Borcherds 1988
+\S 4).
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Differential} $D\colon
  \mathfrak{C}^p\to\mathfrak{C}^{p+1}$, defined on $\phi\in\mathfrak{C}^p$
@@ -3518,9 +4761,11 @@ identity holds; \textup{(iv)} $D$ is a derivation of the bracket.
 \emph{(i) $D^2 = 0$.} Expand:
 $(D^2\phi)(w) = d_A^2\phi(w) - (-1)^{p+1}d_A\phi(d_B w)
 - (-1)^p d_A\phi(d_B w) + \phi(d_B^2 w) = 0$,
-where $d_A^2 = 0$ by Jacobi for $\mathfrak{g}_{\Delta_5}$ extended to its
-Etingof--Kazhdan quantisation (Borcherds 1988 \S 4, Theorem 2;
-Kac 1990 \S 2.5), $d_B^2 = 0$ by coassociativity of $\bar\Delta$ combined
+where $d_A^2 = 0$ by Jacobi for
+$(\mathfrak{g}_{\Delta_5},\delta_{\mathrm{GN}})$ in the fixed
+completed Etingof--Kazhdan super-quasi-Hopf target
+(Borcherds 1988 \S 4, Theorem 2; Kac 1990 \S 2.5), $d_B^2 = 0$ by
+coassociativity of $\bar\Delta$ combined
 with the Arnold relation
 $\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} +
 \eta_{ki}\wedge\eta_{ij} = 0$
@@ -3710,7 +4955,7 @@ $m = 1$).
 
 \begin{theorem}[Polar depth-reduction of the pentagon tower on the K3
 side]
-\label{thm:bc-unconditional-depth-reduction}
+\label{thm:bc-polar-depth-reduction}
 \ClaimStatusConditional
 Assume the pentagon $A_\infty$-tower $\{\phi^{(n)}\}_{n\ge 3}$ of
 $\mathbf{H}_{\Delta_5}$ on the $A_\infty$-Humbert regime has coefficient
@@ -3794,7 +5039,7 @@ $n$ with $\mathfrak d_n > 1$.
 Theorem~\ref{thm:MC-hbar7-hbar12-k3} is a formal finite-window
 criterion: it identifies the coefficient identities needed through
 $\hbar^{12}$. The motivic verification of those identities is a
-separate arithmetic input. Theorem~\ref{thm:bc-unconditional-depth-reduction}
+separate arithmetic input. Theorem~\ref{thm:bc-polar-depth-reduction}
 is orthogonal: on the $A_\infty$-Humbert regime the vanishing is
 polar-cutoff driven and reaches arbitrarily high $n$, without any
 motivic-basis input. The

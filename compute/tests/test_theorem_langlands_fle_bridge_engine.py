@@ -1,28 +1,31 @@
-r"""Tests for theorem_langlands_fle_bridge_engine: Geometric Langlands FLE bridge.
+r"""Tests for theorem_langlands_fle_bridge_engine: critical-level FLE shadow.
 
-THEOREM (Langlands FLE bridge):
+Comparison surface:
     At the critical level k = -h^v, the bar complex of V_{-h^v}(g)
     is uncurved and its cohomology computes the oper differential-form
     algebra:
         H^n(B(V_{-h^v}(g))) ~ Omega^n(Op_{g^v}(D))  for all n >= 0.
 
-    This is an algebraic bridge to the Fundamental Local Equivalence (FLE)
+    This is the cohomological shadow of the Fundamental Local Equivalence (FLE)
     of Gaitsgory-Raskin (arXiv:2405.03648):
         V_{-h^v}(g)-mod ~ QCoh(Op_{g^v}(D)).
 
-Proved by SIX INDEPENDENT METHODS:
+Finite critical-level consistency checks:
   1. Bar cohomology dimension matching with oper space
   2. Whitehead spectral decomposition (2^r nonzero rows)
   3. Kappa vanishing at critical level
-  4. Feigin-Frenkel involution fixed point
+  4. Critical-level reflection fixed point
   5. Transgression differential d_4 nonvanishing
   6. Localization functor compatibility
+
+These checks do not prove the categorical FLE, and the critical fixed point
+is not strict Koszul self-duality or KSDual membership.
 
 Multi-path verification per CLAUDE.md mandate:
   Path 1: Direct computation (dimension formulas)
   Path 2: Cross-family consistency (all simple types)
   Path 3: Literature comparison (Kac, Humphreys, Feigin-Frenkel)
-  Path 4: Algebraic identity checks (kappa + kappa' = 0)
+  Path 4: Reflected-level scalar identity checks (kappa + kappa' = 0)
   Path 5: Structural checks (spectral sequence, Whitehead lemma)
 
 Ground truth sources:
@@ -262,7 +265,7 @@ class TestSugawaraUndefined:
 
 
 # ============================================================
-# 4. FF involution fixed point (Method 4)
+# 4. Critical-level reflection fixed point
 # ============================================================
 
 
@@ -289,7 +292,7 @@ class TestFFInvolution:
             k_crit = -g.h_vee
             k_dual = koszul_dual_level(g, k_crit)
             assert k_dual == k_crit, (
-                f"FF involution at critical level for {lt}_{rk}: "
+                f"critical-level reflection at {lt}_{rk}: "
                 f"{k_dual} != {k_crit}"
             )
 
@@ -564,17 +567,22 @@ class TestTransgression:
 
 
 # ============================================================
-# 9. Full FLE bridge verification (all 6 methods)
+# 9. Finite FLE-shadow consistency checks
 # ============================================================
 
 
 class TestFLEBridge:
-    """Full six-method FLE bridge verification."""
+    """Finite critical-level consistency checks for the FLE shadow."""
 
     def test_sl2_full_bridge(self):
-        """Complete bridge for sl_2."""
+        """Finite cohomological-shadow consistency check for sl_2."""
         result = verify_fle_bridge("A", 1, max_weight=12)
         assert result.all_methods_pass
+        assert 'finite critical-level consistency checks' in result.verification_scope
+        assert 'not a proof of the categorical FLE' in result.verification_scope
+        assert 'not strict Koszul self-duality' in result.ff_fixed_point_scope
+        assert result.not_koszul_self_dual is True
+        assert result.critical_not_koszul is True
         assert result.kappa_zero
         assert result.ff_fixed_point
         assert result.bar_uncurved
@@ -583,66 +591,66 @@ class TestFLEBridge:
         assert result.vacuum_to_oper
 
     def test_sl3_full_bridge(self):
-        """Complete bridge for sl_3."""
+        """Finite cohomological-shadow consistency check for sl_3."""
         result = verify_fle_bridge("A", 2, max_weight=10)
         assert result.all_methods_pass
 
     def test_sl4_full_bridge(self):
-        """Complete bridge for sl_4."""
+        """Finite cohomological-shadow consistency check for sl_4."""
         result = verify_fle_bridge("A", 3, max_weight=8)
         assert result.all_methods_pass
 
     def test_b2_full_bridge(self):
-        """Complete bridge for B_2 = so_5."""
+        """Finite cohomological-shadow consistency check for B_2 = so_5."""
         result = verify_fle_bridge("B", 2, max_weight=8)
         assert result.all_methods_pass
 
     def test_c2_full_bridge(self):
-        """Complete bridge for C_2 = sp_4."""
+        """Finite cohomological-shadow consistency check for C_2 = sp_4."""
         result = verify_fle_bridge("C", 2, max_weight=8)
         assert result.all_methods_pass
 
     def test_g2_full_bridge(self):
-        """Complete bridge for G_2."""
+        """Finite cohomological-shadow consistency check for G_2."""
         result = verify_fle_bridge("G", 2, max_weight=8)
         assert result.all_methods_pass
 
     def test_d4_full_bridge(self):
-        """Complete bridge for D_4 = so_8."""
+        """Finite cohomological-shadow consistency check for D_4 = so_8."""
         result = verify_fle_bridge("D", 4, max_weight=6)
         assert result.all_methods_pass
 
     def test_f4_full_bridge(self):
-        """Complete bridge for F_4."""
+        """Finite cohomological-shadow consistency check for F_4."""
         result = verify_fle_bridge("F", 4, max_weight=6)
         assert result.all_methods_pass
 
     def test_e6_full_bridge(self):
-        """Complete bridge for E_6."""
+        """Finite cohomological-shadow consistency check for E_6."""
         result = verify_fle_bridge("E", 6, max_weight=6)
         assert result.all_methods_pass
 
     def test_e7_full_bridge(self):
-        """Complete bridge for E_7."""
+        """Finite cohomological-shadow consistency check for E_7."""
         result = verify_fle_bridge("E", 7, max_weight=6)
         assert result.all_methods_pass
 
     def test_e8_full_bridge(self):
-        """Complete bridge for E_8."""
+        """Finite cohomological-shadow consistency check for E_8."""
         result = verify_fle_bridge("E", 8, max_weight=4)
         assert result.all_methods_pass
 
 
 # ============================================================
-# 10. FF involution analysis
+# 10. Critical-level reflection analysis
 # ============================================================
 
 
 class TestFFInvolutionAnalysis:
-    """Detailed FF involution analysis across levels."""
+    """Detailed critical-level reflection analysis across levels."""
 
     def test_sl2_critical_analysis(self):
-        """FF analysis for sl_2 at critical level."""
+        """Critical-level reflection analysis for sl_2."""
         g = lie_data("A", 1)
         result = ff_involution_analysis(g, Fraction(-2))
         assert result['is_critical']
@@ -653,7 +661,7 @@ class TestFFInvolutionAnalysis:
         assert result['sugawara_defined'] is False
 
     def test_sl2_generic_analysis(self):
-        """FF analysis for sl_2 at generic level k=1."""
+        """Critical-level reflection analysis for sl_2 at generic level k=1."""
         g = lie_data("A", 1)
         result = ff_involution_analysis(g, Fraction(1))
         assert not result['is_critical']
@@ -661,14 +669,17 @@ class TestFFInvolutionAnalysis:
         assert result['kappa_sum'] == 0  # kappa + kappa' = 0
         assert result['sugawara_defined'] is True
 
-    def test_all_types_critical_self_dual(self):
-        """At critical level, the algebra is self-dual (FF fixed point)."""
+    def test_all_types_critical_reflection_fixed_not_self_dual(self):
+        """At critical level, the level reflection is fixed; no self-duality follows."""
         for (lt, rk) in [("A", 1), ("A", 2), ("B", 2), ("C", 2),
                          ("D", 4), ("G", 2)]:
             g = lie_data(lt, rk)
             result = ff_involution_analysis(g, Fraction(-g.h_vee))
             assert result['is_ff_fixed_point'], f"{lt}_{rk} not FF-fixed"
             assert result['kappa'] == 0
+            assert result['not_koszul_self_dual'] is True
+            assert 'not strict Koszul self-duality' in result['ff_fixed_point_scope']
+            assert result['critical_not_koszul'] is True
 
 
 # ============================================================
@@ -677,10 +688,10 @@ class TestFFInvolutionAnalysis:
 
 
 class TestCriticalVsGeneric:
-    """Verify that FLE and Koszulness are complementary properties."""
+    """Check that FLE and generic Koszulness are orthogonal properties."""
 
     def test_sl2_complementarity(self):
-        """At critical: uncurved, NOT Koszul. At generic: curved, Koszul."""
+        """At critical: uncurved, NOT Koszul. At generic: conditional package."""
         result = critical_vs_generic_comparison("A", 1)
         assert result['critical']['uncurved'] is True
         assert result['critical']['koszul'] is False
@@ -688,16 +699,18 @@ class TestCriticalVsGeneric:
         for gd in result['generic']:
             assert gd['uncurved'] is False
             assert gd['koszul'] is True
+            assert 'conditional on named PBW' in gd['koszul_status']
             assert gd['sugawara_defined'] is True
 
     def test_all_types_complementarity(self):
-        """FLE vs Koszulness complementarity for all types."""
+        """FLE vs generic Koszul package separation for all types."""
         for (lt, rk) in [("A", 1), ("A", 2), ("B", 2), ("G", 2)]:
             result = critical_vs_generic_comparison(lt, rk)
             assert result['critical']['uncurved'] is True
             assert result['critical']['koszul'] is False
             for gd in result['generic']:
                 assert gd['koszul'] is True
+                assert 'conditional on named PBW' in gd['koszul_status']
 
 
 # ============================================================
@@ -769,14 +782,14 @@ class TestFactorizationBridge:
 
 
 class TestLandscapeSweep:
-    """Full landscape sweep across all simple types."""
+    """Finite consistency sweep across all simple types."""
 
     def test_landscape_all_pass(self):
-        """All standard simple types pass the FLE bridge verification."""
+        """All standard simple types pass the finite FLE-shadow consistency checks."""
         results = fle_bridge_landscape_sweep(max_weight=4)
         for key, result in results.items():
             assert result.all_methods_pass, (
-                f"FLE bridge FAILED for {key}: "
+                f"FLE-shadow consistency check FAILED for {key}: "
                 f"kappa_zero={result.kappa_zero}, "
                 f"ff_fixed={result.ff_fixed_point}, "
                 f"h0_match={result.h0_dims_match}"
@@ -1026,7 +1039,7 @@ class TestMultiPathCrossVerification:
         """kappa = 0 at critical level by two independent arguments.
 
         Path 1: Direct formula kappa = dim(g) * (k+h^v) / (2h^v) with k = -h^v.
-        Path 2: FF involution fixed point: kappa = -kappa => kappa = 0.
+        Path 2: reflected-level fixed point: kappa = -kappa => kappa = 0.
         """
         for (lt, rk) in [("A", 1), ("A", 2), ("A", 3),
                          ("B", 2), ("C", 2), ("D", 4),

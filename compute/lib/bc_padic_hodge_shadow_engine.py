@@ -975,7 +975,9 @@ def koszul_dual_frobenius(
     r"""Compare p-adic invariants of A and A! (Koszul dual).
 
     For Virasoro: A = Vir_c, A! = Vir_{26-c}.
-    For Heisenberg: A = H_k, A! has kappa = -k (AP33: H_k^! != H_{-k}).
+    For Heisenberg: A = H_k and A! has scalar kappa = -k.  AP33:
+    at k != 0, A! is the curved second-kind Sym^ch(V*[1]) branch,
+    not H_{-k} and not the uncurved polynomial centre.
     For affine sl_2: A! has level -k - 2h^v (Feigin-Frenkel involution).
 
     Compares: Frobenius eigenvalues, Newton/Hodge polygons,

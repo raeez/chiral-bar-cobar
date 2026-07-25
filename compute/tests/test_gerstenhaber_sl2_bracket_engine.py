@@ -1,8 +1,9 @@
-r"""Tests for FT-10: Gerstenhaber bracket on ChirHoch^1(V_k(sl_2)).
+r"""Tests for FT-10: Gerstenhaber bracket on the affine sl_2 zero-mode prequotient.
 
-Verifies that the Gerstenhaber bracket on the first chiral Hochschild
-group of affine sl_2 reproduces the sl_2 Lie bracket.  This is the
-FIRST non-abelian E_3 structure verification in the programme.
+Verifies that the Gerstenhaber bracket on the affine sl_2 zero-mode
+prequotient reproduces the sl_2 Lie bracket.  The actual
+ChirHoch^1(V_k(sl_2)) group is zero after quotienting inner
+derivations.
 
 Organized by:
   I.    sl_2 structure constants and Jacobi identity
@@ -385,10 +386,11 @@ class TestHeisenbergComparison:
         assert comp["sl2_brackets_trivial"] is False
 
     def test_dim_hh1_comparison(self):
-        """dim ChirHoch^1: 1 for Heisenberg, 3 for sl_2."""
+        """dim ChirHoch^1: 1 for Heisenberg, 0 for affine sl_2."""
         comp = heisenberg_comparison()
         assert comp["heisenberg_dim_hh1"] == 1
-        assert comp["sl2_dim_hh1"] == 3
+        assert comp["sl2_dim_hh1"] == 0
+        assert comp["sl2_zero_mode_prequotient_dim"] == 3
 
 
 # ======================================================================
@@ -399,21 +401,17 @@ class TestFullVerification:
     """Complete FT-10: Gerstenhaber bracket reproduces sl_2 Lie bracket."""
 
     def test_reproduces_sl2_bracket(self):
-        """The Gerstenhaber bracket on ChirHoch^1(V_k(sl_2)) IS the sl_2 Lie bracket."""
+        """The prequotient Gerstenhaber bracket is the sl_2 Lie bracket."""
         result = full_verification()
         assert result.reproduces_sl2_bracket
 
     def test_chirhoch_dimensions(self):
-        """ChirHoch^*(V_k(sl_2)) = (1, 3, 1), total 5.
-
-        VERIFIED: [DC] prop:chirhoch1-affine-km gives dim HH^1 = dim(sl_2) = 3
-        VERIFIED: [LT] chirhoch_dimension_engine.py: total_dim = 5 for sl_2
-        """
+        """ChirHoch^*(V_k(sl_2)) = (1, 0, 1), total 2."""
         result = full_verification()
         assert result.dim_hh0 == 1
-        assert result.dim_hh1 == 3
+        assert result.dim_hh1 == 0
         assert result.dim_hh2 == 1
-        assert result.dim_hh0 + result.dim_hh1 + result.dim_hh2 == 5
+        assert result.dim_hh0 + result.dim_hh1 + result.dim_hh2 == 2
 
     def test_all_axioms_pass(self):
         """All Gerstenhaber algebra axioms verified."""

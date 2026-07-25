@@ -645,10 +645,11 @@ class TestCrossFamilyConsistency:
             assert math.isfinite(disc)
 
     def test_koszul_dual_relation_heisenberg(self):
-        """Heisenberg H_k and H_{-k}: Koszul dual shadow comparison.
+        """Heisenberg H_k and the scalar -k shadow comparison.
 
-        H_k^! has kappa = -k (AP33: different algebra, same kappa as H_{-k}).
-        Shadow Li of H_k: all zero.  Shadow Li of H_{-k}: all zero.
+        H_k^! has scalar kappa = -k.  AP33: the object is the curved
+        second-kind Sym branch; only scalar kappa agrees with H_{-k}.
+        Shadow Li of H_k: all zero.  Shadow Li of the -k shadow: all zero.
         Both trivially positive.
         """
         li_k = shadow_li_coefficients_polynomial(heisenberg_shadow_coefficients(1.0), 10)

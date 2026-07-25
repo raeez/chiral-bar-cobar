@@ -1468,7 +1468,7 @@ def compare_ks_vs_shadow_monodromy(
             'B(A)': 'bar coalgebra/complex',
             'A_i': 'H^*(B(A)) bar-dual coalgebra',
             'A_bang': 'Verdier/continuous dual algebra under finite-type or completed hypotheses',
-            'Z_ch_der(A)': 'ChirHoch^*(A,A), the Hochschild/bulk centre',
+            'Z_ch_der(A)': 'ChirHoch^*(A,A), the Hochschild/closed-sector centre',
         },
         'holographic_package_keys': HOLOGRAPHIC_PACKAGE_KEYS,
         'modular_koszul_package_keys': MODULAR_KOSZUL_PACKAGE_KEYS,

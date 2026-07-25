@@ -74,7 +74,7 @@ Koszul duality.
   A_bdy = A_E  (boundary chiral algebra on E)
   A_E^i = H^*(B^{ch}(A_E))  (bar-dual coalgebra)
   A_E^! = Verdier/Koszul branch after finite-type rectification
-  C = Z_ch^der(A_E)  (derived-centre bulk slot)
+  C = Z_ch^der(A_E)  (derived-centre closed-sector slot)
 
 From the monograph (Theorem A): D_Ran(B(A)) identifies the Verdier-dual
 bar construction on the finite-type surface.  The inversion
@@ -673,8 +673,9 @@ class KoszulDualData(NamedTuple):
     c_verdier_koszul: int
 
     # The free-field Verdier/Koszul branch has the dual generators and
-    # opposite kappa. AP33: H_k^! = Sym^ch(V*) has kappa = -k for
-    # Heisenberg; it is not the same object as the bar-cobar inversion.
+    # opposite scalar kappa. AP33: at k != 0, H_k^! is the curved
+    # second-kind Sym^ch(V*[1]) branch, not H_{-k} and not the
+    # uncurved polynomial centre.
     dual_generators: int
     dual_shadow_class: str
 
@@ -699,8 +700,9 @@ def koszul_dual_k3e() -> KoszulDualData:
       from k to -k and leaves the central charge of the free boson
       factor equal to 1.
 
-    AP33 CAUTION: H_k^! = Sym^ch(V*) != H_{-k}. They have the same kappa
-    but are different algebras. We use kappa values only, not algebra identity.
+    AP33 CAUTION: at k != 0, H_k^! is the curved second-kind
+    Sym^ch(V*[1]) branch, not H_{-k} and not the uncurved polynomial
+    centre.  We use scalar kappa values only, not algebra identity.
 
     Complementarity at genus 1:
       F_1(A) = kappa(A) / 24 = 24/24 = 1
@@ -1010,7 +1012,7 @@ def ap25_object_firewall_k3e() -> Dict[str, Any]:
             object_type="bar factorization coalgebra",
             construction="T^c(s^{-1} A_{E,+}) with bar differential",
             role="bar resolution and source of the bar-dual coalgebra",
-            not_output="not A_E, not A_E^!, not Omega(B(A_E)), not the bulk",
+            not_output="not A_E, not A_E^!, not Omega(B(A_E)), not the closed-sector slot C",
         ),
         "A_i": TypedObjectRecord(
             symbol="A_E^i",
@@ -1031,13 +1033,13 @@ def ap25_object_firewall_k3e() -> Dict[str, Any]:
             object_type="Verdier/Koszul branch",
             construction="dual of A_E^i after finite-type or completed duality",
             role="dual boundary/line slot with kappa -24",
-            not_output="not B(A_E), not Omega(B(A_E)), and not the bulk C",
+            not_output="not B(A_E), not Omega(B(A_E)), and not the closed-sector slot C",
         ),
         "Z_der_ch_A": TypedObjectRecord(
             symbol="Z_ch^der(A_E)",
             object_type="derived chiral center / Hochschild cochains",
             construction="C^*_ch(A_E, A_E), computed with a bar resolution",
-            role="bulk slot C of the seven-entry package",
+            role="closed-sector slot C of the seven-entry package",
             not_output="not A_E^i and not A_E^!",
         ),
     }
@@ -1050,8 +1052,8 @@ def ap25_object_firewall_k3e() -> Dict[str, Any]:
         "forbidden_collapses": (
             "Omega(B(A)) reconstructs A; it does not construct A^!.",
             "A^i is a coalgebra until Verdier/linear duality is applied.",
-            "A^! is the dual boundary/line slot, not the bulk slot C.",
-            "Z_ch^der(A) is the Hochschild bulk, not the bar coalgebra.",
+            "A^! is the dual boundary/line slot, not the closed-sector slot C.",
+            "Z_ch^der(A) is the Hochschild closed-sector, not the bar coalgebra.",
         ),
         "objects_kept_distinct": len({record.symbol for record in objects.values()}) == 6,
     }
@@ -1171,7 +1173,7 @@ def holographic_datum_k3e() -> HolographicDatum:
         verdier_koszul_kappa=kappa_dual,
         kappa_sum=kappa + kappa_dual,  # = 0
         # Component 4: Derived center
-        derived_center_description="C = Z_ch^der(A_E), the Hochschild bulk slot",
+        derived_center_description="C = Z_ch^der(A_E), the Hochschild closed-sector slot",
         derived_center_polynomial=[24, 576, 24],
         # Component 5: r-matrix
         r_matrix_pole_order=1,

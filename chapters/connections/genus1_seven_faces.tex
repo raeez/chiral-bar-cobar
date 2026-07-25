@@ -16,7 +16,8 @@ coalgebra.) Modular invariance in the $d\tau$-direction is the level-$5$
 modular reconstruction (trace + clutching on
 $\overline{\cM}_{1,n}$); it is not an intrinsic closure property.
 
-At genus~$0$, the collision residue $r_\cA(z)$ has one polar kernel:
+At genus~$0$, the ordered collision kernel $K_\cA^{\mathrm{coll}}(z)$
+has one polar profile:
 the bar-cobar twisting morphism on $\mathbb{P}^1$. Rational functions
 on $\mathbb{P}^1$ are fixed by their principal part and the
 normalisation at infinity; the seven faces of
@@ -156,9 +157,9 @@ regardless of the conformal weight of the fields being sewed.
 \section{The genus-$1$ collision residue}
 \label{sec:g1sf-collision-residue}
 
-The propagator determines the collision residue. At genus~$0$, the
+The propagator determines the collision kernel. At genus~$0$, the
 rational kernel $1/(z_1 - z_2)$ extracts Laurent coefficients; the
-collision residue $r_\cA(z)$ is the resulting element of
+collision kernel $K_\cA^{\mathrm{coll}}(z)$ is the resulting element of
 $\End_\cA(2)[\![z^{-1}]\!]$. At genus~$1$, the elliptic kernel
 $\xi_\tau(z_1 - z_2)$ extracts the same principal coefficients through
 a prime-form normalization, and the collision residue acquires a
@@ -174,7 +175,7 @@ stratum of the genus-$1$ moduli space.
 For a modular Koszul chiral algebra $\cA$ on an elliptic curve
 $E_\tau$, the \emph{genus-$1$ collision residue} is
 \begin{equation}\label{eq:g1sf-collision-residue}
-r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z, \tau)
 \;:=\;
 \operatorname{Res}^{\mathrm{coll}}_{1,2}(\Theta_\cA)
 \bigm|_{E_\tau}
@@ -202,11 +203,11 @@ residue; hypothesis package: $\cA$ modular Koszul on $E_\tau$ with
 finite-type or weight-completed bar coalgebra; prime-form
 normalisation of Definition~\ref{def:g1sf-bar-propagator}.)
 Let $\cA$ be a modular Koszul chiral algebra with genus-$0$ collision
-residue $r_\cA(z) = \sum_{n \geq 0} c_n/z^{n+1}$, where
+kernel $K_\cA^{\mathrm{coll}}(z)=\sum_{n\geq0}c_n/z^{n+1}$, where
 $c_n = a_{(n)}b$ are the OPE-mode coefficients of the generating
 fields. The genus-$1$ collision residue is
 \begin{equation}\label{eq:g1sf-elliptic-expansion}
-r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z, \tau)
 \;=\;
 c_0 \cdot \xi_\tau(z)
 \;+\;
@@ -218,7 +219,7 @@ where $P_\tau^{(m)} = d^mP_\tau/dz^m$. Since
 $P_\tau=\wp+2\eta_1$, one has $P_\tau^{(m)}=\wp^{(m)}$ for
 $m\geq1$. In particular, the first three terms are
 \begin{equation}\label{eq:g1sf-first-three-terms}
-r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z, \tau)
 \;=\;
 c_0\, \xi_\tau(z)
 \;+\;
@@ -229,7 +230,7 @@ c_1\, P_\tau(z)
 \end{equation}
 The elliptic kernels satisfy
 $P_\tau^{(m)}(z) = (-1)^m (m+1)!/z^{m+2} + O(1)$ near $z = 0$, so the
-Laurent expansion of $r_\cA^{(1)}$ near $z = 0$ agrees with
+Laurent expansion of $K_\cA^{(1),\mathrm{coll}}$ near $z = 0$ agrees with
 $r_\cA(z)$ at leading order.
 \end{theorem}
 
@@ -255,10 +256,11 @@ OPE data on the elliptic curve.
 \begin{remark}[Quasi-periodicity dichotomy]
 \label{rem:g1sf-dichotomy}
 The kernel $P_\tau$ and all its derivatives are doubly periodic.
-The quasi-periodicity of $r_\cA^{(1)}(z, \tau)$ is therefore inherited
+The quasi-periodicity of $K_\cA^{(1),\mathrm{coll}}(z,\tau)$ is therefore inherited
 entirely from the $\xi_\tau(z)$ term:
 \begin{equation}\label{eq:g1sf-B-cycle-monodromy}
-r_\cA^{(1)}(z + \tau, \tau) - r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z+\tau,\tau)
+-K_\cA^{(1),\mathrm{coll}}(z,\tau)
 \;=\;
 -2\pi i \cdot c_0.
 \end{equation}
@@ -297,18 +299,21 @@ $(E_\tau, D, \tau)$; level~$2$ in the Beilinson tower; hypothesis
 package: $\cA$ modular Koszul on $E_\tau$, finite-type or
 weight-completed bar coalgebra, prime-form normalisation of
 Definition~\ref{def:g1sf-bar-propagator}.)
-The genus-$1$ collision residue equals the genus-$1$ twisting
-morphism:
+The genus-$1$ collision kernel is the binary collision component of
+the genus-$1$ twisting morphism:
 \begin{equation}\label{eq:g1sf-face-1}
-r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z, \tau)
 \;=\;
-\pi_\cA^{(1)}(z, \tau)
+\bigl(\pi_\cA^{(1)}\bigr)_{2}^{\mathrm{coll}}(z,\tau)
 \;:=\;
 \operatorname{Res}_{w=z}
 \bar{a}(w) \cdot \xi_\tau(z - w)\, d(z-w)
-\;\in\;
-\mathrm{Tw}(\barBch(\cA)|_{E_\tau},\, \cA|_{E_\tau}).
+\;\in\;\End_\cA(2)\widehat\otimes\cO(*\Delta).
 \end{equation}
+Here $\pi_\cA^{(1)}\in
+\mathrm{Tw}(\barBch(\cA)|_{E_\tau},\cA|_{E_\tau})$ is the complete
+twisting morphism; the displayed expression records its binary
+component.
 The identification is the genus-$1$ specialization of the
 bar-intrinsic construction
 (Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}).
@@ -526,12 +531,15 @@ Belavin 1981, Belavin--Drinfeld 1982\textup{)}]
 $(E_\tau, D, \tau)$; level~$2$ for the collision residue, level~$4$
 for the spectral $r$-matrix it identifies; hypothesis package:
 $\cA = \widehat{\fg}_k$ simple, $k\neq -h^\vee$,
-KZ/Sugawara level prefix per Lemma~\ref{lem:g1sf-casimir-bridge}.)
+KZ/Sugawara level prefix per Lemma~\ref{lem:g1sf-casimir-bridge},
+and $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ supplied by the KZB
+representation $\rho_{\mathrm{KZ}}$.)
 For $\cA = \widehat{\fg}_k$ with $\fg$ simple and
-$k \neq -h^\vee$, the genus-$1$ collision residue equals the
-classical elliptic $r$-matrix up to the standard level normalization:
+$k \neq -h^\vee$, the represented genus-$1$ collision kernel is the
+classical elliptic $r$-matrix with the standard level normalization:
 \begin{equation}\label{eq:g1sf-elliptic-rmatrix}
-r_{\widehat{\fg}_k}^{(1)}(z, \tau)
+\rho_{\mathrm{KZ}}\!\left(
+K_{\widehat{\fg}_k}^{(1),\mathrm{coll}}(z,\tau)\right)
 \;=\;
 \frac{k}{k + h^\vee}\,
 r^{\mathrm{ell}}_\fg(z, \tau),
@@ -588,10 +596,12 @@ genus-$0$ residue $1/z$ and with the $B$-cycle quasi-periodicity
 dictated by the root lattice
 (Belavin~\cite{Belavin81}).
 
-The classical Yang--Baxter equation~\eqref{eq:g1sf-elliptic-cybe}
-follows from the collision depth~$2$ projection of the modular MC
-equation at genus~$1$
-(Theorem~\ref{thm:collision-depth-2-ybe} applied on $E_\tau$):
+The collision-depth-$2$ projection of the modular MC equation at
+genus~$1$ gives the operadic three-insertion relation
+\textup{(}Theorem~\ref{thm:collision-depth-2-ybe}\textup{)}.  The
+KZB representation in $H_{\mathrm{CYBE}}^{\mathrm{rep}}$ carries it
+to the classical Yang--Baxter equation
+\eqref{eq:g1sf-elliptic-cybe}:
 the infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$ is replaced by its
 elliptic counterpart, and the resulting identity among Weierstrass
@@ -614,12 +624,12 @@ comparison lane.
 For $\fg = \mathfrak{sl}_N$ with $N \geq 3$, the elliptic
 $r$-matrix of Belavin is a matrix-valued meromorphic function on
 $E_\tau$ with poles at $z = 0$ whose residue is the $\mathfrak{sl}_N$
-Casimir. The collision residue produces this $r$-matrix by the same
-mechanism: elliptic regularization of the Cartan and root channels,
+Casimir. The KZB representation sends the elliptically regularized
+Cartan and root channels of the collision kernel to this $r$-matrix,
 with theta-function ratios $\phi_\alpha(z, \tau)$ indexed by the
 roots $\alpha$ of $\mathfrak{sl}_N$. The
-identification~\eqref{eq:g1sf-elliptic-rmatrix} holds for all simple
-$\fg$.
+identification~\eqref{eq:g1sf-elliptic-rmatrix} holds under
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ for all simple $\fg$.
 \end{remark}
 
 \begin{lemma}[Casimir-convention bridge at genus~$1$;
@@ -784,7 +794,7 @@ $\mathfrak{z}(\widehat{\fg}) \subset V_{-h^\vee}(\fg)$ is
 infinite-dimensional at $k = -h^\vee$ \textup{(}and trivial for
 $k \neq -h^\vee$\textup{)}, providing the categorical resolution of
 the Sugawara singularity. The collision residue
-$r_\cA^{(1)}(z,\tau)$ as defined by
+$K_\cA^{(1),\mathrm{coll}}(z,\tau)$ as defined by
 equation~\eqref{eq:g1sf-collision-residue} still makes sense as a
 formal element of $\End_\cA(2)[\![z^{-1}]\!] \otimes
 \mathbb{C}[\![\tau]\!]$ at $k=-h^\vee$, but its identification with
@@ -1090,9 +1100,19 @@ For class~$G$ (Heisenberg, lattice VOAs) with
 $p_{\max} = 2$, $k_{\max} = 1$, the genus-$1$ collision residue
 has the same form as class~$L$: a single $\xi_\tau$-term. For
 class~$C$ ($\beta\gamma$) with $p_{\max} = 1$, $k_{\max} = 0$, the
-genus-$0$ collision residue vanishes, and the genus-$1$ collision
-residue is identically zero: $r_{\beta\gamma}^{(1)}(z, \tau) = 0$.
-The binary collision residue of the $\beta\gamma$ system is zero. The
+genus-$0$ \emph{pole-valued} collision \(r\)-matrix vanishes, and the
+genus-$1$ pole-valued collision \(r\)-matrix is identically zero:
+$r_{\beta\gamma}^{(1)}(z, \tau) = 0$. This does not say that the
+ordered binary OPE contraction vanishes:
+\[
+\beta(z)\gamma(w)\sim (z-w)^{-1}
+\]
+is nonzero. The simple pole is absorbed by the \(d\log\)-bar kernel in
+the pole-valued \(r_{\mathrm{coll}}\) convention, while the regular
+contact transport
+\(\Theta_{\beta\gamma}^{\mathrm{ord}}
+=\beta\otimes\gamma-\gamma\otimes\beta\)
+remains the nonzero class-\(C\) contact datum. The
 shadow class hierarchy
 $G, L, C, M$ is unchanged at genus~$1$; only the concrete
 realization changes from rational to elliptic functions.
@@ -1136,26 +1156,26 @@ binary elliptic collision kernel. Then
 \[
 \mathsf E_i^{(1)}(F_i^{(1)})
 \;=\;
-r_\cA^{(1)}(z,\tau)
+K_\cA^{(1),\mathrm{coll}}(z,\tau)
 \qquad (i\in I^{(1)}(\cA)),
 \]
 where
-$r_\cA^{(1)}(z, \tau)=
+$K_\cA^{(1),\mathrm{coll}}(z,\tau)=
 \operatorname{Res}^{\mathrm{coll}}_{1,2}(\Theta_\cA)|_{E_\tau}$.
 The seven affine genus-$1$ faces are:
 \begin{enumerate}[label=\textup{(F\arabic*${}^{(1)}$)}]
 \item \textbf{Elliptic twisting morphism.}
-$r_\cA^{(1)} = \pi_\cA^{(1)}$, the genus-$1$ bar-cobar twisting
+$K_\cA^{(1),\mathrm{coll}}=(\pi_\cA^{(1)})_2^{\mathrm{coll}}$, the binary component of the genus-$1$ bar-cobar twisting
 morphism \textup{(}Theorem~\textup{\ref{thm:g1sf-face-1})}.
 
 \item \textbf{Elliptic line-operator $r$-matrix.}
-$\mathsf E_2^{(1)}(r^{\mathrm{DNP},(1)})=r_\cA^{(1)}$ for the
+$\mathsf E_2^{(1)}(r^{\mathrm{DNP},(1)})=K_\cA^{(1),\mathrm{coll}}$ for the
 elliptic spectral kernel of the line-operator category on
 $E_\tau \times \mathbb{R}$ in the DNP framework~\cite{DNP25}.
 
 \item \textbf{Elliptic $\lambda$-bracket.}
 $\mathsf E_3^{(1)}$ sends the elliptic $\lambda$-bracket of the
-classical PVA on $E_\tau$ to the kernel $r_\cA^{(1)}$
+classical PVA on $E_\tau$ to the kernel $K_\cA^{(1),\mathrm{coll}}$
 \textup{(}Khan--Zeng~\cite{KhanZeng25}, genus-$1$ specialization\textup{)}.
 
 \item \textbf{KZB connection.}
@@ -1164,7 +1184,8 @@ the $d\tau$-component is its $z$-derivative
 \textup{(}Theorem~\textup{\ref{thm:g1sf-face-4})}.
 
 \item \textbf{Belavin--Drinfeld elliptic $r$-matrix.}
-$r_\cA^{(1)} = k\,r^{\mathrm{ell}}_\fg/(k + h^\vee)$
+$\rho_{\mathrm{KZ}}(K_\cA^{(1),\mathrm{coll}})
+=k\,r^{\mathrm{ell}}_\fg/(k+h^\vee)$
 \textup{(}Theorem~\textup{\ref{thm:g1sf-face-5})}; the level
 prefix~$k$ is required.
 
@@ -1175,14 +1196,15 @@ the genus-$0$ Sklyanin bracket of
 Semenov-Tian-Shansky~\cite{STS83}.
 
 \item \textbf{Elliptic Gaudin Hamiltonians.}
-$H_i^{\mathrm{ell}} = \sum_{j \neq i}\,[r_\cA^{(1)}(z_i - z_j)]_{ij}$
+$H_i^{\mathrm{ell}}=\sum_{j\neq i}
+[\rho_{\mathrm{KZ}}(K_\cA^{(1),\mathrm{coll}}(z_i-z_j))]_{ij}$
 \textup{(}Theorem~\textup{\ref{thm:g1sf-face-7})}.
 \end{enumerate}
 All available extracted kernels agree as elements of
 $\End_\cA(2)[\![z^{-1}]\!] \otimes \mathbb{C}[\![\tau]\!]$:
 \begin{equation}\label{eq:g1sf-master-equation}
 \boxed{\;
-r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z,\tau)
 \;=\;
 \mathsf E_1^{(1)}(\pi_\cA^{(1)})
 \;=\;
@@ -1202,7 +1224,7 @@ r_\cA^{(1)}(z, \tau)
 \end{equation}
 with
 \[
-r_\cA^{(1)}(z,\tau)
+K_\cA^{(1),\mathrm{coll}}(z,\tau)
 =
 c_0\xi_\tau(z)
 +
@@ -1393,7 +1415,7 @@ expansion at $O(q^0)$ to machine precision.
 For $\cA = \widehat{\mathfrak{sl}}_2$ at levels
 $k = 1, 2, 3, 5, 10$, verify that the $dz$-component of the
 KZB connection equals the collision residue, and that the
-$d\tau$-component equals $-\partial_z r_\cA^{(1)}$ in the
+$d\tau$-component equals $-\partial_zK_\cA^{(1),\mathrm{coll}}$ in the
 prime-form normalization.
 
 \item \textbf{Elliptic CYBE.}
@@ -1409,7 +1431,8 @@ configurations and $5$ values of $\tau$.
 
 \item \textbf{Degeneration.}
 Verify that
-$\|r_\cA^{(1)}(z, \tau) - r_\cA(z)\| / \|r_\cA(z)\| < 10^{-6}$
+$\|K_\cA^{(1),\mathrm{coll}}(z,\tau)-K_\cA^{\mathrm{coll}}(z)\|/
+\|K_\cA^{\mathrm{coll}}(z)\|<10^{-6}$
 for $\operatorname{Im}(\tau) \geq 12$ across all standard
 families.
 
@@ -1453,7 +1476,8 @@ intrinsic closed-algebra invariant.)
 Let $\cA$ be a modular Koszul chiral algebra with $c_0 \neq 0$. The
 $B$-cycle monodromy of the genus-$1$ collision residue is
 \begin{equation}\label{eq:g1sf-b-cycle}
-r_\cA^{(1)}(z + \tau, \tau) - r_\cA^{(1)}(z, \tau)
+K_\cA^{(1),\mathrm{coll}}(z+\tau,\tau)
+-K_\cA^{(1),\mathrm{coll}}(z,\tau)
 \;=\;
 -2\pi i \cdot c_0.
 \end{equation}
@@ -1472,7 +1496,7 @@ group deformation parameter.
 \end{theorem}
 
 \begin{proof}
-The $B$-cycle monodromy of $r_\cA^{(1)}$ is computed
+The $B$-cycle monodromy of $K_\cA^{(1),\mathrm{coll}}$ is computed
 in~\eqref{eq:g1sf-b-cycle}: it equals
 $-2\pi i \cdot c_0$, and the doubly-periodic terms do not
 contribute. For $\cA = \widehat{\fg}_k$, the full exponentiated
@@ -1571,12 +1595,12 @@ The genus-$1$ seven-face theorem
 of three structural anchors:
 \begin{enumerate}[label=\textup{(W\arabic*)}]
 \item \emph{Climax identity, elliptic.} The KZB connection of
- Face~F4 is the elliptic instance of the climax identity
- $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
- of Chapter~\ref{ch:climax-theorem}: pulling back the elliptic
- Arnold connection
- $d-\xi_\tau(z_i-z_j)\Omega_{ij}\,d(z_i-z_j)$ through the KZB map
- produces the genus-$1$ bar differential. The Arakelov correction is
+ Face~F4 is the elliptic instance of the typed KZ--Arnold
+ bar-superconnection theorem of Chapter~\ref{ch:climax-theorem}:
+after Fulton--MacPherson boundary-residue realization, the elliptic
+Arnold/KZB connection
+$d-\xi_\tau(z_i-z_j)\Omega_{ij}\,d(z_i-z_j)$ is pulled through the
+KZB map to produce the genus-$1$ bar differential. The Arakelov correction is
  the separate non-holomorphic term needed for single-valuedness on
  $E_\tau$; it is not part of the holomorphic polar residue.
 \item \emph{Universal conductor.} The modular characteristic
@@ -1593,7 +1617,7 @@ of three structural anchors:
  bar-cobar adjunction
  (Theorem~B at $g=1$, with the Heisenberg case unconditional)
  implements the Koszul reflection theorem
- (Theorem~\ref{thm:koszul-reflection}, Vol~I Platonic Theorem~A)
+ (Theorem~\ref{thm:koszul-reflection}, Vol~I bar--cobar Theorem~A)
  in the elliptic setting: the elliptic twisting morphism of
  Face~F1 is the unit of the genus-$1$ bar-cobar adjunction, and
  the seven elliptic faces are seven names for that unit datum
@@ -1638,7 +1662,7 @@ the Humbert divisor monodromy, and the Lusztig root-of-unity
 Hall--Drinfeld double remain three full objects with a shared scalar
 readout. Vol~I
 Theorem~C uses the resulting scalar bucket
-$\{0, 8, 13, 250/3, 98/3\}$.
+$\{0, 8, 13, 250/3, 25/3\}$.
 \end{remark}
 
 \begin{remark}[Siegel-elliptic comparison kernel]
@@ -1776,16 +1800,23 @@ Borcherds-product, and Siegel-dynamical rows add scalar or dynamical
 data visible only after the corresponding comparison map is chosen.
 \end{remark}
 
-\begin{remark}[K3 comparison and BV obstruction]
+\begin{remark}[K3 two-loop comparison]
 \label{rem:g1sf-cross-ref}
 \ClaimStatusHeuristic{}
-The expected relation between the vanishing of the $2$-loop BV obstruction class
-(Proposition~\ref{prop:bvbrst-2loop-obstruction}) and the
-seven K3-genus-$1$ face catalogue of
-Proposition~\ref{prop:g1sf-seven-K3-faces} is the following numerical
-matching problem: the theta-graph contribution carries the factor
-$\chi(K3)=24$, while the nodal elliptic-fibre comparison sums the
-$24$ Kodaira $I_1$ local trigonometric kernels. A proof would require
-identifying this local kernel sum with the BV graph integral in the
-same regularisation scheme.
+Conjecture~\ref{prop:bvbrst-2loop-obstruction} asks for a graded map
+\[
+ \Psi _2:H^1\operatorname{Obs}_{\mathrm{loc}}
+   (\mathcal E_{11}^{\mathrm{tw}}(Y))\longrightarrow \bQ(y)[[q]]
+\]
+carrying the renormalized two-loop class $[\mathfrak o_2]$ to the
+Fourier--Jacobi coefficient $[p^2]\log\Phi_{10}^{\circ}$.  The K3
+topological factor in the theta integral is
+$\int_{K3}c_2(TK3)=24$; the elliptic degeneration presents the same
+integer as the number of Kodaira $I_1$ fibres.  The vertices,
+propagator, counterterm, and regularization determine the remaining
+field-theoretic coefficient.  Thus the precise bridge to
+Proposition~\ref{prop:g1sf-seven-K3-faces} is the equality, under one
+regularization convention, between the renormalized theta amplitude
+and the sum of the corresponding local degeneration kernels.  This
+equality is the first value required of~$\Psi _2$.
 \end{remark}

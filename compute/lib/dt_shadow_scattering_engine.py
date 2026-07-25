@@ -155,7 +155,7 @@ def bar_koszul_firewall_summary() -> Dict[str, str]:
             "completed hypotheses"
         ),
         "Omega(B(A))": "bar-cobar inversion recovering A",
-        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/bulk object",
+        "Z_ch^der(A)": "ChirHoch^*(A,A), the Hochschild/closed-sector object",
     }
 
 
@@ -1532,7 +1532,7 @@ def mc_scattering_dictionary() -> Dict[str, str]:
       A^! is the Verdier/continuous-linear dual branch under finite-type
       or completed hypotheses.
       Omega(B(A)) = A is bar-cobar inversion.
-      Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/bulk object.
+      Z_ch^der(A) = ChirHoch^*(A,A) is the Hochschild/closed-sector object.
     """
     return {
         "modular_convolution_algebra": "Hamiltonian_vector_fields_on_torus",

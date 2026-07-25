@@ -1,137 +1,204 @@
-r"""Tests for k3_yangian_wave18_pentagon_coboundary_hbar11_12.
-
-Module claims:
-    (1) Padovan dimension d_n (Brown 2011 Ann. Math. 175 Thm 1.1):
-        d_0 = 1, d_1 = 0, d_2 = d_3 = d_4 = d_5 = 1, and
-        d_n = d_{n-2} + d_{n-3} for n >= 3.  Thus
-        d_6, d_7, ..., d_12 = 2, 2, 3, 4, 5, 7, 9.
-    (2) Depth-4 irreducible motivic MZV first appears at weight 12
-        (Brown 2011 Thm 1.2): zeta(3, 3, 3, 3).  Below weight 12
-        every Deligne-basis entry has depth <= 3.
-    (3) K3 Borcherds leg Phi_10^{n/2} / eta^{12n} has raw modular
-        weight -n (wt(Phi_10) = 10, wt(eta) = 1/2).
-    (4) Fake-Monster BKM denominator Phi_12 lives on II_{25,1}
-        (signature (25,1)), NOT on Lambda^{2,1}_II (signature (2,1)):
-        the two lattices cannot embed compatibly, so the Fake-Monster
-        leg is never a K3-BKM leg (Borcherds 1998 Thm 13.1 vs K3 setup).
-    (5) Borcherds leg lives on Sp_4(Z) double cover iff n is odd
-        (Gritsenko-Nikulin 1998 Sec 4).
-"""
-
-from __future__ import annotations
+"""Independent checks for the weight-11/12 motivic arithmetic engine."""
 
 from fractions import Fraction
+from itertools import permutations
+from math import factorial
 
 import pytest
 
 from compute.lib.k3_yangian_wave18_pentagon_coboundary_hbar11_12 import (
-    borcherds_leg_in_tower_weight,
-    borcherds_leg_is_fake_monster,
-    borcherds_leg_lives_on_double_cover,
-    borcherds_leg_raw_weight,
-    depth_4_first_appears_at_weight,
-    mzv_basis_weight_11,
-    mzv_basis_weight_12,
+    borcherds_leg_weight_raw,
+    borcherds_scalar_section,
+    delta5_pure_q_log_coefficient,
+    first_depth_4_entry_at_weight_12,
+    hoffman_words,
+    kz_denominator,
+    kz_normalization_status,
+    mittag_leffler_at_weight,
+    mzv_has_depth_4_irreducible,
+    obs_g_formula,
+    obs_infty_pro_limit_well_defined_through_weight_12,
     padovan_dim,
-    phi_11_symbolic,
-    phi_12_symbolic,
+    padovan_dim_11,
+    padovan_dim_12,
+    phi_n_symbolic,
+    repeated_mzv_newton,
+    run_tests,
+    zeta3333_newton_identity,
+    zeta3333_status,
 )
 
 
-# ---------------------------------------------------------------------------
-# Smoke test
-# ---------------------------------------------------------------------------
-
-def test_smoke_phi_11_and_phi_12_decompose():
-    d11 = phi_11_symbolic()
-    d12 = phi_12_symbolic()
-    assert d11["weight"] == 11
-    assert d12["weight"] == 12
-
-
-# ---------------------------------------------------------------------------
-# (Identity) Brown 2011 Thm 1.1: Padovan recurrence, tabulated values.
-# ---------------------------------------------------------------------------
-
-@pytest.mark.parametrize("n,expected", [
-    (0, 1),
-    (1, 0),
-    (2, 1),
-    (3, 1),
-    (4, 1),
-    (5, 1),
-    (6, 2),
-    (7, 2),
-    (8, 3),
-    (9, 4),
-    (10, 5),
-    (11, 7),
-    (12, 9),
-])
-def test_padovan_canonical_brown_2011(n, expected):
-    assert padovan_dim(n) == expected, (
-        f"d_{n} = {padovan_dim(n)} disagrees with Brown 2011 Thm 1.1 "
-        f"tabulated value {expected}"
+def _independent_hoffman_count(weight: int) -> int:
+    """Count 2/3-compositions by a recursion separate from the engine."""
+    if weight < 0:
+        return 0
+    if weight == 0:
+        return 1
+    return (
+        _independent_hoffman_count(weight - 2)
+        + _independent_hoffman_count(weight - 3)
     )
 
 
-def test_padovan_recurrence_d_n_equals_d_nm2_plus_d_nm3():
-    for n in range(6, 20):
-        assert padovan_dim(n) == padovan_dim(n - 2) + padovan_dim(n - 3)
+def _cycle_lengths(permutation):
+    seen = set()
+    lengths = []
+    for start in range(len(permutation)):
+        if start in seen:
+            continue
+        length = 0
+        current = start
+        while current not in seen:
+            seen.add(current)
+            length += 1
+            current = permutation[current]
+        lengths.append(length)
+    return lengths
 
 
-# ---------------------------------------------------------------------------
-# (Identity) Brown 2011 Thm 1.2: depth-4 first appears at weight 12.
-# ---------------------------------------------------------------------------
+def _permutation_oracle(single_weight: int, depth: int):
+    r"""Elementary symmetric polynomial from the permutation formula.
 
-def test_depth_4_first_appearance_is_weight_12():
-    assert depth_4_first_appears_at_weight() == 12
-    # Weight-11 basis: 7 entries, max depth = 3 (only zeta(3,3,5) is depth 3)
-    b11 = mzv_basis_weight_11()
-    assert len(b11) == 7
-    d11 = phi_11_symbolic()
-    assert d11["depth_max_in_basis"] == 3
-    # Weight-12 basis: 9 entries, max depth = 4 (ninth entry zeta(3,3,3,3))
-    b12 = mzv_basis_weight_12()
-    assert len(b12) == 9
-    assert "zeta(3, 3, 3, 3)" in b12
-    d12 = phi_12_symbolic()
-    assert d12["depth_max_in_basis"] == 4
+    e_r = (1/r!) sum_{sigma in S_r} sign(sigma) p_sigma.
+    This route is independent of the engine's Newton recurrence.
+    """
+    result = {}
+    for permutation in permutations(range(depth)):
+        cycles = _cycle_lengths(permutation)
+        sign = -1 if (depth - len(cycles)) % 2 else 1
+        monomial = tuple(sorted(single_weight * size for size in cycles))
+        result[monomial] = result.get(monomial, Fraction(0)) + Fraction(
+            sign, factorial(depth)
+        )
+    return {key: value for key, value in result.items() if value}
 
 
-# ---------------------------------------------------------------------------
-# (Identity) Borcherds raw modular weight = -n
-#   wt(Phi_10^{n/2} / eta^{12n}) = 10 * (n/2) - (1/2)(12n) = 5n - 6n = -n.
-# ---------------------------------------------------------------------------
+class TestHoffmanDimensions:
+    def test_dimensions_11_and_12(self):
+        assert padovan_dim_11() == 9
+        assert padovan_dim_12() == 12
 
-@pytest.mark.parametrize("n", [1, 2, 3, 6, 11, 12])
-def test_borcherds_raw_modular_weight_equals_minus_n(n):
-    assert borcherds_leg_raw_weight(n) == Fraction(-n, 1)
+    @pytest.mark.parametrize("weight", range(0, 16))
+    def test_independent_composition_count(self, weight):
+        assert padovan_dim(weight) == _independent_hoffman_count(weight)
 
-
-def test_borcherds_in_tower_weight_equals_5n():
-    for n in (0, 1, 5, 11, 12):
-        assert borcherds_leg_in_tower_weight(n) == 5 * n
-
-
-# ---------------------------------------------------------------------------
-# (Symmetry) Double-cover lives iff n is odd (half-integer exponent n/2).
-# ---------------------------------------------------------------------------
-
-@pytest.mark.parametrize("n,odd", [
-    (1, True), (2, False), (3, True), (4, False),
-    (11, True), (12, False),
-])
-def test_double_cover_iff_n_odd(n, odd):
-    assert borcherds_leg_lives_on_double_cover(n) is odd
+    def test_words_have_correct_weight(self):
+        for weight in range(2, 16):
+            assert all(sum(word) == weight for word in hoffman_words(weight))
+            assert all(set(word) <= {2, 3} for word in hoffman_words(weight))
 
 
-# ---------------------------------------------------------------------------
-# (Lattice signature) Fake-Monster is never a K3-BKM leg.
-# Borcherds 1998 Thm 13.1: Phi_12 on II_{25,1} (signature (25,1)).
-# K3-BKM Cartan is Lambda^{2,1}_II (signature (2,1)).  No embedding.
-# ---------------------------------------------------------------------------
+class TestRepeatedZetaNewtonIdentity:
+    def test_permutation_oracle(self):
+        assert zeta3333_newton_identity() == _permutation_oracle(3, 4)
 
-@pytest.mark.parametrize("n", [2, 6, 10, 11, 12, 100])
-def test_fake_monster_never_a_k3_bkm_leg(n):
-    assert borcherds_leg_is_fake_monster(n) is False
+    def test_literal_coefficients(self):
+        assert zeta3333_newton_identity() == {
+            (3, 3, 3, 3): Fraction(1, 24),
+            (3, 3, 6): Fraction(-1, 4),
+            (6, 6): Fraction(1, 8),
+            (3, 9): Fraction(1, 3),
+            (12,): Fraction(-1, 4),
+        }
+
+    def test_limiting_depths(self):
+        assert repeated_mzv_newton(5, 1) == {(5,): Fraction(1)}
+        assert repeated_mzv_newton(5, 2) == {
+            (5, 5): Fraction(1, 2),
+            (10,): Fraction(-1, 2),
+        }
+
+    def test_primitive_status(self):
+        status = zeta3333_status()
+        assert status["decomposable"]
+        assert status["primitive_projection"] == 0
+        assert not status["first_depth_four_primitive"]
+        assert first_depth_4_entry_at_weight_12() is None
+        assert mzv_has_depth_4_irreducible(12) is None
+
+
+class TestExactBorcherdsScalar:
+    @pytest.mark.parametrize("height", range(1, 9))
+    def test_pure_q_log_by_direct_factor_expansion(self, height):
+        direct = sum(
+            -Fraction(10, height // divisor)
+            for divisor in range(1, height + 1)
+            if height % divisor == 0
+        )
+        assert delta5_pure_q_log_coefficient(height) == direct
+
+    def test_resolved_weights_and_characters(self):
+        odd = borcherds_scalar_section(11)
+        even = borcherds_scalar_section(12)
+        assert borcherds_leg_weight_raw(11) == -11
+        assert borcherds_leg_weight_raw(12) == -12
+        assert odd["delta5_character"] == "nu_Delta5"
+        assert even["delta5_character"] == "trivial"
+        assert odd["product_exponent_scale"] == 11
+        assert even["product_exponent_scale"] == 12
+
+    def test_scalar_to_cochain_gate(self):
+        section = borcherds_scalar_section(12)
+        assert not section["coefficient_to_cochain_map_constructed"]
+        assert not section["cyclic_closure_verified"]
+        assert not section["maurer_cartan_verified"]
+
+
+class TestCochainAndProLimitStatus:
+    def test_kz_simplex_scope(self):
+        assert kz_denominator(12) == factorial(12)
+        status = kz_normalization_status(12)
+        assert not status["word_specified"]
+        assert not status["regularised_word_integral_computed"]
+        assert not status["word_to_cochain_map_constructed"]
+
+    def test_phi12_remains_open(self):
+        phi12 = phi_n_symbolic(12)
+        assert phi12["motivic_dimension"] == 12
+        assert not phi12["phi_n_constructed"]
+        assert not phi12["rotation_equation_verified"]
+        assert not phi12["maurer_cartan_equation_verified"]
+        assert not phi12["zeta3333"]["grt_action_computed"]
+
+    def test_motivic_projection_and_cyclic_transition_are_separate(self):
+        level = mittag_leffler_at_weight(12)
+        assert level["motivic_quotient_projection_surjective"]
+        assert not level["cyclic_obstruction_transition_constructed"]
+        assert level["cyclic_obstruction_transition_surjective"] is None
+        assert level["cyclic_lim1"] is None
+
+    def test_pro_limit_status(self):
+        status = obs_infty_pro_limit_well_defined_through_weight_12()
+        assert status["motivic_projections_surjective"]
+        assert not status["cyclic_inverse_system_constructed"]
+        assert status["lim1"] is None
+        assert status["pro_limit_well_defined"] is None
+
+    def test_genus_11_requires_independent_graph_class(self):
+        genus = obs_g_formula(11)
+        assert genus["gamma12_required"]
+        assert not genus["zeta3333_primitive_contribution"]
+        assert not genus["phi12_cochain_constructed"]
+        assert not genus["obs_g_constructed"]
+
+    def test_internal_checks(self):
+        checks = run_tests()
+        assert checks
+        assert all(checks.values())
+
+
+class TestInputValidation:
+    @pytest.mark.parametrize(
+        "call",
+        [
+            lambda: repeated_mzv_newton(1, 4),
+            lambda: repeated_mzv_newton(3, -1),
+            lambda: delta5_pure_q_log_coefficient(0),
+            lambda: borcherds_scalar_section(-1),
+            lambda: phi_n_symbolic(-1),
+        ],
+    )
+    def test_invalid_inputs(self, call):
+        with pytest.raises(ValueError):
+            call()
