@@ -5,9 +5,17 @@ of Defects*, by Raeez Lorgat.
 
 ```bash
 make volume        # the normative volume → out/reconstruction.pdf   (104pp)
+make geometry      # the 408pp revision — refuses: 46 of 53 sources absent
 make skeleton      # the earlier 8-chapter spine, superseded          (35pp)
 make legacy-manuscript   # the retracted architecture, reference only
 ```
+
+The 408-page revision *The Geometry of Ordered Quantum Fields* arrived as a
+PDF plus its root file only. Its structure is installed and its `core/` inputs
+resolve here, but 44 `detailed/*` chapters, 2 `frontier/*` chapters, `compat`,
+and `combined_bibliography` are missing — see
+[`reconstruction/MISSING_SOURCES.md`](reconstruction/MISSING_SOURCES.md).
+Until they arrive `make volume` is normative.
 
 ## The primitive objects
 
@@ -64,9 +72,15 @@ corpus file by file: what has been upgraded, what survives the reframing
 and awaits porting, and what is keyed to the dead architecture.
 
 The obstruction theorems that make each retraction explicit are in
-`volume/no_go.tex`. The falsified Motzkin/Riordan bar-cohomology tables
-are settled in `volume/enveloping_audit.tex`, verified by
-`compute/tests/test_witt_pentagonal_rigidity.py`.
+`reconstruction/core/part5_audit.tex`. The falsified Motzkin/Riordan
+bar-cohomology tables are settled in
+`reconstruction/core/part3_examples.tex`, verified by
+`compute/tests/test_witt_pentagonal_rigidity.py` and cross-checked
+against a second, independent harness in
+`compute/tests/test_harness_cross_agreement.py`.
+
+(The superseded skeleton carries its own copies at `volume/no_go.tex`
+and `volume/enveloping_audit.tex`; `make skeleton` still builds them.)
 
 ## Sections below
 

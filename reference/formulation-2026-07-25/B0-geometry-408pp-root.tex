@@ -1,42 +1,28 @@
 \documentclass[10pt,oneside,openany]{book}
-
-% Repository typography: EB Garamond via the shared template, loaded
-% immediately after \documentclass per ecosystem invariant XII.  The
-% `localtheorems' option suppresses the template's own theorem
-% declarations so that this document's environments below stand.
-\usepackage[localtheorems]{raeez-math-template}
-
-% This document's page geometry, applied after the template's geometry
-% load so it wins without an option clash.
-\geometry{paperwidth=7in,paperheight=10in,inner=0.72in,outer=0.72in,%
-          top=0.72in,bottom=0.78in,headheight=14pt}
-
+\usepackage[paperwidth=7in,paperheight=10in,inner=0.72in,outer=0.72in,top=0.72in,bottom=0.78in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage{microtype}
-% mathrsfs and bm dropped: unused here, and the template's newtxmath
-% leaves too few free math alphabets to afford them.
-\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,amsthm,amscd,mathrsfs,bm}
 \usepackage{stmaryrd}
 \usepackage{booktabs,longtable,tabularx,array,multirow}
 \usepackage{enumitem}
 \usepackage{xcolor}
-% tcolorbox is loaded by raeez-math-template; add the library only.
-\tcbuselibrary{most}
+\usepackage[most]{tcolorbox}
 \usepackage{tikz-cd}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{csquotes}
 \usepackage{etoolbox}
 \usepackage{fancyhdr}
-% imakeidx removed: raeez-math-template already loads makeidx,
-% calls \makeindex, and provides \printindex.
+\usepackage{imakeidx}
 \usepackage{hyperref}
 \usepackage[nameinlink,noabbrev,capitalise]{cleveref}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{titlesec}
 \usepackage{needspace}
 \usepackage{setspace}
-\usepackage{listings}
 
 \definecolor{ink}{HTML}{172033}
 \definecolor{deep}{HTML}{173B57}
@@ -47,9 +33,9 @@
 \definecolor{grayline}{HTML}{D8DEE4}
 \hypersetup{colorlinks=true,linkcolor=deep,citecolor=accent,urlcolor=deep,
 pdfauthor={Raeez Lorgat},
-pdftitle={Chiral Koszul Duality: Definitive Reconstruction},
-pdfsubject={Associative chiral algebras, ordered quantum fields, bar-cobar duality, and defects},
-pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex algebra, ordered quantum fields, bar-cobar, defects}}
+pdftitle={Chiral Koszul Duality: The Geometry of Ordered Quantum Fields},
+pdfsubject={Noncommutative chiral algebras, factorisable D-modules, bar-cobar geometry, defects, sewing, quantum groups, and field theory},
+pdfkeywords={chiral Koszul duality, associative chiral algebra, factorisation D-modules, nonlocal vertex algebra, ordered quantum fields, bar-cobar, defects}}
 
 \titleformat{\chapter}[display]
   {\normalfont\huge\bfseries\color{ink}}
@@ -70,7 +56,8 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \setlist[itemize]{topsep=0.35em,itemsep=0.15em,parsep=0em,leftmargin=1.6em}
 \setlist[enumerate]{topsep=0.35em,itemsep=0.18em,parsep=0em,leftmargin=1.8em}
 \setstretch{1.035}
-\emergencystretch=2em
+\emergencystretch=3em
+\allowdisplaybreaks
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -78,6 +65,7 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{criterion}[theorem]{Criterion}
 \newtheorem{recognition}[theorem]{Recognition theorem}
+\newtheorem{externaltheorem}[theorem]{External theorem}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{construction}[theorem]{Construction}
@@ -89,19 +77,11 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newtheorem{warning}[theorem]{Warning}
 \newtheorem{question}[theorem]{Question}
 
-\newtcolorbox{statusbox}[1][]{breakable,colback=pale,colframe=deep,boxrule=0.6pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Status},fonttitle=\bfseries,#1}
 \newtcolorbox{nogobox}[1][]{breakable,colback=warm,colframe=accent,boxrule=0.7pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={No-go theorem},fonttitle=\bfseries,#1}
 \newtcolorbox{calcbox}[1][]{breakable,colback=greenpale,colframe=deep,boxrule=0.6pt,arc=1.2mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Exact calculation},fonttitle=\bfseries,#1}
-\newtcolorbox{sourcebox}[1][]{breakable,colback=white,colframe=grayline,boxrule=0.6pt,arc=0mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,title={Source reconciliation},fonttitle=\bfseries\color{ink},#1}
-\newcommand{\proved}{\textsc{proved}}
-\newcommand{\conditional}{\textsc{conditional}}
-\newcommand{\formalstatus}{\textsc{formal}}
-\newcommand{\retracted}{\textsc{retracted}}
-\newcommand{\computed}{\textsc{computed}}
-\newcommand{\native}{\textsc{native}}
 
 \newcommand{\kfield}{\Bbbk}
-\newcommand{\one}{\mathbbm{1}}
+\newcommand{\one}{\mathbf 1}
 \newcommand{\Ran}{\operatorname{Ran}}
 \newcommand{\DMod}{\operatorname{DMod}}
 \newcommand{\FactD}{\operatorname{FactD}}
@@ -147,6 +127,7 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newcommand{\Com}{\mathsf{Com}}
 \newcommand{\Chir}{\mathsf{Chir}}
 \newcommand{\Assch}{\mathsf{Ass}^{\mathrm{ch}}_X}
+\newcommand{\Mixch}{\mathsf{Mix}^{\mathrm{ch}}_{X,\perp}}
 \newcommand{\Ainf}{\mathsf A_\infty}
 \newcommand{\Linf}{\mathsf L_\infty}
 \newcommand{\op}{\mathrm{op}}
@@ -157,8 +138,7 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newcommand{\conil}{\mathrm{conil}}
 \newcommand{\coaug}{\mathrm{coaug}}
 \newcommand{\nilc}{\mathrm{nil}}
-\providecommand{\widebar}[1]{\overline{#1}}
-\renewcommand{\widebar}[1]{\overline{#1}}
+\newcommand{\widebar}[1]{\overline{#1}}
 \newcommand{\mcM}{\overline{\mathcal M}}
 \newcommand{\hbarX}{\hbar_X}
 \newcommand{\hbarp}{\hbar_{\perp}}
@@ -168,7 +148,6 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newcommand{\brp}[2]{[#1,#2]_{\perp}}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\qedherebox}{\hfill$\square$}
-\newcommand{\sourceversion}[1]{\textsf{#1}}
 \newcommand{\word}[1]{[\,#1\,]}
 \newcommand{\cyc}{\mathrm{cyc}}
 \newcommand{\sdim}{\operatorname{sdim}}
@@ -176,12 +155,8 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \newcommand{\ad}{\operatorname{ad}}
 \newcommand{\id}{\operatorname{id}}
 
-% mathbbm fallback
-% bbm would be a 17th math alphabet on top of the template's newtxmath,
-% which overflows LaTeX's limit of 16.  Use the document's own
-% documented fallback, matching \unit in the repository preamble.
-\renewcommand{\one}{\mathbf 1}
-
+\input{compat}
+\makeindex
 
 \begin{document}
 \frontmatter
@@ -197,15 +172,73 @@ pdfkeywords={chiral Koszul duality, factorisation D-modules, nonlocal vertex alg
 \input{core/part3_examples}
 \part{Exchange, reduction, sewing, physics, and arithmetic}
 \input{core/part4_physics}
-\part{The disciplinary constitution of the theory}
+
+\part{Geometric and categorical derivations}
+\inputaschapter{detailed/00_first_principles}
+\inputaschapter{detailed/00_factd}
+\inputaschapter{detailed/00_duoidal}
+\inputaschapter{detailed/00_ordered_ran}
+\inputaschapter{detailed/00_mixed_operad}
+\inputaschapter{detailed/00_internal_bar}
+\inputaschapter{detailed/00_internal_duality}
+\inputaschapter{detailed/00_koszul_morita_square}
+\inputaschapter{detailed/00_exchange_center}
+\inputaschapter{detailed/00_ht_recognition}
+
+\part{The chiral coefficient and its resolutions}
+\inputaschapter{detailed/01_diagonal_language}
+\inputaschapter{detailed/02_chiral_operations}
+\inputaschapter{detailed/03_partition_complex}
+\inputaschapter{detailed/04_fm_resolution}
+\inputaschapter{detailed/05_pole_geometry}
+\inputaschapter{detailed/06_formal_disc}
+\inputaschapter{detailed/07_chevalley_ran}
+\inputaschapter{detailed/08_koszul_duality}
+\inputaschapter{detailed/09_duality_center}
+
+\part{Exchange, reduction, and quantum symmetry}
+\inputaschapter{detailed/10_ordered_monodromy}
+\inputaschapter{detailed/11_kz_quantum_groups}
+\inputaschapter{detailed/00_quantum_line_theory}
+\inputaschapter{detailed/14_brst_w}
+
+\part{Two sewing geometries and their anomalies}
+\inputaschapter{detailed/00_bimodular}
+\inputaschapter{detailed/12_modular_master}
+\inputaschapter{detailed/13_conformal_blocks}
+\inputaschapter{detailed/00_anomalies}
+
+\part{Exact models, physics, and arithmetic}
+\inputaschapter{detailed/15_examples}
+\inputaschapter{detailed/00_noncomm_examples}
+\inputaschapter{detailed/16_arithmetic}
+\inputaschapter{detailed/17_quantum_field_theory}
+\inputaschapter{detailed/00_physical_derivations}
+\inputaschapter{detailed/00_higher_sources}
+
+\part{Frontier completions}
+% Frontier chapters are inserted here.
+\input{frontier/frontier_master}
+
+\part{Exact boundaries and the functorial atlas}
 \input{core/part5_audit}
+
+\part{The invariant synthesis}
+\input{frontier/inner_music_synthesis}
 
 \appendix
 \input{core/appendices}
+\inputaschapter{detailed/A_signs}
+\inputaschapter{detailed/B_low_arity}
+\inputaschapter{detailed/00_ordered_low_arity}
+\inputaschapter{detailed/C_stratified_spectral_sequence}
+\inputaschapter{detailed/E_local_geometry}
+\inputaschapter{detailed/F_field_theory_derivations}
+\inputaschapter{detailed/G_exact_models}
+\inputaschapter{detailed/D_logical_separations}
+\inputaschapter{detailed/00_historical_lineage}
 
 \backmatter
-\nocite{*}
-\bibliographystyle{plainnat}
-\bibliography{references}
+\input{combined_bibliography}
 \printindex
 \end{document}

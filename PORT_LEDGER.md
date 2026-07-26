@@ -3,13 +3,28 @@
 Disposition of the legacy corpus against the normative volume
 (`reconstruction/reconstruction.tex`, built by `make volume`).
 
-## The three roots
+## The four roots
 
 | root | build | pages | status |
 |---|---|---:|---|
-| `reconstruction/reconstruction.tex` | `make volume` | 104 | **normative**. Merges all four PDF witnesses plus the repository corpus. |
-| `main_ordered_chiral.tex` | `make skeleton` | 35 | superseded; its two unique results are merged into the normative volume. |
+| `reconstruction/geometry.tex` | `make geometry` | 408 | latest revision. **46 of its 53 sources are absent**; the target refuses rather than emit a partial document. See `reconstruction/MISSING_SOURCES.md`. |
+| `reconstruction/reconstruction.tex` | `make volume` | 104 | **normative** until those sources arrive. Builds fully from source here. |
+| `main_ordered_chiral.tex` | `make skeleton` | 35 | superseded; its two unique results are merged into `core/`. |
 | `main.tex` | `make legacy-manuscript` | — | retracted architecture. Reference only. |
+
+The revision's `\input{core/...}` targets resolve against the seven files
+already here, which is why they now live in `reconstruction/core/`. Empty
+`detailed/` and `frontier/` directories are staged so the remaining 46 files
+drop straight in and `make geometry` starts passing.
+
+The revision renames the Motzkin/Riordan audit from *Exact audit of the
+Motzkin and Riordan claims* to *Carrier theorem for the planar series*, and
+sharpens it: a chain-level identification of either planar series with an
+ordered bar now explicitly "requires a specified transverse multiplication and
+a quasi-isomorphism from its planar complex to that bar." It still computes no
+Virasoro bar — `Goncharova` and `pentagonal` are at zero occurrences in the
+408-page rendering — so the merged Virasoro row supplies exactly what that
+theorem asks for.
 
 The normative volume arrived as upstream LaTeX (`reconstruction/UPSTREAM_BUILD_README.md`,
 `SOURCE_CORPUS_MANIFEST.md`, `INPUT_SHA256_MANIFEST.txt`). Four changes were

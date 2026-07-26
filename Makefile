@@ -5,6 +5,9 @@
 #  Usage:
 #    make volume         Build the NORMATIVE volume → out/reconstruction.pdf
 #                        This is the mathematically current root.
+#    make geometry       Build the 408-page revision → out/geometry.pdf
+#                        Refuses while any of its 53 sources is absent;
+#                        see reconstruction/MISSING_SOURCES.md.
 #    make skeleton       Build the earlier 8-chapter spine (superseded).
 #    make legacy-manuscript
 #                        Build the retracted-architecture manuscript.
@@ -102,7 +105,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .DEFAULT_GOAL := all
 
-.PHONY: all volume skeleton legacy-manuscript modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
+.PHONY: all volume geometry skeleton legacy-manuscript modular-koszul-core fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose mathematics-publish root-publish architecture unified-architecture
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(ICLOUD_MAIN_PREREQ) standalone
@@ -183,6 +186,39 @@ volume:
 		grep -aE 'Reference .* undefined|Citation .* undefined' $(LOG_DIR)/$(RECON).log | head -5; exit 1; \
 	fi
 	@echo "    0 errors, 0 undefined references, 0 undefined citations."
+
+## geometry: Build the 408-page revision → out/geometry.pdf
+##   Refuses unless every \input target resolves.  46 of its 53 sources are
+##   not present; see reconstruction/MISSING_SOURCES.md.
+geometry:
+	@echo "  ── Building the 408-page revision (geometry) ──"
+	@mkdir -p $(OUT_DIR) $(LOG_DIR)
+	@missing=0; \
+	for f in $$(grep -oE '\\(input|inputaschapter)\{[^}]+\}' $(RECON_DIR)/geometry.tex \
+	           | sed 's/.*{\(.*\)}/\1/' | sort -u); do \
+	  if [ ! -f "$(RECON_DIR)/$$f.tex" ]; then \
+	    if [ $$missing -eq 0 ]; then echo "    missing sources:"; fi; \
+	    echo "      $$f.tex"; missing=$$((missing+1)); \
+	  fi; \
+	done; \
+	if [ $$missing -gt 0 ]; then \
+	  echo "    ✗ $$missing source file(s) absent — not building a partial document."; \
+	  echo "      See $(RECON_DIR)/MISSING_SOURCES.md.  Use \`make volume\` (104pp) meanwhile."; \
+	  exit 1; \
+	fi
+	@cd $(RECON_DIR) && \
+	  TEXINPUTS=".:..:$$TEXINPUTS" BIBINPUTS=".:..:$$BIBINPUTS" \
+	  $(TEX) $(TEXFLAGS) geometry.tex >../$(LOG_DIR)/geometry.log 2>&1 || true; \
+	  for i in 1 2 3; do \
+	    TEXINPUTS=".:..:$$TEXINPUTS" BIBINPUTS=".:..:$$BIBINPUTS" \
+	    $(TEX) $(TEXFLAGS) geometry.tex >../$(LOG_DIR)/geometry.log 2>&1 || true; \
+	  done
+	@if [ -f $(RECON_DIR)/geometry.pdf ]; then \
+		cp $(RECON_DIR)/geometry.pdf $(OUT_DIR)/geometry.pdf; \
+		echo "    ✓ out/geometry.pdf ($$(pdfinfo $(RECON_DIR)/geometry.pdf 2>/dev/null | awk '/^Pages/{print $$2}') pages)"; \
+	else \
+		echo "    ✗ build failed — see $(LOG_DIR)/geometry.log"; exit 1; \
+	fi
 
 ## skeleton: Build the earlier 8-chapter normative spine → out/
 ##   Superseded by `make volume`; its unique results are merged there.
