@@ -192,3 +192,38 @@ recorded in the witness analysis, not a per-statement audit of 104,106 lines.
 A file in "to upgrade" is not certified correct; it is certified *not
 obviously keyed to the retracted architecture*. Each must be audited when
 ported.
+
+
+## Cross-repository: the platonic-integrated spine (2026-07-26)
+
+A five-volume spine, byte-identical across the Calabi-Yau and Igusa source
+bundles (SHA-256 verified), was deployed into the two repositories that
+shipped it:
+
+| volume | lines | repository | deployed |
+|---|---:|---|---|
+| I Ordered Chiral Geometry | 1552 | `chiral-bar-cobar` | not yet |
+| II Mixed HT Deligne Theory | 929 | `mixed-holomorphic-topological-strings` | not yet |
+| III Igusa–Borcherds Theory | 1427 | `igusa-cusp-form` | `make platonic`, 501pp |
+| IV Calabi–Yau Quantum Groups | 1279 | `calabi-yau-quantum-groups` | `make platonic`, 507pp |
+| V Universal Chiral BV, Einstein Completion | 847 | no repository yet | — |
+
+Both deployments build with 0 errors and 0 undefined references or citations,
+in EB Garamond. Ledgers at `<repo>/platonic/PLATONIC_LEDGER.md`.
+
+The spine is on the corrected framework: `aligned` 34, `associative chiral` 27,
+`distributive law` 10, `denominator` 44, against `Beilinson tower` 0,
+`Universal Trace Identity` 0, `five-archetype` 0, `KSDual` 0, `Theorem H` 0.
+
+**One upgrade came back the other way.** The spine derives the theta-constant
+scalar $\Delta_5^{\theta}=2^6\Delta_5^{\mathrm{mon}}=64D_5$ from the ten even
+genus-two characteristics, where `reconstruction/core/part4_physics.tex` quoted
+it as a normalization. The derivation is now cross-referenced there.
+
+**One gap.** `no-go` occurs 0 times in the spine. The obstruction constitution
+in `reconstruction/core/part5_audit.tex` has no counterpart in Volumes I–V, so
+the retractions are implicit there rather than stated. Porting it is the next
+cross-repository step.
+
+Volume I of the spine is *not* the 408-page revision; the two are separate
+treatments of the same subject and have not been reconciled.
