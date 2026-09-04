@@ -1696,9 +1696,6 @@ reflecting the wild representation type. The class~W designation
 marks the boundary of modular Koszul duality: on classes G/L/C/M,
 the shadow obstruction tower is the organizing structure; on
 class~W, motivic DT theory supplies the algebraic substitute.
-
-Computation:
-\texttt{compute/lib/wild\_quiver\_chiral\_engine.py} (89 tests).
 \end{remark}
 
 %% ================================================================
@@ -1816,17 +1813,13 @@ CYBE $[r_{12}, r_{13}] + \text{cyc.} = 0$ holds vacuously;
 ``IBR'' = the CYBE reduces to the infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$ on the Casimir
 tensor (checked numerically for $\mathfrak{sl}_2$ and
-$\mathfrak{sl}_3$ in
-\texttt{test\_rmatrix\_landscape.py});
+$\mathfrak{sl}_3$; in general it follows from invariance of the
+Casimir tensor);
 ``odd'' = $r(z)$ has only odd-order poles and is therefore an odd
 function of~$z$, so skew-symmetry
 $r_{12}(z) + r_{21}(-z) = 0$ holds;
 ``mixed'' = even-order poles present (see
 Remark~\ref{rem:ww-even-poles-census} below).
-Computed across
-\texttt{test\_rmatrix\_landscape.py} and
-\texttt{test\_rmatrix\_poles\_comprehensive.py}
-($205$ tests, all passing).
 The detailed pole structure is in
 Table~\ref{tab:rmatrix-pole-landscape} (the bar complex
 tables chapter).
@@ -3315,15 +3308,11 @@ $\kappa^{\mathrm{mid}}=K^\kappa/2$.  A regular fixed point of the
 companion involution realizes this midpoint as an individual value.
 The BP involution fixes the pole $k=-3$; its regular midpoint fibre
 $c=25$ consists of $k=-3\pm2i$, exchanged by the involution.
-The master computation
-\texttt{test\_complementarity\_landscape.py} re-evaluates the four
-unconditional witness formulas and the principal $\mathcal W_3$
-formula.  The latter formula is read on
+The four unconditional witness formulas and the principal
+$\mathcal W_3$ formula are evaluated by the three routes just listed.
+The latter formula is read on
 $H_{\mathrm{diag}}^{g=1}+H_{W_3}^{\mathrm{DS/bar}}$
-\textup{(}see \texttt{compute/tests} for the stored
-$(\varrho,K,K^\kappa,\kappa^*)$ tuples\textup{)}.  These evaluations
-share the same companion formulas and constitute one computational
-route.
+and uses the displayed $(\varrho,K,K^\kappa,\kappa^*)$ tuple.
 The BP row carries the exact tuple component $K^c=50$ and open
 genus-$1$ entries; the
 $\mathsf B$ row carries the proved Mukai arithmetic
@@ -3877,10 +3866,8 @@ $r_{\max} = 3$. The cubic shadow $C$ is the Lie bracket, and the tower
 terminates because the quartic shadow vanishes by the Jacobi identity.
 At $k=-h^\vee$ the scalar curvature vanishes and the Feigin--Frenkel
 center moves the bar object to the critical FF boundary; this is not a
-class-L Koszul row. The exceptional and non-simply-laced non-critical
-cases are checked by
-\texttt{compute/lib/bar\_cohomology\_non\_simply\_laced\_engine.py}
-(120+ tests).
+class-L Koszul row. The same Jacobi argument applies to the exceptional
+and non-simply-laced non-critical cases.
 
 Note: for Kac--Moody algebras the anomaly ratio $\varrho(\mathfrak{g})$ is defined for the associated $\mathcal{W}$-algebra $\mathcal{W}(\mathfrak{g}, f_{\mathrm{prin}})$, not for $\widehat{\mathfrak{g}}_k$ itself; the Kac--Moody obstruction coefficient is $\kappa = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$ directly.
 \end{remark}
@@ -4057,9 +4044,6 @@ The W-line of $\cW_3$ has $\alpha_W = 0$ ($\mathbb{Z}_2$ parity),
 so $Q_W$ is even in~$t$ with purely imaginary branch points.
 The Gaussian decomposition is $Q_W = (2c/3)^2 + 2\Delta_W\,t^2$
 with constant Gaussian envelope.
-Checked by \texttt{test\_shadow\_connection.py}
-(114 tests: residues, monodromy, flat sections, Picard--Fuchs,
-Koszul duality, complementarity).
 
 \begin{table}[ht]
 \centering
@@ -4129,10 +4113,6 @@ Structural dichotomy: class~L + class~L is always autonomous
 real $c > 0$ ($f_{\mathrm{G}} = 0$ but $f_{\mathrm{M}} \neq 0$,
 so the ratios cannot coincide).
 $\cW_4$ is \emph{never} autonomous at any real central charge.
-Checked by
-\texttt{test\_propagator\_variance\_landscape.py}
-(143 tests: Cauchy--Schwarz, cross-engine consistency,
-enhanced symmetry zeros, mixing polynomial structure).
 
 %% ================================================================
 %% Shadow fields and Epstein L-functions
@@ -4247,8 +4227,7 @@ detects class~$\mathbf{C}$.\\
 ${}^\dagger$\,$435 = 3 \cdot 5 \cdot 29$;
 $d = -435$ is a fundamental discriminant ($-435 \equiv 1 \pmod{4}$,
 squarefree) with $h(-435) = 4$
-\textup{(}Computation~\textup{\ref{comp:fe-minimal-models}},
-\texttt{shadow\_epstein\_zeta.py}\textup{)}.
+\textup{(}Computation~\textup{\ref{comp:fe-minimal-models}}\textup{)}.
 }
 \end{table}
 
@@ -4385,12 +4364,12 @@ The explicit formulas are:
  giving $\dim H^n = 2n+1$ for all $n \geq 1$
  (Computation~\ref{comp:sl2-ce-verification},
  Remark~\ref{rem:garland-lepowsky-sl2}).
- The earlier Riordan formula
+ The candidate Riordan formula
  $\dim (\widehat{\mathfrak{sl}}_2^!)_n = R(n+3)$
  (Riordan numbers, OEIS~A005043) agrees at $n = 1$
  but gives $R(5) = 6 \neq 5$ at $n = 2$ and
  $R(6) = 15 \neq 7$ at $n = 3$; the Riordan generating
- function is superseded by the rational GF
+ function differs from the rational generating function
  $x(3-x)/(1-x)^2 = \sum_{n \geq 1}(2n+1)x^n$
  (see Remark~\ref{rem:garland-lepowsky-sl2} and
  Appendix~\ref{subsec:riordan}).
@@ -4609,8 +4588,7 @@ in $\Lambda^n$ of the loop algebra restricted to
 total weight~$H$; the net count is $2n+1$
 (Computation~\ref{comp:sl2-ce-verification}).
 
-The linear growth $\dim H^n = 2n+1$
-supersedes the Riordan formula
+The linear growth $\dim H^n = 2n+1$ differs from the Riordan formula
 $\dim H^n = R(n+3)$ (OEIS~A005043), which gives the
 correct value at $n = 1$ ($R(4) = 3$) but
 fails at $n = 2$ ($R(5) = 6 \neq 5$) and
@@ -7205,8 +7183,6 @@ $F_1^{\mathrm{const}}(Q_5)=-25/72$ and $F_2^{\mathrm{const}}(Q_5)=
  $2000$ Theorem~$4$; \textup{(}iii\textup{)} Marino--Moore $1998$
  eq.~$\textup{(}2.20\textup{)}$.
 \end{itemize}
-Any chapter inscribing these values should cite
-Proposition~\textup{(}\ref{prop:canonical-prs-coefficient-cm214}--\ref{prop:canonical-bcov-quintic}\textup{)}
-by label; any compute engine hardcoding them should cite both the
-proposition label and the corresponding checks above.
+The values in this comparison are the ones established in
+Propositions~\textup{\ref{prop:canonical-prs-coefficient-cm214}--\ref{prop:canonical-bcov-quintic}}.
 \end{remark}

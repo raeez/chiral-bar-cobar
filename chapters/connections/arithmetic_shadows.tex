@@ -3563,9 +3563,7 @@ conjugate pair of modulus $p^{11/2}$.
 
 \begin{proof}
 The coefficients are extracted from the $\eta^{24}$ product expansion
-of $\Delta$ truncated to $q^{113}$, implemented in
-\verb|compute/lib/ramanujan_verifications.py::ramanujan_tau_table|.
-Three independent verification paths:
+of $\Delta$ in $\bZ[q]/(q^{114})$.  Three independent checks are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Direct expansion of $\Delta = q\prod(1-q^n)^{24}$ by iterated
 polynomial multiplication.
@@ -3629,9 +3627,7 @@ $\tau(p)\bmod 691 = \sigma_{11}(p)\bmod 691
 The four $\tau(p)$ follow from direct $\eta^{24}$-product expansion
 $\Delta(q) = q\prod_{m\ge 1}(1-q^m)^{24}
 = q\sum_{k=0}^{24}\binom{24}{k}(-1)^k q^{mk}$
-truncated to $q^{229}$, implemented in
-\verb|compute/lib/ramanujan_verifications.py::ramanujan_tau_extended|;
-three independent verification paths confirm each entry.
+in $\bZ[q]/(q^{230})$; three independent checks confirm each entry.
 \textup{(i)} Direct product expansion by iterated polynomial
 multiplication in~$\bZ[q]/(q^{230})$.
 \textup{(ii)} Ramanujan congruence mod~$691$: each listed $\tau(p)$
@@ -4800,9 +4796,9 @@ class~$\mathbf{L}$ the (an)harmonic oscillator,
 class~$\mathbf{C}$ a sextic potential ($r_{\max} = 4$),
 and class~$\mathbf{M}$ an infinite-order potential
 whose full Taylor expansion requires the entire shadow
-tower. The identification is a computed claim in
-\texttt{theorem\_ode\_im\_shadow\_engine.py}; four independent
-methods agree across the standard landscape.
+tower.  Identifying these formal potentials with spectral ODEs
+requires a comparison from the shadow connection to the corresponding
+Schr\"odinger operator; that comparison is not constructed here.
 \end{remark}
 
 \begin{proposition}[Shadow oper as rigid hypergeometric;
@@ -6196,9 +6192,8 @@ $\Lambda^{\mathrm{KE}}(s) = \Lambda^{\mathrm{KE}}(1{-}s)$
 \textup{(}Theorem~\textup{\ref{thm:shadow-epstein-zeta}(ii)}\textup{)}
 is computed for the Virasoro shadow metric
 at all unitary minimal model central charges $c = 1 - 6/m(m{+}1)$,
-$m = 3, \ldots, 12$, via the theta-function splitting method
-\textup{(}\texttt{shadow\_epstein\_zeta.py}\textup{)}.
-At each central charge, seven test points
+$m = 3, \ldots, 12$, via the theta-function splitting method.
+At each central charge, the seven evaluation points
 $s \in \{0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8\}$ give
 relative error below~$10^{-3}$.
 The following cases are distinguished:
@@ -10055,7 +10050,7 @@ the amplitudes then gives prime-locality.
  convolution for holomorphic forms; Roelcke--Selberg
  spectral theory for real-analytic completions), but the genus-$1$
  amplitudes also contain the quasi-modular propagator graph sum.
- The remaining task is to verify that both the extraction of
+ It remains to prove that both the extraction of
  $S_2,S_3$ and the graph-sum functor preserve the Hecke
  decomposition.
 \end{enumerate}

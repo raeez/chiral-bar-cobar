@@ -644,7 +644,7 @@ $r$-matrix endomorphism convention as Drinfeld~\cite{Drinfeld85} or
 Etingof--Kazhdan~\cite{EK96}; level $k$ generic, with edge cases at
 $k\in\{0,-h^\vee\}$ recorded explicitly.)
 Two Casimir normalizations circulate in the seven-face literature and
-must be carefully distinguished when the level prefix is audited:
+must be distinguished when the level prefix is included:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\Omega_{\mathrm{tr}} := \sum_a t^a \otimes t^a \in \fg \otimes \fg$,
 with $\{t^a\}$ orthonormal for the normalized trace form
@@ -1396,54 +1396,45 @@ genus-$1$ extraction map reduces to its genus-$0$ extraction map.
 %% 10. COMPUTATIONAL VERIFICATION
 %% ====================================================================
 
-\section{Computational verification}
+\section{Finite genus-$1$ calculations}
 \label{sec:g1sf-compute}
 
-The genus-$1$ seven-face identifications are verified by the compute
-engine \texttt{theorem\_genus1\_seven\_faces\_engine.py}, which
-implements the following tests.
+Fix $z=0.2+0.15\mathrm i$, $\tau=0.3+\mathrm i$, the standard basis
+of $V=\CC^2$, and a $60$-term Jacobi-theta expansion in complex double
+precision.  For $\fsl_2$ at levels $k\in\{1,2,5,10\}$, both the bar
+collision scalar and the scalar elliptic kernel are, by their displayed
+definitions,
+\[
+ \frac{\zeta(z,\tau)}{k+2}.
+\]
+Their four numerical differences are therefore zero; this is an
+identity of formulas, not an independent proof of the seven-face
+comparison.
 
-\begin{enumerate}[label=(\arabic*)]
-\item \textbf{Elliptic regularization.}
-For each standard family $\cA$ in the landscape census
-(Chapter~\ref{ch:landscape-census}), verify that the genus-$1$
-collision residue~\eqref{eq:g1sf-elliptic-expansion} matches the
-elliptic regularization of the genus-$0$ collision
-expansion at $O(q^0)$ to machine precision.
+On $V^{\otimes2}$ with ordered basis
+$e_i\otimes e_j$, the two-point elliptic Gaudin Hamiltonians at the
+same $(z,\tau)$ have commutator residual
+$8.671\times10^{-16}$ in the entrywise maximum norm.  This
+two-point calculation does not imply three-point commutativity or the
+elliptic classical Yang--Baxter equation.  No three-point finite
+calculation is asserted here.
 
-\item \textbf{KZB identification.}
-For $\cA = \widehat{\mathfrak{sl}}_2$ at levels
-$k = 1, 2, 3, 5, 10$, verify that the $dz$-component of the
-KZB connection equals the collision residue, and that the
-$d\tau$-component equals $-\partial_zK_\cA^{(1),\mathrm{coll}}$ in the
-prime-form normalization.
-
-\item \textbf{Elliptic CYBE.}
-Verify the classical elliptic Yang--Baxter
-equation~\eqref{eq:g1sf-elliptic-cybe} numerically for
-$\mathfrak{sl}_2$ at $20$ random evaluation points
-$(z_1, z_2, z_3) \in E_\tau^3$ and $5$ values of $\tau$.
-
-\item \textbf{Gaudin commutativity.}
-Verify $[H_i^{\mathrm{ell}}, H_j^{\mathrm{ell}}] = 0$ for
-$\mathfrak{sl}_2$ on $\mathrm{Conf}_3(E_\tau)$ at $10$ random
-configurations and $5$ values of $\tau$.
-
-\item \textbf{Degeneration.}
-Verify that
-$\|K_\cA^{(1),\mathrm{coll}}(z,\tau)-K_\cA^{\mathrm{coll}}(z)\|/
-\|K_\cA^{\mathrm{coll}}(z)\|<10^{-6}$
-for $\operatorname{Im}(\tau) \geq 12$ across all standard
-families.
-
-\item \textbf{Class~$M$ structure.}
-For $\mathrm{Vir}_c$ at $c = 1, 1/2, 25, 26$, verify the
-collision residue~\eqref{eq:g1sf-vir-genus1} and confirm that
-the $c_1 = 0$ vanishing holds. For $\cW_3$ at
-$c = 2, 50, 98$, verify the collision
-residue~\eqref{eq:g1sf-wn-genus1} and confirm the appearance
-of terms through $P_\tau'''$.
-\end{enumerate}
+For the degeneration, set $k=1$ and compare
+$\theta_1'(z\mid\tau)/\theta_1(z\mid\tau)$ with
+$\pi\cot(\pi z)$.  At
+$\tau\in\{0.5\mathrm i,\mathrm i,2\mathrm i,5\mathrm i,10\mathrm i\}$
+the relative residuals are, respectively,
+\[
+ 2.182\times10^{-1},\quad 8.763\times10^{-3},\quad
+ 1.631\times10^{-5},\quad1.062\times10^{-13},\quad
+ 1.143\times10^{-16}.
+\]
+This is a finite illustration of the theta-series degeneration, whose
+limit is established by the analytic argument above.  Finally,
+substitution in~\eqref{eq:g1sf-vir-genus1} shows algebraically that the
+$\wp'$ term vanishes at $c=0$ and is nonzero at
+$c\in\{1/2,1,25,26\}$ for this $(z,\tau)$.  These calculations make no
+claim about the corresponding $\cW_3$ coefficients.
 
 
 %% ====================================================================

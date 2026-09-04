@@ -797,28 +797,23 @@ from slot~(1), the quadrichotomy from slot~(2), and the~FF locus from
 slot~(5) via~$\kappa$-vanishing.
 \end{remark}
 
-\section{Compute-layer verification}
+\section{Finite separation table}
 \label{sec:three-invariants-compute}
 
-The three-invariants distinction is checked in the compute layer
-by the engine
-\texttt{compute/lib/theorem\_three\_paper\_intersection\_engine.py},
-which contains the dictionary
-\begin{verbatim}
- shadow_depth_to_operator_order('heisenberg')
- = {shadow_class: G, r_max: 2, p_max: 2, k_max: 1, op_order: 0}
- shadow_depth_to_operator_order('km_sl2')
- = {shadow_class: L, r_max: 3, p_max: 2, k_max: 1, op_order: 0}
- shadow_depth_to_operator_order('betagamma')
- = {shadow_class: C, r_max: 4, p_max: 1, k_max: 0, op_order: 0}
- shadow_depth_to_operator_order('virasoro')
- = {shadow_class: M, r_max: inf, p_max: 4, k_max: 3, op_order: 2}
- shadow_depth_to_operator_order('w3')
- = {shadow_class: M, r_max: inf, p_max: 6, k_max: 5, op_order: 4}
-\end{verbatim}
-The corresponding test file
-\texttt{compute/tests/test\_theorem\_three\_paper\_intersection\_engine.py}
-contains the critical
-\texttt{test\_betagamma\_class\_C}
-which verifies the $(p_{\max}, k_{\max}, r_{\max}) = (1, 0, 4)$
-triple for the $\beta\gamma$ system.
+On the five standard representatives, the finite invariant map
+$\cA\mapsto(\text{shadow class},r_{\max},p_{\max},k_{\max},
+\text{operator order})$ gives
+\[
+\begin{array}{c|ccccc}
+\cA&\text{class}&r_{\max}&p_{\max}&k_{\max}&\text{operator order}\\ \hline
+\text{Heisenberg}&G&2&2&1&0\\
+\widehat{\mathfrak{sl}}_2&L&3&2&1&0\\
+\beta\gamma&C&4&1&0&0\\
+\mathrm{Vir}&M&\infty&4&3&2\\
+\cW_3&M&\infty&6&5&4
+\end{array}
+\]
+In particular, the critical class-$C$ row is
+$(p_{\max},k_{\max},r_{\max})=(1,0,4)$ for the $\beta\gamma$
+system.  This table records only these five representatives; the
+general classification statements retain the hypotheses stated above.

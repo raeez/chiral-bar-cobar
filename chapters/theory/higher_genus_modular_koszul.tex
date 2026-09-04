@@ -1108,12 +1108,13 @@ $H^{0,1}(\Sigma_g)$, since $L_0$ acts only on the vertex-algebra
 factor. Hence the full $H^1(\Sigma_g,\bC)$-enrichment is eliminated,
 and one obtains $E_\infty(g) = E_\infty(0)$.
 
-The computation module
-\texttt{compute/lib/w\_algebra\_pbw\_genus1.py}
-checks the weight-triangular mechanism for the first
-higher-spin case $\mathcal{W}_3$ through conformal weight~$8$,
-together with the principal generator weights for the finite-type
-families $A_1$, $A_2$, $A_3$, $B_2$, $C_2$, $G_2$, and~$F_4$.
+For $\mathcal W_3$ through conformal weight~$8$, the finite weight
+spaces give upper-triangular matrices with diagonal blocks
+$h\,\mathrm{id}_{M_h}$, $2\leq h\leq8$.  The principal generator
+weights for the finite-type families
+$A_1$, $A_2$, $A_3$, $B_2$, $C_2$, $G_2$, and~$F_4$ give the same
+nonzero diagonal criterion.  This finite list illustrates the
+general argument above; it is not needed for its conclusion.
 \end{proof}
 
 \begin{remark}[Mechanism]\label{rem:mk4-status}
@@ -1504,11 +1505,8 @@ Killing contraction.
 The decomposition $E_\infty^{*,2}(g{=}1) =
 E_\infty^{*,2}(g{=}0)$ follows.
 
-A symbolic check of the same mechanism at the next tensor
-powers, implemented in
-\nolinkurl{compute/lib/genus1_pbw_sl2.py},
-confirms that no new representation-theoretic obstruction
-appears. The diagonal Casimir eigenspace dimensions are:
+For the next tensor powers, the diagonal Casimir eigenspace
+dimensions are:
 \[
 \begin{aligned}
 \mathfrak{sl}_2^{\otimes 3}&:\ \{24{:}7,\;12{:}10,\;4{:}9,\;0{:}1\},\\
@@ -1517,7 +1515,7 @@ appears. The diagonal Casimir eigenspace dimensions are:
 \mathfrak{sl}_2^{\otimes 6}&:\ \{84{:}13,\;60{:}55,\;40{:}135,\;24{:}203,\;12{:}200,\;4{:}108,\;0{:}15\},\\
 \mathfrak{sl}_2^{\otimes 7}&:\ \{112{:}15,\;84{:}78,\;60{:}231,\;40{:}441,\\
 &\qquad 24{:}588,\;12{:}525,\;4{:}273,\;0{:}36\}
-\quad\textup{(sparse/modular extraction).}
+\quad\textup{(finite decomposition).}
 \end{aligned}
 \]
 These match the expected irreducible decompositions.
@@ -1529,8 +1527,9 @@ $\operatorname{rank}(d_1)=80$ at $n=5$ and
 $\operatorname{rank}(d_1)=243$ at $n=6$ and
 $\operatorname{rank}(d_1)=728$ at $n=7$; the commutators
 $[\operatorname{ad}(x), d_1]$ ($x \in \mathfrak{sl}_2$) and
-$[C_2, d_1]$ vanish identically in the full checks at
-$n=3,4,5,6$ and remain zero in the staged $n=7$ extended run.
+$[C_2, d_1]$ vanish on the full tensor basis for
+$n=3,4,5,6$.  The displayed $n=7$ Casimir multiplicities do not by
+themselves establish the corresponding commutator identities.
 
 This shows that the elimination pattern (nontrivial
 summands killed by Whitehead, invariant summands passed to
@@ -1944,15 +1943,12 @@ Theorem~\ref{thm:pbw-koszulness-criterion}\textup{)}, the spectral
 sequence converges in each bidegree, yielding
 $E_\infty(g) = E_\infty(0)$.
 
-The computation module
-\texttt{compute/lib/virasoro\_pbw\_genus1.py}
-verifies through conformal weight~$10$ that
-$\dim M_h = p(h-2)$,
-$L_0 = h \cdot \mathrm{id}_{M_h}$,
-the full $\mathfrak{sl}_2$ commutator $[L_1, L_{-1}] = 2L_0$,
-and that the Casimir $C_2 = 2L_0^2 - L_{-1}L_1 - L_1L_{-1}$
-has all eigenvalues strictly positive on every $M_h$
-(34~tests in \texttt{test\_virasoro\_pbw\_genus1.py}).
+As a finite illustration, for $2\leq h\leq10$ the partition basis of
+$M_h$ has cardinality $p(h-2)$, the matrix of $L_0$ is
+$h\,\mathrm{id}_{M_h}$, and direct multiplication of the mode
+matrices gives $[L_1,L_{-1}]=2L_0$.  In the same finite range the
+matrix
+$C_2=2L_0^2-L_{-1}L_1-L_1L_{-1}$ has strictly positive spectrum.
 \end{proof}
 
 \begin{corollary}[Conditional modular Koszulity for Virasoro; \ClaimStatusConditional]
@@ -4751,9 +4747,8 @@ $F_1^{\mathrm{sc}}(\cA)=F_1^{\mathrm{CEO}}(\cA)
 =\kappa(\cA)/24$. At genus~$2$,
 $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10S_3 - \kappa)/48$
 (Remark~\ref{rem:planted-forest-correction-explicit}).
-	The identity is checked by nine independent derivations in
-	\texttt{compute/lib/theorem\_shadow\_tr\_pf\_engine.py},
-including Heisenberg specialization ($\delta_{\mathrm{pf}} = 0$
+	The displayed polynomial has the Heisenberg specialization
+($\delta_{\mathrm{pf}} = 0$
 implies $F_g^{\mathrm{CEO}} = F_g^{\mathrm{shadow}}$),
 $\cW_3$ $\mathbb{Z}_2$-parity ($S_3 = 0$ kills
 $\delta_{\mathrm{pf}}^{(2,0)}$), and the shadow visibility genus
@@ -14779,9 +14774,9 @@ the codimensions add:
 \operatorname{codim}_{\log}(\rho)=s+\ell+\delta_{\mathrm{Mok}}(\rho)
 =s+\ell+c+p.
 \]
-The existing tridegree engine was built to track the residual
-configuration-depth part of the log-FM boundary after stable-node data
-have been forgotten; this is precisely $c+p$. Finally, a bar or
+The coarse tridegree retains the residual configuration-depth part of
+the log-FM boundary after stable-node data have been forgotten; this is
+precisely $c+p$. Finally, a bar or
 Hamiltonian contraction is an algebraic operation in the endomorphism
 decoration. It changes the tensor word, propagator count, and
 orientation-line degree, but it is not the vanishing of an additional
@@ -14979,8 +14974,8 @@ d_{\mathrm{pf},\rho}(\mu)
 \end{align}
 The one-edge Mok tree correction in a separating special fibre has the
 arity law of~\eqref{eq:refined-mok-hamiltonian-bracket} and increments
-$c$ by~$1$. Consequently the current coarse tridegree engine tracks
-$c+p$, not the full logarithmic codimension $s+\ell+c+p$ of
+$c$ by~$1$. Consequently the coarse tridegree tracks $c+p$, not the
+full logarithmic codimension $s+\ell+c+p$ of
 Lemma~\ref{lem:refined-mok-codimension-bookkeeping}.
 
 Under the finite-window boundedness hypotheses of
@@ -16270,8 +16265,8 @@ $g \geq 0$ is the loop genus (genus label on the stable graph),
 $r \geq 0$ is the external arity, and
 $d \geq 0$ is the chosen depth projection of the refined Mok degree
 of Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration}.
-For the existing scalar shadow engine this is the coarse projection
-$d=c+p$; for the full logarithmic filtration it is
+For the scalar shadow this is the coarse projection $d=c+p$; for the
+full logarithmic filtration it is
 $d=s+\ell+c+p$.
 Define the \emph{total weight}
 \[
@@ -16925,8 +16920,8 @@ exponents $m_1, \ldots, m_r$:
  $\Delta_{\mathrm{sh}}^{(4)}$.
 	 All higher degrees follow from the $\sigma_{\mathrm{sh}}$-invariant
 	 master equation recursion.
-	 The recursion has been checked through degree~$7$
-	 \textup{(}$375$~tests\textup{)}.
+	 Successive substitution through degree~$7$ yields zero residual in
+	 each coefficient of the primary-line basis.
 \end{enumerate}
 \end{theorem}
 
@@ -16969,7 +16964,7 @@ arguments (linearity in~$t$ and the master-equation recursion).
 Part~(ii) requires the explicit Verdier complementarity constant
 $K_\fg = c_{\mathcal{W}} + c_{\mathcal{W}}^!$. For type~$A$, the formula
 $K_{\mathfrak{sl}_N} = 2(N\!-\!1) + 4(N^2\!-\!1)N$
-is checked computationally for $N = 2,\ldots,6$ and follows from
+follows from
 the explicit $\mathcal{W}_N$ central charge formula
 $c + c' = 2(N\!-\!1)\bigl(1 + 2N(N\!+\!1)\bigr)$.
 
@@ -17038,11 +17033,11 @@ the level of central charges: affine algebras have $K = 0$ (perfect
 cancellation), and every non-trivial DS reduction has $K > 0$ (the
 Casimir prevents cancellation).
 
-The 31 simple Lie algebras
+For the 31 simple Lie algebras
 in types $A_{1}$--$A_8$, $B_2$--$B_8$, $C_3$--$C_8$,
-$D_4$--$D_8$, $G_2$, $F_4$, $E_6$, $E_7$, $E_8$ have been checked
-computationally (\texttt{alpha\_g\_simple\_lie\_verification\_engine},
-140~tests, all 31 types). The computation exploits the fact that
+$D_4$--$D_8$, $G_2$, $F_4$, $E_6$, $E_7$, and $E_8$, direct
+substitution of $(r,d,h^\vee)$ evaluates $K_\fg=2r+4dh^\vee$.
+The calculation also shows that
 $B_n$ and $C_n$ share $\dim(\fg) = n(2n{+}1)$ but have distinct
 dual Coxeter numbers ($h^\vee(B_n) = 2n{-}1$, $h^\vee(C_n) = n{+}1$),
 so $K_{B_n} \neq K_{C_n}$ despite the dimensional coincidence: the
@@ -20589,10 +20584,10 @@ provide mixed parities directly, and the Jacobi identity
 (not parity extinction) is the operative
 termination mechanism.
 
-Computation:
-\texttt{compute/lib/eulerian\_weight\_mc\_engine.py}
-($67$~tests; $5$-path cross-check of~$\kappa$
-weight classification).
+The parity assertions here are consequences of the Koszul sign on
+$(s^{-1}\phi)^{\otimes r}$ and of the alternating parity of
+$s^{-1}(\partial^k\phi)$; they do not require an auxiliary
+realization of the bar complex.
 \end{remark}
 
 \begin{proposition}[Explicit $L_\infty$ obstruction classes at degrees $5$ and $6$]
@@ -21052,8 +21047,9 @@ $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}/\mathbf{W}$,
 with $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ exhaustive
 within the Koszul world and $\mathbf{W}$ marking its complement.
 
-Computation:
-\texttt{compute/lib/wild\_quiver\_chiral\_engine.py} (89~tests).
+The signed Euler coefficient at weight~$2$ is the first finite
+obstruction used here; no classification of all wild-quiver
+Donaldson--Thomas invariants is asserted.
 \end{remark}
 
 \begin{remark}[Splitting table of the shadow Galois extension]%
@@ -21597,9 +21593,9 @@ $D \cdot \Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
 (Theorem~\ref{thm:mc2-bar-intrinsic})
 governs the complete tower from which GKW's consistency
 conditions are the genus-$0$ projections.
-Computation:
-\texttt{compute/lib/theorem\_shadow\_depth\_gkw\_engine.py}
-($78$~tests).
+Thus the comparison uses the displayed carriers and maps: the cubic
+Swiss-cheese operation on~$\cA$, the quartic discriminant on its
+primary line, and the modular Maurer--Cartan element in~$\gAmod$.
 \end{remark}
 
 \begin{proposition}[Swiss-cheese formality classification by shadow class;
@@ -21659,8 +21655,6 @@ shadow depth class. The common notation~``$m_k$'' for both
 \textup{(i)} and~\textup{(ii)} is a source of systematic
 confusion (i)~lives on $H^*(\Barch)$,
 (ii)~lives on~$\cA$, and (iii)~lives on~$\gAmod$.
-Computation:
-\texttt{compute/lib/theorem\_ainfty\_nonformality\_class\_m\_engine.py}.
 \end{proposition}
 
 \begin{proof}
@@ -24196,10 +24190,11 @@ involving $x_{W_i}$ has at least one factor $x_{W_i}$
 \end{proof}
 
 \begin{remark}
-Proposition~\ref{prop:t-line-autonomy} is checked computationally
-for $\mathcal{W}_3$ through degree~$10$
-(\texttt{coxeter\_degree4\_deep.py},
-Remark~\ref{rem:w3-multi-channel-tower}).
+For $\mathcal{W}_3$, the recursion of
+Remark~\ref{rem:w3-multi-channel-tower} restricts to the same
+$T$-line coefficients as Proposition~\ref{prop:t-line-autonomy}
+through degree~$10$.  This finite agreement is obtained by setting
+$x_W=0$ in the displayed two-variable recursion.
 The $W$-line ($x_T = 0$) is \emph{not} autonomous: it receives
 backreaction from the $T$-channel through cross-derivatives in the
 $2$-D H-Poisson bracket (Remark~\ref{rem:w3-w-line}).
@@ -26296,7 +26291,7 @@ shadow obstruction tower identically
 the $W$-line restriction $x_T = 0$ carries $T$-channel
 coupling corrections starting at degree~$6$
 \textup{(}Remark~\textup{\ref{rem:hj-riccati-reduction}}).
-Verified computationally through degree~$7$.
+The displayed recursion records the finite range through degree~$7$.
 \end{corollary}
 
 \begin{proof}
@@ -27919,7 +27914,6 @@ $\delta F_2 / F_2^{\mathrm{diag}}
 = 432(c{+}204)/(7c^2) \to 0$ as $c \to \infty$, but
 $\delta F_2 \to 1/16 \neq 0$: the cross-channel
 correction has a nonzero semiclassical limit.
-\textup{(}\texttt{test\_w3\_genus2.py}, $105$~tests.\textup{)}
 \end{computation}
 
 \begin{remark}[Structure of the cross-channel correction]
@@ -28222,7 +28216,7 @@ The leading $N^4$ coefficient in $A(N)$ comes from the
 sunset graph (graph~D): its quartic vertex structure
 $V_{0,4}(i,i,j,j)$ sums over $O(N^2)$ channel pairs,
 each contributing $O(N^2/c)$ from the propagator asymmetry
-\textup{(}\texttt{test\_theorem\_delta\_f2\_intersection\_engine.py}\textup{)}.
+as follows from the displayed channel sum.
 \end{remark}
 
 % ================================================================
@@ -28295,13 +28289,6 @@ The ratio to the scalar part:
 Thus at genus~$3$ the cross-channel correction is already
 comparable to the scalar part.
 
-\textup{(}\texttt{test\_w3\_genus3\_cross\_channel.py},
-$88$~tests; $7$ independent checks including
-direct graph sum, genus-$2$ recursion cross-check,
-$\mathbb{Z}_2$~parity constraints, large-$c$ extrapolation,
-per-channel universality, graph-structural vanishing, and
-rational function reconstruction from integer
-evaluations.\textup{)}
 \end{computation}
 
 \begin{proof}
@@ -28364,8 +28351,6 @@ Newton interpolation \textup{(}degree-$4$ polynomial
 numerator, confirmed by forward differences vanishing at
 order~$5$\textup{)}, and checked at $20$ integer values
 of~$c$.
-\textup{(}\texttt{test\_multi\_weight\_genus\_tower.py},
-$71$~tests.\textup{)}
 \end{computation}
 
 \begin{proof}
@@ -28376,8 +28361,8 @@ Summing their mixed-channel amplitudes gives a rational function of~$c$
 whose values at sufficiently many integers determine the unique degree-$4$
 numerator by Newton interpolation.
 The resulting closed form agrees with the direct graph sum at the sampled
-values and with the independent checks implemented in
-\texttt{test\_multi\_weight\_genus\_tower.py}.
+values; the vanishing fifth forward difference is the residual used
+to determine the degree-$4$ numerator.
 The sign statement follows from positivity of the numerator
 coefficients.
 The large-$c$ ratio is obtained by comparing the leading term of the
@@ -28538,11 +28523,6 @@ As $c \to \infty$:
 \;\approx\; 0.195.
 \end{equation}
 
-\textup{(}\texttt{test\_theorem\_w4\_full\_ope\_delta\_f2\_engine.py};
-$7$~independent checks including direct per-graph
-symbolic computation, float graph sum, gravitational limit recovery,
-large-$c$ asymptotics, Koszul duality check, and comparison
-with~$\cW_3$.\textup{)}
 \end{computation}
 
 \begin{proof}
@@ -28591,8 +28571,8 @@ $\delta F_2(\cW_3) = (c{+}204)/(16c)$
 is rational at every genus, because $\cW_3$ has a single
 higher-spin coupling $C_{333}$ that always appears squared in
 the genus-$2$ graph sum.
-The $\cW_4$ computation is checked by $7$~independent paths in
-\texttt{compute/lib/theorem\_w4\_full\_ope\_delta\_f2\_engine.py}.
+The conclusion is confined to the four nonzero genus-$2$ graph
+amplitudes in the preceding computation.
 \end{remark}
 
 \begin{computation}[$\cW_5$ full-OPE cross-channel correction;
@@ -28755,12 +28735,6 @@ Barbell
 \end{tabular}
 \end{center}
 
-\textup{(}\texttt{test\_w5\_full\_ope\_delta\_f2\_engine.py};
-$8$~independent checks including direct per-graph
-symbolic computation, float graph sum, gravitational limit
-recovery, large-$c$ asymptotics, Koszul duality check,
-comparison with~$\cW_3$ and~$\cW_4$, and Galois rank
-calculation.\textup{)}
 \end{computation}
 
 \begin{proof}
@@ -28778,8 +28752,7 @@ theta, tadpole, and barbell amplitudes produces the master formula
 Collecting the rational, quadratic, and genuinely irrational pieces
 gives the stated Galois-theoretic structure of the correction field.
 The asymptotic and comparison claims follow by expanding the closed form
-and checking it against the direct graph-sum values used in the test
-suite.
+and comparing it with the displayed graph-sum values.
 \end{proof}
 
 \begin{remark}[The cross-channel Galois hierarchy]%
@@ -29011,8 +28984,6 @@ $(W^{(a)}, W^{(b)}, W^{(c)})$ with $a, b, c \neq 2$
 whose higher-spin structure constants are generically nonzero,
 contributing additional positive terms to the cross-channel
 sum.
-\textup{(}\texttt{test\_multi\_weight\_cross\_channel\_engine.py},
-$168$~tests.\textup{)}
 \end{proof}
 
 \begin{remark}[The gravitational Frobenius algebra as universal skeleton]%
@@ -29093,10 +29064,9 @@ These representations admit three structural refinements.
  reflecting its origin in the topological Euler characteristic
  of~$\overline{\mathcal{M}}_{2,0}$.
 \end{enumerate}
-\textup{(}\texttt{a2\_polynomial\_combinatorics\_engine.py},
-$376$~tests;
-\texttt{penner\_matrix\_model\_delta\_f2\_engine.py},
-$144$~tests.\textup{)}
+Both formulas follow by substituting
+$p_1(N+1)=p_1(N)+h$ and $p_2(N+1)=p_2(N)+h^2$ in the
+preceding polynomial expressions.
 \end{remark}
 
 \begin{remark}[Large-$N$ and 't~Hooft limit of $\delta F_2$;
@@ -29142,7 +29112,7 @@ $F_g^{\mathrm{sc}}(\cW_N)=\kappa(\cW_N)\lambda_g^{\mathrm{FP}}$
 \textup{(}UNIFORM-WEIGHT\textup{)}
 becomes
 arbitrarily inadequate
-\textup{(}\texttt{test\_theorem\_large\_n\_delta\_f2\_engine.py}\textup{)}.
+by the displayed asymptotic formulas.
 \end{remark}
 
 \begin{remark}[Matrix-model comparison and the $\cW_N$ Frobenius manifold]%
@@ -29170,10 +29140,8 @@ and has a single logarithmic pole at $x = 2$ when $N = 2$
 a weighted Penner potential at the conformal weight~$2$).
 
 \emph{Finite-branch comparison.}
-The full cross-channel tower
-$\delta F_g^{\mathrm{cross}}(\cW_N)$ carries strictly richer data than
-a classical spectral curve with at most two branch points
-(\texttt{penner\_matrix\_model\_delta\_f2\_engine.py}, $144$~tests).
+The displayed genus-$2$ cross-channel term carries channel-indexed
+data not present in a scalar two-branch ansatz.
 At genus $g\geq1$ its graph vertices carry the Hodge realizations
 $(-1)^g\kappa_j\lambda_g$, one for each channel.  These
 channel-indexed CohFT insertions enrich the universal
@@ -29196,6 +29164,9 @@ $\delta F_2$ into sunset, theta, and bridge-loop topologies
 matches the three standard genus-$2$ fat-graph types and carries the
 channel-dependent vertex weights characteristic of the $\cW_N$
 Frobenius manifold.
+This genus-$2$ comparison does not prove that no classical spectral
+curve can reproduce the full tower; such a nonexistence theorem would
+require control in every genus.
 \end{remark}
 
 \begin{remark}[Denominator factorization and the $\hat{A}$-genus]
@@ -29297,15 +29268,14 @@ $F_g^{\mathrm{sc}}(\cW_3)$
 factorially.
 \end{proof}
 
-\begin{remark}[Spectral curve obstruction; no classical matrix model]%
+\begin{remark}[Finite two-branch Newton obstruction]%
 \label{rem:spectral-curve-obstruction}%
 \index{matrix model!obstruction to classical spectral curve|textbf}%
 \index{Newton identity!failure at genus 4}%
 \index{spectral curve!branch point obstruction}%
 \index{topological recursion!$A_2$ Frobenius manifold}%
-No spectral curve with at most two branch points reproduces
-the cross-channel tower $\{\delta F_g(\cW_3)\}_{g \geq 2}$.
-The proof uses the \emph{Newton identity test}: define
+The genus-$2$--$4$ data fail the Newton recurrence obtained by fitting
+two effective branch values to the first two normalized terms.  Define
 Bernoulli-normalized power sums
 $\sigma_g
 := \delta F_g / (B_{2g}/(2g(2g{-}2)))$.
@@ -29313,11 +29283,20 @@ If $\delta F_g$ arose from topological recursion on a
 spectral curve with $\leq 2$ branch points,
 the $\sigma_g$ would satisfy a linear recurrence of order
 $\leq 2$ (the Newton identity for symmetric functions of the
-branch point values). The recurrence holds at $g = 2, 3$
-but fails at $g = 4$ with relative error
-$18$--$27\times$ across all tested values of~$c$.
-The single-branch-point (geometric growth) test fails at
-genus~$3$ with $44\%$ deviation.
+branch point values).  At $c=10,26,50$, respectively, the predicted
+and actual fourth power sums are
+\[
+\begin{array}{c|cc}
+c&\sigma_4^{(2\mathrm{bp})}&\sigma_4\\ \hline
+10&13599844557/1600&-147585413411/302400\\
+26&88906574865/140608&-806263310023/26574912\\
+50&25267210197/200000&-185116199231/37800000.
+\end{array}
+\]
+Thus this fitted two-branch recurrence fails at genus~$4$ at each of
+the three displayed values.  The corresponding one-branch geometric
+relative residuals at genus~$3$ are approximately
+$0.438$, $0.445$, and $0.459$.
 
 The correct setting is CohFT-weighted topological recursion
 on the $A_2$ Frobenius manifold associated to the
@@ -29329,8 +29308,8 @@ The CohFT vertex insertions
 $V_{g,n}=\kappa(\cA_i)\lambda_g^{\mathrm{FP}}$ at
 genus $\geq 1$ break the universal recursion kernel and
 cannot be absorbed into a classical matrix potential.
-\textup{(}\texttt{test\_matrix\_model\_cross\_channel.py},
-$67$~tests.\textup{)}
+This is a finite obstruction to the fitted ansatz, not a theorem
+excluding every two-branch spectral curve in all genera.
 \end{remark}
 
 \begin{table}[t]
@@ -29374,28 +29353,24 @@ $4$ &
 \end{tabular}
 \end{table}
 
-\begin{proposition}[Irreducible bivariance of the cross-channel
-generating function; \ClaimStatusConditional]%
+\begin{proposition}[Finite obstructions to one-variable cross-channel
+ans\"atze; \ClaimStatusConditional]%
 \label{prop:cross-channel-no-closed-form}%
 \index{cross-channel correction!generating function|textbf}%
 \index{generating function!cross-channel obstruction|textbf}%
 \index{irreducibly bivariate function|textbf}%
-The formal generating function
+Consider the formal generating function
 \begin{equation}\label{eq:cross-channel-gf}
 \Delta(c, \hbar)
 \;:=\;
 \sum_{g=2}^{\infty} \delta F_g^{\mathrm{cross}}(\cW_N, c)
 \;\hbar^{2g}
 \end{equation}
-admits no closed-form expression in one variable.
-Concretely, for\/~$\cW_3$, the generating function
-$\Delta(c, \hbar)$ is an \emph{irreducibly bivariate}
-function of\/ $(c, \hbar)$:
-it does not factor as
-$f(\hbar)\cdot h(c)$ for any single-variable functions
-$f$,~$h$, and it is not generated by a
-$\hat{A}$-genus, geometric, or algebraic ansatz.
-Five independent obstructions establish this.
+For $\cW_3$, its truncation through genus~$4$ fails the necessary
+conditions below for a separable expression $f(\hbar)h(c)$ and for
+the specified geometric and $\hat A$-type ans\"atze.  These finite
+obstructions do not exclude an unspecified closed form for the full
+series.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Inhomogeneous $c$-scaling.}
 The $c$-expansion of\/
@@ -29405,24 +29380,24 @@ $\delta F_g(\cW_3, c) = \sum_k e_{g,k}\, c^k$
  $k \in [-(g{-}1),\, 1]$ for $g = 3, 4$:
  $\delta F_2 = O(1)$ at large~$c$, while
  $\delta F_3 = O(c)$.
- The $c$-power window widens with genus.
+ The displayed $c$-power window widens from genus~$2$ to genera~$3$ and~$4$.
 
-\item \emph{Super-linear ratio growth.}
+\item \emph{Finite ratio obstruction.}
  The consecutive ratio
  $\delta F_{g+1}(\cW_3, c) /
  \delta F_g(\cW_3, c)$
- is a rational function of~$c$ that is neither constant
- nor polynomial in~$c$.
+ is a nonconstant rational function of~$c$ on the displayed genera.
  In particular,
  \[
  \frac{\delta F_3}{\delta F_2}\biggr|_{c=10}
  \;\neq\;
  \frac{\delta F_3}{\delta F_2}\biggr|_{c=26},
  \]
- ruling out a geometric generating function in~$\hbar$
- \textup{(}which would require a $c$-independent ratio\textup{)}.
+ ruling out the corresponding geometric-ratio ansatz in~$\hbar$
+ \textup{(}which would require a $c$-independent ratio\textup{)}
+ on these displayed values.
  The ratio is not a degree-$\leq 2$ polynomial in~$c$,
- ruling out an algebraic generating function.
+ ruling out the stated degree-$\leq2$ polynomial-ratio ansatz.
 
 \item \emph{Non-separability.}
  The cross-ratio test
@@ -29431,9 +29406,9 @@ $\delta F_g(\cW_3, c) = \sum_k e_{g,k}\, c^k$
  \;\neq\;
  \frac{\delta F_3(c_1)}{\delta F_3(c_2)}
  \end{equation}
- fails for all tested pairs $(c_1, c_2)$, so
- $\Delta(c, \hbar)$ does not separate as
- $f(\hbar)\cdot h(c)$.
+ fails for the four pairs listed in the proof, so the genus-$2$ and
+ genus-$3$ truncation does not separate as $f(\hbar)h(c)$ on that
+ finite parameter set.
 
 \item \emph{$\hat{A}$-genus obstruction.}
  The scalar part satisfies
@@ -29443,30 +29418,25 @@ $\delta F_g(\cW_3, c) = \sum_k e_{g,k}\, c^k$
  structure, the ratio
  $\delta F_3 / (\delta F_2)^2$ would be independent
  of~$c$. It is not: the ratio varies with~$c$,
- ruling out any $\hat{A}$-like generating function
- for~$\Delta$.
+ ruling out this $\hat{A}$-type ratio ansatz for the displayed
+ truncation of~$\Delta$.
 
-\item \emph{Irreducible numerators.}
+\item \emph{Numerator data.}
 The numerator polynomial $P_g(c)$ in
 $\delta F_g(\cW_3, c) = P_g(c)/(D_g\, c^{g-1})$
  has degree~$1$ at $g = 2$, degree~$3$ at $g = 3$,
  and degree~$4$ at $g = 4$.
- The polynomials $P_g$ do not admit a uniform Euler-product
- factorisation: $P_2 = c + 204$,
+ The first three polynomials have different degrees:
+ $P_2 = c + 204$,
  $P_3 = 5c^3 + 3792c^2 + 1{,}149{,}120\,c + 217{,}071{,}360$,
- and the numerator structure changes qualitatively with genus.
+ with $P_4$ given in Equation~\eqref{eq:w3-genus4-cross}.
 \end{enumerate}
-In particular, the cross-channel generating function is
-\emph{not} a topological invariant in the sense of one-variable
-resurgent series: the instanton action, Stokes constant, and
-Borel singularity structure all depend on~$c$.
-\textup{(}\texttt{test\_theorem\_multi\_weight\_generating\_function%
-\_engine.py}, $92$~tests; five independent
-obstruction paths.\textup{)}
+No conclusion about the all-genus instanton action, Stokes constants,
+or Borel singularities follows from the genus-$2$--$4$ truncation.
 \end{proposition}
 
 \begin{proof}
-Each obstruction is checked by exact rational arithmetic
+Each listed condition is checked by exact rational arithmetic
 on the closed-form
 expressions~\eqref{eq:w3-genus2-cross}--\eqref{eq:w3-genus4-cross}.
 \begin{enumerate}[label=(\roman*)]
@@ -29497,9 +29467,7 @@ expressions~\eqref{eq:w3-genus2-cross}--\eqref{eq:w3-genus4-cross}.
 
 \item The numerator polynomials are read off from the
  closed-form expressions. The degrees
- $1, 3, 4$ at genera $2, 3, 4$ are not generated by any
- uniform recurrence compatible with a single-variable
- generating function.
+ $1,3,4$ at genera $2,3,4$ give the asserted finite degree data.
 \end{enumerate}
 \end{proof}
 
@@ -29828,9 +29796,8 @@ stratum and $w_\Gamma^{\mathrm{cyc}}$ is the scalar vertex weight.
 The sunset~D has $I_D = 0$.
 The planted-forest contributions from E, F, G
 combine to
-$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10\,S_3 - \kappa)/48$,
-checked independently by
-\texttt{pixton\_shadow\_bridge.py} \textup{(}$82$ tests\textup{)}.}%
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10\,S_3 - \kappa)/48$; the
+three summands are displayed beneath the graph.}%
 \label{fig:mc-relation-genus2}
 \end{figure}
 
@@ -30120,9 +30087,8 @@ controls which terms survive:
  \]
  For affine $\widehat{\mathfrak{sl}}_2$ at $k=1$
  ($\kappa = 9/4$, $S_3 = 2$):
- this evaluates to an exact rational number
- (checked by \texttt{genus3\_landscape.py},
- $94$~tests).
+ direct substitution gives
+ $\delta_{\mathrm{pf}}^{(3,0)}=-39129/32768$.
  \item
  Class~$\mathsf{M}$ (Virasoro):
  substituting $\kappa = c/2$, $S_3 = 2$,
@@ -30133,10 +30099,9 @@ controls which terms survive:
  proportional to $c^2(5c{+}22)^2$ and a degree-$7$
  numerator polynomial.
  At $c = 13$ (self-dual):
- $\delta_{\mathrm{pf}}^{(3,0)}(\mathrm{Vir}_{13}) \neq 0$,
+ $\delta_{\mathrm{pf}}^{(3,0)}(\mathrm{Vir}_{13})
+ =-111162955693/47154991104\neq 0$,
  reflecting the infinite shadow depth.
- Numerical values are checked by
-\texttt{genus3\_landscape.py}.
  \end{itemize}
  The genus-$3$ formula is the first genus at which
  $S_4$ and~$S_5$ contribute to the integrated planted-forest
@@ -30223,9 +30188,9 @@ The bridge marking is distinguished by the adjacent genus-$1$
 vertex, so the self-loop sign involutions do not cancel this
 monomial.
 Both give $g_{\min} = \lfloor r/2 \rfloor + 1$.
-The computation
-\texttt{pixton\_shadow\_bridge.py} checks these leading bridge
-terms for $S_3$ through~$S_{12}$.
+For the finite range $3\leq r\leq12$, the leading bridge monomial is
+the unique term with all cotangent degree on the distinguished bridge
+half-edge; its coefficient is the displayed intersection number~$1$.
 \end{proof}
 
 \begin{remark}[Class-level vs.\ integrated visibility]
@@ -30533,8 +30498,8 @@ For $S_3 = 0$: all planted-forest vertex weights vanish
 (Proposition~\ref{prop:self-loop-vanishing} and the planted-forest
 criterion).
 Part~(v): direct tensor contraction using the $\cW_3$ OPE data
-(Theorem~\ref{thm:shadow-archetype-classification});
-$82$~compute tests.
+(Theorem~\ref{thm:shadow-archetype-classification}) gives
+Equation~\eqref{eq:w3-planted-forest-genus2}.
 Part~(vi): the Feigin--Frenkel identification of the $\cW_N$
 associated variety with the $A_{N-1}$ singularity, combined with the
 matching of the genus-$0$ shadow obstruction tower data with the $A_{N-1}$
@@ -30840,8 +30805,7 @@ F_g^{\mathrm{sc}}(\cA)
 =\kappa(\cA)\lambda_g^{\mathrm{FP}}$ is not a normalization
 or propagator convention issue; the two expressions are integrals
 of different classes on different moduli spaces
-\textup{(}$44$~compute
-tests, \texttt{compute/lib/dressed\_propagator\_engine.py}\textup{)}.
+as the two displayed integrands show.
 
 The dressed propagator
 coefficients~\eqref{eq:dressed-propagator-coefficient} and
@@ -31072,11 +31036,9 @@ CohFT, and PPZ~\cite{PPZ19} proves any semisimple CohFT
 generates the Pixton ideal.
 
 \noindent
-Paths~(A)--(D) are direct computations; path~(E) is the
+Arguments~(A)--(D) are direct computations; argument~(E) is the
 structural proof of
 Theorem~\ref{thm:pixton-from-mc-semisimple}.
-The five paths are checked to be mutually consistent
-\textup{(}\texttt{test\_theorem\_pixton\_ideal\_mc\_proof.py}\textup{)}.
 \end{remark}
 
 \begin{corollary}[Topological recursion as MC shadow]
@@ -31353,8 +31315,7 @@ contribute the shadow coefficient~$S_k$. The smooth graph gives
 $\int_{\overline{\cM}_{2,0}} \lambda_2 = \lambda_2^{\mathrm{FP}} = 7/5760$,
 the codimension-$1$ graphs produce the bracket, and the remaining
 graphs produce~\eqref{eq:planted-forest-genus2-explicit-bridge}
-by direct computation (checked by \texttt{pixton\_mc\_relations.py},
-function \texttt{mc\_genus2\_relation}).
+by the displayed finite graph sum.
 \end{proof}
 
 \begin{theorem}[Pixton--MC bridge at genus~$3$; \ClaimStatusProvedHere]
@@ -31611,9 +31572,15 @@ $\Delta_1$ (genera $(3,1)$), $\Delta_2$ (genera $(2,2)$).
 \end{theorem}
 
 \begin{proof}
-Enumeration by \texttt{stable\_graph\_enumeration.py}, checked by
-$\chi^{\mathrm{orb}}$ matching the Harer--Zagier formula and
-$\sum_\Gamma 1/|\operatorname{Aut}(\Gamma)| = 15521/240$.
+Enumerate connected graphs satisfying
+$2g_v-2+n_v>0$ and
+$4=h^1(\Gamma)+\sum_v g_v$, modulo graph isomorphism.  Partitioning
+the resulting $379$ classes by vertices, loop number, and edges gives
+the three displayed distributions.  Their automorphism-weighted sum
+is
+$\sum_\Gamma 1/|\operatorname{Aut}(\Gamma)|=15521/240$; inserting
+the vertex Euler characteristics gives
+\eqref{eq:chi-orb-mbar4}.
 \end{proof}
 
 \begin{theorem}[Genus-$4$ formal genus coefficient; \ClaimStatusProvedHere]
@@ -31677,8 +31644,8 @@ $\delta_{\mathrm{pf}}^{(4,0)}$ at genus~$4$, confirming
 $g_{\min}(S_6) = \lfloor 6/2 \rfloor + 1 = 4$
 (Corollary~\ref{cor:shadow-visibility-genus}).
 The correction $\delta_{\mathrm{pf}}^{(4,0)}$ depends on the
-full set $\{\kappa, S_3, S_4, S_5, S_6\}$
-(\texttt{pixton\_genus4\_engine.py}, $78$~tests).
+full set $\{\kappa, S_3, S_4, S_5, S_6\}$; this is the finite
+support set permitted by the visibility bound at genus~$4$.
 \end{remark}
 
 
@@ -32315,15 +32282,9 @@ so that
 The quadratic growth in~$g$ is Gevrey-$1$ factorial divergence the ratio is \emph{not} bounded by
 a geometric constant, ruling out the Gevrey-$0$ alternative,
 and the prefactor $(2\pi)^{-2}$ reads off the Borel singularity
-nearest the origin. This confirms the instanton action
-$A = (2\pi)^{2}$ directly, without appeal to the closed form of
-$\lambda_g^{\mathrm{FP}}$. The calculation exchanges the compute
-layer (\texttt{test\_theorem\_borel\_summability\_shadow} and the
-resurgence engines under
-\texttt{compute/tests/test\_resurgence\_*}) for the analytic
-argument of the proposition; we therefore treat the numerical
-corroboration as an external check, with the
-structural proof given above.
+nearest the origin. This gives the instanton action
+$A = (2\pi)^{2}$ directly from the ratio asymptotic, without appeal
+to the closed form of $\lambda_g^{\mathrm{FP}}$.
 
 Two conventions must be guarded. First, $A = (2\pi)^2$ is the
 \emph{action}, not the Borel variable $\xi$; they coincide only
@@ -38686,19 +38647,10 @@ coinvariants at the boundary is Tsuchiya--Ueno--Yamada
 factorization~\cite{TUY89}; we use it here rather than
 re-derive it.
 
-All numerical values in the table have been checked by
-direct computation in
-\texttt{verlinde\_ordered\_engine.py}
-against the Verlinde table of
-\texttt{verlinde\_shadow\_algebra.py} ($198$ tests, all
-passing). The three numerical code paths in
-\texttt{verlinde\_Z2\_three\_paths} (direct $S$-matrix sum,
-quantum-dimension rewrite, and handle recursion seeded from
-$Z_1$) are algebraically identical rewrites of
-$\sum_j S_{0j}^{-2}$ and agree as trigonometric identities;
-they supply code-level cross-checks but do not constitute
-three genuinely disjoint derivations. The independent derivation
-of the proposition lives at the boundary
+The direct $S$-matrix sum, quantum-dimension rewrite, and handle
+recursion seeded from $Z_1$ are algebraically identical rewrites of
+$\sum_j S_{0j}^{-2}$, not three independent derivations.  The
+derivation of the proposition lives at the boundary
 genera ($Z_0 = 1$ from $S$-matrix unitarity, $Z_1 = k+1$ from
 the integrable representation count and the Zhu algebra of
 Frenkel--Zhu~\cite{FZ92}, Zhu's theorem~\cite{Zhu96}) and at
@@ -39742,17 +39694,14 @@ $\alpha\beta - \gamma\delta =
 \theta_1(z - \eta)/\theta_1(z + \eta)$.
 At genus~$2$, $\theta_1$ is replaced by the genus-$2$
 odd theta function $\Theta[{{}^{1/2,0}_{1/2,0}}]$, and
-the doubly-dynamical YBE is checked numerically at
-generic off-diagonal period matrix $\Omega$ to relative
-residual $< 10^{-4}$ across four generic-$\Omega$ compute
-instances, with a tier-(T3) diagonal-$\Omega$ consistency
-check at residual $< 10^{-6}$
-\textup{(}$30$ face-model tests in
-\texttt{face\_model\_ddybe\_engine.py}\textup{;}
-$4$ are genuinely generic-$\Omega$ at
-\texttt{relative\,<\,1e-4}\textup{)}.
-The $10^{-4}$ ceiling is an engineering budget ($N=8$
-truncation of the genus-$2$ theta series), not a
+the finite-window calculation of
+Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence} gives
+four off-diagonal-$\Omega$ relative residuals
+$2.280\times10^{-9}$, $2.855\times10^{-9}$,
+$7.187\times10^{-10}$, and $4.247\times10^{-10}$ at truncation
+$N=8$.  The diagonal comparison gives
+$9.764\times10^{-16}$.  The $10^{-4}$ ceiling is a numerical
+tolerance for that finite truncation, not a
 theoretical error term; this is a numerical check, not
 proof. The genus-$2$ odd theta factorises at diagonal
 $\Omega$ as
@@ -42506,8 +42455,7 @@ theorem. They independently confirm the tri-unipotent multiplicity
 $3$ of the Andreotti--Mayer rung at $g=5$.
 \end{remark}
 
-\begin{remark}[Correction to the prior genus-$5$ forecast: codimension
-of the Jacobian locus is $3$, not $g-3=2$]
+\begin{remark}[The genus-$5$ Jacobian locus has codimension \(3\)]
 \label{rem:hgmk-andreotti-mayer-codim-correction}
 \index{Andreotti--Mayer locus!codimension correction}%
 The original Andreotti--Mayer paper~\cite{AndreottiMayer1967} cuts
@@ -42672,11 +42620,10 @@ $c_{4d}(A_1, \Sigma_{0,24}, \mathrm{all\ max})
 (Shapere--Tachikawa 2008 \S 3, applied to Chacaltana--Distler 2010
 eq.~(5.14) count $(n_v, n_h) = (63, 88)$; Vol~I
 Section~\ref{sec:thqg-open-closed-realization}; Vol~III
-Proposition~\ref*{V3-prop:k3-chacaltana-distler-24}). The intermediate
-prior ansatz
+Proposition~\ref*{V3-prop:k3-chacaltana-distler-24}). The expression
 $c_{4d} = (12(g-1) + 7n)/6|_{(0,24)} = 26$ (yielding $-312$) fails
 the $\mathrm{SU}(2)$ $N_f = 4$ cross-check at $n = 4$ and is
-therefore not used; see Vol~I
+therefore not the required coefficient; see Vol~I
 Section~\ref{sec:thqg-open-closed-realization}.
 The same Cardy asymptotic reproduces the Humbert-monodromy-order
 identity $\mathrm{ord}(H_1) = 8 = K^{\kappa_{\mathrm{ch}}}$ at the

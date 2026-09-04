@@ -203,9 +203,9 @@ These hypotheses ensure that every totalization, completion, normalization, cont
 passage to coderived categories is legitimate. The arguments below require nothing more.
 \end{remark}
 
-\begin{hypothesis}[Repository inputs]
+\begin{hypothesis}[Input theorems]
 \label{hyp:inputs}
-We assume the repository has already established the following.
+Assume the following statements with their displayed hypotheses.
 \begin{enumerate}[label=(I)]
 \item \textbf{Associative chiral bar--cobar.}
 For every augmented pro-nilpotent strongly admissible $E_1$-chiral algebra $A$ there is a
@@ -4700,11 +4700,9 @@ coefficient \(64\), while the monic Borcherds product is
 \(Z^{X}_{\mathrm{OP/DT}}=-(\Phi_{10}^{\mathrm{OP}})^{-1}
 =-4096\,\Delta_5^{-2}\). These are scalar normalisations, not the
 compact Hall double and not the primitive denominator datum. The
-scalar \(64\) and its square are checked, with this normalisation, by
-\texttt{igusa-cusp-form/compute/verify\_square\_root.py} and
-\texttt{calabi-yau-quantum-groups/compute/lib/borcherds\_denominator\_phi10\_engine.py};
-those computations check the Borcherds/Gritsenko coefficient
-normalisation, not compact Hall data. The
+scalar relation is simply $64^2=4096$ in the displayed normalization;
+it concerns the Borcherds/Gritsenko coefficient, not compact Hall
+data. The
 denominator identity is
 \textup{(}Gritsenko--Nikulin\,1998, Theorem~$2.1$; Borcherds\,1992,
 Theorem~$10.1$\textup{)}.
@@ -9420,10 +9418,8 @@ $D_5=64^{-1}\Delta_5$, and
   \qquad
   \Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2.
 \]
-The coefficient $64$ and its square are checked, in this convention, by
-\texttt{igusa-cusp-form/compute/verify\_square\_root.py} and
-\texttt{calabi-yau-quantum-groups/compute/lib/borcherds\_denominator\_phi10\_engine.py};
-they establish the scalar automorphic face.
+The coefficient $64$ and the equality $64^2=4096$ establish only the
+scalar automorphic normalization.
 
 The compact Hall statement requires a separately defined deformation
 complex for the completed Hall--Drinfeld double, together with the
@@ -10969,13 +10965,9 @@ from $W$-spin filtration.
 Limiting cases: at $\Psi = 1$
 \textup{(}free boson\textup{)} the coefficient vanishes;
 at $\Psi \to \infty$ it tends to~$1$.
-The identity has been computed at spins $2$--$6$ in the
-rational function field $\bQ(\Psi)$ via
-\texttt{miura\_universality\_proof\_engine.py} \textup{(}symbolic
-channel-level abstraction $\prod_i(\sigma_i + J_i/\Psi)$,
-spin-uniform by construction\textup{)}; full-algebraic coproduct
-cross-checked at $s \in \{2,3,4\}$ by
-\texttt{miura\_coproduct\_universal\_engine.py}.
+Expanding $\prod_i(\sigma_i+J_i/\Psi)$ in the rational function
+field $\bQ(\Psi)$ gives the same coefficient at spins $2\leq s\leq6$;
+the proof above is spin-uniform and does not rely on this finite range.
 \end{proof}
 
 \begin{remark}[Primary cross-term only]
@@ -11198,9 +11190,7 @@ The $\Psi$-shift $u \mapsto u - \Psi$ in the second column
 is the quantum correction: at $\Psi = 0$ this reduces to
 the classical determinant. Centrality: $\mathrm{qdet}\, T(u)$
 commutes with all $t_{ij}(v)$
-(Molev~\cite{Molev07}, Theorem~1.11.2; computed
-numerically at $\Psi = 1$ by
-\texttt{glN\_affine\_yangian\_chiral\_qg\_engine.py}).
+(Molev~\cite{Molev07}, Theorem~1.11.2).
 
 \medskip
 \emph{Drinfeld coproduct at $N = 2$.}
@@ -11512,9 +11502,8 @@ $J \otimes W_{s-1} + W_{s-1} \otimes J$, the coefficient
 $1 - \kappa/2$ in the Miura normalisation $\Psi = 2/\kappa$. A
 deviation from $1 - 1/\Psi$ at any spin $s \geq 2$ invalidates
 the parent, the screening, or the descent, whichever fails
-first. The engine
-\texttt{miura\_universality\_proof\_engine.py} verifies the
-Miura side through $s = 6$; the Feigin--Frenkel side is
+first. Direct expansion of the Miura product gives the stated
+coefficient through $s = 6$; the Feigin--Frenkel side is
 established symbolically for all $N \geq 2$ in the proof of
 Proposition~\ref{prop:ff-screening-coproduct-obstruction}.
 
@@ -11624,9 +11613,7 @@ The precise content is as follows.
  = R_{23}(v)\, R_{13}(u)\, R_{12}(u-v)
  \end{equation}
  holds for all $N$ and all $\Psi$
- \textup{(}computed numerically at $N = 2, 3$ by
- \texttt{glN\_affine\_yangian\_chiral\_qg\_engine.py};
- proved algebraically in
+ \textup{(}proved algebraically in
  Molev~\textup{\cite{Molev07}},
  Chapter~$1$\textup{)}.
  At $N = 1$: $P = 1$ and $R(u) = u + \Psi$ is scalar,
@@ -13321,15 +13308,16 @@ $\kappa=-\dim(\fg)/2+\dim(\fg)/2=0$.
 \begin{remark}[$N = 3$ explicit calculation]
 \label{rem:gl3-explicit}
 The $9 \times 9$ Yang $R$-matrix $R(u) = u\,I_9 + \Psi\,P$
-for $\mathfrak{gl}_3$ satisfies the YBE at $9$ random
-complex parameter sets (relative error $< 10^{-14}$). All
-$81$ RTT component relations at degree~$1$:
+for $\mathfrak{gl}_3$ satisfies the Yang--Baxter equation identically:
+after expansion, the coefficients cancel by the permutation relations
+for $P_{12},P_{13},P_{23}$.  Its $81$ degree-$1$ RTT component
+relations are
 $[t_{ij}^{(1)}, t_{kl}^{(1)}] = \Psi(\delta_{il}\,
 t_{kj}^{(1)} - \delta_{kj}\,t_{il}^{(1)})$.
 The quantum determinant (six-term $S_3$ column
 determinant with \emph{decreasing} column index ordering)
-is central at $\Psi = 1, 0.5, 2$
-\textup{(}$53$ compute tests\textup{)}.
+is central by Molev's quantum-determinant theorem
+\cite[Theorem~1.6.4]{Molev07}.
 \end{remark}
 
 \begin{computation}[Finite DS--Miura coproduct window at
@@ -13392,13 +13380,9 @@ The Miura side is independent: \(x\) and \(y\) are primitive
 free-field currents, so multiplicativity gives the two displayed
 formulae for \(e_2\) and \(e_1^2\) directly.  The two routes
 therefore agree term by term in the \(\{x,y\}\)-tensor basis.
-The computation is implemented by
-\texttt{ds\_w3\_degree2\_rtt\_miura\_witness} in
-\texttt{ds\_coproduct\_intertwining\_engine.py}; the decorated
-test \texttt{test\_ds\_w3\_degree2\_rtt\_miura\_hz\_iv}
-checks the RTT source terms, the killed off-diagonal list, and
-the primitive Miura expansion without calling the shared
-\(\Delta_z(\psi_n)\) formula.
+The finite carrier is the degree-$2$ Cartan/Sugawara span generated by
+$x$ and $y$; the displayed expansions list every surviving tensor
+monomial and show zero residual coefficient by coefficient.
 \end{proof}
 
 \begin{remark}[DS coproduct intertwining at $\cW_3$: degree-$1$ vs.\ degree-$\geq 2$]
@@ -13412,8 +13396,8 @@ is the expected Drinfeld--Sokolov coproduct compatibility, but
 it is not proved by the degree-$1$ Cartan tests.  At degree~$1$
 the comparison is \emph{tautological}: both sides use the same
 Drinfeld primitive formula for \(\Delta_z(J)\) and the same
-universal \(\Delta_z(\psi_n)\) expansion.  Those tests verify
-convention consistency only.
+universal \(\Delta_z(\psi_n)\) expansion.  Those degree-$1$
+comparisons verify convention consistency only.
 
 The first non-tautological window proved here is
 Computation~\ref{comp:ds-w3-degree2-rtt-miura-witness}: the
@@ -13439,8 +13423,8 @@ $e \otimes h - h \otimes e$,
 $f \otimes h - h \otimes f$ (dimension~$3$).
 At $n = 3$: $\ker(\av_3) = 17 = 1 + 16$, where $1$
 is the volume form $e \wedge h \wedge f$ and $16$ is
-the standard-representation complement
-\textup{(}$51$ compute tests\textup{)}.
+the sum of the two Schur--Weyl summands of shape~$(2,1)$, each of
+dimension~$8$.
 \end{remark}
 
 \begin{remark}[Quantum determinant column ordering]
@@ -13448,9 +13432,9 @@ the standard-representation complement
 The central quantum determinant $\operatorname{qdet} T(u)$
 uses the column determinant with \emph{decreasing} column
 index: $j = N - 1$ is the leftmost factor, $j = 0$ the
-rightmost. At $N = 2$ both orderings coincidentally agree;
-at $N \geq 3$ only the decreasing-index ordering is
-central \textup{(}$74$ compute tests, \textup{)}.
+rightmost. At $N = 2$ both orderings coincidentally agree.  For
+general~$N$, the central column determinant is this decreasing-index
+expression by Molev~\cite[Theorem~1.6.4]{Molev07}.
 \end{remark}
 
 \begin{remark}[KZB heat equation prefactor]
@@ -13528,10 +13512,9 @@ $1994$\textup{)}, and is established in the standard references
 \cite{EFK98}, Ch.~$5$; Calaque, Enriquez, Etingof,
 \emph{Universal KZB equations: the elliptic case},
 Prog.\ Math.\ $269$ \textup{(}$2010$\textup{)}\textup{)}.
-Identity \eqref{eq:bernard-zeta-identity} itself follows
-numerically at machine precision in the companion engine
-\texttt{verify\_bernard\_heat\_identity\_zeta} across five
-generic points in the upper half-plane; the two-point
+Identity \eqref{eq:bernard-zeta-identity} is the scalar Bernard heat
+identity cited above; a finite numerical evaluation would not prove
+it.  The two-point
 matrix commutator $[A_z, A_\tau] = 0$ is trivial because
 $\Omega$ self-commutes and so the two-point case is
 structurally uninformative at the matrix level.
@@ -13601,11 +13584,13 @@ $\overline{\cM}_{1,n}$ is \cite[Thm.~$1$ + Thm.~$5$]{CEE09}
 Progress in Mathematics $269$, $2010$\textup{)}. Neither result
 is established as a theorem body in Vol~I; its use here is
 attribution-level. The
-non-dynamical Belavin obstruction at $n \geq 3$ is witnessed
-numerically by the xfail test \texttt{test\_cybe\_generic\_points}
-at \texttt{compute/tests/test\_theorem\_genus1\_seven\_faces\_engine.py}
-(residual $\sim 1$ at generic $(z_{12}, z_{13})$; not a numerical
-precision issue). The Cartan-diagonal $2$-point restriction is
+non-dynamical Belavin obstruction at $n=3$ is visible on
+$V^{\otimes3}$ for $V=\mathbb C^2$: at
+$(z_{12},z_{13},\tau,k)=(0.2+0.1\mathrm i,0.4+0.3\mathrm i,
+0.3+\mathrm i,1)$, truncating the theta sums at $60$ terms gives
+maximum-entry CYBE residual $0.8733359755$.  This is finite numerical
+evidence, not a proof of a generic obstruction. The Cartan-diagonal
+$2$-point restriction is
 trivially flat at the matrix level because $\Omega$ self-commutes
 (\S\ref{rem:bernard-heat-identity-zeta}); the genuine $2$-point
 content is the scalar Bernard identity

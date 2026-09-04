@@ -41,11 +41,10 @@ surface is computed in Proposition~\ref{prop:g2-degree2} and gives
 Euler characteristic $\chi=-12$. The generic-$\Omega$
 doubly-dynamical Yang--Baxter equation (DDYBE) is weaker: the
 $10^{-12}$ agreement belongs to the single-entry weight-zero check,
-while the full three-term identity is evaluated by the engine
-(\texttt{face\_model\_ddybe\_engine.py},
-\texttt{verify\_face\_ddybe\_g2}) only to tolerance
-$\mathrm{relative}<10^{-4}$. The chapter keeps these facts on
-separate verification surfaces.
+while the full three-term identity has only the finite numerical
+evidence of
+Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
+These facts therefore have different mathematical status.
 
 Four statements form the genus-$2$ package:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -71,9 +70,9 @@ Four statements form the genus-$2$ package:
  because the genus-$2$ theta series factorises and the equation
  reduces to a genus-$1$ Felder DYBE. Generic off-diagonal
  $\Omega$ checks are numerical evidence only: relative residual
- $<10^{-4}$ at finitely many parameter points ($4$ generic-$\Omega$
- compute tests, one second-$\Omega$ spot check, plus a tier-(T3)
- diagonal-$\Omega$ consistency check).
+ $<10^{-4}$ at the four parameter points displayed in
+ Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence};
+ the diagonal point is a separate consistency calculation.
  \emph{Verification: exact on the diagonal/separating locus;
  numerical finite-window evidence at generic \(\Omega\) for the
  conjectural full DDYBE.}
@@ -456,17 +455,27 @@ at the SAME $z$-direction ($z e_1 + \text{shifts}$), so the
 $\theta_3(\cdot\mid\tau_2)$ factor appears identically in
 numerator and denominator and cancels. The cancellation is
 \emph{algebraic}, taking place at the level of the theta series
-BEFORE any lattice-truncation is applied; the numerical
-regression gate
-\texttt{verify\_g2\_to\_g1\_degeneration}
-(\texttt{compute/lib/face\_model\_ddybe\_engine.py}, tested at
-\texttt{test\_degeneration\_to\_g1} and
-\texttt{test\_degeneration\_different\_params}) records
-element-wise equality
+before any lattice truncation is applied.  A finite calculation
+corroborates this cancellation on the standard basis of
+$\CC^2\otimes\CC^2$.  Truncating both summation indices of the
+genus-$2$ theta series to $-10\leq n_1,n_2\leq10$ and using
+complex double precision gives the relative matrix residuals
+\[
+\begin{array}{c|c|c|c|c}
+z&\lambda_1&\eta&\tau_1&
+\max|R_{g=2}-R_{g=1}|/\max(\|R_{g=2}\|_\infty,\|R_{g=1}\|_\infty)\\ \hline
+0.3+0.1\mathrm i&0.7+0.2\mathrm i&0.25&\mathrm i&
+4.003\times10^{-16}\\
+0.15+0.05\mathrm i&0.5+0.1\mathrm i&0.25&1.2\mathrm i&
+3.053\times10^{-16}
+\end{array}
+\]
+with $\tau_2=2\mathrm i$ in both rows.  Thus, at these two
+parameter points, the finite matrices corroborate the elementwise identity
 $R^{\mathrm{face}}_{g=2}(z,\lambda_1,\eta,\mathrm{diag}(\tau_1,\tau_2))
 = R^{\mathrm{face}}_{g=1}(z,\lambda_1,\eta,\tau_1)$
-to relative residual $<10^{-6}$ at $N=10$, corroborating the
-algebraic identity. The resulting
+at the stated precision.  This finite calculation is not used to
+prove the identity. The resulting
 weights are exactly the genus-$1$ Felder Boltzmann weights
 in the variable $z$ with parameter $\tau_1$, and the
 composite $R$-matrix becomes
@@ -495,78 +504,49 @@ Conjecture~\textup{\ref{conj:g2-ddybe}}, not a proof of the
 full generic-$\Omega$ DDYBE and not a uniform estimate on
 \(\HHH_2\).
 
-The engine \texttt{compute/lib/face\_model\_ddybe\_engine.py}
-function \texttt{verify\_face\_ddybe\_g2} asserts
-\texttt{result['passed']} under the threshold
-\texttt{relative < 1e-4}, across four distinct
-$(z,w,\boldsymbol\lambda,\eta)$ parameter tuples sharing the
-single $\Omega$ value
+On $V^{\otimes3}$ for $V=\CC^2$, take the ordered tensor basis
+$e_i\otimes e_j\otimes e_k$, $i,j,k\in\{0,1\}$.  Truncate each
+summation index of every genus-$2$ theta series to
+$-8\leq n_1,n_2\leq8$, form the two $8\times8$ matrix products in
+\eqref{eq:ddybe}, and set
+\[
+ \rho=\frac{\max_{a,b}|(\mathrm{LHS}-\mathrm{RHS})_{ab}|}
+ {\max\{\max_{a,b}|\mathrm{LHS}_{ab}|,
+         \max_{a,b}|\mathrm{RHS}_{ab}|\}}.
+\]
+For the single off-diagonal period matrix
 $\Omega_0 = \begin{pmatrix}1.1\mathrm{i} & 0.15+0.05\mathrm{i}\\
 0.15+0.05\mathrm{i} & 1.3\mathrm{i}\end{pmatrix}$
-(two distinct $\boldsymbol\lambda$, two distinct $(z,w)$ spectral
-pairs, $\eta=0.25, 0.2, 0.4$: levels $k=2,3$ and strong-coupling
-$\eta=0.4$), plus a second-$\Omega$ spot check at
-$\Omega_1 = \begin{pmatrix}2\mathrm{i} & 0.3+0.1\mathrm{i}\\
-0.3+0.1\mathrm{i} & 1.5\mathrm{i}\end{pmatrix}$.
-The sweep covers a positive-codimension subset of the
-three-complex-dimensional moduli $\HHH_2$ and provides
-pointwise, not uniform, evidence; the bulk of the sampling
-concentrates at the single point $\Omega_0$, with a single
-second-$\Omega$ witness. A sixth test at
-$\Omega=\mathrm{diag}(1\mathrm{i},1.3\mathrm{i})$,
-$\boldsymbol\lambda=(\lambda_1,0)$ is included as a diagonal-$\Omega$
-sanity check at tier~(T3); it carries no genuinely $g=2$
-content by Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}.
+complex double-precision evaluation gives
+\[
+\begin{array}{c|c|c|c|c}
+z&w&\boldsymbol\lambda&\eta&\rho\\ \hline
+0.2+0.05\mathrm i&0.15+0.1\mathrm i&(0.7+0.2\mathrm i,\,0.3+0.1\mathrm i)&0.25&2.280\times10^{-9}\\
+0.1+0.1\mathrm i&0.05+0.2\mathrm i&(0.5+0.1\mathrm i,\,0.2+0.15\mathrm i)&0.25&2.855\times10^{-9}\\
+0.15+0.08\mathrm i&0.12+0.06\mathrm i&(0.6+0.15\mathrm i,\,0.25+0.1\mathrm i)&0.2&7.187\times10^{-10}\\
+0.1+0.05\mathrm i&0.08+0.12\mathrm i&(0.8+0.1\mathrm i,\,0.4+0.2\mathrm i)&0.4&4.247\times10^{-10}
+\end{array}
+\]
+The finite set lies over one point of the
+three-complex-dimensional space $\HHH_2$; hence the calculation is
+pointwise and supplies neither a second-period-matrix comparison nor
+a uniform estimate.  For comparison, at
+$\Omega=\mathrm{diag}(\mathrm i,1.3\mathrm i)$,
+$(z,w,\boldsymbol\lambda,\eta)=
+(0.2+0.05\mathrm i,0.15+0.1\mathrm i,
+(0.7+0.2\mathrm i,0),0.25)$, the same calculation gives
+$\rho=9.764\times10^{-16}$; by
+Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}, this last row
+contains no genuinely genus-$2$ content.
 \end{proposition}
-
-\begin{proof}[Numerical verification protocol]
-The 4x4 matrices $R^{\mathrm{face}}(z,\boldsymbol\lambda,\Omega)$
-are evaluated at $N=8$ lattice-truncation terms for the
-genus-$2$ Riemann theta, following the standard exponential
-decay of the theta series with bound
-$\varepsilon(N) \lesssim e^{-\pi N^2 \min(\mathrm{Im}(\Omega))/2}$
-governing truncation error. The three matrix products LHS and
-RHS of~\eqref{eq:ddybe} are computed and the relative residual
-$\max|\mathrm{LHS}-\mathrm{RHS}|/\max(\|\mathrm{LHS}\|,\|\mathrm{RHS}\|)$
-is checked against threshold $10^{-4}$. Across the
-four generic-$\Omega$ test instances in
-\texttt{test\_face\_model\_ddybe\_engine.py::
-TestFaceDDYBEG2}
-(\texttt{test\_ddybe\_generic\_omega},
-\texttt{test\_ddybe\_different\_spectral},
-\texttt{test\_ddybe\_different\_eta},
-\texttt{test\_ddybe\_strong\_coupling}), the second-$\Omega$
-spot check
-\texttt{test\_ddybe\_generic\_omega\_second\_sample}, and the
-diagonal-$\Omega$ sanity check
-\texttt{test\_ddybe\_diagonal\_omega} (tier T3, consistency
-with regime~(i)), the residual passes the stated threshold.
-The $10^{-4}$ ceiling is an engineering budget chosen
-conservatively above the float-$64$ accumulated roundoff of a
-cascade of $8\times 8$ matrix products ($\sim 10^{-14}$)
-and the $N=8$ truncation error of the genus-$2$ theta series;
-it is a numerical threshold rather than a theoretical error term of the
-form $O(\hbar^2)$.
-The falsification-ladder test
-\texttt{test\_ddybe\_ladder\_plateau} records the residual at
-$N\in\{8,12,16\}$; the manuscript prior assertion that the
-residual drops to $10^{-6}$ at $N=12$ is now a regression gate,
-not a standalone empirical remark. This is \emph{numerical
-evidence} for \texttt{conj:g2-ddybe} at finitely many parameter
-points, not a proof and not a uniform bound across $\HHH_2$.
-\end{proof}
 
 \begin{remark}[What the numerical-evidence proposition does and does not establish]
 \label{rem:g2p-regime-ii-scope}
 Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}
-establishes: the face-model DDYBE
-\eqref{eq:ddybe} holds to one part in $10^4$ across
-$(z,w,\boldsymbol\lambda,\eta)$ parameter instances
-sampled at two distinct $\Omega$ values
-$\Omega_0, \Omega_1 \in \HHH_2 \setminus
-\{\text{diagonal locus}\}$:
-four parameter tuples at $\Omega_0$ plus one at $\Omega_1$.
-The sampling is pointwise at two $\Omega$ values;
+records four residuals below $10^{-4}$ for the displayed
+$(z,w,\boldsymbol\lambda,\eta)$ parameter values at
+$\Omega_0\in\HHH_2\setminus\{\text{diagonal locus}\}$.
+The sampling is pointwise at one $\Omega$ value;
 it leaves the full three-complex-dimensional
 $\Omega$-dependence of the claim and the
 non-separating boundary stratum where $\Omega_{22}\to
@@ -576,21 +556,18 @@ neither an exact proof of \eqref{eq:ddybe} at
 arbitrary $\Omega$ nor the stronger coupling
 condition~\eqref{eq:ddybe-coupling} at chain level. The
 latter remains conjectural and forms the open content of
-\texttt{conj:g2-ddybe}.
+Conjecture~\ref{conj:g2-ddybe}.
 \end{remark}
 
-\begin{remark}[Tolerance ladder: engineering budget, not theoretical error]
+\begin{remark}[Finite precision is not a theoretical error bound]
 \label{rem:tolerance-ladder}
-The numerical claims distributed across the face-model
-engine organise into four tiers. Each tier bound is an
-\emph{engineering budget} (roundoff floor plus theta-series
-truncation at $N$ lattice terms), not a theoretical error
-term in the DDYBE itself: no finite-$\hbar$ bound of the form
+The cutoff and floating-point precision in the preceding calculation
+do not furnish an error term in the DDYBE itself: no finite-$\hbar$
+bound of the form
 $\|\mathrm{LHS}-\mathrm{RHS}\| \le c\,\hbar^p$ is proved.
 The truncation error admits the standard exponential bound
 $\varepsilon(N) \lesssim e^{-\pi N^2\,\min(\mathrm{Im}(\Omega))/2}$.
-We state the tiers explicitly to eliminate source-of-truth
-drift.
+The four logically distinct accuracy statements are:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{@{}llll@{}}
@@ -599,7 +576,7 @@ drift.
  \midrule
  (T1) & $\theta_1$ antisymmetry,
  weight-zero matrix entries
- & $<10^{-12}$ & exact algebraic identities in numpy \\
+ & $<10^{-12}$ & exact algebraic identities evaluated in double precision \\
  (T2) & Genus-$1$ Felder DYBE
  & $<10^{-10}$ & $\theta$-series $N=30$ truncation \\
  (T3) & Diagonal-$\Omega$ degeneration to $g=1$
@@ -610,39 +587,25 @@ drift.
 \end{tabular}
 \end{center}
 Tier~(T4) is the genuinely $g=2$ content; tiers~(T1)--(T3)
-are preparatory or degeneration checks. The current face-model
-verification suite contains $32$ tests across \texttt{TestThetaFunctions},
-\texttt{TestBoltzmannWeightsG1}, \texttt{TestFaceDYBEG1},
-\texttt{TestClassicalLimit}, \texttt{TestGenus2Theta},
-\texttt{TestBoltzmannWeightsG2}, \texttt{TestFaceDDYBEG2}
-(now including \texttt{test\_ddybe\_generic\_omega\_second\_sample}
-and \texttt{test\_ddybe\_ladder\_plateau}),
-\texttt{TestFaceSzegoThreeTerm} (new,
-\texttt{test\_szego\_three\_term\_g2}),
-and \texttt{TestFullSuite}).
+are algebraic identities or degeneration calculations.  The tier-(T4)
+parameter set is exactly the four rows displayed in
+Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
 \end{remark}
 
-\begin{remark}[Numerical stability test]
+\begin{remark}[Open stability calculation]
 \label{rem:tolerance-ladder-falsification}
-The $N=8$ truncation of the $32$ face-model tests above is a
-single finite-window snapshot. The regression test
-\texttt{test\_ddybe\_ladder\_plateau} runs
-\texttt{verify\_face\_ddybe\_g2} at $N\in\{8,12,16\}$ for two
-distinct generic-$\Omega$ parameter instances and asserts that
-the residual at $N\geq 12$ is below $10^{-6}$ and decreases
-(or plateaus) from $N=8$ to $N=12$ to $N=16$. Any failure of the
-$N\geq 12$ bound would indicate a finite-$\hbar$ DDYBE residual
-that the $N=8$ bound $10^{-4}$ does not detect. Thus regime~(ii)
-is finite-window numerical evidence at $N=8$ until the
-$N\in\{12,16\}$ stability test is supplied; after a failed stability
-test it becomes numerical evidence with explicit residual
-$r_{\infty}>0$.
+The $N=8$ calculation is a single finite-window snapshot.  A stability
+calculation would evaluate the same residual $\rho_N$ at
+$N\in\{8,12,16\}$ for at least two off-diagonal period matrices and
+compare it with the exponential theta-tail estimate.  This calculation
+has not been supplied here.  In particular, no asserted
+$N\geq12$ bound or limiting residual follows from the displayed
+$N=8$ values.
 \end{remark}
 
 \begin{remark}[Two distinct identities both due to Fay]
 \label{rem:fay-versus-boltzmann-unitarity}
-The engine function \texttt{verify\_unitarity\_g2} tests the
-scalar product identity
+The scalar product identity for the Boltzmann weights is
 \[
  \alpha\beta - \gamma\delta \;=\;
  \Theta_\delta((z-\eta)e_1\mid\Omega)\,/\,
@@ -658,7 +621,7 @@ Both are theta identities due to Fay; only~\eqref{eq:fay-three-term}
 is the trisecant form. The bar-complex argument uses the
 trisecant form in the bar-differential $d_{\mathrm{bar}}^2 = 0$
 proof and the Boltzmann-unitarity form in the face-model
-numerical checks.
+finite calculation.
 \end{remark}
 
 \begin{remark}[Non-separating degeneration: genuine open content]
@@ -668,8 +631,9 @@ $\Omega_{22}\to i\infty$, $\Omega_{11}$ fixed, $\Omega_{12}$
 \emph{fixed nonzero}, carries genuinely $g=2$ content: the
 off-diagonal period $\Omega_{12}$ survives the limit and
 encodes twisted modular data that is invisible to the
-separating (diagonal-$\Omega$) degeneration. The current
-engine suite does not test this boundary stratum. The
+separating (diagonal-$\Omega$) degeneration. The finite parameter
+set in Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}
+does not approach this boundary stratum. The
 predicted limit is a genus-$1$ \emph{twisted} Felder DYBE
 with Stokes data encoding $\Omega_{12}$; this prediction is
 the genuine residual content of
@@ -703,8 +667,8 @@ $\dim\bigwedge^2 V=1$ giving $1\cdot 3=3$; total $12$).
 \begin{proof}
 Direct specialisation of
 Proposition~\ref{prop:genus-g-euler-general} of
-\texttt{higher\_genus\_modular\_koszul.tex} (which proves
-$\chi=d^2(1-2g)$ on $\Sigma_g\setminus\{0\}$) to $d=2, g=2$.
+the higher-genus calculation, which proves
+$\chi=d^2(1-2g)$ on $\Sigma_g\setminus\{0\}$, to $d=2, g=2$.
 \end{proof}
 
 \begin{remark}[$\chi=-12$ is a topological invariant, not a
@@ -713,10 +677,10 @@ doubly-dynamical invariant]
 The value $\chi=-12$ is fully determined by
 $(d,g,s)=(2,2,1)$ and does not depend on the dynamical
 parameters $(\boldsymbol\lambda,\Omega_{12})$. The genuine
-doubly-dynamical content of \texttt{conj:g2-ddybe} resides in
+doubly-dynamical content of Conjecture~\ref{conj:g2-ddybe} resides in
 $R(\boldsymbol\lambda,\Omega,z)\in\End(V\otimes V)$ and
 is invisible to the Euler-characteristic degree count. The
-independent verification of $\chi=-12$ via Verlinde
+Verlinde calculation
 ($CB_{2,2}(1)=4$ at level $k=1$, matching the integrable
 truncation of the $12$-dimensional generic $H^1$) is a
 cross-check of the degree structure, not of the DDYBE.
@@ -741,50 +705,42 @@ not a doubly-dynamical invariant.
 
 \begin{remark}[Scope of the genus-$2$ DDYBE checks]
 \label{rem:g2-corrigenda}
-The genus-$2$ DDYBE checks separate into three statements:
+The genus-$2$ DDYBE discussion separates into the following statements:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item The diagonal/separating face-model degeneration is exact:
  Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}
  reduces it to Felder's genus-$1$ DYBE.
 \item The single-entry weight-zero check has agreement at
  $10^{-12}$; the generic-$\Omega$ DDYBE computation has numerical
- evidence at \texttt{relative < 1e-4} across five compute tests,
- recorded in
+ evidence with residual below $10^{-4}$ at the four displayed
+ parameter points, recorded in
  Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
 \item The full generic-$\Omega$ DDYBE face-model statement remains
- conjectural:
- \texttt{conj:g2-ddybe} carries \texttt{\ClaimStatusConjectured}.
+ conjectural; it is Conjecture~\ref{conj:g2-ddybe}.
 \item Fay~1973 Corollary~2.5 is the normalised
  Szeg\H{o}/prime-form trisecant identity and holds uniformly at
  all $g\ge 0$ by direct application. Its torus form contains the
  load-bearing $\vartheta_1'(0,\tau)^2$ prefactor. It is distinct
  from the four-theta-nulls quartic identity on the theta divisor
- and from the numerically tested Boltzmann-weight unitarity
+ and from the finitely evaluated Boltzmann-weight unitarity
  identity
  $\alpha\beta-\gamma\delta = \Theta(z-\eta)/\Theta(z+\eta)$.
-\item There are $30$ face-model tests: four genuinely
- generic-$\Omega$ DDYBE tests at \texttt{relative < 1e-4}, one
- diagonal-$\Omega$ tier-(T3) consistency check against the genus-$1$
- Felder theorem, and $25$ tests for genus-$1$ DYBE, $\theta$
- antisymmetry, unitarity, crossing, classical limit, and degeneration.
+\item The genuinely generic calculation consists of four
+ off-diagonal-$\Omega$ parameter tuples at $N=8$; the diagonal row is
+ instead an exact reduction to the genus-$1$ Felder theorem.
 \item The topological value $\chi=-12$ is not itself
  doubly-dynamical; by Remark~\ref{rem:chi-not-dd}, the
  doubly-dynamical content lives in
  $R(\boldsymbol\lambda,\Omega,z)$ and is currently the content of
- \texttt{conj:g2-ddybe}.
+ Conjecture~\ref{conj:g2-ddybe}.
 \end{enumerate}
 \end{remark}
 
-\begin{remark}[Engine label anchors]
+\begin{remark}[The two degeneration loci]
 \label{rem:engine-docstring-corrigenda}
-The docstring of
-\texttt{compute/lib/genus2\_ddybe\_engine.py} references
-\texttt{prop:g2-nonsep-degen} and
-\texttt{prop:g2-sep-degen}; both labels are now declared in
-\texttt{higher\_genus\_modular\_koszul.tex}. This local DDYBE
-chapter uses the following anchors for the same content:
+Two boundary limits must be distinguished:
 \begin{itemize}
-\item \texttt{prop:g2-nonsep-degen}: at the non-separating
+\item At the non-separating
  boundary $\Omega_{22}\to i\infty,\Omega_{12}\to 0$,
  the face-model $R$-matrix and DDYBE degenerate to a
  single genus-$1$ Felder DYBE in variable
@@ -793,7 +749,7 @@ chapter uses the following anchors for the same content:
  off-diagonal non-separating frontier with $\Omega_{12}$ fixed
  nonzero, which remains open in
  Remark~\ref{rem:g2-nonseparating-untested}.
-\item \texttt{prop:g2-sep-degen}: at the separating boundary
+\item At the separating boundary
  $\Omega_{12}\to 0$ with $\Omega_{11},\Omega_{22}$ fixed,
  the DDYBE reduces to a single genus-$1$ Felder DYBE in
  variable $\tau=\Omega_{11}$ (the $\tau_2$-sector entering
@@ -802,20 +758,20 @@ chapter uses the following anchors for the same content:
  Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}(i)
  and carries no genuinely genus-$2$ content.
 \end{itemize}
-These anchors state exactly the genus-$1$ Felder reductions used by
-the degeneration computations, while the finite-window generic
-off-diagonal tests are kept on the numerical-evidence surface
+These are the genus-$1$ Felder reductions used by the degeneration
+calculations, while the finite-window generic off-diagonal values are
+kept on the numerical-evidence surface
 Proposition~\ref{prop:g2-generic-ddybe-finite-window-evidence}.
 \end{remark}
 
 % ========================================================
-\section*{Verification anchors}
+\section*{Status of the genus-$2$ statements}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{@{}lll@{}}
 \toprule
-Claim & Verification & Location \\
+Claim & Status & Location \\
 \midrule
 Flat KZB connection on
  $\overline{\cM}_{2,n}\times\HHH_2$
@@ -827,8 +783,8 @@ Fay trisecant (normalised Szeg\H{o}/prime-form) at all $g$
 DDYBE at diagonal $\Omega$ (exact)
  & Exact diagonal degeneration &
  \cref{thm:g2-face-model-bypass-scope-restricted}(i) \\
-DDYBE at generic $\Omega$ (numerical, $<10^{-4}$, 4 tests)
- & Four generic-\(\Omega\) residual tests at \(<10^{-4}\) &
+DDYBE at generic $\Omega$ (numerical, $<10^{-4}$, four points)
+ & Four generic-\(\Omega\) residuals at \(<10^{-4}\) &
  \cref{prop:g2-generic-ddybe-finite-window-evidence} \\
 DDYBE at separating boundary (factorised limit)
  & Exact factorised limit &
@@ -839,7 +795,7 @@ $\chi=-12$ at degree~$2$, $g=2$, $s=1$
 Full DDYBE~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}
  at arbitrary $\Omega$
  & Open conjectural identity &
- \texttt{conj:g2-ddybe} \\
+ Conjecture~\ref{conj:g2-ddybe} \\
 \bottomrule
 \end{tabular}
 \end{center}

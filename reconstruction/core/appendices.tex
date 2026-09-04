@@ -79,20 +79,20 @@ For \(R_{ij}(u)=1-\hbar P_{ij}/u\), expand both sides of Yang--Baxter.  The orde
 \]
 The cubic term agrees because both sides represent the same longest permutation.
 
-\chapter{Exact computation tables and reproducibility}\label{app:computations}
+\chapter{Exact finite computations}\label{app:computations}
 
-\section{Verification bundle}
-The accompanying source bundle contains
-\begin{itemize}
-\item \texttt{verify\_bar\_models.py}, the exact rational computation;
-\item \texttt{verified\_results.json}, machine-readable bases, ranks, cycles, and checks;
-\item \texttt{verification\_report.txt}, a compact human-readable report.
-\end{itemize}
-The script uses no floating-point arithmetic.  It constructs normalized bar bases by total polynomial weight and word length.  Multiplication in the quantum plane is
+\section{Finite chain-matrix construction}
+For each total polynomial weight \(w\leq5\) and word length \(r\), let
+\(C_{w,r}\) be the normalized bar space spanned over \(\mathbb Q\) by words
+whose nonunit monomial letters have total weight~\(w\).  The bar differential
+is the alternating sum of adjacent multiplications.  In the quantum plane at
+the rational parameter \(q=2\), multiplication is
 \[
  (x^ay^b)(x^cy^d)=q^{bc}x^{a+c}y^{b+d}.
 \]
-Multiplication in the Jordan plane is obtained by exact recursive reduction with \(yx\mapsto xy+x^2\).  Differential matrices are built entry by entry and ranked over \(\mathbb Q\).
+In the Jordan plane it is determined by the exact reduction
+\(yx\mapsto xy+x^2\).  Thus every differential matrix in the stated window
+has rational entries; its kernel, image, and rank are taken over \(\mathbb Q\).
 
 \section{Quantum-plane and Jordan-plane windows}
 The complete nonzero homology through weight five is:
@@ -117,12 +117,30 @@ algebra & \(w\) & \(r\) & \(\dim C_r\) & \(\operatorname{rk}d_r\) & \(\operatorn
 \(A_q,q=2\)&3&1&4&0&4&0\\
 \(A_q,q=2\)&3&2&12&4&8&0\\
 \(A_q,q=2\)&3&3&8&8&0&0\\
+\(A_q,q=2\)&4&1&5&0&5&0\\
+\(A_q,q=2\)&4&2&25&5&20&0\\
+\(A_q,q=2\)&4&3&36&20&16&0\\
+\(A_q,q=2\)&4&4&16&16&0&0\\
+\(A_q,q=2\)&5&1&6&0&6&0\\
+\(A_q,q=2\)&5&2&44&6&38&0\\
+\(A_q,q=2\)&5&3&102&38&64&0\\
+\(A_q,q=2\)&5&4&96&64&32&0\\
+\(A_q,q=2\)&5&5&32&32&0&0\\
 \(A_J\)&1&1&2&0&0&2\\
 \(A_J\)&2&1&3&0&3&0\\
 \(A_J\)&2&2&4&3&0&1\\
 \(A_J\)&3&1&4&0&4&0\\
 \(A_J\)&3&2&12&4&8&0\\
 \(A_J\)&3&3&8&8&0&0\\
+\(A_J\)&4&1&5&0&5&0\\
+\(A_J\)&4&2&25&5&20&0\\
+\(A_J\)&4&3&36&20&16&0\\
+\(A_J\)&4&4&16&16&0&0\\
+\(A_J\)&5&1&6&0&6&0\\
+\(A_J\)&5&2&44&6&38&0\\
+\(A_J\)&5&3&102&38&64&0\\
+\(A_J\)&5&4&96&64&32&0\\
+\(A_J\)&5&5&32&32&0&0\\
 \bottomrule
 \end{longtable}
 The quantum cycle \([y|x]-2[x|y]\) and Jordan cycle \([y|x]-[x|y]-[x|x]\) evaluate to the zero vector under the exact degree-two differential.
@@ -148,12 +166,15 @@ Therefore
 \]
 The symbolic proof in \cref{thm:hall-serre} holds for arbitrary \(q\); the finite check catches coefficient transpositions.
 
-\section{Stable trace Jacobi test}
-For labels \((a,b)\) with \(0\le a,b\le3\) and \(a+b>0\), the script evaluates all ordered triples under
+\section{Finite stable-trace Jacobi calculation}
+For labels \((a,b)\) with \(0\le a,b\le3\) and \(a+b>0\), evaluate all ordered triples under
 \[
  [(a,b),(c,d)]=(ad-bc)(a+c-1,b+d-1).
 \]
-All \(15^3=3375\) Jacobi sums vanish exactly.  This is a finite sanity check of the symbolic Poisson proof.
+All \(15^3=3375\) Jacobi sums vanish exactly in the free
+\(\mathbb Q\)-module on the resulting labels.  This statement is confined to
+the displayed finite label set; the all-label Poisson identity is supplied by
+the separate symbolic proof.
 
 \chapter{Generators-and-relations templates}\label{app:templates}
 
@@ -204,19 +225,15 @@ For a semisimple base \(S\), use free \(S\)-bimodule algebras and relative tenso
 \]
 A coloured chiral quiver replaces every \(e_jMe_i\) by a coefficient object and imposes the factorisation compatibility on every source-target component.
 
-\chapter{Critical archive map}\label{app:archive}
+\chapter{Logical status of comparison statements}\label{app:archive}
 
-The collected critical archive accompanying this volume is intentionally larger than the normative reconstruction.  It contains, in order:
-\begin{enumerate}
-\item this definitive reconstruction;
-\item the 198-page formulation from the analysis bundle;
-\item the 199-page early volume;
-\item the 246-page formulation preserving the legacy-table audit;
-\item the 153-page formulation preserving the aligned-decomposition theorem and detailed exact examples.
-\end{enumerate}
-The archival witnesses are not silently endorsed.  They are included so that no mathematical or physical proposal disappears from the record.  The theorem-status ledger in \cref{chap:corpus} determines whether a proposal is retained, reconstructed, conditional, retracted, or archival.
-
-The source-and-verification bundle includes the extracted repository chapters and computed results supplied by the user, together with the new LaTeX source and independent finite-window calculations.  This creates an immune system absent from the earlier paper: a future edit can be checked both against the no-go constitution and against reproducible chain matrices.
+A comparison is used only after its source, target, carrier category, and map
+have been specified.  A finite chain-matrix calculation establishes its stated
+finite window only.  A formal identity carries no analytic convergence claim,
+and a conditional comparison is invoked only with its named hypothesis.  The
+obstructions in Chapter~\ref{chap:nogo} and the exact calculations in
+Appendix~\ref{app:computations} give the corresponding negative and finite
+criteria.
 
 \chapter{Extended comparison table}\label{app:comparison}
 

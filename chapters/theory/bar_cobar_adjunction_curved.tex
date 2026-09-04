@@ -929,20 +929,22 @@ $-c/(4z^2)$ gives powers $z^{-2k}$ and no odd inverse powers,
 yielding \eqref{eq:virasoro-r-matrix-closed}.
 \end{proof}
 
-\begin{remark}[Independent checks]
+\begin{remark}[Coefficient expansion and scope]
 \label{rem:virasoro-r-matrix-paths}
 The scalar primary-state factor
 $R^{\mathrm{prim}}_{h,c}(z)=z^{2h}\,\exp(-c/(4z^{2}))$
-is checked by $91$ tests in
-\texttt{compute/lib/theorem\_virasoro\_spectral\_r\_matrix\_engine.py},
-including:
-\begin{itemize}
-\item direct OPE mode computation;
-\item path-ordered exponential numerical integration;
-\item series coefficient checks at $c = 1, 13, 25, 26$;
-\item comparison with the BPZ connection on conformal blocks;
-\item bosonic parity (only even $1/z$ powers).
-\end{itemize}
+has the formal expansion
+\[
+ R^{\mathrm{prim}}_{h,c}(z)
+ =z^{2h}\sum_{m\geq 0}\frac{1}{m!}
+ \left(-\frac{c}{4}\right)^m z^{-2m}.
+\]
+Thus the coefficient of $z^{2h-2m}$ is
+$(-c/4)^m/m!$, while every odd inverse-power coefficient vanishes.
+This conclusion follows directly from the closed form and is valid
+formally for every $h$ and $c$; it does not by itself identify the
+corresponding operator on the full descendant space or its action on
+conformal blocks.
 The $R_{2} = -c/4$ first correction is the genus-$0$
 primary-line footprint of the quartic Virasoro pole. It is one scalar
 projection of the data from which the infinite primitive-cumulant series
@@ -2913,14 +2915,12 @@ all descendant coefficients.
 All source-$2$ tuples lie in $\mathcal{I}_4^{\mathrm{Vir}}$ (stress-tensor action); the $(3,3)$ tuples with $u\le 3$ lie in $\mathcal{I}_4^{W_3}$ (stage-$3$ packet). Enumerating the remaining admissible tuples for $(3,3,4)$, $(3,4)$, and $(4,4)$ gives the displayed decomposition with cardinality $2+12+15=29$.
 \end{proof}
 
-\begin{computation}[Stage-\texorpdfstring{$4$}{4} seed set and residual packet check]
+\begin{computation}[Stage-\texorpdfstring{$4$}{4} seed set and residual packet]
 \label{comp:winfty-stage4-seed-check}
 \index{MC4!W-infinity stage-4 check}
-The seed set cardinalities and residual decomposition of
-Proposition~\ref{prop:winfty-ds-stage4-residual-packet} have been
-checked computationally
-(\texttt{compute/\allowbreak lib/\allowbreak w4\_stage4\_coefficients.py},
-$74$~tests):
+The finite sets in
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet} have the
+following cardinalities and decomposition:
 \begin{itemize}
 \item $|\mathcal{I}_4| = 54$,
  $|\mathcal{I}_4^{\mathrm{Vir}}| = 18$,
@@ -2937,8 +2937,8 @@ $74$~tests):
 \item Complementarity sum:
  $c(k) + c(-k-8) = 246$ (constant in~$k$);
 \item Universal $T$-coupling pattern:
- $\mathsf{C}_{s,s;2;0,2s-2} = 2$ confirmed for $s = 2, 3$;
- predicted for $s = 4$.
+ $\mathsf{C}_{s,s;2;0,2s-2} = 2$ for $s = 2, 3$;
+ the $s=4$ identity remains the conditional stage-$4$ target.
 \end{itemize}
 \end{computation}
 
@@ -4086,10 +4086,10 @@ the swap-odd \(W^{(4)}\)-transport square is forced by the
 \end{proposition}
 
 \begin{proof}
-The principal Drinfeld--Sokolov computation
-(Proposition~\ref{prop:w4-ds-ope-explicit},
-Computation~\ref{comp:w4-ds-ope-extraction}, $121$~tests) gives all
-stage-$4$ OPE coefficients as explicit rational functions of~$c$;
+The principal Drinfeld--Sokolov calculation
+(Proposition~\ref{prop:w4-ds-ope-explicit} and
+Computation~\ref{comp:w4-ds-ope-extraction}) gives all stage-$4$ OPE
+coefficients as explicit rational functions of~$c$;
 the inter-coefficient relation
 $\mathsf{C}_{3,4;4;0,3}^{\,2} = \tfrac{5}{7}c_{334}^{\,2}$
 as an algebraic consequence of the DS structure
@@ -5297,13 +5297,11 @@ sides by the same sign; the equality is a statement after the visible
 \end{proof}
 
 \begin{computation}[Exact stage-\texorpdfstring{$5$}{5}
-\texorpdfstring{$(3,4)$}{(3,4)} block coefficient check]
+\texorpdfstring{$(3,4)$}{(3,4)} block coefficient comparison]
 \label{comp:winfty-stage5-block34-coefficient}
-The coefficient equality of
-Proposition~\ref{prop:winfty-stage5-block-34} is checked by the exact
-engine \texttt{compute/lib/winfty\_stage5\_block34.py}. The test
-surface \texttt{compute/tests/test\_winfty\_stage5\_block34.py}
-compares three independent paths:
+The finite comparison in
+Proposition~\ref{prop:winfty-stage5-block-34} consists of the following
+three expressions:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the metric contraction
 \(\eta^{55}\langle W^{(3)}W^{(4)}W^{(5)}\rangle=g_{345}\);
@@ -5323,9 +5321,16 @@ g_{345}^{\,2}
 =-\frac34\,\mathsf{C}_{3,5;4;0,4}.
 \]
 \end{enumerate}
-At \(c=10,24,26,123\) the exact rational square agrees with the two
-pre-existing \(W_5\) engines; at \(c=\tfrac12\) the factor \(2c-1\)
-kills \(g_{345}\) on both sides.
+At (c=10,24,26,123,\tfrac12), respectively, the displayed rational
+square is
+\[
+ \frac{28000}{12903},\quad
+ \frac{16818480}{1521197},\quad
+ \frac{110047392}{8854375},\quad
+ \frac{5396816880}{110031689},\quad 0.
+\]
+These five specializations record a bounded exact calculation; they do
+not replace the coefficient identification in the preceding proof.
 \end{computation}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5}
@@ -5580,20 +5585,19 @@ Without this finite-stage identification, the theorem supplies a
 reduction criterion rather than a closure theorem.
 \end{proof}
 
-\begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain check]
+\begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain]
 \label{comp:winfty-stage4-reduction-chain}
 \index{MC4!W-infinity stage-4 reduction chain}
 The complete reduction chain from the residual packet
 $\mathcal{J}_4$ to the completion packet of
-Proposition~\ref{prop:winfty-mc4-frontier-package} has been
-checked computationally
-(\texttt{compute/lib/w4\_stage4\_coefficients.py}, $85$~tests):
+Proposition~\ref{prop:winfty-mc4-frontier-package} is the following
+sequence of finite subsets:
 \begin{itemize}
 \item \emph{Primaryity}
  (Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet}):
  $|\mathcal{J}_4| = 29 \to |\mathcal{J}_4^{\mathrm{top}}| = 7$,
- eliminating $22$ sub-leading entries; seven top-pole elements
- checked against the manuscript display;
+ eliminating $22$ sub-leading entries; the seven surviving elements
+ are listed in that corollary;
 \item \emph{Parity}
  (Corollary~\ref{cor:winfty-ds-stage4-parity-packet}):
  $|\mathcal{J}_4^{\mathrm{top}}| = 7
@@ -5612,8 +5616,8 @@ checked computationally
  split the stage-$4$ packet into $4$ higher-spin channels plus
  $2$ proved principal Virasoro-target values.
 \end{itemize}
-The full chain $29 \to 7 \to 6 = 4 + 2$ matches every intermediate
-cardinality and every explicit element of the manuscript displays.
+The full chain is therefore $29 \to 7 \to 6 = 4 + 2$; each arrow is
+the restriction defined by the cited corollary.
 \end{computation}
 
 \begin{proposition}[Explicit \texorpdfstring{$W_4$}{W4} OPE structure constants {\cite{Hornfeck93}};
@@ -5722,8 +5726,8 @@ square-class input on the principal side.
 Proposition~\ref{prop:winfty-mc4-frontier-package} and
 Proposition~\ref{prop:w4-ds-ope-explicit} together show that the first
 genuinely higher-spin MC4 packet is no longer extraction of principal
-Drinfeld--Sokolov data. That side is already explicit. The live
-stage-$4$ task is the six bar-side identities
+Drinfeld--Sokolov data. That side is already explicit. The remaining
+stage-$4$ obligation is the six bar-side identities
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(4)
 =
@@ -5750,28 +5754,33 @@ packet is an exact six-entry identity problem on~$\mathcal{I}_4$, not a
 further principal-side extraction problem.
 \end{remark}
 
-\begin{computation}[Full \texorpdfstring{$W_4$}{W4} OPE coefficient extraction]
+\begin{computation}[Finite \texorpdfstring{$W_4$}{W4} OPE specializations]
 \label{comp:w4-ds-ope-extraction}
 \index{MC4!W4 OPE coefficient extraction}
-The explicit structure constants of
-Proposition~\ref{prop:w4-ds-ope-explicit} have been checked
-computationally
-(\texttt{compute/lib/w4\_ds\_ope\_extraction.py}, $121$~tests):
+Substitution in the rational functions of
+Proposition~\ref{prop:w4-ds-ope-explicit} gives the following bounded
+consequences:
 \begin{itemize}
-\item all four squared structure constants evaluated at levels
- $k = 0, 1, 2, -2, -3$ (avoiding poles);
+\item all four squared structure constants are defined by direct
+ substitution at the regular levels $k = 0, 1, 2, -2, -3$, using
+ $c(k)=3-60(k+3)^2/(k+4)$;
 \item inter-coefficient ratios
  $\mathsf{C}_{3,4;3;0,4}^2/c_{334}^2 = 9/16$ and
- $\mathsf{C}_{3,4;4;0,3}^2/c_{334}^2 = 5/7$ checked symbolically;
+ $\mathsf{C}_{3,4;4;0,3}^2/c_{334}^2 = 5/7$ hold identically wherever
+ $c_{334}\neq0$ and the displayed rational functions are regular;
 \item Feigin--Frenkel duality $k \leftrightarrow -k-2h^\vee$
- checked: $c(k) + c(-k-8) = 246$;
+ gives $c(k) + c(-k-8) = 246$ by direct simplification;
 \item unitarity non-negativity ($c_{334}^2 \geq 0$, $c_{444}^2 \geq 0$)
- confirmed at all $\mathcal{W}(N, N{+}1)$ minimal models
+ holds after substitution at the $\mathcal{W}(N, N{+}1)$ minimal models
  for $4 \leq N \leq 19$;
 \item both proved principal Virasoro-target values
  $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ and
- $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ confirmed.
+ $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ are the remaining two
+ entries of the six-channel packet.
 \end{itemize}
+The listed levels and minimal models are a finite specialization of the
+rational identities, not an extension beyond the conditional status of
+Proposition~\ref{prop:w4-ds-ope-explicit}.
 \end{computation}
 
 The completion-closure theory and the $\mathcal{W}_\infty$ seed-packet
@@ -7794,8 +7803,8 @@ $\widehat{\bar B}^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$
 \item[\textup{(c)}] On a formal neighbourhood of $H_3$, strict
 chain-level inversion fails with obstruction
 $\phi^{(3)}|_{H_3} = -8\cdot c_{\Phi_{10}/\eta^{24}}|_{H_3}$; the
-$A_\infty$-deformation installs the homotopy $h^{(3)}|_{H_3}$ of
-Remark~\ref{rem:bcac-3} to produce a coacyclic-cone repair in the
+$A_\infty$-deformation supplies the homotopy $h^{(3)}|_{H_3}$ of
+Remark~\ref{rem:bcac-3}, whose cone is coacyclic in the
 completed coderived $A_\infty$ ambient
 (cross-ref Theorem~\ref{thm:climax-W18-global-inversion}~(c)).
 \end{enumerate}

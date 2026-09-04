@@ -630,12 +630,13 @@ recursion on the transferred $T$-line data, and the shadow-metric
 reconstruction from the same transferred invariants.  For each of the
 $4\times5$ pairs $(N,k)$, each method produces an exact rational value
 for every $S_r$, $2\le r\le20$.  The finite comparison is implemented by
-\texttt{systematic\_comparison} in
-\texttt{compute/lib/ds\_transferred\_shadows.py}: with
-$N\in\{2,3,4,5\}$, $k\in\{1,2,3,5,10\}$, and
-\texttt{max\_arity=20}, it compares all entries by exact rational
-equality and returns \texttt{all\_agree=True}.  Hence the three exact
-outputs agree entrywise.
+$N\in\{2,3,4,5\}$, $k\in\{1,2,3,5,10\}$, and $2\le r\le20$.
+Form the residual vector in $\mathbb Q^{760}$ whose two entries for
+each $(N,k,r)$ are
+$S_r^{\mathrm{DS}}-S_r^{\mathrm{MC}}$ and
+$S_r^{\mathrm{DS}}-S_r^{\mathrm{metric}}$.  Exact rational
+evaluation gives the zero vector.  Hence the three outputs agree
+entrywise on precisely this finite parameter set.
 \end{proof}
 
 These are three descriptions of a single algebraic fact: the
@@ -862,10 +863,9 @@ The jump from one pole to two is an asymptotic phase transition.
 \label{thm:comp-three-way-bar}
 \ClaimStatusConditional
 In the Open quadrant, standard bar presentation, Beilinson level~$2$,
-under the OS-corrected PBW-collapse hypothesis package, the finite
-windows implemented by the local bar-dimension
-engines, the direct bar matrices, closed-form sequence formulae,
-and CE/Zhu comparison routines agree whenever they compute the same
+under the OS-corrected PBW-collapse hypothesis package, the direct bar
+matrices, closed-form sequence formulae, and CE/Zhu comparisons agree
+in the degree-$1$ through degree-$6$ windows displayed above whenever they compute the same
 typed object.  The unconditional rows are the single-generator
 free-field and Virasoro windows and the affine low-degree windows
 where the OS factor is trivial or explicitly included.  The
@@ -874,15 +874,11 @@ PBW-collapse package of Proposition~\ref{prop:comp-ce-bar}.
 \end{theorem}
 
 \begin{proof}
-The direct matrices are built in
-\texttt{compute/lib/bar\_cohomology\_dimensions.py}.  The independent
-closed-form witnesses live in \texttt{compute/lib/bar\_complex.py} and
-are tested in \texttt{compute/tests/test\_bar\_complex.py} and
-\texttt{compute/tests/test\_bar\_cohomology\_dimensions.py}.  The
-single-generator CE comparison is isolated in
-\texttt{compute/lib/ce\_vs\_chiral\_bar\_reconciliation\_engine.py}
-and its test file.  These computations agree in the implemented
-finite windows after the typed-object distinction is imposed: CE
+For each displayed algebra and degree, write the bar differential on
+the ordered word basis, compute $\dim\ker d_n-dim\operatorname{im}
+d_{n-1}$, and compare it with the listed closed-form sequence.  The
+difference vector is zero in the displayed finite windows after the
+typed-object distinction is imposed: CE
 computes the leading-pole page, while the chiral bar computation also
 contains the Orlik--Solomon and subleading-pole data.  The theorem is
 therefore a finite-window conditional comparison, not an
@@ -1595,12 +1591,11 @@ first nonvanishing higher shadow $S_3$ is a finite
 $c$-independent constant, not a divergent sum.
 \end{proof}
 
-\begin{remark}[Computational verification]
+\begin{remark}[Algebraic consequence]
 \label{rem:s3-vir-compute}
-The $c$-independence of $S_3(\mathrm{Vir}_c) = 2$ is verified
-at multiple values of $c$ in
-\texttt{compute/lib/theorem\_ainfty\_nonformality\_class\_m\_engine.py}
-($77$ passing tests). The identity furnishes a finite
+The exact cancellation in the preceding proof shows that
+$S_3(\mathrm{Vir}_c)=2$ wherever $\kappa(\mathrm{Vir}_c)\ne0$.
+The identity furnishes a finite
 algebraic proof of class~$M$ non-formality, distinguishing the
 Russian-school approach (algebraic identity) from the
 divergent-sum approach (which requires careful
@@ -1757,32 +1752,28 @@ only on the Virasoro subalgebra.
 
 
 % =========================================================
-\subsection{Summary of verifications}
+\subsection{Finite ranges}
 \label{subsec:comp-summary}
 % =========================================================
 
 \begin{table}[htbp]
 \centering
-\caption{Computed invariants and verification methods.
-Every entry exact rational, verified by $\geq 2$ methods.}
+\caption{Finite ranges of the exact calculations in this chapter.}
 \label{tab:comp-methods-summary}
 \small
 \[
-\begin{array}{@{}l|ccccc@{}}
- \text{Invariant}
- & \sqrt{\ShadowMetric} & \text{MC}
- & \text{Borel} & \text{matrices} & \text{scope} \\
+\begin{array}{@{}l|l|l@{}}
+ \text{Invariant}&\text{parameter set}&\text{finite conclusion} \\
 \hline
  S_r \; (r = 2 \ldots 30)
- & \checkmark & \checkmark & \checkmark
- & & \text{15 algebras, 580 values} \\
+ & \text{15 displayed algebras}&\text{exact rational values} \\
  \dim H^n(\barBch) \; (n \leq 12)
- & & & & \checkmark & \text{8 algebras} \\
+ & \text{8 displayed algebras}&\text{finite matrix ranks} \\
  F_2
- & & & & & \text{10 algebras} \\
+ & \text{10 displayed algebras}&\text{exact rational values} \\
  S_r(\cW_N) \; (\text{DS})
- & \checkmark & \checkmark & &
- & \text{4 $N$, 5 $k$}
+ & N=2,3,4,5;\ k=1,2,3,5,10;\ 2\le r\le20
+ & \text{zero residual in }\mathbb Q^{760}
 \end{array}
 \]
 \end{table}
@@ -1790,36 +1781,34 @@ Every entry exact rational, verified by $\geq 2$ methods.}
 \section{Synthesis}
 \label{sec:cm-supplement}
 
-\begin{remark}[Compute modules as algorithmic carriers]
+\begin{remark}[Four finite arithmetic carriers]
 \label{rem:cm-1}
-The compute modules used for Volume~III each carry a
-K3-chiral imprint at the algorithmic level:
-(i)~\texttt{zte\_t\_matrix.sage} computes the exact persymmetric ZTE $T$
-matrix with zero anti-diagonal and $10$ distinct rational entries,
-realising the $\widetilde M_{24}$-twined trace at order $24$;
-(ii)~\texttt{shadow\_tower\_m5\_m8.sage} computes $m_5 = -80/9$,
-$m_7 = -24320/81$, $m_8 = 33157760/19683$ from $G_5^{\mathrm{conn}} = 775/5184$
-via Feynman sums, aligning to the Borcherds-product expansion of
-$\Delta_5$; (iii)~\texttt{kappa\_BKM\_universal.sage} verifies
-$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N\in\{1,2,3,4,6\}$
-against Gritsenko 1999 series;
-(iv)~\texttt{pasol\_zagier\_universal\_igusa.sage} realises
-$R_{\mathrm{Sieg,dyn}}$ on $\mathrm{Sp}_4(\mathbb Z)$ modular locus
+Four distinct finite calculations enter the comparison with Volume~III:
+(i) an exact persymmetric ZTE matrix with zero anti-diagonal and ten
+distinct rational entries realizes the $\widetilde M_{24}$-twined
+trace at order~$24$;
+(ii) finite Feynman sums give $m_5=-80/9$, $m_7=-24320/81$, and
+$m_8=33157760/19683$ from $G_5^{\mathrm{conn}}=775/5184$;
+(iii) the coefficient identity
+$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ is evaluated for
+$N\in\{1,2,3,4,6\}$ against the Gritsenko series;
+(iv) the Pasol--Zagier construction realizes
+$R_{\mathrm{Sieg,dyn}}$ on the $\mathrm{Sp}_4(\mathbb Z)$ modular locus
 \cite{PasolZagier2013,Gritsenko1999,Borcherds1992}.
 Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\begin{remark}[Algorithmic verification of the universal identity]
+\begin{remark}[Typed scope of the three scalar calculations]
 \label{rem:cm-2}
-The universal identity $\hbar^2\cdot K^{\kappa_{\mathrm{ch}}} = -1$ at
-$\hbar^2 = -1/8$ is computationally verified across the compute modules:
-Lusztig specialisation at $\ell = 8$ (root-of-unity module tally),
-Mukai-doubling at $c_+ = 4$ (signature computation on $II_{4,20}$),
-pentagon coboundary $\phi^{(3)}$ at $\hbar^3$ (associator closure at
-third order, with three linearly independent pieces summing to zero
-modulo $\Phi_{10}/\eta^{24}$). The test suite checks each module's
-output against the identity as a cross-cutting invariant
-\cite{Mukai1987,Lusztig1990,EtingofKazhdan2007PartV}. Cross-ref
+At the specified parameters, Lusztig specialization has $\ell=8$,
+Mukai doubling has $c_+=4$ on the lattice $II_{4,20}$, and the three
+linearly independent order-$\hbar^3$ pieces of the pentagon
+coboundary sum to zero modulo $\Phi_{10}/\eta^{24}$.  The numerical
+substitution $\hbar^2=-1/8$ and $K^{\kappa_{\mathrm{ch}}}=8$ gives
+$\hbar^2K^{\kappa_{\mathrm{ch}}}=-1$.  These are differently typed
+calculations; identifying their carriers requires additional comparison
+maps.  See \cite{Mukai1987,Lusztig1990,EtingofKazhdan2007PartV} and
+cross-ref
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
@@ -1856,14 +1845,13 @@ Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 
 \begin{remark}[Maass spin cover, \emph{not} paramodular $K(1)$]
 \label{rem:cm-maass-spin}
-The arithmetic group carrying $\Delta_5$ is \emph{not} the paramodular
-group $K(1) = \mathrm{Sp}_4(\Z)$ at level one (the earlier
-``paramodular $K(N)$'' claim for $N = 1$ was retracted explicitly). The
-correct home is the \emph{Maass spin cover}
+The arithmetic group carrying $\Delta_5$ is the \emph{Maass spin cover}
 $\widetilde{\mathrm{Sp}_4(\Z)}$, the unique $\Z/2$-cover of
 $\mathrm{Sp}_4(\Z)$ fixing $v_{\Delta_5}$: writing
 $1 \to \Z/2 \to \widetilde{\mathrm{Sp}_4(\Z)} \to \mathrm{Sp}_4(\Z) \to 1$
-with the $\Z/2$ exactly $\ker(v_{\Delta_5})^c$, one has
+with the $\Z/2$ exactly $\ker(v_{\Delta_5})^c$.  Thus the level-one
+paramodular group \(K(1)=\mathrm{Sp}_4(\Z)\) alone does not encode the
+multiplier, and one has
 $\Delta_5 \in S_5(\widetilde{\mathrm{Sp}_4(\Z)})_{\mathrm{triv}}$
 on which the spin cover acts with trivial multiplier
 (Maass 1979, \S 4, identification of spin weights).
