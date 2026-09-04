@@ -4289,8 +4289,8 @@ $\Theta_\cA^{\leq 2} = \kappa(\cA) \cdot \eta \otimes \Lambda$
 the full tower $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
 exists by the bar-intrinsic construction;
 see Theorem~\ref{thm:mc2-bar-intrinsic}).
-The MC2 extension problem is packaged by
-Proposition~\ref{prop:mc2-reduction-principle} into three tasks;
+The MC2 extension problem is reduced by
+Proposition~\ref{prop:mc2-reduction-principle} to three constructions;
 the clutching package is resolved by
 Proposition~\ref{prop:geometric-modular-operadic-mc}, and the
 surviving one-channel obstruction is further reduced through a
@@ -8216,8 +8216,8 @@ The compatibility
 $\kappa(\cW_k) = \rho \cdot c_{\cW}$ follows by explicit
 computation for $\mathfrak{sl}_2$ ($\rho = 1/2$,
 $c_{\cW} = c_{\mathrm{Vir}}$, $\kappa = c/2$) and
-$\mathfrak{sl}_3$ ($\rho = 5/6$, computed in the compute module
-\texttt{factorization\_envelope\_shadow.py}).
+$\mathfrak{sl}_3$, where
+$\rho=H_3-1=1/2+1/3=5/6$.
 \end{proof}
 
 
@@ -8396,9 +8396,18 @@ for which the corresponding $S_{2k+1}$ is nonzero. For Virasoro the
 input coefficients are the recursively computed rational functions
 with seeds
 $S_2=c/2$, $S_3=2$, and $S_4=10/(c(5c+22))$
-\textup{(}Theorem~\ref{thm:riccati-algebraicity}\textup{)}; their
-generic odd-degree nonvanishing is the computation performed by
-\texttt{kontsevich\_graph\_complex.py}. A deformation
+\textup{(}Theorem~\ref{thm:riccati-algebraicity}\textup{)}.  Applying
+the displayed recursion through arity~$11$ gives
+\begin{align*}
+ S_5&=-\frac{48}{c^2(5c+22)},\\
+ S_7&=-\frac{2880(15c+61)}{7c^4(5c+22)^2},\\
+ S_9&=-\frac{1280(2025c^2+15570c+29554)}
+ {3c^6(5c+22)^3},\\
+ S_{11}&=-\frac{15360(91125c^3+990225c^2+3500190c+3988097)}
+ {11c^8(5c+22)^4}.
+\end{align*}
+Thus the odd coefficients are generically nonzero in this finite
+range; an all-arity assertion requires a separate argument. A deformation
 $\cA_t$ then maps to
 $\dot a_{2k+1}=(d/dt)S_{2k+1}(\cA_t)$ in the
 $\sigma_{2k+1}$ direction, and the Ihara relations in
@@ -8417,9 +8426,8 @@ of class~M are the dimensionless ratios
 \frac{S_r(\cA)}{|\kappa(\cA)|^{r/2}}.
 \]
 For the Virasoro algebra at central charge~$c$, these are
-rational functions of~$c$ (computed exactly in
-\texttt{kontsevich\_graph\_complex.py},
-function~\texttt{shadow\_zeta\_exact}).
+rational functions of~$c$: substitute the recursively defined
+$S_r(c)$ and $\kappa=c/2$ in the displayed quotient.
 The terminology ``shadow zeta values'' reflects the
 correspondence $\sigma_{2k+1} \leftrightarrow \zeta(2k+1)$
 in $\mathfrak{grt}_1$: the shadow coefficient
@@ -8491,7 +8499,7 @@ projective curve.  An explicit family support datum
  \mathrm{ChirHoch}^\bullet(\mathbf H_{\Delta_5})
  \subseteq S_{\Delta_5}.
 \]
-The curve-level calculation then has three further concrete tasks:
+The curve-level calculation then requires three further constructions:
 \begin{itemize}
 \item degree zero is the chiral centre
 \(Z(\mathbf H_{\Delta_5})\); the Hall--Drinfeld model determines its

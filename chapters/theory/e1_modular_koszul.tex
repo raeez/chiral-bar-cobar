@@ -564,11 +564,21 @@ only for permutations $\sigma$ fixing both~$i$ and~$j$,
 i.e.\ $\Sigma_{n-2} \subset \Sigma_n$. An
 ordered endomorphism in $\ker(\operatorname{av}_n)$
 can map under~$D$ to an endomorphism with nonzero
-$\operatorname{av}_{n-1}$ component. The engine
-\texttt{e1\_non\-split\-ting\_ob\-struc\-tion\_engine.py}
-verifies the cross-degree leakage
-$D(\ker(\operatorname{av}_3)) \not\subset
-\ker(\operatorname{av}_2)$ for $V = \C^2$ (degree~$3$, 60 tests).
+$\operatorname{av}_{n-1}$ component.  For $V=\mathbb C^2$ with
+basis $(e_0,e_1)$, write
+$E_{ijk,pqr}=|ijk\rangle\langle pqr|$ and set
+\[
+ m=4E_{000,001}-2E_{000,010}-2E_{000,100}.
+\]
+The $\Sigma_3$-average of $m$ is zero.  Tracing the middle factor
+gives
+\[
+ D_{12}(m)=4E_{00,01}-2E_{00,10},\qquad
+ \operatorname{av}_2D_{12}(m)=E_{00,01}+E_{00,10}\neq0.
+\]
+Hence
+$D(\ker(\operatorname{av}_3))\not\subset
+\ker(\operatorname{av}_2)$ already on this basis element.
 
 Part~(iii): the $\Sigma_3$-isotypic decomposition of
 $[\Omega_{12}, \Omega_{23}]$ consists of sign and standard
@@ -1342,9 +1352,8 @@ parts~\textup{(ii)} on $\cA$ and $\cB$ glue into a cube whose
 commutation realises the boundary-to-bulk averaging
 compatibility.
 \emph{(b) Vol~III CY-to-chiral factorisation
-$\Phi_d^{(\Sigma_{d-1}, C)} = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ \textup{(}Vol~III
-\texttt{chapters/theory/cy\_to\_chiral.tex} Theorem~\textup{phi-two-stage-factorisation};
-\texttt{compute/lib/kodaira\_spencer\_e1\_engine.py}\textup{)}\textup{:}}
+$\Phi_d^{(\Sigma_{d-1}, C)} = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$
+\textup{(}Vol~III, Theorem~\textup{phi-two-stage-factorisation}\textup{)}\textup{:}}
 stage~$1$ $\PhiFA_d\colon \mathrm{CY}_d\text{-}\mathsf{Cat} \to
 E_d\text{-}\HolFA(\CY_d)$ is a canonical holomorphic factorisation
 algebra on the CY$_d$ variety, pinned up to contractible choice by
@@ -1709,14 +1718,13 @@ characters of distinct irreducible representations. Therefore
 is the complementary sum~\eqref{eq:ker-av-isotypic} on each finite
 quotient, and the completed statement follows by inverse limit from
 Lemma~\ref{lem:completed-reynolds-descent-ordered-arity}. Its
-image is $\operatorname{End}(\cA^{\otimes n})^{\Sigma_n}$. The
-numerical identity $\dim K^{\mathrm{Re}}_n|_{V=\bC^2}
-=2^n-(n+1)=\dim V^{\otimes n}-\dim\operatorname{Sym}^n V$ is
-verified through arity~$10$ in the compute engine
-\texttt{compute/lib/averaging\_kernel\_dim\_engine.py}
-\textup{(}functions \texttt{hecke\_kernel\_dim\_sl2\_fund},
-\texttt{hecke\_kernel\_decomposition\_sl2\_fund}, and
-\texttt{schur\_weyl\_decomposition\_sl2}\textup{)}.
+image is $\operatorname{End}(\cA^{\otimes n})^{\Sigma_n}$.  For
+comparison, the Reynolds projector on the tensor carrier
+$V^{\otimes n}$ itself has kernel dimension
+$2^n-(n+1)$ when $V=\mathbb C^2$, since
+$\dim\operatorname{Sym}^nV=n+1$.  This is not a dimension formula
+for the different carrier
+$\operatorname{End}(V^{\otimes n})$ used in part~\textup{(i)}.
 
 \emph{(ii).} For the bracket stability, work under the full descent
 package of Definition~\ref{def:e1-modular-convolution}, including the
@@ -1753,8 +1761,8 @@ $\Sigma_n$-equivariant; projected onto the trivial
 $\Sigma_{n-1}$-isotypic component, the result need not vanish, so
 \(D(K^{\mathrm{Re}}_n)\not\subseteq K^{\mathrm{Re}}_{n-1}\) on the
 raw degreewise Reynolds surface. The numerical witness is the
-$60$-test chain-level verification at $n=3$, $V=\bC^2$, in the
-engine \texttt{e1\_nonsplitting\_obstruction\_engine.py}. If the
+$n=3$, $V=\bC^2$ basis element $m$ displayed in
+Proposition~\ref{prop:e1-nonsplitting-obstruction}. If the
 stronger descent hypotheses make \(\operatorname{av}_R\) a chain map,
 this leakage is killed in the quotient and
 \(\ker(\operatorname{av}_R)\) is stable under \(D\).
@@ -1887,8 +1895,8 @@ matching the $r_{\max}=3$ (class $\mathbf{L}$) and $r_{\max}=4$
 depth tower is infinite, so the Ihara/Willwacher generators
 $\{\sigma_{2k+1}\}_{k\geq 1}$ all appear at rational weights
 tracked by the Deligne--Ihara conjecture
-(classical for $n\leq 13$; verified computationally through
-weight~$19$ by Brown~\cite{Brown12}), giving the
+(classical for $n\leq 13$; Brown~\cite{Brown12} computes the relevant
+graded pieces through weight~$19$), giving the
 $\mathfrak{grt}_1^{(n)}$-dimension as the rational weight-$n$
 component; adding the depth-tail correction for the even-weight
 cusp contributions at $n=12$ and higher yields the total
@@ -2668,9 +2676,9 @@ on the set of ribbon structures:
 \;=\;
 \frac{\#\mathrm{Rib}(\Gamma)}{|\operatorname{Aut}(\Gamma)|}.
 \]
-Computational verification: \texttt{theorem\_higher\_dim\_modular\_%
-operad\_engine.py} ($55$ tests); $\chi^{\mathrm{orb}}(\overline{\cM}_2)
-= -1/240$ verified by three independent paths.
+The equality is exactly the orbit--stabiliser identity for the
+finite $\operatorname{Aut}(\Gamma)$-set of cyclic orders at the
+vertices; no moduli-space calculation is required.
 \end{remark}
 
 \begin{remark}[$F\!\Com = F\!\Ass$ at the scalar level]
@@ -2715,10 +2723,9 @@ $\Sigma_n$-coinvariant data by construction
 strictly more information: the $R$-matrix $r(z)$, the full
 $S_n$-Frobenius character decomposition of each bar degree, and the
 KZ associator are all killed by the averaging map~$\operatorname{av}$.
-Computational verification:
-\texttt{theorem\_higher\_dim\_modular\_operad\_engine.py} ($55$~tests)
-verifies $F\!\Com = F\!\Ass$ for all standard families at
-genus~$1$ and $2$ by direct ribbon-weighted graph summation.
+The statement remains conditional at arbitrary genus: a finite
+ribbon-graph sum in genus~$1$ or~$2$ cannot establish the asserted
+operadic identification in all genera.
 \end{remark}
 
 \begin{remark}[Eulerian weight of $\kappa$: parity-dependent]
@@ -2742,8 +2749,6 @@ $\kappa(\cW_3) = \tfrac{5c}{6} = c/2 + c/3$ splits as
 $\kappa_{TT} = c/2$ at weight~$1$ (odd desuspended $T$) and
 $\kappa_{WW} = c/3$ at weight~$2$ (even desuspended $W$),
 with cross-channel $\kappa_{TW} = 0$ by weight parity on~$\overline{\cM}_{1,1}$.
-Computational verification:
-\texttt{eulerian\_weight\_mc\_engine.py} ($67$ tests).
 \end{remark}
 
 \begin{remark}[The MC equation is not Eulerian-weight-graded]
@@ -3655,10 +3660,6 @@ into the sign projection.
 Part~(iv): $\dim \mathrm{Sym}^n(V) = \binom{d+n-1}{n}$ and
 $\dim \Lambda^n(V) = \binom{d}{n}$ are the standard
 multiset and subset counts.
-Computational verification:
-\texttt{sn\_bar\_irrep\_decomp\_engine.py}
-(Schur--Weyl decomposition, character tables for
-$\Sigma_1$--$\Sigma_5$, hook-length formula, 120+ tests).
 \end{proof}
 
 \section{Cyclic trace, ribbon structure, and the

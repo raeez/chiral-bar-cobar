@@ -1937,10 +1937,9 @@ target $E_1^{1,2}$ is zero.  Consequently
  \cong \mathfrak h,
 \]
 and this group has dimension~$2$.  The exact rational matrix, its
-rank, its root-space image, and the two Cartan cokernel calculations
-are recorded in
-\texttt{compute/lib/admissible\_sl3\_d1\_poisson\_engine.py} and
-\texttt{compute/tests/test\_admissible\_sl3\_d1\_poisson\_engine.py}.
+rank, its root-space image, and the two Cartan cokernel classes are
+precisely the data required by Hypothesis~\textup{(A3)}; this step
+makes no unconditional assertion that the rank condition holds.
 
 \emph{Step~4 (Passage from the finite model to the quotient bar).}
 Hypothesis~\textup{(A4)} is the quotient comparison and persistence
@@ -3503,11 +3502,15 @@ $S_3 = (\text{scalar projection of } T_{(1)}T)/T_{(3)}T
 $S_4 = 10/[c(5c{+}22)]$ and $\Delta = 8\kappa S_4 = 40/(5c{+}22) \neq 0$
 for generic~$c$, so the Riccati algebraicity theorem
 forces the tower to be infinite.
-Computational verification:
-\texttt{theorem\_ainfty\_nonformality\_class\_m\_engine.py}
-(three independent methods for $S_3$,
-quartic shadow $S_4$ and $Q^{\mathrm{contact}}$, quintic
-shadow $S_5 = -48/(c^2(5c+22))$, all four classes verified).
+The finite class-$M$ calculation therefore consists of the three
+displayed coefficients
+\[
+ S_3=2,\qquad S_4=\frac{10}{c(5c+22)},\qquad
+ S_5=-\frac{48}{c^2(5c+22)};
+\]
+the classification of all four landscape classes uses the named
+structural results in the preceding paragraphs, not this finite list
+alone.
 \end{proof}
 
 The four classes exhaust the finite standard-landscape atlas, not a
@@ -4541,15 +4544,6 @@ $\fg$-module~$M$ when $\fg$ is semisimple
 In particular $H^2_{\mathrm{CE}}(\fg, \mathrm{Sym}^p(\fg^*)) = 0$
 for all~$p \geq 0$. The spectral sequence degenerates at~$E_1$
 and yields $H^2_\pi(\fg^*, \pi_{\mathrm{STS}}) = 0$.
-
-The explicit verification for $\fg = \mathfrak{sl}_2$ (the
-three-dimensional Lichnerowicz complex on~$\mathbb{C}^3$, carried out
-in
-\texttt{compute/lib/theorem\_sklyanin\_poisson\_cohomology\_engine.py};
-57~tests, three independent verification paths: direct
-kernel/image, CE comparison, and polynomial-degree spectral
-sequence) confirms $H^0_\pi = \mathbb{C}[C_2]$ (Casimir ring),
-$H^1_\pi = H^2_\pi = H^3_\pi = 0$.
 
 Comparison with Koszulness:
 the vanishing $H^2_\pi = 0$ means the Sklyanin bracket on

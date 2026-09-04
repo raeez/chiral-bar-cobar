@@ -1995,7 +1995,7 @@ without passing through the determinant line bundle.
 \index{family index theorem!BV/bar proof|)}
 
 \medskip
-\noindent\textbf{Path \textup{(d)}: numerical verification.}
+\noindent\textbf{Finite coefficient comparison.}
 \index{multi-path verification!Heisenberg BV/bar}
 At each genus $g = 1, \ldots, 15$, three independent
 implementations produce the same rational number $\lambda_g^{\mathrm{FP}}$:
@@ -2010,12 +2010,10 @@ implementations produce the same rational number $\lambda_g^{\mathrm{FP}}$:
  intersection integral on $\overline{\mathcal{M}}_{g,1}$
  via the string/dilaton equation and Witten's conjecture.
 \end{enumerate}
-All three agree at every genus tested. Sample values:
+All three agree for every $g=1,\ldots,15$. Sample values:
 $\lambda_1^{\mathrm{FP}} = 1/24$,
 $\lambda_2^{\mathrm{FP}} = 7/5760$,
 $\lambda_3^{\mathrm{FP}} = 31/967680$.
-\textup{(}Verified in the compute layer:
-\texttt{heisenberg\_bv\_bar\_proof.py}, $60$ tests.\textup{)}
 \end{proof}
 
 \begin{remark}[Why the Heisenberg is special]
@@ -2893,11 +2891,9 @@ pairs with an $SO(8)$ global symmetry, giving:
  $F_2^{\mathrm{Burns}} = \kappa_{\mathrm{Burns}} \cdot
  \lambda_2^{\mathrm{FP}} = 4 \cdot 7/5760 = 7/1440$.
 \end{itemize}
-Both $F_1$ and $F_2$ are verified by multi-path computation in
-\texttt{compute/lib/burns\_space\_koszul\_datum\_engine.py} and the
-associated test file
-\texttt{compute/tests/test\_theorem\_burns\_f2\_engine.py}
-\textup{(}five paths for $\kappa$, six paths for $F_2$\textup{)}.
+The two displayed values follow by exact substitution of
+$\kappa_{\mathrm{Burns}}=4$ into
+$F_g=\kappa\lambda_g^{\mathrm{FP}}$ for $g=1,2$.
 \end{computation}
 
 \begin{remark}[Burns shadow class, global vs.\ $T$-line]
@@ -2990,9 +2986,10 @@ Direct verification via multi-path computation is open.
 \begin{remark}[Scope and status]
 \label{rem:non-cy-scope}
 The Burns row of Table~\ref{tab:non-cy-local-surfaces} is the only
-entry that is presently computed from the engine; it is
-\ClaimStatusProvedElsewhere{} by the five-path $\kappa$ verification
-and the six-path $F_2$ verification in the compute layer. The
+entry whose scalar values are calculated here: four weight-one
+$\beta\gamma$ pairs give $c=8$ and $\kappa=4$, hence
+$F_1=4/24=1/6$ and $F_2=4\cdot7/5760=7/1440$.  It is marked
+\ClaimStatusProvedElsewhere{}. The
 Hirzebruch, del~Pezzo, and Enriques rows are
 \ClaimStatusConjectured{} predictions based on dimensional counting
 of the characteristic lattice and the general class-$\mathsf{C}$

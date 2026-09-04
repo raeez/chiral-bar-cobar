@@ -642,9 +642,8 @@ $B,C,D$; imposing the usual central determinant normalization
 (quantum determinant in type~A, Sklyanin determinant in
 orthogonal/symplectic type) recovers the corresponding Yangian
 presentation of Molev~\cite[Theorems 3.2.1, 4.2.1, 4.3.1,
-4.4.1]{molev-yangians}.  The finite numerical checks in
-\texttt{yangian\_rtt\_all\_types.py} are consistency checks, not the
-proof of the all-rank statement.
+4.4.1]{molev-yangians}.  The all-rank statement rests on these
+operator identities and Molev's presentation theorems.
 \end{theorem}
 
 \begin{proof}
@@ -1001,7 +1000,7 @@ The RTT relation $R_{12}(u-v) T_1 T_2 = T_2 T_1 R_{12}(u-v)$ can be written as:
 \]
 Expanding: $T_1 T_2 - T_2 T_1 = \frac{\hbar}{u-v}(P T_1 T_2 - T_2 T_1 P)$.
 
-The orthogonal complement $R^\perp$ consists of quadratic expressions $Q(T^*, T^*)$ that pair to zero with all elements of $R$. For $\mathfrak{sl}_2$ (where $V = \mathbb{C}^2$ and $P$ is the $4 \times 4$ permutation matrix), $R^\perp$ is computed by direct matrix calculation. The RTT relation at fixed spectral parameters defines a linear map $\Phi_R\colon \mathrm{End}(V)^{\otimes 2} \to \mathrm{End}(V)^{\otimes 2}$ by $X \mapsto R_{12} X - \sigma(X) R_{12}$ where $\sigma$ is the flip; its image is the space of relations~$R$. Writing out the $16 \times 16$ matrix of $\Phi_R$ in the standard basis of $\mathrm{End}(\mathbb{C}^2)^{\otimes 2}$ and computing its orthogonal complement with respect to the trace pairing, $R^\perp$ coincides with the image of $\Phi_{R^{-1}}$, i.e., the space of $R^{-1}$-RTT relations (verified by explicit $16\times 16$ matrix computation; see \texttt{test\_koszul\_dual\_dims.py}).
+The orthogonal complement $R^\perp$ consists of quadratic expressions $Q(T^*, T^*)$ that pair to zero with all elements of $R$. For $\mathfrak{sl}_2$ (where $V = \mathbb{C}^2$ and $P$ is the $4 \times 4$ permutation matrix), $R^\perp$ is computed by direct matrix calculation. The RTT relation at fixed spectral parameters defines a linear map $\Phi_R\colon \mathrm{End}(V)^{\otimes 2} \to \mathrm{End}(V)^{\otimes 2}$ by $X \mapsto R_{12} X - \sigma(X) R_{12}$ where $\sigma$ is the flip; its image is the space of relations~$R$. Writing out the $16 \times 16$ matrix of $\Phi_R$ in the standard basis of $\mathrm{End}(\mathbb{C}^2)^{\otimes 2}$ and computing its orthogonal complement with respect to the trace pairing, $R^\perp$ coincides with the image of $\Phi_{R^{-1}}$, i.e., the space of $R^{-1}$-RTT relations.
 
 \emph{Step~2a: Finite windows.}
 The Yangian has infinitely many generators
@@ -1085,14 +1084,11 @@ R_\hbar(u)^{-1}
 \left(1-\frac{\hbar^2}{u^2}\right)^{-1}R_{-\hbar}(u),
 \]
 so scalar Laurent gauge identifies the inverse-kernel and sign-reversed
-RTT relation spaces.  The explicit $9\times9$ matrix realization,
-YBE/RTT checks, quantum determinant calculation, and
-$\operatorname{Sym}^2\mathbb C^3\oplus\wedge^2\mathbb C^3$ spectral
-decomposition are implemented in
-\texttt{compute/lib/gl3\_yangian\_verification\_engine.py},
-\texttt{compute/lib/yangian\_sl3\_rtt.py}, and
-\texttt{compute/lib/theorem\_sl3\_yangian\_r\_matrix\_engine.py}.
-Those computations give the advertised finite-window
+RTT relation spaces.  The $9\times9$ matrix realization has the
+spectral decomposition
+$\mathbb C^3\otimes\mathbb C^3=operatorname{Sym}^2\mathbb C^3
+\oplus\wedge^2\mathbb C^3$ of dimensions $6$ and $3$.
+Together with the displayed inverse-kernel identity, this gives the finite-window
 $\mathfrak{sl}_3$ RTT dual surface; the passage to the abstract
 Drinfeld presentation uses
 Proposition~\ref{prop:drinfeld-rtt-presentation-comparison}.
@@ -1683,10 +1679,7 @@ fundamental spectral packet~$V_{\omega_i}(a)$:
  satisfies
  the classical Yang--Baxter equation in spectral-parameter form
  \textup{(}equivalently, the infinitesimal braid relations for
- $\Omega$\textup{)}, for all simple~$\fg$
- \textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}, verified
- for $A_1$--$A_3$, $B_2$--$B_3$, $C_1$--$C_3$,
- $D_3$--$D_4$\textup{)}.
+ $\Omega$\textup{)}, for all simple~$\fg$.
 
 \item \emph{Yangian quantization and RTT.}
  The Yangian deformation
@@ -2653,7 +2646,7 @@ The following chain of results holds:
  (induction on~$m$).
 \item \emph{One-factor closure.}
  Under the hypotheses of~\textup{(vi)}, the top-packet induction step
- closes. The only remaining Yangian task on the universal-packet side
+ closes. The only remaining Yangian construction on the universal-packet side
  is to transport the one-factor line operator to $L_x(u)=R_{0x}(u-x)$.
 \end{enumerate}
 \end{proposition}
@@ -3277,7 +3270,7 @@ of the permutation operator.
 \end{proof}
 
 
-\begin{computation}[Three-layer reduction verification]
+\begin{computation}[Three-layer reduction on the standard module]
 \label{comp:mc4-three-layer-verification}
 \index{MC4!three-layer verification}
 The three-layer reduction chain
@@ -3286,39 +3279,39 @@ $\to$
 Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels}
 $\to$
 Corollary~\ref{cor:dg-shifted-rtt-typea-single-line})
-has been verified computationally in both
-the residue and additive normalizations, for
-$M = 2, 3, 4$:
+is evaluated in both the residue and additive normalizations for
+$V=\mathbb C^M$, $M = 2, 3, 4$, in the tensor basis
+$e_i\otimes e_j$:
 \begin{itemize}
 \item \textbf{Layer~1 (residue):}
- $\Xi_a = \operatorname*{Res}_{u=a}L_a(u) = -\hbar P$ confirmed
- both analytically and by numerical residue extraction at multiple
- evaluation points.
+ $\Xi_a = \operatorname*{Res}_{u=a}L_a(u) = -\hbar P$ follows by
+ taking the coefficient of $(u-a)^{-1}$.
 \item \textbf{Layer~2 (channels):}
- Eigenvalues $\lambda_{\mathrm{sym}} = -\hbar$,
- $\lambda_{\mathrm{alt}} = +\hbar$ confirmed on the projectors
+ The eigenvalues are $\lambda_{\mathrm{sym}} = -\hbar$ and
+ $\lambda_{\mathrm{alt}} = +\hbar$ on the projectors
  $\Pi_{\mathrm{Sym}^2}$ and $\Pi_{\Lambda^2}$.
 \item \textbf{Layer~3 (single line):}
- $\Xi_a(e_1\otimes e_2) = -\hbar(e_2\otimes e_1)$ confirmed,
+ $\Xi_a(e_1\otimes e_2) = -\hbar(e_2\otimes e_1)$,
  together with the diagonal action
  $\Xi_a(e_1\otimes e_1) = -\hbar(e_1\otimes e_1)$.
 \item \textbf{Yang--Baxter equation:}
  $R_{12}(u{-}v)\,R_{13}(u{-}a)\,R_{23}(v{-}a)
  = R_{23}(v{-}a)\,R_{13}(u{-}a)\,R_{12}(u{-}v)$
- verified on $V^{\otimes 3}$ at generic spectral parameters
- (max violation $< 10^{-15}$).
+ holds as a rational identity in $(u,v,a)$ on each of the
+ $M^3$ tensor-basis vectors; clearing the three linear denominators
+ reduces both sides to the same permutation-algebra element.
 \item \textbf{RTT truncation defect:}
  For the evaluation representation truncated at mode level~$N$,
  the mode-level defect $D_{N,s}(i,j,k,l)$ is identically zero for
  interior modes ($r < N$ and $s < N$) and nonzero at boundary
  modes ($r = N$ or $s = N$), with the predicted algebraic structure
  $D \propto a^{N+s-1}(\delta_{il}E_{jk} - \delta_{jk}E_{li})$
- confirmed for $M = 2, 3$ and $N = 2, 3$.
+ for $M = 2, 3$ and $N = 2, 3$.
 \end{itemize}
 The three-layer chain is the proved part of the standard type-A
 Yangian completion theorem (MC4 structural framework proved by Theorem~\ref{thm:completed-bar-cobar-strong}; the finite RTT stages lie in $\CompCl(\Fft)$). The evaluation-core comparison
 $\mathsf{K}^{\mathrm{line}}_{a,b}(N) = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$
-is verified for $N = 2,3,4$ by the finite-window residue computation.
+holds for $N = 2,3,4$ by the finite-window residue calculation above.
 The remaining Yangian
 open problem is the DK-5 categorical packet, which is downstream of
 the remaining post-core completion problem in
@@ -4308,7 +4301,7 @@ orthogonal coideal $C_{-\mu,\lambda}^{(N)}$ of
 Definition~\textup{\ref{def:shifted-rtt-boundary-quotient}},
 and the corresponding cobar algebra coincides with the quantized
 Coulomb branch of the rank-one $A_1$ theory. The remaining rank-one
-task is not homological algebra but the explicit identification of the
+comparison is the explicit identification of the
 boundary parameter $c$ with the Coulomb-branch mass/FI data.
 \end{conjecture}
 

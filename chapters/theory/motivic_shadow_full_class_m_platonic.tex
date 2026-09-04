@@ -218,8 +218,7 @@ For the principal $\cW_N$ algebra, the shadow tower decomposes
 formally into generator lines. Each generator $W_j$ of conformal
 weight $j$ ($2 \leq j \leq N$) contributes a line in the
 $(N-1)$-dimensional deformation space, with curvature
-$\kappa_j(\cW_N) = c/j$ in the compute normalisation of
-\texttt{higher\_w\_shadows.py}. Rationality on a line follows only
+$\kappa_j(\cW_N) = c/j$ in the normalization used here. Rationality on a line follows only
 after that line has been placed on the depth-$1$ residue lane of
 Theorem~\ref{thm:shadow-tower-depth-1-rationality}.
 
@@ -242,8 +241,7 @@ content appears.
 
 \begin{proof}
 Each generator line $W_j$ inherits a one-parameter sub-tower
-governed by the shadow data $(\kappa_j, \alpha_j, S_4^{W_j})$ from
-\texttt{higher\_w\_shadows.py}. These data are $\mathbb{Q}(c)$-rational
+governed by the shadow data $(\kappa_j, \alpha_j, S_4^{W_j})$. These data are $\mathbb{Q}(c)$-rational
 by the Fateev--Lukyanov $\cW_N$ OPE: structure constants are rational
 in $c$ (Fateev--Lukyanov 1988, Appendix A). The shadow recurrence on
 a single line reduces to the Riccati master equation at the line's
@@ -284,9 +282,7 @@ irreducible factor entering.
 \end{proposition}
 
 \begin{proof}
-Reading from \texttt{compute/lib/w3\_shadow\_tower\_arity12\_engine.py}
-(function \texttt{w\_line\_general\_term}), the even-$r$ W-line
-admits the explicit formula above. Direct substitution gives
+Expanding the binomial coefficient in the displayed closed form gives
 $S_4 = 2560/[c(5c+22)^3]$, $S_6 = -2 S_4^2/c$, $S_8 = 9 S_4^3/c^2$,
 $S_{10} = -54 S_4^4/c^3$, $S_{12} = 378 S_4^5/c^4$ (ring relations
 verified in \texttt{w\_line\_ring\_coefficients}). Each entry is
@@ -340,8 +336,8 @@ $c_{\mathrm{BP}}(k)$.
 \begin{proof}
 The T-line shadow of BP reduces by restriction to the Virasoro
 shadow at the BP central charge: $S_r^{\mathrm{BP}, T}(k) =
-S_r^{\Vir}(c_{\mathrm{BP}}(k))$ (\texttt{bp\_shadow\_tower.py}
-function \texttt{bp\_tline\_shadow\_tower}). Apply
+S_r^{\Vir}(c_{\mathrm{BP}}(k))$ by restriction to the Virasoro
+subalgebra. Apply
 Theorem~\ref{thm:virasoro-motivic-rationality-all-r}: at any
 $\mathbb{Q}$-rational specialisation $c = c_{\mathrm{BP}}(k)$ of
 $c \in \mathbb{Q}(c)$, the output $S_r^{\Vir}(c_{\mathrm{BP}}(k))$
@@ -386,12 +382,8 @@ $c_{\mathrm{BP}}(k) = (-6k^2 - 11k - 3)/(k + 3)$ and
 $c_{\mathrm{BP}}(-k-6) = (6k^2 + 61k + 153)/(k + 3)$,
 their sum is $(50(k+3))/(k+3) = 50$ after cancellation of the common
 denominator. This is a polynomial identity in $k$ (in fact constant),
-verified in the compute engine
-\texttt{compute/tests/test\_motivic\_shadow\_full\_class\_m.py} at
-four explicit levels $k \in \{1, 2, 4, 10\}$ and via the
-\texttt{sympy.simplify} symbolic identity. Volume~II's
-\texttt{bp\_chain\_level\_strict\_platonic.tex} uses this standard
-convention consistently. Rational substitution preserves
+and therefore holds wherever the two rational functions are defined.
+Rational substitution preserves
 $\mathbb{Q}(k)$-membership, so the motivic-rationality conclusion of
 Theorem~\ref{thm:bp-motivic-rationality-arakawa} holds for either
 conformal-vector scalar.
@@ -443,10 +435,10 @@ Stasheff identity, not through any MZV-weighted period.
 \begin{proof}
 Under the stated hypothesis, the $\cW_{\infty}$ shadow coefficient on
 the T-line is the coefficientwise large-$N$ limit of the $\cW_N$
-T-line coefficient (\texttt{w\_infinity\_shadow\_limit.py}); the
+T-line coefficient; the
 conditional Theorem~\ref{thm:w-n-motivic-rationality-all-r} then
 places the limit in $\mathbb{Q}(c)$. The Miura cross-universality of
-\texttt{thm:miura-cross-universality} adds the rational prefactor
+Theorem~\ref{thm:miura-cross-universality} adds the rational prefactor
 $(\Psi - 1)/\Psi$ at every spin and cross-arity; this is a
 $\mathbb{Q}(\Psi)$-rational function of $\Psi$ with no
 $\MZV^{\mot}$-content. The combined $\mathbb{Q}(c) \cdot
@@ -542,8 +534,8 @@ $\pi$-dependent twists), then the shadow tower can carry
 $\MZV^{\mot}$-content. No such algebra appears in the standard
 landscape.
 \item[(b)] \emph{Non-compact algebras.} At $c \to \infty$ in
-Virasoro, the regularised shadow $S_r(\Vir_c)/c^{r/2}$ stabilises
-(see \texttt{virasoro\_c\_to\_infty.py}); the limit is
+Virasoro, the regularised shadow $S_r(\Vir_c)/c^{r/2}$ stabilises;
+the limit is
 $\mathbb{Q}$-rational, so rationality is preserved.
 \end{enumerate}
 The genuine frontier is: do there exist chirally Koszul algebras
