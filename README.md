@@ -236,7 +236,13 @@ chiral-bar-cobar/
 
 ## Build
 
-All compiled output goes to `out/`.
+All research output goes to `out/`.
+
+The exception is `make editorial`, which builds
+`.build_logs/internal-editorial/editorial.pdf` as an internal governance
+artifact. The tracked `standalone/editorial.pdf` has the same internal
+classification. Both are excluded from research-book, standalone-paper,
+archive, iCloud, root-publication, mathematics-publication, and release targets.
 
 ```bash
 make fast                    # quick converging build → out/main.pdf
