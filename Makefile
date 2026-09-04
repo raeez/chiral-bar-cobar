@@ -34,7 +34,8 @@
 #      # ... edit .tex ...
 #      make fast                         # warm — converges in fewer passes
 #
-#  All compiled output goes to out/.
+#  All research output goes to out/.  Internal governance output stays under
+#  .build_logs/ and is never released.
 #
 # ============================================================================
 
@@ -73,7 +74,7 @@ SOURCES   := $(wildcard *.tex) \
              $(wildcard appendices/*.tex) \
              $(wildcard bibliography/*.tex)
 
-# Output — everything goes to out/
+# Research output
 OUT_DIR   := out
 PDF       := $(OUT_DIR)/main.pdf
 ICLOUD_MAIN_PREREQ := $(if $(wildcard $(PDF)),,$(PDF))
@@ -86,6 +87,12 @@ PYTHON_BIN      ?= $(shell if [ -x compute/.venv/bin/python ]; then echo compute
 
 # Working notes
 WN_TEX    := working_notes.tex
+
+# Internal governance artifact.  This root is not a research book or paper,
+# and no book, paper, archive, publication, or release target depends on it.
+EDITORIAL_ROOT      := standalone/editorial.tex
+EDITORIAL_BUILD_DIR := $(LOG_DIR)/internal-editorial
+EDITORIAL_PDF       := $(EDITORIAL_BUILD_DIR)/editorial.pdf
 
 # Stamp file: tracks last successful build.
 STAMP     := .build_stamp
@@ -634,28 +641,32 @@ standalone:
 		exit 1; \
 	fi
 
-## editorial: Build the editorial companion → out/editorial.pdf
+## editorial: Build the internal editorial concordance → .build_logs/internal-editorial/
+##   Internal governance only; excluded from all research and release aggregates.
 editorial:
-	@echo "  ── Building editorial companion ──"
-	@mkdir -p $(LOG_DIR) $(OUT_DIR)
-	@for i in 1 2 3; do \
-		$(TEX) $(TEXFLAGS) -output-directory=standalone standalone/editorial.tex >$(LOG_DIR)/editorial.log 2>&1 || true; \
-	done
-	@if [ -f standalone/editorial.pdf ]; then \
-		mv standalone/editorial.pdf $(OUT_DIR)/editorial.pdf; \
-		rm -f standalone/editorial.aux standalone/editorial.log standalone/editorial.out 2>/dev/null; \
-		echo "  ✓  $(OUT_DIR)/editorial.pdf"; \
-	else \
-		echo "  ✗  Editorial build failed. See $(LOG_DIR)/editorial.log"; \
+	@echo "  ── Building internal editorial concordance ──"
+	@mkdir -p $(LOG_DIR) $(EDITORIAL_BUILD_DIR)
+	@build_failed=0; \
+	for i in 1 2 3; do \
+		if ! $(TEX) $(TEXFLAGS) -halt-on-error \
+			-output-directory=$(EDITORIAL_BUILD_DIR) $(EDITORIAL_ROOT) \
+			>$(LOG_DIR)/editorial.log 2>&1; then \
+			build_failed=1; \
+			break; \
+		fi; \
+	done; \
+	if [ $$build_failed -ne 0 ] || [ ! -f $(EDITORIAL_BUILD_DIR)/editorial.pdf ]; then \
+		echo "  ✗  Internal editorial build failed. See $(LOG_DIR)/editorial.log"; \
 		exit 1; \
-	fi
+	fi; \
+	echo "  ✓  $(EDITORIAL_PDF) (internal; excluded from research releases)"
 
 ## help: Show available targets.
 help:
 	@echo ""
 	@echo "  Chiral Bar-Cobar Duality — Build System"
 	@echo "  ────────────────────────────────────────"
-	@echo "  All compiled output goes to out/"
+	@echo "  Research output goes to out/; internal governance output is never released"
 	@echo ""
 	@echo "  make               Full build: manuscript + working notes → out/"
 	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes) → out/"
@@ -674,7 +685,7 @@ help:
 	@echo "  make count          Manuscript statistics"
 	@echo "  make metadata       Regenerate machine-readable metadata"
 	@echo "  make census         Print claim census"
-	@echo "  make editorial      Build editorial companion → out/"
+	@echo "  make editorial      Build internal governance PDF only (never released)"
 	@echo "  make verify         Run anti-pattern verification"
 	@echo "  make test           Fast tests (excludes slow — for rapid iteration)"
 	@echo "  make test-full      Full test suite (including slow — before commits)"
