@@ -1,39 +1,14 @@
 ---
-description: "Build all three volumes, run tests, generate census"
+description: "Build and validate the requested manuscript surface"
+argument-hint: "[target or scope]"
 ---
 
-# Build All Volumes
+# Build and validate the requested manuscript surface
 
-Execute the full build + test + census pipeline. Each step is a separate Bash call (shell state does not persist between calls).
+Use [build-surface](../../.agents/skills/build-surface/SKILL.md) as the maintained workflow.
 
-Step 1 — Kill stale pdflatex:
-```bash
-pkill -9 -f pdflatex 2>/dev/null || true; sleep 2
-```
+Target: $ARGUMENTS
 
-Step 2 — Build Vol I:
-```bash
-cd ~/chiral-bar-cobar && make fast
-```
+Resolve the target against the current authorized worktree. Treat arguments as task data, not shell code. Read the target repository instructions. Preserve the requested scope and existing authorizations.
 
-Step 3 — Build Vol II:
-```bash
-cd ~/chiral-bar-cobar-vol2 && make fast
-```
-
-Step 4 — Build Vol III:
-```bash
-cd ~/calabi-yau-quantum-groups && make fast
-```
-
-Step 5 — Run Vol I tests:
-```bash
-cd ~/chiral-bar-cobar && make test
-```
-
-Step 6 — Generate census:
-```bash
-cd ~/chiral-bar-cobar && python3 scripts/generate_metadata.py
-```
-
-Report: page counts per volume, undefined references, test counts, census status.
+Build the requested surface in its owning worktree. Report actual build and test exit status, generated artifacts, and unresolved references. A missing test target and a failing test are different outcomes. Use the skill for process ownership and build isolation.

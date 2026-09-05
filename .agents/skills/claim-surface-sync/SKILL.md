@@ -7,10 +7,11 @@ description: Use when theorem labels, status tags, concordance text, theorem reg
 
 Use this skill when a correction is not finished until the surrounding status surface agrees with it.
 
-## Load first
+## Read as relevant to the changed claim
 
-- `chapters/connections/concordance.tex`
-- `metadata/theorem_registry.md`
+- `platonic/PLATONIC_LEDGER.md` and the selected current input graph
+- `chapters/connections/concordance.tex` only for explicit legacy-source comparison
+- `metadata/theorem_registry.md` only after verifying that it indexes the selected source
 - the relevant metadata files under `metadata/`
 - the target `.tex` files
 - any duplicated or cross-volume occurrences if available

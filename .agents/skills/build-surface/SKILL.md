@@ -1,43 +1,38 @@
 ---
 name: build-surface
-description: Use when LaTeX builds, build logs, warning classification, metadata regeneration, or targeted pytest runs determine whether a change is actually verified. This is the Codex-native equivalent of `/build` from `CLAUDE.md`.
+description: Run isolated local LaTeX builds, targeted tests, and log checks for affected mathematical changes.
 ---
 
-# Build Surface
+# Build and test evidence
 
-Build output is evidence only after the surface is stable enough to trust.
-
-## Standard prelude
+Read `Makefile` and `platonic/PLATONIC_LEDGER.md` to select the requested source.
+The current integrated manuscript is `platonic/main.tex`, built by `make platonic` into `out/platonic.pdf`.
+Run that target only in the assigned isolated worktree. It writes auxiliaries inside that worktree's `platonic/` directory.
+Do not run concurrent builds in the same worktree. `MKD_BUILD_NS` does not isolate the platonic target.
 
 ```bash
-pkill -9 -f pdflatex 2>/dev/null || true
-sleep 2
+make platonic
 ```
 
-Then choose the narrowest command that can falsify the change:
+Inspect source freshness, decisive logs, output text, and changed rendered pages. Existing PDFs and a zero exit do not prove fresh output.
+`make fast` and `scripts/build.sh` compile the legacy root `main.tex`. They do not verify the current integrated manuscript.
+Use them only for explicit legacy-source work, with a unique `MKD_BUILD_NS` for that task.
+Do not substitute a legacy build when a current source is missing or fails.
 
-- `make fast`
-- `make`
-- targeted `python3 -m pytest ...`
-- `python3 scripts/generate_metadata.py`
-- direct log inspection
+For compute changes, use the affected `python3 -m pytest` slice with the repository's available dependencies.
+Metadata regeneration applies only when the change affects generated claim indexes.
 
-## Classification rules
+Local builds after coherent changes need no repeated approval. Broader checks follow the changed dependencies and observed failures.
+Release, iCloud, and publication targets have external effects. Run them only with the relevant existing authorization.
+Never terminate processes by executable name. Stop only a process handle or PID launched and still owned by this task.
+Before signaling a PID, confirm its identity and ownership. Prefer graceful termination.
 
-- Fatal LaTeX error: actionable immediately.
-- Persistent undefined reference after stable rerun: likely real.
-- Pass-1 warning on unstable aux surface: not yet a finding.
-- Interrupted or concurrent build: restabilize before trusting counts.
-- Test mismatch: treat as a mathematics bug or convention bug until proved otherwise.
+Classify failures before repair:
 
-## Workflow
+- Fatal LaTeX errors require source or dependency diagnosis.
+- Undefined references matter after stable reruns. Check external references against their intended source.
+- First-pass warnings are provisional until auxiliary files stabilize.
+- An interrupted build needs a fresh task namespace or repair of its own artifacts before comparison.
+- Oracle disagreement needs independent mathematical and convention checks. Do not copy engine outputs into tests.
 
-1. Stabilize the build surface.
-2. Run the narrowest falsifying build/test/metadata command.
-3. Classify failures into:
-   manuscript error,
-   compute error,
-   convention mismatch,
-   stale artifact noise,
-   expected cross-volume warning.
-4. Fix or quarantine only after classification.
+Report the command, source revision, result, and remaining warnings. A clean build verifies rendering and references, not mathematical truth.

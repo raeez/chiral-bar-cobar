@@ -1,598 +1,81 @@
-# CLAUDE.md
-
-## Golden rule: no project management at any scale whatsoever in the manuscript
-
-Reader-facing book and paper sources contain mathematics or physics only.
-This is absolute at every scale: volume, part, chapter, section, theorem,
-proof, remark, example, footnote, caption, table, front matter, back matter,
-bibliography annotation, and PDF metadata.
-Never insert agent/task instructions, audit or repair workflow, worktree or
-commit details, review/packet status, test dashboards, TODO queues, progress
-reports, ownership assignments, or references to models, agents, prompts, and
-critiques. Keep such material outside the manuscript. Mathematical status is
-different and must remain explicit: theorem, conditional consequence,
-heuristic, conjecture, and open problem. State missing data as mathematics,
-without narrating who found the gap. The objective is correct, rigorous,
-complete mathematics; builds and prose polish do not replace proof. Pass this
-rule to every subagent and check its returned prose.
-
-> **Inherits `~/ecosystem/INVARIANTS.md`.** Canonical ecosystem rules:
-> destructive-git forbidden list, multi-agent worktree concurrency,
-> standalone-documents discipline, Russian-school voice,
-> every-file-into-the-repo, no-LLM-attribution on commits,
-> deep-semantic-merges, intelligence propagation. Read it first.
-> Repo-local rules follow.
-
----
-
-## What this repository is for
-
-This repository is an instrument for advancing human mathematical
-knowledge — specifically, **$E_1$–$E_1$ operadic Koszul duality in the
-homotopical modular chiral realm on algebraic curves**, and what the
-averaging map
-$\mathrm{av}: \mathfrak{g}^{E_1} \to \mathfrak{g}^{\mathrm{mod}}$
-implies about the five invariants (Theorems A, B, C, D, H) that
-survive the ordered-to-symmetric chiral (co)homology projection.
-
-Every action — read, edit, agent dispatch, inscription, retraction —
-advances that understanding, one true theorem at a time. When the
-choice is between mathematics and accounting, **do the mathematics**;
-accounting is automated. Mathematics requires a live mind.
-
----
-
-## The platonic ideal architecture (Vol I, the Open quadrant)
-
-Vol I is the **Open quadrant** of the four-quadrant programme
-$(\text{Open} \cup \text{CY}) \times (\text{Cat} \cup \text{Chain})$ —
-the complete five-level **Beilinson tower** on a tangential log curve
-$(X, D, \tau)$:
-
-```
-factorisation dg-category C^op on (X, D, τ)        [level 0: primitive]
-        ↓  choose vacuum b ∈ C^op
-chart algebra  A_b = End_C(b)                       [level 1: chart]
-        ↓  Theorem A — reconstruction Ω_X B_X(A_b) ≃ A_b;
-           Verdier branch K_X(A_b) = D_Ran B_X(A_b)
-bar / twisting coalgebra  B(A_b) = T^c(s^{-1} Ā_b)  [level 2: twisting]
-        ↓  Theorem H — family retract H_H(A_b;S) computes support in S
-derived chiral centre  Z^der_ch(A_b) ≃ ChirHoch^•   [level 3: BULK]
-        ↓
-line / brane operators                              [level 4: operator]
-        ↓  modular trace + clutching on open category
-modular shadow (κ-tuple, partition function, form)  [level 5: scalar]
-```
-
-Each forgetful step has a **reconstruction theorem** with named
-hypothesis package: Morita (1↔0), Theorem A (1↔2), Theorem H / B
-(1→3), Drinfeld-double (4→3), modular reconstruction (5→4).
-
-**KSDual** is the $\mathbb{Z}/2$-fixed sublocus computed in the
-finite-type curved Verdier--Koszul ambient and intersected with the
-uncurved Koszul locus. On admissible KSDual, Theorem A is an
-equivalence on the chart-side bar--cobar lane; Theorem H remains
-conditional on its \(H_H\) package; the archetype label is rigid on the
-actual fixed locus; scalar anti-diagonal orbit pairs form a separate
-trace surface; and the
-Universal Trace Identity is the equivariant signature.
-
-**Vertical holographic equivalences** to Vols II / III at every level:
-
-| Level | Vol I (Open) | Vol II / III companion |
-|---|---|---|
-| 0 | factorisation dg-cat on $(X, D, \tau)$ | Vol III: CY-cat via 6d hCS, formal locus + global descent (anomaly **quartic** $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$) |
-| 1 | chart $A_b$ | Vol III: $\Phi_d^{\mathrm{FA}}$ at chosen target / vacuum |
-| 2 | bar $B(A_b)$ | Vol III: $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}$ specialisation |
-| 3 | derived chiral centre | Vol II: $\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk (Vol II climax) |
-| 4 | line / brane operators | Vol III: Drinfeld double $G(X) = D(Y^+(X))$ + descent |
-| 5 | modular trace + clutching | Vol III: $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$; Vol II: gravity-line completion |
-
-**Master Reconstruction Theorem** (Vol I climax): the Open Beilinson
-tower has five levels with reconstruction theorems and hypothesis
-packages named, KSDual as $\mathbb{Z}/2$-fixed sublocus, vertical
-equivalences to Vols II / III at every level. Theorems A–H are
-corollaries. Inscribed in
-`chapters/connections/master_reconstruction.tex` and positioned at
-the structural climax of Part VI (after the seven-face dictionary,
-the frontier chapters, and the cross-volume vertical-equivalence
-chapters at levels 0, 2, 4; immediately before `outlook.tex` and
-`master_concordance.tex`).
-
-**Manuscript layout** (six-part platonic ideal in `main.tex`):
-
-| # | Part | Beilinson level | Theorem |
-|---|------|-----------------|---------|
-| I  | Foundations and the Open Beilinson Tower | 0–1 | Morita reconstruction |
-| II | The Bar–Cobar Engine                     | 1↔2 | **Theorem A** |
-| III| The Bulk                                 | 3   | **Theorems H, B** |
-| IV | The Five-Archetype Landscape             | —   | **Theorem C** $5{\times}5$ matrix |
-| V  | The Modular Tower                        | 4–5 | **Theorem D** |
-| VI | Seven Faces and the Frontier             | —   | **Master Reconstruction** (climax) |
-
----
-
-## The mathematics
-
-**One object**: the ordered bar complex
-$B^{\mathrm{ord}}(A_b) = T^c(s^{-1}\bar A_b)$ on $\overline{M}_{g,n}$
-over the relative factorisation stack.
-
-**One relation**: the Arnold relation
-$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
-+ \eta_{ki} \wedge \eta_{ij} = 0$
-on $\mathrm{Conf}_n(X)$ with $\eta_{ij} = d\log(z_i - z_j)$.
-
-**One equation**: the Maurer–Cartan identity
-$D \cdot \Theta_{A_b} + \tfrac{1}{2}[\Theta_{A_b}, \Theta_{A_b}] = 0$
-in the ordered convolution dGLA.
-
-**One dichotomy**: at chart level, every standard chiral algebra
-collapses under averaging into one of five archetypes
-**G / L / C / M / B** with shadow-depth
-$r_{\max} \in \{2, 3, 4, \infty, 5\}$, and admits a row in the
-**5 × 5 $\kappa$-stratification matrix** with measurements
-$\{\kappa_{\mathrm{cat}},\ \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},\
-\kappa^{\mathrm{Heis}}_{\mathrm{ch}},\ \kappa_{\mathrm{BKM}},\
-\kappa_{\mathrm{fiber}}\}$. K3 × E anchors row B at $(0, 0, 3, 5, 24)$.
-
-**Five theorems**, restratified by Beilinson-tower level:
-
-| | Statement | Level | Hypothesis package |
-|---|---|---|---|
-| **A** | enhanced associative bar--cobar equivalence in the pro-nilpotent Francis--Gaitsgory Ran ambient, hence universal reconstruction $\Omega_XB_X(A_b)\xrightarrow{\sim}A_b$; factorization restriction and chain realization on their named packages; Verdier algebra $K_X(A_b)=\mathbb D_{\operatorname{Ran}}B_X(A_b)$ on the dualizable Ran surface | 1 ↔ 2 | augmented Ran algebra / conilpotent Ran coalgebra; $H_{\mathrm{fact}}$ for factorization closure; $H_{\mathrm{conv}}$ for completed chain realization; $H_{\mathrm{VD}}$ for Verdier transport and biduality |
-| **B** | quadratic Koszul recognition for a chosen presentation $A_b=T_X(V)/(R)$: the canonical comparison $q_{A_b}\colon A_b^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\to B_X(A_b)$ is a quasi-isomorphism, equivalently $\Omega_X(A_b^{\mathrm i})\to A_b$ is a quasi-isomorphism | 1 ↔ 2 | connected positive-weight quadratic presentation; canonical twisting morphism; finite-window comparison; exhaustive complete filtrations, collectively $H_{\mathrm{CL}}(A_b,A_b^{\mathrm i},\tau_{\mathrm i})$; the detecting $E_2$-collapse formulation additionally carries $H_{\mathrm{PBW}}^{\mathrm{det}}$ |
-| **C** | C0 identifies the degree-zero strict-flat fibre with the ordinary centre local system $\mathcal Z(A_b)$; C1 splits $\mathbf C_g(A_b)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A_b))$ by the represented Verdier involution; a supplied brace comparison $\iota_Z^{\mathrm{der}}$ connects the Theorem H derived centre to this object after $H^0$ and the flat fibre-centre comparison; the scalar ceiling $K^\kappa(A_b)=\kappa(A_b)+\kappa^!_{\mathrm{alg}}(A_b)$ is the normalized trace shadow of C1 together with Theorem D; C2 is the separate shifted-symplectic upgrade | 3 and 5 (strict-flat centre-local-system cohomology, then modular trace per stratum) | C0 strict flat fibre-centre comparison; C1 represented Verdier involution + perfectness + nondegenerate anti-invariant pairing; $\iota_Z^{\mathrm{der}}$ and its $H^0$ comparison when Theorems C and H are related; C2 shifted-symplectic/BV package when explicitly supplied; five $\kappa$-measurements per family; algebra-level Verdier sum distinct from $\mathcal N(A_b)$ |
-| **D** | native class $\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\operatorname{Def}_g)$ for $g\ge2$; normalized pointed genus-one trace $\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}=+\kappa\lambda_1$; virtual object $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ and signed Hodge character $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$; graph scalar $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$ | 4--5 (deformation class, $K$-realization, Hodge character, and graph trace on their stable bases) | $H_D^1$ for the pointed loop trace; $H_D^K$ for the perfect virtual object; $H_D^{\mathrm{tr}}$ for deformation-to-$K$ comparison; $H_D^{\mathrm{graph}}$ for the stable-graph functional |
-| **H** | for each family datum $H_H(A_b;S)$, a strong deformation retract identifies $C^\bullet_{\mathrm{ch}}(A_b,A_b)=R\!\operatorname{Hom}_{A_b^e}(A_b,A_b)$ with a complete model supported in $S$, hence $\operatorname{Supp}\mathrm{ChirHoch}^\bullet(A_b)\subseteq S$ | 3 (derived chiral centre) | complete chart model; family support model; strong deformation retract; filtration convergence; ordered-to-symmetric comparison; a bar presentation additionally carries $\operatorname{Conv}(B_X(A_b),A_b)\xrightarrow{\sim}C^\bullet_{\mathrm{ch}}(A_b,A_b)$; BDSK bounded calculations enter through a named bounded-to-chart quasi-isomorphism |
-
-**Family chain-rescaling problems** (the comparison surface joining
-Theorems A, C, and D).  Given chain maps
-$(\iota_A,p_A)$ and an operator $h_A$ satisfying
-\[
- d_Ah_A+h_Ad_A
- =\nu_A(\mathrm{id}_{C_A}-\iota_Ap_A),
-\]
-the rescaled operator $\nu_A^{-1}h_A$ is a contracting homotopy for
-$\nu_A\in k^\times$.  This elementary identity becomes a theorem
-about a family after $(\iota_A,p_A,h_A,\nu_A)$ have been constructed
-on the same factorization bar--cobar complex.  The five candidate
-scalars
-\[
-\{1,\;2(k+h^\vee),\;1,\;c(5c+22)/10,\;8\}
-\]
-therefore define five construction problems.  A further chain map to
-the scalar trace complex is the datum identifying $\nu_A$ with the
-algebra-level Verdier sum
-$K^\kappa(A)=\kappa(A)+\kappa(A^!)$.
-
-The Virasoro scalar $c(5c+22)/10$ vanishes at $c=0$ and
-$c=-22/5$.  The weighted-Riccati generating series carries the
-separate branch radius
-$|\omega|^2=c^2(5c+22)/[4(45c+218)]$ and branch collision
-$c=-218/45$, where the Zamolodchikov norm equals $436/405$.
-$h_B$ Mukai-K3 Heisenberg via Bruinier–Heegner Chern-class reciprocity.
-
-Three volumes: Vol I (this repo, ~2,700pp), Vol II
-(`~/chiral-bar-cobar-vol2`, ~1,749pp), Vol III
-(`~/calabi-yau-quantum-groups`, ~693pp).
-
----
-
-## Beilinson's dictum
-
-> What limits forward progress is not the lack of genius but the
-> inability to dismiss false ideas.
-
-Every claim is false until verified from primary source. Smaller true
-beats larger false. Every numerical claim has **3+ independent
-verification paths** (direct computation, alternative formula,
-limiting case, symmetry / duality, cross-family, primary literature,
-dimensional analysis, numerical evaluation).
-
-**Epistemic hierarchy** (higher wins): direct computation in `compute/`
-> `.tex` source ±100 lines > build / tests > primary literature >
-`chapters/connections/master_concordance.tex` > this file > memory.
-
-Before every assertion: *"How do I know this — read, computed, or
-assumed?"* If assumed, stop and verify.
-
----
-
-## The master critique discipline
-
-The deepest false pattern is **shadow ≠ object**. Equivalently:
-forgetful image ≠ source. Every false idea is a forgetful functor
-mistaken for an equivalence; each has a *companion reconstruction
-theorem* with named hypothesis package. Never suppress that hypothesis
-package.
-
-**Type-signature discipline.** Every theorem carries
-(*quadrant, presentation, level, hypothesis package*). Every cross-level
-equality additionally carries a six-field anatomy header
-(*Status / Ambient / Source / Target / Map / Residuals*) — status
-(proved / conditional / heuristic), ambient (raw chain / weight-completed
-/ pro / coderived / contraderived / Banach / Tate), source object, target
-object, named comparison morphism, explicit residual obstructions — and
-invokes a named reconstruction theorem with hypothesis package. Suppress
-no hypothesis.
-
-**Master patterns to detect (MA-1 … MA-15).** When any forbidden form
-appears, halt the inscription and either replace or quarantine:
-
-| # | Forbidden | Required |
-|---|---|---|
-| 1 | shadow = object (meta) | every cross-level equality names a reconstruction theorem |
-| 2 | $A$ as primitive open object | $A_b = \mathrm{End}_\mathcal{C}(b)$ at chosen vacuum on factorisation dg-cat $\mathcal{C}^{\mathrm{op}}$ |
-| 3 | modularity = closed-algebra property | trace + clutching on open category; closed shadow has modular consequences |
-| 4 | $\mathrm{Bar}(A) = $ bulk | bar = twisting coalgebra; $Z^{\mathrm{der}}_{\mathrm{ch}}(A) = $ universal closed sector; physical bulk requires OCA: $\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(A) \xrightarrow{\sim} Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ |
-| 5 | $E_1$-bar direction explains 2d→3d HT | chiral Deligne–Tamarkin / Swiss-cheese; bar = computational model |
-| 6 | five $\kappa$ are one invariant | five $\kappa$-measurements per family; collapse pattern is the classification axis |
-| 7 | one-stage $\Phi_d$ | $\Phi_d^{(\Sigma_{d-1}, C)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ \Phi_d^{\mathrm{FA}}$ |
-| 8 | $Y^+(X) = G(X)$ | Drinfeld double after Hall pairing + completion + integral form + descent |
-| 9 | 6d hCS = 3d CS in disguise | quartic obstruction $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$, not cubic Casimir |
-| 10 | local HT globalises automatically | descent + QME + anomaly + locality required |
-| 11 | scalar shadow = operator algebra | $\Delta_5$ = Borcherds denominator; operator-level Pfaffian missing problem |
-| 12 | finite-spin / quadratic / classical = full theorem | endpoint hypotheses (Prochazka, CKL, PRS, Yamada, KZ analytic SDR) explicit |
-| 13 | ordinary = completed ambient | Class M chain-level requires completed / pro / $J$-adic ambient |
-| 14 | scalar $\chi$ determines chain-level $\mathsf{SC}^{\mathrm{ch,top}}$ object | $\chi$ is non-faithful (lemma: add acyclic $K$ with $\chi(K) = 0$); chain-level at level $5{\to}4$ needs the four-part datum $(\beta, \delta, \varepsilon, \tau)$ |
-| 15 | $T = [Q, G]$ from a conformal vector alone | raw chain topologisation requires T1–T5 obstructions explicit (construct $G$; $[Q,G]=T$; filtration; finite propagation; SDR-independent $E_3$-ops; anomaly cancellation) |
-
-**Forbidden slogans** (a sample; full list with replacements in
-`notes/antipatterns_catalogue.md` under MA-1 … MA-15):
-*$\mathrm{Bar}(A)$ is the bulk*; *$A$ is the primitive open sector*;
-*$\Phi_d: \mathrm{CY}_d\text{-Cat} \to \mathrm{ChirAlg}$ is direct*;
-*$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$*;
-*$\mathrm{CoHA}(\mathbb{C}^3) = W_{1+\infty}$* (truth:
-$= Y^+(\mathfrak{gl}_1)$);
-*$\Delta_5$ constructs the BPS Hilbert space*;
-*$Z_{\mathrm{BPS}}$ is the gravitational path integral*;
-*formal local Hamiltonian BF $\Rightarrow$ compact twisted M-theory background*;
-*$W_\infty[\lambda] \Rightarrow E_\infty$ unconditional*;
-*PVA Jacobi $\Rightarrow$ all-loop quantum HT theory*.
-
-**Named residuals** (the obstructions whose explicit construction earns
-the forbidden slogans; use these names when stating what is missing):
-
-- **OCA** — Open–Closed Algebra comparison
-  $\mathcal{O}^{\mathrm{phys}}_{\mathrm{bulk}}(A)
-   \xrightarrow{\sim} Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
-  Without it, the derived chiral centre is the *universal closed sector*
-  internal to the boundary theory, not the physical bulk of a realised
-  HT QFT.
-- **$(\beta, \delta, \varepsilon, \tau)$** — four-part Hall–Borcherds
-  chain datum at level $5{\to}4$: $E_1$-chiral bialgebra morphism;
-  completed Drinfeld-double extension; current-envelope morphism along
-  the elliptic fibre; derived-centre trace identity
-  $\mathrm{Tr}_{Z^{\mathrm{der}}_{\mathrm{ch}}}(\varepsilon)
-   = (\Phi_{10}^{\mathrm{un}})^{-1} = \Delta_5^{-2}$. Each finite window
-  $W = (\text{height}, \text{charge}, \text{weight})$ requires eight
-  checks: Hall source, root multiplicities, PBW, parity, Hall
-  non-degeneracy, current locality on $E$, $\mathsf{SC}^{\mathrm{ch,top}}$ commutation, Mittag–Leffler control.
-- **T1–T5** — topologisation obstructions for raw chain $T = [Q, G]$:
-  (T1) construct $G$ with $[Q, G] = T$; (T2) filtration / completion
-  compatibility; (T3) finite propagation (or stay completed); (T4)
-  SDR-independent transferred $E_3$-operations; (T5) anomaly cancellation
-  in $H^1 / H^2$ of the convolution complex.
-- **Scalar non-faithfulness lemma** — $\chi$ is not faithful.
-  $\chi(C) = \chi(C')$ does *not* determine quasi-iso, $\mathsf{SC}^{\mathrm{ch,top}}$-morphism, Hall product, Drinfeld pairing, current locality,
-  or derived-centre trace. Proof: add filtered acyclic summand $K$ with
-  $\chi(K) = 0$; or change a filtered differential preserving
-  associated-graded $\chi$.
-
-Every promotion from scalar shadow to chain-level theorem names which
-residual is being discharged.
-
----
-
-## What counts as progress
-
-A new theorem precisely stated, rigorously proved, with primary-literature-verifiable
-proof body. A new $\kappa$-matrix entry by 3+ paths. A falsified claim
-repaired. A healed statement with the natural hypothesis named. A
-first-principles computation replacing a citation black box (e.g. the
-in-place derivation of
-$\langle \Lambda | \Lambda \rangle = c(5c+22)/10$
-from Virasoro). A reconstruction theorem named with its hypothesis
-package. A vertical Open ↔ CY equivalence stated at a previously
-unstated level.
-
-**Not progress**: status-table updates, label renames, scope-qualifier
-propagation, `FRONTIER.md` retraction sweeps, syncing `AGENTS.md` to
-`CLAUDE.md`. Bookkeeping. The hook catches it.
-
----
-
-## Writing standard: Chriss–Ginzburg north star
-
-Manuscript prose channels the Russian elite school (Gelfand, Manin,
-Drinfeld, Arnold, Beilinson, Bernstein, Kapranov, Etingof, Kazhdan,
-Kontsevich, Soibelman, Bezrukavnikov) and the mathematical-physics
-elite (Polyakov, Nekrasov, Witten, Costello, Gaiotto, Moore, Segal).
-**Show don't tell.** Construct mathematics directly; the synthesis of
-disparate technical domains brings out the unified structure.
-
-**Forbidden in manuscript prose** (`chapters/`, `frame/`, `examples/`,
-`theory/`, `connections/`, `bibliography/`, `appendices/`):
-
-- *Bookkeeping vocabulary* — "Wave N", "round M", "batch K", "DNA
-  strand", "AP$n$", "Pattern $n$", "cache entry $n$",
-  "CG-rectify pass $k$", "$\mathsf{HZ}$-$n$ inscription". These
-  belong in `notes/`, `FRONTIER.md`, commit messages, local
-  `memory/` — never in the manuscript.
-- *Meta-narration* — "we now turn to", "having established", "let us
-  now", "this brings us to", "it is worth noting", "notably",
-  "crucially", "remarkably", "furthermore", "moreover", "in the
-  present work". Delete every instance; replace with direct
-  mathematical statement.
-- *Hedging the mathematics earns.* If $X = Y$ is proved, write
-  $X = Y$; never "$X$ is closely related to $Y$". Courage, after
-  Drinfeld and Polyakov: the equals sign is a theorem.
-
-**Required**:
-
-- Every section title names a mathematical object, construction,
-  theorem, or question — never a process or meta-organising device.
-- Every definition is preceded within ten lines by the question it
-  answers; the reader feels "of course" before the definition arrives.
-- Every symbol defined at or before first use, with parenthetical
-  first-principles for standard concepts.
-- Every physical claim labelled: theorem, heuristic, or metaphor.
-  When a physical identification can be a theorem, state it as one;
-  do not hide content as an "analogy".
-- Economy. A paragraph that can be one sentence is one sentence.
-- At every section boundary, three sentences of mathematics: what was
-  just established, the question the next section resolves, the
-  construction that resolves it.
-
-The reader is an equal who sees the force of the argument when stated
-with sufficient precision. The prose **is** mathematics, not
-commentary on mathematics. Existing prose with bookkeeping vocabulary
-is rectified through `/chriss-ginzburg-rectify`; new prose is in the
-CG voice from the first keystroke.
-
----
-
-## The manuscript is self-complete, self-coherent, self-consistent
-
-Current version stands for itself. No references to previous versions,
-intermediate ansätze, retracted values, superseded formulas, or
-drafting-history commentary. If a formula was $X$ and is now $Y$, the
-manuscript says $Y$; not "$Y$ (previously $X$)".
-
-When a retraction is genuinely informative — a proof attempt whose
-failure illuminates why the successful proof is forced — state the
-failed argument and its flaw as mathematics: *"$[m_k, B^{(2)}] = 0$
-fails per-$k$ because cyclic invariance controls adjacent contractions
-but not non-adjacent terms (Proposition X)"*. Not "the author
-initially attempted X". The mathematics is the Gap / Flaw, not the
-drafting record.
-
----
-
-## Chain-level and $(\infty,1)$-categorical: equal status
-
-Both **chain-level** mathematics (explicit complexes, named
-differentials, witnessed homotopies, $L_\infty$, Mittag–Leffler
-towers, ambient-qualified statements) and **$(\infty,1)$-categorical**
-mathematics (derived $\infty$-stable categories, Lurie HA,
-factorisation $\infty$-categories, $\infty$-operads à la
-Costello–Gwilliam, Francis–Gaitsgory) are **equally load-bearing**.
-Neither replaces the other.
-
-State each theorem in the lane its proof works. Chain-level: name the
-chain homotopy / Mittag–Leffler tower / explicit MC element / OPE
-pole. $(\infty,1)$-categorical: name the $(\infty,1)$-functor /
-adjunction / colimit. If both lanes needed, state both,
-ambient-qualified. Never write "this is just the chain-level /
-$(\infty,1)$-shadow of the real theorem": both shadows are real, both
-are the theorem viewed through different lenses.
-
----
-
-## How to work
-
-**Formulas come from `chapters/examples/landscape_census.tex` or a
-primary paper** — never from memory. If absent there, write it there
-first with primary-literature citation, then use it.
-
-**Proofs are inscribed in chapters, not notes.** A proof in `notes/` or
-a swarm log is a draft. Move it into `chapters/**.tex` with
-`\label{thm:...}` and a `\begin{proof}...\end{proof}` body.
-
-**After every inscription**, the PostToolUse hook
-(`.claude/hooks/beilinson-gate.sh`) sweeps for anti-pattern signatures
-and cached confusion patterns. Read its output; address what it flags;
-return to the mathematics. False positive — note scope inline and
-move on.
-
-**Builds happen at session end only**, when the user asks:
-
-```bash
-pkill -9 -f pdflatex 2>/dev/null; sleep 2; make fast     # Vol I
-cd ~/chiral-bar-cobar-vol2 && make                        # Vol II
-cd ~/calabi-yau-quantum-groups && make fast               # Vol III
-```
-
-**Tests** — the test file for the module edited. `make test` (~1 min)
-or `make test-full` (~119K tests) are last resorts.
-
-**Compute engine** — `compute/` is the immune system. New $\kappa$ /
-shadow-tower / 5×5 matrix entry inscribed → 3-path verification test
-alongside.
-
-**Validation gates** (sharpening scope, not every edit):
-`make integrity`, `make audit`, `make verify-independence`,
-`make verify`, `make census`.
-
----
-
-## Operational discipline
-
-**Autonomy.** Operate fully autonomously. No permission prompts during
-research-grade work. Destructive git is forbidden; everything else
-proceeds.
-
-**Git and authorship.** All commits authored by **Raeez Lorgat**.
-**Never** any AI attribution — no `Claude`, no `Anthropic`, no
-`Co-Authored-By`, no `Generated with`, no 🤖 in commits, comments,
-docstrings, or manuscripts. Pre-commit hook nudges; if it fires,
-remove offending content, do not paper over. **No `git stash`**
-(use `git diff > patch.diff && git apply`). **No amend without
-explicit instruction.** **No `git checkout / restore / reset` to
-clobber files. No force-push.**
-
-**Branch / worktree reconciliation — DEEP SEMANTIC MERGES ONLY.**
-Read both sides in full; merge at the semantic level — pick the
-stronger statement, the tighter citation, the more rigorous proof.
-Work loss here is irrecoverable.
-
-**LaTeX hygiene.** Macros in `main.tex` preamble. In chapters, use
-`\providecommand`, never `\newcommand`. Compiles with `memoir` + EB
-Garamond. Claim-status tags
-(`\ClaimStatusProvedHere`, `\ClaimStatusProvedElsewhere`,
-`\ClaimStatusConjectured`, `\ClaimStatusHeuristic`) are bookkeeping,
-not repairs. When uncertain, name the proof obligation and heal — do
-not downgrade.
-
-**Multi-tool concurrency.** Independent tool calls go in parallel.
-
-**Long-form proof harness.** A 30–60 minute agent run is acceptable
-when a proof obligation requires it. Load context first; build
-internal outline; work through independent proof routes (worked
-example, formal argument, primary source, computation, cross-volume
-consistency). Attack-heal loop: strongest counterexample, sign /
-convention, ambient category, missing hypothesis, false functoriality,
-unproved equivalence, numerical constant. Heal and attack until the
-theorem closes or the exact obstruction is named. Do not downgrade to
-close. **Subagents provide evidence, not authority.**
-
----
-
-## Memory system
-
-Persistent file-based memory at
-`/Users/raeez/.claude/projects/-Users-raeez-chiral-bar-cobar/memory/`.
-Types: **user** (role, knowledge), **feedback** (corrections +
-confirmations with *Why* and *How to apply*), **project**
-(in-progress decisions; absolute dates), **reference** (external
-pointers). Index in `MEMORY.md` (one-line entries ≤150 chars).
-
-**Memory is point-in-time.** Verify against current state before
-acting; if memory and current state disagree, trust the current state
-and update / remove the stale memory. For implementation alignment
-within a conversation, use a *plan*; for step tracking, use *tasks*.
-Memory is for cross-conversation context only.
-
----
-
-## Essential constants
-
-- $\kappa(V_k(\mathfrak{g})) = \dim(\mathfrak{g})(k+h^\vee)/(2h^\vee)$ (affine KM, trace form).
-- $\kappa(\mathrm{Vir}_c) = c/2$. $\kappa(\mathcal{H}_k) = k$. $\kappa(\mathcal{W}_N) = c(H_N - 1)$, $H_N = \sum_{j=1}^N 1/j$.
-- Virasoro exact local datum: $\langle\Lambda|\Lambda\rangle=c(5c+22)/10$ for $\Lambda={:}TT{:}-(3/10)\partial^2T$.  Higher scalar coordinates are defined by an ordered residue package $\mathsf H_{\mathrm{res}}(\mathrm{Vir}_c;X)$.  The weighted-Riccati coefficient is $R_6=80(45c+193)/[3c^3(5c+22)^2]$; the distinct formal solution of $2R_2C_6^{\mathrm{rel}}+2R_3R_5+R_4^2=0$ is $C_6^{\mathrm{rel}}=4(240c+1031)/[c^3(5c+22)^2]$.  A singular-vector interpretation is supplied by an explicit level-six radical/decoupling map, and comparison with $S_6(\mathrm{Vir}_c;\mathsf H_{\mathrm{res}})$ is supplied by the normalized residue map.  The weighted Riccati series has geometric branch radius $|\omega|^2(c)=c^2(5c+22)/[4(45c+218)]$ and branch collision at $c=-218/45$.
-- $r$-matrix (level prefix MANDATORY): $r^{KM}(z) = k\,\Omega/z$; $r^{\mathrm{Heis}}(z) = k/z$; $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$.
-- Universal Borcherds-weight identity: $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ + half / quarter-integer continuations.
-- Chain homotopies are part of the family reconstruction datum.  A scalar relation $dh+hd=\nu_A(\mathrm{id}-ip)$ follows after constructing the chain maps $(i,p,h)$ and the scalar action $\nu_A$ in the same complex.  Equality of $\nu_A$ with an algebra-level Verdier sum $K^\kappa(A_b)$ is a separate comparison theorem.
-- Desuspension: $|s^{-1}v| = |v| - 1$; cohomological grading $|d| = +1$.
-- Bar: $B(A_b) = T^c(s^{-1}\bar A_b)$, $\bar A_b = \ker \epsilon$.
-
-**Five typed objects**:
-$A_b$ (chart algebra) — $B_X(A_b)$ (full bar coalgebra) —
-$A_b^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ (quadratic coalgebra of a chosen
-presentation) — $A_{b,\infty}^{!}=\mathbb D_{\operatorname{Ran}}B_X(A_b)$
-(Verdier algebra) — $Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)$ (derived
-centre).  The universal counit $\Omega_XB_X(A_b)\to A_b$ performs
-reconstruction.  The comparison $q_{A_b}\colon A_b^{\mathrm i}\to
-B_X(A_b)$ detects quadratic Koszulness.  Verdier duality constructs
-$A_{b,\infty}^{!}$, and Hochschild cochains construct the derived
-centre.
-
----
-
-## Where the bookkeeping lives
-
-- `chapters/connections/master_concordance.tex` — repo constitution.
-- `chapters/examples/landscape_census.tex` — canonical formulas.
-- `notes/antipatterns_catalogue.md` — AP register + MA-1 … MA-13.
-- `notes/cross_volume_aps.md` — cross-volume AP reference.
-- `notes/first_principles_cache_comprehensive.md` — confusion-pattern
-  registry; hook auto-checks top-15, grep the rest.
-- `appendices/first_principles_cache.md` — cache tip in manuscript.
-- Volume-specific `CLAUDE.md` in `~/chiral-bar-cobar-vol2`,
-  `~/calabi-yau-quantum-groups`. Vol III carries the canonical CY$_d$
-  $\kappa$-table (`cy_d_kappa_stratification.tex`) and the two-stage
-  functor chapter (`cy_to_chiral.tex`).
-- `FRONTIER.md`, `AGENTS.md`, `adversarial_swarm_*/`, `memory/` —
-  *working notebooks*. Primary wins on conflict.
-
----
-
-## Ambient hooks (automatic)
-
-- `PreToolUse(Agent)` → `cache-injection.sh` prepends the
-  first-principles preamble to every Agent call.
-- `PreToolUse(Bash, git commit)` → pre-commit reminder: no AI
-  attribution, Raeez Lorgat only.
-- `PostToolUse(Edit|Write)` → `beilinson-gate.sh` scans for AP
-  signatures, master patterns MA-1 … MA-13, top-15 cache patterns,
-  cross-volume formula propagation. Output as `additionalContext` in
-  next tool result.
-- `Stop` → `convergence-gate.sh` session-end summary.
-
-The hook is advisory. False positives — scope inline, move on.
-
----
-
-## What not to do
-
-1. Do not invent formulas from memory — consult
-   `landscape_census.tex` or primary literature.
-2. Do not propagate status-label wording across 10 files when
-   mathematics is waiting.
-3. Do not run `make fast` after every edit.
-4. Do not read `notes/claude_md_legacy_*.md` or
-   `notes/first_principles_cache_comprehensive.md` whole — grep them.
-5. Do not build on a new theorem without auditing its proof.
-   The Beilinson cascade is a real failure mode.
-6. Do not defend prior output by sampling files and citing AP
-   discipline. When the user says content is wrong, believe the user.
-   Self-audit of one's own mathematics is negative yield.
-7. Do not treat old throughput cautions as a prohibition on swarms.
-   User-authorised large swarms are allowed.
-8. Do not confuse this file with a configuration manual. This is a
-   mathematician's working manifesto.
-
----
-
-## The permanent rule
-
-> Every theorem statement carries a type signature
-> (*quadrant, presentation, level, hypothesis package*).
-> Every cross-level equality invokes a named reconstruction theorem
-> with explicit hypothesis package.
-> KSDual is the $\mathbb{Z}/2$-fixed sublocus where the four-quadrant
-> grid degenerates into self-dual form.
-> Cells admitting holographic vertical equivalence carry both Open- and
-> CY-quadrant statements, with the equivalence theorem named.
->
-> **Primitive objects first, shadows second, scalar modular forms last.**
-
----
-
-## Code-writing discipline — repo application
-
-Per `~/ecosystem/INVARIANTS.md §XIII`. Twelve rules instantiated for chiral-bar-cobar Vol I (Open Beilinson tower; Theorems A, B, C, D, H; Master Reconstruction Theorem; `raeez-math-template` consumer):
-
-1. **Think Before Coding.** Every theorem / lemma edit names the affected proof obligation, the *(quadrant, presentation, level, hypothesis package)* type signature, and the claim-status macro. Every new term passes the four-part coining test (`MATHEMATICAL_PHYSICS_*_WRITING_STANDARDS.md §III`).
-2. **Simplicity First.** No speculative theorems; statements earn proof obligations. Theorems A–H plus the Master Reconstruction are the canonical landmarks; auxiliary lemmas serve them.
-3. **Surgical Changes.** An edit in one chapter does not touch the bibliography or sibling chapters unless propagation requires. Bar–cobar engine is its own chapter — do not bleed into the bulk. Do not propagate status-label wording across 10 files when mathematics is waiting.
-4. **Goal-Driven Execution.** Success = `pdflatex main.tex` clean, theorem ledger consistent, voice-scan + four-part term-coining test pass, claim-status macros honest, `raeez-math-template.sty` symlink intact (`make check` in `~/latex-template`), Beilinson gate clean. Build at session-end only.
-5. **Use the model only for judgment calls.** Cross-reference resolution is deterministic per `\label`/`\ref`; theorem-numbering is deterministic per LaTeX. The model drafts proofs and chooses examples; it does not invent term names without the four-part test or coefficients without `landscape_census.tex` / primary literature.
-6. **Token budgets are not advisory.** Monograph-scale; checkpoint between chapters and between Beilinson-tower levels (0–5). For long-form proof harness sessions, load context first, build internal outline, do not paginate.
-7. **Surface conflicts, don't average them.** Canonical theorem statement wins over inline commentary. Master Reconstruction Theorem (climax) wins over earlier formulations. A computation in `compute/` or `landscape_census.tex` wins over prose claims — never overwrite from memory.
-8. **Read before you write.** Read the affected theorem and its hypothesis package. Read the cross-volume companion section (Vol II / III) before editing a vertical-equivalence chapter. Grep legacy `notes/claude_md_legacy_*.md` and `notes/first_principles_cache_comprehensive.md` — never read whole.
-9. **Tests verify intent.** Claim-status macros (`\ClaimStatusProvedHere`, `\ClaimStatusConjectured`, `\ClaimStatusHeuristic`, `\ClaimStatusRetracted`) are the load-bearing test. A theorem labelled `proved` with a proof gap is broken. Four-part term-coining test is non-vacuous.
-10. **Checkpoint after every significant step.** Between chapters, summarize theorem-ledger delta and cross-volume equivalence impact. Between Beilinson-tower levels, restate reconstruction-theorem status. Subagents return evidence, not authority; main thread integrates via deep semantic merge.
-11. **Match the codebase's conventions, even if you disagree.** `raeez-math-template.sty` symlinked at repo root, loaded immediately after `\documentclass`, `\mainpreambleonly` guard preserved (`INVARIANTS.md §XII`). Theorem environments per template. No local typography forks.
-12. **Fail loud.** Announce every broken cross-ref, dangling theorem, unhealed conjecture label (`INVARIANTS.md §XI`). Never demote Theorem A to motivation; heal it. Never silently overwrite a computation from memory. Cross-volume / compute-vs-prose disagreements stop and report.
+# Repository agent contract — Claude
+
+This repository inherits `~/ecosystem/INVARIANTS.md` and `~/ecosystem/AGENTS-HARNESS.md`.
+For Claude host controls or loading, consult `~/ecosystem/CLAUDE-HARNESS.md` when relevant.
+Universal safety and truth rules apply. Load domain references only when the task requires them.
+`AGENTS.md` is canonical locally. `CLAUDE.md` carries the same contract for its host.
+Read `CLAUDE.md` before code edits. System and developer instructions, then explicit user chat, precede local guidance.
+
+Volume I studies Ordered Chiral Geometry: two associative directions, aligned locality, three bars, and bar–cobar reconstruction.
+The objective is correct, rigorous, complete mathematics. Preserve the requested theorem target.
+
+## Ownership and authority
+
+Work in the assigned repository and isolated worktree. Preserve concurrent edits and the principal checkout's HEAD.
+Only the main thread commits or publishes. Apply the inherited destructive-Git forbidden list without exceptions.
+Do not add model attribution to commits or manuscripts.
+Cross-volume reading does not authorize cross-volume writing. Report exact dependent paths outside the assigned scope to the integration owner.
+Local verification does not authorize release, iCloud copying, external sending, or publication.
+Existing task authorization remains valid. Do not request repeated approval for reversible work within that scope.
+
+## Manuscript boundary and proof rigor
+
+Reader-facing sources contain mathematics or physics only, at every scale, including metadata.
+Keep task records, agent references, audits, ownership, progress, and drafting history outside the manuscript.
+Mathematical status remains explicit: proved, conditional, computed, heuristic, conjectural, or open.
+State assumptions, ambient categories, maps, and conventions before use. Cite imported results by author, year, and theorem or equation.
+Give complete proof bodies. A build or status macro cannot establish a theorem.
+Chain-level and categorical arguments have equal standing. State the comparison that connects them.
+Every theorem states its objects, ambient category, maps, conventions, and hypothesis package.
+Identifications across constructions require named comparison or reconstruction theorems with their hypotheses.
+Read [mathematical architecture](docs/agent-reference/mathematical-architecture.md) for the relevant construction and claim constraints.
+
+Use current source and reproducible computation to assess claims. Check their hypotheses and independent derivations before resolving contradictions.
+Do not overwrite evidence from memory or treat a successful computation as proof beyond its tested scope.
+Numerical claims require independent verification paths. Seek at least three where feasible, and state missing checks explicitly.
+
+## Task routing
+
+Read the target and its direct dependencies before editing. Inspect the current diff, `Makefile`, `platonic/PLATONIC_LEDGER.md`, and active inputs from `platonic/main.tex` when relevant.
+A local wording fix needs its context and applicable writing rules. It does not require a full-volume audit.
+
+| Task | Read when needed |
+|---|---|
+| Manuscript prose | [Writing reference](docs/agent-reference/manuscript-writing.md), then applicable sections of `MATHEMATICAL_PHYSICS_NUMBER_THEORY_GEOMETRY_ALGEBRA_HOMOTOPY_THEORY_WRITING_STANDARDS.md` |
+| Proof or structural repair | `.agents/skills/beilinson-rectify/SKILL.md` |
+| Findings-first mathematical audit | `.agents/skills/deep-beilinson-audit/SKILL.md` |
+| Formula or numerical verification | `.agents/skills/multi-path-verify/SKILL.md` |
+| Compute engine work | `.agents/skills/compute-engine-scaffold/SKILL.md` |
+| Frontier investigation | `.agents/skills/frontier-research/SKILL.md` |
+| A changed shared claim | `.agents/skills/cross-volume-propagation/SKILL.md` |
+| Build, logs, or tests | `.agents/skills/build-surface/SKILL.md` |
+
+Use current ledgers and the selected input graph to locate claims. Legacy concordance and metadata do not establish current status.
+Search legacy notes and cache catalogues by relevant claim or pattern. Do not load them or swarm histories unconditionally.
+Consult memory only for relevant prior context, then verify against the current tree.
+
+## Verification and completion
+
+Run affected computations, tests, and isolated local builds after a coherent change when they can falsify it.
+This work is authorized by the task. Do not build after every edit or wait for separate build approval.
+Use the build skill for namespace isolation and persistent-warning classification.
+Broaden checks when changed dependencies, failures, or unresolved concerns justify them.
+Preserve the shared `raeez-math-template.sty` link. Keep common macros in the preamble and use `\providecommand` in chapters.
+Hooks provide evidence. Inspect failures and false positives. A hook result does not replace a proof review.
+
+A bounded investigation can end with verified progress and an exact unresolved obligation.
+Record attempted routes, decisive evidence, remaining hypotheses, and the next discriminating calculation or proof step.
+This closes only the bounded investigation. It does not prove the theorem or complete a broader active goal.
+Never remove, demote, or weaken the requested theorem merely to declare success.
+If a contradiction blocks one claim, preserve it and continue independent authorized work.
+Escalate when an authority decision or unavailable external input blocks further progress.
+Use explicit user or host budgets. Checkpoint at meaningful proof boundaries.
+
+## Parallel work
+
+Delegate when the user or applicable instructions authorize it and independent work improves completion.
+Assign disjoint files or proof obligations and one accountable integration owner.
+Request the strongest available model and maximum supported effort for nontrivial proof work when the host permits it.
+Do not claim to control settings or capacity that the host does not expose.
+Workers return proofs, counterexamples, exact sources, computations, changed paths, and unresolved obligations.
+The owner verifies and integrates each result. Agent agreement is evidence to inspect, not mathematical authority.

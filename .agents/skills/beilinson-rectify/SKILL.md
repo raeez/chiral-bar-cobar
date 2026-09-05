@@ -1,76 +1,31 @@
 ---
 name: beilinson-rectify
-description: Use when the user asks to rectify, fortify, rewrite, tighten, or structurally repair a mathematical chapter, proof, or claim surface in this repository. Not for isolated formula checks better handled by multi-path-verify.
+description: Repair a mathematical proof or chapter structure when requested, with evidence-based verification and precise unresolved obligations.
 ---
 
-# Beilinson Rectify
+# Mathematical rectification
 
-This is the heavy rectification workflow. Use it when the task is not just to patch a claim, but to make a chapter or proof lane truer, tighter, and harder to break.
+Read the target, its direct proof dependencies, and the current diff. Consult the root's mathematical and writing references only as relevant.
+Inspect the active input graph for chapter restructuring. Load concordance or metadata when a changed claim affects those indexes.
 
-It is also the Codex-side home of the lighter `/rectify` and `/beilinson-rectify` workflows from `CLAUDE.md`.
+Identify the mathematical question and the requested theorem target. Diagnose the relevant failure:
+proof logic, hypotheses, signs, conventions, missing definitions, claim drift, duplicate statements, or exposition order.
+Use one repair workflow for local proof repair and broader structural rewriting.
+Select relevant review lenses: mathematical catalogue, truth, define-before-use, motivation, physical realization, and structural prose.
+For structural work, put prerequisites and a useful computation before the theorem that depends on them.
+Use direct mathematical transitions. Preserve substantive mathematics during restructuring.
 
-## Load first
+Repair in dependency order. Construct the missing maps, hypotheses, homotopies, computations, or cited comparisons.
+Recheck each repaired argument independently. Repeat only where a surviving defect or new evidence requires another pass.
+No fixed number of writing passes applies.
 
-- `CLAUDE.md`
-- `chapters/connections/concordance.tex`
-- `metadata/theorem_registry.md`
-- `archive/raeeznotes/raeeznotes100/red_team_summary.md`
-- the full target file
-- the directly cited dependencies
+Update affected live claims inside assigned paths after verifying the correction. Report other-volume dependencies to their owners.
+Do not rewrite historical evidence or silently change the requested theorem to fit a partial result.
+Use affected tests and the build skill when executable or rendering checks can falsify the change.
 
-## Rectification loop
+A proof repair is complete when its requested argument closes and affected claims and checks agree.
+A bounded investigation may instead return an exact unresolved obligation, attempted routes, evidence, and next discriminating step.
+That handoff does not complete the theorem target or establish a proved obstruction.
+Keep claim status honest without treating a status change as a proof repair.
 
-1. Identify the organizing question of the target.
-2. Identify the actual climax:
-   the theorem, construction, or proof step the file is really carrying
-3. Diagnose before editing:
-   narrative breaks
-   define-before-use failures
-   cold definitions
-   scope inflation
-   status drift
-   formula red flags
-4. Rectify the structure before the line noise:
-   cut dead weight
-   move prerequisites earlier
-   narrow overclaims
-   rewrite transitions so they carry mathematics, not signposts
-5. Sweep the touched surface chunk by chunk:
-   audit
-   repair
-   re-audit
-   repeat until the chunk converges or the blocker is explicit
-6. After every substantive theorem-surface change, sync nearby status remarks, concordance text, duplicates, and metadata.
-7. Run the strongest local verification available and close with a proved/computational/conditional split.
-
-## Chriss-Ginzburg compatibility
-
-If the task is still local in scope but needs deeper structural rewriting, escalate from ordinary rectification to the Chriss-Ginzburg variant:
-
-1. identify the deficiency opening;
-2. find the unique survivor claim or construction;
-3. put the first real computation earlier;
-4. force transitions to carry mathematical necessity, not narration;
-5. rewrite and re-audit until the surface converges or the blocker is explicit.
-
-For introductions, prefaces, and chapter openings, use the convergent writing loop:
-
-`WRITE -> REIMAGINE -> REWRITE -> BEILINSON AUDIT -> REIMAGINE AGAIN -> REWRITE AGAIN -> CONVERGE`
-
-## Style standard
-
-- Every definition should answer a question the reader already has.
-- Every transition should say:
-  where we are,
-  what forces the next step,
-  and what resolves it
-- Delete filler, hedging, and ceremonial signposting.
-- Never trade exactness for grandeur.
-
-## Failure rule
-
-If a strong version of the claim will not close, do not keep polishing it. Demote it, fence it, or mark it conditional.
-
-## Parallel work
-
-Only use subagents if the user explicitly asks for parallel or delegated agent work. If they do, split by disjoint files or disjoint write scopes.
+Delegate only when authorized. Use available host planning and parallel tools, or concise written tracking when those tools are absent.

@@ -7,12 +7,12 @@ description: Use when the user asks to audit, falsify, red-team, pressure-test, 
 
 Run this skill when correctness matters more than speed and the task is to challenge a claim, not merely improve its presentation.
 
-## Load first
+## Read as relevant to the changed claim
 
-- `CLAUDE.md`
-- `chapters/connections/concordance.tex`
-- `metadata/theorem_registry.md`
-- `archive/raeeznotes/raeeznotes100/red_team_summary.md`
+- relevant root-routed mathematical or writing constraints
+- `platonic/PLATONIC_LEDGER.md` and the selected current input graph
+- `chapters/connections/concordance.tex` only for explicit legacy-source comparison
+- `metadata/theorem_registry.md` only after verifying that it indexes the selected source
 - the target files
 - the directly cited dependencies
 
@@ -36,7 +36,7 @@ For status-heavy work, also load the relevant metadata files.
 5. Read the cited proof steps. Check that each imported result is used with its hypotheses satisfied.
 6. Check whether the same claim or formula appears elsewhere and is drifting in status or wording.
 7. If the user asked for correction as well as audit, apply the minimal true fix and propagate it across duplicates.
-8. Run the strongest relevant verification and end with an explicit proved/computational/conditional split.
+8. Run proportionate relevant verification and end with an explicit proved/computational/conditional split.
 
 ## Severity rubric
 

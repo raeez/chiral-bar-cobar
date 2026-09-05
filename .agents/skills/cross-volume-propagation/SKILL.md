@@ -1,6 +1,6 @@
 ---
 name: cross-volume-propagation
-description: Use after any mathematical wording, status, label, terminology, or formula change that may recur across Volumes I, II, and III, compute layers, tests, notes, or superseded files. This is the Codex-native equivalent of `/propagate` from `CLAUDE.md`.
+description: Use after any mathematical wording, status, label, terminology, or formula change that may recur across Volumes I, II, and III, compute layers, tests, notes, or historical references. This is the Codex-native equivalent of `/propagate` from `CLAUDE.md`.
 ---
 
 # Cross-Volume Propagation
@@ -16,7 +16,7 @@ Search all live surfaces that may still advertise the old claim:
 - `~/calabi-yau-quantum-groups`
 - `compute/`
 - `compute/tests/`
-- relevant notes, standalones, or superseded files if they still mislead future audits
+- relevant notes, standalones, or historical references if they still mislead future audits
 
 ## Propagation checklist
 
@@ -31,7 +31,7 @@ Search all live surfaces that may still advertise the old claim:
    docstrings,
    hardcoded expected values,
    tests.
-5. Update all still-live advertisements of the old claim in the same session when feasible.
+5. Update verified live duplicates within assigned paths. Report other owners' exact dependent paths.
 
 ## Convention alert
 
@@ -40,3 +40,6 @@ Search all live surfaces that may still advertise the old claim:
 - Volume III may use motivic, categorical, or CY-specific normalizations.
 
 Never propagate by verbal similarity alone. Convert conventions first.
+
+Read other repositories only where the changed claim depends on them. This skill grants no cross-repository write authority.
+Preserve archive snapshots. Report active misleading references to their accountable owner.

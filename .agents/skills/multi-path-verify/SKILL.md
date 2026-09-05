@@ -36,7 +36,7 @@ Choose from:
 - Paths must be genuinely independent, not cosmetic rewrites of the same computation.
 - If the paths diverge, do not average them. Diagnose the discrepancy.
 - If the claim survives, report the verified statement with its exact scope.
-- If it fails, replace it with the strongest narrower statement that actually survives.
+- If it fails, report the failure and preserve the requested theorem target. Repair only within the authorized scope.
 
 ## Repository follow-through
 
