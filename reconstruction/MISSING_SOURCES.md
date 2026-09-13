@@ -32,8 +32,14 @@ and the necklace/trace material.
 
 | directory | count | files |
 |---|---:|---|
-| `detailed/` | 44 | `00_first_principles`, `00_factd`, `00_duoidal`, `00_ordered_ran`, `00_mixed_operad`, `00_internal_bar`, `00_internal_duality`, `00_koszul_morita_square`, `00_exchange_center`, `00_ht_recognition`, `00_quantum_line_theory`, `00_bimodular`, `00_anomalies`, `00_noncomm_examples`, `00_physical_derivations`, `00_higher_sources`, `00_historical_lineage`, `00_ordered_low_arity`, `01_diagonal_language`, `02_chiral_operations`, `03_partition_complex`, `04_fm_resolution`, `05_pole_geometry`, `06_formal_disc`, `07_chevalley_ran`, `08_koszul_duality`, `09_duality_center`, `10_ordered_monodromy`, `11_kz_quantum_groups`, `12_modular_master`, `13_conformal_blocks`, `14_brst_w`, `15_examples`, `16_arithmetic`, `17_quantum_field_theory`, `A_signs`, `B_low_arity`, `C_stratified_spectral_sequence`, `D_logical_separations`, `E_local_geometry`, `F_field_theory_derivations`, `G_exact_models` |
+| `detailed/` | 42 | `00_first_principles`, `00_factd`, `00_duoidal`, `00_ordered_ran`, `00_mixed_operad`, `00_internal_bar`, `00_internal_duality`, `00_koszul_morita_square`, `00_exchange_center`, `00_ht_recognition`, `00_quantum_line_theory`, `00_bimodular`, `00_anomalies`, `00_noncomm_examples`, `00_physical_derivations`, `00_higher_sources`, `00_historical_lineage`, `00_ordered_low_arity`, `01_diagonal_language`, `02_chiral_operations`, `03_partition_complex`, `04_fm_resolution`, `05_pole_geometry`, `06_formal_disc`, `07_chevalley_ran`, `08_koszul_duality`, `09_duality_center`, `10_ordered_monodromy`, `11_kz_quantum_groups`, `12_modular_master`, `13_conformal_blocks`, `14_brst_w`, `15_examples`, `16_arithmetic`, `17_quantum_field_theory`, `A_signs`, `B_low_arity`, `C_stratified_spectral_sequence`, `D_logical_separations`, `E_local_geometry`, `F_field_theory_derivations`, `G_exact_models` |
 | `frontier/` | 2 | `frontier_master`, `inner_music_synthesis` |
+
+The earlier count of 44 detailed chapters is retired on 2026-09-05.
+The literal input graph contains 42 detailed chapters, two frontier chapters,
+`compat.tex`, and `combined_bibliography.tex`: 46 missing files in total.
+The source hash, complete input list, and recovery findings are recorded in
+[`audits/source-recovery-20260905/recovery-evidence.json`](../audits/source-recovery-20260905/recovery-evidence.json).
 
 Empty `detailed/` and `frontier/` directories are in place so the files drop
 straight in.
