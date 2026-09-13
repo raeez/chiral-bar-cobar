@@ -1,0 +1,117 @@
+--- candidate001/platonic/chapters/ordered_native_collision.tex
++++ candidate002/platonic/chapters/ordered_native_collision.tex
+@@ -367,9 +367,111 @@
+ tensor sign. Cutting twice identifies convolution with composition
+ of these lifts. Their postcomposition with the augmentation recovers
+ $F$, so the identification also preserves the derived product.
+-Dual collision maps are defined weight by weight, with variance
+-reversed, and then by this degreewise product. No interchange of
+-an unrestricted product with pullback is required.
++Dualizing a collision also changes its coefficient algebra.
++Put $Q_I=B_{\mathcal C_I}\mathcal A_I$ and
++\[
++ Q_I^\vee(w)=\operatorname{Hom}_{\mathcal C_I}
++                   (Q_I(w),\mathcal C_I).
++\]
++For the ordered surjection $(p,\tau)$, set
++$\mathcal B=L\delta_p^*\mathcal C_I$ and use
++$\kappa_{p,\tau}:\mathcal B\to\mathcal C_J$ in left differential
++modules. Its scalar-extension functor on $\mathcal C_I$-modules is
++\[
++ E_{p,\tau}(M)=\mathcal C_J\otimes_{\mathcal B}^{\mathbb L}
++                                L\delta_p^*M.
++\]
++The bar collision map has the $\mathcal C_J$-linear form
++\[
++ \gamma_{p,\tau,w}:E_{p,\tau}(Q_I(w))\longrightarrow Q_J(w).
++\]
++
++\begin{proposition}[Dual collision after scalar extension]
++\label{prop:native-dual-collision}
++Transposition gives the morphism of complexes
++\begin{equation}\label{eq:native-dual-collision}
++\begin{aligned}
++ d^\vee_{p,\tau,w}:{}&
++ \operatorname{Hom}_{\mathcal C_J}(Q_J(w),\mathcal C_J)\\
++ &\longrightarrow
++ \mathcal C_J\otimes_{\mathcal B}^{\mathbb L}
++ L\delta_p^*\operatorname{Hom}_{\mathcal C_I}(Q_I(w),\mathcal C_I).
++\end{aligned}
++\end{equation}
++These maps preserve the connections. Their degreewise products
++over weight define a unital morphism of convolution dg algebras
++\[
++ \prod_{w\ge0}Q_J^\vee(w)
++ \longrightarrow
++ \prod_{w\ge0}E_{p,\tau}(Q_I^\vee(w)).
++\]
++For nested ordered surjections $(p,\tau):I\to J$ and
++$(q,\upsilon):J\to K$, use the concatenated order on each fibre
++of $qp$. Under the canonical identification
++$E_{q,\upsilon}E_{p,\tau}\simeq E_{qp,\upsilon\circ\tau}$,
++\[
++ d^\vee_{qp,\upsilon\circ\tau,w}
++ =E_{q,\upsilon}(d^\vee_{p,\tau,w})
++       \circ d^\vee_{q,\upsilon,w}.
++\]
++\end{proposition}
++\begin{proof}
++At weight $w$, $Q_I(w)$ is graded free on finitely many state
++words and their ordered cuts. The bar-length filtration has at
++most $w$ steps. Its differential preserves the coefficient part
++and sends a state-word basis vector to shorter bar words.
++It is therefore a finite semifree module, hence perfect over
++$\mathcal C_I$; the displayed Hom computes its derived dual.
++
++For a single shifted free module, the evaluation map identifies
++the dual after scalar extension with the scalar extension of the
++dual. The identification is natural, commutes with differentials,
++and persists under finite sums, shifts, and mapping cones.
++Applying the finite semifree filtration gives
++\[
++ \operatorname{RHom}_{\mathcal C_J}
++       (E_{p,\tau}(Q_I(w)),\mathcal C_J)
++ \simeq E_{p,\tau}(Q_I^\vee(w)).
++\]
++In the fixed free models the map in
++\eqref{eq:native-dual-collision} sends $F$ to
++$F\circ\gamma_{p,\tau,w}$, followed by this identification.
++Since $\gamma$ is a degree-zero chain map,
++$d(F\gamma)=(dF)\gamma$. The connection on Hom is the
++commutator connection, so horizontality of $\gamma$ proves the
++connection assertion as well.
++
++The cut map at weights $a,b$ has target
++$Q_I(a)\otimes_{\mathcal C_I}Q_I(b)$ and source $Q_I(a+b)$.
++The coalgebra identity for $\gamma$ consequently gives
++$d^\vee(F*G)=d^\vee(F)*d^\vee(G)$ with the tensor signs.
++In weight zero the map is the identity of $\mathcal C_J$, so it
++preserves the unit. At output weight $w$, convolution uses only
++the finitely many pairs $a+b=w$. Thus these maps form algebra
++maps on every finite weight quotient and then on their inverse
++limit, represented in the stated models by degreewise products.
++The target extends coefficients separately at each weight before
++forming that product.
++
++For nested collisions, associativity of derived scalar extension
++and the identity for the coefficient maps give the displayed
++identification of the $E$ functors. The bar maps obey
++$\gamma_{qp}=\gamma_q\circ E_q(\gamma_p)$ by
++Theorem~\ref{thm:native-collision-bar}. Precomposition reverses
++this equality. Naturality of the finite-module dual identification
++then gives the stated composition formula. Every step occurs in
++a fixed weight, so the same equality holds after completion.
++\end{proof}
++
++The scalar extension is necessary even for the binary coefficient
++fibre. Take $B=\mathbb C^2$, let $C=\mathbb C$ carry the
++$B$-action through the first projection, and put $e_2=(0,1)$.
++Every $B$-linear map $f:C\to B$ satisfies
++$e_2f(1)=f(e_2\cdot1)=0$. Its image lies in the first idempotent
++summand, so it cannot send $1$ to $1_B=(1,1)$.
++There is therefore no unital $B$-linear reverse map $C\to B$.
++After extension, $C\otimes_B^{\mathbb L}B\simeq C$, and the
++weight-zero dual collision map is the identity, as required.
+ 
+ \Needspace{16\baselineskip}
+ \begin{proposition}[Completed reconstruction and collision]

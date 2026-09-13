@@ -1,0 +1,574 @@
+\chapter{Ordered collisions and two holomorphic directions}
+\label{chap:ordered-collisions-residues}
+
+Two local insertions can exchange their order along a real direction
+when their holomorphic positions differ. At equal holomorphic positions,
+the same exchange crosses a collision. A coefficient algebra for these
+insertions must therefore retain two orders at coincidence while
+identifying them away from coincidence.
+
+This requirement gives a geometric use for complexes with multiplication.
+An ordinary function records agreement between the two orders.
+A complex also records their comparison on the region where exchange is
+possible. The multiplication on that comparison will distinguish two
+collision branches from an algebra with a nonzero element whose square
+is zero.
+The difference survives even when the dimensions of all resulting
+cohomology groups agree.
+
+The number of holomorphic coordinates changes this comparison.
+One coordinate gives Laurent principal parts. Two coordinates give a
+class on the intersection of two punctured regions, in a different
+cohomological degree. We construct both coefficient systems before
+introducing operations with those coefficients.
+
+\section{Two orders and their common region}
+
+Work over $k=\mathbb C$. Write $z$ for the difference between two
+holomorphic positions on a line. Polynomial coefficients form $R=k[z]$.
+On the region $z\ne0$, they form $K=k[z,z^{-1}]$.
+Every element of $K$ is a finite linear combination of integer powers
+of $z$. This is the localization of $R$ obtained by making $z$
+invertible, as in Section~\ref{sec:cc-localization}.
+
+Take two copies of the complex line, labelled $-$ and $+$.
+Identify a point of the first copy with the point of the second copy
+having the same nonzero coordinate. Keep the two origins distinct.
+Polynomial functions on the two copies are pairs $(a,b)\in R^2$.
+They agree on the common region precisely when $b-a=0$ in $K$.
+Retaining this difference gives the cochain complex
+\[
+ D_1^0=R^2,\qquad D_1^1=K,\qquad d(a,b)=b-a.
+\]
+All unlisted degrees are zero. Its multiplication is
+\begin{equation}\label{eq:ocr-ordered-cup}
+ \begin{split}
+ (a,b)(c,e)&=(ac,be),\\
+ (a,b)v&=av,\qquad v(c,e)=ve,\qquad vw=0
+ \quad(v,w\in K).
+ \end{split}
+\end{equation}
+Thus a comparison has a left endpoint and a right endpoint.
+Their actions use the corresponding components of a pair.
+The unit is $(1,1)$, and $R$ acts centrally by $a\mapsto(a,a)$.
+
+\Needspace{10\baselineskip}
+\begin{proposition}\label{prop:ocr-line-algebra}
+These formulas make $D_1$ an associative differential graded $R$-algebra.
+Its cohomology is
+\[
+ H^0(D_1)=R,\qquad H^1(D_1)=K/R.
+\]
+Products of positive-degree cohomology classes vanish.
+\end{proposition}
+
+\begin{proof}
+With three degree-zero inputs, associativity is componentwise.
+With one degree-one input it follows from scalar multiplication in $K$.
+For example,
+$((a,b)v)(c,e)=ave=(a,b)(v(c,e))$.
+With at least two degree-one inputs both parenthesizations vanish.
+For two degree-zero inputs the differential identity is exactly
+\[
+ be-ac=(b-a)e+a(e-c).
+\]
+Every other Leibniz identity has zero degree-two target.
+The kernel of $R^2\to K$ is the diagonal copy of $R$.
+Its image is $R\subset K$, proving the cohomology statement.
+\end{proof}
+
+The quotient $K/R$ has basis $z^{-a-1}$ for integers $a\ge0$.
+It retains the entire principal part of a Laurent polynomial.
+The value of its residue, the coefficient of $z^{-1}$, retains only
+one of these coefficients.
+
+\section{A puncture in the complex plane of dimension two}
+
+Let $(x,y)$ be the difference between two positions in $\mathbb C^2$.
+The points are distinct if $x\ne0$ or $y\ne0$.
+There are now two regions on which to compare coefficients.
+Put
+\[
+ R=k[x,y],\quad R_x=k[x,x^{-1},y],\quad
+ R_y=k[x,y,y^{-1}],\quad
+ R_{xy}=k[x,x^{-1},y,y^{-1}].
+\]
+The subscript specifies which coordinates have been made invertible.
+These are subrings of the common Laurent polynomial ring $R_{xy}$.
+Agreement on the overlap is recorded by
+\begin{equation}\label{eq:ocr-puncture-complex}
+ B^0=R_x\oplus R_y
+ \xrightarrow{\ \delta\ }B^1=R_{xy},
+ \qquad \delta(u,v)=v-u.
+\end{equation}
+This is the two-region \v{C}ech complex: degree zero contains local
+values, and degree one contains their difference on the intersection.
+Give it the multiplication~\eqref{eq:ocr-ordered-cup}, using $R_x$
+and $R_y$ for the endpoint rings and $R_{xy}$ for the intersection.
+The same calculation proves the differential algebra identities.
+
+\begin{proposition}\label{prop:ocr-two-dimensional-puncture}
+The cohomology of $B$ is
+\[
+ H^0(B)=R,\qquad
+ H^1(B)=J:=R_{xy}/(R_x+R_y)
+       =\bigoplus_{a,b\ge0} kx^{-a-1}y^{-b-1}.
+\]
+The displayed direct sum consists of finite sums.
+In particular, every compatible pair of Laurent polynomials on the
+puncture extends to a polynomial at the origin.
+\end{proposition}
+
+\begin{proof}
+A Laurent polynomial has a unique finite expansion in monomials
+$x^iy^j$, with $i,j\in\mathbb Z$.
+Membership in $R_x$ requires $j\ge0$ in every nonzero monomial.
+Membership in $R_y$ requires $i\ge0$.
+Their intersection is therefore $R$.
+This computes the kernel of $\delta$.
+
+Their sum contains exactly the Laurent polynomials whose monomials
+have at least one nonnegative exponent.
+Quotienting leaves precisely the monomials with both exponents
+negative. Uniqueness of Laurent coefficients proves both spanning
+and linear independence of the asserted basis.
+\end{proof}
+
+For example, $x^{-1}$ is defined on $x\ne0$, so it contributes zero
+to $J$. The same holds for $y^{-1}$.
+The fraction $x^{-1}y^{-1}$ has a nonzero class because it belongs
+to neither summand, even after addition of terms from both summands.
+It represents a degree-one comparison class on the puncture.
+It is not a compatible degree-zero function there.
+
+The origin can also be retained as a support condition.
+Adjoin the restriction from $R$ to the two-region complex:
+\begin{equation}\label{eq:ocr-support-complex}
+ L^0=R\xrightarrow{\ a\mapsto(a,a)\ }
+ L^1=R_x\oplus R_y
+ \xrightarrow{\ (u,v)\mapsto u-v\ }L^2=R_{xy}.
+\end{equation}
+The same monomial calculation proves
+$H^0(L)=H^1(L)=0$ and $H^2(L)=J$.
+Here $J$ is the local-cohomology module at the origin, with that term
+defined by the support complex~\eqref{eq:ocr-support-complex}.
+Its degree is two in $L$, whereas it has degree one in $B$.
+
+\section{Keeping the two collision branches}
+
+Retain two copies of $\mathbb C^2$, one for each real order.
+Identify their punctured planes by the coordinate identity.
+The comparison on that common region is now the complex $B$,
+rather than a single Laurent ring.
+Its ordered gluing algebra has terms
+\begin{equation}\label{eq:ocr-surface-gluing}
+ \begin{split}
+ D_2^0&=R^2,\\
+ D_2^1&=R_x\oplus R_y,\\
+ D_2^2&=R_{xy},\\
+ d(a,b)&=(b-a,b-a),\\
+ d(u,v)&=u-v.
+ \end{split}
+\end{equation}
+The sign in the last line is the sign from shifting the comparison
+complex by one degree. All other differentials vanish.
+For a positive-degree element $w$, define
+\[
+ (a,b)w=aw,\qquad w(a,b)=wb.
+\]
+Multiply degree-zero pairs componentwise and set every product of
+two positive-degree elements to zero.
+The unit and the central $R$-action are diagonal.
+
+\begin{proposition}\label{prop:ocr-surface-algebra}
+The formulas above define an associative differential graded
+$R$-algebra. Its only nonzero cohomology groups are
+\[
+ H^0(D_2)=R,\qquad H^2(D_2)=J.
+\]
+The induced multiplication is the square-zero extension
+$R\oplus J[-2]$: the copy of $J$ lies in degree two and has
+zero product with itself.
+\end{proposition}
+
+\begin{proof}
+The square of the differential on $(a,b)$ is
+$(b-a)-(b-a)=0$.
+Associativity follows from the endpoint actions, exactly as for $D_1$.
+For two degree-zero inputs the Leibniz calculation is again
+$be-ac=(b-a)e+a(e-c)$ on each component of degree one.
+With one positive-degree input it reduces to $R$-linearity of its
+differential. With two such inputs both sides vanish.
+
+The kernel in degree zero is the diagonal $R$.
+In degree one, $u-v=0$ implies $u=v\in R_x\cap R_y=R$.
+Every such pair is $d(0,u)$.
+The cokernel in degree two is $R_{xy}/(R_x+R_y)=J$.
+\end{proof}
+
+The algebra has an explicit interpretation in terms of comparisons.
+Let $I$ have degree-zero basis $e_-,e_+$ and degree-one basis $h$.
+The nonzero products of basis elements are
+\[
+ e_-^2=e_-,\quad e_+^2=e_+,\quad e_-h=h=he_+,
+ \qquad de_-=-h,\quad de_+=h.
+\]
+Its unit is $e_-+e_+$.
+The two evaluation maps send the corresponding endpoint to $1$
+and all other basis elements to $0$.
+Both induce isomorphisms on cohomology, since
+$\ker(d:I^0\to I^1)=k(e_-+e_+)$ and $d$ is surjective.
+
+Form the differential graded tensor product $I\otimes_k B$.
+Keep those elements whose two endpoint evaluations lie in
+the diagonal copy of $R$ inside $B^0$.
+An element has the unique form
+\[
+ e_-\otimes(a,a)+e_+\otimes(b,b)+h\otimes w,
+ \qquad a,b\in R,\quad w\in B.
+\]
+For homogeneous $w$, its last term has degree $|w|+1$.
+The tensor differential is
+$d(h\otimes w)=-h\otimes\delta w$.
+Consequently this subalgebra is precisely $D_2$.
+The comparison is therefore retained together with its own
+differential and both endpoint actions.
+
+\section{Specializing to coincidence preserves multiplication}
+
+At the origin, both $x$ and $y$ become zero.
+Ordinary substitution in a complex need not preserve a
+quasi-isomorphism, as the coefficient calculations in
+Chapter~\ref{chap:relations-homotopies} show.
+An explicit resolution keeps the witnesses for these two equations.
+Let
+\[
+ K_R=R\otimes\Lambda(e_x,e_y),\qquad
+ |e_x|=|e_y|=-1,\qquad de_x=x,\quad de_y=y.
+\]
+Here $\Lambda$ denotes the exterior algebra:
+$e_x^2=e_y^2=0$ and $e_xe_y=-e_ye_x$.
+The differential obeys the graded Leibniz rule, so
+$d(e_xe_y)=xe_y-ye_x$.
+
+\begin{lemma}\label{lem:ocr-residue-resolution}
+The augmentation $K_R\to k=R/(x,y)$ is a quasi-isomorphism.
+For any quasi-isomorphism of complexes $V\to W$ of $R$-modules,
+the map $V\otimes_RK_R\to W\otimes_RK_R$ is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+In degrees $-2,-1,0$, the complex is
+\[
+ R\xrightarrow{\ c\mapsto(-yc,xc)\ }R^2
+ \xrightarrow{\ (a,b)\mapsto xa+yb\ }R.
+\]
+The first map is injective because $R$ has no zero divisors.
+If $xa+yb=0$, setting $x=0$ gives $yb(0,y)=0$.
+Hence $b=xc$ for a polynomial $c$, and then $a=-yc$.
+This proves exactness in degree $-1$.
+The cokernel in degree zero is $k$.
+
+Filter the tensor complexes by the exterior degree in $K_R$.
+The differential lowers that degree or preserves it.
+There are three filtration steps, and every successive quotient
+is a finite direct sum of shifts of $V$ or $W$.
+The induced map on every quotient is a quasi-isomorphism.
+The long exact cohomology sequences for these finite filtrations
+prove the assertion.
+\end{proof}
+
+For a differential graded algebra with central $R$-action, call
+$A\otimes_RK_R$ its derived fibre at the origin.
+Use the tensor product multiplication with the graded signs already
+fixed in Chapter~\ref{chap:relations-homotopies}.
+The lemma proves that a zigzag of $R$-algebra quasi-isomorphisms
+induces a zigzag between these derived fibres.
+Their cohomology algebras must therefore be isomorphic.
+
+The algebra $k\times k$ contains the elements $(1,0)$ and $(0,1)$.
+Each has square equal to itself, their product is zero, and their sum
+is the unit. An element with $e^2=e$ is called an idempotent.
+Two idempotents are orthogonal when their products in both orders
+are zero. These two idempotents distinguish the collision branches.
+An element is nilpotent when some positive power of it is zero.
+
+\begin{theorem}\label{thm:ocr-relative-nonformality}
+The ordered gluing algebra $D_2$ is not formal over $R$.
+Its derived fibre has degree-zero algebra $k\times k$.
+The derived fibre of its cohomology algebra has degree-zero algebra
+$k[\epsilon]/(\epsilon^2)$.
+Both fibres have zero cohomology in every other degree.
+\end{theorem}
+
+\begin{proof}
+Each localization of $R$ is flat.
+Indeed, localization of a module sends a class to zero precisely
+when some denominator annihilates it.
+This criterion preserves both injections and exactness at the middle
+of an exact sequence, and fractions preserve surjections.
+Tensoring by the localized ring is this localization of modules.
+Thus every term of $D_2$ is flat.
+
+For a bounded complex of flat modules, tensoring the augmentation
+$K_R\to k$ is a quasi-isomorphism.
+Filter by the finitely many degrees of that bounded complex.
+On each quotient, flatness preserves the exact augmented resolution
+of the preceding lemma. The finite filtration proves the claim.
+It follows that $D_2\otimes_RK_R\to D_2\otimes_Rk$ is a
+quasi-isomorphism of algebras.
+Each localization term becomes zero: an invertible coordinate
+cannot act by zero on a nonzero module.
+Only $k^2$ in degree zero remains, with componentwise multiplication.
+
+Construct a flat model for the cohomology algebra by setting
+\[
+ E=R\oplus L,
+ \qquad (a,\ell)(b,m)=(ab,am+\ell b),
+ \qquad d(a,\ell)=(0,d_L\ell).
+\]
+The entire summand $L$ has square-zero multiplication.
+The map $E\to R\oplus J[-2]$ is identity on $R$, the quotient
+map $R_{xy}\to J$ in degree two, and zero on the other terms of $L$.
+It is multiplicative and is a quasi-isomorphism by the calculation
+of $H^*(L)$.
+The terms of $E$ are again flat and bounded.
+Therefore its derived fibre is computed by $E\otimes_Rk$.
+Every localization vanishes, leaving the first $k$ and the degree-zero
+copy of $k$ from $L^0$.
+The latter is square zero. This gives $k[\epsilon]/(\epsilon^2)$.
+
+The element $\epsilon$ is nonzero and nilpotent.
+The algebra $k\times k$ has no nonzero nilpotent element, since
+$(a,b)^n=0$ forces $a=b=0$ in a field.
+The two fibre algebras cannot be isomorphic.
+The preceding lemma therefore excludes every zigzag of
+$R$-algebra quasi-isomorphisms from $D_2$ to its cohomology.
+\end{proof}
+
+The same argument in one coordinate uses
+$k[z]\otimes\Lambda(e_z)$ with $de_z=z$.
+Replace $L$ by $[R\to K]$ in degrees zero and one.
+It proves the corresponding nonformality of $D_1$ over $k[z]$.
+
+The collision branches are visible before any choice of generators
+for a state algebra. Specialization retains their two orthogonal
+idempotents. Replacing the coefficient complex by its cohomology
+changes that multiplication into a square-zero extension.
+Thus higher multiplication data in the coefficient algebra can be
+forced by the geometry of exchanging insertions.
+
+\begin{figure}[htbp]
+\centering
+\[
+\begin{array}{c@{\qquad\qquad}c}
+ D_2 & H^*(D_2)=R\oplus J[-2]\\[4pt]
+ \Big\downarrow\scriptstyle{-\otimes_RK_R}
+ &\Big\downarrow\scriptstyle{-\otimes_RK_R}\\[4pt]
+ k\times k & k[\epsilon]/(\epsilon^2)\\[4pt]
+ (1,0)^2=(1,0),\quad(0,1)^2=(0,1)
+ & \epsilon\ne0,\quad\epsilon^2=0
+\end{array}
+\]
+\caption{At coincidence, two independent order branches and a square-zero
+class have the same vector-space dimension. Their products distinguish
+the two derived fibres.}
+\end{figure}
+
+\section{Residues pair singular coefficients with formal jets}
+
+To measure a coefficient near a fixed point, retain all its Taylor
+coefficients. The completed ring is
+\[
+ \widehat R=k[[x,y]],\qquad \mathfrak m=(x,y).
+\]
+The $\mathfrak m$-adic topology has $\mathfrak m^n$ as neighborhoods
+of zero. A $k$-linear functional $\lambda:\widehat R\to k$, with
+$k$ discrete, is continuous exactly when it kills some $\mathfrak m^n$.
+This is the continuity criterion of Section~\ref{sec:cc-truncations}.
+Equivalently, $\lambda$ depends on finitely many Taylor coefficients.
+
+Repeat the localization quotient over $\widehat R$:
+\[
+ \widehat J=
+ \widehat R[x^{-1},y^{-1}]/
+ \bigl(\widehat R[x^{-1}]+\widehat R[y^{-1}]\bigr).
+\]
+Every numerator divided by $x^py^q$ has a unique doubly negative
+part, involving only the terms with powers of $x$ below $p$ and
+powers of $y$ below $q$ in the numerator.
+That is a finite rectangle of coefficients.
+The remaining terms lie in the two submodules being divided out.
+Thus $\widehat J$ has the same $k$-basis as $J$.
+
+Attach the oriented symbol $dx\wedge dy$, with
+$dy\wedge dx=-dx\wedge dy$, and put
+\[
+ \rho_{ab}=x^{-a-1}y^{-b-1}\,dx\wedge dy,
+ \qquad a,b\ge0.
+\]
+It records the chosen ordering of the two coordinates in the residue.
+Define $\operatorname{Res}$ to extract the coefficient of
+$x^{-1}y^{-1}\,dx\wedge dy$.
+Multiplication by a formal series is well-defined on every $\rho_{ab}$:
+only finitely many of its Taylor coefficients survive the quotient.
+
+\begin{proposition}\label{prop:ocr-residue-dual}
+The pairing
+\[
+ \langle f,\rho\rangle=\operatorname{Res}(f\rho)
+\]
+identifies $\widehat J\,dx\wedge dy$ with the continuous $k$-linear
+dual of $\widehat R$. Explicitly,
+\[
+ \langle x^iy^j,\rho_{ab}\rangle=\delta_{ia}\delta_{jb}.
+\]
+Here $\delta_{ia}$ is $1$ when $i=a$ and $0$ otherwise.
+\end{proposition}
+
+\begin{proof}
+Multiplication changes the powers of $\rho_{ab}$ to
+$i-a-1$ and $j-b-1$.
+Their residue is nonzero precisely when $i=a$ and $j=b$.
+The functional associated to $\rho_{ab}$ therefore kills
+$\mathfrak m^{a+b+1}$ and is continuous.
+Every finite linear combination remains continuous.
+
+Conversely, a continuous functional factors through
+$\widehat R/\mathfrak m^n$ for some $n$.
+This quotient has finite basis $x^iy^j$ with $i+j<n$.
+The displayed pairing represents its dual basis by the corresponding
+$\rho_{ij}$. This proves surjectivity.
+The same pairing proves injectivity coefficient by coefficient.
+\end{proof}
+
+Multiplication by $x$ lowers the first index:
+\[
+ x\rho_{ab}=\rho_{a-1,b}\quad(a\ge1),\qquad x\rho_{0b}=0.
+\]
+There is an identical formula for $y$ and the second index.
+Formal differentiation gives
+\[
+ \partial_x\rho_{ab}=-(a+1)\rho_{a+1,b},\qquad
+ \partial_y\rho_{ab}=-(b+1)\rho_{a,b+1}.
+\]
+These operations obey $[\partial_x,x]=1$ and
+$[\partial_y,y]=1$, with every cross commutator zero.
+They follow either by differentiating Laurent monomials or by direct
+substitution in the displayed formulas, including $a=0$ and $b=0$.
+In characteristic zero,
+\[
+ \rho_{ab}=\frac{(-1)^{a+b}}{a!b!}
+ \partial_x^a\partial_y^b\rho_{00}.
+\]
+Thus a single supported coefficient generates all derivative
+coefficients, with their normalization fixed.
+
+The scalar residue by itself is not $\widehat R$-linear to
+$k=\widehat R/\mathfrak m$.
+Indeed, $\operatorname{Res}(x\rho_{10})=1$, while $x$ acts as zero
+on $k$. The whole principal-part module is required when an
+operation must retain the action of coordinate functions.
+
+\section{Restricting a transverse coordinate retains a witness}
+
+Consider the coordinate line $y=0$.
+Setting $y=0$ directly in a fraction containing $y^{-1}$ is undefined.
+Even the quotient operation on $J$ removes all classes, since
+multiplication by $y$ is surjective:
+$y\rho_{a,b+1}=\rho_{ab}$.
+The ordinary quotient $J/yJ$ is zero.
+
+The equation $y=0$ can instead retain its witness, by tensoring with
+$k[y]\otimes\Lambda(e_y)$, $de_y=y$.
+On the coefficient module $J$, this gives
+\[
+ J e_y\xrightarrow{\ y\ }J,
+\]
+in degrees $-1$ and zero.
+Its degree-zero cohomology vanishes.
+Its degree-minus-one cohomology is
+\[
+ \ker(y:J\to J)=\bigoplus_{a\ge0} kx^{-a-1}y^{-1}.
+\]
+The residue in $y$, normalized by
+$x^{-a-1}y^{-1}\,dx\wedge dy\mapsto x^{-a-1}\,dx$,
+identifies this kernel with one-variable principal parts.
+This is an explicit shift in degree, obtained by retaining the
+equation's witness.
+
+For the supported coefficient $J[-2]$, the same calculation places
+the resulting one-variable principal parts in degree one.
+This matches their degree in the one-variable support complex.
+A restriction of an operator algebra must also carry its
+multiplication and brackets through this comparison.
+The coefficient calculation gives the map and its degree, which
+those operations must respect.
+
+\section{The elementary matrix brane retains its derived equation}
+
+The two holomorphic coordinates also enter the algebra of a point
+brane. At matrix rank $N\ge1$, introduce two $N\times N$ matrices
+$X=(X^i_j)$ and $Y=(Y^i_j)$ of commuting polynomial variables.
+Their ordinary matrix products need not commute.
+The equation for a commuting pair is
+\[
+ (XY-YX)^i_j=\sum_{a=1}^N
+ (X^i_aY^a_j-Y^i_aX^a_j)=0.
+\]
+Retain a degree-minus-one witness $\psi^i_j$ for each entry.
+Define the commutative graded algebra
+\[
+ \mathcal R_N=k[X^i_j,Y^i_j\mid 1\le i,j\le N]
+ \otimes\Lambda(\psi^i_j\mid1\le i,j\le N).
+\]
+The differential is
+\[
+ d\psi^i_j=(XY-YX)^i_j,
+ \quad dX^i_j=dY^i_j=0.
+\]
+The exterior generators anticommute.
+Extend $d$ by the graded Leibniz rule.
+Its square vanishes on every generator and hence on every product.
+This differential algebra defines the derived commuting-pair equation.
+The word ``derived'' here specifies this algebra of equations and
+witnesses, including its negative-degree cohomology.
+
+The trace of a matrix is the sum of its diagonal entries.
+Commutativity of the coefficient ring gives
+\[
+ \operatorname{Tr}(XY-YX)
+ =\sum_{i,a}(X^i_aY^a_i-Y^i_aX^a_i)=0,
+\]
+by interchanging $i$ and $a$ in the second sum.
+Consequently $\operatorname{Tr}\psi=\sum_i\psi^i_i$ is a cycle.
+
+\begin{proposition}\label{prop:ocr-scalar-brane-class}
+For every $N\ge1$, the class $[\operatorname{Tr}\psi]$ is nonzero
+in $H^{-1}(\mathcal R_N)$.
+At $N=1$ the entire differential vanishes and
+\[
+ H^*(\mathcal R_1)=k[X,Y]\otimes\Lambda(\psi).
+\]
+\end{proposition}
+
+\begin{proof}
+Set every entry of $X$ and $Y$ to zero.
+This defines a map of differential graded algebras
+$\mathcal R_N\to\Lambda(\psi^i_j)$ with zero differential in the
+target. The image of $\operatorname{Tr}\psi$ is the nonzero sum
+of distinct exterior generators $\psi^i_i$.
+A boundary would map to zero in a complex with zero differential.
+The asserted class therefore cannot be a boundary.
+For $N=1$ the commutator is identically zero, proving the last claim.
+\end{proof}
+
+Choosing the ordinary coordinate algebra $k[X,Y]$ at rank one
+amounts to additionally setting $\psi=0$.
+The calculation identifies precisely which class that choice removes.
+It links the witnesses of Chapter~\ref{chap:relations-homotopies}
+to the actual brane equation in two holomorphic coordinates.
+The principal-part pairing supplies its possible cotangent
+coefficients. Constructing the corresponding field operations requires
+a differential and a pairing on fields with their spatial dependence
+retained.

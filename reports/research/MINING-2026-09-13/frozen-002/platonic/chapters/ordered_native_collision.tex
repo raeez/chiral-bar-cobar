@@ -1,0 +1,580 @@
+\chapter{Collision maps on finite powers of the curve}
+\label{chap:native-ordered-collision}
+
+At a binary collision, choosing the transverse order selects one of
+two branches. At a triple collision, two successive choices must
+select the same total order. These statements have a realization by
+maps of schemes and by morphisms of differential modules. They give
+an explicit finite-arity compatibility for the pointwise ordered bar.
+
+\section{The binary coefficient and its two restrictions}
+
+Work over $\mathbb C$ with cohomological grading. Put
+$R=\mathbb C[x]$ and $K=R[x^{-1}]$, where $x$ is a normal coordinate
+to the diagonal. Glue two copies of $\operatorname{Spec}R$ along
+$\operatorname{Spec}K$. The ordered \v{C}ech algebra is
+\[
+ D^0=R\oplus R,\qquad D^1=K,\qquad d(a,b)=b-a.
+\]
+Its products are
+\[
+ (a,b)(c,e)=(ac,be),\quad (a,b)v=av,\quad
+ v(c,e)=ve,\quad vv'=0.
+\]
+The equality $be-ac=(b-a)e+a(e-c)$ proves the only nonzero
+Leibniz identity. Associativity follows from the two endpoint
+actions. Thus $H^0(D)=R$ and $H^1(D)=K/R$.
+
+\begin{proposition}[Two collision restrictions]
+\label{prop:native-binary-restrictions}
+The two chart restrictions induce distinct algebra maps
+\[
+ D\otimes_R^{\mathbb L}\mathbb C\simeq\mathbb C\times\mathbb C
+ \longrightarrow\mathbb C.
+\]
+They are the two coordinate projections. The algebra $D$ is not
+formal as a unital associative algebra with central $R$-action.
+\end{proposition}
+\begin{proof}
+The terms of $D$ are flat over $R$. Tensoring its two-term complex
+with $R/(x)$ therefore computes the derived fibre. The localization
+term vanishes, leaving $\mathbb C^2$ with componentwise product.
+Endpoint restriction gives the asserted projections.
+
+A bounded flat model of the cohomology algebra is
+$E=R\oplus L$, where $L=[R\to K]$ occupies degrees zero and one
+and has square-zero multiplication. The quotient $K\to K/R$
+gives an algebra quasi-isomorphism $E\to H^*(D)$.
+Its derived fibre is $\mathbb C[\epsilon]/(\epsilon^2)$ in degree
+zero. This algebra has a nonzero nilpotent, whereas
+$\mathbb C\times\mathbb C$ has none. Derived scalar extension
+preserves algebra quasi-isomorphisms: it can be computed by the
+finite free scalar resolution $[R\xrightarrow{x}R]$.
+Consequently an $R$-algebra zigzag from $D$ to $H^*(D)$ would give
+an impossible isomorphism of these fibre algebras.
+\end{proof}
+
+In particular, the two restrictions are data of the derived
+coefficient algebra. The dual-number fibre has only one unital
+$\mathbb C$-algebra map to $\mathbb C$.
+
+\section{Order charts and differential modules}
+
+Let $X$ be a smooth separated finite-type complex algebraic curve.
+For a nonempty finite set $I$, set $S_I=X^I$ and let
+$\operatorname{Ord}(I)$ be its set of total orders.
+For a nonempty set $J\subset\operatorname{Ord}(I)$, let $D(J)$
+be the set of unordered label pairs whose order varies in $J$.
+Define the open subset
+\[
+ U_J=S_I\setminus\bigcup_{\{i,j\}\in D(J)}\Delta_{ij}.
+\]
+Take a copy of $S_I$ for each total order and identify two copies
+on $U_{\{\sigma,\tau\}}$ by the coordinate identity. Denote the
+result by $Y_I$ and its projection to $S_I$ by $p_I$.
+The identity
+\[
+ D(\{\sigma,\tau,\rho\})
+ =D(\{\sigma,\tau\})\cup D(\{\sigma,\rho\})
+\]
+proves the gluing cocycle. Thus $Y_I$ is a smooth, possibly
+nonseparated scheme. The map $p_I$ is an etale local isomorphism.
+For $X=\mathbb A^1$, these are the order charts of
+\cite[\S\S4.1--4.2]{AKY24}.
+
+Write $j_J:U_J\hookrightarrow S_I$ and
+$\mathcal R_J=j_{J,*}\mathcal O_{U_J}$.
+The diagonals are effective Cartier divisors because $X$ is smooth
+of dimension one and separated. Locally $\mathcal R_J$ is therefore
+a flat localization of $\mathcal O_{S_I}$. Vector fields act by
+derivations of that localization.
+
+Let
+\[
+ \Omega_J=\mathbb C[t_\sigma,dt_\sigma\mid\sigma\in J]
+ \big/\left(\sum t_\sigma-1,\sum dt_\sigma\right),
+ \qquad d(t_\sigma)=dt_\sigma.
+\]
+The variables $t_\sigma$ have degree zero and $dt_\sigma$ degree
+one. Define the sheaf of commutative dg algebras
+\[
+ \mathcal C_I=
+ \left\{(c_J):c_J\in\mathcal R_J\otimes_{\mathbb C}\Omega_J,
+ \quad c_J|_K=c_K|_{U_J}\text{ for }\varnothing\ne K\subset J\right\}.
+\]
+The left side of each face equation sets the variables outside $K$
+to zero. The differential acts on simplex forms. Vector fields on
+$S_I$ act on $\mathcal R_J$ and kill all simplex variables. These
+actions commute with $d$, satisfy the flat-connection identities,
+and act by derivations of multiplication. Thus $\mathcal C_I$ is
+a commutative dg algebra in left $D_{S_I}$-modules with their
+tensor product over $\mathcal O_{S_I}$.
+
+This is a model of $Rp_{I,*}\mathcal O_{Y_I}$ as a complex of
+$\mathcal O_{S_I}$-modules with flat connection. Here $Rp_*$
+denotes derived sheaf pushforward of the structure sheaf, with
+the connection just specified. Indeed, the finite chart
+\v{C}ech resolution has terms
+\[
+ \check{\mathcal C}_I^r=
+ \bigoplus_{\sigma_0<\cdots<\sigma_r}
+ \mathcal R_{\{\sigma_0,\ldots,\sigma_r\}}.
+\]
+An auxiliary ordering is used only in this formula.
+The augmented resolution contracts on each stalk by inserting a
+chart containing that stalk. Each intersection maps affinely to
+$S_I$, so its higher pushforwards vanish. Polynomial integration
+from the compatible simplex forms to this finite complex is a
+quasi-isomorphism, as in the Thom--Sullivan comparison
+\cite[Appendix A.3]{AKY24}. It commutes with the coefficient
+derivations. Integration is used as a comparison of complexes,
+not as a strictly multiplicative map to the ordered cup product.
+
+To express the construction in right differential modules, put
+$\mathcal C_I^r=\omega_{S_I}\otimes\mathcal C_I$.
+Our pointwise convention is
+\[
+ M\tensor^!N=(M\otimes_{\mathcal O_S}^{\mathbb L}N)
+                  \otimes_{\mathcal O_S}\omega_S^{-1},
+ \qquad\mathbbm1_S=\omega_S.
+\]
+For $f:S\to T$, write
+\[
+ f^\dagger M=\omega_S\otimes
+ Lf^*(\omega_T^{-1}\otimes M)
+\]
+with the induced flat connection. This specifies the unshifted
+inverse-image convention; no dimension shift is implicit.
+The transfer-module description gives this inverse image and its
+chain rule \cite[\S28.5, equation (21)]{EtingofD28}.
+
+\section{Merging ordered blocks}
+
+Let $p:I\twoheadrightarrow J$ be a surjection. Choose a total
+order $\tau_j$ on each fibre $p^{-1}(j)$. If $\sigma$ orders $J$,
+let $e_{p,\tau}(\sigma)$ be the order on $I$ obtained by listing
+the fibres in order $\sigma$ and each fibre in order $\tau_j$.
+Let $\delta_p:S_J\hookrightarrow S_I$ repeat the coordinate of
+each block.
+
+\begin{theorem}[Ordered collision morphism]
+\label{thm:native-ordered-collision}
+The chart maps $S_J\xrightarrow{\delta_p}S_I$ indexed by
+$\sigma\mapsto e_{p,\tau}(\sigma)$ glue to a morphism
+\[
+ \iota_{p,\tau}:Y_J\longrightarrow Y_I,
+ \qquad p_I\iota_{p,\tau}=\delta_p p_J.
+\]
+They induce a morphism of commutative algebra objects in right
+$D_{S_J}$-modules,
+\begin{equation}\label{eq:native-coefficient-collision}
+ \kappa_{p,\tau}:\delta_p^\dagger\mathcal C_I^r
+                   \longrightarrow\mathcal C_J^r.
+\end{equation}
+For nested surjections, these morphisms compose according to
+concatenation of the chosen fibre orders. Identity surjections
+give identity morphisms. Bijections act by relabelling.
+\end{theorem}
+\begin{proof}
+Two expanded orders have identical restrictions inside every fibre.
+Their varying pairs are therefore cross-fibre pairs only. A pair
+$i,i'$ in different fibres varies precisely when the corresponding
+pair $p(i),p(i')$ varies in the two block orders. Hence
+\[
+ \delta_p^{-1}U_{e_{p,\tau}(L)}=U_L
+ \quad(\varnothing\ne L\subset\operatorname{Ord}(J)).
+\]
+This proves both the gluing assertion and the existence of the
+coefficient localization maps. It also proves compatibility on
+every overlap, including intersections of more than two charts.
+
+In the simplex model, restrict $c$ to the component indexed by
+$e_{p,\tau}(L)$, identify $t_{e_{p,\tau}(\sigma)}$ with
+$t_\sigma$, and pull back its regular coefficients by $\delta_p$.
+This gives a map $\delta_p^*\mathcal C_I\to\mathcal C_J$ of
+commutative dg algebras with connection. No within-fibre
+denominator is inverted on a retained component.
+In coordinates the connection identity is
+\[
+ \partial_{Z_j}\kappa_{p,\tau}(c)
+ =\kappa_{p,\tau}\left(\sum_{i\in p^{-1}(j)}\partial_{z_i}c\right).
+\]
+The coordinate identity is the chain rule for the geometric map,
+so it glues under changes of coordinates. Precomposing with the
+derived-to-underived pullback map gives $L\delta_p^*\mathcal C_I
+\to\mathcal C_J$. Equivalently, apply derived pullback to a
+flat replacement before the displayed map. Tensoring with
+$\omega_{S_J}$ gives~\eqref{eq:native-coefficient-collision}.
+
+Suppose $q:J\twoheadrightarrow K$ has fibre orders $\upsilon$.
+The induced order on $(qp)^{-1}(k)$ first lists the $j$'s in
+order $\upsilon_k$, then lists $p^{-1}(j)$ in order $\tau_j$.
+Both composites use the same coordinate diagonal and the same
+injection of total-order charts. Their simplex restrictions and
+coefficient pullbacks are consequently equal. Derived pullback
+transports this equality through its canonical composition
+isomorphism. Unary identities and relabelling follow from the
+same formulas.
+\end{proof}
+
+On $\mathbb A^1$, define $q_{ii'}=\sum_{i<_\sigma i'}t_\sigma$
+componentwise and
+$\omega_{ii'}=dq_{ii'}/(z_i-z_{i'})$.
+On a component where this denominator is unavailable the numerator
+is zero, and the component is defined to be zero. Thus
+$\omega_{ii'}\in\mathcal C_I^1$ is a closed coefficient.
+Its class is nonzero: on the edge joining two orders differing
+by an adjacent exchange, integration gives
+$\pm(z_i-z_{i'})^{-1}$. An exact element would instead give a
+difference of polynomial endpoint values.
+The collision morphism satisfies
+\begin{equation}\label{eq:native-collision-one-form}
+ \kappa_{p,\tau}(\omega_{ii'})=
+ \begin{cases}
+ 0,&p(i)=p(i'),\\
+ \omega_{p(i),p(i')},&p(i)\ne p(i').
+ \end{cases}
+\end{equation}
+In the first case, restriction to the retained face sets
+$dq_{ii'}=0$ before coordinate substitution.
+
+\begin{example}[Three labels]
+Merge $1,2$ to $a$, keep $3$ as $b$, and choose $1<2$ in
+the merged fibre. The two retained orders are $123$ and $312$.
+The classes $\omega_{13},\omega_{23}$ both map to $\omega_{ab}$,
+whereas $\omega_{12}$ maps to zero.
+Merging $a<b$ next and merging $2<3$ first, then $1<(23)$,
+both select the chart $123$. At total collision their common
+map is the projection $\mathbb C^6\to\mathbb C$ at $123$.
+Choosing $2<1$ instead selects a different branch.
+\end{example}
+
+\section{Ordered states and the bar compatibility}
+
+Let $V_I$ have basis $u_i$, $i\in I$, in cohomological degree
+zero and weight one. Use the free associative algebra of finite
+words $T(V_I)$ with zero differential and its word-length
+augmentation. Define
+\[
+ \mathcal A_I=\mathcal C_I\otimes_{\mathbb C}T(V_I).
+\]
+Its state generators are horizontal. Products concatenate words,
+and coefficients commute with states with the graded tensor sign.
+This makes $\omega_{S_I}\otimes\mathcal A_I$ an augmented
+associative algebra over $\mathcal C_I^r$ in pointwise right
+differential modules. The augmentation is to $\mathcal C_I^r$.
+
+For an ordered surjection define the state map by
+\[
+ u_{i_1}\cdots u_{i_m}\longmapsto
+ u_{p(i_1)}\cdots u_{p(i_m)}.
+\]
+Together with $\kappa_{p,\tau}$ it gives an augmented algebra
+morphism $\alpha_{p,\tau}:L\delta_p^*\mathcal A_I\to\mathcal A_J$
+in left differential modules, and hence its right-module version.
+In particular, $u_1u_2$ becomes $u_a^2$ when $1,2$ merge. The
+target retains the resulting composite state as an actual word.
+
+\begin{theorem}[Collision and the relative ordered bar]
+\label{thm:native-collision-bar}
+Form the relative reduced bar
+\[
+ B_{\mathcal C_I}\mathcal A_I
+ =\bigoplus_{r\ge0}(s\overline{\mathcal A}_I)
+                      ^{\otimes_{\mathcal C_I}r},\qquad |s|=-1.
+\]
+Ordered collision induces a morphism
+\[
+ L\delta_p^*B_{\mathcal C_I}\mathcal A_I
+ \longrightarrow B_{\mathcal C_J}\mathcal A_J
+\]
+of coalgebras with differential and connection. It commutes with
+every adjacent bar face and every word cut. These maps have the
+nested-partition coherence of
+Theorem~\ref{thm:native-ordered-collision}.
+\end{theorem}
+\begin{proof}
+Write $[a_1|\cdots|a_r]=sa_1\otimes\cdots\otimes sa_r$ and use
+$s(ca)=(-1)^{|c|}c\,sa$. The bar differential is determined by
+\[
+ b_1(sa)=-s(da),\qquad b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
+\]
+Insert these degree-one maps with the tensor sign. Two contractions
+on disjoint input pairs cancel. The overlapping contribution is
+\[
+ b_2^2[a|b|c]=(-1)^{|b|}s((ab)c-a(bc))=0.
+\]
+The mixed internal terms give the Leibniz identity, and the remaining
+terms give $d^2=0$. Thus the total differential squares to zero.
+
+Send a bar word to the word of its images under $\alpha_{p,\tau}$.
+This map has degree zero, commutes with the internal differential,
+and preserves products and degrees. It therefore commutes with
+the two displayed cogenerator maps, including their signs.
+It also commutes with a cut because it does not alter the number
+or order of bar letters. The coefficient chain rule gives the
+connection identity. Derived extension of scalars gives the stated
+map; all bar constructions can be computed by the free state-word
+model just displayed. Composition reduces to composition on each
+coefficient and each state letter.
+\end{proof}
+
+For the three-label merger above, the nonzero calculation is
+\[
+ \alpha b[u_1|u_2|u_3]
+ =[u_a^2|u_b]-[u_a|u_au_b]
+ =b\alpha[u_1|u_2|u_3].
+\]
+Its next boundary is $[u_a^2u_b]-[u_a(u_au_b)]=0$.
+Multiplying the input by $\omega_{13}$ transports its coefficient
+to $\omega_{ab}$, with the coefficient differential and tensor
+sign retained. Thus collision acts simultaneously on the actual
+derived coefficients and the ordered composite states.
+
+For each weight the relative bar is finite free over
+$\mathcal C_I$: state words have positive weights and there are
+only finitely many ordered cuts of a word of a fixed weight.
+The relative augmentation dual is consequently
+\[
+ \prod_{w\ge0}
+ \operatorname{Hom}_{\mathcal C_I}
+       (B_{\mathcal C_I}\mathcal A_I(w),\mathcal C_I),
+\]
+where the product is taken in each cohomological degree.
+The differential is $dF=d_{\mathcal C_I}F-(-1)^{|F|}Fb$ and the
+product uses deconcatenation. The left bar resolution is
+$P_I=\mathcal A_I\otimes_{\mathcal C_I}B_{\mathcal C_I}\mathcal A_I$.
+Its additional leading face is
+\[
+ a_0\otimes[a_1|\cdots|a_r]\longmapsto
+ -(-1)^{|a_0|}a_0a_1\otimes[a_2|\cdots|a_r].
+\]
+The degree-minus-one insertion
+$h(a_0\otimes w)=-1\otimes[\overline a_0|w]$ satisfies
+$dh+hd=1-\eta\epsilon$ on length zero and $dh+hd=1$ on
+positive lengths. Adjacent terms cancel, leaving the leading
+augmentation-ideal term and its scalar complement. The internal
+terms cancel by $d\overline a_0=\overline{da_0}$.
+The differential of a free state-word basis vector uses shorter
+bar words. A map into an acyclic module is therefore null-homotopic
+by choosing primitives in increasing bar length. This proves the
+semifree resolution property. Its coefficient dual computes
+$R\operatorname{Hom}_{\mathcal A_I}(\mathcal C_I,\mathcal C_I)$
+in dg modules over the coefficient algebra. This is a relative
+algebraic Hom, not the Hom of horizontal sections.
+Deconcatenation makes $P_I$ a right bar comodule. A coefficient
+functional $F$ lifts to $(1\otimes F)\Delta_{P_I}$, with the
+tensor sign. Cutting twice identifies convolution with composition
+of these lifts. Their postcomposition with the augmentation recovers
+$F$, so the identification also preserves the derived product.
+Dualizing a collision also changes its coefficient algebra.
+Put $Q_I=B_{\mathcal C_I}\mathcal A_I$ and
+\[
+ Q_I^\vee(w)=\operatorname{Hom}_{\mathcal C_I}
+                   (Q_I(w),\mathcal C_I).
+\]
+For the ordered surjection $(p,\tau)$, set
+$\mathcal B=L\delta_p^*\mathcal C_I$ and use
+$\kappa_{p,\tau}:\mathcal B\to\mathcal C_J$ in left differential
+modules. Its scalar-extension functor on $\mathcal C_I$-modules is
+\[
+ E_{p,\tau}(M)=\mathcal C_J\otimes_{\mathcal B}^{\mathbb L}
+                                L\delta_p^*M.
+\]
+The bar collision map has the $\mathcal C_J$-linear form
+\[
+ \gamma_{p,\tau,w}:E_{p,\tau}(Q_I(w))\longrightarrow Q_J(w).
+\]
+
+\begin{proposition}[Dual collision after scalar extension]
+\label{prop:native-dual-collision}
+Transposition gives the morphism of complexes
+\begin{equation}\label{eq:native-dual-collision}
+\begin{aligned}
+ d^\vee_{p,\tau,w}:{}&
+ \operatorname{Hom}_{\mathcal C_J}(Q_J(w),\mathcal C_J)\\
+ &\longrightarrow
+ \mathcal C_J\otimes_{\mathcal B}^{\mathbb L}
+ L\delta_p^*\operatorname{Hom}_{\mathcal C_I}(Q_I(w),\mathcal C_I).
+\end{aligned}
+\end{equation}
+These maps preserve the connections. Their degreewise products
+over weight define a unital morphism of convolution dg algebras
+\[
+ \prod_{w\ge0}Q_J^\vee(w)
+ \longrightarrow
+ \prod_{w\ge0}E_{p,\tau}(Q_I^\vee(w)).
+\]
+For nested ordered surjections $(p,\tau):I\to J$ and
+$(q,\upsilon):J\to K$, use the concatenated order on each fibre
+of $qp$. Under the canonical identification
+$E_{q,\upsilon}E_{p,\tau}\simeq E_{qp,\upsilon\circ\tau}$,
+\[
+ d^\vee_{qp,\upsilon\circ\tau,w}
+ =E_{q,\upsilon}(d^\vee_{p,\tau,w})
+       \circ d^\vee_{q,\upsilon,w}.
+\]
+\end{proposition}
+\begin{proof}
+At weight $w$, $Q_I(w)$ is graded free on finitely many state
+words and their ordered cuts. The bar-length filtration has at
+most $w$ steps. Its differential preserves the coefficient part
+and sends a state-word basis vector to shorter bar words.
+It is therefore a finite semifree module, hence perfect over
+$\mathcal C_I$; the displayed Hom computes its derived dual.
+
+For a single shifted free module, the evaluation map identifies
+the dual after scalar extension with the scalar extension of the
+dual. The identification is natural, commutes with differentials,
+and persists under finite sums, shifts, and mapping cones.
+Applying the finite semifree filtration gives
+\[
+ \operatorname{RHom}_{\mathcal C_J}
+       (E_{p,\tau}(Q_I(w)),\mathcal C_J)
+ \simeq E_{p,\tau}(Q_I^\vee(w)).
+\]
+In the fixed free models the map in
+\eqref{eq:native-dual-collision} sends $F$ to
+$F\circ\gamma_{p,\tau,w}$, followed by this identification.
+Since $\gamma$ is a degree-zero chain map,
+$d(F\gamma)=(dF)\gamma$. The connection on Hom is the
+commutator connection, so horizontality of $\gamma$ proves the
+connection assertion as well.
+
+The cut map at weights $a,b$ has target
+$Q_I(a)\otimes_{\mathcal C_I}Q_I(b)$ and source $Q_I(a+b)$.
+The coalgebra identity for $\gamma$ consequently gives
+$d^\vee(F*G)=d^\vee(F)*d^\vee(G)$ with the tensor signs.
+In weight zero the map is the identity of $\mathcal C_J$, so it
+preserves the unit. At output weight $w$, convolution uses only
+the finitely many pairs $a+b=w$. Thus these maps form algebra
+maps on every finite weight quotient and then on their inverse
+limit, represented in the stated models by degreewise products.
+The target extends coefficients separately at each weight before
+forming that product.
+
+For nested collisions, associativity of derived scalar extension
+and the identity for the coefficient maps give the displayed
+identification of the $E$ functors. The bar maps obey
+$\gamma_{qp}=\gamma_q\circ E_q(\gamma_p)$ by
+Theorem~\ref{thm:native-collision-bar}. Precomposition reverses
+this equality. Naturality of the finite-module dual identification
+then gives the stated composition formula. Every step occurs in
+a fixed weight, so the same equality holds after completion.
+\end{proof}
+
+The scalar extension is necessary even for the binary coefficient
+fibre. Take $B=\mathbb C^2$, let $C=\mathbb C$ carry the
+$B$-action through the first projection, and put $e_2=(0,1)$.
+Every $B$-linear map $f:C\to B$ satisfies
+$e_2f(1)=f(e_2\cdot1)=0$. Its image lies in the first idempotent
+summand, so it cannot send $1$ to $1_B=(1,1)$.
+There is therefore no unital $B$-linear reverse map $C\to B$.
+After extension, $C\otimes_B^{\mathbb L}B\simeq C$, and the
+weight-zero dual collision map is the identity, as required.
+
+\Needspace{16\baselineskip}
+\begin{proposition}[Completed reconstruction and collision]
+\label{prop:native-collision-cobar}
+Let $Q_I=B_{\mathcal C_I}\mathcal A_I$, with positive-weight
+reduced part $\overline Q_I$, and let $t$ have degree one.
+The cobar differential on tensor words in $t\overline Q_I$ is
+\[
+ d_\Omega(tc)=-t(bc)+
+ \sum_{\overline\Delta c=\sum c'\otimes c''}
+       (-1)^{|c'|+1}(tc')(tc'').
+\]
+It extends by Leibniz to a square-zero differential. The counit
+\[
+ \Omega_{\mathcal C_I}Q_I\longrightarrow\mathcal A_I
+\]
+sends $t(sa)$ to $a$ and longer bar generators to zero.
+It is a quasi-isomorphism in each weight. The same holds after
+taking the derived inverse limit of the finite weight quotients.
+Ordered collision commutes with the counit and the cobar differential.
+\end{proposition}
+\begin{proof}
+The square of the displayed differential vanishes by $b^2=0$,
+the coderivation identity, and coassociativity of cuts, respectively.
+On $t[a|b]$, the counit sends the internal and cut terms to
+$-(-1)^{|a|}ab$ and $(-1)^{|a|}ab$. They cancel.
+Single-letter generators commute with the internal differential;
+all longer generators have zero image under the chain-map identity.
+
+Fix a weight $w$. Filter by the number of augmentation-ideal
+state letters before their multiplication. This number is at most
+$w$. State multiplication lowers it, whereas the cut and coefficient
+differentials preserve it. For a fixed sequence of $m$ state letters
+in the associated graded, each of its $m-1$ gaps is either inside
+one bar generator or between two cobar factors. The cut differential
+is the tensor differential of $m-1$ two-term identity complexes.
+Indeed, after state letter $j$, let $c_j$ count the preceding
+outside gaps. The splitting sign is
+$(-1)^{1+\sum_{i\le j}|a_i|-j+c_j}$.
+The degree before that gap in the interleaved letter-gap complex
+is $\sum_{i\le j}|a_i|-(j-1-c_j)$, which has the same parity.
+For $m>1$ a contraction on the first gap contracts this complex.
+For $m=1$ it is the original state module, mapped identically to
+$\mathcal A_I(w)$. Filter the positive-weight target in step one.
+The finite filtration proves the weightwise quasi-isomorphism.
+Derived inverse limits preserve equivalences. On affine coefficient
+charts the transition projections are degreewise surjective, so the
+limit is represented by the degreewise product of weight complexes.
+
+Collision preserves state products, weights, bar differentials, and
+cuts. Substitution in the cobar formula and the counit on generators
+therefore proves both commuting identities. The completed maps
+are the inverse limits of these finite-weight maps.
+\end{proof}
+
+The completed target is $\widehat{\mathcal A}_I$, rather than the
+finite-word algebra $\mathcal A_I$. For example,
+$\sum_{m\ge0}u_i^m$ is allowed in the completed target in degree zero.
+
+\clearpage
+\section{The comparison with Ran coefficients}
+
+\begin{proposition}[The diagonal transition is not invertible]
+\label{prop:native-collision-ran-boundary}
+The family $\mathcal C_I$ with the collision maps above is not
+a Cartesian family for the usual Ran diagonal transitions.
+\end{proposition}
+\begin{proof}
+At a point of $S_I$, partition the labels into equal-coordinate
+blocks $B$. Tensor the bounded flat \v{C}ech complex with the
+residue field. A term vanishes precisely when its overlap inverts
+a difference inside one such block. The surviving orders split
+into classes with identical restrictions to every $B$.
+Each class gives the cochain complex of a simplex and contributes
+one residue field in degree zero. Multiplication is coordinatewise.
+The derived fibre therefore has $\prod_B |B|!$ branches.
+For two coincident labels it is $\mathbb C^2$; for one label it
+is $\mathbb C$. The transition selects a projection between
+these fibres, which cannot be an equivalence.
+\end{proof}
+
+Thus Theorem~\ref{thm:native-collision-bar} constructs a relative
+pointwise bar on finite powers of $X$, with ordered diagonal maps.
+To compare it with $\BarPerp$ on $\Fact_D(X)$ requires a specified
+factorization object and a morphism carrying these coefficients,
+state words, and diagonal maps to that object. Chiral convolution
+requires its own multiplication morphism. The finite-power theorem
+supplies neither a Cartesian Ran replacement nor that multiplication.
+
+A second obstruction concerns a proposed multiplication with the
+coefficient $\omega_{ij}$. Suppose $a_i,a_j,b_{ij}$ freely generate
+state summands over $\mathcal C_I$, have degrees $0,0,-1$, and are
+horizontal. The prescription
+$a_ia_j=\omega_{ij}b_{ij}$ cannot define a multiplication in
+differential modules with this connection. Indeed,
+\[
+ \partial_{z_i}(\omega_{ij}b_{ij})
+ =-\frac{dq_{ij}}{(z_i-z_j)^2}b_{ij}\ne0,
+\]
+as restriction to an adjacent-exchange edge shows, whereas
+$(\partial_{z_i}a_i)a_j+a_i(\partial_{z_i}a_j)=0$.
+The prescription can define an associative dg coefficient algebra,
+but a differential-module realization must supply a different
+connection or additional state operations. The free-word algebra
+above has horizontal multiplication and its collision compatibility
+is proved on that stated carrier.

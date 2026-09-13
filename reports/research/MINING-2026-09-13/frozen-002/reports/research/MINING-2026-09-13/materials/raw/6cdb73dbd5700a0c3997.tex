@@ -1,0 +1,589 @@
+\chapter{Bar duality with ordered collision coefficients}
+\label{chap:ordered-coefficient-bar}
+
+A product of two insertions must retain the coefficient on their
+collision region. With three insertions, its two iterated products
+must also agree on a common region of expansion. The coefficient
+algebra and the state multiplication therefore enter the same
+associativity equation.
+
+The two-branch algebra of
+Chapter~\ref{chap:ordered-collisions-residues} determines the first
+coefficient problem. For several labels, pairwise choices of order
+must come from one total order. Three labels already distinguish
+these conditions: there are six total orders, while three independent
+binary choices give eight possibilities. The two extra choices are
+cycles. We retain all total orders, construct their common
+coefficients, and place a nonzero collision class inside an
+associative multiplication.
+
+The resulting bar differential will join two states using that
+class. Its dual differential will then recover the same coefficient.
+This gives an explicit relation between collision geometry and
+Koszul duality.
+
+\section{Coefficients on all order charts}
+
+Let $I$ be a finite nonempty set of labels and put
+$R_I=\mathbb C[z_i\mid i\in I]$.
+Each $z_i$ is the holomorphic position of the corresponding label
+on a complex line. A total order $\sigma$ lists every label exactly
+once. Write $\mathcal O_I$ for the finite set of these orders.
+Take one coordinate chart with polynomial ring $R_I$ for each
+$\sigma\in\mathcal O_I$.
+
+For a nonempty subset $J\subset\mathcal O_I$, let $D(J)$ be the set
+of unordered pairs whose relative order varies among the orders in
+$J$. Their common region has coefficient ring
+\[
+ R_{I,J}=R_I[(z_i-z_j)^{-1}\mid\{i,j\}\in D(J)].
+\]
+The sign chosen for a difference does not affect its localization.
+Two charts agree on this region by the identity on coordinates.
+For three orders $\sigma,\tau,\rho$, the pairs varying among them
+are exactly the union of the pairs varying between $\sigma,\tau$
+and between $\sigma,\rho$.
+Thus the common region is independent of the anchor chart.
+The identity identifications consequently agree on triple overlaps.
+
+At fixed complex positions, divide $I$ into blocks of equal positions.
+Two total orders are identified precisely when their restrictions
+to each equality block agree.
+Every tuple of block orders extends to a total order of $I$.
+The number of retained branches is therefore
+\[
+ \prod_B |B|!,
+\]
+where $B$ runs over the equality blocks.
+In particular, a total three-point collision has six branches.
+The binary assignments $1<2<3<1$ and $1>2>3>1$ cannot occur
+in a total order.
+
+We need coefficients that retain comparisons on intersections,
+including comparisons between those comparisons.
+For each $J$, introduce symbols $t_\sigma$ of degree zero and
+$dt_\sigma$ of degree one, for $\sigma\in J$.
+Form
+\[
+ \Omega_J=
+ \mathbb C[t_\sigma\mid\sigma\in J]
+ \otimes\Lambda(dt_\sigma\mid\sigma\in J)
+ \big/\left(\sum_{\sigma\in J}t_\sigma-1,
+             \sum_{\sigma\in J}dt_\sigma\right).
+\]
+Set $d(t_\sigma)=dt_\sigma$ and $d(dt_\sigma)=0$, and extend by
+the graded Leibniz rule. The two displayed relations are preserved.
+The symbols are polynomial differential forms on a simplex:
+the $t_\sigma$ are its barycentric coordinates.
+Only this polynomial algebra of forms is used.
+
+For $K\subset J$, restriction to the face $K$ sets $t_\sigma$ and
+$dt_\sigma$ to zero for $\sigma\notin K$.
+The coefficient map $R_{I,K}\to R_{I,J}$ is localization.
+Define $C_I$ to consist of the families
+\[
+ c=(c_J)_{\varnothing\ne J\subset\mathcal O_I},
+ \qquad c_J\in R_{I,J}\otimes\Omega_J,
+\]
+whose restrictions to each face $K\subset J$ equal the localization
+of $c_K$.
+Products and the differential are taken componentwise, with
+$dz_i=0$.
+They preserve the face equations, so $C_I$ is a commutative
+differential graded algebra.
+Its role is to retain compatible coefficients and their comparison
+forms on every intersection.
+
+\section{A nonzero collision class}
+
+Fix distinct labels $i,j$. On the component indexed by $J$, put
+\[
+ q_{ij,J}=\sum_{\substack{\sigma\in J\\i\prec_\sigma j}}t_\sigma.
+\]
+These polynomials agree on faces.
+If the relative order of $i,j$ is constant on $J$, then
+$q_{ij,J}$ is either zero or one, so its differential vanishes.
+Otherwise $z_i-z_j$ is invertible in $R_{I,J}$.
+Thus the componentwise formula
+\[
+ \omega_{ij}=\frac{dq_{ij}}{z_i-z_j}
+\]
+defines a degree-one element of $C_I$: use zero on components where
+the numerator vanishes and the denominator was not inverted.
+It is closed, since $d^2q_{ij}=0$ and $d(z_i-z_j)=0$.
+Also $q_{ji}=1-q_{ij}$, so $\omega_{ji}=\omega_{ij}$.
+
+\begin{proposition}\label{prop:ocb-nonzero-coefficient}
+The class $[\omega_{ij}]$ in $H^1(C_I)$ is nonzero.
+\end{proposition}
+
+\begin{proof}
+Choose two total orders differing only by an adjacent exchange
+of $i,j$. Their intersection inverts only $z_i-z_j$.
+On their two-vertex simplex, choose a coordinate $t$ increasing
+from the first vertex to the second.
+The restriction of $\omega_{ij}$ is
+$\pm dt/(z_i-z_j)$.
+
+If $\omega_{ij}=df$, the component of $f$ on this edge is a
+polynomial in $t$ with localized coefficients.
+Its values at $t=0$ and $t=1$ lie in $R_I$, by face compatibility.
+Integrating its derivative from zero to one would give
+\[
+ f(1)-f(0)=\frac{\pm1}{z_i-z_j}.
+\]
+Polynomial integration is defined coefficient by coefficient over
+$\mathbb C$.
+The left side belongs to $R_I$.
+The right side does not: multiplying by $z_i-z_j$ and then setting
+$z_i=z_j$ would give $0=\pm1$.
+This contradiction proves the claim.
+\end{proof}
+
+For two labels, this is precisely the principal part of the
+one-coordinate collision from
+Proposition~\ref{prop:ocr-line-algebra}, with the comparison written
+as a polynomial one-form on an interval.
+
+\section{An associative multiplication with a collision coefficient}
+
+An odd coefficient such as $\omega_{ij}$ cannot multiply two
+degree-zero states into another degree-zero state without a shift.
+Introduce states $a_i$ of degree zero and $b_{ij}$ of degree $-1$.
+Let
+\[
+ A_I=C_I1\oplus\bigoplus_{i\in I}C_Ia_i
+           \oplus\bigoplus_{i\ne j}C_Ib_{ij}.
+\]
+This is a finite free graded $C_I$-module.
+Set $da_i=db_{ij}=0$ and use the coefficient differential.
+The coefficient action is graded central:
+$vc=(-1)^{|v||c|}cv$ for homogeneous elements.
+Declare $1$ to be the unit and define
+\begin{equation}\label{eq:ocb-multiplication}
+ a_i a_j=\omega_{ij}b_{ij}\quad(i\ne j),
+ \qquad a_i^2=0.
+\end{equation}
+Every product involving a $b_{ij}$ and another nonunit state is zero.
+Extend by bilinearity with the graded coefficient signs.
+The augmentation $A_I\to C_I$ is identity on coefficients and kills
+all $a_i,b_{ij}$.
+Its kernel $\bar A_I$ is the augmentation ideal.
+
+\begin{proposition}\label{prop:ocb-coefficient-algebra}
+These formulas define an augmented associative differential graded
+algebra over $C_I$.
+\end{proposition}
+
+\begin{proof}
+Every product of three augmentation-ideal generators vanishes,
+under either parenthesization.
+Products involving the unit satisfy associativity by its definition.
+Moving homogeneous coefficients to the left gives the same total
+graded sign in both parenthesizations, so this proves associativity
+for arbitrary elements.
+The only nonzero state products have closed coefficient $\omega_{ij}$.
+Their degrees are $0+0=1+(-1)$.
+Thus their differential and the Leibniz expression both vanish.
+The coefficient Leibniz rule proves the assertion for all elements.
+\end{proof}
+
+The states $b_{ij}$ and $b_{ji}$ are distinct.
+Thus equality of the coefficients $\omega_{ij}=\omega_{ji}$ does
+not impose commutativity of the state multiplication.
+The order of the inputs remains in the output state.
+
+\section{The ordered word differential}
+
+To retain all iterated multiplications, suspend the augmentation
+ideal downward by one degree.
+Write $sv$ for an element with $|sv|=|v|-1$.
+Its scalar action satisfies
+$s(cv)=(-1)^{|c|}c\,sv$ for homogeneous $c$.
+The word module is
+\[
+ B_{C_I}A_I=\bigoplus_{r\ge0}(s\bar A_I)^{\otimes_{C_I}r}.
+\]
+Length zero is $C_I$.
+Write $[v_1|\cdots|v_r]$ for
+$sv_1\otimes\cdots\otimes sv_r$.
+An element has finitely many nonzero word components.
+Cutting a word at every possible gap defines its deconcatenation
+coproduct, including the two empty end pieces.
+
+The differential is determined by the internal differential
+$b_1(sv)=-s(dv)$ and the adjacent multiplication
+\[
+ b_2(sv\otimes sw)=(-1)^{|v|}s(vw).
+\]
+Insert these maps at every input or adjacent pair with the graded
+tensor sign. In particular, the multiplication part is
+\begin{equation}\label{eq:ocb-bar-faces}
+ b_{\mathrm{mult}}[v_1|\cdots|v_r]
+ =\sum_{i=1}^{r-1}
+ (-1)^{\sum_{j<i}(|v_j|-1)+|v_i|}
+ [v_1|\cdots|v_iv_{i+1}|\cdots|v_r].
+\end{equation}
+It has degree one because suspension is removed once at the
+contracted pair. The internal part also has degree one.
+
+\begin{proposition}\label{prop:ocb-bar-square}
+The sum $b=b_1+b_{\mathrm{mult}}$ satisfies $b^2=0$.
+It commutes with deconcatenation in the graded differential sense.
+\end{proposition}
+
+\begin{proof}
+Two internal differentials on different letters cancel by the tensor
+signs. On one letter they give $d^2=0$.
+Two adjacent contractions with disjoint input pairs also cancel:
+each has degree one, so interchanging them reverses the sign.
+On three overlapping inputs, direct substitution gives
+\[
+ b_{\mathrm{mult}}^2[v|w|u]
+ =(-1)^{|w|}s\bigl((vw)u-v(wu)\bigr)=0.
+\]
+The remaining terms apply one internal differential and one product.
+Their sum is the suspension of
+$d(vw)-(dv)w-(-1)^{|v|}v\,dw$, which is zero.
+Every term in $b^2$ occurs in one of these cases.
+
+A word cut disjoint from the inputs of a differential term can be
+made before or after that term.
+The two choices have the same tensor sign.
+When a pair is multiplied, only cuts outside that pair survive.
+These are exactly the terms obtained by differentiating either
+factor of the deconcatenation coproduct.
+\end{proof}
+
+For the collision multiplication~\eqref{eq:ocb-multiplication},
+the first formulas are
+\[
+ b[a_i|a_j]=[\omega_{ij}b_{ij}],
+\]
+\[
+ b[a_i|a_j|a_k]
+ =[\omega_{ij}b_{ij}|a_k]
+  -[a_i|\omega_{jk}b_{jk}].
+\]
+The next multiplication differential vanishes on both terms because
+each contains a $b$-state.
+The comparison coefficient remains a cochain throughout these
+operations. It is not replaced by a scalar residue.
+
+\section{The dual differential records the same collision}
+
+Assign weight one to $a_i$, weight two to $b_{ij}$, and weight
+zero to coefficients. The multiplication and the bar differential
+preserve total weight.
+Each weight contains finitely many words in the finite state basis.
+It is therefore a finite free graded $C_I$-module.
+
+Dualize each weight over $C_I$ and take the product of the resulting
+modules. This defines the augmentation dual
+\[
+ A_I^!=\operatorname{Hom}_{C_I}(B_{C_I}A_I,C_I).
+\]
+Maps in this graded Hom obey
+$F(cv)=(-1)^{|F||c|}cF(v)$.
+The differential is
+$dF=d_{C_I}F-(-1)^{|F|}Fb$.
+Define a product of such maps by deconcatenation and multiplication
+in $C_I$, using the graded tensor convention.
+Coassociativity of cuts proves associativity of this product.
+The differential identity follows from
+Proposition~\ref{prop:ocb-bar-square} and the coefficient Leibniz rule.
+
+Let $\alpha_i$ and $\beta_{ij}$ be the duals of $sa_i$ and
+$sb_{ij}$, with values one on those basis vectors and zero on the
+others. Their degrees are one and two, respectively.
+Their weights are one and two.
+Word duality identifies the algebra just defined with
+\[
+ C_I\langle\!\langle\alpha_i,\beta_{ij}\rangle\!\rangle.
+\]
+The double brackets denote completion by positive weight:
+an element specifies a coefficient for every word, with finitely
+many words in each weight. Multiplication has finitely many
+decompositions in any fixed weight.
+
+\begin{proposition}\label{prop:ocb-dual-differential}
+The augmentation dual has differential
+\begin{equation}\label{eq:ocb-dual-differential}
+ d\alpha_i=0,\qquad
+ d\beta_{ij}=-\omega_{ij}\alpha_i\alpha_j,
+\end{equation}
+together with the differential on $C_I$.
+\end{proposition}
+
+\begin{proof}
+No product has output $a_i$, so $d\alpha_i=0$.
+The only state product detected by $\beta_{ij}$ is $a_i a_j$.
+Suspension gives
+$s(\omega_{ij}b_{ij})=-\omega_{ij}sb_{ij}$.
+Since $|\beta_{ij}|=2$, the Hom differential therefore evaluates
+to $+\omega_{ij}$ on $sa_i\otimes sa_j$.
+By the tensor sign,
+\[
+ (\alpha_i\alpha_j)(sa_i\otimes sa_j)
+ =(-1)^{|\alpha_j||sa_i|}=-1.
+\]
+Thus the right side of~\eqref{eq:ocb-dual-differential} has exactly
+the required value. It is zero on all other basis words.
+This determines the differential on the generators.
+\end{proof}
+
+The geometric coefficient appears as a quadratic differential in
+the dual algebra. Its presence expresses the original state
+multiplication, including its cohomological degree and its order.
+
+\section{Why the augmentation dual computes derived endomorphisms}
+
+The augmentation makes $C_I$ a left $A_I$-module.
+Its derived endomorphisms retain the relations in that module
+together with compatible witnesses, as in
+Chapter~\ref{chap:relations-homotopies}.
+An explicit resolution gives the interpretation of the dual word
+algebra above.
+
+Put $P_I=A_I\otimes_{C_I}B_{C_I}A_I$.
+In addition to the internal and bar differentials, include the
+leading face
+\[
+ d_{\mathrm{lead}}\bigl(a_0\otimes[a_1|\cdots|a_r]\bigr)
+ =-(-1)^{|a_0|}a_0a_1\otimes[a_2|\cdots|a_r].
+\]
+It is zero on length zero.
+Associativity gives its cancellation with the first adjacent bar
+face. Disjoint faces and internal differentials cancel by the
+same signs as in Proposition~\ref{prop:ocb-bar-square}.
+Thus the full differential on $P_I$ squares to zero.
+Augmentation on length zero, and zero on positive lengths,
+defines a map $P_I\to C_I$.
+
+For homogeneous $a_0$, write
+$\bar a_0=a_0-\epsilon(a_0)1$.
+The degree-minus-one map
+\[
+ h\bigl(a_0\otimes[a_1|\cdots|a_r]\bigr)
+ =-1\otimes[\bar a_0|a_1|\cdots|a_r]
+\]
+contracts this augmentation as a $C_I$-complex.
+To verify the identity, insert the leading letter and expand
+$dh+hd$.
+Internal differentials on that letter cancel because
+$d\bar a_0=\overline{da_0}$.
+Internal differentials and adjacent faces to its right cancel
+in pairs with their suspension signs.
+The leading face contributes
+$\bar a_0\otimes[a_1|\cdots|a_r]$.
+When $r>0$, the next face contributes the remaining
+$\epsilon(a_0)\otimes[a_1|\cdots|a_r]$.
+Indeed, the two relevant signs are $(-1)^{|a_0|}$ from the face
+and $(-1)^{|a_0|}$ from suspending
+$\epsilon(a_0)a_1$, whose product is one.
+Thus $dh+hd=1$ in positive word length.
+In length zero it equals $a_0\mapsto a_0-\epsilon(a_0)1$.
+This proves that $P_I\to C_I$ is a quasi-isomorphism.
+
+As a graded left $A_I$-module, $P_I$ is free on the state words.
+The differential of a basis word involves shorter words and
+coefficient differentials.
+Such a resolution is called semifree.
+It permits a map or a homotopy to be constructed in increasing
+word length. At each step its remaining equation asks for a
+primitive of a cycle in the target complex.
+In an acyclic target that primitive exists.
+The finite state basis gives finitely many words at each length,
+and every differential equation uses only earlier choices.
+Consequently $\operatorname{Hom}_{A_I}(P_I,-)$ preserves
+quasi-isomorphisms, by applying this construction to their cones.
+
+Restriction to the words with leading coefficient $1$ identifies
+\[
+ \operatorname{Hom}_{A_I}(P_I,C_I)
+ =\operatorname{Hom}_{C_I}(B_{C_I}A_I,C_I).
+\]
+The leading face vanishes under this Hom because every $a_1$
+belongs to the augmentation ideal.
+Thus the differential is exactly the dual differential already
+computed. This defines a model for
+$R\operatorname{Hom}_{A_I}(C_I,C_I)$.
+
+Its product also has the endomorphism interpretation.
+Deconcatenation makes $P_I$ a right bar comodule: cut the word,
+retaining its left piece in $P_I$.
+A homogeneous word functional $F$ lifts to an endomorphism
+\[
+ \widetilde F=(1\otimes F)\circ\Delta_{P_I}.
+\]
+The tensor rule includes the sign for moving $F$ past the left
+piece. Cutting twice shows that convolution of functionals
+becomes composition of these lifts.
+The coaction commutes with the differentials, including the
+leading face, so this statement holds for the differential algebras.
+Composing a lift with $P_I\to C_I$ recovers the original functional.
+The induced map
+$\operatorname{End}_{A_I}(P_I)\to
+\operatorname{Hom}_{A_I}(P_I,C_I)$
+is a quasi-isomorphism by the semifree property.
+Its section by the lifts is therefore a multiplicative
+quasi-isomorphism. This proves the asserted derived endomorphism
+interpretation with its product.
+
+\section{Recovering the algebra from its bar coalgebra}
+
+Complete the bar by positive weight and denote it by $Q_I$.
+At each weight this retains the same finite free word module.
+The reduced coproduct $\bar\Delta$ omits the two empty end cuts.
+Write $t$ for suspension upward by one degree, so $|tc|=|c|+1$.
+The completed cobar algebra is the tensor algebra on the elements
+$tc$ with $c$ in the positive-weight part of $Q_I$, completed by
+weight. Its differential on a generator is
+\[
+ d_\Omega(tc)=-t(bc)
+ +\sum_{\bar\Delta c=\sum c'\otimes c''}
+       (-1)^{|c'|+1}(tc')(tc'').
+\]
+Extend it by the graded Leibniz rule.
+The internal square vanishes by $b^2=0$.
+The mixed terms cancel because $b$ commutes with the coproduct.
+Two coproduct terms cancel by coassociativity and their suspension
+signs. Thus $d_\Omega^2=0$.
+
+Map $t(sa)$ to $a\in\bar A_I$, and map generators from longer
+bar words to zero. Extending multiplicatively gives the counit
+\[
+ \widehat\Omega_{C_I}Q_I\longrightarrow A_I.
+\]
+On a two-letter bar generator, the internal and coproduct terms
+map to $-(-1)^{|a|}ab$ and $(-1)^{|a|}ab$.
+They cancel. Longer words map to zero in the same differential
+identity, and single letters commute with the internal
+differential. Hence the counit is a chain map.
+
+\begin{theorem}\label{thm:ocb-reconstruction}
+The displayed counit is a quasi-isomorphism in every weight,
+and after the declared weight completion.
+\end{theorem}
+
+\begin{proof}
+Expand a cobar word into its original state letters.
+At weight $w$ there are at most $w$ letters, since each has
+positive weight. Filter by this number.
+The part using state multiplication lowers the filtration.
+On its associated graded, each gap between consecutive letters
+has two possible positions: inside one bar block, or between two
+cobar factors.
+The coproduct differential changes the first position to the
+second with coefficient $1$ or $-1$.
+
+After the suspension signs, this contribution is the tensor
+product of one copy of $[\mathbb C\xrightarrow{1}\mathbb C]$
+for each gap, tensored with the state letters and coefficients.
+If a gap exists, contract the leftmost gap by the inverse map,
+with the tensor sign from preceding factors.
+The contractions on other gaps cancel in $dh+hd$, while the
+chosen gap gives the identity.
+Only the one-letter summand survives, and the counit is identity
+on that summand. It is also identity on the weight-zero unit.
+The finite filtration proves the weightwise quasi-isomorphism.
+
+Finally, products of exact sequences of modules remain exact:
+a preimage of a tuple in a product of surjections is chosen
+component by component.
+Thus products preserve cohomology of these weightwise complexes.
+The product of the proved equivalences is the completed
+equivalence. The target $A_I$ has only weights zero, one, and
+two, so completion leaves it unchanged.
+\end{proof}
+
+\section{Nested positions and a common expansion ring}
+
+Place labels $1,2$ in a small cluster near $Z$, while label $3$
+stays near $W$. Introduce a scale $\varepsilon$ and set
+\[
+ z_1=Z+\varepsilon x_1,\qquad
+ z_2=Z+\varepsilon x_2,\qquad z_3=W.
+\]
+The inner order distinguishes $1<2$ from $2<1$.
+The outer order distinguishes the cluster preceding $3$ from
+the cluster following $3$.
+The four resulting global orders are $123,213,312,321$.
+
+On an intersection of these charts, invert $x_1-x_2$ if the inner
+order varies and invert $Z-W$ if the outer order varies.
+Let $D$ denote the resulting localization of
+$\mathbb C[Z,W,x_1,x_2]$.
+Expand in the ring
+$D[[\varepsilon]][\varepsilon^{-1}]$.
+The exponent of $\varepsilon$ in each element has a fixed lower
+bound, as required by Section~\ref{sec:cc-localization}.
+
+The inner reversed difference has inverse
+\[
+ (z_1-z_2)^{-1}
+ =\varepsilon^{-1}(x_1-x_2)^{-1}.
+\]
+On an outer overlap, geometric series give
+\[
+ (z_1-z_3)^{-1}
+ =\sum_{r\ge0}\frac{(-\varepsilon)^r x_1^r}{(Z-W)^{r+1}},
+ \qquad
+ (z_2-z_3)^{-1}
+ =\sum_{r\ge0}\frac{(-\varepsilon)^r x_2^r}{(Z-W)^{r+1}}.
+\]
+Multiplying each series by its proposed denominator gives one
+coefficient by coefficient. This proves that the substitutions
+respect the localized rings.
+
+Let $q_{\mathrm{in}}$ and $q_{\mathrm{out}}$ be the sums of the
+barycentric coordinates recording the inner and outer orders on
+this four-chart simplex. Pullback of simplex forms sends each
+global barycentric coordinate to the sum of the coordinates of
+charts inducing that global order.
+It commutes with $d$ and with face restriction.
+The collision coefficients consequently expand as
+\[
+ \omega_{12}\longmapsto
+ \varepsilon^{-1}\frac{dq_{\mathrm{in}}}{x_1-x_2},
+\]
+\[
+ \omega_{13}\longmapsto
+ dq_{\mathrm{out}}\sum_{r\ge0}
+ \frac{(-\varepsilon)^r x_1^r}{(Z-W)^{r+1}}.
+\]
+These expressions remain comparison forms of degree one.
+
+More generally, for any map of commutative differential graded
+coefficient algebras $g:C_I\to E$, define
+$A_{I,E}=E\otimes_{C_I}A_I$.
+Its multiplication replaces $\omega_{ij}$ by $g(\omega_{ij})$.
+There is a strict isomorphism of bar complexes
+\[
+ E\otimes_{C_I}B_{C_I}A_I
+ \cong B_E A_{I,E}.
+\]
+It sends every tensor word to the identical word with extended
+coefficients. Formulas~\eqref{eq:ocb-bar-faces} agree term by term,
+so it preserves the differential and every cut.
+For the completed dual, extend coefficients in each finite weight
+and then take the inverse limit. This order of operations gives
+the same dual differential with $g(\omega_{ij})$.
+
+In the displayed three-point expansion, for example,
+\[
+ d\beta_{13}
+ =-dq_{\mathrm{out}}\sum_{r\ge0}
+ \frac{(-\varepsilon)^r x_1^r}{(Z-W)^{r+1}}
+ \alpha_1\alpha_3.
+\]
+Thus nested collision expansion commutes with an actual bar
+operation and an actual dual differential.
+
+The state $b_{12}$ still carries two labels.
+A chiral collision map must additionally produce a state at their
+merged position, with compatible translation and support.
+Such a map must commute with the bar faces above, or supply
+homotopies for their differences satisfying the higher face
+identities. Coefficient expansion provides the common domains on
+which those equations can be stated.
