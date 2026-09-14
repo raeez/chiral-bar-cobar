@@ -1,0 +1,559 @@
+\chapter{The nonadjacent collision and its source extension}
+\label{chap:bdnz-source}
+
+\section{The native double-pole output}
+
+Fix $k\in\mathbb C^\times$ and $X=\mathbb A^1_{\mathbb C}$.
+The level remains this nonzero scalar throughout.
+The Heisenberg states are
+\[
+ V_k=\mathbb C[x_1,x_2,\ldots],\qquad
+ \mathbf1=1,\quad J=x_1,\quad
+ T=\sum_{n\geq1}n x_{n+1}\partial_{x_n}.
+\]
+All states are even, have cohomological degree zero, and have zero differential.
+Every state is a polynomial in finitely many variables.
+The modes are $J_{-n}=x_n\cdot$, $J_n=kn\partial_{x_n}$ for $n\geq1$, and $J_0=0$.
+The fields of monomials are the normally ordered products of the divided current derivatives.
+In particular,
+\begin{equation}\label{eq:bdnz-field}
+ Y(J,t)J=\frac{k}{t^2}\mathbf1+(e^{tT}J)J,
+ \qquad Y(\mathbf1,t)a=a.
+\end{equation}
+Normal ordering places multiplication operators before derivative operators.
+Commuting these operators gives the finite Wick pairing formula and the usual Heisenberg vertex operations.
+
+The right differential module is $\mathcal H_k=\omega_X\otimes V_k$, with
+\[
+ (fa\,dz)\partial_z=-(f'a+fTa)\,dz.
+\]
+Its chiral operation on a pole-valued input is
+\[
+ \mu(f(z,w)(a\,dz\boxtimes b\,dw))
+   =\operatorname{pp}_{t}\bigl(f(y+t,y)Y(a,t)b\bigr),
+ \qquad t=z-w,\quad y=w.
+\]
+The symbol $\operatorname{pp}_t$ denotes the finite principal part.
+Multiplication occurs before passage to the quotient.
+The normalization is
+\begin{equation}\label{eq:bdnz-normal}
+ \operatorname{pp}_t\frac{a(y)}{t^{r+1}}
+ =\frac{a(y)\,dy}{r!}\delta_\Delta\partial_t^r,
+ \qquad dz\wedge dw=dt\wedge dy.
+\end{equation}
+All normal derivatives are retained, and all sums of normal derivatives are finite.
+
+Let $R=\mathbb C[z_1,z_2,z_3]$.
+For a partition $\pi$ of $\{1,2,3\}$, let $\Delta_\pi:X^\pi\hookrightarrow X^3$ identify its blocks.
+Let $j_\pi$ include the locus of distinct block positions.
+The native three-point Chevalley--Cousin complex is
+\begin{equation}\label{eq:bdnz-native}
+ E_k=
+ \bigoplus_{\pi}
+ (\Delta_\pi)_!(j_\pi)_*j_\pi^*
+ \left(\boxtimes_{B\in\pi}\mathcal H_k[1]\right).
+\end{equation}
+The closed direct image uses the right transfer module, including every normal derivative.
+There is no additional geometric degree shift.
+This is the carrier of \cite{BDnonadjacent}*{\S3.4.11, equation (3.4.11.1)}.
+The separated summand has degree $-3$, the three pair summands have degree $-2$, and the small-diagonal summand has degree $-1$.
+
+Write $[a|b|c]$ for the suspended states, each of degree $-1$.
+The collision differential satisfies
+\begin{equation}\label{eq:bdnz-jacobi-signs}
+ Q[a|b|c]=[\mu_{12}(a,b)|c]-[\mu_{13}(a,c)|b]
+                      +[\mu_{23}(b,c)|a],
+ \qquad Q[a|b]=[\mu(a,b)].
+\end{equation}
+Reordering two suspended even states changes the sign.
+Each map includes its coordinate permutation, transverse localization, and transfer module.
+Chiral Jacobi gives $Q^2=0$.
+There is no internal state differential in $E_k$.
+
+Put
+\[
+ t=z_1-z_3,\qquad s=z_2-z_3,\qquad y=z_3,
+ \qquad p=(z_1-z_2)(z_2-z_3)=s(t-s).
+\]
+The common orientation is $dz_1\wedge dz_2\wedge dz_3=dt\wedge ds\wedge dy$.
+Fix the block order $13|2$ and the normal coordinate $t$.
+The section
+\begin{equation}\label{eq:bdnz-nu}
+ \nu=k[\mathbf1\delta_{13}\partial_t|J_2]\in E_k^{-2}
+\end{equation}
+is nonzero.
+The factor $k$ is part of the prescribed current operation.
+It is not changed or set to zero.
+
+\section{The support obstruction}
+
+Let
+\[
+ U=X^3\setminus(\Delta_{12}\cup\Delta_{23}),
+ \qquad A=R[p^{-1}].
+\]
+This open set meets $\Delta_{13}$ and excludes the small diagonal.
+In particular, $s$ and $t-s$ are invertible on $U$.
+The restricted native complex has only two nonzero partition summands:
+the separated summand in degree $-3$ and the $13$ summand in degree $-2$.
+The latter differential is zero because its next collision is absent from $U$.
+
+\begin{theorem}\label{thm:bdnz-support}
+Suppose an ordered three-letter source has
+\[
+ be_{123}=-\omega_{12}m_{12|3}-\omega_{23}n_{1|23}.
+\]
+No degree-zero $R$-linear cochain comparison to $E_k$ can satisfy both of the following requirements:
+the separated component of $e_{123}$ is $[J_1|J_2|J_3]$,
+and the images of its two multiplication faces are supported on $\Delta_{12}$ and $\Delta_{23}$, respectively.
+Allowing further corrections supported on these adjacent diagonals or on their small intersection does not remove the obstruction.
+\end{theorem}
+\begin{proof}
+Restrict the proposed chain equation to $U$.
+All stated correction terms and both source-face images vanish there.
+The $13$ component of the separated insertion differential is
+\[
+ Q[J_1|J_2|J_3]=-\nu\qquad\hbox{on }U.
+\]
+The minus sign is the middle unshuffle sign in \eqref{eq:bdnz-jacobi-signs}.
+Formula~\eqref{eq:bdnz-field} gives the coefficient $k\delta_{13}\partial_t$.
+This coefficient is nonzero at every point of $\Delta_{13}\cap U$.
+The current $J_2$ is nonzero and the normal derivatives form the free transfer basis.
+Thus the two sides of the chain equation differ by the nonzero section $-\nu$.
+\end{proof}
+
+In the unextended complex, degree alone also forbids a partial-diagonal correction to $e_{123}$ itself.
+Its degree is $-3$, whereas every proper-diagonal state has degree $-2$.
+The missing term must therefore occur in the source differential if the separated insertion and the unextended target are retained.
+
+\section{The ordered source and its lowest cohomology}
+
+Let $\mathcal O_3$ be the six total orders of $\{1,2,3\}$.
+For nonempty $B\subset\mathcal O_3$, let $R_B$ invert $z_i-z_j$ exactly when the relative order of $i,j$ varies in $B$.
+Let
+\[
+ \Omega_B=\mathbb C[u_\sigma,du_\sigma\mid\sigma\in B]
+ /(\textstyle\sum u_\sigma-1,\sum du_\sigma),
+\]
+with exterior odd generators $du_\sigma$.
+Let $C$ be the differential graded algebra of face-compatible families in $R_B\otimes\Omega_B$.
+Its differential $d_C$ fixes all positions and sends $u_\sigma$ to $du_\sigma$.
+Define
+\[
+ q_{ij}=\sum_{i\prec_\sigma j}u_\sigma,
+ \qquad \omega_{ij}=\frac{dq_{ij}}{z_i-z_j}.
+\]
+On a component with no inverse for the denominator, the numerator vanishes and that component is zero.
+
+For each ordered triple $\sigma=ijk$, let
+\[
+ e_\sigma=[a_i|a_j|a_k],\quad
+ m_\sigma=[b_{ij}|a_k],\quad
+ n_\sigma=[a_i|b_{jk}].
+\]
+The states $a_i$ have degree zero and $b_{ij}$ have degree $-1$.
+Suspension lowers degree by one.
+All three displayed words therefore have degree $-3$.
+The six triples give eighteen distinct generators.
+Their direct sum of free $C$-modules is denoted $O$.
+Its differential is
+\begin{equation}\label{eq:bdnz-ordered}
+ \begin{gathered}
+ be_\sigma=-\omega_{ij}m_\sigma-\omega_{jk}n_\sigma,
+ \qquad bm_\sigma=bn_\sigma=0,\\
+ b(cv)=d_Cc\,v+(-1)^{|c|}c\,bv.
+ \end{gathered}
+\end{equation}
+These are the suspended bar signs for
+$a_i a_j=\omega_{ij}b_{ij}$, with every other nonunit product involving a $b$ equal to zero.
+The closed forms $\omega_{ij}$ give $b^2=0$.
+The complex is the direct sum of six three-generator subcomplexes $O_\sigma$.
+It has no degree below $-3$.
+
+\begin{lemma}\label{lem:bdnz-lowest}
+For each $\sigma=ijk$, put $t_{ij}=z_i-z_j$ and $t_{jk}=z_j-z_k$.
+Then
+\begin{equation}\label{eq:bdnz-zsigma}
+ z_\sigma=t_{ij}t_{jk}e_\sigma
+           +t_{jk}q_{ij}m_\sigma+t_{ij}q_{jk}n_\sigma
+\end{equation}
+is a cycle, and
+\[
+ H^{-3}(O)=\bigoplus_{\sigma\in\mathcal O_3}
+ \left(Rz_\sigma\oplus Rm_\sigma\oplus Rn_\sigma\right).
+\]
+\end{lemma}
+\begin{proof}
+A closed zero-form in $C$ is a constant polynomial on the full simplex, with coefficient in the common position localization.
+Its vertex restrictions belong to $R$.
+Injectivity of every coefficient localization then shows that all its components equal one element of $R$.
+Thus $\ker(d_C:C^0\to C^1)=R$.
+
+A degree-$-3$ cycle in $O_\sigma$ has the form $fe_\sigma+gm_\sigma+hn_\sigma$, with
+\[
+ f\in R,\qquad d_Cg=f\omega_{ij},\qquad d_Ch=f\omega_{jk}.
+\]
+Restrict the first equation to the actual edge $\{ijk,jik\}$, with coordinate $u=q_{ij}$.
+Its coefficient ring is $R[t_{ij}^{-1}]$ and both endpoints of $g$ lie in $R$.
+Integration gives $g(1)-g(0)=f/t_{ij}$.
+Consequently $t_{ij}$ divides $f$ in $R$.
+The edge $\{ijk,ikj\}$ proves that $t_{jk}$ divides $f$.
+These two distinct linear polynomials are relatively prime, so $f=t_{ij}t_{jk}a$ for some $a\in R$.
+
+The displayed $z_\sigma$ is closed by $d_Cq_{ij}=t_{ij}\omega_{ij}$ and its analogous identity for $jk$.
+Subtracting $a z_\sigma$ leaves two closed coefficients, hence two elements of $R$.
+There are no incoming boundaries in degree $-3$.
+The three leading coefficients show independence, proving the assertion in every summand.
+\end{proof}
+
+\section{The minimal nonadjacent source module}
+
+Let $N=R\nu$ be the cyclic $R$-submodule of the $13$ summand generated by \eqref{eq:bdnz-nu}.
+Regard it as a complex concentrated in degree $-2$.
+The unit field in \eqref{eq:bdnz-field} gives $Q\nu=0$ globally: its remaining coefficient is regular in the outer variable.
+Thus $N$ is a subcomplex of $E_k$.
+Regular function multiplication preserves this statement by $R$-linearity of $Q$.
+
+\begin{proposition}\label{prop:bdnz-minimal}
+The map $R\to N$, $f\mapsto f\nu$, has kernel $(t^2)$.
+In particular,
+\begin{equation}\label{eq:bdnz-two-jets}
+ N\cong R/(t^2),\qquad
+ t\nu=k[\mathbf1\delta_{13}|J_2]\ne0,\qquad t^2\nu=0.
+\end{equation}
+This is the minimal cyclic $R$-module of source outputs whose chosen generator maps to the native double-pole coefficient.
+\end{proposition}
+\begin{proof}
+Write a polynomial uniquely as $f=f_0(y,s)+t f_1(y,s)+t^2g$.
+The transfer relation gives
+\[
+ f\nu=k f_0[\mathbf1\delta_{13}\partial_t|J_2]
+       +k f_1[\mathbf1\delta_{13}|J_2].
+\]
+The two normal coefficients are independent and $k\ne0$.
+Thus the image vanishes exactly when $f_0=f_1=0$.
+Any cyclic module with a specified generator mapping to $\nu$ surjects onto this image.
+In particular, the relation $t=0$ on the generator is incompatible with the specified image.
+\end{proof}
+
+Define a degree-one $R$-linear map $\beta:O\to N$ by
+\begin{equation}\label{eq:bdnz-beta}
+ \beta(fe_{123})=-f(123)\nu\quad(f\in C^0),
+ \qquad \beta=0\quad\hbox{on every other coefficient degree and word}.
+\end{equation}
+Evaluation $f(123)$ is at the order vertex $123$.
+The map kills $bO$, since a coefficient differential has positive degree and a multiplication face is mixed.
+Hence $\beta b=0$.
+Set
+\begin{equation}\label{eq:bdnz-extension}
+ O^+=O\oplus N,
+ \qquad b^+(x,n)=(bx,\beta x).
+\end{equation}
+The degree of $\beta$ makes this a degree-one differential, and $(b^+)^2=0$.
+In particular, the new source operation is $b^+e_{123}=be_{123}-\nu$.
+It has support on the actual nonadjacent diagonal and carries both normal jets in \eqref{eq:bdnz-two-jets}.
+This construction is an extension of cochain complexes over $R$.
+It makes no claim to be a bar coalgebra or a multiplication on the original ordered state algebra.
+
+\section{The exact global change in cohomology}
+
+The inclusion and projection give a short exact sequence of $R$-complexes
+\begin{equation}\label{eq:bdnz-exact}
+ 0\longrightarrow N\longrightarrow O^+
+       \xrightarrow{\pi}O\longrightarrow0.
+\end{equation}
+Its connecting homomorphism $H^{-3}(O)\to N$ is induced by $\beta$.
+For the selected word, Lemma~\ref{lem:bdnz-lowest} gives
+\begin{equation}\label{eq:bdnz-connecting}
+ \beta[z_{123}]=-p\nu=-s(t-s)\nu,
+ \qquad \beta[m_\sigma]=\beta[n_\sigma]=0.
+\end{equation}
+It vanishes on $z_\sigma$ for $\sigma\ne123$.
+
+\begin{theorem}\label{thm:bdnz-cohomology}
+The image of $H^{-3}(\pi)$ is obtained from the basis in Lemma~\ref{lem:bdnz-lowest} by replacing $Rz_{123}$ with $t^2Rz_{123}$.
+The map is injective, and its cokernel is isomorphic to $R/(t^2)$.
+In the next degree there is an exact sequence
+\begin{equation}\label{eq:bdnz-hminus2}
+ 0\longrightarrow R/(t^2,s(t-s))
+ \longrightarrow H^{-2}(O^+)
+ \xrightarrow{H^{-2}(\pi)}H^{-2}(O)\longrightarrow0.
+\end{equation}
+For all other degrees, $H^n(\pi)$ is an isomorphism.
+The projection $\pi$ is not a quasi-isomorphism.
+\end{theorem}
+\begin{proof}
+Multiplication by $p=s(t-s)$ is injective on $R/(t^2)$.
+Indeed, if $a=a_0+t a_1$ modulo $t^2$, then
+\[
+ pa=-s^2a_0+t(sa_0-s^2a_1)\pmod {t^2}.
+\]
+The first coefficient forces $a_0=0$, and the second then forces $a_1=0$.
+Thus the kernel of \eqref{eq:bdnz-connecting} consists exactly of the asserted $t^2$ multiples in the selected component and the other unchanged components.
+The connecting image is $pN$, and $N/pN=R/(t^2,p)$.
+The long exact sequence of \eqref{eq:bdnz-exact} gives every displayed assertion.
+Its only potentially affected degrees are $-3$ and $-2$, since $N$ occurs only in degree $-2$.
+The nonzero connecting map excludes a quasi-isomorphism.
+\end{proof}
+
+The new degree-$-2$ submodule is supported on the small diagonal $t=s=0$.
+It is free of rank four over $\mathbb C[y]$, with basis
+\begin{equation}\label{eq:bdnz-lengthfour}
+ 1,\ s,\ t,\ st,
+ \qquad t^2=0,\quad s^2=st,\quad s^3=0.
+\end{equation}
+For independence, view the quotient first as a free module with basis $1,t$ over $\mathbb C[y,s]$.
+Its additional relations are $s^2=st$ and $s^2t=0$.
+They reduce every monomial to the four displayed classes.
+For independence, use lexicographic order $s>t$.
+The polynomials $t^2$ and $s^2-st$ form a Gr\"obner basis: their only $S$-polynomial is a multiple of $t^2$.
+Their leading monomials are $t^2$ and $s^2$, so the four displayed normal monomials are independent.
+Thus the added nonadjacent operation creates a specific small-diagonal cohomology contribution.
+The exact sequence does not assert a splitting of \eqref{eq:bdnz-hminus2}.
+
+\section{The native comparison away from adjacent collisions}
+
+Localize \eqref{eq:bdnz-exact} at $p$.
+Write $O_A=O\otimes_R A$ and $N_A=N\otimes_R A$.
+On the selected sector, the element
+\begin{equation}\label{eq:bdnz-open-cycle}
+ e'=e_{123}+\frac{q_{12}}{z_1-z_2}m_{12|3}
+              +\frac{q_{23}}{z_2-z_3}n_{1|23}
+       =p^{-1}z_{123}
+\end{equation}
+is a genuine cycle in $O_A$.
+Both denominators are units in $A$.
+Its new boundary component is $\beta e'=-\nu$.
+
+\begin{theorem}\label{thm:bdnz-native-map}
+There is a cochain map
+\[
+ F^+:O_A^+\longrightarrow E_k|_U
+\]
+whose separated projection on the selected word is
+$fe_{123}\mapsto f(123)[J_1|J_2|J_3]$.
+It sends the new source module $N_A$ to its identical native collision module.
+It sends all mixed words, all positive-degree coefficients of the selected word, and all other ordered-word sectors to zero.
+On $U$, the cohomology projection satisfies
+\[
+ \operatorname{coker}H^{-3}(\pi_A)=N_A,
+ \qquad H^n(\pi_A)\text{ is an isomorphism for }n\ne-3.
+\]
+\end{theorem}
+\begin{proof}
+Let $B_U$ be the prescribed separated vertex map, zero on the other terms.
+It kills $bO_A$.
+By \eqref{eq:bdnz-jacobi-signs},
+\[
+ QB_U(x)=\beta x\quad\hbox{in the native }13\hbox{ summand}.
+\]
+Set $F^+(x,n)=B_U(x)+n$.
+The module $N_A$ is closed in the target.
+Therefore
+\[
+ QF^+(x,n)=\beta x=F^+(bx,\beta x)=F^+b^+(x,n).
+\]
+The specified degrees and supports give the component assertions.
+
+Localization is exact and commutes with cohomology.
+Since $p$ is a unit in $A$, the connecting homomorphism is surjective by \eqref{eq:bdnz-connecting}.
+The small-diagonal quotient in \eqref{eq:bdnz-hminus2} vanishes after localization.
+The cohomology assertions follow from Theorem~\ref{thm:bdnz-cohomology}.
+\end{proof}
+
+This is a comparison for the specified ordered insertion on its actual open coefficient domain.
+It does not assign the pure separated current to every other ordered word.
+Relabeling constructs the same comparison for each ordered word on the complement of its own two adjacent diagonals.
+Compatibility among those comparisons on their intersections requires additional equations.
+
+The class $[e']$ in the original source cannot lift to a cycle of the extended source.
+Its connecting image is the nonzero element $-\nu$.
+More generally, no quasi-isomorphic source replacement can preserve this projected insertion and give a lift to the native restricted complex.
+Indeed, the connecting map for the two-term target sends its separated cohomology class to $-\nu$.
+This composite is nonzero on $[e']$ and therefore nonzero in the derived category of $A$-modules.
+A lift through the target would make that composite zero.
+The extension \eqref{eq:bdnz-extension} changes the source cohomology exactly where this derived obstruction requires a change.
+
+\section{All ordered insertions on the same open set}
+
+The same cyclic module can receive the native $13$ boundary of every ordered word on $U$.
+This gives a second extension which assigns pure separated currents to all six words.
+Let $\varepsilon_\sigma$ be the sign of the permutation $\sigma=ijk$ of $123$.
+Suspension gives
+$[J_i|J_j|J_k]=\varepsilon_\sigma[J_1|J_2|J_3]$ in the fixed separated summand.
+Define
+\[
+ \beta_{\mathrm{all}}(fe_\sigma)=-\varepsilon_\sigma f(\sigma)\nu,
+ \qquad f\in C^0,
+\]
+and set it to zero on mixed words and positive coefficient degrees.
+It again kills $bO$.
+Put $O^{\mathrm{all}}=O\oplus N$ with differential
+$b^{\mathrm{all}}(x,n)=(bx,\beta_{\mathrm{all}}x)$.
+Only one new cyclic module is adjoined.
+
+\begin{theorem}\label{thm:bdnz-all-words}
+The formula
+\[
+ F^{\mathrm{all}}(fe_\sigma)=f(\sigma)[J_i|J_j|J_k],
+ \qquad F^{\mathrm{all}}|_{N_A}=\mathrm{id},
+\]
+with zero images on all mixed words and positive-degree coefficients, defines a cochain map
+$O^{\mathrm{all}}\otimes_R A\to E_k|_U$.
+Globally, the connecting homomorphism sends $z_\sigma$ to $\lambda_\sigma\nu$, where
+\[
+ \begin{array}{c|rrrrrr}
+ \sigma&123&132&213&231&312&321\\ \hline
+ \lambda_\sigma\bmod t^2&s^2-st&-st&st&st&-st&st-s^2.
+ \end{array}
+\]
+It kills every mixed basis class.
+The induced cohomology sequence is
+\begin{equation}\label{eq:bdnz-all-cohomology}
+ \begin{gathered}
+ 0\longrightarrow H^{-3}(O^{\mathrm{all}})
+ \longrightarrow H^{-3}(O)
+ \xrightarrow{\beta_{\mathrm{all}}}(s^2,st)\,R/(t^2)
+ \longrightarrow0,\\
+ 0\longrightarrow R/(t^2,s^2,st)
+ \longrightarrow H^{-2}(O^{\mathrm{all}})
+ \longrightarrow H^{-2}(O)\longrightarrow0.
+ \end{gathered}
+\end{equation}
+All other cohomology groups are unchanged.
+The small-diagonal quotient is free of rank three over $\mathbb C[y]$, with basis $1,s,t$.
+\end{theorem}
+\begin{proof}
+On $U$, the differential of each ordered separated insertion is
+$-\varepsilon_\sigma\nu$.
+Its coefficient differential and both old multiplication faces have zero image.
+The added source term is exactly $\beta_{\mathrm{all}}$, and the new module is closed in the target.
+This proves the chain equation on every source summand.
+
+Lemma~\ref{lem:bdnz-lowest} gives
+$\lambda_\sigma=-\varepsilon_\sigma t_{ij}t_{jk}$.
+Substitute $z_1=y+t$, $z_2=y+s$, and $z_3=y$, and reduce modulo $t^2$.
+This gives the six displayed coefficients.
+They generate precisely the ideal $(s^2,st)$ in $R/(t^2)$.
+The long exact cohomology sequence gives \eqref{eq:bdnz-all-cohomology}.
+The quotient has the monomial ideal $(t^2,s^2,st)$, whose standard monomials are $1,s,t$.
+They prove the asserted rank and support.
+\end{proof}
+
+The kernel in the first sequence is explicit: a lowest source class
+$\sum_\sigma(a_\sigma z_\sigma+b_\sigma m_\sigma+c_\sigma n_\sigma)$ lifts exactly when
+$\sum_\sigma\lambda_\sigma a_\sigma\in(t^2)$.
+On $U$, $p$ is a unit, so the connecting map is surjective onto $N_A$ and the small-diagonal quotient disappears.
+The cohomology projection remains noninvertible in degree $-3$.
+All old mixed images in this native comparison are zero.
+Thus this extension has different mixed comparison data from a comparison to a differential graded state enlargement.
+It does not identify either extended source with the original ordered source.
+
+\section{The differential module of the new collision}
+
+The cyclic module $N$ is minimal over regular position functions.
+Its closure under right differential operators is larger and has a direct presentation.
+Let $\mathcal D_R$ be the Weyl algebra in $t,s,y$, with $[\partial_t,t]=[\partial_s,s]=[\partial_y,y]=1$ and all other coordinate commutators zero.
+Let $N_{\mathcal D}=\nu\mathcal D_R$ inside the native $13$ summand.
+
+\begin{proposition}\label{prop:bdnz-weyl}
+As a right differential module,
+\begin{equation}\label{eq:bdnz-weyl-presentation}
+ N_{\mathcal D}\cong
+ \mathcal D_R\big/
+ \left(t^2\mathcal D_R+(t\partial_t-1)\mathcal D_R
+                 +(\partial_y-\partial_s)\mathcal D_R\right).
+\end{equation}
+It has independent finite normal forms with coefficients in $\mathbb C[y,s]$ and states
+\[
+ [\mathbf1\delta_{13}\partial_t^r|T^nJ_2],
+ \qquad r,n\geq0.
+\]
+It is a closed subcomplex of the native target in degree $-2$.
+\end{proposition}
+\begin{proof}
+The relation $\nu t^2=0$ was proved above.
+Since $\nu t=k[\mathbf1\delta_{13}|J_2]$, right differentiation gives
+$\nu t\partial_t=\nu$.
+Translation of the vacuum is zero.
+In these coordinates, both $\partial_s$ and $\partial_y$ act on the constant-coefficient generator as minus translation of $J_2$.
+Hence $\nu(\partial_y-\partial_s)=0$.
+
+Order the Weyl monomials with the tangent coordinate functions on the right.
+The third relation eliminates $\partial_y$ from the generator.
+The first two relations reduce the normal factors to $t$ and $\partial_t^r$ for $r\geq0$.
+Thus the quotient is spanned by
+\[
+ \nu t\partial_s^n f(y,s),\qquad
+ \nu\partial_t^r\partial_s^n f(y,s).
+\]
+Their images have normal orders zero and $r+1$, respectively, and state factors $(-T)^nJ$.
+The states $T^nJ=n!x_{n+1}$ are independent.
+The normal transfer basis is also independent, so no further relation exists.
+This proves the presentation and normal forms.
+Finally $Q\nu=0$ and right differential linearity give $QN_{\mathcal D}=0$.
+\end{proof}
+
+Induce the original source by $\operatorname{Ind}(O)=O\otimes_R\mathcal D_R$, with differential $b\otimes1$.
+The degree-one map
+\[
+ \beta_{\mathcal D}(x\otimes P)=\beta(x)P
+\]
+has values in $N_{\mathcal D}$ and satisfies $\beta_{\mathcal D}(b\otimes1)=0$.
+The extension by $N_{\mathcal D}$ therefore defines a complex of right differential modules.
+On $U$, its comparison to $E_k|_U$ sends
+\[
+ (x\otimes P,n)\longmapsto B_U(x)P+n.
+\]
+Balancing over $R$ and right differential linearity prove the chain equation from Theorem~\ref{thm:bdnz-native-map}.
+The relations in \eqref{eq:bdnz-weyl-presentation} are explicitly killed by this map.
+They specify the differential closure of the added collision source.
+They impose no unproved translation relation on the original ordered symbols.
+Replacing $\beta$ and $B_U$ by the all-word maps gives the same right differential module construction for $O^{\mathrm{all}}$.
+
+\section{A binary obstruction to a regular coefficient connection}
+
+The original binary source has a stronger restriction than a missing choice of connection.
+Let $R_2=\mathbb C[y,t]$, $L_2=R_2[t^{-1}]$, and
+\[
+ C_2^0=\{f\in L_2[u]:f(0),f(1)\in R_2\},
+ \qquad C_2^1=L_2[u]du,\qquad d_Cf=f' du.
+\]
+Let $M=C_2e\oplus C_2h$, with $|e|=|h|=-2$, and
+\[
+ be=-\frac{du}{t}h,\qquad bh=0,
+ \qquad b(cm)=d_Cc\,m+(-1)^{|c|}c\,bm.
+\]
+A coefficient-compatible normal connection means a degree-zero operator $\nabla_t$ satisfying
+\[
+ \nabla_t(cm)=(\partial_tc)m+c\nabla_tm,
+ \qquad \partial_tu=0,\quad\partial_tdu=0.
+\]
+Regularity requires $\nabla_te,\nabla_th\in M^{-2}$ with their coefficients in $C_2^0$.
+
+\begin{proposition}\label{prop:bdnz-no-connection}
+No regular coefficient-compatible normal connection on $M$ commutes with $b$.
+This statement does not depend on the Heisenberg level.
+\end{proposition}
+\begin{proof}
+A degree-$-2$ cycle $fe+gh$ satisfies $\partial_uf=0$ and $\partial_ug=f/t$.
+Endpoint regularity then gives
+\[
+ Z^{-2}(M)=R_2(te+uh)\oplus R_2h.
+\]
+Suppose the stated connection exists, and write $\nabla_te=Ae+Bh$ with $A,B\in C_2^0$.
+The element $te+uh$ is closed, so its covariant derivative must also be closed.
+Coefficient compatibility gives
+\[
+ \nabla_t(te+uh)=e+t\nabla_te+u\nabla_th.
+\]
+At $u=0$, its $e$ coefficient is $1+tA(0)$.
+The displayed description of cycles requires this coefficient to be divisible by $t$ in $R_2$.
+But $A(0)\in R_2$, and $1+tA(0)$ has value one at $t=0$.
+This contradiction proves the proposition.
+\end{proof}
+
+Thus an all-arity differential-module comparison cannot retain this regular coefficient-compatible connection on its binary restriction.
+It must specify a different source enlargement, a different coefficient action, or different translation relations.
+The nonadjacent extension supplies the ternary source term and its exact cohomology cost.
+Its compatibility with binary source replacement, ordered surjections, deconcatenation, and subsequent collisions remains a separate construction.

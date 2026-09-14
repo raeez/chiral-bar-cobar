@@ -1,0 +1,701 @@
+diff --git a/research-candidates/bd_diagonal026/nonzero-level004/translated-source-body.tex b/research-candidates/bd_diagonal026/nonzero-level004/translated-source-body.tex
+new file mode 100644
+index 00000000..327de61a
+--- /dev/null
++++ b/research-candidates/bd_diagonal026/nonzero-level004/translated-source-body.tex
+@@ -0,0 +1,665 @@
++\providecommand{\pp}{\operatorname{pp}}
++\chapter{Translated ordered states and native Heisenberg collisions}
++\label{chap:bdtr-source}
++
++\section{The translation of an ordered product}
++
++Fix $k\in\mathbb C^\times$ and $X=\mathbb A^1_{\mathbb C}$.
++All position functions are algebraic, and every differential operator has finite order.
++No completion or additional state differential is used.
++For two positions put $t=z_1-z_2$ and $y=z_2$.
++The coefficient algebra is
++\[
++ \begin{gathered}
++ C_2^0=\{f\in\mathbb C[y,t,t^{-1}][u]:f(0),f(1)\in\mathbb C[y,t]\},\\
++ C_2^1=\mathbb C[y,t,t^{-1}][u]du,
++ \qquad d_Cf=\partial_uf\,du.
++ \end{gathered}
++\]
++The zero-jet ordered product is $a_1a_2=\omega_{12}b_{12}$, where
++$\omega_{12}=du/t$, $|a_i|=0$, and $|b_{12}|=-1$.
++Translations of the inputs must also differentiate $\omega_{12}$.
++For example, a translation derivation $L_1$ with $L_1z_1=1$ satisfies
++\begin{equation}\label{eq:bdtr-first-jet}
++ (L_1a_1)a_2=-\frac{du}{t^2}b_{12}
++                 +\frac{du}{t}L_1b_{12}.
++\end{equation}
++The first summand is required even when $b_{12}$ has a prescribed translation.
++
++For $n=2,3$, write $R_n=\mathbb C[z_1,\ldots,z_n]$.
++Here is a common definition of the coefficient algebra $C_n$.
++Let $\mathcal O_n$ be the total orders of the labels.
++For nonempty $A\subset\mathcal O_n$, let $R_A$ invert $z_i-z_j$ when the relative order of $i,j$ varies in $A$.
++Let
++\[
++ \Omega_A=\mathbb C[u_\sigma,du_\sigma\mid\sigma\in A]
++ /(\textstyle\sum_Au_\sigma-1,\sum_Adu_\sigma).
++\]
++The odd generators $du_\sigma$ form an exterior algebra.
++A member of $C_n$ is a family in $R_A\otimes\Omega_A$ compatible with every face restriction and coefficient localization.
++The differential sends $u_\sigma$ to $du_\sigma$ and fixes positions.
++Set
++\[
++ q_{ij}=\sum_{i\prec_\sigma j}u_\sigma,
++ \qquad \omega_{ij}=\frac{dq_{ij}}{z_i-z_j}.
++\]
++On a face where the denominator is unavailable, $dq_{ij}=0$ and that component is zero.
++The position derivations $\partial_i=\partial_{z_i}$ preserve $C_n$ and commute with $d_C$.
++Indeed, they preserve every localization and every face condition.
++
++Adjoin closed symbols $a_i^{(r)}$ and $b_{ij}^{(r,s)}$, for $r,s\geq0$, of degrees $0$ and $-1$, respectively.
++Coefficients act graded centrally.
++Define the only nonzero nonunit products by
++\begin{equation}\label{eq:bdtr-product}
++ a_i^{(r)}a_j^{(s)}
++ =\sum_{p=0}^r\sum_{q=0}^s
++ \binom rp\binom sq
++ (\partial_i^p\partial_j^q\omega_{ij})
++ b_{ij}^{(r-p,s-q)},\qquad i\ne j.
++\end{equation}
++Products involving a $b$ and another nonunit symbol are zero.
++Products of two $a_i$ with the same label are zero.
++Let $L_i$ act by $\partial_i$ on coefficients.
++It increases the $i$-label jet index on a symbol and kills symbols without label $i$.
++The operators $L_i$ commute.
++Total translation of a two-label symbol is $L_i+L_j$.
++
++\begin{proposition}\label{prop:bdtr-state-algebra}
++Formula~\eqref{eq:bdtr-product} defines an associative differential graded algebra over $C_n$.
++Each $L_i$ is a degree-zero derivation commuting with the differential.
++The untranslated symbols have exactly the product $a_i^{(0)}a_j^{(0)}=\omega_{ij}b_{ij}^{(0,0)}$.
++\end{proposition}
++\begin{proof}
++Every product of three nonunit symbols vanishes under either parenthesization.
++This proves associativity.
++The coefficients in \eqref{eq:bdtr-product} are closed, since $d_C\omega_{ij}=0$ and $d_C$ commutes with position derivatives.
++Thus the differential obeys the graded Leibniz identity.
++Applying $L_i$ differentiates the coefficient or increases the first $b$ index.
++Pascal's identity combines these terms into \eqref{eq:bdtr-product} with $r$ replaced by $r+1$.
++The same calculation with $s+1$ proves the $L_j$ identity.
++Every other $L_l$ fixes the kernel and both input labels.
++This proves the derivation assertion on all products.
++\end{proof}
++
++\section{The right differential module of ordered states}
++
++Suspension lowers degree by one and satisfies $s(ca)=(-1)^{|c|}c\,sa$.
++The bar convention is $b_2(sa\otimes sb)=(-1)^{|a|}s(ab)$.
++For $n=2$, the untranslated sector has symbols
++$e=[a_1|a_2]$ and $h=[b_{12}]$, both of degree $-2$.
++Its differential is $be=-\omega_{12}h$ and $bh=0$.
++For $n=3$ and $\sigma=ijk$, use
++\[
++ e_\sigma=[a_i|a_j|a_k],\qquad
++ m_\sigma=[b_{ij}|a_k],\qquad
++ n_\sigma=[a_i|b_{jk}].
++\]
++These eighteen symbols have degree $-3$.
++Their free $C_3$-module $O_3$ has differential
++\begin{equation}\label{eq:bdtr-original-bar}
++ be_\sigma=-\omega_{ij}m_\sigma-\omega_{jk}n_\sigma,
++ \qquad bm_\sigma=bn_\sigma=0,
++ \qquad b(cv)=d_Cc\,v+(-1)^{|c|}c\,bv.
++\end{equation}
++Denote the binary complex by $O_2$.
++
++Let $P_n$ be the same bar sector with all translated symbols from \eqref{eq:bdtr-product}.
++For a multi-index $\alpha\in\mathbb N^n$, write $v_\alpha$ for the symbol whose input-label jets are $\alpha$.
++Each $P_n$ is the direct sum of $C_n v_\alpha$ over its untranslated symbols and finite jet indices.
++On these words,
++\[
++ L_i(cv_\alpha)=(\partial_ic)v_\alpha+cv_{\alpha+\mathbf e_i}.
++\]
++For the three-letter symbol the bar differential is explicitly
++\begin{equation}\label{eq:bdtr-jet-bar}
++ bv_\alpha=L^\alpha bv_0,
++ \qquad
++ b(e_\sigma)_\alpha
++ =-\sum_{\gamma\leq\alpha}\binom\alpha\gamma
++ \left((\partial^\gamma\omega_{ij})(m_\sigma)_{\alpha-\gamma}
++       +(\partial^\gamma\omega_{jk})(n_\sigma)_{\alpha-\gamma}\right).
++\end{equation}
++Mixed words have zero symbol differential.
++The binary formula omits the second summand.
++The graded coefficient rule in \eqref{eq:bdtr-original-bar} remains in force.
++
++Let $D_n$ be the Weyl algebra of $R_n$, with $[\partial_i,z_j]=\delta_{ij}$.
++The right action on $P_n$ is
++\begin{equation}\label{eq:bdtr-right-action}
++ w\partial_i=-L_iw,
++ \qquad wf=fw\quad(f\in R_n).
++\end{equation}
++The identity $(w\partial_i)f-(wf)\partial_i=w(\partial_if)$ verifies the Weyl relation.
++Flatness of the $L_i$ verifies all derivative commutators.
++Equation~\eqref{eq:bdtr-jet-bar} gives $bL_i=L_ib$, so $P_n$ is a complex of right $D_n$-modules.
++The untranslated inclusion $O_n\hookrightarrow P_n$ is a cochain map over $R_n$.
++
++\begin{proposition}\label{prop:bdtr-induced-identification}
++There is an isomorphism of right differential-module complexes
++\begin{equation}\label{eq:bdtr-induced}
++ O_n\otimes_{R_n}D_n\longrightarrow P_n,
++ \qquad x\otimes A\longmapsto xA.
++\end{equation}
++Consequently,
++\begin{equation}\label{eq:bdtr-jet-cohomology}
++ H^r(P_n)=H^r(O_n)\otimes_{R_n}D_n.
++\end{equation}
++This is not an identification of $P_n$ with $O_n$.
++\end{proposition}
++\begin{proof}
++Balancing follows from the stated regular-function action.
++The ordered monomials $\partial^\alpha$ form a free left $R_n$-basis of $D_n$.
++For $x=cv_0$, the image of $x\otimes\partial^\alpha$ is
++$(-1)^{|\alpha|}cv_\alpha$ plus terms with smaller jet order.
++This triangular formula gives an inverse on every finite sum.
++Right linearity is built into the definition.
++The chain identity follows from $bL_i=L_ib$.
++Finally, left $R_n$-freeness of $D_n$ makes tensoring exact, proving \eqref{eq:bdtr-jet-cohomology}.
++\end{proof}
++
++The products \eqref{eq:bdtr-product} specify what the induction means for translated states.
++Keeping the same formula $a_i^{(r)}a_j^{(s)}=\omega_{ij}b_{ij}^{(r,s)}$ for every jet would contradict \eqref{eq:bdtr-first-jet}.
++
++\section{The unextended Heisenberg target}
++
++The Heisenberg states, vacuum, current, and translation are
++\[
++ V_k=\mathbb C[x_1,x_2,\ldots],\quad
++ \mathbf1=1,\quad J=x_1,\quad
++ T=\sum_{r\geq1}r x_{r+1}\partial_{x_r}.
++\]
++Every state is a finite polynomial, is even, and has degree zero.
++The modes are $J_{-r}=x_r\cdot$, $J_r=kr\partial_{x_r}$ for $r\geq1$, and $J_0=0$.
++The field of a monomial is the normally ordered product of the divided current derivatives.
++Normal ordering puts multiplication operators before derivative operators.
++Commuting these operators gives the finite Wick pairing rule.
++For factors $x_r$ and $x_l$, a contraction is
++\[
++ C_{rl}(t)=\frac{k(-1)^{r-1}(r+l-1)!}{(r-1)!(l-1)!}\,t^{-r-l}.
++\]
++Sum over all partial pairings of distinct input factors.
++Each pair contributes its contraction, and the unpaired factors remain normally ordered.
++The rule follows by applying $AB=BA+[A,B]$ until every multiplication operator precedes every derivative operator.
++Each contracted factor is removed, so every fixed monomial has finitely many pairings.
++In particular,
++\begin{equation}\label{eq:bdtr-Heisenberg}
++ p(t)=Y(J,t)J=\frac{k}{t^2}\mathbf1+(e^{tT}J)J,
++ \qquad Y(\mathbf1,t)a=a,
++ \qquad T^rJ=r!x_{r+1}.
++\end{equation}
++The right differential module $\mathcal H_k=\omega_X\otimes V_k$ has action
++$(fa\,dz)\partial_z=-(f'a+fTa)dz$.
++For $t=z-w$ and $y=w$, its chiral operation is
++\begin{equation}\label{eq:bdtr-principal-part}
++ \mu\bigl(f(z,w)(a\,dz\boxtimes b\,dw)\bigr)
++ =\pp_t\bigl(f(y+t,y)Y(a,t)b\bigr),
++ \quad
++ \pp_t\frac{a(y)}{t^{r+1}}
++ =\frac{a(y)dy}{r!}\delta\partial_t^r.
++\end{equation}
++The orientation is $dz\wedge dw=dt\wedge dy$.
++Multiplication by a Laurent coefficient occurs before taking the principal part.
++An existing principal-part class only admits multiplication by regular functions.
++The normal action is $-\partial_t$ on Laurent representatives.
++In particular, $(\delta\partial_t^r)t=r\delta\partial_t^{r-1}$.
++
++Translation of fields follows directly from the mode formulas:
++$Y(Ta,t)=\partial_tY(a,t)$ and
++$TY(a,t)b=\partial_tY(a,t)b+Y(a,t)Tb$.
++These two equations make \eqref{eq:bdtr-principal-part} a right differential-module map.
++The contraction relation $C_{lr}(-t)=C_{rl}(t)$ gives vertex skew symmetry by interchanging the two inputs in the Wick sum.
++Normal coordinate transposition acts as
++$p(t,y)\mapsto-\pp_t(e^{tT}p(-t,y+t))$.
++The density minus sign therefore gives skew symmetry for the chiral operation.
++
++For three monomial states the Wick expression belongs to
++$V_k[[u,v]][u^{-1},v^{-1},(u-v)^{-1}]$.
++Its two radial expansions are the two ordered products.
++Pairing the first two inputs first gives its expansion along $u=v$, hence the iterate.
++The following residue identity gives their difference:
++\[
++ \begin{aligned}
++ \operatorname{Res}_v\operatorname{Res}_t G(v+t,v)\,dt\,dv
++ ={}&\operatorname{Res}_u\operatorname{Res}_v i_{u,v}G(u,v)\,dv\,du\\
++    &-\operatorname{Res}_v\operatorname{Res}_u i_{v,u}G(u,v)\,du\,dv.
++ \end{aligned}
++\]
++Here $i_{u,v}$ expands in nonnegative powers of $v/u$.
++For a rational numerator the identity is the partial-fraction identity for the poles $u=0$ and $u=v$.
++For a power-series numerator, each residue uses finitely many coefficients, reducing to that case.
++Apply the identity after multiplication by every polynomial testing the two normal variables.
++This proves chiral Jacobi coefficient by coefficient, including input translations and finite coefficient poles.
++
++For a partition $\pi$ of $\{1,\ldots,n\}$, let $\Delta_\pi$ identify its blocks and let $j_\pi$ exclude collisions between distinct blocks.
++The native complex is
++\begin{equation}\label{eq:bdtr-native}
++ E_n=\bigoplus_\pi (\Delta_\pi)_*(j_\pi)_*j_\pi^*
++       \left(\boxtimes_{B\in\pi}\mathcal H_k[1]\right).
++\end{equation}
++The closed direct image uses the right transfer module with all finite normal derivatives.
++There is no additional degree shift.
++Formula~\eqref{eq:bdtr-native} is the Chevalley--Cousin carrier of
++\cite{BDtranslated}, \S3.4.11, equation (3.4.11.1).
++Its partition summand has degree $-\#\pi$.
++For even states the collision differential is
++\begin{equation}\label{eq:bdtr-Q-signs}
++ Q[a|b]=[\mu(a,b)],\qquad
++ Q[a|b|c]=[\mu_{12}(a,b)|c]-[\mu_{13}(a,c)|b]
++                                  +[\mu_{23}(b,c)|a].
++\end{equation}
++Every map includes transverse localization and the density permutation.
++Swapping suspended even blocks changes the sign.
++The preceding Jacobi identity gives $Q^2=0$.
++
++\section{The binary comparison and its source term}
++
++For an actual edge coefficient define
++\begin{equation}\label{eq:bdtr-integrals}
++ \begin{gathered}
++ A(g)=\int_0^1g(u)\,du,
++ \qquad M(g)=\int_0^1ug(u)\,du,\\
++ q_g=\pp_t\bigl(t p(t)A(g)\bigr),
++ \qquad v_g=\pp_t\bigl(p(t)M(g)\bigr).
++ \end{gathered}
++\end{equation}
++Characteristic zero makes these polynomial integrals exact.
++Every normal coefficient is regular in the remaining block positions.
++Integration by parts gives
++\begin{equation}\label{eq:bdtr-endpoint}
++ v_{\partial_uf}+q_{f/t}=\pp_t\bigl(p(t)f(1)\bigr),
++ \qquad q_{\partial_uf}
++ =k\pp_t\frac{f(1)-f(0)}t\mathbf1.
++\end{equation}
++The second identity uses endpoint regularity and the factor $t$ in $q_g$.
++
++Define a degree-zero $R_2$-linear map $B_2:O_2\to E_2$ by
++\[
++ B_2(fe)=f(1)[J_1|J_2],\quad
++ B_2(gdu\,e)=[v_g],\quad
++ B_2(fh)=0,\quad B_2(gdu\,h)=-[q_g].
++\]
++Let $N_2$ be the right differential module generated by $\delta_{12}\mathbf1$ in degree $-1$.
++It is closed under $Q$, and
++\begin{equation}\label{eq:bdtr-binary-module}
++ N_2\cong D_2/(tD_2+\partial_yD_2).
++\end{equation}
++Its independent forms are $f(y)\mathbf1\delta_{12}\partial_t^r$, $r\geq0$.
++
++Extend $B_2$ to $P_2$ by right differential linearity through \eqref{eq:bdtr-induced}.
++This is an actual map on translated states.
++For any base coefficient $c$ and word $v$, its recursion is
++\begin{equation}\label{eq:bdtr-B-recursion}
++ B_n(cv_{\alpha+\mathbf e_i})
++ =-B_n(cv_\alpha)\partial_i-B_n((\partial_ic)v_\alpha).
++\end{equation}
++For an unmerged zero-form it sends the $i$-th jet to $T$ on precisely the $i$-th native current.
++The identity holds for every jet order, because evaluation commutes with position differentiation.
++
++\begin{proposition}\label{prop:bdtr-binary}
++The binary defect $\beta_2=QB_2-B_2b$ takes values in $N_2$.
++On untranslated inputs its only nonzero component is
++\[
++ \beta_2(fh)=k\pp_t\frac{f(1)-f(0)}t\mathbf1.
++\]
++The complex
++\[
++ \widetilde P_2=P_2\oplus N_2,
++ \qquad \widetilde b(x,n)=(bx,\beta_2x)
++\]
++admits the native cochain map $F_2(x,n)=B_2x+n$.
++Among added submodules of the target for this fixed $B_2$ and splitting, $N_2$ is minimal.
++\end{proposition}
++\begin{proof}
++For $fe$, the first identity in \eqref{eq:bdtr-endpoint} gives zero defect.
++The target differential of a one-form image is zero by degree.
++For $fh$, the defect is $q_{\partial_uf}$, giving the displayed formula.
++Right differential linearity covers all jets.
++Since $Q^2=b^2=0$, one has $Q\beta_2+\beta_2b=0$.
++The target differential is zero on $N_2$, hence $\beta_2b=0$.
++This proves $\widetilde b^2=0$ and $QF_2=F_2\widetilde b$.
++Taking $f=u$ gives $k\delta_{12}\mathbf1$.
++Its right differential closure is all of \eqref{eq:bdtr-binary-module}, proving minimality.
++\end{proof}
++
++The binary cohomology change is explicit in its lowest degree.
++Endpoint integration gives
++\[
++ H^{-2}(O_2)=R_2z\oplus R_2h,\qquad z=te+uh.
++\]
++Indeed, a cycle $fe+gh$ has $f\in R_2$ and $\partial_ug=f/t$.
++Regular endpoints force $t\mid f$, and subtracting a multiple of $z$ leaves a constant multiple of $h$.
++Its connecting map sends $z$ to $k\delta_{12}\mathbf1$ and $h$ to zero.
++Therefore
++\begin{equation}\label{eq:bdtr-binary-cohomology}
++ H^{-2}(\widetilde P_2)
++ =z(tD_2+\partial_yD_2)\oplus hD_2
++ \ \subset\ H^{-2}(O_2)\otimes_{R_2}D_2.
++\end{equation}
++All other cohomology groups of the projection $\widetilde P_2\to P_2$ are isomorphic.
++Surjectivity of the displayed connecting map proves this assertion from the long exact sequence.
++
++\section{All three collision diagonals}
++
++For each word $ijk$, restrict coefficients to its edges $\{ijk,jik\}$ and $\{ijk,ikj\}$.
++Their coordinates are $u_L=q_{ij}$ and $u_R=q_{jk}$.
++Both coordinates equal one at the word vertex.
++For $c\in C_3^1$, write $c|_L=g_Ldu_L$ and $c|_R=g_Rdu_R$.
++Use \eqref{eq:bdtr-integrals} in each edge normal coordinate.
++Define $B_3:O_3\to E_3$ by
++\begin{equation}\label{eq:bdtr-ternary-B}
++ \begin{aligned}
++ B_3(fe_{ijk})&=f(ijk)[J_i|J_j|J_k],\\
++ B_3(ce_{ijk})&=[v_{g_L}|J_k]-[J_i|v_{g_R}],\\
++ B_3(fm_\sigma)&=B_3(fn_\sigma)=0,\\
++ B_3(cm_\sigma)&=-[q_{g_L}|J_k],\\
++ B_3(cn_\sigma)&=+[J_i|q_{g_R}].
++ \end{aligned}
++\end{equation}
++Here $f$ has degree zero and $c$ has degree one.
++Every component of coefficient degree at least two has zero image.
++The mixed formulas are the binary images with the suspended spectator and its tensor sign.
++Extend to $P_3$ by \eqref{eq:bdtr-B-recursion}.
++
++For a finite inner principal part $w$, define
++$R_L(w)=Q[w|J]$ and $R_R(w)=Q[J|w]$.
++These operations retain every inner normal derivative.
++They take the outer principal part only after transverse localization.
++Put $\Delta_Lf=f(ijk)-f(jik)$ and $\Delta_Rf=f(ijk)-f(ikj)$.
++
++\begin{lemma}\label{lem:bdtr-defect-table}
++The defect $\beta_3=QB_3-B_3b$ on untranslated words is
++\begin{equation}\label{eq:bdtr-defect-table}
++ \begin{aligned}
++ \beta_3(fe_{ijk})&=-[\mu_{ik}(f(ijk)(J_i,J_k))|J_j],\\
++ \beta_3(ce_{ijk})&=R_L(v_{g_L})-R_R(v_{g_R}),\\
++ \beta_3(fm_\sigma)&=k[\pp_{t_{ij}}(\Delta_Lf/t_{ij})\mathbf1|J_k],\\
++ \beta_3(fn_\sigma)&=-k[J_i|\pp_{t_{jk}}(\Delta_Rf/t_{jk})\mathbf1],\\
++ \beta_3(cm_\sigma)&=-R_L(q_{g_L}),\\
++ \beta_3(cn_\sigma)&=+R_R(q_{g_R}).
++ \end{aligned}
++\end{equation}
++It vanishes on all higher coefficient degrees.
++\end{lemma}
++\begin{proof}
++For a zero-form unmerged word, the two adjacent components cancel by the first identity in \eqref{eq:bdtr-endpoint}.
++The nonadjacent component has the middle unshuffle sign in \eqref{eq:bdtr-Q-signs}.
++For a one-form unmerged word, all terms in $B_3b$ restrict to two-forms on an edge and vanish.
++Its two outer collisions give the second line.
++On mixed zero-forms use the second identity in \eqref{eq:bdtr-endpoint}.
++On mixed one-forms the source differential again has zero edge image.
++The target differential gives the last two lines with the signs in \eqref{eq:bdtr-ternary-B}.
++Higher coefficients vanish for the same edge-dimension reason.
++\end{proof}
++
++\section{The minimal ternary added module}
++
++Let $U_J=\operatorname{span}_{\mathbb C}\{T^rJ:r\geq0\}$ with its stated translation.
++For each unordered pair $ij$ with spectator $l$, let $M_{ij}$ be the regular-coefficient right differential closure of
++$[\mathbf1\delta_{ij}|J_l]$ inside the $ij|l$ target summand.
++The pair block is listed first, and $t_{ij}=z_i-z_j$ uses $i<j$.
++Let $S_3$ be the right differential closure of $[J\delta_{123}]$ in the small-diagonal summand.
++Then
++\begin{equation}\label{eq:bdtr-module-presentations}
++ \begin{aligned}
++ M_{ij}&\cong D_3/\bigl(t_{ij}D_3+(\partial_i+\partial_j)D_3\bigr),\\
++ S_3&\cong D_3/\bigl(t_{12}D_3+t_{23}D_3\bigr).
++ \end{aligned}
++\end{equation}
++The vacuum fixes the first tangent relation.
++The spectator derivatives generate the independent states $T^rJ$.
++For $S_3$, the total tangent derivative generates those same independent states, so there is no tangent annihilator.
++Normal ordering in the Weyl algebra gives independent finite transfer forms in both presentations.
++This proves completeness of their relations.
++
++Put $M_3=M_{12}\oplus M_{13}\oplus M_{23}$ in degree $-2$ and put $S_3$ in degree $-1$.
++Their direct sum $N_3=M_3\oplus S_3$ has zero differential.
++Indeed, a pair term has vacuum in its merged block and regular outer coefficients.
++Its remaining principal part is zero by $Y(\mathbf1,s)J=J$.
++Right differential linearity preserves this vanishing.
++The small-diagonal term has no further collision.
++
++\begin{theorem}\label{thm:bdtr-native-extension}
++The defect $\beta_3$ has values in $N_3$.
++The right differential-module complex
++\begin{equation}\label{eq:bdtr-extension}
++ \widetilde P_3=P_3\oplus N_3,
++ \qquad \widetilde b(x,n)=(bx,\beta_3x)
++\end{equation}
++admits the native cochain map
++$F_3(x,n)=B_3x+n$ on all of $X^3$.
++It is defined on every ordered word, every global compatible-family coefficient, and every finite input translation.
++For this prescribed $B_3$, and an added module included in the target with the displayed splitting, $N_3$ is minimal.
++\end{theorem}
++\begin{proof}
++The zero-form unmerged output is a regular coefficient times $k\delta_{ik}\partial_{t_{ik}}$ with spectator $J_j$.
++The mixed zero-form outputs have vacuum in the pair block by \eqref{eq:bdtr-defect-table}.
++Thus all degree-$-2$ outputs lie in $M_3$.
++
++Every $v_g$ or $q_g$ has vacuum states or quadratic current states, including their translations.
++Its normal coefficients are regular in the outer variable.
++The outer collision of a vacuum term is zero.
++In the Wick expansion of a quadratic current state against one current, a singular term uses exactly one contraction.
++It leaves exactly one translated current.
++Therefore every degree-$-1$ output lies in $S_3$.
++The same conclusion holds after all right derivatives.
++
++The identity $Q\beta_3+\beta_3b=0$ follows by expanding the defect.
++Since $QN_3=0$, it gives $\beta_3b=0$.
++Thus \eqref{eq:bdtr-extension} is a complex, and direct substitution gives $QF_3=F_3\widetilde b$.
++
++For any pair choose a mixed word containing it and the coefficient $q_{ij}$.
++The corresponding defect is, up to its displayed sign, $k[\mathbf1\delta_{ij}|J_l]$.
++Its right differential closure is $M_{ij}$.
++It remains to show that $S_3$ is forced.
++Take $t=z_1-z_2$, $s=z_2-z_3$, $y=z_3$, and the global closed coefficient
++\begin{equation}\label{eq:bdtr-eta}
++ \eta_{12}=\frac{dq_{12}}{t^2}.
++\end{equation}
++On a face with constant relative order, its numerator is zero.
++On every other face the coefficient ring inverts $t$.
++Thus this is an actual member of $C_3^1$.
++For $m=m_{12|3}$, its left edge coefficient is $g=1/t^2$, and
++\begin{equation}\label{eq:bdtr-small-witness}
++ q_g=\frac{k}{2}\mathbf1\delta_{12}\partial_t^2+J^2\delta_{12},
++ \qquad
++ \beta_3(\eta_{12}m)
++ =-2k\bigl(J\delta_{123}\partial_s+(TJ)\delta_{123}\bigr).
++\end{equation}
++For the second formula, the inner vacuum term has zero outer output and
++$\pp_sY(J^2,s)J=2k(J/s^2+TJ/s)$.
++The orientation is $dz_1\wedge dz_2\wedge dz_3=dt\wedge ds\wedge dy$.
++Multiplication by $s$ gives $-2kJ\delta_{123}$.
++This nonzero element generates $S_3$ under right differential operators.
++Every added target submodule that absorbs the defect must therefore contain $N_3$.
++\end{proof}
++
++The factor $t$ in $q_g$ is decisive.
++The coefficient $dq_{12}/t$ gives only $k\mathbf1\delta_{12}\partial_t$ and has zero outer collision.
++The first nonzero mixed outer output is \eqref{eq:bdtr-eta}, which has one additional inner pole.
++The new small-diagonal source term is exactly \eqref{eq:bdtr-small-witness}.
++
++\section{Cohomology relative to the original ordered complex}
++
++All cohomology in this section is cohomology of algebraic module complexes.
++Write $H_D^r=H^r(O_3)\otimes_{R_3}D_3$.
++The added module gives the short exact sequence
++\[
++ 0\longrightarrow N_3\longrightarrow\widetilde P_3
++     \longrightarrow P_3\longrightarrow0.
++\]
++Its connecting maps are the induced defect maps
++$\delta_{-3}:H_D^{-3}\to M_3$ and $\delta_{-2}:H_D^{-2}\to S_3$.
++They are defined explicitly by \eqref{eq:bdtr-defect-table} and right differential linearity.
++
++For each $\sigma=ijk$, put $p_\sigma=t_{ij}t_{jk}$ and
++\[
++ z_\sigma=p_\sigma e_\sigma+t_{jk}q_{ij}m_\sigma+t_{ij}q_{jk}n_\sigma.
++\]
++These are cycles, and
++\begin{equation}\label{eq:bdtr-lowest}
++ H^{-3}(O_3)=\bigoplus_\sigma
++       (R_3z_\sigma\oplus R_3m_\sigma\oplus R_3n_\sigma).
++\end{equation}
++To prove completeness, a closed unmerged coefficient is constant on the full simplex.
++Its vertex values force it to belong to $R_3$.
++For a cycle $fe_\sigma+gm_\sigma+hn_\sigma$, integration on its two actual edges gives
++$t_{ij}\mid f$ and $t_{jk}\mid f$.
++The two relatively prime linear polynomials give $p_\sigma\mid f$.
++Subtracting the corresponding multiple of $z_\sigma$ leaves constant mixed coefficients.
++There are no incoming boundaries in degree $-3$.
++This proves \eqref{eq:bdtr-lowest}.
++
++In fixed label order set
++\[
++ c=k[\mathbf1\delta_{12}\partial_{t_{12}}|J_3]
++    -k[\mathbf1\delta_{13}\partial_{t_{13}}|J_2]
++    +k[\mathbf1\delta_{23}\partial_{t_{23}}|J_1]\in M_3.
++\]
++Every coordinate permutation here uses \eqref{eq:bdtr-Q-signs} and its density identification.
++If $\varepsilon_\sigma$ is the sign of the permutation $\sigma$, then
++\begin{equation}\label{eq:bdtr-connecting}
++ \delta_{-3}(z_\sigma)=\varepsilon_\sigma p_\sigma c,
++ \qquad \delta_{-3}(m_\sigma)=\delta_{-3}(n_\sigma)=0.
++\end{equation}
++Indeed, $B_3z_\sigma=p_\sigma[J_i|J_j|J_k]$ and $bz_\sigma=0$.
++Apply $Q$ and use its regular-function linearity.
++
++This also gives a finite right-module presentation for the cohomology contribution from the pair diagonals.
++Put $t=z_1-z_3$ and $s=z_2-z_3$ in the next formula only.
++The six polynomials $p_\sigma$ generate $(t^2,ts,s^2)$ in $R_3$.
++The relations $p_\sigma c$ therefore generate precisely
++\begin{equation}\label{eq:bdtr-K}
++ K=c\,t^2D_3+c\,tsD_3+c\,s^2D_3\ \subset M_3.
++\end{equation}
++The right differential closure removes this quotient completely.
++
++\begin{lemma}\label{lem:bdtr-pair-surjection}
++One has $K=M_3$.
++\end{lemma}
++\begin{proof}
++Let $g_{12}=[\mathbf1\delta_{12}|J_3]$ and temporarily put $x=t_{12}$, $s=t_{23}$.
++The element $c\,t_{13}^2t_{23}^2$ belongs to $K$ by \eqref{eq:bdtr-K}.
++Its $13$ and $23$ components vanish, since a double-pole class is killed by its squared normal coordinate.
++On the $12$ component, $t_{13}=x+s$ and normal multiplication gives
++\[
++ (c\,t_{13}^2t_{23}^2)x=k g_{12}s^4.
++\]
++Thus the class $\bar g_{12}$ in $M_3/K$ satisfies $\bar g_{12}s^4=0$.
++It also satisfies $\bar g_{12}P=0$, where $P=\partial_1+\partial_2$.
++The Weyl relation is $[P,s]=1$.
++If $\bar g_{12}s^r=0$ for $r>0$, then
++\[
++ 0=(\bar g_{12}s^r)P
++   =(\bar g_{12}P)s^r-r\bar g_{12}s^{r-1}
++   =-r\bar g_{12}s^{r-1}.
++\]
++Descending from $r=4$ gives $\bar g_{12}=0$.
++The two relabelings give the same conclusion for $g_{13}$ and $g_{23}$.
++These three elements generate $M_3$, proving the assertion.
++\end{proof}
++
++\begin{theorem}\label{thm:bdtr-cohomology}
++Both connecting maps $\delta_{-3}:H_D^{-3}\to M_3$ and $\delta_{-2}:H_D^{-2}\to S_3$ are surjective.
++The entire cohomology change from $P_3$ to $\widetilde P_3$ is described by
++\begin{equation}\label{eq:bdtr-cohomology}
++ \begin{gathered}
++ 0\longrightarrow H^{-3}(\widetilde P_3)\longrightarrow H_D^{-3}
++      \xrightarrow{\delta_{-3}}M_3\longrightarrow0,\\
++ 0\longrightarrow H^{-2}(\widetilde P_3)\longrightarrow H_D^{-2}
++      \xrightarrow{\delta_{-2}}S_3\longrightarrow0,\\
++ H^r(\widetilde P_3)\cong H_D^r\qquad(r\ne-3,-2).
++ \end{gathered}
++\end{equation}
++The first kernel has the explicit equation
++$\sum_\sigma\varepsilon_\sigma p_\sigma c A_\sigma=0$ for the coefficients
++$A_\sigma\in D_3$ of $z_\sigma$.
++Every mixed basis coefficient is unrestricted there.
++\end{theorem}
++\begin{proof}
++The element $\eta_{12}m_{12|3}$ is closed because $d_C\eta_{12}=0$ and $bm_{12|3}=0$.
++Its connecting image is \eqref{eq:bdtr-small-witness}.
++Multiplication by $s$ gives a nonzero scalar times the cyclic generator of $S_3$.
++Right differential linearity proves surjectivity.
++In particular, this closed element is not a boundary in $P_3$.
++Otherwise its defect would vanish, since $\beta_3b=0$.
++
++The long exact sequence has the consecutive terms
++\[
++ 0\to H^{-3}(\widetilde P_3)\to H_D^{-3}\to M_3
++ \to H^{-2}(\widetilde P_3)\to H_D^{-2}\to S_3
++ \to H^{-1}(\widetilde P_3)\to H_D^{-1}\to0.
++\]
++Lemma~\ref{lem:bdtr-pair-surjection} gives surjectivity of $\delta_{-3}$.
++Use both surjections in this sequence.
++All other degrees follow because $N_3$ has only the two stated components.
++\end{proof}
++
++These formulas separate two changes.
++The translation construction replaces $H^r(O_3)$ by the exact tensor product in \eqref{eq:bdtr-jet-cohomology}.
++The native collision terms then impose \eqref{eq:bdtr-cohomology}.
++The vanishing $M_3/K=0$ uses the vacuum tangent relation and Weyl commutators.
++A quotient taken only over regular functions does not permit this argument.
++The coefficient integral table specifies $\delta_{-2}$ on every cycle, without requiring a coefficient-formality assertion about $C_3$.
++Both connecting maps are nonzero, so the projection is not a quasi-isomorphism.
++
++\section{The first four-current compatibility}
++
++The binary added module has vacuum output.
++Tensoring it with a single current gives the ternary pair module through the corresponding closed direct image.
++Its differential remains zero by the vacuum calculation above.
++Tensoring with two currents introduces a new collision.
++
++In $E_4$, for $i<j$ and the remaining labels $l<m$, set
++\[
++ w_{ij}=k[\mathbf1\delta_{ij}\partial_{t_{ij}}|J_l|J_m].
++\]
++For a decomposition into two pairs, order the pair blocks lexicographically and let
++\[
++ d_{ij|lm}=k^2[\mathbf1\delta_{ij}\partial_{t_{ij}}
++                    |\mathbf1\delta_{lm}\partial_{t_{lm}}].
++\]
++These have degrees $-3$ and $-2$, respectively.
++They are supported on their actual pair and double-pair diagonals.
++The double-pair class is nonzero because both transfer derivatives and $k^2$ are nonzero.
++There is no outer pole between the two vacuum blocks.
++
++\begin{proposition}\label{prop:bdtr-four-current}
++The six pair terms cannot all be assigned zero differential while retaining their native images.
++The smallest right differential subcomplex containing them includes the three double-pair modules.
++Its differentials on the displayed generators are
++\begin{equation}\label{eq:bdtr-four-Q}
++ \begin{array}{c|rrrrrr}
++ w&w_{12}&w_{34}&w_{13}&w_{24}&w_{14}&w_{23}\\ \hline
++ Qw&-d_{12|34}&d_{12|34}&-d_{13|24}&d_{13|24}
++                    &-d_{14|23}&d_{14|23}.
++ \end{array}
++\end{equation}
++Every double-pair term is closed.
++The resulting correction satisfies the four-current equation $Q^2[J_1|J_2|J_3|J_4]=0$.
++\end{proposition}
++\begin{proof}
++In $[\mathbf1_{ij}|J_l|J_m]$, both collisions involving the vacuum have zero principal part.
++The remaining term in \eqref{eq:bdtr-Q-signs} is
++$[\mu(J_l,J_m)|\mathbf1_{ij}]$ with positive sign.
++Putting its blocks in the prescribed order gives precisely \eqref{eq:bdtr-four-Q}.
++Right derivatives preserve these equations.
++Multiplying the two normal coordinates lowers the two derivatives to the simple double-delta generator.
++Its right differential closure is the full regular double-pair vacuum module.
++Thus these three modules are forced, and they suffice to close the displayed current subspace under $Q$.
++Their next differential vanishes because both states are vacuum with regular coefficients.
++
++For four even inputs, the first collision of labels $i<j$ has sign $(-1)^{i+j-3}$ when its block is placed first.
++Hence
++\[
++ Q[J_1|J_2|J_3|J_4]
++ =w_{12}-w_{13}+w_{14}+w_{23}-w_{24}+w_{34}.
++\]
++Each complementary pair has the same first sign and opposite second signs in \eqref{eq:bdtr-four-Q}.
++The three double-pair coefficients cancel individually.
++\end{proof}
++
++This calculation specifies the next differential on the regular four-current collision subspace.
++The binary and ternary maps above have their full stated global coefficient domains.
++A map on every four-input ordered coefficient requires additional operations on the other four-point partition summands.
++An all-arity bar coalgebra morphism also requires ordered-surjection and deconcatenation identities.
++Those identities are not consequences of the individual cochain maps constructed here.
+diff --git a/research-candidates/bd_diagonal026/nonzero-level004/translated-source.tex b/research-candidates/bd_diagonal026/nonzero-level004/translated-source.tex
+new file mode 100644
+index 00000000..dda4a3de
+--- /dev/null
++++ b/research-candidates/bd_diagonal026/nonzero-level004/translated-source.tex
+@@ -0,0 +1,24 @@
++\documentclass[11pt,oneside]{memoir}
++\usepackage{raeez-math-template}
++\title{Translated ordered states and native Heisenberg collisions}
++\author{}
++\date{}
++\begin{document}
++\maketitle
++\begin{abstract}
++Differentiating the ordered multiplication kernel determines the products of translated states.
++These products define a flat differential module and retain the original ordered bar as its untranslated subcomplex.
++At a fixed nonzero Heisenberg level, weighted edge integrals give binary and ternary graded comparisons with the native chiral complex.
++Their defects determine minimal added collision modules for these prescribed maps.
++The ternary addition contains three pair-diagonal modules and a current module on the small diagonal.
++Exact sequences describe its cohomology relative to the original ordered source.
++A four-current calculation determines the next differential, supported on the three double-pair diagonals.
++\end{abstract}
++\input{translated-source-body.tex}
++\begin{thebibliography}{9}
++\bibitem{BDtranslated}
++A. Beilinson and V. Drinfeld,
++\emph{Chiral Algebras}, American Mathematical Society, 2004,
++\S3.1.1--3.1.2 and \S3.4.11, equation (3.4.11.1), pp.~157--158, 182--183.
++\end{thebibliography}
++\end{document}

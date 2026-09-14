@@ -1,0 +1,728 @@
+\chapter{Four-input coefficients and collision modules}
+\label{chap:bdfour-source}
+
+\section{The five words of an ordered sector}
+
+Retain the nonzero scalar $k$, the unextended states $V_k$, and the principal-part normalization of Chapter~\ref{chap:bdtr-source}.
+Apply the definition of $C_n$ there with $n=4$.
+Thus $R=\mathbb C[z_1,z_2,z_3,z_4]$, and the coefficient families range over faces of the simplex on twenty-four orders.
+Let $D=D_4$ be its Weyl algebra.
+All coefficients and forms are algebraic, and all state and differential-operator sums are finite.
+
+Fix an order $\sigma=i_1i_2i_3i_4$.
+For this sector write $a_r=a_{i_r}$,
+$t_r=z_{i_r}-z_{i_{r+1}}$, $q_r=q_{i_ri_{r+1}}$, and $\omega_r=dq_r/t_r$.
+The untranslated words are
+\[
+ \begin{aligned}
+ e&=[a_1|a_2|a_3|a_4],\\
+ m_1&=[b_{i_1i_2}|a_3|a_4],\\
+ m_2&=[a_1|b_{i_2i_3}|a_4],\\
+ m_3&=[a_1|a_2|b_{i_3i_4}],\\
+ d&=[b_{i_1i_2}|b_{i_3i_4}].
+ \end{aligned}
+\]
+All five words have degree $-4$.
+The direct sum of their free $C_4$-modules over all orders is $O_4$.
+It has one hundred twenty untranslated generators.
+The bar signs give
+\begin{equation}\label{eq:bdfour-bar}
+ \begin{gathered}
+ be=-\omega_1m_1-\omega_2m_2-\omega_3m_3,\\
+ bm_1=-\omega_3d,\qquad bm_3=-\omega_1d,\qquad bm_2=bd=0,\\
+ b(cv)=d_Cc\,v+(-1)^{|c|}c\,bv.
+ \end{gathered}
+\end{equation}
+For example, the two contributions to $b^2e$ are
+$-\omega_1\omega_3d$ and $-\omega_3\omega_1d$, which cancel.
+Closedness of the $\omega_r$ proves $b^2=0$ on every word.
+
+Use the translated products \eqref{eq:bdtr-product} for all four labels.
+Their proof of associativity and translation covariance applies without change to four labels.
+The resulting bar sector $P_4$ has words $v_\alpha$ for $\alpha\in\mathbb N^4$.
+Its complete translation and differential formulas are
+\begin{equation}\label{eq:bdfour-jets}
+ L_i(cv_\alpha)=(\partial_ic)v_\alpha+cv_{\alpha+\mathbf e_i},
+ \qquad w\partial_i=-L_iw,
+ \qquad bv_\alpha=L^\alpha bv_0.
+\end{equation}
+The coefficient rule in \eqref{eq:bdfour-bar} is retained.
+The triangular proof of Proposition~\ref{prop:bdtr-induced-identification} gives
+\begin{equation}\label{eq:bdfour-induced}
+ P_4\cong O_4\otimes_R D,
+ \qquad H^r(P_4)=H^r(O_4)\otimes_R D.
+\end{equation}
+In particular, the original bar embeds as its untranslated subcomplex.
+
+\section{The square of disjoint adjacent collisions}
+
+Let $\sigma_{ab}$ be the order obtained by independently reversing the first pair when $a=0$ and the last pair when $b=0$.
+Thus $\sigma_{11}=\sigma$.
+The four vertices span a face whose coefficient ring is $R[t_1^{-1},t_3^{-1}]$.
+Map the polynomial square with coordinates $u,v$ to this face by
+\begin{equation}\label{eq:bdfour-square}
+ u_{\sigma_{00}}=(1-u)(1-v),\quad
+ u_{\sigma_{10}}=u(1-v),\quad
+ u_{\sigma_{01}}=(1-u)v,\quad
+ u_{\sigma_{11}}=uv.
+\end{equation}
+The pullback sends $q_1$ to $u$, $q_3$ to $v$, and $q_2$ to one.
+Consequently $\omega_2$ restricts to zero.
+On a side where $u$ is fixed, the coefficients have no $t_1$ pole.
+On a side where $v$ is fixed, they have no $t_3$ pole.
+These assertions follow from the actual face coefficient rings, including their endpoints.
+
+For a one-form $c$ and a two-form $c_2$, write
+\[
+ c|_{\square}=g(u,v)du+h(u,v)dv,
+ \qquad c_2|_{\square}=G(u,v)du\wedge dv.
+\]
+Then
+\begin{equation}\label{eq:bdfour-square-d}
+ (d_Cc)|_{\square}=(\partial_uh-\partial_vg)du\wedge dv.
+\end{equation}
+The edge of the first pair is $v=1$.
+The edge of the last pair is $u=1$.
+The edge of the middle pair remains the ordinary edge $\{\sigma,\sigma(23)\}$.
+Every edge coordinate equals one at $\sigma$.
+
+Put $p_r=p(t_r)=Y(J,t_r)J$, with the states based at the second point of their pair.
+For a coefficient $H$ on the square define
+\[
+ \begin{aligned}
+ W_{00}(H)&=\pp_{t_1}\pp_{t_3}\left(p_1p_3\int_0^1\!\int_0^1uvH\,du\,dv\right),\\
+ W_{10}(H)&=\pp_{t_1}\pp_{t_3}\left(t_1p_1p_3\int_0^1\!\int_0^1vH\,du\,dv\right),\\
+ W_{01}(H)&=\pp_{t_1}\pp_{t_3}\left(p_1t_3p_3\int_0^1\!\int_0^1uH\,du\,dv\right),\\
+ W_{11}(H)&=\pp_{t_1}\pp_{t_3}\left(t_1p_1t_3p_3\int_0^1\!\int_0^1H\,du\,dv\right).
+ \end{aligned}
+\]
+The multiplication and both integrations precede the two principal parts.
+These outputs lie on the double-pair diagonal, in block order $i_1i_2|i_3i_4$.
+This notation uses the exterior tensor product of the two oriented binary transfer maps.
+For $\sigma=1234$, its density convention is
+\begin{equation}\label{eq:bdfour-double-density}
+ dz_1\wedge dz_2\wedge dz_3\wedge dz_4
+ =dt_1\wedge dy_1\wedge dt_3\wedge dy_3
+ =-dt_1\wedge dt_3\wedge dy_1\wedge dy_3,
+ \quad y_1=z_2,\ y_3=z_4.
+\end{equation}
+Normal derivative changes use this equality and the Weyl action.
+No normal derivative is discarded.
+
+\section{The graded comparison on every coefficient}
+
+Let $E_4$ be \eqref{eq:bdtr-native} for four labels.
+Its summands are the separated locus, six pair diagonals, four triple diagonals, three double-pair diagonals, and the small diagonal.
+They have degrees $-4,-3,-2,-2,-1$, respectively.
+On even blocks the first collision of positions $r<s$ has coefficient $(-1)^{r+s-3}$ when its output block is put first.
+Subsequent block permutations use the suspended Koszul signs.
+The normalizations are \eqref{eq:bdtr-principal-part} and \eqref{eq:bdfour-double-density}.
+
+For an edge one-form $a(u)du$, use $v_a$ and $q_a$ from \eqref{eq:bdtr-integrals}.
+Let $\iota_r(w)$ mean insertion of the merged block $w$ in position $r$, retaining the other two currents in their original order.
+For instance, $\iota_2(w)=[J_{i_1}|w|J_{i_4}]$.
+If $c\in C_4^1$, denote its actual three edge coefficients by $a_r$.
+Define the degree-zero $R$-linear map $B:O_4\to E_4$ by
+\begin{equation}\label{eq:bdfour-B}
+ \begin{array}{c|ccc}
+ &f\in C_4^0&c\in C_4^1&c_2\in C_4^2\\ \hline
+ e&f(\sigma)[J_{i_1}|J_{i_2}|J_{i_3}|J_{i_4}]
+       &\sum_{r=1}^3(-1)^{r-1}\iota_r(v_{a_r})&W_{00}(G)\\
+ m_1&0&-\iota_1(q_{a_1})&-W_{10}(G)\\
+ m_2&0&+\iota_2(q_{a_2})&0\\
+ m_3&0&-\iota_3(q_{a_3})&-W_{01}(G)\\
+ d&0&0&W_{11}(G).
+ \end{array}
+\end{equation}
+All higher coefficient degrees have zero image.
+The table includes every untranslated source summand.
+Extend it to $P_4$ using \eqref{eq:bdtr-B-recursion}.
+The recursion is unique by \eqref{eq:bdfour-induced}.
+It sends every unmerged zero-form jet to its actual translated Heisenberg insertion.
+
+\section{The complete boundary identities}
+
+All formulas below use one ordered sector.
+Let $\mathsf T_r(w)$ be the triple-diagonal part of $Q\iota_r(w)$.
+Let $\mathsf C(w)$ be the double-pair output $[\mu(J_{i_1},J_{i_4})|w]$ with the middle pair in its second block.
+The coefficient of $w$ is retained during the spectator collision.
+The corresponding transfer and coordinate permutation are part of this definition.
+The unshuffle rule gives
+\[
+ (Q\iota_2(w))_{\mathrm{double}}=-\mathsf C(w).
+\]
+For square coefficients put
+\[
+ \Delta_uh=h(1,v)-h(0,v),\qquad
+ \Delta_vg=g(u,1)-g(u,0),
+\]
+and define the double-pair terms
+\begin{equation}\label{eq:bdfour-side-defects}
+ \begin{aligned}
+ D_1(c)&=\pp_{t_1}\pp_{t_3}
+      \left(t_1p_1p_3\int_0^1v\Delta_uh\,dv\right),\\
+ D_3(c)&=-\pp_{t_1}\pp_{t_3}
+      \left(p_1t_3p_3\int_0^1u\Delta_vg\,du\right),\\
+ D_d(c)&=\pp_{t_1}\pp_{t_3}
+      \left(t_1p_1t_3p_3
+        \left(\int_0^1\Delta_vg\,du-\int_0^1\Delta_uh\,dv\right)\right).
+ \end{aligned}
+\end{equation}
+In $D_1$, the factor $t_1p_1$ is multiplied by a coefficient regular in $t_1$.
+It therefore has only vacuum principal part.
+The analogous statement holds for the third pair in $D_3$.
+Each summand of $D_d$ has a vacuum block for the same reason.
+
+Let $\beta=QB-Bb$.
+Let $Q_{\mathrm{na}}$ retain the three nonadjacent pair collisions of the four-current insertion.
+For $1234$ it retains the terms $-w_{13}+w_{14}-w_{24}$ of Proposition~\ref{prop:bdtr-four-current}.
+Let $\Delta_rf=f(\sigma)-f(\sigma(r,r+1))$.
+
+\begin{proposition}\label{prop:bdfour-defect}
+On coefficient degree zero the defect is
+\begin{equation}\label{eq:bdfour-defect-zero}
+ \begin{aligned}
+ \beta(fe)&=f(\sigma)Q_{\mathrm{na}}[J_{i_1}|J_{i_2}|J_{i_3}|J_{i_4}],\\
+ \beta(fm_r)&=(-1)^{r-1}k\,
+       \iota_r\!\left(\pp_{t_r}\frac{\Delta_rf}{t_r}\mathbf1\right),
+       \qquad r=1,2,3,\\
+ \beta(fd)&=0.
+ \end{aligned}
+\end{equation}
+On coefficient degree one it is
+\begin{equation}\label{eq:bdfour-defect-one}
+ \begin{aligned}
+ \beta(ce)&=\sum_{r=1}^3(-1)^{r-1}\mathsf T_r(v_{a_r})+\mathsf C(v_{a_2}),\\
+ \beta(cm_1)&=-\mathsf T_1(q_{a_1})+D_1(c),\\
+ \beta(cm_2)&=+\mathsf T_2(q_{a_2})-\mathsf C(q_{a_2}),\\
+ \beta(cm_3)&=-\mathsf T_3(q_{a_3})+D_3(c),\\
+ \beta(cd)&=D_d(c).
+ \end{aligned}
+\end{equation}
+On coefficient degree two, $\beta(c_2v)=QB(c_2v)$ for every seed $v$.
+On every higher coefficient degree it vanishes.
+These identities extend to all input jets by right differential linearity.
+\end{proposition}
+\begin{proof}
+For $fe$, each adjacent channel cancels by \eqref{eq:bdtr-endpoint}.
+The three nonadjacent channels remain with their unshuffle signs.
+For $fm_r$, the only nonzero image of its source differential is the one-form image of $d_Cf$.
+The coefficient $f\omega_sd$ has degree one and zero image.
+The endpoint identity gives the displayed vacuum output.
+Both terms vanish for $fd$.
+
+For coefficient degree one, all triple outputs come from $QB$.
+The square images lie on the double-pair diagonal.
+It remains to compute the latter components of $QB-Bb$.
+Write $H=\partial_uh-\partial_vg$.
+The coefficient of $p_1p_3$ in the double-pair part of $Bb(ce)$ is
+\[
+ \int\!\int uvH+\int\!\int vh-\int\!\int ug
+ =\int_0^1vh(1,v)\,dv-\int_0^1ug(u,1)\,du.
+\]
+The first two signs use $c\omega_1=-h\,du\wedge dv/t_1$ and
+$c\omega_3=g\,du\wedge dv/t_3$.
+These boundary terms equal the spectator collisions of $\iota_3(v_{a_3})$ and $\iota_1(v_{a_1})$, with signs $+$ and $-$.
+The middle-pair spectator collision has no square face and is $+\mathsf C(v_{a_2})$.
+
+For $cm_1$, the coefficient of $t_1p_1p_3$ in $Bb$ is
+\[
+ -\int\!\int vH+\int\!\int g
+ =\int_0^1g(u,1)\,du-\int_0^1v\Delta_uh\,dv.
+\]
+The first term is its spectator collision in $QB$.
+Subtracting leaves $D_1(c)$.
+For $cm_3$, the coefficient of $p_1t_3p_3$ is
+\[
+ -\int\!\int uH-\int\!\int h
+ =-\int_0^1h(1,v)\,dv+\int_0^1u\Delta_vg\,du.
+\]
+Subtract it from the spectator collision to obtain $D_3(c)$.
+The middle mixed word has no nonzero symbol differential and no square image.
+Thus its entire defect is $Q\iota_2(q_{a_2})$.
+Finally, $Bd_C(cd)=W_{11}(H)$.
+Ordinary integration of $H$ gives $D_d(c)$ with the displayed sign.
+
+For coefficient degree two, every term in $Bb$ has coefficient degree at least three, hence zero image.
+The same degree argument proves the final vanishing assertion.
+All integrations, principal parts, and coordinate changes commute with the right differential action through the prescribed jet recursion.
+\end{proof}
+
+\section{A complex of regular collision states}
+
+Let $U=\operatorname{span}\{T^rJ:r\geq0\}$ and let $U^{(2)}$ be the span of products of two such states in $V_k$.
+Thus $U^{(2)}=\operatorname{Sym}^2(U)$ with the total translation.
+These spaces have no state differential.
+Identify $U^{(2)}$ with symmetric polynomials in two variables $\lambda,\mu$ by polarized monomials.
+Total translation is multiplication by $\lambda+\mu$.
+The invariant ring is
+$\mathbb C[\lambda,\mu]^{S_2}=\mathbb C[\lambda+\mu,(\lambda-\mu)^2]$.
+Consequently
+\begin{equation}\label{eq:bdfour-quadratic-basis}
+ U^{(2)}=\bigoplus_{a\geq0}\mathbb C[T]h_a,
+ \qquad
+ h_a=\sum_{r=0}^{2a}(-1)^r\binom{2a}{r}(T^rJ)(T^{2a-r}J).
+\end{equation}
+In particular $h_0=J^2$.
+The invariant-ring equality proves independence and completeness of these translation generators.
+
+The notation below means regular position coefficients and their full right differential closure inside $E_4$.
+It does not add outer inverses.
+Let $A$ be the sum over six pair partitions of vacuum on the pair and $U$ on each remaining singleton.
+Let $V$ be the sum over three double-pair partitions of vacuum on both blocks.
+Let $T_3$ be the sum over four triple partitions of $U$ on the triple and $U$ on the singleton.
+Let $W$ be the sum over double-pair partitions of
+$(\mathbb C\mathbf1\boxtimes U^{(2)})\oplus(U^{(2)}\boxtimes\mathbb C\mathbf1)$.
+Let $S_0$ and $S_2$ be vacuum and $U^{(2)}$, respectively, on the small diagonal.
+Each closed direct image retains every normal derivative.
+
+These are explicit Weyl modules.
+For example, the pair summand of $A$ is
+\[
+ D/\bigl(t_{ij}D+(\partial_i+\partial_j)D\bigr),
+\]
+generated by $[\mathbf1\delta_{ij}|J_l|J_m]$.
+The triple summand with block $B=\{i,j,k\}$ is
+$D/(t_{ij}D+t_{ik}D)$.
+Its two surviving current translations are independent.
+For a double-pair partition $ij|lm$, the vacuum summand is
+\[
+ D/\bigl(t_{ij}D+t_{lm}D+(\partial_i+\partial_j)D
+                                  +(\partial_l+\partial_m)D\bigr).
+\]
+Each vacuum-first summand of $W$ has the presentation
+\[
+ \bigoplus_{a\geq0}
+ D/\bigl(t_{ij}D+t_{lm}D+(\partial_i+\partial_j)D\bigr),
+\]
+with generators $\mathbf1\boxtimes h_a$.
+Exchange the pairs for the other summand.
+Put $P=\partial_1+\partial_2+\partial_3+\partial_4$ and
+$L=t_{14}D+t_{24}D+t_{34}D$.
+Then $S_0=D/(L+PD)$ and $S_2=\bigoplus_{a\geq0}D/L$.
+Normal ordering and \eqref{eq:bdfour-quadratic-basis} prove that all these presentations have exactly the stated relations.
+
+The only nonzero differentials among these modules are
+\begin{equation}\label{eq:bdfour-N}
+ N^{-3}=A\xrightarrow{d_A}N^{-2}=V\oplus T_3\oplus W
+       \xrightarrow{d_T}N^{-1}=S_0\oplus S_2.
+\end{equation}
+Here $d_A$ lands in $V$, and $d_T$ is zero except on $T_3$, where it lands in $S_0$.
+Both maps are the native current collision, including transfers.
+For arbitrary translated currents its scalar coefficient is
+\begin{equation}\label{eq:bdfour-current-contraction}
+ K_{rs}(x)=k(-1)^r(r+s+1)!\,x^{-r-s-2},
+ \qquad
+ \pp_xY(T^rJ,x)T^sJ=\pp_xK_{rs}(x)\mathbf1.
+\end{equation}
+The signs for $d_A$ are precisely \eqref{eq:bdtr-four-Q}, also for simple inner deltas.
+For $d_T$, the triple block is first, so its binary collision sign is positive.
+If $B=\{b_1<b_2<b_3\}$ and the remaining label is $l$, use staged coordinates
+\[
+ z_{b_1}-z_{b_3},\quad z_{b_2}-z_{b_3},\quad
+ z_{b_3}-z_l,\quad z_l.
+\]
+Their density sign relative to $dz_1\wedge\cdots\wedge dz_4$ is $(-1)^{4-l}$.
+This fixes every component of $d_T$ in the common small-diagonal normalization.
+The inner normal derivatives are transported by the displayed linear coordinate change.
+
+\begin{lemma}\label{lem:bdfour-N-subcomplex}
+The complex $N$ is a subcomplex of $E_4$, and $\beta(P_4)\subset N$.
+\end{lemma}
+\begin{proof}
+In a pair summand of $A$, collisions involving the vacuum have zero principal part.
+The remaining two currents collide by \eqref{eq:bdfour-current-contraction}, giving $V$.
+The two currents of a triple summand give $S_0$.
+Every output in $V$ or $W$ has a vacuum block and regular outer coefficients, so its next collision is zero.
+This proves the subcomplex assertion, including all right derivatives.
+
+The zero-form defects in \eqref{eq:bdfour-defect-zero} lie in $A$.
+For degree one, a singular collision of a quadratic current state and one current leaves one current.
+It therefore gives $T_3$ with the remaining spectator.
+A spectator collision leaves a vacuum block and a quadratic or vacuum block, giving $W\oplus V$.
+The side defects in \eqref{eq:bdfour-side-defects} have the same property by side regularity.
+
+For degree two, the only images before applying $Q$ are two quadratic or vacuum blocks on a double-pair diagonal.
+Their regular outer collision leaves either two currents or vacuum.
+For completeness, if $a=(T^rJ)(T^sJ)$ and $b=(T^uJ)(T^vJ)$, its singular part is the principal part of
+\[
+ \begin{aligned}
+ &K_{ru}(x)(e^{xT}T^sJ)(T^vJ)
+ +K_{rv}(x)(e^{xT}T^sJ)(T^uJ)\\
+ &+K_{su}(x)(e^{xT}T^rJ)(T^vJ)
+ +K_{sv}(x)(e^{xT}T^rJ)(T^uJ)\\
+ &+K_{ru}(x)K_{sv}(x)\mathbf1
+ +K_{rv}(x)K_{su}(x)\mathbf1.
+ \end{aligned}
+\]
+This is the finite Wick formula with one or two contractions.
+It gives $S_2\oplus S_0$ after every regular outer coefficient and finite inner normal derivative.
+All higher coefficient defects vanish by Proposition~\ref{prop:bdfour-defect}.
+\end{proof}
+
+\section{The native four-input cochain map}
+
+\begin{theorem}\label{thm:bdfour-comparison}
+On all of $X^4$, the formulas
+\begin{equation}\label{eq:bdfour-extension}
+ \widetilde P_4=P_4\oplus N,\qquad
+ \widetilde b(x,n)=(bx,\beta x+Qn),\qquad
+ F_4(x,n)=Bx+n
+\end{equation}
+define a complex of right differential modules and a cochain map $F_4:\widetilde P_4\to E_4$.
+They include every ordered word, every global compatible-family coefficient, every finite input translation, and all fifteen target partition types.
+The construction is equivariant for every permutation of the four labels.
+\end{theorem}
+\begin{proof}
+Expanding $\beta=QB-Bb$ gives $Q\beta+\beta b=0$.
+Lemma~\ref{lem:bdfour-N-subcomplex} makes this an identity in $N$.
+Thus
+\[
+ \widetilde b^2(x,n)=(0,\beta bx+Q\beta x+Q^2n)=0.
+\]
+Direct substitution also gives
+$QF_4-F_4\widetilde b=QB-Bb-\beta=0$.
+The complete component identities are Proposition~\ref{prop:bdfour-defect}.
+They prove that every entry in the source differential has its specified native support and finite normal expansion.
+
+A permutation carries each actual edge and square to the edge and square of the relabeled word.
+It preserves the word-relative coordinates and their vertex value one.
+Evaluation, polynomial integration, the Heisenberg operation, and right transfer commute with this relabeling.
+The coefficient wedge signs and the suspended block signs are both retained.
+For example, exchanging the two disjoint pairs reverses $du\wedge dv$ and exchanges two degree-$-1$ collision blocks.
+The two minus signs agree in the square formula.
+All other signs are the unshuffle and tensor signs used in \eqref{eq:bdfour-B}.
+Therefore $B$, its defect, $N$, and \eqref{eq:bdfour-extension} are permutation-equivariant.
+\end{proof}
+
+The source differential includes the triple and small-diagonal terms of the defect table.
+Its pair terms also have the nonzero next differential $d_A$.
+Declaring all new collision terms closed would contradict \eqref{eq:bdtr-four-Q}.
+The level and the original double-pole coefficients remain unchanged.
+
+\section{The cohomology of the added complex}
+
+For a pair $ij$, let $D_{ij}$ be the two-coordinate Weyl algebra and put
+\begin{equation}\label{eq:bdfour-binary-ideal}
+ I_{ij}=t_{ij}^2D_{ij}+(t_{ij}\partial_i-1)D_{ij}
+                                  +(\partial_i+\partial_j)D_{ij}.
+\end{equation}
+The map $D_{ij}\to$ vacuum pair module, sending its generator to $k\delta_{ij}\partial_{t_{ij}}$, is surjective and has kernel $I_{ij}$.
+Normal ordering proves this presentation: the normal relations reduce to the simple delta and its successive derivatives, and the tangent derivative kills vacuum.
+For disjoint pairs, regard $I_{ij}I_{lm}$ as the external tensor product right ideal inside $D=D_{ij}\otimes D_{lm}$.
+
+To describe $d_T$ algebraically, set $L_B=t_{b_1b_3}D+t_{b_2b_3}D$ and $P_B=\sum_{i\in B}\partial_i$.
+Scale the external triple generator by the density sign $(-1)^{4-l}$ just specified.
+Then $d_T$ sends its class to $k\delta_{1234}P_B$.
+Thus define the explicit Weyl-module kernel
+\begin{equation}\label{eq:bdfour-triple-kernel}
+ \mathcal K_T=
+ \left\{(A_B\bmod L_B)_B\in\bigoplus_{|B|=3}D/L_B:
+             \sum_B P_BA_B\in L+PD\right\}.
+\end{equation}
+The condition is well-defined because each $P_B$ commutes with the internal normal coordinates of its block.
+
+\begin{theorem}\label{thm:bdfour-N-cohomology}
+The maps $d_A:A\to V$ and $d_T:T_3\to S_0$ are surjective.
+The cohomology of $N$ is
+\begin{equation}\label{eq:bdfour-N-cohomology}
+ \begin{aligned}
+ H^{-3}(N)&\cong\bigoplus_{ij|lm}D/(I_{ij}I_{lm}),\\
+ H^{-2}(N)&\cong\mathcal K_T\oplus W,\\
+ H^{-1}(N)&\cong S_2,
+ \qquad H^r(N)=0\quad(r\ne-3,-2,-1).
+ \end{aligned}
+\end{equation}
+The three generators in the first line map to $w_{ij}+w_{lm}$, using lexicographically ordered complementary pairs.
+Their normalizations are those of Proposition~\ref{prop:bdtr-four-current}.
+\end{theorem}
+\begin{proof}
+In each complementary pair channel, $d_A$ applied to a simple inner delta and two currents gives a nonzero multiple of the remaining double pole.
+Multiplication by the remaining normal coordinate gives the simple double-pair vacuum generator.
+Right differential closure proves surjectivity.
+The same argument with a triple delta and two current blocks proves surjectivity of $d_T$.
+
+For each complementary pair channel, tensor the two surjections
+$D_{ij}\to D_{ij}/I_{ij}$ and $D_{lm}\to D_{lm}/I_{lm}$ over $\mathbb C$.
+The resulting three-term tensor complex is exact in its middle term.
+Its first map sends the four-current generator to $w_{ij}+w_{lm}$, and its second map is the corresponding component of $d_A$.
+The kernel of its first map is
+\[
+ (I_{ij}\otimes D_{lm})\cap(D_{ij}\otimes I_{lm})
+ =I_{ij}\otimes I_{lm}=I_{ij}I_{lm}.
+\]
+Choose vector-space complements to the two ideals to verify the intersection equality directly.
+There are three independent complementary channels, proving the first line of \eqref{eq:bdfour-N-cohomology}.
+
+The image of $d_A$ is all of $V$ and has no component in $T_3\oplus W$.
+The kernel of the next differential there is $\mathcal K_T\oplus W$ by \eqref{eq:bdfour-triple-kernel}.
+Finally, $d_T$ removes exactly $S_0$ from $S_0\oplus S_2$.
+This proves every remaining assertion.
+\end{proof}
+
+\section{Relative cohomology of the four-input source}
+
+Write $H_D^r=H^r(O_4)\otimes_R D$ and let $\pi:\widetilde P_4\to P_4$ be the projection.
+The exact sequence $0\to N\to\widetilde P_4\to P_4\to0$ gives connecting maps
+\[
+ \delta_r:H_D^r\longrightarrow H^{r+1}(N),\qquad
+ \delta_r[x]=[\beta x].
+\]
+The defect table specifies these maps on every coefficient cycle and input jet.
+In the convention $\operatorname{Cone}(\pi)^r=P_4^r\oplus\widetilde P_4^{r+1}$, the inclusion of $N[1]$ is a quasi-isomorphism onto this cone.
+Indeed, the quotient is the contractible cone of the identity on $P_4$.
+Thus the relative groups are exactly
+\begin{equation}\label{eq:bdfour-relative}
+ \begin{aligned}
+ H^{-4}(\operatorname{Cone}\pi)&=\bigoplus_{ij|lm}D/(I_{ij}I_{lm}),\\
+ H^{-3}(\operatorname{Cone}\pi)&=\mathcal K_T\oplus W,\\
+ H^{-2}(\operatorname{Cone}\pi)&=S_2,
+ \end{aligned}
+\end{equation}
+and they vanish in every other degree.
+In particular, $\pi$ is not a quasi-isomorphism.
+
+The ordinary cohomology change has the exact form
+\begin{equation}\label{eq:bdfour-ordinary-change}
+ 0\longrightarrow\operatorname{coker}\delta_{r-1}
+ \longrightarrow H^r(\widetilde P_4)
+ \longrightarrow\ker\delta_r\longrightarrow0,
+\end{equation}
+where $\delta_r=0$ unless $r=-4,-3,-2$.
+Here a cokernel has target $H^r(N)$, and a kernel has source $H_D^r$.
+These conventions specify \eqref{eq:bdfour-ordinary-change} also in degrees outside that range.
+No splitting is asserted.
+
+\begin{proposition}\label{prop:bdfour-small-surjection}
+The connecting map $\delta_{-2}:H_D^{-2}\to S_2$ is surjective.
+Consequently $H^{-1}(\widetilde P_4)\to H_D^{-1}$ is an isomorphism.
+\end{proposition}
+\begin{proof}
+For $r\geq0$, the coefficient
+\[
+ \gamma_r=\frac{dq_{12}\wedge dq_{34}}{t_{12}^{r+2}t_{34}^2}
+\]
+is an actual closed global two-form.
+On every face lacking a required inverse, the corresponding numerator differential vanishes.
+Since $bd_{1234}=0$, the element $\gamma_rd_{1234}$ is a cycle of degree $-2$.
+Its double-pair image is the product of the two principal parts
+\[
+ \pp_{t_1}\frac{p(t_1)}{t_1^{r+1}},\qquad
+ \pp_{t_3}\frac{p(t_3)}{t_3}.
+\]
+The quadratic part of the first factor is
+\[
+ \sum_{a=0}^r\frac{(T^aJ)J}{a!}\,
+             \frac{\delta_{12}\partial_{t_1}^{r-a}}{(r-a)!},
+\]
+and the second quadratic factor is $J^2\delta_{34}$.
+The vacuum terms have zero outer collision.
+
+Filter $U^{(2)}$ by the submodules generated by $h_0,\ldots,h_m$ under $T$.
+This filtration is preserved by every right differential operator after direct image.
+Take $r=2m$ and suppose the preceding filtration step already lies in the connecting image.
+All terms with $a<r$ belong to that preceding step.
+For the remaining quadratic state $(T^rJ)J$, the coefficient of the outer double pole against $J^2$ is
+\[
+ 2k(r+2)(T^rJ)J.
+\]
+This follows from the four single contractions in the displayed Wick formula.
+The coefficients of all higher outer poles lie in the preceding filtration step.
+Multiplication by the outer difference $v=y_1-y_3$ removes its simple-pole term and turns the double pole into a simple pole.
+Modulo the preceding step, the resulting coefficient in the staged double-pair orientation is
+\[
+ \frac{2k(r+2)}{r!\,2^r}\,h_m\delta_{1234}.
+\]
+Here $(T^{2m}J)J\equiv2^{-2m}h_m$ modulo the preceding step, by the symmetric-polynomial description.
+The displayed scalar is nonzero.
+For $m=0$ this starts with $4kJ^2\delta_{1234}$.
+Induction and right differential closure therefore generate all of $S_2$.
+The vacuum small-diagonal terms vanish in $H^{-1}(N)$ by Theorem~\ref{thm:bdfour-N-cohomology}.
+This proves surjectivity and the stated consequence of the long exact sequence.
+\end{proof}
+
+The lowest source group and its connecting map are more explicit.
+For a fixed order put $r_j=q_j/t_j$ in the full position localization and set
+\[
+ \begin{aligned}
+ e'&=e+r_1m_1+r_2m_2+r_3m_3+r_1r_3d,\\
+ m_1'&=m_1+r_3d,\qquad m_3'=m_3+r_1d.
+ \end{aligned}
+\]
+These symbols are closed there.
+Their following multiples belong to the actual global coefficient source:
+\begin{equation}\label{eq:bdfour-lowest-basis}
+ z_\sigma=t_1t_2t_3e',\qquad
+ u_\sigma=t_3m_1',\qquad m_{2,\sigma},\qquad
+ v_\sigma=t_1m_3',\qquad d_\sigma.
+\end{equation}
+
+\begin{proposition}\label{prop:bdfour-lowest}
+The one hundred twenty classes in \eqref{eq:bdfour-lowest-basis} form a free $R$-basis of $H^{-4}(O_4)$.
+If $c_4=Q[J_1|J_2|J_3|J_4]$ and $p_\sigma=t_1t_2t_3$, then
+\begin{equation}\label{eq:bdfour-lowest-connecting}
+ \delta_{-4}(z_\sigma)=\operatorname{sgn}(\sigma)p_\sigma c_4,
+\end{equation}
+and the connecting map kills the other four basis elements of each order.
+In the three cyclic summands of $H^{-3}(N)$, the coefficient vector of $c_4$ is $(1,-1,1)$.
+\end{proposition}
+\begin{proof}
+The triangular change from $e,m_1,m_2,m_3,d$ to $e',m_1',m_2,m_3',d$ makes the differential the coefficient differential on the full simplex.
+A closed lowest element therefore has constant coefficients in this basis.
+At the reverse-order vertex all three $q_j$ vanish.
+Its regular coefficients force these constants to belong to $R$.
+
+The three actual adjacent edges force $t_j\mid f$ for the coefficient $f$ of $e'$.
+The three distinct linear factors are relatively prime, hence $t_1t_2t_3\mid f$.
+Subtract the corresponding multiple of $z_\sigma$.
+For the remaining element, the four corners of \eqref{eq:bdfour-square} force $t_3$ to divide the coefficient of $m_1'$ and $t_1$ to divide that of $m_3'$.
+Subtract their displayed multiples.
+The remaining coefficients of $m_2$ and $d$ are arbitrary elements of $R$.
+This proves spanning, and the triangular leading coefficients prove independence.
+There is no source degree below $-4$, hence no incoming boundary.
+
+All untranslated mixed zero-form images vanish under $B$.
+Thus $Bz_\sigma=p_\sigma[J_{i_1}|J_{i_2}|J_{i_3}|J_{i_4}]$.
+Applying $Q$ proves \eqref{eq:bdfour-lowest-connecting}.
+The final signs follow from the complementary pair calculation in Proposition~\ref{prop:bdtr-four-current}.
+\end{proof}
+
+For an explicit coefficient description, put $x=z_1-z_4$, $y=z_2-z_4$, and $z=z_3-z_4$.
+The twenty-four path polynomials $p_\sigma$ generate
+\[
+ (x,y,z)\bigl(x(y-z),y(x-z)\bigr).
+\]
+Their cubic span has dimension six.
+Here is an explicit verification of the ideal equality.
+Put $A=x(y-z)$ and $B=y(x-z)$.
+Expansion gives
+\[
+ \begin{aligned}
+ zB&=-p_{1342},& yB&=-p_{1342}-p_{1324},\\
+ yA&=p_{1243}-p_{1342}-p_{1324},&
+ zA&=p_{1234}+p_{1243}-p_{1342},\\
+ xA&=p_{1234}+p_{1243}-p_{1342}-p_{2314},&
+ xB&=-p_{2314}-p_{1342}-p_{2134}.
+ \end{aligned}
+\]
+The six cubics $xA,xB,yA,yB,zA,zB$ are independent.
+Indeed, a dependence is a relation between $A$ and $B$ with linear coefficients.
+Their relatively prime quadratic factors force both coefficients to vanish.
+Every path cubic vanishes on the three coordinate axes and on $x=y=z$.
+These four independent conditions leave a six-dimensional space of cubics.
+The six displayed generators lie in that space, so it is exactly their span.
+This proves the asserted ideal equality.
+Consequently the image in \eqref{eq:bdfour-lowest-connecting} is given by this explicit polynomial ideal acting on the cyclic vector $(1,-1,1)$ through right multiplication, followed by right differential closure.
+The presentation retains all Weyl relations and does not identify that image with the whole target.
+
+\section{Ordered three-plus-one cuts}
+
+Fix a word sector $\sigma=i_1i_2i_3i_4$ and its prefix $I=\{i_1,i_2,i_3\}$.
+Let $l=i_4$.
+On coefficients, restrict to the face of orders ending in $l$.
+It is the actual three-input coefficient family on $I$, with the additional position $z_l$.
+On bar words, retain a cut only when it falls between blocks.
+Thus $e\mapsto e_{i_1i_2i_3}\otimes a_l$ and
+$m_1,m_2$ give their ternary mixed words tensored with $a_l$.
+The words $m_3,d$ have no cut of this type and map to zero.
+The coefficient differential and every surviving multiplication face agree with the tensor bar differential.
+Hence this is an ordered cochain cut on $P_{4,\sigma}$.
+
+Let $P_1$ be the current translation module generated by $a_l$, of degree $-1$, with $a_l\mapsto J_l$ and zero differential.
+It maps isomorphically onto the regular translated-current submodule of $E_1$.
+Let
+\[
+ U_{I|l}=X^4\setminus\bigcup_{i\in I}\Delta_{il}.
+\]
+On this open set, all crossing partition summands vanish.
+The native remaining complex is the exterior tensor product of $E_3$ and $E_1$, with its cross coefficients localized.
+This is the explicit carrier factorization in \cite{BDtranslated}, equation (3.4.11.5).
+
+\begin{proposition}\label{prop:bdfour-ternary-cut}
+For the fixed word sector and this ordered cut, the comparison $F_4$ agrees on $U_{I|l}$ with $F_3\boxtimes F_1$.
+The source cut extends from $P_{4,\sigma}$ to $P_{4,\sigma}\oplus N$ by
+\[
+ A_{ij}\longrightarrow M_{ij}\boxtimes P_1\quad(ij\subset I),
+ \qquad (T_3)_I\longrightarrow S_3\boxtimes P_1,
+\]
+and zero on the other partition summands after restriction to this open set.
+These maps retain each input translation and normal derivative.
+The analogous assertion holds for the ordered one-plus-three cut.
+\end{proposition}
+\begin{proof}
+The noncrossing edge formulas in \eqref{eq:bdfour-B} are exactly \eqref{eq:bdtr-ternary-B} with the last suspended current.
+Every square image involves the pair $i_3i_4$, so it vanishes on $U_{I|l}$.
+The crossing mixed images vanish for the same reason.
+This proves equality of the graded comparisons on all coefficients and jets.
+
+The indicated maps on $N$ use the identity on the collision factors and the inverse of $P_1\to U$ on the spectator.
+They are well-defined right differential-module maps.
+Every nonzero differential from their pair terms crosses the cut, hence vanishes on this open set.
+The other retained term is already closed.
+Thus the added-module maps are cochain maps.
+
+Take the defect of the already proved graded equality.
+The ordered source cut commutes with $b$, and $F_1$ has zero defect.
+The resulting equality is precisely the compatibility of the added source terms with $\beta_3\boxtimes F_1$.
+Its native inclusion is injective on these retained added modules, so the equality holds in the extended sources themselves.
+This proves the asserted cochain comparison.
+For the one-plus-three cut, moving a coefficient form past the first degree-$-1$ current gives its usual tensor sign.
+That sign is the edge sign $(-1)^{r-1}$ in \eqref{eq:bdfour-B}, proving the second assertion.
+\end{proof}
+
+This statement concerns the cuts belonging to a fixed ordered word.
+A single coproduct on all words must also specify its nonprefix components.
+The ordered deconcatenation makes such a component zero, whereas the native Chevalley coproduct includes its unshuffle term.
+For example, the $123|4$ component of the ordered cut of $e_{4123}$ is zero.
+The same component of the native separated image $[J_4|J_1|J_2|J_3]$ is nonzero on the distinct-position locus.
+Thus these all-word comparisons do not intertwine ordered deconcatenation with the native unshuffle coproduct.
+
+\section{The two-plus-two torsion obstruction}
+
+Even on the single order $1234$, the added pair modules impose another restriction.
+Use the binary source $\widetilde P_2$ and map $F_2$ from Proposition~\ref{prop:bdtr-binary} on each of the pairs $12$ and $34$.
+Let $\nu_{12}=k\mathbf1\delta_{12}\partial_{t_{12}}$ and let $w_{12}=[\nu_{12}|J_3|J_4]\in A$.
+Its source differential is the complementary double-pair vacuum term.
+The collision modules used in this calculation have regular cross-position coefficients.
+
+\begin{proposition}\label{prop:bdfour-cut-obstruction}
+There is no strict right differential-module cochain cut
+\[
+ P_{4,1234}\oplus N\longrightarrow
+ \widetilde P_2(12)\boxtimes\widetilde P_2(34)
+\]
+that preserves the native comparison on $w_{12}$ and on its double-pair differential.
+The target cut is the partition projection for $12|34$.
+The same obstruction holds after localizing cross-pair differences.
+\end{proposition}
+\begin{proof}
+The underlying regular-function module of $P_2$ has no torsion in its pair normal coordinate.
+Indeed, filter its induced presentation by differential order.
+Its associated graded is a direct sum of the torsion-free coefficient modules of $O_2$.
+The coefficient modules embed into their full position localization, proving their torsion-freeness.
+Therefore any map from a module supported on $\Delta_{12}$ to $P_2(12)$ is zero.
+The same statement applies to $\Delta_{34}$ and remains true after cross localization.
+
+In degree $-3$, the image of $w_{12}$ must consequently lie in
+$N_2(12)\boxtimes P_2(34)^{-2}$.
+There is no term $N_2\boxtimes N_2$ in that degree.
+In degree $-2$, the image of its double-pair differential must lie in
+$N_2(12)\boxtimes N_2(34)$, by torsion in both normals.
+The component of the chain equation in $N_2(12)\boxtimes P_2(34)$ therefore forces the second factor of the first image to be a cycle.
+Extracting each independent first-factor transfer coefficient makes this a statement about individual cycles of $P_2(34)$.
+
+The lowest binary cycle calculation gives
+$Z^{-2}(P_2)=zD_2\oplus hD_2$, where $z=te+uh$.
+Its separated comparison has image exactly
+\[
+ B_2(Z^{-2}(P_2))=[J|J]\cdot tD_2.
+\]
+The separated translated-current module is free cyclic over $D_2$, because $T^rJ\boxtimes T^sJ$ are independent.
+The right ideal $tD_2$ is proper: the nonzero simple delta is a quotient generator killed by $t$.
+Hence the pure separated current $[J|J]$ does not belong to this cycle image.
+
+Preserving the comparison on $w_{12}$ requires precisely that pure current as the coefficient of $\nu_{12}$.
+The cycle condition just proved makes this impossible.
+Cross localization does not invert $t_{34}$ and preserves the nonzero delta quotient on its diagonal.
+Thus the same contradiction holds there.
+\end{proof}
