@@ -1,0 +1,242 @@
+A pole of residue one cannot be the only singularity of a meromorphic differential on a compact torus.
+A Cauchy kernel therefore requires a correction that removes the constant mode.
+The correction below is smooth away from the pole, respects changes of lattice basis, and gives an explicit homotopy for the Dolbeault differential.
+
+\section{The periodic kernel}
+
+Fix $\tau\in\mathbb H$, put $Y=\operatorname{Im}\tau$, and let
+$E_\tau=\mathbb C/(\mathbb Z+\tau\mathbb Z)$.
+Write $z=x+iy$, orient the torus by $dx\wedge dy$, and use the normalized area form
+\[
+ \nu_\tau=\frac{dx\wedge dy}{Y}
+          =\frac{i}{2Y}\,dz\wedge d\bar z,
+ \qquad \int_{E_\tau}\nu_\tau=1.
+\]
+The Dirac current $\delta_0$ is the degree-two current with
+$\langle\delta_0,\varphi\rangle=\varphi(0)$ for a smooth function $\varphi$.
+Our convention is $\bar\partial f=(\partial_{\bar z}f)d\bar z$, where
+$\partial_{\bar z}=\tfrac12(\partial_x+i\partial_y)$.
+
+For the lattice $\Lambda_\tau=\mathbb Z+\tau\mathbb Z$, define
+\[
+ \zeta_\tau(z)=\frac1z+
+ \sum_{\omega\in\Lambda_\tau\setminus\{0\}}
+ \left(\frac1{z-\omega}+\frac1\omega+\frac z{\omega^2}\right).
+\]
+The grouped summands are $O(|\omega|^{-3})$ on compact subsets away from the poles.
+Thus the series and its termwise derivatives converge normally there.
+Pairing $\omega$ and $-\omega$ shows that $\zeta_\tau$ is odd and has expansion $z^{-1}+O(z^3)$ at zero.
+This is the lattice normalization of \cite[Eq.~23.2.5]{DLMFell}.
+
+\begin{lemma}\label{lem:ep-periods}
+There are constants $a_\tau,b_\tau$ with
+\[
+ \zeta_\tau(z+1)-\zeta_\tau(z)=a_\tau,\qquad
+ \zeta_\tau(z+\tau)-\zeta_\tau(z)=b_\tau,
+ \qquad a_\tau\tau-b_\tau=2\pi i.
+\]
+\end{lemma}
+\begin{proof}
+Put $\wp_\tau=-\zeta_\tau'$.
+Its derivative is the absolutely normally convergent series
+$-2\sum_{\omega\in\Lambda_\tau}(z-\omega)^{-3}$.
+Reindexing proves that this derivative is periodic.
+Hence $\wp_\tau(z+\lambda)-\wp_\tau(z)$ is constant for $\lambda=1,\tau$.
+The function $\wp_\tau$ is even; evaluating the difference at $z=-\lambda/2$ shows that the constant is zero.
+The half-period is not a lattice point for these primitive periods.
+Differentiating the two displayed differences of $\zeta_\tau$ now gives zero, proving constancy.
+
+Choose a translated fundamental parallelogram with no pole on its boundary.
+It contains one pole of residue one.
+The residue theorem gives $\oint\zeta_\tau(z)dz=2\pi i$.
+Pairing its opposite sides gives $a_\tau\tau-b_\tau$, with the horizontal sides contributing $-b_\tau$ and the sides parallel to $\tau$ contributing $a_\tau\tau$.
+This proves the last identity.
+\end{proof}
+
+\begin{theorem}\label{thm:ep-kernel}
+The function
+\begin{equation}\label{eq:ep-P}
+ P_\tau(z)=\zeta_\tau(z)-a_\tau z+
+                  \frac{2\pi i}{Y}\operatorname{Im}z
+\end{equation}
+is odd and $\Lambda_\tau$-periodic.
+It is smooth away from the lattice, locally integrable, and has singular part $1/z$.
+The one-form $P_\tau(z)dz$ therefore defines a current on $E_\tau$ and satisfies
+\begin{equation}\label{eq:ep-distribution}
+ \bar\partial\bigl(P_\tau(z)dz\bigr)
+       =2\pi i(\delta_0-\nu_\tau).
+\end{equation}
+Among odd periodic functions with singular part $1/z$ and smooth remainder, it is the unique solution of this current equation.
+\end{theorem}
+\begin{proof}
+Translation by one changes the first two terms of~\eqref{eq:ep-P} by $a_\tau-a_\tau=0$ and leaves the last term unchanged.
+Translation by $\tau$ changes the expression by
+$b_\tau-a_\tau\tau+2\pi i=0$.
+Each term is odd.
+The only singularity in a fundamental domain is $1/z$, which is locally integrable because $\int_0^\epsilon r^{-1}r\,dr<\infty$.
+
+Away from the poles,
+\[
+ \partial_{\bar z}P_\tau=-\frac{\pi}{Y}.
+\]
+At a pole, the distribution identity
+$\partial_{\bar z}(1/z)=\pi\delta^{\mathrm{area}}_0$ uses Dirac mass relative to $dx\,dy$.
+To fix its sign and coefficient, apply Stokes' theorem to a test function on the complement of a disk of radius $\epsilon$.
+The inner boundary has clockwise orientation, while the distributional derivative contributes the opposite boundary term.
+The resulting positively oriented circle integral tends to
+$\varphi(0)\oint dz/z=2\pi i\varphi(0)$.
+Thus $\bar\partial(dz/z)=2\pi i\delta_0$ in current notation.
+For the smooth term,
+\[
+ -\frac{\pi}{Y}\,d\bar z\wedge dz
+ =\frac{\pi}{Y}\,dz\wedge d\bar z
+ =-2\pi i\nu_\tau.
+\]
+These identities prove~\eqref{eq:ep-distribution}.
+
+The difference of two proposed solutions has a smooth coefficient on the torus, is annihilated by $\partial_{\bar z}$, and hence is holomorphic.
+A holomorphic function on a compact connected torus is constant by the maximum principle.
+Oddness makes that constant zero.
+\end{proof}
+
+\begin{corollary}[The constant mode]\label{cor:ep-constant}
+There is no current $K$ of degree one on $E_\tau$ with
+$\bar\partial K=2\pi i\delta_0$.
+In particular, there is no meromorphic one-form with a unique simple pole of residue one.
+\end{corollary}
+\begin{proof}
+Pair the asserted equation with the constant test function one.
+The left side is zero because the derivative of that test function is zero.
+The right side is $2\pi i$.
+\end{proof}
+
+\section{Change of lattice basis}
+
+\begin{theorem}\label{thm:ep-modular}
+Let $\gamma=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in SL_2(\mathbb Z)$,
+$\tau'=(a\tau+b)/(c\tau+d)$ and $j=c\tau+d$.
+Then
+\begin{equation}\label{eq:ep-modular}
+ P_{\tau'}(z/j)=jP_\tau(z).
+\end{equation}
+Consequently the isomorphism $\phi_\gamma:E_\tau\to E_{\tau'}$ induced by $z\mapsto z/j$ satisfies
+$\phi_\gamma^*(P_{\tau'}dz')=P_\tau dz$ and $\phi_\gamma^*\nu_{\tau'}=\nu_\tau$.
+\end{theorem}
+\begin{proof}
+The elementary lattice and area identities are
+$\Lambda_{\tau'}=j^{-1}\Lambda_\tau$ and
+$\operatorname{Im}\tau'=Y/|j|^2$.
+Set $R(z)=j^{-1}P_{\tau'}(z/j)$.
+It is odd and $\Lambda_\tau$-periodic, and its singular part is $1/z$.
+Away from the lattice, the chain rule gives
+\[
+ \partial_{\bar z}R(z)
+ =\frac1{j\bar j}\left(-\frac{\pi}{\operatorname{Im}\tau'}\right)
+ =-\frac\pi Y.
+\]
+The residue gives the same delta term as for $P_\tau$.
+The uniqueness assertion of Theorem~\ref{thm:ep-kernel} proves $R=P_\tau$.
+The one-form law follows by $dz'=dz/j$.
+The area law follows from $dx'\,dy'=|j|^{-2}dx\,dy$ and the displayed imaginary-part identity.
+\end{proof}
+
+The coefficient of $z$ can also be written in the usual holomorphic normalization.
+Put $q=e^{2\pi i\tau}$ and
+\[
+ E_2(\tau)=1-24\sum_{n\geq1}\frac{nq^n}{1-q^n}.
+\]
+The Fourier expansion of $\zeta_\tau$ in a neighborhood of zero is
+\[
+ \zeta_\tau(z)=a_\tau z+\pi\cot(\pi z)
+              +4\pi\sum_{n\geq1}\frac{q^n}{1-q^n}\sin(2\pi nz).
+\]
+This is \cite[Eq.~23.8.2]{DLMFell} with half-periods $1/2,\tau/2$.
+On $|\operatorname{Im}z|\leq Y-\epsilon$ the differentiated series converges normally by geometric decay.
+Comparison of the linear coefficient with $\zeta_\tau(z)=1/z+O(z^3)$ gives
+\begin{equation}\label{eq:ep-E2}
+ a_\tau=\frac{\pi^2}{3}E_2(\tau),\qquad
+ P_\tau(z)=\zeta_\tau(z)-\frac{\pi^2}{3}E_2(\tau)z
+                       +\frac{2\pi i}{Y}\operatorname{Im}z.
+\end{equation}
+The nonholomorphic term is part of the periodic kernel.
+A different meromorphic expression on the covering plane need not satisfy either its periodicity or its current equation.
+
+\section{A homotopy for the Dolbeault complex}
+
+Use smooth complex-valued forms on the fixed torus and their usual Fr\'echet topologies.
+The Dolbeault complex is concentrated in degrees zero and one:
+\[
+ \mathcal D_\tau^\bullet=
+ \bigl[C^\infty(E_\tau)\xrightarrow{\bar\partial}
+       C^\infty(E_\tau)d\bar z\bigr].
+\]
+For a coefficient function $f$, write
+$\langle f\rangle=Y^{-1}\int_{E_\tau}f\,dx\,dy$.
+Let $\mathcal H_\tau^\bullet=\mathbb C\oplus\mathbb C d\bar z$ with zero differential, let $i$ include the constant coefficients, and let $p$ take coefficientwise averages.
+
+\begin{theorem}\label{thm:ep-homotopy}
+Define a degree-minus-one operator by $H_\tau=0$ on degree zero and
+\begin{equation}\label{eq:ep-H}
+ H_\tau(f\,d\bar z)(z)=\frac1\pi
+             \int_{E_\tau}P_\tau(z-w)f(w)\,dx_w\,dy_w.
+\end{equation}
+The integral is absolutely convergent, defines a smooth function, and is independent of representatives of $z,w$ in the covering plane.
+The maps are continuous and satisfy
+\[
+ p i=1,\qquad \bar\partial H_\tau+H_\tau\bar\partial=1-ip,
+ \qquad H_\tau i=pH_\tau=H_\tau^2=0.
+\]
+They give a deformation retraction of the smooth Dolbeault complex onto its constant coefficient subcomplex.
+For every lattice-basis change $\phi_\gamma$, the homotopy obeys
+$\phi_\gamma^*H_{\tau'}=H_\tau\phi_\gamma^*$.
+\end{theorem}
+\begin{proof}
+Periodicity makes the integrand a well-defined function of the difference of two points of the torus.
+The locally integrable kernel and bounded smooth coefficient give absolute convergence.
+After changing variables, the integral is $\pi^{-1}\int P_\tau(u)f(z-u)\,dx_u\,dy_u$.
+Derivatives in $z$ may be applied to $f$ under the integral: each derivative is bounded and $P_\tau\in L^1$.
+This proves smoothness and the seminorm estimate
+\[
+ \|H_\tau(f\,d\bar z)\|_{C^m}
+ \leq\frac{\|P_\tau\|_{L^1}}\pi\|f\|_{C^m}.
+\]
+Thus $H_\tau$ is continuous.
+
+The scalar form of~\eqref{eq:ep-distribution} is
+$\partial_{\bar z}P_\tau=\pi\delta^{\mathrm{area}}_0-\pi/Y$.
+Convolving it with $f$ yields
+\[
+ \bar\partial H_\tau(f\,d\bar z)
+       =(f-\langle f\rangle)d\bar z.
+\]
+Integration by parts in the distribution sense, or differentiation of the convolution with the derivative placed on $f$, gives
+$H_\tau\bar\partial f=f-\langle f\rangle$.
+These are the two degree components of the homotopy identity.
+The mean of a derivative of a periodic function is zero, so $p$ is a chain map.
+The inclusion is a chain map and $pi=1$.
+
+Inversion on the torus preserves area and changes $P_\tau$ to its negative.
+Absolute integrability therefore implies $\int P_\tau=0$.
+It follows that $H_\tau i=0$ and, by Fubini, $pH_\tau=0$.
+The square is zero by the two degrees of the complex.
+
+For naturality, write a one-form on $E_{\tau'}$ as $f'(w')d\bar w'$.
+Its pullback has coefficient $f'(w/j)/\bar j$.
+In~\eqref{eq:ep-H}, substitute $w=jw'$.
+The area contributes $|j|^2$, the kernel contributes $j^{-1}$ by~\eqref{eq:ep-modular}, and the one-form coefficient contributes $\bar j^{-1}$.
+Their product is one, proving the required identity.
+On degree zero both sides vanish.
+\end{proof}
+
+For a smooth $(0,1)$-form $f\,d\bar z$ of mean zero, formula~\eqref{eq:ep-H} is the unique mean-zero smooth solution of $\bar\partial u=f\,d\bar z$.
+Existence and normalization follow from the theorem.
+For uniqueness the difference is holomorphic on the compact torus and hence constant, and its mean is zero.
+For $f=1$, the equation has no solution: integration of $\partial_{\bar z}u$ over a fundamental domain vanishes.
+
+On the square torus $\tau=i$, the Fourier mode $f(x,y)=e^{2\pi i x}$ satisfies $\partial_{\bar z}f=\pi i f$ and has mean zero.
+Consequently $H_i(f\,d\bar z)=-i f/\pi$.
+The constant mode is the complementary case: it is precisely the one subtracted in~\eqref{eq:ep-distribution}.
+
+This construction concerns the scalar smooth Dolbeault complex on a compact complex torus.
+It supplies neither a conformal-character trace on chiral chains nor a comparison with a vertex-algebra BRST complex.
+Such a comparison must specify its coefficient objects and its compatibility with collision maps and with the displayed contraction.

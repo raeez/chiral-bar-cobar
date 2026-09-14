@@ -1,0 +1,113 @@
+\section{Characters and elliptic kernels}
+
+\begin{proposition}[Translation of an integrally graded character]
+\label{thm:modular-anomaly}
+Let $V=\bigoplus_{n\geq0}V_n$ have finite-dimensional components and let $C\in\mathbb C$.
+Suppose $\sum_n\dim(V_n)q^n$ converges for $|q|<1$.
+For $\tau\in\mathbb H$ put
+\[
+ Z_V(\tau)=\sum_{n\geq0}\dim(V_n)
+             \exp\bigl(2\pi i\tau(n-C/24)\bigr).
+\]
+Then $Z_V(\tau+1)=e^{-2\pi i C/24}Z_V(\tau)$.
+For two such nonzero characters of real central charges $C,\widetilde C$, the product $Z_V\overline{Z_{\widetilde V}}$ is invariant under translation if and only if $C-\widetilde C\in24\mathbb Z$.
+This translation condition alone does not imply invariance under all modular transformations.
+\end{proposition}
+\begin{proof}
+Each summand acquires the factor $e^{2\pi i n}e^{-2\pi iC/24}=e^{-2\pi iC/24}$.
+Absolute convergence permits the factor to be taken outside the sum.
+The conjugate character supplies the inverse phase with $\widetilde C$, giving the stated condition.
+Translation is only one generator of the modular group.
+For example $e^{2\pi i\tau}$ is translation invariant but has different values at $2i$ and $i/2$.
+\end{proof}
+
+\begin{theorem}[The Heisenberg vacuum character]
+\label{thm:modular-invariance}
+The rank-one Heisenberg vacuum module has character
+\[
+ Z_{\mathrm H}(\tau)=e^{-\pi i\tau/12}
+                 \prod_{n\geq1}(1-e^{2\pi in\tau})^{-1}
+                 =\eta(\tau)^{-1}.
+\]
+It satisfies
+\[
+ Z_{\mathrm H}(\tau+1)=e^{-\pi i/12}Z_{\mathrm H}(\tau),\qquad
+ Z_{\mathrm H}(-1/\tau)=(-i\tau)^{-1/2}Z_{\mathrm H}(\tau).
+\]
+The square root is the holomorphic branch positive when $\tau$ is positive imaginary.
+The modular weight of this character is $-1/2$, with the inverse eta multiplier.
+\end{theorem}
+\begin{proof}
+A vacuum basis consists of $\prod_{n\geq1}a_{-n}^{m_n}\mathbf1$, with finitely many nonzero $m_n\geq0$ and conformal weight $\sum n m_n$.
+Summing the geometric series for each oscillator gives the displayed product.
+It converges normally on compact subsets of $\mathbb H$ because $\sum |q|^n/(1-|q|^n)$ converges there.
+The vacuum energy is $-1/24$ since the central charge is one.
+The translation identity follows directly from the product.
+The eta transformation formula gives $\eta(-1/\tau)=(-i\tau)^{1/2}\eta(\tau)$ \cite[Eq.~23.18.5]{DLMF26}.
+Taking reciprocals proves the second identity with the same branch.
+\end{proof}
+
+For the universal Virasoro vacuum, replace the oscillator product by $\prod_{n\geq2}(1-q^n)^{-1}$ and the exponent by $-C/24$.
+Its translation multiplier remains $e^{-2\pi iC/24}$.
+For an integrally graded affine vacuum with its Sugawara conformal vector, that multiplier uses $C=k\dim\mathfrak g/(k+h^\vee)$.
+Neither computation asserts a one-dimensional modular representation for the whole character space.
+
+\begin{proposition}[Invariant pairings of character vectors]
+\label{thm:modular-classification}
+Let $\chi:\mathbb H\to\mathbb C^r$ satisfy $\chi(\gamma\tau)=\rho(\gamma)\chi(\tau)$ for a specified representation $\rho$ of $SL_2(\mathbb Z)$.
+If a constant Hermitian matrix $H$ satisfies $\rho(\gamma)^*H\rho(\gamma)=H$ for every $\gamma$, then $\chi(\tau)^*H\chi(\tau)$ is modular invariant.
+\end{proposition}
+\begin{proof}
+Substitution gives $\chi(\gamma\tau)^*H\chi(\gamma\tau)=\chi(\tau)^*\rho(\gamma)^*H\rho(\gamma)\chi(\tau)=\chi(\tau)^*H\chi(\tau)$.
+\end{proof}
+
+\subsection{The Laurent normalization of a meromorphic kernel}
+
+For $\Lambda_\tau=\mathbb Z+\tau\mathbb Z$, define
+\[
+ \zeta_\tau(z)=\frac1z+
+ \sum_{\omega\in\Lambda_\tau\setminus\{0\}}
+ \left(\frac1{z-\omega}+\frac1\omega+\frac z{\omega^2}\right),
+ \qquad z\notin\Lambda_\tau.
+\]
+The grouped summand is $O(|\omega|^{-3})$ on compact subsets away from the poles, so the series converges normally.
+Set $E_2=(12/\pi i)\partial_\tau\log\eta$ and
+$G_\tau(z)=\zeta_\tau(z)+(\pi^2/3)E_2(\tau)z$.
+
+\begin{proposition}[Transformation of the normalized kernel]
+\label{prop:cbc26-elliptic-kernel}
+For $\gamma=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in SL_2(\mathbb Z)$, put $j=c\tau+d$.
+Then
+\[
+ G_{\gamma\tau}(z/j)=jG_\tau(z)-2\pi i c z.
+\]
+Both sides have residue $j$ as functions of $z$ at zero.
+The pulled-back one-form satisfies
+\[
+ G_{\gamma\tau}(z/j)\,d(z/j)
+ =G_\tau(z)\,dz-\frac{2\pi i c}{j}z\,dz,
+\]
+where the differential is in the fiber coordinate $z$ with $\tau$ fixed.
+\end{proposition}
+\begin{proof}
+The identity $\Lambda_{\gamma\tau}=j^{-1}\Lambda_\tau$ and reindexing of the normally convergent series give $\zeta_{\gamma\tau}(z/j)=j\zeta_\tau(z)$.
+The eta multiplier is independent of $\tau$.
+Logarithmic differentiation of its transformation law \cite[Eq.~23.18.5]{DLMF26} therefore gives
+\[
+ E_2(\gamma\tau)=j^2E_2(\tau)+\frac{6c j}{\pi i}.
+\]
+For $c=0$ the same identity follows directly from translation and the central element $-I$.
+Substitution proves the kernel identity because $2\pi/i=-2\pi i$.
+The leading term $1/z$ proves the residue assertion, and division by $j$ gives the one-form identity.
+\end{proof}
+
+The function $G_\tau$ is a meromorphic expression on the covering plane with the stated transformation law.
+A propagator on an elliptic curve requires its additional periodicity, coefficient bundle, and differential equation.
+The character, this kernel, and a chiral chain complex are separate objects.
+
+\begin{conjecture}[Chiral realization of modular transformation laws]
+\label{conj:modular-anomaly-brst}
+For a conformal chiral algebra with a specified convergent character space and a compatible family of elliptic chiral chain complexes, there is a modular-equivariant chain-level realization of its character transformation law.
+Such a realization includes descent maps on the family of elliptic curves and a trace map compatible with those descent maps.
+The scalar character identities above do not construct these maps.
+\end{conjecture}

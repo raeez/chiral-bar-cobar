@@ -1,0 +1,363 @@
+\section{Ordered states in the residue carrier}
+\label{sec:ordered-residue-coefficients}
+
+A residue acts on a differential form, while an ordered bar face multiplies adjacent states.
+These operations can be combined in two ways.
+One can carry an entire bar complex unchanged along every normal stratum, or attach a multiplication map to the stratum reached by a collision.
+The first construction inherits the unfiltered overlap homotopies.
+The second requires the coefficient diagram itself; its behavior is already different for an algebra with square-zero augmentation ideal.
+We construct both complexes and their coordinate maps.
+
+All coefficients in this section are over $\mathbb C$.
+Tensor products of vector spaces are algebraic.
+For sheaves, tensor product means the sheaf associated to the algebraic tensor product on local sections.
+Thus each germ is a finite sum of tensors; no completion is used.
+Normal charts and their base projection satisfy the hypotheses of Section~\ref{sec:cech-map}.
+
+\subsection{A fixed ordered bar complex as coefficients}
+\label{subsec:fixed-bar-coefficients}
+
+Let $H$ be an augmented differential graded associative algebra and $I$ its augmentation ideal.
+Use the desuspension $t$ of degree $-1$ and set
+\[
+Q=\bigoplus_{n\geq0}(tI)^{\otimes n},\qquad b=b_1+b_\mu.
+\]
+The empty word is a copy of $\mathbb C$.
+For homogeneous $a_i\in I$, the word $[a_1|\cdots|a_n]$ has degree
+$\sum_i|a_i|-n$.
+The formulas~\eqref{eq:bar-corestrictions}--\eqref{eq:bar-binary-sign} define $b$;
+Proposition~\ref{prop:bar-determinant-comparison} proves $b^2=0$ by the derivation and associativity identities.
+In particular, this definition includes the changing word length under an adjacent bar face.
+
+Let $\mathcal A=A_E(\Omega_Z^\bullet)$ be the sheaf of normal complexes from~\eqref{eq:normal-total} and let
+$\mathcal B=p_*\mathcal R_Y$.
+View $Q$ as a constant sheaf of complexes on $Z$ and put
+\begin{equation}
+\label{eq:fixed-bar-residue-carriers}
+\mathcal A_Q=Q\otimes\mathcal A,\qquad
+\mathcal B_Q=Q\otimes\mathcal B.
+\end{equation}
+The differential on either tensor product is
+\begin{equation}
+\label{eq:fixed-bar-total-differential}
+D_Q(w\otimes\xi)=bw\otimes\xi+(-1)^{|w|}w\otimes D\xi,
+\end{equation}
+using $D_A$ on $\mathcal A$ and $D$ on $\mathcal B$.
+Thus the coefficient differential includes the bar multiplications, whereas a residue changes the normal stratum and leaves $w$ unchanged.
+The word length and the subset of normal divisors are independent indices in~\eqref{eq:fixed-bar-residue-carriers}.
+
+\begin{lemma}[Tensor signs for comparison maps]
+\label{lem:tensor-residue-homotopies}
+Let $f:A\to B$ have degree $a$ and write
+$\partial f=d_Bf-(-1)^a f d_A$.
+Its tensor extension is
+\[
+f^Q(w\otimes\xi)=(-1)^{a|w|}w\otimes f\xi.
+\]
+Then $\partial(f^Q)=(\partial f)^Q$, and $(gf)^Q=g^Qf^Q$ whenever the composition is defined.
+\end{lemma}
+
+\begin{proof}
+Write $q=|w|$.
+The terms containing $bw$ in $\partial(f^Q)$ have coefficients
+$(-1)^{aq}$ and $-(-1)^{a+a(q+1)}$, whose sum is zero.
+The remaining terms are
+\[
+(-1)^{(a+1)q}w\otimes\bigl(d_Bf-(-1)^af d_A\bigr)\xi.
+\]
+This is $(\partial f)^Q$.
+For composition, the two signs multiply to
+$(-1)^{(|f|+|g|)q}$, as required.
+\end{proof}
+
+\begin{proposition}[Coherent descent with ordered bar coefficients]
+\label{prop:bar-residue-descent}
+The differentials~\eqref{eq:fixed-bar-total-differential} square to zero.
+The full carrier $\mathcal B_Q$ has strict coordinate pullbacks
+$\mathrm{id}_Q\otimes g^*$.
+The normal embeddings and determinant transports extend to chain maps
+$j_i^Q=\mathrm{id}_Q\otimes j_i$ and $P_{ij}^Q=\mathrm{id}_Q\otimes P_{ij}$.
+For $m>0$, their overlap homotopies are
+\begin{equation}
+\label{eq:bar-overlap-homotopy}
+H_{ij}^Q(w\otimes\xi)=(-1)^{|w|}w\otimes H_{ij}\xi.
+\end{equation}
+They satisfy
+\[
+D_QH_{ij}^Q+H_{ij}^QD_Q=j_j^Q-j_i^QP_{ij}^Q,
+\qquad
+H_{ik}^Q=H_{jk}^Q+H_{ij}^QP_{jk}^Q.
+\]
+The source $\mathcal A_Q$ is contractible by $h^Q(w\otimes\xi)=(-1)^{|w|}w\otimes h\xi$.
+\end{proposition}
+
+\begin{proof}
+In the square of~\eqref{eq:fixed-bar-total-differential}, the terms involving both $b$ and $D$
+have coefficients $(-1)^{|w|}$ and $(-1)^{|w|+1}$.
+They cancel; the remaining terms vanish by $b^2=D^2=0$.
+The strict pullbacks are chain maps by Proposition~\ref{prop:strict-residue-descent} and their identity action on $Q$.
+Their composition follows from composition of pullbacks.
+Apply Lemma~\ref{lem:tensor-residue-homotopies} to $j_i$, $P_{ij}$, $H_{ij}$ and $h$.
+The identities of Theorem~\ref{thm:strict-homotopy-cocycle} and Lemma~\ref{lem:normal-contractible}
+then give every displayed identity, including the contraction.
+\end{proof}
+
+On a finite base cover, the actual total comparison sends a homogeneous element
+$w\otimes\xi$ of \v Cech degree $p$ to the two components
+\[
+j_{i_0}^Q(w\otimes\xi),\qquad
+(-1)^{p+|w|}w\otimes H_{i_0i_1}\xi.
+\]
+The second expression uses the tail indices of~\eqref{eq:cech-comparison}.
+Its sign includes both the \v Cech degree and the degree of the ordered word.
+The proof of Proposition~\ref{prop:cech-comparison}, applied to the displayed overlap identities,
+proves the total chain-map equation.
+
+The filtered logarithmic homotopies extend by the same rule:
+$K^Q(w\otimes\xi)=(-1)^{|w|}w\otimes K\xi$ and
+$L^Q(w\otimes\xi)=w\otimes L\xi$.
+Thus, for two normal directions and additive logarithms, the three total components have coefficients
+$1$, $(-1)^{p+|w|}$, and $-1$ multiplying $j$, $K$, and $L$, respectively.
+This supplies the filtered total map, including its secondary homotopy.
+
+For example, take $H=\mathbb C[\epsilon]/(\epsilon^2)$ in degree zero, with zero differential.
+The closed bar word $[\epsilon]$ has degree $-1$.
+With one normal coordinate changed by $y=e^z x$, the logarithmic homotopy sends
+\[
+[\epsilon]\otimes e\longmapsto-[\epsilon]\otimes z.
+\]
+The form part of $D_Q$ also has a minus sign on this word.
+It therefore sends the right side to $[\epsilon]\otimes dz$, the difference of the two normal embeddings.
+Omitting the sign in~\eqref{eq:bar-overlap-homotopy} would reverse this equation.
+
+Neither tensoring with $Q$ nor taking its bar differential removes the scalar limitations.
+The inclusion of the empty word and the projection onto it are cochain maps
+$\mathbb C\to Q\to\mathbb C$ whose composite is the identity.
+Tensoring these maps with every stratum gives a filtered retraction onto the scalar complexes.
+Any filtered overlap or secondary homotopy for the specified tensor comparisons would therefore induce the corresponding scalar one.
+The $\mathbb C^*$ period obstruction of Example~\ref{ex:period-obstruction} and the nonzero constants of
+Theorem~\ref{thm:filtered-triple-criterion} still obstruct those homotopies.
+The same retraction carries the nonzero constant class in $H^0(\mathcal B)$ into $H^0(\mathcal B_Q)$;
+its existence rules out a quasi-isomorphism from the contractible source $\mathcal A_Q$ when $m>0$.
+
+\subsection{Multiplication attached to a collision stratum}
+\label{subsec:state-changing-residues}
+
+We now let a residue multiply the states at its two adjacent blocks.
+Fix an ordered string of $n\geq1$ positions and its $m=n-1$ cuts
+$E=\{1,\ldots,n-1\}$.
+For $S\subseteq E$, declare positions $i$ and $i+1$ equivalent when $i\in S$.
+The equivalence classes are consecutive intervals, ordered from left to right.
+Call them the blocks of $S$ and write $b(S)=n-|S|$ for their number.
+Assign one state in $I$ to each block:
+\begin{equation}
+\label{eq:interval-coefficient-system}
+V_S=I^{\otimes b(S)}.
+\end{equation}
+The differential $d_{V_S}$ is the tensor differential, with sign equal to the sum of the degrees of preceding factors.
+
+For $e\notin S$, the cut $e$ separates two adjacent blocks, say in positions $i,i+1$.
+Define
+\[
+\mu_{S,e}:V_S\longrightarrow V_{S\cup\{e\}},\qquad
+ a_1\otimes\cdots\otimes a_{b(S)}
+ \longmapsto
+ a_1\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_{b(S)}.
+\]
+This map has degree zero and keeps the order of every surviving block.
+It takes values in the augmentation ideal because the augmentation is multiplicative.
+The derivation rule for $d_H$ says precisely that it commutes with the tensor differentials.
+
+\begin{lemma}[The interval coefficient squares]
+\label{lem:interval-coefficient-squares}
+For distinct remaining cuts $e,f$, the two maps to $V_{S\cup\{e,f\}}$ agree:
+\[
+\mu_{S\cup\{e\},f}\mu_{S,e}
+=\mu_{S\cup\{f\},e}\mu_{S,f}.
+\]
+\end{lemma}
+
+\begin{proof}
+If the two cuts have no block in common, each composite multiplies the same two disjoint pairs in their unchanged positions.
+Multiplication has degree zero, so interchanging the order of these operations introduces no sign.
+If the cuts share a block, three consecutive block states $a,b,c$ are affected.
+The two resulting states are $(ab)c$ and $a(bc)$.
+They agree by associativity, and all other factors remain unchanged.
+These exhaust the possibilities for two distinct cuts in an ordered string.
+\end{proof}
+
+Let $U$ be a projected normal chart with one labeled divisor for each cut in $E$.
+Using the full residue sheaves on every stratum, define
+\begin{equation}
+\label{eq:state-residue-carrier}
+\mathcal R(V)=\bigoplus_{S\subseteq E}
+ i_{S,*}\bigl(\underline{V_S}\otimes\Omega^\bullet_{U_S}(\log D^S)\bigr)[-2|S|].
+\end{equation}
+The underline denotes the constant sheaf associated to the graded vector space $V_S$.
+For homogeneous $v\in V_S$ and a form $\alpha$ on $U_S$, set
+\begin{equation}
+\label{eq:state-residue-differential}
+D_V(v\otimes\alpha)=d_{V_S}v\otimes\alpha
++(-1)^{|v|}v\otimes d\alpha
++\sum_{e\notin S}(-1)^{|v|}\mu_{S,e}(v)\otimes r_{S,e}\alpha.
+\end{equation}
+The form residue already contains the determinant deletion sign.
+The only sign inserted here is the tensor sign from moving it past $v$.
+A term has total degree $|v|+|\alpha|+2|S|$.
+All three parts of $D_V$ have degree one.
+
+\begin{proposition}[A residue complex with changing ordered states]
+\label{prop:state-residue-complex}
+The differential~\eqref{eq:state-residue-differential} squares to zero.
+Adapted coordinate changes preserving the labeled cut divisors induce strict chain isomorphisms by pullback of forms and the identity on the corresponding $V_S$.
+Permuting coordinate names only relabels the same cut diagram and its strata; it does not permute the ordered block states.
+These coordinate maps compose strictly.
+\end{proposition}
+
+\begin{proof}
+The internal and form differentials square to zero and anticommute by the tensor sign.
+A collision map commutes with the coefficient differential because $\mu_{S,e}$ is a cochain map.
+Its two cross-terms with that differential have signs $(-1)^{|v|}$ and $(-1)^{|v|+1}$, and cancel.
+The cross-terms with the form differential cancel by $r_{S,e}d=-dr_{S,e}$.
+For two different residues, the tensor signs multiply to $(-1)^{2|v|}=1$.
+The coefficient composites agree by Lemma~\ref{lem:interval-coefficient-squares}, while the form composites have opposite signs.
+Repeated-edge contributions are absent because their targets have already lost that normal direction.
+This proves $D_V^2=0$.
+
+Pullback commutes with the form differential and with each typed residue by Proposition~\ref{prop:strict-residue-descent}.
+It acts as the identity on states, so it also commutes with every $d_{V_S}$ and $\mu_{S,e}$.
+This proves the chain identity and, by composition of pullbacks, the cocycle.
+A relabeling of coordinate slots sends the stratum name to the corresponding set of intrinsic cuts.
+It makes no change to that set of blocks or to their order, proving the permutation assertion.
+\end{proof}
+
+For three positions and degree-zero states, the four coefficient spaces are
+$I^{\otimes3}$, two copies of $I^{\otimes2}$, and $I$.
+Applied to $a\otimes b\otimes c\otimes\lambda_1\wedge\lambda_2$, the two residue terms are
+\[
+(ab)\otimes c\otimes\lambda_2\big|_{D_1},\qquad
+-\,a\otimes(bc)\otimes\lambda_1\big|_{D_2}.
+\]
+Their next residues are $(ab)c$ and $-a(bc)$ on $D_{12}$.
+This is the actual merged-state target; associativity cancels the two terms there.
+For a noncommutative algebra the order of $a,b,c$ is retained throughout.
+
+These $\mu_{S,e}$ are exactly the degree-zero adjacent multiplication maps of
+Proposition~\ref{prop:bar-determinant-comparison}.
+If $r$ cuts remain, there are $r+1$ blocks.
+The ordinary bar comparison retains the final vertex line in addition to the determinant of those $r$ cuts.
+Its determinant therefore has degree $-(r+1)$.
+In~\eqref{eq:state-residue-carrier}, the geometric degree instead uses the stratum shift $[-2|S|]$.
+Matching the multiplication maps does not identify these two gradings or their entire carriers.
+
+\subsection{The normal embedding for the changing states}
+\label{subsec:state-normal-embedding}
+
+On the supplied product projection to $Z$, form
+\[
+\mathcal A(V)=
+\left(\bigoplus_{S\subseteq E}L(E\setminus S)\otimes\underline{V_S}\otimes\Omega_Z^\bullet\right)[-2m].
+\]
+For $F=E\setminus S$, $r=|F|$, and $q=|v|$, its differential is
+\begin{align}
+\label{eq:state-normal-differential}
+D_{A(V)}(\omega_F\otimes v\otimes\beta)
+={}&(-1)^r\omega_F\otimes d_{V_S}v\otimes\beta
++(-1)^{r+q}\omega_F\otimes v\otimes d_Z\beta\notag\\
+&+\sum_{e\in F}\iota_e\omega_F\otimes\mu_{S,e}(v)\otimes\beta.
+\end{align}
+The normal embedding, now with coefficients first in its target, is
+\begin{equation}
+\label{eq:state-normal-embedding}
+j_x^V(\omega_F\otimes v\otimes\beta)
+=(-1)^{rq}v\otimes\lambda_F^x\wedge p_S^*\beta.
+\end{equation}
+The sign moves the $r$ odd determinant generators past $v$.
+
+\begin{proposition}[Comparison for the interval coefficient system]
+\label{prop:interval-normal-comparison}
+The differential~\eqref{eq:state-normal-differential} squares to zero, and~\eqref{eq:state-normal-embedding}
+is an injective degree-zero chain map into $p_*\mathcal R(V)$.
+Its image is the direct sum of the corresponding normal-form subspaces over every $S\subseteq E$,
+and this image is closed under $D_V$.
+When logarithms of the normal coordinate units are chosen, the filtered homotopy is
+\begin{equation}
+\label{eq:state-logarithmic-homotopy}
+K_{xy}^V(\omega_F\otimes v\otimes\beta)
+=(-1)^{(r-1)q}v\otimes K_{xy}(\omega_F\otimes\beta),
+\end{equation}
+where the scalar expression on the right lies on the same stratum $U_S$.
+It satisfies $D_VK_{xy}^V+K_{xy}^VD_{A(V)}=j_y^V-j_x^V$.
+\end{proposition}
+
+\begin{proof}
+The coefficient squares commute, and the coefficient maps are cochain maps.
+Opposite determinant signs cancel the two-edge terms in $D_{A(V)}^2$;
+the internal signs before and after deletion are $(-1)^r$ and $(-1)^{r-1}$, so those mixed terms cancel as well.
+The coefficient differential on $V_S\otimes\Omega_Z$ squares to zero.
+Thus $D_{A(V)}^2=0$.
+
+The source degree is $q+|\beta|-r+2m$; the target degree is
+$q+|\beta|+r+2|S|$, the same number.
+For the coefficient derivative, the sign on the image of the first term of~\eqref{eq:state-normal-differential} is
+$(-1)^{r+r(q+1)}=(-1)^{rq}$, as required.
+For the base derivative, both paths have sign $(-1)^{rq+r+q}$.
+For deletion of the $i$th edge, the signs are
+$(-1)^{i-1+(r-1)q}$ and $(-1)^{i-1+rq+q}$; their exponents differ by $2q$.
+The coefficient map is $\mu_{S,e}$ on both paths, with the same target.
+These calculations prove the chain equation and closure.
+Coefficient extraction in the adapted exterior basis, followed by the zero section of the projection,
+proves injectivity just as in Lemma~\ref{lem:normal-embedding}.
+
+For the homotopy, substitute the closed parameter forms $\Lambda_e(t)$ of Section~\ref{sec:filtered-homotopies}
+for the normal forms in~\eqref{eq:state-normal-embedding}.
+Their residues give the same coefficient maps $\mu_{S,e}$.
+Extracting a $dt$ and integrating introduces one tensor sign $(-1)^q$ in addition to $(-1)^{rq}$;
+this is $(-1)^{(r-1)q}$.
+The identity $dI+Id=\operatorname{ev}_1-\operatorname{ev}_0$ and the residue identity $RI+IR=0$
+then give the homotopy equation, including the coefficient differential by the same tensor cancellation as in
+Lemma~\ref{lem:tensor-residue-homotopies}.
+The map stays on $U_S$, so it preserves stratum depth.
+\end{proof}
+
+\begin{example}[The normal image and the full stratum summands]
+Take $m=1$, $H=\mathbb C[\epsilon]/(\epsilon^2)$ in degree zero, and $Z$ a point.
+Then $I=\mathbb C\epsilon$, $V_\varnothing=\mathbb C(\epsilon\otimes\epsilon)$,
+and $V_{\{1\}}=\mathbb C\epsilon$.
+On the ambient chart the normal image is spanned by
+$(\epsilon\otimes\epsilon)\otimes d\log x$, of total degree $1$.
+The full ambient summand also contains
+$(\epsilon\otimes\epsilon)\otimes1$, of total degree $0$,
+which is outside this image.
+On the divisor, the normal image is spanned by $\epsilon\otimes1$, of total degree $2$.
+Thus both subsets occur in the image, although the ambient summand is not exhausted.
+The residue face vanishes because $\epsilon^2=0$; all these normal generators are closed.
+\end{example}
+
+An unfiltered homotopy on every unit overlap does not follow for this coefficient diagram.
+Take $n=2$, $H=\mathbb C[\epsilon]/(\epsilon^2)$, and $Z=\mathbb C^*$ with coordinate $z$.
+Then $V_\varnothing=\mathbb C(\epsilon\otimes\epsilon)$, $V_{\{1\}}=\mathbb C\epsilon$,
+and $\mu_{\varnothing,1}=0$.
+The coefficient differentials vanish.
+On $U=\Delta\times\mathbb C^*$, change the normal coordinate by $y=zx$.
+The normal generator $a=e\otimes(\epsilon\otimes\epsilon)\otimes1$ has total degree one and $D_{A(V)}a=0$.
+If any degree-minus-one homotopy $G$ existed, $Ga$ would have degree zero in $\mathcal R(V)$.
+The collision stratum has minimum degree two, so $Ga=(\epsilon\otimes\epsilon)\otimes f$ on the ambient stratum.
+The homotopy equation would imply
+\[
+df=dz/z.
+\]
+Restriction to $x=0$ and integration around the unit circle contradict this equation, exactly as in
+Example~\ref{ex:period-obstruction}.
+Thus no such unfiltered $G$ exists on this overlap, even though the full state-valued residue sheaf has strict coordinate descent.
+The average wedge operator $h$ fails here because it would need to reverse the zero multiplication map.
+
+The constructions above give precise carriers for ordered associative states and for a fixed bar complex.
+For a chiral product, its input is the sheaf of states away from a collision and its output is supported on the collision diagonal.
+It is not the degree-zero multiplication $I\otimes I\to I$ used above.
+Applying the displayed formulas to that product requires actual coefficient complexes on every stratum,
+a differential-form action, and typed collision maps commuting with the internal differential and the coordinate transitions.
+The two coefficient composites at an adjacent double collision must land in the same merged-state complex and satisfy the requisite identity there.
+A fixed coefficient comparison additionally requires the stated identification of those coefficient systems.
+These are the mathematical conditions for transfer to Definition~\ref{def:bar-differential-complete};
+neither determinant signs nor strict descent of logarithmic forms supplies them.

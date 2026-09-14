@@ -1,0 +1,750 @@
+A filtration records the leading part of a differential, but it does not determine the differential or a comparison map.
+For current algebras, three operations must be distinguished: filtering the full state space, taking sections of the collision sheaves, and lifting a graded map.
+We construct the filtration and the lifting equations separately.
+The obstruction already occurs in a complex with two basis vectors.
+
+All complexes are cohomologically graded over $\mathbb C$, with differential of degree $1$.
+Tensor products of vector spaces are algebraic, and $C[k]^n=C^{n+k}$.
+A degree-$a$ map $u:C\to T$ has differential
+$\partial u=d_Tu-(-1)^a u d_C$.
+Thus a chain map has degree zero and satisfies $\partial u=0$.
+
+\subsubsection{A graded map that has no chain lift}
+
+An increasing filtration on a complex $C$ consists of subcomplexes
+$F_{p-1}C\subseteq F_pC$, with $F_{-1}C=0$.
+It is exhaustive if every element belongs to some $F_pC$.
+Its graded piece is $\operatorname{gr}_p C=F_pC/F_{p-1}C$.
+A filtered map sends $F_pC$ into $F_pT$.
+
+\begin{example}[The first lifting obstruction]\label{ex:fl19-no-lift}
+Let $C^0=T^0=\mathbb Cx$ and $C^1=T^1=\mathbb Cz$.
+Give both spaces the filtration
+$F_0=\mathbb Cz$, $F_1=\mathbb Cx\oplus\mathbb Cz$.
+Set $d_C=0$, while $d_Tx=z$ and $d_Tz=0$.
+Both associated graded differentials vanish, so their graded complexes and first cohomology pages agree.
+Any degree-zero map inducing the identity on the graded pieces must send $x$ to $x$ and $z$ to $z$.
+The chain equation on $x$ would then give $z=0$, a contradiction.
+
+Equivalently, use the decreasing filtration
+$G^0=C$, $G^1=\mathbb Cz$, $G^2=0$.
+Then $x$ has filtration index zero and $z$ has index one.
+The target has a nonzero first page differential $[x]\mapsto[z]$, whereas the source has none.
+Putting $x$ in increasing order $N$ and $z$ in order zero moves the same obstruction to order $N$.
+Every earlier differential then vanishes.
+\end{example}
+
+\subsubsection{The full current state space}
+
+Let $\mathfrak g$ be a finite-dimensional complex Lie algebra with an invariant symmetric form $\kappa$.
+Write $x_m=x\otimes t^m$ and define
+\[
+\widehat L=\mathfrak g[t,t^{-1}]\oplus\mathbb CK,
+\qquad [x_m,y_n]=[x,y]_{m+n}+m\delta_{m+n,0}\kappa(x,y)K.
+\]
+The element $K$ is central.
+For Laurent polynomials $f,g,h$, the central form on $xf,yg$ is
+\[
+\kappa(x,y)\operatorname{Res}(g\,df).
+\]
+It is alternating because $\operatorname{Res}d(fg)=0$.
+Invariance reduces its cyclic Jacobi sum to
+\[
+\kappa([x,y],z)\operatorname{Res}
+\bigl(h\,d(fg)+f\,d(gh)+g\,d(hf)\bigr)=0,
+\]
+since the differential in parentheses is $2d(fgh)$.
+
+Put $L_-=t^{-1}\mathfrak g[t^{-1}]$ and
+$\mathfrak b=\mathfrak g[t]\oplus\mathbb CK$.
+For $k\in\mathbb C$, let $\mathbb C_k$ be the one-dimensional $\mathfrak b$-module on which $\mathfrak g[t]$ acts by zero and $K$ acts by $k$.
+It is a module because two nonnegative modes have no central bracket.
+The vacuum module is the specified quotient
+\[
+V_k=U(\widehat L)\otimes_{U(\mathfrak b)}\mathbb C_k,
+\qquad \mathbf1=1\otimes1.
+\]
+Here $U(\mathfrak l)$ is the tensor algebra of a Lie algebra $\mathfrak l$ modulo $xy-yx-[x,y]$.
+
+\begin{lemma}[Ordered current states]\label{lem:fl19-state-pbw}
+Order a basis of $L_-$.
+The nondecreasing words in this basis, applied to $\mathbf1$, form a basis of $V_k$.
+The Poincar\'e--Birkhoff--Witt (PBW) filtration $F_pV_k$ by at most $p$ negative current modes has
+\[
+\operatorname{gr}_F V_k=\operatorname{Sym}(L_-)
+\]
+as graded vector spaces.
+Give $x_{-n}$ energy $n$ for $n\ge1$.
+The energy-$h$ space is finite-dimensional and has PBW order at most $h$.
+\end{lemma}
+\begin{proof}
+For any ordered Lie basis, replace $ba$ with $ab+[b,a]$ when $b>a$.
+Each term decreases word length, or preserves length and decreases the number of inversions.
+Thus every reduction terminates.
+Disjoint replacements commute.
+For $a>b>c$, the two overlapping reductions have common ordered term $cba$ and remaining terms
+\[
+[b,c]a+b[a,c]+[a,b]c,
+\qquad c[a,b]+[a,c]b+a[b,c].
+\]
+Their difference reduces to
+$-[a,[b,c]]+[b,[a,c]]+[[a,b],c]=0$.
+There are no equal-letter reduction rules in the ordinary Lie case.
+Induction on length and inversions, also inside any fixed surrounding word, therefore gives a unique normal form.
+Normalization kills every defining relation in every context and fixes ordered words.
+Those words are consequently a basis of the quotient.
+
+Apply this argument to a basis of $\widehat L$ with all negative modes preceding the basis of $\mathfrak b$.
+Multiplication identifies $U(\widehat L)$, as a right $U(\mathfrak b)$-module, with
+$U(L_-)\otimes U(\mathfrak b)$.
+Tensoring with $\mathbb C_k$ gives the asserted basis of the actual vacuum module.
+Setting each bracket correction to zero gives the symmetric associated graded.
+At energy $h$, only modes with $n\le h$ can occur, and a word has at most $h$ factors.
+There are finitely many such words because each mode space has dimension $\dim\mathfrak g$.
+\end{proof}
+
+PBW order is not energy.
+For one current $a$, the states $a_{-2}\mathbf1$ and $a_{-1}^2\mathbf1$ both have energy two, but orders one and two.
+Writing $d=\dim\mathfrak g$, ordered-state counting gives
+\[
+\sum_{h\ge0}\dim(V_k)_h q^h=\prod_{n\ge1}(1-q^n)^{-d}.
+\]
+Every coefficient uses only finitely many factors, so this is an identity of formal series.
+In particular, $\dim(V_k)_2=d+\binom{d+1}{2}$, which is $9$ for $\mathfrak{sl}_2$.
+For $b$ full state factors, the corresponding series is the $b$th power of this product.
+For the positive-energy subspace $V_{k,+}=\bigoplus_{h>0}(V_k)_h$, it is
+$\bigl(\prod_{n\ge1}(1-q^n)^{-d}-1\bigr)^b$.
+These are counts of state tensors, before any geometric coefficient functions or forms are included.
+
+The same ordered-basis argument applies to the universal Virasoro vacuum module.
+Use generators $L_n,C$ with
+$[L_m,L_n]=(m-n)L_{m+n}+\delta_{m+n,0}(m^3-m)C/12$.
+The noncentral Jacobi identity follows by expanding the three quadratic coefficients.
+For the central part, substitute $r=-m-n$ in
+$(m-n)((m+n)^3-(m+n))+(n-r)((n+r)^3-(n+r))+(r-m)((r+m)^3-(r+m))$; the result is zero.
+Induce from the subalgebra spanned by $C$ and $L_n$ for $n\ge-1$, with $C$ acting by $c$ and those $L_n$ killing the vacuum.
+This character respects brackets, including $[L_{-1},L_1]=-2L_0$.
+The ordered monomials in $L_{-n}$, $n\ge2$, form its basis.
+Their energy series is $\prod_{n\ge2}(1-q^n)^{-1}$, and their order in energy $h$ is at most $\lfloor h/2\rfloor$.
+
+\begin{example}[State counts do not bound collision sections]\label{ex:fl19-poles}
+On a punctured normal coordinate $t=z_1-z_2$, the localized coefficient sheaf permits powers $t^{-N}$.
+Give $t$ weight one and $d\log t$ weight zero.
+For a nonzero current $a$ and $N\ge1$, the full two-state expression
+\[
+t^{-(N+1)}
+ \bigl(a_{-1}^{N}\mathbf1\otimes a_{-1}\mathbf1\bigr)\,d\log t
+\]
+has total rotation weight zero: the states contribute $N+1$, the coefficient contributes $-N-1$, and $d\log t$ has weight zero.
+Its PBW order is $N+1$.
+The basis in Lemma~\ref{lem:fl19-state-pbw} proves that these orders are unbounded and their symbols are nonzero.
+Thus a fixed total weight need not bound the PBW filtration of a localized collision sheaf.
+This example concerns local sections on the separated-point locus, not a claim about global sections on a compactification.
+Any finite global bound must also control the permitted poles and extensions.
+\end{example}
+
+There is another distinction between states and an augmentation ideal.
+An augmentation of a unital current vertex algebra to the trivial vertex algebra $\mathbb C\mathbf1$ must preserve its products and vacuum.
+The first current product is $a_{(1)}b=a_1(b_{-1}\mathbf1)=k\kappa(a,b)\mathbf1$, by the mode commutator and $a_1\mathbf1=0$.
+If the augmentation kills the currents, preservation of this product implies $0=k\kappa(a,b)$.
+At nonzero level and nonzero $\kappa$, such an augmentation does not exist.
+The positive-energy vector subspace above is therefore not automatically a chiral augmentation ideal.
+A curved or relative bar construction requires its specified coefficient and curvature data.
+
+\subsubsection{Filtering the full collision carrier}
+
+Let $U$ be a coordinate chart with labeled normal-crossing divisors $D_e$, $e\in E$, where $E$ is finite, and choose normal coordinates $x_e$ with $D_e=\{x_e=0\}$.
+For $S\subseteq E$, write $U_S=\bigcap_{e\in S}D_e$, $i_S:U_S\to U$, and
+$D^S=\bigcup_{e\notin S}(D_e\cap U_S)$.
+Suppose $M_S$ are complexes of coefficient vector spaces with maps
+$\mu_{S,e}:M_S\to M_{S\cup\{e\}}$ of degree zero.
+Assume these maps commute with the differentials and that the two composites for distinct remaining edges agree.
+The full residue carrier is
+\begin{equation}\label{eq:fl19-full-residue}
+\mathcal R(M)=\bigoplus_{S\subseteq E}
+i_{S*}\bigl(\underline{M_S}\otimes\Omega^\bullet_{U_S}(\log D^S)\bigr)[-2|S|].
+\end{equation}
+The underline denotes the constant coefficient sheaf.
+For $v$ of degree $q$ and a form $\alpha$ of degree $r$, the total degree is $q+r+2|S|$.
+With the left-normal residue $r_e(d\log x_e\wedge\beta+\gamma)=\beta|_{U_{S\cup\{e\}}}$, put
+\[
+D(v\otimes\alpha)=d_Mv\otimes\alpha
+ +(-1)^qv\otimes d\alpha
+ +\sum_{e\notin S}(-1)^q\mu_{S,e}v\otimes r_e\alpha.
+\]
+Every term has degree one.
+The form identities are $r_f d=-d r_f$ and $r_fr_e=-r_er_f$.
+Together with the coefficient cochain and square identities, they give $D^2=0$.
+The internal mixed terms have signs $(-1)^q$ and $(-1)^{q+1}$.
+The two different-residue terms have the same coefficient sign and opposite form signs.
+
+Give every $M_S$ an increasing filtration, and assume $d_M$ and all $\mu_{S,e}$ preserve it.
+Filter~\eqref{eq:fl19-full-residue} on the coefficient factor only:
+\begin{equation}\label{eq:fl19-residue-filtration}
+F_p\mathcal R(M)=\bigoplus_{S\subseteq E}
+i_{S*}\bigl(\underline{F_pM_S}\otimes\Omega^\bullet_{U_S}(\log D^S)\bigr)[-2|S|].
+\end{equation}
+The displayed differential preserves this filtration.
+Every subset summand and its shift remain present.
+In particular, this is a filtration of the full carrier, not of one normal-form image inside it.
+
+For full state tensors, the coefficient filtration is the sum filtration
+\begin{equation}\label{eq:fl19-tensor-filtration}
+F_p(A_1\otimes\cdots\otimes A_b)
+=\sum_{p_1+\cdots+p_b\le p}
+\operatorname{im}(F_{p_1}A_1\otimes\cdots\otimes F_{p_b}A_b).
+\end{equation}
+The index $p$ measures state order, independently of cohomological degree and the number of blocks.
+For a graded tensor carrier $K=B\otimes A$, this says
+\[
+F_pK^n=\sum_{a+b=n}\ \sum_{i+j\le p}
+\operatorname{im}(F_iB^a\otimes F_jA^b\to K^n).
+\]
+This formula applies only after that underlying tensor carrier has been specified.
+
+\begin{lemma}[Symbols of tensor coefficients]\label{lem:fl19-tensor-symbol}
+For filtered complex vector spaces with $F_{-1}=0$, the canonical map
+\[
+\bigoplus_{p_1+\cdots+p_b=p}
+\operatorname{gr}_{p_1}A_1\otimes\cdots\otimes\operatorname{gr}_{p_b}A_b
+\longrightarrow \operatorname{gr}_p(A_1\otimes\cdots\otimes A_b)
+\]
+is an isomorphism.
+The same assertion holds for tensor products of sheaves over their coefficient ring if their filtrations split locally through each finite order.
+If all coefficient maps and differentials are filtered, the isomorphism intertwines their symbols.
+\end{lemma}
+\begin{proof}
+Choose complements $A_{i,r}$ to $F_{r-1}A_i$ in $F_rA_i$.
+Up to order $p$, the tensor product is the direct sum of the tensors with $\sum r_i\le p$.
+Quotienting by order $p-1$ leaves precisely $\sum r_i=p$.
+The resulting map sends a tensor of classes to the class of its tensor, so it is independent of the complements.
+Local splittings give the identical argument for sheaves.
+Their canonical maps agree on overlaps and therefore glue.
+Applying any filtered map before or after passing to classes gives the same element, proving compatibility.
+\end{proof}
+
+For chiral coefficients, the actual input includes state sheaves away from collisions and maps to diagonal-supported targets.
+These maps need not be multiplication of two vectors in a fixed fiber.
+To apply the preceding lemma to a chiral bar model, one must supply the full coefficient sheaves, their localized or extended domains, and their typed collision maps.
+Each map must preserve~\eqref{eq:fl19-tensor-filtration}, including every lower-pole and regular contribution selected by its test form.
+The coordinate transitions, coefficient connection and twisting terms must preserve the same filtration.
+Their symbols must be compared with the proposed graded differential on those same sheaves.
+Flatness of the state fibers does not construct any of these maps.
+
+For current pairs, the regular normally ordered product has order two, the bracket coefficient has order one, and the central coefficient has order zero.
+Consequently the leading operator in the order filtration is determined by the test-form residue and its degree in state order.
+It is not determined by the order of the OPE pole.
+A bracket that lowers state order appears in a lower filtration component, rather than in the order-preserving differential.
+
+\subsubsection{The twisting term and its square}
+
+The notation for a twisted tensor product also requires maps.
+Let $B$ be a cochain complex with a coassociative coproduct
+$\Delta:B\to B\otimes B$ of degree zero, and assume that $\Delta$ commutes with the tensor differential.
+Let $A$ be a differential graded associative algebra.
+For a degree-one map $\tau:B\to A$, write
+\[
+\partial\tau=d_A\tau+\tau d_B,
+\qquad \tau\star\tau=\mu_A(\tau\otimes\tau)\Delta.
+\]
+The tensor sign in the second expression is
+$(\tau\otimes\tau)(c'\otimes c'')=(-1)^{|c'|}\tau(c')\otimes\tau(c'')$.
+Assume $\partial\tau+\tau\star\tau=0$.
+On the specified carrier $B\otimes A$, define
+\begin{equation}\label{eq:fl19-twisting-differential}
+d_\tau(c\otimes a)=d_Bc\otimes a+(-1)^{|c|}c\otimes d_Aa
+ +\sum_{\Delta c}(-1)^{|c'|}c'\otimes\tau(c'')a.
+\end{equation}
+Every coproduct value is a finite sum in the algebraic tensor product.
+
+\begin{lemma}[Filtered twisting]\label{lem:fl19-filtered-twisting}
+The operator~\eqref{eq:fl19-twisting-differential} squares to zero.
+Suppose the differentials and $\tau$ preserve their filtrations, and
+\[
+\Delta(F_pB)\subseteq\sum_{i+j\le p}F_iB\otimes F_jB,
+\qquad F_iA\,F_jA\subseteq F_{i+j}A.
+\]
+Then $d_\tau$ preserves the sum filtration on $B\otimes A$.
+Its symbol is the twisted differential of the symbols whenever the tensor symbol maps are isomorphisms.
+\end{lemma}
+\begin{proof}
+Let $d_0$ be the untwisted tensor differential and let $T_\tau=d_\tau-d_0$.
+The tensor Leibniz signs give
+$d_0T_\tau+T_\tau d_0=T_{\partial\tau}$.
+Here an operator $T_u$ for a degree-two map $u$ has no sign when moved past $c'$.
+Coassociativity gives $T_\tau^2=T_{\tau\star\tau}$:
+on a triple coproduct $c_1\otimes c_2\otimes c_3$, the two successive signs multiply to $(-1)^{|c_2|}$.
+This is exactly the sign in the product of the two $\tau$ values.
+Thus $d_\tau^2=T_{\partial\tau+\tau\star\tau}=0$.
+For filtration, a term of orders $i,j$ in $\Delta c$ and order $l$ in $a$ gives output order at most $i+j+l$.
+All other terms preserve order by hypothesis.
+Taking classes and using Lemma~\ref{lem:fl19-tensor-symbol} proves the final assertion.
+\end{proof}
+
+\begin{example}[A twisted polynomial resolution]\label{ex:fl20-twisted-polynomial}
+Take $B=\mathbb C1\oplus\mathbb Cc$ with $|c|=-1$, zero differential, and
+$\Delta c=1\otimes c+c\otimes1$, $\Delta1=1\otimes1$.
+Take $A=\mathbb C[x]$ in degree zero, with zero differential, and set $\tau(c)=x$, $\tau(1)=0$.
+The coproduct is coassociative, and both terms in the twisting equation vanish.
+Formula~\eqref{eq:fl19-twisting-differential} gives
+\[
+d_\tau(c\otimes x^r)=1\otimes x^{r+1},
+\qquad d_\tau(1\otimes x^r)=0.
+\]
+Give $c$ and $x$ order one, and $1$ order zero.
+The differential preserves total order.
+Define $H(1\otimes x^r)=c\otimes x^{r-1}$ for $r\ge1$, and let $H$ vanish on $1\otimes1$ and on $c\otimes A$.
+Then $d_\tau H+Hd_\tau$ is the identity minus projection to $\mathbb C(1\otimes1)$.
+This is a filtered contraction onto the constant class on the specified algebraic carrier.
+\end{example}
+
+This lemma specifies the algebraic signs and filtration requirements for a twisting term.
+In a chiral model, the coproduct, coefficient action and twisting map must have their actual sheaf domains and diagonal targets.
+The notation $\otimes_\tau$ does not construct those maps or prove their equation.
+If the equation has a nonzero defect, the same calculation gives the corresponding operator $d_\tau^2$; the carrier is a cochain complex only if that defect acts by zero.
+
+\subsubsection{Sections and their graded lifting obstruction}
+
+Let $\mathcal K^n$ be a sheaf with filtration $F_p\mathcal K^n$, and use honest global sections
+$K^n=\Gamma(Y,\mathcal K^n)$.
+Set $F_pK^n=\Gamma(Y,F_p\mathcal K^n)$.
+The natural map
+\begin{equation}\label{eq:fl19-global-symbol}
+\operatorname{gr}_p\Gamma(Y,\mathcal K^n)
+\longrightarrow\Gamma(Y,\operatorname{gr}_p\mathcal K^n)
+\end{equation}
+is injective, but need not be surjective.
+For a global symbol $s$, choose local lifts $a_i$ on a cover $U_i$.
+The differences $a_j-a_i$ belong to $F_{p-1}\mathcal K^n$ and satisfy the cocycle equation on triple intersections.
+Changing the lifts changes this cocycle by a coboundary.
+Its class vanishes, possibly after refining the cover, exactly when the lifts can be adjusted to glue.
+This gives the exact obstruction to surjectivity of~\eqref{eq:fl19-global-symbol}.
+Here a degree-one \v Cech class means such overlap cocycles modulo coboundaries and refinement.
+
+\begin{example}[A locally split filtration with no global lift]\label{ex:fl19-global-sections}
+For algebraic sheaves on $\mathbb P^1$ with homogeneous coordinates $[X:Y]$, use
+\[
+0\longrightarrow\mathcal O(-2)
+\xrightarrow{(-Y,X)}\mathcal O(-1)^{\oplus2}
+\xrightarrow{(X,Y)}\mathcal O\longrightarrow0.
+\]
+The two sections $X,Y$ never vanish together, so the sequence is exact and locally split.
+Filter the middle bundle by $F_0=\mathcal O(-2)$ and $F_1=\mathcal O(-1)^{\oplus2}$.
+Every graded piece is locally free.
+Nevertheless, $\Gamma(\mathcal O(-1)^{\oplus2})=0$, while $\Gamma(\mathcal O)=\mathbb C$.
+
+The failure can be computed without a dimension formula for sheaf cohomology.
+On $X\ne0$, write $z=Y/X$ and choose the lift $(1,0)$ in the $X^{-1}$ frame.
+On $Y\ne0$, choose $(0,1)$ in the $Y^{-1}$ frame, which becomes $(0,z^{-1})$ on the overlap.
+Their difference $(-1,z^{-1})$ equals $z^{-1}(-z,1)$.
+Thus the obstruction is $z^{-1}$ in the $X^{-2}$ frame of $\mathcal O(-2)$.
+Coboundaries lie in
+$\mathbb C[z]+z^{-2}\mathbb C[z^{-1}]$, which has no $z^{-1}$ coefficient.
+The class is nonzero.
+The same transition description shows that a global section of $\mathcal O(-1)$ would lie in
+$\mathbb C[z]\cap z^{-1}\mathbb C[z^{-1}]=0$.
+\end{example}
+
+Replacing $\Gamma$ by a \v Cech or derived section complex changes the carrier.
+Such a change can be useful, but it requires its own comparison with the stated native complex.
+Even exhaustive sheaf filtrations need not give exhaustive filtrations on global sections without a uniform finite order for each section.
+Both conditions must therefore be checked on the chosen section carrier.
+
+\subsubsection{A filtered criterion with its exact hypotheses}
+
+\begin{theorem}[Filtered acyclicity]\label{thm:fl19-filtered-acyclicity}
+Let $(K,d)$ have an exhaustive increasing filtration with $F_{-1}K=0$ and $dF_p\subseteq F_p$.
+If $H^n(\operatorname{gr}_pK)=0$ for every $p$, then $H^n(K)=0$.
+No finite-dimensionality or completion assumption is needed.
+If a filtered chain map $f:C\to T$ has a quasi-isomorphism on associated graded complexes, it is a quasi-isomorphism.
+\end{theorem}
+\begin{proof}
+A cycle $x$ has finite order $p$.
+Its symbol is a graded cycle, hence the differential of a symbol of degree $n-1$.
+Choose a lift $y\in F_pK^{n-1}$ of that primitive.
+Then $x-dy$ has order at most $p-1$.
+Repeat until order $-1$, which is zero.
+The finite sum of the chosen $y$ is a primitive for $x$.
+
+For the map assertion use
+$\operatorname{Cone}(f)^n=T^n\oplus C^{n+1}$ with differential
+$D(y,x)=(d_Ty+fx,-d_Cx)$ and the sum filtration.
+Its graded complex is the cone of $\operatorname{gr}f$ and is acyclic.
+The first assertion makes the full cone acyclic.
+For a target cycle $y$, a primitive of $(y,0)$ expresses its class as $f[x]$, proving surjectivity.
+If $x$ is a source cycle with $fx=d_Ty$, then $(-y,x)$ is a cone cycle.
+A cone primitive makes $x$ a source boundary, proving injectivity.
+\end{proof}
+
+\begin{theorem}[PBW criterion on a supplied chiral coefficient complex]
+\label{thm:pbw-koszulness-criterion}
+Let $K=\bar B^{\mathrm{ch}}(\mathcal A)\otimes_\tau\mathcal A$ denote a specified native cochain complex, including its full state sheaves, section functor, collision maps and twisting differential.
+Assume the following conditions.
+\begin{enumerate}
+\item\label{item:pbw-flat} Its state-order filtration is~\eqref{eq:fl19-tensor-filtration} on every coefficient tensor and includes all collision strata with their grading shifts.
+The actual differential and transitions preserve it.
+The tensor symbol maps are isomorphisms on the supplied coefficient sheaves.
+\item\label{item:pbw-classical-koszul} After the prescribed section functor, the graded symbol complex has a specified, order-preserving chain isomorphism or quasi-isomorphism to a graded complex $K_0$ whose positive-degree cohomology vanishes in every order.
+This is a comparison of full coefficient complexes and their operations, not only of state vector spaces.
+\item\label{item:pbw-bounded} On the chosen global section carrier, the filtration is exhaustive, $F_{-1}K=0$, and the global symbol maps~\eqref{eq:fl19-global-symbol} are isomorphisms.
+\end{enumerate}
+Then $H^n(K)=0$ for $n>0$.
+Thus this specified native Koszul complex is acyclic in the degrees required for chiral Koszulness.
+\end{theorem}
+\begin{proof}
+The first condition defines a filtered cochain complex on the stated carrier.
+The third condition identifies its graded section complex with the sections of the symbol complex.
+In the second condition, the comparison and vanishing are understood on this same section carrier, so they give
+$H^n(\operatorname{gr}_pK)=0$ for every $p$ and $n>0$.
+Theorem~\ref{thm:fl19-filtered-acyclicity} applies.
+In particular, no finite-dimensional state count is substituted for a global section comparison or a filtration bound.
+\end{proof}
+
+The classical polynomial resolution is one possible graded complex, but it must be identified by an actual map.
+For a vector space $V$ with basis $x_i$, put
+$P=\operatorname{Sym}(V)\otimes\Lambda(e_i)$, with $|x_i|=0$, $|e_i|=-1$ and $d e_i=x_i$.
+The differential extends by the graded Leibniz rule and squares to zero.
+The degree-minus-one derivation $h$ defined by $h(x_i)=e_i$ and $h(e_i)=0$ satisfies
+$dh+hd=N$ on monomials of total polynomial and exterior length $N$.
+Indeed its anticommutator is a degree-zero derivation fixing every generator.
+Consequently $h/N$ contracts every positive length, leaving only the constant class.
+Each expression is finite even for an infinite basis.
+This proves polynomial Koszul exactness internally, but supplies no map from a localized chiral coefficient complex to $P$.
+
+\begin{example}[Completion changes the acyclicity question]\label{ex:fl19-completion}
+Take $C^0=C^1=\mathbb C[u]$, differential multiplication by $1-u$, and decreasing filtration $G^p=u^p\mathbb C[u]$.
+Every graded differential is the identity, so the graded complex is acyclic.
+The polynomial complex nevertheless has cokernel $\mathbb C$, by evaluation at $u=1$.
+In the completion $\mathbb C[[u]]$, the differential is invertible with inverse $\sum_{j\ge0}u^j$.
+The polynomial filtration is separated but not complete.
+The increasing polynomial-degree filtration does not preserve this differential, so Theorem~\ref{thm:fl19-filtered-acyclicity} does not apply to it.
+\end{example}
+
+\subsubsection{The chain equation at each filtration order}
+
+Let $C,T$ be cochain complexes with exhaustive increasing filtrations starting at order zero.
+Choose degree-preserving splittings
+\[
+C=\bigoplus_{p\ge0}C_p,\qquad T=\bigoplus_{p\ge0}T_p,
+\qquad F_pC=\bigoplus_{i\le p}C_i,
+\]
+and similarly for $T$.
+The differentials have unique components
+\[
+d_C=\sum_{r\ge0}d_{C,r},\qquad d_{C,r}:C_p^n\to C_{p-r}^{n+1},
+\]
+and likewise for $T$.
+All terms with negative target order are zero, so these sums are finite on each input.
+The identities $d_C^2=d_T^2=0$ give
+$\sum_{i+j=r}d_{C,i}d_{C,j}=0$ and the corresponding target identities.
+
+For $r\ge0$, let
+\[
+\mathcal H_r^a=\prod_{p,n}\operatorname{Hom}_{\mathbb C}(C_p^n,T_{p-r}^{n+a}),
+\qquad \partial_0u=d_{T,0}u-(-1)^a u d_{C,0}.
+\]
+This is a cochain complex, since the two order-zero differentials square to zero.
+Fix a graded chain map $f_0\in\mathcal H_0^0$.
+Suppose $f_1,\ldots,f_{r-1}$ have already solved the chain equation in orders below $r$.
+The next defect is the explicit degree-one map
+\begin{equation}\label{eq:fl19-obstruction}
+\omega_r=\sum_{i=1}^{r}
+\bigl(d_{T,i}f_{r-i}-f_{r-i}d_{C,i}\bigr)\in\mathcal H_r^1.
+\end{equation}
+
+\begin{theorem}[The exact lifting obstruction]\label{thm:fl19-lift-obstruction}
+The map $\omega_r$ is $\partial_0$-closed.
+The chosen partial lift extends through order $r$ exactly when
+$[\omega_r]=0$ in $H^1(\mathcal H_r,\partial_0)$.
+An extension is a map $f_r\in\mathcal H_r^0$ satisfying
+\begin{equation}\label{eq:fl19-lift-equation}
+\partial_0 f_r=-\omega_r.
+\end{equation}
+All extensions differ by degree-zero cycles in $\mathcal H_r$.
+If compatible choices can be made at every order, the sum $F=\sum_{r\ge0}f_r$ is an actual filtered chain map $C\to T$ inducing $f_0$.
+\end{theorem}
+\begin{proof}
+Put $F_{<r}=\sum_{j<r}f_j$ and $\Omega=d_TF_{<r}-F_{<r}d_C$.
+The square-zero identities give $d_T\Omega+\Omega d_C=0$.
+The components of $\Omega$ below order $r$ vanish by the induction hypothesis.
+Its order-$r$ component is~\eqref{eq:fl19-obstruction}, and the first component of the displayed identity is $\partial_0\omega_r=0$.
+Adding $f_r$ changes that defect to $\omega_r+\partial_0f_r$.
+This proves the obstruction assertion and the description of all extensions.
+
+For an input in $F_pC$, all $f_r$ with $r>p$ vanish.
+Consequently $F$ is defined by a finite sum on every input.
+Its chain defect vanishes in every order, so it is zero.
+No completion or convergence of an infinite series on a single input is used.
+\end{proof}
+
+The first obstruction in Example~\ref{ex:fl19-no-lift} is the map $x\mapsto z$ in $\mathcal H_1^1$.
+There $\partial_0=0$, so it is not a boundary.
+Higher obstruction classes depend on the preceding choices of lifts.
+Their vanishing must hold along one compatible sequence of choices, not merely for unrelated partial lifts.
+
+We next give actual primitives when the obstruction vanishes.
+For each order-zero complex, put $B^n=\operatorname{im}d_0^{n-1}$ and $Z^n=\ker d_0^n$.
+Choose splittings
+$Z^n=B^n\oplus H^n$ and $C^n=Z^n\oplus A^n$ within each order.
+The map $d_0:A^n\to B^{n+1}$ is an isomorphism.
+Let $h_C$ be its inverse on boundaries and zero on $H^n$ and $A^n$.
+Let $\pi_C$ project to $H$, and $\iota_C$ include $H$ into $C$.
+Then
+\[
+d_{C,0}h_C+h_Cd_{C,0}=1-\iota_C\pi_C.
+\]
+This follows separately on boundaries, the chosen cohomology representatives, and $A$.
+Make the same choices for $T$.
+These are splittings of vector spaces, with no implied linearity over a sheaf of functions or differential operators.
+
+For a homogeneous $u\in\mathcal H_r^a$, define
+\begin{equation}\label{eq:fl19-hom-contraction}
+S(u)=h_Tu+(-1)^a\iota_T\pi_Tu h_C,
+\qquad \Pi(u)=\pi_Tu\iota_C.
+\end{equation}
+The first map has degree $-1$ on the Hom complex, while the second takes values in maps between the chosen graded cohomology spaces.
+
+\begin{lemma}[A primitive for a vanishing defect]\label{lem:fl19-hom-primitive}
+The identities
+\[
+\partial_0 S+S\partial_0=1-\bigl(u\mapsto\iota_T\Pi(u)\pi_C\bigr),
+\qquad \Pi\partial_0=0
+\]
+hold on every $\mathcal H_r$.
+A closed $\omega\in\mathcal H_r^1$ is a boundary if and only if $\Pi(\omega)=0$.
+When this holds, $-S(\omega)$ solves~\eqref{eq:fl19-lift-equation}.
+\end{lemma}
+\begin{proof}
+The anticommutator with $u\mapsto h_Tu$ is $(1-\iota_T\pi_T)u$.
+For the second term in~\eqref{eq:fl19-hom-contraction}, the signs $(-1)^a$ and the sign in the Hom differential give
+\[
+\iota_T\pi_Tu(h_Cd_{C,0}+d_{C,0}h_C)
+=\iota_T\pi_Tu(1-\iota_C\pi_C).
+\]
+Adding the two expressions proves the first identity.
+Projection kills target boundaries, and the source inclusion consists of cycles, proving $\Pi\partial_0=0$.
+For a closed $\omega$ with zero projection, the first identity gives $\omega=\partial_0S(\omega)$.
+The converse follows from the second identity.
+\end{proof}
+
+\begin{example}[A nonzero correction that gives a lift]\label{ex:fl19-successful-lift}
+Let $C^0=T^0=\mathbb Cx\oplus\mathbb Ca$ and $C^1=T^1=\mathbb Cz$.
+Give $a,z$ order zero and $x$ order one.
+Set $d_Ca=d_Ta=z$, $d_Cx=0$ and $d_Tx=z$.
+The identity is a chain map for the order-zero differentials.
+Its first defect sends $x$ to $z$, which is now a boundary in the target graded complex.
+Choose $h_Tz=a$ and let $h_T$ vanish on the other basis vectors.
+The correction is $f_1x=-a$, with $f_1a=f_1z=0$.
+Consequently
+\[
+F(x)=x-a,\qquad F(a)=a,\qquad F(z)=z
+\]
+is a filtered chain map: $d_T(x-a)=0$.
+Its inverse sends $x$ to $x+a$ and fixes $a,z$.
+The extra primitive $a$ is precisely the datum absent from Example~\ref{ex:fl19-no-lift}.
+\end{example}
+
+\begin{corollary}[An explicit sufficient condition for lifting]\label{cor:fl19-explicit-lift}
+Suppose
+\[
+\operatorname{Hom}\bigl(H^n(C_p,d_{C,0}),
+H^{n+1}(T_{p-r},d_{T,0})\bigr)=0
+\quad\text{for all }p,n\text{ and }r\ge1.
+\]
+Then the recursion $f_r=-S(\omega_r)$ constructs a filtered chain lift of every graded chain map $f_0$.
+If $f_0$ is a graded quasi-isomorphism, the resulting $F$ is a quasi-isomorphism.
+\end{corollary}
+\begin{proof}
+The displayed condition makes the degree-one cohomology projection $\Pi(\omega_r)$ zero for every closed defect.
+The preceding lemma therefore supplies the correction at every order.
+Theorem~\ref{thm:fl19-lift-obstruction} constructs the chain map, and
+Theorem~\ref{thm:fl19-filtered-acyclicity} proves the quasi-isomorphism assertion.
+\end{proof}
+
+For example, the sufficient condition holds when every graded cohomology space of both complexes is concentrated in degree zero.
+It does not follow from an isomorphism between their cohomology spaces in several degrees.
+An identification of those spaces can first be made into a graded vector-space chain map by
+$f_0=\iota_T f_H\pi_C$, where $f_H$ is the proposed cohomology map.
+The positive-order obstructions still have to vanish.
+
+\subsubsection{Explicit homotopies and complete filtrations}
+
+The quasi-isomorphism conclusion has a constructive form.
+Let $F:C\to T$ be a filtered chain lift of a graded quasi-isomorphism, and let $(M,D)=\operatorname{Cone}(F)$.
+Choose an order-preserving contraction $h_0$ of its acyclic graded complex, using the boundary splittings above.
+Through the chosen splitting of $M$, write $D=D_0+\delta$.
+The operator $\delta$ strictly lowers order.
+Put
+\begin{equation}\label{eq:fl19-cone-contraction}
+N=-\delta h_0-h_0\delta,
+\qquad H=h_0\sum_{j\ge0}N^j.
+\end{equation}
+Every sum is finite on each input, because $N$ lowers order and $F_{-1}M=0$.
+Since $Dh_0+h_0D=1-N$ and $D^2=0$, the operator $N$ commutes with $D$.
+It follows that
+\[
+DH+HD=(1-N)\sum_{j\ge0}N^j=1.
+\]
+Thus~\eqref{eq:fl19-cone-contraction} is an actual filtered contraction of the cone.
+
+Write its blocks on $T\oplus C[1]$ as
+$H=\left(\begin{smallmatrix}A&B\\G&E\end{smallmatrix}\right)$.
+The equation $DH+HD=1$ gives
+\[
+d_CG=Gd_T,\qquad
+FG=1-d_TA-Ad_T,\qquad
+GF=1+d_CE+Ed_C.
+\]
+Consequently $G$ is a filtered chain inverse up to homotopy.
+The homotopies for $1-FG$ and $1-GF$ are $A$ and $-E$, respectively.
+No coalgebra property or geometric naturality is inferred for these chosen vector-space maps.
+
+There is a separate complete version.
+Suppose instead that the chosen carriers are products
+$C=\prod_{p\ge0}C_p$ and $T=\prod_{p\ge0}T_p$, with decreasing filtrations
+$G^pC=\prod_{j\ge p}C_j$.
+Assume every positive-order differential component raises $p$.
+Define the order-$r$ Hom maps to raise $p$ by $r$ as well.
+The obstruction equations and their proofs are unchanged.
+The sums of corrections and the geometric series in~\eqref{eq:fl19-cone-contraction} converge componentwise: an output of order $p$ receives only orders $0,\ldots,p$.
+They define continuous maps of these specified complete, separated products.
+The same contraction equations hold in each quotient by $G^p$, hence on the product.
+This proves quasi-isomorphism without interchanging cohomology with an unspecified inverse limit.
+It makes no assertion about an uncompleted section carrier such as Example~\ref{ex:fl19-completion}.
+
+\subsubsection{Which semi-infinite target is being compared}
+
+The target also requires actual operators.
+Let $\mathfrak l=\bigoplus_{m\in\mathbb Z}\mathfrak l_m$ be an ordinary graded Lie algebra with finite-dimensional components and chosen homogeneous bases $e_{a,m}$.
+Introduce odd operators $c^{a,m}$ of cohomological degree $1$ and $b_{a,m}$ of degree $-1$, with
+\[
+\{b_{a,m},c^{b,n}\}=\delta_a^b\delta_m^n,
+\qquad \{b,b\}=\{c,c\}=0.
+\]
+The braces mean $uv+vu$ for odd operators.
+Fix a vacuum killed by $c^{a,m}$ for $m\le0$ and by $b_{a,m}$ for $m>0$.
+The ghost space consists of finite products of the remaining creation operators on this vacuum.
+Equivalently, its underlying vector space is
+\[
+\mathcal F=\Lambda\bigl(c^{a,m}\ (m>0),\ b_{a,m}\ (m\le0)\bigr).
+\]
+Creation acts by exterior multiplication, and the paired annihilator acts by exterior contraction with the Koszul sign.
+Its degree is measured relative to the vacuum, whose degree is zero.
+Assign energy $m$ to $c^{a,m}$ and $-m$ to $b_{a,m}$.
+All creation energies are nonnegative, with only finitely many zero-energy generators.
+Each fixed-energy ghost space is finite-dimensional.
+
+Let $M=\bigoplus_{h\ge0}M_h$ be an ordinary module, placed in cohomological degree zero, with $\rho(e_{a,m})M_h\subseteq M_{h-m}$.
+Set $M_h=0$ for $h<0$ and use the algebraic carrier $M\otimes\mathcal F$.
+The linear part of the proposed differential is
+$\sum_{a,m}\rho(e_{a,m})c^{a,m}$.
+The Lie bracket part has the form
+\[
+-\tfrac12\sum_{i,j,k} f_{ij}^{k}{:}c^i c^j b_k{:},
+\]
+where $[e_i,e_j]=\sum_kf_{ij}^ke_k$ and normal ordering moves creation operators to the left with the fermionic signs.
+An energy-preserving scalar linear charge term is a specified finite combination of the $c^{a,0}$.
+
+\begin{lemma}[The algebraic operator domain]\label{lem:fl20-ghost-domain}
+The linear current term and the normal-ordered cubic term define locally finite degree-one, energy-zero operators on $M\otimes\mathcal F$.
+The same holds after adding the stated charge term.
+\end{lemma}
+\begin{proof}
+For $v\in M_h$, the modes with $m>h$ annihilate $v$.
+For $m\le0$, the ghost $c^{a,m}$ annihilates a fixed exterior monomial unless that monomial contains $b_{a,m}$.
+Thus the linear sum has finitely many nonzero terms on every pure tensor.
+
+In a normal-ordered cubic monomial, all annihilators act before all creators.
+Every annihilator must match one of the finitely many occupied creation variables of the input.
+Their indices therefore range over a finite set.
+The Lie grading gives $m_k=m_i+m_j$, so each cubic term has total energy zero.
+Its creation energies are nonnegative, and their sum equals the energy removed by the annihilators.
+Only finitely many creation variables have energy at most that fixed sum, including the finite-dimensional zero-mode space.
+If a term has no annihilators, its creators all have energy zero, giving the same finiteness conclusion.
+This proves local finiteness on each exterior monomial and hence on every algebraic input.
+The operator degrees follow from $|c|=1$ and $|b|=-1$.
+\end{proof}
+
+The square-zero identity is a separate condition on these actual operators.
+It depends on the coefficient action, central generators and polarization.
+On a completion allowing infinitely many excitations, the preceding algebraic proof does not establish continuity or convergence.
+
+\begin{example}[The central ghost changes the complex]\label{ex:fl19-central-ghost}
+For one Heisenberg current with $[a_m,a_n]=m\delta_{m+n,0}K$, use the polynomial coefficient module $M=\mathbb C[x_1,x_2,\ldots]$ with mode action
+\[
+a_{-m}=x_m,\qquad a_m=km\partial_{x_m}\quad(m>0),\qquad a_0=0.
+\]
+Here $K$ acts by $k$ and $x_m$ has energy $m$.
+Use ghosts $c^m,b_m$ with the preceding polarization and put
+\[
+Q_0=\sum_{m\in\mathbb Z}a_m c^m,
+\qquad J=\sum_{m>0}m c^m c^{-m}.
+\]
+Both sums are finite on every polynomial with finitely many ghost excitations.
+For positive $m$, $a_m$ kills a fixed polynomial for sufficiently large $m$.
+For negative $m$, $c^m$ kills a fixed ghost vector except at its finitely many holes.
+The same observation proves local finiteness of $J$.
+The commutators of the $a_m$ give
+\[
+Q_0^2=kJ,
+\qquad Q_0^2(1\otimes b_{-1}|0\rangle)
+=k\otimes c^1|0\rangle.
+\]
+The latter vector is nonzero when $k\ne0$.
+A scalar linear term in the $c^m$ anticommutes with $Q_0$ and squares to zero, so it does not remove this defect.
+
+Now retain a central Lie generator acting by $k$, and add its ghosts $c^K,b_K$ with $\{c^K,b_K\}=1$.
+Give both central ghosts energy zero, and choose $c^K|0\rangle=0$.
+Thus the enlarged carrier is $M\otimes\Lambda(c^m\ (m>0),b_m\ (m\le0),b_K)$, with $c^K$ contracting the last exterior variable.
+The absolute differential is
+\[
+Q=Q_0+k c^K-Jb_K.
+\]
+The new terms square to $-kJ$, and their anticommutator with $Q_0$ vanishes, so $Q^2=0$.
+However, $Qb_K+b_KQ=k$.
+For $k\ne0$, the map $b_K/k$ contracts the entire complex.
+Thus omitting the central ghost gives a nonzero square in this model, while retaining it gives an acyclic absolute complex.
+A relative construction or an additional anomaly-cancelling sector is different data.
+\end{example}
+
+The example does not identify a general chiral bar complex with either target.
+It shows why a proposed semi-infinite comparison must specify its central treatment and differential before computing a page.
+Likewise, conformal energy does not identify the full ghost space with exterior powers of the zero modes.
+Positive-energy creation operators remain in its graded pieces.
+Discarding them requires a proved contraction or another comparison map.
+
+\subsubsection{The native comparison and its descent conditions}
+
+Suppose the full native bar complex $C$ and a specified square-zero semi-infinite target $T$ have been constructed.
+Their filtrations must be defined on all state, form and ghost factors.
+A proposed initial map must be a chain map
+$f_0:\operatorname{gr}C\to\operatorname{gr}T$ on those actual carriers.
+An isomorphism to the cohomology of a finite-dimensional Lie algebra is not such a construction.
+Given $f_0$, equations~\eqref{eq:fl19-obstruction}--\eqref{eq:fl19-lift-equation} state exactly what each higher collision or mode correction must solve.
+If their obstructions vanish compatibly, they give the actual map $F$.
+If $f_0$ is a quasi-isomorphism and the stated algebraic or complete filtration hypotheses hold, the cone construction supplies its inverse and homotopies.
+These are conditional conclusions about the specified native objects.
+
+If a sheaf or differential-operator comparison is required, the corrections must belong to the corresponding complex of morphisms.
+The vector-space splittings in~\eqref{eq:fl19-hom-contraction} need not preserve coefficient multiplication, differential operators or restriction maps.
+One may use that formula in such a category only when the displayed projections and homotopies have those compatibilities.
+Otherwise the obstruction must be solved in that smaller morphism complex.
+
+For local maps $F_i$ on a cover, a first overlap homotopy has degree $-1$ and must satisfy
+\[
+\partial H_{ij}=F_j-F_i.
+\]
+The triple-overlap difference $H_{jk}-H_{ik}+H_{ij}$ is closed.
+For the total differential $\delta+(-1)^r\partial$ in \v Cech degree $r$, the next required map has degree $-2$ and satisfies
+\[
+\partial K_{ijk}=-(H_{jk}-H_{ik}+H_{ij}).
+\]
+Closedness follows by applying $\partial$ and cancelling the three differences of $F_i$.
+Existence of $K$ requires that closed map to be a boundary.
+Further overlaps give the analogous equations in lower internal degrees.
+Strict descent requires the maps themselves to agree on overlaps; homotopy-coherent descent instead uses these additional maps and a specified total section complex.
+Neither replaces the underived global sections silently.
+
+Thus the remaining native construction consists of filtered collision and twisting operators on the full state sheaves, the global symbol comparison, and a specified polarized semi-infinite differential.
+One must then provide $f_0$ and solve its filtered and overlap equations in the required coefficient category.
+The state-level PBW basis, the polynomial Koszul contraction, and an identification of first pages do not supply these maps.

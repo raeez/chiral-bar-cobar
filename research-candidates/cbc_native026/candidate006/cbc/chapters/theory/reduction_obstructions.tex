@@ -1,0 +1,130 @@
+\section{Reduction parameters and finite Batalin--Vilkovisky complexes}
+
+\begin{proposition}[Conformal obstruction to parameter reflection]
+\label{prop:cbc26-conformal-reflection}
+Let $t\in\mathbb C^*$ and put $c(t)=13-6(t+t^{-1})$.
+A conformal vertex algebra isomorphism between the universal Virasoro algebras at charges $c(t)$ and $c(-t)$ exists if and only if $t=\pm i$.
+\end{proposition}
+\begin{proof}
+A conformal isomorphism preserves the vacuum and conformal vector $T$.
+It therefore preserves $T_{(3)}T=(c/2)\mathbf1$, so the two charges must agree.
+Since their sum is $26$, equality is equivalent to $c(t)=13$, or $t+t^{-1}=0$.
+This gives $t=\pm i$.
+Conversely both universal algebras then have charge $13$, and the map sending their conformal generators to one another is an isomorphism by their identical universal presentation.
+\end{proof}
+
+At $t=-2/3$, reflection gives $c(t)=26$ and $c(-t)=0$, whereas the reciprocal partner $t^{-1}=-3/2$ has charge $26$.
+This distinguishes reflection from conformal Feigin--Frenkel duality by an actual vertex product.
+It does not exclude a curved or nonconformal comparison with different structure-preservation requirements.
+
+\begin{example}[The nonsimply laced central coefficient]
+\label{ex:cbc26-b2}
+For $B_2$, take an orthonormal basis $e_1,e_2$ and positive roots $e_1-e_2,e_2,e_1,e_1+e_2$.
+The coroot of $\alpha$ is $2\alpha/(\alpha,\alpha)$.
+Thus
+\[
+ \rho=(3/2,1/2),\qquad\rho^\vee=(2,1),\qquad
+ (\rho,\rho^\vee)=7/2.
+\]
+The principal charge is $c(t)=86-60t-30/t$, so $c(t)+c(-t)=172$.
+The rank is $2$, the dimension is $2+2\cdot4=10$, and $h^\vee=1+(\rho,e_1+e_2)=3$.
+Consequently $2r+4h^\vee\dim\mathfrak g=124$ cannot be the reflected sum for all simple Lie algebras.
+For simply laced root systems $\rho=\rho^\vee$; the general expression remains $2r+48(\rho,\rho^\vee)$.
+\end{example}
+
+\begin{proposition}[Two genus-one scalar normalizations]
+\label{prop:cbc26-genus-one-normalization}
+Let $B_2=1/6$ be the second Bernoulli number and define the scalar coefficient
+\[
+ F_1(\kappa)=\kappa\frac{2^1-1}{2^1}\frac{|B_2|}{2!}.
+\]
+Then $F_1(\kappa)=\kappa/24$.
+Under $\kappa=C/2$, this is $C/48$.
+The vacuum-energy exponent in $q^{L_0-C/24}$ is instead $-C/24$.
+At $C=26$ these values are $13/24$ and $-13/12$.
+\end{proposition}
+\begin{proof}
+The Bernoulli coefficient is $(1/2)(1/6)(1/2)=1/24$.
+Substitution gives the other values.
+\end{proof}
+
+This proposition concerns the specified Bernoulli coefficient.
+Its identification with a Hodge integral or a trace requires that map and its normalization.
+The vacuum energy uses the separately defined conformal trace.
+
+\begin{theorem}[A polynomial Batalin--Vilkovisky differential and its quotient]
+\label{thm:cbc26-finite-bv}
+Let $R=\mathbb C[x_1,\ldots,x_n]$ and $S\in R$.
+Give $K=R\otimes\Lambda(\eta_1,\ldots,\eta_n)$ degrees $|x_i|=0$, $|\eta_i|=-1$.
+Use the degree-one odd Poisson bracket with $\{x_i,\eta_j\}=\delta_{ij}$, $\{x_i,x_j\}=\{\eta_i,\eta_j\}=0$, extended by graded skew symmetry and the graded Leibniz rules.
+Then $Q=\{S,-\}$ is the Koszul differential
+\[
+ Qx_i=0,\qquad Q\eta_i=\partial_i S,
+\]
+and satisfies $Q^2=0$.
+If $\partial_1S,\ldots,\partial_nS$ is a regular sequence, the chain algebra projection
+\[
+ p:K\longrightarrow R/(\partial_1S,\ldots,\partial_nS),
+ \qquad p(\eta_i)=0
+\]
+is a quasi-isomorphism.
+\end{theorem}
+\begin{proof}
+The bracket formulas give the displayed derivation.
+Its square vanishes on every generator and hence everywhere.
+The projection is a chain map because it kills each $Q\eta_i$.
+For a single regular element $f$, the complex $R\eta\xrightarrow{f}R$ has zero cohomology in degree $-1$ and quotient $R/(f)$ in degree zero.
+Inductively tensor with the next two-term complex.
+The two-column spectral sequence first computes the preceding Koszul cohomology, then multiplication by the next element on the quotient.
+Regularity makes that multiplication injective.
+The filtration is finite, so induction proves concentration in degree zero and the asserted projection isomorphism.
+\end{proof}
+
+For $S=\tfrac12\sum_i x_i^2$, the target is $\mathbb C$ and the projection evaluates $x_i=\eta_i=0$.
+This is an explicit finite polynomial BRST comparison.
+It has no collision sheaves, ultraviolet completion, or curvewise descent.
+A comparison with chiral chains must construct those additional objects and maps.
+
+\section{Form degree in higher interaction terms}
+
+\begin{proposition}[Quartic expressions on a three-manifold]
+\label{prop:cbc26-quartic-degree}
+Let $M$ be a smooth three-manifold and $A\in\Omega^1(M;W)$ for a finite-dimensional vector space $W$.
+Any expression obtained by applying a four-linear map to coefficients of $A$ and wedging all four one-form factors is zero.
+If a vector field $v$ and a four-linear map $T:W^{\otimes4}\to\mathbb C$ are specified, the expression
+\[
+ T(\iota_vA,A,A,A)\in\Omega^3(M)
+\]
+is instead a defined three-form.
+It can be nonzero, but depends on the additional contraction and tensor.
+\end{proposition}
+\begin{proof}
+The first expression belongs to $\Omega^4(M)=0$.
+For the second, $\iota_v A$ has form degree zero, so the total degree is three.
+For an explicit local example take $W=\mathbb C^3$, $A=e_1dx+e_2dy+e_3dz$, $v=\partial_x$, and the tensor whose only nonzero coordinate entry is $T(e_1,e_1,e_2,e_3)=1$.
+Then the expression is $dx\wedge dy\wedge dz$.
+\end{proof}
+
+An RTT relation is an algebraic relation on matrix-valued series.
+To use it as an action term, a map to a three-form such as the displayed contraction must be defined and its required symmetries proved.
+A critical affine level alone does not make the Lie bracket in $\Omega^\bullet(M)\otimes\mathfrak g$ vanish.
+For example, $A=e\,dx+f\,dy$ in $\mathfrak{sl}_2$ has $[A,A]/2=h\,dx\wedge dy\ne0$, independently of any level parameter.
+
+\begin{proposition}[Integration on a finite quotient]
+\label{prop:cbc26-quotient-integral}
+Let a finite group $\Gamma$ act freely by orientation-preserving diffeomorphisms on a closed oriented three-manifold $M$.
+Let $\omega$ be an invariant three-form and $\bar\omega$ its descended form on $M/\Gamma$.
+Then
+\[
+ \int_{M/\Gamma}\bar\omega=\frac1{|\Gamma|}\int_M\omega.
+\]
+\end{proposition}
+\begin{proof}
+The quotient map is an oriented covering of degree $|\Gamma|$.
+An evenly covered coordinate cover and a partition of unity reduce integration to the sum over its $|\Gamma|$ sheets.
+Each sheet has the same integral, giving the formula.
+\end{proof}
+
+For a nonfree finite action, integration on the quotient stack uses the right-hand side as its normalization.
+An additional division by $|\Gamma|$ after taking this quotient integral changes the normalization.
+Neither a fractional grading nor a W-algebra specifies an action of $\Gamma$ on $M$.

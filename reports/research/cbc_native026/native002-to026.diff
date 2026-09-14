@@ -1,0 +1,1994 @@
+--- native002/cbc/bibliography/references.tex
++++ native026/cbc/bibliography/references.tex
+@@ -80,7 +80,7 @@
+ 
+ \bibitem{Ara07} T. Arakawa, \emph{Representation theory of W-algebras}, Invent. Math. \textbf{169} (2007), no. 2, 219--320.
+ 
+-\bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Ann. Math. \textbf{182} (2015), no. 2, 565--694.
++\bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Ann. Math. \textbf{182} (2015), no. 2, 565--604.
+ 
+ \bibitem{May72} J. P. May, \emph{The geometry of iterated loop spaces}, Lectures Notes in Mathematics, Vol. 271. Springer-Verlag, Berlin-New York, 1972.
+ 
+--- native002/cbc/chapters/connections/bv_brst.tex
++++ native026/cbc/chapters/connections/bv_brst.tex
+@@ -180,42 +180,7 @@
+ is precisely the $\tfrac{1}{2}$ in the QME applied to the central
+ charge.
+ 
+-\begin{theorem}[Genus-\texorpdfstring{$0$}{0} amplitudes from bar complex;
+-\ClaimStatusProvedHere]\label{thm:genus0-amplitude-bar}
+-\index{string amplitude!bar complex}
+-Let $\cA$ be a chiral algebra on $\mathbb{P}^1$, and let
+-$\omega_1, \ldots, \omega_n$ be cocycles in
+-$\bar{B}^1(\cA)$.  Then the genus-$0$ string amplitude
+-\[
+-\mathcal{A}_0(\omega_1, \ldots, \omega_n)
+-\;=\;
+-\int_{\overline{\mathcal{M}}_{0,n}}
+-  \omega_1 \wedge \cdots \wedge \omega_n
+-\]
+-equals the bar complex Euler characteristic
+-$\chi(\bar{B}^n_0(\cA))$, where $\bar{B}^n_0$ denotes the
+-genus-$0$ component of the degree-$n$ bar complex.
+-\end{theorem}
+-
+-\begin{proof}
+-Both sides compute the same configuration space integral.
+-The bar complex is realized on
+-$\overline{C}_n(\mathbb{P}^1) = \overline{\mathcal{M}}_{0,n+1}$
+-(Theorem~\ref{thm:bar-cobar-isomorphism-main}),
+-with the bar differential given by residues of the FM propagator
+-$\omega_{ij} = d\log(z_i - z_j)$ along collision divisors.
+-The string amplitude $\mathcal{A}_0$ inserts vertex operators
+-at marked points and integrates the resulting form over the
+-compactification; this is precisely the definition of the bar
+-complex pairing.  The Euler characteristic
+-$\chi(\bar{B}^n_0) = \sum_k (-1)^k \dim H^k(\bar{B}^n_0)$
+-equals the integral by the Gauss--Bonnet--Chern theorem on
+-$\overline{\mathcal{M}}_{0,n}$ applied to the logarithmic
+-de~Rham complex: the logarithmic forms $\eta_{ij}$ provide
+-a resolution of the constant sheaf on
+-$\overline{\mathcal{M}}_{0,n}$, and integration of the
+-top-degree component is the Euler characteristic.
+-\end{proof}
++\input{chapters/theory/insertion_integrals}
+ 
+ \begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+ At genus~$1$, Theorem~\ref{thm:genus-universality} gives $F_1 = \kappa/24$.  For $\cA = \mathrm{Vir}_c$, $F_1 = c/24 = \operatorname{tr}(\Theta_{\mathrm{Vir}_c}^{(1)}) = (c/2)\cdot(1/12)$, encoding the Mumford isomorphism.
+@@ -223,7 +188,10 @@
+ 
+ \begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
+ \index{anomaly!curvature identification}
+-By Theorem~\ref{thm:anomaly-koszul}, $d_{\mathrm{bar}}^2 = 0$ for $\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes \cA_{\mathrm{ghost}}$ if and only if $\kappa_{\mathrm{tot}} = 0$ (equivalently, $c = 26$ for the bosonic string).  When $\kappa_{\mathrm{tot}} \neq 0$, the universal MC class $\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$ (Theorem~\ref{thm:explicit-theta}) curves the bar complex at every genus.
++On the algebraic matter--ghost state space, Theorem~\ref{thm:vir-square} gives $Q^2=(c-26)\sum_{n>0}(n^3-n)c_{-n}c_n/12$.
++The reduced chiral construction based on an augmentation kernel does not apply to this vertex algebra by Proposition~\ref{prop:vir-no-augmentation}.
++An alternative chiral target must specify its unit and collision maps before an anomaly operator can be transported.
++The required operator identity is Proposition~\ref{prop:cbc26-square-transport}.
+ \end{remark}
+ 
+ \section{Gauge fixing and BRST}
+@@ -324,7 +292,9 @@
+ 
+ \begin{remark}[Scope and relation to proved results]
+ \label{rem:topological-brst-scope}
+-Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w} construct filtered comparisons under their specified coefficient, target, symbol-map, and correction hypotheses.
++Theorem~\ref{thm:bar-semi-infinite-km} constructs a filtered comparison under its coefficient, target, symbol-map, and correction hypotheses.
++Theorem~\ref{thm:bar-semi-infinite-w} transports an actual equivariant map between specified double complexes.
++Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction and its associative bar maps.
+ The string criterion at $c=26$ in Theorem~\ref{thm:brst-bar-genus0} also requires an actual target and relative coordinate carrier.
+ Propositions~\ref{prop:vir-no-augmentation} and~\ref{prop:vir-relative-target-obstruction} give obstructions to the augmentation-kernel target and the standard restricted transitions.
+ The topological comparison further requires diffeomorphism ghosts and compatible maps on their full state carriers.
+@@ -1146,16 +1116,10 @@
+ 
+ \begin{remark}[Higher genus]
+ \label{rem:brst-bar-higher-genus}
+-At genus $g \geq 1$, the BRST complex requires additional data:
+-the path integral measure on $\overline{\mathcal{M}}_g$ and the
+-Costello renormalization framework~\cite{costello-renormalization} for handling
+-ultraviolet divergences.  The bar complex side is well-defined at
+-all genera via configuration spaces on $\Sigma_g$
+-(Chapter~\ref{chap:higher-genus}).  The chain map $\Phi$ should
+-extend to a map of genus-graded complexes, with the genus-$g$
+-component involving Costello's counterterm expansion.  This
+-extension is the subject of Programme~VI-a in
+-\S\ref{sec:modular-koszul-programme}.
++A genus-$g$ comparison requires complexes over the stated curve or moduli space, with compatible coefficient maps, anomaly operators, and clutching maps.
++Proposition~\ref{prop:cbc26-horizontal-comparison} proves the transport statement for bounded flat bundle complexes.
++Example~\ref{ex:cbc26-torus-monodromy} gives a genus-one obstruction to inferring global cohomology from fiberwise data.
++For the matter--ghost vertex algebra, a unital collision construction must also avoid the augmentation obstruction of Proposition~\ref{prop:vir-no-augmentation}.
+ \end{remark}
+ 
+ \section{Semi-infinite cohomology and the bar complex}
+@@ -1231,266 +1195,7 @@
+ This identification is separate from the filtered lifting theorem.
+ \end{remark}
+ 
+-\subsection{Anomaly duality from complementarity}
+-
+-\begin{corollary}[Anomaly duality for Kac--Moody pairs;
+-\ClaimStatusProvedHere]
+-\label{cor:anomaly-duality-km}
+-\index{anomaly cancellation!Kac--Moody duality}
+-\index{Feigin--Frenkel duality!anomaly interpretation}
+-Let $\widehat{\fg}_k$ be an affine Kac--Moody algebra at generic
+-level $k$, with Feigin--Frenkel dual
+-$\widehat{\fg}_{k'} = \widehat{\fg}_{-k-2h^\vee}$.  Then:
+-\begin{enumerate}[label=\textup{(\alph*)}]
+-\item \emph{Bar cohomology = semi-infinite cohomology.}
+-If the native bar--semi-infinite chain comparison is supplied,
+-the bar cohomology computations of Part~\textup{II} transport to
+-semi-infinite cohomology.  The generic-rank statement of
+-Theorem~\ref{thm:bar-cohomology-level-independence} does not compute a
+-Hilbert series or construct that comparison.  Under the chain-comparison
+-hypothesis, the dimension equality is
+-\[
+-\dim H^n(\barB^{\mathrm{ch}}(\widehat{\fg}_k))
+-= \dim H^{\infty/2+n}(\widehat{\fg}_k, V_k).
+-\]
+-
+-\item \emph{Curvature = conformal anomaly.}
+-The genus-$1$ curvature coefficient
+-$\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim\fg/(2h^\vee)$
+-\textup{(}Theorem~\textup{\ref{thm:genus-universality}(i))} equals
+-the semi-infinite anomaly coefficient.  The duality
+-$\kappa + \kappa' = 0$ of
+-Theorem~\textup{\ref{thm:genus-universality}(ii)} is the
+-anomaly cancellation for the Feigin--Frenkel pair: the
+-conformal anomalies of $\widehat{\fg}_k$ and
+-$\widehat{\fg}_{-k-2h^\vee}$ cancel.
+-
+-\item \emph{Complementarity = anomaly duality.}
+-The quantum complementarity theorem
+-\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+-applied to the Koszul pair
+-$(\widehat{\fg}_k, \widehat{\fg}_{-k-2h^\vee})$ gives:
+-\[
+-Q_g(\widehat{\fg}_k) \oplus Q_g(\widehat{\fg}_{-k-2h^\vee})
+-= H^*(\overline{\mathcal{M}}_g,\, Z(\widehat{\fg}_k)).
+-\]
+-Via the bar--semi-infinite identification, the left side is a
+-direct sum of semi-infinite cohomology spaces on
+-$\overline{\mathcal{M}}_g$: the genus-$g$ quantum corrections
+-of the WZW model at level~$k$ and its Feigin--Frenkel dual sum to
+-the full moduli space cohomology.  This is the mathematical
+-content of anomaly cancellation for Kac--Moody pairs at all genera.
+-
+-\item \emph{Universal MC duality.}
+-The universal Maurer--Cartan classes satisfy
+-$\Theta_{\widehat{\fg}_k} + \Theta_{\widehat{\fg}_{-k-2h^\vee}}
+-= 0$ (Theorem~\ref{thm:explicit-theta}), since
+-$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$
+-by Theorem~\ref{thm:genus-universality}(ii).
+-This is the chain-level mechanism underlying~(c):
+-the Verdier involution exchanges
+-$\Theta_{\widehat{\fg}_k}$ and $-\Theta_{\widehat{\fg}_{k'}}$,
+-producing the Lagrangian splitting of
+-Theorem~\ref{thm:quantum-complementarity-main}.
+-\end{enumerate}
+-\end{corollary}
+-
+-\begin{proof}
+-Part~(a) is the cohomology-level consequence of
+-Theorem~\ref{thm:bar-semi-infinite-km}.  Part~(b): the
+-curvature $m_0 = \kappa \cdot \mathbf{1}$ in the bar complex
+-corresponds, under the quasi-isomorphism~$\Psi$, to the
+-semi-infinite anomaly (the failure of the naive CE differential
+-to square to zero, corrected by the semi-infinite charge).
+-The genus universality theorem identifies this with the
+-conformal anomaly coefficient.  The duality $\kappa + \kappa' = 0$
+-follows from the Feigin--Frenkel level shift and the formula
+-$\kappa = (k+h^\vee)\dim\fg/(2h^\vee)$: replacing $k$ by
+-$-k - 2h^\vee$ negates~$\kappa$.
+-Part~(c): combine the bar--semi-infinite identification with
+-Theorem~\ref{thm:quantum-complementarity-main}.  The genus-$g$
+-obstruction space $Q_g(\widehat{\fg}_k)$ is the associated
+-graded of $H^*(\barB^{(g)}(\widehat{\fg}_k))$, which by
+-Theorem~\ref{thm:bar-semi-infinite-km} is the genus-$g$
+-semi-infinite cohomology.  The complementarity sum equals
+-$H^*(\overline{\mathcal{M}}_g, Z(\widehat{\fg}_k))$ by
+-Theorem~\ref{thm:quantum-complementarity-main}.
+-\end{proof}
+-
+-\begin{remark}[The Master Table, revisited]
+-\label{rem:master-table-brst}
+-\index{master table of invariants!BRST interpretation}
+-Via Corollary~\ref{cor:anomaly-duality-km}, every entry in the Master Table (Table~\ref{tab:master-invariants}) is a semi-infinite anomaly coefficient: $\kappa$ is the semi-infinite anomaly, $c + c' = 2\dim\fg$ the total Feigin--Frenkel anomaly, and $F_g$ the genus-$g$ WZW free energy.
+-\end{remark}
+-
+-\subsection{Extension to $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction}
+-
+-\begin{theorem}[Bar complex = semi-infinite complex for \texorpdfstring{$\mathcal{W}$}{W}-algebras;
+-\ClaimStatusProvedHere]
+-\label{thm:bar-semi-infinite-w}
+-\index{semi-infinite cohomology!W-algebra identification}
+-\index{Drinfeld--Sokolov reduction!semi-infinite cohomology}
+-Let $\mathcal{W}^k(\fg, f_{\mathrm{prin}})$ be the principal
+-W-algebra at level $k \neq -h^\vee$.  There is a quasi-isomorphism:
+-\begin{equation}\label{eq:bar-semi-infinite-w}
+-\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))
+-\;\xrightarrow{\;\sim\;}\;
+-C^{\infty/2+\bullet}(\mathcal{W}^k(\fg),\, M_k)
+-\end{equation}
+-where $M_k$ is the vacuum module for $\mathcal{W}^k(\fg)$ and the
+-right side is the semi-infinite complex defined with respect to the
+-conformal weight grading.  In particular:
+-\[
+-H^*(\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg)))
+-\;\cong\;
+-H^{\infty/2+*}(\mathcal{W}^k(\fg),\, M_k).
+-\]
+-\end{theorem}
+-
+-\begin{proof}
+-The W-algebra is obtained from the Kac--Moody algebra by BRST
+-reduction (Definition~\ref{def:quantum-ds}):
+-$\mathcal{W}^k(\fg) = H^0(
+-\widehat{\fg}_k \otimes \mathcal{F}_{\mathrm{gh}},\,
+-Q_{\mathrm{DS}})$.
+-We compose Theorem~\ref{thm:bar-semi-infinite-km} with the exactness
+-of DS reduction on the relevant filtered complexes.
+-
+-\emph{Step~1: Functoriality of the bar construction under DS.}
+-The bar functor sends $\widehat{\fg}_k$ to
+-$\barB^{\mathrm{ch}}(\widehat{\fg}_k)$, and the DS differential
+-$Q_{\mathrm{DS}}$ acts on the bar complex (since $Q_{\mathrm{DS}}$
+-is a derivation of the vertex algebra structure; the bar construction
+-preserves this action as it is functorial for $A_\infty$ morphisms).
+-By the proof of Theorem~\ref{thm:w-algebra-koszul-main}, Step~2,
+-the bar functor is exact on the homotopy category and:
+-\[
+-\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))
+-\;\simeq\;
+-H^*_{Q_{\mathrm{DS}}}\!\bigl(
+-\barB^{\mathrm{ch}}(\widehat{\fg}_k)
+-\otimes \barB(\mathcal{F}_{\mathrm{gh}})\bigr).
+-\]
+-
+-\emph{Step~2: DS reduction of the semi-infinite complex.}
+-On the semi-infinite side, DS reduction of
+-$C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)$ yields
+-$C^{\infty/2+\bullet}(\mathcal{W}^k(\fg), M_k)$:
+-the semi-infinite complex of the W-algebra is the BRST
+-reduction of the semi-infinite complex of $\widehat{\fg}_k$.
+-This is the content of Feigin--Frenkel's construction of
+-W-algebra BRST cohomology~\cite{Feigin-Frenkel}: the
+-semi-infinite differential $Q_{\mathrm{si}}$ commutes with
+-$Q_{\mathrm{DS}}$ (both are BRST differentials for different
+-symmetries; their commutator vanishes by the standard double
+-complex argument).
+-
+-\emph{Step~3: Comparison.}
+-The quasi-isomorphism $\Psi$ of
+-Theorem~\ref{thm:bar-semi-infinite-km} intertwines the
+-$Q_{\mathrm{DS}}$-action on both sides (since $\Psi$ is
+-constructed via the PBW spectral sequence, which respects the
+-adjoint action of $\widehat{\fg}_k$ on itself and hence the
+-DS differential).  Passing to $Q_{\mathrm{DS}}$-cohomology:
+-\[
+-H^*_{Q_{\mathrm{DS}}}(\Psi) \colon
+-H^*_{Q_{\mathrm{DS}}}(\barB^{\mathrm{ch}}(\widehat{\fg}_k)
+-\otimes \barB(\mathcal{F}_{\mathrm{gh}}))
+-\;\xrightarrow{\;\sim\;}\;
+-H^*_{Q_{\mathrm{DS}}}(
+-C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)
+-\otimes C^*(\mathcal{F}_{\mathrm{gh}}))
+-\]
+-is a quasi-isomorphism (a quasi-isomorphism of filtered complexes
+-remains a quasi-isomorphism after applying an exact functor on the
+-derived category, which $H^*_{Q_{\mathrm{DS}}}$ is for
+-$k \neq -h^\vee$ by Arakawa's vanishing theorem
+-\cite{Ara15}).  The left side is
+-$\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))$ (Step~1); the right
+-side is
+-$C^{\infty/2+\bullet}(\mathcal{W}^k(\fg), M_k)$ (Step~2).
+-\end{proof}
+-
+-\begin{corollary}[Virasoro bar complex = semi-infinite complex;
+-\ClaimStatusProvedHere]
+-\label{cor:virasoro-semi-infinite}
+-\index{semi-infinite cohomology!Virasoro}
+-\index{Virasoro algebra!semi-infinite cohomology}
+-For the Virasoro algebra $\mathrm{Vir}_c$ at central charge
+-$c = 1 - 6(k+1)^2/(k+2)$ \textup{(}obtained as
+-$\mathcal{W}^k(\mathfrak{sl}_2)$\textup{)}:
+-\[
+-H^*(\barB^{\mathrm{ch}}(\mathrm{Vir}_c))
+-\;\cong\;
+-H^{\infty/2+*}(\mathrm{Vir}_c,\, M_c)
+-\]
+-where $M_c$ is the vacuum Virasoro module.  The Motzkin-number
+-bar cohomology dimensions of
+-Theorem~\textup{\ref{thm:virasoro-chiral-koszul}} are therefore
+-semi-infinite cohomology dimensions.
+-\end{corollary}
+-
+-\begin{proof}
+-Apply Theorem~\ref{thm:bar-semi-infinite-w} with
+-$\fg = \mathfrak{sl}_2$, $f = f_{\mathrm{prin}}$.
+-\end{proof}
+-
+-\begin{corollary}[Anomaly complementarity for \texorpdfstring{$\mathcal{W}$}{W}-algebra pairs;
+-\ClaimStatusProvedHere]
+-\label{cor:anomaly-duality-w}
+-\index{anomaly cancellation!W-algebra duality}
+-Let $\mathcal{W}^k(\fg)$ be the principal W-algebra, with
+-Feigin--Frenkel same-family partner
+-$\mathcal{W}^{k'}(\fg) = \mathcal{W}^{-k-2h^\vee}(\fg)$.
+-Then:
+-\begin{enumerate}[label=\textup{(\alph*)}]
+-\item The semi-infinite anomaly coefficients satisfy the same
+-level-independent complementarity law as the bar curvature
+-coefficients.  For principal finite-type $\mathcal{W}$-algebras,
+-\[
+-\kappa(\mathcal{W}^k(\fg)) + \kappa(\mathcal{W}^{k'}(\fg))
+-= \bigl(c(\mathcal{W}^k(\fg)) + c(\mathcal{W}^{k'}(\fg))\bigr)
+-\varrho(\fg),
+-\]
+-where $\varrho(\fg) = \sum_{i=1}^r \frac{1}{m_i+1}$ is the anomaly
+-ratio from Theorem~\ref{thm:wn-obstruction}.  Thus the sum is a
+-level-independent constant: $13$ for Virasoro and $250/3$ for
+-$\mathcal{W}_3$.
+-
+-\item The quantum complementarity theorem
+-\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+-applied to the W-algebra Koszul pair
+-\textup{(}Theorem~\textup{\ref{thm:w-algebra-koszul-main})} gives:
+-\[
+-Q_g(\mathcal{W}^k) \oplus Q_g(\mathcal{W}^{-k-2h^\vee})
+-= H^*(\overline{\mathcal{M}}_g,\, Z(\mathcal{W}^k)).
+-\]
+-Via the bar--semi-infinite identification, this is anomaly duality
+-for W-algebra pairs at all genera.
+-
+-\item For $\fg = \mathfrak{sl}_2$
+-\textup{(}Virasoro\textup{)}: the Virasoro at
+-$c$ and its same-family shadow partner at $c' = 26 - c$ have
+-semi-infinite anomaly coefficients adding to~$13$, and their
+-genus-$g$ quantum corrections sum to
+-  $H^*(\overline{\mathcal{M}}_g, Z(\mathrm{Vir}_c))$.  Here
+-  $\mathrm{Vir}_{26-c}$ is the proved M/S-level shadow partner used in
+-  the semi-infinite calculation; the stronger H-level
+-  infinite-generator realization belongs to MC4
+-  (Chapter~\ref{chap:concordance}).
+-\end{enumerate}
+-\end{corollary}
+-
+-\begin{proof}
+-Combine Theorem~\ref{thm:bar-semi-infinite-w} with
+-Theorem~\ref{thm:wn-obstruction} and
+-Theorem~\ref{thm:central-charge-complementarity}: the DS reduction
+-preserves the anomaly data, and the principal finite-type
+-$\mathcal{W}$-obstruction is $\kappa = c\,\varrho(\fg)$.
+-Part~(b) then follows from the quantum complementarity theorem.
+-Part~(c): specialize to $\fg = \mathfrak{sl}_2$ with $h^\vee = 2$,
+-for which $c + c' = 26$ and $\varrho(\mathfrak{sl}_2)=1/2$.
+-\end{proof}
++\input{chapters/theory/ds_chain_comparisons}
+ 
+ \section{Holomorphic-topological field theories}
+ 
+--- native002/cbc/chapters/connections/concordance.tex
++++ native026/cbc/chapters/connections/concordance.tex
+@@ -832,7 +832,7 @@
+ duality, and clutching.  This is exactly the claimed MC5 reduction.
+ \end{proof}
+ 
+-\begin{corollary}[Standard-tower MC5 closure on the canonical Yangian
++\begin{corollary}[Compatible comparisons on the canonical Yangian
+ locus; \ClaimStatusProvedHere]
+ \label{cor:standard-tower-mc5-closure}
+ Consider the standard principal
+@@ -860,7 +860,7 @@
+ \item actual genus-zero comparison data are supplied, with all target, relative-descent, section-carrier, filtration, symbol-map, correction, and pairing hypotheses of Theorem~\ref{thm:algebraic-string-dictionary};
+   the higher-genus modular deformation package is that of Theorem~\ref{thm:master-theta}.
+ \end{enumerate}
+-Then the standard-tower MC5 packet closes.
++Then the supplied comparison maps extend through the stated tower, compatibly with truncation, Verdier duality, and clutching.
+ \end{corollary}
+ 
+ \begin{proof}
+@@ -874,7 +874,7 @@
+ proposition removes every remaining infinite-tower algebraic
+ obstruction beyond the genuswise BV/BRST/bar comparison, and
+ assumption~\textup{(iv)} supplies exactly that comparison.  Hence the
+-standard-tower MC5 packet closes.
++supplied comparison extends compatibly with truncation, Verdier duality, and clutching.
+ \end{proof}
+ 
+ \begin{remark}[Completion frontier crystallization]
+@@ -2120,8 +2120,7 @@
+ the line-operator side; constitutionally, the latter belongs upstream to
+ MC4 whenever it is used to build the Yangian H-level target.
+ 
+-The exact
+-MC5 attack chain is therefore: the disk-local packet of
++The disk-local comparison of
+ Conjecture~\ref{conj:disk-local-perturbative-fm}, reduced by
+ Proposition~\ref{prop:disk-local-binary-ternary-reduction} to explicit
+ binary and ternary local checks. Under the full constructed-carrier and filtered-comparison hypotheses and the additional binary identity~\eqref{eq:vir-binary-intertwining}, Corollary~\ref{cor:disk-local-ternary-on-brstbar-locus} leaves the ternary comparison; compactification and
+@@ -3051,53 +3050,25 @@
+ Relative nilpotence at other central charges can occur on the carriers of Proposition~\ref{prop:vir-relative-three-term}.
+ \end{proof}
+ 
+-\begin{theorem}[Physical anomaly cancellation for KM and \texorpdfstring{$\mathcal{W}$}{W}-algebras;
+-\ClaimStatusProvedHere]\label{thm:anomaly-physical-km-w}
+-\index{anomaly cancellation!KM/W-algebras}
+-For Kac--Moody algebras $\widehat{\fg}_k$ at $k\neq-h^\vee$ and W-algebras $\mathcal W^k(\fg)$ at non-critical level, impose all coefficient-action, specified square-zero target, filtration, actual symbol-map, and compatible-correction hypotheses of Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w}.
+-On those supplied comparison carriers, the genus-zero assertions below have no additional string-central-charge condition:
+-\begin{enumerate}[label=\textup{(\roman*)}]
+-\item The bar complex computes semi-infinite \textup{(}BRST\textup{)}
+-  cohomology:
+-  $H^*(\barB(\cA)) \cong H^{\infty/2+*}(\cA)$
+-  \textup{(}Theorems~\textup{\ref{thm:bar-semi-infinite-km}}
+-  and~\textup{\ref{thm:bar-semi-infinite-w})}.
+-\item The anomaly duality $\kappa + \kappa' = 0$ holds for
+-  Feigin--Frenkel dual pairs
+-  \textup{(}Corollaries~\textup{\ref{cor:anomaly-duality-km}}
+-  and~\textup{\ref{cor:anomaly-duality-w})}.
+-  This is anomaly cancellation: the matter-ghost system has
+-  $\kappa_{\mathrm{tot}} = 0$ precisely when
+-  $c = c_{\mathrm{crit}}$.
+-\item At genus~$0$, the Chern--Simons equations of motion
+-  are recovered from the Maurer--Cartan equation in the bar
+-  complex \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km})}.
+-\end{enumerate}
+-\end{theorem}
++\begin{proposition}[Anomaly operators and scalar reflection]
++\label{thm:anomaly-physical-km-w}
++On the full conformal Virasoro ghost carrier, the anomaly operator vanishes exactly at matter central charge $26$.
++Reflection of the principal Virasoro parameter pairs central charges $c,26-c$, whose half-central charges sum to $13$.
++Reflection negates the affine scalar $a(k)$ of Proposition~\ref{cor:anomaly-duality-km}; the Sugawara half-central charges instead sum to $\dim\mathfrak g$.
++The Maurer--Cartan equation for $\Omega^\bullet(M)\otimes\mathfrak g$ is the flatness equation on the trivial bundle of Theorem~\ref{thm:cs-koszul-km}.
++\end{proposition}
+ 
+ \begin{proof}
+-Parts~(i) and~(ii) are restated from the cited theorems and
+-corollaries, which are proved using the PBW filtration,
+-Arkhipov functor, and Eilenberg--Moore spectral sequence
+-(Theorem~\ref{thm:bar-semi-infinite-km}) or the
+-Drinfeld--Sokolov reduction cascade
+-(Theorem~\ref{thm:bar-semi-infinite-w}).
+-Part~(iii) follows from Theorem~\ref{thm:cs-koszul-km}:
+-the bar--semi-infinite identification transports the MC equation
+-to the CS flatness equation via the WZW/CS boundary correspondence.
++Theorem~\ref{thm:vir-square} computes the anomaly and its nonzero detecting vector.
++Propositions~\ref{cor:anomaly-duality-w} and~\ref{cor:anomaly-duality-km} give the scalar sums.
++The last assertion follows by substituting the de Rham differential and Lie bracket into the Maurer--Cartan equation.
++Transport to a different carrier requires the components of Proposition~\ref{thm:linf-mc-flatness}.
+ \end{proof}
+ 
+ \begin{conjecture}[Physical anomaly cancellation, higher genus;
+ \ClaimStatusConjectured]\label{conj:anomaly-physical}
+-The genus-$0$ identifications of
+-Theorem~\textup{\ref{thm:anomaly-physical-km-w}} extend to all
+-genera: the BV-BRST identification
+-$\barB(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ holds as a
+-quasi-isomorphism of \emph{genus-graded} complexes, so that the
+-quantum master equation
+-$\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ is the chain-level
+-refinement of $\Dg{g}^{\,2} = 0$ at every genus
+-\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})}.
++For a specified anomaly-free BRST sheaf complex and a separately constructed unital chiral-chain complex, there is a quasi-isomorphism over each moduli space of curves that is compatible with coordinate descent, the connections, pairings, anomaly operators, and clutching.
++The genus-zero comparison and its compatibility with these structures are included in this assertion.
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]\label{rem:anomaly-scope}
+@@ -3106,7 +3077,9 @@
+ These genus-zero constructions remain required.
+ For $V\otimes bc$, the augmentation-kernel target is excluded by Proposition~\ref{prop:vir-no-augmentation}.
+ For the universal Virasoro vacuum, the standard restricted coordinate transitions fail by Proposition~\ref{prop:vir-relative-target-obstruction}.
+-The Kac--Moody and Drinfeld--Sokolov comparisons likewise retain the complete coefficient, target, and filtered-map hypotheses of their cited comparison theorems.
++The affine criterion of Theorem~\ref{thm:bar-semi-infinite-km} requires the actual coefficient and filtered chain maps.
++Theorem~\ref{thm:bar-semi-infinite-w} further requires an equivariant map of specified double complexes and a valid totalization.
++Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction on its associative carrier.
+ 
+ A different unital chiral target requires its coefficient maps and vacuum normalization; its cohomology must then be computed on the chosen section carrier.
+ Integration requires the insertion maps, explicit pairing homotopy, and closed integration functional of Corollary~\ref{cor:string-amplitude-genus0}.
+@@ -3146,37 +3119,18 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]\label{rem:ads-scope}
+-Costello--Paquette \cite{CP2020} conjecture (footnote~8) that
+-curved Koszul duality controls twisted supergravity on AdS$_3$.
+-Our framework provides the mathematical structure they require:
+-the curved $A_\infty$ bar complex
+-(Theorem~\ref{thm:bar-ainfty-complete}), the genus expansion
+-(Theorem~\ref{thm:genus-universality}), and the
+-complementarity theorem (Theorem~\ref{thm:quantum-complementarity-main})
+-relating boundary and bulk.  The bar--semi-infinite identification
+-(Theorems~\ref{thm:bar-semi-infinite-km}
+-and~\ref{thm:bar-semi-infinite-w}) now proves that the bar
+-complex of the boundary KM/W-algebra is the BRST complex, so the
+-theorematic boundary algebraic package is in place.  What remains is
+-not missing finite-type boundary bar theory but the bulk side of the
+-dictionary: if a filtered H-level bulk target is required, that target
+-belongs upstream to MC4, and the comparison with twisted supergravity
+-is the downstream MC5 step.  Concretely, the remaining gap is the
+-identification of the \emph{bulk} observables with the twisted
+-supergravity theory, which requires input from 3d gauge theory
+-(Chern--Simons formulation of gravity on AdS$_3$,
+-$\mathfrak{sl}_2 \oplus \mathfrak{sl}_2$ gauge group).
+-
+-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+-At H-level: an equivalence of factorization categories (boundary
+-chiral vs.\ bulk twisted SUGRA).  The M-level model is the curved
+-bar complex; the S-level shadow is the $1/N$ expansion.
+-(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
++A comparison with twisted supergravity requires both the boundary algebraic comparison and a bulk observable complex.
++The boundary comparison still needs its unital chiral carrier, coefficient maps, relative descent, and actual filtered chain map.
++The polynomial Drinfeld--Sokolov reduction in Theorem~\ref{thm:cbc26-polynomial-ds} constructs an associative comparison on its declared carrier.
++It supplies no chiral collision maps or bulk observables.
++For a comparison over curves, Proposition~\ref{prop:cbc26-horizontal-comparison} identifies the additional horizontal chain equation.
+ \end{remark}
+ 
+ \begin{remark}[Chiral comparison data]\label{rem:brst-chain-map-pieces}
+ \index{BRST!chain map to bar complex}
+-The filtered criteria of Theorems~\ref{thm:brst-bar-genus0}, \ref{thm:bar-semi-infinite-km}, and~\ref{thm:bar-semi-infinite-w} start with specified source and target complexes.
++The affine criterion of Theorem~\ref{thm:bar-semi-infinite-km} requires the actual coefficient and filtered chain maps.
++Theorem~\ref{thm:bar-semi-infinite-w} further requires an equivariant map of specified double complexes and a valid totalization.
++Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction on its associative carrier.
+ A chiral application must construct the coefficient and collision maps, unit normalization, relative coordinate descent, and section carrier.
+ It must then supply compatible exhaustive split filtrations, a genuine graded chain quasi-isomorphism, and compatible solutions of the Hom differential equations at every filtration order.
+ These requirements remain at genus zero.
+@@ -5485,7 +5439,9 @@
+ 
+ \emph{Genus zero and the higher-genus conjectures.}
+ At genus zero, Theorem~\ref{thm:brst-bar-genus0} is a filtered comparison criterion with a separately constructed target and relative carrier, a prescribed section functor, compatible exhaustive split filtrations, an actual graded chain quasi-isomorphism, and compatible corrections.
+-The Kac--Moody and $\mathcal W$ comparisons in Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w} also retain their full coefficient and filtered-map hypotheses.
++The affine criterion of Theorem~\ref{thm:bar-semi-infinite-km} requires the actual coefficient and filtered chain maps.
++Theorem~\ref{thm:bar-semi-infinite-w} further requires an equivariant map of specified double complexes and a valid totalization.
++Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction on its associative carrier.
+ For $V\otimes bc$, Proposition~\ref{prop:vir-no-augmentation} obstructs the augmentation-kernel target.
+ Proposition~\ref{prop:vir-relative-target-obstruction} obstructs the standard relative coordinate transitions for the universal Virasoro vacuum.
+ These genus-zero obstructions require a different constructed chiral carrier before a symbol comparison can be posed.
+--- native002/cbc/chapters/connections/genus_complete.tex
++++ native026/cbc/chapters/connections/genus_complete.tex
+@@ -541,7 +541,9 @@
+ At genus zero, Theorem~\ref{thm:brst-bar-genus0} requires the actual target and relative carrier, section functor, compatible exhaustive split filtrations, symbol quasi-isomorphism, and compatible corrections.
+ Corollary~\ref{cor:string-amplitude-genus0} further requires insertion maps, a pairing homotopy, and a closed integration functional.
+ The augmentation-kernel target for $V\otimes bc$ and the standard relative coordinate restriction are obstructed by Propositions~\ref{prop:vir-no-augmentation} and~\ref{prop:vir-relative-target-obstruction}.
+-The Kac--Moody and $\mathcal W$ comparisons likewise retain the complete hypotheses of Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w}.
++The affine criterion of Theorem~\ref{thm:bar-semi-infinite-km} requires the actual coefficient and filtered chain maps.
++Theorem~\ref{thm:bar-semi-infinite-w} further requires an equivariant map of specified double complexes and a valid totalization.
++Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction on its associative carrier.
+ Higher-genus extension requires the additional compatible constructions of Conjecture~\ref{conj:anomaly-physical}.
+ \end{remark}
+ 
+--- native002/cbc/chapters/connections/holomorphic_topological.tex
++++ native026/cbc/chapters/connections/holomorphic_topological.tex
+@@ -304,46 +304,23 @@
+ 
+ \subsection{Open and closed sectors}
+ 
+-\begin{theorem}[Open-string bar identification; \ClaimStatusProvedHere]
++\begin{proposition}[The Virasoro differential on a boundary vacuum]
+ \label{thm:open-string-bar}
+-\index{open-closed correspondence!open sector}
+-Let $\mathcal{A}_{\mathrm{bdy}}$ be the boundary chiral algebra of
+-a holomorphic-topological theory with boundary condition supporting
+-a Kac--Moody or W-algebra vertex algebra.  Then the bar complex
+-$\barB^{\mathrm{ch}}(\mathcal{A}_{\mathrm{bdy}})$ computes the
+-open-string state space: there is a quasi-isomorphism
+-\[
+-\barB^{\mathrm{ch}}(\mathcal{A}_{\mathrm{bdy}})
+-\simeq
+-C^{\frac{\infty}{2}+\bullet}(\mathcal{A}_{\mathrm{bdy}})
+-\]
+-to the semi-infinite (BRST) complex of~$\mathcal{A}_{\mathrm{bdy}}$.
+-Moreover, the bar-cobar adjunction of Part~I
+-\textup{(}Theorem~\textup{\ref{thm:verdier-bar-cobar})} realizes
+-the Verdier duality exchanging boundary and bulk data at the level
+-of chain complexes.
+-\end{theorem}
++For the universal Virasoro vacuum module $M_C$ with the full weight-$(2,-1)$ ghost carrier of Theorem~\ref{thm:vir-square}, the charge $Q$ defines a cochain complex if and only if $C=26$.
++At $C=26$, the augmentation-kernel chiral target for $M_C\otimes bc$ does not exist.
++The fixed relative fiber is not preserved by the coordinate flow $z\mapsto z/(1+sz)$ when $s\ne0$.
++\end{proposition}
+ 
+ \begin{proof}
+-For Kac--Moody boundary conditions
+-$\mathcal{A}_{\mathrm{bdy}} = \widehat{\fg}_k$ ($k \neq -h^\vee$),
+-Theorem~\ref{thm:bar-semi-infinite-km} provides the quasi-isomorphism
+-$\barB^{\mathrm{ch}}(\widehat{\fg}_k) \simeq C^{\frac{\infty}{2}+\bullet}(\widehat{\fg}_k)$
+-via the PBW filtration and Arkhipov's functor.
+-For W-algebra boundary conditions
+-$\mathcal{A}_{\mathrm{bdy}} = \mathcal{W}_k(\fg)$,
+-Theorem~\ref{thm:bar-semi-infinite-w} gives the analogous
+-identification through Drinfeld--Sokolov reduction.
+-In both cases, the semi-infinite complex is the mathematical
+-formulation of the open-string BRST complex: its cohomology
+-computes the physical state space of open strings ending on
+-the holomorphic-topological boundary condition.
+-
+-The Verdier duality statement follows from
+-Theorem~\ref{thm:verdier-bar-cobar}, which establishes the
+-bar-cobar exchange as Verdier duality on Fulton--MacPherson
+-compactifications.
++The nonzero vector $\mathbf1\otimes b_{-2}\Omega$ detects the square in Theorem~\ref{thm:vir-square}.
++The collision identity $b_{(0)}c=\mathbf1$ proves the augmentation assertion in Proposition~\ref{prop:vir-no-augmentation}.
++The relative state $v=c_{-1}c_1\Omega$ transforms to $v-sc_0c_1\Omega$ by Proposition~\ref{prop:vir-relative-target-obstruction}, which proves the last assertion.
+ \end{proof}
++
++A boundary theory must specify its state complex and boundary condition before its states can be compared with chiral chains.
++Theorem~\ref{thm:bar-semi-infinite-km} supplies a filtered criterion after the coefficient and symbol maps are constructed.
++Theorem~\ref{thm:bar-semi-infinite-w} applies a second differential only to an actual equivariant comparison with the stated finite totalization.
++The explicit associative comparison in Theorem~\ref{thm:cbc26-polynomial-ds} concerns the polynomial reduction.
+ 
+ \begin{conjecture}[Closed-string cobar identification; \ClaimStatusConjectured]
+ \label{conj:closed-string-cobar}
+@@ -363,12 +340,10 @@
+ \end{enumerate}
+ \end{conjecture}
+ 
+-\begin{remark}[Evidence]
+-Open sector: boundary vertex operators are elements of $\mathcal{A}_{\mathrm{bdy}}$, and off-shell amplitudes lie in $\barB^{\mathrm{ch}}(\mathcal{A}_{\mathrm{bdy}})$ (proved).  Closed sector: bulk vertex operators give distribution-valued correlation functions on open configuration spaces (conjectural).  The open-closed map $\barB(\mathcal{A}_{\mathrm{bdy}}) \to \Omega(\mathcal{C}_{\mathrm{bulk}})$ sends boundary residues to bulk distributions via Stokes' theorem.
+-\end{remark}
+-
+-\begin{remark}[Scope]
+-Open-string side proved (Theorems~\ref{thm:bar-semi-infinite-km}, \ref{thm:bar-semi-infinite-w}).  The closed-string identification belongs to MC4/MC5 (Conjecture~\ref{conj:master-bv-brst}).
++\begin{remark}[Boundary and bulk comparison maps]
++An open-sector comparison requires the actual boundary state complex, unital collision target, and compatible chain maps.
++A closed-sector comparison additionally requires a bulk observable complex and an open--closed map.
++For an integral formula, Stokes' theorem applies only after the insertion map and a closed integration functional have been constructed, as in Proposition~\ref{thm:genus0-amplitude-bar}.
+ \end{remark}
+ 
+ \subsection{Factorization and dimensional reduction}
+@@ -731,11 +706,18 @@
+ 
+ \subsection{AGT correspondence via bar-cobar}
+ 
+-\begin{theorem}[AGT 2D side: bar complex = semi-infinite complex; \ClaimStatusProvedHere]
++\begin{proposition}[Central charges under principal level reflection]
+ \label{thm:agt-2d-bar}
+-\index{AGT correspondence!2D side}
+-Let $\mathcal{W}_k(\fg)$ be a W-algebra at generic level~$k$.  Then $H^\bullet(\barB^{\mathrm{ch}}(\mathcal{W}_k(\fg))) \cong H^{\frac{\infty}{2}+\bullet}(\mathcal{W}_k(\fg))$ (Theorem~\ref{thm:bar-semi-infinite-w}), the anomaly duality $\kappa(\mathcal{W}_k(\fg)) + \kappa(\mathcal{W}_{k'}(\fg^\vee)) = 0$ holds for Feigin--Frenkel dual pairs (Corollary~\ref{cor:anomaly-duality-w}), and chiral homology is computed by configuration space integrals on FM compactifications (Theorem~\ref{thm:bar-NAP-homology}).
+-\end{theorem}
++For the principal $\mathfrak{sl}_2$ and $\mathfrak{sl}_3$ central-charge formulas, reflection $k+h^\vee\mapsto-(k+h^\vee)$ gives sums $26$ and $100$, respectively.
++The half-central-charge sum in the Virasoro case is $13$.
++\end{proposition}
++
++\begin{proof}
++Substitute the two root systems in Proposition~\ref{cor:anomaly-duality-w}.
++\end{proof}
++
++The parameter reflection in this proposition differs from the reciprocal parameter relation in Feigin--Frenkel duality.
++Neither scalar relation defines the semi-infinite differential or a comparison with four-dimensional observables.
+ 
+ \begin{conjecture}[AGT 4D--2D bridge via bar-cobar; \ClaimStatusConjectured]\label{conj:agt-bar-cobar}
+ \index{AGT correspondence}
+@@ -765,7 +747,9 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]
+-The 2D side is proved (Theorem~\ref{thm:agt-2d-bar}); the 4D--2D bridge is proved in specific cases \cite{SV13,MO19}.  Remaining coefficient identities belong to MC4; the bulk identification to MC5 (Chapter~\ref{chap:concordance}, Conjecture~\ref{conj:master-bv-brst}).
++Proposition~\ref{thm:agt-2d-bar} computes the indicated two-dimensional scalar formulas.
++The bar comparison requires a specified chiral target and chain maps.
++A comparison with four-dimensional observables further requires their construction and an equivariant map to that target.
+ \end{remark}
+ 
+ 
+--- native002/cbc/chapters/examples/free_fields.tex
++++ native026/cbc/chapters/examples/free_fields.tex
+@@ -1626,7 +1626,10 @@
+ \end{remark}
+ 
+ \begin{remark}[Scope: conjectural table entries]
+-The three conjectural identifications each involve curved Koszul duality ($m_0 \neq 0$) with infinitely many generators.  Two obstructions: (1)~non-quadratic OPE prevents the quadratic framework of Chapter~\ref{chap:koszul-pairs} from applying directly; (2)~the infinite-generator flank requires the exact MC4 coefficient-identification package.  The bar--semi-infinite identification (Theorem~\ref{thm:bar-semi-infinite-w}) constrains the frontier: the same-family involution $\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ gives the proved M/S-level shadow, while the H-level realization asks for an infinite-generator dual whose bar cohomology matches the semi-infinite growth (Motzkin numbers, Theorem~\ref{thm:virasoro-chiral-koszul}).  The super row remains a separate extension flank adjoining Conjecture~\ref{conj:master-infinite-generator}.
++A same-family central-charge reflection does not compute bar or semi-infinite cohomology.
++For the actual critical Virasoro vacuum charge, Corollary~\ref{cor:virasoro-semi-infinite} gives absolute degrees $0,3$ and relative degrees $0,2$.
++The vacuum PBW character in Theorem~\ref{thm:virasoro-chiral-koszul} counts conformal states.
++Any other proposed semi-infinite growth formula requires its own differential and a cohomology calculation.
+ \end{remark}
+ 
+ \begin{remark}[Heisenberg vs Yangian: self-duality contrast]\label{rem:heisenberg-yangian-contrast}
+@@ -3414,51 +3417,30 @@
+ 
+ \subsection{The algebraic string theory dictionary}
+ 
+-\begin{theorem}[Algebraic string theory dictionary;
+-\ClaimStatusProvedHere]\label{thm:algebraic-string-dictionary}
+-\index{string theory!algebraic dictionary}
+-The following string comparisons use the specified constructions and comparison data:
++\begin{proposition}[State complexes, central coefficients, and insertion maps]
++\label{thm:algebraic-string-dictionary}
++The following statements use separate, specified carriers.
+ \begin{enumerate}[label=\textup{(\roman*)}]
+-\item \emph{Filtered chain comparison.}
+-  For the Kac--Moody and Drinfeld--Sokolov targets, impose all coefficient, square-zero target, filtration, symbol-map, and compatible-correction hypotheses of Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w}.
+-  For a conformal vertex algebra with $c=26$, impose the full separately constructed target, relative descent, section-carrier, filtration, symbol-map, and correction hypotheses of Theorem~\ref{thm:brst-bar-genus0}.
+-  These data give the stated cohomology comparisons on their specified carriers.
+-  They are not supplied by the central charge.
+-  In particular, the augmentation-kernel target for $V\otimes bc$ does not exist by Proposition~\ref{prop:vir-no-augmentation}.
+-\item \emph{Curvature = conformal anomaly.}
+-  The obstruction coefficient $\kappa(\cA)$ is the conformal
+-  anomaly; anomaly duality $\kappa + \kappa' = 0$ holds for
+-  Feigin--Frenkel dual pairs
+-  \textup{(}Corollaries~\textup{\ref{cor:anomaly-duality-km}}
+-  and~\textup{\ref{cor:anomaly-duality-w})}.
+-  Anomaly cancellation $\kappa_{\mathrm{tot}} = 0$ holds at
+-  $c = 26$ \textup{(}bosonic\textup{)} and $c = 15$
+-  \textup{(}superstring\textup{)}.
+-\item \emph{Genus expansion = string perturbation series.}
+-  The genus-graded bar complex
+-  $\barB^{(g)}(\cA)$ is the algebraic $g$-loop
+-  contribution
+-  \textup{(}Theorem~\textup{\ref{thm:genus-universality})}.
+-\item \emph{Factorization = unitarity.}
+-  The bar complex factorizes at boundary divisors of
+-  $\overline{\mathcal{M}}_{g,n}$, recovering string amplitude
+-  factorization
+-  \textup{(}Theorem~\textup{\ref{thm:amplitude-factorization})}.
++\item On a nonzero restricted Virasoro module tensored with the conformal ghost module, the full charge is nilpotent exactly at matter central charge $26$.
++\item The parameter reflection of Proposition~\ref{cor:anomaly-duality-km} negates the affine scalar $a(k)$, while its Sugawara central charges sum to $2\dim\mathfrak g$.
++For principal Virasoro parameters the reflected half-central charges sum to $13$ by Proposition~\ref{cor:anomaly-duality-w}.
++\item The polynomial reduction admits the explicit associative bar quasi-isomorphisms of Theorem~\ref{thm:cbc26-polynomial-ds}.
++\item Insertion integrals defined by Proposition~\ref{thm:genus0-amplitude-bar} descend to cohomology and retain multilinear dependence on the insertion classes.
+ \end{enumerate}
+-The genus-zero target, relative descent, symbol maps, and compatible corrections remain required constructions in the stated applications.
+-Integration pairings require the additional compatibility of Corollary~\ref{cor:string-amplitude-genus0}.
+-Convergence of the genus series and holographic bulk reconstruction are further mathematical questions.
+-\end{theorem}
+-
+-\begin{proof}
+-Each clause references its proof:
+-(i)~Under the full hypotheses stated in that clause, Theorems~\ref{thm:bar-semi-infinite-km}, \ref{thm:bar-semi-infinite-w}, and~\ref{thm:brst-bar-genus0} sum the compatible corrections to an actual chain quasi-isomorphism;
+-(ii)~Corollaries~\ref{cor:anomaly-duality-km}
+-and~\ref{cor:anomaly-duality-w},
+-Theorem~\ref{thm:anomaly-koszul};
+-(iii)~Theorem~\ref{thm:genus-universality};
+-(iv)~Theorem~\ref{thm:amplitude-factorization}.
+-\end{proof}
++\end{proposition}
++
++\begin{proof}
++Part~(i) follows from the operator identity and its detecting vector in Theorem~\ref{thm:vir-square}.
++Part~(ii) is the direct substitution in the two scalar propositions.
++Part~(iii) uses the explicitly defined maps $i,p$ and their tensorwise bar maps.
++Part~(iv) is the chain identity for the insertion map followed by Stokes' theorem.
++\end{proof}
++
++A chiral string comparison still requires a unital collision target, a relative sheaf carrier, and compatible symbol and correction maps.
++Theorem~\ref{thm:brst-bar-genus0} states the filtered chain criterion.
++For an affine comparison the full hypotheses of Theorem~\ref{thm:bar-semi-infinite-km} also remain necessary.
++Quantum reduction further requires the equivariance and totalization data of Theorem~\ref{thm:bar-semi-infinite-w}.
++Maps over moduli require compatible connections, pairings, and clutching operations.
+ 
+ \begin{corollary}[Genus-zero amplitude comparison with compatible pairings;
+ \ClaimStatusProvedHere]\label{cor:string-amplitude-genus0}
+@@ -3867,55 +3849,20 @@
+ The family $\{\barBgeom^{(1)}(\mathcal{A})_\tau\}_{\tau \in \mathbb{H}}$ is a flat vector bundle over $\mathcal{M}_1 = \mathbb{H}/SL_2(\mathbb{Z})$.  The transition functions over $\mathbb{H}$ are multiplied by $(c\tau+d)^{c/24}$ when passing from $\tau$ to $\gamma\cdot\tau$: the central-charge anomaly records the failure of the vacuum vector $\mathbf{1}$ to be $L_0$-invariant under rescaling.  This covariance is exactly the statement that $Z_\mathcal{A}$ is a modular form of weight $c/24$, as required.
+ \end{proof}
+ 
+-\begin{theorem}[Modular anomaly for KM and \texorpdfstring{$\mathcal{W}$}{W}-algebras;
+-\ClaimStatusProvedHere]
++\begin{proposition}[Fiber data and genus-one cohomology]
+ \label{thm:modular-anomaly-km-w}
+-\index{modular anomaly!KM and W-algebras}
+-For a Kac--Moody algebra $\widehat{\fg}_k$ or W-algebra
+-$\mathcal{W}^k(\fg)$, the modular anomaly weight at
+-genus~$1$ equals $(c - c_{\mathrm{crit}})/24$, where
+-$c_{\mathrm{crit}} = 26$ \textup{(}bosonic\textup{)}
+-or $c_{\mathrm{crit}} = 15$ \textup{(}super\textup{)}.
+-
+-Precisely: let $\cA$ be $\widehat{\fg}_k$ or
+-$\mathcal{W}^k(\fg)$ with central charge~$c$.  Then:
+-\begin{enumerate}[label=\textup{(\roman*)}]
+-\item The bar complex at genus~$1$ transforms under
+-  $\mathrm{SL}_2(\bZ)$ with weight $c/24$
+-  \textup{(}Theorem~\textup{\ref{thm:modular-invariance})}.
+-\item The bar complex computes BRST\slash semi-infinite
+-  cohomology:
+-  $H^*(\barB^{\mathrm{ch}}(\cA)) \cong
+-  H^*_{\mathrm{si}}(\cA)$
+-  \textup{(}Theorems~\textup{\ref{thm:bar-semi-infinite-km}}
+-  and~\textup{\ref{thm:bar-semi-infinite-w})}.
+-\item The anomaly coefficient satisfies $\kappa + \kappa' = 0$
+-  for Koszul dual pairs $(\cA, \cA^!)$
+-  \textup{(}Corollaries~\textup{\ref{cor:anomaly-duality-km}}
+-  and~\textup{\ref{cor:anomaly-duality-w})}.
+-\end{enumerate}
+-In particular, anomaly cancellation
+-$\kappa(\cA) = 0$ occurs if and only if $c = c_{\mathrm{crit}}$.
+-\end{theorem}
+-
+-\begin{proof}
+-Combine the three established results.
+-By~(i), the genus-$1$ bar complex transforms with
+-weight~$c/24$.  By~(ii), this complex IS the BRST
+-complex: $\barB^{\mathrm{ch}}(\cA) \cong
+-C^*_{\mathrm{BRST}}(\cA)$ as chain complexes
+-(the bar differential coincides with the semi-infinite
+-differential via the PBW filtration for KM or the
+-DS reduction for W-algebras).  By~(iii), the anomaly
+-coefficient $\kappa = c/(2(k+h^\vee))$ for
+-$\widehat{\fg}_k$ satisfies $\kappa + \kappa' = 0$
+-under $k \mapsto -k - 2h^\vee$.  The critical
+-central charge $c_{\mathrm{crit}} = 26$ appears as
+-the ghost contribution: the $bc$-ghost system at
+-weights $(2,-1)$ has $c_{\mathrm{gh}} = -26$, so total
+-anomaly cancellation requires
+-$c_{\mathrm{matter}} = 26$.
+-\end{proof}
++Isomorphism of the fibers of two flat complexes does not imply isomorphism of their genus-one cohomology.
++In particular, a diskwise bar/BRST comparison without transition compatibility does not determine genus-one cohomology or a modular transformation law.
++\end{proposition}
++
++\begin{proof}
++Example~\ref{ex:cbc26-torus-monodromy} gives rank-one local systems on the torus with identical fibers and cohomology dimensions $(1,2,1)$ or $(0,0,0)$.
++The missing condition is the compatibility with transitions, or equivalently horizontality in Proposition~\ref{prop:cbc26-horizontal-comparison}.
++\end{proof}
++
++For a conformal matter module, the ghost square is still governed by $(c-26)/12$ in Theorem~\ref{thm:vir-square}.
++A modular weight requires its own determinant line and automorphy factor.
++The scalar $c/24$ in a vacuum energy does not construct that line or its transformation law.
+ 
+ \begin{conjecture}[Modular anomaly for general chiral
+ algebras; \ClaimStatusConjectured]
+--- native002/cbc/chapters/examples/w_algebras_framework.tex
++++ native026/cbc/chapters/examples/w_algebras_framework.tex
+@@ -133,34 +133,20 @@
+ = 2\operatorname{rank}(\mathfrak{g}) + 4h^\vee\dim\mathfrak{g}$,
+ independent of $k$.
+ 
+-The physical content of this duality is anomaly cancellation:
+-by Corollary~\ref{cor:anomaly-duality-w}, the semi-infinite
+-anomalies of $\mathcal{W}^k(\fg)$ and $\mathcal{W}^{-k-2h^\vee}(\fg)$
+-cancel, and the complementarity theorem gives anomaly duality at
+-all genera.  The bar--semi-infinite identification
+-(Theorem~\ref{thm:bar-semi-infinite-w}) makes this precise: every
+-bar cohomology computation in this chapter is simultaneously a
+-semi-infinite cohomology computation.
++For the parameter reflection $t=k+h^\vee\mapsto-t$, Proposition~\ref{cor:anomaly-duality-w} computes the central-charge sum.
++It is $26$ for Virasoro and $100$ for $\mathcal W_3$.
++The corresponding scalars $\kappa=c/2$ and $\kappa=5c/6$ have sums $13$ and $250/3$.
++These scalar identities require a separate comparison before they can describe anomaly operators or genuswise cohomology.
++The polynomial reduction and its associative bar maps are constructed in Theorem~\ref{thm:cbc26-polynomial-ds}.
+ \end{proof}
+ 
+-\begin{remark}[Canonical twisting morphism for $\mathcal{W}$-algebras via DS]
++\begin{remark}[Reduction maps and twisting morphisms]
+ \label{rem:w-twisting-morphism}
+-The canonical twisting morphism for the $\mathcal{W}$-algebra
+-$\mathcal{W}^k(\fg)$ is the composite
+-\[
+-\tau_{\mathcal{W}} \colon
+-\barB(\mathcal{W}^k(\fg))
+-\xrightarrow{\;\barB(Q_{\mathrm{DS}})\;}
+-\barB(\widehat{\fg}_k)
+-\xrightarrow{\;\tau_{\mathrm{KM}}\;}
+-\widehat{\fg}_k
+-\xrightarrow{\;H^0_{\mathrm{DS}}\;}
+-\mathcal{W}^k(\fg),
+-\]
+-where $Q_{\mathrm{DS}}$ is the BRST reduction functor
+-(Theorem~\ref{thm:ds-koszul-intertwine}).  The Koszul property
+-of $\mathcal{W}^k(\fg)$ thus reduces to two inputs: the Koszul
+-property of $\widehat{\fg}_k$ and the intertwining of bar with DS.
++A differential $Q_{\mathrm{DS}}$ on the affine--ghost complex is a degree-one operator, rather than a degree-zero map from the reduced algebra to the affine algebra.
++It therefore cannot define an arrow $\bar B(\mathcal W)\to\bar B(\widehat{\mathfrak g}_k)$ by bar functoriality.
++For the polynomial reduction, the degree-zero maps are the explicit $i,p$ of Theorem~\ref{thm:cbc26-polynomial-ds}.
++Their associative bar maps preserve tensor length and commute with the two components of the bar differential.
++A chiral twisting morphism after quantum reduction requires the corresponding maps on the full collision complexes.
+ \end{remark}
+ 
+ \begin{conjecture}[W-algebra Koszul duality for general nilpotent; \ClaimStatusConjectured]\label{conj:w-orbit-duality}
+--- native002/cbc/chapters/theory/ds_chain_comparisons.tex
++++ native026/cbc/chapters/theory/ds_chain_comparisons.tex
+@@ -0,0 +1,327 @@
++\section{Hamiltonian reduction and comparison of complexes}
++
++The constraint $e=1$ for $\mathfrak{sl}_2$ gives a reduction whose maps can be written on every polynomial.
++It separates Hamiltonian reduction from the Virasoro charge and from chiral collision operations.
++All complexes in the polynomial calculation are algebraic cochain complexes over $\mathbb C$.
++Their products use the Koszul sign $(-1)^{|x||y|}$.
++
++\subsection{The polynomial reduction}
++
++Let $e,h,f$ be the linear coordinate functions on $\mathfrak{sl}_2^*$, with Poisson brackets
++\[
++ \{h,e\}=2e,\qquad \{h,f\}=-2f,\qquad \{e,f\}=h.
++\]
++Introduce odd generators $b,c$ of cohomological degrees $-1,1$.
++The even generators have degree zero.
++On the graded commutative algebra
++\[
++ A=\mathbb C[e,h,f]\otimes\Lambda(b,c)
++\]
++define a degree-one derivation $D$ by
++\begin{equation}\label{eq:cbc26-ds-differential}
++ De=0,\qquad Dh=-2ec,\qquad Df=hc,
++ \qquad Db=e-1,\qquad Dc=0.
++\end{equation}
++Thus the Koszul differential imposes $e=1$, and the other term is the Chevalley--Eilenberg differential for the Hamiltonian vector field $\{e,-\}$.
++The two terms anticommute.
++Direct substitution on the five generators gives $D^2=0$.
++Let $R=\mathbb C[u]$ have zero differential and augmentation $u\mapsto0$.
++Give $A$ the augmentation
++\[
++ \varepsilon(e)=1,\qquad
++ \varepsilon(h)=\varepsilon(f)=\varepsilon(b)=\varepsilon(c)=0.
++\]
++These choices concern the displayed differential graded commutative algebra.
++They do not give an augmentation of an affine or ghost vertex algebra.
++
++\begin{theorem}[Polynomial reduction and its bar comparison]
++\label{thm:cbc26-polynomial-ds}
++The maps of augmented differential graded algebras
++\begin{align}
++ i:R&\longrightarrow A,& i(u)&=ef+\tfrac14h^2,\label{eq:cbc26-ds-inclusion}\\
++ p:A&\longrightarrow R,&
++ (p(e),p(h),p(f),p(b),p(c))&=(1,0,u,0,0)
++ \label{eq:cbc26-ds-projection}
++\end{align}
++satisfy $pi=1$ and are quasi-isomorphisms.
++In particular,
++\[
++ H^j(A,D)=
++ \begin{cases}\mathbb C[u],&j=0,\\0,&j\ne0.\end{cases}
++\]
++The induced maps $B(i)$ and $B(p)$ on the direct-sum associative reduced bar constructions are quasi-isomorphisms, and $B(p)B(i)=1$.
++\end{theorem}
++
++\begin{proof}
++The element $K=ef+h^2/4$ satisfies
++$DK=ehc-ehc=0$.
++The projection kills the image under $D$ of every generator, including $Db=e-1$.
++This proves the chain identities and $pi=1$.
++
++Resolve the differential as
++\[
++ D=(e-1)\partial_b+c(-2e\partial_h+h\partial_f).
++\]
++Filter by the number of $c$ factors.
++The filtration has two steps, so its spectral sequence has no convergence issue.
++Its first cohomology calculation is the two-term Koszul complex for $e-1$.
++Multiplication by $e-1$ is injective on the polynomial ring.
++The resulting complex is
++\[
++ \mathbb C[h,f]\xrightarrow{\,-2\partial_h+h\partial_f\,}
++ c\mathbb C[h,f].
++\]
++Set $u=f+h^2/4$.
++This is a polynomial change of coordinates from $(h,f)$ to $(h,u)$.
++In these coordinates the displayed derivative is $-2\partial_h$.
++Its kernel is $\mathbb C[u]$, and it is surjective in characteristic zero.
++For example, the primitive of $c h^a u^j$ is $-h^{a+1}u^j/(2a+2)$.
++Thus cohomology is concentrated in degree zero, and $p$ induces its displayed identification.
++The identity $pi=1$ proves the same assertion for $i$.
++
++Here are the bar conventions and the induced maps.
++For an augmented differential graded algebra $E$, put $\bar E=\ker\varepsilon$ and
++\[
++ B(E)=\bigoplus_{n\geq0}(\bar E[1])^{\otimes n}.
++\]
++Write $sa$ for $a$ considered in $\bar E[1]$, so $|sa|=|a|-1$.
++The bar coderivation has components
++\[
++ b_1(sa)=-s(d_Ea),\qquad
++ b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
++\]
++Extend each component to consecutive positions with the Koszul sign for a degree-one operator.
++The Leibniz rule and associativity give $b^2=0$.
++For an augmented chain algebra map $q$, set
++\[
++ B(q)(sa_1\otimes\cdots\otimes sa_n)
++ =s q(a_1)\otimes\cdots\otimes s q(a_n).
++\]
++The identities $q d_E=d_Fq$ and $q(ab)=q(a)q(b)$ prove that $B(q)$ commutes with $b_1$ and $b_2$ separately.
++
++Filter the cone of $B(p)$ by tensor length.
++Its length-$n$ quotient is the cone of $(\bar p[1])^{\otimes n}$ with the internal differentials.
++The splitting $E=\mathbb C\oplus\bar E$ shows that $\bar p$ is a quasi-isomorphism.
++Tensor products of complexes of vector spaces preserve quasi-isomorphisms.
++One proof splits every acyclic complex into two-term contractible summands and tensors its contraction with the identity.
++Consequently each length quotient of the cone is acyclic.
++A cone cycle has finite maximal length.
++Solve its boundary equation in that highest quotient and subtract the resulting boundary.
++This lowers its maximal length.
++Induction ends at length zero and proves that the whole cone is acyclic.
++The same argument applies to $B(i)$, and functoriality gives $B(p)B(i)=1$.
++\end{proof}
++
++The bar argument uses finite tensor words and polynomial primitives.
++A product completion, a vertex algebra, and a chiral sheaf each require a separate comparison.
++Even on $A$, the projection $p$ does not preserve the original Poisson brackets:
++\[
++ p\{h,f\}=-2u,\qquad \{p(h),p(f)\}=0.
++\]
++Hence this chain algebra map cannot transport a Poisson or Batalin--Vilkovisky operation merely by forgetting its source.
++
++\subsection{Reduction of a specified double complex}
++
++Two odd differentials require their anticommutator to vanish on their common domain.
++Their separate nilpotence does not imply this equation.
++For example, on $\Lambda(x,y)$, exterior multiplication $d_1=x\wedge-$ and left differentiation $d_2=\partial_x$ are odd and square zero, but
++$d_1d_2+d_2d_1=1$.
++
++\begin{theorem}[A comparison under a second differential]
++\label{thm:bar-semi-infinite-w}
++Let $X^{p,q},Y^{p,q}$ be bigraded complex vector spaces, zero unless $0\leq p\leq N$.
++Let $d$ have bidegree $(1,0)$ and $\delta$ have bidegree $(0,1)$, with
++\[
++ d^2=\delta^2=0,\qquad d\delta+\delta d=0.
++\]
++Suppose $F:X\to Y$ has bidegree $(0,0)$, commutes with both differentials, and induces a quasi-isomorphism on every column $(X^{p,*},\delta)$.
++Then
++\begin{equation}\label{eq:bar-semi-infinite-w}
++ \operatorname{Tot}(F):
++ \left(\bigoplus_{p+q=*}X^{p,q},d+\delta\right)
++ \longrightarrow
++ \left(\bigoplus_{p+q=*}Y^{p,q},d+\delta\right)
++\end{equation}
++is a quasi-isomorphism.
++The formula is $\operatorname{Tot}(F)((x^{p,q}))=(F(x^{p,q}))$.
++\end{theorem}
++
++\begin{proof}
++Filter the total complexes decreasingly by the first degree $p$.
++This filtration is finite, and the differential on each quotient is $\delta$.
++The same filtration on the mapping cone has acyclic quotients by hypothesis.
++The short exact sequence of two successive filtration stages gives a long exact sequence in cohomology.
++Induction through the finite filtration proves that the cone is acyclic.
++The two commutation identities give the total chain identity before any cohomology is taken.
++\end{proof}
++
++For quantum Drinfeld--Sokolov reduction, the input category in Arakawa's vanishing theorem is $\mathrm{KL}_k$.
++It consists of the specified graded affine modules with locally finite action of the finite-dimensional Lie algebra.
++The theorem gives $H_f^j(M)=0$ for $j\ne0$ and exactness of $H_f^0$ on this category \cite[\S6, p.~585; Theorem~7.1(i), p.~588]{Ara15}.
++Applying it to a collision complex requires an affine action on each term, membership in this category, and equivariance of all collision maps.
++To use the displayed totalization, one also needs its boundedness hypothesis, or a proved substitute for convergence.
++The nonlinear $\mathcal W$-algebra and a conformal grading alone do not specify a second semi-infinite differential.
++
++The polynomial maps~\eqref{eq:cbc26-ds-inclusion}--\eqref{eq:cbc26-ds-projection} construct the associative comparison for the classical $\mathfrak{sl}_2$ constraint.
++A chiral comparison additionally needs maps from its collision sheaves, including the vacuum terms of every operator product.
++The augmentation obstruction in Proposition~\ref{prop:vir-no-augmentation} excludes the augmentation-kernel construction for the matter--ghost vertex algebra.
++
++\subsection{The Virasoro target at a reduced level}
++
++\begin{corollary}[Nilpotence on the Virasoro vacuum carrier]
++\label{cor:virasoro-semi-infinite}
++Let $k\in\mathbb C\setminus\{-2\}$ and let $M_{c(k)}$ be the universal Virasoro vacuum module with
++\[
++ c(k)=1-\frac{6(k+1)^2}{k+2}.
++\]
++Use the ghost module and charge $Q$ of Theorem~\ref{thm:vir-square} on $M_{c(k)}\otimes\mathcal F$.
++This charge squares to zero on the full algebraic carrier if and only if
++\[
++ k=-\frac83\quad\hbox{or}\quad k=-\frac72.
++\]
++At either level, its absolute vacuum cohomology has one-dimensional components in degrees $0,3$.
++Its relative vacuum cohomology has one-dimensional components in degrees $0,2$.
++All other components vanish.
++\end{corollary}
++
++\begin{proof}
++Theorem~\ref{thm:vir-square} gives
++\[
++ Q^2=\frac{c(k)-26}{12}\sum_{n>0}(n^3-n)c_{-n}c_n.
++\]
++On $\mathbf1\otimes b_{-2}\Omega$ the output is
++$(c(k)-26)\mathbf1\otimes c_{-2}\Omega/2$, a nonzero vector when $c(k)\ne26$.
++The equation $c(k)=26$ is $6k^2+37k+56=(3k+8)(2k+7)=0$.
++At these levels the matter module is the universal vacuum module of central charge $26$.
++The four-state calculation and the nonzero-weight contraction in Proposition~\ref{prop:vir-relative-target-obstruction} compute its absolute and relative cohomology.
++\end{proof}
++
++Thus the full displayed ghost carrier cannot define semi-infinite cohomology at arbitrary $k\ne-2$.
++Another semi-infinite construction would need another explicitly defined differential and a comparison with this one at the applicable parameters.
++The vacuum PBW character $\prod_{n\geq2}(1-q^n)^{-1}$ counts states by conformal weight.
++It does not compute the cohomology in the preceding corollary.
++
++\section{Central coefficients and maps over curves}
++
++\subsection{Level reflection and central charge}
++
++\begin{proposition}[Affine scalar normalizations]
++\label{cor:anomaly-duality-km}
++Fix nonzero $h$ and a positive integer $d$.
++For $k\ne-h$, set
++\[
++ k'=-k-2h,\qquad
++ a(k)=\frac{(k+h)d}{2h},\qquad
++ c_{\mathrm{Sug}}(k)=\frac{kd}{k+h}.
++\]
++Then
++\[
++ a(k)+a(k')=0,\qquad
++ c_{\mathrm{Sug}}(k)+c_{\mathrm{Sug}}(k')=2d.
++\]
++For an affine Lie algebra one takes $h=h^\vee$ and $d=\dim\mathfrak g$.
++The half-central-charge normalization has sum $d$, rather than zero.
++\end{proposition}
++
++\begin{proof}
++Write $t=k+h\ne0$.
++Reflection sends $t$ to $-t$.
++The two expressions are $a=td/(2h)$ and $c_{\mathrm{Sug}}=d-hd/t$.
++Their reflected sums give the formulas.
++\end{proof}
++
++\begin{proposition}[Principal central-charge reflection]
++\label{cor:anomaly-duality-w}
++Fix rank $r$ and vectors $\rho,\rho^\vee$ in a real inner-product space.
++For $t\in\mathbb C^*$ define
++\[
++ c(t)=r-12\left(t\lVert\rho^\vee\rVert^2
++             -2(\rho,\rho^\vee)+t^{-1}\lVert\rho\rVert^2\right).
++\]
++This is the principal central-charge normalization with $t=k+h^\vee$ and long roots of square length $2$.
++For a fixed scalar $v$, set $\kappa(t)=v c(t)$.
++Then
++\[
++ c(t)+c(-t)=2r+48(\rho,\rho^\vee),\qquad
++ \kappa(t)+\kappa(-t)=v\bigl(2r+48(\rho,\rho^\vee)\bigr).
++\]
++For $\mathfrak{sl}_2$, $c(t)=13-6(t+t^{-1})$ and $v=1/2$, so the sums are $26$ and $13$.
++For $\mathfrak{sl}_3$, $c(t)=50-24(t+t^{-1})$ and $v=5/6$, so the sums are $100$ and $250/3$.
++\end{proposition}
++
++\begin{proof}
++The $t$ and $t^{-1}$ terms cancel under reflection.
++For $\mathfrak{sl}_2$, the positive root $\alpha$ satisfies $(\alpha,\alpha)=2$, and $\rho=\rho^\vee=\alpha/2$ has square $1/2$.
++For $\mathfrak{sl}_3$, with simple roots $\alpha_1,\alpha_2$ of square $2$ and $(\alpha_1,\alpha_2)=-1$, one has $\rho=\rho^\vee=\alpha_1+\alpha_2$ of square $2$.
++Substitution proves the two cases.
++\end{proof}
++
++The parameter reflection $t\mapsto-t$ differs from Feigin--Frenkel duality, whose dual parameters satisfy $t\,t^{\vee}=1/r^\vee$, where $r^\vee$ is the lacing number \cite[p.~566, footnote~1]{Ara15}.
++For example, $k=-8/3$ reflects to $k'=-4/3$ in $\mathfrak{sl}_2$.
++Their central charges are $26,0$, and their half-central charges sum to $13$.
++String ghosts contribute central charge $-26$, or half-central charge $-13$.
++They cancel the reflected pair's total central charge.
++For a single matter module, Theorem~\ref{thm:vir-square} instead gives the operator coefficient $(C-26)/12$.
++These are distinct scalar normalizations attached to specified expressions.
++
++\subsection{The equation for transport of an anomaly operator}
++
++\begin{proposition}[Transport of a square]
++\label{prop:cbc26-square-transport}
++Let $d_X,d_Y$ be degree-one operators on graded vector spaces and $F:X\to Y$ a degree-zero map.
++If $d_YF=Fd_X$, then
++\[
++ d_Y^2F=Fd_X^2.
++\]
++In particular, a chain isomorphism between square-zero complexes supplies no identification with a nonzero anomaly operator on another carrier.
++If $F$ is injective and $d_Y^2=0$, its intertwining equation forces $d_X^2=0$.
++\end{proposition}
++
++\begin{proof}
++Apply $d_Y$ to the intertwining equation and use that equation once more.
++For an injective $F$, the resulting identity $Fd_X^2=0$ implies $d_X^2=0$.
++\end{proof}
++
++\begin{proposition}[Horizontal comparison]
++\label{prop:cbc26-horizontal-comparison}
++Let $X$ be a smooth manifold.
++Let $(E^\bullet,d_E,\nabla_E)$ and $(F^\bullet,d_F,\nabla_F)$ be bounded complexes of finite-rank complex vector bundles with flat connections.
++Assume $d_E,d_F$ commute with the connections.
++On $\Omega^p(X,E^q)$ use total differential $\nabla_E+(-1)^p d_E$, and use the same convention for $F$.
++A degree-zero bundle map $\phi:E^\bullet\to F^\bullet$ induces a map of these total complexes if and only if
++\[
++ d_F\phi=\phi d_E,\qquad
++ \nabla_F\phi=(1\otimes\phi)\nabla_E.
++\]
++If these identities hold and $\phi$ is a quasi-isomorphism on each fiber, it induces an isomorphism on the hypercohomology of the two local-system complexes.
++\end{proposition}
++
++\begin{proof}
++On a section of form degree zero, the two components of the total chain equation lie in different form degrees.
++They give exactly the displayed identities.
++The Leibniz rule extends these identities to arbitrary forms.
++Flat local frames identify each stalk of the kernel local systems with its fiber.
++The cone of the induced local-system map is therefore acyclic on every stalk.
++Its cohomology sheaves vanish, so it is zero in the derived category of sheaves.
++Applying derived global sections gives the asserted hypercohomology isomorphism.
++\end{proof}
++
++\begin{example}[A genus-one obstruction to fiberwise transport]
++\label{ex:cbc26-torus-monodromy}
++On the oriented torus $T^2=\mathbb R^2/\mathbb Z^2$, let $L_\lambda$ be the rank-one complex local system with monodromy $\lambda\in\mathbb C^*$ on the first circle and $1$ on the second.
++Its cellular cochain complex, with the product orientation, is
++\[
++ \left(\Lambda^\bullet\mathbb C^2,
++       (\lambda-1)e_1\wedge-\right).
++\]
++This is the tensor product of the two circle complexes with differentials $\lambda-1$ and $0$.
++If $\lambda\ne1$, contraction by the dual vector $e_1^*$, divided by $\lambda-1$, gives $dh+hd=1$.
++Thus $H^*(T^2,L_\lambda)=0$.
++For $\lambda=1$, the differential is zero and the dimensions are $(1,2,1)$.
++The fibers in both cases are one-dimensional complexes concentrated in degree zero.
++No fiberwise dimension or scalar central coefficient determines the genus-one cohomology.
++\end{example}
++
++A comparison over the moduli of curves needs maps of its sheaves or local systems, compatible with the connections and with clutching at the boundary.
++The genus-zero filtered lifting criterion alone does not define such maps.
++The same requirement applies separately to pairings, anomaly operators, and the products used in a Maurer--Cartan equation.
+--- native002/cbc/chapters/theory/insertion_integrals.tex
++++ native026/cbc/chapters/theory/insertion_integrals.tex
+@@ -0,0 +1,48 @@
++\subsection{Marked curves and insertion dependence}
++
++For $n\geq3$, let $C_n(\mathbb P^1)$ be the space of ordered distinct points on the complex projective line.
++The diagonal action of $\operatorname{PGL}_2(\mathbb C)$ is free.
++There is a unique projective transformation taking the first three points to $0,1,\infty$.
++The remaining points give the explicit quotient
++\[
++ C_n(\mathbb P^1)/\operatorname{PGL}_2(\mathbb C)
++ \cong\mathcal M_{0,n}.
++\]
++Thus the two spaces have complex dimensions $n$ and $n-3$.
++Their compactifications retain these dimensions.
++In particular, a compactification of $C_n(\mathbb P^1)$ cannot equal $\overline{\mathcal M}_{0,n+1}$, whose dimension is $n-2$.
++
++\begin{proposition}[Insertion integrals and Euler characteristics]
++\label{thm:genus0-amplitude-bar}
++Put $Z=\overline{\mathcal M}_{0,n}(\mathbb C)$ with its complex orientation and real dimension $m=2n-6$.
++Let $C_1,\ldots,C_n$ be complex cochain complexes.
++An insertion map is a degree-zero chain map
++\[
++ \mu:C_1\otimes\cdots\otimes C_n\longrightarrow
++ \Omega^\bullet(Z;\mathbb C),
++\]
++where the tensor differential has sign $(-1)^{|x_1|+\cdots+|x_{j-1}|}$ on its $j$th summand.
++For closed homogeneous inputs of total degree $m$, define
++\[
++ \mathcal A_\mu(x_1,\ldots,x_n)=\int_Z\mu(x_1\otimes\cdots\otimes x_n).
++\]
++This is a multilinear function of their cohomology classes.
++If, on a fixed product of input spaces, it equals an input-independent scalar for every tuple, that scalar is zero.
++Therefore an identity with an Euler characteristic of a fixed complex requires separate insertion normalization, and cannot hold for arbitrary insertions when that Euler characteristic is nonzero.
++\end{proposition}
++
++\begin{proof}
++The chain identity for $\mu$ sends a tensor boundary to an exact form.
++Stokes' theorem on the compact oriented manifold $Z$ makes the integral of such a form zero.
++Multilinearity follows from the linearity of $\mu$ and integration.
++Putting one input equal to zero forces the scalar to be zero.
++For an explicit instance, take $n=3$, $Z$ a point, and $C_j=\mathbb C$ in degree zero.
++The multiplication map gives $\mathcal A_\mu(a,b,c)=abc$.
++The Euler characteristic of the degree-zero complex $\mathbb C$ is $1$.
++The tuples $(1,1,1)$ and $(0,1,1)$ give different amplitudes for the same complex.
++\end{proof}
++
++For a chiral-chain application, $\mu$ includes the actual insertion and collision maps into forms on $Z$.
++Logarithmic forms along a divisor require an integration domain and boundary prescription for which the integration functional is closed.
++An Euler class integral supplies a specific characteristic form, rather than an arbitrary multilinear insertion.
++
+--- native002/cbc/chapters/theory/introduction.tex
++++ native026/cbc/chapters/theory/introduction.tex
+@@ -342,7 +342,8 @@
+   Verdier-geometric duality
+   ($\mathrm{A}_2$,
+   Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+-  The bar complex is the BRST complex; Verdier duality is CPT.
++  A BRST interpretation requires a specified state complex and a compatible map from the chiral construction.
++  The Virasoro square and the augmentation obstruction are given in Chapter~\ref{ch:bv-brst}.
+ 
+ \item \emph{Theorem~B} (Bar-cobar inversion,
+   Theorem~\ref{thm:higher-genus-inversion}).
+@@ -352,7 +353,8 @@
+   Off the locus, the bar-cobar object persists but becomes curved;
+   the failure is measured by
+   $\Theta_\cA$~\eqref{eq:universal-MC}.
+-  The BRST resolution is complete.
++  The displayed counit concerns the stated bar--cobar construction.
++  A BRST resolution also requires its state-space comparison.
+ 
+ \item \emph{Theorem~C} (Deformation-obstruction complementarity,
+   Theorem~\ref{thm:quantum-complementarity-main}).
+--- native002/cbc/chapters/theory/koszul_pair_structure.tex
++++ native026/cbc/chapters/theory/koszul_pair_structure.tex
+@@ -1247,284 +1247,9 @@
+ This resummation is related to the bosonic subalgebra of the $\mathcal{N}=2$ superconformal algebra (the full $\mathcal{N}=2$ SCA requires additional fermionic generators arising via bosonization).
+ 
+ 
+-\section{The Chern--Simons structure in non-quadratic Koszul duality}
+-
+-\subsection{Maurer--Cartan and Chern--Simons}
+-
+-The Maurer--Cartan equation for non-quadratic chiral algebras:
+-\[
+-d\alpha + \frac{1}{2}\ell_2(\alpha, \alpha) + \frac{1}{6}\ell_3(\alpha, \alpha, \alpha) + \cdots = 0
+-\]
+-(using the $L_\infty$ brackets $\ell_n$ obtained by antisymmetrizing the $A_\infty$ operations)
+-is precisely the equation of motion for Chern--Simons theory with higher corrections.
+-
+-\subsection{Witten's Chern--Simons interpretation}
+-
+-Chern--Simons theory on a 3-manifold $M$ with gauge group $G$ at level $k$ produces~\cite{Wit89} the WZW model on $\partial M$ and quantum group representations at $q = e^{\pi i/(k+h^\vee)}$.  The action is:
+-\[
+-S_{CS}(A) = \frac{k}{4\pi} \int_M \text{Tr}\left(A \wedge dA + \frac{2}{3}A \wedge A \wedge A\right)
+-\]
+-
+-\subsection{The precise connection}
+-
+-\begin{theorem}[Chern--Simons equations from Koszul duality;
+-\ClaimStatusProvedHere]\label{thm:cs-koszul-km}
+-\index{Chern--Simons!from Koszul duality}
+-For a simple Lie algebra $\fg$ and its affine extension
+-$\widehat{\fg}_k$ at $k \neq -h^\vee$:
+-\begin{enumerate}[label=\textup{(\roman*)}]
+-\item \emph{Classical Chern--Simons.}
+-  The Chevalley--Eilenberg complex $C^*(\fg)$ is the bar
+-  construction $\barB(U\fg)$\textup{;}
+-  the Maurer--Cartan equation in $C^*(\fg) \otimes \Omega^1(M)$
+-  for a $3$-manifold $M$:
+-  \[
+-  d\alpha + \tfrac{1}{2}[\alpha, \alpha] = 0
+-  \]
+-  is the flatness equation $F_A = 0$, which is the equation of
+-  motion for the Chern--Simons functional
+-  $S_{\mathrm{CS}}(A) = \frac{k}{4\pi}\int_M
+-  \mathrm{Tr}(A \wedge dA + \frac{2}{3}A^3)$.
+-\item \emph{Chiral Chern--Simons.}
+-  The bar--semi-infinite quasi-isomorphism
+-  \[
+-  \barB(\widehat{\fg}_k) \simeq
+-  C^*_{\infty/2}(\widehat{\fg}_k)
+-  \]
+-  (Theorem~\ref{thm:bar-semi-infinite-km})
+-  identifies the bar complex with the BRST complex of
+-  the WZW model at level~$k$, which is the gauge-fixed
+-  Chern--Simons theory on the boundary
+-  \textup{(}Witten~\cite{Wit89}\textup{)}.
+-  The MC equation in $\barB(\widehat{\fg}_k)$
+-  therefore parametrizes flat $\fg$-connections at
+-  level~$k$.
+-\item \emph{Curvature = CS level.}
+-  At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
+-  with $\kappa = k\dim(\fg)/(2(k+h^\vee))$.  This curvature is
+-  the Chern--Simons level: the bar complex is curved precisely
+-  when $k \neq 0$ \textup{(}nontrivial gauge theory\textup{)},
+-  and anomaly cancellation $\kappa + \kappa' = 0$ for the dual
+-  pair $(k, -k-2h^\vee)$ is the CS level-matching condition.
+-\end{enumerate}
+-\end{theorem}
+-
+-\begin{proof}
+-Part~(i) is classical: $C^*(\fg) = \barB(U\fg)$ by the
+-Chevalley--Eilenberg theorem, and the MC equation
+-$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ in the dg~Lie algebra
+-$\fg \otimes \Omega^*(M)$ is the flatness equation $F_A = 0$ by
+-definition.  The flatness equation is the Euler--Lagrange equation
+-for $S_{\mathrm{CS}}$: varying $\delta S_{\mathrm{CS}}/\delta A
+-= \frac{k}{2\pi} F_A = 0$.
+-
+-Part~(ii) chains three identifications:
+-(a)~$\barB(\widehat{\fg}_k) \simeq C^*_{\infty/2}(\widehat{\fg}_k)$
+-is Theorem~\ref{thm:bar-semi-infinite-km} (PBW filtration +
+-Arkhipov functor);
+-(b)~the semi-infinite complex of $\widehat{\fg}_k$ is the BRST
+-complex of the WZW model (Feigin--Frenkel, \cite{FF});
+-(c)~the WZW model on a surface $\Sigma$ is the boundary theory
+-of Chern--Simons on $M$ with $\partial M = \Sigma$
+-(Witten~\cite{Wit89}).
+-Composing, $\barB(\widehat{\fg}_k) \simeq C^*_{\mathrm{BRST}}
+-(\mathrm{CS}_k|_{\partial M})$, and MC elements in the bar complex
+-correspond to flat connections modulo gauge.
+-
+-Part~(iii) follows from
+-$\dfib^{\,2} = \kappa \cdot \omega_1$
+-(Theorem~\ref{thm:genus-universality}) with
+-$\kappa(\widehat{\fg}_k) = k\dim(\fg)/(2(k+h^\vee))$
+-(Remark~\ref{rem:km-central-charge-sum}).  For the dual pair
+-$(k, k' = -k-2h^\vee)$,
+-$\kappa + \kappa' = 0$
+-(Corollary~\ref{cor:anomaly-duality-km}), which is precisely
+-the CS level-matching condition for the Feigin--Frenkel dual
+-theories.
+-\end{proof}
+-
+-\begin{theorem}[\texorpdfstring{$L_\infty$}{L-infinity} Maurer--Cartan as homotopy
+-flatness; \ClaimStatusProvedHere]
+-\label{thm:linf-mc-flatness}
+-\index{Chern--Simons!Koszul correspondence}
+-\index{L-infinity algebra@$L_\infty$ algebra!Maurer--Cartan}
+-For a chiral algebra $\cA$ with $A_\infty$ operations
+-$\{m_n\}$ \textup{(}Theorem~\textup{\ref{thm:w-algebra-ainfty}}
+-for W-algebras\textup{)}, the bar complex $\barB(\cA)$
+-carries an $L_\infty$ structure with brackets $\ell_n$
+-obtained by antisymmetrizing~$m_n$.  The Maurer--Cartan
+-equation
+-\[
+-d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
+-+ \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
+-+ \cdots = 0
+-\]
+-is a \emph{homotopy flatness} equation: it defines the
+-formal moduli space of flat connections on the
+-``dual gauge theory'' associated to~$\cA^!$.
+-\begin{enumerate}[label=\textup{(\roman*)}]
+-\item For quadratic $\cA$
+-  \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
+-  $n \geq 3$, and the MC equation is the standard
+-  Chern--Simons flatness $dA + A \wedge A = 0$
+-  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
+-\item For W-algebras obtained by DS reduction of
+-  $\widehat{\fg}_k$: the MC equation is the
+-  DS-reduced flatness equation, i.e., the generalized
+-  KdV hierarchy.
+-\item For general non-quadratic $\cA$: the higher
+-  $\ell_n$ give BV-BRST corrections to CS.
+-\end{enumerate}
+-\end{theorem}
+-
+-\begin{proof}
+-The $L_\infty$ structure on $\barB(\cA)$ is obtained
+-from the $A_\infty$ structure by the standard
+-antisymmetrization (Loday--Vallette \cite[Thm.~10.1.13]{LV12}):
+-$\ell_n(x_1, \ldots, x_n) = \sum_{\sigma \in S_n}
+-\epsilon(\sigma)\, m_n(x_{\sigma(1)}, \ldots,
+-x_{\sigma(n)})$.  The MC equation
+-$\sum_{n \geq 1} \frac{1}{n!}\ell_n(\alpha^{\otimes n})
+-= 0$ is then automatic from the $A_\infty$
+-relations (which are equivalent to the $L_\infty$
+-Jacobi identities under antisymmetrization).
+-
+-For~(i): when $\cA$ is quadratic (Kac--Moody), the
+-bar complex has $m_n = 0$ for $n \geq 3$
+-(the OPE has only simple and double poles), so
+-$\ell_n = 0$ for $n \geq 3$ and the MC equation
+-reduces to $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
+-which IS the CS equation of motion
+-(Theorem~\ref{thm:cs-koszul-km}).
+-
+-For~(ii): the DS reduction functor
+-$H_{\mathrm{DS}}\colon \widehat{\fg}_k\text{-mod}
+-\to \mathcal{W}^k(\fg)\text{-mod}$ is exact on the
+-bar complex (Theorem~\ref{thm:bar-semi-infinite-w}).
+-Applying DS to the KM flatness equation
+-$dA + A \wedge A = 0$ gives the constrained flatness
+-$dA + A \wedge A = 0$ subject to the constraint
+-$A|_{\mathfrak{n}_+} = f$ (where $f$ is the nilpotent defining
+-the W-algebra).  This constrained flatness IS the
+-generalized KdV equation (Drinfeld--Sokolov \cite{DS}),
+-and the higher $\ell_n$ encode the constraint.
+-
+-For~(iii): this is established in
+-Theorem~\ref{thm:cs-koszul-general} below.
+-\end{proof}
+-
+-\begin{theorem}[CS/Koszul for general non-quadratic
+-algebras; \ClaimStatusProvedHere]
+-\label{thm:cs-koszul-general}
+-For a general chiral algebra $\cA$ with Koszul dual $\cA^!$,
+-the Maurer--Cartan equation in the $L_\infty$ algebra
+-underlying the bar complex $\barB(\cA)$ takes the form of a
+-deformed Chern--Simons equation:
+-\begin{equation}\label{eq:deformed-cs-general}
+-d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
+-+ \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
+-+ \cdots
+-= \sum_{n \geq 1} \frac{1}{n!}\ell_n(\alpha^{\otimes n})
+-= 0.
+-\end{equation}
+-Specifically:
+-\begin{enumerate}[label=\textup{(\roman*)}]
+-\item For quadratic $\cA$
+-  \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
+-  $n \geq 3$, and \eqref{eq:deformed-cs-general} reduces
+-  to the Chern--Simons flatness equation
+-  $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$
+-  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
+-\item For non-quadratic $\cA$
+-  \textup{(}W-algebras, Yangians\textup{)}: the bar
+-  differential carries higher $A_\infty$ operations
+-  $m_n$ for $n \geq 3$
+-  \textup{(}Theorem~\textup{\ref{thm:bar-ainfty-complete}}\textup{)},
+-  yielding nonzero $\ell_n$ for $n \geq 3$.
+-  The MC equation~\eqref{eq:deformed-cs-general} is a
+-  homotopy flatness condition whose higher terms encode
+-  the non-quadratic OPE relations.
+-\end{enumerate}
+-\end{theorem}
+-
+-\begin{proof}
+-The argument proceeds in three steps.
+-
+-\emph{Step~1: $A_\infty$ coalgebra structure on the bar complex.}
+-By Definition~\ref{def:bar-differential-complete}, the bar
+-complex $\barB(\cA) = T^c(s^{-1}\bar{\cA})$ carries a
+-codifferential $D$ encoding the chiral operations of~$\cA$.
+-When $\cA$ has non-quadratic OPE relations (e.g., W-algebras),
+-$D$ decomposes as $D = D_1 + D_2 + D_3 + \cdots$ where
+-$D_n$ is the component of tensor arity~$n$, yielding
+-$A_\infty$ co-operations $\Delta_n$ dual to operations~$m_n$.
+-The identity $D^2 = 0$ is equivalent to the $A_\infty$
+-relations among the~$m_n$
+-(Theorem~\ref{thm:bar-ainfty-complete}).
+-
+-\emph{Step~2: $A_\infty \to L_\infty$ by antisymmetrization.}
+-The standard $A_\infty$-to-$L_\infty$ correspondence
+-(Loday--Vallette \cite[Thm.~10.1.13]{LV12}) produces
+-$L_\infty$ brackets on $s^{-1}\bar{\cA}$ by
+-antisymmetrization:
+-\[
+-\ell_n(x_1, \ldots, x_n) = \sum_{\sigma \in S_n}
+-\epsilon(\sigma)\, m_n(x_{\sigma(1)}, \ldots,
+-x_{\sigma(n)}).
+-\]
+-The $A_\infty$ relations for the $m_n$ translate,
+-under this antisymmetrization, into the higher Jacobi
+-identities for the~$\ell_n$.
+-
+-\emph{Step~3: Maurer--Cartan equation.}
+-For any $L_\infty$ algebra $(\fg, \{\ell_n\})$, the
+-Maurer--Cartan equation is \emph{defined} as
+-\[
+-\mathrm{MC}(\alpha) \;:=\;
+-\sum_{n \geq 1} \frac{1}{n!}\,
+-\ell_n(\alpha, \ldots, \alpha) = 0,
+-\]
+-i.e., $\ell_1(\alpha) + \frac{1}{2}\ell_2(\alpha,\alpha)
+-+ \frac{1}{6}\ell_3(\alpha,\alpha,\alpha) + \cdots = 0$.
+-Writing $d = \ell_1$ (the linear part of the bar
+-differential), this is precisely
+-equation~\eqref{eq:deformed-cs-general}.  The higher
+-Jacobi identities for the $\ell_n$ guarantee that the
+-MC locus $\mathrm{MC}^{-1}(0)$ is well-defined and
+-controls the formal deformation theory of~$\cA$.
+-
+-For~(i): when $\cA$ is quadratic, $m_n = 0$ for $n \geq 3$
+-(the OPE has only simple and double poles), so $\ell_n = 0$
+-for $n \geq 3$ and the MC equation reduces to
+-$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
+-which is the CS equation of motion
+-(Theorem~\ref{thm:cs-koszul-km}).
+-
+-For~(ii): when $\cA$ is non-quadratic, the bar differential
+-has components of all arities (Theorem~\ref{thm:bar-ainfty-complete}),
+-giving nonzero $\ell_n$ for $n \geq 3$.
+-The resulting MC equation~\eqref{eq:deformed-cs-general} is
+-a homotopy flatness equation whose higher terms are determined
+-by the non-quadratic OPE data of~$\cA$.
+-\end{proof}
+-
+-\begin{remark}[Physical interpretation]
+-\label{rem:cs-koszul-heuristic}
+-In the BV-BRST formalism, the higher $\ell_n$ for $n \geq 3$
+-correspond to higher-order interaction vertices in the
+-gauge-fixed action, with fields of mixed ghost degree so that
+-the total form degree remains~$3$ on a $3$-manifold.
+-For quadratic algebras we recover pure Chern--Simons; for
+-non-quadratic algebras, each higher OPE relation contributes
+-a higher-order vertex.  Identifying the $\ell_n$ with
+-\emph{specific} BV-BRST corrections to a Chern--Simons
+-action functional (in the sense of Costello--Gwilliam~\cite{CG17})
+-requires the perturbative QFT framework and is not addressed here.
+-\end{remark}
+-
+-\begin{remark}[Scope]
+-Theorem~\ref{thm:linf-mc-flatness} gives $L_\infty$ MC = homotopy flatness for all chiral algebras; Theorem~\ref{thm:cs-koszul-km} completes the CS/Koszul correspondence for KM (bar $\simeq$ semi-infinite $\simeq$ BRST $\simeq$ gauge-fixed CS); Theorem~\ref{thm:cs-koszul-general} gives the deformed flatness condition~\eqref{eq:deformed-cs-general} in general.  Identifying higher $\ell_n$ with BV-BRST action terms requires the Costello--Gwilliam framework~\cite{CG17}.
+-\end{remark}
++\section{Connections and Maurer--Cartan transport}
++
++\input{chapters/theory/mc_transport}
+ 
+ \subsection{Physical interpretation: quantum groups and Chern--Simons}
+ 
+@@ -1533,7 +1258,7 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]
+-The MC equation for the Koszul dual coalgebra has the form of a deformed flatness equation (preceding theorem).  The WRT identification with physical CS at level $k$ requires \cite{Wit89,RT91}; for $\mathfrak{sl}_2$ the RTT/Yang--Baxter/CS link is established, but the general correspondence is conjectural.
++Corollary~\ref{thm:cs-koszul-general} gives a flat connection after an actual $L_\infty$ map to its de Rham carrier is supplied.  The WRT identification with physical CS at level $k$ requires \cite{Wit89,RT91}; for $\mathfrak{sl}_2$ the RTT/Yang--Baxter/CS link is established, but the general correspondence is conjectural.
+ 
+ \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+ \end{remark}
+--- native002/cbc/chapters/theory/mc_transport.tex
++++ native026/cbc/chapters/theory/mc_transport.tex
+@@ -0,0 +1,104 @@
++\subsection{The differential graded Lie algebra of connections}
++
++\begin{theorem}[Flatness and the Chern--Simons functional]
++\label{thm:cs-koszul-km}
++Let $M$ be a closed oriented smooth three-manifold and $\mathfrak g$ a finite-dimensional complex Lie algebra with a nondegenerate invariant symmetric bilinear form $\langle-,-\rangle$.
++Consider connections on the trivial bundle, written as $A\in\Omega^1(M;\mathfrak g)$.
++On $L=\Omega^\bullet(M)\otimes\mathfrak g$ use differential $d_{\mathrm{dR}}$ and bracket
++\[
++ [\alpha\otimes x,\beta\otimes y]
++  =(\alpha\wedge\beta)\otimes[x,y].
++\]
++For $k\in\mathbb C^*$, put
++\[
++ S_k(A)=\frac{k}{4\pi}\int_M
++ \left(\langle A\wedge dA\rangle
++       +\frac13\langle A\wedge[A,A]\rangle\right).
++\]
++Its critical points are exactly the Maurer--Cartan elements of $L$:
++\[
++ F_A=dA+\frac12[A,A]=0.
++\]
++\end{theorem}
++
++\begin{proof}
++The de Rham Leibniz rule and the Lie Jacobi identity make $L$ a differential graded Lie algebra.
++Its Maurer--Cartan equation in degree one is the displayed equation by definition.
++For an arbitrary variation $a\in\Omega^1(M;\mathfrak g)$, integration by parts on the closed manifold gives
++\[
++ \left.\frac{d}{dt}\right|_{t=0}\int_M\langle(A+ta)\wedge d(A+ta)\rangle
++ =2\int_M\langle a\wedge dA\rangle.
++\]
++Invariance of the bilinear form makes the three differentiated factors of the cubic term equal after the graded signs are included.
++Its variation is therefore $\int_M\langle a\wedge[A,A]\rangle$.
++Consequently
++\[
++ (dS_k)_A(a)=\frac{k}{2\pi}\int_M\langle a\wedge F_A\rangle.
++\]
++If this vanishes for all smooth variations supported in a coordinate chart, nondegeneracy of the form forces every coefficient of $F_A$ to vanish.
++The converse follows from the same formula.
++\end{proof}
++
++This construction uses $\Omega^\bullet(M)\otimes\mathfrak g$.
++The Chevalley--Eilenberg cochains $\operatorname{Hom}(\Lambda^\bullet\mathfrak g,\mathbb C)$ are a different complex.
++Transport from a chiral bar object to this differential graded Lie algebra requires the corresponding bracket data or higher morphism components.
++
++\subsection{Transport of Maurer--Cartan elements}
++
++\begin{proposition}[The components required for Maurer--Cartan transport]
++\label{thm:linf-mc-flatness}
++Let $L,L'$ be uncurved $L_\infty$ algebras over $\mathbb C$.
++In the symmetric convention, these are graded vector spaces with degree-one square-zero coderivations $Q,Q'$ on the coaugmented symmetric coalgebras of $L[1],L'[1]$, vanishing on the coaugmentation.
++Let $\mathfrak m$ be the nilpotent maximal ideal of a commutative local Artinian complex algebra.
++Suppose a coaugmentation-preserving coalgebra map $F$ satisfies $Q'F=FQ$.
++Writing its Taylor components as $F_j:S^j(L[1])\to L'[1]$, define, for $\alpha\in(L\otimes\mathfrak m)^1$,
++\[
++ s\beta=\sum_{j\geq1}\frac1{j!}F_j((s\alpha)^{\odot j}).
++\]
++Then $\alpha$ Maurer--Cartan implies $\beta$ Maurer--Cartan.
++A linear chain quasi-isomorphism without these coalgebra equations need not have this property.
++\end{proposition}
++
++\begin{proof}
++Nilpotence of $\mathfrak m$ makes every displayed sum finite.
++Set $v=s\alpha$ of degree zero and use
++$e^v=\sum_{j\geq0}v^{\odot j}/j!$.
++The coderivation identity gives
++\[
++ Q(e^v)=e^v\odot\left(\sum_{j\geq1}\frac1{j!}Q_j(v^{\odot j})\right).
++\]
++This can be checked by selecting the $j$ inputs on which $Q_j$ acts.
++The binomial coefficient cancels the factorials.
++The expression in parentheses is the shifted Maurer--Cartan expression.
++The coalgebra identity similarly gives $F(e^v)=e^{s\beta}$.
++Thus $Q(e^v)=0$ implies
++$Q'(e^{s\beta})=Q'F(e^v)=FQ(e^v)=0$.
++Projection to $L'[1]$ proves the assertion.
++
++For the last statement, let both underlying complexes have basis $x$ in degree one and $y$ in degree two, with zero differential.
++Give the first algebra zero brackets, and the second the sole nonzero bracket $[x,x]=y$.
++Graded skew symmetry permits this bracket because $x$ is odd, and Jacobi holds because $y$ is central.
++The identity of complexes is a quasi-isomorphism.
++Over $\mathbb C[t]/(t^3)$, $tx$ is Maurer--Cartan in the first algebra but has curvature $t^2y/2\ne0$ in the second.
++\end{proof}
++
++\begin{corollary}[Flatness on an identified carrier]
++\label{thm:cs-koszul-general}
++In the preceding proposition, suppose the target is
++$L'=\Omega^\bullet(M)\otimes\mathfrak g$ from Theorem~\ref{thm:cs-koszul-km}.
++Then the constructed $\beta$ is a flat connection with coefficients in $\mathfrak m$:
++\begin{equation}\label{eq:deformed-cs-general}
++ d\beta+\frac12[\beta,\beta]=0.
++\end{equation}
++The higher Jacobi identities alone do not make every degree-one element Maurer--Cartan.
++\end{corollary}
++
++\begin{proof}
++The first assertion is the preceding proposition and the definition of curvature on the target.
++For the second, the abelian differential graded Lie algebra with $L^1=\mathbb Cx$, $L^2=\mathbb Cy$, and $dx=y$ satisfies all Jacobi identities.
++The element $tx$ over $\mathbb C[t]/(t^2)$ has nonzero Maurer--Cartan expression $ty$.
++\end{proof}
++
++Reduction to a Drinfeld--Sokolov constraint requires the reduction maps and their compatibility with these higher components.
++The polynomial reduction of Theorem~\ref{thm:cbc26-polynomial-ds} supplies a chain algebra comparison on its polynomial carrier.
++Its projection fails Poisson compatibility, so it does not by itself give this transport of flatness equations.
+--- native002/cbc/main.tex
++++ native026/cbc/main.tex
+@@ -618,10 +618,11 @@
+ The four theorems of Part~I and the computations of Part~II establish
+ chiral Koszul duality as a self-contained mathematical framework.  But the
+ framework is not isolated: its constructions appear, in different guises,
+-throughout modern mathematics and mathematical physics.  The genus-$0$
+-bar/BRST comparison is proved, and the all-genera BV/BRST bridge is
+-formulated as a downstream conjectural comparison in
+-Chapter~\ref{ch:bv-brst}.  The Kontsevich integral of knot theory is
++throughout modern mathematics and mathematical physics.  The Virasoro charge and its square are computed in
++Chapter~\ref{ch:bv-brst}.
++The polynomial $\mathfrak{sl}_2$ Hamiltonian reduction has explicit associative bar maps.
++The chiral bar/BRST comparison requires a unital collision target, relative descent, and compatible chain maps.
++Its extension over curves further requires horizontal maps and clutching compatibility.  The Kontsevich integral of knot theory is
+ treated in \S\ref{subsec:vassiliev} as a topological shadow whose
+ comparison with the holomorphic propagator remains conjectural.  The
+ Costello--Li construction of chiral algebras from four-dimensional
+--- native002/proof/augmentation_relative.tex
++++ native026/proof/augmentation_relative.tex
+@@ -0,0 +1,113 @@
++\subsection{Augmentations and the relative coordinate carrier}
++
++The critical Virasoro charge acts on an algebraic state space.
++A comparison with chiral chains also needs a target and compatible coordinate transitions.
++Two finite identities obstruct the augmentation-kernel target and the standard restricted transitions.
++
++\begin{proposition}[The augmentation-kernel obstruction]\label{prop:vir-no-augmentation}
++Let $V\neq0$ be a unital vertex algebra over $\mathbb C$, and let $A=V\otimes bc$ use the ghost system above.
++There is no unital vertex superalgebra homomorphism $A\to\mathbb C$ with trivial target vertex products.
++Consequently the reduced chiral construction whose coefficient sheaf is a chiral augmentation kernel cannot be instantiated on $A$ with its original collision products.
++\end{proposition}
++
++\begin{proof}
++Write $\Omega_A=\mathbf1_V\otimes\Omega$, $b=\mathbf1_V\otimes b_{-2}\Omega$, and $c=\mathbf1_V\otimes c_1\Omega$ in $A$.
++With the vertex convention $Y(a,z)=\sum_r a_{(r)}z^{-r-1}$,
++\[
++ b_{(0)}c=\mathbf1_V\otimes b_{-1}c_1\Omega=\Omega_A.
++\]
++Every nonnegative product vanishes in the trivial vertex algebra.
++A unital homomorphism $\varepsilon$ would therefore give
++$1=\varepsilon(b_{(0)}c)=\varepsilon(b)_{(0)}\varepsilon(c)=0$.
++For $V=\operatorname{Vir}_{26}$, set $T=(L_{-2}^V\mathbf1_V)\otimes\Omega$.
++There is also the independent matter identity
++\[
++ T_{(3)}T=(L_2^VL_{-2}^V\mathbf1_V)\otimes\Omega=13\Omega_A.
++\]
++
++On a coordinate disk, let $t=z_1-z_2$ and normalize
++$\operatorname{Res}(t^{-1}dt)=1$.
++The full collision maps include
++\[
++ \operatorname{Res}_{t=0}Y(b,t)c\,dt=\Omega_A,
++ \qquad
++ \operatorname{Res}_{t=0}t^3Y(T,t)T\,dt=13\Omega_A.
++\]
++A chiral augmentation to the unit chiral algebra must preserve these residues, which gives the same contradiction on that disk.
++It therefore cannot exist globally.
++The forms $dt=t\,d\log t$ and $t^3dt=t^4d\log t$ have regular logarithmic coefficients.
++Restricting to such coefficients does not remove the obstruction.
++
++The linear vacuum projection $\pi:A\to\mathbb C$ has $b,c\in\ker\pi$ but $b_{(0)}c\notin\ker\pi$.
++Its kernel is not closed under the original collision maps.
++The quotient by the vacuum also fails to inherit all vertex products, since
++$(\Omega_A)_{(-1)}b=b$ whereas $0_{(-1)}b=0$.
++Thus neither linear operation supplies the missing chiral augmentation.
++\end{proof}
++
++\begin{proposition}[Relative states, absolute states, and coordinate changes]
++\label{prop:vir-relative-target-obstruction}
++Take $V=\operatorname{Vir}_{26}$ and the zero-intercept charge of Theorem~\ref{thm:vir-square}.
++In this proposition, $\Omega$ denotes the tensor-product vacuum $\mathbf1_V\otimes\Omega_{\mathrm{gh}}$.
++Put $H=L_0^V+L_0^{\mathrm{gh}}$ and
++\[
++ e=\Omega,\quad u=c_0\Omega,\quad
++ v=c_{-1}c_1\Omega,\quad w=c_{-1}c_0c_1\Omega.
++\]
++The weight-zero absolute complex has these four basis states and differential
++\[
++ Qe=0,\qquad Qu=-2v,\qquad Qv=Qw=0.
++\]
++The relative complex is $\mathbb Ce\oplus\mathbb Cv$ with zero differential.
++The absolute cohomology has one class in degrees zero and three, and no others.
++The inclusion of relative states into absolute states kills $[v]$ and is not a quasi-isomorphism.
++
++Fix the convention that the coordinate flow $z\mapsto z/(1+sz)$ acts by
++$g_s=\exp(s\mathcal L_1)$, where $\mathcal L_1=L_1^V+L_1^{\mathrm{gh}}$.
++Then
++\begin{equation}\label{eq:vir-relative-coordinate-obstruction}
++ g_sv=v-sc_0c_1\Omega,
++ \qquad b_0g_sv=-sc_1\Omega\neq0\quad(s\neq0).
++\end{equation}
++The fixed relative fiber therefore does not define a subbundle through restriction of these state-bundle transitions.
++\end{proposition}
++
++\begin{proof}
++The universal vacuum module has $V_0=\mathbb C\mathbf1$ and $V_1=0$.
++The energy argument of Proposition~\ref{prop:vir-relative-three-term} gives exactly the four displayed absolute states and the two relative states.
++The charge contraction gives $Qu=-2v$.
++Nilpotence gives $Qv=0$, and weight zero has no degree-four state, so $Qw=0$.
++At every nonzero total weight $\lambda$, the homotopy $b_0/\lambda$ contracts the absolute complex by Corollary~\ref{cor:vir-complexes}.
++On the four-state complex, the homotopy $h(v)=-u/2$, zero on $e,u,w$, contracts it onto $\mathbb Ce\oplus\mathbb Cw$.
++All state sums are algebraic, so these homotopies define maps on the full carrier.
++In particular, $v=Q(-u/2)$ in the absolute complex.
++
++The ghost transformation law~\eqref{eq:vir-ghost-transform} gives
++\[
++ \mathcal L_1v=-c_0c_1\Omega,
++ \qquad \mathcal L_1(c_0c_1\Omega)=0.
++\]
++The exponential on $v$ consequently terminates after its linear term.
++Since $b_0c_0c_1\Omega=c_1\Omega$, this proves~\eqref{eq:vir-relative-coordinate-obstruction}.
++Also $Hg_sv=sc_0c_1\Omega$, so the same transition fails the weight-zero condition.
++A restricted transition must preserve the model fiber, which fails here.
++\end{proof}
++
++For a fixed coordinate, the relative vector-space complex remains defined.
++A sheaf comparison requires a separately constructed relative sheaf complex or a family of transported constraints with compatible transition maps.
++For source and target sheaf complexes $\mathcal C,\mathcal T$, local maps must satisfy
++\[
++ d_{\mathcal T}\Phi_U=\Phi_Ud_{\mathcal C},\qquad
++ \operatorname{res}^{\mathcal T}_{UW}\Phi_U
++ =\Phi_W\operatorname{res}^{\mathcal C}_{UW}\quad(W\subset U),
++\]
++and $g^{\mathcal T}_{ij}\Phi_j=\Phi_i g^{\mathcal C}_{ij}$ in coordinate trivializations.
++Ordinary or derived global sections require these complexes and their transitions first.
++The restricted transitions in~\eqref{eq:vir-relative-coordinate-obstruction} do not supply them.
++
++A different unital chiral-chain construction may avoid an augmentation kernel.
++Its coefficient complexes, vacuum insertions, all collision maps, differential, and section functor must be constructed before it can serve as a comparison target.
++For the relative vacuum complex, a degree-preserving quasi-isomorphism requires target cohomology precisely in degrees zero and two.
++Proposition~\ref{prop:vir-relative-target-obstruction} excludes the absolute state complex as a replacement target.
++These assertions concern the specified augmentation-kernel construction and state transitions; they do not exclude every chiral-chain construction.
++
+--- native002/proof/comparison_main.tex
++++ native026/proof/comparison_main.tex
+@@ -0,0 +1,17 @@
++\documentclass[11pt,oneside]{memoir}
++\usepackage{raeez-math-template}
++\providecommand{\Res}{\operatorname{Res}}
++\title{Virasoro cohomology and Hamiltonian reduction}
++\author{}
++\date{}
++\hypersetup{pdftitle={Virasoro cohomology and Hamiltonian reduction},pdfauthor={}}
++\begin{document}
++\chapter{Virasoro cohomology and Hamiltonian reduction}
++\input{virasoro_square}
++\input{augmentation_relative}
++\input{../cbc/chapters/theory/ds_chain_comparisons}
++\input{consumer_geometry}
++\begin{thebibliography}{9}
++\bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Annals of Mathematics \textbf{182} (2015), 565--604.
++\end{thebibliography}
++\end{document}
+--- native002/proof/consumer_geometry.tex
++++ native026/proof/consumer_geometry.tex
+@@ -0,0 +1,154 @@
++\section{Insertion integrals and flatness equations}
++
++\subsection{Marked curves and insertion dependence}
++
++For $n\geq3$, let $C_n(\mathbb P^1)$ be the space of ordered distinct points on the complex projective line.
++The diagonal action of $\operatorname{PGL}_2(\mathbb C)$ is free.
++There is a unique projective transformation taking the first three points to $0,1,\infty$.
++The remaining points give the explicit quotient
++\[
++ C_n(\mathbb P^1)/\operatorname{PGL}_2(\mathbb C)
++ \cong\mathcal M_{0,n}.
++\]
++Thus the two spaces have complex dimensions $n$ and $n-3$.
++Their compactifications retain these dimensions.
++In particular, a compactification of $C_n(\mathbb P^1)$ cannot equal $\overline{\mathcal M}_{0,n+1}$, whose dimension is $n-2$.
++
++\begin{proposition}[Insertion integrals and Euler characteristics]
++\label{thm:genus0-amplitude-bar}
++Put $Z=\overline{\mathcal M}_{0,n}(\mathbb C)$ with its complex orientation and real dimension $m=2n-6$.
++Let $C_1,\ldots,C_n$ be complex cochain complexes.
++An insertion map is a degree-zero chain map
++\[
++ \mu:C_1\otimes\cdots\otimes C_n\longrightarrow
++ \Omega^\bullet(Z;\mathbb C),
++\]
++where the tensor differential has sign $(-1)^{|x_1|+\cdots+|x_{j-1}|}$ on its $j$th summand.
++For closed homogeneous inputs of total degree $m$, define
++\[
++ \mathcal A_\mu(x_1,\ldots,x_n)=\int_Z\mu(x_1\otimes\cdots\otimes x_n).
++\]
++This is a multilinear function of their cohomology classes.
++If, on a fixed product of input spaces, it equals an input-independent scalar for every tuple, that scalar is zero.
++Therefore an identity with an Euler characteristic of a fixed complex requires separate insertion normalization, and cannot hold for arbitrary insertions when that Euler characteristic is nonzero.
++\end{proposition}
++
++\begin{proof}
++The chain identity for $\mu$ sends a tensor boundary to an exact form.
++Stokes' theorem on the compact oriented manifold $Z$ makes the integral of such a form zero.
++Multilinearity follows from the linearity of $\mu$ and integration.
++Putting one input equal to zero forces the scalar to be zero.
++For an explicit instance, take $n=3$, $Z$ a point, and $C_j=\mathbb C$ in degree zero.
++The multiplication map gives $\mathcal A_\mu(a,b,c)=abc$.
++The Euler characteristic of the degree-zero complex $\mathbb C$ is $1$.
++The tuples $(1,1,1)$ and $(0,1,1)$ give different amplitudes for the same complex.
++\end{proof}
++
++For a chiral-chain application, $\mu$ includes the actual insertion and collision maps into forms on $Z$.
++Logarithmic forms along a divisor require an integration domain and boundary prescription for which the integration functional is closed.
++An Euler class integral supplies a specific characteristic form, rather than an arbitrary multilinear insertion.
++
++\subsection{The differential graded Lie algebra of connections}
++
++\begin{theorem}[Flatness and the Chern--Simons functional]
++\label{thm:cs-koszul-km}
++Let $M$ be a closed oriented smooth three-manifold and $\mathfrak g$ a finite-dimensional complex Lie algebra with a nondegenerate invariant symmetric bilinear form $\langle-,-\rangle$.
++Consider connections on the trivial bundle, written as $A\in\Omega^1(M;\mathfrak g)$.
++On $L=\Omega^\bullet(M)\otimes\mathfrak g$ use differential $d_{\mathrm{dR}}$ and bracket
++\[
++ [\alpha\otimes x,\beta\otimes y]
++  =(\alpha\wedge\beta)\otimes[x,y].
++\]
++For $k\in\mathbb C^*$, put
++\[
++ S_k(A)=\frac{k}{4\pi}\int_M
++ \left(\langle A\wedge dA\rangle
++       +\frac13\langle A\wedge[A,A]\rangle\right).
++\]
++Its critical points are exactly the Maurer--Cartan elements of $L$:
++\[
++ F_A=dA+\frac12[A,A]=0.
++\]
++\end{theorem}
++
++\begin{proof}
++The de Rham Leibniz rule and the Lie Jacobi identity make $L$ a differential graded Lie algebra.
++Its Maurer--Cartan equation in degree one is the displayed equation by definition.
++For an arbitrary variation $a\in\Omega^1(M;\mathfrak g)$, integration by parts on the closed manifold gives
++\[
++ \left.\frac{d}{dt}\right|_{t=0}\int_M\langle(A+ta)\wedge d(A+ta)\rangle
++ =2\int_M\langle a\wedge dA\rangle.
++\]
++Invariance of the bilinear form makes the three differentiated factors of the cubic term equal after the graded signs are included.
++Its variation is therefore $\int_M\langle a\wedge[A,A]\rangle$.
++Consequently
++\[
++ (dS_k)_A(a)=\frac{k}{2\pi}\int_M\langle a\wedge F_A\rangle.
++\]
++If this vanishes for all smooth variations supported in a coordinate chart, nondegeneracy of the form forces every coefficient of $F_A$ to vanish.
++The converse follows from the same formula.
++\end{proof}
++
++This construction uses $\Omega^\bullet(M)\otimes\mathfrak g$.
++The Chevalley--Eilenberg cochains $\operatorname{Hom}(\Lambda^\bullet\mathfrak g,\mathbb C)$ are a different complex.
++Transport from a chiral bar object to this differential graded Lie algebra requires the corresponding bracket data or higher morphism components.
++
++\subsection{Transport of Maurer--Cartan elements}
++
++\begin{proposition}[The components required for Maurer--Cartan transport]
++\label{thm:linf-mc-flatness}
++Let $L,L'$ be uncurved $L_\infty$ algebras over $\mathbb C$.
++In the symmetric convention, these are graded vector spaces with degree-one square-zero coderivations $Q,Q'$ on the coaugmented symmetric coalgebras of $L[1],L'[1]$, vanishing on the coaugmentation.
++Let $\mathfrak m$ be the nilpotent maximal ideal of a commutative local Artinian complex algebra.
++Suppose a coaugmentation-preserving coalgebra map $F$ satisfies $Q'F=FQ$.
++Writing its Taylor components as $F_j:S^j(L[1])\to L'[1]$, define, for $\alpha\in(L\otimes\mathfrak m)^1$,
++\[
++ s\beta=\sum_{j\geq1}\frac1{j!}F_j((s\alpha)^{\odot j}).
++\]
++Then $\alpha$ Maurer--Cartan implies $\beta$ Maurer--Cartan.
++A linear chain quasi-isomorphism without these coalgebra equations need not have this property.
++\end{proposition}
++
++\begin{proof}
++Nilpotence of $\mathfrak m$ makes every displayed sum finite.
++Set $v=s\alpha$ of degree zero and use
++$e^v=\sum_{j\geq0}v^{\odot j}/j!$.
++The coderivation identity gives
++\[
++ Q(e^v)=e^v\odot\left(\sum_{j\geq1}\frac1{j!}Q_j(v^{\odot j})\right).
++\]
++This can be checked by selecting the $j$ inputs on which $Q_j$ acts.
++The binomial coefficient cancels the factorials.
++The expression in parentheses is the shifted Maurer--Cartan expression.
++The coalgebra identity similarly gives $F(e^v)=e^{s\beta}$.
++Thus $Q(e^v)=0$ implies
++$Q'(e^{s\beta})=Q'F(e^v)=FQ(e^v)=0$.
++Projection to $L'[1]$ proves the assertion.
++
++For the last statement, let both underlying complexes have basis $x$ in degree one and $y$ in degree two, with zero differential.
++Give the first algebra zero brackets, and the second the sole nonzero bracket $[x,x]=y$.
++Graded skew symmetry permits this bracket because $x$ is odd, and Jacobi holds because $y$ is central.
++The identity of complexes is a quasi-isomorphism.
++Over $\mathbb C[t]/(t^3)$, $tx$ is Maurer--Cartan in the first algebra but has curvature $t^2y/2\ne0$ in the second.
++\end{proof}
++
++\begin{corollary}[Flatness on an identified carrier]
++\label{thm:cs-koszul-general}
++In the preceding proposition, suppose the target is
++$L'=\Omega^\bullet(M)\otimes\mathfrak g$ from Theorem~\ref{thm:cs-koszul-km}.
++Then the constructed $\beta$ is a flat connection with coefficients in $\mathfrak m$:
++\begin{equation}\label{eq:deformed-cs-general}
++ d\beta+\frac12[\beta,\beta]=0.
++\end{equation}
++The higher Jacobi identities alone do not make every degree-one element Maurer--Cartan.
++\end{corollary}
++
++\begin{proof}
++The first assertion is the preceding proposition and the definition of curvature on the target.
++For the second, the abelian differential graded Lie algebra with $L^1=\mathbb Cx$, $L^2=\mathbb Cy$, and $dx=y$ satisfies all Jacobi identities.
++The element $tx$ over $\mathbb C[t]/(t^2)$ has nonzero Maurer--Cartan expression $ty$.
++\end{proof}
++
++Reduction to a Drinfeld--Sokolov constraint requires the reduction maps and their compatibility with these higher components.
++The polynomial reduction of Theorem~\ref{thm:cbc26-polynomial-ds} supplies a chain algebra comparison on its polynomial carrier.
++Its projection fails Poisson compatibility, so it does not by itself give this transport of flatness equations.

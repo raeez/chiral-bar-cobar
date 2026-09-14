@@ -1,0 +1,1974 @@
+--- candidate002/cbc/bibliography/references.tex
++++ candidate004/cbc/bibliography/references.tex
+@@ -1271,4 +1271,9 @@
+ \url{https://stacks.math.columbia.edu/tag/0FMU}.
+ 
+ \bibitem{DLMF26} NIST Digital Library of Mathematical Functions, \S23.18, Eq.~23.18.5, \url{https://dlmf.nist.gov/23.18.E5}.
++\bibitem{AffineDSArakawa026} T. Arakawa, \emph{Introduction to W-algebras and their representation theory}, Perspectives in Lie Theory, Springer INdAM Series \textbf{19} (2017), 179--250. \url{https://arxiv.org/abs/1605.00138}. Locators refer to version2.
++\bibitem{AffineDSFrenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, Exp.~875, Ast\'erisque \textbf{276} (2002), 299--339. \url{https://arxiv.org/abs/math/0007054}. Locators refer to version4.
++\bibitem{BD026} A. Beilinson and V. Drinfeld, \emph{Chiral Algebras}, AMS Colloquium Publications51,2004. \url{https://math.uchicago.edu/~drinfeld/langlands/chiral/}.
++\bibitem{Frenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, expos\'e875,2000. \url{https://math.berkeley.edu/~frenkel/BOOK/bourbaki.pdf}.
++\bibitem{DLMFell} NIST Digital Library of Mathematical Functions, \S23.2, Eq.~23.2.5, and \S23.8, Eq.~23.8.2. \url{https://dlmf.nist.gov/23.2.E5}; \url{https://dlmf.nist.gov/23.8.E2}.
+ \end{thebibliography}
+--- candidate002/cbc/chapters/connections/bv_brst.tex
++++ candidate004/cbc/chapters/connections/bv_brst.tex
+@@ -1200,6 +1200,11 @@
+ 
+ \input{chapters/theory/ds_chain_comparisons}
+ 
++\section{Unital Virasoro chiral chains on the projective line}
++\label{sec:cbc26-unital-p1}
++\input{chapters/theory/unital_p1_chains}
++\input{chapters/theory/relative_p1_comparison}
++
+ \section{Holomorphic-topological field theories}
+ 
+ \subsection{Gaiotto's framework: from 4d to 2d}
+--- candidate002/cbc/chapters/examples/free_fields.tex
++++ candidate004/cbc/chapters/examples/free_fields.tex
+@@ -3782,17 +3782,25 @@
+ where $s, t$ are the Mandelstam variables and $\alpha'$ is the Regge slope (the precise form depends on the vertex operator insertions).
+ \end{example}
+ 
+-\begin{example}[One-loop two-point amplitude]
+-For the one-loop two-point amplitude, the bar complex is
+-\[\barBgeom^{(1)}_2 = \text{span}\{V_1 \otimes V_2 \otimes \eta_{12} \otimes \omega_{\text{moduli}}\}\]
+-where $\omega_{\text{moduli}} = d\tau \wedge d\bar{\tau}/(\text{Im}\tau)^2$ is the K\"ahler form on $\mathcal{M}_1$.
+-The amplitude is
+-\[\mathcal{A}_{1,2} = \int_{\mathcal{M}_1} \frac{d\tau \wedge d\bar{\tau}}{(\text{Im}\tau)^2} \int_{\mathbb{T}_\tau} \frac{dz_1 \wedge dz_2}{(z_1-z_2)^2} V_1(z_1) V_2(z_2)\]
+-
+-This gives the one-loop correction with modular invariance.
++\begin{example}[A scalar pairing on a complex torus]
++For $f\in C^\infty(E_\tau)$ and $\beta\in\Omega^{0,1}(E_\tau)$, define
++\[
++ \mathcal P_\tau(f,\beta)=\int_{E_\tau}f\,H_\tau(\beta)\,\nu_\tau,
++\]
++with $H_\tau$ and $\nu_\tau$ as in Theorem~\ref{thm:ep-homotopy}.
++This bilinear functional is well-defined because the kernel is locally integrable and its convolution with a smooth form is smooth.
++Under an isomorphism $\phi_\gamma:E_\tau\to E_{\gamma\tau}$,
++\[
++ \mathcal P_\tau(\phi_\gamma^*f,\phi_\gamma^*\beta)
++ =\mathcal P_{\gamma\tau}(f,\beta).
++\]
++Indeed, both $H$ and the normalized area form commute with pullback, so the identity follows by change of variables.
++An amplitude of vertex insertions requires maps from those insertions to the displayed coefficient spaces and compatibility with this pairing.
+ \end{example}
+ 
+ \input{chapters/theory/elliptic_normalizations}
++
++\input{chapters/theory/elliptic_propagator}
+ 
+ \begin{proposition}[Fiber data and genus-one cohomology]
+ \label{thm:modular-anomaly-km-w}
+--- candidate002/cbc/chapters/examples/w_algebras_framework.tex
++++ candidate004/cbc/chapters/examples/w_algebras_framework.tex
+@@ -38,9 +38,17 @@
+ The sixth-order pole in $W \times W$ OPE makes this fundamentally beyond quadratic Koszul duality.
+ \end{example}
+ 
+-\subsection{\texorpdfstring{The solution: curved $A_\infty$ Koszul duality}{The solution: curved A infty Koszul duality}}
++
+ 
+ \input{chapters/theory/reduction_parameters}
++
++\begingroup
++\providecommand{\Res}{\operatorname{Res}}
++\providecommand{\Vir}{\operatorname{Vir}}
++\providecommand{\Aut}{\operatorname{Aut}}
++\input{chapters/theory/affine_ds_global}
++\endgroup
++
+ 
+ \begin{remark}[The chiral dual after quantum reduction]
+ \label{thm:w-algebra-koszul-main}
+@@ -585,38 +593,15 @@
+ 
+ \subsection{The main theorem}
+ 
+-\begin{theorem}[Koszul duality for \texorpdfstring{$\mathcal{W}$}{W}-algebras --- precise statement; \ClaimStatusProvedHere]\label{thm:w-koszul-precise}
+-\index{W-algebra@$\mathcal{W}$-algebra!Koszul dual}
+-Let $\mathfrak{g}$ be a simple Lie algebra and $f \in \mathfrak{g}$ a nilpotent element.
+-
+-\emph{(A) At Critical Level.} For $k = -h^\vee$, the bar complex is uncurved and the cobar gives:
+-\begin{equation}
+-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{geom}}(\mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}}))) \simeq \mathcal{W}^{-h^{\vee}}(\mathfrak{g}, f_{\mathrm{prin}})
+-\end{equation}
+-For simply-laced $\mathfrak{g}$, $\mathfrak{g}^\vee \cong \mathfrak{g}$ and this is a self-duality.  For non-simply-laced $\mathfrak{g}$, $h^{\vee}(\mathfrak{g}^{\vee}) \neq h^{\vee}(\mathfrak{g})$ in general (e.g., $h^{\vee}(B_n) = 2n-1$ but $h^{\vee}(C_n) = n+1$), and the critical-level duality involves $\mathfrak{g}^\vee$:
+-\begin{equation}
+-\mathcal{W}^{-h^\vee(\mathfrak{g})}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee(\mathfrak{g}^\vee)}(\mathfrak{g}^\vee, f_{\mathrm{prin}}^\vee)
+-\end{equation}
+-
+-\emph{(B) At General Level.} For $f = f_{\mathrm{prin}}$ and $k \neq -h^\vee$, the Koszul dual is the same W-algebra at shifted level (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}):
+-\begin{equation}
+-\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-k-2h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})
+-\end{equation}
+-as curved $A_\infty$ chiral algebras.
+-
+-\emph{(C) $\mathcal{W}_3$ Specialization.} For $\mathfrak{g} = \mathfrak{sl}_3$, $h^\vee = 3$:
+-\begin{equation}
+-\mathcal{W}_3^k(\mathfrak{sl}_3)^! \simeq \mathcal{W}_3^{-k-6}(\mathfrak{sl}_3)
+-\end{equation}
+-The central charges satisfy $c(k) + c(k') = 100$: since $k' = -k-6$ gives $k'+3 = -(k+3)$, we have $c(k') = 2 + 24(k+4)^2/(k+3)$, so $c(k) + c(k') = 4 + 24 \cdot \frac{(k+4)^2 - (k+2)^2}{k+3} = 4 + 24 \cdot \frac{4(k+3)}{k+3} = 100$.
+-This confirms the general formula $2r + 4h^\vee d = 2(2) + 4(3)(8) = 100$.
+-\end{theorem}
+-
+-\begin{proof}
+-Part (B) is the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}.  Part (A) follows from Part~(B) in the limit $k \to -h^\vee$, where the curvature $m_0 = (k+h^\vee) \cdot C_2 \to 0$ and the duality reduces to the Feigin--Frenkel isomorphism of centers, $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Theorem~\ref{thm:ff-center}).  For the non-simply-laced case of Part~(A), the Langlands dual intervenes because the screening operators transform under the root system duality $\alpha_i \mapsto \alpha_i^\vee$, which exchanges long and short roots.
+-
+-Part (C) is immediate from Part~(B) with $h^\vee(\mathfrak{sl}_3) = 3$.
+-\end{proof}
++\begin{remark}[Reflected and critical W-algebra comparisons]\label{thm:w-koszul-precise}
++The parameter reflection $k\mapsto-k-2h^\vee$ specifies a proposed curved chiral comparison, as in Remark~\ref{thm:w-algebra-koszul-main}.
++The reflected central-charge sum for $\mathfrak{sl}_3$ is $100$ by Proposition~\ref{cor:anomaly-duality-w}.
++For $\mathfrak{sl}_2$, Theorem~\ref{thm:affine-comparison} and Proposition~\ref{prop:global-descent} construct the actual noncritical reduction map into the full affine--ghost complex, with its specified coordinate action.
++Neither this reduction quasi-isomorphism nor the scalar reflected sum identifies a Koszul dual at the reflected parameter.
++Such an identification requires a specified chiral bar construction and a map compatible with its reduction and collision differentials.
++At critical level the displayed conformal vector has a pole; specialization requires a family of complexes over the level parameter and a base-change argument.
++Feigin--Frenkel reciprocity of shifted parameters is a different transformation from reflection.
++\end{remark}
+ 
+ \subsection{Obstructions to naive Koszul duality}
+ 
+@@ -1153,40 +1138,15 @@
+ 
+ \subsection{\texorpdfstring{Koszul dual of $\mathcal{W}_3$}{Koszul dual of W 3}}
+ 
+-\begin{theorem}[Koszul dual of \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusProvedHere]\label{thm:w3-koszul-dual}
+-At critical level $k = -h^\vee = -3$ for $\mathfrak{sl}_3$, the $\mathcal{W}_3$ algebra becomes commutative (the Feigin--Frenkel center is large), and the central charge is undefined (the Sugawara construction degenerates). At this critical level:
+-\begin{equation}
+-\mathcal{W}_3^{\text{crit},!} \simeq \mathcal{W}_3^{\text{crit}}
+-\end{equation}
+-The $\mathcal{W}_3$ algebra is self-dual at critical level (up to automorphisms).
+-
+-At general level $k \neq -3$, the Feigin--Frenkel duality $k \leftrightarrow k' = -k - 2h^\vee = -k-6$ gives:
+-\begin{equation}
+-\mathcal{W}_3^{k} \text{ is Koszul dual to } \mathcal{W}_3^{k'}
+-\end{equation}
+-\end{theorem}
+-
+-\begin{proof}
+-\emph{Critical level ($k = -3$).}
+-By Theorem~\ref{thm:w-critical-bar}, the bar complex at $k = -h^\vee = -3$
+-is $\bar{B}(\mathcal{W}_3^{-3}) = \mathrm{Sym}[S_1, S_2] \otimes
+-\Omega^*_{\log}$, where $S_1, S_2$ are the screening charges
+-associated to the two simple roots of $\mathfrak{sl}_3$:
+-\begin{align}
+-S_1 &= \oint e^{\alpha_1(\phi)} \gamma_{\alpha_1}\, dz \\
+-S_2 &= \oint e^{\alpha_2(\phi)} \gamma_{\alpha_2}\, dz
+-\end{align}
+-(The screening operator for $\alpha_1 + \alpha_2$ is a composite,
+-not an independent generator.)
+-
+-At critical level $k = -h^\vee = -3$, the Feigin--Frenkel involution gives $k' = -k - 2h^\vee = 3 - 6 = -3 = k$.  By the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}, $(\mathcal{W}_3^{-3})^! \simeq \mathcal{W}_3^{-3}$, establishing self-duality directly.
+-
+-\emph{General level ($k \neq -3$).}
+-By the main W-algebra Koszul duality theorem
+-(the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}), the Feigin--Frenkel
+-involution $k \mapsto k' = -k - 2h^\vee = -k - 6$ gives
+-$(\mathcal{W}_3^k)^! \simeq \mathcal{W}_3^{k'}$.
+-\end{proof}
++\begin{remark}[The reflected W-three comparison]\label{thm:w3-koszul-dual}
++The parameter reflection $k\mapsto-k-2h^\vee$ specifies a proposed curved chiral comparison, as in Remark~\ref{thm:w-algebra-koszul-main}.
++The reflected central-charge sum for $\mathfrak{sl}_3$ is $100$ by Proposition~\ref{cor:anomaly-duality-w}.
++For $\mathfrak{sl}_2$, Theorem~\ref{thm:affine-comparison} and Proposition~\ref{prop:global-descent} construct the actual noncritical reduction map into the full affine--ghost complex, with its specified coordinate action.
++Neither this reduction quasi-isomorphism nor the scalar reflected sum identifies a Koszul dual at the reflected parameter.
++Such an identification requires a specified chiral bar construction and a map compatible with its reduction and collision differentials.
++At critical level the displayed conformal vector has a pole; specialization requires a family of complexes over the level parameter and a base-change argument.
++Feigin--Frenkel reciprocity of shifted parameters is a different transformation from reflection.
++\end{remark}
+ 
+ \subsection{\texorpdfstring{Genus-1 pipeline for the $\mathcal{W}_3$ algebra}{Genus-1 pipeline for the W3 algebra}}
+ \label{sec:w3-genus-one-pipeline}
+--- candidate002/cbc/chapters/theory/affine_ds_global.tex
++++ candidate004/cbc/chapters/theory/affine_ds_global.tex
+@@ -0,0 +1,517 @@
++The principal affine $\mathfrak{sl}_2$ constraint admits a closed Virasoro field whose embedding preserves every collision, including the vacuum term.
++The ghost relation determines the direction of this map.
++
++\section{Currents, ghosts, and the differential}
++
++All vector spaces are over $\mathbb C$.
++Fix $k\in\mathbb C$ and put $t=k+2$.
++Let $V^k(\mathfrak{sl}_2)$ be the universal affine vacuum vertex algebra with even generators $e,h,f$ and invariant form
++\[
++ (e,f)=1,\qquad (h,h)=2.
++\]
++The nonzero defining $\lambda$-brackets are
++\begin{equation}\label{eq:affine-brackets}
++ [h_\lambda e]=2e,\qquad [h_\lambda f]=-2f,
++ \qquad [e_\lambda f]=h+k\lambda\mathbf1,
++ \qquad [h_\lambda h]=2k\lambda\mathbf1.
++\end{equation}
++The other brackets follow by skew symmetry.
++The affine algebra is universal, including at special levels.
++
++Let $F_{bc}$ be the charged free-fermion vertex superalgebra with odd generators $b,c$ and
++\[
++ [b_\lambda c]=[c_\lambda b]=\mathbf1,
++ \qquad [b_\lambda b]=[c_\lambda c]=0.
++\]
++Give $b,c$ cohomological degrees $-1,1$ and the affine generators degree zero.
++Set $C_k=V^k(\mathfrak{sl}_2)\otimes F_{bc}$, with tensor-product vacuum $\mathbf1$ and translation $\partial$.
++For every state $a$, use
++\[
++ Y(a,z)=\sum_{n\in\mathbb Z}a_{(n)}z^{-n-1},\qquad
++ [a_\lambda d]=\sum_{n\geq0}\frac{\lambda^n}{n!}a_{(n)}d,
++ \qquad :ad:=a_{(-1)}d.
++\]
++Thus $\{b_{(m)},c_{(n)}\}=\delta_{m+n,-1}$, and all five generating fields have $a_{(n)}\mathbf1=0$ for $n\geq0$.
++The carrier consists of finite linear combinations of PBW monomials of negative modes.
++It has no completion in ghost number, mode number, or tensor length.
++
++Define the odd state and its residue by
++\begin{equation}\label{eq:ds-charge}
++ q=:(e-\mathbf1)c:,
++ \qquad D=q_{(0)}=\Res_{z=0}Y(q,z)\,dz.
++\end{equation}
++The residue of $z^{-1}dz$ is $1$.
++The defining operator products give
++\begin{equation}\label{eq:ds-differential}
++ Db=e-\mathbf1,\qquad Dh=-2:ec:,
++ \qquad Df=:hc:+k\partial c,
++ \qquad De=Dc=0.
++\end{equation}
++There are no singular contractions in $Y(q,z)Y(q,w)$.
++Hence $[q_\lambda q]=0$, and the zero-mode commutator formula gives $D^2=0$.
++The same formula gives, for every integer $n$ and homogeneous $a,d$,
++\begin{equation}\label{eq:ds-derivation}
++ D(a_{(n)}d)=(Da)_{(n)}d+(-1)^{|a|}a_{(n)}Dd,
++ \qquad D\partial=\partial D.
++\end{equation}
++This is a differential vertex superalgebra at every level, including $k=-2$.
++The noncritical hypothesis enters the conformal field below.
++
++\section{The conformal field}
++
++Assume $t\neq0$ and define
++\begin{align}
++ S&=\frac{\frac12:hh:+:ef:+:fe:}{2t},
++ &G&=:(\partial b)c:,
++ &T&=S+\frac12\partial h+G.\label{eq:ds-stress}
++\end{align}
++The conformal modes are $L_n=T_{(n+1)}$.
++
++\begin{proposition}\label{prop:closed-stress}
++The state $T$ is closed and is a conformal vector on $C_k$.
++Its central charge and generating-field weights are
++\begin{equation}\label{eq:ds-central}
++ C(k)=\frac{3k}{k+2}-6k-2
++      =13-6(t+t^{-1}),
++ \qquad (\Delta_e,\Delta_h,\Delta_f,\Delta_b,\Delta_c)=(0,1,2,0,1).
++\end{equation}
++The field $q$ is primary of weight one.
++In particular, $D$ commutes with every $L_n$.
++\end{proposition}
++
++\begin{proof}
++The noncommutative Wick identity is
++\[
++ [a_\lambda:uv:]=:[a_\lambda u]v:
++ +(-1)^{p(a)p(u)}:u[a_\lambda v]:
++ +\int_0^\lambda [[a_\lambda u]_\mu v]\,d\mu,
++\]
++where $p$ denotes parity.
++Applied to~\eqref{eq:affine-brackets}, it gives
++\[
++ [S_\lambda x]=(\partial+\lambda)x\quad(x=e,h,f),
++ \qquad [S_\lambda S]=(\partial+2\lambda)S+\frac{k}{4t}\lambda^3\mathbf1.
++\]
++These are the Sugawara identities with the displayed invariant form.
++In the ghost factor, the same identity gives
++\[
++ [G_\lambda b]=\partial b,
++ \qquad [G_\lambda c]=(\partial+\lambda)c,
++ \qquad [G_\lambda G]=(\partial+2\lambda)G-\frac16\lambda^3\mathbf1.
++\]
++Thus $G$ has central charge $-2$ and the stated weights.
++The affine and ghost factors commute.
++The mixed terms between $S$ and $\frac12\partial h$ supply
++$(\partial+2\lambda)\frac12\partial h$, and
++\[
++ \left[\frac12\partial h{}_\lambda\frac12\partial h\right]
++ =-\frac{k}{2}\lambda^3\mathbf1.
++\]
++Consequently
++\begin{equation}\label{eq:TT}
++ [T_\lambda T]=(\partial+2\lambda)T+\frac{C(k)}{12}\lambda^3\mathbf1.
++\end{equation}
++The zero mode of $\partial h$ vanishes, so $T_{(0)}=\partial$.
++The weight statements follow from
++\begin{align*}
++ [T_\lambda e]&=\partial e,&
++ [T_\lambda h]&=(\partial+\lambda)h-k\lambda^2\mathbf1,&
++ [T_\lambda f]&=(\partial+2\lambda)f,\\
++ [T_\lambda b]&=\partial b,&
++ [T_\lambda c]&=(\partial+\lambda)c.
++\end{align*}
++The extra term in the $h$ bracket is a third-order pole; weight one does not make $h$ primary.
++
++Directly from~\eqref{eq:ds-charge},
++\[
++ DS=:e\partial c:,
++ \qquad D\left(\frac12\partial h\right)=-\partial:ec:,
++ \qquad DG=:(\partial e)c:.
++\]
++Their sum is zero.
++Since $e-\mathbf1$ is primary of weight zero, $c$ is primary of weight one, and their mutual bracket vanishes, the Wick identity gives
++$[T_\lambda q]=(\partial+\lambda)q$.
++Equivalently, the conformal modes commute with its residue $D$.
++\end{proof}
++
++The affine ghosts in~\eqref{eq:ds-charge} have weights $(0,1)$.
++The reparametrization ghosts of weights $(2,-1)$ define a different complex.
++In particular, the identity $D^2=0$ above imposes no equation $C(k)=26$.
++
++\section{A reduced complex and its cohomology}
++
++Put
++\[
++ j=:bc:,\qquad H=h+2j,\qquad F=f,\qquad E=e-\mathbf1,
++ \qquad a=\frac{t-1}{2}.
++\]
++The elementary ghost identities needed below are
++\begin{equation}\label{eq:ghost-identities}
++ [j_\lambda j]=\lambda\mathbf1,
++ \qquad [j_\lambda c]=-c,
++ \qquad :jc:=-\partial c,
++ \qquad :jj:=:(\partial b)c:-:b\partial c:.
++\end{equation}
++They follow by one or two contractions in the defining Clifford algebra.
++Let $C_k^-$ be the vertex subalgebra generated by $H,F,c$, and let $C_k^+$ be the vertex subalgebra generated by $E,b$.
++Their relevant brackets and differentials are
++\begin{align}
++ [H_\lambda H]&=2t\lambda\mathbf1,&
++ [H_\lambda F]&=-2F,&
++ [H_\lambda c]&=-2c,\label{eq:reduced-brackets}\\
++ DH&=-2c,&
++ DF&=:Hc:+t\partial c,&
++ Dc&=0,\label{eq:reduced-differential}\\
++ DE&=0,&Db&=E.\notag
++\end{align}
++All other brackets among $F,c$ vanish; all brackets in $C_k^+$ vanish.
++Both subalgebras are subcomplexes.
++Define
++\begin{equation}\label{eq:W-and-L}
++ W=F+\frac14:HH:+a\partial H,
++ \qquad L=t^{-1}W.
++\end{equation}
++
++\begin{lemma}\label{lem:reduced-virasoro}
++The state $W$ is closed.
++The state $L$ satisfies the Virasoro bracket of central charge $C(k)$, and
++\begin{equation}\label{eq:stress-homology}
++ T-L=t^{-1}D(:bf:).
++\end{equation}
++\end{lemma}
++
++\begin{proof}
++Quasi-commutativity gives $:cH:=:Hc:+2\partial c$.
++Therefore
++\[
++ D\left(\frac14:HH:\right)=-:Hc:-\partial c,
++ \qquad D(a\partial H)=-2a\partial c.
++\]
++Equation~\eqref{eq:reduced-differential} and $2a=t-1$ prove $DW=0$.
++
++For the Virasoro bracket, set $P=\frac14:HH:+a\partial H$.
++The Heisenberg calculation using $[H_\lambda H]=2t\lambda$ gives
++\[
++ [P_\lambda P]=t(\partial+2\lambda)P
++ +\left(\frac{t^2}{12}-2ta^2\right)\lambda^3\mathbf1.
++\]
++The Wick identity and $[F_\lambda H]=2F$ give
++\[
++ [F_\lambda P]=:HF:+t(\partial+\lambda)F,
++ \qquad [P_\lambda F]= -:HF:+t\lambda F.
++\]
++Since $[F_\lambda F]=0$, division by $t^2$ yields
++\[
++ [L_\lambda L]=(\partial+2\lambda)L
++ +\frac{1-24a^2/t}{12}\lambda^3\mathbf1.
++\]
++Here $1-24a^2/t=13-6(t+t^{-1})$.
++
++Finally, $:fe:=:ef:-\partial h$ and~\eqref{eq:ghost-identities} give
++\begin{align*}
++ t(T-L)
++ &=:(e-\mathbf1)f:-:hbc:-k:b\partial c:\\
++ &=D(:bf:).
++\end{align*}
++All products in the middle expression use the affine--ghost tensor factors, so moving $h$ or $f$ through a ghost introduces no contraction.
++\end{proof}
++
++\begin{theorem}\label{thm:affine-comparison}
++For every $k\neq-2$, there is an injective quasi-isomorphism of unital differential vertex superalgebras
++\begin{equation}\label{eq:strict-map}
++ \iota_T:(\Vir^{C(k)},0)\longrightarrow(C_k,D),
++ \qquad \iota_T(\omega)=T,
++\end{equation}
++where $\Vir^{C(k)}$ is the universal Virasoro vacuum vertex algebra and $\omega$ its conformal generator.
++The map is conformal for~\eqref{eq:ds-stress}.
++In particular,
++\[
++ H^r(C_k,D)=0\quad(r\neq0),
++ \qquad H^0(C_k,D)\simeq\Vir^{C(k)}.
++\]
++\end{theorem}
++
++\begin{proof}
++The bracket~\eqref{eq:TT} and $DT=0$ construct the unital map~\eqref{eq:strict-map} by the universal Virasoro presentation.
++
++Normally ordered multiplication defines a linear map of complexes
++\begin{equation}\label{eq:pbw-factorization}
++ C_k^-\otimes C_k^+\longrightarrow C_k,
++ \qquad u\otimes v\longmapsto u_{(-1)}v.
++\end{equation}
++This map is a linear isomorphism by the following PBW argument.
++Give derivatives of $e,b,h,c,f$ filtration degrees $0,0,1,1,2$, respectively.
++The affine and ghost brackets lower the sum of these degrees by at least one.
++The associated graded algebra is therefore the polynomial algebra in the even jets and the exterior algebra in the odd jets.
++The change of generators
++\[
++ (e,h,f,b,c)\longmapsto(E,H,F,b,c)
++       =(e-1,h+2bc,f,b,c)
++\]
++and all its derivatives is an invertible change in this commutative algebra.
++Thus the associated graded of~\eqref{eq:pbw-factorization} is an isomorphism.
++Induction on the nonnegative filtration degree proves the assertion on the original vector spaces.
++Each state has finite filtration degree.
++Equation~\eqref{eq:ds-derivation} proves that the map is a map of complexes, using the tensor sign $(-1)^{|u|}$ on the second differential.
++It is not asserted to be a tensor-product decomposition of vertex algebras.
++
++Write $E_r=\partial^rE$ and $b_r=\partial^rb$ for $r\geq0$ in the commutative vertex algebra $C_k^+$.
++Then
++\[
++ C_k^+=\mathbb C[E_r:r\geq0]\otimes\Lambda(b_r:r\geq0),
++ \qquad D=\sum_{r\geq0}E_r\frac{\partial}{\partial b_r}.
++\]
++The odd operator $s=\sum_{r\geq0}b_r\partial/\partial E_r$ satisfies
++$Ds+sD=N$, where $N$ counts the total number of $E_r,b_r$ factors.
++Every polynomial contains finitely many factors and variables.
++On its positive-$N$ subspace, $s/N$ is a contraction.
++Thus $\mathbb C\mathbf1\to C_k^+$ is a quasi-isomorphism and the inclusion $C_k^-\to C_k$ is a quasi-isomorphism by~\eqref{eq:pbw-factorization}.
++
++For $C_k^-$, use the nonnegative filtration in which each derivative of $H,c$ has degree one and each derivative of $F$ degree two.
++Its associated graded differential is
++\[
++ dH_r=-2c_r,\qquad dF_r=\partial^r(H_0c_0),\qquad dc_r=0.
++\]
++Introduce even variables $w_r=\partial^r(F_0+H_0^2/4)$.
++The map $(F_r,H_r,c_r)\mapsto(w_r,H_r,c_r)$ is polynomial and invertible, and $dw_r=0$.
++Consequently the associated graded complex is
++\begin{equation}\label{eq:graded-reduction}
++ \mathbb C[w_r:r\geq0]\otimes
++ \left(\mathbb C[H_r:r\geq0]\otimes\Lambda(c_r:r\geq0),
++       -2\sum_{r\geq0}c_r\frac{\partial}{\partial H_r}\right).
++\end{equation}
++On the second factor, $s_-=-\frac12\sum_rH_r\partial/\partial c_r$ gives
++$ds_-+s_-d=N_-$, the number of $H_r,c_r$ factors.
++This proves that its cohomology consists of constants.
++
++The Virasoro relation for $L$ constructs a map $\iota_L:\Vir^{C(k)}\to C_k^-$.
++Filter its source by assigning degree two to all derivatives of $\omega$.
++The PBW basis of the universal Virasoro vacuum module consists of the ordered products of $L_{-n}$, $n\geq2$, acting on the vacuum.
++Its associated graded algebra is $\mathbb C[\partial^r\omega:r\geq0]$.
++The associated graded of $\iota_L$ sends $\partial^r\omega$ to $w_r/t$ and is a quasi-isomorphism by~\eqref{eq:graded-reduction}.
++The associated graded of its mapping cone is acyclic.
++For a cone cycle, solve its boundary equation in its highest filtration quotient and subtract that boundary.
++Induction terminates because the filtration is bounded below.
++Hence $\iota_L$ is a quasi-isomorphism.
++
++Equation~\eqref{eq:stress-homology} identifies $[T]=[L]$ in $H^0(C_k)$.
++The two induced vertex homomorphisms agree on the universal generator, hence agree everywhere.
++Thus $\iota_T$ is a quasi-isomorphism as well.
++Since its source has zero differential, an element in its kernel has zero cohomology class in the source and must be zero.
++This proves injectivity.
++\end{proof}
++
++Theorem~\ref{thm:affine-comparison} concerns the universal vacuum carrier.
++It agrees with the PBW and reduction statements in \cite{AffineDSArakawa026}*{Theorem~5.8, p.~32; \S5.3, p.~33; Example~5.22, p.~39}.
++No vanishing statement on an unrestricted category of affine modules is used in the proof.
++The sign of the character in~\eqref{eq:ds-charge} differs from the $e+1$ convention of \cite{AffineDSArakawa026}*{\S5.1}; the substitution $(e,f,b,c)\mapsto(-e,-f,-b,-c)$ identifies the two conventions.
++
++\begin{proposition}[Direction of a strict comparison]\label{prop:no-forward-map}
++There is no unital vertex superalgebra homomorphism from $C_k$ to a purely even vertex algebra.
++In particular, $\iota_T$ has no strict unital vertex retraction $C_k\to\Vir^{C(k)}$.
++\end{proposition}
++\begin{proof}
++Parity preservation sends $b,c$ to zero.
++The identity $b_{(0)}c=\mathbf1$ would then send $\mathbf1$ to zero, contradicting the unit condition.
++\end{proof}
++The inverse to~\eqref{eq:strict-map} exists after inverting quasi-isomorphisms.
++The ordinary projection from closed states to $H^0(C_k)$ is defined on $\ker D$, not on every state of $C_k$ as a vertex homomorphism.
++
++\section{The unital collision map on an affine coordinate chart}
++
++Let $X=\mathbb A^1_{\mathbb C}$ with coordinate $z$.
++For a differential vertex superalgebra $(V,d)$, define a left $D_X$-module
++\[
++ \mathcal M_V=\mathcal O_X\otimes_{\mathbb C}V,
++ \qquad \nabla_{\partial_z}(f\otimes v)=f'\otimes v+f\otimes\partial v,
++\]
++with internal differential $1\otimes d$.
++Its corresponding right module is $\mathcal A_V=\omega_X\otimes\mathcal M_V$; explicitly,
++\begin{equation}\label{eq:right-connection}
++ (f\,dz\otimes v)\cdot\partial_z
++ =-f'\,dz\otimes v-f\,dz\otimes\partial v.
++\end{equation}
++These modules use algebraic tensor products.
++
++On $X^2$, use coordinates $z,w$ and put $x=z-w$.
++Let $j_2:X^2\setminus\Delta\hookrightarrow X^2$ and $\Delta:X\hookrightarrow X^2$ be the open and diagonal embeddings.
++In left-module notation, set
++\[
++ \mathcal P_V=\mathcal O_{X^2}(*\Delta)\otimes V\otimes V,
++ \qquad
++ \mathcal R_V=V\otimes\mathbb C[w]\otimes x^{-1}\mathbb C[x^{-1}].
++\]
++The second expression is the coordinate presentation of the module supported on the diagonal, with actions
++\begin{equation}\label{eq:diagonal-connection}
++ \partial_z=\partial_x,
++ \qquad \partial_w=\partial_w^{\mathrm{base}}-\partial_x+\partial_V.
++\end{equation}
++Multiplication by $x$ is interpreted modulo regular terms.
++Tensoring these left modules with $dz\wedge dw$ identifies their right-module versions with
++$j_{2*}j_2^*(\mathcal A_V\boxtimes\mathcal A_V)$ and $\Delta_!\mathcal A_V$.
++The residue orientation is $dz\wedge dw=dx\wedge dw$ and $\Res x^{-1}dx=1$.
++
++Define the full binary collision morphism by
++\begin{equation}\label{eq:full-collision}
++ \mu_V\bigl(f(z,w)a\boxtimes d\bigr)
++ =\operatorname{PP}_x\bigl(f(w+x,w)Y(a,x)d\bigr).
++\end{equation}
++Here $\operatorname{PP}_x$ discards nonnegative powers of $x$.
++For fixed $a,d$ and a meromorphic coefficient $f$ of finite pole order, only finitely many modes contribute to the principal part.
++In particular, this formula also uses negative vertex products when $f$ has a pole.
++It keeps the vacuum terms of all nonnegative products.
++
++\begin{lemma}\label{lem:collision-chain}
++Formula~\eqref{eq:full-collision} is a morphism of differential $D_{X^2}$-modules.
++Its right-module form is the unital chiral product on $\mathcal A_V$.
++\end{lemma}
++\begin{proof}
++For $\partial_z$, the chain rule and $Y(\partial a,x)=\partial_xY(a,x)$ identify the source connection with the first action in~\eqref{eq:diagonal-connection}.
++For $\partial_w$, use
++\[
++ \partial_VY(a,x)d-\partial_xY(a,x)d=Y(a,x)\partial_Vd.
++\]
++This gives the second action in~\eqref{eq:diagonal-connection}.
++Taking principal parts preserves both equations.
++The differential identity follows from~\eqref{eq:ds-derivation}, with $D$ replaced by $d$.
++Skew symmetry and the three-input Jacobi identity are the corresponding vertex identities after passage to principal parts; right-module conversion supplies the ordinary antisymmetry sign, together with the parity sign.
++The vacuum embedding is
++$\omega_X\to\mathcal A_V$, $f\,dz\mapsto f\,dz\otimes\mathbf1$.
++For example,
++\[
++ \operatorname{PP}_x\bigl(x^{-1}Y(\mathbf1,x)a\bigr)=x^{-1}a,
++\]
++which is the unit collision under the residue identification.
++This construction is the coordinate expression of \cite{AffineDSFrenkel026}*{\S7, Theorem~7.1 and Corollary~7.2, pp.~875--34--35}.
++\end{proof}
++
++\begin{theorem}[Chiral comparison on an affine chart]\label{thm:chiral-chart}
++For $k\neq-2$, formula
++\begin{equation}\label{eq:sheaf-map}
++ \mathcal I_X:\mathcal A_{\Vir^{C(k)}}\longrightarrow\mathcal A_{C_k},
++ \qquad f\,dz\otimes v\longmapsto f\,dz\otimes\iota_T(v)
++\end{equation}
++defines a unital quasi-isomorphism of differential chiral algebras on $\mathbb A^1$.
++It preserves the full binary collision morphism:
++\begin{equation}\label{eq:collision-square}
++ (\Delta_!\mathcal I_X)\mu_{\Vir}
++ =\mu_{C_k}\,j_{2*}j_2^*(\mathcal I_X\boxtimes\mathcal I_X).
++\end{equation}
++Every finite iterated collision, with its meromorphic coefficient and its vacuum outputs, satisfies the corresponding intertwining identity.
++\end{theorem}
++\begin{proof}
++The state map $\iota_T$ commutes with translation, the vacuum, and the internal differentials.
++It therefore respects~\eqref{eq:right-connection} and the unit embedding.
++For every $n\in\mathbb Z$,
++\[
++ \iota_T(a_{(n)}d)=\iota_T(a)_{(n)}\iota_T(d).
++\]
++Substitution into~\eqref{eq:full-collision} proves~\eqref{eq:collision-square} for every coefficient $f$, including all its regular and polar parts.
++Induction on the number of binary operations proves the iterated identities.
++The underlying sheaf map is a quasi-isomorphism because Theorem~\ref{thm:affine-comparison} is a quasi-isomorphism of complexes of vector spaces and tensoring with each $\mathcal O_X$-stalk is exact.
++\end{proof}
++
++The lowest Virasoro collision reads
++\begin{equation}\label{eq:TT-ope}
++ Y(T,x)T\sim\frac{C(k)}{2x^4}\mathbf1
++       +\frac{2T}{x^2}+\frac{\partial T}{x}.
++\end{equation}
++Thus $T_{(3)}T=C(k)\mathbf1/2$, $T_{(2)}T=0$, $T_{(1)}T=2T$, and $T_{(0)}T=\partial T$.
++For a regular coefficient $g(x)$, the residue is
++\[
++ \Res_{x=0}g(x)Y(T,x)T\,dx
++ =\frac{C(k)}{12}g'''(0)\mathbf1+2g'(0)T+g(0)\partial T.
++\]
++At $k=-8/3$ or $-7/2$, taking $g=x^3$ gives $13\mathbf1$.
++The independent ghost collision is $\Res Y(b,x)c\,dx=\mathbf1$.
++Neither vacuum output can be removed by a linear projection while preserving the original product.
++
++\section{The binary collision complex}
++
++For any $V$ above, put
++\[
++ P_V=j_{2*}j_2^*(\mathcal A_V\boxtimes\mathcal A_V),
++ \qquad R_V=\Delta_!\mathcal A_V.
++\]
++Their internal differentials are $d_P(a\boxtimes b)=da\boxtimes b+(-1)^{|a|}a\boxtimes db$ and $d_R$ induced by $d$.
++Define the unital binary collision complex
++\begin{equation}\label{eq:binary-cone}
++ K_2(V)=P_V[1]\oplus R_V,
++ \qquad d_{K_2}(sp,r)=(-s d_Pp,\,\mu_V(p)+d_Rr).
++\end{equation}
++The suspension convention is $|sp|=|p|-1$.
++The equality $d_R\mu_V=\mu_Vd_P$ proves $d_{K_2}^2=0$.
++
++\begin{corollary}\label{cor:binary-quasi}
++The componentwise map
++\[
++ K_2(\Vir^{C(k)})\longrightarrow K_2(C_k)
++\]
++defined by $\mathcal I_X\boxtimes\mathcal I_X$ on $P[1]$ and $\Delta_!\mathcal I_X$ on $R$ is a quasi-isomorphism.
++\end{corollary}
++\begin{proof}
++Equation~\eqref{eq:collision-square} proves the total chain identity, including the off-diagonal component $\mu$.
++Tensor products of complexes over $\mathbb C$ preserve quasi-isomorphisms.
++The localization $\mathcal O_{X^2}\to\mathcal O_{X^2}(*\Delta)$ is flat, so the map on $P$ is a quasi-isomorphism.
++The coordinate presentation~\eqref{eq:diagonal-connection} identifies the map on $R$ with a direct sum of copies of the state map tensored with $\mathcal O_X$, so it is a quasi-isomorphism as well.
++The cone of the total map has a two-step filtration with these two acyclic cones as quotients.
++It is acyclic by the long exact sequence of cohomology.
++\end{proof}
++
++The complex~\eqref{eq:binary-cone} retains the unit and is explicitly defined on $X^2$.
++Its comparison does not require an augmentation of $C_k$.
++An identification with a reduced chiral bar defined using an augmentation kernel would require such an augmentation, which is excluded by $b_{(0)}c=\mathbf1$.
++An infinite totalization over configuration spaces requires its own definition and convergence theorem; the two-step argument above contains no such limit.
++
++\section{Descent for the Drinfeld--Sokolov conformal structure}
++
++The conformal structure~\eqref{eq:ds-stress} also specifies coordinate changes.
++Let $X$ now be a smooth complex algebraic curve, and let $\widehat X\to X$ be its torsor of formal coordinates.
++The Lie algebra of $\Aut\mathbb C[[z]]$ acts on $C_k$ by
++\begin{equation}\label{eq:aut-action}
++ -z^{n+1}\partial_z\longmapsto L_n\qquad(n\geq0).
++\end{equation}
++The Virasoro central term vanishes on this subalgebra.
++All PBW states have nonnegative integral $L_0$-weights, and $L_n$ lowers weight by $n>0$.
++The orbit of a weight-$N$ state lies in the span of the finitely many words in $L_1,\ldots,L_N$ with total weight loss at most $N$.
++The positive part therefore integrates to formal coordinate changes, and integral $L_0$ integrates to $\mathbb G_m$.
++The action is locally finite despite the infinite-dimensional weight-zero subspace.
++
++Form the associated sheaf
++\[
++ \mathcal M^{\mathrm{DS}}_{C_k,X}
++     =\widehat X\mathbin{\times}_{\Aut\mathbb C[[z]]}C_k,
++ \qquad
++ \mathcal A^{\mathrm{DS}}_{C_k,X}
++     =\omega_X\otimes\mathcal M^{\mathrm{DS}}_{C_k,X}.
++\]
++Here $(u g,v)\sim(u,g v)$ for the right coordinate torsor and the left action~\eqref{eq:aut-action}.
++The translation operator extends~\eqref{eq:aut-action} to regular formal vector fields and gives the connection $d+\partial\,dz$ in a coordinate trivialization.
++This is the associated-bundle connection described in \cite{AffineDSFrenkel026}*{\S4.2, p.~875--18}.
++The sheaf is the union of its finite-rank associated subbundles as an $\mathcal O_X$-module; the connection can raise their filtration.
++
++\begin{proposition}\label{prop:global-descent}
++For every smooth complex algebraic curve $X$ and $k\neq-2$, the map $\iota_T$ descends to a unital quasi-isomorphism of differential chiral algebras
++\[
++ \mathcal A_{\Vir^{C(k)},X}
++       \longrightarrow\mathcal A^{\mathrm{DS}}_{C_k,X}.
++\]
++The local binary collision comparison of Corollary~\ref{cor:binary-quasi} descends to $X^2$.
++\end{proposition}
++\begin{proof}
++The conformal map $\iota_T$ intertwines all $L_n$ and hence their integrated coordinate actions.
++Proposition~\ref{prop:closed-stress} says that $D$ commutes with the same action.
++Thus both the sheaf map and its differential are defined on the associated sheaves.
++Translation compatibility gives horizontality.
++The coordinate covariance of the vertex operation, equivalently the chiral construction in Lemma~\ref{lem:collision-chain}, glues the collision identity on overlaps.
++Its unit is preserved before descent.
++Locally in an \'etale coordinate, the underlying complex is $\mathcal O_X\otimes C_k$, so Theorem~\ref{thm:affine-comparison} proves the quasi-isomorphism.
++The same local argument applies to the two terms of~\eqref{eq:binary-cone}; quasi-isomorphism is local.
++\end{proof}
++
++The superscript $\mathrm{DS}$ specifies the coordinate action, which uses $T$.
++For example, $e$ and $b$ have weight zero, $f$ has weight two, and $h$ has third-order conformal pole $-2k\mathbf1$.
++These are not the three weight-one primary currents of the Sugawara coordinate action.
++The proposition therefore does not identify this associated sheaf with a separately prescribed affine-current bundle using other coordinate transitions.
++Nor does it construct compatibility with clutching at nodal curves, a completed chiral bar, or a second semi-infinite differential.
++Each such comparison has an additional carrier and an additional intertwining equation.
+--- candidate002/cbc/chapters/theory/elliptic_propagator.tex
++++ candidate004/cbc/chapters/theory/elliptic_propagator.tex
+@@ -0,0 +1,242 @@
++A pole of residue one cannot be the only singularity of a meromorphic differential on a compact torus.
++A Cauchy kernel therefore requires a correction that removes the constant mode.
++The correction below is smooth away from the pole, respects changes of lattice basis, and gives an explicit homotopy for the Dolbeault differential.
++
++\section{The periodic kernel}
++
++Fix $\tau\in\mathbb H$, put $Y=\operatorname{Im}\tau$, and let
++$E_\tau=\mathbb C/(\mathbb Z+\tau\mathbb Z)$.
++Write $z=x+iy$, orient the torus by $dx\wedge dy$, and use the normalized area form
++\[
++ \nu_\tau=\frac{dx\wedge dy}{Y}
++          =\frac{i}{2Y}\,dz\wedge d\bar z,
++ \qquad \int_{E_\tau}\nu_\tau=1.
++\]
++The Dirac current $\delta_0$ is the degree-two current with
++$\langle\delta_0,\varphi\rangle=\varphi(0)$ for a smooth function $\varphi$.
++Our convention is $\bar\partial f=(\partial_{\bar z}f)d\bar z$, where
++$\partial_{\bar z}=\tfrac12(\partial_x+i\partial_y)$.
++
++For the lattice $\Lambda_\tau=\mathbb Z+\tau\mathbb Z$, define
++\[
++ \zeta_\tau(z)=\frac1z+
++ \sum_{\omega\in\Lambda_\tau\setminus\{0\}}
++ \left(\frac1{z-\omega}+\frac1\omega+\frac z{\omega^2}\right).
++\]
++The grouped summands are $O(|\omega|^{-3})$ on compact subsets away from the poles.
++Thus the series and its termwise derivatives converge normally there.
++Pairing $\omega$ and $-\omega$ shows that $\zeta_\tau$ is odd and has expansion $z^{-1}+O(z^3)$ at zero.
++This is the lattice normalization of \cite[Eq.~23.2.5]{DLMFell}.
++
++\begin{lemma}\label{lem:ep-periods}
++There are constants $a_\tau,b_\tau$ with
++\[
++ \zeta_\tau(z+1)-\zeta_\tau(z)=a_\tau,\qquad
++ \zeta_\tau(z+\tau)-\zeta_\tau(z)=b_\tau,
++ \qquad a_\tau\tau-b_\tau=2\pi i.
++\]
++\end{lemma}
++\begin{proof}
++Put $\wp_\tau=-\zeta_\tau'$.
++Its derivative is the absolutely normally convergent series
++$-2\sum_{\omega\in\Lambda_\tau}(z-\omega)^{-3}$.
++Reindexing proves that this derivative is periodic.
++Hence $\wp_\tau(z+\lambda)-\wp_\tau(z)$ is constant for $\lambda=1,\tau$.
++The function $\wp_\tau$ is even; evaluating the difference at $z=-\lambda/2$ shows that the constant is zero.
++The half-period is not a lattice point for these primitive periods.
++Differentiating the two displayed differences of $\zeta_\tau$ now gives zero, proving constancy.
++
++Choose a translated fundamental parallelogram with no pole on its boundary.
++It contains one pole of residue one.
++The residue theorem gives $\oint\zeta_\tau(z)dz=2\pi i$.
++Pairing its opposite sides gives $a_\tau\tau-b_\tau$, with the horizontal sides contributing $-b_\tau$ and the sides parallel to $\tau$ contributing $a_\tau\tau$.
++This proves the last identity.
++\end{proof}
++
++\begin{theorem}\label{thm:ep-kernel}
++The function
++\begin{equation}\label{eq:ep-P}
++ P_\tau(z)=\zeta_\tau(z)-a_\tau z+
++                  \frac{2\pi i}{Y}\operatorname{Im}z
++\end{equation}
++is odd and $\Lambda_\tau$-periodic.
++It is smooth away from the lattice, locally integrable, and has singular part $1/z$.
++The one-form $P_\tau(z)dz$ therefore defines a current on $E_\tau$ and satisfies
++\begin{equation}\label{eq:ep-distribution}
++ \bar\partial\bigl(P_\tau(z)dz\bigr)
++       =2\pi i(\delta_0-\nu_\tau).
++\end{equation}
++Among odd periodic functions with singular part $1/z$ and smooth remainder, it is the unique solution of this current equation.
++\end{theorem}
++\begin{proof}
++Translation by one changes the first two terms of~\eqref{eq:ep-P} by $a_\tau-a_\tau=0$ and leaves the last term unchanged.
++Translation by $\tau$ changes the expression by
++$b_\tau-a_\tau\tau+2\pi i=0$.
++Each term is odd.
++The only singularity in a fundamental domain is $1/z$, which is locally integrable because $\int_0^\epsilon r^{-1}r\,dr<\infty$.
++
++Away from the poles,
++\[
++ \partial_{\bar z}P_\tau=-\frac{\pi}{Y}.
++\]
++At a pole, the distribution identity
++$\partial_{\bar z}(1/z)=\pi\delta^{\mathrm{area}}_0$ uses Dirac mass relative to $dx\,dy$.
++To fix its sign and coefficient, apply Stokes' theorem to a test function on the complement of a disk of radius $\epsilon$.
++The inner boundary has clockwise orientation, while the distributional derivative contributes the opposite boundary term.
++The resulting positively oriented circle integral tends to
++$\varphi(0)\oint dz/z=2\pi i\varphi(0)$.
++Thus $\bar\partial(dz/z)=2\pi i\delta_0$ in current notation.
++For the smooth term,
++\[
++ -\frac{\pi}{Y}\,d\bar z\wedge dz
++ =\frac{\pi}{Y}\,dz\wedge d\bar z
++ =-2\pi i\nu_\tau.
++\]
++These identities prove~\eqref{eq:ep-distribution}.
++
++The difference of two proposed solutions has a smooth coefficient on the torus, is annihilated by $\partial_{\bar z}$, and hence is holomorphic.
++A holomorphic function on a compact connected torus is constant by the maximum principle.
++Oddness makes that constant zero.
++\end{proof}
++
++\begin{corollary}[The constant mode]\label{cor:ep-constant}
++There is no current $K$ of degree one on $E_\tau$ with
++$\bar\partial K=2\pi i\delta_0$.
++In particular, there is no meromorphic one-form with a unique simple pole of residue one.
++\end{corollary}
++\begin{proof}
++Pair the asserted equation with the constant test function one.
++The left side is zero because the derivative of that test function is zero.
++The right side is $2\pi i$.
++\end{proof}
++
++\section{Change of lattice basis}
++
++\begin{theorem}\label{thm:ep-modular}
++Let $\gamma=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in SL_2(\mathbb Z)$,
++$\tau'=(a\tau+b)/(c\tau+d)$ and $j=c\tau+d$.
++Then
++\begin{equation}\label{eq:ep-modular}
++ P_{\tau'}(z/j)=jP_\tau(z).
++\end{equation}
++Consequently the isomorphism $\phi_\gamma:E_\tau\to E_{\tau'}$ induced by $z\mapsto z/j$ satisfies
++$\phi_\gamma^*(P_{\tau'}dz')=P_\tau dz$ and $\phi_\gamma^*\nu_{\tau'}=\nu_\tau$.
++\end{theorem}
++\begin{proof}
++The elementary lattice and area identities are
++$\Lambda_{\tau'}=j^{-1}\Lambda_\tau$ and
++$\operatorname{Im}\tau'=Y/|j|^2$.
++Set $R(z)=j^{-1}P_{\tau'}(z/j)$.
++It is odd and $\Lambda_\tau$-periodic, and its singular part is $1/z$.
++Away from the lattice, the chain rule gives
++\[
++ \partial_{\bar z}R(z)
++ =\frac1{j\bar j}\left(-\frac{\pi}{\operatorname{Im}\tau'}\right)
++ =-\frac\pi Y.
++\]
++The residue gives the same delta term as for $P_\tau$.
++The uniqueness assertion of Theorem~\ref{thm:ep-kernel} proves $R=P_\tau$.
++The one-form law follows by $dz'=dz/j$.
++The area law follows from $dx'\,dy'=|j|^{-2}dx\,dy$ and the displayed imaginary-part identity.
++\end{proof}
++
++The coefficient of $z$ can also be written in the usual holomorphic normalization.
++Put $q=e^{2\pi i\tau}$ and
++\[
++ E_2(\tau)=1-24\sum_{n\geq1}\frac{nq^n}{1-q^n}.
++\]
++The Fourier expansion of $\zeta_\tau$ in a neighborhood of zero is
++\[
++ \zeta_\tau(z)=a_\tau z+\pi\cot(\pi z)
++              +4\pi\sum_{n\geq1}\frac{q^n}{1-q^n}\sin(2\pi nz).
++\]
++This is \cite[Eq.~23.8.2]{DLMFell} with half-periods $1/2,\tau/2$.
++On $|\operatorname{Im}z|\leq Y-\epsilon$ the differentiated series converges normally by geometric decay.
++Comparison of the linear coefficient with $\zeta_\tau(z)=1/z+O(z^3)$ gives
++\begin{equation}\label{eq:ep-E2}
++ a_\tau=\frac{\pi^2}{3}E_2(\tau),\qquad
++ P_\tau(z)=\zeta_\tau(z)-\frac{\pi^2}{3}E_2(\tau)z
++                       +\frac{2\pi i}{Y}\operatorname{Im}z.
++\end{equation}
++The nonholomorphic term is part of the periodic kernel.
++A different meromorphic expression on the covering plane need not satisfy either its periodicity or its current equation.
++
++\section{A homotopy for the Dolbeault complex}
++
++Use smooth complex-valued forms on the fixed torus and their usual Fr\'echet topologies.
++The Dolbeault complex is concentrated in degrees zero and one:
++\[
++ \mathcal D_\tau^\bullet=
++ \bigl[C^\infty(E_\tau)\xrightarrow{\bar\partial}
++       C^\infty(E_\tau)d\bar z\bigr].
++\]
++For a coefficient function $f$, write
++$\langle f\rangle=Y^{-1}\int_{E_\tau}f\,dx\,dy$.
++Let $\mathcal H_\tau^\bullet=\mathbb C\oplus\mathbb C d\bar z$ with zero differential, let $i$ include the constant coefficients, and let $p$ take coefficientwise averages.
++
++\begin{theorem}\label{thm:ep-homotopy}
++Define a degree-minus-one operator by $H_\tau=0$ on degree zero and
++\begin{equation}\label{eq:ep-H}
++ H_\tau(f\,d\bar z)(z)=\frac1\pi
++             \int_{E_\tau}P_\tau(z-w)f(w)\,dx_w\,dy_w.
++\end{equation}
++The integral is absolutely convergent, defines a smooth function, and is independent of representatives of $z,w$ in the covering plane.
++The maps are continuous and satisfy
++\[
++ p i=1,\qquad \bar\partial H_\tau+H_\tau\bar\partial=1-ip,
++ \qquad H_\tau i=pH_\tau=H_\tau^2=0.
++\]
++They give a deformation retraction of the smooth Dolbeault complex onto its constant coefficient subcomplex.
++For every lattice-basis change $\phi_\gamma$, the homotopy obeys
++$\phi_\gamma^*H_{\tau'}=H_\tau\phi_\gamma^*$.
++\end{theorem}
++\begin{proof}
++Periodicity makes the integrand a well-defined function of the difference of two points of the torus.
++The locally integrable kernel and bounded smooth coefficient give absolute convergence.
++After changing variables, the integral is $\pi^{-1}\int P_\tau(u)f(z-u)\,dx_u\,dy_u$.
++Derivatives in $z$ may be applied to $f$ under the integral: each derivative is bounded and $P_\tau\in L^1$.
++This proves smoothness and the seminorm estimate
++\[
++ \|H_\tau(f\,d\bar z)\|_{C^m}
++ \leq\frac{\|P_\tau\|_{L^1}}\pi\|f\|_{C^m}.
++\]
++Thus $H_\tau$ is continuous.
++
++The scalar form of~\eqref{eq:ep-distribution} is
++$\partial_{\bar z}P_\tau=\pi\delta^{\mathrm{area}}_0-\pi/Y$.
++Convolving it with $f$ yields
++\[
++ \bar\partial H_\tau(f\,d\bar z)
++       =(f-\langle f\rangle)d\bar z.
++\]
++Integration by parts in the distribution sense, or differentiation of the convolution with the derivative placed on $f$, gives
++$H_\tau\bar\partial f=f-\langle f\rangle$.
++These are the two degree components of the homotopy identity.
++The mean of a derivative of a periodic function is zero, so $p$ is a chain map.
++The inclusion is a chain map and $pi=1$.
++
++Inversion on the torus preserves area and changes $P_\tau$ to its negative.
++Absolute integrability therefore implies $\int P_\tau=0$.
++It follows that $H_\tau i=0$ and, by Fubini, $pH_\tau=0$.
++The square is zero by the two degrees of the complex.
++
++For naturality, write a one-form on $E_{\tau'}$ as $f'(w')d\bar w'$.
++Its pullback has coefficient $f'(w/j)/\bar j$.
++In~\eqref{eq:ep-H}, substitute $w=jw'$.
++The area contributes $|j|^2$, the kernel contributes $j^{-1}$ by~\eqref{eq:ep-modular}, and the one-form coefficient contributes $\bar j^{-1}$.
++Their product is one, proving the required identity.
++On degree zero both sides vanish.
++\end{proof}
++
++For a smooth $(0,1)$-form $f\,d\bar z$ of mean zero, formula~\eqref{eq:ep-H} is the unique mean-zero smooth solution of $\bar\partial u=f\,d\bar z$.
++Existence and normalization follow from the theorem.
++For uniqueness the difference is holomorphic on the compact torus and hence constant, and its mean is zero.
++For $f=1$, the equation has no solution: integration of $\partial_{\bar z}u$ over a fundamental domain vanishes.
++
++On the square torus $\tau=i$, the Fourier mode $f(x,y)=e^{2\pi i x}$ satisfies $\partial_{\bar z}f=\pi i f$ and has mean zero.
++Consequently $H_i(f\,d\bar z)=-i f/\pi$.
++The constant mode is the complementary case: it is precisely the one subtracted in~\eqref{eq:ep-distribution}.
++
++This construction concerns the scalar smooth Dolbeault complex on a compact complex torus.
++It supplies neither a conformal-character trace on chiral chains nor a comparison with a vertex-algebra BRST complex.
++Such a comparison must specify its coefficient objects and its compatibility with collision maps and with the displayed contraction.
+--- candidate002/cbc/chapters/theory/koszul_pair_structure.tex
++++ candidate004/cbc/chapters/theory/koszul_pair_structure.tex
+@@ -1296,40 +1296,37 @@
+ 
+ The BV algebra structure on the bar complex is as follows.
+ 
+-\begin{theorem}[BV structure on bar complex; \ClaimStatusProvedHere]
+-\label{thm:bv-structure-bar}
+-\index{BV algebra!on bar complex}
+-The chiral bar complex carries a BV algebra structure where:
+-\begin{enumerate}
+-\item The BV operator $\Delta$ is the Laplacian on configuration spaces
+-(residue extraction along diagonals)
+-\item The antibracket $\{-,-\}$ is the failure of $\Delta$ to be a
+-derivation (equivalently, the symplectic pairing on $T^*C_n(X)$)
+-\item The linearized master equation $d_{\bar{B}}^2 = 0$ holds
+-(Theorem~\ref{thm:bar-nilpotency-complete}); the full QME solution
+-is established in Part~III
+-\end{enumerate}
+-\end{theorem}
+-
+-\begin{proof}
+-Items~(1) and~(2) follow from the Arnold relations on configuration spaces
+-(Theorem~\ref{thm:arnold-relations}): the BV operator $\Delta$ extracts
+-residues along collision diagonals, and $\Delta^2 = 0$ is equivalent to the
+-Arnold relation $\omega_{ij} \wedge \omega_{jk} + \omega_{jk} \wedge \omega_{ki}
+-+ \omega_{ki} \wedge \omega_{ij} = 0$.  The second-order property
+-$\Delta(abc) - \Delta(ab)c - (-1)^{|a|}a\Delta(bc) - (-1)^{(|a|+1)|b|}b\Delta(ac)
+-+ \Delta(a)bc + (-1)^{|a|}a\Delta(b)c + (-1)^{|a|+|b|}ab\Delta(c) = 0$
+-follows from the Leibniz rule for residues on triple collisions.
+-Item~(3): the bar differential satisfies $d_{\bar{B}}^2 = 0$
+-(Theorem~\ref{thm:bar-nilpotency-complete}), which is the \emph{linearized} QME
+-($\hbar\Delta S = 0$ at $S = 0$).  Items~(1) and~(2) provide the BV data
+-($\Delta$, $\{-,-\}$) making the bar complex a BV algebra.  For Koszul~$\mathcal{A}$,
+-Verdier duality $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$
+-identifies the bar-cobar pairing as a candidate solution of the full QME
+-$\frac{1}{2}\{S,S\} + \hbar\Delta S = 0$; verification of the interaction
+-term $\{S,S\}$ requires the explicit propagator calculus of
+-Part~III (Chapter~\ref{ch:bv-brst}).
+-\end{proof}
++\begin{proposition}[A polynomial Batalin--Vilkovisky operator]
++\label{prop:cbc26-polynomial-laplacian}
++On $K=\mathbb C[x_1,\ldots,x_n]\otimes\Lambda(\eta_1,\ldots,\eta_n)$, with $|x_i|=0$ and $|\eta_i|=-1$, use left odd derivatives and put
++\[
++ \Delta=\sum_i\partial_{x_i}\partial_{\eta_i}.
++\]
++This operator has degree one, order at most two, and square zero.
++For homogeneous $f,g$, define
++\[
++ \{f,g\}=(-1)^{|f|}\bigl(\Delta(fg)-(\Delta f)g-(-1)^{|f|}f\Delta g\bigr).
++\]
++This odd bracket has $\{x_i,\eta_j\}=\delta_{ij}$.
++For every polynomial $S(x)$, one has $\Delta S=\{S,S\}=0$, and $D=\{S,-\}$ satisfies $D\Delta+\Delta D=0$.
++Thus $S$ solves the polynomial quantum master equation $\tfrac12\{S,S\}+\hbar\Delta S=0$.
++\end{proposition}
++\begin{proof}
++The even derivatives commute and distinct odd derivatives anticommute; equal odd derivatives square to zero.
++Pairing indices in $\Delta^2$ proves its vanishing.
++Each summand is a composition of two derivations and hence has order at most two.
++Expanding $\Delta(fg)$ gives the degree-one derived bracket; evaluation on generators yields the stated brackets, which determine its biderivation extension.
++Both $\Delta S$ and $\{S,S\}$ vanish since $S$ contains no $\eta$.
++In $D\Delta+\Delta D$, the terms with a derivative left on the input cancel by odd anticommutation, while the remaining Hessian coefficients $\partial_i\partial_jS$ are symmetric and multiply the antisymmetric derivatives $\partial_{\eta_i}\partial_{\eta_j}$.
++Their sum is zero.
++\end{proof}
++
++\begin{remark}[A chiral Batalin--Vilkovisky comparison]\label{thm:bv-structure-bar}
++The polynomial operator above is defined on its displayed finite generator algebra.
++A residue operator on a chiral configuration complex requires a domain, a cyclic pairing, its degree and second-order identity, and compatibility with every collision map.
++The Arnold relations alone do not specify these data or an interacting master action.
++An identification with the polynomial model requires the actual coefficient and operator maps.
++\end{remark}
+ 
+ \begin{remark}[Chern--Simons interpretation]\label{rem:cs-interp}
+ The BV antibracket on the bar complex has a natural interpretation as
+@@ -1342,16 +1339,10 @@
+ examples but not for general non-quadratic chiral algebras.
+ \end{remark}
+ 
+-For non-quadratic algebras, the master action is:
+-\[
+-S = \int \left(\alpha \wedge d\alpha + \frac{2}{3}\alpha^3 + \sum_{n=3}^{\infty} \frac{1}{n!}m_{n-1}(\alpha^n)\right)
+-\]
+-
+-This is a deformed Chern--Simons action where the deformations encode the non-quadratic structure of the chiral algebra.
+-
+-\subsection{Implications for Koszul duality}
+-
+-The Chern--Simons perspective: quadratic algebras give pure CS, non-quadratic algebras give deformed CS (each higher relation adds a vertex), critical level abelianizes the theory, and algebra/coalgebra exchange is CS level-rank duality.
++Higher interactions on a three-manifold require operations with output in $\Omega^3(M)$, together with a specified cyclic pairing and differential compatibility.
++Proposition~\ref{prop:cbc26-quartic-degree} constructs a contracted three-form and distinguishes it from the vanishing fourfold wedge.
++The ordinary $\mathfrak{sl}_2$ connection $e\,dx+f\,dy$ has curvature $h\,dx\wedge dy$ independently of a level parameter.
++A critical-level abelianization must therefore change the carrier or construct a comparison that explains this curvature.
+ 
+ \section{Open questions}
+ 
+--- candidate002/cbc/chapters/theory/relative_p1_comparison.tex
++++ candidate004/cbc/chapters/theory/relative_p1_comparison.tex
+@@ -0,0 +1,287 @@
++The relative Virasoro vacuum complex has classes in degrees zero and two.
++The full unital Virasoro chiral algebra has chiral-chain classes on the projective line in degrees zero, one, three, and four.
++A comparison map must therefore lose the relative degree-two class.
++An explicit one-point chain gives such a map and its null-homotopy.
++
++\section{The relative complex and its absolute primitive}
++
++Work over $\mathbb C$, using algebraic tensor products and direct sums.
++All complexes are cohomological, with $K[r]^j=K^{j+r}$ and differential $(-1)^r d_K$.
++Ghost degree is cohomological degree.
++Conformal weight is a separate integer grading.
++Interchanging homogeneous factors of degrees $a,b$ contributes $(-1)^{ab}$.
++
++Let $A=\operatorname{Vir}_{26}\otimes bc$ use the universal matter vacuum module and the conformal ghost vacuum $\Omega$.
++The ghost relations and annihilators are
++\[
++ \{b_m,c_n\}=\delta_{m+n,0},\qquad
++ \{b_m,b_n\}=\{c_m,c_n\}=0,
++ \qquad b_n\Omega=0\ (n\geq-1),\quad c_n\Omega=0\ (n\geq2).
++\]
++The matter vacuum is implicit in each displayed ghost state.
++The generators $b_n,c_n$ have degrees $-1,1$ and weights $-n$.
++Set
++\[
++ Q=\sum_n c_{-n}L_n
++ -\frac12\sum_{m,n}(m-n):c_{-m}c_{-n}b_{m+n}:,
++ \qquad H=\mathcal L_0=L_0+L_0^{\mathrm{gh}}.
++\]
++Normal ordering moves creators to the left and omits contractions.
++The sums are locally finite on algebraic states.
++Theorem~\ref{thm:vir-square} and Lemma~\ref{lem:vir-Q-contractions} give
++$Q^2=0$ and $\{Q,b_0\}=H$.
++
++Fix a coordinate $z$ and define the vector-space complex
++\[
++ R=\ker b_0\cap\ker H\subset A.
++\]
++The weight-zero absolute complex has basis
++\[
++ e=\Omega,\qquad u=c_0\Omega,\qquad
++ v=c_{-1}c_1\Omega,\qquad w=c_{-1}c_0c_1\Omega.
++\]
++Its differential and relative subcomplex are
++\begin{equation}\label{eq:rp-four}
++ Qe=Qv=Qw=0,\qquad Qu=-2v,
++ \qquad (R,Q)=\mathbb Ce\oplus\mathbb Cv.
++\end{equation}
++The degrees of $e,u,v,w$ are $0,1,2,3$.
++Indeed, matter weights are nonnegative, matter weight one vanishes, and the only negative ghost weight is that of $c_1$.
++These facts leave exactly the four displayed weight-zero monomials.
++The operator $b_0$ removes the terms containing $c_0$.
++Its anticommutator with $Q$ contracts every nonzero absolute weight.
++Consequently
++\[
++ H^\bullet(R)=\mathbb C[e]\oplus\mathbb C[v],\qquad
++ H^\bullet(A,Q)=\mathbb C[e]\oplus\mathbb C[w].
++\]
++The formula $v=Q(-u/2)$ determines the relative class image under any comparison that extends to absolute states.
++
++\section{A normalized chain in the one-point summand}
++
++Set $X=\mathbb P^1$, with ordered cover
++$U_0=\operatorname{Spec}\mathbb C[z]$, $U_\infty=\operatorname{Spec}\mathbb C[z^{-1}]$.
++Their intersection is $U_{01}=\operatorname{Spec}\mathbb C[z,z^{-1}]$.
++Let $\mathcal A^\ell$ be the left state module with connection $\partial_z+\partial$ and let $\mathcal A=\omega_X\otimes\mathcal A^\ell$.
++Here $\partial$ is vertex translation.
++Coordinate descent and the differential are specified in Section~\ref{sec:cbc26-unital-p1}.
++
++Use the two resolutions $P,\mathcal Q$ from the construction of~\eqref{eq:uc-chain}.
++Explicitly,
++\[
++ P^0=\operatorname{Sym}^{>0}_{\mathcal O_X}(\mathcal D_X),\qquad
++ P^{-1}=\ker(P^0\longrightarrow\mathcal O_X),
++ \qquad d_P:P^{-1}\hookrightarrow P^0.
++\]
++The augmentation on a generating differential operator $D$ is $D(1)$.
++Write $p=[1_{\mathcal D}]\in P^0$ for the global generator given by the identity differential operator.
++Thus $d_Pp=0$ and the augmentation sends $p$ to $1$.
++The symbol $p$ denotes a degree-zero element of the nonunital resolution.
++
++The degree-one term of the two-chart Thom--Sullivan resolution is
++\[
++ \mathcal Q^1=j_{01*}\mathcal O_{U_{01}}[t]\,dt.
++\]
++In degree zero it consists of triples $(f_0,f_\infty,F(t))$ with $F(0)=f_0$ and $F(1)=f_\infty$ on the overlap.
++The differential differentiates $F(t)$.
++Its connection differentiates the coefficients and fixes $t,dt$.
++The variable $t$ here is an auxiliary interval coordinate.
++Normalize $\int_0^1dt=1$ and $\operatorname{Res}_{z=0}(dz/z)=1$.
++
++For a right $\mathcal D$-module $N$, put $h(N)=N\otimes_{\mathcal D_X}\mathcal O_X$, degreewise.
++The one-point subcomplex of the actual chiral chains is
++\[
++ S(\mathcal A)=\Gamma(X,h(\mathcal A\otimes P\otimes\mathcal Q))[1]
++ \lhook\joinrel\longrightarrow\mathsf C_X(\mathcal A).
++\]
++The target is the Chevalley--Cousin complex~\eqref{eq:uc-chain}, with its full positive-arity unit carrier.
++The one-point inclusion is a chain map.
++A collision merges two distinct blocks, so there is no outgoing collision from a one-block term.
++This is also immediate from Beilinson--Drinfeld~\cite{BD026}, equations (4.2.12.2) and (4.2.12.5), pp.~306--307.
++
++Write $\varsigma$ for suspension, so $|\varsigma x|=|x|-1$ and $d(\varsigma x)=-\varsigma(dx)$.
++The section $(dz/z)\otimes p\otimes dt$ is global in the term supported on $U_{01}$.
++Define
++\begin{equation}\label{eq:rp-tau}
++ \tau=\varsigma\bigl[(dz/z)\otimes p\otimes dt\bigr]
++ \in S(\omega_X)^0.
++\end{equation}
++Square brackets in this formula denote the image in $h$.
++
++\begin{lemma}\label{lem:rp-unit}
++The element $\tau$ is closed.
++Its image in $H^0\mathsf C_X(\omega_X)$ has trace $1$ and is the chiral unit class.
++\end{lemma}
++
++\begin{proof}
++Both $p$ and $dt$ are closed.
++The one-point term has no outgoing collision.
++These observations prove closedness directly in the actual complex.
++
++The right de Rham convention is
++$\operatorname{DR}_X(\omega_X)=\Omega_X^\bullet[1]$.
++Consequently $S(\omega_X)$ represents $R\Gamma(X,\Omega_X^\bullet)[2]$.
++To identify the specific cycle, use the intermediate complex
++\[
++ \Gamma\bigl(X,\operatorname{DR}_X(\omega_X\otimes P\otimes\mathcal Q)\bigr)[1].
++\]
++The same tensor defines a closed element in its terminal Spencer term.
++The Spencer augmentation maps it to~\eqref{eq:rp-tau}.
++The augmentation of $P$ maps it to the form $(dz/z)\,dt$.
++The two maps are the resolution comparisons used in Beilinson--Drinfeld, \S4.2.12, p.~306.
++For the right action on $\omega_X$, the Spencer differential sends $f\,dz\otimes\partial_z$ to $-f'\,dz$.
++The identifications $f\,dz\otimes\partial_z\mapsto f$ and $f\,dz\mapsto f\,dz$ give $\operatorname{DR}_X(\omega_X)=\Omega_X^\bullet[1]$.
++In particular, the top form has its displayed positive sign.
++Integrating the interval form gives the \v Cech one-cocycle $dz/z$ with values in $\Omega_X^1$.
++It has trace $1$ under the stated residue normalization.
++The trace of the singleton term agrees with the trace on the Cousin diagram by Beilinson--Drinfeld, \S4.3.3, pp.~315--316.
++That proposition identifies $H^0\mathsf C_X(\omega_X)$ with $\mathbb C$ and all other unit cohomology with zero.
++Thus the image of $\tau$ is the normalized unit class.
++\end{proof}
++
++\section{The actual comparison and its class images}
++
++For an algebraic state $a\in A$, let $a_z$ be the constant section in the $z$-coordinate trivialization over $U_0$.
++Restriction makes it a section over $U_{01}$.
++For homogeneous $a$, define
++\begin{equation}\label{eq:rp-J}
++ J_z(a)=(-1)^{|a|}\varsigma
++ \bigl[(dz/z)\otimes a_z\otimes p\otimes dt\bigr]
++ \in S(\mathcal A)^{|a|}\subset\mathsf C_X(\mathcal A)^{|a|}.
++\end{equation}
++Extend by linearity to all algebraic states.
++All tensors in this formula are finite.
++The sole pole $z^{-1}$ is regular on the specified overlap.
++No extension of $a_z$ across infinity is required by $\mathcal Q^1$.
++For the Poincar\'e--Birkhoff--Witt (PBW) filtration, give matter and $b$ creators order one and $c$ creators order zero.
++The auxiliary resolutions have order zero.
++
++\begin{proposition}\label{prop:rp-J}
++The map $J_z:(A,Q)\to\mathsf C_X(\mathcal A)$ is a degree-preserving map of vector-space complexes.
++It preserves the PBW filtration from~\eqref{eq:uc-symbolmap}.
++Its restriction $\Phi_z=J_z|_R$ satisfies
++\begin{equation}\label{eq:rp-null}
++ \Phi_z(e)=1_{\mathcal A*}(\tau),\qquad
++ \Phi_z(v)=d\bigl(-J_z(u)/2\bigr).
++\end{equation}
++Here $1_{\mathcal A*}$ is the actual chain map induced by the chiral unit $\omega_X\to\mathcal A$.
++\end{proposition}
++
++\begin{proof}
++In the unsuspended tensor, only the differential of $a$ contributes.
++The remaining factors have $d_Pp=0$ and $d_{\mathcal Q}dt=0$.
++For $|a|=k$, suspension therefore gives
++\[
++ dJ_z(a)=(-1)^{k+1}\varsigma
++ \bigl[(dz/z)\otimes(Qa)_z\otimes p\otimes dt\bigr]
++ =J_z(Qa).
++\]
++Passing to $h$ preserves this equation because $Q$ commutes with the connection.
++There is no outgoing collision from its one-point image.
++This proves the chain-map identity in the full complex.
++The auxiliary factors have PBW order zero, so $J_z$ preserves the state order.
++The first formula in~\eqref{eq:rp-null} follows by substituting $a=e$.
++The second follows from $Qu=-2v$ in~\eqref{eq:rp-four}.
++\end{proof}
++
++The null-homotopy is also explicit as a map of complexes.
++Let $\Phi_z^0$ send $e$ to $1_{\mathcal A*}(\tau)$ and $v$ to zero.
++Define the degree-minus-one linear map $K:R\to\mathsf C_X(\mathcal A)$ by
++\[
++ K(e)=0,\qquad K(v)=-J_z(u)/2.
++\]
++Then $\Phi_z-\Phi_z^0=dK+KQ$.
++These are statements about vector-space complexes and do not assert multiplicativity of $J_z$.
++
++\begin{theorem}\label{thm:rp-images}
++Use the degree and trace conventions above.
++Identify the target cohomology by Theorem~\ref{thm:uc-global} as
++$\Lambda(\xi_1,\xi_3)$, with degrees $1,3$.
++Then the actual relative comparison~\eqref{eq:rp-J} induces
++\[
++ H(\Phi_z)[e]=1,\qquad H(\Phi_z)[v]=0.
++\]
++Its graded kernel, image, and cokernel are
++\begin{align*}
++ \ker H(\Phi_z)&=\mathbb C[v], & |[v]|&=2,\\
++ \operatorname{im}H(\Phi_z)&=\mathbb C1,\\
++ \operatorname{coker}H(\Phi_z)&=
++ \mathbb C\xi_1\oplus\mathbb C\xi_3\oplus\mathbb C\xi_1\xi_3.
++\end{align*}
++The cokernel degrees are $1,3,4$.
++The same assertions hold for the induced map to PBW associated graded chiral chains.
++
++For the absolute comparison $J_z$, normalize $\xi_3$ by the image of $\tau\otimes\eta$, where $\eta=\alpha\beta\gamma$.
++Then $H(J_z)[w]=\xi_3$.
++Thus $H(J_z)$ is injective, with image $\mathbb C1\oplus\mathbb C\xi_3$ and cokernel $\mathbb C\xi_1\oplus\mathbb C\xi_1\xi_3$.
++\end{theorem}
++
++\begin{proof}
++The chain identities~\eqref{eq:rp-null} give the relative images.
++Lemma~\ref{lem:rp-unit} and the unital zigzag~\eqref{eq:uc-zigzag} show that the vacuum image is nonzero.
++The source has precisely the two classes in~\eqref{eq:rp-four}.
++The target basis in Theorem~\ref{thm:uc-global} therefore gives the stated kernel and cokernel.
++
++For the absolute degree-three class, all four weight-zero states lie in the ghost subalgebra $B$.
++The one-point construction commutes with the inclusion $B\hookrightarrow A$ and the global evaluation $\epsilon:B\to E_X$.
++Here
++\[
++ E=\Lambda(\alpha,\beta,\gamma),\quad
++ d\alpha=-\alpha\beta,\quad d\beta=-2\alpha\gamma,\quad d\gamma=-\beta\gamma,
++ \qquad f(z)=\alpha+z\beta+z^2\gamma.
++\]
++The identification $S(E_X)=S(\omega_X)\otimes E$ moves $E$ past $P\otimes\mathcal Q$ with the Koszul sign.
++The evaluation formulas of~\eqref{eq:uc-eval} give
++\begin{equation}\label{eq:rp-Eimages}
++ \epsilon(e)=1,\qquad
++ \epsilon(u)=-\beta-2z\gamma,\qquad
++ \epsilon(v)=-\alpha\gamma-z\beta\gamma,\qquad
++ \epsilon(w)=\eta.
++\end{equation}
++In particular, $\epsilon(v)=d((\beta+2z\gamma)/2)$ at every $z$.
++The degree-three image is constant on both charts.
++After moving the coefficient algebra past $dt$, the Koszul sign is $(-1)^3$.
++It cancels the prefactor in~\eqref{eq:rp-J}.
++Hence $\mathsf C_X(\epsilon)J_z(w)=\tau\otimes\eta$ in the constant coefficient one-point term.
++
++The generator complex for $\omega_X[-3]$ represents $R\Gamma(X,\Omega_X^\bullet)[-1]$.
++Its top de Rham class is $\tau\otimes\eta$, of degree three.
++The positive symmetric-degree comparison~\eqref{eq:uc-free-map} sends this class to $\xi_3$.
++It is nonzero by that quasi-isomorphism.
++This determines both absolute class images and their kernel and cokernel.
++
++Finally, $e,u,v,w$ have PBW order zero.
++The symbol of~\eqref{eq:rp-J} is the same tensor formula with the state replaced by its symbol.
++The diagram with~\eqref{eq:uc-symbolmap} therefore commutes on actual chains.
++The PBW target cohomology lies entirely in order zero, and its unital comparison has the same normalized classes.
++This proves the associated graded assertion.
++\end{proof}
++
++\section{Coordinate dependence and the relative descent obstruction}
++
++The map $J_z$ uses an ordered affine cover, its interval resolution, and the coordinate trivialization on $U_0$.
++The cycle $\tau$ is a chosen algebraic representative of the top de Rham class.
++These choices define a map from the fixed-coordinate state complex to the unmarked global chiral-chain complex.
++The construction does not require a marked-point coefficient module in the target.
++
++A change of coordinate does not preserve the fixed relative subspace by restriction of the ordinary state transitions.
++For the convention $z\mapsto z/(1+sz)$ acting by $g_s=\exp(s\mathcal L_1)$,
++\[
++ \mathcal L_1v=-c_0c_1\Omega,\qquad
++ \mathcal L_1(c_0c_1\Omega)=0.
++\]
++The ghost commutator $[\mathcal L_m,c_n]=(-2m-n)c_{m+n}$ gives both identities.
++Consequently
++\begin{equation}\label{eq:rp-transition}
++ g_sv=v-sc_0c_1\Omega,\qquad
++ b_0g_sv=-sc_1\Omega,\qquad Hg_sv=sc_0c_1\Omega.
++\end{equation}
++For $s\ne0$, this vector is outside $R$.
++Thus these transition operators do not define a relative subbundle with model fiber $R$.
++
++Any map of vector-space complexes from $R$ to this unmarked target must kill its degree-two cohomology class.
++The target degree-two cohomology vanishes.
++A map sending $[e]$ to the normalized unit has the class images in Theorem~\ref{thm:rp-images}, regardless of its chain representative.
++Equation~\eqref{eq:rp-null} supplies a primitive for the specific comparison constructed here.
++Neither this degree obstruction nor~\eqref{eq:rp-transition} excludes a different marked or geometric relative complex.
++Such a complex requires defined coefficient sheaves, transported constraints, and compatible transition maps before a global comparison can be stated.
+--- candidate002/cbc/chapters/theory/unital_p1_chains.tex
++++ candidate004/cbc/chapters/theory/unital_p1_chains.tex
+@@ -0,0 +1,579 @@
++The vacuum term in a collision contributes to chiral chains on the projective line.
++For the critical Virasoro algebra with ghosts, its differential admits a simpler description through global vector fields.
++The resulting cohomology has generators in degrees one and three.
++Both the collision differential and the degree shifts enter this calculation.
++
++\section{The critical differential and the ghost subalgebra}
++
++Work over $\mathbb C$, with algebraic tensor products and direct sums.
++Set $X=\mathbb P^1$.
++Complexes are cohomological, with $K[r]^j=K^{j+r}$ and differential $(-1)^r d_K$.
++The sign for interchanging homogeneous elements of degrees $a,b$ is $(-1)^{ab}$.
++Ghost degree gives both cohomological degree and parity modulo two.
++Conformal weight is a separate integer grading.
++
++Let $V=\operatorname{Vir}_{26}$ be the universal Virasoro vacuum vertex algebra.
++Its vacuum $\mathbf1$ satisfies $L_n\mathbf1=0$ for $n\geq-1$.
++The ordered monomials in $L_{-n}$, $n\geq2$, form its vector-space basis.
++Write $T=L_{-2}\mathbf1$.
++Let $\mathcal F$ be the $bc$ vertex superalgebra with
++\[
++ \{b_m,c_n\}=\delta_{m+n,0},\qquad
++ \{b_m,b_n\}=\{c_m,c_n\}=0,
++ \qquad
++ b_n\Omega=0\ (n\geq-1),\quad c_n\Omega=0\ (n\geq2).
++\]
++Its creators are $b_n$ for $n\leq-2$ and $c_n$ for $n\leq1$.
++The generating states are $b=b_{-2}\Omega$ and $c=c_1\Omega$, of degrees $-1,1$ and weights $2,-1$.
++Put $A=V\otimes\mathcal F$ and write $\Omega$ also for its vacuum.
++The field conventions are
++\[
++ Y(T,z)=\sum_nL_nz^{-n-2},\quad
++ Y(b,z)=\sum_nb_nz^{-n-2},\quad
++ Y(c,z)=\sum_nc_nz^{1-n},\quad
++ Y(a,z)=\sum_na_{(n)}z^{-n-1}.
++\]
++In particular, the vertex product $b_{(0)}$ is the conformal mode $b_{-1}$ and differs from the constraint operator $b_0$.
++
++Normal ordering moves all creators to the left with their odd permutation signs and omits contractions.
++On $A$, define
++\begin{equation}\label{eq:uc-Q}
++ Q=\sum_n c_{-n}L_n
++ -\frac12\sum_{m,n}(m-n):c_{-m}c_{-n}b_{m+n}:.
++\end{equation}
++These sums are locally finite on each algebraic state.
++The total stress tensor and its zero mode are
++\[
++ T^{\mathrm{tot}}=T-2:b\partial c:-:\partial b\,c:,
++ \qquad H=L_0+L_0^{\mathrm{gh}}.
++\]
++Write $Y(T^{\mathrm{tot}},z)=\sum_n\mathcal L_nz^{-n-2}$, so $H=\mathcal L_0$.
++Theorem~\ref{thm:vir-square} gives $Q^2=0$ and $\{Q,b_0\}=H$.
++The field in~\eqref{eq:vir-charge-residue} has zero mode $Q$.
++The vertex commutator identity for a zero mode therefore gives
++\begin{equation}\label{eq:uc-derivation}
++ Q(a_{(n)}a')=(Qa)_{(n)}a'+(-1)^{|a|}a_{(n)}Qa'.
++\end{equation}
++In particular, $Q$ commutes with translation $\partial$, and
++\begin{equation}\label{eq:uc-Qfields}
++ Qc=:c\partial c:,
++ \qquad Qb=T^{\mathrm{tot}},
++ \qquad QT=:c\partial T:+2:\partial c\,T:+\frac{13}{6}\partial^3c.
++\end{equation}
++For the last identity, take the residue of $c(z)T(z)T(w)$.
++The coefficients of $(z-w)^{-4},(z-w)^{-2},(z-w)^{-1}$ are $13,2T,\partial T$.
++Taylor expansion of $c(z)$ gives the stated coefficients.
++
++Let $B\subset A$ be the subalgebra generated by $c$ and its derivatives.
++It is the commutative vertex algebra
++\begin{equation}\label{eq:uc-B}
++ B=\Lambda(c^{(j)}:j\geq0),\qquad
++ c^{(j)}=\partial^jc=j!c_{1-j}\Omega,
++ \qquad Qc^{(j)}=\partial^j(c\partial c).
++\end{equation}
++Every generator has degree one.
++All singular products between these generators vanish.
++The regular vertex operation is $Y(f,t)g=(e^{t\partial}f)g$.
++
++The total central charge is zero.
++The identities $[Q,\mathcal L_n]=0$ in~\eqref{eq:vir-Q-L} permit coordinate descent of $(A,Q)$.
++The $c$-ghosts are preserved by these coordinate changes.
++For a change $w=w(z)$ their field transforms by
++\begin{equation}\label{eq:uc-c-transition}
++ c_w(w)=\frac{dw}{dz}c_z(z).
++\end{equation}
++Repeated differentiation determines every jet transition in $B$.
++Denote the resulting left state modules by $\mathcal A^\ell,\mathcal B^\ell$.
++The second is a commutative differential graded $\mathcal D_X$-algebra.
++Their right modules are $\mathcal A=\omega_X\otimes\mathcal A^\ell$ and $\mathcal B=\omega_X\otimes\mathcal B^\ell$.
++They carry the usual chiral products associated with their vertex algebras.
++In a coordinate, the connection on a state section is $\partial_z+\partial$.
++Thus the line generated by $c$ in the left module is $\omega_X$.
++The connection and the primary-state line convention agree with Frenkel~\cite{Frenkel026}, \S\S4.2--4.3, pp.~875-18--875-19.
++The conformal weights here are bounded below by $-1$.
++Positive Virasoro modes lower weight and hence act locally nilpotently, so the same coordinate-bundle construction applies.
++
++\begin{proposition}\label{prop:uc-B-qiso}
++The inclusion $\mathcal B\longrightarrow\mathcal A$ is a quasi-isomorphism of unital differential graded chiral superalgebras.
++\end{proposition}
++
++\begin{proof}
++The formulas above prove compatibility with the unit, products, differential, and coordinate changes.
++It remains to calculate the cohomology in a coordinate trivialization.
++Both $A$ and $B$ have integral energy decompositions with finite energy support on each element.
++On a nonzero energy $\lambda$, the operator $\lambda^{-1}b_0$ contracts both complexes.
++On $B$, $b_0$ differentiates the exterior variable $c_0$ and preserves $B$.
++The contraction identity is the restriction of $\{Q,b_0\}=H$.
++
++The matter algebra has $V_0=\mathbb C\mathbf1$, $V_1=0$, and no negative weights.
++The only negative-energy ghost creator is $c_1$, which occurs at most once.
++Every $b$ creator has energy at least two.
++Consequently the energy-zero subspaces of $A$ and $B$ are identical, with basis
++\[
++ e=\Omega,\qquad u=c_0\Omega,\qquad
++ v=c_{-1}c_1\Omega,\qquad w=c_{-1}c_0c_1\Omega.
++\]
++Their degrees are $0,1,2,3$, and the differential is
++\begin{equation}\label{eq:uc-zeroenergy}
++ Qe=0,\qquad Qu=-2v,\qquad Qv=Qw=0.
++\end{equation}
++Here $Qu$ follows from $\{Q,c_0\}=-2\sum_{n>0}n c_{-n}c_n$.
++Nilpotence gives $Qv=0$, and degree gives $Qw=0$.
++The map $h(v)=-u/2$, zero on the other three basis vectors, contracts the pair $u,v$.
++Thus both cohomologies have basis $[e],[w]$, and inclusion identifies them.
++This local calculation proves the assertion for the underlying sheaf complexes.
++The contraction need not be invariant under coordinate changes for this purpose.
++\end{proof}
++
++\section{Global vector fields and a constant differential graded algebra}
++
++Let $\mathfrak g=H^0(X,T_X)$ with its vector-field bracket.
++On the affine chart with coordinate $z$, use
++\[
++ e_- =\partial_z,\qquad e_0=z\partial_z,\qquad e_+=z^2\partial_z.
++\]
++Then $[e_-,e_0]=e_-$, $[e_-,e_+]=2e_0$, and $[e_0,e_+]=e_+$.
++Let $E=C^\bullet_{\mathrm{CE}}(\mathfrak g,\mathbb C)$ be its Chevalley--Eilenberg cochain algebra.
++If $\alpha,\beta,\gamma$ are the dual degree-one generators, its differential is
++\begin{equation}\label{eq:uc-E}
++ E=\Lambda(\alpha,\beta,\gamma),\qquad
++ d\alpha=-\alpha\beta,\quad d\beta=-2\alpha\gamma,\quad
++ d\gamma=-\beta\gamma.
++\end{equation}
++Write $E_X^\ell=\mathcal O_X\otimes E$ with the connection on the first factor, and $E_X=\omega_X\otimes E$.
++
++\begin{proposition}\label{prop:uc-evaluation}
++There is a quasi-isomorphism of unital differential graded chiral algebras
++\[
++ \epsilon:\mathcal B\longrightarrow E_X.
++\]
++In the coordinate $z$, it is determined on left modules by
++\begin{equation}\label{eq:uc-eval}
++ \epsilon(c)=-f(z),\qquad
++ f(z)=\alpha+z\beta+z^2\gamma,
++ \qquad \epsilon(\partial^jc)=\partial_z^j\epsilon(c).
++\end{equation}
++\end{proposition}
++
++\begin{proof}
++The last formula is the equation $\partial_z\epsilon(c)=\epsilon(\nabla_{\partial_z}c)$ for a morphism of left $\mathcal D_X$-modules.
++Thus $\epsilon(\partial c)=-f'(z)$ and $\epsilon(\partial^2c)=-2\gamma$.
++Equation~\eqref{eq:uc-E} gives $df=-ff'$.
++Consequently
++\[
++ d\epsilon(c)=ff',\qquad
++ \epsilon(Qc)=(-f)(-f')=ff'.
++\]
++The two differentials commute with translation, so they agree on every jet.
++Both are derivations, so they agree on $B$.
++
++The vector field $f(z)\partial_z$ is the tautological element of $\mathfrak g\otimes\mathfrak g^*$, with its coefficients placed in degree one.
++Under $w=w(z)$, its coefficient becomes $f_w=w'f_z$.
++This agrees with~\eqref{eq:uc-c-transition}, and the jet equations agree by differentiation.
++For the two standard charts $w=1/z$, one obtains
++\[
++ \epsilon(c_w)=\alpha w^2+\beta w+\gamma
++ =(-z^{-2})\epsilon(c_z).
++\]
++The formulas are regular in both charts.
++They therefore define the claimed global morphism.
++Commutative vertex products are determined by multiplication and translation, so this is also a chiral-algebra morphism.
++
++The differential $E^1\to E^2$ in~\eqref{eq:uc-E} is an isomorphism.
++Its matrix in the ordered bases $(\alpha,\beta,\gamma)$ and $(\alpha\beta,\alpha\gamma,\beta\gamma)$ is $\operatorname{diag}(-1,-2,-1)$.
++The other nonzero cohomology classes of $E$ are $1$ and $\eta=\alpha\beta\gamma$.
++At $z=0$,
++\[
++ \epsilon(w)=\epsilon\bigl(\tfrac12(\partial^2c)(\partial c)c\bigr)
++ =(-\gamma)(-\beta)(-\alpha)=\eta.
++\]
++The same product equals $\eta$ at every finite $z$.
++In the $w$ chart its value is also $\eta$.
++The four-state calculation in~\eqref{eq:uc-zeroenergy} therefore proves that $\epsilon$ induces an isomorphism on every cohomology stalk.
++\end{proof}
++
++Let $K=\Lambda(\eta)$ with $|\eta|=3$ and zero differential.
++The map $K\to E$ given by $\eta\mapsto\alpha\beta\gamma$ is a unital quasi-isomorphism of commutative differential graded algebras.
++Combining the two propositions gives a zigzag of actual chiral-algebra morphisms
++\begin{equation}\label{eq:uc-zigzag}
++ \mathcal A\ \longleftarrow\ \mathcal B\
++ \xrightarrow{\epsilon}\ E_X\ \longleftarrow\ K_X,
++ \qquad K_X=\omega_X\otimes K.
++\end{equation}
++Every arrow is a quasi-isomorphism.
++The arrows have their displayed directions: a chosen inverse exists only after passing to the derived category.
++
++\section{The Chevalley--Cousin differential}
++
++For a nonempty finite set $I$, let $\operatorname{Part}(I)$ be its set of partitions.
++Regard a partition $\pi$ as the quotient map from $I$ to its set of blocks.
++Let $\Delta_\pi:X^\pi\hookrightarrow X^I$ identify coordinates within each block.
++Let $U^\pi\subset X^\pi$ be the open set of distinct block coordinates, with inclusion $j_\pi$.
++For a right differential graded chiral algebra $\mathcal M$, define
++\begin{equation}\label{eq:uc-Cousin}
++ C(\mathcal M)_{X^I}
++ =\bigoplus_{\pi\in\operatorname{Part}(I)}
++ (\Delta_\pi)_*(j_\pi)_*j_\pi^*
++ (\mathcal M[1])^{\boxtimes\pi}.
++\end{equation}
++Here $\Delta_*$ is direct image for right $\mathcal D$-modules.
++The open direct image allows poles of arbitrary finite order along the omitted diagonals.
++Every summand is algebraic: no inverse limit in pole order or arity is taken.
++Formula~\eqref{eq:uc-Cousin} is Beilinson--Drinfeld's complex~\cite{BD026}, equation (3.4.11.1), p.~182.
++
++Write $sa$ for an element of $\mathcal M[1]$, so $|sa|=|a|-1$.
++The internal differential is the tensor differential extending $sa\mapsto-s(d_\mathcal M a)$.
++The collision differential merges two blocks using the suspended chiral product
++\begin{equation}\label{eq:uc-suspended}
++ d_2(sa\,sb)=(-1)^{|a|}s\mu(a,b).
++\end{equation}
++For any pair of blocks, move their suspended factors to the first two positions using the Koszul rule, apply~\eqref{eq:uc-suspended}, and retain the other factors.
++The sum over all pairs defines $d_{\mathrm{col}}$.
++In~\eqref{eq:uc-suspended}, the argument is localized away from the two-block diagonal and the output is its direct image.
++Localizations at the other diagonals remain in place.
++This specifies a morphism of right $\mathcal D_{X^I}$-modules on each summand.
++
++\begin{proposition}\label{prop:uc-Ccomplex}
++With $d=d_{\mathrm{int}}+d_{\mathrm{col}}$, formula~\eqref{eq:uc-Cousin} defines a complex.
++The diagonal structure maps and the factorization identifications commute with $d$.
++The construction is functorial for differential graded chiral-algebra morphisms.
++\end{proposition}
++
++\begin{proof}
++The internal square is zero by the differential on $\mathcal M$.
++Equation~\eqref{eq:uc-derivation}, with the suspension signs in~\eqref{eq:uc-suspended}, gives
++$d_{\mathrm{int}}d_{\mathrm{col}}+d_{\mathrm{col}}d_{\mathrm{int}}=0$.
++Two mergers of disjoint pairs cancel in opposite orders because each merger has degree one.
++For three blocks, the three terms in the remaining square are the suspended chiral Jacobi identity.
++These cases exhaust all terms in $d_{\mathrm{col}}^2$.
++
++A diagonal structure map includes the summands whose partitions factor through the specified quotient of labels.
++Merging blocks commutes with this inclusion.
++Over separated groups of points, partitions split into the partitions of those groups.
++The tensor-product identification of the corresponding summands commutes with internal differentials and collisions inside each group.
++For three groups, both composite identifications use the same partition and the same tensor symmetry.
++They therefore agree.
++The same argument with a morphism on every block proves functoriality.
++\end{proof}
++
++For $|I|=2$, the complex contains precisely
++\[
++ j_*j^*(\mathcal M[1]\boxtimes\mathcal M[1])
++ \xrightarrow{d_{\mathrm{col}}}\Delta_*\mathcal M[1].
++\]
++For $|I|=3$, its terms have three, two, and one blocks.
++The two-block term has one summand for each pair of labels.
++Thus the first coherence after a binary collision is the three-block Jacobi identity, with all three intermediate diagonals present.
++
++\section{An actual global chain complex}
++
++The de Rham functor on right $\mathcal D$-modules has the convention
++\[
++ \operatorname{DR}_X(\mathcal M)
++ =[\mathcal M\otimes_{\mathcal O_X}T_X\longrightarrow\mathcal M]
++\]
++in auxiliary degrees $-1,0$.
++In particular, $\operatorname{DR}_X(\omega_X)=\Omega_X^\bullet[1]$.
++To keep collision operations strict after taking sections, choose the following two resolutions.
++
++Let $P^0=\operatorname{Sym}_{\mathcal O_X}^{>0}(\mathcal D_X)$, where the left $\mathcal D_X$-action is the diagonal action.
++Its augmentation sends a differential operator $D$ in the generating summand to $D(1)$.
++Set
++\[
++ P^{-1}=\ker(P^0\to\mathcal O_X),\qquad d_P:P^{-1}\hookrightarrow P^0.
++\]
++Multiplication in degree zero is the symmetric-algebra multiplication.
++Its action on $P^{-1}$ is the ideal action, and the product of two degree-minus-one elements is zero.
++The Leibniz identity on two such elements is $uv-uv=0$.
++This defines a nonunital commutative differential graded $\mathcal D_X$-algebra resolution of $\mathcal O_X$.
++Its terms are $\mathcal D_X$-flat by the curve construction in~\cite{BD026}, \S2.2.10, p.~72.
++Nonunitality belongs to this auxiliary resolution and imposes no augmentation on $\mathcal A$.
++
++Use the two affine charts $U_0,U_\infty$ and their intersection $U_{01}$.
++Write $j_i,j_{01}$ for their embeddings in $X$.
++Let $\mathcal Q^0$ consist of triples
++\[
++ (f_0,f_\infty,F(s))\in
++ j_{0*}\mathcal O_{U_0}\oplus j_{\infty*}\mathcal O_{U_\infty}
++ \oplus j_{01*}\mathcal O_{U_{01}}[s]
++\]
++such that $F(0)=f_0|_{U_{01}}$ and $F(1)=f_\infty|_{U_{01}}$.
++Set $\mathcal Q^1=j_{01*}\mathcal O_{U_{01}}[s]\,ds$, with differential $F\mapsto F'(s)ds$.
++Multiplication is polynomial multiplication with $ds^2=0$.
++The connection differentiates the coefficients, holding $s$ fixed.
++This is the two-chart Thom--Sullivan resolution from~\cite{BD026}, \S4.1.3, pp.~278--279.
++Each term is $\mathcal O_X$-flat.
++For $\mathcal Q^0$, this also follows from its exact sequence with quotient
++$j_{0*}\mathcal O_{U_0}\oplus j_{\infty*}\mathcal O_{U_\infty}$ and kernel
++$s(s-1)j_{01*}\mathcal O_{U_{01}}[s]$.
++
++For any $\mathcal M$, put $\mathcal M_{P\mathcal Q}=\mathcal M\otimes P\otimes \mathcal Q$.
++The tensor differential on $a\otimes p\otimes q$ is
++\[
++ d_\mathcal M a\otimes p\otimes q
++ +(-1)^{|a|}a\otimes d_Pp\otimes q
++ +(-1)^{|a|+|p|}a\otimes p\otimes d_{\mathcal Q}q.
++\]
++Tensor symmetry and multiplication in $P,\mathcal Q$ extend the chiral product.
++For a right $\mathcal D_Y$-module $N$, set $h_Y(N)=N\otimes_{\mathcal D_Y}\mathcal O_Y$, applied degreewise.
++Define
++\begin{equation}\label{eq:uc-chain}
++ \mathsf C_X(\mathcal M)
++ =\underset{I}{\operatorname{colim}}
++ \Gamma\bigl(X^I,h_{X^I}(C(\mathcal M_{P\mathcal Q})_{X^I})\bigr).
++\end{equation}
++The index category has nonempty finite sets and arrows opposite to surjections.
++Its transition maps are the diagonal structure maps.
++Thus~\eqref{eq:uc-chain} is an actual complex of vector spaces with the differential already specified.
++The comparison of Beilinson--Drinfeld, equation (4.2.12.2), pp.~305--306, identifies its derived-category object with
++\[
++ C^{\mathrm{ch}}(X,\mathcal M)=R\Gamma_{\mathrm{DR}}(\operatorname{Ran}(X),C(\mathcal M)).
++\]
++Their comparison is functorial and preserves the filtration by the number of blocks.
++
++As a graded vector space,~\eqref{eq:uc-chain} has the smaller description
++\begin{equation}\label{eq:uc-small}
++ \mathsf C_X(\mathcal M)
++ =\bigoplus_{n\geq1}
++ \Gamma\bigl(U^{[n]},h_{X^n}((\mathcal M_{P\mathcal Q}[1])^{\boxtimes n})\bigr)_{\mathfrak S_n}.
++\end{equation}
++This is equation (4.2.12.5), p.~307, with its induced differential.
++The symmetric group acts on the suspended factors.
++The subscript means coinvariants over $\mathbb C$.
++The summand with one point contains vacuum states through the unit $\omega_X\to\mathcal M$.
++There is no arity-zero summand in this reduced Chevalley complex.
++
++\section{The first collision and its differential}
++
++Fix a formal coordinate $t=z_1-z_2$ transverse to the diagonal.
++Normalize $\operatorname{Res}(t^{-1}dt)=1$.
++For a Laurent polynomial $f$ and states $a,a'$, the normal residue coefficient of the collision is
++\begin{equation}\label{eq:uc-rho}
++ \rho_f(a,a')=\operatorname{Res}_{t=0}f(t)Y(a,t)a'\,dt.
++\end{equation}
++The whole distribution is its principal part $[f(t)Y(a,t)a']$.
++This is the local chiral-product formula of~\cite{Frenkel026}, Theorem~7.1 and Corollary~7.2, p.~875-35.
++Pairing this principal part with all powers of $t$ recovers every normal derivative.
++Lower truncation makes each principal part finite.
++The vacuum and Virasoro products give
++\begin{equation}\label{eq:uc-firstcoll}
++ \rho_1(b,c)=1,\qquad \rho_{t^3}(T,T)=13\,1,
++ \qquad \rho_{t^{-1}}(1,a)=a.
++\end{equation}
++All three identities occur in~\eqref{eq:uc-Cousin} and~\eqref{eq:uc-chain}.
++
++The first mixed differential identity can be computed on $b,c$ without infinite sums:
++\begin{align*}
++ Q\rho_1(b,c)
++ &=\rho_1(Qb,c)-\rho_1(b,Qc)\\
++ &=(T^{\mathrm{tot}})_{(0)}c-b_{(0)}(:c\partial c:)\\
++ &=\partial c-\partial c=0.
++\end{align*}
++The second term uses $b_{(0)}c=1$ and $b_{(0)}\partial c=0$.
++The first uses the translation mode of the total stress tensor.
++For the Virasoro collision,
++\[
++ (QT)_{(3)}T=-26\partial c,
++ \qquad T_{(3)}QT=26\partial c.
++\]
++Indeed, differentiating the central term $13t^{-4}$ in the first variable gives $-52t^{-5}$.
++Its linear Taylor coefficient contributes $-52\partial c$.
++The term $2\partial c\,T$ contributes $26\partial c$.
++In the second expression, only $2\partial c\,T$ contributes to the coefficient of $t^{-4}$.
++This proves $Q\rho_{t^3}(T,T)=0$ directly.
++
++The general identity
++\[
++ Q\rho_f(a,a')=\rho_f(Qa,a')+(-1)^{|a|}\rho_f(a,Qa')
++\]
++follows coefficientwise from~\eqref{eq:uc-derivation}.
++It also proves binary compatibility for every arrow of~\eqref{eq:uc-zigzag}.
++For $\epsilon$, its compatibility with the regular collision $f=t^{-1}$ reads
++$\epsilon(aa')=\epsilon(a)\epsilon(a')$.
++Compatibility with all other $f$ follows from its translation equation.
++The first three-point compatibility is therefore the commuting diagram obtained by applying each arrow to all three Jacobi composites.
++
++\section{The filtration and its chiral symbol}
++
++Use the Poincar\'e--Birkhoff--Witt (PBW) ordering on the negative matter modes and the exterior ghost generators.
++Give each negative matter mode and each $b$ creator order one.
++Give every $c$ creator order zero.
++Let $F_pA$ be the span of ordered monomials of order at most $p$, with $F_{-1}A=0$.
++This is an increasing, exhaustive filtration, with $F_0A=B$.
++Translation and coordinate changes preserve it.
++Normally ordered products add orders, and each singular contraction lowers their sum.
++Equations~\eqref{eq:uc-Qfields} show that $Q$ preserves $F$.
++Its action on an arbitrary ordered monomial follows from~\eqref{eq:uc-derivation} with $n=-1$.
++
++The associated graded vertex algebra is commutative, with local description
++\begin{equation}\label{eq:uc-symbolalg}
++ R=\mathbb C[t^{(j)}:j\geq0]\otimes
++ \Lambda(b^{(j)},c^{(j)}:j\geq0).
++\end{equation}
++Here $t,b,c$ are the symbols of $T,b,c$, their degrees are $0,-1,1$, and their orders are $1,1,0$.
++The index $(j)$ means $j$ translations.
++The differential $q$ commutes with translation and is determined by
++\begin{equation}\label{eq:uc-symbolq}
++ qc=c\partial c,\qquad
++ qb=t-2b\partial c-(\partial b)c,\qquad
++ qt=c\partial t+2(\partial c)t.
++\end{equation}
++The term $13\partial^3c/6$ in $QT$ has lower order and hence disappears from $qt$.
++The singular collisions in~\eqref{eq:uc-firstcoll} also lower order.
++Regular collisions remain: for example $\rho_{t^{-1}}(1,a)=a$ on $R$.
++
++Put $\ell=qb$.
++The change from $t$ to $\ell=t-2b\partial c-(\partial b)c$ is an invertible polynomial change of jet generators.
++Equations~\eqref{eq:uc-symbolq} give $q\ell=0$ by direct substitution.
++Thus
++\[
++ q= q_B+\sum_{j\geq0}\ell^{(j)}\frac{\partial}{\partial b^{(j)}}
++\]
++in these generators.
++Let $N$ count the $\ell$ and $b$ factors and define the degree-minus-one derivation
++\[
++ h=\sum_{j\geq0}b^{(j)}\frac{\partial}{\partial\ell^{(j)}}.
++\]
++Each sum is finite on a polynomial, and $qh+hq=N$.
++On the positive-order subspace, $N^{-1}h$ is a contraction.
++Both $b$ and $\ell=qb$ transform as primary fields of weight two, so this construction respects the jet transition maps.
++It follows that $\mathcal B\hookrightarrow\operatorname{gr}_F\mathcal A$ is a quasi-isomorphism, with positive orders acyclic.
++
++Give~\eqref{eq:uc-Cousin} and~\eqref{eq:uc-chain} total order $\sum_i p_i$ on a tensor of factors in $F_{p_i}\mathcal A$.
++Keep $P,\mathcal Q$ in order zero.
++The symbol operation on each tensor induces the typed isomorphism of actual complexes
++\begin{equation}\label{eq:uc-symbolmap}
++ \sigma:\operatorname{gr}_F\mathsf C_X(\mathcal A)
++ \xrightarrow{\ \cong\ }
++ \mathsf C_X(\operatorname{gr}_F\mathcal A),
++ \qquad
++ [\boxtimes_i(a_i\otimes p_i\otimes q_i)]
++ \longmapsto\boxtimes_i([a_i]\otimes p_i\otimes q_i).
++\end{equation}
++This is the chain-level comparison in~\cite{BD026}, equation (4.2.18.3), p.~311.
++Its hypotheses hold because the chosen $P,\mathcal Q$ have flat terms and the state filtration has locally free associated graded pieces.
++Localization, external tensor product, and diagonal direct image respect these symbols.
++For the functor $h$ and global sections, the flat-resolution argument of \S4.2.12 gives the same comparison.
++The internal differential becomes~\eqref{eq:uc-symbolq}.
++The collision differential becomes the regular commutative vertex collision on $R$.
++These identifications verify that~\eqref{eq:uc-symbolmap} commutes with both parts of the differential.
++
++In particular, the first PBW target is the actual complex
++\begin{equation}\label{eq:uc-grzero}
++ \operatorname{gr}^F_0\mathsf C_X(\mathcal A)
++ =\mathsf C_X(\mathcal B)
++ =\bigoplus_{n\geq1}
++ \Gamma\bigl(U^{[n]},h((\mathcal B_{P\mathcal Q}[1])^{\boxtimes n})\bigr)_{\mathfrak S_n},
++\end{equation}
++with~\eqref{eq:uc-B}, the $P,\mathcal Q$ differentials, and the regular collision products specified above.
++For the separate filtration $G$ by the number of points,
++\[
++ \operatorname{gr}^G_1\operatorname{gr}^F_0\mathsf C_X(\mathcal A)
++ =\Gamma(X,h(\mathcal B_{P\mathcal Q}[1])).
++\]
++Thus PBW order and collision length give different filtrations with different first terms.
++
++There is also an actual filtered chain map
++\begin{equation}\label{eq:uc-filtered-inclusion}
++ \iota:\mathsf C_X(\mathcal B)\longrightarrow\mathsf C_X(\mathcal A),
++\end{equation}
++obtained by including each ghost factor in each partition summand.
++Give its source the filtration concentrated in order zero.
++Its associated graded map, followed by $\sigma$, is the map induced by $\mathcal B\hookrightarrow R$.
++The contraction above and functoriality of chiral chains show that this associated graded map is a quasi-isomorphism.
++Thus~\eqref{eq:uc-filtered-inclusion} is a filtered quasi-isomorphism.
++This supplies a lift of the order-zero symbol on the full configuration complex.
++The differential equation holds on every partition, including all binary and triple collisions.
++
++\section{The cohomology on the projective line}
++
++\begin{theorem}\label{thm:uc-global}
++For $\mathcal A$ associated with $(\operatorname{Vir}_{26}\otimes bc,Q)$ on $X=\mathbb P^1$, the algebraic chiral chain complex satisfies
++\begin{equation}\label{eq:uc-globalanswer}
++ C^{\mathrm{ch}}(X,\mathcal A)\simeq\Lambda(\xi_1,\xi_3),
++ \qquad |\xi_1|=1,\quad |\xi_3|=3,
++\end{equation}
++as an object of the derived category of complexes.
++The algebra on the right has zero differential.
++Its cohomology basis is $1,\xi_1,\xi_3,\xi_1\xi_3$, in degrees $0,1,3,4$.
++With Beilinson--Drinfeld's homological convention $H_a^{\mathrm{ch}}=H^{-a}C^{\mathrm{ch}}$, the corresponding indices are $0,-1,-3,-4$.
++The PBW associated graded chiral complex has the same cohomology, entirely in order zero.
++\end{theorem}
++
++\begin{proof}
++Apply the functor $\mathsf C_X$ to~\eqref{eq:uc-zigzag}.
++The result consists of actual chain maps, each a quasi-isomorphism by Beilinson--Drinfeld, \S4.2.11 and \S4.2.12.
++It therefore suffices to compute $C^{\mathrm{ch}}(X,K_X)$.
++The left algebra $K_X^\ell=\mathcal O_X\otimes\Lambda(\eta)$ is freely commutative on $\mathcal O_X[-3]$.
++The corresponding right generator module is
++\[
++ W=\omega_X[-3].
++\]
++It is $\mathcal O_X$-flat.
++Set $L=\Gamma(X,h(W_{P\mathcal Q}))[1]$.
++The actual comparison is the following map of complexes:
++\begin{equation}\label{eq:uc-free-map}
++ \Psi:\mathsf C_X(\omega_X)\oplus\operatorname{Sym}^{>0}(L)
++ \longrightarrow\mathsf C_X(K_X).
++\end{equation}
++On the first summand, use the chain map induced by the chiral unit $\omega_X\to K_X$.
++On $L$, use the inclusion of the generator module into the one-point term.
++For each positive symmetric degree, take the external product of these inclusions and restrict to the distinct-point locus.
++The differential commutes with these products because $K_X$ is commutative.
++This specifies $\Psi$ on every chain, including its entire first summand.
++
++The positive-degree map factors through $\mathsf C_X(W)$, where $W$ has zero chiral product.
++Indeed, $W$ is the nonunital free commutative chiral algebra on its odd rank-one generator, and $K_X=W\oplus\omega_X$ is its unitalization.
++Equation (4.6.2.2) and the proof of the proposition in~\cite{BD026}, pp.~342--344, give a quasi-isomorphism
++$\operatorname{Sym}^{>0}(L)\to\mathsf C_X(W)$.
++The unit and inclusion induce another actual quasi-isomorphism of complexes
++\[
++ \mathsf C_X(\omega_X)\oplus\mathsf C_X(W)
++ \longrightarrow\mathsf C_X(K_X)
++\]
++by the proof of~\cite{BD026}, \S4.4.8, p.~329.
++Their composition is $\Psi$, which is therefore a quasi-isomorphism.
++
++The unit contributes through the first complex summand.
++Its replacement by $\mathbb C$ occurs in the derived category, using
++$C^{\mathrm{ch}}(X,\omega_X)\simeq\mathbb C$ from~\cite{BD026}, \S4.3.3, p.~315.
++The raw positive-arity chain multiplication has the homotopy-unit structure of \S4.3.4.
++No representative of a cohomology class is required to define~\eqref{eq:uc-free-map}.
++
++The complex $L$ represents
++\[
++ R\Gamma_{\mathrm{DR}}(X,W[1])
++ =R\Gamma(X,\Omega_X^\bullet)[-1].
++\]
++Algebraic de Rham cohomology of $\mathbb P^1$ is $\mathbb C$ in degrees zero and two and vanishes otherwise.
++For completeness, the two-chart \v Cech complex gives
++$H^0(\mathcal O_X)=\mathbb C$, $H^1(\mathcal O_X)=0$,
++$H^0(\Omega_X^1)=0$, and $H^1(\Omega_X^1)=\mathbb C[dz/z]$.
++These are the only two entries in its de Rham spectral sequence, so no differential can join them.
++Normalize $[dz/z]$ by the residue $1$ on the overlap.
++After the displayed shift, these two classes have degrees one and three.
++Over $\mathbb C$, symmetric powers preserve quasi-isomorphisms of complexes, because the symmetric-group coinvariant functors are exact.
++Together with the first summand of~\eqref{eq:uc-free-map}, their positive symmetric powers give the exterior algebra in~\eqref{eq:uc-globalanswer}.
++
++Finally,~\eqref{eq:uc-symbolmap} identifies the PBW symbol complex with the chiral chains of $R$.
++The quasi-isomorphism $\mathcal B\to R$ preserves PBW order and has image in order zero.
++Applying chiral chains and then~\eqref{eq:uc-zigzag} computes its cohomology by the same exterior algebra.
++Every positive-order cohomology group therefore vanishes.
++\end{proof}
++
++The chiral-algebra zigzag~\eqref{eq:uc-zigzag}, the chain map~\eqref{eq:uc-free-map}, and the symbol map~\eqref{eq:uc-symbolmap} give the comparison.
++Every chain arrow has its displayed source and target, including the unit-complex summand.
++They also specify the next maps after the binary collision: external products on three factors, with compatibility supplied by the chiral Jacobi identity.
++The two scalar collisions in~\eqref{eq:uc-firstcoll} lie below their input PBW orders and are retained in the filtered complex.
++Passing to the symbol does not assert their vanishing before specialization.
++
++For the fixed-coordinate relative state complex
++\[
++ C_{\mathrm{rel}}=\ker b_0\cap\ker H\subset A,
++\]
++the four-state calculation gives $C_{\mathrm{rel}}=\mathbb Ce\oplus\mathbb Cv$ with zero differential, in degrees zero and two.
++It lies in PBW order zero.
++Consequently it cannot be quasi-isomorphic, with these degrees, to $C^{\mathrm{ch}}(\mathbb P^1,\mathcal A)$ or to its PBW associated graded complex.
++Their cohomology degrees are those of Theorem~\ref{thm:uc-global}.
++This comparison concerns the unmarked proper curve and algebraic, uncompleted chiral chains.
++Marked-point coefficients, relative geometric constructions, and inverse-limit completions require their own carriers and comparison maps.
+--- candidate002/proof/comparison_main.tex
++++ candidate004/proof/comparison_main.tex
+@@ -13,8 +13,22 @@
+ \input{consumer_geometry}
+ \input{../cbc/chapters/theory/elliptic_normalizations}
+ \input{../cbc/chapters/theory/reduction_obstructions}
++\input{../cbc/chapters/theory/elliptic_propagator}
++\begingroup
++\providecommand{\Res}{\operatorname{Res}}\providecommand{\Vir}{\operatorname{Vir}}\providecommand{\Aut}{\operatorname{Aut}}
++\input{../cbc/chapters/theory/affine_ds_global}
++\endgroup
++\section{Unital Virasoro chiral chains on the projective line}\label{sec:cbc26-unital-p1}
++\input{../cbc/chapters/theory/unital_p1_chains}
++\input{../cbc/chapters/theory/relative_p1_comparison}
++\input{finite_bv_operator}
+ \begin{thebibliography}{9}
+ \bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Annals of Mathematics \textbf{182} (2015), 565--604.
+ \bibitem{DLMF26} NIST Digital Library of Mathematical Functions, \S23.18, Eq.~23.18.5, \url{https://dlmf.nist.gov/23.18.E5}.
++\bibitem{AffineDSArakawa026} T. Arakawa, \emph{Introduction to W-algebras and their representation theory}, Perspectives in Lie Theory, Springer INdAM Series \textbf{19} (2017), 179--250. \url{https://arxiv.org/abs/1605.00138}. Locators refer to version2.
++\bibitem{AffineDSFrenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, Exp.~875, Ast\'erisque \textbf{276} (2002), 299--339. \url{https://arxiv.org/abs/math/0007054}. Locators refer to version4.
++\bibitem{BD026} A. Beilinson and V. Drinfeld, \emph{Chiral Algebras}, AMS Colloquium Publications51,2004. \url{https://math.uchicago.edu/~drinfeld/langlands/chiral/}.
++\bibitem{Frenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, expos\'e875,2000. \url{https://math.berkeley.edu/~frenkel/BOOK/bourbaki.pdf}.
++\bibitem{DLMFell} NIST Digital Library of Mathematical Functions, \S23.2, Eq.~23.2.5, and \S23.8, Eq.~23.8.2. \url{https://dlmf.nist.gov/23.2.E5}; \url{https://dlmf.nist.gov/23.8.E2}.
+ \end{thebibliography}
+ \end{document}
+--- candidate002/proof/finite_bv_operator.tex
++++ candidate004/proof/finite_bv_operator.tex
+@@ -0,0 +1,33 @@
++\section{A polynomial odd Laplacian}
++
++\begin{proposition}[A polynomial Batalin--Vilkovisky operator]
++\label{prop:cbc26-polynomial-laplacian}
++On $K=\mathbb C[x_1,\ldots,x_n]\otimes\Lambda(\eta_1,\ldots,\eta_n)$, with $|x_i|=0$ and $|\eta_i|=-1$, use left odd derivatives and put
++\[
++ \Delta=\sum_i\partial_{x_i}\partial_{\eta_i}.
++\]
++This operator has degree one, order at most two, and square zero.
++For homogeneous $f,g$, define
++\[
++ \{f,g\}=(-1)^{|f|}\bigl(\Delta(fg)-(\Delta f)g-(-1)^{|f|}f\Delta g\bigr).
++\]
++This odd bracket has $\{x_i,\eta_j\}=\delta_{ij}$.
++For every polynomial $S(x)$, one has $\Delta S=\{S,S\}=0$, and $D=\{S,-\}$ satisfies $D\Delta+\Delta D=0$.
++Thus $S$ solves the polynomial quantum master equation $\tfrac12\{S,S\}+\hbar\Delta S=0$.
++\end{proposition}
++\begin{proof}
++The even derivatives commute and distinct odd derivatives anticommute; equal odd derivatives square to zero.
++Pairing indices in $\Delta^2$ proves its vanishing.
++Each summand is a composition of two derivations and hence has order at most two.
++Expanding $\Delta(fg)$ gives the degree-one derived bracket; evaluation on generators yields the stated brackets, which determine its biderivation extension.
++Both $\Delta S$ and $\{S,S\}$ vanish since $S$ contains no $\eta$.
++In $D\Delta+\Delta D$, the terms with a derivative left on the input cancel by odd anticommutation, while the remaining Hessian coefficients $\partial_i\partial_jS$ are symmetric and multiply the antisymmetric derivatives $\partial_{\eta_i}\partial_{\eta_j}$.
++Their sum is zero.
++\end{proof}
++
++\begin{remark}[A chiral Batalin--Vilkovisky comparison]\label{thm:bv-structure-bar}
++The polynomial operator above is defined on its displayed finite generator algebra.
++A residue operator on a chiral configuration complex requires a domain, a cyclic pairing, its degree and second-order identity, and compatibility with every collision map.
++The Arnold relations alone do not specify these data or an interacting master action.
++An identification with the polynomial model requires the actual coefficient and operator maps.
++\end{remark}

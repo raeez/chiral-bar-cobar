@@ -1,0 +1,1689 @@
+\chapter{BV-BRST formalism and Gaiotto's perspective}
+\label{ch:bv-brst}
+
+\label{rem:programme-bv}
+\index{Batalin--Vilkovisky|see{BV algebra}}
+
+\section{BV formalism for chiral algebras}
+
+Let $\cA$ be a chiral algebra on a smooth curve~$X$.
+
+\begin{definition}[BV data for chiral algebra]
+\index{antibracket}
+The BV formalism associates to~$\cA$ the following data:
+\begin{enumerate}
+\item \emph{Fields.} $\phi \in \mathcal{A}$ (fields of the theory)
+\item \emph{Antifields.} $\phi^+ \in \mathcal{A}^*[1]$ (dual shifted by 1)
+\item \emph{BV bracket.} $\{\cdot, \cdot\}$ of degree $+1$ (odd Poisson structure)
+\item \emph{Action.} $S[\phi, \phi^+]$ satisfying classical master equation
+$\{S, S\} = 0$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[BV complex = geometric bar complex; \ClaimStatusProvedElsewhere]
+\label{thm:bv-bar-geometric}
+The BV complex $(C_{\text{BV}}(\mathcal{A}), Q_{\text{BV}})$ is isomorphic to
+the geometric bar complex:
+\[C_{\text{BV}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}(\mathcal{A})\]
+
+The BV differential $Q_{\text{BV}} = \{S, -\}$ corresponds to the bar differential.
+The precise statement and proof appear in the Costello--Gwilliam framework \cite{CG17}; we give the geometric construction below.
+\end{theorem}
+
+\begin{proof}[Geometric construction]
+\emph{Step~1: Bar generators.}
+
+The degree-$n$ bar complex is:
+\[\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes (n+1)})\]
+
+The generators are operator insertions $\phi_i \in \mathcal{A}$ at marked points, paired with logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ dual to the collision divisors.
+
+\emph{Step~2: BV Bracket.}
+
+The BV bracket is a residue operation on the log-de~Rham complex
+of~$\overline{C}_{n+1}(X)$.  In local coordinates near the divisor
+$D_{ij} = \{z_i = z_j\}$, with $\epsilon = z_i - z_j$:
+\[\{\phi(z_i), \eta_{jk}\}
+= \delta_{ij}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_k)}\Bigr]
++ \delta_{ik}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_j)}\Bigr].\]
+Both terms are Poincar\'e residues of logarithmic forms along
+normal-crossing divisors of the smooth
+variety~$\overline{C}_{n+1}(X)$: the residue map
+$\Res_{D_{ij}}\colon \Omega^k_{\log}(\overline{C}_{n+1})
+\to \Omega^{k-1}_{D_{ij}}$ is an algebraic morphism of sheaves
+on a smooth variety.  The factor $1/(z_i - z_k)$ is a pole along
+the transverse divisor $D_{ik}$ (Theorem~\ref{thm:FM}(3):
+$D_{ij} \cap D_{ik}$ has normal crossings), so on~$D_{ij}$
+it restricts to a regular meromorphic function with poles only
+along~$D_{ij} \cap D_{ik}$ --- a codimension-$2$ stratum.
+The FM compactification resolves all coincidence singularities
+into normal-crossing divisors, and the log-de~Rham complex on
+this resolution is the correct algebraic framework: it replaces
+distributional regularization with algebraic residues.
+
+The logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ generate
+$H^1(C_n(X); \mathbb{C})$ by the Arnold--Brieskorn theorem;
+for $X = \mathbb{C}$, all $\binom{n}{2}$ classes are linearly independent in degree~$1$
+(the Arnold relations constrain products in degree~$\geq 2$), giving
+$\dim H^1(C_n(\mathbb{C})) = \binom{n}{2}$.  (For a curve of genus~$g > 0$, additional generators from $H^1(X)$ contribute $2gn$ classes.)
+
+\emph{Step~3: Master Equation.}
+
+The classical master equation $\{S, S\} = 0$ is equivalent to $\dzero^2 = 0$ for the
+genus-$0$ bar differential:
+\[d = d_{\text{strat}} + d_{\text{int}} + d_{\text{res}}\]
+\end{proof}
+
+\subsection{Quantum master equation}
+
+\begin{definition}[BV Laplacian]
+The BV Laplacian $\Delta_{\text{BV}}$ is the second-order operator:
+\[\Delta_{\text{BV}} = \sum_i \frac{\partial^2}{\partial \phi_i \partial \phi_i^+}\]
+
+In the geometric realization:
+\[\Delta_{\text{BV}} = \sum_{i<j} \int \delta(z_i - z_j) 
+\frac{\partial}{\partial \eta_{ij}}\]
+
+This inserts delta functions along diagonals—exactly the cobar differential.
+\end{definition}
+
+\begin{theorem}[Quantum master equation as Maurer--Cartan equation; \ClaimStatusProvedHere]
+\label{thm:qme-bar-cobar}
+\index{quantum master equation|textbf}
+The quantum master equation
+\[\Delta_{\text{BV}} e^{S/\hbar} = 0\]
+is equivalent to the Maurer--Cartan equation in the dg Lie algebra
+$(\bar{B}^{\ge 1}(\cA),\, \delta,\, [-,-])$: it encodes the
+compatibility of bar and cobar differentials under Verdier duality.
+This equivalence is natural: it holds functorially for morphisms of
+chiral algebras via the BV functor of Theorem~\ref{thm:bv-functor}.
+\end{theorem}
+
+\begin{proof}
+\emph{Stage~1 (Algebraic equivalence).}
+Write $S = S_0 + S_{\text{int}}$ with $S_0$ the free (quadratic) action and $S_{\text{int}}$ the interactions.  Then:
+\[\Delta_{\text{BV}} e^{S/\hbar} = \frac{1}{\hbar}\left(\Delta_{\text{BV}} S +
+\frac{1}{2\hbar}\{S, S\}\right) e^{S/\hbar}\]
+
+Setting this to zero and using $\{S_0, S_0\} = 0$ (classical master equation for the free theory), $\Delta S_0 = 0$ (no quantum anomaly for quadratic actions), and absorbing $\{S_0, S_{\text{int}}\}$ into a total BV differential $\delta = \Delta_{\text{BV}} + \frac{1}{\hbar}\{S_0, -\}$ gives:
+\[\hbar\,\delta\, S_{\text{int}} + \frac{1}{2}\{S_{\text{int}}, S_{\text{int}}\} = 0\]
+
+This is precisely the Maurer--Cartan equation in the dg Lie algebra
+$(\bar{B}^{\ge 1}(\cA), \delta, [-,-])$.  The identification of each
+term with a bar/cobar operation is provided by Stage~2.
+
+\emph{Stage~2 (Identification of terms via the BV functor).}
+The BV functor $\mathrm{BV}: \mathrm{ChirAlg}_X \to \mathrm{BV\text{-}Alg}$
+of Theorem~\ref{thm:bv-functor} assigns to each chiral algebra~$\cA$ the BV algebra
+$\mathrm{BV}(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), \cdot, \Delta, \{-,-\})$.
+Its Verdier duality compatibility (Theorem~\ref{thm:bv-functor}, last part)
+establishes that $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$ as BV algebras,
+naturally in~$\cA$.
+
+Under this identification, each BV operation matches a concrete
+bar-cobar operation:
+\begin{itemize}
+\item The bar differential $d_{\bar{B}} = \{S, -\}$ on $\bar{B}(\cA)$ becomes
+the cobar differential $d_\Omega$ on $\Omega(\cA^!)$.
+\item The BV Laplacian $\Delta$ on $\bar{B}(\cA)$ becomes the cobar product on $\Omega(\cA^!)$.
+\item The QME $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ is the condition ensuring
+that both differentials square to zero \emph{simultaneously}, i.e.,
+that the BV algebra $(d_{\bar{B}}, \Delta)$ is consistent.
+\end{itemize}
+
+Now let $f\colon \cA \to \cB$ be a morphism of chiral algebras.
+Functoriality gives a BV morphism
+$\mathrm{BV}(f)\colon \mathrm{BV}(\cA) \to \mathrm{BV}(\cB)$
+preserving the product, Laplacian, and bracket, while Verdier
+duality transports this morphism to the corresponding cobar map on
+duals.  Therefore the identification between the quantum master
+equation and the bar-cobar compatibility is functorial in~$\cA$; it is
+a natural equivalence, not merely a pointwise comparison.
+\end{proof}
+
+\begin{remark}[Scope]
+Stage~1 uses standard BV algebra manipulations (\ClaimStatusProvedElsewhere,
+see Costello--Gwilliam~\cite{CG17}).  Stage~2 assembles the BV
+functor (Theorem~\ref{thm:bv-functor}, \ClaimStatusProvedHere) with
+the Verdier duality isomorphism $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$
+(Theorem~\ref{thm:verdier-bar-cobar}, \ClaimStatusProvedHere).  The
+identification of the QME with the functorial expression of bar-cobar
+Verdier compatibility is Theorem~\ref{thm:qme-bar-cobar} above.
+\end{remark}
+
+\subsection{The BV--bar dictionary}
+\label{subsec:bv-bar-identification}
+\index{BV algebra!bar complex identification}
+
+The dictionary is:
+\begin{center}
+\begin{tabular}{lcl}
+\textbf{BV side} && \textbf{Bar complex side} \\[2pt]
+fields $\phi \in \cA$ && bar generators $s^{-1}\bar{\cA}$ \\
+antibracket $\{-,-\}$ && bracket from simple-pole OPE residue \\
+QME: $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$
+  && curved $A_\infty$ relation: $m_1^2 = [m_0, -]$ \\
+factor $\tfrac{1}{2}$ in QME && Sugawara normalization $m_0 = \kappa/2$
+\end{tabular}
+\end{center}
+The first three entries are reformulations of
+Theorem~\ref{thm:config-space-bv} and the proof of
+Theorem~\ref{thm:qme-bar-cobar}.  The fourth is the observation
+that the QME coefficient $\tfrac{1}{2}$ matches the Sugawara
+normalization: the curvature $m_0 = \kappa \cdot \mathbf{1}$ arises
+from the double-pole OPE residue, and the factor $\kappa = c/2$ for
+the Virasoro algebra (Computation~\ref{comp:virasoro-curvature})
+is precisely the $\tfrac{1}{2}$ in the QME applied to the central
+charge.
+
+\input{chapters/theory/insertion_integrals}
+
+\begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+The Bernoulli coefficient of Theorem~\ref{thm:genus-universality} is $F_1=\kappa/24$.
+For $\kappa=C/2$, it gives $F_1=C/48$, while the vacuum-energy exponent in $q^{L_0-C/24}$ is $-C/24$.
+Proposition~\ref{prop:cbc26-genus-one-normalization} computes both values.
+An identification with a Hodge integral or a trace requires its separately specified map and normalization.
+\end{remark}
+
+\begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
+\index{anomaly!curvature identification}
+On the algebraic matter--ghost state space, Theorem~\ref{thm:vir-square} gives $Q^2=(c-26)\sum_{n>0}(n^3-n)c_{-n}c_n/12$.
+The reduced chiral construction based on an augmentation kernel does not apply to this vertex algebra by Proposition~\ref{prop:vir-no-augmentation}.
+An alternative chiral target must specify its unit and collision maps before an anomaly operator can be transported.
+The required operator identity is Proposition~\ref{prop:cbc26-square-transport}.
+\end{remark}
+
+\section{Gauge fixing and BRST}
+
+\subsection{BRST from BV}
+
+\begin{definition}[BRST operator]
+\index{BRST cohomology|textbf}
+The BRST operator $Q_{\text{BRST}}$ arises from gauge fixing the BV action. 
+Choose a Lagrangian submanifold $\mathcal{L} \subset$ (fields + antifields):
+\[Q_{\text{BRST}} = Q_{\text{BV}}|_{\mathcal{L}}\]
+
+In the chiral algebra context:
+\[Q_{\text{BRST}} = Q_0 + Q_1 + Q_2 + \cdots\]
+where the decomposition is by \emph{antighost number} (not ghost number): $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.  The total BRST charge has definite ghost number~$+1$.
+\end{definition}
+
+\begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere{} \cite{CG17}]
+\label{thm:brst-physical-states}
+The cohomology of $Q_{\text{BRST}}$ computes physical on-shell states:
+\[H^*(Q_{\text{BRST}}) \cong \mathcal{A}_{\text{phys}}\]
+\end{theorem}
+
+\begin{example}[Free \texorpdfstring{$bc$}{bc} ghost system]
+The $bc$ system has fields $b(z)$ of weight $\lambda$ and $c(z)$ of weight $1-\lambda$, OPE $b(z)c(w)\sim(z-w)^{-1}$, and central charge $c_{bc}=1-3(2\lambda-1)^2$.
+For $\lambda=2$, the Virasoro charge is the residue~\eqref{eq:vir-charge-residue} on the domain of Lemma~\ref{lem:vir-domain}, with its specified ghost vacuum and normal ordering.
+
+For the bosonic string, $\lambda = 2$ (so $b$ has weight~$2$ and $c$ has weight~$-1$), giving $c_{\text{ghost}} = 1 - 3(3)^2 = -26$ and ghost stress tensor $T_{\text{ghost}} = -2b\,\partial c - (\partial b)\,c$.
+
+The BRST nilpotence condition:
+\[Q^2 = 0 \iff c_{\text{matter}} + c_{\text{ghost}} = 0, \quad \text{i.e., } c_{\text{matter}} = 26\]
+
+For a collision-state differential $d_{\mathrm{res}}$, a comparison map $\Phi$ must satisfy
+\[d_{\mathrm{res}}\Phi=\Phi Q_{\mathrm{BRST}}.\]
+Theorem~\ref{thm:brst-bar-genus0} constructs such a map only after the target, relative carrier, compatible filtrations, actual symbol quasi-isomorphism, and corrections are supplied.
+The augmentation-kernel target for this matter-ghost algebra is excluded by Proposition~\ref{prop:vir-no-augmentation}.
+\end{example}
+
+\subsection{Coupling to topological gravity}
+
+\begin{theorem}[Ghost transformation law for log forms;
+\ClaimStatusProvedHere]
+\label{thm:log-form-ghost-law}
+\index{ghost!transformation law}
+\index{logarithmic form!ghost transformation}
+The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$
+on the configuration space $C_n(X)$ transform under
+coordinate changes $z \to w(z)$ exactly as BRST ghosts
+for diffeomorphisms:
+\[
+\eta_{ij} \;\mapsto\; \eta_{ij}
++ d\log\!\left(\frac{w(z_i) - w(z_j)}{z_i - z_j}\right).
+\]
+Near the diagonal $z_i \to z_j$, the correction term
+approaches $d\log w'(z_i)$, which is the standard ghost
+cocycle for $\mathrm{Diff}(X)$.  Moreover, the Arnold
+relations
+$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
++ \eta_{ki} \wedge \eta_{ij} = 0$
+in the Orlik--Solomon algebra provide the quadratic
+structure shared by the BRST ghost algebra
+($Q_{\mathrm{BRST}}(c) = c\,\partial c$).
+\end{theorem}
+
+\begin{proof}
+Direct computation: $\eta_{ij} = d\log(z_i - z_j)$
+maps to $d\log(w(z_i) - w(z_j))$ under $z \to w(z)$.
+Factoring:
+\[
+d\log(w(z_i) - w(z_j)) = d\log(z_i - z_j)
++ d\log\!\left(\frac{w(z_i) - w(z_j)}{z_i - z_j}\right)
+\]
+and near the diagonal, L'H\^opital gives
+$(w(z_i) - w(z_j))/(z_i - z_j) \to w'(z_i)$, so
+the correction approaches $d\log w'(z_i)$.  This is
+the BRST ghost 1-cocycle for the Lie algebra
+$\mathrm{Vect}(X)$: if $c(z)$ is the ghost field for
+$v(z)\partial_z \in \mathrm{Vect}(X)$, then the
+infinitesimal version
+$\delta_v \eta_{ij} = d(v'(z_i)/(z_i - z_j))$ matches
+the BRST variation $\delta c = c\,\partial c$ at leading
+order.  The Arnold relations are verified in
+Theorem~\ref{thm:arnold-relations}.
+\end{proof}
+
+\begin{conjecture}[Bar complex \texorpdfstring{$=$}{=} topological BRST;
+\ClaimStatusConjectured]
+\label{conj:bar-topological-brst}
+The ghost transformation law
+(Theorem~\ref{thm:log-form-ghost-law}) extends to a dg
+algebra isomorphism:
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{A}) \cong
+C^*_{\mathrm{top}\text{-}\mathrm{BRST}}(\mathcal{A}
+\otimes \mathrm{Diff}(X)).
+\]
+\end{conjecture}
+
+\begin{remark}[Scope and relation to proved results]
+\label{rem:topological-brst-scope}
+Theorem~\ref{thm:bar-semi-infinite-km} constructs a filtered comparison under its coefficient, target, symbol-map, and correction hypotheses.
+Theorem~\ref{thm:bar-semi-infinite-w} transports an actual equivariant map between specified double complexes.
+Theorem~\ref{thm:cbc26-polynomial-ds} constructs the polynomial reduction and its associative bar maps.
+The string criterion at $c=26$ in Theorem~\ref{thm:brst-bar-genus0} also requires an actual target and relative coordinate carrier.
+Propositions~\ref{prop:vir-no-augmentation} and~\ref{prop:vir-relative-target-obstruction} give obstructions to the augmentation-kernel target and the standard restricted transitions.
+The topological comparison further requires diffeomorphism ghosts and compatible maps on their full state carriers.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+
+\section{The genus-\texorpdfstring{$0$}{0} BRST-bar chain map}
+\label{sec:brst-bar-chain-map}
+\index{BRST!bar complex chain map|textbf}
+
+\subsection{Semi-infinite cohomology and the BRST complex}
+
+\subsubsection{The state space and the first anomaly}
+
+A degree-one operator can define cohomology only when its degree-two square vanishes on the specified state space.
+For the Virasoro algebra, this square is a quadratic ghost operator.
+Its coefficient comes from a finite contraction in the ghost representation.
+The zero modes then determine which restrictions form cochain complexes.
+
+All vector spaces and tensor products below are algebraic over $\mathbb C$.
+For homogeneous operators, the bracket is
+$[A,B]_{\mathrm s}=AB-(-1)^{|A||B|}BA$.
+Braces denote the bracket of two odd operators.
+Matter operators have ghost degree zero.
+
+Let $M$ be a Virasoro module with central charge $C\in\mathbb C$:
+\begin{equation}\label{eq:vir-matter-relation}
+ [L_m^M,L_n^M]=(m-n)L_{m+n}^M+
+ \frac{C}{12}(m^3-m)\delta_{m+n,0}\,1.
+\end{equation}
+Assume that $M$ is restricted: for each $v\in M$, $L_n^Mv=0$ for all sufficiently large positive $n$.
+No inner product or finite-dimensional weight-space hypothesis is imposed.
+
+The ghost Clifford algebra has odd generators $b_n,c_n$, $n\in\mathbb Z$, and relations
+\[
+ \{b_m,c_n\}=\delta_{m+n,0},\qquad
+ \{b_m,b_n\}=\{c_m,c_n\}=0.
+\]
+Its conformal vacuum $\Omega$ obeys
+\begin{equation}\label{eq:vir-ghost-vacuum}
+ b_n\Omega=0\quad(n\geq-1),\qquad
+ c_n\Omega=0\quad(n\geq2).
+\end{equation}
+The ghost module is
+\[
+ \mathcal F=\Lambda\bigl(b_n\ (n\leq-2),\ c_n\ (n\leq1)\bigr)\Omega.
+\]
+A displayed generator acts by exterior multiplication.
+Its Clifford partner acts by left exterior differentiation.
+Thus the formulas specify the signs on every monomial.
+Set $\deg\Omega=0$, $\deg c_n=1$, and $\deg b_n=-1$.
+Set $E\Omega=0$ and assign both $b_n$ and $c_n$ energy $-n$.
+The energy of a monomial is the sum of these assignments.
+
+Normal ordering, denoted by colons, moves the creators in~\eqref{eq:vir-ghost-vacuum} to the left.
+Each interchange of odd factors contributes a minus sign.
+Contraction terms are omitted.
+This convention applies to the whole monomial inside the colons.
+Define
+\begin{align}
+ L_m^{\mathrm{gh}}&=\sum_{s\in\mathbb Z}(m+s):b_{m-s}c_s:,
+ \label{eq:vir-ghost-L}\\
+ R&=-\frac12\sum_{m,n\in\mathbb Z}(m-n):c_{-m}c_{-n}b_{m+n}:,
+ \label{eq:vir-ghost-R}\\
+ Q&=\sum_{n\in\mathbb Z}c_{-n}L_n^M+R
+ \quad\hbox{on }\mathcal D=M\otimes\mathcal F.
+ \label{eq:brst-differential}
+\end{align}
+Tensor factors commute because the matter action is even.
+The degree of $Q$ is one.
+
+\begin{lemma}[Algebraic domain]\label{lem:vir-domain}
+Every sum in~\eqref{eq:vir-ghost-L}--\eqref{eq:brst-differential} has finitely many nonzero terms on each element of $\mathcal D$.
+The same holds for
+\[
+ \nu_r=\frac12\sum_{a+b=r}(a-b)c_ac_b,
+ \qquad
+ K=\frac{C-26}{12}\sum_{n>0}(n^3-n)c_{-n}c_n.
+\]
+These operators and all their finite compositions preserve $\mathcal D$.
+\end{lemma}
+
+\begin{proof}
+It suffices to use one matter vector and one ghost monomial.
+For the matter term, indices $n\leq-2$ require the occupied creator $b_n$.
+Only finitely many such indices occur.
+The restrictedness of $M$ bounds the remaining positive indices.
+
+For a normally ordered ghost monomial, every annihilator must remove an occupied creator.
+Its indices therefore lie in a fixed finite set.
+All creator indices have an upper bound: $-2$ for $b$ and $1$ for $c$.
+The sum of the indices is fixed in each displayed operator.
+Once the annihilator indices are fixed, this sum and the upper bounds give lower bounds for every creator index.
+There are at most three factors.
+Hence only finitely many terms act nontrivially.
+The argument includes terms containing only creators.
+It also applies to $\nu_r$ and $K$.
+Each output is a finite linear combination of algebraic states, so compositions are defined on the same domain.
+\end{proof}
+
+For trivial matter, all $L_n^M$ vanish and $C=0$.
+The first nonzero anomalous mode is visible without an infinite summation:
+\begin{align*}
+ R\Omega&=0, &
+ Rb_{-2}\Omega&=-2b_{-2}c_0\Omega-b_{-3}c_1\Omega,\\
+ R(b_{-2}c_0\Omega)&=4c_{-2}\Omega+b_{-3}c_0c_1\Omega
+       +2b_{-2}c_{-1}c_1\Omega,\\
+ R(b_{-3}c_1\Omega)&=5c_{-2}\Omega-2b_{-3}c_0c_1\Omega
+       -4b_{-2}c_{-1}c_1\Omega.
+\end{align*}
+Consequently,
+\begin{equation}\label{eq:vir-first-square}
+ R^2b_{-2}\Omega=-13c_{-2}\Omega.
+\end{equation}
+The cancellation of the cubic output leaves a degree-two operator acting on a degree-minus-one input.
+The calculation below determines every mode of this operator.
+
+\subsubsection{The ghost central term}
+
+\begin{lemma}[Ghost commutants]\label{lem:vir-commutant}
+An operator on $M\otimes\mathcal F$ that supercommutes with every $b_n,c_n$ is zero if its ghost degree is nonzero.
+An even operator on $\mathcal F$ commuting with every $b_n,c_n$ is a scalar.
+\end{lemma}
+
+\begin{proof}
+The common kernel of the vacuum annihilators on $M\otimes\mathcal F$ is $M\otimes\mathbb C\Omega$.
+Indeed, these annihilators are all the exterior derivatives of the creator variables.
+A finite exterior polynomial killed by all these derivatives is constant.
+A supercommuting operator sends this common kernel into itself.
+The kernel has ghost degree zero, so an operator of nonzero ghost degree vanishes there.
+Supercommutation with the creators makes it vanish on every state.
+For an even operator on $\mathcal F$, its value on $\Omega$ is a scalar multiple of $\Omega$.
+Commutation with the creators gives the same scalar on all monomials.
+\end{proof}
+
+\begin{proposition}[The ghost Virasoro algebra]\label{prop:vir-ghost-central}
+On $\mathcal F$,
+\begin{align}
+ [L_m^{\mathrm{gh}},b_n]&=(m-n)b_{m+n}, &
+ [L_m^{\mathrm{gh}},c_n]&=(-2m-n)c_{m+n},
+ \label{eq:vir-ghost-transform}\\
+ L_0^{\mathrm{gh}}&=E, &
+ L_m^{\mathrm{gh}}\Omega&=0\quad(m\geq-1),
+ \label{eq:vir-ghost-energy}\\
+ [L_m^{\mathrm{gh}},L_n^{\mathrm{gh}}]
+ &=(m-n)L_{m+n}^{\mathrm{gh}}
+ -\frac{26}{12}(m^3-m)\delta_{m+n,0}\,1.
+ \label{eq:vir-ghost-central}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The elementary contractions are
+\[
+ [:b_rc_s:,b_n]=\delta_{s+n,0}b_r,
+ \qquad
+ [:b_rc_s:,c_n]=-\delta_{r+n,0}c_s.
+\]
+They give~\eqref{eq:vir-ghost-transform}.
+A term acting on $\Omega$ needs both factors to be creators.
+For $m\geq0$ this is impossible.
+For $m=-1$ the only possible term has coefficient zero.
+The commutators of $L_0^{\mathrm{gh}}$ with the creators equal those of $E$.
+Both operators kill $\Omega$, which proves~\eqref{eq:vir-ghost-energy}.
+
+Let
+$A_{m,n}=[L_m^{\mathrm{gh}},L_n^{\mathrm{gh}}]-(m-n)L_{m+n}^{\mathrm{gh}}$.
+Substitution of~\eqref{eq:vir-ghost-transform} into the Jacobi identity shows that $A_{m,n}$ commutes with every ghost generator.
+For example, its commutator with $b_r$ has coefficient
+\[
+ (n-r)(m-n-r)-(m-r)(n-m-r)-(m-n)(m+n-r)=0.
+\]
+For $c_r$, the coefficient is
+\[
+ (-2n-r)(-2m-n-r)-(-2m-r)(-2n-m-r)
+ -(m-n)(-2m-2n-r)=0.
+\]
+Lemma~\ref{lem:vir-commutant} makes $A_{m,n}$ a scalar.
+Its energy is $-m-n$, so this scalar vanishes unless $m+n=0$.
+
+For $m\geq2$, the complete vacuum expression is
+\[
+ L_{-m}^{\mathrm{gh}}\Omega
+ =\sum_{s=2-m}^{1}(s-m)b_{-m-s}c_s\Omega.
+\]
+Commuting $L_m^{\mathrm{gh}}$ through the first factor gives $(2m+s)b_{-s}$.
+This contracts with $c_s$ to give $1$.
+Its commutator with the second factor annihilates $\Omega$.
+Therefore
+\begin{align*}
+ A_{m,-m}\Omega
+ &=\sum_{s=2-m}^{1}(s-m)(2m+s)\Omega\\
+ &=\left(\sum_{s=2-m}^{1}s^2
+      +m\sum_{s=2-m}^{1}s-2m^2\cdot m\right)\Omega\\
+ &=-\frac{13}{6}(m^3-m)\Omega.
+\end{align*}
+Here the interval has $m$ integers,
+$\sum s=m(3-m)/2$, and
+$\sum s^2=m(2m^2-9m+13)/6$.
+The cases $m=0,1$ give zero by~\eqref{eq:vir-ghost-energy}.
+Antisymmetry gives negative $m$.
+This proves~\eqref{eq:vir-ghost-central}.
+\end{proof}
+
+Set $\mathcal L_n=L_n^M+L_n^{\mathrm{gh}}$ on $\mathcal D$.
+The two summands commute.
+Thus~\eqref{eq:vir-matter-relation} and~\eqref{eq:vir-ghost-central} give
+\begin{equation}\label{eq:vir-total-central}
+ [\mathcal L_m,\mathcal L_n]
+ =(m-n)\mathcal L_{m+n}+A(m)\delta_{m+n,0},
+ \qquad A(m)=\frac{C-26}{12}(m^3-m).
+\end{equation}
+This central term determines the square of $Q$ on the full ghost module.
+
+\subsubsection{The square as an operator identity}
+
+\begin{lemma}[Contractions of the charge]\label{lem:vir-Q-contractions}
+The operator~\eqref{eq:brst-differential} satisfies
+\begin{equation}\label{eq:vir-Q-contractions}
+ \{Q,b_n\}=\mathcal L_n,\qquad \{Q,c_n\}=\nu_n.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:vir-nu-identities}
+ [\mathcal L_m,\nu_n]=(-2m-n)\nu_{m+n},\qquad
+ [Q,\nu_n]=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Contracting $b_n$ with the two $c$ factors in $R$ gives
+\[
+ \{R,b_n\}=\sum_{m\in\mathbb Z}(m-n):c_{-m}b_{m+n}:
+ =\sum_{s\in\mathbb Z}(n+s):b_{n-s}c_s:
+ =L_n^{\mathrm{gh}}.
+\]
+Contracting $c_n$ with the $b$ factor gives
+\[
+ \{R,c_n\}=-\frac12\sum_{r+s=-n}(r-s)c_{-r}c_{-s}=\nu_n.
+\]
+The matter term contributes $L_n^M$ to the first identity and zero to the second.
+All contractions retain the same normal ordering of the uncontracted factors.
+
+The commutator of $\mathcal L_m$ with $\nu_n$ uses~\eqref{eq:vir-ghost-transform}.
+After reindexing, the coefficient of $c_uc_v$, $u+v=m+n$, is
+\begin{align*}
+ \frac12\bigl((u-v-m)(-m-u)+(u-v+m)(-m-v)\bigr)
+ &=-\frac12(2m+n)(u-v).
+\end{align*}
+This proves the first part of~\eqref{eq:vir-nu-identities}.
+
+For the second part, extend $\delta(c_n)=\nu_n$ as an odd derivation on products of $c$ modes.
+Their mutual anticommutators are zero.
+The coefficient of each alternating cubic monomial in $\delta^2(c_n)$ is a multiple of
+\[
+ (a-b)(a+b-d)+(b-d)(b+d-a)+(d-a)(d+a-b)=0.
+\]
+Thus $\delta^2(c_n)=0$.
+The second identity in~\eqref{eq:vir-Q-contractions} identifies $[Q,\nu_n]$ with this expression.
+Lemma~\ref{lem:vir-domain} permits these expansions on each algebraic input.
+\end{proof}
+
+\begin{theorem}[The Virasoro square]\label{thm:vir-square}\label{lem:brst-nilpotence}
+For every restricted matter module $M$ as above,
+\begin{equation}\label{eq:vir-square}
+ \boxed{\displaystyle
+ Q^2=\frac{C-26}{12}\sum_{n>0}(n^3-n)c_{-n}c_n
+ \quad\text{on }M\otimes\mathcal F.}
+\end{equation}
+In addition,
+\begin{equation}\label{eq:vir-Q-L}
+ [Q,\mathcal L_n]=-A(n)c_n,\qquad [Q,\mathcal L_0]=0.
+\end{equation}
+If $M\neq0$, the operator $Q$ is square-zero on the full state space if and only if $C=26$.
+\end{theorem}
+
+\begin{proof}
+Put $D_m=[Q,\mathcal L_m]$.
+The graded Jacobi identity,~\eqref{eq:vir-Q-contractions}, and~\eqref{eq:vir-total-central} give
+\begin{align*}
+ \{D_m,b_n\}
+ &=[Q,[\mathcal L_m,b_n]]_{\mathrm s}
+   -[\mathcal L_m,\{Q,b_n\}]\\
+ &=(m-n)\mathcal L_{m+n}-[\mathcal L_m,\mathcal L_n]
+ =-A(m)\delta_{m+n,0},\\
+ \{D_m,c_n\}
+ &=(-2m-n)\nu_{m+n}-[\mathcal L_m,\nu_n]=0.
+\end{align*}
+Hence $D_m+A(m)c_m$ supercommutes with all ghosts.
+It has ghost degree one, so Lemma~\ref{lem:vir-commutant} makes it zero.
+This proves~\eqref{eq:vir-Q-L}.
+
+Let $K$ be the right side of~\eqref{eq:vir-square}.
+A direct Clifford contraction gives
+\[
+ [K,b_n]=-A(n)c_n,\qquad [K,c_n]=0.
+\]
+For instance,
+$[c_{-m}c_m,b_n]=\delta_{m+n,0}c_{-m}-\delta_{n-m,0}c_m$.
+The oddness of $A$ gives the formula for both signs of $n$.
+Also,
+\[
+ [Q^2,b_n]=[Q,\{Q,b_n\}]=[Q,\mathcal L_n],\qquad
+ [Q^2,c_n]=[Q,\nu_n]=0.
+\]
+Thus $Q^2-K$ commutes with all ghosts and has ghost degree two.
+Lemma~\ref{lem:vir-commutant} proves that it is zero.
+
+When $C=26$, the displayed square vanishes.
+For nonzero $v\in M$, the converse follows from
+\[
+ Q^2(v\otimes b_{-2}\Omega)
+ =\frac{C-26}{2}\,v\otimes c_{-2}\Omega.
+\]
+The output is nonzero when $C\neq26$.
+\end{proof}
+
+\subsubsection{Fields, zero modes, and the intercept}
+
+Fix a formal coordinate $z$ and define
+\[
+ b(z)=\sum_n b_nz^{-n-2},\qquad
+ c(z)=\sum_n c_nz^{1-n},\qquad
+ T^M(z)=\sum_nL_n^Mz^{-n-2}.
+\]
+The residue extracts the coefficient of $z^{-1}dz$.
+For convergent Laurent series it equals the positively oriented integral divided by $2\pi i$.
+All uses here are formal.
+The two ghost contractions are the expansion of $(z-w)^{-1}$ in nonnegative powers of $w/z$.
+For example,
+\[
+ \sum_{n\geq-1}z^{-n-2}w^{n+1}=\frac1{z-w}.
+\]
+The ghost stress tensor is
+\begin{equation}\label{eq:vir-stress-field}
+ T^{\mathrm{gh}}(z)=-2:b(z)\partial c(z):-:\partial b(z)c(z):
+ =\sum_mL_m^{\mathrm{gh}}z^{-m-2}.
+\end{equation}
+Indeed, the coefficient of $b_rc_s$ is $r+2s$.
+When $r+s=m$, this is $m+s$, as in~\eqref{eq:vir-ghost-L}.
+Equation~\eqref{eq:vir-ghost-transform} specifies the conformal weights $2$ and $-1$.
+
+Multiplying the fields and taking the residue gives exactly
+\begin{equation}\label{eq:vir-charge-residue}
+ Q=\operatorname{Res}_{z=0}
+ \bigl(c(z)T^M(z)+:b(z)c(z)\partial c(z):\bigr)\,dz.
+\end{equation}
+For the matter term, the residue condition is $m+n=0$.
+For the ghost term it is $r+s+t=0$.
+Antisymmetrizing the two $c$ factors changes the coefficient $1-t$ to $(s-t)/2$, which gives~\eqref{eq:vir-ghost-R}.
+If $\mathcal N$ means full normal ordering of the elementary ghost factors, then
+\[
+ \tfrac12\mathcal N(cT^{\mathrm{gh}})=:bc\partial c:.
+\]
+Thus~\eqref{eq:vir-charge-residue} also gives the residue of
+$cT^M+\tfrac12\mathcal N(cT^{\mathrm{gh}})$.
+Adding $\tfrac32\partial^2c$ to this current leaves its residue unchanged.
+This specifies a zero mode, rather than a sum of all current modes.
+
+\begin{proposition}[Intercept and vacuum conventions]\label{prop:vir-intercept}
+For $t\in\mathbb C$, set $Q_t=Q+tc_0$.
+Then
+\begin{align}
+ \{Q_t,b_n\}&=\mathcal L_n+t\delta_{n,0},
+ & [Q_t,\mathcal L_0]&=0,
+ \label{eq:vir-intercept-zero}\\
+ Q_t^2&=\sum_{n>0}
+ \left(\frac{C-26}{12}(n^3-n)-2tn\right)c_{-n}c_n.
+ \label{eq:vir-intercept-square}
+\end{align}
+For $M\neq0$, absolute nilpotence holds exactly when $C=26$ and $t=0$.
+
+Let $\downarrow=c_1\Omega$ and normal-order relative to this vacuum.
+Its annihilators are $b_n$ for $n\geq0$ and $c_n$ for $n\geq1$.
+Use a subscript $\downarrow$ for this ordering.
+Then
+\begin{equation}\label{eq:vir-intercept-dictionary}
+ L_{n,\downarrow}^{\mathrm{gh}}=L_n^{\mathrm{gh}}+\delta_{n,0},
+ \quad R_{\downarrow}=R+c_0,
+ \quad
+ \sum_n c_{-n}L_n^M+R_{\downarrow}-ac_0=Q+(1-a)c_0.
+\end{equation}
+In this convention the nilpotent intercept is $a=1$.
+The underlying Clifford module is the same.
+The vacuum $\downarrow$ has conformal energy $-1$ and ghost degree one in the $\Omega$ convention.
+\end{proposition}
+
+\begin{proof}
+The first line follows from~\eqref{eq:vir-Q-contractions} and $[\mathcal L_0,c_0]=0$.
+Since $c_0^2=0$,
+\[
+ Q_t^2=Q^2+t\{Q,c_0\},\qquad
+ \{Q,c_0\}=\nu_0=-2\sum_{n>0}n c_{-n}c_n.
+\]
+This proves~\eqref{eq:vir-intercept-square}.
+On $v\otimes\Omega$, its value is $-2t\,v\otimes c_{-1}c_1\Omega$.
+Thus absolute nilpotence requires $t=0$.
+Theorem~\ref{thm:vir-square} then requires $C=26$.
+
+The change of vacuum reverses only the creator/annihilator pair $(c_1,b_{-1})$.
+Its normal products satisfy
+\[
+ :b_{-1}c_1:_{\downarrow}-:b_{-1}c_1:
+ =b_{-1}c_1+c_1b_{-1}=1.
+\]
+The coefficient of this pair in $L_0^{\mathrm{gh}}$ is $1$, and it occurs in no other $L_n^{\mathrm{gh}}$.
+This gives the first identity in~\eqref{eq:vir-intercept-dictionary}.
+The same contraction proof as in Lemma~\ref{lem:vir-Q-contractions} gives
+\[
+ \{R_{\downarrow}-R,b_n\}=\delta_{n,0},\qquad
+ \{R_{\downarrow}-R,c_n\}=0.
+\]
+The difference $R_{\downarrow}-R-c_0$ vanishes by Lemma~\ref{lem:vir-commutant}.
+The last identity in~\eqref{eq:vir-intercept-dictionary} follows.
+The energy and degree of $\downarrow$ follow from those of $c_1$.
+\end{proof}
+
+\begin{proposition}[The nonnegative ghost polarization]\label{prop:vir-polarization-map}
+Set $c^m=c_{-m}$, so that $\{b_m,c^n\}=\delta_m^n$.
+Let $\mathcal F_{\mathrm{pol}}$ have vacuum $\Omega_{\mathrm{pol}}$ killed by $c^m$ for $m\leq0$ and by $b_m$ for $m>0$.
+Its creators are $c^m$ for $m>0$ and $b_m$ for $m\leq0$.
+Give its vacuum degree and energy zero, and assign these creators degrees $1,-1$ and energies $m,-m$ respectively.
+There is a Clifford-module isomorphism
+\[
+ I:\mathcal F_{\mathrm{pol}}\longrightarrow\mathcal F,
+ \qquad I(x\Omega_{\mathrm{pol}})=x\,c_0c_1\Omega,
+\]
+where $x$ is a product of the indicated creators.
+It raises ghost degree by $2$ and lowers energy by $1$.
+Let $R_{\mathrm{pol}}$ denote the cubic expression~\eqref{eq:vir-ghost-R} with this ordering.
+Under $1_M\otimes I$,
+\[
+ \sum_m c^mL_m^M+R_{\mathrm{pol}}-ac^0
+ \quad\longmapsto\quad Q+(1-a)c_0.
+\]
+Thus its critical charge term is $-c^0$, with both degree and energy shifts specified by $I$.
+\end{proposition}
+
+\begin{proof}
+The vector $\Xi=c_0c_1\Omega$ obeys the required annihilator conditions.
+For $m\leq0$, $c_{-m}\Xi=0$: $c_0$ and $c_1$ square to zero, and all $c_n$ with $n\geq2$ annihilate $\Xi$.
+For $m>0$, $b_m\Xi=0$ by the Clifford relations and~\eqref{eq:vir-ghost-vacuum}.
+Hence the displayed map intertwines the Clifford actions.
+Away from the pairs $(b_0,c_0)$ and $(b_{-1},c_1)$ it identifies the same exterior creators.
+On each of these two pairs, exterior multiplication and exterior differentiation exchange the empty and occupied states, with nonzero signs.
+Their four-state tensor product is invertible.
+This proves that $I$ is an isomorphism.
+Since $\Xi$ has degree $2$ and energy $-1$, the grading statements follow.
+
+Relative to $\Omega$, this ordering reverses both specified pairs.
+The pair $(b_{-1},c_1)$ contributes $1$ to $L_0^{\mathrm{gh}}$, as in Proposition~\ref{prop:vir-intercept}.
+The pair $(b_0,c_0)$ has coefficient zero there.
+Consequently the transported ghost stress modes are $L_n^{\mathrm{gh}}+\delta_{n,0}$.
+The contraction identities and Lemma~\ref{lem:vir-commutant} then give
+$I R_{\mathrm{pol}}I^{-1}=R+c_0$.
+The matter term commutes with $I$, which proves the charge formula.
+\end{proof}
+
+\subsubsection{Absolute and relative complexes}
+
+Here absolute and relative refer to the $b_0$ constraint.
+The central character of the Virasoro module is fixed, and the ghost variables are indexed by the modes $L_n$.
+There is no ghost for the central generator in this carrier.
+
+Set
+\[
+ \mathcal D_t^{\mathrm{rel}}=
+ \ker(b_0:\mathcal D\to\mathcal D)
+ \cap\ker(\mathcal L_0+t:\mathcal D\to\mathcal D).
+\]
+It inherits the ghost grading of $\mathcal D$.
+The first identity in~\eqref{eq:vir-intercept-zero} and the commutation with $\mathcal L_0$ show that $Q_t$ preserves this subspace.
+On it, the square is the restriction of~\eqref{eq:vir-intercept-square}.
+
+\begin{corollary}[The critical complexes]\label{cor:vir-complexes}
+At $C=26$ and $t=0$, the pairs
+\[
+ C_{\mathrm{abs}}^q(M)=M\otimes\mathcal F^q,
+ \qquad
+ C_{\mathrm{rel}}^q(M)=\mathcal D_0^{\mathrm{rel}}\cap(M\otimes\mathcal F^q)
+\]
+with differential $Q$ are cochain complexes of complex vector spaces.
+The inclusion $C_{\mathrm{rel}}^\bullet(M)\to C_{\mathrm{abs}}^\bullet(M)$ is a chain map.
+A homomorphism of restricted Virasoro modules induces chain maps by tensoring with $1_{\mathcal F}$.
+If $\mathcal L_0$ acts semisimply, every nonzero weight $\lambda$ subcomplex of the absolute complex is contractible by $\lambda^{-1}b_0$.
+\end{corollary}
+
+\begin{proof}
+The domain lemma defines the differential in every degree.
+Theorem~\ref{thm:vir-square} gives its square, and~\eqref{eq:vir-intercept-zero} gives stability of the relative subspace.
+A module homomorphism commutes termwise with~\eqref{eq:brst-differential}, hence with the finite sums on each state.
+On the weight-$\lambda$ subspace,
+$Q(\lambda^{-1}b_0)+(\lambda^{-1}b_0)Q=1$ by~\eqref{eq:vir-Q-contractions}.
+\end{proof}
+
+Relative nilpotence depends on the actual relative carrier.
+The full-state converse in Theorem~\ref{thm:vir-square} cannot be restricted without checking its detecting vectors.
+
+\begin{proposition}[Nonnegative matter weights]\label{prop:vir-relative-three-term}
+Suppose $M=\bigoplus_{j\geq0}M_j$, with $L_0^M|_{M_j}=j$ and $L_n^MM_j\subseteq M_{j-n}$.
+At $t=0$, for every central charge $C$, the relative carrier is
+\begin{equation}\label{eq:vir-relative-carrier}
+ \mathcal D_0^{\mathrm{rel}}
+ =(M_0\otimes\mathbb C\Omega)
+ \oplus(M_1\otimes\mathbb Cc_1\Omega)
+ \oplus(M_0\otimes\mathbb Cc_{-1}c_1\Omega).
+\end{equation}
+Its differential is the three-term complex
+\begin{equation}\label{eq:vir-relative-three-term}
+ M_0\xrightarrow{\ L_{-1}^M\ } M_1
+ \xrightarrow{\ L_1^M\ }M_0
+\end{equation}
+in ghost degrees $0,1,2$.
+In particular, $Q^2=0$ on this relative carrier for every $C$.
+\end{proposition}
+
+\begin{proof}
+The only negative ghost energy is that of $c_1$, and it can occur at most once.
+Thus $\mathcal F$ has minimum energy $-1$.
+Every $b$ creator has energy at least $2$, so no $b$ creator occurs at ghost energy $0$ or $-1$.
+The complete bases at these two energies are
+\[
+ \mathcal F_{-1}=\langle c_1\Omega,c_0c_1\Omega\rangle,
+ \qquad
+ \mathcal F_0=\langle\Omega,c_0\Omega,c_{-1}c_1\Omega,c_{-1}c_0c_1\Omega\rangle.
+\]
+The condition $b_0=0$ removes precisely the terms containing $c_0$.
+The total weight-zero condition therefore gives~\eqref{eq:vir-relative-carrier}.
+
+The matter term and ghost term of~\eqref{eq:brst-differential} give
+\begin{align*}
+ Q(v\otimes\Omega)&=L_{-1}^Mv\otimes c_1\Omega &&(v\in M_0),\\
+ Q(w\otimes c_1\Omega)&=L_1^Mw\otimes c_{-1}c_1\Omega &&(w\in M_1),\\
+ Q(v\otimes c_{-1}c_1\Omega)&=0 &&(v\in M_0).
+\end{align*}
+In the middle line, $c_0L_0^Mw\otimes c_1\Omega$ cancels $w\otimes Rc_1\Omega=-w\otimes c_0c_1\Omega$.
+For the last line, $R(c_{-1}c_1\Omega)=0$ by the two contractions in Lemma~\ref{lem:vir-Q-contractions}.
+Finally,
+$L_1^ML_{-1}^Mv=2L_0^Mv+L_{-1}^ML_1^Mv=0$ on $M_0$.
+This proves~\eqref{eq:vir-relative-three-term} and its nilpotence.
+\end{proof}
+
+For example, the universal Virasoro vacuum module of central charge $C$ is induced from a vector $\mathbf1$ killed by $L_n$ for $n\geq-1$.
+The central generator acts by $C$.
+The ordered monomials in $L_{-n}$, $n\geq2$, form its basis by the Poincar\'e--Birkhoff--Witt theorem.
+Hence $M_0=\mathbb C\mathbf1$ and $M_1=0$.
+Its relative complex has basis $\mathbf1\otimes\Omega,\mathbf1\otimes c_{-1}c_1\Omega$ and zero differential for every $C$.
+Trivial matter gives the same relative complex at $C=0$.
+Its absolute square is nonzero by~\eqref{eq:vir-first-square}.
+At the other boundary, suppose a restricted module contains $v\neq0$ with $L_0^Mv=-2v$.
+Then $v\otimes b_{-2}\Omega$ lies in $\mathcal D_0^{\mathrm{rel}}$ and
+\[
+ Q^2(v\otimes b_{-2}\Omega)=\frac{C-26}{2}v\otimes c_{-2}\Omega.
+\]
+This relative square is nonzero when $C\neq26$.
+Thus the critical central charge guarantees relative nilpotence for every restricted module, while particular relative carriers can have further vanishing.
+
+\subsubsection{Conformal vertex algebra states}
+
+Let $V$ be an ordinary conformal vertex algebra over $\mathbb C$ with conformal vector $\omega$.
+Write
+$Y(\omega,z)=\sum_nL_n^Vz^{-n-2}$ and let $C$ be its central charge.
+The lower truncation axiom makes $V$ a restricted matter module.
+Consequently~\eqref{eq:brst-differential} defines the degree-one operator on the full algebraic state carrier $V\otimes\mathcal F$.
+Equation~\eqref{eq:vir-charge-residue} identifies it with the zero mode of the specified normal-ordered current.
+At $C=26$, Corollary~\ref{cor:vir-complexes} supplies both the absolute complex and its $b_0$-relative subcomplex.
+When $V$ has nonnegative integral conformal weights, Proposition~\ref{prop:vir-relative-three-term} computes the relative complex directly.
+
+The ghost degree here is the cohomological degree.
+Conformal weight is the eigenvalue of $L_0^V+L_0^{\mathrm{gh}}$ and is independent of ghost degree.
+The residue uses the fixed formal coordinate $z$.
+A comparison with a complex of collision-state sheaves requires maps in that sheaf category, with compatible restrictions and differentials.
+The state-space construction above supplies its Virasoro differential and its square.
+
+For the conformal vertex algebra $\cA$, set $V=\cA$, $C=c(\cA)$, and $\cA_{\mathrm{tot}}=V\otimes\mathcal F$ on algebraic states.
+The notations $Q_{\mathrm{BRST}}=Q$ and $L_0^{\mathrm{tot}}=\mathcal L_0$ use the conformal vacuum and zero intercept.
+At $c(\cA)=26$, define
+\[
+ H^{\infty/2+q}(\cA)=H^q(C_{\mathrm{abs}}^\bullet(\cA),Q).
+\]
+The $b_0$-relative cohomology uses the separate complex $C_{\mathrm{rel}}^\bullet(\cA)$.
+
+\begin{remark}[The Virasoro anomaly and a bar comparison]
+\label{rem:brst-nilpotence-periodicity}
+The quadratic ghost operator in Theorem~\ref{thm:vir-square} has coefficient $c(\cA)-26$.
+A comparison with a bar differential requires an actual chain map on its specified collision-state carrier.
+If anomaly operators are also to be identified, that map must intertwine those operators.
+Equality of their scalar parameters alone does not supply such a map.
+\end{remark}
+
+\subsection{Augmentations and the relative coordinate carrier}
+
+The critical Virasoro charge acts on an algebraic state space.
+A comparison with chiral chains also needs a target and compatible coordinate transitions.
+Two finite identities obstruct the augmentation-kernel target and the standard restricted transitions.
+
+\begin{proposition}[The augmentation-kernel obstruction]\label{prop:vir-no-augmentation}
+Let $V\neq0$ be a unital vertex algebra over $\mathbb C$, and let $A=V\otimes bc$ use the ghost system above.
+There is no unital vertex superalgebra homomorphism $A\to\mathbb C$ with trivial target vertex products.
+Consequently the reduced chiral construction whose coefficient sheaf is a chiral augmentation kernel cannot be instantiated on $A$ with its original collision products.
+\end{proposition}
+
+\begin{proof}
+Write $\Omega_A=\mathbf1_V\otimes\Omega$, $b=\mathbf1_V\otimes b_{-2}\Omega$, and $c=\mathbf1_V\otimes c_1\Omega$ in $A$.
+With the vertex convention $Y(a,z)=\sum_r a_{(r)}z^{-r-1}$,
+\[
+ b_{(0)}c=\mathbf1_V\otimes b_{-1}c_1\Omega=\Omega_A.
+\]
+Every nonnegative product vanishes in the trivial vertex algebra.
+A unital homomorphism $\varepsilon$ would therefore give
+$1=\varepsilon(b_{(0)}c)=\varepsilon(b)_{(0)}\varepsilon(c)=0$.
+For $V=\operatorname{Vir}_{26}$, set $T=(L_{-2}^V\mathbf1_V)\otimes\Omega$.
+There is also the independent matter identity
+\[
+ T_{(3)}T=(L_2^VL_{-2}^V\mathbf1_V)\otimes\Omega=13\Omega_A.
+\]
+
+On a coordinate disk, let $t=z_1-z_2$ and normalize
+$\operatorname{Res}(t^{-1}dt)=1$.
+The full collision maps include
+\[
+ \operatorname{Res}_{t=0}Y(b,t)c\,dt=\Omega_A,
+ \qquad
+ \operatorname{Res}_{t=0}t^3Y(T,t)T\,dt=13\Omega_A.
+\]
+A chiral augmentation to the unit chiral algebra must preserve these residues, which gives the same contradiction on that disk.
+It therefore cannot exist globally.
+The forms $dt=t\,d\log t$ and $t^3dt=t^4d\log t$ have regular logarithmic coefficients.
+Restricting to such coefficients does not remove the obstruction.
+
+The linear vacuum projection $\pi:A\to\mathbb C$ has $b,c\in\ker\pi$ but $b_{(0)}c\notin\ker\pi$.
+Its kernel is not closed under the original collision maps.
+The quotient by the vacuum also fails to inherit all vertex products, since
+$(\Omega_A)_{(-1)}b=b$ whereas $0_{(-1)}b=0$.
+Thus neither linear operation supplies the missing chiral augmentation.
+\end{proof}
+
+\begin{proposition}[Relative states, absolute states, and coordinate changes]
+\label{prop:vir-relative-target-obstruction}
+Take $V=\operatorname{Vir}_{26}$ and the zero-intercept charge of Theorem~\ref{thm:vir-square}.
+In this proposition, $\Omega$ denotes the tensor-product vacuum $\mathbf1_V\otimes\Omega_{\mathrm{gh}}$.
+Put $H=L_0^V+L_0^{\mathrm{gh}}$ and
+\[
+ e=\Omega,\quad u=c_0\Omega,\quad
+ v=c_{-1}c_1\Omega,\quad w=c_{-1}c_0c_1\Omega.
+\]
+The weight-zero absolute complex has these four basis states and differential
+\[
+ Qe=0,\qquad Qu=-2v,\qquad Qv=Qw=0.
+\]
+The relative complex is $\mathbb Ce\oplus\mathbb Cv$ with zero differential.
+The absolute cohomology has one class in degrees zero and three, and no others.
+The inclusion of relative states into absolute states kills $[v]$ and is not a quasi-isomorphism.
+
+Fix the convention that the coordinate flow $z\mapsto z/(1+sz)$ acts by
+$g_s=\exp(s\mathcal L_1)$, where $\mathcal L_1=L_1^V+L_1^{\mathrm{gh}}$.
+Then
+\begin{equation}\label{eq:vir-relative-coordinate-obstruction}
+ g_sv=v-sc_0c_1\Omega,
+ \qquad b_0g_sv=-sc_1\Omega\neq0\quad(s\neq0).
+\end{equation}
+The fixed relative fiber therefore does not define a subbundle through restriction of these state-bundle transitions.
+\end{proposition}
+
+\begin{proof}
+The universal vacuum module has $V_0=\mathbb C\mathbf1$ and $V_1=0$.
+The energy argument of Proposition~\ref{prop:vir-relative-three-term} gives exactly the four displayed absolute states and the two relative states.
+The charge contraction gives $Qu=-2v$.
+Nilpotence gives $Qv=0$, and weight zero has no degree-four state, so $Qw=0$.
+At every nonzero total weight $\lambda$, the homotopy $b_0/\lambda$ contracts the absolute complex by Corollary~\ref{cor:vir-complexes}.
+On the four-state complex, the homotopy $h(v)=-u/2$, zero on $e,u,w$, contracts it onto $\mathbb Ce\oplus\mathbb Cw$.
+All state sums are algebraic, so these homotopies define maps on the full carrier.
+In particular, $v=Q(-u/2)$ in the absolute complex.
+
+The ghost transformation law~\eqref{eq:vir-ghost-transform} gives
+\[
+ \mathcal L_1v=-c_0c_1\Omega,
+ \qquad \mathcal L_1(c_0c_1\Omega)=0.
+\]
+The exponential on $v$ consequently terminates after its linear term.
+Since $b_0c_0c_1\Omega=c_1\Omega$, this proves~\eqref{eq:vir-relative-coordinate-obstruction}.
+Also $Hg_sv=sc_0c_1\Omega$, so the same transition fails the weight-zero condition.
+A restricted transition must preserve the model fiber, which fails here.
+\end{proof}
+
+For a fixed coordinate, the relative vector-space complex remains defined.
+A sheaf comparison requires a separately constructed relative sheaf complex or a family of transported constraints with compatible transition maps.
+For source and target sheaf complexes $\mathcal C,\mathcal T$, local maps must satisfy
+\[
+ d_{\mathcal T}\Phi_U=\Phi_Ud_{\mathcal C},\qquad
+ \operatorname{res}^{\mathcal T}_{UW}\Phi_U
+ =\Phi_W\operatorname{res}^{\mathcal C}_{UW}\quad(W\subset U),
+\]
+and $g^{\mathcal T}_{ij}\Phi_j=\Phi_i g^{\mathcal C}_{ij}$ in coordinate trivializations.
+Ordinary or derived global sections require these complexes and their transitions first.
+The restricted transitions in~\eqref{eq:vir-relative-coordinate-obstruction} do not supply them.
+
+A different unital chiral-chain construction may avoid an augmentation kernel.
+Its coefficient complexes, vacuum insertions, all collision maps, differential, and section functor must be constructed before it can serve as a comparison target.
+For the relative vacuum complex, a degree-preserving quasi-isomorphism requires target cohomology precisely in degrees zero and two.
+Proposition~\ref{prop:vir-relative-target-obstruction} excludes the absolute state complex as a replacement target.
+These assertions concern the specified augmentation-kernel construction and state transitions; they do not exclude every chiral-chain construction.
+
+\subsection{The chain map}
+
+\begin{theorem}[Filtered comparison with a relative string BRST complex]
+\label{thm:brst-bar-genus0}
+\index{BRST!bar complex quasi-isomorphism}
+Let $\cA$ be a conformal vertex algebra with $c(\cA)=26$, and fix a coordinate for its algebraic states. Set $\cA_{\mathrm{tot}}=\cA\otimes bc$.
+Choose a graded $Q$-stable algebraic domain
+$\mathcal D_{\mathrm{rel}}\subseteq\ker b_0\cap\ker L_0^{\mathrm{tot}}$
+in the matter and ghost state space of Theorem~\ref{thm:vir-square}.
+Use the restriction of the operator~\eqref{eq:brst-differential} with its conformal vacuum and zero intercept.
+Theorem~\ref{thm:vir-square} gives $Q^2=0$ on this domain.
+Let $T=(T^\bullet,d_T)$ be a separately specified square-zero cochain complex of complex vector spaces.
+A chiral-chain application requires its actual coefficient complexes, vacuum normalization, collision maps, and prescribed section functor.
+A global relative application also requires the source descent and section-carrier identifications described after Proposition~\ref{prop:vir-relative-target-obstruction}.
+The augmentation-kernel target for $\cA_{\mathrm{tot}}$ is excluded by Proposition~\ref{prop:vir-no-augmentation}; the statement makes no such target assignment.
+Write $C=(\mathcal D_{\mathrm{rel}},Q)$.
+Assume $C,T$ have exhaustive increasing filtrations with $F_{-1}=0$, preserved by their differentials.
+Choose degree-preserving splittings by filtration order and an actual graded chain quasi-isomorphism
+\begin{equation}\label{eq:arkhipov-classical}
+\Phi_0:\operatorname{gr}C\longrightarrow\operatorname{gr}T.
+\end{equation}
+Suppose the obstruction classes of Theorem~\ref{thm:fl19-lift-obstruction} vanish along compatible choices of corrections in the Hom complexes of these carriers.
+Then the sum of those corrections is a filtered homotopy equivalence
+\[
+\Phi=\sum_{r\ge0}\Phi_r:
+(\mathcal D_{\mathrm{rel}},Q)\longrightarrow
+(T^\bullet,d_T).
+\]
+In particular, it induces an isomorphism on cohomology.
+The complete version requires the explicitly split products and filtration-raising maps specified after~\eqref{eq:fl19-cone-contraction}.
+\end{theorem}
+\begin{proof}
+Resolve both differentials by their filtration orders:
+$Q=\sum_{i\ge0}Q_i$ and $d_T=\sum_{i\ge0}d_{T,i}$.
+On maps of degree $a$, the order-zero Hom differential is
+$\partial_0u=d_{T,0}u-(-1)^a uQ_0$.
+After choosing $\Phi_0,\ldots,\Phi_{r-1}$, form the actual degree-one defect
+\[
+\omega_r=\sum_{i=1}^{r}
+(d_{T,i}\Phi_{r-i}-\Phi_{r-i}Q_i).
+\]
+The square-zero identities and the lower-order equations give $\partial_0\omega_r=0$.
+The assumed vanishing gives a map $\Phi_r$ with $\partial_0\Phi_r=-\omega_r$.
+For the chosen splittings of the graded coefficient complexes, Lemma~\ref{lem:fl19-hom-primitive} gives the primitive $-S(\omega_r)$ whenever its cohomology projection vanishes.
+The choices must continue to satisfy the higher obstruction equations.
+
+For an input of order $p$, only $\Phi_0,\ldots,\Phi_p$ act nontrivially.
+Their component equations imply $d_T\Phi=\Phi Q$ on every input.
+The associated graded map is the specified $\Phi_0$.
+The cone of $\Phi$ therefore has an acyclic graded complex.
+Its explicit contraction~\eqref{eq:fl19-cone-contraction} supplies a filtered inverse and both chain homotopies.
+On the stated complete products, the same equations hold componentwise and the sums converge in their specified filtration.
+\end{proof}
+
+\begin{remark}[Compatibility with the BV constructions]
+\label{rem:bv-convergence}
+\index{BV complex!convergence with bar complex}
+Theorem~\ref{thm:brst-bar-genus0} constructs a comparison of the specified filtered cochain complexes.
+Compatibility with the BV operations in~\eqref{eq:master-square}, Verdier duality, or the genus-one curvature requires the symbol map and every correction to intertwine those operations.
+A chosen vector-space contraction does not impose these additional equations.
+\end{remark}
+
+\begin{remark}[Low-degree assignments and the relative domain]
+\label{rem:brst-bar-explicit}
+Any proposed low-degree formula for $\Phi$ must start with a vector in $\mathcal D_{\mathrm{rel}}$ and satisfy $d_T\Phi(v)=\Phi(Qv)$.
+The relative condition already excludes some ghost monomials.
+For a vacuum $|0\rangle$ with $b_0|0\rangle=0$ and $c_1|0\rangle\ne0$, the ghost relations give
+\[
+ b_0c_0c_1|0\rangle=c_1|0\rangle\ne0,
+\]
+since $\{b_0,c_0\}=1$ and $\{b_0,c_1\}=0$.
+Thus $c_0c_1|0\rangle$ is outside $\ker b_0$ and cannot be assigned an image by a map defined only on the relative complex.
+Assignments of ghost states to logarithmic collision forms require the actual source domain, target coefficient sheaf, and chain equation.
+The recursion in the theorem constructs higher terms once those initial data and compatible primitives are supplied.
+\end{remark}
+
+\begin{remark}[Filtration and coefficient hypotheses]
+\label{rem:brst-bar-scope}
+The state-order filtration must include every matter, ghost, form, and collision factor in its actual carrier.
+Preservation of conformal energy does not identify their symbols with a zero-mode Lie algebra complex.
+Example~\ref{ex:fl19-no-lift} shows that an isomorphism of first pages does not construct a filtered chain lift.
+Algebraic direct sums and complete products require the distinct hypotheses stated in Theorem~\ref{thm:brst-bar-genus0}.
+The central-charge condition $c(\cA)=26$ alone supplies neither the target nor its symbol map and compatible corrections.
+For $\cA\otimes bc$, Proposition~\ref{prop:vir-no-augmentation} excludes the native augmentation-kernel target.
+For the universal Virasoro vacuum, Proposition~\ref{prop:vir-relative-target-obstruction} also excludes restriction of the standard coordinate transitions to the relative fiber.
+\end{remark}
+
+\begin{corollary}[Virasoro anomaly cancellation and chain comparison;
+\ClaimStatusProvedHere]
+\label{cor:anomaly-physical-genus0}
+\index{anomaly cancellation!BRST proof}
+Let $\cA\neq0$ be a conformal vertex algebra of central charge $c$, and use the conformal ghost vacuum.
+Then the absolute Virasoro charge has square
+\[
+ Q_{\mathrm{BRST}}^2=\frac{c-26}{12}\sum_{n>0}(n^3-n)c_{-n}c_n.
+\]
+Thus $Q_{\mathrm{BRST}}^2=0$ on the full state space if and only if $c=26$.
+The condition $c+c_{\mathrm{gh}}=0$ is equivalent to this vanishing, since $c_{\mathrm{gh}}=-26$.
+For the scalar normalization $\kappa_{\mathrm{tot}}=(c-26)/2$, the same condition is $\kappa_{\mathrm{tot}}=0$.
+At $c=26$ the relative complex is defined by Corollary~\ref{cor:vir-complexes}.
+Under all separately specified target, source-descent, section-carrier, filtration, symbol-map, and compatible-correction hypotheses of Theorem~\ref{thm:brst-bar-genus0}, its map $\Phi$ identifies the cohomology of the two specified complexes.
+This criterion does not instantiate an augmentation-kernel bar of $\cA\otimes bc$, which Proposition~\ref{prop:vir-no-augmentation} excludes.
+Transport of anomaly operators requires the additional equality
+$\Phi Q^2=B\Phi$ for the supplied target anomaly operator $B$.
+\end{corollary}
+
+\begin{proof}
+The square and its converse are Theorem~\ref{thm:vir-square}.
+Proposition~\ref{prop:vir-ghost-central} supplies the ghost central charge.
+The stated scalar normalization gives the numerical equivalence.
+Corollary~\ref{cor:vir-complexes} gives the relative complex at $c=26$.
+Theorem~\ref{thm:brst-bar-genus0} constructs the chain quasi-isomorphism under its full hypotheses.
+The equality $\Phi Q^2=B\Phi$ is exactly compatibility with the anomaly operators.
+For nonnegative matter weights, Proposition~\ref{prop:vir-relative-three-term} shows why relative nilpotence alone cannot imply $c=26$.
+\end{proof}
+
+\begin{remark}[Higher genus]
+\label{rem:brst-bar-higher-genus}
+A genus-$g$ comparison requires complexes over the stated curve or moduli space, with compatible coefficient maps, anomaly operators, and clutching maps.
+Proposition~\ref{prop:cbc26-horizontal-comparison} proves the transport statement for bounded flat bundle complexes.
+Example~\ref{ex:cbc26-torus-monodromy} gives a genus-one obstruction to inferring global cohomology from fiberwise data.
+For the matter--ghost vertex algebra, a unital collision construction must also avoid the augmentation obstruction of Proposition~\ref{prop:vir-no-augmentation}.
+\end{remark}
+
+\section{Semi-infinite cohomology and the bar complex}
+\label{sec:semi-infinite-bar}
+\index{semi-infinite cohomology|textbf}
+
+\subsection{Semi-infinite cohomology}
+
+\begin{definition}[A specified semi-infinite complex]
+\label{def:semi-infinite-cohomology}
+Let $\mathfrak l=\bigoplus_m\mathfrak l_m$ be a graded Lie algebra with finite-dimensional components and let $M$ be a coefficient module.
+Choose a polarization, its ghost space $\mathcal F$, and a locally finite degree-one operator $Q_{\mathrm{si}}$ on a specified graded algebraic domain $\mathcal D\subseteq M\otimes\mathcal F$, satisfying $Q_{\mathrm{si}}^2=0$ on that domain.
+For an ordinary module with the nonnegative energy grading of Lemma~\ref{lem:fl20-ghost-domain}, the stated current and normal-ordered cubic terms act on $\mathcal D=M\otimes\mathcal F$.
+Their square-zero identity remains a separate requirement.
+The relative ghost degree labels $C^{\infty/2+n}=\mathcal D^n$, and
+$H^{\infty/2+n}(\mathfrak l,M)=H^n(\mathcal D,Q_{\mathrm{si}})$.
+The treatment of central generators and any charge term are part of these data.
+The creation and annihilation conventions, and their significance, are given in Example~\ref{ex:fl19-central-ghost} and the construction preceding it.
+\end{definition}
+
+\begin{remark}[Semi-infinite and string differentials]
+\label{rem:semi-infinite-vs-brst}
+A ghost polarization does not by itself cancel an anomaly.
+Example~\ref{ex:fl19-central-ghost} gives a nonzero square when a central term is retained in the current action but omitted from the ghost differential.
+Including the central ghost gives a different, acyclic absolute complex at nonzero level in that example.
+An identification with a string BRST complex therefore requires the actual coefficient action, central treatment and differential, in addition to a comparison of graded vector spaces.
+\end{remark}
+
+\subsection{The bar--semi-infinite identification for Kac--Moody algebras}
+
+\begin{theorem}[Filtered comparison with a specified semi-infinite target]
+\label{thm:bar-semi-infinite-km}
+Let $C=\bar B^{\mathrm{ch}}(\widehat{\fg}_k)$ be a supplied native cochain complex on full collision-state sheaves and their specified section carrier.
+Choose the graded current Lie algebra $\mathfrak l$, its coefficient action on $V_k$, its ghost polarization and central treatment. Let $T=C^{\infty/2+\bullet}(\mathfrak l,V_k)$ denote the resulting specified square-zero complex of Definition~\ref{def:semi-infinite-cohomology}.
+Suppose their increasing filtrations start at order zero and are exhaustive, and that their differentials preserve them.
+Suppose an actual graded chain quasi-isomorphism $f_0:\operatorname{gr}C\to\operatorname{gr}T$ is given.
+If the obstruction classes of Theorem~\ref{thm:fl19-lift-obstruction} vanish along compatible choices of corrections, then the resulting sum defines a filtered homotopy equivalence
+\begin{equation}\label{eq:bar-semi-infinite}
+\Psi=\sum_{r\ge0}f_r:C\longrightarrow T.
+\end{equation}
+In particular,
+\begin{equation}\label{eq:bar-equals-semi-infinite}
+H^*(\bar B^{\mathrm{ch}}(\widehat{\fg}_k))
+\cong H^{\infty/2+*}(\mathfrak l,V_k).
+\end{equation}
+The same conclusion holds on the explicitly split complete carriers described after~\eqref{eq:fl19-cone-contraction}.
+\end{theorem}
+\begin{proof}
+At order $r$, calculate the defect
+$\omega_r=\sum_{i=1}^r(d_{T,i}f_{r-i}-f_{r-i}d_{C,i})$ on the actual coefficient complexes.
+The hypothesis supplies $f_r$ with $\partial_0 f_r=-\omega_r$.
+When its cohomology projection vanishes, Lemma~\ref{lem:fl19-hom-primitive} gives the explicit choice $f_r=-S(\omega_r)$.
+The sum in~\eqref{eq:bar-semi-infinite} is finite on every input of finite order, and the component equations prove its chain identity.
+Its graded map is $f_0$.
+The cone contraction~\eqref{eq:fl19-cone-contraction} gives the inverse and both homotopies, including their signs.
+The complete case uses componentwise convergent sums on the specified products.
+\end{proof}
+
+\begin{remark}[The coefficient comparison required by the theorem]
+\label{rem:bar-semi-infinite-scope}
+The theorem constructs a lift from actual filtered coefficient data and compatible vanishing obstructions.
+A comparison theorem does not supply those data from an isomorphism of first pages.
+Example~\ref{ex:fl19-no-lift} proves that the proposed implication fails even for two-dimensional complexes.
+Neither a state-level PBW basis nor conformal-weight preservation identifies the full collision sheaves with the zero-mode Chevalley complex.
+The native map $f_0$, its higher corrections, and their compatibility with restrictions and differential operators remain additional constructions.
+At critical level, a comparison must likewise specify its target and filtration independently of the undefined Sugawara stress tensor.
+\end{remark}
+
+\begin{remark}[Comparison with the string BRST complex]
+\label{rem:string-brst-special-case}
+To specialize~\eqref{eq:bar-semi-infinite} to a string BRST complex, one must identify its matter and ghost spaces, central action, charge term and differential with the chosen semi-infinite data.
+The nilpotency condition of the string differential must hold on that carrier.
+This identification is separate from the filtered lifting theorem.
+\end{remark}
+
+\input{chapters/theory/ds_chain_comparisons}
+
+\section{Holomorphic-topological field theories}
+
+\subsection{Gaiotto's framework: from 4d to 2d}
+
+\begin{definition}[Holomorphic-topological (HT) theory]
+A holomorphic-topological field theory on a complex surface $\Sigma$ is holomorphic in one complex direction and topological in the other.  Fields are sections of $\mathcal{O}$-modules satisfying $\bar{\partial}_{\bar{z}} \phi = 0$ (holomorphic) and $Q_{\text{top}} \phi = 0$ (topologically BRST-closed).
+\end{definition}
+
+\begin{theorem}[HT theory from 4d \texorpdfstring{$\mathcal{N}=4$}{N=4} SYM; \ClaimStatusProvedElsewhere]
+\label{thm:ht-from-n4-sym}
+Starting with 4d $\mathcal{N}=4$ super Yang--Mills with gauge group $G$, one applies the holomorphic twist (Costello~\cite{costello-gaiotto}), localizes to $\bar{\partial}$-connections on a Riemann surface $\Sigma$, and obtains holomorphic BF theory (the dimensional reduction of holomorphic Chern--Simons to $\Sigma$).
+
+The action is:
+\[S_{\text{BF}} = \int_{\Sigma} \operatorname{Tr}\!\left(B \wedge \bar{\partial} \mathbf{A} + B \wedge \mathbf{A} \wedge \mathbf{A}\right)\]
+
+where $\mathbf{A} = c + A + \cdots$ denotes the full BV field with $c \in \Omega^{0,0}(\Sigma, \mathfrak{g})$ (ghost) and $A \in \Omega^{0,1}(\Sigma, \mathfrak{g})$ (connection), and $B \in \Omega^{1,0}(\Sigma, \mathfrak{g})$ is the adjoint-valued Lagrange multiplier.
+On a Riemann surface, $\Omega^{0,2}(\Sigma) = 0$, so the classical fields
+$A \in \Omega^{0,1}$ satisfy $\bar{\partial}A = 0$ and $A \wedge A = 0$ identically.  The non-trivial
+content of the action arises from the BV extension: the ghost component $c \in \Omega^{0,0}$ has
+$\bar{\partial}c \in \Omega^{0,1}$, giving $B \wedge \bar{\partial}c \in \Omega^{1,1}$ (the volume form).
+The full holomorphic Chern--Simons action $\int \Omega \wedge \operatorname{CS}(\mathcal{A})$ lives on a
+complex $3$-fold with $(3,0)$-form $\Omega$; on $\Sigma$ only the holomorphic BF action above survives the dimensional reduction.
+\end{theorem}
+
+\begin{proof}[From Costello--Gaiotto]
+\emph{Step~1: The Holomorphic Twist.}
+
+Start with $\mathcal{N}=4$ SYM on $\mathbb{R}^4 \cong \mathbb{C}^2$. The field 
+content includes the gauge field $A_\mu$, scalars $\Phi^I$ in the adjoint ($I=1,\ldots,6$), and fermions $\psi, \bar{\psi}$.  The twist redefines the Lorentz group action by mixing with R-symmetry:
+\[\text{Spin}(4) \times \text{Spin}(6)_R \to \text{Spin}(4)_{\text{new}}\]
+
+After twisting, some bosons become fermions (ghosts), some fermions become bosons (matter), and a nilpotent supercharge $Q$ becomes scalar.
+
+\emph{Step~2: Localization.}
+
+The twisted action has $Q^2 = 0$ and:
+\[S_{\text{twisted}} = \{Q, \Lambda\} + S_0\]
+
+By localization, path integral reduces to:
+\[Z = \int_{\text{Q-fixed locus}} \mathcal{O}(fields)\]
+
+The Q-fixed locus consists of holomorphic data:
+\[\bar{\partial}_A = 0, \qquad \bar{\partial}_A \Phi = 0\]
+
+These are the equations for a holomorphic bundle with holomorphic Higgs field (the Hitchin equations in the holomorphic sector).
+
+\emph{Step~3: Volume Form.}
+
+The holomorphic volume form $\Omega$ arises from the topological twist. On
+$\mathbb{C}^2$ with holomorphic coordinates $(z,w)$:
+\[\Omega = dz \wedge dw\]
+
+On the deformed conifold $Y_\mu = \{u_1 w_2 - u_2 w_1 = \mu\} \subset \mathbb{C}^4$ (a Calabi--Yau 3-fold), $\Omega$ is the unique holomorphic $(3,0)$-form obtained via the Poincar\'{e} residue:
+\[\Omega = \operatorname{Res}_{Y_\mu}\frac{du_1 \wedge du_2 \wedge dw_1 \wedge dw_2}{u_1 w_2 - u_2 w_1 - \mu}\]
+\end{proof}
+
+\subsection{Boundary conditions and chiral algebras}
+
+\begin{theorem}[Boundary chiral algebra; \ClaimStatusProvedElsewhere{} \cite{CDG20,CG17}]
+\label{thm:boundary-chiral-algebra-bv}
+A boundary condition for holomorphic Chern--Simons theory supports a chiral
+algebra $\mathcal{A}_{\text{bdy}}$ whose generators are local operators at the boundary, whose OPE comes from bulk-to-boundary correlation functions, and whose central charge is determined by the level of HCS theory.
+\end{theorem}
+
+\begin{example}[Kac--Moody from HCS]
+Holomorphic Chern--Simons with gauge group $G$ at level $k$ produces:
+\[\mathcal{A}_{\text{bdy}} = \widehat{\mathfrak{g}}_k\]
+
+the affine Kac--Moody algebra at level $k$.
+
+The currents:
+\[J^a(z) = \text{Tr}(T^a A(z))\]
+
+satisfy:
+\[J^a(z) J^b(w) \sim \frac{k \delta^{ab}}{(z-w)^2} + 
+\frac{f^{abc} J^c(w)}{z-w}\]
+
+This OPE is computed via the holomorphic Chern--Simons path integral with
+boundary insertions.
+\end{example}
+
+\subsection{The holomorphic-topological boundary condition}
+
+\begin{definition}[HT boundary condition]
+For holomorphic Chern--Simons on a surface $\Sigma$ with boundary $\partial \Sigma$, 
+the \emph{holomorphic-topological boundary condition} requires:
+\begin{enumerate}
+\item Fields extend holomorphically to a compactification $\bar{\Sigma}$
+\item At the boundary divisor $D = \bar{\Sigma} \setminus \Sigma$, fields have 
+a simple zero: $A \in \Omega^{0,*}(\bar{\Sigma}, \mathcal{O}_{\bar{\Sigma}}(-D))$
+\item The volume form $\Omega$ has compatible pole: $\Omega \in K_{\bar{\Sigma}}(kD)$ 
+for cubic interaction $(k=3)$
+\end{enumerate}
+\end{definition}
+
+\begin{conjecture}[Bar-cobar from HT boundary; \ClaimStatusHeuristic]
+\label{conj:bar-cobar-ht-boundary}
+The holomorphic-topological boundary condition realizes bar-cobar duality:
+\begin{itemize}
+\item \emph{Bar side.} Fields with prescribed asymptotics near $D$ (logarithmic
+forms)
+\item \emph{Cobar side.} Distributional fields on $\Sigma$ (delta functions at $D$)
+\item \emph{Duality.} Perfect pairing via residue-distribution integral
+\end{itemize}
+\end{conjecture}
+
+\begin{evidence}[Evidence: Geometric realization]
+The key is the volume form behavior. If $\Omega$ has a pole of order $k$ along 
+$D$:
+\[\Omega \sim \frac{dz \wedge dw}{(z-w)^k}\]
+
+then the action term:
+\[\int_{\Sigma} \Omega \cdot A^k\]
+
+is finite if and only if $A$ vanishes to order 1 along $D$.
+
+This pole-zero compatibility is exactly the bar-cobar relationship: the logarithmic form $\eta = d\log(z-w)$ (bar) has a logarithmic singularity whose residue is the distribution $\delta(z-w)$ (cobar).
+
+The holomorphic-topological boundary condition enforces this duality at the
+geometric level.
+\end{evidence}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because it proposes a geometric
+realization of bar-cobar duality via holomorphic-topological boundary conditions,
+which requires input from extended field theory (boundary conditions for HT theories)
+beyond the algebraic framework of this monograph.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The bar and cobar complexes should arise as the two boundary conditions (logarithmic forms vs.\ distributional fields) of a holomorphic-topological theory on~$\Sigma$, with the bar-cobar pairing realized by the residue-distribution integral across the boundary divisor~$D$.
+\end{remark}
+
+\section{$\mathcal{W}$-algebras from Higgs branches}
+
+\subsection{\texorpdfstring{4d gauge theory $\to$ 2d $\mathcal{W}$-algebra}{4d gauge theory -> 2d $\mathcal{W}$-algebra}}
+
+\begin{conjecture}[Costello--Gaiotto AGT; \ClaimStatusConjectured]
+\label{conj:costello-gaiotto-agt}
+Starting with 4d $\mathcal{N}=2$ gauge theory with gauge group $G$, compactify on $\Sigma_g$, apply the topological twist, and take the infrared limit.  The result is a 2d CFT with W-algebra symmetry $\mathcal{W}(G)$.
+
+For $G = SU(N)$, this gives the $\mathcal{W}_N$ algebra.
+\end{conjecture}
+
+\begin{evidence}[Evidence: Via bar-cobar]
+\emph{Step~1: Higgs Moduli Space.}
+
+The 4d theory has Higgs branch moduli space:
+\[\mathcal{M}_{\text{Higgs}} = \text{Higgs}(\Sigma_g, G)\]
+
+consisting of $G$-Higgs bundles on $\Sigma_g$.
+
+\emph{Step~2: Chiral Algebra.}
+
+The Higgs moduli space supports a chiral algebra via:
+\[\mathcal{A} = \text{LocalObs}(\mathcal{M}_{\text{Higgs}})\]
+
+Local operators on the moduli space form a factorization algebra, which extends 
+to a chiral algebra.
+
+\emph{Step~3: W-Algebra Identification.}
+
+For $G = SU(N)$ and $\Sigma_g = \mathbb{C}$, the local operators --- the stress tensor $T(z)$ from diffeomorphisms and higher spin currents $W^{(s)}(z)$ for $s = 2, \ldots, N$ --- generate the $\mathcal{W}_N$ algebra.
+
+\emph{Step~4: Bar-Cobar Realization.}
+
+The bar complex:
+\[\bar{B}^{\text{ch}}(\mathcal{W}_N) = \Omega^*(\overline{C}_n(\Sigma_g), 
+\mathcal{W}_N^{\boxtimes n})\]
+
+computes the boundary W-algebra correlators on the 2d side.  The
+conjectural gauge-theory statement is that these same correlators arise
+from partition functions of the 4d theory:
+\[\langle W^{(s_1)}(z_1) \cdots W^{(s_n)}(z_n) \rangle =
+Z_{4d}[\Sigma_g; z_1, \ldots, z_n]\]
+\end{evidence}
+
+\begin{remark}[Scope]
+\ClaimStatusConjectured{} because the 4d gauge theory origin of W-algebras (Costello--Gaiotto) requires the holomorphic twist and infrared localization, which are physics inputs beyond the scope of this monograph.  The bar complex computing W-algebra conformal blocks follows from Part~I; the live task is the gauge-theoretic comparison.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+
+\subsection{Quantum corrections and central charge}
+
+\begin{remark}[Quantum vs.\ classical]
+The 4d $\to$ 2d reduction involves two types of quantum corrections: \emph{loop corrections} from integrating out massive modes (captured by $m_3, m_4, \ldots$ in the $A_\infty$ structure), and \emph{instanton corrections} from non-perturbative effects (not visible in the bar complex, requiring full QFT).
+\end{remark}
+
+\begin{theorem}[Central charge from 4d; \ClaimStatusProvedElsewhere]
+\label{thm:central-charge-from-4d}
+The Sugawara central charge of the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ is:
+\[c_{\mathrm{Sug}} = \frac{k \dim \mathfrak{g}}{k + h^\vee}\]
+
+The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ obtained by DS reduction has a different central charge, determined by $c_{\mathrm{Sug}}$ minus the ghost contribution (which depends on the nilpotent orbit of $f$), where $k$ is the level and $h^\vee$ the dual Coxeter number.  This matches the Feigin--Frenkel formula~\cite{Feigin-Frenkel}.
+\end{theorem}
+
+\section{Quantum observables and BV integration}
+
+\subsection{BV path integral}
+
+\begin{definition}[BV partition function]
+The BV partition function is:
+\[Z_{\text{BV}} = \int_{\mathcal{L}} [D\phi] \, e^{S[\phi]/\hbar}\]
+
+where $\mathcal{L}$ is a Lagrangian submanifold (gauge fixing), $S[\phi]$ satisfies the quantum master equation $\Delta_{\text{BV}} e^{S/\hbar} = 0$, and the integration uses the BV measure (Berezinian).
+\end{definition}
+
+\begin{conjecture}[BV integration = bar-cobar pairing; \ClaimStatusHeuristic]
+\label{conj:bv-integration-bar-cobar}
+The BV path integral is realized by the bar-cobar pairing:
+\[Z_{\text{BV}} = \langle \bar{B}^{\text{ch}}(\mathcal{A}), 
+\Omega^{\text{ch}}(\mathcal{C}) \rangle\]
+
+Explicitly:
+\[Z = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}\]
+\end{conjecture}
+
+\begin{evidence}
+\emph{Step~1: Gauge Fixing as Lagrangian.}
+
+Choose gauge fixing Lagrangian $\mathcal{L}$ corresponding to:
+\[\mathcal{L} = \{(\phi, \phi^+) : \phi^+ = F(\phi)\}\]
+
+for some gauge fermion $F$.
+
+In geometric terms, this corresponds to choosing a regularization prescription 
+for the configuration space integrals.
+
+\emph{Step~2: BV Measure.}
+
+The BV measure on $\mathcal{L}$ is:
+\[\mu_{\text{BV}} = \text{Ber}(\mathcal{L}) \cdot d\phi\]
+
+Geometrically, this is the measure on configuration space:
+\[\mu_{\text{geom}} = \prod_{i<j} |z_i - z_j|^2 \prod_{i=1}^n d^2z_i\]
+
+with appropriate gauge fixing factors.
+
+\emph{Step~3: Action and Pairing.}
+
+The action:
+\[e^{S/\hbar} = \prod_{\text{interactions}} e^{V_k(z_1, \ldots, z_k)/\hbar}\]
+
+corresponds to the cobar element:
+\[K_{\text{cobar}} = \sum_n K_n(z_1, \ldots, z_n)\]
+
+The pairing:
+\[\int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge K_{\text{cobar}}\]
+
+is exactly the BV path integral with gauge fixing determined by the choice of
+regularization.
+\end{evidence}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because the identification of the
+BV path integral with the bar-cobar pairing requires a rigorous measure-theoretic
+framework for configuration space integrals with BV gauge-fixing data, which goes
+beyond the algebraic constructions of Part~I.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The BV partition function $Z_{\mathrm{BV}}$ should equal the bar-cobar pairing $\langle \bar{B}^{\mathrm{ch}}(\cA), \Omega^{\mathrm{ch}}(\mathcal{C}) \rangle$ as a configuration space integral, with gauge-fixing Lagrangian corresponding to the choice of regularization of the FM compactification.
+\end{remark}
+
+\subsection{Observables and correlation functions}
+
+\begin{theorem}[Observables = cohomology; \ClaimStatusProvedElsewhere{} \cite{CG17}]
+\label{thm:observables-brst-cohomology}
+Physical observables are:
+\[\mathcal{O}_{\text{phys}} = H^0(Q_{\text{BRST}}) = 
+\ker(Q_{\text{BRST}})/\text{im}(Q_{\text{BRST}})\]
+
+In the bar-cobar framework:
+\[\mathcal{O}_{\text{phys}} \cong H^0(\bar{B}^{\text{ch}}(\mathcal{A}))\]
+\end{theorem}
+
+\begin{example}[Correlation functions]
+An $n$-point correlation function:
+\[\langle \mathcal{O}_1(z_1) \cdots \mathcal{O}_n(z_n) \rangle = 
+\int_{\overline{C}_n(X)} [\mathcal{O}_1 \otimes \cdots \otimes \mathcal{O}_n] 
+\cdot e^{S_{\text{int}}}\]
+
+is computed by representing each $\mathcal{O}_i$ as a cocycle in $\bar{B}^{\text{ch}}(\mathcal{A})$ and applying the bar-cobar pairing with $e^{S_{\text{int}}}$ --- Gaiotto's prescription for holomorphic-topological observables.
+\end{example}
+
+\section{Dictionary}
+
+\begin{remark}[Dictionary]
+The BV-BRST formalism connects:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Physics} & \textbf{Math (Bar-Cobar)} & \textbf{Geometry} \\
+\hline
+BV complex & Bar complex & Log forms on $\overline{C}_n$ \\
+BV bracket & Configuration space symplectic & Poisson structure \\
+Master equation & $\dzero^2 = 0$ & Stokes / boundary residues \\
+BV Laplacian & Cobar differential & Delta functions \\
+Quantum master eq & Bar-cobar duality & Verdier duality \\
+BRST operator & Residue extraction & OPE singularities \\
+Gauge fixing & Lagrangian choice & Regularization \\
+Observables & Cohomology & Physical states \\
+Path integral & Bar-cobar pairing & Configuration integrals \\
+4d $\to$ 2d reduction & Factorization & Dimensional analysis \\
+W-algebra & Boundary chiral algebra & Higgs moduli \\
+\hline
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{remark}[Gaiotto's contribution]
+Gaiotto's contribution was recognizing a physical pattern: holomorphic-topological theories naturally produce chiral algebras, boundary conditions for these theories are modules over the chiral algebra, the open-closed correspondence should be modeled by bar-cobar duality, and suitable 4d gauge theory reductions should produce W-algebras via this mechanism.  The geometric bar-cobar construction supplies the theorematic boundary algebraic package on which these physical comparison statements are built.
+\end{remark}
+
+
+\section{The BV algebra structure}
+\label{sec:complete-bv-structure}
+
+\subsection{BV algebra definition}
+
+\begin{definition}[BV algebra]
+\label{def:bv-algebra-complete}
+\index{BV algebra|textbf}
+A \emph{Batalin--Vilkovisky algebra} is a graded commutative algebra $(A, \cdot)$ equipped with:
+\begin{enumerate}
+\item \emph{BV bracket.} $\{\cdot, \cdot\}: A \otimes A \to A$ of degree $+1$, satisfying:
+\begin{itemize}
+\item Graded skew-symmetry: $\{a, b\} = -(-1)^{(|a|+1)(|b|+1)} \{b, a\}$
+\item Graded Leibniz: $\{a, bc\} = \{a, b\}c + (-1)^{(|a|+1)|b|} b\{a, c\}$
+\item Graded Jacobi: $\{a, \{b, c\}\} = \{\{a, b\}, c\} + (-1)^{(|a|+1)(|b|+1)} \{b, \{a, c\}\}$
+\end{itemize}
+
+\item \emph{BV Laplacian.} $\Delta: A \to A$ of degree $+1$, satisfying:
+\begin{itemize}
+\item Nilpotency: $\Delta^2 = 0$
+\item Second-order: $\Delta(ab) = \Delta(a)b + (-1)^{|a|}a\Delta(b) + (-1)^{|a|}\{a, b\}$
+\end{itemize}
+
+\item \emph{Compatibility.} $\{a, b\} = (-1)^{|a|} [\Delta(ab) - \Delta(a)b - (-1)^{|a|}a\Delta(b)]$
+\end{enumerate}
+\end{definition}
+
+\subsection{BV structure from configuration spaces}
+
+\begin{theorem}[Configuration space BV structure; \ClaimStatusProvedHere]
+\label{thm:config-space-bv}
+The bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ carries a natural BV algebra structure where:
+
+\emph{(1) Algebra structure.} Wedge product of logarithmic forms
+
+\emph{(2) BV bracket.} Derived from symplectic structure on $T^*C_n(X)$
+
+\emph{(3) BV Laplacian.} Integration against diagonal (cobar differential)
+\[\Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j)\]
+\end{theorem}
+
+\begin{proof}
+We verify the three BV algebra axioms (Definition~\ref{def:bv-algebra-complete}).
+
+\emph{(1) Commutative algebra structure.}
+The bar complex $\bar{B}^n(\mathcal{A}) = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log})$ carries a natural commutative product: the wedge product of logarithmic forms.  For $\omega \in \bar{B}^p$ and $\eta \in \bar{B}^q$, define:
+\[
+(\omega \cdot \eta)(z_0, \ldots, z_{p+q+1}) = \omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})
+\]
+extended to $\overline{C}_{p+q+2}(X)$ via the inclusion $\overline{C}_{p+1}(X) \times \overline{C}_{q+1}(X) \hookrightarrow \overline{C}_{p+q+2}(X)$.  This is graded commutative: $\omega \cdot \eta = (-1)^{|\omega||\eta|}\, \eta \cdot \omega$ by the sign rule for wedge products of forms.
+
+\emph{(2) BV Laplacian.}
+Define $\Delta: \bar{B}^n \to \bar{B}^{n-1}$ by contraction with the diagonal:
+\[
+\Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j) = \sum_{i < j} \operatorname{Res}_{z_i = z_j}[\omega]
+\]
+This has degree $+1$ (reduces bar degree by 1, increases cohomological degree by 1 via the residue).
+
+\emph{Nilpotency} ($\Delta^2 = 0$): Applying $\Delta$ twice gives a double residue $\operatorname{Res}_{z_i = z_j} \circ \operatorname{Res}_{z_k = z_l}$.  For $\{i,j\} \cap \{k,l\} = \emptyset$, the two residues commute and $\Delta^2 = 0$ is immediate.  For $\{i,j\} \cap \{k,l\} \neq \emptyset$, say $j = k$, the iterated residue $\operatorname{Res}_{z_i = z_j}\operatorname{Res}_{z_j = z_l}$ picks out the coefficient of $(z_i - z_j)^{-1}(z_j - z_l)^{-1}$ in $\omega$, but the Arnold relation $\eta_{ij} \wedge \eta_{jl} + \eta_{jl} \wedge \eta_{li} + \eta_{li} \wedge \eta_{ij} = 0$ ensures these contributions cancel in pairs: the terms from triples $(i,j,l)$ with different orderings of the iterated residue sum to zero.
+
+\emph{Second-order property}: We verify $\Delta(\omega \cdot \eta) = \Delta(\omega) \cdot \eta + (-1)^{|\omega|}\omega \cdot \Delta(\eta) + (-1)^{|\omega|}\{\omega, \eta\}$ by computing the residue of a product.  When $\operatorname{Res}_{z_i = z_j}$ acts on $\omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})$, the residue localizes to three cases: (a) both $i, j \leq p$, contributing $\Delta(\omega) \cdot \eta$; (b) both $i, j > p$, contributing $\omega \cdot \Delta(\eta)$; (c) $i \leq p < j$ or $j \leq p < i$, contributing the bracket $\{\omega, \eta\}$.  This decomposition is the BV second-order property.
+
+\emph{(3) BV bracket.}
+The bracket is defined as the failure of $\Delta$ to be a derivation:
+\[
+\{\omega, \eta\} = (-1)^{|\omega|}[\Delta(\omega \cdot \eta) - \Delta(\omega) \cdot \eta - (-1)^{|\omega|}\omega \cdot \Delta(\eta)]
+\]
+Geometrically, $\{\omega, \eta\}$ extracts the residue across the interface between the two factors — this is the contraction pairing between $\omega$ and $\eta$ mediated by the symplectic form on $T^*C_n(X)$.  The Jacobi identity for $\{-,-\}$ follows from $\Delta^2 = 0$ by the standard BV$\to$Lie derivation (the ``7-term identity'').
+
+Thus $(\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$ is a BV algebra.
+\end{proof}
+
+\subsection{Quantum master equation}
+
+\begin{conjecture}[Quantum master equation; \ClaimStatusHeuristic]
+\label{conj:quantum-master-complete}
+The \emph{quantum master equation}
+\[\hbar \Delta S + \frac{1}{2}\{S, S\} = 0\]
+or equivalently $\Delta e^{S/\hbar} = 0$
+is solved by the bar-cobar pairing.
+\end{conjecture}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because the solution $S$ of
+the QME must be constructed from the bar-cobar pairing data, which requires
+controlling the $\hbar$-expansion of configuration space integrals and verifying
+the second-order BV identity at each order.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The bar-cobar pairing element $S = \langle \bar{B}^{\mathrm{ch}}(\cA), \Omega^{\mathrm{ch}}(\cA^!) \rangle$ should satisfy the quantum master equation $\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ in the BV algebra of Theorem~\ref{thm:config-space-bv}.
+\end{remark}
+
+\begin{conjecture}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
+\label{conj:bv-equals-bar-cobar}
+The BV quantization of a chiral algebra $\mathcal{A}$ is equivalent to computing the
+bar-cobar homology:
+\[H^*_{\text{BV}}(\mathcal{A}) \cong H^*(\bar{B}(\mathcal{A}), \Omega(\mathcal{A}^!))\]
+where $\mathcal{A}^!$ is the Koszul dual.
+
+For affine Kac--Moody algebras, Theorem~\ref{thm:bar-semi-infinite-km} gives a chain comparison under its supplied coefficient, target, filtration, symbol-map, and compatible-correction hypotheses.
+A BV-homology identification additionally requires the actual BV complex and compatibility of that map with the required BV operations and pairings.
+The bar-cobar quasi-isomorphism of Theorem~\ref{thm:bar-cobar-isomorphism-main} does not supply these separate maps.
+For general chiral algebras, their construction remains part of the conjecture.
+\end{conjecture}
+
+\begin{remark}[Scope]
+For Kac--Moody algebras, the bar/BRST comparison retains all source, target, filtration, symbol-map, and correction hypotheses of Theorem~\ref{thm:bar-semi-infinite-km}.
+Its BV compatibility and pairings require additional maps even when the bar-cobar quasi-isomorphism of Theorem~\ref{thm:bar-cobar-isomorphism-main} is available.
+The conjecture includes those constructions and their extension to general chiral algebras.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
+The BV cohomology $H^*_{\mathrm{BV}}(\cA)$ and the bar-cobar cohomology $H^*(\bar{B}(\cA), \Omega(\cA^!))$ should be isomorphic as graded vector spaces for every Koszul chiral algebra, induced by a quasi-isomorphism of the underlying cochain complexes.
+\end{remark}
+
+\subsection{Summary: BV as functor}
+
+\begin{theorem}[BV functor; \ClaimStatusProvedHere]
+\label{thm:bv-functor}
+\index{BV functor}
+The BV quantization defines a functor:
+\[\mathrm{BV}: \mathrm{ChirAlg}_X \longrightarrow \mathrm{BV\text{-}Alg}\]
+
+preserving tensor products up to quasi-isomorphism (lax monoidal structure) and Verdier duality for Koszul $\mathcal{A}$: $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$.
+\end{theorem}
+
+\begin{proof}
+\emph{Objects.}  For a chiral algebra $\mathcal{A}$ on $X$, define $\mathrm{BV}(\mathcal{A}) = (\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$, the BV algebra structure of Theorem~\ref{thm:config-space-bv}.  This assignment is well-defined: the bar complex, wedge product, and BV Laplacian depend only on the chiral algebra structure of~$\mathcal{A}$.
+
+\emph{Morphisms.}  A morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $\bar{B}(f): \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \bar{B}^{\mathrm{ch}}(\mathcal{B})$ via $f^{\boxtimes(n+1)}$ on each bar degree.  This map preserves the wedge product (it acts on coefficients, not on forms) and commutes with the BV Laplacian (which is defined by residues, and $f$ preserves OPE data).  Therefore $\bar{B}(f)$ is a morphism of BV algebras.  Functoriality ($\bar{B}(g \circ f) = \bar{B}(g) \circ \bar{B}(f)$ and $\bar{B}(\mathrm{id}) = \mathrm{id}$) is inherited from the functoriality of $\bar{B}^{\mathrm{ch}}$.
+
+\emph{Monoidal structure.}  For chiral algebras $\mathcal{A}_1, \mathcal{A}_2$, the Eilenberg--Zilber theorem provides a quasi-isomorphism
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{A}_1 \otimes \mathcal{A}_2) \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
+\]
+via the shuffle map.  This is \emph{not} an isomorphism at the chain level: the bar construction involves iterated tensor powers over a single configuration space $\overline{C}_n(X)$, which does not factor as a product.  The shuffle quasi-isomorphism is compatible with the BV structures
+in the following sense.  On the target, the BV Laplacian satisfies
+$\Delta_{\otimes} = \Delta_1 \otimes \mathrm{id}
++ \mathrm{id} \otimes \Delta_2$
+(the Laplacian distributes over the tensor product because it acts
+by contraction against the diagonal, which factors).
+The BV bracket
+$\{a_1 \otimes a_2,\, b_1 \otimes b_2\}
+= \{a_1, b_1\} \otimes a_2 b_2
+\pm a_1 b_1 \otimes \{a_2, b_2\}$
+satisfies the Leibniz rule by definition of the Gerstenhaber bracket
+on a tensor product of BV algebras.  The shuffle map intertwines
+these structures because it is a coalgebra map (it respects the
+deconcatenation coproduct, which determines the Laplacian) and an
+algebra map up to homotopy (the Eilenberg--Zilber theorem).
+Explicitly, the failure of strict compatibility is controlled by
+higher homotopies in the $E_\infty$-structure on the bar complex
+(Berger--Fresse~\cite[\S11]{BerFres04}), which do not affect the
+lax monoidal structure at the derived level.  The functor
+$\mathrm{BV}$ is therefore lax monoidal.
+
+\emph{Verdier duality.}  Verdier duality $\mathbb{D}$ on $\overline{C}_n(X)$ exchanges logarithmic forms (bar data) with distributional sections (cobar data).  Specifically, $\mathbb{D}(\bar{B}^n(\mathcal{A})) = \mathrm{Dist}(C_n(X), (\mathcal{A}^*)^{\boxtimes n}) \cong \Omega^n(\mathcal{A}^!)$ (the cobar complex of the Koszul dual coalgebra), where the isomorphism uses the residue pairing between forms and distributions.  Under this identification, the bar differential becomes the cobar differential of $\mathcal{A}^!$, and the BV Laplacian becomes the cobar product, establishing $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$ as BV algebras.  This is the BV-algebraic manifestation of the bar-cobar Verdier duality proved in Theorem~\ref{thm:verdier-bar-cobar}.
+\end{proof}
+
+\begin{remark}[Shifted symplectic structure from BV]\label{rem:bv-shifted-symplectic}
+\index{shifted symplectic!from BV}
+The BV bracket $\{-,-\}$ (degree~$+1$) on $\barB^{\mathrm{ch}}(\cA)$
+is a $(-1)$-shifted Poisson structure; the Verdier duality
+identification $\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
+provides non-degeneracy.  By the equivalence between non-degenerate
+shifted Poisson and shifted symplectic structures
+\cite{CPTVV17}, this makes the formal moduli problem
+$\mathrm{Def}_g(\cA)$ a $(-1)$-shifted symplectic derived stack.
+The deformation-obstruction decomposition
+$Q_g(\cA) \oplus Q_g(\cA^!)$ is a Lagrangian polarization.
+This is the content of
+Theorem~\ref{thm:shifted-symplectic-complementarity}.
+\end{remark}

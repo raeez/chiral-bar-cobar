@@ -1,0 +1,104 @@
+\subsection{The differential graded Lie algebra of connections}
+
+\begin{theorem}[Flatness and the Chern--Simons functional]
+\label{thm:cs-koszul-km}
+Let $M$ be a closed oriented smooth three-manifold and $\mathfrak g$ a finite-dimensional complex Lie algebra with a nondegenerate invariant symmetric bilinear form $\langle-,-\rangle$.
+Consider connections on the trivial bundle, written as $A\in\Omega^1(M;\mathfrak g)$.
+On $L=\Omega^\bullet(M)\otimes\mathfrak g$ use differential $d_{\mathrm{dR}}$ and bracket
+\[
+ [\alpha\otimes x,\beta\otimes y]
+  =(\alpha\wedge\beta)\otimes[x,y].
+\]
+For $k\in\mathbb C^*$, put
+\[
+ S_k(A)=\frac{k}{4\pi}\int_M
+ \left(\langle A\wedge dA\rangle
+       +\frac13\langle A\wedge[A,A]\rangle\right).
+\]
+Its critical points are exactly the Maurer--Cartan elements of $L$:
+\[
+ F_A=dA+\frac12[A,A]=0.
+\]
+\end{theorem}
+
+\begin{proof}
+The de Rham Leibniz rule and the Lie Jacobi identity make $L$ a differential graded Lie algebra.
+Its Maurer--Cartan equation in degree one is the displayed equation by definition.
+For an arbitrary variation $a\in\Omega^1(M;\mathfrak g)$, integration by parts on the closed manifold gives
+\[
+ \left.\frac{d}{dt}\right|_{t=0}\int_M\langle(A+ta)\wedge d(A+ta)\rangle
+ =2\int_M\langle a\wedge dA\rangle.
+\]
+Invariance of the bilinear form makes the three differentiated factors of the cubic term equal after the graded signs are included.
+Its variation is therefore $\int_M\langle a\wedge[A,A]\rangle$.
+Consequently
+\[
+ (dS_k)_A(a)=\frac{k}{2\pi}\int_M\langle a\wedge F_A\rangle.
+\]
+If this vanishes for all smooth variations supported in a coordinate chart, nondegeneracy of the form forces every coefficient of $F_A$ to vanish.
+The converse follows from the same formula.
+\end{proof}
+
+This construction uses $\Omega^\bullet(M)\otimes\mathfrak g$.
+The Chevalley--Eilenberg cochains $\operatorname{Hom}(\Lambda^\bullet\mathfrak g,\mathbb C)$ are a different complex.
+Transport from a chiral bar object to this differential graded Lie algebra requires the corresponding bracket data or higher morphism components.
+
+\subsection{Transport of Maurer--Cartan elements}
+
+\begin{proposition}[The components required for Maurer--Cartan transport]
+\label{thm:linf-mc-flatness}
+Let $L,L'$ be uncurved $L_\infty$ algebras over $\mathbb C$.
+In the symmetric convention, these are graded vector spaces with degree-one square-zero coderivations $Q,Q'$ on the coaugmented symmetric coalgebras of $L[1],L'[1]$, vanishing on the coaugmentation.
+Let $\mathfrak m$ be the nilpotent maximal ideal of a commutative local Artinian complex algebra.
+Suppose a coaugmentation-preserving coalgebra map $F$ satisfies $Q'F=FQ$.
+Writing its Taylor components as $F_j:S^j(L[1])\to L'[1]$, define, for $\alpha\in(L\otimes\mathfrak m)^1$,
+\[
+ s\beta=\sum_{j\geq1}\frac1{j!}F_j((s\alpha)^{\odot j}).
+\]
+Then $\alpha$ Maurer--Cartan implies $\beta$ Maurer--Cartan.
+A linear chain quasi-isomorphism without these coalgebra equations need not have this property.
+\end{proposition}
+
+\begin{proof}
+Nilpotence of $\mathfrak m$ makes every displayed sum finite.
+Set $v=s\alpha$ of degree zero and use
+$e^v=\sum_{j\geq0}v^{\odot j}/j!$.
+The coderivation identity gives
+\[
+ Q(e^v)=e^v\odot\left(\sum_{j\geq1}\frac1{j!}Q_j(v^{\odot j})\right).
+\]
+This can be checked by selecting the $j$ inputs on which $Q_j$ acts.
+The binomial coefficient cancels the factorials.
+The expression in parentheses is the shifted Maurer--Cartan expression.
+The coalgebra identity similarly gives $F(e^v)=e^{s\beta}$.
+Thus $Q(e^v)=0$ implies
+$Q'(e^{s\beta})=Q'F(e^v)=FQ(e^v)=0$.
+Projection to $L'[1]$ proves the assertion.
+
+For the last statement, let both underlying complexes have basis $x$ in degree one and $y$ in degree two, with zero differential.
+Give the first algebra zero brackets, and the second the sole nonzero bracket $[x,x]=y$.
+Graded skew symmetry permits this bracket because $x$ is odd, and Jacobi holds because $y$ is central.
+The identity of complexes is a quasi-isomorphism.
+Over $\mathbb C[t]/(t^3)$, $tx$ is Maurer--Cartan in the first algebra but has curvature $t^2y/2\ne0$ in the second.
+\end{proof}
+
+\begin{corollary}[Flatness on an identified carrier]
+\label{thm:cs-koszul-general}
+In the preceding proposition, suppose the target is
+$L'=\Omega^\bullet(M)\otimes\mathfrak g$ from Theorem~\ref{thm:cs-koszul-km}.
+Then the constructed $\beta$ is a flat connection with coefficients in $\mathfrak m$:
+\begin{equation}\label{eq:deformed-cs-general}
+ d\beta+\frac12[\beta,\beta]=0.
+\end{equation}
+The higher Jacobi identities alone do not make every degree-one element Maurer--Cartan.
+\end{corollary}
+
+\begin{proof}
+The first assertion is the preceding proposition and the definition of curvature on the target.
+For the second, the abelian differential graded Lie algebra with $L^1=\mathbb Cx$, $L^2=\mathbb Cy$, and $dx=y$ satisfies all Jacobi identities.
+The element $tx$ over $\mathbb C[t]/(t^2)$ has nonzero Maurer--Cartan expression $ty$.
+\end{proof}
+
+Reduction to a Drinfeld--Sokolov constraint requires the reduction maps and their compatibility with these higher components.
+The polynomial reduction of Theorem~\ref{thm:cbc26-polynomial-ds} supplies a chain algebra comparison on its polynomial carrier.
+Its projection fails Poisson compatibility, so it does not by itself give this transport of flatness equations.

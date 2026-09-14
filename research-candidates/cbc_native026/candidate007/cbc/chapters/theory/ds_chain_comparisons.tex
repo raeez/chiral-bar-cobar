@@ -1,0 +1,327 @@
+\section{Hamiltonian reduction and comparison of complexes}
+
+The constraint $e=1$ for $\mathfrak{sl}_2$ gives a reduction whose maps can be written on every polynomial.
+It separates Hamiltonian reduction from the Virasoro charge and from chiral collision operations.
+All complexes in the polynomial calculation are algebraic cochain complexes over $\mathbb C$.
+Their products use the Koszul sign $(-1)^{|x||y|}$.
+
+\subsection{The polynomial reduction}
+
+Let $e,h,f$ be the linear coordinate functions on $\mathfrak{sl}_2^*$, with Poisson brackets
+\[
+ \{h,e\}=2e,\qquad \{h,f\}=-2f,\qquad \{e,f\}=h.
+\]
+Introduce odd generators $b,c$ of cohomological degrees $-1,1$.
+The even generators have degree zero.
+On the graded commutative algebra
+\[
+ A=\mathbb C[e,h,f]\otimes\Lambda(b,c)
+\]
+define a degree-one derivation $D$ by
+\begin{equation}\label{eq:cbc26-ds-differential}
+ De=0,\qquad Dh=-2ec,\qquad Df=hc,
+ \qquad Db=e-1,\qquad Dc=0.
+\end{equation}
+Thus the Koszul differential imposes $e=1$, and the other term is the Chevalley--Eilenberg differential for the Hamiltonian vector field $\{e,-\}$.
+The two terms anticommute.
+Direct substitution on the five generators gives $D^2=0$.
+Let $R=\mathbb C[u]$ have zero differential and augmentation $u\mapsto0$.
+Give $A$ the augmentation
+\[
+ \varepsilon(e)=1,\qquad
+ \varepsilon(h)=\varepsilon(f)=\varepsilon(b)=\varepsilon(c)=0.
+\]
+These choices concern the displayed differential graded commutative algebra.
+They do not give an augmentation of an affine or ghost vertex algebra.
+
+\begin{theorem}[Polynomial reduction and its bar comparison]
+\label{thm:cbc26-polynomial-ds}
+The maps of augmented differential graded algebras
+\begin{align}
+ i:R&\longrightarrow A,& i(u)&=ef+\tfrac14h^2,\label{eq:cbc26-ds-inclusion}\\
+ p:A&\longrightarrow R,&
+ (p(e),p(h),p(f),p(b),p(c))&=(1,0,u,0,0)
+ \label{eq:cbc26-ds-projection}
+\end{align}
+satisfy $pi=1$ and are quasi-isomorphisms.
+In particular,
+\[
+ H^j(A,D)=
+ \begin{cases}\mathbb C[u],&j=0,\\0,&j\ne0.\end{cases}
+\]
+The induced maps $B(i)$ and $B(p)$ on the direct-sum associative reduced bar constructions are quasi-isomorphisms, and $B(p)B(i)=1$.
+\end{theorem}
+
+\begin{proof}
+The element $K=ef+h^2/4$ satisfies
+$DK=ehc-ehc=0$.
+The projection kills the image under $D$ of every generator, including $Db=e-1$.
+This proves the chain identities and $pi=1$.
+
+Resolve the differential as
+\[
+ D=(e-1)\partial_b+c(-2e\partial_h+h\partial_f).
+\]
+Filter by the number of $c$ factors.
+The filtration has two steps, so its spectral sequence has no convergence issue.
+Its first cohomology calculation is the two-term Koszul complex for $e-1$.
+Multiplication by $e-1$ is injective on the polynomial ring.
+The resulting complex is
+\[
+ \mathbb C[h,f]\xrightarrow{\,-2\partial_h+h\partial_f\,}
+ c\mathbb C[h,f].
+\]
+Set $u=f+h^2/4$.
+This is a polynomial change of coordinates from $(h,f)$ to $(h,u)$.
+In these coordinates the displayed derivative is $-2\partial_h$.
+Its kernel is $\mathbb C[u]$, and it is surjective in characteristic zero.
+For example, the primitive of $c h^a u^j$ is $-h^{a+1}u^j/(2a+2)$.
+Thus cohomology is concentrated in degree zero, and $p$ induces its displayed identification.
+The identity $pi=1$ proves the same assertion for $i$.
+
+Here are the bar conventions and the induced maps.
+For an augmented differential graded algebra $E$, put $\bar E=\ker\varepsilon$ and
+\[
+ B(E)=\bigoplus_{n\geq0}(\bar E[1])^{\otimes n}.
+\]
+Write $sa$ for $a$ considered in $\bar E[1]$, so $|sa|=|a|-1$.
+The bar coderivation has components
+\[
+ b_1(sa)=-s(d_Ea),\qquad
+ b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
+\]
+Extend each component to consecutive positions with the Koszul sign for a degree-one operator.
+The Leibniz rule and associativity give $b^2=0$.
+For an augmented chain algebra map $q$, set
+\[
+ B(q)(sa_1\otimes\cdots\otimes sa_n)
+ =s q(a_1)\otimes\cdots\otimes s q(a_n).
+\]
+The identities $q d_E=d_Fq$ and $q(ab)=q(a)q(b)$ prove that $B(q)$ commutes with $b_1$ and $b_2$ separately.
+
+Filter the cone of $B(p)$ by tensor length.
+Its length-$n$ quotient is the cone of $(\bar p[1])^{\otimes n}$ with the internal differentials.
+The splitting $E=\mathbb C\oplus\bar E$ shows that $\bar p$ is a quasi-isomorphism.
+Tensor products of complexes of vector spaces preserve quasi-isomorphisms.
+One proof splits every acyclic complex into two-term contractible summands and tensors its contraction with the identity.
+Consequently each length quotient of the cone is acyclic.
+A cone cycle has finite maximal length.
+Solve its boundary equation in that highest quotient and subtract the resulting boundary.
+This lowers its maximal length.
+Induction ends at length zero and proves that the whole cone is acyclic.
+The same argument applies to $B(i)$, and functoriality gives $B(p)B(i)=1$.
+\end{proof}
+
+The bar argument uses finite tensor words and polynomial primitives.
+A product completion, a vertex algebra, and a chiral sheaf each require a separate comparison.
+Even on $A$, the projection $p$ does not preserve the original Poisson brackets:
+\[
+ p\{h,f\}=-2u,\qquad \{p(h),p(f)\}=0.
+\]
+Hence this chain algebra map cannot transport a Poisson or Batalin--Vilkovisky operation merely by forgetting its source.
+
+\subsection{Reduction of a specified double complex}
+
+Two odd differentials require their anticommutator to vanish on their common domain.
+Their separate nilpotence does not imply this equation.
+For example, on $\Lambda(x,y)$, exterior multiplication $d_1=x\wedge-$ and left differentiation $d_2=\partial_x$ are odd and square zero, but
+$d_1d_2+d_2d_1=1$.
+
+\begin{theorem}[A comparison under a second differential]
+\label{thm:bar-semi-infinite-w}
+Let $X^{p,q},Y^{p,q}$ be bigraded complex vector spaces, zero unless $0\leq p\leq N$.
+Let $d$ have bidegree $(1,0)$ and $\delta$ have bidegree $(0,1)$, with
+\[
+ d^2=\delta^2=0,\qquad d\delta+\delta d=0.
+\]
+Suppose $F:X\to Y$ has bidegree $(0,0)$, commutes with both differentials, and induces a quasi-isomorphism on every column $(X^{p,*},\delta)$.
+Then
+\begin{equation}\label{eq:bar-semi-infinite-w}
+ \operatorname{Tot}(F):
+ \left(\bigoplus_{p+q=*}X^{p,q},d+\delta\right)
+ \longrightarrow
+ \left(\bigoplus_{p+q=*}Y^{p,q},d+\delta\right)
+\end{equation}
+is a quasi-isomorphism.
+The formula is $\operatorname{Tot}(F)((x^{p,q}))=(F(x^{p,q}))$.
+\end{theorem}
+
+\begin{proof}
+Filter the total complexes decreasingly by the first degree $p$.
+This filtration is finite, and the differential on each quotient is $\delta$.
+The same filtration on the mapping cone has acyclic quotients by hypothesis.
+The short exact sequence of two successive filtration stages gives a long exact sequence in cohomology.
+Induction through the finite filtration proves that the cone is acyclic.
+The two commutation identities give the total chain identity before any cohomology is taken.
+\end{proof}
+
+For quantum Drinfeld--Sokolov reduction, the input category in Arakawa's vanishing theorem is $\mathrm{KL}_k$.
+It consists of the specified graded affine modules with locally finite action of the finite-dimensional Lie algebra.
+The theorem gives $H_f^j(M)=0$ for $j\ne0$ and exactness of $H_f^0$ on this category \cite[\S6, p.~585; Theorem~7.1(i), p.~588]{Ara15}.
+Applying it to a collision complex requires an affine action on each term, membership in this category, and equivariance of all collision maps.
+To use the displayed totalization, one also needs its boundedness hypothesis, or a proved substitute for convergence.
+The nonlinear $\mathcal W$-algebra and a conformal grading alone do not specify a second semi-infinite differential.
+
+The polynomial maps~\eqref{eq:cbc26-ds-inclusion}--\eqref{eq:cbc26-ds-projection} construct the associative comparison for the classical $\mathfrak{sl}_2$ constraint.
+A chiral comparison additionally needs maps from its collision sheaves, including the vacuum terms of every operator product.
+The augmentation obstruction in Proposition~\ref{prop:vir-no-augmentation} excludes the augmentation-kernel construction for the matter--ghost vertex algebra.
+
+\subsection{The Virasoro target at a reduced level}
+
+\begin{corollary}[Nilpotence on the Virasoro vacuum carrier]
+\label{cor:virasoro-semi-infinite}
+Let $k\in\mathbb C\setminus\{-2\}$ and let $M_{c(k)}$ be the universal Virasoro vacuum module with
+\[
+ c(k)=1-\frac{6(k+1)^2}{k+2}.
+\]
+Use the ghost module and charge $Q$ of Theorem~\ref{thm:vir-square} on $M_{c(k)}\otimes\mathcal F$.
+This charge squares to zero on the full algebraic carrier if and only if
+\[
+ k=-\frac83\quad\hbox{or}\quad k=-\frac72.
+\]
+At either level, its absolute vacuum cohomology has one-dimensional components in degrees $0,3$.
+Its relative vacuum cohomology has one-dimensional components in degrees $0,2$.
+All other components vanish.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:vir-square} gives
+\[
+ Q^2=\frac{c(k)-26}{12}\sum_{n>0}(n^3-n)c_{-n}c_n.
+\]
+On $\mathbf1\otimes b_{-2}\Omega$ the output is
+$(c(k)-26)\mathbf1\otimes c_{-2}\Omega/2$, a nonzero vector when $c(k)\ne26$.
+The equation $c(k)=26$ is $6k^2+37k+56=(3k+8)(2k+7)=0$.
+At these levels the matter module is the universal vacuum module of central charge $26$.
+The four-state calculation and the nonzero-weight contraction in Proposition~\ref{prop:vir-relative-target-obstruction} compute its absolute and relative cohomology.
+\end{proof}
+
+Thus the full displayed ghost carrier cannot define semi-infinite cohomology at arbitrary $k\ne-2$.
+Another semi-infinite construction would need another explicitly defined differential and a comparison with this one at the applicable parameters.
+The vacuum PBW character $\prod_{n\geq2}(1-q^n)^{-1}$ counts states by conformal weight.
+It does not compute the cohomology in the preceding corollary.
+
+\section{Central coefficients and maps over curves}
+
+\subsection{Level reflection and central charge}
+
+\begin{proposition}[Affine scalar normalizations]
+\label{cor:anomaly-duality-km}
+Fix nonzero $h$ and a positive integer $d$.
+For $k\ne-h$, set
+\[
+ k'=-k-2h,\qquad
+ a(k)=\frac{(k+h)d}{2h},\qquad
+ c_{\mathrm{Sug}}(k)=\frac{kd}{k+h}.
+\]
+Then
+\[
+ a(k)+a(k')=0,\qquad
+ c_{\mathrm{Sug}}(k)+c_{\mathrm{Sug}}(k')=2d.
+\]
+For an affine Lie algebra one takes $h=h^\vee$ and $d=\dim\mathfrak g$.
+The half-central-charge normalization has sum $d$, rather than zero.
+\end{proposition}
+
+\begin{proof}
+Write $t=k+h\ne0$.
+Reflection sends $t$ to $-t$.
+The two expressions are $a=td/(2h)$ and $c_{\mathrm{Sug}}=d-hd/t$.
+Their reflected sums give the formulas.
+\end{proof}
+
+\begin{proposition}[Principal central-charge reflection]
+\label{cor:anomaly-duality-w}
+Fix rank $r$ and vectors $\rho,\rho^\vee$ in a real inner-product space.
+For $t\in\mathbb C^*$ define
+\[
+ c(t)=r-12\left(t\lVert\rho^\vee\rVert^2
+             -2(\rho,\rho^\vee)+t^{-1}\lVert\rho\rVert^2\right).
+\]
+This is the principal central-charge normalization with $t=k+h^\vee$ and long roots of square length $2$.
+For a fixed scalar $v$, set $\kappa(t)=v c(t)$.
+Then
+\[
+ c(t)+c(-t)=2r+48(\rho,\rho^\vee),\qquad
+ \kappa(t)+\kappa(-t)=v\bigl(2r+48(\rho,\rho^\vee)\bigr).
+\]
+For $\mathfrak{sl}_2$, $c(t)=13-6(t+t^{-1})$ and $v=1/2$, so the sums are $26$ and $13$.
+For $\mathfrak{sl}_3$, $c(t)=50-24(t+t^{-1})$ and $v=5/6$, so the sums are $100$ and $250/3$.
+\end{proposition}
+
+\begin{proof}
+The $t$ and $t^{-1}$ terms cancel under reflection.
+For $\mathfrak{sl}_2$, the positive root $\alpha$ satisfies $(\alpha,\alpha)=2$, and $\rho=\rho^\vee=\alpha/2$ has square $1/2$.
+For $\mathfrak{sl}_3$, with simple roots $\alpha_1,\alpha_2$ of square $2$ and $(\alpha_1,\alpha_2)=-1$, one has $\rho=\rho^\vee=\alpha_1+\alpha_2$ of square $2$.
+Substitution proves the two cases.
+\end{proof}
+
+The parameter reflection $t\mapsto-t$ differs from Feigin--Frenkel duality, whose dual parameters satisfy $t\,t^{\vee}=1/r^\vee$, where $r^\vee$ is the lacing number \cite[p.~566, footnote~1]{Ara15}.
+For example, $k=-8/3$ reflects to $k'=-4/3$ in $\mathfrak{sl}_2$.
+Their central charges are $26,0$, and their half-central charges sum to $13$.
+String ghosts contribute central charge $-26$, or half-central charge $-13$.
+They cancel the reflected pair's total central charge.
+For a single matter module, Theorem~\ref{thm:vir-square} instead gives the operator coefficient $(C-26)/12$.
+These are distinct scalar normalizations attached to specified expressions.
+
+\subsection{The equation for transport of an anomaly operator}
+
+\begin{proposition}[Transport of a square]
+\label{prop:cbc26-square-transport}
+Let $d_X,d_Y$ be degree-one operators on graded vector spaces and $F:X\to Y$ a degree-zero map.
+If $d_YF=Fd_X$, then
+\[
+ d_Y^2F=Fd_X^2.
+\]
+In particular, a chain isomorphism between square-zero complexes supplies no identification with a nonzero anomaly operator on another carrier.
+If $F$ is injective and $d_Y^2=0$, its intertwining equation forces $d_X^2=0$.
+\end{proposition}
+
+\begin{proof}
+Apply $d_Y$ to the intertwining equation and use that equation once more.
+For an injective $F$, the resulting identity $Fd_X^2=0$ implies $d_X^2=0$.
+\end{proof}
+
+\begin{proposition}[Horizontal comparison]
+\label{prop:cbc26-horizontal-comparison}
+Let $X$ be a smooth manifold.
+Let $(E^\bullet,d_E,\nabla_E)$ and $(F^\bullet,d_F,\nabla_F)$ be bounded complexes of finite-rank complex vector bundles with flat connections.
+Assume $d_E,d_F$ commute with the connections.
+On $\Omega^p(X,E^q)$ use total differential $\nabla_E+(-1)^p d_E$, and use the same convention for $F$.
+A degree-zero bundle map $\phi:E^\bullet\to F^\bullet$ induces a map of these total complexes if and only if
+\[
+ d_F\phi=\phi d_E,\qquad
+ \nabla_F\phi=(1\otimes\phi)\nabla_E.
+\]
+If these identities hold and $\phi$ is a quasi-isomorphism on each fiber, it induces an isomorphism on the hypercohomology of the two local-system complexes.
+\end{proposition}
+
+\begin{proof}
+On a section of form degree zero, the two components of the total chain equation lie in different form degrees.
+They give exactly the displayed identities.
+The Leibniz rule extends these identities to arbitrary forms.
+Flat local frames identify each stalk of the kernel local systems with its fiber.
+The cone of the induced local-system map is therefore acyclic on every stalk.
+Its cohomology sheaves vanish, so it is zero in the derived category of sheaves.
+Applying derived global sections gives the asserted hypercohomology isomorphism.
+\end{proof}
+
+\begin{example}[A genus-one obstruction to fiberwise transport]
+\label{ex:cbc26-torus-monodromy}
+On the oriented torus $T^2=\mathbb R^2/\mathbb Z^2$, let $L_\lambda$ be the rank-one complex local system with monodromy $\lambda\in\mathbb C^*$ on the first circle and $1$ on the second.
+Its cellular cochain complex, with the product orientation, is
+\[
+ \left(\Lambda^\bullet\mathbb C^2,
+       (\lambda-1)e_1\wedge-\right).
+\]
+This is the tensor product of the two circle complexes with differentials $\lambda-1$ and $0$.
+If $\lambda\ne1$, contraction by the dual vector $e_1^*$, divided by $\lambda-1$, gives $dh+hd=1$.
+Thus $H^*(T^2,L_\lambda)=0$.
+For $\lambda=1$, the differential is zero and the dimensions are $(1,2,1)$.
+The fibers in both cases are one-dimensional complexes concentrated in degree zero.
+No fiberwise dimension or scalar central coefficient determines the genus-one cohomology.
+\end{example}
+
+A comparison over the moduli of curves needs maps of its sheaves or local systems, compatible with the connections and with clutching at the boundary.
+The genus-zero filtered lifting criterion alone does not define such maps.
+The same requirement applies separately to pairings, anomaly operators, and the products used in a Maurer--Cartan equation.

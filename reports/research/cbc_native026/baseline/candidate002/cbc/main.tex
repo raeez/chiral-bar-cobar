@@ -1,0 +1,712 @@
+\documentclass[11pt]{memoir}
+\usepackage{raeez-math-template}
+\providecommand{\orline}[1]{\mathrm{or}_{#1}}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Free}{Free}
+\DeclareMathOperator{\Cofree}{Cofree}
+\DeclareMathOperator{\Spec}{Spec}
+
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Pois}{\mathsf{Pois}}
+\newcommand{\BV}{\mathsf{BV}}
+\newcommand{\Grav}{\mathsf{Grav}}
+\newcommand{\Eone}{\mathsf{E}_1}
+\newcommand{\Etwo}{\mathsf{E}_2}
+\newcommand{\En}{\mathsf{E}_n}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+\newcommand{\Linf}{\mathsf{L}_{\infty}}
+\newcommand{\Ainf}{\mathsf{A}_{\infty}}
+\newcommand{\Cinf}{\mathsf{C}_{\infty}}
+\newcommand{\Pinf}{\mathsf{P}_{\infty}}
+
+\newcommand{\Chir}{\mathsf{Chir}}
+\newcommand{\Fact}{\mathsf{Fact}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\chirstar}{{}^{\mathrm{ch}\star}}  %
+\newcommand{\chirtensor}{\otimes^{\mathrm{ch}}}
+\newcommand{\facttensor}{\otimes^{!}}
+\newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\newcommand{\chirAss}{\mathsf{Ass}^{\mathrm{ch}}}
+\newcommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\newcommand{\chirPois}{\mathsf{Pois}^{\mathrm{ch}}}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\Vect}{\cat{Vect}}
+\newcommand{\Ch}{\cat{Ch}}
+\newcommand{\Alg}{\cat{Alg}}
+\newcommand{\CoAlg}{\cat{CoAlg}}
+\newcommand{\Op}{\cat{Op}}
+\newcommand{\DGCat}{\cat{DGCat}}
+
+\newcommand{\DMod}{\cat{D}\text{-}\cat{Mod}}
+\newcommand{\DX}{\mathcal{D}_X}
+\newcommand{\OX}{\mathcal{O}_X}
+\newcommand{\omX}{\omega_X}
+\newcommand{\IndCoh}{\cat{IndCoh}}
+\newcommand{\QCoh}{\cat{QCoh}}
+
+\newcommand{\C}{\mathbb{C}}  %
+\newcommand{\Z}{\mathbb{Z}}  %
+\newcommand{\R}{\mathbb{R}}  %
+\newcommand{\Vlat}{V}            %
+\newcommand{\grpalg}[1]{\C[#1]}  %
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\barC}{\overline{C}}  %
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barPi}{\overline{\Pi}}  %
+
+\newcommand{\chirbar}{\bar{B}^{\text{ch}}}       %
+\newcommand{\chircobar}{\Omega^{\text{ch}}}       %
+\newcommand{\Conf}{C}                              %
+\newcommand{\OPE}[2]{\phi_{#1}(z)\phi_{#2}(w)}   %
+\newcommand{\MC}{\text{MC}}                        %
+
+\newcommand{\omitpair}[2]{\widehat{#1#2}}
+\newcommand{\omitindex}[2]{\widehat{#1,#2}}
+
+\newcommand{\colldiv}[2]{D_{#1#2}}
+\newcommand{\collspace}[1]{\overline{C}_{#1}^{\text{coll}}}  %
+
+\newcommand{\barcomplex}[2]{\bar{B}^{#1}(#2)}
+\newcommand{\cobarcomplex}[2]{\Omega^{#1}(#2)}  %
+\newcommand{\genusbar}[3]{\bar{B}^{(#1)}_{#2}(#3)}  %
+
+\newcommand{\OpenConfig}[1]{C_{#1}(X)}  %
+
+\newcommand{\BDref}[1]{\textup{[\cite{BD04}, #1]}}
+
+\newcommand{\StarProd}[1]{\star_{\hbar}^{#1}}     %
+\newcommand{\ChiralStar}{\star_{\text{ch}}}        %
+\newcommand{\ConfigInt}[2]{\int_{\overline{C}_{#1}(X)} #2}  %
+\newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})}  %
+\newcommand{\SugawaraT}{T^{\text{Sug}}}            %
+\newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}}   %
+\newcommand{\MCeq}{\text{MC}}                      %
+
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
+\newcommand{\barBch}{\bar{B}^{\text{ch}}}       %
+\newcommand{\Omegach}{\Omega^{\text{ch}}}       %
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  %
+\newcommand{\LogForm}[2]{\eta_{#1#2}}           %
+\newcommand{\OPEcoeff}[4]{C_{#1#2}^{#3,#4}}    %
+\newcommand{\ChirAlg}{\mathsf{ChirAlg}}         %
+\newcommand{\dgCoalg}{\mathsf{dgCoalg}}         %
+
+\newcommand{\ChirHoch}{CH}                      %
+\newcommand{\Wakimoto}{\mathcal{M}_{\text{Wak}}} %
+\newcommand{\Walg}{\mathcal{W}}                 %
+\newcommand{\critLevel}{-h^\vee}                %
+\newcommand{\PrimeForm}{E}                      %
+\newcommand{\ThetaChar}{\vartheta}              %
+\newcommand{\ModularParam}{\tau}                %
+\newcommand{\DS}{\text{DS}}                     %
+
+\newcommand{\dzero}{d_0}                              %
+\newcommand{\dfib}{d_{\mathrm{fib}}}                  %
+\newcommand{\Dg}[1]{D_{#1}}                           %
+\newcommand{\Dtot}{D_{\mathrm{tot}}}                  %
+\newcommand{\mcurv}[1]{m_0^{(#1)}}                    %
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}  %
+\newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}}           %
+\newcommand{\Perbr}{\operatorname{Per}}                   %
+\newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}}             %
+\newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}}   %
+\newcommand{\Factord}{\Fact_{\Eone}^{\mathrm{ord}}}       %
+
+
+\usepackage{setspace}
+
+\geometry{top=1.2in, bottom=1.2in, left=1.25in, right=1.25in, footskip=0.5in}
+
+\setsecheadstyle{\normalfont\Large\scshape}
+\setsubsecheadstyle{\normalfont\large\scshape}
+
+
+\title{\textit{Modular Homotopy Theory for Factorization Algebras on Curves}\\[0.5em]\large Volume~1: Modular Koszul Duality}
+\author{Raeez Lorgat}
+\date{March 2026}
+
+\ifdefined\mainpreambleonly
+\expandafter\endinput
+\fi
+
+\begin{document}
+
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\mathbbm}[1]{\mathbb{#1}}
+\providecommand{\bigboxtimes}{\mathop{\boxtimes}\displaylimits}
+\providecommand{\Bbar}{\bar{B}}
+\providecommand{\B}{\bar{B}}
+\providecommand{\Det}{\mathrm{Det}}
+\providecommand{\Cobar}{\Omega}
+\providecommand{\gr}{\operatorname{gr}}
+\providecommand{\DR}{\mathrm{DR}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\ad}{\operatorname{ad}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\dlog}{d\log}
+\providecommand{\otim}{\otimes}
+\providecommand{\normord}[1]{:{#1}:}
+\providecommand{\Bl}{\operatorname{Bl}}
+\providecommand{\shuffle}{\mathbin{\amalg}}
+\providecommand{\STATE}{\State}
+\providecommand{\FOR}{\For}
+\providecommand{\ENDFOR}{\EndFor}
+\providecommand{\bA}{\mathbb{A}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bF}{\mathbb{F}}
+\providecommand{\bP}{\mathbb{P}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bG}{\mathbb{G}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\fS}{\mathfrak{S}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Hch}{H^{\mathrm{ch}}}
+\providecommand{\CC}{\mathcal{C}}
+\providecommand{\Cat}{\mathsf{Cat}}
+\providecommand{\Catinf}{\mathsf{Cat}_\infty}
+\providecommand{\Spc}{\mathsf{Spc}}
+\providecommand{\dgVect}{\mathsf{dgVect}}
+\providecommand{\grVect}{\mathsf{grVect}}
+\providecommand{\Shv}{\mathsf{Shv}}
+\providecommand{\Perv}{\mathsf{Perv}}
+\providecommand{\PrL}{\mathsf{Pr}^\mathrm{L}}
+\providecommand{\PrR}{\mathsf{Pr}^\mathrm{R}}
+\providecommand{\Map}{\operatorname{Map}}
+\providecommand{\holim}{\operatorname{holim}}
+\providecommand{\hocolim}{\operatorname{hocolim}}
+\providecommand{\VD}{\mathbb{D}}
+\providecommand{\Sol}{\mathrm{Sol}}
+\providecommand{\coOp}{\mathrm{coOp}}
+\providecommand{\Opinfty}{\mathrm{Op}_\infty}
+\providecommand{\Tw}{\mathrm{Tw}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\fib}{\operatorname{fib}}
+\providecommand{\cofib}{\operatorname{cofib}}
+\providecommand{\CoDer}{\operatorname{CoDer}}
+
+
+
+\maketitle
+
+\begin{abstract}
+\itshape
+
+\noindent
+Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.  Place
+sections $a_1, \ldots, a_n \in \cA$ at distinct points
+$z_1, \ldots, z_n \in X$, wedge the tensor
+$a_1(z_1) \otimes \cdots \otimes a_n(z_n)$ against the logarithmic
+$n$-form
+$\eta = \bigwedge_{i < j} d\log(z_i - z_j)$
+on the Fulton--MacPherson compactification~$\overline{C}_n(X)$, and
+extract residues at each collision divisor~$D_{ij}$ where $z_i = z_j$.
+The result is a differential~$d$ on
+$\barB_X(\cA) := \bigoplus_{n \ge 0}
+\Gamma(\overline{C}_n(X),\, \cA^{\boxtimes n} \otimes
+\Omega^*_{\log})$.
+The Arnold relation
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$,
+which holds because
+$(z_3{-}z_1)+(z_1{-}z_2)+(z_2{-}z_3)=0$,
+forces $d^2 = 0$: three boundary strata meet at every triple-collision
+locus of $\overline{C}_n(X)$, and their residue contributions cancel
+cyclically.
+
+\medskip
+When $X = \operatorname{Spec} k$ is a point, configuration spaces
+collapse and the construction reduces to the bar complex
+$T^c(s^{-1}\bar{\cA})$ of Loday--Vallette.  When $\cA$ is the
+Heisenberg algebra $\mathcal{H}_1$ on an elliptic curve~$E_\tau$,
+the transform recovers the Poincar\'e line bundle on
+$\operatorname{Jac}(E_\tau) \times
+\widehat{\operatorname{Jac}}(E_\tau)$: the bar complex specializes to the Fourier--Mukai kernel on the Jacobian.  The
+classical Fourier transform on~$\mathbb{R}$, the Fourier--Mukai
+transform on an abelian variety, and the chiral bar transform on a
+curve are three incarnations of the same logarithmic integral
+$\int \exp(xy)\,dy$,
+$\int \mathcal{P}\,d\mu$,
+$\int \cA^{\boxtimes n} \wedge \eta$,
+at dimension $0$, $1$ (abelian), and $1$ (non-abelian).
+
+\medskip
+The Verdier dualizing functor
+$\mathbb{D}_{\Ran}\colon
+\mathcal{D}^b(\overline{C}_n(X)) \to
+\mathcal{D}^b(\overline{C}_n(X))$
+exchanges the bar complex of $\cA$ with the bar complex of a second
+chiral algebra~$\cA^!$:
+\[
+\mathbb{D}_{\Ran}\,\barB_X(\cA)
+\;\simeq\; \barB_X(\cA^!).
+\]
+Both sides are factorization coalgebras on $\operatorname{Ran}(X)$;
+$\cA^!$ is the \emph{chiral Koszul dual}.
+Concretely, $\mathbb{D}_{\Ran}$ pairs the logarithmic $n$-form
+$\eta = \bigwedge d\log(z_i - z_j)$ against the distributional
+$n$-current $\delta_\Delta$ supported on the collision diagonal:
+$\langle \eta,\, \delta_\Delta \rangle = 1$.
+For affine Kac--Moody, $\widehat{\fg}_k^! =
+\mathrm{CE}^{\mathrm{ch}}(\widehat{\fg}_{-k-2h^\vee})$.  On
+the Koszul locus --- where $\barB_X(\cA)$ has cohomology concentrated
+in a single degree --- the cobar inverts the bar:
+\[
+\Omega_X(\barB_X(\cA)) \xrightarrow{\;\sim\;} \cA,
+\]
+with the bar-cobar spectral sequence collapsing at~$E_2$.  For
+$\widehat{\fg}_k$ this produces
+$\widehat{\fg}_{-k-2h^\vee}$: the Feigin--Frenkel involution is the
+shadow of Verdier duality on configuration spaces.  At critical level
+$k = -h^\vee$, the bar complex is uncurved, and
+$H^0(\barB(\widehat{\fg}_{-h^\vee}))$ recovers the Feigin--Frenkel
+center --- the algebra of functions on the space of
+$\fg^\vee$-opers on the formal disc.  The full derived identification
+$H^*(\barB(\widehat{\fg}_{-h^\vee})) \cong \Omega^*(\Op_{\fg^\vee})$
+gives a vertex-algebraic construction of a central object in the
+geometric Langlands programme.
+
+\medskip
+At genus $g \geq 1$ the logarithmic propagator $d\log(z_i - z_j)$ is
+replaced by $d\log E(z_i, z_j)$, where $E$ is the prime form.  The
+prime form has monodromy around $B$-cycles of~$\Sigma_g$, and this
+monodromy enters the bar differential as a curvature: the fiberwise
+differential satisfies
+\[
+\dfib^{\,2} = \kappa(\cA) \cdot \omega_g
+\]
+where $\kappa(\cA) \in \mathbb{C}$ is determined by the leading OPE
+singularity and $\omega_g \in H^{2g}(\overline{\mathcal{M}}_g)$ is a
+tautological class on moduli.  Genus-$0$ nilpotence $d^2 = 0$ fails by
+an amount proportional to one number.  Period integrals along $A$-cycles
+of the fiber curves supply the correction terms that restore strict
+nilpotence:
+$\Dg{g}^{\,2} = 0$.
+
+The scalar $\kappa(\cA)$ controls the entire genus tower.
+For affine Kac--Moody:
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+The genus free energies assemble as
+\[
+\sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
+\;=\; \kappa(\cA) \cdot
+\biggl(\frac{x/2}{\sin(x/2)} - 1\biggr),
+\]
+recovering the $\hat{A}$-genus: it appears because it is the
+multiplicative genus of the additive formal group law, and the genus
+expansion is additive in~$\kappa$.  Under Koszul duality,
+$\kappa(\cA) + \kappa(\cA^!) = 0$
+for Kac--Moody, and more generally the complementarity sum
+$\kappa + \kappa'$ is a root-datum invariant.  Anomaly cancellation in
+string theory is $\kappa_{\mathrm{tot}} = 0$: the condition under
+which the curvature vanishes and the bar complex at every genus is an
+honest cochain complex.
+
+\medskip
+The relative bar complex over the universal curve
+$\pi\colon \overline{\mathcal{M}}_{g,1} \to \overline{\mathcal{M}}_g$
+has fiber cohomology concentrated in the center~$Z(\cA)$: the
+Koszul property forces all higher fiber cohomology to vanish, and
+the degree-zero identification $H^0 = Z(\cA)$ holds because a
+bar-degree-$0$ cocycle is an element whose OPE with every field is
+regular --- the defining property of a central element.  The center
+forms a local system~$\mathcal{Z}_\cA$ on~$\overline{\mathcal{M}}_g$.
+Verdier self-duality of the center equips
+$R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)$ with a
+$(-1)$-shifted symplectic structure in the sense of
+Pantev--To\"en--Vaqui\'e--Vezzosi, and Verdier duality
+$\cA \leftrightarrow \cA^!$ splits the ambient complex into
+complementary Lagrangian halves:
+\[
+R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)
+\;\simeq\;
+\mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
+\]
+the deformation complex of~$\cA$ and the obstruction complex of its
+dual.  The Lagrangian condition
+$\langle \mathbf{Q}_g(\cA),\, \mathbf{Q}_g(\cA^!) \rangle = 0$
+means that every first-order deformation of $\cA$ at genus~$g$ is
+annihilated by the obstruction map of~$\cA^!$.
+
+Clutching along the boundary divisors of
+$\overline{\mathcal{M}}_g$ --- the stable-graph strata where the
+curve degenerates --- organizes the genus tower into a single modular
+deformation.  A cyclic $L_\infty$-algebra structure on the deformation
+complex~$\Defcyc(\cA)$, constructed from the Fay trisecant identity
+on FM compactifications, supports a universal Maurer--Cartan element
+\[
+\Theta_\cA \;\in\;
+\operatorname{MC}\bigl(
+\Defcyc(\cA) \,\widehat{\otimes}\,
+R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})\bigr)
+\]
+whose scalar trace recovers $\kappa(\cA) \cdot \lambda_g$, whose
+clutching compatibility encodes the sewing axiom, and whose Verdier
+duality gives $\Theta_\cA \mapsto \Theta_{\cA^!}$.
+
+\medskip
+The chiral Hochschild cohomology
+$\ChirHoch^*(\mathcal{W}^k(\fg))$ of a principal $\mathcal{W}$-algebra
+at generic level is polynomial:
+$\mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+with $\deg \Theta_i = m_i + 1$ where $m_1, \ldots, m_r$ are the
+exponents of~$\fg$.  At critical level~$k = -h^\vee$, the exterior
+generators of Chevalley--Eilenberg cohomology reappear:
+$\Lambda^*(P_1, \ldots, P_r) \otimes \mathbb{C}[\Theta_1, \ldots,
+\Theta_r]$.  The Koszul duality functor acts on Hochschild cohomology
+via the Connes periodicity operator~$S$.
+
+\medskip
+The construction has two genuinely different specializations because
+the logarithmic propagator on a curve interacts with two distinct
+algebraic structures.
+
+On the commutative ($\Einf$-chiral) side, the Heisenberg
+algebra~$\mathcal{H}_k$ is the first nontrivial example.  The current
+$J(z)$ with OPE $J(z)J(w) = k/(z{-}w)^2$ gives a bar element
+$J \otimes J \otimes \eta_{12} \in \barB^1$; the bar differential
+produces $\Res_{\epsilon=0}[\epsilon^{-3}\,d\epsilon] = 0$ (triple
+pole, no residue).  The level~$k$ is invisible at genus~$0$ and appears
+at genus~$1$ as curvature $\kappa = k$.  Every feature of the general
+theory --- Arnold nilpotence, Verdier duality, complementarity,
+the $\hat{A}$-genus, the Hodge bundle correction --- is already
+present and computable.
+
+On the braided ($\Eone$-chiral) side, the Yangian $Y(\fg)$ is the
+first nontrivial example.  The RTT presentation
+$R_{12}(u{-}v)\,T_1(u)\,T_2(v) = T_2(v)\,T_1(u)\,R_{12}(u{-}v)$
+replaces commutativity with the Yang--Baxter equation, and the bar
+differential acts on ordered configuration spaces.  Koszul duality
+inverts the $R$-matrix: $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$.  The
+derived Drinfeld--Kohno theorem --- that $\Eone$-factorization
+categories of Yangians and quantum groups are equivalent on the
+evaluation locus --- is proved for the evaluation-generated core at
+all simple Lie types.  For lattice vertex algebras $V_\Lambda$,
+sectorwise finiteness of the $\Lambda$-graded bar complex bypasses
+thick generation entirely, yielding unconditional factorization
+equivalences for all even positive-definite lattices.
+
+\medskip
+Explicit computations, occupying half this volume, cover the
+Heisenberg algebra (the $\Einf$ atom), free fermions and the
+$bc$-$\beta\gamma$ Koszul pair (Com-Lie duality incarnate), affine
+Kac--Moody at Feigin--Frenkel dual levels with the oper space emerging
+at critical level, the Virasoro algebra with its
+$c \leftrightarrow 26 - c$ complementarity, principal
+$\mathcal{W}$-algebras through Drinfeld--Sokolov reduction with
+complete stage-$4$ OPE structure constants for~$W_4$, ADE lattice
+algebras with their quantum deformations, and Yangians with
+Mittag-Leffler stabilization of the RTT bar-cohomology tower.
+Bar cohomology dimensions, genus free energies through $g = 10$,
+Koszul dual Hilbert series, and modular characteristics are computed
+for every family.
+\end{abstract}
+
+\bigskip
+\noindent
+\textbf{2020 Mathematics Subject Classification.}
+Primary 17B69, 16S37;
+Secondary 14H10, 55R80, 81T40, 18G35.
+
+\medskip
+\noindent
+\textbf{Keywords.}
+Chiral algebras, Koszul duality, vertex algebras, bar-cobar construction,
+configuration spaces, Fulton--MacPherson compactification, non-abelian
+Poincar\'e duality, quantum corrections, higher genus, factorization algebras.
+
+\hfuzz=4pt
+\tableofcontents
+\hfuzz=2.5pt
+
+\begin{remark}[Notation convention]
+Throughout this manuscript:
+\begin{itemize}
+\item $\barBgeom(\mathcal{A})$ denotes the geometric bar complex
+\item $\barBch(\mathcal{A})$ denotes the abstract chiral bar complex (when distinction needed)
+\item $\ConfigSpace{n} = \overline{C}_n(X)$ is the compactified configuration space
+\item $\LogForm{i}{j} = d\log(z_i - z_j)$ are the logarithmic 1-forms
+\item $\Einf$-chiral, $\Eone$-chiral, $\Pinf$-chiral refer to
+  curve-based chiral factorization levels
+  (Definition~\ref{def:einf-chiral}ff.); bare $\En$ refers to the
+  little-disks/topological axis on real $n$-manifolds.  A complex
+  curve therefore enters the topological ladder at $n = 2$, not
+  $n = 1$ (Remark~\ref{rem:En-terminology})
+\end{itemize}
+\end{remark}
+
+
+\include{chapters/frame/heisenberg_frame}
+
+
+\part{Core Theory}
+
+\noindent
+In Chapter~\ref{ch:heisenberg-frame}, we saw the bar complex,
+Koszul duality, genus-$1$ curvature, and the $\hat{A}$-genus tower
+for the Heisenberg algebra.
+
+Part~I is the proved modular Koszul core:
+it establishes these results in full generality while marking the exact
+boundary beyond which the full modular homotopy theory remains
+programmatic.
+
+Its governing claim is that on a curve the bar-cobar transform is
+already modular: genus enters through the same configuration-space
+logarithm, Verdier duality, and clutching formalism that define
+genus-$0$ duality, so the genus tower is internal to the transform
+rather than an external correction.
+
+The argument proceeds through four stages: classical Koszul duality is
+the point-level shadow; configuration spaces provide the geometric
+kernel; bar-cobar duality and Verdier intertwining give the genus-$0$
+equivalence; higher genus internalizes the same construction through
+Hodge-theoretic curvature and modular-operadic clutching.  The proved
+spine consists of Theorem~A (bar-cobar duality intertwined with
+Verdier duality on $\operatorname{Ran}(X)$), Theorem~B (higher-genus
+inversion on the Koszul locus, with coderived persistence off it),
+Theorem~C (Lagrangian complementarity of deformation and obstruction),
+Theorem~D$_{\mathrm{scal}}$ and Theorem~D$_\Delta$ (the scalar and
+spectral characteristic layers), the higher-genus PBW entry theorem
+for affine Kac--Moody, Virasoro, and principal finite-type
+$\mathcal{W}$-algebras, and the universal Maurer--Cartan class
+$\Theta_{\cA}$ constructed by Theorem~\ref{thm:mc2-full-resolution}.
+
+\include{chapters/theory/introduction}
+
+\include{chapters/theory/fourier_seed}
+
+\include{chapters/theory/algebraic_foundations}
+
+\include{chapters/theory/configuration_spaces}
+
+\include{chapters/theory/bar_cobar_construction}
+
+
+\include{chapters/theory/poincare_duality}
+
+\include{chapters/theory/higher_genus}
+
+
+
+\include{chapters/theory/chiral_koszul_pairs}
+\include{chapters/theory/koszul_pair_structure}
+\include{chapters/theory/deformation_theory}
+
+
+\include{chapters/theory/chiral_modules}
+\include{chapters/theory/poincare_duality_quantum}
+\include{chapters/theory/quantum_corrections}
+
+\IfFileExists{chapters/theory/filtered_curved.tex}{%
+  \input{chapters/theory/filtered_curved}%
+}{%
+}
+
+\input{chapters/theory/hochschild_cohomology}
+
+\input{chapters/theory/en_koszul_duality}
+
+\input{chapters/theory/derived_langlands}
+
+
+\part{Complete Portraits}
+
+\noindent
+In Chapter~\ref{ch:heisenberg-frame}, we computed the bar complex, Koszul
+dual, curvature tower, and $\hat{A}$-genus for the Heisenberg algebra.
+Part~II applies the same programme to every major family of chiral
+algebras.  These chapters should be read as complete portraits rather
+than as subordinate examples: each family reveals a structural feature
+that is invisible in the Heisenberg frame alone.
+The constructions of Part~I---the bar complex, the genus tower, the Koszul
+pair structure---are defined for any augmented chiral algebra satisfying mild finiteness
+conditions.  The question driving Part~II is: what do these constructions
+\emph{produce} when applied to the algebras that arise in practice?
+
+The answer is unexpectedly structured.  The bar cohomology dimensions
+of apparently unrelated algebras---the Kac--Moody algebra
+$\widehat{\mathfrak{sl}}_2$, the Virasoro algebra, the
+$\beta\gamma$-system---share a common discriminant
+$\Delta(x) = (1-3x)(1+x)$.  The genus expansion of every Koszul
+algebra is controlled by a single obstruction invariant~$\kappa$,
+and $\kappa$ transforms predictably under Drinfeld--Sokolov
+reduction.  The complementarity sums $c + c'$ are root-datum
+invariants.  These are not coincidences; they are the fingerprints
+of the general theory made visible in specific examples.  Each family
+of chiral algebras reveals a distinct face of the modular Koszul
+structure: the Feigin--Frenkel involution
+$k \mapsto -k - 2h^\vee$ is Koszul duality for Kac--Moody
+algebras; Drinfeld--Sokolov reduction is a Koszul functor;
+the $\hat{A}$-genus in the Heisenberg genus expansion witnesses a
+family index theorem; the Yangian forces a departure from
+$E_\infty$-chiral to $E_1$-chiral Koszul duality.
+
+The examples are organized along the axis from the
+$\Einf$-commutative atom (Heisenberg) to the $\Eone$-associative
+atom (Yangian).  Kac--Moody algebras, Virasoro, and
+$\mathcal{W}$-algebras are $\Einf$-chiral with increasingly
+complex OPE pole structures.  Lattice vertex algebras carry an
+$\Eone$ sublattice structure visible through screening operators.
+The Yangian is purely $\Eone$-chiral: its bar complex uses ordered
+configuration spaces and Verdier duality acts by $R$-matrix
+inversion, not type exchange.
+
+\include{chapters/examples/lattice_foundations}
+
+\include{chapters/examples/free_fields}
+\include{chapters/examples/beta_gamma}
+
+
+\input{chapters/examples/heisenberg_eisenstein}
+
+\include{chapters/examples/kac_moody_framework}
+
+\include{chapters/examples/w_algebras_framework}
+
+\input{chapters/examples/w3_composite_fields}
+
+\input{chapters/examples/minimal_model_fusion}
+\input{chapters/examples/minimal_model_examples}
+
+\input{chapters/examples/w_algebras_deep}
+
+\include{chapters/examples/deformation_quantization}
+
+\input{chapters/examples/deformation_examples}
+
+\input{chapters/examples/yangians}
+
+\input{chapters/examples/toroidal_elliptic}
+
+\input{chapters/examples/genus_expansions}
+
+\input{chapters/examples/detailed_computations}
+
+\input{chapters/examples/examples_summary}
+
+
+\part{Synthesis and Programmes}
+
+\noindent
+The Heisenberg frame chapter (Chapter~\ref{ch:heisenberg-frame}) demonstrated
+that a single chiral algebra encodes bar cohomology, Koszul duality, genus
+corrections, and an index-theoretic $\hat{A}$-genus simultaneously.
+
+The four theorems of Part~I and the computations of Part~II establish
+chiral Koszul duality as a self-contained mathematical framework.  But the
+framework is not isolated: its constructions appear, in different guises,
+throughout modern mathematics and mathematical physics.  The genus-$0$
+bar/BRST comparison is proved, and the all-genera BV/BRST bridge is
+formulated as a downstream conjectural comparison in
+Chapter~\ref{ch:bv-brst}.  The Kontsevich integral of knot theory is
+treated in \S\ref{subsec:vassiliev} as a topological shadow whose
+comparison with the holomorphic propagator remains conjectural.  The
+Costello--Li construction of chiral algebras from four-dimensional
+gauge theories provides the factorization-algebra target against which
+Chapter~\ref{ch:ht-boundary} formulates boundary comparisons.  Part~III relates these constructions and states the hypotheses of the conjectural comparisons.
+
+The chapters here are more concise than those of Parts~I--II,
+indicating directions of active investigation rather than definitive
+treatments.  It should be read as synthesis rather than as a loose
+appendix of applications.  Several results are labeled
+\emph{Conjectured} with scope
+remarks identifying the additional input---typically from gauge theory or
+string theory---needed for a complete proof.  The final chapter
+(\S\ref{sec:modular-koszul-programme}) articulates the programme toward which
+the entire monograph points: modular homotopy theory for factorization
+algebras on curves.
+
+\include{chapters/connections/poincare_computations}
+\include{chapters/connections/feynman_diagrams}
+\input{chapters/connections/feynman_connection}
+\include{chapters/connections/bv_brst}
+\include{chapters/connections/holomorphic_topological}
+
+\input{chapters/connections/kontsevich_integral}
+
+\input{chapters/connections/physical_origins}
+
+\input{chapters/connections/genus_complete}
+
+\input{chapters/connections/concordance}
+
+
+\include{bibliography/references}
+
+\appendix
+
+\input{appendices/general_relations}
+\input{appendices/arnold_relations}
+
+\input{appendices/signs_and_shifts}
+
+\input{appendices/sign_conventions}
+
+\input{appendices/theta_functions}
+
+\input{appendices/spectral_sequences}
+
+\input{appendices/spectral_higher_genus}
+
+\input{appendices/koszul_reference}
+
+\input{appendices/homotopy_transfer}
+
+\input{appendices/dual_methodology}
+
+\input{appendices/computational_tables}
+\input{appendices/combinatorial_frontier}
+\input{appendices/existence_criteria}
+\input{appendices/nilpotent_completion}
+
+\input{appendices/coderived_models}
+
+\input{appendices/notation_index}
+
+
+\index{Ayala--Francis|see{Poincar\'e duality, non-abelian}}
+\index{Batalin--Vilkovisky|see{BV algebra}}
+\index{BD|see{Beilinson--Drinfeld}}
+\index{vertex algebra|see{chiral algebra}}
+\index{VOA|see{chiral algebra}}
+\index{FM compactification|see{Fulton--MacPherson compactification}}
+\index{$\beta\gamma$ system|see{beta-gamma system}}
+\index{symplectic boson|see{beta-gamma system}}
+\index{SDR|see{strong deformation retract}}
+\index{OPE|see{operator product expansion}}
+\index{CFT|see{conformal field theory}}
+\index{DS reduction|see{Drinfeld--Sokolov reduction}}
+\index{KL equivalence|see{Kazhdan--Lusztig equivalence}}
+\index{HTT|see{homotopy transfer theorem}}
+\index{NAP duality|see{Poincar\'e duality, non-abelian}}
+\index{QME|see{quantum master equation}}
+\index{BRST|see{BRST cohomology}}
+\index{KS map|see{Kodaira--Spencer map}}
+\index{AGT|see{AGT correspondence}}
+
+\printindex
+
+\end{document}

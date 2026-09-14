@@ -1,0 +1,682 @@
+\section{A coordinate change that moves the normal forms}
+\label{sec:deciding-coordinate-change}
+
+Work first on a product of three complex discs with coordinates $(x_1,x_2,z)$.
+The two divisors are $D_1=\{x_1=0\}$ and $D_2=\{x_2=0\}$.
+Write $\lambda_i=dx_i/x_i$.
+A logarithmic residue removes a normal differential after moving it to the first position:
+\[
+r_1(\lambda_1\wedge\lambda_2)=\lambda_2|_{D_1},\qquad
+r_2(\lambda_1\wedge\lambda_2)=-\lambda_1|_{D_2}.
+\]
+Consequently the two successive residues of this form are $1$ and $-1$.
+The normal order determines the sign.
+
+Change coordinates by
+\begin{equation}
+\label{eq:two-normal-unit}
+y_1=e^z x_1,\qquad y_2=x_2,\qquad z'=z.
+\end{equation}
+This is an invertible holomorphic change, with the same two divisors.
+Its normal logarithmic form is
+\[
+\frac{dy_1}{y_1}\wedge\frac{dy_2}{y_2}
+=\lambda_1\wedge\lambda_2+dz\wedge\lambda_2.
+\]
+The second term has one normal logarithmic factor.
+It cannot equal $f(z)\lambda_1\wedge\lambda_2$ for a holomorphic function $f$.
+Indeed, on the complement of the divisors,
+$\lambda_1\wedge\lambda_2$ and $dz\wedge\lambda_2$ are distinct exterior basis elements.
+Thus the geometric coordinate change does not preserve the chosen space of top normal forms.
+
+There are two questions.
+The first asks whether the full logarithmic residue complex is independent of coordinates.
+The second asks how the smaller normal complex compares with that coordinate-independent complex.
+The distinction persists even though the normal complex includes every collision stratum.
+We will construct both comparisons and examine which homotopies respect the number of collisions.
+
+The starting language is linear algebra, holomorphic functions, and differential forms.
+All complexes are complexes of complex vector spaces or sheaves of such spaces.
+A differential has degree $+1$.
+Its degree-$q$ cohomology is the kernel of the differential in degree $q$ modulo its image from degree $q-1$.
+For a complex $V$, the shift is $V[a]^j=V^{j+a}$, with differential $(-1)^a d_V$.
+The wedge of forms of degrees $p,q$ changes by $(-1)^{pq}$ when their order is exchanged.
+Tensor products obey the same sign rule.
+All edge sets, sums over strata, and covers used below are finite.
+No completed tensor product, support condition, or analytic limiting procedure is used.
+
+\section{The coordinate-independent residue complex}
+\label{sec:residue-sheaf}
+
+Let $Y$ be a complex manifold and $D=\bigcup_{e\in E}D_e$ a labeled simple normal crossing divisor.
+This means that its components are smooth and, locally, are distinct coordinate hyperplanes.
+For $S\subseteq E$, put
+$D_S=\bigcap_{e\in S}D_e$, with $D_\varnothing=Y$.
+The remaining components cut out a divisor $D^S$ on $D_S$.
+An empty intersection contributes the zero complex.
+
+On a chart of $D_S$ with remaining normal coordinates $x_e$ and tangential coordinates $z_a$,
+the sheaf $\Omega^1_{D_S}(\log D^S)$ is the free holomorphic module with basis
+$d\log x_e=dx_e/x_e$ and $dz_a$.
+Its $q$th exterior power is $\Omega^q_{D_S}(\log D^S)$.
+The exterior derivative extends the usual derivative on functions and satisfies
+$d(d\log x_e)=0$.
+A sheaf assigns sections to each open set, with restrictions and unique gluing of compatible local sections.
+The displayed local modules define such a sheaf because changes between adapted charts preserve logarithmic forms.
+The next calculation proves this preservation and determines the residue maps.
+
+For $e\notin S$, expand $\alpha=d\log x_e\wedge\beta+\gamma$ in the coordinate exterior basis,
+with neither $\beta$ nor $\gamma$ containing $d\log x_e$.
+Define the left-normal residue
+\begin{equation}
+\label{eq:residue-definition}
+r_{S,e}:\Omega^q_{D_S}(\log D^S)
+\longrightarrow\Omega^{q-1}_{D_{S\cup\{e\}}}(\log D^{S\cup\{e\}}),
+\qquad r_{S,e}\alpha=\beta|_{D_{S\cup\{e\}}}.
+\end{equation}
+This coefficient is independent of the presentation.
+In a coordinate exterior basis, terms containing $dx_e$ with a regular coefficient have zero residue,
+because $dx_e=x_e\,d\log x_e$.
+Every other ambiguity changes $\beta$ by a form whose restriction is zero.
+
+An adapted coordinate change between charts has normal equations
+\begin{equation}
+\label{eq:adapted-change}
+y_e=u_e x_{\pi(e)},\qquad u_e\in\mathcal O_Y^\times.
+\end{equation}
+Here $\pi$ is a permutation of the locally present components, constant on each connected overlap.
+The tangential coordinates can also change.
+The superscript $\times$ means that $u_e$ is nowhere zero.
+Both coordinate systems are assumed to be charts, so the full coordinate map has an invertible Jacobian.
+Their logarithmic differentials satisfy
+\begin{equation}
+\label{eq:unit-differential}
+d\log y_e=d\log x_{\pi(e)}+\alpha_e,
+\qquad \alpha_e=u_e^{-1}du_e,\qquad d\alpha_e=0.
+\end{equation}
+The form $\alpha_e$ is regular and holomorphic.
+Its closedness follows from
+$d(u_e^{-1}du_e)=-u_e^{-2}du_e\wedge du_e=0$.
+The inverse coordinate change has the same form, so the logarithmic modules agree.
+
+Write $i_S:D_S\hookrightarrow Y$ for inclusion.
+The direct image sheaf $i_{S,*}\mathcal F$ has sections
+$\mathcal F(V\cap D_S)$ on an open set $V\subseteq Y$.
+Set
+\begin{equation}
+\label{eq:full-residue-complex}
+\mathcal R_Y=
+\bigoplus_{S\subseteq E}i_{S,*}\Omega^\bullet_{D_S}(\log D^S)[-2|S|],
+\qquad D=d+R,\qquad R=\sum_{S,e\notin S}r_{S,e}.
+\end{equation}
+A $q$-form on $D_S$ has total degree $q+2|S|$.
+Thus a residue has degree one, although it lowers the form degree by one.
+The shifts are even, so $d$ is the usual exterior derivative on each stratum.
+
+\begin{proposition}[Residue naturality and strict descent]
+\label{prop:strict-residue-descent}
+The operator $D$ satisfies $D^2=0$.
+Every adapted coordinate change induces a degree-zero chain isomorphism on~\eqref{eq:full-residue-complex} by ordinary pullback of forms and relabeling of strata.
+These isomorphisms compose strictly.
+Consequently the local descriptions glue to the displayed complex of sheaves on $Y$.
+\end{proposition}
+
+\begin{proof}
+The coefficient of $d\log x_e\wedge d\log x_f$ changes sign when the two factors are exchanged.
+Restriction of its remaining coefficient to $D_{S\cup\{e,f\}}$ is independent of order.
+Hence, for distinct $e,f\notin S$,
+\[
+r_{S\cup\{e\},f}r_{S,e}
+=-r_{S\cup\{f\},e}r_{S,f}.
+\]
+Once $e$ has been removed, no second $e$-residue is defined.
+There is therefore no repeated-edge contribution to $R^2$.
+All other terms cancel in the displayed pairs.
+
+For $\alpha=d\log x_e\wedge\beta+\gamma$, the derivative is
+$d\alpha=-d\log x_e\wedge d\beta+d\gamma$.
+The form $d\gamma$ still has zero residue along $D_e$.
+Thus $r_{S,e}d=-dr_{S,e}$.
+Together with $d^2=0$ and $R^2=0$, this proves $D^2=0$.
+
+Consider a coordinate map $g$ from an $x$-chart to a $y$-chart with equations~\eqref{eq:adapted-change}.
+It maps the source stratum indexed by $\pi(S)$ to the target stratum indexed by $S$.
+Denote this restriction by $g_S$.
+On a term $d\log y_e\wedge\beta+\gamma$, pullback gives
+$(d\log x_{\pi(e)}+\alpha_e)\wedge g^*\beta+g^*\gamma$.
+The two regular terms have zero residue along $x_{\pi(e)}=0$.
+Therefore
+\begin{equation}
+\label{eq:pullback-residue}
+r_{\pi(S),\pi(e)}g_S^*=g_{S\cup\{e\}}^*r_{S,e}.
+\end{equation}
+Pullback also commutes with $d$ by the chain rule on functions and the exterior product rule.
+It preserves total degree because $|\pi(S)|=|S|$.
+Thus it intertwines $D$.
+The inverse coordinate map supplies its inverse.
+The identities $(g\circ h)^*=h^*g^*$ and $\pi_{g\circ h}=\pi_h\pi_g$
+show strict compatibility on triple overlaps.
+Unique gluing of differential forms proves the sheaf assertion.
+\end{proof}
+
+The permutation signs in this proposition occur inside wedge pullback.
+For two normal directions, swapping $y_1=x_2$, $y_2=x_1$ sends
+$d\log y_1\wedge d\log y_2$ to $-\lambda_1\wedge\lambda_2$.
+There is no additional sign on the direct sum of strata.
+
+\section{The full-subset normal complex}
+\label{sec:normal-complex}
+
+The smaller comparison requires a base projection.
+Fix a product chart $U=\Delta^E\times Z$ and the projection $p:U\to Z$.
+Here $\Delta$ is a complex disc and $m=|E|$.
+Put $M^\bullet=\Gamma(Z,\Omega_Z^\bullet)$.
+For $S\subseteq E$, the product stratum $U_S$ has projection $p_S:U_S\to Z$.
+For an ordered set $F=E\setminus S$, define
+\[
+L(F)=\bigwedge^{|F|}\mathbb C^F[|F|],
+\qquad
+\omega_F=e_{f_1}\wedge\cdots\wedge e_{f_r},\qquad r=|F|.
+\]
+The line $L(F)$ lies in degree $-|F|$.
+Deleting its $i$th basis vector gives
+\[
+\iota_{f_i}\omega_F=(-1)^{i-1}\omega_{F\setminus\{f_i\}}.
+\]
+Place this line before the coefficient complex and take the complete direct sum
+\begin{equation}
+\label{eq:normal-total}
+C_E(M)=\bigoplus_{S\subseteq E}L(E\setminus S)\otimes M^\bullet,
+\qquad A_E(M)=C_E(M)[-2m].
+\end{equation}
+On its $S$-summand, define
+\begin{equation}
+\label{eq:normal-differential}
+D_A(\omega_F\otimes\beta)
+=(-1)^r\omega_F\otimes d_Z\beta
++\sum_{e\in F}\iota_e\omega_F\otimes\beta.
+\end{equation}
+The residue term indexed by $e$ is in the $S\cup\{e\}$-summand.
+The even shift in~\eqref{eq:normal-total} does not change this differential.
+
+\begin{lemma}[The normal embedding]
+\label{lem:normal-embedding}
+The formula~\eqref{eq:normal-differential} defines a differential.
+For adapted normal coordinates $x$, the map
+\begin{equation}
+\label{eq:normal-embedding}
+j_x:A_E(M)\longrightarrow\mathcal R_Y(U),
+\qquad
+\omega_F\otimes\beta\longmapsto
+\lambda_F^x\wedge p_S^*\beta
+\end{equation}
+is an injective chain map, where $\lambda_F^x=\bigwedge_{e\in F}d\log x_e$ in the given order.
+Its image $N_x$ is a subcomplex of $\mathcal R_Y(U)$.
+\end{lemma}
+
+\begin{proof}
+Two distinct deletions have opposite exterior signs.
+The internal differential has signs $(-1)^r$ before a deletion and $(-1)^{r-1}$ after it.
+The coefficient identity maps commute with $d_Z$.
+These facts prove $D_A^2=0$.
+The source degree of $\omega_F\otimes\beta$ is $|\beta|-r+2m$.
+Since $m=r+|S|$, this equals the target degree $|\beta|+r+2|S|$.
+
+Every normal logarithmic form is closed, so
+$d(\lambda_F^x\wedge p_S^*\beta)=(-1)^r\lambda_F^x\wedge p_S^*(d_Z\beta)$.
+Its $e_i$-residue is
+$(-1)^{i-1}\lambda_{F\setminus\{e_i\}}^x\wedge p_{S\cup\{e_i\}}^*\beta$.
+These are exactly the two parts of~\eqref{eq:normal-differential}.
+They stay in the full direct sum.
+Finally, the adapted coordinate exterior basis recovers $p_S^*\beta$ uniquely from its coefficient of $\lambda_F^x$.
+Pullback along $p_S$ is injective on these forms, as restriction to a constant normal section recovers $\beta$.
+Thus $j_x$ is injective.
+\end{proof}
+
+We next allow unit changes~\eqref{eq:adapted-change} that preserve the specified projection $p$.
+The units may depend on both normal and base coordinates.
+After restriction to a common chart domain, $(y_e,z_a)$ must still be adapted coordinates.
+If a base chart changes by a biholomorphism depending only on the base coordinates,
+its ordinary pullback on $M$ can be included in all formulas below.
+A tangential coordinate change depending on the normal coordinates is outside this smaller comparison.
+Proposition~\ref{prop:strict-residue-descent} still applies to the full residue complex in that case.
+
+\begin{proposition}[Abstract transport and its geometric limit]
+\label{prop:normal-transport}
+A permutation $\pi$ induces a chain isomorphism
+\[
+P_\pi:A_{E_y}(M)\longrightarrow A_{E_x}(M),\qquad
+(e_{f_1}\wedge\cdots\wedge e_{f_r})\otimes\beta
+\longmapsto(e_{\pi(f_1)}\wedge\cdots\wedge e_{\pi(f_r)})\otimes\beta.
+\]
+It maps the $S$-summand to the $\pi(S)$-summand.
+In ordered bases, its sign is the sign of sorting the list $\pi(f_1),\ldots,\pi(f_r)$.
+These transports compose strictly.
+The resulting abstract maps between normal images are
+\[
+T_{y\leftarrow x}=j_yP_\pi^{-1}j_x^{-1}:N_x\longrightarrow N_y.
+\]
+They also compose strictly.
+In general they are not restrictions of geometric pullback on logarithmic forms.
+\end{proposition}
+
+\begin{proof}
+Exterior contraction is natural under relabeling:
+$\iota_{\pi(e)}P_\pi=P_\pi\iota_e$ on the appropriate summands.
+The internal sign depends only on $|F|$, which is unchanged.
+This proves the chain identity.
+Functoriality of exterior powers gives $P_\rho P_\pi=P_{\rho\pi}$.
+The formula for $T$ then cancels adjacent inverse maps in every composition.
+The change~\eqref{eq:two-normal-unit} shows that geometric pullback does not preserve $N_x$.
+Thus these abstract transitions need a further comparison with the ambient geometric maps.
+\end{proof}
+
+\section{A coherent comparison without choosing logarithms}
+\label{sec:unfiltered-comparison}
+
+A chain homotopy between chain maps $f,g:A\to B$ is a degree-minus-one map $H$ satisfying
+$g-f=d_BH+Hd_A$.
+It witnesses equality of the induced maps on cohomology.
+The following contraction will supply such homotopies with an exact composition rule.
+Its existence also determines the limited cohomological information carried by $A_E(M)$.
+
+Identify the direct sum of lines $L(F)$ with the exterior algebra on the edge symbols,
+placing each symbol in degree $-1$.
+Let $\epsilon$ be the linear functional with $\epsilon(e)=1$ for every edge.
+The edge part of $D_A$ is contraction $\iota_\epsilon$.
+For $m>0$, set
+\begin{equation}
+\label{eq:average-contraction}
+v_E=\frac1m\sum_{e\in E}e,\qquad
+h(\omega_F\otimes\beta)=v_E\wedge\omega_F\otimes\beta.
+\end{equation}
+A wedge containing a repeated edge is zero.
+Every nonzero term of $h$ adds an edge to $F$ and removes it from $S$.
+Thus $h$ has degree $-1$, including after the shift $[-2m]$.
+
+\begin{lemma}[Permutation-invariant contraction]
+\label{lem:normal-contractible}
+The identities $D_Ah+hD_A=\mathrm{id}$ and $h^2=0$ hold.
+Moreover $P_\pi h=hP_\pi$.
+Consequently $A_E(M)$ has zero cohomology for $m>0$.
+\end{lemma}
+
+\begin{proof}
+For a vector $v$ and exterior form $\omega$, deleting each factor in $v\wedge\omega$ gives
+$\iota_\epsilon(v\wedge\omega)=\epsilon(v)\omega-v\wedge\iota_\epsilon\omega$.
+Here $\epsilon(v_E)=1$.
+The internal terms cancel because the wedge degree changes from $r$ to $r+1$ under $h$.
+This proves $D_Ah+hD_A=\mathrm{id}$.
+The equality $v_E\wedge v_E=0$ proves $h^2=0$.
+Every permutation fixes the average $v_E$, proving equivariance.
+If $D_Aa=0$, then $a=D_A(ha)$, so every cycle is a boundary.
+\end{proof}
+
+On an overlap, use geometric pullback to place all forms in the same residue complex $B$.
+For each chart $i$, let $A_i$ be its normal complex and $j_i:A_i\to B$ its embedding.
+Let $P_{ij}:A_j\to A_i$ be the determinant transport.
+It includes a base pullback if such a base change is present.
+Assume these underlying atlas transitions satisfy $P_{ik}=P_{ij}P_{jk}$.
+This is automatic for the stated coordinate permutations and compatible base charts.
+
+\begin{theorem}[Overlap homotopies and their cocycle]
+\label{thm:strict-homotopy-cocycle}
+For $m>0$, define
+\begin{equation}
+\label{eq:overlap-homotopy}
+H_{ij}=(j_j-j_iP_{ij})h_j:A_j^q\longrightarrow B^{q-1}.
+\end{equation}
+Then
+\begin{align}
+\label{eq:overlap-identities}
+DH_{ij}+H_{ij}D_A&=j_j-j_iP_{ij},\\
+H_{ik}&=H_{jk}+H_{ij}P_{jk}.
+\end{align}
+The construction uses $u_e^{-1}du_e$ but no choice of a logarithm of $u_e$.
+The second identity is exact, so its triple-overlap defect is zero.
+\end{theorem}
+
+\begin{proof}
+Write $\Delta_{ij}=j_j-j_iP_{ij}$.
+Both terms are chain maps, hence $D\Delta_{ij}=\Delta_{ij}D_A$.
+The first identity follows from
+$D\Delta_{ij}h_j+\Delta_{ij}h_jD_A
+=\Delta_{ij}(D_Ah_j+h_jD_A)=\Delta_{ij}$.
+For the second, use $h_jP_{jk}=P_{jk}h_k$:
+\[
+H_{jk}+H_{ij}P_{jk}
+=(j_k-j_jP_{jk})h_k
++(j_jP_{jk}-j_iP_{ij}P_{jk})h_k
+=H_{ik}.
+\]
+The difference $\Delta_{ij}$ is a finite exterior expansion of~\eqref{eq:unit-differential}.
+All its coefficients are globally defined regular forms on the overlap.
+Thus no primitive of $d\log u_e$ enters the formula.
+\end{proof}
+
+For two aligned normal labels, let $\alpha_e=d\log u_e$ and
+\[
+W=(\lambda_1+\alpha_1)\wedge(\lambda_2+\alpha_2)
+-\lambda_1\wedge\lambda_2.
+\]
+Suppressing a common base coefficient, the homotopy is
+\begin{align*}
+H(\omega_{\{1,2\}})&=0,\\
+H(e_2\text{ on }S=\{1\})&=\tfrac12W\text{ on }S=\varnothing,\\
+H(e_1\text{ on }S=\{2\})&=-\tfrac12W\text{ on }S=\varnothing,\\
+H(1\text{ on }S=\{1,2\})
+&=\tfrac12\alpha_1|_{D_2}+\tfrac12\alpha_2|_{D_1}.
+\end{align*}
+The last two terms belong to different summands.
+Since $r_1W=\alpha_2|_{D_1}$ and $r_2W=-\alpha_1|_{D_2}$,
+these formulas give the first identity in~\eqref{eq:overlap-identities} directly.
+They also show that $H$ can decrease stratum depth by one.
+
+\section{A chain map on a finite cover}
+\label{sec:cech-map}
+
+The overlap identities give an actual map on a complex of local sections.
+Let $p:Y\to Z$ have a finite base cover $V_i$ with the following projected normal charts.
+Each $p^{-1}V_i$ is identified over $V_i$ with an open subset of $\mathbb C^m\times V_i$
+containing $\{0\}\times V_i$, and its normal divisors are the coordinate hyperplanes.
+The map $p$ becomes projection to $V_i$, and the fixed number of normal directions is $m>0$.
+The formulas above restrict to these open subsets; the zero section still recovers every base coefficient.
+Normal labels may permute on overlaps, with their permutations satisfying the atlas cocycle.
+The sheaves $A_i$ on $V_i$ consist of~\eqref{eq:normal-total}, with holomorphic forms on each base open set.
+The maps $P_{ij}$ glue them to a sheaf of complexes $A$.
+Explicitly, a section is a family of local sections with $a_i=P_{ij}a_j$ on overlaps.
+Let $B=p_*\mathcal R_Y$.
+Thus $B(V)=\mathcal R_Y(p^{-1}V)$.
+After the identifications defining $A$, write each $j_i:A|_{V_i}\to B|_{V_i}$ and
+$H_{ij}=(j_j-j_i)h$ on overlaps.
+
+For a sheaf of complexes $F$, its alternating \v Cech cochains are
+\[
+\check C^p(F)^q=\prod_{i_0<\cdots<i_p}F^q(V_{i_0}\cap\cdots\cap V_{i_p}).
+\]
+The \v Cech differential is the alternating restriction sum
+$(\delta a)_{i_0\ldots i_{p+1}}=
+\sum_{r=0}^{p+1}(-1)^r a_{i_0\ldots\widehat i_r\ldots i_{p+1}}$.
+Restrictions to the common overlap are implicit in this formula only.
+The total complex has degree $p+q$ and differential
+$\mathscr D a=\delta a+(-1)^p d_Fa$ on \v Cech degree $p$.
+The equations $\delta^2=d_F^2=0$ and $\delta d_F=d_F\delta$ prove $\mathscr D^2=0$.
+
+\begin{proposition}[The total comparison]
+\label{prop:cech-comparison}
+For $a\in\check C^p(A)^q$, define $\mathcal J a$ by its two components:
+\begin{align}
+\label{eq:cech-comparison}
+(\mathcal J a)^{p}_{i_0\ldots i_p}
+&=j_{i_0}a_{i_0\ldots i_p},\\
+(\mathcal J a)^{p+1}_{i_0\ldots i_{p+1}}
+&=(-1)^p H_{i_0i_1}a_{i_1\ldots i_{p+1}}.
+\end{align}
+This is a degree-zero chain map
+$\operatorname{Tot}\check C(A)\to\operatorname{Tot}\check C(B)$.
+No acyclicity condition on the cover is needed for this chain-map assertion.
+\end{proposition}
+
+\begin{proof}
+The first component preserves both degrees.
+The second raises the \v Cech degree by one and lowers the internal degree by one.
+At unchanged \v Cech degree, the chain identity follows from $Dj_i=j_iD_A$.
+At \v Cech degree $p+1$, the difference between restriction of the first component and application after $\delta$
+is $(j_{i_1}-j_{i_0})a_{i_1\ldots i_{p+1}}$.
+The internal differential of the second component has coefficient $-DH_{i_0i_1}$.
+The second component applied to the internal differential has coefficient $H_{i_0i_1}D_A$ on the other side.
+Thus the difference is
+$(j_{i_1}-j_{i_0}-DH_{i_0i_1}-H_{i_0i_1}D_A)a_{i_1\ldots i_{p+1}}=0$.
+At \v Cech degree $p+2$, all terms with later indices cancel as alternating restrictions.
+The remaining coefficient is
+$H_{i_1i_2}-H_{i_0i_2}+H_{i_0i_1}$, which vanishes by~\eqref{eq:overlap-identities}.
+These exhaust the possible degrees.
+\end{proof}
+
+This construction gives a comparison into the global residue carrier.
+It gives no quasi-isomorphism, meaning a map inducing isomorphisms on cohomology, with that carrier.
+For $m>0$, the source sheaf $A$ is contractible by $h$.
+Its \v Cech total complex is also contractible: on \v Cech degree $p$, use $(-1)^p h$.
+The restriction terms cancel because this sign changes when $p$ increases.
+The internal terms sum to the identity by Lemma~\ref{lem:normal-contractible}.
+In contrast, on a connected nonempty chart $U$, the constant function $1$ is a nonzero class in $H^0(\mathcal R_Y(U))$.
+It is closed and cannot be a boundary because the total complex has no negative degrees.
+Consequently the normal comparison cannot recover even this degree-zero class.
+When $m=0$, the product chart is $Z$ itself, $A=M$, and $j$ is the identity on its de Rham complex.
+The contraction argument is unnecessary in that case.
+
+\section{Homotopies that preserve stratum depth}
+\label{sec:filtered-homotopies}
+
+The preceding contraction adds a remaining edge and therefore removes a contracted edge.
+This matters when the number of collisions is part of the structure.
+Define the decreasing filtration
+\[
+F^aA=\bigoplus_{|S|\geq a}A_S,
+\qquad
+F^aB=\bigoplus_{|S|\geq a}B_S.
+\]
+Both differentials preserve it, since residues increase $|S|$.
+A filtered map or homotopy sends $F^aA$ into $F^aB$ for every $a$.
+The homotopy~\eqref{eq:overlap-homotopy} need not satisfy this condition.
+
+On a sufficiently small overlap, a unit $u$ has a holomorphic logarithm $\ell$ with $e^\ell=u$.
+To see this near a point, write $u=u_0(1+w)$ with $|w|<1$ and use the convergent power series for $\log(1+w)$.
+Then $d\ell=u^{-1}du$.
+Two logarithms differ by a locally constant element of $2\pi i\mathbb Z$.
+After aligning the component labels, suppose $y_e=u_ex_e$ and choose logarithms $\ell_e$.
+Write $\alpha_e=d\ell_e$.
+
+Introduce a real parameter $t\in[0,1]$ only as a polynomial variable with its differential $dt$.
+The forms
+\[
+\Lambda_e(t)=\lambda_e+t\alpha_e+dt\,\ell_e
+=\lambda_e+d(t\ell_e)
+\]
+are closed for the total exterior derivative on the parameter and chart variables.
+Their residues are $r_f\Lambda_e=\delta_{fe}$, where $\delta_{fe}$ is one for $f=e$ and zero otherwise.
+Their other terms are regular.
+Therefore the wedge construction~\eqref{eq:normal-embedding}, using $\Lambda_e(t)$,
+gives a chain map into the polynomial parameter extension of the residue complex.
+
+For a parameter form $a(t)+dt\wedge b(t)$, define
+$I(a+dt\wedge b)=\int_0^1 b(t)\,dt$.
+The integral means coefficientwise integration of a polynomial, so it is a finite algebraic operation over $\mathbb C$.
+Direct differentiation gives
+$dI+Id=\operatorname{ev}_1-\operatorname{ev}_0$.
+Residues satisfy $r(dt\wedge b)=-dt\wedge rb$, and hence $RI+IR=0$.
+Thus the same identity holds with $D=d+R$.
+
+\begin{proposition}[Logarithmic overlap homotopy]
+\label{prop:logarithmic-homotopy}
+The degree-minus-one map
+\begin{equation}
+\label{eq:logarithmic-homotopy}
+K_{xy}(\omega_F\otimes\beta)
+=\int_0^1\sum_{i=1}^{r}(-1)^{i-1}\ell_{f_i}
+\bigwedge_{\substack{j=1\\j\ne i}}^r
+(\lambda_{f_j}+t\alpha_{f_j})\wedge p_S^*\beta\,dt
+\end{equation}
+is a filtered chain homotopy from $j_x$ to $j_y$.
+All coefficients and forms on the right are restricted to $U_S$.
+The remaining wedge factors keep their original order.
+\end{proposition}
+
+\begin{proof}
+The coefficient of $dt$ in $\bigwedge_{j=1}^r\Lambda_{f_j}(t)$
+is the integrand in~\eqref{eq:logarithmic-homotopy}.
+Moving that $dt$ to the first position gives $(-1)^{i-1}$.
+The parameter integration identity applied to the chain map just constructed yields
+$DK_{xy}+K_{xy}D_A=j_y-j_x$.
+Every term stays on $U_S$, so it preserves stratum depth.
+It has one fewer differential form than its input image under $j_x$, and hence has degree $-1$.
+\end{proof}
+
+For two labels, the top-stratum formula is
+\begin{equation}
+\label{eq:two-log-homotopy}
+K_{xy}(e_1\wedge e_2)
+=\ell_1\lambda_2-\ell_2\lambda_1
++\tfrac12(\ell_1\alpha_2-\ell_2\alpha_1).
+\end{equation}
+On the $S=\{1\}$ summand it sends $e_2$ to $\ell_2|_{D_1}$.
+On the $S=\{2\}$ summand it sends $e_1$ to $\ell_1|_{D_2}$.
+It vanishes on $S=\{1,2\}$.
+These formulas include their common base coefficient by wedging it on the right.
+
+\begin{example}[A double overlap with no filtered homotopy]
+\label{ex:period-obstruction}
+Take $U=\Delta^2\times\mathbb C^*$ with base coordinate $z$.
+Let $y_1=zx_1$ and $y_2=x_2$.
+These functions and $z$ form an adapted coordinate system onto their open image.
+The maps $j_x,j_y$ are defined on the same projected overlap.
+There is no filtered chain homotopy $K$ from $j_x$ to $j_y$ on all of $U$.
+
+To prove this, apply the homotopy equation to the coefficient-one element $e_1$ in $S=\{2\}$.
+Its total degree is three, and $D_Ae_1=1$ in $S=\{1,2\}$.
+A filtered degree-minus-one map sends that last element to zero:
+its output would have degree three and depth at least two, whose minimum total degree is four.
+The component of $Ke_1$ on $D_2$ is therefore a holomorphic function $f$ with
+$df=dz/z$.
+Restricting to $x_1=0$ gives the same equation on $\mathbb C^*$.
+Along $z=e^{it}$, the integral of $df$ is zero because $f(e^{it})$ has the same endpoints.
+The integral of $dz/z=i\,dt$ is $2\pi i$.
+This contradiction proves nonexistence.
+The unfiltered homotopy of Theorem~\ref{thm:strict-homotopy-cocycle} still exists on this overlap.
+\end{example}
+
+\section{The triple-overlap obstruction for two normal directions}
+\label{sec:triple-obstruction}
+
+Take three projected normal charts with labels aligned on a connected triple overlap.
+Write their normal forms as
+$\lambda^{(0)}=\lambda$,
+$\lambda^{(1)}=\lambda+a$,
+and $\lambda^{(2)}=\lambda+a+b$.
+Choose logarithms $A_e$ for the change $0\to1$ and $B_e$ for $1\to2$.
+Thus $a_e=dA_e$ and $b_e=dB_e$.
+Let $C_e$ be the chosen logarithm for $0\to2$.
+The coordinate cocycle gives
+\begin{equation}
+\label{eq:logarithm-obstruction}
+c_e=A_e+B_e-C_e\in2\pi i\mathbb Z.
+\end{equation}
+The number $c_e$ is constant on the connected overlap.
+Define the homotopy defect
+$T=K_{01}+K_{12}-K_{02}$.
+It has degree $-1$, and $DT+TD_A=0$ because the differences of the three embeddings cancel.
+For a map $L$ of degree $-2$, the equation making it a secondary homotopy is
+$DL-LD_A=T$.
+Its minus sign is part of the cohomological convention.
+
+\begin{theorem}[Exact filtered triple criterion]
+\label{thm:filtered-triple-criterion}
+Suppose both normal components meet on the triple overlap.
+For the logarithmic homotopies~\eqref{eq:logarithmic-homotopy},
+a filtered secondary homotopy exists if and only if $c_1=c_2=0$.
+When these constants vanish, one can take
+\begin{equation}
+\label{eq:secondary-log-homotopy}
+L(e_1\wedge e_2\otimes\beta)
+=Q\,p_\varnothing^*\beta,
+\qquad
+Q=\tfrac12(A_2B_1-A_1B_2),
+\end{equation}
+on the ambient stratum and set $L=0$ on all other summands.
+\end{theorem}
+
+\begin{proof}
+First assume $C=A+B$.
+Substitution into~\eqref{eq:two-log-homotopy} gives
+\begin{align*}
+T(e_1\wedge e_2)
+&=\tfrac12(B_1a_2-B_2a_1-A_1b_2+A_2b_1)\\
+&=d\bigl(\tfrac12(A_2B_1-A_1B_2)\bigr)=dQ.
+\end{align*}
+On each one-edge summand, the three logarithms add to zero in $T$.
+Thus $T$ vanishes there and on the empty-wedge summand.
+For a base form $\beta$, differentiation of $Q\beta$ gives $dQ\wedge\beta+Qd\beta$.
+The term $LD_A$ contributes $Qd\beta$ because the top remaining-edge count is two.
+All edge terms of $LD_A$ vanish by the definition of $L$.
+The residue of the regular form $Q\beta$ is zero.
+Consequently $DL-LD_A=T$ on every summand.
+The map stays on the ambient stratum and is filtered.
+
+For arbitrary $C$, the restriction of $T$ to $e_1$ on $S=\{2\}$ is the constant function $c_1$ on $D_2$.
+Its restriction to $e_2$ on $S=\{1\}$ is $c_2$ on $D_1$.
+Let $L$ be any filtered map of degree $-2$.
+On either of these degree-three inputs, $L$ must vanish, since a depth-one output has minimum total degree two.
+The requested output degree would be one.
+Their differentials are the degree-four unit at depth two.
+The value of $L$ there must also vanish, since the requested degree two is below the depth-two minimum of four.
+Hence $(DL-LD_A)$ vanishes on both one-edge inputs.
+It cannot equal a nonzero $c_1$ or $c_2$ there.
+This proves necessity and completes the criterion.
+\end{proof}
+
+This obstruction belongs to the chosen logarithmic homotopies.
+Changing a logarithm on a double overlap by $2\pi i n_{ij,e}$ changes
+$c_{ijk,e}$ by
+$2\pi i(n_{ij,e}+n_{jk,e}-n_{ik,e})$.
+Thus the obstruction to choosing logarithms with zero triple defect is the class of this constant two-cochain modulo those changes.
+Here a two-cochain is a family on triple overlaps,
+and two such families define the same class when their difference is the alternating change of a family on double overlaps.
+On quadruple overlaps its alternating sum is zero, since each logarithm occurs twice with opposite signs.
+If arbitrary holomorphic primitives of $d\log u_e$ are allowed in place of logarithms,
+the permitted constants are in $\mathbb C$, and the corresponding class uses that constant coefficient space.
+Component permutations transport these constants with their labels.
+
+When additive logarithms have been chosen, the secondary homotopies also satisfy the next coherence identity.
+For three successive logarithm vectors $A,B,C$, the scalar function in~\eqref{eq:secondary-log-homotopy} is bilinear:
+\[
+Q(A,B)+Q(A+B,C)=Q(B,C)+Q(A,B+C).
+\]
+Both sides expand to $Q(A,B)+Q(A,C)+Q(B,C)$.
+Therefore the alternating quadruple-overlap sum of $L$ is zero.
+Together, the embeddings, the homotopies $K$, and the secondary homotopies $L$
+give a filtered map on the finite-cover total complexes of Section~\ref{sec:cech-map}.
+For $a\in\check C^p(A)^q$, its components in \v Cech degrees $p,p+1,p+2$ are
+\begin{align*}
+(\mathcal J_{\log}a)^p_{i_0\ldots i_p}
+&=j_{i_0}a_{i_0\ldots i_p},\\
+(\mathcal J_{\log}a)^{p+1}_{i_0\ldots i_{p+1}}
+&=(-1)^pK_{i_0i_1}a_{i_1\ldots i_{p+1}},\\
+(\mathcal J_{\log}a)^{p+2}_{i_0\ldots i_{p+2}}
+&=-L_{i_0i_1i_2}a_{i_2\ldots i_{p+2}}.
+\end{align*}
+The third term has internal degree $q-2$, so all three terms have total degree $p+q$.
+To check the chain identity, use the calculation of Proposition~\ref{prop:cech-comparison}.
+The new \v Cech-degree-$p+2$ defect is
+$(-1)^p(\delta K-DL+LD_A)a$, which is zero.
+At degree $p+3$ it is a signed copy of $(\delta L)a$, also zero by bilinearity of $Q$.
+There are no components in higher degrees.
+Thus no further homotopies are needed for this map.
+The identities here are $\delta j=DK+KD_A$, $\delta K=DL-LD_A$, and $\delta L=0$;
+they also express the total cocycle $j+K-L$ in the \v Cech complex of graded maps.
+
+The constants do not obstruct the unfiltered construction.
+Indeed, if $T$ is any closed degree-minus-one map out of $A$, then $-Th$ has degree $-2$ and
+\[
+D(-Th)-(-Th)D_A=T.
+\]
+To check this, use $DT=-TD_A$ and $D_Ah+hD_A=1$.
+This primitive can decrease stratum depth, which is exactly the property excluded in Theorem~\ref{thm:filtered-triple-criterion}.
+
+\section{What descends}
+\label{sec:consumer-map}
+
+The full residue complex glues by canonical pullbacks.
+On a supplied projected atlas, the normal complex has determinant transports and the comparison~\eqref{eq:cech-comparison},
+with the shift $[-2m]$ and every stratum retained.
+For $m>0$, its contractibility excludes a quasi-isomorphism with the full residue complex.
+When the homotopies must preserve stratum depth, the logarithmic construction instead gives the two-normal comparison
+subject to~\eqref{eq:logarithm-obstruction}.
+
+A construction with chiral coefficient states must supply those states on every stratum and the maps attached to coordinate changes.
+Those maps must commute with residues and the internal coefficient differential on their actual domains.
+The contraction $h$ used here also depends on the identity coefficient maps between all subsets.
+For varying state spaces, adding an edge would require a map in the reverse stratum direction;
+the formula $H=\Delta h$ requires such a compatible contraction to be constructed separately.
+The logarithmic formula requires a differential-form action and compatible coefficient restrictions.
+Changing the base projection through normal-dependent tangential coordinates also requires an additional coefficient comparison.
+No such state or base-projection comparison is provided by the normal orientation line itself.

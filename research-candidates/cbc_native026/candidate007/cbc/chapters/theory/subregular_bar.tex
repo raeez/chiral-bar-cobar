@@ -1,0 +1,405 @@
+\section{Augmentation, normal products, and the subregular Poisson quotient}
+\label{sec:cbc28-subregular-bar}
+
+The strict reduction map has the affine--ghost complex as its target.
+The vacuum product $J_{(1)}J$ prevents replacing that target by the bare affine algebra at level zero.
+It also restricts augmented bar constructions before any question of completion arises.
+
+Use the universal polynomial family $W_R\subset C_R$ of
+Theorem~\ref{thm:cbc27-subregular-map}, with $R=\mathbb C[k]$.
+The fields $J,U,P,V$ retain their definitions and cohomological degree zero.
+At a complex level $k$, write $W_k,C_k$ for their fibers.
+A vertex augmentation is a unital vertex homomorphism to $\mathbb C$ with zero translation and only its ordinary multiplication.
+
+\begin{proposition}[The affine target and the vacuum term]\label{prop:cbc28-nonembedding}
+There is no unital vertex homomorphism
+\[
+ W_0\longrightarrow V^0(\mathfrak{sl}_3).
+\]
+More generally, $W_k$ has a vertex augmentation if and only if $k=-3/2$.
+No pair $W_k,W_{-k-6}$ admits vertex augmentations on both factors.
+\end{proposition}
+\begin{proof}
+The universal affine algebra $V^0(\mathfrak{sl}_3)$ has an augmentation that kills every current.
+Its defining brackets permit this map: the affine central term is zero at level zero, and every Lie bracket maps to zero.
+Composing a proposed map from $W_0$ with this augmentation gives a vertex augmentation of $W_0$.
+However, $J_{(1)}J=\mathbf1$ in $W_0$, while every positive product in $\mathbb C$ vanishes.
+This would give $0=1$.
+
+At arbitrary $k$, the same argument applied to
+$J_{(1)}J=(2k+3)\mathbf1/3$ requires $k=-3/2$.
+At that level, all scalar terms in the universal presentation
+\eqref{eq:cbc27-j-products}--\eqref{eq:cbc27-g-products} vanish.
+Sending $J,G^+,G^-,T$ to zero therefore defines a vertex augmentation by the presentation.
+Here $k+3=3/2$, so this presentation is defined.
+Finally,
+\[
+ \frac{2k+3}{3}+\frac{2(-k-6)+3}{3}=-2.
+\]
+Both coefficients cannot vanish over $\mathbb C$.
+The same contradiction applies over every nonzero $\mathbb C$-algebra.
+\end{proof}
+
+The ghost target has no such augmentation because $b_i{}_{(0)}c_i=\mathbf1$.
+Thus the explicit map $W_0\hookrightarrow C_0$ is consistent with this obstruction.
+The proposition excludes a bare-affine inclusion, not the reduction map.
+
+\begin{proposition}[The first normal-product associator]\label{prop:cbc28-bar-obstruction}
+At every complex level, including $k=-3$, the polynomial fields satisfy
+\begin{equation}\label{eq:cbc28-associator}
+ :(:JJ:)U:-:J(:JU:):=2:(\partial J)U:\ne0.
+\end{equation}
+Consequently the ordinary tensor-bar coderivation defined only from the normal product does not square to zero.
+This failure occurs at tensor length three.
+There is no uncurved $A_\infty$ structure with $m_1=0$ and $m_2(a,b)=:ab:$ on this state space.
+\end{proposition}
+\begin{proof}
+For even states $a,b$, the vertex iterate identity gives
+\[
+ (:ab:)_{(-1)}c-a_{(-1)}b_{(-1)}c
+ =\sum_{r\geq0}\left(a_{(-r-2)}b_{(r)}c+b_{(-r-2)}a_{(r)}c\right).
+\]
+Apply this with $a=b=J$ and $c=U$.
+The relations $J_{(0)}U=U$ and $J_{(r)}U=0$ for $r\geq1$ leave exactly $2J_{(-2)}U$.
+Translation identifies this state with $2:(\partial J)U:$.
+Its leading PBW symbol is the nonzero monomial $2(\partial J)U$ in the polynomial jet algebra.
+Theorem~\ref{thm:cbc27-subregular-map} proves that it remains nonzero in every fiber.
+
+Use the cohomological desuspension $sF=F[1]$, with $|sa|=|a|-1$.
+On $T^c(sF)=\bigoplus_{n\geq0}(sF)^{\otimes n}$, let $b_2$ be the coderivation with
+$b_2(sa\otimes sb)=(-1)^{|a|}s(:ab:)$.
+For these degree-zero fields, its square gives
+\[
+ b_2^2(sJ\otimes sJ\otimes sU)=2s\bigl(:(\partial J)U:\bigr)\ne0.
+\]
+At $k=-3/2$, the same word lies in the augmentation ideal.
+Thus passing to that ideal does not remove this failure.
+In an uncurved $A_\infty$ algebra with $m_1=0$, the arity-three identity is associativity of $m_2$.
+Higher $m_n$ cannot change that identity.
+\end{proof}
+
+The proposition concerns this specified normal-product bar.
+A curved chiral bar has additional operations and configuration-space coefficients.
+Its definition must supply the terms that replace the failed identity~\eqref{eq:cbc28-associator}.
+The obstruction does not exclude a separately constructed curved comparison at reflected levels.
+
+\subsection{The finite Poisson reduction}
+
+For a differential vertex superalgebra $F$, define
+\[
+ C_2(F)=\operatorname{span}\{a_{(-2)}b:a,b\in F\},\qquad
+ R_F=F/C_2(F).
+\]
+The differential preserves $C_2(F)$.
+The quotient has an associative supercommutative product and a degree-zero super-Poisson bracket
+\[
+ \bar a\,\bar b=\overline{a_{(-1)}b},\qquad
+ \{\bar a,\bar b\}=\overline{a_{(0)}b}.
+\]
+Translation vanishes in this quotient.
+Quasi-commutativity, the iterate identity, and the vertex Jacobi identity prove these assertions.
+They are the $C_2$ construction in \cite{AffineDSArakawa026}*{Proposition~3.15, p.~21}.
+The quotient map retains these two induced operations.
+It is not a vertex homomorphism to a constant-field vertex algebra.
+
+The affine and charged-fermion PBW bases identify
+\begin{equation}\label{eq:cbc28-classical-carrier}
+ R_{C_R}=K_R
+ =R[a,e,h,j,u,v,A,B]\otimes\Lambda(b_1,b_2,c_1,c_2).
+\end{equation}
+Here the same symbols denote their quotient classes.
+The bracket on the affine variables is matrix commutation, while
+$\{b_i,c_j\}=\{c_j,b_i\}=\delta_{ij}$.
+The affine central coefficient and every derivative have disappeared.
+For the affine quotient this is \cite{AffineDSArakawa026}*{Eq.~(3.19), p.~24}.
+For the charged ghosts it is the calculation in \cite{AffineDSArakawa026}*{Example~4.10, pp.~27--28}.
+Their tensor product gives~\eqref{eq:cbc28-classical-carrier}.
+The same ordered-mode argument applies over $R$ because all defining coefficients are polynomial in $k$.
+
+Use ordinary supercommutative multiplication in $K_R$ and set
+\[
+ H=h+2b_1c_1+b_2c_2,\quad J=j+b_2c_2,\quad
+ U=u-b_2c_1,\quad X=v-b_1c_2,
+\]
+\begin{equation}\label{eq:cbc28-finite-invariants}
+ p=A+H^2/4+UX,\qquad v_0=B-HX/2-3JX/2.
+\end{equation}
+Let $A_R=R[J,U,p,v_0]$, with zero differential.
+The inclusion $i:A_R\to K_R$ is given by these explicit polynomials.
+
+\begin{theorem}[Reduction after the $C_2$ quotient]\label{thm:cbc28-c2-reduction}
+The natural map induced by $W_R\hookrightarrow C_R$ identifies $R_{W_R}$ with $A_R$ and gives a quasi-isomorphism
+\[
+ (R_{W_R},0)=(A_R,0)\xrightarrow{\ i\ }(K_R,D)
+\]
+of differential Poisson superalgebras over $R$.
+Its cohomology is concentrated in degree zero, and these assertions commute with every specialization of $k$.
+The Poisson bracket on $A_R$ is
+\begin{align*}
+ \{J,U\}&=U,&\{J,v_0\}&=-v_0,&\{J,p\}&=0,\\
+ \{U,v_0\}&=p-\tfrac94J^2,&
+ \{p,U\}&=-\tfrac32JU,&\{p,v_0\}&=\tfrac32Jv_0.
+\end{align*}
+\end{theorem}
+\begin{proof}
+The differential on $K_R$ is the differential of $C_R$ with every derivative set to zero.
+Write $a'=a-1$.
+The triangular polynomial change to coordinates
+\[
+ (a',e,b_1,b_2,H,X,c_1,c_2,J,U,p,v_0)
+\]
+is invertible: first recover $h,j,u,v$ from $H,J,U,X$ and the ghosts, then recover $A,B$ from~\eqref{eq:cbc28-finite-invariants}.
+In these coordinates,
+\[
+ D=a'\partial_{b_1}+e\partial_{b_2}-2c_1\partial_H+c_2\partial_X,
+ \qquad DJ=DU=Dp=Dv_0=0.
+\]
+Odd derivatives act from the left.
+The odd operator
+\[
+ s=b_1\partial_{a'}+b_2\partial_e-\tfrac12H\partial_{c_1}+X\partial_{c_2}
+\]
+satisfies $Ds+sD=N$, where $N$ counts the first eight coordinates.
+Division by the positive integer eigenvalues of $N$ contracts their positive-degree part.
+The projection $\pi:K_R\to A_R$ sets those eight coordinates to zero.
+It is an algebra chain map, $\pi i=1$, and $Ds/N+sD/N=1-i\pi$ on the positive-$N$ part.
+Thus $i$ is a quasi-isomorphism of differential associative algebras.
+
+Every class in $R_{W_R}$ is a polynomial in the images of the four strong generators.
+Indeed, a derivative belongs to $C_2(W_R)$, and the quotient product is associative.
+The resulting surjection $A_R\to R_{W_R}$ composed with
+$R_{W_R}\to H^0(K_R)$ is the isomorphism just proved.
+It follows that the surjection is injective and that $R_{W_R}=A_R$.
+Functoriality of $C_2$ makes $i$ a Poisson map.
+Taking the zero products of the polynomial fields, or substituting their displayed polynomials in the matrix and ghost brackets, gives the six formulas.
+No inverse of a polynomial in $k$ occurs.
+The coordinate change and contraction therefore prove the same assertions in every fiber.
+\end{proof}
+
+The projection $\pi$ need not preserve the Poisson bracket.
+For example, $\pi h=0$, $\pi a=1$, and
+$\pi\{h,a\}=2\ne\{\pi h,\pi a\}$.
+This distinction matters for the bar construction below, which uses associative multiplication.
+
+\subsection{An actual associative bar comparison}
+
+Give $A_R$ the augmentation $\epsilon_A(J)=\epsilon_A(U)=\epsilon_A(p)=\epsilon_A(v_0)=0$.
+Give $K_R$ the chain augmentation $\epsilon_K=\epsilon_A\pi$.
+In original coordinates it sends $a$ to one and every other affine or ghost variable to zero.
+These are augmentations of differential associative algebras.
+They are not asserted to preserve the Poisson bracket or lift to vertex augmentations.
+Both $i$ and $\pi$ preserve them.
+
+For an augmented differential associative algebra $E$, put $\bar E=\ker\epsilon_E$ and
+\[
+ B(E)=\bigoplus_{n\geq0}(s\bar E)^{\otimes_R n},\qquad |sa|=|a|-1.
+\]
+Use deconcatenation and the tensor Koszul signs.
+Its bar differential is the coderivation determined by
+\[
+ b_1(sa)=-s(Da),\qquad
+ b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
+\]
+
+\begin{theorem}[Direct-sum bar comparison]\label{thm:cbc28-bar-comparison}
+The maps $B(i)$ and $B(\pi)$ are explicit coalgebra chain maps and quasi-isomorphisms
+\[
+ B(A_R)\underset{B(\pi)}{\overset{B(i)}{\rightleftarrows}}B(K_R),
+ \qquad B(\pi)B(i)=1.
+\]
+On a word, they apply $i$ or $\pi$ separately to every letter.
+The construction commutes with every specialization of $k$.
+\end{theorem}
+\begin{proof}
+The differential squares to zero by $D^2=0$, the Leibniz rule, and associativity.
+The signs displayed above give these three identities in arities one, two, and three, respectively.
+The maps preserve the unit, augmentation, multiplication, and differential, so their tensorwise extensions commute with $b_1,b_2$ and deconcatenation.
+
+The contraction in Theorem~\ref{thm:cbc28-c2-reduction} preserves the augmentation kernels.
+All these complexes and maps are obtained from complexes of $\mathbb C$-vector spaces by tensoring with $R$.
+It follows that every finite tensor power of $s\bar i$ is a quasi-isomorphism.
+Filter $B(i)$ by tensor length.
+The quotient at length $n$ is that tensor-power map with its internal differential.
+Its cone is acyclic.
+For any cycle in the total cone, solve the boundary equation in its highest length quotient and subtract that boundary.
+The largest nonzero length decreases.
+Since every word sum is finite, this procedure terminates and proves that $B(i)$ is a quasi-isomorphism.
+The equation $B(\pi)B(i)=1$ and the same argument prove the assertion for $B(\pi)$.
+The contraction works over every fiber, so specialization gives the same maps and proof.
+\end{proof}
+
+This bar comparison applies to the full four-generator $C_2$ quotient of the subregular algebra.
+The quotient construction and Theorem~\ref{thm:cbc28-c2-reduction} provide its comparison with the affine--ghost quotient.
+It retains no first-product operation and kills every derivative and the associator~\eqref{eq:cbc28-associator}.
+Indeed, $\overline{\partial J}=0$ but
+$\overline{(\partial J)_{(1)}U}=-U\ne0$.
+Thus the first product cannot descend to this quotient at any level.
+This prevents using the theorem as a proof about the unreduced vertex carrier or a completed chiral bar.
+
+\begin{corollary}\label{cor:cbc28-bar-cohomology}
+Let $z_1=J,z_2=U,z_3=p,z_4=v_0$ in $A_R$.
+The cohomology of either bar in Theorem~\ref{thm:cbc28-bar-comparison} is
+\[
+ H^{-n}\simeq\Lambda_R^n(R^4)\quad(0\leq n\leq4),
+ \qquad H^r=0\quad\text{otherwise}.
+\]
+The class indexed by $i_1<\cdots<i_n$ is represented in $B(A_R)$ by
+\[
+ \sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+ [z_{i_{\sigma(1)}}|\cdots|z_{i_{\sigma(n)}}].
+\]
+Applying $B(i)$ gives its explicit representative in $B(K_R)$.
+\end{corollary}
+\begin{proof}
+The normalized free bar resolution has terms
+$A_R\otimes_R\bar A_R^{\otimes n}$ in degree $-n$ and differential
+\[
+ \begin{split}
+ d(a_0|a_1|\cdots|a_n)
+ ={}&-a_0a_1|a_2|\cdots|a_n\\
+ &+\sum_{i=1}^{n-1}(-1)^{i-1}
+ a_0|\cdots|a_ia_{i+1}|\cdots|a_n.
+ \end{split}
+\]
+Its augmentation is $\epsilon_A$.
+The operator $h(a_0|a_1|\cdots|a_n)=-1|\bar a_0|a_1|\cdots|a_n$, with
+$\bar a_0=a_0-\epsilon_A(a_0)$, satisfies $dh+hd=1-\eta\epsilon_A$.
+Here $\eta:R\to A_R$ is the unit in degree zero, and the last term is zero in negative degrees.
+Thus this is a free resolution of $R$ over $A_R$.
+
+The polynomial Koszul complex $A_R\otimes\Lambda(\eta_1,\ldots,\eta_4)$, with
+$|\eta_i|=-1$ and $d\eta_i=-z_i$, is another free resolution.
+The sequence $z_1,\ldots,z_4$ is regular: each successive quotient is a polynomial ring in the remaining variables over $R$.
+Tensoring its four two-term resolutions proves exactness in negative degrees.
+The antisymmetrization in the statement, with initial coefficient $1$, defines a chain map from this Koszul resolution to the bar resolution.
+Its internal product terms cancel in pairs by commutativity, while its first terms reproduce $d\eta_i=-z_i$.
+It lifts the identity of $R$.
+The usual inductive lifting of maps between projective resolutions gives a homotopy inverse.
+Tensoring with $R$ over $A_R$ therefore computes the bar cohomology by the zero-differential exterior algebra on the four $\eta_i$.
+Theorem~\ref{thm:cbc28-bar-comparison} supplies the same result for $B(K_R)$.
+\end{proof}
+
+\begin{theorem}[Induced-module bar comparison]\label{thm:cbc28-module-bar}
+Let $M$ be a differential left $A_R$-module and put
+$M_K=K_R\otimes_{A_R}M$ using $i$.
+For $E=A_R,K_R$, form the direct-sum module bar
+\[
+ B(E;M_E)=\bigoplus_{n\geq0}(s\bar E)^{\otimes_R n}\otimes_R M_E,
+ \qquad M_{A_R}=M.
+\]
+Its differential consists of the internal differentials, the adjacent $b_2$ above, and the last-letter action
+$sa\otimes m\mapsto am$, with the tensor Koszul signs.
+The maps
+\[
+ [a_1|\cdots|a_n]\otimes m
+ \longmapsto [i(a_1)|\cdots|i(a_n)]\otimes(1\otimes m)
+\]
+and the reverse map applying $\pi$ to the letters and $x\otimes m\mapsto\pi(x)m$ to the module are chain quasi-isomorphisms.
+Their reverse composite on $B(A_R;M)$ is the identity.
+They commute with the natural bar comodule structures relative to $B(i)$ and $B(\pi)$.
+\end{theorem}
+\begin{proof}
+The module differential squares to zero by the differential-module Leibniz identity and the associative action identity.
+For example, on two degree-zero letters its action terms are
+$(ab)m-a(bm)=0$; on a homogeneous last letter the sign-free action anticommutes with the internal differential because $b_1(sa)=-s(Da)$.
+The displayed maps preserve all these operations.
+
+In the coordinates of Theorem~\ref{thm:cbc28-c2-reduction}, $K_R=A_R\otimes_R Q_R$, where $Q_R$ is the algebra on the eight contracted coordinates.
+The contraction $s/N$ is $A_R$-linear.
+It therefore gives a contraction of $M_K\rightleftarrows M$ for every differential $M$, with the tensor signs.
+The contraction of $s\bar K_R\rightleftarrows s\bar A_R$ likewise gives homotopy equivalences on all finite tensor powers, including after tensoring with $M$.
+The associated map at every tensor length is consequently a quasi-isomorphism.
+The finite highest-length argument in Theorem~\ref{thm:cbc28-bar-comparison} proves the assertion on the direct sums.
+This proof does not require boundedness of $M$ or completion.
+\end{proof}
+
+For $M=R$ with its augmentation action, $B(A_R;R)=B(A_R)$, so the theorem computes the cohomology of $B(K_R;K_R\otimes_{A_R}R)$ by the same exterior algebra.
+For a general affine vertex module there is no assertion here that its $C_2$ quotient is an induced module $M_K$.
+Constructing that comparison, and restoring the lost first products, are separate requirements.
+
+\subsection{Changing the central-charge parameter}
+
+Over $\mathbb C[k,(k+3)^{-1}]$, the central charge is $c=25-6t-24/t$, where $t=k+3$.
+Changing the base from the level to $c$ is the finite algebra
+\begin{equation}\label{eq:cbc28-central-base}
+ S=\mathbb C[c,t]/\bigl(6t^2+(c-25)t+24\bigr).
+\end{equation}
+Its element $t$ is invertible, with $t^{-1}=-(6t+c-25)/24$.
+Eliminating $c$ gives $S\simeq\mathbb C[t,t^{-1}]$.
+As a $\mathbb C[c]$-module, $S$ is free on $1,t$ because the relation is monic after division by $6$.
+Its discriminant is $(c-1)(c-49)$.
+Thus the two branches are exchanged by $t\mapsto4/t$ and meet at $c=1,49$.
+These equations define the coefficient change without a square root of $c$ or an adic completion.
+Choosing a formal branch at a specified point is an additional base change.
+
+\subsection{Orbit dimensions and generator weights}
+
+\begin{proposition}\label{prop:cbc28-sl4-centralizers}
+For the Dynkin good grading of each nilpotent orbit in $\mathfrak{sl}_4$, the universal reduction at $k\ne-4$ has the following even strong generators.
+\[
+ \begin{array}{c|c|c|c}
+ \text{partition}&\dim\mathcal O&\dim\mathfrak{sl}_4^f&\text{generator weights}\\\hline
+ (1,1,1,1)&0&15&1^{15}\\
+ (2,1,1)&6&9&1^4,(3/2)^4,2\\
+ (2,2)&8&7&1^3,2^4\\
+ (3,1)&10&5&1,2^3,3\\
+ (4)&12&3&2,3,4
+ \end{array}
+\]
+An exponent records multiplicity.
+In particular, the subregular $\mathfrak{sl}_4$ algebra has five generators, with integral weights $1,2,2,2,3$.
+\end{proposition}
+\begin{proof}
+Let $L_m$ be the irreducible $\mathfrak{sl}_2$-module of highest weight $m$ and dimension $m+1$.
+A Jordan block of size $d$ gives the summand $L_{d-1}$ in the defining representation.
+The decompositions of its traceless endomorphisms, in the order of the table, are
+\[
+ 15L_0,\qquad 4L_0\oplus4L_1\oplus L_2,\qquad
+ 3L_0\oplus4L_2,\qquad L_0\oplus3L_2\oplus L_4,
+ \qquad L_2\oplus L_4\oplus L_6.
+\]
+They follow from
+$L_a\otimes L_b=\bigoplus_{r=0}^{\min(a,b)}L_{a+b-2r}$ and removal of the scalar endomorphism.
+In each $L_m$, the kernel of the lowering operator is one-dimensional and has grading degree $-m/2$.
+Kac--Wakimoto's structure theorem therefore gives one even strong generator of weight $1+m/2$ for each summand
+\cite{SubregularKW027}*{Theorem~4.1, pp.~10--12}.
+Counting these summands gives the centralizer dimensions.
+Subtracting each from $\dim\mathfrak{sl}_4=15$ gives the orbit dimensions.
+
+For the subregular row, this can also be checked directly.
+Take $f=E_{21}+E_{32}$ and $x=\operatorname{diag}(1,0,-1,0)$.
+Its centralizer has basis
+\[
+ \operatorname{diag}(1,1,1,-3),\quad f,\quad E_{34},\quad E_{41},\quad f^2,
+\]
+with grading degrees $0,-1,-1,-1,-2$.
+\end{proof}
+
+\begin{corollary}\label{cor:cbc28-principal-affine}
+For $n\geq2$ and noncritical levels $k,\ell\ne-n$, there is no conformal vertex isomorphism
+\[
+ \mathcal W^k(\mathfrak{sl}_n,f_{\mathrm{prin}})
+ \simeq V^\ell(\mathfrak{sl}_n)
+\]
+between the universal algebras with their standard conformal vectors.
+\end{corollary}
+\begin{proof}
+The principal centralizer has basis $f,f^2,\ldots,f^{n-1}$ with grading degrees $-1,-2,\ldots,-(n-1)$.
+The same structure theorem gives strong generator weights $2,3,\ldots,n$.
+Its weight-one space is therefore zero.
+The universal affine algebra has weight-one space $\mathfrak{sl}_n$, of dimension $n^2-1$.
+A conformal isomorphism preserves these weight spaces.
+\end{proof}
+
+Partition transpose describes nilpotent orbit duality in type $A$.
+The weight-space obstruction shows that this finite combinatorial operation does not, by itself, identify the vertex algebras attached to the two orbits.
+
+\begin{proposition}[A vacuum obstruction to generator truncation]\label{prop:cbc28-truncation}
+Let $\mathcal W_3$ have the normalization $W_{(5)}W=(c/3)\mathbf1$.
+If $c\ne0$, no unital vertex homomorphism out of this algebra can send $W$ to zero.
+In particular, at $c=-30$, deleting the weight-three generator cannot define a map to a Virasoro algebra.
+\end{proposition}
+\begin{proof}
+Applying such a homomorphism to $W_{(5)}W=(c/3)\mathbf1$ would give $0=(c/3)\mathbf1$ in its nonzero target.
+At $c=-30$, the right side is $-10\mathbf1$.
+\end{proof}

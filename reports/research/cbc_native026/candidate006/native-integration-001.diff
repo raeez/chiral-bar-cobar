@@ -1,0 +1,817 @@
+--- candidate004/cbc/bibliography/references.tex
++++ candidate006/cbc/bibliography/references.tex
+@@ -1276,4 +1276,6 @@
+ \bibitem{BD026} A. Beilinson and V. Drinfeld, \emph{Chiral Algebras}, AMS Colloquium Publications51,2004. \url{https://math.uchicago.edu/~drinfeld/langlands/chiral/}.
+ \bibitem{Frenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, expos\'e875,2000. \url{https://math.berkeley.edu/~frenkel/BOOK/bourbaki.pdf}.
+ \bibitem{DLMFell} NIST Digital Library of Mathematical Functions, \S23.2, Eq.~23.2.5, and \S23.8, Eq.~23.8.2. \url{https://dlmf.nist.gov/23.2.E5}; \url{https://dlmf.nist.gov/23.8.E2}.
++\bibitem{SubregularKW027} V. G. Kac and M. Wakimoto, \emph{Quantum reduction and representation theory of superconformal algebras}, Adv. Math. \textbf{185} (2004), 400--458. \url{https://arxiv.org/abs/math-ph/0304011}. Locators refer to version 2.
++\bibitem{SubregularArakawa027} T. Arakawa, \emph{Rationality of Bershadsky--Polyakov vertex algebras}, Comm. Math. Phys. \textbf{323} (2013), 627--633. \url{https://arxiv.org/abs/1005.0185}. Locators refer to version 4.
+ \end{thebibliography}
+--- candidate004/cbc/chapters/examples/w_algebras_deep.tex
++++ candidate006/cbc/chapters/examples/w_algebras_deep.tex
+@@ -188,43 +188,32 @@
+ $J^a$ ($a = 1,\ldots,8$) \\
+ $\mathbb{O}_{\min}$ & $(2,1)$ & $4$ &
+ $\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ &
+-$J^a$ ($a = 1,2,3$) + $G^{\pm}$ \\
++$J,T,G^+,G^-$ \\
+ $\mathbb{O}_{\mathrm{reg}}$ & $(3)$ & $6$ &
+ $\mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{prin}}) = \mathcal{W}_3$ &
+ $T$ (spin 2) + $W$ (spin 3)
+ \end{tabular}
+ \end{center}
+ 
+-The minimal nilpotent $f_{\min} = F_1$ (a single simple root lowering
+-operator) gives the \emph{Bershadsky--Polyakov algebra}
+-$\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$.  Its generators are an $\widehat{\mathfrak{sl}}_2$ subalgebra at level $k' = k + 1/2$ (from the $\mathfrak{sl}_2 \subset \mathfrak{sl}_3$ commuting with $f_{\min}$) and two fermionic generators $G^+, G^-$ of conformal weight $3/2$ (from the remaining root spaces).
+-The central charge is $c = -3(2k+3)^2/(k+3) + 2$.
+-
+-\emph{Koszul duality for the minimal DS reduction.}
+-The level-shifting duality for the ambient algebra gives
+-$(\widehat{\mathfrak{sl}}_{3,k})^! \simeq \widehat{\mathfrak{sl}}_{3,-k-6}$.
+-By the DS--KD intertwining (Theorem~\ref{thm:ds-koszul-intertwine}):
+-\[
+-\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})^!
+-\simeq \mathcal{W}^{-k-6}(\mathfrak{sl}_3, f_{\min})
+-\]
+-The dual level $k' = -k-6$ sends the minimal orbit to itself
+-(not to the principal orbit), since the Barbasch--Vogan duality
+-preserves orbit type for the minimal nilpotent in type $A$.
+-
+-\emph{Bar complex.}
+-The bar complex of $\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ has
+-5 generators (3 from $\widehat{\mathfrak{sl}}_2$ + 2 fermionic), so:
+-\begin{align}
+-\dim \bar{B}^1 &= 5 \\
+-\dim \bar{B}^2 &= 25 \\
+-\dim \bar{B}^3 &= 250
+-\end{align}
+-The degree-2 differential encodes both the $\widehat{\mathfrak{sl}}_2$
+-OPE (double pole $k'/(z-w)^2$) and the $G^+ G^-$ OPE (which has
+-poles up to order 3).  The curvature has two channels:
+-$m_0^{(\mathfrak{sl}_2)} = k'/2$ (from the $\mathfrak{sl}_2$ level)
+-and $m_0^{(G)} = 2k'/3$ (from the cubic pole in $G^+ G^-$); both vanish at $k' = 0$.
++The minimal nonzero orbit is also subregular.
++Its reduction has four even strong generators $J,T,G^+,G^-$, of weights $1,2,3/2,3/2$ for $k\ne-3$.
++Their explicit representatives are~\eqref{eq:cbc27-generators} and~\eqref{eq:cbc27-bp-fields}.
++The centralizer in grading degree zero $\mathfrak{sl}_3^f\cap\mathfrak g_0=\mathbb Cj\oplus\mathbb Cu$
++uses the integral good grading and has brackets $[j,u]=u$.
++For the symmetric conformal vector $T$, the weight-one subspace is the single Heisenberg current $J$.
++Its coefficient is $(2k+3)/3$.
++
++Theorem~\ref{thm:cbc27-subregular-map} constructs a strict unital map into the full affine--ghost complex and proves it is a quasi-isomorphism.
++Proposition~\ref{prop:cbc27-binary} constructs its meromorphic binary collision map.
++In the PBW associated graded, the differential polynomial generators have weights $1,2,3/2,3/2$.
++Consequently the conformal vacuum series is
++\[
++ \prod_{r\geq0}\frac{1}{(1-q^{r+1})(1-q^{r+2})(1-q^{r+3/2})^2}.
++\]
++The three lowest nonconstant weight spaces have dimensions $1,2,3$ at weights $1,3/2,2$.
++These are vertex-state dimensions.
++A tensor length in a chiral bar also contains derivatives and configuration-space coefficients, so these numbers do not count its chain groups.
++The reflected orbit $(2,1)$ is unchanged, while the conformal charge calculation is Corollary~\ref{cor:cbc27-bp-levels}.
+ \end{computation}
+ 
+ \begin{computation}[Miura transform for \texorpdfstring{$\mathcal{W}_3$}{W_3}]
+@@ -1426,66 +1415,26 @@
+ (for the $T$-channel) controls the curvature at every genus.
+ \end{computation}
+ 
+-\begin{computation}[Non-principal DS: Bershadsky--Polyakov bar complex]
++\begin{computation}[Subregular binary vacuum products]
+ \label{comp:bp-bar}
+-\index{Bershadsky--Polyakov algebra!bar complex}
+-
+-The Bershadsky--Polyakov algebra $\mathcal{W}^k(\mathfrak{sl}_3,
+-f_{\min})$ (Computation~\ref{comp:sl3-ds-hierarchy}) has generators $J^a$ ($a = 1, 2, 3$), the $\widehat{\mathfrak{sl}}_2$ currents at level $k' = k + 1/2$ and conformal weight $1$, together with fermionic generators $G^+, G^-$ of conformal weight $3/2$.
+-
+-\emph{Degree-2 OPE data.}
+-\begin{center}
+-\renewcommand{\arraystretch}{1.2}
+-\begin{tabular}{lll}
+-\textbf{Pair} & \textbf{OPE} & \textbf{Residue} \\
+-\hline
+-$J^a \otimes J^b$ &
+-$\frac{k' \delta^{ab}}{(z-w)^2} + \frac{i\epsilon^{abc}J^c}{z-w}$ &
+-$i\epsilon^{abc}J^c$ (simple pole) \\[4pt]
+-$J^a \otimes G^\pm$ &
+-$\frac{\pm \sigma^a_{\alpha\beta} G^\beta}{z-w}$ &
+-$\pm \sigma^a G^\pm$ (representation action) \\[4pt]
+-$G^+ \otimes G^-$ &
+-$\frac{2k'/3}{(z-w)^3} + \frac{J^3}{(z-w)^2}
+-+ \frac{T + \partial J^3/2}{z-w}$ &
+-$T + \partial J^3/2$ \\[4pt]
+-$G^\pm \otimes G^\pm$ & regular & $0$
+-\end{tabular}
+-\end{center}
+-The $\sigma^a$ are the Pauli matrices (the $\mathfrak{sl}_2$ action
+-on the $G^\pm$ doublet).
+-
+-\emph{Curvature.}
+-The curvature has two channels:
++\index{Bershadsky--Polyakov algebra!binary collisions}
++For $k\ne-3$, the exact products in Proposition~\ref{prop:cbc27-bp-products} give
+ \begin{align}
+-m_0^{(\mathfrak{sl}_2)} &= k'/2 = (k+1/2)/2
+-\quad (\text{from } J^a J^b \text{ double pole})
+-\label{eq:bp-curv-sl2} \\
+-m_0^{(G)} &= 2k'/3
+-\quad (\text{from } G^+ G^- \text{ cubic pole})
+-\label{eq:bp-curv-G}
++ J_{(1)}J&=\frac{2k+3}{3}\mathbf1,\label{eq:bp-curv-sl2}\\
++ G^+{}_{(2)}G^-&=(k+1)(2k+3)\mathbf1,\label{eq:bp-curv-G}\\
++ T_{(3)}T&=-\frac{(2k+3)(3k+1)}{2(k+3)}\mathbf1.
+ \end{align}
+-Both vanish at $k' = 0$, i.e., $k = -1/2$.  At this level the
+-Bershadsky--Polyakov algebra has $c = -3 \cdot 0/(k+3) + 2 = 2$
+-and its bar complex is strict.
+-
+-\emph{Comparison with principal $\mathcal{W}_3$.}
+-At the same ambient level $k$ for $\widehat{\mathfrak{sl}}_3$:
+-\begin{center}
+-\renewcommand{\arraystretch}{1.2}
+-\begin{tabular}{l|cc}
+-& $\mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{prin}})$ &
+-$\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ \\
+-\hline
+-Generators & $T, W$ & $J^a, G^\pm$ \\
+-Generator weights & $2, 3$ & $1, 3/2$ \\
+-$\#$ generators & $2$ & $5$ \\
+-Curvature channels & $2$ & $2$ \\
+-Zero-curvature level & $c = 0$ ($k$ non-integral rational) & $k = -1/2$
+-\end{tabular}
+-\end{center}
+-The Bershadsky--Polyakov algebra has more generators but simpler
+-curvature structure (zero at a rational level).
++The normalization $[a_\lambda b]=\sum_{n\geq0}\lambda^na_{(n)}b/n!$
++accounts for the factor $2$ between the $\lambda^2$ coefficient and the cubic pole.
++All three scalar terms vanish at $k=-3/2$.
++At $k=-1/2$ their values are $2/3,1,1/5$, respectively.
++Thus that level still has nonzero vacuum collisions.
++
++At $k=-3/2$, the universal algebra still has the four independent PBW generators.
++For example, $J_{(0)}G^+=G^+$ remains nonzero.
++Vanishing scalar terms therefore do not imply a zero collision operation.
++The polynomial representatives $J,U,P,V$ and their strict reduction map remain defined at $k=-3$.
++The conformal formula for $T$ requires inversion of $k+3$ and has a different domain.
+ \end{computation}
+ 
+ 
+--- candidate004/cbc/chapters/examples/w_algebras_framework.tex
++++ candidate006/cbc/chapters/examples/w_algebras_framework.tex
+@@ -6,24 +6,17 @@
+ $\widehat{\mathfrak{g}}_k$ to the $\mathcal{W}$-algebra
+ $\mathcal{W}^k(\mathfrak{g}, f)$ by BRST reduction along a nilpotent
+ element $f \in \mathfrak{g}$.  The result is no longer generated by
+-weight-$1$ currents; its generators have conformal weights $\geq 2$, its
+-OPEs have poles of order up to $2h_W$, and its Koszul theory is
+-genuinely non-quadratic.
++weight-$1$ currents alone.
++Principal reduction has generator weights at least two, while the subregular
++$\mathfrak{sl}_3$ reduction retains a weight-one current.
++The charged subregular generators have weight $3/2$ and even parity.
+ 
+ \index{W-algebra@$\mathcal{W}$-algebra!as modular Koszul atom}
+ 
+-DS reduction is a Koszul functor: it sends the Koszul pair
+-$(\widehat{\mathfrak{g}}_k, \widehat{\mathfrak{g}}_{k'})$
+-(Chapter~\ref{chap:kac-moody-koszul}) to
+-$(\mathcal{W}^k, \mathcal{W}^{k'})$, preserving the
+-discriminant $\Delta(x)$
+-(Theorem~\ref{thm:ds-bar-gf-discriminant}).  The
+-$\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$ families
+-all share $\Delta(x) = (1-3x)(1+x)$ despite having entirely
+-different local operator content.  The bar spectral sequence collapses
+-at $E_2$ rather than $E_1$, reflecting the higher-order poles.  The
+-curvature is non-scalar: $\mathcal{W}_3$ has two curvature channels,
+-$m_0^{(T)} = c/2$ and $m_0^{(W)} = c/3$, one for each generator.
++The principal $\mathfrak{sl}_2$ and subregular $\mathfrak{sl}_3$ reductions admit explicit unital maps into their full affine--ghost complexes
++(Theorems~\ref{thm:affine-comparison} and~\ref{thm:cbc27-subregular-map}).
++Their proofs preserve the vacuum terms of every binary collision.
++Compatibility with a reflected Koszul dual requires a further comparison between levels, as specified in Remark~\ref{thm:w-algebra-koszul-main}.
+ 
+ \section{The $\mathcal{W}_3$ bar complex}
+ 
+@@ -48,6 +41,8 @@
+ \providecommand{\Aut}{\operatorname{Aut}}
+ \input{chapters/theory/affine_ds_global}
+ \endgroup
++
++\input{chapters/theory/subregular_ds}
+ 
+ 
+ \begin{remark}[The chiral dual after quantum reduction]
+@@ -132,48 +127,36 @@
+ 
+ The W-orbit duality conjecture (Conjecture~\ref{conj:w-orbit-duality})
+ asserts that Koszul duality intertwines DS reduction with BV orbit duality.
+-The following result verifies the subregular case.
+-
+-\begin{proposition}[Subregular \texorpdfstring{$\mathcal{W}$}{W}-algebra duality for \texorpdfstring{$\mathfrak{sl}_3$}{sl_3};
+-\ClaimStatusProvedHere]
+-\label{prop:bp-duality}
+-\index{Bershadsky--Polyakov algebra!Koszul duality}
+-The Bershadsky--Polyakov algebra
+-$\mathcal{B}^k = \mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$
+-satisfies:
++Theorem~\ref{thm:cbc27-subregular-map} constructs the full subregular reduction map.
++Its reflection obstruction separates this map from the proposed Koszul comparison.
++
++\begin{proposition}[Subregular reduction and reflected parameters;
++\ClaimStatusProvedHere]\label{prop:bp-duality}
++For the universal subregular algebra $\mathcal B^k$ of $\mathfrak{sl}_3$, the map
++$\iota:\mathcal B^k\hookrightarrow C_k$ of Theorem~\ref{thm:cbc27-subregular-map}
++is a strict unital vertex quasi-isomorphism at every complex level.
++It preserves the binary collisions in Proposition~\ref{prop:cbc27-binary}.
++Its polynomial family specializes at $k=-3$ without a conformal vector.
++For noncritical $k$ and $k'=-k-6$, the conformal charges sum to $50$.
++A conformal isomorphism between these two levels can exist only if $(k+3)^2=-4$.
++\end{proposition}
++\begin{proof}
++The four fields in~\eqref{eq:cbc27-generators} give the map.
++The two constraint contractions and the filtered calculation in Theorem~\ref{thm:cbc27-subregular-map}
++prove its cohomology and specialization assertions.
++Corollary~\ref{cor:cbc27-bp-levels} computes the charges and the conformal obstruction.
++\end{proof}
++
++\begin{remark}[The reflected subregular comparison]
++The orbit $(2,1)$ is fixed by partition transpose.
++The proposed comparison remains
+ \begin{equation}\label{eq:bp-duality}
+-(\mathcal{B}^k)^! \;\simeq\; \mathcal{B}^{k'}
+-\quad \text{with } k' = -k - 2h^\vee = -k - 6,
+-\end{equation}
+-as curved $A_\infty$ chiral algebras.  The BV dual of the minimal orbit
+-$(2,1)$ in $\mathfrak{sl}_3$ is itself (since $(2,1)^t = (2,1)$), so
+-the duality preserves the orbit type.
+-\end{proposition}
+-
+-\begin{proof}
+-The Bershadsky--Polyakov algebra is defined as the DS reduction of
+-$\widehat{\mathfrak{sl}}_{3,k}$ along the minimal nilpotent $f_{\min}$.
+-By the DS--KD intertwining theorem
+-(Theorem~\ref{thm:ds-koszul-intertwine}), the Koszul dual of the
+-DS reduction at nilpotent $f$ is the DS reduction of the Koszul dual
+-algebra at the BV dual nilpotent:
+-\[
+-\bigl(\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})\bigr)^!
+-\simeq
+-\mathcal{W}^{-k-6}(\mathfrak{sl}_3, f_{\min}^{\mathrm{BV}}).
+-\]
+-In type $A_2$, the minimal orbit has partition $(2,1)$ and
+-$(2,1)^t = (2,1)$, so $f_{\min}^{\mathrm{BV}} = f_{\min}$.
+-The result follows.
+-
+-\emph{Consistency check.}  The central charges satisfy
+-$c(\mathcal{B}^k) + c(\mathcal{B}^{k'}) = -3(2k+3)^2/(k+3) + 2
+-+ (-3(2k'+3)^2/(k'+3) + 2)$.  Using $k' = -k-6$, one verifies
+-$c + c' = 76$ in the normalization used here.
+-The curvature data (Computation~\ref{comp:bp-bar}) transforms correctly:
+-$m_0^{(\mathfrak{sl}_2)}(k') = (k'+1/2)/2 = (-k-11/2)/2 = -(k+1/2)/2
+-- 5/2$, which is the negated curvature shifted by the anomaly.
+-\end{proof}
++ (\mathcal B^k)^!\simeq\mathcal B^{-k-6}.
++\end{equation}
++The reduction map above has source $\mathcal B^k$ and target the affine--ghost complex at the same level.
++Constructing~\eqref{eq:bp-duality} requires a definition of the curved chiral dual and a map relating the two levels.
++Neither partition transpose nor the charge sum supplies that map.
++\end{remark}
+ 
+ \begin{remark}[Hook-type evidence for W-orbit duality]
+ \label{rem:hook-type-evidence}
+@@ -1670,11 +1653,12 @@
+ \hline
+ Principal & $(3)$ & $(1,1,1)$ \\
+ Subregular & $(2,1)$ & $(2,1)$ \\
+-Minimal & $(1,1,1)$ & $(3)$
++Zero & $(1,1,1)$ & $(3)$
+ \end{tabular}
+ \end{center}
+ 
+-For $\mathfrak{sl}_3$, the principal and minimal orbits are \emph{exchanged} under duality (transposition of partitions), while the subregular orbit $(2,1)$ is self-dual.
++For $\mathfrak{sl}_3$, the principal and zero orbits are exchanged by partition transpose.
++The minimal nonzero orbit equals the subregular orbit $(2,1)$ and is self-dual.
+ 
+ For $\mathfrak{sl}_4$:
+ \begin{center}
+--- candidate004/cbc/chapters/theory/subregular_ds.tex
++++ candidate006/cbc/chapters/theory/subregular_ds.tex
+@@ -0,0 +1,464 @@
++\section{An explicit subregular reduction of \texorpdfstring{$\mathfrak{sl}_3$}{sl3}}
++\label{sec:cbc27-subregular}
++
++The subregular reduction has a nonzero weight-one current and two even charged fields.
++Their vacuum products determine both the reduction map and its normalization.
++An integral good grading gives a complex with two charged ghost pairs and no neutral ghosts.
++
++Work first over $R=\mathbb C[k]$.
++All tensor products and direct sums are algebraic.
++The symbol $k$ is an indeterminate of cohomological degree zero.
++For matrix units $E_{ij}$, put
++\[
++ a=E_{12},\quad e=E_{13},\quad A=E_{21},\quad B=E_{31},
++ \qquad u=E_{23},\quad v=E_{32},
++\]
++\[
++ h=\operatorname{diag}(1,-1,0),\qquad
++ j=\tfrac13\operatorname{diag}(1,1,-2),\qquad
++ x=\tfrac13\operatorname{diag}(2,-1,-1),\qquad f=-E_{21}.
++\]
++Use the invariant form $(s,t)=\operatorname{tr}(st)$ on $\mathfrak{sl}_3$.
++The positive eigenspace of $\operatorname{ad}x$ is the abelian algebra
++$\mathfrak m=Ra\oplus Re$, in degree one.
++The degree-zero space is spanned by $h,j,u,v$, and the degree-minus-one space by $A,B$.
++Direct matrix commutation gives
++\[
++ [x,f]=-f,\qquad
++ \mathfrak{sl}_3^f=Rj\oplus Ru\oplus RA\oplus RB.
++\]
++Thus every eigenvalue on the centralizer is nonpositive.
++The character $(f,-)|_{\mathfrak m}$ takes values $-1,0$ on $a,e$.
++This is the good-grading convention for quantum reduction in
++\cite{SubregularKW027}*{\S1, pp.~3--5}.
++Changing the sign of $f$ does not change its nilpotent orbit.
++
++Let $V_R(\mathfrak{sl}_3)$ be the universal affine vacuum vertex algebra with
++\[
++ [s_\lambda t]=[s,t]+k\operatorname{tr}(st)\lambda\mathbf1.
++\]
++Tensor it with charged free fermions $b_1,b_2,c_1,c_2$, whose only nonzero brackets are
++\[
++ [b_i{}_{\lambda}c_j]=[c_j{}_{\lambda}b_i]=\delta_{ij}\mathbf1.
++\]
++Affine generators have cohomological degree zero, while $|b_i|=-1$ and $|c_i|=1$.
++Parity is cohomological degree modulo two.
++Write $C_R$ for this differential vertex superalgebra's underlying vertex superalgebra.
++Use the mode convention
++\[
++ Y(s,z)=\sum_{n\in\mathbb Z}s_{(n)}z^{-n-1},\qquad
++ [s_\lambda t]=\sum_{n\geq0}\frac{\lambda^n}{n!}s_{(n)}t,
++ \qquad :st:=s_{(-1)}t.
++\]
++All generating modes with $n\geq0$ annihilate the vacuum.
++Every state is a finite sum of ordered negative-mode monomials.
++
++Define the odd field and its zero mode by
++\begin{equation}\label{eq:cbc27-q}
++ q=:(a-\mathbf1)c_1:+:ec_2:,
++ \qquad D=q_{(0)}.
++\end{equation}
++The residue of $z^{-1}dz$ is one.
++There are no singular contractions in $q(z)q(w)$, so $D^2=0$.
++The zero-mode commutator formula makes $D$ a derivation of every vertex product and gives $D\partial=\partial D$.
++In particular,
++\begin{align*}
++ Db_1&=a-\mathbf1,&Db_2&=e,&Dc_i&=Da=De=0,\\
++ Dh&=-2:ac_1:-:ec_2:,&Dj&=-:ec_2:,&Du&=:ec_1:,\\
++ Dv&=:ac_2:,&DA&=:hc_1:-:uc_2:+k\partial c_1,\\
++ DB&=-:vc_1:+\tfrac12:(h+3j)c_2:+k\partial c_2.
++\end{align*}
++
++\subsection{Four closed fields}
++
++Set $N_i=:b_ic_i:$ and define
++\begin{equation}\label{eq:cbc27-modified}
++ H=h+2N_1+N_2,\qquad J=j+N_2,\qquad
++ U=u-:b_2c_1:,\qquad X=v-:b_1c_2:.
++\end{equation}
++Let $C_R^-$ be the vertex subalgebra generated by $H,J,U,X,A,B,c_1,c_2$.
++Its cohomological degrees are nonnegative.
++
++\begin{lemma}\label{lem:cbc27-closed}
++The subalgebra $C_R^-$ is preserved by $D$.
++Its differential satisfies
++\begin{align}
++ DH&=-2c_1,&DX&=c_2,&DJ&=DU=Dc_i=0,\label{eq:cbc27-doublets}\\
++ DA&=:Hc_1:-:Uc_2:+(k+3)\partial c_1,\notag\\
++ DB&=-:Xc_1:+\tfrac12:(H+3J)c_2:+(k+3)\partial c_2.\notag
++\end{align}
++The following four even states are closed:
++\begin{equation}\label{eq:cbc27-generators}
++ \begin{split}
++ J,\qquad U,\qquad
++ P&=A+\tfrac14:HH:+:UX:+\tfrac{k+2}{2}\partial H,\\
++ V&=B-\tfrac12:HX:-\tfrac32:JX:-(k+2)\partial X.
++ \end{split}
++\end{equation}
++\end{lemma}
++
++\begin{proof}
++The affine brackets and the ghost brackets show that $C_R^-$ is a vertex subalgebra with a PBW basis in its displayed generators.
++For example,
++\[
++ [H_\lambda H]=(2k+5)\lambda\mathbf1,\quad
++ [H_\lambda J]=\lambda\mathbf1,\quad
++ [U_\lambda X]=-\tfrac12H+\tfrac32J+(k+1)\lambda\mathbf1.
++\]
++The bracket of $A$ or $B$ with a modified current remains a linear combination of $A,B$.
++The brackets of modified degree-zero currents close among themselves and scalar terms.
++Their brackets with $c_i$ are linear combinations of the $c_i$.
++
++Normal ordering gives the identities
++\[
++ :N_ic_i:=-\partial c_i,\qquad
++ :N_2c_1:+:(:b_2c_1:)c_2:=-\partial c_1,
++\]
++\[
++ :(:b_1c_2:)c_1:+:N_1c_2:=-\partial c_2.
++\]
++They follow by moving the rightmost ghost mode through the two modes of the normal product.
++Substitution in $DA,DB$ proves~\eqref{eq:cbc27-doublets}.
++The quasi-commutativity formula gives
++\[
++ :c_1H:-:Hc_1:=2\partial c_1,
++ \qquad :c_1X:-:Xc_1:=-\partial c_2.
++\]
++Therefore
++\begin{align*}
++ D\bigl(\tfrac14:HH:\bigr)&=-:Hc_1:-\partial c_1,
++ &D(:UX:)&=:Uc_2:,\\
++ D\bigl(-\tfrac12:HX:\bigr)&=:c_1X:-\tfrac12:Hc_2:,
++ &D\bigl(-\tfrac32:JX:\bigr)&=-\tfrac32:Jc_2:.
++\end{align*}
++The remaining derivative terms in $DP,DV$ cancel exactly.
++\end{proof}
++
++Let $W_R$ denote the vertex subalgebra of $C_R^-$ generated by $J,U,P,V$, with zero differential.
++
++\begin{theorem}[Subregular reduction map]\label{thm:cbc27-subregular-map}
++The inclusion
++\begin{equation}\label{eq:cbc27-iota}
++ \iota:(W_R,0)\lhook\joinrel\longrightarrow(C_R,D)
++\end{equation}
++is a strict unital quasi-isomorphism of differential vertex superalgebras over $R$.
++Ordered normally ordered monomials in all derivatives of $J,U,P,V$ form an $R$-basis of $W_R$.
++For every $k_0\in\mathbb C$, specialization gives
++\[
++ H^r(C_R\otimes_R\mathbb C_{k_0},D)=
++ \begin{cases}W_R\otimes_R\mathbb C_{k_0},&r=0,\\0,&r\ne0.\end{cases}
++\]
++Here $\mathbb C_{k_0}=R/(k-k_0)$, including $k_0=-3$.
++The degree-zero vertex algebra is the subregular quantum reduction for $(\mathfrak{sl}_3,x,f)$.
++\end{theorem}
++
++\begin{proof}
++Let $C_R^+$ be generated by $a-\mathbf1,e,b_1,b_2$.
++Its vertex products are commutative and its differential is preserved.
++Normally ordered multiplication gives a linear map of complexes
++\[
++ C_R^-\otimes_R C_R^+\longrightarrow C_R,\qquad
++ s\otimes t\longmapsto s_{(-1)}t.
++\]
++The tensor differential is $D(s\otimes t)=Ds\otimes t+(-1)^{|s|}s\otimes Dt$.
++To prove bijectivity, assign filtration degrees zero to derivatives of $a,e,b_i$, one to derivatives of $h,j,u,v,c_i$, and two to derivatives of $A,B$.
++All singular brackets lower total filtration degree by at least one.
++The associated graded is the polynomial algebra in the even jets tensored with the exterior algebra in the odd jets.
++The changes $a\mapsto a-1$ and~\eqref{eq:cbc27-modified}, including all derivatives, are polynomial and invertible there.
++Thus multiplication induces a bijection on associated graded modules.
++Induction on the nonnegative filtration degree proves the stated linear bijection.
++The filtration need not have finite-dimensional pieces.
++Every individual state has finite degree.
++This is a tensor decomposition of complexes, not of vertex algebras.
++
++Write $a_r'=\partial^r(a-\mathbf1)$, $e_r=\partial^re$, and $b_{ir}=\partial^rb_i$.
++The complex $C_R^+$ has differential
++\[
++ D_+=\sum_{r\geq0}\left(a_r'\frac{\partial}{\partial b_{1r}}+
++ e_r\frac{\partial}{\partial b_{2r}}\right).
++\]
++Odd derivatives act from the left.
++For $s_+=\sum_r(b_{1r}\partial_{a_r'}+b_{2r}\partial_{e_r})$, one has
++$D_+s_++s_+D_+=N_+$, where $N_+$ counts these factors.
++Division by each positive integer eigenvalue gives a contraction onto $R\mathbf1$.
++All sums are finite on a state.
++Consequently $C_R^-\hookrightarrow C_R$ is a quasi-isomorphism.
++
++On $C_R^-$ assign degree one to derivatives of $H,J,U,X,c_i$, and degree two to derivatives of $A,B$.
++The associated graded differential is
++\[
++ dH=-2c_1,\quad dX=c_2,\quad dJ=dU=dc_i=0,
++\]
++\[
++ dA=Hc_1-Uc_2,\qquad dB=-Xc_1+\tfrac12(H+3J)c_2.
++\]
++It commutes with all formal derivatives.
++Introduce the polynomial variables
++\[
++ p=A+H^2/4+UX,\qquad
++ v_0=B-HX/2-3JX/2.
++\]
++This triangular change is invertible, and $dp=dv_0=0$.
++Hence the graded complex is
++\[
++ R[\partial^rJ,\partial^rU,\partial^rp,\partial^rv_0:r\geq0]
++ \otimes_R
++ \bigl(R[H_r,X_r]\otimes\Lambda(c_{1r},c_{2r}),d\bigr).
++\]
++On the second factor,
++\[
++ s_-=-\tfrac12\sum_rH_r\frac{\partial}{\partial c_{1r}}
++       +\sum_rX_r\frac{\partial}{\partial c_{2r}}
++\]
++satisfies $ds_-+s_-d=N_-$.
++Thus the graded cohomology is precisely the first polynomial factor in degree zero.
++
++The explicit cycles~\eqref{eq:cbc27-generators} lift its four generators.
++Their ordered monomials have independent leading symbols, which proves linear independence.
++Given a degree-zero closed state, subtract a linear combination of these monomials with the same leading symbol.
++The filtration degree decreases.
++Repeating terminates and proves that these monomials span $\ker(D|_{(C_R^-)^0})$.
++There are no degree-minus-one states in $C_R^-$.
++Thus this kernel is $W_R$ itself.
++For a closed state in positive cohomological degree, the graded contraction produces a preimage of its leading symbol.
++Subtracting its differential lowers the filtration degree and again terminates.
++It follows that $H^{r>0}(C_R^-)=0$.
++
++These arguments use only division by nonzero integers and the constant $2$.
++They therefore apply over $R$ and after every specialization.
++No inverse of $k+3$ enters this proof.
++This proves all assertions, including base change and the identification with the defining quantum reduction.
++\end{proof}
++
++Theorem~\ref{thm:cbc27-subregular-map} gives an explicit instance of the structure theorem in
++\cite{SubregularKW027}*{Theorem~4.1 and its proof, pp.~10--12}.
++The displayed contraction proves the required assertions on this universal vacuum carrier directly.
++Write $C_k=C_R\otimes_R\mathbb C_k$ and $W_k=W_R\otimes_R\mathbb C_k$ for a fixed complex level.
++
++\subsection{The Bershadsky--Polyakov products}
++
++For $k\ne-3$, set $t=k+3$ and
++\begin{equation}\label{eq:cbc27-bp-fields}
++ \begin{gathered}
++ G^+=U,\qquad G^-=-V,\qquad
++ T=\frac{P+\tfrac34:JJ:-\tfrac32\partial J}{t},\\
++ \kappa_J=\frac{2k+3}{3},\qquad
++ c=-\frac{(2k+3)(3k+1)}{k+3}.
++ \end{gathered}
++\end{equation}
++The sign in $G^-=-V$ fixes the cubic vacuum term.
++The fields $G^\pm$ are even.
++
++\begin{proposition}\label{prop:cbc27-bp-products}
++The following brackets hold as identities of states in $C_k$, not only in cohomology:
++\begin{gather}
++ [J_\lambda J]=\kappa_J\lambda\mathbf1,\qquad
++ [J_\lambda G^\pm]=\pm G^\pm,\qquad[ G^\pm{}_{\lambda}G^\pm]=0,\label{eq:cbc27-j-products}\\
++ [T_\lambda J]=(\partial+\lambda)J,\qquad
++ [T_\lambda G^\pm]=(\partial+\tfrac32\lambda)G^\pm,\notag\\
++ [T_\lambda T]=(\partial+2\lambda)T+\tfrac{c}{12}\lambda^3\mathbf1.\notag
++\end{gather}
++\begin{equation}\label{eq:cbc27-g-products}
++\begin{split}
++ [G^+{}_{\lambda}G^-]
++ &=3:JJ:+\tfrac{3(k+1)}2\partial J-tT
++   +3(k+1)\lambda J\\
++ &\hspace{12pt}+\tfrac{(k+1)(2k+3)}2\lambda^2\mathbf1.
++\end{split}
++\end{equation}
++Consequently $W_k$ is the universal Bershadsky--Polyakov vertex algebra in this normalization.
++\end{proposition}
++
++\begin{proof}
++Use the noncommutative Wick formula
++\[
++ [s_\lambda:ab:]=:[s_\lambda a]b:
++ +(-1)^{p(s)p(a)}:a[s_\lambda b]:
++ +\int_0^\lambda[[s_\lambda a]_\mu b]\,d\mu
++\]
++and quasi-commutativity $:ab:-(-1)^{p(a)p(b)}:ba:=\int_{-\partial}^0[a_\lambda b]\,d\lambda$.
++For $M_{ij}=:b_ic_j:$, their input ghost identities are
++\[
++ [M_{ij}{}_{\lambda}M_{lm}]
++ =\delta_{jl}M_{im}-\delta_{im}M_{lj}
++   +\delta_{jl}\delta_{im}\lambda\mathbf1,
++\]
++\[
++ [M_{ij}{}_{\lambda}b_l]=\delta_{jl}b_i,
++ \qquad [M_{ij}{}_{\lambda}c_l]=-\delta_{il}c_j.
++\]
++Affine--ghost mixed brackets vanish.
++These formulas immediately give $[J_\lambda J]=\kappa_J\lambda$ and $[J_\lambda U]=U$.
++The next substitutions give
++\begin{align*}
++ [J_\lambda V]&=-V,\\
++ [J_\lambda P]&=\tfrac32\lambda J+\tfrac{2k+3}{2}\lambda^2\mathbf1,\\
++ [U_\lambda V]&=P-\tfrac94:JJ:-\tfrac{3(k+2)}2\partial J
++ -3(k+1)\lambda J-\tfrac{(k+1)(2k+3)}2\lambda^2\mathbf1.
++\end{align*}
++For the last identity, insert $V=B-:HX:/2-3:JX:/2-(k+2)\partial X$.
++The required brackets are
++\[
++ [U_\lambda B]=A,\quad [U_\lambda H]=U,\quad
++ [U_\lambda J]=-U,\quad
++ [U_\lambda X]=-H/2+3J/2+(k+1)\lambda.
++\]
++The two Wick integrals combine to
++$\lambda U_{(0)}X+\frac{k+1}{2}\lambda^2\mathbf1$.
++Expanding the four displayed summands, and using quasi-commutativity for $H,J$, yields the asserted formula.
++Substitution of~\eqref{eq:cbc27-bp-fields} proves~\eqref{eq:cbc27-g-products}.
++The formula for $[J_\lambda P]$ and $[J_\lambda:JJ:]=2\kappa_J\lambda J$ give the stated $T,J$ bracket.
++
++For the conformal normalization, let $S$ be the affine Sugawara field and put
++\[
++ L^{\mathrm{full}}=S+\partial x+\sum_{i=1}^2:(\partial b_i)c_i:.
++\]
++Its affine generator weights are $1-\deg_x(s)$.
++Each ghost pair has weights $(0,1)$ and central charge $-2$.
++The field $q$ is primary of weight one, so $DL^{\mathrm{full}}=0$.
++The Sugawara and ghost contractions give
++\[
++ c_L=\frac{8k}{t}-8k-4,
++ \qquad [L^{\mathrm{full}}{}_{\lambda}J]
++ = (\partial+\lambda)J-\frac{\kappa_J}{2}\lambda^2\mathbf1.
++\]
++Here $(x,x)=2/3$, $(x,j)=1/3$, and the second ghost pair contributes $-\lambda^2/2$.
++There is an explicit homotopy identity:
++\begin{equation}\label{eq:cbc27-stress-homotopy}
++ t\bigl(L^{\mathrm{full}}-T-\tfrac12\partial J\bigr)
++ =D\bigl(:b_1A:+:b_2B:\bigr).
++\end{equation}
++For its verification, write the affine Sugawara numerator as
++\[
++ tS=\tfrac14:hh:+\tfrac34:jj:
++ +\tfrac12\bigl(:aA:+:Aa:+:eB:+:Be:+:uv:+:vu:\bigr).
++\]
++Use
++$:Aa:=:aA:-\partial h$,
++$:Be:=:eB:-\partial(h+3j)/2$, and
++$:vu:=:uv:+\partial(h-3j)/2$.
++Substitute~\eqref{eq:cbc27-modified}--\eqref{eq:cbc27-generators}.
++The remaining terms are
++$:(a-1)A:+:eB:-:b_1DA:-:b_2DB:$,
++which equal the right side of~\eqref{eq:cbc27-stress-homotopy} by the odd derivation rule.
++
++Improving $L^{\mathrm{full}}$ by $-\partial J/2$ changes the central charge by $3\kappa_J$.
++It makes $J$ primary and gives $G^\pm$ weights $3/2$.
++Here charge is the eigenvalue of $J_{(0)}$.
++Under $L^{\mathrm{full}}_{(1)}$, the states $H,J,U,X$ have weight one and $A,B,P,V$ have weight two.
++The improvement adds half the charge to these weights.
++Its cohomology class is $[T]$.
++The inclusion $W_k\to C_k$ is injective on cohomology.
++Thus its conformal identities hold strictly in $W_k$.
++The value $c=c_L+3\kappa_J$ is exactly~\eqref{eq:cbc27-bp-fields}.
++Higher products $T_{(n)}G^\pm$, $n\geq2$, have charge $\pm1$ and weight at most $1/2$.
++The PBW basis has no such states.
++Products $G^\pm{}_{(n)}G^\pm$, $n\geq0$, have charge $\pm2$ and weight at most two.
++The smallest PBW weight with either charge is three.
++These products therefore vanish.
++This proves all brackets.
++They agree with the universal presentation in
++\cite{SubregularArakawa027}*{\S2, p.~2}.
++The PBW theorem proves that this presentation introduces no further relations.
++\end{proof}
++
++\begin{corollary}[Special levels and reflection]\label{cor:cbc27-bp-levels}
++The current vacuum coefficient is $\kappa_J=(2k+3)/3$.
++The $G^+,G^-$ cubic coefficient is $(k+1)(2k+3)$, and the $T,T$ quartic coefficient is $c/2$.
++All three vanish simultaneously at $k=-3/2$.
++At $k=-1/2$ they are $2/3,1,1/5$, respectively.
++For $k'=-k-6$ and $k\ne-3$, the reflected conformal charges obey
++\[
++ c(k)+c(k')=50.
++\]
++Equality $c(k)=c(k')$ holds precisely when $(k+3)^2=-4$.
++Hence a conformal vertex isomorphism at reflected levels is impossible for all other noncritical parameters.
++\end{corollary}
++\begin{proof}
++The common root follows from the first coefficient and direct substitution in the other two.
++At $k=-1/2$, the charge is $2/5$.
++Writing $t=k+3$ gives $c(k)=25-6t-24/t$ and $c(k')=25+6t+24/t$.
++Their equality is equivalent to $t^2=-4$.
++A conformal unital map preserves $T_{(3)}T=(c/2)\mathbf1$.
++At the two exceptional parameters, this calculation states only equality of charges.
++It does not construct an isomorphism.
++\end{proof}
++
++\subsection{Unital binary collisions}
++
++Fix a complex level $k$, including $k=-3$, and an affine coordinate $z$ on $\mathbb A^1$.
++The map $\iota:W_k\to C_k$ commutes with translation and every vertex product.
++For a differential vertex algebra $F$, its right differential-operator module is
++$\mathcal A_F=\omega_{\mathbb A^1}\otimes_{\mathbb C}F$, with
++\[
++ (g(z)\,dz\otimes a)\cdot\partial_z
++ =-g'(z)\,dz\otimes a-g(z)\,dz\otimes\partial a.
++\]
++In left-module notation, put
++\[
++ \mathcal P_F=\mathbb C[z,w,(z-w)^{-1}]\otimes F\otimes F,
++ \qquad
++ \mathcal R_F=F\otimes\mathbb C[w]\otimes \xi^{-1}\mathbb C[\xi^{-1}],
++ \quad \xi=z-w.
++\]
++The source connections are $\partial_z^{\mathrm{base}}+\partial_F\otimes1$ and
++$\partial_w^{\mathrm{base}}+1\otimes\partial_F$.
++The target actions are
++\[
++ \partial_z=\partial_\xi,\qquad
++ \partial_w=\partial_w^{\mathrm{base}}-\partial_\xi+\partial_F.
++\]
++Multiplication by $\xi$ on the target is taken modulo regular powers.
++Tensoring with $dz\wedge dw$ gives the corresponding right modules.
++The orientation is $dz\wedge dw=d\xi\wedge dw$, with $\operatorname{Res}\xi^{-1}d\xi=1$.
++The tensor differential on $\mathcal P_F$ uses the sign $(-1)^{|a|}$ on its second state.
++Define the full meromorphic collision by
++\[
++ \mu_F\bigl(g(z,w)\otimes a\otimes b\bigr)
++ =\operatorname{pp}_{\xi=0}\bigl(g(w+\xi,w)Y(a,\xi)b\bigr).
++\]
++Here $\operatorname{pp}$ retains the strictly negative powers of $\xi$.
++The answer is finite by vertex truncation and the finite pole order of $g$.
++Both $\mu_F$ and $\iota$ commute with the internal differential.
++
++\begin{proposition}\label{prop:cbc27-binary}
++The map $\mathcal A_{W_k}\to\mathcal A_{C_k}$, $g\,dz\otimes a\mapsto g\,dz\otimes\iota(a)$,
++is a unital quasi-isomorphism of differential chiral algebras on this affine chart.
++Its tensorwise maps make the square of $\mu_{W_k}$ and $\mu_{C_k}$ commute exactly.
++They are quasi-isomorphisms on $\mathcal P$ and $\mathcal R$, and on their collision mapping cones.
++In particular, the vacuum terms are preserved:
++\[
++ \mu_{C_k}(J\otimes J)=\kappa_J\xi^{-2}\mathbf1,
++\]
++and, for $k\ne-3$,
++\[
++ \begin{split}
++ \mu_{C_k}(G^+\otimes G^-)
++ ={}&(k+1)(2k+3)\xi^{-3}\mathbf1
++ +3(k+1)\xi^{-2}J\\
++ &+\xi^{-1}\bigl(3:JJ:+\tfrac{3(k+1)}2\partial J-(k+3)T\bigr).
++ \end{split}
++\]
++\end{proposition}
++\begin{proof}
++Equality of every mode product gives the commutative square coefficient by coefficient.
++The identities $Y(\partial a,\xi)=\partial_\xi Y(a,\xi)$ and
++$[\partial_F,Y(a,\xi)]=\partial_\xi Y(a,\xi)$ prove compatibility with both connections.
++The vertex skew-symmetry and Jacobi identities give the chiral identities after taking principal parts and converting to right modules.
++The vacuum embedding is $g\,dz\mapsto g\,dz\otimes\mathbf1$.
++Its collision is $\operatorname{pp}_{\xi}(\xi^{-1}Y(\mathbf1,\xi)a)=\xi^{-1}a$.
++Localization and tensor products over $\mathbb C$ preserve quasi-isomorphisms.
++The same holds for the direct sum $\xi^{-1}\mathbb C[\xi^{-1}]$.
++For a cochain map $\mu:P\to R$, use
++$\operatorname{Cone}(\mu)^n=R^n\oplus P^{n+1}$ and
++$d(r,p)=(d_Rr+\mu p,-d_Pp)$.
++The cone's short exact sequence gives the cone quasi-isomorphism.
++The two displayed collisions follow directly from~\eqref{eq:cbc27-j-products}--\eqref{eq:cbc27-g-products}.
++The same coefficient argument preserves every finite iterated vertex product.
++\end{proof}
++
++There is no strict unital vertex map $C_k\to W_k$ preserving cohomological degree.
++It would kill $b_i,c_i$ and contradict $b_i{}_{(0)}c_i=\mathbf1$.
++The inverse to $\iota$ is therefore an inverse in the category obtained by inverting quasi-isomorphisms.
++The polynomial family and its binary collision maps specify no comparison with the reflected Koszul dual.
++A completed chiral bar, a second differential, and descent through nodal curves require their own constructions.
+--- candidate004/cbc/chapters/theory/unital_p1_chains.tex
++++ candidate006/cbc/chapters/theory/unital_p1_chains.tex
+@@ -27,12 +27,12 @@
+ The generating states are $b=b_{-2}\Omega$ and $c=c_1\Omega$, of degrees $-1,1$ and weights $2,-1$.
+ Put $A=V\otimes\mathcal F$ and write $\Omega$ also for its vacuum.
+ The field conventions are
+-\[
+- Y(T,z)=\sum_nL_nz^{-n-2},\quad
+- Y(b,z)=\sum_nb_nz^{-n-2},\quad
+- Y(c,z)=\sum_nc_nz^{1-n},\quad
++\begin{gather*}
++ Y(T,z)=\sum_nL_nz^{-n-2},\qquad
++ Y(b,z)=\sum_nb_nz^{-n-2},\\
++ Y(c,z)=\sum_nc_nz^{1-n},\qquad
+  Y(a,z)=\sum_na_{(n)}z^{-n-1}.
+-\]
++\end{gather*}
+ In particular, the vertex product $b_{(0)}$ is the conformal mode $b_{-1}$ and differs from the constraint operator $b_0$.
+ 
+ Normal ordering moves all creators to the left with their odd permutation signs and omits contractions.
+--- candidate004/proof/comparison_main.tex
++++ candidate006/proof/comparison_main.tex
+@@ -22,6 +22,7 @@
+ \input{../cbc/chapters/theory/unital_p1_chains}
+ \input{../cbc/chapters/theory/relative_p1_comparison}
+ \input{finite_bv_operator}
++\input{../cbc/chapters/theory/subregular_ds}
+ \begin{thebibliography}{9}
+ \bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Annals of Mathematics \textbf{182} (2015), 565--604.
+ \bibitem{DLMF26} NIST Digital Library of Mathematical Functions, \S23.18, Eq.~23.18.5, \url{https://dlmf.nist.gov/23.18.E5}.
+@@ -30,5 +31,7 @@
+ \bibitem{BD026} A. Beilinson and V. Drinfeld, \emph{Chiral Algebras}, AMS Colloquium Publications51,2004. \url{https://math.uchicago.edu/~drinfeld/langlands/chiral/}.
+ \bibitem{Frenkel026} E. Frenkel, \emph{Vertex algebras and algebraic curves}, S\'eminaire Bourbaki, expos\'e875,2000. \url{https://math.berkeley.edu/~frenkel/BOOK/bourbaki.pdf}.
+ \bibitem{DLMFell} NIST Digital Library of Mathematical Functions, \S23.2, Eq.~23.2.5, and \S23.8, Eq.~23.8.2. \url{https://dlmf.nist.gov/23.2.E5}; \url{https://dlmf.nist.gov/23.8.E2}.
++\bibitem{SubregularKW027} V. G. Kac and M. Wakimoto, \emph{Quantum reduction and representation theory of superconformal algebras}, Adv. Math. \textbf{185} (2004), 400--458. \url{https://arxiv.org/abs/math-ph/0304011}. Locators refer to version 2.
++\bibitem{SubregularArakawa027} T. Arakawa, \emph{Rationality of Bershadsky--Polyakov vertex algebras}, Comm. Math. Phys. \textbf{323} (2013), 627--633. \url{https://arxiv.org/abs/1005.0185}. Locators refer to version 4.
+ \end{thebibliography}
+ \end{document}
+--- candidate004/proof/subregular_main.tex
++++ candidate006/proof/subregular_main.tex
+@@ -0,0 +1,13 @@
++\documentclass[11pt,oneside]{memoir}
++\usepackage{raeez-math-template}
++\title{Explicit subregular reduction of the affine sl3 algebra}
++\author{}\date{}
++\hypersetup{pdftitle={Explicit subregular reduction of the affine sl3 algebra},pdfauthor={}}
++\begin{document}
++\chapter{Subregular reduction and binary collisions}
++\input{../cbc/chapters/theory/subregular_ds}
++\begin{thebibliography}{9}
++\bibitem{SubregularKW027} V. G. Kac and M. Wakimoto, \emph{Quantum reduction and representation theory of superconformal algebras}, Adv. Math. \textbf{185} (2004), 400--458. \url{https://arxiv.org/abs/math-ph/0304011}. Locators refer to version 2.
++\bibitem{SubregularArakawa027} T. Arakawa, \emph{Rationality of Bershadsky--Polyakov vertex algebras}, Comm. Math. Phys. \textbf{323} (2013), 627--633. \url{https://arxiv.org/abs/1005.0185}. Locators refer to version 4.
++\end{thebibliography}
++\end{document}

@@ -1,0 +1,544 @@
+\section{Edge contractions, residues, and bar signs}
+\label{sec:edge-contraction-signs}
+
+A two-step collision has two orders. Its two contributions cancel only when
+the signs oppose and the resulting coefficient maps satisfy the required identity.
+The determinant of the remaining edges records the first condition.
+An associative product supplies the second condition in the ordinary bar construction.
+Logarithmic residues give a geometric realization of the same determinant sign.
+
+All complexes use cohomological grading over a commutative ring $k$.
+Thus $V[r]^j=V^{j+r}$ and $d_{V[r]}=(-1)^r d_V$.
+Tensor products use the Koszul rule.
+Every sum below is algebraic and finite on each input.
+No completion or passage to graph isomorphism classes is implicit.
+
+\subsection{The deciding corner}
+\label{subsec:deciding-corner}
+
+Let $e<f$ be two labeled edges and let $\omega=e\wedge f$.
+Place this determinant generator in degree $-2$.
+Deleting an edge means exterior contraction with its dual basis vector:
+\begin{equation}
+\label{eq:two-edge-deletion}
+\iota_e\omega=f,\qquad \iota_f\omega=-e,\qquad
+\iota_f\iota_e\omega=1,\qquad \iota_e\iota_f\omega=-1.
+\end{equation}
+Suppose contracting $e$ then $f$ gives a coefficient map $P$.
+Suppose the reverse order gives $Q$, with the same source and target.
+The coefficient of the double contraction is $P-Q$.
+For $P=Q$ it vanishes over every $k$.
+For $k=\mathbb Z$, $P=1$, and $Q=2$ on $\mathbb Z$, it equals $-1$.
+The determinant sign therefore leaves a coefficient identity to prove.
+
+The same calculation appears on a coordinate bidisc over $\mathbb C$.
+Write $\lambda_e=du/u$ and $\lambda_f=dv/v$.
+Normalize the residue by placing the normal logarithmic form first:
+\begin{equation}
+\label{eq:left-residue}
+r_u(\lambda_e\wedge\beta+\gamma)=\beta|_{u=0},
+\end{equation}
+where $\gamma$ has no logarithmic pole along $u=0$.
+Then
+\[
+r_u(\lambda_e\wedge\lambda_f)=\lambda_f,\qquad
+r_v(\lambda_e\wedge\lambda_f)=-\lambda_e.
+\]
+The two ordered residues are $1$ and $-1$.
+There is already one determinant sign in this formula.
+Multiplying each residue by its deletion sign again gives $1+1=2$.
+This last prescription fails over $\mathbb Z$ and $\mathbb C$.
+
+\subsection{A determinant complex with two contractions}
+\label{subsec:determinant-complex}
+
+Fix a finite set $E$ of labeled edges.
+For $S\subseteq E$, write $F=E\setminus S$ and set
+\[
+L(F)=\bigwedge^{|F|}k^F[|F|].
+\]
+The unshifted exterior power lies in degree zero, so $L(F)$ lies in degree $-|F|$.
+Its differential is zero.
+For $e\in F$, contraction defines a degree-one map
+$\iota_e:L(F)\longrightarrow L(F\setminus\{e\})$.
+An ordering $F=(e_1,\ldots,e_r)$ gives
+\begin{equation}
+\label{eq:ordered-deletion}
+\iota_{e_i}(e_1\wedge\cdots\wedge e_r)
+=(-1)^{i-1}e_1\wedge\cdots\widehat e_i\cdots\wedge e_r.
+\end{equation}
+This formula is compatible with every relabeling of $F$.
+For $i<j$, the signs for deleting $e_i$ then $e_j$, and conversely, are
+$(-1)^{i+j-3}$ and $(-1)^{i+j-2}$.
+Hence $\iota_f\iota_e=-\iota_e\iota_f$ for distinct edges.
+Once $e$ is removed, a second contraction of $e$ has no domain.
+There is no repeated-edge summand.
+
+For every $S\subseteq E$, let $(M_S,d_S)$ be a cochain complex of $k$-modules.
+For $e\notin S$, supply two degree-zero cochain maps
+\[
+a_{S,e},b_{S,e}:M_S\longrightarrow M_{S\cup\{e\}}.
+\]
+The target records the contracted set, so both contraction orders have the same target.
+The coefficient maps can be zero.
+Define
+\[
+C=\bigoplus_{S\subseteq E} L(E\setminus S)\otimes M_S,
+\qquad |\omega\otimes x|=|x|-|E\setminus S|.
+\]
+The determinant factor comes first.
+For $r=|E\setminus S|$, put
+\begin{align}
+\label{eq:total-contractions}
+\delta(\omega\otimes x)&=(-1)^r\omega\otimes d_Sx,\notag\\
+A(\omega\otimes x)&=\sum_{e\notin S}\iota_e\omega\otimes a_{S,e}x,\\
+B(\omega\otimes x)&=\sum_{e\notin S}\iota_e\omega\otimes b_{S,e}x.\notag
+\end{align}
+All three maps have degree one.
+
+For distinct $e,f\notin S$, abbreviate $S\cup\{e\}$ by $S+e$ and define
+\begin{align}
+\label{eq:coefficient-defects}
+K^{aa}_{S;e,f}
+ &=a_{S+e,f}a_{S,e}-a_{S+f,e}a_{S,f},\notag\\
+K^{bb}_{S;e,f}
+ &=b_{S+e,f}b_{S,e}-b_{S+f,e}b_{S,f},\\
+K^{ab}_{S;e,f}
+ &=a_{S+e,f}b_{S,e}+b_{S+e,f}a_{S,e}\notag\\
+ &\quad-a_{S+f,e}b_{S,f}-b_{S+f,e}a_{S,f}.\notag
+\end{align}
+These are degree-zero maps $M_S\to M_{S+e+f}$.
+
+\begin{theorem}[Exact coefficient criterion]
+\label{thm:exact-coefficient-criterion}
+The operators satisfy $\delta^2=\delta A+A\delta=\delta B+B\delta=0$.
+Moreover,
+\[
+A^2=0\iff K^{aa}_{S;e,f}=0,\qquad
+B^2=0\iff K^{bb}_{S;e,f}=0,
+\]
+and
+\begin{equation}
+\label{eq:exact-mixed-criterion}
+AB+BA=0\iff K^{ab}_{S;e,f}=0
+\quad\text{for every }S,e,f.
+\end{equation}
+Consequently $\delta+A+B$ is a differential when all three coefficient identities hold.
+These statements hold in characteristic two as well.
+\end{theorem}
+
+\begin{proof}
+The assertion $\delta^2=0$ follows from $d_S^2=0$.
+For a fixed edge $e$, the two terms in $\delta A+A\delta$ have signs
+$(-1)^{r-1}$ and $(-1)^r$.
+Their coefficient maps agree because $d_{S+e}a_{S,e}=a_{S,e}d_S$.
+The proof for $B$ uses the corresponding cochain-map identity.
+
+Fix an ordering of $E\setminus S$.
+For $e=e_i<f=e_j$, the component of $A^2$ from $S$ to $S+e+f$ equals
+\[
+(-1)^{i+j-3}\omega_{F\setminus\{e,f\}}
+ \otimes K^{aa}_{S;e,f}x.
+\]
+There are exactly two contributing paths.
+Equation~\eqref{eq:ordered-deletion} gives their signs.
+The same calculation gives $K^{bb}$ for $B^2$.
+There are four paths in $AB+BA$.
+Two first remove $e$, and two first remove $f$.
+Their sum has the same determinant factor and coefficient $K^{ab}$.
+Distinct unordered pairs have distinct target summands for a fixed $S$.
+The determinant factor is free of rank one.
+Thus vanishing of each operator is equivalent to the displayed coefficient identities.
+No step divides by two.
+\end{proof}
+
+\begin{corollary}[Fixed edge colors]
+\label{cor:colored-edges}
+Partition $E=E_a\sqcup E_b$.
+Suppose degree-zero cochain maps $m_{S,e}$ satisfy
+\[
+m_{S+e,f}m_{S,e}=m_{S+f,e}m_{S,f}.
+\]
+Set $a_{S,e}=m_{S,e}$ on $E_a$ and zero on $E_b$.
+Set $b_{S,e}=m_{S,e}$ on $E_b$ and zero on $E_a$.
+Then $A^2=B^2=AB+BA=0$.
+\end{corollary}
+
+\begin{proof}
+For two edges of one color, the pure coefficient defect is the assumed square.
+For different colors, the mixed defect is that square.
+All other terms are zero.
+\end{proof}
+
+When both operations can contract every edge, the four-term identity is the exact condition.
+Separate associativity of the two operations does not imply it.
+For a tree with a fixed edge labeling, its quotients by subsets give the required target identifications.
+Coefficient complexes and contraction maps must also respect these identifications.
+If relabelings act compatibly, the construction descends to their coinvariants by equivariance.
+The vanishing criterion on a quotient can be weaker, since distinct labeled terms can become equal there.
+
+\subsection{Stable graphs with labeled edges}
+\label{subsec:stable-graph-contractions}
+
+A stable graph here is a connected graph with finitely many vertices, edges, and labeled legs.
+Each vertex $v$ has a nonnegative integer genus $g_v$ and satisfies
+$2g_v-2+\operatorname{val}(v)>0$.
+A loop contributes two to the valence.
+For a connected graph, its total genus is $\sum_v g_v+|E|-|V|+1$.
+Fix an edge labeling and, when needed, an edge color.
+
+For $S\subseteq E$, the vertices of $\Gamma/S$ are the connected components
+$C$ of the subgraph $(V,S)$, including isolated vertices.
+Give the vertex corresponding to $C$ genus
+\begin{equation}
+\label{eq:simultaneous-graph-genus}
+g_C=\sum_{v\in C}g_v+|S_C|-|V_C|+1.
+\end{equation}
+Retain the edges outside $S$, with endpoints sent to their components.
+Retain each leg and its label.
+This defines the quotient without choosing a contraction order.
+A nonloop edge merges two vertices and adds their genera.
+A loop increases its vertex genus by one.
+
+\begin{proposition}[The oriented stable-graph differential]
+\label{prop:stable-graph-signs}
+The quotient $\Gamma/S$ is stable and preserves total genus.
+For disjoint $S,T\subseteq E$, contracting $S$ and then $T$ gives $\Gamma/(S\cup T)$.
+On the free module of labeled stable graphs with determinant factor $L(E)$,
+edge contraction defines a differential of cohomological degree one.
+Splitting the edges into two fixed colors gives anticommuting contraction differentials.
+The operators descend to graph-isomorphism coinvariants if isomorphisms preserve leg labels and edge colors.
+\end{proposition}
+
+\begin{proof}
+The number $|S_C|-|V_C|+1$ is the cycle rank of the connected subgraph $C$, so $g_C\geq0$.
+Its surviving valence is $\sum_{v\in C}\operatorname{val}(v)-2|S_C|$.
+Therefore
+\[
+2g_C-2+\operatorname{val}(C)
+=\sum_{v\in C}\bigl(2g_v-2+\operatorname{val}(v)\bigr)>0.
+\]
+Summing~\eqref{eq:simultaneous-graph-genus} over $C$ and then adding the cycle rank of $\Gamma/S$
+returns $\sum_vg_v+|E|-|V|+1$.
+To compare successive quotients, fix one component of $(V,S\cup T)$.
+If it contains $c$ components after contracting $S$, the second contraction contributes $|T_C|-c+1$ to its genus.
+The first contraction has contributed $|S_C|-|V_C|+c$.
+Their sum is $|S_C|+|T_C|-|V_C|+1$.
+The vertex genera, remaining flags, and leg labels therefore agree with the simultaneous quotient.
+
+Each two-edge coefficient square now has equal composites, because both yield that same quotient graph.
+Its determinant signs are opposite by~\eqref{eq:ordered-deletion}.
+This proves the square-zero and mixed identities.
+Relabeling edges transports their determinant generators and contraction maps together.
+Thus these operators are equivariant and descend to coinvariants.
+No division by an automorphism order is used.
+\end{proof}
+
+\begin{example}[Two parallel edges]
+\label{ex:parallel-edges}
+Take two genus-zero vertices, each carrying one leg, joined by two edges $e<f$.
+Each vertex has valence three.
+Contracting $e$ gives one genus-zero vertex with two legs and the remaining loop $f$.
+Contracting that loop gives one genus-one vertex with two legs.
+The other order gives the same result.
+The two determinant signs are $+1$ and $-1$, so the sum is zero.
+The first edge is nonseparating but is not a loop.
+Its contraction does not increase the vertex genus.
+\end{example}
+
+\subsection{An explicit comparison with the associative bar construction}
+\label{subsec:associative-comparison}
+
+Let $(H,d_H,\mu)$ be an augmented differential graded associative $k$-algebra.
+Write $\bar H$ for its augmentation ideal.
+Let $t$ have degree $-1$, and put $t\bar H=\bar H[1]$.
+The reduced tensor coalgebra is
+\[
+T^c(t\bar H)=\bigoplus_{n\geq0}(t\bar H)^{\otimes n},
+\]
+with deconcatenation coproduct and the empty word as coaugmentation.
+Define the unary and binary operations by
+\begin{equation}
+\label{eq:bar-corestrictions}
+b_1(ta)=-t(d_Ha),\qquad
+b_\mu(ta\otimes tb)=(-1)^{|a|}t(ab).
+\end{equation}
+Extend them as coderivations.
+Their degree is one.
+For homogeneous inputs,
+\begin{equation}
+\label{eq:bar-binary-sign}
+b_\mu[ a_1|\cdots|a_n]
+=\sum_{i=1}^{n-1}(-1)^{\sum_{j\leq i}|a_j|-i+1}
+ [a_1|\cdots|a_i a_{i+1}|\cdots|a_n],
+\end{equation}
+where the brackets denote $ta_1\otimes\cdots\otimes ta_n$.
+This follows by moving a degree-one coderivation past the first $i-1$ shifted inputs.
+
+For three inputs, the two binary contractions give
+\begin{equation}
+\label{eq:associative-two-edge}
+b_\mu^2[a|b|c]
+=(-1)^{|b|}\,t\bigl((ab)c-a(bc)\bigr)=0.
+\end{equation}
+This is the first associativity condition in the bar differential.
+The algebraic bar construction is also described in
+Loday--Vallette, Section~2.2.1~\cite{LV12}.
+Equations~\eqref{eq:bar-corestrictions}--\eqref{eq:bar-binary-sign} fix the cohomological signs used here.
+
+\begin{proposition}[Determinant comparison]
+\label{prop:bar-determinant-comparison}
+Let $L_n=\bigwedge^n k^{[n]}[n]$, with generator $\omega_n=e_1\wedge\cdots\wedge e_n$.
+The degree-zero isomorphism
+\begin{equation}
+\label{eq:bar-determinant-map}
+\Phi_n[a_1|\cdots|a_n]
+=(-1)^{\sum_{j=1}^n(n-j)|a_j|}
+ \omega_n\otimes a_1\otimes\cdots\otimes a_n
+\end{equation}
+identifies the bar operations with
+\[
+\Phi b_1\Phi^{-1}=(-1)^n d_{\bar H^{\otimes n}},\qquad
+\Phi b_\mu\Phi^{-1}=\sum_{i=1}^{n-1}\iota_{e_i}\otimes\mu_i.
+\]
+Here $\mu_i$ multiplies positions $i,i+1$ and retains the right vertex label.
+After deletion, relabel the surviving vertices in increasing order.
+The last vertex is never removed.
+Its degree-minus-one line supplements the determinant of the $n-1$ internal cuts.
+\end{proposition}
+
+\begin{proof}
+Moving each $t$ to the left across preceding algebra factors gives the exponent in~\eqref{eq:bar-determinant-map}.
+For multiplication at positions $i,i+1$, the difference between the input and output exponents is
+$\sum_{j\leq i}|a_j|$ modulo two.
+Adding the exponent in~\eqref{eq:bar-binary-sign} leaves $i-1$ modulo two.
+This is precisely the determinant contraction sign.
+For the unary operation at position $i$, the exponent in $\Phi_n$ changes by $n-i$.
+The unary coderivation contributes
+$1+\sum_{j<i}(|a_j|-1)$.
+Their sum is $n+\sum_{j<i}|a_j|$ modulo two.
+This is the sign in $(-1)^n d_{\bar H^{\otimes n}}$.
+\end{proof}
+
+The coefficient maps $\mu_i$ commute on disjoint cuts.
+On adjacent cuts their two composites agree by associativity.
+Deleting cuts therefore gives a commuting coefficient diagram on every ordered word.
+Theorem~\ref{thm:exact-coefficient-criterion}, with the last vertex line retained, proves
+$(b_1+b_\mu)^2=0$ in every length.
+This also proves compatibility with internal degrees and the augmentation ideal.
+
+Now let $\nu:\bar H\otimes\bar H\to\bar H$ be another degree-zero cochain map.
+Use the same sign as~\eqref{eq:bar-corestrictions} to define $b_\nu$.
+
+\begin{theorem}[Two associative bar contractions]
+\label{thm:two-associative-contractions}
+Suppose $\nu$ is associative.
+Then $b_\mu^2=b_\nu^2=0$, and $b_\mu b_\nu+b_\nu b_\mu=0$ if and only if
+\begin{align}
+\label{eq:compatible-products}
+\mu(\nu(a,b),c)+\nu(\mu(a,b),c)
+=\mu(a,\nu(b,c))+\nu(a,\mu(b,c))
+\end{align}
+for every $a,b,c\in\bar H$.
+Equivalently, $\mu+z\nu$ is associative over $k[z]$.
+Here $z$ is a formal variable of degree zero.
+\end{theorem}
+
+\begin{proof}
+On three homogeneous inputs, the mixed operator equals $(-1)^{|b|}t$ times the difference of the two sides of~\eqref{eq:compatible-products}.
+Thus anticommutation implies that identity.
+For longer words, operations on disjoint pairs have equal coefficient composites and opposite determinant signs.
+Operations on overlapping pairs occupy three consecutive positions.
+Their four contributions are the same identity, tensored with the unchanged inputs.
+Thus the identity implies anticommutation in every length.
+Expanding associativity of $\mu+z\nu$ gives associativity of $\mu$, equation~\eqref{eq:compatible-products}, and associativity of $\nu$ as its three coefficients.
+Coefficient comparison in $k[z]$ requires no hypothesis on the characteristic.
+\end{proof}
+
+\begin{example}[Separate associativity is insufficient]
+\label{ex:incompatible-products}
+Let $\bar H=kx\oplus ky$ in degree zero.
+Define $\mu(x,x)=x$ and $\nu(y,y)=x$, with every other basis product zero.
+Both products are associative.
+For $\mu$, only an all-$x$ triple can have a nonzero iterated product.
+Every iterated $\nu$-product vanishes.
+For $(a,b,c)=(y,y,x)$, the left side of~\eqref{eq:compatible-products} is $x$ and the right side is zero.
+Thus the mixed bar anticommutator is nonzero whenever $k$ is nonzero.
+Adjoining a unit to $(\bar H,\mu)$ gives an augmented algebra with this augmentation ideal.
+\end{example}
+
+\begin{example}[A noncommutative family]
+\label{ex:inserted-element}
+Choose a closed element $h\in H^0$ and define $\nu(a,b)=ahb$.
+The augmentation ideal contains $ahb$ whenever $a,b\in\bar H$.
+The map is a cochain map because $d_Hh=0$.
+Associativity gives
+\[
+(ahb)hc=ah(bhc),\qquad
+(ahb)c+(ab)hc=a(bhc)+ah(bc).
+\]
+Thus the two bar contractions anticommute.
+No centrality assumption on $h$ is needed.
+For $H=k\langle x,y\rangle$, with zero differential and its usual augmentation, take $h=x$.
+The products $yxyy$ and $yyxy$ can occur in separate mixed paths and are distinct.
+Their four-term sum still cancels.
+This example shows why requiring every mixed coefficient square to commute would be unnecessarily restrictive.
+\end{example}
+
+\subsection{Logarithmic residues and the de Rham differential}
+\label{subsec:logarithmic-comparison}
+
+Let $Y$ be a smooth complex manifold and let $D=\bigcup_{e\in E}D_e$ be a simple normal crossing divisor.
+The components are labeled, and $E$ is finite.
+For $S\subseteq E$, write $D_S=\bigcap_{e\in S}D_e$, with $D_\varnothing=Y$.
+Let $D^S$ be the divisor on $D_S$ cut out by the remaining components.
+Empty strata contribute zero.
+All statements are local statements of sheaves on $Y$, using direct image from each stratum.
+
+On a coordinate chart with $D_e=\{x_e=0\}$, define $r_{S,e}$ by~\eqref{eq:left-residue}.
+Its domain and target are
+\[
+r_{S,e}:\Omega^q_{D_S}(\log D^S)
+\longrightarrow\Omega^{q-1}_{D_{S+e}}(\log D^{S+e}).
+\]
+Changing $x_e$ to $u x_e$, with $u$ invertible, adds the regular form $du/u$ to $dx_e/x_e$.
+It therefore leaves the residue unchanged.
+Restriction of the coefficient to $D_{S+e}$ makes the formula independent of its representative.
+This constructs the map on overlapping coordinate charts.
+
+\begin{proposition}[Residue identities]
+\label{prop:residue-identities}
+With the left-normal convention, the maps satisfy
+\begin{equation}
+\label{eq:residue-relations}
+r_{S+e,f}r_{S,e}=-r_{S+f,e}r_{S,f},\qquad
+r_{S,e}d_{D_S}=-d_{D_{S+e}}r_{S,e}.
+\end{equation}
+The first equation uses distinct $e,f\notin S$.
+Consequently, on
+\[
+\mathcal R=\bigoplus_{S\subseteq E}
+\Omega^\bullet_{D_S}(\log D^S)[-2|S|],
+\]
+the sum $d_{\mathrm{dR}}+R$, with $R=\sum r_{S,e}$, has degree one and squares to zero.
+A partition $E=E_a\sqcup E_b$ gives $R=R_a+R_b$ with
+$R_a^2=R_b^2=R_aR_b+R_bR_a=0$.
+\end{proposition}
+
+\begin{proof}
+Only terms containing both $d\log x_e$ and $d\log x_f$ contribute to a double residue.
+Moving these two forms to the front in opposite orders changes the sign once.
+Coefficient restriction to their common zero locus is independent of order.
+This proves the first equation.
+For the second, write $\alpha=d\log x_e\wedge\beta+\gamma$.
+The Leibniz rule gives
+$d\alpha=-d\log x_e\wedge d\beta+d\gamma$.
+The term $d\gamma$ has no logarithmic pole along $D_e$.
+Restriction of $d\beta$ commutes with exterior differentiation.
+Therefore $r_{S,e}d\alpha=-d(r_{S,e}\alpha)$.
+This agrees with the shifted residue sequence in
+Stacks Project, Lemma~50.15.2~\cite{StacksResidue}.
+
+A $q$-form on $D_S$ has total degree $q+2|S|$ in $\mathcal R$.
+A residue lowers $q$ by one and raises $|S|$ by one.
+Its total degree is therefore one.
+The shifts are even, so the internal differential remains $d_{\mathrm{dR}}$.
+The identities just proved cancel every double residue and every mixed term with $d_{\mathrm{dR}}$.
+The color decomposition follows by grouping pairs of distinct components.
+\end{proof}
+
+To identify the determinant explicitly, take a product chart
+$U=\Delta^E\times Z$, with coordinates $x_e$ on the normal discs.
+For $S\subseteq E$, write $U_S=\{x_e=0:e\in S\}\subset U$ and
+let $p_S:U_S\to Z$ be the projection.
+Work with complexes of complex vector spaces on these fixed charts.
+Put $M^\bullet=\Gamma(Z,\Omega_Z^\bullet)$, with its holomorphic de Rham differential $d_Z$.
+Choose an order on $E$ and use the inherited order on every $F=E\setminus S$.
+Let $\lambda_F$ be the wedge of the $d\log x_e$, $e\in F$, in that order.
+The empty wedge is $1$.
+
+Define the direct sum over every contracted set:
+\[
+C_E(Z)=\bigoplus_{S\subseteq E}L(E\setminus S)\otimes M^\bullet.
+\]
+On its $S$-summand, set
+\begin{equation}
+\label{eq:normal-log-total-differential}
+D_E(\omega_F\otimes\beta)
+=(-1)^{|F|}\omega_F\otimes d_Z\beta
++\sum_{e\in F}\iota_e\omega_F\otimes\beta.
+\end{equation}
+The first term stays in the $S$-summand.
+The term indexed by $e$ lies in the $S\cup\{e\}$-summand.
+Thus $D_E=\delta+\sum_e\iota_e\otimes\mathrm{id}$, with each identity map acting between the corresponding copies of $M^\bullet$.
+The coefficient squares commute, so Theorem~\ref{thm:exact-coefficient-criterion} gives $D_E^2=0$.
+
+Inside the complex $\mathcal R(U)$ of sections of the residue sheaves, put
+\[
+N_E(Z)=\bigoplus_{S\subseteq E}
+\lambda_{E\setminus S}\wedge p_S^*M^\bullet.
+\]
+Here the $S$-summand is on $U_S$.
+It has the grading inherited from $\mathcal R$:
+$\lambda_F\wedge p_S^*\beta$ has total degree $|\beta|+|F|+2|S|$.
+The direct-sum map
+\begin{equation}
+\label{eq:log-symbol-comparison}
+\Psi:C_E(Z)[-2|E|]\longrightarrow N_E(Z)\subset\mathcal R(U),
+\qquad
+\omega_F\otimes\beta\longmapsto\lambda_F\wedge p_S^*\beta
+\end{equation}
+is a chain isomorphism onto this subcomplex.
+
+Indeed, its source degree is $|\beta|-|F|+2|E|$.
+Since $|E|=|F|+|S|$, this equals the target degree.
+The global shift is even, so it leaves the differential $D_E$ unchanged.
+The normal logarithmic forms are closed, and hence
+\[
+d_{\mathrm{dR}}(\lambda_F\wedge p_S^*\beta)
+=(-1)^{|F|}\lambda_F\wedge p_S^*(d_Z\beta).
+\]
+This term lies in the same summand and agrees with the first term of~\eqref{eq:normal-log-total-differential}.
+For $e=e_i$ in the ordered set $F$, the residue is
+\[
+r_{S,e}(\lambda_F\wedge p_S^*\beta)
+=(-1)^{i-1}\lambda_{F\setminus\{e\}}\wedge p_{S\cup\{e\}}^*\beta.
+\]
+This lies in the included $S\cup\{e\}$-summand and agrees with the corresponding determinant contraction.
+These two formulas prove closure of $N_E(Z)$ under $d_{\mathrm{dR}}+R$ and prove
+$(d_{\mathrm{dR}}+R)\Psi=\Psi D_E$.
+On each summand, the normal logarithmic wedge has a unique coefficient pulled back from $Z$.
+Extracting this coefficient gives the inverse to $\Psi$ on its image.
+
+For $E=\{e\}$ and $Z$ a point, the direct sum has two terms.
+Under $\Psi$, its differential is $d\log x_e\mapsto1$ on $U_{\{e\}}$.
+Their total degrees are one and two, respectively.
+The first term has $S=\varnothing$, and the second has $S=\{e\}$.
+
+This comparison concerns the specified direct sum of normal logarithmic forms on the product strata.
+General logarithmic forms also have regular normal directions and variable coefficients.
+A determinant line alone is not the full sheaf of logarithmic forms.
+The global residue identities hold on that full sheaf by Proposition~\ref{prop:residue-identities}.
+
+\subsection{The coefficient obligation for chiral contractions}
+\label{subsec:chiral-coefficient-obligation}
+
+In a chiral construction, a contraction can include a collision map on states,
+a residue, and a pushforward from a boundary stratum.
+Each composite must have a specified target after the first collision.
+A second contraction acts on that target, which contains the merged state.
+
+Theorem~\ref{thm:exact-coefficient-criterion} applies after these coefficient complexes and degree-zero maps have been constructed.
+It determines the orientation sign and the exact remaining coefficient identity.
+For disjoint fixed-color contractions, equality of the two unsigned composites suffices.
+When both kinds of contraction can remove either edge, equation~\eqref{eq:coefficient-defects} gives the required four-term identity.
+The associative construction proves this identity on its stated tensor-coalgebra carrier.
+The logarithmic construction proves it for the stated residue sheaves.
+A comparison with a chiral bar complex must intertwine its native collision maps with these maps.
+Neither a determinant line nor an equality of scalar residues constructs that comparison.
+
+The de Rham differential is a distinct degree-one operation.
+With left-normal residues, its anticommutation follows from the second identity in~\eqref{eq:residue-relations}.
+Here $d(d\log x_e)=0$ as a meromorphic differential form.
+No current supported on a divisor occurs in this de Rham complex.
+Replacing meromorphic forms by currents changes the carrier and requires its own comparison.

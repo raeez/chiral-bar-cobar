@@ -1,0 +1,287 @@
+The relative Virasoro vacuum complex has classes in degrees zero and two.
+The full unital Virasoro chiral algebra has chiral-chain classes on the projective line in degrees zero, one, three, and four.
+A comparison map must therefore lose the relative degree-two class.
+An explicit one-point chain gives such a map and its null-homotopy.
+
+\section{The relative complex and its absolute primitive}
+
+Work over $\mathbb C$, using algebraic tensor products and direct sums.
+All complexes are cohomological, with $K[r]^j=K^{j+r}$ and differential $(-1)^r d_K$.
+Ghost degree is cohomological degree.
+Conformal weight is a separate integer grading.
+Interchanging homogeneous factors of degrees $a,b$ contributes $(-1)^{ab}$.
+
+Let $A=\operatorname{Vir}_{26}\otimes bc$ use the universal matter vacuum module and the conformal ghost vacuum $\Omega$.
+The ghost relations and annihilators are
+\[
+ \{b_m,c_n\}=\delta_{m+n,0},\qquad
+ \{b_m,b_n\}=\{c_m,c_n\}=0,
+ \qquad b_n\Omega=0\ (n\geq-1),\quad c_n\Omega=0\ (n\geq2).
+\]
+The matter vacuum is implicit in each displayed ghost state.
+The generators $b_n,c_n$ have degrees $-1,1$ and weights $-n$.
+Set
+\[
+ Q=\sum_n c_{-n}L_n
+ -\frac12\sum_{m,n}(m-n):c_{-m}c_{-n}b_{m+n}:,
+ \qquad H=\mathcal L_0=L_0+L_0^{\mathrm{gh}}.
+\]
+Normal ordering moves creators to the left and omits contractions.
+The sums are locally finite on algebraic states.
+Theorem~\ref{thm:vir-square} and Lemma~\ref{lem:vir-Q-contractions} give
+$Q^2=0$ and $\{Q,b_0\}=H$.
+
+Fix a coordinate $z$ and define the vector-space complex
+\[
+ R=\ker b_0\cap\ker H\subset A.
+\]
+The weight-zero absolute complex has basis
+\[
+ e=\Omega,\qquad u=c_0\Omega,\qquad
+ v=c_{-1}c_1\Omega,\qquad w=c_{-1}c_0c_1\Omega.
+\]
+Its differential and relative subcomplex are
+\begin{equation}\label{eq:rp-four}
+ Qe=Qv=Qw=0,\qquad Qu=-2v,
+ \qquad (R,Q)=\mathbb Ce\oplus\mathbb Cv.
+\end{equation}
+The degrees of $e,u,v,w$ are $0,1,2,3$.
+Indeed, matter weights are nonnegative, matter weight one vanishes, and the only negative ghost weight is that of $c_1$.
+These facts leave exactly the four displayed weight-zero monomials.
+The operator $b_0$ removes the terms containing $c_0$.
+Its anticommutator with $Q$ contracts every nonzero absolute weight.
+Consequently
+\[
+ H^\bullet(R)=\mathbb C[e]\oplus\mathbb C[v],\qquad
+ H^\bullet(A,Q)=\mathbb C[e]\oplus\mathbb C[w].
+\]
+The formula $v=Q(-u/2)$ determines the relative class image under any comparison that extends to absolute states.
+
+\section{A normalized chain in the one-point summand}
+
+Set $X=\mathbb P^1$, with ordered cover
+$U_0=\operatorname{Spec}\mathbb C[z]$, $U_\infty=\operatorname{Spec}\mathbb C[z^{-1}]$.
+Their intersection is $U_{01}=\operatorname{Spec}\mathbb C[z,z^{-1}]$.
+Let $\mathcal A^\ell$ be the left state module with connection $\partial_z+\partial$ and let $\mathcal A=\omega_X\otimes\mathcal A^\ell$.
+Here $\partial$ is vertex translation.
+Coordinate descent and the differential are specified in Section~\ref{sec:cbc26-unital-p1}.
+
+Use the two resolutions $P,\mathcal Q$ from the construction of~\eqref{eq:uc-chain}.
+Explicitly,
+\[
+ P^0=\operatorname{Sym}^{>0}_{\mathcal O_X}(\mathcal D_X),\qquad
+ P^{-1}=\ker(P^0\longrightarrow\mathcal O_X),
+ \qquad d_P:P^{-1}\hookrightarrow P^0.
+\]
+The augmentation on a generating differential operator $D$ is $D(1)$.
+Write $p=[1_{\mathcal D}]\in P^0$ for the global generator given by the identity differential operator.
+Thus $d_Pp=0$ and the augmentation sends $p$ to $1$.
+The symbol $p$ denotes a degree-zero element of the nonunital resolution.
+
+The degree-one term of the two-chart Thom--Sullivan resolution is
+\[
+ \mathcal Q^1=j_{01*}\mathcal O_{U_{01}}[t]\,dt.
+\]
+In degree zero it consists of triples $(f_0,f_\infty,F(t))$ with $F(0)=f_0$ and $F(1)=f_\infty$ on the overlap.
+The differential differentiates $F(t)$.
+Its connection differentiates the coefficients and fixes $t,dt$.
+The variable $t$ here is an auxiliary interval coordinate.
+Normalize $\int_0^1dt=1$ and $\operatorname{Res}_{z=0}(dz/z)=1$.
+
+For a right $\mathcal D$-module $N$, put $h(N)=N\otimes_{\mathcal D_X}\mathcal O_X$, degreewise.
+The one-point subcomplex of the actual chiral chains is
+\[
+ S(\mathcal A)=\Gamma(X,h(\mathcal A\otimes P\otimes\mathcal Q))[1]
+ \lhook\joinrel\longrightarrow\mathsf C_X(\mathcal A).
+\]
+The target is the Chevalley--Cousin complex~\eqref{eq:uc-chain}, with its full positive-arity unit carrier.
+The one-point inclusion is a chain map.
+A collision merges two distinct blocks, so there is no outgoing collision from a one-block term.
+This is also immediate from Beilinson--Drinfeld~\cite{BD026}, equations (4.2.12.2) and (4.2.12.5), pp.~306--307.
+
+Write $\varsigma$ for suspension, so $|\varsigma x|=|x|-1$ and $d(\varsigma x)=-\varsigma(dx)$.
+The section $(dz/z)\otimes p\otimes dt$ is global in the term supported on $U_{01}$.
+Define
+\begin{equation}\label{eq:rp-tau}
+ \tau=\varsigma\bigl[(dz/z)\otimes p\otimes dt\bigr]
+ \in S(\omega_X)^0.
+\end{equation}
+Square brackets in this formula denote the image in $h$.
+
+\begin{lemma}\label{lem:rp-unit}
+The element $\tau$ is closed.
+Its image in $H^0\mathsf C_X(\omega_X)$ has trace $1$ and is the chiral unit class.
+\end{lemma}
+
+\begin{proof}
+Both $p$ and $dt$ are closed.
+The one-point term has no outgoing collision.
+These observations prove closedness directly in the actual complex.
+
+The right de Rham convention is
+$\operatorname{DR}_X(\omega_X)=\Omega_X^\bullet[1]$.
+Consequently $S(\omega_X)$ represents $R\Gamma(X,\Omega_X^\bullet)[2]$.
+To identify the specific cycle, use the intermediate complex
+\[
+ \Gamma\bigl(X,\operatorname{DR}_X(\omega_X\otimes P\otimes\mathcal Q)\bigr)[1].
+\]
+The same tensor defines a closed element in its terminal Spencer term.
+The Spencer augmentation maps it to~\eqref{eq:rp-tau}.
+The augmentation of $P$ maps it to the form $(dz/z)\,dt$.
+The two maps are the resolution comparisons used in Beilinson--Drinfeld, \S4.2.12, p.~306.
+For the right action on $\omega_X$, the Spencer differential sends $f\,dz\otimes\partial_z$ to $-f'\,dz$.
+The identifications $f\,dz\otimes\partial_z\mapsto f$ and $f\,dz\mapsto f\,dz$ give $\operatorname{DR}_X(\omega_X)=\Omega_X^\bullet[1]$.
+In particular, the top form has its displayed positive sign.
+Integrating the interval form gives the \v Cech one-cocycle $dz/z$ with values in $\Omega_X^1$.
+It has trace $1$ under the stated residue normalization.
+The trace of the singleton term agrees with the trace on the Cousin diagram by Beilinson--Drinfeld, \S4.3.3, pp.~315--316.
+That proposition identifies $H^0\mathsf C_X(\omega_X)$ with $\mathbb C$ and all other unit cohomology with zero.
+Thus the image of $\tau$ is the normalized unit class.
+\end{proof}
+
+\section{The actual comparison and its class images}
+
+For an algebraic state $a\in A$, let $a_z$ be the constant section in the $z$-coordinate trivialization over $U_0$.
+Restriction makes it a section over $U_{01}$.
+For homogeneous $a$, define
+\begin{equation}\label{eq:rp-J}
+ J_z(a)=(-1)^{|a|}\varsigma
+ \bigl[(dz/z)\otimes a_z\otimes p\otimes dt\bigr]
+ \in S(\mathcal A)^{|a|}\subset\mathsf C_X(\mathcal A)^{|a|}.
+\end{equation}
+Extend by linearity to all algebraic states.
+All tensors in this formula are finite.
+The sole pole $z^{-1}$ is regular on the specified overlap.
+No extension of $a_z$ across infinity is required by $\mathcal Q^1$.
+For the Poincar\'e--Birkhoff--Witt (PBW) filtration, give matter and $b$ creators order one and $c$ creators order zero.
+The auxiliary resolutions have order zero.
+
+\begin{proposition}\label{prop:rp-J}
+The map $J_z:(A,Q)\to\mathsf C_X(\mathcal A)$ is a degree-preserving map of vector-space complexes.
+It preserves the PBW filtration from~\eqref{eq:uc-symbolmap}.
+Its restriction $\Phi_z=J_z|_R$ satisfies
+\begin{equation}\label{eq:rp-null}
+ \Phi_z(e)=1_{\mathcal A*}(\tau),\qquad
+ \Phi_z(v)=d\bigl(-J_z(u)/2\bigr).
+\end{equation}
+Here $1_{\mathcal A*}$ is the actual chain map induced by the chiral unit $\omega_X\to\mathcal A$.
+\end{proposition}
+
+\begin{proof}
+In the unsuspended tensor, only the differential of $a$ contributes.
+The remaining factors have $d_Pp=0$ and $d_{\mathcal Q}dt=0$.
+For $|a|=k$, suspension therefore gives
+\[
+ dJ_z(a)=(-1)^{k+1}\varsigma
+ \bigl[(dz/z)\otimes(Qa)_z\otimes p\otimes dt\bigr]
+ =J_z(Qa).
+\]
+Passing to $h$ preserves this equation because $Q$ commutes with the connection.
+There is no outgoing collision from its one-point image.
+This proves the chain-map identity in the full complex.
+The auxiliary factors have PBW order zero, so $J_z$ preserves the state order.
+The first formula in~\eqref{eq:rp-null} follows by substituting $a=e$.
+The second follows from $Qu=-2v$ in~\eqref{eq:rp-four}.
+\end{proof}
+
+The null-homotopy is also explicit as a map of complexes.
+Let $\Phi_z^0$ send $e$ to $1_{\mathcal A*}(\tau)$ and $v$ to zero.
+Define the degree-minus-one linear map $K:R\to\mathsf C_X(\mathcal A)$ by
+\[
+ K(e)=0,\qquad K(v)=-J_z(u)/2.
+\]
+Then $\Phi_z-\Phi_z^0=dK+KQ$.
+These are statements about vector-space complexes and do not assert multiplicativity of $J_z$.
+
+\begin{theorem}\label{thm:rp-images}
+Use the degree and trace conventions above.
+Identify the target cohomology by Theorem~\ref{thm:uc-global} as
+$\Lambda(\xi_1,\xi_3)$, with degrees $1,3$.
+Then the actual relative comparison~\eqref{eq:rp-J} induces
+\[
+ H(\Phi_z)[e]=1,\qquad H(\Phi_z)[v]=0.
+\]
+Its graded kernel, image, and cokernel are
+\begin{align*}
+ \ker H(\Phi_z)&=\mathbb C[v], & |[v]|&=2,\\
+ \operatorname{im}H(\Phi_z)&=\mathbb C1,\\
+ \operatorname{coker}H(\Phi_z)&=
+ \mathbb C\xi_1\oplus\mathbb C\xi_3\oplus\mathbb C\xi_1\xi_3.
+\end{align*}
+The cokernel degrees are $1,3,4$.
+The same assertions hold for the induced map to PBW associated graded chiral chains.
+
+For the absolute comparison $J_z$, normalize $\xi_3$ by the image of $\tau\otimes\eta$, where $\eta=\alpha\beta\gamma$.
+Then $H(J_z)[w]=\xi_3$.
+Thus $H(J_z)$ is injective, with image $\mathbb C1\oplus\mathbb C\xi_3$ and cokernel $\mathbb C\xi_1\oplus\mathbb C\xi_1\xi_3$.
+\end{theorem}
+
+\begin{proof}
+The chain identities~\eqref{eq:rp-null} give the relative images.
+Lemma~\ref{lem:rp-unit} and the unital zigzag~\eqref{eq:uc-zigzag} show that the vacuum image is nonzero.
+The source has precisely the two classes in~\eqref{eq:rp-four}.
+The target basis in Theorem~\ref{thm:uc-global} therefore gives the stated kernel and cokernel.
+
+For the absolute degree-three class, all four weight-zero states lie in the ghost subalgebra $B$.
+The one-point construction commutes with the inclusion $B\hookrightarrow A$ and the global evaluation $\epsilon:B\to E_X$.
+Here
+\[
+ E=\Lambda(\alpha,\beta,\gamma),\quad
+ d\alpha=-\alpha\beta,\quad d\beta=-2\alpha\gamma,\quad d\gamma=-\beta\gamma,
+ \qquad f(z)=\alpha+z\beta+z^2\gamma.
+\]
+The identification $S(E_X)=S(\omega_X)\otimes E$ moves $E$ past $P\otimes\mathcal Q$ with the Koszul sign.
+The evaluation formulas of~\eqref{eq:uc-eval} give
+\begin{equation}\label{eq:rp-Eimages}
+ \epsilon(e)=1,\qquad
+ \epsilon(u)=-\beta-2z\gamma,\qquad
+ \epsilon(v)=-\alpha\gamma-z\beta\gamma,\qquad
+ \epsilon(w)=\eta.
+\end{equation}
+In particular, $\epsilon(v)=d((\beta+2z\gamma)/2)$ at every $z$.
+The degree-three image is constant on both charts.
+After moving the coefficient algebra past $dt$, the Koszul sign is $(-1)^3$.
+It cancels the prefactor in~\eqref{eq:rp-J}.
+Hence $\mathsf C_X(\epsilon)J_z(w)=\tau\otimes\eta$ in the constant coefficient one-point term.
+
+The generator complex for $\omega_X[-3]$ represents $R\Gamma(X,\Omega_X^\bullet)[-1]$.
+Its top de Rham class is $\tau\otimes\eta$, of degree three.
+The positive symmetric-degree comparison~\eqref{eq:uc-free-map} sends this class to $\xi_3$.
+It is nonzero by that quasi-isomorphism.
+This determines both absolute class images and their kernel and cokernel.
+
+Finally, $e,u,v,w$ have PBW order zero.
+The symbol of~\eqref{eq:rp-J} is the same tensor formula with the state replaced by its symbol.
+The diagram with~\eqref{eq:uc-symbolmap} therefore commutes on actual chains.
+The PBW target cohomology lies entirely in order zero, and its unital comparison has the same normalized classes.
+This proves the associated graded assertion.
+\end{proof}
+
+\section{Coordinate dependence and the relative descent obstruction}
+
+The map $J_z$ uses an ordered affine cover, its interval resolution, and the coordinate trivialization on $U_0$.
+The cycle $\tau$ is a chosen algebraic representative of the top de Rham class.
+These choices define a map from the fixed-coordinate state complex to the unmarked global chiral-chain complex.
+The construction does not require a marked-point coefficient module in the target.
+
+A change of coordinate does not preserve the fixed relative subspace by restriction of the ordinary state transitions.
+For the convention $z\mapsto z/(1+sz)$ acting by $g_s=\exp(s\mathcal L_1)$,
+\[
+ \mathcal L_1v=-c_0c_1\Omega,\qquad
+ \mathcal L_1(c_0c_1\Omega)=0.
+\]
+The ghost commutator $[\mathcal L_m,c_n]=(-2m-n)c_{m+n}$ gives both identities.
+Consequently
+\begin{equation}\label{eq:rp-transition}
+ g_sv=v-sc_0c_1\Omega,\qquad
+ b_0g_sv=-sc_1\Omega,\qquad Hg_sv=sc_0c_1\Omega.
+\end{equation}
+For $s\ne0$, this vector is outside $R$.
+Thus these transition operators do not define a relative subbundle with model fiber $R$.
+
+Any map of vector-space complexes from $R$ to this unmarked target must kill its degree-two cohomology class.
+The target degree-two cohomology vanishes.
+A map sending $[e]$ to the normalized unit has the class images in Theorem~\ref{thm:rp-images}, regardless of its chain representative.
+Equation~\eqref{eq:rp-null} supplies a primitive for the specific comparison constructed here.
+Neither this degree obstruction nor~\eqref{eq:rp-transition} excludes a different marked or geometric relative complex.
+Such a complex requires defined coefficient sheaves, transported constraints, and compatible transition maps before a global comparison can be stated.

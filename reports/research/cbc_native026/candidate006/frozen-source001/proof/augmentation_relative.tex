@@ -1,0 +1,113 @@
+\subsection{Augmentations and the relative coordinate carrier}
+
+The critical Virasoro charge acts on an algebraic state space.
+A comparison with chiral chains also needs a target and compatible coordinate transitions.
+Two finite identities obstruct the augmentation-kernel target and the standard restricted transitions.
+
+\begin{proposition}[The augmentation-kernel obstruction]\label{prop:vir-no-augmentation}
+Let $V\neq0$ be a unital vertex algebra over $\mathbb C$, and let $A=V\otimes bc$ use the ghost system above.
+There is no unital vertex superalgebra homomorphism $A\to\mathbb C$ with trivial target vertex products.
+Consequently the reduced chiral construction whose coefficient sheaf is a chiral augmentation kernel cannot be instantiated on $A$ with its original collision products.
+\end{proposition}
+
+\begin{proof}
+Write $\Omega_A=\mathbf1_V\otimes\Omega$, $b=\mathbf1_V\otimes b_{-2}\Omega$, and $c=\mathbf1_V\otimes c_1\Omega$ in $A$.
+With the vertex convention $Y(a,z)=\sum_r a_{(r)}z^{-r-1}$,
+\[
+ b_{(0)}c=\mathbf1_V\otimes b_{-1}c_1\Omega=\Omega_A.
+\]
+Every nonnegative product vanishes in the trivial vertex algebra.
+A unital homomorphism $\varepsilon$ would therefore give
+$1=\varepsilon(b_{(0)}c)=\varepsilon(b)_{(0)}\varepsilon(c)=0$.
+For $V=\operatorname{Vir}_{26}$, set $T=(L_{-2}^V\mathbf1_V)\otimes\Omega$.
+There is also the independent matter identity
+\[
+ T_{(3)}T=(L_2^VL_{-2}^V\mathbf1_V)\otimes\Omega=13\Omega_A.
+\]
+
+On a coordinate disk, let $t=z_1-z_2$ and normalize
+$\operatorname{Res}(t^{-1}dt)=1$.
+The full collision maps include
+\[
+ \operatorname{Res}_{t=0}Y(b,t)c\,dt=\Omega_A,
+ \qquad
+ \operatorname{Res}_{t=0}t^3Y(T,t)T\,dt=13\Omega_A.
+\]
+A chiral augmentation to the unit chiral algebra must preserve these residues, which gives the same contradiction on that disk.
+It therefore cannot exist globally.
+The forms $dt=t\,d\log t$ and $t^3dt=t^4d\log t$ have regular logarithmic coefficients.
+Restricting to such coefficients does not remove the obstruction.
+
+The linear vacuum projection $\pi:A\to\mathbb C$ has $b,c\in\ker\pi$ but $b_{(0)}c\notin\ker\pi$.
+Its kernel is not closed under the original collision maps.
+The quotient by the vacuum also fails to inherit all vertex products, since
+$(\Omega_A)_{(-1)}b=b$ whereas $0_{(-1)}b=0$.
+Thus neither linear operation supplies the missing chiral augmentation.
+\end{proof}
+
+\begin{proposition}[Relative states, absolute states, and coordinate changes]
+\label{prop:vir-relative-target-obstruction}
+Take $V=\operatorname{Vir}_{26}$ and the zero-intercept charge of Theorem~\ref{thm:vir-square}.
+In this proposition, $\Omega$ denotes the tensor-product vacuum $\mathbf1_V\otimes\Omega_{\mathrm{gh}}$.
+Put $H=L_0^V+L_0^{\mathrm{gh}}$ and
+\[
+ e=\Omega,\quad u=c_0\Omega,\quad
+ v=c_{-1}c_1\Omega,\quad w=c_{-1}c_0c_1\Omega.
+\]
+The weight-zero absolute complex has these four basis states and differential
+\[
+ Qe=0,\qquad Qu=-2v,\qquad Qv=Qw=0.
+\]
+The relative complex is $\mathbb Ce\oplus\mathbb Cv$ with zero differential.
+The absolute cohomology has one class in degrees zero and three, and no others.
+The inclusion of relative states into absolute states kills $[v]$ and is not a quasi-isomorphism.
+
+Fix the convention that the coordinate flow $z\mapsto z/(1+sz)$ acts by
+$g_s=\exp(s\mathcal L_1)$, where $\mathcal L_1=L_1^V+L_1^{\mathrm{gh}}$.
+Then
+\begin{equation}\label{eq:vir-relative-coordinate-obstruction}
+ g_sv=v-sc_0c_1\Omega,
+ \qquad b_0g_sv=-sc_1\Omega\neq0\quad(s\neq0).
+\end{equation}
+The fixed relative fiber therefore does not define a subbundle through restriction of these state-bundle transitions.
+\end{proposition}
+
+\begin{proof}
+The universal vacuum module has $V_0=\mathbb C\mathbf1$ and $V_1=0$.
+The energy argument of Proposition~\ref{prop:vir-relative-three-term} gives exactly the four displayed absolute states and the two relative states.
+The charge contraction gives $Qu=-2v$.
+Nilpotence gives $Qv=0$, and weight zero has no degree-four state, so $Qw=0$.
+At every nonzero total weight $\lambda$, the homotopy $b_0/\lambda$ contracts the absolute complex by Corollary~\ref{cor:vir-complexes}.
+On the four-state complex, the homotopy $h(v)=-u/2$, zero on $e,u,w$, contracts it onto $\mathbb Ce\oplus\mathbb Cw$.
+All state sums are algebraic, so these homotopies define maps on the full carrier.
+In particular, $v=Q(-u/2)$ in the absolute complex.
+
+The ghost transformation law~\eqref{eq:vir-ghost-transform} gives
+\[
+ \mathcal L_1v=-c_0c_1\Omega,
+ \qquad \mathcal L_1(c_0c_1\Omega)=0.
+\]
+The exponential on $v$ consequently terminates after its linear term.
+Since $b_0c_0c_1\Omega=c_1\Omega$, this proves~\eqref{eq:vir-relative-coordinate-obstruction}.
+Also $Hg_sv=sc_0c_1\Omega$, so the same transition fails the weight-zero condition.
+A restricted transition must preserve the model fiber, which fails here.
+\end{proof}
+
+For a fixed coordinate, the relative vector-space complex remains defined.
+A sheaf comparison requires a separately constructed relative sheaf complex or a family of transported constraints with compatible transition maps.
+For source and target sheaf complexes $\mathcal C,\mathcal T$, local maps must satisfy
+\[
+ d_{\mathcal T}\Phi_U=\Phi_Ud_{\mathcal C},\qquad
+ \operatorname{res}^{\mathcal T}_{UW}\Phi_U
+ =\Phi_W\operatorname{res}^{\mathcal C}_{UW}\quad(W\subset U),
+\]
+and $g^{\mathcal T}_{ij}\Phi_j=\Phi_i g^{\mathcal C}_{ij}$ in coordinate trivializations.
+Ordinary or derived global sections require these complexes and their transitions first.
+The restricted transitions in~\eqref{eq:vir-relative-coordinate-obstruction} do not supply them.
+
+A different unital chiral-chain construction may avoid an augmentation kernel.
+Its coefficient complexes, vacuum insertions, all collision maps, differential, and section functor must be constructed before it can serve as a comparison target.
+For the relative vacuum complex, a degree-preserving quasi-isomorphism requires target cohomology precisely in degrees zero and two.
+Proposition~\ref{prop:vir-relative-target-obstruction} excludes the absolute state complex as a replacement target.
+These assertions concern the specified augmentation-kernel construction and state transitions; they do not exclude every chiral-chain construction.
+

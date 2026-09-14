@@ -1,0 +1,978 @@
+--- parent/cbc/bibliography/references.tex
++++ candidate002/cbc/bibliography/references.tex
+@@ -1270,4 +1270,5 @@
+ Section 50.15, Lemma 50.15.2,
+ \url{https://stacks.math.columbia.edu/tag/0FMU}.
+ 
++\bibitem{DLMF26} NIST Digital Library of Mathematical Functions, \S23.18, Eq.~23.18.5, \url{https://dlmf.nist.gov/23.18.E5}.
+ \end{thebibliography}
+--- parent/cbc/chapters/connections/bv_brst.tex
++++ candidate002/cbc/chapters/connections/bv_brst.tex
+@@ -183,7 +183,10 @@
+ \input{chapters/theory/insertion_integrals}
+ 
+ \begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+-At genus~$1$, Theorem~\ref{thm:genus-universality} gives $F_1 = \kappa/24$.  For $\cA = \mathrm{Vir}_c$, $F_1 = c/24 = \operatorname{tr}(\Theta_{\mathrm{Vir}_c}^{(1)}) = (c/2)\cdot(1/12)$, encoding the Mumford isomorphism.
++The Bernoulli coefficient of Theorem~\ref{thm:genus-universality} is $F_1=\kappa/24$.
++For $\kappa=C/2$, it gives $F_1=C/48$, while the vacuum-energy exponent in $q^{L_0-C/24}$ is $-C/24$.
++Proposition~\ref{prop:cbc26-genus-one-normalization} computes both values.
++An identification with a Hodge integral or a trace requires its separately specified map and normalization.
+ \end{remark}
+ 
+ \begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
+--- parent/cbc/chapters/connections/concordance.tex
++++ candidate002/cbc/chapters/connections/concordance.tex
+@@ -410,11 +410,10 @@
+   The genus universality theorem shows that these two perspectives
+   produce the same genus-$g$ obstruction class.
+ \item \emph{BV-BRST.}
+-  The CG BV formalism produces the same BRST complex as our bar
+-  construction when applied to the chiral algebra of a 2d holomorphic
+-  field theory (Chapter~\ref{ch:bv-brst}).  The identification
+-  $\bar{B}(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ connects the
+-  algebraic (bar complex) and physical (BRST cohomology) perspectives.
++  Theorem~\ref{thm:cbc26-finite-bv} constructs a polynomial BV differential and its Koszul quotient map under a regular-sequence hypothesis.
++  A comparison between field-theory observables and a chiral bar complex requires the actual observable complex, collision target, coefficient maps, coordinate descent, and a chain morphism.
++  The filtered criterion of Theorem~\ref{thm:brst-bar-genus0} applies only after these data are supplied.
++  The polynomial quotient map alone does not construct those curvewise data.
+ \item \emph{Monoidal bar-cobar.}
+   Booth--Lazarev~\cite{BL24} construct monoidal model structures on
+   categories of coalgebras, providing the homotopical infrastructure
+@@ -695,7 +694,7 @@
+ Theorem~\textup{\ref{thm:master-theta}}, and
+ Conjectures~\textup{\ref{conj:master-dk-kl}}--\textup{%
+ \ref{conj:master-infinite-generator}}, and should not be placed on the
+-same logical level. The genus-zero comparison in Theorem~\ref{thm:algebraic-string-dictionary} requires its constructed target, relative descent, symbol map, compatible corrections, and pairing data.
++same logical level. The genus-zero comparison in Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0} requires its constructed target, relative descent, symbol map, compatible corrections, and pairing data.
+ The augmentation and relative-transition obstructions are Propositions~\ref{prop:vir-no-augmentation} and~\ref{prop:vir-relative-target-obstruction}.}
+ \end{conjecture}
+ 
+@@ -773,7 +772,7 @@
+   Corollary~\ref{cor:yangian-typea-realization-plus-compacts} or,
+   equivalently,
+   Corollary~\ref{cor:yangian-typea-realization-plus-fundamental-packet};
+-\item actual genus-zero comparison data are supplied, with all target, relative-descent, section-carrier, filtration, symbol-map, correction, and pairing hypotheses of Theorem~\ref{thm:algebraic-string-dictionary};
++\item actual genus-zero comparison data are supplied, with all target, relative-descent, section-carrier, filtration, symbol-map, correction, and pairing hypotheses of Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0};
+   the higher-genus modular deformation package is that of Theorem~\ref{thm:master-theta}.
+ \end{enumerate}
+ Then no new infinite-tower algebraic obstruction remains on the
+@@ -827,7 +826,7 @@
+ packages.  The only further content is the genuswise BV/BRST/bar
+ comparison supplied by assumption~\textup{(iv)}, namely the passage
+ from the realized H-level targets to the corresponding BV/BRST
+-complexes with all actual genus-zero comparison and pairing data imposed in assumption~\textup{(iv)}, in the sense of Theorem~\ref{thm:algebraic-string-dictionary} and
++complexes with all actual genus-zero comparison and pairing data imposed in assumption~\textup{(iv)}, in the sense of Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0} and
+ Theorem~\ref{thm:master-theta}, compatibly with truncation, Verdier
+ duality, and clutching.  This is exactly the claimed MC5 reduction.
+ \end{proof}
+@@ -857,7 +856,7 @@
+   either Corollary~\ref{cor:yangian-formal-moduli-plus-core-realization}
+   or Corollary~\ref{cor:yangian-canonical-realization-plus-vector-line}
+   hold for the canonical H-level target $\mathfrak{g}_{\cA}$; and
+-\item actual genus-zero comparison data are supplied, with all target, relative-descent, section-carrier, filtration, symbol-map, correction, and pairing hypotheses of Theorem~\ref{thm:algebraic-string-dictionary};
++\item actual genus-zero comparison data are supplied, with all target, relative-descent, section-carrier, filtration, symbol-map, correction, and pairing hypotheses of Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0};
+   the higher-genus modular deformation package is that of Theorem~\ref{thm:master-theta}.
+ \end{enumerate}
+ Then the supplied comparison maps extend through the stated tower, compatibly with truncation, Verdier duality, and clutching.
+@@ -2100,7 +2099,7 @@
+ 
+ \emph{MC5} (BV/BRST at all genera):
+ The Virasoro charge and its square are given in Theorem~\ref{thm:vir-square}.
+-The genus-zero comparisons of Theorem~\ref{thm:algebraic-string-dictionary} and Theorem~\ref{thm:bar-semi-infinite-km} require their constructed targets, coefficient actions, relative descent, section carriers, filtrations, actual symbol maps, and compatible corrections.
++The genus-zero comparisons of Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0} and Theorem~\ref{thm:bar-semi-infinite-km} require their constructed targets, coefficient actions, relative descent, section carriers, filtrations, actual symbol maps, and compatible corrections.
+ For $V\otimes bc$, the augmentation-kernel target is excluded by Proposition~\ref{prop:vir-no-augmentation}.
+ The standard relative transitions also fail in Proposition~\ref{prop:vir-relative-target-obstruction}.
+ 
+@@ -5448,7 +5447,7 @@
+ 
+ Corollary~\ref{cor:string-amplitude-genus0} transfers amplitudes only with actual $n$-point insertion maps, their pairing homotopy, and a closed integration functional on a declared form domain.
+ Corollary~\ref{cor:disk-local-ternary-on-brstbar-locus} reduces the local comparison to arity three only after the separate binary-intertwining identity is supplied.
+-The algebraic string dictionary of Theorem~\ref{thm:algebraic-string-dictionary} uses these conditions; equality of scalar anomalies does not replace them.
++The algebraic string dictionary of Theorem~\ref{thm:brst-bar-genus0} and Corollary~\ref{cor:string-amplitude-genus0} uses these conditions; equality of scalar anomalies does not replace them.
+ 
+ The higher-genus programme
+ (Conjectures~\ref{conj:bv-equals-bar-cobar},
+@@ -5880,11 +5879,11 @@
+ \item Conjecture~\ref{conj:string-amplitude}:
+   String amplitudes from bar complex
+   (Section~\ref{sec:free-field-genera}).
+-\item Theorem~\ref{thm:modular-anomaly}:
+-  Modular anomaly equation from bar-cobar
++\item Proposition~\ref{thm:modular-anomaly}:
++  Translation multiplier of an integrally graded character
+   (Section~\ref{sec:free-field-genera}).
+ \item Conjecture~\ref{conj:modular-anomaly-brst}:
+-  Modular anomaly via BRST
++  Chiral realization of modular transformation laws
+   (Section~\ref{sec:free-field-genera}).
+ \item Theorem~\ref{thm:w-integrability}:
+   W-algebra integrability from bar complex
+--- parent/cbc/chapters/examples/deformation_examples.tex
++++ candidate002/cbc/chapters/examples/deformation_examples.tex
+@@ -559,7 +559,7 @@
+ 
+ \begin{computation}[Compatibility verification for Virasoro]
+ \label{comp:dq-koszul-vir}
+-For $\mathrm{Vir}_c$ via DS reduction of $\widehat{\mathfrak{sl}}_2$ at level $k$: the Koszul dual is $\mathrm{Vir}_{26-c}$ (Theorem~\ref{thm:w-algebra-koszul-main}), with curvatures $\kappa(c)=c/2$, $\kappa(c')=(26-c)/2$, summing to $13$ independently of $c$.  At $c=0$ the bar complex is uncurved while the dual is maximally curved; at $c=26$ the roles reverse (the no-ghost theorem).
++For $\mathrm{Vir}_c$ via DS reduction of $\widehat{\mathfrak{sl}}_2$ at level $k$: the Koszul dual is $\mathrm{Vir}_{26-c}$ (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}), with curvatures $\kappa(c)=c/2$, $\kappa(c')=(26-c)/2$, summing to $13$ independently of $c$.  At $c=0$ the bar complex is uncurved while the dual is maximally curved; at $c=26$ the roles reverse (the no-ghost theorem).
+ \end{computation}
+ 
+ \begin{remark}[Filtered deformation quantization]
+--- parent/cbc/chapters/examples/examples_summary.tex
++++ candidate002/cbc/chapters/examples/examples_summary.tex
+@@ -657,7 +657,7 @@
+ \item \emph{Virasoro and finite-type $\mathcal{W}$-algebras}:
+ for principal finite-type $\mathcal{W}$-algebras,
+ $\mathcal{W}^k(\fg)^! \cong \mathcal{W}^{-k-2h^\vee}(\fg)$
+-(Theorem~\ref{thm:w-algebra-koszul-main}).
++(the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}).
+ For the Virasoro row, the same involution supplies the proved
+ same-family shadow partner $\mathrm{Vir}_{26-c}$ used by the
+ genus and semi-infinite calculations; the stronger H-level
+@@ -2514,7 +2514,7 @@
+ Theorem~\ref{thm:betagamma-bc-koszul} ($bc$--$\beta\gamma$),
+ Theorem~\ref{thm:heisenberg-bar} (Heisenberg),
+ Theorem~\ref{thm:universal-kac-moody-koszul} (Kac--Moody),
+-Theorem~\ref{thm:w-algebra-koszul-main} ($\mathcal{W}$-algebras),
++the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main} ($\mathcal{W}$-algebras),
+ and Theorem~\ref{thm:lattice:unimodular-self-dual} (lattice VOA).
+ Claim (3) at the critical level follows from
+ Theorem~\ref{thm:spectral-sequence-collapse}:
+@@ -2584,12 +2584,12 @@
+   (Theorem~\ref{thm:genus-universality}).
+ \item \emph{Virasoro}:
+   $\mathcal{W}$-algebra Koszul duality
+-  (Theorem~\ref{thm:w-algebra-koszul-main}),
++  (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}),
+   genus-$1$ pipeline (\S\ref{sec:virasoro-genus-one-pipeline}),
+   $c + c' = 26$
+   (Theorem~\ref{thm:central-charge-complementarity}).
+ \item \emph{$\mathcal{W}_3$ and $\mathcal{W}_N$}:
+-  Koszul duality (Theorem~\ref{thm:w-algebra-koszul-main}),
++  Koszul duality (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}),
+   genus-$1$ pipeline (\S\ref{sec:w3-genus-one-pipeline}),
+   general $\kappa$ formula (Theorem~\ref{thm:wn-obstruction}),
+   three-theorem synthesis
+--- parent/cbc/chapters/examples/free_fields.tex
++++ candidate002/cbc/chapters/examples/free_fields.tex
+@@ -3792,62 +3792,7 @@
+ This gives the one-loop correction with modular invariance.
+ \end{example}
+ 
+-\begin{theorem}[Modular invariance and anomaly cancellation; \ClaimStatusProvedElsewhere]\label{thm:modular-anomaly}
+-The string amplitude is modular invariant if and only if the central charge satisfies the anomaly cancellation condition:
+-
+-For bosonic strings: $c = 26$
+-For superstrings: $c = 15$
+-
+-The modular anomaly is computed by:
+-\[\text{Anomaly} = \frac{c - c_{\text{crit}}}{24} \int_{\mathcal{M}_1} \omega_{\text{moduli}}\]
+-\end{theorem}
+-
+-\begin{proof}
+-The modular transformation acts on the bar complex as:
+-\[\tau \mapsto \frac{a\tau + b}{c\tau + d} \quad \Rightarrow \quad \barBgeom^{(1)}(\mathcal{A})_\tau \to \barBgeom^{(1)}(\mathcal{A})_{\gamma\tau}\]
+-
+-The transformation law is:
+-\[\barBgeom^{(1)}(\mathcal{A})_{\gamma\tau} = (c\tau + d)^{c/24} \barBgeom^{(1)}(\mathcal{A})_\tau\]
+-
+-Modular invariance of the full partition function requires the left-right central charge difference $c - \tilde{c} = 0 \bmod 24$ (for single-valuedness of the phase $e^{2\pi i (c-\tilde{c})/24}$). For the bosonic string ($c = \tilde{c} = 26$) and the superstring ($c = \tilde{c} = 15$), conformal anomaly cancellation arises from Weyl invariance on the worldsheet, not from $c \bmod 24$ alone. This is the Belavin--Knizhnik theorem \cite{BK86}; see also Polchinski \cite[Ch.~5]{Pol98} for the standard textbook treatment.
+-\end{proof}
+-
+-\section{\texorpdfstring{Modular invariance under $SL_2(\mathbb{Z})$}{Modular invariance under SL-2(Z)}}
+-
+-\begin{theorem}[Modular invariance of bar complex; \ClaimStatusProvedHere]\label{thm:modular-invariance}
+-At genus 1, the bar complex transforms covariantly under $SL_2(\mathbb{Z})$:
+-\[\gamma: \barBgeom^{(1)}(\mathcal{A})_\tau \to \barBgeom^{(1)}(\mathcal{A})_{\gamma \cdot \tau}\]
+-where $\gamma \cdot \tau = \frac{a\tau + b}{c\tau + d}$ for $\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in SL_2(\mathbb{Z})$.
+-
+-The transformation law is:
+-\[\barBgeom^{(1)}(\mathcal{A})_{\gamma \cdot \tau} = (c\tau + d)^{c/24} \barBgeom^{(1)}(\mathcal{A})_\tau\]
+-where $c$ is the central charge of the chiral algebra $\mathcal{A}$.
+-\end{theorem}
+-
+-\begin{proof}[Proof via genus-1 bar complex]
+-The precise content of this theorem is: the partition function $Z_\mathcal{A}(\tau)$, obtained by taking the supertrace of $q^{L_0 - c/24}$ over the vacuum module and assembling the bar complex over the elliptic curve $\mathbb{T}_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, transforms as a modular form of weight $c/24$ for $SL_2(\mathbb{Z})$.
+-
+-\emph{Step~1: Propagator on $\mathbb{T}_\tau$.}
+-By Theorem~\ref{thm:eta-appearance}, the genus-1 bar complex is built from the Weierstrass $\zeta$-function:
+-\[
+-G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\,z
+-\]
+-where $E_2(\tau)$ is the quasi-modular Eisenstein series.  Under $\tau \mapsto \gamma\cdot\tau = (a\tau+b)/(c\tau+d)$:
+-\[
+-G_{\gamma\cdot\tau}\!\left(\frac{z}{c\tau+d}\right) = (c\tau+d)^2\,G_\tau(z) + \pi i c\,(c\tau+d)\,z
+-\]
+-The quasi-modular anomaly of $E_2$ (cf.\ Appendix~\ref{app:theta}) is what drives the non-trivial cocycle.
+-
+-\emph{Step~2: Bar complex as trace.}
+-By the genus-1 bar complex computation (Theorem~\ref{thm:eta-appearance}), the bar complex partition function is:
+-\[
+-Z_\mathcal{A}(\tau) = \mathrm{Tr}_{V_\mathcal{A}}\!\left(q^{L_0 - c/24}\right), \quad q = e^{2\pi i \tau}.
+-\]
+-Zhu's theorem \cite{Zhu96} identifies $Z_\mathcal{A}(\tau)$ with a character in Zhu's module category.  The modular-invariance properties of these characters (including the transformation weight $c/24$) are established by Zhu \cite[Thm.~4.4.2]{Zhu96} under rationality assumptions, which hold for the finite examples computed here (free fields, Heisenberg, Kac--Moody at positive integer level).
+-
+-\emph{Step~3: Covariance of the bar complex.}
+-The family $\{\barBgeom^{(1)}(\mathcal{A})_\tau\}_{\tau \in \mathbb{H}}$ is a flat vector bundle over $\mathcal{M}_1 = \mathbb{H}/SL_2(\mathbb{Z})$.  The transition functions over $\mathbb{H}$ are multiplied by $(c\tau+d)^{c/24}$ when passing from $\tau$ to $\gamma\cdot\tau$: the central-charge anomaly records the failure of the vacuum vector $\mathbf{1}$ to be $L_0$-invariant under rescaling.  This covariance is exactly the statement that $Z_\mathcal{A}$ is a modular form of weight $c/24$, as required.
+-\end{proof}
++\input{chapters/theory/elliptic_normalizations}
+ 
+ \begin{proposition}[Fiber data and genus-one cohomology]
+ \label{thm:modular-anomaly-km-w}
+@@ -3864,74 +3809,6 @@
+ A modular weight requires its own determinant line and automorphy factor.
+ The scalar $c/24$ in a vacuum energy does not construct that line or its transformation law.
+ 
+-\begin{conjecture}[Modular anomaly for general chiral
+-algebras; \ClaimStatusConjectured]
+-\label{conj:modular-anomaly-brst}
+-For a general chiral algebra $\cA$ with central charge~$c$,
+-the modular anomaly is:
+-\[
+-\mathrm{Anomaly} = \frac{c - c_{\mathrm{crit}}}{24}
+-\cdot \dim_{\mathrm{reg}} H^*_{\mathrm{BRST}}(\cA)
+-\]
+-where $\dim_{\mathrm{reg}}$ denotes the regularized
+-dimension \textup{(}zeta-function regularization of
+-$\sum_n (-1)^n \dim H^n_{\mathrm{BRST}} \cdot
+-n^{-s}|_{s=0}$\textup{)}.
+-(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
+-\end{conjecture}
+-
+-
+-\begin{example}[Virasoro algebra modular invariance]
+-For the Virasoro algebra $\text{Vir}_c$ at central charge $c$, the bar complex is
+-\[\barBgeom^{(1)}(\text{Vir}_c)_\tau = \text{span}\{L_{n_1} \otimes \cdots \otimes L_{n_k} \otimes \vartheta_3(z_1-z_2|\tau) \wedge \cdots\}\]
+-and the modular transformation acts by
+-\[\gamma: \barBgeom^{(1)}(\text{Vir}_c)_\tau \to (c\tau + d)^{c/24} \barBgeom^{(1)}(\text{Vir}_c)_{\gamma \cdot \tau}.\]
+-For holomorphic (self-dual) CFTs, modular invariance of the partition function requires $c \equiv 0 \pmod{24}$, which is satisfied for:
+-\begin{itemize}
+-\item $c = 0$: trivial theory
+-\item $c = 24$: Monster module (Frenkel--Lepowsky--Meurman \cite{FLM88})
+-\item $c = 48$: tensor product theories
+-\end{itemize}
+-The physically relevant values are:
+-\begin{itemize}
+-\item $c = 26$: bosonic string (modular weight excess $(c-24)/24 = 1/12$)
+-\item $c = 15$: superstring (modular weight excess $(c-24)/24 = -3/8$)
+-\end{itemize}
+-\end{example}
+-
+-\begin{example}[WZW model modular invariance]
+-For the WZW model $\widehat{\mathfrak{g}}_k$ at level $k$, the bar complex is
+-\[\barBgeom^{(1)}(\widehat{\mathfrak{g}}_k)_\tau = \text{span}\{J^a_{n_1} \otimes \cdots \otimes J^a_{n_k} \otimes \vartheta_3(z_1-z_2|\tau) \wedge \cdots\}\]
+-with central charge
+-\[c = \frac{k \dim \mathfrak{g}}{k + h^\vee}\]
+-where $h^\vee$ is the dual Coxeter number.
+-The model is modular invariant for all integer levels $k \geq 1$, and the anomaly is
+-\[\text{Anomaly} = \frac{k \dim \mathfrak{g} - (k + h^\vee) \cdot 24}{24(k + h^\vee)}.\]
+-For large $k$, this approaches $\frac{\dim \mathfrak{g}}{24} - 1$.
+-\end{example}
+-
+-\begin{theorem}[Complete modular invariance classification \cite{Zhu96, MooreSeiberg89}; \ClaimStatusProvedElsewhere]\label{thm:modular-classification}
+-A chiral algebra $\mathcal{A}$ is modular invariant at genus 1 if and only if one of the following holds:
+-
+-\begin{enumerate}
+-\item \emph{Critical dimension.} $c = 26$ for Virasoro (bosonic string), $c = 15$ for $N=1$ super-Virasoro (superstring), $c = 0$ for topological theories.
+-\item \emph{Integer weight.} $c = 24n$ for $n \in \mathbb{Z}$ (trivial transformation).
+-\item \emph{Rational CFT.} The chiral algebra has rational fusion rules and modular $S$-matrix.
+-\item \emph{Orbifold.} The chiral algebra is an orbifold of a modular invariant theory.
+-\end{enumerate}
+-\end{theorem}
+-
+-\begin{proof}[Proof via representation theory]
+-The classification follows from the representation theory of $SL_2(\mathbb{Z})$:
+-
+-\emph{Step~1.} The modular group has irreducible representations of weight $k \in \mathbb{Z}/2$.
+-
+-\emph{Step~2.} For weight $k = c/24$, the representation is trivial if and only if $k \in \mathbb{Z}$.
+-
+-\emph{Step~3.} Rational conformal field theories have finite-dimensional representation spaces, ensuring modular invariance.
+-
+-\emph{Step~4.} Orbifolding preserves modular invariance under appropriate conditions.
+-\end{proof}
+ 
+ \section{Explicit low-degree computations}
+ \label{sec:explicit-low-degree}
+--- parent/cbc/chapters/examples/genus_expansions.tex
++++ candidate002/cbc/chapters/examples/genus_expansions.tex
+@@ -1039,7 +1039,7 @@
+ The $\mathcal{W}_3 = \mathcal{W}^k(\mathfrak{sl}_3)$ algebra has
+ two generators: $T$ (weight~$2$) and $W$ (weight~$3$), with
+ $c + c' = 100$ under Koszul duality
+-(Theorem~\ref{thm:w-algebra-koszul-main}).  The genus-$2$ bar
++(the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}).  The genus-$2$ bar
+ differential involves four propagator channels (the four
+ generator pairs $T \times T$, $T \times W$, $W \times T$,
+ $W \times W$).
+--- parent/cbc/chapters/examples/kac_moody_framework.tex
++++ candidate002/cbc/chapters/examples/kac_moody_framework.tex
+@@ -1315,7 +1315,7 @@
+ \[
+ \mathcal{W}^{-h^\vee}(\mathfrak{g}, f)^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee)
+ \]
+-for arbitrary $f$ (Barbasch--Vogan dual $f^\vee$) is conjectural (\ClaimStatusConjectured): it separates into three non-principal packets (dual-orbit input, orbit-indexed level shift, paired DS seed transport).  See Theorem~\ref{thm:w-algebra-koszul-main} for the principal case.
++for arbitrary $f$ (Barbasch--Vogan dual $f^\vee$) is conjectural (\ClaimStatusConjectured): it separates into three non-principal packets (dual-orbit input, orbit-indexed level shift, paired DS seed transport).  See the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main} for the principal case.
+ \end{remark}
+ 
+ \begin{remark}[Langlands duality]
+--- parent/cbc/chapters/examples/w_algebras_framework.tex
++++ candidate002/cbc/chapters/examples/w_algebras_framework.tex
+@@ -40,105 +40,22 @@
+ 
+ \subsection{\texorpdfstring{The solution: curved $A_\infty$ Koszul duality}{The solution: curved A infty Koszul duality}}
+ 
+-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra Koszul duality for principal nilpotent; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul-main}
+-\index{W-algebra@$\mathcal{W}$-algebra|textbf}
+-\textup{[Regime: filtered-complete \textup{(}DS reduction from curved-central KM;
+-Convention~\textup{\ref{conv:regime-tags})}.]}
+-
+-Let $\mathfrak{g}$ be a simple Lie algebra with dual Coxeter number $h^\vee$, and let $f = f_{\mathrm{prin}}$ be the principal nilpotent.
+-For $k \neq -h^\vee$, the W-algebra $\mathcal{W}^k(\mathfrak{g}) = \mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})$ admits a curved $A_\infty$ Koszul dual:
+-\begin{equation}\label{eq:w-koszul-main}
+-\mathcal{W}^k(\mathfrak{g})^! \simeq \mathcal{W}^{k'}(\mathfrak{g})
+-\end{equation}
+-where the dual level is the Feigin--Frenkel involution:
+-\begin{equation}\label{eq:ff-level-shift}
+-k' = -k - 2h^\vee
+-\end{equation}
+-
+-The equivalence is of curved $A_\infty$ chiral algebras, and satisfies:
+-\begin{enumerate}
+-\item \emph{Involutivity.} $(k')' = -(-k-2h^\vee) - 2h^\vee = k$, so $(\mathcal{W}^!)^! \simeq \mathcal{W}$.
+-\item \emph{Critical level.} As $k \to -h^\vee$, both $k$ and $k'$ approach $-h^\vee$, and the duality reduces to Feigin--Frenkel self-duality of the center $Z(\widehat{\mathfrak{g}}_{-h^\vee})$.
+-\item \emph{Virasoro specialization.} For $\mathfrak{g} = \mathfrak{sl}_2$ ($h^\vee = 2$), this gives $k' = -k-4$, and the central charges satisfy $c(k) + c(k') = 26$ exactly (by direct computation: $c(k') = 1 + 6(k+3)^2/(k+2)$, so $c(k)+c(k') = 2 + 24 = 26$), recovering the Virasoro level-shifting.
+-\end{enumerate}
+-
+-For non-principal nilpotent $f$ with simply-laced $\mathfrak{g}$, the Koszul dual involves
+-orbit duality: $\mathcal{W}^k(\mathfrak{g},f)^! \simeq \mathcal{W}^{k'}(\mathfrak{g}, f^D)$ where $f^D$ is the Barbasch--Vogan dual nilpotent. This is stated as Conjecture~\ref{conj:w-orbit-duality} below.
+-\end{theorem}
+-
+-\begin{proof}
+-The proof proceeds in five steps.
+-
+-\emph{Step~1: Wakimoto reduction to free fields.}
+-By the Wakimoto free field realization (Theorem~\ref{thm:w3-wakimoto} for $\mathfrak{sl}_3$, Frenkel \cite{Feigin-Frenkel} for general $\mathfrak{g}$), the W-algebra admits a resolution:
++\input{chapters/theory/reduction_parameters}
++
++\begin{remark}[The chiral dual after quantum reduction]
++\label{thm:w-algebra-koszul-main}
++\label{eq:w-koszul-main}\label{eq:ff-level-shift}
++For a simple Lie algebra $\mathfrak g$ and principal nilpotent $f$, the proposed curved chiral comparison is
+ \[
+-\mathcal{W}^k(\mathfrak{g}) \simeq H^0_{Q_{\mathrm{DS}}}\!\left(\bigotimes_{\alpha \in \Delta_+} \mathcal{F}_{\beta_\alpha\gamma_\alpha} \;\otimes\; \mathcal{H}^{\otimes r}\right)
++ \mathcal W^k(\mathfrak g,f)^!\simeq\mathcal W^{-k-2h^\vee}(\mathfrak g,f).
+ \]
+-where $\mathcal{F}_{\beta\gamma}$ denotes a $\beta$-$\gamma$ system, $\mathcal{H}$ denotes a Heisenberg (free boson) algebra, $r = \mathrm{rank}(\mathfrak{g})$, and $Q_{\mathrm{DS}}$ is the BRST differential for Drinfeld--Sokolov reduction.  The level $k$ enters through the background charge $\alpha_0 = \alpha_0(k)$ of the bosonic fields and the conformal weights of the $\beta$-$\gamma$ systems.
+-
+-\emph{Step~2: Bar complex of the resolution.}
+-Since the bar functor is an exact functor on the homotopy category of $A_\infty$ algebras (Theorem~\ref{thm:bar-cobar-inversion-qi}), we may compute:
+-\[
+-\bar{B}(\mathcal{W}^k) \simeq H^*_{Q_{\mathrm{DS}}}\!\bigl(\bar{B}(\mathcal{F}_{\beta\gamma})^{\otimes |\Delta_+|} \otimes \bar{B}(\mathcal{H})^{\otimes r}\bigr)
+-\]
+-The bar complexes of the constituent free fields are known: $\bar{B}(\mathcal{H}_k) \simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)$ (the bar differential vanishes since the Heisenberg OPE has only a double pole; the coalgebra retains the level~$k$ through the pairing on~$V$, cf.\ Theorem~\ref{thm:heisenberg-koszul-dual-early}), and $\bar{B}(\mathcal{F}_{\beta\gamma})^\vee \simeq \mathcal{F}_{bc}$ (the bar coalgebra of $\beta\gamma$, dualized, is the $bc$ system, cf.\ Section~\ref{sec:betagamma-koszul-dual}).
+-
+-\emph{Step~3: BRST cohomology at the dual level.}
+-The BRST differential $Q_{\mathrm{DS}}$ acts on the bar complex.
+-
+-The bar construction dualizes the coalgebra on the Heisenberg factor,
+-so the screening momenta change sign:
+-$\alpha_i \mapsto -\alpha_i$.
+-This is the effect of the Koszul pairing
+-$J \mapsto J^*$ on the level-dependent bilinear form.
+-
+-By Feigin--Frenkel duality~\cite{Feigin-Frenkel}, the negated momenta
+-$-\alpha_i$ are precisely the screening momenta at the dual level
+-$k' = -k - 2h^\vee$.
+-
+-Therefore:
+-\[
+-H^*_{Q_{\mathrm{DS}}}(\bar{B}(\text{free fields at level } k)) \simeq \mathcal{W}^{k'}(\mathfrak{g})
+-\]
+-with $k' = -k - 2h^\vee$.
+-
+-The screening charges $S_i = \oint V_{\alpha_i}(z)\,dz$ at level $k$
+-therefore become the screening charges at level $k'$.
+-
+-Although the Heisenberg bar complex $\bar{B}(\mathcal{H}_k)$ is
+-commutative and has trivial differential, the coalgebra pairing still
+-retains the level~$k$.
+-
+-Since $-\alpha_i$ are the screening momenta for level
+-$k' = -k-2h^\vee$ by Feigin--Frenkel duality, the level shift arises
+-from the BRST mechanism, not from the Heisenberg factor alone.
+-
+-\emph{Step~4: Curved $A_\infty$ identification.}
+-For $k \neq -h^\vee$, the W-algebra has non-trivial curvature $m_0 \neq 0$ (Theorem~\ref{thm:w-bar-curvature}). The bar-cobar adjunction of Theorem~\ref{thm:e1-chiral-koszul-duality} gives a curved $A_\infty$ quasi-isomorphism:
+-\[
+-\Omega^{\mathrm{ch}}(\bar{B}(\mathcal{W}^k(\mathfrak{g}))) \xrightarrow{\;\sim\;} \mathcal{W}^{-k-2h^\vee}(\mathfrak{g})
+-\]
+-The curvature of the dual is $m_0' = (k' + h^\vee) \cdot C_2 = -(k + h^\vee) \cdot C_2 = -m_0$, where $C_2$ is the quadratic Casimir element.  In particular, $m_0 = 0$ if and only if $m_0' = 0$, as expected.
+-
+-\emph{Step~5: Consistency checks.}
+-\emph{(i) Involutivity.}  $k'' = -(k') - 2h^\vee = -(-k-2h^\vee) - 2h^\vee = k$. \checkmark
+-
+-\emph{(ii) Critical level.}  At $k = -h^\vee$: $k' = -(-h^\vee) - 2h^\vee = -h^\vee$. Both sides have vanishing curvature ($m_0 = 0$) and large centers.  The duality reduces to the isomorphism $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Theorem~\ref{thm:ff-center}), which is Feigin--Frenkel's theorem. \checkmark
+-
+-\emph{(iii) $\mathfrak{sl}_2$ reduction.}  For $\mathfrak{g} = \mathfrak{sl}_2$ with $h^\vee = 2$: $\mathcal{W}^k(\mathfrak{sl}_2) = \mathrm{Vir}_{c(k)}$ with $c(k) = 1 - 6(k+1)^2/(k+2)$.  The dual level $k' = -k-4$ gives $c(k') = 1 - 6(-k-3)^2/(-k-2)$.  One verifies $c(k) + c(k') = 26$ for all $k$: the Virasoro algebra at $c = 0$ is abstractly Koszul self-dual (Theorem~\ref{thm:virasoro-self-duality}); this self-duality is a property of the algebra at $c=0$, not of the FF level-shifting involution (which sends $c=0$ to $c=26$). \checkmark
+-
+-The level-independence of $c(k) + c(k') = 26$ is an instance of the
+-general pattern: for any simple $\mathfrak{g}$, the Freudenthal--de~Vries
+-identity gives $c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
+-= 2\operatorname{rank}(\mathfrak{g}) + 4h^\vee\dim\mathfrak{g}$,
+-independent of $k$.
+-
+-For the parameter reflection $t=k+h^\vee\mapsto-t$, Proposition~\ref{cor:anomaly-duality-w} computes the central-charge sum.
+-It is $26$ for Virasoro and $100$ for $\mathcal W_3$.
+-The corresponding scalars $\kappa=c/2$ and $\kappa=5c/6$ have sums $13$ and $250/3$.
+-These scalar identities require a separate comparison before they can describe anomaly operators or genuswise cohomology.
+-The polynomial reduction and its associative bar maps are constructed in Theorem~\ref{thm:cbc26-polynomial-ds}.
+-\end{proof}
++Its construction requires the affine--ghost collision complex, a unital reduced target, and a comparison that commutes with the reduction differential and all collision maps.
++No such map is supplied by replacing a free-field state space with its cohomology.
++The actual polynomial comparison is Theorem~\ref{thm:cbc26-polynomial-ds}.
++Proposition~\ref{prop:cbc26-conformal-reflection} excludes a conformal vertex isomorphism under reflection for generic Virasoro parameters.
++The curved chiral comparison above therefore needs a separately specified notion of equivalence and preserved structures.
++At critical level the Sugawara conformal vector is undefined, so a limiting assertion additionally requires a construction over the level parameter.
++\end{remark}
+ 
+ \begin{remark}[Reduction maps and twisting morphisms]
+ \label{rem:w-twisting-morphism}
+@@ -159,7 +76,7 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]
+-A proof requires: (1)~DS reduction for arbitrary nilpotent $f$ (non-standard BRST complexes); (2)~Barbasch--Vogan duality~\cite{BV85} relating $\mathcal{O}_f$ to $\mathcal{O}_{f^D}$ with component group compatibility; (3)~a level-shift formula $k' = k'(k,f)$ generalizing $k' = -k - 2h^\vee$.  The principal case is proved (Theorem~\ref{thm:w-algebra-koszul-main}); the first non-principal family is hook-type; the $\mathfrak{sl}_3$ subregular computation is the seed.  The remaining frontier splits into three exact packets: dual-orbit input (BV/Spaltenstein dictionary), orbit-indexed level shift, and paired DS seed transport/globalization.
++A proof requires: (1)~DS reduction for arbitrary nilpotent $f$ (non-standard BRST complexes); (2)~Barbasch--Vogan duality~\cite{BV85} relating $\mathcal{O}_f$ to $\mathcal{O}_{f^D}$ with component group compatibility; (3)~a level-shift formula $k' = k'(k,f)$ generalizing $k' = -k - 2h^\vee$.  The principal comparison requires the maps in Remark~\ref{thm:w-algebra-koszul-main}; the first non-principal family is hook-type; the $\mathfrak{sl}_3$ subregular computation is the seed.  The remaining frontier splits into three exact packets: dual-orbit input (BV/Spaltenstein dictionary), orbit-indexed level shift, and paired DS seed transport/globalization.
+ 
+ \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).
+ \end{remark}
+@@ -681,7 +598,7 @@
+ \mathcal{W}^{-h^\vee(\mathfrak{g})}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee(\mathfrak{g}^\vee)}(\mathfrak{g}^\vee, f_{\mathrm{prin}}^\vee)
+ \end{equation}
+ 
+-\emph{(B) At General Level.} For $f = f_{\mathrm{prin}}$ and $k \neq -h^\vee$, the Koszul dual is the same W-algebra at shifted level (Theorem~\ref{thm:w-algebra-koszul-main}):
++\emph{(B) At General Level.} For $f = f_{\mathrm{prin}}$ and $k \neq -h^\vee$, the Koszul dual is the same W-algebra at shifted level (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}):
+ \begin{equation}
+ \mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-k-2h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})
+ \end{equation}
+@@ -696,7 +613,7 @@
+ \end{theorem}
+ 
+ \begin{proof}
+-Part (B) is Theorem~\ref{thm:w-algebra-koszul-main}.  Part (A) follows from Part~(B) in the limit $k \to -h^\vee$, where the curvature $m_0 = (k+h^\vee) \cdot C_2 \to 0$ and the duality reduces to the Feigin--Frenkel isomorphism of centers, $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Theorem~\ref{thm:ff-center}).  For the non-simply-laced case of Part~(A), the Langlands dual intervenes because the screening operators transform under the root system duality $\alpha_i \mapsto \alpha_i^\vee$, which exchanges long and short roots.
++Part (B) is the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}.  Part (A) follows from Part~(B) in the limit $k \to -h^\vee$, where the curvature $m_0 = (k+h^\vee) \cdot C_2 \to 0$ and the duality reduces to the Feigin--Frenkel isomorphism of centers, $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Theorem~\ref{thm:ff-center}).  For the non-simply-laced case of Part~(A), the Langlands dual intervenes because the screening operators transform under the root system duality $\alpha_i \mapsto \alpha_i^\vee$, which exchanges long and short roots.
+ 
+ Part (C) is immediate from Part~(B) with $h^\vee(\mathfrak{sl}_3) = 3$.
+ \end{proof}
+@@ -1262,11 +1179,11 @@
+ (The screening operator for $\alpha_1 + \alpha_2$ is a composite,
+ not an independent generator.)
+ 
+-At critical level $k = -h^\vee = -3$, the Feigin--Frenkel involution gives $k' = -k - 2h^\vee = 3 - 6 = -3 = k$.  By Theorem~\ref{thm:w-algebra-koszul-main}, $(\mathcal{W}_3^{-3})^! \simeq \mathcal{W}_3^{-3}$, establishing self-duality directly.
++At critical level $k = -h^\vee = -3$, the Feigin--Frenkel involution gives $k' = -k - 2h^\vee = 3 - 6 = -3 = k$.  By the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}, $(\mathcal{W}_3^{-3})^! \simeq \mathcal{W}_3^{-3}$, establishing self-duality directly.
+ 
+ \emph{General level ($k \neq -3$).}
+ By the main W-algebra Koszul duality theorem
+-(Theorem~\ref{thm:w-algebra-koszul-main}), the Feigin--Frenkel
++(the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}), the Feigin--Frenkel
+ involution $k \mapsto k' = -k - 2h^\vee = -k - 6$ gives
+ $(\mathcal{W}_3^k)^! \simeq \mathcal{W}_3^{k'}$.
+ \end{proof}
+@@ -1932,7 +1849,7 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope: AGT correspondence]
+-A proof requires localization on the instanton moduli space and identification of contributions with W-algebra matrix elements; see Alday--Gaiotto--Tachikawa~\cite{AGT09}.  In the monograph's frontier order, the gauge-theory comparison is a downstream MC5 task.
++A proof requires localization on the instanton moduli space and identification of contributions with W-algebra matrix elements; see Alday--Gaiotto--Tachikawa~\cite{AGT09}.  The gauge-theory comparison requires a map from its observable complex to the stated chiral target.
+ \end{remark}
+ 
+ 
+@@ -1942,7 +1859,8 @@
+ \label{rem:w-algebra-three-theorems}
+ \index{main theorems!W-algebra verification}
+ This chapter verifies Theorems~A, B, and C for principal $\mathcal{W}^k(\mathfrak{g})$.
+-Theorem~A yields $\mathcal{W}^k(\mathfrak{g})^! \simeq \mathcal{W}^{-k-2h^\vee}(\mathfrak{g})$ (Theorem~\ref{thm:w-algebra-koszul-main}) via Wakimoto realization and BRST reduction.
++The proposed chiral equivalence in Remark~\ref{thm:w-algebra-koszul-main} requires a Wakimoto resolution with its full ghost complex and equivariant collision maps.
++The scalar level reflection alone does not construct this equivalence.
+ Theorem~B gives strict inversion at $k = -h^\vee$ (Theorem~\ref{thm:critical-level-structure}) and spectral sequence collapse at genus~$1$ for $\mathrm{Vir}_c$ and $\mathcal{W}_3^k$.
+ Theorem~C gives complementarity $Q_1(\cA) \oplus Q_1(\cA^!) = H^*(\overline{\mathcal{M}}_{1,1})$ with $\kappa(\mathcal{W}_N) = c \cdot (H_N - 1)$ (Theorem~\ref{thm:wn-obstruction}).
+ \end{remark}
+@@ -2007,7 +1925,7 @@
+ \begin{remark}[W-algebra modules and Koszul duality]
+ \label{rem:w-module-koszul}
+ \index{W-algebra@$\mathcal{W}$-algebra!module Koszul duality}
+-The level shift $k \mapsto k' = -k - 2h^\vee$ (Theorem~\ref{thm:w-algebra-koszul-main}) extends to modules: $H^0_{\mathrm{DS}}(\mathrm{Ind}(M)) \simeq \mathrm{Ind}_W(H^0_{\mathrm{DS}}(M))$ (Theorem~\ref{thm:e1-module-koszul-duality}).  At minimal model values $k = -h^\vee + p/q$, $\mathcal{W}^k$ is rational ($X_{\mathcal{W}^k} = \{0\}$, Arakawa~\cite{Arakawa17}), while at the dual level $k' = -h^\vee - p/q$ it is non-rational ($X_{\mathcal{W}^{k'}} \neq \{0\}$).
++The level shift $k \mapsto k' = -k - 2h^\vee$ (the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}) extends to modules: $H^0_{\mathrm{DS}}(\mathrm{Ind}(M)) \simeq \mathrm{Ind}_W(H^0_{\mathrm{DS}}(M))$ (Theorem~\ref{thm:e1-module-koszul-duality}).  At minimal model values $k = -h^\vee + p/q$, $\mathcal{W}^k$ is rational ($X_{\mathcal{W}^k} = \{0\}$, Arakawa~\cite{Arakawa17}), while at the dual level $k' = -h^\vee - p/q$ it is non-rational ($X_{\mathcal{W}^{k'}} \neq \{0\}$).
+ \end{remark}
+ 
+ \begin{example}[Virasoro minimal model modules]
+--- parent/cbc/chapters/frame/heisenberg_frame.tex
++++ candidate002/cbc/chapters/frame/heisenberg_frame.tex
+@@ -2242,7 +2242,7 @@
+ \noindent\textbf{Koszul duality commutes with DS reduction.}
+ The central theorem for $\mathcal{W}$-algebras is that Drinfeld--Sokolov
+ reduction commutes with Koszul duality
+-(Theorem~\ref{thm:w-algebra-koszul-main}):
++(the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main}):
+ \begin{equation}\label{eq:frame-w-koszul}
+ \mathcal{W}^k(\mathfrak{g})^!
+ \;\simeq\;
+--- parent/cbc/chapters/theory/elliptic_normalizations.tex
++++ candidate002/cbc/chapters/theory/elliptic_normalizations.tex
+@@ -0,0 +1,113 @@
++\section{Characters and elliptic kernels}
++
++\begin{proposition}[Translation of an integrally graded character]
++\label{thm:modular-anomaly}
++Let $V=\bigoplus_{n\geq0}V_n$ have finite-dimensional components and let $C\in\mathbb C$.
++Suppose $\sum_n\dim(V_n)q^n$ converges for $|q|<1$.
++For $\tau\in\mathbb H$ put
++\[
++ Z_V(\tau)=\sum_{n\geq0}\dim(V_n)
++             \exp\bigl(2\pi i\tau(n-C/24)\bigr).
++\]
++Then $Z_V(\tau+1)=e^{-2\pi i C/24}Z_V(\tau)$.
++For two such nonzero characters of real central charges $C,\widetilde C$, the product $Z_V\overline{Z_{\widetilde V}}$ is invariant under translation if and only if $C-\widetilde C\in24\mathbb Z$.
++This translation condition alone does not imply invariance under all modular transformations.
++\end{proposition}
++\begin{proof}
++Each summand acquires the factor $e^{2\pi i n}e^{-2\pi iC/24}=e^{-2\pi iC/24}$.
++Absolute convergence permits the factor to be taken outside the sum.
++The conjugate character supplies the inverse phase with $\widetilde C$, giving the stated condition.
++Translation is only one generator of the modular group.
++For example $e^{2\pi i\tau}$ is translation invariant but has different values at $2i$ and $i/2$.
++\end{proof}
++
++\begin{theorem}[The Heisenberg vacuum character]
++\label{thm:modular-invariance}
++The rank-one Heisenberg vacuum module has character
++\[
++ Z_{\mathrm H}(\tau)=e^{-\pi i\tau/12}
++                 \prod_{n\geq1}(1-e^{2\pi in\tau})^{-1}
++                 =\eta(\tau)^{-1}.
++\]
++It satisfies
++\[
++ Z_{\mathrm H}(\tau+1)=e^{-\pi i/12}Z_{\mathrm H}(\tau),\qquad
++ Z_{\mathrm H}(-1/\tau)=(-i\tau)^{-1/2}Z_{\mathrm H}(\tau).
++\]
++The square root is the holomorphic branch positive when $\tau$ is positive imaginary.
++The modular weight of this character is $-1/2$, with the inverse eta multiplier.
++\end{theorem}
++\begin{proof}
++A vacuum basis consists of $\prod_{n\geq1}a_{-n}^{m_n}\mathbf1$, with finitely many nonzero $m_n\geq0$ and conformal weight $\sum n m_n$.
++Summing the geometric series for each oscillator gives the displayed product.
++It converges normally on compact subsets of $\mathbb H$ because $\sum |q|^n/(1-|q|^n)$ converges there.
++The vacuum energy is $-1/24$ since the central charge is one.
++The translation identity follows directly from the product.
++The eta transformation formula gives $\eta(-1/\tau)=(-i\tau)^{1/2}\eta(\tau)$ \cite[Eq.~23.18.5]{DLMF26}.
++Taking reciprocals proves the second identity with the same branch.
++\end{proof}
++
++For the universal Virasoro vacuum, replace the oscillator product by $\prod_{n\geq2}(1-q^n)^{-1}$ and the exponent by $-C/24$.
++Its translation multiplier remains $e^{-2\pi iC/24}$.
++For an integrally graded affine vacuum with its Sugawara conformal vector, that multiplier uses $C=k\dim\mathfrak g/(k+h^\vee)$.
++Neither computation asserts a one-dimensional modular representation for the whole character space.
++
++\begin{proposition}[Invariant pairings of character vectors]
++\label{thm:modular-classification}
++Let $\chi:\mathbb H\to\mathbb C^r$ satisfy $\chi(\gamma\tau)=\rho(\gamma)\chi(\tau)$ for a specified representation $\rho$ of $SL_2(\mathbb Z)$.
++If a constant Hermitian matrix $H$ satisfies $\rho(\gamma)^*H\rho(\gamma)=H$ for every $\gamma$, then $\chi(\tau)^*H\chi(\tau)$ is modular invariant.
++\end{proposition}
++\begin{proof}
++Substitution gives $\chi(\gamma\tau)^*H\chi(\gamma\tau)=\chi(\tau)^*\rho(\gamma)^*H\rho(\gamma)\chi(\tau)=\chi(\tau)^*H\chi(\tau)$.
++\end{proof}
++
++\subsection{The Laurent normalization of a meromorphic kernel}
++
++For $\Lambda_\tau=\mathbb Z+\tau\mathbb Z$, define
++\[
++ \zeta_\tau(z)=\frac1z+
++ \sum_{\omega\in\Lambda_\tau\setminus\{0\}}
++ \left(\frac1{z-\omega}+\frac1\omega+\frac z{\omega^2}\right),
++ \qquad z\notin\Lambda_\tau.
++\]
++The grouped summand is $O(|\omega|^{-3})$ on compact subsets away from the poles, so the series converges normally.
++Set $E_2=(12/\pi i)\partial_\tau\log\eta$ and
++$G_\tau(z)=\zeta_\tau(z)+(\pi^2/3)E_2(\tau)z$.
++
++\begin{proposition}[Transformation of the normalized kernel]
++\label{prop:cbc26-elliptic-kernel}
++For $\gamma=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in SL_2(\mathbb Z)$, put $j=c\tau+d$.
++Then
++\[
++ G_{\gamma\tau}(z/j)=jG_\tau(z)-2\pi i c z.
++\]
++Both sides have residue $j$ as functions of $z$ at zero.
++The pulled-back one-form satisfies
++\[
++ G_{\gamma\tau}(z/j)\,d(z/j)
++ =G_\tau(z)\,dz-\frac{2\pi i c}{j}z\,dz,
++\]
++where the differential is in the fiber coordinate $z$ with $\tau$ fixed.
++\end{proposition}
++\begin{proof}
++The identity $\Lambda_{\gamma\tau}=j^{-1}\Lambda_\tau$ and reindexing of the normally convergent series give $\zeta_{\gamma\tau}(z/j)=j\zeta_\tau(z)$.
++The eta multiplier is independent of $\tau$.
++Logarithmic differentiation of its transformation law \cite[Eq.~23.18.5]{DLMF26} therefore gives
++\[
++ E_2(\gamma\tau)=j^2E_2(\tau)+\frac{6c j}{\pi i}.
++\]
++For $c=0$ the same identity follows directly from translation and the central element $-I$.
++Substitution proves the kernel identity because $2\pi/i=-2\pi i$.
++The leading term $1/z$ proves the residue assertion, and division by $j$ gives the one-form identity.
++\end{proof}
++
++The function $G_\tau$ is a meromorphic expression on the covering plane with the stated transformation law.
++A propagator on an elliptic curve requires its additional periodicity, coefficient bundle, and differential equation.
++The character, this kernel, and a chiral chain complex are separate objects.
++
++\begin{conjecture}[Chiral realization of modular transformation laws]
++\label{conj:modular-anomaly-brst}
++For a conformal chiral algebra with a specified convergent character space and a compatible family of elliptic chiral chain complexes, there is a modular-equivariant chain-level realization of its character transformation law.
++Such a realization includes descent maps on the family of elliptic curves and a trace map compatible with those descent maps.
++The scalar character identities above do not construct these maps.
++\end{conjecture}
+--- parent/cbc/chapters/theory/form_degree.tex
++++ candidate002/cbc/chapters/theory/form_degree.tex
+@@ -0,0 +1,43 @@
++\section{Form degree in higher interaction terms}
++
++\begin{proposition}[Quartic expressions on a three-manifold]
++\label{prop:cbc26-quartic-degree}
++Let $M$ be a smooth three-manifold and $A\in\Omega^1(M;W)$ for a finite-dimensional vector space $W$.
++Any expression obtained by applying a four-linear map to coefficients of $A$ and wedging all four one-form factors is zero.
++If a vector field $v$ and a four-linear map $T:W^{\otimes4}\to\mathbb C$ are specified, the expression
++\[
++ T(\iota_vA,A,A,A)\in\Omega^3(M)
++\]
++is instead a defined three-form.
++It can be nonzero, but depends on the additional contraction and tensor.
++\end{proposition}
++\begin{proof}
++The first expression belongs to $\Omega^4(M)=0$.
++For the second, $\iota_v A$ has form degree zero, so the total degree is three.
++For an explicit local example take $W=\mathbb C^3$, $A=e_1dx+e_2dy+e_3dz$, $v=\partial_x$, and the tensor whose only nonzero coordinate entry is $T(e_1,e_1,e_2,e_3)=1$.
++Then the expression is $dx\wedge dy\wedge dz$.
++\end{proof}
++
++An RTT relation is an algebraic relation on matrix-valued series.
++To use it as an action term, a map to a three-form such as the displayed contraction must be defined and its required symmetries proved.
++A critical affine level alone does not make the Lie bracket in $\Omega^\bullet(M)\otimes\mathfrak g$ vanish.
++For example, $A=e\,dx+f\,dy$ in $\mathfrak{sl}_2$ has $[A,A]/2=h\,dx\wedge dy\ne0$, independently of any level parameter.
++
++\begin{proposition}[Integration on a finite quotient]
++\label{prop:cbc26-quotient-integral}
++Let a finite group $\Gamma$ act freely by orientation-preserving diffeomorphisms on a closed oriented three-manifold $M$.
++Let $\omega$ be an invariant three-form and $\bar\omega$ its descended form on $M/\Gamma$.
++Then
++\[
++ \int_{M/\Gamma}\bar\omega=\frac1{|\Gamma|}\int_M\omega.
++\]
++\end{proposition}
++\begin{proof}
++The quotient map is an oriented covering of degree $|\Gamma|$.
++An evenly covered coordinate cover and a partition of unity reduce integration to the sum over its $|\Gamma|$ sheets.
++Each sheet has the same integral, giving the formula.
++\end{proof}
++
++For a nonfree finite action, integration on the quotient stack uses the right-hand side as its normalization.
++An additional division by $|\Gamma|$ after taking this quotient integral changes the normalization.
++Neither a fractional grading nor a W-algebra specifies an action of $\Gamma$ on $M$.
+--- parent/cbc/chapters/theory/introduction.tex
++++ candidate002/cbc/chapters/theory/introduction.tex
+@@ -430,7 +430,7 @@
+ where $r = \operatorname{rank}(\mathfrak{g})$ and
+ $t = k + h^\vee$
+ (verified for $\mathfrak{sl}_2$ in
+-Theorem~\ref{thm:w-algebra-koszul-main} and for $\mathfrak{sl}_3$
++the proposed comparison in Remark~\ref{thm:w-algebra-koszul-main} and for $\mathfrak{sl}_3$
+ in Theorem~\ref{thm:w-koszul-precise}).
+ The involution sends $t \mapsto -t$:
+ \[
+--- parent/cbc/chapters/theory/koszul_pair_structure.tex
++++ candidate002/cbc/chapters/theory/koszul_pair_structure.tex
+@@ -1263,36 +1263,7 @@
+ \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+ \end{remark}
+ 
+-The RTT relations in the Yangian give rise to the $\alpha^4$ term:
+-\[
+-S_{Yangian} = \int \text{Tr}\left(\alpha \wedge d\alpha + \frac{2}{3}\alpha^3 + \frac{\lambda}{4}\text{RTT}(\alpha^4)\right)
+-\]
+-
+-\subsection{Examples of Chern--Simons structure}
+-
+-\subsubsection{For the Yangian}
+-
+-The MC equation:
+-\[
+-d\alpha + \frac{1}{2}[\alpha, \alpha] + \frac{1}{6}\text{RTT}(\alpha, \alpha, \alpha) = 0
+-\]
+-corresponds to Chern--Simons theory with a specific quartic deformation determined by the R-matrix.
+-
+-\subsubsection{For $\mathcal{W}$-algebras at critical level}
+-
+-At critical level $k = -h^\vee$:
+-\[
+-d\alpha + \sum_{i=1}^r S_i(\alpha) = 0
+-\]
+-where $S_i$ are screening charges. This is abelianized Chern--Simons - the theory becomes free.
+-
+-\subsubsection{For non-principal $\mathcal{W}$-algebras}
+-
+-With fractional gradings, we get orbifold Chern--Simons:
+-\[
+-S = \frac{1}{||\Gamma||} \int_{M/\Gamma} \text{CS}(\alpha)
+-\]
+-where $\Gamma$ is the orbifold group.
++\input{chapters/theory/form_degree}
+ 
+ \subsection{The holographic interpretation}
+ 
+@@ -1306,7 +1277,7 @@
+ \end{conjecture}
+ 
+ \begin{remark}[Scope]
+-The AdS$_3$/CFT$_2$ interpretation requires: (a)~3d gravity as $SL(2,\mathbb{R})^2$ CS (Witten \cite{Wit89}); (b)~boundary WZW identification (Beilinson--Drinfeld \cite{BD04}); (c)~a holographic dictionary for ``Koszul duality exchanges bulk and boundary.''  The theorematic input is the boundary-side Koszul/module package; bulk reconstruction remains a downstream MC5 task.
++The AdS$_3$/CFT$_2$ interpretation requires: (a)~3d gravity as $SL(2,\mathbb{R})^2$ CS (Witten \cite{Wit89}); (b)~boundary WZW identification (Beilinson--Drinfeld \cite{BD04}); (c)~a holographic dictionary for ``Koszul duality exchanges bulk and boundary.''  Bulk reconstruction requires an explicit complex of bulk observables and a comparison with the boundary construction.
+ 
+ \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
+ \end{remark}
+--- parent/cbc/chapters/theory/reduction_obstructions.tex
++++ candidate002/cbc/chapters/theory/reduction_obstructions.tex
+@@ -0,0 +1,130 @@
++\section{Reduction parameters and finite Batalin--Vilkovisky complexes}
++
++\begin{proposition}[Conformal obstruction to parameter reflection]
++\label{prop:cbc26-conformal-reflection}
++Let $t\in\mathbb C^*$ and put $c(t)=13-6(t+t^{-1})$.
++A conformal vertex algebra isomorphism between the universal Virasoro algebras at charges $c(t)$ and $c(-t)$ exists if and only if $t=\pm i$.
++\end{proposition}
++\begin{proof}
++A conformal isomorphism preserves the vacuum and conformal vector $T$.
++It therefore preserves $T_{(3)}T=(c/2)\mathbf1$, so the two charges must agree.
++Since their sum is $26$, equality is equivalent to $c(t)=13$, or $t+t^{-1}=0$.
++This gives $t=\pm i$.
++Conversely both universal algebras then have charge $13$, and the map sending their conformal generators to one another is an isomorphism by their identical universal presentation.
++\end{proof}
++
++At $t=-2/3$, reflection gives $c(t)=26$ and $c(-t)=0$, whereas the reciprocal partner $t^{-1}=-3/2$ has charge $26$.
++This distinguishes reflection from conformal Feigin--Frenkel duality by an actual vertex product.
++It does not exclude a curved or nonconformal comparison with different structure-preservation requirements.
++
++\begin{example}[The nonsimply laced central coefficient]
++\label{ex:cbc26-b2}
++For $B_2$, take an orthonormal basis $e_1,e_2$ and positive roots $e_1-e_2,e_2,e_1,e_1+e_2$.
++The coroot of $\alpha$ is $2\alpha/(\alpha,\alpha)$.
++Thus
++\[
++ \rho=(3/2,1/2),\qquad\rho^\vee=(2,1),\qquad
++ (\rho,\rho^\vee)=7/2.
++\]
++The principal charge is $c(t)=86-60t-30/t$, so $c(t)+c(-t)=172$.
++The rank is $2$, the dimension is $2+2\cdot4=10$, and $h^\vee=1+(\rho,e_1+e_2)=3$.
++Consequently $2r+4h^\vee\dim\mathfrak g=124$ cannot be the reflected sum for all simple Lie algebras.
++For simply laced root systems $\rho=\rho^\vee$; the general expression remains $2r+48(\rho,\rho^\vee)$.
++\end{example}
++
++\begin{proposition}[Two genus-one scalar normalizations]
++\label{prop:cbc26-genus-one-normalization}
++Let $B_2=1/6$ be the second Bernoulli number and define the scalar coefficient
++\[
++ F_1(\kappa)=\kappa\frac{2^1-1}{2^1}\frac{|B_2|}{2!}.
++\]
++Then $F_1(\kappa)=\kappa/24$.
++Under $\kappa=C/2$, this is $C/48$.
++The vacuum-energy exponent in $q^{L_0-C/24}$ is instead $-C/24$.
++At $C=26$ these values are $13/24$ and $-13/12$.
++\end{proposition}
++\begin{proof}
++The Bernoulli coefficient is $(1/2)(1/6)(1/2)=1/24$.
++Substitution gives the other values.
++\end{proof}
++
++This proposition concerns the specified Bernoulli coefficient.
++Its identification with a Hodge integral or a trace requires that map and its normalization.
++The vacuum energy uses the separately defined conformal trace.
++
++\begin{theorem}[A polynomial Batalin--Vilkovisky differential and its quotient]
++\label{thm:cbc26-finite-bv}
++Let $R=\mathbb C[x_1,\ldots,x_n]$ and $S\in R$.
++Give $K=R\otimes\Lambda(\eta_1,\ldots,\eta_n)$ degrees $|x_i|=0$, $|\eta_i|=-1$.
++Use the degree-one odd Poisson bracket with $\{x_i,\eta_j\}=\delta_{ij}$, $\{x_i,x_j\}=\{\eta_i,\eta_j\}=0$, extended by graded skew symmetry and the graded Leibniz rules.
++Then $Q=\{S,-\}$ is the Koszul differential
++\[
++ Qx_i=0,\qquad Q\eta_i=\partial_i S,
++\]
++and satisfies $Q^2=0$.
++If $\partial_1S,\ldots,\partial_nS$ is a regular sequence, the chain algebra projection
++\[
++ p:K\longrightarrow R/(\partial_1S,\ldots,\partial_nS),
++ \qquad p(\eta_i)=0
++\]
++is a quasi-isomorphism.
++\end{theorem}
++\begin{proof}
++The bracket formulas give the displayed derivation.
++Its square vanishes on every generator and hence everywhere.
++The projection is a chain map because it kills each $Q\eta_i$.
++For a single regular element $f$, the complex $R\eta\xrightarrow{f}R$ has zero cohomology in degree $-1$ and quotient $R/(f)$ in degree zero.
++Inductively tensor with the next two-term complex.
++The two-column spectral sequence first computes the preceding Koszul cohomology, then multiplication by the next element on the quotient.
++Regularity makes that multiplication injective.
++The filtration is finite, so induction proves concentration in degree zero and the asserted projection isomorphism.
++\end{proof}
++
++For $S=\tfrac12\sum_i x_i^2$, the target is $\mathbb C$ and the projection evaluates $x_i=\eta_i=0$.
++This is an explicit finite polynomial BRST comparison.
++It has no collision sheaves, ultraviolet completion, or curvewise descent.
++A comparison with chiral chains must construct those additional objects and maps.
++
++\section{Form degree in higher interaction terms}
++
++\begin{proposition}[Quartic expressions on a three-manifold]
++\label{prop:cbc26-quartic-degree}
++Let $M$ be a smooth three-manifold and $A\in\Omega^1(M;W)$ for a finite-dimensional vector space $W$.
++Any expression obtained by applying a four-linear map to coefficients of $A$ and wedging all four one-form factors is zero.
++If a vector field $v$ and a four-linear map $T:W^{\otimes4}\to\mathbb C$ are specified, the expression
++\[
++ T(\iota_vA,A,A,A)\in\Omega^3(M)
++\]
++is instead a defined three-form.
++It can be nonzero, but depends on the additional contraction and tensor.
++\end{proposition}
++\begin{proof}
++The first expression belongs to $\Omega^4(M)=0$.
++For the second, $\iota_v A$ has form degree zero, so the total degree is three.
++For an explicit local example take $W=\mathbb C^3$, $A=e_1dx+e_2dy+e_3dz$, $v=\partial_x$, and the tensor whose only nonzero coordinate entry is $T(e_1,e_1,e_2,e_3)=1$.
++Then the expression is $dx\wedge dy\wedge dz$.
++\end{proof}
++
++An RTT relation is an algebraic relation on matrix-valued series.
++To use it as an action term, a map to a three-form such as the displayed contraction must be defined and its required symmetries proved.
++A critical affine level alone does not make the Lie bracket in $\Omega^\bullet(M)\otimes\mathfrak g$ vanish.
++For example, $A=e\,dx+f\,dy$ in $\mathfrak{sl}_2$ has $[A,A]/2=h\,dx\wedge dy\ne0$, independently of any level parameter.
++
++\begin{proposition}[Integration on a finite quotient]
++\label{prop:cbc26-quotient-integral}
++Let a finite group $\Gamma$ act freely by orientation-preserving diffeomorphisms on a closed oriented three-manifold $M$.
++Let $\omega$ be an invariant three-form and $\bar\omega$ its descended form on $M/\Gamma$.
++Then
++\[
++ \int_{M/\Gamma}\bar\omega=\frac1{|\Gamma|}\int_M\omega.
++\]
++\end{proposition}
++\begin{proof}
++The quotient map is an oriented covering of degree $|\Gamma|$.
++An evenly covered coordinate cover and a partition of unity reduce integration to the sum over its $|\Gamma|$ sheets.
++Each sheet has the same integral, giving the formula.
++\end{proof}
++
++For a nonfree finite action, integration on the quotient stack uses the right-hand side as its normalization.
++An additional division by $|\Gamma|$ after taking this quotient integral changes the normalization.
++Neither a fractional grading nor a W-algebra specifies an action of $\Gamma$ on $M$.
+--- parent/cbc/chapters/theory/reduction_parameters.tex
++++ candidate002/cbc/chapters/theory/reduction_parameters.tex
+@@ -0,0 +1,87 @@
++\section{Reduction parameters and finite Batalin--Vilkovisky complexes}
++
++\begin{proposition}[Conformal obstruction to parameter reflection]
++\label{prop:cbc26-conformal-reflection}
++Let $t\in\mathbb C^*$ and put $c(t)=13-6(t+t^{-1})$.
++A conformal vertex algebra isomorphism between the universal Virasoro algebras at charges $c(t)$ and $c(-t)$ exists if and only if $t=\pm i$.
++\end{proposition}
++\begin{proof}
++A conformal isomorphism preserves the vacuum and conformal vector $T$.
++It therefore preserves $T_{(3)}T=(c/2)\mathbf1$, so the two charges must agree.
++Since their sum is $26$, equality is equivalent to $c(t)=13$, or $t+t^{-1}=0$.
++This gives $t=\pm i$.
++Conversely both universal algebras then have charge $13$, and the map sending their conformal generators to one another is an isomorphism by their identical universal presentation.
++\end{proof}
++
++At $t=-2/3$, reflection gives $c(t)=26$ and $c(-t)=0$, whereas the reciprocal partner $t^{-1}=-3/2$ has charge $26$.
++This distinguishes reflection from conformal Feigin--Frenkel duality by an actual vertex product.
++It does not exclude a curved or nonconformal comparison with different structure-preservation requirements.
++
++\begin{example}[The nonsimply laced central coefficient]
++\label{ex:cbc26-b2}
++For $B_2$, take an orthonormal basis $e_1,e_2$ and positive roots $e_1-e_2,e_2,e_1,e_1+e_2$.
++The coroot of $\alpha$ is $2\alpha/(\alpha,\alpha)$.
++Thus
++\[
++ \rho=(3/2,1/2),\qquad\rho^\vee=(2,1),\qquad
++ (\rho,\rho^\vee)=7/2.
++\]
++The principal charge is $c(t)=86-60t-30/t$, so $c(t)+c(-t)=172$.
++The rank is $2$, the dimension is $2+2\cdot4=10$, and $h^\vee=1+(\rho,e_1+e_2)=3$.
++Consequently $2r+4h^\vee\dim\mathfrak g=124$ cannot be the reflected sum for all simple Lie algebras.
++For simply laced root systems $\rho=\rho^\vee$; the general expression remains $2r+48(\rho,\rho^\vee)$.
++\end{example}
++
++\begin{proposition}[Two genus-one scalar normalizations]
++\label{prop:cbc26-genus-one-normalization}
++Let $B_2=1/6$ be the second Bernoulli number and define the scalar coefficient
++\[
++ F_1(\kappa)=\kappa\frac{2^1-1}{2^1}\frac{|B_2|}{2!}.
++\]
++Then $F_1(\kappa)=\kappa/24$.
++Under $\kappa=C/2$, this is $C/48$.
++The vacuum-energy exponent in $q^{L_0-C/24}$ is instead $-C/24$.
++At $C=26$ these values are $13/24$ and $-13/12$.
++\end{proposition}
++\begin{proof}
++The Bernoulli coefficient is $(1/2)(1/6)(1/2)=1/24$.
++Substitution gives the other values.
++\end{proof}
++
++This proposition concerns the specified Bernoulli coefficient.
++Its identification with a Hodge integral or a trace requires that map and its normalization.
++The vacuum energy uses the separately defined conformal trace.
++
++\begin{theorem}[A polynomial Batalin--Vilkovisky differential and its quotient]
++\label{thm:cbc26-finite-bv}
++Let $R=\mathbb C[x_1,\ldots,x_n]$ and $S\in R$.
++Give $K=R\otimes\Lambda(\eta_1,\ldots,\eta_n)$ degrees $|x_i|=0$, $|\eta_i|=-1$.
++Use the degree-one odd Poisson bracket with $\{x_i,\eta_j\}=\delta_{ij}$, $\{x_i,x_j\}=\{\eta_i,\eta_j\}=0$, extended by graded skew symmetry and the graded Leibniz rules.
++Then $Q=\{S,-\}$ is the Koszul differential
++\[
++ Qx_i=0,\qquad Q\eta_i=\partial_i S,
++\]
++and satisfies $Q^2=0$.
++If $\partial_1S,\ldots,\partial_nS$ is a regular sequence, the chain algebra projection
++\[
++ p:K\longrightarrow R/(\partial_1S,\ldots,\partial_nS),
++ \qquad p(\eta_i)=0
++\]
++is a quasi-isomorphism.
++\end{theorem}
++\begin{proof}
++The bracket formulas give the displayed derivation.
++Its square vanishes on every generator and hence everywhere.
++The projection is a chain map because it kills each $Q\eta_i$.
++For a single regular element $f$, the complex $R\eta\xrightarrow{f}R$ has zero cohomology in degree $-1$ and quotient $R/(f)$ in degree zero.
++Inductively tensor with the next two-term complex.
++The two-column spectral sequence first computes the preceding Koszul cohomology, then multiplication by the next element on the quotient.
++Regularity makes that multiplication injective.
++The filtration is finite, so induction proves concentration in degree zero and the asserted projection isomorphism.
++\end{proof}
++
++For $S=\tfrac12\sum_i x_i^2$, the target is $\mathbb C$ and the projection evaluates $x_i=\eta_i=0$.
++This is an explicit finite polynomial BRST comparison.
++It has no collision sheaves, ultraviolet completion, or curvewise descent.
++A comparison with chiral chains must construct those additional objects and maps.
++
+--- parent/proof/comparison_main.tex
++++ candidate002/proof/comparison_main.tex
+@@ -11,7 +11,10 @@
+ \input{augmentation_relative}
+ \input{../cbc/chapters/theory/ds_chain_comparisons}
+ \input{consumer_geometry}
++\input{../cbc/chapters/theory/elliptic_normalizations}
++\input{../cbc/chapters/theory/reduction_obstructions}
+ \begin{thebibliography}{9}
+ \bibitem{Ara15} T. Arakawa, \emph{Rationality of W-algebras: principal nilpotent cases}, Annals of Mathematics \textbf{182} (2015), 565--604.
++\bibitem{DLMF26} NIST Digital Library of Mathematical Functions, \S23.18, Eq.~23.18.5, \url{https://dlmf.nist.gov/23.18.E5}.
+ \end{thebibliography}
+ \end{document}
