@@ -1,0 +1,279 @@
+\chapter{Polynomial comparison for every global ternary coefficient}
+\label{chap:bd26-polynomial-full}
+
+\section{The weighted edge integral}
+
+The family $q_{12}(1-q_{12})/(z_1-z_2)$ forces a nonzero image of an unmerged one-form.
+The weighted edge integral supplies that image.
+It cancels the regular composite states in the adjacent comparison defect before any division by the level.
+
+Retain the base $S$, the ordered complex $O$, the five-partition complex $(E,Q)$, and the chiral operations of Chapter~\ref{chap:bd26-comparison}.
+In particular, the source coefficients are global compatible families.
+Each adjacent edge ring is $R[t^{-1}]$ and has no outer pole.
+All principal parts and all differential-operator sums remain finite.
+
+On an oriented edge with coordinate $u=q_{ij}$, define
+\begin{equation}\label{eq:bd26-weighted-integral}
+ M(g)=\int_0^1u g(u)\,du,
+ \qquad v_g=\pp_t\bigl(p(t)M(g)\bigr),
+ \qquad t=z_i-z_j.
+\end{equation}
+The degree of $M(g)$ is zero after the coefficient one-form $gdu$ has been integrated.
+Every normal coefficient of $v_g$ is polynomial in the two remaining block positions.
+Polynomial integration by parts gives
+\begin{equation}\label{eq:bd26-weighted-endpoint}
+ M(\partial_uf)=f(1)-A(f),\qquad
+ v_{\partial_uf}+q_{f/t}=\pp_t\bigl(p(t)f(1)\bigr).
+\end{equation}
+The second identity holds at every finite inner pole order.
+It is an identity before any outer collision is taken.
+
+For $c\in C^1$ and the word $e_{ijk}$, write its two actual edge restrictions as
+\[
+ c|_{\{ijk,jik\}}=g_Ldu_L,
+ \qquad c|_{\{ijk,ikj\}}=g_Rdu_R,
+ \qquad u_L=q_{ij},\quad u_R=q_{jk}.
+\]
+Both edges have $u=1$ at the vertex $ijk$.
+Let $v_L$ and $v_R$ be their principal parts from \eqref{eq:bd26-weighted-integral}, in their respective normal coordinates.
+Define a degree-zero $R$-linear map $B^+:O\to E$ by retaining every mixed component of $B$ and setting
+\begin{equation}\label{eq:bd26-positive-leading}
+ \begin{aligned}
+ B^+(fe_{ijk})&=f(ijk)[J_i|J_j|J_k] && (f\in C^0),\\
+ B^+(ce_{ijk})&=[v_L|J_k]-[J_i|v_R] && (c\in C^1),\\
+ B^+(ce_{ijk})&=0 && (|c|\geq2).
+ \end{aligned}
+\end{equation}
+The first mixed block in the second line lies on $\Delta_{ij}$.
+The second lies on $\Delta_{jk}$.
+Each has total degree $-2$, equal to the degree of $ce_{ijk}$.
+The minus sign in the right term is the sign of the adjacent $jk$ collision when the remaining suspended current is placed first.
+
+\section{Divisibility of the complete comparison defect}
+
+The defect of $B^+$ is
+\[
+ D^+=QB^+-B^+b.
+\]
+It satisfies $QD^++D^+b=0$.
+For an outer operation, let a finite inner principal part be called regular in the outer variable when its normal coefficients are polynomials in the block positions.
+This property concerns its coefficients before the outer chiral operation.
+The outer output itself can have poles.
+
+\begin{lemma}\label{lem:bd26-arbitrary-regular-outer}
+For any finite inner principal part $v$ with states in $V$ that is regular in the outer variable,
+\[
+ R_L(v)\in\kappa P_3(V),\qquad R_R(v)\in\kappa P_3(V).
+\]
+\end{lemma}
+\begin{proof}
+Reduce its monomial-state and normal coefficients modulo $\kappa$.
+The outer fields are $Y_0(a,s)b=(e^{sT}a)b$.
+The coefficient is polynomial in $s$, so the outer principal part is zero.
+Every retained inner normal derivative preserves this conclusion, since it differentiates regular coefficients or remains a normal derivative in the final transfer module.
+The output therefore vanishes modulo $\kappa$.
+The free basis \eqref{eq:bd26-small} gives the asserted divisibility.
+\end{proof}
+
+\begin{proposition}\label{prop:bd26-complete-defect}
+Every value of $D^+$ belongs to $\kappa E$.
+Its values on unmerged words are
+\begin{equation}\label{eq:bd26-positive-defect}
+ \begin{aligned}
+ D^+(fe_{ijk})&=-[\mu_{ik}(f(ijk)(J_i,J_k))|J_j],
+                    &&f\in C^0,\\
+ D^+(ce_{ijk})&=[R_L(v_L)-R_R(v_R)],
+                    &&c\in C^1,\\
+ D^+(ce_{ijk})&=0, &&|c|\geq2.
+ \end{aligned}
+\end{equation}
+In the first line, the coefficient $f(ijk)$ is retained as a function of all three positions during the first collision.
+The first output lies on $\Delta_{ik}$.
+The second output lies on the small diagonal, with both terms written using the same density and normal-coordinate identification.
+\end{proposition}
+\begin{proof}
+For a zero-form $f$, the $ij$ component of $QB^+(fe_{ijk})$ is
+$[\pp_t(p(t)f(ijk))|J_k]$.
+The corresponding component of $B^+b(fe_{ijk})$ is
+\[
+ [v_{\partial_uf}+q_{f/t}|J_k].
+\]
+The value of $f$ at $u=1$ on this edge is $f(ijk)$.
+Equation~\eqref{eq:bd26-weighted-endpoint} makes the two components equal.
+
+For the $jk$ component, both expressions have a minus sign with $J_i$ in the first block.
+The same endpoint identity proves their equality.
+The source differential has no $ik$ face, so the nonadjacent chiral term remains.
+The three-current unshuffle sign for that term is negative.
+This proves the first line of \eqref{eq:bd26-positive-defect}.
+
+The coefficient $f(ijk)$ is regular in every normal variable.
+Thus \eqref{eq:bd26-field} gives
+\[
+ \mu_{ik}(f(ijk)(J_i,J_k))
+ =\kappa\pp_{t_{ik}}\frac{f(ijk)}{t_{ik}^2}\mathbf1.
+\]
+This proves divisibility on every unmerged zero-form.
+
+For $c\in C^1$, the states in $B^+(ce_{ijk})$ are even and have zero internal differential.
+Their collision differential is $[R_L(v_L)-R_R(v_R)]$.
+The coefficient differential $d_Cc$ has degree two, so its unmerged image is zero.
+The other boundary coefficients are $c\omega$, whose degree-two edge restrictions are zero.
+Hence $B^+b(ce_{ijk})=0$.
+This proves the second line of \eqref{eq:bd26-positive-defect}.
+Lemma~\ref{lem:bd26-arbitrary-regular-outer} proves divisibility of both terms.
+All higher-degree unmerged inputs have zero defect by the same edge-degree argument.
+
+The mixed values of $D^+$ equal those of $D$.
+On mixed zero-forms, their possible outer term contains $r_f$, a vacuum principal part with polynomial outer coefficients.
+The vacuum operation with that outer coefficient has no pole, so this term is zero.
+On mixed one-forms, the values are $-[R_L(q_g)]$ and $+[R_R(q_g)]$.
+They are divisible by $\kappa$ by Lemma~\ref{lem:bd26-global-divisibility}.
+Higher-degree mixed restrictions vanish.
+This checks every summand of $O$.
+\end{proof}
+
+\section{The polynomial ternary map}
+
+Every summand of $E$ is torsion-free over $S$.
+Proposition~\ref{prop:bd26-complete-defect} therefore defines a unique degree-one $R$-linear map
+\[
+ T^+:O\longrightarrow E,
+ \qquad \kappa T^+=D^+.
+\]
+Its values are obtained by division of polynomial coefficients known to be divisible by $\kappa$.
+This definition uses no inverse of $\kappa$ in the coefficient ring.
+
+\begin{theorem}\label{thm:bd26-polynomial-complete}
+The formula
+\begin{equation}\label{eq:bd26-polynomial-complete}
+ G=B^++\mathsf eT^+:O\longrightarrow E
+\end{equation}
+defines a degree-zero $R$-linear cochain map over $S$.
+It is defined on all six unmerged words and all twelve mixed words, with every global compatible-family coefficient and every finite inner pole order.
+Its mixed components are exactly those of \eqref{eq:bd26-leading-map} and \eqref{eq:bd26-mixed-correction}, with the polynomial quotients taken before specialization.
+Its separated projection is $fe_{ijk}\mapsto f(ijk)[J_i|J_j|J_k]$.
+Its positive-degree unmerged components are determined by \eqref{eq:bd26-positive-leading} and \eqref{eq:bd26-positive-defect}.
+It specializes to every numerical level, including zero.
+\end{theorem}
+\begin{proof}
+The closed-defect equation and $S$-torsion-freeness imply
+\[
+ QT^++T^+b=0.
+\]
+Using $Q\mathsf e+\mathsf eQ=-\kappa$ gives
+\[
+ \begin{aligned}
+ QG-Gb
+ &=D^++Q\mathsf eT^+-\mathsf eT^+b\\
+ &=\kappa T^+-\kappa T^+-\mathsf e(QT^++T^+b)=0.
+ \end{aligned}
+\]
+This proves the chain equation over $S$ directly.
+The complete list of defect components proves the support and component assertions.
+Every scalar quotient, integration, and residue is $R$-linear.
+All outputs have finite normal expansions.
+Finally, specialize the polynomial identity $QG=Gb$ along $S\to S/(\kappa-k)$.
+No division at the numerical value $k=0$ occurs.
+\end{proof}
+
+In particular, the unmerged one-form image is
+\begin{equation}\label{eq:bd26-polynomial-oneform}
+ G(ce_{ijk})=[v_L|J_k]-[J_i|v_R]
+   +\left[\epsilon\,\frac{R_L(v_L)-R_R(v_R)}\kappa\right].
+\end{equation}
+The displayed quotient is the unique polynomial quotient.
+For a constant unmerged word, $G$ has the same nonadjacent correction as \eqref{eq:bd26-constant-word}.
+
+The necessity of the positive-degree component has a direct check.
+Take $f=q_{12}(1-q_{12})/t$ and $e=e_{123}$.
+Then $G(fe)=0$ because every vertex value vanishes.
+On the left edge,
+\[
+ M(\partial_uf)=-\frac1{6t},\qquad
+ v_{\partial_uf}=-\frac\kappa{6t^3}\mathbf1-\frac{J^2}{6t}
+ =-q_{f/t}.
+\]
+The right edge restriction is zero.
+Therefore the proper-diagonal terms of
+$G((d_Cf)e)-G(f\omega_{12}m_{12|3})$ cancel.
+Their small-diagonal terms also cancel, by the same identity after the outer operation.
+Thus $G(b(fe))=0=QG(fe)$, including the nonzero composite state modulo $\kappa$.
+
+\begin{corollary}\label{cor:bd26-polynomial-equivariant}
+Replacing $\mathsf e$ in \eqref{eq:bd26-polynomial-complete} by
+$(\mathsf e_1+\mathsf e_2+\mathsf e_3)/3$ gives a permutation-equivariant polynomial cochain map $G_{\mathrm{sym}}$.
+There are also polynomial cochain maps of right differential modules
+\[
+ \operatorname{Ind}(O)\longrightarrow E,
+ \qquad m\otimes P\longmapsto G(m)P
+ \quad\hbox{or}\quad G_{\mathrm{sym}}(m)P.
+\]
+\end{corollary}
+\begin{proof}
+Each scalar insertion has anticommutator $-\kappa$ with $Q$.
+Their average has the same identity and commutes with label permutations.
+The two oriented edge integrals in $B^+$ commute with relabeling, since each has its ordered-word vertex at $u=1$.
+The defect and its unique polynomial quotient are therefore equivariant.
+This proves the first assertion.
+The induction formulas are balanced over $R$ and commute with the differential by Proposition~\ref{prop:bd26-induced-comparison}.
+\end{proof}
+
+\section{A comparison with the unextended level-zero chiral algebra}
+
+Put $V_0=\mathbb C[x_1,x_2,\ldots]$ with field
+$Y_0(a,t)b=(e^{tT}a)b$ and zero state differential.
+Its chiral operation on pole-valued inputs is still the principal-part operation \eqref{eq:bd26-chiral}.
+Let $E_0(V_0)$ denote its five-partition Chevalley--Cousin complex, using the same shifts and densities.
+Let $O_0=O\otimes_S S/(\kappa)$.
+
+The projection $W\otimes_S S/(\kappa)\to V_0$ sends $\epsilon$ to zero and preserves every vertex operation.
+Applying it to each partition factor gives a cochain map to $E_0(V_0)$.
+Its composite with the specialization of $G$ is denoted $G_0$.
+
+\begin{corollary}\label{cor:bd26-native-zero}
+There is a permutation-equivariant cochain map
+\[
+ G_0:O_0\longrightarrow E_0(V_0)
+\]
+to the unextended level-zero chiral algebra.
+It is obtained from $B^+$ by setting $\kappa=\epsilon=0$.
+It also induces a cochain map of right differential modules from $\operatorname{Ind}(O_0)$.
+The degree-$-3$ source cycle
+\begin{equation}\label{eq:bd26-nonzero-cycle}
+ z=(z_1-z_2)(z_2-z_3)e_{123}
+   +(z_2-z_3)q_{12}m_{12|3}
+   +(z_1-z_2)q_{23}n_{1|23}
+\end{equation}
+has image representing a nonzero class in $H^{-3}(E_0(V_0))$.
+\end{corollary}
+\begin{proof}
+The state projection is a differential graded vertex map because both differentials are zero and the scalar factor $\epsilon$ is an ideal.
+It therefore commutes with the chiral operation, its transfers, and the Chevalley--Cousin differential.
+All correction terms in $G-B^+$ contain $\epsilon$ and vanish under the projection.
+Hence $G_0$ is exactly the displayed specialization of $B^+$.
+The same specialization of the equivariant map $G_{\mathrm{sym}}$ gives $G_0$, proving equivariance.
+Differential induction applies as before.
+
+Equation~\eqref{eq:bd26-source} and $d_Cq_{ij}=(z_i-z_j)\omega_{ij}$ give $bz=0$.
+The mixed zero-form images contain $\epsilon$ and therefore vanish under the projection.
+Consequently,
+\[
+ G_0(z)=(z_1-z_2)(z_2-z_3)[J_1|J_2|J_3].
+\]
+This is nonzero in the separated summand.
+It is closed because every regular-input level-zero chiral bracket vanishes.
+The complex $E_0(V_0)$ has terms only in degrees $-3,-2,-1$.
+There is no incoming boundary in degree $-3$.
+Thus the displayed image represents a nonzero cohomology class.
+\end{proof}
+
+This comparison uses the unextended state space only at level zero.
+It asserts no quasi-isomorphism of the full complexes.
+
+The source of this polynomial map is the global ordered coefficient complex.
+Admitting independent outer poles changes the comparison problem.
+The cubic obstruction \eqref{eq:bd26-outer-obstruction} still excludes the specified extension on that larger mixed domain with its intermediate images fixed.
+The polynomial family before the level-zero projection uses the Koszul state extension $W$.
+It preserves neither the nonzero-level diagonal state cohomology of $V$ nor a presently unspecified system of state-translation relations on $O$.
+Compatibility with ordered surjections, deconcatenation, and four-input operations remains an additional requirement.

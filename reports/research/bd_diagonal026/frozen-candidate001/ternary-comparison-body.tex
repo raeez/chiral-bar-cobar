@@ -1,0 +1,669 @@
+\providecommand{\HH}{\mathcal H}
+\providecommand{\pp}{\operatorname{pp}}
+\chapter{Ternary comparison on the collision diagonals}
+\label{chap:bd26-comparison}
+
+\section{The nonadjacent current collision}
+
+Three ordered letters have two adjacent multiplication faces.
+Three chiral insertions have three pair-collision maps.
+Their comparison must account for the collision between the first and third points.
+For Heisenberg currents, its coefficient is the level times a normal derivative of the vacuum delta class.
+A primitive on that partial diagonal supplies the missing term.
+
+Work over $S=\mathbb C[\kappa]$ on $X=\mathbb A^1_{\mathbb C}$.
+The parameter $\kappa$ and all position coordinates have degree zero.
+All tensor products use $S$ unless another base is indicated.
+The shift convention is $M[r]^n=M^{n+r}$ with differential $(-1)^r d_M$.
+Parity is cohomological degree modulo two.
+No state-space or parameter completion is used.
+
+The Heisenberg state space, vacuum, current, and translation are
+\[
+ V=S[x_1,x_2,\ldots],\qquad \mathbf1=1,\qquad J=x_1,
+ \qquad T=\sum_{n\geq1}n x_{n+1}\partial_{x_n}.
+\]
+Its states are even and have degree zero.
+Every state uses finitely many variables.
+The current modes act by
+\[
+ J_{-n}=x_n\cdot,\qquad J_n=\kappa n\partial_{x_n}\quad(n\geq1),
+ \qquad J_0=0.
+\]
+Put $J(z)=\sum_{m\in\mathbb Z}J_mz^{-m-1}$.
+The field of $x_{n_1}\cdots x_{n_r}$ is the normally ordered product of
+$\partial_z^{n_i-1}J(z)/(n_i-1)!$.
+Normal ordering places every multiplication operator before every derivative operator.
+Write this field as $Y(a,z)$.
+
+Commuting a derivative past a multiplication operator gives the contraction
+\[
+ C_{nm}(t)=
+ \frac{\kappa(-1)^{n-1}(n+m-1)!}{(n-1)!(m-1)!}\,t^{-n-m}.
+\]
+For any finite set of input monomials, the field product is a finite sum over partial pairings.
+Each pair contributes $C_{nm}$, and unpaired factors remain normally ordered.
+This follows by applying $AB=BA+[A,B]$ at each crossing.
+A contracted factor is removed and cannot occur in another crossing.
+The formula gives $Y(a,t)b\in V((t))$ with a finite lower bound.
+In particular,
+\begin{equation}\label{eq:bd26-field}
+ p(t):=Y(J,t)J=\frac\kappa{t^2}+(e^{tT}J)J,
+ \qquad e^{tT}J=\sum_{r\geq0}x_{r+1}t^r.
+\end{equation}
+
+Introduce the differential graded vertex superalgebra
+\begin{equation}\label{eq:bd26-state}
+ W=V\otimes_S\Lambda_S(\epsilon),\qquad
+ |\epsilon|=-1,\qquad d_W\epsilon=\kappa,\qquad T\epsilon=0.
+\end{equation}
+For homogeneous scalar factors $r,s\in\Lambda_S(\epsilon)$, set
+$Y_W(ar,t)(bs)=Y(a,t)b\,rs$.
+The differential is a graded derivation and commutes with translation.
+The scalar $\epsilon$ is odd and squares to zero.
+
+The associated right differential module is $\HH_W=\omega_X\otimes W$, with
+\[
+ (fa\,dz)\partial_z=-(f'a+fTa)\,dz.
+\]
+For $t=z-w$ and $y=w$, the chiral operation is
+\begin{equation}\label{eq:bd26-chiral}
+ \mu_W\bigl(f(z,w)(a\,dz\boxtimes b\,dw)\bigr)
+ =\pp_t\bigl(f(y+t,y)Y_W(a,t)b\bigr).
+\end{equation}
+The input coefficient may have finite poles at $t=0$.
+The operation multiplies the Laurent series before taking its finite principal part.
+The normal convention and orientation are
+\begin{equation}\label{eq:bd26-normal}
+ \pp_t\frac{a(y)}{t^{r+1}}
+ =\frac{a(y)\,dy}{r!}\delta_\Delta\partial_t^r,
+ \qquad dz\wedge dw=dt\wedge dy.
+\end{equation}
+There is no multiplication by $t^{-1}$ on an existing principal-part class.
+Regular position functions act before passage to the quotient.
+
+For clarity, the chiral identities can be checked directly on these formulas.
+Translation gives $Y(Ta,t)=\partial_tY(a,t)$ and
+$TY(a,t)b=\partial_tY(a,t)b+Y(a,t)Tb$.
+They identify both input right derivatives with the corresponding output right derivatives in \eqref{eq:bd26-chiral}.
+The contraction satisfies $C_{mn}(-t)=C_{nm}(t)$.
+Interchanging the two Wick inputs and translating the result by $e^{tT}$ therefore gives graded vertex skew symmetry.
+On normal principal parts, coordinate transposition acts by
+$p(t,y)\mapsto-\pp_t(e^{tT}p(-t,y+t))$.
+This follows on $a/t$ and $a/t^2$ from \eqref{eq:bd26-normal}, and then on all normal derivatives from the Weyl relations.
+Together these formulas prove graded skew symmetry of $\mu_W$.
+For three monomials, the Wick sum belongs to
+\[
+ W[[u,v]][u^{-1},v^{-1},(u-v)^{-1}].
+\]
+Its two radial expansions give the two ordered products.
+Pairing the first two inputs first gives its expansion at $u=v$, and hence the iterate.
+Partial fractions in $u$, followed by the residue in $v$, give
+\[
+ \operatorname{Res}_v\operatorname{Res}_t G(v+t,v)\,dt\,dv
+ =\operatorname{Res}_u\operatorname{Res}_v i_{u,v}G(u,v)\,dv\,du
+ -\operatorname{Res}_v\operatorname{Res}_u i_{v,u}G(u,v)\,du\,dv.
+\]
+Here $i_{u,v}$ expands in nonnegative powers of $v/u$.
+For a power-series numerator, each residue depends on finitely many coefficients.
+Apply the identity after multiplication by every polynomial testing the normal derivatives.
+It proves chiral Jacobi as an equality in the small-diagonal transfer module.
+Graded commutativity of the scalar factors supplies the super signs.
+Finally, $Y_W(\mathbf1,t)a=a$ gives the normalized unit operation $\pp_t(fa)$.
+
+\section{The five collision summands}
+
+Let $I=\{1,2,3\}$ and $R=S[z_1,z_2,z_3]$.
+For a partition $\pi$ of $I$, let $\Delta_\pi:X^\pi\hookrightarrow X^3$ identify positions within each block.
+Let $j_\pi$ include the locus of distinct block positions in $X^\pi$.
+The symbol $(\Delta_\pi)_!$ denotes closed direct image for right differential modules, using the transfer module.
+It includes all finite normal derivatives and no additional cohomological shift.
+Define
+\begin{equation}\label{eq:bd26-target}
+ E=
+ \bigoplus_{\pi\vdash I}
+ (\Delta_\pi)_!(j_\pi)_*j_\pi^*
+ \left(\boxtimes_{B\in\pi}\HH_W[1]\right).
+\end{equation}
+This is the three-point Chevalley--Cousin module
+\cite{BDdiagonal}*{\S3.4.11, equation (3.4.11.1)}.
+On the affine space $X^3$, the same notation denotes its module of global sections.
+The module formulas determine the associated quasi-coherent sheaf maps.
+The summands correspond to $1|2|3$, $12|3$, $13|2$, $1|23$, and $123$.
+The block order is auxiliary.
+Interchanging blocks uses the Koszul sign of their suspended state degrees.
+
+Write $[a_1|\cdots|a_r]$ for suspended states, with
+$|sa|=|a|-1$ and $d(sa)=-s(d_Wa)$.
+The total differential is $Q=Q_1+Q_2$.
+The operator $Q_1$ is the tensor differential of the suspended states.
+The binary collision has sign
+\[
+ Q_2[a|b]=(-1)^{|a|}[\mu_W(a,b)].
+\]
+For three blocks, with $\alpha=|a|$, $\beta=|b|$, and $\gamma=|c|$, it is
+\begin{equation}\label{eq:bd26-collision-signs}
+ \begin{aligned}
+ Q_2[a|b|c]={}&(-1)^\alpha[\mu_{12}(a,b)|c]\\
+ &+(-1)^{(\beta-1)(\gamma-1)+\alpha}[\mu_{13}(a,c)|b]\\
+ &+(-1)^{(\alpha-1)(\beta+\gamma-2)+\beta}[\mu_{23}(b,c)|a].
+ \end{aligned}
+\end{equation}
+The three maps first localize away from collisions with the remaining point.
+They then apply \eqref{eq:bd26-chiral} and the appropriate direct image.
+Every coordinate permutation includes its density identification.
+Thus \eqref{eq:bd26-collision-signs} uses the full common three-point source.
+
+The differential Leibniz identity gives $Q_1Q_2+Q_2Q_1=0$.
+Applying $Q_2$ twice to \eqref{eq:bd26-collision-signs} gives
+\[
+ (-1)^\beta[
+ \mu(\mu(a,b),c)-\mu(a,\mu(b,c))
+       +(-1)^{\alpha\beta}\mu(b,\mu(a,c))].
+\]
+This vanishes by the chiral Jacobi identity just proved.
+Hence $Q^2=0$, including every normal derivative.
+Both $Q_1$ and $Q_2$ commute with the right differential actions.
+
+For the small diagonal, put $t=z_1-z_2$, $s=z_2-z_3$, and $y=z_3$.
+Its unsuspended principal parts are
+\[
+ P_3(W)=W\otimes_S
+ \frac{S[y,t,s,t^{-1},s^{-1}]}
+ {S[y,t,s,t^{-1}]+S[y,t,s,s^{-1}]}.
+\]
+The orientation and finite normal basis are
+\begin{equation}\label{eq:bd26-small}
+ \begin{gathered}
+ dz_1\wedge dz_2\wedge dz_3=dt\wedge ds\wedge dy,\\
+ \pp\frac{a(y)}{t^{r+1}s^{l+1}}
+ =\frac{a(y)\,dy}{r!l!}\delta_3\partial_t^r\partial_s^l.
+ \end{gathered}
+\end{equation}
+Its right actions are $-\partial_t$, $-\partial_s$, and $-\partial_y-T$.
+The small-diagonal summand of $E$ is $P_3(W)[1]$.
+Its differential is $-d_W$, and its only degrees are $-2$ and $-1$.
+
+\section{A contraction preserving each diagonal}
+
+Distinguish label $1$.
+For each partition, the block containing $1$ determines an odd scalar action.
+If that block occupies position $j$ in the displayed block order, define
+\begin{equation}\label{eq:bd26-epsilon-operator}
+ \mathsf e[a_1|\cdots|a_r]
+ =(-1)^{\sum_{i<j}(|a_i|-1)}
+ [a_1|\cdots|\epsilon a_j|\cdots|a_r].
+\end{equation}
+The formula extends to localized coefficients and normal derivatives.
+It has degree $-1$.
+Changing the block order gives the same operator because \eqref{eq:bd26-epsilon-operator} uses the tensor sign for an odd map.
+
+\begin{lemma}\label{lem:bd26-scalar-homotopy}
+On the entire five-summand complex,
+\begin{equation}\label{eq:bd26-homotopy-level}
+ \mathsf e^2=0,\qquad
+ Q_1\mathsf e+\mathsf e Q_1=-\kappa\,\mathrm{id},\qquad
+ Q_2\mathsf e+\mathsf e Q_2=0.
+\end{equation}
+The operator $\mathsf e$ commutes with the right differential actions and preserves every partition summand.
+Consequently, over $S_*=S[\kappa^{-1}]$,
+\begin{equation}\label{eq:bd26-contraction}
+ h=-\kappa^{-1}\mathsf e,
+ \qquad h^2=0,\qquad Qh+hQ=\mathrm{id}_E.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The first identity follows from $\epsilon^2=0$.
+On one suspended factor, $Q_1\mathsf e+\mathsf e Q_1=-\kappa$ follows from
+$d_W(\epsilon a)=\kappa a-\epsilon d_Wa$ and the suspension minus sign.
+The tensor signs cancel the differentials on the other factors.
+This proves the second identity in every summand.
+
+The chiral operation is graded linear in the scalar factors:
+\[
+ \mu_W(\epsilon a,b)=\epsilon\mu_W(a,b),\qquad
+ \mu_W(a,\epsilon b)=(-1)^{|a|}\epsilon\mu_W(a,b).
+\]
+For two blocks with the distinguished block first, applying $Q_2\mathsf e$ has coefficient $(-1)^{|a|-1}$.
+Applying $\mathsf e Q_2$ has coefficient $(-1)^{|a|}$.
+They cancel.
+With the distinguished block second, the tensor sign and the second displayed scalar identity give the same cancellation.
+
+For three blocks, order the distinguished block first and use \eqref{eq:bd26-collision-signs}.
+For pairs $12$ and $13$, replacing $a$ by $\epsilon a$ changes the displayed sign by $-1$.
+The distinguished block remains first in each output, so the two compositions cancel.
+For pair $23$, put $N=(\alpha-1)(\beta+\gamma-2)+\beta$.
+The $Q_2\mathsf e$ coefficient is $(-1)^{N+\beta+\gamma}$.
+In the output $[\mu(b,c)|a]$, the $\mathsf e Q_2$ coefficient is
+$(-1)^{N+\beta+\gamma-1}$.
+They also cancel.
+This checks every collision in $E$.
+
+The scalar is constant in position and translation fixes it.
+It therefore commutes with tangent and normal right derivatives, and with every regular coordinate multiplication.
+It changes no partition, proving the support assertion.
+Division by $-\kappa$ proves \eqref{eq:bd26-contraction}.
+\end{proof}
+
+The homotopy retains all partial diagonals.
+Its restriction to the small diagonal sends $[a]$ to $-\kappa^{-1}[\epsilon a]$.
+On a partial diagonal it inserts $\epsilon$ in the block containing label $1$.
+Thus it can cancel a nonadjacent collision before reaching the small diagonal.
+
+\section{The ordered three-input complex}
+
+Let $\mathcal O_I$ be the six total orders of $I$.
+For nonempty $A\subset\mathcal O_I$, let $R_A$ invert $z_i-z_j$ exactly when the relative order of $i,j$ varies in $A$.
+Let
+\[
+ \Omega_A=S[u_\sigma,du_\sigma\mid\sigma\in A]
+ /(\textstyle\sum u_\sigma-1,\sum du_\sigma),
+\]
+where the $du_\sigma$ generate an exterior algebra.
+Define $C$ to be the algebra of families in $R_A\otimes_S\Omega_A$ compatible under all face restrictions and coefficient localizations.
+Its differential $d_C$ fixes positions and sends $u_\sigma$ to $du_\sigma$.
+Put
+\[
+ q_{ij}=\sum_{i\prec_\sigma j}u_\sigma,
+ \qquad \omega_{ij}=\frac{dq_{ij}}{z_i-z_j}.
+\]
+On a component without the denominator, the numerator vanishes and this component is zero.
+These formulas define closed compatible families.
+
+The coefficient-weighted state algebra has generators $a_i$ of degree zero and $b_{ij}$ of degree $-1$.
+The states are closed, and coefficients act graded centrally.
+Its nonzero nonunit products are $a_i a_j=\omega_{ij}b_{ij}$ for $i\ne j$.
+Every product involving a $b$ and another nonunit state vanishes, and $a_i^2=0$.
+The labels $b_{ij}$ and $b_{ji}$ are distinct.
+These products are associative because every product of three nonunit states vanishes.
+
+For distinct $i,j,k$, the multilinear three-input bar sector contains
+\[
+ e_{ijk}=[a_i|a_j|a_k],\qquad
+ m_{ij|k}=[b_{ij}|a_k],\qquad
+ n_{k|ij}=[a_k|b_{ij}].
+\]
+There are six $e$-words and twelve mixed words.
+Each displayed word has degree $-3$ before its coefficient is included.
+Let $O$ be their direct sum of free $C$-modules.
+The differential is
+\begin{equation}\label{eq:bd26-source}
+ \begin{gathered}
+ be_{ijk}=-\omega_{ij}m_{ij|k}-\omega_{jk}n_{i|jk},
+ \qquad bm_{ij|k}=bn_{k|ij}=0,\\
+ b(cv)=d_Cc\,v+(-1)^{|c|}c\,bv.
+ \end{gathered}
+\end{equation}
+These signs follow from $s(ca)=(-1)^{|c|}c\,sa$ and
+$b_2(sa\otimes sb)=(-1)^{|a|}s(ab)$.
+Closedness of the $\omega_{ij}$ gives $b^2=0$ directly on every summand.
+Thus $O$ is the actual multilinear sector of the relative ordered bar.
+
+For $m_{ij|k}$, restrict the compatible family to the edge $\{ijk,jik\}$.
+For $n_{k|ij}$, use the edge $\{kij,kji\}$.
+Set $u=q_{ij}$ and $t=z_i-z_j$ on either edge.
+The edge ring is exactly $R[t^{-1}]$.
+In degree zero, the restriction is $f(u)$ with $f(0),f(1)\in R$.
+In degree one, it is $g(u)du$ with $g\in R[t^{-1}][u]$.
+Higher-degree restrictions vanish.
+These are restrictions of entire families, and each restriction commutes with $d_C$.
+
+Write
+\begin{equation}\label{eq:bd26-edge-coefficients}
+ A(g)=\int_0^1g(u)\,du,\qquad
+ r_f=\pp_t\frac{f(1)-f(0)}t\mathbf1,\qquad
+ q_g=\pp_t\bigl(tp(t)A(g)\bigr).
+\end{equation}
+Polynomial integration uses characteristic zero.
+It is linear over $R$.
+Each principal part is finite, including when $A(g)$ has arbitrarily high finite normal pole order.
+The coefficients of its normal expansion are polynomial in both block positions.
+
+Let $R_L(q)$ be the outer chiral operation on $q\boxtimes J$, retaining the first transfer module.
+Let $R_R(q)$ be the corresponding operation on $J\boxtimes q$.
+Both have values in $P_3(V)$.
+They include transverse localization before the outer collision, followed by its principal-part map.
+In particular, all normal derivatives of $q$ remain present.
+For the scalar primitive,
+\[
+ R_L(\epsilon q)=\epsilon R_L(q),\qquad
+ R_R(\epsilon q)=\epsilon R_R(q).
+\]
+The second equality here uses that the other state is the even current $J$.
+
+Define a degree-zero $R$-linear map $B:O\to E$ by
+\begin{equation}\label{eq:bd26-leading-map}
+ \begin{aligned}
+ B(fe_{ijk})&=f(ijk)[J_i|J_j|J_k] && (f\in C^0),\\
+ B(cm_{ij|k})&=[\epsilon r_f|J_k] && (c|_{\{ijk,jik\}}=f),\\
+ B(cm_{ij|k})&=-[q_g|J_k] && (c|_{\{ijk,jik\}}=gdu),\\
+ B(cn_{k|ij})&=[J_k|\epsilon r_f] && (c|_{\{kij,kji\}}=f),\\
+ B(cn_{k|ij})&=+[J_k|q_g] && (c|_{\{kij,kji\}}=gdu).
+ \end{aligned}
+\end{equation}
+Here $f(ijk)$ is evaluation at the vertex indexed by the order $ijk$.
+Set $B=0$ on positive-degree coefficients of every $e$-word and on mixed coefficients of degree at least two.
+The intermediate maps in \eqref{eq:bd26-leading-map} are the binary edge assignments tensored with the remaining suspended current.
+The positive sign in the last line comes from moving $du$ past that suspended current.
+The unmerged vertex evaluation is specified separately and uses no endpoint identity between different edges.
+
+\section{The full ternary cochain map}
+
+The defect of $B$ is the degree-one map
+\[
+ D=QB-Bb:O\longrightarrow E.
+\]
+The identity $QD+Db=0$ follows from $Q^2=b^2=0$.
+Every component of $D$ is supported on a proper collision diagonal.
+Indeed, the projected separated map has zero internal differential and kills the coefficient and multiplication boundaries.
+
+\begin{theorem}\label{thm:bd26-full-comparison}
+Over $S_*$, the formula
+\begin{equation}\label{eq:bd26-full-map}
+ F=B-hD=B+\kappa^{-1}\mathsf e(QB-Bb)
+ \colon O\otimes_S S_*\longrightarrow E\otimes_S S_*
+\end{equation}
+defines a degree-zero $R[\kappa^{-1}]$-linear cochain map.
+Its separated projection is exactly the vertex insertion in \eqref{eq:bd26-leading-map}.
+Its mixed intermediate components are exactly those in \eqref{eq:bd26-leading-map}.
+For the mixed one-form components, its additional small-diagonal terms are
+\begin{equation}\label{eq:bd26-mixed-correction}
+ \begin{aligned}
+ (F-B)(cm_{ij|k})&=-\kappa^{-1}[\epsilon R_L(q_g)],\\
+ (F-B)(cn_{k|ij})&=+\kappa^{-1}[\epsilon R_R(q_g)].
+ \end{aligned}
+\end{equation}
+The correction vanishes on mixed degree-zero coefficients and on mixed coefficients of degree at least two.
+On unmerged words it is supported on the three proper pair diagonals and vanishes on positive-degree coefficients.
+All formulas retain every normal derivative and use finite sums.
+\end{theorem}
+\begin{proof}
+Since $D$ is closed in the Hom complex, \eqref{eq:bd26-contraction} gives
+\[
+ \begin{aligned}
+ QF-Fb
+ &=D-QhD+hDb\\
+ &=D-(\mathrm{id}-hQ)D+hDb
+ =h(QD+Db)=0.
+ \end{aligned}
+\]
+The support assertion for $D$ and partition preservation by $h$ prove the separated-projection statement.
+
+For a left mixed zero-form, endpoint regularity gives
+\begin{equation}\label{eq:bd26-endpoint}
+ q_{\partial_uf}=\kappa r_f.
+\end{equation}
+Indeed, $A(\partial_uf)=f(1)-f(0)$ and
+$tp(t)-\kappa/t$ is regular and vanishes at $t=0$.
+The internal intermediate differential therefore cancels $Bb$.
+The remaining defect is $-[\epsilon R_L(r_f)]$ on the small diagonal.
+Its image under $h$ is zero because $\epsilon^2=0$.
+For a mixed one-form, the defect is $-[R_L(q_g)]$.
+Applying $-h$ gives the first line of \eqref{eq:bd26-mixed-correction}.
+
+For a right mixed zero-form, the preceding suspended current changes the internal sign.
+The intermediate differential is $+\kappa[J|r_f]$ and equals $Bb$ by \eqref{eq:bd26-endpoint}.
+The remaining defect is $+[\epsilon R_R(r_f)]$, which $h$ kills.
+For a right mixed one-form, the defect is $+[R_R(q_g)]$.
+This gives the second line of \eqref{eq:bd26-mixed-correction}.
+Higher forms restrict to zero on every edge, including after their differential.
+
+For $f\in C^0$, the defect on an unmerged word is explicitly
+\begin{equation}\label{eq:bd26-unmerged-defect}
+ D(fe_{ijk})=
+ Q_2\bigl(f(ijk)[J_i|J_j|J_k]\bigr)
+ +B(f\omega_{ij}m_{ij|k})+B(f\omega_{jk}n_{i|jk}).
+\end{equation}
+All three terms lie on proper pair diagonals.
+The coefficient differential gives a positive-degree unmerged coefficient, which $B$ kills.
+If $c$ has positive degree, both $B(ce_{ijk})$ and $B(d_Cc\,e_{ijk})$ vanish.
+The other boundary coefficients $c\omega$ have degree at least two and vanish on edges.
+Hence $D(ce_{ijk})=0$ in these degrees.
+Formula \eqref{eq:bd26-unmerged-defect} and the explicit chiral maps make \eqref{eq:bd26-full-map} a finite formula on every input.
+\end{proof}
+
+The general Hom identity also gives an explicit null homotopy of $F$:
+\begin{equation}\label{eq:bd26-null}
+ K=hF=hB,
+ \qquad QK+Kb=F.
+\end{equation}
+Here $h^2=0$ gives the first equality and $QF=Fb$ gives the second.
+This homotopy is consistent with the contractibility of the nonzero-level target.
+
+For $e=e_{123}$ with constant coefficient, the two adjacent terms in \eqref{eq:bd26-unmerged-defect} cancel.
+Their coefficients are $\pp_t p(t)=\kappa t^{-2}\mathbf1$.
+The remaining defect is the nonadjacent collision:
+\begin{equation}\label{eq:bd26-constant-word}
+ D(e)=-\kappa[\mathbf1\delta_{13}\partial_{t_{13}}|J_2],
+ \qquad
+ F(e)=[J_1|J_2|J_3]-[\epsilon\delta_{13}\partial_{t_{13}}|J_2],
+ \quad t_{13}=z_1-z_3.
+\end{equation}
+The second formula is polynomial in the level.
+Its partial-diagonal internal differential cancels the $13$ component.
+Its next collision vanishes because the vacuum-current outer coefficient is regular.
+The correction is supported on $\Delta_{13}$, including its locus away from both adjacent diagonals.
+Thus the cancellation occurs on the support of the actual nonadjacent defect.
+
+For each label $i$, let $\mathsf e_i$ insert $\epsilon$ in the block containing $i$, with the sign of \eqref{eq:bd26-epsilon-operator}.
+The operators satisfy $\mathsf e_i\mathsf e_j+\mathsf e_j\mathsf e_i=0$.
+For distinct blocks this is the tensor sign for two odd maps.
+For the same block it follows from $\epsilon^2=0$.
+Each operator also satisfies $Q\mathsf e_i+\mathsf e_iQ=-\kappa$.
+
+\begin{corollary}\label{cor:bd26-equivariant}
+Replace $h$ in \eqref{eq:bd26-full-map} by
+\[
+ h_{\mathrm{sym}}=-\frac1{3\kappa}(\mathsf e_1+\mathsf e_2+\mathsf e_3).
+\]
+The resulting map $F_{\mathrm{sym}}$ is equivariant under permutation of the three labels, including the coordinate and suspended-state signs.
+It has the same mixed components as $F$.
+The maps satisfy
+\[
+ F_{\mathrm{sym}}-F=QL+Lb,
+ \qquad L=(h_{\mathrm{sym}}-h)B.
+\]
+\end{corollary}
+\begin{proof}
+The preceding identities give $h_{\mathrm{sym}}^2=0$ and
+$Qh_{\mathrm{sym}}+h_{\mathrm{sym}}Q=\mathrm{id}$.
+The proof of Theorem~\ref{thm:bd26-full-comparison} therefore applies.
+The edge formulas, vertex evaluation, and chiral maps in $B$ commute with label permutations.
+Permutations exchange the three operators $\mathsf e_i$, so their average also commutes with them.
+On the small diagonal, all three scalar operators coincide, which preserves the mixed correction.
+Finally, $Q(h_{\mathrm{sym}}-h)=-(h_{\mathrm{sym}}-h)Q$ gives
+$QL+Lb=-(h_{\mathrm{sym}}-h)(QB-Bb)=F_{\mathrm{sym}}-F$.
+\end{proof}
+
+\section{Polynomial comparison on the global edge domain}
+
+The global order-edge ring $R[t^{-1}]$ contains no inverse of an outer position difference.
+Consequently, a mixed principal part in \eqref{eq:bd26-edge-coefficients} has polynomial coefficients in the outer variable.
+This gives a divisibility statement at every inner pole order.
+
+\begin{lemma}\label{lem:bd26-global-divisibility}
+For every global mixed edge one-form,
+\[
+ R_L(q_g)\in\kappa P_3(V),\qquad R_R(q_g)\in\kappa P_3(V).
+\]
+The quotients by $\kappa$ are unique polynomial elements of the finite principal-parts module.
+\end{lemma}
+\begin{proof}
+Expand $q_g$ in the normal basis at its pair diagonal.
+Every normal coefficient is a polynomial in the two block positions with a state in $V$.
+Reduction modulo $\kappa$ makes the vertex field
+$Y_0(a,s)b=(e^{sT}a)b$.
+Multiplication by a polynomial outer coefficient remains regular in $s$.
+Its outer principal part is therefore zero.
+This argument applies to every inner normal derivative, since the transfer retains these derivatives and regular coefficients remain regular under differentiation.
+Hence both outer outputs vanish modulo $\kappa$.
+The module $P_3(V)$ is free over $S$ in the monomial-state and normal bases.
+It follows that each output has a unique quotient by $\kappa$.
+\end{proof}
+
+Thus \eqref{eq:bd26-mixed-correction} defines a polynomial comparison on the entire global mixed sector.
+There is no bound on its finite inner pole order.
+At level zero, the quotient is taken in $S$ before specialization.
+It is not defined by numerical division at $\kappa=0$.
+
+For an unmerged word $e_{ijk}$, consider its two adjacent edges.
+Let $C^0_{ijk,\mathrm{reg}}$ consist of $f\in C^0$ whose average on each of these edges is regular in the corresponding normal variable.
+Equivalently, its average belongs to $R$ inside $R[t^{-1}]$ on that edge.
+Define an $R$-subcomplex $O_{\mathrm{reg}}\subset O$ by using these zero-form coefficients for the unmerged words.
+Keep every positive-degree unmerged coefficient and every mixed coefficient.
+It is a subcomplex by \eqref{eq:bd26-source}.
+It is not asserted to be a $C$-submodule.
+
+\begin{theorem}\label{thm:bd26-polynomial}
+Formula \eqref{eq:bd26-full-map} restricts to an $S$-polynomial cochain map
+\[
+ F_{\mathrm{reg}}:O_{\mathrm{reg}}\longrightarrow E.
+\]
+It specializes to every numerical level, including zero.
+Its mixed sector contains every global inner pole order, and its unmerged sector contains every constant-coefficient ordered word.
+\end{theorem}
+\begin{proof}
+Lemma~\ref{lem:bd26-global-divisibility} proves polynomiality on mixed one-forms.
+The mixed zero-form correction vanishes.
+For an unmerged zero-form, all pair collisions of the regular vertex coefficient $f(ijk)$ are divisible by $\kappa$.
+Indeed, modulo $\kappa$ the regular-input vertex product has no pole.
+On an adjacent edge, the coefficient of $f\omega_{ij}$ is $f(u)du/t$.
+Its averaged inner output is
+\[
+ q_{f/t}=\pp_t\bigl(p(t)A(f)\bigr).
+\]
+The regular-average condition makes its regular field contribution vanish under $\pp_t$.
+Thus it is also divisible by $\kappa$.
+All components of \eqref{eq:bd26-unmerged-defect} are consequently divisible by $\kappa$.
+This proves that $\mathsf e D/\kappa$ is polynomial on $O_{\mathrm{reg}}$.
+The correction vanishes on positive-degree unmerged coefficients.
+
+The cochain identity holds after inverting $\kappa$ by Theorem~\ref{thm:bd26-full-comparison}.
+Every summand of $E$ is $S$-torsion-free: localization and the finite normal forms preserve this property.
+The identity therefore holds over $S$.
+Tensoring this polynomial identity with $S/(\kappa-k)$ proves every stated specialization.
+\end{proof}
+
+The same polynomial statement holds for $F_{\mathrm{sym}}$.
+The proof uses only divisibility of $D$ on unmerged zero-forms and divisibility of the small-diagonal mixed defect.
+It therefore applies to each $\mathsf e_i$ and to their average.
+
+There is a global coefficient outside the regular-average subcomplex:
+\[
+ f=\frac{q_{12}(1-q_{12})}{t},\qquad t=z_1-z_2.
+\]
+When the relative order of $1,2$ is fixed, its numerator is zero.
+On every other component, $t$ is inverted.
+Thus $f$ is an actual compatible degree-zero family.
+On the edge $\{123,213\}$, its average is $1/(6t)$.
+On the edge $\{123,132\}$, its restriction is zero.
+Its values at all six vertices are zero.
+
+\begin{proposition}\label{prop:bd26-positive-form-obstruction}
+No $S$-polynomial degree-zero cochain map on all of $O$ can simultaneously retain the separated and mixed intermediate components of $B$ and kill all positive-degree unmerged coefficients.
+The same statement holds at level zero.
+\end{proposition}
+\begin{proof}
+Use $fe_{123}$ with the displayed global family.
+Its source boundary is
+\[
+ b(fe_{123})=(d_Cf)e_{123}
+       -f\omega_{12}m_{12|3}-f\omega_{23}n_{1|23}.
+\]
+The first term has zero image under the stated hypothesis.
+The last term has zero mixed intermediate image because $f$ vanishes on its edge.
+For the middle term,
+\[
+ q_{f/t}=\pp_t\left(\frac{p(t)}{6t}\right)
+ =\frac\kappa{6t^3}\mathbf1+\frac{J^2}{6t}.
+\]
+Thus the partial-diagonal component of the boundary image reduces to
+$[J^2\delta_{12}/6|J_3]\ne0$ modulo $\kappa$.
+The proposed image of $fe_{123}$ has zero separated component, since all its vertex values vanish.
+Its degree is $-3$.
+In this degree, the proper pair diagonals contain one $\epsilon$ factor, while the small-diagonal summand is zero.
+The partial-diagonal component of its differential is consequently divisible by $\kappa$.
+This contradicts the displayed nonzero reduction of the source-boundary image.
+At level zero that target differential is zero, giving the same contradiction.
+\end{proof}
+
+A polynomial extension to every unmerged coefficient with these intermediate images must therefore include nonzero positive-degree unmerged components.
+This condition concerns the map on the original ordered complex, before differential induction.
+
+The coefficient-domain hypothesis is essential.
+On a mixed domain admitting the outer coefficient $s^{-1}$, take
+$gdu=du/(t^2s)$ for the left placement.
+Then
+\[
+ q_g=\frac\kappa{st^3}\mathbf1+\frac{J^2}{st}.
+\]
+The actual outer output is
+\begin{equation}\label{eq:bd26-outer-obstruction}
+ R_L(q_g)=
+ \frac{\kappa J}{t^3s}+\frac{J^3}{ts}
+ +\frac{2\kappa J}{ts^3}
+ +\frac{2\kappa x_2}{ts^2}
+ +\frac{2\kappa x_3}{ts}.
+\end{equation}
+To obtain the last four terms, use
+$Y(J^2,s)J=(e^{sT}J)^2J+2\kappa s^{-2}e^{sT}J$.
+The first term retains the inner derivative $\partial_t^2/2$ through the unit operation.
+Modulo $\kappa$, \eqref{eq:bd26-outer-obstruction} is $J^3/(ts)\ne0$.
+Thus the polynomial mixed formula does not extend to this outer-pole domain while retaining its intermediate image and allowing only a small-diagonal correction.
+On the closed degree-$-2$ input, the target correction has the form $[\epsilon v]$ and differential $-\kappa[v]$.
+This cannot cancel the nondivisible coefficient.
+The global divisibility lemma and this obstruction have different coefficient domains.
+
+\section{Differential induction and the remaining comparison}
+
+The map $F$ is linear over position functions.
+The ordered symbols in $O$ have not been assigned a connection commuting with their multiplication differential.
+A precise right differential module source can instead be constructed by induction.
+Let $\mathcal D_R$ be the Weyl algebra over $S$, generated by $R$ and $\partial_{z_1},\partial_{z_2},\partial_{z_3}$.
+Its relations are $[\partial_{z_i},z_j]=\delta_{ij}$ and $[\partial_{z_i},\partial_{z_j}]=0$.
+All Weyl generators have degree zero.
+For an $R$-complex $M$, put
+\begin{equation}\label{eq:bd26-induction}
+ \operatorname{Ind}(M)=M\otimes_R\mathcal D_R,
+ \qquad d(m\otimes P)=dm\otimes P.
+\end{equation}
+Its right action is multiplication on the second factor.
+Normal ordering expresses each element uniquely as a finite sum
+$\sum_\alpha m_\alpha\otimes\partial^\alpha$.
+Thus $\mathcal D_R$ is free as a left $R$-module and induction is exact.
+The source contains the specified formal derivatives of every state-coefficient expression.
+
+\begin{proposition}\label{prop:bd26-induced-comparison}
+There are cochain maps of right differential modules
+\[
+ \begin{aligned}
+ F^{\mathcal D}:\operatorname{Ind}(O)\otimes_S S_*&\longrightarrow E\otimes_S S_*,\\
+ F_{\mathrm{reg}}^{\mathcal D}:\operatorname{Ind}(O_{\mathrm{reg}})&\longrightarrow E,
+ \end{aligned}
+ \qquad m\otimes P\longmapsto F(m)P.
+\]
+They retain every displayed normal-derivative identity.
+The first has right differential module null homotopy
+$K^{\mathcal D}(m\otimes P)=hB(m)P$.
+\end{proposition}
+\begin{proof}
+Function-linearity gives $F(mr)P=F(m)rP$, so the formula is balanced over $R$.
+Right differential linearity follows from associativity of the right action.
+The target differential commutes with that action.
+Hence $Q(F(m)P)=F(bm)P$, proving the cochain equation.
+The same argument applies to the polynomial subcomplex.
+Apply \eqref{eq:bd26-null} and the right differential linearity of $h$ to prove the homotopy formula.
+\end{proof}
+
+Induction specifies a new source rather than a connection on the original finite list of ordered symbols.
+It is not an identification of the underlying $R$-complexes $O$ and $\operatorname{Ind}(O)$.
+For example, their formal derivative summands are separate in the displayed normal form.
+A comparison on a quotient imposing state-translation relations must show that $F^{\mathcal D}$ kills those relations.
+
+The state complex $W$ has $H^{-1}(W)=0$ and $H^0(W)=V/\kappa V$ over $S$.
+At nonzero numerical level, multiplication by $\epsilon/\kappa$ contracts it.
+At zero level, its ordinary specialization has zero differential and state space $V_0\oplus\epsilon V_0$.
+Therefore neither \eqref{eq:bd26-full-map} nor differential induction gives a quasi-isomorphic replacement of the nonzero-level Heisenberg states.
+The ternary map also specifies no compatibility with deconcatenation, ordered surjections, or four-input compositions.
+Such compatibility requires new equations on those maps and their actual coefficient domains.
+The partial-diagonal term \eqref{eq:bd26-constant-word} supplies the missing three-input chain equation with the stated mixed images.
