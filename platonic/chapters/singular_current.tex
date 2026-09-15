@@ -1,0 +1,1642 @@
+\chapter{Simple poles and higher collision operations}
+\label{chap:sc050}
+
+A singular product may become zero after taking cohomology. The
+primitive that makes it zero can still have a singular product with a
+third field. This gives a concrete way for a higher operation to survive
+when the binary operation has disappeared.
+
+The example below has only simple poles between its generating fields.
+Its first surviving operation can nevertheless have any prescribed
+arity greater than two. Reducing the fields to operators of energy
+zero gives a two-by-two matrix algebra. The same polynomial controls
+the higher operations of this matrix algebra and the insertions in its
+Hochschild cochains. The comparison requires the fields, their
+differential, the energy grading, and the signs of the higher maps.
+
+\section{A differential algebra of free fields}
+\label{sec:sc050-fields}
+
+Fix an integer \(r\ge2\) and work over \(\mathbb C\). A parity is an
+element of \(\mathbb Z/2\). Even quantities commute with scalars, and
+interchanging two odd quantities in an exterior algebra changes the
+sign. Consider the vector space
+\[
+ V_r=\mathbb C[x_0,x_1,\ldots]\otimes
+       \Lambda(\gamma_0,\bar\gamma_0,\gamma_1,\bar\gamma_1,\ldots).
+\]
+The variables \(x_n\) are even. The variables \(\gamma_n,\bar\gamma_n\)
+are odd, anticommute, and have square zero in this displayed
+polynomial--exterior presentation. A state is a finite linear
+combination of monomials. No completion of the state space is taken.
+
+For an odd variable \(u\), the left derivative \(\partial_u\) is
+specified by \(\partial_u u=1\) and
+\[
+ \partial_u(AB)=(\partial_u A)B+(-1)^{|A|}A\,\partial_u B
+\]
+on homogeneous monomials. Multiplication by \(u\) and \(\partial_u\)
+have anticommutator one. Derivatives and multiplications associated
+with distinct odd variables have anticommutator zero.
+
+Put \(x=x_0\), \(\gamma=\gamma_0\), \(\bar\gamma=\bar\gamma_0\).
+Define the following operator-valued formal series:
+\begin{align}
+ x(z)&=\sum_{n\ge0}x_nz^n, \notag\\
+ \gamma(z)&=\sum_{n\ge0}\gamma_nz^n+
+                    \sum_{n\ge0}\partial_{\bar\gamma_n}z^{-n-1},
+       \label{eq:sc050-fields}\\
+ \bar\gamma(z)&=\sum_{n\ge0}\bar\gamma_nz^n+
+                    \sum_{n\ge0}\partial_{\gamma_n}z^{-n-1}.
+       \notag
+\end{align}
+The coefficients \(x_n,\gamma_n,\bar\gamma_n\) in these formulas act
+by multiplication. On each state, only finitely many derivatives act
+nontrivially. A field therefore sends a state to a Laurent series
+with a finite lower bound on its powers of \(z\).
+The formal residue \(\operatorname{Res}_{z=0}\) extracts the
+coefficient of \(z^{-1}\); it requires no analytic contour.
+
+The variable \(z\) describes position. The variable \(x\) is a field
+coordinate, not the position. This distinction matters when derivatives
+or changes of coefficients are introduced.
+
+The vacuum is \(1\). Translation is the even operator
+\[
+ T=\sum_{n\ge0}(n+1)
+ \left(x_{n+1}\partial_{x_n}
+       +\gamma_{n+1}\partial_{\gamma_n}
+       +\bar\gamma_{n+1}\partial_{\bar\gamma_n}\right).
+\]
+Each sum is finite on a state. Direct computation gives
+\([T,A(z)]=\partial_z A(z)\) for each generating field \(A\).
+Also \(T1=0\) and \(T^n x/n!=x_n\), with the same identities for
+the odd generators.
+
+For homogeneous operators write
+\([A,B]_{\mathrm{gr}}=AB-(-1)^{|A||B|}BA\).
+The only nonzero generating commutator is
+\[
+ [\gamma(z),\bar\gamma(w)]_{\mathrm{gr}}
+   =\delta(z,w)\,\mathrm{id},\qquad
+ \delta(z,w)=\sum_{m\in\mathbb Z}z^{-m-1}w^m.
+\]
+The identity
+\[
+ \delta(z,w)=i_{z,w}(z-w)^{-1}-i_{w,z}(z-w)^{-1}
+\]
+uses expansion in powers of the second coordinate divided by the
+first. Thus the singular products are
+\begin{equation}\label{eq:sc050-poles}
+ \gamma(z)\bar\gamma(w)\sim\frac1{z-w},\qquad
+ \bar\gamma(z)\gamma(w)\sim\frac1{z-w}.
+\end{equation}
+The symbol \(\sim\) retains only negative powers of \(z-w\).
+Every product involving \(x\) has no singular part.
+
+\subsection{Composite states and normal products}
+
+Normal ordering moves multiplication operators to the left of
+derivatives, with a minus sign for each interchange of odd operators.
+Associate to a state monomial the normally ordered product of the
+corresponding divided derivatives of the fields in
+\eqref{eq:sc050-fields}. Extend this assignment linearly and denote it
+by \(Y(A,z)\). In particular \(Y(1,z)=\mathrm{id}\).
+For states \(A,B\), define their products \(A_{(n)}B\) by
+\[
+ Y(A,z)B=\sum_{n\in\mathbb Z}(A_{(n)}B)z^{-n-1}.
+\]
+The normal product of two states is \(A_{(-1)}B\).
+The vector-space presentation of \(V_r\) does not assert that every
+normal product equals multiplication in its polynomial--exterior
+coordinates.
+
+Every product of composite fields can be calculated by moving the
+derivatives in the first field past the multiplications in the
+second. At a crossing, retain the reordered term or take the
+anticommutator. Each odd factor can participate in at most one
+contraction. A contraction between divided derivatives of orders
+\(m,n\) of the two conjugate fields contributes
+\begin{equation}\label{eq:sc050-contraction}
+ \frac{\partial_z^m\partial_w^n(z-w)^{-1}}{m!\,n!}
+ =\frac{(-1)^m(m+n)!}{m!\,n!}(z-w)^{-m-n-1}.
+\end{equation}
+The sign of a pairing is the sign of the permutation of odd factors
+required to make its contractions. This gives a finite sum over
+partial pairings for any fixed input monomials.
+
+A vertex superalgebra is a parity-graded state space with a vacuum,
+translation and a state--field assignment satisfying lower
+truncation, the vacuum and translation identities, graded skew
+symmetry, and the collision Jacobi identity. For the fields here,
+the following proof states these identities and derives them
+directly from the pairings.
+
+\begin{proposition}\label{prop:sc050-vertex}
+These fields give \(V_r\) a vertex superalgebra structure. They obey
+the vacuum and translation identities
+\[
+ Y(A,z)1=e^{zT}A,\qquad
+ Y(TA,z)=\partial_zY(A,z),\qquad
+ [T,Y(A,z)]=\partial_zY(A,z),
+\]
+and the graded skew-symmetry identity
+\[
+ Y(A,z)B=(-1)^{|A||B|}e^{zT}Y(B,-z)A.
+\]
+Their two ordered products and their collision iterate satisfy the
+vertex Jacobi identity.
+\end{proposition}
+\begin{proof}
+On the vacuum all derivatives vanish. The remaining multiplication
+series is the Taylor series \(e^{zT}A\). Differentiating a divided
+derivative field gives the next one with its required integer
+coefficient. This proves the two translation identities. Interchanging
+the two lists of odd factors in the pairing expansion gives the
+displayed skew sign. Formula \eqref{eq:sc050-contraction} transforms
+with exactly the sign of the interchanged contracted factors.
+
+For three states, expand their three fields into pairings. After
+putting the third coordinate at zero, the result is a finite sum of
+elements of
+\[
+ V_r[[u,v]][u^{-1},v^{-1},(u-v)^{-1}].
+\]
+The two radial expansions give the two ordered products, with the
+graded sign when the first two states are exchanged. For the collision
+expansion, first choose the pairs between those two states. Pair the
+remaining factors with the third state and Taylor-expand their
+uncontracted factors. This is a bijection with the original pairings.
+It preserves the permutation of odd factors and hence every sign.
+The collision expansion is therefore \(Y(Y(A,u-v)B,v)C\).
+
+For a rational function of \(u\) with possible poles at \(0\) and
+\(v\), partial fractions say that its outer residue is the sum of the
+residues at these two poles. Taking the coefficient of \(v^{-1}\)
+gives the difference between the two ordered expansions as the
+collision residue. The same statement holds for the displayed formal
+series, because only finitely many Taylor coefficients contribute at
+fixed pole orders. Applying it after multiplication by arbitrary
+Laurent monomials gives every coefficient of the vertex Jacobi
+identity.
+\end{proof}
+
+A differential on a vertex superalgebra is an odd square-zero map
+that commutes with translation and is a derivation of every product.
+Let \(X(t)=\sum_{n\ge0}x_nt^n\). On the vector-space coordinates define
+\begin{equation}\label{eq:sc050-Q}
+ Qx_n=0,\qquad Q\gamma_n=x_n,\qquad
+ Q\bar\gamma_n=\frac{[t^n]X(t)^r}{r+1},
+\end{equation}
+and extend as an odd derivation. Here \([t^n]\) means coefficient
+extraction. Its square is zero on each generator, hence on every
+monomial. Its commutators with the three fields are respectively
+\[
+ 0,\qquad x(z),\qquad \frac{:x(z)^r:}{r+1}.
+\]
+These follow directly from the left derivative formulas. They
+preserve the splitting into multiplication and derivative parts.
+Thus \(Q\) is a derivation of every normally ordered composite and
+every coefficient of its field. Formula \eqref{eq:sc050-Q} also
+commutes with \(T\). It defines a differential on \(V_r\).
+
+The closed odd field of interest is
+\begin{equation}\label{eq:sc050-psi}
+ \psi=\bar\gamma-\frac1{r+1}:x^{r-1}\gamma:.
+\end{equation}
+For states \(A,B\), the polynomial
+\[
+ [A_\lambda B]=\sum_{n\ge0}\frac{\lambda^n}{n!}A_{(n)}B
+\]
+records their singular products. It is called the \(\lambda\)-bracket.
+Contraction of the fields in \eqref{eq:sc050-psi} gives
+\begin{equation}\label{eq:sc050-primary}
+ Q\psi=0,\qquad
+ [\psi_\lambda\psi]=-\frac2{r+1}x^{r-1},\qquad
+ [:x^j\gamma:_\lambda\psi]=x^j.
+\end{equation}
+The first bracket is exact, since
+\(Q(:x^{r-2}\gamma:)=x^{r-1}\). Its primitive still has a singular
+product with \(\psi\).
+
+\subsection{Cohomology and its commutative product}
+
+A state is closed if its differential is zero, and exact if it is
+the differential of another state. Cohomology is the quotient of
+closed states by exact states. A linear map commuting with the
+differentials is a chain map; it is a quasi-isomorphism when its
+induced map on cohomology is an isomorphism.
+
+Introduce \(G(t)=\sum_{n\ge0}\gamma_nt^n\) and
+\[
+ \psi_n=\bar\gamma_n-\frac{[t^n](X(t)^{r-1}G(t))}{r+1}.
+\]
+This is an invertible triangular change of polynomial--exterior
+coordinates: solve for each \(\bar\gamma_n\) by adding back the
+displayed expression. In these coordinates,
+\[
+ Q\gamma_n=x_n,\qquad Qx_n=Q\psi_n=0.
+\]
+Give each \(x_n\) and \(\gamma_n\) pair degree one and each \(\psi_n\)
+pair degree zero. On pair degree \(N>0\), put
+\[
+ h=\frac1N\sum_{n\ge0}\gamma_n\partial_{x_n};
+\]
+put \(h=0\) on pair degree zero. Each sum is finite on a state.
+The anticommutator of \(Q\) with the numerator is multiplication by
+\(N\). Thus
+\[
+ Qh+hQ=1-ip,
+\]
+where \(p\) sets the \(x_n,\gamma_n\) to zero and \(i\) includes the
+remaining exterior vector space. In particular,
+\begin{equation}\label{eq:sc050-cohom}
+ H(V_r,Q)=\Lambda(\psi_0,\psi_1,\ldots),\qquad
+ T\psi_n=(n+1)\psi_{n+1}.
+\end{equation}
+The singular products on this cohomology vanish. In a pairing of
+surviving \(\psi\)-fields, every contraction introduces \(x^{r-1}\)
+or one of its derivatives. Such factors are central and cannot be
+removed by further contractions. Their images under \(p\) vanish.
+The vertex product on \eqref{eq:sc050-cohom} is consequently the
+commutative differential exterior product, with
+\(Y(A,z)B=(e^{zT}A)B\). This conclusion concerns the cohomology
+vertex algebra. It does not remove the singular operations of \(V_r\).
+
+\section{A finite presentation of the singular operations}
+\label{sec:sc050-presentation}
+
+To retain the primitives of \eqref{eq:sc050-primary}, introduce a
+central even symbol \(k\), even symbols \(c_1,\ldots,c_{r-1}\), and
+odd symbols \(\psi,h_0,\ldots,h_{r-2}\). Set \(c_0=k\).
+Let
+\[
+ L_r=\mathbb Ck\oplus\mathbb C[T]\psi
+ \oplus\bigoplus_{j=0}^{r-2}\mathbb C[T]h_j
+ \oplus\bigoplus_{j=1}^{r-1}\mathbb C[T]c_j,\qquad Tk=0.
+\]
+The notation \(\mathbb C[T]u\) means the free span of the derivatives
+\(u,Tu,T^2u,\ldots\). Define
+\begin{align}
+ Qh_j&=c_{j+1},&Q\psi&=Qc_j=Qk=0,\notag\\
+ [\psi_\lambda\psi]&=-\frac2{r+1}c_{r-1},&
+ [h_j{}_\lambda\psi]&=[\psi_\lambda h_j]=c_j.
+ \label{eq:sc050-L}
+\end{align}
+All other brackets of these generators are zero. Derivative inputs
+are determined by
+\[
+ [TA_\lambda B]=-\lambda[A_\lambda B],\qquad
+ [A_\lambda TB]=(T+\lambda)[A_\lambda B].
+\]
+These identities are called sesquilinearity. Together with graded
+skew symmetry and
+\[
+ [A_\lambda[B_\mu C]]
+ =[[A_\lambda B]_{\lambda+\mu}C]
+   +(-1)^{|A||B|}[B_\mu[A_\lambda C]],
+\]
+they define a Lie conformal superalgebra. All the bracket values in
+\eqref{eq:sc050-L} are central, so every term of this Jacobi identity
+is zero on generators. Sesquilinearity extends the equality to their
+derivatives. The same check proves that \(Q\) is a bracket derivation.
+
+The assignments
+\begin{equation}\label{eq:sc050-Lmap}
+ k\longmapsto1,\qquad c_j\longmapsto x^j,\qquad
+ h_j\longmapsto:x^j\gamma:,\qquad
+ \psi\longmapsto\bar\gamma-\frac{:x^{r-1}\gamma:}{r+1}
+\end{equation}
+preserve the differential, translation and brackets. Their
+\(\mathbb C[T]\)-linear independence can be checked in the free
+coordinate space: the \(\bar\gamma_n\) coefficients separate the
+derivatives of \(\psi\), and powers of \(x\) separate the remaining
+families. Thus this presentation retains an actual subspace of fields.
+
+\subsection{The vacuum enveloping algebra}
+
+A mode of a field \(A\) is its coefficient \(A_{(m)}\) in
+\(A(z)=\sum_m A_{(m)}z^{-m-1}\).
+Form the Lie superalgebra of the modes of \(L_r\), with
+\[
+ [A_{(m)},B_{(n)}]_{\mathrm{gr}}=[A_\lambda B]_{(m+n)}
+\]
+for the constant primary brackets in \eqref{eq:sc050-L}, and
+\((TA)_{(m)}=-mA_{(m-1)}\).
+The formula on the right takes the indicated mode of the bracket
+value. Specialize \(k_{(-1)}=1\) and \(k_{(m)}=0\) for \(m\ne-1\).
+Let every nonnegative mode annihilate a vector \(1\), and let the
+negative modes generate its induced module \(U_r\).
+
+There is a concrete basis for this module. Order the negative modes.
+Even central modes have arbitrary multiplicity, and each odd mode has
+multiplicity at most one. Reorder two odd modes by their
+anticommutator, which is central. The two reorderings of three odd
+modes agree because their Jacobi expression is zero. For a repeated
+odd letter \(u\), use \(u^2=[u,u]/2\); its overlaps agree because
+\([u,u]\) is central. These reductions terminate by word length and
+the number of inverted pairs.
+
+Their linear independence has an explicit test. Over the polynomial
+ring of negative central modes, write \(B_{ij}\) for the symmetric
+central anticommutator of two negative odd modes. On the exterior
+space with variables \(e_i\), represent these odd modes by
+\[
+ e_i\wedge+\frac12\sum_j B_{ij}\partial_{e_j}.
+\]
+The sum is finite on each exterior polynomial. Its anticommutators
+are \(B_{ij}\). Applied to \(1\), an ordered word has its exterior
+monomial as highest exterior-degree term. Descending in that degree
+proves independence of the ordered words. Positive modes can be
+moved to the right using the same central relations, so the vacuum
+condition introduces no additional relation among negative words.
+
+Define fields on the ordered states by taking successive normal
+products of divided derivatives. Their generating contractions are
+the central fields in \eqref{eq:sc050-L} divided by \(z-w\).
+Their derivatives are still central. Moving modes through a normal
+product therefore gives a finite pairing expansion, with the central
+factors left at their contraction positions and then Taylor-expanded.
+The two orderings and the collision expansion agree term by term
+by the pairing argument in Proposition~\ref{prop:sc050-vertex}.
+It proves locality and the vertex Jacobi identity for these fields.
+Their value on the vacuum recovers the ordered state, so the
+state--field assignment is well-defined and injective.
+This constructs the vacuum enveloping vertex algebra \(U_r\).
+The derivation \(Q\) of its mode relations descends to its vacuum
+module and to every field product.
+
+\begin{theorem}\label{thm:sc050-vertex-resolution}
+The assignments \eqref{eq:sc050-Lmap} extend to a surjective
+differential vertex-algebra map
+\[
+ q_r:U_r\longrightarrow V_r.
+\]
+It induces an isomorphism on cohomology, preserving translation and
+every vertex product.
+\end{theorem}
+\begin{proof}
+The mode assignments preserve all relations and the vacuum. The
+construction by successive normal products then preserves every
+composite field. They are surjective because \(h_0\) gives
+\(\gamma\), \(c_1\) gives \(x\), and
+\(\psi+:x^{r-1}\gamma:/(r+1)\) gives \(\bar\gamma\).
+
+For homogeneous negative modes define symmetrization by
+\[
+ \operatorname{sym}(u_1\cdots u_n)
+   =\frac1{n!}\sum_{\sigma\in S_n}
+        \epsilon(\sigma;u)\,u_{\sigma(1)}\cdots u_{\sigma(n)}.
+\]
+Here \(S_n\) is the set of permutations of \(n\) letters, and
+\(\epsilon(\sigma;u)\) is the product of the signs from
+interchanging odd letters. Symmetrization is a vector-space isomorphism
+from the symmetric algebra on even generators tensored with the
+exterior algebra on odd generators. It is triangular with respect
+to the ordered basis just proved. Since \(Q\) is a derivation of
+the mode relations, it commutes with symmetrization.
+In these coordinates the pairs
+\[
+ T^nh_j\longmapsto T^nc_{j+1}
+\]
+are contractible. The homotopy which replaces a \(T^nc_{j+1}\) by
+\(T^nh_j\), sums over all such factors and divides by total pair
+degree proves that only the exterior algebra on \(T^n\psi\)
+survives. This homotopy and the projection commute with translation.
+
+The target contraction in \eqref{eq:sc050-cohom} leaves exactly the
+same exterior generators. After the map \(q_r\), a symmetrized
+source word projects to its exterior word in those generators.
+All contraction corrections contain an \(x_n\), and vanish under
+the target projection. Thus \(H(q_r)\) is the identity on the
+displayed exterior bases. It is an isomorphism, and preservation
+of the vertex operations follows from the already constructed
+strict vertex map.
+\end{proof}
+
+In particular the normal square of the source generator need not
+vanish. If \(C=[\psi_\lambda\psi]\), graded skew symmetry gives
+\begin{equation}\label{eq:sc050-normal-square}
+ 2:\psi\psi:=TC.
+\end{equation}
+The exterior presentation used for the cohomology computation is a
+vector-space presentation by symmetrization. Equation
+\eqref{eq:sc050-normal-square} records the additional normal-product
+term before taking cohomology.
+
+\section{The first higher conformal operation}
+\label{sec:sc050-higher}
+
+The cohomology of the smaller complex \(L_r\) is
+\[
+ H_r=\mathbb Ck\oplus\mathbb C[T]\theta.
+\]
+Here \(\theta\) is odd and \(k\) is even with \(Tk=0\).
+Let \(i(\theta)=\psi\), let \(p\) kill the pairs \(h_j,c_{j+1}\),
+and set \(h(c_{j+1})=h_j\), with \(h=0\) on the other generators.
+Then \(Qh+hQ=1-ip\), \(ph=hi=h^2=0\).
+
+Higher brackets retain the compatibility equations for these
+primitives. Their \(n\)-input output lies in
+\[
+ H_r[\lambda_1,\ldots,\lambda_n]/
+       (T+\lambda_1+\cdots+\lambda_n).
+\]
+Applying \(T\) to the \(j\)-th input multiplies the output by
+\(-\lambda_j\). When an output is inserted into another operation,
+its momentum is the sum of the momenta of its inputs. These rules
+define translation-equivariant compositions. Graded skew symmetry
+uses the sign of a permutation times its Koszul sign; on repeated
+odd inputs the resulting operations are symmetric.
+
+We use exponential coefficients. On a formal odd input \(a\),
+the bracket and map series are respectively
+\[
+ \sum_n\frac{\ell_n(a,\ldots,a)}{n!},\qquad
+ \sum_n\frac{F_n(a,\ldots,a)}{n!}.
+\]
+For ordinary higher brackets, the Jacobi equations say that
+the induced odd operation on the symmetric coalgebra of the
+inputs with parity reversed has square zero. Its degree-\(n\)
+part consists of \(n\)-letter tensor words modulo the Koszul
+permutation relations.
+That coalgebra splits a word into every ordered pair of complementary
+subsets, with its Koszul sign. An operation extends by applying it
+to each subset. Consequently an identity of these extensions is
+determined by its one-output component. For conformal operations,
+carry the momentum labels through each subset and each insertion.
+These finite identities with polynomial momentum coefficients
+define the conformal higher Jacobi and morphism equations.
+A higher model is minimal when its unary operation is zero.
+A higher morphism is a quasi-isomorphism when its linear
+component is a quasi-isomorphism of complexes.
+
+\begin{theorem}\label{thm:sc050-first-operation}
+There is a higher conformal model of \(L_r\) on \(H_r\) with the
+single nonzero primary bracket
+\begin{equation}\label{eq:sc050-ell}
+ \ell_{r+1}(\theta,\ldots,\theta)=(-1)^r r!\,k.
+\end{equation}
+All higher brackets with \(k\) as an input are zero.
+A higher conformal quasi-isomorphism to \(L_r\) has components
+\begin{align}
+ F_1(\theta)&=\psi,&F_1(k)&=k,\notag\\
+ F_n(\theta,\ldots,\theta)
+   &=\frac{(-1)^n n!}{r+1}h_{r-n}
+       &&(2\le n\le r).
+ \label{eq:sc050-F}
+\end{align}
+All other higher primary components vanish. Sesquilinearity determines
+every derivative-input component.
+\end{theorem}
+\begin{proof}
+Every composite of two source brackets has \(k\) as an input and
+vanishes. Thus their higher Jacobi identities hold. Introduce an
+even parameter \(t\) and the odd polynomial
+\[
+ F(t)=t\psi+\frac1{r+1}\sum_{n=2}^r(-t)^n h_{r-n}.
+\]
+From \eqref{eq:sc050-L},
+\begin{align*}
+ QF(t)&=\frac1{r+1}\sum_{n=2}^r(-t)^n c_{r-n+1},\\
+ \frac12[F(t)_\lambda F(t)]
+   &=-\frac{t^2}{r+1}c_{r-1}
+     +\frac1{r+1}\sum_{n=2}^r(-1)^nt^{n+1}c_{r-n}.
+\end{align*}
+Terms of each degree from two through \(r\) cancel. The remaining
+identity is
+\begin{equation}\label{eq:sc050-LMC}
+ QF(t)+\tfrac12[F(t)_\lambda F(t)]
+      =\frac{(-1)^r}{r+1}t^{r+1}k.
+\end{equation}
+Its coefficient of \(t^n/n!\) is exactly the one-output morphism
+identity on \(n\) copies of \(\theta\). A source bracket can only
+be followed by \(F_1\), since higher components vanish on \(k\).
+Inputs containing \(k\) give zero on both sides. Multiplying each
+input by its polynomial in \(T\) amounts to multiplying each
+identity by the specified polynomial in the \(-\lambda_j\).
+This is compatible with the momentum sums at insertions, so it
+proves all derivative-input identities.
+
+An identity with several output blocks is a sum over partitions
+of the input labels, with one of the proved identities in one
+block. The other blocks carry the same component maps on both
+sides. Their Koszul signs are the signs of the same subset
+permutations. Thus these component equations prove the complete
+higher morphism identities, with every momentum label retained.
+Finally, \(F_1\) is the inclusion in the displayed contraction,
+so it induces the cohomology isomorphism.
+\end{proof}
+
+For \(r=2\), write \(h=h_0,c=c_1\). The calculation reduces to
+\[
+ Qh=c,\qquad [\psi_\lambda\psi]=-\tfrac23c,\qquad
+ [h_\lambda\psi]=k,\qquad F_2=\tfrac23h.
+\]
+The binary equation is \(QF_2+[\psi,\psi]=0\).
+At three inputs its correction gives
+\(\ell_3=3[\psi,F_2]=2k\).
+For \(r=3\), the corresponding equations are
+\[
+ F_2=\tfrac12h_1,\qquad F_3=-\tfrac32h_0,\qquad
+ QF_3+3[\psi,F_2]=0,\qquad \ell_4=4[\psi,F_3]=-6k.
+\]
+All the generating poles in both examples are simple. Pole order
+and the first nonzero higher arity measure different operations.
+
+An invertible higher change of coordinates between minimal models
+has an invertible linear component. At the first nonzero arity,
+its comparison equation contains only that linear component and
+the bracket in \eqref{eq:sc050-ell}; every term involving a lower
+bracket vanishes. Hence it cannot remove this first operation.
+This statement concerns the stated conformal model and its
+translation-equivariant maps.
+
+\subsection{Composite fields retain the obstruction}
+
+The contraction used in Theorem~\ref{thm:sc050-vertex-resolution}
+also determines higher brackets on the full cohomology of \(U_r\).
+The following construction specifies them, including composite
+inputs. Use the symmetrized coordinates of that proof and their
+maps \(i,p,h\). Introduce a formal odd element \(a\) of the
+cohomology space, with a separate supercommuting coefficient for
+each basis vector. A coefficient has the parity needed to make its
+product with that vector odd. Complete only in the number of these
+coefficients. Define recursively
+\begin{equation}\label{eq:sc050-full-transfer}
+ F(a)=i(a)-hR(a),\qquad
+ R(a)=\tfrac12[F(a),F(a)],\qquad
+ \ell(a)=pR(a).
+\end{equation}
+In these series a bracket sums over decompositions of the labelled
+inputs. For conformal brackets, attach an independent momentum to
+each input and add momenta at each insertion. A derivative of a
+series means the sum of insertions in one labelled block, with
+the Koszul sign. No momentum parameters are identified. Coefficient
+extraction and polarization define every component of \(F\) and
+\(\ell\). Each coefficient uses finitely many binary trees.
+Translation-equivariance of the contraction makes these operations
+sesquilinear.
+
+Here is a direct verification of the higher identities. Put
+\(B=QF+R\). Since \(Qh=1-ip-hQ\), and \(Qi=0\),
+\[
+ B=i\ell+h[QF,F]=i\ell+h[B,F].
+\]
+The last equality uses \([[F,F],F]=0\), the graded Jacobi identity
+on the odd element \(F\). Let \(F_*\ell\) denote the derivative
+of the formal series \(F\) in its odd vector-field direction
+\(\ell\). Applying this odd derivative to \eqref{eq:sc050-full-transfer}
+changes sign when it passes the odd map \(h\). It gives
+\[
+ F_*\ell=i\ell+h[F_*\ell,F].
+\]
+An equation \(X=i\ell+h[X,F]\) has a unique solution coefficient
+by coefficient, because \(F\) has no constant term. Hence
+\[
+ QF+\tfrac12[F,F]=F_*\ell.
+\]
+The vector field \(Qb+[b,b]/2\) on formal odd elements of the target
+has square zero: its terms cancel by \(Q^2=0\), the derivation
+identity, and Jacobi. Applying the chain rule to the last displayed
+identity therefore gives \(F_*(\ell^2)=0\). Terms with two first
+derivatives cancel because the vector fields are odd. Since
+\(pF=a\), its derivative satisfies \(pF_*=1\), and \(\ell^2=0\).
+These coefficient equations prove all higher Jacobi and morphism
+identities. The argument preserves the independent momentum labels
+throughout, so it proves the conformal identities as well.
+
+\begin{proposition}\label{prop:sc050-full-obstruction}
+On the full cohomology \eqref{eq:sc050-cohom}, the transferred
+brackets of arities \(2,\ldots,r\) vanish. At arity \(r+1\), the
+value on \(r+1\) copies of \(\psi_0\) is \((-1)^r r!\,1\).
+Thus this first higher operation cannot be removed by an
+invertible change of minimal conformal coordinates.
+\end{proposition}
+\begin{proof}
+Assign auxiliary weights \(j\) to \(c_j\), \(j+1\) to \(h_j\),
+and zero to \(\psi,k\); derivatives have the same auxiliary
+weight as their generators. For a monomial subtract the number
+of \(h\)-factors from its auxiliary weight.
+
+A contraction of two \(\psi\)-factors increases this difference by
+\(r-1\). A contraction of \(h_j\) with \(\psi\) replaces \(h_j\)
+by \(c_j\), and preserves it. Other primary contractions vanish.
+Reordering and symmetrizing words use exactly these contractions.
+The homotopy replaces one \(c_{j+1}\) by \(h_j\), so it decreases
+the difference by one. Translation does not change it.
+
+Every term of a bracket of two surviving composite states starts
+with at least one contraction of two \(\psi\)-factors. In an
+\(n\)-input tree for \(\ell\), there are \(n-2\) homotopies.
+The difference in every term before projection is therefore at
+least \(r-1-(n-2)\). For \(n\le r\) it is positive. Projection
+keeps only exterior words in derivatives of \(\psi\), for which
+the difference is zero. It kills every such term.
+
+On primitive inputs, \eqref{eq:sc050-full-transfer} stays in
+\(L_r\). Its homotopy agrees there with the linear contraction
+used in Theorem~\ref{thm:sc050-first-operation}. Thus that theorem
+gives the stated arity-\((r+1)\) value. The first-arity comparison
+argument applies to the full minimal model just constructed.
+\end{proof}
+
+\section{Energy zero and the Zhu quotient}
+\label{sec:sc050-zhu}
+
+The singular fields and the matrix algebra have different inputs.
+To relate them, retain only operators that preserve energy.
+An energy grading of a vertex algebra is an even diagonal operator
+\(H\) satisfying
+\[
+ [H,Y(A,z)]=z\partial_zY(A,z)+Y(HA,z).
+\]
+If \(HA=h_AA\), the number \(h_A\) is the weight of \(A\).
+Translation raises it by one, and a nonzero product has weight
+\(h_{A_{(n)}B}=h_A+h_B-n-1\).
+An operator with this property is also called a Hamiltonian.
+Its existence does not assert that it is a mode of any state.
+
+Set \(a=1/(r+1)\). On \(V_r\) assign weights
+\[
+ h_x=h_\gamma=a,\qquad h_{\bar\gamma}=1-a.
+\]
+On divided derivatives add their derivative order, and on state
+monomials add weights. The field formulas prove the Hamiltonian
+identity. The differential preserves weight. The weights of the
+generators in \(U_r\) are
+\[
+ h_\psi=\frac r{r+1},\qquad
+ h_{h_j}=\frac{j+1}{r+1},\qquad
+ h_{c_j}=\frac j{r+1},\qquad h_k=0.
+\]
+They preserve the relations, and \(q_r\) preserves this grading.
+
+\subsection{An associative product from collision coefficients}
+
+For a state \(A\) of weight \(h_A\), define deformed products by
+\[
+ A_{[n]}B=\sum_{j\ge0}\binom{h_A}{j}A_{(n+j)}B,\qquad
+ \binom{h}{j}=\frac{h(h-1)\cdots(h-j+1)}{j!}.
+\]
+The empty product is one. The sum is finite on fixed states.
+These are the coefficients of \((1+z)^{h_A}Y(A,z)\).
+Extend them to nonhomogeneous states by linearity. Put
+\[
+ A*B=A_{[-1]}B,\qquad
+ \{A,B\}_H=\sum_{j\ge0}\binom{h_A-1}{j}A_{(j)}B,
+\]
+and let \(O_H(V)\) be the linear span of all \(A_{[-2]}B\).
+The braces in this paragraph denote this deformed binary bracket,
+not Hochschild insertion operations.
+
+\begin{lemma}\label{lem:sc050-zhu-quotient}
+The subspace \(O_H(V)\) is a two-sided ideal for \(*\), and the
+quotient \(Z_H(V)=V/O_H(V)\) is a unital associative algebra.
+In the quotient,
+\begin{equation}\label{eq:sc050-zhu-relations}
+ [TA]=-h_A[A],\qquad
+ [A]*[B]-(-1)^{|A||B|}[B]*[A]=[\{A,B\}_H].
+\end{equation}
+No integrality assumption on the weights is needed.
+\end{lemma}
+\begin{proof}
+Write \(\nabla=T+H\). Differentiating the deformed fields gives
+\[
+ ((\nabla+n+1)A)_{[n]}B=-nA_{[n-1]}B,\qquad
+ A_{[-2]}B=(\nabla A)*B.
+\]
+In particular every product with index at most \(-2\) lies in
+\(O_H(V)\), by induction on its negative index. Taking \(B=1\)
+gives \(\nabla V\subset O_H(V)\), and repeated translation gives
+\[
+ \frac{T^jA}{j!}\equiv\binom{-h_A}{j}A\pmod{\nabla V}.
+\]
+
+The coefficient form of the vertex Jacobi identity gives
+\begin{align}
+ (A*B)*C-A*(B*C)
+  =\sum_{j\ge0}\bigl(
+     A_{[-j-2]}(B_{[j]}C)
+    +(-1)^{|A||B|}B_{[-j-2]}(A_{[j]}C)\bigr).
+ \label{eq:sc050-zhu-associator}
+\end{align}
+To obtain it with these deformed coefficients, multiply the two
+field factors by \((1+z)^{h_A}\) and \((1+w)^{h_B}\) in the
+two product expansions. In their collision expansion use
+\[
+ (1+z)^{h_A}
+  =\sum_{j\ge0}\binom{h_A}{j}(z-w)^j(1+w)^{h_A-j}.
+\]
+Taking the coefficients with two product indices \(-1\) gives
+\eqref{eq:sc050-zhu-associator}; the two radial expansions give
+its two summands and their graded sign.
+
+The same coefficient identity, with one residue weighted by
+\((1+z)^{h_A-1}\), gives the derivation formula
+\[
+ \{A,B_{[n]}C\}_H
+   =\{\!A,B\!\}_H{}_{[n]}C
+      +(-1)^{|A||B|}B_{[n]}\{A,C\}_H.
+\]
+It follows by expanding \((1+w+(z-w))^{h_A-1}\);
+the coefficients combine by
+\(\sum_i\binom{u}{i}\binom{v}{j-i}=\binom{u+v}{j}\).
+This binomial identity follows by multiplying the two series
+\((1+t)^u,(1+t)^v\).
+
+Graded skew symmetry, followed by the displayed reduction of
+\(T^j/j!\), gives
+\[
+ A*B-(-1)^{|A||B|}B*A-\{A,B\}_H\in\nabla V.
+\]
+Indeed the coefficient of \(A_{(j)}B\) after this reduction is
+\(\binom{h_A}{j+1}-\binom{h_A-1}{j+1}
+ =\binom{h_A-1}{j}\); the translation terms discarded at each
+step lie in \(\nabla V\).
+
+Apply \eqref{eq:sc050-zhu-associator} with \(A\) replaced by
+\(\nabla A\). It shows that
+\(((\nabla A)*B)*C\) differs from
+\((\nabla A)*(B*C)\) by elements of \(O_H(V)\).
+Hence \(O_H(V)\) is a right ideal. The bracket derivation formula
+shows \(\{V,O_H(V)\}_H\subset O_H(V)\).
+The skew formula then makes it a left ideal as well.
+Equation \eqref{eq:sc050-zhu-associator} proves associativity in
+the quotient. The vacuum formulas give \(1*A=A*1=A\).
+All calculations use formal binomial coefficients, so rational
+weights satisfy the same identities.
+\end{proof}
+
+The algebra \(Z_H(V)\) is the Hamiltonian-twisted Zhu algebra.
+To interpret it through energy zero, consider modules with
+twisted fields. A weight-\(h_A\) generating field in such a
+module has the expansion
+\[
+ A(z)=\sum_{m\in\mathbb Z}\mathsf A_m z^{-m-h_A}.
+\]
+The commutator with energy is
+\([H,\mathsf A_m]=-m\mathsf A_m\).
+Rational powers are interpreted on a finite cover of the punctured
+coordinate disk. The displayed monodromy under \(z\mapsto e^{2\pi i}z\) is
+\(e^{-2\pi ih_A}\). Equivalently, for \(g=e^{2\pi iH}\), our
+convention is \(Y(gA,z)=Y(A,e^{-2\pi i}z)\). This fixes the
+sign of the twist. It respects products because their weight
+differences are integers.
+The index \(m=0\) preserves energy. Translation gives
+\(\mathsf{(TA)}_0=-h_A\mathsf A_0\), as in
+\eqref{eq:sc050-zhu-relations}.
+The collision residue of two zero modes is the product \(*\).
+Thus the quotient retains their multiplication, not just their
+commutator.
+
+\subsection{No additional zero-mode relations}
+
+For the two vertex algebras at hand, it remains to prove that the
+relations between their primary zero modes are defining relations.
+Both algebras have the ordered mode basis already constructed.
+Their primary singular brackets are central linear combinations
+of generators or of the vacuum.
+
+Here is a basis argument applicable to this situation. Filter states
+by the number of primary generators in an ordered negative-mode
+word. A contraction reduces that number. Replacing each \(T^nu\)
+by \(\nabla^nu\), for a primary generator \(u\), is triangular in
+derivative order, with diagonal coefficient one. Replacing an
+ordered normal product by the right-associated \(*\)-product is
+triangular in generator number, again with diagonal coefficient
+one. Consequently the right-associated ordered \(*\)-words in
+\(\nabla^nu\) form a basis.
+
+Let \(W_+\) be the span of those words that contain a factor with
+\(n>0\). We claim \(W_+=O_H(V)\). The operator \(\nabla\) is an
+exact derivation of all the deformed products. In fact
+\[
+ [\nabla,(1+z)^{h_A}Y(A,z)]
+   =(1+z)\partial_z\bigl((1+z)^{h_A}Y(A,z)\bigr)
+   =Y_H(\nabla A,z),
+\]
+where \(Y_H(A,z)=(1+z)^{h_A}Y(A,z)\).
+Also
+\[
+ \{\nabla A,B\}_H=0,\qquad
+ \{A,\nabla B\}_H=\nabla\{A,B\}_H.
+\]
+These follow by integration by parts in the defining formal
+residue for \(\{-,-\}_H\).
+
+Induction on total generator number shows that \(W_+\) is a
+two-sided ideal. In re-associating a product of basis words, every
+error in \eqref{eq:sc050-zhu-associator} has smaller generator
+number, because it contains a singular contraction. Moreover,
+\[
+ A_{[-j-2]}B
+   =\frac1{(j+1)!}
+       \bigl(\nabla(\nabla-1)\cdots(\nabla-j)A\bigr)*B
+\]
+has a factor of \(\nabla\). The induction hypothesis places each
+such error in \(W_+\). For the leading re-associated words, swap
+adjacent generators into order. A swap involving \(\nabla^nu\),
+\(n>0\), has zero deformed bracket when it is the first input;
+when it is second, that bracket still contains a factor of
+\(\nabla\). The remaining skew correction lies in \(\nabla V\)
+and has smaller generator number. The derivation rule expands it
+into words with positive derivative order, to which induction
+applies. Odd-square reductions are the same skew calculation
+divided by two. These steps prove the ideal assertion, starting
+from the constants, whose \(\nabla\) is zero.
+
+The derivation rule gives \(\nabla V\subset W_+\), so
+\(O_H(V)=(\nabla V)*V\subset W_+\). Conversely every positive
+factor \(\nabla^nu\) belongs to \(O_H(V)\), and that subspace is
+an ideal by Lemma~\ref{lem:sc050-zhu-quotient}.
+Thus \(W_+=O_H(V)\).
+
+It follows that the ordered \(*\)-words in the primary generators,
+without their positive derivatives, form a basis of \(Z_H(V)\).
+Their graded commutator is their primary bracket, because all
+primary brackets are independent of \(\lambda\).
+There are no further relations.
+
+For \(V_r\) this proves
+\begin{equation}\label{eq:sc050-clifford}
+ Z_H(V_r)=
+ \mathbb C[x]\langle\gamma,\bar\gamma\rangle/
+   (\gamma^2,\bar\gamma^2,\gamma\bar\gamma+\bar\gamma\gamma-1),
+\end{equation}
+with central \(x\). The two scalar corrections to the mixed
+products are \(h_\gamma\) and \(h_{\bar\gamma}\); their sum is one.
+For \(U_r\), let \(\mathfrak l_r\) be the finite Lie superalgebra
+on the primary generators in \eqref{eq:sc050-L}, omitting \(T\).
+Then
+\begin{equation}\label{eq:sc050-B}
+ Z_H(U_r)=B_r:=U(\mathfrak l_r)/(k-1).
+\end{equation}
+Here the enveloping algebra is the tensor algebra divided by
+\(AB-(-1)^{|A||B|}BA-[A,B]\).
+For the odd generator \(\psi\), equation
+\eqref{eq:sc050-normal-square} gives the same odd-square relation:
+if \(C=[\psi_\lambda\psi]\), then
+\[
+ [\psi]*[\psi]=(-h_C/2+h_\psi)[C]=[C]/2,
+ \qquad h_C=2h_\psi-1.
+\]
+
+\section{The matrix differential and the comparison square}
+\label{sec:sc050-matrix}
+
+Let \(M=\mathbb C[x]^{1|1}\), the free module with one even and
+one odd basis vector. Its even endomorphisms are diagonal matrices;
+its odd endomorphisms are off-diagonal matrices. Set
+\[
+ W(x)=\frac{x^{r+1}}{r+1},\qquad
+ D=\begin{pmatrix}0&x\\x^r/(r+1)&0\end{pmatrix}.
+\]
+A matrix factorization of a scalar \(W\) is such an odd operator
+with square \(W\,\mathrm{id}\). Here \(D^2=W(x)I\).
+Its endomorphism algebra \(A_r=\operatorname{End}_{\mathbb C[x]}M\)
+has differential
+\[
+ \delta A=DA-(-1)^{|A|}AD.
+\]
+Expansion gives \(\delta^2A=D^2A-AD^2=0\), and gives the graded
+Leibniz identity for multiplication.
+
+\begin{theorem}\label{thm:sc050-zhu-matrix}
+The assignments
+\[
+ x\longmapsto xI,\qquad
+ \gamma\longmapsto E_{21},\qquad
+ \bar\gamma\longmapsto E_{12}
+\]
+give an isomorphism of differential algebras \(Z_H(V_r)\cong A_r\).
+There is a commuting diagram
+\begin{equation}\label{eq:sc050-square}
+ \begin{array}{ccc}
+ U_r&\xrightarrow{\ q_r\ }&V_r\\
+ \big\downarrow\pi_U&&\big\downarrow\pi_V\\
+ B_r&\xrightarrow{\ \rho_r\ }&A_r ,
+ \end{array}
+\end{equation}
+where the upper arrow is a differential vertex quasi-isomorphism
+and the lower arrow is a differential associative quasi-isomorphism.
+The vertical arrows are the quotient maps of complexes, with
+the matrix identification on the right. Their targets retain
+the deformed product \(*\); they are not asserted equivalences.
+\end{theorem}
+\begin{proof}
+The four ordered words \(1,\gamma,\bar\gamma,\gamma\bar\gamma\)
+in \eqref{eq:sc050-clifford} are a free \(\mathbb C[x]\)-basis.
+Their matrices are \(I,E_{21},E_{12},E_{22}\), which form a basis
+of the matrix algebra. The relations hold by multiplication.
+The map is therefore an algebra isomorphism. Since \(Q\) commutes
+with \(H,T\), it preserves the deformed products and their ideal.
+The differential descends, and direct multiplication gives
+\[
+ \delta E_{21}=xI,\qquad
+ \delta E_{12}=\frac{x^r}{r+1}I.
+\]
+These are exactly its two generating differentials.
+
+The map on \(B_r\) sends
+\[
+ c_j\longmapsto x^jI,\qquad
+ h_j\longmapsto x^jE_{21},\qquad
+ \psi\longmapsto
+ \vartheta=E_{12}-\frac{x^{r-1}}{r+1}E_{21}.
+\]
+The differential and bracket relations follow by direct
+supercommutation. This is the map induced from \(q_r\), proving
+commutativity of the diagram. It is onto, since \(h_0,c_1\) give
+\(E_{21},xI\), and
+\(\psi+c_{r-1}h_0/(r+1)\) gives \(E_{12}\).
+
+The ordered basis of \(B_r\), or its symmetrization, identifies
+its complex with
+\[
+ \mathbb C[c_1,\ldots,c_{r-1}]
+ \otimes\Lambda(h_0,\ldots,h_{r-2},\psi),
+\]
+with \(Qh_j=c_{j+1}\). The pair-degree contraction leaves
+cohomology with basis \(1,\psi\).
+For the target, a diagonal matrix satisfies
+\[
+ \delta\begin{pmatrix}a&0\\0&d\end{pmatrix}
+      =(d-a)x\vartheta,
+\]
+and an odd matrix satisfies
+\[
+ \delta(bE_{12}+cE_{21})
+      =x\left(c+\frac{x^{r-1}b}{r+1}\right)I.
+\]
+Since \(x\) is not a zero divisor, the even cycles are
+\(\mathbb C[x]I\) and the odd cycles are
+\(\mathbb C[x]\vartheta\).
+Their boundaries are respectively \(x\mathbb C[x]I\) and
+\(x\mathbb C[x]\vartheta\).
+Thus \(H(A_r)\) has basis \(I,\vartheta\), and \(\rho_r\)
+induces the identity on the two displayed cohomology bases.
+The upper quasi-isomorphism was proved independently in
+Theorem~\ref{thm:sc050-vertex-resolution}.
+\end{proof}
+
+The same formulas restricted to \(\mathfrak l_r\) give a
+differential Lie quasi-isomorphism to \(A_r\) with its
+supercommutator. Its source cohomology consists of \(k,\psi\);
+its target cohomology was computed in the proof.
+The finite Lie map, the associative map, and the vertex map
+therefore have separate proofs at their stated operation levels.
+
+Completing \(\mathbb C[x]\) at \(x=0\) gives the corresponding
+formal matrix algebra over \(\mathbb C[[x]]\).
+The kernel and image calculations above remain valid there,
+because multiplication by \(x\) is still injective.
+This is a specified coefficient change after the polynomial
+comparison. No assertion about commuting an arbitrary Zhu
+reduction with completion or cohomology is required.
+
+\subsection{A twisted Fock module with a curved charge}
+
+The matrices above arise on the energy-zero states of an explicit
+field module. Introduce even variables \(X,X_{-1},X_{-2},\ldots\)
+and odd exterior variables \(G_{-n},\bar G_{-n}\), \(n\ge1\).
+Let \(S_0=\mathbb C^{1|1}\) and put
+\[
+ \mathcal M=
+ \mathbb C[X,X_{-1},X_{-2},\ldots]\otimes
+ \Lambda(G_{-1},\bar G_{-1},G_{-2},\bar G_{-2},\ldots)
+ \otimes S_0.
+\]
+Give \(X\) and \(S_0\) energy zero, and each variable with
+subscript \(-n\) energy \(n\). Energies add on monomials.
+The grading operator \(\mathcal H\) multiplies a monomial by
+its energy. All states again have finite support.
+
+For \(m<0\), let \(X_m,\Gamma_m,\bar\Gamma_m\) act by
+multiplication by \(X_m,G_m,\bar G_m\).
+Set \(X_0=X\), \(X_m=0\) for \(m>0\), and
+\[
+ \Gamma_m=\partial_{\bar G_{-m}},\qquad
+ \bar\Gamma_m=\partial_{G_{-m}}\quad(m>0).
+\]
+On \(S_0\) let \(\Gamma_0=E_{21}\) and
+\(\bar\Gamma_0=E_{12}\). These odd zero modes act on the tensor
+product with the sign
+\[
+ \Gamma_0(A\otimes v)=(-1)^{|A|}A\otimes E_{21}v,
+\]
+and similarly for \(\bar\Gamma_0\). Therefore all mode relations are
+\[
+ \{\Gamma_m,\bar\Gamma_n\}=\delta_{m+n,0}I,\qquad
+ \{\Gamma_m,\Gamma_n\}=\{\bar\Gamma_m,\bar\Gamma_n\}=0,
+\]
+with all \(X_m\) central. Each mode of index \(m\) has
+commutator \(-m\) times itself with \(\mathcal H\).
+
+With \(a=1/(r+1)\), the twisted generating fields are
+\begin{align*}
+ x^{\mathcal M}(z)&=\sum_{m\le0}X_mz^{-m-a},\\
+ \gamma^{\mathcal M}(z)&=\sum_{m\in\mathbb Z}\Gamma_mz^{-m-a},\\
+ \bar\gamma^{\mathcal M}(z)&=
+       \sum_{m\in\mathbb Z}\bar\Gamma_mz^{-m-(1-a)}.
+\end{align*}
+Their annihilation parts act finitely on each state.
+Their contractions have precisely the required local pole.
+For example, positive \(\Gamma\)-modes contracted with negative
+\(\bar\Gamma\)-modes give
+\begin{equation}\label{eq:sc050-twisted-contraction}
+ \sum_{m>0}z^{-m-a}w^{m-(1-a)}
+       =\frac{z^{-a}w^a}{z-w}.
+\end{equation}
+Near \(z=w\) its singular part is \((z-w)^{-1}\).
+Define the fields of composite states by expanding at \(z=w\)
+and subtracting the singular part prescribed by
+\eqref{eq:sc050-poles}, then taking the required regular
+coefficient. This is point-splitting normal ordering. For a
+derivative state, differentiate the corresponding field.
+The binomial expansion of \(z^{-a}=w^{-a}(1+(z-w)/w)^{-a}\)
+specifies every correction.
+
+These rules give a twisted module for \(V_r\). Indeed, each
+multiple product is a finite pairing sum, with the factors in
+\eqref{eq:sc050-twisted-contraction} and their conjugates and
+derivatives. Expanding these same factors in the two radial
+orders gives the two field products. Expanding them first at a
+collision gives the stated point-splitting definition.
+The bijection of pairings preserves the graded sign.
+Formal residues therefore prove the twisted product and
+iterate identities exactly as in
+Proposition~\ref{prop:sc050-vertex}.
+The only added factors are the displayed rational powers, whose
+binomial expansions have just fixed the monodromy.
+
+The normal-ordering correction can already be seen on
+\(\mathcal M_0=\mathbb C[X]\otimes S_0\), the energy-zero subspace.
+The regular part of \eqref{eq:sc050-twisted-contraction} at
+\(z=w\) is \(-a/w\). The zero modes contribute
+\(\Gamma_0\bar\Gamma_0/w\). Hence
+\[
+ (: \gamma\bar\gamma :)_0
+       =\Gamma_0\bar\Gamma_0-aI
+       \quad\hbox{on }\mathcal M_0.
+\]
+Adding the scalar correction \(aI\) in the Zhu product recovers
+\(\Gamma_0\bar\Gamma_0\). This is the product in
+\eqref{eq:sc050-clifford} acting on the stated module.
+
+Define an odd energy-preserving operator on \(\mathcal M\) by
+\begin{equation}\label{eq:sc050-module-charge}
+ \mathcal Q=
+   \sum_{m\le0}X_m\bar\Gamma_{-m}
+   +\frac1{r+1}
+      \sum_{m_1,\ldots,m_r\le0}
+          X_{m_1}\cdots X_{m_r}\Gamma_{-(m_1+\cdots+m_r)}.
+\end{equation}
+On a fixed state, positive fermion modes beyond its largest
+occupied index vanish. For each remaining index there are
+finitely many tuples with the prescribed sum. Thus both sums
+define algebraic operators on all finite states.
+The mode anticommutators give
+\[
+ [\mathcal Q,\Gamma_m]_{\mathrm{gr}}=X_m,\qquad
+ [\mathcal Q,\bar\Gamma_m]_{\mathrm{gr}}
+   =\frac1{r+1}\sum_{m_1+\cdots+m_r=m}
+                         X_{m_1}\cdots X_{m_r}.
+\]
+The sum uses \(m_i\le0\) and is zero for \(m>0\).
+Also \([\mathcal Q,X_m]=0\). These are exactly the generating
+field equations for \(Q\), so normal products and derivatives
+give \([\mathcal Q,Y^{\mathcal M}(A,z)]_{\mathrm{gr}}
+=Y^{\mathcal M}(QA,z)\) for every state \(A\).
+
+The square of \(\mathcal Q\) is especially restrictive.
+Only a cross anticommutator between the two sums in
+\eqref{eq:sc050-module-charge} can survive. Both its fermion
+indices are nonnegative, so their sum can be zero only when
+both vanish. All the associated \(m,m_i\) are then zero.
+Consequently
+\begin{equation}\label{eq:sc050-module-curvature}
+ \mathcal Q^2=\frac{X^{r+1}}{r+1}I=W(X)I.
+\end{equation}
+On \(\mathcal M_0\) the charge is
+\[
+ \mathcal Q|_{\mathcal M_0}
+       =X E_{12}+\frac{X^r}{r+1}E_{21}=D(X).
+\]
+Thus the energy-zero module with its charge is the displayed
+matrix factorization. It is a curved module: its charge has
+the specified nonzero scalar square. Its endomorphism
+supercommutator is an ordinary square-zero differential,
+because that scalar commutes with every endomorphism.
+This distinction is forced by the field representation itself.
+
+\section{The higher comparison and its coefficient signs}
+\label{sec:sc050-associative}
+
+The higher conformal map also respects the energy-zero sector.
+For a primary field of weight \(h\), its energy-zero vertex index
+is \(h-1\). A constant conformal operation adds its input indices.
+For the component \(F_n\) of \eqref{eq:sc050-F},
+\[
+ n h_\psi-(n-1)=\frac{r-n+1}{r+1}=h_{h_{r-n}}.
+\]
+Its output is therefore again of energy zero. At \(n=r+1\),
+the sum of the input indices is \(-1\), the only nonzero mode
+index of the constant field \(k\). Applying the matrix map gives
+\begin{equation}\label{eq:sc050-matrix-F}
+ F_1=\vartheta,\qquad
+ F_n=\frac{(-1)^nn!}{r+1}x^{r-n}E_{21}\quad(2\le n\le r).
+\end{equation}
+Derivative inputs have the falling factorials from
+\((TA)_{(m)}=-mA_{(m-1)}\). The binomial rule for differentiating
+a product proves that this mode conversion commutes with
+insertions, including their summed indices.
+
+To compare with ordered multiplication, define the diagonal
+matrix over \(\mathbb C[x,y]\)
+\[
+ \Delta(x,y)=
+ \begin{pmatrix}
+ 0&x-y\\
+ \dfrac1{r+1}\displaystyle\sum_{j=0}^r x^{r-j}y^j&0
+ \end{pmatrix}.
+\]
+Multiplying the finite geometric sum by \(x-y\) gives
+\(\Delta(x,y)^2=(W(x)-W(y))I\), and \(\Delta(x,0)=D\).
+Thus the ordinary matrix series
+\[
+ L(t)=\Delta(x,-t)-D
+     =t\vartheta+\frac1{r+1}
+                         \sum_{n=2}^r(-t)^n x^{r-n}E_{21}
+\]
+satisfies
+\begin{equation}\label{eq:sc050-Lmatrix}
+ \delta L+L^2=-W(-t)I.
+\end{equation}
+Its exponential coefficients are exactly
+\eqref{eq:sc050-matrix-F}. This is the matrix form of the
+conformal identity \eqref{eq:sc050-LMC}.
+
+\subsection{Ordered words and the boundary algebra}
+
+The associative higher model uses ordered tensor words. For a
+parity-graded vector space \(C\), let \(sC\) have the opposite
+parity, and set
+\[
+ T^c(sC)=\bigoplus_{n\ge0}(sC)^{\otimes n}.
+\]
+Its coproduct cuts a word at every position. An odd operation
+\(b_n:(sC)^{\otimes n}\to sC\) extends to words by replacing
+each consecutive block of length \(n\); the sign is
+\((-1)^{\text{parity of the preceding letters}}\).
+An \(A_\infty\)-algebra is a family of such operations whose
+extended sum \(b\) satisfies \(b^2=0\), with no zero-input
+component in the algebras used here.
+
+A morphism has even components \(\Phi_n\). Its extension replaces
+each ordered partition into consecutive blocks by the tensor of
+the corresponding component values. It is an \(A_\infty\)-map
+when \(b'\Phi=\Phi b\). It is a quasi-isomorphism when \(\Phi_1\)
+induces an isomorphism on cohomology. For a differential algebra
+\((A,\delta)\), the convention is
+\begin{equation}\label{eq:sc050-suspension}
+ b_1(sA)=s(\delta A),\qquad
+ b_2(sA,sB)=(-1)^{|A|}s(AB).
+\end{equation}
+These signs determine the comparison below.
+
+Let \(H_W=\mathbb C1\oplus\mathbb C\theta\), with \(\theta\) odd.
+Write \(e=s1\), which is odd, and \(a=s\theta\), which is even.
+Set
+\begin{equation}\label{eq:sc050-boundary}
+ b_n(a^{\otimes n})=W_n e,\qquad
+ W(t)=\sum_{n\ge3}W_nt^n,
+\end{equation}
+and add the unit operations
+\[
+ b_2(e,e)=e,\qquad b_2(e,a)=a,\qquad b_2(a,e)=-a.
+\]
+All other unit-containing operations vanish. These formulas
+define a strictly unital algebra: after removing suspensions,
+the even element \(1\) multiplies as an identity, has zero
+differential, and kills every higher operation in which it
+appears.
+
+Here is a verification of \(b^2=0\) on all words. Its square is
+a coderivation, since the two cross terms in the tensor
+coproduct cancel for the odd map \(b\). It is enough to check
+the one-output component. On a pure word \(a^N\), the only
+two-step contributions replace \(N-1\) letters by \(W_{N-1}e\)
+at one endpoint or the other. The final unit multiplication
+gives \(W_{N-1}a-W_{N-1}a=0\).
+For a single interior \(e\), removing it on its left or right
+has opposite signs and leaves the same pure word.
+For an endpoint \(e\), removing the unit and then applying the
+pure operation cancels applying that operation first: its
+prefix sign is negative at a left endpoint, and
+\(b_2(a,e)=-a\) gives the negative sign at a right endpoint.
+With at least two units, only three-letter words can reach one
+output in two steps. The words \(eee,eea,eae,aee\) give pairs
+\((e,-e),(a,-a),(-a,a),(a,-a)\).
+The remaining words give zero. This exhausts the possibilities.
+
+\begin{theorem}\label{thm:sc050-boundary-matrix}
+For \(W(t)=t^{r+1}/(r+1)\), a strictly unital
+\(A_\infty\)-quasi-isomorphism \(H_W\to A_r\) is given by
+\[
+ \Phi_1(e)=sI,\qquad
+ \Phi_n(a^{\otimes n})
+       =-\frac{s\,\partial_y^n\Delta(x,0)}{n!}\quad(n\ge1),
+\]
+with all other higher components zero.
+\end{theorem}
+\begin{proof}
+Let \(K(t)=-(\Delta(x,t)-D)=\sum_{n\ge1}K_nt^n\).
+Subtracting \(D^2\) from \((D-K)^2\) gives
+\begin{equation}\label{eq:sc050-Kmatrix}
+ \delta K-K^2=W(t)I.
+\end{equation}
+By \eqref{eq:sc050-suspension}, the one-output component of
+\(b^{A_r}\Phi\) on \(a^n\) is
+\[
+ s\left(\delta K_n-\sum_{j=1}^{n-1}K_jK_{n-j}\right).
+\]
+The corresponding component of \(\Phi b\) is \(W_nsI\).
+Any shorter scalar-output block would leave a unit in a word
+of length at least two, on which the higher component is zero.
+Thus \eqref{eq:sc050-Kmatrix} proves the pure-input equations.
+On a word with one interior unit, the two adjacent removals
+cancel. At an endpoint, multiplication by \(I\) on the target
+gives respectively \(sK_n\) and \(-sK_n\), matching the two
+source unit signs. The word \(ee\) gives \(sI\); words with more
+units or letters have zero one-output difference.
+
+The difference \(b^{A_r}\Phi-\Phi b\) is a coderivation along
+\(\Phi\). Induction on word length with the cut coproduct
+therefore extends the one-output equations to the full identity.
+Finally \(K_1=\vartheta\), so the linear component induces the
+basis \(I,\vartheta\) of the matrix cohomology computed in
+Theorem~\ref{thm:sc050-zhu-matrix}. This proves the
+quasi-isomorphism.
+\end{proof}
+
+The two series are related by \(L(t)=-K(-t)\). Hence the
+exponential Lie component and the ordinary associative
+coefficient satisfy
+\begin{equation}\label{eq:sc050-sign-comparison}
+ F_n^{\mathrm{Lie}}=(-1)^{n+1}n!K_n.
+\end{equation}
+For the cubic, \(K_2=-E_{21}/3\) whereas \(F_2^{\mathrm{Lie}}=2E_{21}/3\).
+For the quartic, \(K_2=-xE_{21}/4\), \(K_3=-E_{21}/4\), while
+\(F_2^{\mathrm{Lie}}=xE_{21}/2\), \(F_3^{\mathrm{Lie}}=-3E_{21}/2\).
+The factorial and the change of parameter both enter the map.
+Using \(L\) instead of \(-L\) as the associative series for
+the reflected potential \(W(-t)\) leaves an arity-two error
+\(2x^{r-1}I/(r+1)\). The two matrix identities fix the sign.
+
+There is no strictly unital \(A_\infty\)-map from \(H_W\) to
+\(\mathbb C\) which kills \(\theta\) and preserves these operations.
+Every higher pure-input component would vanish by parity. Its
+equation on \(r+1\) copies of \(\theta\) would then send the
+nonzero scalar output to zero. Deleting that scalar term before
+forming ordered words therefore changes the algebra. The
+scalar polynomial must remain in any dual description.
+
+\section{All normalized Hochschild insertions}
+\label{sec:sc050-hochschild}
+
+The ordered boundary model is small, but its operations act on
+words of every length. A cochain records how such a word changes.
+This is the source of the larger algebra of compatible boundary
+operations.
+
+Allow any series \(P(t)\in t^3\mathbb C[[t]]\), and define \(H_P\)
+by \eqref{eq:sc050-boundary} with \(P\) in place of \(W\), retaining
+the same units. The proof of \(b^2=0\) applies coefficient by
+coefficient. A normalized Hochschild cochain is a multilinear
+map on each input length, zero whenever a nonempty input word
+contains the unit. Cochains with zero inputs are included.
+Take a product, rather than a direct sum, over the input lengths.
+
+In suspended notation the normalized cochains have basis
+\[
+ u_n(a^{\otimes n})=e,\qquad v_n(a^{\otimes n})=a,\qquad n\ge0.
+\]
+Their parities are one and zero respectively. For formal series
+\(f(t)=\sum f_nt^n\), \(g(t)=\sum g_nt^n\), write
+\[
+ u(f)=\sum_{n\ge0}f_nu_n,\qquad
+ v(g)=\sum_{n\ge0}g_nv_n.
+\]
+After removing the cochain output suspension, \(u(f)\) has even
+parity and \(v(g)\) has odd parity.
+
+The insertion brace \(F\{G_1,\ldots,G_k\}\) inserts the ordered
+outputs of the \(G_i\) into distinct slots of \(F\), summing all
+placements with the Koszul signs. Slots not used for an insertion
+receive the remaining inputs in order. A zero-input insertion
+occupies a slot while consuming no external input.
+Define the Hochschild differential by
+\[
+ D F=[b,F]=b\{F\}-(-1)^{|F|}F\{b\}.
+\]
+Here parities are suspended parities, so \(|b|=1\).
+
+\begin{theorem}\label{thm:sc050-braces}
+For \(k\ge1\), all normalized insertion braces are
+\begin{align}
+ u(f)\{v(g_1),\ldots,v(g_k)\}
+     &=u\left(\frac{f^{(k)}}{k!}\prod_i g_i\right),\notag\\
+ v(f)\{v(g_1),\ldots,v(g_k)\}
+     &=v\left(\frac{f^{(k)}}{k!}\prod_i g_i\right).
+ \label{eq:sc050-braces}
+\end{align}
+An insertion of type \(u\) gives zero. The differential is
+\begin{equation}\label{eq:sc050-HHd}
+ Du(f)=0,\qquad Dv(g)=u(P'g).
+\end{equation}
+These formulas include zero-input cochains and the product
+completion in input length.
+\end{theorem}
+\begin{proof}
+Take \(f=t^m\) and \(g_i=t^{n_i}\).
+For a nonzero insertion, each inserted output must be \(a\);
+an \(e\) input kills a normalized outer cochain. Hence every
+inserted cochain has type \(v\).
+There are \(\binom{m}{k}\) ordered choices of \(k\) slots.
+Each gives output length \(m-k+\sum_i n_i\), with positive
+sign because the inserted maps and all external \(a\)'s are
+even. This is the coefficient in
+\(f^{(k)}g_1\cdots g_k/k!\). It proves both brace formulas,
+including \(n_i=0\).
+
+Split \(b\) into its scalar-output part \(u(P)\) and its binary
+unit operations. The first part brackets with \(v(g)\) to give
+\(u(P'g)\), by the brace formula, and brackets with \(u(f)\)
+to give zero. On pure input words the binary unit contributions
+cancel at the two endpoints. In the reverse insertion, the
+binary product of two \(a\)'s is zero.
+On words containing a unit, the two adjacent unit removals
+cancel against the corresponding endpoint insertion. For a
+zero-input cochain, the same two endpoint terms are the left
+and right multiplication of its output, and have opposite
+signs. Thus the normalized subspace is preserved and
+\eqref{eq:sc050-HHd} holds in every input length.
+
+At output length \(N\), a brace with \(k\) inserted cochains
+uses outer length at most \(N+k\). There are finitely many
+nonnegative input lengths summing to the required value.
+Consequently each coefficient is a finite sum; the displayed
+operations are defined on the product completion.
+\end{proof}
+
+The higher cup operations in suspended form are
+\(M_1=D\) and \(M_k(F_1,\ldots,F_k)=b\{F_1,\ldots,F_k\}\)
+for \(k\ge2\). The binary unit contributions are
+\begin{align*}
+ M_2(u(f),u(g))&=u(fg),&
+ M_2(u(f),v(g))&=v(fg),&
+ M_2(v(f),u(g))&=-v(fg).
+\end{align*}
+For \(k\ge2\), the remaining values are
+\begin{equation}\label{eq:sc050-cups}
+ M_k(v(g_1),\ldots,v(g_k))
+       =u\left(\frac{P^{(k)}}{k!}\prod_i g_i\right).
+\end{equation}
+For \(k\ge3\), an input of type \(u\) gives zero.
+Indeed the only possible outer operation is the scalar part
+of \(b\), and its slots are counted exactly as in the proof
+of \eqref{eq:sc050-braces}. These cases exhaust all cup operations.
+Their higher identities are identities of actual insertions:
+in an iterated insertion, partition terms by the ordered
+positions of the inner blocks. Disjoint blocks occur in both
+orders with their Koszul sign, and nested blocks give the
+corresponding composite insertion. With \(b^2=0\), these
+cancellations give the differential and higher cup identities.
+
+In ordinary parity, the higher cup algebra has underlying module
+\[
+ \mathbb C[[t]]1\oplus\mathbb C[[t]]\eta,\qquad |\eta|=1,
+\]
+and
+\begin{equation}\label{eq:sc050-Taylor}
+ d\eta=P'(t),\qquad \eta\cdot\eta=-\tfrac12P''(t).
+\end{equation}
+Its higher suspended scalar operations are \(P^{(k)}(t)/k!\).
+This is the Taylor family with its full normalized insertion
+structure. The cup operations are \(\mathbb C[[t]]\)-linear.
+The braces are only \(\mathbb C\)-linear: for example
+\[
+ v(t)\{v(1)\}=v(1),\qquad
+ t\bigl(v(1)\{v(1)\}\bigr)=0.
+\]
+Thus adding insertion operations changes the required
+coefficient-linearity of a comparison.
+
+\subsection{Cohomology and detection by boundary words}
+
+If \(P'\ne0\), multiplication by \(P'\) is injective on
+\(\mathbb C[[t]]\). Equation \eqref{eq:sc050-HHd} therefore gives
+\begin{equation}\label{eq:sc050-HH}
+ HH^{\mathrm{even}}(H_P)=\mathbb C[[t]]/(P'),\qquad
+ HH^{\mathrm{odd}}(H_P)=0.
+\end{equation}
+The notation \(HH\) denotes the cohomology of the full normalized
+Hochschild complex just defined. The even product is the
+quotient product, by the formula for \(M_2(u(f),u(g))\).
+The induced odd bracket on cohomology is zero by parity.
+The cochain braces \eqref{eq:sc050-braces} remain nonzero.
+
+\subsection{The diagonal matrix for the full Taylor family}
+
+The Taylor coefficients in \eqref{eq:sc050-cups} also have an
+explicit matrix realization before setting their parameter to zero.
+Rename the cochain parameter \(y\), put \(R=\mathbb C[[y]]\), and
+let \(S=\mathbb C[[x,y]]\). These are rings of formal power series,
+with convergence meaning agreement of every coefficient below a
+fixed total degree. The series
+\[
+ g(x,y)=\frac{P(x)-P(y)}{x-y}
+\]
+belongs to \(S\): divide each monomial difference by its finite
+geometric sum and add the resulting series. Define
+\[
+ \Delta_P=\begin{pmatrix}0&x-y\\g(x,y)&0\end{pmatrix},
+ \qquad E_P=\operatorname{End}_S(S^{1|1}),\qquad
+ \delta=[\Delta_P,-]_{\mathrm{gr}}.
+\]
+The square of \(\Delta_P\) is the central scalar \(P(x)-P(y)\),
+so \(\delta^2=0\).
+
+\begin{proposition}\label{prop:sc050-HH-diagonal}
+The higher cup algebra of normalized Hochschild cochains of
+\(H_P\), regarded as the finite free \(R\)-module in
+\eqref{eq:sc050-Taylor}, has a strictly unital \(R\)-linear
+\(A_\infty\)-quasi-isomorphism to \(E_P\).
+Its components on \(e=s1\), \(a=s\eta\) are
+\[
+ \Psi_1(e)=sI,\qquad
+ \Psi_n(a^{\otimes n})
+      =-\frac{s\,\partial_y^n\Delta_P}{n!},\quad n\ge1,
+\]
+with \(x\) fixed under differentiation. The other
+unit-containing components vanish.
+\end{proposition}
+\begin{proof}
+Put \(f(t)=-(\Delta_P(x,y+t)-\Delta_P(x,y))\).
+Subtracting the two squared matrices gives
+\[
+ \delta f-f^2=(P(y+t)-P(y))I.
+\]
+Its coefficient of \(t^n\) is the morphism identity for the
+source operation \(P^{(n)}(y)e/n!\), including \(n=1\).
+The unit equations have the same endpoint cancellations as
+in Theorem~\ref{thm:sc050-boundary-matrix}. The cut-coproduct
+induction proves the full morphism identity.
+
+For its linear component set \(z_0=x-y\),
+\(\beta=E_{21}\), and
+\[
+ H_0=-\partial_y\Delta_P=E_{12}-(\partial_yg)E_{21}.
+\]
+Then
+\[
+ \delta\beta=z_0I,\qquad \delta H_0=P'(y)I,\qquad
+ H_0\beta+\beta H_0=I.
+\]
+The four matrices \(I,H_0,\beta,H_0\beta\) form an \(S\)-basis:
+the odd pair is triangular in \(E_{12},E_{21}\), and the
+even pair is \(I,E_{11}\).
+Write \(S=R[[z_0]]\). Projection sets \(z_0=0\), kills terms
+containing \(\beta\), and sends \(H_0\) to \(\eta\).
+Inclusion sends \(1,\eta\) to \(I,H_0\).
+For \(q\in R[[z_0]]\), let
+\[
+ \partial_0q=\frac{q(z_0)-q(0)}{z_0}.
+\]
+Define an odd homotopy by
+\[
+ h(qI)=(\partial_0q)\beta,\qquad
+ h(qH_0)=-(\partial_0q)H_0\beta,\qquad
+ h(q\beta)=h(qH_0\beta)=0.
+\]
+For the first basis element, \(\delta h(qI)=q-q(0)\).
+For the second, the two terms proportional to
+\(P'(y)(\partial_0q)\beta\) cancel, leaving
+\((q-q(0))H_0\).
+For \(q\beta\), the term \(h\delta(q\beta)=h(z_0qI)\)
+is \(q\beta\).
+For \(qH_0\beta\), the differential is
+\(qP'(y)\beta-z_0qH_0\), and applying \(h\) gives
+\(qH_0\beta\).
+Thus \(\delta h+h\delta=1-ip\), and \(pi=1\).
+The source differential is \(d\eta=P'(y)\), so these are
+chain maps and the inclusion is a homotopy equivalence.
+It is exactly \(\Psi_1\).
+
+Each derivative and divided-difference operator lowers formal
+order by a bounded amount. All specified components are
+continuous. Their formulas use finite sums in each input
+length and well-defined formal series in \(x,y\).
+\end{proof}
+
+This map compares the complete higher cup algebra with the
+diagonal endomorphisms. It is coefficient-linear.
+The insertions in \eqref{eq:sc050-braces} also differentiate
+coefficients. A comparison that preserves those insertions
+must include that additional, \(\mathbb C\)-linear structure;
+it is not asserted by the matrix components \(\Psi_n\) alone.
+
+\subsection{Recovering the scalar algebra from word evaluations}
+
+For \(P=t^{r+1}/(r+1)\), every cohomology class has a unique
+representative \(\sum_{j=0}^{r-1}f_jt^j\).
+The cochain \(u(f)\) evaluated on \(j\) copies of the boundary
+letter \(a\) gives \(f_je\).
+These evaluations are unchanged by a boundary \(u(t^rg)\) for
+\(0\le j<r\). Hence they give an isomorphism
+\[
+ HH^{\mathrm{even}}(H_P)\longrightarrow\mathbb C^r,\qquad
+ [u(f)]\longmapsto(f_0,\ldots,f_{r-1}).
+\]
+They also recover the algebra product:
+\[
+ (fg)_n=\sum_{i+j=n}f_ig_j,\qquad 0\le n<r.
+\]
+In the cubic, the class \(t\) has zero zero-input value but
+nonzero one-input value. In general \(t^{r-1}\) is first
+detected by the \((r-1)\)-input word. The surviving scalar
+boundary operation has arity \(r+1\); the two arities are
+related by the explicit differential \(Dv(g)=u(t^rg)\).
+
+The residue pairing is equally explicit. Define the residue of
+a formal Laurent series times \(dt\) to be the coefficient of
+\(t^{-1}dt\). Then
+\[
+ \lambda(f)=\operatorname{Res}_{t=0}\frac{f(t)\,dt}{t^r}
+            =f_{r-1},\qquad
+ \lambda(t^it^j)=\begin{cases}1&i+j=r-1,\\0&i+j\ne r-1.\end{cases}
+\]
+Its matrix in \(1,t,\ldots,t^{r-1}\) is antidiagonal with
+nonzero entries one, so the pairing is nondegenerate.
+This is a pairing on the calculated associative centre.
+Identifying it with a chosen geometric or physical trace
+requires a map that preserves the stated normalization.
+
+\section{The polynomial retained by the differential}
+\label{sec:sc050-charge}
+
+The nilpotent differential of the fields has a short expression.
+Put \(v(x)=x^r/(r+1)\) and
+\[
+ J=:x\bar\gamma:+:v(x)\gamma:.
+\]
+It is odd and has Hamiltonian weight one. Its zero mode sends
+\(\gamma\) to \(x\), \(\bar\gamma\) to \(v(x)\), and \(x\) to
+zero, so it is \(Q\). On the twisted module, multiplication of
+the mode series shows that its zero mode is exactly
+\(\mathcal Q\) in \eqref{eq:sc050-module-charge}.
+Its self-bracket is
+\[
+ [J_\lambda J]=2xv(x)=2W(x).
+\]
+For an odd zero mode, Jacobi gives
+\(Q^2=(J_{(0)}J)_{(0)}/2=W(x)_{(0)}\).
+In \(V_r\), the field \(W(x)\) has only nonnegative powers of
+position and acts by multiplication. Its zero mode vanishes.
+This explains directly why \(Q^2=0\) in the constructed theory.
+On \(\mathcal M\), its coefficient of \(z^{-1}\) is \(W(X)\).
+The same field identity therefore gives the nonzero scalar
+square in \eqref{eq:sc050-module-curvature}.
+
+The same identity specifies what happens if the fields are
+enlarged. Adjoin an even conjugate field \(p\) with
+\([p_\lambda x]=1\), and keep \(J\) as written.
+Skew symmetry gives \([x_\lambda p]=-1\), so the induced
+differential must satisfy
+\[
+ Qp=-\bar\gamma-v'(x)\gamma,\qquad
+ Q^2p=-v(x)-xv'(x)=-W'(x)=-x^r.
+\]
+It is not square zero on the enlarged algebra. A conjugate
+momentum therefore requires a new differential or new
+interacting fields with a proved cancellation of this term.
+Adjoining a field \(c\) with \(Qc=1\) would instead make every
+closed state exact, since \(Q(cA)=A\) when \(QA=0\).
+That would eliminate the nontrivial cohomology calculated above.
+
+There is no state whose zero mode implements translation on
+\(V_r\). Such a state \(\omega\) would have to
+satisfy \(\omega_{(0)}x=Tx\). But \(x\) has regular products
+with every state, whereas \(Tx=x_1\ne0\). The Hamiltonian
+grading and its zero-mode quotient remain well-defined.
+They supply no additional gravitational fields or stress tensor.
+
+The constructed maps preserve successively the singular vertex
+operations, their higher conformal compatibility, and the
+associative operations after the specified energy reduction.
+The normalized Hochschild calculation retains every ordered
+boundary insertion. A comparison with the full native chiral
+centre must also retain nonzero spatial modes and their collision
+operations. Neither the zero-mode quotient nor equality of the
+scalar cohomology rings supplies that further map.
