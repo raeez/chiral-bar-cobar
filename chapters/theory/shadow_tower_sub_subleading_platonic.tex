@@ -1,0 +1,255 @@
+%% Formal sub-subleading Virasoro recurrence and its geometric comparison.
+
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{The Sub-subleading Virasoro Recurrence}
+\label{ch:shadow-tower-sub-subleading-platonic}
+
+\section*{Formal sequence and residue sequence}
+
+This chapter computes one coefficient of a formal quadratic
+recurrence.  Its geometric interpretation belongs to a separate
+comparison package.  Let \(R_r(c)\) denote the formal sequence and let
+\(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\) denote the scalar extracted
+from an ordered residue package.  The package
+\(\mathsf H_{\mathrm{asymp}}\) consists of an identification
+\(S_r=R_r\) together with a common large-\(c\) domain and a termwise
+Laurent expansion.  Every asymptotic assertion about the geometric
+residue tower below carries
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\).
+
+\section{The formal Laurent problem}
+\label{sec:stss-setup}
+
+\begin{definition}[Rescaled formal sequence]
+\label{def:phi-laurent}
+\ClaimStatusDefinitional
+Set \(R_3(c)=2\), \(R_4(c)=10/[c(5c+22)]\), and for \(r\ge5\) define
+\[
+ R_r(c)=-\frac1{rc}
+ \sum_{\substack{j+k=r+2\\3\le j\le k<r}}
+ \epsilon_{j,k}\,jkR_j(c)R_k(c),
+ \qquad
+ \epsilon_{j,k}=\begin{cases}1,&j<k,\\[2pt]\frac12,&j=k.\end{cases}
+\]
+Write \(\Phi_r(c)=c^{r-2}R_r(c)\).  Its formal Laurent expansion is
+\[
+ \Phi_r(c)=A_r+\frac{B_r}{c}+\frac{\Gamma_r}{c^2}+O(c^{-3}).
+\]
+\end{definition}
+
+\begin{lemma}[Rescaled recurrence]
+\label{lem:phi-recurrence}
+\ClaimStatusProvedHere
+For \(r\ge5\),
+\[
+ \Phi_r=-\frac{6(r-1)}r\Phi_{r-1}
+ -\frac1{rc}
+ \sum_{\substack{j+k=r+2\\4\le j\le k\le r-2}}
+ \epsilon_{j,k}\,jk\Phi_j\Phi_k.
+\]
+\end{lemma}
+
+\begin{proof}
+Substitute \(R_j=c^{2-j}\Phi_j\) into the defining recurrence and
+separate the pair \((3,r-1)\).
+\end{proof}
+
+The leading two formal coefficients are
+\[
+ A_r=\frac{8(-6)^{r-4}}r,
+ \qquad
+ B_r=-A_r\left(\frac{22}{5}
+ +\frac{(r-4)(r-5)}{18}\right).
+\]
+They may also be taken as the hypotheses for the following coefficient
+extraction.
+
+\section{The coefficient recurrence}
+\label{sec:stss-recurrence}
+
+\begin{proposition}[Formal recurrence for \(\Gamma_r\)]
+\label{prop:gamma-recurrence}
+\ClaimStatusProvedHere
+For \(r\ge5\),
+\[
+ \Gamma_r=-\frac{6(r-1)}r\Gamma_{r-1}-\sigma_r^{(\Gamma)},
+\]
+where
+\[
+ \sigma_r^{(\Gamma)}=
+ \frac1r\sum_{\substack{j+k=r+2\\4\le j\le k\le r-2}}
+ \epsilon_{j,k}\,jk(A_jB_k+B_jA_k).
+\]
+\end{proposition}
+
+\begin{proof}
+Extract the coefficient of \(c^{-2}\) in
+Lemma~\ref{lem:phi-recurrence}.  The external factor \(c^{-1}\)
+selects the coefficient \(A_jB_k+B_jA_k\) from each product.
+\end{proof}
+
+\begin{lemma}[Closed source ratio]
+\label{lem:gamma-source-ratio-closed-form}
+\ClaimStatusProvedHere
+For \(r\ge5\),
+\[
+ \frac{\sigma_r^{(\Gamma)}}{A_r}
+ =-\frac{44(r-5)}{45}
+ -\frac{(r-5)(r-6)(r-7)}{243}.
+\]
+\end{lemma}
+
+\begin{proof}
+The identity \(jA_j=8(-6)^{j-4}\) makes
+\(jkA_jA_k=64(-6)^{r-6}\) independent of the partition
+\(j+k=r+2\).  Symmetrization converts the polynomial part into
+\[
+ \sum_{j=4}^{r-2}(j-4)(j-5)
+ =\frac{(r-5)(r-6)(r-7)}3.
+\]
+Substitution of \(B_j/A_j\) gives the displayed ratio.
+\end{proof}
+
+\section{Closed form and geometric comparison}
+\label{sec:stss-closed-form}
+
+\begin{theorem}[Formal sub-subleading coefficient]
+\label{thm:shadow-tower-sub-subleading-closed-form}
+\ClaimStatusProvedHere
+For \(r\ge4\),
+\[
+ \frac{\Gamma_r}{A_r}
+ =\frac{484}{25}
+ +\frac{22(r-4)(r-5)}{45}
+ +\frac{(r-4)(r-5)(r-6)(r-7)}{972}.
+\]
+Equivalently, with
+\(\phi_r=22/5+(r-4)(r-5)/18\),
+\[
+ \frac{\Gamma_r}{A_r}
+ =\phi_r^2-
+ \frac{(r-4)(r-5)(r^2-7r+9)}{486}.
+\]
+\end{theorem}
+
+\begin{proof}
+Since \(A_r=-6(r-1)A_{r-1}/r\), division by \(A_r\) turns
+Proposition~\ref{prop:gamma-recurrence} into a first-difference
+equation.  Starting from \(\Gamma_4/A_4=484/25\), use
+Lemma~\ref{lem:gamma-source-ratio-closed-form} and the identities
+\[
+ \sum_{s=5}^{r}(s-5)=\frac{(r-4)(r-5)}2,
+ \quad
+ \sum_{s=5}^{r}(s-5)(s-6)(s-7)
+ =\frac{(r-4)(r-5)(r-6)(r-7)}4.
+\]
+The second formula follows by expansion.
+\end{proof}
+
+\begin{remark}[Initial value]
+\label{rem:gamma-base-case}
+At \(r=4,5\) the polynomial increments vanish and
+\(\Gamma_r/A_r=484/25\).  This is the square of the initial
+subleading ratio.
+\end{remark}
+
+\begin{remark}[Relation with a Riccati model]
+\label{rem:gamma-riccati-origin}
+The formula is intrinsic to the recurrence of
+Definition~\ref{def:phi-laurent}.  A Riccati generating function gives
+another presentation of the same formal sequence once its coefficient
+comparison has been proved.
+\end{remark}
+
+\begin{remark}[Residue-tower interpretation]
+\ClaimStatusConditional
+Under \(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\), the
+coefficient \(\Gamma_r\) is the sub-subleading Laurent coefficient of
+\(c^{r-2}S_r(\Vir_c;\mathsf H_{\mathrm{res}})\).  Constructing this
+package is the geometric proof obligation.
+\end{remark}
+
+\section{Congruence data of the formal quartic}
+\label{sec:stss-kummer}
+
+\begin{lemma}[Integral numerator]
+\label{lem:gamma-numerator-quartic-polynomial}
+\ClaimStatusProvedHere
+Writing \(\Gamma_r/A_r=N(r)/24300\) gives
+\[
+ N(r)=25r^4-550r^3+16355r^2-122870r+729048.
+\]
+\end{lemma}
+
+\begin{proof}
+Put the three terms of
+Theorem~\ref{thm:shadow-tower-sub-subleading-closed-form} over the
+common denominator \(24300\) and expand.
+\end{proof}
+
+\begin{lemma}[Irreducibility of the numerator]
+\label{lem:gamma-numerator-irreducible}
+\ClaimStatusProvedHere
+The polynomial \(N\) is primitive and irreducible in
+\(\mathbb Q[r]\).
+\end{lemma}
+
+\begin{proof}
+Its reduction modulo \(7\) is
+\[
+ 4r^4+3r^3+3r^2+r+5\in\mathbb F_7[r].
+\]
+The finite-field irreducibility criterion gives
+\[
+ \gcd\!\left(N(r),r^{49}-r\right)=1,
+ \qquad
+ r^{2401}-r\equiv0\pmod{N(r),7}.
+\]
+Thus its reduction has degree four over \(\mathbb F_7\).  Gauss's
+lemma lifts irreducibility to \(\mathbb Q\).
+\end{proof}
+
+\begin{remark}[The residue class modulo \(691\)]
+\label{rem:gamma-691-emergence-sporadic}
+\ClaimStatusProvedHere
+The exact factorization
+\[
+ N(8)=613608=2^3\cdot3\cdot37\cdot691
+\]
+is a congruence of the formal recurrence.  The roots of \(N\) in
+\(\mathbb F_{691}\) are
+\(8,315,423,658\).  A Bernoulli or Kummer interpretation requires a
+separate comparison package \(\mathsf H_{\mathrm{Kum}}\) connecting
+this recurrence to a Bernoulli-valued geometric invariant.
+\end{remark}
+
+\begin{remark}[Prime values of an integral quartic]
+\label{rem:gamma-irregular-primes-dense-but-structureless}
+The prime divisors of \(N(r)\) record the arithmetic of this integral
+quartic.  Their interpretation as geometric Kummer data begins after
+\(\mathsf H_{\mathrm{Kum}}\) supplies the relevant motive, integral
+lattice, and reduction map.
+\end{remark}
+
+\section{Verification surface}
+\label{sec:stss-verification}
+
+The formal identities admit four independent checks: coefficient
+extraction from the recurrence, substitution of the closed form,
+symbolic expansion of \(N(r)\), and finite-field factorization.  The
+geometric lane has two additional checks: construction of
+\(\mathsf H_{\mathrm{res}}\) and uniform control of the Laurent
+expansion in \(\mathsf H_{\mathrm{asymp}}\).
+
+\section{Status}
+\label{sec:stss-summary}
+
+The quartic formula is proved for the formal quadratic recurrence.
+Its Virasoro residue interpretation is conditional on
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\), and its
+Bernoulli interpretation is governed by \(\mathsf H_{\mathrm{Kum}}\).

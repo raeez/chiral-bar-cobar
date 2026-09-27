@@ -1,0 +1,1253 @@
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+%%% Packages
+
+%%% Page geometry
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fgl}{\mathfrak{gl}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Eone}{E_1}
+\newcommand{\Etwo}{E_2}
+\newcommand{\Ethree}{E_3}
+\newcommand{\En}{E_n}
+\newcommand{\Sd}{\bS^d}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\HC}{\mathrm{HC}}
+\newcommand{\CC}{\mathrm{CC}}
+\newcommand{\Zder}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+\newcommand{\CoHA}{\mathrm{CoHA}}
+\newcommand{\Fuk}{\mathrm{Fuk}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Fact}{\mathrm{Fact}}
+\newcommand{\CY}{\mathrm{CY}}
+\newcommand{\DT}{\mathrm{DT}}
+\newcommand{\GW}{\mathrm{GW}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\MF}{\mathrm{MF}}
+\newcommand{\Coh}{\mathrm{Coh}}
+\newcommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch},\mathrm{top}}}
+\newcommand{\hCS}{\mathrm{hCS}}
+\newcommand{\BRST}{\mathrm{BRST}}
+\newcommand{\Uq}{U_q}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Spec}{Spec}
+
+%%% Title
+\title{Calabi--Yau quantum groups\\
+and $6$d holomorphic Chern--Simons}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+%%% ================================================================
+%%% ABSTRACT
+%%% ================================================================
+
+\begin{abstract}
+Volume~I of the modular Koszul duality programme introduces
+$\Eone$-chiral quantum groups as abstract algebraic-geometric
+objects: ordered bar complexes with spectral $R$-matrices, Drinfeld
+coproducts, and Yang--Baxter equations on configuration spaces of
+curves.  This paper constructs them concretely from Calabi--Yau
+geometry.
+
+The source is the holomorphic Chern--Simons hierarchy.  At the top
+($d = 6$): holomorphic Chern--Simons theory on a CY$_3$-fold~$Y$.
+A curve $C \subset Y$ of codimension~$2$ carries a defect algebra:
+the normal bundle $N_{C/Y}$ supplies two spectral parameters, and
+the defect algebra is a chiral algebra on~$C$ with quantum group
+structure from the normal directions.  For $Y = \bC^3$ and
+$C = \bC$, the local defect gives the abelian low-spin witness
+$J(z)J(w)\sim\Psi_{\mathrm{lev}}/(z-w)^2$, with
+$\Psi_{\mathrm{lev}}=-\sigma_2(h_1,h_2,h_3)$ and Sugawara
+central charge~$1$.  The full $\cW_{1+\infty}$ object requires the
+completed Drinfeld double or Fock/evaluation data. The hierarchy
+$6 \to 5 \to 4 \to 3$ is codimension-$2$ restriction followed by
+curve specialization; the ambient hCS observables are holomorphic
+$E_3$ in complex dimension~$3$ and holomorphic $E_2$ in complex
+dimension~$2$, while the curve output is $\Eone$.
+
+The critical cohomological Hall algebra $\CoHA(Q, W)$ of a quiver
+with CY$_3$ potential is the positive $\Eone$-primitive: its product
+is ordered Hall multiplication. The full Hopf and vertex-coproduct
+data require localization, a Hopf pairing, the opposite half, the
+Cartan sector, and completion. For the Jordan quiver:
+	$\CoHA(\bC^3) \simeq Y^+(\widehat{\fgl}_1)$. The full
+	$\cW_{1+\infty}$ vertex realisation requires the corresponding
+	double/evaluation construction.
+The Drinfeld center recovers $\Etwo$-braiding, closing the $\En$
+operadic circle.
+
+Quantum toroidal algebras
+$U_{q,t}(\widehat{\widehat{\fgl}}_1)$ carry the CY condition as
+the parameter constraint $q_1 q_2 q_3 = 1$.  The structure
+function
+$G(x; q_1, q_2, q_3) = \prod_i(1 - q_i x)/\prod_i(1 - q_i^{-1}x)$
+satisfies $G(x)G(1/x)=(q_1q_2q_3)^2$; the identity
+$G(x)G(1/x)=1$ characterizes the connected CY branch
+$q_1q_2q_3=1$ after the exponential/formal branch is fixed.
+
+Wall-crossing in the Bridgeland stability manifold is
+Maurer--Cartan gauge equivalence in the convolution algebra of
+Volume~I: the Kontsevich--Soibelman wall-crossing formula is the
+MC gauge transformation $\Theta_\sigma \sim \Theta_{\sigma'}$.
+The shadow obstruction tower at $\kappa_{\mathrm{ch}} = \Psi$
+recovers the genus-$1$ constant-map contribution for $\bC^3$; the
+all-genus virtual equality is conditional on the uniform-weight
+and $\Phi_3^{(\Sigma_2,C)}$ hypotheses, and the motivic equality remains
+conjectural in general.
+\end{abstract}
+
+\tableofcontents
+
+%%% ================================================================
+%%% 1. INTRODUCTION
+%%% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{CY quantum groups as concrete $\Eone$-chiral quantum
+groups}
+
+Volume~I constructs $\Eone$-chiral quantum groups as abstract
+algebraic-geometric objects on curves.  An $\Eone$-chiral quantum
+group is a tuple $(A, \mu, \Delta_z, \varepsilon, \eta, S)$
+satisfying five axioms (H1--H5): an $\Eone$-chiral algebra
+structure, a spectral coproduct, bialgebra compatibility, spectral
+coassociativity
+\[
+ (\Delta_w \otimes \mathrm{id}) \circ \Delta_{z+w}
+ = (\mathrm{id} \otimes \Delta_z) \circ \Delta_w,
+\]
+and the Hopf axiom at $z = 0$.  The ordered bar
+$B^{\mathrm{ord}}(A) = T^c(s^{-1}\bar{A})$ preserves the
+collision kernel and its represented $R$-operator. The symmetric bar
+$B^\Sigma(A)$ carries the homotopy-coinvariant operator
+$q_2(K_A^{\mathrm{coll}})$.  The normalized functional gives
+$\kappa_{\mathrm{ch}}$ in abelian and scalar families and
+$\kappa_{\mathrm{dp}}$ on the non-abelian affine row; the Sugawara
+contribution $\dim(\fg)/2$ completes $\kappa_{\mathrm{ch}}$ there.
+
+Two geometric inputs produce concrete $\Eone$-chiral quantum groups:
+the $6$d holomorphic Chern--Simons hierarchy, which gives defect
+chiral algebras on codimension-$2$ curves, and critical CoHA, which
+gives the ordered $\Eone$-primitive graded by dimension vectors.
+
+The $\Eone$ stabilization theorem of the companion paper
+proves that for $d \geq 3$ the constructed CY chiral output on the
+reference curve is natively $\Eone$ on the witnessed loci.  The full
+Schouten--Nijenhuis bracket is nonzero; the ordered CoHA direction is
+the quantum-group source.  The braided $\Etwo$-structure is recovered
+through the Drinfeld center of the $\Eone$-monoidal representation
+category. For $d\ge3$,
+\[
+\pi_1(\Conf_2(\bR^d))=\pi_1(S^{d-1})=0,
+\qquad
+\pi_1(\Conf_2(\bR^d)/\mathfrak S_2)=\bZ/2,
+\]
+so the unordered quotient supplies only symmetric braiding.
+
+\subsection{The holomorphic Chern--Simons hierarchy}
+
+The theories of this paper form a hierarchy in real dimension:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{llll}
+ \toprule
+ $d$ & Theory & Curve output & $\En$ level \\
+ \midrule
+ $6$ & hCS on CY$_3$ $Y$ & defect on $C \subset Y$ &
+ $\Eone$ \\
+ $5$ & partially topological CS on $\bR \times S$ &
+ $\bR \times C$ & $\Eone$ \\
+ $4$ & hCS on $\bC^2$ (CWY) & line operator & $\Eone$ \\
+ $3$ & 3d HT (Volume~II) & boundary algebra & $\Eone$ \\
+ \bottomrule
+\end{tabular}
+\end{center}
+The hierarchy $6 \to 5 \to 4 \to 3$ is codimension-$2$ restriction
+at each step.  Each restriction produces a chiral algebra from a
+gauge theory.  The resulting chiral algebras are $\Eone$-chiral
+quantum groups in the sense of Volume~I, with $R$-matrices from the
+normal directions and coproducts from the spectral parameters.
+
+\subsection{The $\En$ operadic circle}
+
+The $\En$ hierarchy organizes the entire programme:
+\[
+ \Ethree(\text{bulk}) \;\to\;
+ \Etwo(\text{boundary chiral}) \;\to\;
+ \Eone(\text{bar/QG}) \;\to\;
+ \Etwo(\text{Drinfeld center}) \;\to\;
+ \Ethree(\text{derived center}).
+\]
+Each arrow has precise mathematical content:
+$\Ethree \to \Etwo$ is restriction to a codimension-$2$ defect;
+$\Etwo \to \Eone$ is the ordered bar complex;
+$\Eone \to \Etwo$ is the Drinfeld center;
+$\Etwo \to \Ethree$ is higher Deligne plus topologization.  The round
+trip closes only after the Drinfeld-centre/derived-centre comparison
+and the topologization package are both available.  This is proved on
+the affine Kac--Moody non-critical locus by the Sugawara BRST
+primitive; for general class-$M$ inputs the original-complex
+chain-level comparison remains open.  Without that primitive the
+structure remains $\SCchtop$.
+
+The CY quantum groups of this paper enter the circle at the
+$\Eone$ vertex: the CoHA is the ordered associative Hall input, and the
+Drinfeld center carries it to $\Etwo$.  The tetrahedron equation
+(3d analogue of YBE) fails for the Yang $R$-matrix at
+$O(\kappa_{\mathrm{ch}}^2)$: the $\Ethree$ structure is
+genuinely nontrivial beyond $\Etwo$.
+
+\subsection{Construction layers}
+
+The construction has five layers.  Codimension-$2$ hCS restriction
+produces the defect chiral algebra on a curve.  The local $\bC^3$
+defect identifies the Heisenberg low-spin channel and isolates the
+completed double/Fock data needed for $\cW_{1+\infty}$.  Critical
+CoHA supplies the ordered positive half.  The toroidal formal disk
+imposes $q_1q_2q_3=1$.  The Drinfeld center and the shadow tower
+connect the $\Eone$ primitive to $\Etwo$ braiding and the genus-one
+DT/GW channel.
+
+
+%%% ================================================================
+%%% 2. THE hCS HIERARCHY
+%%% ================================================================
+
+\section{The holomorphic Chern--Simons hierarchy}
+\label{sec:hcs-hierarchy}
+
+\subsection{$6$d holomorphic Chern--Simons}
+
+Let $Y$ be a CY$_3$-fold with holomorphic volume form
+$\Omega_Y \in H^0(Y, \omega_Y)$.  The holomorphic Chern--Simons
+functional on $Y$ (Witten, Costello) is
+\[
+ S_{\hCS}(\cA)
+ = \int_Y \Omega_Y \wedge
+ \mathrm{tr}\Bigl(\cA \wedge \bar\partial \cA
+ + \tfrac{2}{3}\cA \wedge \cA \wedge \cA\Bigr)
+\]
+where $\cA \in \Omega^{0,1}(Y, \fg)$ is a $(0,1)$-form valued in
+a Lie algebra~$\fg$.  The equations of motion
+$\bar\partial \cA + \cA \wedge \cA = 0$ are the integrability
+condition for the holomorphic structure on the trivial $G$-bundle.
+
+The theory is six-dimensional, holomorphic in all three complex
+directions.  The BRST operator is $Q_{\BRST} = \bar\partial +
+[\cA, -]$, and the observables are the Dolbeault cohomology
+$H^{0,\bullet}_{\bar\partial_\cA}(Y, \fg)$.
+
+\begin{remark}[Relation to physical dimensions]
+\label{rem:v3-qg-hcs-physical}
+The $6$d hCS theory is the Costello--Li/BCOV open B-model
+holomorphic field-theory avatar of the $E_3$ story: the kinetic term
+is first-order, the path integral is one-loop exact, and the partition
+function is a holomorphic invariant.  The $6$d $(2,0)$ Schur/BLLPR
+route is an independent construction.  The physical content sits in
+the defect algebras.
+\end{remark}
+
+\subsection{Dimensional reduction: $6 \to 5 \to 4 \to 3$}
+
+The hierarchy proceeds by codimension-$2$ restriction at each step.
+
+\emph{$6 \to 5$}: for a CY$_3$-fold of the form
+$Y = \bR \times S$ (where $S$ is a CY$_2$ surface), the $6$d hCS
+theory reduces to $5$d partially topological Chern--Simons on
+$\bR \times S$.  The topological direction $\bR$ carries the
+$\Eone$ ordering; the holomorphic surface $S$ carries the chiral
+data.  Restriction to $\bR \times C$ (where $C \subset S$ is a
+curve) produces the ordered bar complex with one spectral parameter.
+
+\emph{$5 \to 4$}: for $S = \bC^2$, the $5$d theory reduces to
+$4$d holomorphic Chern--Simons on $\bC^2$: the
+Costello--Witten--Yamazaki theory.  Line operators on $\bC \subset
+\bC^2$ produce Yangians from holomorphic gauge fields.  The
+$R$-matrix comes from the normal direction to the line.
+
+\emph{$4 \to 3$}: restricting to a further codimension-$2$ locus
+produces the $3$d holomorphic-topological theories of Volume~II.
+The boundary algebra is a chiral algebra on the codimension-$2$
+curve, and the $\SCchtop$ pair
+$(C^\bullet_{\mathrm{ch}}(A,A), A)$ is the boundary--bulk system.
+
+\begin{proposition}[Dimensional consistency]
+\label{prop:v3-qg-dim-consistency}
+The ambient hCS observables retain their holomorphic factorization
+level before curve specialization: $6$d hCS on a CY$_3$ has ambient
+holomorphic $E_3$ observables, and $5$d hCS on $\bR\times\bC^2$
+has holomorphic $E_2$ observables. Projection to a defect curve is
+the stage that produces the ordered $\Eone$ chiral algebra with
+spectral parameters from the normal directions. The $\Etwo$-braiding
+is recovered through the Drinfeld center.
+\end{proposition}
+
+\subsection{The $\Omega$-background and equivariant parameters}
+
+For the toric CY$_3$-fold $Y = \bC^3$, the three coordinate
+directions carry equivariant parameters
+$h_1, h_2, h_3 \in \bC$ subject to the CY condition
+$h_1 + h_2 + h_3 = 0$.  In the multiplicative parametrization
+$q_i = e^{h_i}$, the CY condition reads $q_1 q_2 q_3 = 1$.  The
+identification $q_1 = q$, $q_2 = t^{-1}$,
+$q_3 = t/q$ recovers the standard $(q,t)$-parametrization of the
+quantum toroidal algebra.
+
+The $\Omega$-background parameters enter the defect algebra through
+the equivariant Chern--Simons functional: the gauge field on $Y$
+decomposes along the normal bundle to a defect curve
+$C \subset Y$, and the equivariant parameters weight the normal
+modes.  For $C = \bC_z$ (the first coordinate axis) inside
+$Y = \bC^3$, the normal bundle is
+$N_{C/Y} = \cO_C^{\oplus 2}$ with fiber coordinates
+$(w_1, w_2)$ carrying equivariant weights $(h_2, h_3)$.  The
+resulting defect algebra on $C$ has OPE poles involving both normal
+parameters.
+
+
+%%% ================================================================
+%%% 3. CODIMENSION-2 DEFECT ALGEBRAS
+%%% ================================================================
+
+\section{Codimension-$2$ defect algebras}
+\label{sec:codim2}
+
+\subsection{The defect construction}
+
+A curve $C \subset Y$ in a CY$_3$-fold carries a defect algebra:
+the $6$d hCS theory restricted to a tubular neighborhood of $C$
+produces a $2$d chiral algebra on $C$ with additional structure from
+the normal bundle.
+
+\begin{construction}[Codimension-$2$ defect algebra]
+\label{con:v3-qg-codim2}
+Let $Y$ be a CY$_3$-fold, $C \subset Y$ a smooth curve, and
+$N_{C/Y}$ the normal bundle of rank~$2$.  The defect algebra
+$A_C^{\mathrm{def}}$ on $C$ is obtained by:
+\begin{enumerate}[label=\textbf{\arabic*.}]
+ \item \textbf{Restriction.}  Restrict the $6$d hCS gauge field
+ $\cA \in \Omega^{0,1}(Y, \fg)$ to the formal neighborhood
+ $\hat{N}_{C/Y}$ of $C$ in $Y$.  The Taylor expansion along the
+ normal fibers gives a collection of fields on $C$ indexed by
+ normal-direction monomials.
+ \item \textbf{BRST reduction.}  The $\BRST$ operator
+ $Q = \bar\partial + [\cA, -]$ restricts to the formal
+ neighborhood.  The $Q$-cohomology in the fiber directions
+ produces the generating fields of the defect algebra on~$C$.
+ \item \textbf{OPE from normal modes.}  The OPE on $C$ is
+ inherited from the $6$d hCS action.  The normal bundle
+ $N_{C/Y}$ supplies two spectral parameters (from the two fiber
+ coordinates), which enter the OPE as meromorphic functions of
+ the insertion points on~$C$.
+\end{enumerate}
+\end{construction}
+
+\begin{remark}[Two spectral parameters]
+\label{rem:v3-qg-two-spectral}
+The rank-$2$ normal bundle $N_{C/Y}$ gives two spectral parameters.
+This is the geometric origin of the two-parameter family of quantum
+toroidal algebras: the two normal directions to a curve inside a
+CY$_3$-fold produce the $(q,t)$-deformation.  For a CY$_2$-fold
+(surface), the normal bundle has rank~$1$, producing one spectral
+parameter: the standard spectral parameter of Yangians and
+KZ equations.
+\end{remark}
+
+\subsection{$\bC^3$: the low-spin defect witness}
+
+\begin{proposition}[Low-spin defect algebra of $\bC^3$]
+\label{prop:v3-qg-c3-defect}
+For $Y = \bC^3$ with coordinates $(z, w_1, w_2)$ and CY form
+$\Omega = dz \wedge dw_1 \wedge dw_2$, the codimension-$2$ defect
+algebra on $C = \bC_z$ has a Heisenberg current
+\[
+J(z)J(w)\sim \frac{\Psi_{\mathrm{lev}}}{(z-w)^2},
+\qquad
+\Psi_{\mathrm{lev}}=-\sigma_2(h_1,h_2,h_3)
+=\frac{h_1^2+h_2^2+h_3^2}{2}
+\]
+on the Calabi--Yau branch $h_1+h_2+h_3=0$. Its Sugawara stress
+tensor is
+\[
+T=\frac{1}{2\Psi_{\mathrm{lev}}}{:}J^2{:},\qquad c=1.
+\]
+The all-spin $\cW_{1+\infty}$ vertex algebra requires the completed
+Drinfeld double/Fock evaluation data in addition to this local
+abelian witness.
+\end{proposition}
+
+\begin{proof}
+The gauge field $\cA \in \Omega^{0,1}(\bC^3, \fgl_N)$ expands along
+the normal fiber as
+$\cA(z, w_1, w_2) = \sum_{a,b \geq 0}
+J_{a,b}(z)\, w_1^a w_2^b\, d\bar{z}$,
+where $J_{a,b}$ are fields on $C = \bC_z$.  The lowest BRST class is
+the $\fgl_1$ current $J(z)$. The OPE is computed from the quadratic
+part of the $6$d hCS action restricted to the formal neighborhood,
+and the normal equivariant weights enter through
+$\Psi_{\mathrm{lev}}=-\sigma_2(h_1,h_2,h_3)$. The CY condition
+$h_1 + h_2 + h_3 = 0$ gives
+$\sigma_2 = -(h_1^2 + h_2^2 + h_3^2)/2$, so
+$\Psi_{\mathrm{lev}}=(h_1^2+h_2^2+h_3^2)/2$. The Sugawara formula
+for a nonzero-level Heisenberg current gives $c=1$.
+\end{proof}
+
+\begin{remark}[Level-prefixed collision kernel and represented $r$-matrix]
+\label{rem:v3-qg-level-r-matrix}
+The collision kernel of the $\widehat\fgl_1$ current subalgebra
+derived from the 6d reduction carries level $\Psi=-\sigma_2$:
+\[
+ K_{H_\Psi}^{\mathrm{coll}}(z)
+ = \frac{\Psi\Omega_{\mathcal H}}{z}
+ = \frac{-\sigma_2(h_1,h_2,h_3)\Omega_{\mathcal H}}{z}.
+\]
+Its Fock representation has commuting tensor insertions and supplies
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ and the associated classical
+$r$-matrix.
+The specialization $\Psi=0$ gives the zero collision operator and the
+singular Sugawara coordinate; this is the degenerate locus adjacent to
+the non-critical Koszul locus.  The homotopy coinvariant remains the
+rank-one operator and
+$\tau_{H_\Psi,2}^{\mathrm{res}}q_2(K_{H_\Psi}^{\mathrm{coll}})
+=\Psi=\kappa_{\mathrm{ch}}(H_\Psi)$. For the
+full $\cW_{1+\infty}$ algebra, higher-spin $r$-matrix components
+enter through the universal Miura cross-term: the leading term
+$J \otimes W_{s-1}$ has coefficient $(\Psi - 1)/\Psi$ for every
+$s \geq 2$. The central charge $c = 1$ is the rank of the underlying
+free boson and is independent of $\Psi$; Prochazka--Rapcak
+parametrise $\cW_{1+\infty}$ by
+$(\lambda_1,\lambda_2,\lambda_3)$ with
+$\sum_i 1/\lambda_i=0$. The normalisation $\Psi=-\sigma_2$ is the one
+for which the equivariant hCS quadratic form gives
+$J(z)J(w)\sim\Psi/(z-w)^2$.
+\end{remark}
+
+\subsection{Defect algebras for general CY$_3$}
+
+For a general CY$_3$-fold $Y$ with a curve $C \subset Y$, the
+defect algebra depends on the normal bundle $N_{C/Y}$.  The normal
+bundle is a rank-$2$ vector bundle on $C$; its splitting type and
+degree control the defect algebra.
+
+\begin{example}[Conifold]
+\label{ex:v3-qg-conifold-defect}
+For the resolved conifold $Y = \mathrm{Tot}(\cO(-1) \oplus
+\cO(-1) \to \bP^1)$ and $C = \bP^1$ (the zero section):
+$N_{C/Y} = \cO(-1)^{\oplus 2}$.  The defect algebra on $C$ has
+$\kappa_{\mathrm{ch}} = 1$ (from the DT computation) and shadow
+class~G (shadow depth~$2$).  The negative degrees of the normal
+bundle constrain the spin content: only finitely many spins
+contribute, and the resulting algebra is a truncation of
+$\cW_{1+\infty}$.
+\end{example}
+
+\begin{example}[Local $\bP^2$]
+\label{ex:v3-qg-local-p2-defect}
+For $Y = \mathrm{Tot}(K_{\bP^2} \to \bP^2)$ and a line
+$C = \bP^1 \subset \bP^2$:
+$N_{C/Y} = \cO(1) \oplus \cO(-3)$.  The defect algebra has
+$\kappa_{\mathrm{ch}} = 3/2$ and shadow class~M (infinite shadow
+depth).  The mixed splitting type of the normal bundle introduces
+asymmetry between the two spectral parameters.
+\end{example}
+
+
+%%% ================================================================
+%%% 4. CoHA AS ORDERED HALL INPUT
+%%% ================================================================
+
+\section{The CoHA as ordered Hall input}
+\label{sec:coha-e1}
+
+\subsection{Critical cohomological Hall algebras}
+
+For a quiver with potential $(Q, W)$ arising from a toric
+CY$_3$-fold, the critical CoHA is the $\bZ$-graded associative
+algebra
+\[
+ \CoHA(Q, W)
+ = \bigoplus_{\mathbf{d} \in \bZ_{\geq 0}^{Q_0}}
+ H^{\mathrm{BM}}_*(\mathrm{Crit}(W_\mathbf{d}),
+ \phi_{W_\mathbf{d}})
+\]
+where $\phi_{W_\mathbf{d}}$ is the vanishing cycle sheaf and the
+multiplication comes from Hall-algebra extension of representations.
+The grading by dimension vectors $\mathbf{d}$ is the CY analogue of
+the weight-space decomposition of a quantum group.
+
+\begin{theorem}[Schiffmann--Vasserot; Rapcak--Soibelman--Yang--Zhao]
+\label{thm:v3-qg-coha-yangian}
+For a toric CY$_3$ $X$ without compact $4$-cycles:
+\[
+ \CoHA(Q_X, W_X) \;\simeq\; Y^+(\widehat{\fg}_{Q_X})
+\]
+where $Y^+(\widehat{\fg}_{Q_X})$ is the positive half of the
+affine super Yangian attached to the toric quiver.  For $\bC^3$
+(Jordan quiver, cubic potential):
+$\CoHA(\bC^3) \simeq Y^+(\widehat{\fgl}_1)$. The
+$\cW_{1+\infty}$ vertex realisation appears only after passing to
+the Drinfeld double, or to the corresponding evaluation shadow.
+\end{theorem}
+
+\subsection{The CoHA carries the positive $\Eone$ half}
+
+The bare critical CoHA is the positive half of the CY quantum group.
+It supplies the ordered Hall product. Spectral coproducts, Hopf
+pairings, antipodes, Cartan currents, and negative roots belong only
+after localization, completion, and passage to the Drinfeld double.
+
+\begin{proposition}[CoHA positive-half data]
+\label{prop:v3-qg-coha-hopf}
+The critical CoHA $\CoHA(Q, W)$ of a toric CY$_3$ carries the
+positive $\Eone$ data:
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+ \item \emph{Ordered Hall product.}  The Hall multiplication
+ (extension of short exact sequences $0 \to V' \to V \to V'' \to 0$
+ with sub before quotient) is an ordered ($\Eone$) product.  The
+ ordering is physical: the dimension-vector filtration imposes a
+ preferred direction.
+ \item \emph{Positive half.}  For the Jordan quiver, this ordered
+ product identifies $\CoHA(\bC^3)$ with
+ $Y^+(\widehat{\fgl}_1)$.
+ \item \emph{Double input.}  A spectral coproduct or Hopf antipode
+ requires the opposite half, Cartan sector, Hopf pairing, and
+ completed Drinfeld double. These structures are extra data beyond
+ the bare positive CoHA.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Hopf data require the double]
+\label{rem:v3-qg-antipode}
+The transfer-matrix antipode $S(T(u))=T(u)^{-1}$ is a statement in
+the completed Yangian or toroidal double. The Hopf identity requires
+the negative half and the Cartan current in addition to the positive
+CoHA.
+\end{remark}
+
+\subsection{The $R$-matrix and the Drinfeld coproduct}
+
+The $R$-matrix of the CoHA arises from the Ext-quiver: the
+extension groups $\Ext^1(V', V'')$ between representations
+determine the poles of the $R$-matrix, and the CY condition
+(self-duality of the Ext-quiver) constrains the $R$-matrix
+to satisfy the Yang--Baxter equation.
+
+\begin{proposition}[Universal Miura coefficient]
+\label{prop:v3-qg-miura-universal}
+The Drinfeld coproduct $\Delta_z$ for $\cW_{1+\infty}$ has the
+universal Miura coefficient $(\Psi - 1)/\Psi$ on the leading
+cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$ at every spin
+$s \geq 2$.  At spin~$2$:
+\[
+ \Delta_z(T)
+ = T \otimes 1 + 1 \otimes T
+ + \frac{\Psi - 1}{\Psi}\,J \otimes J
+ + O(z^{-1}).
+\]
+The coefficient $(\Psi - 1)/\Psi$ is structural: it arises from
+the Prochazka--Rapcak Miura factorization $T(u) =
+\prod_i (u + \Lambda_i)$ in three steps: (1)~single-$J$ sector
+gives $1/\Psi$; (2)~Drinfeld shift adds $+1$; (3)~lower sectors do
+not contribute.  The coefficient persists at all spins $s \geq 2$ with
+direct symbolic expansion through spins $2$--$6$ giving the same
+coefficient.
+\end{proposition}
+
+\begin{remark}[Coincidental agreement at $\Psi = 2$]
+\label{rem:v3-qg-psi2-coincidence}
+At $\Psi = 2$: $(\Psi - 1)/\Psi = 1/2 = 1/\Psi$.  The two
+expressions $(\Psi - 1)/\Psi$ and $1/\Psi$ agree at this single
+point, which is the self-dual level.  The distinction is visible at
+$\Psi = 3$: $(\Psi - 1)/\Psi = 2/3 \neq 1/3 = 1/\Psi$.  Verify
+at three or more parameter values to distinguish the two.
+\end{remark}
+
+
+%%% ================================================================
+%%% 5. QUANTUM TOROIDAL ALGEBRAS
+%%% ================================================================
+
+\section{Quantum toroidal algebras and the CY condition}
+\label{sec:toroidal}
+
+The quantum toroidal algebra
+$U_{q,t}(\widehat{\widehat{\fgl}}_1)$ is the two-parameter
+deformation of the double current algebra $\fgl_1 \otimes
+\bC[u^{\pm 1}, v^{\pm 1}]$, carrying the full
+$\bZ \times \bZ$ bigrading from the two loop directions.
+
+\subsection{The CY parameter constraint}
+
+In the additive parametrization $q_i = e^{h_i}$, the three
+equivariant parameters of the $\Omega$-background satisfy the CY
+condition:
+\[
+ h_1 + h_2 + h_3 = 0
+ \qquad\text{equivalently}\qquad
+ q_1 q_2 q_3 = 1.
+\]
+Two independent parameters survive.  The standard
+$(q,t)$-parametrization identifies $q_1 = q$, $q_2 = t^{-1}$,
+$q_3 = t/q$.
+
+\begin{definition}[CY reflection identity]
+\label{def:v3-qg-cy-reflection}
+The \emph{trigonometric structure function} of the quantum toroidal
+algebra is
+\[
+ G(x;\, q_1, q_2, q_3)
+ = \frac{(1 - q_1 x)(1 - q_2 x)(1 - q_3 x)}
+ {(1 - q_1^{-1}x)(1 - q_2^{-1}x)(1 - q_3^{-1}x)}.
+\]
+The \emph{CY reflection identity} is
+\[
+ G(x) \cdot G(1/x) = 1.
+\]
+\end{definition}
+
+\begin{proposition}[CY reflection characterizes the CY condition]
+\label{prop:v3-qg-cy-reflection}
+Writing $q_1 q_2 q_3=\omega$, one has
+\[
+G(x)G(x^{-1})=\omega^2.
+\]
+Thus the connected exponential Calabi--Yau branch
+$q_1q_2q_3=1$ implies the reflection identity
+$G(x)G(x^{-1})=1$. Algebraically the branch $\omega=-1$ also
+satisfies the squared identity; the converse requires the chosen
+connected/formal branch.
+\end{proposition}
+
+\begin{proof}
+Direct computation.  The numerator of $G(x) \cdot G(1/x)$ is
+$\prod_i (1 - q_i x)(1 - q_i/x) = \prod_i (1 - q_i x)(x - q_i)/x$.
+The denominator is
+$\prod_i (1 - q_i^{-1}x)(1 - q_i^{-1}/x) = \prod_i
+(1 - q_i^{-1}x)(x - q_i^{-1})/x$.
+The ratio simplifies to $\prod_i (q_i/q_i^{-1}) = \prod_i q_i^2
+= (q_1 q_2 q_3)^2$.
+\end{proof}
+
+\subsection{The Miki automorphism}
+
+The Miki $S_3$ symmetry is an automorphism of the completed
+quantum toroidal/DIM algebra. On parameters it permutes
+$(q_1,q_2,q_3)$, but the automorphism is more than a cyclic
+relabelling of the positive half. It uses the completed algebra,
+Cartan sector, and opposite directions.
+
+\begin{remark}[The Miki automorphism and the operadic action]
+\label{rem:v3-qg-miki-non-operadic}
+The $\Ethree$-operad acts on the derived center $\Zder(A_\cC)$
+through the higher Deligne conjecture.  The Miki automorphism acts
+on the quantum toroidal algebra itself, permuting the three
+equivariant directions.  These are different actions at different
+categorical levels: the $\Ethree$-action is on the algebraic
+closed-sector actor $\Zder(A_\cC)$, while a physical-bulk reading
+requires the OCA/HT comparison datum.  The Miki automorphism is on
+the boundary algebra (the chiral algebra itself).  The relationship
+between them is mediated by the $\En$ operadic circle, but the
+Miki automorphism requires the completed toroidal algebra.
+\end{remark}
+
+\subsection{The DDCA--toroidal bridge}
+
+The deformed double current algebra
+$\mathrm{DDCA}_k(\fgl_K) = U(\fgl_K \otimes \bC[u, v])$ carries
+two spectral parameters from the two holomorphic directions of
+$\bC^2$ in the $5$d theory.  The quantum toroidal algebra
+$U_{q,t}(\widehat{\widehat{\fgl}}_K)$ carries two deformation
+parameters from the two loop directions.
+
+\begin{conjecture}[DDCA--toroidal bridge]
+\label{conj:v3-qg-ddca-toroidal}
+Writing $q = e^{\hbar_1}$, $t = e^{\hbar_2}$, the DDCA is the
+rational ($\hbar_1, \hbar_2 \to 0$) degeneration of the quantum
+toroidal algebra in the category of filtered algebras.  The two
+one-parameter degenerations produce a commuting square:
+\begin{center}
+\begin{tikzcd}[column sep=1.8cm, row sep=1cm]
+ U_{q,t}(\widehat{\widehat{\fgl}}_K)
+ \arrow[r, "t \to 1"] \arrow[d, "q \to 1"']
+ & Y(\widehat{\fgl}_K) \otimes U(\bC[v])
+ \arrow[d, "\hbar_1 \to 0"] \\
+ U(\bC[u]) \otimes Y(\widehat{\fgl}_K)
+ \arrow[r, "\hbar_2 \to 0"']
+ & \mathrm{DDCA}_k(\fgl_K)
+\end{tikzcd}
+\end{center}
+The diagonal $\hbar_1 = \hbar_2 \to 0$ recovers the affine Yangian
+$Y(\widehat{\fgl}_K)$ as the common degeneration.  The modular
+characteristic is continuous across the bridge:
+$\kappa_{\mathrm{ch}}(\mathrm{DDCA}_k(\fgl_K))
+= K(k+K)/2 = \lim_{\hbar_i \to 0}
+\kappa_{\mathrm{ch}}(U_{q,t})$.
+\end{conjecture}
+
+
+%%% ================================================================
+%%% 6. DRINFELD CENTER
+%%% ================================================================
+
+\section{The Drinfeld center closes the $\En$ circle}
+\label{sec:drinfeld-center}
+
+The Drinfeld center $\cZ(\Rep^{\Eone}(A))$ is the universal
+braided monoidal category receiving a central monoidal functor from
+$\Rep^{\Eone}(A)$.  For the CoHA of a toric CY$_3$-fold:
+
+\begin{theorem}[Drinfeld center for constructed CY$_3$ chiral loci]
+\label{thm:v3-qg-drinfeld-center}
+For $A_\cC$ in the constructed BZFN/CoHA loci of a toric
+CY$_3$-fold~$X$:
+\[
+ \cZ(\Rep^{\Eone}(A_\cC))
+ \;\simeq\;
+ \Rep^{\Etwo}(\Zder(A_\cC))
+\]
+where $\Zder(A_\cC) = C^\bullet_{\mathrm{ch}}(A_\cC, A_\cC)$ is
+the chiral derived center.  The forgetful functor
+$U \colon \cZ(\Rep^{\Eone}(A_\cC)) \to \Rep^{\Eone}(A_\cC)$ is
+the underlying-monoidal functor; its right adjoint, the Drinfeld
+center, equips objects with half-braidings.  This is the
+categorical-centre step, not the lossy averaging map to the scalar
+shadow.
+\end{theorem}
+
+\begin{remark}[Ordinary center and derived center]
+\label{rem:v3-qg-ordinary-vs-derived}
+For $A = H_k$ (Heisenberg at level~$k$): the ordinary center
+$Z(A) = \bC$ has dimension~$1$; the derived center
+$\Zder(A)$ has dimension~$3$, capturing $\Ext^1$ and $\Ext^2$
+invisible to the commutant.  The five invariants matching at six
+levels (conjectured for Heisenberg; proved end-to-end for $\bC^3$
+via the CoHA) confirm that the Drinfeld center of the
+$\Eone$-monoidal representation category is the correct
+categorification of the chiral derived center.
+\end{remark}
+
+The passage $\Eone \to \Etwo$ via the Drinfeld center is the CY
+incarnation of the $\Eone$-to-$\Etwo$ lift of Volume~I.  The
+averaging map $\mathrm{av} \colon \fg^{\Eone} \to
+\fg^{\mathrm{mod}}$ projects the ordered $R$-matrix to the scalar
+$\kappa_{\mathrm{ch}}$; the Drinfeld center is the categorical
+analogue, recovering the $R$-matrix data as the braiding on the
+center category.
+
+Direct restriction from $E_d$ to $\Etwo$ (for $d \geq 3$) gives
+only symmetric braiding:
+\[
+\pi_1(\Conf_2(\bR^d))=0,\qquad
+\pi_1(\Conf_2(\bR^d)/\mathfrak S_2)=\bZ/2
+\quad(d\ge3).
+\]
+The Drinfeld center is the source of the nontrivial centre-side
+half-braiding for CY$_3$ quantum groups.
+
+
+%%% ================================================================
+%%% 7. SHADOW = GW(C^3)
+%%% ================================================================
+
+\section{Shadow = $\GW(\bC^3)$ and wall-crossing}
+\label{sec:shadow-gw}
+
+\subsection{The shadow tower as Gromov--Witten theory}
+
+At $\kappa_{\mathrm{ch}} = \Psi$ (the deformation parameter of the
+low-spin defect channel), the shadow obstruction tower recovers the
+genus-$1$ constant-map contribution for $\bC^3$. The all-genus virtual
+identification requires the uniform-weight and $\Phi_3^{(\Sigma_2,C)}$ hypotheses;
+the motivic identification remains conjectural.
+
+\begin{proposition}[Genus-one shadow and the DT character of $\bC^3$]
+\label{prop:v3-qg-shadow-gw}
+At genus~$1$, the shadow specialization $\kappa_{\mathrm{ch}}=\Psi$
+matches the constant-map/DT genus-one channel for $\bC^3$. On the DT
+side, the MacMahon function
+$M(q) = \prod_{n \geq 1}(1 - q^n)^{-n}$ encodes the partition
+function as the second-quantized bar/DT character in the non-compact
+degree-zero normalization.
+\end{proposition}
+
+The identification shadow = GW operates at three levels:
+\begin{enumerate}[(i)]
+ \item \emph{Genus-$1$}: the shadow Eisenstein theorem
+ $D_2(\cA, s) = -24\kappa_{\mathrm{ch}} \cdot \zeta(s)\zeta(s-1)$
+ (Volume~I) gives the genus-$1$ DT partition function via the
+ Borcherds lift.
+ \item \emph{Virtual}: under the uniform-weight and $\Phi_3^{(\Sigma_2,C)}$
+ hypotheses, the shadow coefficient $S_r$ at degree~$r$ matches the
+ virtual Euler characteristic of the moduli of $r$-dimensional sheaves.
+ \item \emph{Motivic}: the full chiral quantum group structure
+ ($R$-matrix, coproduct, RTT) is conjecturally matched with the
+ motivic DT invariants of Kontsevich--Soibelman.
+\end{enumerate}
+
+\subsection{Wall-crossing as MC gauge equivalence}
+
+For a toric CY$_3$ with fan~$\Sigma$, Bridgeland stability
+conditions partition the space of central charges into chambers.
+Each chamber $\sigma$ determines a quiver presentation
+$(Q_\sigma, W_\sigma)$ and a CoHA
+$\CoHA(Q_\sigma, W_\sigma)$.
+
+\begin{conjecture}[Wall-crossing = MC gauge equivalence]
+\label{conj:v3-qg-wall-crossing-mc}
+Wall-crossing between stability chambers $\sigma$ and $\sigma'$ is
+Maurer--Cartan gauge equivalence in the modular convolution algebra:
+$\Theta_\sigma \sim \Theta_{\sigma'}$.  The Kontsevich--Soibelman
+wall-crossing formula is the MC gauge transformation.  The global
+chiral algebra is the homotopy colimit over the chamber
+decomposition:
+$A_\cC = \operatorname{hocolim}_\sigma A_{Q_\sigma}$.
+\end{conjecture}
+
+For $\bC^3$ (single chamber): the conjecture is vacuous.  For the
+resolved conifold (two chambers): the wall-crossing formula is the
+flop relation on DT partition functions (Bryan--Steinberg), and the
+MC gauge equivalence is the bar-cobar transport across the flop.
+
+\begin{remark}[The four faces of wall-crossing]
+\label{rem:v3-qg-four-faces-wc}
+Wall-crossing admits four descriptions in the programme:
+\begin{enumerate}[(i)]
+ \item \emph{DT/BPS}: change of BPS spectrum across a wall of
+ marginal stability.
+ \item \emph{MC gauge}: the universal Maurer--Cartan element
+ $\Theta_A$ transforms by gauge equivalence in the modular
+ convolution algebra.
+ \item \emph{Scattering diagram}: the Gross--Siebert consistency
+ condition IS the $\Eone$ Maurer--Cartan equation (proved for
+ affine KM).
+ \item \emph{Root system}: reflections in the Weyl group of the
+ BKM superalgebra $\fg_X$.
+\end{enumerate}
+The identification of (ii) with (iii) is proved; the identification
+with (i) and (iv) is conjectural in the CY$_3$ setting.
+\end{remark}
+
+
+%%% ================================================================
+%%% 8. CY_4 and the p_1-twisted double current algebra
+%%% ================================================================
+
+\section{The $\CY_4$ obstruction and the $p_1$-twisted double
+current algebra}
+\label{sec:cy4-p1-twisted}
+
+The fourth-dimensional stage of the holomorphic Chern--Simons
+hierarchy is obstructed.  The untwisted quantum group associated to a
+CY$_4$ geometry is replaced by a $p_1$-twisted double current algebra:
+the first Pontryagin class of the tangent bundle appears as a cocycle
+on the Drinfeld double.
+
+\subsection{The obstruction in $\pi_4(BU)$}
+
+\begin{theorem}[CY$_4$ first obstruction]
+\label{thm:cy4-obstruction-pi4-BU}
+Let $X$ be a compact CY$_4$ manifold. The obstruction to promoting
+$\Phi(D^b\Coh(X))$ to an $E_4$-algebra lies in
+$\pi_4(BU) \cong \bZ$, realised as the framing class of the stable
+normal bundle to the cyclic trace on $X$.
+\end{theorem}
+
+\begin{proof}
+By Bott periodicity,
+$\pi_4(BU) = \pi_3(U) = \bZ$.
+The equality $\pi_3(BU)=0$ follows from $\pi_2(U)=0$.  The
+$E_1$-direction framing of the cyclic trace on $X$ carries a
+characteristic obstruction class in $H^4(X;\bZ)$, represented by
+$p_1(T_X)$.  Scalar obstructions are obtained by pairing this class
+with specified four-cycles, or by the degree-compatible invariant
+$\int_X p_1(T_X)^2$ on the real eight-manifold~$X$.
+Obstruction theory for $E_1$-to-$E_4$ promotion locates this first
+class in the $\pi_4(BU)$ stage. Its vanishing removes only this
+obstruction; a genuine $E_4$ lift still requires the higher
+obstruction tower and holomorphic-twist, framing, and completion
+witnesses.
+\end{proof}
+
+\begin{remark}
+Contrast $\CY_3$: there $\pi_3(BU) = 0$, so this first scalar
+obstruction vanishes. The CY$_4$ case is the first step where this
+homotopy group is non-trivial; the full higher obstruction tower
+remains separate.
+\end{remark}
+
+\subsection{The Drinfeld double presentation}
+
+\begin{definition}[$p_1$-twisted double current algebra]
+\label{def:p1-twisted-double-current}
+Let $X$ be a CY$_4$ and $\bg$ a simple Lie algebra.
+Let $Y^+(\bg)$ and $Y^-(\bg)$ be the positive and negative
+half-Yangians (in the Drinfeld realisation: Chevalley generators
+$\{x_i^{\pm,r}\}_{r \ge 0}$ subject to the Yangian relations over
+$\bC[\hbar]$).
+The \emph{$p_1$-twisted double current algebra} associated to $X$ is
+the Drinfeld double
+\[
+Y_{p_1}(X) \defeq Y^+(\bg) \bowtie_{c} Y^-(\bg)
+\]
+equipped with the cocycle
+\[
+c(x, y) \;=\; \frac{1}{24}\,
+\Big\langle\, x \cup y \cup p_1(T_X),\ [X] \,\Big\rangle,
+\qquad x,y \in H^{\bullet}(X;\bg),
+\]
+where $p_1(T_X) \in H^4(X;\bZ)$ is the first Pontryagin class and
+$[X] \in H_8(X;\bZ)$ the fundamental class.
+\end{definition}
+
+\begin{remark}
+The algebra $Y_{p_1}(X)$ is a $p_1$-twisted Drinfeld double.  Its
+cocycle depends on $X$ through $p_1$, and its RTT presentation contains
+a genuine $O(\hbar^2)$ correction absent from ordinary Yangians; the
+notation ``CY$_4$ Yangian'' suppresses the obstruction.
+\end{remark}
+
+\subsection{The RTT relation through $O(\hbar^2)$}
+
+\begin{conjecture}[$p_1$-twisted RTT]
+\label{conj:cy4-rtt-p1}
+Let
+\[
+N_{p_1^2}(X)\defeq \int_X p_1(T_X)^2 .
+\]
+The $R$-matrix of $Y_{p_1}(X)$ satisfies
+\[
+R_{p_1}(u) \;=\; 1 \;+\; \frac{\hbar\,P}{u}
+\;+\; \hbar^2\,\frac{N_{p_1^2}(X)\,\Omega_{\mathrm{Cartan}}}{u^2}
+\;+\; O(\hbar^3),
+\]
+where $P$ is the permutation operator and $\Omega_{\mathrm{Cartan}}$
+the Cartan component of the quadratic Casimir.
+\end{conjecture}
+
+\begin{remark}[Proof obligation]
+\label{rem:cy4-rtt-p1-proof-obligation}
+The displayed $O(\hbar^2)$ term requires a deformation-complex
+calculation for the $p_1$-twisted double, or a primary source proving
+the same RTT normalisation.  Whitehead's lemma supplies only the
+cohomological vanishing input.
+\end{remark}
+
+\subsection{CY$_4$ twisted-supergravity analogue}
+
+\begin{conjecture}[CY$_4$ twisted-supergravity boundary algebra]
+\label{conj:cy4-twisted-supergravity-boundary-algebra}
+The boundary algebra of the conjectural CY$_4$ twisted-supergravity
+analogue on $X \times \bR$, with $X$ a CY$_4$, is the $p_1$-twisted
+double current algebra $Y_{p_1}(X)$.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+The statement is the CY$_4$ analogue of the 5d hCS/Yangian-VOA
+theorem on $\bR\times\bC^2$ and of the 6d hCS framework of
+Section~\ref{sec:hcs-hierarchy}. Since a CY$_4$ has real dimension
+8, the space $X\times\bR$ is 9-dimensional. The statement is a
+CY$_4$ twisted-supergravity conjecture. The cocycle $c$ is
+predicted by the one-loop anomaly, proportional to $p_1(T_X)$.
+\end{remark}
+
+\subsection{Comparison with Maulik--Okounkov}
+
+\begin{proposition}[Maulik--Okounkov comparison]
+\label{prop:cy4-MO-comparison}
+At $X = \bC^4$, the twist $c$ degenerates to the equivariant
+Omega-background of Maulik--Okounkov, and the specialisation map
+\[
+Y_{p_1}(\bC^4)\ \longrightarrow\ U_{q,t_1,t_2}(\widehat{\widehat{\gl}}_1)
+\]
+identifies the $p_1$-twisted double current algebra with the
+quantum toroidal $\gl_1$ algebra of Maulik--Okounkov.
+\end{proposition}
+
+\begin{remark}[Attribution]
+Cited from Maulik--Okounkov, \emph{Quantum groups and quantum
+cohomology}, Ast\'erisque 408 (2019), and Schiffmann--Vasserot.
+The vanishing of $N(\bC^4)$ on the non-compact target is cancelled by
+the equivariant integration that produces the $(q,t_1,t_2)$
+parameters; this is the standard refinement dictionary.
+\end{remark}
+
+\subsection{$p_1$-twisted stratum of $K3 \times K3$}
+
+\begin{proposition}[$K3 \times K3$ is $p_1$-twisted]
+\label{prop:k3k3-p1-twisted}
+For $X = K3 \times K3$,
+\[
+N_{p_1^2}(X) \;=\; \int_{K3 \times K3} p_1(T_X)^2
+\;=\; 4608,
+\]
+and $p_1(T_X)\neq0$. Thus $K3\times K3$ lies on the $p_1$-twisted
+stratum.  The untwisted Drinfeld double and pointwise $E_4$ lift
+require separate vanishing data.
+\end{proposition}
+
+\begin{proof}
+The Pontryagin class splits: $p_1(T_{K3 \times K3}) = \pi_1^* p_1(T_{K3})
++ \pi_2^* p_1(T_{K3})$, where $\pi_i$ are the two projections.
+For a $K3$ surface $p_1(T_{K3}) = -2 c_2(T_{K3}) = -48\,[\pt]$ in
+$H^4(K3)$. Therefore
+\[
+p_1(T_{K3\times K3})
+=-48(\pi_1^*[\pt]+\pi_2^*[\pt]).
+\]
+Squaring gives
+\[
+p_1(T_{K3\times K3})^2
+=2\cdot48^2\,\pi_1^*[\pt]\,\pi_2^*[\pt],
+\]
+and integration over $K3\times K3$ gives $2\cdot48^2=4608$.
+\end{proof}
+
+\begin{remark}
+The product $K3\times K3$ is off the $S^4$-framed stratum. Its
+natural CY$_4$ quantum group is $p_1$-twisted.
+\end{remark}
+
+
+%%% ================================================================
+%%% Codimension-2 defects, CoHA positivity, and the toroidal formal disk
+%%% ================================================================
+
+\section{Codimension-$2$ defects, $\CoHA$, and the toroidal formal disk}
+\label{sec:6dhCS-defect-coha-toroidal}
+
+The 6d holomorphic Chern--Simons hierarchy has three load-bearing
+tests: the codimension-$2$ defect algebra on a curve
+$C \subset \bC^3$, the identification
+$\CoHA(\bC^3) \simeq Y^+(\widehat\fgl_1)$ as the \emph{positive half}
+of $\cW_{1+\infty}$, and the formal-disk specialisation of the
+toroidal algebra via the Schiffmann--Vasserot $\CoHA$ and the Miki
+$DIM$ presentation.
+
+\begin{theorem}[Codim-$2$ low-spin defect at non-critical level]
+\label{thm:codim2-defect}
+Let $Y = \bC^3$ with holomorphic volume form
+$\Omega_Y = dz_1\wedge dz_2\wedge dz_3$ and let
+$C=\{z_2=z_3=0\}\subset Y$ be a codim-$2$ holomorphic curve. The
+6d holomorphic Chern--Simons defect on~$C$ has a Heisenberg current
+with level
+\[
+\Psi_{\mathrm{lev}}=-\sigma_2(h_1,h_2,h_3),
+\]
+where $h_1$ is the tangent weight and $(h_2,h_3)$ are the normal
+weights, subject to $h_1+h_2+h_3=0$. The Sugawara stress tensor has
+central charge $c=1$.
+\end{theorem}
+
+\begin{proof}
+Reduction of 6d hCS along $N_{C/Y}$ is a codim-$2$ boundary
+condition; the descent of the gauge algebra from $\mathrm{hol}(Y)$
+to $\mathrm{hol}(C)$ factors through the normal Koszul complex,
+producing a chiral extension of $\widehat\fgl_1$. The equivariant
+normal parameters are $h_2,h_3$ and the tangent weight is $h_1$.
+Their elementary symmetric polynomial $\sigma_2$ gives the
+Heisenberg level $\Psi_{\mathrm{lev}}=-\sigma_2$. The vanishing
+$\sigma_1=0$ is the CY condition. Non-criticality
+$\Psi_{\mathrm{lev}}\ne0,\infty$ places the Heisenberg current on
+the Sugawara locus.
+\end{proof}
+
+\begin{theorem}[$\CoHA(\bC^3)$ as the positive half]
+\label{thm:coha-positive-half}
+The critical cohomological Hall algebra of $\bC^3$
+($=$~Jordan quiver with cubic potential) is isomorphic to the
+positive half $Y^+(\widehat\fgl_1)$ of the affine Yangian of
+$\widehat\fgl_1$:
+\begin{equation}\label{eq:coha-positive}
+\CoHA(\bC^3) \;\simeq\; Y^+(\widehat\fgl_1).
+\end{equation}
+The full $\cW_{1+\infty} \simeq Y(\widehat\fgl_1)$ is recovered as
+the Drinfeld double $Y^+ \bowtie Y^-$, with the opposite half
+$Y^-$ realised either by the opposite orientation $(\bC^3)^{\op}$
+(conjugate quiver with potential $-W$) or by a Koszul dual
+$\CoHA^!$ construction.
+\end{theorem}
+
+\begin{proof}
+Schiffmann--Vasserot prove $\CoHA(Q, W) \simeq Y^+$ as the Hopf
+algebra generated by simple-object fundamental classes, with Hall
+multiplication for positive roots; the shuffle presentation exhibits
+only $Y^+$. The full Yangian with Cartan currents and negative
+roots requires either a second copy via $(\bC^3)^{\op}$ or the
+derived Drinfeld double. Thus the precise identification is
+$\CoHA \simeq Y^+$. Character coincidence with
+$\cW_{1+\infty}$ is weaker than a bar equivalence.
+\end{proof}
+
+\begin{theorem}[Toroidal formal-disk identification]
+\label{thm:toroidal-formal-disk}
+On the formal disk $D = \Spec\Bbbk[[z]]$, the completed quantum
+toroidal algebra $U_{q,t}(\widehat{\widehat\fgl}_1)$ carries the
+structure of an $\Eone$-chiral quantum group: (i)~the completed Miki
+$S_3$-automorphism realizes the $\Omega$-background Weyl symmetry on
+the branch $q_1 q_2 q_3 = 1$; (ii)~the spectral $R$-matrix from the
+completed SV/toroidal structure satisfies the additive Yang--Baxter equation;
+(iii)~the formal-disk chiral quantum-group equivalence holds at that
+level with associator dependence controlled by the Etingof--Kazhdan
+functor on the Koszul locus.
+\end{theorem}
+
+\begin{remark}[Global toroidal: conditional]
+\label{rem:toroidal-global}
+The extension of Theorem~\ref{thm:toroidal-formal-disk}
+from the formal disk to a global curve $\bP^1 \times \bP^1$ is
+conditional on chain-level topologization of the underlying
+class~M chiral algebra: the formal-disk statement is unconditional,
+the global statement inherits the class~M chain-level
+topologization hypothesis and the modular-family base-change
+problem (proved cohomologically;
+the chain-level statement depends on Francis--Gaitsgory base change
+for the relative Ran prestack).
+\end{remark}
+
+\begin{remark}[Geometric vs algebraic model discipline]
+\label{rem:geom-vs-alg}
+The parameters $(h_1,h_2,h_3)$ are formal algebraic variables in
+$\End^{\mathrm{ch}}_\cA$. Fulton--MacPherson variables on
+$\FM_k(\bC)$, the Hopf-algebra identity
+$\CoHA(\bC^3)\simeq Y^+$, and BZFN centre comparisons live in three
+distinct ambients: configuration-space geometry, algebraic Hopf
+algebras, and the pair $(\cA^{\mathrm{ch}},\cA_{\mathrm{mode}})$.
+\end{remark}
+
+\begin{remark}[Proof ambients]
+\label{rem:6d-proof-ambients}
+Theorem~\ref{thm:codim2-defect} rests on the formal BRST calculation
+at non-critical level (\emph{proved cohomologically for affine KM;
+class~M cases via DS reduction conditional}). Theorem~\ref{thm:coha-positive-half}
+uses the Schiffmann--Vasserot positive-half normalization. Identifying
+the CoHA with $\cW_{1+\infty}$ gives at most a character identity
+until the Drinfeld double is included.
+Theorem~\ref{thm:toroidal-formal-disk} is \emph{proved}
+at the formal disk; global extension conditional per
+Remark~\ref{rem:toroidal-global}.
+\end{remark}
+
+
+%%% ================================================================
+%%% REFERENCES
+%%% ================================================================
+
+\section*{References}
+
+\begin{enumerate}[label={[\arabic*]}]
+\item
+ R.~Lorgat,
+ \emph{Modular Koszul Duality},
+ Volume~I of the Modular Koszul Duality Programme, 2026.
+
+\item
+ R.~Lorgat,
+ \emph{$\Ainf$ Chiral Algebras and 3D Holomorphic-Topological QFT},
+ Volume~II of the Modular Koszul Duality Programme, 2026.
+
+\item
+ R.~Lorgat,
+ \emph{Calabi--Yau Categories, Quantum Groups, and BPS Algebras},
+ Volume~III of the Modular Koszul Duality Programme, 2026.
+
+\item
+ R.~Lorgat,
+ \emph{The Calabi--Yau-to-chiral functor and the
+ $\kappa_\bullet$-spectrum},
+ standalone paper (companion to this paper), 2026.
+
+\item
+ K.~Costello,
+ \emph{Holomorphic Chern--Simons theory and the super Yangian},
+ preprint, 2017.
+
+\item
+ K.~Costello, E.~Witten, and M.~Yamazaki,
+ \emph{Gauge theory and integrability, I, II},
+ Notices ICCM \textbf{6} (2018), 46--119 and 120--149.
+
+\item
+ O.~Schiffmann and E.~Vasserot,
+ \emph{Cherednik algebras, $\cW$-algebras and the equivariant
+ cohomology of the moduli space of instantons on $\mathbb{A}^2$},
+ Publ.\ Math.\ IHES \textbf{118} (2013), 213--342.
+
+\item
+ M.~Rapcak, Y.~Soibelman, Y.~Yang, and G.~Zhao,
+ \emph{Cohomological Hall algebras, vertex algebras, and
+ instantons},
+ Comm.\ Math.\ Phys.\ \textbf{376} (2020), 1803--1873.
+
+\item
+ T.~Prochazka and M.~Rapcak,
+ \emph{$\cW$-algebra modules, free fields, and Gukov--Witten
+ defects},
+ JHEP \textbf{2019}(5), 159.
+
+\item
+ K.~Costello and O.~Gwilliam,
+ \emph{Factorization Algebras in Quantum Field Theory},
+ Cambridge University Press, 2017, 2021.
+
+\item
+ D.~Maulik, N.~Nekrasov, A.~Okounkov, R.~Pandharipande,
+ \emph{Gromov--Witten theory and Donaldson--Thomas theory, I, II},
+ Compos.\ Math.\ \textbf{142} (2006), 1263--1285 and 1286--1304.
+
+\item
+ M.~Kontsevich and Y.~Soibelman,
+ \emph{Stability structures, motivic Donaldson--Thomas invariants
+ and cluster transformations},
+ preprint arXiv:0811.2435, 2008.
+\end{enumerate}
+
+\end{document}

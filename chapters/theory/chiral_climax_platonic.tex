@@ -1,0 +1,1885 @@
+% !TEX root = ../../main.tex
+% =====================================================================
+% Chapter: Arnold residues and the typed scalar ledger
+%
+% The chapter records two comparison mechanisms:
+% (G2) a finite-window KZ--Arnold bar-superconnection comparison;
+% (G3) a typed ledger separating central, modular, ghost, lattice,
+%      and Borcherds scalars.
+%
+% Conventions (visible at every relevant identity):
+% - KZ residue in the affine conformal-block window:
+%   Omega / (k + h^v).
+% - kappa values: read from chapters/examples/landscape_census.tex
+% (source every formula from the manuscript or a primary reference)
+% - Vol III kappa: subscripted (kappa_ch / kappa_BKM / kappa_cat /
+% kappa_fiber); cross-volume identity refers to the bridge
+% mediated by Phi.
+% - Bar complex: B^ord(A) = T^c(s^{-1} A-bar).
+% =====================================================================
+
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\hv}{h^{\vee}}
+\providecommand{\Conf}{C}
+\providecommand{\Confnord}{\Conf_n^{\mathrm{ord}}}
+\providecommand{\BarOrd}{B^{\mathrm{ord}}}
+\providecommand{\BarSym}{B^{\Sigma}}
+\providecommand{\Tcoalg}{T^{c}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Op}{\mathrm{Op}}
+\providecommand{\End}{\mathrm{End}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\cghost}{c_{\mathrm{ghost}}}
+\providecommand{\bc}{\mathrm{bc}}
+\providecommand{\Sug}{\mathrm{Sug}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\KZB}{\mathrm{KZB}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\ConnConf}{\mathsf{ConnConf}}
+\providecommand{\ChirAlg}{\mathsf{ChirAlg}}
+\providecommand{\BRSTGaugedChirAlg}{\mathsf{BRSTGaugedChirAlg}}
+\providecommand{\Cone}{\operatorname{cone}}
+\providecommand{\dlog}{d\log}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\PhiCY}{\Phi}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\Hch}{H^{\bullet}_{\mathrm{ch}}}
+\providecommand{\IdC}{\mathrm{Id}_{\mathrm{ConnConf}}}
+
+\chapter{Arnold Residues and Scalar Invariants}
+\label{chap:climax-platonic}\label{ch:chiral-climax-platonic}
+\index{climax theorem!typed comparison surface|textbf}
+\index{Arnold connection!pullback identity|textbf}
+\index{scalar invariants!central, modular, ghost, lattice|textbf}
+\index{KZ functor!chiral algebras|textbf}
+
+\ChapterIntro{Theorems A, B, C, D, H traverse Volume~I in five
+categorical directions: bar--cobar adjunction, completed inversion,
+conductor complementarity, genus-$g$ integration, and chiral
+Hochschild cohomology. Their proofs live in their native chapters.
+This chapter supplies a common notation for two typed statements:
+\[
+ \nabla^{B,0}_{A,V,n}
+ =d_A+d_{\mathrm{dR}}
+ -\sum_{i<j}\widetilde\rho_{A,V,n}(t_{ij})\,\eta_{ij}
+ =\KZ_{A,V,n}^{*}(\nabla_{\Arn}),
+ \qquad
+ \bigl(K^c,\,K^\kappa,\,c_{\mathrm{gh}},\,K^{\mathrm{lat}},
+ \kappa_{\mathrm{BKM}}\bigr).
+\]
+The first statement is conditional on the logarithmic-residue package
+$H_{\mathrm{KZ}}$: a finite bar window, logarithmic collision
+operators, the infinitesimal braid relations, and the
+Fulton--MacPherson comparison.  It identifies the finite-window
+ordered genus-$0$ bar superconnection with the pullback of Arnold's
+$1969$ operator-valued KZ connection; the bar differential is its
+Fulton--MacPherson residue realization.  Drinfeld--Kohno supplies the
+standard affine example.
+
+The second display separates the scalar invariants by ambient.  It keeps the
+central-charge conductor $K^c$, the modular conductor $K^\kappa$, the
+central charge $c_{\mathrm{gh}}$ of a specified BRST ghost complex,
+the lattice number $K^{\mathrm{lat}}=2c_+$, and the Borcherds weight
+$\kappa_{\mathrm{BKM}}$ in their native ambients.  The scalar values
+computed from the named companion formulas are
+$\{0,13,250/3\}$.  Bershadsky--Polyakov contributes the exact
+central-charge identity $K^c_{\mathrm{BP}}=50$; its strong generators
+$J,G^+,G^-,T$ are even, and its modular conductor remains an open
+genus-one computation.  The Mukai lattice has signature $(4,20)$ and
+therefore $K^{\mathrm{lat}}=2c_+=8$; the chiral equation
+$K^\kappa=8$ is conjectural under
+$H_{\mathsf B}=(H_{\mathrm{chart}},H_{\mathrm{KD}},H_{\mathrm{scalar}},
+H_{\mathrm{mod}},H_{\mathrm{quantum}})$.  These distinctions govern
+the five theorem pointers and the Vol~II/III comparison remarks below.}
+
+\section{Setup: the Arnold connection, the KZ functor, BRST resolution}
+\label{sec:climax-platonic-setup}
+
+Four objects enter the comparison: the ordered configuration space
+$\Confnord(\Conf)$ with Arnold's $1$-forms; the universal
+infinitesimal braid Lie algebra $\mathfrak{t}_n$; the chiral bar
+coalgebra $\BarOrd(A)$; and the ghost charge of a quasi-free BRST
+resolution. Each is recalled in the precise form the two comparison
+surfaces require.
+
+\subsection{The Arnold connection}
+\label{ssec:climax-platonic-arnold}
+
+\begin{lemma}[Arnold three-term form identity; \ClaimStatusProvedElsewhere]
+\label{lem:arnold-three-term-forms-platonic}
+For the Arnold part of the climax, $\Conf$ denotes an affine
+genus-$0$ coordinate screen, equivalently a formal disk inside
+$\mathbb{P}^1$, with coordinate~$z$. Let
+$\Confnord(\Conf) = \{(z_1,\dots,z_n) \in \Conf^{n}: z_i \neq z_j\}$
+denote the open configuration space of $n$ ordered distinct points.
+The Arnold $1$-forms on this screen are
+\begin{equation}
+\label{eq:arnold-eta}
+ \eta_{ij} \;=\; \dlog(z_i - z_j)
+ \;\in\; \Omega^{1}\bigl(\Confnord(\Conf)\bigr),
+ \qquad 1 \leq i \neq j \leq n.
+\end{equation}
+This is an Arnold-local affine/formal representative of the
+logarithmic normal form along the diagonal. On a curve it must be
+glued by the coordinate-change cocycle; at positive genus it is
+replaced by the KZB/theta or prime-form representative.
+Arnold's three-term identity reads
+\begin{equation}
+\label{eq:arnold-three-term}
+ \eta_{ij} \wedge \eta_{jk}
+ \;+\; \eta_{jk} \wedge \eta_{ki}
+ \;+\; \eta_{ki} \wedge \eta_{ij}
+ \;=\; 0
+ \quad\text{in }\Omega^{2}\bigl(\Conf_3^{\mathrm{ord}}(\Conf)\bigr),
+\end{equation}
+for every triple of distinct indices.
+\end{lemma}
+
+\begin{proof}[Attribution]
+This is the logarithmic-form relation in Arnold's braid-arrangement
+calculation; the cohomological version and the Arnold--Orlik--Solomon
+attribution are recalled immediately below.
+\end{proof}
+
+\begin{theorem}[Arnold 1969]
+\label{thm:arnold-cohomology-platonic}
+\ClaimStatusProvedElsewhere
+For $\Conf=\mathbb{A}^1$ the de Rham cohomology ring
+$H^{*}(\Confnord(\mathbb{A}^1);\mathbb{C})$ is the
+graded-commutative algebra generated by the classes $[\eta_{ij}]$,
+subject to $\eta_{ij}=\eta_{ji}$, $\eta_{ij}^{2}=0$, and the
+three-term identity~\eqref{eq:arnold-three-term}. On
+$\mathbb{P}^1$ the descended pairwise classes also satisfy the
+projective linear relations
+$\sum_{j\neq i}\bar\eta_{ij}=0$; for positive-genus curves the
+Totaro--K\v{r}\'{\i}\v{z}--Bezrukavnikov model adds the surface
+classes, mixed period relations, and differential
+$d\eta_{ij}=\Delta_{ij}$.
+\end{theorem}
+
+\begin{remark}[Attribution]
+\label{rem:arnold-attribution-platonic}
+Theorem~\ref{thm:arnold-cohomology-platonic} is the Arnold--Orlik--Solomon
+description of the cohomology of complements of hyperplane arrangements
+applied to the braid arrangement on $\mathbb{A}^1$; see Arnold
+(\textit{Mat.\ Zametki}~$5$, $1969$) and Orlik--Solomon
+(\textit{Inventiones}~$56$, $1980$). The projective and positive-genus
+corrections are the genus split of
+Proposition~\ref{prop:arnold-higher-genus}.
+\end{remark}
+
+\begin{definition}[Infinitesimal braid Lie algebra; \ClaimStatusDefinitional]
+\label{def:infinitesimal-braid-lie-algebra-platonic}
+The infinitesimal braid Lie algebra $\mathfrak{t}_n$ is the free
+$\mathbb{Z}$-graded Lie algebra on generators
+$t_{ij} = t_{ji}$ for $1 \leq i \neq j \leq n$ modulo the
+infinitesimal braid relations
+\begin{equation}
+\label{eq:inf-braid-relations}
+ [t_{ij}, t_{kl}] = 0 \quad \text{when } \{i,j\} \cap \{k,l\} = \emptyset,
+ \qquad
+ [t_{ij},\, t_{ik} + t_{jk}] = 0 \quad \text{for distinct } i,j,k.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Arnold's universal KZ connection; \ClaimStatusDefinitional]
+\label{def:arnold-universal-kz-connection-platonic}
+\emph{Arnold's universal KZ connection} on the trivial
+$U(\mathfrak{t}_n)$\nobreakdash-bundle over $\Confnord(\Conf)$ is
+\begin{equation}
+\label{eq:nabla-arnold}
+ \nabla_{\Arn}
+ \;=\; d \;-\; \sum_{1 \leq i < j \leq n} t_{ij}\,\eta_{ij},
+\end{equation}
+with $\eta_{ij}$ the Arnold $1$-form~\eqref{eq:arnold-eta} and
+$t_{ij} \in \mathfrak{t}_n$ the universal infinitesimal braid generator.
+\end{definition}
+
+\begin{proposition}[Arnold flatness]
+\label{prop:arnold-flatness-platonic}
+\ClaimStatusProvedElsewhere
+The connection $\nabla_{\Arn}$ is flat: $\nabla_{\Arn}^{2} = 0$. Flatness
+is equivalent to the simultaneous vanishing of the three-term
+identity~\eqref{eq:arnold-three-term} and the infinitesimal braid
+relations~\eqref{eq:inf-braid-relations}.
+\end{proposition}
+
+\begin{proof}[Attribution]
+The flatness $\nabla_{\Arn}^{2} = 0$ unpacks to
+$\sum [t_{ij}, t_{kl}]\,\eta_{ij}\wedge\eta_{kl} = 0$, and the
+hypotheses on $t_{ij}$ together with~\eqref{eq:arnold-three-term}
+make every wedge sum vanish. Reference: Kohno (\textit{Annales
+Inst.\ Fourier}~$37$, $1987$), Drinfel'd (\textit{Algebra i
+Analiz}~$2$, $1989$).
+\end{proof}
+
+\subsection{The chiral bar complex $\BarOrd(A)$}
+\label{ssec:climax-platonic-bar}
+
+Let $A$ be an $E_\infty$\nobreakdash-chiral algebra on $\Conf$ in
+the sense of Beilinson--Drinfeld: an augmented unital factorisation
+$D$\nobreakdash-module on $\Conf$ with chiral multiplication
+$\mu \colon j_!(A \boxtimes A)|_{\Conf^{2} \setminus \Delta} \to
+\Delta_{!} A$. Write $\bar A = \ker\epsilon$ for the augmentation ideal.
+
+\begin{definition}[Ordered chiral bar complex]
+\label{def:bar-ord-platonic}
+The \emph{ordered chiral bar coalgebra} of $A$ is the cofree conilpotent
+graded coassociative coalgebra
+\[
+ \BarOrd(A)
+ \;=\; \Tcoalg\bigl(s^{-1}\bar A\bigr)
+ \;=\; \bigoplus_{n \geq 0}\bigl(s^{-1}\bar A\bigr)^{\otimes n},
+\]
+with deconcatenation coproduct, equipped with the bar differential
+$\dbar = d_0 + d_1$ assembled from the augmentation $d_0$ and the
+chiral multiplication $d_1$ via the standard Stasheff--Quillen
+twisting morphism (Vol~I Chapter~\ref{chap:bar-construction}).
+\end{definition}
+
+The bar differential satisfies $\dbar^{2} = 0$.  Its bar--cobar
+comparison with $A$ is recorded in
+Theorem~\ref{thm:theorem-a-platonic-pointer} below for the bar--cobar
+adjoint equivalence on the Koszul locus.
+
+\subsection{The logarithmic KZ comparison datum}
+\label{ssec:climax-platonic-kz-functor}
+
+Arnold's connection is universal for representations of the
+infinitesimal braid Lie algebra.  A chiral algebra enters this
+construction after its collision operators have been shown to define
+such a representation.  This order of construction separates the
+geometric logarithmic forms from the algebraic Borcherds identities.
+
+\begin{definition}[The logarithmic Arnold arena; \ClaimStatusDefinitional]
+\label{def:connconf-platonic}
+For fixed $n$, let $\ConnConf^{\mathrm{Arn,log}}_{\Conf,n}$ be the
+category whose objects are finite-rank dg vector spaces $(V,d_V)$
+equipped with a dg Lie representation
+\(
+ \rho\colon\mathfrak t_n\to\End(V)
+\)
+and the associated logarithmic connection
+\begin{equation}
+\label{eq:nabla-n-form}
+ \nabla_{\rho}
+ =d_V+d_{\mathrm{dR}}
+ -\sum_{1\leq i<j\leq n}\rho(t_{ij})\,\eta_{ij}.
+\end{equation}
+Morphisms are chain maps intertwining the $\mathfrak t_n$ actions.
+The compatible collection over all $n$ is denoted
+$\ConnConf^{\mathrm{Arn,log}}_{\Conf}$.
+\end{definition}
+
+\begin{remark}[Universal coefficient property; \ClaimStatusProvedHere]
+\label{rem:connconf-initial-platonic}
+Every representation $\rho\colon\mathfrak t_n\to\End(V)$ extends
+uniquely to an algebra morphism
+$U(\mathfrak t_n)\to\End(V)$.  Base change of
+$\nabla_{\Arn}$ along this morphism is $\nabla_\rho$.  Thus
+$U(\mathfrak t_n)$ is the universal coefficient algebra for the
+connections in Definition~\ref{def:connconf-platonic}.
+\end{remark}
+
+\begin{proof}
+This is the universal property of the enveloping algebra.  Substitution
+of $t_{ij}\mapsto\rho(t_{ij})$ in~\eqref{eq:nabla-arnold} gives
+\eqref{eq:nabla-n-form}; Proposition~\ref{prop:arnold-flatness-platonic}
+and the dg-intertwining condition give flatness of the total
+superconnection.
+\end{proof}
+
+\begin{construction}[Finite-window KZ datum; \ClaimStatusConditional]
+\label{constr:kz-functor-platonic}
+Let $A$ be an augmented chiral algebra on an affine/formal genus-zero
+screen.  A finite window $(V,n)$ of $\BarOrd(A)$ carries the
+hypothesis package
+\[
+H_{\mathrm{KZ}}(A;V,n)
+=(H_{\mathrm{fin}},H_{\log},H_{\mathrm{Borch}},H_{\mathrm{FM}}),
+\]
+with the following content.
+\begin{enumerate}[label=\textup{(K\arabic*)}]
+\item $H_{\mathrm{fin}}$: $V$ is a finite-rank dg quotient or
+subquotient of the length-$\leq n$ ordered bar complex.
+\item $H_{\log}$: each pairwise collision has a logarithmic residue
+operator $T_{ij}\in\End^0(V)$ commuting with the internal differential.
+\item $H_{\mathrm{Borch}}$: the Borcherds mode identities imply
+\[
+[T_{ij},T_{kl}]=0,
+\qquad
+[T_{ij},T_{ik}+T_{jk}]=0
+\]
+for disjoint pairs and distinct triples, respectively.
+\item $H_{\mathrm{FM}}$: the Fulton--MacPherson boundary-residue
+realization sends the pairwise logarithmic term
+$T_{ij}\eta_{ij}$ to the corresponding collision summand of the bar
+differential.
+\end{enumerate}
+Under this package the assignment $t_{ij}\mapsto T_{ij}$ defines
+\begin{equation}
+\label{eq:r-matrix-from-ope}
+ \widetilde\rho_{A,V,n}\colon\mathfrak t_n\longrightarrow\End(V)
+\end{equation}
+and hence the superconnection
+\begin{equation}
+\label{eq:nabla-of-A}
+ \nabla^{B,0}_{A,V,n}
+ =d_A+d_{\mathrm{dR}}
+ -\sum_{i<j}\widetilde\rho_{A,V,n}(t_{ij})\eta_{ij}.
+\end{equation}
+Functoriality holds for morphisms preserving the finite window and the
+four pieces of $H_{\mathrm{KZ}}$.
+\end{construction}
+
+\begin{computation}[Affine Kac--Moody KZ window; \ClaimStatusProvedElsewhere]
+\label{ex:kz-of-vk-g-platonic}
+Let $\fg$ be simple, let $k\neq-h^\vee$, and let
+$V_1,\ldots,V_n$ be finite-dimensional $\fg$-modules.  The Sugawara
+Ward identity for conformal blocks of $V^k(\fg)$ gives
+\begin{equation}
+\label{eq:r-kz-form-vk-g}
+ \nabla_{\mathrm{KZ}}
+ =d_{\mathrm{dR}}-\frac{1}{k+h^\vee}
+ \sum_{i<j}\Omega_{ij}\,\dlog(z_i-z_j),
+\end{equation}
+where $\Omega=\sum_a I^a\otimes I_a$ for dual bases of an invariant
+form.  The operators
+$T_{ij}=\Omega_{ij}/(k+h^\vee)$ satisfy the infinitesimal braid
+relations, so this conformal-block window is an object of
+$\ConnConf^{\mathrm{Arn,log}}_{\mathbb A^1,n}$.
+\end{computation}
+
+\begin{proof}[Attribution]
+The current OPE fixes the level and invariant form.  The displayed
+connection follows from the Sugawara Ward identity; see
+Knizhnik--Zamolodchikov (1984) and Kohno (1987).  Invariance of
+$\Omega$ gives the infinitesimal braid relations.  The critical level
+$k=-h^\vee$ is precisely the singular Sugawara parameter.
+\end{proof}
+
+\subsection{Quasi-free BRST resolution and ghost charge}
+\label{ssec:climax-platonic-brst}
+
+The modular characteristic $\kappa(A)$ is defined by the genus-one
+curvature of the chiral theory.  A BRST presentation carries a second
+datum: the central charge of its ghost fields.  Their comparison is a
+theorem upon specification of the presentation, conformal vector, and
+normalization map.
+
+Let $\BRSTGaugedChirAlg$ denote the category of pairs $(A, R_{\bullet}
+\twoheadrightarrow A)$ consisting of an augmented unital $E_\infty$-chiral
+algebra $A$ together with a quasi-free BRST resolution
+$R_{\bullet} \to A$ in the homotopical sense: $R_{\bullet}$ is a free
+chiral cdga generated in degrees $\leq 0$ by an augmentation-ideal
+generator system together with a $bc$-ghost system, the
+differential is the BRST charge $Q_{\BRST}$, and the morphism
+$R_{\bullet} \to A$ is a quasi-isomorphism.
+
+For each fermionic $bc$ pair of weights $(\lambda,1-\lambda)$, the
+central charge is
+$c_{\bc}(\lambda)=1-3(2\lambda-1)^2$.  For each bosonic
+$\beta\gamma$ pair with the same weights, the central charge is
+$c_{\beta\gamma}(\lambda)
+= 2(6\lambda^{2} - 6\lambda + 1)$; the sign reverses
+relative to $bc$. The total ghost charge of $R_{\bullet}$ is
+\begin{equation}
+\label{eq:c-ghost-formula}
+ \cghost(R_{\bullet})
+ \;=\; \sum_{\text{$bc$ pairs}} c_{\bc}(\lambda_{\alpha})
+ \;+\; \sum_{\text{$\beta\gamma$ systems}} c_{\beta\gamma}(\lambda_{\beta}).
+\end{equation}
+
+\begin{remark}[Statistics and conformal weight]
+\label{rem:bc-vs-bg-platonic}
+Statistics and conformal weight are separate entries.  The $bc$
+system is odd and the $\beta\gamma$ system is even for every value of
+$\lambda$.  At $\lambda=2$ their central charges are $-26$ and $+26$,
+respectively.  A BRST comparison therefore records both the conformal
+vector and the parity of each field.
+\end{remark}
+
+\section{Two typed comparison surfaces}
+\label{sec:climax-platonic-two-equations}
+
+The operator-valued comparison and the scalar list have different
+type signatures.  Their hypotheses are recorded independently.
+
+\subsection{Equation~(G2): bar differential is pullback of Arnold}
+\label{ssec:climax-platonic-equation-g2}
+
+Assume $H_{\mathrm{KZ}}(A;V,n)$.  The collision operators define a
+representation of $\mathfrak t_n$, and the finite-window bar
+superconnection is the corresponding base change of Arnold's
+operator-valued connection.  Applying the Fulton--MacPherson residue
+realization gives the collision part of~$\dbar$.
+
+\begin{definition}[The pullback identity, structural form; \ClaimStatusDefinitional]
+\label{def:pullback-identity-structural-platonic}
+The \emph{pullback identity} for the datum $(A;V,n,H_{\mathrm{KZ}})$
+on an affine/formal genus-zero collision screen is
+\begin{equation}
+\label{eq:climax-equation-G2}
+\nabla^{B,0}_{A,V,n}
+=d_A+d_{\mathrm{dR}}
+-\sum_{i<j}\widetilde\rho_{A,V,n}(t_{ij})\,\eta_{ij}
+=\KZ_{A,V,n}^{*}(\nabla_{\Arn}),
+\end{equation}
+where $\KZ_{A,V,n}$ denotes base change along
+$U(\mathfrak t_n)\to\End(V)$.  The chain differential $\dbar$ is the
+FM-boundary residue realization of this superconnection under
+$H_{\mathrm{FM}}$.
+\end{definition}
+
+\subsection{Equation~(G3): the scalar type signature}
+\label{ssec:climax-platonic-equation-g3}
+
+\begin{definition}[Scalar invariants and their ambients;
+\ClaimStatusDefinitional]
+\label{def:ghost-identity-structural-platonic}
+For a chiral algebra $A$ with a specified companion $A^!$, a specified
+BRST complex $R_\bullet$, a lattice $L$ of signature $(c_+,c_-)$,
+and a Borcherds product $\Phi$, set
+\begin{equation}
+\label{eq:climax-equation-G3}
+ \mathscr S(A,R_\bullet,L,\Phi)
+ :=\left(
+ \underbrace{c(A)+c(A^!)}_{K^c(A)},\;
+ \underbrace{\kappa(A)+\kappa(A^!)}_{K^\kappa(A)},\;
+ \underbrace{c_{\mathrm{gh}}(R_\bullet)}_{\text{BRST presentation}},\;
+ \underbrace{2c_+(L)}_{K^{\mathrm{lat}}(L)},\;
+ \underbrace{\operatorname{wt}(\Phi)}_{\kappa_{\mathrm{BKM}}(\Phi)}
+ \right).
+\end{equation}
+The first two entries are invariants of a named chiral companion pair;
+the third belongs to a chosen BRST presentation; the fourth is lattice
+arithmetic; the fifth is an automorphic weight.  A comparison theorem
+between two entries specifies the objects, the normalization, and its
+hypothesis package.
+\end{definition}
+
+For a chosen scalar normalization $\alpha_R\in\mathbb Q$, the BRST
+comparison obstruction is
+\[
+ \Gamma_{\mathrm{gh}}(A,R_\bullet;\alpha_R)
+ :=\kappa(A)+\alpha_R c_{\mathrm{gh}}(R_\bullet).
+\]
+Its vanishing is a family theorem about the displayed presentation.
+
+\section{The comparison theorem}
+\label{sec:climax-platonic-climax-theorem}
+
+\begin{theorem}[Arnold comparison and scalar companion values]
+\label{thm:climax-vol1-platonic}
+\ClaimStatusConditional
+The following statements have the indicated type signatures.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Arnold window.}  For every datum
+$(A;V,n,H_{\mathrm{KZ}})$, the representation
+$\widetilde\rho_{A,V,n}$ defines a functor
+\begin{equation}
+\label{eq:KZ-functor-signature-platonic}
+ \KZ_{(-;V,n)}\colon
+ \ChirAlg^{H_{\mathrm{KZ}}}_{\mathbb P^1;V,n}
+ \longrightarrow
+ \ConnConf^{\mathrm{Arn,log}}_{\mathbb P^1,n}
+\end{equation}
+and Equation~\eqref{eq:climax-equation-G2}.  The
+Fulton--MacPherson residue realization is the bar-differential
+comparison.
+
+\item \emph{Scalar companion values.}  On the named companion pairs
+and hypothesis packages of Chapter~\ref{ch:landscape-census},
+\begin{equation}
+\label{eq:climax-scalar-companion-values}
+ K^\kappa(A)\in\left\{0,13,\frac{250}{3}\right\}.
+\end{equation}
+The value $0$ occurs on the Heisenberg, affine, and
+$\beta\gamma/bc$ pairs; $13$ occurs on the Virasoro pair; and
+$250/3$ occurs on the principal $\mathcal W_3$ pair.
+
+\item \emph{Bershadsky--Polyakov central identity.}  In the
+Fehily--Kawasetsu--Ridout conformal convention,
+\begin{equation}
+\label{eq:climax-bp-central-lane}
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3},
+\qquad
+K^c_{\mathrm{BP}}=c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\end{equation}
+The generators $J,G^+,G^-,T$ are even.  The value of
+$K^\kappa_{\mathrm{BP}}$ has status \ClaimStatusOpen{} pending the
+genus-one curvature calculation of
+Proposition~\ref{prop:bp-kappa}.
+
+\item \emph{Mukai lattice invariant.}  The integral Mukai lattice has
+signature $(4,20)$, hence
+\begin{equation}
+\label{eq:climax-mukai-lattice-lane}
+K^{\mathrm{lat}}\bigl(\widetilde H(K3,\mathbb Z)\bigr)
+=2c_+=8.
+\end{equation}
+The chiral bridge
+$K^\kappa(A_{\mathrm{Muk}})=8$ has status
+\ClaimStatusConjectured{} under
+$H_{\mathsf B}=(H_{\mathrm{chart}},H_{\mathrm{KD}},H_{\mathrm{scalar}},
+H_{\mathrm{mod}},H_{\mathrm{quantum}})$.
+
+\item \emph{Ghost contribution.}  Every equality involving
+$c_{\mathrm{gh}}(R_\bullet)$ is indexed by the BRST presentation and
+its normalization $\alpha_R$.  Its exact theorem statement is
+$\Gamma_{\mathrm{gh}}(A,R_\bullet;\alpha_R)=0$ on the family where
+that comparison has been computed.
+
+\item \emph{Five theorem pointers.}  Theorems A, B, C, D, H retain
+the separate ambients and hypothesis packages recorded in
+Theorems~\ref{thm:theorem-a-platonic-pointer}--%
+\ref{thm:theorem-h-platonic-pointer}.  The present theorem supplies
+notation and comparison data for those statements.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\label{prf:climax-vol1-platonic}
+Clause~(i) is the enveloping-algebra universal property together with
+$H_{\mathrm{Borch}}$ and $H_{\mathrm{FM}}$.  Clause~(ii) is the
+family-by-family computation of
+Chapter~\ref{ch:landscape-census}.  Clause~(iii) is
+Theorem~\ref{thm:bp-koszul-conductor-polynomial} and
+Proposition~\ref{prop:bp-kappa}.  Clause~(iv) is the integral-lattice
+calculation of
+Proposition~\ref{prop:lattice-k3-mukai-lane-separation}; the five
+unproved comparison steps are exactly the components of
+$H_{\mathsf B}$ in
+Proposition~\ref{prop:G-B-heisenberg-rho-bifurcation}.  Clause~(v) is
+the definition of $\Gamma_{\mathrm{gh}}$.  Clause~(vi) is the pointer
+block below.
+\end{proof}
+
+\section{Verification architecture for the Arnold window}
+\label{sec:climax-platonic-proof-architecture}
+
+Four classical constructions illuminate different parts of the
+Arnold window.  Fulton--MacPherson residues provide the chain map;
+Kohno identifies the affine monodromy; Drinfeld supplies associator
+coherence; the direct commutator computation verifies flatness after
+the infinitesimal braid representation has been constructed.  They
+overlap on a common finite window, and each proves its own link in
+the comparison chain.
+
+\subsection{Path~A: Fulton--MacPherson residues}
+\label{ssec:climax-platonic-path-A-fm}
+
+The first path is purely geometric. The chiral bar differential is
+extracted from the Fulton--MacPherson compactification
+$\overline{\mathrm{FM}}_n^{\mathrm{ord}}(\Conf)$ via residue maps at
+the codimension-one boundary divisors corresponding to two-point
+collisions.
+
+\begin{lemma}[FM residue presentation of the collision differential]
+\label{lem:fm-residue-dbar-platonic}
+\ClaimStatusConditional
+In the logarithmic Fulton--MacPherson model used in
+Chapter~\ref{chap:bar-construction}, the collision component of the
+ordered chiral bar differential at length $n$ is the signed sum over
+pairs $(i,j)$ of the residue map
+$\Res_{\Delta_{ij}} \colon \Omega^{n}\bigl(\Confnord(\Conf), A^{\boxtimes n}\bigr)
+\to \Omega^{n-1}\bigl(\Conf_{n-1}^{\mathrm{ord}}(\Conf), A^{\boxtimes(n-1)}\bigr)$
+applied to the logarithmic OPE residue at $\Delta_{ij}$.  The
+augmentation and internal-differential components retain their usual
+bar-complex definitions.
+\end{lemma}
+
+\begin{proof}[Attribution]
+The factorization homology differential is assembled from collision
+maps.  The logarithmic compactification identifies the binary
+collision map with Poincar\'e residue; see
+Chapter~\ref{chap:bar-construction} for the model and
+Beilinson--Drinfeld (2004, \S4.2) for the factorization construction.
+\end{proof}
+
+\begin{lemma}[Pullback presentation under $H_{\mathrm{KZ}}$]
+\label{lem:pullback-presentation-nabla-platonic}
+\ClaimStatusConditional
+Assume $H_{\mathrm{KZ}}(A;V,n)$.  The connection
+$\nabla^{B,0}_{A,V,n}$ is the base change of $\nabla_{\Arn}$ along
+$\widetilde\rho_{A,V,n}$, and its FM-boundary residue realization is
+the collision differential on~$V$.
+\end{lemma}
+
+\begin{proof}
+$H_{\mathrm{Borch}}$ makes
+$t_{ij}\mapsto T_{ij}$ a representation of $\mathfrak t_n$.
+Remark~\ref{rem:connconf-initial-platonic} gives the base-change
+identity.  $H_{\mathrm{FM}}$ identifies the residue of
+$T_{ij}\eta_{ij}$ with the $(i,j)$ collision summand.  Summing over
+pairs gives the asserted collision differential.
+\end{proof}
+
+\begin{lemma}[Triple-collision commutator; \ClaimStatusConditional]
+\label{lem:triple-collision-cybe-platonic}
+Under $H_{\mathrm{Borch}}$, the logarithmic collision operators satisfy
+\begin{equation}
+\label{eq:cybe-on-r}
+ [T_{ij},T_{ik}+T_{jk}]=0,
+\end{equation}
+for every triple of distinct indices.
+\end{lemma}
+
+\begin{proof}
+This is the shared-index clause of $H_{\mathrm{Borch}}$.  In the
+flatness calculation, Arnold's three-term relation cancels the
+logarithmic two-form coefficients, while the simple-pole projection of
+the Borcherds identity cancels the operator coefficients.
+\end{proof}
+
+\begin{remark}[Closure of Path~A]
+\label{rem:path-A-closure-platonic}
+Lemmas~\ref{lem:fm-residue-dbar-platonic} and
+\ref{lem:pullback-presentation-nabla-platonic} establish
+Equation~\eqref{eq:climax-equation-G2} for the finite window carrying
+$H_{\mathrm{KZ}}$.  The residue-realization functor then recovers its
+collision differential.
+\end{remark}
+
+\subsection{Path~B: Kohno monodromy}
+\label{ssec:climax-platonic-path-B-kohno}
+
+The second path is representation-theoretic and computes the
+monodromy of $\nabla(A)$ in evaluation modules.
+
+\begin{theorem}[Kohno 1987]
+\label{thm:kohno-monodromy-platonic}
+\ClaimStatusProvedElsewhere
+For $A = V^{k}(\fg)$ with $\fg$ simple and $k\neq-h^\vee$, the
+monodromy of the KZ connection on evaluation modules
+$V_1 \otimes \cdots \otimes V_n$ is the quantum-group braid
+representation of $U_{q}(\fg)$ at
+$q=\exp(\pi i/(k+h^\vee))$ in the convention $K_i=q^{h_i}$.
+The convention $q_{\mathrm{alt}}=q^2$ gives the frequently used
+$\exp(2\pi i/(k+h^\vee))$ parameter.
+\end{theorem}
+
+\begin{proof}[Attribution]
+Kohno (\textit{Annales Inst.\ Fourier}~$37$, $1987$) for the genus-zero
+KZ monodromy; Drinfel'd (\textit{Algebra i Analiz}~$2$, $1989$) for
+the associator construction; Kazhdan--Lusztig
+(\textit{J.\ Amer.\ Math.\ Soc.}~$6$--$7$, $1993$--$1994$) for the
+type-A category equivalence. See also Vol~I Section~\ref{sec:derived-dk}.
+\end{proof}
+
+\begin{remark}[Closure of Path~B for affine input]
+\label{rem:path-B-closure-platonic}
+Theorem~\ref{thm:kohno-monodromy-platonic} computes the monodromy of
+the affine Arnold window.  It verifies the representation-theoretic
+output of Equation~\eqref{eq:climax-equation-G2}; the FM residue
+comparison remains the chain-level input supplied by
+$H_{\mathrm{FM}}$.
+\end{remark}
+
+\subsection{Path~C: Drinfeld associator}
+\label{ssec:climax-platonic-path-C-drinfeld}
+
+The third path is analytic and computes Arnold's monodromy via
+iterated integrals. The Drinfeld associator $\Phi_{\KZ} \in U(\mathfrak{t}_3)
+[[\hbar]]$ is the universal monodromy element for $\nabla_{\Arn}$ at
+$n = 3$, controlling the failure of strict associativity at triple
+collisions.
+
+\begin{theorem}[Drinfeld $1989$]
+\label{thm:drinfeld-associator-platonic}
+\ClaimStatusProvedElsewhere
+The monodromy of $\nabla_{\Arn}$ on $\Conf_3^{\mathrm{ord}}(\mathbb{C})$
+through the iterated-integral construction equals the Drinfeld
+associator $\Phi_{\KZ}$, satisfying the pentagon and hexagon coherence
+identities and the duality relation
+$\Phi_{\KZ}(t_{12}, t_{23})\,\Phi_{\KZ}(t_{23}, t_{12}) = 1$.
+\end{theorem}
+
+\begin{proof}[Attribution]
+Drinfel'd (\textit{Algebra i Analiz}~$2$, $1989$, $\S 4$). See also
+Bar-Natan (\textit{Selecta Math.}~$4$, $1998$) for an explicit
+combinatorial presentation.
+\end{proof}
+
+\begin{remark}[Closure of Path~C]
+\label{rem:path-C-closure-platonic}
+For every $\mathfrak t_3$ representation, base change sends
+$\Phi_{\KZ}$ to the associativity constraint of its KZ monodromy.
+Thus the associator controls the triple-collision coherence of every
+finite window satisfying $H_{\mathrm{KZ}}$.
+\end{remark}
+
+\subsection{Path~D: direct chain-level Yang--Baxter}
+\label{ssec:climax-platonic-path-D-direct}
+
+The fourth calculation expands the square of the logarithmic
+superconnection and isolates its codimension-two components.
+
+\begin{proposition}[Codimension-two flatness criterion]
+\label{prop:cybe-equivalence-platonic}
+\ClaimStatusConditional
+Let $(A;V,n)$ satisfy $H_{\mathrm{fin}}$ and $H_{\log}$.  The
+connection~\eqref{eq:nabla-of-A} is flat precisely when the operators
+$T_{ij}$ satisfy the infinitesimal braid relations.  Under
+$H_{\mathrm{FM}}$, this flatness calculation maps to the
+codimension-two collision component of $\dbar^2|_V=0$.
+\end{proposition}
+
+\begin{proof}
+Expand the square of
+$d_V+d_{\mathrm{dR}}-\sum T_{ij}\eta_{ij}$.  The dg-intertwining
+condition removes the terms containing $d_V$.  Disjoint divisors give
+$[T_{ij},T_{kl}]$, killed by the disjoint-pair infinitesimal
+braid relation; shared-index divisors give
+$[T_{ij},T_{ik}+T_{jk}]$ after Arnold's three-term form identity.
+The simple-pole projection of the Borcherds identity supplies the
+operator relation at a shared-index collision.  These coefficients
+vanish exactly under the infinitesimal braid relations.
+$H_{\mathrm{FM}}$ transports the calculation to the collision
+summand of the bar square.
+\end{proof}
+
+\section{Classical comparison theorems}
+\label{sec:climax-platonic-classical-specialisations}
+
+The Arnold window directly contains Drinfeld--Kohno.  Verlinde and
+Borcherds belong to additional modular and automorphic structures;
+their precise relation to the ordered bar is recorded separately.
+
+\subsection{Drinfeld--Kohno: affine Kac--Moody at evaluation modules}
+\label{ssec:climax-platonic-cor-DK}
+
+\begin{corollary}[Affine Arnold window and Drinfeld--Kohno]
+\label{cor:climax-drinfeld-kohno-platonic}
+\ClaimStatusProvedElsewhere
+For $A = V^{k}(\fg)$ at generic level $k$ and $\fg$ simple, the
+monodromy representation of $\nabla_{\mathrm{KZ}}$ on evaluation modules
+$V_1, \dots, V_n$ equals the quantum-group braid representation
+$\rho_n^{U_q(\fg)}$ at $q=\exp(\pi i/(k+h^\vee))$ in the
+$K_i=q^{h_i}$ convention:
+\begin{equation}
+\label{eq:climax-drinfeld-kohno-platonic}
+ \rho_n^{\KZ}(V_1,\dots,V_n)
+ \;=\; \rho_n^{U_q(\fg)}(V_1,\dots,V_n).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+By Computation~\ref{ex:kz-of-vk-g-platonic}, the connection coefficient
+in KZ normalisation is $\Omega_{ij}/((k+\hv)\,z_{ij})$;
+hence the displayed connection is the standard KZ connection. By
+Theorem~\ref{thm:kohno-monodromy-platonic}, its monodromy on
+evaluation modules is $\rho_n^{U_q(\fg)}$ at the displayed~$q$.
+\end{proof}
+
+\subsection{Verlinde: rational chiral algebra at genus zero}
+\label{ssec:climax-platonic-cor-Verlinde}
+
+\begin{corollary}[Verlinde formula on a modular tensor category]
+\label{cor:climax-verlinde-platonic}
+\ClaimStatusProvedElsewhere
+Let $A$ satisfy the rationality, $C_2$-cofiniteness, self-contragredience,
+and semisimplicity hypotheses that make its module category modular.
+Then the
+fusion coefficients $N_{ij}^{k}$ are diagonalised by $S$:
+\begin{equation}
+\label{eq:climax-verlinde-platonic}
+ N_{ij}^{k}
+ \;=\; \sum_{\ell}
+ \frac{S_{i\ell}\,S_{j\ell}\,(S^{-1})_{\ell k}}{S_{0\ell}}.
+\end{equation}
+For a unitary modular tensor category,
+$(S^{-1})_{\ell k}=\overline{S_{k\ell}}$.
+\end{corollary}
+
+\begin{proof}
+This is the Verlinde theorem for the modular tensor category of
+$A$-modules.  The genus-zero braid connection and the genus-one
+$S$-matrix are joined by the sewing and modularity theorems of the
+rational theory; those hypotheses supply the additional structure
+beyond $H_{\mathrm{KZ}}$.
+\end{proof}
+
+\subsection{Borcherds: lattice vertex algebra at genus one}
+\label{ssec:climax-platonic-cor-Borcherds}
+
+\begin{remark}[Borcherds comparison obligation]
+\label{cor:climax-borcherds-platonic}
+\ClaimStatusOpen
+Borcherds' multiplicative lift constructs automorphic products from
+vector-valued modular or Jacobi input.  A comparison with
+$H^\bullet(\BarOrd(V_\Lambda))$ requires a trace theorem identifying
+the relevant Fourier coefficients with the Euler characteristics of
+the completed bar complex.  That trace theorem is the named open
+obligation for this comparison.  The proved automorphic statement remains
+the Borcherds product theorem itself.
+\end{remark}
+
+\subsection{Arnold's KZ-monodromy theorem as the common root}
+\label{ssec:climax-platonic-cor-Arnold}
+
+\begin{corollary}[Arnold universal coefficient map]
+\label{cor:climax-arnold-common-root-platonic}
+\ClaimStatusProvedHere
+Every finite window satisfying $H_{\mathrm{KZ}}$ carries the algebra
+map
+\begin{equation}
+\label{eq:four-shadows-platonic}
+ U(\mathfrak t_n)\longrightarrow\End(V),
+ \qquad t_{ij}\longmapsto T_{ij},
+\end{equation}
+and its monodromy is the corresponding specialization of Arnold's
+pure-braid representation.
+\end{corollary}
+
+\begin{proof}
+This is Remark~\ref{rem:connconf-initial-platonic} applied to
+$\widetilde\rho_{A,V,n}$.
+\end{proof}
+
+\section{Five Vol~I theorem pointers}
+\label{sec:climax-platonic-five-theorems-corollaries}
+
+Theorems A, B, C, D, H retain distinct inputs and reconstruction
+maps.  The present chapter fixes the common notation used by their
+comparison maps.  A concerns the bar--cobar adjunction; B concerns
+strict and completed inversion; C concerns Verdier complementarity and
+its typed scalar projections; D concerns modular pushforward; H
+concerns the chiral derived centre.  For a finite set
+$S\subset\mathbb Z$, the Theorem~H package $H_H(\cA;S)$ consists of a
+complete chart-cochain model and incidence-compatible strong
+deformation retract onto a complex supported in $S$.  The pointers
+below name the chapters where each theorem is stated and proved in
+its native form; the corresponding pointer remark identifies the
+categorical direction being read.
+
+\begin{theorem}[Theorem~A: chiral bar--cobar adjunction, pointer]
+\label{thm:theorem-a-platonic-pointer}
+\ClaimStatusConditional
+\textup{[Type signature: Open quadrant; augmented factorization
+presentation; Beilinson levels \(1\leftrightarrow2\);
+pro-nilpotent chiral Ran ambient;
+\(H_A=H_{\mathrm{fact}}\cup H_{\mathrm{conv}}\).]}
+On the stable factorization ambient specified by \(H_A\), chiral
+cobar and bar form the adjunction
+\[
+ \boldsymbol\Omega_X
+ :
+ \mathsf{FactCoalg}_X^{\mathrm{conil,comp}}
+ \rightleftarrows
+ \mathsf{FactAlg}_X^{\mathrm{aug}}
+ :
+ \mathbf B_X,
+ \qquad
+ \boldsymbol\Omega_X\dashv\mathbf B_X.
+\]
+Its chain realization has counit
+\[
+ \psi_\cA\colon
+ \Omega^{\mathrm{ch}}\bar B^{\mathrm{ch}}(\cA)\longrightarrow\cA
+\]
+induced by the universal twisting morphism.  On the quadratic chiral
+presentation, let
+$\tau_{\mathrm i}\colon\cA^i\to\cA$ be the canonical twisting
+morphism.  Priddy's coalgebra carries the additional map
+\[
+ q_\cA\colon\cA^i\longrightarrow B_X(\cA),
+\]
+which is an equivalence under
+$H_{\mathrm{CL}}(\cA,\cA^i,\tau_{\mathrm i})$.  This quadratic
+comparison is separate from the full bar--cobar unit and counit.
+\end{theorem}
+
+\begin{proposition}[Chain and presentable-\((\infty,1)\) readouts]
+\label{prop:theorem-a-dual-lane-local-readout}
+\ClaimStatusConditional
+Under \(H_A\), the chain counit \(\psi_\cA\) is the model-level
+realization of the presentable-\((\infty,1)\) counit
+\(\boldsymbol\Omega_X\mathbf B_X(\cA)\to\cA\).
+The model/realization package supplies a natural comparison between
+these maps and asserts its compatibility with the Ran completion and
+factorization structure.
+\end{proposition}
+
+\begin{proof}
+The universal twisting morphism gives the chain adjunction.  The
+enhanced bar--cobar theorem in the pro-nilpotent Ran ambient gives the
+categorical counit, and the clauses of $H_{\mathrm{fact}}$ restrict it
+to the factorization subcategory.  Naturality of the realization
+comparison identifies the two representatives.
+\end{proof}
+
+\begin{theorem}[Theorem~B: strict and completed inversion, pointer]
+\label{thm:theorem-b-platonic-pointer}
+\ClaimStatusConditional
+\textup{[Type signature: Open quadrant; chiral CDG presentation;
+Beilinson level \(2\); strict package \(H_B^{\mathrm{str}}\) or
+completed package \(H_B^{\mathrm{comp}}\).]}
+Theorem~B has two theorem surfaces.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Under \(H_B^{\mathrm{str}}\), the counit
+\[
+ \Omega_X^{\mathrm{ch}}\bar B_X^{\mathrm{ch}}(\cA)
+ \longrightarrow \cA
+\]
+is a chain quasi-isomorphism
+(Theorems~\ref{thm:higher-genus-inversion} and
+\ref{thm:bar-cobar-inversion-qi}).
+
+\item Under \(H_B^{\mathrm{comp}}\), let
+\(\widehat C=\widehat{\bar B}^{\mathrm{ch}}(\cA)\) be the
+weight-complete conilpotent chiral CDG coalgebra.  The continuous
+co-/contra-derived comparison is
+\[
+ D^{\mathrm{co}}\!\left(
+ \widehat C\text{-}\mathrm{comod}^{\mathrm{conil,ch}}\right)
+ \simeq
+ D^{\mathrm{ctr}}\!\left(
+ \widehat C\text{-}\mathrm{contra}^{\mathrm{ch}}\right)
+\]
+(Theorem~\ref{thm:chiral-positselski-weight-completed}).
+The curved structure is interpreted in the second-kind derived
+categories, and its comparison morphisms are inverted through
+coacyclic cones.
+\end{enumerate}
+The strict and completed packages specify distinct categories and
+distinct notions of equivalence.
+\end{theorem}
+
+
+\begin{theorem}[Theorem~C: complementarity and typed scalar projections]
+\label{thm:theorem-c-platonic-pointer}
+\ClaimStatusConditional
+Theorem~C has a strict-flat centre-local-system core and a
+family-indexed scalar readout.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Centre-local-system complementarity.}
+Under the C0/C1 hypothesis package of
+Theorem~\ref{thm:quantum-complementarity-main}, Verdier duality gives
+the eigenspace decomposition and Lagrangian pairing
+\[
+ \mathbf C_g(\cA)
+ \simeq
+ \mathbf Q_g(\cA)\oplus\mathbf Q_g(\cA^!).
+\]
+Here
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$
+uses the ordinary centre local system obtained from the strict-flat C0
+comparison.  The Theorem~H derived centre connects to this coefficient
+system through a supplied $\iota_Z^{\mathrm{der}}$, followed by~$H^0$
+and C0.
+The shifted-symplectic BV extension carries the additional C2 package
+of Theorem~\ref{thm:shifted-symplectic-complementarity}.
+
+\item \emph{Computed modular conductors.}
+For the named companion pairs in the canonical census,
+\[
+ K^\kappa(\cA)=\kappa(\cA)+\kappa(\cA^!)
+ \in
+ \left\{0,\ 13,\ \frac{250}{3}\right\}.
+\]
+The three values are realized by the Heisenberg/affine/free-field
+pairs, the Virasoro pair, and the principal \(\mathcal W_3\) pair,
+respectively.  Each row carries the duality package displayed in
+Chapter~\ref{ch:landscape-census}.
+
+\item \emph{Bershadsky--Polyakov.}
+The standard Fehily--Kawasetsu--Ridout conformal vector gives the
+proved central-charge conductor
+\[
+ K^c_{\mathrm{BP}}
+ =c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\]
+The generators \(J,G^+,G^-,T\) are even.  The modular entries
+\(\kappa_{\mathrm{BP}}\) and \(K^\kappa_{\mathrm{BP}}\) have status
+\ClaimStatusOpen{} pending the direct genus-one curvature computation
+of Proposition~\ref{prop:bp-kappa}.  Secondary conformal-vector
+normalizations form a separate family whose genus-one transformation
+law remains to be proved.
+
+\item \emph{Mukai lattice candidate.}
+The proved lattice invariant is
+\[
+ K^{\mathrm{lat}}\bigl(\widetilde H(K3,\mathbb Z)\bigr)
+ =2c_+=8.
+\]
+Its interpretation as
+\(K^\kappa(A_{\mathrm{Muk}})=8\) has status
+\ClaimStatusConjectured{} under
+\[
+ H_{\mathsf B}
+ =(H_{\mathrm{chart}},H_{\mathrm{KD}},H_{\mathrm{scalar}},
+   H_{\mathrm{mod}},H_{\mathrm{quantum}}).
+\]
+Equation~\eqref{eq:climax-scalar-companion-values} therefore contains
+three computed values; adjoining the \(H_{\mathsf B}\)-candidate gives
+the conditional numerical set \(\{0,8,13,250/3\}\).
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[The Mukai arithmetic and its chiral bridge]
+\label{rem:climax-k3-face}
+The integral Mukai lattice of a complex K3 surface is
+\[
+ \widetilde H(K3,\mathbb Z)
+ =
+ H^0(K3,\mathbb Z)\oplus H^2(K3,\mathbb Z)\oplus H^4(K3,\mathbb Z)
+ \simeq U^4\oplus E_8(-1)^2.
+\]
+It has rank \(24\) and signature \((4,20)\).  Consequently
+\(c_+=4\) and \(2c_+=8\).  This calculation is a theorem of integral
+lattice theory.
+
+The proposed chiral reading requires all five maps in
+\(H_{\mathsf B}\).  Here \(H_{\mathrm{chart}}\) constructs an augmented
+chiral chart from the indefinite lattice,
+\(H_{\mathrm{KD}}\) proves its bar comparison and identifies the
+Koszul companion, \(H_{\mathrm{scalar}}\) identifies the modular pair
+sum with \(2c_+\), \(H_{\mathrm{mod}}\) constructs the
+Humbert--Borcherds comparison, and \(H_{\mathrm{quantum}}\) constructs
+a functor selecting a root order.  Thus the equation
+\(K^\kappa(A_{\mathrm{Muk}})=8\) is a precise five-obligation
+conjecture.
+
+Bruinier (2002, Lemma~5.1) supplies a coefficient-field statement for
+vector-valued modular forms, with \(\operatorname{lcm}(N,8)\) in the
+half-integral-weight case.  Lusztig (1990) constructs quantum groups
+at a chosen admissible root order.  These are ambient inputs for
+\(H_{\mathrm{mod}}\) and \(H_{\mathrm{quantum}}\); the comparison maps
+themselves remain the open mathematics.
+\end{remark}
+
+\begin{remark}[K3 Hall--Drinfeld recognition obligations]
+\label{rem:k3-koszul-structure-precise}
+\ClaimStatusOpen
+Let \(\mathbf H_{\Delta_5}\) denote the proposed K3
+Hall--Drinfeld recognition target of Volume~III.  A theorem placing it
+on the strict chiral Koszul surface requires the following data in one
+ambient:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item a constructed factorization or chiral algebra with specified
+generators, relations, parity, completion, and coproduct;
+\item a PBW theorem determining the full relation ideal of the
+Hall/CoHA presentation;
+\item a conilpotent or weight-complete bar model and an identified
+Verdier companion;
+\item an explicit twisting morphism whose bar--cobar counit is a
+quasi-isomorphism on a named locus;
+\item a modular comparison relating the chiral family to
+\(\Delta_5\), with nearby-cycle data at every asserted Humbert wall.
+\end{enumerate}
+These five constructions form the recognition package
+\(H_{\Delta_5}^{\mathrm{rec}}\).  The BKM denominator theorem for
+\(\Delta_5\) and the Mukai lattice calculation supply arithmetic
+targets; \(H_{\Delta_5}^{\mathrm{rec}}\) supplies the algebraic bridge.
+The present status is \ClaimStatusOpen.
+\end{remark}
+
+
+\begin{theorem}[Theorem~D: deformation, Hodge, and graph traces; pointer]
+\label{thm:theorem-d-platonic-pointer}
+\ClaimStatusConditional
+\textup{[Type signature: Open quadrant; modular-trace and cyclic-graph
+presentations; Beilinson levels \(4\to5\); hypothesis package
+\(H_D=(H_D^1,H_D^K,H_D^{\mathrm{tr}},H_D^{\mathrm{graph}})\).]}
+For \(g\geq2\), the native deformation class is
+\[
+ \operatorname{Obs}^{\mathrm{def}}_g(\cA)
+ \in H^2\!\left(\Def_g(\cA)\right).
+\]
+Under~\(H_D^1(\cA)\), the pointed genus-one class has trace
+\[
+ \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)
+ =\kappa(\cA)\lambda_1.
+\]
+Under~\(H_D^K(\cA,g)\), the scalar virtual object and its Hodge
+image are
+\[
+ \mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g\!\left(\mathfrak O_g^K(\cA)\right)
+ =(-1)^g\kappa(\cA)\lambda_g.
+\]
+The package~\(H_D^{\mathrm{tr}}\) supplies the derived comparison
+from the degree-two deformation class to this perfect virtual object.
+Under~\(H_D^{\mathrm{graph}}(\cA,g)\), the all-weight numerical trace of
+Theorems~\ref{thm:modular-characteristic} and
+\ref{thm:multi-weight-genus-expansion} satisfies
+\[
+ F_g(\cA)
+ =
+ \kappa(\cA)\lambda_g^{\mathrm{FP}}
+ +
+ \delta F_g^{\mathrm{cross}}(\cA).
+\]
+Here \(\delta F_1^{\mathrm{cross}}=0\); the scalar-diagonal graph
+package gives \(\delta F_g^{\mathrm{cross}}=0\) in every genus.
+\end{theorem}
+
+\begin{theorem}[Theorem~H: chiral derived centre, pointer]
+\label{thm:theorem-h-platonic-pointer}
+\ClaimStatusConditional
+\textup{[Type signature: Open/Bulk comparison; chiral Hochschild
+presentation; Beilinson level \(3\); hypothesis package
+\(H_H(\cA;S)\).]}
+The chart cochain object is
+\[
+ \ChirHoch^\bullet(\cA)
+ =
+ C^\bullet_{\mathrm{ch}}(\cA,\cA)
+ =
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\]
+in the chart presentation.  Fix a finite set $S\subset\mathbb Z$.
+The package $H_H(\cA;S)$ constructs a complete filtered model and an
+incidence-compatible strong deformation retract onto an
+$S$-supported complex.  It gives
+\[
+ \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S.
+\]
+Bakalov--De Sole--Kac compute the bounded benchmarks
+$\{0,2,3\}$ for Virasoro and dimension vector $(2,1,0,\ldots)$ for
+the rank-one even free superboson.  Transport from bounded vertex
+cochains to the chiral chart uses a separately named quasi-isomorphism.
+Topological and categorical Hochschild theories retain their typed
+comparison maps.
+\end{theorem}
+
+\begin{remark}[Five theorem packages in one coordinate chart]
+\label{rem:five-corollaries-together-platonic}
+Theorems~\ref{thm:theorem-a-platonic-pointer}--%
+\ref{thm:theorem-h-platonic-pointer} use the same Beilinson levels and
+companion notation.  Their reconstruction maps are, respectively, the
+bar--cobar unit/counit, strict or completed inversion, Verdier
+complementarity, modular pushforward, and the chiral derived-centre
+comparison.  The common coordinate chart preserves the five native
+proofs.
+\end{remark}
+
+
+\section{Open comparison obligations \(\Pi_1\)--\(\Pi_4\)}
+\label{sec:climax-platonic-open-obstructions}
+
+The four obligations below enlarge a proved input by one named
+construction.  Each is stated in the ambient where that construction
+must live.
+
+\begin{conjecture}[\(\Pi_1\): elliptic and higher-genus residue comparison]
+\label{conj:climax-kzb-genus-one-platonic}
+\ClaimStatusConjectured
+For an elliptic curve \(E_\tau\), let
+\begin{equation}
+\label{eq:nabla-kzb-platonic}
+ \nabla_{\mathrm{KZB}}
+ =
+ d-\sum_{i<j}t_{ij}\,\eta^{(1)}_{ij}(\tau,z_{ij})
+ +\text{the standard dynamical/Cartan term}
+\end{equation}
+denote an elliptic KZB connection in a fixed convention.  An elliptic
+analogue of Equation~\eqref{eq:climax-equation-G2} requires a package
+\(H_{\mathrm{KZB}}\) consisting of an elliptic bar model, a global
+propagator and dynamical term, collision operators satisfying the
+elliptic braid relations, and a residue comparison compatible with
+degeneration.  Calaque--Enriquez--Etingof construct universal KZB
+connections; \(H_{\mathrm{KZB}}\) is the additional chiral-bar
+comparison.
+\end{conjecture}
+
+\begin{conjecture}[\(\Pi_2\): principal-\(\mathcal W\) collision operators]
+\label{conj:climax-w-arena-platonic}
+\ClaimStatusConjectured
+For a principal \(\mathcal W^k(\mathfrak g)\), a KZ-type bar window
+requires explicit logarithmic collision operators on a finite bar
+model and a proof of the infinitesimal braid relations from the
+screening or BRST presentation.  The package
+\(H_{\mathcal W\mathrm{KZ}}\) consists of those operators, their
+functoriality, and the FM residue comparison.  Principal screening
+complexes provide the natural source of the construction.
+\end{conjecture}
+
+\begin{conjecture}[\(\Pi_3\): functorial BRST comparison]
+\label{conj:climax-universal-brst-platonic}
+\ClaimStatusConjectured
+Let \(\mathcal C_{\mathrm{BRST}}\) be a specified subcategory of chiral
+algebras equipped with chosen reduction data.  The desired
+construction is a functor
+\[
+ \mathsf R_{\mathrm{BRST}}\colon
+ \mathcal C_{\mathrm{BRST}}\longrightarrow
+ \mathsf{BRSTGaugedChirAlg}
+\]
+together with a natural normalization
+\(\alpha_R\) and a proof that
+\(\Gamma_{\mathrm{gh}}(A,R_\bullet;\alpha_R)=0\) on each connected
+family.  Non-principal reductions require the charged, neutral, and
+conformal-improvement sectors in the same genus-one calculation.
+Bershadsky--Polyakov is the first open test.
+\end{conjecture}
+
+\begin{conjecture}[\(\Pi_4\): chiral--Borcherds trace comparison]
+\label{conj:climax-universal-trace-identity-platonic}
+\ClaimStatusConjectured
+For a Borcherds product \(\Phi_N\), the automorphic theorem gives
+\[
+ \kappa_{\mathrm{BKM}}(\Phi_N)
+ =\operatorname{wt}(\Phi_N)
+ =\frac{c_N(0)}2.
+\]
+For a CY-to-chiral output \(A_X\), the proposed comparison asks for an
+isomorphism of determinant lines
+\begin{equation}
+\label{eq:trace-identity-platonic}
+ \Theta_{\Phi}\colon
+ \mathcal L_{\mathrm{ch}}(A_X)
+ \xrightarrow{\ \sim\ }
+ \mathcal L_{\mathrm{Bor}}(\Phi_N),
+\end{equation}
+whose equality of weights compares \(K^\kappa(A_X)\) with
+\(\kappa_{\mathrm{BKM}}(\Phi_N)\).  Its hypothesis package
+\(H_{\mathrm{tr}}\) consists of the CY-to-chiral construction,
+chiral Koszulness of \(A_X\), the determinant-line comparison, and
+compatibility with the Borcherds lift.  The Mukai lattice number \(8\),
+the Borcherds weight \(5\) of \(\Delta_5\), and every BRST ghost charge
+remain separate entries of~\eqref{eq:climax-equation-G3} until
+\(H_{\mathrm{tr}}\) is proved.
+\end{conjecture}
+
+\section{Verification anchors}
+\label{sec:climax-platonic-iv}
+
+\subsection{Arnold window}
+\label{ssec:climax-platonic-iv-G2}
+
+The verification chain has four typed links.
+\begin{enumerate}
+\item Arnold's three-term form relation and the infinitesimal braid
+relations prove flatness of the universal logarithmic connection.
+\item The Borcherds identity proves the operator relations
+\(H_{\mathrm{Borch}}\) for a chosen collision model.
+\item The FM boundary map supplies \(H_{\mathrm{FM}}\), relating the
+superconnection residue to the bar collision differential.
+\item Kohno and Drinfeld compute the monodromy and associator of the
+affine instance.
+\end{enumerate}
+The first two links are the form and operator halves of flatness; the
+third is the chain comparison; the fourth is a representation-theoretic
+check on a named family.
+
+\subsection{Scalar values and statuses}
+\label{ssec:climax-platonic-iv-G3}
+
+The canonical census gives the following status table.
+\begin{center}
+\begin{tabular}{l|c|c|l}
+family & scalar type & value & status \\ \hline
+Heisenberg / affine / \(\beta\gamma\)-\(bc\)
+ & \(K^\kappa\) & \(0\) & computed on named companion pairs \\
+Virasoro & \(K^\kappa\) & \(13\) & computed under \(H_{\mathrm{Vir}}\) \\
+principal \(\mathcal W_3\)
+ & \(K^\kappa\) & \(250/3\) & computed under \(H_{\mathcal W_3}\) \\
+Bershadsky--Polyakov & \(K^c\) & \(50\) & proved central identity \\
+Bershadsky--Polyakov & \(K^\kappa\) & \(\mathrm{open}\)
+ & genus-one curvature obligation \\
+Mukai lattice & \(K^{\mathrm{lat}}\) & \(8\) & proved lattice arithmetic \\
+Mukai chiral chart & \(K^\kappa\) & \(8\)
+ & conjectural under \(H_{\mathsf B}\) \\
+\(\Delta_5\) & \(\kappa_{\mathrm{BKM}}\) & \(5\)
+ & proved Borcherds weight
+\end{tabular}
+\end{center}
+The Bershadsky--Polyakov proof uses
+Theorem~\ref{thm:bp-koszul-conductor-polynomial} and the even
+generating fields of Proposition~\ref{prop:bp-kappa}.  The Mukai proof
+uses the decomposition
+\(U^4\oplus E_8(-1)^2\) and the signature \((4,20)\).  These
+computations are independent because they evaluate different scalar
+types.
+
+\section{Typed cross-volume comparisons}
+\label{sec:climax-platonic-outlook}
+
+\subsection{Vol~II boundary-linear comparison}
+\label{ssec:climax-platonic-volii-bridge}
+
+Under the boundary-linear, tempered, and derived-centre package
+\(H_{\mathrm{BL}}\), the Vol~II comparison assigns to \(A\) the pair
+\[
+ \bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(A),A\bigr)
+\]
+with its
+\(\mathrm{SC}^{\mathrm{ch},\mathrm{top}}\)-action and boundary
+restriction
+\[
+ \rho_\partial\colon Z^{\mathrm{der}}_{\mathrm{ch}}(A)\longrightarrow A.
+\]
+This map compares the level-three derived centre with the level-one
+boundary algebra.  The bar coalgebra remains the level-two object in
+the Beilinson tower.
+
+\subsection{Vol~III CY-to-chiral and trace comparison}
+\label{ssec:climax-platonic-voliii-bridge}
+
+The proposed Vol~III construction has the two-stage type
+\[
+ \Phi_d^{(\Sigma_{d-1},C)}
+ =
+ \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}
+ \circ
+ \Phi_d^{\mathrm{FA}}.
+\]
+Its application in this chapter carries the package \(H_\Phi\):
+construction of the factorization algebra
+\(\Phi_d^{\mathrm{FA}}(\mathcal C)\), construction of the
+specialization functor, and verification of the resulting operadic
+level on \(C\).  When \(H_\Phi\) produces a chirally Koszul
+\(A_X\), the Vol~I theorem packages apply in their native ambients.
+The Borcherds formula
+\(\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2\) is the proved automorphic
+target; Conjecture~\ref{conj:climax-universal-trace-identity-platonic}
+is the determinant-line bridge.
+
+\subsection{Summary of the four extensions}
+\label{ssec:climax-platonic-closing}
+
+The established statements consist of the finite-window Arnold
+comparison, the scalar values
+\(\{0,13,250/3\}\), the BP central conductor \(50\), and the Mukai
+lattice invariant \(8\).  The four extensions add, respectively, an
+elliptic residue theorem, principal-\(\mathcal W\) collision
+operators, a functorial BRST comparison, and a chiral--Borcherds trace
+map.  Each extension has a named hypothesis package and a concrete
+first calculation.
+
+\section{K3 and arithmetic frontier: comparison obligations}
+\label{sec:cclimax-supplement}
+
+\begin{remark}[K3 Hall--Drinfeld recognition target]
+\label{rem:cclimax-1}
+\ClaimStatusOpen
+The notation \(\mathbf H_{\Delta_5}\) denotes the recognition target
+specified by the proposed Hall/CoHA source, the Mukai pairing, and the
+Borcherds denominator \(\Delta_5\).  Its construction as a chiral
+bialgebra carries the package
+\(H_{\Delta_5}^{\mathrm{rec}}\) of
+Remark~\ref{rem:k3-koszul-structure-precise}.  The proved inputs are
+the Mukai lattice and the automorphic denominator theorem.  PBW,
+completion, radical quotient, parity, coproduct, and chiral
+factorization are the remaining recognition maps.
+\end{remark}
+
+\begin{remark}[\(\hbar\)-normalization at the Mukai candidate]
+\label{rem:cclimax-2}
+The lattice calculation gives \(K^{\mathrm{lat}}=8\).  Choosing the
+formal parameter by \(\hbar^2=-1/8\) yields
+\[
+ \hbar^2K^{\mathrm{lat}}=-1.
+\]
+This is a normalization identity.  Its promotion to a chiral quantum
+statement requires \(H_{\mathrm{scalar}}\) and
+\(H_{\mathrm{quantum}}\): the first identifies
+\(K^\kappa\) with \(K^{\mathrm{lat}}\), and the second constructs a
+quantization functor whose root order is eight.
+\end{remark}
+
+\section{A decoupled Saito--Kurokawa arithmetic check}
+\label{sec:cclimax-supplement-ii}
+
+The arithmetic calculation below is retained as an exact local-factor
+check.  Its role in this chapter is purely arithmetic.
+
+\begin{proposition}[Saito--Kurokawa spinor coefficients of
+\(\Delta_{10}\) for \(p\leq37\)]
+\label{prop:cclimax-SK-spinor}
+\ClaimStatusProvedHere
+Let \(f_{18}=E_6\Delta\) be the normalized weight-\(18\) eigenform.
+For the Saito--Kurokawa lift
+\(\Delta_{10}=\mathrm{SK}(f_{18})\), the spinor coefficient satisfies
+\begin{equation}
+\label{eq:cclimax-SK-hecke}
+ \lambda_p(\Delta_{10})
+ =a_p(f_{18})+p^8+p^9.
+\end{equation}
+For
+\(p=2,3,5,7,11,13,17,19,23,29,31,37\), the pairs
+\((a_p,\lambda_p)\) are
+\[
+\begin{array}{r|r|r}
+2&-528&240\\
+3&-4\,284&21\,960\\
+5&-1\,025\,850&1\,317\,900\\
+7&3\,225\,992&49\,344\,400\\
+11&-753\,618\,228&1\,818\,688\,344\\
+13&2\,541\,064\,526&13\,961\,294\,620\\
+17&-5\,429\,742\,318&120\,133\,891\,620\\
+19&1\,487\,499\,860&341\,158\,760\,680\\
+23&-317\,091\,823\,464&1\,562\,371\,823\,280\\
+29&2\,433\,410\,602\,590&17\,440\,802\,991\,420\\
+31&-8\,849\,722\,053\,088&18\,442\,791\,145\,024\\
+37&12\,691\,652\,946\,662&146\,165\,872\,195\,660
+\end{array}
+\]
+and \(|a_p|\leq2p^{17/2}\).
+\end{proposition}
+
+\begin{proof}
+The Saito--Kurokawa local spinor factor is
+\[
+ L_p(s,\Delta_{10},\mathrm{spin})
+ =
+ \zeta_p(s-8)\zeta_p(s-9)L_p(s,f_{18}).
+\]
+Its four reciprocal roots are
+\(p^8,p^9,\alpha_p,\beta_p\), with
+\(\alpha_p+\beta_p=a_p(f_{18})\) and
+\(\alpha_p\beta_p=p^{17}\).  Their sum gives
+Equation~\eqref{eq:cclimax-SK-hecke}.  Expanding
+\(E_6(q)\,q\prod_{n\geq1}(1-q^n)^{24}\) gives the table.  Deligne's
+theorem gives the final bound.
+\end{proof}
+
+\begin{remark}[Extended coefficient window]
+\label{rem:cclimax-ap-extension}
+\label{rem:cclimax-ap-extension-ii}
+\label{rem:cclimax-ap-extension-iii}
+\ClaimStatusProvedHere
+Write (e_6(0)=1), (e_6(j)=-504\sigma_5(j)) for (j>0), and
+
+\[
+ a_n=\sum_{m=1}^{n}\tau(m)e_6(n-m),
+ \qquad \lambda_p=a_p+p^8+p^9.
+\]
+Exact integer evaluation on the (46) primes (p\leq199) gives the
+zero residual vector
+
+\[
+ \bigl(\lambda_p-a_p-p^8-p^9\bigr)_{p\leq199}=0\in\mathbb Z^{46}.
+\]
+This is a finite evaluation of the local-factor formula above, not an
+independent proof of that formula.
+\end{remark}
+
+\begin{remark}[Local Euler factor]
+\label{rem:cclimax-sk-euler}
+For every finite prime,
+\[
+ Z_p(s)=\zeta_p(s-8)\zeta_p(s-9)L_p(s,f_{18})
+\]
+is regular at \(s=19/2\): its three denominator factors evaluate at
+\(p^{-3/2}\), \(p^{-1/2}\), and
+\(1-a_pp^{-19/2}+p^{-2}\), and Deligne's bound controls the last.
+\end{remark}
+
+\begin{remark}[Normalized Satake identity and the open Casimir bridge]
+\label{rem:cclimax-satake-casimir}
+\label{rem:cclimax-satake-casimir-ii}
+Let
+\(\widetilde\alpha_p=\alpha_p/p^{17/2}\) and
+\(\widetilde\beta_p=\beta_p/p^{17/2}\).  Then
+\[
+ \widetilde\alpha_p\widetilde\beta_p=1,\qquad
+ \widetilde\alpha_p+\widetilde\beta_p=\frac{a_p}{p^{17/2}},
+\]
+and the exact degree-two identity is
+\begin{equation}
+\label{eq:cclimax-casimir-dictionary}
+ \widetilde\alpha_p^2+\widetilde\beta_p^2
+ =\frac{a_p^2}{p^{17}}-2.
+\end{equation}
+A Frenkel--Reshetikhin Casimir interpretation on
+\(\mathbf H_{\Delta_5}\) requires a constructed representation and a
+Satake--chiralization functor.  That comparison has status
+\ClaimStatusOpen.
+\end{remark}
+
+\begin{remark}[Monster quantization datum]
+\label{rem:cclimax-monster-lusztig-conway-norton}
+\ClaimStatusOpen
+A Lusztig root order is an input to a root-of-unity quantum group.
+For a proposed Monster Hall--Drinfeld object, write
+\begin{equation}
+\label{eq:cclimax-monster-lusztig-level}
+ \ell_{\mathrm{Monster}}
+ :=\operatorname{ord}(q_{\mathrm{Monster}}).
+\end{equation}
+A theorem fixing this integer requires a quantization functor from the
+Monster vertex-algebraic or Borcherds data to a specified quantum
+group.  The Fricke involution of the Hauptmodul has order two; the
+quantization functor is a separate input.  The value of
+\(\ell_{\mathrm{Monster}}\) therefore has status \ClaimStatusOpen.
+\end{remark}
+
+\begin{remark}[Metaplectic component group for \(\Delta_5\)]
+\label{rem:cclimax-S-psi-delta5}
+\ClaimStatusOpen
+For a genuine automorphic representation on a metaplectic cover, the
+Arthur-type component group would be defined from a constructed
+\(L\)-parameter by
+\begin{equation}
+\label{eq:cclimax-S-psi-delta5}
+ S_{\psi_{\Delta_5}}
+ :=
+ \pi_0\!\left(
+ \operatorname{Cent}(\operatorname{im}\psi_{\Delta_5})/
+ Z(\widehat G)^\Gamma
+ \right).
+\end{equation}
+The parameter, dual-group convention, and multiplicity formula form
+the required input.  The cardinality of the associated packet
+\begin{equation}
+\label{eq:cclimax-Psi-delta5-total}
+ |\Psi_{\Delta_5}| \quad\text{is an open output of that package.}
+\end{equation}
+\end{remark}
+
+\section{K3 Koszul and Humbert-wall frontier}
+\label{sec:cclimax-supplement-iii}
+
+\begin{remark}[Koszul locus as a moduli problem]
+\label{rem:cclimax-koszul-locus}
+\ClaimStatusOpen
+For a constructed chiral family \(A\) over a base \(S\), define
+\begin{equation}
+\label{eq:cclimax-koszul-locus-sharp}
+ U_{\mathrm{Kosz}}(A)
+ :=
+ \{s\in S:\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(A_s)\to A_s
+ \text{ is a quasi-isomorphism}\}.
+\end{equation}
+Identifying this open locus with a complement of Humbert divisors
+requires a family \(A/S\), a perfect bar complex, and a degeneracy
+calculation for its counit.  These data belong to
+\(H_{\Delta_5}^{\mathrm{rec}}\) and supplement Bruinier's
+coefficient-field lemma.
+\end{remark}
+
+\begin{lemma}[The \(H_1\) nearby-cycle obligation]
+\label{lem:cclimax-H1-failure}
+\ClaimStatusOpen
+A theorem at \(H_1\) requires the nearby-cycle complex
+\(\psi_{H_1}B^{\mathrm{ch}}(A)\), its monodromy operator, and a proof
+that the completed bar filtration satisfies the required
+Mittag--Leffler condition.  The order of any finite monodromy is an
+output of this calculation.
+\end{lemma}
+
+\begin{lemma}[The \(H_3\) obstruction-class obligation]
+\label{lem:cclimax-H3-failure}
+\ClaimStatusOpen
+A theorem at \(H_3\) requires a Maurer--Cartan model for the family, an
+explicit class in the deformation complex of the bar--cobar counit,
+and a homotopy whose differential equals that class.  A physical
+three-loop coefficient becomes part of this statement after a
+comparison theorem identifies the physical determinant line with the
+chiral deformation line.
+\end{lemma}
+
+\begin{lemma}[The \(H_4\) descent obligation]
+\label{lem:cclimax-H4-failure}
+\ClaimStatusOpen
+A theorem at \(H_4\) requires a local system on the constructed chiral
+family, its étale descent cocycle, and a comparison between that
+cocycle and the completed bar complex.  Kuga--Satake and Torelli
+theorems provide geometric inputs after the relevant moduli map has
+been constructed.
+\end{lemma}
+
+\begin{theorem}[Conditional global inversion template]
+\label{thm:climax-W18-global-inversion}
+\ClaimStatusConditional
+Let \(A/S\) be a chiral family satisfying
+\(H_{\Delta_5}^{\mathrm{rec}}\).  Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the bar--cobar counit is a quasi-isomorphism on
+\(U_{\mathrm{Kosz}}(A)\);
+\item every boundary stratum carries a monodromy-refined complete
+filtration with a coacyclic counit cone;
+\item the local completed inversions satisfy derived Čech descent.
+\end{enumerate}
+Then the counit is an isomorphism in the resulting global coderived
+category.  Strict chain-level inversion holds on
+\(U_{\mathrm{Kosz}}(A)\).
+\end{theorem}
+
+\begin{proof}
+Clause (a) gives the open part, clause (b) gives the formal
+neighbourhoods, and clause (c) glues the two in the coderived category.
+The mathematical work for \(\mathbf H_{\Delta_5}\) is the
+construction and verification of these three hypotheses.
+\end{proof}
+
+\begin{remark}[Physical three-loop comparison]
+\label{rem:cclimax-W17-costello-link}
+A coefficient in a twisted-supergravity amplitude and a class
+obstructing a chiral bar--cobar counit live in distinct deformation
+complexes.  The comparison map between those complexes is the
+load-bearing theorem required to identify them.
+\end{remark}
+
+\begin{remark}[Theorem~B scope on the K3 target]
+\label{rem:cclimax-theoremB-scope-update}
+Theorem~B applies to \(\mathbf H_{\Delta_5}\) after
+\(H_{\Delta_5}^{\mathrm{rec}}\) constructs the object and verifies the
+strict or completed hypotheses of
+Theorem~\ref{thm:climax-W18-global-inversion}.  The current K3
+statement is therefore a conditional application template.
+\end{remark}
+
+\section{Nearby-cycle programme}
+\label{sec:cclimax-chain-level-nearby-cycle-global-inversion}
+\label{subsec:cclimax-global-inversion-climax-form}
+
+\begin{theorem}[Nearby-cycle global inversion programme]
+\label{thm:cclimax-global-inversion-all-admissible}
+\ClaimStatusOpen
+For every divisor \(H_n\) declared admissible, construct:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the nearby-cycle CDG coalgebra and its monodromy filtration;
+\item the local completed co-/contra-derived comparison;
+\item an explicit extension class and its \(A_\infty\) null-homotopy;
+\item derived Čech descent on all multiple intersections.
+\end{enumerate}
+Completion of these four constructions produces a global coderived inversion
+theorem.  The admissible index set and each numerical wall coefficient
+are outputs of the construction.
+\end{theorem}
+
+\begin{remark}[Evidence package for the nearby-cycle programme]
+\label{rem:cclimax-four-verification-paths}
+Local coefficient computations, Kashiwara--Malgrange specialization,
+generic Koszul inversion, and automorphic divisor data test different
+parts of Theorem~\ref{thm:cclimax-global-inversion-all-admissible}.
+They share the recognition and comparison maps and therefore form one
+coherent evidence package.
+\end{remark}
+
+\begin{remark}[Ambient-neutral statement of the programme]
+\label{rem:cclimax-constitutional-ambient-neutral-theoremB}
+The ambient-neutral conclusion is an isomorphism in a named coderived
+category of a constructed completed CDG coalgebra.  The algebra,
+coalgebra, completion, curvature, and descent topology are therefore
+part of the theorem statement.
+\end{remark}
+
+\begin{remark}[Extension class]
+\label{rem:cclimax-extension-obstruction-governing-equation}
+\ClaimStatusOpen
+A wall formula has the typed form
+\[
+ [d_{\mathrm{bar}},\phi^{(n)}]
+ =
+ \omega_n
+ \quad\text{in the deformation complex of the counit}.
+\]
+Identifying \(\omega_n\) with a Fourier coefficient of an automorphic
+lift requires a comparison map from that Fourier coefficient to the
+same deformation complex.
+\end{remark}
+
+\section{Compatibility diagram for Theorems A, B, C, D, H}
+\label{sec:climax-unified-five-theorem-identity}
+\label{ssec:climax-unified-grand-synthesis}
+
+\begin{theorem}[Five typed readouts of the chiral bar--cobar architecture]
+\label{thm:unified-five-theorem-identity}
+\ClaimStatusConditional
+Let
+\begin{equation}
+\label{eq:unified-adjunction}
+ \Omega_X^{\mathrm{ch}}
+ :
+ \ChirCoalg_X^{\mathrm{conil,comp}}
+ \rightleftarrows
+ \ChirAlg_X^{\mathrm{aug}}
+ :
+ B_X^{\mathrm{ch}},
+ \qquad
+ \Omega_X^{\mathrm{ch}}\dashv B_X^{\mathrm{ch}}
+\end{equation}
+be the adjunction on the ambient and completion locus of
+Theorem~\ref{thm:A-infinity-2}.  Then:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item Theorem~A concerns the unit and counit of
+\eqref{eq:unified-adjunction}.
+\item Theorem~B concerns strict and completed inversion.
+\item Theorem~C concerns the Verdier-paired strict-flat
+centre-local-system complex and its normalized scalar trace through
+Theorem~D.
+\item Theorem~D concerns modular pushforward of the genus-weighted
+trace.
+\item Theorem~H concerns the chiral Hochschild complex.
+\end{enumerate}
+Each item carries the hypothesis package of its pointer theorem.
+Their common organizing diagram is
+\eqref{eq:unified-adjunction}; their proofs remain the five native
+arguments.
+The computed and conditional scalar sets are
+\begin{equation}
+\label{eq:unified-kappa-plus-kappadual-finite-set}
+ \{0,13,250/3\}_{\mathrm{Vol\,I}}
+ \subset
+ \{0,8,13,250/3\}_{H_{\mathsf B}}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The five clauses restate
+Theorems~\ref{thm:theorem-a-platonic-pointer}--%
+\ref{thm:theorem-h-platonic-pointer} with their type signatures.
+Equation~\eqref{eq:unified-kappa-plus-kappadual-finite-set} is
+Theorem~\ref{thm:theorem-c-platonic-pointer}.
+\label{prf:unified-five-theorem-identity}
+\end{proof}
+
+\subsection{Five-archetype status table}
+\label{ssec:climax-unified-five-archetypes}
+
+\begin{proposition}[Five-archetype scalar status]
+\label{prop:five-archetype-specialisation}
+\ClaimStatusConditional
+The archetype witnesses have the following current scalar and
+shadow-depth data:
+\[
+\begin{array}{c|l|c|c|l}
+\text{taxon}&\text{witness}&\text{scalar entry}&r_{\max}&\text{status}\\\hline
+\mathsf G&\mathcal H_k&K^\kappa=0&2&\text{computed from partner formula}\\
+\mathsf L&\widehat{\mathfrak g}_k&K^\kappa=0&3&\text{computed from partner formula}\\
+\mathsf C&\beta\gamma_\lambda/bc_\lambda&K^\kappa=0&4&\text{computed from partner formula}\\
+\mathsf M&\mathrm{Vir}_c&K^\kappa=13&\infty&\text{computed from partner formula}\\
+\mathbf B&\widetilde H(K3,\mathbb Z)&K^{\mathrm{lat}}=8&5&
+ \text{lattice theorem; chiral candidate under }H_{\mathsf B}
+\end{array}
+\]
+The principal \(\mathcal W_3\) extension has computed value
+\(K^\kappa=250/3\).  Bershadsky--Polyakov has proved \(K^c=50\) and
+open \(K^\kappa\).  The crown normalization is
+\begin{equation}
+\label{eq:unified-crown-identity}
+ K^{\mathrm{lat}}=8,\quad \hbar^2:=-1/8
+ \quad\Longrightarrow\quad
+ \hbar^2K^{\mathrm{lat}}=-1.
+\end{equation}
+The implication is scalar substitution; its quantum interpretation is
+the \(H_{\mathrm{quantum}}\) obligation.
+\end{proposition}
+
+\begin{proof}
+The first four rows and the principal-\(\mathcal W_3\) extension are
+the family calculations of Chapter~\ref{ch:landscape-census}.  The
+fifth row is the Mukai signature calculation.  The status column
+records the comparison theorem required to pass from a lattice number
+to a chiral conductor.
+\end{proof}
+
+\subsection{Verification obligations}
+\label{ssec:climax-unified-three-verification-paths}
+
+\begin{proposition}[Three verification obligations for the
+compatibility diagram]
+\label{prop:unified-identity-three-path-verification}
+\ClaimStatusOpen
+A proof identifying more than the organizing diagram requires:
+\begin{enumerate}[label=\textup{(V\arabic*)}]
+\item natural transformations connecting the five derived functors;
+\item familywise specialization maps preserving the companion pairs;
+\item a deformation-theoretic map from wall classes to the bar--cobar
+counit.
+\end{enumerate}
+These are three separate obligations.  Their completion would promote
+the compatibility diagram to a reconstruction theorem.
+\end{proposition}
+
+\begin{remark}[One architecture, five theorem packages]
+\label{rem:unified-identity-one-theorem-five-shadows}
+The adjunction~\eqref{eq:unified-adjunction} organizes the five
+readouts.  A common organizing object and a common proof are distinct
+mathematical assertions; the present chapter establishes the former
+and records the natural transformations required for the latter.
+\end{remark}
+
+\begin{remark}[Typed cross-volume reading]
+\label{rem:unified-identity-cross-volume-reading}
+The Vol~II map \(\rho_\partial\) and the Vol~III composite
+\(\mathrm{Sp}^{\mathrm{ch}}\circ\Phi^{\mathrm{FA}}\) enter through
+their own packages \(H_{\mathrm{BL}}\) and \(H_\Phi\).  The Borcherds
+weight \(\kappa_{\mathrm{BKM}}(\Delta_5)=5\), the Mukai lattice number
+\(8\), and the chiral modular conductor are distinct scalar
+invariants.
+\end{remark}
+
+\begin{remark}[Degree-three comparison]
+\label{rem:climax-unified-chirhoch3-portrait}
+The package $H_H(\cA;S)$ determines whether degree~$3$ occurs in the
+curve-level chart complex.  The bounded Virasoro benchmark contains
+degree~$3$.  CY-$d$, Gelfand--Fuks, Hall, and CoHA degree-three classes
+belong to their respective complexes; a named chain map transports a
+class to the chiral chart.
+\end{remark}
+
+\subsection{Reference-curve selection for the crown candidate}
+\label{ssec:climax-crown-named-curve}
+
+\begin{theorem}[Reference-curve selection obligation]
+\label{thm:climax-crown-canonical-curve}
+\ClaimStatusOpen
+The specialization
+\(\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2,C}\) takes the reference curve
+\(C\) as part of its input.  For \(K3\times E\), the natural candidate
+is the elliptic factor \(C=E\).  An elliptic K3 fibration
+\(\pi\colon K3\to\mathbb P^1\) has base \(\mathbb P^1\) and, in the
+generic case, twenty-four \(I_1\) discriminant points on that base.
+The elliptic factor \(E\), the base \(\mathbb P^1\), and the nodal
+fibres are three distinct geometric objects.
+
+A theorem selecting a canonical chiral curve must construct
+\(H_\Phi\), specify \((\Sigma_2,C)\), and prove independence under the
+allowed choices.  The canonical curve therefore remains an output of
+the comparison package.
+\end{theorem}
+
+\begin{corollary}[Conditional genus-one crown specialization]
+\label{cor:climax-crown-genus-stratified}
+\ClaimStatusConditional
+Assume \(H_\Phi\) with \((\Sigma_2,C)=(K3,E)\) and assume
+\(H_{\Delta_5}^{\mathrm{rec}}\).  Then the resulting chiral object is
+defined on \(E\), and its bar--cobar and chiral Hochschild statements
+are evaluated on \(\operatorname{Ran}(E)\).  The twenty-four
+discriminant points of an elliptic K3 enter through an additional
+correspondence from the base \(\mathbb P^1\).
+\end{corollary}
+
+\begin{remark}[Curve data and algebra data]
+\label{rem:climax-crown-curve-richer}
+Genus, marked points, and nodal fibres belong to the source geometry;
+associator, coproduct, and completion belong to the algebra.  A
+factorization theorem connecting them specifies the correspondence
+between these two data sets.
+\end{remark}
+
+\begin{remark}[Named-module verification programme]
+\label{rem:climax-named-module-scope-crown}
+\ClaimStatusOpen
+A module-level application of Theorem~B begins with constructed
+comodules over the completed bar coalgebra and verifies the
+co-/contra-derived comparison for each.  Proposed fundamental,
+vacuum, adjoint, and imaginary-root modules become theorem witnesses
+after their coactions, filtrations, and convergence are written
+explicitly.
+\end{remark}
+
+\begin{remark}[Moduli selection principle]
+\label{rem:climax-curve-selection-principle}
+A rigidity statement for a marked curve requires a morphism to the
+appropriate moduli stack and a calculation of its deformation
+complex.  Group transitivity on a finite set of labels supplies a
+symmetry of the marking; infinitesimal rigidity is the separate
+vanishing statement \(H^1(C,T_C(-D))=0\) or its stack-theoretic
+replacement.  This is the precise selection problem for a proposed
+crown curve.
+\end{remark}

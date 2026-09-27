@@ -1,0 +1,2156 @@
+\chapter{Entanglement entropy from modular Koszul duality}
+\label{chap:entanglement-modular-koszul}
+\index{entanglement entropy!from modular Koszul duality|textbf}
+\index{Ryu--Takayanagi formula!algebraic reconstruction (conditional)|textbf}
+\index{quantum extremal surface!shadow connection|textbf}
+
+% ======================================================================
+% Local macros
+% ======================================================================
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\BTZ}{\mathrm{BTZ}}
+\providecommand{\EE}{\mathrm{EE}}
+\providecommand{\QES}{\mathrm{QES}}
+
+Entanglement enters the modular-Koszul tower through a scalar
+projection and a higher shadow projection.  The scalar projection is
+the Calabrese--Cardy single-interval law
+\[
+ S_{\EE}^{\mathrm{sc}}(\Sigma)
+ = \frac{c(\cA)}{3}\log\frac{L}{\varepsilon},
+\]
+which depends on the Virasoro central charge, not on the modular
+characteristic~$\kappa$ except in families where a separate
+normalisation identifies the two.  For Virasoro,
+$\kappa(\mathrm{Vir}_c)=c/2$ and
+$\mathrm{Vir}_c^!\simeq\mathrm{Vir}_{26-c}$, hence the scalar
+duality sum is
+\[
+ S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_c)
+ +S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{26-c})
+ = \frac{26}{3}\log\frac{L}{\varepsilon}.
+\]
+This is the entanglement shadow of the conductor identity
+$c+c^!=26$, equivalently
+$\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13$.
+
+\paragraph{Modular terminology.}
+\index{modular terminology!entanglement}
+In the title and throughout this chapter, ``modular'' in
+\emph{modular Koszul duality} means the Hodge/moduli and
+modular-characteristic package: the $\lambda_g^{\mathrm{FP}}$ lane,
+the $\mathrm{SL}_2(\mathbb Z)$ and mapping-class constraints in the
+scalar boundary theory, and the invariant~$\kappa(\cA)$.  It does not
+assert a Tomita--Takesaki modular operator.  Tomita--Takesaki modular
+flow and Tomita conjugation appear only in the separate conjectural
+analytic comparison of
+Conjectures~\ref{conj:thqg-tomita-from-verdier}
+and~\ref{conj:thqg-modular-flow}, where a unitary sewing envelope,
+a faithful normal state, anti-linearity, and a physical Hilbert-space
+inner product are additional hypotheses.
+
+The higher projection is algebraic.  The shadow tower gives
+classes~$\Sh_r(\Theta_\cA)$ and bounds their growth; a chosen
+replica functional can turn those classes into numbers
+$\delta S_r$.  The vanishing and convergence statements below are
+therefore theorems about the shadow tower.  Their interpretation as
+Faulkner--Lewkowycz--Maldacena bulk entropy corrections, or as a
+quantum-extremal-surface variational principle, requires a
+gravitational dual and is recorded only as a physical heuristic.
+
+\paragraph{Five-object firewall and tower placement.}
+The chapter places every entanglement statement on the open Beilinson
+tower.  The chiral algebra $\cA=A_b=\End_{\mathcal C^{\mathrm{op}}}(b)$
+sits at level~$1$ as the chart algebra at a chosen vacuum~$b$ in a
+factorisation dg-category $\mathcal C^{\mathrm{op}}$ on a tangential
+log curve $(X,D,\tau)$.  The bar coalgebra
+$B(A_b)=T^c(s^{-1}\bar A_b)$ at level~$2$ is the twisting object;
+inversion is the level-$1$ reconstruction
+$\Omega B(A_b)\xrightarrow{\sim}A_b$ (Theorem~B on the Koszul
+locus). The level-$3$ closed-sector
+object is the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
+\simeq C^\bullet_{\mathrm{ch}}(A_b,A_b)$,
+constructed from chiral Hochschild cochains.  A family support datum
+$H_H(A_b;S)$ identifies its cohomology with
+$H^\bullet(K_{A_b,S})$ and places its support in~$S$
+(Theorem~H).  Verdier duality
+ forms the algebra
+$K_X(A_b)=\mathbb D_{\Ran}B_X(A_b)$ from the full bar coalgebra.
+A chosen quadratic presentation supplies
+$A_b^{\mathrm i}=C_X(s^{-1}V_b,s^{-2}R_b)$ and
+$q_{A_b}\colon A_b^{\mathrm i}\to B_X(A_b)$; its recognition theorem is
+the quasi-isomorphism of~$q_{A_b}$.  The pair map
+$\nu_{A_b}\colon K_X(A_b)\to A_b^!$ reaches the chosen Koszul partner.
+The
+displayed entanglement formulas are scalar shadows at level~$5$, the
+Lagrangian capacity bounds and topological-entanglement coefficients
+sit at level~$4$ (line and brane operators), the modular-flow
+candidate lives on the centre at level~$3$, the bar-cobar
+encoding/decoding adjunction is the level-$1$$\leftrightarrow$
+level-$2$ reconstruction package, and every cross-level identification
+named below cites the reconstruction theorem with its hypothesis
+package. Thus $B(A_b)$ retains its role as the level-$2$ twisting
+object, $A_b^!$ retains its Verdier--Koszul type, and the derived
+centre retains its level-$3$ closed-sector type.
+
+% ======================================================================
+%
+% 1. REPLICA TRICK FROM THE A-HAT GENERATING FUNCTION
+%
+% ======================================================================
+
+\section{Entanglement entropy from the replica trick
+and the \texorpdfstring{$\hat{A}$}{A-hat}-genus}
+\label{sec:ent-replica-shadow}
+\index{replica trick!modular Koszul}
+
+\subsection{Twist operators and the modular characteristic}
+
+\begin{setup}[Entanglement framework]
+\label{setup:ent-framework}
+Let $\cA=A_b=\End_{\mathcal C^{\mathrm{op}}}(b)$ be the chart algebra
+at a chosen vacuum~$b$ on a smooth genus-$0$ curve~$X$ with a
+distinguished tangent direction at~$0$, with bar coalgebra
+$B(\cA)=T^c(s^{-1}\bar\cA)$ (level~$2$ on the open Beilinson
+tower).  Fix a quadratic presentation
+$\cA=T_X(V)/(R)$ with
+\[
+\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+q_\cA\colon\cA^{\mathrm i}\longrightarrow B_X(\cA).
+\]
+The full symmetric bar coalgebra is
+$B_X(\cA)=\barB_X^{\mathrm{ch}}(\cA)$, with cohomology
+$H^\bullet B_X(\cA)$.  On the finite-type Verdier surface set
+$K_X(\cA)=D_{\Ran}B_X(\cA)$ and choose
+$\nu_\cA\colon K_X(\cA)\to\cA^!$.  Let $\kappa(\cA)$ be its modular
+characteristic and let $c(\cA)$ be the Virasoro central charge of a
+chosen stress tensor.  The scalar entropy calculation below depends on
+a \emph{local replica datum} carrying three load-bearing hypotheses,
+inscribed and named once here so that every theorem in the chapter
+inherits them by reference.
+\begin{enumerate}[label=\textup{(EH\arabic*)}]
+\item \textbf{Cardy boundary state.}
+A coordinate disc $U\simeq\mathbb C\subset X$, a unitary vacuum
+representation on~$U$, and a Cardy boundary state $|0\rangle_C$ at
+each endpoint of the entangling cut $\Sigma=[0,L]\subset U$, so that
+the twist insertion $\langle\sigma_n(0)\,\bar\sigma_n(L)\rangle$ is
+computed in the half-plane geometry pinned by~$|0\rangle_C$
+\textup{(}Cardy 1989, \emph{Boundary conditions, fusion rules and the
+Verlinde formula}\textup{)}.
+\item \textbf{Uniformisation to the half-plane.}
+A conformal map
+$z\mapsto\bigl((z-x_1)/(z-x_2)\bigr)^{1/n}$ uniformising the
+$n$-sheeted cyclic branched cover of $\mathbb C$ over
+$\{x_1,x_2\}=\{0,L\}$ to a single half-plane.  The Schwarzian
+derivative of this map fixes the twist-field dimension
+\eqref{eq:ent-twist-dim}.
+\item \textbf{Conformal invariance of the entangling cut.}
+The cut $\Sigma$ is a conformal interface placing no extra modular
+boundary condition beyond~(EH1); the stress-tensor Ward identity on
+the cover is the Calabrese--Cardy one, with no anomalous Schwarzian
+contribution from the cut itself.
+\end{enumerate}
+Fix a UV cutoff $\varepsilon>0$.  The R\'enyi and von~Neumann entropies
+of~$\Sigma$ in the (EH1)-vacuum are defined via the replica trick:
+\begin{equation}\label{eq:ent-renyi-def}
+S_n(\Sigma)
+\;:=\;
+\frac{1}{1-n}\,\log \Tr(\rho_\Sigma^n),
+\qquad
+S_{\EE}(\Sigma)
+\;:=\;
+\lim_{n \to 1} S_n(\Sigma)
+\;=\;
+-\Tr(\rho_\Sigma \log \rho_\Sigma),
+\end{equation}
+where $\rho_\Sigma$ is the reduced density matrix obtained by
+tracing over the complement $\Sigma^c$.  Hypotheses (EH1)--(EH3)
+are the named hypothesis package for every Calabrese--Cardy-type
+statement in the chapter; suppression of any one fails an explicit
+step in Theorem~\ref{thm:ent-scalar-entropy}.
+\end{setup}
+
+\begin{lemma}[Twist operator dimension; \ClaimStatusProvedElsewhere]
+\label{lem:ent-twist-dimension}
+\index{twist operator!conformal dimension}
+Under the local replica datum of Setup~\textup{\ref{setup:ent-framework}},
+the $n$-fold twist operator $\sigma_n$ creating the $n$-sheeted
+branched cover has conformal dimension
+\begin{equation}\label{eq:ent-twist-dim}
+h_n
+\;=\;
+\frac{c(\cA)}{24}\Bigl(n - \frac{1}{n}\Bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is the standard result of Calabrese--Cardy
+\cite[Eq.~(2.5)]{Calabrese-Cardy04},
+following from the Schwarzian derivative of
+$z \mapsto z^{1/n}$ applied to the stress tensor.
+For the Virasoro family, $c = 2\kappa$; the
+general relationship between $\kappa$ and~$c$ is family-dependent
+(see Setup~\ref{setup:ent-framework}).
+\end{proof}
+
+\subsection{Calabrese--Cardy in central-charge normalization}
+
+\begin{theorem}[Entanglement entropy at the scalar level;
+\ClaimStatusProvedElsewhere]
+\label{thm:ent-scalar-entropy}
+\index{Calabrese--Cardy formula!central-charge normalization}
+\index{entanglement entropy!scalar level|textbf}
+\textbf{Type signature.}  Quadrant: open.  Presentation: chain-level
+on the standard half-plane geometry.  Level: $5$ (scalar shadow on
+the central-charge lane).  Hypothesis package:
+Setup~\textup{\ref{setup:ent-framework}} (EH1)--(EH3); positive
+central charge $c(\cA)>0$ for the entropy reading, formal anomaly
+otherwise.
+
+Under (EH1)--(EH3), the scalar-level replica partition function
+(non-chiral convention, left plus right movers), R\'enyi entropy, and
+von~Neumann entropy of a single interval are:
+\begin{align}
+\log Z_n^{\mathrm{sc}}(\Sigma)
+&\;=\;
+-\frac{c(\cA)}{6}\Bigl(n - \frac{1}{n}\Bigr)
+\log\frac{L}{\varepsilon},
+\label{eq:ent-replica-partition}
+\\[4pt]
+S_n^{\mathrm{sc}}(\Sigma)
+&\;=\;
+\frac{c(\cA)}{6}\Bigl(1 + \frac{1}{n}\Bigr)
+\log\frac{L}{\varepsilon},
+\label{eq:ent-renyi-scalar}
+\\[4pt]
+S_{\EE}^{\mathrm{sc}}(\Sigma)
+&\;=\;
+\frac{c(\cA)}{3}\,\log\frac{L}{\varepsilon}.
+\label{eq:ent-vn-scalar}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Hypothesis (EH2) supplies the uniformisation $w(z)=\bigl((z-0)/(z-L)
+\bigr)^{1/n}$ from the $n$-sheeted cyclic branched cover of $\mathbb
+C$ over $\{0,L\}$ to a single sheet; its Schwarzian derivative
+$\{w,z\}=\tfrac12(1-1/n^2)(z(z-L))^{-2}\cdot z(z-L)\cdot\ldots$
+delivers the twist-field dimension
+\eqref{eq:ent-twist-dim} as the conformal-weight image of the stress
+tensor under the cover.  Hypothesis (EH1) supplies the half-plane
+boundary state $|0\rangle_C$ that pins the two-point function
+$\langle\sigma_n(0)\,\bar\sigma_n(L)\rangle$ to the standard
+power-law form.  Hypothesis (EH3) is the input that the entangling
+cut adds no anomalous Schwarzian contribution beyond (EH2), so that
+the stress-tensor Ward identity on the cover is the Calabrese--Cardy
+one.  Under these three inputs, the replica partition function on
+the $n$-sheeted branched cover is~\eqref{eq:ent-replica-partition},
+following from the two-point function
+$\langle \sigma_n(0)\,\bar\sigma_n(L) \rangle
+= (L/\varepsilon)^{-2(h_n + \bar{h}_n)}
+= (L/\varepsilon)^{-4h_n}$
+with~$h_n = \bar{h}_n$ from~\eqref{eq:ent-twist-dim}
+\textup{(}non-chiral: both chiralities contribute equally\textup{)}.
+Since $Z_1 = 1$ by normalization:
+\[
+S_n
+= \frac{\log Z_n}{1-n}
+= \frac{-(c/6)(n - 1/n)}{1-n}\,\log(L/\varepsilon)
+= \frac{c}{6}\cdot\frac{n+1}{n}\,\log(L/\varepsilon),
+\]
+giving~\eqref{eq:ent-renyi-scalar}. The limit
+$\lim_{n \to 1} S_n = (c/3)\log(L/\varepsilon)$
+gives~\eqref{eq:ent-vn-scalar}.
+
+\smallskip
+\noindent\textit{Independent verification paths.}
+\textsc{Path~1 (twist-field dimension).}~Lemma~\ref{lem:ent-twist-dimension}
+yields $h_n=(c/24)(n-1/n)$ from (EH2) alone, independently of
+endpoint data; the Schwarzian computation is the original
+Calabrese--Cardy 2004 derivation.
+\textsc{Path~2 (uniformisation map).}~The branched-cover map of
+(EH2) is the conformal isomorphism
+$\Sigma_n\to\mathbb H$ at the level of the $z$-plane; the explicit
+metric pull-back gives the same $-4h_n$ exponent with the half-plane
+two-point function from (EH1).  Cross-check: at $n=1$, the
+uniformisation is the identity, $h_1=0$, and $\log Z_1=0$.
+\textsc{Path~3 (Cardy boundary-state expansion).}~For Virasoro $\cA$,
+the boundary state $|0\rangle_C$ has the expansion
+$\sum_a S_{0a}/\sqrt{S_{00}}\,|a\rangle\!\rangle$, and the
+twist-field two-point function is the diagonal of the modular
+$S$-matrix; saturation of the leading exponent reproduces
+\eqref{eq:ent-replica-partition} (Cardy 1989, eq.\ 3.2).  All three
+paths agree on the coefficient $-c/6$.
+\end{proof}
+
+\begin{remark}[Connection to the $\hat{A}$-genus]
+\label{rem:ent-ahat-connection}
+\index{A-hat genus@$\hat{A}$-genus!entanglement}
+The scalar free energy
+$F_g^{\mathrm{sc}}(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+on the uniform-weight scalar lane
+(Corollary~\ref{cor:free-energy-ahat-genus})
+resums as $F(\cA;\hbar) = (\kappa/\hbar^2)[\hat{A}(i\hbar)-1]$.
+The replica partition function~\eqref{eq:ent-replica-partition}
+is determined by~$c$ alone; at the scalar level, the
+$\hat{A}$-genus controls the \emph{genus} expansion of the
+partition function, while the \emph{replica} index~$n$
+determines the sewing parameters of the branched cover.
+The two expansions are distinct projections of the bar-intrinsic
+MC element~$\Theta_\cA$: the genus projection is internal to the
+shadow tower, while the replica projection first chooses the local
+twist-field functional above.
+\end{remark}
+
+\begin{lemma}[Replica, genus, and anomaly coefficients;
+\ClaimStatusConditional]
+\label{lem:ent-replica-genus-anomaly-separation}
+\index{central charge!entanglement versus modular characteristic}
+\index{modular characteristic!genus-one versus entropy}
+In Setup~\textup{\ref{setup:ent-framework}} the Calabrese--Cardy
+coefficient is the Virasoro central charge:
+\[
+ \frac{S_{\EE}^{\mathrm{sc}}(\Sigma)}
+ {\log(L/\varepsilon)}
+ =\frac{c(\cA)}{3}.
+\]
+The genus-shadow coefficient on the uniform-weight scalar lane is instead
+\[
+ F_1^{\mathrm{sc}}(\cA)
+ =\kappa(\cA)\lambda_1^{\mathrm{FP}}
+ =\frac{\kappa(\cA)}{24}.
+\]
+Thus $\kappa$ enters the replica entropy only after a family-specific
+normalisation relating $c$ and $\kappa$.  For Virasoro,
+$c=2\kappa$ and
+\[
+ \frac{S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_c)}
+ {\log(L/\varepsilon)}
+ =\frac{2\kappa}{3},
+ \qquad
+ F_1^{\mathrm{sc}}(\mathrm{Vir}_c)=\frac{c}{48}.
+\]
+For the Heisenberg family, $c=1$ for a rank-one free boson while
+$\kappa(\mathcal H_k)=k$; the two coefficients are not the same
+invariant.  A negative effective central charge inserted into
+$(c/3)\log(L/\varepsilon)$ is therefore a formal anomaly coefficient
+unless a positive Hilbert-space representation supplies a density
+matrix.
+\end{lemma}
+
+\begin{proof}
+The first formula is Theorem~\ref{thm:ent-scalar-entropy}.  The
+second is Corollary~\ref{cor:free-energy-ahat-genus} with
+$\lambda_1^{\mathrm{FP}}=1/24$.  The Virasoro identities use the
+normalisation $\kappa(\mathrm{Vir}_c)=c/2$; the Heisenberg identity
+uses $\kappa(\mathcal H_k)=k$ and the rank-one free-boson central
+charge $c=1$.  Non-negativity of Hilbert-space entropy is
+$-\Tr(\rho\log\rho)\ge0$, so a negative coefficient cannot itself be
+a Hilbert-space entropy.
+\end{proof}
+
+% ======================================================================
+%
+% 2. ENTANGLEMENT COMPLEMENTARITY
+%
+% ======================================================================
+
+\section{The entanglement complementarity constraint}
+\label{sec:ent-complementarity}
+\index{complementarity!entanglement|textbf}
+
+\begin{theorem}[Entanglement complementarity; \ClaimStatusConditional]
+\label{thm:entanglement-complementarity}
+\index{entanglement complementarity|textbf}
+\textbf{Type signature.}  Quadrant: open.  Presentation: scalar shadow
+on the Koszul-pair locus.  Level: $5$ (scalar) with a degree-$\le4$
+shadow refinement at level~$5$.  Hypothesis package: Setup~\ref{setup:ent-framework}
+(EH1)--(EH3); existence of the finite-type Verdier dual
+$\cA^!:=D_{\Ran}(\cA^{\mathrm i})$ as a chiral algebra carrying its own
+(EH1)--(EH3) data.
+
+Let $\cA$ be as in Setup~\textup{\ref{setup:ent-framework}}, and
+assume that the Verdier dual
+$\cA^!:=D_{\Ran}(\barB_X^{\mathrm{ch}}(\cA))$ exists as a chiral
+algebra carrying its own local replica datum.  Write
+$\kappa(\cA)$ and $\kappa(\cA^!)$ for the two modular
+characteristics.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Verdier-dual scalar sum rule.}
+At the scalar level, the entanglement entropies of~$\cA$
+and its Koszul dual satisfy:
+\begin{equation}\label{eq:ent-complementarity-sum}
+S_{\EE}^{\mathrm{sc}}(\cA)
++ S_{\EE}^{\mathrm{sc}}(\cA^!)
+\;=\;
+\frac{c(\cA) + c(\cA^!)}{3}\,
+\log\frac{L}{\varepsilon}.
+\end{equation}
+For the Virasoro family, where $\cA^!=\mathrm{Vir}_{26-c}$,
+$c(\mathrm{Vir}_c) + c(\mathrm{Vir}_{26-c}) = c + (26 - c) = 26$
+\textup{(}equivalently,
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$
+via Theorem~\textup{\ref{thm:anomaly-koszul}}\textup{)},
+giving the universal sum:
+\begin{equation}\label{eq:ent-virasoro-sum}
+S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_c)
++ S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{26-c})
+\;=\;
+\frac{26}{3}\,\log\frac{L}{\varepsilon}.
+\end{equation}
+
+\item \emph{Self-dual pinning.}
+At the self-dual point $c = 13$
+\textup{(}$\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$\textup{)},
+$S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{13})
+= S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{13}^!)$, and the
+complementarity constraint pins the scalar entropy:
+\begin{equation}\label{eq:ent-self-dual}
+S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{13})
+\;=\;
+\frac{13}{3}\,\log\frac{L}{\varepsilon}.
+\end{equation}
+
+\item \emph{Shadow-level complementarity.}
+Beyond the scalar level, the algebraic Virasoro shadow sums
+\[
+D_r^{\mathrm{sh}}(c)
+:= S_r(\mathrm{Vir}_c)+S_r(\mathrm{Vir}_{26-c})
+\]
+are controlled by
+Remark~\textup{\ref{rem:higher-degree-complementarity}}:
+\begin{itemize}
+\item Degree $2$: $D_2^{\mathrm{sh}} = \kappa + \kappa' = 13$
+ \textup{(}universal constant\textup{)}.
+\item Degree $3$: $D_3^{\mathrm{sh}} = S_3(c) + S_3(26{-}c) = 4$
+ \textup{(}universal constant\textup{)}.
+\item Degree $\ge 4$: $D_r^{\mathrm{sh}}(c)$ acquires non-trivial
+ $c$-dependence through the Lee--Yang denominators
+ $(5c{+}22)$ and $(152{-}5c)$.
+\end{itemize}
+The discriminant complementarity
+$\Delta(c) + \Delta(26-c) =
+6960/[(5c{+}22)(152{-}5c)]$
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection}(vi)}\textup{)}
+governs the degree-$4$ structure.
+These are algebraic shadow identities.  They do not identify
+$D_r^{\mathrm{sh}}(c)$ with physical entropy corrections until a
+replica functional and, for bulk entropy, a gravitational dual have
+been specified.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).}
+By Theorem~\ref{thm:ent-scalar-entropy},
+$S_{\EE}^{\mathrm{sc}}(\cA)
+= (c(\cA)/3)\log(L/\varepsilon)$.
+The sum follows by linearity.
+The Virasoro specialization uses
+$c(\mathrm{Vir}_c) = c$ and
+the duality law $c + c' = 26$
+(Theorem~\ref{thm:anomaly-koszul}).
+
+\emph{Part (ii).}
+At $c = 13$: $c = c' = 13$, so
+$S_{\EE}^{\mathrm{sc}}
+= (13/3)\log(L/\varepsilon)$.
+
+\emph{Part (iii).}
+The degree-$2$ and degree-$3$ universality of the duality sums
+$D_2^{\mathrm{sh}} = 13$, $D_3^{\mathrm{sh}} = 4$ is proved in
+Remark~\ref{rem:higher-degree-complementarity}.
+The degree-$\ge 4$ $c$-dependence follows from the
+discriminant complementarity formula
+(Theorem~\ref{thm:shadow-connection}(vi)), whose
+numerator $6960$ is a universal constant but whose
+denominators $(5c{+}22)(152{-}5c)$ depend on~$c$.
+\end{proof}
+
+\begin{remark}[Entanglement as complementarity projection]
+\label{rem:ent-as-projection}
+\index{entanglement entropy!as complementarity projection}
+The complementarity theorem decomposes the genus-$g$ ambient
+complex into Lagrangian summands:
+$\mathbf C_g(\cA) \simeq \mathbf Q_g(\cA)\oplus
+\mathbf Q_g(\cA^!)$.
+For Virasoro, the entropy sum~\eqref{eq:ent-virasoro-sum}
+is the central-charge image of this scalar complementarity
+under the normalization $\kappa(\mathrm{Vir}_c)=c/2$.
+The modular characteristic~$\kappa(\cA)$ controls the genus-$1$
+obstruction; the ratio
+$c/\kappa$ is family-dependent (equal to~$2$ for Virasoro but not in general).
+Under the hypotheses of Theorem~\ref{thm:entanglement-complementarity},
+the Verdier involution $\sigma$
+(Theorem~\ref{thm:thqg-g4-s-duality})
+exchanges the two algebraic summands.  The entropy sum
+\eqref{eq:ent-complementarity-sum} is obtained only after both
+summands carry compatible local replica data and the displayed
+central-charge relation has been imposed.
+\end{remark}
+
+% ======================================================================
+%
+% 3. SHADOW CORRECTIONS AND ENTANGLEMENT COMPLEXITY
+%
+% ======================================================================
+
+\section{Shadow corrections and entanglement complexity}
+\label{sec:ent-shadow-corrections}
+\index{entanglement complexity!shadow depth|textbf}
+\index{shadow corrections!entanglement entropy}
+
+\begin{proposition}[Shadow entropy functionals by depth;
+\ClaimStatusConditional]
+\label{prop:ent-complexity-classification}
+\index{entanglement complexity!four classes|textbf}
+\textbf{Type signature.}  Quadrant: open.  Presentation: chain-level
+on the shadow tower.  Level: $5$, controlled by the level-$2$ bar
+object $B(A_b)$.  Hypothesis package: Setup~\ref{setup:ent-framework}
+(EH1)--(EH3); $C^1$ replica-functional family $\mathcal R_{n,r}$ near
+$n=1$; for class-M convergence, the uniform replica-functional bound
+$|\mathcal R_{n,r}(x)|+|\partial_n\mathcal R_{n,r}(x)|\le
+C_0\|x\|\log(L/\varepsilon)$ together with shadow radius $\rho(\cA)<1$
+\textup{(}Theorem~\ref{thm:shadow-radius}\textup{)}.
+
+Let $\mathcal R_{n,r}$ be a $C^1$ family of linear replica
+functionals on the degree-$r$ shadow projection of the
+$n$-sheeted replica geometry, defined near $n=1$.  Define the
+degree-$r$ shadow entropy coefficient by
+\[
+\delta S_r^{\mathrm{sh}}(\cA;\Sigma)
+\;:=\;
+-\,\left.\frac{\partial}{\partial n}\right|_{n=1}
+\mathcal R_{n,r}\!\left(
+\Sh_r(\Theta_\cA|_{\Sigma_n})\right).
+\]
+The algebraic vanishing and convergence of
+$\delta S_r^{\mathrm{sh}}$ are determined by the shadow tower
+$\Theta_\cA^{\le r}$ together with the chosen functionals
+$\mathcal R_{n,r}$.
+The four shadow depth classes
+\textup{(}Theorem~\textup{\ref{thm:shadow-archetype-classification}}\textup{)}
+yield four shadow-complexity classes:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l@{\quad}c@{\quad}c@{\quad}l}
+\textbf{Class} & $r_{\max}$ & \textbf{Corrections}
+& \textbf{Prototype} \\
+\midrule
+\textbf{G} \textup{(Gaussian)} & $2$ &
+ none beyond the scalar term &
+ Heisenberg, lattice \\
+\textbf{L} \textup{(Lie/tree)} & $3$ &
+ one cubic shadow coefficient &
+ Affine Kac--Moody \\
+\textbf{C} \textup{(Contact)} & $4$ &
+ quartic coefficient \textup{(}the cubic may vanish\textup{)} &
+ $\beta\gamma$ \\
+\textbf{M} \textup{(Mixed)} & $\infty$ &
+ infinite tower $\{\delta S_r^{\mathrm{sh}}\}_{r \ge 3}$ &
+ Virasoro, $W_N$ \\
+\end{tabular}
+\end{center}
+In particular:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item For class~G algebras, every algebraic shadow contribution
+ $\delta S_r^{\mathrm{sh}}$ with $r\ge3$ vanishes.  The
+ Calabrese--Cardy term is therefore the complete contribution
+ of the shadow model, not a statement about non-shadow sectors or a
+ bulk interface.
+\item For class~M algebras, if the replica functionals are
+ uniformly differentiably bounded by
+ \[
+ |\mathcal R_{n,r}(x)|+
+ |\partial_n\mathcal R_{n,r}(x)|
+ \le C_0\|x\|\log(L/\varepsilon)
+ \]
+ near $n=1$, then
+ $|\delta S_r^{\mathrm{sh}}| \le C \cdot \rho(\cA)^r \cdot r^{-5/2}
+ \cdot \log(L/\varepsilon)$ where $\rho(\cA)$ is the shadow
+ radius \textup{(Theorem~\textup{\ref{thm:shadow-radius}}\textup{)}.}
+ The correction series converges absolutely when
+ $\rho(\cA) < 1$, i.e., for $c > c^* \approx 6.125$
+ in the Virasoro family.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The shadow obstruction tower $\Theta_\cA^{\le r}$ consists of
+finite-order projections of the bar-intrinsic MC element
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The replica functional is
+extra data: it evaluates the restriction of
+$\Sh_r(\Theta_\cA)$ to the $n$-sheeted branched cover~$\Sigma_n$ and
+then differentiates at $n=1$.  Thus the coefficient
+$\delta S_r^{\mathrm{sh}}$ is a shadow-functional coefficient, not a
+canonical Hilbert-space entropy correction before the functional is
+chosen.
+The shadow depth $r_{\max}(\cA)$ is the
+smallest~$r$ at which the tower stabilizes
+(Theorem~\ref{thm:shadow-archetype-classification});
+for~$r > r_{\max}$, all higher shadows vanish and
+$\delta S_r^{\mathrm{sh}} = 0$.
+
+Part~(a): For class~G, $r_{\max} = 2$, so all shadows of
+degree $\ge 3$ vanish identically. The scalar
+level is the complete shadow content.
+
+Part~(b): The bound on $|\delta S_r^{\mathrm{sh}}|$ follows from the
+shadow growth rate
+(Theorem~\ref{thm:shadow-radius}):
+$|\Sh_r(\Theta_\cA)| \le C_1 \rho(\cA)^r r^{-5/2}$.
+The assumed uniform operator bound on $\mathcal R_{n,r}$ and on its
+$n$-derivative propagates this estimate to the replica coefficient:
+$|\delta S_r^{\mathrm{sh}}| \le C \rho(\cA)^r r^{-5/2}
+\log(L/\varepsilon)$.
+Absolute convergence of $\sum_{r \ge 3} |\delta S_r^{\mathrm{sh}}|$
+follows from comparison with the geometric series
+$\sum \rho^r < \infty$ when $\rho < 1$.
+\end{proof}
+
+\begin{remark}[The shadow radius as entanglement convergence radius]
+\label{rem:ent-convergence-radius}
+\index{shadow radius!entanglement convergence}
+For Virasoro at central charge $c$:
+$\rho(c) = \sqrt{(180c+872)/(c^2(5c+22))}$.
+At the self-dual point $c = 13$: $\rho \approx 0.467$
+(convergent algebraic shadow expansion).
+At the critical string $c = 26$: $\rho \approx 0.233$
+(strongly convergent algebraic shadow expansion).
+At the Ising point $c = 1/2$: $\rho > 1$
+(the normalized shadow power series has radius below the
+unit sewing disk).
+
+The transition at $c = c^* \approx 6.125$, where
+$\rho = 1$, separates the \emph{perturbative regime}
+(shadow coefficients give an absolutely convergent correction
+series for bounded replica functionals) from the
+\emph{asymptotic regime}.  Borel--\'Ecalle summability is a
+separate genus-expansion assertion; it does not follow from the
+shadow-radius estimate alone.
+\end{remark}
+
+\begin{corollary}[Shadow expansion of the entropy functional;
+\ClaimStatusConditional]
+\label{cor:ent-full-entropy}
+\index{entanglement entropy!full formula}
+For a chirally Koszul algebra $\cA$ in the convergent
+regime $\rho(\cA) < 1$, and for a replica functional satisfying
+the boundedness hypothesis of
+Proposition~\textup{\ref{prop:ent-complexity-classification}},
+the shadow entropy functional is:
+\begin{equation}\label{eq:ent-full}
+S_{\EE}^{\mathrm{sh}}(\cA)
+\;=\;
+\frac{c(\cA)}{3}\,\log\frac{L}{\varepsilon}
+\;+\;
+\sum_{r=3}^{r_{\max}(\cA)}
+\delta S_r^{\mathrm{sh}}(\cA),
+\end{equation}
+where the sum terminates at $r = r_{\max}$ for classes
+G, L, C and converges absolutely for class~M
+with $\rho < 1$. The underlying Virasoro shadow sums are universal
+constants for $r \le 3$ and acquire $c$-dependence for $r \ge 4$
+\textup{(}Theorem~\textup{\ref{thm:entanglement-complementarity}(iii)}\textup{)}.
+The equality is an identity in the chosen shadow-functional model; it
+becomes a physical von~Neumann entropy formula only after a unitary
+state space and a bulk/boundary dictionary identify the shadow
+functionals with replica partition functions.
+\end{corollary}
+
+% ======================================================================
+%
+% 4. QUANTUM EXTREMAL SURFACE FROM THE SHADOW CONNECTION
+%
+% ======================================================================
+
+\section{The quantum extremal surface as shadow
+connection stationarity}
+\label{sec:ent-qes}
+\index{quantum extremal surface|textbf}
+\index{shadow connection!QES stationarity}
+
+\begin{conjecture}[QES dictionary for the shadow connection;
+\ClaimStatusConjectured]
+\label{conj:ent-qes}
+\index{quantum extremal surface!from shadow connection|textbf}
+\textbf{Type signature.}  Quadrant: open with conjectural cross-volume
+input from a gravitational dual.  Presentation: holographic
+identification.  Level: $5$ on the open Beilinson tower with input
+from level~$3$ (derived chiral centre as universal closed sector,
+physical bulk only after comparison).  Hypothesis package:
+hypotheses (i)--(iii) below, each conjectural.
+
+The quantum extremal surface formula
+\begin{equation}\label{eq:ent-qes-formula}
+S_{\QES}
+\;=\;
+\min_\gamma\Bigl[
+\frac{\mathrm{Area}(\gamma)}{4G_N}
++ S_{\mathrm{bulk}}(\Sigma_\gamma)
+\Bigr]
+\end{equation}
+is compared with the modular-Koszul shadow tower only after a
+holographic dictionary has been chosen.  Such a dictionary consists
+of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an AdS$_3$/CFT$_2$ normalisation satisfying the
+ Ryu--Takayanagi boundary value
+ \[
+ \frac{\mathrm{Area}(\gamma)}{4G_N}
+ =S_{\EE}^{\mathrm{sc}}(\cA)
+ =\frac{c}{3}\log(L/\varepsilon);
+ \]
+
+\item a family of replica functionals identifying the FLM bulk
+ entropy correction with the shadow series
+ $\sum_{r\ge3}\delta S_r^{\mathrm{sh}}(\cA)$;
+
+\item a variation map from deformations of~$\gamma$ to tangent
+ vectors on the replica sewing locus, compatible with the modular
+ shadow connection
+ $\nabla^{\mathrm{hol}}_{g,n}=d-\Sh_{g,n}(\Theta_\cA)$.
+\end{enumerate}
+Under these three inputs, QES stationarity
+$\nabla_\gamma S_{\QES}=0$ is the physical image of the Ward identity
+for $\nabla^{\mathrm{hol}}_{g,n}$ on the replica geometry.  The
+proved algebraic content is flatness and the shadow obstruction
+tower; the RT/QES identification requires the additional
+holographic data listed above.
+\end{conjecture}
+
+\begin{remark}[Algebraic content]
+The boundary scalar term in part~(i) is
+Theorem~\ref{thm:ent-scalar-entropy}.  The shadow series in part~(ii)
+is Proposition~\ref{prop:ent-complexity-classification}.  For
+part~(iii), the shadow connection
+$\nabla^{\mathrm{hol}} = d - \Sh(\Theta_\cA)$ satisfies
+$(\nabla^{\mathrm{hol}})^2 = 0$ (proved as Theorem~\ref{thm:thqg-g6-soft-graviton}
+in~\S\ref{sec:thqg-soft-graviton-theorems}).
+Its Ward identities give
+$\nabla^{\mathrm{hol}}(\Sh_r) + o^{(r)} = 0$
+at each degree $r \ge 3$. On the replica geometry,
+the chosen physical dictionary may model $S_{\QES}$ by a functional of
+the shadow projections
+$\{\Sh_r|_{\Sigma_n}\}_{r \ge 2}$.  Without that dictionary the Ward
+identity is a flatness statement for the algebraic connection, not a
+variational equation for an extremal surface.
+\end{remark}
+
+\begin{remark}[RT as scalar approximation]
+\label{rem:ent-rt-scalar}
+\index{Ryu--Takayanagi formula!as scalar approximation}
+The Ryu--Takayanagi formula
+$S_{\mathrm{RT}} = \mathrm{Area}(\gamma_{\min})/(4G_N)$
+\cite{Ryu-Takayanagi06}
+matches the scalar-level boundary entropy
+$S_{\EE}^{\mathrm{sc}}(\cA) = (c/3)\log(L/\varepsilon)$.
+The quantum corrections
+(Faulkner--Lewkowycz--Maldacena~\cite{Faulkner-Lewkowycz-Maldacena13},
+Engelhardt--Wall~\cite{Engelhardt-Wall14})
+upgrading RT to the quantum extremal surface formula are
+identified with the shadow coefficients
+$\delta S_r^{\mathrm{sh}}$ only under the physical dictionary of
+Conjecture~\ref{conj:ent-qes}.
+
+Under this physical dictionary the shadow depth measures the
+number of algebraic correction channels available to the RT scalar
+term: class~G has none beyond the scalar term, class~L has a cubic
+channel, class~C has a quartic contact channel, and class~M has an
+infinite tower convergent for $\rho < 1$ under bounded replica
+functionals.
+\end{remark}
+
+% ======================================================================
+%
+% 5. ENTANGLEMENT DATA FOR THE STANDARD LANDSCAPE
+%
+% ======================================================================
+
+\section{Entanglement census for the standard landscape}
+\label{sec:ent-standard-landscape}
+\index{standard landscape!entanglement census|textbf}
+
+\begin{theorem}[Standard landscape entanglement census;
+\ClaimStatusConditional]
+\label{thm:ent-landscape-census}
+\index{entanglement entropy!standard landscape}
+\textbf{Type signature.}  Quadrant: open.  Presentation: scalar shadow
+across G/L/C/M archetypes.  Level: $5$ across the
+$\kappa$-stratification matrix.  Hypothesis package:
+Setup~\ref{setup:ent-framework} (EH1)--(EH3); per-row archetype
+identification of Theorem~\ref{thm:shadow-archetype-classification};
+class-M rows additionally require $\rho(\cA)<1$ for absolute
+convergence.
+
+For each standard family, the scalar entanglement entropy
+coefficient $S_{\EE}^{\mathrm{sc}} / \log(L/\varepsilon)$,
+the shadow depth class, and the convergence status are:
+the entropy coefficient is the central-charge coefficient
+$c(\cA)/3$, while the displayed $\kappa$ is the modular
+characteristic governing the genus-shadow lane.  The
+Heisenberg row is rank one; rank-$d$ level-one free bosons
+replace $1/3$ by $d/3$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c}
+\textbf{Family} & $\kappa$ &
+$\dfrac{S_{\EE}^{\mathrm{sc}}}{\log(L/\varepsilon)}$
+& \textbf{Class}
+& \textbf{Convergent?} \\
+\midrule
+Heisenberg $\mathcal{H}_k$
+& $k$ & $1/3$ & G & \textup{exact} \\
+Lattice $V_\Lambda$
+& $\rank(\Lambda)$ & $\rank(\Lambda)/3$ & G & \textup{exact} \\
+Affine $\widehat{\mathfrak{g}}_k$
+& $\dim\mathfrak{g}\cdot(k{+}h^\vee)/(2h^\vee)$
+& $k\dim\mathfrak{g}/\bigl(3(k{+}h^\vee)\bigr)$ & L & yes \\
+$\beta\gamma$
+& $6\lambda^2-6\lambda+1$
+& $(12\lambda^2-12\lambda+2)/3$ & C & yes \\
+Virasoro $\mathrm{Vir}_c$
+& $c/2$ & $c/3$ & M
+& $c > c^*$ \\
+$W_N$ \textup{($N \ge 3$)}
+& $c(W_N) \cdot (H_N{-}1)$
+& $c(W_N)/3$ & M
+& $\rho < 1$ \\
+\end{tabular}
+\end{center}
+The Virasoro complementarity constraint is:
+\begin{equation}\label{eq:ent-virasoro-census}
+\frac{c}{3} + \frac{26-c}{3}
+= \frac{26}{3},
+\end{equation}
+for all non-singular Virasoro central charges in the standard
+landscape.
+\end{theorem}
+
+\begin{proof}
+The $\kappa$ values are from the modular characteristic
+theorem (Theorem~\ref{thm:modular-characteristic})
+and the individual family computations in Part~\ref{part:characteristic-datum}.
+The scalar entanglement entropy is
+$S_{\EE}^{\mathrm{sc}} = (c/3)\log(L/\varepsilon)$
+(Theorem~\ref{thm:ent-scalar-entropy}).
+The shadow depth classes are from the shadow archetype
+classification
+(Theorem~\ref{thm:shadow-archetype-classification}).
+The convergence status follows from the shadow radius
+(Theorem~\ref{thm:shadow-radius}):
+all class~G and~L algebras have finite shadow obstruction towers
+(automatically convergent); class~M convergence depends
+on~$\rho(\cA) < 1$.
+The Virasoro sum~\eqref{eq:ent-virasoro-census} is
+$c/3 + (26-c)/3 = 26/3$.
+\end{proof}
+
+\begin{remark}[Additivity under independent sums]
+\label{rem:ent-additivity}
+\index{entanglement entropy!additivity}
+For independent chiral algebras $\cA = \cA_1 \oplus \cA_2$
+with vanishing mixed OPE
+(Proposition~\ref{prop:independent-sum-factorization}),
+the central charge and the modular characteristic are both
+additive:
+$c(\cA)=c(\cA_1)+c(\cA_2)$ and
+$\kappa(\cA) = \kappa(\cA_1) + \kappa(\cA_2)$.
+Therefore
+$S_{\EE}^{\mathrm{sc}}(\cA)
+= S_{\EE}^{\mathrm{sc}}(\cA_1)+S_{\EE}^{\mathrm{sc}}(\cA_2)$.
+The shadow coefficients separate by the same independent-sum
+factorization.
+\end{remark}
+
+\begin{remark}[Monotonicity of the R\'enyi spectrum]
+\label{rem:ent-renyi-monotone}
+\index{Renyi entropy@R\'enyi entropy!monotonicity}
+The R\'enyi entropy
+$S_n^{\mathrm{sc}} = (c/6)(1+1/n)\log(L/\varepsilon)$
+is non-increasing in $n \ge 1$ at the scalar level for
+$c(\cA)>0$,
+with limits:
+\begin{itemize}
+\item $S_1 = (c/3)\log(L/\varepsilon)$
+ \;\textup{(}von~Neumann\textup{)},
+\item $S_\infty = (c/6)\log(L/\varepsilon)$
+ \;\textup{(}min-entropy\textup{)}.
+\end{itemize}
+The ratio $S_1/S_\infty = 2$ is universal: the
+von~Neumann entropy is exactly twice the min-entropy.
+This universality holds at the scalar level for \emph{all}
+positive-central-charge chirally Koszul algebras; no such
+monotonicity conclusion follows from the scalar argument once
+degree-$\ge3$ shadow functionals are inserted.
+\end{remark}
+
+\begin{remark}[Holographic dictionary for shadow depth]
+\label{rem:ent-gravitational-complexity}
+\index{gravitational complexity!entanglement}
+The entanglement complexity classification
+(Proposition~\ref{prop:ent-complexity-classification})
+admits a holographic interpretation
+contingent on the existence of a gravitational dual:
+\begin{itemize}
+\item \emph{Class~G}: the shadow model has no correction beyond the
+ scalar RT channel.
+\item \emph{Class~L}: a dictionary sending cubic shadows to bulk
+ vertices supplies one cubic correction channel.
+\item \emph{Class~C}: a dictionary sending the quartic contact shadow
+ to a bulk contact term supplies a quartic correction channel.
+\item \emph{Class~M}: the shadow side has infinitely many correction
+ channels; under bounded replica functionals the series is absolutely
+ convergent for $\rho < 1$ and asymptotic outside that regime.
+\end{itemize}
+The algebraic theorem is the classification of available shadow
+channels.  Identifying those channels with graviton vertices requires
+the RT/QES dictionary and a physical inner product on the bulk state
+space.
+\end{remark}
+
+% ======================================================================
+%
+% 6. BTZ BLACK HOLE ENTROPY FROM THE SHADOW TOWER
+%
+% ======================================================================
+
+\section{BTZ black hole entropy from the shadow obstruction tower}
+\label{sec:ent-btz}
+\index{BTZ black hole!entropy from shadow tower|textbf}
+\index{Bekenstein--Hawking entropy!from modular characteristic}
+
+The Bekenstein--Hawking entropy of the three-dimensional
+BTZ black hole \cite{BTZ92} is the Cardy entropy of the
+boundary Virasoro theory.  In the Virasoro normalization
+$c=2\kappa$, the leading Cardy coefficient can be rewritten in
+terms of the modular characteristic $\kappa(\mathrm{Vir}_c)$.
+The shadow tower supplies the algebraic genus expansion; its
+identification with gravitational loop corrections is an additional
+physics input.
+In this section $h$ and $\bar h$ denote $L_0,\bar L_0$ weights.  If
+one uses BTZ charges already normalized as
+$L_0-c/24=(M\ell+J)/2$ and
+$\bar L_0-c/24=(M\ell-J)/2$, then the symbols
+$h_{\mathrm{eff}},\bar h_{\mathrm{eff}}$ below are those charges and
+no further subtraction is made.
+
+\begin{proposition}[Character-asymptotic and BTZ entropy gate;
+\ClaimStatusConditional]
+\label{prop:ent-character-btz-gate}
+\index{entropy!character-asymptotic gate}
+\index{BTZ black hole!modular-invariance gate}
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{scalar\ character\ asymptotics},
+\mathrm{level}=5,
+\mathrm{hypothesis\ package}=\mathrm{modular\ invariance}
+\ +\ \mathrm{Cardy\ vacuum\ dominance}
+\ +\ \mathrm{Brown\text{--}Henneaux}
+\ +\ \mathrm{large\ charge/large\ }N\ \mathrm{regime})$\textup{].}
+The algebraic entropy formulas in this chapter are character
+asymptotics: they estimate coefficients of graded characters,
+partition functions, or shadow generating functions.  They become
+physical von~Neumann, Bekenstein--Hawking, or BTZ entropies only after
+a Hilbert-space interpretation and the relevant modular-invariance
+package have been supplied.
+
+For BTZ, the necessary gate is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item modular invariance of the torus partition function;
+\item Cardy vacuum dominance in the high-temperature transform;
+\item Brown--Henneaux normalization $c=3\ell/(2G_N)$;
+\item effective weights $h_{\mathrm{eff}},\bar h_{\mathrm{eff}}$ in
+the semiclassical large-charge regime;
+\item a fixed one-loop ensemble, since matter zero modes or ensemble
+changes alter logarithmic corrections.
+\end{enumerate}
+Without these hypotheses, the same formulas remain coefficient
+asymptotics of the boundary character and are not gravitational
+entropy theorems.
+\end{proposition}
+
+\begin{theorem}[BTZ entropy from the modular characteristic;
+\ClaimStatusConditional]
+\label{thm:ent-btz-entropy}
+\index{BTZ black hole!entropy|textbf}
+\textbf{Type signature.}  Quadrant: open.  Presentation: scalar shadow
+plus one-loop determinant on the BTZ background.  Level: $5$ (Cardy
+saddle) with genus expansion of \emph{level-$5$} free energies driven
+by the level-$2$ bar object.  Hypothesis package:
+Brown--Henneaux $c=3\ell/(2G_N)$; modular invariance of the genus-$1$
+torus partition function; vacuum dominance in the high-temperature
+limit; effective weights $h_{\mathrm{eff}},\bar h_{\mathrm{eff}}>0$;
+the standard BTZ one-loop ensemble (changes in matter content or
+ensemble alter the $-3/2$ coefficient).
+
+Let $\mathrm{Vir}_c$ be the Virasoro algebra at central
+charge $c = 3\ell/(2G_N)$ \textup{(}Brown--Henneaux\textup{)}.
+For a BTZ black hole of mass~$M$ and angular momentum~$J$, write the
+effective Brown--Henneaux weights as
+\[
+h_{\mathrm{eff}}=\frac{M\ell+J}{2},
+\qquad
+\bar h_{\mathrm{eff}}=\frac{M\ell-J}{2}.
+\]
+Equivalently, if $h,\bar h$ denote $L_0,\bar L_0$ weights, then
+$h_{\mathrm{eff}}=h-c/24$ and
+$\bar h_{\mathrm{eff}}=\bar h-c/24$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Leading entropy.}
+The Bekenstein--Hawking entropy is given by the Cardy
+formula with these effective conformal weights:
+\begin{equation}\label{eq:ent-btz-leading}
+S_{\mathrm{BH}}
+\;=\;
+2\pi\sqrt{\frac{c\,h_{\mathrm{eff}}}{6}}
++ 2\pi\sqrt{\frac{c\,\bar{h}_{\mathrm{eff}}}{6}}
+\;=\;
+2\pi\sqrt{\frac{\kappa\,h_{\mathrm{eff}}}{3}}
++ 2\pi\sqrt{\frac{\kappa\,\bar{h}_{\mathrm{eff}}}{3}},
+\end{equation}
+where $\kappa = \kappa(\mathrm{Vir}_c) = c/2$
+\textup{(}so $c/6 = \kappa/3$\textup{)}.
+In the semiclassical regime $h_{\mathrm{eff}},
+\bar h_{\mathrm{eff}}\gg1$, the chiral contribution is
+$2\pi\sqrt{c\,h_{\mathrm{eff}}/6}$.
+For the non-rotating case $J = 0$, the two chiral sectors agree and
+the exact Cardy expression is
+\[
+S_{\mathrm{BH}}
+=4\pi\sqrt{\frac{c}{6}\left(\frac{M\ell}{2}-\frac{c}{24}\right)}.
+\]
+
+\item \emph{Logarithmic correction.}
+The one-loop determinant on the BTZ background yields
+\begin{equation}\label{eq:ent-btz-log}
+S
+\;=\;
+S_{\mathrm{BH}}
+\;-\;\frac{3}{2}\log\frac{S_{\mathrm{BH}}}{2\pi}
+\;+\; O(1).
+\end{equation}
+For the vacuum-dominated Brown--Henneaux/Cardy saddle with the
+standard BTZ one-loop measure, the coefficient $-3/2$ comes from the
+quadratic fluctuation determinant and is independent of the shadow
+depth class.  Additional matter zero modes or a different ensemble
+change this coefficient.
+
+\item \emph{Higher-genus corrections.}
+The shadow free energies
+$F_g^{\mathrm{sc}}(\mathrm{Vir}_c) = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+on the uniform-weight scalar lane
+\textup{(}Corollary~\textup{\ref{cor:free-energy-ahat-genus}}\textup{)}
+are scalar closed-sector inputs to a saddle expansion.  After a
+gravitational one-loop measure and a shadow-to-bulk dictionary have
+been chosen, the corresponding formal entropy expansion has the form
+\begin{equation}\label{eq:ent-btz-genus-expansion}
+S(M)
+\;=\;
+S_{\mathrm{BH}}
+- \tfrac{3}{2}\log S_{\mathrm{BH}}
++ \sum_{g=2}^{\infty}
+\frac{C_g(\kappa)}{S_{\mathrm{BH}}^{2g-2}},
+\end{equation}
+where $C_g$ depends on the physical saddle data and on the shadow free
+energies $F_1,\ldots,F_g$ through the chosen dictionary.
+At genus~$1$: $F_1 = \kappa/24 = c/48$.
+At genus~$2$: $F_2 = 7\kappa/5760$.
+For class~M algebras, the planted-forest corrections
+$\delta_{\mathrm{pf}}^{(g,0)}$ contribute starting at $g = 2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+The Cardy formula follows from the modular $S$-transform
+of the genus-$1$ partition function
+$Z(\tau) = \Tr(q^{L_0 - c/24})$. Modular invariance
+and vacuum dominance in the high-temperature limit give
+$\log Z(\tau) \sim \pi c/(12\,\mathrm{Im}\,\tau)$ as
+$\mathrm{Im}\,\tau \to 0^+$.
+Saddle-point extraction at effective conformal weight
+$h_{\mathrm{eff}} = h - c/24$ yields
+the leading entropy $2\pi\sqrt{c\,h_{\mathrm{eff}}/6}
+= 2\pi\sqrt{\kappa\,h_{\mathrm{eff}}/3}$.
+The datum $c = 2\kappa$ is the sole input from the
+shadow obstruction tower at the scalar level.
+
+\emph{Part~(ii).}
+The saddle-point expansion about the Cardy saddle
+$\tau_* = i\sqrt{c/(24h)}$
+produces a Gaussian integral whose determinant gives the
+$-3/2$ logarithmic correction \cite{Carlip98}.
+For the stated BTZ saddle this is the one-loop gravitational
+contribution determined by the quadratic fluctuation structure.
+
+\emph{Part~(iii).}
+The scalar genus-$g$ contribution to the free energy is
+\[
+F_g^{\mathrm{sc}}
+= \kappa\cdot\lambda_g^{\mathrm{FP}} .
+\]
+The full coefficient decomposes as
+$F_g=F_g^{\mathrm{sc}}+\delta F_g^{\mathrm{cross}}$.
+Given a physical saddle functional whose loop expansion uses these
+scalar closed-sector inputs, its saddle-point expansion yields a
+formal entropy series of the shape
+\eqref{eq:ent-btz-genus-expansion}.  The universal
+$-\tfrac32\log S_{\mathrm{BH}}$ term is supplied by the BTZ
+quadratic determinant in part~(ii), not by the equality
+$F_1=\kappa/24$ alone.
+For Virasoro (class~M), the planted-forest corrections
+$\delta_{\mathrm{pf}}^{(g,0)}$
+(Remark~\ref{rem:planted-forest-correction-explicit})
+contribute additional terms beyond the scalar level
+at every genus $g \ge 2$.
+\end{proof}
+
+\begin{remark}[Genus~$1$ scalar coefficient and BTZ one-loop measure]
+\label{rem:ent-btz-three-routes}
+\index{BTZ black hole!verification routes}
+The algebraic genus-$1$ scalar coefficient is
+$F_1=\kappa/24=c/48$.  Three checks keep it separate from the BTZ
+logarithmic determinant:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Uniform-weight scalar lane.}
+ $F_1 = \kappa\cdot\lambda_1^{\mathrm{FP}}
+ = (c/2)(1/24)=c/48$.
+\item \emph{Determinant separation.}
+ The same coefficient appears in the scalar closed-sector genus
+ expansion; it does not determine the Gaussian determinant
+ $-\tfrac32\log S_{\mathrm{BH}}$.
+\item \emph{Selberg zeta.}
+ After the Brown--Henneaux gravitational measure is supplied, the
+ Selberg zeta function for the BTZ quotient
+ $\Gamma \backslash \mathbb{H}^3$ is a compatibility check on the
+ one-loop normalization
+ \cite{Patterson-Perry01}.
+\end{enumerate}
+The equality $F_1=c/48$ is a genus-one algebraic identity.  The
+coefficient $-3/2$ in~\eqref{eq:ent-btz-log} is a separate
+one-loop determinant statement.
+\end{remark}
+
+\begin{proposition}[BTZ scalar complementarity; \ClaimStatusConditional;
+licensing $\beta+\gamma+\delta$]
+\label{prop:ent-btz-complementarity}
+\index{BTZ black hole!complementarity}
+For the same-family Virasoro comparison pair
+$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, after the Cardy/BTZ
+modular-invariance and vacuum-dominance hypotheses are imposed, the
+BTZ entropy satisfies the following scalar complementarity identity on
+the real range \(0\le c\le26\), whenever the shifted effective weights
+\(h-c/24\) and \(h-(26-c)/24\) are nonnegative:
+\begin{equation}\label{eq:ent-btz-complementarity}
+S_{\mathrm{BH}}(\mathrm{Vir}_c;\, h)
++ S_{\mathrm{BH}}(\mathrm{Vir}_{26-c};\, h)
+\;=\;
+2\pi\Bigl(
+ \sqrt{\tfrac{c\,(h - c/24)}{6}}
+ + \sqrt{\tfrac{(26-c)\,(h - (26-c)/24)}{6}}
+\Bigr).
+\end{equation}
+In the semiclassical regime where \(h\) dominates both vacuum shifts,
+this simplifies to
+$2\pi\sqrt{h/6}\,(\sqrt{c} + \sqrt{26-c})$,
+with maximum on \(0\le c\le26\) at the comparison fixed point
+\(c = 13\),
+where $\sqrt{c} + \sqrt{26-c} = 2\sqrt{13}$.
+The one-loop free energy sum
+$F_1(\mathrm{Vir}_c) + F_1(\mathrm{Vir}_{26-c})
+= 13/24$
+is the genus-$1$ shadow of the complementarity constant
+$K = 13$.
+\end{proposition}
+
+\begin{proof}
+By additivity of the scalar curvature projection,
+$F_1(c) + F_1(26-c) = c/48 + (26-c)/48 = 26/48 = 13/24$.
+Substituting $c$ and $26-c$ into~\eqref{eq:ent-btz-leading} gives
+the displayed entropy sum.
+On the real interval \(0\le c\le26\), the maximum of
+$f(c) = \sqrt{c} + \sqrt{26-c}$ is at
+$f'(c) = 0$, giving $c = 13$, where
+$f(13) = 2\sqrt{13}$ (concavity of $\sqrt{\cdot}$).
+\end{proof}
+
+\begin{remark}[Monster module]
+\label{rem:ent-btz-monster}
+\index{Monster module!BTZ entropy}
+For the Monster module $V^\natural$ at $c = 24$:
+$\kappa = 12$, $F_1 = 1/2$,
+$S_{\mathrm{BH}} = 4\pi\sqrt{h-1}$ at leading order
+\textup{(}here $h_{\mathrm{eff}} = h - c/24 = h - 1$\textup{)}.
+The McKay--Thompson series
+$J(\tau) = q^{-1} + 196884q + \cdots$ gives the graded dimensions of
+the boundary module.  In an extremal-AdS$_3$ interpretation these
+graded dimensions supply candidate BTZ degeneracies; the Monster acts
+on $V^\natural$, and its action becomes a black-hole state symmetry
+only after the gravitational dual has been specified.
+\end{remark}
+
+\begin{remark}[BPS entropy from the shadow tower]
+\label{rem:bps-entropy-shadow}
+\index{BPS black hole!entropy from shadow tower|textbf}
+\index{Strominger--Vafa formula!shadow derivation}
+For the Virasoro boundary theory $\mathrm{Vir}_c$ with
+$c = 2\kappa$, the Cardy formula for a BPS sector of level
+$n$ \textup{(}semiclassical weight $h_{\mathrm{eff}} = n$\textup{)}
+reduces to
+\begin{equation}\label{eq:bps-entropy-shadow}
+S_{\mathrm{BH}}
+\;=\;
+2\pi\sqrt{\frac{\kappa\,n}{3}},
+\end{equation}
+which rewrites the Cardy/Strominger--Vafa coefficient
+\cite{Strominger-Vafa96} in the Virasoro shadow normalization
+$c=2\kappa$.  Sanity checks: at $\kappa = 1$, $n = 3$,
+$S_{\mathrm{BH}} = 2\pi$; at $\kappa = 13/2$
+\textup{(}the Koszul self-dual point $c = 13$\textup{)},
+$n = 3$, $S_{\mathrm{BH}} = 2\pi\sqrt{13/2} \approx 16.0$.
+If the linear Page-curve model of
+Conjecture~\ref{conj:ent-page-curve} applies, the crossing time is
+\begin{equation}\label{eq:bps-page-time}
+t_P \;=\; \frac{3\,S_{\mathrm{BH}}}{13},
+\end{equation}
+which is $c$-independent: only the Koszul conductor
+$K = 13$ of the Virasoro Koszul pair
+$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ enters the two-line scalar
+model, not the individual central charge. Higher-genus contributions
+follow the multi-weight genus expansion
+$F_g = \kappa\,\lambda_g^{\mathrm{FP}} + \delta F_g^{\mathrm{cross}}$
+\textup{(}Theorem~\ref{thm:multi-weight-genus-expansion},
+\textsc{all-weight}: the scalar formula holds without
+cross-channel correction at uniform weight and at $g = 1$;
+cross-channel corrections
+$\delta F_g^{\mathrm{cross}}$ are required for $g \ge 2$
+at multi-weight\textup{)}. Under the gravitational-dual hypothesis
+of Conjecture~\ref{conj:ent-qes}, complementarity
+\textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}
+supplies the shadow connection Ward identity whose physical image is
+expected to match QES stationarity: the algebraic condition is the
+vanishing of the shadow one-form $\iota_\xi(r^{\mathrm{sh}})$ on the
+complementary Lagrangian
+\cite{Hartle-Hawking83}. See
+Proposition~\ref{prop:ent-btz-complementarity} for the
+pair $(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})$ instantiation.
+\end{remark}
+
+\begin{computation}[The $-3/2$ logarithmic coefficient; determinant
+derivation and shadow non-derivation]
+\label{comp:bps-log-three-ways}
+\index{BPS black hole!logarithmic correction}
+The subleading structure $S = S_0 - \tfrac{3}{2}\log S_0 + O(1)$
+in equation~\eqref{eq:ent-btz-log}, with $S_0 = S_{\mathrm{BH}}$,
+has one standard BTZ/Cardy determinant derivation and one algebraic
+shadow compatibility check:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Cardy one-loop at large $n$.}
+ Gaussian fluctuation around the saddle $\tau_* = i\sqrt{c/(24n)}$
+ produces a determinant $(\det K)^{-1/2}$ with three soft modes
+ \textup{(}two translations plus dilation\textup{)}, yielding
+ $-\tfrac{3}{2}\log S_0$ \cite{Carlip98,Cardy86}.
+\item \emph{Shadow tower compatibility.}
+ The quartic shadow projection $Q^{\mathrm{contact}}$ for
+ $\mathrm{Vir}_c$ gives
+ $S_4(\mathrm{Vir}_c) = 10/[c(5c+22)]$.  This non-zero
+ contact datum supplies the degree-$4$ term in the shadow-side
+ saddle expansion.  It cannot by itself determine the universal
+ coefficient $-\tfrac32$: the function
+ $10/[c(5c+22)]$ varies with~$c$, whereas the stated BTZ determinant
+ coefficient is independent of~$c$ for the fixed ensemble.  After the
+ Cardy normalization of the quadratic fluctuation determinant is
+ imposed, the shadow-side Hessian package is compatible with the
+ coefficient.
+\item \emph{Hartle--Hawking inner product.}
+ A direct evaluation of
+$\langle\Psi_{\mathrm{HH}}|\Psi_{\mathrm{HH}}\rangle$ with the
+shadow connection as a bulk flat connection requires a physical
+ state, measure, and gauge fixing compatible with the chosen
+ gravitational dual \cite{Hartle-Hawking83}.  Those data are not
+ supplied by the shadow obstruction tower.
+\end{enumerate}
+The Cardy/BTZ route derives the saddle coefficient $-\tfrac32$.
+The shadow route proves compatibility and the non-derivation statement:
+quartic shadow data alone do not imply the logarithmic determinant.
+\end{computation}
+
+% ======================================================================
+%
+% 7. PAGE CURVE FROM KOSZUL COMPLEMENTARITY
+%
+% ======================================================================
+
+\section{The Page curve from Koszul complementarity}
+\label{sec:ent-page-curve}
+\index{Page curve!from Koszul complementarity|textbf}
+\index{island formula!Koszul interpretation}
+
+\begin{conjecture}[Page curve from complementarity; \ClaimStatusConjectured]
+\label{conj:ent-page-curve}
+\index{Page curve|textbf}
+\textbf{Type signature.}  Quadrant: open with conjectural gravitational
+dual.  Presentation: scalar two-line model on the Virasoro Koszul
+pair $(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})$.  Level: $5$.  Hypothesis
+package: Setup~\ref{setup:ent-framework} (EH1)--(EH3); existence of
+the Verdier dual $\cA^!=D_{\Ran}(\cA^{\mathrm i})$ as a chiral algebra
+controlling the island saddle; gravitational-dual identification of
+the linear growth rates with Hawking radiation emission and island
+absorption.
+
+\emph{Scope.} The mathematical content of this conjecture is the
+elementary crossing-time computation given the two linear
+growth rates below. The physical identification of $c/6$ and
+$(26-c)/6$ with Hawking radiation emission and island absorption
+respectively, and the identification of the crossing with the
+Page transition, are heuristic:
+they require a gravitational dual in which the Verdier-dual sector
+$\cA^!=D_{\Ran}(\cA^{\mathrm i})$, or its bar complex when this sector
+carries the needed chiral algebra structure, controls the island
+saddle. This identification is extra physical input.
+
+\smallskip
+Let $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ be the Virasoro
+Koszul pair with entanglement growth rates
+$v = c/6$ \textup{(}matter\textup{)} and
+$v' = (26-c)/6$ \textup{(}Koszul dual\textup{)}.
+The Page curve of the radiation entropy is:
+\begin{equation}\label{eq:ent-page-curve}
+S_{\mathrm{rad}}(t)
+\;=\;
+\min\!\bigl(
+ S_{\mathrm{Hawking}}(t),\;
+ S_{\mathrm{island}}(t)
+\bigr),
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Hawking phase} ($t < t_P$):
+ $S_{\mathrm{Hawking}}(t) = (c/6)\,t$.
+
+\item \emph{Island phase} ($t > t_P$):
+ $S_{\mathrm{island}}(t)
+ = S_{\mathrm{BH}} - ((26-c)/6)\,t$.
+
+\item \emph{Page time}:
+ \begin{equation}\label{eq:ent-page-time}
+ t_P \;=\; \frac{3\,S_{\mathrm{BH}}}{13}
+ \;=\;
+ \frac{6\,S_{\mathrm{BH}}}{c + (26-c)}.
+ \end{equation}
+ The denominator is the complementarity constant
+ $c + c' = 26$, equivalently $\kappa + \kappa' = 13$
+ \textup{(}Theorem~\textup{\ref{thm:entanglement-complementarity}}\textup{)}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Crossing computation]
+The Hawking phase growth rate $c/6$ is the Calabrese--Cardy
+entanglement production rate after a local quench, under the
+gravitational-dual identification with Hawking radiation emission.
+The island phase uses the Verdier-dual Virasoro rate $(26-c)/6$:
+once the dual sector $\mathrm{Vir}_{26-c}$ controls the saddle, the
+entropy is governed by $\kappa'=(26-c)/2$.
+
+The Page time is determined by the crossing condition:
+the two branches
+$S_{\mathrm{Hawking}}(t) = (c/6)t$ (increasing)
+and
+$S_{\mathrm{island}}(t) = S_{\mathrm{BH}} - ((26{-}c)/6)t$
+(decreasing) intersect when
+\[
+\frac{c}{6}\,t_P = S_{\mathrm{BH}} - \frac{26{-}c}{6}\,t_P,
+\qquad
+t_P\,\frac{c + (26{-}c)}{6} = S_{\mathrm{BH}},
+\qquad
+t_P = \frac{6\,S_{\mathrm{BH}}}{26}
+= \frac{3\,S_{\mathrm{BH}}}{13}.
+\]
+\end{remark}
+
+\begin{corollary}[Self-dual two-line Page model;
+\ClaimStatusConditional]
+\label{cor:ent-page-self-dual}
+\index{Page curve!self-dual point}
+In the scalar two-line model of
+Conjecture~\textup{\ref{conj:ent-page-curve}}, at the self-dual point
+$c = 13$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The Hawking and island growth rates are equal:
+ $v = v' = 13/6$.
+\item The Page time is $t_P = 3S_{\mathrm{BH}}/13$
+ and the Page curve is symmetric about~$t_P$.
+\item The Page entropy is
+ $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$,
+ reflecting the Virasoro involution $c\leftrightarrow 26-c$ at its
+ fixed point.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+At $c = 13$: $\kappa = \kappa' = 13/2$, so $v = v' = 13/6$.
+The crossing condition gives
+$t_P = 6S_{\mathrm{BH}}/26 = 3S_{\mathrm{BH}}/13$.
+The Page entropy $S_{\mathrm{Page}}
+= (13/6)\cdot 3S_{\mathrm{BH}}/13 = S_{\mathrm{BH}}/2$.
+\end{proof}
+
+\begin{remark}[Island formula as Koszul dual dominance]
+\label{rem:ent-island-koszul}
+\index{island formula!Koszul interpretation}
+In the language of
+Penington~\cite{Penington19} and
+Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19},
+the modular-Koszul dictionary assigns the \emph{island} saddle to
+the Verdier-dual sector
+$\cA^!=D_{\Ran}(\cA^i)$, when that sector is represented by a chiral
+algebra with its own replica datum.  The transition from the Hawking
+phase to the island phase is then modelled by the exchange of dominant
+saddle
+in the complementarity sum
+$\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus
+\mathbf{Q}_g(\cA^!)$
+(Theorem~\ref{thm:quantum-complementarity-main}).
+Under that dictionary, the two scalar branches are controlled by
+$\kappa(\cA)$ at early times and by $\kappa(\cA^!)$ at late times;
+the complementarity constant $\kappa + \kappa' = 13$
+determines the crossover.
+\end{remark}
+
+\begin{remark}[Page curve from Koszul complementarity; \ClaimStatusHeuristic]
+\label{rem:page-curve-complementarity}
+\index{Page curve!from complementarity constant}
+The two-line Page model is the Virasoro complementarity sum
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$
+(Theorem~\ref{thm:quantum-complementarity-main}).
+The Hawking channel grows entropy at rate $c/6$;
+the island channel decreases it at rate $(26-c)/6$.
+The crossing condition gives a $c$-independent Page time
+\[
+ t_P = \frac{3 S_{\mathrm{BH}}}{13},
+\]
+because the $c$ cancels algebraically from
+$\kappa + \kappa' = 13$.
+At the Koszul self-dual point $c = 13$:
+$S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$
+for the two linear scalar branches.  Self-duality kills the
+duality-odd part of any correction written as a function of
+$\delta_\kappa=\kappa-\kappa'=c-13$; it does not kill the
+duality-even shadow tower.  Indeed
+$S_4(\mathrm{Vir}_{13})=10/(13\cdot87)\neq0$ and
+$\Delta(13)=40/87$, so the class-$\mathsf M$ tower remains
+non-trivial at the fixed point.
+
+\emph{Scope}: the scalar-level complementarity and
+the Page time formula use only
+Theorems~\ref{thm:quantum-complementarity-main}
+and~\ref{thm:ent-scalar-entropy} (proved).
+The identification of the shadow coefficients with FLM bulk
+entropy corrections, and the identification of the crossing with
+the physical Page transition, require a gravitational dual and are
+heuristic.
+\end{remark}
+
+% ======================================================================
+%
+% 8. DE SITTER ENTROPY FROM ANALYTIC CONTINUATION
+%
+% ======================================================================
+
+\section{de~Sitter entropy from analytic continuation of the shadow obstruction tower}
+\label{sec:ent-desitter}
+\index{de Sitter entropy!from shadow tower|textbf}
+\index{analytic continuation!shadow tower}
+
+\begin{conjecture}[de~Sitter shadow obstruction tower; \ClaimStatusConjectured]
+\label{conj:ent-desitter}
+\index{de Sitter entropy|textbf}
+After the analytic continuation $\ell\mapsto i\ell$ from
+$\mathrm{AdS}_3$ to $\mathrm{dS}_3$, choose the real de~Sitter
+section in which
+$c_{\mathrm{dS}} = 3\ell_{\mathrm{dS}}/(2G)$ and
+$\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$.
+The shadow obstruction tower continues as:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Gibbons--Hawking entropy.}
+ The tree-level entropy of the cosmological horizon is
+ \begin{equation}\label{eq:ent-ds-leading}
+ S_{\mathrm{dS}}
+ \;=\;
+ \frac{\pi\,c_{\mathrm{dS}}}{3}
+ \;=\;
+ \frac{\pi\ell_{\mathrm{dS}}}{2G},
+ \end{equation}
+ which is the area of the cosmological horizon
+ in $2{+}1$ dimensions.
+
+\item \emph{One-loop correction.}
+ The genus-$1$ free energy continues to
+ $F_1 = \kappa_{\mathrm{dS}}/24 = c_{\mathrm{dS}}/48$,
+ contributing a real quantum correction to the
+ Gibbons--Hawking entropy.
+
+\item \emph{Nariai limit.}
+ The analytic continuation of the self-dual point
+ $c = 13$ gives $c_{\mathrm{dS}} = 13$
+ (the Nariai solution, where the cosmological and
+ black hole horizons coincide). At this point
+ $\kappa_{\mathrm{dS}} = 13/2$ and the
+ complementarity is symmetric.
+
+\item \emph{Hilbert space dimension.}
+ The Banks conjecture
+ $\dim(\mathcal{H}_{\mathrm{dS}})
+ = \exp(S_{\mathrm{dS}})
+ = \exp(\pi c_{\mathrm{dS}}/3)$
+ is consistent with the convergent shadow obstruction tower
+ \textup{(}Bernoulli decay\textup{)}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Analytic-continuation input]
+Under $\ell \mapsto i\ell$, the Brown--Henneaux formula
+$c = 3\ell/(2G_N)$ maps to an imaginary central charge.
+In Convention~B (real section), one takes
+$\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$ as a real
+parameter directly, yielding real free energies.
+The Gibbons--Hawking entropy then follows from the genus-$0$
+shadow projection, and the genus expansion provides quantum
+corrections. The identification of~\eqref{eq:ent-ds-leading}
+with the cosmological horizon area is the dS/CFT
+correspondence (Strominger~\cite{Strominger01}).
+\end{remark}
+
+% ======================================================================
+%
+% 9. JT GRAVITY AS SCHWARZIAN LIMIT OF THE SHADOW TOWER
+%
+% ======================================================================
+
+\section{JT gravity as a conditional Schwarzian comparison}
+\label{sec:ent-jt}
+\index{JT gravity!from shadow tower|textbf}
+\index{Weil--Petersson volumes!shadow tower}
+
+\begin{conjecture}[Conditional JT comparison from the shadow obstruction tower;
+\ClaimStatusConjectured]
+\label{conj:ent-jt-shadow}
+\index{JT gravity|textbf}
+Fix a Schwarzian/JT comparison datum: a large-\(c\)
+Virasoro--Schwarzian scaling, a local coordinate \(z\) with
+\(x=z^2\), the compact Weil--Petersson curve
+\[
+y_{\mathrm{WP}}(z)=\frac{\sin(2\pi z)}{4\pi},
+\]
+an Eynard--Orantin recursion kernel, and an energy-contour convention.
+In the Schwarzian limit \(c\to\infty\) with \(\ell=2Gc/3\) held fixed,
+the Virasoro shadow obstruction tower supplies only the scalar input
+for this comparison:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Spectral curve.}
+ The shadow metric $Q_{\mathrm{Vir}}(t)$, after rescaling
+ $t \mapsto t/\sqrt{c}$, is compared with the compact
+ Weil--Petersson normalization
+ \(x=z^2,\ y_{\mathrm{WP}}(z)=\sin(2\pi z)/(4\pi)\).
+ The notation \(y=\sin(2\pi\sqrt{x})/(4\pi)\) is only this formula
+ after a branch of \(\sqrt{x}\) has been chosen.
+ The physical JT density is obtained only after the contour convention:
+ \[
+ \rho_0(E)=\frac{1}{i\pi}y_{\mathrm{WP}}(i\sqrt E)
+ =\frac{\sinh(2\pi\sqrt E)}{4\pi^2}.
+ \]
+
+\item \emph{Genus expansion.}
+ The JT partition function is
+ \begin{equation}\label{eq:ent-jt-genus}
+ Z_{\mathrm{JT}}(\beta)
+ \;=\;
+ \sum_{g \ge 0}
+ e^{S_0(2-2g)}\,Z_g(\beta),
+ \end{equation}
+ where $Z_g(\beta)$ is expressed in terms of
+ Weil--Petersson volumes $V_{g,1}(b)$ via the Laplace
+ transform. This WP/JT volume statement is external input, not a
+ theorem of the scalar shadow tower. The initial data
+ $V_{1,1}(b) = (b^2 + 4\pi^2)/48$
+ can be compared with the genus-$1$ shadow amplitude $F_1 = \kappa/24$
+ after integration against the JT measure.
+
+\item \emph{Shadow CohFT reconstruction.}
+The shadow CohFT extracts Faber--Pandharipande
+intersection numbers $\lambda_g^{\mathrm{FP}}$ that
+govern the scalar contribution to the JT genus expansion.
+At genus~$g$, the scalar shadow free energy
+\[
+F_g^{\mathrm{sc}}
+=\kappa\cdot\lambda_g^{\mathrm{FP}}
+\]
+on the uniform-weight scalar lane, with
+ $\lambda_g^{\mathrm{FP}}
+ = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$
+ gives the scalar comparison term. It does not reconstruct the full
+ JT \((2g)!\)-divergent series or its non-perturbative completion.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Schwarzian-limit evidence]
+The Schwarzian limit of the Virasoro OPE produces the
+Schwarzian mode~$\{f, z\}$ as the surviving degree of
+freedom. The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$
+degenerates to a trigonometric connection whose flat
+sections can be compared with the Bessel function kernel of the
+JT matrix integral after the Schwarzian/JT datum has been fixed.
+The genus-$1$ scalar check:
+$V_{1,1}(0) = \pi^2/12$ and
+$F_1 = \kappa/24 = c/48$; in the Schwarzian limit,
+the Laplace transform of $V_{1,1}(b)$ gives
+$Z_1(\beta) = (c/48)\beta^{-1}$ after normalization. The
+higher-genus comparison requires the external topological recursion
+and is not forced by the scalar shadow CohFT reconstruction
+(Corollary~\ref{cor:topological-recursion-mc-shadow})
+at the level of tautological intersection numbers.
+\end{remark}
+
+\begin{remark}[Matrix model from the shadow obstruction tower]
+\label{rem:ent-jt-matrix-model}
+\index{JT gravity!matrix model}
+The JT spectral density
+$\rho(E) = \sinh(2\pi\sqrt{E})/(4\pi^2)$ is obtained from the
+compact sine curve only after the energy-contour convention
+\(z=i\sqrt E\) has been supplied. It is not obtained from the scalar
+shadow obstruction tower alone.
+The shadow partition function
+$Z^{\mathrm{sh}} = \exp(\sum F_g\,\hbar^{2g})$
+converges absolutely (Bernoulli decay
+$\lambda_g^{\mathrm{FP}} \sim (2\pi)^{-2g}$),
+in contrast to the JT perturbative expansion which
+diverges as $(2g)!$ and requires
+non-perturbative completions
+via the matrix integral \cite{SSS19}.
+\end{remark}
+
+\section{Entanglement and Koszul conductor on the B-family}
+\label{sec:ent-supplement}
+
+\begin{remark}[Entanglement $c/3 \log$-law and K3 Mukai doubling]
+\label{rem:ent-cthird-K3}
+At the K3 chiral algebra $\mathcal{H}_{\mathrm{Muk}}$ with
+$c=24$, the scalar entropy coefficient is
+\[
+S_{EE}=8\log(L/\varepsilon).
+\]
+The same integer occurs in the B-family Koszul conductor
+\[
+K^{\kappa_{\mathrm{ch}}}
+(\mathcal{H}_{\mathrm{Muk}}(K3))
+=2\,c_+(\mathrm{Mukai}(K3))=8.
+\]
+It has three independent realizations: Mukai doubling
+$2c_+=8$, the monodromy order of $\mathcal L^{\Delta_5}$ around the
+Humbert divisor $H_1\subset\overline{\mathcal A_2}$, and the Lusztig
+specialisation $\ell=8$ at $\zeta^8=1$, $\hbar^2=-1/8$.  On the
+$\mathcal B$-family this gives
+$\hbar^2 K^{\kappa_{\mathrm{ch}}}=-1$.
+The equality of the two displayed integers compares two normalized
+invariants: the central-charge coefficient $c/3$ on the replica line
+and the B-family conductor.  It is not a rule replacing the
+Calabrese--Cardy central charge by $\kappa$.
+\end{remark}
+
+\section{Formal anomaly coefficient for negative effective
+\texorpdfstring{$c$}{c}}
+\label{sec:ent-supplement-ii}
+
+\begin{remark}[Negative formal coefficient at $c_{\mathrm{eff}} = -166$;
+\ClaimStatusProvedHere]
+\label{rem:ent-negative}
+\index{entanglement entropy!negative coefficient!anomaly}
+\index{c effective@$c_{\mathrm{eff}} = -166$!entanglement reading}
+\index{topological entanglement!anomaly signature}
+At the K3 BKM chiral bialgebra $\mathbf H_{\Delta_5}$ with formal
+chiral central charge $c_{2d} = -214$ and effective central charge
+$c_{\mathrm{eff}} = -166 = -2\cdot 83$ (Vol~I
+Remark~\ref{rem:stqp-ceff-unitarity}), the formal
+Calabrese--Cardy coefficient obtained by inserting
+$c_{\mathrm{eff}}$ into $(c/3)\log(L/\varepsilon)$ is
+\[
+S_{\mathrm{EE}}^{\mathrm{eff}}(\mathbf H_{\Delta_5})
+\;=\;
+\frac{c_{\mathrm{eff}}}{3}\,\log(L/\varepsilon)
+\;=\;
+-\frac{166}{3}\,\log(L/\varepsilon).
+\]
+The coefficient is negative. Entanglement entropy of a Hilbert-space
+density matrix is non-negative by definition,
+$S = -\mathrm{tr}\rho_A\log\rho_A\ge 0$.  Thus this number is a formal
+anomaly coefficient rather than an entropy.  The correct reading is that
+$\mathbf H_{\Delta_5}$ is \emph{not a unitary CFT at the
+whole-module level} (Vol~I
+Remark~\ref{rem:stqp-ceff-unitarity};
+Corollary~\ref{cor:stqp-real-imag-dichotomy}); the
+negative $c_{\mathrm{eff}}$ quantifies the gravitational /
+topological anomaly obstructing a unitary CFT description, not
+an entanglement entropy of a Hilbert space.
+\end{remark}
+
+\begin{proposition}[Real-root unitary submodule entanglement;
+\ClaimStatusProvedHere]
+\label{prop:ent-real-root}
+\index{entanglement entropy!real-root submodule}
+On the real-root unitary submodule
+$V^{\mathrm{unit}}\subset\mathbf H_{\Delta_5}$
+(Vol~I Proposition~\ref{prop:stqp-unitary-spectrum};
+positive-definite $2$-plane $P\subset\mathfrak h_{\mathbb R}$ of
+Vol~I Proposition~\ref{prop:stqp-signature}), the
+Calabrese--Cardy entanglement formula applies with the genuine
+positive-definite central charge
+\[
+c_{\mathrm{unit}}(V^{\mathrm{unit}})
+\;=\;
+\mathrm{rk}(P)
+\;=\;
+2,
+\]
+giving
+\[
+S_{\mathrm{EE}}(V^{\mathrm{unit}})
+\;=\;
+\frac{2}{3}\,\log(L/\varepsilon)
+\;>\;0,
+\]
+a positive, physical, bosonic entanglement entropy of a rank-$2$
+free-boson vertex algebra $\mathrm{Fock}(P)$ on the positive-definite
+$2$-plane. The remaining $c_{\mathrm{eff}}/24 - 2/24 = -168/24 = -7$
+of the ``effective'' central charge budget lives on the
+imaginary-root sector (hyperbolic direction $L$) and does not
+contribute to the unitary entanglement; it tracks the gravitational
+anomaly.
+\end{proposition}
+
+\begin{proof}
+The real-root unitary submodule is a Frenkel--Kac vertex algebra
+on the positive-definite rank-$2$ lattice $P^* \cap
+\Lambda_{\mathrm{BKM}}$, whose central charge equals the rank of
+the lattice (Frenkel--Lepowsky--Meurman 1988 \S 8.8; Kac 1998
+\emph{Vertex Algebras for Beginners} Proposition~3.6):
+$c = \mathrm{rk}(P) = 2$. The Calabrese--Cardy formula
+$S_{\mathrm{EE}} = (c/3)\log(L/\varepsilon)$ applies to every
+unitary $2$d CFT with positive central charge
+(Calabrese--Cardy 2004 eq.~(3.8); derivation via twist-operator
+dimension $h_n = (c/24)(n - 1/n)$) and gives $2/3\cdot\log(L/\varepsilon)$.
+Independence from the anomaly reading: the full-module
+$c_{\mathrm{eff}} = -166$ formal coefficient of
+Remark~\ref{rem:ent-negative} is the partition-function
+shift, not a bona fide entanglement entropy; the genuine positive
+entanglement comes only from the unitary submodule with central
+charge $+2$.
+\end{proof}
+
+\begin{remark}[Topological anomaly reading of $c_{\mathrm{eff}} < 0$;
+\ClaimStatusHeuristic]
+\label{rem:ent-topological-anomaly}
+\index{topological anomaly!c effective negative}
+\index{Manschot--Moore!anti-holomorphic counting}
+The negative sign of $c_{\mathrm{eff}} = -166$ matches the
+anti-holomorphic Cardy counting of
+Manschot--Moore 2007 arXiv:0712.0573 \S 3 and
+Dijkgraaf--Verlinde--Verlinde 1997 \S 6 on K3 BPS counting: BKM
+BPS states are counted against an anti-holomorphic background,
+and the entanglement reading $(c_{\mathrm{eff}}/3)\log(L/\varepsilon)$
+is used here only as the \emph{gravitational anomaly coefficient} of
+the holographic dual, rather than as a conventional Calabrese--Cardy
+entanglement on a unitary Hilbert space. The
+$c_{\mathrm{eff}}/24 = -83/12$ weight appears in the Borcherds
+denominator identity expansion as the leading polar term at the
+maximal-rank cusp of $\mathcal A_2$, tracking the gravitational
+anomaly of the 3d dual (anti-de Sitter gravity with
+Chern--Simons level proportional to $c_{\mathrm{eff}}$; Witten
+2007 arXiv:0706.3359 \S 2; cf.\ Vol~II Chapter~13 on the level-$3$
+$\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk realisation
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ as 3d quantum gravity datum). In
+this
+reading, the negative coefficient is a \emph{topological anomaly
+signature}: a measure of how far $\mathbf H_{\Delta_5}$
+is from being a unitary CFT, with the positive-definite
+real-root submodule $V^{\mathrm{unit}}$ of
+Proposition~\ref{prop:ent-real-root} realising the
+genuine entanglement content.
+\end{remark}
+
+\begin{remark}[Koszul-locus scope and Humbert divisor degeneration]
+\label{rem:ent-koszul-locus}
+All three statements (the negative
+$c_{\mathrm{eff}}$ anomaly reading, the real-root unitary entanglement,
+the topological-anomaly interpretation) hold on the
+Koszul locus
+$\overline{\mathcal A_2}\setminus(H_1\cup H_4)$, where the
+Gritsenko--Nikulin paramodular lift of $\Delta_5$ has maximal rank
+and the Kawazumi--Zhang current $\kappa_{\mathrm{KZ}}$ is
+non-degenerate. On the Humbert divisors $H_1$ and $H_4$, the
+hyperbolic Cartan of Vol~I
+Proposition~\ref{prop:stqp-signature} suffers a
+rank-collapse (the principal minor $m_2 = 0$ becomes a full
+$2$-plane degeneracy rather than an isolated isotropic
+direction), unitarity on the real-root sector breaks down, and
+the entanglement reading of
+Proposition~\ref{prop:ent-real-root} requires
+replacement before it can be physical.  A logarithmic-CFT entropy
+with
+$c_{\mathrm{log}}\log^2(L/\varepsilon)$ corrections
+(Bianchi--Piazza 2012; Saleur 2013 lectures) is the expected
+replacement; no such formula is asserted here for the degenerate
+Humbert locus.  The Koszul-locus restriction is therefore
+constitutive, not a convenience.
+\end{remark}
+
+\section{Topological entanglement and ground-state degeneracy from the 3d TQFT}
+\label{sec:ent-3d-tqft}
+
+The scalar entanglement formula
+$S_{\EE} = (c/3)\log(L/\varepsilon)$ of
+Theorem~\ref{thm:ent-scalar-entropy} tracks the $1+1$d boundary CFT
+Calabrese--Cardy coefficient.  A different invariant appears after
+one equips the K3 boundary theory with the Vol~III ribbon-category
+package: at each finite PBW stage the Kerler--Lyubashenko category
+defines a De~Renzi--Gainutdinov--Geer--Patureau-Mirand--Runkel
+3d TQFT, and its disc topological entropy is
+$\gamma_N=\log\mathcal D_N$.  This is a TQFT invariant.  It becomes
+a correction to the boundary interval entropy only after a
+bulk--boundary interface has been chosen.
+
+\begin{theorem}[Topological entanglement at finite PBW stage]
+\label{thm:ent-topological-entanglement}
+\ClaimStatusConditional
+\textbf{Type signature.}  Quadrant: open boundary of a CY-quadrant
+input under the two-stage Vol~III specialisation
+$\Phi_d^{(\Sigma_{d-1},C)}=\Sp^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ
+\Phi_d^{\mathrm{FA}}$ at the K3-row reference data $(\Sigma_{d-1},C)$
+producing $\mathbf H_{\Delta_5}$.  Presentation: ribbon-category 3d
+TQFT at finite PBW stage~$N$, with optional pro-limit completion.
+Level: $4$ (boundary line/brane operators) with bulk--boundary
+interface to a level-$1$/level-$5$ open boundary.  Hypothesis
+package: bulk--boundary interface identifying the two interval
+endpoints with disc defects; choice of unitary boundary sector with
+central charge $c_{\mathrm{bdry}}$; trace-class Mittag--Leffler
+completion for the pro-limit clause.
+
+Let $\mathcal C_N =
+\mathrm{Rep}^{\mathrm{fd}}(\mathfrak u_{\zeta_8}^{\le N}
+(\widehat{\mathfrak m}_{\Delta_5}))$ be a finite PBW-stage
+Kerler--Lyubashenko category in the pro-system of
+Vol~III Chapter~\ref{V3-ch:modular-trace}
+Theorem~\ref{V3-thm:modtr-Plancherel-KerlerLyubashenko} at the
+specialisation data $(\Sigma_{d-1},C)$, and let
+$Z_N^{\mathrm{DGGPR}}$ be the corresponding DGGPR 3d TQFT.  Define
+\[
+ \mathcal D_N(\mathbf H_{\Delta_5})
+ \;=\;
+ \sqrt{\sum_{\lambda\in\Lambda^{\le N}}d_\lambda^2},
+ \qquad
+ d_\lambda
+ \;:=\;
+ \dim_{\mathrm{qu}}(P_\lambda),
+\]
+where the finite sum runs over indecomposable projective covers at
+stage~$N$ and $d_\lambda$ is the Kerler--Lyubashenko quantum
+dimension.  The topological entanglement entropy of a disc-like
+spatial region in $Z_N^{\mathrm{DGGPR}}$ is
+\[
+ \boxed{\;
+ \gamma_N(\mathbf H_{\Delta_5})
+ \;=\;
+ \log\mathcal D_N(\mathbf H_{\Delta_5}).\;}
+\]
+If the Mittag--Leffler Plancherel trace has a trace-class limit on the
+chosen completion, one may set
+$\gamma_\infty=\lim_N\gamma_N$; without this completion no finite
+number is asserted for the full pro-limit.  Under an additional
+bulk--boundary coupling identifying the two interval endpoints with
+disc defects of the 3d TQFT, and after choosing a unitary boundary
+sector with central charge $c_{\mathrm{bdry}}$, the boundary entropy
+takes the form
+\[
+ S_{\EE}(\Sigma)
+ \;=\;
+ \frac{c_{\mathrm{bdry}}}{3}\log\frac{L}{\varepsilon}
+ \;-\;
+ 2\,\gamma_N(\mathbf H_{\Delta_5})
+ \;+\;
+ \mathcal O(1/L),
+\]
+with the coefficient $-2\gamma_N$ reflecting the two boundary
+components of the entangling interval.  For the whole
+$\mathbf H_{\Delta_5}$ module, $c_{\mathrm{bdry}}=c_{\mathrm{eff}}$
+is only the formal anomaly coefficient of
+Remark~\ref{rem:ent-negative}; for the real-root unitary sector,
+$c_{\mathrm{bdry}}=2$.
+\end{theorem}
+
+\begin{proof}
+For each finite stage~$N$, the DGGPR construction applies to the
+finite Kerler--Lyubashenko ribbon category $\mathcal C_N$.  The
+Kitaev--Preskill and Levin--Wen topological-entanglement formula gives
+$\gamma_N=\log\mathcal D_N$ in the semisimple string-net case; the
+Gainutdinov--Runkel non-semisimple extension replaces simples by
+indecomposable projective covers and the ordinary quantum dimension by
+the Kerler--Lyubashenko quantum trace.
+
+The Calabrese--Cardy $(c_{\mathrm{bdry}}/3)\log(L/\varepsilon)$
+leading term is Theorem~\ref{thm:ent-scalar-entropy} applied to the
+chosen unitary boundary sector.  The topological subtraction does not
+follow from the scalar chiral calculation; it is the extra TQFT
+interface input.  At finite~$N$ the Hopf-algebraic
+normalisation is controlled by Radford's $S^4$ formula together with
+the Kerler--Lyubashenko ribbon anomaly.  Passing to the full
+$\mathfrak u_{\zeta_8}=\lim_N\mathfrak u_{\zeta_8}^{\le N}$ requires
+the trace-class Mittag--Leffler completion of Vol~III
+Theorem~\ref{V3-thm:modtr-Plancherel-ML-limit}; the theorem therefore
+states a finite-stage invariant and records the pro-limit as an
+additional hypothesis.
+\end{proof}
+
+\begin{theorem}[Ground-state degeneracy on $T^2$ at finite PBW stage]
+\label{thm:ent-GSD-T2}
+\ClaimStatusConditional
+\textbf{Type signature.}  Quadrant: open boundary of CY-quadrant data
+specialised through the Vol~III two-stage functor
+$\Phi_d^{(\Sigma_{d-1},C)}$ to the K3 row.  Presentation:
+finite-stage Kerler--Lyubashenko categorical Hochschild $H_0$ on
+$T^2$.  Level: $4$ at finite PBW stage.  Hypothesis package: finite
+stage~$N$; identification of $T^2$ state space with categorical
+$\mathrm{HH}_0^{\mathrm{cat}}$ via Keller's trace; trace-class
+Mittag--Leffler completion for the pro-limit clause.
+
+At finite PBW stage~$N$, the ground-state degeneracy of the
+Hamiltonian 3d TQFT $Z_N^{\mathrm{DGGPR}}$ on a spatial two-torus
+$T^2$ equals the dimension of the state space:
+\[
+ \mathrm{GSD}_N(T^2)
+ \;=\;
+ \dim Z_N^{\mathrm{DGGPR}}(T^2)
+ \;=\;
+ \dim\mathrm{HH}_0^{\mathrm{cat}}(\mathcal C_N),
+\]
+where $\mathrm{HH}_0^{\mathrm{cat}}$ denotes the categorical
+Hochschild zero-homology of the finite tensor category
+$\mathcal C_N$, distinct from chiral Hochschild
+$\mathrm{ChirHoch}^\bullet$ and topological Hochschild
+$\mathrm{THH}$.  On the real-root Kerler--Lyubashenko stratum,
+\[
+ |\Lambda^{\mathrm{re}}|
+ \;=\;
+ 8^{|\Phi^{\mathrm{real}}_+|+\mathrm{rank}}
+ \;=\;
+ 8^{126+3}
+ \;=\;
+ 8^{129}.
+\]
+This is a projective-index cardinality, equivalently the positive
+Borel real-root count; it is not the total dimension of the full
+two-sided BKM small form.  For the full pro-limit, the state space is
+the pro-vector space $\lim_N Z_N^{\mathrm{DGGPR}}(T^2)$, and no finite
+ground-state degeneracy is claimed without a trace-class completion.
+The word ``ground-state'' refers to the topological state space of the
+3d TQFT; a physical Hilbert-space interpretation requires a unitary
+Hamiltonian realization.
+\end{theorem}
+
+\begin{proof}
+The DGGPR universal construction identifies the state space on
+$\Sigma_g$ with
+$\mathrm{Hom}_{\mathcal C_N}(\mathbf 1,\mathcal L_N^{\otimes g})$.
+At $g=1$ this is
+$\mathrm{Hom}_{\mathcal C_N}(\mathbf 1,\mathcal L_N)$, and Keller's
+categorical trace identifies it with
+$\mathrm{HH}_0^{\mathrm{cat}}(\mathcal C_N)$.  The Hamiltonian
+interpretation of the 3d TQFT makes this vector space the
+ground-state subspace on $T^2$.
+
+The number $8^{129}$ is supplied by the sharpened Vol~III root-of-unity
+calculus at the specialisation $(\Sigma_{d-1},C)$ producing the
+$\Delta_5$/Igusa row: $|\Phi^{\mathrm{real}}_+|=126$ and
+$\mathrm{rank}=3$, so the real-root positive-Borel/projective-index
+count is $8^{126+3}$.  Vol~III's pro-limit theorem separates this
+cardinality from the full small-form dimensions
+$\dim\mathfrak u_{\zeta_8}^{\le N}=8^{2d(N)+3}$ and from the
+pro-finite object
+$\mathfrak u_{\zeta_8}=\lim_N\mathfrak u_{\zeta_8}^{\le N}$.
+\end{proof}
+
+\begin{remark}[Topological entanglement and derived-centre scope]
+\label{rem:ent-topological-entanglement-derived-centre}
+The topological entanglement
+$\gamma_N=\log\mathcal D_N$ of
+Theorem~\ref{thm:ent-topological-entanglement} is first a finite-stage
+ribbon tensor-category invariant of
+$\mathcal C_N=
+\mathrm{Rep}^{\mathrm{fd}}(\mathfrak u_{\zeta_8}^{\le N}
+(\widehat{\mathfrak m}_{\Delta_5}))$: it depends on
+projective-cover quantum dimensions in the Kerler--Lyubashenko coend.
+The bulk on the open Beilinson tower is the level-$3$ derived chiral
+centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\simeq
+C^\bullet_{\mathrm{ch}}(\cA,\cA)$, not the level-$2$ bar coalgebra
+$B(\cA)$; the bar object encodes the twisting datum on the
+Koszul-locus reconstruction
+$\Omega B(A_b)\xrightarrow{\sim} A_b$ at level~$1$, while
+$\gamma_N$ becomes a chiral derived-centre invariant only after one
+supplies an open/closed comparison functor
+\[
+ \mathfrak F_N\colon Z_{\mathrm{KL}}(\mathcal C_N)
+ \longrightarrow
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\mathbf H_{\Delta_5})
+\]
+where $Z_{\mathrm{KL}}(\mathcal C_N)$ denotes the
+Kerler--Lyubashenko ribbon centre/coend package of $\mathcal C_N$.
+The functor must be compatible with the ribbon trace and the
+Kerler--Lyubashenko coend.
+Kazhdan--Lusztig at a root of unity and its logarithmic extensions
+provide the expected bridge. This bridge is an additional input; the
+Calabrese--Cardy calculation supplies its scalar boundary invariant.
+
+Theorem~C governs the strict-flat centre-local-system complex
+$\mathbf C_g(\cA)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))$
+and its represented Verdier eigenspaces.  Theorem~H governs the
+derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+=\ChirHoch^\bullet(\cA,\cA)$ through the family datum $H_H(\cA;S)$
+and the resulting support~$S$.  A supplied brace comparison
+$\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, transports the
+Theorem~H object to the coefficient system of Theorem~C.  The
+categorical Hochschild group
+$\mathrm{HH}^{\mathrm{cat}}_0(\mathcal C)$, the topological
+Hochschild theory of a ring spectrum, and the ribbon-category
+coend trace remain in their native categories.  Under the functor
+$\mathfrak F_N$, the equality
+$\gamma_N(\mathbf H_{\Delta_5})=\log\mathcal D_N$ says that the
+finite-stage topological entanglement coefficient is the logarithmic
+volume of the bulk ribbon centre. Prior to this bridge,
+$\gamma_N$ is a three-dimensional TQFT invariant. Passing from $\gamma_N$ to
+$\gamma_\infty$ requires the trace-class Mittag--Leffler completion
+named in Theorem~\ref{thm:ent-topological-entanglement}.
+\end{remark}
+
+\begin{remark}[Genus-two topological entanglement and Siegel-cusp correction]
+\label{rem:ent-Sigma2-topological}
+At finite PBW stage, and under the same bulk--boundary interface
+hypothesis as Theorem~\ref{thm:ent-topological-entanglement}, the
+genus-two correction replaces the single-interval vacuum functional by
+the Vol~III genus-two DGGPR/Plancherel partition function
+$\mathcal Z_{\Sigma_2}=1/\Phi_{10}^{\mathrm{un}}(Z)$ at the
+specialisation data $(\Sigma_{d-1},C)$
+\textup{(}Chapter~\ref{V3-ch:modular-trace},
+Theorem~\ref{V3-thm:modtr-Zsigma2-Phi10}\textup{)}:
+\[
+ S_{\EE}^{\Sigma_2}(\Sigma)
+ \;=\;
+ \frac{c_{\mathrm{bdry}}}{3}\log\frac{L}{\varepsilon}
+ \;-\;
+ 2\gamma_N(\mathbf H_{\Delta_5})
+ \;+\;
+ \log\Phi_{10}^{\mathrm{un}}(Z)
+ \;+\;
+ \mathcal O(1/L),
+\]
+where $\log\Phi_{10}^{\mathrm{un}}(Z) =
+\log\prod_\alpha(1-e^{-\alpha})^{\mathrm{mult}(\alpha)}$
+is the BKM Weyl--Kac--Borcherds denominator evaluated at the Siegel
+modulus $Z$. The positivity problem of
+Remark~\ref{rem:ent-negative} (bulk $c_{\mathrm{eff}} = -166$
+gives a negative leading coefficient) is not resolved by the genus-two
+correction: the unitary sector is still the real-root submodule
+$V^{\mathrm{unit}}$ with $c_{\mathrm{unit}} = 2$ of
+Proposition~\ref{prop:ent-real-root}, and the topological
+correction $\gamma_N$ on the unitary sector adds
+$\log\mathcal D_N(\mathfrak h_{\mathrm{real}})$ to the standard free-boson
+entanglement. The genus-two extension to the full $\mathbf H_{\Delta_5}$
+module inherits the anomaly signature rather than curing it.
+\end{remark}
+
+\begin{proposition}[Knill--Laflamme scope for finite-stage
+topological entanglement; \ClaimStatusProvedHere]
+\label{prop:ent-kl-scope}
+\index{Knill--Laflamme condition!topological entanglement scope}
+The finite-stage data
+\[
+ \bigl(\mathcal C_N,\; \gamma_N=\log\mathcal D_N,\;
+ Z_N^{\mathrm{DGGPR}}(T^2)\bigr)
+\]
+do not by themselves define a Knill--Laflamme quantum
+error-correcting code.  They define a ribbon-category TQFT invariant
+and a topological state space.  A Knill--Laflamme code additionally
+requires:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a physical Hilbert space $\mathcal H_{\mathrm{phys}}$ with a
+ positive Hermitian inner product;
+\item a code projector $P_{\mathcal C}$;
+\item an error algebra $\mathcal E$ acting on
+ $\mathcal H_{\mathrm{phys}}$;
+\item the compression identities
+ \[
+  P_{\mathcal C} E_i^\dagger E_j P_{\mathcal C}
+  =\lambda_{ij}P_{\mathcal C}.
+ \]
+\end{enumerate}
+The Verdier isotropic condition is only an algebraic prerequisite.
+It becomes a Hilbert-space Knill--Laflamme statement only after the
+physical inner product and error algebra have been supplied, as in the holographic-code
+framework of Almheiri--Dong--Harlow~\cite{Almheiri-Dong-Harlow15}
+and Pastawski--Yoshida--Harlow--Preskill
+\cite{Pastawski-Yoshida-Harlow-Preskill15}.  On a one-dimensional
+scalar conformal-block line the compression equation is automatic;
+this one-channel fact does not identify the full finite-stage
+$T^2$ state space with a one-dimensional code.  For genus $g\ge2$,
+the physical Knill--Laflamme upgrade remains a conjectural
+open/closed comparison problem.
+\end{proposition}
+
+\begin{proof}
+The objects $\mathcal C_N$, $\gamma_N$, and
+$Z_N^{\mathrm{DGGPR}}(T^2)$ belong to the finite ribbon-category
+TQFT.  The Knill--Laflamme equation is an
+identity in a Hilbert space with an adjoint operation
+$E\mapsto E^\dagger$ and a chosen projector.  These data are absent
+from $\gamma_N=\log\mathcal D_N$ and from the categorical trace
+$\mathrm{HH}^{\mathrm{cat}}_0(\mathcal C_N)$ alone.
+Even when the Verdier-isotropic summands are present, they are
+algebraic data; they do not supply the physical Hilbert-space
+Knill--Laflamme equation.  For a
+one-dimensional code line,
+$P_{\mathcal C}E_i^\dagger E_jP_{\mathcal C}$ is a scalar multiple of
+$P_{\mathcal C}$, giving the automatic scalar case and no statement
+about higher-dimensional state spaces.
+\end{proof}
+
+\begin{remark}[Chain-level obligations for the 3d TQFT entanglement]
+\label{rem:ent-open}
+Three chain-level obligations remain.
+(i) \emph{Explicit PBW count}: the real-root cardinality
+$|\Lambda^{\mathrm{re}}|=8^{129}$ does not enumerate the full
+pro-limit; exact PBW enumeration requires the full
+Shapovalov Gram matrix of
+$\mathfrak u_{\zeta_8}(\widehat{\mathfrak m}_{\Delta_5})$ (Shapovalov 1972
+\emph{Funct.~Anal.~Appl.}~6), known only through the rank-3 truncation.
+(ii) \emph{Higher-genus topological entanglement}: the
+Kitaev--Preskill formula generalises to higher genera via the
+Lyubashenko--Virelizier mapping-class-group representation; the
+precise correction to the Calabrese--Cardy entanglement from the
+genus-$g$ state space is conjectured to be
+$-2g\gamma_N + \log|B_{10}^{\mathrm{Maass}}(g)|$ at finite PBW stage,
+subject to chain-level verification.
+(iii) \emph{Holographic-code interpretation}: the identification of
+$\gamma_N$ (or $\gamma_\infty$ after trace-class completion) with the
+bulk derived-centre volume
+(Remark~\ref{rem:ent-topological-entanglement-derived-centre})
+is separate from the Knill--Laflamme condition
+(Proposition~\ref{prop:ent-kl-scope}); a precise theorem requires
+matching the non-semisimple MTC ribbon structure with a holographic
+tensor network, a physical inner product, and an error algebra.
+\end{remark}

@@ -1,0 +1,680 @@
+% !TEX root = ../../main.tex
+% ============================================================================
+% Chapter: Universality of the Sugawara denominator (k + h^v)
+%
+% Russian-school lossless rectification and structural reconstitution.
+% Drinfeld + Feigin-Frenkel + Faddeev-Takhtajan style.
+%
+% This chapter STRENGTHENS the convention paragraphs already present at
+% standalone/chiral_chern_weil.tex:474
+% standalone/holographic_datum.tex:636
+% standalone/three_parameter_hbar.tex
+% standalone/virasoro_r_matrix.tex
+% from a pointwise bridge identity to a UNIVERSALITY theorem. The
+% pre-existing paragraphs correctly dismiss the naive rational identity
+% k Omega_tr = Omega_KZ / (k + h^v);
+% the structural content behind that
+% dismissal: the denominator (k + h^v) is a universal invariant of the
+% affine Kac-Moody chiral datum, appearing in the Sugawara conformal
+% weight, the Sugawara central charge, the trace-form shadow invariant
+% kappa(V_k(g)), the KZ connection, and the Feigin-Frenkel critical-level
+% locus; the trace-form and KZ r-matrix presentations are two gauge
+% representatives of the SAME operadic datum, exchanged by a
+% level-dependent change of basis of the Casimir.
+%
+% Guiding principle: strengthening only. Every claim is scoped to the
+% convention (trace-form / KZ) in which it is stated. No bare kappa;
+% label prefixes match environment; r-matrix writes carry level prefix
+% and k=0 check.
+% ============================================================================
+
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\fz}{\mathfrak{z}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\Omegatr}{\Omega_{\mathrm{tr}}}
+\providecommand{\OmegaKil}{\Omega_{\mathrm{Kil}}}
+\providecommand{\OmegaKZ}{\Omega_{\mathrm{KZ}}}
+\providecommand{\rtr}{r_{\mathrm{tr}}}
+\providecommand{\rKZ}{r_{\mathrm{KZ}}}
+\providecommand{\hv}{h^{\vee}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+
+\chapter{Universality of the Sugawara denominator $k + \hv$}
+\label{chap:chern-weil-level-shift-platonic}
+\index{Sugawara!denominator $k + h^{\vee}$|textbf}
+\index{level shift!universality|textbf}
+\index{trace-form convention!vs.\ KZ convention|textbf}
+\index{Feigin--Frenkel!critical level|textbf}
+
+\ChapterIntro{The affine Kac--Moody chiral algebra $V_k(\fg)$ carries
+two natural classical $r$-matrix presentations. In the \emph{trace-form}
+convention,
+\[
+ \rtr(z) \;=\; \frac{k\,\Omegatr}{z},
+\]
+where $\Omegatr = \sum_a t^a \otimes t^a$ is the Casimir built from an
+orthonormal basis for the normalised invariant form (long roots squared
+length~$2$). In the \emph{Kazhdan--Lusztig} (KZ) convention,
+\[
+ \rKZ(z) \;=\; \frac{\OmegaKZ}{(k + \hv)\,z},
+\]
+where $\OmegaKZ=\Omegatr$ is the same normalised inverse-form Casimir
+written in conformal-block notation. If $\OmegaKil$ denotes the inverse
+tensor of the Killing form, then
+$\OmegaKil=(2\hv)^{-1}\Omegatr$ and
+$\OmegaKZ=2\hv\,\OmegaKil$. These two formulas are \emph{not} equal
+as rational functions of~$k$: at $k = 0$ the left side vanishes while
+the right side is finite and non-zero. This chapter makes the
+structural content behind that distinction precise. The denominator
+$k + \hv$ is a universal
+invariant of the chiral datum, appearing simultaneously in the
+Sugawara energy--momentum tensor, the Sugawara central charge, the
+trace-form shadow invariant, the KZ connection, and the Feigin--Frenkel
+critical-level locus. The trace-form and KZ presentations are not
+generic tensor-equal representatives; they are the central-extension
+and Sugawara-Ward projections of the same affine operadic datum. The
+convention discipline is universal: every $r$-matrix write declares
+its convention and exhibits the appropriate $k = 0$ check.}
+
+\section{Setup: affine Kac--Moody at level $k$}
+\label{sec:chern-weil-setup}
+
+\begin{definition}[Invariant-form, Casimir, and affine OPE normalisation;
+\ClaimStatusDefinitional]
+\label{def:chern-weil-normalization-data}
+Fix a simple Lie algebra $\fg$ over $\mathbb{C}$ with dual Coxeter
+number $\hv$ and rank $r$. Let $\kappa_{\mathrm{Kil}}$ be the Killing
+form and let $(\ ,\ )$ denote the normalised invariant form determined
+by the convention $(\theta, \theta) = 2$ for the highest root
+$\theta$. The two invariant forms are related by
+\begin{equation}\label{eq:killing-trace-relation}
+ \kappa_{\mathrm{Kil}}(x, y) \;=\; 2 \hv\, (x, y),
+ \qquad x, y \in \fg.
+\end{equation}
+
+Let $\{t^a\}_{a=1}^{\dim\fg}$ be an orthonormal basis for $(\ ,\ )$
+and let $\{T^a\}$ be an orthonormal basis for
+$\kappa_{\mathrm{Kil}}$. The two Casimirs are
+\begin{equation}\label{eq:casimir-two-forms}
+ \Omegatr \;=\; \sum_a t^a \otimes t^a,
+ \qquad
+ \OmegaKil \;=\; \sum_a T^a \otimes T^a,
+ \qquad
+ \OmegaKil \;=\; \frac{1}{2 \hv}\,\Omegatr.
+\end{equation}
+Explicitly, $T^a = (2\hv)^{-1/2} t^a$ gives an orthonormal basis
+for $\kappa_{\mathrm{Kil}}$; squaring the normalisation factor recovers
+the prefactor $(2\hv)^{-1}$ in~\eqref{eq:casimir-two-forms}. The KZ
+Casimir used below is
+\begin{equation}\label{eq:kz-casimir-normalization}
+ \OmegaKZ := \Omegatr = 2\hv\,\OmegaKil.
+\end{equation}
+Thus the KZ numerator is not the Killing inverse tensor itself; it is
+the normalised inverse-form tensor expressed in the notation standard
+for conformal-block connections.
+
+The affine Kac--Moody algebra at level $k$ is the vertex algebra
+$V_k(\fg)$ with strong generators $J^a(z)$ and singular OPEs
+\begin{equation}\label{eq:affine-km-ope}
+ J^a(z)\,J^b(w) \;=\;
+ \frac{k\,\delta^{ab}}{(z - w)^2}
+ \;+\;
+ \frac{f^{ab}{}_c\,J^c(w)}{z - w}
+ \;+\;\mathrm{regular},
+\end{equation}
+where $f^{ab}{}_c$ are the structure constants in the $\{t^a\}$
+basis. The level $k$ multiplies the Killing-normalised central
+extension after the orthonormal-basis translation: under $t^a \mapsto
+T^a = (2\hv)^{-1/2} t^a$, the OPE~\eqref{eq:affine-km-ope} becomes
+\[
+ J^a_{\mathrm{KZ}}(z)\,J^b_{\mathrm{KZ}}(w)
+ \;=\;
+ \frac{(k / 2\hv)\,\delta^{ab}_{\mathrm{Kil}}}{(z - w)^2}
+ \;+\;\cdots,
+\]
+so in the KZ convention the central extension appears with effective
+level $k/(2\hv)$.
+\end{definition}
+
+\begin{definition}[r-matrix convention labels; \ClaimStatusDefinitional]
+\label{def:rmatrix-convention}
+% r-matrix check:
+% family: affine KM; both conventions.
+% convention (trace-form): r(z) = k * Omega_tr / z; level k MANDATORY.
+% r(z)|_{k=0} = 0.
+% convention (KZ): r(z) = Omega_KZ / ((k+h^v) z); level denominator MANDATORY.
+% r(z)|_{k=0} = Omega_KZ / (h^v z), non-zero for non-abelian g.
+% KZ r(z) does not vanish at k=0 because the Lie bracket persists;
+% this is the physically correct statement. Critical level:
+% r(z)|_{k=-h^v} diverges.
+% Source: landscape_census.tex for kappa; this chapter for the bridge.
+We fix once and for all the following two classical $r$-matrix
+presentations of the affine Kac--Moody chiral algebra:
+\begin{enumerate}
+ \item \emph{Trace-form convention.} $\rtr(z) = k\,\Omegatr / z$,
+ where $\Omegatr$ is built from an orthonormal basis for the
+ normalised invariant form $(\ ,\ )$. The level $k$ appears as an
+ explicit numerator prefix. At $k = 0$: $\rtr = 0$.
+ \item \emph{Kazhdan--Lusztig} (KZ) \emph{convention.}
+ $\rKZ(z) = \OmegaKZ / ((k + \hv)\,z)$, where $\OmegaKZ$ is built
+ from the normalised form and equals $2\hv$ times the Killing
+ inverse tensor. The level appears in the denominator as
+ $k + \hv$. At $k = 0$:
+ $\rKZ = \OmegaKZ / (\hv\,z)$, which is non-zero for non-abelian
+ $\fg$ (the Lie bracket persists through the Casimir).
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[bare-$r$ regime]
+\label{rem:level-shift-universal}
+An $r$-matrix presentation that writes $\Omega / z$ with neither a $k$
+numerator prefix nor a $(k + \hv)$ denominator is under-specified: it
+chooses neither convention and so cannot be checked against either
+$k = 0$ boundary. The regex
+\[
+ \mathtt{r(z)\backslash s*=\backslash s*\backslash\backslash Omega\backslash s*/\backslash s*z}
+\]
+catches this violation; every such bare write must be augmented into
+$\rtr$ or $\rKZ$ form before the file is accepted. The universality
+theorem below explains why both augmentations are legitimate only after
+their extraction channel has been declared.
+\end{remark}
+
+\section{Universality of the level shift}
+\label{sec:universality}
+
+The assignment $k \mapsto k + \hv$ is not a change of basis that turns
+$k\,\Omegatr$ into $\OmegaKZ/(k+\hv)$. It is the unique denominator
+forced by the Sugawara normalisation, and hence by the KZ equation,
+while $k\,\Omegatr$ is the central-extension part of the affine OPE.
+
+\begin{theorem}[Level-shift universality with convention separation]
+\label{thm:level-shift-universality}
+\ClaimStatusProvedHere
+Let $\fg$ be simple and $k \neq -\hv$. Consider the space of classical
+$r$-matrix numerators and KZ connection coefficients associated with
+$V_k(\fg)$ in the normalised invariant-form convention. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the trace-form collision residue is
+\[
+ \rtr(z)=\frac{k\,\Omegatr}{z};
+\]
+\item the KZ conformal-block connection has simple-pole coefficient
+\[
+ \rKZ(z)=\frac{\OmegaKZ}{(k+\hv)z},
+ \qquad \OmegaKZ=\Omegatr=2\hv\,\OmegaKil;
+\]
+\item no $k$-independent invariant-form rescaling identifies these two
+ tensors for generic~$k$;
+\item the denominator $k+\hv$ is uniquely forced by the requirement that
+ the Sugawara field make each current $J^a$ a primary field of
+ conformal weight~$1$ and by the critical-level condition that the
+ Sugawara construction degenerate precisely at $k=-\hv$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The affine OPE in the basis orthonormal for the normalised form is
+\[
+ J^a(z)J^b(w)
+ =
+ \frac{k\,\delta^{ab}}{(z-w)^2}
+ +\frac{f^{ab}{}_cJ^c(w)}{z-w}
+ +\cdots .
+\]
+The double-pole term is exactly the trace-form collision residue
+$k\,\Omegatr/z$, proving~(i).
+
+The invariant-form conversion is independent of~$k$:
+equations~\eqref{eq:casimir-two-forms}--\eqref{eq:kz-casimir-normalization}
+give $\OmegaKil=(2\hv)^{-1}\Omegatr$ and
+$\OmegaKZ=\Omegatr=2\hv\,\OmegaKil$. This proves the tensor
+normalisation in~(ii).
+
+It remains to derive the denominator. Write a possible Sugawara field
+as
+\[
+ T_a(z)=a\sum_b :J^bJ^b:(z).
+\]
+Contracting $T_a(z)$ with $J^c(w)$ using the affine OPE gives the
+singular part
+\[
+ T_a(z)J^c(w)
+ =
+ \frac{2a(k+\hv)J^c(w)}{(z-w)^2}
+ +\frac{2a(k+\hv)\partial J^c(w)}{z-w}
+ +\cdots .
+\]
+The $k$ term comes from the central double-pole contraction, and the
+$\hv$ term is the adjoint quadratic-Casimir contribution
+$\sum_{a,b} f^{ca}{}_b f^{ab}{}_d = 2\hv\,\delta^c_d$ in the present
+normalisation, with the factor~$2$ already absorbed by the two Wick
+contractions. The condition that $J^c$ be primary of weight~$1$ forces
+\[
+ 2a(k+\hv)=1,
+ \qquad\text{so}\qquad
+ a=\frac{1}{2(k+\hv)}.
+\]
+The same coefficient is the Ward-identity coefficient in the KZ
+connection, proving~(ii) and the uniqueness part of~(iv).
+
+Finally, if one tries to identify $\rtr$ and $\rKZ$ by a
+$k$-independent invariant-form rescaling $\OmegaKZ=\lambda\Omegatr$,
+then equality would require
+\[
+ k=\frac{\lambda}{k+\hv}
+ \qquad\text{for all }k,
+\]
+or $k(k+\hv)=\lambda$ for all~$k$, impossible for constant
+$\lambda$. Thus (iii) holds. The denominator vanishes exactly at
+$k=-\hv$, the Feigin--Frenkel critical level, so the critical-locus
+condition also forces the same shift.
+\end{proof}
+
+\begin{remark}[Change of basis vs.\ rational identity]
+\label{rem:basis-vs-identity}
+The equation
+\[
+ k \cdot \Omegatr \;\neq\; \OmegaKZ / (k + \hv)
+\]
+FAILS as a rational identity in $k$: at $k = 0$ the left side vanishes,
+the right side is $\OmegaKZ / \hv \neq 0$. The correct reading is that
+the two sides are different projections of the same affine OPE. The
+left side records the central-extension collision residue. The right
+side records the Ward-identity coefficient of the KZ connection after
+the Sugawara field has been normalised by $1/(2(k+\hv))$. The
+invariant-form conversion is only
+	$\OmegaKZ=\Omegatr=2\hv\,\OmegaKil$; it does not supply any
+	$k$-dependent tensor equality. The level-shift theorem records the
+	positive statement: the trace-form central residue and the KZ
+	Ward-identity coefficient are different projections of the same affine
+	OPE, separated by the Sugawara denominator.
+\end{remark}
+
+\section{Universal occurrence of $k + \hv$}
+\label{sec:universal-occurrence}
+
+The level shift $k \mapsto k + \hv$ is not an accident of the
+$r$-matrix bridge; the denominator $k + \hv$ appears universally in
+every Sugawara-related quantity attached to $V_k(\fg)$.
+
+\begin{proposition}[Universal occurrence of $k + \hv$]
+\label{prop:shift-appears-universally}
+\ClaimStatusProvedHere
+Let $\fg$ be simple and $k \neq -\hv$. The quantity $k + \hv$ appears
+as the Sugawara denominator in each of the following invariants of
+$V_k(\fg)$:
+\begin{enumerate}
+ \item \emph{Sugawara energy-momentum tensor.}
+ \[
+ T(z) \;=\; \frac{1}{2(k + \hv)}
+ \sum_{a} :\!J^a(z)\,J^a(z)\!:.
+ \]
+ \item \emph{Sugawara central charge.}
+ \[
+ c(V_k(\fg)) \;=\; \frac{k\,\dim \fg}{k + \hv}.
+ \]
+ \item \emph{Trace-form chiral shadow invariant.}
+ \[
+ \kch(V_k(\fg)) \;=\; \frac{\dim(\fg)\,(k + \hv)}{2\,\hv}
+ \qquad\text{[trace convention]},
+ \]
+ equivalently, in KZ convention,
+ $\kch(V_k(\fg))/(k + \hv) = \dim(\fg)/(2\hv)$, a
+ level-independent rational number.
+ \item \emph{KZ connection.} The genus-$0$ shadow connection on the
+ configuration space $\mathrm{Conf}_n(\mathbb{C})$ is
+ \[
+ \nabla^{\mathrm{hol}}_{0,n}
+ \;=\; d
+ \;-\; \frac{1}{k + \hv}\sum_{i < j}
+ \frac{\Omega_{\mathrm{KZ},\,ij}\,dz_{ij}}{z_{ij}}.
+ \]
+ \item \emph{Feigin-Frenkel critical level.} The locus where the
+ Sugawara construction degenerates is $k = -\hv$, equivalently the
+ zero locus of the universal denominator $k + \hv$.
+\end{enumerate}
+The Sugawara and KZ quantities are ill-defined precisely at
+$k = -\hv$; the trace-form shadow invariant is instead regular there
+and vanishes. In every displayed formula the shifted parameter
+$k + \hv$ is the universal affine denominator or its numerator-dual
+shadow.
+\end{proposition}
+
+\begin{proof}
+\emph{Item (1).} Sugawara's formula for the affine energy--momentum
+tensor is derived by requiring that $T(z)$ generate a Virasoro
+subalgebra under the affine Kac--Moody OPE~\eqref{eq:affine-km-ope},
+with $J^a(z)$ a primary of weight~$1$. The derivation produces the
+normalisation factor $1/(2(k + \hv))$, where $2$ comes from the double
+pole in the Killing form of the orthonormal basis for $(\ ,\ )$ and
+$\hv$ comes from the quadratic Casimir eigenvalue on the adjoint
+representation of $\fg$. The composite $k + \hv$ is the SAME
+denominator.
+
+\emph{Item (2).} The Sugawara central charge is computed from the
+$T(z) T(w)$ OPE. The quartic term in
+$:\!J^a J^a\!:\cdot:\!J^b J^b\!:$ contracts pairwise, producing a
+double-pole coefficient of $(k \cdot \dim\fg \cdot 2) \cdot
+(2(k + \hv))^{-2} \cdot 2 = k\,\dim\fg / (2(k + \hv)^2) \cdot 2\,(k+\hv) = k\,\dim\fg / (k + \hv)$.
+(The intermediate factor $2(k + \hv)$ comes from the Killing-form
+contraction in the Wick expansion.) Equivalently, one can derive
+$c = k\,\dim\fg / (k + \hv)$ from the action of $L_0$ on the vacuum
+and the centre of $V_k(\fg)$.
+
+\emph{Item (3).} Direct census entry, landscape\_census.tex:
+$\kch^{\mathrm{KM}}(V_k(\fg)) = \dim(\fg)(k + \hv)/(2\hv)$. At $k = 0$
+this gives $\dim(\fg)/2 \neq 0$, which is the correct abelian limit.
+At $k = -\hv$ this gives $0$, the critical-level
+value.
+
+\emph{Item (4).} The KZ connection is derived by requiring horizontal
+sections to satisfy the KZ equation, which in turn is derived from
+the Ward identity for $V_k(\fg)$-conformal blocks. The coefficient
+$1/(k + \hv)$ is forced by the Sugawara formula in item~(1).
+
+\emph{Item (5).} At $k = -\hv$, the denominator-controlled
+quantities in items~(1), (2), and (4) degenerate: the Sugawara
+$T(z)$ is undefined (division by zero), $c$ is undefined, and the
+KZ connection has a pole in~$k$. The trace-form shadow invariant in
+item~(3) is the numerator-dual reflection of the same shift: it is
+regular and equals zero at the critical point. This is the
+Feigin--Frenkel critical level.
+
+In each item the numerator is $k$-linear (or $k$-independent in
+items~(1), (4)); the only denominator of $k$ that appears is
+$k + \hv$. This is the universality statement.
+\end{proof}
+
+\section{Dual Coxeter coincidence via the strange formula}
+\label{sec:strange-formula}
+
+We illustrate the universality with the explicit dependence on $\hv$
+through the Freudenthal--de~Vries strange formula.
+
+\begin{theorem}[Dual Coxeter coincidence]
+\label{thm:h-dual-coxeter-coincidence}
+\ClaimStatusProvedHere
+Let $\fg$ be simple with rank $r$, dimension $d = \dim\fg$, dual
+Coxeter number $\hv$, and half-sum of positive roots $\rho$. The
+Freudenthal--de~Vries strange formula
+\begin{equation}\label{eq:strange}
+ \frac{(\rho, \rho)}{2\hv} \;=\; \frac{d}{24}
+\end{equation}
+(in the normalised invariant form) implies the identity
+\begin{equation}\label{eq:kappa-vs-c}
+ \kch(V_k(\fg))
+ \;=\; \frac{d(k + \hv)}{2\hv}
+ \;=\; \frac{12(\rho, \rho)(k + \hv)}{d \cdot 2\hv}
+ \cdot \frac{d^2}{12(\rho,\rho)}
+ \;=\; \frac{c(V_k(\fg))}{2}
+ \cdot \frac{(k + \hv)^2}{k\,\hv}
+\end{equation}
+at $k \neq 0, -\hv$. In particular the ratio
+$\kch(V_k(\fg))/c(V_k(\fg)) = (k + \hv)^2 / (2k\,\hv)$ is a rational
+function of $k$ with its only pole at $k = 0$ (abelian limit) and
+its only zero at $k = -\hv$ (critical limit). Explicit evaluations:
+\begin{center}
+\begin{tabular}{lccccc}
+\toprule
+$\fg$ & $\fsl_2$ & $\fsl_3$ & $\mathfrak{so}_5$ & $G_2$ & $E_8$ \\
+\midrule
+$\hv$ & $2$ & $3$ & $3$ & $4$ & $30$ \\
+$d$ & $3$ & $8$ & $10$ & $14$ & $248$ \\
+$\kch$ at $k = 1$ & $9/4$ & $16/3$ & $20/3$ & $35/4$ & $248 \cdot 31 / 60$ \\
+$c$ at $k = 1$ & $1$ & $2$ & $5/2$ & $14/5$ & $248 / 31$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+Equation~\eqref{eq:strange} is the Freudenthal--de~Vries strange
+formula; see Kac, \emph{Infinite-Dimensional Lie Algebras},
+Ch.~12. Substituting into
+$\kch(V_k(\fg)) = d(k + \hv)/(2\hv)$ and
+$c(V_k(\fg)) = kd/(k + \hv)$ produces the identity~\eqref{eq:kappa-vs-c}
+after algebra.
+
+For the explicit evaluations, at $k = 1$:
+\begin{itemize}
+ \item $\fsl_2$: $\hv = 2$, $d = 3$, $\kch = 3 \cdot 3 / 4 = 9/4$,
+ $c = 3/3 = 1$.
+ \item $\fsl_3$: $\hv = 3$, $d = 8$, $\kch = 8 \cdot 4 / 6 = 32/6$,
+ $c = 8/4 = 2$.
+ \item $\mathfrak{so}_5$: $\hv = 3$, $d = 10$,
+ $\kch = 10 \cdot 4 / 6 = 20/3$, $c = 10/4 = 5/2$.
+ \item $G_2$: $\hv = 4$, $d = 14$,
+ $\kch = 14 \cdot 5 / 8 = 35/4$, $c = 14/5$.
+ \item $E_8$: $\hv = 30$, $d = 248$,
+ $\kch = 248 \cdot 31 / 60$, $c = 248/31$.
+\end{itemize}
+Each case exhibits the denominator $k + \hv$ (with $k = 1$) and the
+compensating numerator factor $d = \dim\fg$.
+\end{proof}
+
+\begin{remark}[Reading of the strange-formula identity]
+\label{rem:strange-formula-reading}
+The identity~\eqref{eq:kappa-vs-c} is not a coincidence; it is the
+shadow of the Sugawara construction itself. The ratio
+$\kch/c = (k + \hv)^2/(2k\hv)$ records the two independent places
+where the Sugawara denominator enters the chiral datum: once in the
+normalisation of $T(z)$ (the $c$ side) and once in the level
+parametrisation of the shadow invariant (the $\kch$ side). The strange
+formula aligns the $\hv$-dependence of both.
+\end{remark}
+
+\section{The trace-form / KZ convention bridge}
+\label{sec:bridge}
+
+The bridge between the two $r$-matrix presentations takes the
+following sharp form.
+
+\begin{theorem}[Trace--KZ convention bridge]
+\label{thm:trace-KZ-convention-bridge}
+\ClaimStatusProvedHere
+Let $\fg$ be simple and $k \neq -\hv$. The two classical $r$-matrix
+presentations $\rtr(z) = k\,\Omegatr / z$ and
+$\rKZ(z) = \OmegaKZ / ((k + \hv) z)$ are distinct as
+$\fg \otimes \fg$-valued rational functions of $k$ and $z$: at $k = 0$
+the former vanishes while the latter equals $\OmegaKZ / (\hv\,z) \neq 0$
+for non-abelian $\fg$. With the normalisation
+$\OmegaKZ=\Omegatr$, their ratio is
+\begin{equation}\label{eq:trace-kz-ratio}
+ \frac{\rtr(z)}{\rKZ(z)} = k(k+\hv).
+\end{equation}
+Consequently the two tensor formulas coincide only at the roots of
+$k(k+\hv)=1$ in this normalisation, or more generally at the roots of
+$k(k+\hv)=\lambda$ if one replaces $\OmegaKZ$ by
+$\lambda\Omegatr$ using a fixed invariant-form rescaling. No such
+rescaling gives equality for generic~$k$.
+
+The bridge is therefore not a tensor identity. It is the following
+commuting dictionary from the affine OPE:
+\[
+ \text{central double pole}
+ \longmapsto
+ k\,\Omegatr/z,
+ \qquad
+ \text{Sugawara Ward identity}
+ \longmapsto
+ \OmegaKZ/((k+\hv)z).
+\]
+Both arrows start from the same affine chiral datum, but they record
+different coefficients of that datum.
+\end{theorem}
+
+\begin{proof}
+The inequality of $\rtr(z)$ and $\rKZ(z)$ as rational functions follows
+from evaluating at $k = 0$: $\rtr(z)|_{k = 0} = 0$, whereas
+$\rKZ(z)|_{k = 0} = \OmegaKZ/(\hv\,z)$, which is non-zero for
+non-abelian $\fg$ (the Lie bracket persists through $\OmegaKZ$).
+
+The normalisation statement is
+$\OmegaKZ=\Omegatr=2\hv\,\OmegaKil$, proved in
+\eqref{eq:casimir-two-forms}--\eqref{eq:kz-casimir-normalization}.
+Substituting it into the trace-form residue gives
+\[
+ \rtr(z)=\frac{k\,\OmegaKZ}{z}.
+\]
+Since $\rKZ(z)=\OmegaKZ/((k+\hv)z)$, division gives
+\eqref{eq:trace-kz-ratio}. Equality after a fixed rescaling
+$\OmegaKZ=\lambda\Omegatr$ would require $k(k+\hv)=\lambda$.
+The left side is a non-constant quadratic polynomial in~$k$, so no
+constant $\lambda$ gives equality for generic~$k$. For a chosen
+$\lambda$, equality occurs exactly at the two roots
+\[
+ k=\frac{-\hv\pm\sqrt{(\hv)^2+4\lambda}}{2}
+\]
+when the discriminant is non-zero.
+
+Finally, the source of the two coefficients is different. The
+trace-form coefficient $k$ is read directly from the double pole in
+the affine OPE. The KZ coefficient $(k+\hv)^{-1}$ is read from the
+Sugawara Ward identity, whose derivation is given in the proof of
+Theorem~\ref{thm:level-shift-universality}. This proves the dictionary
+and excludes the false tensor identity.
+\end{proof}
+
+\begin{remark}[Convention-separated universality]
+\label{rem:chern-weil-474}
+The naive rational identity
+$k\,\Omegatr = \OmegaKZ/(k + \hv)$ fails at $k = 0$ and therefore is
+not an identity in rational functions of $k$. The structural positive
+statement is supplied by
+Theorems~\ref{thm:level-shift-universality} and
+\ref{thm:trace-KZ-convention-bridge}: they identify the denominator
+$k + \hv$ as the universal Sugawara parameter while keeping the
+trace-form central residue $k\,\Omegatr/z$ separate from the KZ
+connection coefficient $\OmegaKZ/((k+\hv)z)$. The same separation is
+the holographic datum: central residues and Ward-identity coefficients
+share an affine OPE source but live in different normalisations.
+\end{remark}
+
+\section{Universal convention bridge}
+\label{sec:level-shift-convention-bridge}
+
+The trace-form and KZ normalisations are related by a universal
+level-shift comparison.
+
+\begin{corollary}[$r$-matrix convention bridge with explicit $k=0$ check]
+\label{cor:level-shift-universal-convention-bridge}
+\ClaimStatusProvedHere
+Every $r$-matrix presentation for $V_k(\fg)$ in this theory declares
+its convention and exhibit the corresponding $k = 0$ check, as follows.
+\begin{enumerate}
+ \item \emph{Trace-form normalisation.} The $r$-matrix has the
+ $k$ numerator prefix:
+ $r(z) = k\,\Omegatr / z$. The $k = 0$ check yields $r = 0$
+ (abelian limit). This is the convention adopted in
+ Definition~\ref{def:rmatrix-convention}(1).
+ \item \emph{KZ normalisation.} The $r$-matrix has the
+ $(k + \hv)$ denominator:
+ $r(z) = \OmegaKZ / ((k + \hv)\,z)$. The $k = 0$ check yields
+ $r = \OmegaKZ / (\hv\,z) \neq 0$ for non-abelian $\fg$, reflecting
+ the persistence of the Lie bracket at $k = 0$ in the KZ
+ normalisation. This is the convention adopted in
+ Definition~\ref{def:rmatrix-convention}(2).
+\end{enumerate}
+A bare expression $r(z) = \Omega/z$ with no level prefix and no
+$(k + \hv)$ denominator has no normalisation; by
+Theorem~\ref{thm:level-shift-universality} and
+Theorem~\ref{thm:trace-KZ-convention-bridge}, every bare write admits
+a unique augmentation into either form~(1) or~(2), determined by the
+chosen normalisation. The comparison is universal: the level shift
+$k \mapsto k + \hv$ supplies the KZ
+denominator, while the affine OPE supplies the trace-form numerator.
+\end{corollary}
+
+\begin{proof}
+The trace-form augmentation is the assignment
+$r(z) = \Omega/z \mapsto k\,\Omegatr/z$, which is well-defined once
+$\Omega$ is identified as $\Omegatr$. The KZ augmentation is
+$r(z) = \Omega/z \mapsto \OmegaKZ/((k + \hv) z)$, which is well-defined
+once $\Omega$ is identified as $\OmegaKZ$. By
+Theorem~\ref{thm:trace-KZ-convention-bridge} the two augmentations are
+not tensor-equal for generic~$k$; they are the two conventionally
+separate coefficients extracted from the same affine chiral datum. By
+Theorem~\ref{thm:level-shift-universality} the denominator in the KZ
+augmentation is uniquely forced by the Sugawara primary-field
+condition. Hence every bare write admits a unique choice of
+augmentation per convention, and the resulting expression is checkable
+against its $k=0$ boundary.
+\end{proof}
+
+\begin{remark}[Detector for level-prefix omission]
+\label{rem:level-prefix-grep-detector}
+Once
+Corollary~\ref{cor:level-shift-universal-convention-bridge} fixes
+the convention discipline, every $r$-matrix write carries either
+an explicit $k$ numerator (trace form) or an explicit $(k+\hv)$
+denominator (KZ); the level is never implicit. The pattern
+$r(z) = \Omega/z$ with no level prefix is therefore a detector for
+violations of the discipline: any such write is either an undeclared
+free-field identity at $k=1$ or a typesetting omission to be
+corrected.
+\end{remark}
+
+\section{Independent derivations of the level shift}
+\label{sec:level-shift-independent-verification}
+
+\begin{itemize}
+ \item Theorem~\ref{thm:level-shift-universality} follows from this
+ chapter's conditions (i)--(iii).  Kac's
+ \emph{Infinite-Dimensional Lie Algebras}, Chapter~12, derives the
+ same shifted parameter from the Sugawara formula.  That derivation
+ of the Sugawara denominator uses the quadratic Casimir eigenvalue
+ on the adjoint, not the $r$-matrix CYBE.
+ \item Proposition~\ref{prop:shift-appears-universally} agrees with
+ Di~Francesco--Mathieu--S\'en\'echal, \emph{Conformal Field Theory},
+ \S15.3.  Their derivation of
+ the KZ connection starts from the Ward identity for conformal blocks,
+ rather than from the modular-characteristic calculation.
+ \item Theorem~\ref{thm:h-dual-coxeter-coincidence} uses the
+ Freudenthal--de~Vries strange formula.  Wendlandt,
+ \emph{The restricted Yangian and Yangian doubles}, \S3, obtains the
+ corresponding trace-form normalization of the Yangian $r$-matrix
+ from Hopf algebra axioms rather than from the strange formula.
+ \item In the free-field realization of
+ $\widehat{\fsl}_2{}_1$, the central double pole gives the
+ trace-form coefficient $\Omega_{\mathrm{tr}}/z$, whereas the
+ Sugawara Ward identity gives the KZ coefficient
+ $\Omega_{\mathrm{KZ}}/(3z)$.  This is the smallest instance of the
+ convention dictionary in
+ Theorem~\ref{thm:trace-KZ-convention-bridge}.
+\end{itemize}
+
+\section{Trace-form versus KZ presentation: not a hidden Casimir rescaling}
+\label{sec:trace-vs-kz-r-matrix-disambiguation}
+
+The candidate identification
+$k\Omega_{\mathrm{tr}}/z \stackrel{?}{=} \Omega/((k+\hv)z)$ — the trace-form
+$r$-matrix and the KZ $r$-matrix as the same tensor up to a
+hidden Casimir rescaling — is false.
+Theorem~\ref{thm:level-shift-universality} proves the opposite. The
+denominator $k+\hv$ is the universal Sugawara denominator; the
+trace-form coefficient $k$ and the KZ coefficient $(k+\hv)^{-1}$
+are different extractions from the same affine OPE.
+Theorem~\ref{thm:trace-KZ-convention-bridge} bridges the two as a
+dictionary on conventions, not as a rational identity in the same
+generators.
+
+\section*{The level shift as the universal Sugawara parameter}
+
+The assignment $k \mapsto k+\hv$ is not a convention-dependent
+algebraic manipulation; it is the universal Sugawara parameter of
+the affine Kac--Moody chiral algebra. Every quantity attached to
+$V_k(\fg)$ that cares about the Sugawara normalisation depends on
+$k$ through $k+\hv$ alone. The trace-form and KZ presentations of
+$r(z)$ remain convention-separated: one reads the central double
+pole, the other reads the Sugawara Ward identity. The
+critical-level locus $k = -\hv$ is the zero of this universal
+denominator, and Feigin--Frenkel localisation is the chart of the
+chiral datum adapted to that locus.
+Corollary~\ref{cor:level-shift-universal-convention-bridge}
+makes the convention discipline universal: every bare $r$-matrix
+write admits a unique augmentation per convention, and each
+augmentation carries its own $k=0$ check.

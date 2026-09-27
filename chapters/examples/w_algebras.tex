@@ -1,0 +1,931 @@
+% Standalone safety net.
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
+\providecommand{\BP}{\mathrm{BP}}
+\providecommand{\ClaimStatusComputed}{\textnormal{[computed]}}
+\providecommand{\ClaimStatusOpen}{\textnormal{[open]}}
+
+\chapter{$W$-algebras: local structure, bar transport, and scalar
+companions}
+\label{chap:w-algebra-koszul}
+\label{chap:w-algebras}
+
+A $W$-algebra enters the Open Beilinson tower through four distinct
+layers.  The local layer is its vertex-algebra OPE\@.  The filtered layer
+is the Li--Kazhdan degeneration to the arc space of a Slodowy slice.
+The Koszul layer is the completed chiral bar coalgebra and its Verdier
+dual.  The modular layer is the genus-one trace produced after sewing.
+The first two layers supply the exact calculations in this chapter.
+The final two carry named hypothesis packages whenever the required
+comparison theorem remains open.
+
+This separation is especially important for two scalar families.  For
+principal $\mathcal W_N$, the central-charge companion sum is an exact
+rational-function identity.  For Bershadsky--Polyakov, the standard
+Fehily--Kawasetsu--Ridout conformal vector gives conductor~$50$; a
+shifted conformal vector gives the secondary sum~$196$.  The modular
+characteristic of Bershadsky--Polyakov remains a genus-one
+calculation.
+
+\section{Drinfeld--Sokolov reduction and Slodowy geometry}
+
+\begin{definition}[Slodowy transverse slice]
+\label{def:slodowy-slice}
+Let $(e,h,f)$ be an $\mathfrak{sl}_2$-triple in a complex semisimple
+Lie algebra $\mathfrak g$.  The Slodowy slice through $f$ is
+\begin{equation}\label{eq:slodowy-slice-repaired}
+S_f:=f+\mathfrak g^e,
+\qquad
+\mathfrak g^e=\ker(\operatorname{ad}e).
+\end{equation}
+It is an affine space transverse to the orbit of $f$ at the point
+$f$ and carries the Poisson structure induced by Hamiltonian
+reduction.
+\end{definition}
+
+\begin{remark}[Arc-space PBW theorem]
+\label{rem:jet-slodowy}
+For the universal affine $W$-algebra, the Li--Kazhdan PBW theorem is
+the differential-commutative identification
+\begin{equation}\label{eq:jet-slodowy-repaired}
+\operatorname{gr}_{\mathrm{Li}}\mathcal W^k(\mathfrak g,f)
+\cong \mathbb C[J_\infty S_f].
+\end{equation}
+Since $S_f=f+\mathfrak g^e$ is affine space,
+$\mathbb C[J_\infty S_f]$ is a free differential polynomial algebra
+on $(\mathfrak g^e)^*$.  This PBW statement concerns the associated
+graded vertex algebra; a completed-bar collapse requires the separate
+criterion in Theorem~\ref{thm:w-pbw-slodowy-collapse}.
+\end{remark}
+
+\begin{theorem}[Associated varieties under DS reduction;
+\ClaimStatusProvedElsewhere]
+\label{thm:arakawa-variety-intersection}
+Let $M$ lie in a category on which the higher DS cohomology vanishes.
+Arakawa's associated-variety theorem gives
+\begin{equation}\label{eq:arakawa-variety-repaired}
+X_{H^0_{\mathrm{DS},f}(M)}=X_M\cap S_f
+\end{equation}
+with the scheme-theoretic formulation and finiteness hypotheses of
+\cite{Ara15,ArakawaMoreau17}.
+\end{theorem}
+
+\begin{remark}[Geometric localization]
+\label{rem:ds-geometric-localization-principle}
+Drinfeld--Sokolov reduction restricts the classical support from the
+ambient current space to the transverse slice.  Equation
+\eqref{eq:arakawa-variety-repaired} is the support-theoretic form of
+this localization.  Transport of a chiral bar coalgebra is a stronger
+derived assertion: it asks for a filtered comparison between the bar
+construction of the BRST resolution and the bar construction of its
+DS cohomology.
+\end{remark}
+
+\begin{remark}[The PBW face of the reconstruction square]
+\label{rem:pbw-slodowy-master-square}
+The PBW face compares
+$\operatorname{gr}_{\mathrm{Li}}\mathcal W^k(\mathfrak g,f)$ with
+$\mathbb C[J_\infty S_f]$.  The derived face compares completed bar
+coalgebras.  A theorem joining these faces consists of a convergent
+filtered spectral sequence, diagonal concentration, and a continuous
+twisting morphism.  These are precisely the hypotheses recorded
+below.
+\end{remark}
+
+\section{Exact principal type-$A$ arithmetic}
+
+For $N\ge2$, put
+\[
+\mathcal W_N^k:=\mathcal W^k(\mathfrak{sl}_N,f_{\mathrm{prin}}),
+\qquad t:=k+N.
+\]
+The standard DS central charge is
+\begin{equation}\label{eq:principal-WN-central-charge}
+c_N(k)
+=(N-1)-\frac{N(N^2-1)(k+N-1)^2}{k+N}.
+\end{equation}
+
+\begin{proposition}[$\mathcal W_3$ central charge;
+\ClaimStatusProvedHere]
+\label{prop:w3-central-charge}
+For $N=3$,
+\begin{equation}\label{eq:w3-central-charge-repaired}
+c_3(k)=2-\frac{24(k+2)^2}{k+3}.
+\end{equation}
+The companion involution $k^\vee=-k-6$ satisfies
+\begin{equation}\label{eq:w3-central-sum}
+c_3(k)+c_3(k^\vee)=100.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:w3-central-charge-repaired} is
+\eqref{eq:principal-WN-central-charge} at $N=3$.  Writing $t=k+3$
+gives
+$c_3(k)=2-24(t-1)^2/t$ and
+$c_3(k^\vee)=2+24(t+1)^2/t$; their sum is~$100$.
+\end{proof}
+
+\begin{definition}[Zamolodchikov $\mathcal W_3$ algebra]
+\label{def:w3-algebra}
+The universal $\mathcal W_3$ algebra over $\mathbb C(c)$ is generated
+by $T$ and $W$ of weights $2$ and $3$, with
+\begin{align}
+T(z)T(w)&\sim \frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w},\nonumber\\
+T(z)W(w)&\sim \frac{3W(w)}{(z-w)^2}
++\frac{\partial W(w)}{z-w},\nonumber\\
+W(z)W(w)&\sim \frac{c/3}{(z-w)^6}
++\frac{2T(w)}{(z-w)^4}+\frac{\partial T(w)}{(z-w)^3}\nonumber\\
+&\quad+\frac{\frac3{10}\partial^2T(w)
++\frac{32}{22+5c}\Lambda(w)}{(z-w)^2}
++\frac{\frac1{15}\partial^3T(w)
++\frac{16}{22+5c}\partial\Lambda(w)}{z-w},
+\label{eq:w3-ope-repaired}
+\end{align}
+where
+$\Lambda={:}TT{:}-\frac3{10}\partial^2T$.
+Theorem~\ref{thm:w-w-ope-complete} gives the full normalization proof
+and the OPE-to-mode conversion.
+\end{definition}
+
+\begin{proposition}[Principal $W_3/W_N$ standard-family ledger;
+\ClaimStatusConditional]
+\label{prop:principal-WN-standard-family-ledger}
+The exact local and arithmetic data are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathcal W_N^k$ has principal strong-generator weights
+$2,3,\ldots,N$ on the generic PBW lane.
+\item The companion level $k^\vee=-k-2N$ obeys
+\begin{equation}\label{eq:principal-WN-conductor}
+K_N^c:=c_N(k)+c_N(k^\vee)=4N^3-2N-2.
+\end{equation}
+\item The same integer is the principal ghost spin sum
+\begin{equation}\label{eq:principal-WN-ghost-sum}
+\sum_{s=2}^N2(6s^2-6s+1)=4N^3-2N-2.
+\end{equation}
+\item Choose the diagonal generator normalization
+\begin{equation}\label{eq:wn-2pt}
+W^{(s)}(z)W^{(s)}(w)\sim
+\frac{c/s}{(z-w)^{2s}}+\cdots.
+\end{equation}
+Under the genus-one diagonal-trace hypothesis
+$H_{\mathrm{diag}}^{g=1}$, the modular characteristic is
+\begin{equation}\label{eq:wn-kappa}
+\kappa(\mathcal W_N^k)=c_N(k)(H_N-1),
+\qquad H_N=\sum_{j=1}^N\frac1j.
+\end{equation}
+\end{enumerate}
+Thus $K_3^c=100$.  Under $H_{\mathrm{diag}}^{g=1}$ and the
+DS/bar companion package,
+$K_3^\kappa=(H_3-1)K_3^c=250/3$.
+\end{proposition}
+
+\begin{proof}
+Write $A=N(N^2-1)$.  In the coordinate $t=k+N$,
+\[
+c_N(k)=N-1-A\frac{(t-1)^2}{t},\qquad
+c_N(k^\vee)=N-1+A\frac{(t+1)^2}{t}.
+\]
+Addition gives $2(N-1)+4A=4N^3-2N-2$.  The finite sums
+$\sum s$ and $\sum s^2$ give
+\eqref{eq:principal-WN-ghost-sum}.  The final clause is the stated
+diagonal genus-one hypothesis applied to~\eqref{eq:wn-2pt}.
+\end{proof}
+
+\begin{theorem}[Principal modular trace formula;
+\ClaimStatusConditional]
+\label{thm:wn-obstruction}
+\textbf{Type signature.}
+$(\mathrm{Open},\mathrm{principal\ DS},\mathrm{level}=1\to5,
+H_{\mathrm{diag}}^{g=1})$.
+On the generic PBW lane, assume that non-separating sewing traces the
+diagonal leading-pole pairing~\eqref{eq:wn-2pt}, with the chosen
+completion and with mixed channels orthogonal in the genus-one trace.
+Then
+\[
+\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathcal W_N^k)
+=c_N(k)(H_N-1)\lambda_1.
+\]
+Equivalently, equation~\eqref{eq:wn-kappa} holds on this hypothesis
+surface.
+\end{theorem}
+
+\begin{corollary}[Principal $W(\mathfrak g)$ trace formula;
+\ClaimStatusConditional]
+\label{cor:general-w-obstruction}
+Let $m_1,\ldots,m_r$ be the exponents of a simple Lie algebra
+$\mathfrak g$.  Under the analogue of
+$H_{\mathrm{diag}}^{g=1}$ for the principal generators of weights
+$m_i+1$,
+\begin{equation}\label{eq:general-w-trace-repaired}
+\kappa(\mathcal W^k(\mathfrak g,f_{\mathrm{prin}}))
+=c\sum_{i=1}^r\frac1{m_i+1}.
+\end{equation}
+\end{corollary}
+
+\begin{remark}[Exponent sums]
+\label{rem:general-w-kappa-values}
+The reciprocal-exponent sums are finite arithmetic invariants.  For
+example,
+\[
+\varrho(E_6)=\frac{427}{360},\qquad
+\varrho(E_7)=\frac{2777}{2520},\qquad
+\varrho(E_8)=\frac{121}{126}.
+\]
+For type $A_{N-1}$, $\varrho=H_N-1$.  Their interpretation as modular
+characteristics uses the hypothesis in
+Corollary~\ref{cor:general-w-obstruction}.
+\end{remark}
+
+\begin{corollary}[Principal companion scalar;
+\ClaimStatusConditional]
+\label{cor:wn-complementarity}
+Under $H_{\mathrm{diag}}^{g=1}$ and the principal DS/bar companion
+package,
+\begin{equation}\label{eq:wn-kappa-companion-repaired}
+\kappa(\mathcal W_N^k)+\kappa(\mathcal W_N^{k^\vee})
+=(H_N-1)(4N^3-2N-2).
+\end{equation}
+The central-charge identity inside this formula is unconditional.
+\end{corollary}
+
+\begin{remark}[The $W_3$ scalar sum]
+\label{rem:w3-kappa-sums}
+The exact conductor is $c+c^\vee=100$.  The modular value
+$250/3$ is its image under the conditional multiplier
+$H_3-1=5/6$.
+\end{remark}
+
+\section{Bershadsky--Polyakov: standard and shifted lanes}
+
+Let
+$\mathcal B^k=\mathcal W^k(\mathfrak{sl}_3,f_{(2,1)})$.
+Fehily--Kawasetsu--Ridout use an ordinary vertex algebra whose strong
+generators $J,G^+,G^-,T$ are all even, of respective weights
+$1,3/2,3/2,2$~\cite[Definition~2.1]{FKR20}.  The standard central
+charge is
+\begin{equation}\label{eq:bp-standard-central-repaired}
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3}
+=25-6(k+3)-\frac{24}{k+3}.
+\end{equation}
+Therefore
+\begin{equation}\label{eq:bp-standard-conductor-repaired}
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=50.
+\end{equation}
+The explicitly shifted secondary convention is
+\begin{equation}\label{eq:bp-shifted-central-repaired}
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+=2-\frac{24(k+1)^2}{k+3},
+\qquad
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
++c_{\mathrm{BP}}^{\mathrm{shift}}(-k-6)=196.
+\end{equation}
+The all-even reciprocal-weight diagnostic is
+\begin{equation}\label{eq:bp-reciprocal-weight-diagnostic}
+1+\frac{1}{3/2}+\frac{1}{3/2}+\frac12=\frac{17}{6}.
+\end{equation}
+It is a generator-weight diagnostic.  The genus-one curvature
+$\kappa_{\mathrm{BP}}(k)$, its ratio to $c_{\mathrm{BP}}(k)$, and its
+companion sum all have status \ClaimStatusOpen.
+
+\begin{conjecture}[Bershadsky--Polyakov Verdier companion;
+\ClaimStatusConjectured]
+\label{conj:bp-duality}
+Under a finite-type or continuous completed Verdier pairing and the
+subregular hook DS/bar transport package,
+\[
+(\mathcal B^k)^!\simeq\mathcal B^{-k-6}.
+\]
+The exact scalar evidence is the standard central conductor~$50$ in
+\eqref{eq:bp-standard-conductor-repaired}.
+\end{conjecture}
+
+\begin{theorem}[BP quadratic normal-form criterion;
+\ClaimStatusConditional]
+\label{thm:w-bp-strict}
+In the Feigin--Semikhatov normal form, every singular OPE coefficient
+of $\mathcal B^k$ has generator degree at most~$2$; the nonlinear
+term in $G^+(z)G^-(w)$ is quadratic in~$J$.  If the completed
+bar-dual Taylor coefficients are obtained by continuous dualization
+of this normal form, then their arity is at most~$2$.  This is the
+precise strictness statement for the canonical presentation.
+\end{theorem}
+
+\begin{remark}[Hook transport evidence]
+\label{rem:hook-type-evidence}
+Inverse reductions and hook-type reduction networks provide a
+natural corridor for Conjecture~\ref{conj:bp-duality}
+\cite{FehilyHook,CLNS24,CFLN24,GenraStages}.  The remaining proof
+object is a hook-wide comparison of completed bar coalgebras through
+the BRST reductions.
+\end{remark}
+
+\begin{conjecture}[Orbit transport for non-principal $W$-algebras;
+\ClaimStatusConjectured]
+\label{conj:w-orbit-duality}
+For a non-principal nilpotent $f$, the Verdier companion is expected
+to be a $W$-algebra attached to the appropriate
+Barbasch--Vogan--Spaltenstein dual orbit, with a level transform fixed
+by the reduction data.  The conjecture includes as hypotheses the
+completed DS/bar comparison, the orbit-identification theorem, and
+the level-normalization calculation.
+\end{conjecture}
+
+\begin{theorem}[Subregular Appell identity;
+\ClaimStatusProvedHere]
+\label{thm:w-subregular-appell}
+Let $u_j=h+v_j$ for $0\le j<n$, with $\sum_jv_j=0$, and let
+$e_a(v)$ be the elementary symmetric functions.  For $0\le r\le n$,
+\begin{equation}\label{eq:subregular-appell-repaired}
+\frac{1}{(n-r)!}\partial_h^{n-r}\prod_{j=0}^{n-1}u_j
+=\sum_{t=0}^r\binom{n-r+t}{t}e_{r-t}(v)h^t.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expand $\prod_j(h+v_j)=\sum_{a=0}^ne_{n-a}(v)h^a$ and differentiate
+term by term.
+\end{proof}
+
+\begin{theorem}[Subregular completed-dual classification;
+\ClaimStatusConditional]
+\label{thm:w-subregular-classification}
+Assume the Feigin--Semikhatov Bell packet identifies the degree-$r$
+term in~\eqref{eq:subregular-appell-repaired} with the arity-$r$
+Taylor coefficient of the continuously dualized bar normal form, and
+assume the completed PBW criterion of
+Theorem~\ref{thm:w-pbw-slodowy-collapse}.  Then
+$\mathcal W_n^{(2)}$ has canonical Taylor degree $n-1$.  The case
+$n=3$ is the quadratic BP presentation of
+Theorem~\ref{thm:w-bp-strict}.
+\end{theorem}
+
+\section{Completed bar constructions and companion algebras}
+
+For a quadratic presentation $A=T_X(V)/(R)$, keep the typed objects
+\[
+A,\qquad \bar B(A),\qquad
+A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+H^\bullet\bar B(A),\qquad
+K_X(A)=\mathbb D_{\Ran}\bar B(A),\qquad A^!,\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+\]
+with comparison maps
+\[
+q_A\colon A^{\mathrm i}\to\bar B(A),\qquad
+\mathbb D(q_A)\colon K_X(A)\to\mathbb D_{\Ran}(A^{\mathrm i}),
+\qquad
+\nu_A\colon K_X(A)\to A^!.
+\]
+Bar--cobar inversion reconstructs $A$ from $\bar B(A)$.
+
+\begin{theorem}[Filtered PBW bar-collapse criterion;
+\ClaimStatusProvedHere]
+\label{thm:w-pbw-slodowy-collapse}
+Let $A$ be a complete filtered augmented chiral algebra.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed bar filtration is exhaustive, separated, and
+weightwise complete;
+\item its spectral sequence converges strongly;
+\item the $E_1$ page is the bar homology of
+$\operatorname{gr}A\cong\operatorname{Sym}_\partial(V)$ and is
+concentrated on one bar/PBW diagonal.
+\end{enumerate}
+Then all higher differentials vanish for bidegree reasons, and the
+completed bar homology is the completed exterior coalgebra on the
+suspended differential generators.  The canonical twisting morphism
+is a filtered quasi-isomorphism precisely when the resulting
+extension data are complete.
+\end{theorem}
+
+\begin{corollary}[Principal completed Koszulity;
+\ClaimStatusConditional]
+\label{cor:w-principal-completed-koszul}
+The PBW identity~\eqref{eq:jet-slodowy-repaired} supplies the
+associated-graded input for principal $W$-algebras.  Their completed
+Koszulity follows once strong convergence, diagonal concentration,
+and completeness of the twisting morphism in
+Theorem~\ref{thm:w-pbw-slodowy-collapse} are verified.
+\end{corollary}
+
+\begin{theorem}[$W$-algebra bar/Koszul package;
+\ClaimStatusConditional]
+\label{thm:w-koszul-precise}
+\textbf{Type signature.}
+$(\mathrm{Open},\mathrm{DS/BRST},\mathrm{levels}=1\leftrightarrow2,
+H_{\mathrm{PBW}}+H_{\mathrm{DS/bar}}+H_{\mathrm{Verdier}})$.
+For a universal principal $W$-algebra at non-critical level, these
+hypotheses give completed bar--cobar inversion and identify the
+Verdier companion with the DS reduction at the reflected level.
+At the critical level the Feigin--Frenkel centre supplies a distinct
+critical presentation and requires its own completed comparison.
+\end{theorem}
+
+\begin{theorem}[Principal characteristic transport;
+\ClaimStatusConditional]
+\label{thm:w-algebra-koszul-main}
+Let $k^\vee=-k-2h^\vee$.  Under the filtered derived DS/bar
+transport, continuous Verdier duality, and genus-one trace
+hypotheses,
+\begin{equation}\label{eq:w-koszul-main-repaired}
+(\mathcal W^k(\mathfrak g,f_{\mathrm{prin}}))^!
+\simeq
+\mathcal W^{k^\vee}(\mathfrak g,f_{\mathrm{prin}}),
+\end{equation}
+and their modular characteristics are transported accordingly.  At
+the arithmetic layer, the central-charge companion identities such
+as~\eqref{eq:principal-WN-conductor} hold directly.
+\end{theorem}
+
+\begin{proposition}[Virasoro companion;
+\ClaimStatusConditional]
+\label{prop:virasoro-generic-koszul-dual}
+For
+\[
+c(k)=1-\frac{6(k+1)^2}{k+2},\qquad k^\vee=-k-4,
+\]
+one has the exact identity $c(k)+c(k^\vee)=26$.  Under the
+$\mathfrak{sl}_2$ instance of the hypothesis package in
+Theorem~\ref{thm:w-algebra-koszul-main},
+\begin{equation}\label{eq:vir-companion-repaired}
+\mathrm{Vir}_{c(k)}^!\simeq\mathrm{Vir}_{26-c(k)}.
+\end{equation}
+\end{proposition}
+
+\begin{theorem}[The centre-free Virasoro quadratic presentation;
+\ClaimStatusOpen]
+\label{thm:virasoro-self-duality}
+At $c=0$, the singular Virasoro OPE is
+\[
+T(z)T(w)\sim\frac{2T(w)}{(z-w)^2}
++\frac{\partial T(w)}{z-w}.
+\]
+An equivalence
+$\mathrm{Vir}_0^{!_{\mathrm{quad}}}\simeq\mathrm{Vir}_0$ requires an
+explicit quadratic relation object, its orthogonal complement in the
+chosen chiral operad, and the comparison with the completed bar dual.
+This finite presentation calculation is the open obligation attached
+to the label.
+\end{theorem}
+
+\begin{theorem}[$\mathcal W_3$ companion;
+\ClaimStatusConditional]
+\label{thm:w3-koszul-dual}
+The exact level and central transformations are
+\[
+k^\vee=-k-6,\qquad c_3(k^\vee)=100-c_3(k).
+\]
+Under $H_{\mathrm{PBW}}+H_{\mathrm{DS/bar}}+H_{\mathrm{Verdier}}$,
+\[
+(\mathcal W_3^k)^!\simeq\mathcal W_3^{-k-6}.
+\]
+\end{theorem}
+
+\begin{theorem}[Bar differential and transferred curvature;
+\ClaimStatusProvedHere]
+\label{thm:w-bar-curvature}
+The full chiral bar coderivation satisfies
+\begin{equation}\label{eq:bar-square-zero-repaired}
+d_{\bar B}^{2}=0.
+\end{equation}
+A curved $A_\infty$ model obtained by homotopy transfer may carry a
+nullary operation $m_0$.  The arity-one curved Stasheff identity
+expresses $m_1^2$ as the signed sum of insertions of $m_0$ into the
+higher structure maps; the precise signs follow the suspension
+convention of the chosen transfer.
+The transferred $m_0$, the fiberwise Hodge curvature, and the
+genus-one scalar $\kappa$ are three typed objects.  Their comparison
+requires a specified contraction and sewing theorem.
+\end{theorem}
+
+\begin{definition}[DS reduction of modules]
+\label{def:w-module-ds}
+For an affine module $M$ in a category supporting BRST reduction,
+\[
+H^\bullet_{\mathrm{DS},f}(M)
+:=H^\bullet(M\otimes F_{\mathrm{gh}},Q_{\mathrm{DS}})
+\]
+is a graded module over $\mathcal W^k(\mathfrak g,f)$.  Concentration
+in degree zero is a theorem on the relevant module subcategories.
+\end{definition}
+
+\begin{theorem}[Feigin--Frenkel centre;
+\ClaimStatusProvedElsewhere]
+\label{thm:feigin-frenkel-center}
+At critical level,
+\[
+\mathfrak z(\widehat{\mathfrak g}_{-h^\vee})
+\cong\mathcal O(\operatorname{Op}_{\mathfrak g^\vee}(D))
+\]
+as commutative chiral algebras, in the Feigin--Frenkel theorem.
+\end{theorem}
+
+\section{Virasoro and $W_3$ scalar extractions}
+\label{sec:mixed-cubic-quartic-shadows}
+
+The following calculations take place in finite Shapovalov windows.
+Their promotion to a Maurer--Cartan shadow uses an explicitly named
+extraction map.
+
+\begin{theorem}[Primary-action cubic tensor;
+\ClaimStatusProvedHere]
+\label{thm:w-universal-gravitational-cubic}
+Let $W^{(s)}$ be Virasoro-primary of weight $s$ and normalize its
+quadratic line by $W^{(s)}_{(2s-1)}W^{(s)}=c/s$.  Then
+\[
+T_{(1)}W^{(s)}=sW^{(s)}.
+\]
+In the polynomial convention in which this action is recorded once
+for each unordered pair of equal primary legs, the primary-action
+cubic is
+\begin{equation}\label{eq:primary-action-cubic-repaired}
+\mathfrak C_{\mathrm{act}}
+=2x_2^3+\sum_{s\ge3}s,x_2x_s^2.
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Virasoro finite-window mixed datum;
+\ClaimStatusConditional]
+\label{thm:w-virasoro-mixed-shadow}
+The exact local inputs are the quadratic pairing $c/2$, the action
+coefficient $2$, and the level-$4$ quasi-primary
+\[
+\Lambda={:}TT{:}-\frac3{10}\partial^2T.
+\]
+Any shadow extraction that uses the inverse Shapovalov pairing on
+$\mathbb C\Lambda$ therefore contains the scalar in
+Theorem~\ref{thm:w-virasoro-quartic-explicit}.  The identification of
+this scalar with a modular quartic class is conditional on the chosen
+bar-to-shadow map.
+\end{theorem}
+
+\begin{theorem}[Virasoro level-four inverse Gram scalar;
+\ClaimStatusComputed]
+\label{thm:w-virasoro-quartic-explicit}
+The level-$4$ quasi-primary has norm
+\[
+\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10}.
+\]
+Hence its inverse-line scalar is
+\begin{equation}\label{eq:virasoro-inverse-gram-repaired}
+Q_\Lambda=\frac{1}{\langle\Lambda|\Lambda\rangle}
+=\frac{10}{c(5c+22)}.
+\end{equation}
+This is an exact Shapovalov calculation on $\mathbb C\Lambda$.
+\end{theorem}
+
+\begin{theorem}[Virasoro quintic shadow obligation;
+\ClaimStatusOpen]
+\label{thm:w-virasoro-quintic-forced}
+The nonvanishing of a quintic class requires the chain-level
+transferred bracket and its cohomology class.  A scalar Poisson
+contraction of the cubic polynomial with
+\eqref{eq:virasoro-inverse-gram-repaired} is evidence for that class;
+it is the explicit finite calculation to be compared with the
+completed deformation complex.
+\end{theorem}
+
+\begin{corollary}[Universal Virasoro nontermination;
+\ClaimStatusOpen]
+\label{cor:virasoro-postnikov-nontermination}
+All-degree nontermination over $\mathbb Q(c)$ is the assertion that
+every transferred obstruction class survives in cohomology.  Its
+proof obligation is an all-degree transfer theorem together with a
+non-cancellation argument in each filtration quotient.
+\end{corollary}
+
+\begin{theorem}[Formal Riccati metric;
+\ClaimStatusConditional]
+\label{thm:virasoro-shadow-generating-function}
+Assume the one-line Riccati extraction and its all-degree recursion.
+Then the formal metric determined by the three scalar inputs
+$c/2$, $2$, and~\eqref{eq:virasoro-inverse-gram-repaired} is
+\begin{equation}\label{eq:virasoro-formal-metric-repaired}
+Q_{\mathrm{Vir}}(t)
+=c^2+12ct+\frac{180c+872}{5c+22}t^2.
+\end{equation}
+This statement concerns the formal scalar recursion; the
+chain-level shadow comparison remains part of the hypothesis.
+\end{theorem}
+
+\begin{remark}[Formal growth rate]
+\label{rem:virasoro-shadow-growth-rate}
+Under Theorem~\ref{thm:virasoro-shadow-generating-function}, the
+nearest branch point gives
+\[
+\rho_{\mathrm{formal}}(c)
+=\sqrt{\frac{180c+872}{(5c+22)c^2}}.
+\]
+This is a property of the formal Riccati series.
+\end{remark}
+
+\begin{theorem}[Archetype ledger through quartic order;
+\ClaimStatusConditional]
+\label{thm:w-archetype-trichotomy}
+Once a common shadow extraction functor is fixed, the local OPE
+windows distinguish Gaussian, Lie-cubic, contact-quartic, and mixed
+cubic--quartic inputs.  Virasoro and principal $W_N$ carry the mixed
+local packet by
+Theorems~\ref{thm:w-universal-gravitational-cubic}
+and~\ref{thm:w-virasoro-quartic-explicit}.
+\end{theorem}
+
+\begin{theorem}[Finite-termination ledger;
+\ClaimStatusConditional]
+\label{thm:w-finite-termination}
+Finite termination is a cohomological statement about transferred
+operations.  It follows for a family once a contraction is fixed and
+all obstruction groups above the claimed degree vanish.  For the
+Virasoro and principal $W_N$ rows, all-degree survival remains the
+open obligation in
+Corollary~\ref{cor:virasoro-postnikov-nontermination}.
+\end{theorem}
+
+\begin{remark}[Status of the shadow-depth ledger]
+\label{rem:w-postnikov-interpretation}
+The local OPE distinguishes the first available operation.  The
+completed deformation cohomology decides whether it survives and
+whether subsequent operations terminate.  The manuscript therefore
+records local depth and proven homotopy depth in separate columns.
+\end{remark}
+
+\begin{proposition}[Virasoro primitive kernel;
+\ClaimStatusConditional]
+\label{prop:virasoro-primitive-kernel}
+Under the modular transfer package, the primitive kernel begins with
+the local entries $c/2$, $2$, and $10/[c(5c+22)]$.  Higher corollas
+are the transferred classes of
+Corollary~\ref{cor:virasoro-postnikov-nontermination}.
+\end{proposition}
+
+\begin{proposition}[Virasoro primitive shell;
+\ClaimStatusConditional]
+\label{prop:virasoro-primitive-shell}
+Under stable-graph sewing, the genus-two primitive shell is the sum
+of the non-separating contraction, separating bracket, and
+codimension-two boundary terms.  Each term is defined after the
+modular transfer data and propagator have been chosen.
+\end{proposition}
+
+\begin{computation}[Formal Virasoro branch action;
+\ClaimStatusComputed]
+\label{comp:virasoro-branch-bv}
+The scalar finite-window action begins
+\[
+S_{\mathrm{Vir}}^{\mathrm{formal}}(x)
+=\frac c4x^2+\frac13x^3
++\frac{10}{4!\,c(5c+22)}x^4+O(x^5).
+\]
+The terms through degree four are the normalized local inputs above.
+\end{computation}
+
+\subsection{The $\mathcal W_3$ finite-window calculation}
+\label{subsec:w3-shadow-archetype}
+
+\begin{theorem}[$\mathcal W_3$ primary-window datum;
+\ClaimStatusConditional]
+\label{thm:w-w3-mixed-shadow}
+The exact quadratic and primary-action polynomials are
+\[
+H_{W_3}=\frac c2t^2+\frac c3w^2,
+\qquad
+\mathfrak C_{\mathrm{act}}=2t^3+3tw^2.
+\]
+The singular $WW$ product adds the $\Lambda$ coupling
+$32/(22+5c)$.  Promotion of these local tensors to a quartic shadow
+uses the specified extraction and symmetry factors.
+\end{theorem}
+
+\begin{theorem}[$\mathcal W_3$ rank-one exchange calculation;
+\ClaimStatusComputed]
+\label{thm:w3-quartic-channel-decomposition}
+Put $D=5c+22$ and
+$\langle\Lambda|\Lambda\rangle=cD/10$.  The three inverse-line
+ratios in OPE normalization are
+\begin{equation}\label{eq:w3-ope-exchange-ratios-repaired}
+\frac{1}{\langle\Lambda|\Lambda\rangle}=\frac{10}{cD},
+\quad
+\frac{32/D}{\langle\Lambda|\Lambda\rangle}=\frac{320}{cD^2},
+\quad
+\frac{(32/D)^2}{\langle\Lambda|\Lambda\rangle}
+=\frac{10240}{cD^3}.
+\end{equation}
+The corresponding mode-normalized ratios use
+$\beta=16/D$ and are
+\begin{equation}\label{eq:w3-mode-exchange-ratios-repaired}
+\frac{10}{cD},\qquad
+\frac{160}{cD^2},\qquad
+\frac{2560}{cD^3}.
+\end{equation}
+These are rank-one $\Lambda$-exchange ratios.  The full quartic tensor
+also sees the remaining intermediate-state blocks and the extraction
+map's combinatorial factors.
+\end{theorem}
+
+\begin{proposition}[Denominator filtration for the $\Lambda$ line;
+\ClaimStatusComputed]
+\label{prop:w3-denominator-filtration}
+For the three ratios in either normalization of
+Theorem~\ref{thm:w3-quartic-channel-decomposition}, the denominator
+with $2j$ external $W$ legs is $cD^{1+j}$ for $j=0,1,2$.
+\end{proposition}
+
+\begin{proposition}[Mode-normalized autonomous recursion;
+\ClaimStatusConditional]
+\label{prop:w3-wline-ring-relations}
+Assume a one-dimensional autonomous extraction whose quartic input is
+the mode-normalized scalar $S_4^W=2560/[cD^3]$ and whose recursion is
+the stated Riccati square-root recursion.  Then
+\[
+S_6^W=-\frac{2}{c}(S_4^W)^2,
+\qquad
+S_8^W=\frac{9}{c^2}(S_4^W)^3.
+\]
+The autonomy hypothesis is the load-bearing input.
+\end{proposition}
+
+\begin{remark}[$W$-line normalization]
+\label{rem:w3-w-line}
+The value $2560/[cD^3]$ is the square of the mode coefficient
+$16/D$ divided by the $\Lambda$ norm.  The OPE-normalized square is
+$10240/[cD^3]$.  A shadow convention must state which vertex enters
+its gluing map.
+\end{remark}
+
+\begin{remark}[Multi-channel tower]
+\label{rem:w3-multi-channel-tower}
+The $T$-axis is a Virasoro subalgebra at the level of local OPEs.
+Autonomy of its transferred modular tower, and transverse
+backreaction on the $W$-axis, are properties of the completed
+multi-variable transfer.  Their current status is \ClaimStatusOpen.
+The first transverse correction is denoted
+\begin{equation}\label{eq:w3-interchannel-correction}
+\delta_6^{W\text{-line}}=:\mathfrak d_6(c)
+\qquad\textup{(open chain-level calculation)}.
+\end{equation}
+\end{remark}
+
+\begin{proposition}[Formal large-$N$ $T$-line asymptotic;
+\ClaimStatusConditional]
+\label{prop:rho-decreasing-with-N}
+Fix $k>0$ and insert $c_N(k)$ into the formal Virasoro rate of
+Remark~\ref{rem:virasoro-shadow-growth-rate}.  Since
+$c_N(k)=-N^4+O(N^3)$,
+\[
+\rho_{\mathrm{formal}}(\mathcal W_N^k)=O(N^{-4}).
+\]
+This is an asymptotic of the formal $T$-line scalar series.
+\end{proposition}
+
+\begin{proposition}[DS shadow comparison corridor;
+\ClaimStatusConditional]
+\label{prop:ds-shadow-cascade}
+The exact DS data are the affine and reduced central charges and the
+PBW map to $J_\infty S_f$.  A comparison of shadow depth, transferred
+quartics, or all-degree towers requires a chain map between the
+affine BRST bar model and the reduced completed bar model.  Under that
+chain-level comparison, the induced map transports the corresponding
+filtered Maurer--Cartan classes.
+\end{proposition}
+
+\section{Genus-one typing}
+\label{sec:virasoro-genus-one-computation}
+
+\begin{theorem}[Virasoro genus-one scalar;
+\ClaimStatusConditional]
+\label{thm:vir-genus1-curvature}
+Assume the non-separating sewing theorem identifies the genus-one
+trace of the Virasoro generator with its leading OPE pairing.  Then
+\[
+\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathrm{Vir}_c)
+=\frac c2\lambda_1.
+\]
+This is the Virasoro instance of $H_{\mathrm{diag}}^{g=1}$.
+\end{theorem}
+
+\section{$\mathcal W_3$ genus-one scalar}
+\label{sec:w3-genus-one-computation}
+
+\begin{computation}[Leading-pole Gram diagnostic;
+\ClaimStatusComputed]
+\label{comp:w3-genus1-hessian}
+In the basis $(T,W)$, the leading vacuum pairings are
+\[
+G_{\mathrm{lead}}=\operatorname{diag}(c/2,c/3).
+\]
+This is a two-channel local Gram matrix.  Its identification with a
+genus-one deformation Hessian is the sewing assertion in
+Theorem~\ref{thm:w3-genus1-curvature}.
+\end{computation}
+
+\begin{theorem}[$\mathcal W_3$ genus-one scalar;
+\ClaimStatusConditional]
+\label{thm:w3-genus1-curvature}
+Under $H_{\mathrm{diag}}^{g=1}$,
+\[
+\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathcal W_3^k)
+=\frac{5c_3(k)}6\lambda_1.
+\]
+\end{theorem}
+
+\begin{theorem}[$\mathcal W_3$ genus-one companion;
+\ClaimStatusConditional]
+\label{thm:w3-genus1-complementarity}
+Under $H_{\mathrm{diag}}^{g=1}$ and the DS/bar Verdier companion
+package,
+\[
+\kappa(\mathcal W_3^k)+\kappa(\mathcal W_3^{-k-6})=\frac{250}{3}.
+\]
+The underlying central-charge identity is~\eqref{eq:w3-central-sum}.
+\end{theorem}
+
+\begin{computation}[$\mathcal W_3$ genus-two open coefficient;
+\ClaimStatusOpen]
+\label{comp:w3-genus2-multichannel}
+The mixed stable-graph contribution is denoted
+\begin{equation}\label{eq:w3-cross-channel-genus2}
+\delta F_2^{\mathrm{cross}}(\mathcal W_3)=:\mathfrak f_2(c).
+\end{equation}
+Its determination requires the normalized genus-zero vertices, the
+genus-one vertex, every stable-graph automorphism factor, and the
+multi-channel propagator.  This finite graph sum is the active proof
+obligation.
+\end{computation}
+
+\section{Collision kernels and the PVA/HT interface}
+
+\begin{computation}[Virasoro singular collision kernel;
+\ClaimStatusComputed]
+\label{comp:virasoro-rmatrix}
+The unintegrated local singular kernel is the Virasoro OPE
+\[
+r_{\mathrm{Vir}}^{\mathrm{sing}}(z)
+=\frac{c/2}{z^4}+\frac{2T}{z^2}+\frac{\partial T}{z}.
+\]
+An integrated $d\log$ kernel and a Yang--Baxter line kernel require
+their respective degree shifts and transport theorem.
+\end{computation}
+
+\section{$\mathcal W_3$ Poisson vertex algebra and HT comparison}
+\label{sec:w3-pva-holography}
+
+With the vertex-algebra convention
+$[A_\lambda B]=\sum_{j\ge0}\lambda^jA_{(j)}B/{j!}$, the
+Zamolodchikov brackets are
+\begin{align}
+[T_\lambda T]&=(\partial+2\lambda)T+\frac c{12}\lambda^3,\nonumber\\
+[T_\lambda W]&=(\partial+3\lambda)W,\nonumber\\
+[W_\lambda W]&=\frac c{360}\lambda^5
++\frac13T\lambda^3+\frac12(\partial T)\lambda^2\nonumber\\
+&\quad+\left(\frac3{10}\partial^2T+\frac{32}{22+5c}\Lambda\right)\lambda
++\frac1{15}\partial^3T+\frac{16}{22+5c}\partial\Lambda.
+\label{eq:w3-lambda-bracket-repaired}
+\end{align}
+The associated classical or semiclassical PVA is obtained after a
+declared scaling limit.  The Khan--Zeng Poisson-sigma-model
+construction applies to that PVA presentation with its finite-jet
+hypotheses.
+
+\subsection{Virasoro phase space and projective connections}
+\label{subsec:virasoro-teichmuller-phase-space}
+
+\begin{proposition}[Schwarzian transformation law;
+\ClaimStatusProvedElsewhere]
+\label{prop:schwarzian-central-charge}
+For a coordinate change $w=\phi(z)$, the stress tensors satisfy
+\begin{equation}\label{eq:schwarzian-transformation}
+T_z(z)=(\phi'(z))^2T_w(\phi(z))
++\frac c{12}\{\phi,z\},
+\qquad
+\{\phi,z\}=\frac{\phi'''}{\phi'}
+-\frac32\left(\frac{\phi''}{\phi'}\right)^2.
+\end{equation}
+Thus $c=0$ gives a quadratic differential, while general $c$ gives a
+projective connection.  The pair consisting of a Beltrami
+differential and a quadratic differential is the classical cotangent
+pair on Teichm\"uller space.
+\end{proposition}
+
+\begin{conjecture}[AGT comparison for principal $W$-algebras;
+\ClaimStatusConjectured]
+\label{conj:agt-w-algebra}
+The AGT correspondence identifies suitable four-dimensional
+$\mathcal N=2$ instanton partition functions with conformal blocks of
+principal $W$-algebras.  Its use here is a comparison dictionary.
+Transport to chiral Koszul duality requires the independent DS/bar
+and sewing packages stated above.
+\end{conjecture}
+
+\section{Finite-window conclusion}
+
+The local $W_3$ coefficient is
+$32/(22+5c)$ in the second-order OPE pole and
+$16(m-n)/(22+5c)$ in the mode commutator.  The BP standard conductor
+is~$50$; the value~$196$ belongs to the shifted secondary conformal
+vector; the all-even weight diagnostic is~$17/6$; and the BP modular
+characteristic remains open.  Principal $W_N$ central-charge and
+ghost-spin arithmetic are exact, while the bar, Verdier, modular,
+large-$N$ shadow, and higher-genus statements carry the hypothesis
+packages displayed at their theorem surfaces.

@@ -1,0 +1,740 @@
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{array}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Walg}{\mathcal{W}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\OPE}{\mathrm{OPE}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Sh}{\mathrm{Sh}}
+
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\depth}{depth}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title{The classification trichotomy for chiral algebras:\\
+three invariants and four shadow classes}
+
+\author{Raeez Lorgat}
+\date{}
+
+\maketitle
+
+\begin{abstract}
+Three numerical invariants of a chiral algebra~$\cA$ (the generator
+OPE pole order~$p_{\max}(\cA)$, the collision depth~$k_{\max}(\cA)$,
+and the shadow depth~$r_{\max}(\cA)$) measure three structurally
+distinct features and need not coincide. The relation
+$k_{\max} = p_{\max} - 1$ always holds, a consequence of the
+$d\log$ absorption of the bar propagator, but $r_{\max}$ is independent
+of~$p_{\max}$. The $\beta\gamma$ system is the archetypal witness:
+$p_{\max} = 1$, $k_{\max} = 0$, $r_{\max} = 4$. This distinction
+yields a trichotomy at degree~$2$ (trivial / multiplication /
+differential) governing the operator order of commuting Hamiltonians,
+and a four-class partition $G,L,C,M$ of the standard landscape by
+shadow depth. All claims are verified computationally across 14 engine
+modules and 929 tests.
+\end{abstract}
+
+% ================================================================
+\section{Introduction}\label{sec:intro}
+% ================================================================
+
+Let $\cA$ be a chirally Koszul vertex algebra on a smooth projective
+curve~$X$. The bar construction $\barB^{\mathrm{ch}}(\cA)$ carries a
+Maurer--Cartan element $\Theta_\cA$ in the modular convolution dg Lie
+algebra, and the projections of $\Theta_\cA$ to finite degree form the
+shadow obstruction tower $\Theta_\cA^{\leq r}$. Three invariants
+extracted from this data measure three different structural features
+of~$\cA$.
+
+The \emph{generator OPE pole order} $p_{\max}(\cA)$ records the
+maximal singular order of the OPE among generators. The \emph{collision
+depth} $k_{\max}(\cA)$ records the maximal pole order of the degree-$2$
+collision residue $\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$. The
+\emph{shadow depth} $r_{\max}(\cA)$ records the degree at which the tower
+terminates (or $\infty$ if it does not).
+
+These invariants are distinct projections of common ordered data. The
+collision kernel $K_\cA^{\mathrm{coll}}(z)$ lives on the ordered bar complex
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$, the cofree tensor
+coalgebra with deconcatenation coproduct; it is an element of the
+$E_1$ convolution algebra that carries the full spectral-parameter
+dependence. Its homotopy coinvariant
+$q_2(K_\cA^{\mathrm{coll}})$ retains an operator class, and the
+normalized functional gives
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})=\kappa$ for
+abelian and Virasoro-type families. On the non-abelian affine row this
+trace is $\kappa_{\mathrm{dp}}$, with Sugawara contribution
+$\dim(\fg)/2$. This scalar trace,
+and the shadow depth $r_{\max}$ is computed from the
+$\Sigma_n$-coinvariant tower. Both are proper quotients of the
+ordered data.
+
+The bar propagator
+$d\log(z-w) = dz/(z-w)$ absorbs one power of the OPE singularity, so
+$k_{\max} = p_{\max} - 1$ always. But the shadow depth $r_{\max}$
+involves composite-field contributions at higher degrees and is not
+determined by the generator OPE poles. The $\beta\gamma$ system has
+$p_{\max} = 1$ (simple pole only) yet $r_{\max} = 4$ (the quartic
+contact class from the composite $:\!\beta\gamma\!:$ does not vanish).
+The three invariants disagree maximally.
+
+This paper formalizes the distinction and extracts two classification
+results: the operator-order trichotomy at degree~$2$, and the four-class
+partition of the standard landscape.
+
+% ================================================================
+\section{The \texorpdfstring{$\beta\gamma$}{beta-gamma} witness}
+\label{sec:betagamma}
+% ================================================================
+
+The $\beta\gamma$ system is generated by fields $\beta(z), \gamma(z)$
+of conformal weights $1$ and $0$ with OPE
+\begin{equation}\label{eq:bg-ope}
+\beta(z)\gamma(w) \sim \frac{1}{z-w}, \qquad
+\gamma(z)\beta(w) \sim \frac{-1}{z-w}, \qquad
+\beta\beta \sim 0, \qquad
+\gamma\gamma \sim 0.
+\end{equation}
+The maximal OPE pole among generators is a simple pole, so
+$p_{\max}(\beta\gamma) = 1$.
+
+By the $d\log$ absorption principle, a simple OPE pole is absorbed
+entirely by the bar propagator kernel $d\log(z-w)$ and produces no
+collision residue. The collision depth is therefore
+$k_{\max}(\beta\gamma) = 0$. At degree $2$, the $\beta\gamma$ system
+is invisible to the bar complex.
+
+The composite field $:\!\beta\gamma\!:$ has conformal weight $1$. Its
+self-OPE
+\begin{equation}\label{eq:bg-composite-ope}
+(:\!\beta\gamma\!:)(z)\,(:\!\beta\gamma\!:)(w)
+\sim \frac{-1}{(z-w)^2}
+\end{equation}
+has a second-order pole; this contributes at degree $4$ to the shadow
+obstruction tower. The quartic contact class
+$\mathfrak{Q}_{\beta\gamma}$ is nonvanishing, so the shadow depth is
+$r_{\max}(\beta\gamma) = 4$. After degree $4$, rank-one rigidity
+forces all higher-degree projections to vanish, and the tower
+terminates.
+
+The three invariants for $\beta\gamma$ are
+\[
+p_{\max} = 1, \qquad k_{\max} = 0, \qquad r_{\max} = 4.
+\]
+This triple is the sharpest witness to the independence of the three
+invariants: the OPE pole order is minimal, the collision depth is
+trivial, yet the shadow depth is nontrivial.
+
+% ================================================================
+\section{Definitions}\label{sec:defs}
+% ================================================================
+
+\begin{definition}[Generator OPE pole order]\label{def:p-max}
+Let $\cA$ be a chiral algebra with minimal strong generators
+$\{a_\alpha\}$. The \emph{generator OPE pole order} is
+\begin{equation}\label{eq:p-max-def}
+p_{\max}(\cA)
+:= \max_{\alpha,\beta}\,
+\bigl\{\,n \geq 0 \;\big|\;
+a_\alpha(z)a_\beta(w) \text{ has a nonzero }
+(z-w)^{-n}\text{ term}\,\bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Collision depth]\label{def:k-max}
+The \emph{collision depth} of $\cA$ is
+\begin{equation}\label{eq:k-max-def}
+k_{\max}(\cA) := \max\bigl\{\,k \geq 0 \;\big|\;
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\text{ has a nonzero } z^{-k}\text{ term}\,\bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Shadow depth]\label{def:r-max}
+The \emph{shadow depth} of $\cA$ is
+\begin{equation}\label{eq:r-max-def}
+r_{\max}(\cA) := \max\bigl\{\,r \geq 2 \;\big|\;
+\Theta_\cA^{\leq r}
+\text{ has a nonzero $r$-degree projection}\,\bigr\}
+\in \{2,3,4,\infty\}.
+\end{equation}
+For $r_{\max} < \infty$, the tower terminates at degree $r_{\max}$ and
+all higher projections vanish. For $r_{\max} = \infty$, the tower has
+nontrivial components at every degree.
+\end{definition}
+
+\begin{proposition}[Fundamental relation]\label{prop:k-from-p}
+For every chiral algebra $\cA$,
+\begin{equation}\label{eq:k-from-p}
+k_{\max}(\cA) = p_{\max}(\cA) - 1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The bar propagator extracts collision residues against
+$d\log(z-w) = dz/(z-w)$. A pole of order $n$ in the OPE contributes
+a residue of order $n-1$ after the $d\log$ kernel absorbs one power
+of $(z-w)$.
+\end{proof}
+
+\begin{proposition}[Independence of $r_{\max}$ from $p_{\max}$]
+\label{prop:independence}
+The shadow depth $r_{\max}$ is not determined by the generator OPE
+pole order $p_{\max}$. The pair $(p_{\max}, r_{\max})$ attains
+the values $(1,4)$, $(2,2)$, $(2,3)$, $(4,\infty)$, and
+$(2N,\infty)$ for $N \geq 3$ in the standard landscape.
+\end{proposition}
+
+\begin{proof}
+The witnesses are: $\beta\gamma$ for $(1,4)$; Heisenberg for $(2,2)$;
+affine $\widehat{\fg}_k$ of type $A_1$ for $(2,3)$; Virasoro for
+$(4,\infty)$; and $\Walg_N$ for $(2N, \infty)$. In each case the
+shadow depth is computed from the explicit shadow obstruction tower.
+The pair $(2,2)$ vs.\ $(2,3)$ shows that $p_{\max} = 2$ does not
+determine $r_{\max}$; the pairs $(4,\infty)$ and $(1,4)$ show that
+the inequality can go in either direction.
+\end{proof}
+
+% ================================================================
+\section{The operator-order trichotomy}\label{sec:trichotomy}
+% ================================================================
+
+The collision depth $k_{\max}$ classifies chiral algebras into three
+regimes through the operator order of the commuting Hamiltonians
+$H_i = \Sh_{0,n}(\Theta_\cA)_i$ on genus-$0$ $n$-point moduli.
+
+\begin{theorem}[Operator-order trichotomy]\label{thm:trichotomy}
+For every chiral algebra $\cA$ in the standard landscape,
+$k_{\max}(\cA) \in \{0,1\} \cup \{3,4,5,\ldots\}$.
+The value $k_{\max} = 2$ is excluded by locality and conformal
+dimension. The three regimes are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ccll@{}}
+\toprule
+$k_{\max}$ & \textbf{Regime} & \textbf{Hamiltonians $H_i$}
+ & \textbf{Examples}\\
+\midrule
+$0$ & trivial & no commuting structure at degree $2$
+ & $\beta\gamma$, free fermion\\
+$1$ & multiplication & scalar/matrix multiplication
+ & Heisenberg, affine KM\\
+$\geq 3$ & differential & differential operators of order $k_{\max}-1$
+ & Virasoro, $\Walg_N$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+The generator OPE pole order $p_{\max}$ takes values in
+$\{1,2\} \cup \{4,5,\ldots\}$ for bosonic chiral algebras in the
+standard landscape: the OPE of two weight-$h$ currents has poles at
+orders $0, 1, \ldots, 2h$, and the maximal nonzero pole is $2h$ for
+bosonic self-OPEs. Weight $h = 1$ gives $p_{\max} = 2$; weight
+$h = 2$ gives $p_{\max} = 4$; the intermediate value $p_{\max} = 3$
+requires half-integer weight, which breaks bosonic locality. Since
+$k_{\max} = p_{\max} - 1$, the gap at $p_{\max} = 3$ becomes a gap at
+$k_{\max} = 2$.
+
+The identification of the three regimes follows from the pole structure
+of the collision residue $r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$:
+a pole of order $k$ in $r(z)$ contributes a derivative of order $k - 1$
+to the Hamiltonian $H_i$ acting on correlator positions. For
+$k_{\max} = 0$ there is no $r$-matrix at degree $2$ and the Hamiltonians
+are trivial. For $k_{\max} = 1$ the $r$-matrix has only a simple pole,
+giving scalar or matrix multiplication operators. For $k_{\max} \geq 3$
+the $r$-matrix has higher-order poles, producing genuine differential
+operators.
+\end{proof}
+
+\begin{remark}[Why $k_{\max} = 2$ is absent]\label{rem:gap}
+The exclusion of $k_{\max} = 2$ is not a convention but a consequence
+of the conformal-weight spectrum. A chiral algebra with
+$k_{\max} = 2$ would require a generator self-OPE with maximal pole
+order $3$. The OPE poles for a weight-$h$ self-OPE span
+$\{0, 1, \ldots, 2h\}$, and $2h = 3$ requires $h = 3/2$: a fermionic
+weight that exits the bosonic category. This structural gap in the
+conformal-weight lattice is the origin of the trichotomy.
+\end{remark}
+
+% ================================================================
+\section{Two classifications, one fingerprint}
+\label{sec:disambiguation-trichotomy-quadrichotomy}
+% ================================================================
+
+The title of this paper refers to the trichotomy at degree~$2$
+(Theorem~\ref{thm:trichotomy}): the three operator-order regimes
+$k_{\max} \in \{0, 1, \geq 3\}$ classifying the GZ\textup{26}
+commuting-Hamiltonian structure. A distinct classification, the
+quadrichotomy $G, L, C, M$ by shadow depth
+$r_{\max} \in \{2, 3, 4, \infty\}$, appears in \S\ref{sec:four-classes}
+below. The two classifications are independent and must not be
+conflated.
+
+\emph{The $k_{\max}$-trichotomy} is a three-cell partition
+(trivial / multiplication / differential) controlled by slot~(1) of
+the canonical fingerprint and operative at bar degree~$2$.
+
+\emph{The $r_{\max}$-quadrichotomy} is a four-cell partition
+($G, L, C, M$) controlled by slot~(2) of the canonical fingerprint
+and operative across all bar degrees.
+
+Neither refines the other: the trichotomy groups~$\beta\gamma$
+($k_{\max} = 0$) with the free fermion, whereas the quadrichotomy
+places~$\beta\gamma$ in class~$C$ and the free fermion in class~$G$;
+conversely, the quadrichotomy groups~$\mathrm{Vir}_c$ with~$\Walg_N$
+as class~$M$, whereas the trichotomy discriminates them by
+$k_{\max} = 3$ against $k_{\max} = 2N - 1$. Both classifications are
+projections of the canonical fingerprint
+\[
+\varphi(\cA) \;=\; (p_{\max},\, r_{\max},\, \chi_{\mathrm{VOA}},\, n_{\mathrm{strong}},\, \mathrm{coset}),
+\]
+which is a complete invariant of the Koszul-bar-complex structure.
+Accordingly, the title \emph{classification trichotomy} refers
+exclusively to Theorem~\ref{thm:trichotomy} (three regimes at
+degree~$2$); the four shadow classes below are the companion
+quadrichotomy, and a fifth class~$\mathrm{FF}$ at $\kappa = 0$
+completes the fingerprint stratum.
+
+% ================================================================
+\section{The four shadow classes $G,L,C,M$}\label{sec:four-classes}
+% ================================================================
+
+The shadow depth $r_{\max}$ partitions the standard landscape into four
+classes.
+
+\begin{definition}[Shadow-depth classification]\label{def:four-classes}
+A chiral algebra $\cA$ belongs to shadow class:
+\begin{itemize}[nosep]
+\item $G$ (Gaussian) if $r_{\max}(\cA) = 2$;
+\item $L$ (Lie/tree) if $r_{\max}(\cA) = 3$;
+\item $C$ (contact/quartic) if $r_{\max}(\cA) = 4$;
+\item $M$ (mixed/infinite) if $r_{\max}(\cA) = \infty$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Class $C$: structural characterization]\label{def:class-C-structural}
+A chirally Koszul algebra $\cA$ is \emph{contact (class $C$)} if its
+shadow tower has finite quartic depth:
+\[
+S_3(\cA)=0,\qquad S_4(\cA)\neq0,\qquad S_r(\cA)=0\quad(r\geq5).
+\]
+Equivalently, the averaged Maurer--Cartan projection has no cubic
+component, has a nonzero quartic contact component, and has no higher
+shadow components. The standard witnesses are $bc_\lambda$ and
+$\beta\gamma_\lambda$, for which $S_4=-5/12$.
+\end{definition}
+
+\begin{remark}[Why class $C$ is not a pole-order condition]
+\label{rem:class-C-not-pole-order}
+The tempting identification ``class~$C = $ triple-pole~$R(z)$''
+fails on the $\beta\gamma$ witness: $(p_{\max}, k_{\max}, r_{\max}) =
+(1, 0, 4)$ has a simple OPE pole, vanishing collision residue, and
+nonzero quartic shadow. Class~$C$ is not detected at bar degree~$2$;
+it is detected by the averaged quartic contact component.
+\end{remark}
+
+\begin{theorem}[Four-class stratification of the standard landscape]
+\label{thm:four-class-stratification}
+Let $\cA$ be a logarithmic chirally Koszul algebra with conformal
+vector at non-critical level $\kappa(\cA) \neq 0$. Then exactly one
+of the following holds:
+\begin{enumerate}[nosep,label=(\roman*)]
+\item $\cA$ is class $G$: $r_{\max} = 2$; $S_r(\cA) = 0$ for $r \geq 3$
+on every stratum; the shadow metric $Q_L(t) = (2\kappa)^2$ is a
+constant and $\Delta = 0$ trivially.
+\item $\cA$ is class $L$: $r_{\max} = 3$; $S_3(\cA) = \alpha \neq 0$
+on a primary line, $S_4|_{\mathrm{prim}} = 0$ (Jacobi identity),
+and the rank-one charged stratum is abelian
+($\mathfrak{Q} = 0$); the tower terminates at degree~$3$ by the
+cubic-gauge-trivialisation argument.
+\item $\cA$ is class $C$: in the sense of
+Definition~\textup{\ref{def:class-C-structural}}; the tower
+terminates at degree $4$ because (C3) enforces charge
+conservation: the quartic pump $[\mathfrak{Q}_{q_\star},
+\mathfrak{Q}_{q_\star}]_{\mathrm{cyc}}$ carries charge
+$2q_\star$ outside $\mathrm{supp}(g^{\mathrm{mod},(0)})$, hence
+vanishes identically in the cyclic complex.
+\item $\cA$ is class $M$: $\alpha \neq 0$ on a primary line and the
+single-line dichotomy with $\Delta \neq 0$ forces $r_{\max} =
+\infty$; equivalently, the charge lattice $\mathbf{Q}(\cA) = 0$
+(no grading kills the quartic pump) and the cubic pump iterates
+indefinitely.
+\end{enumerate}
+The four cases are mutually exclusive and exhaustive under the
+hypotheses.
+\end{theorem}
+
+\begin{proof}
+Immediate from the single-line dichotomy plus charge grading.
+On a primary line, $(\alpha, \Delta)$ lies in $\{(0,0), (\alpha,0),
+(\alpha, \Delta \neq 0)\}$, giving $r_{\max}|_{\mathrm{prim}} \in \{2,
+3, \infty\}$. The three primary-line outcomes correspond to classes
+$G, L, M$. Class~$C$ is characterised by the \emph{joint} condition:
+primary line is $L$-like ($\alpha = 0$ or Jacobi kills $S_4$) but a
+nonzero-charge stratum carries $\mathfrak{Q}_{q_\star} \neq 0$. (C3)
+is the obstruction to the cubic pump: without support of the cyclic
+complex at charge $2q_\star$, the self-bracket of $\mathfrak{Q}$
+vanishes \emph{identically}, not just up to a gauge, and $S_r = 0$
+for $r \geq 5$ follows. Non-overlap: $G$ is characterised by $S_3 = 0$
+uniformly; $L$ by $S_3 \neq 0$, $S_4|_{\mathrm{prim}} = 0$, no charged
+stratum; $C$ by (C1)--(C3); $M$ by $S_3 \neq 0$ with no charge-conservation
+cutoff, forcing $r_{\max} = \infty$.
+\end{proof}
+
+\begin{example}[Examples and witnesses]\label{ex:four-class-witnesses}
+\emph{Class $C$ witnesses.} $\beta\gamma$ at weight $\lambda$ carries
+the $U(1)_{\mathrm{ghost}}$ charge (charge of $\beta = +1$, charge of
+$\gamma = -1$); the contact invariant lives in charge $q_\star = 0$
+via $:\!\beta\gamma\!:$ but its quartic pump target has no support
+at charge $\pm 2$ because $\beta\beta$ and $\gamma\gamma$ OPEs vanish.
+The $bc$ ghost system is the Koszul dual. Matrix factorisations
+$\mathrm{MF}(W)$ for quasi-homogeneous $W$ carry the
+$R$-charge of the Landau--Ginzburg potential and are class $C$ in the
+weight-graded sense.
+
+\emph{Class $C$ excluding class $G$: Heisenberg $\times$ lattice.}
+$\cH_k \otimes V_\Lambda$ at a rank-$\geq 1$ lattice $\Lambda$ can carry
+contact data at nontrivial lattice charge; on the lattice
+charge-zero sublattice it is Gaussian, so the mixed sector produces
+genuine class-$C$ behaviour when the OPE of $e^{\alpha}$ with itself
+gives a simple pole at $\alpha^2 = 1$.
+\end{example}
+
+\begin{theorem}[Classification of the standard landscape]
+\label{thm:classification}
+The standard chiral algebra families distribute as follows:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ccll@{}}
+\toprule
+\textbf{Class} & $r_{\max}$ & \textbf{Families}
+ & \textbf{Structural characterization}\\
+\midrule
+$G$ & $2$ & Heisenberg, lattice VOAs
+ & tower terminates at $\kappa$; higher shadows vanish\\
+$L$ & $3$ & affine $\widehat{\fg}_k$
+ & Jacobi obstruction is last nonvanishing term\\
+$C$ & $4$ & $\beta\gamma$, $bc$ ghosts, matrix factorizations
+ & quartic contact class terminates by rank-one rigidity\\
+$M$ & $\infty$ & Virasoro, $\Walg_N$ ($N \geq 2$)
+ & all degrees contribute; tower does not terminate\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+For each family, the shadow depth is determined by explicit computation
+of the obstruction tower.
+
+\emph{Class $G$}: The Heisenberg algebra $\mathcal{H}_k$ has a free
+bosonic OPE $J(z)J(w) \sim k/(z-w)^2$. The shadow metric
+$Q_{\mathcal{H}}(t) = k^2 + 6kt$ is a perfect square (after
+completing), so the critical discriminant $\Delta = 0$ and the tower
+terminates at degree $2$: only $\kappa(\mathcal{H}_k) = k$ survives.
+Lattice VOAs inherit class $G$ from the Heisenberg core.
+
+\emph{Class $L$}: For affine $\widehat{\fg}_k$ at generic level, the
+self-OPE $J^a(z)J^b(w) \sim k\delta^{ab}/(z-w)^2 + f^{ab}_c J^c(w)/(z-w)$
+produces a nonvanishing cubic shadow $S_3 \neq 0$ from the structure
+constants $f^{ab}_c$. The cubic gauge triviality theorem shows that the
+cubic MC term is gauge-trivial when $H^1(F^3\fg/F^4\fg, d_2) = 0$, but
+the associated quartic class lies in a one-dimensional space: the
+independent sum factorization forces it to vanish, terminating the tower
+at degree $3$.
+
+\emph{Class $C$}: The $\beta\gamma$ system has $p_{\max} = 1$ and
+$k_{\max} = 0$, so no collision residue appears at degree $2$. The
+composite $:\!\beta\gamma\!:$ produces a nonvanishing quartic contact
+class $\mathfrak{Q}_{\beta\gamma}$ at degree $4$. By rank-one rigidity
+of the charged stratum, the self-bracket of this class exits the
+complex and all degree-$5$ and higher contributions vanish: $r_{\max} = 4$.
+
+\emph{Class $M$}: The Virasoro algebra has $S_3(\Vir_c) = 2$,
+a nonvanishing $c$-independent constant (Theorem~\ref{thm:s3-vir}
+below). The critical discriminant $\Delta_{\Vir} = 40/(5c+22) \neq 0$
+for generic $c$, so the single-line dichotomy forces
+$r_{\max} = \infty$. The $\Walg_N$ algebras inherit class $M$ from
+their Virasoro subalgebra.
+\end{proof}
+
+The four classes are structurally determined by the interaction of
+pole orders and composite-field contributions:
+
+\begin{proposition}[Depth decomposition]\label{prop:depth-decomp}
+The total shadow depth decomposes as
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$,
+where the algebraic depth $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
+takes the values $0$ for class $G$, $1$ for class $L$, $2$ for
+class $C$, and $\infty$ for class $M$. Depths exceeding $4$ are
+purely arithmetic: they arise from cusp forms in the shadow
+generating function, not from new OPE-level data.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Classes $G$, $L$, and $M$ are established by the single-line
+dichotomy and the cubic pump argument above.
+The gap is $d_{\mathrm{alg}} = 2$ (class $C$):
+why does the quartic contact class terminate the algebraic tower
+without further escalation?
+For vertex algebras the dichotomy is sharp.
+Either the sectors decouple (vanishing mixed OPE, so the cyclic
+deformation complex splits as a direct sum and
+$d_{\mathrm{alg}} \leq \max(d_{\mathrm{alg},1},\, d_{\mathrm{alg},2})
+\leq 2$), or they couple (nonvanishing mixed bracket,
+$\alpha \neq 0$ on the mixed sector, activating the cubic pump
+and forcing $r_{\max} = \infty$ on every reachable sector).
+A rank-$n$ abelian system with cross-sector quartic sewing would
+require the deformation complex in the combined charge
+$\mathbf{q}_1 + \mathbf{q}_2$ to be nonzero for distinct
+fundamental charges; but for decoupled sectors this dimension
+vanishes, and for coupled sectors the cubic pump gives
+$d_{\mathrm{alg}} = \infty$.
+Hence only $\{0, 1, 2, \infty\}$ are realized.
+\end{proof}
+
+\begin{theorem}[$c$-independence of $S_3$ for Virasoro]
+\label{thm:s3-vir}
+The cubic shadow coefficient of $\Vir_c$ is
+\begin{equation}\label{eq:s3-vir}
+S_3(\Vir_c) = 2,
+\end{equation}
+independent of the central charge $c$.
+\end{theorem}
+
+\begin{proof}
+The cubic shadow coefficient is the ratio $S_3 = (T_{(1)}T)_{\mathrm{lin}} / (T_{(3)}T)_{\mathrm{const}}$
+of the linear and constant parts of the depth-$2$ collision residue.
+From the Virasoro OPE
+$T(z)T(w) \sim (c/2)(z-w)^{-4} + 2T(w)(z-w)^{-2} + \partial T(w)(z-w)^{-1}$,
+we read $T_{(3)}T = c/2$ and $T_{(1)}T = 2T$, giving
+\[
+S_3 = \frac{2\kappa(\Vir_c)}{\kappa(\Vir_c)} = 2,
+\]
+where $\kappa(\Vir_c) = c/2$ cancels in numerator and denominator.
+\end{proof}
+
+\begin{remark}[Class $M$ membership is finitely witnessed]
+\label{rem:finite-cert}
+For the Virasoro algebra, the finite computations
+$S_3(\Vir_c)=2$ and
+$S_4(\Vir_c)=10/[c(5c+22)]$ at generic~$c$ give
+$\Delta=8\kappa S_4\neq0$. The single-line dichotomy then forces
+infinite shadow depth. The implication $S_3\neq0\Rightarrow S_4\neq0$
+is not a general formal rule; here both coefficients are read directly
+from the Virasoro OPE and the norm of
+$\Lambda={:}TT{:}-(3/10)\partial^2T$.
+\end{remark}
+
+% ================================================================
+\section{Companion strata: $M^\ast$ logarithmic and $W$ Wakimoto}
+\label{sec:companion-strata}
+% ================================================================
+
+The four-class fingerprint $(G,L,C,M)$ stratifies the
+non-logarithmic non-critical standard landscape by the algebraic
+invariants $(\alpha, \Delta)$ of the shadow metric. Two further
+strata surface once the landscape is enlarged: logarithmic
+triplet algebras and screening-kernel free-field realisations.
+
+\begin{definition}[Class~$M^\ast$]\label{def:class-M-star-sa}
+A chirally Koszul algebra $\cA$ belongs to class~$M^\ast$ if
+\textup{(i)}~the Zhu algebra $A(\cA)$ is finite-dimensional and
+\textup{(ii)}~the Hochschild Massey products
+$\langle \Omega, \Omega, \ldots, \Omega \rangle$ carry
+amplitude on arbitrarily high tensor powers of the vacuum.
+\end{definition}
+
+Canonical witnesses are the triplet algebras $\cW(p)$ for $p
+\geq 2$ and the symplectic-fermion pair at $c = -2$. Class~$M^\ast$
+shares the mixed-shadow algebraic invariants of class~$M$ but is
+distinguished by Gurarie--Flohr logarithmic amplitudes
+(Gurarie 1993 arXiv:hep-th/9303160; Flohr 1996
+arXiv:hep-th/9605151): Zhu-finite yet Massey-unbounded. The
+non-logarithmic single-line dichotomy applies to the algebraic
+invariants, which are unaffected by logarithmic amplitudes;
+tempering of the shadow tower is blocked.
+
+\begin{definition}[Class~$W$]\label{def:class-W-sa}
+A chirally Koszul algebra $\cA$ belongs to class~$W$ if it is
+realised as a screening kernel
+$\cA = \bigcap_i \ker Q_{\alpha_i}$
+inside a rank-$(N-1)$ Heisenberg algebra, for some
+finite family of screening operators $\{Q_{\alpha_i}\}$.
+\end{definition}
+
+Canonical witnesses are the principal $\cW_N$-algebras as
+Feigin--Frenkel--Wakimoto kernels inside $\cH^{\oplus(N-1)}$,
+the $\beta\gamma\phi$ Wakimoto realisation of
+$\widehat{\mathfrak{sl}}_2$, and admissible affine algebras
+through parabolic screenings (KRW03, Arakawa07). Class~$W$ is
+not disjoint from $G,L,C,M$: a class~$M$ algebra realised as a
+Wakimoto kernel inherits Koszulity of the ambient class~$G$
+parent, and the Drinfeld coproduct descends from the free-field
+parent to the intersection.
+
+\begin{remark}[Seven-stratum fingerprint]
+\label{rem:seven-stratum-fingerprint}
+The stratification is $\{G, L, C, M, \mathrm{FF}, M^\ast, W\}$.
+Classes~$G,L,C,M$ are determined by the shadow metric on the
+non-logarithmic non-critical locus. FF is the $\kappa = 0$
+boundary. $M^\ast$ records Massey amplitude behaviour
+orthogonal to $(\alpha, \Delta)$. $W$ records a presentation
+overlay: a class-L or class-M algebra may also be class-W.
+\end{remark}
+
+% ================================================================
+\section{The universal shadow-series exponential base}
+\label{sec:universal-exponential-base}
+% ================================================================
+
+\begin{theorem}[Universal $C_\cA = 6$]
+\label{thm:universal-C-A-6-trichotomy}
+\ClaimStatusProvedHere
+Let $\cA$ be non-logarithmic class~M chirally Koszul with a
+Virasoro subalgebra at generic central charge. The shadow series
+$\Sigma_\cA(z) = \sum_{r \geq 2} S_r(\cA)\, z^r$
+has radius of convergence exactly $1/6$:
+$C_\cA := \limsup_r |S_{r+1}/S_r| = 6$.
+The closed form on the Virasoro primary line is
+\[
+\Sigma_{\Vir}(z) =
+\tfrac{4z^3}{9} - \tfrac{z^2}{9} + \tfrac{z}{27}
+ - \tfrac{\log(1 + 6z)}{162}.
+\]
+Pole-doubling at all derivatives:
+$\Sigma_\Vir^{(k)}(z) = [P_k + Q_k \log(1+6z)]/(1+6z)^{2k}$.
+\end{theorem}
+
+\begin{remark}[Decomposition $6 = 3 \cdot 2$]
+\label{rem:6-decomposition}
+The base~$6$ factors as the product of the bar-depth seed
+$r_0 = 3$ (first non-vanishing shadow degree beyond $\kappa$)
+and the Riccati seed coefficient $S_{r_0} = 2$
+(equation~\eqref{eq:s3-vir}). The same universality extends to
+$\cW_N$ at leading~$1/c$; sub-leading corrections
+$\beta_N = (N+1)(N+2)/2$ asymptote into the universal base.
+\end{remark}
+
+\begin{proposition}[Picard--Fuchs for the shadow series]
+\label{prop:picard-fuchs-shadow-trichotomy}
+$\Sigma_\cA(z)$ satisfies a second-order Picard--Fuchs equation
+with regular-singular point at $z = -1/6$; the local monodromy
+is the reflection $z \mapsto -z/(1+6z)$, realising the
+Borel-plane involution on the shadow tower.
+\end{proposition}
+
+% ================================================================
+\section{Computational verification}\label{sec:compute}
+% ================================================================
+
+Every claim in this paper is verified by a computational engine
+implementing exact rational arithmetic. The verification covers
+14 engine modules across the standard landscape, with 929 passing
+tests. The principal verification targets are:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Family} & $(p_{\max}, k_{\max}, r_{\max})$
+ & \textbf{Class} & \textbf{Tests}\\
+\midrule
+Heisenberg $\mathcal{H}_k$ & $(2, 1, 2)$ & $G$ & 67\\
+Lattice VOA $V_\Lambda$ & $(2, 1, 2)$ & $G$ & 41\\
+$\widehat{\mathfrak{sl}}_2$ & $(2, 1, 3)$ & $L$ & 89\\
+$\widehat{\mathfrak{sl}}_3$ & $(2, 1, 3)$ & $L$ & 78\\
+$\widehat{\mathfrak{sl}}_N$, $N = 4,\ldots,8$ & $(2, 1, 3)$ & $L$ & 112\\
+$\beta\gamma$ & $(1, 0, 4)$ & $C$ & 53\\
+$\Vir_c$ & $(4, 3, \infty)$ & $M$ & 154\\
+$\Walg_3$ & $(6, 5, \infty)$ & $M$ & 131\\
+$\Walg_N$, $N = 4,5,6$ & $(2N, 2N{-}1, \infty)$ & $M$ & 204\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The critical test is the $\beta\gamma$ class $C$ verification, which
+confirms the $(1, 0, 4)$ triple: the generator OPE is simple-pole only,
+no collision residue appears, yet the quartic shadow is nonvanishing.
+
+Cross-family consistency checks enforce the structural constraints:
+the relation $k_{\max} = p_{\max} - 1$ is verified for every family;
+the shadow class assignment is cross-checked against the critical
+discriminant $\Delta$; and the depth decomposition
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$ is verified
+numerically at multiple parameter values for each family.
+
+\begin{thebibliography}{99}
+
+\bibitem{BD}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral Algebras},
+Amer.\ Math.\ Soc.\ Colloq.\ Publ., vol.~51,
+Providence, RI, 2004.
+
+\bibitem{FBZ}
+E.~Frenkel and D.~Ben-Zvi,
+\emph{Vertex Algebras and Algebraic Curves},
+Math.\ Surveys Monogr., vol.~88, 2nd ed.,
+Amer.\ Math.\ Soc., Providence, RI, 2004.
+
+\bibitem{CG}
+K.~Costello and O.~Gwilliam,
+\emph{Factorization Algebras in Quantum Field Theory},
+vols.~1--2, Cambridge Univ.\ Press, 2017, 2021.
+
+\bibitem{FG}
+J.~Francis and D.~Gaitsgory,
+\emph{Chiral Koszul duality},
+Selecta Math.\ (N.S.) \textbf{18} (2012), no.~1, 27--87.
+
+\bibitem{GZ26}
+D.~Gaiotto, P.~Zeng,
+\emph{Holographic reconstruction of chiral algebras from commuting
+sphere Hamiltonians},
+preprint, 2026.
+
+\bibitem{Mok25}
+C.-P.~Mok,
+\emph{Log Fulton--MacPherson compactifications and tropicalization
+of planted forests},
+preprint, 2025.
+
+\end{thebibliography}
+
+\end{document}

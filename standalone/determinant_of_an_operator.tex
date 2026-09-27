@@ -1,0 +1,2057 @@
+\documentclass[11pt]{memoir}
+\usepackage{raeez-math-template}
+
+\title{The Determinant of an Operator and the Virtual $K_0$-Determinant}
+\author{Raeez Lorgat}
+\date{}
+
+\providecommand{\Vect}{\operatorname{Vect}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\Pic}{\operatorname{Pic}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Frob}{\operatorname{Frob}}
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\coker}{\operatorname{coker}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\id}{\operatorname{id}}
+\providecommand{\Pf}{\operatorname{Pf}}
+\providecommand{\sdet}{\operatorname{sdet}}
+\providecommand{\sdim}{\operatorname{sdim}}
+\providecommand{\smult}{\operatorname{smult}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\Coh}{\operatorname{Coh}}
+\providecommand{\BKM}{\operatorname{BKM}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\bA}{\mathbb{A}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bF}{\mathbb{F}}
+\providecommand{\bG}{\mathbb{G}}
+\providecommand{\bH}{\mathbb{H}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bN}{\mathbb{N}}
+\providecommand{\bU}{\mathbb{U}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\ChirHoch}{\operatorname{ChirHoch}}
+\providecommand{\Sp}{\mathbf{Sp}}
+\providecommand{\cref}[1]{\ref{#1}}
+\providecommand{\Cref}[1]{\ref{#1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The determinant is the scalar action induced by an endomorphism on the
+top exterior line. The same exterior-line construction governs
+finite-dimensional linear algebra, algebraic geometry, arithmetic
+geometry, geometric representation theory, and the virtual
+$K_0$-determinant of a Calabi--Yau threefold.
+
+The terminal object is the \emph{virtual $K_0$-determinant package} on
+$X = K3 \times E$. The protected K3 elliptic genus
+$Z_{\mathrm{K3}} = 2\phi_{0,1}$ feeds a charge-graded virtual super
+vector space $\cV_{(n,l,m)}$ on $\Gamma_{\mathrm{eff}}$. Its
+$K_0$-determinant in the Borcherds cusp chamber is the Igusa cusp form
+\[
+  \cD_X(Z) =
+  64\,q^{1/2}r^{1/2}s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  (1 - q^{n}r^{l}s^{m})^{f(nm,l)}
+  = \Delta_5(Z),
+\]
+a Siegel cusp form of weight $5$ on $\mathbf{Sp}_4(\bZ)$. By
+Borcherds--Gritsenko--Nikulin, $\Delta_5$ is the denominator of the
+Borcherds--Kac--Moody superalgebra $\fg_{\Delta_5}$, and
+\[
+  \kappa_{\BKM}(\Delta_5)
+  \;=\; \tfrac12\,c_1(0)
+  \;=\; 5,
+\]
+the Borcherds weight read off the constant Fourier coefficient
+$c_1(0) = 10$ of $2\phi_{0,1}$.
+
+The construction supplies the \emph{scalar} virtual $K_0$-determinant
+together with its \emph{algebraic target} BKM denominator algebra. It
+does \emph{not} supply a compact BPS Hilbert space, an operator-level
+Pfaffian whose square is the BKM denominator squared, or a compact
+Hall correspondence on $K3 \times E$. The operator-level Pfaffian
+$\Pf(\mathfrak D_X) = \Delta_5$ is a separate construction listed as
+the open problem F11 in the Vol~I frontier.  The scalar shadow is
+constructed here; the operator-level Pfaffian is the
+distinct second-quantised string construction still to be made.
+The separation between scalar shadow and operator algebra
+(scalar-operator) is enforced throughout: every invocation of $\Delta_5$ is
+labelled with its level (level $5$ scalar, not level $4$ operator).
+\end{abstract}
+
+\tableofcontents
+
+\chapter*{Definition}
+\addcontentsline{toc}{chapter}{Definition}
+
+The determinant of an operator is the scalar by which the operator acts
+on the top exterior line.
+
+Let \(V\) be an \(n\)-dimensional vector space over a field \(k\). The
+top exterior power
+\[
+  \det V := \bigwedge^{n}V
+\]
+is one-dimensional. A linear operator \(T:V\to V\) induces a linear
+operator
+\[
+  \bigwedge^{n}T:\bigwedge^{n}V\longrightarrow \bigwedge^{n}V.
+\]
+Every endomorphism of a one-dimensional vector space is multiplication
+by a unique scalar. That scalar is \(\det(T)\):
+\[
+  \bigwedge^{n}T=\det(T)\cdot \id_{\det V}.
+\]
+
+This is the definition. The formula with permutations, the product of
+eigenvalues, the Jacobian, the Frobenius determinant in a zeta
+function, the determinant line on a moduli stack, the Weyl denominator,
+the central extension of a loop group, and the virtual $K_0$-determinant
+of the Mukai stack of $K3$ sheaves whose value on $K3 \times E$ is the
+Igusa cusp form $\Delta_5$, are realizations of this definition. The
+last item is the modular-shadow realisation constructed below.
+
+\chapter{The Finite-Dimensional Construction}
+\label{ch:finite}
+
+\section{Alternating Volume Before Determinants}
+\label{sec:alternating-volume}
+
+The determinant is forced by one elementary fact: volume is alternating.
+If two edge vectors of a parallelepiped are equal, the parallelepiped
+has zero volume. If two edge vectors are exchanged, the orientation
+changes sign. Algebra encodes this by the exterior power.
+
+\begin{definition}[alternating multilinear map]
+\label{def:alternating-map}
+Let \(V\) and \(L\) be vector spaces over a field \(k\). A map
+\[
+  A:V^r\to L
+\]
+is alternating \(r\)-linear if it is linear in each variable and
+\[
+  A(v_1,\dots,v_r)=0
+\]
+whenever \(v_i=v_j\) for some \(i\neq j\).
+\end{definition}
+
+From this one derives the sign rule. If \(A\) is alternating and
+\(i\neq j\), then
+\[
+  A(\dots,v_i,\dots,v_j,\dots)
+  =
+  -A(\dots,v_j,\dots,v_i,\dots).
+\]
+Indeed, in the two displayed slots,
+\[
+  0=A(\dots,v_i+v_j,\dots,v_i+v_j,\dots),
+\]
+and multilinearity expands this as the sum of the two swapped terms,
+because the repeated terms vanish.
+
+\begin{definition}[exterior power]
+\label{def:exterior-power}
+The \(r\)-th exterior power \(\bigwedge^rV\) is the vector space
+generated by symbols
+\[
+  v_1\wedge\cdots\wedge v_r
+\]
+subject to the relations making the map
+\[
+  V^r\to \bigwedge^rV,\qquad
+  (v_1,\dots,v_r)\mapsto v_1\wedge\cdots\wedge v_r
+\]
+alternating and multilinear.
+\end{definition}
+
+Equivalently, \(\bigwedge^rV\) is the quotient of \(V^{\otimes r}\)
+by the subspace generated by all tensors which express failure of
+alternation. The quotient formulation proves existence. The symbolic
+formulation proves usability.
+
+\begin{proposition}[universal property of exterior powers]
+\label{prop:exterior-universal}
+For every vector space \(L\), composition with the wedge map gives a
+natural bijection
+\[
+  \Hom\left(\bigwedge^rV,L\right)
+  \simeq
+  \{\text{alternating \(r\)-linear maps }V^r\to L\}.
+\]
+\end{proposition}
+
+\begin{proof}
+A linear map \(\phi:\bigwedge^rV\to L\) gives an alternating
+\(r\)-linear map
+\[
+  (v_1,\dots,v_r)\mapsto \phi(v_1\wedge\cdots\wedge v_r).
+\]
+Conversely, if \(A:V^r\to L\) is alternating and multilinear, then
+the defining relations of \(\bigwedge^rV\) are exactly the relations
+that \(A\) already satisfies. Hence \(A\) descends uniquely to a
+linear map \(\phi_A:\bigwedge^rV\to L\) with
+\[
+  \phi_A(v_1\wedge\cdots\wedge v_r)=A(v_1,\dots,v_r).
+\]
+The two constructions are inverse.
+\end{proof}
+
+\begin{proposition}[basis of an exterior power]
+\label{prop:wedge-basis}
+Let \(V\) have basis \(e_1,\dots,e_n\). Then \(\bigwedge^rV\) has
+basis
+\[
+  e_{i_1}\wedge\cdots\wedge e_{i_r},
+  \qquad
+  1\leq i_1<\cdots<i_r\leq n.
+\]
+In particular,
+\[
+  \dim\bigwedge^rV=\binom nr.
+\]
+\end{proposition}
+
+\begin{proof}
+First, the displayed vectors span. Every wedge
+\[
+  v_1\wedge\cdots\wedge v_r
+\]
+expands multilinearly in the basis \(e_i\). Any term with repeated
+indices vanishes. Any term with distinct indices can be reordered
+into increasing order, at the cost of the sign of the permutation.
+
+Second, the displayed vectors are independent. For each increasing
+multi-index \(I=(i_1<\cdots<i_r)\), define an alternating \(r\)-linear
+form \(\varepsilon_I:V^r\to k\) by
+\[
+  \varepsilon_I(e_{j_1},\dots,e_{j_r})
+  =
+  \begin{cases}
+    \operatorname{sgn}(\sigma),&
+    (j_1,\dots,j_r)=(i_{\sigma(1)},\dots,i_{\sigma(r)})
+    \text{ for some }\sigma\in S_r,\\
+    0,&\text{otherwise.}
+  \end{cases}
+\]
+By \Cref{prop:exterior-universal}, \(\varepsilon_I\) descends to a
+linear functional on \(\bigwedge^rV\). It takes value \(1\) on
+\(e_{i_1}\wedge\cdots\wedge e_{i_r}\) and value \(0\) on every other
+increasing basis candidate. These functionals separate the displayed
+vectors. Hence the spanning family is independent.
+\end{proof}
+
+\begin{corollary}[the top exterior power is a line]
+\label{cor:top-wedge-line}
+If \(\dim V=n\), then
+\[
+  \bigwedge^nV
+\]
+is one-dimensional. If \(e_1,\dots,e_n\) is a basis of \(V\), then
+\[
+  e_1\wedge\cdots\wedge e_n
+\]
+is a basis of \(\bigwedge^nV\).
+\end{corollary}
+
+\begin{proof}
+Apply \Cref{prop:wedge-basis} with \(r=n\). There is exactly one
+increasing \(n\)-tuple:
+\[
+  (1,2,\dots,n).
+\]
+\end{proof}
+
+\section{Linear Maps Act on Exterior Powers}
+\label{sec:linear-maps-exterior}
+
+Let \(T:V\to W\) be linear. Define
+\[
+  \bigwedge^rT:\bigwedge^rV\to\bigwedge^rW
+\]
+by
+\[
+  (\bigwedge^rT)(v_1\wedge\cdots\wedge v_r)
+  :=
+  T(v_1)\wedge\cdots\wedge T(v_r).
+\]
+This is well-defined because the right side is alternating and
+multilinear in \(v_1,\dots,v_r\). The universal property of the
+exterior power is exactly the statement that this prescription
+descends to a linear map.
+
+\begin{proposition}[functoriality]
+\label{prop:wedge-functoriality}
+If \(V\xrightarrow{T}W\xrightarrow{S}U\) are linear maps, then
+\[
+  \bigwedge^r(S\circ T)=(\bigwedge^rS)\circ(\bigwedge^rT).
+\]
+Also
+\[
+  \bigwedge^r(\id_V)=\id_{\bigwedge^rV}.
+\]
+\end{proposition}
+
+\begin{proof}
+Both identities are checked on wedge generators. For example,
+\[
+  \bigwedge^r(S\circ T)(v_1\wedge\cdots\wedge v_r)
+  =
+  S(Tv_1)\wedge\cdots\wedge S(Tv_r),
+\]
+which is exactly
+\[
+  (\bigwedge^rS)(Tv_1\wedge\cdots\wedge Tv_r)
+  =
+  ((\bigwedge^rS)\circ(\bigwedge^rT))(v_1\wedge\cdots\wedge v_r).
+\]
+\end{proof}
+
+\section{Definition of the Determinant}
+\label{sec:det-definition}
+
+Specialize to \(W=V\), \(r=n=\dim V\), and \(T:V\to V\). Functoriality
+gives
+\[
+  \bigwedge^nT:\bigwedge^nV\to\bigwedge^nV.
+\]
+By \Cref{cor:top-wedge-line}, the source and target form a
+one-dimensional line. Hence the operator is multiplication by one
+scalar.
+
+\begin{definition}[determinant of an operator]
+\label{def:operator-det}
+Let \(V\) be finite-dimensional and \(T:V\to V\) linear. The
+determinant \(\det(T)\in k\) is the unique scalar satisfying
+\[
+  \bigwedge^{\dim V}T
+  =
+  \det(T)\cdot \id_{\bigwedge^{\dim V}V}.
+\]
+\end{definition}
+
+The rest of finite-dimensional determinant theory evaluates this
+scalar in useful coordinates.
+
+\section{One Dimension}
+\label{sec:one-dimension}
+
+Let \(V\) be one-dimensional. Choose a non-zero vector \(e\). Every
+linear operator \(T:V\to V\) has the form
+\[
+  T(e)=a e
+\]
+for a unique scalar \(a\in k\). In one dimension the determinant is
+this scalar:
+\[
+  \det(T)=a.
+\]
+
+This case already contains the whole idea. A one-dimensional vector
+space is a line. An operator on a line is multiplication by a scalar.
+The determinant asks every operator, even an operator on a large
+space, to act on a line canonically attached to that space.
+
+\section{Two Dimensions by Area}
+\label{sec:two-dimensions-area}
+
+Let \(V\) have basis \(e_{1},e_{2}\). Write
+\[
+  T(e_{1})=a e_{1}+c e_{2},\qquad
+  T(e_{2})=b e_{1}+d e_{2}.
+\]
+The matrix of \(T\) in the basis \((e_{1},e_{2})\) is
+\[
+  [T]=
+  \begin{pmatrix}
+    a & b\\
+    c & d
+  \end{pmatrix}.
+\]
+The oriented area element is \(e_{1}\wedge e_{2}\). The wedge product
+is bilinear and alternating:
+\[
+  u\wedge v=-v\wedge u,\qquad u\wedge u=0.
+\]
+Therefore
+\begin{align*}
+  T(e_{1})\wedge T(e_{2})
+  &=(a e_{1}+c e_{2})\wedge(b e_{1}+d e_{2})\\
+  &=ab\,e_{1}\wedge e_{1}
+    +ad\,e_{1}\wedge e_{2}
+    +cb\,e_{2}\wedge e_{1}
+    +cd\,e_{2}\wedge e_{2}\\
+  &=ad\,e_{1}\wedge e_{2}-bc\,e_{1}\wedge e_{2}\\
+  &=(ad-bc)e_{1}\wedge e_{2}.
+\end{align*}
+Hence
+\[
+  \det(T)=ad-bc.
+\]
+
+Nothing was memorized. The formula is forced by the action on the
+oriented area line \(\bigwedge^{2}V\).
+
+\section{Three Dimensions by Volume}
+\label{sec:three-dimensions-volume}
+
+Let \(V\) have basis \(e_{1},e_{2},e_{3}\). The oriented volume line is
+\[
+  \det V=\bigwedge^{3}V=k\cdot(e_{1}\wedge e_{2}\wedge e_{3}).
+\]
+If
+\[
+  T(e_j)=\sum_{i=1}^{3}a_{ij}e_i,
+\]
+then
+\[
+  T(e_1)\wedge T(e_2)\wedge T(e_3)
+  =
+  \left(\sum_{\sigma\in S_3}\operatorname{sgn}(\sigma)
+  a_{\sigma(1),1}a_{\sigma(2),2}a_{\sigma(3),3}\right)
+  e_1\wedge e_2\wedge e_3.
+\]
+Terms with repeated basis vectors vanish because the wedge product is
+alternating. Terms using each basis vector once survive. The sign is
+the sign of the permutation needed to reorder the surviving wedge into
+\(e_1\wedge e_2\wedge e_3\).
+
+Thus the determinant is the signed sum over all ways of selecting one
+entry from each column and one entry from each row.
+
+\section{The General Formula}
+\label{sec:general-formula}
+
+\begin{proposition}[permutation formula]
+\label{prop:permutation-formula}
+Let \(V\) have basis \(e_1,\dots,e_n\). Let \(T(e_j)=\sum_i a_{ij}e_i\).
+Then
+\[
+  T(e_1)\wedge\cdots\wedge T(e_n)
+  =
+  \det(a_{ij})\,e_1\wedge\cdots\wedge e_n,
+\]
+where
+\[
+  \det(a_{ij})
+  =
+  \sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+  a_{\sigma(1),1}\cdots a_{\sigma(n),n}.
+\]
+\end{proposition}
+
+\begin{proof}
+Expand the wedge product by multilinearity:
+\[
+  \left(\sum_{i_1}a_{i_1,1}e_{i_1}\right)\wedge\cdots\wedge
+  \left(\sum_{i_n}a_{i_n,n}e_{i_n}\right).
+\]
+If two indices \(i_r,i_s\) coincide, the term contains the same basis
+vector twice and vanishes. The only surviving terms are indexed by
+permutations \(\sigma\in S_n\), with \(i_j=\sigma(j)\). For such a
+term,
+\[
+  e_{\sigma(1)}\wedge\cdots\wedge e_{\sigma(n)}
+  =
+  \operatorname{sgn}(\sigma)\,e_1\wedge\cdots\wedge e_n.
+\]
+Substitution gives the displayed formula.
+\end{proof}
+
+\section{Basis Independence}
+\label{sec:basis-independence}
+
+The permutation formula depends on a basis. The determinant is
+basis-free.
+
+\begin{proposition}[basis-free determinant]
+\label{prop:basis-free-det}
+Let \(V\) be finite-dimensional. There is a unique scalar \(\det(T)\)
+such that
+\[
+  \bigwedge^{\dim V}T=\det(T)\cdot\id_{\det V}.
+\]
+This scalar is independent of every choice of basis.
+\end{proposition}
+
+\begin{proof}
+The line \(\det V=\bigwedge^{n}V\) is one-dimensional. Hence every
+endomorphism of \(\det V\) is multiplication by a unique scalar.
+The induced map \(\bigwedge^n T\) is such an endomorphism. The scalar
+is defined without choosing a basis. If a basis is chosen, the scalar
+is computed by the permutation formula of
+\Cref{sec:general-formula}; changing basis changes both the chosen
+generator of \(\det V\) and its image by the same non-zero scalar, so
+the multiplier is unchanged.
+\end{proof}
+
+\section{What the Determinant Measures}
+\label{sec:what-det-measures}
+
+\begin{proposition}[detecting invertibility]
+\label{prop:det-invertibility}
+For \(T:V\to V\) with \(V\) finite-dimensional,
+\[
+  \det(T)\neq 0
+  \quad\Longleftrightarrow\quad
+  T\text{ is invertible}.
+\]
+\end{proposition}
+
+\begin{proof}
+If \(T\) is singular, its image has dimension \(<n\). Then
+\(T(e_1),\dots,T(e_n)\) are linearly dependent for every basis
+\((e_i)\). The wedge of linearly dependent vectors is zero, so
+\(\bigwedge^nT=0\), hence \(\det(T)=0\).
+
+If \(T\) is invertible, \(T(e_1),\dots,T(e_n)\) is a basis. Its wedge
+is a non-zero generator of \(\det V\). Hence
+\(\bigwedge^nT\) is non-zero on a one-dimensional space, so it is
+multiplication by a non-zero scalar.
+\end{proof}
+
+\begin{proposition}[multiplicativity]
+\label{prop:multiplicativity}
+For \(S,T:V\to V\),
+\[
+  \det(ST)=\det(S)\det(T).
+\]
+\end{proposition}
+
+\begin{proof}
+Exterior powers are functorial:
+\[
+  \bigwedge^n(ST)=(\bigwedge^nS)(\bigwedge^nT).
+\]
+On the determinant line, these maps are multiplication by
+\(\det(S)\) and \(\det(T)\). Their composite is multiplication by
+\(\det(S)\det(T)\).
+\end{proof}
+
+\begin{proposition}[eigenvalue product]
+\label{prop:eigenvalue-product}
+If \(T\) has eigenvalues \(\lambda_1,\dots,\lambda_n\) counted with
+algebraic multiplicity over an algebraic closure of \(k\), then
+\[
+  \det(T)=\lambda_1\cdots\lambda_n.
+\]
+\end{proposition}
+
+\begin{proof}
+Over an algebraic closure, triangularize \(T\). In an upper triangular
+matrix, the determinant formula has only one non-zero surviving
+diagonal contribution:
+\[
+  \det(T)=a_{11}\cdots a_{nn}.
+\]
+The diagonal entries of a triangular form are the eigenvalues counted
+with algebraic multiplicity. The determinant is unchanged by extension
+of scalars.
+\end{proof}
+
+\section{Worked Linear Examples}
+\label{sec:worked-linear-examples}
+
+\subsection{Diagonal Scaling}
+
+Let \(V=k^3\) with basis \(e_1,e_2,e_3\), and let
+\[
+  T(e_1)=a e_1,\qquad T(e_2)=b e_2,\qquad T(e_3)=c e_3.
+\]
+Then
+\[
+  T(e_1)\wedge T(e_2)\wedge T(e_3)
+  =
+  (a e_1)\wedge(b e_2)\wedge(c e_3)
+  =
+  abc\,e_1\wedge e_2\wedge e_3.
+\]
+Thus
+\[
+  \det(T)=abc.
+\]
+The determinant is the product of the three independent stretch
+factors.
+
+\subsection{Shear}
+
+Let \(V=k^2\), and let
+\[
+  T(e_1)=e_1,\qquad T(e_2)=e_2+a e_1.
+\]
+Then
+\[
+  T(e_1)\wedge T(e_2)
+  =
+  e_1\wedge(e_2+a e_1)
+  =
+  e_1\wedge e_2+a\,e_1\wedge e_1
+  =
+  e_1\wedge e_2.
+\]
+Therefore
+\[
+  \det(T)=1.
+\]
+A shear changes shape and preserves oriented area.
+
+\subsection{Projection}
+
+Let \(V=k^2\), and let
+\[
+  P(e_1)=e_1,\qquad P(e_2)=0.
+\]
+Then
+\[
+  P(e_1)\wedge P(e_2)=e_1\wedge0=0.
+\]
+Hence
+\[
+  \det(P)=0.
+\]
+Projection collapses area to a line. The determinant vanishes because
+the top exterior image vanishes.
+
+\subsection{\texorpdfstring{Rotation over \(\bR\)}{Rotation over R}}
+
+Let \(V=\bR^2\), and let
+\[
+  R_\theta=
+  \begin{pmatrix}
+    \cos\theta & -\sin\theta\\
+    \sin\theta & \cos\theta
+  \end{pmatrix}.
+\]
+Then
+\[
+  R_\theta(e_1)=\cos\theta\,e_1+\sin\theta\,e_2,
+  \qquad
+  R_\theta(e_2)=-\sin\theta\,e_1+\cos\theta\,e_2.
+\]
+Therefore
+\begin{align*}
+  R_\theta(e_1)\wedge R_\theta(e_2)
+  &=
+  (\cos\theta\,e_1+\sin\theta\,e_2)
+  \wedge
+  (-\sin\theta\,e_1+\cos\theta\,e_2)\\
+  &=
+  \cos^2\theta\,e_1\wedge e_2
+  +
+  \sin^2\theta\,e_1\wedge e_2\\
+  &=
+  e_1\wedge e_2.
+\end{align*}
+Thus
+\[
+  \det(R_\theta)=1.
+\]
+Rotation preserves oriented area.
+
+\section{Exact Sequences and Block Operators}
+\label{sec:exact-sequences}
+
+The determinant line behaves well in exact sequences. This is the
+first point at which the finite-dimensional definition becomes a
+machine for geometry.
+
+\begin{proposition}[determinant line of a short exact sequence]
+\label{prop:short-exact-det-line}
+Let
+\[
+  0\longrightarrow U\longrightarrow V\longrightarrow W\longrightarrow 0
+\]
+be a short exact sequence of finite-dimensional vector spaces. There
+is a canonical isomorphism
+\[
+  \det V\simeq \det U\otimes \det W.
+\]
+\end{proposition}
+
+\begin{proof}
+Choose a basis \(u_1,\dots,u_r\) of \(U\). Choose vectors
+\(\widetilde w_1,\dots,\widetilde w_s\in V\) lifting a basis
+\(w_1,\dots,w_s\) of \(W\). Then
+\[
+  u_1\wedge\cdots\wedge u_r\wedge
+  \widetilde w_1\wedge\cdots\wedge \widetilde w_s
+\]
+is a basis of \(\det V\). Send it to
+\[
+  (u_1\wedge\cdots\wedge u_r)\otimes
+  (w_1\wedge\cdots\wedge w_s).
+\]
+Changing the lifts \(\widetilde w_i\) adds \(U\)-vectors to them; the
+extra terms contain repeated \(U\)-directions in the top wedge and
+vanish. Changing bases multiplies both sides by the same determinant.
+Hence the map is canonical.
+\end{proof}
+
+\begin{corollary}[block triangular determinant]
+\label{cor:block-triangular}
+If \(T:V\to V\) preserves a subspace \(U\subset V\), and if
+\(\overline T\) is the induced operator on \(V/U\), then
+\[
+  \det(T)=\det(T|_U)\det(\overline T).
+\]
+\end{corollary}
+
+\begin{proof}
+Apply \(\det\) to the exact sequence
+\[
+  0\to U\to V\to V/U\to 0
+\]
+and use \Cref{prop:short-exact-det-line}. On the line
+\(\det U\otimes\det(V/U)\), the induced action is multiplication by
+\(\det(T|_U)\det(\overline T)\).
+\end{proof}
+
+\chapter{From Operators to Determinant Lines}
+\label{ch:det-lines}
+
+\section{The Determinant of a Vector Bundle}
+\label{sec:vector-bundle-det}
+
+Let \(X\) be a scheme or a smooth manifold. A rank \(n\) vector bundle
+\(E\) assigns an \(n\)-dimensional vector space \(E_x\) to every point
+\(x\in X\), varying algebraically or smoothly. Its determinant is the
+line bundle
+\[
+  \det E:=\bigwedge^n E.
+\]
+Fibrewise,
+\[
+  (\det E)_x=\det(E_x).
+\]
+
+Thus the finite-dimensional determinant line globalizes without
+change. A vector bundle is a family of vector spaces. Its determinant
+line is the family of their top exterior lines.
+
+\section{Determinant of a Bundle Endomorphism}
+\label{sec:bundle-endomorphism}
+
+Let \(T:E\to E\) be an endomorphism of a rank \(n\) vector bundle.
+Taking top exterior powers gives
+\[
+  \bigwedge^nT:\det E\to\det E.
+\]
+An endomorphism of a line bundle is a section of \(\cO_X\). Thus
+\[
+  \det(T)\in \Gamma(X,\cO_X).
+\]
+At a point \(x\),
+\[
+  \det(T)(x)=\det(T_x:E_x\to E_x).
+\]
+The zero locus of this function is exactly the singular locus of
+\(T_x\).
+
+\section{The Determinant of a Complex}
+\label{sec:det-complex}
+
+Geometry rarely gives a single vector space. It gives cohomology in
+several degrees. The determinant line of a complex is first a
+chain-level alternating product; cohomology gives a canonically
+isomorphic line by the Knudsen--Mumford determinant isomorphism.
+
+\begin{definition}[determinant line of a finite complex]
+\label{def:det-complex}
+Let \(C^\bullet\) be a bounded complex of finite-dimensional vector
+spaces. Define the chain-level determinant
+\[
+  \det_{\mathrm{KM}} C^\bullet
+  :=
+  \bigotimes_i \left(\det C^i\right)^{(-1)^i},
+\]
+where \(L^{+1}=L\) and \(L^{-1}=L^\vee\).
+There is a canonical Knudsen--Mumford isomorphism
+\[
+  \det_{\mathrm{KM}} C^\bullet
+  \simeq
+  \bigotimes_i \left(\det H^i(C^\bullet)\right)^{(-1)^i}.
+\]
+\end{definition}
+
+The inverse in odd degree is load-bearing. It is the line-level form
+of the alternating sign in Euler characteristics:
+\[
+  \chi(C^\bullet)=\sum_i(-1)^i\dim H^i(C^\bullet).
+\]
+The determinant line is the multiplicative Euler characteristic.
+
+\begin{example}[two-term complex]
+\label{ex:two-term-complex}
+Let
+\[
+  C^\bullet=[C^0\xrightarrow{d}C^1].
+\]
+Then
+\[
+  \det_{\mathrm{KM}} C^\bullet
+  =
+  \det C^0\otimes \det C^1{}^\vee
+  \simeq
+  \det H^0(C^\bullet)\otimes \det H^1(C^\bullet)^\vee.
+\]
+If \(d\) is an isomorphism, both cohomology groups vanish and
+\(\det_{\mathrm{KM}} C^\bullet\simeq k\). Acyclic complexes have a
+differential trivialisation. Torsion is the comparison between that
+trivialisation and a chosen basis or metric trivialisation.
+\end{example}
+
+\section{Why the Signs Are Forced}
+\label{sec:signs-forced}
+
+Suppose \(C^\bullet\) is a complex with zero differential:
+\[
+  C^\bullet=\cdots\to 0\to C^0\to C^1\to 0\to\cdots.
+\]
+Then \(H^i(C^\bullet)=C^i\), so
+\[
+  \det_{\mathrm{KM}} C^\bullet=\det C^0\otimes(\det C^1)^\vee.
+\]
+If one thinks of \(C^0\) as numerator and \(C^1\) as denominator, then
+the determinant line remembers the cancellation encoded by the
+differential. This is the same alternating structure as
+\[
+  \det(1-tT|C^\bullet)
+  :=
+  \prod_i\det(1-tT|C^i)^{(-1)^i}.
+\]
+The signs are the price of making cohomology invariant under
+homotopy.
+
+\chapter{Infinite-Dimensional Operators}
+\label{ch:infinite}
+
+\section{The Obstruction}
+\label{sec:infinite-obstruction}
+
+The finite-dimensional determinant used the line
+\(\bigwedge^nV\). If \(V\) is infinite-dimensional, there is no final
+exterior power. There is no largest \(n\). Thus there is no automatic
+line \(\det V\), and no automatic scalar \(\det(T)\).
+
+Every infinite-dimensional determinant is therefore extra structure.
+One must specify:
+\begin{enumerate}
+\item a class of operators for which a determinant is defined;
+\item a replacement for the finite product of eigenvalues;
+\item a topology or regularisation making the replacement converge;
+\item functorial identities preserved by the construction.
+\end{enumerate}
+
+\section{Fredholm Determinants}
+\label{sec:fredholm}
+
+Let \(\cH\) be a separable Hilbert space and let \(K:\cH\to\cH\) be
+trace-class. The operator \(1+K\) has a Fredholm determinant
+\[
+  \det(1+K).
+\]
+If \(K\) has finite rank with eigenvalues \(\lambda_1,\dots,\lambda_m\)
+on its non-zero image, then
+\[
+  \det(1+K)=\prod_{j=1}^{m}(1+\lambda_j).
+\]
+For trace-class \(K\), the infinite product over eigenvalues is
+convergent after the trace-class hypothesis is imposed:
+\[
+  \det(1+K)=\prod_j(1+\lambda_j).
+\]
+Equivalently,
+\[
+  \det(1+K)
+  =
+  \sum_{r\geq0}\Tr\left(\bigwedge^rK\right),
+\]
+where the series converges for trace-class \(K\). This formula is the
+finite-dimensional exterior-power construction with all exterior
+degrees retained, because there is no top degree.
+
+\section{Zeta-Regularised Determinants}
+\label{sec:zeta-det}
+
+Let \(A\) be a positive self-adjoint operator with discrete positive
+spectrum
+\[
+  0<\lambda_1\leq\lambda_2\leq\cdots
+\]
+and finite multiplicities. Suppose the spectral zeta function
+\[
+  \zeta_A(s):=\sum_j\lambda_j^{-s}
+\]
+converges for \(\operatorname{Re}(s)\gg0\) and admits meromorphic
+continuation to a neighbourhood of \(s=0\), regular at \(0\). Define
+\[
+  \det_\zeta(A):=\exp\bigl(-\zeta_A'(0)\bigr).
+\]
+
+This definition is forced by the finite case. If the spectrum is
+finite, then
+\[
+  \zeta_A'(s)=\sum_j -(\log\lambda_j)\lambda_j^{-s},
+\]
+so
+\[
+  \zeta_A'(0)=-\sum_j\log\lambda_j.
+\]
+Therefore
+\[
+  \exp(-\zeta_A'(0))
+  =
+  \exp\left(\sum_j\log\lambda_j\right)
+  =
+  \prod_j\lambda_j.
+\]
+The zeta determinant is the finite product of eigenvalues continued
+through the spectral zeta function.
+
+\section{\texorpdfstring{The Determinant of \(s-\Theta\)}{The Determinant of s-Theta}}
+\label{sec:s-minus-theta}
+
+In arithmetic applications one often wants a determinant depending on
+a complex parameter \(s\):
+\[
+  \det_\infty(s\id-\Theta).
+\]
+If \(\Theta\) has discrete spectrum \(\{\rho\}\), this determinant is
+the regularised form of
+\[
+  \prod_\rho(s-\rho).
+\]
+This product diverges in the arithmetic cases of interest. A
+regularised determinant replaces it by a function with the required
+logarithmic derivative:
+\[
+  \frac{d}{ds}\log\det_\infty(s\id-\Theta)
+  =
+  \Tr_{\mathrm{reg}}\bigl((s\id-\Theta)^{-1}\bigr).
+\]
+Thus a determinant packages a spectrum into a function. Conversely,
+if a function is known by its zeros, a determinant formula asserts
+that those zeros are the spectrum of an operator.
+
+This is why determinant formulas in arithmetic are severe. Writing
+\[
+  \xi(s)=\det_\infty(s\id-\Theta)
+\]
+strengthens the zero-set statement for \(\xi\): the zeros are realised
+by an operator \(\Theta\) on a cohomological space, with the
+determinant regularisation compatible with trace formulas.
+
+\chapter{Algebraic Geometry}
+\label{ch:algebraic-geometry}
+
+\section{The Jacobian as a Determinant}
+\label{sec:jacobian}
+
+Let \(f:X\to Y\) be a morphism of smooth \(n\)-dimensional varieties
+over a field \(k\). The differential is a bundle map
+\[
+  df:f^*\Omega^1_Y\to\Omega^1_X.
+\]
+Taking determinants gives
+\[
+  \det(df):
+  f^*\det\Omega^1_Y\longrightarrow \det\Omega^1_X.
+\]
+Locally, if \(Y\) has coordinates \(y_1,\dots,y_n\) and \(X\) has
+coordinates \(x_1,\dots,x_n\), then
+\[
+  df(dy_j)=\sum_i\frac{\partial f_j}{\partial x_i}dx_i.
+\]
+Therefore
+\[
+  df(dy_1)\wedge\cdots\wedge df(dy_n)
+  =
+  \det\left(\frac{\partial f_j}{\partial x_i}\right)
+  dx_1\wedge\cdots\wedge dx_n.
+\]
+The classical Jacobian determinant is the determinant of the
+differential on the canonical line.
+
+\section{Canonical Bundle}
+\label{sec:canonical-bundle}
+
+For a smooth \(n\)-dimensional variety \(X\), the canonical bundle is
+\[
+  \omega_X:=\det\Omega^1_X=\bigwedge^n\Omega^1_X.
+\]
+This is the line of algebraic volume forms. The determinant
+construction is the reason the canonical bundle is a line: top
+forms are top exterior powers of cotangent spaces.
+
+If \(f:X\to Y\) is étale of relative dimension \(0\), then \(df\) is
+an isomorphism. Hence \(\det(df)\) is non-zero everywhere. Conversely,
+for a finite separable map between smooth curves, vanishing of
+\(\det(df)\) detects ramification. In dimension \(1\), this is the
+ordinary derivative. In higher dimension, it is the determinant of the
+Jacobian matrix.
+
+\section{Chern Classes and the Determinant}
+\label{sec:chern-det}
+
+For a vector bundle \(E\) of rank \(n\), the first Chern class is the
+first Chern class of its determinant line:
+\[
+  c_1(E)=c_1(\det E).
+\]
+The determinant extracts the line-bundle shadow of \(E\). Many
+intersection-theoretic invariants of \(E\) begin with this shadow.
+
+If \(E=L_1\oplus\cdots\oplus L_n\) splits as line bundles, then
+\[
+  \det E=L_1\otimes\cdots\otimes L_n,
+\]
+so
+\[
+  c_1(E)=c_1(L_1)+\cdots+c_1(L_n).
+\]
+This is the line-bundle analogue of the eigenvalue product formula.
+
+\section{Determinant of Cohomology}
+\label{sec:det-cohomology-ag}
+
+Let \(X\) be a proper scheme over \(k\), and let \(E\) be a coherent
+sheaf whose cohomology groups are finite-dimensional. Define
+\[
+  \lambda(E)
+  :=
+  \det R\Gamma(X,E)
+  =
+  \bigotimes_i \det H^i(X,E)^{(-1)^i}.
+\]
+This line is the determinant of cohomology.
+
+For a smooth projective curve \(C\),
+\[
+  \lambda(E)=\det H^0(C,E)\otimes \det H^1(C,E)^\vee.
+\]
+If \(\pi:X\to S\) is proper perfect and \(E\) is an \(S\)-perfect
+complex, the determinant of cohomology is the line bundle
+\[
+  \det R\pi_*E\in\Pic(S).
+\]
+Its fibre over \(s\in S\) identifies with \(\det R\Gamma(X_s,E_s)\)
+under the usual cohomology-and-base-change hypotheses; the individual
+cohomology dimensions may jump. Theta line bundles on moduli spaces
+are determinant-of-cohomology line bundles in this perfect relative
+sense.
+
+\section{Degeneracy Loci}
+\label{sec:degeneracy}
+
+Let \(\phi:E\to F\) be a morphism of vector bundles of equal rank
+\(n\) on \(X\). Taking determinants gives
+\[
+  \det(\phi):\det E\to\det F.
+\]
+Equivalently,
+\[
+  \det(\phi)\in\Gamma(X,\det F\otimes(\det E)^\vee).
+\]
+The vanishing locus of this section is the rank-drop locus of
+\(\phi_x\). Thus a determinant turns a rank condition into a
+divisor when the expected codimension is \(1\).
+
+More general degeneracy loci use minors. A minor is the determinant of
+a map between exterior powers:
+\[
+  \bigwedge^r E\to \bigwedge^r F.
+\]
+Thus even the higher rank stratification is built from determinant
+maps.
+
+\section{Derived Algebraic Geometry}
+\label{sec:derived-ag-det}
+
+In derived algebraic geometry the basic objects are perfect complexes.
+The determinant extends to a functor
+\[
+  \det:\Perf(X)\to \Pic(X),
+\]
+where \(\Pic(X)\) is the Picard groupoid of line bundles. Locally, if
+a perfect complex is represented by vector bundles \(E^i\), then
+\[
+  \det(E^\bullet)=\bigotimes_i(\det E^i)^{(-1)^i}.
+\]
+Passing to cohomology gives the same line when the complex has finite
+cohomology. This determinant functor is the line-level shadow of the
+derived category.
+
+Algebraic geometry uses determinants because geometry produces
+families. A determinant is the functor which turns a family of
+finite-dimensional linear problems into a line bundle, and line
+bundles have divisors, Chern classes, metrics, and moduli.
+
+\chapter{Arithmetic Geometry}
+\label{ch:arithmetic-geometry}
+
+\section{The Fundamental Trace-to-Determinant Identity}
+\label{sec:trace-det-identity}
+
+\begin{proposition}[trace--determinant identity]
+\label{prop:trace-det-identity}
+Let \(T\) be an endomorphism of a finite-dimensional vector space.
+Then
+\[
+  -\log\det(1-tT)
+  =
+  \sum_{r\geq1}\frac{\Tr(T^r)}{r}t^r
+\]
+as a formal power series.
+\end{proposition}
+
+\begin{proof}
+After extending scalars, triangularize \(T\), with eigenvalues
+\(\lambda_1,\dots,\lambda_n\). Then
+\[
+  \det(1-tT)=\prod_j(1-t\lambda_j).
+\]
+Hence
+\[
+  -\log\det(1-tT)
+  =
+  -\sum_j\log(1-t\lambda_j)
+  =
+  \sum_j\sum_{r\geq1}\frac{(t\lambda_j)^r}{r}.
+\]
+Interchange the finite sum over \(j\) with the formal sum over \(r\):
+\[
+  \sum_{r\geq1}\frac{t^r}{r}\sum_j\lambda_j^r.
+\]
+But \(\sum_j\lambda_j^r=\Tr(T^r)\). This proves the identity.
+\end{proof}
+
+This identity is the bridge from point counts to zeta functions.
+
+\section{Varieties over Finite Fields}
+\label{sec:finite-field-zeta}
+
+Let \(X/\bF_q\) be a separated variety of finite type. Its zeta function is
+\[
+  Z(X,t):=
+  \exp\left(\sum_{r\geq1}\#X(\bF_{q^r})\frac{t^r}{r}\right).
+\]
+For \(\ell\neq p\) and geometric Frobenius \(\Frob_q\), the
+Grothendieck--Lefschetz trace formula uses compactly supported
+étale cohomology:
+\[
+  \#X(\bF_{q^r})
+  =
+  \sum_i(-1)^i
+  \Tr\left(\Frob_q^r\mid H^i_{c,\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right).
+\]
+Insert this into the exponential defining \(Z(X,t)\):
+\[
+  \log Z(X,t)
+  =
+  \sum_i(-1)^i
+  \sum_{r\geq1}
+  \Tr\left(\Frob_q^r\mid H^i_c\right)\frac{t^r}{r}.
+\]
+By \Cref{prop:trace-det-identity},
+\[
+  \sum_{r\geq1}\Tr(\Frob_q^r|H^i_c)\frac{t^r}{r}
+  =
+  -\log\det(1-t\Frob_q|H^i_c).
+\]
+Therefore
+\[
+  Z(X,t)
+  =
+  \prod_i
+  \det\left(1-t\Frob_q\mid
+  H^i_{c,\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right)^{(-1)^{i+1}}.
+\]
+
+This is the arithmetic determinant formula. Counting points over all
+finite extensions is equivalent to taking alternating determinants of
+Frobenius on compactly supported cohomology. For smooth proper
+varieties, compactly supported cohomology agrees with ordinary
+étale cohomology.
+
+\section{Example: A Smooth Projective Curve}
+\label{sec:curve-zeta}
+
+Let \(C/\bF_q\) be a smooth projective geometrically connected curve
+of genus \(g\). Its étale cohomology has three non-zero degrees:
+\[
+  H^0\simeq \bQ_\ell,\qquad
+  \dim H^1=2g,\qquad
+  H^2\simeq \bQ_\ell(-1).
+\]
+Frobenius acts on \(H^0\) by \(1\), and on \(H^2\) by \(q\). Hence
+\[
+  Z(C,t)
+  =
+  \frac{\det(1-t\Frob_q|H^1)}
+  {(1-t)(1-qt)}.
+\]
+Set
+\[
+  Z(C,t)=\frac{P_C(t)}{(1-t)(1-qt)},
+  \qquad
+  P_C(t)=\det(1-t\Frob_q|H^1).
+\]
+This is the reciprocal characteristic polynomial of Frobenius on
+\(H^1\): its roots in the \(t\)-plane have absolute value
+\(q^{-1/2}\), while the Frobenius eigenvalues have absolute value
+\(q^{1/2}\).
+The numerator is a determinant on middle cohomology. The denominator
+comes from the two Tate lines \(H^0\) and \(H^2\).
+
+\section{Example: An Elliptic Curve}
+\label{sec:elliptic-zeta}
+
+Let \(E/\bF_q\) be an elliptic curve. Then \(g=1\), so \(H^1\) has
+dimension \(2\). Let
+\[
+  a_q:=q+1-\#E(\bF_q).
+\]
+The Frobenius characteristic polynomial on \(H^1\) is
+\[
+  1-a_qt+qt^2.
+\]
+Therefore
+\[
+  Z(E,t)=\frac{1-a_qt+qt^2}{(1-t)(1-qt)}.
+\]
+The Riemann hypothesis for \(E/\bF_q\) says the two reciprocal roots
+of \(1-a_qt+qt^2\) have absolute value \(q^{1/2}\). In determinant
+language, it is a purity statement about Frobenius eigenvalues on
+\(H^1\).
+
+\section{\texorpdfstring{Local \(L\)-Factors}{Local L-Factors}}
+\label{sec:local-l-factors}
+
+Let \(V\) be an \(\ell\)-adic Galois representation of
+\(\operatorname{Gal}(\overline{\bQ}/\bQ)\). At a prime \(p\neq \ell\),
+let \(I_p\) be inertia. The unramified part is \(V^{I_p}\). The local
+\(L\)-factor is
+\[
+  L_p(V,s)
+  =
+  \det\left(1-p^{-s}\Frob_p\mid V^{I_p}\right)^{-1}.
+\]
+Again the determinant is the action of Frobenius on a volume line.
+The Euler product
+\[
+  L(V,s)=\prod_pL_p(V,s)
+\]
+is a product of inverse determinants.
+
+\section{Deninger-Type Determinants}
+\label{sec:deninger}
+
+For \(X/\bF_q\), Frobenius is a genuine operator on genuine
+cohomology, and the zeta function is an alternating product of finite
+determinants.
+
+For arithmetic schemes over \(\Spec\bZ\), Deninger's work asks
+for an analogue:
+\[
+  \zeta_X(s)
+  =
+  \prod_i
+  \det_\infty\left(s\id-\Theta\mid H^i_{\mathrm{arith}}(X)\right)^{(-1)^{i+1}}.
+\]
+Here \(H^i_{\mathrm{arith}}(X)\) is a conjectural arithmetic
+cohomology, \(\Theta\) is a Frobenius-like infinitesimal operator, and
+\(\det_\infty\) is a regularised determinant.
+
+For \(X=\overline{\Spec\bZ}\), the expected shape is:
+\[
+  \xi_{\bR}(s)
+  =
+  \det_\infty\left(s\id-\Theta\mid
+  H^1_{\mathrm{arith}}(\overline{\Spec\bZ})_{\mathrm{prim}}\right),
+\]
+while the cohomological degrees \(0\) and \(2\) account for the Tate
+pole lines at \(s=0\) and \(s=1\).
+
+This is Deninger's conjectural determinant template for the arithmetic
+curve. The open content is the construction of the cohomology, the
+operator, and the regularised determinant.
+
+\section{Arakelov Determinants}
+\label{sec:arakelov-det}
+
+Arithmetic geometry also has determinant lines with metrics. Let
+\(\pi:X\to\Spec\bZ\) be an arithmetic surface and let \(E\) be a
+hermitian vector bundle on \(X\). The determinant of cohomology is
+\[
+  \lambda(E)=\det R\pi_*E.
+\]
+At the archimedean fibre, analytic torsion supplies a metric on this
+line, the Quillen metric. The determinant line is therefore
+Arakelov-geometric: finite primes contribute algebraic cohomology, and
+the infinite place contributes spectral analysis of Laplacians. Both
+are determinant constructions.
+
+\section{Frobenius, Regularisation, and Alternating Signs}
+\label{sec:arithmetic-lesson}
+
+The determinant in arithmetic geometry packages three operations:
+\begin{enumerate}
+\item finite-place Frobenius acting on cohomology;
+\item archimedean spectral regularisation;
+\item alternating cohomological signs.
+\end{enumerate}
+The determinant is the mechanism by which a cohomological operator
+becomes a zeta or \(L\)-function.
+
+\chapter{Geometric Representation Theory}
+\label{ch:grt}
+
+\section{The Weyl Denominator}
+\label{sec:weyl-denominator}
+
+Let \(G\) be a connected reductive group with maximal torus \(T\), Weyl
+group \(W\), and positive roots \(\Phi^+\). Define
+\[
+  \rho:=\frac12\sum_{\alpha\in\Phi^+}\alpha.
+\]
+The Weyl denominator identity is
+\[
+  \sum_{w\in W}(-1)^{\ell(w)}e^{w\rho}
+  =
+  e^\rho\prod_{\alpha\in\Phi^+}(1-e^{-\alpha}).
+\]
+The right side is a determinant. It is the determinant of
+\[
+  1-\operatorname{Ad}(t)^{-1}
+\]
+on the positive nilpotent tangent directions:
+\[
+  \prod_{\alpha\in\Phi^+}(1-e^{-\alpha}).
+\]
+The sign \((-1)^{\ell(w)}\) is the determinant of the Weyl group
+element acting on the real span of roots.
+
+\section{\texorpdfstring{The \(GL_n\) Model}{The GLn Model}}
+\label{sec:gln-model}
+
+For \(G=GL_n\), the Weyl group is \(S_n\). Let
+\[
+  x_i=e^{\varepsilon_i}.
+\]
+The Vandermonde determinant is
+\[
+  \det(x_j^{n-i})_{1\leq i,j\leq n}
+  =
+  \prod_{i<j}(x_i-x_j).
+\]
+The left side is a determinant of a matrix of weights. The right side
+is a product over positive roots:
+\[
+  \prod_{i<j}x_i(1-x_j/x_i)
+  =
+  e^\rho\prod_{\alpha>0}(1-e^{-\alpha})
+\]
+after the standard \(SL_n\) normalization. Thus
+\(\prod_{\alpha>0}(1-e^{-\alpha})\) is the determinant
+\(\det(1-\operatorname{Ad}(t)^{-1}|\mathfrak n_+)\), while
+\(e^\rho\) supplies the Weyl half-density.  For \(GL_n\) the central
+character accounts for the extra monomial factor.
+
+\section{Weyl Character Formula}
+\label{sec:weyl-character}
+
+For a dominant weight \(\lambda\), the Weyl character formula says
+\[
+  \operatorname{ch}V_\lambda
+  =
+  \frac{\sum_{w\in W}(-1)^{\ell(w)}e^{w(\lambda+\rho)}}
+  {\sum_{w\in W}(-1)^{\ell(w)}e^{w\rho}}.
+\]
+This is a ratio of two alternating determinants. The denominator is
+the determinant of the tangent weights of the flag variety at a fixed
+point. The numerator is the same determinant twisted by the line
+bundle of weight \(\lambda\).
+
+The Weyl character formula is the fixed-point formula for equivariant
+localization on \(G/B\): localization divides by equivariant Euler
+classes, and these Euler classes are determinants of tangent
+representations.
+
+\section{Localization and Euler Classes}
+\label{sec:localization}
+
+Let a torus \(T\) act on a smooth proper variety \(X\). At an isolated
+fixed point \(x\in X^T\), the tangent space decomposes into weight
+spaces:
+\[
+  T_xX=\bigoplus_j k_{\chi_j}.
+\]
+The equivariant Euler class is
+\[
+  e_T(T_xX)=\prod_j\chi_j.
+\]
+This is the determinant of the \(T\)-representation on the tangent
+space, read multiplicatively in equivariant cohomology.
+
+For \(\alpha\in H_T^\bullet(X)\), the Atiyah--Bott localization
+formula has the form, after inverting the relevant characters,
+\[
+  \int_X\alpha
+  =
+  \sum_{x\in X^T}
+  \frac{\alpha|_x}{e_T(T_xX)}.
+\]
+The denominator is a determinant. Geometric representation theory is
+full of such denominators because representation-theoretic characters
+are computed by localizing sheaves on spaces with group actions.
+For non-isolated fixed loci, the sum ranges over components
+\(F\subset X^T\) and the denominator is \(e_T(N_F)\).
+
+\section{Determinant Lines for Tate Vector Spaces}
+\label{sec:tate-det-lines}
+
+Loop groups force infinite-dimensional linear algebra. Let \(V\) be a
+Tate vector space, such as \(k((t))\), and let \(L,L'\subset V\) be
+lattices. Their relative determinant line is
+\[
+  \det(L|L')
+  :=
+  \det\bigl(L/(L\cap L')\bigr)
+  \otimes
+  \det\bigl(L'/(L\cap L')\bigr)^\vee.
+\]
+This is finite-dimensional because the two quotient spaces are
+finite-dimensional when \(L\) and \(L'\) are commensurable.
+
+The relative determinant line measures the failure of two infinite
+lattices to have the same volume. If \(g\) is a loop acting on \(V\),
+compare \(L\) and \(gL\). The line
+\[
+  \det(L|gL)
+\]
+is the determinant anomaly of \(g\). The central extension is the
+\(\bG_m\)-torsor of nonzero vectors in \(\det(L|gL)\); multiplication
+is induced by the transitivity isomorphism
+\[
+  \det(L|gL)\otimes\det(gL|ghL)\simeq\det(L|ghL).
+\]
+
+\section{Affine Grassmannian and Kac-Moody Level}
+\label{sec:affine-grassmannian}
+
+For a reductive group \(G\), the affine Grassmannian is
+\[
+  \operatorname{Gr}_G=G((t))/G[[t]].
+\]
+Line bundles on \(\operatorname{Gr}_G\) encode levels of affine
+Kac-Moody representations. The basic line bundle is a determinant
+line. For \(G=GL_n\), a point of \(\operatorname{Gr}_{GL_n}\) is a
+lattice \(L\subset k((t))^n\). Relative to the standard lattice
+\[
+  L_0=k[[t]]^n,
+\]
+the determinant line at \(L\) is
+\[
+  \det(L|L_0).
+\]
+This line is the geometric source of the basic central extension of
+the loop group. The representation-theoretic level is a determinant
+class.
+
+\section{Convolution and Orientation Lines}
+\label{sec:convolution}
+
+Geometric representation theory uses correspondences:
+\[
+  X \xleftarrow{p} Z \xrightarrow{q} Y.
+\]
+A sheaf on \(X\) is pulled back to \(Z\), then pushed forward to \(Y\).
+When the theory is refined to \(D\)-modules, constructible sheaves,
+or coherent sheaves, the correct functor often carries shifts and
+orientation lines. For smooth, lci, or derived correspondences these
+orientation lines are determinant lines of virtual tangent or cotangent
+complexes:
+\[
+  \det\bigl(T^{\mathrm{vir}}_Z-p^*T^{\mathrm{vir}}_X
+  -q^*T^{\mathrm{vir}}_Y\bigr)
+\]
+in Picard-group notation, together with the cohomological rank shift
+and the chosen Gysin orientation data.
+
+Thus the determinant controls the normalization of convolution. Wrong
+determinant lines give wrong signs, wrong shifts, and wrong dualities.
+
+\section{Springer Theory}
+\label{sec:springer}
+
+The Springer resolution
+\[
+  \widetilde{\mathcal N}=T^*(G/B)\to\mathcal N
+\]
+is one of the central spaces of geometric representation theory. The
+cotangent bundle has a canonical symplectic form. Its canonical bundle
+is trivial because
+\[
+  \omega_{T^*X}\simeq \cO_{T^*X}
+\]
+for smooth \(X\). This triviality is a determinant statement: the
+determinant of the cotangent directions cancels the determinant of
+the tangent directions. Such cancellations are the geometric reason
+Springer theory has clean duality and Weyl group actions.
+
+\section{Euler, Central-Extension, and Orientation Determinants}
+\label{sec:grt-lesson}
+
+In geometric representation theory, determinants appear as:
+\begin{enumerate}
+\item Weyl denominators and character formula denominators;
+\item equivariant Euler classes in localization;
+\item determinant line bundles on affine Grassmannians;
+\item central extensions of loop groups;
+\item orientation lines in convolution;
+\item duality normalizations in symplectic resolutions.
+\end{enumerate}
+Every item is the same operation: take a linearized tangent,
+cotangent, lattice, or cohomology object, pass to its determinant
+line, and record how symmetry acts on that line.
+
+\chapter{The Unified Dictionary}
+\label{ch:unified}
+
+\section{Action on the Volume Line}
+\label{sec:one-sentence}
+
+The determinant is the passage from a linear operator on a space to
+the induced scalar action on the space's volume line.
+
+\section{Determinant Outputs Across Fields}
+\label{sec:four-realizations}
+
+\begin{center}
+\begin{tabular}{p{0.22\textwidth}p{0.32\textwidth}p{0.32\textwidth}}
+\textbf{Field} & \textbf{Space} & \textbf{Determinant output}\\
+\hline
+Linear algebra & finite vector space \(V\) & scalar \(\det(T)\) on \(\det V\)\\
+Algebraic geometry & vector bundle or perfect complex & determinant line bundle\\
+Arithmetic geometry & cohomology with Frobenius & zeta and \(L\)-factors\\
+Geometric representation theory & tangent, lattice, or sheaf-theoretic data & Euler class, denominator, central extension, level\\
+\end{tabular}
+\end{center}
+
+\section{Determinant Data}
+\label{sec:three-tests}
+
+When a claimed determinant appears, test it by three questions.
+
+\begin{enumerate}
+\item What is the underlying linear or derived object?
+\item What is its determinant line?
+\item Which operator, symmetry, or Frobenius acts on that line?
+\end{enumerate}
+
+Naming these three objects is the construction of the determinant;
+without them the displayed symbol is only notation.
+
+\section{Number-Field Determinant Data}
+\label{sec:arithmetic-warning}
+
+For a finite-dimensional operator, the determinant is automatic. An
+infinite-dimensional arithmetic operator requires extra data. A formula
+\[
+  \xi(s)=\det_\infty(s\id-\Theta)
+\]
+requires:
+\begin{enumerate}
+\item a cohomological space;
+\item a densely-defined operator \(\Theta\);
+\item a spectral theory for \(\Theta\);
+\item a regularised determinant;
+\item a trace formula linking the determinant to primes and
+archimedean terms.
+\end{enumerate}
+
+The finite-field formula gives the template. The number-field object
+requires a separate construction, which is the substance of a
+Deninger-type arithmetic cohomology.
+
+\chapter{The Virtual \texorpdfstring{$K_0$}{K0}-Determinant on \texorpdfstring{$K3\times E$}{K3 x E}}
+\label{ch:virtual-k0-det}
+
+The preceding chapters realised the determinant as a finite-dimensional
+exterior-power scalar, a determinant line bundle on a perfect complex,
+a Fredholm or zeta-regularised eigenvalue product, an arithmetic
+$L$-factor, and a Weyl-type denominator. One realisation remains: a
+virtual $K_0$-determinant whose value on a Calabi--Yau threefold is the
+Igusa cusp form $\Delta_5$, the second-quantised denominator of the
+Mukai-K3 Borcherds--Kac--Moody algebra $\fg_{\Delta_5}$. This chapter
+constructs that realisation, names its hypothesis package, and isolates
+the operator-level Pfaffian as a separate construction.
+
+\section{Type signature}
+\label{sec:vd-type-signature}
+
+The construction carries the type signature
+\[
+  (\text{quadrant} = \text{CY}_3,\quad
+   \text{presentation} = \text{Borcherds product},\quad
+   \text{level} = 5,\quad
+   \text{hypothesis package} = \text{Definition~\ref{def:vd-hypothesis}}).
+\]
+Level $5$ in the Beilinson tower is the modular-shadow level: a
+$\kappa$-tuple, partition function, or modular form. The construction
+is therefore a \emph{scalar shadow}, not an operator algebra. The
+distinction is enforced by the shadow-object distinction1
+(\S\ref{sec:vd-ma-11}); the operator-level Pfaffian is the open
+frontier F11 (\S\ref{sec:vd-f11}).
+
+\begin{definition}[hypothesis package for the virtual $K_0$-determinant]
+\label{def:vd-hypothesis}
+The virtual $K_0$-determinant on $K3 \times E$ is constructed under
+the package:
+\begin{enumerate}
+\item \textbf{Mukai stack and Heegner reciprocity.} $\cM_{K3}$ is the
+  derived moduli stack of objects in $D^b\Coh(K3)$ with bounded Mukai
+  vector, and $K_0(\cM_{K3})$ is the Grothendieck group of perfect
+  complexes. The Bruinier--Heegner Chern-class reciprocity supplies a
+  natural map $K_0(\cM_{K3}) \to H^*(\cM_{K3}, \bZ)$ whose pairing with
+  the Heegner divisors of \cite{Bruinier2002} matches Fourier
+  coefficients of $\phi_{0,1}$ at signed Heegner indices.
+\item \textbf{Reduction to $K3 \times E$.} The structure-group
+  reduction picks out the locus where the K3 factor carries a
+  hyperk\"ahler structure and the elliptic factor carries a complex
+  structure compatible with a Lagrangian $E \subset \cM_{K3}$. The
+  resulting structure group is the paramodular group
+  $\Sp_4(\bZ)$ acting on $\bH_2$, the Siegel upper half space.
+\item \textbf{Borcherds singular-theta lift of $\phi_{0,1}$.}
+  The weak Jacobi form
+  \[
+    \phi_{0,1}(\tau, z)
+    = \tfrac12 Z_{\mathrm{K3}}(\tau, z)
+    = \sum_{n \ge 0,\; l \in \bZ} f(n,l)\, q^{n} r^{l}
+  \]
+  has constant term $c_1(0) = f(0,0) + 2 f(0,1) + \cdots = 10$, and
+  feeds the Borcherds singular-theta lift to give a holomorphic
+  modular form of weight $5$ with respect to the multiplier system
+  $\chi_5$ of $\Sp_4(\bZ)$. This is $\Delta_5$.
+\item \textbf{Virtual super vector space data.} For each $(n,l) \in
+  \bN_{\ge 0} \times \bZ$, choose a virtual super vector space
+  $\bU_{n,l}$ with $\sdim \bU_{n,l} = f(n,l)$. Set
+  $\cV_{(n,l,m)} := \bU_{nm,l}$.
+\item \textbf{Effective semigroup.} $\Gamma_{\mathrm{eff}} \subset
+  \bZ^3$ is the saturated cone generated by the support of
+  $\phi_{0,1}$ on the standard basis $(2 f_2, -f_3, 2 f_{-2})$.
+\end{enumerate}
+\end{definition}
+
+\section{The virtual $K_0$-determinant}
+\label{sec:vd-construction}
+
+\begin{definition}[virtual $K_0$-determinant]
+\label{def:virtual-k0-det}
+With the data of Definition~\ref{def:vd-hypothesis}, the virtual
+$K_0$-determinant is the formal symmetric power
+\[
+  \cD_X(Z)
+  := 64\, q^{1/2} r^{1/2} s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  \sdet\bigl(1 - q^{n} r^{l} s^{m}\,;\, \cV_{(n,l,m)}\bigr),
+\]
+where $\sdet(1 - t\,;\, V) := (1-t)^{\sdim V}$ extends the
+finite-dimensional determinant of $\id - tT$ on a virtual super vector
+space, with multiplicative continuation in the variable $t$. The
+constant $64$ is the theta-constant normalisation
+$[q^{1/2} r^{1/2} s^{1/2}]\Delta_5 = 64$.
+\end{definition}
+
+\begin{theorem}[$K_0$-determinant equals the Igusa cusp form]
+\label{thm:k0-det-equals-Delta5}
+With the data of Definition~\ref{def:vd-hypothesis} and the convention
+of Definition~\ref{def:virtual-k0-det},
+\[
+  \cD_X(Z)
+  = 64\,q^{1/2}r^{1/2}s^{1/2}
+  \prod_{(n,l,m)\in\Gamma_{\mathrm{eff}}}
+  (1 - q^{n} r^{l} s^{m})^{f(nm,l)}
+  = \Delta_5(Z).
+\]
+The monic Borcherds product is $D_5 = 64^{-1}\Delta_5$, satisfying
+$\Phi_{10}^{\mathrm{OP}} = D_5^2 = 4096^{-1}\Delta_5^2$ in
+Oberdieck--Pandharipande normalisation.
+\end{theorem}
+
+\begin{proof}
+Apply the determinant identity
+$\sdet(1-t\,;\,V) = \exp\bigl(-\sum_{r\ge1} \tfrac{t^r}{r} \sdim V\bigr)$
+to each factor; the multiplicative form is forced by
+$\sdim \bU_{nm,l} = f(nm,l)$. The resulting product expansion is the
+Borcherds singular-theta lift of $\phi_{0,1}$ to $\bH_2$, evaluated at
+the cusp where the multiplier system is trivial; by
+\cite{Borcherds1995, GritsenkoNikulin1998} this lift is $\Delta_5$ up
+to the normalisation $64$. The conversion $\Phi_{10}^{\mathrm{OP}} =
+4096^{-1}\Delta_5^2$ is the squared monic form, with
+$4096 = 64^2$.
+\end{proof}
+
+\begin{proposition}[universal Borcherds-weight identity at $N=1$]
+\label{prop:borcherds-weight}
+The Borcherds weight of $\Delta_5$ is
+\[
+  \kappa_{\BKM}(\Delta_5)
+  \;=\; \tfrac12\,c_1(0)
+  \;=\; 5.
+\]
+\end{proposition}
+
+\begin{proof}
+Three independent paths.
+
+\emph{Path~1 (Borcherds singular-theta lift).} The lift carries weak
+Jacobi forms of weight $0$ to Siegel modular forms of weight $c(0)/2$,
+where $c(0)$ is the constant Fourier coefficient
+\cite[Thm.~13.3]{Borcherds1995}. For $2\phi_{0,1}$, the constant term
+is $c_1(0) = 2 \cdot 5 = 10$, giving weight $5$.
+
+\emph{Path~2 (Gritsenko--Nikulin denominator identity).} The
+Borcherds--Kac--Moody superalgebra $\fg_{\Delta_5}$ has denominator
+identity $\operatorname{den}(\fg_{\Delta_5}) = 64^{-1}\Delta_5(2Z)$
+\cite[\S2]{GritsenkoNikulin1998}. The denominator function transforms
+under $\Sp_4(\bZ)$ with character $\chi_5$ of weight $5$, fixed by the
+Weyl-vector formula
+$\rho = \tfrac12(2 f_2 - f_3 + 2 f_{-2})$ and the imaginary-root
+multiplicities
+$\smult \fg_{\Delta_5,\alpha(n,l,m)} = f(nm,l)$.
+
+\emph{Path~3 (Siegel modular form weight).} As an element of
+$M_5(\Sp_4(\bZ), \chi_5)$, the Igusa cusp form $\Delta_5$ has weight
+$5$ by direct construction as a Maass lift of $\phi_{0,1}$
+\cite{Igusa1962, EichlerZagier1985}. Independent verification: the
+Fourier expansion at the standard cusp begins
+$\Delta_5 = \chi_5 \cdot q^{1/2} r^{1/2} s^{1/2} (1 + O(q,r,s))$ and
+the $q$-expansion at the Maass-lift cusp matches the universal
+Saito--Kurokawa input weight $4$ shifted by $+1$ to weight $5$ via the
+$\chi_{10} = \Delta_5^2$ identification with the Igusa cusp form of
+weight $10$ \cite[\S6]{EichlerZagier1985}.
+
+The three paths agree: $\kappa_{\BKM}(\Delta_5) = 5$. The identity is
+the $N = 1$ instance of the universal Borcherds-weight identity
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ plus
+half- and quarter-integer continuations \cite[Vol.~III, FRONTIER \S
+``Universal Borcherds-weight identity'']{LorgatVol3}.
+\end{proof}
+
+\begin{remark}[Borcherds weight versus chiral conductor]
+\label{rem:borcherds-weight-vs-chiral}
+The K3$\times E$ row of the five-archetype $5\times 5$
+$\kappa$-stratification matrix carries
+\[
+  (\kappa_{\mathrm{cat}},\,
+   \kappa_{\mathrm{ch}}^{\mathrm{Hodge}},\,
+   \kappa_{\mathrm{ch}}^{\mathrm{Heis}},\,
+   \kappa_{\BKM},\,
+   \kappa_{\mathrm{fiber}})
+  = (0, 0, 3, 5, 24).
+\]
+The five entries are five distinct $\kappa$-measurements, not one
+invariant in five guises (master pattern five-invariant). The Mukai-K3 conductor
+$K^{\kappa_{\mathrm{ch}}}_{\mathcal B} = 2 c_+(\mathrm{Mukai}(K3)) = 8$
+is yet a sixth scalar, again on a separate lane: it is the Mukai
+positive-signature half, not the Borcherds weight. The additive
+formula $\kappa_{\BKM} = \kappa_{\mathrm{ch}} +
+\chi(\cO_{\mathrm{fiber}})$ fails at every $N$, including the
+$N=1$ K3$\times E$ row where it would give $0 + 0 = 0$ versus the
+correct $5$.
+\end{remark}
+
+\section{Scalar shadow versus operator algebra}
+\label{sec:vd-ma-11}
+
+The deepest false pattern in this domain is the identification of a
+scalar shadow with the operator algebra it shadows (master pattern
+scalar-operator). The Igusa cusp form $\Delta_5$ is a level-$5$ scalar; it is
+not a level-$4$ operator algebra.
+
+\begin{proposition}[scalar shadow versus operator algebra]
+\label{prop:ma-11-Delta5}
+The Igusa cusp form $\Delta_5 \in M_5(\Sp_4(\bZ), \chi_5)$ is a Siegel
+modular form. As a scalar at level $5$ of the Beilinson tower it is
+the modular trace and clutching of an operator algebra $\fg_{\Delta_5}$
+at level $4$. The reverse direction
+\[
+  \Delta_5 \;\rightsquigarrow\; \fg_{\Delta_5}
+\]
+is not a determinant identity. It requires an operator-level
+Pfaffian / square-root reconstruction whose existence on a compact
+$K3 \times E$ source is an open problem.
+\end{proposition}
+
+\begin{proof}
+The forward direction is the Borcherds--Gritsenko--Nikulin denominator
+identity $\operatorname{den}(\fg_{\Delta_5}) = 64^{-1}\Delta_5(2Z)$:
+the BKM superalgebra produces the Siegel cusp form via Weyl-character
+data \cite{Borcherds1995, GritsenkoNikulin1998}. The scalar reads off
+the operator-graded data; this direction is well-defined.
+
+The reverse direction proposes to recover $\fg_{\Delta_5}$ as the
+operator algebra of a compact $K3 \times E$ source whose protected
+trace is $\Delta_5$. By the exterior-power machinery of
+Chapter~\ref{ch:finite}, a determinant identity does not invert: the
+top exterior line records eigenvalue products, not eigenvectors. To
+recover the operator algebra one must solve, in addition,
+\begin{enumerate}
+\item the orientation/Pfaffian datum that distinguishes $\Delta_5$ from
+  $-\Delta_5$ (the squared scalar
+  $-4096\,\Delta_5^{-2} = Z^X_{\mathrm{OP/DT}}$ is
+  orientation-forgetful);
+\item the Hall bracket and Hopf pairing that promote
+  $\fg_{\Delta_5}$ to a compact Hall source;
+\item primitive root representatives, the radical quotient, the
+  no-extra-relations theorem, PBW, and parity dimensions on every
+  finite root window.
+\end{enumerate}
+None of these is a determinant. The forward direction is the
+determinant theorem; the reverse direction is the open problem
+F11 of the Vol~I frontier.
+\end{proof}
+
+\begin{corollary}[Scalar shadow and operator algebra]
+\label{cor:scalar-shadow-operator-algebra}
+$\Delta_5$ is the Borcherds denominator at level $5$. The level-$4$
+operator algebra is reconstructed only from operator data; the
+scalar denominator supplies its shadow and not its Hilbert space,
+path integral, or Pfaffian algebra.
+\end{corollary}
+
+\section{F11: the operator-level Pfaffian as open frontier}
+\label{sec:vd-f11}
+
+The virtual $K_0$-determinant package \emph{produces} the scalar
+$\Delta_5$. It does \emph{not} produce a compact protected operator
+$\mathfrak D_X$ on $K3 \times E$ whose protected Pfaffian is
+$\Delta_5$.
+
+\begin{problem}[F11 — operator-level Pfaffian on $K3 \times E$]
+\label{prob:F11}
+Construct a first-order protected operator/algebra $\mathfrak D_X$ on
+a compact $K3 \times E$ source, and a comparison map between the
+Pfaffian line of $\mathfrak D_X$ and the automorphic line of
+$\Delta_5$, such that
+\[
+  \Pf(\mathfrak D_X) \;=\; \Delta_5,
+  \qquad
+  \Tr_{\mathrm{prot}}\bigl((-1)^F \mathfrak D_X^{-2}\bigr)
+  \;=\; -4096\,\Delta_5^{-2} \;=\; Z^X_{\mathrm{OP/DT}}.
+\]
+The orientation/Pfaffian datum must distinguish $\Delta_5$ from
+$-\Delta_5$ (squared scalar is orientation-forgetful) and the
+construction must include:
+\begin{enumerate}
+\item additive formal dyonic charge lattice $\Gamma_X^{\mathrm{form}}$
+  with Gram map $\Pi_X$ to $\Gamma_{\mathrm{gram}}$;
+\item holomorphic $E_3$-factorisation algebra on $K3 \times E$;
+\item normal-ordered extension $\widehat\Gamma_X = \Gamma_X^{\mathrm{form}}
+  \oplus_B \Gamma_{\mathrm{gram}}$ rectifying the failure of strict
+  fixed-lift raw Gram descent for the type-II real-root brackets;
+\item formality datum, QME, anomaly control, descent, and finite-first
+  HN completion;
+\item chiral specialisation along the K3 direction to a chiral object
+  on $\operatorname{Ran}(E)$, with the
+  $\operatorname{Ran}(E)$-support-locality obstruction solved by mixed
+  local/wrapped correspondences.
+\end{enumerate}
+\end{problem}
+
+\begin{remark}[Compact-realisation reduction]
+\label{rem:vd-heal-path}
+The compact-realisation problem factors through the local Borcherds
+and Hall--Drinfeld target data of~\cite{LorgatIgusa} and the
+CY-to-chiral two-stage functor of~\cite{LorgatVol3},
+$\Phi_3^{(\Sigma_2, E)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, E}
+\circ \Phi_3^{\mathrm{FA}}$ with the K3 chiral bialgebra
+$\mathbf H_{\Delta_5}$ as Stage~$2$ output. The compact realisation
+problem is finite-stage in the sense of
+\cite[\S Compact realization]{LorgatIgusa}: construct geometric
+Hall--Dirac source data and a compatible functor to the algebraic
+target $G(\mathscr B_{\Delta_5})_W$ on every downward-saturated
+finite root window $W$. Each step has a named obstruction;
+none is automatic from the scalar.
+\end{remark}
+
+\begin{remark}[diagnostic: where the determinant chain ends]
+\label{rem:vd-diagnostic}
+The determinant chain of this paper extends as follows.
+\[
+\begin{array}{rl}
+  \text{level } 0 & \text{exterior power } \bigwedge^n V \\
+  \text{level } 1 & \text{determinant line bundle } \det E
+                    \text{ on a perfect complex} \\
+  \text{level } 2 & \text{determinant of cohomology }
+                    \det R\Gamma(X, E) \\
+  \text{level } 3 & \text{Knudsen--Mumford determinant of a complex} \\
+  \text{level } 4 & \text{Quillen / zeta / Fredholm regularised
+                    determinant} \\
+  \text{level } 5 & \text{virtual $K_0$-determinant }
+                    \cD_X = \Delta_5
+                    \text{ on the Mukai stack of K3} \\
+  \text{level } 6 & \text{operator-level Pfaffian }
+                    \Pf(\mathfrak D_X) = \Delta_5
+                    \quad (\text{F11, open})
+\end{array}
+\]
+The determinant construction closes at level $5$. Level $6$
+is the second-quantised string construction, distinct in level and in
+hypothesis package; it is not produced by the determinant chain
+running upward without further data.
+\end{remark}
+
+\section{Verification: $\kappa_{\BKM}(\Delta_5) = 5$ by three paths}
+\label{sec:vd-three-path}
+
+The numerical claim $\kappa_{\BKM}(\Delta_5) = 5$ is verified by three
+independent paths in Proposition~\ref{prop:borcherds-weight}: the
+Borcherds singular-theta lift constant-term formula $c(0)/2 = 5$, the
+Gritsenko--Nikulin denominator identity weight, and the direct
+Saito--Kurokawa lift weight of $\Delta_5$ as a Siegel modular form.
+
+A fourth, dimensional path: the universal Borcherds-weight identity
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ for $N \in \{1, 2, 3, 4, 6\}$ at
+$N = 1$ (paramodular K3$\times E$), with constant term
+$c_1(0) = 10$, gives weight $5$. The same identity at $N = 12$ (Fake
+Monster on $\mathrm{II}_{25,1}$) gives weight $12$, with input
+denominator $\theta_{\Lambda_{24}}/\eta^{24}$ and constant term $24$.
+The two rows are not re-indexings of each other; the Cartans
+$\Lambda^{2,1}_{\mathrm{II}}$ and $\mathrm{II}_{25,1}$ admit no
+signature-preserving embedding, and the Fourier channels at the two
+weights do not interfere. The identity therefore holds row by row,
+with the input denominator declared, and is verified at $N = 1$ for
+$\Delta_5$ to give weight $5$.
+
+\section{Cross-volume placement}
+\label{sec:vd-cross-volume}
+
+The virtual $K_0$-determinant package sits at level $5$ of the Vol~I
+Open-quadrant Beilinson tower, paired by holographic vertical
+equivalence with the Vol~III CY-quadrant statement
+$\kappa_{\BKM}(\Phi_N) = c_N(0)/2$ at $N=1$. The Vol~III
+two-stage functor
+$\Phi_3^{(\Sigma_2, E)} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_2, E}
+\circ \Phi_3^{\mathrm{FA}}$ produces, from the Calabi--Yau category
+$D^b\Coh(K3 \times E)$, the K3 chiral bialgebra $\mathbf H_{\Delta_5}$
+with $\ChirHoch^1(\mathbf H_{\Delta_5}) \cong \fg_{\Delta_5}/\fh$,
+the BKM superalgebra modulo its imaginary Cartan
+\cite{LorgatVol3}. The scalar $\Delta_5$ constructed here is the
+denominator of that BKM superalgebra; the chiral bialgebra
+$\mathbf H_{\Delta_5}$ is its level-$4$ operator companion (modulo the
+F11 compact-realisation problem).
+
+\section{Summary}
+\label{sec:vd-summary}
+
+The determinant chain extends into the modular-shadow
+regime. The virtual $K_0$-determinant package has
+scalar value $\Delta_5$ on $K3 \times E$, a
+Siegel modular form of weight $5$. The Borcherds weight identity
+$\kappa_{\BKM}(\Delta_5) = c_1(0)/2 = 5$ holds by three independent
+paths. The hypothesis package names the Mukai stack, the Bruinier--Heegner
+Chern-class reciprocity, the structure-group reduction to $K3 \times
+E$, and the Borcherds singular-theta lift of $\phi_{0,1}$. The scalar-operator
+discipline is enforced: $\Delta_5$ is the scalar shadow at level $5$,
+not the operator algebra at level $4$. The construction of an
+operator-level Pfaffian whose value is $\Delta_5$ is the open
+frontier F11.
+
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+The determinant answers a precise linear question:
+
+\[
+  \text{by what scalar does }T\text{ multiply volume?}
+\]
+
+The rigorous answer is:
+\[
+  \bigwedge^nT=\det(T)\cdot\id_{\bigwedge^nV}.
+\]
+
+Algebraic geometry globalizes the volume line into a determinant line
+bundle. Arithmetic geometry makes Frobenius act on cohomological
+volume lines and obtains zeta functions. Geometric representation
+theory makes symmetry act on tangent, lattice, and sheaf-theoretic
+determinant lines and obtains denominators, levels, Euler classes, and
+central extensions. The virtual $K_0$-determinant of the Mukai stack
+of K3 sheaves, evaluated on $K3 \times E$ with Borcherds
+singular-theta input $\phi_{0,1}$, gives the Igusa cusp form
+$\Delta_5$ of weight $5$ — a Borcherds--Kac--Moody denominator, the
+second-quantised string scalar, and the level-$5$ modular shadow of an
+operator algebra still to be constructed.
+
+Across finite locally free, perfect, regularised, and virtual
+$K_0$ settings, the determinant remains the action on the appropriate
+volume line:
+\[
+  \boxed{\text{determinant}=\text{action on the top exterior line}.}
+\]
+
+The construction of the operator-level Pfaffian
+$\Pf(\mathfrak D_X) = \Delta_5$ on a compact $K3 \times E$ source is
+distinct in level and hypothesis package from the determinant of this
+paper; it is the open frontier F11.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{Borcherds1995}
+R.~E. Borcherds. \emph{Automorphic forms on $O_{s+2,2}(\bR)$ and
+infinite products}. Invent.\ Math.\ \textbf{120} (1995), 161--213.
+
+\bibitem{GritsenkoNikulin1998}
+V.~A. Gritsenko and V.~V. Nikulin. \emph{Automorphic forms and
+Lorentzian Kac--Moody algebras, Part II}. Internat.\ J.\ Math.\
+\textbf{9} (1998), 201--275.
+
+\bibitem{Bruinier2002}
+J.~H. Bruinier. \emph{Borcherds products on $O(2,l)$ and Chern classes
+of Heegner divisors}. Lecture Notes in Math.\ \textbf{1780},
+Springer, 2002.
+
+\bibitem{Igusa1962}
+J.-I. Igusa. \emph{On Siegel modular forms of genus two}.
+Amer.\ J.\ Math.\ \textbf{84} (1962), 175--200.
+
+\bibitem{EichlerZagier1985}
+M.~Eichler and D.~Zagier. \emph{The theory of Jacobi forms}.
+Progress in Math.\ \textbf{55}, Birkh\"auser, 1985.
+
+\bibitem{LorgatIgusa}
+R.~Lorgat. \emph{The Igusa Square Root: the Borcherds determinant of
+$\phi_{0,1}$, its denominator algebra, and the $K3 \times E$
+realization problem}. Manuscript, April 2026.
+% Cross-repo: ~/igusa-cusp-form/main.tex
+
+\bibitem{LorgatVol3}
+R.~Lorgat. \emph{Calabi--Yau Quantum Groups: the two-stage functor
+$\Phi_d^{(\Sigma_{d-1}, C)}$ and the universal Borcherds-weight
+identity $\kappa_{\BKM}(\Phi_N) = c_N(0)/2$}. Vol.~III of the
+chiral bar-cobar programme.
+% Cross-repo: ~/calabi-yau-quantum-groups/main.tex
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,1072 @@
+\chapter{Algebraic code skeletons from Koszul duality}
+\label{chap:holographic-codes-koszul}
+\index{holographic code!algebraic skeleton from Koszul duality|textbf}
+\index{bar-cobar recovery!Koszul duality|textbf}
+
+\providecommand{\KL}{\mathrm{KL}}
+\providecommand{\QEC}{\mathrm{QEC}}
+
+Fix a chart $b$ in a factorisation dg-category
+$\mathcal C^{\mathrm{op}}$ on $(X,D,\tau)$ and a connected positive-weight
+quadratic presentation
+$\cA=A_b=T_X(V)/(R)$.  The recovery problem involves five objects:
+\[
+\cA = A_b = \End_\mathcal{C}(b)\quad\text{(level 1, chart algebra),}
+\qquad
+B_X(\cA) = T^c(s^{-1}\bar\cA)\quad\text{(level 2, full bar coalgebra),}
+\]
+\[
+\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\subset T^c(s^{-1}V)
+\quad\text{(quadratic coalgebra),}
+\qquad
+\cA^!_\infty=\mathbb D_{\operatorname{Ran}}B_X(\cA)
+\quad\text{(post-Verdier algebra under }H_{\mathbb D}(\cA)\text{),}
+\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) = C^\bullet_{\mathrm{ch}}(\cA,\cA)
+\quad\text{(level 3, universal closed sector).}
+\]
+Local finite Verdier duality also gives the strict quadratic algebra
+$\cA^!=\mathbb D_{\operatorname{Ran}}\cA^{\mathrm i}$.
+
+Three typed comparison lanes govern these objects.  First, enhanced
+bar--cobar duality in the pro-nilpotent Ran category gives the universal
+counit
+\[
+ \varepsilon_\cA\colon\Omega_XB_X(\cA)\xrightarrow{\sim}\cA
+\]
+for every augmented algebra in the ambient of Theorem~A; factorisation
+and completed chain models carry the packages
+$H_{\mathrm{fact}}$ and $H_{\mathrm{conv}}$.  This is the Ran form of
+Francis--Gaitsgory~\cite[Proposition~4.1.2]{FrancisGaitsgory2012} and
+the ordinary resolution of
+Loday--Vallette~\cite[Corollary~2.3.4]{LodayVallette12}.
+Second, the chosen presentation determines the canonical comparison
+and its adjoint
+\[
+ q_\cA\colon\cA^{\mathrm i}\longrightarrow B_X(\cA),
+ \qquad
+ p_\cA\colon\Omega_X(\cA^{\mathrm i})\longrightarrow\cA.
+\]
+Under $H_{\mathrm{CL}}(\cA,\cA^{\mathrm i},\tau_{\mathrm i})$,
+Theorem~B identifies chiral Koszulness with either map being a
+quasi-isomorphism; this is the quadratic criterion modeled by
+Loday--Vallette~\cite[Theorem~3.4.6]{LodayVallette12}.  Third, for a
+fixed coalgebra $C$, Positselski's equivalence has the typed form
+\[
+ \mathsf D^{\mathrm{co}}(C\text{-}\mathsf{Comod})
+ \simeq
+ \mathsf D^{\mathrm{ctr}}(C\text{-}\mathsf{Contramod}).
+\]
+This is Positselski~\cite[Theorem~5.2]{Positselski11}.
+Its carrier is the module theory of one fixed $C$; the quadratic
+recognition carrier is the coalgebra map $q_\cA$.
+
+The level-$3$ object is the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, equipped with its universal
+open/closed action by Chapter~\ref{ch:holographic-datum-master} and
+Theorem~\ref{thm:thqg-swiss-cheese}.  A physical realization datum for
+a chosen holomorphic-topological theory~$T$ is a comparison
+\[
+ \beta_T\colon
+ \operatorname{Loc}_{\partial}\operatorname{Obs}^{\mathrm{bulk}}(T)
+ \longrightarrow Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+Thus $\varepsilon_\cA$, $q_\cA$, $p_\cA$, and $\beta_T$ have distinct
+sources, targets, and hypothesis packages; $H_{\mathbb D}(\cA)$ adds
+the Verdier transpose $\mathbb D_{\operatorname{Ran}}(q_\cA)$.
+Chapter~\ref{chap:entanglement-modular-koszul} reads the
+Calabrese--Cardy entanglement entropy (proved elsewhere) through the
+scalar projection of this structure; every reconstruction beyond that
+scalar shadow is conditional on its named comparison data.
+The algebraic recovery statement is:
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{\centering
+\textbf{Chiral Koszulness is quadratic exactness: the comparison
+$q_\cA\colon\cA^{\mathrm i}\to B_X(\cA)$, equivalently
+$p_\cA\colon\Omega_X(\cA^{\mathrm i})\to\cA$, is a
+quasi-isomorphism.}  The universal counit $\varepsilon_\cA$ resolves
+every augmented chart in the Theorem~A ambient.  Theorem~C supplies a
+Verdier--Lagrangian algebraic code skeleton.  Unitary completion and a
+physical error algebra supply Hilbert-space quantum error correction;
+the comparison $\beta_T$ supplies physical bulk realization.
+}}
+\end{center}
+
+\noindent
+The characterizations of Koszulness (K1--K12,
+Theorem~\ref{thm:koszul-equivalences-meta}: seven intrinsic
+bidirectional equivalences, one listed consequence
+(Barr--Beck--Lurie monadicity), one conditional
+factorization-homology comparison, one Theorem~H-conditional chiral
+Hochschild consequence, one conditional on the shifted-symplectic
+hypothesis package, and one one-directional
+$\mathcal D$-module purity implication) yield corresponding diagnostics
+for the quadratic comparison $q_\cA$.
+The shadow depth classifies the non-scalar layers in the formal
+MC obstruction tower.
+The Lagrangian isotropy of Theorem~C provides the code/complement
+decomposition: each summand is isotropic and the cross-pairing is
+perfect.  The derived-centre/BRST comparison and the corresponding
+Hilbert-space inner product promote this algebraic polarization to a
+physical holographic recovery problem.
+
+% ======================================================================
+%
+% 1. SYMPLECTIC CODE STRUCTURE FROM LAGRANGIAN ISOTROPY
+%
+% ======================================================================
+
+\section{Symplectic code structure from Lagrangian isotropy}
+\label{sec:hc-knill-laflamme}
+\index{symplectic code!from Lagrangian isotropy|textbf}
+
+\begin{remark}[Three algebraic recovery structures]
+\label{rem:hc-two-codes}
+\index{holographic code!three recovery structures}
+The algebraic framework produces three related recovery structures:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The \emph{linearized symplectic code}: $\cC = \mathbf{Q}_g(\cA) \subset
+ \mathbf{C}_g(\cA) = \cH$
+ (Lagrangian summand inside the ambient complex).
+ This is the algebraic structure relevant to a Knill--Laflamme
+ comparison after a physical inner product is supplied.
+\item The \emph{universal resolution}: the bar functor sends $\cA$
+ to $B_X(\cA)$, and the counit
+ $\varepsilon_\cA\colon\Omega_XB_X(\cA)\to\cA$ is an equivalence in
+ the Theorem~A ambient for every augmented chart.
+\item The \emph{quadratic compression}: the presentation
+ $T_X(V)/(R)$ replaces the full bar coalgebra by
+ $\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$.  Its decoding map is
+ $p_\cA\colon\Omega_X(\cA^{\mathrm i})\to\cA$, and Theorem~B makes
+ its exactness equivalent to $q_\cA$ being a quasi-isomorphism.
+\end{enumerate}
+The linearized symplectic code governs the genus-by-genus phase-space
+polarization.  The universal resolution reconstructs the full chart.
+The quadratic compression measures the efficiency of the chosen
+presentation.  The Lagrangian splitting in~(a) is the conditional
+Theorem~C upgrade with its own perfectness and non-degeneracy package.
+\end{remark}
+
+\begin{proposition}[Verdier isotropy and the Knill--Laflamme obstruction;
+\ClaimStatusConditional]
+\label{prop:hc-knill-laflamme}
+\index{Knill--Laflamme condition|textbf}
+\index{Lagrangian isotropy!Knill--Laflamme}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level.
+Level: $5$ (scalar genus-$g$ pairing on the conformal-block carrier).
+Hypothesis package: chirally Koszul pair $(\cA, \cA^!)$;
+finite-dimensional shadow window; Verdier involution $\sigma$ as in
+Proposition~\textup{\ref{prop:lagrangian-eigenspaces}}; complementary
+Lagrangian polarisation of Theorem~C.
+\smallskip\noindent
+Let $(\cA, \cA^!)$ be a chirally Koszul pair satisfying the
+hypotheses of the Lagrangian clause of
+Theorem~\textup{\ref{thm:quantum-complementarity-main}} at genus
+$g\geq1$, with the Verdier/Shapovalov comparison of
+Proposition~\textup{\ref{prop:lagrangian-eigenspaces}}.
+Define:
+\begin{itemize}
+\item $\cH := \mathbf{C}_g(\cA)$ \quad
+ \textup{(}ambient complex\textup{)},
+\item $\cC := \mathbf{Q}_g(\cA)$ \quad
+ \textup{(}Lagrangian summand, the linearized code subspace\textup{)},
+\item $\mathcal E := \mathbf{Q}_g(\cA^!)$ \quad
+ \textup{(}complementary Lagrangian; a physical Hermitian form
+ determines the associated orthogonal complement\textup{)}.
+\end{itemize}
+Conditional on the Lagrangian-eigenspace package in
+Proposition~\textup{\ref{prop:lagrangian-eigenspaces}}, the following
+two-layer symplectic structure holds:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Verdier isotropy \textup{(}summand decoupling\textup{)}.}
+ The Verdier pairing $\langle \cdot, \cdot \rangle_{\mathbb{D}}$
+ vanishes on $\cC \times \cC$ and on
+ $\mathcal E \times \mathcal E$:
+ \begin{equation}\label{eq:hc-verdier-isotropy}
+ \langle v, w \rangle_{\mathbb{D}} = 0
+ \quad\text{for } v, w \in \cC
+ \;\;\text{(resp.\ both in } \mathcal E\text{)}.
+ \end{equation}
+ This is the algebraic null-pairing carried by a symplectic code
+ model.  The Hilbert-space Knill--Laflamme equation uses, in addition,
+ a Hermitian adjoint and a specified physical error algebra.
+
+\item \emph{Perfect Shapovalov cross-pairing.}
+ Define $\langle v, w \rangle_S := \langle v, \sigma(w)
+ \rangle_{\mathbb{D}}$.
+ Since $\cC = V^+$ and $\mathcal E = V^-$ are the $\pm1$-eigenspaces
+ of the Verdier involution~$\sigma$
+ \textup{(}Proposition~\textup{\ref{prop:lagrangian-eigenspaces}(iii)}\textup{)},
+ the Shapovalov form restricts to:
+ \begin{equation}\label{eq:hc-shapovalov-cross-pairing}
+ \langle v, w \rangle_S = -\langle v, w \rangle_{\mathbb{D}}
+ \quad\text{for } v \in \cC,\; w \in \mathcal E.
+ \end{equation}
+ The Verdier cross-pairing
+ $\cC \times \mathcal E \to \bC$ is non-degenerate
+ \textup{(}it is the Lagrangian polarization\textup{)},
+ hence the Shapovalov cross-pairing is equally non-degenerate
+ with a sign flip.
+ The bipartite decomposition
+ $\cH = \cC \oplus \mathcal E$ is a \emph{Lagrangian}
+ splitting: its summands are Verdier-isotropic and pair perfectly
+ across the decomposition.
+\end{enumerate}
+
+\smallskip\noindent
+Part~(i) establishes the \emph{Lagrangian prerequisite}
+for the symplectic code: the Verdier form vanishes internally on each
+summand.
+Part~(ii) shows the cross-pairing is non-degenerate
+with a sign flip, giving a \emph{symplectic}
+code/complement structure.
+The full Knill--Laflamme condition
+$P_\cC E_i^\dagger E_j P_\cC = \lambda_{ij} P_\cC$
+for a physical error family $\{E_i\}$
+requires, in addition, the physical Hilbert space inner product
+\textup{(}from the state--operator correspondence
+in unitary theories\textup{)}, which is a separate
+structure from the Verdier pairing.
+On a one-dimensional scalar conformal-block line the KL compression
+condition is automatic.  The full genus-$1$ complementarity complex
+retains the dimension supplied by its conformal-block carrier.
+\end{proposition}
+
+\begin{proof}
+\emph{Part (i).}
+The Verdier involution $\sigma$ satisfies
+$\langle \sigma(v), \sigma(w) \rangle_{\mathbb{D}} =
+-\langle v, w \rangle_{\mathbb{D}}$
+(anti-commutativity,
+Proposition~\ref{prop:lagrangian-eigenspaces}(ii)).
+For $v, w \in \cC = V^+$ (eigenvalue $+1$ of $\sigma$):
+$\langle v, w \rangle_{\mathbb{D}} =
+\langle \sigma(v), \sigma(w) \rangle_{\mathbb{D}} =
+-\langle v, w \rangle_{\mathbb{D}}$,
+so $\langle v, w \rangle_{\mathbb{D}} = 0$.
+The same argument with eigenvalue $-1$ gives
+isotropy of $\mathcal E$.
+
+\emph{Part (ii).}
+For $v \in \cC = V^+$ and $w \in \mathcal E = V^-$:
+$\sigma(v) = v$ and $\sigma(w) = -w$, so
+$\langle v, w \rangle_S = \langle v, \sigma(w)
+\rangle_{\mathbb{D}} = \langle v, -w \rangle_{\mathbb{D}}
+= -\langle v, w \rangle_{\mathbb{D}}$.
+Since $V^+$ and $V^-$ are complementary Lagrangians,
+the Verdier cross-pairing
+$\langle -, - \rangle_{\mathbb{D}}\colon V^+ \times V^- \to \bC$
+is a perfect pairing
+\textup{(}non-degeneracy of the total form plus isotropy
+of each factor\textup{)}.
+Hence $\langle v, w \rangle_S = -\langle v, w \rangle_{\mathbb{D}}$
+is equally non-degenerate.
+\end{proof}
+
+\begin{remark}[Relation to Almheiri--Dong--Harlow]
+\label{rem:hc-adh-comparison}
+\index{Almheiri--Dong--Harlow}
+The Lagrangian decomposition
+$\cH = \cC \oplus \mathcal E$
+has the same bipartite form as the
+Almheiri--Dong--Harlow \cite{Almheiri-Dong-Harlow15}
+entanglement-wedge/complementary-wedge decomposition.  At the present
+level it is an algebraic model; a Hilbert-space completion and
+subregion recovery maps furnish its physical realization.
+The splitting is \emph{symplectic} (Verdier-isotropic
+summands with non-degenerate cross-pairing,
+\textup{(\ref{eq:hc-shapovalov-cross-pairing})}).
+A class
+$\Phi\in Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
+C^\bullet_{\mathrm{ch}}(\cA,\cA)$
+in the level-$3$ derived chiral centre is assigned to the $\cC$-side
+by a chosen open/closed action and a support condition for that action.
+Vanishing of the induced Verdier
+pairing against $\mathcal E$ is an algebraic support condition.  A
+physical comparison theorem identifies this support condition with
+entanglement-wedge localization.
+\end{remark}
+
+\begin{theorem}[Symplectic code structure; \ClaimStatusConditional]
+\label{thm:hc-symplectic-code}
+\index{symplectic code|textbf}
+\index{holographic code!symplectic structure|textbf}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level.
+Level: $5$ (scalar carrier $\mathbf{C}_g(\cA)$ as a
+genus-$g$ symplectic vector space). Hypothesis package: chirally
+Koszul pair $(\cA, \cA^!)$; perfectness/non-degeneracy of the
+Verdier pairing; finite-dimensional Lagrangian window of Theorem~C
+(reconstruction theorem: Theorem~C, level $5$, Lagrangian clause).
+\smallskip\noindent
+Let $(\cA, \cA^!)$ be a chirally Koszul pair satisfying the
+hypotheses of the Lagrangian clause of
+Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
+The Lagrangian decomposition
+$\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+defines a \emph{symplectic code} in the following precise sense:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Lagrangian code subspace.}
+ The code subspace $\cC := \mathbf{Q}_g(\cA)$ is Lagrangian:
+ it is Verdier-isotropic
+ \textup{(}Proposition~\textup{\ref{prop:hc-knill-laflamme}(i)}\textup{)}
+ and, in each finite-dimensional shadow window, half-dimensional:
+ $\dim \cC = \tfrac{1}{2}\dim \mathbf{C}_g(\cA)$.
+
+\item \emph{Symplectic projection.}
+ The Lagrangian splitting determines
+ the symplectic projection
+ \[
+ \pi_\cC \colon \mathbf{C}_g(\cA) \longrightarrow
+ \mathbf{Q}_g(\cA)
+ \]
+ along $\mathbf{Q}_g(\cA^!)$.  For any algebraic operator $E$
+ preserving the code summand \textup{(}i.e.,
+ $E(\cC)\subset\cC$\textup{)}, one has
+ $(\pi_\cC\circ E)|_\cC=E|_\cC$.  Thus projection removes the
+ $\mathbf{Q}_g(\cA^!)$ component.  A class of physical errors and a
+ Hermitian inner product determine whether this projection satisfies
+ the Knill--Laflamme recovery equation.
+
+\item \emph{Non-degenerate cross-pairing.}
+ The Verdier pairing restricted to
+ $\cC \times \mathbf{Q}_g(\cA^!)$ is a perfect pairing
+ with sign flip
+ \textup{(}Proposition~\textup{\ref{prop:hc-knill-laflamme}(ii)}\textup{)},
+ providing the non-degenerate duality between
+ the code summand and its Lagrangian complement.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from Theorem~C:
+$\mathbf{Q}_g(\cA) + \mathbf{Q}_g(\cA^!) = \mathbf{C}_g(\cA)$
+with the summands complementary Lagrangians under the Verdier
+pairing. Isotropy is
+Proposition~\ref{prop:hc-knill-laflamme}(i);
+half-dimensionality is the Lagrangian condition.
+
+Part~(ii): given the direct sum decomposition
+$\mathbf{C}_g(\cA) = \cC \oplus \mathcal E$ with
+$\mathcal E = \mathbf{Q}_g(\cA^!)$, the projection
+$\pi_\cC$ is well-defined. If $E(\cC) \subset \cC$,
+then $E(v)\in\cC$ for $v\in\cC$, hence
+$\pi_\cC(E(v))=E(v)$.  If additionally $E|_\cC=\id_\cC$,
+the projection recovers the original code vector.  The physical error
+model upgrades this symplectic projection statement to a QEC recovery
+theorem precisely when the Knill--Laflamme compressions are scalar.
+
+Part~(iii) is Proposition~\ref{prop:hc-knill-laflamme}(ii):
+the Verdier cross-pairing is non-degenerate by the
+Lagrangian polarization, with the Shapovalov form
+giving $\langle v, w \rangle_S = -\langle v, w
+\rangle_{\mathbb{D}}$.
+\end{proof}
+
+\begin{proposition}[Independence of symplectic projection and
+Knill--Laflamme recovery;
+\ClaimStatusProvedHere]
+\label{prop:hc-projection-not-kl}
+\index{Knill--Laflamme condition!projection obstruction}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level
+(symplectic vs.\ Hermitian). Level: $5$ (Hilbert-space completion of
+the scalar carrier). Hypothesis package: Verdier symplectic splitting
+of Theorem~C plus an external Hilbert completion
+$H_{\mathrm{phys}}$ and physical error $*$-algebra $\mathfrak E$.
+\smallskip\noindent
+Let $H_{\mathrm{phys}}$ be a Hilbert completion of
+$\mathbf C_g(\cA)$ with orthogonal projection $P_\cC$ onto the
+closure of $\cC$, and let $\mathfrak E$ be a physical error
+$*$-algebra on $H_{\mathrm{phys}}$.  The Verdier splitting supplies
+the algebraic projection
+$\pi_\cC\colon \cC\oplus\mathcal E\to\cC$.  For
+$E\in\mathfrak E$ and $v\in\cC$, write
+\[
+E(v)=E_{\cC}(v)+E_{\mathcal E}(v),
+\qquad
+E_{\cC}(v)\in\cC,\quad E_{\mathcal E}(v)\in\mathcal E.
+\]
+Then $\pi_\cC E(v)=E_{\cC}(v)$: the projection extracts the logical
+component $E_{\cC}$.  A Knill--Laflamme code for $\mathfrak E$ is the
+independent Hilbert-space assertion
+\[
+P_\cC E_i^\dagger E_j P_\cC=\lambda_{ij}P_\cC
+\qquad(E_i,E_j\in\mathfrak E).
+\]
+Verdier isotropy fixes the bilinear polarization; the displayed
+compression condition fixes the physical error action.
+\end{proposition}
+
+\begin{proof}
+The first assertion is the definition of projection along the direct
+sum $\cC\oplus\mathcal E$.  It kills the second component and leaves
+the first component unchanged.  The Knill--Laflamme equation is a
+statement about the Hermitian adjoint in $H_{\mathrm{phys}}$ and the
+compression of products $E_i^\dagger E_j$ to the code subspace.  The
+Verdier form is bilinear, shifted, and anti-symplectic under~$\sigma$.
+The physical Hilbert structure supplies the Hermitian adjoint and the
+compression.  Their independence is visible in the finite-dimensional
+model
+$V=\mathbb C e_1\oplus\mathbb C e_2\oplus
+\mathbb C f_1\oplus\mathbb C f_2$ with
+$\cC=\langle e_1,e_2\rangle$,
+$\mathcal E=\langle f_1,f_2\rangle$, Verdier pairing
+$\langle e_i,f_j\rangle_{\mathbb D}=\delta_{ij}$ and zero on
+each summand, and the standard Hermitian form.  The operator
+$E(e_1)=e_1$, $E(e_2)=2e_2$, $E(f_i)=0$ preserves~$\cC$ and has zero
+leakage.  Its compression is
+$P_\cC E^\dagger E P_\cC=\operatorname{diag}(1,4)$ on~$\cC$; the two
+eigenvalues distinguish it from the scalar compression required by
+Knill--Laflamme.  Thus the two structures are independent.
+\end{proof}
+
+\begin{remark}[Unitary Koszul algebras and physical QEC]
+\label{rem:hc-unitary-physical-qec}
+\index{Knill--Laflamme condition!unitary case}
+\index{Tomita--Takesaki!modular conjugation}
+For \emph{unitary} Koszul algebras
+\textup{(}positive-definite Shapovalov form, physical
+state--operator correspondence\textup{)},
+the physical inner product provides a Hermitian
+structure $\langle -, - \rangle_{\mathrm{phys}}$
+on $\mathbf{C}_g(\cA)$ in addition to the Verdier
+pairing. The question of whether
+$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are
+\emph{orthogonal} in this physical inner product
+is additional analytic data.  The Tomita--Takesaki analogy is read
+through a chosen real form: a modular conjugation is anti-linear,
+whereas the Verdier involution used in Theorem~C is a complex-linear
+cochain involution.  Compatibility means that the anti-linear modular
+operator implements, after complexification, the polarization defined
+by the complex-linear Verdier involution.
+On a one-dimensional scalar conformal-block line the KL compression is
+tautological; higher-dimensional conformal-block spaces require the
+full error-algebra condition of Proposition~\ref{prop:hc-projection-not-kl}.
+\end{remark}
+
+\begin{conjecture}[Physical QEC at higher genus;
+\ClaimStatusConjectured]
+\label{conj:hc-physical-qec}
+\index{Knill--Laflamme condition!higher genus conjecture}
+\textit{Type signature.} Quadrant: Open. Presentation: Hilbert-space
+chain-level. Level: $5$ (genus-$g$ scalar Hilbert completion).
+Hypothesis package: unitary chirally Koszul pair $(\cA,\cA^!)$;
+fixed Hilbert completion $H_{\mathrm{phys}}(\cA,g)$ of $\mathbf
+C_g(\cA)$; physical error $*$-algebra $\mathfrak E_g$; expected
+implementation by a Tomita--Takesaki modular conjugation.
+\smallskip\noindent
+Let $(\cA,\cA^!)$ be a unitary chirally Koszul pair and let
+$g\geq1$.  Suppose a physical Hilbert completion
+$H_{\mathrm{phys}}(\cA,g)$ of $\mathbf C_g(\cA)$ and a physical
+error $*$-algebra $\mathfrak E_g$ are fixed.  The physical QEC
+upgrade asserts:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the closures of $\mathbf Q_g(\cA)$ and
+ $\mathbf Q_g(\cA^!)$ are orthogonal for
+ $\langle-,-\rangle_{\mathrm{phys}}$;
+\item for the orthogonal projection $P_\cC$ onto
+ $\overline{\mathbf Q_g(\cA)}$,
+ \[
+ P_\cC E_i^\dagger E_j P_\cC
+ =\lambda_{ij}P_\cC
+ \qquad(E_i,E_j\in\mathfrak E_g).
+ \]
+\end{enumerate}
+The Tomita--Takesaki expectation is that a compatible modular
+conjugation supplies these two conditions in the unitary
+holomorphic-topological theories arising from the open/closed
+realization.  This conjecture is the physical completion problem that
+extends the algebraic content of Theorem~C.
+\end{conjecture}
+
+% ======================================================================
+%
+% 2. BAR-COBAR RECOVERY AND DERIVED-CENTRE FUNCTORIALITY
+%
+% ======================================================================
+
+\section{Bar-cobar recovery and derived-centre functoriality}
+\label{sec:hc-koszulness-exact-qec}
+\index{bar-cobar recovery!Koszul duality|textbf}
+
+\begin{definition}[Typed recovery data; \ClaimStatusDefinitional]
+\label{def:hc-typed-recovery-data}
+Let $\cA=T_X(V)/(R)$ be a complete augmented quadratically presented
+chiral algebra.  Its full reconstruction coalgebra is
+\[
+C_\cA=
+\begin{cases}
+B_X(\cA),&\text{in a finite window},\\
+\widehat B_X(\cA),&\text{in the strict completed lane},
+\end{cases}
+\]
+with universal counit
+\[
+\varepsilon_\cA\colon
+\Omega_X^{\mathrm{cont}}(C_\cA)\longrightarrow\cA.
+\]
+The chosen presentation supplies
+\[
+\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+q_\cA\colon\cA^{\mathrm i}\longrightarrow C_\cA,
+\qquad
+p_\cA\colon\Omega_X(\cA^{\mathrm i})\longrightarrow\cA.
+\]
+Here $p_\cA$ is adjoint to $q_\cA$ under the twisting-morphism
+bijection.  The
+\emph{derived-centre transport package} $H_Z(f)$ for a weak
+equivalence $f\colon A'\to A$ consists of cofibrant chiral algebra
+models and a functorial derived-centre model that sends $f$ to an
+equivalence
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(f)\colon
+ Z^{\mathrm{der}}_{\mathrm{ch}}(A')
+ \xrightarrow{\sim}Z^{\mathrm{der}}_{\mathrm{ch}}(A).
+\]
+For a holomorphic-topological theory~$T$ with boundary chart~$\cA$,
+the physical open/closed datum is a continuous brace dg algebra map
+\[
+\beta_T\colon
+\bigl(\operatorname{Loc}_{\partial}
+\operatorname{Obs}^{\mathrm{bulk}}(T),Q_{\mathrm{BRST}}\bigr)
+\longrightarrow Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+=C^\bullet_{\mathrm{ch}}(\cA,\cA).
+\]
+A quasi-isomorphism $\beta_T$ in the chosen analytic completion,
+together with subregion maps, realizes the universal closed sector as
+the boundary-local physical bulk.  For a fixed coalgebra $C$, the
+separate co/contra datum has source
+$\mathsf D^{\mathrm{co}}(C\text{-}\mathsf{Comod})$ and target
+$\mathsf D^{\mathrm{ctr}}(C\text{-}\mathsf{Contramod})$.
+\end{definition}
+
+\begin{proposition}[Curve-level Hochschild support and physical
+transport; \ClaimStatusProvedHere]
+\label{prop:hc-theorem-h-scope}
+\index{Theorem H!scope in holographic codes}
+\index{chiral Hochschild cohomology!physical transport}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level.
+Level: $3$, with source
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)=C^\bullet_{\mathrm{ch}}(\cA,\cA)$.
+Hypothesis package: $H_H(\cA;S)$ for a finite
+$S\subset\mathbb Z$; the class~M lane uses its
+completed/pro/$J$-adic realization; physical transport uses a
+quasi-isomorphism $\beta_T$.  De Sole--Kac variational Poisson
+cohomology is nonvanishing in unboundedly many degrees for
+Virasoro-type Poisson vertex algebras, so the finite-support
+conclusion lives strictly on the stated Koszul/bounded locus, with
+the bounded-to-chart comparison part of $H_H(\cA;S)$.
+\smallskip\noindent
+Theorem~H gives
+\[
+\operatorname{Supp}\ChirHoch^\bullet(\cA,\cA)
+\subseteq S.
+\]
+If $\beta_T$ is a quasi-isomorphism, then
+\[
+\operatorname{Supp}H^\bullet\bigl(
+\operatorname{Loc}_{\partial}\operatorname{Obs}^{\mathrm{bulk}}(T),
+Q_{\mathrm{BRST}}\bigr)
+\subseteq S.
+\]
+The first support statement belongs to curve-level chiral Hochschild
+cochains; the second is its transport through the physical comparison.
+Topological and categorical Hochschild theories retain their own input
+categories and comparison functors.
+A perfect degree-$d$ pairing is an independent hypothesis and governs
+the degree-reflection statement rather than this support transport.
+\end{proposition}
+
+\begin{proof}
+The $H_H(\cA;S)$ package supplies a strong deformation retract of the
+chiral Hochschild complex onto a complex supported in~$S$.  A
+quasi-isomorphism $\beta_T$ identifies cohomology groups degree by
+degree, and therefore transports the support inclusion to its BRST
+source.
+\end{proof}
+
+\begin{theorem}[Universal reconstruction, quadratic compression, and
+derived-centre transport; \ClaimStatusConditional]
+\label{thm:hc-koszulness-exact-qec}
+\index{G12|textbf}
+\textit{Type signature.} Quadrant: Open. Presentation: complete
+quadratic chiral chain model. Levels: $1\leftrightarrow2$ in
+clauses~\textup{(i)--(ii)}, level~$3$ in clause~\textup{(iii)}, and
+physical level~$3\to4$ in clause~\textup{(iv)}. Ambient: the
+pro-nilpotent Francis--Gaitsgory chiral Ran category. Hypothesis
+packages: $H_{\mathrm{fact}}$, $H_{\mathrm{conv}}$, and the finite-window or
+strict completed reconstruction package of
+Definition~\ref{def:finite-window-essential-image-bci} for
+clause~\textup{(i)};
+$H_{\mathrm{CL}}(\cA,\cA^{\mathrm i},\tau_{\mathrm i})$ for
+clause~\textup{(ii)}; $H_Z$ for clause~\textup{(iii)}; a
+quasi-isomorphism $\beta_T$ in the chosen analytic completion for
+clause~\textup{(iv)}. Reconstruction theorems invoked: Theorem~A for
+the full bar coalgebra, Theorem~B for quadratic recognition,
+Theorem~H for family-indexed curve-level support, and
+Theorem~\ref{thm:thqg-swiss-cheese} for the universal open/closed
+action.
+\smallskip\noindent
+Let $\cA=T_X(V)/(R)$ and use the maps of
+Definition~\textup{\ref{def:hc-typed-recovery-data}}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universal reconstruction.}
+Theorem~A gives a quasi-isomorphism
+\[
+\varepsilon_\cA\colon
+\Omega_X^{\mathrm{cont}}(C_\cA)\xrightarrow{\sim}\cA
+\]
+for every augmented chart carrying the stated Ran and completion
+packages.
+
+\item \emph{Quadratic recognition.}
+The following conditions are equivalent:
+\[
+q_\cA\colon\cA^{\mathrm i}\xrightarrow{\sim}C_\cA,
+\qquad
+p_\cA\colon\Omega_X(\cA^{\mathrm i})\xrightarrow{\sim}\cA.
+\]
+They are also equivalent to acyclicity of the left and right twisted
+tensor products and to strong convergence on the quadratic PBW
+diagonal.  These conditions define chiral Koszulness of the chosen
+presentation.  The filtered complex
+$\operatorname{Cone}(q_\cA)$ is its obstruction carrier.
+
+\item \emph{Derived-centre transport.}
+The package $H_Z(\varepsilon_\cA)$ gives
+\[
+Z^{\mathrm{der}}_{\mathrm{ch}}
+\bigl(\Omega_X^{\mathrm{cont}}(C_\cA)\bigr)
+\xrightarrow{\sim}Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+On the quadratic Koszul locus, $H_Z(p_\cA)$ also gives
+\[
+Z^{\mathrm{der}}_{\mathrm{ch}}
+\bigl(\Omega_X(\cA^{\mathrm i})\bigr)
+\xrightarrow{\sim}Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\]
+
+\item \emph{Physical realization.}
+A quasi-isomorphism $\beta_T$ identifies the completed
+boundary-local BRST observable complex with
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.  The subregion maps and the
+physical Hermitian structure then formulate holographic recovery and
+the Knill--Laflamme condition.
+\end{enumerate}
+
+For a Koszul pair satisfying the respective Theorem~C, shadow, and
+modular packages, the resulting algebraic data are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the Lagrangian decomposition
+$\cH_g=\cC\oplus\mathcal E$ with perfect Verdier cross-pairing;
+\item the formal shadow slots classified by $r_{\max}(\cA)$;
+\item the scalar information functional of
+Theorem~\ref{thm:ent-scalar-entropy}.
+\end{enumerate}
+The physical error algebra converts the first datum into KL
+compressions, assigns operational meaning to the shadow slots, and
+determines Hilbert-space code distance.
+\end{theorem}
+
+\begin{proof}
+Clause~\textup{(i)} is the enhanced Ran bar--cobar equivalence of
+Francis--Gaitsgory and its finite-window realization, modeled over a
+point by Loday--Vallette~\cite[Corollary~2.3.4]{LodayVallette12}.
+Clause~\textup{(ii)} is
+Theorem~\ref{thm:bar-cobar-inversion-qi}, modeled by the fundamental
+twisting theorem and its quadratic specialization
+\cite[Theorems~2.3.2 and~3.4.6]{LodayVallette12}.  The comparison
+lemma identifies the mapping cone and the two twisted tensor
+complexes as equivalent acyclicity tests.  Clause~\textup{(iii)} is
+the homotopy invariance stipulated by $H_Z$.  Clause~\textup{(iv)} is
+the defining consequence of the supplied physical comparison.
+The final three data are the conclusions of Theorem~C,
+Theorem~\ref{thm:hc-shadow-redundancy}, and
+Theorem~\ref{thm:ent-scalar-entropy}, respectively.
+\end{proof}
+
+\begin{remark}[The quadratic obstruction carrier]
+\label{rem:hc-non-koszul-failure}
+\index{quadratic Koszulness!obstruction carrier}
+Under $H_{\mathrm{CL}}$, the chosen presentation is Koszul precisely
+when the filtered complexes
+\[
+\operatorname{Cone}(q_\cA),\qquad
+\operatorname{Cone}(p_\cA)
+\]
+are acyclic.  Admissible and critical quotients
+$L_k(\mathfrak g)$ are decided by computing these cones, or
+equivalently the off-diagonal PBW groups, in the relevant completion.
+The universal counit $\varepsilon_\cA$ remains the Theorem~A
+resolution throughout this test.  A physical information-loss claim
+is carried by the further map $\beta_T$ and its subregion recovery
+data.
+\end{remark}
+
+% ======================================================================
+%
+% 3. SHADOW DEPTH AND FORMAL SLOTS
+%
+% ======================================================================
+
+\section{Shadow depth as formal slot structure}
+\label{sec:hc-redundancy}
+\index{shadow depth!formal slot structure|textbf}
+\index{shadow slots|textbf}
+
+\begin{conjecture}[Shadow depth and filtered recovery models]
+\ClaimStatusConjectured
+\label{conj:thqg-shadow-depth-code-distance}
+\index{shadow depth!filtered recovery models}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level
+(formal MC tower) plus external Hilbert error model. Level: $5$
+(scalar shadow tower) lifted to physical recovery. Hypothesis
+package: chirally Koszul $\cA$ in the standard-landscape scope;
+fixed physical error model whose erasures match the non-scalar
+shadow degrees.
+\smallskip\noindent
+Let a physical error model be supplied whose erasures are exactly the
+non-scalar shadow degrees of the MC tower.  Then the formal number of
+filtered recovery slots is
+\[
+\#\{\,r\ge 3:\Sh_r(\Theta_\cA)\neq 0\,\}.
+\]
+On a pure shadow-depth archetype this number is $r_{\max}(\cA)-2$
+for finite $r_{\max}$ and countably infinite for class~$\mathbf M$.
+The physical inner product, error algebra, and recovery maps determine
+the associated Hilbert-space code distance.
+\end{conjecture}
+
+\begin{theorem}[Shadow depth controls the formal shadow slots;
+\ClaimStatusConditional]
+\label{thm:hc-shadow-redundancy}
+\index{shadow depth!formal slots}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level
+(MC obstruction tower). Level: $5$ (scalar shadow algebra
+$\cA^{\mathrm{sh}}_{r,\bullet}$) sourced from the level-$2$ bar
+intrinsic MC element $D_\cA - \dzero$. Hypothesis package: chirally
+Koszul $\cA$; standard-landscape scope of
+Theorem~\textup{\ref{thm:shadow-archetype-classification}};
+recursive existence theorem
+(Theorem~\textup{\ref{thm:recursive-existence}}); shadow growth bound
+(Theorem~\textup{\ref{thm:shadow-radius}}) for class~M convergence.
+\smallskip\noindent
+For a chirally Koszul algebra $\cA$ in the computed standard
+landscape scope of
+Theorem~\textup{\ref{thm:shadow-archetype-classification}}, the shadow
+depth $r_{\max}(\cA)$ controls the non-scalar slots in the formal MC
+obstruction tower as follows.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Fundamental datum.}
+ The scalar-level shadow $\kappa(\cA)$
+ \textup{(}degree~$2$\textup{)} is the first modular datum in the
+ tower: it is the genus-$1$ scalar obstruction of Theorem~D.
+
+\item \emph{Recursive lifting.}
+ For each degree $r \ge 3$, the shadow
+ $\Sh_r(\Theta_\cA) \in \cA^{\mathrm{sh}}_{r,\bullet}$
+ \textup{(}as a cohomology class in the shadow algebra\textup{)}
+ is the degree-$r$ projection of the canonical bar-intrinsic MC
+ element $D_\cA-\dzero$.
+ The recursive existence theorem
+ \textup{(}Theorem~\textup{\ref{thm:recursive-existence}}\textup{)}
+ gives a lift from degree $<r$ to degree~$r$ after the obstruction
+ class in $H^2$ vanishes; choices of representative are controlled by
+ the degree-$r$ $H^1$.  A contraction, gauge convention, or physical
+ recovery map turns a degree-$r$ shadow into a formal recovery slot.
+
+\item \emph{Slot count.}
+ The number of non-scalar shadow slots on the pure archetype is:
+ \begin{center}
+ \renewcommand{\arraystretch}{1.3}
+ \begin{tabular}{ccll}
+ \textbf{Class} & $r_{\max}$ & \textbf{Non-scalar slots}
+ & \textbf{Prototype} \\
+ \midrule
+ G & $2$ & $0$ & Heisenberg, lattice \\
+ L & $3$ & $1$ & Affine Kac--Moody \\
+ C & $4$ & $2$ & $\beta\gamma$ \\
+ M & $\infty$ & $\aleph_0$ \textup{(}countably infinite\textup{)}
+ & Virasoro, $W_N$
+ \end{tabular}
+ \end{center}
+ For class~M with shadow radius $\rho(\cA) < 1$, the scalar shadow
+ series converges absolutely.
+\end{enumerate}
+These data determine formal slot count.  The universal degree statement
+is that the scalar tower begins at degree~$2$; the physical error
+package determines Hilbert-space code distance.
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).} The scalar shadow $\kappa(\cA)$ is the
+genus-$1$ obstruction class (Theorem~D), determining the
+modular curvature on the uniform-weight scalar lane.  Degree~$2$ is
+the initial degree of this shadow tower.
+
+\emph{Part (ii).} The recursive existence theorem
+(Theorem~\ref{thm:recursive-existence}) constructs the
+shadow obstruction tower $\Theta_\cA = \varprojlim \Theta_\cA^{\le r}$
+by solving the MC equation at each degree. At degree $r \ge 3$,
+the equation
+$d(\Theta^{(r)}) + \tfrac{1}{2}\sum_{r_1+r_2=r}
+[\Theta^{(r_1)}, \Theta^{(r_2)}] = 0$
+determines the \emph{shadow class}
+$[\Theta^{(r)}] \in H^0(\operatorname{gr}^r \fg^{\mathrm{mod}})$
+from $\{\Theta^{(s)}\}_{s < r}$.
+The representatives $\Theta^{(r)}$ form the gauge torsor controlled
+by~$H^1$; $H^2$ carries the obstruction.
+The bar-intrinsic representative $D_\cA-\dzero$ supplies the canonical
+choice used in the monograph.  A physical error package promotes this
+formal lifting slot to a Hilbert-space recovery datum.
+
+\emph{Part (iii).}
+Class~G: $\Sh_r = 0$ for $r \ge 3$; zero non-scalar slots.
+Class~L: $\Sh_3 \ne 0$, $\Sh_r = 0$ for $r \ge 4$; one non-scalar slot.
+Class~C: $\Sh_4 \ne 0$ (and possibly $\Sh_3$), $\Sh_r = 0$
+for $r \ge 5$; two non-scalar slots.
+Class~M: $\Sh_r \ne 0$ for all $r$; countably many non-scalar slots.
+Convergence for class~M follows from the shadow growth rate
+bound $|\Sh_r| = O(\rho(\cA)^r \cdot r^{-5/2})$
+(Theorem~\ref{thm:shadow-radius}), with absolute convergence
+for $\rho < 1$.
+\end{proof}
+
+% ======================================================================
+%
+% 4. THE 12-FOLD DICTIONARY
+%
+% ======================================================================
+
+\section{The Koszulness--code dictionary}
+\label{sec:hc-dictionary}
+\index{Koszulness--code dictionary|textbf}
+
+\begin{proposition}[Koszulness--code dictionary;
+\ClaimStatusConditional]
+\label{prop:hc-dictionary}
+\index{Koszulness!code-theoretic meaning}
+\textit{Type signature.} Quadrant: Open. Presentation: dictionary
+(structural readings of the twelve entries in
+Theorem~\ref{thm:koszul-equivalences-meta}). Levels:
+$1\!\leftrightarrow\!2$ for K1--K5 and K9--K10; categorical
+resolution for K6; factorization homology for K7; level~$3$ for K8;
+level~$5$ for K11; geometric purity for K12. Hypothesis package:
+$H_{\mathrm{CL}}$ for the intrinsic core; the displayed monadic,
+factorization-homology, $H_H$, shifted-symplectic, and mixed-Hodge
+packages for K6, K7, K8, K11, and K12, respectively.
+\smallskip\noindent
+The twelve entries consist of seven intrinsic diagnostics for
+$q_\cA$, one monadic consequence, one conditional
+factorization-homology criterion, one $H_H$-conditional Hochschild
+consequence, one shifted-symplectic criterion, and one mixed-Hodge
+purity implication.  The third column records the algebraic datum
+that enters a code model; Hilbert-space QEC arises from the additional
+physical package of Definition~\ref{def:hc-typed-recovery-data}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{l@{\;}l@{\;\;}l@{\;\;}c}
+& \textbf{Koszulness condition}
+& \textbf{Code property}
+& \textbf{Status} \\
+\midrule
+K1 & Koszul twisting morphism
+ & presentation-level encoding datum
+ & intrinsic \\
+K2 & PBW diagonal collapse
+ & graded quadratic compression
+ & intrinsic \\
+K3 & off-diagonal $A_\infty$ formality
+ & minimal compressed model
+ & intrinsic \\
+K4 & Ext diagonal concentration
+ & diagonal defect groups
+ & intrinsic \\
+K5 & $q_\cA$ and $p_\cA$ quasi-isomorphisms \textup{(}Thm~B\textup{)}
+ & \textbf{exact quadratic recovery}
+ & exact \\
+K6 & Barr--Beck--Lurie comparison
+ & categorical recovery
+ & cond. \\
+K7 & factorization-homology concentration
+ & global homological signature
+ & cond. \\
+K8 & $H_H(\cA;S)$-conditional $\ChirHoch$ support
+ & family-indexed closed-sector support
+ & $\Rightarrow$ \\
+K9 & Kac--Shapovalov nonvanishing
+ & non-degenerate Gram matrix
+ & intrinsic \\
+K10 & FM boundary acyclicity
+ & collision-local recovery
+ & intrinsic \\
+K11 & Lagrangian criterion
+ & half-dimensional Lagrangian subspace
+ & cond. \\
+K12 & $\mathcal D$-module purity
+ & geometric sufficient condition for K10
+ & $\Rightarrow$
+\end{tabular}
+\end{center}
+Here ``intrinsic'' means equivalent under $H_{\mathrm{CL}}$ and its
+PBW detection package; ``cond.'' imports the package displayed in the
+corresponding row; $\Rightarrow$ records a one-way implication.
+\end{proposition}
+
+\begin{proof}
+The ordering is the ordering of
+Theorem~\ref{thm:koszul-equivalences-meta}.  Its intrinsic circuit is
+K1--K5 together with K9--K10.  The fundamental twisting theorem
+\cite[Theorem~2.3.2]{LodayVallette12} and the quadratic criterion
+\cite[Theorem~3.4.6]{LodayVallette12} identify K5 with
+\[
+q_\cA\colon\cA^{\mathrm i}\xrightarrow{\sim}B_X(\cA),
+\qquad
+p_\cA\colon\Omega_X(\cA^{\mathrm i})\xrightarrow{\sim}\cA.
+\]
+Thus K5 is exact recovery from the quadratic compression.  K6 is the
+monadic consequence under conservativity and totalization.  K7 and K8
+are the factorization-homology and derived-centre consequences under
+their named comparison packages.  K9 says that the relevant Gram form
+is non-degenerate; a physical inner product transports this datum to a
+Hilbert-space Gram matrix.  K10 is the collision-stratum form of the
+intrinsic acyclicity test.
+
+\emph{K11 (Lagrangian criterion).}
+Under perfectness and non-degeneracy, Theorem~C gives
+$\mathbf C_g(\cA)=\mathbf Q_g(\cA)\oplus\mathbf Q_g(\cA^!)$ with
+both summands Lagrangian; in finite dimension this forces
+$\dim\mathbf Q_g(\cA)=\frac12\dim\mathbf C_g(\cA)$.  This is the
+Verdier-symplectic rate statement.  K12 supplies a geometric sufficient
+condition for K10.  Proposition~\ref{prop:hc-theorem-h-scope} and
+Definition~\ref{def:hc-typed-recovery-data} record the comparison maps
+that carry K8 and K11 toward physical observables and Hilbert-space
+recovery.
+\end{proof}
+
+\begin{remark}[Algebraic parameters supplied by the model]
+\label{rem:hc-universal-parameters}
+\index{code rate!universal $1/2$}
+\index{code distance!physical input}
+The algebraic model supplies three parameters, each with its own
+scope:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Verdier rate.}
+ Under the finite-dimensional Lagrangian hypotheses of Theorem~C,
+ $\dim \cC=\tfrac12\dim\cH$.
+\item \emph{First degree.}
+ The shadow tower begins at degree~$2$ with the scalar
+ $\kappa(\cA)$.
+\item \emph{Formal shadow slots.}
+ On a pure archetype, the number of non-scalar slots is
+ $r_{\max}(\cA)-2$ for finite $r_{\max}$ and countably infinite for
+ class~$\mathbf M$.
+\end{enumerate}
+The structure is symplectic in the Verdier sense.  A physical
+Hilbert-space realization and an error algebra determine the
+stabilizer group and operational code distance.
+\end{remark}
+
+% ======================================================================
+%
+% 5. STANDARD LANDSCAPE CODE CENSUS
+%
+% ======================================================================
+
+\section{Code census for the standard landscape}
+\label{sec:hc-census}
+\index{standard landscape!code census|textbf}
+
+\begin{theorem}[Standard landscape code census;
+\ClaimStatusConditional]
+\label{thm:hc-census}
+\textit{Type signature.} Quadrant: Open. Presentation: chain-level.
+Level: $1\!\leftrightarrow\!2$ (quadratic recognition) plus level-$5$
+shadow-slot count. Hypothesis package: a Theorem~B recognition datum
+$\bigl(\cA^{\mathrm i},q_\cA,H_{\mathrm{CL}}\bigr)$ for each row;
+shadow archetype classification
+(Theorem~\textup{\ref{thm:shadow-archetype-classification}});
+shadow-slot tabulation
+(Theorem~\textup{\ref{thm:hc-shadow-redundancy}}); for class M,
+absolute convergence requires
+$\rho(\cA) < 1$
+(Theorem~\textup{\ref{thm:shadow-radius}}).
+\smallskip\noindent
+Each row carrying this recognition datum admits exact quadratic
+recovery
+\[
+\cA^{\mathrm i}\xrightarrow{\sim}B_X(\cA),
+\qquad
+\Omega_X(\cA^{\mathrm i})\xrightarrow{\sim}\cA.
+\]
+The universal counit belongs to Theorem~A for every augmented row.
+The formal shadow slots and heuristic physical labels are:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{l@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}l}
+\textbf{Family} & \textbf{Class} & \textbf{Slots}
+& \textbf{Algebraic type} & \textbf{Heuristic physical label} \\
+\midrule
+Heisenberg $\mathcal{H}_\kappa$
+ & G & $0$ & scalar & abelian CS \\
+Lattice $V_\Lambda$
+ & G & $0$ & scalar & lattice gauge \\
+Affine $\widehat{\mathfrak{g}}_k$
+ & L & $1$ & cubic & non-abelian CS \\
+$\beta\gamma$
+ & C & $2$ & quartic/contact & topological B-model \\
+Virasoro $\mathrm{Vir}_c$
+ & M & $\aleph_0$ & infinite shadow tower & 3d gravity \\
+$W_N$
+ & M & $\aleph_0$ & infinite shadow tower & higher-spin gravity
+\end{tabular}
+\end{center}
+For class~M families, the scalar shadow series converges absolutely
+when $\rho(\cA) < 1$.
+\end{theorem}
+
+\begin{proof}
+The recognition datum supplies Theorem~\ref{thm:bar-cobar-inversion-qi}
+for each asserted row.  The shadow slots follow from
+the shadow archetype classification
+(Theorem~\ref{thm:shadow-archetype-classification}) and
+Theorem~\ref{thm:hc-shadow-redundancy}.
+\end{proof}
+
+\begin{remark}[Heuristic gravitational reading of the shadow slots]
+\label{rem:hc-gravitational-code-complexity}
+\index{gravitational complexity!code complexity}
+The following physical reading is heuristic.  Its promotion package
+consists of the derived-centre/BRST comparison and Hilbert-space
+recovery maps:
+\begin{itemize}
+\item \emph{Scalar type} (G):
+ The shadow tower has zero non-scalar slots.  In the Gaussian
+ gravitational reading, the scalar entropy equals its scalar term
+ (Chapter~\ref{chap:entanglement-modular-koszul},
+ Proposition~\ref{prop:ent-complexity-classification}).
+
+\item \emph{Cubic type} (L):
+ One non-scalar slot, the cubic shadow, is available.  In the
+ tree-level reading this is the algebraic place where a three-point
+ interaction can be compared with lower-degree data.
+
+\item \emph{Contact type} (C):
+ Two non-scalar slots, cubic and quartic, are available.
+ The quartic contact invariant
+ $\mathfrak{Q}^{\mathrm{contact}}$
+ is the second formal shadow datum.
+
+\item \emph{Infinite shadow type} (M):
+ There is one formal slot at each degree.  The MC equation supplies
+ the recursive algebraic constraint.  Convergence for $\rho<1$
+ establishes convergence of the scalar shadow series; the physical
+ comparison and recovery maps furnish error-correction content.
+\end{itemize}
+\end{remark}

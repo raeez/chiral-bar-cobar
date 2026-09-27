@@ -1,0 +1,292 @@
+%% Virasoro residues and their motivic comparison problem.
+
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\mot}{\mathrm{mot}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Walg}{\mathcal W}
+\providecommand{\cA}{\mathcal A}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Virasoro Residues and Motivic Comparison}
+\label{ch:virasoro-motivic-purity}
+
+\section*{Local algebra, residues, and periods}
+
+The Virasoro local layer is exact.  The operator product, the sphere
+Ward recursion, and the level-four vacuum Gram form give
+\[
+ T(z)T(w)\sim \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w},
+ \qquad
+ N_\Lambda(c)=\frac{c(5c+22)}{10}.
+\]
+Consequently every connected stress-tensor Ward function is a
+rational function on an ordered configuration space.  A scalar
+shadow coordinate requires the additional ordered-residue package
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\).  A motivic statement requires
+another comparison from the residue complex to a specified motivic
+period complex.  Rationality of the local integrand and Tate
+factorization of its period are distinct assertions.
+
+\section{Regularity and the comparison packages}
+\label{sec:vmp-setup}
+
+\begin{definition}[Level-four and residue-regular charges]
+\ClaimStatusDefinitional
+\label{def:vmp-generic-c}
+The level-four regular locus is
+\[
+ C^{(4)}_{\mathrm{reg}}
+ :=\{c\in\mathbb C: c(5c+22)\ne0\}.
+\]
+For an arity bound \(R\), a charge is
+\emph{residue-regular through arity \(R\)} when the package
+\(\mathsf H_{\mathrm{res}}^{\le R}(\Vir_c;X)\) exists and every
+scalar contraction used through arity~\(R\) is defined.  The
+all-arity locus \(C^{\mathrm{res}}_{\mathrm{reg}}\) consists of
+charges carrying compatible packages for every~\(R\).
+Once such a compatible family is fixed, write
+\(C^{\mathrm{gen}}:=C^{\mathrm{res}}_{\mathrm{reg}}\) for the
+all-arity domain used by downstream comparison statements.
+\end{definition}
+
+\begin{remark}[Radical and quotient lanes]
+\label{rem:vmp-exclusions}
+At \(c=0\) and \(c=-22/5\), the level-four invariant form has a
+radical.  The corresponding simple quotient carries its own residue
+package, built after passage to the radical quotient.  Higher Kac
+degeneracy loci are treated by the same typed quotient construction.
+\end{remark}
+
+\begin{problem}[Compare the formal Riccati lane with geometric residues]
+\ClaimStatusOpen
+\label{thm:vmp-riccati-vir-recap}
+\emph{Type signature:}
+\textup{(Open quadrant, formal weighted-series and ordered residue-bar
+presentations, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\)).}
+
+A formal square-root series may be generated from chosen Virasoro
+seeds.  Construct a chain map from its coefficient model to the
+transferred scalar residue model and prove compatibility with the
+Maurer--Cartan equations, arity conventions, and normalizations.  The
+package \(\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\) records this
+comparison.
+\end{problem}
+
+\begin{definition}[Motivic residue package]
+\ClaimStatusDefinitional
+\label{def:vmp-motivic-lift}
+For a constructed ordered-residue package, the motivic comparison
+package \(\mathsf H_{\mathrm{mot}}\) consists of:
+\begin{enumerate}[(i)]
+\item a graded motivic period complex \(\mathcal P^{\mot}\) with its
+de Rham coaction;
+\item a collision-compatible chain map from the ordered correlator
+complex to \(\mathcal P^{\mot}\);
+\item a comparison from \(\mathcal P^{\mot}\) to the scalar
+contraction in \(\mathsf H_{\mathrm{res}}\);
+\item compatibility with the ordered-to-symmetric averaging map and
+with the period homomorphism;
+\item declared Tate twists, weight conventions, and regularizations.
+\end{enumerate}
+The resulting class is denoted
+\[
+ S_r^{\mot}(\Vir_c;\mathsf H_{\mathrm{res}},\mathsf H_{\mathrm{mot}}).
+\]
+\end{definition}
+
+\section{The conditional purity criterion}
+\label{sec:vmp-main}
+
+\begin{theorem}[Tate-factorization criterion for Virasoro residues]
+\ClaimStatusConditional
+\label{thm:virasoro-motivic-purity}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, ordered residue and motivic-period
+presentations, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}
++\mathsf H_{\mathrm{Tate}}\)).}
+
+Assume \(\mathsf H_{\mathrm{res}}\) and
+\(\mathsf H_{\mathrm{mot}}\).  Suppose the Tate-factorization package
+\(\mathsf H_{\mathrm{Tate}}\) supplies, for every~\(r\), a
+factorization of the motivic residue class through the unit-motive
+summand
+\[
+ \mathbb Q(0)\otimes\mathbb Q(c)
+ \longrightarrow \mathcal P^{\mot}\otimes\mathbb Q(c).
+\]
+Then
+\[
+ S_r^{\mot}(\Vir_c)
+ =S_r(\Vir_c;\mathsf H_{\mathrm{res}})\otimes1
+ \in\mathbb Q(0)\otimes\mathbb Q(c),
+\]
+and its reduced positive-weight motivic coaction vanishes.
+\end{theorem}
+
+\begin{proof}
+The factorization places the class in the unit-motive summand.  The
+period comparison identifies its scalar coefficient with the
+ordered-residue contraction.  The reduced positive-weight coaction
+vanishes on \(\mathbb Q(0)\), which proves the assertion.
+\end{proof}
+
+\begin{remark}[Formal algebraicity and motivic periods]
+\label{rem:vmp-convergence-of-sqrt}
+Formal algebraicity controls coefficients of the auxiliary formal
+series.  The package \(\mathsf H_{\mathrm{mot}}\) controls periods of
+the geometric residue cycles.  The comparison
+\(\mathsf H_{\mathrm{Ricc}\to\mathrm{res}}\) connects these two
+statements.
+\end{remark}
+
+\section{Denominator and growth obligations}
+\label{sec:vmp-denominator}
+
+\begin{problem}[Determine the divisor of the residue coefficients]
+\ClaimStatusOpen
+\label{prop:denominator-structure}
+\emph{Type signature:}
+\textup{(Open quadrant, scalar residue presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{den}}\)).}
+
+Construct the scalar coordinates and determine their reduced divisors
+as rational functions of~\(c\).  The denominator package
+\(\mathsf H_{\mathrm{den}}\) contains a proof of rational dependence,
+an exact divisor calculation in each arity, and a uniform induction
+compatible with the transferred brackets.  The local factor
+\(c(5c+22)\) enters through the norm of~\(\Lambda\); its
+multiplicity in arity~\(r\) is part of this problem.
+\end{problem}
+
+\begin{remark}[Uniform asymptotic package]
+\label{rem:vmp-growth}
+Growth in~\(r\), Laurent order at \(c=\infty\), and the analytic
+radius of a generating series are governed by
+\(\mathsf H_{\mathrm{asymp}}\).  This package includes uniform bounds
+and an order-of-limits theorem.
+\end{remark}
+
+\begin{remark}[The free-boson specialization]
+\label{rem:vmp-c1-excluded}
+At \(c=1\), the exact local Gram factor specializes to
+\(N_\Lambda(1)=27/10\).  Higher residue values at this charge are
+obtained by specializing a constructed residue tower.  A comparison
+with categorical coefficients in Volume~III requires a named
+cross-volume chain map.
+\end{remark}
+
+\section{Rational transfer as a conditional algebraic statement}
+\label{sec:vmp-transport}
+
+\begin{theorem}[Rationality under a finite scalar transfer package]
+\ClaimStatusConditional
+\label{thm:virasoro-riccati-transport-rationality}
+\emph{Type signature:}
+\textup{(Open quadrant, transferred scalar presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{rat}}\)).}
+
+Assume the transferred scalar Maurer--Cartan equation is triangular in
+arity, every transfer kernel lies in \(\mathbb Q(c)\), and every
+linear coefficient solved at the next arity is invertible in
+\(\mathbb Q(c)\).  Then all recursively constructed scalar
+coordinates lie in \(\mathbb Q(c)\).
+\end{theorem}
+
+\begin{proof}
+The initial coordinates belong to \(\mathbb Q(c)\) by hypothesis.
+At arity~\(r\), triangularity expresses the next coordinate as the
+inverse linear coefficient times a finite polynomial in earlier
+coordinates and transfer kernels.  The field \(\mathbb Q(c)\) is
+closed under these operations.  Induction on~\(r\) gives the result.
+\end{proof}
+
+\begin{remark}[Local binary OPE and transferred brackets]
+\label{rem:vmp-binary-bracket-closure}
+The Virasoro OPE determines the local binary collision terms.  Higher
+transferred brackets encode homotopies of the residue complex.  The
+package \(\mathsf H_{\mathrm{rat}}\) proves their scalar kernels and
+thereby turns local rationality into rationality of the transferred
+coordinates.
+\end{remark}
+
+\section{Motivic coaction}
+\label{sec:vmp-no-mzv}
+
+\begin{corollary}[Unit-motive coaction]
+\ClaimStatusConditional
+\label{cor:virasoro-no-mzv-contribution}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, motivic scalar presentation,
+levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}
++\mathsf H_{\mathrm{Tate}}\)).}
+Under the hypotheses of
+Theorem~\ref{thm:virasoro-motivic-purity}, every Virasoro motivic
+residue has zero reduced positive-weight coaction.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:virasoro-motivic-purity} places every class in
+\(\mathbb Q(0)\otimes\mathbb Q(c)\), and the reduced
+positive-weight coaction vanishes on this summand.
+\end{proof}
+
+\begin{remark}[Grothendieck--Teichm\"uller action]
+\label{rem:vmp-grt-action-trivial-on-vir}
+Under \(\mathsf H_{\mathrm{Tate}}\), the motivic Galois action on the
+Virasoro scalar residue factors through the action on the unit
+motive.  Constructing \(\mathsf H_{\mathrm{Tate}}\) is the geometric
+content of this statement.
+\end{remark}
+
+\section{Comparison with principal \texorpdfstring{$\mathcal W$}{W}-algebras}
+\label{sec:vmp-w-algebra-comparison}
+
+\begin{remark}[The first additional generator lane]
+\label{rem:vir-vs-w3-contrast}
+Virasoro has the stress-tensor generator and rational Ward
+correlators.  Principal \(\mathcal W_3\) adds a spin-three generator
+and a multivariable residue complex.  Each generator lane acquires a
+motivic meaning through its own collision-compatible period map and
+averaging comparison.
+\end{remark}
+
+\begin{remark}[Finite-lane comparison for \texorpdfstring{$\mathcal W_N$}{WN}]
+\label{rem:vmp-wn-propagation-bound}
+Principal \(\mathcal W_N\) has generator weights
+\(2,3,\ldots,N\).  The stress-tensor lane receives the Virasoro local
+input, while every additional lane contributes separate transfer
+kernels and period cycles.  The multivariable package records their
+mixed brackets.
+\end{remark}
+
+\begin{problem}[Transport the motivic package through Drinfeld--Sokolov reduction]
+\ClaimStatusOpen
+\label{cor:vir-purity-propagates-to-dress-reduced}
+\emph{Type signature:}
+\textup{(Open/motivic quadrants, Drinfeld--Sokolov and ordered-residue
+presentations, levels \(1\leftrightarrow2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{DS}\to\mathrm{res}}
++\mathsf H_{\mathrm{mot}}\)).}
+Construct a chain map from the Drinfeld--Sokolov complex to the
+ordered-residue complexes of the source and reduced
+\(\mathcal W_N\)-algebra.  Prove compatibility with scalar
+contractions, motivic period maps, and the stress-tensor projection.
+This comparison determines the image of the Virasoro Tate package
+under reduction.
+\end{problem}
+
+\section{The comparison frontier}
+\label{sec:vmp-epilogue}
+
+The exact Ward and Gram calculations provide the local source.  The
+ordered-residue package constructs the scalar invariant.  The motivic
+package lifts its chain representative to a period class.  Tate
+factorization, denominator control, and Drinfeld--Sokolov propagation
+are the three named obligations that complete Virasoro motivic
+purity.

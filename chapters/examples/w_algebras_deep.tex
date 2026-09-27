@@ -1,0 +1,1224 @@
+% Local macros for cross-volume conductor references.
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\BP}{\mathrm{BP}}
+\providecommand{\ClaimStatusComputed}{\textnormal{[computed]}}
+
+\section{Verified Drinfeld--Sokolov and \texorpdfstring{$\mathcal W$}{W}-algebra lanes}
+\label{sec:walg-deep-repaired}
+
+The universal affine \(\mathcal W\)-algebra
+\(\mathcal W^k(\fg,f)\) is the degree-zero cohomology of the quantum
+Drinfeld--Sokolov BRST complex attached to a good grading for the
+nilpotent element \(f\).  This chapter uses that construction at
+Beilinson level~\(1\), its ordered chiral bar complex at level~\(2\),
+and scalar genus-one data at level~\(5\).  Each passage between these
+levels carries its own comparison map.
+
+Four objects occur throughout:
+\[
+\mathcal W^k(\fg,f),\qquad
+\bar B_X\!\left(\mathcal W^k(\fg,f)\right),\qquad
+\left(\mathcal W^k(\fg,f)\right)^{\mathrm i},\qquad
+\left(\mathcal W^k(\fg,f)\right)^!.
+\]
+They denote respectively the chiral algebra, its chain-level ordered
+bar coalgebra, its bar cohomology, and a Verdier--Koszul dual algebra
+after finite-type or completed duality.  A theorem comparing any two
+members of this list states the required filtration, convergence, and
+duality hypotheses.
+
+\begin{remark}[Three verified surfaces]
+\label{rem:w-deep-three-pillar}
+\index{W-algebras@$\mathcal W$-algebras!verified surfaces}
+The chapter has three mathematical surfaces.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Quantum Hamiltonian reduction supplies the BRST complex and the
+  universal algebra \(\mathcal W^k(\fg,f)\).
+\item OPE calculations supply exact rational functions, including the
+  principal central-charge companion and the BP companion sum.
+\item Bar, Verdier, modular, and large-rank comparisons are derived
+  statements whose hypotheses are recorded explicitly.
+\end{enumerate}
+The principal \(W_N\) scalar formulas and the Bershadsky--Polyakov
+central formula therefore occupy separate theorem lanes.
+\end{remark}
+
+\subsection{The derived Drinfeld--Sokolov functor}
+\label{sec:ds-derived-foundation}
+
+Fix a good \(\frac12\mathbb Z\)-grading
+\(\fg=\bigoplus_j\fg_j\) for \(f\), with charged ghosts for
+\(\fg_{>0}\) and neutral fields for \(\fg_{1/2}\).  We write
+\(F^{\mathrm{ch}}_f\) and \(F^{\mathrm{ne}}_f\) for the corresponding
+free-field factors.
+
+\begin{definition}[Filtered derived Drinfeld--Sokolov functor;
+\ClaimStatusDefinitional]
+\label{def:filtered-derived-ds-functor}
+\index{Drinfeld--Sokolov reduction!derived functor|textbf}
+Let \(A\) be an augmented chiral algebra with a compatible
+\(\widehat\fg_k\)-action and a complete, separated Kazhdan
+filtration, bounded below in every conformal-weight window.  Define
+\[
+\mathbf R\mathrm{DS}_f(A)
+:=
+\operatorname{Tot}\!\left(
+A\widehat\otimes F^{\mathrm{ch}}_f
+\widehat\otimes F^{\mathrm{ne}}_f,\,
+Q_{\mathrm{DS}}
+\right).
+\]
+The differential is the Kac--Roan--Wakimoto quantum reduction
+differential, including the current, charged-ghost, neutral-field,
+and character terms \cite{KRW}.  A morphism \(u\colon A\to A'\)
+induces
+\(\operatorname{Tot}(u\widehat\otimes\mathrm{id})\).
+The ordinary reduction is
+\[
+\mathrm{DS}_f(A):=H^0\!\left(\mathbf R\mathrm{DS}_f(A)\right).
+\]
+The equality of derived and degree-zero reduction is governed by the
+BRST concentration condition
+\[
+H^i\!\left(\mathbf R\mathrm{DS}_f(A)\right)=0
+\quad (i\ne0).
+\]
+\end{definition}
+
+\begin{definition}[Screening operators]
+\label{def:screening}
+\ClaimStatusDefinitional
+\index{screening operator|textbf}
+In a chosen free-field realization, a screening current \(S_i(z)\)
+is a field whose residue
+\[
+Q_i:=\operatorname{Res}_{z=0}S_i(z)
+\]
+commutes with the \(\mathcal W\)-action up to a total derivative.
+An intersection-of-kernels presentation
+\(\mathcal W=\bigcap_i\ker Q_i\) is a theorem about that realization,
+level, and completion.  A screening resolution additionally requires
+exactness in every nonzero cohomological degree.
+\end{definition}
+
+\begin{remark}[BRST concentration and screening exactness]
+Kac--Roan--Wakimoto construct the quantum reduction complex
+\cite{KRW}.  Free-field screening presentations supply an effective
+description on generic Wakimoto lanes.  Critical, admissible, and
+simple-quotient fibers carry their own concentration and exactness
+statements.
+\end{remark}
+
+\subsection{Principal type \(A\): the exact scalar lane}
+\label{sec:principal-wn-exact}
+
+For \(\fg=\mathfrak{sl}_N\), let \(f_{\mathrm{prin}}\) be principal
+and write \(\mathcal W_N^k=\mathcal W^k(\mathfrak{sl}_N,f_{\mathrm{prin}})\).
+The universal principal algebra at generic level has strong
+generators of weights \(2,3,\ldots,N\).
+
+\begin{theorem}[Fateev--Lukyanov central charge and reflected sum]
+\label{thm:wn-central-companion-deep}
+\ClaimStatusProvedHere
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{universal\ principal\ DS},1,
+H_{\mathrm{univ}}^{W_N})\).
+For \(N\ge2\) and \(k\ne-N\), the principal central charge is
+\begin{equation}
+\label{eq:wn-central-deep}
+c_N(k)
+=(N-1)-N(N^2-1)\frac{(k+N-1)^2}{k+N}.
+\end{equation}
+Under the reflected parameter \(k^\vee=-k-2N\),
+\begin{equation}
+\label{eq:wn-central-conductor-deep}
+c_N(k)+c_N(k^\vee)
+=4N^3-2N-2.
+\end{equation}
+Equation~\eqref{eq:wn-central-deep} is the Fateev--Lukyanov
+principal-DS formula \cite[Equation~\textup{(}7\textup{)}]{FateevLukyanov88}.
+\end{theorem}
+
+\begin{proof}
+Put \(t=k+N\) and \(A_N=N(N^2-1)\).  Then
+\[
+c_N(t)=(N-1)-A_N\left(t-2+t^{-1}\right).
+\]
+The reflection sends \(t\) to \(-t\), so
+\[
+c_N(t)+c_N(-t)
+=2(N-1)+4A_N
+=4N^3-2N-2.
+\]
+\end{proof}
+
+\begin{computation}[The reflection in the shifted parameter]
+\label{comp:ff-thooft-involution}
+\ClaimStatusComputed
+The parameter \(t=k+N\) linearizes the reflected companion:
+\[
+t^\vee=k^\vee+N=-t.
+\]
+This identity proves the scalar sum
+\eqref{eq:wn-central-conductor-deep}.  Its promotion to an algebra
+equivalence requires a bar--Verdier comparison theorem.
+\end{computation}
+
+\begin{proposition}[Principal genus-one scalar package]
+\label{prop:higher-w-kappa-matrix}
+\ClaimStatusConditional
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{principal\ DS},5,
+H_{\mathrm{genus1}}^{W_N}\cup H_{\mathrm{comp}}^{W_N})\).
+Assume the principal genus-one curvature theorem
+\(H_{\mathrm{genus1}}^{W_N}\), normalized so that a weight-\(s\)
+principal generator contributes \(c/s\), and the reflected companion
+package \(H_{\mathrm{comp}}^{W_N}\).  Then
+\[
+\kappa(\mathcal W_N^k)
+=c_N(k)\sum_{s=2}^{N}\frac1s
+=c_N(k)(H_N-1),
+\qquad
+H_N:=\sum_{j=1}^{N}\frac1j,
+\]
+and the pointed Theorem~D class satisfies
+\[
+ \operatorname{tr}_1
+ \operatorname{Obs}^{\mathrm{def}}_{1,1}(\mathcal W_N^k)
+ =\kappa(\mathcal W_N^k)\lambda_1.
+\]
+and
+\begin{equation}
+\label{eq:wn-kappa-conductor-deep}
+K_N^\kappa
+=(H_N-1)(4N^3-2N-2).
+\end{equation}
+The diagonal OPE-normalization matrix
+\[
+D_N(c):=\operatorname{diag}\left(\frac c2,\frac c3,\ldots,\frac cN\right)
+\]
+has trace \(c(H_N-1)\).  The theorem identifies this trace with the
+genus-one scalar precisely through
+\(H_{\mathrm{genus1}}^{W_N}\).
+\end{proposition}
+
+\begin{proof}
+The first equality is the stated genus-one hypothesis.  Add the two
+reflected values and apply
+\eqref{eq:wn-central-conductor-deep}.
+\end{proof}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccc}
+\toprule
+\(N\) & \(H_N-1\) & \(K_N^c\) & \(K_N^\kappa\) \\
+\midrule
+2 & \(1/2\) & \(26\) & \(13\) \\
+3 & \(5/6\) & \(100\) & \(250/3\) \\
+4 & \(13/12\) & \(246\) & \(533/2\) \\
+5 & \(77/60\) & \(488\) & \(9394/15\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{computation}[The \(\mathfrak{sl}_3\) DS hierarchy]
+\label{comp:sl3-ds-hierarchy}
+\ClaimStatusComputed
+The three nilpotent partitions are
+\[
+(1,1,1),\qquad(2,1),\qquad(3).
+\]
+They index respectively the affine algebra, the
+Bershadsky--Polyakov reduction, and the principal
+\(\mathcal W_3\) reduction.  The partition labels organize the
+reductions.  Verdier--Koszul companions require the comparison
+package of \S\ref{sec:ds-bar-comparison-deep}.
+\end{computation}
+
+\begin{computation}[The \(\mathfrak{sl}_4\) orbit list]
+\label{comp:sl4-ds-hierarchy}
+\ClaimStatusComputed
+The nilpotent partitions are
+\[
+(1^4),\quad(2,1^2),\quad(2^2),\quad(3,1),\quad(4).
+\]
+Their transposes give a combinatorial involution on the orbit list.
+A functorial duality between the associated affine
+\(\mathcal W\)-algebras is a separate theorem-level obligation.
+\end{computation}
+
+\subsection{Miura and \(W_3\) OPE calculations}
+\label{sec:w3-verified-ope}
+
+\begin{computation}[Quantum Miura operator]
+\label{comp:miura-w3}
+\ClaimStatusProvedElsewhere
+Let \(\varphi_1+\cdots+\varphi_N=0\) be Heisenberg fields in the
+standard principal free-field realization.  The normally ordered
+operator
+\[
+:\prod_{i=1}^{N}
+\left(\partial+\alpha_0\,\partial\varphi_i\right):
+=\partial^N+\sum_{s=2}^{N}U^{(s)}\partial^{N-s}
+\]
+produces the Miura generators.  A triangular correction by
+derivatives and normally ordered lower-spin fields yields primary
+generators \(W^{(s)}\).  For \(N=3\), this gives the stress tensor
+\(T\) and a weight-three primary \(W\).
+\end{computation}
+
+\begin{computation}[Universal \(W_3\) OPE packet]
+\label{comp:w-infty-shadow-tower}
+\label{comp:w3-shadow-tower-data}
+\ClaimStatusProvedElsewhere
+In Zamolodchikov normalization \cite{Zamolodchikov1985}, set
+\[
+\Lambda={:}TT{:}-\frac{3}{10}\partial^2T.
+\]
+The singular part of the universal \(W_3\) OPE is
+\begin{align}
+W(z)W(w)\sim{}&
+\frac{c/3}{(z-w)^6}
++\frac{2T(w)}{(z-w)^4}
++\frac{\partial T(w)}{(z-w)^3}
+\nonumber\\
+&+\frac{\frac{32}{5c+22}\Lambda(w)
++\frac{3}{10}\partial^2T(w)}{(z-w)^2}
++\frac{\frac{16}{5c+22}\partial\Lambda(w)
++\frac1{15}\partial^3T(w)}{z-w}.
+\label{eq:w3-wline-closed-form}
+\end{align}
+This finite OPE packet supplies exact collision coefficients.
+Translation covariance fixes the pole-one coefficient to one half of
+the pole-two \(\Lambda\)-coefficient.  If the latter is \(A\), these
+two poles contribute \(\frac{A}{2}(m-n)\Lambda_{m+n}\) to the mode
+commutator.  Zamolodchikov's coefficient
+\(16(m-n)/(22+5c)\) therefore gives \(A=32/(22+5c)\), providing an
+independent normalization check.
+An all-degree shadow recurrence requires the transferred modular
+deformation complex.
+\end{computation}
+
+\begin{proposition}[Weight-four Virasoro Gram matrix]
+\label{prop:gram-wt4}
+\ClaimStatusProvedHere
+In the vacuum Verma module with basis
+\[
+L_{-4}\lvert0\rangle,\qquad L_{-2}^2\lvert0\rangle,
+\]
+the Gram matrix and its determinant are
+\[
+G_4=
+\begin{pmatrix}
+5c&3c\\[2pt]
+3c&c(c+8)/2
+\end{pmatrix},
+\qquad
+\det G_4=\frac{c^2(5c+22)}2.
+\]
+\end{proposition}
+
+\begin{proof}
+The Virasoro relation gives
+\[
+\langle0|L_4L_{-4}|0\rangle=5c,\qquad
+\langle0|L_4L_{-2}^2|0\rangle=3c,
+\]
+and
+\[
+L_2L_{-2}^2|0\rangle=(c+8)L_{-2}|0\rangle,
+\qquad
+\langle0|L_2^2L_{-2}^2|0\rangle=\frac{c(c+8)}2.
+\]
+Taking the determinant gives the stated factor.
+\end{proof}
+
+\begin{corollary}[The weight-four quasi-primary]
+\label{cor:lambda-qp}
+\ClaimStatusProvedHere
+The state
+\[
+\lvert\Lambda\rangle
+=L_{-2}^2\lvert0\rangle-\frac35L_{-4}\lvert0\rangle
+\]
+satisfies \(L_1\lvert\Lambda\rangle=0\) and
+\[
+\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10}.
+\]
+Under state--field correspondence it is
+\(\Lambda={:}TT{:}-\frac3{10}\partial^2T\).
+\end{corollary}
+
+\begin{theorem}[\(\mathcal W_4\) primary-normalization obligation]
+\label{thm:c334}
+\ClaimStatusOpen
+Fix a primary generator \(W^{(4)}\), its two-point normalization,
+and a universal \(\mathcal W_4\) presentation.  The coefficient of
+\(W^{(4)}(w)(z-w)^{-2}\) in
+\(W^{(3)}(z)W^{(3)}(w)\) is then a rational function of \(c\).
+A proved formula requires a primary-source Miura or Jacobi
+calculation with these normalizations and a quotient-by-quotient
+treatment at determinant zeros.  The weight-four Gram factor above
+supplies one input to that calculation.
+\end{theorem}
+
+\subsection{The Bershadsky--Polyakov truth surface}
+\label{sec:bp-truth-surface}
+
+Write
+\[
+\mathcal B^k
+:=\mathcal W^k(\mathfrak{sl}_3,f_{(2,1)}),
+\qquad k\ne-3.
+\]
+Fehily--Kawasetsu--Ridout define \(\mathcal B^k\) as an ordinary
+bosonic vertex algebra \cite[Definition~2.1]{FKR20}.  Its strong
+generators are
+\[
+J_{1}^{\mathrm{even}},\qquad
+G^+_{3/2}^{\mathrm{even}},\qquad
+G^-_{3/2}^{\mathrm{even}},\qquad
+T_{2}^{\mathrm{even}}.
+\]
+
+\begin{proposition}[BP OPE normalization]
+\label{prop:bp-ope-deep}
+\ClaimStatusProvedElsewhere
+In the Feigin--Semikhatov normalization used by
+Fehily--Kawasetsu--Ridout,
+\begin{align*}
+J_{(1)}J&=\frac{2k+3}{3},&
+J_{(0)}G^\pm&=\pm G^\pm,\\
+T_{(1)}G^\pm&=\frac32G^\pm,&
+G^+_{(2)}G^-&=(k+1)(2k+3),\\
+G^+_{(1)}G^-&=3(k+1)J,&
+G^+_{(0)}G^-&=
+3{:}JJ{:}+\frac32(k+1)\partial J-(k+3)T.
+\end{align*}
+The Virasoro OPE has central charge
+\begin{equation}
+\label{eq:bp-central-deep}
+c_{\mathrm{BP}}(k)
+=-\frac{(2k+3)(3k+1)}{k+3}.
+\end{equation}
+\end{proposition}
+
+\begin{theorem}[BP central companion]
+\label{thm:bp-central-companion-deep}
+\ClaimStatusProvedHere
+\emph{Type signature:}
+\((\mathrm{Open},\mathrm{FKR\ bosonic\ BP},5,
+H_{\mathrm{central}}^{\mathrm{BP}})\).
+For the reflected parameter \(k^\vee=-k-6\),
+\begin{equation}
+\label{eq:bp-central-sum-deep}
+c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(k^\vee)=50
+\qquad\text{in }\mathbb Q(k).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Put \(t=k+3\).  Then
+\[
+c_{\mathrm{BP}}(k)=25-6t-\frac{24}{t},
+\qquad
+c_{\mathrm{BP}}(-k-6)=25+6t+\frac{24}{t}.
+\]
+Their sum is \(50\).
+\end{proof}
+
+\begin{proposition}[Secondary shifted BP scalar]
+\label{prop:bp-shifted-secondary-deep}
+\ClaimStatusComputed
+The rational function
+\[
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+:=2-\frac{24(k+1)^2}{k+3}
+\]
+belongs to a shifted conformal-vector convention.  It satisfies
+\[
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
++c_{\mathrm{BP}}^{\mathrm{shift}}(-k-6)=196.
+\]
+Thus \(196\) records the secondary shifted lane, while
+\eqref{eq:bp-central-sum-deep} records the canonical FKR lane.
+\end{proposition}
+
+\begin{proof}
+With \(t=k+3\),
+\[
+c_{\mathrm{BP}}^{\mathrm{shift}}(k)
+=98-24t-\frac{96}{t};
+\]
+the reflection \(t\mapsto-t\) gives the sum \(196\).
+\end{proof}
+
+\begin{proposition}[BP reciprocal-weight diagnostic]
+\label{prop:bp-reciprocal-diagnostic-deep}
+\ClaimStatusComputed
+The even strong-generator packet gives
+\[
+1+\frac{1}{3/2}+\frac{1}{3/2}+\frac12
+=1+\frac23+\frac23+\frac12
+=\frac{17}{6}.
+\]
+This number is a reciprocal-weight diagnostic.  The BP genus-one
+curvature is a separate BRST/modular computation.
+\end{proposition}
+
+\begin{computation}[BP bar and modular ledger]
+\label{comp:bp-bar}
+\ClaimStatusOpen
+The presently computed BP data are
+\[
+\left(
+\text{parity},\ \text{strong weights},\ \text{OPE packet},\
+c_{\mathrm{BP}}(k),\ K^c_{\mathrm{BP}}
+\right)
+=
+\left(
+\mathrm{even},\ \{1,\tfrac32,\tfrac32,2\},\
+\text{\eqref{eq:bp-central-deep} and the displayed OPEs},\
+c_{\mathrm{BP}}(k),\ 50
+\right).
+\]
+The following entries remain theorem obligations:
+\[
+\kappa_{\mathrm{BP}}(k),\qquad
+\rho_{\mathrm{BP}}(k),\qquad
+K^\kappa_{\mathrm{BP}},\qquad
+(\mathcal B^k)^!,\qquad
+\mathbf R\mathrm{DS}_{(2,1)}\bar B_X
+\Longrightarrow
+\bar B_X\mathbf R\mathrm{DS}_{(2,1)}.
+\]
+Their evaluation requires the genus-one BP BRST curvature and the
+DS--bar comparison package below.
+\end{computation}
+
+\begin{remark}[Orbit label and duality datum]
+\label{rem:bv-orbit-identification}
+\index{Bershadsky--Polyakov algebra!orbit label}
+The partition \((2,1)\) is self-transpose.  This supplies a
+same-orbit candidate for a Verdier companion.  A same-family algebra
+equivalence additionally requires a bar comparison, continuous
+Verdier duality, cobar convergence, and a level-identification
+theorem.
+\end{remark}
+
+\begin{proposition}[Partition-dependent complementarity obligation]
+\label{prop:partition-dependent-complementarity}
+\ClaimStatusOpen
+For principal type \(A\), Theorem~\ref{thm:wn-central-companion-deep}
+computes the reflected central sum.  For the BP partition,
+Theorem~\ref{thm:bp-central-companion-deep} computes the value \(50\).
+A formula for arbitrary partitions \(\lambda\vdash N\) requires the
+KRW central charge in a fixed grading together with a proved
+companion operation on nilpotent orbits.  The modular sum further
+requires the genus-one curvature of each reduced family.
+\end{proposition}
+
+\subsection{DS, bar, and Verdier comparison}
+\label{sec:ds-bar-comparison-deep}
+\label{sec:ds-bar-intertwining}
+
+\begin{proposition}[Filtered criterion for DS--bar exchange]
+\label{prop:ds-bar-formality}
+\ClaimStatusConditional
+Let \(A\) satisfy the filtered-complete hypotheses of
+Definition~\ref{def:filtered-derived-ds-functor}.  Assume:
+\begin{enumerate}[label=\textup{(D\arabic*)}]
+\item \(\mathbf R\mathrm{DS}_f\) has the lax monoidal structure needed
+  to construct a filtered comparison
+  \[
+  \eta_{A,f}\colon
+  \mathbf R\mathrm{DS}_f\!\left(\bar B_X(A)\right)
+  \longrightarrow
+  \bar B_X\!\left(\mathbf R\mathrm{DS}_f(A)\right);
+  \]
+\item both filtrations are complete, separated, and bounded below in
+  every conformal-weight window;
+\item \(\operatorname{gr}\eta_{A,f}\) is a quasi-isomorphism;
+\item the relevant spectral sequences converge strongly.
+\end{enumerate}
+Then \(\eta_{A,f}\) is a filtered quasi-isomorphism.
+\end{proposition}
+
+\begin{proof}
+Hypothesis~\textup{(D3)} identifies the \(E_1\)-pages.
+Hypotheses~\textup{(D2)} and~\textup{(D4)} identify the abutments by
+the comparison theorem for complete filtered complexes.
+\end{proof}
+
+\begin{remark}[Visible comparison obligations]
+\label{rem:ds-bar-verdier-obstructions}
+The verification package consists of the monoidal BRST comparison,
+higher-cohomology control on every bar term, completeness on
+Fulton--MacPherson strata, and Verdier dualizability.  Critical and
+simple-quotient fibers change this package
+through centers and null fields.  Non-principal reductions add the
+neutral and ghost--ghost contributions to the associated graded.
+\end{remark}
+
+\begin{proposition}[DS-transferred Verdier--Koszul dual]
+\label{prop:ds-transferred-koszul-dual}
+\ClaimStatusConditional
+Assume Proposition~\ref{prop:ds-bar-formality}, BRST concentration,
+and Verdier duality through BRST totalization.  Then the
+DS-transferred Verdier--Koszul algebra is
+\[
+\left(\mathbf R\mathrm{DS}_f(A)\right)^!_{\mathrm{DS}}
+:=
+\mathbb D_{\Ran}
+\bar B_X\!\left(\mathbf R\mathrm{DS}_f(A)\right),
+\]
+and the comparison gives
+\[
+\mathbb D_{\Ran}\bar B_X\!\left(\mathbf R\mathrm{DS}_f(A)\right)
+\simeq
+\mathbf R\mathrm{DS}_f^\vee
+\!\left(\mathbb D_{\Ran}\bar B_X(A)\right).
+\]
+A strict same-family \(\mathcal W\)-algebra presentation is obtained
+by identifying the right-hand Verdier algebra through an independent
+presentation theorem.
+\end{proposition}
+
+\begin{theorem}[DS/bar master square]
+\label{thm:master-commutative-square}
+\ClaimStatusConditional
+Under hypotheses \textup{(D1)--(D4)} of
+Proposition~\ref{prop:ds-bar-formality}, the square
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+\mathbf R\mathrm{DS}_f(\bar B_X(A))
+  \arrow[r,"\eta_{A,f}"] \arrow[d,"\mathbb D_{\Ran}"']
+&
+\bar B_X(\mathbf R\mathrm{DS}_f(A))
+  \arrow[d,"\mathbb D_{\Ran}"]
+\\
+\mathbb D_{\Ran}\mathbf R\mathrm{DS}_f(\bar B_X(A))
+  \arrow[r]
+&
+\mathbb D_{\Ran}\bar B_X(\mathbf R\mathrm{DS}_f(A))
+\end{tikzcd}
+\]
+commutes in the filtered derived category once the lower horizontal
+map is supplied by Verdier compatibility.  This is the comparison
+surface used by any DS-transferred Koszul duality statement.
+\end{theorem}
+
+\begin{computation}[The \(\mathfrak{sl}_3\to W_3\) comparison window]
+\label{comp:ds-bar-sl3-w3}
+\ClaimStatusOpen
+The first proof window must construct \(\eta_{A,f_{\mathrm{prin}}}\)
+on bar lengths \(1,2,3\), retain the charged and neutral BRST fields,
+and verify compatibility with every collision stratum.  The affine
+Jacobi relation supplies one associated-graded cancellation.  The
+remaining BRST/bar terms form the finite chain-map calculation.
+\end{computation}
+
+\begin{conjecture}[DS--Verdier intertwining for arbitrary nilpotent]
+\label{conj:ds-kd-arbitrary-nilpotent}
+\ClaimStatusConjectured
+For a good grading of \(f\), assume windowwise perfectness,
+BRST concentration, strong convergence of the Kazhdan and bar
+spectral sequences, and Verdier compatibility on every
+Fulton--MacPherson stratum.  Then
+\[
+\left(\mathbf R\mathrm{DS}_f(A)\right)^!_{\mathrm{DS}}
+\simeq
+\mathbf R\mathrm{DS}_f^\vee(A^!)
+\]
+in the completed derived category.
+\end{conjecture}
+
+\begin{remark}[Springer and Barbasch--Vogan input]
+\label{rem:bv-springer-duality}
+Springer and Barbasch--Vogan correspondences organize orbit data.
+Their use in chiral Koszul duality requires a functor from the
+geometric correspondence to the BRST/bar category and a theorem
+identifying its output with the completed cobar algebra.
+\end{remark}
+
+\begin{remark}[Abelian and non-abelian nilradicals]
+\label{rem:abelian-nonabelian-nilradical}
+An abelian positive nilradical removes the ghost--ghost bracket term
+from \(Q_{\mathrm{DS}}\).  A non-abelian nilradical retains it.
+This distinction controls one part of the filtered differential;
+orbit companionship and Verdier duality are additional structures.
+\end{remark}
+
+\begin{theorem}[Type-\(A\) transport-closure obligation]
+\label{thm:transport-closure-type-a}
+\ClaimStatusOpen
+A transport-closure theorem for all partitions of \(N\) consists of:
+the orbit correspondence, the level map, the filtered DS--bar
+quasi-isomorphism, Verdier compatibility, and a presentation theorem
+for the resulting cobar algebra.  Principal and hook calculations
+provide test families for this package.  The arbitrary-partition
+closure remains an open theorem lane.
+\end{theorem}
+
+\subsection{Degree-three ordered bar calculation for \(W_3\)}
+\label{sec:w3-bar-degree3}
+
+Let \(\bar B_{X,\le3}(\mathcal W_3)\) denote the ordered chiral bar
+complex truncated at bar length three.  Its differential combines
+the full singular OPE with the boundary maps of compactified
+configuration spaces.  Mode-zero Chevalley--Eilenberg data form one
+associated-graded piece.
+
+\begin{computation}[Length-three chain groups]
+\label{comp:w3-deg3-structure}
+\ClaimStatusComputed
+The length-three summand has the form
+\[
+\bigl(s^{-1}\overline{\mathcal W}_3\bigr)^{\boxtimes3}
+\otimes
+C^\bullet_{\mathrm{dR}}\!\left(\operatorname{Conf}_3(X)\right),
+\]
+with coinvariants and completions fixed by the ordered-bar
+construction.  Conformal-weight truncation makes this a finite
+linear-algebra problem in each window.
+\end{computation}
+
+\begin{computation}[Mixed \(T,W\) sectors]
+\label{comp:w3-deg3-mixed}
+\ClaimStatusComputed
+The \(T/W\) colorings at length three are
+\[
+TTT,\quad TTW,\quad TWT,\quad WTT,\quad
+TWW,\quad WTW,\quad WWT,\quad WWW.
+\]
+Their differentials are determined by
+\eqref{eq:w3-wline-closed-form}, the Virasoro OPE, and the
+configuration-space boundary signs.
+\end{computation}
+
+\begin{computation}[Arnold relation]
+\label{comp:w3-arnold-deg3}
+\ClaimStatusProvedElsewhere
+On \(\operatorname{Conf}_3(X)\), the logarithmic one-forms satisfy
+\[
+\omega_{12}\wedge\omega_{23}
++\omega_{23}\wedge\omega_{31}
++\omega_{31}\wedge\omega_{12}=0.
+\]
+This identity supplies the geometric cancellation in the
+length-three boundary differential.
+\end{computation}
+
+\begin{proposition}[Degree-three vacuum cohomology obligation]
+\label{prop:w3-deg3-vacuum}
+\ClaimStatusOpen
+The value of the vacuum-sector cohomology in a conformal-weight
+window is the kernel modulo image of the complete matrix assembled
+from the OPE and Fulton--MacPherson boundary maps.  Row reduction of
+that matrix is the required computation.
+\end{proposition}
+
+\begin{computation}[Degree-three cohomology ledger]
+\label{comp:w3-deg3-cohom}
+\ClaimStatusOpen
+The ledger records chain bases, differential matrices, ranks,
+kernel generators, and boundary representatives.  The present
+chapter supplies the exact OPE input and the Arnold relation.
+The rank computation remains the open entry.
+\end{computation}
+
+\begin{computation}[Reflected \(W_3\) scalar]
+\label{comp:w3-curvature-dual}
+\ClaimStatusConditional
+Under the principal genus-one package,
+\[
+\kappa(\mathcal W_3^k)=\frac56c_3(k),\qquad
+\kappa(\mathcal W_3^{k^\vee})=\frac56(100-c_3(k)),
+\]
+so the reflected scalar sum is \(250/3\).  The algebra-level
+companion interpretation uses the DS--bar--Verdier package.
+\end{computation}
+
+\subsection{Modular Koszul packages}
+
+\begin{definition}[Modular Koszul triple]
+\label{def:modular-koszul-triple}
+\ClaimStatusDefinitional
+A modular Koszul triple is
+\[
+\mathfrak T_A=
+\left(A,\,(A^{\mathrm i},A^!),\,r_A^{\mathrm{coll}}\right)
+\]
+together with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an augmented quadratic chiral algebra
+  \(A=T_X(V)/(R)\);
+\item its presentation coalgebra
+  \(A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\), full bar chain model
+  \(\bar B_X(A)\), and comparison
+  \(q_A\colon A^{\mathrm i}\to\bar B_X(A)\);
+\item the Verdier algebra
+  \(K_X(A)=\mathbb D_{\Ran}\bar B_X(A)\), the transpose
+  \(\mathbb D(q_A)\), and a finite-type or completed pair map
+  \(\nu_A\colon K_X(A)\to A^!\);
+\item a specified binary collision class
+  \(r_A^{\mathrm{coll}}\) in its declared target.
+\end{enumerate}
+A morphism of triples contains maps on every displayed component.
+\end{definition}
+
+\begin{construction}[DS comparison on modular Koszul triples]
+\label{constr:ds-functor-triples}
+\ClaimStatusOpen
+Apply \(\mathbf R\mathrm{DS}_f\) to the algebra component and the
+comparison map \(\eta_{A,f}\) to the bar component.  Verdier
+compatibility then gives the candidate map on \(A^!\), while the
+binary projection of the chain map gives the candidate collision
+class.  Verifying these maps supplies the DS functor on triples.
+\end{construction}
+
+\begin{theorem}[BRST reduction on a full modular datum]
+\label{thm:ds-platonic-functor}
+\ClaimStatusConditional
+Assume DS--bar exchange, BRST concentration, Verdier compatibility,
+determinant-line compatibility, and preservation of the declared
+collision and modular classes.  Then BRST reduction defines a
+morphism of the corresponding full modular data.  Each component is
+the map supplied by its named hypothesis.
+\end{theorem}
+
+\begin{remark}[Derived reduction precedes invariant extraction]
+\label{rem:ds-before-shadows}
+The derived BRST complex is the source object.  Scalar, collision,
+and modular invariants are extracted after the comparison maps have
+been constructed.  This order records the ghost and neutral-field
+contributions in their natural chain complex.
+\end{remark}
+
+\begin{corollary}[Maurer--Cartan descent]
+\label{cor:ds-theta-descent}
+\ClaimStatusConditional
+Under Theorem~\ref{thm:ds-platonic-functor}, a Maurer--Cartan element
+\(\Theta_A\) descends when the comparison map is compatible with the
+deformation \(L_\infty\)-algebras:
+\[
+\Theta_{\mathbf R\mathrm{DS}_f(A)}
+=\mathbf R\mathrm{DS}_f(\Theta_A).
+\]
+\end{corollary}
+
+\begin{remark}[Non-principal scope]
+\label{rem:ds-triple-nonprincipal}
+The BP family is the first non-principal test.  Its exact OPE and
+central data are known; its genus-one curvature and DS--bar map are
+the first unresolved entries of the modular triple.
+\end{remark}
+
+\subsection{Large-rank character stabilization}
+\label{sec:w-infty}
+\label{sec:w-completion-kinematics}
+
+The generic universal principal algebra has the vacuum character
+\begin{equation}
+\label{eq:wn-generic-character-deep}
+\chi_N(q)
+=\prod_{s=2}^{N}\prod_{m\ge0}(1-q^{s+m})^{-1}
+=\prod_{n\ge2}(1-q^n)^{-\min(n-1,N-1)}.
+\end{equation}
+This is a state-counting theorem.  It becomes a bar statement after
+the bar differential has been computed.
+
+\begin{definition}[Stable principal character datum]
+\label{def:w-infty}
+\ClaimStatusDefinitional
+The coefficientwise stable character is
+\[
+\chi_{\mathrm{st}}(q)
+:=\lim_{N\to\infty}\chi_N(q)
+=\prod_{n\ge2}(1-q^n)^{-(n-1)}.
+\]
+This definition introduces a formal character datum.  A vertex
+algebra \(\mathcal W_\infty\) additionally requires compatible
+algebra maps and a completed category.
+\end{definition}
+
+\begin{proposition}[Generic principal character]
+\label{prop:wn-character-primitive}
+\ClaimStatusProvedHere
+Equation~\eqref{eq:wn-generic-character-deep} follows from free strong
+generation in weights \(2,\ldots,N\).  Its single-particle series is
+\begin{equation}
+\label{eq:primitive-series}
+P_N(q):=\sum_{s=2}^{N}\frac{q^s}{1-q},
+\end{equation}
+and the character identity is
+\begin{equation}
+\label{eq:free-algebra-inversion}
+\chi_N(q)=\operatorname{PE}[P_N(q)].
+\end{equation}
+\end{proposition}
+
+\begin{computation}[Coefficient stabilization]
+\label{comp:wn-stabilization-windows}
+\ClaimStatusProvedHere
+For fixed \(m\), the coefficient \([q^m]\chi_N(q)\) is constant for
+\(N\ge m\), since generators of weight \(s>m\) contribute above the
+window.  Consequently
+\[
+[q^m]\chi_{\mathrm{st}}(q)=[q^m]\chi_m(q).
+\]
+\end{computation}
+
+\begin{proposition}[MacMahon factorization]
+\label{prop:winfty-macmahon-deep}
+\ClaimStatusProvedHere
+Let
+\[
+M(q)=\prod_{n\ge1}(1-q^n)^{-n},
+\qquad
+\varphi(q)=\prod_{n\ge1}(1-q^n).
+\]
+Then
+\begin{equation}
+\label{eq:bar-window-series}
+\chi_{\mathrm{st}}(q)=M(q)\varphi(q).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Multiplication adds exponents \(-n+1=-(n-1)\); the \(n=1\)
+factor has exponent zero.
+\end{proof}
+
+\begin{conjecture}[A completed principal tower]
+\label{conj:w-infty-bar}
+\ClaimStatusConjectured
+Choose compatible principal-algebra maps, a weightwise complete
+category, and a pro-conilpotent ordered-bar functor.  The resulting
+pro-object should admit a convergent comparison
+\[
+\bar B_X\!\left(\varprojlim_N\mathcal W_N\right)
+\longrightarrow
+\varprojlim_N\bar B_X(\mathcal W_N).
+\]
+The proof requires explicit transition maps and control of the
+derived inverse-limit term.
+\end{conjecture}
+
+\begin{theorem}[Large-rank factorization/Koszul comparison package]
+\label{thm:winfty-factorization-kd}
+\ClaimStatusOpen
+A large-rank Koszul theorem requires:
+\begin{enumerate}[label=\textup{(W\arabic*)}]
+\item a defined pro-vertex-algebra and compatible OPE maps;
+\item coefficientwise complete bar complexes;
+\item vanishing or computation of the relevant
+  \(\varprojlim^{1}\)-terms;
+\item continuous Verdier duality and cobar convergence.
+\end{enumerate}
+Under these hypotheses, the desired comparison is the inverse limit
+of the finite-stage comparison maps.
+\end{theorem}
+
+\begin{theorem}[Stable scalar cyclic line obligation]
+\label{thm:winfty-scalar}
+\ClaimStatusOpen
+The one-dimensionality of a stable scalar cyclic line requires a
+defined inverse system of cyclic complexes and an isomorphism theorem
+for their degree-two scalar subquotients.  The character stabilization
+above supplies the finite-weight state counts; the cyclic differential
+and transition maps supply the remaining proof.
+\end{theorem}
+
+\begin{remark}[Bar-growth quantities]
+\label{prop:virasoro-primitive}
+\label{prop:virasoro-entropy}
+\label{comp:w3-naive-corrected}
+\label{prop:w3-entropy}
+\label{prop:wn-entropy-ladder}
+\label{prop:winfty-bar-window}
+\ClaimStatusOpen
+For an ordered-bar complex with finite weight windows, define
+\begin{equation}
+\label{eq:virasoro-primitive}
+\label{eq:w3-naive-primitive}
+\label{eq:w3-naive-window}
+\label{eq:w3-lambda-coproduct}
+\label{eq:w3-corrected-primitive}
+\label{eq:w3-corrected-window}
+\label{eq:w3-corrected-recursion}
+G_A^{\mathrm{bar}}(q)
+:=\sum_{m,r}\dim
+\operatorname{Prim}H^r\!\left(\bar B_X(A)\right)_m q^m,
+\qquad
+H_A^{\mathrm{bar}}(q)
+:=\sum_{m,r}\dim H^r\!\left(\bar B_X(A)\right)_m q^m.
+\end{equation}
+These series are determined by the bar differential.  Vacuum
+characters determine the chain-space census, while OPE collision
+maps and configuration-space boundaries determine cohomology.
+Growth radii and entropy are defined after these coefficients have
+been computed.
+\end{remark}
+
+\begin{remark}[Principal shadow data]
+\label{sec:higher-w-shadow-data}
+The universal \(W_3\) OPE and the Virasoro Gram matrix give the exact
+finite collision packet.  The higher shadow tower is an unbounded
+transfer problem in the modular deformation complex.  The transfer
+and convergence hypotheses determine its theorem status; the vacuum
+character determines the state-counting input.
+\end{remark}
+
+\subsection{Corner VOAs and adjacent superconformal lanes}
+\label{sec:y-algebra-koszulness}
+
+\begin{theorem}[Chiral Koszulness of \(Y\)-algebras]
+\label{thm:y-algebra-koszulness}
+\ClaimStatusOpen
+For a Gaiotto--Rap\v{c}\'ak corner VOA
+\(Y_{N_1,N_2,N_3}[\Psi]\), a chiral Koszul theorem requires:
+a proved generic strong-generation presentation, a comparison from
+its PBW associated graded to the ordered chiral bar construction,
+spectral-sequence convergence, and control of truncation ideals at
+special \(\Psi\).  The BRST and triality presentations supply
+candidate comparison routes.  Their completion into the displayed
+bar theorem remains open.
+\end{theorem}
+
+\begin{remark}[Parameter loci]
+\label{rem:y-algebra-non-generic-locus}
+Generic and truncation parameters are treated in separate families.
+At each exceptional parameter, null fields alter the bar differential
+and require a quotient comparison.
+\end{remark}
+
+\begin{remark}[Triality and duality]
+\label{rem:y-algebra-koszul-duality-compat}
+Triality is an isomorphism of the appropriately labelled corner
+VOAs.  A Koszul-dual interpretation of a parameter reflection
+requires the completed bar--Verdier comparison.
+\end{remark}
+
+\begin{remark}[Depth classification]
+\label{rem:y-algebra-depth-classification-deep-summary}
+Shadow depth and Koszulness are independent theorem coordinates:
+the first concerns transferred modular operations, while the second
+concerns bar cohomology.
+\end{remark}
+
+\subsection{The \(N=2\) comparison}
+\label{sec:n2-shadow-tower}
+
+\begin{remark}[\(N=2\) superconformal algebra]
+\label{thm:n2-kappa}
+\label{rem:n2-sca-koszulness}
+\label{rem:n2-spectral-flow-invariance}
+Chapter~\ref{chap:n2-sca} gives the \(N=2\) OPE, spectral-flow, and
+bar-comparison calculations.  The scalar identity used here is
+\begin{equation}
+\label{eq:n2-complementarity}
+K^\kappa_{N=2}
+:=\kappa_{N=2}+\kappa_{N=2}^{!}.
+\end{equation}
+Its evaluation belongs to the companion chapter's stated hypothesis
+package.
+\end{remark}
+
+\begin{conjecture}[Pixton comparison from a modular MC tower]
+\label{conj:pixton-from-shadows}
+\ClaimStatusConjectured
+A comparison with Pixton relations requires a constructed morphism
+from the modular deformation complex to the tautological
+Feynman-transform complex, compatibility with the unit and gluing,
+and a generation theorem for its image.  Finite-genus calculations
+provide evidence after these maps are fixed.
+\end{conjecture}
+
+\subsection{Arithmetic recognition kept on its own surface}
+\label{sec:walgdeep-supplement}
+
+The Borcherds singular-theta theorem assigns weight
+\(\frac12 f(0,0)\) to a multiplicative lift from a weight-zero
+Jacobi input with Fourier coefficient \(f(0,0)\)
+\cite[Theorem~13.3]{Borcherds1998Grassmannian}.  The input Jacobi
+form, its lattice, its polar part, and its character are therefore
+load-bearing data.
+
+\begin{remark}[Borcherds and additive Gritsenko weights]
+\label{rem:walgdeep-W16-borch-vs-grit}
+The multiplicative Borcherds weight is \(f(0,0)/2\).
+An additive Gritsenko lift carries the weight of its Jacobi cusp-form
+input.  For the standard index-one generator
+\(\phi_{0,1}=y+10+y^{-1}+O(q)\), whose double is the K3 elliptic
+genus, the coefficient \(f(0,0)=10\) gives Borcherds weight~\(5\).
+\end{remark}
+
+\begin{definition}[Schur--Jacobi/Borcherds recognition package]
+\label{def:walgdeep-schur-jacobi-borcherds-recognition}
+\ClaimStatusDefinitional
+A recognition package \(\mathcal R_N\) consists of:
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item an explicitly constructed Weyl-invariant weak lattice-Jacobi
+  form \(\phi^{(N)}\);
+\item a proof of its modular law, lattice index, and Fourier
+  integrality;
+\item its complete polar part and the exact coefficient
+  \(f^{(N)}(0,0)\);
+\item the Borcherds product with its Weyl vector, divisor, character,
+  and normalization;
+\item a map from the proposed Schur or VOA source to the product's
+  graded root spaces, compatible with brackets and completion.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Weight implied by a recognition package]
+\label{thm:walgdeep-gaiotto-siegel-weight}
+\ClaimStatusConditional
+Assume \(\mathcal R_N\) and the verified coefficient identity
+\[
+f^{(N)}(0,0)=2(N+3).
+\]
+Then Borcherds' theorem gives multiplicative-lift weight
+\[
+\operatorname{wt}\operatorname{Borch}(\phi^{(N)})=N+3.
+\]
+Every class-\(\mathcal S\), Niemeier, or moonshine interpretation is
+carried by the maps and equivariance data in \(\mathcal R_N\).
+\end{theorem}
+
+\begin{proof}
+Apply Borcherds' weight formula
+\(\operatorname{wt}=f^{(N)}(0,0)/2\).
+\end{proof}
+
+\begin{remark}[The \(N=3,4\) coefficient obligation]
+\label{rem:walgdeep-W17-borcherds-kN-computation}
+\ClaimStatusOpen
+The values \(f^{(3)}(0,0)\) and \(f^{(4)}(0,0)\) require explicit
+Schur/Jacobi inputs and coefficient extraction.  An adjoint
+dimension and a rank count supply consistency checks; the Jacobi
+form supplies the coefficient.
+\end{remark}
+
+\begin{theorem}[Pure \(A\)-type rank arithmetic]
+\label{thm:walgdeep-divisor-rule}
+\ClaimStatusProvedHere
+A root system \(mA_{N-1}\) has rank \(m(N-1)\).  It has rank \(24\)
+exactly when
+\[
+(N-1)\mid24,\qquad m=\frac{24}{N-1}.
+\]
+For \(2\le N\le25\), the solutions are
+\[
+N\in\{2,3,4,5,7,9,13,25\}.
+\]
+\end{theorem}
+
+\begin{proof}
+This is the divisibility condition for \(m(N-1)=24\).
+\end{proof}
+
+\begin{remark}[Niemeier classification data at Coxeter number \(6\)]
+\label{rem:walgdeep-W18-6D4-reanchoring}
+\label{thm:walgdeep-N6-reanchoring}
+\label{thm:walgdeep-N6-reanchor-A5-4-D4}
+\ClaimStatusOpen
+The Niemeier root systems \(A_5^4D_4\) and \(D_4^6\) share Coxeter
+number \(6\); the first contains \(A_5\) summands.  A class-\(\mathcal
+S\) anchor requires an explicit lattice map from the flavour data and
+an equivariant Jacobi-form comparison.  The classification fact
+provides the candidate list, while the recognition package provides
+the anchor theorem.
+\end{remark}
+
+\begin{remark}[Higher-\(N\) Niemeier comparisons]
+\label{thm:walgdeep-N7-N8-re-anchor}
+\label{thm:walgdeep-substitute-anchors}
+\label{rem:walgdeep-substitute-anchors}
+\label{rem:walgdeep-coxeter-void-regime}
+\ClaimStatusOpen
+Rank and Coxeter-number tables classify candidate Niemeier root
+systems.  A sequence of class-\(\mathcal S\) anchors additionally
+requires the family of Jacobi inputs \(\phi^{(N)}\), their lattice
+maps, and compatible equivariance.  Definition~\ref{def:walgdeep-schur-jacobi-borcherds-recognition}
+records this finite recognition problem at each \(N\).
+\end{remark}
+
+\begin{theorem}[Leech lattice fact and comparison obligation]
+\label{thm:walgdeep-N24-conway}
+\ClaimStatusConditional
+The Leech lattice is the unique positive-definite even unimodular
+rank-\(24\) lattice with empty root system, and its full automorphism
+group is \(\mathrm{Co}_0\).  A comparison with an \(A_{23}\)
+class-\(\mathcal S\) Schur sector requires a map from that sector to
+the Leech or Conway module together with character and product
+compatibility.  Under such a recognition map, Conway equivariance
+becomes a property of the source.
+\end{theorem}
+
+\begin{theorem}[Extended weight-ladder obligation]
+\label{thm:walgdeep-N13-N24-ladder}
+\ClaimStatusOpen
+For each \(N\), Theorem~\ref{thm:walgdeep-gaiotto-siegel-weight}
+produces weight \(N+3\) from the hypothesis
+\(f^{(N)}(0,0)=2(N+3)\).  A ladder theorem over a range of \(N\)
+therefore consists of explicit recognition packages
+\(\{\mathcal R_N\}\) and compatibility maps between them.
+\end{theorem}
+
+\subsection{Status ledger}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.30\textwidth}p{0.18\textwidth}p{0.42\textwidth}}
+\toprule
+Claim & Status & Proof surface \\
+\midrule
+Principal \(c_N(k)\) and reflected sum
+& proved
+& Fateev--Lukyanov formula plus \(t\mapsto-t\) \\
+Principal \(\kappa=c(H_N-1)\)
+& conditional
+& \(H_{\mathrm{genus1}}^{W_N}\) \\
+BP parity and OPE packet
+& proved elsewhere
+& FKR, Definition~2.1 and OPE normalization \\
+BP standard central sum \(50\)
+& proved
+& rational identity in \(t=k+3\) \\
+BP shifted sum \(196\)
+& computed-secondary
+& shifted conformal-vector rational function \\
+BP \(17/6\)
+& diagnostic
+& even reciprocal-weight sum \\
+BP \(\kappa,\rho,K^\kappa\)
+& open
+& genus-one BRST curvature \\
+BP same-family duality
+& open
+& DS--bar--Verdier comparison \\
+Arbitrary-nilpotent DS/bar commutation
+& conjectured
+& filtered comparison map and convergence \\
+\(W_3\) degree-three bar cohomology
+& open
+& finite differential-matrix rank computation \\
+Large-\(N\) vacuum character
+& proved
+& coefficientwise free-generation count \\
+Large-\(N\) bar/Koszul limit
+& open
+& pro-system, \(\varprojlim^1\), continuous duality \\
+Class-\(\mathcal S\)/Borcherds recognition
+& conditional
+& package \(\mathcal R_N\) \\
+\bottomrule
+\end{tabular}
+\end{center}

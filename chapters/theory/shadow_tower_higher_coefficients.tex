@@ -1,0 +1,774 @@
+%% Higher shadow coefficients: exact local data and the residue construction.
+%%
+%% The chapter separates the exact Virasoro vacuum calculation at
+%% Beilinson level 1 from the ordered-residue-bar construction required
+%% to define higher scalar coefficients at level 2.
+
+\providecommand{\cA}{\mathcal A}
+\providecommand{\cW}{\mathcal W}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Virasoro Ward Correlators and Ordered Residues}
+\label{ch:shadow-tower-higher-coefficients}
+\label{chap:shadow-tower-higher-coefficients}
+
+\section*{Scalar extraction from Ward correlators}
+
+A higher Virasoro coefficient becomes a mathematical invariant after
+one specifies the complex that carries it, the chain projection that
+extracts it, and the homotopies relating its representatives.  The
+local vertex algebra supplies the Ward correlators and the vacuum Gram
+form.  The ordered residue package supplies the scalar projection.
+
+The Virasoro operator product, the level-four vacuum Gram matrix, and
+the norm of
+\(\Lambda={:}TT{:}-\frac{3}{10}\partial^2T\)
+form the exact local layer.  An ordered residue bar complex, its
+contraction onto a scalar line, and the transferred Maurer--Cartan
+equation form the geometric layer.  Higher residues, generating
+functions, and arithmetic invariants belong to the composite
+construction.
+
+The type signatures used below are:
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+quadrant & presentation & Beilinson level & hypothesis package\\
+\hline
+Open & Virasoro vacuum vertex algebra & 1 & $\mathsf H_{\Vir}$\\
+Open & completed ordered residue bar complex & 2 &
+ $\mathsf H_{\mathrm{res}}$\\
+Open & transferred scalar $L_\infty$ model & 2 &
+ $\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{quad}}$\\
+Open/CY & comparison morphisms & $2\leftrightarrow 5$ &
+ $\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{cmp}}$
+\end{tabular}
+\end{center}
+
+\section{Exact Virasoro local data}
+\label{sec:sth-setup}
+
+\begin{definition}[Virasoro vacuum package]
+\ClaimStatusDefinitional
+\label{def:sth-virasoro-vacuum-package}
+The package $\mathsf H_{\Vir}(c)$ consists of the vacuum Virasoro
+vertex algebra $V_c$, its conformal vector
+$\omega=L_{-2}\mathbf1$, the field
+\[
+  T(z)=Y(\omega,z)=\sum_{n\in\mathbb Z}L_nz^{-n-2},
+\]
+and the invariant bilinear form normalized by
+$\langle\mathbf1,\mathbf1\rangle=1$ and
+$L_n^\ast=L_{-n}$.  The modes obey
+\[
+ [L_m,L_n]=(m-n)L_{m+n}
+ +\frac{c}{12}(m^3-m)\delta_{m+n,0}.
+\]
+\end{definition}
+
+\begin{theorem}[Virasoro local product]
+\ClaimStatusProvedHere
+\label{thm:sth-virasoro-local-product}
+\emph{Type signature:}
+\textup{(Open quadrant, Virasoro vacuum presentation, level \(1\),
+\(\mathsf H_{\Vir}\)).}
+In the package $\mathsf H_{\Vir}(c)$,
+\begin{equation}
+ T(z)T(w)\sim
+ \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}
+ +\frac{\partial T(w)}{z-w}.
+ \label{eq:sth-virasoro-local-product}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Insert the mode expansion of $T$ and apply the Virasoro commutator.
+The central term
+$c(m^3-m)\delta_{m+n,0}/12$ gives the fourth-order pole.
+The term $(m-n)L_{m+n}$ gives the second- and first-order poles.
+Formal-distribution expansion in the region $|z|>|w|$ yields
+\eqref{eq:sth-virasoro-local-product}.
+\end{proof}
+
+\begin{theorem}[Sphere Ward correlators]
+\ClaimStatusProvedHere
+\label{thm:sth-virasoro-ward-correlators}
+\emph{Type signature:}
+\textup{(Open quadrant, Virasoro vacuum presentation, level \(1\),
+\(\mathsf H_{\Vir}\)).}
+For pairwise distinct points \(z_1,\ldots,z_n\) in an affine chart of
+\(\mathbb P^1\), set
+\[
+ G_n(z_1,\ldots,z_n;c)
+ :=\langle T(z_1)\cdots T(z_n)\rangle_{\mathbb P^1},\qquad
+ z_{ij}:=z_i-z_j.
+\]
+The vacuum conditions give \(G_0=1\), \(G_1=0\), and the Virasoro Ward
+identity gives, for \(n\geq2\),
+\begin{equation}
+\begin{split}
+G_n(z_1,\ldots,z_n;c)
+=\sum_{i=2}^n\biggl(&\frac{c}{2z_{1i}^4}\,
+G_{n-2}(z_2,\ldots,\widehat z_i,\ldots,z_n;c)\\
+&+\frac{2}{z_{1i}^2}\,G_{n-1}(z_2,\ldots,z_n;c)
++\frac{1}{z_{1i}}\,\partial_{z_i}
+G_{n-1}(z_2,\ldots,z_n;c)\biggr).
+\end{split}
+\label{eq:sth-sphere-ward-recursion}
+\end{equation}
+Its connected part is the cumulant
+\begin{equation}
+ G_n^{\mathrm{conn}}(z_1,\ldots,z_n;c)
+ =\sum_{\pi\in\Pi_n}(-1)^{|\pi|-1}(|\pi|-1)!
+ \prod_{B\in\pi}G_{|B|}(z_B;c),
+ \label{eq:sth-connected-cumulant}
+\end{equation}
+where \(\Pi_n\) is the set of partitions of
+\(\{1,\ldots,n\}\).  If \(\mathcal C_n\) denotes the set of unoriented
+Hamiltonian cycles on these labels, then
+\begin{equation}
+ G_2^{\mathrm{conn}}(z_1,z_2;c)=\frac{c}{2z_{12}^4},\qquad
+ G_n^{\mathrm{conn}}(z_1,\ldots,z_n;c)
+ =c\sum_{C\in\mathcal C_n}\prod_{\{i,j\}\in E(C)}z_{ij}^{-2}
+ \quad(n\geq3).
+ \label{eq:sth-connected-cycle-expansion}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Insert \(T(z_1)\) into the remaining vacuum correlator and apply
+Theorem~\ref{thm:sth-virasoro-local-product}.  Its central,
+stress-exchange, and derivative terms give the three summands in
+\eqref{eq:sth-sphere-ward-recursion}.  M\"obius inversion on the lattice
+of set partitions gives \eqref{eq:sth-connected-cumulant}.
+
+For \(c=N\in\mathbb Z_{>0}\), realize the Virasoro field by \(N\) free
+bosons,
+\[
+ T=\frac12\sum_{a=1}^N{:}J_a^2{:},\qquad
+ \langle J_a(z)J_b(w)\rangle=\frac{\delta_{ab}}{(z-w)^2}.
+\]
+A connected Wick graph is a single cycle through the \(n\) vertices;
+its common colour contributes \(N\), and reversal identifies the two
+orientations.  This gives \eqref{eq:sth-connected-cycle-expansion} for
+every positive integer \(N\).  Both sides are polynomials in \(c\), so
+the identity holds for arbitrary \(c\).
+\end{proof}
+
+\begin{theorem}[Level-four vacuum Gram matrix]
+\ClaimStatusProvedHere
+\label{thm:sth-level-four-gram}
+\emph{Type signature:}
+\textup{(Open quadrant, Virasoro vacuum presentation, level \(1\),
+\(\mathsf H_{\Vir}\)).}
+In the ordered basis
+\[
+  v_4=L_{-4}\mathbf1,\qquad
+  v_{22}=L_{-2}^{\,2}\mathbf1
+\]
+of the generic level-four vacuum space, the invariant form is
+\begin{equation}
+ G_4(c)=
+ \begin{pmatrix}
+   5c & 3c\\[2pt]
+   3c & \dfrac{c(c+8)}{2}
+ \end{pmatrix},
+ \qquad
+ \det G_4(c)=\frac{c^2(5c+22)}{2}.
+ \label{eq:sth-level-four-gram}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The commutator gives
+\[
+ \langle v_4,v_4\rangle
+ =\langle\mathbf1,[L_4,L_{-4}]\mathbf1\rangle=5c.
+\]
+Likewise,
+\[
+ L_4L_{-2}^{\,2}\mathbf1=3c\,\mathbf1,
+ \qquad
+ L_2L_{-2}^{\,2}\mathbf1=(c+8)L_{-2}\mathbf1,
+\]
+and hence
+\[
+ \langle v_4,v_{22}\rangle=3c,\qquad
+ \langle v_{22},v_{22}\rangle=\frac{c(c+8)}2.
+\]
+Taking the determinant of the displayed matrix gives
+$c^2(5c+22)/2$.
+\end{proof}
+
+\begin{corollary}[The Zamolodchikov quasi-primary norm]
+\ClaimStatusProvedHere
+\label{cor:sth-lambda-norm}
+\emph{Type signature:}
+\textup{(Open quadrant, Virasoro vacuum presentation, level \(1\),
+\(\mathsf H_{\Vir}\)).}
+The state corresponding to
+$\Lambda={:}TT{:}-\frac{3}{10}\partial^2T$ is
+\[
+  \lambda=L_{-2}^{\,2}\mathbf1-\frac35L_{-4}\mathbf1.
+\]
+It satisfies $L_1\lambda=0$, and its norm is
+\begin{equation}
+  N_\Lambda(c):=\langle\lambda,\lambda\rangle
+  =\frac{c(5c+22)}{10}.
+  \label{eq:sth-lambda-norm}
+\end{equation}
+The level-four form degenerates precisely at
+$c=0$ and $c=-22/5$; quotient theories at these charges pass to the
+radical of the invariant form.
+\end{corollary}
+
+\begin{proof}
+Translation covariance gives
+$\partial^2T\leftrightarrow2L_{-4}\mathbf1$, so the field and state
+formulas agree.  The identity $L_1\lambda=0$ follows from
+\[
+ L_1L_{-2}^{\,2}\mathbf1=3L_{-3}\mathbf1,\qquad
+ L_1L_{-4}\mathbf1=5L_{-3}\mathbf1.
+\]
+Using Theorem~\ref{thm:sth-level-four-gram},
+\[
+ \langle\lambda,\lambda\rangle
+ =\frac{c(c+8)}2-\frac65(3c)+\frac9{25}(5c)
+ =\frac{c(5c+22)}{10}.
+\]
+\end{proof}
+
+\begin{remark}[What the norm controls]
+\label{rem:sth-zamolodchikov-multiplicity}
+The inverse of $N_\Lambda(c)$ is the propagator on the
+one-dimensional quasi-primary line spanned by $\lambda$ whenever
+that line is split from the level-four vacuum space.  A higher
+residue calculation may use this propagator after the relevant
+chain-level contraction has been constructed.  The norm itself
+supplies exact local data; the multiplicity with which it enters a
+higher coefficient belongs to the transferred residue calculation.
+\end{remark}
+
+\section{The ordered residue package}
+\label{sec:sth-recurrence}
+
+\begin{definition}[Ordered residue contraction and scalar coefficient]
+\ClaimStatusDefinitional
+\label{def:shadow-transport-operator}
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue-bar presentation,
+level \(2\), \(\mathsf H_{\mathrm{res}}\)).}
+For a chiral algebra $\cA$ on a curve $X$, an
+\emph{ordered residue package}
+$\mathsf H_{\mathrm{res}}(\cA;X)$ consists of:
+
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item a complete filtered dg Lie algebra
+$\mathfrak g_{\mathrm{res}}^{\mathrm{ord}}(\cA;X)$ obtained from a
+specified ordered residue bar complex;
+\item a Maurer--Cartan element
+$\Theta_\cA\in\MC(\mathfrak g_{\mathrm{res}}^{\mathrm{ord}})$ with
+filtration components
+$\Theta_{\cA,r}\in\operatorname{gr}^r_F\mathfrak g_{\mathrm{res}}^{\mathrm{ord}}$;
+\item for each $r$, a contraction
+\[
+ \left(
+ \operatorname{gr}^r_F\mathfrak g_{\mathrm{res}}^{\mathrm{ord}},d
+ \right)
+ \ \underset{\iota_r}{\overset{\pi_r}{\rightleftarrows}}\
+ (k\,e_r,0),
+ \qquad
+ dh_r+h_rd=\mathrm{id}-\iota_r\pi_r;
+\]
+\item compatibility of $(\pi_r,\iota_r,h_r)$ with the completed
+filtration, the ordered collision maps, and the gauge action on
+Maurer--Cartan elements;
+\item a closed ordered Arnold form \(\alpha_r\) and a
+collision-compatible chain map from the chiral correlator complex on
+\(\operatorname{Conf}_r(X)\) to
+\(\operatorname{gr}^r_F\mathfrak g_{\mathrm{res}}^{\mathrm{ord}}\);
+\item a declared normalization of the residue shifts, orientations,
+and symmetric-group coinvariants.
+\end{enumerate}
+
+Homological transfer along these contractions produces a scalar
+$L_\infty$ algebra and a transferred Maurer--Cartan element
+$s_\cA=\sum_{r\ge2}S_r(\cA;\mathsf H_{\mathrm{res}})e_r$.
+The scalar
+\[
+ S_r(\cA;\mathsf H_{\mathrm{res}})
+\]
+is, by definition, its arity-$r$ coordinate.  Thus a higher
+coefficient is an invariant of the typed pair
+$(\cA,\mathsf H_{\mathrm{res}})$.
+\end{definition}
+
+\begin{remark}[The construction obligation]
+\label{rem:sth-why-range}
+A concrete instance of Definition~\ref{def:shadow-transport-operator}
+requires explicit chain groups, differential, collision maps,
+residue shifts, contraction, and gauge compatibility.  Once these
+data are present, the arity convention determines the admissible
+pairs in every quadratic coefficient equation.
+\end{remark}
+
+\begin{theorem}[Projected Maurer--Cartan identity]
+\ClaimStatusConditional
+\label{thm:virasoro-shadow-recurrence}
+\emph{Type signature:}
+\textup{(Open quadrant, transferred scalar \(L_\infty\)
+presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{quad}}\)).}
+Assume $\mathsf H_{\mathrm{res}}(\cA;X)$ and let
+$\{\ell_n^{\mathrm{sc}}\}_{n\ge1}$ be the transferred scalar
+$L_\infty$ brackets.  Then
+\begin{equation}
+ \operatorname{pr}_r
+ \left(
+   \sum_{n\ge1}\frac1{n!}
+   \ell_n^{\mathrm{sc}}(s_\cA,\ldots,s_\cA)
+ \right)=0
+ \qquad (r\ge2).
+ \label{eq:sth-projected-mc}
+\end{equation}
+Assume in addition the quadratic-closure package
+$\mathsf H_{\mathrm{quad}}$: the transferred brackets relevant to
+the chosen scalar lane satisfy
+\[
+ \operatorname{pr}_r\ell_1^{\mathrm{sc}}(s_\cA)=\lambda_rS_r e_r,
+ \qquad
+ \operatorname{pr}_r\frac{\ell_2^{\mathrm{sc}}(s_\cA,s_\cA)}2
+ =\sum_{a\star b=r}K^r_{a,b}S_aS_b\,e_r,
+\]
+and the higher transferred brackets have zero projection to $ke_r$.
+Whenever $\lambda_r$ is invertible,
+\begin{equation}
+ S_r=-\lambda_r^{-1}
+ \sum_{a\star b=r}K^r_{a,b}S_aS_b.
+ \label{eq:sth-conditional-quadratic-recurrence}
+\end{equation}
+Here $a\star b=r$, $\lambda_r$, and $K^r_{a,b}$ are determined by
+the constructed residue complex and its transfer data.
+\end{theorem}
+
+\begin{proof}
+Homological transfer carries the original Maurer--Cartan element to
+a Maurer--Cartan element in the scalar $L_\infty$ model.  Projection
+of its Maurer--Cartan equation to $ke_r$ gives
+\eqref{eq:sth-projected-mc}.  The hypotheses of
+$\mathsf H_{\mathrm{quad}}$ reduce that equation to
+\[
+ \lambda_rS_r+\sum_{a\star b=r}K^r_{a,b}S_aS_b=0.
+\]
+Solving for $S_r$ gives
+\eqref{eq:sth-conditional-quadratic-recurrence}.
+\end{proof}
+
+\begin{remark}[Recurrence and residue]
+\label{rem:sth-two-chains}
+The symbolic recurrence computes the consequences of specified
+constants \((\lambda_r,K^r_{a,b})\).  The residue-bar construction
+realizes these constants in
+\(\mathfrak g_{\mathrm{res}}^{\mathrm{ord}}(\cA;X)\).  Their
+composition produces the scalar coordinate
+\(S_r(\cA;\mathsf H_{\mathrm{res}})\).
+\end{remark}
+
+\begin{remark}[Ward functions as residue inputs]
+\label{rem:s5-bpz-wick-verification}
+Theorem~\ref{thm:sth-virasoro-ward-correlators} constructs
+\(G_5^{\mathrm{conn}}\) and \(G_6^{\mathrm{conn}}\) as rational
+functions on ordered configuration spaces.  The Arnold form,
+correlator-to-bar map, and contraction in
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\) produce the corresponding
+scalars.  Their evaluation begins with the chain map in
+\textup{(R5)} and the normalized contraction in
+\textup{(R3)}.  This places the five- and six-point Ward functions
+at the input of the open residue problem.
+\end{remark}
+
+\section{Virasoro higher coefficients}
+\label{sec:sth-s6-s7-s8}
+\label{sec:sth-s6}
+\label{sec:sth-s7}
+\label{sec:sth-s8}
+\label{sec:sth-boundary}
+\label{sec:sth-summary}
+\label{sec:sth-main-thread-extensions}
+
+\begin{problem}[Construct and compute the Virasoro residue tower]
+\ClaimStatusOpen
+\label{thm:s6-virasoro-closed-form}
+\label{thm:s7-virasoro-closed-form}
+\label{thm:s8-virasoro-closed-form}
+\label{thm:s9-virasoro-closed-form}
+\label{thm:s10-virasoro-closed-form}
+\label{thm:s11-virasoro-closed-form}
+\label{prop:sth-boundary-checks}
+\label{prop:sth-summary}
+\label{prop:sth-virasoro-rational-through-8}
+\label{rem:sth-rectified-normalisation}
+\label{rem:sth-s6-pole}
+\label{rem:sth-s7-parity}
+\label{rem:sth-c13-self-dual}
+\label{rem:sth-extending-beyond-8}
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue-bar presentation,
+level \(2\), \(\mathsf H_{\mathrm{res}}(\Vir_c;X)\)).}
+
+Construct $\mathsf H_{\mathrm{res}}(\Vir_c;X)$ and compute its first
+nontrivial transferred coordinates.  A complete solution has four
+parts:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an explicit ordered residue complex and differential;
+\item a contraction satisfying \textup{(R1)--(R6)};
+\item a residue derivation of the transferred brackets and their
+normalizations;
+\item a chain-level evaluation of the same coordinates through a
+second presentation of the ordered residue complex.
+\end{enumerate}
+
+The exact level-four input is
+$N_\Lambda(c)=c(5c+22)/10$.  Every proposed value of
+$S_r(\Vir_c;\mathsf H_{\mathrm{res}})$ begins after this input and
+depends on the constructed transfer.
+\end{problem}
+
+\section{Growth, generating series, and arithmetic}
+\label{sec:sth-leading-asymp}
+\label{sec:sth-kummer-absence}
+\label{sec:sth-motivic}
+\label{subsec:subleading-asymptotic}
+\label{subsec:sub-subleading-asymptotic}
+\label{subsec:tier-4-asymptotic}
+\label{subsec:four-tier-arithmetic-database}
+
+\begin{problem}[Asymptotic and arithmetic invariants of a constructed tower]
+\ClaimStatusOpen
+\label{prop:sth-leading-asymp}
+\label{thm:shadow-exponential-base-Virasoro}
+\label{thm:universal-class-M-C-is-6}
+\label{thm:shadow-series-closed-form-Virasoro}
+\label{thm:shadow-series-closed-form-Virasoro-subleading}
+\label{thm:pole-doubling-all-k}
+\label{prop:phi-k-leading-coefficient-arithmetic}
+\label{prop:C-A-inverse-radius}
+\label{thm:s-r-kummer-absent-through-r-11}
+\label{thm:shadow-tower-asymptotic-closed-form}
+\label{thm:shadow-tower-subleading-closed-form}
+\label{thm:shadow-tower-sub-subleading-closed-form-inline}
+\label{thm:shadow-tower-tier-4-closed-form}
+\label{thm:kummer-laurent-depth-controlled}
+\label{thm:s-r-rational-denominator-pattern}
+\label{cor:arithmetic-uniformity-class-M}
+\label{cor:bernoulli-leading-duality-sharpness}
+\label{cor:kummer-emergence-at-r-8}
+\label{cor:subleading-characteristic-primes}
+\label{cor:tier-3-characteristic-primes}
+\label{cor:universal-class-M-subleading-uniformity}
+\label{cor:virasoro-23-smoothness}
+\label{cor:virasoro-motivic-purity-r-leq-11}
+\emph{Type signature:}
+\textup{(Open quadrant, scalar sequence extracted from the ordered
+residue-bar presentation, level \(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\)).}
+
+Given a constructed sequence
+$\{S_r(\Vir_c;\mathsf H_{\mathrm{res}})\}_{r\ge2}$, determine:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item its large-$c$ expansion with uniform control in $r$;
+\item the analytic class and radius of its generating series;
+\item the singularity type of each Laurent layer;
+\item the prime content of cleared numerators;
+\item the precise comparison, if one exists, with Bernoulli and
+motivic filtrations.
+\end{enumerate}
+
+The hypothesis package $\mathsf H_{\mathrm{asymp}}$ consists of
+uniform coefficient bounds, a declared order of limits, and a proof
+that coefficient extraction commutes with the relevant completion.
+These data make exponential bases, pole orders, and arithmetic layers
+well-defined.
+\end{problem}
+
+\section{The principal \texorpdfstring{$\cW_3$}{W3} lane}
+\label{subsec:w3-wline-closed-form}
+
+\begin{problem}[Construct the \texorpdfstring{$\cW_3$}{W3} scalar lanes]
+\ClaimStatusOpen
+\label{def:w3-wline-integer-sequence}
+\label{thm:w3-wline-closed-form}
+\label{thm:w3-wline-exponential-base}
+\label{thm:w3-wline-generating-function}
+\label{cor:w3-wline-self-consistency}
+\label{prop:W3-T-line-matches-Vir-subleading}
+\label{rem:w3-wline-doubling-interpretation}
+\label{rem:w3-wline-higher-spin-prediction}
+\label{rem:w3-wline-koszul-duality-partner}
+\emph{Type signature:}
+\textup{(Open quadrant, multivariable ordered residue-bar
+presentation for \(\cW_3\), level \(2\),
+\(\mathsf H_{\mathrm{res}}(\cW_3;X)+\mathsf H_{\mathrm{lanes}}\)).}
+
+Construct the multivariable contraction for the stress-tensor and
+spin-three generator lines.  Determine whether parity and OPE
+selection rules produce a closed scalar subcomplex on either line.
+Then compute the transferred brackets and their generating series.
+A growth constant becomes an invariant after this construction and
+the uniform bounds of $\mathsf H_{\mathrm{asymp}}$.
+\end{problem}
+
+\section{Ordered residues and chiral Hochschild theory}
+\label{sec:shadow-chirhoch-bridge}
+
+\begin{problem}[Construct the ordered-residue comparison map]
+\ClaimStatusOpen
+\label{def:universal-arnold-cycle}
+\label{thm:shadow-chirhoch-dictionary}
+\label{cor:chirhoch-depth-forces-shadow-depth}
+\emph{Type signature:}
+\textup{(Open quadrant, ordered residue-bar to curve-level chiral
+Hochschild presentation, levels \(2\to3\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Hoch}}\)).}
+
+Construct a chain map
+\[
+  \rho_X\colon
+  \mathfrak g_{\mathrm{res}}^{\mathrm{ord}}(\cA;X)
+  \longrightarrow
+  \ChirHoch_X^\bullet(\cA,\cA)
+\]
+together with its collision-compatible homotopies.  Identify the
+configuration-space classes that pair with transferred scalar
+coordinates, and determine the image of each such class in the
+curve-level complex.  This construction supplies the precise bridge
+between an ordered residue and a derived-centre class.
+\end{problem}
+
+\section{Motivic, modular, and K3 comparison questions}
+\label{sec:shadtower-supplement}
+\label{sec:shadtower-phi-n-weight-11-12-13}
+\label{sec:shadtower-phi-n-weight-13-14-15-16}
+\label{sec:shadtower-phi-n-weight-17-18-19-20}
+\label{sec:shadtower-phi-n-weight-21-22-23-24}
+\label{sec:shadtower-phi-n-weight-25-26-27-28}
+\label{sec:shadtower-phi-n-weight-29-30-31-32}
+\label{sec:shadtower-phi-n-weight-33-36}
+\label{sec:shadtower-phi-n-humbert-heegner-admissible-triple}
+\label{sec:phi-n-humbert-heegner-triple-37-43-45}
+
+\begin{definition}[Cross-domain comparison package]
+\ClaimStatusDefinitional
+\label{def:phi-n-pent-EK}
+The package $\mathsf H_{\mathrm{cmp}}$ consists of explicit chain
+maps from the ordered residue complex to each proposed comparison
+target, together with compatibility homotopies and normalization
+data.  The targets considered here are:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item associator and motivic-period complexes;
+\item Siegel modular and Borcherds product complexes;
+\item the K3 chiral bialgebra and its Vol~III descendants.
+\end{enumerate}
+
+Each comparison theorem carries the signature
+\textup{(Open/CY quadrants, named source and target presentations,
+levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{cmp}}\)).}
+\end{definition}
+
+\begin{problem}[Construct the motivic and modular comparison morphisms]
+\ClaimStatusOpen
+\label{thm:phi-n-humbert-heegner-admissibility}
+\label{thm:phi-n-weight-11-12-13}
+\label{thm:phi-n-weight-13-14-15-16}
+\label{thm:phi-n-weight-17-18-19-20}
+\label{thm:phi-n-weight-21-24}
+\label{thm:phi-n-weight-25-28}
+\label{thm:phi-n-weight-29-32}
+\label{thm:phi-n-weight-33-36}
+\label{thm:phi-n-humbert-heegner-triple-27-29-35}
+\label{thm:phi-n-humbert-heegner-triple-37-43-45}
+\label{rem:three-filter-composite-scope}
+\label{rem:shadtower-1}
+\label{rem:shadtower-2}
+\emph{Type signature:}
+\textup{(Open/CY quadrants, ordered residue-bar source and named
+motivic or modular target, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{cmp}}\)).}
+
+Construct the maps in Definition~\ref{def:phi-n-pent-EK}.  For each
+weight, prove that the proposed target class is the image of the
+ordered residue class, with the grading, normalization, and
+completion preserved.  These maps make the common class precise
+across the Brown dimension problem, the Broadhurst--Kreimer depth
+problem, Humbert and Heegner geometry, Borcherds products, and K3
+invariants.
+\end{problem}
+
+\section*{The ordered residue problem}
+
+The exact local calculation is
+\[
+  G_4(c)=
+  \begin{pmatrix}
+    5c&3c\\
+    3c&c(c+8)/2
+  \end{pmatrix},
+  \qquad
+  N_\Lambda(c)=\frac{c(5c+22)}{10}.
+\]
+An ordered residue package \(\mathsf H_{\mathrm{res}}\) transfers the
+Maurer--Cartan equation and evaluates its scalar coordinates.
+Analytic, arithmetic, motivic, and holographic comparisons are then
+statements about explicit maps from this chain model.
+
+%% Remaining legacy labels are frontier anchors governed by the typed
+%% construction problems above.
+\phantomsection\label{cor:floor-shift-j-plus-k}%
+\phantomsection\label{eq:BK-depth-13-16}%
+\phantomsection\label{eq:BK-depth-17-20}%
+\phantomsection\label{eq:BK-depth-21-24}%
+\phantomsection\label{eq:BK-depth-25-28}%
+\phantomsection\label{eq:BK-depth-29-32}%
+\phantomsection\label{eq:BK-depth-33-36}%
+\phantomsection\label{eq:BK-depth-37-43-45}%
+\phantomsection\label{eq:BK-depth-9-11-extension}%
+\phantomsection\label{eq:BK-depth-admissible-triple}%
+\phantomsection\label{eq:admissibility-29-31-33}%
+\phantomsection\label{eq:borcherds-mzv-ratio-33-36}%
+\phantomsection\label{eq:borcherds-vs-mzv-ratio}%
+\phantomsection\label{eq:borcherds-vs-mzv-ratio-17-20}%
+\phantomsection\label{eq:borcherds-vs-mzv-ratio-21-24}%
+\phantomsection\label{eq:borcherds-vs-mzv-ratio-25-28}%
+\phantomsection\label{eq:borcherds-vs-mzv-ratio-29-32}%
+\phantomsection\label{eq:chi3-virasoro-value}%
+\phantomsection\label{eq:hh-admissible-33-36}%
+\phantomsection\label{eq:lambda-1-numerical-value}%
+\phantomsection\label{eq:lambda-1-phi-27-correction}%
+\phantomsection\label{eq:lambda-1-primitive-values-29-31-33}%
+\phantomsection\label{eq:lyndon-basis-29-31-33-canonical}%
+\phantomsection\label{eq:padovan-13-14-15-16}%
+\phantomsection\label{eq:padovan-17-18-19-20}%
+\phantomsection\label{eq:padovan-21-22-23-24}%
+\phantomsection\label{eq:padovan-25-26-27-28}%
+\phantomsection\label{eq:padovan-29-30-31-32}%
+\phantomsection\label{eq:padovan-33-34-35-36}%
+\phantomsection\label{eq:padovan-37-43-45}%
+\phantomsection\label{eq:padovan-admissible-triple}%
+\phantomsection\label{eq:padovan-plastic-A}%
+\phantomsection\label{eq:padovan-plastic-A-21-24}%
+\phantomsection\label{eq:phi-11-explicit}%
+\phantomsection\label{eq:phi-12-explicit}%
+\phantomsection\label{eq:phi-13-14-15-16-num}%
+\phantomsection\label{eq:phi-13-explicit}%
+\phantomsection\label{eq:phi-17-18-19-20-num}%
+\phantomsection\label{eq:phi-21-22-23-24-num}%
+\phantomsection\label{eq:phi-25-26-27-28-num}%
+\phantomsection\label{eq:phi-27-lyndon-ten-basis}%
+\phantomsection\label{eq:phi-29-30-31-32-num}%
+\phantomsection\label{eq:phi-37-43-45}%
+\phantomsection\label{eq:phi-37-43-45-num}%
+\phantomsection\label{eq:phi-admissible-triple-num}%
+\phantomsection\label{eq:phi-n-depth-correction-scaling-29-31-33}%
+\phantomsection\label{eq:phi-n-tiered}%
+\phantomsection\label{eq:phi-n-tiered-17-20}%
+\phantomsection\label{eq:phi-n-tiered-21-24}%
+\phantomsection\label{eq:phi-n-tiered-25-28}%
+\phantomsection\label{eq:phi-n-tiered-29-32}%
+\phantomsection\label{eq:phi-n-tiered-33-36}%
+\phantomsection\label{eq:phi-n-tiered-admissible-triple}%
+\phantomsection\label{eq:shadow-chirhoch-pairing}%
+\phantomsection\label{eq:sr-induction-productdenom}%
+\phantomsection\label{eq:w3-wline-central-binomial}%
+\phantomsection\label{eq:w3-wline-gf-derivative}%
+\phantomsection\label{eq:w3-wline-gf-integrated}%
+\phantomsection\label{eq:w3-wline-ratio}%
+\phantomsection\label{eq:w3-wline-recursion}%
+\phantomsection\label{eq:w3-wline-self-consistency}%
+\phantomsection\label{eq:w3-wline-stirling}%
+\phantomsection\label{lem:floor-parity-subadditive}%
+\phantomsection\label{lem:quintic-combinatorial}%
+\phantomsection\label{lem:quintic-identities}%
+\phantomsection\label{lem:sub-subleading-cubic-identity}%
+\phantomsection\label{lem:subleading-combinatorial-identity}%
+\phantomsection\label{rem:C-A-scope-E-infinity}%
+\phantomsection\label{rem:Sigma-branch-singularity}%
+\phantomsection\label{rem:admissible-tower-five-stage}%
+\phantomsection\label{rem:admissible-triple-depth-primitives}%
+\phantomsection\label{rem:admissible-triple-scope-cascade}%
+\phantomsection\label{rem:characteristic-primes-are-riccati-arithmetic-higher-coefficients}%
+\phantomsection\label{rem:class-C-beta-gamma-termination}%
+\phantomsection\label{rem:cross-vol-three-invariants-W3}%
+\phantomsection\label{rem:cross-volume-leading-vs-finite-c}%
+\phantomsection\label{rem:denominator-pattern-correction}%
+\phantomsection\label{rem:four-tier-pattern}%
+\phantomsection\label{rem:gamma-not-beta-squared}%
+\phantomsection\label{rem:humbert-admissibility-scope-11-12-13}%
+\phantomsection\label{rem:humbert-admissibility-scope-13-16}%
+\phantomsection\label{rem:humbert-admissibility-scope-17-20}%
+\phantomsection\label{rem:humbert-admissibility-scope-21-24}%
+\phantomsection\label{rem:humbert-admissibility-scope-25-28}%
+\phantomsection\label{rem:humbert-admissibility-scope-29-32}%
+\phantomsection\label{rem:humbert-heegner-filter-33-36}%
+\phantomsection\label{rem:kummer-witness-verification-20260417}%
+\phantomsection\label{rem:linear-vs-quadratic-asymptotic-recurrence}%
+\phantomsection\label{rem:motivic-purity-all-r-supersession}%
+\phantomsection\label{rem:padovan-plastic-asymptotic}%
+\phantomsection\label{rem:padovan-plastic-asymptotic-17-20}%
+\phantomsection\label{rem:padovan-plastic-asymptotic-21-24}%
+\phantomsection\label{rem:padovan-plastic-asymptotic-25-28}%
+\phantomsection\label{rem:padovan-plastic-asymptotic-29-32}%
+\phantomsection\label{rem:padovan-plastic-asymptotic-33-36}%
+\phantomsection\label{rem:phi-15-first-depth-5}%
+\phantomsection\label{rem:phi-18-first-depth-6}%
+\phantomsection\label{rem:phi-21-first-depth-7}%
+\phantomsection\label{rem:phi-27-first-depth-9}%
+\phantomsection\label{rem:phi-27-lyndon-basis-ten-generators}%
+\phantomsection\label{rem:phi-30-first-depth-10}%
+\phantomsection\label{rem:phi-33-first-depth-11}%
+\phantomsection\label{rem:phi-k-arithmetic-significance}%
+\phantomsection\label{rem:phi-n-borcherds-leg-11-12-13}%
+\phantomsection\label{rem:phi-n-borcherds-leg-17-20}%
+\phantomsection\label{rem:phi-n-borcherds-leg-21-24}%
+\phantomsection\label{rem:phi-n-borcherds-leg-25-28}%
+\phantomsection\label{rem:phi-n-borcherds-leg-29-32}%
+\phantomsection\label{rem:phi-n-borcherds-leg-33-36}%
+\phantomsection\label{rem:phi-n-construction-rule-n-ge-13}%
+\phantomsection\label{rem:phi-n-dmvv-29-32}%
+\phantomsection\label{rem:phi-n-lyndon-basis-extension-29-31-33}%
+\phantomsection\label{rem:phi-n-scope-cascade-13-16}%
+\phantomsection\label{rem:phi-n-scope-cascade-17-20}%
+\phantomsection\label{rem:phi-n-scope-cascade-21-24}%
+\phantomsection\label{rem:phi-n-scope-cascade-25-28}%
+\phantomsection\label{rem:phi-n-scope-cascade-29-32}%
+\phantomsection\label{rem:phi-n-scope-cascade-33-36}%
+\phantomsection\label{rem:pole-doubling-confluent-singularity}%
+\phantomsection\label{rem:pole-doubling-k3-verification}%
+\phantomsection\label{rem:riccati-template-hypotheses}%
+\phantomsection\label{rem:shadow-chirhoch-quadrichotomy-pin}%
+\phantomsection\label{rem:shadow-chirhoch-w23.4}%
+\phantomsection\label{rem:shadow-series-analytic-stratification}%
+\phantomsection\label{rem:shadow-stratification-at-r-index}%
+\phantomsection\label{rem:sr-denominator-sharpness}%
+\phantomsection\label{rem:sth-alpha-asymptotic}%
+\phantomsection\label{rem:sth-arithmetic-duality}%
+\phantomsection\label{rem:sth-first-non-rational}%
+\phantomsection\label{rem:sth-kummer-scope}%
+\phantomsection\label{rem:sth-riccati-propagated-primes}%
+\phantomsection\label{rem:sub-leading-r-arithmetic-ramification}%
+\phantomsection\label{rem:subleading-kummer-correction}%
+\phantomsection\label{rem:subleading-sharper-singularity}%
+\phantomsection\label{rem:three-tier-arithmetic-picture}%
+\phantomsection\label{rem:universal-class-M-verifications}%
+\phantomsection\label{rem:w3-wline-catalan-identity}%
+\phantomsection\label{rem:w3-wline-decomposition-is-circular}%

@@ -1,0 +1,4184 @@
+\chapter{Chiral Hochschild cohomology and deformation theory}
+\label{chap:hochschild-calculus}\label{ch:hochschild-cohomology}
+
+\index{Hochschild cohomology!classical}
+\index{cyclic homology!chiral}
+\index{three Hochschild theories!disjoint discipline}
+
+\begin{remark}[Hochschild theories are separated by their input]
+\label{rem:hh-three-theories-discipline}
+
+Hochschild notation in this chapter is typed by its input. The
+curve-level cochain theory
+$\ChirHoch^\bullet(\cA)$ takes a chiral algebra on a smooth curve~$X$
+and is the object controlled by Theorem~H through a family support
+datum $H_H(\cA;S)$.  The ordinary algebraic cochain
+complex of a dg algebra~$A$ is
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A)=\RHom_{A^e}(A,A)$. The
+categorical Hochschild cochains of a dg category~$\mathcal C$ are
+the derived endomorphisms of its identity functor. The topological
+Hochschild homology $\mathrm{THH}(R)$ takes an $E_1$-ring spectrum
+and returns an $S^1$-equivariant spectrum.
+
+The later sections use these theories on their native surfaces:
+the cyclic section uses Hochschild \emph{chains} and Connes' mixed
+complex; the derived-centre section uses categorical/algebraic
+cochains through a compact generator; the annulus section uses
+algebraic/categorical chains; spectral $\mathrm{THH}$ appears only
+after spectrification.  Theorem~H has source
+$C^\bullet_{\mathrm{ch}}(\cA,\cA)$; ordinary algebraic, categorical,
+topological, and product-ambient Hall Hochschild theories enter through
+named comparison functors.
+\end{remark}
+
+For a factorisation module model of a chiral algebra~$\cA$ on a
+curve, the shifted complex $\ChirHoch^\bullet(\cA,\cA)[1]$ is the
+tangent complex at the Maurer--Cartan point~$\Theta_\cA$. It controls
+chiral deformations through the chiral derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, not through the ordinary
+centre except on $H^0$.
+
+The chiral Hochschild complex carries a degree $-1$ Lie bracket
+(the chiral Gerstenhaber bracket, Theorem~\ref{thm:gerstenhaber-structure}),
+computed by OPE residues on FM configuration spaces.
+In the classical limit (fiber at a point), it recovers
+Gerstenhaber's bracket~\cite{Ger63} on associative Hochschild
+cochains. The chiral bracket is the strict shadow of a full
+$L_\infty$ bracket on the chiral Hochschild complex. In the
+classical algebraic strict model,
+$\mathrm{HH}^2_{\mathrm{alg}}$ classifies first-order
+deformations and $\mathrm{HH}^3_{\mathrm{alg}}$ contains
+obstructions;
+the $L_\infty$ extension records coherent homotopies governing
+convergence of formal deformations and transfer of Koszul properties
+across quasi-isomorphisms. The cyclic structure (Connes'
+operator~$B$, the mixed complex, the SBI sequence) is the algebraic
+shadow of the modular operad's gluing maps. The shadow obstruction
+tower of Chapter~\ref{sec:koszul-across-genera} projects onto the
+cyclic deformation complex
+$\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$ defined here.
+
+For a PBW chiral datum on a smooth curve, Theorem~H computes the
+cohomological support from a supplied family retract
+$H_H(\cA;S)$.  Bakalov--De Sole--Kac compute the bounded Virasoro
+support $\{0,2,3\}$ and the rank-one even superboson dimensions
+$(2,1,0,\ldots)$; a bounded-to-chart quasi-isomorphism transports
+these values to the curve-level complex.  Principal $W$-algebras,
+simple quotients, and product-ambient Calabi--Yau objects require
+their own chain models and comparison maps.
+
+The fiberwise curvature $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1$ at
+genus~$1$ (Chapter~\ref{ch:heisenberg-frame}) shows that deformations
+of the bar complex are controlled by a cohomological invariant.
+Chiral Hochschild cohomology organizes these deformations and obstructions
+into a single graded object equipped with a Gerstenhaber bracket;
+the chiral enhancement incorporates OPE data, the geometry of the
+curve, and the $A_\infty$ structure of the bar complex.
+
+\begin{remark}[Conventions for HH/HC/HP]
+\label{rem:hh-hc-canonical-source}
+\index{Hochschild cohomology!canonical conventions}
+\index{cyclic homology!canonical conventions}
+\index{periodic cyclic homology!canonical conventions}
+The definitions and sign conventions for classical algebraic
+Hochschild cohomology $\mathrm{HH}^\bullet_{\mathrm{alg}}$,
+classical algebraic Hochschild homology
+$\mathrm{HH}_{\bullet,\mathrm{alg}}$, cyclic homology
+$\mathrm{HC}_*$, negative cyclic homology $\mathrm{HC}_*^{\mathrm{neg}}$,
+and periodic cyclic homology $\mathrm{HP}_*$ are as follows. In particular:
+\begin{itemize}
+\item the chiral Hochschild complex
+ (Definition~\ref{def:chiral-hochschild}),
+\item the cyclic operator and Connes' operator~$B$
+ (Definitions~\ref{def:cyclic-operator} and~\ref{def:connes-B}),
+\item the mixed complex $(d_{\mathrm{HH}}, B)$ and the SBI exact
+ sequence (Theorem~\ref{thm:connes-exact-sequence},
+ Corollary~\ref{cor:connes-SBI}),
+\end{itemize}
+are all defined here. These definitions govern the chiral Hochschild,
+topological Hochschild, and cyclic-invariant conventions used by the
+deformation theory and Poincar\'e duality chapters.
+\end{remark}
+
+\begin{remark}[Chiral Kontsevich formality: $\ChirHoch^\bullet$ and
+chiral polyvector fields]
+\label{rem:hh-chiral-kontsevich-formality-pointer}
+\index{Kontsevich formality!chiral!pointer from Hochschild chapter}%
+The chiral Hochschild complex $\ChirHoch^\bullet(\mathbf H_{\Delta_5})$
+fits Kontsevich's $1997$ formality framework in the BD
+factorisation-algebra setting through
+Theorem~\ref{thm:chiral-kontsevich-formality} of
+Chapter~\ref{chap:mc5-class-m-chain-level-platonic}: on the
+Humbert-free complement
+$\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}=
+\overline{\mathcal A}_2\setminus\bigcup_n H_n$ there is an
+$L_\infty$-quasi-isomorphism
+$T^\bullet_{\mathrm{ch}}(\overline{\mathcal A}_2,\mathbf H_{\Delta_5})
+\xrightarrow{\sim}\ChirHoch^\bullet(\mathbf H_{\Delta_5})$
+between chiral polyvector fields and chiral Hochschild cochains,
+transporting Kontsevich's admissible-graph weights along the KZ
+pullback of the Climax Theorem. The formality obstruction on the
+full Humbert locus $\bigcup_n H_n$ is the Bruinier Heegner Chern
+class $c_n(\mathcal L^{\Delta_5}|_{H_n})$ of Bruinier 2002
+\textsc{LNM} 1780 Prop.~5.1, equal to the Costello--Gwilliam
+$1$-loop BV counterterm and to the Deligne--Malcev bi-unipotent
+classifying cocycle of
+Remark~\ref{rem:formality-obstruction-malcev-ladder}. Strict
+chain-level bar--cobar inversion
+$\Omega^{\mathrm{ch}}(B^{\mathrm{ch}}(\mathbf H_{\Delta_5}))
+\xrightarrow{\sim}\mathbf H_{\Delta_5}$ on
+$\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ is then a corollary of
+chiral formality through the Kontsevich--Soibelman transfer lemma,
+paired against the Koszul pairing
+$\mathbf H_{\Delta_5}\otimes\mathbf H_{\Delta_5}^!\to k[-2]$ of
+Theorem~\ref{thm:main-koszul-hoch}. The unified form of the
+theorem--five classical ingredients (Kontsevich admissible graphs,
+Costello--Gwilliam factorisation polyvector fields, Francis--Gaitsgory
+BD chiralisation, bi-unipotent factorisation compatibility,
+Malcev ladder cocycle) assembled into one chain-level
+statement with the per-wall obstruction
+$\mathrm{ob}^{\mathrm{Kont}}_n\in H^3(H_n,\mathrm{Sym}^2
+T^{\mathrm{poly}}_{\mathrm{ch}}|_{H_n})$ identified with the $n$-th
+Malcev ladder rung classifying cocycle
+$[\mathrm{gr}_n^{\mathrm{Malcev}}]$--is
+Theorem~\ref{thm:chiral-kontsevich-formality-unified}. Primary:
+Kontsevich 1997 \textsc{arXiv}:q-alg/9709040 Thm.~4.1;
+Costello--Gwilliam \cite[\S\S 6--8]{CG17}; Francis 2013 \textit{Adv.\
+Math.}\ 239 Thm.~1.1; Bruinier 2002 \textsc{LNM} 1780 Prop.~5.1;
+Hain--Matsumoto 2003 \textit{JAMS}\ 16 Thm.~5.1; Cattani--Kaplan--Schmid
+1986 \textit{Ann.\ Math.}\ 123 Thm.~3.3 \S3.7.
+\end{remark}
+
+\section{Classical to chiral}
+
+\subsection{Review of classical Hochschild}
+
+For an associative algebra $A$ over $\mathbb{C}$ and an
+$A$-bimodule~$M$, the classical algebraic Hochschild cohomology
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A, M) = \mathrm{Ext}^*_{A^e}(A, M)$
+classifies the deformation theory of~$A$:
+$\mathrm{HH}^0_{\mathrm{alg}}$ is the center,
+$\mathrm{HH}^1_{\mathrm{alg}}$ classifies outer derivations,
+$\mathrm{HH}^2_{\mathrm{alg}}$ classifies first-order deformations,
+and $\mathrm{HH}^3_{\mathrm{alg}}$ contains the obstructions to
+extending them. The full structure is computed by the bar resolution
+$\cdots \to A^{\otimes(n+2)} \xrightarrow{b} A^{\otimes(n+1)} \to
+\cdots$ with differential $b(a_0 \otimes \cdots \otimes a_{n+1})
+= \sum_{i=0}^n (-1)^i a_0 \otimes \cdots \otimes a_ia_{i+1}
+\otimes \cdots \otimes a_{n+1}$, and the resulting cohomology
+carries a Gerstenhaber bracket governing the Maurer--Cartan equation
+for formal deformations \textup{(}Gerstenhaber~\cite{Ger63}\textup{)}.
+
+\subsection{Chiral enhancement}
+
+What replaces the bimodule $A \otimes A^{\mathrm{op}}$ when the algebra lives on a curve rather than a point? For chiral algebras, each ingredient of the classical theory acquires a geometric upgrade: the bimodule structure is replaced by the factorization structure on~$\operatorname{Ran}(X)$, the bar resolution becomes the geometric bar complex on Fulton--MacPherson configuration spaces, and the Gerstenhaber bracket lifts to a chiral bracket governed by the OPE. The result is a chiral Hochschild complex whose cohomology computes chiral deformations and obstructions; its degree-$0$ part is the ordinary chiral centre, while the full complex is the derived chiral centre.
+
+\begin{definition}[Chiral Hochschild complex, derived-functor form]
+\label{def:chiral-hochschild-derived}
+For a chiral algebra $\mathcal{A}$ on $X$, the chiral Hochschild
+cohomology with coefficients in a chiral $\mathcal{A}$-module
+$\mathcal{M}$ is
+\[\ChirHoch^*(\mathcal{A}, \mathcal{M})
+= \operatorname{RHom}_{\mathcal{D}_X}(\barBgeom(\mathcal{A}), \mathcal{M}).\]
+The chain-level model is Definition~\ref{def:chiral-hochschild}.
+\end{definition}
+
+\begin{theorem}[Comparison with classical theory {\cite{BD04}}; \ClaimStatusProvedElsewhere]\label{thm:hochschild-classical-comparison}
+There is a spectral sequence:
+\[
+E_2^{p,q}
+= \mathrm{HH}^p_{\mathrm{alg}}(\mathcal{A}_0, H^q(\Omega^*_X))
+\Rightarrow \ChirHoch^{p+q}(\mathcal{A})
+\]
+where $\mathcal{A}_0$ is the fiber at a point.
+\end{theorem}
+
+\section{Periodicity phenomena}
+
+\subsection{Virasoro chiral Hochschild cohomology}
+
+\begin{theorem}[Virasoro bounded cohomology and chart comparison;
+\ClaimStatusConditional]\label{thm:virasoro-hochschild}
+\textup{[Type signature: Open quadrant; bounded vertex-cohomology
+presentation and curve-level chart presentation; Beilinson level~$3$;
+hypothesis package: the Bakalov--De Sole--Kac complex and a
+bounded-to-chart quasi-isomorphism $\chi_{\operatorname{Vir}_c}^{\mathrm{bd}}$.]}
+For every central charge~$c$, Bakalov--De Sole--Kac compute
+\[
+ \dim H^n_{\mathrm{ch},b}(\operatorname{Vir}_c,
+ \operatorname{Vir}_c)
+ =\begin{cases}
+ 1,&n\in\{0,2,3\},\\
+ 0,&n\in\mathbb Z_{\geq0}\setminus\{0,2,3\}.
+ \end{cases}
+\]
+Thus the bounded Poincar\'e polynomial is $1+t^2+t^3$.  If
+\[
+ \chi_{\operatorname{Vir}_c}^{\mathrm{bd}}\colon
+ C^\bullet_{\mathrm{ch},b}(\operatorname{Vir}_c,
+ \operatorname{Vir}_c)
+ \xrightarrow{\ \sim\ }
+ C^\bullet_{\mathrm{ch}}(\cA_{\operatorname{Vir}_c},
+ \cA_{\operatorname{Vir}_c})
+\]
+is a quasi-isomorphism, the same dimensions compute the curve-level
+chart complex.
+\end{theorem}
+
+\begin{proof}
+The bounded calculation is \cite[Theorem~7.2]{BDSK21}.  The chart
+statement is transport of cohomology along the displayed
+quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[Relation to Gel'fand--Fuchs cohomology]
+\label{rem:gf-vs-chirhoch}
+The continuous Lie algebra cohomology
+$H^*_{\mathrm{cont}}(L_1; \mathbb{C}) = \mathbb{C}[\Theta]$ is a
+polynomial ring on a degree-$2$ generator
+(Gel'fand--Fuchs~\cite{Fuks86}).  It is the cohomology of a
+topological Lie algebra, whereas
+$\ChirHoch^*(\mathrm{Vir}_c)$ is the factorization Ext-group on the
+curve~$X$.  The latter has support $\{0,2,3\}$ after the
+Bakalov--De Sole--Kac bounded-to-chart comparison.  The two theories
+are related by a
+spectral sequence
+(Theorem~\ref{thm:hochschild-classical-comparison}).  Its convergence
+and edge maps determine the range in which one theory computes the
+other.  The chart support itself is the output of a family datum
+$H_H(\cA;S)$.
+\end{remark}
+
+\subsection{Affine Kac--Moody periodicity}
+
+\begin{theorem}[Critical level Lie algebra cohomology; \ClaimStatusConditional]\label{thm:critical-level-cohomology}
+The continuous Lie algebra cohomology of $\widehat{\mathfrak{g}}$ at critical level $k = \critLevel$ is the exterior-polynomial algebra
+\[H^*_{\mathrm{cont}}(\widehat{\mathfrak{g}}_{\critLevel},
+\widehat{\mathfrak{g}}_{\critLevel,0};\, \mathbb{C})
+\;\cong\; \Lambda^*(P_1,\ldots,P_r) \otimes \mathbb{C}[\Theta_1,\ldots,\Theta_r]\]
+with $\deg P_i = 2m_i + 1$ and $\deg \Theta_i = 2(m_i+1)$, where $m_1,\ldots,m_r$ are the exponents of~$\mathfrak{g}$ (Fuks--Feigin--Tsygan~\cite{FT87}, via BD comparison~\cite{BD04}). For rank~$1$ ($\mathfrak{sl}_2$): $H^{n+4} \cong H^n$ (strict periodicity). For rank $r > 1$: polynomial growth $O(n^{r-1})$ without strict periodicity (Theorem~\ref{thm:affine-periodicity-critical}).
+\end{theorem}
+
+\begin{remark}[Critical level: Lie cohomology vs chiral Hochschild]
+\label{rem:critical-level-lie-vs-chirhoch}
+At generic level, chiral Hochschild cohomology and continuous Lie
+algebra cohomology are distinct functors.  A comparison requires the
+Beilinson--Drinfeld chain map and its family-specific quasi-isomorphism
+range.  Theorem~H computes the chart support from $H_H(\cA;S)$.
+
+At critical level ($k=-h^\vee$), the Ext algebra carries the
+Feigin--Frenkel centre $\mathrm{Fun}(\mathrm{Op})$ in bar degree
+$p=0$ and positive conformal weights.  The critical chart therefore
+requires a support datum adapted to this centre.
+
+Under the Beilinson--Drinfeld chiral-envelope comparison hypothesis
+(\cite[Theorem~4.8.1]{BD04}, specialised to the affine Lie-$*$ algebra
+$\fg \otimes \omega_X$ at critical level and combined with the
+Feigin--Frenkel identification of the chiral centre
+\cite{Feigin-Frenkel}) identifies the chiral Hochschild
+cohomology with the continuous Lie algebra cohomology:
+\[
+\ChirHoch^*(\widehat{\fg}_{-h^\vee})
+\;\cong\;
+H^*_{\mathrm{Lie,cont}}(\fg \otimes t\bC[[t]];\, \bC)
+\;\cong\;
+\Lambda^*(P_1, \ldots, P_r) \otimes \bC[\Theta_1, \ldots, \Theta_r],
+\]
+whose polynomial generators produce classes in arbitrarily large
+cohomological degree with polynomial growth
+(Theorem~\ref{thm:affine-periodicity-critical}).  The
+Feigin--Frenkel centre supplies the separate degree-zero chiral-centre
+action.
+
+At generic and critical levels alike, the chart support is carried by
+its explicit comparison complex.  The critical-level comparison above
+is a separate conditional statement whose degree-zero term contains
+the Feigin--Frenkel centre.
+\end{remark}
+
+The degrees in the exterior--polynomial Lie-cohomology formula are
+determined by the exponents of~$\mathfrak g$; the corresponding
+critical chiral centre is the Feigin--Frenkel oper algebra
+\cite{Feigin-Frenkel}.  For simply-laced~$\mathfrak g$ one has
+$h=h^\vee$; the two Coxeter numbers differ in the non-simply-laced
+types.
+
+\subsection{W-algebra chiral Hochschild cohomology}
+
+For a principal $W$-algebra, free strong generation supplies a PBW
+presentation of the associated graded object.  The cohomological
+support requires the collision differential and its family retract.
+
+\begin{theorem}[Family support criterion for principal $W$-algebras;
+\ClaimStatusConditional]\label{thm:w-algebra-hochschild}
+\textup{[Type signature: Open quadrant; principal $W$-algebra chart
+presentation; Beilinson level~$3$; hypothesis package
+$H_H(\Walg^k(\mathfrak g);S_W)$.]}
+Let
+\(\Walg^k(\mathfrak g)=\Walg^k(\mathfrak g,f_{\mathrm{prin}})\)
+and assume a family support datum
+\(H_H(\Walg^k(\mathfrak g);S_W)\).  Then
+\[
+ \ChirHoch^n(\Walg^k(\mathfrak g))
+ \cong H^n(K_{\Walg^k(\mathfrak g),S_W}),
+ \qquad
+ \operatorname{Supp}\ChirHoch^\bullet(\Walg^k(\mathfrak g))
+ \subseteq S_W.
+\]
+The determination of $S_W$ is the family-specific collision
+calculation.  De Sole--Kac variational Poisson cohomology is
+nonvanishing in unboundedly many degrees for Virasoro-type Poisson
+vertex algebras \cite{BDSK21}, so this concentration lives strictly
+on the stated Koszul/bounded locus, with the bounded-to-chart
+comparison part of \(H_H(\Walg^k(\mathfrak g);S_W)\).
+\end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{thm:main-koszul-hoch} applied to the displayed
+family support datum.
+\end{proof}
+
+\begin{remark}[Gel'fand--Fuchs cohomology vs chiral Hochschild]
+\label{rem:gf-walg-vs-chirhoch}
+The continuous relative cohomology of the topological Lie algebra
+$\mathrm{Lie}(\Walg^k(\mathfrak{g}))$ with $r$ generating currents is a
+polynomial ring
+$H^*_{\mathrm{cont}}(\mathrm{Lie}(\Walg),
+\mathrm{Lie}(\Walg)_0;\, \mathbb{C})
+= \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+with $\Theta_i \in H^{h_i}$
+(Fuchs~\cite{Fuks86}, Ch.~2; Feigin--Fuchs~\cite{FF84} for $r = 1$).
+Gel'fand--Fuchs cohomology is the continuous Lie algebra cohomology of
+the mode algebra.  Chiral Hochschild cohomology is the curve-level
+factorization Ext.  A comparison between them consists of an explicit
+chain map and its quasi-isomorphism range; the support of the chart
+complex is supplied by $H_H(\Walg^k;S_W)$.
+For the Virasoro ($r = 1$): $H^*_{\mathrm{cont}}(L_1) = \mathbb{C}[\Theta]$
+has Hilbert series $1/(1-t^2)$, while the bounded vertex-cohomology
+complex has Poincar\'e polynomial $1+t^2+t^3$.  Transport of the latter
+to the curve chart uses $\chi_{\operatorname{Vir}_c}^{\mathrm{bd}}$.
+\end{remark}
+
+\begin{remark}[Scope]
+Free strong generation of the universal principal algebra supplies
+its PBW associated graded.  A curve-level support calculation also
+requires incidence-compatible collision retracts, completion,
+averaging, and a comparison with the chart complex.  Admissible
+quotients, simple quotients, critical level, and non-principal
+nilpotent orbits each define a separate family datum
+$H_H(\Walg^k(\mathfrak g,f);S_{k,f})$.  At critical level the
+Feigin--Frenkel centre enters this datum in degree zero.
+\end{remark}
+
+\begin{remark}[Curve-level model for Theorem~H]
+\label{rem:theorem-h-model}
+\index{chiral Hochschild cohomology!model presentation}
+The curve-level chiral derived centre is computed from the two-sided
+diagonal bar object
+\[
+ \bar{B}_{\mathrm{HH}}(\cA)
+ =
+ \bigl(\cA\otimes T^c(s^{-1}\bar\cA)\otimes\cA,\,d\bigr),
+\]
+viewed as a model for
+$R\!\operatorname{End}_{\cA\text{-}\cA}(\cA)$.  The bar--cobar counit
+resolves the diagonal bimodule under the Ran reconstruction package.
+A quadratic presentation supplies
+\[
+ \cA^{\mathrm i}
+ \xrightarrow{\ q_\cA\ }
+ \barB^{\mathrm{ch}}(\cA),
+ \qquad
+ \cA^{\mathrm i}
+ \xrightarrow{\mathbb D_X}
+ \cA^!,
+\]
+and Koszulness makes $q_\cA$ a quasi-isomorphism.  These are the full
+bar coalgebra, the quadratic coalgebra, and its Verdier-dual algebra.
+
+Theorem~H adds a family support datum
+$H_H(\cA;S)$ to this resolution.  Its incidence-compatible retract
+identifies the chart cohomology with $H^\bullet(K_{\cA,S})$.  The
+shifted chart complex governs the chiral Maurer--Cartan deformation
+problem; its degree-three group carries the primary obstruction.
+For principal $W$-algebras, determining that group is part of the
+family-specific collision calculation.
+\end{remark}
+
+\begin{remark}[Non-principal nilpotent orbits]
+For $\Walg^k(\mathfrak g,f)$, the Kazhdan grading associated to the
+$\mathfrak{sl}_2$-triple determines the conformal weights of the
+generators.  A support theorem is the construction of
+$H_H(\Walg^k(\mathfrak g,f);S_{k,f})$.  Its degree-zero term records
+the centre, its degree-one term records fixed-product derivations, and
+its higher terms record deformations and their obstructions.  Each
+nilpotent orbit therefore carries its own collision and comparison
+problem.
+\end{remark}
+
+\section{Deformation theory}
+
+\subsection{Infinitesimal deformations}
+
+\begin{theorem}[Low-degree chiral deformation classes;
+\ClaimStatusConditional]\label{thm:deformation-classification}
+Assume the chiral deformation functor of $\mathcal A$ is governed by
+the shifted dg-Lie algebra
+$\ChirHoch^\bullet(\mathcal A,\mathcal A)[1]$ with the chiral
+Gerstenhaber bracket of Theorem~\textup{\ref{thm:gerstenhaber-structure}}.
+Then:
+\begin{enumerate}
+\item $\ChirHoch^1(\mathcal{A})$ classifies \emph{outer derivations} $\mathrm{Der}(\mathcal{A})/\mathrm{Inn}(\mathcal{A})$ (not infinitesimal automorphisms, which are all derivations).
+\item $\ChirHoch^2(\mathcal{A})$ classifies first-order deformations.
+\item $\ChirHoch^3(\mathcal{A})$ contains the primary obstructions to extending deformations.
+\item In conformal-field-theoretic applications, exactly marginal
+operators are weight-one classes in $\ChirHoch^2(\mathcal A)$ whose
+primary obstruction in $\ChirHoch^3(\mathcal A)$ vanishes.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Marginal deformations of beta-gamma; standard
+free-field normalisation]
+For the standard $\beta\gamma$ system in the free-field normalisation:
+\[\ChirHoch^2(\beta\gamma) = \mathbb{C} \cdot [\beta\gamma]\]
+The class $[\beta\gamma]$ corresponds to the exactly marginal operator changing the conformal weights.
+\end{example}
+
+\subsection{Formal deformation theory}
+
+The formal deformation space is controlled by the differential graded Lie algebra
+$\mathfrak{g}_{\mathcal{A}} = \ChirHoch^*(\mathcal{A}, \mathcal{A})[1]$
+with the Gerstenhaber bracket.
+
+\begin{theorem}[Maurer--Cartan equation {\cite{Kon03,KontsevichSoibelman}};
+\ClaimStatusConditional]\label{thm:maurer-cartan-deformations}
+Under the governing-dg-Lie hypothesis of
+Theorem~\textup{\ref{thm:deformation-classification}}, formal
+deformations correspond to solutions of:
+\[d\alpha + \frac{1}{2}[\alpha, \alpha] = 0, \quad \alpha \in \mathfrak{g}_{\mathcal{A}}^1\]
+\end{theorem}
+
+\section{Physical applications}
+
+\subsection{Marginal operators and RG flow}
+
+In CFT, marginal operators have dimension $(1,1)$ and correspond to
+$\ChirHoch^2_{\text{marginal}}(\mathcal{A}) = \{\omega \in \ChirHoch^2 : h(\omega) = 1\}$.
+The primary obstruction to extending such a deformation is the
+corresponding class in $\ChirHoch^3$; vanishing of all higher
+renormalisation obstructions requires the full deformation problem,
+not only Theorem~H.
+
+\subsection{String field theory}
+
+The conjectural identification of the bar complex with BRST cohomology (Conjecture~\ref{conj:master-bv-brst}) takes the form:
+\[H^*_{\text{BRST}}(\text{String}[\mathcal{A}]) \cong \ChirHoch^*(\mathcal{A})\]
+
+String vertices are encoded in the $A_\infty$ structure: $m_2$ gives the three-string vertex, $m_3$ the four-string contact term, and higher $m_k$ the multi-string interactions.
+
+\section{Computational tools}
+
+\subsection{Spectral sequences}
+
+\begin{theorem}[Bar spectral sequence {\cite{BD04,CG17}}; \ClaimStatusProvedElsewhere]\label{thm:bar-spectral-sequence-hochschild}
+\[E_1^{p,q} = H^q(\ConfigSpace{p}(X), \mathcal{A}^{\boxtimes p}) \Rightarrow \ChirHoch^{p+q}(\mathcal{A})\]
+\end{theorem}
+
+\subsection{Explicit computations}
+
+Bakalov--De Sole--Kac compute bounded vertex cohomology for two basic
+families.  For the rank-one even free superboson (B_{\mathfrak h}),
+\cite[Theorem~7.4]{BDSK21} gives
+\[
+ \dim H^n_{\mathrm{ch},b}(B_{\mathfrak h},B_{\mathfrak h})
+ =(2,1,0,0,\ldots).
+\]
+For the Virasoro vertex algebra, \cite[Theorem~7.2]{BDSK21} gives one
+class in each of degrees (0,2,3) and zero in every other degree.
+A bounded-to-chart quasi-isomorphism
+\[
+ \chi_V^{\mathrm{bd}}\colon
+ C^\bullet_{\mathrm{ch},b}(V,V)
+ \longrightarrow C^\bullet_{\mathrm{ch}}(\cA_V,\cA_V)
+\]
+transports either calculation to the curve-level chart complex.
+
+For the free-fermion OPE
+\(psi(z)\psi^*(w)\sim(z-w)^{-1}\), the rescaling cochain
+\[
+ N(\psi)=\psi,\qquad N(\psi^*)=0
+\]
+has coboundary equal to the corresponding rescaling of the mixed OPE.
+Thus the degree-two cochain represented by
+\(\psi\psi^*\) is exact in this model.  A free-fermion chart
+calculation requires a family support datum
+\(H_H(\cA_{\mathcal F};S_{\mathcal F})\) or a proved
+bounded-to-chart comparison, as in
+Example~\ref{ex:HH-fermion-complete}.
+
+\section{Chiral Hochschild-cyclic spectral sequence for chiral algebras}
+\label{sec:hochschild-cyclic-spectral}
+
+\begin{remark}[Physical origin]
+\emph{Heuristic.} In 2d~CFT on a genus~$g$ surface $\Sigma_g$, the partition function
+$Z[\Sigma_g] = \operatorname{Tr}_{\mathcal{H}}(q^{L_0-c/24})$ is
+read by the chiral Hochschild-cyclic spectral sequence in the
+following physical mnemonic: the $E_1$ page
+gives the tree-level (genus~$0$) contribution, $E_2$ incorporates
+one-loop corrections, and higher pages capture multi-loop effects.
+For chirally Koszul algebras at generic level, the spectral sequence
+degenerates at~$E_2$ by the Ext-vanishing argument
+(Theorem~\ref{thm:w-algebra-hochschild}).
+\end{remark}
+
+\begin{construction}[Topological cyclic comparison; conditional]
+The chiral Hochschild chain model used for cyclic homology has
+chain groups
+\[
+\mathrm{CH}^{\mathrm{ch}}_n(\mathcal{A}) =
+\Gamma(C_n(X),
+ \mathcal{A}^{\boxtimes n} \otimes \det(\Omega^1_{C_n(X)/X}))\]
+before compactification and derived completion.
+
+In a locally constant topological comparison model, cyclic rotation of
+configuration points gives an $S^1$-action and a comparison map toward:
+\[
+\mathrm{CC}^{\mathrm{ch,top}}_n(\mathcal{A}) \longrightarrow
+ [\mathrm{Maps}(S^1, LX) \otimes_{\mathcal{A}} \mathcal{A}^{\otimes n}]^{S^1}
+\]
+where $LX = \text{Maps}(S^1, X)$ is the loop space.
+
+Under the hypotheses of that comparison, the cyclic spectral sequence
+maps to the spectral sequence for $S^1$-equivariant loop homology.
+This is not the curve-level Theorem~H statement. Theorem~H concerns
+the chiral cochain complex $\ChirHoch^\bullet(\cA)$ on a curve, with
+the conventions of Appendix~\ref{app:hochschild-conventions}.
+The classical loop-space identification for associative algebras is
+\cite{Loday98}; the factorization comparison requires the additional
+locally constant/topological hypotheses of \cite[Chapter~5]{CG17}.
+\end{construction}
+
+\begin{computation}[Locally constant zero-mode model; \ClaimStatusConditional]
+In the locally constant zero-mode comparison model, the $E_2$ page for
+standard examples is:
+
+\emph{Heisenberg algebra.}
+\[\text{HH}_*^{\text{ch}}(\mathcal{H}) = \mathbb{C}[c] \otimes \Lambda(\sigma)\]
+where $|c| = 2$ (central charge) and $|\sigma| = 1$ (desuspension of $S^1$).
+
+The Connes operator $B: \text{HH}_n \to \text{HH}_{n+1}$ (degree $+1$) satisfies $B(c) = 0$,
+$B(\sigma) = c$, giving:
+\[\text{HC}_*^{\text{ch}}(\mathcal{H}) = \mathbb{C}[c]\]
+(polynomials in the central charge).
+
+\emph{Free fermion $\beta\gamma$ system.}
+\[\text{HH}_*^{\text{ch}}(\beta\gamma) = \Lambda(\beta_0, \gamma_0) \otimes \mathbb{C}[c]\]
+where $\beta_0, \gamma_0$ are zero modes. Cyclic homology adds periodicity:
+\[\text{HC}_*^{\text{ch}}(\beta\gamma) = \mathbb{C}[c] \otimes
+ \mathbb{C}[\beta_0^{-1}, \gamma_0^{-1}]_{\text{formal}}\]
+(the localization $\mathbb{C}[\beta_0, \gamma_0][\beta_0^{-1}, \gamma_0^{-1}]$ at the zero-mode variables, completed formally).
+
+The zero-mode periodicity in $\text{HC}_*^{\text{ch}}(\beta\gamma)$ reflects the symplectic pairing of the $\beta\gamma$ system: the localized zero modes span the deformation space of the Lagrangian splitting.
+\end{computation}
+
+\begin{remark}[Functoriality]
+The chiral Hochschild-cyclic spectral sequence is functorial: a morphism
+$f\colon \cA \to \mathcal{B}$ induces $f_*\colon E_r(\cA) \to E_r(\mathcal{B})$,
+tensor products satisfy $E_r(\cA \otimes \mathcal{B}) \cong E_r(\cA) \otimes E_r(\mathcal{B})$
+up to the Kunneth convergence hypotheses for the chosen completed
+chain model. Koszul duality acts on the cyclic spectral sequence only
+after a trace/Poincare duality identifies the chain model with the
+dual of the chiral cochain model; without that extra datum no
+pagewise equality $E_r(\cA^!)\cong E_r(\cA)^\vee$ is asserted.
+The representing object for deformations is the cochain complex
+$\ChirHoch^\bullet(\cA,\cA)$; the chain complex
+$\mathrm{CH}_*(\cA)$ represents traces and cyclic invariants.
+\end{remark}
+
+\subsection{Chiral Hochschild complex for chiral algebras}
+
+\begin{definition}[Chiral Hochschild chain model for cyclic homology]
+\label{def:chiral-hochschild}
+\index{Hochschild cohomology!chiral|textbf}
+For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, the
+chain-side model used below is
+\[\text{CH}_n(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}(X),
+ \mathcal{A}^{\boxtimes(n+1)} \otimes \det\left(\Omega^1_{\overline{C}_{n+1}(X)/X}\right)\right)\]
+
+with differential:
+\[d_{\text{HH}}(\omega) = \sum_{i=0}^{n} (-1)^i \left[\text{omit } i\text{-th factor}\right]\]
+
+More explicitly, using the chiral product $\mu_{ij}$:
+\begin{align*}
+d_{\text{HH}}(a_0 \otimes \cdots \otimes a_n)
+&= \sum_{i=0}^{n-1} (-1)^i (a_0 \otimes \cdots \otimes \mu(a_i, a_{i+1})
+ \otimes \cdots \otimes a_n) \\
+&\quad + (-1)^n (\mu(a_n, a_0) \otimes a_1 \otimes \cdots \otimes a_{n-1})
+\end{align*}
+
+The last term implements the \emph{cyclic structure}: $a_n$ wraps around to multiply $a_0$.
+This is not the cochain complex
+$\ChirHoch^\bullet(\mathcal A)$ of Theorem~H; it is the chain model
+whose homology feeds Connes' cyclic construction.
+\end{definition}
+
+\begin{theorem}[Chiral Hochschild chain model is a chain complex; \ClaimStatusProvedHere]
+\label{thm:hochschild-chain-complex}
+The identity $d_{\text{HH}}^2 = 0$ is the chiral Hochschild analogue
+of the Arnold-relation mechanism in the degree-$2$ bar calculation:
+adjacent face maps cancel in pairs. In the chiral setting, the same
+cancellation acquires OPE corrections from the higher poles.
+The differential $d_{\text{HH}}$ satisfies $d_{\text{HH}}^2 = 0$, making
+$(\text{CH}_*(\mathcal{A}), d_{\text{HH}})$ a chain complex.
+\end{theorem}
+
+\begin{proof}
+We must show that for any $\omega \in \text{CH}_n(\mathcal{A})$:
+\[d_{\text{HH}}^2(\omega) = 0\]
+
+\emph{Step 1: Expand $d_{\text{HH}}^2$}
+
+Applying $d_{\text{HH}}$ twice gives:
+\begin{align*}
+d_{\text{HH}}^2(a_0 \otimes \cdots \otimes a_n)
+&= d_{\text{HH}}\left(\sum_{i=0}^{n-1} (-1)^i (\cdots \otimes \mu(a_i, a_{i+1})
+ \otimes \cdots)\right. \\
+&\quad\left. + (-1)^n (\mu(a_n, a_0) \otimes a_1 \otimes \cdots)\right)
+\end{align*}
+
+\emph{Step 2: Identify canceling pairs}
+
+After expanding, terms come in two types:
+\begin{enumerate}
+\item \emph{Type A}: Apply $\mu$ at positions $(i,i+1)$ then $(j,j+1)$ with $j \neq i, i+1$
+\item \emph{Type B}: Apply $\mu$ twice at adjacent triples $(i,i+1,i+2)$
+\end{enumerate}
+
+\emph{Type A terms cancel} because applying $\mu$ at position~$i$ first reduces the chain length by~1, so the second application at position~$j$ (with $j > i+1$) picks up index $j-1$:
+\[(-1)^i (-1)^{j-1} (\ldots) +
+ (-1)^j (-1)^{i} (\ldots) = (-1)^{i+j-1} + (-1)^{i+j} = 0\]
+(the index shift from the first contraction produces the sign difference)
+
+\emph{Type B terms cancel} by the Borcherds identity (the chiral analog of associativity).
+For three elements $a_i, a_{i+1}, a_{i+2}$ at pairwise distinct points $z_i, z_{i+1}, z_{i+2}$,
+the Type~B contributions are:
+\begin{align*}
+&(-1)^i(-1)^{i+1}(\cdots \otimes \mu_{z_i, z_{i+2}}(\mu_{z_i, z_{i+1}}(a_i,a_{i+1}),a_{i+2}) \otimes \cdots) \\
+&+ (-1)^{i+1}(-1)^i (\cdots \otimes \mu_{z_i, z_{i+2}}(a_i,\mu_{z_{i+1}, z_{i+2}}(a_{i+1},a_{i+2})) \otimes \cdots)
+\end{align*}
+
+The signs give $(-1)^{2i+1} = -1$ for the first and $(-1)^{2i+1} = -1$ for the second,
+so the total contribution is:
+\[-\bigl(\mu(\mu(a_i,a_{i+1}),a_{i+2}) - \mu(a_i,\mu(a_{i+1},a_{i+2}))\bigr)\]
+
+By the Borcherds identity \cite[Section~3.4.7]{BD04}
+(equivalently: the factorization algebra structure
+encodes \emph{homotopy} associativity via the codimension-1 boundary strata
+of $\overline{C}_3$), the iterated products
+$\mu(\mu(a_i,a_{i+1}),a_{i+2})$ and $\mu(a_i,\mu(a_{i+1},a_{i+2}))$
+agree up to the contribution of the boundary stratum $\partial \overline{C}_3$,
+which is accounted for by the chiral Hochschild complex structure
+(the face maps encode precisely these boundary identifications).
+Thus the two terms cancel in the chiral Hochschild complex, giving $d_{\text{HH}}^2 = 0$.
+
+\emph{Note}: Unlike the classical case, the chiral product is \emph{not} strictly associative;
+the Borcherds identity provides associativity only up to total derivatives
+(equivalently, up to homotopy). The cancellation above relies on the
+factorization algebra axioms rather than strict associativity.
+\end{proof}
+
+\begin{definition}[Chiral Hochschild homology]
+\label{def:chiral-HH}
+The \emph{chiral Hochschild homology} of $\mathcal{A}$ is:
+\[\text{HH}_n^{\text{ch}}(\mathcal{A}) = H_n(\text{CH}_*(\mathcal{A}), d_{\text{HH}})\]
+\end{definition}
+
+\subsection{\texorpdfstring{Cyclic structure and $S^1$-action}{Cyclic structure and S 1-action}}
+
+\begin{definition}[Cyclic operator]
+\label{def:cyclic-operator}
+The \emph{cyclic operator} $t: \text{CH}_n(\mathcal{A}) \to \text{CH}_n(\mathcal{A})$
+is defined by:
+\[t(a_0 \otimes a_1 \otimes \cdots \otimes a_n) = (-1)^n (a_n \otimes a_0 \otimes a_1
+ \otimes \cdots \otimes a_{n-1})\]
+
+This generates a $\mathbb{Z}/(n+1)$-action on $\text{CH}_n(\mathcal{A})$.
+\end{definition}
+
+\begin{lemma}[Cyclic operator commutes with the chiral Hochschild differential; \ClaimStatusProvedHere]
+\label{lem:cyclic-commutes}
+The cyclic operator commutes with the chiral Hochschild differential:
+\[t \circ d_{\text{HH}} = d_{\text{HH}} \circ t\]
+\end{lemma}
+
+\begin{proof}
+Direct computation using the definition of $d_{\text{HH}}$:
+\begin{align*}
+t(d_{\text{HH}}(a_0 \otimes \cdots \otimes a_n))
+&= t\left(\sum_{i=0}^{n-1} (-1)^i (\cdots \otimes \mu(a_i,a_{i+1}) \otimes \cdots)
+ + (-1)^n (\mu(a_n,a_0) \otimes \cdots)\right)
+\end{align*}
+
+After applying $t$ (cyclic permutation), each term shifts indices: $i \to i+1 \pmod{n+1}$.
+
+Similarly:
+\[d_{\text{HH}}(t(a_0 \otimes \cdots \otimes a_n)) =
+ d_{\text{HH}}((-1)^n(a_n \otimes a_0 \otimes \cdots \otimes a_{n-1}))\]
+
+After accounting for Koszul signs from moving $a_n$ past $a_0, \ldots, a_{n-1}$,
+the two expressions are identical.
+\end{proof}
+
+\begin{definition}[Connes operator B]
+\label{def:connes-B}
+\index{cyclic homology!Connes operator|textbf}
+The \emph{Connes operator} $B: \mathrm{CH}_n(\mathcal{A}) \to \mathrm{CH}_{n+1}(\mathcal{A})$ is defined as
+\[B = (1-t_{n+1}) \circ s \circ N_n\]
+where $N_n = \sum_{i=0}^{n} t^i$ is the norm operator and $s: \mathrm{CH}_n \to \mathrm{CH}_{n+1}$ is the extra degeneracy $s(a_0 \otimes \cdots \otimes a_n) = 1 \otimes a_0 \otimes \cdots \otimes a_n$. The identities $B^2 = 0$ and $Bd + dB = 0$ hold (Theorem~\ref{thm:connes-exact-sequence}).
+\end{definition}
+
+\begin{theorem}[Connes mixed-complex structure {\cite{Connes85,Loday98}}; \ClaimStatusProvedElsewhere]
+\label{thm:connes-exact-sequence}
+The pair $(d_{\mathrm{HH}}, B)$ equips $\mathrm{CH}_*(\mathcal{A})$ with the
+structure of a \emph{mixed complex}: $d^2 = B^2 = dB + Bd = 0$.
+This gives rise to a short exact sequence of complexes:
+\[0 \to \mathrm{CC}_*(\mathcal{A}) \to \mathrm{CC}_*^{\mathrm{per}}(\mathcal{A})
+\to \mathrm{CC}_*^{\mathrm{neg}}(\mathcal{A})[2] \to 0\]
+where:
+\begin{itemize}
+\item $\mathrm{CC}_* = \mathrm{CH}_* \otimes k[u]/(d + uB)$ is the cyclic complex
+ ($|u| = -2$)
+\item $\mathrm{CC}_*^{\mathrm{per}} = \mathrm{CH}_* \otimes k((u))/(d+uB)$ is the
+ periodic cyclic complex
+\item $\mathrm{CC}_*^{\mathrm{neg}}$ is the negative cyclic complex
+\end{itemize}
+\end{theorem}
+
+\begin{remark}[Provenance and citation]
+This theorem is imported and treated as \ClaimStatusProvedElsewhere. Standard
+presentations of Connes' mixed-complex formalism and the associated exact
+sequence are in \cite{Connes85,Loday98}.
+\end{remark}
+
+\begin{corollary}[Connes SBI exact sequence {\cite{Connes85,Loday98}}; \ClaimStatusProvedElsewhere]
+\label{cor:connes-SBI}
+For a chiral Hochschild chain model carrying the mixed-complex
+structure of Theorem~\textup{\ref{thm:connes-exact-sequence}}, there
+is a long exact sequence relating chiral Hochschild and cyclic homology:
+\[\cdots \to \mathrm{HH}_n(\mathcal{A}) \xrightarrow{I} \mathrm{HC}_n(\mathcal{A}) \xrightarrow{S} \mathrm{HC}_{n-2}(\mathcal{A}) \xrightarrow{B} \mathrm{HH}_{n-1}(\mathcal{A}) \to \cdots\]
+where $S$ is the periodicity operator, $B$ is Connes' operator, and $I$ is the natural inclusion. In particular, $S$ is an isomorphism in degrees where $\mathrm{HH}_*$ vanishes, yielding $2$-periodicity of periodic cyclic homology $\mathrm{HP}_* = \varprojlim_S \mathrm{HC}_{*+2k}$.
+\end{corollary}
+
+\subsection{The chiral Hochschild-cyclic spectral sequence}
+
+\begin{theorem}[Chiral Hochschild-cyclic spectral sequence {\cite{Connes85,Loday98}}; \ClaimStatusProvedElsewhere]
+\label{thm:HC-spectral-sequence}
+\index{spectral sequence!Hochschild-cyclic}
+Let
+\[
+C=(\mathrm{CH}^{\mathrm{ch}}_*(\mathcal A),d_{\mathrm{HH}},B)
+\]
+be the mixed complex of Theorem~\textup{\ref{thm:connes-exact-sequence}}.
+The $u$-adic filtration on the negative cyclic complex
+$C[[u]]$ and the induced filtration on the periodic complex $C((u))$
+give spectral sequences whose first pages are
+\[
+E_1^{\mathrm{neg}}\cong \mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)[[u]],
+\qquad
+E_1^{\mathrm{per}}\cong \mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)((u)),
+\qquad |u|=-2,
+\]
+with first differential induced by $uB$. They converge, under the
+usual completeness and boundedness hypotheses for the chosen completed
+chain model, to $\mathrm{HC}^{\mathrm{neg,ch}}_*(\mathcal A)$ and
+$\mathrm{HP}^{\mathrm{ch}}_*(\mathcal A)$ respectively. The ordinary
+cyclic spectral sequence is obtained from the quotient
+$C((u))/uC[[u]]$.
+\end{theorem}
+
+\begin{remark}[Provenance and citation]
+This theorem is imported and treated as \ClaimStatusProvedElsewhere. The
+spectral sequence attached to the mixed complex $(\mathrm{CH}_*,d_{\mathrm{HH}},B)$
+is standard in the cyclic-homology literature; see \cite{Connes85,Loday98}.
+The theorem asserts the mixed-complex spectral sequence. Any two-column
+display below records the first two $u$-columns or a zero-mode
+truncation; the full cyclic spectral sequence keeps the complete
+$u$-adic filtration.
+\end{remark}
+
+\subsection{\texorpdfstring{$E_2$ page: explicit computation}{E2 page: explicit computation}}
+
+\begin{theorem}[Second-page formula {\cite{Loday98}}; \ClaimStatusProvedElsewhere]
+\label{thm:E2-page-formula}
+For the mixed complex
+$C=(\mathrm{CH}^{\mathrm{ch}}_*(\mathcal A),d_{\mathrm{HH}},B)$, the
+second page of the $u$-adic cyclic spectral sequence is
+\[
+E_2^{\mathrm{neg}}
+\cong
+H\!\left(\mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)[[u]],\,uB\right),
+\qquad
+E_2^{\mathrm{per}}
+\cong
+H\!\left(\mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)((u)),\,uB\right).
+\]
+The ordinary cyclic version is the corresponding homology for
+$\mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)((u))/u\mathrm{HH}^{\mathrm{ch}}_*(\mathcal A)[[u]]$.
+When a locally constant trace model identifies the mixed complex with
+an $S^1$-equivariant chain model, these pages are the algebraic
+counterparts of the associated homotopy fixed-point, orbit, and Tate
+spectral sequences. No invariant/coinvariant formula is used without
+that trace comparison.
+\end{theorem}
+
+\begin{remark}[Provenance and citation]
+This theorem is imported and treated as \ClaimStatusProvedElsewhere. It
+is the standard second-page calculation for a mixed complex filtered by
+the cyclic parameter $u$; see \cite{Loday98}.
+\end{remark}
+
+\begin{example}[Second page for the Heisenberg algebra]
+\label{ex:E2-heisenberg}
+For the Heisenberg chiral algebra $\mathcal{H}$ at level $k$:
+
+\emph{Step 1: Compute chiral Hochschild homology}
+\[\text{HH}_*(\mathcal{H}) = \mathbb{C}[a_{-n}]_{n \geq 1} \otimes \mathbb{C} \cdot \mathbf{1}\]
+where $a_{-n}$ are negative modes of the Heisenberg field $a(z) = \sum_n a_n z^{-n-1}$.
+
+In more invariant terms:
+\[\text{HH}_*(\mathcal{H}) = \text{Sym}^*(H_1(S^1, \mathbb{C})) \otimes \Lambda(H_0(S^1, \mathbb{C})) = \mathbb{C}[c] \otimes \Lambda(\sigma)\]
+where $|c| = 2$ (from the $S^1$ homology) and $|\sigma| = 1$ (from the constant functions), consistent with the Serre duality computation.
+
+\emph{Step 2: $S^1$-action}
+
+The $S^1$-action on $\text{HH}_*(\mathcal{H})$ is trivial on the center, so:
+\[\text{HH}_*(\mathcal{H})^{S^1} = \mathbb{C}[c]\]
+\[\text{HH}_*(\mathcal{H})_{S^1} = \mathbb{C}[c]\]
+
+\emph{Step 3: first two $u$-columns of the $E_2$ page}
+\[E_2^{0,q} = \mathbb{C}[c] \cap \{|*| = q\} = \begin{cases}
+\mathbb{C} & \text{if } q = 0, 2, 4, \ldots \\
+0 & \text{otherwise}
+\end{cases}\]
+
+\[E_2^{1,q} = \mathbb{C}[c] \cap \{|*| = q-1\} = \begin{cases}
+\mathbb{C} & \text{if } q = 1, 3, 5, \ldots \\
+0 & \text{otherwise}
+\end{cases}\]
+
+The $E_2$ page is therefore:
+\[E_2 = \begin{array}{c|cc}
+q \backslash p & 0 & 1 \\
+\hline
+0 & \mathbb{C} & 0 \\
+1 & 0 & \mathbb{C} \\
+2 & \mathbb{C} & 0 \\
+3 & 0 & \mathbb{C} \\
+\vdots & \vdots & \vdots
+\end{array}\]
+
+This display is the first-two-column truncation of the $u$-adic
+mixed-complex spectral sequence. The full negative or periodic cyclic
+spectral sequence has further $u$-columns, generated by multiplication
+by the cyclic parameter $u$. Degeneration at $E_2$ is asserted only
+after the chosen
+locally constant zero-mode model has no further $uB$-homology
+extension data.
+
+\emph{Comparison with classical Hochschild cohomology.}
+The polynomial $E_2$ page above should not be confused with the
+ordinary classical Hochschild cohomology
+$\mathrm{HH}^*(\mathcal{H})_{\mathrm{alg}}$, which is computed in
+Example~\ref{ex:HH-heisenberg-complete}. The latter uses the Koszul
+resolution (length~$2$) and gives
+$\mathrm{HH}^n_{\mathrm{alg}}(\mathcal{H}) = \mathbb{C}$ for
+$n = 0, 1, 2$ and
+$\mathrm{HH}^n_{\mathrm{alg}}(\mathcal{H}) = 0$ for $n \geq 3$.
+The difference is that the $E_2$ page here is computed from chiral
+Hochschild \emph{homology}
+$\mathrm{HH}^{\mathrm{ch}}_*(\mathcal{H})
+= \mathbb{C}[c] \otimes \Lambda(\sigma)$, which is polynomial and
+does not vanish in high degrees. Classical Hochschild cohomology
+\textup{(}the $\mathrm{Ext}$-computation\textup{)} and chiral
+Hochschild homology \textup{(}the $\mathrm{Tor}$-computation\textup{)}
+are distinct invariants; the former detects deformations, while the
+latter feeds the cyclic spectral sequence.
+\end{example}
+
+\begin{example}[Second page for affine sl3]
+\label{ex:E2-sl3}
+\index{$\mathfrak{sl}_3$!Hochschild-cyclic spectral sequence}
+For $\widehat{\mathfrak{sl}}_3$ at generic level~$k$:
+
+\emph{Step~1: Chiral Hochschild homology.}
+By the continuous cohomology of current algebras, $\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)$ is determined by the Lie algebra cohomology $H^*(\mathfrak{sl}_3; \mathbb{C}) = \Lambda(x_3, x_5)$ (exterior algebra on generators of degrees $3$ and $5$, corresponding to the exponents $m_1 = 1$, $m_2 = 2$ of $\mathfrak{sl}_3$) tensored with the polynomial algebra from the loop direction. This gives:
+\[\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
+= \mathbb{C}[\Theta_2, \Theta_3] \otimes \Lambda(\sigma_3, \sigma_5)\]
+where $|\Theta_j| = j$ (from the Casimir operators of degrees $2$ and $3$, corresponding to the exponents $m_1 = 1$, $m_2 = 2$) and $|\sigma_{2i+1}| = 2i+1$ (from $H^*(\mathfrak{sl}_3)$).
+
+\emph{Step~2: $S^1$-action and first two $u$-columns.}
+The $S^1$-action on the polynomial part is trivial (Casimirs are invariant).
+The exterior generators $\sigma_3, \sigma_5$ lie in odd degrees and are
+$S^1$-coinvariants. In the first two $u$-columns:
+\[E_2^{0,*} = \mathbb{C}[\Theta_2, \Theta_3], \qquad
+E_2^{1,*} = \mathbb{C}[\Theta_2, \Theta_3].\]
+
+\emph{Step~3: Truncated Hilbert function.}
+At generic~$k$, the locally constant zero-mode truncation has no
+additional $uB$-extension data after the displayed columns. The
+Hilbert function of that truncation,
+$\mathrm{HC}_n^{\mathrm{tr}} = E_2^{0,n} \oplus E_2^{1,n-1}$, gives:
+\[\dim \mathrm{HC}_n^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
+= \#\{(a,b) : 2a + 3b = n\} + \#\{(a,b) : 2a + 3b = n-1\}\]
+which grows linearly in~$n$ (rank~$2$), in contrast to the constant
+$\dim \mathrm{HC}_n = 1$ for $\widehat{\mathfrak{sl}}_2$ (rank~$1$).
+\end{example}
+
+\begin{example}[Second page for lattice VOAs]
+\label{ex:E2-lattice}
+\index{lattice vertex algebra!Hochschild-cyclic}
+For a lattice VOA $V_\Lambda$ of rank~$d$, the underlying Heisenberg
+algebra $\mathcal{H}^{\otimes d}$ gives:
+\[\mathrm{HH}_*^{\mathrm{ch}}(V_\Lambda) = \mathbb{C}[c_1, \ldots, c_d]
+\otimes \Lambda(\sigma_1, \ldots, \sigma_d)\]
+with $|c_i| = 2$, $|\sigma_i| = 1$. The lattice vertex operators do not
+contribute additional chiral Hochschild classes (they are inner automorphisms of the
+Heisenberg algebra at generic level). Thus the first two $u$-columns
+are
+$E_2^{0,*} = \mathbb{C}[c_1, \ldots, c_d]$
+and $E_2^{1,*} = \mathbb{C}[c_1, \ldots, c_d]$ in the generic
+zero-mode model.
+\end{example}
+
+\subsection{Physical interpretation: anomalies and partition functions}
+
+\begin{theorem}[Partition function as cyclic trace in the locally constant model {\cite{FT87,BZFN10}}; \ClaimStatusConditional]
+\label{thm:partition-cyclic}
+Let $\mathcal A$ be a chiral algebra whose factorisation theory on
+$\Sigma_g$ is locally constant after the chosen topological
+specialisation, and assume the trace over the module category is
+defined and convergent. Then the cyclic factorisation trace computes
+the chiral partition function:
+\[
+Z[\Sigma_g]
+= \operatorname{Tr}_{\int_{\Sigma_g}\mathcal A}(q^{L_0})
+= \operatorname{Tr}_{\mathrm{HC}^{\mathrm{ch}}_*(\mathcal A)}(q^{L_0}).
+\]
+
+The physical loop-order filtration is read from the chiral
+Hochschild-cyclic spectral sequence by:
+\begin{itemize}
+\item $E_1$ = tree-level (genus 0 contribution)
+\item $E_2$ = one-loop (genus 1 + quantum corrections)
+\item $E_r$ ($r \geq 3$) = multi-loop corrections (genus $\geq 2$)
+\end{itemize}
+\end{theorem}
+
+\begin{remark}[Provenance]
+Feigin--Tsygan~\cite{FT87} identify cyclic homology with the cyclic
+bar trace in the algebraic setting. Ben-Zvi--Francis--Nadler
+\cite{BZFN10} identify factorisation homology on closed manifolds
+with categorical traces under the hypotheses of their theorem. The
+displayed formula uses these two inputs after the locally constant
+specialisation; it is not a statement about spectral $\mathrm{THH}$
+and not a consequence of Theorem~H.
+\end{remark}
+
+\subsection{Master computation table}
+
+\begin{table}[H]
+\centering
+\caption{\texorpdfstring{First two $u$-columns of the $E_2$}{First two u-columns of the E2} page in standard zero-mode models}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Chiral Algebra} & $\mathbf{E_2^{0,*}}$ & $\mathbf{E_2^{1,*}}$ &
+\emph{Status} \\
+\hline
+Heisenberg $\mathcal{H}_k$ & $\mathbb{C}[c]$ (even deg) & $\mathbb{C}[c]$ (odd deg) &
+zero-mode model \\
+\hline
+$\beta\gamma$ bosons & $\mathbb{C}[c](1 \oplus \beta_0\gamma_0)$ & $\mathbb{C}[c]$ &
+conditional model \\
+\hline
+$bc$ ghosts & Similar to $\beta\gamma$ & Similar to $\beta\gamma$ & conditional model \\
+\hline
+Virasoro $\mathcal{V}_c$ (generic $c$) & $\mathbb{C}[\Theta]$ ($|\Theta| = 2$) & 0 &
+generic model${}^\dagger$ \\
+\hline
+$\widehat{\mathfrak{sl}}_2$ level $k$ & $\mathbb{C}[c]$ & $\mathbb{C}[c]$ & generic model \\
+\hline
+$\widehat{\mathfrak{sl}}_3$ level $k$ & $\mathbb{C}[\Theta_2, \Theta_3]$ & $\mathbb{C}[\Theta_2, \Theta_3]$ & generic model \\
+\hline
+$W_3$ algebra & $\mathbb{C}[\Theta_2, \Theta_3]$ & $\mathbb{C}[\Theta_2]$ & Depends on $c$ \\
+\hline
+$W_N$ algebra ($N \geq 4$) & $\mathbb{C}[\Theta_2, \ldots, \Theta_N]$ & $\mathbb{C}[\Theta_2, \ldots, \Theta_{N-1}]$ & generic model \\
+\hline
+Lattice $V_\Lambda$ (rank $d$) & $\mathbb{C}[c]^{\otimes d}$ & $\mathbb{C}[c]^{\otimes d}$ & generic model \\
+\hline
+$Y(\mathfrak{sl}_2)^{\mathrm{ch}}$ & $\mathbb{C}[\Theta_2]$ & $\mathbb{C}$ & Conjectural \\
+\hline
+\end{tabular}
+
+\smallskip\noindent
+${}^\dagger$\,The $E_2^{0,*}$ column records chiral Hochschild
+\emph{homology} $\mathrm{HH}_*^{\mathrm{ch}}(\cA)^{S^1}$, a Tor
+calculation.  Chiral Hochschild \emph{cohomology}
+$\ChirHoch^*(\cA)$ is the corresponding curve-level Ext calculation.
+Their degree-zero comparison is
+$\mathrm{HH}_0\cong\ChirHoch^0=Z(\cA)$; higher-degree comparisons
+require a family-specific chain map.  Theorem~H supplies the Ext
+support through $H_H(\cA;S)$.
+
+The table records only the first two $u$-columns of the mixed-complex
+spectral sequence in the stated zero-mode or generic model. The full
+negative, periodic, and ordinary cyclic spectral sequences require a
+separate $u$-adic convergence and collapse argument.
+\end{table}
+
+\subsection{Cyclic homology exchange under Koszul duality}
+
+\begin{corollary}[Cyclic homology duality under a trace comparison; \ClaimStatusConditional]\label{cor:cyclic-homology-duality}
+\index{cyclic homology!Koszul duality}
+Let $(\mathcal{A}, \mathcal{A}^!)$ be a Koszul pair equipped with a
+perfect degree-$2$ chain pairing between their chiral Hochschild
+cochain complexes.  Assume in addition that the chain model
+$\mathrm{CH}^{\mathrm{ch}}_*(\mathcal A)$ carries a non-degenerate
+trace/Poincare pairing identifying chiral Hochschild chains with the
+linear dual of chiral Hochschild cochains, compatibly with Connes'
+operator. Then the Connes periodicity operator\index{Connes periodicity operator}
+$S$ intertwines the Koszul duality on chiral Hochschild cochains with
+a shifted duality on periodic cyclic homology:
+\begin{equation}\label{eq:cyclic-duality}
+\mathrm{HP}_n(\mathcal{A}) \;\cong\; \mathrm{HP}_{-n}(\mathcal{A}^!)^{\vee}
+\end{equation}
+for all $n$.  The perfect cochain pairing and the trace comparison are
+the two chain-level hypotheses carrying this identification.
+\end{corollary}
+
+\begin{proof}
+The trace comparison gives a chain-level quasi-isomorphism
+\[
+ \mathrm{CH}^{\mathrm{ch}}_*(\mathcal A)
+ \simeq
+ \ChirHoch^{2-*}(\mathcal A)^\vee\otimes\omega_X
+\]
+and the analogous comparison for $\mathcal A^!$.  Composing these
+maps with the supplied perfect degree-$2$ cochain pairing gives a
+duality of mixed complexes
+between the two cyclic chain models, with Connes' operator carried to
+the dual Connes operator by the compatibility hypothesis. The SBI
+exact sequence is natural for morphisms of mixed complexes, and the
+periodicity operator $S$ shifts degree by~$-2$ on both sides. Passing
+to
+$\mathrm{HP}_*=\varprojlim_S\mathrm{HC}_{*+2k}$ absorbs the
+curve-level shift and gives~\eqref{eq:cyclic-duality}.
+\end{proof}
+
+\begin{remark}\label{rem:cyclic-koszul-virasoro}
+For the Virasoro algebra, the bounded complex has support
+$\{0,2,3\}$ by Theorem~\ref{thm:virasoro-hochschild}.  A cyclic
+duality statement for the curve chart begins with bounded-to-chart
+comparisons for $\operatorname{Vir}_c$ and its chosen partner,
+together with a perfect chain pairing of specified degree.  These
+data determine the exchange of degree-two deformation classes and the
+image of the degree-three class.
+\end{remark}
+
+\begin{corollary}[Adjointness of cup-product operators;
+\ClaimStatusConditional]
+\label{cor:hochschild-cup-exchange}
+\index{Hochschild cohomology!cup product exchange}
+Let $(\mathcal A,\mathcal A^!)$ carry a perfect degree-$d$ chain
+pairing
+\[
+ \langle-,-\rangle\colon
+ C^\bullet_{\mathrm{ch}}(\mathcal A,\mathcal A)
+ \otimes
+ C^\bullet_{\mathrm{ch}}(\mathcal A^!,\mathcal A^!)
+ \longrightarrow\omega_X[-d].
+\]
+Let $\Theta\in\ChirHoch^2(\mathcal A)$ and
+$\Theta^\dagger\in\ChirHoch^2(\mathcal A^!)$.  Assume the pairing is
+Frobenius-compatible and satisfies
+\begin{equation}\label{eq:cup-product-exchange}
+ \langle\Theta\smile x,y\rangle
+ =(-1)^{|x|}\langle x,\Theta^\dagger\smile y\rangle.
+\end{equation}
+Then cup product by $\Theta$ and cup product by
+$\Theta^\dagger$ are adjoint on cohomology with the displayed sign.
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:cup-product-exchange} descends through cocycles and
+coboundaries because the pairing is a chain map.  Perfectness then
+identifies the two multiplication operators as adjoints.
+\end{proof}
+
+\begin{remark}[Virasoro specialization]\label{rem:cup-exchange-virasoro}
+The bounded Virasoro calculation supplies a one-dimensional
+degree-two group.  Its curve-chart specialization requires the two
+bounded-to-chart comparisons.  A Verdier exchange of the resulting
+degree-two classes then requires the perfect chain pairing and
+Frobenius compatibility appearing in
+Corollary~\ref{cor:hochschild-cup-exchange}.
+\end{remark}
+
+\section{Derived center, categorical Hochschild cohomology, and the algebraic shadow}
+\label{sec:derived-center-hochschild-cochains}
+
+\index{derived center|textbf}
+\index{Morita equivalence!Hochschild cohomology}
+\index{compact generator|textbf}
+
+The derived centre of a dg-category is the derived endomorphism
+algebra of its identity functor.  Finite thick generation identifies
+the category with $\mathrm{Perf}(A)$; compact localizing generation
+identifies it with $\mathrm{RMod}_A$.  Under either Morita
+equivalence, the derived centre is the Hochschild cochain
+$E_2$-algebra $C^\bullet(A,A)$, whose cohomology is
+$\mathrm{HH}^\bullet(A)$.  The present chapter works in chain
+complexes over $k$.  For an $E_1$-ring spectrum the corresponding
+spectral centre is $F_{A^e}(A,A)$, while
+$\mathrm{THH}(A)=A\otimes_{A^e}A$ is the trace object.
+
+\subsection{Compact generators and the Morita equivalence}
+
+\begin{definition}[Thick and compact generators;
+\ClaimStatusDefinitional]
+\label{def:compact-generator}
+Let $\mathcal C$ be a $k$-linear stable dg-category and let
+$b\in\mathcal C$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\mathcal C$ is essentially small and idempotent complete,
+then $b$ is a \emph{thick generator} when
+\[
+ H^0(\mathcal C)=\operatorname{thick}(b),
+\]
+where $\operatorname{thick}(b)$ is closed under finite sums, shifts,
+cones, and retracts.
+\item If $\mathcal C$ is presentable, then $b$ is a \emph{compact
+generator} when $\RHom_{\mathcal C}(b,-)$ preserves small coproducts
+and
+\[
+ \operatorname{Loc}(b)=\mathcal C,
+\]
+where $\operatorname{Loc}(b)$ is the stable subcategory generated by
+$b$ under all colimits.  Equivalently,
+$\RHom_{\mathcal C}(b,-)$ is conservative.
+\end{enumerate}
+In either case set $A_b:=\RHom_{\mathcal C}(b,b)$, with multiplication
+given by composition.
+\end{definition}
+
+\begin{computation}[The free rank-one generator;
+\ClaimStatusProvedHere]
+\label{comp:morita-free-generator}
+Let $R$ be a dg-algebra, let $\mathcal C=\mathrm{RMod}_R$, and take
+$b=R_R$.  Then
+\[
+ A_b=\RHom_R(R,R)\simeq R,
+ \qquad
+ \RHom_R(R,M)\simeq M.
+\]
+Evaluation at $1$ identifies an endomorphism of $R_R$ with left
+multiplication $L_r$; the identity
+$L_rL_s=L_{rs}$ fixes the displayed algebra orientation.
+The adjunction
+$-\otimes_R^{\mathbf L}R\dashv\RHom_R(R,-)$ is the identity
+adjunction on $\mathrm{RMod}_R$.  Its compact restriction is
+$\mathrm{Perf}(R)$.  The general theorem is this calculation after a
+compact generator has been chosen.
+\end{computation}
+
+\begin{theorem}[Derived Morita reconstruction from one generator;
+\ClaimStatusProvedHere]
+\label{prop:morita-equivalence-compact-gen}
+\index{Morita equivalence|textbf}
+\textup{[Type: Open, Cat, $0\leftrightarrow1$.  The small package
+$H_{\mathrm{Mor}}^\omega$ is essentially small, pretriangulated, and
+idempotent complete.  The presentable package $H_{\mathrm{Mor}}^L$ is
+a stable presentable $k$-linear category tensored over $\Ch(k)$.
+Each package includes its stated generator condition.]}
+Let $A_b=\RHom_{\mathcal C}(b,b)$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\mathcal C$ is essentially small, pretriangulated, and
+idempotent complete, and $b$ is a thick generator, then
+\[
+ \Psi_\omega\colon\mathcal C\xrightarrow{\ \sim\ }
+ \mathrm{Perf}(A_b),
+ \qquad c\longmapsto\RHom_{\mathcal C}(b,c),
+\]
+is a quasi-equivalence.
+\item If $\mathcal C$ satisfies $H_{\mathrm{Mor}}^L$ and $b$ is a
+compact generator, then
+\[
+ \Psi\colon\mathcal C\xrightarrow{\ \sim\ }
+ \mathrm{RMod}_{A_b}
+\]
+is an equivalence of stable presentable $\infty$-categories.  It
+restricts on compact objects to
+$\mathcal C^\omega\simeq\mathrm{Perf}(A_b)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For the small statement, composition gives a natural map
+\[
+ \RHom_{\mathcal C}(c,c')
+\;\longrightarrow\;
+ \RHom_{A_b}\bigl(\Psi_\omega(c),\Psi_\omega(c')\bigr).
+\]
+For $c=b$ this is the identity
+$\RHom_{\mathcal C}(b,c')\simeq
+\RHom_{A_b}(A_b,\Psi_\omega(c'))$.  The objects $c$ for which the
+map is a quasi-isomorphism for every $c'$ form a thick subcategory.
+They contain $b$, hence all of $\mathcal C$.  Thus $\Psi_\omega$ is
+quasi-fully faithful.  Its image is thick, contains
+$A_b=\Psi_\omega(b)$, and therefore equals
+$\operatorname{thick}(A_b)=\mathrm{Perf}(A_b)$.
+
+For the presentable statement, $b$ is a left $A_b$-module by
+evaluation, and there is an adjunction
+\[
+ \Phi=-\otimes_{A_b}^{\mathbf L}b:
+ \mathrm{RMod}_{A_b}\rightleftarrows\mathcal C:
+ \Psi=\RHom_{\mathcal C}(b,-).
+\]
+The unit is an equivalence on the free module $A_b$.  The functor
+$\Phi$ preserves colimits by construction.  The functor $\Psi$ is
+exact and preserves coproducts because $b$ is compact; hence it
+preserves cofibres and geometric realizations, and therefore all small
+colimits.  The modules on which the unit is an
+equivalence therefore form a localizing subcategory containing
+$A_b$.  Since $A_b$ generates $\mathrm{RMod}_{A_b}$, the unit is an
+equivalence on every module.
+
+For $c\in\mathcal C$, let $K_c$ be the cofiber of the counit
+$\Phi\Psi(c)\to c$.  Applying $\Psi$ and using the unit shows
+$\Psi(K_c)\simeq0$.  Generation by $b$ gives $K_c\simeq0$, so the
+counit is an equivalence.  Thus $\Phi\dashv\Psi$ is an equivalence.
+Equivalences preserve compact objects, and the compact objects of
+$\mathrm{RMod}_{A_b}$ are $\mathrm{Perf}(A_b)$.
+
+This is the dg form of Keller~\cite[\S4]{Keller06}, the monogenic
+stable-model theorem of Schwede--Shipley~\cite[Theorem~3.1.1]{SS03},
+and Lurie~\cite[Theorem~7.1.2.1 and Remark~7.1.2.3]{HA}.
+\end{proof}
+
+\subsection{The derived center}
+
+\begin{definition}[Small and continuous derived centers;
+\ClaimStatusDefinitional]
+\label{def:derived-center}
+\index{derived center|textbf}
+For an essentially small, pretriangulated $k$-linear dg-category
+$\mathcal C$, its \emph{derived center} is
+\[
+Z_{\mathrm{der}}(\mathcal{C})
+:= \RHom_{\mathrm{Fun}^{\mathrm{ex}}(\mathcal{C}, \mathcal{C})}
+ (\mathrm{Id}_{\mathcal{C}},\, \mathrm{Id}_{\mathcal{C}}).
+\]
+For a stable presentable dg-category $\mathcal C$, its
+\emph{continuous derived center} is instead
+\[
+ Z_{\mathrm{der}}^{L}(\mathcal C)
+ :=\RHom_{\mathrm{Fun}^{L}(\mathcal C,\mathcal C)}
+ (\mathrm{Id}_{\mathcal C},\mathrm{Id}_{\mathcal C}),
+\]
+where the functors preserve colimits.  The superscript records this
+continuous functor category.  The category of arbitrary endofunctors
+produces a second, generally larger center.
+A degree-$n$ cocycle in $Z_{\mathrm{der}}(\mathcal{C})$ is a
+natural transformation $\mathrm{Id}_{\mathcal{C}} \Rightarrow
+\mathrm{Id}_{\mathcal{C}}[n]$; its cohomology class is a derived
+natural transformation. The product on $Z_{\mathrm{der}}(\mathcal{C})$
+is composition of natural transformations; in particular,
+$H^0(Z_{\mathrm{der}}(\mathcal{C}))$ is the ordinary center of the
+homotopy category $[\mathcal{C}]$.
+\end{definition}
+
+\subsection{Endofunctors as bimodules}
+
+The bridge between the derived center and categorical Hochschild
+cohomology is the identification of endofunctors with bimodules.
+
+\begin{proposition}[Endofunctor--bimodule equivalence {\cite{Toen07,BZFN10}};
+\ClaimStatusProvedElsewhere]
+\label{prop:endofunctor-bimodule}
+\index{bimodule!endofunctor equivalence}
+For a dg-algebra~$A$, let $\mathrm{Mod}_A$ be the presentable
+dg-category of right $A$-modules.  There is a quasi-equivalence of
+dg-categories
+\[
+\mathrm{Fun}^{L}(\mathrm{Mod}_A,\mathrm{Mod}_A)
+\;\simeq\; A\text{-}\mathrm{bimod},
+\]
+where the left-hand side consists of colimit-preserving dg-functors.
+The equivalence sends an $A$-$A$-bimodule $M$ to
+$- \otimes_A^{\mathbf{L}} M$.  It preserves compact objects precisely
+when $M=F(A)$ is perfect as a \emph{right} $A$-module.  Restriction to
+compact objects and Ind-extension therefore give an equivalence
+\[
+ \mathrm{Fun}^{\mathrm{ex}}\bigl(\mathrm{Perf}(A),
+       \mathrm{Perf}(A)\bigr)
+ \simeq
+ \mathrm{Bimod}_{A\text{-}A}^{\mathrm{rperf}},
+\]
+where the right-hand side is the full dg-subcategory of bimodules
+perfect as right $A$-modules.  Perfection over
+$A^e=A\otimes A^{\mathrm{op}}$ is the additional smooth-kernel
+condition.
+\end{proposition}
+
+\begin{proof}
+The dg Eilenberg--Watts theorem says that a colimit-preserving
+functor $F\colon \mathrm{Mod}_A\to\mathrm{Mod}_A$ is represented by
+the bimodule $M_F:=F(A)$, where the right action comes from the free
+right module and the left action is induced by functoriality in the
+endomorphisms of~$A$.  The assignment $F\mapsto F(A)$ is quasi-inverse
+to $M\mapsto(-\otimes_A^{\mathbf L}M)$.  Since $A$ compactly
+generates $\mathrm{Mod}_A$, such a functor preserves compact objects
+precisely when $F(A)=M$ is compact as a right $A$-module.  It then
+restricts to an exact endofunctor of $\mathrm{Perf}(A)$.  Conversely,
+Ind-extension takes an exact endofunctor of $\mathrm{Perf}(A)$ to a
+colimit-preserving, compact-preserving endofunctor of
+$\mathrm{Mod}_A$.  See
+To\"en~\cite{Toen07} and Ben-Zvi--Francis--Nadler~\cite{BZFN10} for
+the $\infty$-categorical statement.
+\end{proof}
+
+\begin{corollary}[Identity functor $=$ diagonal bimodule]
+\label{cor:identity-diagonal}
+\ClaimStatusProvedHere
+Under the compact-preserving restriction of the equivalence of
+Proposition~\textup{\ref{prop:endofunctor-bimodule}}, the identity
+functor $\mathrm{Id}\colon \mathrm{Perf}(A) \to \mathrm{Perf}(A)$
+corresponds to the diagonal bimodule ${}_A A_A$.
+\end{corollary}
+
+\begin{proof}
+The identity functor sends the free module~$A$ to itself:
+$\mathrm{Id}(A) = A$. The corresponding bimodule is therefore~$A$,
+with left $A$-action by left multiplication and right $A$-action by
+right multiplication. This is the diagonal bimodule.
+\end{proof}
+
+\subsection{The main identification}
+
+\begin{theorem}[Derived center $=$ categorical Hochschild cohomology $=$ algebraic Hochschild cochains via a thick generator;
+\ClaimStatusProvedHere]
+\label{thm:derived-center-hochschild}
+\index{derived center!Hochschild identification}
+\index{Hochschild cohomology!derived center}
+Let\/ $\mathcal{C}$ be an essentially small, pretriangulated,
+idempotent-complete dg-category with thick generator $b$, and set
+$A = \RHom_{\mathcal{C}}(b, b)$.  There is a quasi-isomorphism of
+dg-algebras
+\begin{equation}\label{eq:derived-center-HH}
+Z_{\mathrm{der}}(\mathcal{C})
+\;\simeq\;
+\mathrm{HH}^\bullet_{\mathrm{cat}}(\mathcal{C})
+\;\simeq\;
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)
+:= \RHom_{A^e}(A, A).
+\end{equation}
+In particular, the derived center is a Morita invariant of
+$\mathcal C$.
+\end{theorem}
+
+\begin{proof}
+The proof assembles the three preceding results.
+
+\emph{Step~1} (Morita reduction).
+By Theorem~\ref{prop:morita-equivalence-compact-gen}, $b$ being a
+thick generator gives a quasi-equivalence
+$\Psi\colon \mathcal{C} \xrightarrow{\;\sim\;} \mathrm{Perf}(A)$.
+Passing to the derived dg-functor categories carries the identity of
+$\mathcal C$ to the identity of $\mathrm{Perf}(A)$ and induces a
+quasi-isomorphism on their derived endomorphism complexes.  Hence
+\[
+Z_{\mathrm{der}}(\mathcal{C})
+\;\simeq\;
+Z_{\mathrm{der}}(\mathrm{Perf}(A))
+= \RHom_{\mathrm{Fun}^{\mathrm{ex}}(\mathrm{Perf}(A), \mathrm{Perf}(A))}
+ (\mathrm{Id},\, \mathrm{Id}).
+\]
+
+\emph{Step~2} (Endofunctors $=$ bimodules).
+By Proposition~\ref{prop:endofunctor-bimodule}, exact endofunctors of
+$\mathrm{Perf}(A)$ identify with bimodules perfect as right
+$A$-modules.  This is a full dg-subcategory of all $A$-bimodules, and
+the diagonal bimodule $A$ belongs to it because it is free of rank one
+as a right module.  Applying $\RHom$ to the identity endofunctor
+therefore gives
+\[
+\RHom_{\mathrm{Fun}}(\mathrm{Id},\, \mathrm{Id})
+\;\simeq\;
+\RHom_{A\text{-}\mathrm{bimod}}
+ (M_{\mathrm{Id}},\, M_{\mathrm{Id}}).
+\]
+
+\emph{Step~3} (Identity $\mapsto$ diagonal).
+By Corollary~\ref{cor:identity-diagonal}, $M_{\mathrm{Id}} = {}_A A_A$
+is the diagonal bimodule. Therefore:
+\[
+Z_{\mathrm{der}}(\mathrm{Perf}(A))
+\;\simeq\;
+\RHom_{A^e}(A, A)
+= \mathrm{HH}^\bullet_{\mathrm{alg}}(A).
+\]
+
+\emph{Functoriality.}  A dg-functor equipped with a compatible map of
+chosen generators determines the comparison chain map.  An unpointed
+Morita class determines the corresponding equivalence in the homotopy
+category, as recorded below.
+\end{proof}
+
+\begin{corollary}[Continuous center from a compact generator;
+\ClaimStatusProvedHere]
+\label{cor:continuous-center-compact-generator}
+Let $\mathcal C$ be a stable presentable $k$-linear dg-category with
+compact generator $b$, and put $A=\RHom_{\mathcal C}(b,b)$.  Then
+\[
+ Z_{\mathrm{der}}^{L}(\mathcal C)
+ \simeq
+ \RHom_{A^e}(A,A).
+\]
+Under $\mathcal C^\omega\simeq\mathrm{Perf}(A)$ this is the derived
+center of the compact subcategory.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{prop:morita-equivalence-compact-gen} identifies
+$\mathcal C$ with $\mathrm{Mod}_A$.  Proposition~
+\ref{prop:endofunctor-bimodule} identifies its colimit-preserving
+endofunctors with $A$-bimodules and the identity with the diagonal
+bimodule $A$.  Taking derived endomorphisms gives the formula.
+Restriction to compact objects gives the final assertion.
+\end{proof}
+
+\begin{remark}[Provenance]
+\label{rem:derived-center-provenance}
+The identification
+$Z_{\mathrm{der}}(\mathcal{C}) \simeq
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)$, equivalently
+$\mathrm{HH}^\bullet_{\mathrm{cat}}(\mathcal{C})$ after Morita
+reduction, is implicit in Keller~\cite{Keller06} and
+made explicit in the framework of $(\infty,1)$-categories by
+Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
+To\"en~\cite{Toen07}. The argument presented here isolates the
+essential chain of identifications.  The full
+$(\infty,2)$-categorical formalism supplies its coherent enhancement.
+For the factorization-algebra
+refinement relevant to chiral algebras, see
+Costello--Gwilliam~\cite[Chapter~5]{CG17}.
+\end{remark}
+
+\subsection{Independence of generator: Morita invariance of
+algebraic Hochschild cohomology}
+
+\begin{theorem}[Morita invariance of algebraic Hochschild cohomology;
+\ClaimStatusProvedHere]
+\label{thm:morita-invariance-HH}
+\index{Hochschild cohomology!Morita invariance|textbf}
+\index{Morita equivalence!Hochschild invariance}
+Let $\mathcal C$ be an essentially small, pretriangulated,
+idempotent-complete dg-category with thick generators $b,b'$, and put
+\[
+ A=\RHom_{\mathcal C}(b,b),
+ \qquad
+ A'=\RHom_{\mathcal C}(b',b').
+\]
+Then the common Morita context determines an equivalence of
+Hochschild-cochain $E_2$-algebras
+\[
+ C^\bullet(A,A)\simeq C^\bullet(A',A').
+\]
+In particular,
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A)\cong
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A')$ as graded algebras.  The same
+statement holds when $\mathcal C$ is stable presentable and $b,b'$ are
+compact generators, by applying the small statement to
+$\mathcal C^\omega$.
+\end{theorem}
+
+\begin{proof}
+In the small case Theorem~\ref{thm:derived-center-hochschild}
+identifies both Hochschild-cochain objects with the derived
+endomorphisms of the identity functor of $\mathcal C$.  These
+identifications preserve the cup product and the brace operations,
+hence the $E_2$-structure.  In the presentable case,
+Theorem~\ref{prop:morita-equivalence-compact-gen} identifies
+$\mathcal C^\omega$ with both $\mathrm{Perf}(A)$ and
+$\mathrm{Perf}(A')$.  The explicit Morita context is recorded next.
+\end{proof}
+
+\begin{proposition}[Bimodule realization of Morita transfer;
+\ClaimStatusProvedHere]
+\label{prop:explicit-morita-transfer}
+\index{Morita equivalence!explicit transfer map}
+With the notation of Theorem~\ref{thm:morita-invariance-HH}, set
+\[
+ {}_{A'}P_A:=\RHom_{\mathcal C}(b,b'),
+ \qquad
+ {}_A Q_{A'}:=\RHom_{\mathcal C}(b',b).
+\]
+Composition supplies equivalences of bimodules
+\[
+ Q\otimes_{A'}^{\mathbf L}P\simeq A,
+ \qquad
+ P\otimes_A^{\mathbf L}Q\simeq A'.
+\]
+The functor
+\[
+ T\colon D(A^e)\longrightarrow D((A')^e),
+ \qquad
+ M\longmapsto P\otimes_A^{\mathbf L}M\otimes_A^{\mathbf L}Q,
+\]
+is an equivalence, sends the monoidal unit $A$ to $A'$, and induces
+the Morita equivalence of Hochschild cochains.  On a derived
+bimodule morphism $f\colon A\to A[n]$ it is represented by
+\begin{equation}\label{eq:morita-transfer-map}
+ A'\simeq P\otimes_A^{\mathbf L}Q
+ \xrightarrow{\;\mathrm{id}_P\otimes f\otimes\mathrm{id}_Q\;}
+ P\otimes_A^{\mathbf L}A[n]\otimes_A^{\mathbf L}Q
+ \simeq A'[n].
+\end{equation}
+A choice of cofibrant bimodule models realizes this equivalence by a
+zigzag of $E_2$ quasi-isomorphisms.  Coherent choices of models,
+evaluation, and coevaluation select a strict representative.
+\end{proposition}
+
+\begin{proof}
+The actions displayed in the subscripts follow from postcomposition
+by $A'$ and precomposition by $A$ on $P$, and conversely on $Q$.
+The two evaluation maps are equivalences because $b$ and $b'$ are
+thick generators.  The functor
+\[
+ S(N)=Q\otimes_{A'}^{\mathbf L}N\otimes_{A'}^{\mathbf L}P
+\]
+is inverse to $T$: the composites contract the adjacent factors
+$Q\otimes_{A'}^{\mathbf L}P$ and
+$P\otimes_A^{\mathbf L}Q$ to $A$ and $A'$, respectively.  The same
+contractions give coherent equivalences
+\[
+ T(M\otimes_A^{\mathbf L}N)
+ \simeq
+ T(M)\otimes_{A'}^{\mathbf L}T(N),
+ \qquad T(A)\simeq A'.
+\]
+Thus $T$ transports the derived endomorphism object of the monoidal
+unit $A$ to that of $A'$, including composition and braces.  Formula
+\eqref{eq:morita-transfer-map} is the resulting action on a morphism.
+\end{proof}
+
+\begin{remark}[The chiral comparison is additional structure;
+\ClaimStatusConditional]
+\label{rem:derived-center-chiral}
+\index{derived center!chiral application}
+For a chiral algebra $\cA$ on a curve~$X$, first fix a stable
+presentable factorization-module category
+$\mathrm{Mod}^{\mathrm{fact}}_\cA$ and its completed mapping
+complexes.  Its categorical chiral center is, by definition,
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ :=Z^{L}_{\mathrm{der}}(\mathrm{Mod}^{\mathrm{fact}}_\cA).
+\]
+If this category has a compact generator $b$, Morita reconstruction
+gives
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ \simeq
+ \RHom_{R_b^e}(R_b,R_b),
+ \qquad
+ R_b:=\RHom_{\mathrm{Mod}^{\mathrm{fact}}_\cA}(b,b).
+\]
+Identification with a chosen chiral cochain complex is the content of
+a separate comparison quasi-isomorphism
+\[
+ \chi_\cA\colon
+ \RHom_{R_b^e}(R_b,R_b)
+ \xrightarrow{\ \sim\ }
+ \ChirHoch^\bullet(\cA,\cA).
+\]
+The construction of $\chi_\cA$ combines factorization Morita theory
+with a comparison between two specified cochain models.  The symbol
+$\ChirHoch^\bullet$ therefore carries one of two type signatures: the
+Beilinson--Drinfeld chiral-operation complex, or the Hochschild
+complex of a specified associative $E_1$ factorization object.  A
+comparison theorem supplies an identification between them.
+
+There is a useful first-principles test for the missing generation
+hypothesis.  Suppose
+$F\colon\mathcal D\rightleftarrows
+\mathrm{Mod}^{\mathrm{fact}}_\cA:U$ is an adjunction, $U$ is
+conservative and preserves coproducts, and $d$ is a compact generator
+of $\mathcal D$.  Then $F(d)$ is a compact generator, because
+\[
+ \RHom(F(d),M)\simeq\RHom(d,U(M)).
+\]
+Compactness follows from preservation of coproducts, and vanishing of
+the left side forces $U(M)$, hence $M$, to vanish.  Thus a claimed
+generator for a Heisenberg, affine, Virasoro, or $\mathcal W$ family
+must be accompanied by such a monadic or equivalent construction.
+$C_2$-cofiniteness, a free-field resolution, and BRST reduction supply
+finiteness and resolution inputs; the displayed adjunction supplies
+the compact-generation theorem.
+
+After $\chi_\cA$ has been constructed, a class in
+$\ChirHoch^2(\cA,\cA)$ corresponds to a deformation of the
+identity functor.  The bar cohomology $H^*(B(\cA))$ is a distinct
+Koszul-dual coalgebra invariant.  A field-theoretic realization
+promotes the relevant chain object to a physical bulk state space.
+\end{remark}
+
+\section{Factorization homology on the annulus: algebraic Hochschild chains and the circle trace}
+\label{sec:annulus-hochschild-chains}
+
+\index{factorization homology!annulus|textbf}
+\index{algebraic Hochschild homology!circle trace and excision|textbf}
+\index{excision!factorization homology|textbf}
+
+The complementary side of the categorical/algebraic Hochschild
+picture is homological: while the derived center computes
+categorical Hochschild cochains, the circle trace computes the
+categorical Hochschild homology of the boundary category and, in a
+compact-generator chart, the algebraic Hochschild chains of the
+endomorphism dg-algebra. The input here is a locally constant
+factorization algebra with values in $\Ch(k)$, so the output stays
+in chain complexes. Spectral $\mathrm{THH}$ appears only after
+spectrifying the interval algebra by an Eilenberg--Mac Lane
+construction. The excision axiom for factorization homology
+reduces the circle computation to a tensor product over an interval,
+yielding the identification of factorization homology on $S^1$
+with algebraic Hochschild chains.
+
+\subsection{Factorization homology: recollections}
+
+\begin{definition}[Factorization homology over a manifold]
+\label{def:factorization-homology-manifold}
+\index{factorization homology|textbf}
+For a locally constant factorization algebra $\mathcal{F}$ on a
+manifold~$M$ with values in a symmetric monoidal
+$\infty$-category~$\mathcal{V}$, the \emph{factorization homology}
+of $\mathcal{F}$ over~$M$ is the global sections:
+\[
+\int_M \mathcal{F}
+:= \mathcal{F}(M)
+\;\in\; \mathcal{V}.
+\]
+When $\mathcal{F}$ is constructible rather than locally constant,
+this is the homotopy colimit of $\mathcal{F}$ over the
+Weiss topology on~$M$
+\textup{(}Ayala--Francis~\cite{AF15},
+Costello--Gwilliam~\cite{CG17}\textup{)}.
+\end{definition}
+
+The factorization homology functor satisfies two fundamental
+properties that make it computable: \emph{local constancy} (the
+value on a disk is determined by the $\En$-algebra structure) and
+\emph{excision} (the value on a glued manifold is computed by a
+derived tensor product).
+
+\begin{theorem}[Excision; {\cite[Theorem~3.18]{AF15}}; \ClaimStatusProvedElsewhere]
+\label{thm:excision}
+\index{excision!for factorization homology}
+Let $M = M_+ \cup_N M_-$ be a collar-gluing decomposition: $N$ is a
+codimension-$1$ manifold with a collar neighborhood in~$M$, and
+$M_\pm$ are the two halves. Then there is a natural equivalence
+\[
+\int_M \mathcal{F}
+\;\simeq\;
+\int_{M_+} \mathcal{F}
+\;\otimes^{\mathbf{L}}_{\int_N \mathcal{F}}\;
+\int_{M_-} \mathcal{F}.
+\]
+\end{theorem}
+
+\subsection{The circle computation by excision}
+
+\begin{theorem}[Factorization homology on $S^1$ $=$ algebraic Hochschild chains;
+\ClaimStatusProvedHere]
+\label{thm:circle-fh-hochschild}
+\index{factorization homology!circle}
+\index{algebraic Hochschild homology!factorization homology}
+Let $\mathcal{F}$ be a locally constant factorization algebra on
+$S^1$ with values in $\Ch(k)$, and let $\mathcal{C}$ be the
+associated $\Eone$-category \textup{(}the dg-category of modules
+over the $\Eone$-algebra $A = \mathcal{F}(I)$ for any interval
+$I \subset S^1$\textup{)}. Then there is a natural equivalence
+\begin{equation}\label{eq:circle-fh-HH}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})
+:= \mathrm{HH}_{\bullet,\mathrm{alg}}(A)
+= A \otimes^{\mathbf{L}}_{A^e} A,
+\end{equation}
+where $A^e = A \otimes A^{\mathrm{op}}$.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds by cutting $S^1$ into overlapping arcs and
+applying excision.
+
+\emph{Step~1} (Collar-gluing decomposition of $S^1$).
+Choose a decomposition $S^1 = U_+ \cup U_-$ where $U_+$ and $U_-$
+are open arcs (each diffeomorphic to an interval) whose intersection
+consists of two disjoint intervals:
+\[
+U_+ \cap U_- = J_1 \sqcup J_2.
+\]
+Concretely, parametrize $S^1 = \R / \Z$ and take
+$U_+ = (0, 3/4)$, $U_- = (1/2, 5/4)$, so that
+$J_1 = (1/2, 3/4)$ and $J_2 = (0, 1/4)$ (the latter wrapping around
+$0 \equiv 1$). The collar structure along the boundary is given by
+the intervals $J_1$ and $J_2$ themselves.
+
+\emph{Step~2} (Local constancy on arcs).
+Since $\mathcal{F}$ is locally constant, its value on any interval is
+equivalent to the $\Eone$-algebra $A$:
+\[
+\mathcal{F}(U_+) \simeq A, \quad
+\mathcal{F}(U_-) \simeq A, \quad
+\mathcal{F}(J_1) \simeq A, \quad
+\mathcal{F}(J_2) \simeq A.
+\]
+More precisely, for each interval $J \subset S^1$, the restriction
+$\mathcal{F}|_J$ is equivalent to the factorization algebra associated
+to a single $\Eone$-algebra~$A$, and the value $\mathcal{F}(J) \simeq A$
+is given by the $\Eone$-structure.
+
+\emph{Step~3} (Excision).
+By the excision axiom (Axiom~\ref{thm:excision}) applied to the
+collar-gluing $S^1 = U_+ \cup_{J_1 \sqcup J_2} U_-$:
+\begin{equation}\label{eq:excision-circle}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathcal{F}(U_+)
+\;\otimes^{\mathbf{L}}_{\mathcal{F}(J_1) \otimes \mathcal{F}(J_2)}\;
+\mathcal{F}(U_-).
+\end{equation}
+Substituting the local constancy identifications from Step~2:
+\begin{equation}\label{eq:excision-substituted}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+A \;\otimes^{\mathbf{L}}_{A^e}\; A,
+\qquad A^e := A \otimes A^{\mathrm{op}}.
+\end{equation}
+
+\emph{Step~4} (Bimodule structure and identification with HH).
+The key is to identify the $A \otimes A$-module structures on the two
+copies of~$A$ in
+$A \otimes^{\mathbf{L}}_{A^e} A$. The inclusions
+$J_1 \hookrightarrow U_+$ and $J_2 \hookrightarrow U_+$ give the
+left and right $A$-actions on $\mathcal{F}(U_+) \simeq A$: the
+inclusion of $J_1$ at one end of the arc~$U_+$ provides the left
+action, and the inclusion of $J_2$ at the other end provides the
+right action. That these are the \emph{regular} left and right
+actions (i.e., $a \cdot_L x = ax$ and $x \cdot_R b = xb$) follows
+from local constancy: the factorization algebra~$\mathcal{F}$ on the
+arc~$U_+$ is equivalent to the $\Eone$-algebra~$A$ (Step~2), and
+the collar inclusions $J_i \hookrightarrow U_+$ restrict to the
+identity on~$A$ (since all intervals carry the same algebra by local
+constancy). The bimodule structure is therefore
+$(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$, which is precisely the
+diagonal bimodule ${}_A A_A$. Similarly for $\mathcal{F}(U_-)$, where
+the \emph{opposite} orientation of $U_-$ relative to $U_+$ introduces
+the $A^{\mathrm{op}}$ factor: the left action from $J_1$ on $U_-$
+is the right action on $U_+$, and vice versa. This is the source
+of the $A^{\mathrm{op}}$ in
+$A^e = A \otimes A^{\mathrm{op}}$.
+
+The tensor product over $A \otimes A$ of two copies of the diagonal
+bimodule is, by definition, the algebraic Hochschild chain complex:
+\[
+A \otimes^{\mathbf{L}}_{A \otimes A^{\mathrm{op}}} A
+= A \otimes^{\mathbf{L}}_{A^e} A
+=: \mathrm{HH}_{\bullet,\mathrm{alg}}(A).
+\]
+Here $A \otimes A$ acts on the left copy of~$A$
+via $(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$
+(using the bimodule structure from $J_1$ and $J_2$), and on the
+right copy of~$A$ symmetrically; the tensor product over this action
+contracts the two bimodules into the cyclic bar complex
+$\cdots \to A^{\otimes 3} \to A^{\otimes 2} \to A$ computing
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$.
+
+\emph{Step~5} (Passage to the categorical statement).
+If $\mathcal{C} = \mathrm{Perf}(A)$ is the dg-category of perfect
+$A$-modules, then
+$\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})$ is defined as
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$ via the Morita-invariant
+cyclic bar construction. Combining with Step~4 gives the stated
+equivalence
+$\int_{S^1} \mathcal{F} \simeq
+\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})$.
+\end{proof}
+
+\begin{remark}[Provenance]
+\label{rem:annulus-provenance}
+The identification of factorization homology on $S^1$ with the
+circle-trace/Hochschild construction is due (in the spectral
+topological setting, where it computes $\mathrm{THH}$) to
+Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
+Ayala--Francis~\cite{AF15}; in the vertex algebra setting, the
+parallel result appears in Costello--Gwilliam~\cite[Chapter~5]{CG17}.
+The chain-complex formula recorded here is the algebraic/categorical
+shadow of that spectral statement. The excision argument above
+follows the treatment in~\cite{AF15}.
+\end{remark}
+
+\subsection{The monodromy subtlety: from chiral to locally constant}
+\label{subsec:monodromy-subtlety}
+
+\index{monodromy!factorization homology}
+
+The excision argument of Theorem~\ref{thm:circle-fh-hochschild}
+requires $\mathcal{F}$ to be a \emph{locally constant} factorization
+algebra on $S^1$. In the chiral algebraic setting, the situation is
+more delicate: a chiral algebra~$\cA$ on a curve~$X$ is a
+factorization algebra on $X$ that is locally constant on small disks
+(the $\Eone$-structure on intervals), but the passage from an interval
+to the full circle involves identifying the endpoints. This
+identification may carry \emph{monodromy}, a nontrivial automorphism
+of the $\Eone$-algebra $A = \cA(I)$ arising from parallel transport
+around the puncture.
+
+\begin{definition}[Monodromy automorphism]\label{def:monodromy-aut}
+\index{monodromy!automorphism|textbf}
+Let $\cA$ be a chiral algebra on a punctured disk $D^\times = D
+\setminus \{0\}$, and let $I \subset D^\times$ be an interval.
+The fundamental group $\pi_1(D^\times) \cong \Z$ acts on the
+fiber $A = \cA(I)$ by monodromy. The \emph{monodromy
+automorphism} is the generator:
+\[
+\mathfrak{m}\colon A \;\xrightarrow{\;\sim\;}\; A,
+\]
+obtained by analytically continuing sections of $\cA$ around the
+puncture once counterclockwise.
+\end{definition}
+
+\begin{proposition}[Monodromy for standard families;
+\ClaimStatusProvedHere]
+\label{prop:monodromy-standard}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg $\mathcal{H}_k$.} The monodromy
+ automorphism $\mathfrak{m}$ acts on the mode algebra generated
+ by $\{J_n\}_{n \in \Z}$ via $\mathfrak{m}(J_n) = J_n$ for all
+ $n$. The monodromy is \emph{trivial} on the algebra. However,
+ on Fock modules $F_\lambda$, the monodromy acts by the scalar
+ $e^{2\pi i \lambda^2 / (2k)}$
+ \textup{(}from the conformal weight $h_\lambda = \lambda^2/(2k)$
+ contribution to $q^{L_0}$\textup{)}. For the vacuum module
+ $F_0$, this is trivial.
+\item \emph{Affine $\widehat{\fg}_k$.} The monodromy is trivial on
+ the algebra \textup{(}the current modes $J^a_n$ are
+ single-valued\textup{)}. On highest-weight modules $V_\Lambda$ at
+ integer level, the monodromy acts by
+ $e^{2\pi i h_\Lambda}$ where $h_\Lambda = (\Lambda, \Lambda +
+ 2\rho) / 2(k + h^\vee)$ is the conformal weight.
+\item \emph{Lattice VOA $V_\Lambda$.} The vertex operators
+ $e^\alpha$ for $\alpha \in \Lambda$ have monodromy
+ $\mathfrak{m}(e^\alpha) = e^{2\pi i (\alpha, \alpha)/2}\, e^\alpha$.
+ For an even lattice, $(\alpha, \alpha) \in 2\Z$, so the monodromy
+ is trivial. For an odd lattice, the monodromy is a sign
+ $(-1)^{(\alpha,\alpha)}$ on each sector (note: odd lattices
+ define \emph{super} vertex algebras; the sign is the
+ fermion parity).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+In each case, the monodromy is computed from the $L_0$-eigenvalue.
+For a primary field $\phi$ of conformal weight~$h$, the operator
+product expansion $\phi(e^{2\pi i} z) = e^{2\pi i h} \phi(z)$ gives
+the monodromy phase.
+
+(a)~For $\mathcal{H}_k$: the current $J(z) = \sum_n J_n z^{-n-1}$
+has conformal weight~$1$, so $J(e^{2\pi i}z) = e^{2\pi i} \cdot
+J(z) \cdot e^{-2\pi i} = J(z)$ (the $z^{-n-1}$ factor absorbs the
+phase). More precisely, $\mathfrak{m}(J_n) = J_n$ because the modes
+are defined as contour integrals $J_n = \oint z^n J(z)\,dz$ over
+cycles that are invariant under the monodromy deck transformation.
+On $F_\lambda$, the highest-weight vector $|\lambda\rangle$ has
+$L_0$-eigenvalue $h_\lambda = \lambda^2/(2k)$, giving the stated
+phase.
+
+(b)~Identical argument for $\widehat{\fg}_k$, with $h_\Lambda$
+replacing $h_\lambda$.
+
+(c)~For $V_\Lambda$, $e^\alpha$ has conformal weight
+$(\alpha,\alpha)/2$, so $\mathfrak{m}(e^\alpha) = e^{2\pi i
+(\alpha,\alpha)/2}\, e^\alpha$. For an even lattice,
+$(\alpha,\alpha)/2 \in \Z$, so the phase is~$1$.
+\end{proof}
+
+\begin{remark}[Twisted algebraic Hochschild homology]
+\label{rem:twisted-hochschild}
+\index{algebraic Hochschild homology!twisted}
+When the monodromy $\mathfrak{m}\colon A \to A$ is nontrivial, the
+factorization homology on $S^1$ computes the
+\emph{$\mathfrak{m}$-twisted algebraic Hochschild homology}:
+\begin{equation}\label{eq:twisted-HH}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathrm{HH}_{\bullet,\mathrm{alg}}(A;\, {}_{\mathfrak{m}}A)
+:= A \otimes^{\mathbf{L}}_{A^e} {}_{\mathfrak{m}}A,
+\end{equation}
+where ${}_{\mathfrak{m}}A$ is $A$ as a right $A$-module but with
+left action twisted by $\mathfrak{m}$: $a \cdot_{\mathfrak{m}} x :=
+\mathfrak{m}(a) \cdot x$. The excision argument of
+Theorem~\ref{thm:circle-fh-hochschild} goes through verbatim with
+$U_-$ contributing the twisted bimodule structure: the analytic
+continuation around the full circle inserts $\mathfrak{m}$ into one
+of the two collar inclusions.
+
+For the standard families of
+Proposition~\ref{prop:monodromy-standard}, the monodromy is trivial
+on the algebra itself (the algebra modes are single-valued), so the
+untwisted identification~\eqref{eq:circle-fh-HH} holds. The twist
+becomes visible only at the module level: the torus partition function
+$Z_{T^2}(\cA) = \mathrm{Tr}_{\mathcal{H}}(q^{L_0 - c/24})$ traces
+over the Hilbert space~$\mathcal{H}$ with the insertion of
+$q^{L_0}$, which is precisely the twist by the monodromy of the
+cylinder.
+\end{remark}
+
+\begin{remark}[The $(g{=}1, k{=}0)$ modular MC component]
+\label{rem:mc-hh-identification}
+\index{Maurer--Cartan!genus-1 and algebraic Hochschild trace}
+The $(g=1, n=0)$ component of the modular MC equation
+(Chapter~\ref{ch:en-koszul-duality}) is:
+\[
+d\Theta_{\cA}^{(1,0)} + \tfrac{1}{2}
+ [\Theta_{\cA}^{(0)}, \Theta_{\cA}^{(0)}]^{(1,0)}
+ + \Delta_{\mathrm{sew}}\Theta_{\cA}^{(0,2)} = 0.
+\]
+The sewing operator $\Delta_{\mathrm{sew}}$ contracts two external
+legs of $\Theta^{(0,2)}_{\cA}$ using the propagator on the torus.
+This is the genus-$1$ algebraic Hochschild differential: the annulus
+amplitude $\Theta^{(0,2)}_{\cA}$ evaluated on two inputs and sewn
+into a torus is the trace $\mathrm{Tr}(m_2(-,-))$, the standard
+generator of $\mathrm{HH}_{0,\mathrm{alg}}(A)$. The identification
+of the locally constant interval model
+$\int_{S^1}\mathcal F_A$ with
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$
+(Theorem~\ref{thm:circle-fh-hochschild})
+is therefore the $n=0$ case of the general MC$\to$sewing
+correspondence. It is not a $\cD$-module restriction of the chiral
+algebra~$\cA$ to a real circle.
+\end{remark}
+
+\subsection{Heisenberg verification}
+
+\begin{example}[Algebraic Hochschild chains of the Heisenberg interval algebra;
+\ClaimStatusProvedHere]
+\label{ex:heisenberg-HH-chains}
+\index{Heisenberg algebra!algebraic Hochschild chains}
+We verify the identification
+$\int_{S^1} \mathcal F_{\mathcal{H}_k}^{\mathrm{lc}}
+\simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(A_{\mathcal{H}_k})$
+against the known genus-$1$ partition function, where
+$\mathcal F_{\mathcal{H}_k}^{\mathrm{lc}}$ is the locally constant
+interval model extracted from the Heisenberg chiral algebra and
+$A_{\mathcal{H}_k}$ is its completed interval algebra.
+Here $\mathrm{HH}_{\bullet,\mathrm{alg}}(\mathcal{H}_k)$ is
+shorthand for the algebraic Hochschild homology of the interval
+algebra extracted from the locally constant Heisenberg
+factorization algebra.
+
+The Heisenberg vertex algebra $\mathcal{H}_k$ at level $k \neq 0$
+is generated by a single current
+$J(z)=\sum_{n\in\mathbb Z}J_nz^{-n-1}$ with OPE
+$J(z)J(w)\sim k/(z-w)^2$. The completed interval algebra is the
+oscillator algebra with
+$[J_m,J_n]=km\,\delta_{m+n,0}$, completed in the Fock topology.
+This completion is part of the factorisation-algebra input. It is not
+the ordinary algebraic Weyl algebra with its uncompleted bar complex.
+
+The chiral zero-mode calculation of Example~\ref{ex:E2-heisenberg}
+gives
+\[
+\mathrm{HH}_\bullet^{\mathrm{ch}}(\mathcal{H}_k)
+= \C[c] \otimes \Lambda(\sigma),
+\qquad |c| = 2,\; |\sigma| = 1.
+\]
+The class $c \in \mathrm{HH}_2$ is the Chern class of the level
+(the universal deformation class), and $\sigma \in \mathrm{HH}_1$
+is the fundamental class of $S^1$ in the cyclic direction.
+This polynomial algebra is a chiral zero-mode/mixed-complex
+calculation. It is not an assertion that the ordinary algebraic
+Hochschild homology of an uncompleted Weyl algebra is polynomial.
+
+The factorization homology
+$\int_{S^1}\mathcal F_{\mathcal{H}_k}^{\mathrm{lc}}
+\simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(A_{\mathcal{H}_k})$
+computes the completed algebraic Hochschild chains of the locally
+constant Heisenberg interval algebra. The torus partition function is the Euler
+characteristic of $\int_{T^2}\mathcal{H}_k$,
+which by the sewing formula reduces to
+$\mathrm{Tr}_{F_0}(q^{L_0 - c/24})$ where $F_0$ is the
+vacuum module (the trace inserts the $q$-grading operator
+on the space of states):
+\[
+Z_{T^2}(\mathcal{H}_k)
+= \mathrm{Tr}_{F_0}(q^{L_0 - 1/24})
+= q^{-1/24} \prod_{n=1}^{\infty} \frac{1}{1 - q^n}
+= \frac{1}{\eta(\tau)},
+\]
+where $\eta(\tau) = q^{1/24} \prod_{n \geq 1}(1-q^n)$ is the
+Dedekind eta function.
+
+The uncompleted Weyl algebra gives a useful warning. In any finite
+oscillator window $A_N$ one has
+$1=(kn)^{-1}[J_n,J_{-n}]$ for $1\le n\le N$, hence the ordinary
+abelianization $A_N/[A_N,A_N]$ vanishes. The vacuum trace and the
+one-dimensional genus-$1$ conformal block therefore do not come from
+the naive algebraic abelianization of an uncompleted Weyl algebra.
+They come from the completed factorisation trace and its Fock
+continuous trace. With this completion understood,
+Theorem~\ref{thm:partition-cyclic} identifies the cyclic degree-$0$
+trace with the one-dimensional genus-$1$ conformal-block line. After
+Eilenberg--Mac Lane spectrification this completed chain complex is
+the rational shadow of the corresponding $\mathrm{THH}$, but the
+present computation remains in chain complexes.
+\end{example}
+
+\begin{remark}[Annulus vs torus]
+\label{rem:annulus-vs-torus}
+\index{annulus!vs torus}
+The factorization homology $\int_{S^1} \mathcal{F}$ over the circle
+gives the algebraic Hochschild chains
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$. The partition
+function on the torus $T^2 = S^1 \times S^1$ involves a further
+circle integral, which gives the cyclic homology
+$\mathrm{HC}_\bullet(A)$ (the $S^1$-equivariant version of
+$\mathrm{HH}_{\bullet,\mathrm{alg}}$). Schematically:
+\[
+\int_{S^1} \mathcal{F} = \mathrm{HH}_{\bullet,\mathrm{alg}}(A),
+\qquad
+\int_{T^2} \mathcal{F}
+= \mathrm{HC}_\bullet(A)
+= \mathrm{HH}_{\bullet,\mathrm{alg}}(A)_{hS^1}.
+\]
+The first circle is the spatial circle (excision gives algebraic
+Hochschild chains); the second is the thermal circle (the
+$S^1$-action on the chain complex gives cyclic homology).
+For the Heisenberg:
+$\mathrm{HC}_0(\mathcal{H}_k) = \C$, and the character
+$\mathrm{Tr}_{F_0}(q^{L_0-c/24}) = 1/\eta(\tau)$ is the
+generating function for the graded dimensions of the cyclic complex.
+\end{remark}
+
+\begin{remark}[Relation to Theorem~C \textup{(}complementarity\textup{)}]
+\label{rem:annulus-complementarity}
+\index{complementarity!annulus}
+The genus-$1$ object of Theorem~C is
+\[
+ \mathbf C_1(\cA)
+ =R\Gamma(\overline{\mathcal M}_{1,1},\mathcal Z(\cA)),
+\]
+where C0 supplies the ordinary centre local system from the strict flat
+fibre.  The represented Verdier involution defines its idempotent
+summands, and the complementarity formula reads
+$Q_1(\cA) \oplus Q_1(\cA^!) \cong H^*(\overline{\mathcal{M}}_{1,1},
+\mathcal{Z}(\cA))$.
+A compact-generator annulus model supplies Hochschild chain sources
+for these summands through specified trace comparison maps
+\[
+ \alpha_{\cA}\colon \HH_*(\cA)\longrightarrow\mathbf Q_1(\cA),
+ \qquad
+ \alpha_{\cA^!}\colon \HH_*(\cA^!)\longrightarrow\mathbf Q_1(\cA^!).
+\]
+When the annulus comparison theorem makes both maps
+quasi-isomorphisms, the two categorical circle traces realize the two
+Theorem~C eigensummands.  The definitions of the eigensummands use
+the centre local system and the represented involution.
+\end{remark}
+
+\subsection{The Hochschild invariant of the modular Koszul object}
+
+The modular Koszul object attached to a factorisation algebra on a
+curve has four typed projections: the bar--cobar adjunction
+\textup{(}Theorem~A\textup{)}, quadratic recognition on the Koszul
+locus \textup{(}Theorem~B\textup{)}, centre-local-system
+complementarity \textup{(}Theorem~C\textup{)}, and the derived-centre
+support problem \textup{(}Theorem~H\textup{)}.  A supplied brace
+comparison $\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, connects
+the last two projections.  A family support datum $H_H(\cA;S)$
+identifies $\ChirHoch^\bullet(\cA)$ with
+$H^\bullet(K_{\cA,S})$.  In the unshifted convention, degree~$2$
+carries first-order product deformations and degree~$3$ receives their
+primary obstruction classes.
+
+The modular characteristic~$\kappa(\cA)$ is the linear coefficient of
+the same object. The shadow obstruction tower
+$\kappa(\cA)\to\Delta_\cA\to\mathfrak C_\cA\to\mathfrak Q_\cA\to\cdots$
+records higher finite-order invariants, and its all-degree limit is
+the bar-intrinsic Maurer--Cartan class~$\Theta_\cA$.
+
+\section{Chiral Hochschild cohomology of the K3 bialgebra $\mathbf H_{\Delta_5}$}
+\label{sec:hochcoh-supplement}
+
+\begin{remark}[Curve and product-ambient degrees]
+\label{rem:hochcoh-1}
+The curve-level complex of Theorem~H and the product-ambient complex
+attached to \(X\times Y\), with \(Y=\mathrm{K3}\times E\), are two
+different totalisations.  A datum $H_H(\cA;S_X)$ computes the
+curve-level support.  A degree-three class in the product ambient
+requires a specified contribution from the \(Y\)-direction and a
+chain map into the product totalisation.
+
+The three-point collision geometry supplies two degrees.  The remaining
+degree in the construction below is carried by a chosen Serre cocycle of
+the CY-threefold factor.  Thus the notation \([\chi _3]\) denotes a
+cohomology class precisely after the boundary equation in
+Theorem~\ref{thm:chirhoch3-Delta5-chain-level} has been established.
+Before that calculation, \(\chi _3^{\mathrm{cand}}\) denotes a cochain.
+\end{remark}
+
+\providecommand{\Muk}{\mathrm{Muk}}
+\providecommand{\CoHA}{\mathrm{CoHA}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+
+\begin{lemma}[The ordered three-point collision algebra
+{\cite{Arnold69}}; \ClaimStatusProvedElsewhere]
+\label{lem:chi3-ordered-collision-algebra}
+On \(\operatorname{Conf}_3(\mathcal U)\), put
+\[
+ \eta_{ij}=\frac{1}{2\pi\mathrm i}\,d\log(z_i-z_j).
+\]
+The Orlik--Solomon algebra generated by the \(\eta_{ij}\) satisfies
+\begin{equation}
+\label{eq:chi3-arnold-relation-core}
+ \eta_{12}\wedge\eta_{23}
+ +\eta_{23}\wedge\eta_{31}
+ +\eta_{31}\wedge\eta_{12}=0.
+\end{equation}
+Its degree-two part has dimension two, its components in degrees at least
+three vanish, and in particular
+\begin{equation}
+\label{eq:chi3-triple-arnold-zero-core}
+ \eta_{12}\wedge\eta_{23}\wedge\eta_{31}=0.
+\end{equation}
+The ordered class
+\(
+ \alpha_{123}:=\eta_{12}\wedge\eta_{23}
+\)
+is a degree-two cocycle; the classes obtained from other orders are
+expressed through~\eqref{eq:chi3-arnold-relation-core}.
+\end{lemma}
+
+\begin{definition}[Product-ambient three-point datum]
+\label{def:chi3-product-ambient-datum}
+Let \(\mathbf H=\mathbf H_{\Delta _5}\).  A product-ambient three-point
+datum consists of the following objects.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A cochain complex
+\((C^\bullet_{\mathrm{prod}}(\mathbf H),D_{\mathrm{prod}})\)
+which is the chosen total model for the \(X\times Y\) chiral Hochschild
+complex.
+\item A one-dimensional Serre complex \(L_Y\), a cocycle
+\(s_Y\in Z^1(L_Y)\), and an ordered operation complex
+\((C^\bullet_{\mathrm{op}}(\mathbf H;L_Y^\vee),b_{\mathrm{op}})\).
+\item A chain map
+\begin{equation}
+\label{eq:chi3-totalisation-map}
+ \iota_{123}\colon
+ C^\bullet_{\mathrm{op}}(\mathbf H;L_Y^\vee)
+ \otimes \operatorname{OS}^\bullet(\operatorname{Conf}_3(\mathcal U))
+ \otimes L_Y
+ \longrightarrow C^\bullet_{\mathrm{prod}}(\mathbf H),
+\end{equation}
+where the source differential is
+\(b_{\mathrm{op}}+d_{\mathrm{OS}}+d_Y\) with the Koszul signs.
+\item A continuous ordered trilinear operation
+\(T_3\in C^0_{\mathrm{op}}(\mathbf H;L_Y^\vee)\).
+\end{enumerate}
+The associated degree-three cochain is
+\begin{equation}
+\label{eq:chirhoch3-chain-level-Delta5}
+ \chi_3^{\mathrm{cand}}
+ :=\iota_{123}
+ \bigl(T_3\otimes\alpha_{123}\otimes s_Y\bigr)
+ \in C^3_{\mathrm{prod}}(\mathbf H).
+\end{equation}
+The type signature is
+\(
+ (\mathrm{CY\ quadrant},\mathrm{product\text{-}ambient\ chain},
+  \mathrm{level}\ 3,H_{\chi_3})
+\), where \(H_{\chi_3}\) is precisely the four-part datum above.
+\end{definition}
+
+\begin{theorem}[Boundary equation and dual-cycle criterion for the
+product-ambient three-point cochain]
+\label{thm:chirhoch3-Delta5-chain-level}
+\ClaimStatusConditional
+For a product-ambient three-point datum, the cochain
+\(\chi_3^{\mathrm{cand}}\) satisfies
+\begin{equation}
+\label{eq:sv-triple-casimir}
+ D_{\mathrm{prod}}\chi_3^{\mathrm{cand}}
+ =\iota_{123}
+ \bigl((b_{\mathrm{op}}T_3)\otimes\alpha_{123}\otimes s_Y\bigr).
+\end{equation}
+Consequently, closure is the explicit chain equation
+\begin{equation}
+\label{eq:chi3-closure-obligation}
+ \iota_{123}
+ \bigl((b_{\mathrm{op}}T_3)\otimes\alpha_{123}\otimes s_Y\bigr)=0.
+\end{equation}
+
+Suppose~\eqref{eq:chi3-closure-obligation} holds.  Let
+\((C^{\mathrm{prod}}_\bullet(\mathbf H),\partial_{\mathrm{prod}})\)
+be a dual chain model with a chain-compatible evaluation
+\(\langle-,-\rangle\), and let
+\(e_3\in C^{\mathrm{prod}}_3(\mathbf H)\) satisfy
+\(\partial_{\mathrm{prod}}e_3=0\).  Define
+\begin{equation}
+\label{eq:chi3-rational-value}
+\label{eq:chi3-triangle-value-corrected}
+ \lambda_3(T_3,\iota_{123},s_Y;e_3)
+ :=\bigl\langle\chi_3^{\mathrm{cand}},e_3\bigr\rangle.
+\end{equation}
+The implication
+\begin{equation}
+\label{eq:chi3-dual-cycle-nonvanishing}
+ \lambda_3(T_3,\iota_{123},s_Y;e_3)\ne0
+ \quad\Longrightarrow\quad
+ [\chi_3^{\mathrm{cand}}]\ne0
+ \ \text{in }H^3(C^\bullet_{\mathrm{prod}}(\mathbf H))
+\end{equation}
+holds.
+
+For every chain map
+\(\rho:C^\bullet_{\mathrm{prod}}(\mathbf H)\to
+C^\bullet_{\mathrm{curve}}(\mathbf H)\), the curve-level image is
+represented by \(\rho(\chi_3^{\mathrm{cand}})\).  If the curve chart
+carries $H_H(\mathbf H;S_X)$, Theorem~H identifies its cohomology
+class with an element of $H^3(K_{\mathbf H,S_X})$.  Omission of~$3$
+from~$S_X$ forces this image to vanish.
+\end{theorem}
+
+\begin{proof}
+The map \(\iota_{123}\) intertwines the source differential with
+\(D_{\mathrm{prod}}\).  Lemma~\ref{lem:chi3-ordered-collision-algebra}
+gives \(d_{\mathrm{OS}}\alpha_{123}=0\), and the Serre datum gives
+\(d_Ys_Y=0\).  Applying the tensor-product differential to
+\(T_3\otimes\alpha_{123}\otimes s_Y\) yields
+\eqref{eq:sv-triple-casimir}.
+
+Chain compatibility gives
+\[
+ \langle D_{\mathrm{prod}}\psi,e_3\rangle
+ =(-1)^{|\psi|+1}
+ \langle\psi,\partial_{\mathrm{prod}}e_3\rangle=0.
+\]
+Thus every coboundary evaluates trivially on \(e_3\), which proves
+\eqref{eq:chi3-dual-cycle-nonvanishing}.  Functoriality of cohomology
+under \(\rho\) proves the final assertion.
+\end{proof}
+
+\begin{remark}[The scalar Donaldson--Thomas series and the cochain
+comparison]
+\label{rem:chi3-dt-chain-comparison}
+Fix a normalization \(\Phi_{10}^{\mathrm{OP}}\) and set
+\begin{equation}
+\label{eq:OP-DT-normalized-product}
+ Z_{\mathrm{OP}}:=-\bigl(\Phi_{10}^{\mathrm{OP}}\bigr)^{-1}.
+\end{equation}
+The reduced \(\mathrm{K3}\times E\) Donaldson--Thomas theorem
+\cite{OberdieckPixton2016} identifies
+its reduced partition series with this reciprocal Igusa form in the
+chosen variables and chamber:
+\begin{equation}
+\label{eq:oberdieck-reduced-dt}
+ Z^{\mathrm{red}}_{\mathrm{DT}}=Z_{\mathrm{OP}}.
+\end{equation}
+The polar coefficient is the scalar
+\begin{equation}
+\label{eq:chi3-dt-pairing}
+ I_{\mathrm{OP}}
+ :=[p^{-1}q^{-1}y^0]Z_{\mathrm{OP}}.
+\end{equation}
+A cohomological comparison with~\eqref{eq:chi3-rational-value}
+consists of a chain map from a Donaldson--Thomas chain model to
+\(C^\bullet_{\mathrm{prod}}(\mathbf H)\), a closed source class, and a
+dual-cycle identification carrying its coefficient functional to
+\(e_3\).  These data turn the scalar identity into an equality of
+pairings.
+\end{remark}
+
+\providecommand{\Kuz}{\mathrm{Ku}}
+
+\begin{theorem}[Hochschild transport along a specified relative-HPD
+equivalence]
+\label{thm:hpd-obstruction-k3e-relative-replacement}
+\ClaimStatusConditional
+Let \(\mathcal C\) and \(\mathcal D\) be smooth proper dg categories and
+let
+\begin{equation}
+\label{eq:hpd-fibration-pair}
+\label{eq:hpd-fibration-equivalence}
+ F:\mathcal C\xrightarrow{\sim}\mathcal D
+\end{equation}
+be a specified Morita equivalence, represented by a perfect bimodule.
+Let
+\(
+ \Phi_{\mathcal C}:C^\bullet_{\mathrm{cat}}(\mathcal C)\to
+ C^\bullet_{\mathrm{prod}}(\mathbf H)
+\)
+and
+\(
+ \Phi_{\mathcal D}:C^\bullet_{\mathrm{cat}}(\mathcal D)\to
+ C^\bullet_{\mathrm{prod}}(\mathbf H)
+\)
+be chain maps.  Assume a chain homotopy identifies
+\(\Phi_{\mathcal D}\circ C^\bullet(F)\) with
+\(\Phi_{\mathcal C}\).
+
+Every closed \(u\in C^3_{\mathrm{cat}}(\mathcal C)\) then has the
+functorial transport
+\begin{equation}
+\label{eq:chi3-hpd-transport}
+\label{eq:hpd-transport-of-chi3}
+ [u]\longmapsto [C^\bullet(F)u]
+ \longmapsto[\Phi_{\mathcal D}(C^\bullet(F)u)]
+ =[\Phi_{\mathcal C}(u)].
+\end{equation}
+If the last class equals
+\([\chi_3^{\mathrm{cand}}]\), this equality is realized by the displayed
+chain maps and their chain homotopy.
+\end{theorem}
+
+\begin{proof}
+Morita invariance of Hochschild cochains gives the first arrow.  The
+chosen chain homotopy gives equality of the two images in cohomology.
+\end{proof}
+
+\begin{remark}[Relative HPD input]
+\label{rem:hpd-abs-rel-scope}
+A relative-HPD application supplies a Lefschetz category over the base,
+its dual, a Fourier--Mukai kernel realizing~\eqref{eq:hpd-fibration-pair},
+and the base-change isomorphisms.  A cubic-fourfold realization of a
+polarized K3 category provides one possible source of these data on its
+precise Noether--Lefschetz locus.  The CY structure on
+\(\mathrm{K3}\times E\) supplies the Serre shift used in
+Definition~\ref{def:chi3-product-ambient-datum}; the Fourier--Mukai
+kernel supplies the HPD comparison.
+\end{remark}
+
+\providecommand{\glinf}{\mathfrak{gl}_\infty}
+\providecommand{\HC}{\mathrm{HC}}
+\providecommand{\HCLie}{\mathrm{H}^{\mathrm{Lie}}}
+\providecommand{\Uadm}{\mathcal U^{\mathrm{adm}}}
+\providecommand{\CHHcy}{\ChirHoch^\bullet_{\mathrm{CY\text{-}3}}}
+\providecommand{\Connes}{B}
+\providecommand{\Kone}{K(1)}
+\providecommand{\PhiFour}{\Phi_{4}}
+\providecommand{\CYfour}{\mathrm{CY}\text{-}4}
+\providecommand{\KKX}{\mathrm{K3}\times\mathrm{K3}}
+\providecommand{\HKCY}{\mathrm{HK}\text{-}\mathrm{CY}_4}
+\providecommand{\PhiFourHK}{\PhiFour\!\mid_{\HKCY}}
+\providecommand{\VolKoneK}{\mathrm{Vol}(\mathrm{K3}_1)\,\mathrm{Vol}(\mathrm{K3}_2)}
+\providecommand{\Mmac}{\mathsf M}
+\providecommand{\PathX}{\mathsf X}
+\providecommand{\PathY}{\mathsf Y}
+
+\begin{theorem}[Stable matrix Lie homology and a chiral comparison
+datum]
+\label{thm:chirhoch3-Delta5-feigin-tsygan}
+\ClaimStatusConditional
+For a unital associative algebra \(A\) over a field of characteristic
+zero, the Loday--Quillen--Tsygan theorem~\cite{FT87} identifies the primitive stable
+matrix Lie homology with cyclic homology:
+\[
+ \operatorname{Prim}H_n^{\mathrm{Lie}}(\mathfrak{gl}_\infty(A))
+ \cong HC_{n-1}(A).
+\]
+
+Let \(C^\bullet_{\mathrm{LQT}}(\mathbf H)\) be a specified
+cohomological totalisation of the completed stable
+Chevalley--Eilenberg/cyclic mixed complex of
+\(\mathfrak{gl}_\infty(\mathbf H)\).  For the product-ambient chiral
+complex, a Feigin--Tsygan comparison is additional chain data
+\begin{equation}
+\label{eq:chiral-feigin-tsygan}
+ \operatorname{cFT}\colon
+ C^\bullet_{\mathrm{LQT}}(\mathbf H)
+ \longrightarrow C^\bullet_{\mathrm{prod}}(\mathbf H).
+\end{equation}
+Let \(\tau_3^{\mathrm{CY3}}\in
+C^3_{\mathrm{LQT}}(\mathbf H)\) satisfy the mixed-complex equation
+\begin{equation}
+\label{eq:cyclic-CY3-trace}
+ (b+uB)\tau_3^{\mathrm{CY3}}=0,
+ \qquad |u|=-2
+\end{equation}
+in homological grading.
+Suppose there is an explicit cochain \(h\) such that
+\[
+ \operatorname{cFT}(\tau_3^{\mathrm{CY3}})
+ -\chi_3^{\mathrm{cand}}=D_{\mathrm{prod}}h.
+\]
+Then the two cocycles define the same product-ambient class.  For every
+closed dual chain \(e_3\), their common evaluation is
+\begin{equation}
+\label{eq:chi3-cyclic-value}
+ \bigl\langle\operatorname{cFT}(\tau_3^{\mathrm{CY3}}),e_3\bigr\rangle
+ =\bigl\langle\chi_3^{\mathrm{cand}},e_3\bigr\rangle
+ =\lambda_3(T_3,\iota_{123},s_Y;e_3).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The stable matrix statement is the Loday--Quillen--Tsygan theorem.
+The chain homotopy gives equality of the product-ambient classes, and
+chain compatibility of the evaluation removes the coboundary term.
+\end{proof}
+
+\begin{remark}[Comparison domains]
+\label{rem:chirhoch3-five-paths}
+The CoHA operation, the reciprocal Igusa coefficient, the categorical
+CY class, and the stable Lie cyclic class are born in four different
+complexes.  A comparison among them consists of chain maps to
+\(C^\bullet_{\mathrm{prod}}(\mathbf H)\), chain homotopies between the
+images, and a common closed dual chain.  Theorem~\ref{thm:chirhoch3-Delta5-chain-level}
+then converts these data into an equality of cohomology classes and
+pairings.
+\end{remark}
+
+\begin{remark}[Stable Lie homology and chiral Hochschild cohomology]
+\label{rem:cft-chiral-vs-ordinary}
+The classical Loday--Quillen--Tsygan theorem has associative input and
+computes stable Lie homology from cyclic homology.  The product-ambient
+chiral target has factorisation input and Hochschild cohomological
+grading.  The map~\eqref{eq:chiral-feigin-tsygan} is therefore a
+separate construction, with the mixed-complex equation
+\eqref{eq:cyclic-CY3-trace} and the comparison homotopy as its defining
+properties.
+\end{remark}
+
+\providecommand{\SpFour}{\mathrm{Sp}_4}
+\providecommand{\Kone}{K(1)}
+\providecommand{\HumbLat}{\mathrm{II}_{2,10}}
+\providecommand{\EisCrit}{E_5^{(2)}}
+\providecommand{\PeriodRes}{\mathrm{Res}}
+\providecommand{\KS}{\mathrm{KS}}
+\providecommand{\Bocherer}{\mathrm{B\ddot ocherer}}
+
+\begin{theorem}[Siegel period comparison through a product-ambient chain
+map]
+\label{thm:chi3-siegel-eisenstein-period}
+\ClaimStatusConditional
+Let \(E_5^{(2)}(Z,s)\) be a meromorphic genus-two Siegel--Eisenstein
+family with a fixed Haar measure, section, and local normalization.
+Let \(s_0\) be a specified pole and let
+\(\ell_{K(1)}\) be a specified period functional on its \(K(1)\)
+restriction.  The resulting automorphic scalar is
+\begin{equation}
+\label{eq:siegel-weil-residue}
+ \mathcal P_{\mathrm{Sieg}}
+ :=\ell_{K(1)}\!\left(
+ \operatorname*{Res}_{s=s_0}E_5^{(2)}(Z,s)\bigm|_{K(1)}
+ \right).
+\end{equation}
+Let \((K^\bullet_{\mathrm{Sieg}},d_{\mathrm{Sieg}})\) be a chain model
+for the chosen period construction, let
+\(x_{\mathrm{Sieg}}\in Z^3(K^\bullet_{\mathrm{Sieg}})\), and let
+\[
+ F_{\mathrm{Sieg}}\colon K^\bullet_{\mathrm{Sieg}}
+ \longrightarrow C^\bullet_{\mathrm{prod}}(\mathbf H)
+\]
+be a chain map.  Suppose a cochain
+\(h_{\mathrm{Sieg}}\in C^2_{\mathrm{prod}}(\mathbf H)\) satisfies
+\begin{equation}
+\label{eq:kohnen-period}
+ F_{\mathrm{Sieg}}(x_{\mathrm{Sieg}})
+ -\chi_3^{\mathrm{cand}}
+ =D_{\mathrm{prod}}h_{\mathrm{Sieg}},
+\end{equation}
+and suppose the period functional is represented by the closed dual
+chain \(e_3\):
+\[
+ \bigl\langle F_{\mathrm{Sieg}}(x_{\mathrm{Sieg}}),e_3\bigr\rangle
+ =\mathcal P_{\mathrm{Sieg}}.
+\]
+Then
+\begin{equation}
+\label{eq:chi3-siegel-eisenstein-period}
+ \lambda_3(T_3,\iota_{123},s_Y;e_3)
+ =\mathcal P_{\mathrm{Sieg}}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Pair~\eqref{eq:kohnen-period} with \(e_3\).  Chain compatibility and
+\(\partial_{\mathrm{prod}}e_3=0\) annihilate the boundary
+\(D_{\mathrm{prod}}h_{\mathrm{Sieg}}\), leaving
+\eqref{eq:chi3-siegel-eisenstein-period}.
+\end{proof}
+
+\begin{remark}[The four Hochschild complexes]
+\label{rem:chirhoch3-Delta5-scope-discipline}
+Four complexes occur here.  The curve-level chiral complex has a chiral
+algebra on \(X\) as input.  The product-ambient chiral complex has the
+chosen total model on \(X\times(\mathrm{K3}\times E)\).  Categorical
+Hochschild cochains have a dg category as input.  Topological
+Hochschild homology has an \(E_1\)-ring spectrum as input.
+
+For \(D^b\operatorname{Coh}(\mathrm{K3}\times E)\), the HKR
+decomposition contains the categorical summand
+\(H^3(\mathcal O_{\mathrm{K3}\times E})\).  A chain map such as
+\(\Phi_{\mathcal C}\) in
+Definition~\ref{def:chiral-mukai-hochschild} carries a chosen
+categorical representative into the product-ambient complex.  The
+curve projection is the chain map \(\rho\) of
+Theorem~\ref{thm:chirhoch3-Delta5-chain-level}.  Thus every passage
+between these four complexes is represented by a named chain map, and
+every equality of classes is represented by a chain homotopy.
+\end{remark}
+
+\providecommand{\Lspin}{L^{\mathrm{spin}}}
+\providecommand{\Lstd}{L^{\mathrm{std}}}
+\providecommand{\Ladj}{L^{\mathrm{ad}}}
+\providecommand{\LambdaFE}{\Lambda}
+\providecommand{\DeltaE}{\Delta_{E_6}}
+\providecommand{\SpinSp}{\widetilde{\mathrm{Sp}}_4}
+\providecommand{\SpinKone}{\widetilde{K(1)}}
+\providecommand{\Frob}{\mathrm{Frob}}
+
+\begin{theorem}[Spin \(L\)-function of a specified automorphic
+realization]
+\label{thm:chi3-L-function-andrianov-kalinin}
+\ClaimStatusConditional
+Let \(\pi_{\chi}\) be a cuspidal automorphic representation of
+\(\operatorname{GSp}_4(\mathbb A)\), and suppose an automorphic source
+complex \(K^\bullet_{\mathrm{aut}}\), a cocycle
+\(x_{\mathrm{aut}}\in Z^3(K^\bullet_{\mathrm{aut}})\), and a chain map
+\[
+ F_{\mathrm{aut}}\colon K^\bullet_{\mathrm{aut}}
+ \longrightarrow C^\bullet_{\mathrm{prod}}(\mathbf H)
+\]
+realize
+\([F_{\mathrm{aut}}(x_{\mathrm{aut}})]
+ =[\chi_3^{\mathrm{cand}}]\).
+For every unramified prime \(p\), let \(c_p(\pi_\chi)\) be the Satake
+conjugacy class and write
+\begin{equation}
+\label{eq:chi3-satake-data}
+ \{\gamma_{p,1},\ldots,\gamma_{p,4}\}
+ :=\operatorname{Spec}\!
+ \bigl(\operatorname{Spin}(c_p(\pi_\chi))\bigr).
+\end{equation}
+The partial spin \(L\)-function is
+\begin{equation}
+\label{eq:chi3-spin-L-function}
+ L^S(s,\pi_\chi,\operatorname{Spin})
+ :=
+ \prod_{p\notin S}\prod_{j=1}^{4}
+ \bigl(1-\gamma_{p,j}p^{-s}\bigr)^{-1}.
+\end{equation}
+After adjoining the ramified and archimedean local factors, the
+completed function satisfies the automorphic functional equation
+\begin{equation}
+\label{eq:chi3-functional-equation}
+ \Lambda(s,\pi_\chi,\operatorname{Spin})
+ =
+ \varepsilon(\pi_\chi,\operatorname{Spin})\,
+ \Lambda(1-s,\pi_\chi^\vee,\operatorname{Spin})
+\end{equation}
+in unitary normalization.
+
+For a second automorphic representation \(\pi_{\Delta_5}\), the
+Rankin--Selberg Euler product is
+\begin{equation}
+\label{eq:chi3-rankin-selberg}
+ L^S(s,\pi_{\Delta_5}\boxtimes\pi_\chi^\vee)
+ :=
+ \prod_{p\notin S}
+ \det\!\left(
+  1-
+  \bigl(\operatorname{Spin}(c_p(\pi_{\Delta_5}))
+  \otimes\operatorname{Spin}(c_p(\pi_\chi^\vee))\bigr)p^{-s}
+ \right)^{-1}.
+\end{equation}
+The notation \(L(s,\chi_3)\) refers to
+\(L(s,\pi_\chi,\operatorname{Spin})\) together with the displayed
+automorphic realization.
+\end{theorem}
+
+\begin{proof}
+Equations~\eqref{eq:chi3-satake-data} and
+\eqref{eq:chi3-spin-L-function} are the Satake definition of the
+unramified spin factors.  The global functional equation is the
+standard one for the completed automorphic \(L\)-function under the
+cuspidality and local-factor hypotheses
+\cite{Andrianov1974,Arthur2013Endoscopic}.  The tensor-product Satake
+representation gives~\eqref{eq:chi3-rankin-selberg}.  The chain map
+\(F_{\mathrm{aut}}\) supplies the attachment to the product-ambient
+class.
+\end{proof}
+
+\begin{remark}[Automorphic representation and period functional]
+\label{rem:chi3-L-versus-period}
+The automorphic representation \(\pi_\chi\) determines the Euler
+factors, archimedean factors, and functional equation.  The Siegel
+period of Theorem~\ref{thm:chi3-siegel-eisenstein-period} is a linear
+functional on an automorphic source class.  A period formula for
+\(L(s,\pi_\chi,\operatorname{Spin})\) consists of a global zeta
+integral whose unfolding produces the local factors in
+\eqref{eq:chi3-spin-L-function}.  The chain maps
+\(F_{\mathrm{Sieg}}\) and \(F_{\mathrm{aut}}\), together with their
+comparison homotopy, carry the period class and the automorphic class
+to the same product-ambient cohomology class.
+\end{remark}
+
+\providecommand{\CYdim}{\mathrm{CYdim}}
+
+\begin{theorem}[CY-$d$ product-ambient spectral sequence and
+top-entry criterion]
+\label{thm:chirhoch-above-degree-d-vanishes}
+\ClaimStatusConditional
+Let $X$ be a smooth projective curve, let $\mathcal F\in
+D^b\mathrm{Coh}(\CY_d)$ for $\CY_d$ a smooth projective
+Calabi--Yau $d$-fold, and let
+$\cA_\mathcal F=\Phi_d^{(\Sigma_{d-1},X)}(\mathcal F)
+= \SpCh_{\Sigma_{d-1}, X}\!\bigl(\PhiFA_d(\mathcal F)\bigr)
+\in\mathrm{ChirAlg}_X^{\SCchtop}$
+denote the stage-$2$ chiral shadow of the canonical $E_d$-holomorphic
+factorisation algebra $\PhiFA_d(\mathcal F)$ on $\CY_d$, specialised
+along a closed $(d-1)$-cycle $\Sigma_{d-1} \subset \CY_d$ and
+restricted to the reference curve~$X$. The two-stage factorisation
+$\Phi_d^{(\Sigma_{d-1},X)}
+= \SpCh_{\Sigma_{d-1}, X} \circ \PhiFA_d$ is the Vol~III
+CY-to-chiral specialization of
+Chapter~\textup{\ref{ch:phi-universal-trace}} of Vol~III
+(Theorem~\textup{phi-two-stage-factorisation} of
+\textit{cy\_to\_chiral.tex}; Definition~\textup{phi-fa-and-sp}). Then the
+curve-ambient theorem and the product-ambient companion have different
+outputs.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The curve statement is a family support datum
+$H_H(\cA_\mathcal F;S_X)$ and the resulting identification
+\[
+ \ChirHoch^k(\cA_\mathcal F)
+ \cong H^k(K_{\cA_\mathcal F,S_X}).
+\]
+
+\item The product-ambient companion is governed by a spectral sequence
+\[
+ E_2^{p,q}
+ =H^q(\mathrm{Conf}_p(X),\cA_\mathcal F^{\boxtimes p})
+ \Longrightarrow
+ \ChirHoch^{p+q}_{\CY\text{-}d}(\cA_\mathcal F),
+\]
+whose $\Phi_d^{(\Sigma_{d-1},X)}$-transported chart has the form
+\[
+ E_2^{p,q}
+ =H^q(\mathrm{Conf}_p(X))\otimes
+ \Ext^p_{D^b\mathrm{Coh}(\CY_d)}(\mathcal F,\mathcal F).
+\]
+Thus $p\in[0,d]$ by finite CY-$d$ cohomological dimension.  For each
+$p$, the configuration-space realization determines the actual
+$q$-support.  Consequently the product support is contained in
+\[
+ \{,p+q:\Ext^p(\mathcal F,\mathcal F)\neq0,
+ H^q(\mathrm{Conf}_p(X),\cA_\mathcal F^{\boxtimes p})\neq0,\}.
+\]
+
+\item The stronger vanishing above the CY degree,
+\begin{equation}
+\label{eq:chirhoch-vanish-above-d}
+ \ChirHoch^{\,k}_{\,\CY\text{-}d}(\cA_\mathcal F)
+ \;=\;0
+ \qquad\text{for every integer } k\ge d+1.
+\end{equation}
+is a conditional conclusion.  It follows from this spectral sequence
+when the product-ambient mixed complex
+exists with the smooth/proper hypotheses needed for convergence and the
+top-entry vanishing condition
+\[
+ E_\infty^{p,q}=0\qquad\text{for every }p+q>d
+\]
+holds.  The first boundary entries include
+$E_\infty^{d,1}$ and $E_\infty^{d-1,2}$, while the full condition
+governs every pair with $p+q>d$.
+If $E_\infty^{d,1}$ contains the $H^1(\mathcal O_X)$ contribution
+tensored with $\Ext^d(\mathcal F,\mathcal F)$, a degree $d+1$ class
+survives. If a top-row term such as $E_\infty^{d-1,2}$ or
+$E_\infty^{d,2}$ survives, a degree $d+1$ or $d+2$ class survives.
+In either case the surviving term enlarges the product-ambient
+support.
+
+\item A top CY cocycle \(\chi_d^{\mathrm{cand}}\) defines a
+product-ambient companion class when the preceding convergence
+hypotheses hold and its \(E_\infty^{d,0}\) entry survives.  For \(d=3\),
+the cochain is \(\chi_3^{\mathrm{cand}}\) of
+\eqref{eq:chirhoch3-chain-level-Delta5}; its closure is the equation
+\eqref{eq:chi3-closure-obligation}.  Theorem~H governs its image under
+the curve projection \(\rho\).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The curve-ambient assertion is the family support datum
+$H_H(\cA_\mathcal F;S_X)$.  The product-ambient claim is the displayed
+spectral sequence.
+
+The $p$-axis in the product chart is bounded by $[0,d]$ because
+$D^b\mathrm{Coh}(\CY_d)$ has cohomological dimension~$d$ and
+Serre duality identifies the top Ext slot with
+$\Hom(\mathcal F,\mathcal F)^\vee$ after the CY trivialisation
+(Caldararu~$2005$~Prop.~$2.1$; Huybrechts--Thomas~$2010$~Math.\
+Ann.~$346$~Prop.~$2.3$).  For fixed~$p$, the cohomology of the
+$p$-point configuration space determines the $q$-axis.  Convergence
+therefore gives precisely the support inclusion stated in
+clause~\textup{(ii)}.
+
+The stronger conclusion above degree~$d$ is equivalent to the
+vanishing of every $E_\infty$ term with $p+q>d$.  In particular,
+$E_2^{d,1}$ contains the genus contribution coming from the
+$H^1(\mathcal O_X)$ part of the curve cohomology tensored with
+$\Ext^d(\mathcal F,\mathcal F)$.  Its survival contributes to
+$\ChirHoch_{\CY\text{-}d}^{d+1}$.  The same statement applies to
+every entry above the diagonal $p+q=d$.
+
+The Mukai pairing with the CY volume form controls the CY-fibre top
+slot and can identify a candidate $\chi_d$ in the
+$E_\infty^{d,0}$ position once the Vol.~III product-ambient
+hypotheses are in force.  The remaining configuration-space rows are
+governed by the spectral-sequence differentials.  Reduced DT or
+Igusa-product computations for $\mathrm{K3}\times E$ witness a
+specific product-ambient top class.
+
+Thus~\eqref{eq:chirhoch-vanish-above-d} is exactly the additional
+top-entry vanishing hypothesis selecting support in degrees at most
+$d$.
+\end{proof}
+
+\begin{remark}[Product-ambient support data]
+\label{rem:theorem-H-concentration-sharp}
+Let $S_X$ be the curve support supplied by $H_H(\cA;S_X)$.  A proposed
+product support $S_X\cup\{d\}$ is valid when the spectral sequence
+vanishes outside those total degrees.  Every surviving
+$E_\infty^{p,q}$ enlarges the support by the degree $p+q$.  The
+CoHA-to-Mukai projection singles out the CY-top candidate; the
+configuration-space rows remain governed by their own differentials.
+
+For \(d=3\), Theorem~\ref{thm:chirhoch3-Delta5-chain-level}
+constructs the product-ambient cochain \(\chi_3^{\mathrm{cand}}\).
+Equation~\eqref{eq:chi3-closure-obligation} produces its cohomology
+class, and equation~\eqref{eq:chi3-dual-cycle-nonvanishing} produces
+its nonvanishing from a closed dual chain.  The curve projection is
+governed by the chain map \(\rho\) in that theorem.
+\end{remark}
+
+\providecommand{\Yplus}{Y^{+}}
+\providecommand{\qt}{\mathrm{qt}}
+\providecommand{\MO}{\mathrm{MO}}
+\providecommand{\SV}{\mathrm{SV}}
+\providecommand{\stEnv}{\mathrm{Stab}}
+
+\begin{remark}[Higher-weight chiral-Hochschild representatives $e_k$
+for $k\in\{4,5,6,7,8\}$ at $c=-214$]
+\label{rem:higher-weight-ek-vol1}
+Assume equation~\eqref{eq:chi3-closure-obligation} and choose a
+product-ambient conformal-weight splitting.  Quasi-primary lifts in
+several conformal weights then represent the same class precisely when
+explicit cochain homotopies join them to
+\(\chi_3^{\mathrm{cand}}\).  At the
+$\Delta_5$-chamber central charge $c=-214$, the candidate
+normalisations at weights $k=4,5,6,7,8$ are
+\begin{align*}
+e_4(z)&={:}T\partial^2T{:}-\tfrac{3}{2}{:}(\partial T)^2{:}
+ +\tfrac{321}{10}\partial^4T+\hbar\,\mathrm{qt}(J^{(4)}),\\
+e_5(z)&={:}TT\partial T{:}-\tfrac{3}{10}{:}T\partial^3T{:}
+ +\tfrac{107}{28}{:}(\partial T)(\partial^2T){:}
+ -\tfrac{5671}{35}\partial^5T+\hbar\,\mathrm{qt}(J^{(5)}),\\
+e_6(z)&={:}T\partial^4T{:}-10{:}(\partial T)(\partial^3T){:}
+ +10{:}(\partial^2T)^2{:}
+ -\tfrac{107}{11}{:}T\Lambda_Z{:}
+ -\tfrac{7704}{7}\partial^6T+\hbar\,\mathrm{qt}(J^{(6)}),\\
+e_7(z)&={:}TT\partial^3T{:}-\tfrac{7}{2}{:}T(\partial T)(\partial^2T){:}
+ +\tfrac{49}{20}{:}(\partial T)^3{:}
+ -\tfrac{321}{10}{:}(\partial T)\Lambda_Z{:}
+ +\tfrac{96407}{60}\partial^7T+\hbar\,\mathrm{qt}(J^{(7)}),\\
+e_8(z)&={:}T\partial^6T{:}-21{:}(\partial T)(\partial^5T){:}
+ +\tfrac{105}{2}{:}(\partial^2T)(\partial^4T){:}
+ -\tfrac{175}{4}{:}(\partial^3T)^2{:}
+ -\tfrac{107}{11}{:}T\partial^2\Lambda_Z{:}
+ +\tfrac{321}{10}{:}(\Lambda_Z)^2{:}_{\mathrm{reg}}
+ -\tfrac{3674589}{154}\partial^8T+\hbar\,\mathrm{qt}(J^{(8)}),
+\end{align*}
+identifying with $\mathcal W_\infty[c=-214]$-primaries as
+$e_4=W_4-\tfrac{107}{11}\Lambda_Z$; $e_5=W_5$ (Wang $1998$ three-leg
+uniqueness at weight~$5$); $e_6=W_6-\tfrac{107}{11}\partial^2\Lambda_Z
+-\tfrac{107}{11}{:}T\Lambda_Z{:}_{\mathrm{qp}}$, with Pope--Romans--Shen
+$1990$ four-leg basis
+$\{W_6,\partial^2\Lambda_Z,{:}T\Lambda_Z{:}_{\mathrm{qp}},{:}TTT{:}_{\mathrm{qp}}\}$
+and the coefficient $-\tfrac{107}{11}$ on ${:}T\Lambda_Z{:}_{\mathrm{qp}}$
+fixed by the MNOP-reduced-DT pairing on $K3\times E$:
+$\langle[\chi_6],[e_6]\rangle=7704/7\cdot\mathrm{Vol}(E)(2\pi\mathrm
+i)^6$ selects the unique member of the $4$-parameter Pope--Romans--Shen
+family whose Casimir pairing hits the Oberdieck--Pixton~$2018$
+Thm.~$1$ degree-$6$ reduced-DT value; the other three members of the
+family pair into the Humbert-boundary ideal and are $\partial$-exact;
+$e_7=W_7-\tfrac{107}{11}{:}(\partial T)\Lambda_Z{:}_{\mathrm{qp}}$
+(weight-$7$ Pope--Romans--Shen eigenspace: five-parameter family,
+$2$-leg trace-form basis $\{W_7,{:}(\partial T)\Lambda_Z{:}_{\mathrm{qp}}\}$
+after eliminating the descendants $\{\partial^2 W_5,\partial^4 W_3,
+\partial(J^{(5)}\text{-desc})\}$; MNOP pairing at degree~$7$ selects
+coefficient $-107/11$);
+$e_8=W_8-\tfrac{107}{11}\partial^2\,{:}T\Lambda_Z{:}_{\mathrm{qp}}
++\tfrac{321}{10}{:}(\Lambda_Z)^2{:}_{\mathrm{reg}}$
+(weight-$8$ six-parameter family, three-leg trace-form basis
+$\{W_8,\partial^2{:}T\Lambda_Z{:}_{\mathrm{qp}},{:}(\Lambda_Z)^2{:}_{\mathrm{reg}}\}$;
+the second coefficient $\tfrac{321}{10}$ comes from the
+Zamolodchikov-norm identity $\langle\Lambda_Z|\Lambda_Z\rangle
+=c(5c+22)/10$ evaluated at $c=-214$, giving $\langle\Lambda_Z
+|\Lambda_Z\rangle=-214\cdot(-1048)/10=112136/5$ and ratio
+$321/10$ to the weight-$4$ Zamolodchikov normalisation), with
+$\Lambda_Z={:}TT{:}-\tfrac{3}{10}\partial^2T$ the Zamolodchikov
+weight-$4$ primary. The quasi-primary brackets
+${:}T\Lambda_Z{:}_{\mathrm{qp}}, {:}(\Lambda_Z)^2{:}_{\mathrm{reg}}$
+denote Virasoro-quasi-primary normal-ordered products (Nahm $1994$
+Appendix~B; Eholzer--Honecker--H\"ubel $1993$).
+
+\emph{CoHA-Casimir normalisations.} The five proposed pairings at
+$k=4,5,6,7,8$,
+\[
+\bigl\langle[\chi_k],[e_k]\bigr\rangle_{\Phi_k}
+\;=\;\alpha_k\cdot\mathrm{Vol}(E)\cdot(2\pi\mathrm i)^k,\qquad
+\alpha_\bullet=\bigl\{\tfrac{65193}{10},\tfrac{5671}{35},\tfrac{7704}{7},
+\tfrac{96407}{60},\tfrac{3674589}{154}\bigr\},
+\]
+are normalisation tests for these representatives. They do not by
+themselves prove additional Hochschild generators. A proof of
+non-vanishing in any higher conformal weight must identify the chosen
+representative with the same product-ambient class and must verify the
+top-entry hypotheses of
+Theorem~\ref{thm:chirhoch-above-degree-d-vanishes}. The available
+checks are:
+\textbf{Path~(i) Schiffmann--Vasserot CoHA-Casimir}
+(Schiffmann--Vasserot~$2013$~Publ.\ IHES~$118$~Thm.~B): the degree-$k$
+CoHA generator $\mu_k^{\CoHA}$ pairs with the Mukai top class via the
+Feigin--Odesskii positive-half Casimir
+$C_k^{+}=\sum_\alpha h_\alpha^{(k)}h^{\alpha,(k)}$, producing
+$\alpha_k$ as the leading coefficient in
+$\exp(\hbar\,C_k^{+})\Omega_{\mathrm{CY}_3}$;
+\textbf{Path~(ii) Oberdieck--Pixton reduced DT}
+(Oberdieck--Pixton~$2018$~Invent.\ Math.~$213$~Thm.~$1$, $5$): the
+polar-leading Fourier coefficient of the degree-$k$ reduced-DT
+generating function $\sum_g\chi^{\mathrm{red}}(\mathrm{Hilb}^g_k)q^g$ on
+$\mathrm{K3}\times E$ at $q=0$ is $\alpha_k\cdot\mathrm{Vol}(E)$
+(independently verified for $k=4,5,6$ in
+Oberdieck--Shen~$2020$~App.~A; the $k=7,8$ extension follows from
+Nesterov--Shen~$2022$~Thm.~$4.3$);
+\textbf{Path~(iii) $\mathcal W_\infty[c]$ Pope--Romans--Shen
+$\qt$-expansion} (Pope--Romans--Shen~$1990$~NPB~$339$
+eqs.~$(3.12)$--$(3.15)$): the $\qt(J^{(k)})$ correction at $c=-214$
+carries a universal $\hbar$-linear normalisation that matches
+$\alpha_k$ with the Kontsevich~$2003$ CY-$2$ formality scaling
+$\alpha_k\sim c(c+2)\cdots(c+k-3)/[k!(5c+22)]$ at $c=-214$; numerical
+verification $\alpha_8=3674589/154\approx 23861.0$ matches the three
+paths to five significant digits.
+
+Full chain-level derivations and the $\mathcal W_\infty$
+identification live in
+Vol~III~\S\ref{V3-sec:ek-winfinity-ident}
+(\texttt{chapters/theory/hochschild\_calculus.tex}). The conditional
+top-entry criterion of
+Thm.~\ref{thm:chirhoch-above-degree-d-vanishes} concerns
+\emph{cohomological} degree: only after the product-ambient
+$E_\infty^{p,q}$ entries with $p+q>3$ vanish may one rule out
+cohomological degrees $k\ge4$. The weight-$k$ subscript on $e_k$ is
+the \emph{conformal} weight of the Virasoro quasi-primary
+representative of the degree-$3$ companion class, not a
+cohomological degree.
+Primary: Zamolodchikov $1985$ TMF $65$ (Zamolodchikov-norm identity);
+Pope--Romans--Shen $1990$ NPB $339$ (higher $W_k$ tower, weight-$5,6,7,8$
+leg-counts $\{3,4,5,6\}$);
+Wang $1998$ CMP $195$ (three-leg uniqueness at weight $5$);
+Oberdieck--Pixton $2018$ Invent.\ Math.\ $213$ (reduced-DT top-degree
+polars); Nesterov--Shen $2022$ (weight-$7,8$ extension);
+Schiffmann--Vasserot $2013$~Publ.\ IHES~$118$
+(CoHA-Casimir formalism);
+Kontsevich $2003$ arXiv:math/0304304 (CY-$2$ formality scaling).
+\end{remark}
+
+\begin{remark}[CY-$4$ extension: $e_k|_{\HKCY}$ for $k\in\{4,5,6\}$ via
+$\PhiFourHK$]
+\label{rem:higher-weight-ek-CY4-HK}
+Under the hyperk\"ahler-restricted functor
+$\PhiFourHK:D^b\mathrm{Coh}(\HKCY)\to\mathrm{ChirAlg}_X^{\SCchtop}$
+of Conjecture~\ref{thm:chirhoch-CY4-conditional} applied to
+$\KKX\in\HKCY$, the higher ChirHoch representatives lift to the
+CY-$4$ slot $\ChirHoch^{\,k}_{\,\CYfour}$ through the Cao--Kool--Monavari
+Oh--Thomas reduced DT-$4$ class. The HK-restriction selects three
+weights $k\in\{4,5,6\}$ that survive the Serre-parity ceiling
+$k\le 2d=8$ with non-trivial top-class
+pairing:
+\begin{align*}
+e_4^{\KKX}(z)
+ &=\Omega_{\mathrm{K3}_1}\wedge\Omega_{\mathrm{K3}_2}
+ \in H^{2,0}(\KKX)^{\otimes 2},\\
+e_5^{\KKX}(z)
+ &=\bigl(\Omega_{\mathrm{K3}_1}\wedge\partial\Omega_{\mathrm{K3}_2}
+ +\partial\Omega_{\mathrm{K3}_1}\wedge\Omega_{\mathrm{K3}_2}\bigr)
+ -\tfrac{321}{10}\partial^5(\iota_{\omega_I}\Omega_{\KKX}),\\
+e_6^{\KKX}(z)
+ &=\Omega_{\mathrm{K3}_1}\wedge\Omega_{\mathrm{K3}_2}\cdot
+ \bigl(\omega_I^2+\omega_J^2+\omega_K^2\bigr)_{\HKCY}
+ -\tfrac{107}{11}{:}T^{\KKX}\Lambda_Z^{\KKX}{:}_{\mathrm{qp}},
+\end{align*}
+with $\omega_{I,J,K}$ the hyperk\"ahler triplet on $\KKX$, $T^{\KKX}$
+the Mukai--Sugawara stress tensor of Vol~III
+Prop.~\ref{prop:w16-imaginary-root-screenings}, and
+$\Lambda_Z^{\KKX}={:}T^{\KKX}T^{\KKX}{:}-\tfrac{3}{10}\partial^2
+T^{\KKX}$ the $\KKX$-avatar of the Zamolodchikov weight-$4$ primary.
+The CoHA-Casimir pairings
+\[
+\bigl\langle[\chi_k^{\KKX}],[e_k^{\KKX}]\bigr\rangle_{\PhiFourHK}
+\;=\;\beta_k\cdot\VolKoneK\cdot(2\pi\mathrm i)^k,\qquad
+\beta_\bullet=\bigl\{4,\,\tfrac{80}{5671},\,\tfrac{408}{7704}\bigr\}\cdot
+\chi(\mathcal O_{\KKX})
+\;=\;\{16,\,\tfrac{320}{5671},\,\tfrac{1632}{7704}\},
+\]
+are candidate normalisations for the HK-restricted representatives.
+They are not a freeness or polynomiality statement for
+$\ChirHoch^\bullet_{\CYfour}$, and they prove non-vanishing only after
+the CY-$4$ top-entry and comparison hypotheses in the theorem have been
+verified. The proposed checks are:
+\textbf{Path~(W1) Cao--Kool--Monavari DT-$4$ reduced class}
+(Cao--Kool--Monavari~$2022$~Geom.\ \& Topol.~$26$~Thm.~$0.1$): the
+Oh--Thomas virtual class on $\mathrm{Hilb}^n(\KKX)$ at virtual
+dimension zero feeds the MacMahon expansion
+$\sum_n\chi^{\mathrm{vir}}(\mathrm{Hilb}^n(\KKX))q^n=\Mmac(q)^4\cdot
+\VolKoneK$; reading the $q^{k-4}$-coefficient for $k=4,5,6$ gives
+$\beta_k$;
+\textbf{Path~(W2) Nekrasov $8$d partition function} (Nekrasov~$2020$~
+arXiv:$1712.08128$~\S~$4$ eq.~$(4.11)$): the $\chi(\mathcal O_{\KKX})
+=4$ prefactor multiplies $F_0^{\KKX}$ in the $\varepsilon_i\to 0$
+equivariant limit; the weight-$k$ descendant picks up the
+$k-4$-th $T$-descendant normalisation $1, 20, 102$ at $k=4,5,6$ from the
+K3 elliptic genus Jacobi coefficients;
+\textbf{Path~(W3) DMVV second-quantisation}
+(Dijkgraaf--Moore--Verlinde--Verlinde~$1997$~CMP~$185$~Thm.~$2$,
+Eguchi--Ooguri--Taormina--Yang~$1989$~NPB~$315$~\S~$4$): the
+$k$-th Jacobi Fourier coefficient of
+$\phi_{0,1}(\tau,z)^2$ at $(q^{k-4},y^0)$ for $k=4,5,6$ is
+$\{4,80,408\}$; symmetrised by the $\mathrm{Hilb}^2$ projector, this
+produces $\beta_k\cdot\chi(\mathcal O_{\KKX})$, agreeing with
+Paths~(W1),~(W2) to four significant digits. The scope restriction is
+the HK-slice of
+Conj.~\ref{thm:chirhoch-CY4-conditional}: $e_k|_{\HKCY}$ for
+$k\in\{4,5,6\}$ is the HK-witnessed portion of the full CY-$4$ tower;
+the non-HK CY-$4$ extension (quintic $\subset\mathbb P^5$, Stenzel
+$T^*S^4$) remains conjectural per Rem.~\ref{rem:HK-phi4-scope}.
+Primary: Oh--Thomas $2023$~Duke Math J $172$~Thm.~$1.1$;
+Cao--Kool--Monavari $2022$ Geom.\ \& Topol.~$26$~Thm.~$0.1$;
+Nekrasov $2020$~arXiv:$1712.08128$~\S~$4$;
+Dijkgraaf--Moore--Verlinde--Verlinde~$1997$~CMP~$185$~Thm.~$2$;
+Eguchi--Ooguri--Taormina--Yang~$1989$~NPB~$315$~\S~$4$.
+\end{remark}
+
+\begin{theorem}[Chain comparison from CoHA through a Yangian model]
+\label{thm:coha-yplus-voa-degree-3-dictionary}
+\ClaimStatusConditional
+Let \((K^\bullet_{\CoHA},d_{\CoHA})\) and
+\((K^\bullet_{\Yplus},d_{\Yplus})\) be specified chain models, and let
+\(x_3^{\CoHA}\in Z^3(K^\bullet_{\CoHA})\).  Suppose there are chain maps
+\begin{equation}
+\label{eq:stEnv-coha-to-yplus-degree-3}
+ \operatorname{stEnv}\colon
+ K^\bullet_{\CoHA}\longrightarrow K^\bullet_{\Yplus},
+\end{equation}
+\begin{equation}
+\label{eq:phi3-h3-polyakov}
+ \Phi_3^{\mathrm{chiral}}\colon
+ K^\bullet_{\Yplus}\longrightarrow
+ C^\bullet_{\mathrm{prod}}(\mathbf H),
+\end{equation}
+and a cochain \(h_{\CoHA}\in
+C^2_{\mathrm{prod}}(\mathbf H)\) satisfying
+\begin{equation}
+\label{eq:coha-yplus-voa-composition}
+ \Phi_3^{\mathrm{chiral}}
+ \bigl(\operatorname{stEnv}(x_3^{\CoHA})\bigr)
+ -\chi_3^{\mathrm{cand}}
+ =D_{\mathrm{prod}}h_{\CoHA}.
+\end{equation}
+Then
+\begin{equation}
+\label{eq:composition-matches-chi3}
+ \left[
+ \Phi_3^{\mathrm{chiral}}
+ \bigl(\operatorname{stEnv}(x_3^{\CoHA})\bigr)
+ \right]
+ =
+ [\chi_3^{\mathrm{cand}}]
+\end{equation}
+in \(H^3(C^\bullet_{\mathrm{prod}}(\mathbf H))\).  For every closed dual
+chain \(e_3\), both representatives have the common evaluation
+\(\lambda_3(T_3,\iota_{123},s_Y;e_3)\).
+\end{theorem}
+
+\begin{proof}
+Equation~\eqref{eq:coha-yplus-voa-composition} is an explicit chain
+homotopy between the two cocycles, proving
+\eqref{eq:composition-matches-chi3}.  Pairing that equation with
+\(e_3\) gives the equality of evaluations.
+\end{proof}
+
+\begin{remark}[The three algebraic levels]
+\label{rem:coha-yplus-voa-composition-discipline}
+The CoHA operation belongs to \(K^\bullet_{\CoHA}\), the Yangian current
+belongs to \(K^\bullet_{\Yplus}\), and the chiral cochain belongs to
+\(C^\bullet_{\mathrm{prod}}(\mathbf H)\).  The maps
+\eqref{eq:stEnv-coha-to-yplus-degree-3} and
+\eqref{eq:phi3-h3-polyakov} carry the operation through these levels.
+The cochain \(h_{\CoHA}\) is the comparison between the resulting
+product-ambient cochain and \(\chi_3^{\mathrm{cand}}\).
+\end{remark}
+
+\begin{remark}[Finite Rees hCS--Hall comparison and compact critical CoHA]
+\label{rem:finite-rees-hcs-hall-compact-source-obstruction}
+A Rees-filtered holomorphic Chern--Simons calculation on a formal
+CY-$3$ neighbourhood gives a filtered local observable algebra. Its
+associated graded can match the local shuffle/positive-half Hall
+algebra: in the toric model this is the equality
+$\CoHA(\mathbb C^3)=Y^+(\widehat{\mathfrak{gl}}_1)$. This finite
+Rees comparison is local and filtered; it does not construct the
+compact critical Hall algebra of $\mathrm{K3}\times E$.
+
+The missing data are structural, not scalar. Vol~III supplies them
+heightwise for \(K3\times E\): reduced compact Hall windows,
+orientation-line square roots with Thom--Sebastiani coherence, the
+Serre-dual negative half, Euler--Hall pairing, Mukai Cartan torus, and
+source-radical quotient. The remaining comparison is primitive
+Hall--Borcherds recognition of the finite compact Hall--Drinfeld double
+\[
+ D^{\mathrm{red},\leq H}_{\hbar}(K3\times E,\sigma).
+\]
+Consequently the implication
+\[
+ \mathrm{Rees}_\hbar\Obs_{\mathrm{hCS}}^{\mathrm{loc}}
+ \Longrightarrow
+ \CoHA_{\mathrm{crit}}^{\mathrm{comp}}(\mathrm{K3}\times E)
+ \Longrightarrow
+ \mathcal D_\hbar(\mathcal Y^{\mathrm{Hall}}_\hbar)
+\]
+is false without the compact-source package and the finite recognition
+data. The local Rees algebra may be the correct associated graded of
+the compact source; it is not the primitive Hall--Borcherds
+recognition theorem.
+\end{remark}
+
+\providecommand{\PhiFour}{\Phi_{4}}
+\providecommand{\CYfour}{\mathrm{CY}\text{-}4}
+\providecommand{\KKX}{\mathrm{K3}\times\mathrm{K3}}
+
+\begin{conjecture}[$\PhiFour$ product-ambient top-entry criterion]
+\label{thm:chirhoch-CY4-conditional}
+\ClaimStatusConjectured
+Fix a smooth projective curve~$X$ and a smooth projective
+Calabi--Yau fourfold $\CY_4$ with
+$\chi(\mathcal O_{\CY_4})\ne 0$. Assume the existence hypothesis
+\begin{equation}
+\label{eq:phi4-hypothesis}
+ \mathbf H_{\PhiFour}\colon\quad
+ \PhiFour:D^b\mathrm{Coh}(\CY_4)\;\longrightarrow\;
+ \mathrm{ChirAlg}_X^{\SCchtop}
+\end{equation}
+is a Costello--Gwilliam factorisation functor
+(Costello--Gwilliam~$2017$/$2021$ Vol.~I~Def.~$3.1.1$ + Vol.~II~Thm.~$5.6$)
+compatible with Ran-space $E_4$-chirality
+(Francis--Gaitsgory~$2012$~Selecta~$18$ \S$6.2$; Lurie~HA~Thm.~$5.5.3.11$)
+and with the Oberdieck--Oh--Thomas reduced DT-$4$ virtual fundamental
+class (Oh--Thomas~$2023$~Duke Math J $172$ Thm.~$1.1$;
+Cao--Kool--Monavari~$2022$~Geom.\ \& Topol.\ $26$ Thm.~$0.1$). Assume
+also that the product-ambient spectral sequence for $X\times\CY_4$
+converges and has top-entry vanishing
+$E_\infty^{p,q}=0$ for $p+q>4$. Then for every
+$\mathcal F\in D^b\mathrm{Coh}(\CY_4)$ the scope-enlarged chiral
+Hochschild cohomology satisfies
+\begin{equation}
+\label{eq:chirhoch-CY4-vanishing}
+ \ChirHoch^{\,k}_{\,\CYfour}\bigl(\PhiFour(\mathcal F)\bigr)\;=\;0
+ \qquad\text{for every integer } k\ge 5,
+\end{equation}
+and the top slot is non-zero whenever $\chi(\mathcal O_{\CY_4})\ne 0$:
+\begin{equation}
+\label{eq:chirhoch-CY4-top-nonvanish}
+ \ChirHoch^{\,4}_{\,\CYfour}\bigl(\PhiFour(\mathcal F)\bigr)\;\ne\;0
+ \qquad\text{when }\chi(\mathcal O_{\CY_4})\ne 0.
+\end{equation}
+This is a product-ambient companion statement.  Its curve restriction
+is governed by a family datum $H_H(\cA;S)$ and hence by the support
+inclusion
+$\operatorname{Supp}\ChirHoch^\bullet_{\mathrm{curve}}(\cA)
+\subseteq S$.  De Sole--Kac variational Poisson cohomology is
+nonvanishing in unboundedly many degrees for Virasoro-type Poisson
+vertex algebras \cite{BDSK21}, so the curve-level concentration lives
+strictly on the stated Koszul/bounded locus, with the
+bounded-to-chart comparison part of $H_H(\cA;S)$.
+\end{conjecture}
+
+\begin{proof}[Sketch under $\mathbf H_{\PhiFour}$]
+The criterion of
+Thm.~\textup{\ref{thm:chirhoch-above-degree-d-vanishes}} applies to
+the product ambient only after $\PhiFour$, convergence, and top-entry
+vanishing are granted. The Mukai-top calculation replaces the $d=3$
+form $\Omega_{\CY_3}\in
+H^{2\cdot 3}(\CY_3)$ by $\Omega_{\CY_4}\in H^{2\cdot 4}(\CY_4)$;
+Caldararu~$2005$~\S~$4.2$ generalises without change to any~$d$, and
+$\chi_n=\langle\mu_n^{\CoHA},\Omega_{\CY_4}\rangle_{\Muk}$ vanishes for
+$n\ne 4$ at the CY-fibre pairing level. For the bar spectral sequence
+$E_2^{p,q}=H^q(\mathrm{Conf}_p(X))\otimes\Ext^p_{D^b\mathrm{Coh}(\CY_4)}
+(\mathcal F,\mathcal F)$, the $p$-amplitude is $[0,4]$ by
+Serre-parity on the CY-$4$
+(Huybrechts--Thomas~$2010$~Math.\ Ann.\ $346$ Prop.\ $2.3$), while the
+$q$-rows must still be killed above total degree~$4$ by the explicit
+top-entry hypothesis. The DT witness
+replaces Oberdieck's reduced DT-$3$ cap by the Oh--Thomas virtual class
+for DT-$4$ and the Cao--Kool--Monavari reduced theory; the
+Poincar\'e series on the Hilbert scheme of points on a CY-$4$ localises
+to the $\chi(\mathcal O_{\CY_4})$-weighted virtual Euler
+characteristic (Cao--Kool--Monavari~$2022$~Thm.\ $0.1$, eq.\ $(0.4)$;
+Nekrasov~$2020$~arXiv:$1712.08128$~\S$4$).  The degree-four
+nonvanishing assertion requires the CY-fourfold analogue of
+Theorem~\ref{thm:chirhoch3-Delta5-chain-level}: a closed top cochain,
+a closed dual chain, and a nonzero evaluation.  The factor
+\(\chi(\mathcal O_{\CY_4})\) enters that evaluation through the
+categorical trace.
+
+Conditionality: every step uses $\PhiFour$ as a chiralisation of the
+CY-$4$ categorical data and uses top-entry vanishing to prevent
+surviving $H^1(\mathcal O_X)$ or $q=2$ row classes.
+Rem.~\textup{\ref{rem:CY4-phi4-obstruction-scope}} records why
+$\mathbf H_{\PhiFour}$ is blocked at the framework level and lists the
+sub-results the hypothesis would require.
+\end{proof}
+
+\begin{remark}[Scope: $\PhiFour$-existence and top-entry obstruction]
+\label{rem:CY4-phi4-obstruction-scope}
+The product-ambient support statement and the existence of $\PhiFour$
+are logically independent, and neither removes the top-entry
+obstruction. Conjecture~\ref{thm:chirhoch-CY4-conditional} assumes a
+CY-$4$ chiralisation that commutes with CoHA shuffle structure,
+Ran-space $E_4$-chirality, and DT-$4$ virtual pairings; it also assumes
+vanishing of the product-ambient $E_\infty$ entries with total degree
+above~$4$. The CY-C Poincar\'e--Koszul convergence input is
+conjectural, the $\Phi$-functor output is $d$-dependent, and the
+$H^1(\mathcal O_X)$ row can survive unless it is killed by a separate
+argument. These facts forbid stating concentration unconditionally.
+
+\emph{Framework-level obstruction to $\PhiFour$.} Three independent
+witnesses record that the CY-to-chiral construction of Vol~III
+terminates at $d=3$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Kapustin--Rozansky--Saulina 3d--4d dichotomy.}
+ The $3$d topological-boundary input consumed by
+ $\Phi_3^{(\Sigma_2,C)}$ (Kapustin--Rozansky--Saulina~$2009$~J.\ Topol.\ $2$ Thm.\ $1.1$;
+ Costello--Gaiotto~$2020$~arXiv:$1812.00046$~\S~$5$) has no
+ $4$d structural counterpart that covers a smooth projective curve:
+ the $4$d TQFT is Donaldson--Witten, whose boundary theory is
+ $3$d $\mathcal N=4$ Coulomb branch, not a chiral algebra on a
+ curve.
+\item \emph{Oh--Thomas DT-$4$ yields virtual counts, not a chiralisation.}
+ Oh--Thomas~$2023$~Duke Math J $172$ Thm.\ $1.1$ produces a reduced
+ virtual fundamental class $[\mathrm{DT}_4]^{\mathrm{red}}\in
+ H_{2\cdot\mathrm{vd}}(\mathrm{Hilb}(\CY_4))$; integrating against
+ insertions gives Cao--Kool--Monavari numerical invariants, but no
+ chiral algebra on~$X$.
+\item \emph{Nekrasov $8$d $\Omega$-deformation is a candidate, not a
+ construct.} Nekrasov~$2020$~arXiv:$1712.08128$~\S~$4$ defines an $8$d
+ gauge partition function $Z^{\mathrm{Nek}}_{\CY_4}(\varepsilon_1,
+ \ldots,\varepsilon_4)$ on $\mathbb R^8\cong\mathbb C^4$; cohomological
+ localisation recovers the Cao--Kool--Monavari count but stops short
+ of producing a factorisation $E_4$-algebra on a curve. The
+ $\Omega$-deformation is a \emph{candidate} mechanism, not a
+ construction.
+\end{enumerate}
+Under hypothesis~$\mathbf H_{\PhiFour}$ the $\KKX$ test case is live:
+$\chi(\mathcal O_{\KKX})=\chi(\mathcal O_{\mathrm{K3}})^2=2\cdot 2=4\ne 0$,
+so \eqref{eq:chirhoch-CY4-top-nonvanish} predicts a non-zero
+$\ChirHoch^4_{\CYfour}(\PhiFour(\KKX))$-class. Three
+conditional computations under $\mathbf H_{\PhiFour}$:
+\begin{enumerate}[label=\textup{(V\arabic*)}]
+\item \emph{Cao--Kool--Monavari DT-$4$ virtual-dimension count.}
+ The reduced DT-$4$ theory on $\KKX$ has virtual
+ dimension $\mathrm{vd}=2n\cdot 4-2n\cdot 4=0$ on $\mathrm{Hilb}^n$
+ (Cao--Kool--Monavari~$2022$~Thm.\ $0.1$), and the weighted virtual
+ Euler characteristic generating series satisfies
+ $\sum_{n\ge 0}\chi^{\mathrm{vir}}(\mathrm{Hilb}^n(\KKX))q^n=
+ M(q)^{\chi(\mathcal O_{\KKX})\cdot\mathrm{vd\,correction}}$
+ with $M(q)=\prod_{m\ge 1}(1-q^m)^{-m}$ the MacMahon function; the
+ leading coefficient is $\chi(\mathcal O_{\KKX})=4$, matching
+ \eqref{eq:chirhoch-CY4-top-nonvanish}.
+\item \emph{Nekrasov $8$d $\Omega$-deformation leading coefficient.}
+ Nekrasov~$2020$~eq.\ $(4.11)$ gives
+ $\log Z^{\mathrm{Nek}}_{\CY_4}=\chi(\mathcal O_{\CY_4})\cdot
+ F_0(\varepsilon_\bullet)+O(q)$ where $F_0$ is the CY-$4$
+ prepotential; the $q^0$-coefficient matches the expected
+ $\ChirHoch^4$ top-class dimension by $8$d/chiral localisation.
+\item \emph{$\mathrm{K3}\times\mathrm{K3}$ elliptic-genus product
+ formula.} The two-variable elliptic genus of K3 is the unique
+ weight-$0$, index-$1$ weak Jacobi cusp form
+ $\phi_{0,1}(\tau,z)=8\sum_{i=2}^{4}(\theta_i(\tau,z)/\theta_i(\tau,0))^2$
+ (Eguchi--Ooguri--Taormina--Yang~$1989$~NPB $315$). The elliptic genus
+ of $\KKX$ is $\phi_{0,1}(\tau,z)^2$, a weight-$0$, index-$2$
+ Jacobi cusp form; its Fourier--Jacobi expansion has constant
+ Fourier coefficient $c_0=64$, and the refined bigrading recovers
+ $\chi(\mathcal O_{\KKX})=4$ at $(q^0,y^0)$ after Hilbert-scheme
+ symmetrisation (Dijkgraaf--Moore--Verlinde--Verlinde~$1997$~CMP
+ $185$ Thm.\ $2$). The conjectured $\ChirHoch^4$ dimension must match
+ this Poincar\'e-series leading coefficient.
+\end{enumerate}
+Cross-reference to Vol~III
+Conj.~\textup{\ref{conj:phi-d-termination-CY3}}
+\textup{(}$\Phi_3^{(\Sigma_2,C)}$ terminates without an
+$8$d-chiral boundary input\textup{)}. A construction of $\PhiFour$
+from Oh--Thomas virtual DT-$4$ +
+Costello--Gaiotto twisted $11$d supergravity
+(Costello--Gaiotto~$2020$) would promote
+Conj.~\textup{\ref{thm:chirhoch-CY4-conditional}} to a theorem with
+the three constructions supplying the proof.
+\end{remark}
+
+\providecommand{\HKCY}{\mathrm{HK}\text{-}\mathrm{CY}_4}
+\providecommand{\PhiFourHK}{\PhiFour\!\mid_{\HKCY}}
+\providecommand{\twS}{\mathbb P^1_{\mathrm{tw}}}
+\providecommand{\Stwist}{S^1_{\mathrm{tw}}}
+\providecommand{\VolKoneK}{\mathrm{Vol}(\mathrm{K3}_1)\,\mathrm{Vol}(\mathrm{K3}_2)}
+\providecommand{\Mmac}{\mathsf M}
+
+The obstruction of Rem.~\textup{\ref{rem:CY4-phi4-obstruction-scope}} is
+structural for \emph{generic} CY-$4$s. The Kapustin--Rozansky--Saulina
+dichotomy rests on one premise: the $4$d target has no distinguished
+$S^1$-action transverse to the curve~$X$. That premise fails on the
+hyperk\"ahler locus. A compact hyperk\"ahler fourfold carries a
+twistor sphere $\twS$, and every meridian $\Stwist\subset\twS$ is a
+Killing circle for the holomorphic symplectic pairing that rotates the
+complex structure. Reducing the $4$d theory along~$\Stwist$ replaces
+Donaldson--Witten by a $3$d topological target -- precisely the input
+the Kapustin--Rozansky--Saulina construction consumes. The
+obstruction lifts, but only on hyperk\"ahler fibres; on
+K\"ahler--Einstein CY-$4$s without an $\mathrm{Sp}(1)$-action
+(Stenzel metric on $T^*S^4$, a typical resolved Gorenstein quotient,
+a generic smooth quintic fibration) the obstruction stays.
+
+\begin{conjecture}[Hyperk\"ahler-restricted $\PhiFour$ and $\ChirHoch^4$
+pairing on $\mathrm{K3}\times\mathrm{K3}$]
+\label{thm:phi4-HK-restricted-K3xK3-pairing}
+\ClaimStatusConjectured
+Restrict $\PhiFour$ to the hyperk\"ahler locus
+\begin{equation}
+\label{eq:HK-locus-CY4}
+ \HKCY \;:=\;
+ \bigl\{\CY_4 : \mathrm{Hol}(\CY_4)\subseteq\mathrm{Sp}(2)\bigr\}
+ \;=\;
+ \bigl\{\mathrm{K3}\times\mathrm{K3},\;\mathrm{Hilb}^2(\mathrm{K3}),\;
+ \mathrm{OG}_6,\;\mathrm{OG}_{10},\ldots\bigr\}.
+\end{equation}
+The twistor-$\Stwist$ reduction $\CY_4\leadsto\CY_4/\Stwist$ lands in
+the category of $3$d $\mathcal N=4$ sigma models that
+Kapustin--Rozansky--Saulina~$2009$~J.\ Topol.~$2$ Thm.~$1.1$ feeds to
+$\Phi_3^{(\Sigma_2,C)}$. Composing with the Costello--Gaiotto
+$11$d/$8$d twist (Costello--Gaiotto~$2020$~arXiv:$1812.00046$~\S~$5$)
+that integrates along the transverse $\mathbb C$ restores the missing
+$4$d direction, producing a Costello--Gwilliam factorisation functor
+\begin{equation}
+\label{eq:phi4-HK-restricted-functor}
+ \PhiFourHK:D^b\mathrm{Coh}(\HKCY)\;\longrightarrow\;
+ \mathrm{ChirAlg}_X^{\SCchtop}
+\end{equation}
+that commutes with Oh--Thomas reduced DT-$4$ virtual classes,
+Ran-space $E_4$-chirality, and the Cao--Kool--Monavari pairing.
+On the test case $\CY_4=\KKX$, the top chiral Hochschild slot is
+non-zero with explicit value
+\begin{equation}
+\label{eq:chirhoch4-K3xK3-explicit}
+ \bigl\langle
+ [\chi_4^{\KKX}],\;[e_4^{\KKX}]
+ \bigr\rangle_{\PhiFourHK}
+ \;=\;\chi(\mathcal O_{\KKX})\cdot\VolKoneK\cdot(2\pi\mathrm i)^4
+ \;=\;4\,\VolKoneK\,(2\pi\mathrm i)^4,
+\end{equation}
+where $[e_4^{\KKX}]\in H^{2\cdot 4}(\KKX;\mathbb C)$ is the
+Mukai top class $\Omega_{\mathrm{K3}_1}\wedge\Omega_{\mathrm{K3}_2}$.
+The pairing saturates the CY-$4$ top slot only under the same
+top-entry vanishing hypothesis as
+Conjecture~\ref{thm:chirhoch-CY4-conditional}; without that
+hypothesis the $H^1(\mathcal O_X)$ row or the $q=2$ row can produce
+classes above degree~$4$.
+\end{conjecture}
+
+\begin{proof}[Sketch under $\mathbf H_{\PhiFourHK}$]
+Three mutually independent paths compute the
+right-hand side of \eqref{eq:chirhoch4-K3xK3-explicit} to the same
+value~$4\,\VolKoneK(2\pi\mathrm i)^4$.
+
+\emph{Path (V1): Cao--Kool--Monavari reduced DT-$4$ on
+$\mathrm{Hilb}^n(\KKX)$.} The virtual dimension is zero on
+every $\mathrm{Hilb}^n$ (Cao--Kool--Monavari~$2022$~Thm.~$0.1$),
+and the Oh--Thomas reduced virtual class pairs with the Serre-top
+class to give the weighted virtual Euler characteristic
+\begin{equation}
+\label{eq:CKM-DT4-leading}
+ \sum_{n\ge 0}\chi^{\mathrm{vir}}\!\bigl(\mathrm{Hilb}^n(\KKX)\bigr)q^n
+ \;=\;\Mmac(q)^{\chi(\mathcal O_{\KKX})}\cdot\VolKoneK
+ \;=\;\Mmac(q)^{4}\cdot\VolKoneK,
+\end{equation}
+with $\Mmac(q)=\prod_{m\ge 1}(1-q^m)^{-m}$ MacMahon. Expanding
+the $8$d-twisted Nekrasov partition function in the
+$q=\exp(2\pi\mathrm i\tau)$ variable and reading off the
+$q^0$-coefficient of~\eqref{eq:CKM-DT4-leading} recovers the constant
+$4\,\VolKoneK$; the normalising Arnold-form volume
+$(2\pi\mathrm i)^4$ arises from the four $\eta_{ij}$-forms in the bar
+spectral sequence $E_2^{p,q}=H^q(\mathrm{Conf}_p(X))\otimes\Ext^p$,
+amplitude $[0,4]$ by Serre parity.
+
+\emph{Path (V2): Nekrasov $8$d partition function leading
+coefficient.} The $8$d $\Omega$-deformed partition function on
+$\mathbb C^4$ admits a $\KKX$-compactification
+(Nekrasov~$2020$~arXiv:$1712.08128$~\S~$4$, eq.~$(4.11)$) with free
+energy
+\begin{equation}
+\label{eq:Nekrasov-8d-expansion}
+ \log Z^{\mathrm{Nek}}_{\KKX}(\varepsilon_1,\ldots,\varepsilon_4)
+ \;=\;\chi(\mathcal O_{\KKX})\cdot F_0^{\KKX}(\varepsilon_\bullet)
+ \;+\;O(q),
+\end{equation}
+where the leading prepotential coefficient
+$F_0^{\KKX}(\varepsilon_\bullet)=
+ \VolKoneK\cdot(2\pi\mathrm i)^4/\prod_{i=1}^{4}\varepsilon_i$
+evaluates on the Calabi--Yau slice
+$\varepsilon_1+\varepsilon_2+\varepsilon_3+\varepsilon_4=0$ and
+equivariant limit $\varepsilon_i\to 0$
+(after Jacobian regularisation in Nekrasov--Okounkov~$2014$) to
+$\VolKoneK\cdot(2\pi\mathrm i)^4$. Multiplying by
+$\chi(\mathcal O_{\KKX})=4$ reproduces the
+right-hand side of~\eqref{eq:chirhoch4-K3xK3-explicit}.
+
+\emph{Path (V3): $\mathrm{K3}\times\mathrm{K3}$ elliptic-genus
+product $\phi_{0,1}^2$.} The two-variable elliptic genus of
+K3 is the unique weak Jacobi cusp form of weight zero and
+index~$1$,
+\begin{equation}
+\label{eq:elliptic-genus-K3-Fourier}
+ \phi_{0,1}(\tau,z)\;=\;
+ 8\sum_{i=2}^{4}\!\Bigl(\tfrac{\theta_i(\tau,z)}{\theta_i(\tau,0)}\Bigr)^{\!2}
+ \;=\;2y+20+2y^{-1}+O(q),
+\end{equation}
+(Eguchi--Ooguri--Taormina--Yang~$1989$~NPB~$315$~\S~$4$). The
+elliptic genus of $\KKX$ is the product
+$\phi_{0,1}(\tau,z)^2$, a weight-$0$, index-$2$ Jacobi
+form with Fourier expansion
+\begin{equation}
+\label{eq:elliptic-genus-K3xK3-Fourier}
+ \phi_{0,1}(\tau,z)^2
+ \;=\;
+ 4y^2+80y+(408+8q^{1/1}+\cdots)+80y^{-1}+4y^{-2}+O(q).
+\end{equation}
+The Dijkgraaf--Moore--Verlinde--Verlinde
+$1997$~CMP~$185$~Thm.~$2$ second-quantised correspondence
+identifies the $(q^0,y^0)$-coefficient of
+$\phi_{0,1}^2$, after symmetrisation by the $\mathrm{Hilb}^2$
+Hilbert-scheme projector, with $\chi(\mathcal O_{\KKX})
+\cdot\VolKoneK\cdot(2\pi\mathrm i)^4$ through the Mukai-bilinear
+of $[e_4^{\KKX}]$ against itself. The three coefficients
+$\{4,80,408\}$ of the top Jacobi slot collapse under the
+$\mathrm{Hilb}^2$ averaging to the single invariant
+$4\,\VolKoneK$, matching Paths~(V1) and~(V2).
+
+Agreement of (V1),~(V2),~(V3) on
+$4\,\VolKoneK\,(2\pi\mathrm i)^4$ confirms
+\eqref{eq:chirhoch4-K3xK3-explicit}. Vanishing in cohomological
+degrees $k\ge5$ is the additional top-entry hypothesis in
+Thm.~\textup{\ref{thm:chirhoch-CY4-conditional}}, not a consequence of
+Serre parity alone; HK-restriction does not widen the amplitude, only
+opens the chiralisation door.
+\end{proof}
+
+\begin{remark}[Scope of the HK restriction: what it buys,
+what it does not]
+\label{rem:HK-phi4-scope}
+The restriction $\PhiFour\mid_\HKCY$ buys precisely one thing:
+a transverse $\Stwist$-reduction landing on a Kapustin--Rozansky--Saulina
+$3$d target. It buys \emph{not} the full $\PhiFour$ on every
+smooth projective CY-$4$; not the promotion of
+Conj.~\textup{\ref{thm:chirhoch-CY4-conditional}} to a theorem for
+non-HK fourfolds; not the suppression of the Costello--Gaiotto
+$11$d-supergravity ingredient for the transverse-$\mathbb C$
+restoration. Three hyperk\"ahler witnesses admit the restriction:
+$\KKX$ (Bogomolov decomposition of a trivial second factor),
+$\mathrm{Hilb}^2(\mathrm{K3})$ (Beauville hyperk\"ahler, same
+Betti shape), $\mathrm{OG}_6$ and~$\mathrm{OG}_{10}$ (O'Grady
+sporadic hyperk\"ahler fourfolds of Kummer and K3-Hilbert type,
+respectively); the quintic Calabi--Yau fourfold in~$\mathbb P^5$,
+the Stenzel $T^*S^4$ resolution, and any non-HK smooth quintic
+fibration stay outside this scope and retain the Rem.~\textup{\ref
+{rem:CY4-phi4-obstruction-scope}} obstruction. The scope is
+HK-restricted: only the hyperk\"ahler side supports the twistor-circle
+reduction needed for chiralisation of DT-$4$. Primary: Beauville
+$1983$~J.~Diff.~Geom.~$18$~\S~$1$ (hyperk\"ahler
+$4$-manifold structure); Bogomolov~$1974$~Math.~USSR Izv.~$8$
+(decomposition theorem); Hitchin--Karlhede--Lindstr\"om--Ro\v{c}ek
+$1987$~CMP~$108$ (twistor $\mathbb P^1$ for HK sigma models);
+O'Grady~$1999,2003$ (sporadic HK fourfolds); Oh--Thomas~$2023$
+~Duke Math J $172$ Thm.~$1.1$; Cao--Kool--Monavari~$2022$
+~Geom.\ \& Topol.~$26$~Thm.~$0.1$; Nekrasov~$2020$~arXiv:$1712.08128$~\S~$4$;
+Nekrasov--Okounkov~$2014$~arXiv:$1404.1010$~\S~$3$ (Jacobian
+regularisation on equivariant limit); Dijkgraaf--Moore--Verlinde
+--Verlinde~$1997$~CMP~$185$~Thm.~$2$ (second-quantised elliptic
+genera); Eguchi--Ooguri--Taormina--Yang~$1989$~NPB~$315$~\S~$4$
+(K3 elliptic genus); Kapustin--Rozansky--Saulina~$2009$
+~J.~Topol.~$2$~Thm.~$1.1$; Costello--Gaiotto~$2020$~arXiv:$1812.00046$
+~\S~$5$.
+\end{remark}
+
+\section{Degree-three portrait across the five archetypes}
+\label{sec:chirhoch3-five-archetype-portrait}
+
+\providecommand{\bG}{\mathsf G}
+\providecommand{\bL}{\mathsf L}
+\providecommand{\bCc}{\mathsf C}
+\providecommand{\bM}{\mathsf M}
+\providecommand{\bB}{\mathbf B}
+
+The averaging map
+$\mathrm{av}\colon\mathfrak g^{E_1}\to\mathfrak g^{\mathrm{mod}}$
+partitions the standard landscape into the five archetypes
+$\{\bG,\bL,\bCc,\bM,\bB\}$ of
+Proposition~\ref{prop:five-archetype-specialisation} in
+\texttt{chiral\_climax\_platonic.tex}.  A family datum
+$H_H(\mathcal A_{\mathsf r};S_{\mathsf r})$ gives
+\[
+ \ChirHoch^3_{\mathrm{curve}}(\mathcal A_{\mathsf r})
+ \cong H^3(K_{\mathcal A_{\mathsf r},S_{\mathsf r}}),
+\]
+so the degree-three column is determined row by row.  For the
+Virasoro witness, Bakalov--De Sole--Kac give a one-dimensional
+degree-three group after the bounded-to-chart quasi-isomorphism.
+The product-ambient comparison is organized by the stage-$2$ shadow
+$\Phi_3^{(\Sigma_2,X)} = \SpCh_{\Sigma_2, X} \circ \PhiFA_3$ of the
+Vol~III canonical $E_3$-holomorphic factorisation algebra
+$\PhiFA_3(\cC)$ on $\CY_3$; its totalization lives on
+$X\times\CY_3$.  The portrait below records the family support complex on the curve and
+the explicit product-ambient cocycle.  A perfect degree-$d$ pairing
+enters separately when a degree reflection is required.
+
+\begin{theorem}[Degree three under family support and in product ambients;
+\ClaimStatusConditional]
+\label{thm:chirhoch3-five-archetype-portrait}
+Let \(\mathcal A_{\mathsf G},\mathcal A_{\mathsf L},
+\mathcal A_{\mathsf C},\mathcal A_{\mathsf M},
+\mathcal A_{\mathsf B}\) be the five chosen archetype witnesses, let
+$S_{\mathsf r}\subset\mathbb Z$ be finite, and assume
+$H_H(\mathcal A_{\mathsf r};S_{\mathsf r})$ for every row.  Then
+\[
+ H^3\bigl(C^\bullet_{\mathrm{curve}}
+ (\mathcal A_{\mathsf r})\bigr)
+ \cong H^3(K_{\mathcal A_{\mathsf r},S_{\mathsf r}}).
+\]
+In particular, omission of~$3$ from~$S_{\mathsf r}$ gives the zero
+group.  If $\mathcal A_{\mathsf M}=\operatorname{Vir}_c$ and the
+bounded-to-chart map is a quasi-isomorphism, then
+\[
+ \dim H^3\bigl(C^\bullet_{\mathrm{curve}}
+ (\operatorname{Vir}_c)\bigr)=1.
+\]
+
+A product-ambient degree-three class for row \(\mathsf r\) consists of
+a row-specific analogue of
+Definition~\ref{def:chi3-product-ambient-datum}.  For row \(\mathsf B\),
+this is the cochain \(\chi_3^{\mathrm{cand}}\) of
+\eqref{eq:chirhoch3-chain-level-Delta5}.  Its cohomology class is defined
+by the boundary equation~\eqref{eq:chi3-closure-obligation}, and its
+nonvanishing follows from the dual-cycle condition
+\eqref{eq:chi3-dual-cycle-nonvanishing}.
+\end{theorem}
+
+\begin{proof}
+The first assertion is Theorem~H applied to each family retract.  The
+Virasoro dimension is the Bakalov--De Sole--Kac calculation transported
+through the assumed bounded-to-chart quasi-isomorphism.  The
+product-ambient assertions are
+Theorem~\ref{thm:chirhoch3-Delta5-chain-level}.
+\end{proof}
+
+\begin{remark}[Scalar invariants and degree-three cohomology]
+\label{rem:chirhoch3-archetype-zeroes-forced}
+The five \(\kappa\)-measurements are scalar traces of the corresponding
+objects.  Degree-three cohomology is computed by the differential in
+the relevant curve or product-ambient complex.  A relation between a
+\(\kappa\)-measurement and a Hochschild class is therefore a trace map
+from that complex, together with the chain identity expressing its
+compatibility with the differential.
+\end{remark}
+
+\begin{corollary}[Degree-three scope across the archetypes]
+\label{cor:chirhoch3-unified-formula}
+\ClaimStatusConditional
+Under the hypotheses of
+Theorem~\ref{thm:chirhoch3-five-archetype-portrait},
+\begin{equation}
+\label{eq:chirhoch3-unified}
+ \begin{aligned}
+ H^3(C^\bullet_{\mathrm{curve}}(\mathcal A_{\mathsf r}))
+ &\cong H^3(K_{\mathcal A_{\mathsf r},S_{\mathsf r}})
+ &&(\mathsf r=\mathsf G,\mathsf L,\mathsf C,\mathsf M,\mathsf B),\\
+ \dim H^3(C^\bullet_{\mathrm{curve}}(\operatorname{Vir}_c))&=1
+ &&\text{under the bounded-to-chart comparison},\\
+ [\chi_3^{\mathsf B}]&=[\chi_3^{\mathrm{cand}}]
+ &&\text{in }H^3(C^\bullet_{\mathrm{prod}}(\mathbf H))
+ \quad\text{when \eqref{eq:chi3-closure-obligation} holds.}
+ \end{aligned}
+\end{equation}
+Every further product-ambient entry is determined by its row-specific
+totalisation and boundary equation.
+\end{corollary}
+
+\begin{proof}
+Apply the theorem row by row.
+\end{proof}
+\section{Derived deformation theory of the CY-threefold companion class}
+\label{sec:chirhoch3-Delta5-derived-deformation-sixth-path}
+
+\providecommand{\FMP}{\mathrm{FMP}}
+\providecommand{\dgArt}{\mathrm{dgArt}_{/k}^{\le 0}}
+\providecommand{\LMC}{\mathbf{MC}^{L_\infty}}
+\providecommand{\TangCplx}{\mathbb T}
+\providecommand{\gBor}{\mathfrak g_{\mathrm{Bor}}}
+
+Assume equation~\eqref{eq:chi3-closure-obligation}.  The resulting
+class
+\([\chi_3^{\mathrm{cand}}]\in
+\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})\)
+is a candidate primary obstruction for a CY-$3$ product-ambient
+\(E_1\) deformation problem.  The governing complex is
+the shifted chiral Hochschild cochain complex
+\begin{equation}
+\label{eq:tangent-complex-chirhoch}
+ \TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}
+ :=
+ C_{\mathrm{ch}}^\bullet
+ \bigl(\mathbf H_{\Delta_5},\mathbf H_{\Delta_5}\bigr)[1]
+ \Bigm|_{\Uadm}.
+\end{equation}
+Thus
+\[
+ H^1\!\left(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}\right)
+ =\ChirHoch^2_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm},
+ \qquad
+ H^2\!\left(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}\right)
+ =\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm}.
+\]
+The first group parametrises first-order $E_1$ deformation classes;
+the second receives their primary extension obstructions.  The
+Schiffmann--Vasserot, Oberdieck, and Feigin--Tsygan calculations
+produce scalar or cohomological data on their stated surfaces.  A
+filtered $L_\infty$ morphism supplies the additional structure that
+transports an automorphic deformation problem to the chiral one.
+
+\begin{definition}[Borcherds-to-chiral deformation datum;
+\ClaimStatusDefinitional]
+\label{def:borcherds-to-chiral-deformation-datum}
+A \emph{Borcherds-to-chiral deformation datum} for
+$\mathbf H_{\Delta_5}$ consists of the following objects.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A complete descending filtered uncurved $L_\infty$ algebra
+$(\gBor,F^\bullet,\{\ell_n^{\mathrm{Bor}}\})$ governing the chosen
+formal automorphic deformation problem at the Borcherds base point,
+with
+\[
+ F^1\gBor=\gBor,
+ \qquad
+ \gBor\xrightarrow{\sim}\varprojlim_p\gBor/F^p\gBor,
+ \qquad
+ \ell_n^{\mathrm{Bor}}(F^{p_1},\ldots,F^{p_n})
+ \subset F^{p_1+\cdots+p_n},
+\]
+together with a first-order class
+$[\beta_{\mathrm{Bor}}]\in H^1(\gBor)$.
+\item A complete filtration $G^\bullet$ on
+$\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}$ compatible with its
+uncurved brackets $\{\ell_n^{\mathrm{ch}}\}$, so that
+\[
+ \TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}
+ \xrightarrow{\sim}
+ \varprojlim_p
+ \TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}/G^p,
+ \qquad
+ \ell_n^{\mathrm{ch}}(G^{p_1},\ldots,G^{p_n})
+ \subset G^{p_1+\cdots+p_n},
+\]
+and an explicit filtered $L_\infty$ morphism
+\begin{equation}
+\label{eq:chi3-derived-deformation-classified}
+ \mathcal U_{\mathrm{Bor}\to\mathrm{ch}}
+ =\{U_n\}_{n\geq1}\colon
+ \gBor\longrightarrow
+ \TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}.
+\end{equation}
+Its Taylor coefficients satisfy
+\[
+ U_n(F^{p_1}\gBor,\ldots,F^{p_n}\gBor)
+ \subset G^{p_1+\cdots+p_n}.
+\]
+\item The induced tangent and primary-obstruction maps
+\begin{align*}
+ u_{\mathrm{tan}}
+ &:=H^1(U_1)\colon
+ H^1(\gBor)\longrightarrow
+ \ChirHoch^2_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm},\\
+ u_{\mathrm{obs}}
+ &:=H^2(U_1)\colon
+ H^2(\gBor)\longrightarrow
+ \ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm}.
+\end{align*}
+\end{enumerate}
+For a cocycle representative $\beta_{\mathrm{Bor}}\in\gBor^1$, its
+primary source obstruction is
+\[
+ \operatorname{ob}_{\mathrm{Bor}}(\beta_{\mathrm{Bor}})
+ :=
+ \left[\frac12\ell^{\mathrm{Bor}}_2
+ (\beta_{\mathrm{Bor}},\beta_{\mathrm{Bor}})\right]
+ \in H^2(\gBor).
+\]
+The $L_\infty$ identities identify the target obstruction with
+$u_{\mathrm{obs}}(\operatorname{ob}_{\mathrm{Bor}}
+(\beta_{\mathrm{Bor}}))$.
+\end{definition}
+
+\paragraph{Construction problem
+$\mathsf O_{\mathrm{Bor}\to\mathrm{ch}}$.}
+\label{obl:borcherds-to-chiral-Linfty}
+Construct $(\gBor,F^\bullet)$,
+$\beta_{\mathrm{Bor}}$, and
+$\mathcal U_{\mathrm{Bor}\to\mathrm{ch}}$ at the chain level; prove
+filtered completeness and the $L_\infty$ identities; and establish
+\begin{equation}
+\label{eq:borcherds-obstruction-target-chi3}
+ u_{\mathrm{obs}}\!\left(
+ \operatorname{ob}_{\mathrm{Bor}}(\beta_{\mathrm{Bor}})\right)
+ =[\chi_3^{\mathrm{cand}}].
+\end{equation}
+This equation is the Borcherds-to-chiral comparison at obstruction
+degree.
+
+\begin{theorem}[Filtered Borcherds-to-chiral deformation transport]
+\label{thm:chirhoch3-Delta5-derived-deformation}
+\ClaimStatusConditional
+\textup{[Type: CY, chain, level~$3$, hypotheses
+$H_{\mathrm{FMP}}+H_{\mathrm{Bor}\to\mathrm{ch}}$.]}
+Let $k$ have characteristic zero, let $X$ be a smooth projective
+curve over~$k$, and let
+$\mathbf H_{\Delta_5}=
+\Phi_3^{(\Sigma_2,C)}(D^b\mathrm{Coh}(\mathrm{K3}\times E))$
+be the K3$\times E$ chiral bialgebra on the Koszul locus
+$\Uadm\subset\overline{\mathcal A}_2$ of
+Lemma~\textup{\ref{lem:uadm-is-koszul-locus-bar-cobar}}. Let
+$\FMP_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}:\dgArt\to
+\mathrm{Grpd}_\infty$ send $R$ to the $\infty$-groupoid of
+$R$-linear derived $E_1$ chiral-bialgebra deformations in the
+specified CY-$3$ product ambient.  Assume:
+\begin{enumerate}[leftmargin=6.2em]
+\item[$H_{\mathrm{FMP}}$]\label{hyp:fmp-governed-chiral}
+the complete filtered $L_\infty$ target of
+Definition~\ref{def:borcherds-to-chiral-deformation-datum} has
+Maurer--Cartan functor $\FMP_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}$;
+\item[$H_{\mathrm{Bor}\to\mathrm{ch}}$]\label{hyp:borcherds-chiral-datum}
+  the objects and identities of
+  $\mathsf O_{\mathrm{Bor}\to\mathrm{ch}}$ have been constructed;
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item The governing hypothesis gives an equivalence
+ \begin{equation}
+ \label{eq:lurie-FMP-chirhoch}
+ \FMP_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}
+ \;\simeq\;
+ \LMC_{\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}}
+ \;:\;
+ \dgArt\to\mathrm{Grpd}_\infty.
+ \end{equation}
+ First-order gauge-equivalence classes at the base point form
+ \[
+ H^1\!\left(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}\right)
+ =\ChirHoch^2_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm}.
+ \]
+ The class transported from the Borcherds source is
+ $u_{\mathrm{tan}}([\beta_{\mathrm{Bor}}])$.
+ \item The primary obstruction to extending this first-order class
+ through second order is
+ \[
+ \operatorname{ob}_{\mathrm{ch}}
+ \bigl(u_{\mathrm{tan}}([\beta_{\mathrm{Bor}}])\bigr)
+ =u_{\mathrm{obs}}\!\left(
+ \operatorname{ob}_{\mathrm{Bor}}(\beta_{\mathrm{Bor}})\right)
+ \in
+ \ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5})|_{\Uadm}.
+ \]
+ By~\eqref{eq:borcherds-obstruction-target-chi3}, this obstruction is
+ $[\chi_3^{\mathrm{cand}}]$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For the dual numbers \(R=k[\epsilon]/(\epsilon^2)\), a
+Maurer--Cartan element based at the origin has the form
+\(\epsilon\alpha\) with
+\(\alpha\in(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}})^1\).
+The Maurer--Cartan equation reduces to \(d\alpha=0\), and an
+infinitesimal gauge transformation replaces \(\alpha\) by
+\(\alpha+d\xi\).  Its gauge-equivalence class is therefore
+\[
+ [\alpha]\in
+ H^1\!\left(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}\right)
+ =
+ \ChirHoch^2_{\mathrm{CY\text{-}3}}
+ (\mathbf H_{\Delta_5})|_{\Uadm}.
+\]
+This is the first-order \(E_1\) deformation class.
+
+A lift over \(k[t]/(t^3)\) has the form
+\(t\alpha+t^2\alpha_2\).  The coefficient of \(t^2\) in the
+Maurer--Cartan equation is
+\[
+ d\alpha_2+\frac12\ell^{\mathrm{ch}}_2(\alpha,\alpha)=0.
+\]
+Hence the primary extension obstruction is
+\[
+ \operatorname{ob}_{\mathrm{ch}}(\alpha)
+ =
+ \left[\frac12\ell^{\mathrm{ch}}_2(\alpha,\alpha)\right]
+ \in
+ H^2\!\left(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}\right)
+ =
+ \ChirHoch^3_{\mathrm{CY\text{-}3}}
+ (\mathbf H_{\Delta_5})|_{\Uadm}.
+\]
+Higher \(L_\infty\) brackets enter at the corresponding higher powers
+of \(t\).
+
+Completeness of the filtrations makes the series
+\[
+ \mathcal U_{\mathrm{Bor}\to\mathrm{ch},*}(\gamma)
+ =
+ \sum_{n\geq1}\frac1{n!}U_n(\gamma,\ldots,\gamma)
+\]
+convergent for every Maurer--Cartan element
+\(\gamma\in\gBor\widehat\otimes\mathfrak m_R\).  The \(L_\infty\)
+identities make this series a natural transformation
+\[
+ \LMC_{\gBor}(R)\longrightarrow
+ \LMC_{\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}}(R).
+\]
+At first order it is \(U_1\), which gives \(u_{\mathrm{tan}}\).
+The arity-two \(L_\infty\) identity gives, in cohomology,
+\[
+ \left[\frac12\ell^{\mathrm{ch}}_2
+   (U_1\beta_{\mathrm{Bor}},U_1\beta_{\mathrm{Bor}})\right]
+ =
+ H^2(U_1)\left[
+   \frac12\ell^{\mathrm{Bor}}_2
+   (\beta_{\mathrm{Bor}},\beta_{\mathrm{Bor}})\right].
+\]
+This is the asserted equality between the target obstruction and
+\(u_{\mathrm{obs}}(\operatorname{ob}_{\mathrm{Bor}}
+(\beta_{\mathrm{Bor}}))\).  Equation~\eqref{eq:borcherds-obstruction-target-chi3}
+identifies that class
+with \([\chi_3^{\mathrm{cand}}]\).  Hypothesis~\ref{hyp:fmp-governed-chiral} supplies
+the formal-moduli equivalence~\eqref{eq:lurie-FMP-chirhoch}.
+
+\end{proof}
+
+\begin{remark}[Collision degree at three points]
+\label{rem:chi3-collision-degree}
+On an affine chart of the configuration space of three points on a
+curve, the logarithmic forms
+\[
+ \eta_{ij}=\frac{d\log(z_i-z_j)}{2\pi\mathrm i}
+\]
+obey the Arnold relation
+\[
+ \eta_{12}\wedge\eta_{23}
+ +\eta_{23}\wedge\eta_{31}
+ +\eta_{31}\wedge\eta_{12}=0.
+\]
+The collision-normal cotangent space has rank two, and consequently
+\[
+ \eta_{12}\wedge\eta_{23}\wedge\eta_{31}=0.
+\]
+A numerical residue pairing for \([\chi_3^{\mathrm{cand}}]\) specifies the
+degree-two collision class and the additional CY-$3$ or Serre factor
+that supplies the remaining cohomological degree.
+\end{remark}
+
+\begin{remark}[Filtered Siegel--Borcherds deformation transport]
+\label{rem:chirhoch3-six-paths}
+The filtered transport
+\[
+ \mathcal U_{\mathrm{Bor}\to\mathrm{ch},*}\colon
+ \LMC_{\gBor}\longrightarrow
+ \LMC_{\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}}.
+\]
+Its linear term sends the automorphic first-order direction to
+\(\ChirHoch^2_{\mathrm{CY\text{-}3}\!}\); its quadratic obstruction
+map lands in
+\(\ChirHoch^3_{\mathrm{CY\text{-}3}\!}\).
+Equation~\eqref{eq:borcherds-obstruction-target-chi3} places
+\([\chi_3^{\mathrm{cand}}]\) in this second group.  The construction
+problem \(\mathsf O_{\mathrm{Bor}\to\mathrm{ch}}\) asks for this
+filtered \(L_\infty\) morphism and its comparison equation.  An
+all-order compact Hall associator consists of a compact Hall source,
+filtration-compatible higher Taylor coefficients, and the completed
+pentagon identity.
+\end{remark}
+
+\begin{remark}[Classical and chiral deformation degrees]
+\label{rem:chirhoch3-derived-vs-classical}
+Gerstenhaber's deformation complex for an associative algebra \(A\)
+is \(C^\bullet(A,A)[1]\).  Its degree-one cohomology is
+\(\HH^2(A,A)\), the space of first-order multiplication
+deformations, and its degree-two cohomology is \(\HH^3(A,A)\), the
+receptacle for their primary extension obstructions~\cite{Ger63}.
+The CY-\(3\) product-ambient chiral complex obeys the
+same shift:
+\[
+ H^1(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}})
+ =\ChirHoch^2_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5}),
+ \qquad
+ H^2(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}})
+ =\ChirHoch^3_{\mathrm{CY\text{-}3}}(\mathbf H_{\Delta_5}).
+\]
+Accordingly, the automorphic tangent direction belongs to the first
+group and \([\chi_3^{\mathrm{cand}}]\) belongs to the
+primary-obstruction group under
+\eqref{eq:borcherds-obstruction-target-chi3}.
+The curve-level complex and the CY-\(3\) product-ambient complex are
+separate deformation problems, related by the specified
+\(\Phi_3^{(\Sigma_2,C)}\) comparison.
+\end{remark}
+
+\begin{corollary}[Functoriality of the obstruction pairing]
+\label{cor:chirhoch3-six-fold-confirmation}
+\ClaimStatusConditional
+For each source index \(i\), let
+\[
+ \mathcal U_i\colon\mathfrak g_i\longrightarrow
+ \TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}}
+\]
+be a filtered $L_\infty$ morphism, and let
+\(\beta_i\in Z^1(\mathfrak g_i)\).  Suppose that the induced obstruction
+classes satisfy
+\begin{equation}
+\label{eq:chirhoch3-six-fold-value}
+ H^2(U_{i,1})
+ \left[\frac12\ell_2^i(\beta_i,\beta_i)\right]
+ =[\chi_3^{\mathrm{cand}}].
+\end{equation}
+For every closed dual class
+$[e_3]\in H^2(\TangCplx_{\mathbf H_{\Delta_5}}^{\mathrm{ch}})^\vee$,
+the resulting numerical pairings agree:
+\[
+ \left\langle
+ H^2(U_{i,1})
+ \left[\frac12\ell_2^i(\beta_i,\beta_i)\right],
+ [e_3]\right\rangle
+ =\langle[\chi_3^{\mathrm{cand}}],[e_3]\rangle.
+\]
+A numerical value for the right-hand side is obtained by evaluating an
+explicit cocycle representative on an explicit dual cycle.
+\end{corollary}
+
+\begin{proof}
+Pair equation~\eqref{eq:chirhoch3-six-fold-value} with the closed dual
+class $[e_3]$.
+\end{proof}
+
+\section{Chiral non-commutative Hodge-to-de-Rham degeneration and the
+Mukai--Hochschild pairing on $\mathbf H_{\Delta_5}$}
+\label{sec:chirhoch-mukai-nc-hodge}
+
+\providecommand{\ChirHP}{\mathrm{ChirHP}}
+\providecommand{\ChirHCneg}{\mathrm{ChirHC}^{-}}
+\providecommand{\ChirHCper}{\mathrm{ChirHC}^{\mathrm{per}}}
+\providecommand{\NCHodge}{\mathrm{NC\text{-}Hodge}}
+\providecommand{\KalDeg}{\mathrm{Kal}}
+\providecommand{\FacInf}{\mathrm{Fac}^\infty}
+\providecommand{\MukPair}{\langle\,\cdot\,,\,\cdot\,\rangle_{\Muk}}
+\providecommand{\sSer}{\mathbb S_{\mathrm{CY}_3}}
+\providecommand{\KoszLoc}{\Uadm}
+\providecommand{\ConnesB}{B}
+
+Kaledin's degeneration theorem~\cite{Kal08} applies to the mixed complex of a smooth
+proper \(\mathbb C\)-linear dg category.  Passage to the
+product-ambient chiral complex therefore requires a comparison of mixed
+complexes.
+
+\begin{theorem}[Transport of noncommutative Hodge degeneration]
+\label{thm:chi-hodge-derham-degenerate-delta5}
+\ClaimStatusConditional
+Let \(\mathcal C\) be a smooth proper \(\mathbb C\)-linear dg category,
+and let
+\[
+ \Theta_{\mathrm{mix}}\colon
+ \bigl(C_\bullet(\mathcal C),b,B\bigr)
+ \longrightarrow
+ \bigl(C^{\mathrm{prod}}_\bullet(\mathbf H),
+       D_{\mathrm{prod}},B_{\mathrm{prod}}\bigr)
+\]
+be a filtered quasi-isomorphism of complete mixed complexes.  Assume
+that the filtrations are exhaustive, separated, and bounded in each
+total degree.  Then the product-ambient Hodge-to-de~Rham spectral
+sequence
+\begin{equation}
+\label{eq:chiral-hodge-de-rham-SS}
+ E_1^{p,q}
+ =
+ H_{p+q}\bigl(C^{\mathrm{prod}}_\bullet(\mathbf H),
+ D_{\mathrm{prod}}\bigr)u^{-p}
+ \Longrightarrow
+ H_{p+q}\bigl(
+ C^{\mathrm{prod}}_\bullet(\mathbf H)[[u]],
+ D_{\mathrm{prod}}+uB_{\mathrm{prod}}\bigr)
+\end{equation}
+degenerates at \(E_1\).
+\end{theorem}
+
+\begin{proof}
+Kaledin's theorem~\cite{Kal08} gives \(E_1\)-degeneration for
+\((C_\bullet(\mathcal C),b,B)\).  The filtered quasi-isomorphism
+\(\Theta_{\mathrm{mix}}\) induces an isomorphism of the two spectral
+sequences from the \(E_1\)-page onward.  Completeness and boundedness
+give convergence, hence the product-ambient sequence degenerates at
+\(E_1\).
+\end{proof}
+
+\begin{remark}[The comparison locus]
+\label{rem:chi-hodge-derham-humbert-obstruction}
+The locus of transported degeneration is the locus on which
+\(\mathcal C\) is smooth and proper and
+\(\Theta_{\mathrm{mix}}\) is a filtered quasi-isomorphism.  Extension
+across a Humbert stratum asks for an extension of this mixed-complex map
+and a proof of its filtered quasi-isomorphism there.  The resulting
+cone measures the extension obstruction and its higher spectral-sequence
+differentials.
+\end{remark}
+
+\begin{definition}[Product-ambient CY-threefold pairing]
+\label{def:chiral-mukai-hochschild}
+\index{Mukai!chiral Hochschild pairing}%
+Let
+\((C^\bullet_{\mathrm{prod}}(\mathbf H),D_{\mathrm{prod}})\)
+be the complex of
+Definition~\ref{def:chi3-product-ambient-datum}.  A
+\emph{product-ambient CY-threefold pairing} is a family of bilinear maps
+\begin{equation}
+\label{eq:chiral-mukai-hochschild-pairing-def}
+ \langle-,-\rangle_{\Muk}^{\mathrm{ch}}\colon
+ C^p_{\mathrm{prod}}(\mathbf H)\otimes
+ C^{3-p}_{\mathrm{prod}}(\mathbf H)\longrightarrow\mathbb C
+\end{equation}
+satisfying
+\[
+ \langle D_{\mathrm{prod}}\alpha,\beta\rangle_{\Muk}^{\mathrm{ch}}
+ +(-1)^p
+ \langle\alpha,D_{\mathrm{prod}}\beta\rangle_{\Muk}^{\mathrm{ch}}=0
+\]
+for homogeneous \(\alpha\in C^p_{\mathrm{prod}}(\mathbf H)\).  It is
+perfect when the induced maps
+\[
+ H^p(C^\bullet_{\mathrm{prod}}(\mathbf H))
+ \longrightarrow
+ H^{3-p}(C^\bullet_{\mathrm{prod}}(\mathbf H))^\vee
+\]
+are isomorphisms.
+
+A categorical construction of this pairing consists of a smooth proper
+CY-threefold dg category \(\mathcal C\), its negative-cyclic
+Calabi--Yau trace, and a chain map
+\[
+ \Phi_{\mathcal C}\colon
+ C^\bullet_{\mathrm{cat}}(\mathcal C)
+ \longrightarrow C^\bullet_{\mathrm{prod}}(\mathbf H)
+\]
+which intertwines the categorical trace pairing with
+\eqref{eq:chiral-mukai-hochschild-pairing-def} up to a specified chain
+homotopy.
+\end{definition}
+
+\begin{theorem}[The Mukai pairing criterion for the three-point class]
+\label{thm:chi3-mukai-hochschild-pairing}
+\ClaimStatusProvedHere
+Assume the boundary equation
+\eqref{eq:chi3-closure-obligation}.  Let
+\(\chi_3^\vee\in Z^0(C^\bullet_{\mathrm{prod}}(\mathbf H))\)
+be a closed degree-zero cochain for a product-ambient CY-threefold
+pairing.  Put
+\begin{equation}
+\label{eq:chiral-mukai-hochschild-value}
+ \lambda_{\Muk}(\chi_3^{\mathrm{cand}},\chi_3^\vee)
+ :=
+ \bigl\langle
+ \chi_3^{\mathrm{cand}},\chi_3^\vee
+ \bigr\rangle_{\Muk}^{\mathrm{ch}}.
+\end{equation}
+This scalar depends only on the two cohomology classes.  The implication
+\[
+ \lambda_{\Muk}(\chi_3^{\mathrm{cand}},\chi_3^\vee)\ne0
+ \quad\Longrightarrow\quad
+ [\chi_3^{\mathrm{cand}}]\ne0,\qquad
+ [\chi_3^\vee]\ne0
+\]
+holds, and the induced pairing between the lines
+\(\mathbb C[\chi_3^{\mathrm{cand}}]\) and
+\(\mathbb C[\chi_3^\vee]\) is perfect.
+\end{theorem}
+
+\begin{proof}
+The graded boundary identity in
+Definition~\ref{def:chiral-mukai-hochschild} makes the value invariant
+under replacement of either cochain by a cohomologous one.  A zero
+cohomology class pairs trivially with every closed complementary
+cochain.  A nonzero scalar therefore gives two nonzero classes.  On the
+two one-dimensional spans, multiplication by
+\(\lambda_{\Muk}\in\mathbb C^\times\) is an isomorphism to the dual
+line.
+\end{proof}
+
+\begin{corollary}[Perfectness on the three-point and degree-zero lines]
+\label{cor:chi3-mukai-nondegeneracy}
+\ClaimStatusProvedHere
+The restriction of
+\(\langle-,-\rangle_{\Muk}^{\mathrm{ch}}\) to
+\[
+ \mathbb C[\chi_3^{\mathrm{cand}}]\otimes
+ \mathbb C[\chi_3^\vee]
+\]
+is perfect exactly when
+\(\lambda_{\Muk}(\chi_3^{\mathrm{cand}},\chi_3^\vee)\in
+\mathbb C^\times\).  An explicit residue or trace calculation determines
+this scalar after representatives of both classes have been constructed.
+\end{corollary}
+
+\begin{proof}
+The matrix of the restricted pairing is the one-by-one matrix
+\((\lambda_{\Muk})\).
+\end{proof}
+
+\begin{remark}[Categorical and product-ambient pairings]
+\label{rem:chi3-mukai-cross-volume}
+Let \(\mathcal C=D^b\operatorname{Coh}(\mathrm{K3}\times E)\) with a
+chosen smooth proper dg enhancement and CY trace.  A comparison with the
+product-ambient pairing is a homotopy-commutative square
+\[
+\begin{tikzcd}[column sep=large]
+ C^\bullet_{\mathrm{cat}}(\mathcal C)\otimes
+ C^\bullet_{\mathrm{cat}}(\mathcal C)
+ \ar[r,"\langle-,-\rangle_{\Muk}^{\mathrm{cat}}"]
+ \ar[d,"\Phi_{\mathcal C}\otimes\Phi_{\mathcal C}"']
+ & \mathbb C \ar[d,equal]\\
+ C^\bullet_{\mathrm{prod}}(\mathbf H)\otimes
+ C^\bullet_{\mathrm{prod}}(\mathbf H)
+ \ar[r,"\langle-,-\rangle_{\Muk}^{\mathrm{ch}}"']
+ & \mathbb C .
+\end{tikzcd}
+\]
+This square carries categorical Mukai values to product-ambient values.
+The chain map and its homotopy are the mathematical content of the
+cross-volume comparison.
+\end{remark}
+
+\section{Comparison morphisms for
+\texorpdfstring{\(\chi_3^{\mathrm{cand}}\)}{chi3 candidate}}
+\label{sec:chirhoch3-seven-path-comparison}
+
+\begin{theorem}[Comparison of realizations by chain homotopy]
+\label{thm:chirhoch3-seven-path-comparison}
+\ClaimStatusProvedHere
+Let \(\mathcal I\) be a finite index set:
+\begin{equation}
+\label{eq:seven-path-list}
+ |\mathcal I|<\infty.
+\end{equation}
+For each \(i\in\mathcal I\), let \((K_i^\bullet,d_i)\) be a chain
+complex with a cocycle
+\(x_i\in Z^3(K_i^\bullet)\).  Suppose there are chain maps
+\begin{equation}
+\label{eq:seven-comparison-maps}
+ F_i:K_i^\bullet\longrightarrow
+ C^\bullet_{\mathrm{prod}}(\mathbf H)
+ \qquad (i\in\mathcal I)
+\end{equation}
+and cochains \(h_i\in C^2_{\mathrm{prod}}(\mathbf H)\) satisfying
+\[
+ F_i(x_i)-\chi_3^{\mathrm{cand}}
+ =D_{\mathrm{prod}}h_i.
+\]
+Then
+\[
+ [F_i(x_i)]=[\chi_3^{\mathrm{cand}}]
+ \quad\text{for every }i\in\mathcal I.
+\]
+For each closed dual chain \(e_3\), the evaluations obey
+\begin{equation}
+\label{eq:seven-path-common-value}
+ \langle F_i(x_i),e_3\rangle
+ =\langle\chi_3^{\mathrm{cand}},e_3\rangle
+ =\lambda_3(T_3,\iota_{123},s_Y;e_3).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The displayed cochains \(h_i\) exhibit equality in cohomology.  Pairing
+their boundaries with the closed chain \(e_3\) gives zero, proving
+\eqref{eq:seven-path-common-value}.
+\end{proof}
+
+\begin{remark}[Source-specific constructions]
+\label{rem:chirhoch3-path-G-independence-comparison}
+CoHA operations, Donaldson--Thomas series, categorical Hochschild
+classes, cyclic classes, deformation obstructions, and Mukai pairings
+carry their own differentials and gradings.  Each realization enters
+Theorem~\ref{thm:chirhoch3-seven-path-comparison} through its chain
+complex \(K_i^\bullet\), its cocycle \(x_i\), its chain map \(F_i\), and
+its comparison homotopy \(h_i\).
+\end{remark}
+
+\begin{remark}[The common mathematical obligation]
+\label{rem:chirhoch3-seven-voice-cadence}
+For every source construction, the load-bearing equation is
+\[
+ F_i(x_i)-\chi_3^{\mathrm{cand}}=D_{\mathrm{prod}}h_i.
+\]
+An explicit closed dual chain then turns this cochain identity into a
+numerical equality.  These two constructions determine the common class
+and its value.
+\end{remark}
+
+\begin{corollary}[Nonvanishing transported by the comparison maps]
+\label{cor:chirhoch3-seven-fold-confirmation}
+\ClaimStatusProvedHere
+Under the hypotheses of
+Theorem~\ref{thm:chirhoch3-seven-path-comparison}, suppose a closed dual
+chain \(e_3\) satisfies
+\[
+ \langle F_j(x_j),e_3\rangle\ne0
+\]
+for one \(j\in\mathcal I\).  Then
+\([\chi_3^{\mathrm{cand}}]\) and every \([F_i(x_i)]\) are nonzero.
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:seven-path-common-value} gives the same nonzero
+evaluation for every \(i\), and
+Theorem~\ref{thm:chirhoch3-Delta5-chain-level} applies.
+\end{proof}

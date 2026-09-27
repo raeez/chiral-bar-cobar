@@ -1,0 +1,271 @@
+% Shared preamble: typography, macros, and operators for every volume root.
+%
+% Extracted verbatim from main.tex (lines 2-252 and 256-267) so that all roots
+% inherit identical memoir + EB Garamond typography and identical macros.
+% Each root supplies its own \documentclass, 	itle, uthor, and \date.
+% The \mainpreambleonly guard is intentionally omitted: this file is a
+% preamble only, so there is no monograph body to guard against.
+
+\usepackage{raeez-math-template}
+
+% Compatibility for imported fragments that still use old-style \rm in math.
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+
+% Orientation line used in §6 (keeps the existing symbol but defines it cleanly).
+\newcommand{\orline}[1]{\mathrm{or}_{#1}}
+
+% Lightweight wrappers used by chapter-opening synthesis passages.
+\newenvironment{overture}{\begin{quote}\itshape}{\end{quote}}
+
+% ==========================================
+% MATH OPERATORS
+% ==========================================
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Res}{Res}
+\newcommand{\Rescoll}{\operatorname{Res}^{\mathrm{coll}}}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Free}{Free}
+\DeclareMathOperator{\Cofree}{Cofree}
+\DeclareMathOperator{\Spec}{Spec}
+\providecommand{\HS}{\operatorname{HS}}
+\providecommand{\obs}{\operatorname{obs}}
+\providecommand{\RMap}{\operatorname{RMap}}
+\providecommand{\Pro}{\operatorname{Pro}}
+
+% ==========================================
+% OPERADS -- sans-serif per Loday--Vallette convention
+% ==========================================
+% Note: \Com and \Lie are set in \mathsf (not \operatorname) because
+% they name operads, not functors. This matches Loday--Vallette [LV12].
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Pois}{\mathsf{Pois}}
+\newcommand{\BV}{\mathsf{BV}}
+\newcommand{\Grav}{\mathsf{Grav}}
+\newcommand{\Eone}{\mathsf{E}_1}
+\newcommand{\Etwo}{\mathsf{E}_2}
+\newcommand{\Ethree}{\mathsf{E}_3}
+\newcommand{\En}{\mathsf{E}_n}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+\newcommand{\Linf}{\mathsf{L}_{\infty}}
+\newcommand{\Ainf}{\mathsf{A}_{\infty}}
+\newcommand{\Cinf}{\mathsf{C}_{\infty}}
+\newcommand{\Pinf}{\mathsf{P}_{\infty}}
+
+% Chiral operads
+\newcommand{\Chir}{\mathsf{Chir}}
+\newcommand{\Fact}{\mathsf{Fact}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\chirtensor}{\otimes^{\mathrm{ch}}}
+\newcommand{\facttensor}{\otimes^{!}}
+\newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\newcommand{\chirAss}{\mathsf{Ass}^{\mathrm{ch}}}
+\newcommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\newcommand{\chirPois}{\mathsf{Pois}^{\mathrm{ch}}}
+
+% ==========================================
+% CATEGORIES -- sans-serif
+% ==========================================
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\Vect}{\cat{Vect}}
+\newcommand{\Ch}{\cat{Ch}}
+\newcommand{\Alg}{\cat{Alg}}
+\newcommand{\CoAlg}{\cat{CoAlg}}
+\newcommand{\Op}{\cat{Op}}
+\newcommand{\DGCat}{\cat{DGCat}}
+\providecommand{\dgAlg}{\mathsf{dgAlg}}
+\providecommand{\dgCoAlg}{\mathsf{dgCoAlg}}
+
+% D-modules and sheaves
+\newcommand{\DMod}{\cat{D}\text{-}\cat{Mod}}
+\newcommand{\DX}{\mathcal{D}_X}
+\newcommand{\OX}{\mathcal{O}_X}
+\newcommand{\omX}{\omega_X}
+\newcommand{\IndCoh}{\cat{IndCoh}}
+\newcommand{\QCoh}{\cat{QCoh}}
+\providecommand{\Coh}{\operatorname{Coh}}
+
+% ==========================================
+% COMMON SYMBOLS
+% ==========================================
+\newcommand{\C}{\mathbb{C}} % NB: overrides built-in accent command \c (cedilla)
+\newcommand{\Z}{\mathbb{Z}} % NB: overrides built-in accent command
+\newcommand{\R}{\mathbb{R}} % NB: overrides built-in accent command
+\newcommand{\Vlat}{V} % Lattice vertex algebra (V_\Lambda)
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cI}{\mathcal{I}}
+\providecommand{\cAr}{\mathcal{A}^{\mathrm{Arn}}}
+\providecommand{\vac}{\mathbf{1}}
+\newcommand{\Sh}{\operatorname{Sh}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barPi}{\overline{\Pi}}
+
+% ==========================================
+% NOTATION SYSTEM -- bar/cobar and configuration spaces
+% ==========================================
+\newcommand{\Conf}{C} % config space (open); use \overline{\Conf} for FM compactification
+\newcommand{\MC}{\text{MC}} % Maurer--Cartan
+
+% Hat notation -- consistent single-index style
+\newcommand{\omitpair}[2]{\widehat{#1#2}}
+\newcommand{\omitindex}[2]{\widehat{#1,#2}}
+
+% Collision divisors with explicit ordering
+\newcommand{\colldiv}[2]{D_{#1#2}}
+
+% Bar and cobar complexes with explicit notation
+\newcommand{\barcomplex}[2]{\bar{B}^{#1}(#2)}
+
+% BD references shorthand
+\newcommand{\BDref}[1]{\textup{[\cite{BD04}, #1]}}
+
+% ==========================================
+% W-ALGEBRA AND DEFORMATION NOTATION
+% ==========================================
+\newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})} % W-algebra W_k(g)
+\newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}} % affine Kac--Moody
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Hilb}{\operatorname{Hilb}}
+\providecommand{\Fun}{\operatorname{Fun}}
+\providecommand{\DK}{\mathrm{DK}}
+\providecommand{\tr}{\operatorname{tr}}
+\providecommand{\fu}{\mathfrak{u}}
+\providecommand{\f}{\mathfrak{f}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\VOA}{\mathrm{VOA}}
+\providecommand{\Zmod}{\mathbb{Z}/}
+\providecommand{\str}{\mathrm{str}}
+\providecommand{\sBer}{\operatorname{sBer}}
+\providecommand{\Ainfty}{\mathsf{A}_{\infty}}
+\providecommand{\Linfty}{\mathsf{L}_{\infty}}
+\providecommand{\Assch}{\mathrm{Ass}^{\mathrm{ch}}}
+\providecommand{\poly}{\mathrm{poly}}
+\providecommand{\Muk}{\mathrm{Muk}}
+\providecommand{\qt}{\mathrm{qt}}
+\providecommand{\slnn}[1]{\mathfrak{sl}_{#1}}
+\providecommand{\fpsl}{\mathfrak{psl}}
+\providecommand{\fosp}{\mathfrak{osp}}
+\providecommand{\CP}{\mathbb{CP}}
+\providecommand{\xlongequal}[2][]{\mathrel{\overset{#2}{\underset{#1}{=}}}}
+\providecommand{\cref}[1]{\ref{#1}}
+\providecommand{\Cref}[1]{\ref{#1}}
+\providecommand{\kmax}{k_{\max}}
+\providecommand{\Dco}{D^{\mathrm{co}}}
+\providecommand{\der}{\mathrm{der}}
+\providecommand{\ch}{\mathrm{ch}}
+\providecommand{\Zder}{\operatorname{Z}_{\mathrm{der}}}
+\providecommand{\Zderch}{\operatorname{Z}^{\mathrm{ch}}_{\mathrm{der}}}
+\providecommand{\ord}{\mathrm{ord}}
+\providecommand{\fact}{\mathrm{fact}}
+\providecommand{\aug}{\mathrm{aug}}
+\providecommand{\comp}{\mathrm{comp}}
+\providecommand{\conil}{\mathrm{conil}}
+\providecommand{\co}{\mathrm{co}}
+\providecommand{\AMlocG}{\mathrm{AM}_g}
+\providecommand{\AMlocFour}{\mathrm{AM}_4}
+\providecommand{\AMlocSix}{\mathrm{AM}_6}
+\providecommand{\AbarG}{\overline{\mathcal{A}_g}}
+\providecommand{\AbarFour}{\overline{\mathcal{A}_4}}
+\providecommand{\AMtightG}{\mathsf{AM}^{\mathrm{tight}}_g}
+\providecommand{\AMtightGinf}{\mathsf{AM}^{\mathrm{tight}}_{\infty}}
+\providecommand{\AMtightSix}{\mathsf{AM}^{\mathrm{tight}}_6}
+\providecommand{\AMtightSeven}{\mathsf{AM}^{\mathrm{tight}}_7}
+\providecommand{\AMtightEight}{\mathsf{AM}^{\mathrm{tight}}_8}
+\providecommand{\MbarSix}{\overline{\mathcal{M}}_6}
+\providecommand{\Schottky}{\mathsf{Sch}}
+\providecommand{\Sps}{D^{\mathrm{Chen}}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\Gsuper}{\mathbb{G}_{\mathrm{super}}}
+\providecommand{\sSer}{\mathbb{S}_{\mathrm{CY}_3}}
+\providecommand{\Tpar}{\mathbb{T}^{\mathrm{par}}}
+\providecommand{\Lspin}{L^{\mathrm{spin}}}
+\providecommand{\Humbert}{\mathcal{H}}
+\providecommand{\NLdiv}{\mathrm{NL}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\Confnord}{\Conf_n^{\mathrm{ord}}}
+\providecommand{\Confcomp}{\overline{\mathrm{Conf}}}
+\providecommand{\ChirCoalg}{\mathsf{ChirCoalg}}
+\providecommand{\itemA}{\item}
+\providecommand{\qedlem}{\qed}
+\providecommand{\ClaimIndependentlyVerified}[1][]{\textnormal{[independently verified]}}
+
+% ==========================================
+% NOTATION CONSISTENCY DECLARATIONS
+% (PM6: moved here from after \usepackage{makecell})
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\SL}{\mathrm{SL}}
+\providecommand{\Imag}{\operatorname{Im}}
+% ==========================================
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
+\newcommand{\barBch}{\bar{B}^{\text{ch}}} % Chiral bar complex notation
+\newcommand{\Omegach}{\Omega^{\text{ch}}} % Chiral cobar complex notation
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)} % Configuration space
+\newcommand{\LogForm}[2]{\eta_{#1#2}} % Logarithmic forms
+
+% Additional notation for consistency
+\newcommand{\ChirHoch}{CH} % Chiral Hochschild
+\newcommand{\Walg}{\mathcal{W}} % W-algebra
+\newcommand{\critLevel}{-h^\vee} % Critical level
+
+% ==========================================
+% HIGHER-GENUS DIFFERENTIAL NOTATION
+% (Convention~\ref{conv:higher-genus-differentials})
+% ==========================================
+% Three mathematically distinct differentials act on genus-g bar complexes.
+% Using the same symbol for all three is the single deepest notational
+% instability in the manuscript; the macros below enforce the distinction.
+\newcommand{\dzero}{d_0} % genus-0 collision differential (Arnold d^2=0)
+\newcommand{\dfib}{d_{\mathrm{fib}}} % fiberwise differential on fixed Sigma_g (CURVED: d^2 = kappa * omega_g)
+\newcommand{\Dg}[1]{D_{#1}} % total corrected differential at genus g (STRICT: D_g^2 = 0)
+\newcommand{\Dtot}{D_{\mathrm{tot}}} % full genus-stratified total differential
+\newcommand{\mcurv}[1]{m_0^{(#1)}} % curvature element at genus g
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}} % cyclic deformation complex
+% Two-level homotopy convention (§\ref{subsec:two-level-convention})
+\newcommand{\Convstr}{\operatorname{Conv}_{\mathrm{str}}} % strict dg Lie convolution model
+\newcommand{\Convinf}{\operatorname{Conv}_{\infty}} % homotopy-invariant L-infinity convolution
+\newcommand{\Definfmod}{\operatorname{Def}_{\infty}^{\mathrm{mod}}} % homotopy-invariant modular deformation object
+\newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}} % modular graph coefficient algebra
+\newcommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}} % modular convolution dg Lie algebra of A
+\providecommand{\gAord}{\mathfrak{g}_{\cA}^{\mathrm{ord}}}
+\newcommand{\Perbr}{\operatorname{Per}} % derived scalar period
+\newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}} % dg-shifted Yangian
+\newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}} % spectral quantum group
+\newcommand{\Factord}{\Fact_{\Eone}^{\mathrm{ord}}} % ordered E_1-factorization category
+\newcommand{\Uvert}{U_{\mathrm{vert}}} % enveloping vertex algebra functor
+\newcommand{\Thetaenv}{\Theta^{\mathrm{env}}} % envelope-shadow functor
+\newcommand{\chienv}{\chi_{\mathrm{env}}} % envelope-shadow complexity
+\newcommand{\LCA}{\mathsf{LCA}} % category of Lie conformal algebras
+\newcommand{\JacF}[2]{J_{#1,#2}} % one-step Jacobi coalgebra J_{F,p}
+
+
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\Imag}{\operatorname{Im}}

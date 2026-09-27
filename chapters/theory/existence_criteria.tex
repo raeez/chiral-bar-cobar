@@ -1,0 +1,1426 @@
+%================================================================
+% APPENDIX: EXISTENCE CRITERIA FOR KOSZUL DUALS
+% This appendix compares strict finite-type, completed, and
+% literature existence regimes for Koszul dual objects.
+%================================================================
+
+\chapter{Comparison of existence regimes for Koszul duals}
+\label{app:existence-criteria}
+
+
+For which chiral algebras does a Koszul dual exist? The strict
+finite-type theory of the core monograph, the completion package of
+Appendix~\ref{app:nilpotent-completion}, and the classical
+existence/non-existence criteria in the literature each answer a
+different version of this question.
+
+%================================================================
+% SECTION 1: STATEMENT OF THE PROBLEM
+%================================================================
+
+\section{The existence problem}
+\label{sec:existence-problem-statement}
+
+\subsection{Question and ambient}
+
+\begin{question}[Central question]\label{q:existence-central}
+Given an augmented chiral algebra $\mathcal A$ on~$X$, determine the
+domains of the following four constructions.
+\begin{enumerate}[label=\textup{(E\arabic*)}]
+\item \emph{Universal resolution.}  The universal twisting morphism
+ $\pi_{\mathcal A}\colon\bar B(\mathcal A)\to\mathcal A$ induces
+ \[
+  \epsilon_{\mathcal A}\colon
+  \Omega\bar B(\mathcal A)\longrightarrow\mathcal A.
+ \]
+ On the connected weight-graded ordinary lane this is the
+ Loday--Vallette bar--cobar resolution
+ \cite[Corollary~2.3.4]{LV12}; its Ran/factorization realization carries
+ the corresponding comparison hypotheses.
+\item \emph{Quadratic recognition.}  A quadratic presentation
+ $\mathcal A=T_{\mathcal D}(V)/(R)$ defines the quadratic coalgebra
+ $\mathcal A^i=C_{\mathcal D}(s^{-1}V,s^{-2}R)$ and the canonical comparison
+ \[
+  q_{\mathcal A}\colon\mathcal A^i\longrightarrow\bar B(\mathcal A).
+ \]
+ Koszulness is the quasi-isomorphism property of~$q_{\mathcal A}$,
+ equivalently of $\Omega(\mathcal A^i)\to\mathcal A$.
+\item \emph{Completed convergence.}  A separated filtered tower
+ produces continuous limits of the full bar resolution and of the
+ quadratic comparisons when the finite-stage maps are compatible and
+ their cohomology towers are Mittag--Leffler.
+\item \emph{Verdier and chosen-pair algebras.}  On a
+ Verdier-dualizable or linearly compact finite-window domain, form
+ \[
+  K_X(\mathcal A):=\mathbb D_{\Ran}\bar B_X(\mathcal A),\qquad
+  \mathbb D(q_{\mathcal A})\colon K_X(\mathcal A)
+  \longrightarrow\mathbb D_{\Ran}(\mathcal A^i),
+ \]
+ and choose a Koszul-pair map
+ $\nu_{\mathcal A}\colon K_X(\mathcal A)\to\mathcal A^!$.
+ On the finite-type or completed pair locus,
+ $\mathcal A^!\simeq\mathbb D_{\Ran}(\mathcal A^i)
+ \simeq(\mathcal A^i)^\vee_{\mathrm{cont}}$.
+\end{enumerate}
+The module/comodule comparison is a subsequent categorical output with
+its own exactness and compact-generation hypotheses.
+\end{question}
+
+\subsection{Preliminary definitions}
+
+\begin{definition}[Quadratic Koszul-dual coalgebra
+\textup{(}Priddy--Loday--Vallette\textup{)};
+\ClaimStatusDefinitional]\label{def:koszul-dual-quadratic}
+Let $\mathcal A=T_{\mathcal D}(V)/(R)$ be a quadratic chiral algebra,
+where $V$ is a graded $\mathcal D_X$-module and
+$R\subset V\otimes_{\mathcal D}V$ is its relation object.  In the
+cohomological bar convention of this volume, its quadratic
+Koszul-dual coalgebra is
+\begin{equation}\label{eq:koszul-dual-quadratic}
+ \mathcal A^i
+ :=C_{\mathcal D}(s^{-1}V,s^{-2}R)
+ \;\hookrightarrow\;T^c_{\mathcal D}(s^{-1}V),
+\end{equation}
+the maximal sub-coalgebra whose weight-two component lies
+in~$s^{-2}R$.  Thus $|s^{-1}v|=|v|-1$, in agreement with
+$\bar B(\mathcal A)=T^c(s^{-1}\bar{\mathcal A})$.
+
+Suppose each weight piece of $V$ and $\mathcal A^i$ is dualizable and
+$R$ is a direct summand.  With
+\[
+ R^\perp
+ :=\{f\in V^*\otimes V^*: \langle f,r\rangle=0
+ \text{ for every }r\in R\},
+\]
+finite or continuous duality gives the quadratic algebra
+\[
+ (\mathcal A^i)^\vee_{\mathrm{cont}}
+ \cong T_{\mathcal D}(V^*)/(R^\perp).
+\]
+Thus $(V,R)$ constructs the coalgebra, while $(V^*,R^\perp)$ presents
+its finite-dual algebra.
+\end{definition}
+
+\begin{remark}[Relationship to the bar construction]\label{rem:bar-vs-quadratic-dual}
+The full bar construction is the cofree coalgebra on the desuspension
+of the augmentation ideal $\bar{\mathcal A}=\ker(\varepsilon)$,
+\[\bar{B}(\mathcal{A}) \;=\; \bigl(T^c(s^{-1}\bar{\mathcal{A}}),\; d\bigr),\]
+equipped with the differential induced by the multiplication of
+$\mathcal A$.  The quadratic twisting morphism
+$\tau_{\mathrm i}\colon\mathcal A^i\to\mathcal A$ induces
+\[
+ q_{\mathcal A}\colon\mathcal A^i\longrightarrow\bar B(\mathcal A).
+\]
+This map compares the quadratic coalgebra with the full resolution.
+The universal twisting morphism
+$\pi_{\mathcal A}\colon\bar B(\mathcal A)\to\mathcal A$ separately
+induces $\Omega\bar B(\mathcal A)\to\mathcal A$.  Verdier or continuous
+duality subsequently carries $\mathcal A^i$ to the algebra~$\mathcal A^!$.
+\end{remark}
+
+\begin{definition}[Koszul property; \ClaimStatusDefinitional]\label{def:koszul-property-existence}
+Let $\mathcal{A} = T_{\mathcal{D}}(V)/(R)$ be a quadratic chiral algebra with
+Koszul dual $\mathcal{A}^i$ as in Definition~\ref{def:koszul-dual-quadratic}.
+\textup{[Type signature: Open quadrant; quadratic finite-window
+presentation; Beilinson levels (1\leftrightarrow2); hypothesis
+package
+$H_{\mathrm{CL}}(\mathcal A,\mathcal A^i,\tau_{\mathrm i})$.]}
+
+The algebra~$\mathcal A$ is \emph{Koszul} when the canonical quadratic
+comparison
+\[
+ q_{\mathcal A}\colon
+ \mathcal A^i\longrightarrow\bar B(\mathcal A)
+\]
+is a quasi-isomorphism of conilpotent dg coalgebras.  Equivalently, the
+quadratic twisting morphism induces a quasi-isomorphism
+\[
+ \Omega(\mathcal A^i)\longrightarrow\mathcal A
+\]
+by Loday--Vallette's quadratic Koszul criterion
+\cite[Theorem~3.4.6]{LV12}.  The full counit
+\[
+ \epsilon_{\mathcal A}\colon
+ \Omega\bar B(\mathcal A)\longrightarrow\mathcal A
+\]
+is the universal resolution of \cite[Corollary~2.3.4]{LV12} in the
+connected weight-graded ordinary lane; its chiral realization belongs
+to the separate Ran/factorization comparison package.
+\end{definition}
+
+\begin{remark}[Module-category comparison is extra data]
+\label{rem:existence-module-comparison-extra}
+The ordinary module/comodule comparison is not part of the base
+definition above. On the manuscript's current proved surface, the
+intrinsic higher-genus statement is the bar-coalgebra
+coderived/contraderived comparison
+\textup{(}Theorems~\ref{thm:positselski-chiral} and
+\ref{thm:completed-dual-finite-type-reduction-kp}\textup{)}, while the ordinary
+module-level equivalence is the separate quadratic genus-$0$
+$\Eone$ theorem
+\textup{(}Theorem~\ref{thm:e1-module-koszul-duality}\textup{)}.
+Any broader module-category comparison for general chiral Koszul pairs
+requires extra hypotheses beyond the quadratic existence package
+recorded in this appendix.
+\end{remark}
+
+\begin{proposition}[Four loci in the existence problem;
+\ClaimStatusProvedHere]
+\label{prop:existence-four-loci}
+Let $\mathcal A$ be an augmented chiral algebra with bar coalgebra
+$\bar B(\mathcal A)$ and, when a quadratic finite-dual presentation is
+chosen, quadratic coalgebra $\mathcal A^i_{\mathrm{quad}}$.
+There are four successive outputs.
+\begin{enumerate}
+\item \emph{Universal bar--cobar resolution.} The counit
+ \[
+ \epsilon_{\mathcal A}\colon
+ \Omega\bar B(\mathcal A)\longrightarrow \mathcal A
+ \]
+ is induced by the universal twisting cochain
+ $\tau_{\mathcal A}\colon \bar B(\mathcal A)\to\mathcal A$ before any
+ quadratic presentation enters. Dually, for a conilpotent coalgebra~$C$
+ the unit
+ \[
+ \eta_C\colon C\longrightarrow \bar B\Omega(C)
+ \]
+ is induced by $C\to\Omega(C)$.  Loday--Vallette
+ \cite[Corollary~2.3.4]{LV12} supplies both quasi-isomorphisms in the
+ connected weight-graded ordinary lane; the chiral statement uses the
+ named Ran/factorization realization.
+\item \emph{Quadratic Koszul comparison.} A quadratic presentation
+ defines $\mathcal A^i_{\mathrm{quad}}=C(s^{-1}V,s^{-2}R)$.  The Koszul locus is
+ characterized by the condition that
+ \[
+ q_{\mathcal A}\colon
+ \mathcal A^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A)
+ \]
+ is a quasi-isomorphism of dg coalgebras.
+\item \emph{Completed convergence.} Compatible finite-stage universal
+ counits and quadratic comparisons give continuous limit maps when the
+ corresponding cohomology towers satisfy Mittag--Leffler.
+\item \emph{Verdier and chosen-pair comparison.} On the dualizable
+ domain, form
+ $K_X(\mathcal A)=\mathbb D_{\Ran}\bar B_X(\mathcal A)$ and
+ $\mathbb D(q_{\mathcal A})\colon K_X(\mathcal A)\to
+ \mathbb D_{\Ran}(\mathcal A^i)$.  A declared Koszul pair supplies
+ $\nu_{\mathcal A}\colon K_X(\mathcal A)\to\mathcal A^!$; finite or
+ continuous duality identifies the intermediate presentation dual
+ with $(\mathcal A^i)^\vee_{\mathrm{cont}}$.
+\end{enumerate}
+The two level-(1\leftrightarrow2) chains are therefore
+\[
+\Omega\bar B(\mathcal A)\longrightarrow\mathcal A
+\quad\text{and}\quad
+\mathcal A^i\xrightarrow{\ q_{\mathcal A}\ }\bar B(\mathcal A),
+\]
+followed respectively by completed transport and by duality on their
+declared domains.  The derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal A)
+=C^\bullet_{\mathrm{ch}}(\mathcal A,\mathcal A)$ is the subsequent
+derived endomorphism construction at Beilinson level~$3$.
+\end{proposition}
+
+\begin{proof}
+The augmentation and multiplication construct the full bar coalgebra
+and its universal twisting cochain.  The quadratic presentation
+constructs $\mathcal A^i_{\mathrm{quad}}$ and its twisting morphism;
+the adjunction sends that morphism to~$q_{\mathcal A}$.  Definition
+\ref{def:koszul-property-existence} identifies Koszulness with the
+quasi-isomorphism property of this second map.  Inverse limits carry
+both maps through compatible Mittag--Leffler towers.  Verdier or
+continuous duality then acts on the quadratic coalgebra, while
+Hochschild cochains form the derived endomorphism object of~$\mathcal A$.
+\end{proof}
+
+\begin{proposition}[Recognition targets are not existence criteria;
+\ClaimStatusProvedHere]
+\label{prop:recognition-not-existence}
+Let $\mathscr C$ be a category of augmented chiral algebras with bar
+construction, and let
+$F\colon\mathscr C\to\mathscr D$ be a comparison or transport functor.
+A Koszul-dual existence theorem for $\mathcal A\in\mathscr C$ is not
+supplied by an isomorphism, MC solution, or recognition theorem for
+$F(\mathcal A)$ unless the following source-level data are also
+present:
+\begin{enumerate}
+\item a coalgebra $C_{\mathcal A}$ in the chosen strict or completed
+ chiral coalgebra category;
+\item a typed comparison
+ \[
+ q_{\mathcal A}\colon C_{\mathcal A}\longrightarrow\bar B(\mathcal A)
+ \]
+ whose cone is acyclic in the declared ambient;
+\item preservation of the bar/cobar maps by $F$, and conservativity of
+ $F$ on the class of cones containing $\operatorname{Cone}(q_{\mathcal A})$.
+\end{enumerate}
+Consequently associator or $\operatorname{GRT}$ transport, a
+Positselski co/contra comparison, a Yangian recognition theorem, a K3
+Hall-double comparison, or a topological enhancement through
+$\mathsf{SC}^{\mathrm{ch,top}}$ is a recognition surface until it is
+accompanied by these source-level bar data. None of them replaces the
+finite-dual test, the PBW spectral sequence, or the completed
+Mittag--Leffler test.
+\end{proposition}
+
+\begin{proof}
+The assertion that $\mathcal A$ has a quadratic Koszul coalgebra
+includes an object of the source coalgebra category and an acyclic
+comparison from that coalgebra to the full bar resolution.  A functor
+$F$ transports this assertion when it preserves the comparison and
+reflects acyclicity on its cone.  Under these two hypotheses,
+acyclicity of $F(q_{\mathcal A})$ reflects acyclicity of
+$q_{\mathcal A}$.
+\end{proof}
+
+
+\section{Quadratic case: constructive existence proof}
+\label{sec:quadratic-existence}
+
+\subsection{Statement of result}
+
+\begin{theorem}[Quadratic coalgebra and comparison
+\cite{LV12, Priddy70}; \ClaimStatusConditional]\label{thm:quadratic-have-duals}
+\textup{[Type signature: Open quadrant; quadratic finite-window
+presentation; Beilinson levels (1\leftrightarrow2); hypothesis
+package
+$H_{\mathrm{CL}}(\mathcal A,\mathcal A^i,\tau_{\mathrm i})$.]}
+Let $\mathcal{A} = \text{Free}_{\mathcal{D}}(V) / (R)$ be a \emph{quadratic}
+chiral algebra, meaning:
+\begin{enumerate}
+\item $R \subseteq V^{\otimes 2}$ is the quadratic relation object;
+\item tensor products and the cofree conilpotent coalgebra exist in the
+ chosen finite-window chiral category;
+\item the ordinary quadratic comparison transports through the named
+ chiral Comparison-Lemma package.
+\end{enumerate}
+
+Then the quadratic coalgebra $\mathcal{A}^i_{\mathrm{quad}}$ of
+Definition~\ref{def:koszul-dual-quadratic} exists and is conilpotent
+in the strict lane.  The quadratic twisting morphism determines a
+canonical dg-coalgebra map
+\[
+q_{\mathcal A}\colon
+\mathcal{A}^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A).
+\]
+The algebra $\mathcal A$ is Koszul precisely when $q_{\mathcal A}$ is
+a quasi-isomorphism, equivalently when
+$\Omega(\mathcal A^i_{\mathrm{quad}})\to\mathcal A$ is a
+quasi-isomorphism.  If the weight pieces are dualizable and
+$R\subset V^{\otimes2}$ is a direct summand, the continuous dual of
+$\mathcal A^i_{\mathrm{quad}}$ is
+$T_{\mathcal D}(V^*)/(R^\perp)$.
+\end{theorem}
+
+\begin{proof}
+The cofree conilpotent coalgebra $T^c_{\mathcal D}(s^{-1}V)$ carries the
+deconcatenation coproduct.  Tensor weights~$0$ and~$1$ are
+$\mathbf 1$ and~$s^{-1}V$; for $n\ge2$, the intersection
+\[
+ \bigcap_{p+q=n-2}(s^{-1}V)^{\otimes p}\otimes s^{-2}R\otimes
+ (s^{-1}V)^{\otimes q}
+\]
+is stable under every deconcatenation component; these intersections
+therefore form $C_{\mathcal D}(s^{-1}V,s^{-2}R)$.  The quadratic
+twisting morphism
+$\tau_{\mathrm i}\colon\mathcal A^i\to\mathcal A$
+corresponds under the bar--cobar adjunction to
+$q_{\mathcal A}\colon\mathcal A^i\to\bar B(\mathcal A)$.
+Loday--Vallette's Theorem~3.4.6 identifies acyclicity of the associated
+Koszul complex with either displayed quadratic comparison being a
+quasi-isomorphism.  The chiral Comparison-Lemma hypotheses transport
+this ordinary finite-window calculation.  On locally finite weight
+pieces, dualizing the intersection formula gives the quotient by
+$R^\perp$.
+\end{proof}
+
+\begin{construction}[Quadratic finite-dual coordinates]\label{constr:quadratic-finite-dual-coordinates}
+The finite-coordinate construction has five stages.
+
+\begin{enumerate}
+\item \emph{Dual space.}
+\[V^* = \text{Hom}(V, \mathbb{C})\]
+with dual grading: $|v^*| = -|v|$.
+
+\item \emph{Dual relations.}
+The relations $R \subseteq V^{\otimes 2}$ induce:
+\[R^\perp \subseteq (V^*)^{\otimes 2}\]
+defined by:
+\[R^\perp = \{f \in (V^*)^{\otimes 2} : f(r) = 0 \text{ for all } r \in R\}\]
+
+\item \emph{Quadratic coalgebra.}
+Define
+\[
+ \mathcal A^i_{\mathrm{quad}}
+ =C_{\mathcal D}(s^{-1}V,s^{-2}R)
+ \hookrightarrow T^c_{\mathcal D}(s^{-1}V)
+\]
+as the maximal sub-coalgebra with quadratic core~$s^{-2}R$.
+The degree convention is $|s^{-1}v|=|v|-1$.
+
+\item \emph{Finite-dual algebra coordinates.}
+On locally finite weight pieces, duality gives
+\[
+ \mathcal A^!
+ =(\mathcal A^i_{\mathrm{quad}})^\vee
+ \cong T_{\mathcal D}(V^*)/(R^\perp).
+\]
+Verdier duality supplies the corresponding factorization-algebra
+realization on its dualizable domain.
+
+\item \emph{Koszul comparison.}
+The coalgebra structure follows from the universal property of the
+cofree conilpotent coalgebra; see \cite[Theorem~7.1.2]{LV12}.
+Koszulness is the separate check that
+$\mathcal{A}^i_{\mathrm{quad}}\to\bar{B}(\mathcal{A})$ is a
+quasi-isomorphism, equivalently that the Koszul complex is acyclic
+away from degree~$0$.
+\end{enumerate}
+\end{construction}
+
+\subsection{Explicit construction}
+
+\begin{construction}[Building \texorpdfstring{$\mathcal{A}^i$}{Ai} from
+\texorpdfstring{$\mathcal{A}$}{A}]\label{const:quadratic-dual-criteria}
+Given a finite-window quadratic presentation
+$\mathcal A=T(V)/(R)$, construct the four pieces as follows.
+
+\emph{Presentation.}
+Choose homogeneous generators
+$V=\operatorname{span}\{v_1,\ldots,v_n\}$ and a relation object
+$R=\operatorname{span}\{r_1,\ldots,r_m\}\subset V^{\otimes2}$.
+
+\emph{Quadratic coalgebra.}
+Suspend the generators and relations and form
+\[
+ \mathcal A^i_{\mathrm{quad}}
+ =C(s^{-1}V,s^{-2}R)\hookrightarrow T^c(s^{-1}V).
+\]
+Its weight-(n) component is
+\[
+ (\mathcal A^i_{\mathrm{quad}})^{(n)}
+ =\bigcap_{p+q=n-2}
+ (s^{-1}V)^{\otimes p}\otimes s^{-2}R\otimes
+ (s^{-1}V)^{\otimes q},
+\]
+with deconcatenation coproduct.
+
+\emph{Quadratic comparison.}
+The twisting morphism
+$\tau_{\mathrm i}\colon\mathcal A^i_{\mathrm{quad}}\to\mathcal A$
+corresponds to
+\[
+ q_{\mathcal A}\colon
+ \mathcal A^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A).
+\]
+Its quasi-isomorphism property is the Koszul test.
+
+\emph{Finite-dual algebra.}
+When the weight pieces are finite, put
+$V^*=\operatorname{span}\{v_1^*,\ldots,v_n^*\}$ and define
+\[
+ R^\perp
+ =\{f\in(V^*)^{\otimes2}:\langle f,r\rangle=0
+ \text{ for every }r\in R\}.
+\]
+Then
+\[
+ \mathcal A^!=(\mathcal A^i_{\mathrm{quad}})^\vee
+ \cong T(V^*)/(R^\perp),
+\]
+with the standard graded shifts.
+\end{construction}
+
+\begin{example}[Heisenberg algebra]\label{ex:heisenberg-quadratic-dual}
+The Heisenberg chiral algebra is:
+\[\mathcal{H}_k = \text{Free}(a, a^*) / ([a, a^*] - k)\]
+
+\emph{Generators.} $V = \text{span}\{a, a^*\}$ with $|a| = 1$, $|a^*| = 1$.
+
+\emph{Relation (quadratic part).} $R = \operatorname{span}\{a \otimes a^* - a^* \otimes a\} \subset V^{\otimes 2}$
+
+(The full relation $[a, a^*] = k$ is inhomogeneous, where $k$ is the
+Heisenberg level; for Heisenberg this level also equals the modular
+characteristic, $\kappa(\mathcal{H}_k) = k$. This identification is
+specific to the abelian case: for non-abelian Kac--Moody one has
+instead $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g})(k+h^\vee)/(2h^\vee)$.
+The constant $k$ contributes curvature $m_0$ in the bar complex,
+not a quadratic relation. For Koszul duality, we work with the
+quadratic part.)
+
+\emph{Quadratic coalgebra.}
+The homogeneous presentation gives
+\[
+ \mathcal H^i=C(s^{-1}V,s^{-2}R)\hookrightarrow T^c(s^{-1}V).
+\]
+Since $R=\Lambda^2V$, the suspension convention identifies this with
+the exterior coalgebra~$\Lambda^c(s^{-1}V)$.
+
+\emph{Finite-dual algebra.}
+For
+$V^*=\operatorname{span}\{a^\dagger,(a^*)^\dagger\}$, the annihilator
+is $R^\perp=\operatorname{Sym}^2(V^*)$ and hence
+\[
+ \mathcal H^!=(\mathcal H^i)^\vee
+ \cong T(V^*)/(R^\perp),
+\]
+with the standard shifts.
+
+\emph{Verification.}
+The PBW comparison and its cobar form are
+\[
+ \mathcal H^i\xrightarrow{\sim}\bar B(\mathcal H),
+ \qquad
+ \Omega(\mathcal H^i)\xrightarrow{\sim}\mathcal H.
+\]
+The full bar resolution separately supplies
+$\Omega\bar B(\mathcal H)\xrightarrow{\sim}\mathcal H$.
+\end{example}
+
+\subsection{PBW regularity conditions}
+
+\begin{definition}[Quadratic PBW regularity]\label{def:quadratic-regularity}
+A quadratic or filtered-quadratic presentation
+$\mathcal{A}=\text{Free}(V)/(R)$ is \emph{PBW regular} if:
+\begin{enumerate}
+\item \emph{Finite dualisability.} The pairing:
+ \[V \otimes V^* \to \mathbb{C}\]
+ is perfect in each conformal weight, and $R$ is a direct summand of
+ $V^{\otimes 2}$.
+
+\item \emph{Bidual compatibility.} The relations $R$ and $R^\perp$ satisfy:
+ \[(R^\perp)^\perp = R\]
+ with respect to the chosen pairing.
+
+\item \emph{Conilpotency.} The coalgebra $\mathcal{A}^i_{\mathrm{quad}}$ is conilpotent: every element
+ of the coaugmentation coideal
+ $\overline{\mathcal{A}^i_{\mathrm{quad}}} = \ker(\varepsilon)$ is
+ annihilated by a sufficiently high iterate of the reduced coproduct $\bar{\Delta}$:
+ \[\bigcup_{n=0}^\infty \ker(\bar{\Delta}^n) =
+ \overline{\mathcal{A}^i_{\mathrm{quad}}}\]
+
+\item \emph{PBW flatness and convergence.} There is an exhaustive,
+ separated multiplicative filtration~$F$, bounded below and split in
+ each conformal-weight window, whose Rees algebra is flat and whose associated graded
+ $\operatorname{gr}_F\mathcal A$ is the quadratic algebra
+ determined by $(V,R)$.
+
+\item \emph{Koszul associated graded.} The quadratic algebra
+ $\operatorname{gr}_F\mathcal A$ is classically Koszul, and the
+ bar chain groups are finite-dimensional in each conformal
+ weight and bar degree.
+
+\item \emph{Chiral comparison package
+ $({\rm H}^{\rm ch}_{\rm PBW})$.}  The chosen Ran/factorization
+ realization preserves the filtered bar construction, its associated
+ graded comparison, and the quadratic twisting morphism, and it is
+ conservative on the comparison cone.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[PBW regularity implies Koszul \cite{BGS96, LV12}; \ClaimStatusConditional]\label{thm:regular-implies-koszul}
+\textup{[Type signature: Open quadrant; filtered quadratic
+finite-window presentation; Beilinson levels (1\leftrightarrow2);
+hypothesis package: quadratic dualizability, split PBW filtration,
+strong convergence, and $({\rm H}^{\rm ch}_{\rm PBW})$.]}
+If $\mathcal{A} = \text{Free}(V) / (R)$ is PBW regular in the sense of
+Definition~\ref{def:quadratic-regularity}, then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The quadratic coalgebra
+ $\mathcal A^i_{\mathrm{quad}}=C(s^{-1}V,s^{-2}R)$ exists and is conilpotent.
+\item The PBW comparison
+ \[
+  q_{\mathcal A}\colon
+  \mathcal A^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A)
+ \]
+ is a quasi-isomorphism.  Equivalently,
+ $\Omega(\mathcal A^i_{\mathrm{quad}})\to\mathcal A$ is a
+ quasi-isomorphism.
+\item The universal counit
+ \[
+  \epsilon_{\mathcal A}\colon
+  \Omega\bar B(\mathcal A)\longrightarrow\mathcal A
+ \]
+ is a quasi-isomorphism, hence the full bar--cobar resolution, on the
+ connected weight-graded strict lane.
+\item On the locally finite Verdier or continuous-dual domain,
+ \[
+  \mathcal A^!
+  =\mathbb D_{\Ran}(\mathcal A^i_{\mathrm{quad}})
+  \quad\text{or}\quad
+  (\mathcal A^i_{\mathrm{quad}})^\vee_{\mathrm{cont}}
+ \]
+ is the quadratic dual algebra.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first three conditions of
+Definition~\ref{def:quadratic-regularity} give the conilpotent
+coalgebra of Theorem~\ref{thm:quadratic-have-duals}.  The PBW
+filtration identifies the (E_1)-page of the comparison with the
+Koszul complex of~$\operatorname{gr}_F\mathcal A$.  Classical
+Koszulness makes this complex acyclic in positive homological degree,
+and finite conformal windows give strong convergence.  The filtered
+comparison therefore proves~(ii).  Loday--Vallette
+\cite[Theorem~3.4.6]{LV12} gives its cobar formulation.
+
+The universal twisting morphism
+$\pi_{\mathcal A}\colon\bar B(\mathcal A)\to\mathcal A$ produces the
+map in~(iii), and \cite[Corollary~2.3.4]{LV12} proves it on the
+connected weight-graded ordinary lane.  This resolution theorem uses
+the full bar coalgebra and is logically parallel to the PBW
+comparison.  Finally, the dualizability hypotheses apply Verdier or
+continuous duality to the coalgebra in~(i), giving~(iv).
+\end{proof}
+
+
+\section{Non-quadratic case: completion required}
+\label{sec:non-quadratic-existence}
+
+\subsection{Necessity of completion}
+
+\begin{remark}[Obstructions in non-quadratic case]\label{rem:non-quadratic-obstructions}
+For higher-order relations ($n \ge 3$), the dual relations
+$r^\perp \in (V^*)^{\otimes n}$ need not define a conilpotent
+quadratic coalgebra, the bidual map may have infinite-dimensional
+kernel, and $\mathcal{A}^*$ lacks a natural continuous
+comultiplication. Filtered completions remove these obstructions only
+after the topology, finite-window quotients, and
+Mittag--Leffler convergence have been supplied.
+\end{remark}
+
+\begin{definition}[Filtered completion]\label{def:filtered-completion}
+Let $\mathcal{A} = \text{Free}(V) / (R)$ carry a descending
+multiplicative filtration
+\[
+\mathcal A=F^0\mathcal A \supset F^1\mathcal A \supset
+F^2\mathcal A\supset\cdots,\qquad
+F^p\mathcal A\cdot F^q\mathcal A\subset F^{p+q}\mathcal A .
+\]
+The \emph{filtered completion} is:
+
+\emph{Separating topology.}
+The filtration is required to be separated and complete:
+\[
+\bigcap_nF^n\mathcal A=0,\qquad
+\mathcal A\simeq\varprojlim_n\mathcal A/F^n\mathcal A .
+\]
+For an augmented algebra one usually takes $F^n\mathcal A=I^n$,
+where $I=\ker(\varepsilon)$.
+
+\emph{Completion.}
+\[\widehat{\mathcal{A}} = \varprojlim_n \mathcal{A} / F^n\mathcal{A}.\]
+
+The useful finite-window regime assumes that the quotients
+$\mathcal A/F^n\mathcal A$ are finite in each cohomological degree and
+that all chiral operations are continuous for this topology.
+\end{definition}
+
+\begin{theorem}[Completed quadratic comparison and universal
+resolution; \ClaimStatusConditional]\label{thm:completed-koszul-dual}
+\textup{[Type signature: Open quadrant; strict inverse-limit
+factorization presentation; Beilinson levels (1\leftrightarrow2);
+hypothesis package: separated strong filtration, finite conilpotent
+windows, compatible quadratic and universal comparison maps,
+Mittag--Leffler, and continuous bar/cobar.  The curved clause uses the
+specified Positselski second-kind realization \cite{Positselski11}.]}
+
+Let $\mathcal A$ be a separated complete filtered chiral algebra and
+write $\mathcal A_n=\mathcal A/F^n\mathcal A$.  Assume:
+\begin{enumerate}[label=\textup{(C\arabic*)}]
+\item all chiral operations are strongly filtered and every
+ $\mathcal A_n$ is finite in each cohomological degree;
+\item each stage has a conilpotent quadratic coalgebra
+ $\mathcal A_n^i$ and a quadratic comparison
+ \[
+  q_n\colon\mathcal A_n^i\longrightarrow\bar B(\mathcal A_n)
+ \]
+ which is a quasi-isomorphism in the square-zero model, or has
+ coacyclic cone in the declared second-kind model;
+\item the universal counit
+ \[
+  \epsilon_n\colon\Omega\bar B(\mathcal A_n)\longrightarrow\mathcal A_n
+ \]
+ is a quasi-isomorphism in the square-zero model, or has coacyclic cone
+ in the declared second-kind model;
+\item the quotient maps $\rho_{m,n}\colon\mathcal A_m\to\mathcal A_n$
+ and coalgebra maps
+ $\rho^i_{m,n}\colon\mathcal A_m^i\to\mathcal A_n^i$ make both the
+ $q_n$-squares and the $\epsilon_n$-squares commute for $m\ge n$;
+\item the inverse systems underlying $q_n$, $\epsilon_n$, and their
+ cones are degreewise Mittag--Leffler, so that their ordinary inverse
+ limits compute their derived inverse limits; for every~$j$, the four
+ cohomology towers
+ \[
+ \{H^j(\operatorname{Cone}(q_n))\}_n,
+ \qquad
+ \{H^j(\operatorname{Cone}(\epsilon_n))\}_n,
+ \qquad
+ \{H^j(\mathcal A_n^i)\}_n,
+ \qquad
+ \{H^j\bar B(\mathcal A_n)\}_n
+ \]
+ are Mittag--Leffler, and continuous bar and cobar commute with these
+ strict inverse limits.  In the second-kind lane, the declared exact
+ inverse-limit functor preserves the two coacyclic cone towers.
+\end{enumerate}
+Then the four completed outputs are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the separated pro-conilpotent coalgebra
+ \[
+  \widehat{\mathcal A^i}:=\varprojlim_n\mathcal A_n^i;
+ \]
+\item the completed quadratic comparison
+ \[
+  \widehat q_{\mathcal A}\colon
+  \widehat{\mathcal A^i}\longrightarrow
+  \widehat{\bar B}(\widehat{\mathcal A}),
+ \]
+ which is a quasi-isomorphism in the square-zero model, or has
+ coacyclic cone in the declared curved model;
+\item the completed universal resolution
+ \[
+  \widehat\epsilon_{\mathcal A}\colon
+  \widehat\Omega\widehat{\bar B}(\widehat{\mathcal A})
+  \longrightarrow\widehat{\mathcal A},
+ \]
+ with the same ambient-specific conclusion, together with the
+ quadratic cobar comparison
+ $\widehat\Omega(\widehat{\mathcal A^i})\to\widehat{\mathcal A}$;
+\item on a dualizable domain, the completed dual algebra
+ \[
+  \widehat{\mathcal A}^{\,!}
+  :=\mathbb D_{\Ran}(\widehat{\mathcal A^i})
+  \quad\text{or}\quad
+  (\widehat{\mathcal A^i})^\vee_{\mathrm{cont}}.
+ \]
+\end{enumerate}
+The corresponding module/comodule comparison is the categorical
+Positselski output attached to this completed coalgebra and its own
+exactness package.
+\end{theorem}
+
+\begin{proof}
+Strong filtration makes every finite-stage bar differential a finite
+sum.  The transition maps in~\textup{(C4)} form inverse systems of
+coalgebras, quadratic comparisons, and universal counits.  Their
+inverse limit gives~\textup{(i)} and the two continuous maps in
+\textup{(ii)}--\textup{(iii)}.
+
+Apply the Milnor exact sequence first to the tower of cones of~$q_n$
+and then to the tower of cones of~$\epsilon_n$.  Condition~\textup{(C5)}
+identifies the strict limits with the corresponding derived limits and
+annihilates the respective $\varprojlim^1$ terms, proving the two
+limit comparisons independently.  Continuity of cobar sends
+$\widehat q_{\mathcal A}$ to a quadratic cobar comparison, whose
+composition with $\widehat\epsilon_{\mathcal A}$ is
+$\widehat\Omega(\widehat{\mathcal A^i})\to\widehat{\mathcal A}$.
+In the curved realization, the exact inverse-limit hypothesis carries
+the two coacyclic cone towers to coacyclic limit cones.
+Finally, the dualizability hypothesis applies Verdier or continuous
+duality to the coalgebra in~\textup{(i)}, giving~\textup{(iv)}.
+\end{proof}
+
+\begin{proposition}[Finite-stage obstruction classes;
+\ClaimStatusProvedHere]
+\label{prop:finite-stage-obstruction-classes}
+Let $\mathcal A$ satisfy the filtration hypotheses of
+Theorem~\ref{thm:completed-koszul-dual}, and write
+$\mathcal A_n=\mathcal A/F^n\mathcal A$. A completed Koszul-dual
+coalgebra is obtained only after the following finite-stage
+obstructions vanish.
+\begin{enumerate}
+\item \emph{Stage Koszul comparison.} If
+ $q_n\colon\mathcal A_n^i\to\bar B(\mathcal A_n)$ is the finite-stage
+ quadratic comparison, then
+ \[
+ \mathsf K_n^j=H^j(\operatorname{Cone}(q_n))
+ \]
+ must vanish for every~$j$ in the strict square-zero model; in the
+ curved model the cone must be coacyclic in the specified second-kind
+ category.
+\item \emph{Universal-resolution comparison.} For the finite-stage counit
+ $\epsilon_n\colon\Omega\bar B(\mathcal A_n)\to\mathcal A_n$,
+ \[
+ \mathsf E_n^j=H^j(\operatorname{Cone}(\epsilon_n))
+ \]
+ must vanish, or have coacyclic cone in the curved ambient.
+\item \emph{Compatibility obstruction.} For $m\ge n$ the class of
+ \[
+ \delta_{m,n}:=
+ \rho_{m,n}\circ\epsilon_m
+ -\epsilon_n\circ\Omega\bar B(\rho_{m,n})
+ \]
+ in
+ \[
+ H^0\operatorname{Hom}\bigl(
+ \Omega\bar B(\mathcal A_m),\mathcal A_n\bigr)
+ \]
+ must vanish, with coherent null-homotopies for triples
+ $\ell\ge m\ge n$.
+\item \emph{Milnor obstruction.} The inverse-limit passage has
+ obstruction
+ \[
+ \varprojlim\nolimits^1_n\,\mathsf E_n^{j-1}
+ \]
+ in degree~$j$. The Mittag--Leffler condition kills this term.
+\item \emph{Maurer--Cartan lifting obstruction.} Let
+ \[
+ \mathfrak g_{\mathcal A}
+ =\operatorname{Conv}(\bar B(\mathcal A),\mathcal A)
+ \]
+ with its filtration induced from $F^\bullet\mathcal A$. A partial
+ solution $\Theta_{\le N}$ of the MC equation modulo $F^{N+1}$ lifts
+ across $F^{N+1}/F^{N+2}$ only if
+ \[
+ \mathsf O_{N+1}(\Theta_{\le N})
+ =
+	 \left[
+	 \partial\Theta_{\le N}
+	 +\frac12[\Theta_{\le N},\Theta_{\le N}]
+	 \right]_{N+1}
+	 \in H^2\!\left(
+	 \operatorname{gr}^{N+1}\mathfrak g_{\mathcal A},
+	 d_{\Theta_{\le N}}
+	 \right),
+	 \qquad
+	 d_{\Theta_{\le N}}=\partial+[\Theta_{\le N},-],
+	 \]
+	 vanishes. When it vanishes, the choices of lift form a torsor under
+	 $H^1(\operatorname{gr}^{N+1}\mathfrak g_{\mathcal A},
+	 d_{\Theta_{\le N}})$.
+\end{enumerate}
+These classes are the finite-stage tests; Positselski completion,
+MC solvability, and target recognition do not remove them.
+\end{proposition}
+
+\begin{proof}
+The first two classes are the homology of the quadratic-comparison and
+universal-resolution cones.  The third measures coherence of the
+finite-stage counits as a morphism of inverse systems.  The Milnor
+exact sequence for the inverse limit of cones contains
+$\varprojlim^1_n\mathsf E_n^{j-1}$, so the fourth class is precisely
+the obstruction to passing acyclicity to the limit. The last formula is
+the standard obstruction class for lifting a filtered Maurer--Cartan
+solution: the MC curvature of a partial solution has first possible
+non-zero component in
+$\operatorname{gr}^{N+1}\mathfrak g_{\mathcal A}$, is closed for
+$d_{\Theta_{\le N}}$ by the Bianchi identity, and changes by a
+$d_{\Theta_{\le N}}$-coboundary under a change of lift.
+\end{proof}
+
+\subsection{I-adic completion}
+
+\begin{definition}[I-adic completion]\label{def:i-adic-completion}
+Let $I \subseteq \mathcal{A}$ be an ideal (the ``augmentation ideal''). The
+\emph{$I$-adic completion} is:
+\[\widehat{\mathcal{A}}_I = \varprojlim_n \mathcal{A} / I^n\]
+
+\emph{Geometric meaning.} This is completion along the formal
+neighbourhood of the augmentation character, when such a spectrum
+exists.
+\end{definition}
+
+\begin{example}[Virasoro algebra]\label{ex:virasoro-i-adic}
+The Virasoro algebra is:
+\[\text{Vir} = \text{span}\{L_n, c : n \in \mathbb{Z}\} /
+([L_m, L_n] - (m-n)L_{m+n} - \frac{c}{12}(m^3 - m)\delta_{m+n,0})\]
+
+This is \emph{inhomogeneous quadratic}: the relation $[L_m, L_n] = (m-n)L_{m+n} + \frac{c}{12}(m^3-m)\delta_{m+n,0}$ is bilinear in generators plus a constant (the central charge defines a Lie algebra 2-cocycle in $H^2(\mathrm{Witt}, \mathbb{C})$).
+
+\emph{Augmentation ideal.} $I = \text{span}\{L_n : n \in \mathbb{Z}\}$ (the kernel of the counit $\varepsilon: U(\mathrm{Vir}) \to \mathbb{C}$ sending all $L_n \mapsto 0$ and $c \mapsto c_0$)
+
+\emph{Completion.}
+\[\widehat{\text{Vir}} = \varprojlim_n \text{Vir} / I^n\]
+
+In this completion, the Virasoro algebra acquires a completed curved
+bar coalgebra
+\[
+\widehat{\text{Vir}^{\,i}}
+ = \text{completed cofree coalgebra on } L_n^*, c^* .
+\]
+This line is only a description of the completed candidate. Its
+bar-cobar inversion requires the finite-window convergence hypotheses:
+finite quotient stages, compatible counits, and the
+Mittag--Leffler condition on the cohomology of the stagewise cones.
+The same-family shadow $\mathrm{Vir}_{26-c}$ belongs to the
+Verdier/Koszul-dual algebra lane and requires the separate finite-type
+or completed comparison. It is not produced by the completed counit
+$\Omega\widehat{\bar B}(\mathrm{Vir}_c)\to \mathrm{Vir}_c$.
+
+Without the PBW filtration or an $I$-adic completion,
+$\mathrm{Vir}_c$ is outside the strict finite-dual quadratic criterion.
+\end{example}
+
+\subsection{Convergence criteria}
+
+\begin{theorem}[Finite-window convergence for the universal resolution;
+\ClaimStatusProvedHere]\label{thm:completion-convergence-criteria}
+Let $\mathcal{A}$ carry a descending multiplicative filtration
+$F^\bullet\mathcal A$ and set
+$\widehat{\mathcal A}=\varprojlim_n\mathcal A/F^n\mathcal A$.
+Assume:
+\begin{enumerate}
+\item $\bigcap_n F^n\mathcal A=0$ and $\mathcal A$ is complete for
+ $F^\bullet$;
+\item each quotient $\mathcal A/F^n\mathcal A$ is finite over the
+ coefficient field in each cohomological degree;
+\item every chiral operation is strongly filtered:
+ \[
+ \mu_r(F^{i_1}\mathcal A,\ldots,F^{i_r}\mathcal A)
+ \subset F^{i_1+\cdots+i_r}\mathcal A;
+ \]
+\item the finite-stage bar-cobar counits
+ \[
+ \epsilon_n\colon
+ \Omega\bar B(\mathcal A/F^n\mathcal A)\to
+ \mathcal A/F^n\mathcal A
+ \]
+ are quasi-isomorphisms in the square-zero
+ total model, or coacyclic-cone equivalences in the curved
+ second-kind category, and are compatible with the quotient maps;
+\item for every $j$, the inverse systems
+ $\{H^j(\operatorname{Cone}(\epsilon_n))\}_n$ satisfy the
+ Mittag--Leffler condition.
+\end{enumerate}
+Then the completed bar-cobar counit
+\[
+\widehat\Omega\widehat{\bar B}(\widehat{\mathcal A})\longrightarrow
+\widehat{\mathcal A}
+\]
+is a quasi-isomorphism in the square-zero total model, and has
+coacyclic cone in the curved second-kind category.  The simultaneous
+quadratic comparison and its Verdier dual are supplied by
+Theorem~\ref{thm:completed-koszul-dual} after the additional $q_n$ and
+duality hypotheses of that theorem are present.
+\end{theorem}
+
+\begin{proof}
+The strong filtration makes each arity-$r$ operation continuous and
+forces every fixed quotient $\mathcal A/F^n\mathcal A$ to see only
+finitely many filtration windows. The bar construction is therefore
+computed stagewise. By hypothesis, the stagewise counits are
+quasi-isomorphisms, or coacyclic-cone equivalences in the curved
+ambient, and form a compatible inverse system. The Mittag--Leffler
+condition kills the $\varprojlim^1$ term in the Milnor exact sequence,
+so taking inverse limits preserves the quasi-isomorphism in the
+square-zero model. The curved statement is the same cone calculation
+read in Positselski's second-kind category.
+\end{proof}
+
+%================================================================
+% SECTION 4: ALGORITHMIC TEST
+%================================================================
+
+\section{Finite-stage existence tests}
+\label{sec:algorithmic-test}
+
+\subsection{Regime classifier}
+
+\begin{construction}[Four-output existence classifier;
+\ClaimStatusDefinitional]
+\label{con:koszul-dual-existence}
+\textup{[Type signature: Open quadrant; augmented strict,
+finite-window, or completed presentation; Beilinson levels
+(1\leftrightarrow2); the four output-specific hypothesis packages
+recorded below.]}
+Given an augmented chiral algebra~$\mathcal A$, record the following
+outputs independently.
+
+\emph{E1: universal bar--cobar resolution.}
+Construct the full bar coalgebra and its universal counit
+\[
+ \epsilon_{\mathcal A}\colon
+ \Omega\bar B(\mathcal A)\longrightarrow\mathcal A.
+\]
+The connected weight-graded ordinary lane is governed by
+\cite[Corollary~2.3.4]{LV12}.  A Ran/factorization or completed model
+records the corresponding realization, continuity, and convergence
+hypotheses.
+
+\emph{E2: quadratic coalgebra and Koszul comparison.}
+For a quadratic presentation $\mathcal A=T(V)/(R)$, form
+\[
+ \mathcal A^i_{\mathrm{quad}}=C(s^{-1}V,s^{-2}R)
+ \quad\text{and}\quad
+ q_{\mathcal A}\colon
+ \mathcal A^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A).
+\]
+PBW regularity proves that $q_{\mathcal A}$ is a quasi-isomorphism by
+Theorem~\ref{thm:regular-implies-koszul}.  The same theorem supplies
+the equivalent map $\Omega(\mathcal A^i_{\mathrm{quad}})\to\mathcal A$.
+
+\emph{E3: completed convergence.}
+Choose a separated multiplicative filtration and construct the finite
+windows~$\mathcal A_n$.  Record at every stage the quadratic map~$q_n$
+and the universal counit~$\epsilon_n$.  Compatible transition maps,
+continuous bar/cobar, and the four Mittag--Leffler towers of
+Theorem~\ref{thm:completed-koszul-dual} produce
+$\widehat{\mathcal A^i}$, $\widehat q_{\mathcal A}$, and
+$\widehat\epsilon_{\mathcal A}$.
+
+\emph{E4: Verdier and chosen-pair comparison.}
+On a dualizable finite-window domain, return
+\[
+ K_X(\mathcal A)=\mathbb D_{\Ran}\bar B_X(\mathcal A),\qquad
+ \mathbb D(q_{\mathcal A})\colon K_X(\mathcal A)\to
+ \mathbb D_{\Ran}(\mathcal A^i),\qquad
+ \nu_{\mathcal A}\colon K_X(\mathcal A)\to\mathcal A^!,
+\]
+with
+$\mathbb D_{\Ran}(\mathcal A^i)\simeq
+(\mathcal A^i)^\vee_{\mathrm{cont}}$ in the linear finite-window
+model, and analogously for the completed coalgebra.  The output record lists
+the hypotheses established in each lane and the exact hypothesis
+package remaining for the next construction.
+\end{construction}
+
+\begin{proposition}[Correctness of the existence test;
+\ClaimStatusConditional]
+\label{prop:existence-test-correctness}
+\textup{[Type signature: Open quadrant; augmented strict,
+finite-window, or completed presentation; Beilinson levels
+(1\leftrightarrow2); hypothesis package given by the applicable
+clauses of Theorems~\ref{thm:regular-implies-koszul} and
+\ref{thm:completed-koszul-dual}.]}
+The construction above has the following logical content.
+\begin{enumerate}[label=\textup{(E\arabic*)}]
+\item On the connected weight-graded ordinary lane, the universal
+ counit $\epsilon_{\mathcal A}$ is a quasi-isomorphism by
+ \cite[Corollary~2.3.4]{LV12}.  The chiral and completed realizations
+ carry the comparison hypotheses stated in their respective theorems.
+\item A quadratic presentation constructs
+ $\mathcal A^i_{\mathrm{quad}}=C(s^{-1}V,s^{-2}R)$.  PBW regularity makes
+ $q_{\mathcal A}\colon
+ \mathcal A^i_{\mathrm{quad}}\longrightarrow\bar B(\mathcal A)$
+ and $\Omega(\mathcal A^i_{\mathrm{quad}})\to\mathcal A$
+ quasi-isomorphisms.
+\item Under conditions~\textup{(C1)--(C5)} of
+ Theorem~\ref{thm:completed-koszul-dual}, the inverse limit carries
+ both the completed quadratic comparison and the completed universal
+ resolution, with their two Milnor arguments performed separately.
+\item On the Verdier-dualizable or linearly compact domain,
+ $K_X(\mathcal A)$ and $\mathbb D(q_{\mathcal A})$ are defined.
+ A chosen-pair map $\nu_{\mathcal A}$ reaches~$\mathcal A^!$; the
+ same construction applies to the completed full bar and completed
+ presentation coalgebra.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Clause~\textup{(E1)} is the universal bar--cobar resolution.
+Theorem~\ref{thm:quadratic-have-duals} constructs the coalgebra in
+\textup{(E2)}, and Theorem~\ref{thm:regular-implies-koszul} proves its
+quadratic comparison.  The two inverse-limit arguments in
+Theorem~\ref{thm:completed-koszul-dual} give~\textup{(E3)}.
+Applying the declared duality functor to the full bar and to
+$q_{\mathcal A}$ gives $K_X(\mathcal A)$ and
+$\mathbb D(q_{\mathcal A})$; the chosen pair supplies
+$\nu_{\mathcal A}$ in~\textup{(E4)}.  Each clause therefore has its own source object,
+comparison map, and hypothesis package.
+\end{proof}
+
+\subsection{Examples of algorithm application}
+
+\begin{example}[Heisenberg finite-dual test]\label{ex:algorithm-heisenberg}
+For
+$\mathcal{H}_k = \text{Free}(a, a^*) / ([a, a^*] - k)$
+the homogeneous part of the relation space is
+\[R = \{a \otimes a^* - a^* \otimes a\} \subseteq V^{\otimes 2}\]
+and the central level~$k$ is curvature, not a quadratic relation.
+
+The quadratic coalgebra is
+\[
+ \mathcal H^i=C(s^{-1}V,s^{-2}R)\cong\Lambda^c(s^{-1}V).
+\]
+It is conilpotent by exterior degree.  On finite weight pieces, the
+annihilator $R^\perp=\operatorname{Sym}^2(V^*)$ presents
+\[
+ \mathcal H^!=(\mathcal H^i)^\vee_{\mathrm{cont}}
+ \cong T(V^*)/(R^\perp).
+\]
+\end{example}
+
+\begin{example}[Finite-window recognition for \texorpdfstring{$\mathcal{W}_\infty$}{W\_infinity}]\label{ex:algorithm-w-infinity}
+The algebra $\mathcal{W}_\infty$ has infinitely many generators and
+relations of unbounded arity. The strict finite-dual quadratic test
+therefore returns no coalgebra. The bar coalgebra
+$\bar{B}(\mathcal{W}_\infty)$ still exists, but a completed dual is
+obtained only from a tower
+$\{\mathcal W_{\infty,\le N}\}_N$ satisfying the hypotheses of
+Theorem~\ref{thm:completion-convergence-criteria}: finite-stage
+Koszulness, compatible counits, continuity of all operations, and the
+Mittag--Leffler condition. Theorem~\ref{thm:completed-bar-cobar-strong}
+is the comparison theorem after those tower hypotheses have been
+verified; it is not a bounded-arity recognition shortcut.
+\end{example}
+
+%================================================================
+% SECTION 5: COMPLETE CLASSIFICATION
+%================================================================
+
+\section{Existence regimes for standard examples}
+\label{sec:classification-standard-examples}
+
+\begin{proposition}[Existence regimes for standard examples \cite{FBZ04, BD04}; \ClaimStatusConditional]\label{prop:classification-table}
+The following table records the regime in which the Koszul-dual
+coalgebra or post-Verdier algebra is obtained. The second column is
+only the strict finite-dual test of this appendix; failure there is
+not a non-existence theorem in a completed category.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.21\textwidth}|p{0.22\textwidth}|p{0.24\textwidth}|p{0.22\textwidth}|}
+\hline
+\textbf{Chiral algebra} & \textbf{Strict finite-dual output} & \textbf{Completed/Verdier output} & \textbf{Obstruction not removed by recognition} \\
+\hline
+Heisenberg $\mathcal{H}_k$ & quadratic coalgebra; PBW-Koszul & post-Verdier algebra after continuous finite-window dual & central term is curvature \\
+\hline
+$V_k(\mathfrak{g})$ universal affine & PBW-Koszul coalgebra & module/algebra partner only after Verdier or finite-type input & simple quotients need null-vector test \\
+\hline
+$L_k(\mathfrak{g})$ simple affine & not inherited from $V_k(\mathfrak g)$ & separate quotient analysis & singular vectors may create off-diagonal bar cohomology \\
+\hline
+Virasoro $\mathrm{Vir}_c$ universal & PBW-filtered Koszul; raw finite dual is not automatic & completed/Verdier algebra after finite-window hypotheses & central charge is curved data \\
+\hline
+$\mathcal{W}^k(\fg)$ universal principal & PBW-Koszul coalgebra on the generic/non-critical lane & completed finite-window algebra dual when the tower hypotheses hold & critical Feigin--Frenkel centre/Sugawara--KZ boundary; PBW is not post-Verdier algebra by itself \\
+\hline
+$\mathcal{W}_k(\fg)$ simple quotient & level-dependent quotient test & requires null-vector bar calculation & $C_2$-cofiniteness does not imply bar Koszulness \\
+\hline
+$\mathcal{W}_{1+\infty}$ & no strict finite-dual test & positive/strong completion tower & target recognition requires finite windows \\
+\hline
+$\mathcal{W}_\infty$ & no strict finite-dual test & weight-stabilized completed target & Mittag--Leffler and counit compatibility remain the test \\
+\hline
+Free fermion ($bc$ ghosts) & quadratic finite-dual coalgebra; Koszul & $\beta\gamma$ after continuous dual & signs fixed by super pairing \\
+\hline
+Affine Yangian & filtered finite RTT windows & target identification requires a comparison map after completion & Yangian recognition is not source-level existence \\
+\hline
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+Each row records an output surface, not a single implication.
+Heisenberg and the free fermion are strict finite-dual quadratic
+examples. Universal affine, universal Virasoro, and universal
+principal $\mathcal W$-algebras are PBW examples on their stated
+generic/non-critical lanes, so
+Proposition~\ref{prop:pbw-universality} supplies the bar-coalgebra
+Koszul comparison from free strong generation. Simple affine and
+simple $\mathcal W$-quotients are not decided by their universal
+parents: null vectors can create off-diagonal bar cohomology. The
+$\mathcal W_{1+\infty}$ and $\mathcal W_\infty$ rows are completed
+finite-window statements governed by
+Theorem~\ref{thm:completed-bar-cobar-strong} and
+Theorem~\ref{thm:stabilized-completion-positive}. The affine Yangian
+row has the same filtered-complete shape: finite RTT windows belong to
+the completed tower, while the global target identification is
+additional comparison data.
+\end{proof}
+
+\begin{remark}[Scope of the $\mathcal{W}$ rows]
+The $\mathcal{W}_N$ row records the simple-quotient dependence on the
+parameter~$c$. For the universal principal
+$\mathcal{W}^k(\fg)$-algebras, Proposition~\ref{prop:w-algebra-koszul}
+gives the PBW bar-coalgebra comparison on the generic/non-critical
+principal $\mathcal W$ lane. The critical level is a separate
+Feigin--Frenkel centre/Sugawara--KZ boundary, and simple quotients
+belong to the next row's null-vector test. The completed post-Verdier
+algebra still requires finite-window duality and tower compatibility.
+\end{remark}
+
+\subsection{Detailed analysis: Kac--Moody}
+
+\begin{proposition}[Affine Kac--Moody existence criterion \cite{FBZ04, Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{prop:kac-moody-koszul-duals}
+Let $V_k(\mathfrak g)$ be the universal affine vertex algebra of a
+simple Lie algebra $\mathfrak g$ at level $k\in\mathbb C$. Then:
+\begin{enumerate}
+\item $V_k(\mathfrak g)$ satisfies the PBW existence criterion:
+ its PBW associated graded is
+ $\operatorname{Sym}(\mathfrak g\otimes t^{-1}\mathbb C[t^{-1}])$,
+ finite in each conformal weight, hence classically Koszul.
+\item The bar-dual coalgebra is the chiral Chevalley--Eilenberg
+ coalgebra determined by the dual current generators and the
+ Kac--Moody cocycle. The central term is a curved contribution to
+ the bar differential, not a new quadratic relation.
+\item A post-Verdier algebra notation such as
+ $(V_k(\mathfrak g))^!$ requires the finite-type or continuous
+ duality hypotheses of this appendix. The genus-$0$ module lane can
+ identify the corresponding algebra-side partner with the familiar
+ level reflection $k\mapsto -k-2h^\vee$; that is additional
+ Verdier/module input, not the existence criterion for the coalgebra.
+\item For a simple quotient $L_k(\mathfrak g)$, PBW for the universal
+ algebra does not decide Koszulness. Singular vectors in the quotient
+ can create off-diagonal bar cohomology; admissible and critical
+ levels therefore require the separate null-vector or completed
+ analysis recorded in the main Koszulness chapter.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The universal affine algebra has generators $J^a_{-n}$ and relations
+\[
+[J^a_m,J^b_n]=f^{ab}_{c}J^c_{m+n}
+ + k\,m\,\langle a,b\rangle\delta_{m+n,0}.
+\]
+The PBW filtration by the number of current modes has associated
+graded the symmetric algebra on
+$\mathfrak g\otimes t^{-1}\mathbb C[t^{-1}]$. Each conformal-weight
+piece is finite-dimensional, and the symmetric algebra is classically
+Koszul by Priddy. Proposition~\ref{prop:pbw-universality} gives
+chiral Koszulness for the universal algebra.
+
+The orthogonal complement of the current-current relation gives the
+Chevalley--Eilenberg coalgebra on dual current generators; the
+level-$k$ cocycle supplies curvature in the bar differential. The
+level-reflection and Feigin--Frenkel/Langlands formulas live on
+different comparison surfaces: they identify algebra-side partners
+after Verdier or module-category input. They are not needed to prove
+existence of the bar-dual coalgebra. Passing to $L_k(\mathfrak g)$
+changes the associated graded by quotienting singular vectors, so the
+universal PBW proof no longer applies without an additional
+null-vector calculation.
+\end{proof}
+
+\subsection{Detailed analysis: $\mathcal{W}$-algebras}
+
+\begin{proposition}[\texorpdfstring{$\mathcal{W}$}{W}-algebra Koszul analysis]\label{prop:w-algebra-koszul}
+\begin{enumerate}
+\item\emph{(\ClaimStatusConditional)}
+The universal $\mathcal{W}$-algebra $\mathcal{W}^k(\fg, f_{\mathrm{prin}})$
+is treated on the generic/non-critical principal $\mathcal W$ lane: the
+free strong-generation/PBW presentation supplies the bar-coalgebra
+comparison there. At critical level the Feigin--Frenkel
+centre/Sugawara--KZ degeneration is a separate boundary surface, and at
+admissible or other simple-quotient levels the PBW argument must be
+replaced by the null-vector obstruction calculation of item~\textup{2}.
+The post-Verdier algebra
+$(\mathcal{W}^k)^!$ exists only on the finite-type or completed
+continuous-dual surface: for finitely generated finite-window
+$\mathcal{W}_N$ by Theorem~\textup{\ref{thm:completed-bar-cobar-strong}},
+and for $\mathcal{W}_\infty$ by weight stabilisation
+\textup{(}Theorem~\textup{\ref{thm:stabilized-completion-positive}}\textup{)}.
+
+\item For the simple quotient $\mathcal{W}_k(\fg)$ at admissible
+level~$k$, $C_2$-cofiniteness holds~\cite{Arakawa15}, and the Zhu
+algebra is finite-dimensional. These are not bar-Koszul criteria. The
+remaining open mathematical condition is the vanishing of the null-vector
+obstruction
+\[
+H^j\!\left(
+\operatorname{Cone}\bigl(
+\mathcal W_k(\fg)^i_{\mathrm{quad}}\to \bar B(\mathcal W_k(\fg))
+\bigr)\right)=0
+\quad(j\ne0)
+\]
+in the chiral bar complex, or the corresponding coacyclic-cone
+statement in a completed curved ambient.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof of item~\textup{1}]
+On the generic/non-critical principal $\mathcal W$ lane,
+$\mathcal{W}^k(\fg, f_{\mathrm{prin}})$ is freely strongly generated
+by the Feigin--Frenkel/Drinfeld--Sokolov PBW theorem.
+Proposition~\ref{prop:pbw-universality} gives the corresponding
+bar-coalgebra comparison.  At the critical level this argument reaches
+the critical centre/Sugawara--KZ boundary data.  A Theorem~H statement
+there requires a critical family datum
+$H_H(\mathcal W^{-h^\vee}(\fg,f_{\mathrm{prin}});
+S_{\mathrm{crit}})$, and a strict post-Verdier algebra requires its
+own completed comparison.  The final sentence invokes precisely this
+finite-window comparison in addition to PBW.
+\end{proof}
+
+%================================================================
+% SECTION 6: PRACTICAL COMPUTATION
+%================================================================
+
+\section{Finite-stage computation of Koszul duals}
+\label{sec:practical-computation}
+
+\subsection{Computable data}
+
+\begin{procedure}[Computing \texorpdfstring{$\mathcal{A}^i$}{Ai} in practice]\label{proc:compute-koszul-dual}
+Given $\mathcal{A} = \text{Free}(V) / (R)$:
+
+\emph{Presentation data.}
+\begin{enumerate}
+\item Write generators $V = \text{span}\{v_1, \ldots, v_n\}$ with explicit degrees
+\item Write relations $R = \text{span}\{r_1, \ldots, r_m\}$ in normal form
+\item Identify which relations are quadratic, cubic, etc.
+\end{enumerate}
+
+\emph{Quadratic coalgebra and finite-dual data.}
+\begin{enumerate}
+\item Extract quadratic relations $R_2 \subseteq R$
+\item Build the quadratic coalgebra
+ \[
+ \mathcal{A}^i_{\text{quad}}
+ =C(s^{-1}V,s^{-2}R_2)\hookrightarrow T^c(s^{-1}V).
+ \]
+\item Form $V^*=\{v_1^*,\ldots,v_n^*\}$ and compute
+ $R_2^\perp\subseteq(V^*)^{\otimes2}$ on locally finite weight pieces.
+\item Record the finite-dual algebra
+ $(\mathcal A^i_{\mathrm{quad}})^\vee
+ \cong T(V^*)/(R_2^\perp)$.
+\end{enumerate}
+
+\emph{Higher-relation data.}
+\begin{enumerate}
+\item If $R$ contains only quadratic relations, set
+ $\mathcal{A}^i = \mathcal{A}^i_{\text{quad}}$.
+\item If $R$ contains higher relations:
+ \begin{enumerate}
+ \item Choose a descending multiplicative filtration $F^n\mathcal A$
+ and verify separated completeness.
+ \item Compute successive finite windows
+ $\mathcal{A}_n = \mathcal{A} / F^n\mathcal A$.
+ \item Compute duals $\mathcal{A}_n^i$ for each $n$ and verify
+ stagewise Koszulness.
+ \item Check compatibility and the Mittag--Leffler condition, then take
+ the inverse limit:
+ $\widehat{\mathcal{A}^i} = \varprojlim_n \mathcal{A}_n^i$.
+ \end{enumerate}
+\end{enumerate}
+
+\emph{Verification data.}
+\begin{enumerate}
+\item Check conilpotency: $\ker(\varepsilon) = \bigcup_n \ker(\bar{\Delta}^{(n)})$ (every element of the coaugmentation coideal is annihilated by a sufficiently high iterate of the reduced coproduct)
+\item Verify quadratic comparison: Compute $\bar{B}(\mathcal{A})$ and check
+ $\mathcal{A}^i\xrightarrow{\sim}\bar{B}(\mathcal{A})$ as a
+ quasi-isomorphism of dg coalgebras, or the corresponding
+ finite-window inverse-limit statement in the completed lane.
+\item Verify the universal resolution: compute
+ $\Omega(\bar{B}(\mathcal{A}))\to\mathcal A$ in its strict or chiral
+ realization.  In the completed lane compare
+ $\widehat\Omega(\widehat{\bar B}(\widehat{\mathcal A}))$ with
+ $\widehat{\mathcal A}$ in the square-zero total model or in the
+ second-kind coderived category.
+\item Verify the quadratic cobar comparison
+ $\Omega(\mathcal A^i)\to\mathcal A$, obtained from the preceding
+ quadratic comparison by continuous cobar.
+\end{enumerate}
+\end{procedure}
+
+\subsection{\texorpdfstring{Worked example: free fermion ($bc$ system)}{Worked example: free fermion}}
+
+\begin{example}[Free fermion (\texorpdfstring{$bc$}{bc} ghost) system]\label{ex:free-fermion-koszul-dual}
+The free fermion ($bc$ ghost) system is:
+\[\mathcal{F} = \text{Free}(b, c) / (b \otimes c + c \otimes b)\]
+
+\emph{Generators.} $V = \text{span}\{b, c\}$ with $|b| = \lambda$,
+$|c| = 1 - \lambda$.
+
+\emph{Relation.} $R = \{b \otimes c + c \otimes b\}$ (anticommutation).
+
+\emph{Quadratic coalgebra.}
+\[
+ \mathcal F^i=C(s^{-1}V,s^{-2}R)\hookrightarrow T^c(s^{-1}V).
+\]
+The parity shift identifies this coalgebra with the symmetric coalgebra
+$\operatorname{Sym}^{\bullet,c}(sV)$ carrying the shuffle coproduct.
+
+\emph{Finite-dual algebra.}
+For $V^*=\operatorname{span}\{b^*,c^*\}$, the annihilator is
+\[
+ R^\perp=\operatorname{span}\{
+ b^*\otimes b^*,\ c^*\otimes c^*,\
+ b^*\otimes c^*-c^*\otimes b^*\}.
+\]
+The continuous dual
+$\mathcal F^!=(\mathcal F^i)^\vee_{\mathrm{cont}}$ is the
+$\beta\gamma$ algebra of
+Theorem~\ref{thm:betagamma-fermion-koszul}.
+
+\emph{Verification.}
+\begin{itemize}
+\item Conilpotency follows from the coradical filtration by polynomial degree.
+\item The quadratic comparison
+ $\mathcal F^i\to\bar B(\mathcal F)$ is a quasi-isomorphism.
+\item Its cobar form is
+ $\Omega(\mathcal F^i)\xrightarrow{\sim}\mathcal F$.
+\item The universal resolution is
+ $\Omega\bar B(\mathcal F)\xrightarrow{\sim}\mathcal F$.
+\item Continuous duality gives
+ $(\mathcal F^i)^\vee_{\mathrm{cont}}\cong\mathcal F^!\cong\beta\gamma$.
+\end{itemize}
+
+Hence the free fermion system is Koszul, with symmetric coalgebra
+$\mathcal F^i$ and finite-dual algebra~$\beta\gamma$.
+\end{example}
+
+%================================================================
+% SECTION 7: SUMMARY AND DECISION TREE
+%================================================================
+
+\section{Comparison map of existence regimes}
+\label{sec:existence-summary}
+
+\begin{figure}[H]
+\centering
+\begin{tikzcd}[row sep=large, column sep=large]
+& \text{Given } \mathcal{A} \ar[dl] \ar[dr] & \\
+\text{Finite-dual quadratic?} \ar[d, "Yes"] \ar[dr, "No"] & & \text{Strong finite window?} \ar[d, "Yes"] \ar[dd, "No"'] \\
+\text{PBW regular?} \ar[d, "Yes"] \ar[dr, "No"] & {} & \text{Mittag--Leffler?} \ar[dl, "Yes"'] \ar[d, "No"] \\
+\text{Conilpotent/pro-conilpotent?} \ar[d, "Yes"] \ar[dr, "No"] & \boxed{\text{COMPLETED REGIME}} & \text{SEPARATE ANALYSIS} \\
+\boxed{\text{STRICT REGIME}} & \boxed{\text{COMPLETED REGIME}} & \text{SEPARATE ANALYSIS}
+\end{tikzcd}
+\caption{Schematic comparison of strict, completed, and unresolved
+existence regimes}
+\label{fig:decision-tree-existence}
+\end{figure}
+
+\begin{remark}[Comparison of existence regimes
+ \cite{LV12, Positselski11}]
+\label{rem:existence-summary}
+Three existence regimes govern this monograph and the cited literature:
+\begin{enumerate}
+\item \emph{Strict quadratic/conilpotent regime.} In the classical
+ and quadratic literature, finite-dual quadratic data give an explicit
+ strict coalgebra
+ \textup{(}Construction~\ref{const:quadratic-dual-criteria}\textup{)}.
+ PBW regularity is the additional hypothesis that makes this coalgebra
+ the bar-cobar Koszul resolution.
+\item \emph{Completed/filter-complete regime.} In the non-quadratic
+ setting one seeks a completed dual under explicit convergence and
+ inverse-limit hypotheses; Appendix~\ref{app:nilpotent-completion}
+ records this frontier package and its standard towers.
+\item \emph{Negative or comparison statements.} Claims that no dual
+ exists depend on the ambient category, the allowed completion, and the
+ level at which one asks for inversion. They are regime-specific
+ comparison statements, not a single monograph theorem overriding the
+ family-by-family theorem surface.
+\end{enumerate}
+There is no single constitutional ``if and only if'' criterion for the
+whole monograph.
+\end{remark}
+
+\subsection{Alternative ambients}
+
+\begin{remark}[Alternatives outside a chosen Koszul-dual regime]\label{rem:no-dual-alternatives}
+If a chiral algebra $\mathcal{A}$ has no Koszul dual in the strict
+finite-dual or completed regime being used, four replacement surfaces
+remain available.
+
+\emph{$A_\infty$ replacement.}
+Under the conilpotence and completion hypotheses of the bar-cobar
+adjunction, $\Omega(\bar{B}(\mathcal{A}))$ gives an $A_\infty$
+model of~$\mathcal{A}$ even when the Koszul-dual coalgebra is not
+concentrated in the quadratic degree.
+
+\emph{Derived module category.}
+The derived category $\mathcal{D}^b(\mathcal{A}\text{-mod})$ can be
+formed without an explicit Koszul dual, although finiteness,
+compact-generation, and comparison theorems remain separate
+hypotheses.
+
+\emph{Factorization homology.}
+Factorization homology $\int_X \mathcal{A}$ can be computed without Koszul dual
+(Costello--Gwilliam factorization algebra formalism).
+
+\emph{Finite or compactly generated subcategory.}
+Some subcategories of $\mathcal{A}\text{-mod}$ satisfy the
+finite-type or compact-generation hypotheses needed for a
+module/comodule comparison.
+\end{remark}

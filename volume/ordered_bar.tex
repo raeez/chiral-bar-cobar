@@ -1,0 +1,113 @@
+\chapter{The ordered bar construction}
+\label{ch:ordered-bar}
+
+\section{The simplicial object and the interval}
+
+Let $A$ be a transversely ordered chiral algebra with augmentation
+$\varepsilon\colon A\to\unit$ and augmentation ideal $\bar A$. The
+simplicial ordered bar has level
+\[
+  B^{\mathrm{ord}}_r(A) = \unit\otimes^! A^{\otimes^! r}\otimes^!\unit,
+\]
+with faces built from the multiplication or the augmentation and
+degeneracies built from the unit.
+
+\begin{proposition}[The ordered bar factorises]
+\label{prop:bar-factorises}
+\StatusProved{} $B^{\mathrm{ord}}_\bullet(A)$ is a simplicial object of
+$\FactD(X)$. Its geometric realization inherits the chiral factorisation
+structure, and the deconcatenation coproduct is a morphism of
+factorisation objects.
+\end{proposition}
+
+\begin{proof}
+Faces and degeneracies are structure maps to which
+Theorem~\ref{thm:locality} applies. Realization is computed
+componentwise. Deconcatenation cuts a transverse word while a
+factorisation equivalence separates the chiral support letter by letter;
+the two commute on every disjointness locus, which is the morphism
+condition in $\FactD(X)$.
+\end{proof}
+
+\begin{theorem}[Interval identity]
+\label{thm:interval}
+\StatusProved{} The realization of the simplicial ordered bar is the
+relative tensor product of the two augmentation modules,
+\[
+  \Barperp_X(A) \;\simeq\; \unit\otimes^{L}_A\unit ,
+\]
+and when the analytic realization is locally constant in the transverse
+direction and satisfies excision it is the factorisation homology of an
+interval with augmentation boundary labels,
+\[
+  \Barperp_X(A) \;\simeq\; \int_{([0,1],\,\partial[0,1])} A .
+\]
+\end{theorem}
+
+\begin{proof}
+The first equivalence is the standard identification of the two-sided bar
+resolution with the derived relative tensor product, valid in any
+monoidal category with the relevant colimits; here the colimits are
+computed componentwise on $X^I$ and remain in $\FactD(X)$ by
+Proposition~\ref{prop:bar-factorises}. The second is factorisation
+excision for the stratified interval, whose two boundary points carry the
+augmentation modules, under the stated local-constancy hypothesis.
+\end{proof}
+
+\section{The chiral coefficient is not contracted}
+
+The bar differential of Theorem~\ref{thm:interval} multiplies adjacent
+transverse letters. It does not extract a collision residue. The de Rham
+differential of a configuration space, the residue differential along a
+collision divisor, and the simplicial bar differential are three distinct
+operators, and each bar term carries the full chiral operation as a
+morphism of factorisation $D$-modules.
+
+\begin{remark}[The superposition that this separates]
+\label{rem:superposition}
+Placing a bar complex on $\overline{\mathcal M}_{g,n}$ over a relative
+factorisation stack fuses the transverse and modular directions in the
+primitive object. Every construction downstream of such a placement
+inherits the fusion: one Maurer--Cartan equation where there are two, one
+genus where there are two, and a single scalar where there are several
+invariants in different theories. The separation is
+Theorem~\ref{thm:interval} together with the independence of $g_\perp$
+and $g_X$.
+\end{remark}
+
+\section{Coalgebra structure and completion}
+
+The normalized complex of $\Barperp_X(A)$ is the conilpotent tensor
+coalgebra $T^c(s\bar A)$ on the suspended augmentation ideal, with
+deconcatenation coproduct. By Proposition~\ref{prop:bar-factorises} the
+coproduct is a morphism of factorisation objects, so
+\[
+  \Barperp_X(A) \in
+  \Coalg^{\mathrm{coaug}}_{E_1}\bigl(\FactD(X),\otimes^!\bigr)
+\]
+is coaugmented and conilpotent.
+
+Two completions enter later statements and are never imposed silently:
+the coradical filtration of the coalgebra, and the weight filtration when
+$A$ is positively graded. Both are recorded in the hypotheses of
+Chapter~\ref{ch:bar-cobar} rather than assumed here.
+
+\begin{proposition}[Low arity]
+\label{prop:low-arity}
+\StatusProved{} In arity one the bar differential vanishes and
+$\Barperp_X(A)_1 = s\bar A$. In arity two it is the suspended
+multiplication $s\bar A\otimes^! s\bar A \to s\bar A$, and the
+codimension-one boundary of the one-dimensional associahedron gives the
+associativity relation $(ab)c-a(bc)=0$ in arity three.
+\end{proposition}
+
+\begin{proof}
+Immediate from the simplicial identities, with the signs fixed by the
+suspension convention: for a reduced bar word
+$[a_1|\cdots|a_r]=sa_1\otimes\cdots\otimes sa_r$,
+\[
+  b_m[a_1|\cdots|a_r] = \sum_{i=1}^{r-1}
+  (-1)^{\sum_{j\le i}|a_j| + i - 1}
+  [a_1|\cdots|a_ia_{i+1}|\cdots|a_r].
+\]
+\end{proof}

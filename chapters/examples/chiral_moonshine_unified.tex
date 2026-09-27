@@ -1,0 +1,861 @@
+% chiral_moonshine_unified.tex
+%
+% Chiral moonshine through signed denominator/bar comparison:
+% denominator products compare with bar data only after the product
+% exponents have been identified, with sign and normalization fixed,
+% with the primitive graded supertrace of the chosen chiral object.
+
+\providecommand{\cA}{\mathcal A}
+\providecommand{\cB}{\mathcal B}
+\providecommand{\cH}{\mathcal H}
+\providecommand{\cM}{\mathcal M}
+\providecommand{\cO}{\mathcal O}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\cT}{\mathcal T}
+\providecommand{\bZ}{\mathbb Z}
+\providecommand{\bQ}{\mathbb Q}
+\providecommand{\bH}{\mathbb H}
+\providecommand{\bM}{\mathbb M}
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Str}{\operatorname{Str}}
+\providecommand{\sdim}{\operatorname{sdim}}
+\providecommand{\PE}{\operatorname{PE}}
+\providecommand{\Co}{\mathrm{Co}}
+\providecommand{\Th}{\mathrm{Th}}
+\providecommand{\Mtw}{M_{24}}
+\providecommand{\Vnat}{V^{\natural}}
+\providecommand{\Vsnat}{V^{s\natural}}
+\providecommand{\VTh}{V^{\Th}}
+\providecommand{\VKthree}{V_{K3}^{\cN{=}4}}
+\providecommand{\cN}{\mathcal N}
+\providecommand{\Barch}{\mathrm B^{\mathrm{ch}}}
+\providecommand{\BarchOrd}{\mathrm B^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\kapch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kapBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\kapcat}{\kappa_{\mathrm{cat}}}
+\providecommand{\kapfiber}{\kappa_{\mathrm{fiber}}}
+\providecommand{\ZcSig}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+
+\chapter{Chiral moonshine: denominator products and primitive bar traces}
+\label{chap:chiral-moonshine-unified}
+
+\noindent
+A Borcherds denominator is not a bar complex.  It is an automorphic
+product whose exponents are root multiplicities of a generalized
+Kac--Moody algebra.  A chiral bar complex supplies a product only
+after its primitive weight strata have been converted into a
+plethystic Euler product.  Moonshine enters when the same integers
+occur on both sides.
+
+The Monster scalar lane and the Monster-equivariant lane are different
+objects.  The scalar lane of $\Vnat$ sees the Virasoro curvature
+$\kapch(\Vnat)=12$, the Virasoro shadow coefficients at $c=24$, and
+the collision residue
+\[
+ r^{\mathrm{Vir}}_{24}(z)=\frac{12}{z^3}+\frac{2T}{z}.
+\]
+The equivariant lane sees the Monster action on graded spaces and, for
+a bar statement, on
+$H^\bullet(\operatorname{Prim}\Barch(\Vnat))$.  The McKay--Thompson
+series are not determined by the scalar tower alone.
+
+Four sources carry the comparison.  The Monster source is the FLM
+module $\Vnat$ and Borcherds' monster Lie algebra
+\cite{FLM88,Bor92}.  The Conway source is Duncan's super-VOA
+$\Vsnat$ with $\Co_0$ supertraces.  The Thompson source is the
+Harvey--Rayhaun / Griffin--Mertens graded $\Th$-module, not an
+unconditional VOA datum in the input package.  The Mathieu source is
+the K3 elliptic genus, the Gannon $\Mtw$-module, and the
+DMVV--Gritsenko--Nikulin multiplicative lift
+\cite{Gannon16,DMVV,GritsenkoNikulin97}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The four moonshine inputs}
+\label{sec:moonshine-setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[Moonshine input package]
+\label{def:moonshine-four-families}
+The ordered package
+\[
+ \cM
+ \;=\;
+ \bigl(\Vnat,\;\Vsnat,\;W^{\Th},\;\VKthree\bigr)
+\]
+has the following meaning.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item $\Vnat$ is the Frenkel--Lepowsky--Meurman holomorphic VOA of
+central charge $24$, $\dim \Vnat_1=0$, with
+$\Aut(\Vnat)=\bM$.
+\item $\Vsnat$ is Duncan's $N{=}1$ Conway super-VOA of central charge
+$12$, with $\dim \Vsnat_{1/2}=0$ and $\Co_0=2\cdot\Co_1$ acting by
+super-VOA automorphisms.
+\item $W^{\Th}$ denotes the graded Thompson supermodule whose graded
+traces are the Harvey--Rayhaun Thompson moonshine functions.  The
+notation $\VTh$ is reserved for a chiral algebra model realizing
+$W^{\Th}$ if such a model is supplied.
+\item $\VKthree$ denotes the $c=6$ $\cN{=}4$ chiral sector appearing
+in the K3 elliptic genus.  Gannon's theorem supplies a graded
+$\Mtw$-module for the Mathieu coefficients; it does not assert that
+the full group $\Mtw$ acts as symmetries of one K3 sigma model.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Separated modular characteristics]
+\label{rem:moonshine-kappa-ch-table}
+The symbol $\kappa$ is lane-dependent:
+\[
+\begin{array}{c|c|c}
+\text{object} & \text{invariant} & \text{value}\\
+\hline
+\Vnat & \kapch(\Vnat) & 12\\
+V_{\Lambda_{24}}\text{ on the lattice lane}
+ & \kappa_{\mathrm{latt}}(V_{\Lambda_{24}}) & 24\\
+\Vsnat & \kapch(\Vsnat) & 6\\
+\VKthree\text{ on the Virasoro lane} & \kapch(\VKthree) & 3\\
+K3\text{ as a CY}_2\text{ category} & \kapcat(K3) & 2\\
+\mathfrak g_{\Delta_5}\text{ BKM denominator} & \kapBKM(\mathfrak g_{\Delta_5}) & 5\\
+\mathcal H_{\mathrm{Muk}}(K3)\text{ conductor lane} & K^\kappa & 8\\
+\widetilde H(K3,\bZ)\text{ Mukai lattice} & \kapfiber & 24
+\end{array}
+\]
+The Monster value is the proved scalar modular-characteristic statement
+of Proposition~\ref{prop:moonshine-kappa}: the weight-$1$ Heisenberg
+channel is absent and the Virasoro contribution gives $c/2=12$.  The
+Leech value is the lattice formula
+$\kappa_{\mathrm{latt}}(V_{\Lambda_{24}})=\operatorname{rank}(\Lambda_{24})=24$.
+The Conway value is the same Virasoro calculation at $c=12$.  The K3
+values live in different lanes.  The equality
+$\kapch(\VKthree)=3$ is the $c/2$ Virasoro value for the $c=6$
+$\cN{=}4$ algebra; it is not the categorical value
+$\kapcat(K3)=\chi(\cO_{K3})=2$, not the Borcherds weight
+$\kapBKM(\mathfrak g_{\Delta_5})=5$, not the scalar conductor
+$K^\kappa=8$ of the Mukai-enhanced $\mathcal B$-family
+\textup{(}Proposition~\ref{prop:archetype-complementarity-bridge};
+$K^\kappa=2c_+(\mathrm{Mukai}(K3))$\textup{)}, and not the Mukai
+rank $24$.
+\end{remark}
+
+\begin{remark}[Schellekens and Niemeier scope]
+\label{rem:moonshine-schellekens-niemeier-scope}
+The comparison is restricted to the Niemeier--Monster slice of the
+Schellekens $c=24$ census.  The twenty-four Niemeier lattice VOAs are
+class~$\mathbf G$ at the scalar shadow level, with
+$\kappa_{\mathrm{latt}}=24$ and $r_{\max}=2$.  The unique $V_1=0$ row
+represented by $\Vnat$ is class~$\mathbf M$, with
+$\kapch(\Vnat)=12$ and $r_{\max}=\infty$.  The remaining forty-six
+Schellekens rows require their own current algebra, scalar shadow, and
+denominator data; the Niemeier and Monster rows do not determine them.
+\end{remark}
+
+\begin{remark}[Five-stratum archetype tagging of the moonshine input package]
+\label{rem:moonshine-five-stratum-archetype}
+\index{five-archetype dichotomy!moonshine input package}
+\index{$\kappa$-stratification matrix!moonshine row}
+This is an Open-quadrant statement for the $\Vnat,\Vsnat,W^{\Th}$
+chart algebras, with the CY-coupled $\VKthree$ row present only via
+the Vol.~III two-stage factorisation
+$\Phi_2^{(\Sigma_1,C)}=\SpCh_{\Sigma_1,C}\circ\PhiFA_2$;
+the presentation is chart-level, the Beilinson levels are $1$ and
+$5$, and the hypotheses are the working loci of
+Definition~\ref{def:moonshine-four-families} together with the
+channel-supremum classification rule.
+
+On the standard Open-quadrant Beilinson tower, the four chiral inputs
+of Definition~\ref{def:moonshine-four-families} carry the following
+archetype tags and rows in the
+$5\times5$ $\kappa$-stratification matrix
+$(\kapcat,\kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}},\kapBKM,\kapfiber)$
+with five distinct $\kappa$-measurements in each row. The
+$\mathbf B$-row entry includes its pair $(\Sigma_{d-1},C)$ and is
+not a one-stage $\Phi_d$.
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|c|p{0.45\linewidth}}
+\toprule
+\textbf{Object} & \textbf{Archetype} & \textbf{Five-stratum row} \\
+\midrule
+$V_{\Lambda_{24}}$ (Niemeier lattice VOA) & $\mathbf G$ &
+ $(-,\,0,\,24,\,-,\,24)$: Heisenberg slot is the Leech rank;
+ $r_{\max}=2$ \\
+$\Vnat$ (FLM Monster module) & $\mathbf M$ &
+ $(-,\,12,\,0,\,-,\,-)$: Hodge slot is $c/2{=}12$;
+ $V_1{=}0$ kills the Heisenberg slot;
+ $r_{\max}=\infty$ \\
+$\Vsnat$ (Conway $N{=}1$ super-VOA) & $\mathbf M$ &
+ $(-,\,6,\,0,\,-,\,-)$: Hodge slot is $c/2{=}6$;
+ $r_{\max}=\infty$ \\
+$W^{\Th}$ (Thompson graded module) & $\mathbf M$ (conditional) &
+ row determined by an external chiral realisation $\VTh$ if supplied
+ (Theorem~\ref{thm:thompson-chiral}) \\
+$\VKthree$ ($c{=}6$ $\cN{=}4$ chiral sector) & $\mathbf B$
+ (after Mukai enhancement) &
+ anchored at $(0,\,0,\,3,\,5,\,24)$ on the
+ Mukai-enhanced K3$\times E$ row \\
+\bottomrule
+\end{tabular}
+\end{center}
+The five entries are five distinct invariants on five distinct lanes.
+A dash records that no Borcherds product, no compact CY fibre, or no
+relevant slot is attached at the chart level. The Niemeier
+$\mathbf G$ row and the FLM $\mathbf M$ row are different rows of the
+matrix, indexed by the lattice rank (Heisenberg slot) and the Virasoro
+$c/2$ scalar (Hodge slot), respectively.  The
+class~$\mathbf B$ entry is reserved for the Mukai-enhanced K3$\times E$
+witness whose canonical row is the class~$\mathbf B$ CY-host row;
+$\VKthree$ alone is the chart algebra of an entry in that row only
+after the Vol~III two-stage factorisation
+$\Phi_2^{(\Sigma_1,C)}=\SpCh_{\Sigma_1,C}\circ\PhiFA_2$ has been
+applied with $\Sigma_1$ a transverse one-real-dimensional manifold and
+$C$ a fixed reference curve.
+\end{remark}
+
+\begin{remark}[Super sign convention]
+\label{rem:moonshine-bar-super-conv}
+For $\Vsnat$, $W^{\Th}$, and $\VKthree$ every bar primitive and every
+trace is $\bZ/2$-graded.  The coefficient of weight $n$ is the
+superdimension
+\[
+ a(n)=\sdim P_n=\dim P_n^{\bar 0}-\dim P_n^{\bar 1}.
+\]
+Odd collision OPEs remain collision OPEs; they are not replaced by
+Laplace kernels.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Primitive bar-Euler products}
+\label{sec:moonshine-master}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}[Primitive bar-Euler product; \ClaimStatusProvedHere]
+\label{prop:bar-euler-hilbert}
+Let $A$ be an augmented weight-graded chiral algebra with finite
+weight pieces, and let
+\[
+ P_A
+ \;:=\;
+ H^\bullet\!\bigl(\operatorname{Prim}\Barch(A)\bigr)
+\]
+be the primitive stratum of its chiral bar complex after taking the
+weight-preserving bar differential.  Put
+$a_A(n)=\sdim (P_A)_n$.  The primitive bar-Euler product is
+\begin{equation}
+\label{eq:bar-euler-hilbert}
+ E_{\Barch}(A;q)
+ \;:=\;
+ \PE\!\left(\sum_{n\geq 1} a_A(n)q^n\right)
+ \;=\;
+ \prod_{n\geq 1}(1-q^n)^{-a_A(n)} .
+\end{equation}
+For a purely even object whose primitive bar homology is $\bar A$,
+one has $a_A(n)=\dim \bar A_n$.
+\end{proposition}
+
+\begin{proof}
+Work in the completed ring of formal power series in $q$.  Since each
+weight piece $P_n$ is finite-dimensional, every coefficient of the
+Euler product is a finite sum.  For a graded super vector space
+$P=\bigoplus_{n\geq 1}P_n$ with finite weight pieces, the plethystic
+exponential is defined by
+\[
+ \PE\!\left(\sum_{n\geq 1} a(n)q^n\right)
+ =
+ \exp\!\left(
+   \sum_{r\geq 1}\frac{1}{r}\sum_{n\geq 1}a(n)q^{rn}
+ \right).
+\]
+Taking the logarithm of the product on the right of
+\eqref{eq:bar-euler-hilbert} gives the same series:
+\[
+ -\sum_{n\geq 1}a(n)\log(1-q^n)
+ =
+ \sum_{n,r\geq 1}\frac{a(n)}{r}q^{rn}.
+\]
+This is the symmetric, plethystic Euler product generated by the
+primitive bar classes.
+
+It is not the ordinary Euler characteristic of the tensor coalgebra
+$T^c(s^{-1}\bar A)$.  Before taking a differential, the tensor
+coalgebra has tensor-length series
+$1/(1-\chi_q(s^{-1}\bar A))$ up to the suspension sign.  The product
+\eqref{eq:bar-euler-hilbert} is obtained only after passing to the
+primitive strata and then forming the free supercommutative
+plethystic product.  Theorem~H is used exactly at this point in
+Vol~I applications: finite cohomological amplitude allows the
+primitive supertrace to be computed on homology without changing the
+Euler characteristic.
+\end{proof}
+
+\begin{theorem}[Denominator/bar-Euler comparison criterion;
+\ClaimStatusProvedHere]
+\label{thm:moonshine-bar-euler-master}
+\index{chiral moonshine!denominator comparison}
+\index{Borcherds denominator identity!primitive bar-Euler product}
+This is an Open-quadrant chain-level statement from Beilinson level
+$2$ to level~$5$. The hypotheses are an augmented weight-graded
+chiral algebra with finite weight pieces, a primitive-bar finite-type
+model, and an external denominator-recognition datum as in
+Definition~\ref{def:moonshine-finite-denominator-recognition}.
+
+Let $A$ be an augmented weight-graded chiral algebra chosen in a
+moonshine sector, and suppose an external generalized Kac--Moody
+denominator is given in the form
+\begin{equation}
+\label{eq:moonshine-master}
+ \mathcal D_A(\mathbf z)
+ =
+ e^\rho
+ \prod_{\alpha\in\Delta_+}
+ \bigl(1-e^{-\alpha}\bigr)^{\mu_A(\alpha)} .
+\end{equation}
+Let $\lambda:\Delta_+\to\bZ_{\geq 1}$ be a specialization of positive
+roots to one weight variable, and let
+$\varepsilon_A\in\{\pm1\}$ be the denominator-sign convention.  If the
+specialized root multiplicities satisfy
+\begin{equation}
+\label{eq:moonshine-exponent-match}
+ \sum_{\lambda(\alpha)=n}\mu_A(\alpha)
+ =
+ \varepsilon_A a_A(n)
+ \qquad(n\geq 1),
+\end{equation}
+with $a_A(n)=\sdim(P_A)_n$ as in
+Proposition~\ref{prop:bar-euler-hilbert}, then the normalized
+specialized denominator is the signed inverse power of the primitive
+bar-Euler product:
+\[
+ e^{-\rho}\mathcal D_A\!\mid_\lambda(q)
+ =
+ E_{\Barch}(A;q)^{-\varepsilon_A}.
+\]
+Thus denominator exponents equal to primitive supertraces give
+$E_{\Barch}(A;q)^{-1}$, while reciprocal-product conventions give
+$E_{\Barch}(A;q)$.
+\end{theorem}
+
+\begin{proof}
+After specialization, \eqref{eq:moonshine-master} becomes
+\[
+ e^{-\rho}\mathcal D_A\!\mid_\lambda(q)
+ =
+ \prod_{n\geq 1}
+ (1-q^n)^{\sum_{\lambda(\alpha)=n}\mu_A(\alpha)} .
+\]
+Substituting \eqref{eq:moonshine-exponent-match} gives
+\[
+ \prod_{n\geq 1}(1-q^n)^{\varepsilon_A a_A(n)}
+ =
+ E_{\Barch}(A;q)^{-\varepsilon_A}
+\]
+by Proposition~\ref{prop:bar-euler-hilbert}.  No chiral algebra
+produces a Borcherds denominator from this formal calculation; the
+denominator, sign convention, root specialization, and exponent match
+are external inputs.
+\end{proof}
+
+\begin{definition}[Finite denominator-recognition datum; \ClaimStatusDefinitional]
+\label{def:moonshine-finite-denominator-recognition}
+For a sector $(A,G_A)$ and an external denominator
+\eqref{eq:moonshine-master}, a finite denominator-recognition datum on
+a downward-saturated finite root window $W\subset\Delta_+$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a finite-dimensional, $G_A$-stable chain model for
+$H^\bullet(\operatorname{Prim}\Barch(A))$ in the weights represented by
+$W$;
+\item the root specialization $\lambda$, Weyl-vector normalization,
+parity convention, and sign $\varepsilon_A$;
+\item a parity-preserving comparison map from this primitive bar model
+to the corresponding finite sum of BKM root spaces such that
+\[
+ \sum_{\substack{\alpha\in W\\ \lambda(\alpha)=n}}\mu_A(\alpha)
+ =
+ \varepsilon_A\,
+ \Str\!\left(g\mid H^\bullet(\operatorname{Prim}\Barch(A))_n\right)
+\]
+for every represented weight $n$ and every twining element for which a
+twined comparison is part of the datum;
+\item if the datum includes a source BKM algebra, rather than only a
+scalar target product, the finite-window Chevalley, real-Serre, super-Jacobi,
+radical, and PBW compatibility statements for the same window.
+\end{enumerate}
+Passing from the finite windows to a completed denominator identity
+requires the corresponding Mittag--Leffler or finite-determination
+bound.  Without these data, an Igusa or Borcherds product is only an
+external automorphic target.
+\end{definition}
+
+\begin{remark}[Finite type, Verdier duals, and centres]
+\label{rem:moonshine-finite-type-verdier-firewall}
+The Euler products use finite-dimensional primitive bar homology in
+each weight.  A Verdier dual is defined only under the
+finite-type, perfect, or continuous-dual hypotheses of the cited
+bar--cobar theorem.  When a quadratic presentation
+$A=T_X(V)/(R)$ is chosen, the objects
+\[
+ A,\qquad
+ \Barch(A),\qquad
+ A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\qquad
+ H^\bullet\Barch(A),\qquad
+ K_X(A)=\mathbb D_{\Ran}\Barch(A),\qquad
+ A^!,\qquad
+ \ZcSig(A)
+\]
+are connected by
+\[
+q_A\colon A^{\mathrm i}\to\Barch(A),\qquad
+\mathbb D(q_A)\colon K_X(A)\to\mathbb D_{\Ran}(A^{\mathrm i}),
+\qquad
+\nu_A\colon K_X(A)\to A^!.
+\]
+The counit $\Omega\Barch(A)\to A$ is bar--cobar inversion, while
+$\ZcSig(A)=C^\bullet_{\mathrm{ch}}(A,A)$ is the Hochschild/closed-sector
+object.
+\end{remark}
+
+\begin{remark}[Sectorwise exponent data]
+\label{rem:moonshine-sectorwise-exponent-data}
+The comparison criterion has four different inputs.
+\begin{center}
+\begin{tabular}{c|p{0.34\linewidth}|p{0.37\linewidth}}
+\textbf{sector} & \textbf{external product or trace} & \textbf{bar comparison}\\
+\hline
+$\Vnat$ &
+Borcherds' monster Lie algebra denominator
+$J(\sigma)-J(\tau)
+=p^{-1}\prod_{m>0,n\in\bZ}(1-p^m q^n)^{c(mn)}$ &
+The exponents are coefficients of
+$J(q)=q^{-1}+\sum_{n\geq 1}c(n)q^n$ and
+$\dim \Vnat_N=c(N-1)$.  The shift and the two variables are part of
+the theorem; setting $p=0$ is not a specialization of the product.\\
+$\Vsnat$ &
+Duncan's $\Co_0$-twined supertraces on $V^{s\natural}$ &
+These traces determine primitive superdimensions for a Conway
+bar-Euler product.  A Conway BKM denominator may be compared only
+after its root multiplicities are identified with those
+superdimensions.\\
+$W^{\Th}$ &
+Harvey--Rayhaun / Griffin--Mertens Thompson graded traces &
+The literature supplies a graded $\Th$-module and modular functions.
+A chiral algebra $\VTh$ and a denominator-root match are additional
+data, not consequences of the Conway construction.\\
+$\VKthree$ &
+The K3 elliptic genus and the DMVV--Gritsenko--Nikulin multiplicative
+lift to the Igusa product &
+The exponents are Fourier--Jacobi coefficients
+$c(4mn-\ell^2)$ of the K3 elliptic genus.  They belong to the
+second-quantized K3 product, not to the bare Hilbert series of the
+$c=6$ $\cN{=}4$ vacuum algebra.  A bar comparison requires the finite
+denominator-recognition datum of
+Definition~\ref{def:moonshine-finite-denominator-recognition}.
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{remark}[Four inputs, not one functor]
+\label{rem:moonshine-four-inputs-not-one-functor}
+The comparison above uses four distinct sources.  $\Vnat$ is the FLM
+Leech $\bZ/2$ orbifold.  $\Vsnat$ is Duncan's Conway super-VOA.
+$W^{\Th}$ is a Thompson graded module unless a separate chiral model
+is supplied.  $\VKthree$ comes from the K3 $\cN{=}4$ elliptic-genus
+sector.  The two-stage CY-to-chiral factorization
+$\Phi_2=\SpCh_{\Sigma_1,C}\circ\PhiFA_2$ applies to the K3 entry; it
+does not manufacture the Monster, Conway, and Thompson entries.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Monster sector}
+\label{sec:vnat-e3-topological}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[E$_3$-topological descent through the Leech orbifold]
+\label{def:e3-topological}
+For the Monster sector, an E$_3$-topological statement means the
+finite-orbifold descent statement from the Leech lattice
+holomorphic-topological model to the FLM boundary VOA.  The data are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the abelian Leech lattice model with its chain-level
+E$_3$-topological structure;
+\item a lifted $\bZ/2$ action with trivial Dijkgraaf--Witten anomaly
+class in $H^3(B\bZ/2;U(1))$;
+\item identification of the descended boundary chiral algebra with
+$V_\Lambda^+\oplus V_\Lambda^{\mathrm{tw},+}=\Vnat$.
+\end{enumerate}
+This is a statement about the descended HT model.  The bar coalgebra
+$\Barch(A)$, its cohomology $H^\bullet\Barch(A)$, any quadratic
+presentation coalgebra $A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$,
+the Verdier algebra $K_X(A)$, the chosen partner~$A^!$, and the
+derived chiral centre~$\ZcSig(A)$ retain their respective types.
+The counit $\Omega\Barch(A)\to A$ records bar--cobar inversion.
+\end{definition}
+
+\begin{theorem}[$\Vnat$ from the Leech orbifold E$_3$ descent;
+\ClaimStatusConditional]
+\label{thm:v-natural-e3-topological}
+\index{Monster module!E_3-topological descent}
+\index{Leech orbifold!BV anomaly}
+This is an Open-quadrant chain-level statement from Beilinson level
+$0$ to level~$1$ through finite-orbifold descent. Its hypotheses are
+the three data of Definition~\ref{def:e3-topological}: the abelian
+Leech HT model, an anomaly-free $\bZ/2$ lift, and the FLM boundary
+identification. The class transition is recorded separately in
+Remark~\ref{rem:vnat-class-transition-clarified}.
+
+Assume the three data of Definition~\ref{def:e3-topological}.  Then
+the descended finite-orbifold HT factorisation algebra has a
+chain-level E$_3$-topological structure and boundary chiral algebra
+$\Vnat$.  The conformal vector of $\Vnat$ is the FLM conformal vector
+of central charge $24$ inherited through the Leech orbifold; since
+$\Vnat_1=0$, it is not a Sugawara tensor built from weight-$1$
+currents.
+\end{theorem}
+
+\begin{proof}
+FLM construct
+$\Vnat=V_\Lambda^+\oplus V_\Lambda^{\mathrm{tw},+}$ and prove the
+twisted Jacobi identity for this orbifold VOA.  The boundary
+identification in Definition~\ref{def:e3-topological}(iii) imports
+that VOA as the boundary of the descended HT theory.  The abelian
+Leech E$_3$ operations descend through finite orbifolding precisely
+when the BV associator anomaly is trivial; this is
+Definition~\ref{def:e3-topological}(i)--(ii).  Therefore the
+descended HT factorisation algebra is E$_3$-topological, and its
+boundary is $\Vnat$.
+
+The conformal-vector clause is FLM's construction of the
+Moonshine module.  The weight-two space decomposes as the conformal
+line together with the Griess algebra, but the absence of
+weight-one currents forbids a Heisenberg or affine Sugawara formula
+inside $\Vnat$.
+\end{proof}
+
+\begin{remark}[Monster denominator and scalar bar data]
+\label{rem:vnat-bar-euler-status}
+Borcherds' denominator for the monster Lie algebra has exponents
+$c(mn)$ from $J(q)=q^{-1}+\sum c(n)q^n$.  The coefficient shift
+$\dim \Vnat_N=c(N-1)$ is essential.  The denominator formula, the
+FLM construction, and the primitive bar-Euler product meet only after
+this shift and the chosen root specialization are recorded.  The
+scalar shadow data of Proposition~\ref{prop:moonshine-kappa} are
+\[
+ \kapch(\Vnat)=12,\qquad
+ S_4^{\mathrm{Vir}}=\frac{5}{1704},\qquad
+ \Delta=\frac{20}{71},\qquad
+ r^{\mathrm{Vir}}_{24}(z)=\frac{12}{z^3}+\frac{2T}{z}.
+\]
+These data distinguish $\Vnat$ from the Leech lattice VOA at the
+scalar level, but they do not compute the Monster action on
+$H^\bullet(\operatorname{Prim}\Barch(\Vnat))$.  A Monster-equivariant
+bar denominator statement requires the finite recognition datum of
+Definition~\ref{def:moonshine-finite-denominator-recognition}, with
+graded Monster traces on primitive bar homology.  The E$_3$ descent
+theorem is independent of that denominator calculation.
+\end{remark}
+
+\begin{remark}[Shadow class versus E$_3$ descent]
+\label{rem:vnat-class-transition-clarified}
+Chapter~\ref{chap:moonshine}
+Remark~\ref{rem:moonshine-orbifold-class-transition} records that
+the Leech orbifold changes the shadow class from $\mathbf G$ to
+$\mathbf M$.  E$_3$ descent is a different invariant: it is transported
+from the abelian Leech HT model through an anomaly-free finite
+orbifold.  Thus the class transition does not by itself prove or
+disprove E$_3$-topological descent.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Conway and Thompson sectors}
+\label{sec:conway-thompson}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Conway chiral input; \ClaimStatusProvedElsewhere]
+\label{thm:conway-chiral-structure}
+\index{Conway module!chiral structure}
+\index{Duncan module!primitive bar-Euler product}
+This is an Open-quadrant chain-level statement at Beilinson levels
+$1$ and~$2$. The hypotheses are Duncan's $N{=}1$ super-VOA structure
+on $\Vsnat$ and the $\Co_0$ action by super-VOA automorphisms; no
+Conway BKM denominator is asserted.
+
+Duncan's Conway module $\Vsnat$ is a $\bZ/2$-graded
+$N{=}1$ super-VOA of central charge $12$ with
+$\dim \Vsnat_{1/2}=0$ and a $\Co_0$ action by super-VOA
+automorphisms.  Its primitive bar-Euler product is
+\[
+ E_{\Barch}(\Vsnat;q)
+ =
+ \prod_{n\geq 1}(1-q^n)^{-a_{\Vsnat}(n)},
+ \qquad
+ a_{\Vsnat}(n)=\sdim H^\bullet(\operatorname{Prim}\Barch(\Vsnat))_n .
+\]
+For $g\in\Co_0$, replacing $a_{\Vsnat}(n)$ by the primitive
+supertrace $\Str(g\mid P_{\Vsnat,n})$ gives the twined bar-Euler
+product.  This theorem does not assert a Conway BKM denominator
+unless an external denominator with the same exponents is supplied.
+\end{theorem}
+
+\begin{proof}
+Duncan's construction supplies the $N{=}1$ super-VOA, the central
+charge $12$, the vanishing of the degree-$1/2$ space, and the
+$\Co_0$ action.  Since $\Co_0$ preserves the super-VOA structure, it
+preserves the bar differential and acts on the primitive bar
+homology.  Proposition~\ref{prop:bar-euler-hilbert} gives the
+untwined and twined products by taking superdimensions or
+supertraces on those primitive weight spaces.
+\end{proof}
+
+\begin{theorem}[Thompson chiral realization criterion;
+\ClaimStatusConditional]
+\label{thm:thompson-chiral}
+\index{Thompson moonshine!chiral realization criterion}
+This is an Open-quadrant chain-level statement at Beilinson levels
+$1$ and~$2$. It assumes an external $\Th$-equivariant chiral
+superalgebra $\VTh$ together with an isomorphism of graded
+$\Th$-modules
+$H^\bullet(\operatorname{Prim}\Barch(\VTh))_n\cong W^{\Th}_n$;
+a Thompson BKM denominator enters only if its specialised root
+multiplicities match the named graded supertraces.
+
+Let $W^{\Th}=\bigoplus_n W^{\Th}_n$ be the graded Thompson module
+whose traces are the Harvey--Rayhaun Thompson moonshine functions.
+Suppose a $\Th$-equivariant chiral superalgebra $\VTh$ is given
+together with an isomorphism of graded $\Th$-modules
+\[
+ H^\bullet(\operatorname{Prim}\Barch(\VTh))_n
+ \;\cong\;
+ W^{\Th}_n
+\]
+for all $n$, compatible with parity.  Then
+\[
+ E_{\Barch}^{g}(\VTh;q)
+ =
+ \prod_{n\geq 1}
+ (1-q^n)^{-\Str(g\mid W^{\Th}_n)}
+ \qquad(g\in\Th).
+\]
+If, in addition, a Thompson BKM denominator has specialized root
+multiplicities $-\Str(g\mid W^{\Th}_n)$, the denominator/bar
+comparison of Theorem~\ref{thm:moonshine-bar-euler-master} applies.
+\end{theorem}
+
+\begin{proof}
+The first displayed identity is exactly
+Proposition~\ref{prop:bar-euler-hilbert} after the assumed
+identification of primitive bar homology with the Thompson module.
+The denominator clause is Theorem~\ref{thm:moonshine-bar-euler-master}.
+\end{proof}
+
+\begin{remark}[No fixed-point construction asserted]
+\label{rem:thompson-as-conway-subsector}
+The data above are weaker than a construction of $\VTh$ as a
+$3A$-fixed-point subalgebra of $\Vsnat$.  The Thompson group is not
+obtained by taking Conway invariants, and no rank-halving or
+$\kapch(\VTh)$ computation is made.  Harvey--Rayhaun and
+Griffin--Mertens supply graded Thompson moonshine functions; a
+compatible chiral algebra model is the extra input named in
+Theorem~\ref{thm:thompson-chiral}.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Mathieu sector and the K3/Mukai separation}
+\label{sec:mathieu-k3-link}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Mathieu elliptic genus and second quantization]
+\label{thm:mathieu-class-from-N4-K3}
+\ClaimStatusConditional
+\index{Mathieu moonshine!K3 elliptic genus}
+\index{Mathieu moonshine!Borcherds lift}
+This is an Open-quadrant assertion for the chart algebra $\VKthree$,
+with a CY-quadrant comparison only after the Vol.~III two-stage
+factorisation
+$\Phi_2^{(\Sigma_1,C)}=\SpCh_{\Sigma_1,C}\circ\PhiFA_2$ with
+$\Sigma_1$ a transverse one-real-dimensional manifold and $C$ a
+fixed reference curve. It is stated in the chain presentation at
+Beilinson levels $1$ and $5$. Its hypotheses are the
+Eguchi--Ooguri--Tachikawa decomposition into $c=6$ $\cN{=}4$
+characters, Gannon's $\Mtw$-module theorem, the DMVV multiplicative
+lift, and the Gritsenko--Nikulin Borcherds lift; for the bar
+comparison one also assumes the finite
+denominator-recognition datum of
+Definition~\ref{def:moonshine-finite-denominator-recognition}.
+
+Let $Z_{K3}(\tau,z)$ be the K3 elliptic genus, decomposed into
+$c=6$ $\cN{=}4$ characters as in Eguchi--Ooguri--Tachikawa and
+Gannon.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Gannon's theorem gives a graded $\Mtw$-module whose traces are
+the Mathieu twining functions.  This is a module theorem; it is not
+a full $\Mtw$ action on one K3 sigma model.
+\item The DMVV multiplicative lift and the
+Gritsenko--Nikulin denominator identify the second-quantized K3
+elliptic genus with an Igusa/Siegel automorphic product.  Its
+exponents are Fourier--Jacobi coefficients
+$c(4mn-\ell^2)$ of $Z_{K3}$.
+\item The primitive bar-Euler product of the bare algebra
+$\VKthree$ uses the primitive superdimensions of
+$\Barch(\VKthree)$.  It is compared with the DMVV/Gritsenko--Nikulin
+product only after a chiral model has been fixed whose primitive
+supertrace is the same Fourier--Jacobi coefficient system, together
+with the sign, Weyl-vector, parity, and finite-window recognition data
+of Definition~\ref{def:moonshine-finite-denominator-recognition}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Clause (i) is Gannon's proof of Mathieu moonshine.  Clause (ii) is
+the DMVV second-quantized elliptic-genus product together with the
+Gritsenko--Nikulin Borcherds lift.  The product side counts
+Fourier--Jacobi coefficients of the elliptic genus; those are
+second-quantized K3 coefficients, not weight dimensions of the
+abstract small $\cN{=}4$ vacuum algebra.  Clause (iii) is therefore
+the signed coefficient-matching and finite-recognition condition of
+Theorem~\ref{thm:moonshine-bar-euler-master} applied to the K3
+sector.
+\end{proof}
+
+\begin{remark}[K3 values are not interchangeable]
+\label{rem:mathieu-k3-values-separated}
+The identities
+\[
+ \kapch(\VKthree)=3,\qquad
+ \kapcat(K3)=2,\qquad
+ \kapBKM(\mathfrak g_{\Delta_5})=5,\qquad
+ K^\kappa(\mathcal H_{\mathrm{Muk}}(K3))=8,\qquad
+ \kapfiber(\widetilde H(K3,\bZ))=24
+\]
+belong to five constructions: Virasoro curvature, CY$_2$ categorical
+Euler characteristic, Borcherds product weight, Mukai-enhanced scalar
+conductor, and Mukai-lattice rank.  The Igusa product uses the
+Borcherds/DMVV surface.  The celestial K3 construction uses the
+$\cN{=}4$ matter surface.  The scalar conductor $K^\kappa=8$ is the
+Mukai-doubling complementarity value of
+Proposition~\ref{prop:archetype-complementarity-bridge}, not the BKM
+weight~$5$.  A bar-Euler identity between these surfaces requires an
+explicit finite recognition datum; it is not a formal consequence of
+sharing the word ``K3''.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Twining, shadow towers, and congruence tests}
+\label{sec:shadow-tower-twining}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Twined shadow comparison: K3 domain and general
+criterion; \ClaimStatusConditional]
+\label{thm:shadow-tower-twining-universality}
+\index{shadow tower!twining comparison}
+\index{McKay--Thompson series!primitive bar traces}
+This is an Open-quadrant chain-level comparison from Beilinson level
+$2$ to the level-$5$ scalar shadow. For K3 it uses the Vol.~II
+celestial--Mathieu theorem and the Mellin--shadow dictionary. For a
+general pair $(A,G_A)$ it assumes a chain map compatible with
+twining and depth filtrations from the primitive bar complex to the
+Rademacher polar-data complex, together with the sign, Weyl-vector,
+parity, and finite coefficient bounds of
+Definition~\ref{def:moonshine-finite-denominator-recognition}.
+
+For the K3 celestial algebra, Vol~II proves a Mathieu statement:
+the $g$-twined shadow-tower coefficients of the K3 matter factor
+match the Rademacher coefficients of the corresponding Mathieu mock
+modular form $h_g(\tau)$.  For a general moonshine input
+$(A,G_A)$, the analogous identity
+\begin{equation}
+\label{eq:shadow-tower-mck-thompson}
+S_r(A)^g
+\;=\;
+\mathrm{Rad}_r\!\bigl[T^{G_A}_g\bigr]
+\end{equation}
+holds only under an additional comparison map from the depth-$r$
+bar-cohomology primitive to the polar/Rademacher datum of the
+twined modular function $T^{G_A}_g$.
+\end{theorem}
+
+\begin{proof}
+The K3 clause is the Vol~II celestial--Mathieu theorem together
+with the Mellin--shadow dictionary: the celestial K3 matter factor
+has twined mock modular forms $h_g$, and the soft/Mellin residue
+identifies the relevant shadow coefficient with the Rademacher
+coefficient.  This proof uses the tensor decomposition of the
+celestial K3 algebra and the Gannon $\Mtw$-module.  The $\Mtw$ action
+is an action on the Mathieu coefficient module; it is not a geometric
+$\Mtw$ action on the $24$ marked points of a class-$\mathcal S$
+sphere.  A passage through the $\Sigma_{0,24}$ AGT or Schur-index
+realisation uses only the finite Schur--Igusa recognition data; a
+cyclotomic marking gives $\mu_{24}$ symmetry, not Mathieu symmetry.
+
+For Monster, Conway, and Thompson, equation
+\eqref{eq:shadow-tower-mck-thompson} has two independent sides:
+the left side is a bar-cohomology invariant of a specified chiral
+object, while the right side is analytic data of a Hauptmodul or
+mock modular form.  Linearity of traces is not enough to identify
+them.  The missing datum is the finite recognition package: a chain
+map compatible with twining and depth filtrations from the primitive
+bar complex to the Rademacher polar-data complex, together with the
+sign, Weyl-vector, parity, and finite coefficient bounds required by
+Definition~\ref{def:moonshine-finite-denominator-recognition}.  Once
+such data are supplied, the equality is a theorem by functoriality of
+the Mellin/Rademacher construction; before that, it is a criterion.
+\end{proof}
+
+\begin{corollary}[Kummer congruence test, not automatic congruence;
+\ClaimStatusConditional]
+\label{cor:kummer-congruence-moonshine}
+\index{Kummer congruence!moonshine test}
+Fix a sector $(A,G_A)$ and $g\in G_A$.  Suppose the twined series
+$T^{G_A}_g$ admits a decomposition
+\[
+ T^{G_A}_g = E_g + C_g
+\]
+in which $E_g$ is an Eisenstein series with integral $q$-coefficients
+and $C_g$ is a cusp or mock part whose relevant coefficients vanish
+modulo a prime $p$.  If $p=691$ in weight $12$ or $p=3617$ in weight
+$16$, then the Eisenstein part satisfies the usual Kummer congruence
+modulo $p$, and the same congruence holds for the selected coefficient
+of $T^{G_A}_g$.
+\end{corollary}
+
+\begin{proof}
+The primes $691$ and $3617$ divide the numerators of the Bernoulli
+numbers $B_{12}$ and $B_{16}$, respectively.  Kummer congruences for
+Eisenstein series give the stated congruence on $E_g$.  The
+hypothesis on $C_g$ is exactly what is needed to transfer the
+congruence from $E_g$ to the full twined series.  Without this
+hypothesis no congruence for a McKay--Thompson or Mathieu twining
+series follows from the bar formalism alone.
+\end{proof}
+
+\begin{remark}[Finite computation required]
+\label{rem:moonshine-falsification-test}
+For a concrete sector and conjugacy class the test is finite:
+compute the relevant twined coefficients from the moonshine character
+table, compute the bar primitive trace from the chosen chiral model,
+and compare them modulo $691$ or $3617$ after the Eisenstein/cusp
+decomposition has been fixed.  The statement is a verification
+problem for the chosen sector, not an automatic consequence of the
+bar formalism.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Signed denominator bridge}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+The signed exponent match is the invariant.  Borcherds
+products, DMVV products, Conway supertraces, Thompson graded traces,
+and chiral bar primitives are different objects.  When a cited
+denominator product has exponents equal to
+$\varepsilon_A$ times the primitive graded supertrace of the chosen
+chiral object, Theorem~\ref{thm:moonshine-bar-euler-master} identifies
+the normalized product with
+$E_{\Barch}(A;q)^{-\varepsilon_A}$.  The Monster and K3 sectors have
+named product formulae with known coefficient systems; the Conway and
+Thompson sectors require the extra denominator or chiral-realization
+data explicitly stated above.
+
+%=======================================================================
+% End of chiral_moonshine_unified.tex
+%=======================================================================

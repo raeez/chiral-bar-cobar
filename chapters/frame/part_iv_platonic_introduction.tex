@@ -1,0 +1,1288 @@
+% !TEX root = ../../main.tex
+% ============================================================================
+% Part IV; Platonic Introduction.
+%
+% Part IV has six typed carriers: the Vol I boundary-holographic datum,
+% the associator face scheme, the celestial Mellin-shadow comparison,
+% the Monster orbifold-Hochschild carrier, the K3/BKM arithmetic
+% comparison surface, and the Vol II $\mathsf{SC}^{\mathrm{ch,top}}$
+% to $E_3^{\mathrm{top}}$ topologisation map.  The source theorem is a
+% statement about these carriers and their comparison maps, not an
+% identification of all physical realisations with one object.
+% ============================================================================
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fgrt}{\mathfrak{grt}_1}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\Einfty}{E_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Ethree}{E_3}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Face}{\mathrm{Face}}
+\providecommand{\Phol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Zder}{\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\Holbd}{\mathsf{Hol}^{\mathrm{bd}}}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\FactAlg}{\mathsf{FactAlg}}
+\providecommand{\OC}{\mathrm{OC}}
+\providecommand{\VOA}{\mathrm{VOA}}
+\providecommand{\DW}{\mathrm{DW}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Mel}{\mathrm{Mel}}
+\providecommand{\Sh}{\mathrm{Sh}}
+
+\chapter{The Modular Tower's typed witnesses and physics bridges}
+\label{ch:part-iv-platonic-introduction}
+
+Part~\ref{part:modular-tower} develops the four Theorem~D objects:
+$\operatorname{Obs}^{\mathrm{def}}_g(A_b)\in H^2(\Def_g(A_b))$ for
+$g\geq2$;
+the trace
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(A_b)
+=\kappa(A_b)\lambda_1$ under~$H_D^1$;
+$\mathfrak O_g^K(A_b)=\kappa(A_b)\lambda_{-1}(\mathbb E_g)$ and its
+signed Hodge character under~$H_D^K$; and
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$ under
+$H_D^{\mathrm{graph}}$.  The package~$H_D^{\mathrm{tr}}$ compares the
+deformation class with the perfect object.  The part also develops
+the shadow-tower quadrichotomy via
+the algebraic branch structure of the weighted Riccati series, and the
+modular trace + clutching package on the open category. The present
+chapter inscribes the five
+typed comparison carriers — boundary-holographic datum, associator
+face scheme, celestial Mellin-shadow, Monster orbifold-Hochschild
+carrier, K3/BKM arithmetic comparison surface, and Vol~II
+$\mathsf{SC}^{\mathrm{ch,top}}$ bulk — that realise the
+typed Theorem~D outputs in concrete physics
+computations (Feynman BV, Kontsevich weights, BRST, arithmetic
+shadows).
+
+Let $\cA$ be a Koszul-compatible $\Eone$-chiral algebra on a smooth
+algebraic curve~$X$.  The Vol~I source is the boundary-holographic
+datum
+\begin{equation}
+ \Phol_X(\cA) \;=\;
+ \Bigl(\bar{B}^{\mathrm{ch}}(\cA),\Theta_\cA,r_\cA(z),
+ \Zder(\cA),\nabla^{\mathrm{hol}}_\cA\Bigr).
+ \label{eq:part-iv-holographic-functor}
+\end{equation}
+Here $\bar{B}^{\mathrm{ch}}(\cA)$ is the conilpotent bar coalgebra,
+$\Theta_\cA$ is the universal Maurer--Cartan element,
+$r_\cA(z)=\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is the binary
+collision residue, and
+$\Zder(\cA)=C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is the cochain-level
+derived chiral centre.  The last object is the closed-sector algebra
+internal to the boundary theory.  It is identified with a physical
+bulk only after an open--closed comparison quasi-isomorphism
+\[
+ \OC_\cA:\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(\cA)
+ \xrightarrow{\;\sim\;} \Zder(\cA)
+\]
+has been constructed.
+
+The five comparison carriers are:
+\[
+\begin{array}{c|c|c}
+\text{carrier} & \text{map or object} & \text{mathematical content} \\
+\hline
+\text{GRT face scheme} &
+\Face_K(\cA) &
+\GRT_1(K)\text{-action on associator choices} \\
+\text{celestial factorisation} &
+\Sh\Mel\,\Phol_X(\cA^{\mathrm{soft}}_{\mathcal T})
+\to \mathcal V^{\mathrm{cel}}_{\mathcal T} &
+\text{soft-collinear comparison on }\CP^1 \\
+\text{Monster orbifold} &
+V_{\Lambda_{24}}^+\oplus V_{\Lambda_{24}}^{T,+}=V^\natural &
+\Z/2\text{-crossed VOA extension and }H^3(\Z/2,U(1)) \\
+\text{K3/BKM arithmetic} &
+\mathbf H_{\Delta_5}\leadsto
+\mathcal D_\hbar(\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})) &
+\text{Vol III comparison surface} \\
+\text{topologisation} &
+\SCchtop(\cA,\Zder(\cA))\to E_3^{\mathrm{top}}(\Zder(\cA)) &
+\text{Vol II conformal-vector/completion map.}
+\end{array}
+\]
+The theorem surface of Part~\ref{part:physics-bridges} is the
+compatibility of these carriers with the bar datum
+\eqref{eq:part-iv-holographic-functor}.  None of the comparison
+carriers is a substitute for the bar coalgebra, the Verdier dual
+$\cA^!$, or the derived centre.
+
+\section{The six carriers}
+\label{sec:part-iv-deficiency}
+
+The carrier separation is forced by type.  The bar coalgebra
+$\bar{B}^{\mathrm{ch}}(\cA)=T^c(s^{-1}\bar\cA)$ classifies twisting
+morphisms.  The Koszul dual algebra
+$\cA^!=(H^\bullet\bar{B}^{\mathrm{ch}}(\cA))^\vee$ is obtained after
+Verdier duality on the Koszul locus.  The derived chiral centre
+$\Zder(\cA)$ is a Hochschild cochain object.  The physical bulk of an
+open--closed field theory is a fourth object until the map
+$\OC_\cA$ is supplied.
+
+The GRT carrier acts on associator choices in the bar differential.
+The celestial carrier applies the Mellin and shadow transforms to the
+soft-sector collision residue.  The Monster carrier is the
+$\Z/2$-crossed orbifold extension of the Leech lattice VOA.  The
+K3/BKM carrier belongs to the Vol III Hall--Borcherds comparison
+surface.  The topologisation carrier is the Vol II passage
+\[
+ \SCchtop(\cA,\Zder(\cA))
+ \xrightarrow{\;T_{\mathrm{conf}},\,\widehat{\mathrm{wt}}\;}
+ E_3^{\mathrm{top}}(\Zder(\cA)^\wedge),
+\]
+defined only after the conformal-vector and weight-completion
+hypotheses used in Vol II are present.
+
+\section{The boundary-holographic functor}
+\label{sec:part-iv-holographic-functor}
+
+The functor $\Phol_X$ assembles the bar coalgebra, the universal
+Maurer--Cartan element, the classical r-matrix, the derived chiral
+centre, and the Gauss--Manin connection into a boundary datum.
+
+\begin{definition}[Boundary-holographic datum]
+\label{def:part-iv-chiral-holographic-datum}
+A \emph{boundary-holographic datum} over a smooth algebraic curve~$X$
+is a tuple
+$\mathscr{H} = (\cB, \Theta, r, Z, \nabla^{\mathrm{hol}})$
+where:
+\begin{itemize}[leftmargin=*]
+ \item $\cB$ is a conilpotent $\Eone$-chiral coassociative coalgebra
+ over~$X$ with coproduct $\Delta$ of cohomological degree~$0$ and
+ differential $d_\cB$ of cohomological degree~$+1$;
+ \item $\Theta \in \Hom^1(\cB, \cB)^{\mathrm{prim}}$ is a
+ primitive Maurer--Cartan element:
+ $d_\cB \Theta + \tfrac{1}{2} [\Theta, \Theta] = 0$;
+ \item $r = \Res^{\mathrm{coll}}_{0,2}(\Theta) \in \cA^! \otimes
+ \cA^! [\![z^{-1}]\!]$ is its degree-$2$ collision residue;
+ \item $Z$ is a brace dg algebra, to be realised for a chiral algebra
+ $\cA$ as the derived chiral centre
+ $\Zder(\cA)=C^\bullet_{\mathrm{ch}}(\cA,\cA)$;
+ \item $\nabla^{\mathrm{hol}}: \cB \to \cB \otimes \Omega^1_X$ is a
+ flat Gauss--Manin-type connection compatible with~$\Theta$ and inducing
+ the Gauss--Manin connection on $Z$ in families.
+\end{itemize}
+The category of boundary-holographic data over~$X$ is denoted
+$\Holbd_X$.  A physical open--closed realisation is extra structure:
+a quasi-isomorphism
+\[
+ \OC_\cA:\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(\cA)
+ \xrightarrow{\sim} Z
+\]
+from the physical bulk observables of the relevant field theory to
+the derived chiral centre.  The datum $\mathscr H$ does not contain
+this map by notation.
+\end{definition}
+
+\begin{definition}[The boundary-source functor]
+\label{def:part-iv-Phol}
+The \emph{boundary-source functor}
+\[
+ \Phol_X:\;\; \mathsf{ChirAlg}^{\mathrm{Kosz}}_X
+ \;\longrightarrow\;
+ \Holbd_X
+\]
+sends a Koszul-compatible $\Eone$-chiral algebra $\cA$ on~$X$ to the
+tuple $\Phol_X(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), \Theta_\cA,
+K_\cA^{\mathrm{coll}}(z), \Zder(\cA), \nabla^{\mathrm{hol}}_\cA)$, where
+$\Theta_\cA = D_\cA - d_0$ is the universal Maurer--Cartan
+element \textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)},
+$K_\cA^{\mathrm{coll}}(z)$ is its binary collision kernel; its
+represented image is a classical $r$-matrix on the locus
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$,
+$\Zder(\cA) = \mathrm{ChirHoch}^\bullet(\cA)$ is the chiral
+Hochschild complex, and $\nabla^{\mathrm{hol}}_\cA$ is the Gauss--Manin
+connection on the bar fibres over the configuration space.
+\end{definition}
+
+The projection onto any one coordinate recovers a canonical
+construction: projection onto~$\cB$ alone is the
+bar construction; projection onto $(\cB, \Theta)$ is the
+Maurer--Cartan moduli MC\_2; projection onto~$r(z)$ is the classical
+r-matrix hub; projection onto $\Zder(\cA)$ is the derived centre of
+$E_n$ Koszul duality (Chapter~\ref{ch:en-koszul-duality}), not a
+physical bulk before an open--closed map $\OC_\cA$ is given;
+projection onto $\nabla^{\mathrm{hol}}_\cA$ at critical level is
+the algebra of opers (Chapter~\ref{ch:derived-langlands}).
+
+The coordinates of $\Phol_X$ assemble into a typed operadic passage
+\[
+ \SCchtop(\cA,\Zder(\cA))
+ \longrightarrow
+ E_3^{\mathrm{top}}(\Zder(\cA)^\wedge)
+\]
+only under the conformal-vector and completion hypotheses used in
+the Vol II topologisation theorem.  The generic carrier is the
+two-coloured object $\SCchtop(\cA,\Zder(\cA))$.
+Each arrow of the passage is a distinct mathematical construction:
+restriction to a codimension-two defect; ordered bar complex;
+Drinfeld-centre passage to categorical half-braidings; higher Deligne.
+The passage is proved single-direction, arrow by arrow, and should not
+be read as a round-trip isomorphism. Closure to a full operadic circle
+requires the Drinfeld-centre/derived-centre comparison together with a
+conformal vector making translations $Q$-exact; it is proved
+chain-level on the original complex only for the affine Kac--Moody
+case at non-critical level
+\textup{(}by the Sugawara construction\textup{)};
+for general chiral algebras with conformal vector, the closure is
+realised at the cohomological level via the iterated Sugawara
+theorem of Vol~II
+\texttt{V2-thm:iterated-sugawara-construction}, and remains
+conjectural at chain level.
+Without such a chosen conformal vector, or at loci where the
+topologisation comparison fails \textup{(}critical level and
+nonconformal free-field presentations\textup{)}, the intermediate object is
+$\SCchtop$ rather than $E_3^{\mathrm{top}}$:
+the Swiss-cheese two-coloured chiral-topological operad is the
+correct home, and Dunn additivity does not apply at the coloured
+level. The Costello--Gwilliam factorization algebra $F^{\mathrm{CS}}_k$
+on $\R \times \C$ gives a single-coloured factorization envelope of
+the boundary chiral algebra, distinct from
+$\mathsf{SC}^{\mathrm{ch,top}}$; the two presentations agree on the
+affine Kac--Moody locus at non-critical level and diverge elsewhere.
+
+\section{$\Face_K(\cA)$ as associator carrier}
+\label{sec:part-iv-face-torsor}
+
+The bar differential $d_\cB$ and the universal Maurer--Cartan
+element $\Theta_\cA$ are defined in terms of a choice of Drinfeld
+associator $\Phi \in \mathsf{Assoc}(K)$ over a coefficient field~$K$.
+For rational associators one may take $K=\Q$; for the KZ/Brown
+motivic face one must work over the corresponding motivic-period
+realisation field. Different choices of
+associator yield isomorphic but not equal holographic data; the
+ambiguity is precisely the Drinfeld Grothendieck--Teichmuller
+group~$\GRT_1(K)$ after a formality base point has been fixed. The
+rigidified orbit of $\Phol_X(\cA)$ under the $\GRT_1(K)$-action is the
+\emph{face scheme}
+\begin{equation}
+ \Face_K(\cA) \;=\; \bigl\{\,\Phol_X(\cA,\Phi)\;:\;
+ \Phi \in \mathsf{Assoc}(K)\,\bigr\}\big/\mathrm{iso}.
+ \label{eq:part-iv-face-scheme}
+\end{equation}
+The fingerprint map is a further quotient of this carrier. Its named
+charts are comparison maps from the same collision residue
+$r_\cA(z)$ to concrete presentations; the list of named charts is not
+the full $\GRT_1(K)$-orbit.
+
+\section{Celestial factorization comparison}
+\label{sec:part-iv-celestial}
+
+The celestial factorization algebra $\mathcal{V}^{\mathrm{cel}}$ on the
+celestial sphere $\CP^1$ of four-dimensional asymptotic null infinity
+arises from the leading soft theorems of a bulk four-dimensional
+gauge theory: a Mellin transform of the S-matrix followed by a
+shadow transform of the conformal-primary basis yields a
+two-dimensional chiral algebra whose operator product expansion is
+computed by soft-collinear limits. The comparison identifies this
+algebra as the Mellin-shadow image of $\Phol_X$ applied to the
+boundary soft-sector chiral algebra
+$\cA^{\mathrm{soft}}_{\mathcal T}$ only after the celestial comparison
+map
+\[
+ C_{\mathrm{cel},\mathcal T}:
+ \Sh\Mel\bigl(\pi_r\Phol_X(\cA^{\mathrm{soft}}_{\mathcal T})\bigr)
+ \longrightarrow \mathcal V^{\mathrm{cel}}_{\mathcal T}
+\]
+has been constructed and shown to preserve soft-collinear OPEs and
+Ward identities.
+
+\section{The $\SCchtop/E_3$ topologisation ladder}
+\label{sec:part-iv-einfty-ladder}
+
+The class-$M$ stratum of $\cM_{\ChirAlg}$ admits a canonical
+ascending ladder in the coset slot of the fingerprint. The ladder
+\begin{equation}
+ \Vir_c \;\hookrightarrow\; \cW_N
+ \;\hookrightarrow\; \cW_\infty[\mu]
+ \;\hookrightarrow\; \cW_{1+\infty}[\psi]
+ \;\xRightarrow{\;\SCchtop\;}\;
+ \SCchtop(\cA_\infty,\Zder(\cA_\infty))
+ \;\xRightarrow{\;T_{\mathrm{conf}},\,\widehat{\mathrm{wt}}\;}\;
+ E_3^{\mathrm{top}}(\Zder(\cA_\infty)^\wedge)
+ \label{eq:part-iv-einfty-ladder}
+\end{equation}
+has two distinct carriers. The $\SCchtop$ object is the generic
+two-coloured chiral-topological structure on
+$(\cA_\infty,\Zder(\cA_\infty))$. The $E_3^{\mathrm{top}}$ endpoint is
+the additional topologisation obtained only after the conformal
+vector, non-critical coupling, and weight-completed comparison
+hypotheses are present.
+
+\section{Moonshine as boundary-Hochschild $\Z/2$-orbifold}
+\label{sec:part-iv-moonshine}
+
+The Monster vertex operator algebra $V^\natural$
+\cite{Frenkel-Lepowsky-Meurman} is the $\Z/2$-orbifold of the Leech
+lattice vertex operator algebra $V_{\Lambda_{24}}$ by the involution
+$\iota: v \mapsto -v$. The orbifold carrier is a
+$\Z/2$-crossed VOA extension with anomaly class
+$\omega_{\mathrm{DW}}\in H^3(\Z/2,U(1))\cong\Z/2$. The
+Frenkel--Lepowsky--Meurman twisted-module construction supplies the
+trivial associator class for this extension. A physical bulk reading
+requires a separate open--closed map for the orbifold theory.
+
+\section{Five carrier theorems}
+\label{sec:part-iv-five-theorems}
+
+The five theorem surfaces below state the carrier-level content.  Each
+theorem names its source coordinate, comparison map, and ambient
+category; none identifies a physical object with a Vol I complex by
+notation alone.
+
+\subsection{Theorem 1: the associator carrier controls the named faces}
+\label{sec:part-iv-thm-1}
+
+\begin{theorem}[$\Face_K(\cA)$ carries a $\GRT_1(K)$ associator action;
+ nine named comparison charts are typed; \ClaimStatusConditional]
+\label{thm:part-iv-grt-torsor-of-bridges}
+Let $\cA$ be a Koszul-compatible $\Eone$-chiral algebra in the
+standard landscape, and let $K$ contain the coefficients of the
+associators under consideration. The face scheme
+$\Face_K(\cA)$ of Equation~\eqref{eq:part-iv-face-scheme} carries a
+right action of $\GRT_1(K)$ induced by
+Alekseev--Torossian--Kontsevich associator transport on the bar
+differential. After passing to the fingerprint quotient
+\[
+ \Face_{K,\le 12}^{\mathrm{fp}}(\cA)
+ :=
+ \Face_K(\cA)\big/\bigl(F^{13}\mathfrak{grt}_1(K)+
+ \ker(\mathrm{fp})\bigr),
+\]
+where $F^\bullet$ is the motivic weight filtration and
+$\mathrm{fp}$ is the fingerprint coset map used in
+Part~\ref{part:physics-bridges}, the following assertions hold.
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+ \item $\Face_{K,\le 12}^{\mathrm{fp}}(\cA)$ is non-empty after a
+ base associator in $\mathsf{Assoc}(K)$ is fixed;
+ \item the nine named comparison charts
+ \[
+ F_1, F_2, F_3, F_4, F_5, F_6, F_7, F_8, F_9,
+ \]
+ have typed carriers: $F_1$ Vol~I bar hub; $F_2$
+ Dimofte--Niu--Py line-operator $R$-twist; $F_3$ PVA
+ $\lambda$-bracket r-matrix; $F_4$ Gaiotto--Zeng sphere
+ Hamiltonians; $F_5$ Drinfeld Yangian on the finite-type affine
+ lineage; $F_6$ Sklyanin--Semenov--Tian-Shansky classical
+ r-matrix; $F_7$ Feigin--Frenkel--Reshetikhin Gaudin;
+ $F_8$ Brown motivic MZV-coupled associator over the motivic-period
+ field; $F_9$ Willwacher operadic chart through
+ $H^0(\mathsf{GC}_2)\cong \mathfrak{grt}_1$;
+ \item after a base associator is fixed, two charts $F_i,F_j$ are
+ connected, when both charts are defined over the same field~$K$, by
+ a class
+ $\gamma_{ij}\in \GRT_1(K)/(F^{13}+\ker(\mathrm{fp}))$; the
+ composite $\gamma_{ij} \circ \gamma_{jk} = \gamma_{ik}$ is the
+ associator cocycle closure;
+ \item no assertion of exhaustiveness of the full $\GRT_1(K)$-orbit
+ follows from the nine named charts.  Exhaustiveness is a statement
+ only about a specified finite fingerprint quotient and requires the
+ quotient map $\mathrm{fp}$ as an input.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Associator action: the bar differential of
+$\bar{B}^{\mathrm{ch}}(\cA)$ is defined from the universal MC element
+$\Theta_\cA$ via a Drinfeld associator~$\Phi$, and any two
+associators over~$K$ differ by a unique element of~$\GRT_1(K)$
+\cite{Drinfeld-Associator, Furusho-Associator}. The assignment
+$\Phi \mapsto \bar{B}^{\mathrm{ch}}(\cA; \Phi)$ is equivariant; the
+quotient by isomorphism gives the stated action on $\Face_K(\cA)$.
+Non-emptiness follows from the chosen base associator. The named
+charts are typed comparison maps out of the same collision residue:
+the first seven are the bar, line-operator, PVA, Hamiltonian,
+Yangian, Sklyanin--Semenov--Tian-Shansky, and Gaudin presentations;
+the Brown chart lives over motivic periods rather than canonically
+over~$\Q$; the Willwacher chart is defined over~$\Q$ at the
+graph-complex Lie-algebra level.  Thus all nine are compatible only
+after scalar extension to a common~$K$. Cocycle closure is the
+composition law in the associator gauge groupoid.  Brown's motivic
+freeness theorem \cite{Brown12} supplies the odd-weight motivic generators; it does
+not by itself prove that a finite list of nine charts exhausts the
+full $\GRT_1(K)$-orbit.  The finite-atlas assertion is therefore
+exactly the assertion of the chosen fingerprint quotient.
+$\quad\square$
+\end{proof}
+
+\begin{remark}[Coefficient fields for the two new faces]
+\label{rem:part-iv-thm-1-hziv}
+The Brown face is motivic-period valued: the KZ associator has
+multiple-zeta coefficients, and Brown's theorem controls their
+motivic coaction.  It is not a canonical $\Q$-point of
+$\GRT_1$.  The Willwacher face is rational at the level of the
+graph-complex theorem
+$H^0(\mathsf{GC}_2)\cong\mathfrak{grt}_1$.  Comparing $F_8$ with
+$F_9$ therefore requires scalar extension to a common coefficient
+field and a chosen realisation functor from motivic periods.
+\end{remark}
+
+\subsection{Theorem 2: coordinate projections and comparison maps}
+\label{sec:part-iv-thm-2}
+
+\begin{theorem}[The boundary-holographic functor supplies the Vol I
+ source coordinates; physical bridges require comparison maps;
+ \ClaimStatusConditional]
+\label{thm:part-iv-universal-holography-unifies}
+For every Koszul-compatible $\Eone$-chiral algebra~$\cA$ in the
+standard landscape, the functor
+$\Phol_X: \mathsf{ChirAlg}^{\mathrm{Kosz}}_X \to \Holbd_X$
+of Definition~\ref{def:part-iv-Phol} admits five canonical
+projection functors
+\begin{equation}
+ \pi_{\mathrm{bar}},\;\; \pi_{\MC},\;\; \pi_{r},\;\;
+ \pi_{\mathrm{Hoch}},\;\; \pi_{\nabla},
+\end{equation}
+onto respectively the bar coalgebra, the Maurer--Cartan moduli, the
+classical r-matrix hub, the derived chiral centre, and the
+Gauss--Manin connection. The physics-facing identifications factor
+through the following named comparison maps when those maps exist:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+ \item the Feynman comparison is a map from
+ $\pi_{\MC}\Phol_X(\cA)$ to the worldline classical action;
+ \item the BV--BRST comparison is the open--closed map
+ $\OC_\cA$ from the physical BRST closed sector to
+ $\pi_{\mathrm{Hoch}}\Phol_X(\cA)=\Zder(\cA)$;
+ \item the derived-Langlands comparison is the critical-level
+ specialization of $\pi_\nabla\Phol_X(\cA)$ at $k=-h^\vee$ to the
+ oper connection;
+ \item the arithmetic-shadows comparison pairs
+ $\pi_{\mathrm{Hoch}}\Phol_X(\cA)$ with the Selberg/Eisenstein
+ regularization after the relevant analytic completion has been
+ supplied;
+ \item the face comparison is the map from
+ $\pi_r\Phol_X(\cA)$ to the named charts of
+ $\Face_K(\cA)$ in Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.
+\end{enumerate}
+Thus the Vol I theorem supplies the five source coordinates.  A
+physics bridge is an equality only after its comparison map is a
+quasi-isomorphism, an isomorphism of factorisation algebras, or a
+specified equality in the target category.
+\end{theorem}
+\begin{proof}
+Existence of $\Phol_X$: Definition~\ref{def:part-iv-Phol} assembles
+the five coordinates; functoriality follows from functoriality of
+the bar coalgebra
+\textup{(}Theorem~\ref{thm:operadic-homotopy-convolution}\textup{)},
+of the universal MC element
+\textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}, and of the
+chiral Hochschild complex
+\textup{(}Chapter~\ref{ch:en-koszul-duality}\textup{)}. The
+projections $\pi_{\mathrm{bar}}$ etc.\ are forgetful functors
+onto the indicated factor of the boundary-holographic datum; each is
+well-defined on morphisms.
+
+The five factorizations of the Part~\ref{part:physics-bridges}
+chapters are comparison statements, not definitions of $\Phol_X$.
+The Feynman statement uses the bar-worldline dictionary
+$\Theta_\cA=S_{\mathrm{cl}}$ on its proved surface
+\textup{(}Theorem~\ref{thm:brst-bar-genus0}\textup{)}.  The BV--BRST
+statement uses the conditional coderived comparison
+\textup{(}Theorem~\ref{thm:bv-bar-coderived-vol1}\textup{)} and is
+exactly an $\OC_\cA$ statement.  The critical-level statement uses
+Theorem~\ref{thm:oper-bar-dl}.  The arithmetic statement requires the
+Selberg regularization in Chapter~\ref{chap:arithmetic-shadows}.  The
+face statement is Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.
+Forgetting the comparison maps leaves only the five source
+coordinates of $\Phol_X(\cA)$, so no physical equality is asserted
+without its carrier. $\quad\square$
+\end{proof}
+
+\begin{remark}[The derived-centre coordinate]
+\label{rem:part-iv-thm-2-hziv}
+The coordinate $\pi_{\mathrm{Hoch}}\Phol_X(\cA)$ is
+$\Zder(\cA)=C^\bullet_{\mathrm{ch}}(\cA,\cA)$. It is a brace dg
+algebra in the factorisation bimodule category. The phrase
+``physical bulk'' denotes this complex only on a field-theoretic
+surface where $\OC_\cA$ has been constructed.
+\end{remark}
+
+\subsection{Theorem 3: celestial factorization comparison}
+\label{sec:part-iv-thm-3}
+
+\begin{theorem}[Celestial factorization is the Mellin-shadow image of
+ the boundary source under the soft comparison map;
+ \ClaimStatusConditional.  The celestial algebra construction is
+ proved elsewhere by Pasterski--Shao--Strominger and Strominger; the
+ class-$M$ chain-level comparison at $g \ge 1$ uses Vol~II
+ \texttt{V2-thm:uch-main} and the hypotheses of
+ \texttt{V2-conj:uch-gravity-chain-level}.]
+\label{thm:part-iv-celestial-is-holographic-image}
+Let $\mathcal{T}$ be a four-dimensional gauge theory in its soft
+sector with asymptotic null infinity~$\mathscr{I}^\pm$, and let
+$\cA^{\mathrm{soft}}_{\mathcal{T}}$ denote the chiral soft algebra
+generated by its leading soft-theorem operators. Assume:
+\begin{enumerate}[label=\textup{(\alph*)}, leftmargin=*]
+ \item the soft-sector open--closed map
+ $\OC_{\mathrm{soft},\mathcal T}:
+ \mathcal O^{\mathrm{phys}}_{\mathrm{soft}}(\mathcal T)
+ \to \Zder(\cA^{\mathrm{soft}}_{\mathcal T})$ is a
+ quasi-isomorphism on the operators used in the celestial OPE;
+ \item the residue comparison sends the soft-collinear leading pole
+ to $r_{\cA^{\mathrm{soft}}_{\mathcal T}}(z)
+ =\Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA^{\mathrm{soft}}_{\mathcal T}})$;
+ \item the Mellin and shadow transforms are taken in the
+ Pasterski--Shao--Strominger normalization.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+ \item the Mellin transform
+ $\Mel: \cA^{\mathrm{soft}}_{\mathcal{T}} \to
+ \cA^{\mathrm{soft}}_{\mathcal{T}}(\Delta)$
+ converts energy eigenstates into conformal-dimension-$\Delta$
+ primaries;
+ \item the shadow transform $\Sh: \Delta \mapsto 2 - \Delta$
+ produces the shadow-primary basis adapted to two-dimensional
+ chiral factorization on the celestial sphere~$\CP^1$;
+ \item the composite $\Sh \circ \Mel \circ \Phol_X:
+ \mathsf{ChirAlg}^{\mathrm{Kosz}}_{X} \to
+ \FactAlg_{\CP^1}$ lands in the category of holomorphic
+ factorization algebras on the celestial sphere;
+ \item the celestial factorization algebra
+ $\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ of $\mathcal{T}$ is
+ identified with the image
+ $\Sh(\Mel(\Phol_X(\cA^{\mathrm{soft}}_{\mathcal{T}})))$ by the
+ comparison map $C_{\mathrm{cel},\mathcal T}$;
+ \item the operator product expansion of
+ $\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ is computed by
+ soft-collinear limits, and these limits are the Mellin-shadow
+ image of the classical r-matrix $r(z)$-coordinate of
+ $\Phol_X$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Mellin transform: the standard Mellin transform on the
+positive-energy half of the asymptotic momentum
+space~$\mathbb{R}_{> 0}$ is well-defined on soft eigenmodes
+\cite{Pasterski-Shao-Strominger-Mellin}; it sends energy
+eigenstates to conformal primaries of boost weight~$\Delta$.
+Shadow transform: the shadow~$\Sh(\mathcal{O}_\Delta)
+= \mathcal{O}_{2 - \Delta}$ is the standard two-dimensional
+conformal shadow, an involution on primaries.
+Composite: the functor $\Phol_X$ produces a chiral coalgebra
+equipped with collision-residue data; Mellin transform converts
+this chiral coalgebra to a celestial-sphere $\Eone$-coalgebra;
+shadow transform relates the $\Delta$-lift to its $2-\Delta$
+shadow, recovering holomorphic factorization on the celestial
+sphere.
+
+Celestial comparison: the celestial factorization algebra
+$\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ is constructed in the
+literature from the soft-theorem operators and the
+boost-eigenstate basis \cite{Strominger-Celestial,
+Pasterski-Shao-Strominger-Mellin}; this construction is
+manifestly the composite of (Mellin) followed by (shadow transform)
+applied to the chiral soft algebra.  The chiral soft algebra is the
+image of~$\Phol_X$ restricted to the four-dimensional soft sector
+only under the assumed open--closed soft comparison.  Residue
+compatibility identifies the soft-theorem operators with the collision
+residues of the classical r-matrix in the soft-limit normalization.
+Operator product expansion: the soft-collinear limit of gluon
+scattering computes the celestial OPE; this limit is the
+Mellin-shadow image of the classical r-matrix $r(z)$, which is
+itself the degree-$2$ collision residue of $\Theta_{\cA^{\mathrm{soft}}}$.
+$\quad\square$
+\end{proof}
+
+\begin{remark}[Celestial OPE test]
+\label{rem:part-iv-thm-3-hziv}
+The comparison map $C_{\mathrm{cel},\mathcal T}$ is tested on the
+leading soft-gluon OPE computed from soft-collinear limits
+\cite{Fan-Fotopoulos-Taylor-Celestial, Strominger-Celestial}.  In the
+gravitational soft sector the same test is the
+$\cW_{1+\infty}$ Ward algebra of Strominger
+\cite{Strominger-w1plusinfty}.  These computations check the
+$r_\cA(z)$ coordinate; they do not identify a physical bulk with
+$\Zder(\cA)$ without $\OC_{\mathrm{soft},\mathcal T}$.
+\end{remark}
+
+\subsection{Theorem 4: The $\SCchtop/E_3$ topologisation ladder}
+\label{sec:part-iv-thm-4}
+
+\begin{theorem}[Class-$M$ ladder through $\SCchtop$ and, under
+ topologisation hypotheses, to $E_3^{\mathrm{top}}$;
+ \ClaimStatusConditional\ on the weight-completed ambient;
+ \ClaimStatusProvedElsewhere\ for the Vol~II endpoint established by
+ \texttt{V2-thm:e-infinity-topologization-ladder} and
+ \texttt{V2-thm:iterated-sugawara-construction}.  The statement below
+ uses the weight-completed carrier specified by Volume~II
+ Theorem~\ref{V2-thm:e-infinity-topologization-ladder}]
+\label{thm:part-iv-e-infinity-ladder}
+Let $(\cA_N)_{N \ge 2}$ be the principal $\cW_N$-tower in the
+class-$M$ stratum of $\cM_{\ChirAlg}$, with
+$\cA_2 = \Vir_c$ the Virasoro algebra, $\cA_N = \cW_N$ the
+principal $\cW$-algebra of $\fsl_N$-type, and
+$\cA_\infty = \cW_{1+\infty}[\mu]$ the two-parameter
+$\cW$-infinity algebra. The ladder of inclusions
+\begin{equation}
+ \cA_2 \;\hookrightarrow\; \cA_3 \;\hookrightarrow\; \cdots
+ \;\hookrightarrow\; \cA_\infty
+\end{equation}
+admits the following two-stage carrier:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+ \item each inclusion $\cA_N \hookrightarrow \cA_{N+1}$ preserves
+ the Koszul conductor
+ $\kappa_{\mathrm{ch}}(\cA_N) = c\cdot(H_N - 1)$,
+ with $H_N = \sum_{j=1}^{N} 1/j$
+ \textup{(}by the universal formula of
+ Theorem~\ref{thm:part-iii-central-charge-is-emergent} at
+ the class-$M$ stratum\textup{)};
+ \item the direct limit $\cA_\infty = \mathrm{colim}_N \cA_N =
+ \cW_{1+\infty}[\mu]$ is a two-parameter $\cW$-algebra whose
+ Koszul conductor diverges as $H_\infty$;
+ \item the pair
+ $(\cA_\infty,\Zder(\cA_\infty))$ carries the generic
+ $\SCchtop$ boundary/closed-sector structure;
+ \item at non-critical Sugawara coupling the class-$M$
+ topologization theorem
+ \textup{(}Volume~II
+ Theorem~\ref{V2-thm:e-infinity-topologization-ladder}\textup{)}
+ gives, on a strict pro-object / $J$-adic / filtered
+ weight-completed presentation satisfying the continuous comparison
+ hypotheses, an $E_3^{\mathrm{top}}$
+ structure on the weight-completed chiral Hochschild complex
+ $\mathrm{ChirHoch}^\bullet(\cA_\infty)^\wedge$; the
+ bounded-direct-sum calculation identifies the weight completion as
+ part of the class-\(M\) carrier;
+ \item the $\GRT_1(K)$ associator action transports the
+ $\SCchtop$ carrier; it descends to the $E_3^{\mathrm{top}}$
+ multiplication exactly when the topologisation map
+ $\SCchtop(\cA_\infty,\Zder(\cA_\infty))\to
+ E_3^{\mathrm{top}}(\Zder(\cA_\infty)^\wedge)$ is
+ $\GRT_1(K)$-equivariant.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Tower structure: the principal $\cW$-algebras are nested by
+Feigin--Frenkel screening: $\cW_N$ is recovered inside $\cW_{N+1}$
+as the kernel of an additional screening charge
+\cite{Fateev-Lukyanov}, so the inclusions are maps of vertex
+algebras. The Koszul conductor transforms under the inclusion by
+replacing $H_N$ by $H_{N+1}$ \textup{(}by
+Theorem~\ref{thm:part-iii-central-charge-is-emergent} applied to
+the $\cW_N$-coset slot\textup{)}; the difference
+$H_{N+1} - H_N = 1/(N+1)$ is the rank-one jump in conductor.
+Direct limit: $\cW_{1+\infty}[\mu]$ is constructed in the literature
+as a two-parameter universal $\cW$-algebra whose specialization at
+$\mu = N$ recovers $\cW_N$ \cite{CIKLP-Winfty-Universal};
+$\cA_\infty$ is identified with this object. Conductor divergence:
+$\kappa_{\mathrm{ch}}(\cA_\infty) = c \cdot H_\infty$ diverges as a
+harmonic series; the class-$M$ topologization is restricted to the
+weight-completed Hochschild complex where this divergence is
+regulated by the weight filtration.
+
+The $\SCchtop$ carrier is the two-coloured chiral-topological
+structure on the boundary algebra and its derived centre.  The
+topologization at non-critical Sugawara is stronger: the $E_3^{\mathrm{top}}$
+structure on $\mathrm{ChirHoch}^\bullet(\cA_\infty)^\wedge$
+follows from the class-$M$ weight-completed topologization theorem
+\textup{(}Volume~II
+Theorem~\ref{V2-thm:e-infinity-topologization-ladder}, class-$M$
+direction, weight-completed\textup{)}; the
+$E_3$ multiplication is defined on the completed comparison surface
+and passes to the completed direct limit by the
+Milnor--Mittag-Leffler filtration argument.
+
+$\GRT_1(K)$-equivariance: the $\cW_{1+\infty}[\mu]$-algebra carries an
+associator action on the coefficient field~$K$
+\cite{Gaiotto-Rapcak-Y}.  This action is defined on the
+$\SCchtop$ carrier.  Descent to $E_3^{\mathrm{top}}$ is the
+equivariance of the topologisation map in the coloured operad.
+\(\quad\square\)
+\end{proof}
+
+\begin{remark}[Class-$M$ ambient]
+\label{rem:part-iv-thm-4-hziv}
+For class \(M\), the chain-level topologisation is carried by the
+pro-object / \(J\)-adic / filtered weight-completed ambient.  The
+Linshaw--Gaiotto--Rapcak construction of
+\(\cW_{1+\infty}[\mu]\) supplies the infinite-rank algebraic carrier.
+On the declared comparison surface, the Costello--Gwilliam
+holomorphic-topological factorization algebra supplies an independent
+\(E_3^{\mathrm{top}}\) model.
+\end{remark}
+
+\subsection{Theorem 5: Moonshine as boundary-Hochschild orbifold}
+\label{sec:part-iv-thm-5}
+
+\begin{theorem}[Monster $V^\natural$ as boundary-Hochschild
+ $\Z/2$-orbifold carrier; Dijkgraaf--Witten class vanishes for the
+ FLM extension; external FLM--Borcherds--Gannon inputs]
+\label{thm:part-iv-moonshine-via-holography}
+\ClaimStatusConditional
+The FLM orbifold construction of $V^\natural$, the Monster
+denominator identity, and the genus-zero theorem for McKay--Thompson
+series are external inputs.
+The Monster vertex operator algebra
+$V^\natural$ \cite{Frenkel-Lepowsky-Meurman} is the
+boundary-Hochschild $\Z/2$-orbifold carrier of the Leech lattice vertex operator
+algebra $V_{\Lambda_{24}}$ under the involution
+$\iota: v \mapsto -v$:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+ \item the FLM extension is
+ $V^\natural=V_{\Lambda_{24}}^+\oplus V_{\Lambda_{24}}^{T,+}$;
+ \item this holomorphic extension is obstructed by an anomaly
+ class
+ $\omega_{\mathrm{DW}} \in H^3(\Z/2, U(1)) \cong \Z/2$;
+ \item $\omega_{\mathrm{DW}} = 0$ on the $V_{\Lambda_{24}}$
+ orbifold; the vanishing is the associator trivialization in the
+ Frenkel--Lepowsky--Meurman $\iota$-twisted-module construction,
+ while
+ $\Theta_{\Lambda_{24}}(\tau)/\eta(\tau)^{24}=J(\tau)+24$
+ verifies the Leech graded-character shadow;
+ \item the resulting $\Etwo$-topological structure on
+ $\Zder(V^\natural) = \mathrm{ChirHoch}^\bullet(V^\natural)$ is the
+ orbifold-Hochschild carrier attached to the moonshine module, not a
+ physical bulk before an open--closed map is supplied;
+ \item the character-level constants are
+ $\mathrm{ch}(V_{\Lambda_{24}})=J+24$ and
+ $\mathrm{ch}(V^\natural)=J$, equivalently
+ $(V^\natural)_0=\mathbb C\mathbf 1$ and $(V^\natural)_1=0$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Construction of $V^\natural$ as orbifold: Frenkel--Lepowsky--Meurman
+construct $V^\natural$ as the $\Z/2$-orbifold of
+$V_{\Lambda_{24}}$ by the involution $\iota: v \mapsto -v$
+\cite{Frenkel-Lepowsky-Meurman}; the orbifold has vacuum
+character $\chi_0(\tau) = J(\tau)$, where $J=j-744$.
+
+$\Etwo$-topological structure on the orbifold-Hochschild carrier:
+the $\Z/2$-orbifold
+of a chiral algebra~$\cA$ extends to an orbifold of its chiral
+Hochschild complex $\mathrm{ChirHoch}^\bullet(\cA)$ if and only if
+the anomaly class in $H^3(\Z/2, U(1))$ vanishes
+\cite{Dijkgraaf-Witten, Kirillov-Orbifold}; when the class vanishes,
+the orbifold carries a compatible $\Etwo$-topological multiplication
+\textup{(}by the boundary-Hochschild topologization argument of
+Chapter~\ref{chap:topologization-chain-level-platonic}
+applied to the orbifold-Hochschild complex\textup{)}.
+
+Vanishing of $\omega_{\mathrm{DW}}$ for $V_{\Lambda_{24}}$: the
+Dijkgraaf--Witten class of the $\Z/2$-orbifold on
+$V_{\Lambda_{24}}$ is the associator obstruction for the
+$\Z/2$-crossed extension
+\[
+ V_{\Lambda_{24}} \oplus V_{\Lambda_{24}}^{T,+}
+\]
+by the even part of the canonical $\iota$-twisted module. In the
+Frenkel--Lepowsky--Meurman construction the central extension
+$1\to\{\pm1\}\to\widehat{\Lambda}_{24}\to\Lambda_{24}\to1$ has
+commutator $(-1)^{\langle\alpha,\beta\rangle}$, and the chosen
+normalized $2$-cocycle has trivial coboundary on the even unimodular
+Leech lattice. The twisted Jacobi identity for
+$V_{\Lambda_{24}}^{T}$ is therefore an honest associativity identity,
+not a projective identity. Under the standard identification between
+$H^3(\Z/2,U(1))$ and Dijkgraaf--Witten associator phases, this is
+exactly $\omega_{\mathrm{DW}}=0$. The theta-series identity
+$\Theta_{\Lambda_{24}}(\tau)/\eta(\tau)^{24} = J(\tau)+24$
+\cite{Conway-Sloane, Borcherds-Monster} and the Monster denominator
+identity verify the graded character and denominator of the resulting
+orbifold; they are character-level checks of the already constructed
+cocycle trivialization.
+
+Moonshine module identification: with $\omega_{\mathrm{DW}} = 0$, the
+orbifold admits a consistent extension; the
+Conway--Norton--Borcherds moonshine module~$V^\natural$
+\cite{Borcherds-Monster} is this extension. The Monster symmetry is
+the automorphism group of the resulting VOA; it is not determined by
+the vanishing of the Dijkgraaf--Witten class alone.
+
+Character constants: the Leech lattice character is
+$\Theta_{\Lambda_{24}}/\eta^{24}=J+24$; the FLM orbifold cancels the
+weight-one Leech contribution and gives $\mathrm{ch}(V^\natural)=J$.
+Thus $(V^\natural)_0=\mathbb C\mathbf 1$ and
+$(V^\natural)_1=0$.  These constants check the VOA orbifold; they are
+not classes in $H^3(\Z/2,U(1))$. $\quad\square$
+\end{proof}
+
+\begin{remark}[Moonshine checks outside Hochschild theory]
+\label{rem:part-iv-thm-5-hziv}
+Borcherds' proof of monstrous moonshine uses the Monster denominator
+identity, and Gannon's genus-zero theorem uses modular functions.
+Those results identify the moonshine module and its McKay--Thompson
+series independently of the chiral Hochschild carrier.  They do not
+replace the Dijkgraaf--Witten obstruction calculation for the
+$\Z/2$-crossed extension.
+\end{remark}
+
+\section{Projection algebra}
+\label{sec:part-iv-reading-order}
+
+Let
+\[
+ \Pi=\{\pi_{\mathrm{bar}},\pi_{\MC},\pi_r,\pi_{\mathrm{Hoch}},
+ \pi_\nabla\}
+\]
+be the five projections of $\Phol_X(\cA)$. A physics bridge with
+target object $T_\beta$ is not the projection $\pi_i\Phol_X(\cA)$
+alone. It is a pair
+\[
+ \bigl(\pi_i,\; C_\beta:
+ F_\beta(\pi_i\Phol_X(\cA))\longrightarrow T_\beta\bigr),
+\]
+where $F_\beta$ is the required normalisation, completion, Mellin
+transform, shadow transform, critical-level specialization, or
+orbifold construction. The bridge theorem is the assertion that
+$C_\beta$ is an isomorphism, quasi-isomorphism, or equality in its
+declared target category.
+
+The face scheme is the same rule in the associator direction:
+$F_i$ is a comparison chart for $r_\cA(z)$ inside
+$\Face_K(\cA)$, not a new object replacing $\Phol_X(\cA)$.
+
+\section{Comparison carriers}
+\label{sec:part-iv-dependency-map}
+
+The five carrier statements
+(\ref{thm:part-iv-grt-torsor-of-bridges},
+\ref{thm:part-iv-universal-holography-unifies},
+\ref{thm:part-iv-celestial-is-holographic-image},
+\ref{thm:part-iv-e-infinity-ladder},
+\ref{thm:part-iv-moonshine-via-holography}) have the following
+source coordinates and comparison carriers.
+
+\begin{center}
+\begin{tabular}{p{3.8cm}|p{6.2cm}|p{4.5cm}}
+\hline
+\textbf{Statement} & \textbf{Vol I source coordinate}
+& \textbf{comparison carrier} \\
+\hline
+\ref{thm:part-iv-grt-torsor-of-bridges}
+ ($\Face_K(\cA)$)
+ & Vol~II Ch.~\ref{V2-ch:grt-seven-faces}
+ & associator torsor over $K$; fingerprint quotient map \\
+\hline
+\ref{thm:part-iv-universal-holography-unifies}
+ ($\Phol_X$ projections)
+ & Ch.~\ref{ch:v1-feynman},
+ Ch.~\ref{ch:v1-bv-brst},
+ Ch.~\ref{ch:derived-langlands},
+ Ch.~\ref{chap:arithmetic-shadows}
+ & comparison maps $C_\beta$ and $\OC_\cA$ where physical bulk is
+ named \\
+\hline
+\ref{thm:part-iv-celestial-is-holographic-image}
+ (celestial comparison)
+ & Ch.~\ref{ch:v1-feynman}
+ & $C_{\mathrm{cel},\mathcal T}$ after Mellin, shadow, and
+ soft-sector open--closed comparison \\
+\hline
+\ref{thm:part-iv-e-infinity-ladder}
+ ($\SCchtop/E_3$ topologisation)
+ & Ch.~\ref{chap:w-algebras},
+ Ch.~\ref{chap:topologization-chain-level-platonic}
+ & $\SCchtop(\cA,\Zder(\cA))\to
+ E_3^{\mathrm{top}}(\Zder(\cA)^\wedge)$ under completion and
+ conformal-vector hypotheses \\
+\hline
+\ref{thm:part-iv-moonshine-via-holography}
+ (Monster orbifold carrier)
+ & Ch.~\ref{chap:chiral-moonshine-unified},
+ Ch.~\ref{ch:moonshine}
+ & FLM $\Z/2$-crossed extension; Dijkgraaf--Witten class in
+ $H^3(\Z/2,U(1))$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Carrier theorem}
+\label{sec:part-iv-bridges-restated}
+
+\begin{proposition}[Part~\ref{part:physics-bridges} restated as
+ carrier data with typed comparison maps;
+ \ClaimStatusConditional]
+\label{prop:part-iv-bridges-restated}
+Under this structural reading, the content of
+Part~\ref{part:physics-bridges} is the datum
+\begin{equation}
+ \bigl(\Phol_X,\; \Face_K(\cA),\;
+ \{C_\beta\}_{\beta\in\{\mathrm{Feyn},\mathrm{BRST},\mathrm{DL},
+ \mathrm{arith},\mathrm{cel},\mathrm{orb},\mathrm{top}\}}\bigr),
+ \label{eq:part-iv-bridges-triple}
+\end{equation}
+where $\Phol_X$ is Definition~\ref{def:part-iv-Phol},
+$\Face_K(\cA)$ is Equation~\eqref{eq:part-iv-face-scheme}, and each
+$C_\beta$ is a comparison map in the target category of the
+corresponding carrier.  The celestial algebra, the Monster orbifold,
+the K3/BKM arithmetic surface, and the $\SCchtop/E_3$ topologisation
+are not Vol I theorems until their comparison maps are part of the
+statement.
+\end{proposition}
+\begin{proof}
+The projections of $\Phol_X$ are functorial by
+Theorem~\ref{thm:part-iv-universal-holography-unifies}.  The
+associator carrier is Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.
+The celestial, topologisation, and Monster assertions are precisely
+Theorems~\ref{thm:part-iv-celestial-is-holographic-image},
+\ref{thm:part-iv-e-infinity-ladder}, and
+\ref{thm:part-iv-moonshine-via-holography}, each with its named
+comparison carrier.  The datum \eqref{eq:part-iv-bridges-triple}
+therefore records exactly the maps needed to turn a Vol I coordinate
+into a physics-facing object. $\quad\square$
+\end{proof}
+
+\medskip
+
+Every bridge in Part~\ref{part:physics-bridges} is a coordinate of
+$\Phol_X$ together with a comparison map.  The comparison map is the
+mathematical place where physical content enters.
+
+\section{The class-$\mathcal M$ vs class-$\mathcal C$ dichotomy and its $\mathbb Z/8$ shared core}
+\label{sec:pivpi-supplement}
+
+The K3/BKM material in this section is a comparison carrier for
+Vol~III, not a Vol I theorem identifying the bar complex with the
+Hall--Borcherds object.  The carrier is the map from the curve-level
+boundary datum to the Hall--Borcherds surface
+\[
+ \mathbf H_{\Delta_5}\leadsto
+ \mathcal D_\hbar\!\left(
+ \mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})\right),
+\]
+together with the period, Humbert-monodromy, and Dijkgraaf--Witten
+cocycle comparisons stated below.  Equalities such as
+$K^{\kappa_{\mathrm{ch}}}=8$ are normalisations on this carrier until
+the comparison map is part of the theorem.
+
+\begin{remark}[The $\mathcal M$ vs $\mathcal C$ dichotomy]
+\label{rem:pivpi-1}
+The K3/BKM comparison refines the shadow-tower quadrichotomy into two
+major arithmetic classes: $\mathcal M$ (Mathieu; K3, $M_{24}$, $\Delta_5$)
+and $\mathcal C$ (Conway; Leech, $\mathrm{Co}_0$, Borcherds Monster).
+The dichotomy meets at the $\mathbb Z/8$-class shared between Mukai
+doubling on K3 ($K^{\kappa_{\mathrm{ch}}} = 8$) and the Leech
+$(-1)$-automorphism shift on $\mathrm{Co}_0$ (order-$8$ in the centre)
+\cite{ConwaySloane1988,Borcherds1998}. The Vol.~III carrier is
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Humbert $H_4$ monodromy and the
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$ fundamental group]
+\label{rem:pivpi-humbert-H4}
+The Koszul locus of the $\mathcal M$-family lives on
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$, the compactified
+Siegel threefold with both the first Humbert divisor $H_1$
+(discriminant-$1$ real multiplication, product locus
+$\mathcal A_1 \times \mathcal A_1$) and the fourth Humbert divisor
+$H_4$ (discriminant-$4$ real multiplication, squared-CM locus) removed.
+The local Gauss--Manin monodromy of the holonomic $D$-module
+$\mathcal L^{\Delta_5}$ has order $8$ at $H_1$ and order $16$ at
+$H_4$ by Bruinier's Heegner-divisor reciprocity, in the form recorded
+as Vol~III Theorem~\ref{V3-thm:humbert-order-K-kappa}. The
+discriminant-$4$ CM-degeneration of the genus-$2$ period carries a
+Kummer parity quotient of order $2$
+\cite{HulekSankaran2002,vdGeer1988}. Locally around the two divisors,
+$\pi_1^{\mathrm{loc}}(\overline{\mathcal A_2} \setminus
+(H_1 \cup H_4))$ maps onto cyclic monodromy quotients
+$\Z/8$ and $\Z/16$; its Kummer quotient replaces the second factor by
+$\Z/2$. The two local loops commute only up to the Mayer--Vietoris
+boundary map on $H_1 \cap H_4 \subset \overline{\mathcal A_2}$; at
+smooth transversal strata the commuting monodromy quotient is
+$\Z/8 \times \Z/16$, while the parity quotient is
+$\Z/8 \times \Z/2$. The $\Z/8$ Mukai-doubling identity
+$K^{\kappa_{\mathrm{ch}}} = 8$ (Remark~\ref{rem:pivpi-1}) accounts
+for the $H_1$ factor; the $M_{24}$ order-$6$ sector below detects the
+Kummer parity quotient of the $H_4$ monodromy alone. Primary:
+Hulek--Sankaran 2002 ``The geometry of Siegel modular varieties''
+(Adv.\ Stud.\ Pure Math.\ 35); Bruinier 2002 Prop.\ 5.1 (Invent.\ Math.);
+van der Geer 1988 ``Hilbert modular surfaces'' (Springer). The
+corresponding Vol.~III carrier is
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Kazhdan--Lusztig equivalence scope refined across $H_1 \cup H_4$]
+\label{rem:pivpi-KL-scope}
+The chain-level Kazhdan--Lusztig equivalence
+$\mathrm{Mod}(\mathbf H_{\Delta_5})^{\mathrm{loc,KL}} \simeq
+\mathrm{Mod}(\mathfrak u_{q_{\mathrm{K3}}}(\widehat{\mathfrak m}_{\mathrm{K3}}))$
+at $q = e^{2\pi i / 8}$ is proved \emph{on the Koszul locus}
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$. Its extension
+across each stratum requires a different Positselski regime:
+\begin{itemize}[leftmargin=1.5em,itemsep=0.25em]
+ \item Across $H_1$: use the weight-completed coderived/contraderived
+ model (Positselski 2011, LNM 1780, Ch.\ 6), pulled back along the
+ $\Z/8$ local monodromy. The Positselski comparison gives an
+ isomorphism at the weight-completed level and an obstruction class
+ in the $\Z/8$-equivariant cohomology of $H_1$ that measures the
+ failure of strict equality.
+ \item Across $H_4$: use the $\Z/16$-monodromic KL regime together
+ with its Kummer parity quotient. The order-$2$ quotient lifts to a
+ Kummer involution on the chiral Hall algebra, and the KL equivalence
+ extends through the resulting graded bimodules; the Kummer
+ specialisation (Bruinier LNM 1780 \S 4) identifies the $(+)$-eigenspace
+ with the K3 side and the $(-)$-eigenspace with the twisted-K3 side.
+ \item On the Koszul locus: the chain-level statement with
+ $q_{\mathrm{K3}} = e^{2\pi i / 8}$ holds strictly, no
+ weight-completion required.
+\end{itemize}
+Primary: Positselski 2011 ``Two kinds of derived categories, Koszul
+duality, and comodule-contramodule correspondence'' (Mem.\ AMS LNM
+1780, via arXiv:0905.2621); Bruinier LNM 1780; Kazhdan--Lusztig 1993
+I--IV (J.\ AMS). The compatible carriers are Vol.~III
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} and Vol.~II
+Chapter~\ref{chap:periodic-cdg-admissible}.
+\end{remark}
+
+\begin{remark}[$6A$ vs $6B$ class distinguishes the order-$6$ sector of the $\mathcal M$ apex]
+\label{rem:pivpi-M24-order6}
+Inside the class-$\mathcal M$ apex $\mathbf H_{\Delta_5}$, the
+$M_{24}$-action splits the order-$6$ sector into two pieces by
+conjugacy class. The $6A$ class with cycle shape $1^2 2^2 3^2 6^2$
+and umbral shift $m_{6A} = 2$ contributes to the Humbert-$H_4$
+parity quotient via its pure $\Z/3$-phase (CRT residue $(0, 2)$
+in $\Z/6 = \Z/2 \times \Z/3$, pentagon-$\hbar^3$ cocycle class
+$2 \pmod 6$). The $6B$ class with cycle shape $6^4$ and umbral shift
+$m_{6B} = 6$ contributes the $\Z/2$ sign-flip of the Humbert $H_4$
+monodromy via its pure $\Z/2$-phase (CRT residue $(1, 0)$, cocycle
+class $3 \pmod 6$) \cite{ChengDuncanHarvey2014,ConwayCurtisNortonParkerWilson1985}.
+Their sum $2 + 3 \equiv -1 \pmod 6$ is the order-$6$ restriction of
+the universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$.
+This is the cyclic restriction of Vol~III's pentagon--umbral agreement
+theorem and Vol.~II Remark~\ref{V2-rem:was-6A-6B}.
+\end{remark}
+
+\begin{remark}[$v_{\Delta_5}$ character table on $\mathrm{Sp}_4(\Z)$ generators]
+\label{rem:pivpi-vDelta5-chartable}
+The sign character
+$v_{\Delta_5} \colon \mathrm{Sp}_4(\Z) \to \{\pm 1\}$ factors through
+$\mathrm{Sp}_4(\Z/2) \cong S_6$ (Igusa $1964$, through the action on
+theta characteristics); the kernel
+$\ker(v_{\Delta_5}) \subset \mathrm{Sp}_4(\Z)$ is the index-$2$
+subgroup of matrices mapping to even permutations in $S_6$. On the
+Klingen--Igusa generators
+\[
+ J = \begin{pmatrix} 0_2 & -I_2 \\ I_2 & 0_2 \end{pmatrix},\qquad
+ T_b = \begin{pmatrix} I_2 & b \\ 0_2 & I_2 \end{pmatrix}\ (b^t = b),\qquad
+ M_U = \begin{pmatrix} U & 0 \\ 0 & (U^t)^{-1} \end{pmatrix}\ (U \in \mathrm{GL}_2(\Z)),
+\]
+the character values are
+\[
+ v_{\Delta_5}(J) = +1,\qquad
+ v_{\Delta_5}(T_b) = (-1)^{b_1+b_2+b_3},\qquad
+ v_{\Delta_5}(M_U)
+ = (-1)^{(1+u_1+u_4)(1+u_2+u_3)+u_1u_4},
+\]
+where $b=\begin{psmallmatrix} b_1&b_2\\ b_2&b_3\end{psmallmatrix}$
+and $U=\begin{psmallmatrix}u_1&u_2\\ u_3&u_4\end{psmallmatrix}$.
+These formulae are Maass's theta-character computation for the product
+of the ten even theta constants:
+\[
+ \Delta_{10}=\Delta_5^2,\qquad
+ \Delta_5\vert_5 g=v_{\Delta_5}(g)\Delta_5.
+\]
+The Borcherds denominator normalisation is a scalar normalisation, not
+an eta-factor:
+\[
+ \Delta_5^{\mathrm{Borch}}
+ = 2^{-6}\Delta_5^{\mathrm{Grit}},\qquad
+ (\Delta_5^{\mathrm{Borch}})^2=\Phi_{10}/2^{12}.
+\]
+The first Fourier coefficient of the Gritsenko normalisation is $64$,
+and the Borcherds denominator is obtained by dividing by that coefficient.
+Primary: Maass's character formula as recorded in the
+$\Delta_5$ Borcherds-lift manuscript; Gritsenko--Nikulin $1998$,
+Thm.~4.1; Igusa $1964$ ``On Siegel modular forms of genus two'';
+Klingen $1990$ ``Introductory lectures on Siegel modular forms''.
+Compatible carriers: Vol.~I Remark~\ref{rem:cm-delta5-ramification};
+Vol.~III
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Explicit $p = 2$ ramified local Langlands parameter $\phi_{\Delta_5,2}$]
+\label{rem:pivpi-langlands-p2}
+At $p = 2$ the local Langlands parameter
+$\phi_{\Delta_5, 2} \colon W_{\Q_2} \times \mathrm{SL}_2(\C)
+\to \mathrm{GSp}_4(\C)$ is ramified because
+$v_{\Delta_5}$ restricted to $\mathrm{Sp}_4(\Z_2)$ is non-trivial
+(Remark~\ref{rem:pivpi-vDelta5-chartable}). The Arthur $2013$
+endoscopic-classification framework
+\cite[Thm.\ 1.5.1 and Thm.\ 2.2.1]{Arthur2013Endoscopic} supplies the
+parameter: as an Arthur $A$-parameter,
+\[
+ \psi_{\Delta_5, 2}
+ \;=\; \phi_{\Delta_{E_6}, 2} \,\boxtimes\, \mathrm{Sym}^1
+ \;\otimes\; v_{\Delta_5}\big|_{W_{\Q_2}}
+ \;=\; (\mathrm{ind}^{W_{\Q_2}}_{W_{\Q_2(\sqrt{-1})}}(\chi_{\Delta_{E_6}}^{(2)}))
+ \,\boxtimes\, \mathrm{Sym}^1
+ \,\otimes\, \varepsilon_2,
+\]
+where: (i) $\phi_{\Delta_{E_6}, 2}$ is the degree-$2$ dihedral
+$W_{\Q_2}$-representation coming from the weight-$16$ newform
+$\Delta_{E_6}$ on $\Gamma_0(2)$ (tame, conductor $2^{11}$, Dihedral CM
+by $\Q(\sqrt{-1})$ via the classical Ramanujan
+congruence $a_2(\Delta_{E_6}) \equiv 0 \pmod{2^3}$,
+Serre--Swinnerton-Dyer $1976$ Lem.\ 3.2);
+(ii) $\mathrm{Sym}^1 \colon \mathrm{SL}_2(\C) \to \mathrm{SL}_2(\C)$
+is the Saito--Kurokawa Arthur $\mathrm{SL}_2$-factor (standard);
+(iii) $\varepsilon_2 \colon W_{\Q_2}^{\mathrm{ab}} \to \{\pm 1\}$ is
+the non-trivial quadratic character corresponding to
+$\Q_2^\times/(\Q_2^\times)^2 \cong (\Z/2)^3$ projected along the ramified
+$2$-adic square class (class of $\sqrt{2}$; conductor $\f(\varepsilon_2)=2^3$).
+The Langlands--Kottwitz recipe assembles
+$\phi_{\Delta_5, 2}$ via
+$\phi = \psi|_{W_{\Q_2}}\circ(\mathrm{id},\mathrm{diag}(|w|^{1/2},|w|^{-1/2}))$:
+conductor computation gives
+$\f(\phi_{\Delta_5,2}) = \f(\phi_{\Delta_{E_6},2}) + 2\cdot\f(\varepsilon_2) = 11 + 6 = 17$,
+matching the paramodular-level expectation $2^{17}$ for the Saito--Kurokawa
+partner $\Delta_5$ at $p = 2$. At odd primes $\varepsilon_p$ is trivial
+and the formula reduces to the unramified Satake parameter. Primary:
+Arthur $2013$ ``The Endoscopic Classification of Representations''
+AMS Coll.\ 61, Thm.\ 1.5.1 (parametrisation) + Thm.\ 2.2.1 (local
+packets); Serre--Swinnerton-Dyer $1976$ Ann.\ Inst.\ Fourier
+``Ramanujan conjectures mod $\ell$''; Gritsenko--Nikulin $1998$ Part~II.
+Compatible carriers: Vol.~I Remark~\ref{rem:cm-delta5-ramification};
+Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[$6A$ vs $6B$ cocycle restriction $\iota_g^* \lbrack\mathrm{Pent}(\hbar^3)\rbrack$ explicit]
+\label{rem:pivpi-6A6B-cocycle}
+Specialising Remark~\ref{rem:pivpi-M24-order6}, compute the
+restriction of the pentagon-$\hbar^3$ cocycle
+$[\mathrm{Pent}(\hbar^3)] \in H^3(M_{24}, U(1))$ along the inclusion
+$\iota_g \colon \Z/6\hookrightarrow M_{24}$ generated by $g \in \{6A, 6B\}$.
+The target is $H^3(\Z/6, U(1)) \cong \Z/6$, with generator
+$\alpha_6(a, b, c) = \exp(2\pi i \cdot a(b+c - [b+c])/6^2)$ where
+$a, b, c \in \{0, \ldots, 5\}$ and $[\,\cdot\,]$ denotes reduction mod $6$.
+The Chern--Simons / transgression formula
+(Dijkgraaf--Witten $1990$ Comm.\ Math.\ Phys.\ $129$; Freed--Quinn
+$1993$):
+\begin{equation}
+\label{eq:pivpi-6A6B-transgression}
+ \iota_g^* [\mathrm{Pent}(\hbar^3)]
+ \;=\; m_g \cdot \alpha_6 \;\in\; H^3(\Z/6, U(1)) \cong \Z/6,
+ \qquad
+ m_{6A} = 2,\qquad m_{6B} = 3.
+\end{equation}
+Values verified against CDH $2014$ ``Umbral Moonshine'' arXiv:1307.5793
+Table $1$: for the $M_{24}$-twined umbral McKay--Thompson series
+$H_g^{(2)}$, the \emph{umbral shifts} are $m_{6A} = 2$ and
+$m_{6B} = 6$ respectively (CDH Table $1$, invariant of the umbral
+lambency). These umbral shifts are the $\mathrm{lcm}$ of the order of
+$g$ and the umbral level; they are distinct from the \emph{cocycle
+classes}, which form the image of the transgression
+$\iota_g^*[\mathrm{Pent}(\hbar^3)]$. Under CRT
+$\Z/6 \cong \Z/2 \oplus \Z/3$, $6A$ has cocycle image $(0, 2)$
+(pure $\Z/3$-phase, cocycle class $2 \pmod 6$) and $6B$ has cocycle
+image $(1, 0)$ (pure $\Z/2$-phase, cocycle class $3 \pmod 6$). Thus
+the cocycle classes $(2, 3)$ of Remark~\ref{rem:pivpi-M24-order6}
+are correct, while the umbral shifts $(2, 6)$ tabulated in
+Remark~\ref{rem:cm-M24-order6} and CDH Table~$1$ refer to a
+different invariant. The sum of cocycle classes $2 + 3 \equiv 5
+\equiv -1 \pmod 6$ is the restriction of the universal identity
+$\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at the $\Z/6$ cyclic
+test-subgroup. Vol~III's pentagon--umbral agreement theorem separates
+the umbral shift $m_g$ from the transgression-cocycle class via
+Dijkgraaf--Witten. Primary: Cheng--Duncan--Harvey $2014$
+``Umbral Moonshine'' arXiv:1307.5793 Table $1$;
+Dijkgraaf--Witten $1990$ Comm.\ Math.\ Phys.\ $129$ \S 4;
+Freed--Quinn $1993$ Comm.\ Math.\ Phys.\ $156$ \S 2. The Vol.~III
+carrier is Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Six coordinate charts for the apex carrier]
+\label{rem:pivpi-2}
+The coordinate-chart idealisation realises the $\mathcal M$-class apex
+as $\mathbf H_{\Delta_5}$, read through six coordinate charts: Hall
+(Schiffmann--Vasserot), Frenkel--Kac/Borcherds imaginary-root vertex,
+Siegel-paramodular $R_{\mathrm{Sieg,dyn}}$ (Pasol--Zagier 2013),
+bi-based Ran factorisation, Costello holomorphic twist, class-$\mathcal S$
+AGT chiral algebra. These are coordinate charts on the K3/BKM carrier,
+not alternate definitions of the Vol I bar datum; the dichotomy
+$\mathcal M$ vs $\mathcal C$ is the choice of base point on the
+arithmetic comparison surface
+\cite{SchiffmannVasserot2012,PasolZagier2013,CostelloHolomorphic,Gaiotto2009}.
+The full chart is Vol.~III
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[The $\varepsilon_2$-structure at $p = 2$ reconciled with the archimedean Maass-spin signature]
+\label{rem:pivpi-eps2-arch-reconciliation}
+\index{$\varepsilon_2$!archimedean reconciliation}
+Remark~\ref{rem:pivpi-langlands-p2} gave the local
+Langlands datum at $p = 2$ as
+$\phi_{\Delta_5, 2} = (\phi_{\Delta_{E_6}, 2} \boxtimes
+\mathrm{Sym}^1)\otimes\varepsilon_2$ with
+$\f(\varepsilon_2) = 2^3$ and conductor exponent
+$\f(\phi_{\Delta_5, 2}) = 17$. The global picture closes by
+reconciling $\varepsilon_2$ with its archimedean partner
+$\varepsilon_\infty$ under Arthur's global sign-character
+factorisation
+$\varepsilon_{\psi_{\Delta_5}} = \prod_v \varepsilon_v$
+(Vol.~I Chapter~\ref{ch:derived-langlands}
+Remark~\ref{rem:dl-kazhdan-global-consistency}). The reconciliation
+forces
+\begin{equation}
+\label{eq:pivpi-global-consistency}
+ \varepsilon_\infty\cdot\varepsilon_2
+ \;=\;
+ +1,
+\end{equation}
+and the determination $\varepsilon_2 = -1$ on the spin-cover
+generator pins the archimedean partner to
+$\varepsilon_\infty = -1$: the Maass-spin $\Delta_5$ is a
+``negative-sign'' archimedean discrete-series representation. The
+$(-1)\cdot(-1) = +1$ coincidence is not formal; a priori
+$\varepsilon_\infty$ could have been $+1$, in which case the product
+would be $-1$ and cuspidal survival would fail. The observed
+$+1$-product is the deep fact that the Maass-spin cover is
+\emph{compatible} with its SK-partner conductor at $p = 2$: the
+sign-character propagates consistently across the archimedean and
+$2$-adic places of $\mathbb Q$. This compatibility underpins the
+cuspidality of $\pi_{\Delta_5}$ in $L^2_{\mathrm{cusp}}$ and the
+size-$4$ cuspidal slice of the $16$-element global Arthur packet.
+Primary: Vol.~I
+Remark~\ref{rem:dl-kazhdan-global-consistency};
+Arthur $2013$ AMS Coll.~$61$ Thm.\ $1.5.2$;
+Ibukiyama $1998$ J.\ Math.\ Kyoto $38$ Prop.\ 4.1 (sign conventions on
+the Maass spin cover).
+\end{remark}
+
+\begin{remark}[Klein four-group $S_{\psi_{\Delta_5}}$ as refinement of the $(\mathbb Z/2)$-character]
+\label{rem:pivpi-klein-four-refinement}
+\index{Klein four refinement!$S_{\psi_{\Delta_5}}$}
+\index{$v_{\Delta_5}$!$(\mathbb Z/2)^2$ lift}
+Remark~\ref{rem:pivpi-vDelta5-chartable} computed the
+character $v_{\Delta_5}\colon\mathrm{Sp}_4(\mathbb Z) \to\{\pm 1\}$
+factoring through $S_6$, identifying a $(\mathbb Z/2)$-quotient of the
+spin-cover character group. The Klein four refinement lifts this:
+$v_{\Delta_5}$ is one of \emph{two} generators of the full
+Maass-spin-cover character group
+$\mathrm{Hom}(\widetilde{\mathrm{Sp}_4(\mathbb Z)}^{\mathrm{ab}},
+\{\pm 1\}) = (\mathbb Z/2)^2$, with $v_{\Delta_5}$ accounting for the
+Fricke-$w_8$ eigenvalue factor and a complementary generator
+$v^{\mathrm{arch}}_{\Delta_5}$ accounting for the archimedean
+signature. Concretely, Ibukiyama's Table~$1$
+\cite{Ibukiyama1998Paramodular} lists four characters on the Maass
+spin cover at weight $5$; the two generators match exactly
+Ibukiyama's Table $1$ entries for $v_{\Delta_5}$ and the
+holomorphic-signature $\varepsilon_{\mathrm{holo}}$. The four
+characters of the Klein four group match the four cuspidal
+constituents of the global Arthur packet
+(Vol.~I Remark~\ref{rem:dl-kazhdan-multiplicity-formula}):
+$(v_{\Delta_5}, \varepsilon_{\mathrm{holo}})$ runs through
+$\{(+,+), (+,-), (-,+), (-,-)\}$, each distinguishing one of
+$\pi_{\Delta_5}$, $\pi_{\Delta_5}^{\mathrm{Fricke}}$,
+$\pi_{\Delta_5}^{\mathrm{spin-}}$,
+$\pi_{\Delta_5}^{\mathrm{Fricke, spin-}}$. The
+$v_{\Delta_5}\in\{\pm 1\}$ character-table entry is thus the
+restriction of the Klein-four $\mathrm{Irr}(S_{\psi_{\Delta_5}})$
+to one of its two $\mathbb Z/2$-factor projections. Primary:
+Ibukiyama $1998$ Table $1$; Vol.~I
+Remark~\ref{rem:dl-kazhdan-group-structure};
+Gritsenko--Nikulin $1998$ Part~II.
+\end{remark}

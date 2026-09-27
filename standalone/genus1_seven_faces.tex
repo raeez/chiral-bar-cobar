@@ -1,0 +1,1007 @@
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+%%% Packages
+
+%%% Page geometry
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\barBch}{\bar{B}^{\mathrm{ch}}}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Conf}{Conf}
+\DeclareMathOperator{\Bun}{Bun}
+\DeclareMathOperator{\Tw}{Tw}
+\numberwithin{equation}{section}
+
+%%% Title
+\title{The genus-$1$ seven faces:\\
+elliptic collision residues and the KZB connection}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+%%% ================================================================
+%%% ABSTRACT
+%%% ================================================================
+
+\begin{abstract}
+At genus~$0$, the collision residue of a chirally Koszul chiral
+algebra admits seven equivalent presentations: as a twisting
+morphism, a line-operator $r$-matrix, a $\lambda$-bracket, commuting
+sphere Hamiltonians, the Drinfeld $r$-matrix, the Sklyanin bracket,
+and the Gaudin Hamiltonians. We prove the genus-$1$ extension: on an
+elliptic curve $E_\tau$, the genus-$1$ collision residue
+$r_\cA^{(1)}(z,\tau)$ is the elliptic regularization of the genus-$0$
+residue, obtained by replacing rational propagator kernels with
+prime-form elliptic kernels. All seven faces at genus~$1$ specialize a
+\emph{single $E_1$-datum} $\Theta_\cA$ via the dictionary
+$\Psi \rightsquigarrow \hbar \rightsquigarrow \tau$: $\Psi$ is the
+algebraic spectral parameter on genus-$0$ faces, $\hbar$ is the
+quantisation parameter on the Drinfeld / Sklyanin / Yangian faces,
+and $\tau$ is the elliptic modulus on the KZB / Belavin--Drinfeld /
+Felder faces. The passage is the bar-intrinsic projection
+$\Theta_\cA^{(g=1)} = \mathrm{Reg}_\tau \circ \Theta_\cA^{(g=0)}$
+where $\mathrm{Reg}_\tau$ is elliptic regularisation.
+For affine Kac--Moody algebras $\cA = \widehat{\fg}_k$, the seven
+faces specialize to the Knizhnik--Zamolodchikov--Bernard connection,
+the Belavin--Drinfeld elliptic $r$-matrix, the Felder dynamical
+elliptic $R(z,\tau)$ (via Fay trisecant), and the elliptic Gaudin
+Hamiltonians. The prime-form $B$-cycle shift is the local source of
+the Drinfeld--Kohno quantum-group parameter; with
+\(\hbar_{\mathrm{ref}}=(k+h^\vee)^{-1}\), the KL half-monodromy
+parameter is
+\(q_{\mathrm{KL}}=\exp(\pi i\hbar_{\mathrm{ref}})\), while the DK
+full pure-braid parameter is
+\(q_{\mathrm{DK}}=q_{\mathrm{KL}}^2
+=\exp(2\pi i\hbar_{\mathrm{ref}})\). For class~$M$ algebras (Virasoro,
+$\cW_N$), the collision residue produces higher-order elliptic
+differential operators involving \(P_\tau,P_\tau',\ldots,P_\tau^{(2N-3)}\)
+outside the affine Hitchin--KZB $r$-matrix lane.
+\end{abstract}
+
+\begin{remark}[Genus-$1$ seven-face datum]\label{rem:genus1-seven-face-datum}
+The genus-$1$ comparison kernels are obtained by restricting the
+bar-intrinsic Maurer--Cartan element to the elliptic collision
+stratum. The KZB, Belavin--Drinfeld, Felder, and Gaudin readouts are
+different projections of this restricted datum. The prime-form
+normalization uses
+\[
+\xi_\tau(z)=\partial_z\log\theta_1(z\mid\tau)
+=\zeta_\tau(z)-2\eta_1z,\qquad
+P_\tau(z)=-\partial_z\xi_\tau(z)=\wp(z,\tau)+2\eta_1.
+\]
+The quasi-period \(\xi_\tau(z+\tau)-\xi_\tau(z)=-2\pi i\) is the
+local monodromy input; the quantum-group parameter also requires the
+chosen Drinfeld--Kohno or Kazhdan--Lusztig normalization.
+\end{remark}
+
+
+%%% ================================================================
+%%% 1. INTRODUCTION
+%%% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+The genus-$0$ seven-face theorem~\cite{Lorgat26} identifies the
+collision residue $r_\cA(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+of a chirally Koszul chiral algebra $\cA$ with seven classical
+objects: a bar-cobar twisting morphism, a line-operator $r$-matrix in
+the Dimofte--Niu--Py framework~\cite{DNP25}, a classical
+$\lambda$-bracket in the Khan--Zeng 3d sigma-model~\cite{KhanZeng25},
+the Gaiotto--Zeng commuting sphere Hamiltonians, the Drinfeld
+$r$-matrix, the Sklyanin Poisson bracket, and the Gaudin
+Hamiltonians. The seven presentations agree as elements of
+$\End_\cA(2)[\![z^{-1}]\!]$; their mutual identification is
+controlled by the collision depth $k_{\max}$ and the shadow class
+$G/L/C/M$.
+
+The collision kernel $K_\cA^{\mathrm{coll}}(z)$ is the degree-$2$ component of
+the $E_1$ Maurer--Cartan element
+$\Theta^{E_1}_\cA$ in the ordered convolution algebra
+$\mathfrak{g}^{E_1}_\cA$, where
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$ is the cofree tensor
+coalgebra with deconcatenation coproduct. Its homotopy coinvariant
+$q_2(K_\cA^{\mathrm{coll}})$ retains the equivariant operator and its
+spectral parameter.  The normalized functional
+$\tau_{\cA,2}^{\mathrm{res}}$ gives $\kappa$ in abelian and scalar
+families and $\kappa_{\mathrm{dp}}$ on the non-abelian affine row;
+the Sugawara contribution $\dim(\fg)/2$ completes the latter modular
+characteristic. At genus~$1$, the spectral parameter acquires
+modular dependence: $r^{(1)}_\cA(z,\tau)$ depends on the elliptic
+modulus $\tau$, and the $B$-cycle monodromy of the ordered collision
+residue encodes the quantum group parameter.
+
+This paper extends the identification to genus~$1$. The elliptic
+curve $E_\tau = \mathbb{C}/(\mathbb{Z}+\mathbb{Z}\tau)$ replaces the
+Riemann sphere, the rational propagator $1/z$ is replaced by the
+prime-form kernel
+\(\xi_\tau(z)=\theta_1'(z,\tau)/\theta_1(z,\tau)\), and each rational
+function $1/z^{n+1}$ in the collision expansion is replaced by the
+corresponding derivative of
+\(P_\tau(z)=-\partial_z\xi_\tau(z)\). The resulting genus-$1$
+collision residue
+$r_\cA^{(1)}(z,\tau)$ admits seven equivalent presentations that
+degenerate to the genus-$0$ faces as $\tau \to i\infty$.
+
+The main results are:
+\begin{enumerate}[label=(\arabic*)]
+\item The \emph{elliptic regularization theorem}
+(Theorem~\ref{thm:elliptic-reg}): the genus-$1$ collision residue is
+\[
+r_\cA^{(1)}(z,\tau)
+\;=\;
+c_0\,\xi_\tau(z)
+\;+\;
+\sum_{n \geq 1}
+\frac{(-1)^{n-1}}{n!}\,c_n \cdot P_\tau^{(n-1)}(z),
+\]
+where $c_n = a_{(n)}b$ are the OPE-mode collision coefficients.
+
+\item The identification of the $dz$-component of the \emph{KZB
+connection} with the genus-$1$ collision residue, and of the
+$d\tau$-component with its $z$-derivative
+(Theorem~\ref{thm:kzb}).
+
+\item The identification of the genus-$1$ collision residue with
+the \emph{Belavin--Drinfeld elliptic $r$-matrix}
+(Theorem~\ref{thm:elliptic-r}).
+
+\item The \emph{elliptic Gaudin comparison}: the two-point and Cartan
+sectors match the KZB kernel; full \(n\geq3\) flatness is the Felder
+dynamical Yang--Baxter statement (Theorem~\ref{thm:gaudin}).
+
+\item The \emph{class~$M$ collision residue} for Virasoro and
+$\cW_N$: higher-order elliptic operators outside the affine
+Hitchin--KZB \(r\)-matrix lane
+(Theorems~\ref{thm:virasoro-g1} and~\ref{thm:wn-g1}).
+
+\item The \emph{degeneration theorem}: all seven genus-$1$ faces
+degenerate continuously to their genus-$0$ counterparts as
+$q = e^{2\pi i\tau} \to 0$ (Theorem~\ref{thm:degeneration}).
+\end{enumerate}
+
+The prime-form kernel defines the elliptic collision residue. Its
+\(z\)- and \(\tau\)-derivatives give the KZB connection, its
+root-channel continuation gives the Belavin--Drinfeld kernel, and its
+collision-depth projections give the Gaudin and class-\(M\) operators.
+
+
+%%% ================================================================
+%%% 2. THE ELLIPTIC COLLISION RESIDUE
+%%% ================================================================
+
+\section{The elliptic collision residue}\label{sec:propagator}
+
+\subsection{The genus-$1$ bar propagator}
+
+At genus~$0$ the bar propagator is $\eta_{12} = d\log(z_1 - z_2)$: a
+meromorphic one-form on $\mathbb{P}^1$ with a simple pole along the
+diagonal. On the elliptic curve $E_\tau$, Liouville's theorem forbids
+a meromorphic function with a single simple pole that is doubly
+periodic. The propagator must be replaced by a quasi-periodic object.
+
+\begin{definition}[Genus-$1$ bar propagator]\label{def:bar-propagator}
+The \emph{genus-$1$ bar propagator} on $E_\tau$ is the logarithmic
+derivative of the prime form:
+\begin{equation}\label{eq:propagator}
+\eta_{12}^{E_\tau}
+\;=\;
+d\log E(z_1,z_2)
+\;=\;
+\xi_\tau(z_1 - z_2)\,d(z_1 - z_2),
+\end{equation}
+where $E(z_1,z_2) = \theta_1(z_1 - z_2 \mid \tau)/\theta_1'(0\mid\tau)$
+is the prime form on $E_\tau$ (a section of
+$K^{-1/2} \boxtimes K^{-1/2}$), $\theta_1$ is the Jacobi theta
+function, and
+\[
+\xi_\tau(z):=\partial_z\log\theta_1(z\mid\tau)
+=\frac{\theta_1'(z\mid\tau)}{\theta_1(z\mid\tau)}
+=\zeta_\tau(z)-2\eta_1z
+\]
+is the prime-form logarithmic kernel. Here \(\zeta_\tau\) is the
+Weierstrass zeta function for periods \((1,\tau)\):
+\begin{equation}\label{eq:weierstrass-zeta}
+\zeta_\tau(z)
+\;=\;
+\frac{1}{z}
++ \sum_{(m,n) \neq (0,0)}
+\biggl[
+ \frac{1}{z - m - n\tau}
+ + \frac{1}{m + n\tau}
+ + \frac{z}{(m + n\tau)^2}
+\biggr].
+\end{equation}
+\end{definition}
+
+Put \(P_\tau(z):=-\partial_z\xi_\tau(z)=\wp(z,\tau)+2\eta_1\).
+The prime-form kernel has Laurent expansion
+$\xi_\tau(z) = 1/z + O(z)$ near $z = 0$, matching the genus-$0$
+propagator $1/z$ at leading order. The difference is global:
+$\xi_\tau$ is quasi-periodic,
+\begin{equation}\label{eq:quasi-periodicity}
+\xi_\tau(z+1) = \xi_\tau(z),
+\qquad
+\xi_\tau(z+\tau) = \xi_\tau(z) - 2\pi i.
+\end{equation}
+The quasi-periodicity of the propagator is the geometric origin of the
+$B$-cycle monodromy that distinguishes genus~$1$ from genus~$0$ in
+all seven faces.
+
+\begin{remark}[Propagator weight]\label{rem:propagator-weight}
+The bar propagator $d\log E(z,w)$ has weight~$1$ in both variables,
+regardless of the conformal weight of the fields being sewed. The
+logarithmic derivative of the prime form is a $(1,0)$-form in each
+variable; the conformal weight $h$ of the generator enters the
+OPE-mode coefficient $c_n$, not the propagator kernel.
+\end{remark}
+
+
+\subsection{The collision residue}
+
+\begin{definition}[Genus-$1$ collision residue]\label{def:collision-residue}
+For a chirally Koszul chiral algebra $\cA$ on $E_\tau$, the
+\emph{genus-$1$ collision residue} is
+\begin{equation}\label{eq:collision-residue}
+r_\cA^{(1)}(z,\tau)
+\;:=\;
+\Res^{\mathrm{coll}}_{1,2}(\Theta_\cA)\big|_{E_\tau}
+\;\in\;
+\End_\cA(2)[\![z^{-1}]\!] \otimes \mathbb{C}[\![\tau]\!],
+\end{equation}
+where $\Theta_\cA$ is the bar-intrinsic Maurer--Cartan element.
+\end{definition}
+
+\begin{theorem}[Elliptic regularization]\label{thm:elliptic-reg}
+Let $\cA$ be a chirally Koszul chiral algebra with genus-$0$ collision
+residue $r_\cA(z) = \sum_{n \geq 0} c_n/z^{n+1}$, where
+$c_n = a_{(n)}b$ are the OPE-mode coefficients. The genus-$1$
+collision residue is
+\begin{equation}\label{eq:elliptic-expansion}
+r_\cA^{(1)}(z,\tau)
+\;=\;
+c_0\,\xi_\tau(z)
+\;+\;
+\sum_{n \geq 1}
+\frac{(-1)^{n-1}}{n!}\,c_n \cdot P_\tau^{(n-1)}(z),
+\end{equation}
+where \(P_\tau^{(m)}=d^mP_\tau/dz^m\). Since
+\(P_\tau=\wp+2\eta_1\), one has \(P_\tau^{(m)}=\wp^{(m)}\) for
+\(m\geq1\). In particular, the first three
+terms are
+\begin{equation}\label{eq:first-three}
+r_\cA^{(1)}(z,\tau)
+\;=\;
+c_0\,\xi_\tau(z)
+\;+\;
+c_1\,P_\tau(z)
+\;-\;
+\tfrac{1}{2}\,c_2\,P_\tau'(z)
+\;+\;\cdots
+\end{equation}
+The Laurent expansion of $r_\cA^{(1)}$ near $z = 0$ agrees with
+$r_\cA(z)$ at leading order.
+\end{theorem}
+
+\begin{proof}
+Each rational function $1/z^{n+1}$ ($n \geq 0$) in the genus-$0$
+collision expansion is the unique meromorphic function on
+$\mathbb{P}^1$ with a pole of order $n+1$ at $z = 0$ and vanishing
+at $z = \infty$. On $E_\tau$, the prime-form normalization fixes the
+corresponding polar kernel. For \(n=0\) it is \(\xi_\tau(z)\); for
+\(n\geq1\) it is \((-1)^{n-1}P_\tau^{(n-1)}(z)/n!\). The prefactor is
+fixed by the Laurent expansion
+$P_\tau^{(m)}(z) = (-1)^m(m+1)!/z^{m+2} + O(1)$ at $m = n-1$:
+\[
+\frac{(-1)^{n-1}}{n!}\,P_\tau^{(n-1)}(z)
+\;=\;
+\frac{(-1)^{n-1}}{n!}\cdot\frac{(-1)^{n-1}\,n!}{z^{n+1}} + O(z^{-n+1})
+\;=\;
+\frac{1}{z^{n+1}} + O(z^{-n+1}).
+\]
+Substituting into the propagator-extraction formula of
+Definition~\ref{def:bar-propagator}
+yields~\eqref{eq:elliptic-expansion}.
+\end{proof}
+
+\begin{remark}[Quasi-periodicity dichotomy]\label{rem:dichotomy}
+The kernel \(P_\tau\) and all its derivatives are doubly periodic. The
+quasi-periodicity of $r_\cA^{(1)}(z,\tau)$ is therefore inherited
+entirely from the \(\xi_\tau\)-term:
+\begin{equation}\label{eq:B-cycle-monodromy}
+r_\cA^{(1)}(z + \tau,\tau) - r_\cA^{(1)}(z,\tau)
+\;=\;
+-2\pi i \cdot c_0.
+\end{equation}
+When $c_0 = 0$ (the Cartan-type case: $\beta\gamma$, lattice VOAs),
+the collision residue is a genuine meromorphic function on $E_\tau$.
+When $c_0 \neq 0$ (the Yangian-type case: affine Kac--Moody,
+Virasoro, $\cW_N$), it is quasi-periodic with non-trivial $B$-cycle
+monodromy.
+\end{remark}
+
+
+%%% ================================================================
+%%% 3. FACE 4: THE KZB CONNECTION
+%%% ================================================================
+
+\section{Face 4: the KZB connection}\label{sec:kzb}
+
+At genus~$0$, Face~4 identifies the collision residue with the
+Gaiotto--Zeng commuting sphere Hamiltonians. At genus~$1$, the
+sphere Hamiltonians are replaced by the
+Knizhnik--Zamolodchikov--Bernard connection on the configuration space
+$\Conf_n(E_\tau)$. The KZB connection has two components: a
+$dz$-component generalizing the genus-$0$ KZ connection, and a
+$d\tau$-component encoding the dependence of conformal blocks on the
+modulus $\tau$.
+
+The formulas in this section use the KZ-normalized conformal-block
+kernel. In trace-form normalization the binary affine collision
+residue is \(k\Omega_{\mathrm{tr}}\xi_\tau(z)\). The KZ coefficient is
+\(\Omega_{\mathrm{KZ}}\xi_\tau(z)/(k+h^\vee)\). These are related by
+the Sugawara normalization; they are not identical functions of the
+level.
+
+\begin{theorem}[Face~4: KZB connection]\label{thm:kzb}
+For $\cA = \widehat{\fg}_k$ at level $k \neq -h^\vee$, the modular
+shadow connection on $\Conf_n(E_\tau)$ restricts to the KZB
+connection:
+\begin{equation}\label{eq:kzb-full}
+\nabla^{\mathrm{KZB}}
+\;=\;
+d
+\;-\;
+\underbrace{
+\frac{1}{k+h^\vee}
+\sum_{i<j}\Omega_{ij}\,\xi_\tau(z_{ij})\,dz_{ij}
+}_{\textup{$dz$-component: genus-$1$ collision residue}}
+\;-\;
+\underbrace{
+\frac{1}{k+h^\vee}
+\sum_{i<j}\Omega_{ij}\,P_\tau(z_{ij})\,d\tau
+}_{\textup{$d\tau$-component: modular Hamiltonian}},
+\end{equation}
+where $z_{ij} = z_i - z_j$ and $\Omega_{ij}$ is the Casimir acting
+on the $i$-th and $j$-th tensor factors.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The $dz$-component equals the genus-$1$ collision residue:
+\begin{equation}\label{eq:kzb-z}
+H_{z,i}^{\mathrm{KZB}}
+\;=\;
+\frac{1}{k+h^\vee}\sum_{j \neq i}\Omega_{ij}\,\xi_\tau(z_{ij})
+\;=\;
+\sum_{j \neq i}
+\bigl[r_{\widehat{\fg}_k}^{(1)}(z_{ij},\tau)\bigr]_{ij}.
+\end{equation}
+\item The $d\tau$-component equals the $z$-derivative of the collision
+residue, through the identity $P_\tau(z)=-\xi_\tau'(z)$:
+\begin{equation}\label{eq:kzb-tau}
+H_{\tau,i}^{\mathrm{KZB}}
+\;=\;
+\frac{1}{k+h^\vee}\sum_{j \neq i}\Omega_{ij}\,P_\tau(z_{ij})
+\;=\;
+-\sum_{j \neq i}
+\partial_z\bigl[r_{\widehat{\fg}_k}^{(1)}(z_{ij},\tau)\bigr]_{ij}.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{Part~(i).} The affine Kac--Moody OPE
+$J^a(z)\,J^b(w) \sim k\,\delta^{ab}/(z-w)^2 +
+f^{ab}_{\;\;c}\,J^c(w)/(z-w)$ has $c_0 = \Omega/(k+h^\vee)$
+and $c_n = 0$ for $n \geq 1$: the bar propagator absorbs one pole
+order, so the only surviving term is $c_0$. By
+Theorem~\ref{thm:elliptic-reg}, the elliptic regularization gives
+$r_{\widehat{\fg}_k}^{(1)}(z,\tau) = \Omega\,\xi_\tau(z)/(k+h^\vee)$
+in KZ normalization.
+Substituting into the Gaiotto--Zeng formula produces~\eqref{eq:kzb-z},
+which is the $dz$-component of the KZB
+connection~\cite{Bernard88,KZB95}.
+
+\textbf{Part~(ii).} The $d\tau$-component involves the modular
+Hamiltonian $D_i$, whose leading term is
+$\sum_{j \neq i}P_\tau(z_{ij})\,\Omega_{ij}/(k+h^\vee)$. The
+identity \(P_\tau=-\xi_\tau'\) identifies this
+with $-\partial_z r_\cA^{(1)}$, yielding~\eqref{eq:kzb-tau}.
+\end{proof}
+
+\begin{remark}[Shadow connection interpretation]\label{rem:shadow}
+The KZB connection is the genus-$1$ instance of the modular shadow
+connection $\nabla^{\mathrm{hol}}_{g,n}$ on $\Mbar_{g,n}$: at
+genus~$0$ it gives the KZ connection, at genus~$1$ the KZB
+connection, and at genus~$\geq 2$ it produces new flat connections on
+configuration spaces of higher-genus curves.
+\end{remark}
+
+
+%%% ================================================================
+%%% 4. FACE 5: THE ELLIPTIC r-MATRIX
+%%% ================================================================
+
+\section{Face 5: the elliptic $r$-matrix}\label{sec:r-matrix}
+
+At genus~$0$, Face~5 identifies the collision residue with the
+KZ-normalized rational kernel $\Omega/((k+h^\vee)z)$. At genus~$1$, the
+rational $r$-matrix is replaced by the classical elliptic $r$-matrix
+of Belavin~\cite{Belavin81} and
+Belavin--Drinfeld~\cite{BelavinDrinfeld82}.
+
+\begin{theorem}[Face~5: elliptic $r$-matrix]\label{thm:elliptic-r}
+For $\cA = \widehat{\fg}_k$ with $\fg$ simple and $k \neq -h^\vee$,
+the KZ-normalized genus-$1$ two-point kernel equals the classical
+Belavin elliptic kernel up to the standard level normalization:
+\begin{equation}\label{eq:elliptic-rmatrix}
+r_{\widehat{\fg}_k}^{(1)}(z,\tau)
+\;=\;
+\frac{1}{k+h^\vee}\,r^{\mathrm{ell}}_\fg(z,\tau).
+\end{equation}
+For $\fg = \fsl_2$, the Belavin $r$-matrix is
+\begin{equation}\label{eq:sl2-elliptic}
+r^{\mathrm{ell}}_{\fsl_2}(z,\tau)
+\;=\;
+\xi_\tau(z)\cdot\frac{H \otimes H}{2}
+\;+\;
+\phi_+(z,\tau)\,E \otimes F
+\;+\;
+\phi_-(z,\tau)\,F \otimes E,
+\end{equation}
+where $\{H,E,F\}$ is the standard basis of $\fsl_2$ and the
+theta-function ratios are
+\begin{equation}\label{eq:phi-pm}
+\phi_\pm(z,\tau)
+\;=\;
+\frac{\theta_1'(0\mid\tau)\,
+ \theta_1(z \pm \tfrac{1}{2}\mid\tau)}%
+{\theta_1(z\mid\tau)\,\theta_1(\pm\tfrac{1}{2}\mid\tau)}.
+\end{equation}
+The full \(n\geq3\) KZB flatness statement uses the Felder dynamical
+shift and the dynamical Yang--Baxter equation. It is not a consequence
+of applying the ordinary rational CYBE to the displayed two-point
+kernel.
+\end{theorem}
+
+\begin{proof}
+For the Cartan channel: the Kac--Moody OPE with
+$c_0 = \Omega/(k+h^\vee)$ gives, after genus-$1$ regularization,
+$\xi_\tau(z)\cdot H \otimes H/2$ in the Cartan direction.
+
+For the root channels: on $E_\tau$, the chiral fields $J^E$, $J^F$
+associated to the positive and negative roots satisfy twisted boundary
+conditions under $B$-cycle monodromy. The collision residue in the
+root channels acquires the theta-function ratios
+$\phi_\pm(z,\tau)$~\eqref{eq:phi-pm}, which are the unique
+meromorphic functions on $\mathbb{C}$ with a simple pole at $z = 0$
+matching $1/z$ and with $B$-cycle quasi-periodicity dictated by the
+root lattice~\cite{Belavin81}.
+
+The full \(n\)-point flatness statement belongs to the Felder dynamical
+KZB lane. The two-point identification~\eqref{eq:elliptic-rmatrix}
+follows from
+Theorem~\ref{thm:elliptic-reg} combined with uniqueness of the
+classical elliptic $r$-matrix~\cite{BelavinDrinfeld82}.
+\end{proof}
+
+\begin{remark}[Higher rank]\label{rem:higher-rank}
+For $\fg = \fsl_N$ with $N \geq 3$, the Belavin elliptic $r$-matrix
+is a matrix-valued meromorphic function on $E_\tau$ with poles at
+$z = 0$ whose residue is the $\fsl_N$ Casimir. The collision residue
+produces this $r$-matrix by the same mechanism: elliptic
+regularization of the Cartan and root channels, with theta-function
+ratios $\phi_\alpha(z,\tau)$ indexed by the roots $\alpha$. The
+identification~\eqref{eq:elliptic-rmatrix} holds for all simple $\fg$.
+\end{remark}
+
+
+%%% ================================================================
+%%% 5. FACE 7: THE ELLIPTIC GAUDIN MODEL
+%%% ================================================================
+
+\section{Face 7: the elliptic Gaudin model}\label{sec:gaudin}
+
+At genus~$0$, Face~7 identifies the collision residue with the Gaudin
+Hamiltonians
+$H_i^{\mathrm{Gaudin}} = \sum_{j \neq i}\Omega_{ij}/(z_i - z_j)$.
+At genus~$1$, the Gaudin model acquires elliptic structure.
+
+\begin{theorem}[Face~7: elliptic Gaudin kernel]\label{thm:gaudin}
+For $\cA = \widehat{\fg}_k$, the KZ-normalized two-point elliptic
+Gaudin kernel on $\Conf_n(E_\tau)$ is
+\begin{equation}\label{eq:elliptic-gaudin}
+H_i^{\mathrm{ell}}
+\;=\;
+\frac{1}{k+h^\vee}\sum_{j \neq i}
+\Omega_{ij}\,\xi_\tau(z_i - z_j)
+\;=\;
+\sum_{j \neq i}
+\bigl[r_{\widehat{\fg}_k}^{(1)}(z_i - z_j,\tau)\bigr]_{ij}.
+\end{equation}
+After adding the Felder dynamical shift, this kernel is the
+two-point sector of the flat KZB/Gaudin connection.
+\end{theorem}
+
+\begin{proof}
+The identification of $H_i^{\mathrm{ell}}$ with the collision residue
+is immediate from Theorem~\ref{thm:elliptic-reg}:
+$r_{\widehat{\fg}_k}^{(1)}(z,\tau) = \Omega\,\xi_\tau(z)/(k+h^\vee)$
+in KZ normalization. For \(n\geq3\), flatness of the elliptic Gaudin
+connection requires the dynamical Cartan variable and Felder's
+dynamical Yang--Baxter equation; the non-dynamical two-point kernel
+displayed here is the affine Cartan/KZB comparison surface.
+\end{proof}
+
+\begin{remark}[Hitchin system]\label{rem:hitchin}
+The elliptic Gaudin model is the genus-$1$ instance of the Hitchin
+integrable system on $\Bun_G(E_\tau)$. The Hitchin Hamiltonians are
+sections of a line bundle on the base of the Hitchin fibration; at
+genus~$1$, the base is the affine space of elliptic spectral curves,
+and the Hitchin Hamiltonians restrict to the elliptic Gaudin
+Hamiltonians on the trivial $G$-bundle. At genus $g \geq 2$, the
+collision residue on $\Sigma_g$ produces the Hitchin Hamiltonians on
+$\Bun_G(\Sigma_g)$; this is the structural target of the holographic
+construction~\cite{Lorgat26}.
+\end{remark}
+
+
+%%% ================================================================
+%%% 6. CLASS M AT GENUS 1
+%%% ================================================================
+
+\section{Class $M$ at genus~$1$: higher-order elliptic
+operators}\label{sec:class-m}
+
+For affine Kac--Moody algebras (class~$L$), the collision expansion
+terminates at $c_0$: the collision depth is $k_{\max} = 1$, and only
+the \(\xi_\tau\)-term contributes. For class~$M$ algebras (Virasoro,
+$\cW_N$), the OPE has poles of higher order, and the collision
+expansion involves \(P_\tau\), \(P_\tau'\), and higher prime-form
+derivatives.
+
+\subsection{Virasoro at genus~$1$}
+
+The Virasoro algebra has maximal OPE pole order $p_{\max} = 4$ (from
+the $T(z)\,T(w)$ OPE). The bar propagator absorbs one order, giving
+collision depth $k_{\max} = 3$. The genus-$0$ collision residue is
+\begin{equation}\label{eq:vir-genus0}
+r_{\Vir_c}(z) \;=\; \frac{c/2}{z^3} \;+\; \frac{2T}{z},
+\end{equation}
+with $c_0 = 2T$, $c_1 = 0$ (the $z^{-2}$ pole is absent from the
+$r$-matrix by a parity argument: the $d\log$ extraction sends
+$z^{-2n}$ to $z^{-(2n-1)}$), and $c_2 = c/2$.
+
+\begin{theorem}[Virasoro genus-$1$ collision
+residue]\label{thm:virasoro-g1}
+The genus-$1$ collision residue of $\Vir_c$ is
+\begin{equation}\label{eq:vir-genus1}
+r_{\Vir_c}^{(1)}(z,\tau)
+\;=\;
+2T\cdot\xi_\tau(z) \;-\; \frac{c}{4}\,P_\tau'(z).
+\end{equation}
+This is an elliptic differential operator of order~$2$ on conformal
+blocks on $E_\tau$: the \(\xi_\tau\)-term acts by multiplication,
+while the \(P_\tau'\)-term acts as a second-order differential operator
+through the stress-energy Ward identity.
+\end{theorem}
+
+\begin{proof}
+The genus-$0$ collision expansion has $c_0 = 2T$, $c_1 = 0$,
+$c_2 = c/2$. By Theorem~\ref{thm:elliptic-reg}:
+\[
+r_{\Vir_c}^{(1)}(z,\tau)
+\;=\;
+c_0\,\xi_\tau(z) + c_1\,P_\tau(z)
+- \tfrac{1}{2}\,c_2\,P_\tau'(z).
+\]
+Since $c_1 = 0$, the \(P_\tau\)-term vanishes, and the result
+is~\eqref{eq:vir-genus1}. The Laurent expansion near $z = 0$
+confirms consistency: $2T/z - (c/4)\cdot(-2/z^3 + O(z))
+= (c/2)/z^3 + 2T/z + O(1)$, matching $r_{\Vir_c}(z)$ at leading
+order.
+
+The \(P_\tau'\)-term acts as a second-order differential operator because
+the Virasoro OPE at order $(z-w)^{-4}$ involves
+$(c/2)\cdot\mathrm{id}$, which through the Ward identity produces a
+second derivative $\partial_z^2$ on the correlator; the elliptic
+regularization replaces $1/z^4$ by $-P_\tau'(z)/2$.
+\end{proof}
+
+\begin{remark}[The $c_1 = 0$ vanishing]\label{rem:c1-vanishing}
+The vanishing of $c_1$ is a parity phenomenon: the OPE mode
+$T_{(2)}T = \partial T$ is a total derivative, and its contribution to
+the $r$-matrix vanishes after $d\log$-extraction. In the elliptic
+regularization, this means the \(P_\tau(z)\)-term is absent. The
+first non-trivial correction beyond \(\xi_\tau\) involves \(P_\tau'\),
+not \(P_\tau\).
+\end{remark}
+
+
+\subsection{$\cW_N$ at genus~$1$}
+
+The $\cW_N$ algebra has generators $W_2 = T, W_3, \ldots, W_N$ of
+conformal weights $2,3,\ldots,N$. The maximal OPE pole order among
+generating fields is $p_{\max} = 2N$ (from the $W_N$-$W_N$ OPE),
+giving collision depth $k_{\max} = 2N-1$.
+
+\begin{theorem}[$\cW_N$ genus-$1$ collision
+residue]\label{thm:wn-g1}
+The genus-$1$ collision residue of $\cW_N$ involves the prime-form
+kernel and the derivatives of \(P_\tau\) up to \(P_\tau^{(2N-3)}\):
+\begin{equation}\label{eq:wn-genus1}
+r_{\cW_N}^{(1)}(z,\tau)
+\;=\;
+c_0\,\xi_\tau(z)
+\;+\;
+\sum_{\substack{n=1 \\ c_n \neq 0}}^{2N-2}
+\frac{(-1)^{n-1}}{n!}\,c_n\cdot P_\tau^{(n-1)}(z),
+\end{equation}
+where $c_n$ are the OPE-mode collision coefficients. The
+highest-order term is an elliptic differential operator of order
+$2N-2$. For $\cW_3$: the collision expansion involves
+\(\xi_\tau,P_\tau,P_\tau',P_\tau'',P_\tau'''\), producing fourth-order elliptic
+differential operators.
+\end{theorem}
+
+\begin{proof}
+Direct specialization of Theorem~\ref{thm:elliptic-reg} to the
+$\cW_N$ OPE data with $p_{\max} = 2N$: the collision depth
+$k_{\max} = 2N-1$ means the genus-$0$ expansion
+$r_{\cW_N}(z) = \sum_{n=0}^{2N-2}c_n/z^{n+1}$ has $2N-1$ terms,
+each regularized by \(1/z\mapsto\xi_\tau(z)\) and
+\(1/z^{n+1}\mapsto (-1)^{n-1}P_\tau^{(n-1)}(z)/n!\) for \(n \geq 1\).
+\end{proof}
+
+\begin{remark}[Outside the affine KZB lane]\label{rem:genuinely-new}
+The elliptic differential operators produced by the class~$M$ collision
+residue lie outside the affine Hitchin--KZB \(r\)-matrix lane. The
+Hitchin system on $\Bun_G(E_\tau)$ sees the affine Casimir channel.
+The KZB connection sees the prime-form kernel and its first polar
+derivative in the standard affine sector. The class~$M$ collision
+residue at depth $\geq 3$ produces operators involving
+\(P_\tau',P_\tau'',\ldots,P_\tau^{(2N-3)}\) from higher OPE poles
+specific to $\cW$-algebras.
+\end{remark}
+
+
+%%% ================================================================
+%%% 7. DEGENERATION TO GENUS 0
+%%% ================================================================
+
+\section{Degeneration to genus~$0$}\label{sec:degeneration}
+
+\begin{theorem}[Degeneration]\label{thm:degeneration}
+As $\mathrm{Im}(\tau) \to \infty$ (equivalently,
+$q = e^{2\pi i\tau} \to 0$), all seven genus-$1$ faces degenerate to
+their genus-$0$ counterparts:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Propagator.)}
+\(\xi_\tau(z) \to \pi\cot(\pi z) \to 1/z + O(z)\).
+
+\item \textup{(Prime-form derivatives.)}
+\(P_\tau(z) \to \pi^2/\sin^2(\pi z) \to 1/z^2 + O(1)\), and
+\(P_\tau^{(m)}(z) \to (-1)^m(m+1)!/z^{m+2} + O(z^{-m})\).
+
+\item \textup{(KZB $\to$ KZ.)} The $dz$-component degenerates to
+the KZ connection: \(\xi_\tau(z_{ij}) \to 1/z_{ij}\). The
+$d\tau$-component has no genus-$0$ counterpart.
+
+\item \textup{(Elliptic $\to$ rational $r$-matrix.)}
+In trace form,
+\[
+r^{\mathrm{KM}}_{\mathrm{tr}}(z)=k\,\Omega_{\mathrm{tr}}/z.
+\]
+The KZ-normalized connection uses
+\[
+r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z),
+\qquad
+\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}.
+\]
+The elliptic kernel degenerates through the trigonometric kernel to
+the corresponding rational kernel in the chosen normalization. These
+are conventionally related normalizations, not an identity as rational
+functions of~$k$.
+
+\item \textup{(Elliptic $\to$ rational Gaudin.)}
+$H_i^{\mathrm{ell}} \to H_i^{\mathrm{Gaudin}} = \sum_{j \neq i}
+\Omega_{ij}/(z_i - z_j)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+As \(q\to0\), the prime-form kernels have the standard degenerations.
+The logarithmic derivative satisfies
+\(\xi_\tau(z)=\pi\cot(\pi z)+O(q)\), giving \(1/z+O(z)\) for
+\(|z|<1\). Its derivative gives
+\(P_\tau(z)=\pi^2/\sin^2(\pi z)+O(q)\), hence \(1/z^2+O(1)\). Higher
+derivatives degenerate analogously.
+
+The KZB degeneration: with \(\xi_\tau(z) \to 1/z\), the
+$dz$-component~\eqref{eq:kzb-z} becomes
+$\sum_{j \neq i}\Omega_{ij}/((k+h^\vee)z_{ij})\,dz_{ij}$, which is
+the KZ connection.
+
+The elliptic $r$-matrix degeneration: as $q \to 0$,
+$\phi_\pm(z,\tau) \to \pi/\sin(\pi z) + O(q)$, recovering the
+trigonometric $r$-matrix. A further limit
+$z \mapsto z/L$, $L \to \infty$ gives $\pi/\sin(\pi z/L) \to L/z$,
+recovering the rational $r$-matrix
+$\Omega/((k+h^\vee)z)$ in the KZ normalization.
+Both limits are continuous in the topology of formal Laurent series.
+\end{proof}
+
+The degeneration theorem provides the consistency check between genus-$0$
+and genus-$1$: every genus-$1$ face is a continuous deformation of the
+corresponding genus-$0$ face, with deformation parameter $q$. At
+$q = 0$, the elliptic curve degenerates to the nodal rational curve,
+and all seven identifications collapse to their genus-$0$ ancestors.
+
+
+%%% ================================================================
+%%% 8. COMPUTATIONAL VERIFICATION
+%%% ================================================================
+
+\section{Computational verification}\label{sec:compute}
+
+The genus-$1$ seven-face checks are implemented by the compute
+engine \texttt{theorem\_genus1\_seven\_faces\_engine.py}, which
+implements the following tests.
+
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Elliptic regularization.} For each standard family
+$\cA$ in the landscape census, verify that the genus-$1$ collision
+residue~\eqref{eq:elliptic-expansion} matches the elliptic
+regularization of the genus-$0$ collision expansion at \(O(q^0)\)
+within the stated numerical tolerance.
+
+\item \textbf{KZB identification.} For
+$\cA = \widehat{\fsl}_2$ at levels $k = 1,2,3,5,10$, verify that the
+$dz$-component of the KZB connection equals the collision residue, and
+that the $d\tau$-component equals $-\partial_z r_\cA^{(1)}$.
+
+\item \textbf{Dynamical closure.} Check the two-point and Cartan
+sectors of the affine elliptic kernel. The full \(n\geq3\) flatness
+statement is the Felder dynamical Yang--Baxter closure and is not
+claimed by this ordinary-kernel test.
+
+\item \textbf{Gaudin kernel.} Check that the two-point and Cartan
+elliptic Gaudin kernels agree with the KZB kernel in the chosen
+normalization. Full \(n\geq3\) commutativity belongs to the dynamical
+KZB/Gaudin lane.
+
+\item \textbf{Degeneration.} Verify that
+$\|r_\cA^{(1)}(z,\tau) - r_\cA(z)\|/\|r_\cA(z)\| < 10^{-6}$
+for $\mathrm{Im}(\tau) \geq 12$ across all standard families.
+
+\item \textbf{Class~$M$ structure.} For $\Vir_c$ at
+$c = 1, 1/2, 25, 26$, verify~\eqref{eq:vir-genus1} and confirm the
+$c_1 = 0$ vanishing. For $\cW_3$ at $c = 2, 50, 98$,
+verify~\eqref{eq:wn-genus1} and confirm terms through \(P_\tau'''\).
+\end{enumerate}
+
+
+%%% ================================================================
+%%% 9. VERLINDE FORMULA
+%%% ================================================================
+
+\section{The Verlinde formula from ordered chiral
+homology}\label{sec:verlinde}
+
+At integer level $k \in \mathbb{Z}_{\geq 1}$, the ordered chiral
+homology of $\widehat{\fg}_k$ on $E_\tau$ recovers the Verlinde
+partition function. The connection to the genus-$1$ seven-face
+identification is
+direct: the KZB connection of Theorem~\ref{thm:kzb} has finite
+monodromy at integer level, and the trace of the $B$-cycle monodromy
+over the space of conformal blocks recovers the Verlinde formula.
+
+\begin{proposition}[Verlinde from genus-$1$ collision
+residue]\label{prop:verlinde-g1}
+For $\cA = \widehat{\fg}_k$ at integer level $k \geq 1$, the $B$-cycle
+shift of the KZ-normalized prime-form kernel is
+\begin{equation}\label{eq:b-monodromy}
+\mathcal{M}_{B}^{\mathrm{ker}}
+\;=\;
+\exp\Bigl(-\frac{2\pi i}{k+h^\vee}\,\Omega\Bigr)
+\;=\;
+\exp(-2\pi i\,c_0),
+\end{equation}
+where $c_0 = \Omega/(k+h^\vee)$ is the degree-$0$ collision
+coefficient. The quantum group parameter is
+\(q_{\mathrm{KL}}=\exp(\pi i/(k+h^\vee))\) on the half-braid cover,
+with full-cycle DK factor
+\(q_{\mathrm{DK}}=q_{\mathrm{KL}}^2
+=\exp(2\pi i/(k+h^\vee))\). The Verlinde partition function
+at genus~$1$ is
+\begin{equation}\label{eq:verlinde-g1}
+Z_1(\widehat{\fg}_k)
+\;=\;
+\sum_{\lambda \in P_+^k}
+|S_{0\lambda}|^{0}
+\;=\;
+|P_+^k|,
+\end{equation}
+where $P_+^k$ is the set of integrable highest weights at level $k$
+and $S_{0\lambda}$ are the modular $S$-matrix entries. At higher genus
+$g$, the Verlinde formula
+$Z_g = \sum_\lambda S_{0\lambda}^{2-2g}$ is recovered from the
+ordered chiral homology via handle attachment and separating
+factorization of the ordered bar complex.
+\end{proposition}
+
+\begin{remark}[The $B$-cycle monodromy and the quantum
+group]\label{rem:quantum-group}
+The quasi-periodicity~\eqref{eq:B-cycle-monodromy} of the genus-$1$
+collision residue is the geometric origin of the quantum group
+parameter. For affine $\widehat{\fsl}_{2,k}$: the $B$-cycle monodromy
+eigenvalues are written on the KL half-braid cover with
+\(q_{\mathrm{KL}}=e^{\pi i/(k+2)}\); the full pure-braid cycle is
+the DK parameter \(q_{\mathrm{DK}}=q_{\mathrm{KL}}^2\). The passage from the
+$E_1$ collision residue $r^{(1)}(z,\tau)$ to the quantum group
+category is through this KL/DK bridge for the $B$-cycle monodromy of the ordered bar complex:
+the spectral parameter $z$ (genus-$0$ data) becomes the quantum
+group parameter through exponentiation of the
+quasi-period.
+\end{remark}
+
+
+%%% ================================================================
+%%% 10. THE CRITICAL LEVEL JUMP
+%%% ================================================================
+
+\section{The critical level}\label{sec:critical-level}
+
+The genus-$1$ seven-face identification has a distinguished boundary:
+the critical level $k = -h^\vee$, where the Sugawara construction
+degenerates. The collision residue and the KZB connection undergo a
+qualitative change at this value.
+
+\begin{theorem}[Critical level jump at
+genus~$1$]\label{thm:critical-level-g1}
+For $\cA = \widehat{\fg}_k$ at the critical level $k = -h^\vee$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The shadow invariant vanishes:
+$\kappa(\widehat{\fg}_{-h^\vee}) = 0$. The KZB-normalized kernel is
+singular at this level, so the non-critical monodromy formula has no
+regular value there.
+\item The degree-$2$ ordered chiral homology on $V \otimes V$ doubles:
+$\dim H^1_{\mathrm{ord}, 2}$ jumps from $4$ (generic level) to $8$
+(critical level) for $\fg = \fsl_2$ \textup{(}finite computation,
+$\chi_{\mathrm{ord}, 2} = -4$ conserved\textup{)}. This is distinct from
+the full symmetric bar cohomology at critical level, addressed in (iii).
+\item Under the completed critical bar--Ext comparison, the critical
+bar--Ext groups identify with differential forms on the space of
+\(\fg^\vee\)-opers:
+\[
+H^n_{\mathrm{bExt}}(\widehat{\fg}_{-h^\vee})
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D)).
+\]
+This is a completed critical statement, not an equality for the raw
+symmetric bar cohomology.
+\item The genus-$1$ collision residue degenerates: the KZ normalization
+$r^{(1)}(z,\tau) = \Omega\,\xi_\tau(z)/(k+h^\vee)$ has a pole at
+$k = -h^\vee$, and the KZB connection becomes singular. The critical
+level requires a separate regularization via the Feigin--Frenkel
+center~\cite{FeiginFrenkel94}.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Koszulness at critical level]\label{rem:koszul-critical}
+At generic level $k \neq -h^\vee$, the affine Kac--Moody algebra
+$\widehat{\fg}_k$ is chirally Koszul, and the seven-face
+identification applies without modification. At the critical level
+$k = -h^\vee$,
+the KZ/KZB normalization and Sugawara topologisation fail, and the
+Feigin--Frenkel centre appears. This does not by itself negate PBW
+Koszulness of the universal affine algebra; it moves the statement to
+the separate critical-level bar-cohomology lane. The seven KZ faces
+degenerate: the Gaudin Hamiltonians become the Feigin--Frenkel higher
+Gaudin
+Hamiltonians, and the $r$-matrix limit requires the Langlands dual
+group ${}^L G$ via the geometric Langlands correspondence. The
+critical level is a boundary of the non-critical seven-face
+identification.
+\end{remark}
+
+\begin{remark}[Spectral sequence at critical
+level]\label{rem:spectral-critical}
+The passage from generic to critical level is controlled by a spectral
+sequence with $d_1 = \lambda \cdot [\delta]$, where
+$\lambda = k + h^\vee$ is the level shift and $\delta$ is the boundary
+class. At $\lambda = 0$ (critical level), $d_1$ vanishes, and the
+spectral sequence degenerates at $E_1$: the bar cohomology jumps
+because the differential that would kill the extra classes is absent.
+This is the mechanism by which the degree-$2$ ordered chiral homology
+$H^1_{\mathrm{ord}, 2}$ doubles from $4$ to $8$ for $\fsl_2$. For the
+completed critical bar--Ext cohomology at critical level, the
+\(d_1\)-vanishing
+lets the entire de~Rham algebra $\Omega^*(\mathrm{Op}_{\fsl_2}(D))$
+appear in completed critical bar--Ext cohomology, which is
+infinite-dimensional.
+\end{remark}
+
+
+%%% ================================================================
+%%% REFERENCES
+%%% ================================================================
+
+\begin{thebibliography}{10}
+
+\bibitem{Belavin81}
+A.~A.~Belavin,
+\emph{Dynamical symmetry of integrable quantum systems},
+Nucl.\ Phys.\ B~\textbf{180} (1981), 189--200.
+
+\bibitem{BelavinDrinfeld82}
+A.~A.~Belavin and V.~G.~Drinfeld,
+\emph{Solutions of the classical Yang--Baxter equation for simple Lie
+algebras},
+Funct.\ Anal.\ Appl.\ \textbf{16} (1982), 159--180.
+
+\bibitem{Bernard88}
+D.~Bernard,
+\emph{On the Wess--Zumino--Witten models on the torus},
+Nucl.\ Phys.\ B~\textbf{303} (1988), 77--93.
+
+\bibitem{DNP25}
+T.~Dimofte, W.~Niu, and A.~Py,
+\emph{Line operators in $3$d holomorphic QFT: meromorphic tensor
+categories and dg-shifted Yangians},
+arXiv:2508.11749, 2025.
+
+\bibitem{FeiginFrenkel94}
+B.~Feigin, E.~Frenkel, and N.~Reshetikhin,
+\emph{Gaudin model, Bethe ansatz and critical level},
+Comm.\ Math.\ Phys.\ \textbf{166} (1994), 27--62.
+
+\bibitem{KhanZeng25}
+A.~Z.~Khan and K.~Zeng,
+\emph{Poisson vertex algebras and three-dimensional gauge theory},
+arXiv:2502.13227, 2025.
+
+\bibitem{KZB95}
+D.~Bernard,
+\emph{On the Wess--Zumino--Witten models on Riemann surfaces},
+Comm.\ Math.\ Phys.\ \textbf{124} (1989), 315--340;
+V.~G.~Knizhnik and A.~B.~Zamolodchikov,
+\emph{Current algebra and Wess--Zumino model in two dimensions},
+Nucl.\ Phys.\ B~\textbf{247} (1984), 83--103.
+
+\bibitem{Lorgat26}
+R.~Lorgat,
+\emph{Modular Koszul Duality},
+preprint, 2026.
+
+\bibitem{STS83}
+M.~A.~Semenov-Tian-Shansky,
+\emph{What is a classical $r$-matrix?},
+Funct.\ Anal.\ Appl.\ \textbf{17} (1983), 259--272.
+
+\end{thebibliography}
+
+\end{document}

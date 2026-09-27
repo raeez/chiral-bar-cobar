@@ -1,0 +1,381 @@
+\chapter{The transverse interval bar}\label{chap:transverse-bar}
+
+\section{The simplicial object}
+Let
+\[
+ A\in\Alg^{\aug}_{\Eone}(\FactD(X),\tensorpt),
+ \qquad \eps:A\to\one,
+ \qquad \widebar A=\fib(\eps).
+\]
+The two-sided simplicial bar is
+\[
+ B_r^{\perp}(A)=\one\tensorpt A^{\tensorpt r}\tensorpt\one,
+ \qquad r\ge0.
+\]
+Interior faces multiply adjacent factors, outer faces use the augmentation, and degeneracies insert the unit.  Its geometric realization is
+\[
+ \Barop_X^{\perp}(A)=\bigl|B_\bullet^{\perp}(A)\bigr|
+ \simeq \one\otimes_A^{\mathbb L}\one.
+\]
+Every simplicial map belongs to \(\FactD(X)\) by the exact locality criterion; hence the entire bar remains a chiral coefficient system.
+
+\section{Normalized words and signs}
+Write \(s\widebar A\) for cohomological suspension.  Normalization gives the tensor coalgebra
+\[
+ T^c(s\widebar A)=\bigoplus_{r\ge0}(s\widebar A)^{\tensorpt r}.
+\]
+For homogeneous \(a_i\in\widebar A\), abbreviate
+\(
+ [a_1|\cdots|a_r]=sa_1\otimes\cdots\otimes sa_r.
+\)
+We fix
+\[
+ b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
+\]
+The multiplication coderivation is therefore
+\[
+ b_m[a_1|\cdots|a_r]
+ =\sum_{i=1}^{r-1}
+ (-1)^{\sum_{j<i}(|a_j|+1)+|a_i|}
+ [a_1|\cdots|a_ia_{i+1}|\cdots|a_r].
+\]
+The internal differential is the tensor differential on suspended letters.  For an \(\Ainf\)-algebra, add the coderivations induced by every \(m_k\).
+
+\begin{proposition}[Bar identity]
+The total bar differential \(d_B=d_{\mathrm{int}}+\sum_{k\ge2}b_{m_k}\) squares to zero exactly when the \(\Ainf\)-relations hold.  In the strict ungraded case, the square on a three-letter word is the suspended associator
+\[
+ b_m^2[a|b|c]=\pm[(ab)c-a(bc)].
+\]
+\end{proposition}
+\begin{proof}
+A coderivation of the cofree tensor coalgebra is determined by its projection to cogenerators.  The projection of \(d_B^2\) in arity \(n\) is precisely the signed sum of all substitutions \(m_r(1^{\otimes i}\otimes m_s\otimes1^{\otimes j})\) with \(r+s=n+1\), which is the \(n\)-th Stasheff identity.
+\end{proof}
+
+The deconcatenation coproduct
+\[
+ \Delta_{\mathrm{dec}}[a_1|\cdots|a_r]
+ =\sum_{p=0}^r[a_1|\cdots|a_p]\otimes
+ [a_{p+1}|\cdots|a_r]
+\]
+makes \(\Barop_X^\perp(A)\) a conilpotent coassociative coalgebra in \(\FactD(X)\).  The bar differential is a coderivation because every multiplication contracts a consecutive subword.
+
+\section{Interval factorisation homology}
+\begin{theorem}[Bar as interval amplitude]\label{thm:bar-interval}
+Let the endpoints of \([0,1]\) carry the augmentation module.  Then
+\[
+ \Barop_X^{\perp}(A)
+ \simeq\one\otimes_A^{\mathbb L}\one
+ \simeq\int_{([0,1],\partial[0,1])}A.
+\]
+More generally, for a right module \(R\) and left module \(L\),
+\[
+ \Barop(R,A,L)\simeq R\otimes_A^{\mathbb L}L
+ \simeq\int_{([0,1],\{0,1\})}(A;R,L).
+\]
+\end{theorem}
+\begin{proof}
+Cover the interval by an ordered chain of small subintervals and endpoint collars.  The factorisation Cech diagram is the two-sided simplicial bar.  Excision identifies its colimit with factorisation homology and with the derived relative tensor product.  Refinement of the cover is cofinal.
+\end{proof}
+
+This is the exact physical meaning of a bar word: an ordered sequence of intermediate boundary operations.  The differential fuses adjacent operations.  The chiral coefficient accompanies each letter and each multiplication map, but the bar degree is transverse.
+
+\begin{nogobox}[title={No-go theorem 7: collision residue cannot replace the bar differential}]
+The transverse bar differential has source \((s\widebar A)^{\tensorpt r}\) and target \((s\widebar A)^{\tensorpt(r-1)}\), and it is induced by \(m_\perp\).  A collision residue changes the normal degree of a distribution on \(X^I\) and is induced by restriction to a diagonal.  Their source and target gradings differ.  They may appear as anticommuting differentials in a bicomplex, but one cannot do the work of the other.
+\end{nogobox}
+
+\section{Associahedra and the monadic bar}
+The simplicial bar presents the derived tensor product.  The Stasheff associahedron resolves the multiplication used to evaluate it.  If \(A\) is an algebra over a cofibrant \(\Ainf\)-operad, the operadic bar has a cellular filtration with terms
+\[
+ \bigoplus_{r\ge0}C_*(K_r)\otimes(s\widebar A)^{\tensorpt r}.
+\]
+Rectification gives a zigzag of quasi-isomorphisms to the simplicial bar of a strict model.  The simplex and associahedron therefore have different universal properties and must both be retained when the input multiplication is homotopy coherent.
+
+\section{Completion}
+The direct-sum bar is conilpotent.  In formal or filtered field theory one often needs
+\[
+ \widehat{\Barop}^{\perp}(A)=\prod_{r\ge0}(s\widebar A)^{\tensorpt r}.
+\]
+Let \(F^N A\) be a complete decreasing filtration such that every \(m_k\) raises total filtration by at least \(k-1\).
+
+\begin{proposition}[Completed-bar convergence]\label{prop:bar-completion}
+Assume that each quotient \(A/F^N A\) has finite bar length in a fixed total weight and that the cohomology tower satisfies Mittag--Leffler.  Then
+\[
+ H^*(\widehat{\Barop}^{\perp}(A))
+ \cong\varprojlim_N H^*(\Barop^{\perp}(A/F^N A)).
+\]
+The bar differential is continuous and the completion is separated.
+\end{proposition}
+\begin{proof}
+The completed bar is the inverse limit of the finite quotient bars.  The Mittag--Leffler hypothesis kills \(\varprojlim^1\), and the filtration-growth assumption makes every coderivation continuous.
+\end{proof}
+
+\chapter{The associative chiral bar and the theorem of two bars}\label{chap:two-bars}
+
+\section{Operadic chiral bar}
+Let \(C\) be an augmented algebra over \(\Assch\).  The operadic bar is a conilpotent coalgebra over the bar cooperad \(B\Assch\):
+\[
+ \Barop^{\ch}_{\Ass}(C)
+ =\bigoplus_T
+ B\Assch(T)\otimes_{\operatorname{Aut}T}
+ (s\widebar C)^{\otimes\operatorname{in}(T)}.
+\]
+Here \(T\) runs over ordered chiral composition trees.  The differential has three sources:
+\begin{enumerate}
+\item the internal differential of \(C\);
+\item the cooperadic differential of the chiral resolution, including screen chains when present;
+\item contraction of an internal chiral edge by the associative chiral multiplication.
+\end{enumerate}
+The entire principal-part distribution remains attached to each vertex and edge.  A residue is one component of this geometric coefficient, not the universal differential.
+
+On the formal disc, this bar resolves iterated nonlocal fields.  Its length is the number of chiral composition vertices, and its relations are weak associativity together with all higher homotopies.  When an exchange operator is present, the chiral trees are braided and the differential uses the corresponding transport.
+
+\section{Chiral Chevalley chains are a third construction}
+A chiral Lie algebra \(\mathfrak g\) has Chevalley chains
+\[
+ \CE_*^{\ch}(\mathfrak g)
+ =\bigl(\Cofree_{\Com^c}^{\ch}(s\mathfrak g),d_{\mathrm{int}}+d_{[-,-]_{\ch}}\bigr).
+\]
+This is the construction appearing in Francis--Gaitsgory chiral Koszul duality.  It is not the associative chiral bar and not the transverse interval bar.  The three constructions are related only after one supplies an enveloping map, a commutator map, or another explicit monoidal comparison.
+
+\begin{theorem}[The theorem of two associative bars]\label{thm:two-bars}
+Let \(A\) be a doubly associative chiral algebra in the sense of \cref{def:double-e1}.  Then:
+\begin{enumerate}
+\item \(\Barop^\perp(A)\) is a conilpotent coalgebra for transverse deconcatenation and remains an associative chiral coefficient whenever the mixed locality maps are compatible with the bar faces;
+\item \(\Barop^{\ch}_{\Ass}(A)\) is a conilpotent chiral cooperadic object and remains a transverse \(\Eone\)-algebra whenever the same mixed data are compatible with chiral edge contraction;
+\item the iterated objects \(\Barop^\perp\Barop^{\ch}_{\Ass}(A)\) and \(\Barop^{\ch}_{\Ass}\Barop^\perp(A)\) are linked by a canonical comparison on the aligned-decomposition sector;
+\item if the mixed operad is a genuine distributive law and both realizations preserve the relevant homotopy colimits, the comparison is an equivalence and the total differential is
+\[
+ d_{\mathrm{tot}}=d_{\mathrm{int}}+d_\perp+d_X,
+ \qquad d_\perp d_X+d_Xd_\perp=0.
+\]
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The first two statements apply each bar functor internally to the algebra category for the other operation.  This is possible precisely because the mixed cells say that every face map is a morphism for the remaining structure.  The aligned projector supplies the comparison between the two orders of common decomposition.  Under a distributive law, the two-sided bar construction is the geometric realization of one bisimplicial/cooperadic object; Fubini for homotopy colimits gives the equivalence.  The anticommutator is the mixed edge identity of \cref{thm:mixed-boundary}.
+\end{proof}
+
+\begin{nogobox}[title={No-go theorem 8: no unnamed comparison of bars}]
+An equality
+\(
+ \Barop^\perp(A)=\Barop^{\ch}_{\Ass}(A)
+\)
+has no meaning without a functor carrying the pointwise multiplication problem to the chiral-convolution multiplication problem.  Even their underlying gradings count different geometric events.  A similarity of Euler characteristics is not a comparison map.
+\end{nogobox}
+
+\section{Universal enveloping comparison}
+Suppose \(\mathfrak g\) is a chiral Lie algebra and \(U^{\ch}(\mathfrak g)\) is an associative chiral enveloping algebra satisfying PBW.  The universal twisting map induces
+\[
+ \CE_*^{\ch}(\mathfrak g)\longrightarrow
+ \Barop^{\ch}_{\Ass}(U^{\ch}(\mathfrak g)).
+\]
+Under the chiral PBW and connectivity hypotheses, the associated graded map is the ordinary Koszul comparison between symmetric coalgebras and the bar of a tensor quotient, hence a quasi-isomorphism.  This is the correct setting in which Lie-type and associative-chiral dualities coincide.
+
+For a transversely ordered enveloping algebra \(U(\mathfrak g)\) in the coefficient category, the analogous comparison is
+\[
+ \CE_*(\mathfrak g)\xrightarrow{\sim}\Barop^\perp(U(\mathfrak g)),
+\]
+which is the classical Cartan--Eilenberg theorem internal to the coefficient category.  The two statements share a proof pattern but have different multiplications.
+
+\chapter{Bar--cobar reconstruction and the completion locus}\label{chap:bar-cobar}
+
+\section{Cobar}
+Let \(C\) be a coaugmented conilpotent coassociative coalgebra in a stable symmetric monoidal category \(\mathcal V\), and write \(\widebar C\) for its coaugmentation coideal.  The cobar construction is
+\[
+ \Cobar(C)=\bigl(T(s^{-1}\widebar C),d_C+d_\Delta\bigr),
+\]
+where \(d_\Delta\) is the derivation induced by the reduced coproduct.  The universal twisting morphisms give the adjunction
+\[
+ \Barop:\Alg^{\aug}_{\Eone}(\mathcal V)
+ \rightleftarrows
+ \Coalg^{\coaug}_{B\Eone}(\mathcal V):\Cobar.
+\]
+The notation on the coalgebra side includes the divided-power or norm data required by the ambient category; in ordinary characteristic-zero chain complexes it reduces to the familiar conilpotent coassociative coalgebra.
+
+\section{Nilcompletion and conilcompletion}
+An augmented algebra has an operadic nilpotent tower; its inverse limit is the nilcompletion \(A^{\wedge}_{\nilc}\).  A coalgebra has a coradical tower; its inverse limit is the conilcompletion \(C^{\wedge}_{\conil}\).
+
+\begin{theorem}[Internal associative Koszul duality]\label{thm:internal-kd}
+Let \(\mathcal V\) be a stable presentable symmetric monoidal \(\infty\)-category whose tensor product preserves colimits separately, and use the correct bar-cooperad coalgebras in \(\mathcal V\).  Bar and cobar restrict to inverse equivalences
+\[
+ \Alg^{\aug}_{\Eone}(\mathcal V)_{\mathrm{nilcomp}}
+ \simeq
+ \Coalg^{\coaug}_{B\Eone}(\mathcal V)_{\mathrm{conilcomp}}.
+\]
+Applied to \((\FactD(X),\tensorpt)\), this is transverse ordered chiral bar--cobar duality.  Applied to the associative chiral operad, under its admissibility and continuity hypotheses, it is associative chiral bar--cobar duality.
+\end{theorem}
+\begin{proof}
+The bar--cobar unit and counit are equivalences on finite nilpotent/coradical stages by the operadic filtration and the Koszul self-duality of the associative operad up to suspension.  Passing to the inverse limits gives the stated equivalence on complete objects.  Stability and separate colimit preservation ensure the operadic constructions exist and commute with the finite stages.
+\end{proof}
+
+The theorem is an equivalence on a completion locus, not on all augmented algebras.  This is the correct unconditional statement: every hypothesis appears in the object type.
+
+\section{Positive-weight proof}
+Let
+\[
+ A=\one\oplus\prod_{w\ge1}A_w,
+ \qquad A_u\tensorpt A_v\to A_{u+v},
+\]
+be connected and complete, and suppose every weight has finitely many decompositions into positive weights.
+
+\begin{theorem}[Positive reconstruction]\label{thm:positive-reconstruction}
+The counit
+\[
+ \Cobar\Barop(A)\longrightarrow A
+\]
+is a filtered quasi-isomorphism.  Dually, for a conilpotent weight-complete coalgebra with finite decomposition in every weight, the unit \(C\to\Barop\Cobar(C)\) is a filtered quasi-isomorphism.
+\end{theorem}
+\begin{proof}
+Fix total weight \(w\).  Only finitely many subdivided words occur.  Filter \(\Cobar\Barop(A)\) by the number of surviving cuts.  The associated graded of each fixed underlying word is the augmented cellular chain complex of the simplex of its subdivisions.  The extra degeneracy joining the first cut contracts this complex onto the unsplit word.  Thus the associated-graded counit is a quasi-isomorphism in every weight.  Completeness promotes it to the filtered equivalence.  The coalgebra proof uses the finite coradical filtration in each weight.
+\end{proof}
+
+\section{Mittag--Leffler limits}
+For a complete filtered algebra \(A\simeq\varprojlim A/F^N\), reconstruction is inherited from the finite quotients if the towers of bar and cobar cohomology satisfy Mittag--Leffler and the tensor product is continuous.  Without these conditions, \(\varprojlim^1\) can create classes and completion can fail to commute with geometric realization.
+
+\begin{nogobox}[title={No-go theorem 9: bar--cobar without completion}]
+The canonical map \(\Cobar\Barop(A)\to A\) need not be an equivalence for an arbitrary augmented algebra.  It computes a nilpotent or augmentation completion.  Any theorem writing an unqualified equality has omitted the principal conclusion of the double-centralizer calculation.
+\end{nogobox}
+
+\section{Deformation complexes}
+The convolution complex
+\[
+ \operatorname{Conv}(B\Eone,\End_A)
+\]
+controls deformations of the associative multiplication.  Its Maurer--Cartan elements are homotopy-coherent products, and its gauge equivalences are operadic homotopies.  In the two-direction theory, the complete deformation complex is the total convolution algebra of the bicoloured cooperad.  Its differential splits into internal, transverse, chiral, and mixed components.  Curvature can be inserted only after its arity and degree are specified.
+
+\chapter{Koszul--Morita theory, relative bases, and the centre}\label{chap:morita}
+
+\section{The augmentation boundary}
+For an augmented algebra \(A\), the unit is a left and right module.  The augmentation-boundary algebra is
+\[
+ A^!=\RHom_A(\one,\one).
+\]
+When bar terms are dualisable, or continuous internal Hom is used,
+\[
+ A^!\simeq\RHom_{\mathcal V}(\Barop(A),\one).
+\]
+This is the boundary Koszul dual.  It is not automatically the quadratic dual, Verdier dual, or chiral dual.
+
+\begin{theorem}[Double centralizer]\label{thm:double-centralizer}
+Assume \(A\) is connective, derived augmentation completion is computed by the cobar totalization of the Amitsur complex, and \(\one\) is compact in the completed module category.  Then
+\[
+ A^{!!}:=\RHom_{A^!}(\one,\one)
+ \simeq A^{\wedge}_\eps.
+\]
+On the nilcomplete locus this is \(A\).
+\end{theorem}
+\begin{proof}
+The bar resolution identifies the thick subcategory generated by \(\one\) with perfect \(A^!\)-modules.  The endomorphisms of the corresponding Yoneda generator form the double centralizer.  The universal algebra acting on the augmentation-generated subcategory is derived completion along \(\ker\eps\), computed by the assumed Amitsur totalization.
+\end{proof}
+
+\section{One-sided and two-sided twisting}
+Put \(C=\Barop(A)\) and let \(\tau:C\to A\) be the universal twisting cochain.  For an \(A\)-module \(M\), define
+\[
+ K_A(M)=C\tensorpt M
+\]
+with the sum of the internal differential and the twisting term obtained from \(\Delta_C\), \(\tau\), and the module action.  The first factor makes it a \(C\)-comodule.  The reverse functor is \(L_C(N)=A\tensorpt N\) with the dual twisting differential.
+
+\begin{theorem}[Positive-complete module--comodule duality]\label{thm:module-comodule}
+For a connected positive-complete algebra with finite weight decompositions, the twisting functors are inverse equivalences between positive-complete modules and conilcomplete comodules.  The two-sided version gives an equivalence between complete \((A,B)\)-bimodules and conilcomplete \((\Barop A,\Barop B)\)-bicomodules.  It sends the regular diagonal bimodule to the regular diagonal bicomodule.
+\end{theorem}
+\begin{proof}
+Filter the composites by bar cuts and coradical length.  In each fixed weight, the associated graded is the subdivision complex of an ordered word with an extra degeneracy, hence contractible onto the unsplit module or comodule.  Finite decomposition gives convergence; completion passes from finite windows to the full object.
+\end{proof}
+
+For composable bimodules,
+\[
+ K_{A,D}^{\mathrm{bi}}(M\otimes_B^{\mathbb L}N)
+ \simeq
+ K_{A,B}^{\mathrm{bi}}(M)\square^{\mathbb R}_{\Barop B}
+ K_{B,D}^{\mathrm{bi}}(N).
+\]
+Thus tensor composition becomes cotensor composition.  Mapping objects identify Hochschild cochains with coHochschild cochains, and Hochschild chains with coHochschild chains, in the complete categories.
+
+\section{Relative augmentation bases}
+Many important noncommutative algebras are not augmented over \(\kfield\) but are augmented over a separable or semisimple base \(S\).
+
+\begin{definition}[Relative bar]
+For an \(S\)-algebra \(A\) equipped with a retraction \(A\to S\), the relative reduced bar is
+\[
+ \Barop_S(A)=S\otimes_A^{\mathbb L}S
+ \simeq T_S^c(s\widebar A_S)
+\]
+with tensors and multiplication taken over \(S\).
+\end{definition}
+
+For a quiver, \(S=\bigoplus_i\kfield e_i\) is the vertex-idempotent algebra.  Tensoring over \(S\) automatically retains only composable paths.  This is the natural chain complex; choosing an arbitrary scalar augmentation destroys the object decomposition and can change the homology.
+
+\section{The internal derived centre}
+The derived centre is
+\[
+ \mathbf Z(A)=\RHom_{A^e}(A,A),
+ \qquad A^e=A\tensorpt A^{\op}.
+\]
+The brace operations make \(\mathbf Z(A)\) an \(\Etwo\)-algebra internal to the coefficient category.  It is universal among \(\Etwo\)-objects acting centrally on \(A\).  Under Morita equivalence, it is invariant.
+
+A physical bulk theory \(\mathcal B\) coupled to a boundary condition produces a bulk-to-boundary-centre map
+\[
+ \mathcal B\longrightarrow\mathbf Z(A_b).
+\]
+An open--closed theorem can prove this map is an equivalence for a selected sector.  The centre alone does not construct the decoupled bulk theory, its stress tensor, its global state space, or its anomaly data.
+
+\begin{nogobox}[title={No-go theorem 10: a boundary centre does not determine an arbitrary bulk}]
+There is no universal inverse to the bulk-to-centre map.  Different bulk theories can induce the same central action on a chosen boundary sector, and a boundary category may admit no anomaly-free local bulk realization.  The equation \(\mathcal B\simeq\mathbf Z(A_b)\) is a theorem only after generation, locality, and open--closed comparison hypotheses are verified.
+\end{nogobox}
+
+\chapter{Quadratic, PBW, curved, and Verdier comparisons}\label{chap:quadratic}
+
+\section{Quadratic recognition}
+Let \(V\) be dualisable and
+\[
+ A=T(V)/(R),\qquad R\hookrightarrow V\tensorpt V.
+\]
+The quadratic dual algebra is
+\[
+ A^{q!}=T(V^*[-1])/(R^\perp),
+\]
+and the quadratic dual coalgebra is the largest subcoalgebra of \(T^c(sV)\) whose quadratic core lies in \(s^2R\).
+
+\begin{theorem}[Quadratic recognition]\label{thm:quadratic-recognition}
+Assume every weight component is dualisable and the diagonal Koszul complex is exact in positive homological degree.  Then the quadratic dual coalgebra includes quasi-isomorphically into \(\Barop(A)\), and continuous duality gives
+\[
+ A^!\simeq A^{q!}.
+\]
+\end{theorem}
+\begin{proof}
+Filter the bar by tensor weight.  Its linear strand is the quadratic Koszul complex.  The exactness hypothesis collapses the spectral sequence onto the quadratic dual coalgebra.  Continuous linear duality turns the coalgebra into the stated algebra.
+\end{proof}
+
+\begin{nogobox}[title={No-go theorem 11: quadratic dual is not automatically derived Koszul dual}]
+The orthogonal-relations algebra \(A^{q!}\) records only the quadratic strand.  If the Koszul complex has higher homology, \(A^{q!}\) is not quasi-isomorphic to \(\RHom_A(\one,\one)\).  Equality requires the Koszulness theorem, not merely a quadratic presentation.
+\end{nogobox}
+
+\section{PBW deformations and curvature}
+A nonhomogeneous relation has the form
+\[
+ r-\alpha(r)-\beta(r),
+ \qquad \alpha:R\to V,
+ \qquad \beta:R\to\one.
+\]
+The linear term becomes a differential on the quadratic dual, and the constant term becomes curvature.
+
+\begin{theorem}[Curved PBW duality]\label{thm:curved-pbw}
+If the Braverman--Gaitsgory overlap conditions hold, then the filtered algebra has associated graded \(T(V)/(R)\), and its dual is a curved dg algebra
+\[
+ (A^{q!},d_\alpha,h_\beta),
+ \qquad d_\alpha^2=[h_\beta,-],
+ \qquad d_\alpha h_\beta=0.
+\]
+Conversely, these curved identities are equivalent to resolution of the degree-three overlap ambiguities.
+\end{theorem}
+\begin{proof}
+Evaluate the ambiguity space \((R\otimes V)\cap(V\otimes R)\).  Its filtration-two component gives the derivation condition for \(d_\alpha\); the filtration-one and filtration-zero components give \(d_\alpha^2=[h_\beta,-]\) and \(d_\alpha h_\beta=0\).  The Rees spectral sequence then identifies the associated graded algebra.
+\end{proof}
+
+This is the correct home of the Weyl relation \(yx-xy=1\): the constant is curvature, not an augmentation-preserving quadratic relation.
+
+\section{Verdier duality}
+Verdier duality acts on the factorisation \(D\)-module coefficient and reverses \(!\)- and \(*\)-extensions.  Under holonomicity and finiteness hypotheses it can carry factorisation algebras to factorisation coalgebras.  A comparison with a Koszul dual requires an explicit pairing between the bar resolution and the Verdier-dual coefficient.  The operations agree in self-dual examples but are not definitionally identical.
+
+\begin{nogobox}[title={No-go theorem 12: four dualities are not one operation}]
+The interval bar \(\one\otimes_A^{\mathbb L}\one\), boundary dual \(\RHom_A(\one,\one)\), quadratic dual \(T(V^*[-1])/(R^\perp)\), and Verdier dual \(\mathbb D A\) have different variances and hypotheses.  They can be joined by comparison maps in a finite Koszul self-dual model.  Replacing the maps by equality erases the theorem.
+\end{nogobox}

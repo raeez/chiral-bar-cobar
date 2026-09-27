@@ -1,0 +1,1728 @@
+%% The Motivic Shadow Tower.
+%%
+%% Constructs the motivic lift of the Vol I shadow tower on affine
+%% Arnold screens. The motivic object is weight-filtered, not purely
+%% weight r in general: rational Virasoro coefficients live in the
+%% Tate-scalar lane, while non-rational Arnold periods live in the
+%% Brown--Goncharov motivic MZV filtration.
+%%
+%% Vol I theory sequence. Depends on shadow tower (see \ref{part:characteristic-datum}), Vol II
+%% GRT-parametrized seven faces, Vol III shadow-Feynman
+%% identification S_r = delta^{(r)}.
+%%
+%% All macros \providecommand-guarded.
+
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\mot}{\mathrm{mot}}
+\providecommand{\num}{\mathrm{num}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\grt}{\mathfrak{grt}_1}
+\providecommand{\Face}{\mathrm{Face}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\wt}{\mathrm{wt}}
+\providecommand{\rat}{\mathrm{rat}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Delta}{\Delta}
+\providecommand{\zet}{\zeta}
+\providecommand{\Li}{\mathrm{Li}}
+\providecommand{\per}{\mathrm{per}}
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Fil}{\mathrm{Fil}}
+\providecommand{\ClaimStatusConditional}{}
+
+\chapter{The Motivic Shadow Tower}
+\label{ch:motivic-shadow-tower}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Prologue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow tower $\{S_r(\cA)\}_{r \geq 2}$ is the sequence of scalar
+coefficients obtained from the ordered Maurer--Cartan element
+$\Theta_{\cA}$ after Arnold-residue extraction and symmetric averaging.
+The low Virasoro values
+\[
+ S_2(\Vir_c)=\frac c2,\qquad S_3(\Vir_c)=2,\qquad
+ S_4(\Vir_c)=\frac{10}{c(5c+22)},\qquad
+ S_5(\Vir_c)=\frac{-48}{c^2(5c+22)}
+\]
+are rational functions of the central charge. Their rationality is not
+a motivic purity statement in weight $r$: it says that these particular
+Arnold pairings have only the Tate-scalar component. Higher-spin
+channels may carry genuine Brown--Goncharov periods, but a non-zero
+period coefficient must be produced by an explicit Arnold/KZ iterated
+integral that survives the ordered-to-symmetric averaging map.
+
+The GRT-parametrised faces act on the same Arnold/KZ period algebra.
+Thus the natural motivic object attached to a shadow coefficient is a
+weight-filtered motivic period, together with its rational OPE
+coefficient, not a bare numerical scalar.
+
+Throughout, we distinguish numerical multiple zeta values
+$\MZV^{\num} \subset \mathbb{R}$ (the $\mathbb{Q}$-algebra generated
+by $\zet(n_1, \ldots, n_k)$ with $n_1 \geq 2$) from motivic
+multiple zeta values $\MZV^{\mot}$ (Goncharov--Brown
+$\mathbb{Q}$-algebra of motivic periods of the mixed Tate motive
+$\mathrm{MT}(\mathbb{Z})$). The period map
+$\per \colon \MZV^{\mot} \to \MZV^{\num}$ is surjective (Brown
+2012); injectivity is the motivic period conjecture in this mixed Tate
+setting, not a theorem. The motivic ring $\MZV^{\mot}$ carries a
+coaction of the motivic Galois group of
+$\mathrm{MT}(\mathbb{Z})$. Through the Ihara--Drinfeld action on the
+motivic fundamental group of
+$\mathbb P^1\setminus\{0,1,\infty\}$ this coaction is compatible with
+the Grothendieck--Teichmuller Lie algebra. No argument below uses an
+identification of the full motivic Galois Lie algebra with $\grt$.
+
+Three separations govern the chapter. A shadow coefficient has an
+external bar weight $r$, while its motivic period may have any Brown
+weight $\leq r$; rational Virasoro coefficients have Brown weight $0$.
+Arnold forms control affine ordered screens; projective and
+positive-genus curves add the extra relations recorded in
+Appendix~\ref{app:arnold-relations}. Finally, shadow/Gel'fand--Fuks
+representatives are not curve-level chiral Hochschild classes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Setup: motivic multiple zeta values and the weight filtration}
+\label{sec:mot-setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We recall only what is required; the reader is referred to
+Brown's \emph{Mixed Tate motives over $\mathbb{Z}$}
+(arXiv:1102.1312) and Deligne--Goncharov's \emph{Groupes
+fondamentaux motiviques de Tate mixte} (Ann. Sci. \'Ecole Norm.
+Sup. 38, 2005) for the foundational statements. The proofs in this
+chapter use the ring $\MZV^{\mot}$ and its coaction through the cited
+theorems stated inline.
+
+\begin{definition}[\label{def:mzv-mot}Motivic multiple zeta values]
+Let $\mathrm{MT}(\mathbb{Z})$ denote the Tannakian category of
+mixed Tate motives over $\mathbb{Z}$ (Deligne--Goncharov 2005,
+Brown 2012). Write $\MZV^{\mot}$ for the $\mathbb{Q}$-algebra of
+\emph{motivic periods} of $\mathrm{MT}(\mathbb{Z})$: for each
+collection of indices $(n_1, \ldots, n_k)$ with $n_1 \geq 2$ and
+$n_i \geq 1$, there is a distinguished element
+$\zet^{\mot}(n_1, \ldots, n_k) \in \MZV^{\mot}$; the weight is
+$\wt = n_1 + \cdots + n_k$. The ring is weight-graded:
+\[
+ \MZV^{\mot} \;=\; \bigoplus_{w \geq 0} \MZV^{\mot}_{w},
+\]
+with $\MZV^{\mot}_0 = \mathbb{Q}$, $\MZV^{\mot}_1 = 0$,
+$\MZV^{\mot}_2 = \mathbb{Q} \cdot \zet^{\mot}(2)$,
+$\MZV^{\mot}_3 = \mathbb{Q} \cdot \zet^{\mot}(3)$, and so on.
+\end{definition}
+
+\begin{remark}[\label{rem:wt-1-vanishes}No motivic multiple zeta
+value of weight one]
+Definition~\ref{def:mzv-mot} entails $\MZV^{\mot}_1 = 0$: any
+multiple zeta value of weight $1$ would be proportional to
+$\zet(1)$, which diverges. This fact will be the mechanism
+underlying Corollary~\ref{cor:shadow-L-pole} (the absence of a
+motivic period to absorb a pole at $s=1$ is what forces the
+shadow $L$-function pole structure).
+\end{remark}
+
+\begin{definition}[\label{def:period-map}Period map]
+The \emph{period map}
+\[
+ \per \colon \MZV^{\mot} \longrightarrow \mathbb{R}
+\]
+is the $\mathbb{Q}$-algebra homomorphism sending
+$\zet^{\mot}(n_1, \ldots, n_k)$ to the numerical multiple zeta
+value $\zet(n_1, \ldots, n_k) \in \mathbb{R}$. The image is
+$\MZV^{\num} \subset \mathbb{R}$. By Brown's period theorem
+(\emph{loc.\ cit.}\ Thm.\ 1.1), $\per$ is surjective onto
+$\MZV^{\num}$.
+\end{definition}
+
+\begin{definition}[\label{def:mot-coaction}Motivic coaction]
+The ring $\MZV^{\mot}$ is a comodule over the coordinate Hopf algebra
+\[
+ \mathcal{G}^{\mot}
+ =
+ \mathcal{O}\bigl(\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb{Z}))\bigr).
+\]
+Brown identifies the Lie algebra of the unipotent radical, after a
+choice of de~Rham generators, with the free graded Lie algebra having
+one generator $\sigma_{2n+1}$ in each odd weight $2n+1\ge3$ (Brown
+2012 Thm.~1.2). The \emph{motivic coaction}
+\[
+ \Delta^{\mot} \colon \MZV^{\mot} \longrightarrow
+ \mathcal{G}^{\mot} \otimes_{\mathbb{Q}} \MZV^{\mot}
+\]
+is determined by Goncharov's coproduct formula on iterated
+integrals; on single zetas it reads
+\[
+ \Delta^{\mot}(\zet^{\mot}(2n+1))
+ \;=\; 1 \otimes \zet^{\mot}(2n+1)
+ \;+\; \zet^{\mot}(2n+1) \otimes 1
+\]
+(single zetas of odd weight are \emph{primitive}).
+\end{definition}
+
+The Ihara--Drinfeld action sends the motivic Galois Lie algebra to
+the Grothendieck--Teichm\"uller Lie algebra acting on KZ associators.
+We use the notation $\sigma_{2n+1}$ for this motivic image in $\grt$.
+Nothing in the sequel requires the unproved assertion that the image is
+all of $\grt$. The depth and dimension conjectures of
+Zagier--Hoffman and Broadhurst--Kreimer are likewise not inputs; the
+arguments use only Brown's motivic coaction, the weight filtration, and
+the explicit low-weight lines $\MZV^{\mot}_0$, $\MZV^{\mot}_1$, and
+$\MZV^{\mot}_3$.
+
+\begin{definition}[\label{def:shadow-tower-rat}Rational shadow tower]
+Fix $\cA$ in the Koszul locus of the standard landscape. Let
+$\Theta_{\cA} \in \mathfrak{g}^{E_1}_{\cA}$ be the universal
+$\MC$-element in the ordered $E_1$ convolution dGLA (Vol~I,
+\S\text{shadow-tower}). Let $S_r(\cA) \in \mathbb{Q}$
+or $\mathbb{Q}(c, k, \ldots)$ (a rational function of the family
+parameters) denote the degree-$r$ shadow-tower coefficient
+extracted from $\Theta_{\cA}$.
+
+The \emph{period-scalar shadow ring} is
+\[
+ R^{\rat}(\cA) \;=\; \mathbb{Q}\bigl[(2\pi i)^{2n}, \zet(2m+1)
+ \mid n\geq1,\ m\geq1\bigr]
+\]
+(the $\mathbb{Q}$-subalgebra of $\mathbb{C}$ generated by the even
+Tate periods and the odd single zetas), graded by period weight with
+$\deg((2\pi i)^{2n}) = 2n$ and
+$\deg(\zet(2m+1)) = 2m+1$.
+\end{definition}
+
+\begin{remark}[\label{rem:even-zeta-2pi-i}Even zetas reduce to
+powers of $2 \pi i$]
+$\zet(2n) = -\tfrac{(2\pi i)^{2n}}{2 (2n)!} B_{2n}$ where
+$B_{2n}$ is a Bernoulli number; thus all even zetas already lie
+in $\mathbb{Q}[(2\pi i)^{2n}]$. The choice to generate $R^{\rat}$
+by $(2\pi i)^2$ and odd zetas is economical: it matches the
+generators of $\MZV^{\mot}$, with $\zet^{\mot}(2)$ and
+$(2\pi i)^{\mot,2}$ identified via
+$\zet^{\mot}(2) = -\tfrac{(2\pi i)^{\mot,2}}{24}$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The motivic-lift theorem}
+\label{sec:mot-lift-thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[\label{thm:shadow-tower-motivic-lift}Motivic lift of
+Arnold-period shadow coefficients]
+\ClaimStatusProvedHere
+Let $\cA$ lie in the Koszul locus of the standard landscape. Fix the
+genus-zero affine Arnold/KZ model with tangential base points. Suppose
+the ordered residue computation of the $r$-th shadow coefficient is
+written as a finite expression
+\[
+ S_r(\cA)=\sum_{\nu} q_{\nu,r}(\cA)\,\per(I_{\nu,r}^{\mot}),
+ \qquad q_{\nu,r}(\cA)\in\mathbb Q(c,k,\ldots),
+\]
+where each $I_{\nu,r}^{\mot}$ is a motivic iterated integral of Arnold
+length at most $r$. Then
+\[
+ S_r^{\mot}(\cA):=\sum_{\nu} q_{\nu,r}(\cA)\,I_{\nu,r}^{\mot}
+ \;\in\;
+ \Fil^W_{\le r}\MZV^{\mot}\otimes_{\mathbb Q}\mathbb Q(c,k,\ldots)
+\]
+is a motivic lift and satisfies
+\[
+ \per\bigl(S_r^{\mot}(\cA)\bigr)=S_r(\cA).
+\]
+If the Arnold expression has only the unit period, then
+$S_r^{\mot}(\cA)\in \MZV^{\mot}_0\otimes\mathbb Q(c,k,\ldots)$; its
+shadow degree remains $r$, but its Brown motivic weight is $0$.
+The construction is functorial for morphisms preserving the chosen
+ordered residue model and is compatible with rational
+ordered-to-symmetric averaging.
+\end{theorem}
+
+\begin{proof}
+Arnold's theorem identifies the cohomology of the affine configuration
+space with the Orlik--Solomon algebra generated by the logarithmic
+forms $\eta_{ij}=d\log(z_i-z_j)$ modulo the triangular circuit
+relations. Deligne--Goncharov and Brown lift the corresponding
+iterated integrals on the genus-zero KZ/Arnold model to
+$\MZV^{\mot}$, with period map equal to the numerical iterated
+integral.
+
+The ordered Maurer--Cartan element has the form
+\[
+ \Theta_{\cA} \;=\; r(z) \,dz
+ \;+\; \sum_{r \geq 3} \theta_r \cdot \omega_r,
+\]
+where the $\omega_r$ are Arnold words on affine tangent screens and
+the OPE coefficients in $\theta_r$ are rational functions of the
+family parameters. The scalar shadow coefficient is obtained by
+applying the rational averaging map
+\[
+ \mathrm{av}^{\mathrm{mod}}
+ \colon \mathfrak{g}^{E_1} \longrightarrow \mathfrak{g}^{\mathrm{mod}}.
+\]
+Since averaging is $\mathbb Q$-linear and acts on the ordered
+configuration labels rather than on the period algebra, it commutes
+with replacing each numerical Arnold iterated integral by its motivic
+lift. Arnold length bounds Brown weight, so the resulting coefficient
+lies in $\Fil^W_{\le r}\MZV^{\mot}$. Applying $\per$ termwise gives
+the original scalar. Functoriality is the functoriality of the OPE
+coefficient system and of the Arnold/KZ iterated-integral torsor under
+maps that preserve the chosen ordered residue model.
+\end{proof}
+
+\begin{remark}[\label{rem:mot-lift-independence}Associator torsor]
+Changing the motivic associator changes the coordinates on the same
+motivic torsor. The intrinsic assertion is therefore comodule
+stability, not equality of coordinate formulas. A displayed expression
+for $S_r^{\mot}$ is tied to the chosen Arnold/KZ coordinates; its
+period and its motivic coaction orbit are coordinate-independent.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The GRT motivic coaction on the shadow tower}
+\label{sec:grt-coaction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Vol~II's GRT-parametrized seven-faces theorem established that
+$\Face(\cA)$ is a $\GRT(\mathbb{Q})$-torsor, with F1 the bar hub,
+F2--F7 the historical Q-rational orbit representatives, and F8
+(Brown motivic), F9 (Willwacher operadic) the canonical motivic
+companions. The action of $\GRT(\mathbb{Q})$ on r-matrices is
+the associator transport; on Arnold period coordinates it is induced
+by the motivic coaction below.
+
+\begin{theorem}[\label{thm:grt-motivic-coaction}Motivic coaction on
+the Arnold shadow-period envelope]
+\ClaimStatusProvedHere
+For fixed $\cA$, $r$, and ordered residue expressions as in
+Theorem~\ref{thm:shadow-tower-motivic-lift}, let
+\[
+ \mathscr S^{\mot}_{\le r}(\cA)
+ \subset
+ \Fil^W_{\le r}\MZV^{\mot}\otimes_{\mathbb Q}\mathbb Q(c,k,\ldots)
+\]
+be the $\mathbb Q(c,k,\ldots)$-span of all motivic Arnold iterated
+integrals of length at most $r$ that occur either in the expressions
+$S_j^{\mot}(\cA)$, $2\le j\le r$, or as right tensor factors in an
+iterated Goncharov coproduct of such integrals. For $b\le r$, let
+$\mathscr S^{\mot}_{\le b}(\cA)$ be the length-$\le b$ part of this
+same envelope. Then $\mathscr S^{\mot}_{\le r}(\cA)$ is a
+$\mathcal G^{\mot}$-subcomodule:
+\[
+ \Delta^{\mot}\bigl(\mathscr S^{\mot}_{\le r}(\cA)\bigr)
+ \subset
+ \bigoplus_{a+b\le r}
+ \mathcal G^{\mot}_{a}\otimes
+ \mathscr S^{\mot}_{\le b}(\cA).
+\]
+In any homogeneous Brown basis one may write
+\[
+ S_r^{\mot}(\cA)=\sum_{b\le r} S_{r,b}^{\mot}(\cA),
+ \qquad S_{r,b}^{\mot}(\cA)\in \MZV^{\mot}_{b}\otimes\mathbb Q(c,k,\ldots),
+\]
+and the coaction lowers the right tensor weight by the left tensor
+weight. The formula is basis-dependent; the subcomodule statement is
+intrinsic. The smaller literal span of the periods appearing in the
+displayed coefficients is not asserted to be stable unless it already
+contains these coproduct right factors.
+\end{theorem}
+
+\begin{proof}
+Goncharov's coproduct for motivic iterated integrals is deconcatenation
+with admissible subintegrals. A subword of an Arnold word on an affine
+collision screen is again an Arnold word of smaller or equal length,
+and the Orlik--Solomon relations are rational. Therefore Brown's
+coaction sends every motivic period appearing in a shadow coefficient
+to a finite sum of left motivic Galois coefficients tensor Arnold
+periods of smaller Brown weight, and those right tensor factors lie in
+the envelope by definition.
+
+The averaged motivic map
+\[
+ \mathrm{av}^{\mot}:=\mathrm{av}^{\mathrm{mod}}\otimes_{\mathbb Q}
+ \mathrm{id}_{\MZV^{\mot}}
+\]
+is rational on the configuration labels, so it commutes with the
+coaction on the coefficient ring. The weight bound follows because a
+length-$r$ Arnold word has no motivic subperiod of Brown weight
+exceeding $r$. The GRT torsor acts by changing associator coordinates;
+the subcomodule does not depend on that coordinate choice.
+\end{proof}
+
+\begin{remark}[\label{rem:f8-f9-coincide}$F_8$ and $F_9$ give the
+same coaction]
+The Willwacher operadic and Brown motivic realisations act through the
+same motivic image in the $\grt$-torsor after the Vol~II comparison.
+The intrinsic object is the coaction envelope of
+Theorem~\ref{thm:grt-motivic-coaction}; coordinates coming from $F_8$
+or $F_9$ give different names to the same orbit.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Explicit motivic computations}
+\label{sec:motivic-shadow-explicit-computations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We compute two explicit Virasoro motivic shadow coefficients and then
+isolate the first higher-spin period boundary. The Virasoro lifts are
+Tate-scalar: no $\zet^{\mot}$ enters. The $W_3$ weight-$6$ statement
+does not prove a non-zero $\zet^{\mot}$ coefficient; it names the
+Arnold/KZ pairing that must be computed before such a coefficient can
+be asserted.
+
+\subsection{$S_4^{\mot}(\Vir_c)$}
+
+\begin{proposition}[\label{prop:s4-vir-mot}Motivic lift of
+$S_4(\Vir_c)$]
+\ClaimStatusProvedHere
+The motivic lift of the weight-$4$ Virasoro shadow coefficient is
+\[
+ S_4^{\mot}(\Vir_c) \;=\; \frac{10}{c (5c + 22)}
+ \;\in\; \MZV^{\mot}_{0} \otimes \mathbb{Q}(c)
+ \;\subset\; \Fil^W_{\le 4}\MZV^{\mot} \otimes \mathbb{Q}(c).
+\]
+The external shadow degree is $4$; the Brown motivic weight is $0$.
+\end{proposition}
+
+\begin{proof}
+The landscape census fixes the Virasoro coefficient on the nonsingular
+surface $c(5c+22)\ne0$:
+\[
+ S_4(\Vir_c) \;=\; \frac{10}{c (5c + 22)}.
+\]
+The denominator factors as
+$\det G_{\wt\,=\,2}(\Vir_c) = c^2(5c+22)/2$, the weight-$2$
+Shapovalov determinant; the numerator $10 = 20/2$ arises from
+the norm $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ and the
+structure constant $c_{334}^2$. All inputs are rational functions
+of $c$. The Arnold residue used here is the rational boundary residue
+of the four-point affine screen; no non-unit iterated integral occurs.
+Thus the motivic lift is the Tate-scalar element
+$10/[c(5c+22)]\in\MZV^{\mot}_0\otimes\mathbb Q(c)$, and the period map
+acts as the identity on it.
+\end{proof}
+
+\begin{remark}[\label{rem:large-c-normalization}Large-$c$ normalization]
+The large-$c$ asymptotic $S_4^{\mot}(\Vir_c) \sim 2/c^2$, not
+$2/(5c^2)$; this is a rational identity and receives no motivic
+correction. The factor $5$ in $5c+22$ cancels against the numerator
+$10=2\cdot5$ in the leading term.
+\end{remark}
+
+\subsection{$S_5^{\mot}(\Vir_c)$}
+
+\begin{proposition}[\label{prop:s5-vir-mot}Motivic lift of
+$S_5(\Vir_c)$]
+\ClaimStatusProvedHere
+The motivic lift of the weight-$5$ Virasoro shadow coefficient is
+\[
+ S_5^{\mot}(\Vir_c) \;=\; \frac{-48}{c^2 (5c + 22)}
+ \;\in\; \MZV^{\mot}_{0} \otimes \mathbb{Q}(c)
+ \;\subset\; \Fil^W_{\le 5}\MZV^{\mot} \otimes \mathbb{Q}(c).
+\]
+The external shadow degree is $5$; the Brown motivic weight is $0$.
+\end{proposition}
+
+\begin{proof}
+The numerical value $S_5(\Vir_c) = -48/[c^2(5c+22)]$ is computed by
+Wick contraction and agrees with the master-equation recursion:
+\[
+ S_5 \;=\; -\frac{1}{5c} \sum_{\substack{3 \leq j \leq k \\ j + k = 7}}
+ \varepsilon(j, k)\, j k\, S_j S_k
+ \;=\; -\frac{1}{5c}\bigl(2 \cdot 3 \cdot 4 \cdot S_3 S_4\bigr)
+ \;=\; -\frac{24}{5c} \cdot 2 \cdot \frac{10}{c(5c+22)}
+ \;=\; \frac{-48}{c^2(5c+22)}
+\]
+using $S_3 = 2$, $S_4 = 10/[c(5c+22)]$, and
+$\varepsilon(3,4) = 1$.
+The displayed recurrence is a finite rational product-sum on the
+rational inputs $S_3$ and $S_4$. It contains no non-unit Arnold
+iterated integral. Hence the motivic lift lies in the weight-$0$
+summand $\MZV^{\mot}_0\otimes\mathbb Q(c)$.
+\end{proof}
+
+\subsection{$W_3$ at shadow degree $6$: period boundary}
+
+\begin{proposition}[\label{prop:s6-w3-mot}Motivic lift of
+$S_6(W_3)$: necessary period source]
+\ClaimStatusConditional
+For the principal $\cW_3$ algebra, the canonical local data determine
+rational $T$-line and $W$-line collision coefficients:
+\[
+ S_4^T=\frac{10}{c(5c+22)},\qquad
+ S_4^W=\frac{2560}{c(5c+22)^3}.
+\]
+A non-rational motivic contribution to the shadow-degree-$6$ coefficient
+can occur only from a non-zero Arnold/KZ period pairing in the $WW$
+channel that survives ordered-to-symmetric averaging. In that case it
+has the filtered form
+\[
+ S_6^{\mot}(W_3)
+ \;=\; S_6^{\rat}(W_3)
+ \;+\;\sum_{1\le b\le 6}\gamma_{6,b}(c)\,m_b,
+ \qquad
+ m_b\in\MZV^{\mot}_b,\quad \gamma_{6,b}(c)\in\mathbb Q(c).
+\]
+The local sources used here do not prove that the coefficients of
+$\zet^{\mot}(3)^2$ or $\zet^{\mot}(6)$ are non-zero.
+\end{proposition}
+
+\begin{proof}
+The landscape census gives the principal $\cW_3$ $T$-line coefficient
+and the separate $W$-line coefficient displayed above. It also records
+the $WW$ collision channel with pole orders $\{6,4,3,2,1\}$ in the
+OPE and $\{5,3,2,1\}$ after the $d\log$ shift. Thus the spin-$3$
+sector is a genuine possible source of Arnold iterated integrals beyond
+the Virasoro scalar lane.
+
+Appendix~\ref{app:arnold-relations} supplies the obstruction: ordered
+Stasheff boundary data do not by themselves imply all pairwise
+Arnold/Kohno flatness relations, and the passage to symmetric data
+requires a named compatibility calculation. Therefore the existence of
+a spin-$3$ channel gives only the necessary source of a motivic period.
+To prove a non-zero $\zet^{\mot}(3)^2$ or $\zet^{\mot}(6)$ coefficient
+one must compute the actual Arnold/KZ pairing and check that it survives
+the averaging map. That computation is not present in the local sources
+used for this chapter.
+\end{proof}
+
+\begin{remark}[\label{rem:w3-first-zeta3}Virasoro scalar lane and
+higher-spin period lane]
+The Virasoro calculations in this chapter prove rationality only for
+the scalar residue recurrences they display. The $\cW_3$ spin-$3$
+channel is the first local place where a genuine Arnold/KZ period can
+enter, because it supplies collision data not present on the Virasoro
+$T$-line. Non-zero motivic content is a separate period-pairing
+calculation, not a consequence of the existence of the spin-$3$
+generator alone.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Virasoro rationality: weighted coefficients and formal relations}
+\label{sec:virasoro-motivic-rationality-all-r}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The weighted Riccati coefficients $R_r$ satisfy their one-line
+transport recurrence.  A separate quadratic relation uses the same
+seeds through arity five and determines an order-six coefficient:
+\[
+ R^{\mathrm{Ricc}}_6(\Vir_c)
+ =\frac{80(45c+193)}{3c^3(5c+22)^2},
+ \qquad
+ C^{\mathrm{rel}}_6(\Vir_c)=\frac{4(240c+1031)}{c^3(5c+22)^2}.
+\]
+The rationality theorem below concerns the weighted recurrence.  A
+comparison with an ordered residue-bar coordinate requires
+$\mathsf H_{\mathrm{res}}(\Vir_c;X)$.
+
+\begin{theorem}[\label{thm:virasoro-motivic-rationality-all-r}Virasoro
+motivic rationality: weighted tower and manuscript boundary]
+\ClaimStatusProvedHere
+For every $r\ge2$, the weighted Riccati-metric Virasoro coefficient is
+rational in the central charge:
+\[
+ \widehat S_{r}^{\rm wt,\mot}(\Vir_c)
+ =
+ \widehat S_{r}^{\rm wt}(\Vir_c)
+ \in
+ \MZV^{\mot}_{0}\otimes\mathbb Q(c)
+ \subset
+ \Fil^W_{\le r}\MZV^{\mot}\otimes\mathbb Q(c).
+\]
+Its motivic coaction is trivial:
+\[
+ \Delta^{\mot}\bigl(\widehat S_r^{\rm wt,\mot}(\Vir_c)\bigr)
+ =
+ 1\otimes \widehat S_r^{\rm wt,\mot}(\Vir_c).
+\]
+The formal order-six relation coefficient
+$C_6^{\mathrm{rel}}(\Vir_c)$ also belongs to $\mathbb Q(c)$.
+A level-six radical/decoupling map supplies its singular-vector
+interpretation, while $\mathsf H_{\mathrm{res}}(\Vir_c;X)$ supplies the
+geometric coordinate $S_6(\Vir_c;\mathsf H_{\mathrm{res}})$.
+\end{theorem}
+
+\begin{proof}
+The weighted recurrence is
+\[
+ \widehat S^{\rm wt}_r(\Vir_c)
+ =
+ -\frac{1}{r c}
+ \sum_{\substack{j+k=r+2\\3\le j\le k<r}}
+ f(j,k)\,jk\,
+ \widehat S^{\rm wt}_j(\Vir_c)\widehat S^{\rm wt}_k(\Vir_c),
+ \qquad r\ge5,
+\]
+with $f(j,k)=1$ for $j<k$ and $f(j,j)=1/2$. This is the recurrence of
+Theorem~\ref{thm:virasoro-shadow-recurrence}; the factor $r c$ is
+$2r\kappa$ with $\kappa(\Vir_c)=c/2$. The initial values are
+\[
+ \widehat S^{\rm wt}_2=\frac c2,\qquad
+ \widehat S^{\rm wt}_3=2,\qquad
+ \widehat S^{\rm wt}_4=\frac{10}{c(5c+22)}.
+\]
+Strong induction gives $\widehat S^{\rm wt}_r(\Vir_c)\in\mathbb Q(c)$:
+each summand is a rational scalar times a product of lower rational
+functions, and division by $r c$ preserves $\mathbb Q(c)$.
+
+The motivic lift of a rational function is its Tate-scalar element in
+$\MZV^{\mot}_0\otimes\mathbb Q(c)$. Brown's coaction on the ground field
+is $q\mapsto 1\otimes q$, so all positive-weight GRT components vanish
+on these coefficients.  The quadrichotomy chapter solves the separate
+formal relation
+$2R_2C_6^{\mathrm{rel}}+2R_3R_5+R_4^2=0$, giving the displayed rational
+value and separating it from the weighted coefficient.
+\end{proof}
+
+\begin{remark}[\label{rem:e1-vs-e2-rationality}The $E_1$-chiral residue
+recurrence versus the $E_2$ Drinfeld associator]
+Kontsevich's universal formality $\mathcal{U} \colon T_{\mathrm{poly}}
+\to D_{\mathrm{poly}}$ involves motivic periods beyond
+$\mathbb{Q}$: the depth-$2$ coefficient of Kontsevich's wheel graph
+carries $\zet^{\mot}(3)$, and higher-depth coefficients populate
+$\MZV^{\mot}$ (Rossi--Willwacher 2014, Alekseev--Torossian 2012). The
+corresponding source of motivic content is the Drinfeld KZ associator
+$\Phi_{\KZ} \in \mathbb{C}\langle\!\langle x, y\rangle\!\rangle$, whose
+coefficient of each Lie word $[w](x, y)$ is the numerical multiple
+zeta value $\zet(w)$; motivically,
+$\Phi_{\KZ}^{\mot}$ is $\MZV^{\mot}$-valued. This generates the full
+$\grt$-coaction on the $E_2$ Gerstenhaber operad.
+
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r} may appear
+paradoxical next to this $E_2$-level richness: the Virasoro shadow
+tower is $E_2$-visible (it is a coefficient of the universal
+$\MC$-element of an $E_1$-chiral algebra whose derived center receives
+an $E_2$-structure via Deligne--Tamarkin), so one might expect
+$\MZV^{\mot}$-content to propagate from $\Phi_{\KZ}^{\mot}$ to the
+Virasoro coefficients. The weighted Virasoro theorem does not make that
+claim. It says that the one-dimensional $T$-line residue recurrence
+uses only rational OPE constants and rational Arnold boundary residues.
+The $E_2$ Drinfeld--Kontsevich periods belong to the associator and
+derived-centre lane. They can affect a shadow coefficient only after a
+specific Arnold/KZ period pairing survives the ordered-to-symmetric
+averaging map. Proposition~\ref{prop:s6-w3-mot} isolates the first
+higher-spin place where such a pairing may occur; it does not assert
+non-vanishing without that computation.
+\end{remark}
+
+\begin{remark}[\label{rem:all-r-extends-r-leq-11}Relation to
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11}]
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11} belongs to the
+weighted higher-coefficient chapter and is proved by explicit closed
+forms through $r=11$. Theorem~\ref{thm:virasoro-motivic-rationality-all-r}
+gives the all-$r$ induction for that weighted recurrence.  The
+quadrichotomy chapter supplies the separate order-six formal relation.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kummer congruences from motivic Bernoulli-Kummer}
+\label{sec:kummer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The genus expansion of the characteristic-datum part
+(\ref{part:characteristic-datum}) produces closed-form $Z_g(n)$ for
+$g = 0,\ldots,9$. In the $\mathrm{SL}_2$ normalisation of
+Chapter~\ref{ch:z-g-kummer-bernoulli}, the leading coefficient is
+\[
+ [n^{3g-3}]Z_g(k)
+ =
+ (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+Thus the Bernoulli-leading irregular primes $691$ and $3617$ occur at
+$g=7$ and $g=9$. The statement below is $p$-adic: it concerns the
+Bernoulli numerator in the genus slot, not the Riccati characteristic
+primes of the Virasoro shadow coefficients.
+
+\begin{theorem}[\label{thm:kummer-from-motivic}Kummer congruences
+from motivic Bernoulli-Kummer]
+\ClaimStatusConditional
+Let $p$ be an irregular prime with Bernoulli-irregularity index
+$(2g-2, p)$ (i.e.\ $p \mid \mathrm{numer}(B_{2g-2})$). Assume the
+motivic shadow-Feynman comparison identifies the motivic genus-$g$
+slot with the $\mathrm{SL}_2$ Verlinde leading coefficient up to a
+$p$-adic unit. If $p>2g-2$, then the genus slot has the same
+$p$-adic numerator divisibility as
+\[
+ (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+Consequently the Bernoulli-leading part of $Z_7$ contains the numerator
+prime $691$, and the Bernoulli-leading part of $Z_9$ contains the
+numerator prime $3617$.
+\end{theorem}
+
+\begin{proof}
+The leading coefficient formula is
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}. Its scalar
+multiplier $(-1)^g2^{g-1}/(2g-2)!$ is a $p$-adic unit whenever
+$p>2g-2$. This holds for the first two relevant cases:
+$691>12$ and $3617>16$.
+
+Kummer's congruence
+\[
+ \frac{B_{2g-2}}{2g-2} \pmod{p} \text{ depends only on }
+ (2g-2) \bmod (p-1)
+\]
+is a statement in the $p$-adic zeta/Tate lane; the comparison
+hypothesis transports that $p$-adic class to the genus slot. The
+$p$-adic-unit multiplier cannot remove a Bernoulli numerator prime.
+For $g = 7$ ($2g-2 = 12$), $B_{12} = -691/2730$: the numerator
+$691$ occurs in the leading coefficient. For $g = 9$ ($2g-2 = 16$),
+$B_{16} = -3617/510$: the numerator $3617$ occurs in the leading
+coefficient.
+\end{proof}
+
+\begin{remark}[\label{rem:kummer-verification}Kummer verification]
+Direct computation of the $Z_g$ closed forms tests only the stated
+Bernoulli-leading numerator divisibility. It does not imply that the
+same primes occur in the Virasoro Riccati coefficients; the higher
+coefficient chapter proves the opposite scope for the Bernoulli-leading
+pair, with the isolated Laurent-tier $691$ occurrence at $\Gamma_8$.
+\end{remark}
+
+\begin{remark}[\label{rem:characteristic-primes-are-riccati-arithmetic}Characteristic
+primes of the shadow tower are Riccati-recurrence integers]
+\ClaimStatusProvedHere
+The primes $\{61,\, 193,\, 2111,\, 16657,\, 14777,\, 3988097,\,
+4969967,\, \ldots\}$ that appear in $S_r(\Vir_c)$ numerators
+through $r = 11$ might be suspected of being Kac-module
+characteristic primes: roots of the Shapovalov--Kac determinant
+$\det G_N(c, h)$ at vacuum $h = 0$ for some level $N$. Direct
+computation disproves this conjecture.
+
+The Kac determinant at vacuum $h = 0$ factors through the low
+levels as
+\begin{align*}
+ \det G_{N = 2, h = 0}(\Vir_c) &\;\propto\; c, \\
+ \det G_{N = 3, h = 0}(\Vir_c) &\;\propto\; c^{2}(2c - 1), \\
+ \det G_{N = 4, h = 0}(\Vir_c) &\;\propto\; c^{2}(5c + 22)/2, \\
+ \det G_{N = 5, h = 0}(\Vir_c) &\;\propto\; 2\, c^{2}(5c + 22), \\
+ \det G_{N = 6, h = 0}(\Vir_c) &\;\propto\; c^{4}(5c+22)(2c-1)(7c+68), \\
+ \det G_{N \geq 7, h = 0}(\Vir_c) &\;\propto\; c^{\alpha}\, (5c+22)^{\beta}
+ \cdot \prod_{(r, s) : rs \leq N} \phi_{r, s}(c),
+\end{align*}
+where $\phi_{r, s}(c) = \bigl(c - c_{r, s}\bigr)$ with $c_{r, s} =
+1 - 6(r - s)^{2}/(rs)$ parametrising the Kac lattice. The
+characteristic primes of Kac-module factors arise from the
+$c_{r, s}$ rationals: $c_{1, 2} = -22/5, c_{1, 3} = -7,
+c_{1, 4} = -46/7, c_{2, 3} = 1/2, c_{1, 5} = -22/5$, etc. These
+rational factorisations yield the Kac-module characteristic-prime
+set $\{2, 3, 5, 7, 11, 17, 22, 23, 46, 68, \ldots\}$; none of
+these rationals generate $\{61, 193, 16657, 14777\}$.
+
+Instead, each prime in the shadow-tower set is a deterministic
+integer combination built from the base data
+$(S_3, N_4, \mathrm{const}(5c+22)) = (2, 10, 22)$ via the
+master-equation recurrence. Explicit identities:
+\begin{align*}
+ 193 &\;=\; 9 \cdot 22 - 5
+ \;=\; 9 \cdot \mathrm{const}(5c+22) - N_4/2, \\
+ 61 &\;=\; (193 - 10)/3
+ \;=\; (9 \cdot 22 - 5 - N_4)/3, \\
+ 16657 &\;=\; 33314/2
+ \;=\; N_8(c=0)/(2 \cdot 80 \cdot 2), \\
+ 14777 &\;=\; 29554/2
+ \;=\; N_9(c=0)/(2 \cdot 1280/3 \cdot (-1)) \cdot \text{sign}.
+\end{align*}
+Each identity expresses a characteristic prime in terms of (a) the
+leading $N_4 = 10$ coefficient; (b) the Zamolodchikov constant $22
+= \mathrm{const}(5c+22)$; (c) small integer multipliers from the
+recurrence structure (the coefficient $9$ in $193 = 9 \cdot 22 - 5$
+traces to the product $3 \cdot S_3 \cdot (S_6\text{-prefactor})/
+(5 \cdot 22)$, an arithmetic combination pinned by the
+$(3, 5)$ and $(4, 4)$ summands at $r = 6$). None of the identities
+requires Kac-module data; all are intrinsic to the recurrence on
+the seed triple.
+
+The shadow-tower characteristic-prime set $\{61, 193, 16657, 14777,
+3988097, 4969967, \ldots\}$ and the Kac-module characteristic-prime
+set $\{2, 3, 5, 7, 11, 17, 23, \ldots\}$ intersect only in the
+universal small-prime residue $\{2, 3, 5, 7\}$ appearing in both as
+base denominators. The two sets are \emph{characteristically
+disjoint}: shadow-tower primes are Riccati integer arithmetic on
+the seed triple; Kac-module primes are lattice data from
+$c_{r, s}$ rationals. Thus the Kac-determinant explanation is false for
+the displayed shadow primes.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Shadow L-function weight obstruction}
+\label{sec:shadow-L}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow $L$-function was introduced in the characteristic-datum part (\ref{part:characteristic-datum}) as the formal
+Dirichlet series
+\[
+ L^{\mathrm{sh}}(\cA; s)
+ \;=\; \sum_{r \geq 2} \frac{S_r(\cA)}{r^s}.
+\]
+The motivic lift supplies the weight filtration for this formal series. It
+does not by itself prove analytic continuation or locate analytic
+poles; those belong to the separate shadow-$L$ analysis.
+
+\begin{corollary}[\label{cor:shadow-L-pole}Motivic weight obstruction
+for the shadow $L$-function]
+\ClaimStatusConditional
+The formal motivic shadow $L$-series
+\[
+ L^{\mathrm{sh}, \mot}(\cA; s)
+ \;=\; \sum_{r \geq 2} \frac{S_r^{\mot}(\cA)}{r^s}
+\]
+has no intrinsic weight-$1$ motivic residue: $\MZV^{\mot}_1=0$ and the
+shadow tower starts at $r=2$. The coefficient $S_2=\kappa$ is a
+Tate-scalar shadow invariant in
+$\MZV^{\mot}_0\otimes\mathbb Q(c,k,\ldots)$ with external shadow
+degree $2$, not a forced non-zero $\zet^{\mot}(2)$ period.
+Consequently the bare rule
+$F_g \leftrightarrow L^{\mathrm{sh}}(1-2g)$ is not supplied by the
+motivic shadow tower. A motivic genus-slot comparison must add, as
+separate data, an admissible analytic continuation, a coefficient
+extraction or regularisation map, and the Tate twist matching the
+Bernoulli-leading genus line.
+\end{corollary}
+
+\begin{proof}
+Definition~\ref{def:mzv-mot} gives $\MZV^{\mot}_1=0$. Since the
+series defining $L^{\mathrm{sh},\mot}$ begins at $r=2$, there is no
+coefficient in shadow degree $1$. The coefficient in shadow degree $2$
+is the conductor $\kappa$; for Virasoro it is $c/2$, a rational scalar.
+By Theorem~\ref{thm:shadow-tower-motivic-lift}, its lift lies in the
+weight-$0$ part of the filtered motivic coefficient ring unless a
+separate Arnold period computation supplies a non-unit period.
+
+The genus coefficient has leading Bernoulli factor
+$B_{2g-2}/(2g-2)!$, hence Tate weight $2g-2$ in the $p$-adic Bernoulli
+lane of Theorem~\ref{thm:kummer-from-motivic}. Evaluation of a
+Dirichlet series at $s=1-2g$ is an analytic regularisation operation,
+not coefficient extraction from the $r=2g-2$ shadow slot. Thus a
+motivic identity at this point requires extra comparison data; the
+formal motivic shadow tower alone only gives the filtered coefficient
+sequence.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Shadow kappa and Dyson beta}
+\label{sec:kappa-vs-beta}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The conductor $\kappa$ is the shadow coefficient $S_2$. Dyson's
+$\beta$ is not a chiral-algebra invariant by itself; it is the
+symmetry index of a chosen random-matrix ensemble. At $c=13$,
+$\kappa(\Vir_{13})=13/2$, while the classical Dyson indices lie in
+$\{1,2,4\}$. The equality problem is a type error: the two numbers
+come from different structures.
+
+\begin{theorem}[\label{thm:kappa-vs-beta-split}Motivic kappa,
+modular beta]
+\ClaimStatusProvedHere
+Let $\cA$ be chirally Koszul in the standard landscape.
+\begin{enumerate}[(i)]
+\item The Koszul depth
+$\kappa^{\mot}(\cA)=S_2^{\mot}(\cA)$ is a Tate-filtered shadow
+invariant:
+\[
+\kappa^{\mot}(\cA)\in
+\MZV^{\mot}_{0}\otimes\mathbb Q(c,k,\ldots)
+\subset
+\Fil^W_{\le2}\MZV^{\mot}\otimes\mathbb Q(c,k,\ldots),
+\]
+unless a separate degree-$2$ Arnold period is present. For the standard
+scalar conductor formulas no such period occurs.
+\item Dyson's $\beta$ is defined only after choosing an ensemble
+$\mathcal E$ whose antiunitary symmetry type is specified. Then
+$\beta(\mathcal E)\in\{1,2,4\}$ records the orthogonal, unitary, or
+symplectic class. The modular character vector of $\cA$ may be used as
+input for such an ensemble, but the bar complex and the character
+vector do not canonically determine $\beta$.
+\item There is no natural comparison map sending the shadow conductor
+to Dyson's symmetry index. Numerical coincidences at special central
+charges are not identities of invariants.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} The canonical conductor formulas are rational:
+\[
+\kappa(\Vir_c)=\frac c2,\qquad
+\kappa(V_k(\fg))=\frac{\dim(\fg)(k+h^\vee)}{2h^\vee},\qquad
+\kappa(\mathcal W_N)=c(H_N-1).
+\]
+Their motivic lifts are the same rational functions in the
+weight-$0$ summand of the filtered motivic coefficient ring. Brown's
+coaction on the ground field is $q\mapsto1\otimes q$.
+
+\emph{(ii)} Dyson's $\beta$ is not defined by the bar-complex
+construction; it is defined by a \emph{separate} datum: the symmetry
+class of a Hermitian random-matrix ensemble. A modular $S$-matrix or a
+Verlinde character vector can supply spectral input, but it does not
+choose the real, complex, or quaternionic symmetry class. That choice
+is external to the chiral algebra unless an ensemble construction is
+part of the data.
+
+\emph{(iii)} $\kappa$ is extracted from the ordered bar conductor.
+$\beta$ is extracted from the symmetry type of a modular-character
+ensemble. Regulators may compare selected motivic and automorphic
+periods, but they do not identify a rational shadow conductor with a
+Dyson symmetry class. At $c=13$ the values $13/2$ and
+$\{1,2,4\}$ already lie in different numerical sets.
+\end{proof}
+
+\begin{remark}[\label{rem:kappa-beta-numerical-coincidence}Numerical
+near-coincidence]
+At the self-dual Virasoro point $c=13$, $\kappa(\Vir_{13})=6.5$.
+Dyson's $\beta$ is an integer symmetry index. The fixed point of
+$c\mapsto26-c$ is a shadow-conductor statement; the symmetry type of a
+modular $S$-matrix is a separate modular statement.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Epilogue}
+\label{sec:epilogue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow tower is arithmetic in two distinct senses. Its rational
+Riccati coefficients are integer recursions in the OPE constants; its
+non-rational coefficients, when present, are Brown--Goncharov periods
+of Arnold/KZ iterated integrals. The motivic coaction of
+Theorem~\ref{thm:grt-motivic-coaction} acts on the latter period
+subspace and is trivial on the rational Virasoro scalar lane.
+
+The Bernoulli-leading Kummer primes belong to the genus expansion
+through Theorem~\ref{thm:kummer-from-motivic}. The Riccati primes of
+the Virasoro shadow tower belong to a different arithmetic mechanism.
+The shadow $L$-series and the Dyson $\beta$ comparison are likewise
+weight and source tests: neither supplies an identity between
+incompatible invariants.
+
+The open calculation is explicit: compute the Arnold/KZ pairings for
+higher-spin $\mathcal W_N$ channels and check their survival under
+ordered-to-symmetric averaging. Only then does a motivic weight
+signature distinguish two families beyond their rational shadow
+projection.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Nekrasov $\Omega$-background and external degree}
+\label{sec:nekrasov-omega-motivic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\ep}{\epsilon}
+
+The $\Omega$-background supplies an external equivariant degree; it is
+not, by itself, Brown motivic weight. For a $4d$ $\mathcal N=2$ theory
+on $\mathbb R^4_{\ep_1,\ep_2}$, the Nekrasov partition function
+$Z_{\mathrm{inst}}(\ep_1,\ep_2)$
+(Nekrasov, \texttt{hep-th/0206161}; Nekrasov--Okounkov 2006) defines
+the $\Omega$-deformed free energy
+\[
+ \mathcal F(\ep_1,\ep_2)
+ \;=\;
+ \ep_1\ep_2\,\log Z_{\mathrm{inst}}(\ep_1,\ep_2)
+\]
+with a Taylor expansion in $\ep_1,\ep_2$ whose coefficients are
+equivariant integrals, rational functions, or periods according to the
+theory and chamber \cite{NakajimaYoshioka2003,ErnstromNaganoNakajima2015}.
+Only after an Arnold/KZ period comparison is constructed may such a
+coefficient be lifted to
+$\Fil^W_{\le n}\MZV^{\mot}$. The self-dual phase
+$\ep_1=-\ep_2=\ep$ collapses the two-variable grading to the single
+$\hbar$-grading via $\hbar^2=-\ep^2=\ep_1\ep_2$. Under this collapse
+$\ep^n$ has external $\Omega$-degree $n$; a rational coefficient
+carrying that monomial still has Brown weight~$0$. The comparison below
+is therefore a conjectural match between shadow degree and external
+$\Omega$-degree, with Brown weight supplied only by explicit
+Arnold/KZ periods.
+
+\begin{conjecture}[\label{conj:omega-motivic-weight-match}
+$\Omega$-degree controls filtered shadow periods]
+\ClaimStatusConjectured
+Let $\cA$ be a $C_2$-cofinite non-logarithmic chiral algebra that
+is attached by the Beem--Rastelli construction to a $4d$
+$\mathcal{N}=2$ superconformal theory $\mathcal T$ on the
+$\Omega$-background
+$\mathbb{R}^4_{\ep_1,\ep_2}$. Then the shadow-tower coefficient
+$S_r^{\mot}(\cA)\in\Fil^W_{\le r}\MZV^{\mot}$ coincides, after choosing
+the same Arnold/KZ period coordinates and up to a rational
+family-dependent prefactor, with the motivic lift of the external
+$\Omega$-degree-$r$ coefficient of the Nekrasov--Okounkov refined free
+energy at the self-dual phase:
+\[
+ S_r^{\mot}(\cA)
+ \;\sim_{\mathbb{Q}(\mathrm{family})}\;
+ \bigl[\,\ep^r\,\bigr]\,
+ \mathcal F_{\mathrm{NO}}\bigl(\mathcal T;\,\ep,-\ep\bigr).
+\]
+The bracket $[\ep^r]$ denotes external equivariant degree, not
+projection to Brown weight~$r$; if the coefficient is rational, its
+motivic lift lies in $\MZV^{\mot}_0$.
+\end{conjecture}
+
+\begin{remark}[Nekrasov--Okounkov normalisation for
+Conjecture~\ref{conj:omega-motivic-weight-match}]
+\label{rem:omega-motivic-weight-match-strategy}
+Nekrasov--Okounkov (2006) express the $\Omega$-deformed free energy via
+equivariant integration over framed-instanton moduli; the resulting
+formula evaluates to a partition sum with hook-length weights. Under
+the AGT normalisation, when $\mathcal T$ is a class-$\mathcal S$
+theory, the same instanton series is identified with a
+Liouville/Toda conformal block. Mixed-Tate
+Arnold/KZ coordinates give motivic lifts for the genus-zero collision
+periods appearing in such blocks (Andr\'e~2009; Brown 2012), but the
+statement that the $\ep$-degree-$r$ collision coefficient equals the
+shadow coefficient is precisely Conjecture~\ref{conj:omega-motivic-weight-match}.
+The self-dual phase $\ep_1=-\ep_2$ restricts to the single
+$\hbar$-expansion used in the convolution dGLA. Family-dependent
+rational normalisations, including the Beem--Rastelli dictionary
+$c_{2d}=-12c_{4d}$, are absorbed in
+$\sim_{\mathbb Q(\mathrm{family})}$. The conjecture is open beyond the
+family-by-family checks for $\Vir_c$ (Liouville,
+Nekrasov--Shatashvili 2009) and affine Kac--Moody
+(Nekrasov--Pestun 2012).
+\end{remark}
+
+\begin{remark}[K3 instance: $\hbar^2 = -1/8$ vs.\ self-dual
+$\ep^2 = 1/8$]
+\label{rem:omega-k3-self-dual}
+For the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$ of Vol~III, the
+parameter $\hbar^2 = -1/8$ (Vol~III K3 Hall--Drinfeld pentagon-coboundary
+calculation)
+corresponds under $\hbar^2 = \ep_1\ep_2$ at the self-dual phase to
+$\ep_1 = -\ep_2 = \pm 1/(2\sqrt{2})$ for the $\Omega$-deformed
+class-$\mathcal S$ $A_1$ theory on $\Sigma_{0,24}$. The theorem
+available at this point is the normalized AGT block comparison. The
+Bethe algebra enters through the Nekrasov--Shatashvili degeneration,
+which is adjacent to the fixed self-dual slice but not identical to it.
+Identifying its Bethe wall crossing with Humbert walls, or the
+Maulik--Okounkov stable-envelope $R$-matrix with a
+Siegel-elliptic dynamical $R_{\mathrm{Sieg,dyn}}$, is a conditional
+target comparison requiring the finite Schur--Igusa recognition data of
+Remark~\ref{rem:feyn-nekrasov-schur-limit}
+\cite{NekrasovShatashvili2009,MaulikOkounkov12}. This is the first
+Vol~I/Vol~III test case for the Nekrasov external-degree comparison;
+its generalisation to other CY-$2$ base inputs of the Vol~III
+factorisation
+$\Phi_d^{(\Sigma_{d-1},C)} = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ (the canonical
+factorisation algebra $\PhiFA_d$ on the CY$_d$ base, followed by
+specialisation) is open.
+\end{remark}
+
+\begin{remark}[Pentagon coboundary at $\hbar^3$: $25/3$ is not a
+central charge]
+\label{rem:omega-pentagon-coboundary}
+The pentagon-equation coboundary at order $\hbar^3$ of the candidate
+K3 Siegel--Borcherds target cocycle decomposes as
+\[
+ \phi^{(3)}
+ \;=\;
+ \zeta(3)\,c_{\mathrm{symm}}
+ \;+\;
+ \tfrac{25}{3}\,c_{\mathrm{timelike}}
+ \;+\;
+ (\Phi_{10}/\eta^{24})\,c_{\Phi_{10}}
+\]
+(Vol~III K3 Hall--Drinfeld pentagon-coboundary calculation). The
+coefficient $25/3$ equals
+$\mathrm{rk}(\mathrm{II}_{25,1}) - 1$ divided by the triple-leg
+antisymmetrisation denominator~$3$, i.e.\ the Fake Monster Cartan
+rank minus the timelike Cartan direction. This is \emph{not} a
+Virasoro central charge: there is no $c = 25/3$ minimal model
+controlling this coefficient. The motivic weight-$3$
+component $\zeta^{\mot}(3)\,c_{\mathrm{symm}}$ sits in $\MZV^{\mot}_3$,
+while the $25/3$ coefficient is a weight-$0$ rational. Conflating
+motivic weight-$3$ with a central-charge interpretation at the
+pentagon coboundary is a type error;
+primary-lit frame: Drinfeld 1990 quasi-Hopf, Etingof--Kazhdan
+Parts~I--V.  This is an order-$\hbar^3$ target-cocycle statement.  An
+all-order Hall-realised associator additionally requires the compact
+Hall source, comparison maps, and completed pentagon identity.
+\end{remark}
+
+\section{Igusa--Dedekind factors}
+\label{sec:mst-supplement}
+
+\begin{remark}[Andrianov factorisation $L(s,\Phi_{10}) = L(s,\Delta\otimes E_6)\,\zeta(s-9)\,\zeta(s-8)$]
+\label{rem:mst-1}
+The automorphic factorisation used by the motivic shadow-tower
+comparison is the Andrianov identity
+\[
+ L(s,\Phi_{10})
+ \;=\;
+ L(s,\Delta\otimes E_6)\,\zeta(s-9)\,\zeta(s-8),
+\]
+with $\Phi_{10}$ the Igusa cusp form of weight $10$ and
+$\Delta\otimes E_6$ the convolution of the discriminant modular form
+$\Delta\in S_{12}$ with the Eisenstein series $E_6$. The shifts $s-9$
+and $s-8$ are pinned by the K3 Mukai signature: $9 = c_-/2 - 1 = 20/2 - 1$
+and $8 = K^{\kappa_{\mathrm{ch}}} = 2c_+ = 8$ (Mukai doubling) \cite{Andrianov1979,GritsenkoNikulin1998}.
+Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Motivic fingerprint of the Igusa--Dedekind twist]
+\label{rem:mst-2}
+The period fingerprint of the
+$\Phi_{10}^{\mathrm{un}}/\eta^{24}$ Borcherds twist is recorded by
+the shifted pair of standard factors
+$L(s,\Phi_{10}^{\mathrm{un}})$ and $L(s,\eta^{24})$
+with $\eta^{24}$ the weight-$12$ cusp form on $\mathrm{SL}_2(\mathbb Z)$.
+At the K3 base point, the $\eta^{24}$ factor encodes the $24$ Kodaira
+$I_1$ fibres on $E^{\mathrm{nod,sm}}_{24}$ via the Dedekind denominator
+on the $24$ nodal base, and the quotient lives on $\bar{\mathcal A}_2$
+via Kuga--Satake. The motivic shadow tower thus organises as
+$m_k(\Delta_5)$ coefficients reading the third-order pentagon
+coboundary $\phi^{(3)}$ \cite{Borcherds1992,KugaSatake1967}. Cross-ref
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{Humbert residues and external $\Omega$-degree: the $A_1$
+class-$\mathcal S$ Nekrasov realisation}
+\label{sec:mst-nekrasov-A1-sigma-0-24}
+
+Conjecture~\ref{conj:omega-motivic-weight-match} identifies the
+external shadow degree of $S_r^{\mot}(\cA)$ with the $\ep^r$-degree of
+the $\Omega$-deformed free energy; Brown weight is supplied only by the
+period part of the coefficient.
+At the K3 slice
+$\hbar^2 = -1/8$ corresponds to the self-dual $\Omega$-point of the
+class-$\mathcal S$ $A_1$ theory on $\Sigma_{0,24}$. The
+three local comparisons are the normalized AGT Liouville block, the
+finite Schur--Igusa target for Humbert residues, and the
+Nekrasov--Shatashvili Bethe system as a cyclotomic comparison channel.
+Only the first is a theorem at this site; the latter two require the
+recognition hypotheses stated below.
+
+\begin{proposition}[Humbert residues carry external $\Omega$-degree at
+self-dual; \ClaimStatusConditional]
+\label{prop:mst-nekrasov-humbert-motivic}
+Let $\mathcal T = \mathcal T[A_1, \Sigma_{0,24}]$
+be the class-$\mathcal S$ $A_1$ theory on the $24$-punctured sphere
+with distinct marked points $z_1,\ldots,z_{24}$. The specialisation
+$z_i=\zeta_{24}^{i-1}$ is a cyclotomic marking of the pointed sphere,
+not a geometric Mathieu $M_{24}$ action on $\mathbb{CP}^1$. Let
+$Z^{\mathrm{Nek}}_{\mathcal T}$ denote the $\Omega$-background
+partition function evaluated at the self-dual slice
+$\ep_1 = -\ep_2 = 1/(2\sqrt 2)$, so
+$\hbar^2 = \ep_1\ep_2 = -1/8$.
+
+Assume the finite Schur--Igusa recognition data of
+Remark~\ref{rem:feyn-nekrasov-schur-limit}: the Beem--Rastelli
+chiral algebra $\mathcal X(\mathcal T)$ is compared with
+$\mathbf H_{\Delta_5}$ only after central-charge, level, root, parity,
+and finite coefficient data identify the chosen K3-marked Schur
+character with the reciprocal Igusa target; and the scalar Humbert-pole
+comparison of Remark~\ref{rem:feyn-nekrasov-humbert-residues}
+identifies
+\[
+ \mathrm{Res}_{H_n}\bigl[\log Z^{\mathrm{Nek}}_{\mathcal T}\bigr]
+ \;=\; c_{\phi_{-2,1}}(n)\cdot [H_n].
+\]
+Then this conditional residue admits the motivic lift
+\[
+ \bigl(\mathrm{Res}_{H_n}\bigl[\log Z^{\mathrm{Nek}}_{\mathcal T}\bigr]\bigr)^{\mot}
+ \;=\; c_n\cdot [H_n]^{\mot}
+ \;\in\; \MZV^{\mot}_{0}
+ \otimes \mathrm{CH}^1(\overline{\mathcal A}_2)^{\mot},
+\]
+where $c_n=c_{\phi_{-2,1}}(n)\in\mathbb Q$ is the Fourier coefficient
+of $\phi_{-2,1}$ and $[H_n]^{\mot}$ is the motivic class of the Humbert
+divisor in
+$\mathrm{CH}^1(\overline{\mathcal A}_2)^{\mot}$. The index $n$ is the
+Humbert and $\Omega$-degree under this target comparison; it is not the
+Brown weight of the rational integer $c_n$. The period map recovers the
+rational coefficient
+$c_n = c_{\phi_{-2,1}}(n)$ of
+Eichler--Zagier~$1985$ \S~$9$.
+
+\emph{Proof.} The AGT input is exactly the normalized block theorem of
+Proposition~\ref{prop:feyn-nekrasov-self-dual}:
+$Z^{\mathrm{Nek}}_{\mathcal T}$ at the self-dual slice is the
+Liouville conformal block on the same $24$-punctured sphere with
+$c_{\mathrm{Liou}}=25$. This theorem supplies no Mathieu action on the
+marked sphere and no identification of the Beem--Rastelli chiral
+algebra with $\mathbf H_{\Delta_5}$.
+
+Beem--Rastelli~$2013$ Thm.~$1$ identifies the Schur index with the
+graded character of the associated $2d$ chiral algebra
+$\mathcal X(\mathcal T)$. The passage from
+$\mathrm{ch}_q(\mathcal X(\mathcal T))$ to the reciprocal Igusa
+character is precisely the finite recognition hypothesis in the
+statement, not a consequence of Beem--Rastelli. Under that hypothesis
+the scalar Humbert-pole comparison reduces the local calculation to the
+Siegel slice of $\log(\Phi_{10}^{\mathrm{un}}/\eta^{24})$. Its Fourier
+expansion admits the Borcherds product form
+$\Phi_{10}/\eta^{24} = \prod_{(m,n,r) > 0}(1 - p^m q^n y^r)^{
+c_{\phi_{-2,1}}(4mn - r^2)}$ (Borcherds~$1998$ JAMS~$11$
+Thm.~$10.1$). Taking $\log$ and collecting the $p^n$-coefficient
+at the Humbert-$H_n$ slice yields the rational residue
+$c_{\phi_{-2,1}}(n)\cdot [H_n]$ (Bruinier~$2002$ LNM~$1780$
+Prop.~$5.1$). The motivic lift proceeds on each factor. On the
+coefficient side, $\phi_{-2,1}$ is a weak Jacobi form arising
+from the K3 elliptic genus $\chi(\mathrm K3; \tau, z) = 2\phi_{0,1}
+- \tfrac{1}{2}(\wp + 2 E_2)\phi_{-2,1}$ (Eichler--Zagier~$1985$
+Thm.~$9.3$); its Fourier coefficients lie in
+$\mathbb Q\subset \MZV^{\num}$. Each rational Fourier coefficient has
+the canonical Tate-scalar motivic lift
+$c_{\phi_{-2,1}}(n)\cdot1\in\MZV^{\mot}_0$. The external label $n$ is
+the Humbert label and, under
+Conjecture~\ref{conj:omega-motivic-weight-match}, the $\ep^n$-degree;
+it is not the Brown weight of the rational integer. On the divisor
+side, the Humbert divisors $H_n$ are algebraic cycles on
+$\overline{\mathcal A}_2$, so they admit motivic classes
+$[H_n]^{\mot}\in \mathrm{CH}^1(\overline{\mathcal A}_2)^{\mot}$
+(van der Geer~$1988$ Ch.~IX). The product is the motivic
+residue in question; the period map recovers the numerical
+identity by definition of $\per$ (Definition~\ref{def:period-map}).
+\qed
+
+\emph{Primary.} Alday--Gaiotto--Tachikawa~$2009$ Thm.~$1$;
+Beem--Rastelli~$2013$ Thm.~$1$; Gritsenko--Nikulin~$1998$
+Thm.~$2.1$; Borcherds~$1998$ JAMS~$11$ Thm.~$10.1$;
+Bruinier~$2002$ LNM~$1780$ Prop.~$5.1$; Eichler--Zagier~$1985$
+\S~$9$; van der Geer~$1988$ \emph{Hilbert Modular Surfaces}
+Ch.~IX; Brown~$2012$ \emph{Ann.\ Math.}~$175$; see also
+Remark~\ref{rem:feyn-nekrasov-schur-limit} and
+Remark~\ref{rem:feyn-nekrasov-humbert-residues}.
+\end{proposition}
+
+\begin{corollary}[$c_3 = -8$ at $H_3$: explicit verification;
+\ClaimStatusConditional]
+\label{cor:mst-nekrasov-c3-H3}
+Under the hypotheses of
+Proposition~\ref{prop:mst-nekrasov-humbert-motivic}, at $n = 3$ the
+motivic Humbert residue of
+$\log Z^{\mathrm{Nek}}_{\mathcal T[A_1,\Sigma_{0,24}]}$ is
+\[
+ \bigl(\mathrm{Res}_{H_3}\bigl[\log Z^{\mathrm{Nek}}_{\mathcal T}\bigr]\bigr)^{\mot}
+ \;=\; -8\cdot [H_3]^{\mot},
+\]
+whose period is the rational
+$\mathrm{Res}_{H_3}\bigl[\log Z^{\mathrm{Nek}}\bigr] = -8\cdot [H_3]$
+of the finite target comparison in Vol~I feynman\_diagrams.tex
+Remark~\ref{rem:feyn-nekrasov-humbert-residues}.
+
+\emph{Proof.} By Proposition~\ref{prop:mst-nekrasov-humbert-motivic}
+the residue equals $c_{\phi_{-2,1}}(3)^{\mot}\cdot [H_3]^{\mot}$.
+Direct $q, y$-expansion of the infinite-product form
+$\phi_{-2,1} = -(y - 2 + y^{-1})\prod_{n\geq 1}(1 - q^n y)^2
+(1 - q^n/y)^2/(1-q^n)^4$ through $q^8$ yields
+$c_{\phi_{-2,1}}(3) = -8$, $c_{\phi_{-2,1}}(4) = +12$,
+$c_{\phi_{-2,1}}(7) = -39$, $c_{\phi_{-2,1}}(8) = +56$ (Vol~I
+bv\_brst.tex eq.~\eqref{eq:bvbrst-heegner-identity}; Eichler--Zagier
+$1985$ \S~$9$ Table~$1$). At $n = 3$ this gives $c_3^{\mot} = -8$
+as a $\mathbb Q$-rational Tate scalar, i.e.\ Brown weight~$0$ with
+external Humbert/$\Omega$-degree~$3$; its period is
+$-8 \in \mathbb Q\subset \mathbb R$. The admissibility condition
+$n\equiv 0, 3\pmod 4$ (Eichler--Zagier~$1985$ Thm.~$2.2$) confirms
+$n = 3$ is on the Fourier support. \qed
+\end{corollary}
+
+\begin{remark}[Cyclotomic Bethe-spectrum Galois shadow;
+\ClaimStatusHeuristic]
+\label{rem:mst-nekrasov-bethe-motivic}
+The Nekrasov--Shatashvili limit of
+$\mathcal T[A_1, \Sigma_{0,24}]$ identifies its free energy with the
+Yang--Yang functional of the Gaudin model of type $A_1$ on
+$\mathbb{CP}^1$ with $24$ marked points
+(Feigin--Frenkel--Reshetikhin~$1994$ Comm.\ Math.\ Phys.~$166$;
+Frenkel~$2007$ Ch.~$6$; Vol~I feynman\_diagrams.tex
+Remark~\ref{rem:feyn-nekrasov-NS-bethe}). This is an NS degeneration,
+not the fixed self-dual point $\ep_1=-\ep_2=1/(2\sqrt2)$.
+
+The Bethe-ansatz spectrum $\{u_a\}$ is the zero set of a system of
+$\bar{\mathbb Q}$-rational equations. Its algebraic coordinates are
+acted on by $\mathrm{Gal}(\bar{\mathbb Q}/\mathbb Q)$, not by the
+mixed-Tate motivic Galois group unless a separate Arnold/KZ period
+torsor has been constructed. After the cyclotomic marking
+$z_i=\zeta_{24}^{i-1}$, with equal external masses, the equations are
+defined over $\mathbb Q(\zeta_{24})$ and acquire the evident
+cyclotomic symmetry: rotation by $\zeta_{24}$ sends a solution
+$\{u_a\}$ to $\{\zeta_{24}u_a\}$, while
+$\mathrm{Gal}(\mathbb Q(\zeta_{24})/\mathbb Q)$ permutes the marked
+points arithmetically. This is $\mu_{24}$ and cyclotomic Galois data,
+not an $M_{24}$-equivariant system. A Mathieu-moonshine interpretation
+would require an additional comparison map from this cyclotomic Gaudin
+system to the Cheng--Duncan--Harvey K3 module.
+
+Under the finite Igusa-recognition hypotheses of
+Proposition~\ref{prop:mst-nekrasov-humbert-motivic}, the Humbert
+residue target in the Bethe channel is the absolute-Galois module
+generated by
+$\{c_{\phi_{-2,1}}(n)\cdot [H_n]^{\mot}\}_{n\geq3,\,
+n\equiv0,3(4)}$, with $c_{\phi_{-2,1}}(n)$ a Tate scalar. A genuine
+$\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb Z))$-comodule would require
+non-rational KZ/Arnold periods in the Bethe integral. Its period, if
+such a torsor is constructed, is the numerical Bethe spectrum of the
+$24$-point Gaudin system in the NS degeneration. Primary:
+Feigin--Frenkel--Reshetikhin~$1994$; Frenkel~$2007$ Ch.~$6$;
+Nekrasov--Shatashvili~$2009$ arXiv:$0908.4052$; Brown~$2012$
+\emph{Ann.\ Math.}~$175$ for the motivic Galois framework;
+Cheng--Duncan--Harvey~$2014$ for the moonshine target.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The motivic bar--cobar bridge on $\overline{\mathcal A}_{2}$}
+\label{sec:motivic-barcobar-bridge}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\BettiRlz}{\mathrm{Betti}}
+\providecommand{\HeegObs}{\mathrm{Heeg}}
+\providecommand{\Data}{\mathrm{Data}}
+\providecommand{\Heeg}{\mathrm{Heeg}}
+\providecommand{\MT}{\mathrm{MT}}
+
+The chain-level compatibility $\infty$-groupoid
+$\Data(\cA)\simeq B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$
+of Theorem~B is a torsor under $\widehat{\mathrm{grt}}_1$ modulo the
+Gaitsgory--Nadler obstruction $\mathrm{ob}^{\mathrm{GN}}$
+(\cite{GaitsgoryNadler09}; Vol~I
+\texttt{e3\_identification\_chain\_level\_platonic.tex}
+Chapter~\ref{chap:bar-cobar-adjunction}). The Siegel--Eisenstein pairing
+$\langle [\chi_3], [e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}
+= 2\,\mathrm{Vol}(E)(2\pi i)^3
+= \chi(\cO_{\mathrm{K3}})\cdot\Res_{s=1/2}[E_5^{(2)}(Z,s)]|_{K(1)}$
+of Theorem~H expresses a numerical period. The bridge conjecture asserts
+that both data are images under a single period realisation of a common
+motivic object, and that this compatibility holds away from the Humbert
+locus where Heegner--Chern torsion obstructs.
+
+\begin{definition}[Motivic compatibility-data groupoid;
+\ClaimStatusConjectured]
+\label{def:motivic-data-groupoid}
+Let $\mathscr D$ be a finite set of admissible Humbert discriminants
+and set
+\[
+ U_{\mathscr D}
+ :=
+ \overline{\mathcal A}_{2,\mathbb Q}
+ \setminus \bigcup_{D\in\mathscr D} H_D .
+\]
+This is the algebraic open on which the following object is defined.
+The phrase ``away from all Humbert divisors'' means the inverse system
+over all finite $\mathscr D$, not a single finite-type open complement
+of the infinite Humbert union. Let
+$\Data^{\mot}_{\mathscr D}(\cA)$ denote the conjectural pro-object in
+$\mathcal{DM}(U_{\mathscr D};\mathbb Q)$ obtained from the motivic
+homotopy automorphisms of a relative ordered bar complex
+$B_{U_{\mathscr D}/\mathbb Q}^{\mathrm{ord},\mot}(\cA)$ over
+$U_{\mathscr D}$:
+\[
+ \Data^{\mot}_{\mathscr D}(\cA)
+ \;:=\;
+ \mathbf{R}\mathrm{Aut}_{\mathcal{DM}(U_{\mathscr D})}^{h,L_\infty}\!
+ \bigl(\mathfrak g^{\infty,1,\mot}_{\cA,U_{\mathscr D}}\bigr).
+\]
+The motivic Galois action on the mixed-Tate Arnold/KZ torsor maps,
+through the Ihara--Drinfeld action, to its image in
+$\widehat{\mathrm{grt}}_1$. No quotient
+$\mathrm{Gal}^{\mot}(\MT(\mathbb Z))\twoheadrightarrow\grt$ is asserted.
+The period realisation is required to give a comparison morphism
+\[
+ \per_{\mathscr D}\colon \Data^{\mot}_{\mathscr D}(\cA)
+ \longrightarrow
+ \Data^{\BettiRlz}(\cA)|_{U_{\mathscr D}}
+ \;=\; \Data(\cA)_{\CC}|_{U_{\mathscr D}}
+\]
+to the Betti compatibility groupoid of Theorem~B tensored to
+$\mathbb C$.
+\end{definition}
+
+\begin{definition}[Heegner--Chern obstruction module;
+\ClaimStatusConditional]
+\label{def:heeg-chern-obstruction}
+For each admissible discriminant $D\in\{1, 4, 5, 8, 9, 12, 13, \ldots\}$
+(discriminants $D\equiv 0, 1\bmod 4$) let
+$\mathrm{cl}(H_D)\in H^2_{\mathrm{mot}}(\overline{\mathcal A}_{2};
+\mathbb Q(1))$ be the motivic cycle class of the Humbert divisor
+$H_D$ (Borcherds 1998; Kudla--Millson 1990). The cycle classes are
+unconditional. The obstruction module additionally requires a chosen
+action of the motivic image in $\widehat{\mathrm{grt}}_1$ on their
+rational span. For a finite set $\mathscr D$ as in
+Definition~\ref{def:motivic-data-groupoid}, set
+\[
+ \Heeg_{\mathscr D} \;:=\;
+ \bigoplus_{D\in\mathscr D} \mathbb Q\cdot \mathrm{cl}(H_D)
+ \;\subset\;
+ H^2_{\mathrm{mot}}(\overline{\mathcal A}_{2}; \mathbb Q(1))
+\]
+as a module over the motivic image. The candidate obstruction to
+extending $\per_{\mathscr D}$ across the finite boundary
+$\bigcup_{D\in\mathscr D}H_D$ is the class
+\[
+ \mathrm{ob}^{\mot}_{\Data,\mathscr D}(\cA)
+ \;\in\;
+ H^2\bigl(\mathfrak g_{\mathrm{mot}\to\mathrm{grt}};
+ \Heeg_{\mathscr D}\bigr),
+\]
+where $\mathfrak g_{\mathrm{mot}\to\mathrm{grt}}$ denotes the image of
+the motivic Lie algebra under the Ihara--Drinfeld/Willwacher comparison.
+The all-Humbert obstruction is the compatible family of these finite
+classes as $\mathscr D$ varies.
+\end{definition}
+
+\begin{conjecture}[\label{thm:motivic-barcobar-bridge}Motivic bar--cobar
+bridge]
+\ClaimStatusConjectured
+Fix $\cA = \mathbf H_{\Delta_5}$, the K3-fibre BKM crown of Vol~III.
+The period realisation of
+Definition~\ref{def:motivic-data-groupoid} restricts, for every finite
+admissible $\mathscr D$, to an equivalence
+\[
+ \per_{\mathscr D}\colon
+ \Data^{\mot}_{\mathscr D}(\cA)
+ \xrightarrow{\;\sim\;}
+ \Data^{\BettiRlz}(\cA)|_{U_{\mathscr D}}
+\]
+over $U_{\mathscr D}$, compatibly under enlarging $\mathscr D$. The
+Siegel--Eisenstein pairing of Theorem~H lifts to a motivic pairing
+\[
+ \bigl\langle [\chi_3]^{\mot}, [e_3^{\mathrm{K3}\times E}]^{\mot}
+ \bigr\rangle_{\Phi_3}^{\mot}
+ \;=\;
+ 2\,\mathrm{Vol}(E)^{\mot}\cdot(2\pi i)^{\mot,3}
+ \;\in\;
+ \Fil^W_{\le3}\MZV^{\mot}
+ \otimes_{\mathbb Q} H^0_{\mathrm{mot}}(E; \mathbb Q(0))
+\]
+whose weight-$3$ projection has period recovering the
+numerical identity
+$2\,\mathrm{Vol}(E)(2\pi i)^3$ of the preface
+eq.~\eqref{eq:bvbrst-heegner-identity} only after the Heegner
+obstruction classes vanish:
+\[
+ \mathrm{ob}^{\mot}_{\Data,\mathscr D}(\cA) \;=\; 0
+ \text{ in }
+ H^2(\mathfrak g_{\mathrm{mot}\to\mathrm{grt}};\,\Heeg_{\mathscr D})
+ \qquad\text{for every finite }\mathscr D .
+\]
+\end{conjecture}
+
+\begin{remark}[Conditional construction of
+Conjecture~\ref{thm:motivic-barcobar-bridge} under the
+Deligne--Goncharov/Voevodsky/Ayoub framework]
+\label{rem:motivic-bridge-evidence}
+\emph{Motivic Arnold piece over $U_{\mathscr D}$.}
+Deligne--Goncharov 2005 Theorem~5.25 lifts the genus-zero KZ/Arnold
+iterated integrals on $\overline{M}_{0,n}$ to mixed-Tate motivic
+periods. For $B^{\mathrm{ord}}(\cA)$ over
+$U_{\mathscr D}\subset\overline{\mathcal A}_{2,\mathbb Q}$ this
+supplies the coefficient periods on affine collision screens. A
+relative object
+$B^{\mathrm{ord},\mot}_{U_{\mathscr D}/\mathbb Q}(\cA)
+\in\mathcal{DM}(U_{\mathscr D})$ carrying the OPE residue maps is the
+extra datum demanded by
+Definition~\ref{def:motivic-data-groupoid}; it is not a consequence of
+the Deligne--Goncharov theorem alone. Its de~Rham and Betti
+realisations are required to be the chain-level ordered bar complex and
+the corresponding singular-chain complex.
+
+\emph{Bar--cobar inversion, Koszul duality, and the bulk.}
+Assuming this relative motivic bar complex and the usual Koszul-locus
+conservativity for its realisations, Theorem~A lifts to a motivic
+adjunction $\Omega^{\mot}\dashv B^{\mot}$ on the generated Tate
+subcategory. Its period realisation is the bar--cobar inversion
+$\Omega_XB_X(\cA)\to\cA$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$. This
+object is not the Koszul dual algebra. The Koszul dual is
+$\cA^!=(\cA^i)^\vee$ after Verdier duality on the bar coalgebra
+$B(\cA)$; the chiral derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the Hochschild closed-sector object of
+Theorem~H. The motivic bridge compares period realisations of these
+typed objects; it does not identify them.
+
+\emph{Galois compatibility of $\Data^{\mot}$.}
+The motivic Galois action on the Arnold/KZ iterated-integral torsor
+maps, via Ihara--Drinfeld and Willwacher's graph-complex realisation, to
+the $\widehat{\mathrm{grt}}_1$-torsor of compatibility $2$-morphisms in
+Theorem~B (Willwacher 2015 Thm.~1.1; Brown 2012 Thm.~1.2). The
+comparison is through the motivic image in $\widehat{\mathrm{grt}}_1$,
+not through an equality of motivic Galois and Grothendieck--Teichmuller
+Lie algebras. Equivariance of each $\per_{\mathscr D}$ is therefore
+one of the conditions in
+Conjecture~\ref{thm:motivic-barcobar-bridge}.
+
+\emph{Motivic lift of the Eisenstein pairing.}
+The Chern class part of
+$[e_3^{\mathrm{K3}\times E}]$ has a motivic lift by the cycle-class map.
+A motivic lift of $[\chi_3]$ is additional Hochschild-regulator data:
+it must realise the curve-level chiral Hochschild class of Theorem~H and
+pair with the Chern class under Beilinson's regulator formalism
+(Beilinson 1984 \emph{Higher regulators}). Under this hypothesis, the
+de~Rham period of the pairing is the regularised Siegel--Eisenstein
+residue of Kudla--Rallis 1994.
+
+\emph{Heegner obstruction at the Humbert boundary.}
+For finite $\mathscr D$, the boundary of
+$U_{\mathscr D}$ in $\overline{\mathcal A}_{2,\mathbb Q}$ is the
+finite union of Humbert divisors $H_D$, $D\in\mathscr D$. Their motivic
+cycle classes form $\Heeg_{\mathscr D}$. Extending
+$\Data^{\mot}_{\mathscr D}$ across this boundary would require a
+splitting of the extension
+\[
+ 0\to
+ \Data^{\mot}_{\mathscr D}
+ \to
+ \widetilde{\Data}^{\mot}_{\mathscr D}
+ \to
+ \bigoplus_{D\in\mathscr D}
+ \mathrm{cl}(H_D)\otimes_{\mathbb Q}\Heeg_{\mathscr D}
+ \to 0,
+\]
+and the obstruction is the class of
+Definition~\ref{def:heeg-chern-obstruction}. The codimension-$3$
+calculation at $(D_1,D_2,D_3)=(3,4,7)$ verifies the numerical
+Siegel--Eisenstein period identity on that locus. Global extension
+across the all-Humbert pro-system requires the compatible vanishing of
+all finite obstruction classes
+\(\mathrm{ob}^{\mot}_{\Data,\mathscr D}\).
+\end{remark}
+
+\begin{conjecture}[\label{cor:motivic-lift-chi3}Motivic form of the
+$\chi_3$-pairing]
+\ClaimStatusConjectured
+If
+\[
+ \mathrm{ob}^{\mot}_{\Data,\mathscr D}(\mathbf H_{\Delta_5})=0
+ \qquad\text{for every finite admissible }\mathscr D,
+\]
+then
+\[
+ \bigl\langle [\chi_3]^{\mot}, [e_3^{\mathrm{K3}\times E}]^{\mot}
+ \bigr\rangle_{\Phi_3}^{\mot}
+ \;=\; \chi(\cO_{\mathrm{K3}})^{\mot}\cdot
+ \Res^{\mot}_{s=1/2}\!\bigl[E_5^{(2),\mot}(Z, s)\bigr]\big|_{K(1)}
+\]
+in the weight-$3$ Eisenstein period line inside
+$\Fil^W_{\le3}\MZV^{\mot}$. Here $E_5^{(2),\mot}(Z,s)$ and
+$\Res^{\mot}_{s=1/2}$ denote a chosen motivic lift of the
+regularised Siegel--Eisenstein residue on the paramodular group $K(1)$;
+existence and compatibility of this lift are part of the conjecture.
+Period realisation recovers the numerical identity of the preface.
+\end{conjecture}
+
+\begin{remark}[Three compatibility tests for
+Conjecture~\ref{thm:motivic-barcobar-bridge}]
+\label{rem:motivic-bridge-three-paths}
+The conjecture has three independent compatibility tests. Agreement of
+the tests is evidence; it does not prove the motivic equivalence
+$\per_{\mathscr D}$ for all finite $\mathscr D$.
+
+\textup{(i)} \emph{Deligne--Goncharov motivic $\pi_1$.} Apply the
+Deligne--Goncharov 2005 motivic iterated-integral construction to the
+affine collision screens on a generic fibre of
+$\overline{M}_{0,2g+2}$ over $U_{\mathscr D}$. The expected comparison
+is that the
+resulting motivic $\pi_1^{\mot}$-torsor realises the same associator
+coordinates as the $\widehat{\mathrm{grt}}_1$-torsor of chain-level
+$\Data(\cA)$, with Furusho 2011 providing associator rigidity. This
+test is internal to mixed Tate motives over~$\mathbb Z$ and does not
+use Siegel--Eisenstein.
+
+\textup{(ii)} \emph{Ikeda lift of Siegel--Eisenstein.} Ikeda 2001
+(\emph{Invent.\ Math.}\ 144) supplies the automorphic lift controlling
+the Siegel--Eisenstein residue. A motivic refinement of that residue,
+when constructed, would lie on the weight-$3$ Eisenstein extension line
+whose period is the classical Zagier value. This test is automorphic
+and disjoint from the operadic~(i).
+
+\textup{(iii)} \emph{K3-chiral Chern character.} The Mukai vector
+of the K3 fibre at an admissible Humbert point maps to its motivic
+Chern character $\mathrm{ch}^{\mot}\in
+K_0^{\mot}(\mathrm{K3})\otimes_{\mathbb Z}\mathbb Q$; its pairing
+with the degree-$3$ BKM class
+$e_3^{\mathrm{K3}\times E}$ computes
+$\chi(\cO_{\mathrm{K3}}) = 2$ and $\mathrm{Vol}(E)$ from the
+fibre integral
+(Mukai 1987; Oberdieck 2019 reduced DT; Vol~III K3 Hall--Drinfeld
+Schur-index calculation).
+This path is geometric and disjoint from both (i) and (ii).
+
+Agreement across the three tests at codim-$3$ is verified
+numerically at $(D_1, D_2, D_3) = (3, 4, 7)$ with
+value $2\,\mathrm{Vol}(E)(2\pi i)^3$. Brown's description of the
+weight-$3$ line gives a distinguished generator
+$\zet^{\mot}(3)$; after fixing this normalisation the calculation
+selects the corresponding motivic lift. Surjectivity of $\per$ alone
+would not give uniqueness.
+\end{remark}
+
+\begin{remark}[Motivic and chain-level compatibility
+data; \ClaimStatusConditional]
+\label{rem:motivic-vs-chainlevel-data}
+The compatibility data $\Data(\cA)$ admits two genuinely distinct
+enhancements, never to be conflated:
+\emph{chain-level} $\Data(\cA)\simeq
+B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$, a
+$\widehat{\mathrm{grt}}_1$-torsor valued in simplicial sets over
+$\mathbb C$ (Theorem~B), versus \emph{motivic}
+$\{\Data^{\mot}_{\mathscr D}(\cA)\}_{\mathscr D}$, conjectural torsors
+for the motivic image in $\widehat{\mathrm{grt}}_1$ over the finite
+Humbert-complement opens
+$U_{\mathscr D}\subset\overline{\mathcal A}_{2,\mathbb Q}$
+(Definition~\ref{def:motivic-data-groupoid}). Period realisations
+$\per_{\mathscr D}$ are conjectured to be equivalences compatibly in
+$\mathscr D$; extension across Humbert divisors is obstructed by the
+finite classes $\mathrm{ob}^{\mot}_{\Data,\mathscr D}$ in the
+image-Lie-algebra cohomology of
+Definition~\ref{def:heeg-chern-obstruction}
+(Conjecture~\ref{thm:motivic-barcobar-bridge}). Conflation produces
+the error of treating the Siegel--Eisenstein residue
+$\Res_{s=1/2}[E_5^{(2)}]|_{K(1)}$ as a universal invariant of
+$\Data(\cA)$ rather than a period of
+$\Data^{\mot}_{\mathscr D}(\cA)$ at a specific Heegner datum; the numerical
+coincidence $2\,\mathrm{Vol}(E)(2\pi i)^3$ is a \emph{restricted}
+shadow, not the whole motivic structure.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}[Nekrasov motivic scope]
+\label{rem:mst-nekrasov-scope}
+Four distinctions are load-bearing. (i) The coefficient
+$c_n$ of $\phi_{-2,1}$ is weight-$0$ on the $\MZV^{\num}$ side
+(a rational integer), while the monomial carrying it has external
+$\ep^n$-degree in Conjecture~\ref{conj:omega-motivic-weight-match}.
+(ii) $\hbar^2 = -1/8$ is \emph{not} a central charge:
+it is the product $\ep_1\ep_2$ at the self-dual slice; conflating
+it with a Virasoro central charge is a type error. (iii) The Beem--Rastelli
+identification is a \emph{character} trace, not an algebra
+isomorphism; see Vol~III toric\_cy3\_coha.tex
+Remark~\ref{V3-rem:K3xE-coha-chiral-guard}. (iv) The cyclotomic
+marking $z_i=\zeta_{24}^{i-1}$ is not a geometric $M_{24}$ action on
+the $24$-punctured sphere; Moonshine enters only through a separate K3
+module comparison.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Single-valued scope for chiral-Hochschild periods}
+\label{sec:sv-scope-restriction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\zetasv}{\zeta^{\mathrm{sv}}}
+\providecommand{\MZVsv}{\MZV^{\mathrm{sv}}}
+\providecommand{\MZVmot}{\MZV^{\mot}}
+\providecommand{\proj}{\mathrm{pr}^{\mathrm{sv}}}
+
+Deligne--Goncharov attach motivic periods to the KZ/Arnold
+iterated-integral torsor. Brown's single-valued period map sends
+motivic multiple zeta values to the real-analytic quotient
+$\MZVsv$. The chiral-Hochschild pairing of Theorem~H uses real Arnold
+forms on the real Fulton--MacPherson compactification. That reality
+condition is the source of the single-valued restriction.
+
+\begin{theorem}[\label{thm:sv-scope-restriction-chiralhoch}Single-valued
+scope of the chiral-Hochschild period identity;
+\ClaimStatusConditional]
+Assume the motivic Hochschild pairing of
+Conjecture~\ref{cor:motivic-lift-chi3}
+\[
+ \bigl\langle [\chi_r]^{\mot},
+ [\omega_r^{\mathrm{univ}}]^{\mot}\bigr\rangle_{\mathrm{cyc}}^{\mot}
+ \;\in\; \Fil^W_{\le r}\MZVmot
+\]
+is represented by real Arnold forms
+$d\log|z_i-z_j|^2$ on
+$\overline{\mathrm{Conf}_n(X)}(\RR)$. Then its real period factors
+through Brown's single-valued projection
+$\proj\colon \MZVmot\to\MZVsv$. Equivalently, for each finite
+$\mathscr D$ the relevant period-realisation map
+$\per_{\mathscr D}$ of Definition~\ref{def:motivic-data-groupoid}
+factors as
+\[
+ \per_{\mathscr D}\colon
+ \Data^{\mot}_{\mathscr D}(\cA)\;\xrightarrow{\;\proj_*\;}\;
+ \Data^{\mathrm{sv}}(\cA)\;\xrightarrow{\;\mathrm{real}\;}\;
+ \Data^{\BettiRlz}(\cA)|_{U_{\mathscr D},\RR},
+\]
+and the image of the Hochschild pairing in
+$\Data^{\mathrm{sv}}$ is a $\mathrm{Gal}(\CC/\RR)$-invariant
+motivic real period. The Siegel--Eisenstein numerical identity
+$2\,\mathrm{Vol}(E)(2\pi i)^3 = \chi(\cO_{\mathrm{K3}})
+\Res_{s=1/2}[E_5^{(2)}(Z,s)]|_{K(1)}$ of Theorem~H is a period
+in the single-valued realisation of the weight-$3$ period line, not a
+generic element carrying the full motivic Galois action.
+\end{theorem}
+
+\begin{proof}
+Arnold harmonic representatives $\omega_r^{\mathrm{univ}}$ are real
+forms on $\overline{\mathrm{Conf}_n(X)}(\RR)$: the Arnold algebra
+is generated by
+$\eta_{ij} = d\log|z_i - z_j|^2 = (dz_{ij}/z_{ij} + \overline{dz_{ij}/z_{ij}})$,
+which is the single-valued real form whose holomorphic part is
+the KZ one-form. Integration of a motivic iterated integral
+against a single-valued harmonic form lands in $\MZVsv$ by
+Brown 2013 \S 2.1 Thm.~2.4 (single-valued period realisation). The
+Hochschild cocycle $\chi_r$ is, under the hypothesis of the theorem, the
+cyclic-Arnold pairing
+$\langle\chi_r,\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}$ by
+the shadow-ChirHoch bridge, which is a real-period pairing. The factorisation
+$\per_{\mathscr D} = \mathrm{real}\circ\proj_*$ follows from the
+Brown 2013 single-valued factorisation diagram of the motivic
+comparison isomorphism on each finite open. The Siegel--Eisenstein
+residue at $s=1/2$ of
+$E_5^{(2)}$ is a regularised real period
+(Kudla--Rallis 1994 regularised Siegel--Weil), so any motivic lift of
+this identity lands in the single-valued realisation. In weight $3$ the
+single-valued odd-zeta line is generated by $\zetasv(3)$, with Brown's
+normalisation fixing the scalar.
+\end{proof}
+
+\begin{remark}[Scope separations for
+Theorem~\ref{thm:sv-scope-restriction-chiralhoch}]
+\label{rem:sv-scope-five-obstructions}
+Five separations are essential. First, $S_2=c/2$ is a rational shadow
+coefficient, not a depth-one MZV; the vanishing of weight-one
+single-valued MZVs does not constrain it. Second, Heegner--Chern
+classes control extension of the motivic domain across Humbert
+divisors, while the single-valued projection controls the codomain of
+real periods. Third, the Zamolodchikov norm $c(5c+22)/10$ is a rational
+normalisation, not an iterated-integral period. Fourth, the
+Gangl--Kaneko--Zagier double-zeta relations are compatible with
+single-valued projection after taking the real invariant quotient.
+Fifth, Kontsevich graph weights live in the full motivic period algebra;
+only the real Arnold-Hochschild subclass is forced into the
+single-valued image.
+\end{remark}
+
+\begin{remark}[Motivic, single-valued, and chain-level sites;
+single-valued scope; \ClaimStatusConditional]
+\label{rem:motivic-sv-crosslevel}
+The compatibility data $\Data(\cA)$ thus inhabits \emph{three}
+distinct sites, never to be conflated.
+\textup{(a)} Chain-level
+$\Data(\cA)\simeq B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$
+over $\mathbb C$, a $\widehat{\mathrm{grt}}_1$-torsor of
+simplicial sets (Theorem~B).
+\textup{(b)} Motivic
+$\{\Data^{\mot}_{\mathscr D}(\cA)\}_{\mathscr D}$, a conjectural
+compatible system of torsors for the motivic image in
+$\widehat{\mathrm{grt}}_1$ over the finite Humbert-complement opens
+$U_{\mathscr D}\subset\overline{\mathcal A}_{2,\mathbb Q}$
+(Definition~\ref{def:motivic-data-groupoid}).
+\textup{(c)} Single-valued $\Data^{\mathrm{sv}}(\cA)$, the image of
+$\Data^{\mot}_{\mathscr D}(\cA)$ under Brown's single-valued period
+projection, carrying
+$\mathrm{Gal}(\CC/\RR)$-invariant real motivic periods
+(Theorem~\ref{thm:sv-scope-restriction-chiralhoch}).
+The real-period refinement of the chiral-Hochschild pairing lives in
+(c); Theorem~H itself is a curve-level Hochschild statement in (a).
+Under the hypotheses of Theorem~\ref{thm:sv-scope-restriction-chiralhoch},
+period realisation factors as
+$(b)\xrightarrow{\proj_*}(c)\xrightarrow{\mathrm{real}}(a)_\RR$.
+Vol~III's factorisation
+$\Phi_d^{(\Sigma_{d-1},C)} = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$
+combines the canonical $E_d$-holomorphic factorisation algebra
+$\PhiFA_d$ with specialisation
+$\SpCh_{\Sigma_{d-1}, C}$ to the reference curve $C$ by
+factorisation homology over a $(d{-}1)$-cycle. The BKM denominator
+$\chi_{10}$ is a real-analytic Borcherds product
+(Borcherds 1992 Thm.~10.1), so its real periods are compared through
+the single-valued image of $\MZVmot$.  A curve-level family datum
+$H_H(\cA;S)$ gives
+$\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S$; the
+single-valued restriction refines its period realization.  A perfect
+degree-$d$ pairing remains the separate input for a Hochschild degree
+reflection.
+\end{remark}

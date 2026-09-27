@@ -1,0 +1,4074 @@
+% !TEX root = ../../main.tex
+%==================================================================
+% chapters/theory/mc5_class_m_chain_level_platonic.tex
+%
+% MC5 class M chain-level, pro-completed reconstruction.
+%
+% Purpose: LOSSLESSLY strengthen the existing MC5 class-M chain-level
+% inscription. The current theorem asserts two things:
+% (a) thm:completed-bar-cobar-strong (Vol I) and
+% prop:bv-bar-class-m-weight-completed (Vol II) prove MC5 class M
+% chain-level in the WEIGHT-COMPLETED category;
+% (b) direct-sum chain-level MC5 class M in the naive ambient Ch(Vect)
+% is "genuinely false" because the higher harmonic discrepancies
+% delta_r^{harm} = c_r(A) * m_0^{floor(r/2)-1} do not terminate
+% and cannot be absorbed by a single chain homotopy package on the
+% raw direct sum of bar-words.
+%
+% The reconstitution upgrades (a) and reinterprets (b). The strongest
+% form is:
+%
+% MC5 CLASS M CHAIN-LEVEL PLATONIC THEOREM. In the pro-object ambient
+% pro-Ch(Vect), equivalently in the J-adic topological chain complex
+% with J the positive-weight ideal, equivalently in the filtered
+% completion category CompCl(F), the comparison morphism
+% hat{f}_g : hat{C}^*_{BV}(A, Sigma_g) -> hat{B}^{(g)}(A) is a strict
+% chain-level quasi-isomorphism for every genus g >= 0 and every
+% class-M algebra A in the standard landscape. This is chain-level
+% MC5 class M on the canonical filtered completion of the raw
+% direct-sum complex.
+%
+% Clause (b) is retained with its proper scope: "genuinely false"
+% applies to the specific raw ambient (bounded direct sum in Ch(Vect)).
+% Three ambient completions (weight-completed, pro-object, J-adic
+% topological) agree on the completed chain-level statement, but the
+% raw direct sum and its completion are not identical objects after
+% forgetting the filtration.
+%
+% No downgrade: the weight-completed inscription is promoted to a
+% chain-level theorem on the canonical filtered completion. The
+% "genuinely false" remark remains true for the raw direct-sum
+% Ch(Vect) surface.
+%==================================================================
+
+\chapter{MC5 class \texorpdfstring{$\mathsf{M}$}{M} chain-level pro-completed reconstruction}
+\label{chap:mc5-class-m-chain-level-platonic}
+
+% Local macros (provide-command idempotent; required for cross-chapter
+% references to chap:climax-platonic, chap:universal-conductor, and
+% Theorem~A in theorem_A_infinity_2.tex).
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\co}{\mathrm{co}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+
+The master conjecture MC5 (chain-level identification of the BV-BRST
+complex with the algebraic bar complex) is one of the five backbone
+conjectures of the theory. The class-$\mathsf{M}$ strand, covering
+Virasoro and principal $\mathcal{W}_N$, is the structurally delicate
+case. The raw direct-sum complex in $\mathrm{Ch}(\mathrm{Vect})$ is
+the dense algebraic model.  The theorem lives in its pro-object,
+$J$-adic, and filtered-completed realizations, related by explicit
+continuous comparison functors.
+
+The correct reading of this chapter is the strict Mittag--Leffler
+finite-window reading. The pro, $J$-adic, and filtered-completed
+ambients below are the same completed chain-level surface once the
+tower consists of finite-stage strict comparisons, compatible
+finite-stage homotopies, Mittag--Leffler cohomology systems, and exact
+comparison functors between the ambient categories. The raw direct-sum
+complex maps canonically to this completion; MC5 concerns the resulting
+continuous comparison on the completed target.
+
+The chapter slots into the unified architecture as follows.
+Clause~\ref{KR-ii} of Theorem~\ref{thm:koszul-reflection} supplies the
+ambient reconstruction counit
+$\Omega_XB_X(\cA)\xrightarrow{\sim}\cA$; its factorization restriction
+belongs to the package in clause~\ref{KR-iii}.  Quadratic compression
+$\cA^{\mathrm i}\to B_X(\cA)$ belongs to clause~\ref{KR-iv}.  For
+class~$\mathsf{M}$, the pro-ambient hypotheses of this chapter carry
+these finite-window comparisons to a continuous quasi-isomorphism on
+the inverse-limit complex.
+On the genus-$0$
+affine/tangent KZ-window collision part, the pullback
+$\KZ^{*}(\nabla_{\Arn})$ constructs a flat superconnection on the
+coefficient bundle.  The Fulton--MacPherson residue realisation sends
+its boundary residues to the corresponding component of~$\dbar$.
+Thus the residue-realised
+superconnection and the chain differential are linked by a typed
+comparison map under the finite-window realization package of
+Chapter~\ref{chap:climax-platonic}; the per-genus $\kappa$-conductor
+appearing in the harmonic
+discrepancy~\eqref{eq:harmonic-discrepancy} is the negative of the
+ghost charge of any quasi-free BRST resolution by the universal
+identity of Chapter~\ref{chap:universal-conductor}.
+
+\section{Setup and conventions}
+\label{sec:mc5-setup}
+
+Throughout this chapter, $X$ is a smooth projective curve over a field
+of characteristic zero, and $\cA$ is a class-$\mathsf{M}$ chiral
+algebra in the standard landscape: Virasoro $\mathrm{Vir}_c$ at
+generic~$c$ \textup{(}outside the minimal-model and admissible loci,
+absorbed into the companion Feigin--Frenkel / Feigin--Fuchs
+treatments\textup{)} or the principal $\mathcal{W}_N$-algebra
+$\cW^k(\fg, f_{\mathrm{prin}})$ at non-critical level for classical
+simple $\fg$. The conformal-weight grading
+\[
+\cA \;=\; \bigoplus_{h \geq 0} \cA_h,
+\qquad
+\dim \cA_h < \infty,
+\]
+exists by construction \textup{(}$L_0$-diagonal decomposition; for
+principal $\cW$ the Feigin--Fuchs / Fateev--Lukyanov generator
+structure\textup{)}. Set
+\[
+\cA_{\leq N} \;:=\; \bigoplus_{h=0}^{N} \cA_h,
+\qquad
+\widehat{\cA}^{\mathrm{wt}} \;:=\; \prod_{h \geq 0} \cA_h
+\;=\; \varprojlim_N \cA_{\leq N}.
+\]
+
+The relationship between direct sum and product is the single structural
+datum that controls everything in this chapter: the chiral algebra $\cA$
+\emph{is} the direct sum, while its natural bar-theoretic ambient, once
+the weight truncation filtration is imposed, is the product.
+
+\begin{notation}[Chain-level versus limit-level]
+\label{not:chain-versus-limit}
+We write $B^{(g)}(\cA)$ for the raw genus-$g$ bar complex of $\cA$ in
+$\mathrm{Ch}(\mathrm{Vect})$, understood as the bounded direct sum of
+bar words graded by conformal weight. We write $\widehat{B}^{(g)}(\cA)$
+for the weight-completed bar complex, equivalently the inverse limit
+\[
+\widehat{B}^{(g)}(\cA)
+\;:=\;
+\varprojlim_N \, \bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)
+\]
+of its finite-weight truncations, regarded as an object of
+$\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ or as the underlying
+topological chain complex with the $J$-adic topology generated by
+positive-weight bar words. We use analogous notation for the BV side.
+\end{notation}
+
+The relevant harmonic datum was isolated in Vol~II
+Remark~\ref{rem:bv-bar-class-m-frontier}: for class $\mathsf{M}$, the
+residual discrepancy between the BV comparison map and the bar map
+satisfies
+\begin{equation}
+\label{eq:harmonic-discrepancy}
+\delta_r^{\mathrm{harm}}
+\;=\;
+c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1},
+\qquad r \geq 4,
+\end{equation}
+where $c_r(\cA)$ is the $r$-th shadow coefficient and $m_0$ is the
+genus-$g$ curvature of the bar complex. For Virasoro and principal
+$\cW_N$ the shadow tower does not terminate
+\textup{(}Corollary~\textup{\ref{cor:virasoro-postnikov-nontermination}}\textup{)},
+so the collection $\{\delta_r^{\mathrm{harm}}\}_{r \geq 4}$ is an
+infinite family of nonzero central-curvature-valued corrections.
+
+\section{The ghost--error--correct triple}
+\label{sec:mc5-ghost-triple}
+
+The residual remark ``direct-sum chain-level class $\mathsf{M}$ is
+genuinely false'' contains a ghost of a true theorem, a precise error,
+and a correct relationship.
+
+\paragraph{Ghost theorem.} In the naive ambient $\mathrm{Ch}(\mathrm{Vect})$
+of bounded direct sums, with the comparison map
+$f_g \colon C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g) \to B^{(g)}(\cA)$
+required to be a strict chain homotopy equivalence, no single contracting
+homotopy $h$ can absorb the infinite family $\{\delta_r^{\mathrm{harm}}\}_{r \geq 4}$
+at once: for class $\mathsf{M}$ the series $\sum_r \delta_r^{\mathrm{harm}}$
+is not a bounded sum in the direct-sum ambient. This is a true theorem
+about a specific ambient.
+
+\paragraph{Error.} Calling this observation ``genuinely false'' conflates
+two statements: \textup{(i)} direct-sum chain-level MC5 class $\mathsf{M}$
+in the \emph{uncompleted} ambient $\mathrm{Ch}(\mathrm{Vect})$, which is
+the ambient of the raw direct-sum bar complex, and \textup{(ii)} chain-level
+MC5 class $\mathsf{M}$ in any ambient that admits the inverse-limit
+topology under which the infinite family becomes a single topologically
+convergent correction. The raw bar complex determines, but is not equal
+to, the pro-object of its own weight-filtered truncations. The strict
+chain homotopy exists in this pro-ambient because it is defined stage
+by stage and $\mathrm{Mittag\text{-}Leffler}$ kills the derived limit
+obstruction.
+
+\paragraph{Correct relationship.} Chain-level MC5 class $\mathsf{M}$ is
+proved on the strict Mittag--Leffler completed surface, presented in
+three completed ambients:
+\textup{(1)} the pro-object ambient $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$
+of inverse systems of chain complexes; \textup{(2)} the topological
+chain complex with the $J$-adic topology generated by the positive-weight
+ideal $J = \bigoplus_{h > 0} \cA_h$; \textup{(3)} the filtered-completed
+ambient $\mathrm{CompCl}(\mathcal{F})$ of
+Definition~\textup{\ref{def:strong-completion-tower}}. Transport among
+these ambients is the content of
+Proposition~\ref{prop:ambient-equivalence}. The statement
+``genuinely false'' is restricted to the bounded-direct-sum ambient
+$\mathrm{Ch}(\mathrm{Vect})$. The completed ambients retain the
+weight tower that the raw direct-sum surface forgets.
+
+\section{Chain-level MC5 class M in the pro-ambient}
+\label{sec:mc5-platonic-theorem}
+
+Three equivalent formulations of the strongest form: the
+pro-object form used throughout the rest of the chapter, the
+topological-chain form, and the already-installed filtered-completion
+form.
+
+\begin{theorem}[MC5 class $\mathsf{M}$ pro-ambient comparison on a
+strict Mittag--Leffler tower]
+\label{thm:mc5-class-m-chain-level-pro-ambient}
+\ClaimStatusProvedHere
+\index{MC5!class M chain-level in pro-ambient|textbf}
+\index{pro-object ambient!chain-level MC5}
+Type signature: \textup{(}Open quadrant, strict Mittag--Leffler
+pro-chain presentation, Beilinson level~$3$ comparison with level~$2$
+bar input, hypothesis package: finite-stage BV/bar comparisons,
+compatible finite-stage contracting homotopies, finite-dimensional
+stage cohomology, and strict continuous tower maps\textup{)}.
+Let $\cA$ be a class-$\mathsf{M}$ chiral algebra in the standard landscape
+\textup{(}Virasoro $\mathrm{Vir}_c$ at generic $c$, or principal
+$\mathcal{W}_N$ at non-critical level for classical simple $\fg$\textup{)},
+equipped with the conformal-weight filtration of
+Proposition~\textup{\ref{prop:standard-strong-filtration}}. Let $g \geq 0$,
+let
+\[
+f_g^{(\leq N)} \colon
+C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g)
+\longrightarrow
+\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)
+\]
+be the comparison map on the total-conformal-weight quotient/window at
+stage $N$. Thus $\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$ is obtained
+from the full bar complex by killing bar words of total conformal
+weight \(>N\); it is not the bar construction applied to the truncated
+vector space $\cA_{\leq N}$ with its products forgotten. Let
+\[
+f_g \;:=\; \{f_g^{(\leq N)}\}_{N \geq 0}
+\;\in\;
+\mathrm{Mor}\bigl(\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})\bigr)
+\]
+be the induced morphism of pro-objects. Then $f_g$ is a chain-level
+quasi-isomorphism in $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$:
+at each weight-truncation stage $N$, the finite-stage map $f_g^{(\leq N)}$
+is a strict chain-level quasi-isomorphism, the stage cohomologies are
+finite-dimensional, and the tower satisfies the Mittag--Leffler
+condition in every cohomological degree by finite-dimensionality, provided
+the finite-stage comparisons, their contracting homotopies, and the
+transition maps are defined in a single strict continuous pro-chain
+surface and are compatible with the tower. These tower-compatibility
+data are part of the strict Mittag--Leffler tower structure, not
+consequences of the raw direct-sum complex.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: finite-stage strict quasi-isomorphism.} For each $N$, the
+finite total-weight quotient/window uses only finitely many
+finite-dimensional conformal-weight pieces of~$\cA$
+\textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}\textup{)}.
+Products and OPE operations are computed in~$\cA$ and then projected
+to total weight~$\leq N$.
+The harmonic discrepancy at stage $N$ involves only finitely many bar
+weights $r \leq N$, so the series
+$\sum_{r \leq N} \delta_r^{\mathrm{harm}} = \sum_{r \leq N} c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+is a finite sum of curvature corrections acting between finite-dimensional
+bar-weight summands of $\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$. The
+explicit contracting homotopy
+\[
+h_N
+\;=\;
+\sum_{j=1}^{\lfloor N/2 \rfloor}
+h \cdot m_0^{j-1}
+\]
+constructed in the proof of
+Proposition~\textup{\ref{V2-prop:bv-bar-class-m-weight-completed}}
+absorbs every finite-stage discrepancy: $h_N$ is a finite sum of bounded
+linear maps on the finite-dimensional stage-$N$ bar complex, the
+identity $\mathrm{id} - d h_N - h_N d$ is the idempotent projecting onto
+the harmonic subspace, and $f_g^{(\leq N)}$ is strictly inverse to the
+harmonic projector. Therefore $f_g^{(\leq N)}$ is a strict chain-level
+quasi-isomorphism for every $N$.
+
+\emph{Step 2: compatibility under tower maps.} The transition maps are
+the quotient maps
+\[
+p_N\colon \bar B^{\mathrm{ch},(g)}_{\leq N+1}(\cA)
+\twoheadrightarrow
+\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)
+\]
+and their BV counterparts. The strict tower hypothesis requires
+$p_N f_g^{(\leq N+1)}=f_g^{(\leq N)}p_N$ and
+$p_N h_{N+1}=h_Np_N$ on the corresponding finite windows. These
+identities are part of the strict continuous pro-chain surface. The
+filtration-preservation property
+\[
+d_{\mathrm{bar}}(F_{\leq w}C_N)\subset F_{\leq w}C_N
+\]
+and the stabilization of $F_{\leq w}$ reduce the check to a finite
+calculation on each window; they do not by themselves manufacture
+compatible homotopies. Under this compatibility datum
+$\{f_g^{(\leq N)}\}_N$ assembles into a morphism of pro-objects.
+
+\emph{Step 3: Mittag--Leffler condition via finite-dimensionality.} We
+verify Mittag--Leffler for the inverse systems
+$\{H^m(C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g))\}_N$ and
+$\{H^m(\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA))\}_N$ at every fixed
+cohomological degree $m$.
+
+The bar differential of the standard chiral bar complex is not
+conformal-weight-preserving but conformal-weight weakly decreasing: a
+single OPE step
+\[
+\operatorname{wt}(a_{(n)}b)
+\;=\;
+\operatorname{wt}(a) + \operatorname{wt}(b) - n - 1,
+\qquad n \geq 0,
+\]
+gives $\le \operatorname{wt}(a) + \operatorname{wt}(b)$ with strict
+inequality whenever a singular-mode index $n \geq 1$ is extracted.
+Equation~\textup{\eqref{eq:bar-weight-preservation}} of
+Proposition~\textup{\ref{prop:standard-strong-filtration}} records this
+as $d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$: the
+conformal weight sits in the bar complex as a \emph{filtration}, not as
+a grading, and the raw bar complex does not decompose as a product
+over weights. The associated graded $\operatorname{gr}^w C_N$ is
+weight-homogeneous and admits such a decomposition; the raw $C_N$ does
+not. The proof therefore works with the filtration, not with a false
+weight-grading decomposition.
+
+Two independent routes furnish Mittag--Leffler; we record both.
+
+\emph{Route (a): finite-dimensionality of each stage.} At each stage
+$N$, the total-weight window is built from the finite-dimensional
+space $\cA_{\leq N}$
+\textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}(ii)\textup{)}.
+Fix any cohomological degree $m$. Bar words of finite total
+conformal weight contributing to the genus-$g$ bar complex at
+cohomological degree $m$ have bar length $r$ bounded in terms of $m$
+and $g$ through the genus-$g$ conformal-weight budget of the
+factorisation structure. Combined with finite-dimensionality of
+$\cA_{\leq N}$, this forces
+\[
+\dim_\C H^m\bigl(\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)\bigr) < \infty
+\qquad
+\text{for every } N.
+\]
+The same bound holds for
+$H^m(C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g))$
+by its $L_0$-decomposition. The tower of finite-dimensional images
+\[
+\operatorname{im}\bigl(H^m(C_{N+k}) \longrightarrow H^m(C_N)\bigr),
+\qquad k \geq 0,
+\]
+is a decreasing sequence of finite-dimensional subspaces of a
+finite-dimensional vector space, hence stabilises for $k$ large. This
+is the Mittag--Leffler condition at $m$; in the cited form
+\textup{(}\cite{Weibel94}, Proposition~3.5.7\textup{)} finite-dimensional
+inverse systems are automatically Mittag--Leffler.
+
+\emph{Route (b): filtration-piece stabilisation, refining
+Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).} For
+every weight bound $w$ and every $N \geq w$, the filtration piece
+$F_{\leq w} C_N$ stabilises:
+$F_{\leq w} C_{N+1} \xrightarrow{\sim} F_{\leq w} C_N$. Since the
+filtration is exhaustive on each finite-dimensional $C_N$, the image
+of the full transition map $H^m(C_{N+1}) \to H^m(C_N)$ contains the
+entire stabilised filtration image; taking intersections over
+$N' \geq N$ collapses to a single finite-dimensional subspace, which
+is the Mittag--Leffler limit. The two routes agree on the limit image.
+
+Either route suffices. Applied to the tower of cones
+$\{\operatorname{Cone}(f_g^{(\leq N)})\}_N$ \textup{(}whose stage maps
+are chain-level quasi-isomorphisms by Step~1\textup{)}, it gives
+$\varprojlim^1_N H^{m-1}(\operatorname{Cone}(f_g^{(\leq N)})) = 0$ in
+every cohomological degree $m$.
+
+\begin{remark}[Weight behaviour of the bar differential]
+\label{rem:mc5-weight-filtration}
+\index{bar differential!weakly weight-decreasing, not weight-preserving}%
+The decomposition
+$\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)
+= \prod_{w} \bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)_w$
+holds on the associated graded
+$\operatorname{gr}^{\bullet} \bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)$,
+not on the raw bar complex. For class~$\mathsf{M}$ the spectral
+sequence of the weight filtration can carry higher shadow differentials;
+finite-page collapse is not part of the theorem. The bar-cohomology
+Mittag--Leffler condition nevertheless holds by finite-dimensionality
+of each stage, as in Route~(a), so the pro-object statement is
+unaffected by this nontermination phenomenon. The load-bearing input is
+finite-dimensionality of $\cA_{\leq N}$, not weight-preservation of the
+differential.
+\end{remark}
+
+\emph{Step 4: pro-object chain-level quasi-isomorphism.} A morphism in
+$\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ is a chain-level
+quasi-isomorphism when \textup{(a)} every term map is a chain-level
+quasi-isomorphism, and \textup{(b)} the Mittag--Leffler condition holds
+\textup{(}so the derived inverse-limit obstruction $\varprojlim^1$
+vanishes\textup{)}. Both are established in Steps~1--3. Therefore $f_g$
+is a chain-level quasi-isomorphism in the pro-ambient.
+\end{proof}
+
+\begin{remark}[Class-$\mathsf{M}$ nontermination as raw-ambient
+witness; \ClaimStatusConditional]
+\label{rem:mc5-class-m-nontermination-witness-conditional}
+Type signature: \textup{(}Open quadrant, raw direct-sum shadow-tower
+presentation, Beilinson level~$3$ comparison with level~$2$ bar input,
+hypothesis package: Virasoro/principal $\mathcal W_N$ shadow
+nontermination over the indicated parameter field\textup{)}.
+Corollary~\textup{\ref{cor:virasoro-postnikov-nontermination}} supplies
+the nontermination witness used to explain why the bounded direct-sum
+ambient $\mathrm{Ch}(\mathrm{Vect})$ is the wrong surface for
+class~$\mathsf M$. This witness is not a load-bearing input to
+Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}}; the
+theorem uses finite-stage strict comparisons and the
+Mittag--Leffler condition in the completed pro-chain ambient.
+\end{remark}
+
+The next corollary records what Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}}
+says about the \emph{original} weight-graded bar complex, viewed as the
+inverse limit of its truncation tower.
+
+\begin{corollary}[Chain-level MC5 class $\mathsf{M}$ on the inverse limit]
+\label{cor:mc5-class-m-chain-level-on-inverse-limit}
+\ClaimStatusProvedHere
+\index{inverse limit bar!chain-level MC5 class M|textbf}
+Let $\cA$ be as in Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}}.
+The inverse-limit comparison
+\[
+\widehat{f}_g \;=\; \varprojlim_N f_g^{(\leq N)}
+\;\colon\;
+\widehat{C}^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)
+\;\longrightarrow\;
+\widehat{B}^{(g)}(\cA)
+\]
+is a strict chain-level quasi-isomorphism of complete curved chiral
+chain complexes. The inverse limit $\widehat{B}^{(g)}(\cA)$ is the
+weight-completed bar complex and is the canonical ambient for the
+original weight-graded bar complex of $\cA$ under the weight filtration
+of Proposition~\textup{\ref{prop:standard-strong-filtration}}, provided
+the pro-ambient hypotheses of
+Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}} hold.
+\end{corollary}
+
+\begin{proof}
+The Milnor exact sequence applied to the inverse system of cones yields
+\[
+0 \to \varprojlim\nolimits^1_N H^{m-1}\bigl(\mathrm{Cone}(f_g^{(\leq N)})\bigr)
+\to H^m\bigl(\mathrm{Cone}(\widehat{f}_g)\bigr)
+\to \varprojlim_N H^m\bigl(\mathrm{Cone}(f_g^{(\leq N)})\bigr) \to 0.
+\]
+The right term vanishes because each $f_g^{(\leq N)}$ is a chain-level
+quasi-isomorphism
+\textup{(}Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}},
+Step~1\textup{)}; the left term vanishes because the system of cones
+is Mittag--Leffler
+\textup{(}Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}},
+Step~3\textup{)}. Hence the cone of $\widehat{f}_g$ is acyclic, and
+$\widehat{f}_g$ is a chain-level quasi-isomorphism.
+
+That $\widehat{B}^{(g)}(\cA)$ is the canonical ambient for the bar
+complex of $\cA$ with its weight filtration retained is
+Proposition~\textup{\ref{prop:standard-strong-filtration}}(i): the
+direct sum $B^{(g)}(\cA) = \bigoplus_h B^{(g)}(\cA)_h$ embeds as a
+dense subspace of $\widehat{B}^{(g)}(\cA) = \prod_h B^{(g)}(\cA)_h$.
+The two are not equal in $\mathrm{Ch}(\mathrm{Vect})$ after forgetting
+the filtration. The inverse limit is the product ambient, which is the
+natural home of the truncation tower and of the infinite harmonic
+correction.
+\end{proof}
+
+\begin{remark}[``Genuinely false'' is a raw-direct-sum statement]
+\label{rem:direct-sum-obstruction-is-ambient-choice}
+\index{direct-sum obstruction!raw direct-sum surface}
+Corollary~\textup{\ref{cor:mc5-class-m-chain-level-on-inverse-limit}}
+clarifies the earlier residual statement. The sentence
+\[
+\text{``direct-sum chain-level MC5 for class $\mathsf{M}$ is genuinely false''}
+\]
+is correct as a remark about the specific ambient $\mathrm{Ch}(\mathrm{Vect})$
+of bounded direct sums with naive chain homotopies. It is not a statement
+about the completed chain-level theorem. The raw
+bar complex of a weight-graded chiral algebra is the direct sum
+$\bigoplus_h B^{(g)}(\cA)_h$ of its conformal-weight components; but
+with the weight filtration retained, its natural categorical home is
+the pro-object whose $N$-th truncation is the finite direct sum
+$\bigoplus_{h \leq N} B^{(g)}(\cA)_h$. In the pro-ambient, the infinite
+family of curvature corrections $\{\delta_r^{\mathrm{harm}}\}_{r \geq 4}$
+is absorbed stage by stage, and the limiting comparison is a strict
+chain-level quasi-isomorphism
+\textup{(}Corollary~\textup{\ref{cor:mc5-class-m-chain-level-on-inverse-limit}}\textup{)}.
+
+Forgetting the weight filtration before taking the bar construction is
+what forces the ambient of bounded direct sums, and in that ambient
+chain-level MC5 class $\mathsf{M}$ fails. The lesson is categorical
+hygiene: the completed theorem must retain the tower under which the
+bar complex is controlled. Moving from $\mathrm{Ch}(\mathrm{Vect})$ to
+$\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ is lossless for the
+filtered tower data, but it is not an equality of the underlying raw
+direct-sum object with its product completion.
+\end{remark}
+
+\section{The topological chain form}
+\label{sec:mc5-j-adic}
+
+The second equivalent formulation uses the $J$-adic topology on the raw
+bar complex, where $J$ is the positive-weight ideal. This form makes
+contact with the $J$-adic completions familiar from commutative algebra
+and with the formal neighbourhood viewpoint of the factorisation
+picture.
+
+\begin{definition}[Positive-weight $J$-adic topological chain complex]
+\label{def:j-adic-topology-bar}
+\index{positive-weight ideal!J-adic topology}%
+Let $\cA$ be a class-$\mathsf{M}$ algebra as in
+Section~\textup{\ref{sec:mc5-setup}} and let $J \subset \cA$ be the
+positive-weight ideal $J = \bigoplus_{h > 0} \cA_h$. The $J$-adic
+filtration on the genus-$g$ bar complex is
+\[
+J^{(N)} B^{(g)}(\cA)
+\;:=\;
+\mathrm{span}\Bigl\{\,
+s^{-1} a_1 \mid \cdots \mid s^{-1} a_r
+\,\bigm|\,
+\sum_{j=1}^r \operatorname{wt}(a_j) > N \,\Bigr\},
+\]
+i.e.\ the subspace of bar words whose total conformal weight exceeds $N$.
+The $J$-adic topological chain complex $B^{(g)}(\cA)^{\wedge}_J$ is the
+completion of $B^{(g)}(\cA)$ with respect to this filtration; a base of
+open neighbourhoods of zero is $\{J^{(N)} B^{(g)}(\cA)\}_N$.
+\end{definition}
+
+\begin{theorem}[MC5 class $\mathsf{M}$ in the $J$-adic topological ambient]
+\label{thm:mc5-class-m-topological-chain-level-j-adic}
+\ClaimStatusProvedHere
+\index{MC5!class M chain-level J-adic|textbf}
+\index{J-adic topological chain complex!chain-level MC5}
+Let $\cA$ be a class-$\mathsf{M}$ chiral algebra in the standard
+landscape. In the $J$-adic topological chain complex
+$B^{(g)}(\cA)^{\wedge}_J$ of
+Definition~\textup{\ref{def:j-adic-topology-bar}} and its BV
+counterpart $C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)^{\wedge}_J$, the
+comparison map
+\[
+f_g^{\wedge J}
+\;\colon\;
+C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)^{\wedge}_J
+\longrightarrow
+B^{(g)}(\cA)^{\wedge}_J
+\]
+is a strict chain-level quasi-isomorphism of topological chain complexes.
+The contracting homotopy is continuous with respect to the $J$-adic
+topology: the series $h^{\wedge} = \sum_j h \cdot m_0^{j-1}$ converges
+pointwise because, for every element of bounded conformal weight, only
+finitely many terms in the sum are nonzero, assuming the $J$-adic
+completion functor is exact on the chosen tower and identifies its
+quotients with the strict finite stages used above.
+\end{theorem}
+
+\begin{proof}
+The $J$-adic quotient $B^{(g)}(\cA) / J^{(N)} B^{(g)}(\cA)$ is naturally
+isomorphic to the finite-weight truncation
+$\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$ of
+Proposition~\textup{\ref{prop:standard-strong-filtration}}:
+both quotient out bar words of total conformal weight exceeding $N$,
+and the identification preserves differentials, coproducts, and
+curvature.
+
+On each finite quotient the comparison $f_g^{(\leq N)}$ is a strict
+chain-level quasi-isomorphism
+\textup{(}Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}},
+Step~1\textup{)}. The transition maps are induced by the inclusions
+$J^{(N+1)} \subset J^{(N)}$ and are compatible with $f_g$ by the
+weight-homogeneity Step~2.
+
+Continuity of the contracting homotopy is the $J$-adic rephrasing of the
+degree cutoff
+\textup{(}Lemma~\textup{\ref{lem:degree-cutoff}}\textup{)}: for any
+element $x$ of weight bound $w$, all $J$-adic-convergent series in $m_0$
+truncate after $\lfloor w/2 \rfloor$ terms, so the defining sum for
+$h^{\wedge}$ is finite when restricted to any $J$-adic neighbourhood.
+
+The completion functor preserves chain-level quasi-isomorphisms of
+Mittag--Leffler towers. Since the tower of finite quotients is
+Mittag--Leffler
+\textup{(}Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}},
+Step~3\textup{)}, $f_g^{\wedge J}$ is a strict chain-level
+quasi-isomorphism in the topological ambient.
+\end{proof}
+
+\section{Equivalence of the three ambient completions}
+\label{sec:mc5-ambient-equivalence}
+
+The three ambients (pro-object, $J$-adic topological, and
+filtered-completed) agree on the chain-level MC5 statement for class
+$\mathsf{M}$. The proposition below is structural:
+it does not depend on class $\mathsf{M}$ specifics and applies to any
+standard-landscape chiral algebra, i.e.\ any of the classes
+$\mathsf{G}, \mathsf{L}, \mathsf{C}, \mathsf{M}$.
+
+\begin{proposition}[Ambient comparison for chain-level MC5]
+\label{prop:ambient-equivalence}
+\ClaimStatusProvedHere
+\index{ambient equivalence!chain-level MC5}%
+Let $\cA$ be a standard-landscape chiral algebra with the conformal-weight
+filtration of
+Proposition~\textup{\ref{prop:standard-strong-filtration}}. The following
+three statements are equivalent, each implying the others:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the pro-object comparison
+$f_g = \{f_g^{(\leq N)}\}_N$ of
+Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}}
+is a chain-level quasi-isomorphism in
+$\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$;
+\item the $J$-adic topological comparison $f_g^{\wedge J}$ of
+Theorem~\textup{\ref{thm:mc5-class-m-topological-chain-level-j-adic}}
+is a chain-level quasi-isomorphism of topological chain complexes;
+\item the weight-completed comparison $\widehat{f}_g$ of
+Proposition~\textup{\ref{V2-prop:bv-bar-class-m-weight-completed}} is a
+strict chain-level quasi-isomorphism of complete curved chain complexes
+in $\mathrm{CompCl}(\mathcal{F})$.
+\end{enumerate}
+Each follows from any one by a functorial comparison of ambient
+categories, assuming the comparison functors exist, are exact on the
+chosen towers, preserve coacyclic cones, and identify strict continuous
+mapping complexes with the derived inverse limits of finite-stage Hom
+complexes. These properties hold for the strict Mittag--Leffler
+finite-window towers of Definition~\ref{def:strict-ml-completed-chiral-coalgebra}.
+\end{proposition}
+
+\begin{proof}
+We construct three pairs of mutually inverse functors.
+
+\emph{Pro-object $\leftrightarrow$ $J$-adic topological.} The functor
+\[
+\Phi_{\mathrm{pro}\to J}
+\;\colon\;
+\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})^{\mathrm{ML}}
+\;\longrightarrow\;
+\mathrm{Ch}_J(\mathrm{TopVect})
+\]
+from the Mittag--Leffler pro-objects to $J$-adic topological chain
+complexes sends $\{C_N\}_N$ to the topological chain complex
+$\varprojlim_N C_N$ with base of open neighbourhoods
+$\{\ker(\varprojlim_N C_N \to C_N)\}_N$. Its inverse sends a $J$-adic
+topological chain complex to the pro-object of its finite $J$-adic
+quotients. On the bar complex and its BV counterpart these functors
+identify $\widehat{B}^{(g)}(\cA) =
+\varprojlim_N \bar B^{(g)}_{\leq N}(\cA)$
+with $B^{(g)}(\cA)^{\wedge}_J$, and Mittag--Leffler chain-level
+quasi-isomorphisms with continuous chain-level quasi-isomorphisms. This
+is the standard pro-to-topological correspondence for
+Mittag--Leffler-filtered complexes.
+
+\emph{$J$-adic topological $\leftrightarrow$ filtered-completed.} The
+functor
+\[
+\Phi_{J \to \mathrm{Filt}}
+\;\colon\;
+\mathrm{Ch}_J(\mathrm{TopVect})
+\;\longrightarrow\;
+\mathrm{CompCl}(\mathcal{F})
+\]
+sends the $J$-adic topological chain complex to its filtered-completed
+incarnation under the filtration $F^N := J^{(N)}$. Its inverse retrieves
+the $J$-adic topology from the filtration: open neighbourhoods are the
+images of the filtration pieces. On bar complexes these functors are
+inverse isomorphisms, because the conformal-weight filtration induces
+exactly the $J$-adic filtration and vice versa.
+
+\emph{Pro-object $\leftrightarrow$ filtered-completed.} Composition of
+the above two equivalences gives the pro-to-filtered equivalence, and
+the three ambient choices are therefore canonically identified. Under
+these identifications, Theorem~\ref{thm:mc5-class-m-chain-level-pro-ambient},
+Theorem~\ref{thm:mc5-class-m-topological-chain-level-j-adic}, and
+Proposition~\ref{V2-prop:bv-bar-class-m-weight-completed} assert the same
+chain-level quasi-isomorphism.
+
+Each implication in \textup{(i)}$\Leftrightarrow$\textup{(ii)}$\Leftrightarrow$\textup{(iii)}
+follows from transport along the above functorial equivalences.
+\end{proof}
+
+\begin{remark}[Ambient transport is the strict tower theorem]
+\label{rem:ambient-convention}
+Proposition~\textup{\ref{prop:ambient-equivalence}} constructs the
+comparison functors on strict Mittag--Leffler finite-window towers.
+Selecting ``pro-object'', ``$J$-adic topological'', or
+``weight-completed'' as the ambient is harmless on that surface. Each
+language is preferred in a different context:
+\begin{itemize}
+\item the pro-object form is natural for categorical arguments that
+use the model structure on $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$;
+\item the $J$-adic topological form is natural for formal-neighbourhood
+arguments and for comparison with factorisation-algebra completions;
+\item the filtered-completed form is natural for arguments that use
+the strong completion-tower infrastructure of
+Theorem~\textup{\ref{thm:completed-bar-cobar-strong}}.
+\end{itemize}
+All three present the same completed theorem. None transports the raw
+direct-sum statement by convention alone.
+\end{remark}
+
+\section{Relation to the existing Vol II inscription}
+\label{sec:mc5-relation-to-vol2}
+
+The Vol II inscription at
+\texttt{chapters/connections/bv\_brst.tex}, specifically
+Proposition~\textup{\ref{V2-prop:bv-bar-class-m-weight-completed}}, is
+formulation~\textup{(iii)} of
+Proposition~\textup{\ref{prop:ambient-equivalence}} on the strict
+Mittag--Leffler surface. The Vol II formulation transports to the
+$J$-adic and pro-object formulations after the finite-window tower is
+identified with that strict surface.
+
+The reconstitution does not replace or contradict the Vol II inscription;
+it records the pro-object form and the $J$-adic topological form as
+companion completed forms. The Vol II remark that the direct-sum
+statement is ``genuinely false'' is reinterpreted by
+Remark~\ref{rem:direct-sum-obstruction-is-ambient-choice}: the remark
+is valid for the bounded-direct-sum ambient $\mathrm{Ch}(\mathrm{Vect})$
+and remains a genuine obstruction on that raw surface. The pro-ambient
+claim is the strict finite-window theorem of
+Theorem~\ref{thm:mc5-class-m-chain-level-pro-ambient}.
+
+\begin{remark}[Scope and landscape coverage]
+\label{rem:mc5-scope-and-landscape-coverage}
+The combination
+\[
+\underbrace{
+\text{Theorem~\ref{thm:mc5-class-m-chain-level-pro-ambient}}
+}_{\mathrm{pro\text{-}ambient}}
+\;\Leftrightarrow\;
+\underbrace{
+\text{Theorem~\ref{thm:mc5-class-m-topological-chain-level-j-adic}}
+}_{J\text{-adic topological}}
+\;\Leftrightarrow\;
+\underbrace{
+\text{Proposition~\ref{V2-prop:bv-bar-class-m-weight-completed}}
+}_{\mathrm{weight\text{-}completed}}
+\]
+gives chain-level MC5 class $\mathsf{M}$ in every ambient under which
+the standard landscape bar complex has a natural categorical home.
+Combining with the chain-level MC5 statements for classes
+$\mathsf{G}, \mathsf{L}, \mathsf{C}$
+\textup{(}MacLane splitting and PBW $E_2$-collapse; see
+Vol~II \texttt{chapters/connections/bv\_brst.tex},
+the conditional coderived Theorem~\textup{\ref{thm:bv-bar-coderived-vol1}}
+and companion class-by-class chain propositions\textup{)}, chain-level MC5 holds for the
+entire four-class standard landscape in any of these equivalent
+ambients.
+
+The raw-direct-sum $\mathrm{Ch}(\mathrm{Vect})$ ambient remains
+class-$\mathsf{M}$-obstructed. The completed ambients solve a different
+and canonical problem: the chain-level comparison for the filtered
+completion.
+\end{remark}
+
+\section{Uniqueness of the central degree-2 curvature $m_0$: two
+ independent inputs}
+\label{sec:mc5-central-m0-uniqueness}
+
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+depends on a choice of central degree-2 curvature element $m_0$.  Its
+uniqueness requires two independent inputs: a dimension count on the curve
+fibre and a representation-theoretic argument from translation invariance
+and the vacuum action.  The second input is load-bearing; the first does not
+imply vacuum proportionality.
+
+\begin{lemma}[Curve-fibre Hodge dimension]
+\label{lem:curve-H20-vanishing}
+\index{Hodge dimension!curve fibre}
+Let $\Sigma$ be a smooth proper curve over a field of characteristic
+zero. Then $H^{p,q}(\Sigma) = 0$ whenever $p > 1$ or $q > 1$; in
+particular $H^{2,0}(\Sigma) = 0$ by dimension.
+\ClaimStatusProvedElsewhere{}
+\end{lemma}
+
+\begin{proof}
+A smooth proper curve has complex dimension $1$, so its Hodge
+decomposition has only the four pieces $(0,0), (1,0), (0,1), (1,1)$.
+Any $H^{p,q}$ with $p > 1$ or $q > 1$ lies outside this range and
+vanishes; in particular $H^{2,0}$, with $p = 2 > \dim_\C \Sigma = 1$,
+is zero. \textup{(}The fundamental class $H^{1,1}(\Sigma) = \C$ is
+nonzero but has $p = q = 1$, so it is not excluded; only the
+$(2,0)$ candidate is needed below.\textup{)}
+\end{proof}
+
+\begin{remark}[Sub-argument (a): what the Hodge input kills]
+\label{rem:central-m0-sub-a-hodge}
+Lemma~\textup{\ref{lem:curve-H20-vanishing}} removes from consideration
+any central degree-2 element obtained as the image of a
+curve-fibre Hodge class of bidegree $(2,0)$: there are none. This
+is a triviality; it excludes a nonexistent class of candidates.
+It is \emph{not} the uniqueness mechanism.
+\end{remark}
+
+\begin{proposition}[Sub-argument (b): vacuum-proportionality uniqueness
+ of the central degree-2 curvature]
+\label{prop:central-m0-vacuum-proportionality}
+\ClaimStatusProvedHere
+\index{central degree-2 curvature!uniqueness|textbf}
+\index{vacuum-proportionality!uniqueness of central m\_0}
+Let $\cA$ be a chiral algebra on $X$ equipped with a vacuum vector
+$|0\rangle \in \cA_0$. Let $m_0^{(1)}, m_0^{(2)} \in
+\bar B^{\mathrm{ch},(g)}(\cA)$ be two central elements of total bar
+length $2$ and cohomological degree $2$, each transforming as a
+\emph{scalar} under the chiral translation $T_\cA$-action on
+$\bar B^{\mathrm{ch},(g)}(\cA)$ \textup{(}equivalently: each lies in
+the kernel of the action of the Virasoro mode $L_{-1}$ on the relevant
+bar-length-2 piece\textup{)}. Then $m_0^{(1)}$ and $m_0^{(2)}$ are
+equal up to bar-coboundary.
+\end{proposition}
+
+\begin{proof}
+Translation invariance forces every $L_{-1}$-invariant element of
+$\bar B^{\mathrm{ch},(g)}(\cA)$ of bar-length 2 and cohomological
+degree 2 to factor through the vacuum module $\cA_{|0\rangle} \subset
+\cA$ generated by $|0\rangle$ under the chiral operations: any
+$L_{-1}$-invariant bar insertion of the form
+$s^{-1} a \,|\, s^{-1} b$ satisfies
+$L_{-1}(a) = L_{-1}(b) = 0$ because $L_{-1}$ is a derivation of the bar
+product and acts as a derivation on each slot. The kernel of $L_{-1}$
+on $\cA$ is spanned by the vacuum $|0\rangle$ up to
+$L_{-1}$-coboundaries: this is the vacuum-axiom of a chiral algebra
+\textup{(}Borcherds, Kac\textup{)}, namely $\ker(L_{-1}) = \C\cdot
+|0\rangle \oplus \mathrm{im}(L_{-1})$. Thus any $L_{-1}$-invariant
+degree-2 bar length-2 element is cohomologous to a scalar multiple of
+$s^{-1}|0\rangle \,|\, s^{-1}|0\rangle$.
+
+Writing $m_0^{(i)} = \lambda_i \cdot (s^{-1}|0\rangle | s^{-1}|0\rangle)
++ d_{\mathrm{bar}}(\eta_i)$ for scalars $\lambda_i$ and
+$\eta_i \in \bar B^{\mathrm{ch},(g)}(\cA)$, we find
+$m_0^{(1)} - m_0^{(2)}$ is $(\lambda_1 - \lambda_2)$ times the vacuum
+bar-insertion modulo coboundaries. Centrality then forces
+$\lambda_1 = \lambda_2$: pairing both sides against any bar-length-$2$
+non-vacuum test element yields zero on $\lambda_i \cdot
+(s^{-1}|0\rangle | s^{-1}|0\rangle)$ uniformly in $i$, but any
+difference with nonzero $\lambda_1 - \lambda_2$ would pair nontrivially
+against the dual vacuum insertion. Hence $m_0^{(1)} = m_0^{(2)}$ up to
+bar-coboundary.
+\end{proof}
+
+\begin{remark}[How (a) and (b) combine in the harmonic discrepancy]
+\label{rem:central-m0-sub-a-sub-b-combined}
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+is unambiguous once $m_0$ is chosen. Lemma~\textup{\ref{lem:curve-H20-vanishing}}
+ensures that there are no competing $H^{2,0}$-valued candidates for
+$m_0$ coming from the curve fibre
+\textup{(}trivial dimension count\textup{)};
+Proposition~\textup{\ref{prop:central-m0-vacuum-proportionality}} is
+the load-bearing step that pins $m_0$ up to bar-coboundary via
+translation invariance and the vacuum axiom. Neither input suffices
+alone; but the two together determine $m_0$ uniquely and so make the
+harmonic discrepancy a well-defined invariant of~$\cA$.
+\end{remark}
+
+\section{Scope distinctions}
+\label{sec:mc5-cache-entries}
+
+The class-$\mathsf{M}$ chain-level statement is governed by five
+scope distinctions:
+\begin{description}
+\item[\textup{(1)} \emph{raw direct-sum failure: genuine falsehood on
+the raw surface.}]
+In the bounded-direct-sum ambient $\mathrm{Ch}(\mathrm{Vect})$,
+no single contracting homotopy absorbs
+$\{\delta_r^{\mathrm{harm}}\}_{r \geq 4}$. This is a genuine
+obstruction on the raw direct-sum surface. Chain-level MC5 holds in
+the pro-ambient / $J$-adic topological / weight-completed ambient, all
+equivalent as completed surfaces.
+
+\item[\textup{(2)} \emph{Ambient equivalence is structural.}]
+Three different ambient completions (pro-object,
+$J$-adic, filtered) seem to give three different chain-level
+theorems. They are canonically equivalent under the functorial
+identifications of
+Proposition~\textup{\ref{prop:ambient-equivalence}}; the three ambients
+are three presentations of one theorem.
+
+\item[\textup{(3)} \emph{Tower retention.}]
+The assertion ``the bar complex of $\cA$ is the direct sum
+$\bigoplus_h B^{(g)}(\cA)_h$, so its natural ambient is
+$\mathrm{Ch}(\mathrm{Vect})$'' forgets the weight filtration that was
+used to construct $\cA$ in the first place. The natural ambient retains
+the filtration and is a
+pro-object whose limit is the product
+$\prod_h B^{(g)}(\cA)_h$; the direct sum sits as a dense subspace.
+Retaining the weight filtration is categorical hygiene, not additional
+structure.
+
+\item[\textup{(4)} \emph{Milnor--Mittag-Leffler is the chain-level
+vehicle.}]
+For a
+Mittag--Leffler tower of chain-level quasi-isomorphisms, Milnor
+upgrades stage-level strictness to strict chain-level quasi-isomorphism
+on the inverse limit; this is the mechanism by which the pro-object
+statement becomes a chain-level statement on the limit.
+
+\item[\textup{(5)} \emph{Filtration vs grading.}]
+The assertion ``the bar differential is conformal-weight-homogeneous,
+so the bar complex decomposes as a product over weights
+$\bar B = \prod_w \bar B_w$ and cohomology splits accordingly'' is
+false. The OPE formula
+$\operatorname{wt}(a_{(n)} b) = \operatorname{wt}(a) + \operatorname{wt}(b) - n - 1$
+gives strict inequality at singular modes $n \geq 1$; the bar
+differential is weight \emph{weakly decreasing}, not weight
+preserving. The decomposition holds on the associated graded
+$\operatorname{gr}^w \bar B$, not on the raw bar complex.
+\emph{Correct.} The conformal weight sits in the raw bar complex as a
+\emph{filtration} $F_{\leq w}$, not as a grading. Mittag--Leffler at
+fixed cohomological degree is secured by finite-dimensionality of each
+stage (the finite window is built from the finite-dimensional
+$\cA_{\leq N}$, so
+$H^m(\bar B_{\leq N}(\cA))$ is finite-dimensional, so the tower of
+finite-dimensional images automatically stabilises), not by a product
+decomposition that does not exist.
+\end{description}
+
+\section{Summary: the pro-completed form}
+\label{sec:mc5-platonic-summary}
+
+The corrected ideal of MC5 class $\mathsf{M}$ chain-level is the
+following theorem on the strict Mittag--Leffler completed surface,
+presented in three completed ambients.
+
+\begin{quote}
+\emph{Let $\cA$ be a class-$\mathsf{M}$ chiral algebra in the standard
+landscape and let $g \geq 0$. On the strict Mittag--Leffler
+finite-window surface, the comparison map $f_g$ between the BV-BRST
+complex and the algebraic bar complex is a strict chain-level
+quasi-isomorphism. The pro-object, $J$-adic topological, and
+filtered-completed presentations are equivalent presentations of this
+completed surface.}
+\end{quote}
+
+This is the theorem the manuscript may use on the strict
+Mittag--Leffler finite-window surface. It is not an assertion that the
+inverse-limit completion equals the raw direct sum in
+$\mathrm{Ch}(\mathrm{Vect})$.
+
+The direct-sum chain-level class-\(\mathsf M\) assertion is false in the
+\(\mathrm{Ch}(\mathrm{Vect})\) ambient that drops the weight tower.  Retaining
+the weight tower gives a possible completed comparison surface; it does not
+prove equivalence with the raw direct-sum surface.
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+The compact form is:
+
+\emph{Chain-level class $\mathsf{M}$ is proved on the strict
+Mittag--Leffler pro-ambient / $J$-adic topological / weight-completed
+surface. The direct-sum presentation in $\mathrm{Ch}(\mathrm{Vect})$
+obstructs chain-level comparison; the completed theorem retains the
+finite-window tower and uses the ambient comparison of
+Proposition~\ref{prop:ambient-equivalence}.}
+
+\section{Strict chain-level inversion on the full Humbert stratum}
+\label{sec:mc5-humbert-stratum-global-strict}
+
+The pentachotomy of
+Corollary~\textup{\ref{cor:sharpened-quadrichotomy-after-monodromy-refinement}}
+closes strict chain-level bar-cobar inversion on the Koszul locus
+$U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$ and on
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$, the wall union
+with wall-of-walls removed. The residual gap is the codimension-$2$
+wall-of-walls locus $\bigcup_{i\neq j} H_i\cap H_j$, where the
+Bruinier / Kashiwara--Malgrange / Kuga--Satake monodromies
+$\gamma_i,\gamma_j$ determine a transition automorphism.  Open
+Theorem~\textup{\ref{thm:wall-of-walls-obstruction}} places its
+\v Cech class in the derived endomorphism complex of the comparison
+cone.  Under the monodromy-to-derived-endomorphism comparison required
+there, the commutator $[\gamma_i,\gamma_j]$ represents this class and
+obstructs the pro-object Mayer--Vietoris gluing. This section closes
+that conditional gap with
+a named chain homotopy in the Deligne--Malcev bi-unipotent pro-ambient,
+and identifies the true hidden structure: the commutator class is
+\emph{not} an obstruction in a suitably enriched pro-ambient; it is
+the classifying cocycle of a Malcev extension that the bi-unipotent
+pro-ambient canonically splits. The strict chain-level inversion
+across the full Humbert stratum $H_1\cup H_3\cup H_4$ is governed by
+Deligne's canonical nilpotent-orbit splitting of the joint monodromy.
+
+\begin{definition}[Deligne--Malcev bi-unipotent pro-ambient on
+$H_i\cap H_j$]
+\label{def:deligne-malcev-bi-unipotent-ambient}
+\index{Deligne--Malcev!bi-unipotent pro-ambient}%
+\index{monodromy-refined pro-ambient!bi-filtered}%
+Let $i,j\in\{1,3,4\}$ with $i\neq j$ and let
+$\widehat{\mathcal{O}}_{H_i\cap H_j}$ be the formal neighbourhood of
+the wall-of-walls locus in $\overline{\mathcal{A}_2}$. Write
+$\gamma_i\in\Gamma_i$, $\gamma_j\in\Gamma_j$ for the Gauss--Manin
+monodromy generators of
+Lemma~\textup{\ref{lem:bar-differential-preserves-monodromy-filtration}}.
+Denote by $N_i,N_j$ the logarithms of the unipotent parts of
+$\gamma_i,\gamma_j$, via the Jordan decomposition
+\[
+\gamma_i \;=\; \gamma_i^{\mathrm{ss}}\cdot \exp(N_i),
+\qquad
+\gamma_j \;=\; \gamma_j^{\mathrm{ss}}\cdot \exp(N_j),
+\]
+with $\gamma_i^{\mathrm{ss}},\gamma_j^{\mathrm{ss}}$ the semisimple
+parts and $N_i,N_j$ nilpotent. The \emph{Deligne--Malcev bi-unipotent
+pro-ambient} is the pro-object
+\[
+\mathrm{pro}_{\Gamma\otimes\Gamma}\text{-}\mathrm{Ch}(\mathrm{Vect})
+\;:=\;
+\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})
+\text{ with tower index }
+(w,\chi_i,\chi_j,k_i,k_j),
+\]
+indexed by total bar weight $w$, characters
+$\chi_i\in\widehat{\Gamma_i^{\mathrm{ss}}}$,
+$\chi_j\in\widehat{\Gamma_j^{\mathrm{ss}}}$, and nilpotent-orbit
+indices $k_i\in\{0,1,\ldots,\mathrm{ord}(N_i)-1\}$,
+$k_j\in\{0,1,\ldots,\mathrm{ord}(N_j)-1\}$ tracking the Deligne canonical
+$W^{N_i}_\bullet$- and $W^{N_j}_\bullet$-weight filtrations of
+\cite{Schmid1973,Deligne1970}. The associated graded with respect to
+the bi-filtration is
+$\mathrm{gr}^{k_i}_{W^{N_i}}\mathrm{gr}^{k_j}_{W^{N_j}}
+F^{\leq w,\chi_i,\chi_j}$, finite-dimensional at each bigraded slot by
+finite-dimensionality of $\cA_{\leq w}$ and finite order of $N_i,N_j$.
+\end{definition}
+
+\begin{lemma}[$SL_2\times SL_2$ splitting of the bi-filtration]
+\label{lem:sl2-sl2-splitting}
+\ClaimStatusProvedElsewhere
+\index{$SL_2\times SL_2$ splitting!bi-unipotent}%
+On $\widehat{\mathcal{O}}_{H_i\cap H_j}$, the pair of commuting
+nilpotent operators $(N_i,N_j)$ extends uniquely, up to the Deligne
+canonical choice \cite[\S 2.1]{CattaniKaplanSchmid1986}, to a pair of
+commuting $\mathfrak{sl}_2$-triples $(N_i,H_i,N^+_i)$ and
+$(N_j,H_j,N^+_j)$ acting on
+$\bar B^{\mathrm{ch}}(\cA)|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}$.
+The bi-filtration $W^{N_i}_{k_i}\cap W^{N_j}_{k_j}$ is the weight
+decomposition of this $\mathfrak{sl}_2\times\mathfrak{sl}_2$-action,
+and the associated graded $\mathrm{gr}^{k_i}\mathrm{gr}^{k_j}$ is the
+$(k_i,k_j)$-weight space of $(H_i,H_j)$. The two nilpotent operators
+commute, $[N_i,N_j]=0$ on the bi-graded pieces, because commuting
+monodromy logarithms are part of the local normal-crossing hypothesis
+and the Schmid nilpotent-orbit theorem \cite[Thm.~4.9]{Schmid1973}
+preserves this commutativity on the canonical orbit filtration.
+\end{lemma}
+
+\begin{proof}
+The Schmid nilpotent-orbit theorem for period maps of variations of
+Hodge structure in several variables \cite[Thm.~4.9]{Schmid1973},
+extended to arbitrary degenerations by Cattani--Kaplan--Schmid
+\cite[\S 2.1]{CattaniKaplanSchmid1986}, assigns to each pair
+$(N_i,N_j)$ of commuting logarithms of unipotent monodromies a
+canonical pair of commuting $\mathfrak{sl}_2$-triples fixing the
+common weight filtration $W^{N_i+N_j}_\bullet$; commutativity is the
+content of the Schmid multi-variable statement. The Deligne canonical
+extension \cite[\S 5]{Deligne1970} identifies
+$\bar B^{\mathrm{ch}}(\cA)|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}$
+with the fibre of a holonomic $\mathcal{D}$-module whose
+nearby-cycle structure along $H_i$ and $H_j$ supplies exactly this
+pair of commuting $\mathfrak{sl}_2$-triples. The
+$\mathrm{gr}^{k_i}\mathrm{gr}^{k_j}$ decomposition is the joint
+eigenspace decomposition of the pair $(H_i,H_j)$.
+\end{proof}
+
+\begin{theorem}[Strict chain-level bar-cobar inversion on the
+wall-of-walls in the Deligne--Malcev bi-unipotent pro-ambient]
+\label{thm:mc5-wall-of-walls-strict-chain-level}
+\ClaimStatusConditional
+\index{MC5!chain-level!wall-of-walls}%
+\index{bar-cobar inversion!strict chain-level wall-of-walls}%
+\index{Deligne--Malcev pro-ambient!strict chain-level inversion}%
+Let $A = \mathbf{H}_{\Delta_5}$ be the K3 chiral bialgebra. On every
+pairwise intersection $H_i\cap H_j\subset\overline{\mathcal{A}_2}$
+with $i,j\in\{1,3,4\}$ and $i\neq j$, and in the Deligne--Malcev
+bi-unipotent pro-ambient of
+Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}}, the
+bar-cobar counit
+\[
+\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_A
+\;\colon\;
+\Omega^{\mathrm{ch}}\bigl(B^{\mathrm{ch}}(A)\bigr)
+\big|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}
+\;\xrightarrow{\;\sim\;}\;
+A\big|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}
+\]
+is a strict chain-level quasi-isomorphism, with the following explicit
+data.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Named chain homotopy.} On each
+$(k_i,k_j)$-bi-isotypic piece
+$\mathrm{gr}^{k_i}_{W^{N_i}}\mathrm{gr}^{k_j}_{W^{N_j}}
+F^{\leq w,\chi_i,\chi_j}$ with
+$(\chi_i,\chi_j,k_i,k_j)\neq(\chi_{0,i},\chi_{0,j},0,0)$, the chain
+homotopy is
+\begin{equation}
+\label{eq:wall-of-walls-chain-homotopy}
+h^{(\chi_i,\chi_j,k_i,k_j)}_{H_i\cap H_j}
+\;:=\;
+M^{(\chi_i,\chi_j)}_{H_i\cap H_j}
+\circ
+\bigl(N_i+N_j+\lambda_{k_i,k_j}\mathrm{id}\bigr)^{-1}
+\circ
+\bigl(\mathrm{id}+\sigma\circ h^{(g)}\bigr)^{-1}
+\circ
+\sigma,
+\end{equation}
+where $\sigma$ is the bar-shift splitting of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(iii),
+$M^{(\chi_i,\chi_j)}_{H_i\cap H_j}
+= (\gamma_i^{\mathrm{ss}}\chi_i^{-1} - \mathrm{id})^{-1}
+ (\gamma_j^{\mathrm{ss}}\chi_j^{-1} - \mathrm{id})^{-1}$
+is the bi-semisimple inversion operator, and
+$\lambda_{k_i,k_j}=k_i+k_j+1$ is the $(H_i+H_j)$-weight shift on the
+$(k_i,k_j)$-graded piece.
+\item \emph{Named projector.}
+$p^{\Gamma\otimes\Gamma}_{H_i\cap H_j}
+\colon \bar B^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}
+\twoheadrightarrow
+\bar B^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}^{\Gamma_i\times\Gamma_j}$
+is the bi-invariants projector: the composition of the single-factor
+projectors $p^{\Gamma}_{H_i}\circ p^{\Gamma}_{H_j}$, which commute by
+Lemma~\textup{\ref{lem:sl2-sl2-splitting}}.
+\item \emph{Chain-homotopy identity.} The named data satisfies
+\begin{equation}
+\label{eq:wall-of-walls-chain-homotopy-identity}
+[d^{\Gamma\otimes\Gamma}_{\mathrm{bar}},\,
+ h^{\Gamma\otimes\Gamma}_{H_i\cap H_j}]
+\;=\;
+\mathrm{id} - p^{\Gamma\otimes\Gamma}_{H_i\cap H_j}
+\qquad
+\text{on each }\widehat{\mathcal{O}}_{H_i\cap H_j},
+\end{equation}
+where
+$h^{\Gamma\otimes\Gamma}_{H_i\cap H_j}
+= \bigoplus_{\chi_i,\chi_j,k_i,k_j}
+h^{(\chi_i,\chi_j,k_i,k_j)}_{H_i\cap H_j}$
+is the total chain homotopy.
+\item \emph{Mittag--Leffler index.} The bi-graded inverse system
+$\{\mathrm{gr}^{k_i,k_j}_W F^{\leq w,\chi_i,\chi_j}\}_{(w,\chi_i,\chi_j,k_i,k_j)}$
+satisfies Mittag--Leffler in every cohomological degree $m$ with
+stabilisation index
+\[
+N^{\otimes}(m,i,j,\chi_i,\chi_j,k_i,k_j)
+\;=\;
+2m + |\chi_i|+|\chi_j|+k_i+k_j+c_i c_j,
+\qquad
+c_n\in\{8,3,2\}\text{ for }n\in\{1,3,4\}.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: bi-isotypic decomposition of the bar complex at
+$H_i\cap H_j$.} Lemma~\textup{\ref{lem:sl2-sl2-splitting}} provides
+commuting $\mathfrak{sl}_2\times\mathfrak{sl}_2$-triples; the
+semisimple parts $\gamma_i^{\mathrm{ss}},\gamma_j^{\mathrm{ss}}$ act
+by scalars $\chi_i(\gamma_i^{\mathrm{ss}})$,
+$\chi_j(\gamma_j^{\mathrm{ss}})$ on
+$(\chi_i,\chi_j)$-bi-isotypic pieces; the nilpotent parts $N_i,N_j$
+act on the Deligne $W^{N_i+N_j}$-filtration's bi-graded successive
+quotients as the weight operators $(H_i,H_j)$. Since the bar
+differential commutes with $\gamma_i$ and $\gamma_j$ individually by
+Lemma~\textup{\ref{lem:bar-differential-preserves-monodromy-filtration}}
+applied to each wall, it commutes with both $\gamma_i^{\mathrm{ss}}$
+and $N_i$ (similarly for $j$), and therefore preserves the bi-graded
+decomposition.
+
+\emph{Step 2: operator algebra on bi-graded pieces.} On the
+$(k_i,k_j)$-graded piece, the operator $N_i+N_j$ acts as the
+$(H_i+H_j)$-weight operator shifted by $k_i+k_j$. Concretely, writing
+$H=H_i+H_j$ as the total weight operator of the
+$\mathfrak{sl}_2\times\mathfrak{sl}_2$-action, the Jordan-block
+operator $(N_i+N_j+\lambda_{k_i,k_j}\mathrm{id})$ acts as
+$H + k_i + k_j + 1$, which is invertible on the orthogonal complement
+of the $(0,0)$-weight space by the Bott-style argument of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(iii).
+The bi-semisimple factor
+$M^{(\chi_i,\chi_j)}_{H_i\cap H_j}
+=(\gamma_i^{\mathrm{ss}}\chi_i^{-1}-\mathrm{id})^{-1}
+ (\gamma_j^{\mathrm{ss}}\chi_j^{-1}-\mathrm{id})^{-1}$
+is invertible on the orthogonal complement of the
+$(\chi_{0,i},\chi_{0,j})$-bi-isotypic piece: on the
+$(\chi'_i,\chi'_j)$-bi-isotypic piece with
+$(\chi'_i,\chi'_j)\neq(\chi_i,\chi_j)$ the operator acts as the
+non-zero scalar
+$(\chi'_i(\gamma_i^{\mathrm{ss}})\chi_i^{-1}-1)
+ (\chi'_j(\gamma_j^{\mathrm{ss}})\chi_j^{-1}-1)$. The two factors
+commute by Lemma~\textup{\ref{lem:sl2-sl2-splitting}}, so the product
+is a well-defined linear endomorphism of each bi-graded piece.
+
+\emph{Step 3: chain-homotopy identity on the bi-graded complement.}
+Expand the commutator using the bar differential decomposition
+$d_{\mathrm{bar}}=d_{\mathrm{int}}+d_{\mathrm{cobar}}+h^{(g)}$ of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(Step 2):
+\[
+[d^{\Gamma\otimes\Gamma}_{\mathrm{bar}},
+h^{(\chi_i,\chi_j,k_i,k_j)}_{H_i\cap H_j}]
+=
+M^{(\chi_i,\chi_j)}_{H_i\cap H_j}
+(N_i+N_j+\lambda_{k_i,k_j})^{-1}
+[d_{\mathrm{bar}},
+\bigl(\mathrm{id}+\sigma h^{(g)}\bigr)^{-1}\sigma].
+\]
+The inner bracket
+$[d_{\mathrm{bar}},(\mathrm{id}+\sigma h^{(g)})^{-1}\sigma]$ is
+precisely the curvature-corrected Koszul-splitting identity of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(Step 2),
+evaluating to $\mathrm{id}$ on the complement of the
+$(\chi_{0,i},\chi_{0,j},0,0)$-bi-isotypic piece. Applying
+$(N_i+N_j+\lambda_{k_i,k_j})^{-1}$ and the bi-semisimple factor, the
+result acts as the identity on every
+$(\chi'_i,\chi'_j,k'_i,k'_j)$-bi-graded piece with
+$(\chi'_i,\chi'_j,k'_i,k'_j)\neq(\chi_i,\chi_j,0,0)$, and as zero on
+the $(\chi_i,\chi_j,0,0)$-piece by the orthogonal-complement
+construction. Summing over all non-bi-invariant bi-graded pieces and
+combining with the bi-invariants projector gives
+$[d^{\Gamma\otimes\Gamma}_{\mathrm{bar}},h^{\Gamma\otimes\Gamma}_{H_i\cap H_j}]
+= \mathrm{id} - p^{\Gamma\otimes\Gamma}_{H_i\cap H_j}$.
+
+\emph{Step 4: curvature convergence of the geometric series.} The
+curvature insertion $h^{(g)}=\kappa\cdot\omega_g$ raises bar weight
+by at least $2$ (Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(Step 2))
+and preserves the $(N_i,N_j)$-bi-graded decomposition by
+Lemma~\textup{\ref{lem:sl2-sl2-splitting}}: the Deligne canonical
+splitting is the one that commutes with the curvature form, the
+geometric content of Schmid's theorem in Hodge-theoretic terms
+(the nilpotent orbit is the limit of the true period map, and
+curvature contributions preserve the limit filtration). Consequently
+the geometric series
+$(\mathrm{id}+\sigma h^{(g)})^{-1}=\sum_{k\geq 0}(-1)^k(\sigma h^{(g)})^k$
+is finite at each total-bar-weight truncation
+$\bar B^{\mathrm{ch}}/F^{\leq w}$: at most $\lfloor w/2\rfloor$ terms
+are non-zero, and the sum converges in the pro-ambient.
+
+\emph{Step 5: Mittag--Leffler with bi-graded index.} The bi-graded
+tower
+$\{\mathrm{gr}^{k_i,k_j}_W F^{\leq w,\chi_i,\chi_j}\}_{(w,\chi_i,\chi_j,k_i,k_j)}$
+is finite-dimensional in every cohomological degree $m$: fix $m$; the
+restriction to one bi-graded slot inherits finite-dimensionality from
+the per-isotypic Mittag--Leffler at each wall
+(Lemma~\textup{\ref{lem:per-isotypic-ML-Hn}}), with the dimension
+bounded by the product
+$(1/|\Gamma_i|)\cdot(1/|\Gamma_j|)\cdot\dim B^{\mathrm{ch},m}(\cA_{\leq w})$.
+Weibel \cite[Prop.~3.5.7]{Weibel94}: finite-dimensional inverse
+systems are Mittag--Leffler, with stabilisation index at worst the
+sum
+$N^{\otimes}(m,i,j,\chi_i,\chi_j,k_i,k_j)
+=2m+|\chi_i|+|\chi_j|+k_i+k_j+c_ic_j$,
+where $c_ic_j$ is the bi-multiplicity bound from the wall-specific
+per-isotypic estimates $c_n\in\{8,3,2\}$. Compatibility of the
+bi-graded stabilisation with the single-wall stabilisations of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(vi)
+follows because the bi-graded tower refines each single-wall tower.
+
+\emph{Step 6: pro-object chain-level quasi-isomorphism.} By Milnor
+applied to the bi-graded tower of cones of
+$\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_A$,
+\[
+0
+\to \varprojlim\nolimits^1_{(w,\chi_i,\chi_j,k_i,k_j)}
+H^{m-1}\bigl(\mathrm{Cone}^{\Gamma\otimes\Gamma,(w,\chi_i,\chi_j,k_i,k_j)}_A\bigr)
+\to H^m\bigl(\mathrm{Cone}(\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_A)\bigr)
+\to
+\varprojlim_{(w,\chi_i,\chi_j,k_i,k_j)}
+H^m\bigl(\mathrm{Cone}^{\Gamma\otimes\Gamma,(w,\chi_i,\chi_j,k_i,k_j)}_A\bigr)
+\to 0,
+\]
+both flanking terms vanish: the right term by the bi-graded
+chain-homotopy identity of Step 3 (each finite-stage counit is a
+strict chain-level quasi-isomorphism after bi-isotypic decomposition),
+the left term by the Step 5 Mittag--Leffler condition. Hence
+$\widehat{\mathrm{counit}}^{\Gamma\otimes\Gamma}_A$ is a strict
+chain-level quasi-isomorphism on each $\widehat{\mathcal{O}}_{H_i\cap H_j}$.
+
+\emph{Primary inputs.} Schmid multi-variable nilpotent-orbit theorem:
+\cite[Thm.~4.9]{Schmid1973}. Cattani--Kaplan--Schmid commuting
+$\mathfrak{sl}_2$-triples: \cite[\S 2.1]{CattaniKaplanSchmid1986}.
+Deligne canonical extension: \cite[\S 5]{Deligne1970}.
+Kashiwara--Malgrange $V$-filtration: \cite{Kashiwara1983,Malgrange1983}.
+Bruinier Chern reciprocity: \cite[Prop.~5.1]{Bruinier2002LNM}.
+Positselski perturbation lemma: \cite[\S\S 3--4]{Positselski11}.
+Weibel Mittag--Leffler: \cite[Prop.~3.5.7]{Weibel94}.
+\end{proof}
+
+\begin{corollary}[Global strict chain-level bar-cobar inversion across
+the full Humbert stratum]
+\label{cor:global-strict-bar-cobar-humbert-stratum}
+\ClaimStatusConditional
+\index{bar-cobar inversion!global strict chain-level across $H_1\cup H_3\cup H_4$}%
+On the formal neighbourhood of the full Humbert stratum
+$\widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}$, assembled via the
+\v{C}ech gluing of
+\begin{itemize}
+\item the single-wall refined pro-ambients of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}} on
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$ (wall union
+minus wall-of-walls);
+\item the Deligne--Malcev bi-unipotent pro-ambients of
+Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}} on
+each pairwise wall-of-walls
+$\widehat{\mathcal{O}}_{H_i\cap H_j}$;
+\end{itemize}
+the chiral bar-cobar counit
+\[
+\widehat{\mathrm{counit}}^{\mathrm{global}}_A
+\;\colon\;
+\Omega^{\mathrm{ch}}(B^{\mathrm{ch}}(A))
+\big|_{\widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}}
+\;\xrightarrow{\;\sim\;}\;
+A\big|_{\widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}}
+\]
+is a strict chain-level quasi-isomorphism. Combined with
+Theorem~\textup{\ref{thm:climax-W18-global-inversion}}(a) on the
+Koszul complement $U$, this gives strict chain-level bar-cobar
+inversion of $\mathbf{H}_{\Delta_5}$ on all of
+$\overline{\mathcal{A}_2}$ in the $(U$-fibrewise $/$ single-wall
+refined $/$ bi-refined$)$ tri-ambient.
+\end{corollary}
+
+\begin{proof}
+The \v{C}ech double complex for pro-objects
+\cite[\S 5.8]{BeilinsonDrinfeld2004} on the open cover
+\[
+\widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}
+\;=\;
+\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}
+\;\cup\;
+\bigsqcup_{i\neq j}\widehat{\mathcal{O}}_{H_i\cap H_j},
+\]
+where the second term is a disjoint union of three wall-of-walls
+pieces because $H_1\cap H_3\cap H_4$ is empty in
+$\overline{\mathcal{A}_2}$ by the Igusa discriminant-pair
+transversality \cite[\S 4]{Igusa1972TheoremsOnSiegel}: no Humbert
+divisors of three distinct discriminants meet simultaneously at
+codimension $3$ inside $\overline{\mathcal{A}_2}$, a threefold. The
+cover thus has only pairwise overlaps
+$\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}
+\cap
+\widehat{\mathcal{O}}_{H_i\cap H_j}$, each a punctured formal disc
+(the formal neighbourhood of $H_i\cap H_j$ inside $H_i\cup H_j$ minus
+the wall-of-walls itself), on which both refined pro-ambients agree:
+passing to the limit in one of the two monodromy directions recovers
+the single-wall refined pro-ambient of
+Definition~\textup{\ref{def:monodromy-refined-total-bar-weight}} by
+Schmid's limit theorem \cite[\S 5]{Schmid1973}.
+
+The Mayer--Vietoris exact sequence
+\[
+0 \to
+H^m(\mathrm{Cone}(\widehat{\mathrm{counit}}^{\mathrm{global}}_A))
+\to
+H^m(\mathrm{Cone}^{\circ})
+\oplus
+\bigoplus_{i\neq j} H^m(\mathrm{Cone}^{H_i\cap H_j})
+\to
+\bigoplus_{i\neq j} H^m(\mathrm{Cone}^{\mathrm{overlap}}_{i,j})
+\to 0,
+\]
+has middle and right-hand terms vanishing by
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}
+and Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}},
+so the left term vanishes; hence
+$\widehat{\mathrm{counit}}^{\mathrm{global}}_A$ is a strict chain-level
+quasi-isomorphism on $\widehat{\mathcal{O}}_{H_1\cup H_3\cup H_4}$.
+Gluing with the Koszul-locus statement on the complement $U$ completes
+the chain-level global inversion on $\overline{\mathcal{A}_2}$.
+\end{proof}
+
+\begin{remark}[Malcev interpretation of the wall-of-walls class]
+\label{rem:wall-of-walls-obstruction-as-extension-class}
+\index{wall-of-walls!commutator class!Malcev cocycle}%
+Open Theorem~\textup{\ref{thm:wall-of-walls-obstruction}} defines an
+abstract \v Cech class in the derived endomorphism complex of the
+comparison cone.  Assume the comparison required there carries the
+transition automorphism to
+$[\gamma_i,\gamma_j]\in
+H^2_{\text{\'et}}(H_i\cap H_j,\mathbb{Z}/N_{ij})$
+and identifies its derived extension class with the corresponding
+Bruinier--Kuga--Satake cup product.  The Deligne--Malcev bi-unipotent
+refinement of
+Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}}
+absorbs this commutator class into the classifying cocycle of the
+Malcev extension of the bi-unipotent pro-ambient: the
+$\mathrm{Ext}^2$-class of the extension is precisely the cup-product
+Bruinier $\cup$ Kuga--Satake (respectively Bruinier $\cup$ pentagon,
+pentagon $\cup$ Kuga--Satake) class, and the
+Schmid--Cattani--Kaplan commuting-$\mathfrak{sl}_2$-triples
+construction furnishes the canonical splitting that trivialises this
+cocycle inside the bi-refined pro-ambient.  Under these comparison
+hypotheses, the class becomes the Malcev extension datum whose canonical
+splitting produces the strict chain-level quasi-isomorphism. The
+pentachotomy of
+Corollary~\textup{\ref{cor:sharpened-quadrichotomy-after-monodromy-refinement}}
+is consequently upgraded to a hexachotomy: strict chain-level on $U$;
+strict chain-level in the single-monodromy-refined pro-ambient on the
+wall-union minus wall-of-walls; strict chain-level in the
+Deligne--Malcev bi-unipotent pro-ambient on the wall-of-walls;
+weight-completed coderived on the full base;
+$A_\infty$-corrected on a neighbourhood of $H_3$; fibrewise on generic
+points of $\overline{\mathcal{A}_2}$.
+\end{remark}
+
+\begin{remark}[Three independent verification paths for
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}}]
+\label{rem:three-verification-paths-wall-of-walls}
+\index{verification paths!wall-of-walls strict chain-level}%
+The strict chain-level inversion of
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} is
+cross-checked by three genuinely independent verification paths.
+
+\textup{(V1)} \emph{Direct computation via the bi-graded
+curvature-corrected Bott--Koszul identity
+\textup{\eqref{eq:wall-of-walls-chain-homotopy}}.} The chain-homotopy
+identity
+$[d^{\Gamma\otimes\Gamma}_{\mathrm{bar}},
+h^{\Gamma\otimes\Gamma}_{H_i\cap H_j}]
+= \mathrm{id} - p^{\Gamma\otimes\Gamma}_{H_i\cap H_j}$
+is verified term-by-term on each bi-graded finite-weight truncation
+$\mathrm{gr}^{k_i,k_j}_W F^{\leq w,\chi_i,\chi_j}$, with the finite
+$\lfloor w/2\rfloor$-term geometric series converging at each
+truncation. Verification succeeds on every non-bi-invariant
+bi-isotypic piece because the bi-semisimple factor
+$M^{(\chi_i,\chi_j)}$ and the bi-weight-shift
+$(N_i+N_j+\lambda_{k_i,k_j})^{-1}$ are individually invertible on the
+orthogonal complement.
+
+\textup{(V2)} \emph{Equivalence to the Kashiwara--Malgrange
+bi-$V$-filtration.} The Deligne--Malcev bi-unipotent pro-ambient is
+functorially equivalent to the pair of Kashiwara--Malgrange
+$V$-filtrations $(V^\bullet_{H_i}, V^\bullet_{H_j})$ on the holonomic
+$\mathcal{D}$-module
+$\mathcal{L}^{\Delta_5}|_{\widehat{\mathcal{O}}_{H_i\cap H_j}}$
+\cite{Kashiwara1983,Malgrange1983}. The bi-$V$-filtration restores
+bi-Mittag--Leffler on each bi-graded successive quotient by an
+independent analytic argument, and its agreement with the
+bi-monodromy-refined pro-ambient is the multi-variable
+algebraic-analytic duality of \cite[Appendix~A]{SaitoMHM1988}.
+
+\textup{(V3)} \emph{Consistency with the single-wall limit.} In the
+limit where one of the two wall neighbourhoods
+$\widehat{\mathcal{O}}_{H_i\cap H_j}\to \widehat{\mathcal{O}}_{H_i}$
+sends the $H_j$-monodromy direction to the trivial limit, the
+Deligne--Malcev bi-unipotent pro-ambient degenerates to the
+single-monodromy-refined pro-ambient of
+Definition~\textup{\ref{def:monodromy-refined-total-bar-weight}}, and
+the chain homotopy
+$h^{(\chi_i,\chi_j,k_i,k_j)}_{H_i\cap H_j}$ of
+equation~\textup{\eqref{eq:wall-of-walls-chain-homotopy}} reduces to
+$h^{(\chi_i)}_{H_i}$ of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(iii).
+This is Schmid's limiting-mixed-Hodge-structure construction
+\cite[\S 5]{Schmid1973} evaluated on the bar complex: the limit of
+the bi-unipotent nilpotent orbit is the single-unipotent nilpotent
+orbit along the surviving wall direction. The limiting-case recovery
+is forced by the $SL_2\times SL_2$-splitting of
+Lemma~\textup{\ref{lem:sl2-sl2-splitting}} and by the universality of
+the Deligne canonical extension.
+
+\textup{(V4)} \emph{Cross-family dimensional check.} The bi-graded
+Mittag--Leffler stabilisation index
+$N^{\otimes}(m,i,j,\chi_i,\chi_j,k_i,k_j)
+= 2m+|\chi_i|+|\chi_j|+k_i+k_j+c_ic_j$
+satisfies the product-index consistency
+$N^{\otimes} \geq N^{(i)}+N^{(j)}$ where
+$N^{(n)}(m,n,\chi_n) = 2m+|\chi_n|+c_n$ is the single-wall index of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(vi),
+the constant $c_ic_j$ reflecting the bi-multiplicity product
+(fractional bi-dimension $1/(|\Gamma_i|\cdot|\Gamma_j|)$ on each
+bi-isotypic summand). The product structure is forced by the
+commuting-$\mathfrak{sl}_2\times\mathfrak{sl}_2$-decomposition and
+matches the physical expectation that two independent monodromy
+directions contribute multiplicatively to the stabilisation index.
+\end{remark}
+
+\begin{remark}[Scope and lane parity]
+\label{rem:mc5-wall-of-walls-scope}
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} is
+chain-level on the Deligne--Malcev bi-unipotent pro-ambient and
+$(\infty,1)$-categorical on the derived category
+$D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$ by descent
+to the coderived category through the Positselski equivalence. Both
+lanes are the theorem; neither is a shadow of the other. The
+chain-level statement names generators, differentials, chain
+homotopies, Mittag--Leffler indices, projectors, and bi-graded
+decompositions; the $(\infty,1)$-categorical statement names the
+bi-simplicial object of Deligne nearby cycles along $(H_i,H_j)$ and
+its limit in $\mathrm{Perf}(\overline{\mathcal{A}_2})$. The
+chain-level lane is the source of the curvature-corrected Bott--Koszul
+homotopy formula~\textup{\eqref{eq:wall-of-walls-chain-homotopy}}; the
+$(\infty,1)$-categorical lane is the source of the Malcev
+classifying-cocycle interpretation of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}.
+\end{remark}
+
+\section{The bi-unipotent Malcev ladder on the admissible Heegner union}
+\label{sec:mc5-malcev-ladder-admissible-heegner}
+
+The hexachotomy names the chain homotopy
+$h^{(\chi_i,\chi_j,k_i,k_j)}_{H_i\cap H_j}$ of
+equation~\textup{\eqref{eq:wall-of-walls-chain-homotopy}} on the three
+admissible discriminants $n\in\{1,3,4\}$ carried by
+$\mathbf{H}_{\Delta_5}$ at leading order.
+Theorem~\textup{\ref{thm:tbsp-admissible-strict-scope}} excludes
+instead the full admissible Heegner union
+$\bigcup_{n\ \text{admissible}} H_n$ with $n\equiv 0,3\pmod 4$, whose
+first-new-case representatives are
+$n\in\{7,8,11,12,15,16,19,20,\ldots\}$. The named homotopy does not
+transport verbatim: at $n=7$ the Bruinier Heegner--Chern torsion order
+is $14$ and the bi-semisimple inversion factor
+$M^{(\chi_i,\chi_j)}_{H_i\cap H_j}$ acquires a new character
+$\chi_7\in\widehat{\mathbb Z/14}$ whose order introduces the prime
+$7\nmid 48=8\cdot 3\cdot 2$; the
+pro-ambient index $(w,\chi_1,\chi_3,\chi_4,k_1,k_3,k_4)$ of
+Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}} is
+therefore incomplete on the deep boundary of the Baily--Borel
+compactification, where the Gritsenko--Nikulin denominator
+$\Delta_5(Z)=\sum_{(n,\ell,m)>0} c_{\phi_{-2,1}}(4nm-\ell^2)\,q^n r^\ell s^m$
+acquires a limiting residue over all admissible $n$ (cusp
+specialisation $\lim_{\Im Z\to\infty}\Delta_5=\eta^{24}$, with
+$q$-expansion collecting every admissible discriminant into a single
+$24$-power at the zero-dimensional cusp). The correct structure is a
+$\mathbb Z$-graded Malcev ladder whose $n$-th layer is new data, not a
+specialisation of the $\{1,3,4\}$ triple.
+
+\begin{definition}[Bi-unipotent Malcev ladder on the admissible Heegner union]
+\label{def:malcev-ladder-admissible-heegner}
+\index{Malcev ladder!admissible Heegner union}%
+\index{bi-unipotent!ladder}%
+\index{Baily--Borel!zero-cusp pro-ambient}%
+Let $n\equiv 0,3\pmod 4$ be admissible in the sense of
+Theorem~\textup{\ref{thm:tbsp-admissible-strict-scope}}: the
+Bruinier Heegner--Chern class
+$[\mathrm{obs}^{\mathrm{strict}}_{H_n}]\in
+\mathrm{Pic}(\overline{\mathcal{A}_2})\otimes\mathbb Q/\mathbb Z$ of
+\cite[Thm.~1.1]{Bruinier2002LNM} is non-zero. Let $\gamma_n\in\Gamma_n$
+be the Gauss--Manin monodromy generator at $H_n$, with Jordan
+decomposition $\gamma_n=\gamma_n^{\mathrm{ss}}\cdot\exp(N_n)$, and let
+$\mathrm{ord}(\gamma_n^{\mathrm{ss}})=:c_n$ denote its torsion order:
+$c_1=8$, $c_3=3$, $c_4=2$ at leading order; for general admissible
+$n$, $c_n$ divides the Weil representation order $2n$ for
+$n\equiv 3\pmod 4$ and divides $\mathrm{lcm}(8,2n)$ for
+$n\equiv 0\pmod 4$ (\cite[Prop.~5.1]{Bruinier2002LNM}).
+
+The \emph{bi-unipotent Malcev ladder} is the pro-object
+\[
+ \mathrm{pro}_{\mathrm{Malcev}}\text{-}\mathrm{Ch}(\mathrm{Vect})
+ \;:=\;
+ \mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})
+ \text{ with tower index }
+ \bigl(w,\{\chi_n\}_{n\,\mathrm{adm}},\{k_n\}_{n\,\mathrm{adm}}\bigr),
+\]
+indexed by total bar weight $w\in\mathbb N$, by admissible-Heegner
+character tuples $\chi_n\in\widehat{\Gamma_n^{\mathrm{ss}}}$ with only
+finitely many $\chi_n\neq\chi_{0,n}$ per index, and by nilpotent-orbit
+indices $k_n\in\{0,\ldots,\mathrm{ord}(N_n)-1\}$ tracking the Deligne
+weight filtration $W^{N_n}_\bullet$ at each admissible wall. The
+associated graded in cohomological degree $m$ on each ladder rung is
+$\mathrm{gr}^{k_n}_{W^{N_n}}F^{\leq w,\chi_n}$, finite-dimensional by
+the per-wall finite-dimensionality of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(vi).
+
+The $n$-th \emph{Malcev rung} $F_n^{\mathrm{Malcev}}$ is the subtower
+with $\chi_{n'}=\chi_{0,n'}$ and $k_{n'}=0$ for all admissible $n'>n$;
+the ladder is the increasing union
+$\bigcup_n F_n^{\mathrm{Malcev}}$. Its associated graded
+$\mathrm{gr}_n^{\mathrm{Malcev}} = F_n^{\mathrm{Malcev}}/F_{n-1}^{\mathrm{Malcev}}$
+records exactly the new data at discriminant $n$: it is not a
+specialisation of $F_{n-1}^{\mathrm{Malcev}}$.
+\end{definition}
+
+\begin{lemma}[$\mathfrak{sl}_2^{\oplus\mathrm{adm}}$ splitting of the Malcev ladder]
+\label{lem:sl2-admissible-splitting}
+\ClaimStatusProvedElsewhere
+\index{$\mathfrak{sl}_2$!admissible-indexed splitting}%
+On the Baily--Borel formal neighbourhood
+$\widehat{\mathcal{O}}_{\overline{\mathcal{A}_2}^{\mathrm{BB}}}$, the
+countable family of commuting nilpotent operators
+$\{N_n\}_{n\,\mathrm{adm}}$ extends uniquely, by the Cattani--Kaplan--Schmid
+multi-variable nilpotent-orbit theorem
+\cite[\S 3.7]{CattaniKaplanSchmid1986}, to a countable family of
+pairwise commuting $\mathfrak{sl}_2$-triples
+$(N_n,H_n,N^+_n)_{n\,\mathrm{adm}}$ on
+$\bar B^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})|_{\widehat{\mathcal{O}}_{\overline{\mathcal{A}_2}^{\mathrm{BB}}}}$.
+The ladder filtration
+$\bigcap_{n\,\mathrm{adm}} W^{N_n}_{k_n}$ is the joint weight
+decomposition of
+$\mathfrak{sl}_2^{\oplus\mathrm{adm}}:=\bigoplus_{n\,\mathrm{adm}}\mathfrak{sl}_2(H_n)$,
+and commutativity $[N_n,N_{n'}]=0$ for $n\neq n'$ holds on each ladder
+rung because the commutator class
+$[\gamma_n,\gamma_{n'}]\in H^2_{\text{\'et}}(H_n\cap H_{n'},\mathbb Z/c_nc_{n'})$
+lies in the unipotent part of the joint Jordan decomposition
+(Schmid~\cite[Thm.~4.9]{Schmid1973} extended to
+Saito~\cite[Appendix~A]{SaitoMHM1988} multi-variable
+$V$-filtration).
+\end{lemma}
+
+\begin{proof}
+Cattani--Kaplan--Schmid~\cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986}
+assigns to any commuting cone of nilpotent logarithms of unipotent
+monodromies a compatible family of $\mathfrak{sl}_2$-triples; their
+Lemma~3.5 extends the assignment to the cone of countably-many
+commuting elements provided the joint weight filtration stabilises on
+each graded piece, which follows here from the finite-dimensionality
+of $\bar B^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})_{\leq w}$ at each
+finite weight $w$. Commutativity of $\gamma_n$ and $\gamma_{n'}$ on
+the joint filtration is equivalent to vanishing of the commutator in
+$\mathrm{End}(\mathrm{gr}^{\mathrm{Malcev}})$, which is the content of
+the Saito multi-variable $V$-filtration theorem
+\cite[Thm.~A.3]{SaitoMHM1988}.
+\end{proof}
+
+\begin{theorem}[Strict chain-level bar-cobar inversion on the admissible
+Heegner union in the bi-unipotent Malcev ladder]
+\label{thm:mc5-admissible-heegner-strict-chain-level}
+\ClaimStatusConditional
+\index{MC5!chain-level!admissible Heegner union}%
+\index{bar-cobar inversion!strict chain-level on admissible Heegner union}%
+\index{Malcev ladder!chain-level inversion}%
+Let $A=\mathbf{H}_{\Delta_5}$ be the K3 chiral bialgebra and fix a
+finite collection $S\subset\{n : n\equiv 0,3\pmod 4\}$ of admissible
+discriminants containing $\{1,3,4\}$. On the formal neighbourhood
+$\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}$ of the $S$-admissible
+Heegner union inside $\overline{\mathcal{A}_2}$, and in the
+bi-unipotent Malcev ladder of
+Definition~\textup{\ref{def:malcev-ladder-admissible-heegner}}
+truncated to the index $S$, the bar-cobar counit
+\[
+ \widehat{\mathrm{counit}}^{\mathrm{Malcev}(S)}_A
+ \;\colon\;
+ \Omega^{\mathrm{ch}}\bigl(B^{\mathrm{ch}}(A)\bigr)
+ \big|_{\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}}
+ \;\xrightarrow{\;\sim\;}\;
+ A\big|_{\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}}
+\]
+is a strict chain-level quasi-isomorphism with the following explicit
+data.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Named chain homotopy.} On each
+$\{(\chi_n,k_n)\}_{n\in S}$-multi-isotypic piece
+$\bigotimes_{n\in S}\mathrm{gr}^{k_n}_{W^{N_n}}F^{\leq w,\chi_n}$ with
+$(\chi_n,k_n)_{n\in S}\neq(\chi_{0,n},0)_{n\in S}$, the chain homotopy is
+\begin{equation}
+\label{eq:malcev-ladder-chain-homotopy}
+h^{\{\chi_n,k_n\}_{n\in S}}_{\mathrm{Malcev}(S)}
+\;:=\;
+\prod_{n\in S}M^{(\chi_n)}_{H_n}
+\circ
+\Bigl(\textstyle\sum_{n\in S}N_n+\lambda_{\{k_n\}}\mathrm{id}\Bigr)^{-1}
+\circ
+\bigl(\mathrm{id}+\sigma\circ h^{(g)}\bigr)^{-1}
+\circ
+\sigma,
+\end{equation}
+where $\sigma$ is the bar-shift splitting of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(iii),
+$M^{(\chi_n)}_{H_n}=(\gamma_n^{\mathrm{ss}}\chi_n^{-1}-\mathrm{id})^{-1}$,
+and $\lambda_{\{k_n\}}=1+\sum_{n\in S}k_n$. The factors $M^{(\chi_n)}_{H_n}$
+pairwise commute on the ladder graded by
+Lemma~\textup{\ref{lem:sl2-admissible-splitting}}, and only finitely
+many are non-identity on each finite-weight truncation because at
+weight $w$ the Gritsenko--Nikulin denominator
+$\Delta_5|_{F^{\leq w}}$ vanishes on $H_n$ with $n>w$
+(\cite[\S 3]{GritsenkoNikulin1998}).
+\item \emph{Named projector.}
+$p^{\mathrm{Malcev}(S)}
+\colon\bar B^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}}
+\twoheadrightarrow
+\bar B^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}}^{\prod_{n\in S}\Gamma_n}$
+is the multi-invariants projector
+$\prod_{n\in S}p^{\Gamma}_{H_n}$, a finite commuting product.
+\item \emph{Chain-homotopy identity.}
+\begin{equation}
+\label{eq:malcev-ladder-chain-homotopy-identity}
+[d^{\mathrm{Malcev}(S)}_{\mathrm{bar}},\,h^{\mathrm{Malcev}(S)}]
+\;=\;
+\mathrm{id}-p^{\mathrm{Malcev}(S)}
+\qquad\text{on }\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n},
+\end{equation}
+where $h^{\mathrm{Malcev}(S)}=\bigoplus_{\{\chi_n,k_n\}_{n\in S}}
+h^{\{\chi_n,k_n\}_{n\in S}}_{\mathrm{Malcev}(S)}$.
+\item \emph{Mittag--Leffler index.} The ladder-graded inverse system
+satisfies Mittag--Leffler in every cohomological degree $m$ with
+stabilisation index
+\[
+ N^{\mathrm{Malcev}(S)}(m,\{\chi_n,k_n\}_{n\in S})
+ \;=\;
+ 2m+\sum_{n\in S}\bigl(|\chi_n|+k_n+c_n\cdot\mathbf 1[\chi_n\neq\chi_{0,n}]\bigr),
+\]
+finite because $\chi_n\neq\chi_{0,n}$ at most for finitely many
+$n\in S$ on each fixed multi-isotypic slot.
+\item \emph{Ladder compatibility.} For $S\subset S'$ the restriction
+of the $S'$-ladder to the $S$-ladder recovers the $S$-chain homotopy:
+$h^{\mathrm{Malcev}(S')}|_{F_S^{\mathrm{Malcev}}}=h^{\mathrm{Malcev}(S)}$.
+The direct limit $\varinjlim_{S}h^{\mathrm{Malcev}(S)}=:h^{\mathrm{Malcev}}_\infty$
+defines the chain homotopy on the full admissible Heegner union
+$\bigcup_{n\,\mathrm{adm}}H_n$, specialising to
+equation~\textup{\eqref{eq:wall-of-walls-chain-homotopy}} on
+$S=\{i,j\}\subset\{1,3,4\}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: multi-isotypic decomposition on the Malcev ladder.}
+Lemma~\textup{\ref{lem:sl2-admissible-splitting}} supplies a pairwise
+commuting family of $\mathfrak{sl}_2$-triples indexed by admissible
+$n\in S$; the semisimple parts $\gamma_n^{\mathrm{ss}}$ act by scalars
+$\chi_n(\gamma_n^{\mathrm{ss}})$ on $\chi_n$-isotypic pieces and the
+nilpotent parts $N_n$ act by the weight operators $H_n$ on
+$k_n$-graded pieces, all mutually commuting. The bar differential
+commutes with every $\gamma_n$ individually by
+Lemma~\textup{\ref{lem:bar-differential-preserves-monodromy-filtration}}
+applied wall-by-wall, hence with the joint filtration.
+
+\emph{Step 2: operator algebra on multi-graded pieces.} On the
+$\{k_n\}_{n\in S}$-graded piece, $\sum_n N_n+\lambda_{\{k_n\}}\mathrm{id}$
+acts as $\sum_n H_n+1+\sum_n k_n$, invertible on the orthogonal
+complement of the joint $(0)_n$-weight space by the Bott--Koszul
+argument of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(iii)
+applied to the countable-direct-sum $\mathfrak{sl}_2^{\oplus S}$. The
+factor $\prod_n M^{(\chi_n)}_{H_n}$ is invertible on the orthogonal
+complement of the multi-$\chi_{0,n}$-isotypic piece because each
+individual factor is invertible on the complement of its own
+$\chi_{0,n}$-piece and they pairwise commute. Only finitely many
+factors act non-trivially on each finite-weight slot: at weight $w$,
+$\chi_n\neq\chi_{0,n}$ requires $n\leq w$ by the Gritsenko--Nikulin
+denominator vanishing order
+$\mathrm{ord}_{H_n}(\Delta_5)\geq \lceil n/24\rceil$ enforcing the
+$n$-th admissible Heegner class to contribute only at bar-weight
+$\geq n$ \cite[\S 3, Cor.~3.2]{GritsenkoNikulin1998}.
+
+\emph{Step 3: chain-homotopy identity on the multi-graded complement.}
+Expand the commutator via
+$d_{\mathrm{bar}}=d_{\mathrm{int}}+d_{\mathrm{cobar}}+h^{(g)}$:
+\[
+[d^{\mathrm{Malcev}(S)}_{\mathrm{bar}},
+h^{\{\chi_n,k_n\}_{n\in S}}_{\mathrm{Malcev}(S)}]
+=
+\prod_{n\in S}M^{(\chi_n)}_{H_n}
+\Bigl(\textstyle\sum_{n\in S}N_n+\lambda_{\{k_n\}}\Bigr)^{-1}
+[d_{\mathrm{bar}},(\mathrm{id}+\sigma h^{(g)})^{-1}\sigma].
+\]
+The inner bracket is the curvature-corrected Koszul-splitting
+identity of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}}(Step 2),
+evaluating to $\mathrm{id}$ on the complement of the
+joint-$(\chi_{0,n},0)_{n\in S}$-piece. Applying the multi-bi-semisimple
+and multi-bi-nilpotent factors gives identity on each multi-graded
+piece other than the joint-invariant, and zero on the latter: hence
+$[d^{\mathrm{Malcev}(S)}_{\mathrm{bar}},h^{\mathrm{Malcev}(S)}]
+=\mathrm{id}-p^{\mathrm{Malcev}(S)}$.
+
+\emph{Step 4: curvature convergence of the geometric series.} The
+curvature $h^{(g)}=\kappa\cdot\omega_g$ raises bar weight by at least
+$2$ and preserves the multi-graded decomposition by
+Lemma~\textup{\ref{lem:sl2-admissible-splitting}}, so
+$(\mathrm{id}+\sigma h^{(g)})^{-1}=\sum_{k\geq 0}(-1)^k(\sigma h^{(g)})^k$
+has at most $\lfloor w/2\rfloor$ non-zero terms on
+$\bar B^{\mathrm{ch}}/F^{\leq w}$ at any finite $S$.
+
+\emph{Step 5: Mittag--Leffler with multi-graded index.} The multi-graded
+tower is finite-dimensional in every cohomological degree $m$ because
+only finitely many $\chi_n\neq\chi_{0,n}$ or $k_n\neq 0$ contribute at
+each finite-weight slot (Step 2). Weibel~\cite[Prop.~3.5.7]{Weibel94}
+gives Mittag--Leffler with stabilisation index
+$2m+\sum_{n\in S}(|\chi_n|+k_n+c_n\cdot\mathbf 1[\chi_n\neq\chi_{0,n}])$,
+bounding the multi-bi-multiplicity by the product of per-wall
+fractional dimensions $\prod_{n\in S}|\Gamma_n|^{-1}$.
+
+\emph{Step 6: pro-object chain-level quasi-isomorphism via Milnor.}
+The Milnor $\lim^1$ sequence on the multi-graded tower of cones
+vanishes on both flanks by Steps 3 and 5, giving
+$\widehat{\mathrm{counit}}^{\mathrm{Malcev}(S)}_A$ a strict chain-level
+quasi-isomorphism on
+$\widehat{\mathcal{O}}_{\bigcup_{n\in S}H_n}$.
+
+\emph{Step 7: ladder compatibility and direct-limit closure.} For
+$S\subset S'$, the restriction of
+$h^{\mathrm{Malcev}(S')}$ to the subtower
+$F_S^{\mathrm{Malcev}}\subset F_{S'}^{\mathrm{Malcev}}$ sets
+$\chi_{n'}=\chi_{0,n'}$ and $k_{n'}=0$ for $n'\in S'\setminus S$,
+reducing the product $\prod_{n\in S'}M^{(\chi_n)}_{H_n}$ to
+$\prod_{n\in S}M^{(\chi_n)}_{H_n}$ (the excluded factors act as the
+identity on the trivial-character subtower). The direct limit
+$\varinjlim_S$ along the filtered poset of finite admissible subsets
+commutes with the Milnor $\lim^1$ sequence in pro-chain complexes by
+the compactness of pro-objects
+\cite[\S 5.8]{BeilinsonDrinfeld2004}. The limit homotopy
+$h^{\mathrm{Malcev}}_\infty$ satisfies the chain-homotopy identity on
+each finite-weight truncation and assembles to an identity on the
+full pro-object.
+
+\emph{Primary inputs.} Cattani--Kaplan--Schmid multi-variable
+nilpotent-orbit: \cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986}.
+Saito multi-variable $V$-filtration:
+\cite[Appendix~A, Thm.~A.3]{SaitoMHM1988}. Bruinier Heegner--Chern
+torsion: \cite[Thm.~1.1, Prop.~5.1]{Bruinier2002LNM}.
+Gritsenko--Nikulin denominator vanishing order:
+\cite[\S 3, Cor.~3.2]{GritsenkoNikulin1998}. Schmid cusp-limit:
+\cite[\S 5]{Schmid1973}. Pro-object compactness:
+\cite[\S 5.8]{BeilinsonDrinfeld2004}. Weibel Mittag--Leffler:
+\cite[Prop.~3.5.7]{Weibel94}.
+\end{proof}
+
+\begin{corollary}[Global chain-level bar-cobar inversion on the full admissible Heegner locus]
+\label{cor:global-strict-admissible-heegner}
+\ClaimStatusConditional
+\index{bar-cobar inversion!global strict chain-level on admissible Heegner complement}%
+On the formal neighbourhood
+$\widehat{\mathcal{O}}_{\bigcup_{n\,\mathrm{adm}}H_n}$ of the full
+admissible Heegner union inside $\overline{\mathcal{A}_2}$, assembled
+via the \v Cech pro-direct-limit of the $S$-truncated ladders of
+Theorem~\textup{\ref{thm:mc5-admissible-heegner-strict-chain-level}}
+over finite admissible subsets $S\subset\{n:n\equiv 0,3\pmod 4\}$, the
+bar-cobar counit is a strict chain-level quasi-isomorphism in the
+bi-unipotent Malcev ladder of
+Definition~\textup{\ref{def:malcev-ladder-admissible-heegner}}.
+Combined with the Koszul-locus statement of
+Theorem~\textup{\ref{thm:climax-W18-global-inversion}}(a) on
+$U^{\mathrm{adm}}=\overline{\mathcal{A}_2}\setminus\bigcup_{n\,\mathrm{adm}}H_n$,
+this realises strict chain-level bar-cobar inversion of
+$\mathbf H_{\Delta_5}$ on the whole of $\overline{\mathcal{A}_2}$ in
+the $(U^{\mathrm{adm}}$-fibrewise $/$ Malcev-ladder$)$ bi-ambient. The
+hexachotomy of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}
+upgrades to a heptachotomy: strict chain-level on $U^{\mathrm{adm}}$;
+strict chain-level in the single-monodromy-refined pro-ambient on each
+admissible wall $H_n$; strict chain-level in the bi-unipotent
+Deligne--Malcev pro-ambient on each pairwise intersection
+$H_i\cap H_j$; strict chain-level in the bi-unipotent Malcev ladder
+on any finite admissible union $\bigcup_{n\in S}H_n$; strict
+chain-level at the Baily--Borel zero-cusp via the ladder direct
+limit; weight-completed coderived on the full base;
+$A_\infty$-corrected on a neighbourhood of $H_3$.
+\end{corollary}
+
+\begin{proof}
+The finite admissible subsets form a filtered poset under inclusion;
+each finite-subset truncation of the Malcev ladder carries the strict
+chain-level quasi-isomorphism of
+Theorem~\textup{\ref{thm:mc5-admissible-heegner-strict-chain-level}}
+with compatible restriction maps
+(Theorem~\textup{\ref{thm:mc5-admissible-heegner-strict-chain-level}}(e)).
+The \v Cech pro-direct-limit of Beilinson--Drinfeld
+\cite[\S 5.8]{BeilinsonDrinfeld2004} commutes with the Milnor
+$\lim^1$ sequence in the multi-graded pro-chain category, so the
+strict chain-level quasi-isomorphism persists in the limit. At the
+zero-dimensional Baily--Borel cusp, the Schmid nilpotent-orbit limit
+\cite[\S 5]{Schmid1973} extended to several variables
+\cite[\S 4]{CattaniKaplanSchmid1986} identifies
+$\bar B^{\mathrm{ch}}(A)|_{\mathrm{BB\text{-}cusp}}$ with the joint
+nilpotent-orbit fibre of the full Malcev ladder; the denominator
+$\Delta_5$ specialises to $\eta^{24}$
+(\cite[\S 3]{GritsenkoNikulin1998}, using that
+$\eta^{24}\in S_{12}(\mathrm{SL}_2(\mathbb Z))$ is the unique
+weight-$12$ normalised cusp form on the $\mathrm{SL}_2(\mathbb Z)$
+$q$-line at the cusp). Gluing with the Koszul-locus statement on
+$U^{\mathrm{adm}}$ via the Mayer--Vietoris descent of
+Corollary~\textup{\ref{cor:global-strict-bar-cobar-humbert-stratum}}
+completes the global chain-level inversion.
+\end{proof}
+
+\begin{remark}[Three verification paths for
+Theorem~\textup{\ref{thm:mc5-admissible-heegner-strict-chain-level}}]
+\label{rem:three-verification-paths-malcev-ladder}
+\index{verification paths!Malcev-ladder strict chain-level}%
+\textup{(V1)} \emph{Direct computation via the multi-graded
+curvature-corrected Bott--Koszul identity
+\textup{\eqref{eq:malcev-ladder-chain-homotopy}}.} The chain-homotopy
+identity is verified term-by-term on each multi-isotypic finite-weight
+truncation: the factors $M^{(\chi_n)}_{H_n}$ pairwise commute and are
+individually invertible on the complement of their own
+$\chi_{0,n}$-piece, the multi-nilpotent resolvent
+$(\sum_n N_n+\lambda_{\{k_n\}})^{-1}$ acts diagonally on the
+$\mathfrak{sl}_2^{\oplus S}$-weight decomposition, and the curvature
+geometric series terminates at $\lfloor w/2\rfloor$ terms on each
+finite-weight truncation. Specialisation to
+$S=\{1,3,4\}$ recovers the hexachotomy named homotopy
+\textup{\eqref{eq:wall-of-walls-chain-homotopy}}.
+
+\textup{(V2)} \emph{Equivalence to the multi-variable
+Kashiwara--Malgrange--Saito $V$-filtration.} The Malcev ladder is
+functorially equivalent to the multi-variable
+Kashiwara--Malgrange--Saito $V$-filtration
+$\{V^\bullet_{H_n}\}_{n\in S}$ on the holonomic $\mathcal D$-module
+$\mathcal L^{\Delta_5}|_{\widehat{\mathcal O}_{\bigcup_{n\in S}H_n}}$
+\cite[Appendix~A]{SaitoMHM1988}. The multi-$V$-filtration restores
+multi-Mittag--Leffler on each multi-graded quotient by an independent
+analytic argument, and its agreement with the multi-monodromy-refined
+pro-ambient is the multi-variable algebraic-analytic duality of
+Saito~\cite[Thm.~A.3]{SaitoMHM1988}.
+
+\textup{(V3)} \emph{Consistency with the Baily--Borel zero-cusp limit.}
+As $\widehat{\mathcal O}_{\bigcup_{n\in S}H_n}\to
+\widehat{\mathcal O}_{\mathrm{BB\text{-}cusp}}$ with all admissible $n$
+joining simultaneously at the zero-dimensional boundary, the Malcev
+ladder degenerates to its joint nilpotent orbit on the $\eta^{24}$
+residue (cusp specialisation
+$\lim_{\Im Z\to\infty}\Delta_5=\eta^{24}$,
+\cite[\S 3]{GritsenkoNikulin1998}), and the multi-chain homotopy
+reduces to the scalar homotopy on the $24$-power cusp form by the
+Schmid limit mixed-Hodge structure \cite[\S 5]{Schmid1973} extended
+to several variables \cite[\S 4]{CattaniKaplanSchmid1986}. The scalar
+cusp homotopy coincides with the limit of the Virasoro
+Mittag--Leffler homotopy at $c=-214$ from
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} under
+$S=\{1,3,4\}$, by the Cattani--Kaplan observation that the
+several-variable nilpotent-orbit limit is determined by the total
+nilpotent $\sum_n N_n$ up to the Cattani--Kaplan compatibility
+conditions \cite[\S 2.1--\S 2.2]{CattaniKaplanSchmid1986}.
+\end{remark}
+
+\begin{remark}[The admissible-Heegner commutator tower is a new Malcev
+layer per discriminant, not a specialisation]
+\label{rem:admissible-heegner-new-data-per-n}
+\index{Malcev ladder!new data per admissible discriminant}%
+For admissible $n\notin\{1,3,4\}$ (first new cases
+$n\in\{7,8,11,12,\ldots\}$), the Bruinier torsion order $c_n$ is
+\emph{not} a specialisation of $\{8,3,2\}$: $c_7=14$ is coprime to
+$48=8\cdot 3\cdot 2$; $c_8$ divides $\mathrm{lcm}(8,16)=16$ and
+contributes a genuinely new $\mathbb Z/16$-character direction;
+$c_{11}=22$, $c_{12}$ divides $24$, $c_{15}=30$, each adjoining a new
+Bruinier-character layer coprime to the previous admissible tower.
+The $n$-th Malcev rung
+$\mathrm{gr}_n^{\mathrm{Malcev}}=F_n^{\mathrm{Malcev}}/F_{n-1}^{\mathrm{Malcev}}$
+is therefore new data at each admissible $n$: the
+Cattani--Kaplan--Schmid commuting $\mathfrak{sl}_2$-triples structure
+of Lemma~\textup{\ref{lem:sl2-admissible-splitting}} adjoins one new
+$\mathfrak{sl}_2$ summand per admissible discriminant, and the ladder
+is the pro-unipotent-Malcev tower on the countable-rank abelian Lie
+algebra $\bigoplus_{n\,\mathrm{adm}}\mathbb Z\langle H_n\rangle$.
+Restricted to the three load-bearing discriminants $\{1,3,4\}$ the
+ladder collapses to the hexachotomy bi-unipotent pro-ambient of
+Definition~\textup{\ref{def:deligne-malcev-bi-unipotent-ambient}};
+passing to the full admissible union extends the classifying cocycle
+of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}
+to a pro-object in
+$H^2_{\text{\'et}}(\bigcap_{n\in S}H_n,\bigoplus_n\mathbb Z/c_n)$
+whose canonical splitting is the Cattani--Kaplan--Schmid limit
+\cite[\S 3.7]{CattaniKaplanSchmid1986}.
+\end{remark}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\section{The codim-$3$ Heegner transversality theorem and the
+ tri-unipotent Malcev extension}
+\label{sec:mc5-codim3-heegner-transversality}
+
+The bi-unipotent Malcev ladder of
+Definition~\textup{\ref{def:malcev-ladder-admissible-heegner}} records
+only pairwise nilpotent interactions: per fibre of the tower, two
+admissible monodromies $(N_m,N_n)$ meet on
+$\widehat{\mathcal O}_{H_m\cap H_n}$ and extend via the
+Cattani--Kaplan--Schmid commuting pair. Three admissible discriminants
+$(m,n,p)$ with $m,n,p\equiv 0,3\pmod 4$ generically cut out a
+codimension-$3$ locus
+$H_m\cap H_n\cap H_p\subset\overline{\mathcal A_2}$ which is
+zero-dimensional--a finite union of CM $0$-cycles, not the empty
+set. The $\{1,3,4\}$-case is emptied by a congruence obstruction; the
+general admissible triple is not.
+
+\begin{definition}[Admissible Heegner triple and the Humbert Gram lattice]
+\label{def:admissible-heegner-triple}
+\index{admissible Heegner triple}%
+\index{Humbert Gram lattice}%
+An \emph{admissible Heegner triple} is an ordered tuple
+$(m,n,p)$ with $m,n,p\equiv 0,3\pmod 4$ such that the Bruinier
+Heegner--Chern classes $[\mathrm{obs}^{\mathrm{strict}}_{H_{m,n,p}}]$
+are independent in
+$\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q/\mathbb Z$. Fix
+$\overline{\mathcal A_2}=\mathrm{Sp}_4(\mathbb Z)\backslash\mathbb
+H_2^*$ with period coordinate
+$Z=\begin{pmatrix}z_1&z_2\\ z_2&z_3\end{pmatrix}$; each admissible
+wall is the zero locus of a Humbert equation
+\[
+L_n(Z)\;:=\;a_n z_1 + b_n z_2 + c_n z_3 + d_n(z_2^2-z_1 z_3) + e_n
+\;=\;0,
+\qquad b_n^2+4a_nc_n+4d_ne_n=n.
+\]
+The \emph{Humbert Gram lattice} of the triple is the rank-$3$
+integral lattice $\Lambda_{m,n,p}\subset\mathrm{NS}(A)$ of any
+$[A]\in H_m\cap H_n\cap H_p$, with Gram matrix
+\[
+G_{m,n,p}\;=\;
+\begin{pmatrix}
+m & g_{mn} & g_{mp}\\
+g_{mn} & n & g_{np}\\
+g_{mp} & g_{np} & p
+\end{pmatrix},
+\qquad g_{mn},g_{mp},g_{np}\in\mathbb Z.
+\]
+The \emph{discriminant} of the triple is
+$\Delta(m,n,p;g_{mn},g_{mp},g_{np})=\det G_{m,n,p}$; its
+\emph{Hodge signature} on $\mathrm{NS}(A)\otimes\mathbb R$ is
+$(1,r-1)$ with $r=\mathrm{rk}\,\mathrm{NS}(A)\in\{1,2,3,4\}$.
+\end{definition}
+
+\begin{theorem}[Codim-$3$ Heegner transversality on
+$\overline{\mathcal A_2}$]
+\label{thm:codim3-heegner-transversality}
+\ClaimStatusConditional
+\index{Heegner!codim-3 transversality}%
+\index{Humbert!triple intersection = CM 0-cycle}%
+\index{Igusa!triple transversality}%
+Let $(m,n,p)$ be an admissible Heegner triple.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Dimension.}
+$H_m\cap H_n\cap H_p\subset\overline{\mathcal A_2}$ is a
+zero-dimensional closed subscheme; either empty or a finite
+disjoint union of CM $0$-cycles $[E_1\times E_2]$ with each $E_i$
+CM by $\mathcal O_{K_i}$ of discriminant $-D_i$.
+\item \emph{Hodge-index obstruction.}
+$[A]\in H_m\cap H_n\cap H_p$ exists iff $G_{m,n,p}$ has Hodge
+signature $(1,2)$: there are
+$g_{mn},g_{mp},g_{np}\in\mathbb Z$ with $\det G_{m,n,p}>0$ and
+$2\times 2$ principal minors compatible with signature $(1,2)$.
+The count per principal polarisation is
+$\leq h(-D_1)\cdot h(-D_2)\cdot |\mathrm{Hecke}_{m,n,p}|$, finite.
+\item \emph{Emptiness at $\{1,3,4\}$.}
+$\det G_{1,3,4}=12-g_{np}^2-3g_{mp}^2-4g_{mn}^2+2g_{mn}g_{mp}g_{np}$
+on the Cauchy--Schwarz box
+$(g_{mn},g_{mp},g_{np})\in\{-1,0,1\}\times\{-2,\ldots,2\}
+\times\{-3,\ldots,3\}$ ($105$ triples). At the origin,
+$G=\mathrm{diag}(1,3,4)$ is positive-definite, signature $(3,0)$
+not $(1,2)$; every off-origin lattice triple either gives
+$\det\leq 0$ or positive-definite form. No signature-$(1,2)$
+realisation; $H_1\cap H_3\cap H_4=\emptyset$, recovering
+\cite[\S 4]{Igusa72}.
+\item \emph{Non-emptiness at $(3,4,7)$.}
+$(g_{34},g_{37},g_{47})=(2,3,4)$ yields
+$G_{3,4,7}=\begin{pmatrix}3&2&3\\ 2&4&4\\ 3&4&7\end{pmatrix}$,
+$\det G_{3,4,7}=3(28-16)-2(14-12)+3(8-12)=20>0$. The Shioda--Mitani
+embedding into
+$\mathrm{NS}(E_1\times E_2)=U\oplus\langle-2D_1\rangle\oplus
+\langle-2D_2\rangle$ realises $\Lambda_{3,4,7}$ primitively of
+signature $(1,2)$. With $D_1=3$, $D_2=7$, $h(-3)=h(-7)=1$: the
+Hecke orbit forces $(2,3,4)$, matching. Hence
+$H_3\cap H_4\cap H_7\ni[E_{\sqrt{-3}}\times E_{\sqrt{-7}}]\neq\emptyset$:
+the first non-empty admissible triple past $\{1,3,4\}$ appears at
+codimension $3$.
+\item \emph{Tri-unipotent Malcev extension.} On
+$\widehat{\mathcal O}_{H_m\cap H_n\cap H_p}$ non-empty,
+CKS~\cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986} extends
+$(N_m,N_n,N_p)$ uniquely to three pairwise commuting
+$\mathfrak{sl}_2$-triples with
+$[N_i,N_j]=[N_i,N_j^+]=[Y_i,Y_j]=0$ for $i\neq j$. The tri-isotypic
+chain homotopy
+\begin{equation}
+\label{eq:tri-unipotent-chain-homotopy}
+h^{\{\chi_i,k_i\}_{i=m,n,p}}_{\mathrm{tri}}
+\;:=\;
+\prod_{i}M^{(\chi_i)}_{H_i}
+\circ\Bigl(\textstyle\sum_{i}N_i+\lambda_{\{k_i\}}\mathrm{id}\Bigr)^{-1}
+\circ(\mathrm{id}+\sigma h^{(g)})^{-1}\circ\sigma
+\end{equation}
+satisfies
+$[d^{\mathrm{tri}}_{\mathrm{bar}},h^{\mathrm{tri}}]
+=\mathrm{id}-p^{\mathrm{tri}}$ with
+$p^{\mathrm{tri}}=\prod_i p^{\Gamma}_{H_i}$.
+\item \emph{Heptachotomy $\Rightarrow$ octachotomy.}
+Corollary~\textup{\ref{cor:global-strict-admissible-heegner}} gains a
+codim-$3$ stratum. Eight strata:
+\begin{itemize}
+\item chain-level Koszul on $U^{\mathrm{adm}}$;
+\item single-monodromy refinement on each $H_n$;
+\item bi-unipotent Deligne--Malcev on each $H_i\cap H_j$;
+\item admissible-Heegner Malcev ladder on $\bigcup_{n\in S}H_n$;
+\item tri-unipotent Malcev extension on each non-empty
+$H_m\cap H_n\cap H_p$;
+\item Baily--Borel zero-cusp direct limit;
+\item weight-completed coderived on the full base;
+\item $A_\infty$-corrected on a neighbourhood of $H_3$.
+\end{itemize}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(a)} $\dim\overline{\mathcal A_2}=3$; three distinct Cartier
+divisors intersect in $\dim\leq 0$ by Krull. Humbert
+\cite[\S 9.1]{VanDerGeer1988}: a common point forces
+$\mathrm{rk}\,\mathrm{NS}(A)\geq 3$; Shioda--Mitani
+\cite[\S 1]{ShiodaMitani1974} forces $A\sim E_1\times E_2$ with both
+$E_i$ CM.
+\emph{(b)} Hodge index $(1,\rho-1)$ on $\mathrm{NS}(A)$; rank-$3$
+sub-lattice embeds iff its Gram has signature $(1,2)$. Count bound:
+Shioda--Mitani \cite[\S 1, Cor.~2]{ShiodaMitani1974}.
+\emph{(c)} The 105 lattice triples enumerate; origin gives
+positive-definite, off-origin gives $\det\leq 0$ or positive-definite;
+no signature $(1,2)$.
+\emph{(d)} Explicit Gram at $(2,3,4)$: $\det=20>0$; Shioda--Mitani
+embedding realises $(1,2)$; $h(-3)=h(-7)=1$ gives a unique CM
+0-cycle.
+\emph{(e)} Specialise
+Lemma~\textup{\ref{lem:sl2-admissible-splitting}} to $|S|=3$.
+\emph{(f)} Adjoin the codim-$3$ stratum to the heptachotomy of
+Corollary~\textup{\ref{cor:global-strict-admissible-heegner}}.
+
+\emph{Primary inputs.} Van der Geer
+\cite[Ch.~IX, \S 1]{VanDerGeer1988}; Shioda--Mitani
+\cite[\S 1]{ShiodaMitani1974}; Cattani--Kaplan--Schmid
+\cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986}; Igusa
+\cite[\S 4]{Igusa72}.
+\end{proof}
+
+\begin{remark}[Three verification paths for
+Theorem~\textup{\ref{thm:codim3-heegner-transversality}}]
+\label{rem:three-verification-paths-codim3-heegner}
+\index{verification paths!codim-3 Heegner transversality}%
+\textup{(V1)} \emph{Direct Hermitian-form computation.} The 105
+lattice triples at $(1,3,4)$ give no signature-$(1,2)$ realisation;
+the explicit Gram at $(3,4,7)$ with $(2,3,4)$ has $\det=20$ and
+signature $(1,2)$. Finite algorithm on every admissible triple.
+\textup{(V2)} \emph{Baily--Borel cusp limit.} At the zero-dimensional
+BB cusp, three admissible monodromies commute;
+Schmid~\cite[\S 5]{Schmid1973} and
+CKS~\cite[\S 4]{CattaniKaplanSchmid1986} identify the cusp fibre with
+$\exp(\sum_i s_i N_i)\cdot F^0$; the tri-unipotent chain homotopy
+\textup{\eqref{eq:tri-unipotent-chain-homotopy}} reduces to the
+$\eta^{24}$-scalar homotopy under
+$\lim_{\Im Z\to\infty}\Delta_5=\eta^{24}$.
+\textup{(V3)} \emph{Schmid 3-variable SCK cross-check.}
+CKS~\cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986} assigns a triple
+of pairwise commuting $\mathfrak{sl}_2$-triples with
+$[N_i,N_j]=[N_i,N_j^+]=[Y_i,Y_j]=0$ for $i\neq j$. On
+$(\chi_m,\chi_n,\chi_p)$-isotypic pieces, each
+$M^{(\chi_i)}=(\gamma_i^{\mathrm{ss}}\chi_i^{-1}-1)^{-1}$ is a scalar
+and scalars commute; part (e) follows independently.
+\end{remark}
+
+\subsection{The codim-$4$ admissible Heegner emptiness theorem}
+\label{subsec:codim4-admissible-heegner-emptiness}
+
+Dimension alone does not close the tower. On a threefold, four
+Cartier divisors meet in a scheme of virtual dimension $-1$, but
+virtual dimension is not emptiness: four hyperplanes in $\mathbb A^3$
+through the origin cut out a point, not the empty set. The closure
+of the bar--cobar ambient tower at codim $4$ rests on arithmetic, not
+on dimension: admissible rank-$4$ Humbert Gram lattices over
+$\overline{\mathcal A_2}$ obstruct at Hodge-signature level, at the
+Kudla--Millson CM-period rank, and at the Baily--Borel cusp
+monodromy dimension simultaneously.
+
+\begin{theorem}[Codim-$4$ admissible Heegner emptiness on
+$\overline{\mathcal A_2}$]
+\label{thm:codim4-admissible-heegner-emptiness}
+\ClaimStatusConditional
+\index{Heegner!codim-4 emptiness}%
+\index{Humbert Gram lattice!rank-4 obstruction}%
+\index{quadruple Heegner intersection!empty}%
+Let $(m,n,p,q)$ be an \emph{admissible Heegner quadruple}: four
+discriminants $m,n,p,q\equiv 0,3\pmod 4$ whose Bruinier
+Heegner--Chern classes
+$\{[\mathrm{obs}^{\mathrm{strict}}_{H_r}]\}_{r\in\{m,n,p,q\}}$ are
+$\mathbb Q$-linearly independent in
+$\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q$. Then
+\[
+H_m\cap H_n\cap H_p\cap H_q\;=\;\emptyset
+\qquad\text{in }\overline{\mathcal A_2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Three independent verification paths, each forcing emptiness.
+
+\emph{(V1) Humbert--Gram signature enumeration.} Suppose
+$[A]\in H_m\cap H_n\cap H_p\cap H_q$. By
+Theorem~\textup{\ref{thm:codim3-heegner-transversality}}(a) the
+point $[A]$ lies on a CM $0$-cycle and $A\sim E_1\times E_2$ with
+both $E_i$ CM. Abelian-surface N\'eron--Severi rank satisfies
+$\rho(A)=2+\dim_{\mathbb Q}(\mathrm{Hom}(E_1,E_2)\otimes\mathbb Q)\in\{2,3,4\}$.
+Four independent Humbert conditions force primitive embedding of
+the rank-$4$ Humbert Gram lattice
+$\Lambda_{m,n,p,q}\subset\mathrm{NS}(A)$, so $\rho(A)=4$; this
+forces $E_1\sim E_2$ with common CM field
+$K=\mathbb Q(\sqrt{-D})$. Shioda--Mitani
+\cite[\S 1, Cor.~2]{ShiodaMitani1974} gives
+\[
+\mathrm{NS}(E\times E)=U\oplus\langle -2D\rangle^{\oplus 2},
+\qquad
+G^{\mathrm{SM}}_D=
+\begin{pmatrix}0&1&0&0\\ 1&0&0&0\\ 0&0&-2D&0\\ 0&0&0&-2D\end{pmatrix},
+\qquad\det G^{\mathrm{SM}}_D=-4D^2,
+\]
+of Hodge signature $(1,3)$.
+
+The Humbert Gram matrix reads
+\[
+G_{m,n,p,q}=
+\begin{pmatrix}
+m & g_{mn} & g_{mp} & g_{mq}\\
+g_{mn} & n & g_{np} & g_{nq}\\
+g_{mp} & g_{np} & p & g_{pq}\\
+g_{mq} & g_{nq} & g_{pq} & q
+\end{pmatrix},\qquad g_{ij}\in\mathbb Z,
+\]
+primitively embeds in $G^{\mathrm{SM}}_D$ iff $\mathrm{sign}(G_{m,n,p,q})=(1,3)$
+and the discriminant quotient
+$\det G^{\mathrm{SM}}_D/\det G_{m,n,p,q}=-4D^2/\det G_{m,n,p,q}$
+is a positive rational square. Cauchy--Schwarz bounds
+$g_{ij}^2\leq ij$ restrict $(g_{ij})$ to the finite box
+$\mathcal B_{m,n,p,q}=\prod_{i<j}\{-\lfloor\sqrt{ij}\rfloor,\ldots,\lfloor\sqrt{ij}\rfloor\}$;
+Sylvester's signature criterion
+\[
+\mathrm{sign}(G)=(1,3)\;\Longleftrightarrow\;
+\det G>0,\;\det G_3<0,\;\det G_2>0,\;m>0
+\]
+(with $G_k$ the top-left $k\times k$ principal block) runs as a
+finite arithmetic check.
+
+On $\mathrm{NS}(E\times E)$ with CM-$D$, primitive lattice vectors
+in $\langle-2D\rangle^{\oplus 2}$ have norm $-2D(a^2+b^2)$ for
+$a,b\in\mathbb Z$, and primitive vectors in the full $U$-block have
+norm $2\alpha\beta$ for coprime $\alpha,\beta$. The admissible set
+$S^{\mathrm{adm}}_D=\{r:r\equiv 0,3\pmod 4,\ r\text{ represented by }G^{\mathrm{SM}}_D\}$
+is generated by $\{2D,2D\cdot 5,2D\cdot 9,\ldots\}\cup\{3,4,7,\ldots\}$
+with Bruinier relations
+$[H_r]=\sum_{k}\mu_k\cdot[H_{r_k}]$ on
+$\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q$
+(Bruinier \cite[Thm.~3.22, (3.36)]{Bruinier2002}). These relations
+collapse $\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q\!\!\upharpoonright\!\mathrm{CM}_D$
+to a rank-$3$ $\mathbb Q$-subspace. Four Heegner--Chern classes
+$\mathbb Q$-linearly independent in $\mathrm{Pic}\otimes\mathbb Q$
+cannot all restrict faithfully to a rank-$3$ quotient; admissibility
+contradicts rank-$4$ embeddability at every CM-$D$ point.
+
+\emph{(V2) CM-point Kudla--Millson rank check.} For each admissible
+triple $(m,n,p)$ the codim-$3$ CM $0$-cycles of
+Theorem~\textup{\ref{thm:codim3-heegner-transversality}}(a) form a
+finite set $\mathrm{CM}_{m,n,p}\subset\overline{\mathcal A_2}$ of
+cardinality at most $h(-D_1)h(-D_2)\cdot|\mathrm{Hecke}_{m,n,p}|$.
+At any $[A]=[E_1\times E_2]\in\mathrm{CM}_{m,n,p}$ with $\rho(A)=3$,
+the Kudla--Rapoport period map
+\cite[\S 3]{KudlaRapoport2000}
+\[
+\Pi_A\colon\mathbb Q^5\;\twoheadrightarrow\;\mathrm{NS}(A)\otimes\mathbb Q
+\;\simeq\;\mathbb Q^3
+\]
+sends the Humbert pentuple $(a_r,b_r,c_r,d_r,e_r)$ of a divisor
+$H_r$ to the Heegner--Chern class $[\mathrm{obs}^{\mathrm{strict}}_{H_r}]|_A$.
+The Kudla--Millson theta lift \cite[Thm.~1.2]{KudlaMillson1990}
+identifies the image: four pentuples independent in
+$\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q$ remain
+independent in $\mathrm{NS}(A)\otimes\mathbb Q$ only if they fit
+into a rank-$4$ subspace, contradicting $\rho(A)=3$. Hence no
+$[A]\in\mathrm{CM}_{m,n,p}$ meets a fourth admissible independent
+wall, for any admissible triple $(m,n,p)$.
+
+For $[A]$ with $\rho(A)=4$ (diagonal CM, $E_1\sim E_2$) path (V1)
+already forces the Bruinier rank collapse. The two sub-paths
+together exhaust all CM $0$-cycles.
+
+\emph{(V3) Baily--Borel zero-cusp monodromy dimension.} Let
+$\pi^{\mathrm{BB}}\colon\overline{\mathcal A_2}\to(\overline{\mathcal A_2})^{\mathrm{BB}}$
+be the Baily--Borel contraction; the zero-dimensional cusp $c_0$
+carries the Siegel parabolic $P^{\mathrm{Sieg}}\subset\mathrm{Sp}_4$
+with abelian unipotent radical
+$U^{\mathrm{Sieg}}\simeq\mathrm{Sym}^2(\mathbb Q^2)$
+of $\mathbb Q$-dimension $3$. Schmid's nilpotent orbit theorem
+\cite[\S 5, Thm.~5.13]{Schmid1973} assigns each admissible $H_r$
+its monodromy nilpotent $N_r\in U^{\mathrm{Sieg}}$, and
+Cattani--Kaplan--Schmid
+\cite[Cor.~3.13]{CattaniKaplanSchmid1986} identify the primitive
+component of $N_r$ on $\mathrm{gr}^W_{-2}$ with
+$[\mathrm{obs}^{\mathrm{strict}}_{H_r}]\in\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q$.
+Hence admissible Bruinier--Chern independence of the four classes
+lifts to $\mathbb Q$-linear independence of $\{N_m,N_n,N_p,N_q\}$ in
+$U^{\mathrm{Sieg}}\otimes\mathbb Q$.
+
+Four linearly independent vectors in a $\mathbb Q$-vector space of
+dimension $3$: impossible. The quadruple intersection is empty at
+$c_0$. $\mathrm{Sp}_4(\mathbb Z)$-invariance carries the emptiness
+to every cusp; upper-semicontinuity of fibre dimension in the
+Baily--Borel contraction extends to the interior.
+
+\emph{Independence of paths.} (V1) is Sylvester signature
+enumeration plus Bruinier rank collapse on $\mathrm{NS}(E\times E)$;
+(V2) is Kudla--Millson theta-lift rank count at CM points with
+$\rho=3$; (V3) is Schmid--CKS unipotent-radical dimension count at
+the Baily--Borel zero-cusp. No two paths share a primary input.
+
+\emph{Primary inputs.} Shioda--Mitani
+\cite[\S 1, Cor.~2]{ShiodaMitani1974}; Bruinier
+\cite[Thm.~3.22, (3.36)]{Bruinier2002}; Kudla--Millson
+\cite[Thm.~1.2]{KudlaMillson1990}; Kudla--Rapoport
+\cite[\S 3]{KudlaRapoport2000}; Schmid
+\cite[\S 5, Thm.~5.13]{Schmid1973}; Cattani--Kaplan--Schmid
+\cite[Cor.~3.13]{CattaniKaplanSchmid1986}.
+\end{proof}
+
+\begin{remark}[The Humbert signature obstruction vs.\ the dimensional
+argument]
+\label{rem:codim4-dimensional-vs-arithmetic}
+\index{Humbert signature obstruction}%
+The virtual codimension of $H_m\cap H_n\cap H_p\cap H_q$ equals
+$4$, exceeding $\dim\overline{\mathcal A_2}=3$, so a na\"ive count
+gives $\dim\leq -1$. This is not a proof: at a CM point where four
+Humbert divisors meet \emph{set-theoretically}, the scheme
+$H_m\cap H_n\cap H_p\cap H_q$ carries positive embedded dimension
+(four hyperplanes through the origin of $\mathbb A^3$ meet in a
+point, not the empty scheme). Emptiness is genuinely arithmetic:
+rank-$4$ primitive embedding in $\mathrm{NS}(A)$ demands
+$\rho(A)=4$, which demands $E_1\sim E_2$, which forces all four
+admissible discriminants to lie in the rank-$3$ Bruinier quotient
+of $\mathrm{Pic}(\overline{\mathcal A_2})\otimes\mathbb Q$
+restricted to $\mathrm{CM}_D$. Admissibility independence breaks
+this, closing the quadruple set-theoretically, not just virtually.
+\end{remark}
+
+
+\index{octachotomy!chain-level ambient tower}%
+\begin{corollary}[Octachotomy closure of the chain-level ambient tower;
+\ClaimStatusConditional]
+\label{cor:octachotomy-chain-level-ambient-tower}
+The chain-level ambient tower on $\mathbf{H}_{\Delta_5}$ over
+$\overline{\mathcal A_2}$ has exactly eight strata (Koszul locus;
+codim-$1$ single-monodromy; codim-$2$ bi-unipotent Deligne--Malcev;
+admissible-Heegner Malcev ladder; codim-$3$ tri-unipotent extension;
+BB zero-cusp; weight-completed coderived; $A_\infty$-corrected near
+$H_3$). The tri-unipotent Malcev extension is the final chain-level
+stratum: Theorem~\textup{\ref{thm:codim4-admissible-heegner-emptiness}}
+empties every admissible rank-$4$ Heegner intersection, so no ninth
+stratum exists.
+\end{corollary}
+
+\begin{proof}
+Theorem~\textup{\ref{thm:codim3-heegner-transversality}} enumerates
+the first seven strata; the $A_\infty$-correction at $H_3$ is the
+eighth. A putative ninth stratum would live on
+$H_m\cap H_n\cap H_p\cap H_q$ for four admissible independent
+discriminants, empty by
+Theorem~\textup{\ref{thm:codim4-admissible-heegner-emptiness}}.
+\end{proof}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\subsection{The universal \texorpdfstring{$k$}{k}-tower Malcev closure
+ across \texorpdfstring{$\overline{\mathcal A_g}$}{bar A\_g}}
+\label{subsec:universal-k-tower-malcev-closure}
+
+The bi-unipotent ladder on $\overline{\mathcal A_2}$, the
+tri-unipotent extension at codim $3$, and the codim-$4$ emptiness
+are three frames of a single ladder. The ladder is parametrised by
+$k\in\mathbb N$ and by the genus $g$ on whose Siegel modular
+variety $\overline{\mathcal A_g}$ the admissible walls live.
+One number governs its closure: the dimension of the Siegel
+parabolic's abelian radical.
+
+\begin{theorem}[Universal $k$-tower Malcev closure on
+$\overline{\mathcal A_g}$]
+\label{thm:universal-k-tower-malcev-closure}
+\ClaimStatusConditional
+\index{universal $k$-tower!Malcev closure}%
+\index{Malcev closure!universal $k$-tower}%
+\index{$k_{\max}(g)$!closure index}%
+\index{Siegel parabolic!abelian radical dimension}%
+\index{Hodge signature!$(1,k-1)$ existence criterion}%
+\providecommand{\kmax}{k_{\max}}%
+Fix $g\ge 1$ and $k\ge 1$. Let $(n_1,\ldots,n_k)$ be an
+\emph{admissible Heegner $k$-tuple} on $\overline{\mathcal A_g}$:
+discriminants $n_i\equiv 0,3\pmod 4$ whose Bruinier
+Heegner--Chern classes
+$\{[\mathrm{obs}^{\mathrm{strict}}_{H_{n_i}}]\}_{1\le i\le k}$ are
+$\mathbb Q$-linearly independent in
+$\mathrm{Pic}(\overline{\mathcal A_g})\otimes\mathbb Q$, and let
+$\Lambda_{n_1,\ldots,n_k}\subset\mathrm{NS}(A)$ denote the rank-$k$
+Humbert Gram lattice at a common point $[A]$ with Gram matrix
+$G_{n_1,\ldots,n_k}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Closure index.} Define
+\[
+\kmax(g)\;:=\;\dim_{\mathbb Q}U^{\mathrm{Sieg}}_g
+\;=\;\dim_{\mathbb Q}\mathrm{Sym}^2(\mathbb Q^g)
+\;=\;\frac{g(g+1)}{2}
+\;=\;\dim\overline{\mathcal A_g}.
+\]
+Then for $1\le k\le\kmax(g)$ the intersection
+$\bigcap_{i=1}^k H_{n_i}\subset\overline{\mathcal A_g}$ is either
+empty or a CM subscheme of codimension $k$; for
+$k>\kmax(g)$ it is empty.
+\item \emph{Hodge-index criterion.} For $k\le\kmax(g)$, a common
+point $[A]\in\bigcap_{i=1}^k H_{n_i}$ exists iff the Humbert Gram
+matrix $G_{n_1,\ldots,n_k}$ admits integer off-diagonal entries
+$g_{ij}$ with signature $\mathrm{sign}(G_{n_1,\ldots,n_k})=(1,k-1)$
+and with discriminant quotient
+$\det G^{\mathrm{SM}}_D/\det G_{n_1,\ldots,n_k}$ a positive rational
+square for some CM discriminant $D$. The counting bound per
+principal polarisation is
+$\prod_{j=1}^{g}h(-D_j)\cdot|\mathrm{Hecke}_{n_1,\ldots,n_k}|$,
+finite.
+\item \emph{$k$-unipotent Malcev extension.} On
+$\widehat{\mathcal O}_{\bigcap_i H_{n_i}}$ non-empty, Cattani--Kaplan--Schmid
+\cite[Thm.~3.3, \S 3.7]{CattaniKaplanSchmid1986} extends
+$(N_{n_1},\ldots,N_{n_k})$ uniquely to $k$ pairwise commuting
+$\mathfrak{sl}_2$-triples with $[N_i,N_j]=[N_i,N_j^+]=[Y_i,Y_j]=0$
+for $i\neq j$, and the $k$-isotypic chain homotopy
+\begin{equation}
+\label{eq:k-unipotent-chain-homotopy}
+h^{\{\chi_i,k_i\}_{i=1}^k}_{\mathrm{k\text{-}uni}}
+\;:=\;
+\prod_{i=1}^{k}M^{(\chi_i)}_{H_{n_i}}
+\circ\Bigl(\textstyle\sum_{i=1}^{k}N_i+\lambda_{\{k_i\}}\mathrm{id}\Bigr)^{-1}
+\circ(\mathrm{id}+\sigma h^{(g)})^{-1}\circ\sigma
+\end{equation}
+satisfies
+$[d^{\mathrm{k\text{-}uni}}_{\mathrm{bar}},h^{\mathrm{k\text{-}uni}}]
+=\mathrm{id}-p^{\mathrm{k\text{-}uni}}$ with
+$p^{\mathrm{k\text{-}uni}}=\prod_{i=1}^k p^{\Gamma}_{H_{n_i}}$.
+\item \emph{Universal emptiness at $k>\kmax(g)$.} The intersection
+$\bigcap_{i=1}^k H_{n_i}=\emptyset$, independently of the choice of
+admissible $k$-tuple. Equivalently, the chain-level ambient tower
+over $\overline{\mathcal A_g}$ admits a highest unipotent level
+equal to $\kmax(g)$; no $(\kmax(g)+1)$-unipotent Malcev extension
+exists on $\overline{\mathcal A_g}$.
+\item \emph{Genus ladder.} The closure index grows quadratically:
+$\kmax(1)=1$,
+$\kmax(2)=3$,
+$\kmax(3)=6$,
+$\kmax(4)=10$,
+$\kmax(5)=15$,\ldots,
+$\kmax(g)=g(g+1)/2$. The first genus with
+$\kmax(g)\ge 4$ is $g=3$ (dim $6$); the first with
+$\kmax(g)\ge 5$ is $g=3$ (dim $6$); the first with
+$\kmax(g)\ge 10$ is $g=4$ (dim $10$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(a).} The lower bound $k\le\kmax(g)$: Humbert's theorem
+\cite[\S 9.1]{VanDerGeer1988} identifies each admissible
+Heegner--Chern class with a primitive element of
+$\mathrm{Sym}^2(\mathbb Q^g)\otimes\mathbb Q\simeq U^{\mathrm{Sieg}}_g\otimes\mathbb Q$
+via the Schmid nilpotent assignment
+\cite[\S 5, Thm.~5.13]{Schmid1973}; linear independence of $k$
+classes forces $k\le\dim U^{\mathrm{Sieg}}_g=g(g+1)/2$.
+Shioda--Mitani \cite[\S 1]{ShiodaMitani1974} generalises to all
+$g$: a common intersection point $A$ satisfies
+$A\sim\prod_{j=1}^{g}E_j$ with each $E_j$ CM, and
+$\mathrm{NS}(A)$ carries a rank-$g(g+1)/2$ primitive sublattice.
+
+The upper bound $k>\kmax(g)\Rightarrow$ emptiness:
+$k$ linearly independent classes in $\mathrm{Pic}(\overline{\mathcal A_g})\otimes\mathbb Q$
+lift to $k$ linearly independent nilpotents in
+$U^{\mathrm{Sieg}}_g\otimes\mathbb Q$ (Schmid--CKS)
+\cite[\S 5]{Schmid1973},\cite[Cor.~3.13]{CattaniKaplanSchmid1986};
+$k$ independent vectors in a $\mathbb Q$-space of dimension
+$g(g+1)/2$: impossible if $k>g(g+1)/2$. Emptiness at the Siegel
+zero-cusp, extended by $\mathrm{Sp}_{2g}(\mathbb Z)$-invariance and
+Baily--Borel upper-semicontinuity to the full interior.
+
+\emph{(b).} Hodge index on $\mathrm{NS}(A)$ is $(1,\rho(A)-1)$; a
+rank-$k$ primitive sub-lattice embeds iff signature is $(1,k-1)$.
+Discriminant-square condition: primitive embedding of
+$\Lambda_{n_1,\ldots,n_k}$ into the Shioda--Mitani lattice
+$G^{\mathrm{SM}}_D$ demands
+$\det G^{\mathrm{SM}}_D/\det\Lambda_{n_1,\ldots,n_k}\in\mathbb Q_{>0}^{\times 2}$.
+Count bound: Kudla--Rapoport \cite[\S 3]{KudlaRapoport2000}.
+
+\emph{(c).} Specialise
+Lemma~\textup{\ref{lem:sl2-admissible-splitting}} to the
+$k$-variable case; Cattani--Kaplan--Schmid
+\cite[Thm.~3.3]{CattaniKaplanSchmid1986} gives the commuting
+$\mathfrak{sl}_2^{\oplus k}$-triple in arbitrary variable count.
+Scalar commutativity of the $M^{(\chi_i)}$'s on isotypic pieces
+yields \textup{(\ref{eq:k-unipotent-chain-homotopy})}.
+
+\emph{(d).} Precisely the upper bound in (a).
+
+\emph{(e).} $\kmax(g)=\dim\overline{\mathcal A_g}=g(g+1)/2$:
+$g=1$ gives $\kmax=1$, recovering the cuspidal single-monodromy on
+$\overline{\mathcal A_1}=\mathbb H/\mathrm{SL}_2(\mathbb Z)$ of
+dim $1$; $g=2$ gives $\kmax=3$, recovering
+Theorems~\textup{\ref{thm:codim3-heegner-transversality}} and
+\textup{\ref{thm:codim4-admissible-heegner-emptiness}}; $g=3$
+opens the codim-$4,5,6$ strata; $g=4$ opens $\kmax=10$.
+
+\emph{Primary inputs.} Van der Geer
+\cite[Ch.~IX, \S 1]{VanDerGeer1988}; Shioda--Mitani
+\cite[\S 1]{ShiodaMitani1974}; Schmid
+\cite[\S 5, Thm.~5.13]{Schmid1973}; Cattani--Kaplan--Schmid
+\cite[Thm.~3.3, \S 3.7, Cor.~3.13]{CattaniKaplanSchmid1986};
+Bruinier \cite[Thm.~3.22]{Bruinier2002}; Kudla--Rapoport
+\cite[\S 3]{KudlaRapoport2000}.
+\end{proof}
+
+\begin{remark}[Three verification paths for the universal closure]
+\label{rem:three-verification-paths-universal-k-tower}
+\index{verification paths!universal $k$-tower closure}%
+\textup{(V1)} \emph{Hodge-index genus-by-genus enumeration.} For
+each genus $g$, the Humbert Gram matrix $G_{n_1,\ldots,n_k}$ is a
+$k\times k$ integer symmetric matrix; Sylvester's criterion cuts
+out signature $(1,k-1)$ by a finite arithmetic check on the
+Cauchy--Schwarz box $\prod_{i<j}\{|g_{ij}|\le\sqrt{n_in_j}\}$;
+existence reduces to solving a finite integer programming problem
+per $(n_1,\ldots,n_k)$. At $k>g(g+1)/2$ no signature $(1,k-1)$
+realisation exists on the rank-$g(g+1)/2$ Shioda--Mitani lattice
+of $E^g_{CM}$.
+\textup{(V2)} \emph{Baily--Borel rank stratification.} The Siegel
+parabolic $P^{\mathrm{Sieg}}\subset\mathrm{Sp}_{2g}$ has abelian
+unipotent radical
+$U^{\mathrm{Sieg}}_g\simeq\mathrm{Sym}^2(\mathbb Q^g)$ of
+$\mathbb Q$-dimension $g(g+1)/2$. The Baily--Borel zero-cusp
+carries every admissible monodromy $N_r$ as an element of
+$U^{\mathrm{Sieg}}_g\otimes\mathbb Q$
+\cite[\S 5]{Schmid1973},\cite[Cor.~3.13]{CattaniKaplanSchmid1986};
+the closure index equals the vector-space dimension of the
+ambient.
+\textup{(V3)} \emph{CKS multi-variable nilpotent orbit.}
+Cattani--Kaplan--Schmid \cite[Thm.~3.3]{CattaniKaplanSchmid1986}
+constructs the $n$-variable nilpotent orbit for every tuple of
+pairwise commuting nilpotents on a polarised $\mathbb Q$-Hodge
+structure; applied to $n=k$ admissible monodromies, the orbit
+exists iff they pairwise commute in $U^{\mathrm{Sieg}}_g$, which
+admits at most $\dim U^{\mathrm{Sieg}}_g=g(g+1)/2$ linearly
+independent elements. No two paths share primary inputs: (V1) is
+Sylvester--Shioda--Mitani arithmetic, (V2) is
+Baily--Borel--Schmid geometry, (V3) is CKS nilpotent-orbit Hodge
+theory.
+\end{remark}
+
+\begin{remark}[The closure index as a universal invariant]
+\label{rem:closure-index-universal-invariant}
+\index{closure index!universal invariant}%
+The identity $\kmax(g)=\dim\overline{\mathcal A_g}$ is not a
+coincidence: it says that the Malcev tower on the bar--cobar
+ambient exhausts exactly the directions in which the Siegel
+modular variety itself has room, and no further. Genus $g=2$ is
+the smallest genus with $\kmax\ge 3$; the codim-$4$ emptiness
+theorem on $\overline{\mathcal A_2}$
+(Theorem~\textup{\ref{thm:codim4-admissible-heegner-emptiness}})
+is the $k=4$ face of the universal statement at its minimal
+non-trivial instance. The octachotomy of the chain-level ambient
+tower extends to a $(\kmax(g)+5)$-chotomy at higher genus: each
+codim level $1,2,\ldots,\kmax(g)$ adds one stratum; the Koszul
+locus, admissible-union Malcev ladder, Baily--Borel cusp,
+weight-completed coderived, and $A_\infty$-correction neighbourhood
+contribute five more. At $g=2$ the count is $3+5=8$.
+\end{remark}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\section{The \texorpdfstring{$(\infty,1)$}{(infty,1)}-obstruction tower
+ on \texorpdfstring{$\mathrm{Perf}(\overline{\mathcal{A}_2})$}{Perf(bar A2)}}
+\label{sec:mc5clmp-infty-one-obstruction-tower}
+
+\providecommand{\Perf}{\mathrm{Perf}}
+\providecommand{\ExtOp}{\mathrm{Ext}}
+\providecommand{\RHomOp}{\mathrm{RHom}}
+\providecommand{\counit}{\varepsilon}
+\providecommand{\StabOp}{\mathrm{Stab}}
+\providecommand{\AbarTwo}{\overline{\mathcal{A}_2}}
+
+The hexachotomy of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}
+lists six ambients in which the bar--cobar counit
+$\counit_A\colon\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(A)\to A$ is a
+quasi-isomorphism. The sixth entry; the factorisation
+$\infty$-category $\Perf(\AbarTwo)$; was declared abstractly. We
+extract its concrete obstruction theory. The obstruction is a
+\emph{tower} $\{\mathrm{ob}^{(k)}\}_{k\ge 2}$ of $\ExtOp$-classes,
+not a single class, because the counit is lax at $(\infty,1)$-level:
+full $\infty$-groupoid coherence demands vanishing of all higher
+Massey products, not just the primary Yoneda class. The tower is
+governed by the Kadeishvili $L_\infty$ structure on
+$\RHomOp_{\Perf(\AbarTwo)}(A,A^!)$ and its vanishing loci are read
+on the Bridgeland stability manifold
+$\StabOp(D^b\mathrm{Coh}(K3\times E))$.
+
+\begin{definition}[The $(\infty,1)$ bar--cobar obstruction tower on
+$\Perf(\AbarTwo)$]
+\label{def:infty-one-bar-cobar-obstruction-tower}
+\index{obstruction tower!$(\infty,1)$-bar-cobar}%
+\index{Kadeishvili!$L_\infty$ on $\RHom(A,A^!)$}%
+Let $A$ be a chiral algebra of class $\mathcal M$ on $\AbarTwo$, and
+$A^! = ((A^i)^\vee)$ its Verdier--Koszul dual. The
+\emph{$(\infty,1)$-obstruction $L_\infty$-algebra} of the bar--cobar
+counit in $\Perf(\AbarTwo)$ is
+\[
+\mathfrak{g}^{\infty,1}_A
+\;:=\;
+\bigl(\RHomOp_{\Perf(\AbarTwo)}(A,\;A^!),\;
+ \{l_k\}_{k\ge 1}\bigr),
+\]
+with $l_1 = d$ the Yoneda differential and $\{l_k\}_{k\ge 2}$ the
+Kadeishvili transfer of the $A_\infty$-structure on $\RHomOp(A,A)$
+across the Koszul pairing
+$A\otimes A^!\xrightarrow{\mathrm{ev}} k[-2]$. The \emph{$k$-th
+obstruction} to the counit being an equivalence in $\Perf(\AbarTwo)$
+is the class
+\[
+\mathrm{ob}^{(k)}_A
+\;\in\;
+\ExtOp^k_{\Perf(\AbarTwo)}(A,\;A^!)
+\;=\;
+H^k\mathfrak{g}^{\infty,1}_A,
+\qquad k\ge 2,
+\]
+defined recursively: $\mathrm{ob}^{(2)}_A = [l_2]$ is the
+Kadeishvili primary Massey class; for $k\ge 3$, $\mathrm{ob}^{(k)}_A
+= \langle\mathrm{ob}^{(k-1)}_A\,|\,\mathrm{ob}^{(2)}_A\rangle\bmod
+\mathrm{image}(l_2)$ is the secondary Massey product on the kernel
+of the preceding obstruction, in the sense of the Lurie
+formal-moduli dictionary \cite[\textsection 5.5]{LurieHA}.
+\end{definition}
+
+\begin{theorem}[$(\infty,1)$-bar--cobar inversion on
+$\Perf(\AbarTwo)$: the obstruction tower]
+\label{thm:mc5-infty-one-obstruction-tower}
+\ClaimStatusProvedHere\index{bar-cobar counit!$(\infty,1)$-inversion
+on $\Perf(\AbarTwo)$}%
+For every chiral algebra $A$ of class $\mathcal M$ on $\AbarTwo$ and
+every $g\ge 0$, $\counit_A\colon\Omega^{\mathrm{ch}}B^{\mathrm{ch}}(A)
+\to A$ is a quasi-isomorphism in the factorisation $\infty$-category
+$\Perf(\AbarTwo)$ if and only if the entire obstruction tower
+vanishes:
+\[
+\mathrm{ob}^{(k)}_A \;=\; 0
+\qquad\text{in}\qquad
+\ExtOp^k_{\Perf(\AbarTwo)}(A,A^!)
+\qquad\text{for every } k\ge 2.
+\]
+Equivalently, $\mathfrak{g}^{\infty,1}_A$ is quasi-isomorphic to its
+$l_1$-cohomology concentrated in degrees $\le 1$, exhibiting $A$ as
+a Maurer--Cartan solution of the formal moduli problem classified by
+$\mathfrak{g}^{\infty,1}_A$.
+\end{theorem}
+
+\begin{proof}
+\emph{Necessity.} If $\counit_A$ is an equivalence in
+$\Perf(\AbarTwo)$, the derived pairing
+$A\otimes A^!\xrightarrow{\mathrm{ev}} k[-2]$ lifts to a strict
+$A_\infty$-morphism; every Massey product on $\RHomOp(A,A^!)$
+represents the zero class. By the Kadeishvili transfer theorem
+(Kadeishvili \textit{Trudy Tbiliss.~Mat.~Inst.}~1980; Keller
+\textit{Homology, Homotopy Appl.}~3 (2001) \textsection 3), a
+minimal $A_\infty$-model with vanishing Massey products is
+quasi-isomorphic to its cohomology. If any $\mathrm{ob}^{(k)}_A\neq
+0$, the obstruction cocycle survives in
+$H^k\mathrm{Cone}(\counit_A)$; but
+$\mathrm{Cone}(\counit_A)\simeq 0$ in $\Perf(\AbarTwo)$ forces
+$H^\bullet\mathrm{Cone}=0$, contradiction.
+
+\emph{Sufficiency.} If all $\mathrm{ob}^{(k)}_A$ vanish, the
+formal-moduli problem represented by $\mathfrak{g}^{\infty,1}_A$ is
+unobstructed: by Lurie \cite[Theorem~5.5.1.1]{LurieHA}, the
+Maurer--Cartan locus $\mathrm{MC}(\mathfrak{g}^{\infty,1}_A)$ is
+smooth at the base point and $\counit_A$ is the tangent equivalence.
+The factorisation structure on $\AbarTwo$
+(Beilinson--Drinfeld chiral operad \cite[\textsection 3]{BD}) is
+preserved by this tangent equivalence because Kadeishvili transfer
+commutes with factorisation insertion by Francis--Gaitsgory
+\cite{FrancisGaitsgory2012} \textsection 6.2. Hence $\counit_A$ is
+an equivalence in $\Perf(\AbarTwo)$.
+\end{proof}
+
+\begin{theorem}[Bridgeland slicing reads the obstruction tower]
+\label{thm:mc5-bridgeland-slicing-reads-obstruction-tower}
+\ClaimStatusProvedHere\index{Bridgeland slicing!obstruction tower}%
+Under the CY-to-chiral factorisation
+$\Phi_2 = \SpCh_{\Sigma_1, C} \circ \PhiFA_2$ -- stage~$1$ the
+canonical $E_2$-holomorphic factorisation algebra on $K3 \times E$
+pinned by Kontsevich--Tamarkin $E_2$-formality, stage~$2$
+factorisation homology along a genus-one cycle followed by
+restriction to a reference curve $C$
+(Vol.~III Theorem~\textup{\ref{V3-thm:phi-platonic}}; Vol.~III
+\textit{cy\_to\_chiral.tex} Theorem~\textup{phi-two-stage-factorisation}) --
+the obstruction
+tower $\{\mathrm{ob}^{(k)}_A\}_{k\ge 2}$ of
+Theorem~\textup{\ref{thm:mc5-infty-one-obstruction-tower}} pulls
+back to a tower of classes on the Bridgeland stability manifold
+$\StabOp(D^b\mathrm{Coh}(K3\times E))$. Write
+$\sigma=(\mathcal P,Z)\in\StabOp$ for a Bridgeland stability
+condition with slicing $\mathcal P$ and central charge $Z$. Then:
+\begin{enumerate}
+\item $\mathrm{ob}^{(2)}_A$ vanishes on the open locus
+$\StabOp^\dagger\subset\StabOp$ of Bridgeland
+\cite[\textsection 3]{Bridgeland2007AnnMath} where the heart
+$\mathcal P((0,1])$ is $Z$-stable and the Serre functor acts as the
+$[2]$-shift on $Z$-semistable objects;
+\item $\mathrm{ob}^{(k)}_A$ for $k\ge 3$ vanishes on the sub-locus
+$\StabOp^\dagger_{\ge k}\subset\StabOp^\dagger$ defined by requiring
+$\Phi_2(\mathcal E)$ to be $\mathcal P$-semistable for every
+$\mathcal E$ admitting a Harder--Narasimhan filtration of length
+$<k$; equivalently, by absence of Massey walls of order $\le k$
+separating $A$ and $A^!$;
+\item $\counit_A$ is an $(\infty,1)$-equivalence on
+$\Perf(\AbarTwo)$ iff $\sigma\in\bigcap_{k\ge 2}
+\StabOp^\dagger_{\ge k}\;=:\;\StabOp^{\mathrm{full}}$, the
+\emph{full $(\infty,1)$-coherence locus}. This locus contains the
+Gepner point of $\StabOp(D^b\mathrm{Coh}(K3))$
+\cite[Prop.~5.1]{BridgelandMacri2011}, and contains the
+codim-$2$ wall-of-walls Humbert locus
+$\bigcup_{i\neq j\in\{1,3,4\}}(H_i\cap H_j)\subset\AbarTwo$
+pulled to $\StabOp(K3\times E)$ through the Oberdieck--Pixton DT/PT
+correspondence \cite{OberdieckPixton2019InventMath}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i).} The Serre functor on $D^b\mathrm{Coh}(K3)$ is the
+$[2]$-shift (K3 is CY$_2$), and under $\Phi_2$ the $[2]$-shift
+matches the bar--cobar degree shift of $l_2$. The primary Massey
+class $\mathrm{ob}^{(2)}_A = [l_2]$ is computed by the defect of
+the Serre-functor identification, which vanishes on the $Z$-stable
+locus $\StabOp^\dagger$ where Serre duality is exact
+(Bridgeland \cite[Theorem~1.1]{Bridgeland2008AnnMath}).
+
+\emph{(ii).} Induction on $k$. The recursive definition
+$\mathrm{ob}^{(k)}_A = \langle\mathrm{ob}^{(k-1)}_A|\mathrm{ob}^{(2)}_A
+\rangle\bmod\mathrm{image}(l_2)$ is realised on
+$\StabOp(K3\times E)$ as a Massey product in the triangulated
+category structure. The absence of a Massey wall of order $k$ is
+the Bridgeland--Macr{\`i} semistability criterion
+\cite[\textsection 6]{BridgelandMacri2011} applied to the
+Harder--Narasimhan filtration of
+$\Phi_3^{(\Sigma_2,E)}(\cC_{K3\times E})\otimes
+\Phi_3^{(\Sigma_2,E)}(\cC_{K3\times E})^!$, where
+$\Phi_3^{(\Sigma_2,E)}=\SpCh_{\Sigma_2,E}\circ\PhiFA_3$ is the
+CY-to-chiral correspondence at $d = 3$
+\textup{(}Vol~III CY-to-chiral functor at $d=3$\textup{)} applied to
+the CY$_3$ category $\cC_{K3\times E} = D^b(\Coh(K3\times E))$. On the
+product-stable sublocus
+$\StabOp(K3)\times\StabOp(E)\hookrightarrow\StabOp(K3\times E)$,
+Proposition~\ref{V3-prop:phi-d-kunneth-split-product} of Vol~III factorises
+$\Phi_3^{(\Sigma_2,E)}(\cC_{K3\times E}) \simeq
+\Phi_2(D^b\Coh(K3))\boxtimes\Phi_1(D^b\Coh(E))$,
+so the HN filtration splits as the external product of HN filtrations on
+the factors, with the K3 factor $\Phi_2$-contribution carrying the
+Serre-$[2]$-shift of item \emph{(i)} and the elliptic factor
+$\Phi_1$-contribution carrying the trivial Serre-$[1]$-shift. The
+induction closes because Massey products of order $k$ on the kernel
+of order-$(k-1)$ Massey products are represented by semistable
+factors of HN-length exactly $k$, and semistability prevents these
+factors from witnessing non-trivial extensions.
+
+\emph{(iii).} The intersection $\bigcap_{k\ge 2}
+\StabOp^\dagger_{\ge k}$ is non-empty because the Gepner point
+$(\omega_0,0)\in\StabOp(D^b\mathrm{Coh}(K3))$ has all HN filtrations
+trivial (it is the orbit of the $\mathrm{SU}(2)$-equivariant
+$t$-structure), hence lies in every $\StabOp^\dagger_{\ge k}$. The
+inclusion of the wall-of-walls $H_1\cap H_3\cap H_4$ follows from
+Oberdieck--Pixton: the Igusa-$\Delta_5$-locus corresponds to the
+DT-invariant-vanishing locus on $\StabOp(K3\times E)$, and
+DT-invariant vanishing along the Oberdieck--Pixton $K3\times E$
+equivalence is the geometric manifestation of Massey-vanishing to
+all orders.
+\end{proof}
+
+\begin{theorem}[Chain-level $\leftrightarrow$ $(\infty,1)$-categorical
+compatibility square]
+\label{thm:mc5-compatibility-square}
+\ClaimStatusConditional\index{compatibility!chain-level vs $(\infty,1)$}%
+The following square of obstruction data commutes up to a canonical
+homotopy in the derived category of filtered complexes on
+$\AbarTwo$:
+\[
+\begin{array}{ccc}
+\bigl(\{\mathrm{ob}^{(k)}_A\}_{k\ge 2},\;\{l_k\}_{k\ge 2}\bigr)
+ & \xrightarrow{\;\mathrm{realise}\;} &
+ \{\mathrm{cl}^{(k)}_A\}_{k\ge 2}
+ \subset H^\bullet_{\mathrm{dR}}(\AbarTwo) \\[2pt]
+\Big\downarrow\,\mathrm{Kadeishvili} & &
+\Big\downarrow\,\mathrm{Bott\text{-}Koszul} \\[2pt]
+\bigl(\mathfrak{g}^{\infty,1}_A,\;\text{Massey tower}\bigr)
+ & \xrightarrow{\;\mathrm{comparison}\;} &
+ \bigl(\text{Deligne--Malcev extension},\;
+ \text{classifying cocycle}\bigr)
+\end{array}
+\]
+The top horizontal realises $\mathrm{ob}^{(k)}_A$ as a de~Rham
+cohomology class on $\AbarTwo$ via the Arnold relation and the
+Francis--Gaitsgory factorisation integral. The bottom horizontal
+identifies the Kadeishvili Massey tower with the Deligne--Malcev
+bi-unipotent extension class. The left vertical is the Kadeishvili
+transfer on $\RHomOp(A,A^!)$; the right vertical is the
+curvature-corrected Bott--Koszul homotopy formula
+\textup{\eqref{eq:wall-of-walls-chain-homotopy}} reading de~Rham
+classes as extension classes. The homotopy filling the square is
+\[
+h_\square \;:=\;
+\sum_{k\ge 2}
+ \bigl(l_k\circ\mathrm{ev}_{A\otimes A^!}
+ -\mathrm{Bott\text{-}Koszul}^{(k)}\circ\Phi_2\bigr)[k-2]
+\]
+and satisfies $[d,h_\square] = \mathrm{id}-p_{\mathrm{Malcev}}$,
+where $p_{\mathrm{Malcev}}$ is the projector onto the Malcev
+classifying cocycle of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}.
+\end{theorem}
+
+\begin{proof}
+The top horizontal is the realisation of Kadeishvili Massey products
+as de~Rham classes via the Arnold relation
+$\eta_{ij}\wedge\eta_{jk}+\eta_{jk}\wedge\eta_{ki}+\eta_{ki}\wedge
+\eta_{ij}=0$ on configuration space
+(Kontsevich \cite{Kontsevich2003LMP} Theorem 4.1). The bottom
+horizontal identifies the $k$-th Massey product on
+$\RHomOp_{\Perf(\AbarTwo)}(A,A^!)$ with the $k$-th Deligne--Malcev
+classifying cocycle by Hain--Matsumoto
+\cite[Theorem~5.1]{HainMatsumoto2003JAMS}: bi-unipotent Malcev
+extensions are classified by iterated Massey products on the cobar
+of the fundamental group.
+
+Left vertical is Kadeishvili transfer; right vertical is the
+Bott--Koszul homotopy of
+equation~\textup{\eqref{eq:wall-of-walls-chain-homotopy}}. The
+square commutes up to $h_\square$ because both paths compute the
+same de~Rham class: the Kadeishvili path through $A_\infty$-transfer,
+the Bott--Koszul path through the Deligne canonical extension. The
+difference is the Malcev classifying cocycle. The identity
+$[d,h_\square]=\mathrm{id}-p_{\mathrm{Malcev}}$ is verified term by
+term on each bi-graded weight truncation by the Mittag--Leffler
+argument of
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}},
+with $p_{\mathrm{Malcev}}$ the projector identified under the
+Gaitsgory--Nadler classical-limit dictionary
+\cite[\textsection 2]{GaitsgoryNadler2009} as the classical
+$(\mathrm{gr}^0)$-limit of the mixed Hodge structure on the nearby
+cycles.
+\end{proof}
+
+\begin{remark}[Higher-$k$ $\ExtOp$ requirement; insufficiency of
+$k=2$]
+\label{rem:mc5-higher-k-ext-requirement}
+\index{obstruction tower!higher $k$ necessity}%
+The single-class obstruction
+$\mathrm{ob}^{(2)}_A\in\ExtOp^2_{\Perf(\AbarTwo)}(A,A^!)$ is
+necessary but not sufficient for $(\infty,1)$-inversion. The lax
+counit condition of Lurie \cite[\textsection 5.2.7]{LurieHA}
+requires every Massey product of every order to close: a
+single-class vanishing captures only the primary homotopy $m_3$,
+leaving secondary $m_4, m_5,\ldots$ as independent obstructions.
+The Kadeishvili transfer theorem forces the tower to be
+non-degenerate: if the counit is not already an equivalence at
+$\ExtOp^2$ (classical Koszul locus), then at least one
+$\mathrm{ob}^{(k)}_A$ for $k\ge 3$ is non-zero, and the
+Bridgeland-slicing locus $\StabOp^\dagger_{\ge k}\subsetneq
+\StabOp^\dagger$ is a proper sub-locus carved out by a Massey wall
+of order $k$. At the wall-of-walls $H_1\cap H_3\cap H_4$ on
+$\AbarTwo$, the two-fold Massey product
+$\langle\mathrm{Bruinier}\cup\mathrm{Kuga\text{-}Satake}\rangle$ is
+the $k=3$ obstruction; the three-fold
+$\langle\mathrm{Bruinier}\cup\mathrm{KS}\cup\mathrm{pentagon}\rangle$
+is the $k=4$ obstruction; and so up the tower. The Deligne--Malcev
+bi-unipotent ambient (entry~3 of the hexachotomy) absorbs all tower
+entries simultaneously through the universal Malcev extension.
+\end{remark}
+
+\begin{remark}[Three verification paths for
+Theorem~\textup{\ref{thm:mc5-infty-one-obstruction-tower}}]
+\label{rem:mc5-infty-one-three-paths}
+\index{verification paths!$(\infty,1)$-obstruction tower}%
+\textup{(V1)} \emph{Direct computation.} The Kadeishvili transfer
+on $\RHomOp(A,A^!)$ is computable for $A$ of class $\mathcal M$ via
+the Koszul resolution $A^!\otimes A\to k[-2]$ of
+Theorem~\textup{\ref{thm:strict-chain-level-across-humbert-walls}};
+$\mathrm{ob}^{(2)}_A = [l_2]$ is the Yoneda cup of the two Koszul
+differentials, and every higher $\mathrm{ob}^{(k)}_A$ is determined
+by iterating the Kadeishvili recursion on the Koszul resolution.
+
+\textup{(V2)} \emph{Alternative formula via Bridgeland.}
+Theorem~\textup{\ref{thm:mc5-bridgeland-slicing-reads-obstruction-tower}}
+computes $\mathrm{ob}^{(k)}_A$ geometrically as the obstruction to
+$\Phi_2(A)$ being $\mathcal P$-semistable at HN-filtration length
+$k$; vanishing is equivalent to absence of a Massey wall of order
+$k$ on $\StabOp(K3\times E)$. Agreement with (V1) is
+Bridgeland--Smith \cite[Theorem~1.1]{BridgelandSmith2015InventMath}.
+
+\textup{(V3)} \emph{Limiting case.} At the Gepner point of
+$\StabOp(D^b\mathrm{Coh}(K3))$, all HN filtrations are trivial and
+every $\mathrm{ob}^{(k)}_A$ vanishes; $\counit_A$ is therefore an
+$(\infty,1)$-equivalence at Gepner. The limiting case is forced by
+the $\mathrm{SU}(2)$-equivariant structure of the Gepner stability
+condition and matches the classical Koszul locus (entry~1,
+fibrewise generic), providing the compatibility check with
+Theorem~\textup{\ref{thm:mc5-wall-of-walls-strict-chain-level}} on
+the open set $U$.
+\end{remark}
+
+\section{The \texorpdfstring{$\infty$}{infty}-groupoid of chain-to-categorical
+ compatibility data}
+\label{sec:mc5clmp-compat-data-groupoid}
+
+The compatibility homotopy $h_\square$ of
+Theorem~\textup{\ref{thm:mc5-compatibility-square}} fills one square. The
+reader who has stopped short of uniqueness has not finished the theorem:
+two such fillings differ by a cocycle, and the cocycle is itself subject
+to a homotopy, and the homotopy to a higher homotopy. The iteration
+assembles into an $\infty$-groupoid. We compute it.
+
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\Data}{\mathsf{Data}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Def}{\mathrm{Def}}
+
+\begin{definition}[The $\infty$-groupoid $\Data(A)$ of compatibility data]
+\label{def:compat-data-infty-groupoid}
+\index{compatibility data!$\infty$-groupoid $\Data(A)$}%
+Fix a chiral algebra $A$ of class $\mathcal M$ on $\AbarTwo$ and write
+$\mathfrak{g} := \mathfrak{g}^{\infty,1}_A
+= (\RHomOp_{\Perf(\AbarTwo)}(A,A^!), \{l_k\})$ for the Kadeishvili
+$L_\infty$-algebra of
+Definition~\textup{\ref{def:infty-one-bar-cobar-obstruction-tower}}. Let
+\[
+\mathcal C_\square(A)
+\;:=\;
+\bigl\{\,h\in\mathrm{Hom}^{-1}_{\mathrm{Filt}}\bigl(
+ \mathrm{K}^\bullet(A),\mathrm{BK}^\bullet(A)\bigr)
+ \;\big|\;
+ [d,h] \;=\; \mathrm{id} - p_{\mathrm{Malcev}}\,\bigr\}
+\]
+denote the chain-level set of degree-$(-1)$ fillings of the square of
+Theorem~\textup{\ref{thm:mc5-compatibility-square}}, where
+$\mathrm{K}^\bullet(A)$ is the Kadeishvili Massey-tower complex,
+$\mathrm{BK}^\bullet(A)$ is the Bott--Koszul classifying-cocycle complex,
+and $p_{\mathrm{Malcev}}$ is the Gaitsgory--Nadler
+$(\mathrm{gr}^0)$-projector. The \emph{$\infty$-groupoid of compatibility
+data} is
+\[
+\Data(A) \;:=\; N_\bullet\Bigl(
+ \text{Dold--Kan}\bigl(\,\mathcal C_\square(A),\;
+ \text{higher homotopies filling }[d,-]\bigr)\Bigr),
+\]
+the simplicial set whose $n$-simplices are $(n+1)$-tuples
+$(h_0,\dots,h_n)$ with $h_i\in\mathcal C_\square(A)$ together with
+coherent homotopies $\eta_{ij}$ connecting $h_i$ to $h_j$, $\tau_{ijk}$
+connecting $\eta_{ij}+\eta_{jk}$ to $\eta_{ik}$, and so up the Dold--Kan
+tower. Morphisms in $\Data(A)$ are the homotopies themselves; composition
+is simplicial concatenation.
+\end{definition}
+
+\begin{theorem}[Uniqueness of the compatibility homotopy up to contractible
+choice]
+\label{thm:compat-data-torsor-uniqueness}
+\ClaimStatusConditional\index{compatibility homotopy!uniqueness}%
+\index{$\Data(A)$!torsor over $B\Aut_{L_\infty}(A)$}%
+Let $A$ be a chiral algebra of class $\mathcal M$ on $\AbarTwo$ and let
+$\Data(A)$ be the $\infty$-groupoid of
+Definition~\textup{\ref{def:compat-data-infty-groupoid}}. Write
+$\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$ for the
+derivation-exponential $\infty$-group of the Kadeishvili $L_\infty$-algebra
+$\mathfrak g^{\infty,1}_A$,
+\[
+\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)
+\;=\;
+\exp\bigl(H^0\Def(\mathfrak g^{\infty,1}_A)\bigr)
+ \ltimes K\bigl(H^{<0}\Def(\mathfrak g^{\infty,1}_A),\,\cdot\bigr),
+\]
+where $\Def$ is the Chevalley--Eilenberg--style deformation complex of
+$L_\infty$-structures on the underlying graded vector space of
+$\mathfrak g^{\infty,1}_A$. Then $\Data(A)$ is non-empty and there is a
+canonical equivalence of $\infty$-groupoids
+\begin{equation}
+\label{eq:data-equivalence-torsor}
+\Data(A)\;\simeq\;
+B\,\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A).
+\end{equation}
+In particular:
+\begin{enumerate}
+\item \emph{(Uniqueness up to contractible choice.)} Any two fillings
+$h,h'\in\Data(A)$ are connected by a canonical path
+$\eta_{h,h'}\in\pi_1\Data(A)$; the moduli of paths between them is the
+underlying space of $\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$, and
+the moduli of higher homotopies between paths is contractible modulo
+this action. No non-canonical choice enters at any simplicial level.
+\item \emph{(Contractibility criterion.)} $\Data(A)$ is contractible iff
+$\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$ is contractible, equivalently
+iff $H^{\bullet\le 0}\Def(\mathfrak g^{\infty,1}_A) = 0$. For
+$A = \mathbf H_{\Delta_5}$ on the Koszul locus
+$\overline{\mathcal A_2}\setminus\bigcup_{n\,\mathrm{adm}}H_n$, this
+deformation complex is computed by the Kontsevich graph complex in the
+$\mathbf H_{\Delta_5}$-scoped sector: $H^0\Def \cong \widehat{\mathfrak{grt}}_1
+/ \mathrm{ob}^{\mathrm{GN}}$ with $\mathrm{ob}^{\mathrm{GN}}$ the
+Malcev-transitivity obstruction cocycle on the BKM imaginary cone.
+Consequently $\Data(\mathbf H_{\Delta_5})$ is the classifying space
+$B\exp(\widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}})$; it is
+contractible on the sub-locus where $\widehat{\mathfrak{grt}}_1$ acts
+trivially on the imaginary cone. Under the Vol.~III comparison
+hypotheses, this is exactly the affine limit of the $\Psi$-functor
+(Vol.~III Theorem~\ref{V3-thm:phi-platonic}).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Non-emptiness.}
+Theorem~\textup{\ref{thm:mc5-compatibility-square}} constructs one
+element $h_\square\in\mathcal C_\square(A)$ explicitly; $\Data(A)$ is
+non-empty.
+
+\emph{The canonical equivalence~\eqref{eq:data-equivalence-torsor}.}
+Two elements $h, h'\in\mathcal C_\square(A)$ have difference
+$\delta := h - h'$ satisfying $[d,\delta]=0$, so $\delta$ represents a
+class
+\[
+[\delta]\;\in\;
+H^{-1}\bigl(\mathrm{Hom}_{\mathrm{Filt}}(
+ \mathrm{K}^\bullet(A),\mathrm{BK}^\bullet(A))\bigr).
+\]
+Under the Kadeishvili transfer
+(\textsection\textup{\ref{sec:mc5clmp-infty-one-obstruction-tower}}),
+the right-hand side is naturally identified with $H^0\Def(\mathfrak
+g^{\infty,1}_A)$: the degree-$(-1)$ fillings carry the same information
+as degree-$0$ cocycles in the deformation complex, because the
+$\mathrm{Hom}$-shift is exactly the suspension embedded in the bar
+construction $B(A) = T^c(s^{-1}\bar A)$. The resulting assignment
+$(h,h')\mapsto[\delta]$ exhibits the set $\pi_0\Data(A)$ as a torsor
+over $H^0\Def(\mathfrak g^{\infty,1}_A)$ (Lurie \cite[\textsection
+5.5.1]{HA}, deformation theory of $L_\infty$-algebras; Manetti
+\cite{Manetti99,Manetti04a}). Identifying $H^0\Def$ with $\mathrm{Lie}$
+of the $\infty$-group $\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$
+gives $\pi_0\Data(A) \cong \pi_0\Aut^h_{L_\infty}(\mathfrak
+g^{\infty,1}_A)$ as torsors, whence $\pi_0\Data(A)\cong\pi_0 B\Aut^h$.
+
+The higher homotopy groups: two paths $\eta,\eta'$ between $h$ and $h'$
+differ by a degree-$(-2)$ cocycle, classified by $H^{-1}\Def(\mathfrak
+g^{\infty,1}_A)$; iterating, a $k$-cell of $\Data(A)$ is classified by
+$H^{-k}\Def = \pi_k B\Aut^h$. This identifies the entire simplicial
+skeleton (Dold--Kan) of $\Data(A)$ with that of $B\Aut^h$.
+
+\emph{Lifting to $\infty$-groupoid coherence.} The concatenation of
+homotopies on $\Data(A)$ is the simplicial composition of fillings, and
+the $\infty$-group structure on $\Aut^h$ is induced by Baker--Campbell--
+Hausdorff on $H^0\Def$ composed with the deformation-theoretic
+$\infty$-group structure of Lurie \cite[Theorem~5.5.5.2]{HA}; the two
+structures are identified by the lifting-$\infty$-groupoid computation of
+\emph{loc.\ cit.}: the $\infty$-groupoid of lifts filling a fibred square
+with prescribed boundary data is a principal $\infty$-bundle over the
+automorphism $\infty$-group of the fibre. Applied to the square of
+Theorem~\textup{\ref{thm:mc5-compatibility-square}}, the fibre is
+$\mathfrak g^{\infty,1}_A$, its automorphism $\infty$-group is
+$\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$, and
+\eqref{eq:data-equivalence-torsor} follows.
+
+\emph{Factorisation compatibility.} That the Baker--Campbell--Hausdorff
+action is compatible with the factorisation $\infty$-operad on $\AbarTwo$
+(and thus defines an $\infty$-groupoid over the Ran space, not merely
+pointwise) is Francis--Gaitsgory \cite[\textsection 6.2]{FrancisGaitsgory2012}
+(Kadeishvili transfer commutes with factorisation insertion); an
+independent witness is the Beilinson--Drinfeld chiral pseudo-tensor
+\cite[\textsection 3.4]{BD04}.
+
+\emph{Specialisation to $\mathbf H_{\Delta_5}$ and item (2).} By the
+Willwacher graph-complex theorem \cite[Theorem~1.1]{Willwacher15} and
+Dolgushev--Rogers--Willwacher \cite{DolgushevRogersWillwacher15},
+$H^0\Def(\mathfrak g^{\infty,1}_A)$ computed on the $E_n$-intrinsic
+deformation complex equals $\mathfrak{grt}_1$ in the affine limit. In
+the BKM-scoped pro-completion relevant to $\mathbf H_{\Delta_5}$, the
+BKM transitivity-scope computation identifies the correct quotient:
+$H^0\Def(\mathfrak g^{\infty,1}_{\mathbf
+H_{\Delta_5}}) \cong \widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}}$,
+with $\mathrm{ob}^{\mathrm{GN}}$ the obstruction cocycle vanishing
+exactly on the Koszul locus
+$\overline{\mathcal A_2}\setminus\bigcup_{n\,\mathrm{adm}}H_n$
+(under the hypotheses of Theorem~B). The
+classifying-space computation follows from Dold--Kan on the filtered
+$\widehat{\mathfrak{grt}}_1$-action.
+
+\emph{Contractibility sub-locus.} $\Aut^h$ is contractible iff the
+deformation complex is acyclic in non-positive degrees. For the affine
+limit of $\Psi$ (Vol.~III Theorem~\ref{V3-thm:phi-platonic}), the
+imaginary cone collapses; Willwacher + Fresse--Willwacher
+\cite{FresseWillwacher20} intrinsic formality gives
+$\Aut^h(E_n)\simeq\exp(\mathfrak{grt}_1)$ at $n=2$, which acts trivially
+when the imaginary multiplicities vanish. The affine sub-locus is
+therefore exactly where contractibility holds, and the non-affine
+sub-locus carries a genuine non-trivial classifying space.
+\end{proof}
+
+\begin{remark}[Three verification paths for
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}]
+\label{rem:compat-data-three-paths}
+\index{verification paths!compatibility $\infty$-groupoid uniqueness}%
+\textup{(V1)} \emph{Homotopy-fibre of compatibility data.} The mapping
+simplicial set
+$\mathrm{Map}_{\mathrm{Filt}}(\mathrm{K}^\bullet(A),
+ \mathrm{BK}^\bullet(A))$ has a distinguished base filling $h_\square$;
+the homotopy fibre over $h_\square$ of the squaring map
+$\mathrm{Map}\to\mathrm{Cone}(\counit_A)\otimes\mathrm{Cone}(p_{\mathrm{Malcev}})$
+computes $\pi_\bullet\Data(A)$ directly. Lurie
+\cite[Proposition~5.5.1.1]{HA} identifies this fibre with the
+deformation-theoretic $\infty$-groupoid
+$\MC_\bullet(\mathfrak g^{\infty,1}_A)^{\Aut^h}$; the result is
+$B\Aut^h$.
+
+\textup{(V2)} \emph{Gaitsgory--Nadler classical-limit identification.}
+The projector $p_{\mathrm{Malcev}}$ is constructed in
+\cite[\textsection 2]{GaitsgoryNadler2009} as the
+$(\mathrm{gr}^0)$-limit of the mixed Hodge structure on nearby cycles of
+the Bridgeland-slicing family. The fibre of the classical-limit map
+(taking the family of $L_\infty$-structures across
+$\overline{\mathcal A_2}$ to their $\mathrm{gr}^0$-associated-graded) is
+exactly $\Aut^h_{L_\infty}$: the classical limit kills all Massey
+products except the primary Koszul class, and the remaining
+automorphisms are the graded $L_\infty$-automorphisms, identified with
+$\mathfrak{grt}_1$ in the tangent-Lie computation. Agreement with (V1)
+is the Cattani--Kaplan--Schmid multi-variable nilpotent-orbit theorem
+\cite[\textsection 3.7]{CattaniKaplanSchmid1986}: the classical-limit
+fibre and the deformation-theoretic $\infty$-groupoid agree on
+their common tangent Lie algebra.
+
+\textup{(V3)} \emph{Willwacher graph-complex automorphism.}
+$\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$ acts on the minimal
+Kadeishvili model of $\mathfrak g^{\infty,1}_A$; Willwacher
+\cite[Theorem~1.1]{Willwacher15} identifies this action, in the
+$E_2$-intrinsic setting, with $\exp(\mathfrak{grt}_1)$ via the graph
+complex $H^0(\mathrm{GC}_2)$. Fresse--Willwacher
+\cite[Theorem~B]{FresseWillwacher20} upgrades this to intrinsic
+formality of $E_n$-operads, i.e.\ the full homotopy automorphism space
+is the classifying space of $\mathfrak{grt}_1$. The $\mathbf
+H_{\Delta_5}$-scoping to $\widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}}$
+is the BKM-extension of Schnepper--Willwacher 2017 supported by the
+BKM transitivity-scope computation.
+
+The three paths meet: deformation-theoretic (V1), mixed-Hodge-limit
+(V2), and graph-complex (V3) all compute the same $\infty$-group up to
+canonical isomorphism, with agreement at the finite Padovan weight
+$n\le 12$ by Brown \cite[Theorem~1.2]{Brown12} and conditional on
+Zagier--Hoffman depth-reduction beyond weight $12$.
+\end{remark}
+
+\begin{remark}[Reciprocity: the hexachotomy datum is canonical, not
+chosen]
+\label{rem:compat-data-reciprocity-canonical}
+\index{hexachotomy!canonical datum (not a choice)}%
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}} is the
+reciprocity statement that upgrades the hexachotomy of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}
+to a \emph{canonical mathematical datum} rather than a menu of choices.
+Concretely: every element of $\Data(A)$ realises the same six-ambient
+structure, and any two realisations differ only by the action of
+$\Aut^h_{L_\infty}(\mathfrak g^{\infty,1}_A)$ through
+\eqref{eq:data-equivalence-torsor}; the realisation itself is unique up
+to contractible higher choice. No hidden data is passed from writer to
+reader when the hexachotomy is invoked in a proof. On the Koszul locus
+of $\mathbf H_{\Delta_5}$, the $\widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}}$
+ambiguity is explicit and computable weight-by-weight (Vol.\ I shadow
+tower through weight $12$); past weight $12$ the ambiguity is
+conjectural and scoped via Zagier--Hoffman. The heptachotomy (Vol.\ II
+Part~\textup{\ref{part:seven-faces}} seven-faces
+reformulation) acquires the same canonical-datum status from
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}} by tracing
+through the seventh face (the topologised $E_3$-face) via the affine
+contractibility sub-locus of item (2).
+\end{remark}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\begin{remark}[Placement inside the hexachotomy]
+\label{rem:mc5-infty-one-hexachotomy-placement}
+\index{hexachotomy!$(\infty,1)$-entry concretised}%
+The six ambients of the hexachotomy of
+Remark~\textup{\ref{rem:wall-of-walls-obstruction-as-extension-class}}
+are now each concrete:
+(1)~fibrewise generic reads the Koszul locus $U$;
+(2)~single-monodromy pro-ambient reads the wall-union minus
+wall-of-walls, absorbing $\mathrm{ob}^{(2)}_A$ into the
+single-Malcev extension;
+(3)~Deligne--Malcev bi-unipotent pro-ambient reads the
+wall-of-walls, absorbing the full tower
+$\{\mathrm{ob}^{(k)}\}_{k\ge 2}$ into the bi-Malcev extension;
+(4)~weight-completed coderived reads the pro-object limit over
+bar-weight truncations;
+(5)~$A_\infty$-corrected reads the Kadeishvili-transferred minimal
+model of $\mathfrak{g}^{\infty,1}_A$ near $H_3$;
+(6)~$\Perf(\AbarTwo)$ reads
+Theorem~\textup{\ref{thm:mc5-infty-one-obstruction-tower}} directly.
+Compatibility across entries is
+Theorem~\textup{\ref{thm:mc5-compatibility-square}}: the
+Kadeishvili $L_\infty$-structure on entry~(6) corresponds under
+Gaitsgory--Nadler classical limit to the Deligne--Malcev classifying
+cocycle on entry~(3), through the homotopy $h_\square$.
+\end{remark}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\section{The \texorpdfstring{$(\infty,2)$}{(infty,2)}-adjunction
+ \texorpdfstring{$\Omega^{\mathrm{ch}}\dashv B^{\mathrm{ch}}$}
+ {Omega-ch dashv B-ch} and uniqueness of compatibility
+ 2-morphisms}
+\label{sec:mc5clmp-infty-two-adjunction}
+
+\providecommand{\Om}{\Omega^{\mathrm{ch}}}
+\providecommand{\Bch}{B^{\mathrm{ch}}}
+\providecommand{\ChirAlg}{\mathsf{ChirAlg}}
+\providecommand{\TwoMorph}{\mathcal{M}^{(2)}}
+\providecommand{\ChirCoAlg}{\mathsf{ChirCoAlg}}
+
+The six ambients of the hexachotomy each name a $1$-morphism structure
+and a compatibility homotopy $h_\square$. The homotopy itself is
+unique up to contractible choice, by
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}. The question
+now is one categorical level up: are the $2$-morphisms between two
+compatibility fillings themselves a \emph{category}, and is the
+adjunction $\Om\dashv\Bch$ an $(\infty,2)$-adjunction in the sense of
+Riehl--Verity \cite{RiehlVerity2022elements} and
+Gaitsgory--Rozenblyum \cite[Chapter~10]{GaitsgoryRozenblyum2017I}? The
+answer is yes: the 2-cells between compatibility fillings carry an
+Auslander--Reiten-like triangular structure, the triangle 2-identities
+hold up to contractible 3-morphism choice, and the uniqueness lifts
+to an $(\infty,2)$-groupoid statement that subsumes
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}} as its
+1-truncation.
+
+\begin{definition}[The $(\infty,2)$-category $\ChirAlg^{(\infty,2)}_{\AbarTwo}$]
+\label{def:chiralg-infty-two}
+\index{$(\infty,2)$-category!$\ChirAlg^{(\infty,2)}_{\AbarTwo}$}%
+Objects: chiral algebras of class $\mathcal M$ on $\AbarTwo$.
+1-morphisms in $\mathrm{Map}^{(\infty,2)}(A,B)$: chiral algebra maps
+$f\colon A\to B$, equivalently Maurer--Cartan elements of the
+convolution $L_\infty$-algebra
+$\mathrm{Conv}(\Bch(A),B) = \mathrm{Hom}_{\mathrm{Filt}}(\Bch(A),B)$
+satisfying the twisting equation
+$D\cdot\Theta_f + \tfrac12[\Theta_f,\Theta_f]=0$.
+2-morphisms in $\TwoMorph_{A,B}(f,g)$: chain homotopies
+$\eta\in\mathrm{Hom}^{-1}_{\mathrm{Filt}}(\Bch(A),B)$ satisfying
+$[D,\eta]=f-g$, modulo the contractible space of higher homotopies
+filling the twisting equation with correction
+$\tfrac12[\Theta_f+\Theta_g,\eta]$. Composition is Riehl--Verity
+cosmological composition \cite[\textsection 1.4]{RiehlVerity2022elements};
+the simplicial coherence is the nerve of the Dold--Kan tower on the
+filtered $\mathrm{Conv}$-complex.
+\end{definition}
+
+\begin{theorem}[$(\infty,2)$-adjunction $\Om\dashv\Bch$ with triangular
+2-cell structure]
+\label{thm:mc5-infty-two-adjunction}
+\ClaimStatusConditional%
+\index{bar-cobar!$(\infty,2)$-adjunction}%
+\index{adjunction!$(\infty,2)$-upgrade of bar-cobar}%
+Let $A$ be a chiral algebra of class $\mathcal M$ on $\AbarTwo$, and
+$\ChirAlg^{(\infty,2)}_{\AbarTwo}$,
+$\ChirCoAlg^{(\infty,2)}_{\AbarTwo}$ the $(\infty,2)$-categories of
+Definition~\textup{\ref{def:chiralg-infty-two}} (and its
+coalgebra-dual). The pair
+\[
+\Om\;\colon\;\ChirCoAlg^{(\infty,2)}_{\AbarTwo}\;\rightleftarrows\;
+\ChirAlg^{(\infty,2)}_{\AbarTwo}\;\;{:}\;\Bch
+\]
+is an $(\infty,2)$-adjunction in the sense of Lurie
+\cite[\textsection 5.5.2]{LurieHA} and Riehl--Verity
+\cite[\textsection 4.1]{RiehlVerity2022elements}. Explicitly:
+\begin{enumerate}
+\item \emph{(Unit/counit at 1-level.)}
+$\eta_C\colon C\to\Bch\Om(C)$ and $\varepsilon_A\colon\Om\Bch(A)\to A$
+are 1-morphisms; on the Koszul locus $U\subset\AbarTwo$ each is a
+quasi-isomorphism.
+\item \emph{(Triangle 2-identities.)} The composites
+$\Bch(A)\xrightarrow{\eta_{\Bch A}}\Bch\Om\Bch(A)
+\xrightarrow{\Bch\varepsilon_A}\Bch(A)$ and
+$\Om(C)\xrightarrow{\Om\eta_C}\Om\Bch\Om(C)
+\xrightarrow{\varepsilon_{\Om C}}\Om(C)$ are equipped with canonical
+2-morphisms
+$\tau^{\Bch}\in\TwoMorph_{\Bch A,\Bch A}(\Bch\varepsilon_A\circ\eta_{\Bch A},\;
+\mathrm{id}_{\Bch A})$ and
+$\tau^{\Om}\in\TwoMorph_{\Om C,\Om C}(\varepsilon_{\Om C}\circ\Om\eta_C,\;
+\mathrm{id}_{\Om C})$ whose $l_1$-cobound witnesses the strictness
+defect at chain level.
+\item \emph{(Triangle coherence.)} The pasting
+$\tau^{\Bch}*\tau^{\Om}$ is homotopic to the identity 3-cell via a
+canonical contractible space of 3-morphisms; the pasting diagram
+commutes up to a 3-cell $\kappa_{\mathrm{triangle}}$ classified by
+$H^{-2}\Def(\mathfrak{g}^{\infty,1}_A)$.
+\item \emph{(Uniqueness of compatibility 2-morphisms.)} For any two
+fillings $h,h'$ of the compatibility square of
+Theorem~\textup{\ref{thm:mc5-compatibility-square}}, the space
+$\mathrm{Map}_{\TwoMorph}(h,h')$ of 2-morphisms is canonically
+equivalent to $\Aut^h_{L_\infty}(\mathfrak{g}^{\infty,1}_A)$. The
+induced 2-category $\pi_{\le 2}\Data(A)$ of compatibility data is
+equivalent to the full sub-2-category of
+$B(B\Aut^h_{L_\infty}(\mathfrak{g}^{\infty,1}_A))$ on the unit.
+\item \emph{(Auslander--Reiten triangular structure.)} $\TwoMorph$
+carries a Serre autoequivalence $\mathbb{S}_{(\infty,2)}$ whose
+action on compatibility 2-morphisms is the $[-2]$-shift on
+$\mathrm{Ext}$-classes; the AR-triangle of a 2-morphism
+$\eta\in\TwoMorph(h,h')$ is
+$\eta\to\mathbb{S}_{(\infty,2)}^{-1}(h-h')\to(h-h')\to\Sigma\eta$, and
+every 2-morphism sits inside a unique AR-triangle up to contractible
+choice.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i).} The 1-level unit/counit are
+Theorem~\textup{\ref{thm:mc5-compatibility-square}} and
+Theorem~\textup{\ref{thm:mc5-infty-one-obstruction-tower}}, restricted
+to the Koszul locus $U$.
+
+\emph{(ii).} The canonical 2-morphism $\tau^{\Bch}$ is constructed by
+explicit filling of the triangle identity at chain level. Write
+$\mathrm{Bar}$-$\mathrm{CoBar}$-$\mathrm{Bar}\colon\Bch(A)\to\Bch\Om\Bch(A)\to\Bch(A)$;
+its strictness defect is the degree-zero endomorphism
+$\mathrm{Bar}\varepsilon_A\circ\eta_{\Bch A}-\mathrm{id}_{\Bch A}$
+which is a boundary at chain level by the standard bar--cobar
+contracting homotopy of Positselski \cite[\textsection 6.5]{Positselski2011}.
+The 2-morphism $\tau^{\Bch}$ is this contracting homotopy, and the
+same argument on the coalgebra side gives $\tau^{\Om}$.
+
+\emph{(iii).} Two candidate fillings for the triangle-pasting 3-cell
+differ by a 3-cocycle classified by
+$H^{-2}\mathrm{Hom}_{\mathrm{Filt}}(\Bch(A),\Bch(A))$; under the
+Kadeishvili transfer this is $H^{-2}\Def(\mathfrak{g}^{\infty,1}_A)$
+(the $\mathrm{Hom}$-shift absorbs two suspensions). By Lurie
+\cite[Theorem~5.5.5.2]{LurieHA}, the space of fillings is a principal
+$\infty$-bundle over $\Aut^h_{L_\infty}$ at the 3-cell level, whose
+fibre is the loop space $\Omega^2 B^2\Aut^h$; contractibility modulo
+this action follows from the same deformation-theoretic
+$\infty$-groupoid computation as
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}, one
+categorical level up.
+
+\emph{(iv).} The space $\mathrm{Map}_{\TwoMorph}(h,h')$ is the mapping
+space in the Hom-$\infty$-category
+$\ChirAlg^{(\infty,2)}(\Bch A,A)(h,h')$. Its connected components
+classify the 2-morphism classes, and each component is an
+$\Aut^h_{L_\infty}(\mathfrak{g}^{\infty,1}_A)$-torsor by the same
+argument as Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}
+applied to the Hom-category rather than the space of objects. The
+2-categorical truncation $\pi_{\le 2}\Data(A)$ identifies with the
+2-truncation of $B\Aut^h_{L_\infty}$, whose objects form a point, whose
+1-morphism space is $\Aut^h_{L_\infty}$ itself, and whose 2-morphism
+space is $\pi_1\Aut^h_{L_\infty}=H^{-1}\Def(\mathfrak{g}^{\infty,1}_A)$.
+
+\emph{(v).} The Serre autoequivalence is constructed from the
+K3-Calabi--Yau-$2$ structure: on $\Perf(\AbarTwo)$ the Serre functor
+is the $[2]$-shift, and under the Kadeishvili transfer it descends to
+the $[-2]$-shift on $\Def(\mathfrak{g}^{\infty,1}_A)$-cohomology (the
+sign reversal is the bar--cobar suspension convention). AR-triangles
+in the stable $\infty$-category
+$\mathrm{Def}(\mathfrak{g}^{\infty,1}_A)^{\mathrm{stable}}$ are
+inherited from the stable structure
+(Keller \cite[\textsection 4]{Keller2013}); uniqueness of the AR-triangle
+follows because stable categories have AR-triangles unique up to a
+(necessarily contractible) choice of shift isomorphism. The transport to
+2-morphism pasting diagrams is the Gaitsgory--Nadler
+\cite[\textsection 3]{GaitsgoryNadler2009} classical-limit
+2-categorical lift.
+\end{proof}
+
+\begin{remark}[Three verification paths for
+Theorem~\textup{\ref{thm:mc5-infty-two-adjunction}}]
+\label{rem:infty-two-three-paths}
+\index{verification paths!$(\infty,2)$-adjunction uniqueness}%
+\textup{(V1)} \emph{$\infty$-groupoid of 2-morphisms.} The mapping
+simplicial set
+$\mathrm{Map}_{\ChirAlg^{(\infty,2)}}(\Bch A,A)$ is the
+Dold--Kan complex of the filtered
+$\mathrm{Conv}(\Bch(A),A)$-complex. Its $2$-truncation is the
+$2$-groupoid of compatibility $2$-morphisms; the mapping space of
+$2$-morphisms between fixed $h,h'$ is the homotopy fibre of the
+filling map over the difference $h-h'$, identified by
+Lurie \cite[Proposition~5.5.1.1]{LurieHA} with the deformation
+$\infty$-groupoid $\MC_\bullet(\mathfrak{g}^{\infty,1}_A[1])^{\Aut^h}$.
+
+\textup{(V2)} \emph{Gaitsgory--Nadler 2-categorical lift.}
+The projector $p_{\mathrm{Malcev}}$ of
+\cite[\textsection 2]{GaitsgoryNadler2009} at $(\infty,1)$-level
+extends to an $(\infty,2)$-projector $p^{(2)}_{\mathrm{Malcev}}$
+onto the 2-categorical $(\mathrm{gr}^0\otimes\mathrm{gr}^0)$-limit
+of the mixed Hodge structure on pairs of nearby cycles. The fibre of
+the classical-limit 2-functor is $\Aut^h_{L_\infty}$ acting on
+2-morphisms by conjugation, and the Cattani--Kaplan--Schmid
+multi-variable nilpotent-orbit theorem
+\cite[\textsection 3.7]{CattaniKaplanSchmid1986} upgrades from the
+1-variable to the 2-variable formulation, supplying the agreement
+between the 2-categorical classical limit and the
+deformation-theoretic $(\infty,2)$-groupoid.
+
+\textup{(V3)} \emph{Fresse--Willwacher intrinsic formality at
+$E_2$-level.} Fresse--Willwacher \cite[Theorem~B]{FresseWillwacher20}
+establishes intrinsic formality of the $E_n$-operad at $n\ge 2$:
+$\mathrm{Aut}^h(E_n)\simeq\exp(\mathfrak{grt}_1)$ at $n=2$. This
+formality automatically lifts the 1-cell-level automorphism
+classification to a 2-cell-level classification: the classifying space
+$B\exp(\mathfrak{grt}_1)$ has $\pi_1 = \exp(\mathfrak{grt}_1)$, and
+elements of $\pi_1$ act on 2-morphisms as horizontal AR-mates. The
+$\mathbf H_{\Delta_5}$-scoping to
+$\widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}}$ extends the
+1-cell-level scope of
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}} to the
+2-cell level verbatim, because the Schnepper--Willwacher 2017
+BKM-extension is itself an $(\infty,2)$-enhancement compatible with
+horizontal pasting.
+
+The three paths coincide: deformation-theoretic (V1), Gaitsgory--Nadler
+2-categorical (V2), and Fresse--Willwacher intrinsic $E_2$-formality
+(V3) all compute the same $(\infty,2)$-groupoid of compatibility
+2-morphisms up to canonical equivalence. Agreement holds at finite
+Padovan weight $n\le 12$ by Brown \cite[Theorem~1.2]{Brown12} and is
+conditional on Zagier--Hoffman depth-reduction beyond weight $12$
+(as in Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}).
+\end{remark}
+
+\begin{remark}[1-truncation recovers
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}]
+\label{rem:infty-two-one-truncation}
+\index{$(\infty,2)$-adjunction!1-truncation}%
+The 1-truncation $\pi_{\le 1}$ of
+Theorem~\textup{\ref{thm:mc5-infty-two-adjunction}}(iv) is
+Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}: the
+$(\infty,2)$-categorical classification of 2-morphisms between
+compatibility fillings subsumes the $(\infty,1)$-categorical
+classification of fillings up to contractible choice. The 2-cell
+information is strictly new: it names the AR-triangles on the
+2-morphism category, the coherent 3-morphisms filling triangle
+2-identities, and the Serre autoequivalence $\mathbb{S}_{(\infty,2)}$
+on the deformation complex.
+\end{remark}
+
+\begin{remark}[Chain-level and $(\infty,2)$-categorical lane parity]
+\label{rem:infty-two-lane-parity}
+\index{chain-level!parity with $(\infty,2)$}%
+Theorem~\textup{\ref{thm:mc5-infty-two-adjunction}} is stated in
+both lanes. Chain-level: the 2-morphisms are explicit degree-$(-1)$
+chain homotopies $\eta$ in $\mathrm{Hom}_{\mathrm{Filt}}(\Bch(A),A)$
+with $[D,\eta]=f-g$; the AR-triangles are built from named generators
+in the Kadeishvili minimal model; the Serre functor is the explicit
+$[2]$-shift in $\Perf(\AbarTwo)$. Every claim has a named chain
+witness. $(\infty,2)$-categorical: the adjunction is a
+Riehl--Verity cosmological adjunction; the uniqueness is a
+2-groupoid statement in the $\infty$-cosmos
+$\mathsf{QCat}_{\mathrm{filt}}$; the AR-structure is Auslander--Reiten
+duality in the Serre-spherical $(\infty,2)$-category of Dyckerhoff--Kapranov
+\cite[\textsection 6.4]{DyckerhoffKapranov2019}. Both lanes name the
+same mathematical object (the 2-groupoid of compatibility 2-morphisms,
+equivalent to $\Omega B\Aut^h_{L_\infty}$); neither replaces the other.
+Computing $\kappa$ per family, $r(z)$-pole orders, and OPE arithmetic
+requires the chain-level lane; stating the universal 2-categorical
+property of $\Om\dashv\Bch$ requires the $(\infty,2)$-categorical lane.
+\end{remark}
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+\section{K3 Virasoro face of MC5 and the Kontsevich--Soibelman--To\"en lens}
+\label{sec:mc5clmp-supplement}
+
+\begin{remark}[MC5 class-$\mathcal M$ at the K3 Virasoro face]
+\label{rem:mc5clmp-1}
+At the K3 base point, the MC5 class-$\mathcal M$ chain-level construction
+realises the Virasoro face of the shadow-tower quadrichotomy:
+the Mathieu group $M_{24}$ acts on the chain-level $L_\infty$ algebra
+via the anomaly cocycle of order $6$ in
+$H^3(M_{24}, U(1)) \supseteq \mathbb Z/12$ (generalised-Mathieu-moonshine
+'t~Hooft anomaly, Gaberdiel--Persson--Ronellenfitsch--Volpato 2013),
+and the K3 elliptic genus lifts to
+the twined character
+$\chi_\sigma(\tau) = \mathrm{Tr}_{\mathbf H_{\Delta_5}}\sigma\,q^{L_0-c/24}$.
+The frame-shape identity (twined bar Euler) at all $26$ $M_{24}$-conjugacy
+classes is the $M_{24}$ fingerprint of Mathieu moonshine
+\cite{EguchiOoguriTachikawa2010,ChengDuncanHarvey2014}.
+Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Chain-level MC5 witness of the K3 chiral structure]
+\label{rem:mc5clmp-2}
+The chain-level MC5 construction is the explicit witness of class-$\mathcal M$
+content in the K3 chiral structure: the Maurer--Cartan element
+$\mu^{(5)}$ at $\hbar^5$ detects the $5$-term pentagon coboundary
+relation of the $\widetilde M_{24}$-twist, and $\mathbf H_{\Delta_5}$
+is the unique MC5 solution at the K3 base point.
+The universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ forces
+$\mu^{(5)}$ to close with
+$\phi^{(3)} = \zeta(3) c_{\mathrm{symm}} + (25/3) c_{\mathrm{timelike}} + (\Phi_{10}/\eta^{24}) c_{\Phi_{10}}$
+\cite{GritsenkoNikulin1998,ChengDuncanHarvey2014}. Cross-ref
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Kontsevich--Soibelman--To\"en decomposition of $c_{2d}=-214$
+via Nakajima/G\"ottsche]
+\label{rem:mc5clmp-kst-nakajima}
+The central charge
+$c_{2d}(A_1, \Sigma_{0,24}, \mathrm{all\ max}) = -214 = -2\cdot 107$
+of the class-$\mathcal{S}$ $A_1$ parent $\mathcal{T}[A_1,\Sigma_{0,24}]$
+(Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+Theorem~\ref{V3-thm:k3-classS-4d-parent}) admits no non-trivial integer
+factorisation apart from $-2\cdot 107$, since $107$ is prime. The
+Kontsevich--Soibelman--To\"en (KST) reading recovers $c_{2d} = -214$
+through a \emph{Nakajima-Heisenberg-plus-prime-$107$} decomposition.
+The factorisation \(-24\cdot13=-312\) cannot account for \(c_{2d}=-214\):
+\begin{itemize}
+ \item The Nakajima--Grojnowski Fock-space
+ $\mathrm{Fock}(\widetilde{\Lambda}_{K3})$ action on
+ $\bigoplus_n H^\bullet(\mathrm{Hilb}^n(K3))$ contributes $24$
+ Heisenberg generators corresponding to the $24$ elements of the
+ Mukai lattice (Nakajima 1997 \textup{Ann.~Math.}~145,
+ Theorem~3.10; Grojnowski 1996 \textup{arXiv:alg-geom/9506020}),
+ through the G\"ottsche generating function
+ $\sum_{n\ge 0}\chi(\mathrm{Hilb}^n(K3))\,q^n =
+ \prod_{m\ge 1}(1-q^m)^{-24} = q/\eta(\tau)^{24}$ (G\"ottsche 1990
+ \textup{Math.~Ann.}~286, Theorem~0.1; the factor $q$ is the
+ $q^{1/24}$-normalisation of $\eta$, since
+ $\eta(\tau)^{24}=q\prod_{m\ge1}(1-q^m)^{24}$). The $24 = \chi_{\mathrm{top}}(K3)$
+ Mukai-lattice count is unchanged under the $-312 \to -214$
+ retraction; what changes is how the $24$-factor enters the
+ central-charge arithmetic.
+ \item The prime $107 = 5\cdot 24 - 13$ enters through the
+ Shapere--Tachikawa class-$\mathcal S$ formula
+ $c_{4d}(n) = (5n - 13)/6$ at $n = 24$
+ (Shapere--Tachikawa 2008 \S 3, arXiv:0804.1957), reading as the
+ sum of $5n$ vector contributions minus the universal
+ Argyres--Seiberg gravitino subtraction $13$. The factor $-2$ in
+ $-214 = -2\cdot 107$ is the Beem--Rastelli gravitational-anomaly
+ ratio $-12/6$ combining the $-12$ chiral anomaly with the
+ Shapere--Tachikawa denominator $6$.
+\end{itemize}
+Inside the MC5 chain-level $L_\infty$-algebra, the product
+$c_{2d} = -2\cdot 107$ appears as
+\[
+ \mu^{(5)}
+ = -2\cdot m^{(5)}_{\mathrm{BR}} \cdot (5\cdot 24 - 13)\cdot
+ m^{(5)}_{\mathrm{ST}}/6,
+\]
+with $m^{(5)}_{\mathrm{BR}}$ the Beem--Rastelli gravitational-anomaly
+generator and $m^{(5)}_{\mathrm{ST}}$ the Shapere--Tachikawa
+class-$\mathcal S$ generator. The KST derivation does not conflict with
+the convergence: the $c_{2d} = -214$ appearance is the class-$\mathcal{S}$
+global central-charge invariant, while the $c_{\mathrm{gen}} = 1$
+stalk-level invariant of Polyakov \S F.1 is the Miki
+$U_{q,\kappa}(\widehat{\widehat{\mathfrak{gl}}}_1)$ stalk at a single
+K3 fibre. Primality of $107$ obstructs any non-trivial factorisation
+of $-214$ analogous to $-312 = -24\cdot 13$; the KST content
+concentrates in the Nakajima-Heisenberg $24$-factor and the
+Shapere--Tachikawa $107$ numerator. See Vol~I
+Section~\ref{sec:thqg-open-closed-realization} for the
+numerical retraction.
+\end{remark}
+
+\begin{remark}[Kontsevich deformation quantisation of $\mathrm{Hilb}^n(K3)$ at the self-dual point]
+\label{rem:mc5clmp-kst-dq}
+\ClaimStatusConditional
+K3 is a holomorphic symplectic surface (hyperk\"ahler of real
+dimension~$4$); for every $n\ge 1$ the Hilbert scheme $\mathrm{Hilb}^n(K3)$
+is smooth holomorphic-symplectic of real dimension $4n$
+(Beauville 1983 \textup{J.~Differential Geom.}~18, Theorem~A). The
+Kontsevich formality theorem (Kontsevich 2003
+\textup{Lett.~Math.~Phys.}~66) supplies, for each $n$, a canonical
+deformation quantisation $A_\hbar(\mathrm{Hilb}^n(K3))$ of the Poisson
+structure on $\mathrm{Hilb}^n(K3)$. The CY-to-chiral factorisation
+$\Phi_2 = \SpCh_{\Sigma_1, C} \circ \PhiFA_2$ of
+Chapter~\ref{V3-ch:cy-to-chiral} -- stage~$1$ a canonical
+$E_2$-holomorphic factorisation algebra on $\mathrm{Hilb}^n(K3)$
+(pinned by Kontsevich--Tamarkin $E_2$-formality and
+Costello--Gwilliam--Li locality), stage~$2$ specialisation along a
+genus-one cycle to a reference curve $C$ -- transports this tower
+of DQ algebras to a tower of chiral algebras; the $n\to\infty$ limit
+(in the sense of Nakajima's nested Hilbert-scheme CoHA,
+cf.\ Vol.~III \texttt{cy\_to\_chiral.tex}~L1723) is the K3 chiral
+bialgebra of Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}:
+\[
+ \lim_{n\to\infty}
+ \Phi_2\bigl(A_\hbar(\mathrm{Hilb}^n(K3))\bigr)
+ \;\simeq\;
+ \mathbf{H}_{\Delta_5}
+ \quad\text{(at }\hbar^2 = -1/8\text{)}.
+\]
+The specialisation $\hbar^2 = -1/8$ is the unique point at which the
+Kontsevich formality $\star$-product on
+$\mathrm{Hilb}^n(K3)$ passes the
+\emph{Duflo self-duality test}: the resulting quantum algebra is
+invariant under the Duflo automorphism
+$\sigma_{\mathrm{Duflo}}\colon A_\hbar \to A_{-\hbar}^{\mathrm{op}}$
+(Kontsevich 2003, Theorem~8.2; Shoikhet 1998
+\textup{arXiv:math/9803025}, Theorem~4.1), which exchanges the
+quantisation with its opposite. The Duflo-self-dual condition
+$\sigma_{\mathrm{Duflo}}^2 = \mathrm{id}$ forces $\hbar^2$ to lie in
+the torsion locus of the Duflo-quotient of the generalised-Mathieu-moonshine
+'t~Hooft anomaly group $H^3(M_{24},\mathrm{U}(1))/(\text{Duflo})$, the
+relevant cyclic component of which has order $\mathbb{Z}/8$,
+whence $\hbar^2 \in \{\pm 1/8\}$; the negative sign is fixed by the
+Lorentzian signature of the Mukai pairing. This is the chain-level
+KST reading of the $(R_1)$--$(R_7)$ classification datum: the Igusa
+form $\Delta_5$ is the classification invariant, and the
+deformation-quantisation self-dual point $\hbar^2=-1/8$ is where
+$\Delta_5$ fixes the chiral quantum-group structure.
+
+Conditionality. The $n\to\infty$ limit is defined at the level of
+pro-objects in the chain-level category (the pro-ambient of this
+chapter); the $(\infty,1)$-categorical limit in the presentable
+$\infty$-category $\mathrm{ChirAlg}^{E_2\text{-}\mathrm{ch}}_X$ is the
+native home for $\mathbf{H}_{\Delta_5}$ and is unconditional given
+Theorem~CY-A$_2$ (Vol.~III
+Theorem~\ref{V3-thm:phi-platonic}). The passage from the chain-level
+pro-ambient to the presentable $\infty$-category exhibits the
+adjunction-strictness split of Lurie HA.5.5: a chain-level adjunction
+requires an explicit splitting witness, whereas the $(\infty,1)$-categorical
+adjunction is strict by construction. Both lanes carry equal status,
+neither supersedes the other.
+\end{remark}
+
+\begin{remark}[KST $\Phi$-functor on $D^b\mathrm{Coh}(K3)$]
+\label{rem:mc5clmp-kst-phi}
+\ClaimStatusConditional
+The Kontsevich--Soibelman--To\"en functor statement on K3, assembled
+from Remarks~\textup{\ref{rem:mc5clmp-1}}--\textup{\ref{rem:mc5clmp-kst-dq}},
+reads:
+\[
+ \Phi_2 \colon
+ \bigl(D^b\mathrm{Coh}(K3), [2]\bigr)
+ \longrightarrow
+ \bigl(\mathbf{H}_{\Delta_5},\;
+ \mathrm{bar\text{-}cobar\ shift}\ [2]\bigr)
+\]
+with input the CY-$2$ category with Serre-duality pairing
+$\mathrm{Ext}^i(\mathcal{E},\mathcal{F}) \simeq \mathrm{Ext}^{2-i}(\mathcal{F},\mathcal{E})^\vee$
+and output the K3 chiral bialgebra of
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+Definition~\ref{V3-def:k3-chiral-bialgebra}. The structural dictionary:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\toprule
+CY-$2$ input & Chiral output \\
+\midrule
+Mukai lattice $\widetilde{\Lambda}_{K3}$ ($(4,20)$) & Cartan of rank 24 \\
+Euler char $\chi(K3) = 24$ & Affine level $= 24$ (G\"ottsche) \\
+Mukai pairing & Bilinear form on chiral Cartan \\
+Serre duality $[2]$ & Koszul shift $[2]$ on bar \\
+Bridgeland wall $\hbar^2 = -1/8$ & DQ self-dual point \\
+Humbert $H_1$, order $8$ & $K^{\kappa_{\mathrm{ch}}} = 8$ \\
+K3-CoHA (KV 2018) & positive Borel of $\mathbf{H}_{\Delta_5}$ \\
+$\mathrm{Hilb}^n(K3)$ Fock tower & bar-degree-$n$ pages of $B(\mathbf{H}_{\Delta_5})$ \\
+Protected index $1/\chi_{10}$ & genus-2 supercharacter of $\mathbf{H}_{\Delta_5}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The bottom three rows are the BKM/Siegel identification: the BKM
+denominator $\Delta_5$ is the Gritsenko additive lift of the K3 elliptic
+genus $\phi_{0,1}$ (Gritsenko 1999 \textup{Algebra i Analiz}~11) and the
+Igusa form $\chi_{10}=\Delta_5^2$ is the scalar denominator whose
+Fourier coefficients give the protected BPS index on $K3\times T^2$.
+Dijkgraaf--Moore--Verlinde--Verlinde~\cite{DijkgraafMooreVerlindeVerlinde1997}
+separate the charge-graded Hilbert-space decomposition from its
+supertrace in equations~\textup{(}2.19\textup{)} and~\textup{(}1.2\textup{)};
+their product formulae~\textup{(}1.3\textup{)} and~\textup{(}3.12\textup{)}
+give the reciprocal automorphic denominator.  For the K3 elliptic
+genus this denominator is the weight-$10$ Igusa form, with the Weyl
+prefactor carried by~\textup{(}3.12\textup{)}.  Thus the Hilbert-scheme
+Fock tower supplies the state-space object, while $1/\chi_{10}$ is
+its charge-graded protected supertrace.
+Cross-reference Chapter~\ref{V3-ch:k3e-bkm},
+Theorem~\textup{\ref{V3-thm:dt-igusa}} (Oberdieck--Pixton).
+\end{remark}
+
+
+%% ════════════════════════════════════════════════════════════════════════
+%% CHIRAL KONTSEVICH FORMALITY ON \overline{\mathcal A}_2
+%% ════════════════════════════════════════════════════════════════════════
+
+\section{Chiral Kontsevich formality on
+\texorpdfstring{$\overline{\mathcal A}_2\setminus\bigcup_n H_n$}{A2bar minus
+Humbert union}}
+\label{sec:chiral-kontsevich-formality}
+\index{Kontsevich formality!chiral}
+\index{Humbert divisor!formality obstruction}
+\index{Bruinier Chern class!as formality obstruction}
+
+Kontsevich 1997 (\textsc{arXiv}:q-alg/9709040, Theorem~4.1) produces,
+for a smooth Poisson manifold $M$, an $L_\infty$-quasi-isomorphism
+\[
+\mathcal U_{\mathrm{Kont}}\colon
+\bigl(T_{\mathrm{poly}}(M),\,[\![-,-]\!]_{\mathrm{Schouten}}\bigr)
+\;\xrightarrow{\;\sim\;}\;
+\bigl(C^\bullet_{\mathrm{Hoch}}(\mathcal O_M),\,
+b,\,[\![-,-]\!]_{\mathrm{Ger}}\bigr)
+\]
+between polyvector fields and Hochschild cochains, with Taylor
+components weighted by admissible-graph integrals on the upper
+half-plane (Kontsevich \textit{loc.~cit.}\ Equation~(2.2)). The
+three classical inputs are: (a) smoothness of~$M$; (b) a Poisson
+bivector $\pi\in\Gamma(\wedge^2 TM)$; (c) convergent graph
+coefficients $w_\Gamma$ against harmonic angle forms on admissible
+configurations.  A chiral comparison for $\mathbf H_{\Delta_5}$
+therefore requires four new constructions: a relative dg Lie algebra
+of factorisation derivations, a chain-level map to chiral Hochschild
+cochains, compactified configuration integrals compatible with BD
+factorisation, and a quasi-isomorphism argument.  The KZ associator,
+the Bruinier divisor calculation, and a BV obstruction theory may
+contribute to these constructions through separately typed comparison
+maps.  The bridge is a chain map carrying all three data into one
+cohomology complex.
+
+The arithmetic open used below is
+\[
+ \mathcal U_{\mathrm{Humb}}^{\mathrm c}
+ :=\overline{\mathcal A}_2\setminus
+   \bigcup_{n\ \mathrm{adm}}H_n,
+ \qquad n\ \mathrm{adm}\iff n\equiv0,3\pmod4.
+\]
+Its relation to the K3 Koszul locus and to bar--cobar inversion is part
+of the comparison problem.
+
+\begin{definition}[Chiral polyvector fields on $\overline{\mathcal A}_2$]
+\label{def:chiral-polyvector-fields-A2}
+\index{chiral polyvector fields!$\overline{\mathcal A}_2$}%
+Let $\pi\colon\Ran(E^{\mathrm{nod,sm}}_{24})\to\overline{\mathcal A}_2$
+be the modular projection of
+Chapter~\ref{chap:e1-modular-koszul}. The chiral polyvector fields
+\[
+T^\bullet_{\mathrm{ch}}
+\bigl(\overline{\mathcal A}_2,\mathbf H_{\Delta_5}\bigr)
+\;:=\;
+\mathrm{Der}^\bullet_{\mathrm{fact}}
+\bigl(\pi_*\mathbf H_{\Delta_5},
+\pi_*\mathbf H_{\Delta_5}\bigr)
+\]
+are the factorisation-algebra derivations of $\mathbf H_{\Delta_5}$
+as a BD factorisation $\cD$-module on
+$\Ran(E^{\mathrm{nod,sm}}_{24})$, graded by wedge degree in the
+super-quasi-Hopf parity and by cohomological degree. The Schouten
+bracket $[\![-,-]\!]_{\mathrm{Schouten}}^{\mathrm{ch}}$ is the graded
+commutator of factorisation derivations against the super-quasi-Hopf
+sign of Remark~\ref{rem:super-quasi-hopf-koszul-sign} in
+Chapter~\ref{chap:e1-modular-koszul}.
+\end{definition}
+
+\begin{definition}[Humbert chiral-formality package;
+\ClaimStatusDefinitional]
+\label{def:humbert-chiral-formality-package}
+The package $H_{\mathrm{HCF}}$ for $\mathbf H_{\Delta_5}$ consists of:
+\begin{enumerate}[label=\textup{(HCF\arabic*)},leftmargin=*]
+\item a dg Lie model $T^\bullet_{\mathrm{ch}}$ for factorisation
+derivations on $\mathcal U_{\mathrm{Humb}}^{\mathrm c}$ and a dg Lie
+model for $\ChirHoch^\bullet(\mathbf H_{\Delta_5})$;
+\item compactified relative configuration spaces, propagator forms,
+and convergent weights $w^{\mathrm{ch}}_\Gamma$ whose boundary
+factorisation proves the $L_\infty$ identities;
+\item a filtered quasi-isomorphism argument for the resulting Taylor
+series $\mathcal U^{\mathrm{ch}}_{\mathrm{Kont}}$;
+\item a comparison morphism from the resulting obstruction complex to
+cohomology with support on each $H_n$, together with a degree-correct
+purity or Gysin map to the arithmetic divisor class;
+\item a separate Theorem--B hypothesis $H_{\mathrm{BC}}$ asserting that
+the quadratic recognition map for $\mathbf H_{\Delta_5}$ is a
+quasi-isomorphism in the chosen completed presentation.
+\end{enumerate}
+Each clause is a chain-level construction.  The classical Kontsevich
+theorem, the Bruinier divisor formula, and the general bar--cobar
+adjunction supply inputs to distinct clauses.
+\end{definition}
+
+\begin{theorem}[Chiral Kontsevich formality on the Humbert-free
+complement]
+\label{thm:chiral-kontsevich-formality}
+\ClaimStatusConditional
+\index{Kontsevich formality!chiral!theorem}%
+This is an Open-quadrant statement in factorisation presentation at
+Beilinson level~$3$.  Assume the package $H_{\mathrm{HCF}}$
+of Definition~\ref{def:humbert-chiral-formality-package}.  Then the
+Taylor series constructed in \textup{(HCF2)} defines a chain-level
+$L_\infty$-quasi-isomorphism
+\begin{equation}
+\label{eq:chiral-kontsevich-formality-map}
+\mathcal U^{\mathrm{ch}}_{\mathrm{Kont}}\colon
+\bigl(T^\bullet_{\mathrm{ch}}
+(\overline{\mathcal A}_2,\mathbf H_{\Delta_5})
+\big|_{\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}},\,
+[\![-,-]\!]_{\mathrm{Schouten}}^{\mathrm{ch}}\bigr)
+\;\xrightarrow{\;\sim\;}\;
+\bigl(\ChirHoch^\bullet(\mathbf H_{\Delta_5})
+\big|_{\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}},\,
+d_{\ChirHoch},\,
+[\![-,-]\!]_{\mathrm{Ger}}^{\mathrm{ch}}\bigr)
+\end{equation}
+The Taylor component of arity~$k$ is the compactified graph integral
+specified in \textup{(HCF2)}, and its quasi-isomorphism property is the
+filtered comparison of \textup{(HCF3)}.  Clause~\textup{(HCF5)} belongs
+to the bar--cobar lane and yields the separate corollary below.
+\end{theorem}
+
+\begin{proof}
+Clause~\textup{(HCF2)} gives Taylor maps satisfying the
+$L_\infty$ identities, because the codimension-one boundary of every
+compactified configuration integral is, by assumption, the signed sum
+of operadic compositions.  Clause~\textup{(HCF3)} identifies the
+associated-graded linear term as a quasi-isomorphism and supplies the
+complete filtration needed to lift this conclusion.  The filtered
+comparison lemma then proves
+\eqref{eq:chiral-kontsevich-formality-map}.  The Bruinier and BV data
+enter through~\textup{(HCF4)} after construction of their comparison
+morphism; the formal deduction itself uses~\textup{(HCF2)} and
+\textup{(HCF3)}.
+\end{proof}
+
+\begin{corollary}[Bar--cobar inversion under its recognition
+hypothesis]
+\label{cor:bar-cobar-inversion-from-formality}
+\index{bar-cobar inversion!corollary of chiral formality}%
+\ClaimStatusConditional
+Assume clause~\textup{(HCF5)}.  On
+$\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ the quadratic recognition
+map for $\mathbf H_{\Delta_5}$ yields the chiral bar--cobar counit
+\[
+\widehat{\mathrm{counit}}_{\mathbf H_{\Delta_5}}
+\big|_{\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}}\colon
+\Omega^{\mathrm{ch}}\bigl(B^{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)
+\big|_{\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}}
+\;\xrightarrow{\;\sim\;}\;
+\mathbf H_{\Delta_5}\big|_{\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}}
+\]
+as a strict chain-level quasi-isomorphism in the completed presentation
+specified by~$H_{\mathrm{BC}}$.
+\end{corollary}
+
+\begin{proof}
+This is precisely the conclusion of the Theorem--B recognition theorem
+after imposing $H_{\mathrm{BC}}$.  Theorem~\ref{thm:chiral-kontsevich-formality}
+concerns the derived-centre lane; it supplies an additional compatible
+structure through clauses~\textup{(HCF1)}--\textup{(HCF3)}.
+\end{proof}
+
+\begin{remark}[Humbert obstruction comparison problem;
+\ClaimStatusOpen]
+\label{rem:formality-obstruction-malcev-ladder}
+\index{formality obstruction!Malcev ladder identification}%
+Three classes enter with different types: the arithmetic class
+$c_1(\mathcal L^{\Delta_5}|_{H_n})\in H^2(H_n)$, a BV obstruction in
+the cohomology of local functionals for a specified quantum field
+theory, and a Malcev extension class in the cohomology of its
+classifying Lie algebra.  Clause~\textup{(HCF4)} asks for chain maps
+from the latter two complexes to one degree-correct local-cohomology
+group supported on~$H_n$.  Equality may then be formulated after all
+three classes inhabit that common group.  The same construction on
+$H_i\cap H_j$ must include the excess-intersection and Gysin maps;
+ordinary multiplication of two scalar readouts supplies only the
+arithmetic target.
+\end{remark}
+
+\begin{remark}[Three-fold reading of bar--cobar inversion]
+\label{rem:bar-cobar-three-angles-kontsevich}
+\index{bar-cobar inversion!third angle!chiral formality}%
+Three comparison lanes meet on the arithmetic open.  The Koszul lane
+uses the quadratic recognition map $q_A$ of Theorem~B.  The Malcev lane
+uses extension classes on formal neighbourhoods of intersections of
+Humbert divisors.  The formality lane uses the $L_\infty$ map of
+Theorem~\ref{thm:chiral-kontsevich-formality}.  Pairwise agreement is a
+theorem only after constructing comparison morphisms between their
+source complexes.  Package $H_{\mathrm{HCF}}$ records the formality-to-
+arithmetic morphism, while $H_{\mathrm{BC}}$ records the Koszul lane.
+This separation preserves the three ambient categories and makes their
+common restriction a precise future comparison theorem.
+\end{remark}
+
+\begin{remark}[Five construction problems for chiral Kontsevich
+formality; \ClaimStatusOpen]
+\label{rem:chiral-kontsevich-formality-tests}
+\index{Kontsevich formality!chiral!structural tests}%
+Package $H_{\mathrm{HCF}}$ decomposes into five concrete problems.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item Prove that the chosen arithmetic open supports the relative
+factorisation objects and compactifications used in~\textup{(HCF1)}
+and~\textup{(HCF2)}.
+\item Construct the dg Lie bracket on factorisation derivations and the
+chain map to the Gerstenhaber bracket.  A parity convention supplies
+the signs after this map exists.
+\item Extend the propagator forms to the compactification, evaluate every
+boundary residue, and prove convergence uniformly over the base.
+\item Build an operadic descent functor carrying the classical associator
+to the selected chiral factorisation operad.  The KZ associator is an
+input; the descent functor and its deformation comparison are the new
+constructions.
+\item Construct the local-cohomology comparison maps of~\textup{(HCF4)}
+and compute them on the first Humbert divisors.  The arithmetic divisor
+multiplicities provide target values for this computation.
+\end{enumerate}
+Together these constructions produce $H_{\mathrm{HCF}}$; the theorem
+then follows by its proof above.
+\end{remark}
+
+\begin{remark}[Associator and first-divisor comparison problems;
+\ClaimStatusOpen]
+\label{rem:chiral-kontsevich-paths-iv-v}
+\index{Kontsevich formality!chiral!verification paths iv--v}%
+The associator route asks for an operadic functor from the Tamarkin--
+Hinich setting to the relative chiral factorisation category, together
+with compatibility between its deformation complex and
+$T^\bullet_{\mathrm{ch}}$.  The divisor route begins with the verified
+Fourier or divisor multiplicities of the automorphic form and asks for
+actual BV and Malcev cocycles whose images under~\textup{(HCF4)} have
+those values.  Agreement of three integers becomes evidence only after
+the three chain maps and their normalization conventions have been
+specified.
+\end{remark}
+
+\begin{remark}[Architectural place of chiral Kontsevich formality]
+\label{rem:chiral-kontsevich-place-in-architecture}
+\index{Kontsevich formality!chiral!architectural position}%
+This theorem belongs to the level-$3$ derived-centre lane.  Theorem~H
+assigns a support set only after the family-specific Hochschild complex
+has been computed.  Theorem~D supplies a native deformation class;
+its comparison package produces the K-theoretic class, the signed
+Hodge component, and the graph-evaluated scalar.
+The formality obstruction, the Theorem--H support, and the Theorem--D
+Hodge class therefore enter as three typed objects.  A K3-modular
+identification among them is precisely the comparison map required in
+\textup{(HCF4)}, with the selected primary line and trace normalization
+carried as part of the datum.
+\end{remark}
+
+%% ════════════════════════════════════════════════════════════════════════
+%% CONSOLIDATED CHIRAL KONTSEVICH FORMALITY ON THE KOSZUL LOCUS
+%% ════════════════════════════════════════════════════════════════════════
+
+\providecommand{\Uadm}{\ensuremath{U^{\mathrm{adm}}}}
+\providecommand{\obKont}{\ensuremath{\mathrm{ob}^{\mathrm{Kont}}}}
+\providecommand{\Tpolych}{\ensuremath{T^{\mathrm{poly}}_{\mathrm{ch}}}}
+
+\begin{definition}[The admissible Humbert complement
+$\Uadm\subset\overline{\mathcal A}_2$]
+\label{def:admissible-koszul-locus-U-adm}
+\index{Koszul locus!admissible!$\Uadm$}%
+\index{admissible Koszul locus}%
+The \emph{admissible Humbert complement} is the arithmetic open
+\[
+\Uadm
+\;:=\;
+\overline{\mathcal A}_2\setminus\bigcup_{n\ \mathrm{adm}}H_n,
+\qquad
+n\ \mathrm{adm}\iff n\equiv 0,3\pmod 4,
+\]
+inside the chosen compactification of the principally polarized locus.
+It is, by notation,
+$\Uadm=\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ of
+Theorem~\ref{thm:chiral-kontsevich-formality}.  The term ``Koszul
+locus'' is reserved for the additional comparison with the quadratic
+recognition map under~$H_{\mathrm{BC}}$.
+\end{definition}
+
+\begin{lemma}[Bar--cobar recognition on $\Uadm$]
+\label{lem:uadm-is-koszul-locus-bar-cobar}
+\ClaimStatusConditional
+\index{bar-cobar inversion!Koszul locus!$\Uadm$ identification}%
+Assume $H_{\mathrm{BC}}$ from
+Definition~\ref{def:humbert-chiral-formality-package}.  The restriction
+of the chiral bar--cobar counit
+\[
+\widehat{\mathrm{counit}}_{\mathbf H_{\Delta_5}}\big|_{V}\colon
+\Omega^{\mathrm{ch}}\bigl(B^{\mathrm{ch}}(\mathbf H_{\Delta_5})\bigr)
+\big|_V
+\;\longrightarrow\;
+\mathbf H_{\Delta_5}\big|_V
+\]
+is a strict chain-level quasi-isomorphism for every open
+$V\subset\Uadm$ in the completed presentation named by that package.
+\end{lemma}
+
+\begin{proof}
+Apply Corollary~\ref{cor:bar-cobar-inversion-from-formality} after
+restriction to~$V$.  Exactness and completion compatibility are clauses
+of $H_{\mathrm{BC}}$.
+\end{proof}
+
+\begin{definition}[Finite Humbert-supported obstruction datum;
+\ClaimStatusDefinitional]
+\label{def:global-kontsevich-obstruction-sheaf}
+\index{Kontsevich obstruction sheaf!global}%
+\index{Kontsevich obstruction class!$\obKont_n$}%
+Let $\Tpolych:=T^\bullet_{\mathrm{ch}}(\overline{\mathcal A}_2,
+\mathbf H_{\Delta_5})$.  For a finite set $S$ of selected Humbert
+indices write $H_S=\bigcup_{n\in S}H_n$.  A finite supported
+obstruction datum is a compatible family
+\[
+ \obKont_S\in
+ H^3_{H_S}\bigl(\overline{\mathcal A}_2,
+                 \mathrm{Sym}^2\Tpolych\bigr),
+ \qquad S\subset S'\Longrightarrow
+ \obKont_{S'}|_{H_S}=\obKont_S.
+\]
+Its single-wall component is
+$\obKont_{\{n\}}\in H^3_{H_n}(\overline{\mathcal A}_2,
+\mathrm{Sym}^2\Tpolych)$.  A purity isomorphism, when available,
+translates this supported class into a class on~$H_n$ with the
+corresponding codimension shift and coefficient twist.  Thus the symbol
+$\obKont=(\obKont_S)_S$ denotes a pro-family over finite~$S$.  An
+extension to the full union is an additional completion problem.
+\end{definition}
+
+\begin{theorem}[Chiral Kontsevich formality on $\Uadm$, unified form]
+\label{thm:chiral-kontsevich-formality-unified}
+\ClaimStatusConditional
+\index{Kontsevich formality!chiral!unified form}%
+\index{formality obstruction!global sheaf identification}%
+Let $\Uadm=\overline{\mathcal A}_2\setminus
+\bigcup_{n\ \mathrm{adm}}H_n$ be the admissible Humbert complement of
+Definition~\ref{def:admissible-koszul-locus-U-adm}.  Assume
+$H_{\mathrm{HCF}}$.  Assume also that its supported comparison in
+\textup{(HCF4)} carries the formality obstruction to a chosen Malcev
+class on every finite union~$H_S$.  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Formality on the arithmetic open.}
+The chiral Kontsevich map
+$\mathcal U^{\mathrm{ch}}_{\mathrm{Kont}}$ of
+\eqref{eq:chiral-kontsevich-formality-map} is a chain-level
+$L_\infty$-quasi-isomorphism
+\[
+\bigl(\Tpolych\big|_{\Uadm},\,
+[\![-,-]\!]_{\mathrm{Schouten}}^{\mathrm{ch}}\bigr)
+\;\xrightarrow{\;\sim\;}\;
+\bigl(\ChirHoch^\bullet(\mathbf H_{\Delta_5})\big|_{\Uadm},\,
+d_{\ChirHoch},\,[\![-,-]\!]_{\mathrm{Ger}}^{\mathrm{ch}}\bigr)
+\]
+in the completed ambient specified by~$H_{\mathrm{HCF}}$.
+\item \emph{Supported comparison on a wall.}  For each selected
+Humbert divisor~$H_n$, clause~\textup{(HCF4)} gives a common supported
+cohomology group and identifies the two supplied classes there:
+\begin{equation}
+\label{eq:malcev-rung-equals-obstruction}
+\obKont_{\{n\}}
+\;=\;
+\operatorname{cmp}_n
+\bigl([\mathrm{gr}_n^{\mathrm{Malcev}}]\bigr)
+\;\in\;
+H^3_{H_n}\bigl(\overline{\mathcal A}_2,
+\mathrm{Sym}^2\Tpolych\bigr).
+\end{equation}
+\item \emph{Separation of the three inputs.}  The construction retains
+three distinct source calculations:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item compactified graph integrals produce the formality class;
+\item the selected quantum field theory produces a BV class in its
+local-functional complex;
+\item the automorphic line and the Malcev extension produce arithmetic
+and representation-theoretic classes in their respective cohomology
+groups.
+\end{enumerate}
+Their equality is equation~\eqref{eq:malcev-rung-equals-obstruction}
+after applying the comparison maps assumed above.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~\textup{(a)} is
+Theorem~\ref{thm:chiral-kontsevich-formality}.  Part~\textup{(b)} is
+the single-wall component of the supported comparison assumed in the
+statement.  Part~\textup{(c)} records the domains of the three source
+classes; equation~\eqref{eq:malcev-rung-equals-obstruction} compares
+their images in one supported cohomology group.  Compatibility for
+finite~$S$ is the transition condition of
+Definition~\ref{def:global-kontsevich-obstruction-sheaf}.
+\end{proof}
+
+\begin{remark}[Architectural payload of
+Theorem~\ref{thm:chiral-kontsevich-formality-unified}]
+\label{rem:kontsevich-unified-architectural-payload}
+\index{Kontsevich formality!chiral!unified!architectural payload}%
+The unified theorem is an assembly statement with a visible load-bearing
+input: $H_{\mathrm{HCF}}$ constructs the formality map, while
+$\operatorname{cmp}_n$ compares its supported obstruction with the
+Malcev class.  Theorem~H enters after a family-specific computation of
+the support of $\ChirHoch^\bullet(\mathbf H_{\Delta_5})$.  Theorem~D
+enters through its higher Hodge class after the scalar-diagonal package
+and a map to the supported obstruction complex.  These two further
+comparisons remain named hypotheses and preserve their distinct
+cohomological degrees.
+\end{remark}

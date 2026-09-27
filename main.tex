@@ -1,0 +1,2145 @@
+\documentclass[11pt]{memoir}
+\usepackage{raeez-math-template}
+
+% Compatibility for imported fragments that still use old-style \rm in math.
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+
+% Orientation line used in §6 (keeps the existing symbol but defines it cleanly).
+\newcommand{\orline}[1]{\mathrm{or}_{#1}}
+
+% Lightweight wrappers used by chapter-opening synthesis passages.
+\newenvironment{overture}{\begin{quote}\itshape}{\end{quote}}
+
+% ==========================================
+% MATH OPERATORS
+% ==========================================
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Res}{Res}
+\newcommand{\Rescoll}{\operatorname{Res}^{\mathrm{coll}}}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Free}{Free}
+\DeclareMathOperator{\Cofree}{Cofree}
+\DeclareMathOperator{\Spec}{Spec}
+\providecommand{\HS}{\operatorname{HS}}
+\providecommand{\obs}{\operatorname{obs}}
+\providecommand{\RMap}{\operatorname{RMap}}
+\providecommand{\Pro}{\operatorname{Pro}}
+
+% ==========================================
+% OPERADS -- sans-serif per Loday--Vallette convention
+% ==========================================
+% Note: \Com and \Lie are set in \mathsf (not \operatorname) because
+% they name operads, not functors. This matches Loday--Vallette [LV12].
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Pois}{\mathsf{Pois}}
+\newcommand{\BV}{\mathsf{BV}}
+\newcommand{\Grav}{\mathsf{Grav}}
+\newcommand{\Eone}{\mathsf{E}_1}
+\newcommand{\Etwo}{\mathsf{E}_2}
+\newcommand{\Ethree}{\mathsf{E}_3}
+\newcommand{\En}{\mathsf{E}_n}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+\newcommand{\Linf}{\mathsf{L}_{\infty}}
+\newcommand{\Ainf}{\mathsf{A}_{\infty}}
+\newcommand{\Cinf}{\mathsf{C}_{\infty}}
+\newcommand{\Pinf}{\mathsf{P}_{\infty}}
+
+% Chiral operads
+\newcommand{\Chir}{\mathsf{Chir}}
+\newcommand{\Fact}{\mathsf{Fact}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\chirtensor}{\otimes^{\mathrm{ch}}}
+\newcommand{\facttensor}{\otimes^{!}}
+\newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\newcommand{\chirAss}{\mathsf{Ass}^{\mathrm{ch}}}
+\newcommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\newcommand{\chirPois}{\mathsf{Pois}^{\mathrm{ch}}}
+
+% ==========================================
+% CATEGORIES -- sans-serif
+% ==========================================
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\Vect}{\cat{Vect}}
+\newcommand{\Ch}{\cat{Ch}}
+\newcommand{\Alg}{\cat{Alg}}
+\newcommand{\CoAlg}{\cat{CoAlg}}
+\newcommand{\Op}{\cat{Op}}
+\newcommand{\DGCat}{\cat{DGCat}}
+\providecommand{\dgAlg}{\mathsf{dgAlg}}
+\providecommand{\dgCoAlg}{\mathsf{dgCoAlg}}
+
+% D-modules and sheaves
+\newcommand{\DMod}{\cat{D}\text{-}\cat{Mod}}
+\newcommand{\DX}{\mathcal{D}_X}
+\newcommand{\OX}{\mathcal{O}_X}
+\newcommand{\omX}{\omega_X}
+\newcommand{\IndCoh}{\cat{IndCoh}}
+\newcommand{\QCoh}{\cat{QCoh}}
+\providecommand{\Coh}{\operatorname{Coh}}
+
+% ==========================================
+% COMMON SYMBOLS
+% ==========================================
+\newcommand{\C}{\mathbb{C}} % NB: overrides built-in accent command \c (cedilla)
+\newcommand{\Z}{\mathbb{Z}} % NB: overrides built-in accent command
+\newcommand{\R}{\mathbb{R}} % NB: overrides built-in accent command
+\newcommand{\Vlat}{V} % Lattice vertex algebra (V_\Lambda)
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cI}{\mathcal{I}}
+\providecommand{\cAr}{\mathcal{A}^{\mathrm{Arn}}}
+\providecommand{\vac}{\mathbf{1}}
+\newcommand{\Sh}{\operatorname{Sh}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barPi}{\overline{\Pi}}
+
+% ==========================================
+% NOTATION SYSTEM -- bar/cobar and configuration spaces
+% ==========================================
+\newcommand{\Conf}{C} % config space (open); use \overline{\Conf} for FM compactification
+\newcommand{\MC}{\text{MC}} % Maurer--Cartan
+
+% Hat notation -- consistent single-index style
+\newcommand{\omitpair}[2]{\widehat{#1#2}}
+\newcommand{\omitindex}[2]{\widehat{#1,#2}}
+
+% Collision divisors with explicit ordering
+\newcommand{\colldiv}[2]{D_{#1#2}}
+
+% Bar and cobar complexes with explicit notation
+\newcommand{\barcomplex}[2]{\bar{B}^{#1}(#2)}
+
+% BD references shorthand
+\newcommand{\BDref}[1]{\textup{[\cite{BD04}, #1]}}
+
+% ==========================================
+% W-ALGEBRA AND DEFORMATION NOTATION
+% ==========================================
+\newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})} % W-algebra W_k(g)
+\newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}} % affine Kac--Moody
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Hilb}{\operatorname{Hilb}}
+\providecommand{\Fun}{\operatorname{Fun}}
+\providecommand{\DK}{\mathrm{DK}}
+\providecommand{\tr}{\operatorname{tr}}
+\providecommand{\fu}{\mathfrak{u}}
+\providecommand{\f}{\mathfrak{f}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\VOA}{\mathrm{VOA}}
+\providecommand{\Zmod}{\mathbb{Z}/}
+\providecommand{\str}{\mathrm{str}}
+\providecommand{\sBer}{\operatorname{sBer}}
+\providecommand{\Ainfty}{\mathsf{A}_{\infty}}
+\providecommand{\Linfty}{\mathsf{L}_{\infty}}
+\providecommand{\Assch}{\mathrm{Ass}^{\mathrm{ch}}}
+\providecommand{\poly}{\mathrm{poly}}
+\providecommand{\Muk}{\mathrm{Muk}}
+\providecommand{\qt}{\mathrm{qt}}
+\providecommand{\slnn}[1]{\mathfrak{sl}_{#1}}
+\providecommand{\fpsl}{\mathfrak{psl}}
+\providecommand{\fosp}{\mathfrak{osp}}
+\providecommand{\CP}{\mathbb{CP}}
+\providecommand{\xlongequal}[2][]{\mathrel{\overset{#2}{\underset{#1}{=}}}}
+\providecommand{\cref}[1]{\ref{#1}}
+\providecommand{\Cref}[1]{\ref{#1}}
+\providecommand{\kmax}{k_{\max}}
+\providecommand{\Dco}{D^{\mathrm{co}}}
+\providecommand{\der}{\mathrm{der}}
+\providecommand{\ch}{\mathrm{ch}}
+\providecommand{\Zder}{\operatorname{Z}_{\mathrm{der}}}
+\providecommand{\Zderch}{\operatorname{Z}^{\mathrm{ch}}_{\mathrm{der}}}
+\providecommand{\ord}{\mathrm{ord}}
+\providecommand{\fact}{\mathrm{fact}}
+\providecommand{\aug}{\mathrm{aug}}
+\providecommand{\comp}{\mathrm{comp}}
+\providecommand{\conil}{\mathrm{conil}}
+\providecommand{\co}{\mathrm{co}}
+\providecommand{\AMlocG}{\mathrm{AM}_g}
+\providecommand{\AMlocFour}{\mathrm{AM}_4}
+\providecommand{\AMlocSix}{\mathrm{AM}_6}
+\providecommand{\AbarG}{\overline{\mathcal{A}_g}}
+\providecommand{\AbarFour}{\overline{\mathcal{A}_4}}
+\providecommand{\AMtightG}{\mathsf{AM}^{\mathrm{tight}}_g}
+\providecommand{\AMtightGinf}{\mathsf{AM}^{\mathrm{tight}}_{\infty}}
+\providecommand{\AMtightSix}{\mathsf{AM}^{\mathrm{tight}}_6}
+\providecommand{\AMtightSeven}{\mathsf{AM}^{\mathrm{tight}}_7}
+\providecommand{\AMtightEight}{\mathsf{AM}^{\mathrm{tight}}_8}
+\providecommand{\MbarSix}{\overline{\mathcal{M}}_6}
+\providecommand{\Schottky}{\mathsf{Sch}}
+\providecommand{\Sps}{D^{\mathrm{Chen}}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\Gsuper}{\mathbb{G}_{\mathrm{super}}}
+\providecommand{\sSer}{\mathbb{S}_{\mathrm{CY}_3}}
+\providecommand{\Tpar}{\mathbb{T}^{\mathrm{par}}}
+\providecommand{\Lspin}{L^{\mathrm{spin}}}
+\providecommand{\Humbert}{\mathcal{H}}
+\providecommand{\NLdiv}{\mathrm{NL}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\Confnord}{\Conf_n^{\mathrm{ord}}}
+\providecommand{\Confcomp}{\overline{\mathrm{Conf}}}
+\providecommand{\ChirCoalg}{\mathsf{ChirCoalg}}
+\providecommand{\itemA}{\item}
+\providecommand{\qedlem}{\qed}
+\providecommand{\ClaimIndependentlyVerified}[1][]{\textnormal{[independently verified]}}
+
+% ==========================================
+% NOTATION CONSISTENCY DECLARATIONS
+% (PM6: moved here from after \usepackage{makecell})
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\SL}{\mathrm{SL}}
+\providecommand{\Imag}{\operatorname{Im}}
+% ==========================================
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
+\newcommand{\barBch}{\bar{B}^{\text{ch}}} % Chiral bar complex notation
+\newcommand{\Omegach}{\Omega^{\text{ch}}} % Chiral cobar complex notation
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)} % Configuration space
+\newcommand{\LogForm}[2]{\eta_{#1#2}} % Logarithmic forms
+
+% Additional notation for consistency
+\newcommand{\ChirHoch}{CH} % Chiral Hochschild
+\newcommand{\Walg}{\mathcal{W}} % W-algebra
+\newcommand{\critLevel}{-h^\vee} % Critical level
+
+% ==========================================
+% HIGHER-GENUS DIFFERENTIAL NOTATION
+% (Convention~\ref{conv:higher-genus-differentials})
+% ==========================================
+% Three mathematically distinct differentials act on genus-g bar complexes.
+% Using the same symbol for all three is the single deepest notational
+% instability in the manuscript; the macros below enforce the distinction.
+\newcommand{\dzero}{d_0} % genus-0 collision differential (Arnold d^2=0)
+\newcommand{\dfib}{d_{\mathrm{fib}}} % fiberwise differential on fixed Sigma_g (CURVED: d^2 = kappa * omega_g)
+\newcommand{\Dg}[1]{D_{#1}} % total corrected differential at genus g (STRICT: D_g^2 = 0)
+\newcommand{\Dtot}{D_{\mathrm{tot}}} % full genus-stratified total differential
+\newcommand{\mcurv}[1]{m_0^{(#1)}} % curvature element at genus g
+\providecommand{\Def}{\operatorname{Def}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\Av}{\operatorname{Av}}
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}} % cyclic deformation complex
+% Two-level homotopy convention (§\ref{subsec:two-level-convention})
+\newcommand{\Convstr}{\operatorname{Conv}_{\mathrm{str}}} % strict dg Lie convolution model
+\newcommand{\Convinf}{\operatorname{Conv}_{\infty}} % homotopy-invariant L-infinity convolution
+\newcommand{\Definfmod}{\operatorname{Def}_{\infty}^{\mathrm{mod}}} % homotopy-invariant modular deformation object
+\newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}} % modular graph coefficient algebra
+\newcommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}} % modular convolution dg Lie algebra of A
+\providecommand{\gAord}{\mathfrak{g}_{\cA}^{\mathrm{ord}}}
+\newcommand{\Perbr}{\operatorname{Per}} % derived scalar period
+\newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}} % dg-shifted Yangian
+\newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}} % spectral quantum group
+\newcommand{\Factord}{\Fact_{\Eone}^{\mathrm{ord}}} % ordered E_1-factorization category
+\newcommand{\Uvert}{U_{\mathrm{vert}}} % enveloping vertex algebra functor
+\newcommand{\Thetaenv}{\Theta^{\mathrm{env}}} % envelope-shadow functor
+\newcommand{\chienv}{\chi_{\mathrm{env}}} % envelope-shadow complexity
+\newcommand{\LCA}{\mathsf{LCA}} % category of Lie conformal algebras
+\newcommand{\JacF}[2]{J_{#1,#2}} % one-step Jacobi coalgebra J_{F,p}
+
+\title{\texorpdfstring{\textit{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves}\\[0.5em]\large Volume~1: $E_1$ Chiral Algebras and Modular Koszul Duality}{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves. Volume 1: E1 Chiral Algebras and Modular Koszul Duality}}
+\author{Raeez Lorgat}
+\date{}
+
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\Imag}{\operatorname{Im}}
+\ifdefined\mainpreambleonly
+% Allow standalone companions to reuse the manuscript preamble without
+% executing the monograph body.
+\expandafter\endinput
+\fi
+\begin{document}
+\hypersetup{pageanchor=false}
+
+% Fallback macros for imported chapter fragments.
+% Operads, categories, and D-module macros are now in the preamble;
+% \providecommand entries below supply only symbols without preamble definitions.
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\mathbbm}[1]{\mathbb{#1}}
+\providecommand{\bigboxtimes}{\mathop{\boxtimes}\displaylimits}
+\providecommand{\Bbar}{\bar{B}}
+\providecommand{\B}{\bar{B}}
+\providecommand{\Det}{\mathrm{Det}}
+\providecommand{\Cobar}{\Omega}
+\providecommand{\Barch}{\overline{B}^{\mathrm{ch}}}
+\providecommand{\coHoch}{\operatorname{coHH}}
+\providecommand{\KK}{\mathbb{K}}
+\providecommand{\gr}{\operatorname{gr}}
+\providecommand{\DR}{\mathrm{DR}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\ad}{\operatorname{ad}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\dlog}{d\log}
+\providecommand{\otim}{\otimes}
+\providecommand{\normord}[1]{:{#1}:}
+\providecommand{\Bl}{\operatorname{Bl}}
+\providecommand{\shuffle}{\mathbin{\amalg}}
+\providecommand{\STATE}{\State}
+\providecommand{\FOR}{\For}
+\providecommand{\ENDFOR}{\EndFor}
+% Blackboard and calligraphic shorthands
+\providecommand{\bA}{\mathbb{A}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bF}{\mathbb{F}}
+\providecommand{\bP}{\mathbb{P}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bG}{\mathbb{G}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cY}{\mathcal{Y}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\fS}{\mathfrak{S}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\fn}{\mathfrak{n}}
+\providecommand{\fC}{\mathfrak{C}}
+\providecommand{\wt}{\operatorname{wt}}
+\providecommand{\DS}{\mathrm{DS}}
+\providecommand{\pr}{\mathrm{pr}}
+\providecommand{\bD}{\mathbf{D}}
+\providecommand{\Cone}{\operatorname{Cone}}
+\providecommand{\Span}{\operatorname{Span}}
+\providecommand{\HH}{\operatorname{HH}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\cop}{\mathrm{cop}}
+\providecommand{\rev}{\mathrm{rev}}
+\providecommand{\alg}{\mathrm{alg}}
+\providecommand{\red}{\mathrm{red}}
+\providecommand{\Hch}{H^{\mathrm{ch}}}
+\providecommand{\CC}{\mathcal{C}}
+% Yangian modular
+\providecommand{\Ymod}{Y^{\mathrm{mod}}}
+% Additional categories and functors
+\providecommand{\Cat}{\mathsf{Cat}}
+\providecommand{\Catinf}{\mathsf{Cat}_\infty}
+\providecommand{\Spc}{\mathsf{Spc}}
+\providecommand{\dgVect}{\mathsf{dgVect}}
+\providecommand{\grVect}{\mathsf{grVect}}
+\providecommand{\Shv}{\mathsf{Shv}}
+\providecommand{\Perv}{\mathsf{Perv}}
+\providecommand{\PrL}{\mathsf{Pr}^\mathrm{L}}
+\providecommand{\PrR}{\mathsf{Pr}^\mathrm{R}}
+\providecommand{\Map}{\operatorname{Map}}
+\providecommand{\holim}{\operatorname{holim}}
+\providecommand{\hocolim}{\operatorname{hocolim}}
+\providecommand{\VD}{\mathbb{D}}
+\providecommand{\Sol}{\mathrm{Sol}}
+\providecommand{\coOp}{\mathrm{coOp}}
+\providecommand{\Opinfty}{\mathrm{Op}_\infty}
+\providecommand{\Tw}{\mathrm{Tw}}
+\providecommand{\Twcts}{\mathrm{Tw}_{\mathrm{cts}}}
+\providecommand{\CompCl}{\operatorname{CompCl}}
+\providecommand{\Fft}{\mathsf{F}_{\mathrm{ft}}}
+\providecommand{\Cstr}{\mathsf{C}_{\mathrm{str}}^{\wedge}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\fib}{\operatorname{fib}}
+\providecommand{\cofib}{\operatorname{cofib}}
+\providecommand{\CoDer}{\operatorname{CoDer}}
+
+% Standalone-paper macros (ordered chiral homology insertion)
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\PP}{\mathbb{P}}
+\providecommand{\HHH}{\mathbb{H}}
+\providecommand{\Barord}{\overline{B}^{\mathrm{ord}}}
+\providecommand{\BarSig}{\overline{B}^{\Sigma}}
+\providecommand{\Barch}{\overline{B}^{\mathrm{ch}}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Pthree}{\mathsf{P}_{3}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
+\providecommand{\gEone}{\mathfrak{g}^{\mathsf{E}_{1}}_{\cA}}
+\providecommand{\Ainf}{A_{\infty}}
+\providecommand{\Eone}{\mathsf{E}_{1}}
+\providecommand{\Etwo}{\mathsf{E}_{2}}
+\providecommand{\Ethree}{\mathsf{E}_{3}}
+\providecommand{\En}{\mathsf{E}_{n}}
+\providecommand{\Einf}{\mathsf{E}_{\infty}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Lie}{\mathrm{Lie}}
+\providecommand{\GRT}{\operatorname{GRT}}
+\providecommand{\PBr}{\operatorname{PBr}}
+\providecommand{\rk}{\operatorname{rk}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\av}{\operatorname{av}}
+\providecommand{\GRTone}{\operatorname{GRT}_{1}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\ChirAlg}{\operatorname{ChirAlg}}
+\providecommand{\HTQFT}{\operatorname{HT\text{-}QFT}}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\ChirHoch}{\operatorname{ChirHoch}}
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}
+
+
+\begin{titlingpage}
+\vspace*{3cm}
+\begin{center}
+
+{\large\itshape Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves}
+
+\vspace{0.8cm}
+
+{\normalsize Volume~1}
+
+\vspace{1.5cm}
+
+{\HUGE\scshape Modular Koszul Duality}
+
+\vspace{1.5cm}
+
+{\Large\itshape $E_1$ Chiral Algebras and the\\
+Bar--Cobar Adjunction on Algebraic Curves}
+
+\vspace{3cm}
+
+{\large Raeez Lorgat}
+
+\vspace{2cm}
+
+\end{center}
+\end{titlingpage}
+
+\begin{abstract}
+\itshape
+
+\noindent
+Let \(X\) be a smooth curve over a field of characteristic zero and
+let \(\cA\) be a complete augmented chiral algebra on \(X\).  This
+volume studies the passage from the local collision operations of
+\(\cA\) to its Ran-space bar construction, its completed cobar, and
+its derived chiral centre.  The source and target of every comparison
+are fixed before the comparison is made: the bar is a complete
+conilpotent factorization coalgebra, the cobar is an augmented
+factorization algebra, and the derived centre is an endomorphism
+complex carrying its own deformation operations.
+
+On a coordinate disc \(U\subset X\), write
+\(\eta_{ij}=d\log(z_i-z_j)\).  The first calculation is
+\[
+\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0
+\qquad\text{on }\operatorname{Conf}_3(U).
+\]
+This identity is the configuration-space calculation.  On the tensor
+coalgebra, the arity-three bar cancellation is associativity with the
+desuspension signs.  A geometric chiral bar comparison must assemble
+these two facts with the chiral Jacobi identity, residue orientation
+lines, and Stokes compatibility.  Their separation fixes the local
+proof obligation for the constructions that follow.
+
+Over a point, the bar--cobar unit and counit are quasi-isomorphisms
+for augmented dg algebras and conilpotent dg coalgebras.  Francis and
+Gaitsgory's pro-nilpotence theorem gives the enhanced associative
+analogue in
+\(\bigl(D(\operatorname{Ran}X),\otimes^{\mathrm{ch}}\bigr)\).
+Re-unitalization yields the
+universal reconstruction map
+\(\Omega_XB_X(\cA)\xrightarrow{\sim}\cA\).  Its restriction to the
+factorization subcategories and its completed chain realization are
+formulated with explicit closure and convergence packages.  For a
+quadratic presentation
+\(\cA=T_X(V)/(R)\), the canonical map
+\[
+ q_\cA\colon \cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)
+ \longrightarrow B_X(\cA)
+\]
+is the Koszul comparison: under the chiral Comparison Lemma package,
+its being a quasi-isomorphism is equivalent to
+\(\Omega_X(\cA^{\mathrm i})\to\cA\) being a quasi-isomorphism and to
+acyclicity of the quadratic twisted tensor products.  Verdier duality
+forms the algebra
+\(\mathbb D_{\operatorname{Ran}}B_X(\cA)\) under a separate
+dualizability and continuity package.
+
+Symmetrisation is treated as homotopy descent for the configuration
+torsors.  Positive genus begins after a cyclic trace or perfect pairing
+supplies loop contractions and stable-graph sewing.  In that setting a
+complete graph filtration carries the modular Maurer--Cartan equation,
+and a final trace produces scalar classes.  Chiral Hochschild support is
+likewise family-indexed: a family datum consisting of an explicit
+comparison and strong deformation retract transports bounded
+vertex-cohomology calculations to the curve-level chart.  In
+particular, Bakalov--De Sole--Kac compute the bounded vertex
+cohomology of the rank-one even free superboson in degrees \(0,1\)
+with dimensions \(2,1\), and the bounded vertex cohomology of the
+universal Virasoro algebra in degrees \(0,2,3\), one-dimensional in
+each degree.
+
+The book therefore presents a tower of reconstruction theorems with
+four coordinates attached to every claim: quadrant, presentation,
+Beilinson level, and hypothesis package.  The local collision identity
+and the classical bar--cobar resolution form the proved foundation.
+The completed Ran, Verdier, modular, holographic, and
+Calabi--Yau-to-chiral passages appear with the precise comparison data
+that carry them.
+\end{abstract}
+
+\bigskip
+\noindent
+\textbf{2020 Mathematics Subject Classification.}
+Primary 17B69, 16S37;
+Secondary 14H10, 55R80, 81T40, 18G35.
+
+\medskip
+\noindent
+\textbf{Keywords.}
+Chiral algebras, factorization algebras, bar--cobar adjunction,
+Koszul duality, Ran space, Fulton--MacPherson compactifications,
+chiral Hochschild cohomology, modular operads.
+
+\tableofcontents
+\clearpage
+\hypersetup{pageanchor=true}
+
+\section*{Notation and hypothesis packages}
+A tangential logarithmic curve is a triple $(X,D,\tau)$, where $X$ is
+a smooth curve, $D$ is a divisor, and $\tau$ is the chosen tangential
+datum.  A factorization dg-category $\cC^{\mathrm{op}}$ with chosen
+object $b$ determines the augmented chart
+$A_b=\operatorname{RHom}_{\cC}(b,b)$.  These data generate the
+successive constructions displayed below.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.64\textwidth}@{}}
+\toprule
+\textbf{Notation} & \textbf{Construction}\\
+\midrule
+$C$, $\mathbb D_{\operatorname{Ran}}$, $d$ &
+A coalgebra, Verdier duality on the Ran space, and a cochain
+differential.\\
+$\operatorname{Conf}_n(X)$,
+$\operatorname{FM}_n(X)$, $D_I$, $\eta_{ij}$ &
+The ordered configuration space, its nested-set
+Fulton--MacPherson compactification, the collision divisor indexed by
+$I\subseteq\{1,\ldots,n\}$ with $2\leq |I|\leq n$, and the
+logarithmic form
+$\eta_{ij}=d\log(z_i-z_j)$.\\
+$B_X^{\mathrm{ch}}(\cA)$,
+$\Omega_X^{\mathrm{cont}}(C)$ &
+The complete conilpotent factorization coalgebra of an augmented
+factorization algebra and the continuous cobar algebra of a complete
+conilpotent factorization coalgebra.\\
+$\cA^{\mathrm i}$, $q_\cA$ &
+For a quadratic presentation $\cA=T_X(V)/(R)$, the quadratic
+coalgebra $\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ and its canonical comparison
+$q_\cA\colon\cA^{\mathrm i}\to B_X^{\mathrm{ch}}(\cA)$.\\
+$B_X^{\mathrm{ch},\mathrm{ord}}(\cA)$,
+$B_X^{\mathrm{ch},\Sigma}(\cA)$ &
+The ordered bar model and its symmetric homotopy-descent model on the
+configuration torsors.\\
+$\cA^!_\infty$, $\cA^!$ &
+Under $H_{\mathbb D}(\cA)$, the Verdier--Ran dual algebra
+$\cA^!_\infty:=\mathbb D_{\operatorname{Ran}}B_X^{\mathrm{ch}}(\cA)$
+and, when the graded pieces of $\cA^{\mathrm i}$ are dualizable, the
+quadratic algebra $\cA^!:=(\cA^{\mathrm i})^\vee$.  Verdier duality
+applied to $q_\cA$ gives their comparison.\\
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ &
+The derived chiral centre
+$C^\bullet_{\mathrm{ch}}(\cA,\cA)$, constructed from a completed
+diagonal resolution.\\
+$C^\bullet_{\mathrm{ch}}$, $C^\bullet_{\mathrm{alg}}$,
+$\mathrm{THH}$ &
+Chiral Hochschild cochains, algebraic Hochschild cochains, and
+topological Hochschild homology, each in its native monoidal
+category.\\
+$\Delta_{\mathrm{diag}}$, $\Delta_{\mathrm{co}}$,
+$\Delta_{\mathrm{disc}}$ &
+The diagonal map, coalgebra coproduct, and discriminant divisor.\\
+$\Einf$-chiral, $\Eone$-chiral, $\Pinf$-chiral; $\En$ &
+Curve-based chiral factorization structures
+(Definition~\ref{def:einf-chiral}) and the little-disks structure on
+real $n$-manifolds (Remark~\ref{rem:En-terminology}).\\
+\textit{standard landscape} &
+The finite atlas of explicit vertex-algebra families specified in
+Remark~\ref{rem:two-strata}; each family theorem names the subatlas
+carrying its hypotheses.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+\noindent\textbf{Hypothesis index.}
+A package consists of the structures in its row, with compatibility
+identities fixed by the cited definition.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.18}
+\begin{tabular}{@{}p{0.22\textwidth}p{0.70\textwidth}@{}}
+\toprule
+\textbf{Package} & \textbf{Structure supplied}\\
+\midrule
+\textup{(H1)--(H3)} &
+The augmented chart, its augmentation-ideal completion, and a chosen
+finite-window or weight-completed convergence model for Theorem~A
+(Chapter~\ref{ch:theorem-A-infinity-2}).\\
+\textup{(H1)--(H4)}$_{\mathrm{HT}}$ &
+BV gauge-fixing data, a regularized propagator, a
+Fulton--MacPherson extension with Arnold and Stokes identities, and
+factorization compatibility for the holomorphic--topological chain
+model.\\
+$H_{\mathrm{loc}}(\cA;U)$ &
+Nested collision strata, logarithmic de Rham complexes, one coherent
+sign convention, signed residues, chiral compatibility, and a chosen
+residue/Stokes comparison
+(Definition~\ref{def:preface-local-collision-package}).\\
+$H_{\mathrm{BC}}(X)$ &
+Complete Ran subcategories, continuous bar and cobar, factorization
+base change, conservative exact realizations of the associated-graded
+unit and counit, and convergent filtrations
+(Definition~\ref{def:preface-ran-package}).\\
+$H_{\mathrm{fact}}^R$ &
+Homotopy descent for the ordered configuration torsors, including the
+local system and nearby-cycle extension determined by an
+$R$-matrix.\\
+$H_{\mathbb D}(\cA)$ &
+Dualizable filtered pieces, continuous Verdier--Ran duality,
+factorization base change, and convergence of the filtered dual
+(Definition~\ref{def:preface-verdier-package}).\\
+$\mathsf{CP}^{\mathrm{ch}}(\widehat C)$ &
+A strict Mittag--Leffler tower of finite-stage chiral CDG-coalgebras
+whose coderived and contraderived categories are computed by the
+corresponding derived inverse limits
+(Definition~\ref{def:completed-chiral-positselski-package}).\\
+$H_{\mathrm{mod}}(\cA)$ &
+A perfect cyclic pairing, stable compactification chains, signed
+clutching maps, graph-filtration completeness, and a continuous
+square-zero total differential
+(Definition~\ref{def:preface-modular-package}).\\
+$H_H(\cA;S)$ &
+A filtered strong deformation retract onto a complex supported in
+$S$, together with the completed comparison to chiral Hochschild
+cochains and its Mittag--Leffler data
+(Definition~\ref{def:preface-family-support}).\\
+$\mathsf{FH}_{\Sigma}(\cA)$ &
+A factorization-homology comparison on $\Sigma$; the detecting datum
+$\mathsf{FH}^{\mathrm{det}}_{\mathbb P^1}(\cA)$ supplies
+conservativity for Koszul recognition.\\
+\textup{OCA}$(T,\cA)$ &
+A boundary identification, a completed bulk local-operator shadow,
+and a continuous brace morphism
+$\beta_T\colon\operatorname{Loc}_{\partial}
+\operatorname{Obs}^{\mathrm{bulk}}(T)\to
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ compatible with the mixed
+open--closed action and the chosen completions
+(Definition~\ref{def:thqg-oca-datum}); an OCA identification package
+includes a quasi-isomorphism proof for $\beta_T$.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ======================================================================
+%
+% PREFACE
+%
+% Chriss-Ginzburg style: the entire theory delivered through direct
+% constructions, showing the essential spine. Self-contained; readable
+% without the rest of the monograph.
+%
+% ======================================================================
+
+\include{chapters/frame/preface}
+
+% Open Beilinson Tower:
+% Three volumes, five main theorem packages. Placed after preface, before introduction.
+\input{chapters/frame/open_beilinson_tower_platonic}
+
+% Guide to Main Results: compact reference for the five main theorems.
+\ifannalsedition
+ \input{chapters/frame/guide_to_main_results}
+\fi
+
+% =====================================
+% Introduction
+% Conventions, semantic levels, structural overview.
+% The reader meets the five theorems before the Overture
+% instantiates them on the Heisenberg CG opening (the
+% $\Einf$-commutative base; the genuine $\Eone$ atom is the
+% Yangian, developed in the Seven Faces of $r(z)$ part).
+% =====================================
+\include{chapters/theory/introduction}
+
+% ======================================================================
+%
+% OVERTURE
+%
+% The Heisenberg CG opening presents the first finite bar calculation.
+% Example first, theory after. The genuine $\Eone$
+% atom (Yangian) enters later; Heisenberg is the $\Einf$-commutative
+% base case in which the thesis collapses to the single scalar $k$.
+%
+% ======================================================================
+
+\part*{Overture}
+\addcontentsline{toc}{part}{Overture}
+
+\include{chapters/frame/heisenberg_frame}
+
+% ======================================================================
+%
+% PLATONIC INTRODUCTION
+%
+% The refounded editorial posture: every dg structure is a strict shadow
+% of a homotopy-coherent convolution package. Chapter-by-chapter guide
+% to what each part of the algebraic engine does, read through
+% the full modular L-infinity lens.
+%
+% ======================================================================
+
+% omitted: platonic_introduction_volume_I.tex (archived; content absorbed into introduction.tex)
+
+% ======================================================================
+%
+% PART I: FOUNDATIONS AND THE OPEN BEILINSON TOWER
+%
+% Beilinson levels 0-1: the tangential log curve (X, D, tau), the
+% factorisation dg-category C^op, the chart algebra A_b = End_C(b)
+% at a chosen vacuum b, and the Morita reconstruction theorem
+% identifying (C^op, b) up to Morita equivalence from A_b.
+%
+% Open quadrant. Cat & Chain presentation. Hypothesis package:
+% augmentation, completeness, finiteness on chosen weight grading.
+%
+% ======================================================================
+
+\part{Foundations and the Open Beilinson Tower}
+\label{part:foundations-beilinson-tower}%
+
+% --- Chapter-label aliases for cross-references using ch:/chap: prefix variants ---
+\phantomsection\label{ch:theorem-h-off-koszul-platonic}% % alias
+\phantomsection\label{ch:topologization-chain-level-platonic}% % alias
+
+% Cross-volume chapter aliases (Vol II / Vol III chapters referenced from Vol I prose)
+\phantomsection\label{ch:phi-universal-trace}%           % Vol III chapters/theory/phi_universal_trace_platonic.tex
+\phantomsection\label{ch:ht-boundary}%                   % Vol II chapters/connections/holomorphic_topological.tex
+\phantomsection\label{ch:kontsevich-integral}%           % Vol II chapters/connections/kontsevich_integral.tex
+\phantomsection\label{ch:ym-boundary-theory}%            % Vol II chapters/connections/ym_boundary_theory.tex
+\phantomsection\label{ch:ym-instanton-screening}%        % Vol II chapters/connections/ym_instanton_screening.tex
+
+% More chapter-label aliases (canonical labels found in chapter files)
+\phantomsection\label{ch:cy-to-chiral-functor}%          % cross-volume Vol III ch:cy-to-chiral
+\phantomsection\label{V3-ch:cy-to-chiral}%               % canonical Vol III alias
+\phantomsection\label{chap:higher-genus-modular-koszul}% % alias for the higher-genus-modular-koszul chapter
+
+% Final round of chapter-label aliases (semantic redirects)
+\phantomsection\label{ch:genus-complete}%                % chapter genus_complete.tex (no chapter label inscribed; alias points here)
+\phantomsection\label{ch:k3e-bkm-chapter}%               % cross-volume Vol III V3-ch:k3e-bkm
+\phantomsection\label{chap:factorization-swiss-cheese}%  % alias for Swiss-cheese chapter (Vol I or Vol II)
+
+\noindent
+Vol I treats the Open quadrant of the four-quadrant theory: a
+factorisation dg-category $\cC^{\op}$ on a tangential log curve
+$(X, D, \tau)$, a chosen vacuum $b \in \cC^{\op}$, and the chart
+algebra
+$A_b=\operatorname{RHom}_{\cC}(b,b)$.  The open Beilinson tower is
+the sequence of typed constructions
+\[
+ (\cC^{\op},b)
+ \longmapsto A_b
+ \longmapsto B_X(A_b)
+ \longmapsto Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
+ \longmapsto \mathsf{Line}(A_b)
+ \longmapsto \operatorname{Tr}_{\mathrm{mod}}.
+\]
+Each arrow is a construction.  A reverse arrow is supplied by a named
+reconstruction theorem with its own hypothesis package.  Part~I fixes
+levels~$0$ and~$1$.  Part~II constructs the full bar coalgebra,
+universal reconstruction, the quadratic comparison, and the Verdier
+algebra at level~$2$.  Part~III constructs the derived chiral centre at
+level~$3$.  Part~IV records the finite family atlas and its
+recognition problems.  Part~V introduces cyclic trace and clutching
+at levels~$4$ and~$5$.  Part~VI states the comparison functors and the
+remaining reconstruction obligations.
+
+The reader entering this part has already met the tangential log
+curve, the factorisation dg-category, and the augmented chart algebra
+in the Heisenberg overture
+(Chapter~\ref{ch:heisenberg-frame}). Part~I supplies the
+foundations needed to formulate those constructions: the ordinary
+bar--cobar resolution, quadratic Koszul recognition, the three depth
+indices, and the logarithmic configuration-space carrier.
+
+On a coordinate disc, the first geometric calculation is Arnold's
+relation
+\[
+\eta_{12} \wedge \eta_{23}
+\;+\; \eta_{23} \wedge \eta_{31}
+\;+\; \eta_{31} \wedge \eta_{12}
+\;=\; 0
+\]
+on $\operatorname{Conf}_3(X)$.  The algebraic arity-three calculation
+is the signed associativity cancellation in the tensor bar.  A global
+chiral differential requires the logarithmic residue, orientation,
+Jacobi--Borcherds, Stokes, and boundary-of-boundary maps collected in
+$H_{\mathrm{loc}}$.  Proposition~\ref{prop:preface-local-square-zero}
+states the resulting square-zero criterion.
+
+The five theorem packages are:
+
+\begin{enumerate}[label=\textbf{(\Alph*)},leftmargin=2.2em]
+\item \textbf{Theorem~A: enhanced Ran reconstruction.}
+ Francis--Gaitsgory give inverse enhanced associative bar and cobar
+ functors in the pro-nilpotent Ran ambient.  Factorization closure,
+ completed chain realization, and Verdier transport carry the
+ statuses and packages stated in
+ Theorem~\ref{thm:koszul-reflection}.
+\item \textbf{Theorem~B: quadratic recognition.}
+ For $A=T_X(V)/(R)$, the map
+ $q_A\colon A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)\to B_X(A)$ is a
+ quasi-isomorphism exactly when the equivalent twisting and PBW
+ criteria hold under $H_{\mathrm{CL}}$.
+\item \textbf{Theorem~C: centre-local-system complementarity.}
+ On the strict flat C0 surface, the degree-zero fibre comparison gives
+ the ordinary centre local system~$\mathcal Z(A)$.  C1 splits
+ $\mathbf C_g(A)=R\Gamma(\overline{\mathcal M}_g,\mathcal Z(A))$
+ by the represented Verdier involution; C2 supplies the
+ shifted-symplectic refinement under its pairing package.
+\item \textbf{Theorem~D: modular trace.}
+ A perfect cyclic pairing, stable-graph chains, signed clutching, and
+ a trace produce the modular classes on the stated scalar and
+ multi-weight lanes.
+\end{enumerate}
+\noindent
+\textbf{(H) Chiral Hochschild support.}
+The datum $H_H(\cA;S)$ is a filtered deformation retract and a
+quasi-isomorphism to the selected chiral cochain chart.  It implies
+$\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S$.  The
+Bakalov--De Sole--Kac calculations give the benchmark supports stated
+in Theorem~\ref{thm:preface-bdsk-benchmarks}.
+
+\smallskip\noindent
+The shadow obstruction filtration is a further deformation-theoretic
+construction.  Each finite stage requires an explicit obstruction
+class and transition map; an inverse-limit theorem additionally
+requires completeness and Mittag--Leffler convergence.
+
+% The Fourier Seed: pedagogical bridge chapter (archive-only in Annals edition).
+\ifannalsedition\else
+\include{chapters/theory/fourier_seed}
+\fi
+
+% =====================================
+% Chapter 3: Algebraic Foundations
+% Classical Koszul duality recalled (not re-derived).
+% =====================================
+\include{chapters/theory/algebraic_foundations}
+
+% =====================================
+% Chapter 3.5: The three invariants of a chiral algebra
+% Foundational distinction p_max vs k_max vs r_max.
+% =====================================
+\include{chapters/theory/three_invariants}
+
+% =====================================
+% Chapter 3.6: The infinite fingerprint classification
+% Five-class stratum, FF bar structure, DS transport, d_alg = r_max - 2.
+% =====================================
+\include{chapters/theory/infinite_fingerprint_classification}
+
+% =====================================
+% Chapter 4: Configuration Spaces and Logarithmic Forms
+% Fulton--MacPherson compactification, Arnold relations, residue calculus.
+% =====================================
+\include{chapters/theory/configuration_spaces}
+
+% ======================================================================
+%
+% PART II: THE BAR-COBAR ENGINE
+%
+% Beilinson level 1 ↔ 2: the bar coalgebra B(A_b) = T^c(s^{-1} bar A_b)
+% at level 2. Theorem A is universal reconstruction in the enhanced
+% associative Ran ambient, with factorization, chain, and Verdier
+% realizations on named packages. Theorem B is the quadratic comparison
+% A_b^i -> B_X(A_b).
+%
+% Open quadrant. Cat & Chain presentation, four-lane discipline
+% L1 chain / L2 Quillen / L3 (∞,1) / L4 (∞,2)-properad. Hypothesis
+% package: augmented + complete + finite-dim graded; for class~M off
+% the strict lane, the coderived/contraderived Positselski ambient
+% replaces the chain-level lane.
+%
+% ======================================================================
+
+\part{The Bar–Cobar Engine}
+\label{part:bar-cobar-engine}%
+\phantomsection\label{part:bar-complex}% legacy alias: the engine develops the bar-complex proofs
+\phantomsection\label{chap:bar-complex}% legacy alias of part:bar-complex
+
+\noindent
+Part~\ref{part:foundations-beilinson-tower} fixes the level-$1$ chart
+algebra
+$A_b=\operatorname{RHom}_{\cC}(b,b)$ at a chosen vacuum
+$b\in\cC^{\op}$.  Part~\ref{part:bar-cobar-engine} constructs four
+objects and maps:
+\[
+ B_X(A_b),\qquad
+ \varepsilon_{A_b}\colon\Omega_XB_X(A_b)\to A_b,\qquad
+ q_{A_b}\colon A_b^{\mathrm i}\to B_X(A_b),\qquad
+ K_X(A_b)=\mathbb D_{\operatorname{Ran}}B_X(A_b).
+\]
+The enhanced counit is the universal reconstruction equivalence of
+Theorem~A.  Its factorization and completed chain realizations use
+$H_{\mathrm{fact}}$ and $H_{\mathrm{conv}}$.  The map $q_{A_b}$ is
+the quadratic recognition morphism of Theorem~B under
+$H_{\mathrm{CL}}$.  The algebra $K_X(A_b)$ is the Verdier output
+under $H_{\mathrm{VD}}$.  For a fixed curved coalgebra $C$, the
+Positselski theorem compares its comodule and contramodule categories
+under a separate second-kind package.
+
+A scalar can rescale an already constructed deformation retract.  If
+maps $\iota_A,p_A,h_A$ satisfy
+\[
+ p_A\iota_A=\operatorname{id},
+ \qquad
+ d_Ah_A+h_Ad_A
+ =\nu_A(\operatorname{id}-\iota_Ap_A),
+\]
+then $\nu_A^{-1}h_A$ is a contracting homotopy for
+$\nu_A\in k^\times$.  Identifying $\nu_A$ with a conductor or trace
+requires a family-level chain map.  Convention~\ref{conv:A-two-kappa-shriek}
+records this comparison problem.
+
+% =====================================
+% Chapter 5: The Geometric Bar Complex
+% Bar construction, Arnold relations, signs, coalgebra structure.
+% =====================================
+\include{chapters/theory/bar_construction}
+
+% =====================================
+% Chapter 6: The Geometric Cobar Complex
+% Cobar construction, distributions, Verdier duality, genus 1, Koszul pairs.
+% =====================================
+\include{chapters/theory/cobar_construction}
+
+% =====================================
+% Chapter 7: Bar-Cobar Adjunction and Curved Koszul Duality
+% Curved structures, I-adic completion, coalgebra homological algebra,
+% universal reconstruction, quadratic recognition, and Verdier transport.
+% =====================================
+% The two bar--cobar chapters below contain the adjunction and inversion arguments.
+% \include{chapters/theory/bar_cobar_adjunction}
+\clearpage
+\input{chapters/theory/bar_cobar_adjunction_curved}
+\input{chapters/theory/bar_cobar_adjunction_inversion}
+\input{chapters/theory/mc5_class_m_chain_level_platonic}
+\input{chapters/theory/mc5_genus0_genus1_wall_platonic}
+\clearpage
+
+% Homotopy Transfer Theorem: the mechanical heart of A∞ structure production.
+\input{appendices/homotopy_transfer}
+
+% Bar-Cobar Inversion: the quasi-isomorphism theorem, spectral sequence
+% construction, E_2 collapse, functoriality, derived equivalence.
+% omitted: chapters/theory/bar_cobar_quasi_isomorphism.tex
+
+% =====================================
+% Chapter 6: Non-Abelian Poincare Duality and Koszul Dual Cooperads
+% Conceptual foundation. Resolves circularity in defining Koszul duals.
+% =====================================
+\include{chapters/theory/poincare_duality}
+
+% =====================================
+% Chapter 7: Chiral Koszul Pairs and Deformation Theory
+% Curved structures, non-quadratic extension, Hochschild cohomology,
+% module categories.
+% Dependency: higher_genus requires Koszul pairs (complementarity, A!).
+% =====================================
+\include{chapters/theory/chiral_koszul_pairs}
+\include{chapters/theory/koszul_pair_structure}
+\include{chapters/theory/koszulness_moduli_scheme}
+
+% =====================================
+% Theorem A^{infty,2}: Francis-Gaitsgory bar-cobar (infty,2)-equivalence
+% at properad level with R-matrix-twisted Sigma_n-descent.
+% Canonical home for the Platonic-form Theorem A. Heals FM69-74, FM195.
+% =====================================
+\include{chapters/theory/theorem_A_infinity_2}
+
+% FTM seven-fold TFAE at genus zero (hub-and-spoke).
+\input{chapters/theory/ftm_seven_fold_tfae_platonic}
+
+% --- Bar-Cobar Engine: characteristic-datum apparatus ---
+% (Migrated from Part V to Part II in the platonic-ideal reconstitution:
+% the characteristic-datum machinery — fingerprint, branch-line
+% reductions, computational methods, universal conductor K, E_1
+% modular Koszul, ordered associative chiral KD, E_n Koszul duality —
+% extends Theorem A's level 1↔2 adjunction with the operadic
+% refinement that produces the modular characteristic kappa from the
+% bar-coalgebra structure.)
+
+% =====================================
+% The kappa-conductor scalar packages: universal conductor K,
+% the conductor trinity, archetype corollaries.
+% =====================================
+\include{chapters/theory/kappa_conductor}
+
+% =====================================
+% The Climax Theorem at genus zero: d_bar = KZ^*(nabla_Arnold).
+% Unifies the chiral bar differential and the kappa-conductor as two
+% specialisations of the Arnold three-term identity; corollaries:
+% Drinfeld--Kohno, Borcherds, Verlinde.
+% =====================================
+\include{chapters/theory/climax_theorem}
+
+% Part II frame: one fingerprint, five slots, five theorems.
+\input{chapters/frame/part_ii_platonic_introduction}
+
+\noindent
+The bar-length and PBW filtrations govern the comparison
+$q_{A_b}$.  Cyclic and modular deformation data enter later, after a
+perfect pairing and clutching maps have been supplied.  The chapters
+that follow keep these filtered constructions in their respective
+chain categories.
+
+% Branch-line reductions and analytic shadows (level-2 deformation
+% complex apparatus).
+\input{appendices/nonlinear_modular_shadows}
+\input{appendices/branch_line_reductions}
+
+% Computational methods: three-way verification of shadow obstruction
+% towers, bar cohomology, genus-2 free energies, DS-transferred towers,
+% explicit MC elements, N=2 SCA, and the decisive E_8 test.
+\input{chapters/theory/computational_methods}
+
+% Universal Conductor functor K = -c_ghost(BRST(.)) consolidating
+% per-family kappa formulas into ONE universal invariant on
+% BRST-gauged chiral algebras. Trinity Theorem K_E = K_c = K_g.
+\input{chapters/theory/universal_conductor_K_platonic}
+
+% --- E_1 wing: ordered associative parallel of Theorem A ---
+% E_1 modular Koszul duality, ordered chiral Koszul duality, E_n bar
+% complexes. The commutative engine uses symmetric configuration
+% spaces and the Fulton--MacPherson operad; the E_1 wing uses ordered
+% configurations and the ribbon modular operad.
+\input{chapters/theory/e1_modular_koszul}
+\input{chapters/theory/ordered_associative_chiral_kd}
+\input{chapters/theory/en_koszul_duality}
+
+% ======================================================================
+%
+% PART III: THE BULK
+%
+% Beilinson level 3: the derived chiral centre
+% Z^{der}_{ch}(A_b) = ChirHoch^bullet(A_b, A_b)
+% as the bulk identified with the level-3 reconstruction theorem.
+% Theorem H is the family-indexed chiral Hochschild support theorem;
+% Theorem B supplies the quadratic resolution under H_CL.
+%
+% Open quadrant. Cat & Chain presentation. Hypothesis package:
+% finiteness + completion (with class-M needing
+% completed/pro/J-adic). The bar coalgebra B(A_b) at level~2 is the
+% twisting datum, NOT the closed sector; the closed sector is Z^{der}_{ch}(A_b)
+% (bar-centre distinction firewall).
+%
+% ======================================================================
+
+\part{The Bulk}
+\label{part:bulk}
+
+\noindent
+Part~\ref{part:bar-cobar-engine} produced the bar coalgebra
+$B_X(A_b)$ at level~$2$.  The level-$3$ algebraic object is the
+derived chiral centre
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
+ :=C^\bullet_{\mathrm{ch}}(A_b,A_b),
+\]
+constructed from a completed diagonal bimodule resolution.  The bar
+coalgebra supplies one resolution input for this Hochschild
+construction.  An OCA datum
+\[
+ \beta_T\colon
+ \operatorname{Loc}_{\partial}\operatorname{Obs}^{\mathrm{bulk}}(T)
+ \longrightarrow Z^{\mathrm{der}}_{\mathrm{ch}}(A_b)
+\]
+connects the algebraic centre to a physical bulk; an OCA
+identification includes a proof that $\beta_T$ is a
+quasi-isomorphism.
+
+Theorem~H is a family-indexed support theorem.  A datum
+$H_H(A_b;S)$ gives a filtered deformation retract onto a complex
+supported in $S$ and a comparison quasi-isomorphism to the selected
+chiral cochain chart.  It follows that
+$\operatorname{Supp}\ChirHoch^\bullet(A_b)\subseteq S$.
+The Bakalov--De Sole--Kac calculations provide the universal
+Virasoro and free-superboson benchmarks.  Family statements for
+affine and $\mathcal W$ algebras require their own bounded-to-chart
+comparison maps.  Theorem~B contributes the smaller quadratic
+resolution precisely when
+$q_{A_b}\colon A_b^{\mathrm i}\to B_X(A_b)$ is a
+quasi-isomorphism.
+
+% Theorem B scope: on/off Koszul locus sharpening.
+\input{chapters/theory/theorem_B_scope_platonic}
+% Theorem H off-Koszul formulation.
+\input{chapters/theory/theorem_h_off_koszul_platonic}
+% Koszulness characterization (vii) at multi-weight.
+\input{chapters/theory/koszulness_vii_multiweight_platonic}
+% Three Hochschild theories: chain maps, cohomological comparison.
+\input{chapters/theory/three_hochschild_unification_platonic}
+% Compact/completed comparison for MC3.
+\input{chapters/theory/compact_completed_mc3_comparison_platonic}
+% MC3 on eval-generated core: five-family thick generation.
+\input{chapters/theory/mc3_five_family_platonic}
+
+% --- Bulk content: derived chiral centre and Hochschild calculus ---
+% (Migrated from Part V to Part III in the platonic-ideal reconstitution:
+% these chapters develop level-3 Bulk material — chiral Hochschild
+% complexes, modules, quantum corrections, Hochschild cohomology, and
+% the chain-level topologization that lifts the bar coalgebra to the
+% derived centre.)
+\include{chapters/theory/chiral_hochschild_koszul}
+\include{chapters/theory/chiral_modules}
+\include{chapters/theory/poincare_duality_quantum}
+\include{chapters/theory/quantum_corrections}
+\input{chapters/theory/filtered_curved}
+\input{chapters/theory/hochschild_cohomology}
+
+% --- E_n chain-level sharpenings (Bulk continued, level 3 -> derived centre) ---
+% Strict chain-level topologization for affine Kac-Moody.
+\input{chapters/theory/topologization_chain_level_platonic}
+% E_3 identification at chain level.
+\input{chapters/theory/e3_identification_chain_level_platonic}
+% Genus-2 doubly-dynamical Yang-Baxter equation (face model, Fay trisecant).
+\input{chapters/theory/genus_2_ddybe_platonic}
+
+% The open/closed realization: derived centre is the universal closed sector
+% (NOT the bar complex); modularity is trace plus clutching on the
+% open sector. Climax of Part III: Theorem H bridge to Vol II.
+\input{chapters/connections/thqg_open_closed_realization}
+
+% Chiral climax: the Bulk's structural endpoint. Two equations
+% d_bar = KZ^*(nabla_Arnold), kappa(A) = -c_ghost(BRST(A)) ground
+% the level-3 derived centre in the level-1 chart and level-5 modular
+% scalar.
+\input{chapters/theory/chiral_climax_platonic}
+
+% =====================================
+% Chapter 8: Higher Genus Extension and Quantum Corrections
+% From genus 0 to all genera. Deformation-obstruction complementarity.
+% =====================================
+% \include{chapters/theory/higher_genus}
+\clearpage
+
+% ======================================================================
+%
+% PART IV: THE FIVE-ARCHETYPE LANDSCAPE
+%
+% The 5x5 kappa-stratification matrix on G/L/C/M/B archetypes. Each
+% finite-atlas chart algebra A_b admits five distinct kappa-measurements;
+% the collapse pattern across the 5 columns is the stratification axis.
+% K3 x E anchors row B at (0, 0, 3, 5, 24); rows G, L, C, M have
+% a single non-zero entry in kappa^Heis_ch (rank of the canonical
+% Heisenberg subVOA).
+%
+% ======================================================================
+
+\part{The Five-Archetype Landscape}
+\label{part:standard-landscape}
+\phantomsection\label{part:physics-bridges}% legacy alias: family-by-family transform computations
+\phantomsection\label{part:characteristic-datum}% legacy alias: characteristic-datum computations for the standard families
+
+\noindent
+Parts~\ref{part:bar-cobar-engine}--\ref{part:bulk} produced, for every
+augmented chart algebra $A_b$ satisfying the relevant packages, the
+full bar coalgebra and the derived chiral centre in their respective
+categories.  Part~\ref{part:standard-landscape} tests these
+constructions on a finite atlas of vertex-algebra families.
+
+The census records five separately defined measurements:
+\[
+ \kappa_{\mathrm{cat}},\qquad
+ \kappa^{\mathrm{Hodge}}_{\mathrm{ch}},\qquad
+ \kappa^{\mathrm{Heis}}_{\mathrm{ch}},\qquad
+ \kappa_{\mathrm{BKM}},\qquad
+ \kappa_{\mathrm{fiber}}.
+\]
+A row in the proposed $5{\times}5$ matrix is determined by five
+constructions and their comparison maps.  The labels
+$\mathsf G/\mathsf L/\mathsf C/\mathsf M$ organize the Vol.~I
+family atlas by the stated shadow-depth data.  The row $\mathsf B$ is
+a Vol.~III K3 comparison row with candidate anchor
+$(0,0,3,5,24)$.  Each numerical entry carries the status recorded in
+the landscape census.  The modular characteristic
+$\kappa(A_b)$ used by Theorem~D is a further scalar trace and is
+listed with its own normalization.
+
+\include{chapters/frame/part_iii_platonic_introduction}
+
+\noindent
+The Heisenberg calculation provides the first finite model.  Every
+subsequent family chapter has the same proof obligations: choose an
+augmentation and completion; construct the collision maps; compute
+the first finite windows of
+$\operatorname{Cone}(q_A)$; prove convergence; construct the chiral
+Hochschild comparison; and specify any cyclic trace used at positive
+genus.  Drinfeld--Sokolov reductions, lattice screenings, and ordered
+Yangian models contribute additional comparison functors whose
+Koszul, Hochschild, and modular properties are proved family by
+family.
+
+Ordered and symmetric configuration models also remain distinct.
+An $R$-twisted descent theorem connects them when the braid local
+system, equivariance, nearby-cycle extension, and completion data are
+supplied.  This separation permits affine, Virasoro,
+$\mathcal W$-algebra, lattice, and Yangian examples to be compared
+inside one atlas while retaining their native operadic structures.
+
+% =====================================
+% Lattice vertex algebras
+% =====================================
+\include{chapters/examples/lattice_foundations}
+\include{chapters/examples/moonshine}
+% Platonic inscription (2026-04-16): unified chiral moonshine (Monster, Conway,
+% Thompson, Mathieu under the bar-Euler product identity framework).
+\input{chapters/examples/chiral_moonshine_unified}
+\include{chapters/examples/level1_bridge}
+
+% =====================================
+% Chapter: Free Field Theories
+% Heisenberg, free fermion, beta-gamma. Validation against known results.
+% =====================================
+\include{chapters/examples/free_fields}
+\include{chapters/examples/beta_gamma}
+% Overlapping stream collapsed into
+% chapters/examples/heisenberg_eisenstein.tex.
+% omitted: chapters/examples/heisenberg_higher_genus.tex
+
+% Modular-trace computations: Heisenberg, Kac--Moody, W-algebras.
+% The Heisenberg scalar-diagonal Hodge character is
+% (-1)^g kappa * lambda_g; the Kac--Moody lane includes the Sugawara shift.
+% Nilpotence proof and deformation-obstruction pairing via Serre duality.
+% Overlapping stream consolidated in
+% chapters/theory/higher_genus.tex.
+% omitted: chapters/examples/obstruction_classes.tex
+
+% Complete genus expansion of Heisenberg with Eisenstein series E_2, E_4, E_6,
+% Dedekind eta. Modular transformation laws. Agreement with DMVV.
+% \input (not \include): continues within the preceding chapter (Free Fields)
+\input{chapters/examples/heisenberg_eisenstein}
+
+% =====================================
+% Chapter 10: Affine Kac--Moody Algebras
+% Two complementary files: framework provides the abstract structure
+% (setup, config space geometry, screening charges, W-algebra bridge,
+% algorithms, applications); computations provides exhaustive degree-by-degree
+% results (sl_2 through degree 5, sl_3, E_8, partition functions,
+% critical level/Langlands).
+% =====================================
+\include{chapters/examples/kac_moody}
+% Computational overlap archived.
+% omitted: chapters/examples/kac_moody_computations.tex
+
+% =====================================
+% Chapter 11: W-Algebras
+% Two complementary files: framework provides the theoretical structure
+% (config space, curved A-infinity, algorithm, applications);
+% computations provides exhaustive results (W_3, W_N, higher genus,
+% composite fields, minimal models, fusion rules, Toda).
+% =====================================
+\include{chapters/examples/w_algebras}
+% Computational overlap archived.
+% omitted: chapters/examples/w_algebras_computations.tex
+
+% Complete W_3 composite field Lambda derivation: alpha(c) = 16/(22+5c),
+% beta(c) = 3/10. Mode expansion, central charge analysis, literature match.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
+\input{chapters/examples/w3_composite_fields}
+
+% Minimal model fusion rules via Verlinde formula. W_N modular data,
+% W_3(3,4) and W_3(5,6) complete fusion tables, Grothendieck ring.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
+\input{chapters/examples/minimal_model_fusion}
+% \input (not \include): continues within the preceding chapter (W-Algebras)
+\input{chapters/examples/minimal_model_examples}
+
+% Deep W-algebra structures: affine flag varieties, jet geometry,
+% chiral de Rham complex, bar coalgebra, screening operators, Toda systems.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
+\input{chapters/examples/w_algebras_deep}
+
+% =====================================
+% N=2 superconformal algebra: definitive CE vs chiral bar witness.
+% Shadow class M (T-channel infinite, J-channel Gaussian).
+% kappa = (k+4)/4 = (6-c)/(2(3-c)), complementarity sum = 1.
+% Engine: n2_sca_chiral_bar_engine.py, bar_cohomology_n2sca_explicit_engine.py.
+% =====================================
+\input{chapters/examples/n2_superconformal}
+
+% =====================================
+% Chapter 11.2: The Bershadsky-Polyakov algebra.
+% Simplest non-principal DS reduction: W^k(sl_3, f_{(2,1)}).
+% Standard census normalization: c(k)+c(-k-6)=50 and kappa sum=25/3.
+% Same-family Verdier/Koszul transport is a separate conditional theorem.
+% Mixed shadow depth: T-line class M, J-line class G.
+% Engine: bp_shadow_tower.py, bershadsky_polyakov_bar.py.
+% =====================================
+\input{chapters/examples/bershadsky_polyakov}
+
+% =====================================
+% Chapter: Y-algebras (corner VOAs)
+% Y_{N1,N2,N3}[Psi] from Gaiotto-Rapcak 2017.
+% Trijunction of interfaces in 4d N=4 HT gauge theory.
+% Special cases: Y_{0,0,N} = W_N x gl(1), Y_{N,0,0} = affine gl(N).
+%: c(Y_{1,1,1}) = 0 (sigma = h1+h2+h3 = 0); kappa = Psi channel-by-channel.
+% Shadow class G for max(N_i) <= 1; class M for max(N_i) >= 2.
+% =====================================
+\input{chapters/examples/y_algebras}
+
+% =====================================
+% Chapter 11.5: The W_3 holographic modular Koszul datum.
+% First complete rank-2 holographic datum
+% H(W_3) = (A, A!, C, r(z), Theta_A, nabla^hol).
+% Engine: compute/lib/theorem_w3_holographic_datum_engine.py (83 tests).
+% =====================================
+\include{chapters/examples/w3_holographic_datum}
+
+% =====================================
+% Chapter 12: Chiral Deformation Quantization
+% Chiral Kontsevich formality at various genera.
+% =====================================
+\include{chapters/examples/deformation_quantization}
+% Complete overlap archived.
+% omitted: chapters/examples/deformation_quantization_complete.tex
+
+% Deformation quantization examples: coisson (PVA) to E-infinity chiral,
+% P-infinity chiral to E-1 chiral, formality, star product, Maurer--Cartan.
+% \input (not \include): continues within the preceding chapter (Deformation Quantization)
+\input{chapters/examples/deformation_quantization_examples}
+
+% =====================================
+% Chapter 13: Yangians, Shifted Yangians, and Coulomb Branches
+% Drinfeld presentation, E_1 classification, BFN construction, CoHA.
+% =====================================
+% \input{chapters/examples/yangians}
+\input{chapters/examples/yangians_foundations}
+\input{chapters/examples/yangians_computations}
+\input{chapters/examples/yangians_drinfeld_kohno}
+% Exceptional-type Yangian Koszul duality: finite RTT inverse-kernel
+% criterion and obstruction theorem for g in {E_6, E_7, E_8, F_4, G_2}.
+\input{chapters/examples/exceptional_yangian_koszul_duality_platonic}
+
+% =====================================
+% Chapter: Symmetric Orbifolds
+% Sym^N(X) = X^{otimes N}/S_N: kappa linearity, DMVV, large-N, BTZ.
+% Shadow class inherited from seed X; twist sectors from degree 4.
+% Engine: symmetric_orbifold_shadow_engine.py, theorem_symn_kappa_engine.py.
+% =====================================
+\input{chapters/examples/symmetric_orbifolds}
+
+% =====================================
+% Chapter: Logarithmic W-algebras -- the triplet W(p)
+% W(p) at p>=2: C_2-cofinite, non-rational, 4 generators.
+% Koszulness OPEN.
+% =====================================
+\input{chapters/examples/logarithmic_w_algebras}
+
+\ifannalsedition\else
+ %; Archive-only: extended example families and census --
+ % omitted: chapters/examples/toroidal_elliptic.tex (moved to Vol III)
+ \input{chapters/examples/genus_expansions}
+ \input{chapters/examples/bar_complex_tables}
+ \input{chapters/examples/landscape_census}
+ % Class-M shadow tower beyond Virasoro (line-restricted master equation).
+ \input{chapters/theory/shadow_tower_other_class_M_platonic}
+ % Extended shadow-tower families: W_3, BP, W_infinity[Psi], super-Yangian sl(1|1).
+ \input{chapters/examples/shadow_tower_extended_families}
+ \input{appendices/combinatorial_frontier}
+\fi
+
+% ======================================================================
+%
+% PART V: THE MODULAR TOWER
+% (relocated to come BEFORE the physics bridges, which absorb into
+% it as level-4/level-5 realizations of the modular trace.)
+%
+% Beilinson levels 4-5: line/brane operators and the modular trace +
+% clutching package. Theorem D separates the native deformation class,
+% its perfect K-theory realization, the top Hodge character, and the
+% numerical stable-graph trace. The weighted-Riccati shadow tower
+% with closed form |omega|^2(c) = c^2(5c+22)/[4(45c+218)] is the
+% modular spine.
+%
+% Open quadrant. Cat & Chain presentation. Modularity is the trace +
+% clutching package on the open category (open-trace firewall).
+%
+% ======================================================================
+
+\part{The Modular Tower}
+\label{part:modular-tower-physics}%
+\phantomsection\label{part:modular-tower}% canonical short alias
+
+\noindent
+Parts~\ref{part:bar-cobar-engine}--\ref{part:standard-landscape}
+construct the chart, bar, quadratic, Verdier, and Hochschild objects
+on their stated domains.  Positive genus begins with new input.  A
+modular package $H_{\mathrm{mod}}(A_b)$ consists of a perfect cyclic
+pairing, chain models for stable compactifications, signed residue and
+proper pushforward along clutching maps, a complete graph filtration,
+and a square-zero corrected total differential.
+
+These data produce a stable-graph Maurer--Cartan element in the
+complete modular convolution algebra.  For $g\geq2$, its native
+genus-$g$ component is the deformation class
+$\operatorname{Obs}^{\mathrm{def}}_g(A_b)\in
+H^2(\operatorname{Def}_g(A_b))$.  Under the genus-one trace package
+$H_D^1$, the pointed class has normalized trace
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(A_b)
+=\kappa(A_b)\lambda_1$.  Under $H_D^K$, the scalar perfect object and
+its top Hodge character are
+\[
+ \mathfrak O_g^K(A_b)=\kappa(A_b)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g\!\left(\mathfrak O_g^K(A_b)\right)
+ =(-1)^g\kappa(A_b)\lambda_g.
+\]
+The package $H_D^{\mathrm{tr}}$ supplies the deformation-to-$K$
+comparison.  Under $H_D^{\mathrm{graph}}$, the numerical trace is
+$F_g(A_b)=\kappa(A_b)\lambda_g^{\mathrm{FP}}
++\delta F_g^{\mathrm{cross}}(A_b)$; the scalar-diagonal lane has
+$\delta F_g^{\mathrm{cross}}=0$.  Each family application constructs
+the trace, verifies clutching compatibility, and establishes graph
+filtration convergence.
+
+The chapters that follow treat the algebraic graph complexes and
+their comparison with Feynman, BV--BRST, Chern--Weil, and arithmetic
+models.  Every bridge is a chain map or trace identity with its own
+hypothesis package.
+
+\include{chapters/frame/part_iv_platonic_introduction}
+
+\noindent
+The logarithmic collision form
+$\eta_{ij}=d\log(z_i-z_j)$, a gauge-fixed propagator, a Green kernel,
+and a Kontsevich angle form live in different complexes.  The
+chapters below construct comparison maps among selected models.
+Arnold's relation gives the configuration-space codimension-two
+identity.  Associativity, Jacobi--Borcherds, the classical
+Yang--Baxter equation, and the BRST Ward identity are algebraic
+relations in their respective targets.  A bridge theorem identifies
+them by carrying generators, differentials, orientations, and
+boundary maps through an explicit chain map.
+
+\input{chapters/connections/poincare_computations}
+\ifannalsedition
+ % Labels from feynman_diagrams.tex referenced by other chapters
+ % Labels from feynman_connection.tex referenced by other chapters
+ % Labels from bv_brst.tex referenced by other chapters
+\else
+\input{chapters/connections/feynman_diagrams}
+\input{chapters/connections/feynman_connection}
+\input{chapters/connections/bv_brst}
+\fi
+
+\ifannalsedition\else
+ % Physics-facing bridge chapters outside the annals condensation.
+ % omitted: chapters/connections/holomorphic_topological.tex (migrated to Vol II Part V)
+ % omitted: chapters/connections/kontsevich_integral.tex (migrated to Vol II Part III)
+ % omitted: chapters/connections/physical_origins.tex (19-line stub; content absorbed into Vol II)
+ \input{chapters/connections/genus_complete}
+ % Yang--Mills boundary theory -- migrated to Vol II Part V
+ % omitted: chapters/connections/ym_boundary_theory.tex (migrated to Vol II)
+ % omitted: chapters/connections/ym_higher_body_couplings.tex (migrated to Vol II)
+ % omitted: chapters/connections/ym_instanton_screening.tex (migrated to Vol II)
+ % Derived structures and geometric Langlands
+ \input{chapters/theory/derived_langlands}
+ % Periodic CDG at admissible level + chiral Adams functor (closes FM251, FM256)
+ \input{chapters/theory/periodic_cdg_admissible}
+ %; Promoted from appendices: substantial bridge chapters --
+ % spectral_sequences and existence_criteria moved to Appendices (EXEC-17)
+ % omitted: chapters/connections/casimir_divisor_core_transport.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/typeA_baxter_rees_theta.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/shifted_rtt_duality_orthogonal_coideals.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/dg_shifted_factorization_bridge.tex (removed; content in Vol II Part II)
+\fi
+
+% ======================================================================
+%
+% ARITHMETIC SHADOWS (absorbed into Part IV: Physics Bridges)
+%
+% The shadow obstruction tower acquires an arithmetic face: a depth
+% decomposition d = 1 + d_arith + d_alg separates the arithmetic
+% contribution (Eisenstein spectral content of the constrained Epstein
+% zeta) from the algebraic contribution (L_infinity non-formality).
+%
+% ======================================================================
+
+%; Arithmetic Shadows: absorbed into Part IV (Physics Bridges) --
+
+\noindent
+The shadow obstruction tower acquires an arithmetic face.
+The arithmetic chapter defines its depth filtration, constructs the
+relevant Dirichlet series on each stated family, and compares
+Eisenstein terms with the algebraic deformation filtration.  A scalar
+formula is used after its trace normalization and family hypotheses
+have been verified.
+
+% Arithmetic content of the shadow obstruction tower: sewing--Rankin--Selberg bridge,
+% shadow--spectral correspondence, cusp singularity analysis.
+\input{chapters/connections/arithmetic_shadows}
+
+% (Part V continues with the modular-tower algebraic core: higher
+% genus, shadow tower, conformal anomaly rigidity, Chern-Weil
+% level shift, clutching uniqueness, Kummer-Bernoulli, all-tier
+% generating function. The Part V declaration sits earlier in the
+% file as the platonic-ideal entry-point to the modular tower.)
+\ifannalsedition\else
+
+\noindent
+The modular-tower algebraic core continues here with genus complexes,
+the finite stages of the shadow obstruction filtration, and
+arithmetic comparison problems.  The proposed
+$\mathsf G/\mathsf L/\mathsf C/\mathsf M$ shadow-depth census and the
+Vol.~III $\mathsf B$ comparison row are evaluated family by family;
+their formulas and statuses are recorded in the canonical census.
+
+\input{chapters/theory/higher_genus_foundations}
+\input{chapters/theory/higher_genus_complementarity}
+\input{chapters/theory/theorem_C_refinements_platonic}
+\input{chapters/theory/higher_genus_modular_koszul}
+\clearpage
+% Higher-genus material is concentrated in the chapters below.
+% omitted: chapters/theory/higher_genus_full.tex
+
+% Higher genus inversion theorem: induction on moduli space strata.
+% Higher-genus inversion is contained in the higher-genus chapters.
+% omitted: chapters/theory/higher_genus_quasi_isomorphism.tex
+
+% Koszul duality across genera: absorbed into higher_genus.tex §sec:koszul-across-genera.
+% Original standalone file preserved at chapters/theory/koszul_across_genera.tex.
+% omitted: chapters/theory/koszul_across_genera.tex
+
+% (chiral_hochschild_koszul, chiral_modules, poincare_duality_quantum,
+% quantum_corrections, filtered_curved, hochschild_cohomology migrated
+% to Part III: The Bulk in the platonic-ideal reconstitution.)
+
+% =====================================
+% The Motivic Shadow Tower: S_r(A) in MZV^mot, GRT-motivic coaction,
+% Kummer-congruence prediction for Z_g closed forms, L^sh pole structure
+% kappa-motivic vs beta-modular split.
+% Depends on Vol II GRT-parametrized seven faces.
+% =====================================
+\include{chapters/theory/motivic_shadow_tower}
+
+% Platonic inscription (2026-04-17) -- full class-M motivic rationality:
+% Extends thm:virasoro-motivic-rationality-all-r from Virasoro to the
+% complete class M (W_N principal, BP Arakawa, W_infty generic Psi),
+% via the structural E_1-depth-1 theorem. Closes the E_1-vs-E_2 depth
+% distinction (thm:e1-vs-e2-mzv-depth-distinction).
+\include{chapters/theory/motivic_shadow_full_class_m_platonic}
+
+% Virasoro motivic purity: every shadow-tower coefficient S_r(Vir_c)
+% is a rational function of c; the motivic lift carries no MZV
+% contribution. Upstream: motivic_shadow_tower (rational tower).
+\input{chapters/theory/virasoro_motivic_purity}
+
+% Virasoro motivic purity for all r >= 2: the platonic all-r form.
+\input{chapters/theory/virasoro_motivic_purity_all_r_platonic}
+
+% Platonic master narrative (2026-04-17) -- Quadrichotomy Theorem,
+% Riccati master equation H^2 = t^4 Q_c, five corollaries, Borel-
+% geometric layer (iter 30-77). Sets the frame for the entire
+% shadow-tower block: every subsequent shadow_tower_*.tex chapter is
+% a subordinated lemma, witness, or asymptotic-layer specialisation.
+\input{chapters/theory/shadow_tower_quadrichotomy_platonic}
+
+% The shadow L-function: Dirichlet encoding of the shadow tower,
+% conditional analytic continuation, genus-slot bridge, Kummer
+% congruence prediction.
+\input{chapters/theory/shadow_L_function_platonic}
+
+% Shadow tower higher coefficients:
+% extension to higher coefficients S_r for r >= 5.
+\input{chapters/theory/shadow_tower_higher_coefficients}
+% Sub-subleading large-c Laurent layer: Gamma_r = A_r[484/25 +
+% 22(r-4)(r-5)/45 + (r-4)(r-5)(r-6)(r-7)/972], with
+% sporadicity of the Kummer-irregular prime 691 at r=8.
+\input{chapters/theory/shadow_tower_sub_subleading_platonic}
+% Conformal anomaly rigidity and its complementarity with Koszulness.
+\input{chapters/theory/conformal_anomaly_rigidity_platonic}
+% Chern-Weil level-shift theorem (connection kappa to the genus tower).
+\input{chapters/theory/chern_weil_level_shift_platonic}
+% Clutching uniqueness on the socle of the tautological ring.
+\input{chapters/theory/clutching_uniqueness_platonic}
+% Z_g Kummer-Bernoulli: Verlinde polynomial closed form + Kummer prediction.
+\input{chapters/theory/z_g_kummer_bernoulli_platonic}
+% Higher Kummer-irregular arithmetic duality: extends {691, 3617} to the
+% tower {691, 3617, 43867, 283, 617, 131, 593} through r = 13 (2026-04-17).
+\input{chapters/theory/higher_kummer_arithmetic_duality_platonic}
+% All-tier Laurent stratification via a bivariate hypergeometric
+% generating function (2026-04-17): Tier-K(r)/A_r = (-1)^(K+1) Sum
+% C(K-1,m) tau^(K-1-m) (r-4)_(2m) / (9^m m! (m+1)!) for every K >= 1,
+% proved via F(r,u) = (1/(1+tau u)) 2F1((4-r)/2, (5-r)/2; 2; -4u/(9(1+tau u))).
+\input{chapters/theory/all_tier_generating_function_platonic}
+
+% ======================================================================
+%
+% PART II: THE CHARACTERISTIC DATUM
+%
+% Ring 2 of the three concentric rings: the nonlinear modular shadow
+% obstruction tower kappa -> Delta -> [C] -> o^(r) -> Theta. The
+% algebraic engine extended beyond the linear regime into the genuine
+% geometry of complementarity, the graph calculus, and the full
+% Maurer--Cartan equation at all genera.
+%
+% ======================================================================
+
+% (Characteristic-Datum apparatus migrated to Part II: the
+% nonlinear_modular_shadows + branch_line_reductions appendices,
+% computational_methods, universal_conductor_K, the E_1 wing
+% (e1_modular_koszul, ordered_associative_chiral_kd, en_koszul_duality),
+% and part_ii_platonic_introduction frame chapter all belong with
+% the Bar-Cobar Engine in the platonic-ideal reconstitution.
+% topologization_chain_level, e3_identification_chain_level,
+% genus_2_ddybe, thqg_open_closed_realization, chiral_climax_platonic
+% migrated to Part III: The Bulk.)
+
+% ======================================================================
+
+\part{Seven Faces and the Frontier}
+\label{part:seven-faces}
+
+\noindent
+Parts~\ref{part:foundations-beilinson-tower}--\ref{part:modular-tower-physics}
+have constructed the levels of the open Beilinson tower on their
+stated domains.  This final part studies three comparison problems.
+
+\textit{(i)} The binary collision residue is defined in the local bar
+complex.  A seven-face theorem consists of seven explicit morphisms
+from that residue to the chosen line-operator, Yangian, Gaudin,
+Poisson, and related targets, together with proofs that the maps
+intertwine differentials and brackets.
+
+\textit{(ii)} A vertical comparison with Vols.~II and~III is a family
+of functors at specified Beilinson levels.  Each functor carries a
+source category, a target category, a descent package, and a
+comparison transformation.  Levels~$0$, $2$, $4$, and~$5$ therefore
+form separate theorem surfaces.
+
+\textit{(iii)} The Master Reconstruction framework assembles the
+forward constructions and their reverse comparison theorems.
+KSDual denotes the fixed locus equipped with a coherent equivalence
+to the Verdier--Koszul partner.  Theorems~A, B, C, D, and~H retain
+their individual maps and hypothesis packages inside this framework.
+
+The master concordance records the proved, conditional, conjectural,
+and open components of these comparisons.
+
+% The seven faces of the collision residue: master chapter for Part V.
+% One mathematical object (r(z) = Res^coll_{0,2}(Theta_A)) realized in
+% seven independent mathematical frameworks, all proved to agree. This
+% chapter is the centrepiece of the platonic-ideal restructuring: it
+% converts the abstract universality claim into seven typed equalities
+% (seven frameworks, seven independent computations, one object) and
+% activates the seven-face falsification principle.
+\input{chapters/connections/holographic_datum_master}
+
+% Genus-1 extension of the seven-face correspondence. The collision residue
+% on E_tau produces elliptic objects: KZB connection, Belavin r-matrix,
+% elliptic Gaudin Hamiltonians, and genuinely new higher-order elliptic
+% operators for class M (Virasoro, W_N).
+\input{chapters/connections/genus1_seven_faces}
+
+% Grand Unification: one $\infty$-adjunction, five-theorem corollaries,
+% three avatars L1/L2/L3. The Vol I/II/III statement
+% as a single presentable $\infty$-adjoint pair on BrMon^{comp}_\infty.
+\input{chapters/connections/grand_unification_platonic}
+
+% ======================================================================
+% PART VI: BOUNDARY GEOMETRY
+%
+% Modular holography, higher-spin geometry, entanglement, completion,
+% and the explicit boundary conditions of the collision-residue engine.
+% ======================================================================
+% (Boundary geometry develops
+% the hypotheses for boundary collision calculus and the cross-volume comparisons
+% at levels 0 and 4. The Master Reconstruction Theorem closes Part VI
+% as the structural climax that subsumes Theorems A, B, C, D, H as
+% corollaries restratified by Beilinson-tower level.)
+\section*{Boundary Geometry}
+\label{part:v1-frontier}
+\addcontentsline{toc}{section}{Boundary Geometry}
+
+\noindent
+Parts~\ref{part:bar-complex}--\ref{part:seven-faces} develop the
+proved, conditional, and conjectural theorem surfaces, their standard
+computations, and their stated comparison maps.
+Part~\ref{part:v1-frontier} studies modular holography, higher-spin
+geometry, entanglement, nilpotent completion, and the additional
+hypotheses required at each boundary stratum.
+
+\input{chapters/connections/frontier_modular_holography_platonic}
+% omitted: chapters/connections/twisted_holography_quantum_gravity.tex
+% thqg_open_closed_realization lives in Part II (The Characteristic Datum)
+\input{chapters/connections/entanglement_modular_koszul}
+\input{chapters/connections/thqg_entanglement_theory}
+\input{chapters/connections/holographic_codes_koszul}
+\input{chapters/connections/semistrict_modular_higher_spin_w3}
+% Boundary-completion chapters.
+\input{chapters/theory/nilpotent_completion}
+\input{chapters/theory/coderived_models}
+\input{chapters/connections/subregular_hook_frontier}
+
+% Cross-volume vertical equivalences. Level-0: factorisation dg-cat ↔
+% CY-cat via 6d hCS, formal locus + global descent, quartic anomaly
+% \int_X Tr_ad(A(F_A)^3). Level-4: line / brane operators ↔ Drinfeld
+% double D(Y^+(X)) with Hall pairing, completion, integral form,
+% stable-envelope transport, descent.
+\input{chapters/connections/vertical_equivalence_level_0}
+\input{chapters/connections/vertical_equivalence_level_4}
+
+% Master Reconstruction Theorem: structural climax of Vol I. The five-level
+% open Beilinson tower on a tangential log curve, reconstruction theorems
+% with named hypothesis packages at each step, KSDual as the Z/2-fixed
+% sublocus, vertical holographic dictionary to Vols II / III. Theorems
+% A, B, C, D, H are corollaries restratified by tower level. This is
+% the climactic chapter; the outlook + master concordance follow as
+% reading apparatus.
+\input{chapters/connections/master_reconstruction}
+
+\input{chapters/connections/outlook}
+
+% Master concordance: the trilingual dictionary connecting the seven-face
+% theory across all three volumes. Placed after the concordance
+% (concordance.tex) and after outlook.tex so that it serves as the final
+% navigation index of Vol~I, pointing to the corresponding chapters in
+% Vol~II (3d HT QFT) and Vol~III (Calabi--Yau quantum groups).
+\input{chapters/connections/master_concordance}
+\fi
+
+% ======================================================================
+% BIBLIOGRAPHY
+% ======================================================================
+
+\input{bibliography/references}
+
+% ======================================================================
+% APPENDICES
+%
+% Reference material only: sign conventions, notation, relations,
+% tables. Substantial mathematical content lives in chapters in Parts II--III.
+% ======================================================================
+\appendix
+
+\input{appendices/general_relations}
+\input{appendices/hochschild_conventions}
+\input{appendices/arnold_relations}
+\input{appendices/signs_and_shifts}
+\input{appendices/theta_functions}
+\input{appendices/spectral_higher_genus}
+\input{appendices/koszul_reference}
+\ifannalsedition\else
+ \input{appendices/dual_methodology}
+\fi
+\input{appendices/type_system}
+\input{appendices/vertical_equivalence_level_2}
+\input{appendices/notation_index}
+\input{appendices/q_convention_bridge_appendix}
+\ifannalsedition\else
+ \input{appendices/computational_tables}
+\fi
+%; Moved from Part IV (EXEC-17): self-identified appendices --
+\input{chapters/theory/spectral_sequences}
+\input{chapters/theory/existence_criteria}
+
+% ======================================================================
+% CROSS-VOLUME PHANTOM LABELS
+%
+% These anchors resolve prefixed references to real targets in Vol II and
+% Vol III. They are not theorem statements; each source label below was
+% verified against the corresponding external volume before retargeting.
+% ======================================================================
+%; V2 verified external anchors --
+\phantomsection\label{V2-ch:grt-seven-faces}% % V2:ch:grt-seven-faces
+\phantomsection\label{V2-cor:thqg-I-heisenberg-selberg}% % V2:cor:thqg-I-heisenberg-selberg
+\phantomsection\label{V2-def:face-space}% % V2:def:face-space
+\phantomsection\label{V2-eq:molien-weyl-g}% % V2:eq:molien-weyl-g
+\phantomsection\label{V2-item:scope-orbifold}% % V2:item:scope-orbifold
+\phantomsection\label{V2-lem:thqg-X-composition-decay}% % V2:lem:thqg-X-composition-decay
+\phantomsection\label{V2-prop:bv-bar-class-m-weight-completed}% % V2:prop:bv-bar-class-m-weight-completed
+\phantomsection\label{V2-prop:f7-split}% % V2:prop:f7-split
+\phantomsection\label{V2-prop:grt-action-face}% % V2:prop:grt-action-face
+\phantomsection\label{V2-prop:grtfin-casimir}% % V2:prop:grtfin-casimir
+\phantomsection\label{V2-prop:mixed-product-decomposition}% % V2:prop:mixed-product-decomposition
+\phantomsection\label{V2-prop:thqg-X-second-quantization}% % V2:prop:thqg-X-second-quantization
+\phantomsection\label{V2-rem:anomtop-312-spectrum}% % V2:rem:anomtop-312-spectrum
+\phantomsection\label{V2-rem:anomtop-anomaly-polynomial}% % V2:rem:anomtop-anomaly-polynomial
+\phantomsection\label{V2-rem:bulk-categorical}% % V2:rem:bulk-categorical
+\phantomsection\label{V2-rem:e3-topological-scope-map}% % V2:rem:e3-topological-scope-map
+\phantomsection\label{V2-rem:htpo-mukai-direction}% % V2:rem:htpo-mukai-direction
+\phantomsection\label{V2-rem:two-pairings-supertrace-berezinian}% % V2:rem:two-pairings-supertrace-berezinian
+\phantomsection\label{V2-rem:v2-oackd-W15-e1-e2}% % V2:rem:v2-oackd-W15-e1-e2
+\phantomsection\label{V2-rem:v2-oackd-W15-two-param}% % V2:rem:v2-oackd-W15-two-param
+\phantomsection\label{V2-rem:was-6A-6B}% % V2:rem:was-6A-6B
+\phantomsection\label{V2-rem:witten-het-iia-mukai-narain}% % V2:rem:witten-het-iia-mukai-narain
+\phantomsection\label{V2-sec:3dgravvix-supplement}% % V2:sec:3dgravvix-supplement
+\phantomsection\label{V2-sec:bar-cobar-review-supplement}% % V2:sec:bar-cobar-review-supplement
+\phantomsection\label{V2-sec:fsc-K3-vs-A2}% % V2:sec:fsc-K3-vs-A2
+\phantomsection\label{V2-sec:grt-torsor-thm}% % V2:sec:grt-torsor-thm
+\phantomsection\label{V2-sec:grtfin}% % V2:sec:grtfin
+\phantomsection\label{V2-sec:lineop-ext-supplement}% % V2:sec:lineop-ext-supplement
+\phantomsection\label{V2-sec:schtop-heptagon-supplement}% % V2:sec:schtop-heptagon-supplement
+\phantomsection\label{V2-subsec:thqg-III-shifted-symplectic}% % V2:subsec:thqg-III-shifted-symplectic
+\phantomsection\label{V2-thm:E3-topological-DS}% % V2:thm:E3-topological-DS
+\phantomsection\label{V2-thm:E3-topological-DS-general}% % V2:thm:E3-topological-DS-general
+\phantomsection\label{V2-thm:chd-deligne-tamarkin}% % V2:thm:chd-deligne-tamarkin
+\phantomsection\label{V2-thm:class-M-chain-bulk}% % V2:thm:class-M-chain-bulk
+\phantomsection\label{V2-thm:dnp-bar-cobar-identification}% % V2:thm:dnp-bar-cobar-identification
+\phantomsection\label{V2-thm:f1-f4-injection}% % V2:thm:f1-f4-injection
+\phantomsection\label{V2-thm:modular-bar}% % V2:thm:modular-bar
+\phantomsection\label{V2-thm:monster-orbifold-e3}% % V2:thm:monster-orbifold-e3
+\phantomsection\label{V2-thm:seven-faces-as-GRT-torsor}% % V2:thm:seven-faces-as-GRT-torsor
+\phantomsection\label{V2-thm:thqg-I-determinant-formula}% % V2:thm:thqg-I-determinant-formula
+\phantomsection\label{V2-thm:thqg-III-eigenspace-decomposition}% % V2:thm:thqg-III-eigenspace-decomposition
+\phantomsection\label{V2-thm:thqg-X-heisenberg-sewing-full}% % V2:thm:thqg-X-heisenberg-sewing-full
+\phantomsection\label{V2-thm:universal-holography-master}% % V2:thm:universal-holography-master
+
+%; V3 verified external anchors --
+% \phantomsection\label{V3-ch:cy-to-chiral}% % DUPLICATE: already defined at L750 (collision resolved 2026-05-17)
+\phantomsection\label{V3-ch:drinfeld-center}% % V3:ch:drinfeld-center
+\phantomsection\label{V3-ch:geometric-langlands}% % V3:ch:geometric-langlands
+\phantomsection\label{V3-ch:k3-chiral-bialgebra-platonic}% % V3:ch:k3-chiral-bialgebra-platonic
+\phantomsection\label{V3-ch:k3e-bkm}% % V3:ch:k3e-bkm
+\phantomsection\label{V3-conj:toroidal-e1}% % V3:conj:toroidal-e1
+\phantomsection\label{V3-cor:qgf-grt1-affine-recovery}% % V3:cor:qgf-grt1-affine-recovery
+\phantomsection\label{V3-def:cyclically-admissible}% % V3:def:cyclically-admissible
+\phantomsection\label{V3-def:k3-chiral-bialgebra}% % V3:def:k3-chiral-bialgebra
+\phantomsection\label{V3-def:qgf-imag-pro}% % V3:def:qgf-imag-pro
+\phantomsection\label{V3-def:qgf-quant-delta5}% % V3:def:qgf-quant-delta5
+\phantomsection\label{V3-def:phi-fa-and-sp}% % V3:def:phi-fa-and-sp (cy_to_chiral.tex)
+\phantomsection\label{V3-thm:phi-two-stage-factorisation}% % V3:thm:phi-two-stage-factorisation (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:phi-fa-three-step-assembly}% % V3:prop:phi-fa-three-step-assembly (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:native-en-level}% % V3:prop:native-en-level (cy_to_chiral.tex)
+\phantomsection\label{V3-subsec:6d-hcs-k3e-explicit-construction}% % V3:subsec:6d-hcs-k3e-explicit-construction (cy_to_chiral.tex)
+\phantomsection\label{V3-lem:dabc-vanishing-classification}% % V3:lem:dabc-vanishing-classification (cy_to_chiral.tex)
+\phantomsection\label{V3-thm:phi-two-stage-derived}% % V3:thm:phi-two-stage-derived (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:phifa-infty1-kernel}% % V3:prop:phifa-infty1-kernel (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:spch-infty1-kernel}% % V3:prop:spch-infty1-kernel (cy_to_chiral.tex)
+\phantomsection\label{V3-prop:cy-c-beyond-joyce-three-CY3}% % V3:prop:cy-c-beyond-joyce-three-CY3
+\phantomsection\label{V3-prop:k3-chacaltana-distler-24}% % V3:prop:k3-chacaltana-distler-24
+\phantomsection\label{V3-prop:k3-schur-q-expansion}% % V3:prop:k3-schur-q-expansion
+\phantomsection\label{V3-prop:phi-d-kunneth-split-product}% % V3:prop:phi-d-kunneth-split-product
+\phantomsection\label{V3-rem:K3xE-coha-chiral-guard}% % V3:rem:K3xE-coha-chiral-guard
+\phantomsection\label{V3-rem:cy-c-beyond-quintic-joyce-not-brauer}% % V3:rem:cy-c-beyond-quintic-joyce-not-brauer
+\phantomsection\label{V3-rem:cydkappa-fibre-functor}% % V3:rem:cydkappa-fibre-functor
+\phantomsection\label{V3-rem:cydkappa-gerbe}% % V3:rem:cydkappa-gerbe
+\phantomsection\label{V3-rem:cydkappa-mukai-grading-direction}% % V3:rem:cydkappa-mukai-grading-direction
+\phantomsection\label{V3-rem:gl-fricke-self-duality}% % V3:rem:gl-fricke-self-duality
+\phantomsection\label{V3-rem:hh-morita}% % V3:rem:hh-morita
+\phantomsection\label{V3-rem:k3-non-yangian-adjoint}% % V3:rem:k3-non-yangian-adjoint
+\phantomsection\label{V3-rem:mukai-doubling-K-kappa}% % V3:rem:mukai-doubling-K-kappa
+\phantomsection\label{V3-sec:R-Sieg-dynamical}% % V3:sec:R-Sieg-dynamical
+\phantomsection\label{V3-sec:bkm-conway-moonshine}% % V3:sec:bkm-conway-moonshine
+\phantomsection\label{V3-sec:ek-winfinity-ident}% % V3:sec:ek-winfinity-ident
+\phantomsection\label{V3-sec:elliptic-bar-heisenberg}% % V3:sec:elliptic-bar-heisenberg
+\phantomsection\label{V3-sec:humbert-monodromy-platonic}% % V3:sec:humbert-monodromy-platonic
+\phantomsection\label{V3-sec:k3e-reflections}% % V3:sec:k3e-reflections
+\phantomsection\label{V3-subsec:bkm-conway-witten}% % V3:subsec:bkm-conway-witten
+\phantomsection\label{V3-thm:K3xE-coha-character-igusa}% % V3:thm:K3xE-coha-character-igusa
+\phantomsection\label{V3-thm:arthur-packet-H-delta5}% % V3:thm:arthur-packet-H-delta5
+\phantomsection\label{V3-thm:bkm-conway-identity-class}% % V3:thm:bkm-conway-identity-class
+\phantomsection\label{V3-thm:bkm-conway-psi-super-image}% % V3:thm:bkm-conway-psi-super-image
+\phantomsection\label{V3-thm:bkm-conway-ten-class-table}% % V3:thm:bkm-conway-ten-class-table
+\phantomsection\label{V3-thm:bkm-enriques-psi-landscape}% % V3:thm:bkm-enriques-psi-landscape
+\phantomsection\label{V3-thm:bkm-psi-four-is-all}% % V3:thm:bkm-psi-four-is-all
+\phantomsection\label{V3-thm:bkm-simple-roots-walls}% % V3:thm:bkm-simple-roots-walls
+\phantomsection\label{V3-thm:borcherds-weight-kappa-BKM-universal}% % V3:thm:borcherds-weight-kappa-BKM-universal
+\phantomsection\label{V3-thm:dt-igusa}% % V3:thm:dt-igusa
+\phantomsection\label{V3-thm:humbert-order-K-kappa}% % V3:thm:humbert-order-K-kappa
+\phantomsection\label{V3-thm:k3-abelian-at-lie}% % V3:thm:k3-abelian-at-lie
+\phantomsection\label{V3-thm:k3-bi-based-factorization}% % V3:thm:k3-bi-based-factorization
+\phantomsection\label{V3-thm:k3-classS-4d-parent}% % V3:thm:k3-classS-4d-parent
+\phantomsection\label{V3-thm:k3-siegel-character}% % V3:thm:k3-siegel-character
+\phantomsection\label{V3-thm:k3-structural-genesis}% % V3:thm:k3-structural-genesis
+\phantomsection\label{V3-thm:modtr-banding-cocycle}% % V3:thm:modtr-banding-cocycle
+\phantomsection\label{V3-thm:pentagon-sieg-bor}% % V3:thm:pentagon-sieg-bor
+\phantomsection\label{V3-thm:phi-platonic}% % V3:thm:phi-platonic
+\phantomsection\label{V3-thm:qgf-grt1-bkm-transitivity}% % V3:thm:qgf-grt1-bkm-transitivity
+\phantomsection\label{V3-thm:qgf-humbert-non-extendability}% % V3:thm:qgf-humbert-non-extendability
+\phantomsection\label{V3-thm:schiffmann-vasserot-shuffle}% % V3:thm:schiffmann-vasserot-shuffle
+\phantomsection\label{V3-thm:schur-to-delta5-composite}% % V3:thm:schur-to-delta5-composite
+\phantomsection\label{V3-thm:seven-faces-of-r-cy}% % V3:thm:seven-faces-of-r-cy
+
+% ======================================================================
+% ANNALS-EDITION PHANTOM LABELS
+\ifannalsedition
+ \phantomsection\label{part:seven-faces}% % archive-only Part V
+ \phantomsection\label{part:v1-frontier}% % archive-only Part VI
+ \phantomsection\label{conv:theorem-c-bucket}% % chapters/connections/concordance.tex
+ \phantomsection\label{princ:gravitational-primitivity}% % chapters/connections/concordance.tex
+ \phantomsection\label{prop:kappa-bkm-cross-volume-reconciliation}% % chapters/connections/concordance.tex
+ \phantomsection\label{conj:v1-master-infinite-generator}% % chapters/connections/editorial_constitution.tex
+ \phantomsection\label{conv:three-hochschild}% % chapters/connections/concordance.tex
+ \phantomsection\label{rem:kappa-polysemy}% % chapters/connections/concordance.tex
+ %; High-frequency labels from archive-only chapters --
+ \phantomsection\label{conj:master-bv-brst}% % editorial_constitution.tex
+ % thm:family-index now defined in guide_to_main_results.tex
+ \phantomsection\label{sec:concordance-three-pillars}% % concordance.tex (not in guide_to_main_results.tex)
+ % Additional annals cross-reference stubs whose sources are omitted.
+ % removed: prop:whitehead-spectral-decomposition phantom (now defined in derived_langlands.tex)
+ \phantomsection\label{subsec:concordance-holographic-completion}% % concordance.tex
+ % sec:concordance-nishinaka-vicedo now defined in guide_to_main_results.tex
+ \phantomsection\label{rem:yangian-ordered-boundary-face}% % dg_shifted_factorization_bridge.tex
+ \phantomsection\label{constr:thqg-V-binary-extraction}% % thqg_gravitational_yangian.tex
+ \phantomsection\label{chap:concordance}% % concordance.tex (not in guide_to_main_results.tex)
+ % Holographic and open/closed realization labels.
+ % twisted_holography_quantum_gravity.tex phantom labels
+ % (file commented out; labels referenced by thqg_open_closed_realization)
+ \phantomsection\label{def:thqg-standing-hypotheses}%
+ \phantomsection\label{def:thqg-shadow-archetype}%
+ \phantomsection\label{rem:pixton-genus2-computation}% % concordance.tex
+ \phantomsection\label{rem:pixton-conjecture-status}% % concordance.tex
+ %; Archive-only chapter labels --
+ % removed: ch:derived-langlands phantom (now defined in derived_langlands.tex)
+% \phantomsection\label{ch:ht-boundary}% % DUPLICATE: already defined at L737 (collision resolved 2026-05-17)
+% \phantomsection\label{ch:kontsevich-integral}% % DUPLICATE: already defined at L738 (collision resolved 2026-05-17)
+ \phantomsection\label{thm:bar-weight-systems}% % kontsevich_integral.tex (migrated to Vol II)
+ \phantomsection\label{chap:casimir-divisor}% % casimir_divisor_core_transport.tex (migrated to Vol II)
+ \phantomsection\label{thm:pbw-recurrence}% % casimir_divisor_core_transport.tex (migrated to Vol II)
+ \phantomsection\label{thm:growth-mode-factorization}% % casimir_divisor_core_transport.tex (migrated to Vol II)
+ \phantomsection\label{rem:transport-not-invariance}% % dg_shifted_factorization_bridge.tex (removed; in Vol II)
+ \phantomsection\label{prop:kz-from-bar}% % kontsevich_integral.tex (migrated to Vol II)
+% \phantomsection\label{ch:ym-boundary-theory}% % DUPLICATE: already defined at L739 (collision resolved 2026-05-17)
+% \phantomsection\label{ch:ym-instanton-screening}% % DUPLICATE: already defined at L740 (collision resolved 2026-05-17)
+ \phantomsection\label{chap:shifted-rtt-orthogonal-coideals}% % shifted_rtt_duality_orthogonal_coideals.tex (migrated to Vol II)
+ \phantomsection\label{chap:toroidal-elliptic}% % toroidal_elliptic.tex (moved to Vol III)
+ %% Phantom labels for toroidal_elliptic.tex content (now in Vol III):
+ %; Concordance section labels --
+ % princ:gravitational-primitivity now defined in guide_to_main_results.tex
+ %; Editorial constitution / outlook stub labels --
+ \phantomsection\label{rem:four-test-interface}% % concordance.tex (not in guide_to_main_results.tex)
+ %; Concordance theorems/conjectures --
+ \phantomsection\label{conj:derived-drinfeld-kohno}%
+ \phantomsection\label{conj:categorical-modular-kd}%
+ \phantomsection\label{conj:cumulant-recognition}%
+ \phantomsection\label{conj:ads-cft-bar}%
+ \phantomsection\label{conj:master-dk-kl}%
+ % cor:dk23-all-types: real label in yangians_drinfeld_kohno.tex (always compiled)
+ \phantomsection\label{conj:master-infinite-generator}%
+ \phantomsection\label{conj:anomaly-physical}%
+ % conj:platonic-adjunction removed: now proved as thm:platonic-adjunction
+ \phantomsection\label{conj:jet-principle}%
+ \phantomsection\label{conj:standard-tower-mc5-reduction}%
+ \phantomsection\label{cor:standard-tower-mc5-closure}%
+ \phantomsection\label{def:cumulant-coalgebra}%
+ \phantomsection\label{def:spectral-branch-object}%
+ \phantomsection\label{comp:spectral-discriminants-standard}%
+ %; genus_complete.tex labels --
+ \phantomsection\label{thm:complementarity}%
+ \phantomsection\label{thm:genus-graded-bar}%
+ \phantomsection\label{thm:pixton-from-shadows}%
+ % def:hs-sewing already defined at line 1667 -- removed duplicate
+ \phantomsection\label{def:w-algebra-cft}%
+ % lem:pushforward-preserves-qi -- real label in bar_cobar_adjunction_inversion.tex; phantom removed
+ \phantomsection\label{prop:polyakov-chern-weil}%
+ \phantomsection\label{prop:propagator-restriction}%
+ \phantomsection\label{rem:master-reconstruction-verification}%
+ %; landscape_census.tex labels --
+ %; bar_complex_tables.tex labels --
+ %; Archive-only appendix labels --
+ %; Frontier / THQG chapter labels --
+ \phantomsection\label{thm:thqg-V-cybe-from-arnold}%
+ % removed: thm:oper-bar-dl phantom (now defined in derived_langlands.tex)
+ \phantomsection\label{prop:thqg-I-polyakov}%
+ \phantomsection\label{prop:thqg-V-arnold-cohomology}%
+ %; THQG cross-ref stubs --
+ %; Cross-volume Vol II labels --
+ \phantomsection\label{cor:clean-replacement}%
+ %; Frontier chapter cross-refs (preface forward refs) --
+ %; Arithmetic shadows forward refs --
+ % removed: thm:langlands-bar-bridge phantom (now defined in derived_langlands.tex)
+ %; Vol II cross-references (2026-03-30) --
+ \phantomsection\label{V2-prop:modular-bootstrap-to-curved-dunn-bridge}% % Vol II curved_dunn_higher_genus.tex:138
+ \phantomsection\label{V2-thm:e-infinity-topologization-ladder}% % Vol II e_infinity_topologization.tex
+ \phantomsection\label{V3-cor:class-m-higher-genus}% % Vol III en_factorization.tex
+ \phantomsection\label{V3-rem:beauville-kappa-formula-subscript-split}% % Vol III cy_to_chiral.tex:293-298 (Route A / Route B adjudication)
+ \phantomsection\label{V1-prop:level1-kappa-reduction}% alias -> prop:level1-kappa-reduction (level1_bridge.tex:228)
+ \phantomsection\label{V2-prop:modbootstrap-cross-Tmatrix}% alias -> Vol II prop:modbootstrap-cross-Tmatrix (thqg_modular_bootstrap.tex:3961 -- type: prop, not thm)
+ \phantomsection\label{V2-rem:modbootstrap-Sp4}% % Vol II thqg_modular_bootstrap.tex
+ \phantomsection\label{V2-thm:modbootstrap-cross-214}% % Vol II thqg_modular_bootstrap.tex
+ \phantomsection\label{V2-prop:modbootstrap-cross-block-count}% alias -> Vol II prop:modbootstrap-cross-block-count (thqg_modular_bootstrap.tex:3580 -- type: prop, not thm)
+ \phantomsection\label{V2-thm:modbootstrap-cross-four-fricke-fixed}% % Vol II thqg_modular_bootstrap.tex
+ \phantomsection\label{V2-thm:modbootstrap-cross-Smatrix}% % Vol II thqg_modular_bootstrap.tex
+ \phantomsection\label{V3-ch:modular-trace}% % Vol III chapters/theory/modular_trace.tex
+ \phantomsection\label{V3-thm:modtr-Plancherel-KerlerLyubashenko}% alias -> Vol III thm:modtr-plancherel-kerlerlyubashenko (modular_trace.tex:547 -- CASE: lowercase in Vol III)
+ \phantomsection\label{V3-thm:modtr-Plancherel-ML-limit}% alias -> Vol III thm:modtr-plancherel-ml-limit (modular_trace.tex:753 -- CASE: lowercase in Vol III)
+ \phantomsection\label{V3-thm:modtr-Zsigma2-Phi10}% alias -> Vol III thm:modtr-zsigma2-phi10 (modular_trace.tex:2223 -- CASE: lowercase in Vol III)
+ \phantomsection\label{V3-thm:modtr-ZT2-HH0}% alias -> Vol III thm:modtr-zt2-hh0 (modular_trace.tex:2123 -- CASE: lowercase in Vol III)
+
+% --- 2026-05-17 phantom-label sweep: residual undefined references ---
+% 241 phantoms for intra-Vol-I and cross-volume references that consumers
+% wrote without a matching label.  Each label that has a real anchor
+% elsewhere in the repo aliases to that anchor at the phantom location;
+% labels with no anchor are content stubs marking open mathematical conditions.
+ \phantomsection\label{def:d-alg}%
+ \phantomsection\label{def:shadow-obstruction-tower}%
+ \phantomsection\label{eq:ek-s-locality}%
+ \phantomsection\label{eq:ek-vertex-rmatrix}%
+ \phantomsection\label{eq:equiv-triangle}%
+ \phantomsection\label{eq:mk-from-ope}%
+ \phantomsection\label{prop:chi-strong-coset-independence}%
+ \phantomsection\label{prop:clutching-coset}%
+ \phantomsection\label{prop:varphi-natural}%
+ \phantomsection\label{sec:bi-based-ran}%
+ \phantomsection\label{sec:concordance-supplement}%
+ \phantomsection\label{sec:e1-first-prose-architecture}%
+ \phantomsection\label{sec:fingerprint-non-injective-on-class}%
+ \phantomsection\label{thm:chiral-koszul-pair}%
+ \phantomsection\label{thm:climax-global-inversion-HDeltaFive}%
+ \phantomsection\label{thm:hs-sewing-trace-class}%
+ \phantomsection\label{thm:recognition-SC}%
+ \phantomsection\label{thm:sl2-yangian-triangle-concrete}%
+ \phantomsection\label{thm:tbsp-Tor-obstruction-per-wall}%
+ \phantomsection\label{thm:theorem-A-modular-family}%
+ \phantomsection\label{thm:w15-chevalley-bkm-generators}%
+ \phantomsection\label{thm:w15-quantum-determinant}%
+ \phantomsection\label{V3-rem:k3-not-yangian-strict}%
+% --- 2026-05-17 second-pass sweep: 146 residuals surfaced after pass 1 ---
+ \phantomsection\label{chap:koszulness-moduli-scheme}%
+ \phantomsection\label{conj:phi-d-termination-CY3}%
+ \phantomsection\label{constr:chiral-hochschild-cochains}%
+ \phantomsection\label{def:central-charge-functional}%
+ \phantomsection\label{def:ordered-bar-convolution-dgla}%
+ \phantomsection\label{eq:kappa-deformed-kdv}%
+ \phantomsection\label{eq:thqg-X-polyakov}%
+ \phantomsection\label{prop:bkm-w19-delta5-real-cartan-is-F3}%
+ \phantomsection\label{prop:pixton-genus2-planted-forest}%
+ \phantomsection\label{prop:w16-imaginary-root-screenings}%
+ \phantomsection\label{rem:central-charge-functional-examples}%
+ \phantomsection\label{rem:concord-2}%
+ \phantomsection\label{rem:thqg-X-pants-independence}%
+ \phantomsection\label{rem:w18-monster-ell-not-12}%
+ \phantomsection\label{rem:w18-witten-k3-monster-cy3-coincidence}%
+ \phantomsection\label{sec:concordance-holographic-correspondence}%
+ \phantomsection\label{sec:concordance-three-tier-r-matrix}%
+ \phantomsection\label{sec:siegel-elliptic-dynamical-R}%
+ \phantomsection\label{subsec:phi-fa-spch-framework}%
+ \phantomsection\label{thm:bkm-W18-universal-identity}%
+ \phantomsection\label{thm:bkm-w19-drinfeld-delta5-is-borch-F3}%
+ \phantomsection\label{thm:grt-affine-km-transitivity-foundation}%
+ \phantomsection\label{thm:grt-seven-faces-torsor}%
+\fi
+
+\begin{theorem}[Functorial descent of specified invariants under
+ordered-to-symmetric averaging;
+\ClaimStatusConditional]
+\label{thm:final-surviving-invariants-diagram}
+\index{ordered-to-symmetric averaging!surviving invariants}
+\index{surviving invariants diagram|textbf}
+\textup{[Type signature: Open quadrant; ordered and symmetric chiral
+chain presentations; Beilinson levels \(2\to5\); hypothesis package:
+\(H_{\mathrm{fact}}^R\) together with the existence and compatibility
+of the displayed target maps.]}
+Let
+\[
+ \operatorname{Av}\colon
+ B_X^{\mathrm{ord}}(\cA)\longrightarrow B_X^\Sigma(\cA)
+\]
+be the ordered-to-symmetric descent morphism.  Let
+\(\phi_j\colon B_X^\Sigma(\cA)\to Y_j\), \(j\in J\), be a finite
+family of morphisms in a common derived category.  Then the ordered
+maps \(\phi_j^{\mathrm{ord}}:=\phi_j\circ\operatorname{Av}\) form the
+commutative diagram
+\[
+\begin{tikzcd}[column sep=huge,row sep=large]
+B_X^{\mathrm{ord}}(\cA)
+  \arrow[r,"\operatorname{Av}"]
+  \arrow[d,"(\phi_j^{\mathrm{ord}})_{j\in J}"']
+&
+B_X^\Sigma(\cA)
+  \arrow[d,"(\phi_j)_{j\in J}"]
+\\
+\displaystyle\prod_{j\in J}Y_j
+  \arrow[r,equal]
+&
+\displaystyle\prod_{j\in J}Y_j .
+\end{tikzcd}
+\]
+Consequently every class represented by a morphism
+\(\phi_j\) on the symmetric target has a canonical ordered pullback.
+The homotopy fiber of \(\operatorname{Av}\) lies in the kernel of all
+these composites.
+\end{theorem}
+
+\begin{remark}[Completeness problem for symmetric invariants;
+\ClaimStatusOpen]
+A complete list of invariants surviving averaging requires a
+conservativity theorem for a specified family
+\(\{\phi_j\}_{j\in J}\) on the symmetric target.  The scalar trace,
+Hochschild comparison, genus class, cross-channel correction, and
+finite-atlas census each provide candidate target maps on their own
+hypothesis packages.  Their joint conservativity is a separate
+reconstruction problem.
+\end{remark}
+
+% ======================================================================
+% SUBJECT INDEX
+% ======================================================================
+
+% Cross-reference entries (see/see also) -- no page numbers, just navigation.
+\index{Ayala--Francis|see{Poincar\'e duality, non-abelian}}
+\index{Batalin--Vilkovisky|see{BV algebra}}
+\index{BD|see{Beilinson--Drinfeld}}
+\index{vertex algebra|see{chiral algebra}}
+\index{VOA|see{chiral algebra}}
+\index{FM compactification|see{Fulton--MacPherson compactification}}
+\index{$\beta\gamma$ system|see{beta-gamma system}}
+\index{symplectic boson|see{beta-gamma system}}
+\index{SDR|see{strong deformation retract}}
+\index{OPE|see{operator product expansion}}
+\index{CFT|see{conformal field theory}}
+\index{DS reduction|see{Drinfeld--Sokolov reduction}}
+\index{KL equivalence|see{Kazhdan--Lusztig equivalence}}
+\index{HTT|see{homotopy transfer theorem}}
+\index{NAP duality|see{Poincar\'e duality, non-abelian}}
+\index{QME|see{quantum master equation}}
+\index{BRST|see{BRST cohomology}}
+\index{KS map|see{Kodaira--Spencer map}}
+\index{AGT|see{AGT correspondence}}
+\index{Sugawara|see{Sugawara construction}}
+\index{RTT|see{RTT relation}}
+\index{Connes operator|see{Connes periodicity operator}}
+
+\printindex
+
+\end{document}

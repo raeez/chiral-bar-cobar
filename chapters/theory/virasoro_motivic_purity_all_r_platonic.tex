@@ -1,0 +1,261 @@
+%% Motivic status of the Virasoro residue tower.
+
+\providecommand{\MZV}{\operatorname{MZV}}
+\providecommand{\mot}{\mathfrak m}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\cA}{\mathcal A}
+\providecommand{\per}{\operatorname{per}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Motivic Structure of the Virasoro Residue Tower}
+\label{ch:virasoro-motivic-purity-all-r-platonic}
+
+\section*{The comparison problem}
+
+The Virasoro OPE is defined over \(\mathbb Q(c)\).  This arithmetic
+fact governs the local Ward identities.  A higher scalar shadow is a
+second construction: it uses an ordered residue complex, a contraction
+onto a scalar line, and the homotopies that transfer the Maurer--Cartan
+equation.  A motivic statement requires one further datum, namely a
+motivic lift of that residue construction.  The chapter records the
+exact implication supplied by these data and isolates the remaining
+comparison theorem.
+
+We use four named packages:
+\[
+ \mathsf H_{\mathrm{Vir}},\qquad
+ \mathsf H_{\mathrm{res}},\qquad
+ \mathsf H_{\mathrm{mot}},\qquad
+ \mathsf H_{\mathrm{Tate}}.
+\]
+Here \(\mathsf H_{\mathrm{Vir}}\) is the local Virasoro vacuum package,
+\(\mathsf H_{\mathrm{res}}\) is the ordered residue package of
+Chapter~\ref{ch:shadow-tower-higher-coefficients},
+\(\mathsf H_{\mathrm{mot}}\) is a motivic realization of its chains and
+homotopies, and \(\mathsf H_{\mathrm{Tate}}\) asserts that the final
+scalar projection factors through the Tate line \(\mathbb Q(c)(0)\).
+
+\section{Motivic periods and residue data}
+\label{sec:vmpar-setup}
+
+\begin{definition}[Motivic multiple-zeta algebra]
+\label{def:vmpar-mzv-ring}
+\ClaimStatusDefinitional
+Let \(\mathcal H^{\mot}\) denote Brown's graded algebra of motivic
+multiple zeta values over \(\mathbb Z\).  Its weight-zero component is
+\(\mathcal H^{\mot}_0=\mathbb Q\), and its positive-weight ideal is
+\(\mathcal H^{\mot}_{>0}=\bigoplus_{w>0}\mathcal H^{\mot}_w\).
+\end{definition}
+
+\begin{definition}[Motivic coaction]
+\label{def:vmpar-motivic-coaction}
+\ClaimStatusDefinitional
+The motivic coaction is Brown's graded coaction
+\[
+ \Delta^{\mot}\colon \mathcal H^{\mot}
+ \longrightarrow \mathcal A^{\mathrm{dR}}\otimes\mathcal H^{\mot}.
+\]
+On \(q\in\mathbb Q\) it satisfies
+\(\Delta^{\mot}(q)=1\otimes q\).  We call such a class Tate of
+weight zero.
+\end{definition}
+
+\begin{definition}[Period map]
+\label{def:vmpar-period-map}
+\ClaimStatusDefinitional
+The period homomorphism
+\(\per\colon\mathcal H^{\mot}\to\mathbb R\)
+sends a motivic iterated integral to its convergent numerical period
+and restricts to the standard embedding on \(\mathbb Q\).
+\end{definition}
+
+\begin{definition}[Rational OPE package]
+\label{def:vmpar-q-rational-ope}
+\ClaimStatusDefinitional
+Let \(F\) be a field of characteristic zero.  A strongly generated
+vertex algebra has an \(F\)-rational OPE package when its singular OPE
+coefficients, translation operator, vacuum functional, and invariant
+pairing are defined over \(F\).  This package is local and belongs to
+Beilinson level~\(1\).
+\end{definition}
+
+\begin{example}[Rational local families]
+\label{ex:vmpar-q-rational-families}
+The universal Virasoro vertex algebra has an
+\(F=\mathbb Q(c)\)-rational OPE package:
+\[
+ T(z)T(w)\sim \frac{c/2}{(z-w)^4}
+ +\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w}.
+\]
+Universal affine vertex algebras and universal principal
+\(\mathcal W\)-algebras carry analogous rational packages over their
+parameter fields after the invariant form and strong generators have
+been fixed.
+\end{example}
+
+\section{The all-arity motivic implication}
+\label{sec:vmpar-main}
+
+\begin{theorem}[Tate factorization of the Virasoro residue tower]
+\label{thm:virasoro-s-r-motivic-purity-all-r}
+\ClaimStatusConditional
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue-bar presentation,
+Beilinson level~\(2\),
+\(\mathsf H_{\mathrm{Vir}}+\mathsf H_{\mathrm{res}}
++\mathsf H_{\mathrm{mot}}+\mathsf H_{\mathrm{Tate}}\)).}
+Let
+\(S_r(\Vir_c;\mathsf H_{\mathrm{res}})\) be the scalar obtained from
+the arity-\(r\) transferred Maurer--Cartan component.  If its motivic
+lift factors through
+\[
+ \mathbb Q(c)(0)\hookrightarrow
+ \mathcal H^{\mot}\otimes_{\mathbb Q}\mathbb Q(c),
+\]
+then, for every arity for which the residue package is defined,
+\[
+ S_r(\Vir_c;\mathsf H_{\mathrm{res}})\in\mathbb Q(c),
+ \qquad
+ \Delta^{\mot}S_r=1\otimes S_r.
+\]
+Thus the complete residue tower is motivically Tate of weight zero.
+\end{theorem}
+
+\begin{proof}
+The hypothesis places the lifted scalar in the weight-zero summand
+\(\mathbb Q(c)(0)\).  Definition~\ref{def:vmpar-motivic-coaction}
+gives its coaction, and the period map returns the same rational
+function.  The argument applies arity by arity.
+\end{proof}
+
+\begin{remark}[Logical relation with a formal recurrence]
+\label{rem:vmpar-independence-from-riccati}
+A rational Riccati recurrence proves rationality for the formal
+sequence that it defines.  Theorem~\ref{thm:virasoro-s-r-motivic-purity-all-r}
+concerns the geometric residue sequence.  The bridge between the two
+is the comparison package
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{quad}}\) of
+Chapter~\ref{ch:shadow-tower-higher-coefficients}.
+\end{remark}
+
+\section{Class-M algebras}
+\label{sec:vmpar-class-m}
+
+\begin{theorem}[Tate criterion for a rationally presented residue tower]
+\label{thm:class-M-motivic-purity-algebras-with-Q-rational-OPE}
+\ClaimStatusConditional
+Let \(\cA\) carry an \(F\)-rational OPE package.  Assume
+\(\mathsf H_{\mathrm{res}}(\cA)\), a motivic lift
+\(\mathsf H_{\mathrm{mot}}(\cA)\), and a scalar contraction that
+factors through \(F(0)\).  Then every defined scalar coefficient
+\(S_r(\cA;\mathsf H_{\mathrm{res}})\) lies in \(F\) and has motivic
+weight zero.
+\end{theorem}
+
+\begin{proof}
+The contraction lands in \(F(0)\); the motivic coaction is therefore
+the weight-zero coaction.  Period realization preserves the scalar.
+\end{proof}
+
+\begin{corollary}[Concrete rational families]
+\label{cor:vmpar-concrete-Q-rational-families}
+\ClaimStatusConditional
+The criterion applies to a Virasoro, affine, or \(\mathcal W\)-family
+once its ordered residue package, motivic realization, and Tate
+factorization have been constructed over the displayed parameter
+field.
+\end{corollary}
+
+\section{Where a positive motivic weight can enter}
+\label{sec:vmpar-weight-of-mzv}
+
+\begin{proposition}[Sources of positive motivic weight]
+\label{prop:mzv-would-enter-at-what-weight}
+\ClaimStatusProvedHere
+For a residue construction with rational local OPE data, a
+positive-weight motivic class can enter through a chain integral, a
+regularized boundary value, an associator-dependent comparison, or a
+period-valued contraction.  Its weight is the grading of that input in
+\(\mathcal H^{\mot}\).  Rational algebraic operations preserve weight
+zero.
+\end{proposition}
+
+\begin{proof}
+Tensor products and rational linear combinations of weight-zero
+classes remain in weight zero.  Consequently each positive-weight
+summand is carried by one of the additional period-valued inputs of
+the composite construction.
+\end{proof}
+
+\begin{remark}[Generator rigidity and residue geometry]
+\label{rem:vmpar-virasoro-is-generator-rigid}
+The Virasoro algebra has a single strong generator, so its local Ward
+recursion is rigid.  The residue package still contains global chain
+data.  This division identifies precisely where a motivic comparison
+theorem acts.
+\end{remark}
+
+\section{Structural formulation}
+\label{sec:vmpar-structural-reason}
+
+\begin{theorem}[Structural Tate criterion]
+\label{thm:structural-reason-for-purity}
+\ClaimStatusConditional
+Suppose a scalar invariant is represented by a composite
+\[
+ C_\bullet^{\mathrm{res}}(\cA)
+ \xrightarrow{\ \mathcal T\ }
+ H_\bullet^{\mathrm{res}}(\cA)
+ \xrightarrow{\ \pi_{\mathrm{sc}}\ }F(0),
+\]
+where \(\mathcal T\) is the transferred Maurer--Cartan construction
+and both arrows admit motivic lifts.  Then the scalar invariant is a
+Tate period of weight zero.
+\end{theorem}
+
+\begin{proof}
+The motivic composite factors through \(F(0)\), whose coaction is the
+weight-zero coaction.
+\end{proof}
+
+\begin{remark}[Associator and residue integrals]
+\label{rem:vmpar-associator-vs-bar}
+An Etingof--Kazhdan comparison can contribute associator periods.  A
+configuration-space residue model can contribute periods through its
+own chains.  The package \(\mathsf H_{\mathrm{mot}}\) records both
+sources, and \(\mathsf H_{\mathrm{Tate}}\) states their scalar
+factorization.
+\end{remark}
+
+\begin{remark}[The GRT action on the Tate scalar line]
+\label{rem:vmpar-grt-trivial-on-shadow}
+When the motivic residue construction is \(\mathrm{GRT}_1\)-equivariant
+and the final projection factors through \(F(0)\), the induced
+\(\mathrm{GRT}_1\)-action on the scalar line is trivial.  The action on
+the full chain model may retain its filtered associator directions.
+\end{remark}
+
+\section{Status of the all-arity claim}
+\label{sec:vmpar-closure}
+
+\begin{corollary}[All-arity Virasoro motivic status]
+\label{cor:item-19-closed}
+\ClaimStatusOpen
+The all-arity Virasoro purity problem is reduced to the construction
+of \(\mathsf H_{\mathrm{res}}\), \(\mathsf H_{\mathrm{mot}}\), and
+\(\mathsf H_{\mathrm{Tate}}\), together with their compatibility with
+the scalar projection.  The formal rational recurrence supplies an
+independent candidate sequence after the package
+\(\mathsf H_{\mathrm{quad}}\) has been added.
+\end{corollary}
+
+\section*{Epilogue}
+\label{sec:vmpar-epilogue}
+
+The local Virasoro algebra is rational.  The motivic theorem belongs
+to the residue comparison.  This separation turns purity into a
+finite chain-level construction: define the motivic residue model,
+identify its scalar Tate line, and verify the transferred projection.

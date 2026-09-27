@@ -1,0 +1,1102 @@
+\chapter{The Fourier seed}\label{ch:fourier-seed}
+
+
+\index{Fourier seed|textbf}
+\index{propagator!logarithmic|textbf}
+\index{bar construction!Fourier seed}
+
+The Fourier seed of the bar construction is the residue kernel
+\[
+\eta_{ij}=d\log(z_i-z_j)
+\]
+on the two-point collision divisor. It is not an analytic Fourier
+transform on functions. It is the chain-level mechanism by which the
+OPE of a chiral algebra~$\cA$ is converted into the differential of
+the conilpotent bar coalgebra
+$\barB_X(\cA)=T^c(s^{-1}\bar\cA)$, with logarithmic forms on the
+Fulton--MacPherson compactifications~$\overline{C}_n(X)$ carrying the
+configuration-space part.
+
+Three genus-$0$ statements are exact:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bar coalgebra.}
+ $\barB_X(\cA)_n=(s^{-1}\bar\cA)^{\boxtimes n}\otimes
+ \Omega^\bullet(\overline{C}_n(X),\log D)$, with coproduct induced by
+ deconcatenation and boundary factorization.
+\item \emph{Propagator.} The bar differential $d = \sum_{\{i,j\}}
+ \Res_{D_{ij}}(\eta_{ij}\otimes\mu_{ij})+d_{\mathrm{int}}+
+ d_{\mathrm{dR}}$ extracts the OPE coefficient through the chiral
+ product~$\mu$.
+\item \emph{Kernel.} The identity $d^2 = 0$ is a formal consequence
+ of the Arnold relation
+ $\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{31} +
+ \eta_{31}\wedge\eta_{12} = 0$
+ in~$\Omega^2(\overline{C}_3(X), \log D)$.
+\end{enumerate}
+At genus~$g \geq 1$, the prime-form propagator has an Arakelov
+correction. The cyclic Arnold form acquires a canonical cohomology
+class; the algebra-dependent scalar multiplying the resulting genus
+obstruction is the modular characteristic~$\kappa(\cA)$ on the
+scalar lane of Theorem~\ref{thm:modular-characteristic}. Thus
+$\kappa(\cA)$ measures the algebraic coupling to the geometric
+curvature class, not the existence of the class itself.
+
+% ================================================================
+\section{The kernel}\label{sec:fourier-kernel}
+% ================================================================
+
+\begin{definition}[Logarithmic propagator]\label{def:fourier-log-propagator}
+\index{propagator!logarithmic}
+For distinct points $z_1, z_2$ on a smooth algebraic curve~$X$, the
+\emph{logarithmic propagator} is
+\begin{equation}\label{eq:fourier-log-propagator}
+\eta_{ij} \;=\; d\log(z_i - z_j)
+\;=\; \frac{dz_i - dz_j}{z_i - z_j}
+\;\in\; \Omega^1(\overline{C}_2(X),\, \log D_{ij}).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Three properties of the propagator;
+ \ClaimStatusProvedHere]
+\label{prop:fourier-propagator-properties}
+The logarithmic propagator satisfies:
+\begin{enumerate}
+\item \emph{Simple pole.}
+ $\eta_{ij}$ has a simple pole along
+ $D_{ij} = \{z_i = z_j\}$ with
+ $\Res_{D_{ij}}\eta_{ij} = 1$.
+\item \emph{Closedness.}
+ $d\eta_{ij} = 0$ on $C_2(X) \setminus D_{ij}$.
+\item \emph{Arnold relation.}
+ In $\Omega^2(\overline{C}_3(X),\, \log D)$,
+ \begin{equation}\label{eq:fourier-arnold}
+ \eta_{12} \wedge \eta_{23}
+ + \eta_{23} \wedge \eta_{31}
+ + \eta_{31} \wedge \eta_{12} = 0.
+ \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Properties~(1) and~(2) are immediate: the pole is simple with
+residue $\Res_{\epsilon=0}(d\epsilon/\epsilon) = 1$, and
+$d\,d\!\log = 0$.
+
+For~(3), set $u_{ij} = z_i - z_j$ and write
+$\eta_{ij} = u_{ij}^{-1}\,du_{ij}$ where
+$du_{ij} = dz_i - dz_j$.
+Each wedge product
+$\eta_{ij} \wedge \eta_{jk}
+ = u_{ij}^{-1} u_{jk}^{-1}\, du_{ij} \wedge du_{jk}$.
+Since $du_{12} + du_{23} + du_{31} = 0$, all three wedge products
+share a common $2$-form
+$N := du_{12} \wedge du_{23}
+= du_{23} \wedge du_{31} = du_{31} \wedge du_{12}$.
+(For instance:
+$du_{23} \wedge du_{31}
+= du_{23} \wedge (-du_{12} - du_{23})
+= -du_{23} \wedge du_{12} = du_{12} \wedge du_{23} = N$.)
+Then
+\begin{align}
+\sum_{\mathrm{cyc}} \eta_{12} \wedge \eta_{23}
+&= \left[
+ \frac{1}{u_{12}\,u_{23}}
+ + \frac{1}{u_{23}\,u_{31}}
+ + \frac{1}{u_{31}\,u_{12}}
+\right] \cdot N
+\notag \\
+&= \frac{u_{31} + u_{12} + u_{23}}{u_{12}\,u_{23}\,u_{31}}
+ \cdot N
+= \frac{0}{u_{12}\,u_{23}\,u_{31}} \cdot N = 0.
+\label{eq:fourier-arnold-computation}
+\end{align}
+The numerator vanishes because
+$(z_3 - z_1) + (z_1 - z_2) + (z_2 - z_3) = 0$.
+\end{proof}
+
+\begin{proposition}[Genus-\texorpdfstring{$1$}{1} propagator;
+\ClaimStatusConditional]
+\label{prop:fourier-genus1-propagator}
+On the elliptic curve
+$E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, the
+propagator acquires a period correction:
+\begin{equation}\label{eq:fourier-genus1-propagator}
+\eta^{(1)}_{ij}
+=
+\left[
+\partial_u\log\theta_1(u\,|\,\tau)
++2\pi i\,\frac{\operatorname{Im}u}{\operatorname{Im}\tau}
+\right]_{u=z_i-z_j}
+(dz_i-dz_j),
+\end{equation}
+where $\theta_1(u|\tau)$ is the Jacobi theta function with simple
+zero at $u = 0$. The correction is a $(1,0)$-form with
+real-analytic coefficient; it descends the theta quotient to
+$E_\tau \times E_\tau$ and satisfies
+$\eta^{(1)}_{ji}=\eta^{(1)}_{ij}$. For
+\[
+\mathcal A^{(1)}_{123}:=
+\eta^{(1)}_{12}\wedge\eta^{(1)}_{23}
++\eta^{(1)}_{23}\wedge\eta^{(1)}_{31}
++\eta^{(1)}_{31}\wedge\eta^{(1)}_{12},
+\]
+the canonical statement is the current/cohomology identity
+\begin{equation}\label{eq:fourier-arnold-failure}
+[\mathcal A^{(1)}_{123}]
+=2\pi i\,[\omega_\tau],
+\end{equation}
+where
+$\omega_\tau = \frac{i}{2\operatorname{Im}\tau}\,dz \wedge d\bar{z}$
+is the normalized Arakelov $(1,1)$-form on $E_\tau$. A pointwise
+equality of ordinary forms is not canonical without choosing the
+Arakelov--Green representative and interpreting the diagonal
+contribution as a logarithmic current.
+\end{proposition}
+
+\begin{proof}
+Set $u=z_i-z_j$ and $du=dz_i-dz_j$. The holomorphic coefficient
+$\partial_u\log\theta_1(u|\tau)$ has the required simple pole of
+residue~$1$ at $u=0$ (since $\theta_1$ vanishes simply at the
+origin) and is $A$-periodic, but it picks up $B$-cycle monodromy
+$\partial_u\!\log\theta_1(u + \tau|\tau)
+ = \partial_u\!\log\theta_1(u|\tau) - 2\pi i$.
+The deficit multiplies the $(1,0)$-form~$du$. Since
+$\operatorname{Im}(u+\tau)=\operatorname{Im}u+\operatorname{Im}\tau$,
+the coefficient
+$2\pi i\,\operatorname{Im}u/\operatorname{Im}\tau$ shifts by
+$+2\pi i$ under the same period and multiplies the same~$du$. A
+$(0,1)$-form cannot cancel this $(1,0)$ monodromy. Oddness of the
+coefficient, together with $d(z_j-z_i)=-du$, gives
+$\eta^{(1)}_{ji}=\eta^{(1)}_{ij}$.
+
+Single-valuedness forces a non-holomorphic coefficient, not an
+anti-holomorphic one-form. In Arakelov normalization, with
+$q_{ij}(z)=z_i-z_j$, the logarithmic current is
+\[
+d\eta^{(1)}_{ij}
+=
+2\pi i\,\bigl(\delta_{D_{ij}}-q_{ij}^{*}\omega_\tau\bigr),
+\]
+so away from the diagonal the smooth term is
+$-2\pi i\,q_{ij}^{*}\omega_\tau$ (Faltings~\cite{Fal84}).
+
+The genus-$0$ Arnold cancellation used
+$u_{12}+u_{23}+u_{31}=0$ inside a single affine coordinate. On
+$E_\tau$ the same local cancellation survives near a triple
+collision, while the period correction contributes the global class.
+The normalized computation is precisely the elliptic clause of
+Theorem~\ref{thm:arnold-higher-genus}:
+\[
+[\mathcal A^{(1)}_{123}]=2\pi i[\omega_\tau].
+\]
+The proposition records that theorem in the notation of this seed
+chapter.
+\end{proof}
+
+
+% ================================================================
+\section{The transform}\label{sec:fourier-transform}
+% ================================================================
+
+\begin{definition}[Bar complex at tensor power \texorpdfstring{$n$}{n}]
+\label{def:fourier-bar-transform}
+For a chiral algebra $\cA$ on a smooth curve $X$, the bar complex
+at tensor power $n$ is
+\begin{equation}\label{eq:fourier-bar-transform}
+\barB_n(\cA) = (s^{-1}\bar{\cA})^{\otimes n}
+\otimes \Omega^\bullet(\overline{C}_n(X),\, \log D)
+\end{equation}
+with differential $d = d_{\mathrm{int}} + d_{\mathrm{res}}
++ d_{\mathrm{dR}}$. The three components correspond to the internal
+differential of $\cA$, residue extraction along collision divisors
+$D_{ij} \subset \overline{C}_n(X)$, and the de~Rham differential on
+logarithmic forms. The general construction is developed in
+Chapter~\ref{chap:bar-cobar}; here we compute it.
+\end{definition}
+
+\subsection*{Computation~(a): $X = \operatorname{Spec} k$,
+ $\cA = \Lambda(V)$}
+
+\begin{computation}[Bar on a point]\label{comp:fourier-point}
+Let $X = \operatorname{Spec} k$ (a point) and $\cA = \Lambda(V)$
+(the exterior algebra on a finite-dimensional vector space $V$).
+\begin{enumerate}
+\item $\overline{C}_n(\operatorname{Spec} k) = \operatorname{Spec} k$
+ for all $n$.
+\item $\Omega^\bullet(\overline{C}_n,\, \log D) = k$: no forms, no
+ propagator.
+\item $d_{\mathrm{dR}} = 0$ and $d_{\mathrm{res}}$ reduces to the
+ binary product differential.
+\item $\barB(\Lambda(V)) = T^c(s^{-1}\bar{V},\, d_{\mathrm{res}})$,
+ the classical bar construction of
+ Loday--Vallette~\cite[\S2.2]{LV12}.
+\end{enumerate}
+\end{computation}
+
+\begin{proposition}[\ClaimStatusProvedHere]
+\label{prop:fourier-com-lie-duality}
+For $\dim V = 1$, the bar complex has zero differential:
+$\barB(\Lambda(V)) \cong \operatorname{Sym}^c(s^{-1}V)$. The
+exterior algebra supplies the one-dimensional Koszul seed whose
+finite dual is the symmetric coalgebra.
+\end{proposition}
+
+\begin{proof}
+The reduced part $\bar{V} = V$ is one-dimensional, so
+$(s^{-1}V)^{\otimes n} \cong k$ for all $n$. The bar differential
+$d_{\mathrm{res}}\colon (s^{-1}v)^{\otimes 2} \mapsto
+s^{-1}(v \wedge v) = 0$
+vanishes because $v \wedge v = 0$ in $\Lambda(V)$. The cofree
+coalgebra on a one-dimensional space is cocommutative, giving
+$\operatorname{Sym}^c(s^{-1}V)$.
+\end{proof}
+
+\begin{remark}\label{rem:fourier-com-lie-operad}
+At the operad level, $\Lambda(V)$ is a free $\mathsf{Com}$-algebra.
+Its Koszul dual coalgebra is a cofree $\mathsf{Com}^!$-coalgebra, and
+$\mathsf{Com}^! = \mathsf{Lie}$
+(Loday--Vallette~\cite[Theorem~7.2.2]{LV12}). For $\dim V = 1$,
+the Lie coalgebra structure is trivial, so the cofree Lie coalgebra
+coincides with the symmetric coalgebra. For $\dim V > 1$, the
+nontrivial Lie coalgebra differential encodes the shuffle relations.
+\end{remark}
+
+\subsection*{Computation~(b): $X = \mathbb{P}^1$,
+ $\cA = \mathcal{H}_k$}
+
+The Heisenberg chiral algebra $\mathcal{H}_k$ at level
+$k \in \mathbb{C}^\times$ has a single current $\alpha(z)$ of
+conformal weight~$1$ with OPE
+\begin{equation}\label{eq:fourier-heisenberg-ope}
+\alpha(z)\alpha(w) = \frac{k}{(z-w)^2} + \text{regular}.
+\end{equation}
+The double pole and the absence of a simple pole are the entire
+structure.
+
+\begin{computation}[\texorpdfstring{$n = 1$}{n = 1}]\label{comp:fourier-heisenberg-n1}
+The bar complex at tensor power~$1$ is $\barB_1 = s^{-1}\alpha$.
+There is no collision divisor, so
+$d_{\mathrm{res}} = 0$ and $d_{\mathrm{dR}} = 0$. The element
+$s^{-1}\alpha$ is a cocycle.
+\end{computation}
+
+\begin{computation}[\texorpdfstring{$n = 2$}{n = 2}; \ClaimStatusProvedHere]
+\label{comp:fourier-heisenberg-n2}
+At tensor power~$2$, the bar element is
+\begin{equation}\label{eq:fourier-bar2-heisenberg}
+\xi_{12} = s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2)
+ \otimes \eta_{12}
+\;\in\; \barB_2(\mathcal{H}_k).
+\end{equation}
+The bar differential acts by restricting to the boundary stratum
+$D_{12} \subset \overline{C}_2(\mathbb{P}^1)$ and extracting the
+OPE data via the Borcherds identity, as in the degree-one
+Heisenberg-frame extraction computation of
+Chapter~\ref{ch:heisenberg-frame}.
+
+\medskip\noindent\textbf{Step~1.}
+The OPE $\alpha(z_1)\alpha(z_2) = k/(z_1 - z_2)^2 + \text{reg.}$
+has a second-order pole with constant coefficient $c_2 = k$ and no
+simple pole ($c_1 = 0$).
+
+\medskip\noindent\textbf{Step~2.}
+The boundary pairing on $D_{12}$ pairs the OPE singularity with the
+logarithmic test form $\eta_{12}$. For a second-order pole with
+coefficient $c_2$, the Borcherds extraction gives
+\begin{equation}\label{eq:fourier-borcherds-extraction}
+d_{\mathrm{res}}(\xi_{12})
+= \bigl\langle c_2/(z_1 - z_2)^2,\; \eta_{12}
+ \bigr\rangle_{D_{12}}
+= c_2 = k.
+\end{equation}
+
+\medskip\noindent\textbf{Step~3.}
+The result is $k \cdot 1 \in \barB_0 = \mathbb{C}$: the
+second-order OPE coefficient is extracted into the degree-$0$
+component of the bar complex.
+\end{computation}
+
+\begin{remark}[Borcherds mechanism]\label{rem:fourier-borcherds}
+The extraction~\eqref{eq:fourier-borcherds-extraction} uses the
+full chiral product~$\mu$
+(Convention~\ref{conv:product-vs-bracket}),
+which sums \emph{all} OPE modes (not just the simple pole).
+This is \emph{not} the na\"ive contour integral
+$\Res_{\epsilon = 0}[k\epsilon^{-2} \cdot d\epsilon/\epsilon]$
+(which involves a triple pole and vanishes).
+The chiral product extracts data via the Borcherds identity
+(\S\ref{sec:frame-bar-deg1}), not by multiplicatively composing
+the OPE pole with the logarithmic form.
+\end{remark}
+
+\begin{computation}[\texorpdfstring{$n = 3$}{n = 3}; \ClaimStatusProvedHere]
+\label{comp:fourier-heisenberg-n3}
+At tensor power~$3$, the bar element is
+\[
+\xi_{123} = s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2)
+ \otimes s^{-1}\alpha(z_3)
+ \otimes \eta_{12} \wedge \eta_{23}.
+\]
+Three boundary strata $D_{12}$, $D_{23}$, $D_{13}$ contribute to
+$d_{\mathrm{res}}$, each extracting the second-order OPE coefficient:
+\begin{align}
+d_{\mathrm{res}}(\xi_{123})
+&= k \cdot s^{-1}\alpha(z_3) \otimes
+ \eta_{23}\big|_{z_1 = z_2}
+\notag \\
+&\quad + k \cdot s^{-1}\alpha(z_1) \otimes
+ \eta_{12}\big|_{z_2 = z_3}
+\notag \\
+&\quad + k \cdot s^{-1}\alpha(z_2) \otimes
+ \eta_{12}\big|_{z_1 = z_3}.
+\label{eq:fourier-dres-n3}
+\end{align}
+Applying $d_{\mathrm{res}}$ again produces triple collisions.
+The Arnold relation~\eqref{eq:fourier-arnold} forces the three-term
+sum of triple residues to vanish:
+$d_{\mathrm{res}}^2 = 0$ by the cancellation computed in the proof of
+Proposition~\ref{prop:fourier-propagator-properties}.
+\end{computation}
+
+\begin{theorem}[Heisenberg bar seed; \ClaimStatusProvedHere]
+\label{thm:fourier-heisenberg-bar}
+\index{Heisenberg!bar complex}
+The Koszul contraction of the bar complex of the Heisenberg algebra on
+$\mathbb{P}^1$ is
+\begin{equation}\label{eq:fourier-heisenberg-bar}
+H^\bullet(\barB(\mathcal{H}_k)) \;\cong\;
+\operatorname{Sym}^{\mathrm{ch},c}(V^*[-1])
+\end{equation}
+where $V = \langle\alpha\rangle$ is the one-dimensional space of
+currents. The scalar $k$ is recorded in the bar differential by
+$d_{\mathrm{res}}(\xi_{12})=k\cdot1$; after finite-type Verdier
+duality it becomes the curvature $m_0=-k\,\omega$ of the Koszul-dual
+commutative chiral algebra.
+\end{theorem}
+
+\begin{proof}
+The bar complex has a single primitive class represented by
+$s^{-1}\alpha$. The cofree coalgebra on one primitive is
+cocommutative, giving the symmetric coalgebra in
+\eqref{eq:fourier-heisenberg-bar}. The scalar is not lost: the
+degree-$2$ extraction
+$d_{\mathrm{res}}(\xi_{12}) = k \cdot 1$
+(Computation~\ref{comp:fourier-heisenberg-n2}) is dual, after
+Verdier finite duality, to the curvature term
+$m_0=-k\,\omega$ of the commutative algebra
+$\operatorname{Sym}^{\mathrm{ch}}(V^*)$.
+The full verification is Theorem~\ref{thm:heisenberg-bar-complete}
+in Chapter~\ref{ch:heisenberg-frame}.
+\end{proof}
+
+\begin{remark}[Chiral homology verification]
+\label{rem:chiral-homology-heisenberg-verification}
+\index{chiral homology!Heisenberg verification}
+The Beilinson--Drinfeld chiral homology
+$H^*_{\mathrm{ch}}(\mathbb{P}^1, \mathcal{H}_k)$ is, by
+definition, the cohomology of the de~Rham complex of the
+$\mathcal{D}$-module $\Delta_!(\mathcal{H}_k)$ on the Ran space
+(\cite[\S4.1]{BD04}). For $\mathbb{P}^1$ with one current $J$ of
+weight~$1$: $H^0_{\mathrm{ch}} = \mathbb{C}$ (vacuum coinvariant,
+since $J_{-1}|0\rangle$ generates under the global residue).
+Bar cohomology is $H^1(\bar{B}(\mathcal{H}_k)) = \mathbb{C}\cdot
+\alpha^*$ (one-dimensional, by PBW concentration:
+Theorem~\ref{thm:fourier-heisenberg-bar}) and
+$H^n(\bar{B}(\mathcal{H}_k)) = 0$ for $n \geq 2$. This
+confirms the BD identification $H^*_{\mathrm{ch}} = H^*(\bar{B})$
+on the simplest non-trivial example: the bar complex is concentrated
+in degree~$1$, reflecting chiral Koszulness.
+\end{remark}
+
+\begin{remark}[Heisenberg is not self-dual]
+\label{rem:fourier-heisenberg-not-selfdual}
+$\mathcal{H}_k^! =
+(\operatorname{Sym}^{\mathrm{ch}}(V^*[1]),m_0=-k\,\omega)$, not
+$\mathcal{H}_{-k}$. Self-duality would require the Koszul dual to
+be a Heisenberg algebra at the dual level. Instead,
+$\mathcal{H}_k^!$ is the curved chiral symmetric algebra, a free
+chiral commutative algebra with curvature, not a Heisenberg algebra
+with a nontrivial OPE.
+\end{remark}
+
+\begin{proposition}[The five duality objects and the suspension;
+\ClaimStatusConditional]
+\label{prop:fourier-five-duality-objects}
+Let $\cA=T_X(V)/(R)$ be an augmented quadratically presented chiral
+algebra whose bar pieces are finite-type holonomic
+$\mathcal D$-modules on $\Ran(X)$ after the chosen Koszul contraction.
+Then the following five objects have different targets:
+\begin{equation}\label{eq:fourier-five-objects}
+\cA,\qquad
+\barB_X(\cA)=T^c(s^{-1}\bar\cA),\qquad
+\cA^{\mathrm i}:=C_X(s^{-1}V,s^{-2}R),\qquad
+K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA),\qquad
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\end{equation}
+The comparison maps are
+\[
+q_\cA\colon\cA^{\mathrm i}\longrightarrow\barB_X(\cA),
+\qquad
+\mathbb D(q_\cA)\colon K_X(\cA)\longrightarrow
+\mathbb D_{\Ran}(\cA^{\mathrm i}),
+\qquad
+\nu_\cA\colon K_X(\cA)\longrightarrow\cA^!.
+\]
+The bar-cobar counit
+\begin{equation}\label{eq:fourier-counit-not-dual}
+\Omega_X\barB_X(\cA)\longrightarrow \cA
+\end{equation}
+reconstructs~$\cA$ on the Koszul locus.  Local finite duality
+identifies $\mathbb D_{\Ran}(\cA^{\mathrm i})$ with the strict
+quadratic algebra~$(\cA^{\mathrm i})^\vee$; the chosen-pair
+map~$\nu_\cA$ realizes~$\cA^!$.
+\end{proposition}
+
+\begin{proof}
+The bar functor inserts one desuspension:
+$\barB_X(\cA)=T^c(s^{-1}\bar\cA)$. Thus a finite dual of a primitive
+bar generator satisfies
+\[
+(s^{-1}V)^\vee \cong sV^\vee,
+\]
+while the cobar functor applies the opposite suspension to the raw
+coalgebra before forming the free algebra. These two shifts cancel in
+the counit~\eqref{eq:fourier-counit-not-dual}, so
+$\Omega_X\barB_X(\cA)$ reconstructs~$\cA$ when the Koszul hypotheses
+of Theorem~\ref{thm:bar-cobar-inversion-qi} hold.
+
+The finite-type holonomicity hypothesis defines Verdier duality on the
+Ran bar in the ordinary derived category and produces~$K_X(\cA)$.
+Contravariance gives~$\mathbb D(q_\cA)$; formality and the pair package
+make~$\nu_\cA$ an equivalence with the strict algebra~$\cA^!$.  The
+derived chiral centre has the independent Hochschild target displayed
+in~\eqref{eq:fourier-five-objects}.
+\end{proof}
+
+\subsection*{Computation~(c): $X = E_\tau$,
+ $\cA = \mathcal{H}_k$}
+
+The same elements appear as in Computation~(b), but on the elliptic
+curve $E_\tau$. The propagator $\eta_{12}$ is replaced by the
+period-corrected propagator $\eta^{(1)}_{12}$ of
+Proposition~\ref{prop:fourier-genus1-propagator}.
+
+\begin{computation}[Heisenberg on \texorpdfstring{$E_\tau$}{E-tau}; \ClaimStatusConditional]
+\label{comp:fourier-heisenberg-elliptic}
+The bar element at tensor power~$2$ on $E_\tau$ is
+\[
+\xi^{(1)}_{12} = s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2)
+ \otimes \eta^{(1)}_{12}.
+\]
+The fiberwise bar differential $\dfib$ extracts the same OPE
+coefficient $k$ via the boundary pairing. But now
+$\dfib^{\,2} \neq 0$: the Arnold
+failure~\eqref{eq:fourier-arnold-failure} gives
+\begin{equation}\label{eq:fourier-heisenberg-curvature}
+[\dfib^{\,2}(\xi^{(1)}_{123})]
+=2\pi i\,k\,[\omega_\tau].
+\end{equation}
+The curvature is the coupling of the second-order OPE coefficient to
+the Arakelov class.
+
+The raw fiberwise operator is therefore a CDG differential. Let
+$\delta_{\mathrm{per}}^{(1)}$ denote the period and boundary
+correction supplied by Convention~\ref{conv:higher-genus-differentials}
+and Theorem~\ref{thm:quantum-diff-squares-zero}. The total
+differential is
+\begin{equation}\label{eq:fourier-total-diff-genus1}
+\Dg{1}=\dfib+\delta_{\mathrm{per}}^{(1)}
+\end{equation}
+and its defining Maurer--Cartan equation is
+\begin{equation}\label{eq:fourier-period-mc}
+\dfib^{\,2}+[\dfib,\delta_{\mathrm{per}}^{(1)}]
++(\delta_{\mathrm{per}}^{(1)})^2=0.
+\end{equation}
+\end{computation}
+
+\begin{proposition}[\ClaimStatusConditional]
+\label{prop:fourier-total-diff-nilpotent}
+$\Dg{1}^{\,2} = 0$.
+\end{proposition}
+
+\begin{proof}
+Expanding \eqref{eq:fourier-total-diff-genus1} gives exactly
+\eqref{eq:fourier-period-mc}. The obstruction term is the class
+in~\eqref{eq:fourier-heisenberg-curvature}; the period correction is
+constructed so that its commutator and quadratic part represent the
+negative of that class. This is the genus-$1$ specialization of
+Theorem~\ref{thm:quantum-diff-squares-zero}. A single
+$A$-cycle integral is not the theorem: the square-zero statement
+depends on the full period-corrected modular-operadic differential.
+\end{proof}
+
+\begin{proposition}[Poincar\'e connection seed; \ClaimStatusConditional]
+\label{prop:fourier-mukai-identification}
+\index{Fourier--Mukai transform}
+Let $\mathcal{P}$ be the normalized Poincar\'e bundle on
+$\operatorname{Jac}(E_\tau) \times
+\widehat{\operatorname{Jac}}(E_\tau)$, written in the theta
+trivialization
+\begin{equation}\label{eq:fourier-mukai-identification}
+\mathcal{P}_{(z,\hat w)}
+=\frac{\theta_1(z-\hat w|\tau)\theta'_1(0|\tau)}
+{\theta_1(z|\tau)\theta_1(\hat w|\tau)} .
+\end{equation}
+On the complement of the theta divisors,
+\begin{equation}\label{eq:fourier-poincare-connection}
+d_z\log\mathcal{P}_{(z,\hat w)}
+=d_z\log\theta_1(z-\hat w|\tau)
+-d_z\log\theta_1(z|\tau).
+\end{equation}
+Thus the rank-one Heisenberg bar propagator is the infinitesimal
+connection seed of the Poincar\'e kernel. The raw factorization
+coalgebra $\barB_{E_\tau}(\mathcal{H}_1)$ is not a line bundle on
+$\operatorname{Jac}(E_\tau)\times\widehat{\operatorname{Jac}}(E_\tau)$;
+the Fourier--Mukai kernel appears only after finite-type abelianization,
+Verdier duality, exponentiation of the connection, and normalization.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:fourier-poincare-connection} is obtained by
+logarithmically differentiating
+\eqref{eq:fourier-mukai-identification} in the $z$-variable; the
+factors $\theta'_1(0|\tau)$ and $\theta_1(\hat w|\tau)$ are constant
+in~$z$. The first term is the same theta propagator that enters
+\eqref{eq:fourier-genus1-propagator}, translated by~$\hat w$; the
+second term is the normalization forcing triviality along
+$\{0\}\times\widehat{E}_\tau$.
+Mukai's Fourier--Mukai transform uses this line bundle as a kernel
+(Mukai~\cite{Muk81}; Polishchuk~\cite{Pol03}). The Heisenberg vertex
+algebra supplies the Fock realization of the same abelian current
+data (Frenkel--Ben-Zvi~\cite{FBZ04}), but the category and object are
+different: a Ran-space bar coalgebra becomes a Poincar\'e line bundle
+only after the geometric operations stated above.
+\end{proof}
+
+\subsection*{Degeneration of the Fourier seed}
+\label{subsec:fourier-degeneration}
+\index{Fourier transform!recovery from bar-cobar}
+\index{Fourier--Mukai transform!degeneration to Fourier}
+\index{Poincar\'e line bundle!degeneration}
+
+\begin{proposition}[Degeneration of the propagator;
+ \ClaimStatusProvedHere]
+\label{prop:fourier-propagator-degeneration}
+Write $q = e^{2\pi i\tau}$.
+The Jacobi triple product
+\[
+\theta_1(z|\tau)
+= 2q^{1/8}\sin(\pi z)
+ \prod_{n=1}^{\infty}
+ (1-q^n)(1-q^n e^{2\pi iz})(1-q^n e^{-2\pi iz})
+\]
+gives the propagator on $E_\tau$ by logarithmic differentiation:
+\begin{equation}\label{eq:fourier-theta-product}
+d_z\log\theta_1(z|\tau)
+= \pi\cot(\pi z)\,dz
+ + 4\pi\sum_{n=1}^{\infty}
+ \frac{q^n}{1-q^n}\sin(2\pi n z)\,dz.
+\end{equation}
+Three successive degenerations:
+\begin{enumerate}
+\item \emph{$q \to 0$ \textup{(}$B$-cycle collapse\textup{)}.}
+ Every factor $(1 - q^n\,\cdot) \to 1$, and
+ \begin{equation}\label{eq:fourier-propagator-degen}
+ d_z\log\theta_1(z|\tau)
+ \;\xrightarrow{\;q \to 0\;}\;
+ \pi\cot(\pi z)\,dz
+ = d\log\sin(\pi z).
+ \end{equation}
+\item \emph{Mittag-Leffler \textup{(}real locus of $\mathbb{C}^*$\textup{)}.}
+ On $x \in \mathbb{R}/\mathbb{Z}$,
+ \begin{equation}\label{eq:fourier-propagator-real}
+ \pi\cot(\pi x)\,dx
+ = \operatorname{p.v.}\!\sum_{n=-\infty}^{\infty}
+ \frac{dx}{x - n}.
+ \end{equation}
+\item \emph{Universal cover \textup{(}$\mathbb{R} \to \mathbb{R}/\mathbb{Z}$\textup{)}.}
+ Drop the $n \neq 0$ translates:
+ \begin{equation}\label{eq:fourier-propagator-R}
+ \frac{dx}{x} = d\log x.
+ \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Differentiate $\log\theta_1$
+term by term using $\frac{d}{dz}\log(1-q^ne^{2\pi iz})
+= -\frac{2\pi i\,q^n e^{2\pi iz}}{1-q^n e^{2\pi iz}}$
+and combine geometric series
+(Whittaker--Watson~\cite[\S21.3]{WW27}).
+The Mittag-Leffler expansion
+$\pi\cot(\pi x)
+= \lim_{N\to\infty}\sum_{n=-N}^{N}(x-n)^{-1}$
+follows from the Weierstrass product
+$\sin(\pi x) = \pi x\prod_{n=1}^{\infty}(1-x^2/n^2)$
+by logarithmic differentiation
+(Ahlfors~\cite[\S5.2]{Ahlfors79}).
+\end{proof}
+
+\begin{proposition}[Degeneration of the Poincar\'e connection;
+ \ClaimStatusConditional]
+\label{prop:fourier-poincare-degeneration}
+\index{Poincar\'e line bundle!degeneration to character}
+Let $\mathcal{P}$ be as in
+\eqref{eq:fourier-mukai-identification}. Its logarithmic connection
+form in the first variable is
+\[
+\nabla_z\log\mathcal P
+=d_z\log\theta_1(z-\hat w|\tau)-d_z\log\theta_1(z|\tau).
+\]
+It has three controlled degenerations:
+\begin{enumerate}
+\item \emph{$q \to 0$.}
+ The Jacobi triple product gives
+ \begin{equation}\label{eq:fourier-poincare-degen-Gm}
+ \nabla_z\log\mathcal P
+ \;\xrightarrow{\;q \to 0\;}\;
+ \pi\bigl(\cot\pi(z-\hat w)-\cot\pi z\bigr)\,dz .
+ \end{equation}
+
+\item \emph{Real torus.}
+ Set $z = x$, $\hat{w} = \xi$ with
+ $x,\xi \in \mathbb{R}/\mathbb{Z}$. The Mittag--Leffler expansion
+ gives the principal-value distribution
+ \begin{equation}\label{eq:fourier-sine-product}
+ \pi\bigl(\cot\pi(x-\xi)-\cot\pi x\bigr)\,dx
+ = \operatorname{p.v.}\!\sum_{n\in\mathbb Z}
+ \left(\frac{1}{x-\xi-n}-\frac{1}{x-n}\right)dx .
+ \end{equation}
+ Exponentiating the flat integral periods along the integral
+ character lattice gives the characters $e^{2\pi i n x}$,
+ $n\in\mathbb Z$.
+
+\item \emph{Universal cover.}
+ $\widehat{\mathbb{R}/\mathbb{Z}} = \mathbb{Z}$;
+ $\widehat{\mathbb{R}} = \mathbb{R}$. The characters
+$e^{2\pi inx}$ for $n \in \mathbb{Z}$ extend to
+$e^{2\pi i\xi x}$ for $\xi \in \mathbb{R}$
+ \textup{(}Pontryagin~\cite{Pont66}\textup{)}, and
+ \begin{equation}\label{eq:fourier-integral-from-FM}
+ \hat{f}(\xi)
+ = \int_{\mathbb{R}} f(x)\,e^{-2\pi i\xi x}\,dx.
+ \end{equation}
+ This last line uses Haar measure, an $L^1/L^2$ completion, and the
+ oscillatory normalization $x\xi\mapsto -2\pi i x\xi$; these are
+ analytic choices, not part of the raw bar coalgebra.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The $q \to 0$ limit applies the Jacobi triple product to each
+theta factor in~\eqref{eq:fourier-mukai-identification} and then
+logarithmically differentiates in~$z$
+(Polishchuk~\cite[\S16.2]{Pol03}). The distribution identity
+\[
+\pi\cot\pi u=\operatorname{p.v.}\!\sum_{n\in\mathbb Z}\frac{1}{u-n}
+\]
+is the logarithmic derivative of the Weierstrass product for
+$\sin\pi u$ (Ahlfors~\cite[\S5.2]{Ahlfors79}). Pontryagin duality for
+locally compact abelian groups (Rudin~\cite[\S1.7]{Rudin62}) gives
+the passage from integral characters to the real-line Fourier kernel
+after the analytic completions stated in item~(3).
+\end{proof}
+
+\begin{theorem}[Algebraic seed of the Fourier kernel;
+ \ClaimStatusConditional]
+\label{thm:fourier-recovery}
+\index{Fourier transform!recovery from chiral bar}
+For the rank-one Heisenberg Koszul contraction, the primitive
+bar class $\xi=s^{-1}\alpha^*$ and the cobar generator~$x$ satisfy
+\begin{equation}\label{eq:pairing-symmetric-powers}
+\bigl\langle \xi^n,\,x^m\bigr\rangle=n!\,\delta_{nm}.
+\end{equation}
+Hence the exponential generating series of the bar-cobar pairing is
+\begin{equation}\label{eq:pairing-exponential}
+\sum_{n=0}^{\infty}
+ \frac{\langle\xi^n,x^n\rangle}{(n!)^2}\,t^n=e^t.
+\end{equation}
+After the external analytic normalization $t=-2\pi i x\xi$, this
+formal kernel becomes the usual Fourier kernel
+$e^{-2\pi i x\xi}$. The analytic Fourier transform on
+$L^2(\mathbb R)$ also requires Haar measure and topological
+completion. The bar construction supplies the algebraic exponential
+seed, not those analytic choices.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:fourier-heisenberg-bar}, the Koszul contraction of
+$\barB(\mathcal{H}_1)$ is the symmetric coalgebra on one primitive
+$\xi=s^{-1}\alpha^*$. Let $x$ be the corresponding cobar generator.
+The comultiplication
+$\Delta(\xi^n) = \sum_{p+q=n}\binom{n}{p}\xi^p \otimes \xi^q$
+is the binomial coproduct. Multiplicativity of the bar-cobar pairing
+therefore gives \eqref{eq:pairing-symmetric-powers}, and the
+exponential series \eqref{eq:pairing-exponential} follows by summing
+\(\sum t^n/n!\). Proposition~\ref{prop:fourier-poincare-degeneration}
+identifies how the elliptic Poincar\'e connection degenerates to the
+character kernel after real-form and Pontryagin-duality choices. The
+present theorem is only the algebraic coalgebra calculation.
+\end{proof}
+
+\begin{remark}[Connection and holonomy]\label{rem:propagator-vs-kernel}
+The propagator $d\log(z-w)$ is the Arnold/bar one-form on $C_2(X)$.
+The character kernel is holonomy of the Poincar\'e connection after a
+real form and a dual character have been chosen. The coalgebra
+structure of $\barB(\mathcal{H}_1)$ accounts for the exponential
+series in the primitive pairing; it does not by itself choose a Haar
+measure, an $L^2$ completion, or the oscillatory factor $-2\pi i$.
+\end{remark}
+
+\begin{remark}[Four related kernels]\label{rem:four-transforms}
+\index{Fourier transform!four incarnations}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\textbf{Construction}
+ & \textbf{Domain}
+ & \textbf{Kernel}
+ & \textbf{Extra structure} \\
+\hline
+Chiral bar seed
+ & $\cA \mapsto \barB_X(\cA)$
+ & $d\log E(z,w)$
+ & chiral product on $\Ran(X)$ \\
+Fourier--Mukai
+ & $D^b(A) \to D^b(\hat{A})$
+ & $\mathcal{P}$
+ & abelian variety, Poincar\'e bundle \\
+Fourier series
+ & $L^2(S^1) \to \ell^2(\mathbb{Z})$
+ & $e^{2\pi inx}$
+ & Haar measure, integral lattice \\
+Fourier integral
+ & $L^2(\mathbb{R}) \to L^2(\mathbb{R})$
+ & $e^{-2\pi i\xi x}$
+ & Haar measure, real Pontryagin dual
+\end{tabular}
+\end{center}
+The arrows between the rows are degeneration plus added structure.
+They are not equivalences of categories, and the analytic Fourier
+inversion theorem is not a formal consequence of bar-cobar inversion.
+\end{remark}
+
+\begin{proposition}[Factorization homology scope; \ClaimStatusConditional]
+\label{prop:fourier-factorization-homology-scope}
+Let $\cA$ be locally constant or constructible in the sense required
+by the comparison theorem for factorization homology, and assume the
+finite-type compactness hypotheses under which Verdier duality and
+Ran chains commute with the bar construction. Then the Ran assembly of
+the geometric bar coalgebra gives a comparison quasi-isomorphism
+\begin{equation}\label{eq:fourier-factorization-homology}
+C_\bullet^{\Ran}\bigl(X,\barB_X(\cA)\bigr)
+\xrightarrow{\;\sim\;}
+\int_X \cA
+\end{equation}
+as in Proposition~\ref{prop:bar-fh} and
+Ayala--Francis~\cite{AF15}. Without these hypotheses,
+$\barB_X(\cA)$ remains a factorization coalgebra on $\Ran(X)$; it is
+not automatically the factorization homology of~$\cA$.
+\end{proposition}
+
+\begin{proof}
+The bar construction is defined before integration: it is assembled
+from logarithmic forms on $\overline{C}_n(X)$ and the chiral product.
+Factorization homology is the colimit of the factorization algebra
+over disks. The comparison map
+\eqref{eq:fourier-factorization-homology} is the de~Rham/Ran-chain
+comparison under the constructibility and compactness hypotheses of
+Proposition~\ref{prop:bar-fh}. If those hypotheses fail, the colimit
+defining $\int_X\cA$ need not commute with the completions and Verdier
+duals used by the bar complex, so no unconditional identification is
+available.
+\end{proof}
+
+\subsection*{Computation~(d): $X = \mathbb{P}^1$,
+ $\cA = \widehat{\mathfrak{g}}_k$}
+
+The affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ at
+level $k$ has currents $J^a(z)$ ($a = 1, \ldots, \dim\mathfrak{g}$)
+with OPE
+\begin{equation}\label{eq:fourier-km-ope}
+J^a(z)J^b(w) \sim \frac{k\kappa^{ab}}{(z-w)^2}
++ \frac{f^{ab}{}_c\,J^c(w)}{z-w}
+\end{equation}
+where $\kappa^{ab}$ is the Killing form and $f^{ab}{}_c$ are the
+structure constants of $\mathfrak{g}$.
+
+\begin{computation}[Kac--Moody bar; \ClaimStatusProvedHere]
+\label{comp:fourier-km-bar}
+At tensor power~$2$, the bar element
+$s^{-1}J^a(z_1) \otimes s^{-1}J^b(z_2) \otimes \eta_{12}$ receives
+two contributions from the bar differential:
+\begin{enumerate}
+\item \emph{First-order pole.}
+ $\bigl\langle f^{ab}{}_c\, J^c(w)/(z-w),\;
+ \eta_{12}\bigr\rangle_{D_{12}}
+ = f^{ab}{}_c \cdot s^{-1}J^c$:
+ the Lie bracket term.
+\item \emph{Second-order pole.}
+ $\bigl\langle k\kappa^{ab}/(z-w)^2,\;
+ \eta_{12}\bigr\rangle_{D_{12}}
+ = k\kappa^{ab} \cdot 1$:
+ the Killing term.
+\end{enumerate}
+The first contribution builds the Chevalley--Eilenberg differential;
+the second introduces curvature.
+\end{computation}
+
+\begin{theorem}[\ClaimStatusProvedHere]
+\label{thm:fourier-km-bar}
+\index{Kac--Moody!bar complex}
+The bar complex of $\widehat{\mathfrak{g}}_k$ on $\mathbb{P}^1$ is
+the curved chiral Chevalley--Eilenberg coalgebra:
+\begin{equation}\label{eq:fourier-km-bar}
+\barB(\widehat{\mathfrak{g}}_k) \;\cong\;
+\hat{C}^\bullet_{\mathrm{ch}}(\mathfrak{g},\, k\kappa).
+\end{equation}
+The curvature element $m_0 = k\kappa \in \barB_0$ is the Killing
+form at level~$k$. The affine level $-k-2h^\vee$ belongs to the
+post-Verdier Koszul-dual algebra on the finite-type noncritical lane;
+it is not a parameter of the raw bar coalgebra.
+\end{theorem}
+
+\begin{proof}
+The first-order pole contributes the Lie coalgebra differential
+$d_{\mathrm{CE}}\colon s^{-1}\mathfrak{g} \otimes
+s^{-1}\mathfrak{g} \to s^{-1}\mathfrak{g}$, giving the
+Chevalley--Eilenberg complex $C^\bullet(\mathfrak{g})$. The
+second-order pole contributes the curvature $m_0 = k\kappa$, making
+the complex curved: $m_1^2(x) = m_2(m_0, x) - m_2(x, m_0) =
+[m_0, x]$ (the commutator, with minus sign).
+
+After taking bar cohomology and applying Verdier finite duality, the
+dual affine parameter on the noncritical finite-type lane is
+$k \mapsto -k - 2h^\vee$. Thus
+$\kappa(\widehat{\mathfrak{g}}_k^!)
+= \kappa(\widehat{\mathfrak{g}}_{-k-2h^\vee})$ in the vertex-algebra
+normalization. The Koszul dual
+$(\widehat{\mathfrak{g}}_k)^!
+= \mathrm{CE}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{-k-2h^\vee})$
+is the chiral CE algebra at the dual level, not the raw affine
+algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ itself. The
+Feigin--Frenkel involution~\cite{Feigin-Frenkel} operates within the
+affine family; Koszul duality changes the categorical target.
+This is the level-shifting duality of
+Theorem~\ref{thm:level-shifting-abstract}.
+\end{proof}
+
+
+% ================================================================
+\section{Specialization to a point}\label{sec:fourier-specialization}
+% ================================================================
+
+\begin{theorem}[Specialization; \ClaimStatusProvedHere]
+\label{thm:fourier-specialization}
+\index{bar construction!specialization to a point}
+Let $X = \operatorname{Spec} k$. Then:
+\begin{enumerate}
+\item $\overline{C}_n(\operatorname{Spec} k) = \operatorname{Spec} k$
+ for all $n$.
+\item $\Omega^\bullet(\overline{C}_n,\, \log D) = k$ (no forms, no
+ propagator).
+\item $d_{\mathrm{dR}} = 0$ and $d_{\mathrm{res}}$ reduces to the
+ binary multiplication, bracket, or operadic structure map appropriate
+ to the algebraic input.
+\item $\barB_X(\cA)$ reduces to
+ $T^c(s^{-1}\bar{\cA},\, d_{\mathrm{bracket}})$, the classical bar
+ construction of Loday--Vallette~\cite[\S2.2]{LV12}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Items~(1)--(3) are immediate: $\operatorname{Spec} k$ has no
+nontrivial configuration geometry. For~(4), the general
+three-component differential
+$d = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$
+collapses to $d_{\mathrm{int}} + d_{\mathrm{res}}$ when
+$X = \operatorname{Spec} k$. The residue component
+$d_{\mathrm{res}}$ at $X = \operatorname{Spec} k$ has no
+configuration-space residue left; it is the algebraic binary
+operation of the chosen operadic ambient. The result is the classical
+bar construction
+$T^c(s^{-1}\bar{\cA},\, d_2)$ with the standard bar differential.
+\end{proof}
+
+\begin{equation}\label{eq:fourier-specialization-diagram}
+\begin{tikzcd}[column sep=huge, row sep=large]
+\mathrm{ChirAlg}(X) \arrow[r, "\barB_X"]
+ \arrow[d, "X = \mathrm{pt}"']
+& \mathrm{Fact}^c(\Ran\, X) \arrow[d, "X = \mathrm{pt}"] \\
+\mathrm{Alg}_k \arrow[r, "\barB"']
+& \mathrm{CoAlg}_k
+\end{tikzcd}
+\end{equation}
+
+\begin{remark}\label{rem:fourier-zero-dim-shadow}
+Classical operadic Koszul duality
+(Loday--Vallette~\cite{LV12}) is the zero-dimensional specialization
+of the chiral bar-cobar construction. A theorem lifts from the point
+to curves only after the relevant conilpotence, finite-type,
+holonomicity, and logarithmic compactification hypotheses have been
+installed; the configuration-space geometry supplies the new
+obstruction classes rather than a formal automatic lift.
+\end{remark}
+
+
+% ================================================================
+\section{The four properties}\label{sec:fourier-four-properties}
+% ================================================================
+
+\begin{theorem}[Four precise Fourier analogues;
+\ClaimStatusConditional]
+\label{thm:fourier-four-properties}
+The Fourier language in this chapter has the following precise
+mathematical content:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Verdier seed.}
+On the finite-type Verdier/Koszul lane,
+\[
+ K_X(\cA):=\mathbb{D}_{\Ran}\barB_X(\cA),\qquad
+ \nu_\cA\colon K_X(\cA)\longrightarrow\cA^!
+\]
+\textup{(}Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{)}.
+ The first object is the homotopy dual algebra.  A chosen Koszul pair
+ with formal transferred structure makes~$\nu_\cA$ an equivalence to
+ the strict algebra~$\cA^!$.
+\item \emph{Inversion.}
+ On the strict conilpotent Koszul locus,
+ \[
+ \Omega_X\barB_X(\cA)\xrightarrow{\;\sim\;}\cA
+ \]
+ \textup{(}Theorems~\ref{thm:bar-cobar-inversion-qi},
+ \ref{thm:higher-genus-inversion}\textup{)}. Off that locus the
+ strongest proved statement is completed or coderived, not ordinary
+ analytic Fourier inversion.
+\item \emph{Poincar\'e--Parseval shadow.}
+ Under the BV-perfect, Verdier-nondegenerate, uniform-weight-perfect
+ hypotheses of Theorem~\ref{thm:quantum-complementarity-main},
+ $Q_g(\cA) \oplus Q_g(\cA^!) \simeq
+ R\Gamma(\overline{\mathcal{M}}_g,\, Z_{\cA})$ for $g\ge1$, with the
+ genus-$0$ case treated separately. This is the Verdier/Lagrangian
+ shadow of Parseval, not a norm identity on a Hilbert space.
+\item \emph{Characteristic function.}
+ Under~$H_D^K$ the Hodge character is
+$\operatorname{ch}_g(\mathfrak O_g^K(\cA))=
+(-1)^g\kappa(\cA)\lambda_g$.
+At the all-weight numerical level, the scalar coefficient is
+$F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$, and the
+full coefficient is
+$F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
++\delta F_g^{\mathrm{cross}}(\cA)$, with
+$\delta F_1^{\mathrm{cross}}=0$
+\textup{(}Theorem~\ref{thm:modular-characteristic}\textup{)}. The
+ $\hat A$-series is the scalar-lane generating function.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Classical Fourier analogues with scope]
+\label{rem:fourier-classical-analogues}
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Property}
+ & \textbf{Chiral (this monograph)}
+ & \textbf{Classical Fourier} \\
+\hline
+(A) & Verdier seed
+ & $\widehat{f \cdot g} = \hat{f} * \hat{g}$ \\
+(B) & Bar-cobar inversion
+ & Fourier inversion after measure and topology \\
+(C) & Verdier/Lagrangian complementarity
+ & $\|f\|^2 = \|\hat{f}\|^2$ (Parseval) \\
+(D) & Modular characteristic $\kappa$
+ & Characteristic function determines moments
+\end{tabular}
+\end{center}
+Only the chiral column is proved inside the bar-cobar theory. The
+classical column is a dictionary of analogues after analytic structures have
+been added.
+\end{remark}
+
+\begin{remark}\label{rem:fourier-scope}
+These four properties, the specialization theorem
+(\S\ref{sec:fourier-specialization}), and the chiral Hochschild polynomial
+growth theorem (Theorem~H;
+Theorem~\ref{thm:hochschild-polynomial-growth})
+constitute the structural core.
+Part~\ref{part:bar-complex} develops the proofs. Part~\ref{part:physics-bridges} computes the transform for each
+standard family.
+\end{remark}
+
+
+% ================================================================
+\section{The landscape}\label{sec:fourier-landscape}
+% ================================================================
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\textbf{$\cA$}
+ & \textbf{$\barB(\cA)$}
+ & \textbf{$\kappa(\cA)$}
+ & \textbf{$c(\cA)$} \\
+\hline
+$\mathcal{H}_k$
+ & $\operatorname{Sym}^{\mathrm{ch},c}(V^*[-1])$; dual curvature $-k$
+ & $k$
+ & $1$ \\[2pt]
+$\widehat{\mathfrak{g}}_k$
+ & Curved CE coalgebra; post-Verdier level $-k - 2h^\vee$
+ & $\dfrac{(k + h^\vee)\dim\mathfrak{g}}{2h^\vee}$
+ & $\dfrac{k\dim\mathfrak{g}}{k + h^\vee}$ \\[6pt]
+$\mathrm{Vir}_c$
+ & Curved CE coalgebra
+ & $c/2$
+ & $c$ \\[2pt]
+$\mathcal{W}_N$
+ & Via DS reduction
+ & DS formula
+ & DS formula
+\end{tabular}
+\end{center}
+
+\noindent
+The detailed computations appear in Part~\ref{part:physics-bridges}
+(Chapters~\ref{ch:heisenberg-frame}--\ref{chap:yangians}).
+
+
+% ================================================================
+\section{Genus as deformation variable}\label{sec:fourier-genus}
+% ================================================================
+
+\begin{remark}[Ref.\
+ Theorem~\ref{thm:mc2-full-resolution}]
+\label{rem:fourier-genus-preview}
+At genus $g \geq 1$, the bar complex $\barB_g(\cA)$ is a family of
+curved cochain complexes over $\overline{\mathcal{M}}_g$. The proved
+invariant $\kappa(\cA)$
+(Theorem~\ref{thm:modular-characteristic}) is the scalar shadow of the
+universal Maurer--Cartan class
+\begin{equation}\label{eq:fourier-theta-preview}
+\Theta_{\cA} \;\in\;
+\mathrm{MC}\!\left(
+ \Defcyc(\cA) \;\hat{\otimes}\;
+ R\Gamma(\overline{\mathcal{M}}_{g,\bullet},\, \mathbb{Q})
+\right),
+\end{equation}
+constructed by Theorem~\ref{thm:mc2-full-resolution}
+(Theorem~\ref{thm:master-theta}).
+On the theorem surface this means that the Fourier seed lands in the
+concrete modular datum of
+Theorem~\ref{thm:volume-one-concrete-modular-datum}: its M-level
+output is the curved family $(\barB_g(\cA), \Dg{g})$, its S-level
+shadow is the characteristic hierarchy, and its H-level logarithm
+is~$\Theta_{\cA}$ (constructed bar-intrinsically by
+Theorem~\ref{thm:mc2-bar-intrinsic}: $\Theta_{\cA} := D_{\cA} - d_0$
+is automatically MC because $D_{\cA}^2 = 0$, with no restriction to
+simple Lie symmetry). What remains open is the coderived
+continuation beyond the proved algebraic loci, not the existence of
+this datum.
+\end{remark}

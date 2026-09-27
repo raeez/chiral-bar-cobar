@@ -1,0 +1,551 @@
+% =====================================================================
+%  THE COMPANION TO VOLUME I
+%  Modular chiral Koszul duality. Distilled from ~/chiral-bar-cobar.
+%  Standalone document. Author: Raeez Lorgat.
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bE}{\mathbb{E}}
+\providecommand{\bB}{\mathbf{B}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\fO}{\mathfrak{O}}
+\providecommand{\barB}{\overline{B}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Ran}{\operatorname{Ran}}
+\providecommand{\Mbar}{\overline{\mathcal{M}}}
+\providecommand{\FM}{\overline{\mathrm{FM}}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\ChirHoch}{\operatorname{ChirHoch}}
+\providecommand{\Zder}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\Dfive}{\Delta_5}
+\providecommand{\Phiten}{\Phi_{10}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Rez}{\operatorname{Res}}
+\providecommand{\Obs}{\operatorname{Obs}}
+\providecommand{\Conf}{\operatorname{Conf}}
+\providecommand{\Ext}{\operatorname{Ext}}
+\providecommand{\Def}{\operatorname{Def}}
+\providecommand{\av}{\operatorname{av}}
+\providecommand{\Dver}{\mathbb{D}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Op}{\operatorname{Op}}
+\providecommand{\ch}{\operatorname{ch}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{principle}{Principle}
+
+\title{\bfseries Modular Chiral Koszul Duality\\[0.4em]
+\Large The Companion}
+\author{Raeez Lorgat}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent\itshape
+Classical Koszul duality is the theory of the bar construction over a
+point. Volume I rebuilds it over a smooth complex curve and then over
+the moduli of curves: the bar differential becomes an integral
+transform on Fulton--MacPherson compactifications with kernel
+$\eta=d\log(z_1-z_2)$, its square vanishes exactly by the Arnold
+relation together with the Borcherds identity, and at genus $\ge1$
+the construction acquires curvature
+$d^2_{\mathrm{fib}}=\kappa(\cA)\,\omega_g$ whose scalar $\kappa$ is
+the central charge read as modular curvature. All structure assembles
+into one Maurer--Cartan element $\Theta_\cA$ in a modular convolution
+Lie algebra, and the volume's theorems --- adjunction and inversion,
+quadratic recognition, centre complementarity, the
+deformation--Hodge--graph traces, Hochschild concentration --- are
+its projections. The Koszul dual reflects parameters
+($k\mapsto-k-2h^\vee$, $c\mapsto26-c$), the conductor laws
+$c+c^!=2\dim\fg,\ 26,\ 4N^3-2N-2$ organise the landscape into five
+archetypes, and the scalar genus tower is
+$F_g=\kappa\lambda_g^{\mathrm{FP}}$, the $\widehat A$-genus in
+disguise. This companion states the engine with its exact hypothesis
+packages, the complete census of constants, the arithmetic shadow,
+and the honest frontier.
+\end{abstract}
+
+\section{The seed}\label{sec:seed}
+
+The product of two chiral fields $a(z)b(w)$ on a smooth algebraic
+curve $X$ diverges along the diagonal. Among $1$-forms with a pole
+there, exactly one has residue independent of every choice:
+$\eta=d\log(z_1-z_2)$. Three-point consistency forces the Arnold
+relation
+$\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0$, which generates all relations in
+$H^\bullet(\Conf_n(\bC))$; and $\eta$ fails coordinate-invariance by
+the cocycle $d\log w'(z)$ --- the ghost the Virasoro algebra
+measures. From this seed the whole volume unfolds. The ordered bar
+complex of an augmented chiral algebra $\cA$,
+\[
+\barB^{\mathrm{ord}}_X(\cA)
+=T^c(s^{-1}\bar\cA)
+=\bigoplus_{n\ge1}(s^{-1}\bar\cA)^{\otimes n}\otimes
+\Gamma\bigl(\FM^{\mathrm{ord}}_n(X),\Omega^{n-1}_{\log}\bigr),
+\qquad
+d=d_{\mathrm{int}}+d_{\mathrm{res}}+d_{\mathrm{dR}},
+\]
+extracts operator-product residues against the logarithmic kernel,
+and $d^2=0$ holds \emph{if and only if} $\cA$ satisfies the Borcherds
+identity: configuration-space geometry selects the chiral-algebra
+axioms. At genus $g$ the difference $z_1-z_2$ has no meaning; the
+prime form replaces it, the propagator acquires a period correction,
+and the fibrewise differential is curved,
+$d^2_{\mathrm{fib}}=\kappa(\cA)\cdot\omega_g$, flatness restored only
+by the Gauss--Manin connection on the total space. The
+genus-completed differential is strictly square-zero because the
+Deligne--Mumford boundary satisfies $\partial^2=0$, and its positive
+part
+\[
+\Theta_\cA:=D_\cA-d_0,
+\qquad
+D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0
+\]
+is a Maurer--Cartan element in the modular convolution dg Lie algebra
+--- automatic, no equation to solve. Every invariant of the volume is
+a projection of $\Theta_\cA$: the modular characteristic $\kappa$ at
+degree two, the classical $r$-matrix as its binary collision residue,
+the shadow tower beyond, the genus tower as its trace. The question
+underneath, stated at the end of the volume: characterise the modular
+convolution algebra as a geometric object --- proposed answer, the
+endomorphisms of the Lagrangian embedding
+$\cL_\cA\hookrightarrow\cM_{\mathrm{vac}}(\cA)$ in a $(-2)$-shifted
+symplectic stack of vacua.
+
+\section{The objects}\label{sec:objects}
+
+\begin{definition}[Chiral algebra and its three bar complexes]
+A chiral algebra on $X$ is a right $\mathcal D_X$-module with chiral
+product $\mu\colon j_*j^*(\cA\boxtimes\cA)\to\Delta_!\cA$ satisfying
+locality, the Borcherds identity, and unitality
+\textup{(Beilinson--Drinfeld)}; augmented when
+$\varepsilon\colon\cA\to\omega_X$ splits. Three bar complexes coexist
+and are never conflated: the Francis--Gaitsgory bar \textup{(only the
+top residue; the Lie shadow)}; the symmetric bar on $\Ran(X)$
+\textup{(all operator products, $\Sigma_n$-coinvariants)}; the
+ordered bar on ordered configurations \textup{(all products, no
+quotient)}. The averaging map
+$\av\colon\barB^{\mathrm{ord}}\to\barB^{\Sigma}$ is a surjective dg
+Lie morphism whose kernel carries braid and associator data --- a
+torsor over $\mathrm{GRT}_1(\bQ)$ at genus zero, the quasi-modular
+anomaly of $E_2$ at genus one. What the symmetric theory forgets, the
+ordered theory remembers, and the surplus is exactly the $R$-matrix.
+\end{definition}
+
+\begin{definition}[The five typed objects]
+For augmented $\cA$: the algebra $\cA$; the bar coalgebra
+$B_X(\cA)$ \textup{(complete conilpotent; the twisting datum, never
+the bulk)}; the quadratic coalgebra
+$\cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ of a chosen presentation; the
+Koszul dual algebra $\cA^!$, reached by continuous Ran--Verdier
+duality $K_X(\cA)=\Dver_{\Ran}B_X(\cA)$ --- holonomic
+$\mathcal D$-module duality, never the linear dual; and the derived
+chiral centre $\Zder(\cA)=C^\bullet_{\mathrm{ch}}(\cA,\cA)$, the
+bulk. Bar--cobar inversion $\Omega_XB_X(\cA)\simeq\cA$ and Koszul
+duality are different functors with different targets.
+\end{definition}
+
+\begin{definition}[Modular characteristic]
+$\kappa(\cA)$ is the scalar of the genus curvature:
+$\operatorname{tr}_{\mathrm{diag}}(m_0^{(g)})=\kappa(\cA)\,\omega_g$
+with $\omega_1=c_1(\bE)$ the first Hodge class --- equivalently the
+cyclic trace of the self-sewn binary corolla, equivalently the
+normalised residue trace of the collision kernel. From the ordered
+side: $\kappa=\av(r_\cA(z))$ for abelian families, plus the Sugawara
+self-contraction $\dim\fg/2$ for nonabelian Kac--Moody. Values:
+$\kappa(\cH_k)=k$ \textup{(the level, not $c/2$)};
+$\kappa(V_k(\fg))=\dim\fg\,(k+h^\vee)/2h^\vee$;
+$\kappa(\Vir_c)=c/2$; $\kappa(\cW_N)=c\,(H_N-1)$ with $H_N$ the
+harmonic number; $\kappa(bc_\lambda)=-(6\lambda^2-6\lambda+1)$,
+$\kappa(\beta\gamma_\lambda)=+(6\lambda^2-6\lambda+1)$;
+$\kappa(V_\Lambda)=\operatorname{rank}\Lambda$;
+$\kappa(V^\natural)=12$.
+\end{definition}
+
+\section{The theorems}\label{sec:theorems}
+
+\begin{theorem}[Selection principle; proved]\label{thm:selection}
+For a meromorphic product datum on $X$, the Fulton--MacPherson bar
+differential satisfies $d^2=0$ if and only if the product satisfies
+the Borcherds identity: disjoint indices contribute Koszul signs,
+triple collisions contribute the Arnold relation on forms against the
+Borcherds identity on modes, and repeated pairs die because the
+logarithmic normal factor is consumed by the first residue. The bar
+complex is synonymous with the chiral-algebra axiom.
+\end{theorem}
+
+\begin{theorem}[The adjunction and its honest scope]\label{thm:A}
+The continuous cobar $\Omega_X$ is left adjoint to the bar:
+$\operatorname{Hom}(\Omega_X\cC,\cA)\cong
+\mathrm{Tw}(\cC,\cA)\cong\operatorname{Hom}(\cC,\barB_X\cA)$ --- the
+counit exists for every augmented chiral algebra, realised by the
+residue pairing against logarithmic forms, with no Koszul hypothesis.
+The enhanced statement --- mutually inverse bar and cobar on the
+pro-nilpotent Francis--Gaitsgory Ran category, transported to the
+Fulton--MacPherson chain models and closed under factorization ---
+carries three named packages \textup{(factorization closure,
+completed chain comparison, Verdier transport)} whose construction
+for the standard atlas is the open work; the ambient factorization
+category itself remains to be constructed in full. The honest form:
+the adjunction backbone and the chain-level geometry are proved; the
+$(\infty,2)$-enhancement is an architecture whose load rests on its
+packages.
+\end{theorem}
+
+\begin{theorem}[Koszulness; proved by the PBW criterion]\label{thm:B}
+If $\cA$ carries a flat PBW filtration with classically Koszul
+associated graded and finite-dimensional Mittag--Leffler windows,
+then the twisted tensor product is acyclic and the quadratic
+comparison $q_\cA\colon\cA^{\mathrm i}\to B_X(\cA)$ is a
+quasi-isomorphism. Consequences: affine Kac--Moody $\widehat\fg_k$ is
+chirally Koszul at generic level; the Virasoro algebra is chirally
+Koszul for all $c$ \textup{(the quartic pole feeds curvature, not the
+graded bracket)}. Seven diagnostics are equivalent on the recognition
+locus, with the PBW $E_2$-collapse of the bar spectral sequence as
+hub: Koszul twisting morphism; counit and unit equivalences; acyclic
+twisted products; diagonal bar concentration; diagonal Ext vanishing
+$\Ext^{p,q}(\mathbf 1,\mathbf 1)=0$, $p\neq q$; Shapovalov
+non-degeneracy in the bar range. Koszulness is a moduli problem over
+the associator torsor, and it is $\mathrm{GRT}_1$-invariant. Off the
+locus: the critical-level algebra $V_{-h^\vee}(\fg)$ is not Koszul
+\textup{(the Feigin--Frenkel centre spreads off-diagonal)}; the
+$c_{3,4}$ minimal model is not \textup{(a null vector enters the bar
+range)}.
+\end{theorem}
+
+\begin{theorem}[Curvature and the coderived ambient]\label{thm:curv}
+Twisting the curved cobar by $\alpha$ has square
+$[h_\Omega+d\alpha+\tfrac12[\alpha,\alpha],-]$; genus-zero
+conilpotent objects live in the ordinary derived category, while
+genus $\ge1$ with $\kappa\neq0$ is intrinsically coderived
+\textup{(Positselski's second kind)}. The Heisenberg genus-one trace
+cocycle $\omega_\ell(x_m,y_n)=\ell\,m\,(x,y)\,\delta_{m+n,0}$ is a
+nonzero Chevalley--Eilenberg class, and the completed cobar of the
+finite trace quotient recovers the centrally extended loop algebra:
+this is the mechanism by which the Koszul dual acquires curvature.
+The Feigin--Frenkel reflection $k\mapsto-k-2h^\vee$ is the unique
+affine-linear involution fixing the critical level and compatible
+with $\kappa$; class-$\mathsf M$ chain-level comparisons hold in the
+pro, adic, or filtered-complete ambients and are provably false on
+the bounded direct sum --- the harmonic discrepancy family
+$\delta_r^{\mathrm{harm}}=c_r(\cA)\,m_0^{\lfloor r/2\rfloor-1}$
+admits no single absorbing homotopy.
+\end{theorem}
+
+\begin{theorem}[Complementarity; the scalar law]\label{thm:C}
+The centre complex $\mathbf C_{g,n}(\cA)=
+R\Gamma(\Mbar_{g,n},\cZ(\cA))$ splits by the represented Verdier
+involution into complementary halves
+$\mathbf Q_{g,n}(\cA)\oplus\mathbf Q_{g,n}(\cA^!)$; under the
+perfectness package the halves are Lagrangian, dual up to the shift
+$-(3g-3+n)$ --- what one algebra sees as deformation, its dual sees
+as obstruction. The scalar shadow is the conductor law
+\[
+\kappa(\cA)+\kappa(\cA^!)=\varkappa:
+\qquad
+0\ \textup{(free fields, lattices, affine Kac--Moody)},\quad
+13\ \textup{(Virasoro)},\quad
+250/3\ (\cW_3),
+\]
+with $\varkappa=\varrho\cdot K$ on the $\cW$-lane, $\varrho(\fg)=\sum_i
+1/(m_i+1)$ the anomaly ratio and $K=c+c^!$ the central-charge
+conductor. The shifted-symplectic upgrade is a separate package.
+\end{theorem}
+
+\begin{theorem}[The genus tower]\label{thm:D}
+Four objects, four packages. The native class
+$\Obs^{\mathrm{def}}_g\in H^2(\Def_g(\cA))$; its genus-one trace is
+computed, $\operatorname{tr}_1\Obs^{\mathrm{def}}_{1,1}
+=\kappa\lambda_1$; its $K$-theoretic avatar
+$\fO^K_g=\kappa\,\lambda_{-1}(\bE_g)$ with Hodge character
+$(-1)^g\kappa\lambda_g$ is a comparison hypothesis for $g\ge2$, not
+a computation; Mumford's relation
+$\Lambda_g(t)\Lambda_g(-t)=1$ gives $\lambda_g^2=0$, so the Hodge
+shadow squares to zero wherever the comparison holds; and the
+numerical trace is the Faber--Pandharipande integral
+\[
+F_g=\kappa\,\lambda^{\mathrm{FP}}_g+\delta F^{\mathrm{cross}}_g,
+\qquad
+\lambda^{\mathrm{FP}}_g=\int_{\Mbar_{g,1}}\psi_1^{2g-2}\lambda_g
+=\frac{2^{2g-1}-1}{2^{2g-1}}\,\frac{|B_{2g}|}{(2g)!},
+\qquad
+\sum_{g\ge1}F^{\mathrm{sc}}_g x^{2g}
+=\kappa\bigl(\widehat A(ix)-1\bigr),
+\]
+the cross term vanishing for free fields and equal to
+$(c+204)/16c$ for $\cW_3$ at genus two. Clutching pins the class:
+$\xi_h^*\lambda_g=\lambda_h\boxtimes\lambda_{g-h}$,
+$\xi^*_{\mathrm{irr}}\lambda_{-1}(\bE_g)=0$, and a boundary-normalised
+tautological class agrees with $\lambda_g$ on the socle quotient ---
+on the nose at $g\le2$, $\lambda_g$-conjecture territory beyond. The
+honest summary: genus one is a theorem, the higher-genus scalar lane
+is classical Mumford--Faber--Pandharipande riding a named comparison
+package, and the non-scalar tower is the open object.
+\end{theorem}
+
+\begin{theorem}[Hochschild concentration]\label{thm:H}
+The chiral Hochschild complex --- inputs and output on
+$\overline C_{n+2}(X)$ against logarithmic forms --- computes the
+derived centre, with the first-page spectral sequence
+$H^q(\overline C_{n+2},\cA^{\boxtimes(n+2)}\otimes\Omega^n_{\log})
+\Rightarrow\ChirHoch^{n+q}$. Given a family retract onto a model
+supported in finite $S\subset\bZ$, the support is bounded by $S$; the
+anchors are Bakalov--De~Sole--Kac: Virasoro support $\{0,2,3\}$ with
+one dimension each, and at the critical level
+$\ChirHoch^\bullet(\widehat\fg_{-h^\vee})\cong
+\Lambda(P_1,\dots,P_r)\otimes\bC[\Theta_1,\dots,\Theta_r]$, degrees
+tied to the exponents --- unbounded, the theorem's own boundary. The
+force of the theorem for a new family is exactly the construction of
+its retract; the confrontation with the nonvanishing variational
+Poisson cohomology of De~Sole--Kac is the volume's sharpest open
+front.
+\end{theorem}
+
+\begin{theorem}[The ordered face]\label{thm:E1}
+Descending the ordered bar local system along
+$\Conf^{\mathrm{ord}}_n\to\Conf_n$ requires a $\Sigma_n$-equivariant
+structure; the construction of that descent datum \emph{is} the
+$R$-matrix, realised as monodromy of the Kohno connection whose
+coefficients are bar collision residues. Consequences, each on its
+stated locus: the ordered Koszul dual of the Heisenberg algebra is
+the abelian Yangian $\bC[h_0,h_1,\dots]$; for the Yang kernel,
+Verdier duality inverts the $R$-matrix, giving the self-duality
+$Y_\hbar(\fsl_2)^!\cong Y_{-\hbar}(\fsl_2)$ with
+$\hbar=1/(k+h^\vee)$, extended to all classical types on finite
+windows and reduced, for exceptional types, to a named finite
+package; genus-one monodromy exponentiates the additive parameter to
+$q=e^{\pi i\hbar}$ --- a monodromy readout, deliberately not an
+algebra identification; and Drinfeld--Kohno becomes the statement
+that Koszul duality reverses collision cycles,
+$\mathcal R\mapsto\mathcal R^{-1}$, $q\mapsto q^{-1}$, on the
+integrable fusion surface. The Francis--Gaitsgory theory is the
+commutator shadow: a spectral sequence from the Lie bar of the
+associated graded converges to the graded ordered bar. At the
+critical level the bar computes opers,
+$H^n(\barB(\widehat\fg_{-h^\vee}))\cong
+\Omega^n(\Op_{\fg^\vee}(D))$ --- degree zero is Feigin--Frenkel, the
+higher degrees ride the Frenkel--Teleman comparison --- and the
+reflection
+$\kappa(V_k)+\kappa(V_{k^\vee})=0$ solves to
+$k^\vee=-k-2h^\vee$ --- the Langlands-dual level as a curvature
+equation.
+\end{theorem}
+
+\begin{theorem}[The averaging conductor; proved]\label{thm:av}
+The ordered-to-symmetric averaging $\av$ is a natural dg Lie
+morphism, simultaneously quotient, Reynolds fixed-point summand, and
+homotopy-coinvariant shadow, lossy exactly on the nontrivial isotypic
+sector with kernel dimension $d^n-\binom{n+d-1}{d-1}$ in arity $n$.
+Its scalar avatars: $K^c=c+c^!$; $K^\kappa=\kappa+\kappa^!$; and the
+ghost form $K=-c_{\mathrm{ghost}}(\mathrm{BRST})$, whence the
+conceptual origin of the $\cW$-conductor:
+$K_N=\sum_{j=2}^N2(6j^2-6j+1)=4N^3-2N-2$, one $bc$-ghost per spin.
+\end{theorem}
+
+\section{The census}\label{sec:census}
+
+The master table \textup{(canonical registry:
+\texttt{landscape\_census.tex})}:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llccc}
+$\cA$ & Koszul dual & $c$ & $c+c^!$ & $\kappa$\\
+\hline
+free fermion $\psi$ & $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$ & $1/2$ &
+$0$ & $1/4$\\
+$bc_\lambda$ & $\beta\gamma_\lambda$ & $1-3(2\lambda-1)^2$ & $0$ &
+$c/2$\\
+$\cH_k$ & curved $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, $m_0=-k\omega$ &
+$1$ & --- & $k$\\
+$V_\Lambda$ ($\Lambda$ even unimodular) & self-dual & $\mathrm{rk}\,
+\Lambda$ & --- & $\mathrm{rk}\,\Lambda$\\
+$\widehat\fg_k$ & $\CE^{\mathrm{ch}}(\widehat\fg_{-k-2h^\vee})$ &
+$\frac{k\dim\fg}{k+h^\vee}$ & $2\dim\fg$ &
+$\frac{\dim\fg\,(k+h^\vee)}{2h^\vee}$\\
+$\Vir_c$ & $\Vir_{26-c}$ & $c$ & $26$ & $c/2$\\
+$\cW_3^k$ & $\cW_3^{-k-6}$ & $c$ & $100$ & $5c/6$\\
+$\cW_N^k$ & $\cW_N^{-k-2N}$ & Fateev--Lukyanov & $4N^3-2N-2$ &
+$c(H_N-1)$\\
+Bershadsky--Polyakov & $\mathcal B^{-k-6}$ \textup{(conditional)} &
+$-\frac{(2k+3)(3k+1)}{k+3}$ & $50$ & open\\
+$N{=}2$ superconformal & $\mathrm{SCA}_{6-c}$ & $\frac{3k}{k+2}$ &
+$6$ & $(k+4)/4$\\
+Monster $V^\natural$ & $\Vir_2$ \textup{(Virasoro sector)} & $24$ &
+$26$ & $12$\\
+Yangian $Y_\hbar(\fg)$ & $Y_{-\hbar}(\fg)$ & --- & --- &
+residue class\\
+\end{tabular}
+\end{center}
+
+The conductor values: $K_N=26,\ 100,\ 246,\ 488,\ 850$ for
+$N=2,\dots,6$, derived three independent ways \textup{(ghost spin
+sums, Feigin--Frenkel screening, Chevalley--Shephard--Todd
+exponents)}; $\varkappa=(H_N-1)K_N=13,\ 250/3,\ 533/2,\ 9394/15$.
+Anomaly ratios $\varrho(\fg)=\sum_i1/(m_i+1)$:
+$\varrho(A_1)=1/2$, $\varrho(G_2)=2/3$, $\varrho(F_4)=7/8$,
+$\varrho(E_6)=427/360$, $\varrho(E_7)=2777/2520$,
+$\varrho(E_8)=121/126$. Bershadsky--Polyakov:
+$c(k)+c(-k-6)\equiv50$ proved, self-conjugate value $25$ attained
+only at complex level, $\kappa$ open, conditional
+$\varkappa=25/3$ on the ratio lane \textup{(the once-recorded
+$98/3$ and $K=196$ are retracted)}. Self-dual loci are mostly empty
+--- the fixed point of the parameter reflection is not a categorical
+self-duality for Heisenberg, affine, or $\beta\gamma$ families; the
+genuine scalar self-dual point is Virasoro at $c=13$. The level-one
+accident: $\kappa(\widehat\fg_1)=\operatorname{rank}\fg$ by
+Frenkel--Kac, the unique cross-class transition
+($\mathsf L\to\mathsf G$); $E_8$ level one is the unique Koszul
+self-dual lattice theory. The corner-algebra witness that $\kappa$ is
+not $c/2$: $Y_{1,1,1}[\Psi]$ has $c=0$ and $\kappa=\Psi$.
+
+Shadow data: $S_2=\kappa$, $S_3$, $S_4$ with discriminant
+$\Delta=8\kappa S_4$; the weighted tower is algebraic of degree two,
+$H(t)^2=t^4Q(t)$, which forces the depth dichotomy $r_{\max}\in
+\{2,3,4\}$ or $\infty$ and the five classes
+$\mathsf G/\mathsf L/\mathsf C/\mathsf M/\mathsf{FF}$
+\textup{(Gaussian, Lie, contact, mixed, critical)}. Virasoro:
+$S_3=2$, $S_4=10/[c(5c+22)]$, $\langle\Lambda|\Lambda\rangle
+=c(5c+22)/10$, growth radius $|c|/6$.
+
+The arithmetic shadow, proved core first. The Verlinde volumes
+$Z_g(k)=(\tfrac n2)^{g-1}\sum_{j}\csc^{2g-2}(\pi j/n)$ are
+polynomials whose leading coefficients are Bernoulli,
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$, and the Kummer-irregular primes
+$691$, $3617$ appear at genus $7$ and $9$ exactly where the Bernoulli
+numerators put them --- while the Virasoro shadow numerators through
+$r=11$ contain none of them: a sharp arithmetic duality between the
+two localisations, with its near-counterexample ($2111$) recorded.
+The Virasoro tower is motivically pure: algebraicity of the weighted
+generating function over $\bQ(c)$ kills all multiple zeta values ---
+depth one is rational, depth climbs only with the operadic level
+\textup{($E_2$ receives $\zeta(n)$ through the associator, $E_3$
+depth two)}. For lattice theories the shadow--spectral dictionary
+holds: theta decomposition against Eisenstein and Hecke forms
+factorises the constrained Epstein zeta, with the Leech witness
+$S_{12}=-65520/691$ --- Ramanujan's congruence surfacing as a shadow
+coefficient. The shadow $L$-function
+$L^{\mathrm{sh}}(\cA;s)=\sum_rS_rr^{-s}$ is formal: the proved
+statement is the genus-slot bridge, deliberately not a functional
+equation, and the volume's own retraction of the Riemann-style
+evaluation is part of the record.
+
+\section{The garden}\label{sec:garden}
+
+One logarithmic $1$-form generates the programme; this volume is
+where the generation happens, so the map here is outward. Every
+object sits on one chain: primitive factorization category $\to$
+chart algebra $A_b$ $\to$ bar shadow $\barB(A_b)$ $\to$ derived
+chiral centre $\Zder(A_b)$ \textup{(the bulk)} $\to$ acting line
+operators $\to$ scalar modular shadow. Identifying stages without the
+licensing datum --- shadow $=$ object --- is the master error the
+programme is disciplined against.
+
+\emph{Volume II} (\texttt{chiral-bar-cobar-vol2}) reads this volume's
+engine as physics: bar $=$ BV/BRST, quantum master equation $=$
+Maurer--Cartan, the anomaly identity
+$Q^2_{\mathrm{BRST}}=\frac{c-26}{12}c_0\leftrightarrow
+d^2_{\mathrm{fib}}=\kappa_{\mathrm{tot}}\omega_1$ with
+$\kappa_{\mathrm{tot}}=(c-26)/2$, the two-coloured Swiss-cheese
+operad as bulk--boundary home, and Universal Holography
+$\cA\mapsto(\partial=\cA,\ \mathrm{bulk}=\Zder(\cA))$ --- at
+$\Vir_{c=3\ell/2G_N}$ the boundary reading of 3d gravity, with the
+same conductor $26$ appearing as the critical dimension.
+\emph{Volume III} (\texttt{calabi-yau-quantum-groups}) constructs the
+geometric source: the two-stage functor
+$\Phi_d=\SpCh_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$ from
+Calabi--Yau categories to chiral algebras, the cohomological Hall
+positive half and its Drinfeld double as the level-three quantum
+group, the $\kappa$-tuple $(0,0,3,5,24)$ at $K3\times E$.
+\emph{Mixed holomorphic--topological strings} computes the local germ
+of the two-dimensional theory at $N$ Dirac branes --- the trace
+coordinate $J(f)=\Tr f(\phi_1,\phi_2)$ with Capelli anomaly --- and
+the typed ledger separating germ from globe. \emph{The Igusa cusp
+form} (\texttt{igusa-cusp-form}) is the terminal scalar: $\Dfive$
+read five ways, $Z^{K3\times E}_{\mathrm{BPS}}=\Dfive^{-2}$, the
+order-two orientation bit that squaring kills --- the sharpest single
+example of this volume's slogan that the scalar shadow underdetermines
+the object.
+
+The single question underneath: characterise
+$\fg^{\mathrm{mod}}_\cA$ geometrically. This volume computes its
+Taylor jets --- the shadow tower --- and proposes the answer; Volume
+II supplies the local composition law, Volume III the geometric
+source, the satellites the terminal example.
+
+\section{The frontier}\label{sec:frontier}
+
+The honest list, in the volume's own post-audit order:
+
+\begin{enumerate}
+\item The ambient factorization category for the full
+$(\infty,2)$-form of the adjunction --- until constructed, the
+enhanced Theorem A reads: where such a category exists, bar--cobar
+and Positselski apply in it.
+\item The Hochschild engine: ordered twisted-tensor acyclicity, and
+the confrontation with De~Sole--Kac nonvanishing --- the single most
+important unresolved mathematical question of the volume.
+\item The genus tower beyond the scalar-diagonal lane: the
+identification $\Obs^{\mathrm{def}}_g=\kappa\lambda_{-1}(\bE_g)$ for
+$g\ge2$ as computation rather than package; the non-scalar
+Maurer--Cartan obstruction, governed by Bianchi, not killed by
+Mumford.
+\item Class $\mathsf M$ on the bounded direct sum --- provably false
+there; the completed ambients are the theorem, the descent is the
+question.
+\item Fingerprint completeness: the five-slot invariant is a proved
+projection; the reconstruction direction rides a package that
+essentially assumes it.
+\item The arithmetic superstructure: the uniform Kummer-absence
+threshold; the noncommutative Weil dictionary
+\textup{($\Theta_\cA\leftrightarrow$ Frobenius, positivity
+$\Rightarrow$ Ramanujan)} --- a suggestive dictionary whose mechanism
+is open, with Ramanujan for lattices imported from Deligne;
+the $K3$ ladder of recognition targets \textup{(tree $\Dfive$,
+one-loop Heegner, three-loop
+$\zeta(3)$, $25/3$, $\Phiten^{\mathrm{un}}/\eta^{24}$)}, every rung
+conjectural.
+\item Bershadsky--Polyakov's genus-one curvature --- the one census
+row still open.
+\end{enumerate}
+
+What stands without hypothesis: the selection principle; the
+adjunction backbone; the ordered bar functor and its shuffle theorem;
+the PBW recognition of Koszulness with its Kac--Moody and Virasoro
+instances; the curvature mechanism and the central-extension
+extraction; the completion theory; the averaging conductor; the
+census with its three-way conductor derivations; genus one of the
+tower; the Verlinde--Bernoulli arithmetic and the motivic purity of
+the Virasoro shadow. The volume's deepest discipline is its own
+maxim --- primitive objects first, shadows second, scalar modular
+forms last --- and the theorems above are exactly the places where a
+shadow was promoted to an object by an honest construction.
+
+\end{document}

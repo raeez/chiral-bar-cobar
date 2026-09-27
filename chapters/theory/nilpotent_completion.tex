@@ -1,0 +1,2701 @@
+
+\providecommand{\bk}{\mathbb{k}}
+\chapter{Nilpotent completion for filtered chiral bar--cobar}
+\label{app:nilpotent-completion}
+
+
+A filtered chiral algebra can have finite bar words and still fail to
+define a discrete bar--cobar comparison: a fixed output window may
+receive infinitely many OPE-mode contributions, curvature terms may
+survive in filtration degree~$0$, and the universal twisting
+cochain must be evaluated in a completed convolution algebra.  The
+completion used here is not a substitute for Koszul duality.  It is the
+topology in which the bar coalgebra, the cobar differential, and the
+Maurer--Cartan equation are defined by finite-window limits.
+
+\begin{remark}[Three bar surfaces]
+\label{rem:nilpotent-completion-dependency}
+There are three distinct objects.
+\[
+\Omega_X\bar B_X(A)\longrightarrow A
+\]
+is the bar--cobar counit; when it is a quasi-isomorphism it is
+inversion.  The completed object
+\[
+\widehat{\bar B}_X(A)=\varprojlim_N \bar B_X(A_{\le N})
+\]
+is a pro-conilpotent bar coalgebra.  The Verdier--Koszul algebra is the
+separate construction
+\[
+A^!_\infty:=\mathbb D_{\Ran}\widehat{\bar B}_X(A),
+\]
+under the dualizability and continuity hypotheses for Verdier duality
+on the Ran space.  The cobar counit belongs to the reconstruction lane:
+$\Omega_X\widehat{\bar B}_X(A)\simeq A$ recovers~$A$, while
+$\mathbb D_{\Ran}\widehat{\bar B}_X(A)$ defines the Verdier--Koszul
+algebra.
+\end{remark}
+
+\section{Finite windows and completion}
+
+\subsection{Filtered non-quadratic algebras}
+
+\begin{observation}[Filtered bar words]\label{obs:quadratic-limitation}
+Classical quadratic Koszul duality sees generators and quadratic
+relations.  Chiral algebras with central terms, normally ordered
+composites, or infinitely many positive-weight generators carry more
+data than this finite quadratic surface.  The Virasoro OPE
+\[
+T(z)T(w)\sim
+\frac{c/2}{(z-w)^4}+\frac{2T(w)}{(z-w)^2}
+ +\frac{\partial T(w)}{z-w}
+\]
+is already curved: the quartic pole contributes a scalar curvature
+term in the bar differential.  Principal $\mathcal W_N$ algebras add
+composite fields.  Positive towers such as $\mathcal W_{1+\infty}$ or
+RTT/Yangian towers require a weight-completed inverse limit of finite
+windows.
+
+The deconcatenation coalgebra remains conilpotent on every finite bar
+word.  Completion is needed for a different reason: the bar
+differential, the cobar differential, and the universal twisting
+morphism must be continuous for the chosen filtration, and the
+inverse-limit cohomology must satisfy Mittag--Leffler.
+\end{observation}
+
+\subsection{The finite-window topology}
+
+\begin{definition}[Finite-window completion]\label{idea:I-adic}
+Let $A$ be an augmented filtered chiral $A_\infty$-algebra on a curve
+$X$ with
+\[
+A=F^0A\supset F^1A=\bar A\supset F^2A\supset\cdots,
+\qquad
+A\simeq\varprojlim_N A_{\le N},
+\qquad
+A_{\le N}:=A/F^{N+1}A .
+\]
+The filtration is a \emph{strong finite-window filtration} if
+\[
+\mu_r(F^{i_1}A,\ldots,F^{i_r}A)
+\subset F^{i_1+\cdots+i_r}A
+\tag{\ast}
+\label{eq:nc-strong-filtration}
+\]
+for every chiral $A_\infty$ operation $\mu_r$, and every finite window
+$A_{\le N}$ lies in the finite-type bar--cobar regime.
+The completed bar coalgebra is
+\[
+\widehat{\bar B}_X(A)
+:=\varprojlim_N \bar B_X(A_{\le N}).
+\]
+For an honest augmentation-ideal filtration this is the usual
+$I$-adic completion; for a conformal-weight tower it is the
+weight-window completion.
+\end{definition}
+
+\section{The conilpotent filtration}
+
+\subsection{Definition and properties}
+
+\begin{definition}[Conilpotent filtration]\label{def:conilpotent-filtration}
+For a coaugmented coalgebra $C$ with counit $\epsilon: C \to k$, coaugmentation $\eta: k \to C$, and coproduct $\Delta: C \to C \otimes C$, the \emph{coradical filtration} (or conilpotent filtration) is:
+\begin{align*}
+F_0C &= \operatorname{im}(\eta) = k \quad (\text{coaugmentation}) \\
+F_nC &= \{c \in C : \Delta(c) \in F_{n-1}C \otimes C + C \otimes F_{n-1}C\} \quad (n \geq 1)
+\end{align*}
+Equivalently, using the reduced coproduct $\bar{\Delta}: \ker(\epsilon) \to \ker(\epsilon) \otimes \ker(\epsilon)$ and its iterates $\bar{\Delta}^{(n)}: \ker(\epsilon) \to \ker(\epsilon)^{\otimes(n+1)}$:
+\[
+F_nC = k \oplus \ker(\bar{\Delta}^{(n)}).
+\]
+In particular, $F_1C = k \oplus \ker(\bar{\Delta})$ consists of the scalars and the primitive elements.
+
+This is an \emph{ascending} filtration: $F_0C \subset F_1C \subset F_2C \subset \cdots$.
+A coalgebra is conilpotent if $\bigcup_n F_nC = C$, equivalently, if every element of $\ker(\epsilon)$ is annihilated by a sufficiently high iterate of the reduced coproduct: $\ker(\epsilon) = \bigcup_n \ker(\bar{\Delta}^{(n)})$.
+\end{definition}
+
+\begin{proposition}[Collision trees and coradical degree; \ClaimStatusProvedHere]\label{prop:geom-conilpotent}
+For the geometric bar model
+\[
+\bar B^{\mathrm{geom}}_r(\mathcal A)
+=
+\Gamma(\overline C_r(X),
+\mathcal A^{\boxtimes r}\otimes\Omega^*_{\log}),
+\]
+the coradical filtration is the finite bar-length filtration:
+\[
+F_k\bar B^{\mathrm{geom}}(\mathcal A)
+=
+\bk\oplus\bigoplus_{1\le r\le k}
+\bar B^{\mathrm{geom}}_r(\mathcal A).
+\]
+The Fulton--MacPherson collision-tree filtration is a geometric
+refinement of this filtration, not a direct-sum decomposition by
+support on boundary strata.  If $G_k$ denotes the subspace of log
+forms whose iterated residue expansion has no tree of depth $>k$,
+then
+\[
+\bar\Delta(G_k)\subset
+\sum_{i+j\le k-1}G_i\otimes G_j.
+\]
+Thus collision depth is a geometric witness for conilpotence, while
+the coradical degree itself is measured by iterated deconcatenation.
+\end{proposition}
+
+\begin{proof}
+On the tensor coalgebra $T^c(s^{-1}\bar A)$ the reduced coproduct is
+deconcatenation:
+\[
+\bar\Delta[a_1|\cdots|a_r]
+=
+\sum_{i=1}^{r-1}
+[a_1|\cdots|a_i]\otimes[a_{i+1}|\cdots|a_r].
+\]
+After $r$ reduced coproducts every word of length~$r$ has vanished.
+Hence the coradical filtration is exactly the filtration by word
+length, with the coaugmentation in degree~$0$.
+
+The compactification $\overline C_r(X)$ is stratified by rooted
+collision trees.  An iterated logarithmic residue chooses a chain of
+boundary divisors, equivalently a nested collision tree.  Cutting such
+a tree along an internal edge is the geometric incarnation of a
+deconcatenation cut.  Each cut shortens the maximal root-to-leaf chain
+in the remaining factors, so the displayed inclusion for $G_k$ follows.
+Every collision tree is finite, and every bar word has finite length;
+therefore the filtration is ascending and exhaustive.  No assertion is
+made that logarithmic forms split as a direct sum of forms supported on
+strata.
+\end{proof}
+
+\subsection{Convergence by finite windows}
+
+\begin{theorem}[Finite-window convergence; \ClaimStatusProvedHere]\label{thm:completion-convergence}
+Let $A$ be a separated complete augmented filtered chiral
+$A_\infty$-algebra with a strong finite-window filtration
+\textup{(}Definition~\textup{\ref{idea:I-adic}}\textup{)}, and assume
+that the finite-stage maps induced on bar complexes are strict
+epimorphisms of complexes on every finite bar-length window.  Then:
+\begin{enumerate}
+\item the inverse limit
+ $\widehat{\bar B}_X(A)=\varprojlim_N\bar B_X(A_{\le N})$
+ is a separated complete pro-conilpotent curved dg chiral coalgebra;
+\item the bar differential, coproduct, curvature, and universal
+ twisting morphism are continuous for the finite-window topology;
+\item the completed convolution algebra
+ \[
+ \widehat{\operatorname{Conv}}(\widehat{\bar B}_X(A),A)
+ :=
+ \varprojlim_N
+ \operatorname{Conv}(\bar B_X(A_{\le N}),A_{\le N})
+ \]
+ contains the compatible limit
+ $\widehat\tau=\varprojlim_N\tau_N$, and
+ $\widehat\tau$ satisfies the Maurer--Cartan equation
+ \[
+ \partial\widehat\tau+\widehat\tau\star\widehat\tau=0;
+ \]
+\item for each cohomological degree~$m$ there is a Milnor exact
+ sequence
+ \[
+ 0\to
+ \varprojlim\nolimits_N^1 H^{m-1}(\bar B_X(A_{\le N}))
+ \to
+ H^m(\widehat{\bar B}_X(A))
+ \to
+ \varprojlim_N H^m(\bar B_X(A_{\le N}))
+ \to0;
+ \]
+\item if, in degree~$m$, the finite-stage cohomology system
+ $\{H^m(\bar B_X(A_{\le N}))\}_N$ is strict Mittag--Leffler, then
+ \[
+ H^m(\widehat{\bar B}_X(A))
+ \cong
+ \varprojlim_N H^m(\bar B_X(A_{\le N})).
+ \]
+\end{enumerate}
+The strong finite-window multiplicativity condition of
+Definition~\ref{idea:I-adic} implies the needed finiteness of the
+Maurer--Cartan equation in every window: modulo $F^{N+1}A$, only
+operations $\mu_r$ with $r\le N$ can contribute on reduced inputs.
+\end{theorem}
+
+\begin{proof}
+The quotient maps $A_{\le N+1}\twoheadrightarrow A_{\le N}$ are
+strict morphisms of curved chiral $A_\infty$-algebras.  Functoriality
+of the finite-stage bar construction gives morphisms of curved dg
+chiral coalgebras
+\[
+\bar B_X(A_{\le N+1})\longrightarrow\bar B_X(A_{\le N})
+\]
+compatible with coproduct, coaugmentation, differential, and curvature.
+The strict epimorphism hypothesis makes this a strict inverse system
+of complexes, so the inverse limit carries these structures
+componentwise in the category of separated complete complexes.
+Each finite quotient is conilpotent by bar length; the limit is
+pro-conilpotent and separated because $A\simeq\varprojlim_N A_{\le N}$.
+
+For reduced inputs, the strong finite-window condition gives
+$\mu_r(\bar A^{\otimes r})\subset F^rA$.  Hence modulo $F^{N+1}A$ all
+terms with $r>N$ vanish.  The universal finite-stage twisting
+morphisms $\tau_N$ satisfy
+$\partial\tau_N+\tau_N\star\tau_N=0$ and are compatible with the
+transition maps; their inverse limit is the displayed completed
+Maurer--Cartan element.  Continuity is precisely the statement that
+every component is detected after projection to some finite window.
+
+The cohomology statement is Milnor's exact sequence for a strict tower
+of complexes:
+\[
+0\to
+\varprojlim\nolimits_N^1 H^{m-1}(\bar B_X(A_{\le N}))
+\to
+H^m(\widehat{\bar B}_X(A))
+\to
+\varprojlim_N H^m(\bar B_X(A_{\le N}))
+\to0 .
+\]
+Strict Mittag--Leffler kills the derived limit term.  This is the only
+place where exactness of inverse limits is used.
+\end{proof}
+
+\begin{remark}[Polynomial growth is not a convergence theorem]\label{rem:completion-convergence-window}
+Finite generation, polynomial bounds on OPE coefficients, and
+finite-dimensional Hochschild cohomology do not by themselves imply
+eventual vanishing of
+$H^2(A,F^N/F^{N+1})$.  The convergence statement used in this chapter
+is the finite-window theorem above: either the strong filtration axiom
+gives a degree cutoff, or a separate weight-cutoff/Mittag--Leffler
+criterion verifies the inverse-limit comparison.
+\end{remark}
+
+\section{Completion and the Verdier--Koszul lane}
+
+\subsection{The main construction}
+
+\begin{construction}[Completed bar coalgebra and Koszul dual lane]\label{const:completed-koszul}
+For a complete filtered algebra~$A$, set
+\[
+\widehat B_X(A):=\widehat{\bar B}_X(A)
+=\varprojlim_N\bar B_X(A_{\le N}).
+\]
+This is a completed dg coalgebra.  The coalgebraic Koszul object is
+the bar cohomology
+\[
+A^{\mathrm i}_{\mathrm{cpl}}:=H^\bullet(\widehat B_X(A))
+\]
+when that cohomology is a usable completed coalgebra.  The
+Verdier--Koszul algebra is
+\[
+A^!_\infty:=\mathbb D_{\Ran}\widehat B_X(A),
+\]
+under the topological finiteness hypotheses that make
+$\mathbb D_{\Ran}$ continuous on the completed bar object.
+
+The completed cobar used for inversion is a different object:
+\[
+\widehat\Omega_X(\widehat B_X(A))
+:=\varprojlim_N\Omega_X(\bar B_X(A_{\le N})).
+\]
+\end{construction}
+
+\begin{theorem}[Completed finite-window bar--cobar inversion; \ClaimStatusProvedHere]\label{thm:completed-bar-cobar}
+Let $A$ be as in Theorem~\textup{\ref{thm:completion-convergence}},
+and assume the finite-stage counits
+\[
+\epsilon_N\colon \Omega_X\bar B_X(A_{\le N})\longrightarrow A_{\le N}
+\]
+are compatible quasi-isomorphisms in the square-zero total model.
+Assume also that the cone tower
+$K_N=\operatorname{Cone}(\epsilon_N)$ is strict Mittag--Leffler
+\textup{(}for example, the transition maps
+$K_{N+1}\twoheadrightarrow K_N$ are degreewise surjective\textup{)}.
+Then the completed counit
+\[
+\widehat\epsilon\colon
+\widehat\Omega_X(\widehat{\bar B}_X(A))
+=\varprojlim_N\Omega_X\bar B_X(A_{\le N})
+\longrightarrow
+\varprojlim_N A_{\le N}=A
+\]
+is a quasi-isomorphism.  In a genuinely curved CDG realization the
+same finite-window construction gives a coacyclic cone in the relevant
+second-kind coderived category, not an ordinary raw-chain
+quasi-isomorphism.
+\end{theorem}
+
+\begin{proof}
+The maps $\epsilon_N$ form a morphism of inverse systems.  Let
+$K_N=\operatorname{Cone}(\epsilon_N)$.  Each $K_N$ is acyclic in the
+square-zero total model by the finite-stage bar--cobar theorem.  The
+strict Mittag--Leffler hypothesis on the cone tower is part of the
+completed statement; it is not a formal consequence of acyclicity of
+the individual cones.  The Milnor
+sequence gives
+\[
+0\to\varprojlim\nolimits_N^1H^{m-1}(K_N)
+\to H^m(\varprojlim_NK_N)
+\to \varprojlim_NH^m(K_N)\to0.
+\]
+The right term vanishes because every $K_N$ is acyclic; the left term
+vanishes by Mittag--Leffler.  Hence
+$\operatorname{Cone}(\widehat\epsilon)$ is acyclic, which is the
+displayed quasi-isomorphism.  In the curved CDG ambient the same
+inverse-limit cone is interpreted in Positselski's second-kind
+category; acyclicity is replaced by coacyclicity.
+\end{proof}
+
+\begin{remark}[Finite-stage compatibility]\label{rem:completed-bar-cobar-window}
+The theorem uses finite-stage inversion as an input.  The statement
+does not assert that an arbitrary quotient of an arbitrary filtered
+algebra lies on the Koszul locus; it asserts that a tower whose
+quotients already carry the finite-stage bar--cobar quasi-isomorphisms
+inherits the completed quasi-isomorphism by Milnor exactness.
+\end{remark}
+
+\subsection{Essential image}
+
+\begin{theorem}[Essential image of finite-window bar towers; \ClaimStatusProvedHere]\label{thm:koszul-dual-characterization}
+A separated complete curved dg chiral coalgebra
+$\widehat C$ is isomorphic to $\widehat{\bar B}_X(A)$ for a strong
+finite-window algebra~$A$ if and only if it admits a presentation
+\[
+\widehat C\simeq\varprojlim_N C_N
+\]
+with the following properties:
+\begin{enumerate}
+\item each $C_N$ is a finite-type conilpotent curved dg chiral
+ coalgebra in the finite-stage essential image, say
+ $C_N\simeq\bar B_X(A_{\le N})$;
+\item the transition maps $C_{N+1}\to C_N$ are induced by strict
+ quotient maps $A_{\le N+1}\twoheadrightarrow A_{\le N}$;
+\item the algebras $A_{\le N}$ assemble to a separated complete
+algebra $A=\varprojlim_NA_{\le N}$ whose operations satisfy the
+ strong finite-window multiplicativity condition of
+ Definition~\ref{idea:I-adic}; and
+\item the finite-stage twisting morphisms and counits are compatible
+ with the tower.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+If $\widehat C=\widehat{\bar B}_X(A)$, take
+$C_N=\bar B_X(A_{\le N})$.  The four conditions are exactly the
+finite-window construction of Definition~\ref{idea:I-adic} and
+Theorem~\ref{thm:completion-convergence}.
+
+Conversely, assume such a presentation.  The strict quotient maps
+$A_{\le N+1}\twoheadrightarrow A_{\le N}$ assemble to the separated
+complete algebra $A=\varprojlim_NA_{\le N}$.  Compatibility of the
+finite-stage bar functor identifies the inverse system
+$\{C_N\}_N$ with $\{\bar B_X(A_{\le N})\}_N$.  Taking inverse limits
+gives
+\[
+\widehat C
+\simeq
+\varprojlim_N C_N
+\simeq
+\varprojlim_N\bar B_X(A_{\le N})
+=
+\widehat{\bar B}_X(A).
+\]
+\end{proof}
+
+\begin{remark}[Spectral sequences do not define the essential image]\label{rem:koszul-dual-characterization-window}
+Degeneration of an associated-graded spectral sequence is useful for
+proving that a given finite-window tower lies on the Koszul locus, but
+it is not an intrinsic characterization of completed bar coalgebras.
+The essential-image datum is the compatible finite-stage bar tower
+itself, together with the continuous twisting morphisms.
+\end{remark}
+
+\section{Connection to Beilinson--Drinfeld}
+
+\subsection{Filtered chiral algebras}
+
+\begin{remark}[BD framework]\label{rem:BD-filtered}
+Beilinson--Drinfeld develop filtered chiral algebras with
+augmentation-ideal topology.  The basic operations are:
+
+\begin{itemize}
+\item filtration by the augmentation ideal~$I$;
+\item completion
+ $\widehat{\mathcal{A}}=\varprojlim_n\mathcal{A}/I^n$;
+\item associated graded
+ $\operatorname{gr}(\mathcal{A})=\bigoplus_n I^n/I^{n+1}$.
+\end{itemize}
+When the finite-window filtration is the augmentation-ideal
+filtration, Definition~\ref{idea:I-adic} is exactly this completion
+applied to the bar coalgebra:
+\[
+\widehat{\bar B}_X(A)=\varprojlim_n\bar B_X(A/I^{n+1}).
+\]
+\end{remark}
+
+\subsection{Chiral homology completion}
+
+\begin{theorem}[BD chiral homology \cite{BD04}; \ClaimStatusProvedElsewhere]\label{thm:BD-chiral-homology}
+Let $A$ be an $I$-adically complete filtered chiral algebra on a
+smooth curve~$X$.  Assume the inverse system
+$\{H_*^{\mathrm{ch}}(X,A/I^{n+1})\}_n$ is Mittag--Leffler.  Then
+completed chiral homology is computed by the completed bar coalgebra:
+\[
+\widehat H_*^{\mathrm{ch}}(X,A)
+:=
+\varprojlim_n H_*^{\mathrm{ch}}(X,A/I^{n+1})
+\cong
+H_*\!\left(\varprojlim_n\bar B_X(A/I^{n+1})\right).
+\]
+\end{theorem}
+
+\section{Perturbative filtrations}
+
+\subsection{Perturbative expansion}
+
+\begin{interpretation}[Completion as perturbative expansion]\label{interp:completion-renorm}
+In perturbative models whose Feynman graphs are identified with the
+bar construction, a finite window $\bar B(A_{\le N})$ records the graph
+weights visible below the chosen filtration bound.  The completed
+object
+\[
+\widehat{\bar B}_X(A)=\varprojlim_N\bar B_X(A_{\le N})
+\]
+is the formal all-window object.  Theorem~\ref{thm:completion-convergence}
+is the algebraic convergence statement: finite graph windows assemble
+only when the differential and twisting cochain are continuous and the
+cohomology tower is Mittag--Leffler.
+\end{interpretation}
+
+\subsection{Feynman diagram expansion}
+
+\begin{remark}[Feynman diagrams and conilpotent degree]\label{rem:feynman-conilpotent}
+The conilpotent filtration levels $F^n/F^{n+1}$ correspond, under the Feynman diagram identification of Chapter~\ref{ch:v1-feynman}, to graphs with exactly~$n$ internal edges. In particular: $F^0/F^1$ consists of vacuum contributions (no internal edges), $F^1/F^2$ of tree-level propagators (single internal edge), and $F^n/F^{n+1}$ of diagrams with~$n$ internal edges. The symmetry factors arising in the perturbative expansion are the orders of the automorphism groups of the corresponding graphs. The completion $\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n$ amounts to summing over all graph topologies, a formal power series that requires the $I$-adic topology to converge.
+\end{remark}
+
+\section{Finite-window examples}
+
+\subsection{Example 1: Virasoro algebra}
+
+\begin{example}[Virasoro finite-window completion]\label{ex:virasoro-completion}
+The Virasoro OPE is
+\[
+T(z)T(w)\sim
+\frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}
++\frac{\partial T(w)}{z-w}.
+\]
+The quartic pole contributes the scalar curvature direction
+$m_0\propto(c/2)\mathbf 1$ in the curved bar model.  On the
+positive-energy state space write
+\[
+(\mathrm{Vir}_c)_{\le N}:=\bigoplus_{0\le h\le N}
+(\mathrm{Vir}_c)_h .
+\]
+Each finite window is finite-dimensional by the VOA finite-energy
+axiom, and the completed bar coalgebra is
+\[
+\widehat{\bar B}(\mathrm{Vir}_c)
+=
+\varprojlim_N
+\bar B\bigl((\mathrm{Vir}_c)_{\le N}\bigr).
+\]
+This object is the completed bar coalgebra.  The same-family shadow
+$\mathrm{Vir}_{26-c}$ belongs to the Verdier--Koszul lane; it is not
+the bar coalgebra itself and is not produced by the counit
+$\Omega\widehat{\bar B}(\mathrm{Vir}_c)\to\mathrm{Vir}_c$.
+\end{example}
+
+\subsection{\texorpdfstring{Example 2: $W_3$ algebra}{Example 2: W-3 algebra}}
+
+\begin{example}[\texorpdfstring{$\mathcal W_3$}{W3} finite windows]\label{ex:w3-completion}
+The algebra $\mathcal W_3$ has strong generators $T$ and~$W$ of spins
+$2$ and~$3$, and the $W$--$W$ OPE contains a sixth-order scalar pole.
+The completion is the conformal-weight tower
+\[
+\widehat{\bar B}(\mathcal W_3)
+=
+\varprojlim_N
+\bar B\bigl((\mathcal W_3)_{\le N}\bigr).
+\]
+The convergence input is not the bare assertion that the structure
+constants have polynomial growth.  The finite-window proof requires
+the operations to preserve the chosen filtration, finite-stage
+bar--cobar inversion on each $(\mathcal W_3)_{\le N}$, and
+Mittag--Leffler stabilization of the resulting bar cohomology tower.
+\end{example}
+
+\subsection{Example 3: Heisenberg (quadratic case for comparison)}
+
+\begin{example}[Heisenberg: discrete conilpotent model]\label{ex:heisenberg-no-completion}
+The Heisenberg algebra is quadratic:
+\[a(z)a(w) \sim \frac{k}{(z-w)^2}\]
+
+At genus~$0$ the reduced bar coalgebra is conilpotent by bar length:
+for a word of length~$n$, the $(n+1)$-fold reduced coproduct vanishes.
+The quadratic Koszul model is finite in each finite input window, and
+the bar--cobar counit is defined in the discrete conilpotent category.
+Completing the conformal-weight tower changes no finite bar word; it
+only records the same model as a separated inverse limit.
+\end{example}
+
+\section{Computational methods}
+
+\subsection{Computing the completion}
+
+\begin{remark}[Computing a finite window]\label{rem:compute-completion}
+Given a filtered chiral algebra~$A$ and a window~$N$, the quotient
+$A_{\le N}=A/F^{N+1}A$ determines the finite-stage bar coalgebra
+$\bar B_X(A_{\le N})$.
+\begin{enumerate}
+\item \emph{Basis.} Keep fields whose filtration degree is at most~$N$.
+\item \emph{Differential.} Compute collision residues from the OPE and
+ discard every output in $F^{N+1}A$.
+\item \emph{Coproduct.} Use deconcatenation on finite bar words.
+\item \emph{Compatibility.} Verify that the projection
+ $\bar B_X(A_{\le N+1})\to\bar B_X(A_{\le N})$ commutes with
+ differential, curvature, coproduct, and the finite-stage twisting
+ morphism.
+\end{enumerate}
+\end{remark}
+
+\subsection{Convergence criteria in practice}
+
+\begin{proposition}[Weight-window convergence; \ClaimStatusProvedHere]\label{prop:practical-convergence}
+Let $A=\bigoplus_{h\ge0}A_h$ be a positive-energy chiral algebra with
+finite-dimensional weight spaces.  Suppose the chiral $A_\infty$
+operations preserve total conformal weight after the reduced-weight
+shift used in the bar construction, and the finite weight windows
+$A_{\le N}$ lie in the finite-stage bar--cobar regime.  Then
+$\widehat{\bar B}(A)=\varprojlim_N\bar B(A_{\le N})$ is well-defined,
+and every fixed total weight~$w$ stabilizes at stage~$N=w$.  More
+precisely,
+\[
+\widehat{\bar B}(A)\cong
+\prod_{w\ge0}\bar B(A_{\le w})_w,
+\qquad
+\bar B(A)=\bigoplus_{w\ge0}\bar B(A)_w
+\]
+with the direct sum sitting as the polynomial subcomplex of the
+completed product.  The passage from finite windows to the completed
+object is exact only because the weightwise inverse systems are
+eventually constant.
+
+Two standard cases follow.
+\begin{enumerate}
+\item For finitely strongly generated positive-energy algebras, each
+ total-weight piece of the bar complex is finite-dimensional.
+\item For towers with generators of weights
+ $h_1\le h_2\le\cdots\to\infty$, a fixed weight window contains only
+ finitely many generators, so the inverse system is eventually
+ constant on that window.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Fix a total weight~$w$. Weight preservation implies that no bar word
+of total weight~$w$ can use a generator of weight greater than~$w$.
+Thus the projection from the $N$th window to the $w$th window is an
+isomorphism on weight~$w$ for all $N\ge w$. The inverse system is
+therefore Mittag--Leffler and eventually constant weightwise, and the
+completed bar coalgebra is the product of the stabilised weight
+pieces. The two stated cases are exactly the two finiteness
+conditions ensuring finite-dimensionality before the inverse limit.
+\end{proof}
+
+\section{Connection to Costello--Gwilliam}
+
+\subsection{Renormalization and factorization}
+
+\begin{theorem}[Costello--Gwilliam renormalization \cite{CG17}; \ClaimStatusProvedElsewhere]\label{thm:CG-renorm}
+\textup{(Costello--Gwilliam, Volume 2)}
+
+For a perturbative quantum field theory, the effective interaction satisfies:
+\[I_{\text{eff}} = I_{\text{classical}} + \sum_{n=1}^{\infty} \hbar^n I^{(n)}\]
+
+where $I^{(n)}$ are n-loop quantum corrections.
+
+The bar completion has the same formal inverse-limit shape:
+\[
+\widehat{\bar B}(A)=\varprojlim_N\bar B(A_{\le N}).
+\]
+
+\end{theorem}
+
+\begin{remark}[Physical interpretation]
+Under the Feynman diagram identification of Chapter~\ref{ch:v1-feynman},
+the completion topology is the algebraic counterpart of a graph-window
+expansion: convergence of the inverse system
+$\{\bar B(A_{\le N})\}_N$ is exactly the assertion that the formal
+graph sum defines a continuous dg coalgebra.
+\end{remark}
+
+\section{Higher genus corrections}
+
+\subsection{Genus expansion of completion}
+
+\begin{remark}[Genus-graded completion]\label{rem:genus-completion}
+The $I$-adic completion and the genus expansion are two independent filtrations on
+the bar complex. At each fixed genus~$g$, the bar complex
+$\bar{B}^{(g)}(\mathcal{A})$ receives its own $I$-adic completion:
+\[\widehat{\bar{B}}^{(g)}(\mathcal{A}) := \varprojlim_n \bar{B}^{(g)}(\mathcal{A})/I^n.\]
+The genus-$g$ contribution involves configuration spaces on Riemann surfaces of
+genus~$g$, modular forms, and period integrals over $\mathcal{M}_g$.
+
+The total bar complex collecting all genera is a \emph{separate} object:
+\[\bar{B}^{\mathrm{tot}}(\mathcal{A}) := \bigoplus_{g \geq 0} g_s^{2g-2}\, \bar{B}^{(g)}(\mathcal{A}).\]
+The convergence of this genus sum requires analytic input beyond the $I$-adic
+topology; this is the content of the HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) and not a consequence of the $I$-adic
+completion alone. The string-theory interpretation of the genus parameter as a
+loop-counting variable $g_s$ is not used in the algebraic
+arguments of this chapter.
+\end{remark}
+
+%% ====================================================================
+%% STABILIZED AND RESONANCE-FILTERED COMPLETION
+%% ====================================================================
+\section{Stabilized and resonance-filtered completion}
+\label{sec:mc4-splitting}
+
+The strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) turns the abstract
+Mittag--Leffler and continuity inputs of
+Proposition~\ref{prop:mc4-reduction-principle} into a finite-window
+criterion.  Infinite-generator towers separate into positive towers,
+where weight windows stabilize, and resonant towers, where a
+finite-dimensional weight-zero sector remains.
+
+\begin{remark}[Positive and resonant towers]
+\label{rem:mc4-splitting}
+The completed bar-cobar problem for infinite-generator chiral
+algebras splits into two independent sub-problems:
+\begin{itemize}
+\item \emph{Positive towers.}
+ When the algebra carries an honest positive weight grading
+ (conformal weight, spin, loop degree) and the bar differential
+ preserves total weight, the completion problem is reduced by
+ weightwise stabilization:
+ the weight-$w$ summand of the reduced bar complex depends only on
+ the finite truncation $\cA_{\le w}$, and the completed
+ counit is a quasi-isomorphism weight by weight.
+ This is exactly the content of
+ Proposition~\ref{prop:mc4-weight-cutoff} and
+ Corollary~\ref{cor:winfty-weight-cutoff}.
+ \emph{Positive towers include $\mathcal{W}_{1+\infty}$,
+ Drinfeld/RTT positive towers, and standard RTT algebras.}
+\item \emph{Finite resonance towers.}
+ When the algebra has a finite-dimensional weight-zero
+ resonance piece on which higher operations can preserve
+ filtration degree~$0$, the stabilization argument does not
+ apply directly.  The remaining datum is the finite curved factor
+ carrying weight-zero propagation.
+ \emph{The Virasoro algebra, $\mathcal{W}_N$ algebras
+ ($N \ge 3$), and non-quadratic chiral algebras with central
+ terms belong to this regime.}
+\end{itemize}
+This splitting is structural: the positive sector is controlled by
+weight stabilization, while the resonant sector is controlled by a
+finite-dimensional curved factor.
+\end{remark}
+
+\subsection{Positive towers: stabilized completion}
+
+\begin{theorem}[Stabilized completion for positive towers;
+\ClaimStatusProvedHere]
+\label{thm:stabilized-completion-positive}
+Let $\cA = \prod_{w \ge 0} \cA_w$ be a complete augmented
+$A_\infty$-algebra such that:
+\begin{enumerate}
+\item each $\cA_w$ is finite-dimensional;
+\item every $A_\infty$-operation $m_n$ preserves total weight;
+\item the curvature $m_0$ has strictly positive weight;
+\item each truncation
+ $\cA_{\le N} := \prod_{0 \le w \le N} \cA_w$
+ lies in the proved finite-type bar-cobar regime.
+\end{enumerate}
+Then the \emph{stabilized completed reduced bar coalgebra}
+\[
+\widehat{\bar B}^{\mathrm{st}}(\cA)
+:= \prod_{w \ge 0} \bar B(\cA_{\le w})_w
+\]
+is a well-defined complete curved dg coalgebra, and the
+completed counit
+\[
+\Omega\bigl(\widehat{\bar B}^{\mathrm{st}}(\cA)\bigr)
+\longrightarrow \cA
+\]
+is a quasi-isomorphism in the completed graded category.
+\end{theorem}
+
+\begin{proof}
+A bar word of total weight~$w$ can only involve inputs of weights
+$\le w$. Since the $A_\infty$-operations preserve total weight,
+the differential on the weight-$w$ piece sees only $\cA_{\le w}$.
+Hence the chain complex $\bar B(\cA)_w$ stabilizes at stage~$w$:
+for every $N \ge w$, the natural map
+$\bar B(\cA_{\le N})_w \xrightarrow{\sim} \bar B(\cA_{\le w})_w$
+is an isomorphism of chain complexes.
+
+The finite-stage counits
+$\Omega(\bar B(\cA_{\le N})) \xrightarrow{\sim} \cA_{\le N}$
+are quasi-isomorphisms by hypothesis~(4). Restricting to
+the weight-$w$ summand (which stabilizes at stage~$w$)
+gives a quasi-isomorphism on each weight piece. Taking the
+product over~$w$ gives the completed statement.  Products of
+weightwise quasi-isomorphisms are exact here because the tower is
+eventually constant in each finite-dimensional weight and therefore
+strict Mittag--Leffler.
+\end{proof}
+
+\begin{remark}[Relation to finite-window criteria]
+\label{rem:stabilized-vs-mc4-criteria}
+Theorem~\ref{thm:stabilized-completion-positive} is the
+positive-tower special case of the strong completion-tower
+theorem (Theorem~\ref{thm:completed-bar-cobar-strong}),
+under the strong filtration axiom
+(Definition~\ref{def:strong-completion-tower}).
+The weight-cutoff criterion of
+Proposition~\ref{prop:mc4-weight-cutoff} and its application to
+the $\mathcal{W}_\infty$ tower in
+Corollary~\ref{cor:winfty-weight-cutoff} are concrete instances.
+For any target with an honest positive spin, loop, or conformal
+grading \textup{(}$\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive
+towers, positive RTT algebras\textup{)}, the completed bar-cobar
+problem is reduced to finite truncations and strict weightwise
+Mittag--Leffler.
+\end{remark}
+
+\subsection{Resonance rank}
+
+\begin{definition}[Resonance decomposition and resonance rank]
+\label{def:resonance-rank}
+Let $\cA$ be a complete filtered $A_\infty$-algebra with a closed
+decomposition
+\[
+\cA \cong R_\cA \;\widehat{\oplus}\; \cA^{>0},
+\]
+where $\cA^{>0}$ carries a positive weight grading and $R_\cA$ is
+the maximal closed subspace on which higher operations can preserve
+filtration degree~$0$. Define the \emph{resonance rank}
+\[
+\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})
+\]
+when finite.
+\begin{itemize}
+\item $\rho(\cA) = 0$: purely positive tower;
+ stabilization (Theorem~\ref{thm:stabilized-completion-positive})
+ solves the completion problem.
+\item $0 < \rho(\cA) < \infty$: finite resonance obstruction;
+ Theorem~\ref{thm:resonance-filtered-bar-cobar} applies.
+\item $\rho(\cA) = \infty$: genuinely wild completion problem.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Resonance rank is the true obstruction]
+\label{rem:resonance-true-obstruction}
+Infinite generation by itself is not the enemy.
+The enemy is neutral-energy resonance. The standard
+mode-level objection to Virasoro conilpotence (that
+coproducts of~$L_0$ spread into infinitely many
+$L_k \otimes L_{-k}$ terms) may be a presentation artifact
+rather than the intrinsic obstruction of the positive-energy
+chiral algebra. The chiral state space of the Virasoro VOA
+is positively graded by conformal weight, and each weight space
+is finite-dimensional. The right question is not ``is the raw
+mode bar construction conilpotent?''\ but rather ``can one
+rewrite Virasoro completion on the positive-energy state-space
+side, with only a finite resonance slice carrying the
+central term and normal-ordering corrections?''
+\end{remark}
+
+\begin{lemma}[Exact tensoring with a finite resonance tower; \ClaimStatusProvedHere]
+\label{lem:finite-resonance-tensor-exact}
+Let
+\[
+P=\prod_{w\ge0}P_w,\qquad
+Q=\prod_{\ell\ge0}Q_\ell
+\]
+be completed products of complexes over~$\bk$, with every
+$P_w$ and $Q_\ell$ finite-dimensional.  The completed tensor product
+for the product filtrations is
+\[
+P\widehat\otimes Q
+\cong
+\prod_{w,\ell\ge0}(P_w\otimes Q_\ell).
+\]
+If $f:P\to P'$ and $g:Q\to Q'$ are products of weightwise
+quasi-isomorphisms and the corresponding inverse systems are strict
+Mittag--Leffler, then
+$f\widehat\otimes g$ is a quasi-isomorphism.  No exactness assertion is
+made here for arbitrary completed tensor products with an
+infinite-dimensional unfiltered factor.
+\end{lemma}
+
+\begin{proof}
+The displayed tensor product is the inverse limit over finite
+rectangles $(w,\ell)\le(N,L)$.  On each rectangle tensoring is exact,
+because it is a finite tensor product of complexes of vector spaces.
+The transition maps are projections, hence strict epimorphisms.  The
+Milnor sequence has vanishing $\varprojlim^1$ by strict
+Mittag--Leffler, so cohomology commutes with the limit.  This proves
+both the formula and preservation of quasi-isomorphisms.
+\end{proof}
+
+\subsection{Resonance-filtered completion}
+
+\begin{theorem}[Resonance-filtered completed bar/cobar;
+\ClaimStatusProvedHere]
+\label{thm:resonance-filtered-bar-cobar}
+Assume $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ with:
+\begin{enumerate}
+\item $\cA^{>0}$ satisfies the hypotheses of
+ Theorem~\textup{\ref{thm:stabilized-completion-positive}};
+\item $R_\cA$ is a finite-dimensional curved $A_\infty$-subalgebra;
+\item every mixed higher product with at least one resonance input and
+ at least one $\cA^{>0}$-input strictly lowers positive weight;
+\item the compatible finite-stage counit cone tower is strict
+ Mittag--Leffler.
+\end{enumerate}
+Define the \emph{resonance-filtered completed bar coalgebra}
+\[
+\widehat{\bar B}^{\mathrm{res}}(\cA)
+:=
+\Bigl(\prod_{w \ge 0}
+ \bar B\bigl((\cA^{>0})_{\le w}\bigr)_w\Bigr)
+\;\widehat{\otimes}\;
+\widehat{\bar B}(R_\cA),
+\]
+where $\widehat{\bar B}(R_\cA)$ is completed in bar length.  Since
+$R_\cA$ is finite-dimensional, each resonance bar-length piece is
+finite-dimensional.
+Then the total bar differential splits as
+\[
+D = D^+ + D_R + D_{\mathrm{mix}},
+\]
+where $D^+$ is the stabilized positive-weight differential,
+$D_R$ is the bar differential on the resonance-length completion, and
+$D_{\mathrm{mix}}$ is
+locally nilpotent on every finite positive-weight window
+\textup{(}each application strictly lowers positive weight\textup{)}.
+Consequently:
+\begin{enumerate}
+\item $D$ is continuous in the completed topology;
+\item $\widehat{\bar B}^{\mathrm{res}}(\cA)$ is a complete
+ curved dg coalgebra; and
+\item if the finite-stage counits are compatible quasi-isomorphisms,
+ then
+ \[
+ \Omega\bigl(\widehat{\bar B}^{\mathrm{res}}(\cA)\bigr)
+ \simeq \cA.
+ \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Because $D_{\mathrm{mix}}$ strictly lowers positive weight, its
+iterates terminate on every finite window: for an element of
+positive weight~$w$, the $n$-fold iterate $D_{\mathrm{mix}}^n$
+vanishes for $n > w$. Thus the full differential is a finite
+perturbation of $D^+ + D_R$ on each window and a continuous
+perturbation after completion. The stabilized positive sector is
+controlled by Theorem~\ref{thm:stabilized-completion-positive};
+the completed tensor product with the resonance sector is exact by
+Lemma~\ref{lem:finite-resonance-tensor-exact}; and the mixed term
+converges by the weight bound. The filtered homological perturbation
+lemma applies on each finite positive-weight and resonance-length
+window.  Passing to the completed limit uses the strict
+Mittag--Leffler hypothesis on the finite-stage counit cones and
+Theorem~\ref{thm:completed-bar-cobar}, giving completed bar-cobar
+recovery.
+\end{proof}
+
+\begin{construction}[The resonance spectral sequence]
+\label{const:resonance-spectral-sequence}
+Let $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ satisfy the
+hypotheses of
+Theorem~\ref{thm:resonance-filtered-bar-cobar}. Define the
+\emph{positive-weight filtration} on the bar complex by
+\[
+\mathcal{F}_{\le p} \barB(\cA)
+:= \bigl\{\text{bar chains whose total weight from $\cA^{>0}$
+components is $\le p$}\bigr\}.
+\]
+Since the mixed differential $D_{\mathrm{mix}}$ strictly
+lowers positive weight, this finite increasing filtration is
+preserved by $D$, and the associated spectral sequence
+$(E_r^{p,q}, d_r)_{r \ge 0}$ converges to
+$H^*(\barB(\cA), D)$. The pages are:
+\begin{itemize}
+\item $E_0$: the associated graded of the bar complex by
+ positive weight, with $d_0 = D^+ + D_R$ (the weight-preserving
+ part of the differential);
+\item $E_1 \cong H^*(\barB(\cA^{>0}), D^+) \otimes
+ H^*(\widehat{\barB}(R_\cA), D_R)$, computed by finite
+ positive-weight and finite resonance-length windows;
+\item $d_1$: the first correction from $D_{\mathrm{mix}}$,
+ which lowers positive weight by exactly~$1$;
+\item $E_r$ for $r \ge 2$: successive corrections from the mixed
+ differential.
+\end{itemize}
+At total weight~$w$, the spectral sequence degenerates at page
+$E_{w+1}$ (since $D_{\mathrm{mix}}$ can lower positive
+weight at most $w$ times before reaching~$0$).
+In particular, the spectral sequence is
+\emph{finitely convergent at every weight level}: each $E_\infty^w$
+is computed by a finite number of pages.
+
+\emph{Computational significance.}
+The $E_1$ page is computable by finite windows:
+$H^*(\barB(\cA^{>0}), D^+)$ is determined by the stabilized
+positive-weight theory
+(Theorem~\ref{thm:stabilized-completion-positive}), and
+$H^*(\widehat{\barB}(R_\cA), D_R)$ is computed by the
+bar-length tower of the finite-dimensional resonance algebra. The
+differentials $d_r$ for $r \ge 1$ are
+explicit: they are determined by the coupling between the
+resonance piece and the positive sector through the
+mixed $A_\infty$-operations. The spectral sequence provides a
+systematic algorithm for computing the bar cohomology of any
+finite-resonance algebra.
+\end{construction}
+
+\begin{proposition}[Resonance spectral sequence degeneration;
+\ClaimStatusProvedHere]
+\label{prop:resonance-ss-degeneration}
+In the setting of
+Construction~\textup{\ref{const:resonance-spectral-sequence}},
+if the mixed operations
+$\cA^{>0} \otimes R_\cA \to \cA^{>0}$ lower positive weight
+by at least~$\delta \ge 1$, then the spectral sequence
+degenerates at page $E_{\lfloor w/\delta \rfloor + 1}$ for
+elements of total weight~$w$.
+
+In particular, if $\delta = 1$ the spectral sequence for
+weight-$w$ elements has at most $w+1$ pages, and if
+$\delta \ge w$ it degenerates at $E_2$
+\textup{(}the first correction suffices\textup{)}.
+\end{proposition}
+
+\begin{proof}
+Each non-zero application of $d_r$ lowers positive weight by at
+least~$r \cdot \delta$. For an element of positive weight~$w$,
+no term can be lowered more than~$w$, so $d_r = 0$ for
+$r > w/\delta$. Hence $E_{\lfloor w/\delta \rfloor + 1}
+= E_\infty$ for weight-$w$ elements.
+\end{proof}
+
+\subsection{Resonance rank computations for standard families}
+
+\begin{proposition}[Resonance ranks of the standard families;
+\ClaimStatusProvedHere]
+\label{prop:resonance-ranks-standard}
+For the standard chiral algebra families, the resonance rank
+and resonance decomposition are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccl}
+\textbf{Family} & $\rho(\cA)$ & $\dim R_\cA$ & \textbf{Notes} \\
+\hline
+Heisenberg $\mathcal{H}_k$ & $0$ & $0$
+ & Quadratic; no completion needed \\
+Free fermion $\mathrm{Fer}$ & $0$ & $0$
+ & Quadratic; no completion needed \\
+$\beta\gamma$ system & $0$ & $0$
+ & Quadratic; no completion needed \\
+$\widehat{\mathfrak{g}}_k$ \textup{(}affine\textup{)} & $0$ & $0$
+ & Quadratic OPE; PBW-Koszul \\
+$\mathrm{Vir}_c$ \textup{(}Virasoro\textup{)} & $1$ & $1$
+ & $R = \bk \cdot m_0$
+ \textup{(}curvature from quartic pole\textup{)} \\
+$\mathcal{W}_3$ & $1$ & $1$
+ & $R = \bk \cdot m_0$
+ \textup{(}curvature from sixth-order pole\textup{)} \\
+$\mathcal{W}_N$ \textup{(}$N \ge 3$\textup{)} & $1$ & $1$
+ & Curvature $m_0 \propto c$;
+ single resonance direction \\
+$\mathcal{W}_{1+\infty}$ & $0$ & $0$
+ & Positive conformal-weight tower;
+ stabilization applies \\
+$Y_{\mathrm{RTT}}(\mathfrak{g})$ \textup{(}Drinfeld/RTT tower\textup{)} & $0$ & $0$
+ & Positive loop-weight tower;
+ stabilization applies
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+\emph{Quadratic families} ($\mathcal{H}_k$, $\mathrm{Fer}$,
+$\beta\gamma$, $\widehat{\mathfrak{g}}_k$):
+The OPE is at most quadratic, and the bar complex is
+finite-dimensional at each weight. The strong completion-tower
+axiom (Definition~\ref{def:strong-completion-tower}) is
+satisfied for the PBW filtration; no resonance piece is needed.
+
+\emph{Virasoro and $\mathcal{W}_N$} ($N \ge 3$):
+In the curved $A_\infty$-decomposition of the chiral algebra
+structure, the central charge contributes a curvature element
+$m_0 = \kappa(\cA) \cdot \eta \in F^0\cA$, where $\eta$ is
+the vacuum covector.
+The resonance piece $R_\cA = \bk \cdot m_0$ is
+one-dimensional, with trivial differential $d_R(m_0) = 0$
+(the curvature is closed by the $A_\infty$-identity
+$m_1(m_0) + m_2(m_0, m_0) = 0$, and for a single generator
+this reduces to $m_1(m_0) = 0$ plus higher-order terms that
+vanish by dimension). Hence $\rho(\cA)
+= \dim H^*(R_\cA, m_1^R) = 1$. The finite-dimensionality
+is direct from the positive-energy state-space grading:
+$R_\cA=H_0$, each $V_h$ is finite-dimensional, and for Virasoro
+$\dim H_0 \leq \dim V_0 = 1$.
+
+\emph{Positive towers}
+($\mathcal{W}_{1+\infty}$ and Drinfeld/RTT positive towers):
+The tower structure provides a positive conformal-weight (resp.\
+RTT-weight) grading. The curvature at each finite stage is
+absorbed into the finite-type bar-cobar regime, and the
+stabilized completion of
+Theorem~\ref{thm:stabilized-completion-positive} applies.
+The infinite-generator limit has $R_\cA = 0$ because the
+curvature at each stage is handled by the finite truncation.
+This row concerns ordinary Drinfeld/RTT towers.  It is not the K3
+Hall--Drinfeld or BKM target object, whose completion data live in the
+separate Vol.~III comparison lane.
+\end{proof}
+
+\begin{corollary}[Virasoro resonance spectral sequence;
+\ClaimStatusProvedHere]
+\label{cor:virasoro-resonance-ss}
+Assume $\mathrm{Vir}_c$ admits a resonance splitting with
+$R_{\mathrm{Vir}}=\bk\cdot m_0$, that the resonance bar factor has
+$H^*(\widehat{\barB}(R_{\mathrm{Vir}}),D_R)\cong\bk$, and that the
+finite-stage counit cones are strict Mittag--Leffler.  Then the
+resonance spectral sequence of
+Construction~\textup{\ref{const:resonance-spectral-sequence}}
+has:
+\begin{itemize}
+\item $E_1 \cong H^*(\barB(\mathrm{Vir}_c^{>0}))$
+ \textup{(}since the resonance bar cohomology is scalar by
+ hypothesis\textup{)};
+\item if a separate Verdier--Koszul finite-stage computation identifies
+ $H^*(\barB(\mathrm{Vir}_c^{>0}))$ with the same-family shadow
+ $\mathrm{Vir}_{26-c}$, then $\mathrm{Vir}_{26-c}$ is this
+ $E_1$ page;
+\item the differentials $d_r$ for $r \ge 1$ are the corrections
+ from the central charge coupling.
+\end{itemize}
+Thus the same-family shadow is a first-page identification only under
+the stated Verdier--Koszul input; it is not the completed dual by
+itself.
+\end{corollary}
+
+\begin{proof}
+The general resonance spectral sequence gives
+\[
+E_1\cong
+H^*(\barB(\mathrm{Vir}_c^{>0}),D^+)\otimes
+H^*(\widehat{\barB}(R_{\mathrm{Vir}}),D_R).
+\]
+The scalar-resonance hypothesis reduces the second factor to~$\bk$.
+The optional identification with $\mathrm{Vir}_{26-c}$ is not a
+consequence of completion; it is exactly the additional
+Verdier--Koszul computation named in the statement.  The higher
+differentials are induced by $D_{\mathrm{mix}}$, hence by the central
+charge coupling.
+\end{proof}
+
+\begin{remark}[The Virasoro resonance model]
+\label{rem:virasoro-resonance-model}
+The Virasoro state-space bar complex carries a positive-energy
+filtration.  In the transferred models considered here the central
+term gives a one-dimensional resonance candidate
+$R_{\mathrm{Vir}} = \mathbb{k} \cdot m_0$.  The resonance construction
+uses four mathematical inputs:
+\begin{enumerate}
+\item \emph{Finite-dimensionality of the resonance slice}: this is a
+ hypothesis of the transferred model in
+ Theorem~\ref{thm:platonic-completion}
+ \textup{(}$R_\cA = H_0$, $\dim H_0 \le \dim V_0 < \infty$\textup{)}.
+ For Virasoro: $\dim V_0 = 1$ (just the vacuum), so
+ $\dim R_{\mathrm{Vir}} \le 1$.
+ Proposition~\ref{prop:resonance-ranks-standard} computes
+ $\dim R_{\mathrm{Vir}} = 1$.
+\item \emph{Strict positive-weight drop of mixed
+ operations}: this is the reduced-weight hypothesis in
+ Theorem~\ref{thm:platonic-completion}; once imposed, the mixed
+ differential strictly lowers positive conformal weight.
+\item \emph{Compatibility with $\mathcal{W}_N$
+ approximants}: this holds when the DS-reduction functor preserves the
+ positive-energy grading (the BRST differential commutes
+ with~$L_0$), so that the resonance decomposition is compatible
+ with the $N \to \infty$ limit.
+\item \emph{Exactness through functors}: resonance-filtered completion
+ commutes with a weight-preserving functor only when that functor is
+ exact on the finite windows and preserves the strict
+ Mittag--Leffler cone tower.
+\end{enumerate}
+Under these inputs, the same-family shadow $\mathrm{Vir}_{26-c}$ can
+occur only as the first-page Verdier--Koszul shadow named in
+Corollary~\ref{cor:virasoro-resonance-ss}.  The completed dual is
+computed from the full object
+$\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$, with the higher
+pages carrying the central-charge corrections.
+\end{remark}
+
+\subsection{The Resonance completion theorem}
+
+\begin{theorem}[Resonance completion; \ClaimStatusProvedHere]
+\label{thm:platonic-completion}%
+\index{platonic completion theorem|textbf}%
+\index{resonance rank!finiteness|textbf}%
+Let $\cA$ be a separated complete chiral $A_\infty$-algebra obtained
+from a positive-energy chiral algebra
+$\mathcal V=\prod_{h\ge0}V_h$ by a weight-preserving strong
+deformation retract, with every $V_h$ finite-dimensional.  Assume:
+\begin{enumerate}
+\item the transferred operations satisfy the residue-weight identity
+ \[
+ h\bigl(\tilde m_k(x_1,\ldots,x_k)\bigr)
+ =
+ \sum_i h(x_i)-(k-1)
+ \]
+ whenever the right-hand side is non-negative, and the operation
+ vanishes otherwise;
+\item every finite reduced-weight truncation lies in the finite-stage
+ bar-cobar regime; and
+\item the finite-stage counit cone tower is strict Mittag--Leffler.
+\end{enumerate}
+Then $\cA$ admits the closed decomposition
+\[
+\cA \cong R_\cA \;\widehat{\oplus}\; \cA^+_\cA
+\]
+where $\cA^+_\cA$ satisfies stabilized completion
+\textup{(}Theorem~\textup{\ref{thm:stabilized-completion-positive})}
+and $R_\cA$ is finite-dimensional. The completed reduced bar
+coalgebra is then
+\[
+\widehat{\bar B}(\cA)
+\simeq
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\widehat{\bar B}(R_\cA),
+\]
+and the completed cobar recovers~$\cA$.
+
+For $\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive towers, and
+positive RTT algebras satisfying these hypotheses, one has
+$R_\cA = 0$.
+For Virasoro and non-quadratic $\mathcal{W}$-families, one has
+$0 < \dim R_\cA < \infty$ when the stated resonance model has been
+verified.  Any identification of the same-family shadow
+$\mathrm{Vir}_{26-c}$ is a separate Verdier--Koszul computation of
+the first page, not a consequence of the decomposition alone.
+\end{theorem}
+
+\begin{proof}
+Fix a positive-energy chiral algebra $\mathcal V$ whose
+weight-preserving transferred $A_\infty$-model is~$\cA$.
+Write
+\[
+\mathcal V = \prod_{h \ge 0} V_h,
+\qquad
+H_h := H^*(V_h, m_1|_{V_h}),
+\qquad
+H := \prod_{h \ge 0} H_h.
+\]
+Choose a strong deformation retract on each weight space and
+assemble them into a weight-preserving SDR
+\[
+(\mathcal V, H, p, \iota, h).
+\]
+By the homotopy transfer theorem
+\textup{(}Theorem~\ref{thm:htt}\textup{)}, $H$ inherits
+transferred operations $\tilde m_k$, and by construction
+$\cA = (H, \{\tilde m_k\})$.
+
+\emph{Step~1: Reduced weight is preserved on the positive sector.}
+For $x \in H_h$ with $h > 0$, define the reduced weight
+\[
+\nu(x) := h - 1.
+\]
+The residue-weight hypothesis gives, for homogeneous
+$x_i\in H_{h_i}$,
+\[
+h\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr)
+=
+\sum_{i=1}^k h_i - (k-1)
+\qquad (k \ge 2).
+\]
+Hence
+\[
+\nu\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr)
+=
+\sum_{i=1}^k \nu(x_i)
+\qquad (k \ge 2).
+\]
+Since $H$ is cohomology, the transferred differential vanishes:
+$\tilde m_1 = 0$. The transferred curvature $\tilde m_0$ has
+conformal weight~$0$.
+
+Set
+\[
+R_\cA := H_0,
+\qquad
+\cA^+_\cA := \prod_{h > 0} H_h.
+\]
+Then $\cA = R_\cA \;\widehat{\oplus}\; \cA^+_\cA$. The formula
+above shows that $\cA^+_\cA$ is closed under all
+$\tilde m_k$ with $k \ge 1$, because if every input has
+conformal weight at least~$1$, then the output has conformal
+weight at least~$1$ as well. On $\cA^+_\cA$, the transferred
+curvature is zero, so the curvature clause in
+Theorem~\ref{thm:stabilized-completion-positive} is vacuous.
+Each reduced-weight truncation
+\[
+(\cA^+_\cA)_{\le N}^{\nu}
+:=
+\prod_{0 \le \nu \le N} (\cA^+_\cA)_\nu
+=
+\prod_{1 \le h \le N+1} H_h
+\]
+is finite-dimensional and lies in the finite-stage bar-cobar regime
+by hypothesis. Therefore
+Theorem~\ref{thm:stabilized-completion-positive} applies to
+$\cA^+_\cA$ with respect to the reduced weight~$\nu$.
+
+\emph{Step~2: The resonance piece is finite-dimensional and
+curved.}
+By positive energy, each $V_h$ is finite-dimensional. Therefore
+each $H_h$ is finite-dimensional, in particular
+$R_\cA = H_0$ is finite-dimensional. If all inputs lie in $H_0$
+and $k \ge 2$, then the conformal-weight formula from Step~1 gives
+\[
+h\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr) = -(k-1) < 0,
+\]
+which is impossible in a positive-energy theory. Hence
+\[
+\tilde m_k|_{R_\cA^{\otimes k}} = 0
+\qquad (k \ge 2).
+\]
+Since $\tilde m_1 = 0$ and $\tilde m_0 \in R_\cA$, the resonance
+piece is a finite-dimensional curved $A_\infty$-subalgebra.
+Its resonance rank is therefore
+\[
+\rho(\cA)
+=
+\dim H^*(R_\cA, \tilde m_1)
+=
+\dim R_\cA
+<
+\infty.
+\]
+
+\emph{Step~3: The mixed differential is topologically nilpotent.}
+Consider the completed tensor product
+\[
+\widehat{\bar B}^{\mathrm{res}}(\cA)
+=
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\widehat{\bar B}(R_\cA).
+\]
+For a bar word, define its \emph{positive conformal weight}
+$w_+$ to be the sum of the conformal weights of the
+$\cA^+_\cA$-entries. The differential splits as
+$D = D^+ + D_R + D_{\mathrm{mix}}$, where $D^+$ uses only
+operations on~$\cA^+_\cA$, $D_R$ uses only operations on
+$R_\cA$, and $D_{\mathrm{mix}}$ contains the remaining terms.
+
+If a mixed operation involves $r \ge 1$ positive inputs of
+weights $h_1, \ldots, h_r$ and $s \ge 1$ resonance inputs, then
+\[
+h_{\mathrm{out}}
+=
+\sum_{i=1}^r h_i - (r+s-1)
+\le
+\sum_{i=1}^r h_i - 1.
+\]
+So any mixed operation with at least one resonance input lowers
+positive conformal weight by at least~$1$. If all inputs are
+positive, then $h_{\mathrm{out}} \ge 1$, so the output remains in
+$\cA^+_\cA$ and the term belongs to~$D^+$, not to
+$D_{\mathrm{mix}}$. Consequently
+$D_{\mathrm{mix}}$ lowers $w_+$ by at least~$1$ on every term to
+which it contributes.
+
+Therefore, for a bar chain of positive conformal weight~$w$,
+\[
+D_{\mathrm{mix}}^n = 0
+\qquad\text{for } n > w.
+\]
+This is the required topological nilpotence. The perturbation
+argument used in the proof of
+Theorem~\ref{thm:resonance-filtered-bar-cobar} depends only on
+that nilpotence, so it applies here with the finite increasing
+filtration
+\[
+\mathcal F_{\le p}
+:=
+\{\text{bar chains of positive conformal weight } \le p\}.
+\]
+Combining this with Step~1 gives
+\[
+\widehat{\bar B}(\cA)
+\simeq
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\widehat{\bar B}(R_\cA),
+\]
+and the completed cobar recovers~$\cA$.
+
+\emph{Step~4: Comparison with the original positive-energy model.}
+The SDR maps extend to $A_\infty$-quasi-isomorphisms by
+Theorem~\ref{thm:htt}. By
+Proposition~\ref{prop:transfer-bar}, the induced maps on bar
+complexes are quasi-isomorphisms:
+\[
+\bar B(\mathcal V) \xrightarrow{\sim} \bar B(\cA),
+\qquad
+\bar B(\cA) \xrightarrow{\sim} \bar B(\mathcal V).
+\]
+Because the SDR data preserve conformal weight, these maps are
+weightwise quasi-isomorphisms.  Passing to the completed products over
+weight and resonance-length pieces preserves quasi-isomorphisms by
+Lemma~\ref{lem:finite-resonance-tensor-exact} and the strict
+Mittag--Leffler cone hypothesis. Hence the resonance-filtered
+completed bar coalgebra constructed above computes the same completed
+bar-cobar type as the original positive-energy chiral
+algebra~$\mathcal V$.
+
+The specific resonance ranks for the standard families are
+computed in Proposition~\ref{prop:resonance-ranks-standard}:
+$\rho = 0$ for quadratic and positive-tower families, and
+$\rho = 1$ for Virasoro and $\mathcal{W}_N$
+\textup{(}the single resonance direction being the
+curvature $m_0$\textup{)}.
+\end{proof}
+
+\begin{remark}[The mode algebra vs.\ state-space formulation]
+\label{rem:mode-vs-state-completion}
+The proof uses the \emph{state-space} formulation of the
+chiral algebra (positive-energy grading on the VOA state space),
+not the \emph{mode algebra} formulation (generators $L_n$ for
+all~$n \in \mathbb{Z}$). In the mode algebra, the coproduct
+of~$L_0$ involves infinitely many terms
+$L_k \otimes L_{-k}$, and the raw mode bar construction has
+infinite-dimensional weight-$0$ part. The positive-energy
+state-space formulation avoids this: each weight space is
+finite-dimensional by axiom, and the SDR is constructed weight by
+weight. The passage from modes to states is the HTT
+(Theorem~\ref{thm:chiral-htt}), and the weight compatibility
+(Step~2 above) ensures that the resonance piece remains
+finite-dimensional after transfer.
+\end{remark}
+
+\begin{construction}[Completion towers as strict inverse limits]
+\label{constr:completion-mc4}
+The strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) uses the degree cutoff
+lemma
+(Lemma~\ref{lem:degree-cutoff}): the strong filtration axiom
+\[
+\mu_r(F^{i_1}, \ldots, F^{i_r})
+\subset F^{i_1 + \cdots + i_r}
+\]
+ensures continuity and strict Mittag--Leffler for the finite-window
+tower, yielding the completed bar-cobar homotopy equivalence on
+$\operatorname{CompCl}(\mathcal{F}_{\mathrm{ft}})$. The
+resonance rank $\rho(\cA)$
+(Definition~\ref{def:resonance-rank}) classifies completion
+difficulty.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Positive towers, $\rho = 0$.}
+ Weight stabilization
+ (Theorem~\ref{thm:stabilized-completion-positive})
+ reduces the completed bar-cobar problem to a finite
+ verification at each weight: the transition maps
+ $\widehat{\bar B}_{k+1}/F^{n+1}
+ \twoheadrightarrow
+ \widehat{\bar B}_k/F^n$
+ stabilize for $n$ exceeding a bound depending only on
+ the weight grading, so
+ $\varprojlim^1 = 0$ and the inverse limit is exact.
+ Examples: $\mathcal{W}_{1+\infty}$, Drinfeld/RTT positive
+ towers, RTT algebras.
+\item \emph{Finite resonance towers, $\rho > 0$.}
+ The resonance-filtered bar-cobar
+ (Theorem~\ref{thm:resonance-filtered-bar-cobar})
+ decomposes the problem into a finite-dimensional
+ resonance piece $R_\cA$ and a positive complement:
+ $\widehat{\bar B}(\cA)
+ \simeq
+ \widehat{\bar B}^{\mathrm{st}}(\cA^+)
+ \,\widehat{\otimes}\,
+ \widehat{\bar B}(R_\cA)$.
+ The remaining completion difficulty is concentrated in the
+ bar-length tower of the finite-dimensional resonance algebra.
+ Examples: $\mathrm{Vir}_c$ ($\rho = 1$),
+ non-quadratic $\mathcal{W}_N$ ($\rho < \infty$,
+ Theorem~\ref{thm:platonic-completion}).
+\item The coefficient-stability criterion
+ (Theorem~\ref{thm:coefficient-stability-criterion})
+ reduces convergence of the completed bar-cobar to
+ finite matrix stabilization at each weight window,
+ and the uniform PBW bridge
+ (Theorem~\ref{thm:uniform-pbw-bridge}) connects PBW concentration
+ to completed bar-cobar inversion on the stated finite-window locus.
+\end{enumerate}
+\end{construction}
+
+\begin{remark}[Coideal descent and resonance factorisation]
+\label{rem:mc4-coideal-descent}
+The splitting of Remark~\ref{rem:mc4-splitting} imposes the following
+mathematical order on quotient constructions:
+\begin{enumerate}
+\item Positive towers are governed by
+ Theorem~\ref{thm:stabilized-completion-positive}; the completed
+ counit is checked weight by weight.
+\item For Drinfeld/RTT and $\mathcal{W}_{1+\infty}$-type targets, the
+ unshifted completed envelope precedes shifted quotients.  The
+ kernel $\to$ completed envelope $\to$ boundary quotient order is
+ forced by the coideal structure
+ \textup{(}Appendix~\textup{\ref{chap:shifted-rtt-orthogonal-coideals}}\textup{)}.
+\item Orthogonal coideals and shifted quotients descend through
+ completion only after their kernels are closed for the
+ finite-window topology.  Shifted BFN-type data belong to this
+ quotient/coideal descent problem.
+\item The Virasoro state-space bar complex carries the
+ positive-energy filtration of
+ Remark~\ref{rem:virasoro-resonance-model}; its completed bar object
+ is controlled by the finite-dimensional resonance factor
+ $R_{\mathrm{Vir}}$.
+\item PBW concentration supplies the finite windows, completed
+ bar--cobar supplies the inverse limit, and the BV/BRST dictionary is a
+ later interpretation of that completed object.
+\end{enumerate}
+\end{remark}
+
+\section{Summary}
+
+\begin{remark}[Completed finite-window package]\label{rem:nilpotent-main}
+The completed bar--cobar package consists of:
+\begin{enumerate}
+\item the finite-stage convergence and geometry of the completed bar
+ tower
+ \textup{(}Theorem~\ref{thm:completion-convergence},
+ Proposition~\ref{prop:geom-conilpotent}\textup{)};
+\item the inverse-limit criteria used by the standard
+ $\mathcal{W}_\infty$ and Drinfeld/RTT positive towers;
+\item the compatibility of these completed models with the
+ Beilinson--Drinfeld filtered framework
+ \textup{(}Theorem~\ref{thm:BD-chiral-homology}\textup{)};
+\item the splitting into positive and finite-resonance regimes
+ \textup{(}Remark~\ref{rem:mc4-splitting}\textup{)};
+\item stabilized completion for positive towers
+ \textup{(}Theorem~\ref{thm:stabilized-completion-positive}\textup{)};
+\item the resonance rank invariant
+ \textup{(}Definition~\ref{def:resonance-rank}\textup{)}
+ and resonance-filtered completed bar-cobar
+ \textup{(}Theorem~\ref{thm:resonance-filtered-bar-cobar}\textup{)};
+\item the Resonance completion theorem
+ \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)},
+ which proves, under reduced-weight and strict Mittag--Leffler
+ hypotheses, that the completed bar-cobar type is represented by a
+ finite-resonance transferred model.
+\end{enumerate}
+The Resonance completion theorem
+\textup{(}Theorem~\ref{thm:platonic-completion}\textup{)}
+is the sharp finite-window form for positive-energy transferred models
+satisfying its hypotheses.  The remaining algebraic computation is the
+resonance spectral sequence for $\mathrm{Vir}_c$ and the
+non-quadratic $\mathcal W_N$ algebras, together with the
+Verdier--Koszul identification of the H-level target from its higher
+pages.
+\end{remark}
+
+\section{Synthesis}
+\label{sec:nc-supplement}
+
+\begin{remark}[Siegel-elliptic comparison kernels and Hall completion]
+\label{rem:nc-1}
+For the K3 Hall comparison one may posit a Siegel-elliptic dynamical
+kernel
+\[
+ R_{\mathrm{Sieg,dyn}}(z_1, z_2;\,\tau, w):\
+ V(z_1)\otimes V(z_2) \to V(z_2)\otimes V(z_1)
+\]
+with spectral parameters $(z_1,z_2)$ on the configuration side and
+dynamical parameters $(\tau,w)$ on $\mathbb H_2$.  This chapter does
+not construct such a kernel and does not identify it with an ordinary
+Drinfeld Yangian $R$-matrix.  The nilpotent completion of the chiral
+Hall algebra
+$\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})$
+supplies only the completed ambient in which a Vol.~III
+Hall--Drinfeld target $\mathbf H_{\Delta_5}^{\mathrm{tgt}}$ can be
+tested after the target-side comparison maps have been constructed.
+Recognition as the compact source $\mathbf H_{\Delta_5}$ is a
+Vol.~III source-gate statement, not a construction in this chapter
+\cite{PasolZagier2013,SchiffmannVasserot2012,Davison2017}. Cross-ref
+Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[K3 comparison constants do not bound nilpotence]
+\label{rem:nc-2}
+The identity
+\[
+\hbar^2 K^{\kappa_{\mathrm{ch}}}=-1,\qquad
+K^{\kappa_{\mathrm{ch}}}=8,\qquad
+\hbar^2=-1/8
+\]
+is a comparison normalisation for the K3 target lane.  It is not a
+nilpotence bound and it does not imply that the completed bar tower
+truncates at order~$8$.  The Vol.~I completion remains the inverse
+limit over finite windows.
+
+The K3 constants occupy different registers:
+\[
+K^{\kappa_{\mathrm{ch}}}=8=2c_+,\quad c_+=4,\quad
+\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E)=3,\quad
+\kappa_{\mathrm{BKM}}(\Delta_5)=5,
+\]
+while $\kappa_{\mathrm{cat}}(K3\times E)=0$,
+$\kappa_{\mathrm{fiber}}(K3)=24$, and $\chi(\mathcal O_{K3})=2$ are
+separate invariants.  The numerical equality $5=3+2$ is the
+$N=1$ coincidence recorded in the concordance, not a product formula.
+The automorphic forms $\Delta_5$ and $\Phi_{10}^{\mathrm{un}}$ are
+target comparison outputs for the Vol.~III BKM/Hall lane, not input
+data proving a truncation of nilpotent completion
+\cite{Lusztig1990,GritsenkoNikulin1998}. Cross-ref
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{Higher-coherence obstruction tower}
+\label{sec:nc-supplement-ii}
+
+\begin{remark}[Pentagon target cocycle at $\hbar^3, \hbar^4, \hbar^5$]
+\label{rem:nc-phi3-4-5}
+The pentagon target equation for the candidate Siegel--Borcherds
+scalar cocycle
+$\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}^{\mathrm{un}}/\eta^{24}]$
+closes at $\hbar^{\le 3}$ with the explicit three-coboundary
+\[
+\phi^{(3)} \;=\; \zeta(3)\,c_{\mathrm{symm}}
+ \;+\;(25/3)\,c_{\mathrm{timelike}}
+ \;+\;(\Phi_{10}^{\mathrm{un}}/\eta^{24})\cdot c_{\Phi_{10}^{\mathrm{un}}},
+\qquad c_{\Phi_{10}^{\mathrm{un}}}^{\mathrm{leading}} = -2,
+\]
+the leading Fourier coefficient $-2$ being the
+Gritsenko--Nikulin 1997 Theorem~2.1 singular-theta lift coefficient
+at $(q_\rho^1 q_\tau^1 y^0)$, with Eguchi--Ooguri--Tachikawa 2011
+normalisation $c_{\phi_{0,1}^{K3}}(-1) = 2$ entering with the
+singular-theta involution sign
+\cite{GritsenkoNikulin1997,EguchiOoguriTachikawa2011}.
+The obstruction tower extends to $\hbar^4,\hbar^5$:
+\[
+\phi^{(4)} \;=\; \tfrac{1}{24}\,\zeta(3)\,c_4^{(1)}
+ \;+\;\tfrac{1}{6}\,(\Phi_{10}^{\mathrm{un}}/\eta^{24})^2\,c_4^{(K3)},
+\qquad
+\phi^{(5)} \;=\; \tfrac{1}{240}\,\zeta(5)\,c_5^{(1)}
+ \;+\;\tfrac{1}{120}\,(\Phi_{10}^{\mathrm{un}})^{5/2}/\eta^{60}\,c_5^{(K3)}.
+\]
+At weight~$4$ no new multiple-zeta irreducibles appear (Brown 2011
+``Mixed Tate motives over $\mathbb Z$''); the rational coefficient
+$1/24$ is fixed by the Etingof--Kazhdan 2000 super-Drinfeld associator
+$(2\pi i)^4/4!$ normalisation of the 4-leg Knizhnik--Zamolodchikov
+iterated integral. At weight~$5$ the new irreducible is $\zeta(5)$;
+the would-be $\zeta(3)^2$ leg vanishes at $\hbar^5$ because
+$\zeta(3)^2$ is a weight-$6$ object (it re-enters at $\hbar^6$,
+reducible via the Zagier double-shuffle relations).
+\cite{Brown2011,EtingofKazhdan2000,EnriquezGomezGonzalezMaassarani2022,
+ GritsenkoNikulin1998,Drinfeld1990,MarklShniderStasheff2002}.
+An all-order associator on the compact Hall realisation additionally
+requires the Hall source and the all-order pentagon datum.
+\end{remark}
+
+\begin{remark}[$A_\infty$-quasi-Hopf: the tower does not truncate]
+\label{rem:nc-Ainfty-open}
+The conclusion is structural and belongs to the target lane.  For BKM
+target inputs whose imaginary-root cone is infinite-dimensional
+\textup{(}Borcherds 1992; Gritsenko--Nikulin 1998\textup{)}, the
+Vol.~III comparison may have higher-coherence contributions in
+unbounded $\hbar$-orders.  Under the Vol.~III imaginary-root counting
+hypothesis the target-side dimensions have asymptotic form
+\[
+\dim\,c_n^{(K3)} \;\sim\; n^{-27/4}\,\exp\!\bigl(4\pi\sqrt{n}\bigr)
+\]
+by Hardy--Ramanujan asymptotics applied to the Gritsenko--Nikulin~1998
+Section~4 imaginary-root counting formula
+\cite{GritsenkoNikulin1998,Borcherds1992,HardyRamanujan1918}.
+This is not a Vol.~I proof that every compact source has a non-zero
+class in every order.  It says that no finite nilpotence bound follows
+from the K3 comparison constants alone.  If a compact source is
+recognised by the Vol.~III
+$\mathbf H_{\Delta_5}^{\mathrm{tgt}}$ comparator and has non-zero
+classes in unbounded orders, it carries a genuine
+$A_\infty$-quasi-Hopf structure rather than only a quasi-Hopf structure
+in Drinfeld's original sense.  The
+controlling universal object is the chain-level Markl--Shnider--Stasheff
+complex $\mathrm{MSS}^\bullet(\widehat{\mathfrak g}^{\mathrm{super}}_{\Delta_5})$
+over the \emph{pro-}Lie-bialgebra
+$t^{\mathrm{Sieg},\mathrm{super}}_{2,[2]} \oplus \mathfrak n_+^{\mathrm{imag}}$
+(the super-Manin pair of the K3 BKM).  The nilpotent completion of the
+present chapter supplies one pro-conilpotent weight-completed ambient
+for this comparison; it does not recognise the compact Hall source.
+Ambient-qualifier
+discipline applies: the chain-level statement holds on the
+pro-object ambient; the $(\infty,1)$-categorical statement holds in
+the category of presentable $A_\infty$-Hopf $\infty$-operads
+(each lane inscribes its own ambient; the two are distinct
+theorems, both load-bearing). Cross-ref Vol.~III
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{Deep motivic coherences $\phi^{(8,9,10)}$}
+\label{sec:nc-supplement-iii}
+
+\begin{remark}[Brown's motivic MZV dimensions through weight~$12$;
+\ClaimStatusProvedElsewhere]
+\label{rem:nc-brown-deligne}
+Brown's Hoffman basis theorem gives
+\[
+ \sum_{n\geq0}d_nt^n=\frac{1}{1-t^2-t^3},
+ \qquad
+ (d_0,d_1,d_2)=(1,0,1).
+\]
+Hence
+\[
+d_3=1,\quad d_4=1,\quad d_5=2,\quad d_6=2,\quad
+d_7=3,\quad d_8=4,\quad d_9=5,\quad d_{10}=7,\quad
+d_{11}=9,\quad d_{12}=12.
+\]
+The basis in weight~\(n\) is indexed by compositions of \(n\) with
+parts in \(\{2,3\}\).  These dimensions describe the motivic period
+algebra.  Their image in a pentagon or cyclic deformation complex is
+defined by a chosen associator and a word-to-cochain map.
+\cite{Brown2011,Hoffman1997}.
+\end{remark}
+
+\begin{remark}[Weight-eight period coordinates]
+\label{rem:nc-phi8}
+The four Hoffman words in weight~$8$ are
+\[
+ (2,3,3),\quad(3,2,3),\quad(3,3,2),\quad(2,2,2,2).
+\]
+Thus \(d_8=4\).  The scalar Borcherds section
+\[
+ \left(\frac{\Delta_5}{\eta^{12}}\right)^8
+\]
+has raw modular weight \(-8\) and trivial
+\(\Delta_5\)-character.  Given lower cochains
+\(\Theta_{<8}\), an order-$8$ cyclic operation is a cochain
+\(\psi_8\) satisfying
+\[
+ D\psi_8
+ =
+ -\frac12\!\sum_{\substack{i+j=8\\i,j\geq3}}
+ [\psi_i,\psi_j],
+ \qquad
+ \operatorname{Rot}_8(\psi_8)=0.
+\]
+A word-to-cochain map and a Borcherds comparison homotopy place the
+four period coordinates and the scalar section in this equation.
+\end{remark}
+
+\begin{remark}[Weight-nine period coordinates]
+\label{rem:nc-phi9}
+The five Hoffman words in weight~$9$ are
+\[
+ (3,3,3)
+ \quad\text{and the four permutations of}\quad
+ (2,2,2,3).
+\]
+Thus \(d_9=5\).  The scalar section
+\((\Delta_5/\eta^{12})^9\) has raw modular weight \(-9\) and carries
+the character \(\nu_{\Delta_5}\).  An order-$9$ cyclic operation is
+a cochain \(\psi_9\) solving
+\[
+ D\psi_9
+ =
+ -\frac12\!\sum_{\substack{i+j=9\\i,j\geq3}}
+ [\psi_i,\psi_j],
+ \qquad
+ \operatorname{Rot}_9(\psi_9)=0.
+\]
+The exact period count and the cyclic solution are related by the
+chosen word-to-cochain map.
+\end{remark}
+
+\begin{remark}[Weight-ten period coordinates]
+\label{rem:nc-phi10}
+The seven Hoffman words in weight~$10$ are the six permutations of
+\((2,2,3,3)\) together with \((2,2,2,2,2)\).  Hence \(d_{10}=7\).
+The scalar section
+\((\Delta_5/\eta^{12})^{10}\) has raw modular weight \(-10\) and
+trivial character.  The order-$10$ obstruction and solution have the
+same form:
+\[
+ R_{10}:=
+ \frac12\!\sum_{\substack{i+j=10\\i,j\geq3}}
+ [\psi_i,\psi_j],
+ \qquad
+ D\psi_{10}=-R_{10},
+ \qquad
+ \operatorname{Rot}_{10}(\psi_{10})=0.
+\]
+The Hoffman basis indexes period coordinates; the represented
+cochain \(\psi_{10}\) is supplied by the comparison map and the
+chosen primitive of \(R_{10}\).
+\end{remark}
+
+\begin{remark}[Two asymptotic sequences]
+\label{rem:nc-asymptotic}
+The dimensions \(d_n\) grow with exponential rate equal to the
+plastic constant, the positive root of \(x^3=x+1\).  Fourier
+coefficients of a fixed K3 Borcherds product have their own
+chamber-dependent asymptotics.  These sequences count objects in
+distinct spaces.  A comparison of their growth is therefore attached
+to a specified linear map from the Borcherds coefficient space to the
+completed deformation complex.
+\cite{Brown2011,GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[The cyclic pro-obstruction]
+\label{rem:nc-obs-infty}
+For each cutoff \(m\), let \(\mathfrak c_{\leq m}\) be the cyclic
+deformation complex truncated in motivic weight and let
+\(\mathrm{obs}_{\leq m}\) be a represented obstruction cocycle.
+A cyclic pro-obstruction consists of compatible transition maps
+\[
+ q_{m+1,m}\colon\mathfrak c_{\leq m+1}\longrightarrow
+ \mathfrak c_{\leq m},
+ \qquad
+ q_{m+1,m}(\mathrm{obs}_{\leq m+1})
+ =
+ \mathrm{obs}_{\leq m}.
+\]
+When the \(q_{m+1,m}\) are degreewise surjective, the inverse system is
+Mittag--Leffler and
+\[
+ \mathrm{obs}_\infty:=
+ (\mathrm{obs}_{\leq m})_m
+ \in\varprojlim_m\mathfrak c_{\leq m}
+\]
+is defined with \(\varprojlim^1=0\).  Brown's finite motivic
+weight spaces and the finite-window topology provide the truncations;
+the transition maps and their compatibility with cyclic closure are
+the chain-level hypotheses.
+\cite{Brown2011,MarklShniderStasheff2002}.
+\end{remark}
+
+\begin{remark}[Weight eleven: period coordinates and the order-eleven equation]
+\label{rem:nc-phi11}
+Brown's Hoffman basis theorem gives
+\[
+ d_{11}=d_9+d_8=5+4=9.
+\]
+The nine basis words are the four permutations of
+\((2,3,3,3)\) and the five permutations of
+\((2,2,2,2,3)\).  These words index the weight-$11$ motivic period
+space.
+
+Let \(\mathfrak c_{\mathrm{cyc}}\) be the completed cyclic deformation
+dg Lie algebra and
+\(\Theta_{<11}=\sum_{3\leq i<11}\hbar^i\psi_i\) a represented
+Maurer--Cartan solution through order~$10$.  The order-$11$
+obstruction is the closed cochain
+\[
+ R_{11}:=
+ \frac12\!\sum_{\substack{i+j=11\\i,j\geq3}}[\psi_i,\psi_j].
+\]
+An order-$11$ term consists of a cyclic cochain
+\(\psi_{11}\) satisfying
+\[
+ D\psi_{11}=-R_{11},
+ \qquad
+ \operatorname{Rot}_{11}(\psi_{11})=0.
+\]
+A chosen associator, a word-to-cochain map from the nine Hoffman
+coordinates, and a comparison homotopy with the Borcherds scalar
+channel supply the data entering this equation.  The dimension
+\(d_{11}=9\) is the exact arithmetic input.
+\cite{Brown2011,Hoffman1997,Drinfeld1990}.
+\end{remark}
+
+\begin{remark}[Weight twelve: the product-period sector]
+\label{rem:nc-phi12}
+Brown's dimension formula gives
+\[
+ d_{12}=d_{10}+d_9=7+5=12.
+\]
+Concretely, the Hoffman words consist of
+\((3,3,3,3)\), the ten permutations of
+\((2,2,2,3,3)\), and \((2,2,2,2,2,2)\).
+
+The repeated period obeys the exact Newton identity
+\begin{equation}
+\label{eq:nc-zeta3333-newton}
+ \zeta(3,3,3,3)
+ =
+ \frac{\zeta(3)^4-6\zeta(3)^2\zeta(6)+3\zeta(6)^2
+ +8\zeta(3)\zeta(9)-6\zeta(12)}{24}.
+\end{equation}
+Indeed,
+\[
+ \sum_{r\geq0}\zeta(\underbrace{3,\ldots,3}_{r})t^r
+ =
+ \exp\!\left(
+  \sum_{k\geq1}\frac{(-1)^{k-1}}{k}\zeta(3k)t^k
+ \right),
+\]
+and extraction of \(t^4\) yields
+\eqref{eq:nc-zeta3333-newton}.  Euler's formula places
+\(\zeta^{\mathfrak m}(12)\) in
+\(\mathbb Q\cdot(\zeta^{\mathfrak m}(2))^6\); hence every term on the
+right belongs to the square of the positive-weight motivic ideal.
+Thus
+\[
+ \operatorname{pr}_{\mathrm{ind}}
+ \bigl(\zeta^{\mathfrak m}(3,3,3,3)\bigr)=0.
+\]
+
+A primitive weight-$12$ correction consists instead of a closed graph
+cochain \(\gamma_{12}\), its action on
+\(\mathfrak c_{\mathrm{cyc}}\), a period map, and homotopies comparing
+the graph, KZ, and Borcherds images.  The Newton identity determines
+the decomposable scalar sector of this comparison datum.
+\cite{Brown2011,Brown2012,Hoffman1997}.
+\end{remark}
+
+\begin{remark}[Motivic quotients and cyclic inverse limits]
+\label{rem:nc-ML-prolimit-12}
+Let \(Z_{\leq m}^{\mathfrak m}\) denote the quotient of the motivic MZV
+algebra by weights \(>m\).  The transition maps
+\[
+ Z_{\leq m+1}^{\mathfrak m}\twoheadrightarrow Z_{\leq m}^{\mathfrak m}
+\]
+are surjective by construction, and Brown's theorem gives finite
+weight dimensions through the generating series
+\((1-t^2-t^3)^{-1}\).  This inverse system is Mittag--Leffler.
+
+A cyclic obstruction inverse system consists of completed deformation
+complexes \(\mathfrak c_{\leq m}\), transition maps
+\(q_{m+1,m}\), represented obstruction cocycles, and comparison maps
+from \(Z_{\leq m}^{\mathfrak m}\).  Surjectivity of the
+\(q_{m+1,m}\) implies the cyclic Mittag--Leffler condition and
+\(\varprojlim^1\mathfrak c_{\leq m}=0\).  Thus the motivic quotient
+system supplies one hypothesis; the cyclic transition maps supply the
+remaining hypothesis for the pro-obstruction
+\(\mathrm{obs}_\infty\).
+\cite{Brown2011,MarklShniderStasheff2002}.
+\end{remark}
+
+\begin{remark}[Weight-twelve graph--associator comparison]
+\label{rem:nc-grt1-weight-12}
+A weight-$12$ primitive action on the completed deformation complex is
+specified by the following chain data:
+\[
+ \gamma_{12}\in Z^0(\mathrm{GC}_2)_{12},\qquad
+ \rho\colon\mathrm{GC}_2\longrightarrow
+ \operatorname{Der}(\mathfrak c_{\mathrm{cyc}}),
+\]
+a period map on \([\gamma_{12}]\), and degree-\((-1)\) homotopies
+intertwining \(\rho(\gamma_{12})\) with the chosen associator and
+Borcherds comparison maps.  Under these hypotheses,
+\(\rho(\gamma_{12})\) is the primitive weight-$12$ correction.
+Willwacher's isomorphism
+\(H^0(\mathrm{GC}_2)\cong\mathfrak{grt}_1\) identifies the ambient
+Lie algebra of this action.  Equation
+\eqref{eq:nc-zeta3333-newton} contributes zero to this primitive
+coordinate and supplies its decomposable period sector.
+\cite{Willwacher2015,Brown2012,Drinfeld1990}.
+\end{remark}
+
+\begin{remark}[The two weight-twelve automorphic domains]
+\label{rem:nc-fake-monster-non-interference}
+The K3 scalar section at order~$12$ is
+\[
+ \left(\frac{\Delta_5}{\eta^{12}}\right)^{12}
+ =
+ \frac{(\Phi_{10}^{\mathrm{un}})^6}{\eta^{144}},
+\]
+with raw modular weight \(-12\) and trivial
+\(\Delta_5\)-character.  Its orthogonal domain is the K3 lattice of
+signature \((2,1)\).  The Fake-Monster denominator \(\Phi_{12}\)
+belongs to the orthogonal domain of
+\(\mathrm{II}_{25,1}\), of signature \((25,1)\).
+Accordingly the comparison complex records these scalar sections in
+two typed summands.  The K3 order-$12$ comparison uses the first
+summand.
+\cite{Borcherds1998,GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[Exact repeated-zeta scalar at weight twelve]
+\label{rem:nc-c12-explicit}
+Equation~\eqref{eq:nc-zeta3333-newton} gives
+\[
+ \zeta(3,3,3,3)
+ =
+ 0.00029599901404317183550096081913354558\ldots
+\]
+and therefore
+\[
+ \frac{\zeta(3,3,3,3)}{12!}
+ =
+ 6.1794994848278551783743690863150683\ldots\times10^{-13}.
+\]
+The first value follows from depth-one zeta values by Newton's
+identity and independently from the increasing elementary-symmetric
+sums
+\[
+ \sum_{N\geq n_1>n_2>n_3>n_4\geq1}
+ \frac{1}{(n_1n_2n_3n_4)^3}.
+\]
+The factor \(12!\) is a scalar simplex normalisation.  Its occurrence
+as a coefficient of a pentagon or cyclic cochain is determined by the
+word-to-cochain map and the comparison homotopies of
+Remark~\ref{rem:nc-grt1-weight-12}.
+\cite{Hoffman1997,Brown2011}.
+\end{remark}
+
+\begin{remark}[Chain comparison at weight twelve]
+\label{rem:nc-kz-depth-4-integral}
+Let \(C_{\mathrm{KZ},12}\), \(C_{\mathrm{graph},12}\), and
+\(C_{\mathrm{cyc},12}\) denote the weight-$12$ KZ-word,
+graph-complex, and cyclic deformation complexes.  A chain comparison
+is a diagram
+\[
+ C_{\mathrm{KZ},12}
+ \xleftarrow{\ p_{12}\ }
+ C_{\mathrm{graph},12}
+ \xrightarrow{\ \rho_{12}\ }
+ C_{\mathrm{cyc},12}
+\]
+together with a period map and a homotopy identifying the represented
+KZ and cyclic images.  Once this datum is fixed,
+\(\rho_{12}(\gamma_{12})\) defines the primitive cyclic class and
+\(p_{12}(\gamma_{12})\) determines its chosen-associator coefficient.
+The scalar of Remark~\ref{rem:nc-c12-explicit} occupies the
+decomposable summand and has primitive projection zero.
+\cite{Drinfeld1990,Willwacher2015,Brown2012}.
+\end{remark}
+
+\begin{remark}[Fourier and motivic comparison maps]
+\label{rem:nc-fake-monster-fourier-check}
+The K3 Borcherds product supplies a rational Fourier-coefficient
+algebra, while the KZ associator supplies a motivic period algebra.
+A map between these sources is part of the graph--trace comparison
+datum.  In the direct-sum presentation of
+Remark~\ref{rem:nc-fake-monster-non-interference}, the K3 scalar
+section maps to the Borcherds trace summand and
+\(\zeta(3,3,3,3)\) maps to the decomposable motivic summand.
+A primitive cyclic term is supplied by
+\(\rho_{12}(\gamma_{12})\).
+\cite{Borcherds1998,GritsenkoNikulin1998,Brown2011}.
+\end{remark}
+
+\begin{remark}[Arithmetic and primitive data above weight twelve]
+\label{rem:nc-open-horizon}
+Brown's Hoffman basis theorem supplies the motivic weight dimensions
+in every weight through
+\[
+ \sum_{n\geq0}d_nt^n=\frac{1}{1-t^2-t^3}.
+\]
+Depth-graded primitive graph classes form a second problem.  At each
+weight \(n\), a primitive correction is specified by a represented
+class \(\gamma_n\in Z^0(\mathrm{GC}_2)_n\), its period, its action on
+the deformation complex, and the comparison homotopies.  The
+Broadhurst--Kreimer series organises conjectural ranks for these
+depth-graded pieces, while the Hoffman basis controls the proved
+period-algebra dimensions.
+\cite{Brown2011,Brown2012,BroadhurstKreimer1997}.
+\end{remark}
+
+\begin{remark}[Typed asymptotic comparison]
+\label{rem:nc-asymptotic-11-12}
+The motivic sequence \(d_n\) counts Hoffman period coordinates.  The
+Fourier coefficients of the K3 Borcherds product count root
+multiplicities after a chamber and a Fourier direction have been
+fixed.  These sequences inhabit distinct vector spaces.  An
+asymptotic comparison is therefore a theorem about a specified linear
+map between the period and root-multiplicity spaces.  The present
+chapter retains the exact values
+\[
+ d_{11}=9,\qquad d_{12}=12,
+\]
+and places the Borcherds coefficients in their scalar comparison
+summand.
+\cite{Brown2011,GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[Target transitivity for the K$3$-BKM comparison datum]
+\label{rem:nc-grt1-bkm-transitivity-vol1}
+The Drinfeld twist action of the pro-unipotent
+Grothendieck--Teichm\"uller group
+$\exp(\widehat{\mathfrak{grt}}_1)$ on Drinfeld associators is
+transitive on the affine Kac--Moody sub-locus by
+Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$. For the K$3$-BKM target
+datum of $\mathfrak g_{\Delta_5}$ the imaginary cone contributes an
+extra class
+\[
+\mathrm{ob}^{\mathrm{GN}} \in
+H^2(\mathfrak{grt}_1;\widehat{\mathrm{Imag}}_{\Delta_5}) .
+\]
+Vol.~I controls the affine EK mechanism and the motivic associator
+coordinates. It does not prove the vanishing of
+$\mathrm{ob}^{\mathrm{GN}}$, and Brown's unconditional motivic basis
+through weight~$12$ is not a classification of the compact K$3$-BKM
+Hall source through weight~$12$. Under the target-side hypothesis
+$\mathrm{ob}^{\mathrm{GN}}=0$ on the Koszul locus
+$\overline{\mathcal A_2}\smallsetminus\bigcup_{n\;\text{admissible}}H_n$,
+the super-Etingof--Kazhdan target quantisation space
+$\Quant^{\mathrm{GN, Koszul}}_{\mathrm{tgt}}(\mathfrak g_{\Delta_5})/
+(\mathbb Z/2)_{\mathrm{super}}$ becomes a torsor over
+$\exp(\widehat{\mathfrak{grt}}_1)$. Recognition of a compact Hall
+source $\mathbf H_{\Delta_5}$ requires the Vol.~III source gates
+together with the cohomology/Heegner-characteristic comparison.
+\cite{Drinfeld1990,Brown2012,Willwacher2015,SchnepperWillwacher2017,
+ GritsenkoNikulin1998,Borcherds1995}.
+\end{remark}
+
+\begin{theorem}[Conditional target $\mathrm{GRT}_1^{\mathrm{super}}$-torsor
+for $\mathfrak g_{\Delta_5}$]
+\label{thm:nc-grt1-super-torsor-delta5}
+\ClaimStatusConditional
+Let
+\[
+\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})
+\;:=\;
+\bigl\{\mathbf H : \mathbf H/\hbar = U(\mathfrak g_{\Delta_5}),
+\,\mathbf H \text{ super-quasi-Hopf},
+\,\mathrm{GN}\text{-compatible}\bigr\}\big/
+\text{super-quasi-Hopf gauge}
+\]
+denote the space of super-Etingof--Kazhdan quantisations of the
+K$3$-BKM Lie superalgebra $\mathfrak g_{\Delta_5}$ compatible with
+the Gritsenko--Nikulin automorphic cobracket $\delta_{\mathrm{GN}}$,
+modulo super-quasi-Hopf gauge equivalence, restricted to the Koszul
+locus
+$\overline{\mathcal A_2}\smallsetminus\bigcup_{n\;\text{admissible}}H_n$
+of Theorem~B. Let
+\[
+\mathrm{GRT}_1^{\mathrm{super}}
+\;:=\;
+\exp\bigl(\widehat{\mathfrak{grt}}_1\bigr)\rtimes(\mathbb Z/2)_{\mathrm{super}}
+\]
+denote the semidirect product of the pro-unipotent Grothendieck--Teichm\"uller
+group with the $\mathbb Z/2$ super-sign of the Etingof--Kazhdan
+super-twist. Assume:
+\begin{enumerate}
+\item the Etingof--Kazhdan super-quantisation functor extends from the
+affine Kac--Moody Manin-pair backbone to the completed
+Gritsenko--Nikulin BKM target datum;
+\item the imaginary-cone obstruction
+$\mathrm{ob}^{\mathrm{GN}}\in
+H^2(\mathfrak{grt}_1;\widehat{\mathrm{Imag}}_{\Delta_5})$ vanishes on
+the Koszul locus;
+\item whenever $\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is
+used to recognise a compact object $\mathbf H_{\Delta_5}$, the
+Vol.~III Hall/CoHA source-recognition gates and the
+cohomology/Heegner-characteristic comparison have been supplied.
+\end{enumerate}
+Under these hypotheses
+$\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is a principal
+homogeneous space over $\mathrm{GRT}_1^{\mathrm{super}}$: any two
+target super-EK quantisations are related by a unique
+$\mathrm{GRT}_1^{\mathrm{super}}$ Drinfeld twist. Brown's motivic
+basis gives unconditional associator coordinates through weight~$12$;
+it does not give an unconditional classification of the K$3$-BKM
+compact Hall source through weight~$12$.
+\end{theorem}
+
+\begin{proof}
+Three ingredients assemble into the conditional target statement.
+
+\emph{Ingredient~$1$ (affine backbone, Etingof--Kazhdan~$1996$--$2000$
+Parts~I--V).} By EK~$1996$ Part~I Thm.~$4.2$ the pro-unipotent group
+$\exp(\widehat{\mathfrak{grt}}_1)$ acts freely and transitively on
+the space of Drinfeld associators $\Phi_{\mathrm{KZ}}$ associated to
+a Manin pair; the super-extension (EK~$2000$ Part~V Thm.~$2.2$) adds
+the $\mathbb Z/2$-graded module structure. On the affine Kac--Moody
+sub-locus $\Delta_{\mathrm{aff}}\subset\Delta(\mathfrak g_{\Delta_5})$
+(real-root part, signature $(2, 1)$) this
+recovers the classical affine-KM torsor statement. This is the
+unconditional Vol.~I mechanism.
+
+\emph{Ingredient~$2$ (conditional imaginary-cone extension).} On
+$\Delta_+^{\mathrm{im}}$ the multiplicities $\mathrm{mult}(\alpha) =
+c_{K3}(4nm - \ell^2)$ obey the pro-completion convergence of
+Definition~$\ref{V3-def:qgf-imag-pro}$; the $\grt_1$-action lifts to
+$\widehat{\Imag}$ through the Ihara-bracket filtration
+(Drinfeld~$1990$~\S$5$; Furusho~$2011$ \emph{Ann.\ Math.}~$174$
+Thm.~$4$). The obstruction cocycle
+$\mathrm{ob}^{\mathrm{GN}} \in H^2(\grt_1;\widehat\Imag)$ of
+Remark~\ref{rem:nc-grt1-bkm-transitivity-vol1} is the additional
+target hypothesis. If it vanishes, the affine torsor transports to the
+completed Gritsenko--Nikulin target datum; without that vanishing,
+Vol.~I has no transitivity theorem for the K$3$-BKM target.
+
+\emph{Ingredient~$3$ (freeness).} Equivariance of the
+Gritsenko--Nikulin character identity
+(Definition~$\ref{V3-def:qgf-quant-delta5}$(c)) under
+$\exp(\widehat{\grt}_1)$-twist is the content of
+Theorem~$\ref{V3-thm:qgf-grt1-bkm-transitivity}$(i). The fixed-point set
+is trivial because the Ihara bracket is free on the generators
+$\sigma_3, \sigma_5, \sigma_7, \ldots$ (Brown~$2012$ Thm.~$1.2$;
+graph-complex freeness is Willwacher~$2015$ Thm.~$1.1$).
+Non-triviality: Drinfeld~$1990$ \S$5$ Remark~$3$ shows that the
+conjugate associator $f\cdot\Phi_{\mathrm{KZ}}\cdot f^{-1}$ differs
+from $\Phi_{\mathrm{KZ}}$ when $f$ is any non-identity element of
+$\exp(\widehat\grt_1)$. The super-sign factor of
+$(\mathbb Z/2)_{\mathrm{super}}$ acts non-trivially on the braiding
+by EK~$2000$ Part~V Prop.~$2.1$; together the semidirect product
+acts freely.
+
+Combining the three ingredients, on the Koszul locus the
+$\mathrm{GRT}_1^{\mathrm{super}}$-action on
+$\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ is simply
+transitive precisely under the stated target obstruction hypothesis.
+The weight~$12$ assertion belongs only to the motivic-coordinate
+window: Brown~$2011$ \emph{Ann.\ Math.}~$175$ Thm.~$1.2$ supplies the
+MZV basis through weight~$12$; above weight~$12$ those coordinates are
+conditional on Zagier--Hoffman. Neither fact constructs nor classifies
+the compact Hall source $\mathbf H_{\Delta_5}$.
+\end{proof}
+
+\begin{remark}[Associator orbit and weight filtration]
+\label{rem:nc-grt1-orbit-description}
+Fix a reference Drinfeld associator
+\(\Phi^{\mathrm{KZ}}_{\mathrm{ref}}\).  Its orbit is
+\[
+ \mathrm{GRT}_1\cdot\Phi^{\mathrm{KZ}}_{\mathrm{ref}}
+ =
+ \{\,g\cdot\Phi^{\mathrm{KZ}}_{\mathrm{ref}}:
+      g\in\mathrm{GRT}_1\,\}.
+\]
+The weight filtration on \(\mathfrak{grt}_1\) induces the corresponding
+filtration on this orbit.  At weight~$12$, a primitive coordinate is
+defined by a represented graph class \(\gamma_{12}\) and the
+graph--associator comparison of
+Remark~\ref{rem:nc-grt1-weight-12}.  The period
+\(\zeta(3,3,3,3)\) belongs to the decomposable summand by
+Equation~\eqref{eq:nc-zeta3333-newton}.  The action on the K3
+Borcherds trace is supplied by the continuous imaginary-cone
+representation and its intertwining homotopy.
+\cite{Drinfeld1990,Willwacher2015,Brown2012}.
+\end{remark}
+
+\begin{remark}[Target Maurer--Cartan moduli]
+\label{rem:nc-grt1-geometric-interpretation}
+The completed super-convolution dg Lie algebra
+\[
+ \mathfrak c_{\Delta_5}:=
+ \mathrm{Conv}\bigl(
+ B^{\mathrm{ch}}(\mathfrak g_{\Delta_5}^{\mathrm{super}}),
+ \Omega^{\mathrm{ch}}\bigr)
+\]
+defines a formal Maurer--Cartan moduli problem.  A continuous
+\(\mathfrak{grt}_1\)-action on \(\mathfrak c_{\Delta_5}\), together
+with the imaginary-cone cochain comparison, induces an action on this
+formal moduli problem.  For a represented graph class
+\(\gamma_n\), the tangent vector is
+\(\rho(\gamma_n)\).  Its associator coefficient is obtained through
+the chosen period map.  At weight~$12$, the repeated-zeta scalar has
+zero primitive projection, while the primitive tangent vector is
+\(\rho(\gamma_{12})\).
+\cite{Kontsevich2003,Willwacher2015,Drinfeld1990}.
+\end{remark}
+
+\begin{corollary}[$\Delta_5$ target criterion for $\mathbf H_{\Delta_5}$]
+\label{cor:nc-h-delta5-unique-up-to-grt1}
+\ClaimStatusConditional
+Assume the Vol.~III source-recognition package for
+$\mathbf H_{\Delta_5}$: finite Hall/CoHA source, compact Hopf pairing,
+source-to-target comparison maps, radical descent, no-extra-relations,
+PBW compatibility, and exact inverse-limit passage
+(Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+Definition~\ref{V3-def:k3-chiral-bialgebra} and
+Theorem~\ref{V3-thm:k3-structural-genesis}). Assume also a proved
+cohomology/Heegner-characteristic comparison
+\[
+\chi_{\mathrm{Heg}}\colon
+H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}
+\longrightarrow
+\mathbb C\cdot\Delta_5
+\]
+identifying the recognised source deformation class with the
+Bruinier--Heegner characteristic line and proving that this target line
+is the relevant one-dimensional comparison quotient. Under these
+hypotheses the $\Delta_5$-line is a complete target comparator for the
+$\mathrm{GRT}_1^{\mathrm{super}}$-torsor of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}:
+\[
+\mathbf H_{\Delta_5}^{\mathrm{tgt}}
+\;\in\;
+\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})
+\big/\mathrm{GRT}_1^{\mathrm{super}}
+\quad\text{with}\quad
+\mathrm{im}(\chi_{\mathrm{Heg}})=\mathbb C\cdot\Delta_5 .
+\]
+Equivalently, after those gates are supplied, any two recognised
+compact sources whose Heegner characteristic has the same normalised
+$\Delta_5$ image lie in the same
+$\mathrm{GRT}_1^{\mathrm{super}}$-orbit. Without the source-recognition
+and Heegner-comparison inputs, Vol.~I retains only this target criterion.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5} controls the target
+super-EK quantisations of the BKM Manin-pair datum; it neither
+constructs the compact Hall source nor computes
+$H^2(\mathfrak g_{\Delta_5})$ intrinsically. The Vol.~III recognition
+package promotes the target datum to a sourced compact object only
+after the Hall/CoHA source, pairing, comparison, PBW, and inverse-limit
+gates have been verified. The additional
+cohomology/Heegner-characteristic comparison identifies the source
+deformation class with the automorphic $\Delta_5$ line. Under precisely
+these assumptions, equality of the normalised $\Delta_5$ characteristic
+places two recognised sources in the same target
+$\mathrm{GRT}_1^{\mathrm{super}}$-orbit by the torsor theorem. This is a
+conditional recognition criterion, not an unconditional classification
+of $\mathbf H_{\Delta_5}$ inside Vol.~I.
+\end{proof}
+
+\begin{remark}[Assembly of the conditional target torsor proof from EK Parts I--V]
+\label{rem:nc-grt1-ek-parts-assembly}
+The proof of Theorem~\ref{thm:nc-grt1-super-torsor-delta5} assembles
+five Etingof--Kazhdan structural pieces into a conditional target
+transitivity statement. Each piece is classical for quasi-triangular
+Lie bialgebras; the K$3$-BKM passage enters only through the completed
+Gritsenko--Nikulin target datum and the imaginary-cone vanishing
+hypothesis of Theorem~\ref{thm:nc-grt1-super-torsor-delta5}. The
+decomposition makes the target mechanism verifiable against five
+independent primary witnesses:
+\begin{itemize}
+\item \emph{Part~I (EK~$1996$ Sel.~Math.~$2$).} Existence and
+ uniqueness, up to $\grt_1$-gauge, of a quantisation
+ $U_\hbar(\mathfrak a)$ for any quasi-triangular Lie bialgebra
+ $(\mathfrak a, \delta)$. Applied here to the affine sub-lattice
+ $\Delta_{\mathrm{aff}} \subset \Delta(\mathfrak g_{\Delta_5})$
+ (signature $(2, 1)$, real-root part), supplying the affine
+ Kac--Moody backbone with $\delta$ equal to the restriction of
+ $\delta_{\mathrm{GN}}$; the torsor structure on the affine
+ quantisation moduli is Corollary~\ref{V3-cor:qgf-grt1-affine-recovery}.
+\item \emph{Part~II (EK~$1998$ Sel.~Math.~$4$~\S$2$).} Functoriality
+ of the EK functor with respect to Manin-pair morphisms. Applied here
+ to the Manin-pair embedding
+ $(\Delta_{\mathrm{aff}}, \mathrm{triangular})
+ \hookrightarrow (\Delta(\mathfrak g_{\Delta_5}), \mathrm{imaginary})$;
+ under the obstruction-vanishing hypothesis, this functoriality
+ transports the affine torsor structure to the target imaginary-cone
+ extension along the Gritsenko--Nikulin lift.
+\item \emph{Part~III (EK~$1998$ Sel.~Math.~$4$~\S$3$).} Twist
+ invariance: if $\Phi, \Phi'$ are two Drinfeld associators related
+ by $f \in \exp(\widehat\grt_1)$, the induced quantisations
+ $Q_\Phi, Q_{\Phi'}$ are canonically isomorphic as super-quasi-Hopf
+ algebras via the twist $R^{\Phi'} = f_{321} R^\Phi f^{-1}$. This
+ supplies the \emph{action} of $\mathrm{GRT}_1$ on
+ $\mathcal Q^{\mathrm{tgt}}(\mathfrak g_{\Delta_5})$ by Drinfeld
+ twist; together with Part~I and the target obstruction hypothesis it
+ supplies transitivity.
+\item \emph{Part~IV (EK~$2000$ Sel.~Math.~$6$).} Kac--Moody
+ extension: the affine-KM case is controlled by the imaginary
+ sector being trivial. The $\mathfrak g_{\Delta_5}$-case is its
+ hyperbolic extension; the imaginary-cone multiplicities
+ $\mathrm{mult}(\alpha) = c_{K3}(4nm - \ell^2)$ (EOT~$2011$) replace
+ the zero multiplicities of the affine case.
+\item \emph{Part~V (EK~$2000$ Sel.~Math.~$6$~\S$2$).} Super-extension:
+ $\mathbb Z/2$-graded Lie bialgebras admit super-EK quantisations,
+ with the super-sign entering as an object-level grading that
+ commutes with the associator-level $\grt_1$-twist of Part~III.
+ This supplies the $(\mathbb Z/2)_{\mathrm{super}}$ semidirect factor
+ of $\mathrm{GRT}_1^{\mathrm{super}}$ and upgrades the Part~III twist
+ to a super-twist. On the K$3$-BKM side, the super-sign is the
+ fermion-number grading of the $\mathcal N = 4$ elliptic genus
+ (EOT~$2011$; Cheng--Duncan--Harvey~$2014$ umbral moonshine).
+\end{itemize}
+Ingredients~$1$--$3$ of the proof of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5} correspond to
+Parts~(I, IV)+Part~V (affine + BKM + super), Parts~(II, III)+IV
+(functoriality + twist + imaginary cone), and Part~(III)+V
+(free action + super-sign non-triviality), respectively.
+\cite{EtingofKazhdan1996,EtingofKazhdan1998a,EtingofKazhdan1998b,
+ EtingofKazhdan2000,EtingofKazhdan2008}.
+\end{remark}
+
+\begin{remark}[Target verification via $\phi^{(3)}$ transforming under
+$\sigma_3 \in \widehat{\mathfrak{grt}}_1$]
+\label{rem:nc-grt1-phi3-verification}
+A concrete chain-level witness of the conditional target
+$\mathrm{GRT}_1^{\mathrm{super}}$ action is the weight-$3$ component
+$\phi^{(3)}$ of the
+universal associator, written in the reference basis as
+\[
+\phi^{(3)}
+\;=\;
+\zeta(3)\,c_{\mathrm{symm}}^{(3)}
+\;+\; c_{\mathrm{KM}}^{(3)}\,\zeta(3)\cdot\Omega_{\mathrm{KM}}
+\;+\; c_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}^{(3)}\cdot[\Phi_{10}^{\mathrm{un}}/\eta^{24}]_3
+\;+\; c_{\mathrm{skew}}^{(3)}\cdot\zeta(3)\,t_{\mathrm{skew}}
+\]
+(cf.~Vol~III Rem.~\ref{rem:qgf-phi3-explicit}), where
+$c_{\mathrm{symm}}^{(3)}, c_{\mathrm{KM}}^{(3)},
+c_{\Phi_{10}^{\mathrm{un}}/\eta^{24}}^{(3)}, c_{\mathrm{skew}}^{(3)} \in \mathbb Q$
+are the four reference coefficients. The generator
+$\sigma_3 \in \widehat{\mathfrak{grt}}_1$ (Ihara weight~$3$) acts by
+\[
+\sigma_3\cdot\phi^{(3)}
+\;=\;
+\phi^{(3)} + \zeta(3)\cdot\iota_3
+\]
+with $\iota_3 \in \mathfrak g_{\Delta_5}^{\otimes 3}$ the Ihara
+infinitesimal tangent vector at weight~$3$, which in the present
+basis shifts only the $c_{\mathrm{symm}}^{(3)}$ coefficient (the
+depth-$1$ MZV class), leaves the Kac--Moody coefficient
+$c_{\mathrm{KM}}^{(3)}\,\zeta(3)\,\Omega_{\mathrm{KM}}$ gauge-equivalent
+through a conjugation by $\exp(\hbar\cdot\Omega_{\mathrm{KM}})$
+(the free-field cocycle of the Heisenberg subalgebra), and fixes
+the Borcherds leg $[\Phi_{10}^{\mathrm{un}}/\eta^{24}]_3$ pointwise (the imaginary
+cone decouples from weight~$3$: the smallest non-trivial imaginary
+contribution to $[\Phi_{10}^{\mathrm{un}}/\eta^{24}]_n$ is at $n = 10$ by the
+Gritsenko weight, and the weight-$3$ slice of the imaginary-cone
+bivector vanishes by Hardy--Ramanujan asymptotics truncated at
+$N \le 3$).
+
+At weight~$5$, the generator $\sigma_5$ produces a depth-$1$ shift
+$\sigma_5\cdot\phi^{(5)} = \phi^{(5)} + \zeta(5)\cdot\iota_5$, again
+fixing the Borcherds leg; the first non-trivial interaction with
+the imaginary cone is at weight~$10$ via the Ihara--Zagier relation
+$\zeta(10) = \frac{4}{17}[\zeta(3)\zeta(7) + \zeta(5)^2]$
+(which is fixed by $\grt_1$; the depth-$1$ odd sector at weight~$10$
+is zero).  At
+weight~$12$, Equation~\eqref{eq:nc-zeta3333-newton} supplies the
+decomposable repeated-zeta sector and gives zero after primitive
+projection.  A primitive correction is the image
+$\rho(\gamma_{12})$ of a represented graph class under the
+comparison datum of Remark~\ref{rem:nc-grt1-weight-12}.  The affine
+limit, the period map, and the graph-complex action are the three
+inputs that determine the corresponding weight-$12$ twist.
+\cite{Drinfeld1990,Brown2012,EtingofKazhdan2000,GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[Filtered associator orbit]
+\label{rem:nc-grt1-explicit-orbit}
+For a reference associator
+\(\Phi^{\mathrm{KZ}}_{\mathrm{ref}}\), the orbit map is
+\[
+ \mathrm{GRT}_1\longrightarrow\operatorname{Assoc},
+ \qquad
+ g\longmapsto g\cdot\Phi^{\mathrm{KZ}}_{\mathrm{ref}}.
+\]
+The weight filtration on \(\mathfrak{grt}_1\) filters its tangent
+space.  Drinfeld's odd classes give distinguished tangent directions
+in odd weights.  A weight-$12$ primitive direction is represented by
+a graph cocycle \(\gamma_{12}\) together with the comparison datum of
+Remark~\ref{rem:nc-grt1-weight-12}.  Its cyclic action is
+\(\rho(\gamma_{12})\).  The repeated-zeta value of
+Remark~\ref{rem:nc-c12-explicit} has zero primitive projection and
+therefore belongs to the product-period coordinate ring of the orbit.
+\cite{Drinfeld1990,Willwacher2015,Brown2012}.
+\end{remark}
+
+\begin{remark}[Motivic period map for the target action]
+\label{rem:nc-grt1-motivic-geometric}
+The unipotent motivic fundamental group of
+\(\mathbb P^1\smallsetminus\{0,1,\infty\}\) supplies the period
+realisation of the chosen associator.  Willwacher's isomorphism
+\[
+ H^0(\mathrm{GC}_2)\cong\mathfrak{grt}_1
+\]
+supplies the graph-complex tangent Lie algebra.  A target action on
+the K3-BKM deformation complex is consequently determined by a
+continuous representation
+\[
+ \rho_{\Imag}\colon\mathfrak{grt}_1
+ \longrightarrow
+ \operatorname{Der}_{\mathrm{cont}}(\widehat{\Imag}),
+\]
+a graph-to-Chevalley--Eilenberg cochain map, and homotopies
+intertwining the period, cyclic, and Borcherds images.  In weight~$12$
+the primitive action is the image of the represented class
+\(\gamma_{12}\); Equation~\eqref{eq:nc-zeta3333-newton} determines
+the decomposable period component.
+\cite{DeligneGoncharov2005,Drinfeld1990,Willwacher2015,Brown2012}.
+\end{remark}
+
+\section{Deligne--Tamarkin Massey triple $\langle r, r, r\rangle$ at $E_8$}
+\label{sec:nc-massey-triple-rrr}
+
+\begin{proposition}[\(E_8\) cubic invariant channels]
+\label{prop:nc-massey-triple-rrr-E8}
+\ClaimStatusProvedHere
+Let \(\mathfrak g\) be a simple Lie algebra over a field of
+characteristic zero with invariant form \(\langle-,-\rangle\).
+For any invariant cubic tensor
+\(\tau\in(\mathfrak g^{\otimes3})^{\mathfrak g}\), its symmetric and
+alternating projections satisfy
+\[
+ \pi_{\mathrm{sym}}\tau\in
+ \operatorname{Sym}^3(\mathfrak g)^{\mathfrak g},
+ \qquad
+ \pi_{\mathrm{alt}}\tau\in
+ (\Lambda^3\mathfrak g)^{\mathfrak g}.
+\]
+For \(\mathfrak g=E_8\),
+\[
+ \operatorname{Sym}^3(E_8)^{E_8}=0,
+ \qquad
+ (\Lambda^3E_8)^{E_8}
+ =\bk\cdot\bigl[(x,y,z)\mapsto\langle x,[y,z]\rangle\bigr].
+\]
+Hence the symmetric projection of every invariant cubic local tensor
+for \(V_k(E_8)\) is zero, while its alternating projection is a scalar
+multiple of the Cartan three-cocycle.
+\end{proposition}
+
+\begin{proof}
+Chevalley's theorem identifies
+\(\operatorname{Sym}(\mathfrak g)^{\mathfrak g}\) with a polynomial
+algebra whose generator degrees are the exponents plus one.  For
+\(E_8\) these degrees are
+\[
+ 2,8,12,14,18,20,24,30.
+\]
+Thus the degree-three invariant space is zero.  For every simple
+\(\mathfrak g\), the invariant alternating three-forms form the
+one-dimensional primitive degree-three Lie algebra cohomology class,
+represented by the Cartan cocycle
+\((x,y,z)\mapsto\langle x,[y,z]\rangle\).
+\end{proof}
+
+\begin{remark}[$E_8$ invariant-theoretic splitting]
+\label{rem:nc-E8-vanishing-cyclic-associator}
+Chevalley's degree list gives
+\(\operatorname{Sym}^3(E_8)^{E_8}=0\).  The alternating invariant
+belongs to a different summand:
+\[
+ (\Lambda^3E_8)^{E_8}
+ =\bk\cdot\bigl[(x,y,z)\longmapsto\langle x,[y,z]\rangle\bigr].
+\]
+Thus the symmetric projection of the cubic local tensor is zero,
+while the alternating projection is the Cartan three-cocycle up to
+the normalization of the invariant form.  A triple Massey package
+consists of a cocycle representative, explicit null-homotopies for its
+pairwise products, and the quotient by the resulting indeterminacy.
+The classical Yang--Baxter equation supplies bracket compatibility;
+the null-homotopies are additional chain data.  A scalar residue then
+requires \(\mathsf H_{\mathrm{res}}\), while a KZ period such as
+\(\zeta(3)\) requires the word-to-cochain comparison in
+\(\mathsf H_{\mathrm{mot}}\).  The Sugawara conformal vector compares
+the local Virasoro subalgebra, and a comparison of cubic residue
+scalars is an additional chain map.
+\cite{Kohno1985,Sugawara1968,BarNatan1995}.
+\end{remark}
+
+\section{Motivic associator coefficients above weight \(12\)}
+\label{sec:nc-brown-above-12-double-conditional}
+
+The motivic multiple-zeta algebra and the pentagon deformation complex
+are distinct objects.  A coefficient \(\phi^{(n)}\) is obtained from a
+motivic period only after a word-to-cochain comparison has been
+constructed.  We denote this package by \(\mathsf H_{\mathrm{mot}}\).
+It consists of a filtered chain map from the motivic associator
+complex, representatives for the chosen depth-graded classes, and
+homotopies intertwining the pentagon differential.
+
+\begin{proposition}[Motivic comparison problem for \(\phi^{(n)}\)]
+\label{prop:nc-double-conditional-phi-n}
+\ClaimStatusOpen
+\emph{Type signature:}
+\textup{(Open quadrant, completed pentagon deformation presentation,
+Beilinson level~\(2\), \(\mathsf H_{\mathrm{mot}}\)).}
+For \(n\ge13\), the construction of \(\phi^{(n)}\) from motivic
+multiple zeta values requires:
+\begin{enumerate}[label=\textup{(M\arabic*)}]
+\item a represented weight-\(n\) cocycle in the motivic associator
+ complex;
+\item a filtered word-to-pentagon cochain map;
+\item a comparison homotopy identifying its coboundary with the
+ arity-\(n\) deformation obstruction;
+\item a choice of basis and integral normalization for every
+ depth-graded quotient used in the scalar projection.
+\end{enumerate}
+The Zagier--Hoffman and Broadhurst--Kreimer conjectures may supply
+dimension and spanning information for the source.  The package
+\(\mathsf H_{\mathrm{mot}}\) supplies the chain-level comparison to
+\(\phi^{(n)}\).
+\end{proposition}
+
+\begin{remark}[The weight-\(25\) test]
+\label{rem:nc-phi-25-tightening}
+Weight \(25\), depth \(5\), is a concrete test of the complete
+package: one must choose a represented motivic class, compute its
+pentagon image, and compare it with the lower-depth filtration.  A
+Borcherds automorphic form belongs to a further target lane and enters
+after a separate automorphic comparison morphism has been specified.
+\end{remark}
+
+\begin{proposition}[The depth-five iterated integral at weight \(25\)]
+\label{prop:nc-phi-25-depth-5-coefficient}
+\ClaimStatusConditional
+The convergent iterated integral represented by the word
+\[
+ \omega_1\omega_0^2\,
+ \omega_1\omega_0^2\,
+ \omega_1\omega_0^4\,
+ \omega_1\omega_0^4\,
+ \omega_1\omega_0^8
+\]
+is the numerical multiple zeta value
+\[
+ \zeta(3,3,5,5,9).
+\]
+Assume the Broadhurst--Kreimer rank-one prediction for
+\(\operatorname{gr}^{\mathcal D}_5\mathcal L_{\mathrm{mot}}^{(25)}\),
+a nonzero projection of this class to that quotient, and
+\(\mathsf H_{\mathrm{mot}}\) with simplex normalization
+\(\Gamma(26)^{-1}\).
+Then the corresponding scalar coordinate of the represented pentagon
+cochain is
+\[
+ \frac{\zeta(3,3,5,5,9)}{\Gamma(26)}
+ \quad\text{modulo the coordinates of the depth-\(\le4\) filtration.}
+\]
+\end{proposition}
+
+\begin{proof}
+The iterated-integral identity is the standard word realization of a
+convergent multiple zeta value.  The rank-one hypothesis identifies its
+nonzero depth-five projection up to scalar.  The represented
+word-to-cochain map and the specified simplex normalization fix that
+scalar, while the quotient records the lower-depth ambiguity.
+\end{proof}
+
+\begin{remark}[First complete depth-five comparison]
+\label{rem:nc-phi-25-first-double-conditional}
+The proposition separates three verifications: the numerical period,
+its depth-graded motivic class, and its image in the pentagon complex.
+The first is classical.  The second is governed by the stated
+depth-graded hypotheses.  The third is the chain-level content of
+\(\mathsf H_{\mathrm{mot}}\).
+\end{remark}
+
+\section{Conditional GRT$_1$-transitivity on full BKM target loci}
+\label{sec:nc-grt1-full-bkm-conditional}
+
+\begin{theorem}[Conditional GRT$_1^{\mathrm{super}}$-transitivity on full BKM target loci]
+\label{thm:nc-grt1-full-bkm-conditional}
+\ClaimStatusConditional
+Let $\mathcal Q_{\mathrm{full}}(\mathfrak g_{\mathrm{BKM}})$ be the
+space of super-EK quantisations of an arbitrary \textup{(}non-affine,
+non-K$3$-specialised\textup{)} Borcherds--Kac--Moody Lie superalgebra
+$\mathfrak g_{\mathrm{BKM}}$ with Cartan of rank $r$ and signature
+$(p, q)$, $p + q = r$, modulo super-quasi-Hopf gauge. The
+$\mathrm{GRT}_1^{\mathrm{super}}$-action by Drinfeld twist on
+$\mathcal Q_{\mathrm{full}}$ is transitive, conditionally on:
+\textup{(a)~vanishing of the BKM imaginary-cone obstruction
+$H^2(\mathfrak{grt}_1; \widehat{\mathrm{Imag}}_{\mathrm{BKM}}) = 0$
+on the full Koszul locus of} $\mathfrak g_{\mathrm{BKM}}$; and
+\textup{(b)~Zagier--Hoffman + Broadhurst--Kreimer at every weight
+$\le$ the motivic depth of the Cartan type}. The affine case
+\textup{(}$\mathfrak g_{\mathrm{BKM}} = \widehat{\mathfrak g}^{\mathrm{aff}}$,
+imaginary cone trivial\textup{)} is unconditional
+\textup{(}Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$\textup{)}. The
+K$3$-specialised target datum $\mathfrak g_{\Delta_5}$ is the
+conditional case of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}: its motivic associator
+coordinates are unconditional through weight~$12$, but the compact
+Hall-source recognition and any classification of
+$\mathbf H_{\Delta_5}$ require the Vol.~III gates plus the
+cohomology/Heegner comparison. The general BKM case remains
+conjectural pending the imaginary-cone obstruction computation, which
+is an open question of Gritsenko--Nikulin type.
+\end{theorem}
+
+\begin{proof}[Proof of the conditionality]
+Three independent obstructions separate the full-BKM case from the
+K$3$-specialised one: (i)~higher imaginary-cone multiplicities
+\textup{(}Borcherds $1992$ \emph{Invent.\ Math.}~$109$ Thm.~$10.1$
+gives only the existence of the denominator; explicit multiplicities
+for a generic Lorentzian lattice of rank~$> 3$ are unknown\textup{)};
+(ii)~absence of a universal modular covering analogous to the
+Siegel paramodular $K(1)$ \textup{(}each rank-$r$ Lorentzian lattice
+admits its own automorphic cover, and the GRT$_1$-action does not
+descend uniformly\textup{)}; (iii)~the obstruction cocycle
+$\mathrm{ob}^{\mathrm{BKM}} \in H^2(\mathfrak{grt}_1; \widehat{\mathrm{Imag}}_{\mathrm{BKM}})$
+need not vanish generically: on $\mathrm{II}_{25, 1}$ the Fake Monster
+BKM $\mathfrak m_{\mathrm{FakeMonster}}$ carries a distinct vanishing
+mechanism \textup{(}Borcherds~$1998$ Thm.~$13.1$\textup{)} from the
+K$3$-BKM, and the two are not related by a universal argument. The
+three obstructions specialise: (i) is trivial in the affine case
+(no imaginary roots); (ii) is satisfied for K$3$-BKM via the Igusa
+$\Phi_{10}^{\mathrm{un}}$ cover; (iii) becomes the K$3$ target-side
+vanishing hypothesis of
+Theorem~\ref{thm:nc-grt1-super-torsor-delta5}. Vol.~I therefore proves
+the affine EK and motivic mechanisms, not the source classification of
+$\mathbf H_{\Delta_5}$. A general proof requires a uniform
+imaginary-cone vanishing argument across all Lorentzian Kac--Moody root
+systems, which is an open problem of Gritsenko--Nikulin type
+\textup{(}Gritsenko--Nikulin~$2002$ \emph{Russian Math.\ Surveys}~$57$
+\S$5$ open question~$7$\textup{)}.
+\cite{Borcherds1992,Borcherds1998,GritsenkoNikulin1998,
+ GritsenkoNikulin2002,EtingofKazhdan2000}.
+\end{proof}
+
+\begin{remark}[Landscape-row scope]
+\label{rem:nc-grt1-status-per-row}
+The conditionality of Theorem~\ref{thm:nc-grt1-full-bkm-conditional}
+reads per archetype.  Rows $\bG/\bL/\bCc$ lie in the affine EK lane.
+Row $\bM$ uses the motivic residue package
+$\mathsf H_{\mathrm{mot}}$ and its Tate-factorization package
+$\mathsf H_{\mathrm{Tate}}$; these data determine the induced
+GRT$_1$ action on the scalar Virasoro line.  Row $\bB$ combines a
+weight-filtered associator action with an imaginary-cone comparison
+and the Vol.~III compact Hall-source recognition gates.  The value
+$K^\kappa=8$ is a target comparison coordinate whose source
+interpretation is supplied by those recognition data.
+\end{remark}
+
+\section{Higher correction cochains \(\delta^{(n)}\)}
+\label{sec:nc-delta-n-higher-explicit}
+
+The symbol \(\delta^{(n)}\) acquires geometric meaning after its source
+complex, target complex, differential, and scalar projection have been
+specified.  Catalan numbers count planar trees, while motivic
+dimensions count classes in a period algebra.  A correction cochain
+requires a comparison map from those combinatorial and motivic inputs
+to the ordered residue complex.
+
+\begin{proposition}[Construction problem for higher correction cochains]
+\label{prop:nc-delta-n-explicit-higher}
+\ClaimStatusOpen
+\emph{Type signature:}
+\textup{(Open quadrant, completed ordered residue presentation,
+Beilinson level~\(2\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}\)).}
+For \(n\ge7\), an explicit correction cochain is determined by the
+following data:
+\begin{enumerate}[label=\textup{(D\arabic*)}]
+\item a represented arity-\(n\) class in the ordered bar complex;
+\item the transferred Maurer--Cartan differential and its collision
+ strata;
+\item inverse Gram forms for every intermediate quasi-primary channel;
+\item a scalar contraction compatible with the motivic comparison.
+\end{enumerate}
+For the Virasoro local model, the first nontrivial inverse Gram factor
+is supplied by
+\[
+ \Lambda={:}TT{:}-\frac{3}{10}\partial^2T,
+ \qquad
+ \langle\Lambda,\Lambda\rangle=\frac{c(5c+22)}{10}.
+\]
+These data give an algorithm for \(\delta^{(n)}\).  A closed recurrence
+and each polynomial numerator are outputs of that algorithm.
+\end{proposition}
+
+\begin{remark}[Planar counts and residue corrections]
+\label{rem:nc-delta-n-beyond-leading}
+The Catalan number \(C_{n-1}\) records a planar-tree indexing set, and
+a motivic dimension \(d_n\) records the size of a source period space.
+The ordered residue cochain also contains nonplanar collision channels,
+quasi-primary projections, and inverse Gram forms.  The package
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{mot}}\) assembles these
+ingredients into one typed correction.  Direct computations at
+successive arities then determine its poles and numerator polynomials.
+\end{remark}

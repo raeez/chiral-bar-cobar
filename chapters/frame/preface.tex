@@ -1,0 +1,701 @@
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\barB}{\overline{B}}
+\providecommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\Eone}{E_1}
+\providecommand{\Convinf}{\operatorname{Conv}_\infty}
+\providecommand{\Convstr}{\operatorname{Conv}_{\mathrm{str}}}
+\providecommand{\orline}[1]{\operatorname{or}(#1)}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}
+\providecommand{\Rep}{\operatorname{Rep}}
+\providecommand{\Etwo}{\mathsf{E}_{2}}
+\providecommand{\Ethree}{\mathsf{E}_{3}}
+\providecommand{\Einf}{\mathsf{E}_{\infty}}
+\providecommand{\En}{\mathsf{E}_{n}}
+\providecommand{\ChirAlg}{\operatorname{ChirAlg}}
+\providecommand{\HTQFT}{\operatorname{HT\text{-}QFT}}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Phicy}{\Phi_{\mathrm{CY}}}
+\providecommand{\GRTone}{\operatorname{GRT}_{1}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kfib}{\kappa_{\mathrm{fiber}}}
+\providecommand{\kcat}{\kappa_{\mathrm{cat}}}
+\providecommand{\Face}{\operatorname{Face}}
+\providecommand{\gAE}{\mathfrak{g}_{\cA}^{E_{1}}}
+\providecommand{\bE}{\mathbb{E}}
+
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+\label{ch:preface}
+\markboth{Preface}{Preface}
+
+A chiral algebra is governed by collisions.  Two points carry the
+binary operation; three points carry its first coherence; the Ran
+space assembles every finite collision into one global object.  This
+volume studies the bar and cobar constructions in that geometry.
+
+The order of construction matters.  One begins with a factorization
+category and a chosen object, passes to an augmented algebra chart,
+forms its complete conilpotent bar coalgebra, and then constructs the
+derived centre.  A cyclic trace introduces loop contractions.  Stable
+graphs and clutching enter at that stage.  Scalar modular quantities
+appear after the trace.  This order fixes the type of every object and
+the hypotheses of every comparison.
+
+\section*{1.  The first collision}
+
+Let \(U\subset X\) be a coordinate disc on a smooth curve, with
+coordinate \(z\).  On the ordered configuration space
+\(\operatorname{Conf}_3(U)\), set
+\begin{equation}\label{eq:pf1-eta}
+ \eta_{ij}:=d\log(z_i-z_j).
+\end{equation}
+Here an affine coordinate chart, or equivalently its formal tangent
+screen at the collision, represents the logarithmic normal form along
+the diagonal.  The expression \(d\log(z_i-z_j)\) is its local
+coordinate representative.  Over an overlap, the transition cocycle
+compares these representatives.  At positive
+genus the same logarithmic singularity is represented by the KZB/theta
+propagator in genus one and by a prime-form representative in arbitrary
+genus.  These replacement data belong to the global comparison
+package; the calculation below takes place on the affine screen.
+
+\begin{proposition}[The three-point Arnold relation;
+\ClaimStatusProvedHere]
+\label{prop:preface-arnold}
+\textup{[Type signature: Open quadrant; logarithmic de Rham
+presentation; Beilinson level \(2\); coordinate-disc hypothesis
+\(H_{\mathrm{Arn}}\).]}
+The logarithmic forms satisfy
+\begin{equation}\label{eq:preface-arnold}
+ \eta_{12}\wedge\eta_{23}
+ +\eta_{23}\wedge\eta_{31}
+ +\eta_{31}\wedge\eta_{12}=0
+ \qquad\text{on }\operatorname{Conf}_3(U).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Put \(x=z_1-z_2\) and \(y=z_2-z_3\).  Then
+\[
+ \eta_{12}=\frac{dx}{x},\qquad
+ \eta_{23}=\frac{dy}{y},\qquad
+ \eta_{31}=\frac{dx+dy}{x+y}.
+\]
+The coefficient of \(dx\wedge dy\) in the left-hand side of
+\eqref{eq:preface-arnold} is
+\[
+ \frac1{xy}-\frac1{y(x+y)}-\frac1{x(x+y)}=0.
+\]
+\end{proof}
+
+Arnold's calculation is geometric
+\cite{Arnold69}.  The algebraic half of the collision differential is
+associativity for an \(\Eone\)-chart and the Jacobi--Borcherds identity
+for a chiral bracket.  The signs belong to the orientation lines of
+the collision strata.
+
+\begin{definition}[Local collision package;
+\ClaimStatusDefinitional]
+\label{def:preface-local-collision-package}
+The package \(H_{\mathrm{loc}}(\cA;U)\) consists of:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item the nested-set incidence model for the boundary of
+ \(\operatorname{FM}_n(U)\); in arity three its codimension-two
+ corners are \(D_{123}\cap D_{ij}\);
+\item the full logarithmic de Rham complexes on the
+ Fulton--MacPherson spaces \(\operatorname{FM}_n(U)\), with
+ coefficients in the derived external tensor powers of
+ \(s^{-1}\bar\cA\);
+\item one total-degree convention and its induced desuspension,
+ de Rham, residue, and orientation signs;
+\item signed residue maps along every collision divisor, valued in
+ the corresponding orientation lines;
+\item compatibility of the internal differential with the chiral
+ operation;
+\item the Jacobi--Borcherds identity on nested three-point collisions;
+\item a declared compactification model---algebraic logarithmic
+ residues or real oriented blow-up---together with its corresponding
+ residue/Stokes identity and boundary-of-boundary identity;
+\item a comparison map from the affine Arnold--Kohno screen to the
+ nested residue complex, compatible with the preceding signs.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Local square-zero criterion;
+\ClaimStatusConditional]
+\label{prop:preface-local-square-zero}
+\textup{[Type signature: Open quadrant; ordered logarithmic
+Fulton--MacPherson presentation; Beilinson level \(2\); hypothesis
+package \(H_{\mathrm{loc}}(\cA;U)\).]}
+Let
+\[
+ d_{\bar B}=d_{\cA}+d_{\mathrm{dR}}+d_{\mathrm{res}}
+\]
+be the total differential on the completed direct product of the
+local collision complexes.  Under
+\(H_{\mathrm{loc}}(\cA;U)\), one has \(d_{\bar B}^{\,2}=0\).
+\end{proposition}
+
+\begin{proof}
+The internal and de Rham squares vanish.  Compatibility gives the
+mixed cancellation with \(d_{\cA}\).  The selected residue/Stokes
+identity identifies the mixed de Rham--residue terms with oriented
+boundary terms.  The nested-set boundary-of-boundary identity cancels
+the codimension-two corners.  The comparison map carries the
+Arnold--Kohno relation
+\eqref{eq:preface-arnold} to the nested residue complex, while the
+Jacobi--Borcherds identity supplies the coefficient relation.
+\end{proof}
+
+The proposition is a criterion for a chain model.  The global
+Beilinson--Drinfeld object is coordinate-free: it is formed from
+chiral operations of right \(\mathcal D_X\)-modules on
+\(\operatorname{Ran}(X)\).  The coordinate calculation above is its
+first local test.
+
+\section*{2.  The point model}
+
+Let \(A=k\oplus\bar A\) be an augmented dg associative algebra.  In
+the cohomological convention used here, its reduced bar construction
+has underlying conilpotent coalgebra
+\[
+ B(A)=T^c(s^{-1}\bar A)
+\]
+and differential \(d_A+d_\mu\), where \(d_\mu\) is induced by
+multiplication.  For the square-zero algebra \(A=k\oplus M\), the
+product on \(M\) vanishes and
+\[
+ B(A)=T^c(s^{-1}M),\qquad d_\mu=0.
+\]
+This elementary example fixes the object type: the bar construction
+is a coalgebra, and its cobar is an algebra.
+
+\begin{proposition}[Arity-three associative bar cancellation;
+\ClaimStatusProvedHere]
+\label{prop:preface-associative-bar-three}
+\textup{[Type signature: Open quadrant; tensor-coalgebra
+presentation over a point; Beilinson level \(2\); dg associativity
+package \(H_{\mathrm{Ass}}\).]}
+For homogeneous \(a,b,c\in\bar A\), the multiplication part of the
+bar differential satisfies
+\[
+ b_\mu^2[a|b|c]
+ =(-1)^{|b|}\bigl[(ab)c-a(bc)\bigr]=0.
+\]
+The mixed terms with the internal differential cancel by the
+derivation law.
+\end{proposition}
+
+\begin{proof}
+There are two length-two contraction orders.  The desuspension signs
+give the displayed difference, and associativity identifies its two
+terms.  The graded Leibniz rule gives the mixed cancellation.
+\end{proof}
+
+\begin{theorem}[Bar--cobar resolution, Loday--Vallette;
+\ClaimStatusProvedElsewhere]
+\label{thm:preface-point-bar-cobar}
+\textup{[Type signature: Open quadrant; dg algebra/dg coalgebra
+presentation over a point; Beilinson levels \(1\leftrightarrow2\);
+augmentation and conilpotence package \(H_{\mathrm{pt}}\).]}
+For an augmented dg algebra \(A\) and a conilpotent dg coalgebra
+\(C\), the counit and unit
+\[
+ \Omega B(A)\xrightarrow{\ \sim\ }A,
+ \qquad
+ C\xrightarrow{\ \sim\ }B\Omega(C)
+\]
+are quasi-isomorphisms
+\cite[Corollary~2.3.4]{LV12}.
+\end{theorem}
+
+Koszulness adds a second grading.  For a connected quadratic algebra
+it means diagonal concentration of
+\(\operatorname{Tor}^A(k,k)\).  For example,
+\(A=\operatorname{Sym}(V)\) has
+\[
+ \operatorname{Tor}^{A}_{p,q}(k,k)=0\quad(p\ne q),
+ \qquad
+ \operatorname{Tor}^{A}_{p,p}(k,k)\cong\Lambda^p(V),
+\]
+the classical Koszul calculation
+\cite[Proposition~3.4.13]{LV12}.  The bar coalgebra
+\(B(A)\), the resolution \(\Omega B(A)\), the quadratic coalgebra
+\(A^{\mathrm i}\), its graded dual algebra \(A^!\), and the
+Hochschild cochain complex
+\(C^\bullet(A,A)\) are five typed constructions linked by explicit
+maps.
+
+\begin{theorem}[Quadratic Koszul recognition, Loday--Vallette;
+\ClaimStatusProvedElsewhere]
+\label{thm:preface-quadratic-recognition}
+\textup{[Type signature: Open quadrant; connected quadratic
+weight-graded presentation over a point; Beilinson levels
+\(1\leftrightarrow2\); canonical twisting datum
+\(\tau_{\mathrm i}\colon A^{\mathrm i}\to A\).]}
+Let \(A=T(V)/(R)\) be connected and quadratic, and form the quadratic
+coalgebra
+\[
+ A^{\mathrm i}:=C(s^{-1}V,s^{-2}R)\subset T^c(s^{-1}V).
+\]
+The canonical twisting morphism
+\(\tau_{\mathrm i}\colon A^{\mathrm i}\to A\) induces maps
+\[
+ q_A\colon A^{\mathrm i}\longrightarrow B(A),
+ \qquad
+ \Omega(A^{\mathrm i})\longrightarrow A.
+\]
+The following conditions are equivalent: \(\tau_{\mathrm i}\) is a
+Koszul twisting morphism; \(q_A\) is a quasi-isomorphism;
+\(\Omega(A^{\mathrm i})\to A\) is a quasi-isomorphism; and the left
+and right twisted tensor products determined by
+\(\tau_{\mathrm i}\) are acyclic.  Equivalently, the bigraded bar
+homology of \(A\) is concentrated on the quadratic diagonal.
+\end{theorem}
+
+\begin{proof}
+The fundamental theorem for twisting morphisms gives the equivalence
+between the two comparison maps and the two twisted tensor products
+\cite[Theorem~2.3.2]{LV12}.  The quadratic recognition
+theorem identifies these conditions with diagonal bar homology
+\cite[Theorem~3.4.6]{LV12}.
+\end{proof}
+
+The universal resolution \(\Omega B(A)\to A\) of
+Theorem~\ref{thm:preface-point-bar-cobar} exists for every augmented
+algebra.  Theorem~\ref{thm:preface-quadratic-recognition} asks whether
+the smaller presentation-dependent coalgebra \(A^{\mathrm i}\)
+already computes the full bar coalgebra.
+
+\section*{3.  From a point to the Ran space}
+
+Francis and Gaitsgory place factorization algebras inside the larger
+category of chiral commutative coalgebras and express their comparison
+as chiral Koszul duality
+\cite{FrancisGaitsgory2012}.  Completion and conilpotence determine
+the subcategories on which bar and cobar become inverse.
+
+\begin{theorem}[Enhanced associative Ran reconstruction,
+Francis--Gaitsgory; \ClaimStatusProvedElsewhere]
+\label{thm:preface-enhanced-ran-reconstruction}
+\textup{[Type signature: Open quadrant; enhanced associative Ran
+presentation; Beilinson levels \(1\leftrightarrow2\); pro-nilpotent
+Francis--Gaitsgory ambient; reduced associative operad.]}
+Let
+\[
+ \mathcal C_X=\bigl(D(\operatorname{Ran}X),
+ \otimes^{\mathrm{ch}}\bigr).
+\]
+For the reduced associative operad, enhanced bar and cobar are inverse
+equivalences between nonunital associative algebras and divided-power
+conilpotent coalgebras in \(\mathcal C_X\).  After re-unitalization,
+the unit and counit give equivalences
+\[
+ C\xrightarrow{\ \sim\ }B_X^{\mathrm{enh}}\Omega_X^{\mathrm{enh}}C,
+ \qquad
+ \Omega_X^{\mathrm{enh}}B_X^{\mathrm{enh}}A
+ \xrightarrow{\ \sim\ }A.
+\]
+\end{theorem}
+
+\begin{proof}
+Francis--Gaitsgory's enhanced bar--cobar equivalence is
+\cite[Proposition~4.1.2]{Francis2012}; the proof of
+\cite[Theorem~5.1.1]{Francis2012} supplies pro-nilpotence of the
+chiral monoidal category on the Ran space.  Applying the reduced
+theorem to the augmentation ideal and restoring the unit gives the
+displayed maps.
+\end{proof}
+
+\begin{definition}[Completed Ran bar--cobar package;
+\ClaimStatusDefinitional]
+\label{def:preface-ran-package}
+Fix the pro-nilpotent Francis--Gaitsgory ambient
+\(\mathcal C_X=(D(\operatorname{Ran}X),\otimes^{\mathrm{ch}})\).
+The completed factorization package
+\[
+ H_{\mathrm{BC}}(X):=
+ H_{\mathrm{Fact}}+H_{\mathrm{fact}}+H_{\mathrm{conv}}
+\]
+consists of:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item chosen complete augmented factorization algebras and complete
+ conilpotent factorization coalgebras on \(\operatorname{Ran}(X)\);
+\item continuous bar and cobar functors between these subcategories;
+\item factorization base change and disjoint-union compatibility;
+\item a conservative family of exact symmetric-monoidal realizations
+ carrying the associated-graded unit and counit to the ordinary
+ augmented/conilpotent bar--cobar maps;
+\item an exhaustive complete filtration whose comparison spectral
+ sequences converge;
+\item continuity of tensor products and inverse limits on the chosen
+ subcategories.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Completed chiral bar--cobar comparison
+\textup{(}Theorem A\textup{)}; \ClaimStatusConditional]
+\label{thm:preface-theorem-a}
+\textup{[Type signature: Open quadrant; Ran/factorization
+presentation; Beilinson levels \(1\leftrightarrow2\); hypothesis
+package \(H_{\mathrm{BC}}(X)\).]}
+Under \(H_{\mathrm{BC}}(X)\), chiral bar and cobar form a derived
+adjoint equivalence on the chosen subcategories:
+\[
+ \Omega_X^{\mathrm{cont}}\colon
+ \operatorname{CoFact}^{\mathrm{conil},\mathrm{comp}}(X)
+ \rightleftarrows
+ \operatorname{Fact}^{\mathrm{aug},\mathrm{comp}}(X)
+ :B_X^{\mathrm{ch}}.
+\]
+The derived unit and counit are equivalences.
+\end{theorem}
+
+\begin{proof}
+Loday--Vallette's ordinary bar--cobar resolution
+\cite[Corollary~2.3.4]{LV12} identifies the realized
+associated-graded unit and counit as quasi-isomorphisms.  Conservativity
+gives the same conclusion in the associated-graded Ran category.
+Completeness and convergence lift these equivalences through the
+filtration.  Continuity and factorization base change place the
+resulting maps in the chosen Ran subcategories.
+\end{proof}
+
+Every family application requires completed objects, a compatible
+filtration, and a convergence proof.  The
+Loday--Vallette theorem supplies the pointwise model; the Ran
+hypotheses carry that model through factorization.
+
+For an equivariant finite window on ordered configurations,
+symmetrisation is expressed by homotopy descent:
+\[
+ \bigl(Q^{\mathrm{ord}}_{\cA,N}\bigr)_{h\Sigma_n}
+ \longrightarrow Q^{\mathrm{sym}}_{\cA,N}.
+\]
+Monodromy is incorporated by the corresponding local system and
+twisted homotopy coinvariants.  The descent quasi-isomorphism and its
+nearby-cycle extension form the package
+\(H_{\mathrm{fact}}^R\).
+
+\section*{4.  The tower of object types}
+
+The six Beilinson levels are a sequence of constructions.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}c p{0.32\textwidth} p{0.48\textwidth}@{}}
+\textbf{Level} & \textbf{Object} & \textbf{Reconstruction datum}\\
+\hline
+\(0\) &
+factorization dg-category \(\cC^{\mathrm{op}}\) with a chosen object
+\(b\) &
+Morita generator and compactness package\\
+\(1\) &
+\(A_b=R\operatorname{End}_{\cC}(b)\), an augmented
+\(\Eone\)-chart &
+chosen presentation and augmentation\\
+\(2\) &
+\(B_X^{\mathrm{ch}}(A_b)\), a complete conilpotent
+factorization coalgebra &
+\(H_{\mathrm{BC}}(X)\) and the twisting morphism\\
+\(3\) &
+\(\cZ_{\mathrm{ch}}^{\mathrm{der}}(A_b)
+=C^\bullet_{\mathrm{ch}}(A_b,A_b)\) &
+diagonal resolution and completion\\
+\(4\) &
+module, brane, and line-operator categories &
+open--closed comparison functor\\
+\(5\) &
+cyclic trace and stable-graph amplitudes &
+perfect pairing, residue pushforward, and sewing\\
+\end{tabular}
+\end{center}
+
+The table separates three neighboring constructions.  The bar is the
+coalgebraic resolution at level \(2\).  The derived centre is the
+endomorphism object at level \(3\).  A scalar modular class is the
+image of graph-level data under a trace at level \(5\).
+
+\begin{definition}[Verdier--Ran comparison package;
+\ClaimStatusDefinitional]
+\label{def:preface-verdier-package}
+For a complete augmented factorization algebra \(\cA\), the package
+\(H_{\mathbb D}(\cA)\) consists of
+\(H_{\mathrm{BC}}(X)\), dualizable filtered pieces, continuity of
+\(\mathbb D_{\operatorname{Ran}}\), compatibility with factorization
+base change, and convergence of the filtered dual.
+\end{definition}
+
+Under \(H_{\mathbb D}(\cA)\), Verdier duality carries the complete
+bar coalgebra to the augmented factorization algebra
+\[
+ \cA^!_\infty
+ :=\mathbb D_{\operatorname{Ran}}B_X^{\mathrm{ch}}(\cA).
+\]
+An identification \(\cA^!_\infty\simeq\cA^!\) with a quadratic
+Koszul partner is supplied by a separate comparison
+quasi-isomorphism.  The locus \(\mathrm{KSDual}\) consists of objects
+equipped with a coherent equivalence
+\(\cA\simeq\cA^!_\infty\); its coherence identifies the square of the
+duality with the identity.
+
+\section*{5.  Positive genus}
+
+Loop edges contract two inputs.  Their construction therefore begins
+with cyclic data.  Let \(\cA\) carry a perfect invariant pairing of a
+fixed cohomological degree.  The Getzler--Kapranov Feynman transform
+organizes the resulting stable-graph contractions with determinant
+twists and graph automorphism coinvariants
+\cite[\S5]{GetzlerKapranov98}.
+
+\begin{definition}[Modular chain package;
+\ClaimStatusDefinitional]
+\label{def:preface-modular-package}
+The package \(H_{\mathrm{mod}}(\cA)\) consists of:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item a perfect cyclic pairing and its orientation convention;
+\item chain models for the stable compactifications;
+\item signed residue and proper pushforward maps along every clutching
+ morphism;
+\item compatibility with separating and non-separating gluing;
+\item a complete stable-graph filtration;
+\item a continuous square-zero total differential
+ \(D_{\cA}\) extending the genus-zero differential \(d_0\).
+\end{enumerate}
+\end{definition}
+
+For a datum satisfying \(H_{\mathrm{mod}}(\cA)\), write
+\(\fg_{\cA}^{\mathrm{mod}}\) for the complete modular convolution dg
+Lie algebra.  The positive-genus part of the differential is
+\begin{equation}\label{eq:preface-theta}
+ \Theta_{\cA}:=D_{\cA}-d_0
+ =\sum_{[\Gamma]\in\mathsf{Gr}^{\mathrm{st}}}
+   \operatorname{ins}_{\Gamma}(\theta_{\cA,\Gamma}),
+ \qquad
+ \theta_{\cA,\Gamma}\in
+ \bigl(\orline{\Gamma}\otimes
+ \operatorname{Hom}(\bar\cA^{\otimes\operatorname{Leg}(\Gamma)},k)
+ \bigr)_{h\operatorname{Aut}(\Gamma)}.
+\end{equation}
+The sum converges in the stable-graph filtration.
+
+\begin{proposition}[Maurer--Cartan identity;
+\ClaimStatusProvedHere]
+\label{prop:preface-mc-formal}
+\textup{[Type signature: Open modular quadrant; complete convolution
+presentation; Beilinson level \(5\); hypothesis package
+\(H_{\mathrm{mod}}(\cA)\).]}
+The element \(\Theta_{\cA}\) satisfies
+\[
+ d_0\Theta_{\cA}
+ +\frac12[\Theta_{\cA},\Theta_{\cA}]=0.
+\]
+\end{proposition}
+
+\begin{proof}
+Expand \(D_{\cA}^{\,2}=(d_0+\Theta_{\cA})^2\) in the complete
+convolution algebra.  The identities
+\(D_{\cA}^{\,2}=d_0^2=0\) leave the displayed equation.
+\end{proof}
+
+The construction separates an extension obstruction from a
+characteristic operation.  For a partial lift
+\(\Theta_{\le r}\) in a filtered dg Lie algebra, the next obstruction
+is the class
+\[
+ o_{r+1}(\Theta_{\le r})
+ \in H^2\bigl(\operatorname{gr}^{r+1}\fg_{\cA}^{\mathrm{mod}}\bigr).
+\]
+A full Maurer--Cartan element carries higher graph components as
+operations.  A trace maps those operations to cohomology classes or
+numbers.
+
+\begin{principle}[The four-test interface]
+\label{princ:four-test-interface}
+\ClaimStatusDefinitional
+A modular comparison is carried by four explicit tests:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item the chain identity \(D_{\cA}^{\,2}=0\);
+\item homotopy descent from ordered to symmetric configuration data;
+\item perfectness and compatibility of the cyclic pairing;
+\item clutching compatibility for every stable-graph boundary map.
+\end{enumerate}
+Each test is an identity between specified chain maps.
+\end{principle}
+
+\section*{6.  Chiral Hochschild support}
+
+The derived chiral centre is computed from a two-sided diagonal
+resolution.  A family comparison with bounded vertex cochains is an
+additional quasi-isomorphism.
+
+\begin{theorem}[Bakalov--De Sole--Kac benchmarks;
+\ClaimStatusProvedElsewhere]
+\label{thm:preface-bdsk-benchmarks}
+For the universal Virasoro vertex algebra
+\(\operatorname{Vir}_c\), for every central charge \(c\),
+\[
+ \dim H^n_{\mathrm{ch},b}(\operatorname{Vir}_c)
+ =
+ \begin{cases}
+ 1,&n\in\{0,2,3\},\\
+ 0,&n\notin\{0,2,3\}.
+ \end{cases}
+\]
+For the free superboson \(B_{\mathfrak h}\),
+\[
+ H^n_{\mathrm{ch},b}(B_{\mathfrak h})
+ \cong
+ \bigl(S^n(\Pi\mathfrak h)\bigr)^*
+ \oplus
+ \bigl(S^{n+1}(\Pi\mathfrak h)\bigr)^*.
+\]
+These are Theorems~7.2 and~7.4 of
+Bakalov--De Sole--Kac
+\cite{BDSK21}.
+\end{theorem}
+
+For a one-dimensional even \(\mathfrak h\), the parity shift
+\(\Pi\mathfrak h\) is odd, so the second formula gives dimensions
+\((2,1,0,\ldots)\).
+
+\begin{definition}[Family support datum;
+\ClaimStatusDefinitional]
+\label{def:preface-family-support}
+For a finite set \(S\subset\mathbb Z\), the datum
+\(H_H(\cA;S)\) consists of a complete filtered complex
+\(Q_{\cA}\), a quasi-isomorphism
+\[
+ \gamma_{\cA}\colon Q_{\cA}
+ \xrightarrow{\ \sim\ }
+ C^\bullet_{\mathrm{ch}}(\cA,\cA),
+\]
+a complex \(K_{\cA,S}\) supported in \(S\), and continuous maps
+\[
+ K_{\cA,S}
+ \mathop{\xrightarrow{\ \iota_{\cA}\ }}Q_{\cA}
+ \mathop{\xrightarrow{\ p_{\cA}\ }}K_{\cA,S},
+ \qquad
+ h_{\cA}\colon Q_{\cA}\longrightarrow Q_{\cA}[-1],
+\]
+satisfying
+\[
+ p_{\cA}\iota_{\cA}=\operatorname{id},\qquad
+ d h_{\cA}+h_{\cA}d
+ =\operatorname{id}-\iota_{\cA}p_{\cA}.
+\]
+For inverse-limit models, the datum includes the corresponding
+Mittag--Leffler comparison.
+\end{definition}
+
+\begin{theorem}[Family-indexed chiral Hochschild support
+\textup{(}Theorem H\textup{)}; \ClaimStatusConditional]
+\label{thm:preface-theorem-h}
+\textup{[Type signature: Open quadrant; completed chiral cochain
+presentation; Beilinson level \(3\); hypothesis package
+\(H_H(\cA;S)\).]}
+The composite
+\[
+ K_{\cA,S}\xrightarrow{\ \gamma_{\cA}\iota_{\cA}\ }
+ C^\bullet_{\mathrm{ch}}(\cA,\cA)
+\]
+is a quasi-isomorphism.  Consequently,
+\[
+ \operatorname{Supp}
+ \operatorname{ChirHoch}^{\bullet}(\cA)\subseteq S.
+\]
+For a translation-equivariant vertex algebra \(V\), a
+quasi-isomorphism from bounded vertex cochains to the chosen chiral
+chart transports the benchmarks of
+Theorem~\ref{thm:preface-bdsk-benchmarks}.
+\end{theorem}
+
+\begin{proof}
+The deformation-retract identities identify
+\(K_{\cA,S}\) with \(Q_{\cA}\) in the derived category.
+Composition with \(\gamma_{\cA}\) gives the asserted
+quasi-isomorphism.
+\end{proof}
+
+\section*{7.  The five reconstruction problems}
+
+The letters \(A,B,C,D,H\) name five mathematical problems.
+
+\begin{description}[leftmargin=2.8em,style=nextline]
+\item[\(\mathbf A\).]
+Construct the complete Ran bar--cobar adjunction and verify
+\(H_{\mathrm{BC}}(X)\).  The point model is
+Theorem~\ref{thm:preface-point-bar-cobar}; the Ran theorem is
+conditional on the displayed package.
+
+\item[\(\mathbf B\).]
+Construct a chiral Comparison Lemma for a typed twisting datum
+\((\cA,C,\tau)\).  Under convergence, it compares acyclicity of the
+twisted tensor products with
+\(C\to B_X^{\mathrm{ch}}(\cA)\) and
+\(\Omega_X C\to\cA\).  The choice \(C=\cA^{\mathrm i}\) gives
+quadratic Koszul recognition.  For a fixed coalgebra \(C\), the
+coderived/completed problem compares its comodule and contramodule
+categories.
+
+\item[\(\mathbf C\).]
+Represent Verdier--Koszul duality by a cochain involution
+\(\sigma\).  In characteristic zero, the projectors
+\[
+ e_\pm=\frac{1\pm\sigma}{2}
+\]
+give the formal eigenspace decomposition.  A perfect
+anti-invariant pairing supplies the Lagrangian upgrade.
+
+\item[\(\mathbf D\).]
+Construct \(H_{\mathrm{mod}}(\cA)\), hence the stable-graph
+Maurer--Cartan element.  Family traces then produce scalar genus
+classes.
+
+\item[\(\mathbf H\).]
+Construct \(H_H(\cA;S)\) and the bounded-to-chart comparison.
+The set \(S\) and the cohomology dimensions are family data.
+\end{description}
+
+This formulation keeps bar resolution, quadratic Koszul duality,
+derived-centre cohomology, cyclic modular extension, and scalar trace
+in their natural categories.
+
+\section*{8.  Route through the volume}
+
+Part~I fixes the factorization category, the algebra chart, and the
+Ran-space conventions.  Part~II develops twisting morphisms,
+completion, and the bar--cobar comparison.  Part~III constructs the
+derived chiral centre and its family comparison complexes.  Part~IV
+tests the packages on explicit vertex-algebra families.  Part~V adds
+cyclic traces, stable graphs, and clutching.  Part~VI formulates the
+reconstruction programme and its comparison functors.
+
+Volumes~II and~III supply further targets.  The holomorphic-topological
+bulk comparison is carried by an explicit open--closed functor.  The
+Calabi--Yau-to-chiral passage is carried by a two-stage specialization
+functor with its geometric choices.  Their numerical specializations
+belong to the corresponding comparison theorems, after the functors
+and their hypothesis packages have been constructed.
+
+The immediate proof obligations are concrete:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item verify the completed Ran hypotheses on each standard family;
+\item construct the Verdier comparison on dualizable filtered pieces;
+\item build the signed residue--pushforward system for stable graphs;
+\item prove the bounded-to-chart quasi-isomorphism in each
+Hochschild computation;
+\item propagate every verified status and normalization through the
+concordance and the cross-volume claim surfaces.
+\end{enumerate}
+
+Primitive objects come first.  Their resolutions and centres follow.
+Traces and scalar modular forms close the tower.

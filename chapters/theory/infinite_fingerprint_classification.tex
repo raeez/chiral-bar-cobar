@@ -1,0 +1,1469 @@
+\chapter{The infinite fingerprint classification}
+\label{ch:infinite-fingerprint}\label{chap:infinite-fingerprint-classification}
+
+\begin{abstract}
+The $G/L/C/M$ quadrichotomy of
+Proposition~\ref{prop:three-invariants-relations}(iii) is a coarse
+projection. It reads a single slot ($r_{\max}$) of a richer
+invariant, and it degenerates on the critical-level locus
+$\kappa_{\mathrm{ch}}(\cA) = 0$. The canonical fingerprint
+$\varphi(\cA) = (p_{\max}, r_{\max}, \chi_{\mathrm{VOA}}, n_{\mathrm{strong}}, \mathrm{coset})$
+of Definition~\ref{def:canonical-fingerprint} is the correct
+conditional reconstruction datum: it separates the standard
+witness rows, it records the finite-window data carried by the
+ordered bar complex, it survives
+$\kappa_{\mathrm{ch}} = 0$ by recording the critical boundary stratum
+$\mathrm{FF}$, and it transports functorially under
+Drinfeld--Sokolov reduction.
+Every fingerprint slot is extracted from the ordered bar complex
+$\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$: slots 1--4 from
+$\barB^{\mathrm{ord}}$ and its Maurer--Cartan element $\Theta_\cA$
+directly, slot 5 from the commutant pairing on $\barB^{\mathrm{ord}}$,
+and the supplementary slot $\kappa_{\mathrm{ch}}$ from the
+genus-$g \geq 1$ bar curvature $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.
+The symmetric bar $\barB^{\Sigma}(\cA) = \mathrm{av}_*\barB^{\mathrm{ord}}(\cA)$
+loses $n_{\mathrm{strong}}$, $\mathrm{coset}$, and $\kappa_{\mathrm{ch}}$
+under $\Sigma_n$-coinvariants, collapsing the fingerprint to a partial
+invariant. The ordered bar is the unique carrier of $\varphi$. This chapter inscribes the four
+strengthening theorems that complete the fingerprint theorem: the
+critical-level bar structure on class~$\mathrm{FF}$
+(Theorem~\ref{thm:fifth-class-FF}); the pole--depth independence
+table (Theorem~\ref{thm:pole-depth-independence}); the bijection
+$d_{\mathrm{alg}}(\cA) = r_{\max}(\cA) - 2$
+(Theorem~\ref{thm:d-alg-r-max-bijection}); and the DS transport law
+(Theorem~\ref{thm:DS-fingerprint-transport}).
+\end{abstract}
+
+\section{Setup: the coarse projection degenerates at
+\texorpdfstring{$\kappa_{\mathrm{ch}} = 0$}{kappa = 0}}
+\label{sec:coarse-degeneration}
+
+Chapter~\ref{ch:three-invariants} introduced three invariants
+$(p_{\max}, k_{\max}, r_{\max})$ and the canonical fingerprint
+$\varphi(\cA)$
+\textup{(}Definition~\ref{def:canonical-fingerprint}\textup{)}. The
+stratum theorem
+\textup{(}Theorem~\ref{thm:five-class-stratum}\textup{)} partitioned
+the standard landscape into the four generic shadow-depth classes
+$G,L,C,M$ together with the critical boundary stratum~$\mathrm{FF}$
+according to the pair~$(r_{\max}, \kappa_{\mathrm{ch}} = 0)$. Two points of that
+theorem were stated but not proved in detail: first, the
+internal structure of class~$\mathrm{FF}$, where the shadow metric
+$Q_L$ degenerates and every shadow-based argument loses its pivot;
+second, the exact relationship between $r_{\max}$ and the algebraic
+depth~$d_{\mathrm{alg}}$. These gaps are the subject of this
+chapter.
+
+\begin{remark}[Why the quadrichotomy is insufficient]
+\label{rem:why-quadrichotomy-insufficient}
+The quadrichotomy $\{G,L,C,M\}$ is the image of the projection
+$\Pi_{\mathrm{coarse}}\circ\varphi$ restricted to
+$\kappa_{\mathrm{ch}}(\cA)\neq 0$. Three deficiencies follow. (i)
+At~$\kappa_{\mathrm{ch}}=0$ the Sugawara construction
+$T = (k+h^\vee)^{-1}:\!J^aJ^a\!:$ has a pole, the shadow metric
+$Q_L(t) = (2\kappa_{\mathrm{ch}} + 3\alpha t)^2 + 2\Delta t^2$
+loses its leading constant, and the shadow depth alone cannot
+separate critical-level affine $V_{-h^\vee}(\fg)$ from
+its~$\mathrm{FF}$ companions. (ii) Two algebras with identical
+$r_{\max}$ but different parity (symplectic boson versus symplectic
+fermion, $\Walg_3$ versus super-$\Walg_3$) share a quadrichotomy
+class but not a bar complex. (iii) The DS reduction
+$\cA\mapsto H^\bullet_{\mathrm{DS}}(\cA)$ scrambles the quadrichotomy
+(affine~$\widehat{\fg}_k$ in class~$L$ maps to~$\Walg_N$ in
+class~$M$) and its action is invisible on a single slot.
+The fingerprint $\varphi$ is the minimal extension that cures
+all three.
+\end{remark}
+
+\section{The conditional fingerprint reconstruction surface}
+\label{sec:fingerprint-is-complete-invariant}
+
+\begin{lemma}[Presentation-independence of the fingerprint slots on the standard landscape]
+\label{lem:fingerprint-slot-presentation-independence}
+\ClaimStatusConditional
+Let~$\cA$ be a chiral algebra in the standard landscape, and let
+$\varphi(\cA)
+= (p_{\max}, r_{\max}, \chi_{\mathrm{VOA}}, n_{\mathrm{strong}}, \mathrm{coset})$
+be the canonical fingerprint of
+Definition~\ref{def:canonical-fingerprint}. Then each of the five
+slots is independent of the chosen minimal strong generating
+presentation of~$\cA$.
+\end{lemma}
+
+\begin{proof}
+Write
+$\cA_+ := \bigoplus_{n>0}\cA_n$
+for the positive-conformal-weight subspace and
+\[
+Q(\cA)
+:=
+\cA_+/\bigl(T\cA_+ + \cA_+(-1)\cA_+\bigr)
+\]
+for the indecomposable quotient. A minimal strong generating set of
+standard-landscape~$\cA$ is precisely a basis of~$Q(\cA)$, so a change
+of presentation is a basis change in~$Q(\cA)$.
+
+\emph{Slot~(1): \(p_{\max}\).}
+For each~$n\geq 1$, the OPE coefficient
+$(a,b)\mapsto a_{(n-1)}b$ descends to a bilinear map
+\[
+\mu_n^\cA\colon Q(\cA)\otimes Q(\cA)\longrightarrow \gr\cA,
+\]
+because total derivatives and normally ordered composites are killed in
+$Q(\cA)$. The condition that some generator pair has a non-zero
+$1/(z-w)^n$-term is exactly the condition~$\mu_n^\cA\neq 0$, which is
+basis-independent. Therefore
+$p_{\max}(\cA)=\max\{n\mid \mu_n^\cA\neq 0\}$ is independent of the
+chosen presentation; this sharpens the standard-landscape
+well-definedness recorded in
+Remark~\ref{rem:p-max-generator-choice}.
+
+\emph{Slot~(2): \(r_{\max}\).}
+By Theorem~\ref{thm:mc2-bar-intrinsic}, the full shadow obstruction
+tower~$\Theta_\cA$ is the positive-genus correction of the bar
+differential and is therefore intrinsic to~$\bar{B}^{\mathrm{ch}}(\cA)$.
+Hence
+\[
+r_{\max}(\cA)=\max\{r\geq 2\mid \pi_r(\Theta_\cA)\neq 0\}
+\]
+is independent of any chosen presentation.
+
+\emph{Slot~(3): \(\chi_{\mathrm{VOA}}\).}
+The Hodge-filtered supertrace
+$\chi_{\mathrm{VOA}}(\cA)=\operatorname{str}_{F^0\!\cA}(q^{L_0})$
+depends only on the
+$L_0$-graded super vector space underlying~$\cA$. Changing generators
+does not change the eigenspace decomposition of~$L_0$ or the
+$\mathbb{Z}/2$-parity, so the coefficients of~$\chi_{\mathrm{VOA}}$ are
+presentation-independent.
+
+\emph{Slot~(4): \(n_{\mathrm{strong}}\).}
+Minimal strong generating sets are bases of~$Q(\cA)$, hence
+\[
+n_{\mathrm{strong}}(\cA)=\dim Q(\cA),
+\]
+which is basis-independent.
+
+\emph{Slot~(5): \(\mathrm{coset}\).}
+When~$\kappa_{\mathrm{ch}}(\cA)\neq 0$, the Heisenberg factor
+$\cH_{\kappa_{\mathrm{ch}}}\hookrightarrow \cA$ is the intrinsic abelian
+current subalgebra singled out by the invariant bilinear form on the
+weight-one sector, and the pair
+$(\mathrm{Com}(\cH_{\kappa_{\mathrm{ch}}},\cA),\,
+\cA/\mathrm{Com}(\cH_{\kappa_{\mathrm{ch}}},\cA))$
+is functorial in that inclusion. At~$\kappa_{\mathrm{ch}}(\cA)=0$,
+Theorem~\ref{thm:fifth-class-FF}(iv) identifies the critical central
+subalgebra with
+$\operatorname{Fun}(\mathrm{Op}_{\fg^\vee}(D))$, so the critical coset
+slot~$\mathrm{coset}_{FF}$ is likewise intrinsic. Thus the coset slot is
+presentation-independent on the whole standard landscape.
+\end{proof}
+
+\begin{theorem}[Conditional fingerprint reconstruction equivalence;
+strengthening of Theorem~\ref{thm:fingerprint-completeness}]
+\label{thm:fingerprint-reconstruction-equivalence}
+\ClaimStatusConditional
+\textup{[}Type signature:
+$(\mathrm{Open},\mathrm{fingerprint/bar\ reconstruction},
+\mathrm{level}=1\leftrightarrow2,
+\mathrm{hypothesis\ package}=\mathrm{standard\ landscape}
++\mathrm{slot\ presentation\ independence}
++\mathrm{bar\text{-}intrinsic\ MC}
++\mathrm{Koszul\ locus}
++\mathrm{residual\text{-}free\ recovery})$.\textup{]}
+Let~$\cA_1,\cA_2$ be chiral algebras in the standard landscape, and
+assume the fingerprint-reconstruction package for the pair: the
+typed projection of Theorem~\ref{thm:fingerprint-completeness}, the
+presentation-independence of
+Lemma~\ref{lem:fingerprint-slot-presentation-independence}, the
+bar-intrinsic Maurer--Cartan tower of
+Theorem~\ref{thm:mc2-bar-intrinsic}, the Koszul-locus bar--cobar
+comparison of Chapter~\ref{ch:cobar}, and residual-free recovery of
+the maps, higher braces, ordered coinvariants, and OPE coefficients
+forgotten by~$\Pi_{\mathrm{fp}}$ in the chosen completed landscape
+row. Under this package, the following are equivalent:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item the canonical fingerprints agree,
+$\varphi(\cA_1) = \varphi(\cA_2)$;
+\item the bar coalgebras are isomorphic,
+$\bar{B}^{\mathrm{ch}}(\cA_1) \simeq \bar{B}^{\mathrm{ch}}(\cA_2)$
+as $\mathrm{Ass}^{\mathrm{ch}}$-coalgebras, and the Koszul duals
+are isomorphic,
+$\cA_1^{\,!} \simeq \cA_2^{\,!}$
+as chiral algebras with~$\mathrm{Com}^{\mathrm{ch}}$-structure
+\textup{(}on the Koszul locus\textup{)};
+\item the shadow obstruction towers agree,
+$\Theta_{\cA_1}^{\leq r} \simeq \Theta_{\cA_2}^{\leq r}$ for
+every~$r$, as
+$(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebras.
+\end{enumerate}
+Without the residual-free recovery clause, the theorem asserts only
+that the bar/tower data determine the fingerprint; it does not assert
+that the five slots reconstruct the forgotten structure.
+\end{theorem}
+
+\begin{proof}
+\textit{Step 0: the five slots are intrinsic.}
+Lemma~\ref{lem:fingerprint-slot-presentation-independence} removes the
+presentation ambiguity of all five fingerprint slots on the
+standard-landscape scope of the theorem.
+
+\emph{Step 1: \textup{(a)} implies \textup{(b)}.}
+Assume~$\varphi(\cA_1)=\varphi(\cA_2)$. By
+the residual-free recovery clause in the stated
+fingerprint-reconstruction package, there is an
+$\mathrm{Ass}^{\mathrm{ch}}$-coalgebra isomorphism
+\[
+f\colon \bar{B}^{\mathrm{ch}}(\cA_1)\xrightarrow{\ \sim\ }
+\bar{B}^{\mathrm{ch}}(\cA_2)
+\]
+compatible with the
+$(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebra structures on the shadow
+towers. Apply the chiral cobar functor~$\Omega$ to obtain
+\[
+\Omega(f)\colon
+\Omega\bigl(\bar{B}^{\mathrm{ch}}(\cA_1)\bigr)\xrightarrow{\ \sim\ }
+\Omega\bigl(\bar{B}^{\mathrm{ch}}(\cA_2)\bigr).
+\]
+On the Koszul locus, Chapter~\ref{ch:cobar} provides the bar--cobar
+comparison isomorphisms
+\[
+\eta_i\colon
+\Omega\bigl(\bar{B}^{\mathrm{ch}}(\cA_i)\bigr)\xrightarrow{\ \sim\ }\cA_i^{\,!},
+\qquad i=1,2.
+\]
+Hence
+\[
+\eta_2\circ \Omega(f)\circ \eta_1^{-1}\colon
+\cA_1^{\,!}\xrightarrow{\ \sim\ }\cA_2^{\,!}
+\]
+is the required Koszul-dual isomorphism. This proves~\textup{(a)}
+$\Rightarrow$~\textup{(b)}.
+
+\emph{Step 2: \textup{(b)} implies \textup{(c)}.}
+The shadow tower is bar-intrinsic
+\textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}: for
+every~$r\geq 2$,
+\[
+\Theta_\cA^{\leq r}
+=
+\pi_{\leq r}\bigl(\mathrm{MC}(\bar{B}^{\mathrm{ch}}(\cA))\bigr),
+\]
+where~$\pi_{\leq r}$ is the weight-$r$ truncation. The coalgebra
+isomorphism in~\textup{(b)} transports Maurer--Cartan solutions
+functorially, and the
+$(\mathrm{SC}^{\mathrm{ch,top}})^!$-coaction comes from the ambient
+operad, not from a chosen presentation of~$\cA$. Therefore
+\textup{(b)}~$\Rightarrow$~\textup{(c)}.
+
+\emph{Step 3: \textup{(c)} implies \textup{(a)}.}
+Read the five slots from the intrinsic tower, with
+$Q(\cA)=\cA_+/\bigl(T\cA_+ + \cA_+(-1)\cA_+\bigr)$ as in
+Lemma~\ref{lem:fingerprint-slot-presentation-independence}.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item The OPE pole order~$p_{\max}$ is the maximal pole appearing in
+the bilinear OPE maps
+\[
+\mu_n^\cA\colon Q(\cA)\otimes Q(\cA)\to \gr\cA,
+\qquad
+\mu_n^\cA([a],[b])=[a_{(n-1)}b],
+\]
+encoded by the degree-$2$ truncation~$\Theta_\cA^{\leq 2}$. Thus
+$p_{\max}(\cA)=\max\{n\mid \mu_n^\cA\neq 0\}$ is preserved by an
+isomorphism of shadow towers.
+\item The shadow depth~$r_{\max}$ is the largest~$r$ for which
+$\pi_r(\Theta_\cA)\neq 0$, so it is the termination depth of the tower
+itself.
+\item The Hodge-filtered supertrace~$\chi_{\mathrm{VOA}}$ is
+the generating function
+$\sum_n (-1)^{|n|}\dim(F^0\cA)_n q^n$, where the
+$L_0$-graded super vector space~$F^0\cA$ is the degree-$1$ cogenerator
+part of the tower. An isomorphism of towers preserves this graded
+superdimension, hence preserves~$\chi_{\mathrm{VOA}}$.
+\item The number~$n_{\mathrm{strong}}$ of minimal strong generators
+is~$\dim Q(\cA)$, and the degree-$1$ cogenerator space of the tower is
+exactly~$Q(\cA)$.
+\item The coset slot~$\mathrm{coset}(\cA)$ is the isomorphism class
+of the pair
+$(\mathrm{Com}(\cH_{\kappa_{\mathrm{ch}}},\cA),\cA/\mathrm{Com})$
+\textup{(}or~$\mathrm{coset}_{FF}$ at~$\kappa_{\mathrm{ch}}=0$\textup{)},
+both of which are internal to the bar/tower datum: on the non-critical
+locus the Heisenberg sub-pair is the image of the degree-$2$ center of
+the tower under the natural projection, while at~$\kappa_{\mathrm{ch}}=0$
+Theorem~\ref{thm:fifth-class-FF}(iv) identifies the same intrinsic
+center with the oper algebra
+$\operatorname{Fun}(\mathrm{Op}_{\fg^\vee}(D))$.
+\end{enumerate}
+Thus~\textup{(c)}~$\Rightarrow$~\textup{(a)}.
+
+\emph{Step 4: close the biconditional.}
+Combining Steps~2 and~3 gives
+\textup{(b)}~$\Rightarrow$~\textup{(a)}$;$ the extra Koszul-dual
+isomorphism in~\textup{(b)} is therefore compatible with, but not needed
+for, this invariant direction. Together with the conditional
+Step~1, this supplies both directions of the biconditional
+\[
+\varphi(\cA_1)=\varphi(\cA_2)
+\Longleftrightarrow
+\bigl(
+\bar{B}^{\mathrm{ch}}(\cA_1)\simeq \bar{B}^{\mathrm{ch}}(\cA_2)
+\text{ and, on the Koszul locus, }
+\cA_1^{\,!}\simeq \cA_2^{\,!}
+\bigr),
+\]
+and hence the equivalence of~\textup{(a)}, \textup{(b)}, and
+\textup{(c)} under the stated package. Without the residual-free
+clause, Steps~2 and~3 remain the asserted bar-to-fingerprint
+direction, and Step~1 is an open reconstruction obligation rather
+than a theorem.
+\end{proof}
+
+\section{The critical boundary stratum: critical-level bar structure}
+\label{sec:FF-bar-structure}
+
+The refined FF stratum is not the absence of a bar complex, but the
+critical fixed-point geometry of the affine Kac--Moody family: the bar
+complex of~$V_{-h^\vee}(\fg)$ is well-defined and uncurved, the center
+jumps to the Feigin--Frenkel oper algebra, and the generic class-L
+Theorem~H / raw bar-cobar package must be replaced by its critical
+weight-completed form. What changes is not the existence of the bar
+complex, but the surrounding theorem surface.
+
+\begin{theorem}[Feigin--Frenkel stratum at the critical affine fixed point;
+\ClaimStatusConditional]
+\label{thm:fifth-class-FF}
+Let $\fg$ be a simple Lie algebra and set
+\[
+\cA_{\mathrm{FF}} := V_{-h^\vee}(\fg).
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \textup{(}Position in the classification\textup{)}
+ the coarse shadow-depth projection remains the affine
+ Lie/tree value $r_{\max}=3$: the cubic shadow is the Lie bracket and
+ the quartic shadow vanishes by the Jacobi identity. Thus FF is the
+ critical fixed-point boundary stratum of class~L. The refined
+ fingerprint records this stratum separately, while the generic
+ shadow-depth classification retains its four classes.
+\item \textup{(}Scalar invariants\textup{)}
+ \[
+ \kappa(\cA_{\mathrm{FF}})
+ = \frac{\dim(\fg)\,(-h^\vee+h^\vee)}{2h^\vee}
+ = 0,
+ \qquad
+ \kappa(\cA_{\mathrm{FF}}^{!}) = 0,
+ \]
+ because the Feigin--Frenkel level involution
+ $k \mapsto -k-2h^\vee$ fixes $k=-h^\vee$. Consequently
+ \[
+ \kappa(\cA_{\mathrm{FF}}) + \kappa(\cA_{\mathrm{FF}}^{!}) = 0,
+ \qquad
+ \operatorname{obs}^{\mathrm{Hdg}}_g(\cA_{\mathrm{FF}})
+ =(-1)^g\kappa(\cA_{\mathrm{FF}})\lambda_g = 0
+ \quad (g \ge 1).
+ \]
+\item \textup{(}Sugawara degeneration and bar-cobar scope\textup{)}
+ the Sugawara field
+ \[
+ T_{\mathrm{Sug}}
+ = \frac{1}{2(k+h^\vee)}\sum_a {:}J^aJ_a{:}
+ \]
+ has a pole at $k=-h^\vee$. The critical formulation is the
+ weight-completed/coderived bar--cobar package; the direct-sum
+ Sugawara topologisation belongs to the punctured level line.
+\item \textup{(}Center, derived center, and opers\textup{)}
+ the ordinary center is the Feigin--Frenkel center
+ \[
+ Z(\cA_{\mathrm{FF}})
+ \cong \operatorname{Fun}\!\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+ \]
+ \textup{(}Feigin--Frenkel~\cite{Feigin-Frenkel}, Frenkel~\cite{Fre07},
+ Beilinson--Drinfeld~\cite{BD04}\textup{)}.
+ The critical bar complex computes the oper de~Rham package:
+ \[
+ H^n\!\bigl(\bar{B}^{\mathrm{ch}}(\cA_{\mathrm{FF}})\bigr)
+ \cong \Omega^n\!\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+ \qquad (n \ge 0),
+ \]
+ while the derived centre remains
+ $C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{FF}},\cA_{\mathrm{FF}})$.
+ The critical bar complex supplies resolution input for the vacuum
+ Ext calculation
+ \textup{(}Theorem~\textup{\ref{thm:langlands-bar-bridge}(iii)}\textup{)}.
+\item \textup{(}Theorem~H boundary\textup{)}
+ the critical bar--oper calculation has nonzero terms
+ $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ in arbitrarily large degree.
+ A conclusion about chiral Hochschild support requires a chain map
+ \[
+  \chi_{\mathrm{FF}}^{\mathrm{bar}}
+  \colon C^\bullet_{\mathrm{bar\text{-}Ext}}(\cA_{\mathrm{FF}})
+  \longrightarrow
+  C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{FF}},\cA_{\mathrm{FF}})
+ \]
+ from the completed bar--Ext model, together with a proof that it is a
+ quasi-isomorphism and that its source cohomology is the displayed
+ oper-form algebra. Under this comparison, the FF chart has unbounded
+ support, and every finite-support datum $H_H(\cA_{\mathrm{FF}};S)$ is
+ excluded. The bar--oper calculation and the chart support remain
+ separately typed until this comparison is constructed.
+\item \textup{(}Geometric Langlands face\textup{)}
+ the oper-algebra center is already present in Vol~I: the chapter on
+ derived Langlands identifies the critical bar complex with the oper
+ differential-form package and records this as the manuscript's
+ internal geometric-Langlands bridge.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Path~1: direct affine formulas.}
+The affine Kac--Moody census gives
+$\kappa(V_k(\fg)) = \dim(\fg)(k+h^\vee)/(2h^\vee)$, so
+$\kappa(\cA_{\mathrm{FF}})=0$ at $k=-h^\vee$
+\textup{(}Chapter~\ref{ch:landscape-census},
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}\textup{)}.
+The critical-level reflection \(k \mapsto -k-2h^\vee\) fixes
+$k=-h^\vee$, hence $\kappa(\cA_{\mathrm{FF}}^{!})=0$ as well and the
+complementarity sum is~$0$.  Under~$H_D^K$, the perfect object and
+its Hodge character therefore vanish for~$\cA_{\mathrm{FF}}$.
+
+\emph{Path~2: shadow/OPE analysis.}
+For affine Kac--Moody the cubic shadow is the Lie bracket and the
+quartic shadow vanishes by the Jacobi identity; the Kac--Moody census
+and archetype table therefore keep the shadow-depth value
+$r_{\max}=3$ at the critical fixed point. The same OPE analysis shows
+that the Sugawara denominator $2(k+h^\vee)$ vanishes at $k=-h^\vee$,
+placing the fixed point in the completed critical construction.
+
+\emph{Path~3: critical-level bar / oper package.}
+The Feigin--Frenkel theorem identifies
+$Z(\cA_{\mathrm{FF}})$ with
+$\operatorname{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+\textup{(}\cite{Feigin-Frenkel}, \cite{Fre07}\textup{)}.
+Theorem~\ref{thm:langlands-bar-bridge} upgrades this inside Vol~I:
+the critical bar complex is uncurved and its cohomology is the oper
+differential-form algebra in all degrees, while clause~(iii) records
+its role as resolution input and keeps the derived centre in the
+chiral Hochschild category. Theorem~H computes chart support from a
+family datum $H_H(\cA;S)$. The comparison map
+$\chi_{\mathrm{FF}}^{\mathrm{bar}}$ named in clause~(v) is therefore
+the exact bridge. If it is a quasi-isomorphism with the displayed
+bar--oper source cohomology, the nonzero oper forms in arbitrarily
+large degree transport to the chart, giving unbounded support.
+Finally, Corollary~\ref{cor:positselski-applicable-families} and
+Remark~\ref{rem:ainf2-heal-74} give the correct Theorems~A/B scope at
+the critical point: the raw direct-sum theorem is replaced by the
+weight-completed / coderived package. This proves all clauses.
+\end{proof}
+
+\begin{remark}[Three consistency checks on the FF stratum]
+\label{rem:ff-consistency-attacks}
+The FF characterization satisfies three independent checks.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item \emph{Shadow-depth check.}
+ The affine cubic shadow survives and the Jacobi identity kills the
+ quartic term, so the coarse depth value remains~$3$ and the critical
+ refinement lies inside class~L.
+\item \emph{Theorems~C/D/H check.}
+ The self-dual critical level gives $\kappa^!=0$ and therefore
+ $\mathfrak O_g^K=0$ under~$H_D^K$. Independently, the completed bar--oper
+ calculation gives unbounded bar cohomology. The map
+ $\chi_{\mathrm{FF}}^{\mathrm{bar}}$ would transport it to chiral
+ Hochschild cohomology. Theorem~D and the conditional chart-support
+ calculation therefore occupy distinct levels of the Beilinson tower.
+\item \emph{Theorems~A/B critical scope.}
+ The Sugawara denominator places the critical point in the
+ weight-completed/coderived regime already constructed elsewhere in
+ Volume~I.
+\end{enumerate}
+The remaining comparison obligation is the construction and
+quasi-isomorphism proof for $\chi_{\mathrm{FF}}^{\mathrm{bar}}$.
+Every chart-support assertion above is conditional on this map.
+\end{remark}
+
+\begin{remark}[AP\textup{77} consequence: W(p) has $4$ strong
+generators]
+\label{rem:w-p-strong-generation}
+Slot~(4) of the fingerprint records the \emph{strong}-generator
+count, not the \emph{free-strong} count. For the logarithmic
+$\Walg(p)$-algebra, the strong-generating set is $\{T, W^-, W^0, W^+\}$
+(the Virasoro field plus an~$\mathfrak{sl}_2$-triplet of
+weight-$(2p-1)$ primaries), giving $n_{\mathrm{strong}}(\Walg(p)) = 4$.
+The free-strong question (whether these generate freely as a chiral
+algebra) is distinct and open. The fingerprint uses the strong count
+because this is the invariant accessible from the bar coalgebra
+via rank of the degree-$1$ graded piece.
+\end{remark}
+
+\section{Pole--depth independence}
+\label{sec:pole-depth-independence}
+
+\begin{theorem}[Pole--depth independence]
+\label{thm:pole-depth-independence}
+\ClaimStatusConditional
+The pair $(p_{\max}, r_{\max})$ takes the following values on the
+standard landscape, which demonstrate that $p_{\max}$ and $r_{\max}$
+vary independently:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcccl}
+Family & $p_{\max}$ & $r_{\max}$ & Class & Key OPE feature \\
+\hline
+Heisenberg~$\cH_k$ & $2$ & $2$ & $G$ & $JJ\sim k/(z-w)^2$ \\
+$\beta\gamma$ & $1$ & $4$ & $C$ & $\beta\gamma\sim 1/(z-w)$ \\
+$bc$ ($\lambda = 2$) & $1$ & $4$ & $C$ & $bc\sim 1/(z-w)$ \\
+Affine $\widehat{\fg}_k$ & $2$ & $3$ & $L$ & $JJ$ current \\
+Virasoro $\mathrm{Vir}_c$ & $4$ & $\infty$ & $M$ & $TT$ stress \\
+$\Walg_3$ & $6$ & $\infty$ & $M$ & $WW$ cubic \\
+$\Walg_N$ & $2N$ & $\infty$ & $M$ & $W_NW_N$ \\
+	$V_{-h^\vee}(\fg)$ & $2$ & $3$ & FF boundary of $L$ & Sugawara undefined
+	\end{tabular}
+	\end{center}
+	In particular, the pairs $(2,2)$ and $(2,3)$ show that $p_{\max}=2$
+	does not determine~$r_{\max}$; the pairs $(1,4)$ and $(4,\infty)$
+	show that the inequality~$p_{\max} \lessgtr r_{\max}$ can go either
+	way. The FF row records a different phenomenon: the critical affine
+	fixed point keeps the coarse Lie/tree value $r_{\max}=3$ while the
+	Sugawara topologization degenerates, so FF is a critical boundary
+	stratum rather than a new generic $r_{\max}=\infty$ family.
+\end{theorem}
+
+\begin{proof}
+Each row is a citation to the landscape census
+	\textup{(}Chapter~\ref{ch:landscape-census}\textup{)}, with the
+	$\beta\gamma$ row carried by
+	Chapter~\ref{ch:three-invariants}: Heisenberg
+	\eqref{eq:heisenberg-kappa}, $\beta\gamma$
+	\eqref{eq:beta-gamma-ope}--\eqref{eq:beta-gamma-r-max}, affine
+	\eqref{eq:affine-KM-p-max}, Virasoro \eqref{eq:vir-p-max},
+	$\Walg_N$ \eqref{eq:w-N-p-max}, critical affine via
+	Theorem~\ref{thm:fifth-class-FF}\textup{(}i,iii\textup{)}. Independence is the
+	existence of the table.
+\end{proof}
+
+\begin{proposition}[Class determination from full shadow tower;
+formalisation of AP-CY\textup{12}]
+\label{prop:class-from-full-tower}
+\ClaimStatusConditional
+The shadow depth~$r_{\max}(\cA)$ is computed from the full shadow
+tower~$\Theta_\cA^{\leq r}$ for~$r = 2, 3, 4, 5$ and the
+non-termination witness at~$r = 5$; it is not determined by~$p_{\max}$
+alone, by~$k_{\max}$ alone, or by counting strong generators. The
+$G/L/C/M$ classification therefore requires the full MC-tower
+computation, consistent with AP-CY\textup{12}.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:pole-depth-independence} exhibits pairs with
+equal~$p_{\max}$ and distinct~$r_{\max}$ (Heisenberg versus affine
+at~$p_{\max} = 2$), and pairs with equal~$k_{\max}$ and distinct
+$r_{\max}$. Counting strong generators fails because~$\Walg_3$ has
+more strong generators than~$\mathrm{Vir}_c$ yet both lie in
+class~$M$; and~$\Walg(p)$ has four strong generators yet its
+class is controlled by the shadow tower, not the count
+\textup{(}Remark~\ref{rem:w-p-strong-generation}\textup{)}. The
+non-termination witness at~$r = 5$ follows from the recursive
+MC-inverse-limit construction~(Theorem~\ref{thm:mc2-bar-intrinsic})
+evaluated at degree~$5$: the family has~$r_{\max}<\infty$ iff the
+degree-$5$ component of~$\Theta_\cA$ is annihilated by the
+Maurer--Cartan closure at that degree.
+\end{proof}
+
+\section{The depth-bijection: $d_{\mathrm{alg}} = r_{\max} - 2$}
+\label{sec:d-alg-r-max-bijection}
+
+\begin{theorem}[Depth bijection; closes FM\textup{110}]
+\label{thm:d-alg-r-max-bijection}
+\ClaimStatusConditional
+For every chirally Koszul algebra~$\cA$ with $\kappa_{\mathrm{ch}}(\cA)\neq 0$,
+\begin{equation}\label{eq:d-alg-r-max}
+d_{\mathrm{alg}}(\cA) \;=\; r_{\max}(\cA) - 2
+\quad\in\quad \{0, 1, 2, \infty\}.
+\end{equation}
+In particular, the depth gap $d_{\mathrm{alg}}\in\{0,1,2,\infty\}$
+of Proposition~\ref{prop:depth-gap-trichotomy} is the
+quadrichotomy~$\{G,L,C,M\}$ shifted by~$-2$.
+\end{theorem}
+
+\begin{proof}
+Recall $d_{\mathrm{alg}}(\cA)$ is the highest weight at which the
+MC tower~$\Theta_\cA$ carries a nonzero obstruction
+\textup{(}Definition~\ref{def:d-alg}\textup{)}, while $r_{\max}(\cA)$
+is the highest bar-weight at which the shadow obstruction
+$\Theta_\cA^{\leq r}$ differs from~$\Theta_\cA^{\leq r-1}$.
+
+The bar complex has an internal weight shift of~$+2$: the primitive
+obstruction at algebraic weight~$n$ enters the bar complex at
+bar-weight~$n+2$, because the first two bar-degrees are
+reserved for the Maurer--Cartan equation itself
+$(D^*\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0)$ and the
+coboundary compatibility. Explicitly, for each of the four classes:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item Class~$G$: $d_{\mathrm{alg}} = 0$, $r_{\max} = 2$. The
+Heisenberg shadow tower terminates at bar weight~$2$ with
+$\Theta^{\leq 2} = \kappa_{\mathrm{ch}}$; no higher algebraic
+obstruction.
+\item Class~$L$: $d_{\mathrm{alg}} = 1$, $r_{\max} = 3$. Affine
+Kac--Moody has a weight-$1$ Lie obstruction
+\textup{(}the structure constants~$f^{abc}$\textup{)}, which enters
+the bar at weight~$3$ via the Arnold relation.
+\item Class~$C$: $d_{\mathrm{alg}} = 2$, $r_{\max} = 4$. The
+$\beta\gamma$ system has a weight-$2$ quartic contact obstruction,
+entering the bar at weight~$4$.
+\item Class~$M$: $d_{\mathrm{alg}} = \infty$, $r_{\max} = \infty$.
+The Virasoro shadow tower is infinite; the depth gap
+\textup{(}Proposition~\ref{prop:depth-gap-trichotomy}\textup{)}
+shows~$d_{\mathrm{alg}} = 3$ is impossible, so
+$d_{\mathrm{alg}}\in\{0,1,2\}\cup\{\infty\}$.
+\end{enumerate}
+The~$+2$ shift is uniform across all four classes and across the
+standard landscape, giving~\eqref{eq:d-alg-r-max}. At~$\kappa_{\mathrm{ch}} = 0$
+\textup{(}class~$\mathrm{FF}$\textup{)} the algebraic depth is
+ill-defined because the Sugawara construction degenerates, which is
+why~\eqref{eq:d-alg-r-max} is stated on~$\kappa_{\mathrm{ch}}\neq 0$.
+\end{proof}
+
+\begin{corollary}[Quadrichotomy as depth shift]
+\label{cor:quadrichotomy-depth-shift}
+\ClaimStatusProvedHere
+The $G/L/C/M$ classification by $r_{\max}\in\{2,3,4,\infty\}$ is
+equivalent to classification by
+$d_{\mathrm{alg}}\in\{0,1,2,\infty\}$ on the non-critical locus.
+\end{corollary}
+
+\section{The coarse projection and its non-trivial fibres}
+\label{sec:coarse-projection-fibres}
+
+\begin{theorem}[Quadrichotomy is a coarse projection; strengthening
+of Proposition~\ref{prop:coarse-projection-functor}]
+\label{thm:quadrichotomy-is-coarse-projection}
+\ClaimStatusProvedHere
+The coarse projection
+\begin{equation}\label{eq:coarse-projection-fibres}
+\Pi_{\mathrm{coarse}} \colon \mathcal{F} \twoheadrightarrow \{G, L, C, M, \mathrm{FF}\}
+\end{equation}
+is surjective with non-trivial fibres: each of the five classes
+contains at least two fingerprints distinguished by at least one
+non-depth slot.
+Explicit witness pairs are:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Class~$G$ fibre:} Heisenberg~$\cH_k$ and abelian
+$\widehat{\fu(1)}_{k'}$ share $(r_{\max} = 2, \chi_{\mathrm{VOA}})$
+up to sign; they agree in $p_{\max}=2$ but differ in the coset slot
+\textup{(}$\mathrm{Sp}(2,\mathbb{R})$-centraliser versus abelian\textup{)}.
+\item \emph{Class~$L$ fibre:} generic non-critical affine algebras
+$\widehat{\mathfrak{sl}_2}_k$ and
+$\widehat{\mathfrak{sl}_3}_{k'}$ share shadow depth~$r_{\max}=3$;
+they differ in the strong-generator and coset slots.
+\item \emph{Class~$C$ fibre via parity:} symplectic boson
+$\beta\gamma_{1/2}$ and symplectic fermion~$\mathcal{SF}$ share
+the same coarse class under the full shadow tower, with
+$(p_{\max},r_{\max})=(1,4)$, yet their fingerprints differ in
+sign of~$\chi_{\mathrm{VOA}}$ and in the coset pair
+$\mathrm{Sp}(2)$ versus~$\mathrm{OSp}(1|2)$.
+\item \emph{Class~$M$ fibre:} $\Walg_3$ and super-$\Walg_3$ share
+$p_{\max}=6$, $r_{\max}=\infty$, and two strong generators; the
+super variant has an odd weight-$3/2$ generator, so the
+$\chi_{\mathrm{VOA}}$ slot and the coset slot differ.
+\item \emph{Critical-surface fibre:} critical affine
+$V_{-h^\vee}(\fg)$ and critical $\Walg_N$ both lie on the
+$\mathrm{FF}$ surface; they differ in pole order, strong-generator
+count, and oper-coset slot.
+\end{enumerate}
+Consequently, the quadrichotomy $\Pi_{\mathrm{coarse}}\circ\varphi$
+is strictly lossy.
+\end{theorem}
+
+\begin{proof}
+Surjectivity is the landscape census, and the five displayed witness
+pairs hit the five target classes $G,L,C,M,\mathrm{FF}$. Non-triviality
+is verified by reading the five fingerprint slots: the coarse-class
+slot agrees, while at least one of the remaining slots disagrees.
+
+\emph{Witness (i): Heisenberg versus abelian affine.}
+$\varphi(\cH_k) = (2, 2, \operatorname{ch}_q\cH_k, 1, \mathrm{Sp}(2,\mathbb{R}))$
+versus
+$\varphi(\widehat{\fu(1)}_{k'}) = (2, 2, \operatorname{ch}_q\widehat{\fu(1)}, 1, \mathrm{U}(1))$.
+Slot~(5) distinguishes: $\widehat{\fu(1)}$ has the additive group
+$\mathrm{U}(1)$ as coset, whereas Heisenberg carries the full
+symplectic structure.
+
+\emph{Witness (ii): two affine Lie fibres.}
+At generic non-critical levels,
+\[
+\varphi(\widehat{\mathfrak{sl}_2}_k)
+  = (2,3,\operatorname{ch}_q\widehat{\mathfrak{sl}_2},3,
+     \mathfrak{sl}_2/\cH),
+\qquad
+\varphi(\widehat{\mathfrak{sl}_3}_{k'})
+  = (2,3,\operatorname{ch}_q\widehat{\mathfrak{sl}_3},8,
+     \mathfrak{sl}_3/\cH).
+\]
+Both are class~$L$, but slots~(3), (4), and~(5) distinguish them.
+
+\emph{Witness (iii): symplectic boson versus symplectic fermion.}
+Both have $(p_{\max}, r_{\max}) = (1, 4)$ and live in class~$C$
+under the full shadow tower.
+The parity slot separates:
+$\chi_{\mathrm{VOA}}(\beta\gamma_{1/2})$ has a positive weight-$1/2$
+boson, $\chi_{\mathrm{VOA}}(\mathcal{SF})$ has a negative weight-$1$
+fermion. The coset slot also separates.
+
+\emph{Witness (iv): $\Walg_3$ versus super-$\Walg_3$.}
+Both have $p_{\max}=6$, $r_{\max}=\infty$, and two strong generators,
+yet the super variant includes a weight-$3/2$ fermionic primary
+which contributes
+$\operatorname{str}(q^{L_0}) \ni -q^{3/2}\mathbb{Z}[\![q]\!]_+$.
+This forces $\chi_{\mathrm{VOA}}$ to differ, and the super coset is
+not the ordinary $\Walg_3^!$ coset.
+
+\emph{Witness (v): critical affine versus critical $W$.}
+On the $\mathrm{FF}$ surface one has
+\[
+\varphi(V_{-h^\vee}(\fg))
+  = (2,3,\operatorname{ch}_q V_{-h^\vee}(\fg),\dim\fg,
+     \Fun\mathrm{Op}_{\fg^\vee}(D)),
+\qquad
+\varphi(\textup{critical }\Walg_N)
+  = (2N,\infty,\operatorname{ch}_q\Walg_N,N-1,
+     \textup{critical oper-coset}).
+\]
+The pole-order, strong-generator, and oper-coset slots distinguish
+the two fingerprints while the coarse projection records only the
+critical surface.
+\end{proof}
+
+\begin{remark}[Witness (iii) closes FM\textup{107}]
+\label{rem:fm107-closure}
+FM\textup{107} warned that ordinary $W$-algebras could be conflated
+with super-$\Walg_3$ under the quadrichotomy. The class~$M$ witness
+of Theorem~\ref{thm:quadrichotomy-is-coarse-projection}
+produces the separation at the fingerprint level: slot~(3)
+($\chi_{\mathrm{VOA}}$) and slot~(5) (coset) carry the
+$\Zmod 2$-grading information that the quadrichotomy discards.
+\end{remark}
+
+\begin{remark}[Witness (ii) closes FM\textup{106}]
+\label{rem:fm106-closure}
+FM\textup{106} warned that the symplectic boson and the symplectic
+fermion could be confused when reading shadow depth alone. The two
+lie in class~$C$ (not class~$G$) under the full shadow tower;
+within class~$C$ they are separated by slots~(3) and~(5).
+\end{remark}
+
+\section{DS transport of the fingerprint}
+\label{sec:DS-transport}
+
+Drinfeld--Sokolov reduction sends affine Kac--Moody algebras to
+$W$-algebras. On fingerprints, this is an explicit slot-by-slot
+transport: the coset slot transforms predictably, the pole order
+changes in accordance with the new stress tensor, the shadow depth
+escalates from $3$ to $\infty$ (class $L$ to class $M$), and the
+character transforms as a BRST supertrace. Two confusions are cleared
+up: the shadow depth \emph{must} escalate because the stress tensor
+is a polynomial in $J^a$, not a primary field of~$\widehat\fg$; and
+the strong-generator count grows by the number of simple roots
+corresponding to the principal nilpotent (or to the chosen nilpotent
+orbit in the non-principal case).
+
+\begin{theorem}[DS transport of the fingerprint; closes FM\textup{108}]
+\label{thm:DS-fingerprint-transport}
+\ClaimStatusProvedHere
+Let $\fg$ be a simple Lie algebra of rank~$r$ with Coxeter
+number~$h^\vee$, and let~$\Gamma \subset \fg$ be the principal
+nilpotent. The Drinfeld--Sokolov reduction
+$H^\bullet_{\mathrm{DS},\Gamma}(\widehat{\fg}_k) = \Walg^\Gamma_k(\fg)$
+induces, on fingerprints, the following slot-by-slot transport
+\textup{(}at a generic non-critical level~$k\neq -h^\vee$\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Slot 1 (pole order):} $p_{\max}(\widehat{\fg}_k) = 2$ sends
+to $p_{\max}(\Walg^\Gamma_k(\fg)) = 2h^\vee$ for~$\Gamma$ principal
+in type~$A_{N-1}$: the stress-tensor OPE has pole order~$2\cdot 2 = 4$
+and the highest-spin generator~$W^{(h^\vee)}$ has a self-OPE with
+pole~$2h^\vee$.
+\item \emph{Slot 2 (shadow depth):} $r_{\max}\colon 3 \mapsto \infty$.
+Class $L$ escalates to class $M$; the escalation is strict because the
+stress tensor of~$\Walg$ is a quadratic-in-$J$ polynomial, and its
+self-OPE generates shadows at every weight.
+\item \emph{Slot 3 (character):} $\chi_{\mathrm{VOA}}(\widehat{\fg}_k)$
+sends to the BRST supertrace
+$\chi_{\mathrm{VOA}}(\Walg^\Gamma_k(\fg)) = \operatorname{str}_{C^\bullet_{\mathrm{DS}}}(q^{L_0})$
+where~$L_0$ is the DS-shifted grading by the principal
+$\mathfrak{sl}_2$-element. Explicitly
+$\chi \mapsto \chi_{\mathrm{DS}} = \chi\cdot\eta_{\mathrm{ghost}}$
+where~$\eta_{\mathrm{ghost}}(q)$ is the Feigin--Frenkel ghost
+character.
+\item \emph{Slot 4 (strong-generator count):}
+$n_{\mathrm{strong}}(\widehat{\fg}_k) = \dim\fg$ sends to
+$n_{\mathrm{strong}}(\Walg^\Gamma_k(\fg)) = \mathrm{rank}(\fg) + \delta_\Gamma$,
+with~$\delta_\Gamma = 0$ for principal~$\Gamma$ and $\delta_\Gamma \geq 0$
+for non-principal nilpotent orbits; in type~$A_{N-1}$ with
+$\Gamma$ principal, $n_{\mathrm{strong}} = N-1$.
+\item \emph{Slot 5 (coset):} the affine coset
+$(\mathrm{Com}(\cH, \widehat{\fg}_k), \widehat{\fg}_k/\mathrm{Com})$
+transforms to the W-algebra coset
+$(\mathrm{Com}(\cH, \Walg^\Gamma_k(\fg)), \Walg^\Gamma_k/\mathrm{Com})$;
+on the critical-level reflected comparison side this is the
+Feigin--Frenkel \(W\)-algebra duality
+$\Walg^\Gamma_k(\fg) \leftrightarrow \Walg^{\Gamma^\vee}_{k'}(\fg^\vee)$
+with~$(k + h^\vee)(k' + h^{\vee,\vee}) = 1$, not an identification
+of either \(W\)-algebra with the chiral Koszul dual object.
+\end{enumerate}
+In particular, DS reduction is a well-defined map
+$\mathrm{DS}_\Gamma\colon \mathcal{F}_L \to \mathcal{F}_M$ on
+fingerprint strata, and it is not surjective onto class~$M$ (only
+the $W$-algebras lying in the image of DS are reached; exceptional
+$\Walg(p)$-type algebras are not).
+\end{theorem}
+
+\begin{proof}
+Slot~(1) is the standard calculation for~$\Walg_N$: the highest-spin
+generator has conformal weight~$N$, so the self-OPE has pole
+order~$2N = 2h^\vee$ in type~$A_{N-1}$
+\textup{(}\cite{BouwknegtSchoutens1993}\textup{)}.
+
+Slot~(2) is the shadow-tower non-termination: $\Walg_N$ lies in class~$M$
+for all~$N\geq 2$ and generic~$c$
+\textup{(}Chapter~\ref{chap:w-algebras}\textup{)}. The escalation from
+class~$L$ is strict because the Sugawara stress tensor of~$\widehat{\fg}_k$
+is a \emph{secondary} field for the purposes of shadow classification
+(it is not among the generators), whereas the stress tensor
+of~$\Walg^\Gamma_k(\fg)$ is a primary strong generator.
+
+Slot~(3) follows from the BRST reduction:
+$C^\bullet_{\mathrm{DS}} = \widehat{\fg}_k \otimes \Lambda^\bullet(\fn_+^* \oplus \fn_+)$
+\textup{(}\cite{deBoerTjin1993},~\cite{FrenkelBenZvi2004}\textup{)}
+and the graded supertrace factorises
+$\operatorname{str}(q^{L_0}) = \operatorname{ch}_{\widehat{\fg}_k}(q)\cdot\eta_{\mathrm{ghost}}(q)$
+on the character level, then passes to cohomology on the BRST level.
+
+Slot~(4) is Kac--Roan--Wakimoto \cite{KacRoanWakimoto2003}: the
+principal DS reduction in type~$A_{N-1}$ produces $\Walg_N$ with
+exactly~$N-1$ strong generators $W^{(2)},\ldots,W^{(N)}$; more
+generally, the strong-generator count for non-principal~$\Gamma$
+equals~$\mathrm{rank}(\fg) + $ a correction~$\delta_\Gamma\geq 0$
+tracking the non-principal sector
+\textup{(}\cite{KacWakimoto2004}\textup{)}.
+
+Slot~(5) is Feigin--Frenkel duality for $W$-algebras
+\textup{(}\cite{FeiginFrenkel1992},~\cite{Arakawa2007}\textup{)}:
+the Koszul-dual pair of~$\Walg^\Gamma_k(\fg)$ under the
+$k \leftrightarrow k'$ involution is~$\Walg^{\Gamma^\vee}_{k'}(\fg^\vee)$,
+which records the Langlands-dual group and the dual nilpotent orbit.
+The coset slot transforms accordingly.
+
+Non-surjectivity onto class~$M$: the triplet
+$\Walg(p)$-algebras
+(logarithmic, with four strong generators including an
+$\mathfrak{sl}_2$-triplet of primaries) are not Drinfeld--Sokolov
+reductions of any affine algebra; they are in class~$M$ but not in
+the image of~$\mathrm{DS}$.
+\end{proof}
+
+\begin{remark}[DS transport at~$\kappa_{\mathrm{ch}} = 0$]
+\label{rem:DS-at-critical}
+At~$k = -h^\vee$, the DS reduction sends the critical affine fixed point
+$V_{-h^\vee}(\fg)$, i.e.\ the FF boundary point of class~$L$, to
+$\Walg^\Gamma_{-h^\vee}(\fg)$. The target keeps the coarse
+$W$-family shadow-depth behaviour~$r_{\max}=\infty$, but its coset slot
+degenerates to oper data via the Feigin--Frenkel duality
+$\Walg^\Gamma_{-h^\vee}(\fg) \simeq \mathrm{Op}_{\fg^\vee}$: classical
+opers for the Langlands-dual group. The fingerprint slot~(5)
+therefore transports~$\mathfrak{z}(\widehat{\fg}) \leftrightarrow \Fun\mathrm{Op}_{\fg^\vee}(D)$
+under DS, coherent with
+Theorem~\ref{thm:fifth-class-FF}(ii). This is a critical-surface
+statement about slot~(5), not a
+promotion of FF to a fifth generic shadow-depth class.
+\end{remark}
+
+\section{Synthesis and witness table for the generic classes and critical surface}
+\label{sec:five-class-witness}
+
+The strengthening theorems of this chapter assemble into a complete
+fingerprint witness table for the four generic shadow-depth classes
+and the critical surface. Each row is a five-slot reading, verified
+against the landscape census.
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lccccl@{}}
+Family & $p_{\max}$ & $r_{\max}$ & Parity & $n_{\mathrm{strong}}$ & Coset (abbrev.) \\
+\hline
+$\cH_k$ (Heis) & $2$ & $2$ & $+$ & $1$ & $\mathrm{Sp}(2,\mathbb{R})$ \\
+$\widehat{\fu(1)}_{k'}$ & $2$ & $2$ & $+$ & $1$ & $\mathrm{U}(1)$ \\
+$V_\Lambda$ (lattice) & $2h_\Lambda$ & $2$ & $+$ & $\mathrm{rank}(\Lambda)$ & $\Lambda^*/\Lambda$ \\
+\hline
+$\widehat{\mathfrak{sl}_2}_k$ & $2$ & $3$ & $+$ & $3$ & $\fg/\cH$ \\
+$\widehat{\fg}_k$ & $2$ & $3$ & $+$ & $\dim\fg$ & $\fg/\cH$ \\
+\hline
+$\beta\gamma$ & $1$ & $4$ & $+$ & $2$ & $\mathrm{Sp}(2)$ \\
+$bc$ ($\lambda = 2$) & $1$ & $4$ & $-$ & $2$ & $\mathrm{OSp}(1|2)$ \\
+$\mathcal{SF}$ (symp.\ fermion) & $1$ & $4$ & $-$ & $2$ & $\mathrm{OSp}(1|2)$ \\
+\hline
+$\mathrm{Vir}_c$ & $4$ & $\infty$ & $+$ & $1$ & $\mathrm{Vir}_c^!$ \\
+$\Walg_3$ & $6$ & $\infty$ & $+$ & $2$ & $\Walg_3^!$ \\
+$\Walg_N$ & $2N$ & $\infty$ & $+$ & $N-1$ & $\Walg_N^!$ \\
+super-$\Walg_3$ & $6$ & $\infty$ & $\pm$ & $2$ & super-$\Walg_3^!$ \\
+$\Walg(p)$ (triplet) & $2(2p-1)$ & $\infty$ & $+$ & $4$ & $\Walg(p)^!$ \\
+\hline
+	$V_{-h^\vee}(\mathfrak{sl}_2)$ & $2$ & $3$ & $+$ & $3$ & $\Fun\mathrm{Op}_{\mathfrak{sl}_2}(D)$ \\
+	$V_{-h^\vee}(\fg)$ & $2$ & $3$ & $+$ & $\dim\fg$ & $\Fun\mathrm{Op}_{\fg^\vee}(D)$ \\
+	critical $\Walg_N$ & $2N$ & $\infty$ & $+$ & $N-1$ & critical oper-coset \\
+	\end{tabular}
+	\caption{Fingerprint witness table for the generic classes and the
+	critical surface. Parity records the
+	sign of the~$\chi_{\mathrm{VOA}}$ leading term; coset is abbreviated
+	to the dominant datum (centraliser group on the Koszul locus;
+	$\mathrm{Op}$-data on the critical surface).}
+	\label{tab:fingerprint-stratum}
+\end{table}
+
+\begin{calculation}[Fingerprint witness-row separation;
+\ClaimStatusProvedHere]
+\label{calc:fingerprint-stratum-separation}
+Read the displayed rows as generic landscape families, with rows such
+as~$\widehat{\fg}_k$, $\Walg_N$, and critical $\Walg_N$ excluding the
+specialisations already listed separately. The five-slot fingerprint
+values separate the witness rows. Across different coarse classes, the
+shadow-depth slot or the critical-surface flag separates. Within a
+single coarse class, the separating slots are:
+\[
+\begin{array}{c|c}
+\text{coarse class} & \text{separating non-depth slots}\\
+\hline
+G & \mathrm{coset}\text{, and for lattices also }p_{\max}
+\text{ or }n_{\mathrm{strong}}\\
+L & n_{\mathrm{strong}}\text{ and the affine coset}\\
+C & \chi_{\mathrm{VOA}}\text{ and } \mathrm{coset}\\
+M & p_{\max},\ \chi_{\mathrm{VOA}},\ n_{\mathrm{strong}},
+\text{ or } \mathrm{coset}\\
+\mathrm{FF} & p_{\max},\ n_{\mathrm{strong}},\text{ and oper-coset}
+\end{array}
+\]
+The parity column in the displayed table is only the leading sign of
+the full Hodge-filtered supertrace slot; the calculation uses the full
+formal series~$\chi_{\mathrm{VOA}}$, so ghost and symplectic-fermion
+rows with the same leading parity are still separated by their
+standard supertrace series.
+\end{calculation}
+
+\begin{corollary}[Witness-row separation on the standard landscape]
+\label{cor:fingerprint-separates-landscape}
+\ClaimStatusProvedHere
+Calculation~\ref{calc:fingerprint-stratum-separation} exhibits
+pairwise distinct fingerprints for the standard-landscape witness
+rows, including pairs within a single coarse class:
+\begin{itemize}[nosep]
+\item Heisenberg versus $\widehat{\fu(1)}_{k'}$ (class~$G$,
+	slot~$5$);
+\item $\beta\gamma$ versus symplectic fermion (class~$C$, slots~$3,5$);
+\item $\Walg_3$ versus super-$\Walg_3$ (class~$M$, slot~$3$);
+\item $V_{-h^\vee}(\fg)$ versus critical $\Walg_N$
+	(critical surface, slots~$1,4,5$).
+\end{itemize}
+Together with the stratum theorem
+\textup{(}Theorem~\ref{thm:five-class-stratum}\textup{)}, this
+establishes that~$\varphi$ is the canonical separating row datum for
+the listed standard-landscape witnesses.
+\end{corollary}
+
+\begin{proof}
+This is the slot-by-slot inspection carried out in
+Calculation~\ref{calc:fingerprint-stratum-separation}. The stratum
+theorem supplies the coarse-class partition, and the fingerprint
+slots refine that partition by the displayed non-depth separators.
+\end{proof}
+
+\subsection{The holomorphic \texorpdfstring{$c=24$}{c=24} census is a
+structured-subset theorem}
+\label{subsec:schellekens-structured-subset}
+
+\begin{theorem}[Structured-subset derivation of the holomorphic
+\texorpdfstring{$c=24$}{c=24} census; closes AP\textup{290}]
+\label{thm:schellekens-structured-subset}
+\ClaimStatusProvedHere
+Let $\mathfrak{S}_{24}^{\mathrm{hol}}$ be the closed ambient of the
+$71$ strongly rational holomorphic VOAs of central charge~$24$ on
+Schellekens's list, viewed as chiral algebras~$A$ with fingerprint
+$\varphi(A)$. Then:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \textup{(}Structured subsets\textup{)}
+ there is a disjoint decomposition
+ \[
+ \mathfrak{S}_{24}^{\mathrm{hol}}
+ =
+ \mathfrak{S}_{24}^{\mathrm{Niem}}
+ \;\sqcup\;
+ \{V^\natural\}
+ \;\sqcup\;
+ \mathfrak{S}_{24}^{\mathrm{nonlat}},
+ \]
+ where, in Schellekens's Table~2 \textup{(}1993, §3, pp.~177--182; the
+ numbered list on pp.~178--182\textup{)},
+ \[
+ \begin{aligned}
+ \mathfrak{S}_{24}^{\mathrm{Niem}}
+ = \{&
+ 1{:}\,\fu(1)^{24},\;
+ 15{:}\,A_{1,1}^{24},\;
+ 24{:}\,A_{2,1}^{12},\;
+ 30{:}\,A_{3,1}^{8},\;
+ 37{:}\,A_{4,1}^{6},\;
+ 42{:}\,D_{4,1}^{6},\\
+ &
+ 43{:}\,A_{5,1}^{4}D_{4,1},\;
+ 46{:}\,A_{6,1}^{4},\;
+ 49{:}\,A_{7,1}^{2}D_{5,1}^{2},\;
+ 51{:}\,A_{8,1}^{3},\;
+ 54{:}\,D_{6,1}^{4},\\
+ &
+ 55{:}\,A_{9,1}^{2}D_{6,1},\;
+ 58{:}\,E_{6,1}^{4},\;
+ 59{:}\,A_{11,1}D_{7,1}E_{6,1},\;
+ 60{:}\,A_{12,1}^{2},\;
+ 61{:}\,D_{8,1}^{3},\\
+ &
+ 63{:}\,A_{15,1}D_{9,1},\;
+ 64{:}\,D_{10,1}E_{7,1}^{2},\;
+ 65{:}\,A_{17,1}E_{7,1},\;
+ 66{:}\,D_{12,1}^{2},\;
+ 67{:}\,A_{24,1},\\
+ &
+ 68{:}\,E_{8,1}^{3},\;
+ 69{:}\,D_{16,1}E_{8,1},\;
+ 70{:}\,D_{24,1}\},
+ \end{aligned}
+ \]
+ row~$0$ is the Monster slot $V_1=0$, and the non-lattice summand is
+ the explicit complement
+ \[
+ \mathfrak{S}_{24}^{\mathrm{nonlat}}
+ =
+ \{2\text{--}14,\;16\text{--}23,\;25\text{--}29,\;31\text{--}36,\;
+ 38\text{--}41,\;44\text{--}45,\;47\text{--}48,\;50,\;52\text{--}53,\;
+ 56\text{--}57,\;62\}.
+ \]
+	\item \textup{(}Disjointness and exhaustiveness\textup{)}
+	 no algebra in~$\mathfrak{S}_{24}^{\mathrm{hol}}$ lies in two of the
+	 three subsets: the Monster singleton is characterized by~$V_1=0$,
+	 the Niemeier rows are characterized by
+	 $V_1\cong \fu(1)^{24}$ or by level-$1$ simply-laced ADE datum of total
+	 rank~$24$, and every remaining Schellekens row is, by definition, in
+	 $\mathfrak{S}_{24}^{\mathrm{nonlat}}$. Conversely, every algebra
+	 in~$\mathfrak{S}_{24}^{\mathrm{hol}}$ lies in exactly one of these
+	 subsets because the displayed row sets partition~$\{0,1,\dots,70\}$.
+\item \textup{(}Counting corollary, not theorem\textup{)}
+ the identity
+ \[
+ 71 = 24_{\mathrm{Niemeier}} + 1_{V_1=0} + 46_{\mathrm{nonlat}}
+ \]
+ is a downstream count of the structured subsets in~\textup{(i)};
+ it is not itself the classification theorem.
+\item \textup{(}Niemeier rank=count, three independent paths\textup{)}
+ the equality
+ \[
+ 24 = \operatorname{rank}(N)
+ = \#\mathfrak{S}_{24}^{\mathrm{Niem}}
+ \]
+ is verified in three independent ways:
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item Niemeier's class-number computation gives exactly~$24$
+ isomorphism classes of positive-definite even unimodular
+ lattices of rank~$24$
+ \textup{(}Niemeier 1973, J. Number Theory~5, p.~142, abstract; see
+ also Conway--Sloane, Table~16.1, p.~407\textup{)};
+ \item the displayed ADE list is an in-place lattice computation:
+ there are exactly~$23$ rootful simply-laced level-$1$ rank-$24$
+ rows with common-Coxeter decomposition, and the Leech row
+ $1{:}\,\fu(1)^{24}$ is the unique rootless case;
+ \item the Schellekens-table intersection above has exactly~$24$ rows:
+ the abelian row~$1$ together with the~$23$ level-$1$ simply-laced
+ Niemeier root-system rows.
+ \end{enumerate}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: identify the rows.}
+Schellekens's classification is by the weight-one Lie algebra~$V_1$,
+with the Monster row singled out by~$V_1=0$ and the remaining rows
+listed in Table~2. The rows written in
+\textup{\ref{thm:schellekens-structured-subset}(i)} are exactly the
+abelian row and the level-$1$ simply-laced ADE rows whose total rank is
+$24$. They are therefore the Niemeier-lattice candidates. The
+complementary row set is listed explicitly, so no unnamed remainder is
+left. These are precisely the three membership tests stated in
+Theorem~\ref{thm:schellekens-structured-subset}\textup{(}ii\textup{)}:
+\[
+V_1=0,\qquad
+V_1\cong \fu(1)^{24}\ \text{or level-$1$ simply-laced ADE of rank~$24$},
+\qquad
+\text{complementary Schellekens row}.
+\]
+
+\emph{Step~2: lattice identification of the $24$-summand.}
+For every positive-definite even unimodular rank-$24$ lattice~$N$, the
+Frenkel--Kac--Segal / FLM construction gives a holomorphic lattice VOA
+$V_N$ of central charge~$24$ whose weight-one Lie algebra is the
+corresponding level-$1$ simply-laced root system, or $\fu(1)^{24}$ in
+the Leech case. Niemeier's class-number computation
+\textup{(}J. Number Theory~5 \textup{(}1973\textup{)}, p.~142,
+abstract\textup{)} and Conway--Sloane's Table~16.1 \textup{(}p.~407\textup{)}
+supply exactly~$24$ such lattices. Conversely, every row in
+$\mathfrak{S}_{24}^{\mathrm{Niem}}$ is one of those lattice VOAs,
+because its level-$1$ ADE datum is one of the~$23$ explicitly listed
+rank-$24$ root systems or the abelian Leech row.
+
+\emph{Step~3: isolate the Monster singleton.}
+Schellekens isolates the unique row with~$V_1=0$; FLM identify that row
+with the Moonshine module~$V^\natural$
+\textup{(}FLM88, Chapters~8--11; compare also M\"oller--Scheithauer
+2023, Theorem~6.9, pp.~40--41\textup{)}. This gives the singleton
+summand~$\{V^\natural\}$.
+
+\emph{Step~4: identify the $46$-summand.}
+What remains after removing the~$24$ lattice rows and the Monster row
+is the explicit complement set written above, so its cardinality is
+$71-24-1=46$. M\"oller--Scheithauer 2023 give an independent
+generalised-deep-hole realization of this complement:
+Theorem~6.6 \textup{(}p.~33\textup{)} identifies nonzero
+$V_1$-rows with positive-rank deep holes, the abstract
+\textup{(}p.~2\textup{)} and Theorem~6.7 \textup{(}pp.~34--35\textup{)}
+construct the nonzero Lie structures uniformly, and
+Theorem~6.9 \textup{(}pp.~40--41\textup{)} isolates the
+$V_1=0$ branch whose orbifolds are all
+$V^\natural$. Intersecting those results with the explicit
+Niemeier row set above leaves exactly the~$46$ genuinely non-lattice
+holomorphic $c=24$ cases.
+
+\emph{Step~5: disjointness and exhaustiveness on the structured subset.}
+The three membership tests from Step~1 are mutually exclusive.
+The condition~$V_1=0$ singles out~$V^\natural$, so the Monster row
+cannot lie in the Niemeier or non-lattice summands. Every element of
+$\mathfrak{S}_{24}^{\mathrm{Niem}}$ has
+$V_1\cong \fu(1)^{24}$ or level-$1$ simply-laced ADE of total
+rank~$24$, hence cannot be the Monster row and cannot lie in the
+explicit complementary row set defining
+$\mathfrak{S}_{24}^{\mathrm{nonlat}}$. Finally,
+$\mathfrak{S}_{24}^{\mathrm{nonlat}}$ is defined as that complementary
+row set, so it contains none of the Niemeier or Monster rows.
+Conversely, Schellekens's table lists all rows~$0,\dots,70$, and the
+three displayed row sets cover them all. Therefore every algebra in
+$\mathfrak{S}_{24}^{\mathrm{hol}}$ lies in exactly one of the three
+structured subsets.
+
+\emph{Step~6: rank=count.}
+Path~(a) is Niemeier's rank-$24$ class-number theorem itself. Path~(b)
+is the explicit ADE rank-sum computation encoded in the displayed row
+set. Path~(c) is the Schellekens-table count of the explicit row set.
+This proves all claims. Throughout, the five objects are kept distinct:
+$A$ is the VOA, $B(A)$ its bar coalgebra,
+$A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R)$ its presentation coalgebra,
+$K_X(A)=\mathbb D_{\Ran}B_X(A)$ its Verdier algebra, and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ its derived
+center. The maps $q_A$, $\mathbb D(q_A)$, and~$\nu_A$ supply the
+quadratic and chosen-pair comparisons used by the theorem.
+\end{proof}
+
+\begin{proposition}[Weight-one threshold under the filtered
+Hochschild comparison]
+\label{prop:schellekens-weight-one-threshold}
+\label{prop:schellekens-weight-two-threshold}
+\ClaimStatusConditional
+On the ambient~$\mathfrak{S}_{24}^{\mathrm{hol}}$ of
+Theorem~\ref{thm:schellekens-structured-subset}, the minimal uniform
+threshold at which the Schellekens row, and therefore the structured
+subset position of~$A$, is determined is the conformal-weight threshold
+\[
+w_\ast = 1.
+\]
+Assume for every chart~$A$ a family datum $H_H(A;S_A)$ and a
+filtration-preserving bar-to-chart quasi-isomorphism whose restriction
+to conformal weights at most one identifies the $V_1$ bracket. Then
+the same threshold is seen in each
+of the three constructions:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \textup{(}bar--cobar lane\textup{)}
+ the weight-$\le1$ truncation of the ordered bar differential records
+ the weight-one OPE residues, hence reconstructs~$V_1$ and separates
+ all~$71$ rows, including the row~$V_1=0$;
+\item \textup{(}chiral Hochschild lane\textup{)}
+ Theorem~H identifies
+ $\ChirHoch^n(A)$ with $H^n(K_{A,S_A})$ and places its
+ cohomological support in~$S_A$.  The assumed filtered comparison
+ transports the weight-$\le1$ row classifier to this complex;
+\item \textup{(}derived-center lane\textup{)}
+ the evaluation pairing on
+ $Z^{\mathrm{der}}_{\mathrm{ch}}(A)=\ChirHoch^\bullet(A,A)$ restricted
+ to conformal weights~$\le1$ is read on the same filtered cochain
+ complex as the Hochschild lane.
+\end{enumerate}
+Thus the conformal-weight threshold is uniform across the three
+constructions under the stated comparison.  The support set~$S_A$
+records cohomological degrees and remains independent of conformal
+weight.
+\end{proposition}
+
+\begin{proof}
+Schellekens's rows are indexed by~$V_1$, with the row~$V_1=0$ included
+as one value of that invariant. Thus conformal weight~$1$ determines
+all~$71$ rows. Conformal weight~$0$ contains the common vacuum line,
+so weight~$1$ is the minimal uniform threshold.
+
+On the bar side, the reduced bar differential on weight-one generators
+is the OPE residue Lie bracket, so the bar complex truncated at
+conformal weight~$1$ reconstructs~$V_1$, including its zero value. The
+family datum computes the cohomological support
+of the chart complex.  The additional filtered quasi-isomorphism
+identifies its conformal-weight-$\le1$ truncation with the bar
+truncation, and the derived centre retains this complex together with
+its $E_2$-structure.  Hence all three filtered objects have the common
+threshold $w_\ast=1$.
+\end{proof}
+
+\begin{remark}[Independent verification record for the numerical claims]
+\label{rem:schellekens-numerical-record}
+Each numerical claim used in
+Theorem~\ref{thm:schellekens-structured-subset} and
+Proposition~\ref{prop:schellekens-weight-two-threshold} has at least
+three independent verification paths.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item \textup{(}$71 = 24_{\mathrm{Niemeier}} + 1_{V_1=0} +
+46_{\mathrm{nonlat}}$\textup{)}
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item Schellekens 1993, §3 and the numbered table on pp.~24--27 of the
+ CERN/arXiv scan \textup{(}article pp.~177--182\textup{)}:
+ rows~$0$ through~$70$ are
+ explicit, and the row sets in
+ Theorem~\ref{thm:schellekens-structured-subset}(i) partition them.
+ \item Niemeier 1973, p.~142 \textup{(}abstract\textup{)}, and
+ Conway--Sloane, Table~16.1, p.~407, give the~$24$ lattice rows;
+ FLM88, Chapters~8--11, give the Monster singleton; subtraction from
+ the total~$71$ leaves~$46$.
+ \item M\"oller--Scheithauer 2023, Theorems~6.6, 6.7, and~6.9
+ \textup{(}pp.~33--35, 40--41\textup{)} identify the nonzero
+ $V_1$ rows, construct the nonzero Lie structures, and isolate
+ the Monster sector, leaving the same~$46$-row non-lattice complement.
+ \end{enumerate}
+\item \textup{(}$24 = \operatorname{rank}(N) = \#\mathfrak{S}_{24}^{\mathrm{Niem}}$\textup{)}
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item Niemeier 1973, J. Number Theory~5, p.~142 \textup{(}abstract\textup{)},
+ gives class number~$24$ for definite even quadratic forms of
+ dimension~$24$ and discriminant~$1$.
+ \item Conway--Sloane, Table~16.1, p.~407, together with the displayed
+ ADE list above, yields the $23$ rootful simply-laced rank-$24$
+ systems plus the rootless Leech case.
+ \item The Schellekens-table intersection counts exactly the
+ $24$ rows displayed in
+ Theorem~\ref{thm:schellekens-structured-subset}(i).
+ \end{enumerate}
+\item \textup{(}central charge~$24$\textup{)}
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item It is the ambient hypothesis of Schellekens's classification.
+ \item The lattice and Monster constructions compute
+ $c=\operatorname{rank}(N)=24$ and $c(V^\natural)=24$ directly.
+ \item The graded characters all begin with $q^{-1}$ and have modular
+ weight~$0$, the holomorphic-$c=24$ normalization.
+ \end{enumerate}
+\item \textup{(}level~$1$ on the Niemeier rows\textup{)}
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item The lattice VOA construction produces simply-laced affine
+ currents at level~$1$.
+ \item Schellekens's numbered table on pp.~24--27 of the CERN/arXiv
+ scan \textup{(}article pp.~177--182\textup{)} labels those rows
+ with level-$1$ subscripts.
+ \item The affine central-charge computation
+ $c(\widehat{\fg}_{1})=\operatorname{rank}(\fg)$ on simply-laced
+ factors recovers total central charge~$24$ exactly on those rows.
+ \end{enumerate}
+\item \textup{(}$w_\ast = 1$\textup{)}
+ \begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+ \item Schellekens 1993, pp.~4, 23--24, indexes every row by its
+ weight-one Lie algebra, including the value~$V_1=0$.
+ \item The ordered bar differential on weight-one generators
+ reconstructs~$V_1$, while conformal weight~$0$ is the common vacuum
+ line.
+ \item A datum $H_H(A;S_A)$ computes cohomological support in~$S_A$;
+ the assumed filtered comparison transports the conformal-weight-one
+ row classifier to the same cochain complex. These are independent
+ gradings.
+ \end{enumerate}
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Cross-volume checks forced by the structured
+decomposition]
+\label{rem:schellekens-structured-cross-volume}
+Theorem~\ref{thm:schellekens-structured-subset} has three immediate
+cross-volume consequences.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item \textup{(}Vol~I Niemeier census\textup{)}
+ the master-table row ``Niemeier $V_\Lambda$ (all~$24$)'' records only
+ the coarse class-$G$ shadow slot. The theorem above supplies the
+ missing structured subset behind that row.
+\item \textup{(}Vol~III BKM / Fake Monster\textup{)}
+ the number~$24$ appearing as Fake-Monster imaginary-root multiplicity
+ is the Leech-rank input on the unique Leech/Niemeier branch; it is not
+ the full holomorphic $c=24$ count by itself. The shared integer is a
+ transport of the Leech slot, not an accidental slogan.
+\item \textup{(}Vol~III categorical DT\textup{)}
+ the portable statement on the CY$_3$ side is the low-weight threshold,
+ namely the conformal-weight filtration through~$1$. Its
+ cohomological support is recorded separately by the family set~$S_A$,
+ as in Proposition~\ref{prop:schellekens-weight-one-threshold}.
+\end{enumerate}
+\end{remark}
+
+\section{Coverage, propagation, and independent verification}
+\label{sec:coverage-propagation}
+
+The fingerprint classification is cross-volume: Vol I controls the
+slots via the bar coalgebra (this chapter); Vol II reinterprets
+the coset slot in the 3d HT gauge theory context; Vol III upgrades
+the coset slot to $\mathrm{coset}_{FF}$-with-BKM-data on the CY
+side. The critical-level structure (Theorem~\ref{thm:fifth-class-FF})
+is the one slot in which all three volumes agree: the Feigin--Frenkel
+centre appears uniformly in all three
+\textup{(}\cite{FeiginFrenkel1992},~\cite{ArakawaFrenkel2017}\textup{)}.
+
+\begin{remark}[Independent verification paths]
+\label{rem:fingerprint-iv-paths}
+The strengthening theorems and census surfaces in this chapter admit
+disjoint verification sources:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item Theorem~\ref{thm:schellekens-structured-subset} via three
+ independent routes: Schellekens 1993, §3 and the numbered table on
+ pp.~24--27 of the CERN/arXiv scan \textup{(}article pp.~177--182;
+ holomorphic $c=24$ rows\textup{)}; Niemeier 1973, J. Number Theory~5, p.~142
+ \textup{(}class number~$24$\textup{)} together with Conway--Sloane,
+ Table~16.1, p.~407 \textup{(}rank-$24$ even unimodular lattices\textup{)};
+ M\"oller--Scheithauer 2023, Theorems~6.6, 6.7, 6.9
+ \textup{(}pp.~33--35, 40--41; generalised-deep-hole realization\textup{)}.
+\item Theorem~\ref{thm:fifth-class-FF} via
+ \cite{FeiginFrenkel1992} for the centre
+ (algebraic) and \cite{BeilinsonDrinfeld1991} for the
+ $\mathrm{Op}$-interpretation (geometric Langlands): two independent
+ routes to the same infinite-dimensional structure.
+\item Theorem~\ref{thm:pole-depth-independence} against the
+Kac--Wakimoto classification of simple VOAs
+\cite{KacWakimoto2004} and the Creutzig--Linshaw $W$-algebra
+free-generation table \cite{CreutzigLinshaw2023}.
+\item Theorem~\ref{thm:d-alg-r-max-bijection} against the
+independently proved depth-gap trichotomy
+\textup{(}Proposition~\ref{prop:depth-gap-trichotomy}\textup{)}.
+\item Theorem~\ref{thm:DS-fingerprint-transport} against the
+Kac--Roan--Wakimoto analysis of DS reductions
+\cite{KacRoanWakimoto2003} and the Arakawa proof of DS quasi-isomorphism
+\cite{Arakawa2007}.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Forward consequences and open direction]
+\label{rem:fingerprint-forward-consequences}
+The infinite fingerprint classification recasts several open
+questions. (a) The Koszul dual of class~$\mathrm{FF}$ is again
+class~$\mathrm{FF}$: the Feigin--Frenkel duality
+$V_{-h^\vee}(\fg)^{\,!} \simeq \Fun\mathrm{Op}_{\fg^\vee}(D)$
+is a genuine involution on the FF stratum. (b) Escalation of class
+under DS reduction
+(Theorem~\ref{thm:DS-fingerprint-transport}) is a one-way map
+$\mathcal{F}_L\to\mathcal{F}_M$; the inverse problem (which class-$M$
+fingerprints are DS images?) is open beyond the hook-type
+Kac--Roan--Wakimoto range. (c) The fingerprint for elliptic and
+toroidal chiral algebras requires an extension of slot~(5) to record
+the KZB-connection data on the elliptic base and the Miki
+$S_3$-symmetry on the toroidal base; this is open.
+\end{remark}
+
+% End of chapter.
+
+\section{Synthesis}
+\label{sec:ifc-supplement}
+
+\begin{remark}[Class-$\mathcal S$ fingerprint on $\Sigma_{0,24}$]
+\label{rem:ifc-1}
+The canonical class-$\mathcal S$ fingerprint for
+$\mathcal T[A_1,\Sigma_{0,24}, \mathrm{all\ max}]$ is the triple
+\[
+ (c_{4d}, c_{2d}, \mathrm{rank}_{\mathrm{Coul}})
+ \;=\;
+ \bigl(107/6,\, -214,\, 21\bigr),
+ \qquad
+ \mathrm{flavour}\,=\,\mathfrak{su}(2)^{24},
+\]
+an infinite-fingerprint invariant pinning down the K3 chiral algebra
+image as $\mathbf H_{\Delta_5}$-module. The $c_{2d} = -214 = -2\cdot 107$
+factorisation (with $107$ prime) reads the Virasoro shadow-tower face
+against the $24$ Schur/flavour $\mathfrak{su}(2)$ currents at the
+Kodaira $I_1$ punctures. The $c_{4d} = 107/6 = (5\cdot 24 - 13)/6$
+evaluation follows Shapere--Tachikawa 2008 \S 3
+(\texttt{arXiv:0804.1957}) applied to the Chacaltana--Distler
+class-$\mathcal S$ count $(n_v, n_h) = (63, 88)$ on
+$(A_1, \Sigma_{0,24}, \mathrm{all\ max})$ (eq.~(5.14) therein);
+$c_{2d} = -12 c_{4d}$ by Beem--Rastelli (BLLPRvR 2013 eq.~(3.14)).
+The earlier intermediate value $(c_{4d}, c_{2d}) = (26, -312)$ is
+false (Vol~I Section~\ref{sec:thqg-open-closed-realization},
+with \cite{Gaiotto2009,BeemRastelli2015}). Cross-ref
+Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Coulomb-rank $21$ vs Mukai-signature $20$]
+\label{rem:ifc-2}
+The fingerprint distinguishes Coulomb rank $21$ from the Mukai
+negative-signature part $c_- = 20$ by a ``$+1$'' shift matching the
+$U(1)$ topological charge on $\Sigma_{0,24}$; equivalently, the shift
+from $\Lambda_{\mathrm{Muk}} = II_{4,20}$ to the class-$\mathcal S$
+lattice $II_{4,20}\oplus\langle 1\rangle$. At the correct
+first-principles central charge $c_{4d} = 107/6$, $c_{2d} = -214$
+of Remark~\ref{rem:ifc-1}, the Virasoro-face depth reads
+$c_{2d} + 2 c_{4d} = -214 + 107/3 = -535/3$, which is no longer a
+naive integer-multiple of the Mukai signature; rather, the
+denominator $3$ encodes the $6d$ trinion-gluing datum on
+$\Sigma_{0,24}$ via the Shapere--Tachikawa normalisation.
+The Mukai-doubling identity $K^{\kappa_{\mathrm{ch}}} = 8 = 2 c_+$
+survives as a purely lattice-theoretic statement on $II_{4,20}$
+(Mukai 1987, Borcherds 1998), independent of the class-$\mathcal S$
+central-charge correction.
+\cite{Mukai1987,Borcherds1998}. Cross-ref
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Pentagon target cocycle and umbral cohomology class as fingerprint refinement]
+\label{rem:ifc-3-pentagon-umbral}
+A cohomological fingerprint refinement extends the numerical triple
+$(c_{4d}, c_{2d}, \mathrm{rank}_{\mathrm{Coul}}) = (107/6, -214, 21)$
+of Remark~\ref{rem:ifc-1}. The pentagon
+$\hbar^3$-obstruction of the candidate Siegel--Borcherds target cocycle
+$\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}]$
+and the projective $\widetilde{M}_{24}$-umbral cocycle of order $6$ on the
+K3 Serre functor live in \emph{the same transgressed cohomology class}
+in $H^3_{\mathrm{transgr}}(\langle g\rangle, U(1)) \cong H^2(\langle
+g\rangle, U(1)) \cong \mathbb{Z}/6$ for any order-$6$ element
+$g\in M_{24}$. The shared class is the $M_{24}$ global-symmetry 't~Hooft
+anomaly of the class-$\mathcal S$ parent $\mathcal T[A_1,\Sigma_{0,24}]$
+in its Beem--Rastelli protected chiral sector, detected by the
+Atiyah--Segal transgression $H^3_{\mathrm{Lie}}\to H^2_{\mathrm{grp}}$
+applied to the $(\Phi_{10}/\eta^{24})\cdot c_{\Phi_{10}}$ summand of
+$\phi^{(3)}$. The fingerprint is therefore a quadruple
+\[
+ \bigl(c_{4d}, c_{2d}, \mathrm{rank}_{\mathrm{Coul}},\,
+ [\phi^{(3)}|_{\langle g\rangle}]\bigr)
+ \;=\;
+ \bigl(107/6,\, -214,\, 21,\, \mathrm{umbral}_{m_g}\bigr),
+\]
+with the last entry a class in $\mathbb{Z}/6$ indexed by the umbral shift
+$m_g\in\{0,2,6\}$ for order-$6$ conjugacy classes $6A, 6B$ of $M_{24}$
+(Cheng--Duncan--Harvey~$2014$, Table~$1$). The cohomological refinement
+survives the $(c_{4d}, c_{2d}): (26, -312) \to (107/6, -214)$
+retraction unchanged: the $\mathbb{Z}/6$ obstruction class lies in
+$H^3(M_{24}, U(1))$ (generalised-Mathieu-moonshine 't~Hooft
+anomaly, Gaberdiel--Persson--Ronellenfitsch--Volpato 2013), not
+in the central-charge data. Two theories with
+identical numerical fingerprints but different umbral-cocycle classes
+are distinct at the level of the cohomological refinement; cross-ref
+Vol.~III Theorem~\ref{V3-ch:k3-chiral-bialgebra-platonic}'s
+Theorem on pentagon--umbral agreement and its Corollary on the $M_{24}$
+'t~Hooft anomaly. Primary-lit: Cheng--Duncan--Harvey 2014
+(\texttt{arXiv:1307.5793}); Atiyah--Segal 1989; Costello--Gaiotto 2018
+(\texttt{arXiv:1812.00516}).
+\end{remark}

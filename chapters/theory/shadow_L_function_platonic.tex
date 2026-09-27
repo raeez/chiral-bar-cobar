@@ -1,0 +1,263 @@
+%% Dirichlet encoding of a constructed residue sequence.
+
+\providecommand{\cA}{\mathcal A}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Lsh}{L^{\mathrm{sh}}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusConditional}{}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Dirichlet Coordinates for the Shadow Sequence}
+\label{ch:shadow-L-function-platonic}
+
+\section*{Scope}
+
+A Dirichlet series packages a sequence.  In this chapter the sequence
+is the scalar output of an ordered residue package
+\(\mathsf H_{\mathrm{res}}\).  Analytic continuation belongs to a
+growth package \(\mathsf H_{\mathrm{asymp}}\); motivic realization
+belongs to \(\mathsf H_{\mathrm{mot}}\); Bernoulli congruences belong
+to an integral comparison package \(\mathsf H_{\mathrm{Kum}}\).
+These packages keep the formal, analytic, motivic, and arithmetic
+statements on their natural mathematical surfaces.
+
+\section{Formal Dirichlet encoding}
+\label{sec:shL-setup}
+
+\begin{definition}[Shadow Dirichlet series]
+\label{def:shadow-L-series}
+\ClaimStatusDefinitional
+Let \(\mathsf H_{\mathrm{res}}(\cA)\) define scalar coefficients
+\(S_r(\cA;\mathsf H_{\mathrm{res}})\) for \(r\ge2\).  Their formal
+Dirichlet series is
+\[
+ \Lsh(\cA;s)=\sum_{r\ge2}
+ S_r(\cA;\mathsf H_{\mathrm{res}})r^{-s}.
+\]
+Formally, this is the coefficient sequence expressed in the Dirichlet
+basis \(\{r^{-s}\}_{r\ge2}\).
+\end{definition}
+
+\begin{remark}[Three indices]
+\label{rem:shL-two-reindexings}
+The residue arity is \(r\), the Dirichlet variable is \(s\), and a
+genus comparison uses \(g\).  A bridge between \(r\) and \(g\) is a
+comparison morphism, while evaluation in \(s\) is an analytic
+operation on the full sequence.
+\end{remark}
+
+\begin{proposition}[Initial half-plane]
+\label{prop:shL-convergence-half-plane}
+\ClaimStatusProvedHere
+If \(|S_r|\le Cr^N\), then \(\Lsh(\cA;s)\) converges absolutely and
+locally uniformly for \(\operatorname{Re}s>N+1\).  It is holomorphic
+there and determines its coefficients uniquely.
+\end{proposition}
+
+\begin{proof}
+Absolute convergence follows from comparison with
+\(C\sum_{r\ge2}r^{N-\operatorname{Re}s}\).  Uniqueness is the standard
+uniqueness theorem for Dirichlet series in a common half-plane.
+\end{proof}
+
+\begin{definition}[Mellin--Lerch package]
+\label{def:hurwitz-lerch-shadow}
+\ClaimStatusDefinitional
+The package \(\mathsf H_{\mathrm{asymp}}\) consists of a polynomial
+growth bound and a small-\(t\) polyhomogeneous expansion for
+\[
+ G_{\cA}(t)=\sum_{r\ge2}S_r(\cA;\mathsf H_{\mathrm{res}})e^{-rt},
+\]
+with remainder estimates stable under Mellin transform.  An equivalent
+Hurwitz--Lerch presentation may be used when the coefficients admit a
+normally convergent finite or countable decomposition into shifted
+rational kernels.
+\end{definition}
+
+\begin{remark}[Classical continuation mechanism]
+\label{rem:hurwitz-lerch-analytic-continuation}
+The Mellin transform of each power-log term in the expansion of
+\(G_{\cA}(t)\) is meromorphic.  The remainder estimates control the
+continued integral on vertical strips.  A Hurwitz--Lerch decomposition
+gives the same continuation componentwise.
+\end{remark}
+
+\section{Analytic continuation}
+\label{sec:shL-continuation}
+
+\begin{theorem}[Meromorphic continuation from
+\(\mathsf H_{\mathrm{asymp}}\)]
+\label{thm:shadow-L-analytic-continuation}
+\ClaimStatusConditional
+\emph{Type signature:}
+\textup{(Open quadrant, residue Dirichlet presentation, Beilinson
+levels \(2\to5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}\)).}
+Under the Mellin--Lerch package, \(\Lsh(\cA;s)\) extends
+meromorphically to \(\mathbb C\).  Its polar part is obtained from the
+Mellin transforms of the power-log singular terms of
+\(G_{\cA}(t)\), followed by multiplication by \(\Gamma(s)^{-1}\).
+This final factor records the cancellations at the nonpositive
+integers.
+\end{theorem}
+
+\begin{proof}
+In the initial half-plane,
+\[
+ \Gamma(s)\Lsh(\cA;s)=
+ \int_0^\infty G_{\cA}(t)t^{s-1}\,dt.
+\]
+Split the integral at \(t=1\), subtract finitely many terms of the
+polyhomogeneous expansion at the origin, and integrate those terms
+explicitly.  The controlled remainder is holomorphic in the enlarged
+strip.  Iteration gives the continuation and its polar data.
+\end{proof}
+
+\begin{remark}[The weight-one motivic line]
+\label{rem:shL-pole-at-s-1-motivic}
+Under \(\mathsf H_{\mathrm{mot}}\), a residue assigned motivic weight
+one lands in the weight-one piece of the chosen motivic period algebra.
+For mixed Tate motives over \(\mathbb Z\), this piece is zero.  A
+weight-zero boundary residue belongs to a distinct summand of the
+Mellin model.
+\end{remark}
+
+\section{Special values}
+\label{sec:shL-trivial-zeros}
+
+\begin{theorem}[Negative-integer values]
+\label{thm:trivial-zeros-structure}
+\ClaimStatusConditional
+Under \(\mathsf H_{\mathrm{asymp}}\), every value
+\(\Lsh(\cA;-n)\), \(n\ge1\), is the evaluation of the regularized
+Mellin integral.  The small-\(t\) expansion determines its
+subtractions, and the holomorphic remainder records the full kernel
+\(G_{\cA}\).  For the unshifted constant component,
+\[
+ \sum_{r\ge2}^{\mathrm{reg}}r^n
+ =\zeta(-n)-1=-\frac{B_{n+1}}{n+1}-1.
+\]
+Shifted Lerch components contribute their corresponding Bernoulli
+polynomials.
+\end{theorem}
+
+\begin{proof}
+Evaluate the meromorphic Mellin continuation of
+Theorem~\ref{thm:shadow-L-analytic-continuation} at \(s=-n\).  The
+displayed component is the classical special-value formula for
+\(\zeta(-n)\), with its \(r=1\) term removed.
+\end{proof}
+
+\begin{remark}[Functional-equation data]
+\label{rem:contrast-with-riemann}
+Riemann's trivial zeros follow from the completed zeta functional
+equation.  A comparable zero theorem for \(\Lsh\) is governed by a
+completed functional equation supplied as additional analytic data.
+\end{remark}
+
+\section{The genus comparison}
+\label{sec:shL-correct-bridge}
+
+\begin{theorem}[Genus-slot comparison]
+\label{thm:Fg-from-L-sh-correctly}
+\ClaimStatusConditional
+Assume a chain-level shadow--Feynman comparison
+\(\mathsf H_{\mathrm{gen}}\) whose arity map sends genus \(g\ge2\)
+to \(r=2g-2\).  Then
+\[
+ \Pi_g^{\mathrm{sh}}\Lsh
+ :=[r=2g-2]\Lsh=S_{2g-2}(\cA;\mathsf H_{\mathrm{res}})
+\]
+is the scalar residue coordinate entering the genus-\(g\) graph sum.
+Theorem~D determines its uniform-weight contribution, and the
+multi-weight theorem supplies the mixed-channel correction.
+\end{theorem}
+
+\begin{proof}
+The first identity is coefficient extraction.  The remaining
+identification is precisely the arity compatibility and graph-weight
+compatibility contained in \(\mathsf H_{\mathrm{gen}}\).
+\end{proof}
+
+\begin{remark}[Bernoulli values and genus slots]
+\label{rem:shL-why-naive-seemed-plausible}
+Both Verlinde asymptotics and negative zeta values contain Bernoulli
+numbers.  The former is a coefficient asymptotic in a moduli problem;
+the latter is a regularized sum over every Dirichlet coefficient.  The
+package \(\mathsf H_{\mathrm{gen}}\) states the precise bridge used in
+the manuscript.
+\end{remark}
+
+\begin{remark}[Dirichlet coordinates]
+\label{rem:shL-positive-content-of-correction}
+The series \(\Lsh\) is a coordinate system for a constructed scalar
+sequence.  Coefficient projection studies individual arities;
+analytic continuation studies the global growth of the sequence.
+\end{remark}
+
+\section{Bernoulli--Kummer comparison}
+\label{sec:shL-kummer}
+
+\begin{theorem}[Kummer witnesses on the Verlinde lane]
+\label{thm:kummer-congruence-prediction}
+\ClaimStatusConditional
+Assume \(\mathsf H_{\mathrm{Kum}}\), including the integral
+normalization that identifies the relevant genus slot with the leading
+coefficient of the \(\mathrm{SL}_2\) Verlinde polynomial.  Then
+\[
+ [n^{2(g-2)}]R_{g-2}(n^2)
+ =(-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!},
+\]
+and the primes \(691\) and \(3617\) occur in the corresponding
+normalized numerators at \(g=7\) and \(g=9\).
+\end{theorem}
+
+\begin{proof}
+The Bernoulli coefficient is the exact cosecant-sum calculation of
+Chapter~\ref{ch:z-g-kummer-bernoulli}.  The package
+\(\mathsf H_{\mathrm{Kum}}\) carries it to the stated integral genus
+slots; \(B_{12}=-691/2730\) and \(B_{16}=-3617/510\) give the two
+witnesses.
+\end{proof}
+
+\begin{remark}[Arithmetic verification]
+\label{rem:shL-falsification-test}
+Expansion of the exact cosecant formula for \(Z_7\) and \(Z_9\),
+followed by reduction to primitive integral numerators, verifies the
+normalization component of \(\mathsf H_{\mathrm{Kum}}\).
+\end{remark}
+
+\begin{remark}[Two comparison routes]
+\label{rem:shL-classical-route}
+The classical route uses cosecant sums and Kummer congruences.  The
+motivic route uses a motivic residue realization and its integral
+period lattice.  Agreement of the two routes is a theorem inside
+\(\mathsf H_{\mathrm{Kum}}\).
+\end{remark}
+
+\section{Motivic Dirichlet coordinates}
+\label{sec:shL-motivic-upgrade}
+
+\begin{corollary}[Motivic continuation]
+\label{cor:shadow-L-motivic-upgrade}
+\ClaimStatusConditional
+Assume \(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{asymp}}
++\mathsf H_{\mathrm{mot}}\), with weight-compatible Mellin
+subtractions.  Then poles, residues, and special values decompose by
+motivic weight; the period map sends this decomposition to the
+numerical continuation of \(\Lsh\).
+\end{corollary}
+
+\begin{proof}
+Perform the Mellin subtraction in the graded motivic coefficient
+algebra.  Each subtraction and remainder estimate respects weight by
+hypothesis, and period realization commutes with the construction.
+\end{proof}
+
+\begin{remark}[Period realization]
+\label{rem:shL-motivic-period-map-collapse}
+The motivic decomposition distinguishes positive-weight periods from
+weight-zero regularization constants.  Period realization preserves
+that provenance while mapping both to numerical scalars.
+\end{remark}

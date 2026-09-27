@@ -1,0 +1,765 @@
+% Macro safety net for cross-volume universal-conductor references,
+% provided locally so the chapter remains portable
+% under standalone extraction. Definitions match
+% chapters/theory/universal_conductor_K_platonic.tex.
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
+
+% Regime II (Virasoro) / III (W₃); Convention~\ref{conv:regime-tags}.
+The Verlinde formula of the preceding section is a universal machine;
+its output is only as informative as the modular data one feeds in.
+Here we turn the crank on specific models (the Ising model
+$\mathcal{M}(4,3)$, the tricritical Ising model
+$\mathcal{M}(5,4)$, and the $\mathcal{W}_3$ minimal models
+$\mathcal{W}_3(4,3)$ and $\mathcal{W}_3(6,5)$), computing every
+fusion coefficient from the S-matrix and verifying the result
+against the known fusion tables. Beyond verification, these
+explicit computations illustrate a general principle of the
+algebraic engine: the bar complex of a rational algebra is
+\emph{completely determined} by the finite data of the modular
+S-matrix, and the Koszul dual $\mathcal{A}^!$ can in principle be
+read off from the fusion ring. The Ising model, with its
+$\mathbb{Z}/2$ fusion ring, is the simplest instance;
+$\mathcal{W}_3(6,5)$, with its $A_2$ Weyl-orbit identifications, is
+the first case where the passage from Virasoro to $\mathcal{W}$-algebra
+labeling requires non-trivial Weyl-orbit identifications.
+
+\medskip
+\noindent\emph{Cross-volume κ-values for these examples.}
+For the Ising model $\mathcal{M}(4,3)$ at $c = 1/2$:
+$\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{1/2}) = 1/4$
+(Corollary~\ref{cor:uc-K-virasoro},
+Chapter~\ref{chap:universal-conductor}). For the tricritical
+Ising model $\mathcal{M}(5,4)$ at $c = 7/10$:
+$\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{7/10}) = 7/20$. For
+$\mathcal{W}_3(4,3)$ at $c_{N=3} = 0$:
+$\kappa^{W_3}(\mathcal{W}_3(4,3)) = 5 \cdot 0/6 = 0$, the
+degenerate locus. For $\mathcal{W}_3(6,5)$ at
+$c_{N=3} = 2(1 - 12/30) = 6/5$:
+$\kappa^{W_3}(\mathcal{W}_3(6,5)) = 5 \cdot (6/5)/6 = 1$. All
+four minimal-model algebras remain in quadrichotomy class~M with
+$r_{\max} = \infty$ at every $c_{p,q} \notin \{0, -22/5\}$
+(Proposition~\ref{prop:minimal-model-class-transport};
+Theorem~\ref{thm:quadrichotomy},
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}).
+\medskip
+
+\section{Fusion rule examples for $\mathcal{W}$-algebras}
+\label{sec:fusion-examples}
+
+\subsection{\texorpdfstring{Example: Virasoro projection of $W_3(4,3)$, the Ising model $\mathcal{M}(4,3)$}{Example: Virasoro projection of W3(4,3)}}
+
+\begin{table}[ht]
+\centering
+\caption{Virasoro fusion table for $\mathcal{M}(4,3)$ (Ising model, $c = 1/2$). After the identification $\Phi_{r,s} \sim \Phi_{q-r,p-s}$, the three Virasoro primaries are $\mathbb{I} = \Phi_{1,1}$ ($h=0$), $\sigma = \Phi_{1,2}$ ($h=1/16$), $\varepsilon = \Phi_{1,3}$ ($h=1/2$).}
+\begin{tabular}{|c||c|c|c|}
+\hline
+$\times$ & $\mathbb{I}$ & $\sigma$ & $\varepsilon$ \\
+\hline\hline
+$\mathbb{I}$ & $\mathbb{I}$ & $\sigma$ & $\varepsilon$ \\
+\hline
+$\sigma$ & $\sigma$ & $\mathbb{I} + \varepsilon$ & $\sigma$ \\
+\hline
+$\varepsilon$ & $\varepsilon$ & $\sigma$ & $\mathbb{I}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}
+The $W_3(4,3)$ model has central charge $c_{W_3} = 0$ and is degenerate. Its Virasoro projection gives conformal weights $h = 0, 1/16, 1/2$, matching those of the Ising model $\mathcal{M}(4,3)$ at $c_{\mathrm{Vir}} = 1/2$, but the underlying representation categories differ. The fusion rules above are the Virasoro fusion rules; the proper $W_3$ fusion rules require $A_2$ weight labeling (Fateev--Lukyanov).
+\end{remark}
+
+\subsection{\texorpdfstring{Example: minimal model $(6,5)$ selected rules}{Example: minimal model (6,5) selected rules}}
+
+Key fusion products for $W_3(6,5)$:
+\begin{align}
+\Phi_{1,2} \times \Phi_{1,2} &= \mathbb{I} + \Phi_{2,2} + \Phi_{1,4} \\
+\Phi_{2,1} \times \Phi_{2,1} &= \mathbb{I} + \Phi_{2,2} + \Phi_{4,1} \\
+\Phi_{1,3} \times \Phi_{1,3} &= \mathbb{I} + \Phi_{2,2} + \Phi_{2,4} + \Phi_{4,1}
+\end{align}
+(In the last rule, the na\"ive Verlinde formula produces $\Phi_{1,6}$, which lies outside the fundamental domain; the $W_3$ Weyl group identification maps this to $\Phi_{4,1}$.)
+
+\section{Explicit Verlinde computations for Virasoro minimal models}
+\label{sec:verlinde-computations-explicit}
+\index{Verlinde formula!explicit computations}
+
+\subsection{\texorpdfstring{Complete Verlinde computation for $\mathcal{M}(4,3)$}{Complete Verlinde computation for M(4,3)}}
+\label{subsec:verlinde-4-3-complete}
+
+\begin{computation}[All fusion coefficients for the Ising model]
+\label{comp:ising-all-fusion}
+\index{Ising model!fusion coefficients}
+
+Recall from Example~\ref{ex:w3-3-4-complete}: the three Virasoro
+primaries of $\mathcal{M}(4,3)$ after identification are
+$\mathbb{I}$ ($h=0$), $\sigma$ ($h=1/16$), $\varepsilon$ ($h=1/2$),
+with S-matrix
+\[
+S = \frac{1}{2}\begin{pmatrix}
+1 & \sqrt{2} & 1 \\
+\sqrt{2} & 0 & -\sqrt{2} \\
+1 & -\sqrt{2} & 1
+\end{pmatrix}.
+\]
+
+We compute all $3^3 = 27$ fusion coefficients $N_{ij}^k$
+using $N_{ij}^k = \sum_{\ell=0}^{2}
+S_{i\ell}S_{j\ell}S_{\ell k}^*/S_{0\ell}$.
+Since $S$ is real and symmetric, $S^* = S$.
+
+\emph{Step 1: Compute $S_{i\ell}/S_{0\ell}$.}
+\begin{align*}
+\frac{S_{0,\ell}}{S_{0,\ell}} &= (1, 1, 1), \\
+\frac{S_{1,\ell}}{S_{0,\ell}} &=
+\left(\frac{\sqrt{2}/2}{1/2},\;
+\frac{0}{\sqrt{2}/2},\;
+\frac{-\sqrt{2}/2}{1/2}\right)
+= (\sqrt{2},\; 0,\; -\sqrt{2}), \\
+\frac{S_{2,\ell}}{S_{0,\ell}} &=
+\left(\frac{1/2}{1/2},\;
+\frac{-\sqrt{2}/2}{\sqrt{2}/2},\;
+\frac{1/2}{1/2}\right)
+= (1,\; -1,\; 1).
+\end{align*}
+
+\emph{Step 2: Compute all fusion coefficients.}
+
+$N_{\mathbb{I},\mathbb{I}}^k$:
+\begin{align*}
+N_{\mathbb{I}\mathbb{I}}^{\mathbb{I}} &=
+\sum_\ell \frac{S_{0\ell}^2 S_{\ell 0}}{S_{0\ell}}
+= \sum_\ell S_{0\ell} S_{\ell 0}
+= \delta_{00} = 1, \\
+N_{\mathbb{I}\mathbb{I}}^{\sigma} &= \delta_{0,1} = 0, \qquad
+N_{\mathbb{I}\mathbb{I}}^{\varepsilon} = \delta_{0,2} = 0.
+\end{align*}
+By the same orthogonality argument,
+$N_{\mathbb{I},j}^k = \delta_{jk}$ for all $j,k$ (identity fusion).
+
+$N_{\sigma\sigma}^k$:
+\begin{align*}
+N_{\sigma\sigma}^{\mathbb{I}}
+&= \frac{(\sqrt{2}/2)(\sqrt{2}/2)(1/2)}{1/2}
++ \frac{(0)(0)(\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(-\sqrt{2}/2)(1/2)}{1/2} \\
+&= \frac{1/4}{1/2} + 0 + \frac{1/4}{1/2} = \frac{1}{2} + \frac{1}{2} = 1. \qquad \checkmark
+\end{align*}
+
+Similarly:
+\begin{align*}
+N_{\sigma\sigma}^{\sigma}
+&= \frac{(\sqrt{2}/2)^2(\sqrt{2}/2)}{1/2}
++ \frac{0}{(\sqrt{2}/2)}
++ \frac{(-\sqrt{2}/2)^2(-\sqrt{2}/2)}{1/2} \\
+&= \frac{\sqrt{2}/4}{1/2} + 0 + \frac{-\sqrt{2}/4}{1/2}
+= \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2} = 0. \qquad \checkmark
+\end{align*}
+
+\begin{align*}
+N_{\sigma\sigma}^{\varepsilon}
+&= \frac{(\sqrt{2}/2)^2(1/2)}{1/2}
++ \frac{0 \cdot 0 \cdot (-\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)^2 \cdot (1/2)}{1/2} \\
+&= 1/2 + 0 + 1/2 = 1. \qquad \checkmark
+\end{align*}
+
+Hence $\sigma \times \sigma = \mathbb{I} + \varepsilon$.
+
+$N_{\sigma\varepsilon}^k$:
+\begin{align*}
+N_{\sigma\varepsilon}^{\mathbb{I}}
+&= \frac{(\sqrt{2}/2)(1/2)(1/2)}{1/2}
++ \frac{0 \cdot (-\sqrt{2}/2) \cdot (\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(1/2)(1/2)}{1/2} \\
+&= \frac{\sqrt{2}/4}{1/2} + 0 + \frac{-\sqrt{2}/4}{1/2}
+= \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2} = 0,
+\end{align*}
+\begin{align*}
+N_{\sigma\varepsilon}^{\sigma}
+&= \frac{(\sqrt{2}/2)(1/2)(\sqrt{2}/2)}{1/2}
++ \frac{0 \cdot (-\sqrt{2}/2) \cdot 0}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)}{1/2} \\
+&= \frac{1/4}{1/2} + 0 + \frac{1/4}{1/2} = \frac{1}{2} + 0 + \frac{1}{2} = 1. \qquad \checkmark
+\end{align*}
+
+Hence $\sigma \times \varepsilon = \sigma$, as expected.
+The intermediate numerators are
+$(\sqrt{2}/2)(1/2)(\sqrt{2}/2) = (1/2)(1/2) = 1/4$
+(and similarly for the $\ell = 2$ term), so each nonzero
+summand contributes $\tfrac{1}{4}/(1/2) = \tfrac{1}{2}$.
+\end{computation}
+
+\begin{remark}[Verlinde formula and fusion matrices]
+\label{rem:verlinde-normalisation}
+An independent verification of the fusion rules is provided by
+the simultaneous diagonalisation of the fusion matrices. Define
+$\lambda_i^{(\ell)} = S_{i\ell}/S_{0\ell}$ (the eigenvalues of the fusion
+matrix $N_i$). Then $N_{ij}^k = \sum_\ell S_{0\ell} \lambda_i^{(\ell)}
+\lambda_j^{(\ell)} \overline{S_{k\ell}}/S_{0\ell}^2$. The quantum
+dimensions are $d_\sigma = \sqrt{2}$, $d_\varepsilon = 1$, and the fusion
+matrices $N_\sigma$, $N_\varepsilon$ are simultaneously diagonalised by $S$:
+\[
+N_\sigma = \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 0 \end{pmatrix},
+\qquad
+N_\varepsilon = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+\]
+These satisfy $N_\sigma = S \operatorname{diag}(\sqrt{2}, 0, -\sqrt{2}) S^{-1}$
+and $N_\varepsilon = S \operatorname{diag}(1, -1, 1) S^{-1}$, which give
+exactly $\sigma \times \sigma = \mathbb{I} + \varepsilon$,
+$\sigma \times \varepsilon = \sigma$,
+$\varepsilon \times \varepsilon = \mathbb{I}$.
+\end{remark}
+
+
+\subsection{\texorpdfstring{Tricritical Ising model $\mathcal{M}(5,4)$}{Tricritical Ising model M(5,4)}}
+\label{subsec:tricritical-ising}
+
+\begin{computation}[Tricritical Ising model complete data]
+\label{comp:tricritical-ising}
+\index{tricritical Ising model}
+\index{minimal model!M(5,4)@$\mathcal{M}(5,4)$}
+
+\emph{Parameters.}
+$(p,q) = (5,4)$, $c = 1 - 6(5-4)^2/(5 \cdot 4) = 1 - 6/20 = 7/10$.
+
+\emph{Primary count.}
+$(p-1)(q-1)/2 = 12/2 = 6$ primaries after identification
+$(r,s) \sim (q-r, p-s) = (4-r, 5-s)$.
+
+\emph{Conformal weights.}
+Using $h_{r,s} = ((5r - 4s)^2 - 1)/(4 \cdot 20)$
+with $1 \leq r \leq 3$, $1 \leq s \leq 4$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cccc}
+$h_{r,s}$ & $s=1$ & $s=2$ & $s=3$ & $s=4$ \\
+\hline
+$r=1$ & $0$ & $\frac{1}{10}$ & $\frac{3}{5}$ & $\frac{3}{2}$ \\[3pt]
+$r=2$ & $\frac{7}{16}$ & $\frac{3}{80}$ & $\frac{3}{80}$ & $\frac{7}{16}$ \\[3pt]
+$r=3$ & $\frac{3}{2}$ & $\frac{3}{5}$ & $\frac{1}{10}$ & $0$
+\end{tabular}
+\end{center}
+With the identification $(r,s) \sim (4-r,5-s)$:
+$\Phi_{1,1} \sim \Phi_{3,4}$, $\Phi_{1,2} \sim \Phi_{3,3}$,
+$\Phi_{1,3} \sim \Phi_{3,2}$, $\Phi_{1,4} \sim \Phi_{3,1}$,
+$\Phi_{2,1} \sim \Phi_{2,4}$, $\Phi_{2,2} \sim \Phi_{2,3}$.
+The six distinct primaries and their weights are:
+\begin{align*}
+\mathbb{I} = \Phi_{1,1}&: \; h = 0, &
+\varepsilon = \Phi_{1,2}&: \; h = \tfrac{1}{10}, \\
+\varepsilon' = \Phi_{1,3}&: \; h = \tfrac{3}{5}, &
+\varepsilon'' = \Phi_{1,4}&: \; h = \tfrac{3}{2}, \\
+\sigma = \Phi_{2,2}&: \; h = \tfrac{3}{80}, &
+\sigma' = \Phi_{2,1}&: \; h = \tfrac{7}{16}.
+\end{align*}
+\end{computation}
+
+\begin{proposition}[Tricritical Ising S-matrix \cite{BPZ84}; \ClaimStatusProvedElsewhere]
+\label{prop:tricritical-s-matrix}
+\index{modular S-matrix!tricritical Ising}
+
+The modular S-matrix of $\mathcal{M}(5,4)$ in the basis
+$(\mathbb{I}, \varepsilon, \varepsilon', \varepsilon'', \sigma, \sigma')$
+is determined by the CIZ formula
+\[
+S_{(r,s),(r',s')} = (-1)^{1+rs'+r's}\sqrt{\tfrac{8}{pq}}\,
+\sin\!\bigl(\tfrac{\pi q rr'}{p}\bigr)\sin\!\bigl(\tfrac{\pi p ss'}{q}\bigr)
+\]
+with $(p,q) = (5,4)$. Explicitly:
+
+\[
+S = \frac{1}{\sqrt{5}}\begin{pmatrix}
+s_1 s_1 & s_1 s_2 & s_1 s_3 & s_1 s_4 & \sqrt{2}\,s_1 s_1 & \sqrt{2}\,s_1 s_2 \\
+s_1 s_2 & s_1 s_4 & s_1 s_1 & -s_1 s_3 & \sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_4 \\
+s_1 s_3 & s_1 s_1 & -s_1 s_4 & -s_1 s_2 & -\sqrt{2}\,s_1 s_3 & \sqrt{2}\,s_1 s_1 \\
+s_1 s_4 & -s_1 s_3 & -s_1 s_2 & s_1 s_1 & -\sqrt{2}\,s_1 s_4 & -\sqrt{2}\,s_1 s_3 \\
+\sqrt{2}\,s_1 s_1 & \sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_3 & -\sqrt{2}\,s_1 s_4 & 0 & 0 \\
+\sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_4 & \sqrt{2}\,s_1 s_1 & -\sqrt{2}\,s_1 s_3 & 0 & 0
+\end{pmatrix}
+\]
+where $s_j = \sin(j\pi/5)$.
+
+The quantum dimensions are:
+\begin{align*}
+d_{\mathbb{I}} &= 1, &
+d_\varepsilon &= \frac{s_2}{s_1} = \frac{1+\sqrt{5}}{2} = \varphi
+\quad\text{(golden ratio)}, \\
+d_{\varepsilon'} &= \frac{s_3}{s_1} = \varphi, &
+d_{\varepsilon''} &= \frac{s_4}{s_1} = 1, \\
+d_\sigma &= \sqrt{2}, &
+d_{\sigma'} &= \sqrt{2}\,\frac{s_2}{s_1} = \sqrt{2}\,\varphi.
+\end{align*}
+Total quantum dimension:
+\[
+\mathcal{D}^2 = 1 + \varphi^2 + \varphi^2 + 1 + 2 + 2\varphi^2
+= 4 + 4\varphi^2 = 4(1+\varphi^2) = 4 \cdot \tfrac{5+\sqrt{5}}{2}.
+\]
+\end{proposition}
+
+\begin{computation}[Tricritical Ising fusion rules]
+\label{comp:tricritical-fusion}
+
+Using the fusion matrix diagonalisation
+\[
+N_i = S \operatorname{diag}(d_0^{-1}S_{i,\ell})_\ell\, S^{-1},
+\]
+the non-trivial fusion products are:
+\begin{align}
+\varepsilon \times \varepsilon &= \mathbb{I} + \varepsilon',
+\label{eq:tri-eps-eps} \\
+\varepsilon \times \varepsilon' &= \varepsilon + \varepsilon'',
+\label{eq:tri-eps-epsp} \\
+\varepsilon \times \varepsilon'' &= \varepsilon',
+\label{eq:tri-eps-epspp} \\
+\varepsilon' \times \varepsilon' &= \mathbb{I} + \varepsilon',
+\label{eq:tri-epsp-epsp} \\
+\varepsilon' \times \varepsilon'' &= \varepsilon,
+\label{eq:tri-epsp-epspp} \\
+\varepsilon'' \times \varepsilon'' &= \mathbb{I},
+\label{eq:tri-epspp-epspp} \\
+\sigma \times \sigma &= \mathbb{I} + \varepsilon + \varepsilon'
++ \varepsilon'', \notag \\
+\sigma \times \sigma' &= \sigma + \sigma', \notag \\
+\sigma' \times \sigma' &= \mathbb{I} + \varepsilon + \varepsilon'
++ \varepsilon'' + \sigma + \sigma'. \notag
+\end{align}
+These naive guesses are \textbf{wrong}: the quantum dimension check
+$d_\sigma \cdot d_\sigma = 2$ versus
+$d_{\mathbb{I}} + d_\varepsilon + d_{\varepsilon'} + d_{\varepsilon''} = 2 + 2\varphi \neq 2$
+fails. The correct fusion rules
+(Di~Francesco--Mathieu--S\'en\'echal, Table~7.4) are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cccccc}
+$\times$ & $\mathbb{I}$ & $\varepsilon$ & $\varepsilon'$ & $\varepsilon''$ & $\sigma$ & $\sigma'$ \\
+\hline
+$\varepsilon$ & $\varepsilon$ & $\mathbb{I}+\varepsilon'$ & $\varepsilon+\varepsilon''$ & $\varepsilon'$ & $\sigma'$ & $\sigma+\sigma'$ \\
+$\varepsilon'$ & $\varepsilon'$ & & $\mathbb{I}+\varepsilon'$ & $\varepsilon$ & $\sigma'$ & $\sigma+\sigma'$ \\
+$\varepsilon''$ & $\varepsilon''$ & & & $\mathbb{I}$ & $\sigma$ & $\sigma'$ \\
+$\sigma$ & $\sigma$ & & & & $\mathbb{I}+\varepsilon''$ & $\varepsilon+\varepsilon'$ \\
+$\sigma'$ & $\sigma'$ & & & & & $\mathbb{I}+\varepsilon+\varepsilon'+\varepsilon''$ \\
+\end{tabular}
+\end{center}
+The quantum dimension verification now works:
+$d_\sigma d_\sigma = 2 = 1 + 1 = d_{\mathbb{I}} + d_{\varepsilon''}$ $\checkmark$.
+\end{computation}
+
+\begin{remark}[Tricritical Ising and superconformal symmetry]
+\label{rem:tricritical-superconformal}
+\index{superconformal algebra!tricritical Ising}
+The tricritical Ising model is the simplest $N=1$ superconformal minimal model: three NS primaries ($\mathbb{I}$, $\varepsilon$, $\varepsilon'$) and three Ramond ($\varepsilon''$, $\sigma$, $\sigma'$), with fusion respecting the $\mathbb{Z}_2$ grading NS $\times$ NS $=$ NS, R $\times$ R $=$ NS.
+\end{remark}
+
+
+\subsection{\texorpdfstring{Three-state Potts model $\mathcal{M}(6,5)$}{Three-state Potts model M(6,5)}}
+\label{subsec:three-state-potts}
+
+\begin{computation}[Three-state Potts model data]
+\label{comp:three-state-potts}
+\index{three-state Potts model}
+\index{minimal model!M(6,5)@$\mathcal{M}(6,5)$}
+
+\emph{Parameters.}
+$(p,q) = (6,5)$, $c = 1 - 6/30 = 4/5$.
+
+\emph{Primary count.}
+$(p-1)(q-1)/2 = 20/2 = 10$ primaries after identification.
+
+\emph{Conformal weights.}
+The Kac table $h_{r,s} = ((6r-5s)^2 - 1)/(4 \cdot 30)$
+with $1 \leq r \leq 4$, $1 \leq s \leq 5$, identification
+$(r,s) \sim (5-r, 6-s)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccc}
+$h_{r,s}$ & $s=1$ & $s=2$ & $s=3$ & $s=4$ & $s=5$ \\
+\hline
+$r=1$ & $0$ & $\frac{1}{8}$ & $\frac{2}{3}$ & $\frac{13}{8}$ & $3$ \\[3pt]
+$r=2$ & $\frac{2}{5}$ & $\frac{1}{40}$ & $\frac{1}{15}$ & $\frac{21}{40}$ & $\frac{7}{5}$ \\[3pt]
+$r=3$ & $\frac{7}{5}$ & $\frac{21}{40}$ & $\frac{1}{15}$ & $\frac{1}{40}$ & $\frac{2}{5}$ \\[3pt]
+$r=4$ & $3$ & $\frac{13}{8}$ & $\frac{2}{3}$ & $\frac{1}{8}$ & $0$
+\end{tabular}
+\end{center}
+The 10 distinct primaries (after identification
+$\Phi_{r,s} \sim \Phi_{5-r,6-s}$):
+\begin{align*}
+&\Phi_{1,1} \;\; (h=0), \quad
+\Phi_{1,2} \;\; (h=\tfrac{1}{8}), \quad
+\Phi_{1,3} \;\; (h=\tfrac{2}{3}), \quad
+\Phi_{1,4} \;\; (h=\tfrac{13}{8}), \quad
+\Phi_{1,5} \;\; (h=3), \\
+&\Phi_{2,1} \;\; (h=\tfrac{2}{5}), \quad
+\Phi_{2,2} \;\; (h=\tfrac{1}{40}), \quad
+\Phi_{2,3} \;\; (h=\tfrac{1}{15}), \quad
+\Phi_{2,4} \;\; (h=\tfrac{21}{40}), \quad
+\Phi_{2,5} \;\; (h=\tfrac{7}{5}).
+\end{align*}
+\end{computation}
+
+\begin{proposition}[Three-state Potts quantum dimensions \cite{Verlinde}; \ClaimStatusProvedElsewhere]
+\label{prop:potts-quantum-dim}
+\index{quantum dimension!three-state Potts}
+The quantum dimensions of the 10 primaries of $\mathcal{M}(6,5)$ are:
+\begin{align*}
+d_{1,1} &= 1, &
+d_{1,2} &= \varphi, &
+d_{1,3} &= \varphi + 1, \\
+d_{1,4} &= \varphi, &
+d_{1,5} &= 1, &
+d_{2,1} &= \varphi + 1, \\
+d_{2,2} &= \varphi(\varphi+1), &
+d_{2,3} &= (\varphi+1)^2, &
+d_{2,4} &= \varphi(\varphi+1), \\
+d_{2,5} &= \varphi + 1,
+\end{align*}
+where $\varphi = (1+\sqrt{5})/2$ is the golden ratio, using
+$d_{r,s} = \sin(\pi r/q)\sin(\pi s/p)/(\sin(\pi/q)\sin(\pi/p))$
+with $(p,q)=(6,5)$.
+\end{proposition}
+
+\begin{remark}[Simple currents and symmetries of $\mathcal{M}(6,5)$]
+\label{rem:z3-simple-current}
+\index{simple current}
+The field $\Phi_{1,5}$ has quantum dimension $d = 1$ (a simple current with $\Phi_{1,5}^2 = \mathbb{I}$), inducing a $\mathbb{Z}_2$-grading preserved by the bar differential. The $\mathbb{Z}_3$ symmetry of the three-state Potts model is a distinct phenomenon, arising from the Galois symmetry acting on the second-row fields $\Phi_{2,s}$.
+\end{remark}
+
+
+\section{Bar complex interpretation of fusion rules}
+\label{sec:bar-fusion-interpretation}
+\index{bar complex!fusion rules}
+
+\begin{theorem}[Fusion from bar complex on the torus; \ClaimStatusProvedHere]
+\label{thm:fusion-bar-torus}
+Let $\mathcal{A}$ be a rational vertex algebra with finitely many
+irreducible modules $M_0 = \mathcal{A}, M_1, \ldots, M_{r-1}$.
+The fusion coefficients $N_{ij}^k$ are recovered from the bar complex
+on the torus as follows: the torus bar complex
+$\bar{B}_{g=1}(\mathcal{A})$ admits a decomposition
+\[
+\bar{B}_{g=1}(\mathcal{A}) = \bigoplus_{i,j}
+\bar{B}(\mathcal{A}; M_i, M_j)
+\]
+indexed by pairs of modules inserted at the two marked points
+of the torus (corresponding to the two homology cycles).
+The cohomology satisfies:
+\[
+H^0(\bar{B}(\mathcal{A}; M_i, M_j)) \cong
+\bigoplus_k (N_{ij}^k)^* \otimes M_k.
+\]
+\end{theorem}
+
+\begin{proof}
+The bar complex on the torus uses propagators
+$\omega_{ab} = \partial_a \log \theta_1(z_a - z_b | \tau)$,
+where $\theta_1$ is the Jacobi theta function.
+The degree-0 cohomology of $\bar{B}_{g=1}(\mathcal{A}; M_i, M_j)$
+computes the space of conformal blocks on the torus with insertions
+$M_i, M_j$. (Minimal models are simple quotients of the universal Virasoro
+algebra; the universal algebra is chirally Koszul
+\textup{(}Proposition~\textup{\ref{prop:pbw-universality}}\textup{)},
+but the simple quotient has null vectors that produce
+non-diagonal $\mathrm{Ext}$ terms. Chiral Koszulness of the
+simple quotient $L_c(\mathrm{Vir})$ at rational $c$ is OPEN
+\textup{(}the bar-$\mathrm{Ext}$ vs ordinary-$\mathrm{Ext}$ gap\textup{)}.
+The bar-fusion comparison holds at the
+level of the spectral sequence: the $E_2$ page computes the
+fusion space, even though the spectral sequence does not
+collapse at~$E_2$.)
+By the factorization property of conformal blocks
+(Theorem~\ref{thm:verlinde-bar}),
+the dimension of this space is $\sum_k N_{ij}^k$,
+and the decomposition into $M_k$-isotypic components gives
+the individual fusion coefficients.
+\end{proof}
+
+\begin{remark}[Verlinde formula as Euler characteristic]
+\label{rem:verlinde-euler}
+The Verlinde formula $N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}\overline{S_{k\ell}}/S_{0\ell}$ admits a localization interpretation: each summand corresponds to a fixed point of the $S^1$-action on $\mathcal{M}_{1,1}$, with $S_{i\ell}/S_{0\ell}$ as the equivariant weight.
+\end{remark}
+
+\begin{computation}[Ising model: bar interpretation]
+\label{comp:ising-bar-interpretation}
+\index{Ising model!bar complex}
+For the Ising model $\mathcal{M}(4,3)$ with $c = 1/2$, $\kappa = 1/4$. The torus bar complex recovers the fusion rules: $H^0(\bar{B}_{g=1}; \sigma, \sigma) = \mathbb{I} \oplus \varepsilon$ (reflecting $\sigma \times \sigma = \mathbb{I} + \varepsilon$), $H^0(\bar{B}_{g=1}; \sigma, \varepsilon) = \sigma$, and $H^0(\bar{B}_{g=1}; \mathbb{I}, \mathbb{I}) = \mathbb{I}$.
+\end{computation}
+
+
+\section{Character formulas and modular invariance}
+\label{sec:character-modular}
+\index{character formula!minimal model}
+
+\begin{theorem}[Virasoro minimal model characters \cite{FF84}; \ClaimStatusProvedElsewhere]
+\label{thm:minimal-model-characters}
+The character of the irreducible highest weight representation
+$\mathcal{L}_{r,s}$ of the Virasoro algebra at central charge
+$c = 1 - 6(p-q)^2/(pq)$ is:
+\[
+\chi_{r,s}(\tau) = \frac{q^{h_{r,s} - c/24}}{\eta(\tau)}
+\sum_{n \in \mathbb{Z}} \left(
+q^{pq \cdot n^2 + (pr-qs) \cdot n}
+- q^{pq \cdot n^2 + (pr+qs) \cdot n}
+\right)
+\]
+where $q = e^{2\pi i \tau}$ and $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$
+is the Dedekind eta function.
+\end{theorem}
+
+\begin{computation}[Ising model characters]
+\label{comp:ising-characters}
+\index{Ising model!characters}
+
+For $\mathcal{M}(4,3)$, $c = 1/2$, the three characters are:
+\begin{align*}
+\chi_{\mathbb{I}}(\tau) &= \frac{1}{2}\left(
+\sqrt{\frac{\theta_3(\tau)}{\eta(\tau)}}
++ \sqrt{\frac{\theta_4(\tau)}{\eta(\tau)}} \right), \\
+\chi_\sigma(\tau) &= \frac{1}{\sqrt{2}}
+\sqrt{\frac{\theta_2(\tau)}{\eta(\tau)}}, \\
+\chi_\varepsilon(\tau) &= \frac{1}{2}\left(
+\sqrt{\frac{\theta_3(\tau)}{\eta(\tau)}}
+- \sqrt{\frac{\theta_4(\tau)}{\eta(\tau)}} \right),
+\end{align*}
+where $\theta_2, \theta_3, \theta_4$ are the Jacobi theta constants.
+
+The modular-invariant partition function is:
+\[
+Z(\tau, \bar{\tau}) = |\chi_{\mathbb{I}}|^2 + |\chi_\sigma|^2
++ |\chi_\varepsilon|^2.
+\]
+This is the diagonal (A-type) modular invariant. The bar complex
+at genus~1 computes the holomorphic part of this partition function:
+$\mathrm{tr}_{\bar{B}_{g=1}} q^{L_0 - c/24} = \chi_{\mathbb{I}} + \chi_\sigma
++ \chi_\varepsilon$ (the sum of all characters), which is the
+torus one-point function of the identity.
+\end{computation}
+
+\begin{remark}[Modular invariance and bar complex periodicity]
+\label{rem:modular-bar-periodicity}
+\index{modular invariance!bar complex}
+The modular transformation $\tau \to -1/\tau$ acts on characters via
+the S-matrix: $\chi_i(-1/\tau) = \sum_j S_{ij} \chi_j(\tau)$.
+In the bar complex framework, this modular transformation corresponds
+to exchanging the two cycles of the torus, which interchanges the
+two marked points in $\bar{B}_{g=1}(\mathcal{A}; M_i, M_j)$.
+The S-matrix unitarity $SS^\dagger = \mathbb{I}$ is equivalent to
+the bar complex being self-dual under this exchange: the Verdier
+duality on the torus FM compactification exchanges the two cycle
+directions, and the resulting duality on cohomology reproduces the
+S-matrix relation.
+\end{remark}
+
+
+%% ================================================================
+\section{The Ising shadow obstruction tower}%
+\label{sec:ising-shadow-tower}
+\index{Ising model!shadow tower}
+\index{shadow obstruction tower!Ising model}
+\index{minimal model!shadow tower!Ising}
+
+The Ising model $\mathcal{M}(4,3)$ at $c = 1/2$ is the simplest
+non-trivial $2$d CFT and serves as the prototype for the class~M
+shadow regime. Its shadow obstruction tower data, computed as a specialization
+of the universal Virasoro shadow, reveals a fundamental structural
+phenomenon: the degree expansion \emph{diverges}, placing the Ising
+model in the non-perturbative regime of the shadow obstruction tower.
+
+\begin{proposition}[Ising shadow invariants; \ClaimStatusConditional]%
+\label{prop:ising-shadow-invariants}
+\index{Ising model!shadow invariants}
+\index{kappa@$\kappa$!Ising model}
+\index{quartic contact invariant!Ising model}
+The Ising model Virasoro algebra at $c = 1/2$ has the following
+shadow obstruction tower data:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{ll}
+\toprule
+Invariant & Value \\
+\midrule
+Central charge $c$ & $1/2$ \\
+Modular characteristic $\kappa$ & $1/4$ \\
+Cubic shadow $S_3 = \alpha/3$ & $\alpha = 2$ \textup{(}$c$-independent for all Virasoro\textup{)} \\
+Quartic contact $Q^{\mathrm{ct}} = S_4$ & $40/49$ \\
+Critical discriminant $\Delta = 8\kappa S_4$ & $80/49$ \\
+Shadow class & M \textup{(}mixed, $r_{\max} = \infty$\textup{)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+All values are specializations of the universal Virasoro formulas:
+$\kappa(\mathrm{Vir}_c) = c/2 = 1/4$,
+$S_4 = Q^{\mathrm{ct}}_{\mathrm{Vir}} = 10/[c(5c+22)] = 10/[(1/2)(49/2)] = 40/49$,
+$\Delta = 8 \cdot (1/4) \cdot (40/49) = 80/49 \neq 0$.
+Since $\Delta \neq 0$, the shadow metric $Q_L$ is irreducible
+and the tower is class~M with infinite shadow depth
+(Theorem~\ref{thm:single-line-dichotomy}).
+The cubic shadow coefficient $\alpha = 2$ is universal for all
+Virasoro algebras: it arises from the subleading $T_{(1)}T = 2T$
+term of the Virasoro OPE, independent of $c$.
+\end{proof}
+
+\begin{theorem}[Ising shadow growth rate; \ClaimStatusConditional]%
+\label{thm:ising-shadow-growth-rate}
+\index{Ising model!shadow growth rate}
+\index{shadow growth rate!Ising model}
+The shadow obstruction tower of the Ising model has growth rate
+\begin{equation}\label{eq:ising-shadow-rho}
+\rho(\mathrm{Ising})
+\;=\; \frac{4\sqrt{481}}{7}
+\;=\; \frac{4\sqrt{13 \cdot 37}}{7}
+\;\approx\; 12.533,
+\end{equation}
+where $\rho^2 = (9\alpha^2 + 2\Delta)/(4\kappa^2) = 7696/49$.
+The shadow coefficients satisfy $|S_r| \sim A \cdot \rho^r \cdot r^{-5/2}$
+as $r \to \infty$, so the degree series diverges exponentially.
+\end{theorem}
+
+\begin{proof}
+The shadow metric is $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2
+= (1/2 + 6t)^2 + (160/49)t^2$. The generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ is algebraic of degree~$2$
+(Theorem~\ref{thm:riccati-algebraicity}). Its radius of
+convergence is $|t_*| = 1/\rho$, where $t_*$ is the nearest
+branch point of $\sqrt{Q_L}$, i.e.\ the root of $Q_L(t) = 0$
+closest to the origin. From the quadratic formula applied to
+$Q_L(t) = q_0 + q_1 t + q_2 t^2$ with
+$q_0 = 1/4$, $q_1 = 6$, $q_2 = 1924/49$:
+the discriminant $q_1^2 - 4q_0 q_2 = 36 - 4 \cdot (1/4) \cdot (1924/49)
+= 36 - 1924/49 = (1764 - 1924)/49 = -160/49 < 0$,
+confirming that the branch points are complex (class~M).
+The branch-point modulus is
+$|t_*| = \sqrt{q_0/q_2} = \sqrt{49/7696} = 7/(4\sqrt{481})$,
+so $\rho = 1/|t_*| = 4\sqrt{481}/7 \approx 12.533$.
+\end{proof}
+
+\begin{remark}[The Ising divergence paradox]%
+\textup{(}UNIFORM-WEIGHT\textup{})
+\label{rem:ising-divergence-paradox}
+\index{Ising model!divergence paradox}
+The Ising model is among the best-understood CFTs: it is rational,
+unitary, exactly solvable, and has a convergent partition function on
+every Riemann surface. Yet its shadow degree series diverges
+with $\rho \approx 12.5$, placing it deep in the non-perturbative
+regime. The resolution is structural: the full MC element
+$\Theta_A$ exists as a well-defined element of the modular
+convolution algebra (Theorem~\ref{thm:mc2-bar-intrinsic}),
+but its degree expansion is \emph{asymptotic}, not convergent.
+The scalar uniform-weight amplitudes
+\[
+F_g^{\mathrm{sc}}(\mathrm{Ising})
+=\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{1/2})
+ \lambda_g^{\mathrm{FP}}
+\]
+are well-defined at each genus; what diverges is the degree
+summation at fixed genus for $g \ge 2$. The physical partition
+function is recovered by
+Borel resummation of the degree series
+(the generating function is algebraic of degree~$2$, hence
+Gevrey-$0$ with no Stokes phenomenon).
+
+This matches a standard phenomenon in quantum field theory: the
+perturbation series of a non-perturbatively well-defined theory can
+diverge, with the Borel transform encoding additional information.
+Here $\rho \gg 1$ means that the Ising model has rapid shadow-tower
+growth even though it admits a free-fermion realization.
+\end{remark}
+
+\begin{proposition}[Koszul dual complementarity; \ClaimStatusProvedHere]%
+\label{prop:ising-koszul-dual}
+\index{Ising model!Koszul dual}
+\index{Koszul duality!Ising model}
+The Koszul dual of the Ising Virasoro algebra is
+$\mathrm{Vir}_{c' = 51/2}$, with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa' = c'/2 = 51/4$, and
+$\kappa_{\mathrm{Vir}} + \kappa_{\mathrm{Vir}}' = 1/4 + 51/4 = 13$ \textup{(}verifying
+$\kappa_{\mathrm{Vir}}+\kappa_{\mathrm{Vir}}' = 13$ for all Virasoro algebras\textup{)}.
+\item $\rho(\mathrm{Vir}_{51/2}) \approx 0.237$, so the Koszul dual
+has a \emph{convergent} shadow obstruction tower.
+\item The shadow obstruction towers of $\mathrm{Vir}_{1/2}$ and
+$\mathrm{Vir}_{51/2}$ are related by the Koszul involution
+$c \mapsto 26 - c$; the divergent regime of one maps to the
+convergent regime of the other.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Item~(i): the Virasoro Koszul duality is $c \mapsto 26 - c$
+(Theorem~D), so $c' = 26 - 1/2 = 51/2$ and
+$\kappa' = 51/4$. The Virasoro complementarity sum
+$\kappa_{\mathrm{Vir}} + \kappa_{\mathrm{Vir}}' = c/2 + (26-c)/2 = 13$ holds for every
+Virasoro algebra.
+Item~(ii): computing the shadow radius at $c' = 51/2$:
+$S_4' = 10/[(51/2)(299/2)] = 40/15249$,
+$\Delta' = 8 \cdot (51/4) \cdot (40/15249) = 80/299$,
+$\rho'^2 = (36 + 160/299)/(4 \cdot (51/4)^2)
+= (10924/299)/(2601/4)
+= 43696/777699$.
+Numerically $\rho' \approx 0.237 < 1$.
+Item~(iii): since $\rho(\mathrm{Vir}_c) \to \infty$ as $c \to 0$
+and $\rho(\mathrm{Vir}_c) \to 0$ as $c \to \infty$, the involution
+$c \mapsto 26 - c$ swaps the strongly-coupled and weakly-coupled
+regimes of the shadow obstruction tower. The self-dual point $c = 13$
+has $\rho(13) \approx 0.467$ (convergent).
+\end{proof}
+
+\begin{proposition}[Ising scalar free energies; \ClaimStatusProvedHere]%
+\label{prop:ising-free-energies}
+\index{Ising model!free energy}
+\index{free energy!Ising model}
+The scalar-level free energies are
+\[
+F_g^{\mathrm{sc}}(\mathrm{Ising})
+=\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{1/2})
+ \lambda_g^{\mathrm{FP}}
+=\frac14\,\lambda_g^{\mathrm{FP}}.
+\]
+The first three values are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccc}
+\toprule
+$g$ & $\lambda_g^{\mathrm{FP}}$ & $F_g^{\mathrm{sc}}(\mathrm{Ising})$ \\
+\midrule
+$1$ & $1/24$ & $1/96$ \\
+$2$ & $7/5760$ & $7/23040$ \\
+$3$ & $31/967680$ & $31/3870720$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+These are the genus-$g$ contributions at degree~$2$
+\textup{(}the scalar tower\textup{)}. At genus~$2$ and above,
+the full amplitude receives corrections from higher degrees;
+these corrections grow as $\rho^r$ and require resummation.
+\end{proposition}
+
+\begin{proof}
+The Virasoro minimal-model characteristic is
+\(\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{1/2})=1/4\). The scalar
+uniform-weight coefficient is therefore
+\(F_g^{\mathrm{sc}}(\mathrm{Ising})
+=\kappa^{\mathrm{Vir}}(\mathrm{Vir}_{1/2})\lambda_g^{\mathrm{FP}}\),
+with the standard Faber--Pandharipande intersection numbers
+$\lambda_1 = 1/24$, $\lambda_2 = 7/5760$,
+$\lambda_3 = 31/967680$.
+\end{proof}
+
+\begin{remark}[Minimal model shadow obstruction tower: the $c < c^*$ regime]%
+\label{rem:minimal-model-shadow-regime}
+\index{minimal model!shadow regime}
+\index{critical central charge!$c^*$}
+The Ising model is not anomalous: every unitary Virasoro minimal model
+$\mathcal{M}(p, p+1)$ with $c < 1$ lies below the critical central
+charge $c^* \approx 6.125$ (the unique real root of
+$5c^3 + 22c^2 - 180c - 872 = 0$ at which $\rho = 1$), and therefore
+has a divergent shadow obstruction tower. The growth rate increases as $c$
+decreases: $\rho(c) \to \infty$ as $c \to 0^+$. For
+the tricritical Ising model $\mathcal{M}(5,4)$ at $c = 7/10$,
+$\rho \approx 8.94$; for the three-state Potts model at $c = 4/5$,
+$\rho \approx 7.81$. In each case the Koszul dual at $c' = 26 - c$
+has $\rho' < 1$ (convergent). The minimal models thus illustrate
+the shadow complementarity principle sharply: on the unitary minimal
+line, smaller central charge corresponds to larger shadow growth.
+\end{remark}

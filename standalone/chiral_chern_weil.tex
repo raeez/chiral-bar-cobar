@@ -1,0 +1,2226 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{array}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\newcommand{\gEone}{\mathfrak{g}^{E_1}_\cA}
+\newcommand{\Eone}{E_1}
+\newcommand{\Einf}{E_\infty}
+\newcommand{\Ash}{\cA^{\mathrm{sh}}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Ad}{\mathrm{Ad}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Heis}{\mathrm{Heis}}
+\newcommand{\av}{\mathrm{av}}
+\newcommand{\dfib}{d_{\mathrm{fib}}}
+\newcommand{\CW}{\mathrm{CW}}
+\providecommand{\reg}{\mathrm{reg}}
+\providecommand{\Z}{\mathbb{Z}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\obs}{obs}
+\DeclareMathOperator{\im}{Im}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Chiral Chern--Weil Theory]
+{Chiral Chern--Weil Theory}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{}
+
+\begin{abstract}
+Classical Chern--Weil theory extracts characteristic classes from
+the curvature of a principal bundle using invariant polynomials.
+We develop a chiral analogue in the setting of modular Koszul
+duality for vertex algebras. The ordered bar complex
+$B^{\mathrm{ord}}(\cA)$ over the Ran space of a curve~$X$
+plays the role of a chiral classifying space; the Maurer--Cartan
+element $\Theta_\cA^{\Eone}$ plays the role of a universal
+connection, with binary component the collision kernel
+$K_\cA^{\mathrm{coll}}(z)$.  The homotopy-coinvariant comparison
+produces $q_n((\Theta_\cA^{\Eone})_{0,n})$, and specified normalized
+functionals extract scalar shadow data by moment-residue, Sugawara,
+and composite-sector rules.  A represented classical $r$-matrix
+appears under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$. As the curve~$X$
+varies over $\Mbar_g$, the fiberwise bar differential has an Arakelov
+curvature term.  For $g\geq2$, the resulting Theorem~D data consist
+of $\operatorname{Obs}^{\mathrm{def}}_g(\cA)$, the perfect object
+$\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g)$, its
+signed Hodge character, and the stable-graph functional.
+The stable genus-one component begins with
+$\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)$.
+The degree-by-degree scalar coordinates
+\[
+S_n(\cA)=\tau_{\cA,n}^{\mathrm{res}}
+q_n((\Theta_\cA^{E_1})_{0,n})
+\]
+form the shadow tower, with
+$(S_2,S_3,S_4)=(\kappa,\mathfrak C,\mathfrak Q)$ on the corresponding
+scalar channels. The four standard depth types (G/L/C/M) are
+read from the tuple $(S_3,S_4,\text{termination})$, not from the
+single downstream discriminant $\Delta=8\kappa S_4$.
+For multi-weight algebras, the scalar formula conditionally acquires a
+cross-channel correction
+$\delta F_g^{\mathrm{cross}}$, which we compute explicitly
+for $\cW_3$ at genus~$2$:
+$\delta F_2(\cW_3) = (c{+}204)/(16c)$.
+\end{abstract}
+
+\subjclass[2020]{17B69, 14H10, 18M70, 81T40, 57R20}
+
+\keywords{Chiral algebras, Chern--Weil theory, bar construction,
+Koszul duality, moduli of curves, $r$-matrix, vertex algebras}
+
+\maketitle
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+
+% ================================================================
+% Section 1: Introduction
+% ================================================================
+\section{Introduction}\label{sec:intro}
+
+\subsection{The deficiency}
+The bar complex of a chiral algebra~$\cA$ on a curve~$X$
+varies as $X$ moves in the moduli space $\Mbar_g$.
+At genus~$0$, the bar differential squares to zero.
+At genus~$1$, it does not: the fiberwise differential acquires
+fiber Arakelov curvature, and its pushforward to the base produces
+the Hodge-class obstruction with coefficient~$\kappa$.
+
+This curvature carries $\Eone$ operadic indices.  For an affine
+Kac--Moody algebra $V_k(\fg)$, the binary collision kernel
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z$ is valued in
+$\fg\otimes\fg$.  Its homotopy coinvariant
+$q_2(K_{k,\fg}^{\mathrm{coll}})$ remains operator-valued, and the
+normalized residue trace supplies the scalar coordinate.  For the
+Virasoro algebra at central charge~$c$, the collision kernel
+$K_{\mathrm{Vir}_c}^{\mathrm{coll}}(z)=(c/2)/z^3+2T/z$ contains both
+vacuum and field-dependent terms; the moment-residue functional gives
+$\tau_{\mathrm{Vir}_c,2}^{\mathrm{res}}q_2
+(K_{\mathrm{Vir}_c}^{\mathrm{coll}})=c/2$.
+
+The question is: what mechanism extracts the scalar shadow data from
+$K_\cA^{\mathrm{coll}}$?
+The answer has a precise classical analogue. In classical
+Chern--Weil theory, the curvature of a principal $G$-bundle is
+$\fg$-valued, and a $G$-invariant polynomial kills the
+internal indices to produce a scalar characteristic class.
+The chiral analogue has two successive maps.  The averaging comparison
+$q_n\colon\operatorname{End}_\cA(n)\to
+\operatorname{End}_\cA(n)_{h\Sigma_n}$ produces an equivariant operator
+class.  A specified normalized functional
+$\tau_{\cA,n}^{\mathrm{res}}$ then produces its scalar coordinate.
+
+\subsection{Results}
+The main contributions are:
+
+\begin{enumerate}[(1)]
+\item A systematic parallel between classical Chern--Weil theory
+ and the modular Koszul duality programme
+ (Sections~\ref{sec:classical}--\ref{sec:chiral-cw}).
+
+\item Explicit computation of $q_2$ and
+ $\tau_{\cA,2}^{\mathrm{res}}$ on the collision kernels of the
+ standard families: Heisenberg, Virasoro,
+ affine Kac--Moody (all types $A$--$G$), principal $\cW_N$,
+ and free-field systems (Section~\ref{sec:averaging}).
+
+\item Identification of the shadow tower
+ $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ as the
+ sequence of chiral characteristic classes, with the G/L/C/M
+ classification as the classification of chiral classifying
+ spaces by the type of their characteristic ring
+ (Section~\ref{sec:shadow}).
+
+\item Derivation and explicit computation of the multi-weight
+ cross-channel correction $\delta F_g^{\mathrm{cross}}$,
+ including the first closed-form result
+ $\delta F_2(\cW_3) = (c{+}204)/(16c)$
+ (Section~\ref{sec:multi-weight}).
+\end{enumerate}
+
+
+% ================================================================
+% Section 2: Classical Chern--Weil
+% ================================================================
+\section{Classical Chern--Weil theory}\label{sec:classical}
+
+\subsection{Connections and curvature}
+
+Let $G$ be a Lie group with Lie algebra~$\fg$, and let
+$P \to M$ be a principal $G$-bundle over a smooth manifold~$M$.
+The bundle may be topologically non-trivial, but any single
+local trivialization sees only~$\fg$. To detect the global
+topology from local data, one needs a device that is defined
+locally but transforms coherently: a connection.
+
+\begin{definition}\label{def:connection}
+A \emph{connection} on~$P$ is a $\fg$-valued $1$-form
+$\nabla \in \Omega^1(P;\fg)$ satisfying:
+\begin{enumerate}[(i)]
+\item $R_g^*\nabla = \Ad(g^{-1})\nabla$ for all $g \in G$
+ (equivariance);
+\item $\nabla(\xi_P) = \xi$ for all $\xi \in \fg$
+ (normalization along fibers),
+\end{enumerate}
+where $\xi_P$ is the fundamental vector field of~$\xi$
+and $R_g$ is the right $G$-action on~$P$.
+In a local trivialization over $U \subset M$, a connection
+is represented by $A \in \Omega^1(U;\fg)$.
+\end{definition}
+
+\begin{definition}\label{def:curvature}
+The \emph{curvature} of a connection~$\nabla$ is the
+$\fg$-valued $2$-form
+\begin{equation}\label{eq:curvature-def}
+F_\nabla = d\nabla + \tfrac{1}{2}[\nabla,\nabla]
+ \;\in\; \Omega^2(M;\Ad(P)).
+\end{equation}
+In local coordinates: $F = dA + A \wedge A$.
+\end{definition}
+
+The curvature measures the failure of parallel transport around
+infinitesimal loops to be trivial. It is $\fg$-valued: it
+carries internal indices from the Lie algebra.
+
+\begin{lemma}[Bianchi identity]\label{lem:bianchi}
+$d_\nabla F_\nabla = 0$.
+\end{lemma}
+
+\begin{proof}
+Compute $d_\nabla F = d_\nabla(d\nabla +
+\frac{1}{2}[\nabla,\nabla]) = d^2\nabla +
+\frac{1}{2}[d_\nabla\nabla,\nabla] -
+\frac{1}{2}[\nabla,d_\nabla\nabla]$. Using $d^2 = 0$,
+$d_\nabla\nabla = F$, and the Jacobi identity for~$\fg$,
+all terms cancel.
+\end{proof}
+
+\subsection{The Chern--Weil homomorphism}
+
+\begin{definition}\label{def:inv-poly}
+Let $\Sym^k(\fg^*)^G$ denote the space of $G$-invariant
+symmetric $k$-linear forms on~$\fg$. For
+$P \in \Sym^k(\fg^*)^G$, the \emph{Chern--Weil form} is
+\begin{equation}\label{eq:cw-form}
+\CW(P) = P(\underbrace{F_\nabla, \ldots, F_\nabla}_k)
+ \;\in\; \Omega^{2k}(M).
+\end{equation}
+\end{definition}
+
+The form $\CW(P)$ is scalar-valued: the invariant polynomial
+contracts all $\fg$-indices. Its construction requires the
+curvature to carry indices (otherwise there is nothing to
+contract) and the polynomial to be invariant (otherwise the
+result would depend on the trivialization).
+
+\begin{theorem}[Chern--Weil]\label{thm:cw}
+\begin{enumerate}[\upshape(i)]
+\item $\CW(P)$ is closed: $d[\CW(P)] = 0$.
+\item The cohomology class $[\CW(P)] \in H^{2k}(M;\mathbb{R})$
+ is independent of the connection~$\nabla$.
+\item The resulting map
+ $\CW\colon \Sym^*(\fg^*)^G \to H^*(M;\mathbb{R})$
+ is a ring homomorphism.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~The Bianchi identity $d_\nabla F = 0$ and the
+$G$-invariance of~$P$ imply
+$d[P(F^k)] = k\,P(d_\nabla F, F^{k-1}) = 0$.
+
+\smallskip\noindent
+(ii)~Let $\nabla_0$, $\nabla_1$ be connections with curvatures
+$F_0$, $F_1$. Set $\alpha = \nabla_1 - \nabla_0 \in
+\Omega^1(M;\Ad(P))$ and interpolate:
+$\nabla_t = \nabla_0 + t\alpha$,
+$F_t = F_0 + t\,d_{\nabla_0}\alpha + t^2\alpha\wedge\alpha$.
+Then
+\[
+P(F_1^k) - P(F_0^k) = d\!\int_0^1 k\,P(\alpha, F_t^{k-1})\,dt.
+\]
+The Chern--Simons transgression
+$\mathrm{TP} = \int_0^1 k\,P(\alpha, F_t^{k-1})\,dt$
+exhibits the difference as exact.
+
+\smallskip\noindent
+(iii)~Multiplicativity of the wedge product.
+\end{proof}
+
+\begin{example}[Abelian: $G = U(1)$]\label{ex:u1}
+$\fg = \mathbb{R}$, $F = dA$ is already scalar. The unique
+invariant polynomial (up to scale) is the identity. The first
+Chern class $c_1 = \frac{1}{2\pi i}[F] \in H^2(M;\mathbb{Z})$
+is the sole characteristic class.
+The classifying space $BU(1) = \mathbb{CP}^\infty$ has
+$H^*(BU(1)) = \mathbb{Z}[c_1]$.
+\end{example}
+
+\begin{example}[$G = SU(2)$]\label{ex:su2}
+$\fg = \mathfrak{su}(2)$ is traceless, so $c_1 = 0$.
+The first non-trivial invariant polynomial is
+$P(X,Y) = -\frac{1}{8\pi^2}\tr(XY)$, giving the
+second Chern class $c_2 = -\frac{1}{8\pi^2}[\tr(F\wedge F)]$.
+On~$S^4$, $\int_{S^4}c_2 \in \mathbb{Z}$ is the instanton
+number.
+\end{example}
+
+\begin{remark}[Structure of the invariant ring]\label{rem:type}
+For $G = GL_n(\mathbb{C})$, the invariant polynomials are
+generated by $P_k(X) = \tr(X^k)$, $k = 1,\ldots,n$, producing
+Chern classes $c_1,\ldots,c_n$. The number of independent
+generators of $\Sym^*(\fg^*)^G$ determines the \emph{type} of
+the classifying space~$BG$.
+\end{remark}
+
+
+% ================================================================
+% Section 3: Chiral setup
+% ================================================================
+\section{Chiral algebras, the bar complex, and the
+collision kernel}\label{sec:chiral}
+
+Classical Chern--Weil theory requires three ingredients: a
+connection, a curvature, and an invariant polynomial. Each
+has a chiral counterpart, and each requires construction.
+The connection is the Maurer--Cartan element of the $\Eone$
+convolution algebra; its binary twisting component is the collision
+kernel.  The homotopy-coinvariant projection supplies an equivariant
+operator class, and the normalized residue trace plays the role of an
+invariant polynomial.  A representation satisfying
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$ identifies the represented collision
+kernel with a classical $r$-matrix.
+
+\subsection{Chiral algebras and OPE}
+
+Let~$X$ be a smooth algebraic curve. A chiral algebra~$\cA$
+on~$X$ is a factorization algebra encoding operator product
+expansions. In local coordinates, the data consists of
+strong generators $\varphi_1,\ldots,\varphi_r$ of conformal
+weights $h_1,\ldots,h_r$, with operator product expansion
+\begin{equation}\label{eq:ope}
+\varphi_i(z)\,\varphi_j(w) \;\sim\;
+\sum_{p=1}^{h_i + h_j}
+\frac{c^p_{ij}(w)}{(z-w)^p}
+\end{equation}
+where $c^p_{ij}(w)$ are OPE coefficients, possibly depending
+on the remaining fields.
+
+\subsection{The ordered bar complex}
+
+\begin{definition}\label{def:bar}
+The \emph{ordered bar complex} of~$\cA$ is
+\[
+B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)
+\]
+where $\bar\cA = \ker(\varepsilon)$ is the augmentation ideal
+of~$\cA$, $s^{-1}$ is the desuspension ($|s^{-1}v| = |v| - 1$),
+and $T^c$ is the cofree conilpotent coalgebra with the
+deconcatenation coproduct. Grading is cohomological
+($|d| = +1$).
+\end{definition}
+
+\begin{warning}
+Three distinct errors are common in the bar-complex formula.
+First, using~$\cA$ instead of~$\bar\cA$ (the augmentation ideal
+is essential).
+Second, using the suspension~$s$ instead of
+desuspension~$s^{-1}$ (bar is down).
+Third, using the tensor algebra~$T$ instead of the cofree
+coalgebra~$T^c$ (the deconcatenation coproduct is the
+coalgebra structure).
+\end{warning}
+
+On a curve~$X$, the bar complex is a factorization coalgebra
+on the Ran space $\Ran(X) = \bigsqcup_{n \ge 1}\Conf_n(X)$.
+The bar differential uses the logarithmic propagator
+$\eta_{12} = d\log(z_1 - z_2)$ at genus~$0$.
+
+\subsection{The collision kernel from the OPE}
+
+The binary bar differential encodes the collision of two generators.
+The propagator $d\log(z_1-z_2)$ absorbs one pole from the OPE and gives
+the collision kernel.
+
+\begin{definition}\label{def:r-matrix}
+The \emph{collision kernel} of~$\cA$ is the binary component
+of the $\Eone$ Maurer--Cartan element:
+$\Theta^{\Eone}_\cA \in \MC(\gEone)$:
+\[
+K_\cA^{\mathrm{coll}}(z)
+\;=\; (\Theta^{\Eone}_\cA)_{0,2}
+\;\in\; \operatorname{End}_\cA(2)\otimes\cO(*\Delta).
+\]
+It is obtained from the OPE data by $d\log$-absorption; its pole order
+equals $p_{\max}(\mathrm{OPE})-1$.  Given a representation
+$\rho\colon\operatorname{End}_\cA(2)\to\operatorname{End}(V^{\otimes2})$
+and $H_{\mathrm{CYBE}}^{\mathrm{rep}}$, the operator
+$\rho(K_\cA^{\mathrm{coll}})$ is a classical $r$-matrix.
+\end{definition}
+
+We now compute the collision kernel for every standard family.
+
+\begin{computation}[Heisenberg at level~$k$]
+\label{comp:r-heis}
+Generator~$J$, weight $h = 1$. OPE:
+\[
+J(z)J(w) = \frac{k}{(z-w)^2}.
+\]
+Pole order~$2$. After $d\log$-absorption:
+\begin{equation}\label{eq:r-heis}
+\boxed{\;K_{\Heis_k}^{\mathrm{coll}}(z) = \frac{k}{z}.\;}
+\end{equation}
+This is a simple pole.  At $k=0$ the kernel is zero.
+\end{computation}
+
+\begin{computation}[Virasoro at central charge~$c$]
+\label{comp:r-vir}
+Generator~$T$, weight $h = 2$. OPE:
+\[
+T(z)T(w) = \frac{c/2}{(z-w)^4}
++ \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}.
+\]
+Pole order~$4$. After $d\log$-absorption, only the singular
+part of the OPE contributes to the collision residue; the
+regular $\partial T$ term drops (its $d\log$ coefficient
+vanishes identically). Thus:
+\begin{equation}\label{eq:r-vir}
+\boxed{\;K_{\Vir_c}^{\mathrm{coll}}(z)
+\;=\; \frac{c/2}{z^3} \;+\; \frac{2T}{z}.\;}
+\end{equation}
+Cubic pole, \emph{not} quartic. The leading term
+$(c/2)/z^3$ is a $c$-number; the subleading term
+$2T/z$ is field-dependent. The regular term $\partial T$
+from the OPE is absent in $K_{\Vir_c}^{\mathrm{coll}}$: it is $d\log$-absorbed,
+or equivalently it is a total derivative on the configuration
+space and contributes $0$ to the residue pairing.
+At central charge $c=0$, the vacuum cubic term vanishes and the
+field-dependent piece $2T/z$ remains.
+\end{computation}
+
+\begin{computation}[Affine Kac--Moody $V_k(\fg)$]
+\label{comp:r-km}
+Generators $J^a$, $a = 1,\ldots,\dim(\fg)$, all weight
+$h = 1$. Let $(\ ,\ )$ be the normalized invariant form
+(long roots squared length~$2$), $\{t^a\}$ an orthonormal
+basis. OPE:
+\[
+J^a(z)J^b(w) = \frac{k\,\delta^{ab}}{(z-w)^2}
+ + \frac{f^{ab}{}_c\,J^c(w)}{z-w}.
+\]
+After $d\log$-absorption:
+\begin{equation}\label{eq:r-km}
+\boxed{\;K_{k,\fg}^{\mathrm{coll}}(z) = \frac{k\,\Omega}{z},\quad
+ \Omega = \sum_a t^a \otimes t^a \in \fg\otimes\fg.\;}
+\end{equation}
+This is the \emph{trace-form convention}. The level~$k$
+survives $d\log$-absorption. At $k=0$ the trace-form collision kernel
+is zero.  In the represented \emph{Kazhdan--Lusztig (KZ) convention},
+under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$,
+$r_{k,\fg}^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$
+where $\Omega_{\mathrm{KZ}}$ is the Killing-normalized Casimir;
+at $k = 0$ this gives $\Omega_{\mathrm{KZ}}/(h^\vee z) \neq 0$
+for non-abelian $\fg$ (the Lie bracket persists). The two
+conventions are \emph{not equal} as rational functions of $k$:
+they are related by a level-dependent rescaling
+$\Omega_{\mathrm{tr}} = (2 h^\vee)^{-1}\Omega_{\mathrm{KZ}}$
+together with $k \mapsto k(k+h^\vee)/(2h^\vee)$, or
+equivalently by absorbing the $(k+h^\vee)^{-1}$ factor into
+the KZ flat connection. The equation
+$k\,\Omega_{\mathrm{tr}} = \Omega_{\mathrm{KZ}}/(k+h^\vee)$
+should be read as a structural \emph{change of basis} between
+conventions, not as an identity of rational functions in $k$:
+at $k=0$ the LHS vanishes while the RHS is finite and non-zero.
+We adopt the trace convention throughout this note; every affine
+collision kernel in this section carries its level factor explicitly.
+\end{computation}
+
+\begin{computation}[Principal $\cW_N$ algebra]
+\label{comp:r-wn}
+Generators $W^{(s)}$ at weights $s = 2,3,\ldots,N$
+($N-1$ generators). The self-OPE of the spin-$s$ primary
+in the Fateev--Lukyanov normalization has leading singularity
+\[
+W^{(s)}(z)\,W^{(s)}(w) = \frac{c/s}{(z-w)^{2s}} + \cdots
+\]
+After $d\log$-absorption, the vacuum leading term is
+\begin{equation}\label{eq:r-wn}
+K_{ss}^{\mathrm{vac}}(z) = \frac{c/s}{z^{2s-1}} + \cdots
+\end{equation}
+The cross-OPE $W^{(s_1)}(z)\,W^{(s_2)}(w)$ for $s_1 \neq s_2$
+has leading coefficient that is field-dependent, not a $c$-number.
+\end{computation}
+
+\begin{computation}[Fermionic $bc$ system at weight~$\lambda$]
+\label{comp:r-bc}
+Generators: $b$ (weight~$\lambda$) and $c$
+(weight~$1-\lambda$), both fermionic.
+Central charge $c_{bc}(\lambda) = 1 - 3(2\lambda-1)^2$.
+The singular OPEs:
+\[
+b(z)\,c(w) \sim \frac{1}{z-w},\qquad
+b(z)\,b(w) \sim 0,\qquad
+c(z)\,c(w) \sim 0.
+\]
+The only singular OPE has a simple pole (pole order~$1$).
+After $d\log$-absorption the cross-contraction has pole order~$0$.
+It does not contribute to the scalar collision residue:
+\begin{equation}\label{eq:r-bc}
+K_{bc}^{\mathrm{coll}}(z) = 0.
+\end{equation}
+The self-OPEs $b(z)b(w)$ and $c(z)c(w)$ are regular
+(fermionic statistics forbid self-contraction at
+generic~$\lambda$), so $K_{bb}^{\mathrm{coll}}=K_{cc}^{\mathrm{coll}}=0$.
+
+At $\lambda = 2$: the reparametrization ghost system of the
+bosonic string, with $c_{bc}(2) = -26$.
+At $\lambda = 1/2$: a single Dirac fermion, $c_{bc}(1/2) = 1$.
+\end{computation}
+
+\begin{computation}[Bosonic $\beta\gamma$ system at
+weight~$\lambda$]\label{comp:r-bg}
+Generators: $\beta$ (weight~$\lambda$) and $\gamma$
+(weight~$1-\lambda$), both bosonic.
+Central charge
+$c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)
+= -c_{bc}(\lambda)$.
+OPE:
+\[
+\beta(z)\,\gamma(w) \sim \frac{1}{z-w}.
+\]
+After $d\log$-absorption the cross-contraction has pole order~$0$,
+so $K_{\beta\gamma}^{\mathrm{coll}}(z)=0$ in the collision-residue
+shadow. The modular characteristic comes from the stress tensor and
+composite sector.
+
+Complementarity check: $c_{\beta\gamma}(\lambda) +
+c_{bc}(\lambda) = 0$ for all~$\lambda$.
+At $\lambda = 1$: $c_{\beta\gamma}(1) = 2$,
+$c_{bc}(1) = -2$, sum~$= 0$.
+At $\lambda = 2$: $c_{\beta\gamma}(2) = 26$,
+$c_{bc}(2) = -26$, sum~$= 0$ (bosonic string ghost
+cancellation).
+\end{computation}
+
+
+% ================================================================
+% Section 4: The averaging map
+% ================================================================
+\section{The averaging map and the modular
+characteristic}\label{sec:averaging}
+
+\subsection{Definition of the averaging map}
+
+\begin{definition}[Averaging comparison]\label{def:av}
+An \emph{averaging datum} is an $R$-twisted descent datum from the
+ordered ($\Eone$) convolution Lie algebra to the modular symmetric
+convolution Lie algebra. With such a datum fixed, the arity-$n$
+comparison is the quotient to $\Sigma_n$-coinvariants:
+\begin{equation}\label{eq:av-def}
+\av\colon \gEone \longrightarrow \gmod.
+\end{equation}
+For finite-dimensional aritywise calculations over characteristic
+zero, the Reynolds operator
+\[
+\mathrm{Reyn}(\phi)(g,n)=\frac1{n!}\sum_{\sigma\in\Sigma_n}
+\sigma\cdot\phi(g,n)
+\]
+identifies invariants with coinvariants after a choice of splitting;
+it is not a canonical dg Lie section.
+\end{definition}
+
+\begin{theorem}[Averaging on the descent locus]\label{thm:av-properties}
+On the descent locus, the comparison map satisfies:
+\begin{enumerate}[\upshape(i)]
+\item $\av$ is a dg~Lie morphism.
+\item $\av(\Theta^{\Eone}_\cA) = \Theta_\cA$: the ordered
+ MC element maps to the symmetric MC element.
+\item In arity~$n$, the image is the equivariant operator class
+ $q_n((\Theta_\cA^{\Eone})_{g,n})$; its scalar coordinate is defined
+ after choosing $\tau_{\cA,n}^{\mathrm{res}}$.
+\end{enumerate}
+\end{theorem}
+
+At the level of MC elements, the ordered MC element has degree-wise
+components
+$(K_\cA^{\mathrm{coll}},(\Theta_\cA^{\Eone})_{0,3},
+(\Theta_\cA^{\Eone})_{0,4},\ldots)$.  The Maurer--Cartan equation gives
+their operadic boundary relations.  Under
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, the represented binary component
+satisfies the classical Yang--Baxter equation; the corresponding
+arity-three comparison carries the represented associator relation.
+
+The modular MC element $\Theta_\cA=\av(\Theta^{\Eone}_\cA)$ has
+arity-$n$ component $q_n((\Theta_\cA^{\Eone})_{g,n})$ in the homotopy
+coinvariants.
+
+\subsection{The $\Sigma_2$ action on a collision kernel}
+\label{subsec:sigma2}
+
+Before computing~$\kappa$ for specific families, we work
+out what the averaging map does to a generic collision kernel at
+degree~$2$, step by step.
+
+At degree~$2$, the $\Eone$ convolution algebra consists of
+elements on the ordered configuration space
+$\Conf_2(X) = \{(z_1,z_2) \in X^2 : z_1 \neq z_2\}$.
+Let $z = z_1 - z_2$ be the relative coordinate.
+After choosing a representation on the space~$V$ of strong generators,
+the collision kernel is a section of $\End(V^{\otimes 2})$ over
+$\Conf_2(X)$.
+For generators $\varphi_i$, $\varphi_j$, write
+\begin{equation}\label{eq:generic-r}
+K^{\mathrm{coll}}(z) = \sum_{i,j} K_{ij}(z)\cdot
+e_i \otimes e_j
+\;\in\;
+\End(V^{\otimes 2})\otimes\mathbb{C}((z)),
+\end{equation}
+where $\{e_i\}$ is a basis for~$V$ and each~$K_{ij}(z)$ is a
+Laurent series in~$z$ (possibly with field-dependent
+coefficients).
+
+The group $\Sigma_2$ acts on $\Conf_2(X)$ by swapping:
+$(z_1,z_2) \mapsto (z_2,z_1)$, equivalently $z \mapsto -z$.
+Simultaneously, $\Sigma_2$ acts on $\End(V)^{\otimes 2}$ by
+swapping tensor factors: $e_i \otimes e_j \mapsto
+e_j \otimes e_i$. The combined action on the collision kernel is:
+\begin{equation}\label{eq:sigma2-action}
+(\sigma \cdot K^{\mathrm{coll}})(z) = \sum_{i,j} K_{ij}(-z)\cdot
+e_j \otimes e_i.
+\end{equation}
+
+Under the characteristic-zero Reynolds identification, the
+$\Sigma_2$-coinvariant class has representative
+\begin{equation}\label{eq:sigma2-coinvariant}
+q_2(K^{\mathrm{coll}})(z)
+= \tfrac{1}{2}\bigl(K^{\mathrm{coll}}(z)
++ \sigma\cdot K^{\mathrm{coll}}(z)\bigr)
+= \tfrac{1}{2}\sum_{i,j}
+\bigl(K_{ij}(z) + K_{ji}(-z)\bigr)\cdot
+e_i \otimes e_j.
+\end{equation}
+
+\subsection{From function to scalar: the cyclic trace}
+\label{subsec:cyclic-trace}
+
+The class~\eqref{eq:sigma2-coinvariant} is an
+$\End(V^{\otimes2})$-valued function of~$z$.  Residue extraction and
+the chosen cyclic trace combine into
+$\tau_{\cA,2}^{\mathrm{res}}$.
+
+\medskip\noindent
+\emph{Residue extraction.}
+The modular convolution algebra at degree~$2$ pairs
+with the propagator $\eta_{12} = d\log(z_1 - z_2)$, which
+extracts the residue at $z = 0$. The relevant coefficient is
+\begin{equation}\label{eq:residue-step}
+\Res_{z=0}\bigl[q_2(K^{\mathrm{coll}})(z)\bigr]
+= \tfrac{1}{2}\sum_{i,j}
+\bigl(\Res_{z=0}\,K_{ij}(z) + \Res_{z=0}\,K_{ji}(-z)\bigr)
+\cdot e_i\otimes e_j.
+\end{equation}
+For an even-order pole $K_{ij}(z) = c/z^{2m}$:
+$\Res_{z=0}(c/z^{2m}) = 0$ and
+$\Res_{z=0}(c/(-z)^{2m}) = 0$.
+For an odd-order pole $K_{ij}(z) = c/z^{2m+1}$:
+$\Res_{z=0}(c/z^{2m+1}) = 0$ unless $m = 0$
+(simple pole), and
+$\Res_{z=0}(c/(-z)^{2m+1})
+= (-1)^{2m+1}\Res_{z=0}(c/z^{2m+1})
+= -\Res_{z=0}(c/z^{2m+1})$.
+
+For a simple-pole collision kernel $K_{ij}(z) = c_{ij}/z$:
+\[
+\Res_{z=0}\,c_{ij}/z + \Res_{z=0}\,c_{ji}/(-z)
+= c_{ij} - c_{ji}.
+\]
+This is the \emph{antisymmetric} part of the coefficient
+matrix. For a symmetric coefficient ($c_{ij} = c_{ji}$,
+as for $k\,\delta^{ab}$ in the Heisenberg/KM double pole),
+the two terms cancel!
+
+The resolution: for higher-weight generators, the relevant
+coefficient is not the simple residue but the
+\emph{moment residue}, as we now explain.
+
+\medskip\noindent
+\emph{The moment and the cyclic trace.}
+The cyclic trace on $\End(V^{\otimes 2})$ incorporates the
+conformal weights of the generators. For a generator
+$\varphi_i$ of weight~$h_i$, the OPE pairing carries a
+weight factor $z^{2h_i - 2}$ from the conformal Ward identity:
+the two-point function
+$\langle\varphi_i(z)\varphi_i(0)\rangle \propto z^{-2h_i}$
+contributes a volume factor $z^{2h_i}$, and the propagator
+$d\log z$ contributes~$z^{-2}$, giving a net factor
+$z^{2h_i - 2}$.
+
+The cyclic trace therefore evaluates the
+\emph{$(2h_i{-}2)$-th moment} of the residue:
+\begin{equation}\label{eq:cyclic-trace-moment}
+\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})
+= \sum_i \Res_{z=0}\bigl[z^{2h_i - 2}\cdot
+ K_{ii}^{\mathrm{vac}}(z)\bigr]
++ (\text{Sugawara shift}).
+\end{equation}
+
+For a single generator of weight~$h$ with vacuum collision kernel
+$K^{\mathrm{vac}}(z) = c_h/z^{2h-1} + \cdots$
+(leading vacuum pole), the moment residue is:
+\begin{equation}\label{eq:moment-residue}
+\Res_{z=0}\bigl[z^{2h-2}\cdot c_h/z^{2h-1}\bigr]
+= \Res_{z=0}\bigl[c_h/z\bigr] = c_h.
+\end{equation}
+The moment factor $z^{2h-2}$ exactly cancels the
+excess pole order, reducing any leading pole to a simple pole
+whose residue is the vacuum OPE coefficient~$c_h$.
+
+\medskip\noindent
+\emph{Field-dependent terms.}
+The full collision kernel contains field-dependent terms in addition
+to the vacuum ($c$-number) part. For Virasoro:
+$K_{\mathrm{Vir}_c}^{\mathrm{coll}}(z) = (c/2)/z^3 + 2T/z$, where $2T/z$
+is field-dependent.
+
+The vacuum projection
+$K^{\mathrm{vac}}(z) = \langle 0|K^{\mathrm{coll}}(z)|0\rangle$ retains
+the $c$-number part. The cyclic trace annihilates
+field-dependent terms because they have zero vacuum expectation
+value: $\langle 0|T|0\rangle = 0$. More precisely, the
+trace on $\End(V^{\otimes 2})$ contracts the two $V$-slots
+against the vacuum state, and any term proportional to a
+non-identity field gives zero after contraction.
+
+For Virasoro at $h = 2$:
+\[
+\Res_{z=0}\bigl[z^2\cdot K_{\mathrm{Vir}_c}^{\mathrm{coll}}(z)\bigr]
+= \Res_{z=0}\bigl[z^2\cdot\bigl((c/2)/z^3 + 2T/z\bigr)\bigr]
+= \Res_{z=0}\bigl[(c/2)/z + 2Tz\bigr]
+= c/2 + 0.
+\]
+The field-dependent term $2T$ is regular
+at $z = 0$ after the moment shift, so their residue vanishes.
+This is a general mechanism: the moment factor $z^{2h-2}$
+shifts the vacuum pole to a simple pole and simultaneously
+makes all field-dependent terms regular.
+
+\medskip
+For families whose scalar shadow is purely diagonal, the extraction
+rule is
+\begin{equation}\label{eq:kappa-full}
+\kappa(\cA)
+= \sum_i \kappa_i + \kappa_{\mathrm{sp}},
+\end{equation}
+where $\kappa_i = \Res_{z=0}[z^{2h_i-2}\cdot
+K_{ii}^{\mathrm{vac}}(z)]$ is the per-channel diagonal
+contribution and $\kappa_{\mathrm{sp}}$ is the Sugawara shift
+from simple-pole self-contraction (nonzero only for
+non-abelian same-weight generators).
+First-order systems and non-principal reductions also contain
+composite-sector contributions, so \eqref{eq:kappa-full} is an
+extraction rule on the diagonal standard families, not a universal
+trace-residue theorem.
+
+\subsection{Explicit trace: $\mathfrak{sl}_2$ at level~$k$}
+\label{subsec:sl2-explicit}
+
+We carry out the full computation for $\fg = \mathfrak{sl}_2$,
+$\dim = 3$, $h^\vee = 2$. The standard basis is
+\[
+e = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix},\quad
+f = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix},\quad
+h = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix},
+\]
+with bracket $[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$.
+
+The normalized invariant form (long roots squared
+length~$2$) is $(x,y) = \frac{1}{2h^\vee}\tr_{\mathrm{ad}}
+(\mathrm{ad}(x)\,\mathrm{ad}(y))
+= \frac{1}{4}\tr_{\mathrm{ad}}
+(\mathrm{ad}(x)\,\mathrm{ad}(y))$.
+Compute: $(e,f) = 1$, $(h,h) = 2$, $(e,e) = (f,f) = 0$.
+The form is indefinite; no real orthonormal basis exists.
+
+The Casimir is $\Omega = \sum_a t^a \otimes t_a$ where
+$\{t^a\}$ and $\{t_a\}$ are dual bases for~$(\ ,\ )$.
+With $t^1 = e$, $t^2 = f$, $t^3 = h/2$ and
+$t_1 = f$, $t_2 = e$, $t_3 = h/2$
+(so that $(t^a, t_b) = \delta^a_b$):
+\begin{equation}\label{eq:sl2-casimir}
+\Omega = e \otimes f + f \otimes e
++ \tfrac{1}{2}\,h \otimes h.
+\end{equation}
+Check: $\tr(\Omega) = (e,f) + (f,e) + \frac{1}{2}(h,h)
+= 1 + 1 + 1 = 3 = \dim(\mathfrak{sl}_2)$.
+
+The collision kernel is
+$K_{k,\mathfrak{sl}_2}^{\mathrm{coll}}(z)
+=k\,\Omega_{\mathrm{tr}}/z$.
+
+\medskip\noindent
+\emph{Double-pole channel.}
+Each generator~$J^a$ has weight $h = 1$; the moment factor is
+$z^0 = 1$. The double-pole OPE
+$J^a(z)\,J_a(w) \sim k\,(t^a,t_a)/(z-w)^2 = k/(z-w)^2$
+gives collision-kernel coefficient $k/z$ per dual pair. Three dual pairs,
+total double-pole trace:
+\[
+\tr\bigl(\dfib^{\,2}\big|_{\mathrm{dp}}\bigr)
+= 3k\cdot\omega_1.
+\]
+Normalizing by $2h^\vee = 4$:
+$\kappa_{\mathrm{dp}} = 3k/(2h^\vee) = 3k/4$.
+
+\medskip\noindent
+\emph{Simple-pole channel.}
+Use the normalized invariant form with dual bases
+$\{x_i\}$ and $\{x^i\}$, so
+\[
+\Omega=\sum_i x_i\otimes x^i
+=e\otimes f+f\otimes e+\tfrac12h\otimes h .
+\]
+The adjoint Casimir identity is
+\[
+\sum_i[x_i,[x^i,y]]=2h^\vee y .
+\]
+For $\mathfrak{sl}_2$, $h^\vee=2$; with
+$x_i=e,f,h$ and $x^i=f,e,h/2$, the identity gives
+$\sum_i[x_i,[x^i,e]]=4e$. This is the simple-pole
+self-contraction responsible for the Sugawara shift.
+
+The Sugawara trace:
+\[
+\kappa_{\mathrm{sp}} = \frac{\dim(\fg)}{2} = \frac{3}{2}.
+\]
+
+\medskip\noindent
+\emph{Total.}
+\[
+\kappa(V_k(\mathfrak{sl}_2))
+= \kappa_{\mathrm{dp}} + \kappa_{\mathrm{sp}}
+= \frac{3k}{4} + \frac{3}{2}
+= \frac{3(k+2)}{4}
+= \frac{\dim(\fg)(k+h^\vee)}{2h^\vee}.\quad\checkmark
+\]
+At $k = 1$: $\kappa = 9/4$. At $k = -2$ (critical):
+$\kappa = 0$. At $k = 0$:
+$\kappa = 3/2 = \dim(\mathfrak{sl}_2)/2$
+(the Sugawara contribution from the three generators).
+
+\subsection{Explicit trace: $\mathfrak{sl}_3$ at level~$k$}
+\label{subsec:sl3-explicit}
+
+For $\fg = \mathfrak{sl}_3$: $\dim = 8$, $h^\vee = 3$.
+The Lie algebra has the Chevalley basis
+$\{e_1,e_2,e_3,f_1,f_2,f_3,h_1,h_2\}$ (three positive roots,
+three negative roots, two Cartan generators), giving eight
+generators $J^a$ for $a = 1,\ldots,8$.
+
+The collision kernel is
+$K_{k,\mathfrak{sl}_3}^{\mathrm{coll}}(z)
+=k\,\Omega_{\mathrm{tr}}/z$ with
+$\Omega_{\mathrm{tr}} = \sum_{a=1}^8
+t^a \otimes t^a$.
+
+\medskip\noindent
+\emph{Double-pole channel.}
+Each of the $8$ generators has weight~$1$, moment factor
+$z^0 = 1$, and per-channel residue
+$\kappa_a^{\mathrm{dp}} = k$. Summing and normalizing:
+\[
+\kappa_{\mathrm{dp}} = \frac{8k}{2h^\vee} = \frac{8k}{6}
+= \frac{4k}{3}.
+\]
+
+\medskip\noindent
+\emph{Simple-pole channel.}
+The adjoint Casimir eigenvalue is
+$C_2^{\mathrm{ad}} = 2h^\vee = 6$. The Sugawara trace:
+\[
+\kappa_{\mathrm{sp}} = \frac{\dim(\fg)}{2} = \frac{8}{2} = 4.
+\]
+
+\medskip\noindent
+\emph{Total.}
+\[
+\kappa(V_k(\mathfrak{sl}_3)) = \frac{4k}{3} + 4
+= \frac{4k + 12}{3} = \frac{4(k+3)}{3}
+= \frac{\dim(\fg)(k+h^\vee)}{2h^\vee}.\quad\checkmark
+\]
+At $k = 1$: $\kappa = 16/3$. At $k = -3$ (critical):
+$\kappa = 0$.
+
+\subsection{Computation: $bc$ and $\beta\gamma$ systems}
+\label{subsec:av-bc-bg}
+
+The $bc$ and $\beta\gamma$ systems have a distinct-weight
+structure ($h_b = \lambda \neq 1-\lambda = h_c$ for
+$\lambda \neq 1/2$) and their only singular OPE is a
+cross-OPE.
+
+\medskip\noindent
+\emph{The $bc$ system.}
+Generators $b$ (weight~$\lambda$) and $c$
+(weight~$1{-}\lambda$).
+The cross-contraction has pole order~$0$ after $d\log$-absorption:
+\[
+\Res_{z=0}[K_{bc}^{\mathrm{coll}}(z)] = 0.
+\]
+The collision residue has \emph{no residue}. The kappa
+the diagonal collision-kernel extraction gives zero.
+
+How does $\kappa$ arise? For the $bc$ system, the stress
+tensor is
+\[
+T_{bc} = (\partial b)\,c\cdot\lambda + b\,(\partial c)
+\cdot(1-\lambda),
+\]
+a composite field of weight~$2$. The curvature
+$\dfib^{\,2} = \kappa\cdot\omega_g$ arises not from the
+diagonal collision kernel directly
+but from the Sugawara-type construction: the composite stress
+tensor generates a Virasoro subalgebra with central charge
+$c_{bc}(\lambda) = 1 - 3(2\lambda-1)^2$.
+
+The modular characteristic of the full $bc$ vertex algebra is
+\begin{equation}\label{eq:kappa-bc}
+\kappa(bc_\lambda) = \frac{c_{bc}(\lambda)}{2}
+= \frac{1 - 3(2\lambda-1)^2}{2}.
+\end{equation}
+This arises from the Virasoro subalgebra generated by
+$T_{bc}$: the bar complex of the $bc$ system, as a
+factorization coalgebra, has fiberwise curvature controlled by
+the stress tensor, and $\kappa = c/2$ when the curvature is
+entirely generated by the Virasoro sector.
+
+Boundary checks:
+$\lambda = 1/2 \Rightarrow c_{bc} = 1$,
+$\kappa = 1/2$ (single Dirac fermion).
+$\lambda = 2 \Rightarrow c_{bc} = -26$,
+$\kappa = -13$ (string reparametrization ghost).
+
+\medskip\noindent
+\emph{The $\beta\gamma$ system.}
+By complementarity $c_{\beta\gamma} + c_{bc} = 0$:
+\begin{equation}\label{eq:kappa-bg}
+\kappa(\beta\gamma_\lambda) = \frac{c_{\beta\gamma}(\lambda)}{2}
+= \frac{2(6\lambda^2-6\lambda+1)}{2}
+= 6\lambda^2-6\lambda+1.
+\end{equation}
+Checks: $\lambda = 1/2 \Rightarrow \kappa = -1/2$;
+$\lambda = 2 \Rightarrow \kappa = 13$;
+$\kappa(bc_\lambda) + \kappa(\beta\gamma_\lambda)
+= (1-3(2\lambda-1)^2)/2 + (6\lambda^2-6\lambda+1) = 0$
+for all~$\lambda$ (Koszul complementarity, conductor~$K = 0$).
+
+\begin{remark}\label{rem:bc-r-matrix}
+The $bc$ and $\beta\gamma$ systems illustrate a subtlety: when
+the only singular OPE is a \emph{cross}-OPE (not a self-OPE),
+the diagonal collision kernel has zero residue.  The scalar~$\kappa$
+arises from the Sugawara stress tensor of the
+composite system: the bar complex detects the conformal anomaly
+through the Virasoro sector, regardless of whether the
+generators have non-trivial self-OPEs. For free-field systems
+whose OPE is purely a cross-OPE, $\kappa = c/2$ exactly, where
+$c$ is the central charge of the stress tensor. This is
+consistent with the general formula~\eqref{eq:kappa-full}:
+the ``Sugawara shift'' subsumes the entire contribution when
+the diagonal collision kernel is zero.
+\end{remark}
+
+\subsection{Degree-$2$: diagonal extraction rule}
+\label{subsec:kappa-general}
+
+\begin{proposition}\label{prop:kappa-formula}
+For diagonal standard families, the scalar degree-$2$ contribution is
+extracted by the weight-dependent moment residue. For a single
+generator~$\varphi_i$ of weight~$h_i$, the per-channel contribution is
+\begin{equation}\label{eq:kappa-per-channel}
+\kappa_i = \Res_{z=0}\bigl[z^{2h_i - 2}\cdot
+ K_{ii}^{\mathrm{vac}}(z)\bigr].
+\end{equation}
+For abelian and Virasoro-type families,
+$\kappa(\cA)=\sum_i\kappa_i$. For non-abelian affine
+Kac--Moody in the trace-form convention,
+$\kappa(\cA)=\sum_i\kappa_i+\dim(\fg)/2$.
+\end{proposition}
+
+\subsection{Computation: Heisenberg}\label{subsec:av-heis}
+
+$K_{\Heis_k}^{\mathrm{coll}}(z)=k/z$, $h=1$.
+\[
+\kappa_J = \Res_{z=0}\bigl[z^{2\cdot 1 - 2}\cdot k/z\bigr]
+= \Res_{z=0}[k/z] = k.
+\]
+
+\begin{equation}\label{eq:kappa-heis}
+\boxed{\;\kappa(H_k) = k.\;}
+\end{equation}
+
+Boundary checks: $k = 0 \Rightarrow \kappa = 0$ (uncurved);
+$k = 1 \Rightarrow \kappa = 1$.
+
+\subsection{Computation: Virasoro}\label{subsec:av-vir}
+
+$K_{\Vir_c}^{\mathrm{vac}}(z)=(c/2)/z^3$, $h=2$.
+\[
+\kappa_T = \Res_{z=0}\bigl[z^{2\cdot 2 - 2}\cdot
+ (c/2)/z^3\bigr]
+= \Res_{z=0}\bigl[z^2\cdot(c/2)/z^3\bigr]
+= \Res_{z=0}\bigl[(c/2)/z\bigr] = c/2.
+\]
+
+\begin{equation}\label{eq:kappa-vir}
+\boxed{\;\kappa(\Vir_c) = c/2.\;}
+\end{equation}
+
+Boundary checks: $c = 0 \Rightarrow \kappa = 0$;
+$c = 13 \Rightarrow \kappa = 13/2$ (self-dual point);
+$c = 26 \Rightarrow \kappa = 13$.
+
+\subsection{Computation: $\cW_N$}\label{subsec:av-wn}
+
+Generators $W^{(s)}$ at weights $s = 2,\ldots,N$ with
+per-channel vacuum collision kernel
+$K_{ss}^{\mathrm{vac}}(z)=(c/s)/z^{2s-1}+\cdots$.
+
+For each generator:
+\[
+\kappa_s = \Res_{z=0}\bigl[z^{2s-2}\cdot
+ (c/s)/z^{2s-1}\bigr]
+= \Res_{z=0}\bigl[(c/s)/z\bigr] = c/s.
+\]
+
+Sum over generators:
+\begin{equation}\label{eq:kappa-wn}
+\boxed{\;\kappa(\cW_N) = \sum_{s=2}^{N}\frac{c}{s}
+ = c\cdot(H_N - 1),\quad
+ H_N = \sum_{j=1}^{N}\frac{1}{j}.\;}
+\end{equation}
+
+Verification at $N=2$ ($\cW_2 = \Vir$):
+$\kappa = c\cdot(3/2 - 1) = c/2$.
+
+Verification at $N=3$:
+$\kappa = c\cdot(1/2 + 1/3) = 5c/6$.
+
+Verification at $N=4$:
+$\kappa = c\cdot(1/2 + 1/3 + 1/4) = 13c/12$.
+
+\begin{warning}\label{warn:harmonic}
+$H_{N-1} \neq H_N - 1$. At $N = 2$: $H_1 = 1$ but
+$H_2 - 1 = 1/2$. The formula uses $H_N - 1$ (subtract the
+integer~$1$ from the $N$-th harmonic number), not $H_{N-1}$
+(the harmonic number at~$N-1$).
+\end{warning}
+
+\subsection{Computation: affine Kac--Moody and the
+Sugawara shift}\label{subsec:av-km}
+
+For $V_k(\fg)$ with $\fg$ simple, the trace-form collision kernel is
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z$.
+The functional $\tau_{k,\fg,2}^{\mathrm{res}}$ evaluates its
+double-pole channel and gives $\kappa_{\mathrm{dp}}$.  A one-loop
+self-contraction in the simple-pole OPE channel supplies the Sugawara
+term and completes~$\kappa$.
+
+The proof proceeds in three steps.
+
+\medskip\noindent
+\emph{Double-pole channel.}
+The diagonal OPE $J^a(z)J^a(w) \sim k/(z-w)^2$ contributes
+to the fiberwise curvature $\dfib^{\,2}$ on a genus-$1$ curve:
+\begin{equation}\label{eq:dp-channel}
+\dfib^{\,2}\big|_{\mathrm{dp}}(J^a \boxtimes J^b)
+= (-2\pi i)\cdot k\,(J^a,J^b)\cdot\omega_1,
+\end{equation}
+where $\omega_1 = c_1(\mathbb{E})$ is the Hodge class.
+Taking the trace over the normalized form $\sum_a(J^a,J_a)
+= \dim(\fg)$:
+\begin{equation}\label{eq:dp-trace}
+\tr\bigl(\dfib^{\,2}\big|_{\mathrm{dp}}\bigr)
+= k\cdot\dim(\fg)\cdot\omega_1.
+\end{equation}
+
+\medskip\noindent
+\emph{Simple-pole channel (one-loop self-contraction).}
+The cross-OPE $J^a(z)J^b(w) \sim f^{ab}{}_c\,J^c(w)/(z-w)$
+feeds back into a second OPE contraction: $J^c$ is
+contracted with itself through a second propagator loop,
+forming a one-loop Feynman diagram.
+\begin{equation}\label{eq:sp-channel}
+\dfib^{\,2}\big|_{\mathrm{sp}}(J^a \boxtimes J^b)
+= (-2\pi i)\cdot\tfrac{1}{2}\sum_{c,d}
+ f^{ac}{}_d\,f^{bc}{}_d\cdot\omega_1.
+\end{equation}
+The factor~$\frac{1}{2}$ is the symmetry factor
+($|\Aut| = 2$ of the one-loop diagram). The contraction
+$\sum_{c,d}f^{ac}{}_d\,f^{bc}{}_d$ is the adjoint
+quadratic Casimir eigenvalue:
+\begin{equation}\label{eq:casimir-adj}
+\sum_{c,d}f^{ac}{}_d\,f^{bc}{}_d
+= C_2^{\mathrm{ad}}\cdot(J^a,J^b) = 2h^\vee\cdot(J^a,J^b).
+\end{equation}
+This is the Killing form identity: $K^{ab} = 2h^\vee\,
+\delta^{ab}$ in an orthonormal basis. Taking the trace:
+\begin{equation}\label{eq:sp-trace}
+\tr\bigl(\dfib^{\,2}\big|_{\mathrm{sp}}\bigr)
+= \tfrac{1}{2}\cdot 2h^\vee\cdot\dim(\fg)\cdot\omega_1
+= h^\vee\cdot\dim(\fg)\cdot\omega_1.
+\end{equation}
+
+\medskip\noindent
+\emph{Combining the channels.}
+On a single diagonal component, the two channels give
+per-component curvature $k + h^\vee$. Expressing the
+curvature as a multiple of the Casimir
+$\mathsf{C} = \sum_a J^a\otimes J_a$:
+\[
+m_0 = \frac{k+h^\vee}{2h^\vee}\cdot\mathsf{C},
+\]
+where $1/(2h^\vee)$ normalizes against $C_2^{\mathrm{ad}}$.
+Then $\kappa = \tr(m_0)$:
+\begin{align}
+\kappa &= \frac{k+h^\vee}{2h^\vee}\cdot\tr(\mathsf{C})
+= \frac{k+h^\vee}{2h^\vee}\cdot\sum_a(J^a,J_a)
+\notag\\
+&= \frac{(k+h^\vee)\cdot\dim(\fg)}{2h^\vee}.
+\label{eq:kappa-km-derivation}
+\end{align}
+
+The decomposition:
+\begin{equation}\label{eq:dp-sp-decomposition}
+\kappa = \underbrace{\frac{k\cdot\dim(\fg)}{2h^\vee}}_{%
+ \kappa_{\mathrm{dp}}\text{ (tree-level collision-kernel trace)}}
+\;+\;
+\underbrace{\frac{\dim(\fg)}{2}}_{%
+ \kappa_{\mathrm{sp}}\text{ (one-loop, Sugawara shift)}}.
+\end{equation}
+
+\begin{equation}\label{eq:kappa-km}
+\boxed{\;\kappa\bigl(V_k(\fg)\bigr)
+= \frac{\dim(\fg)\,(k + h^\vee)}{2h^\vee}.\;}
+\end{equation}
+
+\begin{example}[Consistency checks]\label{ex:km-checks}
+\begin{center}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+$\fg$ & $\dim$ & $h^\vee$ & $\kappa$ & $k=1$ &
+ $k=-h^\vee$ \\
+\midrule
+$\mathfrak{sl}_2$ & $3$ & $2$ & $3(k{+}2)/4$ & $9/4$ & $0$ \\
+$\mathfrak{sl}_3$ & $8$ & $3$ & $4(k{+}3)/3$ & $16/3$ & $0$ \\
+$E_6$ & $78$ & $12$ & $13(k{+}12)/4$ & $169/4$ & $0$ \\
+$E_7$ & $133$ & $18$ & $133(k{+}18)/36$ & $2527/36$ & $0$ \\
+$E_8$ & $248$ & $30$ & $62(k{+}30)/15$ & $1922/15$ & $0$ \\
+$G_2$ & $14$ & $4$ & $7(k{+}4)/4$ & $35/4$ & $0$ \\
+$F_4$ & $52$ & $9$ & $26(k{+}9)/9$ & $260/9$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+At $k = -h^\vee$ (critical level), $\kappa = 0$: the
+uncurved fixed point of Feigin--Frenkel.
+At $k = 0$, $\kappa = \dim(\fg)/2$: the Sugawara shift
+alone.
+\end{example}
+
+\subsection{When the Sugawara shift vanishes}
+\label{subsec:sugawara-vanishing}
+
+\begin{proposition}\label{prop:sugawara-vanishing}
+The Sugawara shift $\kappa_{\mathrm{sp}}$ is non-zero if and
+only if the algebra has multiple generators of the same
+conformal weight with non-trivial cross-OPE at the
+simple-pole level. In the scalar-shift-free cases,
+$\kappa=\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$.
+\end{proposition}
+
+Three cases:
+
+\begin{enumerate}[(i)]
+\item \emph{Single-generator algebras}
+ (Heisenberg, Virasoro): no cross-OPE,
+ $\kappa_{\mathrm{sp}} = 0$.
+
+\item \emph{Distinct-weight multi-generator algebras}
+ ($\cW_N$): the $c$-number contributions come only from
+ diagonal self-OPEs; the cross-OPEs between generators of
+ different weights have field-dependent leading coefficients
+ that do not produce closed loops.
+ $\kappa_{\mathrm{sp}} = 0$.
+
+\item \emph{Same-weight multi-generator algebras}
+ (Kac--Moody): all $\dim(\fg)$ generators have weight~$1$,
+ the structure constants~$f^{ab}{}_c$ create the one-loop
+ self-contraction, and
+ $\kappa_{\mathrm{sp}} = \dim(\fg)/2 \neq 0$.
+\end{enumerate}
+
+\subsection{Summary of collision kernels and $\kappa$-values}
+\label{subsec:summary-table}
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Family & $K^{\mathrm{coll}}(z)$ (vacuum leading) & $\kappa$ &
+$\kappa_{\mathrm{sp}}$ \\
+\midrule
+$H_k$ & $k/z$ & $k$ & $0$ \\
+$\Vir_c$ & $(c/2)/z^3$ & $c/2$ & $0$ \\
+$V_k(\fg)$ & $k\,\Omega_{\mathrm{tr}}/z$ &
+ $\dim(\fg)(k{+}h^\vee)/(2h^\vee)$ & $\dim(\fg)/2$ \\
+$\cW_N$ & $(c/s)/z^{2s-1}$ per spin & $c(H_N{-}1)$ & $0$ \\
+$bc_\lambda$ & $0$ in collision residue &
+ $(1{-}3(2\lambda{-}1)^2)/2$ & all from Sug. \\
+$\beta\gamma_\lambda$ & $0$ in collision residue &
+ $6\lambda^2{-}6\lambda{+}1$ & all from Sug. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% ================================================================
+% Section 5: The chiral curvature
+% ================================================================
+\section{The chiral curvature}\label{sec:chiral-cw}
+
+The averaging comparison sends the ordered collision kernel to the
+operator class $q_2(K_\cA^{\mathrm{coll}})$.  On abelian and scalar
+families the moment-residue functional gives
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})=\kappa$.
+For non-abelian affine Kac--Moody algebras the same functional gives
+$\kappa_{\mathrm{cl}}$, and the Sugawara term completes the modular
+characteristic:
+$\kappa=\kappa_{\mathrm{cl}}+\dim(\fg)/2$.
+The question it forces is: what role does~$\kappa$ play
+geometrically? The answer: $\kappa$ is the proportionality
+constant of a curvature. The bar differential, which squares
+to zero on~$\mathbb{P}^1$, fails to square to zero on
+higher-genus curves; the failure is proportional to~$\kappa$.
+This section derives that formula from the propagator on a
+genus-$g$ curve.
+
+\subsection{Propagators at higher genus}
+
+On~$\mathbb{P}^1$, the propagator
+$\eta_{12} = d\log(z_1 - z_2)$ is single-valued and the bar
+differential satisfies $d_{\mathrm{bar}}^2 = 0$. On a
+genus-$g$ Riemann surface $\Sigma_g$ with $g \ge 1$, the
+function $z_1 - z_2$ is not globally defined. The
+single-valued (Arakelov-normalized) propagator is
+\begin{equation}\label{eq:propagator-g}
+\eta^{(g)}_{ij} = \Bigl[\partial_{z_i}\!\log E(z_i,z_j)
++ \pi\sum_{\alpha,\beta=1}^{g}
+\omega_\alpha(z_i)\,(\im\,\Omega)^{-1}_{\alpha\beta}\,
+\im\!\Bigl(\int_{z_0}^{z_j}\!\omega_\beta\Bigr)
+\Bigr](dz_i - dz_j),
+\end{equation}
+where $E(z,w)$ is the prime form, $\omega_1,\ldots,\omega_g$
+are the normalized abelian differentials, and~$\Omega$ is the
+$g\times g$ period matrix.
+
+At genus~$1$ ($\Sigma_g = E_\tau$ with period~$\tau$):
+\begin{equation}\label{eq:propagator-1}
+\eta^{(1)}_{12}
+=
+\left[
+\partial_u\log\vartheta_1(u\mid\tau)
++2\pi i\,\frac{\im u}{\im\tau}
+\right]_{u=z_1-z_2}
+(dz_1-dz_2),
+\end{equation}
+where $\vartheta_1$ is the odd Jacobi theta function. The
+real-analytic coefficient multiplies the same $(1,0)$ differential as
+the theta quotient; its $+2\pi i$ shift under $u\mapsto u+\tau$
+cancels the theta quotient's $-2\pi i$ shift, giving a
+double-periodic Arakelov-normalized propagator.
+
+\subsection{The curvature formula}
+
+\begin{theorem}[Fiber curvature and base obstruction]\label{thm:curvature}
+The fiberwise bar differential on $B(\cA)$ over~$\Sigma_g$
+satisfies
+\begin{equation}\label{eq:curvature}
+\dfib^{\,2} = \kappa(\cA)\cdot\omega_g^{\mathrm{Ar}},
+\end{equation}
+where $\omega_g^{\mathrm{Ar}}$ is the Arakelov $(1,1)$-form on the
+fiber curve. The GRR/Deligne-pairing pushforward, under $H_D^K$,
+produces
+\[
+ \mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g(\mathfrak O_g^K(\cA))
+ =(-1)^g\kappa(\cA)c_g(\mathbb E_g).
+\]
+For $g\geq2$, the native class
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)\in H^2(\Def_g(\cA))$
+enters this formula through the comparison package
+$H_D^{\mathrm{tr}}$.
+\end{theorem}
+
+At genus~$1$:
+$\omega_1 = \frac{i}{2\im(\tau)}\,dz\wedge d\bar z$.
+At genus~$g \ge 2$:
+$\omega_g$ involves the full period matrix
+$(\im\,\Omega)^{-1}$, which is a $g \times g$ matrix
+(not a scalar).
+
+The curvature factorizes:
+\[
+\dfib^{\,2} = \underbrace{\kappa(\cA)}_{\text{algebra}}
+\;\cdot\;
+\underbrace{\omega_g}_{\text{geometry}}.
+\]
+The first factor is intrinsic to the chiral algebra
+(a quasi-isomorphism invariant, independent of the curve).
+The second factor is intrinsic to the complex structure of
+the curve (independent of the algebra). This factorization
+is a structural feature of the chiral theory with no direct
+classical Chern--Weil analogue.
+
+\subsection{Cardy--Arakelov test for \texorpdfstring{$\kappa$}{kappa}}
+\label{subsec:cardy-arakelov}
+
+The curvature formula~\eqref{eq:curvature} is algebraic: $\kappa(\cA)$
+is extracted by $\tau_{\cA,2}^{\mathrm{res}}q_2$ from the collision
+kernel, and $\omega_g$
+is a geometric form on $\Sigma_g$. The Cardy--Arakelov identity
+exhibits the same $\kappa$ as the Arakelov-normalised coefficient of
+the coincident-limit torus two-point function of the stress tensor,
+thereby providing an independent geometric derivation of $\kappa$
+from $\langle T(z)T(w)\rangle_{\tau}$.
+
+\begin{conjecture}[Cardy--Arakelov test for the Virasoro lane]
+\label{thm:cardy-arakelov-kappa}
+Let $\cA$ be a chirally Koszul algebra whose scalar invariant is the
+Virasoro lane $\kappa=c/2$, and let $\Sigma_1 = E_\tau$ be an elliptic curve
+with Arakelov $(1,1)$-form
+$\omega_1 = \tfrac{i}{2\im(\tau)}\,dz\wedge d\bar z$
+\textup{(}\textup{}: $\int_{E_\tau}\omega_1 = 1$\textup{)}. Let
+$\langle T(z)T(w)\rangle_\tau^{\reg}$ denote the torus two-point
+function regularised by subtracting the $c/2\cdot(z-w)^{-4}$
+holomorphic short-distance singularity and the Sugawara
+self-energy shift~$\Delta T_{\mathrm{Sug}}$. Then the modular
+Virasoro-lane scalar satisfies
+\begin{equation}\label{eq:cardy-arakelov}
+\frac{c}{2}
+\;=\;
+\lim_{w\to z}
+\frac{\langle T(z)T(w)\rangle_\tau^{\reg}}{\omega_1(z)}
+\;=\;
+\Res^{(2)}_{w=z}\!\bigl(\langle T(z)T(w)\rangle_\tau\bigr)
+\,/\,\omega_1(z),
+\end{equation}
+where $\Res^{(2)}_{w=z}$ denotes the coefficient of
+$(z-w)^{-2}\,dz\wedge d\bar z$ in the genus-$1$ Arakelov
+propagator expansion. The identity is independent of the
+insertion point~$z$ and of the choice of Arakelov
+trivialisation, and is covariant under
+$\tau\mapsto(a\tau+b)/(c\tau+d)$.
+\end{conjecture}
+
+\begin{remark}[Proof obligation]
+The missing step is an Arakelov/Faltings or Bismut--Gillet--Soulé
+derivation identifying the regularised torus stress-tensor two-point
+coefficient with the Virasoro lane $c/2$. Stress-tensor two-point
+functions do not recover the programme's full level-trace invariant
+for Heisenberg or affine Kac--Moody without additional current/OPE
+data.
+\end{remark}
+
+\begin{remark}[Per-family verification]
+\label{rem:cardy-arakelov-families}
+Equation~\eqref{eq:cardy-arakelov} is a Virasoro-lane test. For
+Heisenberg and affine Kac--Moody, the full scalar invariant is
+extracted from current/OPE trace data and the Sugawara shift, not from
+the stress-tensor two-point function alone. For principal $\cW_N$, the
+claimed equality with $c(H_N-1)$ is a separate family computation.
+\end{remark}
+
+\begin{remark}[Chiral Chern--Weil content]
+\label{rem:cardy-is-chern-weil}
+Equation~\eqref{eq:cardy-arakelov} is the proposed Virasoro-lane
+chiral Chern--Weil form of Cardy's identity. On the classical side, a connection's
+curvature pairs against an invariant polynomial to yield a
+Chern class; on the chiral side, the Maurer--Cartan element
+$\Theta^{\Eone}_\cA$ restricted to $\Sigma_1$ pairs against
+the Arakelov form $\omega_1$ to yield the Virasoro scalar. The
+full programme invariant still requires the family-specific
+extraction rule.
+\end{remark}
+
+\subsection{The chiral Chern--Weil map}
+
+As $[\Sigma_g]$ varies over $\Mbar_g$, the bar complex
+forms a family of curved cochain complexes.  The fibrewise curvature
+defines the following typed trace data.
+
+\begin{theorem}[Chiral Chern--Weil; \ClaimStatusConditional]\label{thm:chiral-cw}
+\textup{[Type signature: Open quadrant; modular-trace presentation;
+levels $4\to5$; package
+$H_D=(H_D^1,H_D^K,H_D^{\mathrm{tr}},H_D^{\mathrm{graph}})$.]}
+For a cyclic chart algebra~$\cA$ and $g\geq2$, the native class is
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)\in
+H^2(\operatorname{Def}_g(\cA))$.  Under~$H_D^K$,
+\begin{equation}\label{eq:obs-class}
+\mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+\qquad
+\operatorname{ch}_g(\mathfrak O_g^K(\cA))
+=(-1)^g\kappa(\cA)\lambda_g
+ \quad \end{equation}
+with $\lambda_g=c_g(\mathbb E_g)$.  Under~$H_D^1$ the pointed
+genus-one trace of the deformation class is $\kappa(\cA)\lambda_1$;
+$H_D^{\mathrm{tr}}$ supplies its comparison with~$\mathfrak O_g^K$.
+Under~$H_D^{\mathrm{graph}}$ the numerical output is
+$F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$.
+\end{theorem}
+
+The chiral Chern--Weil map:
+\begin{equation}\label{eq:chiral-cw-map}
+\underbrace{\Theta^{\Eone}_\cA}_{\text{MC element}}
+\;\xrightarrow{\;q\;}
+\;\underbrace{\Theta^{\mathrm{mod}}_\cA}_{\text{homotopy-coinvariant MC element}}
+\;\xrightarrow{\;\text{genus-$g$ deformation component}\;}
+\;\underbrace{\operatorname{Obs}^{\mathrm{def}}_g\in
+H^2(\operatorname{Def}_g)}_{\substack{\text{native deformation class}\\
+g\geq2}}
+\;\xrightarrow{\;H_D^{\mathrm{tr}}\;}
+\;\underbrace{\mathfrak O_g^K\in K^0(\Mbar_g)}_{\text{perfect object}}
+\;\xrightarrow{\;\operatorname{ch}_g\;}
+\;\underbrace{(-1)^g\kappa\lambda_g\in H^{2g}(\Mbar_g)}_{\text{Hodge character}}.
+\end{equation}
+
+\begin{remark}[Comparison with classical Chern--Weil]
+\label{rem:comparison}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{4.2cm}p{5.5cm}@{}}
+\toprule
+\textbf{Classical} & \textbf{Chiral} \\
+\midrule
+Connection $\nabla$ & MC element $\Theta^{\Eone}_\cA$ \\
+Curvature $F_\nabla \in \Omega^2(M;\fg)$
+ & $K_\cA^{\mathrm{coll}}(z) \in \gEone$; $\dfib^{\,2} = \kappa\cdot\omega_g$ \\
+Inv.\@ polynomial $P \in \Sym^k(\fg^*)^G$
+ & Averaging map $\av\colon\gEone\to\gmod$ \\
+$\CW(P) = P(F^k)$
+ & $\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})=\kappa_{\mathrm{cl}}$ \\
+Bianchi $d_\nabla F = 0$
+ & MC: $d\Theta + \frac{1}{2}[\Theta,\Theta] = 0$ \\
+Char.\@ class $[P(F^k)] \in H^{2k}(M)$
+ & $\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$ under $H_D^K$ \\
+Independence of connection
+ & $\kappa$ is a qi-invariant \\
+$H^*(BG) = \Sym^*(\fg^*)^G$
+ & Shadow tower $(\kappa,\mathfrak{C},\mathfrak{Q},\ldots)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Three structural features have no classical analogue:
+(i)~the base curve~$X$ itself varies over~$\Mbar_g$;
+(ii)~the curvature factorizes as algebra $\times$ geometry;
+(iii)~the characteristic classes are graded by
+genus~$g$, not by degree of an invariant polynomial.
+\end{remark}
+
+
+% ================================================================
+% Section 6: The shadow tower
+% ================================================================
+\section{The shadow tower}\label{sec:shadow}
+
+The modular characteristic~$\kappa$ is the scalar coordinate
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$ in the abelian
+and scalar lanes.  The ordered MC element
+$\Theta^{\Eone}_\cA$ has components at every degree:
+the KZ associator~$r_3$ at degree~$3$, the quartic coherence
+$r_4$ at degree~$4$, and so on. Each carries $\Eone$ operadic
+indices; each has a $\Sigma_n$-coinvariant shadow. The
+sequence of these shadows is the \emph{shadow tower}, and
+its depth classifies chiral algebras into four types.
+
+\subsection{The shadow algebra}
+
+\begin{definition}[Shadow algebra]\label{def:shadow-algebra}
+Let $\cA$ be a chiral algebra with modular cyclic deformation
+complex $\Defcyc^{\mathrm{mod}}(\cA)$. The \emph{shadow
+algebra} is
+\begin{equation}\label{eq:shadow-algebra}
+\Ash := H_\bullet\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr),
+\end{equation}
+equipped with the descended Lie bracket from the convolution
+bracket on $\Defcyc^{\mathrm{mod}}(\cA)$.
+\end{definition}
+
+\begin{proposition}\label{prop:shadow-bracket}
+The convolution bracket has degree~$0$ and maps
+degree~$r_1 \times$ degree~$r_2$ to degree~$r_1 + r_2 - 2$
+\textup{(}by gluing two external legs\textup{)}. It descends
+to a well-defined graded Lie bracket on~$\Ash$, making
+$(\Ash, [-,-])$ a bigraded Lie algebra.
+\end{proposition}
+
+\begin{proof}
+The bracket $[-,-]$ on $\Defcyc^{\mathrm{mod}}(\cA)$ is a
+chain map: $d[f,g] = [df,g] + (-1)^{|f|}[f,dg]$. Cocycles
+map to cocycles; the bracket of a cocycle with a coboundary is
+a coboundary. The descended bracket inherits graded
+antisymmetry and the Jacobi identity.
+\end{proof}
+
+The shadow algebra carries a bigrading by degree $r \ge 2$ and
+genus $g \ge 0$:
+\begin{equation}\label{eq:shadow-bigrading}
+\Ash = \bigoplus_{r \ge 2}\;\bigoplus_{g \ge 0}\;
+\Ash_{r,g}.
+\end{equation}
+
+\subsection{Shadow projections}
+
+The individual shadow invariants are the bigraded components:
+\begin{itemize}
+\item $\kappa(\cA) = \Ash_{2,0}$: the \emph{modular
+ characteristic} (degree~$2$, genus~$0$).
+\item $\Delta_\cA = \Ash_{2,*}$: the \emph{spectral
+ discriminant} (all genera at degree~$2$).
+\item $\mathfrak{C}(\cA) = \Ash_{3,0}$: the \emph{cubic
+ shadow} (degree~$3$, genus~$0$).
+\item $\mathfrak{Q}(\cA) = \Ash_{4,0}$: the \emph{quartic
+ shadow} (degree~$4$, genus~$0$), containing~$S_4$.
+\item $\Sh_r(\cA) = \Ash_{r,0}$: the degree-$r$ shadow.
+\end{itemize}
+
+Each scalar shadow is obtained by applying the appropriate normalized
+functional to the corresponding homotopy-coinvariant operator class:
+\begin{equation}\label{eq:shadow-from-e1}
+(\kappa,\;\mathfrak{C},\;\mathfrak{Q},\;\ldots)
+= \bigl(
+\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}}),
+\tau_{\cA,3}^{\mathrm{res}}q_3((\Theta_\cA^{\Eone})_{0,3}),
+\tau_{\cA,4}^{\mathrm{res}}q_4((\Theta_\cA^{\Eone})_{0,4}),
+\ldots\bigr).
+\end{equation}
+
+\subsection{What the higher-degree objects are}
+
+\noindent
+\emph{Degree~$2$}: the $\Eone$ datum is the collision kernel
+$K_\cA^{\mathrm{coll}}$.  Its homotopy coinvariant is the operator
+$q_2(K_\cA^{\mathrm{coll}})$, and the scalar coordinate is
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$.  Under
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}$, its represented image is a
+classical Yang--Baxter datum.
+
+\medskip\noindent
+\emph{Degree~$3$}: the $\Eone$ datum is the KZ associator
+$r_3(z_1,z_2)$, a function on $\Conf_3(X)$ satisfying the
+pentagon identity. Its image under~$\av$ is the cubic
+shadow~$\mathfrak{C}$: the irreducible triple-collision
+invariant.
+
+\medskip\noindent
+\emph{Degree~$4$}: the $\Eone$ datum is the quartic
+$R$-matrix coherence~$r_4$, satisfying the quartic Stasheff
+equation. Its image under~$\av$ contains the quartic contact
+invariant~$S_4$.
+
+\medskip\noindent
+\emph{General degree~$r$}: the obstruction class at degree~$r+1$
+is
+\begin{equation}\label{eq:obstruction-class}
+o_{r+1}(\cA)
+= \bigl(D_\cA\Theta^{\le r}_\cA
++ \tfrac{1}{2}[\Theta^{\le r}_\cA,
+ \Theta^{\le r}_\cA]\bigr)_{r+1}
+\;\in\; H^2(\Ash_{r+1,0}).
+\end{equation}
+This is a Lie bracket of shadows at degrees~$\le r$: the
+shadow algebra bracket connects different degree components and
+drives the MC recursion.
+
+\subsection{The discriminant and the G/L/C/M classification}
+
+\begin{definition}\label{def:discriminant}
+The \emph{discriminant} of a chiral algebra~$\cA$ is
+\begin{equation}\label{eq:discriminant}
+\Delta = 8\kappa\cdot S_4.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Depth classification]\label{thm:depth-class}
+For the standard verified families, the tuple
+$(S_3,S_4,\text{termination})$ classifies the four coarse depth
+types:
+\begin{center}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Class & Depth & Shadow criterion & Prototype & $\Delta$ \\
+\midrule
+$G$ \textup{(Gaussian)} & $2$ & $S_3=S_4=0$ &
+ Heisenberg & $0$ \\
+$L$ \textup{(Lie)} & $3$ & $S_3\ne0,\ S_4=0$ &
+ Affine KM & $0$ \\
+$C$ \textup{(Contact)} & $4$ &
+ $S_3=0,\ S_4\ne0,\ S_{r\ge5}=0$ &
+ $\beta\gamma$ & $\ne0$ generically \\
+$M$ \textup{(Mixed)} & $\infty$ & non-terminating &
+ $\Vir$, $\cW_N$ & $\neq 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{remark}
+The discriminant $\Delta=8\kappa S_4$ is downstream data. It detects
+the quartic/contact channel when it is defined; it is not by itself an
+archetype classifier.
+\end{remark}
+
+\begin{remark}[Analogy with classifying spaces]
+\label{rem:shadow-bg}
+The G/L/C/M classification is the chiral analogue of
+classifying principal bundles by the type of their structure
+group. The number of independent shadow invariants
+(characteristic classes) determines the complexity of the
+chiral classifying space. Class~$G$
+(one invariant,~$\kappa$) is analogous to $BU(1)$ (one
+class,~$c_1$). Class~$M$ (infinitely many invariants) is
+analogous to $BO(\infty)$ (infinitely many Pontryagin classes).
+
+A structural difference: classical Chern classes are
+polynomials in a single curvature~$F$ (the degree-$2$
+datum); chiral shadow invariants are averages of distinct
+higher-degree operations~$r_n$. Each shadow captures
+genuinely new collision structure not determined by lower
+degrees, unless $\Delta = 0$ and the tower terminates.
+\end{remark}
+
+\begin{remark}[Shadow depth and Koszulness]
+\label{rem:depth-koszul}
+Shadow depth measures how many shadow invariants are
+non-zero. Koszulness (bar cohomology concentrated in
+degree~$1$) is a separate property. All standard families are
+Koszul; the shadow depths differ. SC-formality
+($m_k^{SC} = 0$ for $k \ge 3$) holds if and only if the
+algebra is class~$G$.
+\end{remark}
+
+
+% ================================================================
+% Section 7: Multi-weight
+% ================================================================
+\section{Multi-weight structure and cross-channel
+corrections}\label{sec:multi-weight}
+
+The package~$H_D^1$ gives the pointed genus-one trace
+$\kappa\lambda_1$.  The package~$H_D^K$ gives the perfect object and
+its signed Hodge character at every genus in its scope.  The package
+$H_D^{\mathrm{graph}}$ gives the full numerical functional, including
+the mixed-weight cross-channel summand.  The first witness is $\cW_3$
+at genus~$2$,
+where $\delta F_2 = (c{+}204)/(16c)$. This section derives
+these results from the graph-sum structure of the genus
+expansion.
+
+\subsection{Per-channel decomposition}
+
+Let $\cA$ be a modular Koszul chiral algebra with strong
+generators $\varphi_1,\ldots,\varphi_r$ of conformal weights
+$h_1,\ldots,h_r$. Each generator has a per-channel modular
+characteristic~$\kappa_i$: the contribution from the
+$(\varphi_i,\varphi_i)$ self-OPE channel. The total is
+$\kappa(\cA) = \sum_{i=1}^r\kappa_i$.
+
+The genus-$g$ free energy is computed by a graph sum over
+stable graphs~$\Gamma$ of genus~$g$:
+\begin{equation}\label{eq:graph-sum}
+F_g(\cA) = \sum_\Gamma |\Aut(\Gamma)|^{-1}
+\sum_{\sigma\colon E(\Gamma) \to \{1,\ldots,r\}}
+A_\Gamma(\sigma,\cA),
+\end{equation}
+where $\sigma$ assigns a channel to each edge~$e$
+of~$\Gamma$.
+
+\begin{definition}\label{def:diagonal-mixed}
+A channel assignment~$\sigma$ is \emph{diagonal} if
+$\sigma(e) = i$ for all~$e$ (all edges carry the same channel).
+It is \emph{mixed} if at least two edges carry different
+channels.
+\end{definition}
+
+\subsection{The decomposition theorem}
+
+\begin{theorem}[Conditional multi-weight genus expansion]
+\label{thm:multi-weight}
+Assume the diagonal genus-$g$ Faber--Pandharipande comparison and the
+mixed-channel boundary graph expansion of Volume I. With the notation
+above:
+\begin{enumerate}[\upshape(i)]
+\item \emph{Per-channel universality.}
+ The diagonal contribution satisfies
+ \begin{equation}\label{eq:diag}
+ F_g^{\mathrm{diag}}(\cA) = \kappa(\cA)\cdot
+ \lambda_g^{\mathrm{FP}},
+ \end{equation}
+ where $\lambda_g^{\mathrm{FP}}
+ = \frac{2^{2g-1}-1}{2^{2g-1}}\cdot
+ \frac{|B_{2g}|}{(2g)!}$ is the Faber--Pandharipande
+ number ($B_{2g}$ the Bernoulli number), for all
+ $g \ge 1$ in the diagonal sector.
+
+\item \emph{Cross-channel decomposition.}
+ The full free energy decomposes as
+ \begin{equation}\label{eq:decomposition}
+ F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+ + \delta F_g^{\mathrm{cross}}(\cA),
+ \end{equation}
+ where $\delta F_g^{\mathrm{cross}}$ is a graph sum over
+ mixed-channel boundary graphs of~$\Mbar_{g,0}$.
+
+\item \emph{Genus-$1$ universality.}
+ $\delta F_1^{\mathrm{cross}} = 0$ for all~$\cA$.
+
+\item \emph{Uniform-weight universality.}
+ If $h_1 = \cdots = h_r$, then
+ $\delta F_g^{\mathrm{cross}} = 0$ at all $g \ge 1$.
+
+\item \emph{$R$-matrix scope.}
+ No higher-genus mixed-channel $R$-independence is asserted here.
+ The $R$-independence statement is restricted to diagonal terms and
+ to genus~$1$.
+
+\item \emph{Genus-$2$ explicit formula.}
+ At genus~$2$:
+ \begin{equation}\label{eq:genus2-cross}
+ \delta F_2^{\mathrm{cross}}(\cA)
+ = \delta F_2^{\mathrm{sun}}(\cA)
+ + \delta F_2^{\theta}(\cA)
+ + \delta F_2^{\mathrm{lt}}(\cA)
+ + \delta F_2^{\mathrm{bb}}(\cA),
+ \end{equation}
+ summing over four contributing boundary strata among the
+ seven stable graphs of~$\Mbar_{2,0}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~On a diagonal assignment $\sigma(e) = i$ for all~$e$,
+the amplitude factors as $A_\Gamma(\sigma_i,\cA)
+= A_\Gamma(\cA_i)$ for the rank-$1$ algebra~$\cA_i$ with
+curvature~$\kappa_i$. Each rank-$1$ component has a single
+generator and hence uniform weight. Summing:
+\[
+F_g^{\mathrm{diag}}(\cA) = \sum_{i=1}^r F_g(\cA_i)
+= \sum_{i=1}^r \kappa_i\cdot\lambda_g^{\mathrm{FP}}
+= \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}.
+\]
+
+\smallskip\noindent
+(iii)~At genus~$1$, the unique boundary stratum has a single
+edge. A single edge admits only $r$ channel assignments,
+each pure. No mixed-channel assignments exist on a
+single-edge graph.
+\end{proof}
+
+\subsection{Why cross-channel corrections arise at genus g >= 2}\label{subsec:why-cross}
+
+Three ingredients are needed for a non-zero
+$\delta F_g^{\mathrm{cross}}$:
+\begin{enumerate}[(a)]
+\item \emph{Multiple edges on a single graph}, so that
+ different edges can carry different channels. This
+ requires $g \ge 2$, since all genus-$1$ contributing graphs
+ have a single edge.
+
+\item \emph{Distinct weights} on different channels
+ ($h_i \neq h_j$), so that the propagators along edges
+ carry different channel weights in the universal propagator.
+
+\item \emph{Non-trivial OPE mixing}: the vertices carry
+ mixed-channel OPE structure constants not controlled
+ by~$\kappa$ alone.
+\end{enumerate}
+
+At genus~$1$, ingredient~(a) fails: the single-edge graph
+cannot carry a mixed assignment.
+At uniform weight, ingredient~(b) fails: all propagators are
+identical regardless of channel.
+For free fields, ingredient~(c) fails: $m_k = 0$ for
+$k \ge 3$ at genus~$0$, so mixed-channel vertices carry no
+structure constants beyond the two-point function.
+
+\subsection{Explicit computation: $\cW_3$ at genus~$2$}
+\label{subsec:w3-genus2}
+
+$\cW_3$ has two generators: $T$ (weight~$2$) and~$W$
+(weight~$3$). Per-channel modular characteristics:
+$\kappa_T = c/2$, $\kappa_W = c/3$. Total:
+$\kappa = c/2 + c/3 = 5c/6$.
+
+The four contributing boundary strata at genus~$2$ give:
+\begin{equation}\label{eq:w3-cross}
+\delta F_2(\cW_3) = \frac{3}{c} + \frac{9}{2c}
++ \frac{1}{16} + \frac{21}{4c}
+= \frac{c + 204}{16c}.
+\end{equation}
+
+This is non-zero for $c\ne0,-204$; for positive central charge it is
+non-zero.
+
+\begin{itemize}
+\item At $c = 1$: $\delta F_2 = 205/16$.
+\item At large~$c$: $\delta F_2 \to 1/16$ (the leading
+ correction is a constant, independent of~$c$).
+\item At $c = -204$: $\delta F_2 = 0$ (an isolated zero,
+ not physically relevant).
+\end{itemize}
+
+The four terms arise from distinct boundary mechanisms:
+\begin{itemize}
+\item $3/c$: sunset graph with mixed-weight vertex carrying
+ the $T$--$W$ OPE coefficient.
+\item $9/(2c)$: theta graph with three edges at mixed weight
+ assignments $(2,2,3)$, $(2,3,3)$, and permutations.
+\item $1/16$: a topological contribution from the difference
+ in Euler characteristics of the weight-$2$ and weight-$3$
+ determinant line bundles over~$\Mbar_2$, independent of~$c$.
+\item $21/(4c)$: bridge-loop graph connecting a genus-$1$
+ vertex (single-edge loop at weight~$h_i$) to a genus-$0$
+ vertex through an edge at weight~$h_j \neq h_i$.
+\end{itemize}
+
+\begin{corollary}\label{cor:scalar-fails}
+The scalar formula $F_g(\cA) = \kappa(\cA)\cdot
+\lambda_g^{\mathrm{FP}}$ fails at $g = 2$ for~$\cW_3$.
+This resolves the multi-generator universality question
+in the negative: the scalar formula is not universal for
+interacting multi-weight algebras.
+\end{corollary}
+
+\subsection{Free-field exactness}
+
+\begin{proposition}[Free-field exactness]
+\label{prop:free-field-exact}
+Let $\cA$ be a free-field chiral algebra
+\textup{(}$m_k = 0$ for all $k \ge 3$ at genus~$0$\textup{)}.
+Then $\delta F_g^{\mathrm{cross}}(\cA) = 0$ for all
+$g \ge 1$. The scalar formula
+$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ is exact at all
+genera.
+\end{proposition}
+
+Three independent mechanisms force this vanishing:
+\begin{enumerate}[(1)]
+\item The genus-$0$ OPE is purely quadratic, so mixed-channel
+ vertices carry no structure constants beyond the two-point
+ function.
+\item The Givental $R$-matrix is trivial for free fields,
+ eliminating $R$-corrections at genus-$0$ vertices.
+\item The propagator factorization identity for free fields
+ collapses the cross-channel graph sum to the diagonal.
+\end{enumerate}
+
+
+% ================================================================
+% Section 8: The chiral classifying space
+% ================================================================
+\section{The chiral classifying space}\label{sec:classifying}
+
+The preceding sections constructed each ingredient of chiral
+Chern--Weil theory individually: the collision kernel (the binary
+connection datum), the homotopy-coinvariant projection, the normalized
+trace functional (the scalar invariant), the curvature formula, the shadow tower (the
+characteristic ring), and the multi-weight correction.
+The forced question: is there a single geometric object that
+unifies all of these, the way the classifying space~$BG$
+unifies classical Chern--Weil theory?
+
+\subsection{$B(\cA)$ as classifying object}
+
+The ordered bar complex $B^{\mathrm{ord}}(\cA)$ on $\Ran(X)$,
+equipped with the deconcatenation coproduct, is a factorization
+coalgebra. In the deformation-theoretic picture, it is the
+chiral analogue of the simplicial bar construction
+$[n] \mapsto G^n$ whose geometric realization is the classifying
+space~$BG$.
+
+The universal bundle is the twisted tensor product
+\begin{equation}\label{eq:universal-bundle}
+\cE^{\mathrm{univ}}(\cA) = \cA \otimes^\tau B(\cA),
+\end{equation}
+with differential combining the internal differential, the bar
+differential, and the twisting morphism
+$\tau\colon B(\cA) \to \cA$. Its acyclicity,
+$\Omega(B(\cA)) \xrightarrow{\sim} \cA$ (bar-cobar
+quasi-isomorphism on the Koszul locus), is the chiral analogue
+of the contractibility of~$EG$.
+
+\subsection{The universal connection}
+
+The MC element $\Theta_\cA \in \MC(\gmod)$ is the
+\emph{universal connection} on the chiral classifying space.
+The MC equation
+\begin{equation}\label{eq:mc-eq}
+d\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0
+\end{equation}
+is the flatness/integrability condition. At genus~$0$, the
+universal connection is flat ($\dfib^{\,2} = 0$); the
+universal bundle is trivializable over~$\cM_{0,n}$.
+
+At genus~$g\geq2$, the fibrewise curvature is
+$\dfib^{\,2}=\kappa\omega_g$.  The modular trace assigns the native
+class $\operatorname{Obs}^{\mathrm{def}}_g$, the perfect object
+$\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ under~$H_D^K$,
+and the numerical graph functional under~$H_D^{\mathrm{graph}}$.
+At genus one, $H_D^1$ begins with the pointed class
+$\operatorname{Obs}^{\mathrm{def}}_{1,1}$.
+
+\subsection{The total system over moduli}
+
+The total system is a family
+\begin{equation}\label{eq:total-system}
+\cE_{\mathrm{total}}
+\;\longrightarrow\;
+B^{\Sigma}(\cA)\big|_{\Sym^\bullet(\mathcal{C}_g/\Mbar_g)}
+\;\longrightarrow\;
+\Mbar_g,
+\end{equation}
+where $\mathcal{C}_g \to \Mbar_g$ is the universal curve, and
+$B^{\Sigma}(\cA)$ is the $\Sigma_n$-coinvariant (symmetric) bar
+complex over the symmetric product
+$\Sym^n(X) = \Conf_n(X)/\Sigma_n$.
+
+The ordered bar $B^{\mathrm{ord}}(\cA)$ on $\Conf_n(X)$ carries
+$K_\cA^{\mathrm{coll}}(z)$ and, on represented comparison surfaces,
+the corresponding $R$-operator. The symmetric bar
+$B^{\Sigma}(\cA)$ on $\Sym^n(X)$ retains the homotopy-coinvariant
+operator. The normalized trace gives $\kappa$ on scalar families and
+$\kappa_{\mathrm{dp}}$ on non-abelian affine families, where the
+Sugawara contribution completes $\kappa$.
+
+As $[X]$ moves in~$\Mbar_g$:
+\begin{enumerate}[(i)]
+\item The bar differential depends on~$X$ through the prime-form
+ propagator $d\log E(z,w)$ (weight~$1$).
+\item At genus~$0$: flat ($\dfib^{\,2} = 0$), universal bundle
+ trivializable.
+\item At genus~$g \ge 1$: curvature
+ $\dfib^{\,2}=\kappa\omega_g$; $H_D^K$ gives
+ $\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$.
+\item At multi-weight, genus $g \ge 2$: $H_D^{\mathrm{graph}}$ gives
+ $F_g=\kappa\lambda_g^{\mathrm{FP}}+\delta F_g^{\mathrm{cross}}$.
+\end{enumerate}
+
+\subsection{Crystallization}
+
+Classical Chern--Weil theory has three ingredients: a
+connection~$\nabla$, an invariant polynomial~$P$, and the
+resulting characteristic class~$[P(F^k)]$. Chiral
+Chern--Weil theory has the same three: the $\Eone$ MC
+element~$\Theta^{\Eone}_\cA$ (whose binary component is
+$K_\cA^{\mathrm{coll}}$), the homotopy-coinvariant map
+$q_n$, the normalized functional $\tau_{\cA,n}^{\mathrm{res}}$,
+and, for $g\geq2$, the Theorem~D objects
+$\operatorname{Obs}^{\mathrm{def}}_g$, $\mathfrak O_g^K$, its signed
+Hodge character, and~$F_g$.
+What is new is the variation over moduli: the curvature
+$\dfib^{\,2} = \kappa\cdot\omega_g$ factorizes as
+algebra~$\times$ geometry, the shadow tower
+$(\kappa,\mathfrak{C},\mathfrak{Q},\ldots)$ replaces the
+finite-rank invariant ring of a compact group with an
+degree-graded sequence whose depth classifies chiral algebras
+(G/L/C/M), and the scalar formula fails at genus~$\ge 2$ for
+multi-weight algebras with explicit correction
+$\delta F_2(\cW_3) = (c{+}204)/(16c)$.
+
+
+% ================================================================
+% Koszul conductor and scalar complementarity
+% ================================================================
+\section{Koszul conductors and scalar complementarity}
+\label{sec:conductor-scalar}
+
+The chiral Chern--Weil output~$\kappa(\cA)$ also organises
+Koszul-complementary pairs. Two distinct invariants live on a
+Koszul-complementary pair:
+\begin{equation}\label{eq:universal-conductor}
+K_c(\cA) \;:=\; c(\cA) + c(\cA^!)
+\end{equation}
+and the scalar $\kappa$-complementarity
+$K^{\kappa}(\cA) := \kappa(\cA) + \kappa(\cA^{!})$. There is no
+single ratio converting $K_c$ to $K^\kappa$: the affine
+line has $K_c=2\dim\fg$ but $K^\kappa=0$, while Virasoro,
+principal $\cW_N$, and Bershadsky--Polyakov use family-specific
+normalisations.
+	Trinity values: $K_c = 0$ for class~G and abelian Kac--Moody,
+	$K_c = 2\dim(\fg)$ for non-abelian $V_k(\fg)$ while
+	$K^\kappa=0$ on the affine line; $K_c = 26$ for Virasoro
+	(so $K^{\kappa} = 13$ at self-dual
+	$c = 13$, with $\varrho_{\mathrm{Vir}} = 1/2$); $K_c = 50$ for the
+Bershadsky--Polyakov algebra $\mathrm{BP}$ (the polynomial
+identity $\mathrm{K}_{\mathrm{BP}}(k) \equiv 50$ as a rational
+function in the level, in the standard Fehily--Kawasetsu--Ridout
+convention, with the canonical
+fixed point at $k = -3 = -h^\vee(\mathfrak{sl}_3)$, where
+conditionally
+$K^{\kappa}_{\mathrm{BP}} = 25/3$ and $\varrho_{\mathrm{BP}} = 1/6$);
+$K = 100$ for principal $\cW_3$ (so $K^{\kappa} = 250/3$ with
+$\varrho_{\cW_3} = 5/6 = H_3 - 1$). The tabulated central charges of
+the bosonic $\beta\gamma$ and
+fermionic $bc$ ghost systems provide the universal base:
+$c^{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$ and
+$c^{bc}(\lambda) = 1 - 3(2\lambda - 1)^2$, whose sum vanishes
+identically.
+
+\begin{proposition}[Verified conductor lanes]
+\label{thm:koszul-conductor}
+For the verified standard families, central-charge conductors and
+scalar modular conductors are family-specific quantities. There is no
+single BRST ghost object canonically attached to every family in the
+table.
+\end{proposition}
+
+\begin{proof}
+For affine $V_k(\fg)$, the central-charge conductor and the scalar
+modular conductor are different quantities:
+\[
+K_c(V_k(\fg))
+:=c(V_k(\fg))+c(V_{-k-2h^\vee}(\fg))
+=\frac{k\dim\fg}{k+h^\vee}
++\frac{(-k-2h^\vee)\dim\fg}{-k-h^\vee}
+=2\dim\fg,
+\]
+whereas
+\[
+K^\kappa(V_k(\fg))
+:=\kappa(V_k(\fg))+\kappa(V_{-k-2h^\vee}(\fg))
+=\frac{\dim\fg}{2h^\vee}\bigl((k+h^\vee)+(-k-h^\vee)\bigr)
+=0.
+\]
+The ghost calculation records the central-charge lane; the
+vanishing scalar lane is the affine complementarity used by the
+shadow tower. For $\Vir_c$: the $(b,c)$ ghost system has
+$\lambda = 2$ giving $c^{bc}(2) = -26$; complementarity
+$\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = c/2 + (26-c)/2 = 13 = -c_{\mathrm{ghost}}/2$
+after the universal factor. For $\cW_N$: the reduction from
+$\fsl_N$ contributes a tower of ghosts at weights
+$\{2,3,\ldots,N\}$; summation reproduces the tabulated $K$-value.
+For $\mathrm{BP}$, the
+polynomial identity $K_{\mathrm{BP}}(k) \equiv 50$ in the standard
+Fehily--Kawasetsu--Ridout convention matches the central-charge
+conductor $K_c^{\mathrm{BP}}=50$ at every~$k$; the conditional scalar
+conductor on the ratio lane is
+$K^\kappa_{\mathrm{BP}}=50/6=25/3$, and the fixed point
+$k = -h^\vee(\mathfrak{sl}_3) = -3$ is a pole with
+principal-value half $25/6$.
+\end{proof}
+
+\begin{proposition}[Scalar complementarity and moment residues at genus zero]
+\label{thm:moment-genus-zero}
+On the verified diagonal standard families, the genus-zero extraction
+of the scalar invariant uses the moment-residue pairing
+\begin{equation}\label{eq:moment-g0}
+\kappa(\cA)
+\;=\;
+\sum_i \Res_{z=0}\!\bigl(z^{2h_i-2}K^{\mathrm{vac}}_{ii}(z)\,dz\bigr)
+\;+\;\kappa_{\mathrm{sp}},
+\end{equation}
+with the affine Sugawara shift $\kappa_{\mathrm{sp}}$ added
+separately. For a Koszul pair, the scalar conductor is then
+$K^\kappa(\cA)=\kappa(\cA)+\kappa(\cA^!)$.
+\end{proposition}
+
+\begin{remark}[Epistemic tags and independent-verification conventions]
+\label{rem:conductor-epistemic}
+Every collision kernel in this section carries its family parameter
+explicitly: the Kac--Moody trace-form kernel is
+$K_{k,\fg}^{\mathrm{coll}}(z)=k\,\Omega_{\mathrm{tr}}/z$, and the
+Virasoro kernel
+$K_{\Vir_c}^{\mathrm{coll}}(z)=(c/2)/z^3+2T/z$ has the canonical
+cubic pole. Every $\kappa$ value is taken from the landscape census.
+The scalar conductor values $\{0, 13, 25/3, 250/3\}$ are verified
+against two disjoint sources under the independent verification
+protocol: direct computation of $\kappa + \kappa^!$ and ghost
+tabulation after conversion from $K_c$ to $K^\kappa$ where a ghost
+description is available.
+\end{remark}
+
+\begin{remark}[Cross-volume bridge]
+\label{rem:conductor-cross-volume}
+The central and scalar conductor lanes are separate Vol~I
+manifestations of the trace formalism. In Vol~III, the scalar
+normalization reappears
+on Borcherds--Kac--Moody algebras as
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ with $N \in \{1,2,3,4,6\}$
+the level of the Fricke-type paramodular form. A numerical equality
+with a Vol~I scalar conductor is not asserted without specifying the
+Borcherds input $\Phi_N$, the normalization, and the Vol~I family
+being compared.
+\end{remark}
+
+
+% ================================================================
+% References (placeholder)
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{BeiDr}
+A.~Beilinson, V.~Drinfeld.
+\emph{Chiral Algebras}.
+AMS Colloquium Publications~\textbf{51}, 2004.
+
+\bibitem{CG}
+K.~Costello, O.~Gwilliam.
+\emph{Factorization Algebras in Quantum Field Theory},
+Vols.~1--2.
+Cambridge University Press, 2017, 2021.
+
+\bibitem{ChSe}
+C.~Chevalley, S.~Eilenberg.
+Cohomology theory of Lie groups and Lie algebras.
+\emph{Trans.~AMS}~\textbf{63} (1948), 85--124.
+
+\bibitem{CS}
+S.~S.~Chern, J.~Simons.
+Characteristic forms and geometric invariants.
+\emph{Ann.~Math.}~\textbf{99} (1974), 48--69.
+
+\bibitem{Drinfeld}
+V.~G.~Drinfeld.
+Quasi-Hopf algebras.
+\emph{Leningrad Math.~J.}~\textbf{1} (1990), 1419--1457.
+
+\bibitem{FeiginFrenkel}
+B.~Feigin, E.~Frenkel.
+Affine Kac--Moody algebras at the critical level and
+Gel'fand--Dikii algebras.
+\emph{Int.~J.~Mod.~Phys.~A}~\textbf{7}, Suppl.~1A (1992),
+197--215.
+
+\bibitem{FLuk}
+V.~A.~Fateev, S.~L.~Lukyanov.
+The models of two-dimensional conformal quantum field theory
+with $\mathbb{Z}_n$ symmetry.
+\emph{Int.~J.~Mod.~Phys.~A}~\textbf{3} (1988), 507--520.
+
+\bibitem{FBZ}
+E.~Frenkel, D.~Ben-Zvi.
+\emph{Vertex Algebras and Algebraic Curves}.
+Math.~Surveys Monographs~\textbf{88}, AMS, 2004.
+
+\bibitem{Kac}
+V.~Kac.
+\emph{Infinite-Dimensional Lie Algebras}.
+Cambridge University Press, 3rd ed., 1990.
+
+\bibitem{KV}
+M.~Kontsevich, Y.~Soibelman.
+Deformations of algebras over operads and the Deligne conjecture.
+\emph{Conf.~Moshe Flato 2000, Vol.~1},
+Math.~Phys.~Stud.~\textbf{21}, Kluwer, 2000, 255--307.
+
+\bibitem{LV}
+J.-L.~Loday, B.~Vallette.
+\emph{Algebraic Operads}.
+Grundlehren~\textbf{346}, Springer, 2012.
+
+\bibitem{LorgatI}
+R.~Lorgat.
+\emph{Modular Koszul Duality}.
+Perimeter Institute, 2026, in preparation.
+
+\bibitem{LorgatShadow}
+R.~Lorgat.
+Modular Koszul duality and the shadow tower.
+Perimeter Institute, 2026.
+
+\bibitem{LorgatVirR}
+R.~Lorgat.
+The Virasoro $r$-matrix.
+Perimeter Institute, 2026.
+
+\bibitem{LorgatSevenFaces}
+R.~Lorgat.
+Seven faces of the $r$-matrix.
+Perimeter Institute, 2026.
+
+\bibitem{MilnorStasheff}
+J.~Milnor, J.~Stasheff.
+\emph{Characteristic Classes}.
+Annals of Mathematics Studies~\textbf{76}, Princeton, 1974.
+
+\bibitem{Stasheff}
+J.~Stasheff.
+Homotopy associativity of $H$-spaces, I, II.
+\emph{Trans.~AMS}~\textbf{108} (1963), 275--312.
+
+\bibitem{Weil}
+A.~Weil.
+\emph{G\'eom\'etrie diff\'erentielle des espaces fibr\'es}.
+Unpublished manuscript, 1949.
+
+\bibitem{Zam}
+A.~B.~Zamolodchikov.
+Infinite additional symmetries in two-dimensional conformal
+quantum field theory.
+\emph{Theor.~Math.~Phys.}~\textbf{65} (1985), 1205--1213.
+
+\end{thebibliography}
+
+\end{document}

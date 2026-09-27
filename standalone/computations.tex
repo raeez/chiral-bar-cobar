@@ -1,0 +1,898 @@
+\ifdefined\shadowtowervtwoincluded
+\else
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+\usepackage{array}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Res}{\operatorname{Res}}
+
+\title{The genus-2 free energy of $W_3$ and the gravitational coproduct}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+The genus-$2$ free energy of $W_3$ contains a genuine rank-$2$
+cross-channel term. The six boundary graphs give
+$\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$, while the
+rank-$2$ planted-forest correction is
+$(932-7c^2)/(48c^3)$. The same note records the Virasoro
+Drinfeld--Sokolov transfer: the coproduct is primitive and the
+gravitational interaction is carried by the cubic-pole
+$r$-matrix.
+\end{abstract}
+\fi
+
+% Genus-2 W_3 amplitudes and Virasoro gravitational coproduct
+
+\begin{remark}[Rank-2 holographic datum]
+The $W_3$ composite field identity
+$\Lambda_0|h\rangle = h^2 - 9h/5$ and the complete rank-2 holographic
+datum are developed in \emph{The first rank-2
+holographic datum: $\mathcal{H}(W_3)$}
+(\texttt{w3\_holographic\_datum.tex}).
+\end{remark}
+
+\begin{remark}[Genus-two verification data]\label{rem:computation-anchors}
+The six boundary-graph sum gives
+$\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$, and the
+Drinfeld--Sokolov BRST calculation gives Virasoro
+gravitational-coproduct primitivity. Exact rational evaluation at
+$c\in\{1,2,4,13,26,50,100\}$ checks the graph table. No
+exceptional-Lie dimension enters the genus-$2$ computation. The
+principal Drinfeld--Sokolov statement is
+Theorem~\ref{thm:general-ds-primitivity}.
+\end{remark}
+
+%======================================================================
+\section{The genus-2 free energy of \texorpdfstring{$W_3$}{W3}}
+\label{sec:genus2-w3}
+%======================================================================
+
+The single-channel regime has one strong generator, one primary line,
+and one modular characteristic~$\kappa$. The first multi-channel
+invariant occurs for $W_3$, whose strong generators are the stress
+tensor~$T$ of weight~$2$ and the spin-$3$ current~$W$ of weight~$3$.
+Thus $F_2(W_3)$ receives both diagonal channel contributions and
+cross-channel contributions.
+
+\subsection{The Frobenius algebra of the bar-complex CohFT}
+\label{subsec:w3-frobenius}
+
+The bar-complex CohFT of $W_3$ has a two-dimensional
+Frobenius algebra with basis $\{e_T, e_W\}$ and diagonal metric
+from the per-channel modular characteristics:
+\begin{equation}\label{eq:w3-metric}
+\eta_{TT} = \kappa_T = \frac{c}{2},
+\qquad
+\eta_{WW} = \kappa_W = \frac{c}{3},
+\qquad
+\eta_{TW} = 0.
+\end{equation}
+The total modular characteristic is $\kappa(W_3) = \kappa_T + \kappa_W
+= 5c/6 = c \cdot (H_3 - 1)$, where $H_3 = 1 + 1/2 + 1/3 = 11/6$
+is the third harmonic number. The inverse metric gives the
+propagators:
+\begin{equation}\label{eq:w3-propagators}
+\eta^{TT} = \frac{2}{c},
+\qquad
+\eta^{WW} = \frac{3}{c}.
+\end{equation}
+Both propagators have weight~$1$:
+the bar-complex propagator is $d\!\log E(z,w)$, which has weight~$1$
+regardless of the conformal weight of the field being sewed.
+
+The OPE determines the three-point structure constants.
+The $\mathbb{Z}_2$ symmetry $W \mapsto -W$ kills all three-point
+functions with an odd number of $W$-insertions:
+\begin{equation}\label{eq:w3-C3}
+C_{TTT} = C_{TWW} = C_{WWT} = c,
+\qquad
+C_{TTW} = C_{TWT} = C_{WTT} = C_{WWW} = 0.
+\end{equation}
+The OPE identities give the constants:
+$T_{(1)}T = 2T$ gives $C^T_{TT} = 2$, whence
+$C_{TTT} = \eta_{TT} \cdot 2 = c$;
+$T_{(1)}W = 3W$ gives $C^W_{TW} = 3$, whence
+$C_{TWW} = \eta_{WW} \cdot 3 = c$;
+$W_{(3)}W = 2T$ gives $C^T_{WW} = 2$, whence
+$C_{WWT} = \eta_{TT} \cdot 2 = c$.
+
+The genus-0 four-point vertex is universal: for any channel pair
+$(i,j) \in \{T,W\}^2$,
+\begin{equation}\label{eq:w3-V04}
+V_{0,4}(i,i \mid j,j)
+\;=\;
+\sum_m \eta^{mm}\, C_{iim}\, C_{jjm}
+\;=\;
+\eta^{TT} \cdot c \cdot c
+\;=\;
+2c.
+\end{equation}
+Only the $T$-channel contributes to the sum: $C_{iiT} = c$ for
+$i \in \{T,W\}$, while $C_{iiW} = 0$ for both $i = T$ (since
+$C_{TTW} = 0$) and $i = W$ (since $C_{WWW} = 0$).
+The $W$-channel is invisible at genus-0 valence~4.
+
+
+\subsection{The seven stable graphs at genus 2}
+\label{subsec:genus2-graphs}
+
+The moduli space $\overline{\mathcal{M}}_{2,0}$ has a
+stratification by seven stable graphs $\Gamma_0, \ldots, \Gamma_6$:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clllccl}
+& \textbf{Name}
+& \textbf{Vertices}
+& \textbf{Edges}
+& $|\mathrm{Aut}|$
+& $h^1$
+& \textbf{Type} \\
+\hline
+$\Gamma_0$ & smooth
+ & $(g{=}2,\, \mathrm{val}{=}0)$
+ & $0$
+ & $1$ & $0$ & compact stratum \\[2pt]
+$\Gamma_1$ & figure-eight
+ & $(g{=}1,\, \mathrm{val}{=}2)$
+ & $1$ self-loop
+ & $2$ & $1$ & one-loop \\[2pt]
+$\Gamma_2$ & banana
+ & $(g{=}0,\, \mathrm{val}{=}4)$
+ & $2$ self-loops
+ & $8$ & $2$ & two-loop sunset \\[2pt]
+$\Gamma_3$ & dumbbell
+ & $(g{=}1,\, \mathrm{val}{=}1) + (g{=}1,\, \mathrm{val}{=}1)$
+ & $1$ bridge
+ & $2$ & $0$ & separating \\[2pt]
+$\Gamma_4$ & theta
+ & $(g{=}0,\, \mathrm{val}{=}3) + (g{=}0,\, \mathrm{val}{=}3)$
+ & $3$ bridges
+ & $12$ & $2$ & non-separating \\[2pt]
+$\Gamma_5$ & tadpole
+ & $(g{=}0,\, \mathrm{val}{=}3) + (g{=}1,\, \mathrm{val}{=}1)$
+ & $1$ self-loop $+$ $1$ bridge
+ & $2$ & $1$ & mixed \\[2pt]
+$\Gamma_6$ & chain
+ & $(g{=}0,\, \mathrm{val}{=}3) + (g{=}0,\, \mathrm{val}{=}3)$
+ & $2$ self-loops $+$ $1$ bridge
+ & $8$ & $2$ & non-separating
+\end{tabular}
+\end{center}
+Every vertex satisfies the stability condition $2g_v + \mathrm{val}_v
+\geq 3$, and the genus formula $h^1(\Gamma) + \sum_v g_v = 2$ holds
+in each case. The smooth graph $\Gamma_0$ has no edges and contributes
+the integrated class on $\mathcal{M}_{2,0}$ itself; the remaining six
+graphs are the boundary strata.
+
+
+\subsection{Multi-channel Feynman rules}
+\label{subsec:w3-feynman-rules}
+
+For each graph $\Gamma$ with $|E(\Gamma)|$ edges, a \emph{channel
+assignment} is a function $\sigma \colon E(\Gamma) \to \{T, W\}$.
+The Feynman rules of the bar-complex CohFT assign to each pair
+$(\Gamma, \sigma)$ an amplitude
+\begin{equation}\label{eq:feynman-rule}
+\mathcal{A}(\Gamma, \sigma)
+\;=\;
+\frac{1}{|\mathrm{Aut}(\Gamma)|}
+\prod_{e \in E(\Gamma)} \eta^{\sigma(e),\, \sigma(e)}
+\prod_{v \in V(\Gamma)} V_v\bigl(g_v;\, \sigma|_{\mathrm{half\text{-}edges}(v)}\bigr),
+\end{equation}
+where the vertex factors are:
+\begin{itemize}
+\item \emph{Genus-0, trivalent}: $V_v = C_{\sigma(e_1)\sigma(e_2)\sigma(e_3)}$.
+\item \emph{Genus-0, four-valent} (the banana vertex):
+ $V_v = \sum_m \eta^{mm} C_{\sigma(e_1)\sigma(e_2)m}\,
+ C_{m\,\sigma(e_3)\sigma(e_4)}$.
+\item \emph{Genus-1, valence $n$}:
+ $V_v = \kappa_{\sigma(e)}/24$ (per-channel genus-1 universality).
+\end{itemize}
+Each half-edge at a self-loop contributes a pair of half-edges to
+the same vertex, both carrying channel~$\sigma(e)$.
+
+
+\subsection{Per-graph amplitudes}
+\label{subsec:per-graph-amplitudes}
+
+Each boundary graph amplitude decomposes into \emph{diagonal}
+contributions, where all edges lie in one channel, and \emph{mixed}
+contributions, where both channels occur.
+
+\subsubsection*{$\Gamma_1$: figure-eight}
+
+One edge, two channel assignments. The vertex is genus-1 with
+valence~2, so the vertex factor for channel~$i$ is $\kappa_i/24$:
+\begin{align}
+\mathcal{A}(\Gamma_1, T) &= \tfrac{1}{2}\, \eta^{TT} \cdot
+ \tfrac{\kappa_T}{24}
+ = \tfrac{1}{2} \cdot \tfrac{2}{c} \cdot \tfrac{c}{48}
+ = \tfrac{1}{48}, \label{eq:fig-eight-T}\\
+\mathcal{A}(\Gamma_1, W) &= \tfrac{1}{2}\, \eta^{WW} \cdot
+ \tfrac{\kappa_W}{24}
+ = \tfrac{1}{2} \cdot \tfrac{3}{c} \cdot \tfrac{c}{72}
+ = \tfrac{1}{48}. \label{eq:fig-eight-W}
+\end{align}
+Both channels contribute equally: the propagator~$1/\kappa_i$ cancels
+the genus-1 vertex factor~$\kappa_i/24$, leaving the universal value
+$1/48$ independent of $c$. The total is $1/24 = \lambda_1^{\mathrm{FP}}$.
+No mixed channel assignments exist (single edge).
+
+\subsubsection*{$\Gamma_2$: banana}
+
+Two edges, four channel assignments, $|\mathrm{Aut}| = 8$. The
+vertex is genus-0 with valence~4, and the four-point vertex factor
+is $V_{0,4}(i,i \mid j,j) = 2c$ universally~\eqref{eq:w3-V04}.
+\begin{align}
+\mathcal{A}(\Gamma_2, TT) &=
+ \tfrac{1}{8}\, (\eta^{TT})^2 \cdot 2c
+ = \tfrac{1}{8} \cdot \tfrac{4}{c^2} \cdot 2c
+ = \frac{1}{c}, \label{eq:banana-TT}\\
+\mathcal{A}(\Gamma_2, WW) &=
+ \tfrac{1}{8}\, (\eta^{WW})^2 \cdot 2c
+ = \tfrac{1}{8} \cdot \tfrac{9}{c^2} \cdot 2c
+ = \frac{9}{4c}, \label{eq:banana-WW}\\
+\mathcal{A}(\Gamma_2, TW{+}WT) &=
+ \tfrac{1}{8} \cdot 2 \cdot \eta^{TT}\, \eta^{WW} \cdot 2c
+ = \tfrac{1}{8} \cdot 2 \cdot \tfrac{6}{c^2} \cdot 2c
+ = \frac{3}{c}. \label{eq:banana-mixed}
+\end{align}
+The cross-channel contribution is $\delta_{\mathrm{banana}} = 3/c$.
+
+\subsubsection*{$\Gamma_3$: dumbbell}
+
+One bridge edge, two channel assignments, $|\mathrm{Aut}| = 2$.
+Each vertex has genus~1 and valence~1, with vertex factor
+$\kappa_i/24$:
+\begin{align}
+\mathcal{A}(\Gamma_3, T) &=
+ \tfrac{1}{2}\, \eta^{TT} \cdot
+ \bigl(\tfrac{\kappa_T}{24}\bigr)^2
+ = \tfrac{1}{2} \cdot \tfrac{2}{c} \cdot \tfrac{c^2}{2304}
+ = \frac{c}{2304}, \label{eq:dumbbell-T}\\
+\mathcal{A}(\Gamma_3, W) &=
+ \tfrac{1}{2}\, \eta^{WW} \cdot
+ \bigl(\tfrac{\kappa_W}{24}\bigr)^2
+ = \tfrac{1}{2} \cdot \tfrac{3}{c} \cdot \tfrac{c^2}{5184}
+ = \frac{c}{3456}. \label{eq:dumbbell-W}
+\end{align}
+The total is $c/2304 + c/3456 = (3c + 2c)/6912 = 5c/6912 =
+\kappa(W_3)/1152$. No mixed channel assignments exist (single edge).
+
+\subsubsection*{$\Gamma_4$: theta}
+
+Three bridge edges, eight channel assignments, $|\mathrm{Aut}| = 12$.
+Each vertex has genus~0 and valence~3, with vertex factor
+$C_{\sigma(e_1)\sigma(e_2)\sigma(e_3)}$.
+\begin{itemize}
+\item \emph{All-$T$}: both vertices get $C_{TTT} = c$.
+ Amplitude $= \frac{1}{12}\, (\eta^{TT})^3 \cdot c^2
+ = \frac{1}{12} \cdot \frac{8}{c^3} \cdot c^2
+ = \frac{2}{3c}$.
+
+\item \emph{All-$W$}: both vertices get $C_{WWW} = 0$.
+ Amplitude $= 0$.
+
+\item \emph{Type $(T,T,W)$} (three such assignments):
+ each vertex receives one~$W$ half-edge, giving $C_{TTW} = 0$.
+ All three vanish.
+
+\item \emph{Type $(T,W,W)$} (three such assignments):
+ each vertex receives half-edges $(T,W,W)$, giving
+ $C_{TWW} = c$. The propagator product is
+ $\eta^{TT} (\eta^{WW})^2 = (2/c)(9/c^2) = 18/c^3$.
+ Each assignment contributes $18c^2/c^3 = 18/c$; with
+ $|\mathrm{Aut}| = 12$, the total mixed amplitude is
+ \begin{equation}\label{eq:theta-mixed}
+ \delta_{\mathrm{theta}} = \frac{3 \cdot 18}{12c}
+ = \frac{9}{2c}.
+ \end{equation}
+\end{itemize}
+
+\subsubsection*{$\Gamma_5$: tadpole}
+
+One self-loop at vertex~$v_0$ (genus~0, valence~3) and one bridge
+to vertex~$v_1$ (genus~1, valence~1). Two edges, four channel
+assignments, $|\mathrm{Aut}| = 2$.
+
+\begin{itemize}
+\item \emph{$(T,T)$}: self-loop~$T$, bridge~$T$. Vertex~$v_0$ gets
+ half-edges $(T,T,T) \to C_{TTT} = c$. Vertex~$v_1$ gets
+ half-edge $T \to \kappa_T/24 = c/48$. Propagators:
+ $(\eta^{TT})^2 = 4/c^2$. With $|\mathrm{Aut}|$:
+ $\frac{1}{2} \cdot \frac{4}{c^2} \cdot c \cdot \frac{c}{48}
+ = \frac{1}{24}$.
+
+\item \emph{$(W,W)$}: self-loop~$W$, bridge~$W$. Vertex~$v_0$ gets
+ $(W,W,W) \to C_{WWW} = 0$. Vanishes.
+
+\item \emph{$(T,W)$}: self-loop~$T$, bridge~$W$. Vertex~$v_0$ gets
+ $(T,T,W) \to C_{TTW} = 0$. Vanishes.
+
+\item \emph{$(W,T)$}: self-loop~$W$, bridge~$T$. Vertex~$v_0$ gets
+ $(W,W,T) \to C_{WWT} = c$. Vertex~$v_1$ gets
+ $T \to \kappa_T/24 = c/48$. Propagators:
+ $\eta^{WW} \cdot \eta^{TT} = (3/c)(2/c) = 6/c^2$.
+ With $|\mathrm{Aut}|$:
+ \begin{equation}\label{eq:tadpole-mixed}
+ \delta_{\mathrm{tadpole}}
+ = \tfrac{1}{2} \cdot \tfrac{6}{c^2} \cdot c \cdot \tfrac{c}{48}
+ = \tfrac{6c^2}{96c^2} = \frac{1}{16}.
+ \end{equation}
+\end{itemize}
+The tadpole mixed amplitude $1/16$ is \emph{independent of~$c$}:
+the $c^2$ in the numerator (from $C_{WWT} \cdot \kappa_T/24$)
+cancels the $c^2$ in the denominator (from $\eta^{WW} \cdot \eta^{TT}$).
+
+
+\subsubsection*{$\Gamma_6$: chain (barbell)}
+
+Two genus-$0$ trivalent vertices, each carrying one self-loop,
+connected by a bridge. Three edges
+(self-loop~$s_1$, self-loop~$s_2$, bridge~$b$),
+eight channel assignments, $|\mathrm{Aut}| = 8$.
+Each vertex~$v_j$ receives half-edges
+$(\sigma(s_j), \sigma(s_j), \sigma(b))$
+with vertex factor $C_{\sigma(s_j)\,\sigma(s_j)\,\sigma(b)}$.
+
+Only $\sigma(b) = T$ gives nonzero vertex factors
+(since $C_{TTW} = C_{WWW} = 0$). Among the four remaining
+assignments $(\sigma(s_1), \sigma(s_2)) \in \{T,W\}^2$ with
+$\sigma(b) = T$:
+\begin{itemize}
+\item \emph{$(T,T,T)$}: diagonal.
+ Vertex factors $C_{TTT}^2 = c^2$,
+ propagators $(\eta^{TT})^3 = 8/c^3$.
+ With $|\mathrm{Aut}|$: $(1/8)(8/c^3)(c^2) = 1/c$.
+
+\item \emph{$(T,W,T)$}: mixed.
+ $C_{TTT} \cdot C_{WWT} = c^2$,
+ $\eta^{TT}\,\eta^{WW}\,\eta^{TT} = 12/c^3$.
+ With $|\mathrm{Aut}|$:
+ $(1/8)(12/c^3)(c^2) = 3/(2c)$.
+
+\item \emph{$(W,T,T)$}: mixed. By the $s_1 \leftrightarrow s_2$
+ symmetry: $3/(2c)$.
+
+\item \emph{$(W,W,T)$}: mixed.
+ $C_{WWT}^2 = c^2$,
+ $(\eta^{WW})^2\,\eta^{TT} = 18/c^3$.
+ With $|\mathrm{Aut}|$:
+ $(1/8)(18/c^3)(c^2) = 9/(4c)$.
+\end{itemize}
+The total mixed amplitude is
+\begin{equation}\label{eq:barbell-mixed}
+\delta_{\mathrm{barbell}}
+= \frac{3}{2c} + \frac{3}{2c} + \frac{9}{4c}
+= \frac{6 + 6 + 9}{4c}
+= \frac{21}{4c}.
+\end{equation}
+
+
+\subsection{The cross-channel correction}
+\label{subsec:cross-channel}
+
+\begin{proposition}[Rank-$2$ genus-two cross-channel term]
+\label{prop:w3-cross-channel}
+For the $W_3$ bar-complex CohFT with the Feynman rules above, the
+degree-$0$ mixed-boundary graph sum is
+\begin{equation}\label{eq:cross-channel-total}
+\delta F_2^{\mathrm{cross}}(W_3)
+\;=\;
+\underbrace{\frac{3}{c}}_{\text{banana}}
+\;+\;
+\underbrace{\frac{9}{2c}}_{\text{theta}}
+\;+\;
+\underbrace{\frac{1}{16}}_{\text{tadpole}}
+\;+\;
+\underbrace{\frac{21}{4c}}_{\text{barbell}}
+\;=\;
+\frac{51}{4c} + \frac{1}{16}
+\;=\;
+\frac{c + 204}{16c}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The mixed columns of the six boundary-graph amplitudes contribute
+only on the banana, theta, tadpole, and barbell graphs. Summing
+Equations~\eqref{eq:banana-mixed}, \eqref{eq:theta-mixed},
+\eqref{eq:tadpole-mixed}, and~\eqref{eq:barbell-mixed} gives the
+displayed rational function. The figure-eight and dumbbell graphs
+have a single edge, hence no mixed channel assignment.
+\end{proof}
+
+The figure-eight and dumbbell graphs contribute zero mixed amplitude
+(single edges admit only diagonal assignments). The correction
+decomposes into two structurally distinct pieces:
+\begin{itemize}
+\item A \emph{$c$-dependent} piece $51/(4c)$, arising from
+ genus-0 vertex factors on the banana ($3/c$), theta ($9/(2c)$),
+ and barbell ($21/(4c)$) graphs. This is
+ $R$-matrix independent: genus-0 vertices receive no corrections
+ from the CohFT $R$-matrix.
+\item A \emph{$c$-independent} piece $1/16$, arising from the
+ tadpole graph, which mixes a genus-0 vertex factor with a
+ genus-1 vertex factor $\kappa_i/24$.
+\end{itemize}
+
+\begin{remark}[Comparison with the scalar approximation]
+\label{rem:scalar-comparison}
+The per-channel (diagonal) graph sum, computed by applying Theorem~D
+to each channel independently, gives
+\begin{equation}\label{eq:F2-scalar}
+F_2^{\mathrm{scal}}(W_3) = \kappa \cdot \lambda_2^{\mathrm{FP}}
+= \frac{5c}{6} \cdot \frac{7}{5760} = \frac{7c}{6912}.
+\end{equation}
+The ratio of the cross-channel correction to the scalar
+approximation is
+\begin{equation}\label{eq:cross-channel-ratio}
+\frac{\delta F_2^{\mathrm{cross}}}{F_2^{\mathrm{scal}}}
+= \frac{432(c+204)}{7c^2},
+\end{equation}
+which diverges as $c \to 0$ and decays as $c^{-1}$ at large~$c$.
+At $c = 4$: the ratio is approximately~$802$, and the cross-channel
+correction \emph{dominates} the scalar term. At $c = 50$: the
+ratio is approximately~$6.3$.
+At large~$c$, the tadpole's $c$-independent contribution $1/16$
+dominates, and the correction becomes a subleading $O(1/c)$ effect
+relative to the $O(c)$ scalar term.
+\end{remark}
+
+\begin{remark}[Cross-channel correction]
+\label{rem:cross-channel-status}
+The graph computation uses the genus-$1$ vertex factors
+$\kappa_i/24$ before the CohFT $R$-matrix action. The
+multi-generator universality problem has a negative answer: the
+CohFT $R$-matrix contributes no terms cancelling
+$\delta F_2^{\mathrm{cross}}$. Hence
+$\delta F_2^{\mathrm{cross}}=(c+204)/(16c)$ is a genuine
+additional term, and the decomposition is
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} +
+\delta F_g^{\mathrm{cross}}$.
+\end{remark}
+
+
+\subsection{The complete amplitude table}
+\label{subsec:amplitude-table}
+
+The full per-graph data are:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcccc}
+\textbf{Graph}
+& \textbf{Diagonal ($T$)}
+& \textbf{Diagonal ($W$)}
+& \textbf{Mixed}
+& \textbf{Total} \\
+\hline
+$\Gamma_1$ figure-eight
+& $1/48$ & $1/48$ & $0$ & $1/24$ \\[2pt]
+$\Gamma_2$ banana
+& $1/c$ & $9/(4c)$ & $3/c$ & $25/(4c)$ \\[2pt]
+$\Gamma_3$ dumbbell
+& $c/2304$ & $c/3456$ & $0$ & $5c/6912$ \\[2pt]
+$\Gamma_4$ theta
+& $2/(3c)$ & $0$ & $9/(2c)$ & $31/(6c)$ \\[2pt]
+$\Gamma_5$ tadpole
+& $1/24$ & $0$ & $1/16$ & $5/48$ \\[2pt]
+$\Gamma_6$ barbell
+& $1/c$ & $0$ & $21/(4c)$ & $25/(4c)$ \\
+\end{tabular}
+\end{center}
+
+The table records the six boundary-graph amplitudes; the
+smooth graph $\Gamma_0$ has no edges and contributes an
+integrated class on $\mathcal{M}_{2,0}$ itself.
+The mixed column sums to
+$\delta F_2^{\mathrm{cross}} = (c+204)/(16c)$.
+
+The rational identities in the table specialise correctly under exact
+arithmetic at $c\in\{1,2,4,13,26,50,100\}$.
+
+
+\subsection{Planted-forest corrections}
+\label{subsec:planted-forest}
+
+The rank-one planted-forest correction on a single primary line is
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$. On the
+Virasoro $T$-line, $S_3^T=2$ and $\kappa_T=c/2$, hence
+\begin{equation}\label{eq:pf-T}
+\delta_{\mathrm{pf}}^{T,\mathrm{rank1}}
+= \frac{2(20 - c/2)}{48}
+= \frac{40 - c}{48}.
+\end{equation}
+The pure $W$-line rank-one projection has
+$\delta_{\mathrm{pf}}^{W,\mathrm{pure}}=0$ because the
+$\mathbb{Z}_2$ parity $W\mapsto -W$ kills odd-degree shadows on the
+pure $W$-line. The full rank-$2$ $W_3$ correction also contains the
+mixed cubic $S_3(T,W,W)=1$, and the canonical rank-$2$ value is
+\begin{equation}\label{eq:pf-w3-rank2}
+\delta_{\mathrm{pf}}^{(2,0)}(W_3)
+=\frac{932-7c^2}{48c^3}.
+\end{equation}
+
+
+\subsection{Koszul duality constraints}
+\label{subsec:w3-koszul-duality}
+
+Under the Koszul involution, $W_3$ at central charge~$c$ is
+dual to $W_3$ at central charge $c' = 100 - c$
+(the Feigin--Frenkel involution for $\mathfrak{sl}_3$). The modular
+characteristics satisfy
+\begin{equation}
+\kappa(c) + \kappa(100-c) = \frac{5c}{6} + \frac{5(100-c)}{6}
+= \frac{250}{3},
+\end{equation}
+and the scalar free energies satisfy $F_2^{\mathrm{scal}}(c) +
+F_2^{\mathrm{scal}}(100-c) = (250/3) \cdot \lambda_2^{\mathrm{FP}}$.
+The cross-channel correction at the dual pair is
+\[
+\delta F_2(c) + \delta F_2(100-c)
+= \frac{c+204}{16c} + \frac{304-c}{16(100-c)}
+= -\,\frac{c^2 - 100c - 10200}{8c(100-c)}.
+\]
+This sum varies with~$c$: the cross-channel correction violates
+Koszul additivity. Since the $R$-matrix contributes no
+cancellation term, $F_2$ contains a Koszul-asymmetric contribution
+beyond the scalar single-channel term.
+
+
+%======================================================================
+\section{The gravitational coproduct is primitive}
+\label{sec:gravitational-coproduct}
+%======================================================================
+
+In gauge theory, gluons split: one gluon can exit a scattering
+region as two, and the dg-shifted Yangian coproduct encodes this
+splitting. In gravity, the graviton is composite.
+The stress tensor is the Sugawara quadratic
+\begin{equation}\label{eq:sugawara}
+T = \frac{1}{k+2}\Bigl(\tfrac{1}{2} {:}J^0 J^0{:}
++ {:}J^+ J^-{:}\Bigr),
+\end{equation}
+built from affine currents by normal ordering.
+This compositeness has a precise algebraic consequence: the
+transferred coproduct is trivial.
+
+
+\subsection{The DS-HPL transfer theorem}
+\label{subsec:ds-hpl}
+
+The Drinfeld--Sokolov reduction $\hat{\mathfrak{sl}}_2 \to
+\mathrm{Vir}$ is a BRST reduction with a strong deformation retract
+$(i, p, h)$ from the BRST complex to the Virasoro cohomology.
+The homotopy $h$ has ghost-number degree~$-1$: it maps
+$V \mapsto b$ (ghost number $0 \to -1$) and
+$c \mapsto U/2$ (ghost number $1 \to 0$).
+
+\begin{construction}[DS-HPL transfer data]\label{thm:ds-hpl-standalone}
+Let $Y^{\mathrm{dg}}(\widehat{\mathfrak{sl}}_2)$ denote the
+dg-shifted Yangian at level~$k$, with $A_\infty$ products
+$\{m_n^{\mathrm{aff}}\}$, coproduct
+$\Delta_z^{\mathrm{aff}}$, and $r$-matrix
+$r^{\mathrm{aff,coll}}(z)=k\Omega_{\mathrm{tr}}/z$ in the trace-form
+collision normalization. The HPL transfer through the
+BRST SDR produces:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Transferred $A_\infty$ products
+ $\{m_n^{\mathrm{Vir}}\}_{n \geq 2}$ on the Virasoro sector,
+ with $m_n^{\mathrm{Vir}} \neq 0$ for all $n \geq 2$
+ \textup{(}the entire infinite $A_\infty$ tower of class~$\mathbf{M}$%
+ \textup{)}.
+\item A transferred coproduct
+ $\Delta_z^{\mathrm{Vir}} \colon H_{\mathrm{Vir}} \to
+ H_{\mathrm{Vir}} \otimes H_{\mathrm{Vir}}$.
+\item A transferred $r$-matrix
+ $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$,
+ with cubic leading pole reflecting the Sugawara nonlinearity.
+\end{enumerate}
+\end{construction}
+
+The trace-form affine collision $r$-matrix
+$r^{\mathrm{aff,coll}}(z)=k\Omega_{\mathrm{tr}}/z$ has a simple
+pole: the OPE has at most a double pole, and the bar kernel
+$d\!\log(z-w)$ absorbs one power. The KZ-normalized connection uses
+$r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+2)z)$ for
+$\mathfrak{sl}_2$, with a different normalization of the Casimir.
+The Virasoro OPE has a quartic pole ($z^{-4}$ in $T(z)T(w)$);
+absorption produces the cubic pole $z^{-3}$ of
+$r^{\mathrm{Vir}}(z)$. The general principle is: $r$-matrix pole
+order equals OPE pole order minus one.
+
+\begin{theorem}[Virasoro coproduct primitivity]
+\label{thm:grav-primitivity-standalone}
+For the verified Virasoro DS reduction, the HPL-transferred
+coproduct is strictly primitive at all degrees:
+\begin{equation}\label{eq:grav-prim}
+\Delta_{z,n}^{\mathrm{Vir}} = 0
+\qquad \text{for all } n \geq 2.
+\end{equation}
+That is, $\Delta_z^{\mathrm{Vir}}(T) = \tau_z(T) \otimes 1
++ 1 \otimes T$. All nontrivial structure of the Virasoro
+dg-shifted Yangian resides in the $r(z)$-twisted target product,
+never in the coproduct.
+\end{theorem}
+
+\begin{proof}
+The tensor-factor projection formulation of the Virasoro DS complex
+gives the result.
+
+\emph{Linear term.} The linear transferred coproduct
+$(p \otimes p)(\Delta_z(T))$ is already primitive. The
+affine coproduct $\Delta_z(T)$ expands as
+$\tau_z(T) \otimes 1 + 1 \otimes T + \frac{1}{k+2}\,\Omega(w{+}z,\,w)$,
+where $\Omega(w{+}z, w) = J^0(w{+}z) \otimes J^0(w)
++ J^+(w{+}z) \otimes J^-(w) + J^-(w{+}z) \otimes J^+(w)$.
+The projection $p$ annihilates $J^0$ (outside the Virasoro sector)
+and $J^+$ decomposes as $V + 1$ with $p(V) = 0$. Every summand
+of~$\Omega$ contains at least one factor from $\{J^0, J^-, J^+\}$
+at conformal weight~$1$, where the Virasoro sector has no states
+($L_{-1}|0\rangle = 0$). Each tensor factor of
+$(p \otimes p)(\Omega)$ has $p$ killing at least one component,
+so $(p \otimes p)(\Omega) = 0$.
+
+\emph{Higher HPL trees.} The degree-$2$ source correction has the
+form
+\[
+(p\otimes p)\Delta_z\,h\,\mu(iT,iT),
+\]
+and the degree-$2$ target correction has the form
+\[
+(p\otimes p)H_{12}\,\mu_{r(z)}(\Delta_z iT,\Delta_z iT).
+\]
+The source tree lands in the BRST ghost sector after the homotopy
+$h$; the target tree lands in the same ghost sector after the
+$r(z)$-twisted target product. The projection $p\otimes p$ kills
+both. In higher degrees, each transferred source or target tree
+contains the same source/target ghost split: either a homotopy edge
+places the output in nonzero ghost degree, or the $r(z)$-twisted
+target product does. Thus every higher coproduct component is
+annihilated by $p\otimes p$.
+
+The ghost degrees are:
+\begin{center}
+\small
+\begin{tabular}{lc}
+Operation & Ghost degree \\
+\hline
+$h$ (homotopy) & $-1$ \\
+$\delta$ (BRST perturbation) & $+1$ \\
+$\mu$ (vertex algebra product) & $0$ \\
+$\Delta_z$ (coproduct) & $0$ \\
+\end{tabular}
+\end{center}
+
+\emph{Projection to cohomology.} The W-algebra cohomology sits in ghost number~$0$.
+The projection $p$ annihilates all ghost-number-$(\neq 0)$ elements.
+The projection $(p \otimes p)$ therefore kills every source and
+target correction in degree $n\geq2$.
+
+The perturbation produces no corrections. The BRST
+perturbation $\delta$ has ghost degree~$+1$, so the product
+$h\delta$ preserves ghost number. But $\delta(T) = 0$ (the stress
+tensor is BRST-closed), so $(h\delta)(i(T)) = 0$, and by induction
+$(h\delta)^n(i(T)) = 0$ for all $n \geq 1$. The corrected inclusion
+$i_\infty(T) = i(T)$ is unperturbed, and the same primitive coproduct
+results at every perturbative order.
+\end{proof}
+
+\begin{theorem}[Principal DS coproduct primitivity]
+\label{thm:general-ds-primitivity}
+For every principal Drinfeld--Sokolov reduction
+$V_k(\fg)\to\cW_k(\fg)$,
+\[
+\Delta^W_{z,n}=0\quad(n\ge2),\qquad
+\Delta^W_z(x)=\tau_z(x)\otimes 1+1\otimes x .
+\]
+\end{theorem}
+
+\begin{proof}
+The principal DS BRST complex has the same source/target ghost split
+as the Virasoro case. The linear affine coproduct projects to the
+primitive term on cohomology. Each higher transferred source tree
+contains a homotopy edge landing in nonzero ghost degree, and each
+higher transferred target tree contains the corresponding
+$r(z)$-twisted target product in nonzero ghost degree. The principal
+projection kills these components, leaving only
+$\tau_z(x)\otimes1+1\otimes x$.
+\end{proof}
+
+
+\subsection{Physical meaning}
+\label{subsec:physical-meaning}
+
+The coproduct $\Delta_z$ of a dg-shifted Yangian encodes the
+\emph{splitting} of excitations. Its strictness or nontriviality
+is the algebraic fingerprint of the distinction between fundamental
+and composite fields.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llccl}
+\textbf{Theory}
+& \textbf{Boundary algebra}
+& $\boldsymbol{\Delta_z}$
+& \textbf{Shadow depth}
+& \textbf{Reason} \\
+\hline
+Chern--Simons &
+ $\hat{\mathfrak{g}}_k$ (affine KM) &
+ reduced coproduct nonzero &
+ $3$ (class $\mathbf{L}$) &
+ fundamental gluons split \\[4pt]
+3d gravity &
+ $\mathrm{Vir}_c = W_k(\mathfrak{sl}_2)$ &
+ $\Delta_{z,n\ge2}=0$ &
+ $\infty$ (class $\mathbf{M}$) &
+ ghost obstruction (DS) \\[4pt]
+Twisted holography &
+ $H_k$ (Heisenberg) &
+ $\Delta_{z,n\ge2}=0$ &
+ $2$ (class $\mathbf{G}$) &
+ free field, $r = k/z$ \\[4pt]
+M2 brane &
+ DDCA &
+ reduced coproduct nonzero &
+ non-DS &
+ no DS, fundamental modes \\[4pt]
+M5 brane &
+ $W_{1+\infty}(K)$ &
+ $\Delta_{z,n\ge2}=0$ &
+ $\infty$ (class $\mathbf{M}$) &
+ ghost obstruction (DS) \\
+\end{tabular}
+\end{center}
+
+Theorem~\ref{thm:general-ds-primitivity} states the principal
+Drinfeld--Sokolov result: the BRST ghost grading kills all higher
+coproduct components. Theorem~\ref{thm:grav-primitivity-standalone}
+is its Virasoro instance for
+$\widehat{\mathfrak{sl}}_2\to\mathrm{Vir}$.
+Theories with fundamental excitations (Chern--Simons, deformed
+double current algebras) lack a ghost sector, and their coproducts
+are nontrivial.
+
+The two exceptions to the DS pattern are illuminating. The
+Heisenberg algebra has a primitive coproduct for a different reason:
+it is a free field, its $r$-matrix $r^H(z) = k/z$ is scalar, and
+the bar complex is formal at degree~$2$ (shadow depth $r_{\max} = 2$,
+class~$\mathbf{G}$). No DS reduction and no ghost obstruction;
+primitivity follows from the absence of nonlinear OPE structure.
+The M2 brane boundary algebra (a deformed double current algebra)
+has a nontrivial coproduct because it lies outside the DS-reduction
+family; its excitations are fundamental
+modes of the M2 worldvolume theory.
+
+
+\subsection{The \texorpdfstring{$r$}{r}-matrix carries all
+gravitational structure}
+\label{subsec:r-matrix-gravity}
+
+With the coproduct primitive, the full gravitational content of
+the Virasoro dg-shifted Yangian is encoded in the $r$-matrix
+\begin{equation}\label{eq:grav-r-matrix}
+r^{\mathrm{Vir}}(z) = \frac{c/2}{z^3} + \frac{2T}{z}.
+\end{equation}
+The two terms encode distinct physical data:
+\begin{itemize}
+\item The \emph{leading coefficient} $c/2 = \kappa(\mathrm{Vir}_c)$
+ is the modular characteristic. It determines the uniform-weight genus
+ tower $F_g = (c/2) \int_{\overline{\mathcal{M}}_g} \lambda_g$ and
+ the two-sided BTZ entropy
+ \[
+ S_{\mathrm{BTZ}}
+ =
+ 2\pi\sqrt{\frac{c\Delta_+}{6}}
+ +2\pi\sqrt{\frac{c\Delta_-}{6}},
+ \qquad
+ \Delta_\pm=L_0^\pm-c/24.
+ \]
+
+\item The \emph{subleading term} $2T/z$ encodes the state dependence
+ of gravitational scattering. The braiding of Wilson lines
+ (gravitational line operators) in the holomorphic-topological
+ bulk is controlled by this term.
+
+\item The \emph{pole structure} (cubic leading pole, simple
+ subleading pole, no even poles) is the signature of a
+ bosonic algebra extracted through the $d\!\log$ kernel: the
+ OPE poles $z^{-4}, z^{-2}, z^{-1}$ each lose one order under
+ the $d\!\log$ extraction, producing $r$-matrix terms
+ $z^{-3}, z^{-1}, z^0$. The $z^0$ term (from the $\partial T$
+ pole at $z^{-1}$) is regular and contributes no term to the
+ $r$-matrix, leaving only $z^{-3}$ and $z^{-1}$.
+\end{itemize}
+
+For Chern--Simons gauge theory, the trace-form affine collision
+$r$-matrix
+\[
+r^{\mathrm{aff,coll}}(z)=\frac{k\Omega_{\mathrm{tr}}}{z}
+\]
+has a simple pole and the reduced coproduct is nonzero. For gravity,
+the cubic-pole Virasoro $r$-matrix controls braiding while the
+coproduct remains primitive. Drinfeld--Sokolov reduction sends the
+affine collision datum to $(c/2)/z^3+2T/z$ by homological perturbation
+through the Sugawara nonlinearity; the ghost-number obstruction
+annihilates the nonprimitive coproduct terms.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Datum} & \textbf{Chern--Simons} & \textbf{Gravity} \\
+\hline
+boundary algebra
+ & $V_k(\mathfrak{g})$ (affine KM)
+ & $\mathrm{Vir}_c$ (Virasoro) \\[2pt]
+highest OPE pole
+ & $z^{-2}$ (quadratic)
+ & $z^{-4}$ (quartic) \\[2pt]
+$A_\infty$ tower
+ & strict ($m_{k \geq 3} = 0$)
+ & infinite ($m_k \neq 0$ all $k$) \\[2pt]
+shadow depth
+ & $3$ (class $\mathbf{L}$)
+ & $\infty$ (class $\mathbf{M}$) \\[2pt]
+$r^{\mathrm{coll}}(z)$
+ & $k\Omega_{\mathrm{tr}}/z$ (simple pole)
+ & $(c/2)/z^3 + 2T/z$ (cubic pole) \\[2pt]
+$\Delta_z$
+ & nontrivial (gluons split)
+ & primitive (gravitons braid) \\[2pt]
+$\kappa$
+ & $\dim\mathfrak{g}\,(k+h^\vee)/(2h^\vee)$
+ & $c/2$ \\[2pt]
+$\kappa + \kappa^!$
+ & $0$
+ & $13$
+\end{tabular}
+\end{center}
+
+The entire table descends from a single datum: the number of
+$\lambda$-powers in the $\lambda$-bracket. Affine Kac--Moody has
+$\lambda^1$ at most (quadratic pole), yielding strict associativity,
+finite shadow depth, a simple-pole $r$-matrix, and a nontrivial
+coproduct. The Virasoro algebra has $\lambda^3$ (quartic pole),
+yielding the full infinite $A_\infty$ tower, infinite shadow depth,
+a cubic-pole $r$-matrix, and a primitive coproduct. The
+Drinfeld--Sokolov reduction is the functor that connects the two
+columns: it increases the $\lambda$-bracket order by two, trades
+the nontrivial coproduct for a ghost obstruction, and replaces the
+complementarity $\kappa + \kappa^! = 0$ with $\kappa + \kappa^! = 13$.
+
+\smallskip
+
+Thus the Virasoro dg-shifted Yangian has a primitive coproduct and a
+nontrivial cubic-pole $r$-matrix: the composite Sugawara origin of
+$T$ places gravitational interaction in braiding, with no higher
+coproduct component.
+
+\ifdefined\shadowtowervtwoincluded
+\else
+\end{document}
+\fi

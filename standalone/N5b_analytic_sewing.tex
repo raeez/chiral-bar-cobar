@@ -1,0 +1,862 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+\usepackage{array}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\HS}{\mathrm{HS}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\GG}{\Gamma}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Analytic Sewing for Chiral Algebras]
+{Analytic Sewing for Chiral Algebras:\\
+Hilbert--Schmidt Criteria, Bergman Reduction,\\
+and the Heisenberg Fredholm Determinant}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University,
+ Cambridge, MA 02138, USA}
+\email{rlorgat@math.harvard.edu}
+
+\date{}
+
+\begin{abstract}
+A sufficient analytic sewing criterion is established for chiral
+algebras. The sewing envelope $\cA^{\mathrm{sew}}$ is the locally
+convex completion of an algebraic chiral core determined by
+coefficient seminorms before convergence and by compact-open matrix
+coefficient seminorms on convergence domains. A Hilbert--Schmidt
+estimate on the sector multiplication gives trace-class closed loop
+amplitudes after $q$-damping. In the Heisenberg case, the disk
+completion is modeled by
+the symmetric algebra of the Bergman space; the second-quantized
+Fredholm determinant formula is valid under the usual trace-class
+implementability hypotheses. For interacting families the criterion is
+conditional on a positive Hilbert model and polynomial OPE bounds.
+\end{abstract}
+
+\subjclass[2020]{17B69 (primary), 14H10, 30H20, 47B10, 81T40}
+
+\keywords{Chiral algebras, vertex operator algebras, sewing,
+bar construction, Hilbert--Schmidt operators, Bergman space,
+Fredholm determinant, Heisenberg algebra}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{Sewing and the bootstrap}
+
+The sewing axiom is the defining structural law of
+two-dimensional conformal field theory. A Riemann surface with
+parametrized boundary circles carries an amplitude valued in the
+tensor power of a state space; gluing two surfaces along matched
+boundary circles composes the amplitudes; and the conformal
+bootstrap decomposes higher-genus amplitudes into sphere
+amplitudes by cutting along every possible configuration of
+circles. The classical treatment of Segal~\cite{Segal88} takes
+this as the basic geometric axiom. Zhu's modular invariance
+theorem~\cite{Zhu96} proves that, for a rational vertex operator
+algebra, the genus-$1$ characters span a representation of
+$SL_2(\mathbb{Z})$; Huang extended the sewing of
+sphere amplitudes to genus one and then by induction to all
+genera~\cite{Huang05}, under a list of analytic hypotheses
+(convergence of the relevant products of matrix elements; absolute
+convergence of sector sums).
+
+For a general chiral algebra, the bar complex
+$\barB(\cA)$ of residue-contracted point configurations; genus-$g$
+amplitudes are integrals of bar elements over boundary strata of
+$\overline{\cM}_{g,n}$; the gluing of two surfaces is a
+pair-of-pants multiplication followed by trace. Each of these
+operations is well-defined at the algebraic level, but asking
+for a convergent \emph{number} rather than a formal power series
+requires completing the state space in a topology that both
+contains the image of every amplitude and supports trace-class
+estimates. This is the analytic sewing problem.
+
+\subsection{The Hilbert--Schmidt criterion}
+
+The Hilbert--Schmidt condition is a single analytic hypothesis
+strong enough to imply the closed-loop estimates needed in sewing
+and concrete enough to be checked from OPE data. Let
+$H = \widehat{\bigoplus}_{n \geq 0}
+H_n$ be a graded pre-Hilbert core and let
+$m_{a,b}^c \colon H_a \otimes H_b \to H_c$ denote the sector
+components of the pair-of-pants product. Say $\cA$ satisfies
+\emph{HS-sewing} if
+\begin{equation}\label{eq:hs-intro}
+\sum_{a,b,c \geq 0} q^{a+b+c}\, \|m_{a,b}^c\|_{\HS}^2
+\;<\; \infty
+\end{equation}
+for some $0 < q < 1$. Proposition
+\ref{prop:closed-trace-class} gives the corresponding trace-class
+criterion for the \(q\)-damped kernel: closed sewing loops with the
+specified Hilbert--Schmidt factors are trace-class on the weighted
+completion $H_q := \widehat{\bigoplus}_n q^n H_n$. Genus-$g$
+partition functions and correlators are then genuine numbers once
+the remaining open-amplitude bounds are supplied.
+
+The Heisenberg case verifies the criterion in the sharpest available
+form. Moriwaki~\cite{Moriwaki26b}
+identifies the Heisenberg sewing envelope with the symmetric
+algebra $\Sym A^2(D)$ of the Bergman space of the disk. The
+pair-of-pants amplitude is the second quantization
+$\Gamma(R)$ of a one-particle Bergman restriction operator $R$,
+and the Fredholm determinant expression follows whenever the bosonic
+second quantization is trace-class. In the standard free-boson
+normalisation, the genus-$g$ partition function for a rank-$r$
+Heisenberg VOA is
+\begin{equation}\label{eq:heisenberg-partition-intro}
+Z_g(\cH^{(r)};\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-r/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-r/2},
+\end{equation}
+in agreement with the Belavin--Knizhnik~\cite{BK86} string measure.
+
+The final criterion turns~\eqref{eq:hs-intro} into a checkable
+hypothesis. A positive-energy chiral algebra with subexponential
+sector growth $\log\dim H_n = o(n)$ and polynomial OPE coefficient
+growth $|C^{c,k}_{a,i;b,j}| \leq K(a+b+c+1)^N$ satisfies HS-sewing
+for every $0 < q < 1$. These are both conditions that can be
+checked from character formulas and OPE tables. The criterion holds
+on the standard landscape for the Heisenberg $\cH_k$,
+affine Kac--Moody $V_k(\fg)$ at integer level, Virasoro
+$\Vir_c$, the $\cW_N$ algebras, and lattice vertex algebras
+$V_\Lambda$, subject in the interacting cases to a positive Hilbert
+model satisfying the stated OPE bounds.
+
+\subsection{Prior work}
+
+Zhu's original sewing for rational VOAs~\cite{Zhu96} uses modular
+invariance as its analytic input; Huang's hypotheses for
+irrational sewing~\cite{Huang05} are formulated as convergence
+of specific formal series. The HS criterion is stronger in that
+it provides a single norm estimate that implies all such
+convergences simultaneously. The Bergman identification of the
+Heisenberg sewing envelope was established by
+Moriwaki~\cite{Moriwaki26b} through factorization homology valued
+in $\operatorname{IndHilb}$. In the present formulation it appears
+as a one-particle reduction of the pair-of-pants operator, which is
+the source of the Fredholm expression
+\eqref{eq:heisenberg-partition-intro}.
+
+\subsection{Outline}
+
+Section~\ref{sec:sewing-envelope} constructs the sewing envelope
+as a universal locally convex completion and states its
+universal property. Section~\ref{sec:hs-criterion} defines the
+Hilbert--Schmidt sewing condition and proves the trace-class
+theorem. Section~\ref{sec:heisenberg} treats the Heisenberg
+algebra: statement of the sewing theorem, one-particle reduction,
+and the Fredholm determinant formula.
+Section~\ref{sec:general-criterion} proves the general criterion
+from polynomial OPE growth and subexponential sector growth.
+Section~\ref{sec:examples} verifies the criterion on the standard
+landscape. Section~\ref{sec:conclusion} collects open problems.
+
+\section{The sewing envelope}\label{sec:sewing-envelope}
+
+\subsection{Algebraic cores and bordism amplitudes}
+
+An \emph{algebraic chiral core} is a
+$\mathbb{Z}_{\geq 0}$-graded vector space
+$\cA_{\mathrm{alg}} = \bigoplus_{n \geq 0} H_n$
+equipped with the operator product expansion of a vertex operator
+algebra of positive energy, with $H_0 = \mathbb{C}\cdot\mathbf{1}$
+and $\dim H_n < \infty$. The sector components $H_n$ are the
+conformal-weight eigenspaces; the pair-of-pants product assembles
+them into the state space. The augmentation
+$\varepsilon \colon \cA_{\mathrm{alg}} \to \mathbb{C}$ is the
+projection to $H_0$. The augmentation ideal
+$\bar\cA = \ker(\varepsilon)$ is the input to the bar construction
+$B(\cA) = T^c(s^{-1}\bar\cA)$.
+
+A finite conformally flat bordism is a compact Riemann surface
+$\Sigma$ with parametrized in/out boundary collars
+$(D^{\mathrm{in}}_1, \ldots, D^{\mathrm{in}}_m)$ and
+$(D^{\mathrm{out}}_1, \ldots, D^{\mathrm{out}}_\ell)$. For each
+such $\Sigma$ the algebraic data determines an
+\emph{algebraic amplitude}
+\[
+A_\Sigma^{\mathrm{alg}} \colon
+\cA_{\mathrm{alg}}^{\otimes m}
+\longrightarrow
+\cA_{\mathrm{alg}}^{\otimes \ell},
+\]
+a priori valued in formal series of conformal-weight components.
+Matrix coefficients of $A_\Sigma^{\mathrm{alg}}$ are bilinear pairings
+\[
+\langle \eta,\,
+A_\Sigma^{\mathrm{alg}}
+(\xi_1 \otimes \cdots \otimes \xi_m)
+\rangle
+\in
+\mathbb{C}[[\text{moduli of } \Sigma]],
+\]
+where $\eta$ ranges over the algebraic dual of the output sectors.
+The question is whether these matrix coefficients converge to
+actual complex numbers.
+
+\subsection{The sewing envelope}
+
+\begin{definition}[Sewing envelope]\label{def:sewing-envelope}
+Let $\Sigma$ be a finite conformally flat bordism whose sewing
+parameters lie in a convergence polydisc $U$. For every compact
+$K\Subset U$ and every choice of boundary vectors
+$\xi_i \in \cA_{\mathrm{alg}}$, $\eta \in \cA_{\mathrm{alg}}^\vee$,
+define the compact-open seminorm
+\begin{equation}\label{eq:sewing-seminorm}
+p_{\Sigma,K,\xi,\eta}(a)
+\;=\;
+\sup_{u\in K}
+\bigl|\langle \eta,\,
+A_\Sigma^{\mathrm{alg}}(u)
+(\xi_1 \otimes \cdots \otimes a \otimes \cdots \otimes \xi_m)
+\rangle\bigr|.
+\end{equation}
+Before convergence on $U$ is proved, use the corresponding
+coefficient seminorms of the formal series.
+The \emph{sewing envelope} $\cA^{\mathrm{sew}}$ is the Hausdorff
+completion of $\cA_{\mathrm{alg}}$ for the locally convex topology
+generated by these coefficient and compact-open seminorms.
+\end{definition}
+
+The seminorms~\eqref{eq:sewing-seminorm} require every matrix
+coefficient of every convergent algebraic amplitude to extend to a
+continuous function of the state, and record formal coefficients
+before convergence has been established. The sewing envelope is the
+smallest completion that remembers every local-to-global operation
+at once.
+It is the minimal target for analytic bootstrap arguments that use
+all sewing amplitudes as continuous matrix coefficients.
+
+\begin{proposition}[Universal property]\label{prop:sewing-universal}
+Let $E$ be any complete locally convex realization of
+$\cA_{\mathrm{alg}}$ for which every algebraic amplitude
+$A_\Sigma^{\mathrm{alg}}$ extends continuously on the chosen
+compact convergence domains, and every formal coefficient seminorm
+is continuous. Then the identity on $\cA_{\mathrm{alg}}$ extends
+uniquely to a continuous map
+$E \to \cA^{\mathrm{sew}}$ with dense image, provided
+$\cA_{\mathrm{alg}}$ is dense in~$E$.
+\end{proposition}
+
+\begin{proof}
+By hypothesis, each seminorm $p_{\Sigma,K,\xi,\eta}$ and each
+coefficient seminorm is continuous on $E$. Hence the identity
+$(\cA_{\mathrm{alg}},E\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ is continuous. Since
+$\cA^{\mathrm{sew}}$ is complete, it extends uniquely from the dense
+algebraic core to~$E$.
+\end{proof}
+
+\begin{remark}[Algebraic versus analytic completions]
+The sewing envelope can differ from elementary completions
+such as the $q$-adic completion
+$\widehat{\bigoplus}_n q^n H_n$, the Hilbert-space completion
+with respect to a fixed invariant form, or Zhu's $C_2$-quotient.
+These completions compare to $\cA^{\mathrm{sew}}$ by continuous maps
+once their amplitudes are continuous; embeddings or quotient
+descriptions require additional topological hypotheses. The
+HS-sewing criterion of the next section constructs trace-class
+closed amplitudes on a concrete Hilbert completion~$H_q$.
+A dense comparison map $H_q\to\cA^{\mathrm{sew}}$ exists only after
+the open sewing seminorms are separately shown to be continuous on
+$H_q$.
+\end{remark}
+
+\section{The Hilbert--Schmidt criterion}\label{sec:hs-criterion}
+
+The universal sewing envelope of
+Definition~\ref{def:sewing-envelope} is an abstract object. To
+compute with it one needs a concrete Hilbert completion on which
+the sewing operators satisfy composable norm estimates. The
+Hilbert--Schmidt criterion supplies such a completion.
+
+\begin{definition}[HS-sewing]\label{def:hs-sewing}
+Let $\cA_{\mathrm{alg}} = \bigoplus_n H_n$ be an algebraic chiral
+core with pre-Hilbert structure on each sector (for example, the
+invariant form restricted to $H_n$). Write the pair-of-pants
+sector multiplications as
+\[
+m_{a,b}^c \colon H_a \otimes H_b \longrightarrow H_c.
+\]
+Say $\cA$ satisfies \emph{HS-sewing} at parameter $q \in (0,1)$ if
+\begin{equation}\label{eq:hs-sewing}
+\sum_{a,b,c \geq 0} q^{a+b+c}\,
+\|m_{a,b}^c\|_{\HS}^2
+\;<\; \infty.
+\end{equation}
+	The \emph{weighted completion} is
+	$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
+	product $\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
+	for $v, w \in H_n$.
+	The \emph{$q$-damped pair-of-pants} is the sectorwise map
+	\[
+	m_q\big|_{H_a\otimes H_b\to H_c}
+	\;:=\;
+	q^{(3a+3b-c)/2}\,m_{a,b}^c ,
+	\]
+	viewed as an operator $H_q\widehat\otimes H_q\to H_q$.
+	\end{definition}
+
+	The damping is part of the sewing kernel. The raw multiplication on
+	the Hilbert space with inner product
+	$q^{2n}\langle-,-\rangle_{H_n}$ contributes the sector factor
+	$q^{2(c-a-b)}$ to the Hilbert--Schmidt norm, not the factor in
+	\eqref{eq:hs-sewing}.
+
+\begin{proposition}[Closed loop amplitudes are trace-class]
+\label{prop:closed-trace-class}
+Suppose $\cA$ satisfies HS-sewing at parameter $q$. Then
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the $q$-damped pair-of-pants
+$m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
+\[
+\|m_q\|_{\HS}^2
+\;=\;
+\sum_{a,b,c} q^{a+b+c}\, \|m_{a,b}^c\|_{\HS}^2;
+\]
+\item under bounded collar transport and the heat-trace condition
+$\sum_n q^n\dim H_n<\infty$, every closed stable amplitude built
+from a finite pants decomposition with at least two
+Hilbert--Schmidt pair-of-pants factors is trace class on $H_q$;
+\item if every open sewing seminorm
+$p_{\Sigma,K,\xi,\eta}$ is separately continuous on $H_q$, then
+the weighted Hilbert completion~$H_q$ admits a continuous linear
+map $H_q \to \cA^{\mathrm{sew}}$ whose image is dense.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Claim~(i) is direct calculation. Identifying $H_a \otimes H_b$
+with the weight-$(a+b)$ subspace of $H_q^{\widehat{\otimes} 2}$,
+	the raw sector component $m_{a,b}^c \colon H_a \otimes H_b \to H_c$
+	contributes $q^{2(c-a-b)}\|m_{a,b}^c\|_{\HS}^2$. The damping
+	$q^{(3a+3b-c)/2}$ multiplies this by $q^{3a+3b-c}$, so the sector
+	contribution is $q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2$. Summing gives
+$\|m_q\|_{\HS}^2 = \sum q^{a+b+c} \|m_{a,b}^c\|_{\HS}^2 < \infty$.
+
+Claim~(ii) is the standard fact that a composition of two
+Hilbert--Schmidt operators is trace class, together with the stated
+bounded collar transport and heat-trace assumptions. Thus a closed
+stable sewing graph with the controlled factors has a well-defined
+trace. Open amplitudes and loops with only one controlled factor
+require separate uniform boundedness assumptions.
+
+Claim~(iii) is a conditional comparison statement. If the open
+sewing seminorms of Definition~\ref{def:sewing-envelope} are
+continuous on $H_q$, then the identity
+$(\cA_{\mathrm{alg}},H_q\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ follows, and completion
+gives $H_q \to \cA^{\mathrm{sew}}$.
+\end{proof}
+
+\begin{corollary}[Conditional positivity of the sewing Gram matrix]
+\label{cor:hs-positivity}
+Under HS-sewing and a reflection-positive Hilbert model whose
+pair-of-pants operators are positive in the relevant channel, the
+connected sewing amplitudes
+$a_\cA(N) \in \mathbb{R}_{\geq 0}$ define a positive-semidefinite
+inner product on generating Dirichlet polynomials. In particular,
+every closed amplitude lies in the cone of positive-semidefinite
+finite sums of pair-of-pants amplitudes.
+\end{corollary}
+
+\begin{proof}
+Trace-class operators form a two-sided ideal with a well-defined
+trace, which is positive when applied to a positive trace-class
+operator. The additional positivity hypothesis supplies positivity
+of the pair-of-pants factors; the trace-class criterion alone does
+not.
+\end{proof}
+
+\section{The Heisenberg sewing theorem}\label{sec:heisenberg}
+
+The Heisenberg vertex algebra $\cH_k$ is generated by a single
+current $J(z)$ with operator product expansion
+\[
+J(z)\, J(w) \;\sim\; \frac{k}{(z-w)^2}.
+\]
+Its sectors $H_n$ are spanned by monomials
+$a_{-n_1-1}\cdots a_{-n_j-1}\mathbf{1}$ with $\sum (n_i + 1) = n$;
+the sector generating function is
+$\sum_{n \geq 0} \dim H_n\,q^n = \prod_{n \geq 1}(1 - q^n)^{-1}$,
+equivalently $q^{1/24}/\eta(q)$. The
+Heisenberg algebra is the first case in which the analytic sewing
+envelope admits a complete geometric description.
+
+\subsection{The Bergman identification}
+
+Let $A^2(D)$ be the Bergman space of square-integrable holomorphic
+functions on the unit disk $D \subset \mathbb{C}$, with inner
+product $\langle f, g \rangle = \int_D f\overline{g}\,dA$ and
+orthonormal basis $e_n(z) = \sqrt{(n+1)/\pi}\,z^n$ for
+$n \geq 0$. The symmetric algebra $\Sym A^2(D)$ is the Hilbert
+space of symmetric tensors; physically it is the Fock space
+built on the one-particle Bergman space.
+
+\begin{definition}[Mode--Bergman map]\label{def:theta-map}
+The \emph{mode--Bergman map}
+$\Theta \colon \cH_k^{\mathrm{alg}} \longrightarrow \Sym A^2(D)$
+is the dense linear map defined on the algebraic Fock core by
+\[
+\Theta(a_{-n-1}\mathbf{1})
+\;=\;
+\sqrt{n+1}\, z^n,
+\qquad
+\Theta(a_{-n_1-1}\cdots a_{-n_j-1}\mathbf{1})
+\;=\;
+\operatorname{Sym}\bigl(\Theta(a_{-n_1-1}\mathbf{1})
+\otimes \cdots \otimes \Theta(a_{-n_j-1}\mathbf{1})\bigr).
+\]
+\end{definition}
+
+\begin{theorem}[Heisenberg sewing]\label{thm:heisenberg-sewing}
+Let $\cH_k$ be the Heisenberg vertex algebra at level $k$ and let
+$\Theta$ be the mode--Bergman map of
+Definition~\ref{def:theta-map}. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The sewing envelope $\cH_k^{\mathrm{sew}}$ of the algebraic
+Heisenberg VOA is identified via $\Theta$ with $\Sym A^2(D)$.
+\item The Gaussian collision kernel on Bergman tensors represents
+the Wick contraction in the sewing amplitude.
+\item The pair-of-pants sewing amplitude is the second
+quantization $\Gamma(R)$ of a one-particle Bergman restriction
+operator $R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$.
+\item Every closed genus-$g$ amplitude whose bosonic second
+quantization is trace-class is represented by a Fredholm determinant
+on the reduced one-particle Bergman space
+$A^2_0(\partial D)$ (constant mode removed).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Claim~(i) is the Bergman identification of
+Moriwaki~\cite{Moriwaki26b}, who constructs a conformally flat
+2-disk algebra structure on $\Sym A^2(D)$ isomorphic to the
+Heisenberg sewing completion by factorization homology valued
+in $\operatorname{IndHilb}$. The universal property of
+Proposition~\ref{prop:sewing-universal} identifies his
+completion with $\cH_k^{\mathrm{sew}}$.
+
+Claim~(ii) is the analytic form of the Wick contraction. Under
+$\Theta$, the Heisenberg two-point contraction is the Gaussian collision
+operator
+$G(z, w) = k/(1 - z\bar w)^2$ on $A^2(D) \otimes A^2(D)$,
+which is the reproducing kernel of the Bergman space; the bar
+sewing amplitude factors through this densely defined Gaussian kernel
+operator on Bergman tensors.
+
+Claims~(iii) and~(iv) follow from
+Theorem~\ref{thm:heisenberg-one-particle} below.
+\end{proof}
+
+\subsection{One-particle sewing}
+
+The Heisenberg amplitude factorises completely through a
+one-particle operator; this is the analytic version of Wick's
+theorem.
+
+\begin{theorem}[Conditional Heisenberg one-particle sewing]
+\label{thm:heisenberg-one-particle}
+The Heisenberg pair-of-pants amplitude is the second quantisation
+$\Gamma(R)$ of the one-particle Bergman restriction
+$R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$
+whose matrix elements satisfy
+\[
+|R_{n,m}| \;\leq\; C q^{(n+m)/2},
+\]
+where $q = e^{-t}$ and $t$ is the conformal length of the collar.
+The sewing operator $T_q$ on the reduced Bergman space
+$A^2_0(\partial D)$ has eigenvalues $q^n$ for $n \geq 1$ and is
+trace class with
+\[
+\|T_q\|_1 \;=\; \frac{q}{1 - q}.
+\]
+When the bosonic second quantization is trace-class, the genus-$g$
+partition function of a rank-$r$ Heisenberg VOA is the Fredholm
+determinant
+\begin{equation}\label{eq:heisenberg-fredholm}
+Z_g(\cH^{(r)};\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-r/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-r/2}.
+\end{equation}
+At genus~$1$,
+$Z_1 = (\operatorname{Im}\tau)^{-r/2}\,|\eta(\tau)|^{-2r}$.
+\end{theorem}
+
+\begin{proof}
+Wick's theorem: every Heisenberg amplitude factors into
+pairwise contractions of the generating current. Each
+contraction across a sewing circle corresponds to a
+one-particle pairing, so the full Fock-space amplitude
+equals the second quantization $\Gamma(R)$ of the
+one-particle pairing $R$.
+
+The one-particle matrix element is
+\[
+R_{n,m}
+\;=\;
+\frac{k}{2\pi i}\oint_{|z| = 1}
+\oint_{|w| = 1}
+z^{-n-1}\, w^{-m-1}\, G_{\mathrm{pants}}(z, w)\, dz\, dw,
+\]
+where $G_{\mathrm{pants}}$ is the Bergman kernel of the pair
+of pants. The collar of length $t = -\log q$ and the Bergman
+reproducing property give the estimate
+$|G_{\mathrm{pants}}(z, w)| \leq C (1 - q|zw|)^{-2}$,
+and extraction of the $(n, m)$ Fourier coefficient yields
+$|R_{n,m}| \leq C q^{(n+m)/2}$.
+
+Consequently $R$ is Hilbert--Schmidt. The additional
+implementability hypothesis that $\Gamma(R)$ is trace-class gives
+$\operatorname{Tr}_{\Sym H}\Gamma(T)=\det(1-T)^{-1}$ for a
+trace-class one-particle sewing operator $T$ with spectral radius
+$<1$; for rank $r$ the determinant is raised to the power $-r$.
+
+The Polyakov formula for the Heisenberg partition function
+identifies
+$\det(1 - K_g)^{-r}
+= (\det\operatorname{Im}\Omega)^{-r/2}
+(\det{}'_\zeta \Delta_{\Sigma_g})^{-r/2}$,
+where $K_g$ is the genus-$g$ sewing kernel assembled by
+composing $2g - 2$ pair-of-pants restriction operators along
+the edges of a trivalent graph $\Gamma$ of first Betti number
+$g$; this is the Belavin--Knizhnik~\cite{BK86} holomorphic
+factorisation of the bosonic string measure.
+
+At genus~$1$, $K_1 = T_q$ and the Fredholm determinant is
+$\det(1 - T_q) = \prod_{n \geq 1}(1 - q^n) = q^{-1/24}\eta(q)$,
+so $Z_1 = (\operatorname{Im}\tau)^{-r/2}\cdot |\eta(\tau)|^{-2r}$
+for rank $r$ after combining holomorphic and antiholomorphic
+sectors. For a single current at level $k$, this exponent is $1$;
+the level affects the two-point normalization, not the number of
+oscillator colours.
+\end{proof}
+
+\begin{remark}
+For the families treated here, the Heisenberg algebra is the case in
+which the sewing construction is completely explicit: the sewing
+envelope is a Bergman Fock space, the pair-of-pants amplitude is a
+second quantization, and the closed amplitudes covered by
+Theorem~\ref{thm:heisenberg-one-particle} are Fredholm
+determinants. The non-abelian cases below are controlled by
+Hilbert--Schmidt estimates rather than by a one-particle model.
+\end{remark}
+
+\section{The general HS-sewing theorem}\label{sec:general-criterion}
+
+For algebras beyond the Heisenberg, the sewing envelope does not
+admit a classical description, but the Hilbert--Schmidt criterion
+can still be verified from two OPE-level estimates: polynomial
+growth of the structure constants and subexponential growth of
+the sector dimensions. Both hypotheses can be read off from
+character formulas and OPE tables.
+
+\begin{theorem}[General HS-sewing criterion]
+\label{thm:general-hs-sewing}
+Let $\cA$ be a positive-energy chiral algebra with a choice of
+pre-Hilbert structure on each sector $H_n$. Suppose
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item (\textbf{Hardy--Ramanujan sector growth})
+$\dim H_n \leq C e^{\alpha\sqrt{n}}$ for some
+$C, \alpha > 0$;
+\item (\textbf{polynomial OPE coefficient growth}) there exist
+constants $K > 0$ and $N \geq 0$ such that the matrix elements
+of $m_{a,b}^c$ in orthonormal bases satisfy
+\[
+|C^{c,k}_{a,i;\,b,j}| \;\leq\; K(a + b + c + 1)^N
+\]
+for all weights $a, b, c$ and all basis indices $i, j, k$.
+\end{enumerate}
+Then $\cA$ satisfies HS-sewing at every parameter
+$0 < q < 1$.
+\end{theorem}
+
+\begin{proof}
+From hypothesis~(ii), the Hilbert--Schmidt norm of the sector
+multiplication is controlled by
+\begin{equation}\label{eq:hs-bound}
+\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+\dim H_a \cdot \dim H_b \cdot \dim H_c \cdot
+K^2 (a + b + c + 1)^{2N}.
+\end{equation}
+Apply the power-mean inequality
+$(x + y + z)^p \leq 3^{p-1}(x^p + y^p + z^p)$ with $p = 2N$ and
+$x = a+1$, $y = b+1$, $z = c+1$:
+\[
+(a + b + c + 1)^{2N}
+\;\leq\;
+(a+1+b+1+c+1)^{2N}
+\;\leq\;
+3^{2N-1}\bigl((a+1)^{2N} + (b+1)^{2N} + (c+1)^{2N}\bigr).
+\]
+Substituting into~\eqref{eq:hs-bound} and using the symmetry of
+the three terms, the HS-sewing sum is bounded by
+\[
+\sum_{a, b, c \geq 0}
+q^{a+b+c}\, \|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+3^{2N} K^2
+\Bigl(\sum_{n \geq 0} q^n\dim H_n\,(n+1)^{2N}\Bigr)
+\Bigl(\sum_{n \geq 0} q^n \dim H_n\Bigr)^2.
+\]
+By hypothesis~(i), $\dim H_n \leq C e^{\alpha\sqrt{n}}$, while
+$q^n = e^{-n\log(1/q)}$ decays exponentially. Each factor
+$q^n\dim H_n\,(n+1)^{2N}$ is bounded by
+$C(n+1)^{2N}\exp(\alpha\sqrt n - n\log(1/q))$, which decays
+superpolynomially, so each series converges absolutely.
+\end{proof}
+
+\begin{corollary}[Trace-class stable-graph expansion]
+\label{cor:trace-class-stable-graph}
+Suppose $\cA$ satisfies the hypotheses of
+Theorem~\ref{thm:general-hs-sewing}. Then every closed amplitude
+associated to a finite stable sewing graph is a trace of a
+trace-class operator on $H_q$. This gives a norm-convergent
+stable-graph expansion
+\[
+\langle A_{\Sigma_{g,n}}\rangle
+\;=\;
+\sum_{\Gamma}
+\operatorname{Tr}(m_q^{\Gamma}),
+\]
+where $\Gamma$ ranges over the stable graphs appearing in the
+chosen sewing decomposition. It is a Fredholm determinant only in
+Gaussian one-particle situations, such as the Heisenberg and
+oscillator part of lattice VOAs.
+\end{corollary}
+
+\begin{proof}
+Immediate from Proposition~\ref{prop:closed-trace-class} applied
+to the pants decomposition and the fact that the trace of a
+trace-class operator is a norm-convergent sum over any
+orthonormal basis.
+\end{proof}
+
+\begin{remark}[Completed algebras]\label{rem:completed}
+The standard families below are finitely strongly generated in the
+sense that a finite set of fields produces the entire algebra under
+normal-ordered product and derivation. For nonunitary or degenerate
+quotients, the polynomial OPE bound is a normed-model hypothesis. For
+completed algebras (such as $\cW_{1+\infty}$ or completed
+Yangians), the polynomial OPE bound of
+hypothesis~(ii) must be verified in the completed (inverse
+limit) topology, where the structure constants are themselves
+formal power series. This verification is the content of
+Theorem MC4 of~\cite{LorgatVolI}.
+\end{remark}
+
+\section{Verification on the standard landscape}\label{sec:examples}
+
+The criterion applies to any chosen positive Hilbert realization for
+which the heat trace, bounded collar transport, and polynomial
+matrix-coefficient bounds have been verified. The data required is
+a character formula, to control $\dim H_n$, and a normed OPE bound,
+to determine $N$.
+
+\begin{example}[Heisenberg]\label{ex:heisenberg}
+The Heisenberg $\cH_k$ has $\dim H_n = p(n)$, the partition
+number. The OPE
+$J(z)J(w) \sim k/(z-w)^2$ has structure constants bounded by
+$k$, independent of weight; taking $N = 1$ is safe (the
+derivation $\partial$ increases weight by~$1$, so the
+normal-ordered products of derivatives are at most linear in
+the degree). Hence $\cH_k$ satisfies HS-sewing at every
+$0 < q < 1$. The sector sum
+$\sum_n q^n p(n) = \prod_{n \geq 1}(1-q^n)^{-1} = q^{1/24}/\eta(q)$
+is the Heisenberg partition generating function,
+consistent with~\eqref{eq:heisenberg-fredholm}.
+\end{example}
+
+\begin{example}[Affine Kac--Moody at integer level]
+\label{ex:kac-moody}
+Let $V_k(\fg)$ be the vacuum module of the affine vertex algebra
+at integer level $k \in \mathbb{Z}_{> 0}$, with $\fg$ a simple
+Lie algebra. The sectors satisfy
+$\dim H_n \leq C e^{\alpha\sqrt n}$ from the Kac--Weyl character
+formula. The OPE of two currents
+$J^a(z)J^b(w)$ has a double pole (central term) and a simple
+pole (Lie bracket); hence
+$|C^{c,k}_{a,i;\,b,j}| \leq K(n+1)$ with $N = 1$, because the
+structure constants depend linearly on the weight via the
+insertion of derivatives. In a positive Hilbert model satisfying
+this normed estimate and bounded collar transport, HS-sewing at
+every $0<q<1$ follows. The sector sum
+$\sum_n q^n\dim H_n$ is the Kac--Moody character $\chi_{V_k}(q)$.
+\end{example}
+
+\begin{example}[Virasoro]\label{ex:virasoro}
+The generic Virasoro vacuum VOA has character
+\[
+q^{-c/24}\prod_{m\ge2}(1-q^m)^{-1}.
+\]
+Thus its sector dimensions have the same subexponential growth as
+the partition function with the $L_{-1}\mathbf 1$ generator removed.
+The OPE
+$T(z)T(w) \sim c/2(z-w)^{-4} + 2T(w)(z-w)^{-2}
++ \partial T(w)(z-w)^{-1}$
+is quartic; repeated normal products of $T$ give
+$|C| \leq K(n+1)^2$ with $N = 2$. The general
+Theorem~\ref{thm:general-hs-sewing} applies for every
+$0 < q < 1$ in the PBW monomial norm, and in a genuine Hilbert
+model only after the same polynomial estimate is verified. The
+criterion applies without rationality, but positivity of the
+Hilbert form is a separate condition.
+\end{example}
+
+\begin{example}[$\cW_N$-algebras]\label{ex:wn}
+The principal $\cW_N$-algebra is generated by $N - 1$ primary
+fields of conformal weights $2, 3, \ldots, N$. Sector
+dimensions satisfy $\dim H_n \leq C e^{\alpha\sqrt n}$ from
+the $\cW_N$ character formula. OPE coefficient growth is
+$|C| \leq K(n+1)^{2N}$ in the PBW monomial norm; applying
+Theorem~\ref{thm:general-hs-sewing} with this $N$ gives
+HS-sewing at every $0 < q < 1$ in any positive Hilbert
+realization satisfying the same normed bound and bounded collar
+transport, and sector summation
+produces the $\cW_N$ character $\chi_{\cW_N}(q)$.
+\end{example}
+
+\begin{example}[Lattice vertex algebras]\label{ex:lattice}
+Let $\Lambda$ be a positive-definite even lattice of rank $r$
+with dual $\Lambda^*$. The lattice vertex algebra $V_\Lambda$
+has sectors whose dimensions are the coefficients of
+\[
+\frac{\Theta_\Lambda(q)}{\eta(q)^r}.
+\]
+The discriminant group indexes simple coset modules in the full
+module envelope, not the charge summands of the vacuum VOA. The OPE
+is a finite sum of
+vertex operators labelled by lattice vectors, so
+$|C| \leq K \cdot r$ independent of weight, giving $N = r$.
+HS-sewing at every $0 < q < 1$ follows, and sector summation
+produces the lattice character
+$\Theta_\Lambda(q)/\eta(q)^r$.
+\end{example}
+
+\begin{example}[Summary]\label{ex:summary}
+The following table summarizes the verification:
+\begin{center}
+\begin{tabular}{l|ccc|c}
+$\cA$ & $\dim H_n$ & $|C|$ & $N$ & $\sum_n q^n\dim H_n$ \\ \hline
+$\cH_k$ & $p(n)$ & $\leq k$ & $1$
+& $q^{1/24}/\eta(q)$ \\
+$V_k(\fg)$ & $\leq Ce^{\alpha\sqrt n}$
+& $\leq K(n+1)$ & $1$ & $\chi_{V_k}(q)$ \\
+$\Vir_c$ & $[q^n]\,q^{-c/24}\prod_{m\ge2}(1-q^m)^{-1}$
+& $\leq K(n+1)^2$ & $2$
+& $q^{-c/24}\prod_{m\ge2}(1-q^m)^{-1}$ \\
+$\cW_N$ & $\leq Ce^{\alpha\sqrt n}$
+& $\leq K(n+1)^{2N}$ & $2N$
+& $\chi_{\cW_N}(q)$ \\
+$V_\Lambda$ & $[q^n]\Theta_\Lambda(q)/\eta(q)^r$
+& $\leq K \cdot r$ & $r$
+& $\Theta_\Lambda(q)/\eta(q)^r$
+\end{tabular}
+\end{center}
+In the indicated positive Hilbert models, these estimates verify
+the hypotheses of Theorem~\ref{thm:general-hs-sewing}. For affine,
+Virasoro, and $\cW_N$ families, the row records the required normed
+model estimate unless a cited Hilbert-model proof is supplied. The
+resulting HS-sewing envelopes have closed loop amplitudes controlled
+by Proposition~\ref{prop:closed-trace-class}.
+\end{example}
+
+\section{Analytic extensions}\label{sec:conclusion}
+
+The Hilbert--Schmidt criterion realizes the algebraic MC element of
+the chiral bar construction as trace-class analytic sewing data on
+$H_q$. For the Heisenberg algebra this realization is completely
+explicit in the Bergman Fock model.
+
+Three extensions remain.
+
+\paragraph{Completed algebras.}
+Inverse-limit algebras such as $\cW_{1+\infty}$ and completed
+Yangians require a quantitative HS estimate in the completed
+topology. The algebraic input is the MC4 comparison cited in
+Remark~\ref{rem:completed}.
+
+\paragraph{Fredholm determinants beyond Heisenberg.}
+For non-abelian Kac--Moody and Virasoro, the closed amplitudes
+are trace class under the stated hypotheses. No one-particle
+Fredholm model is constructed here.
+
+\paragraph{Positivity and modular invariance.}
+Corollary~\ref{cor:hs-positivity} establishes a positivity
+cone for HS-sewing amplitudes; it does not directly imply
+$SL_2(\mathbb{Z})$ covariance of genus-$1$ characters. A modular
+statement requires compatibility with Zhu's genus-$1$
+theorem~\cite{Zhu96} and Huang's higher-genus sewing
+theorem~\cite{Huang05}.
+
+\begin{thebibliography}{99}
+
+\bibitem{BK86}
+A.~A. Belavin, V.~G. Knizhnik,
+\emph{Algebraic geometry and the geometry of quantum strings},
+Phys. Lett. B \textbf{168} (1986), 201--206.
+
+\bibitem{Huang05}
+Y.-Z. Huang,
+\emph{Differential equations, duality and modular invariance},
+Commun. Contemp. Math. \textbf{7} (2005), 649--706.
+
+\bibitem{LorgatVolI}
+R.~Lorgat,
+\emph{Modular Koszul Duality, Volume I},
+monograph, 2026.
+
+\bibitem{Moriwaki26b}
+Y.~Moriwaki,
+\emph{Conformally flat factorization homology and ind-Hilbert
+vertex algebras},
+preprint, 2026.
+
+\bibitem{Segal88}
+G.~Segal,
+\emph{The definition of conformal field theory},
+in \emph{Differential geometrical methods in theoretical
+physics}, NATO Adv. Sci. Inst. Ser. C \textbf{250}, Kluwer,
+Dordrecht, 1988, 165--171.
+
+\bibitem{Zhu96}
+Y.~Zhu,
+\emph{Modular invariance of characters of vertex operator
+algebras},
+J. Amer. Math. Soc. \textbf{9} (1996), 237--302.
+
+\end{thebibliography}
+
+\end{document}

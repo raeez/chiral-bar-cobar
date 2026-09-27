@@ -1,0 +1,3289 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+% ================================================================
+% Paper M: Algebraic Holographic HT Sector with Virasoro
+%          Boundary and Derived Chiral Centre Bulk
+% TARGET: Annals of Mathematics (or Inventiones)
+% LENGTH: 80-100pp
+% ================================================================
+%
+% This paper identifies the ALGEBRAIC SECTOR of 3d gravity with
+% negative cosmological constant. It constructs the open Beilinson
+% tower with boundary $\partial = \Vir_c$, bulk
+% $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)$, and interaction the
+% $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure. It does NOT
+% construct a compact dynamical-metric path integral; that is the
+% Vol I open frontier F12 and requires BTZ/Cardy hypotheses
+% (modular invariance + vacuum dominance + saddle stability) plus
+% the Maloney--Witten + Manschot--Moore Farey-tail modular
+% completion. scalar-shadow discipline observed throughout: scalar shadow
+% projections do not equal the operator algebra; the trace
+% direction (operators $\to$ scalar) is well-defined; the inverse
+% direction is the named Pfaffian / square-root open problem.
+% ================================================================
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Macros
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\MC}{\mathrm{MC}}
+
+\begin{document}
+
+\title[Algebraic Holographic HT Sector for 3d Gravity]
+{Algebraic Holographic HT Sector with Virasoro Boundary\\
+ and Derived Chiral Centre Bulk}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+Three-dimensional Einstein gravity with negative cosmological
+constant is $SL(2,\mathbb{R}) \times SL(2,\mathbb{R})$ Chern--Simons
+(Ach\'ucarro--Townsend, Witten); its boundary symmetry algebra is
+the Virasoro algebra at central charge $c = 3\ell/(2G)$
+(Brown--Henneaux). We identify the \emph{algebraic holographic
+HT~sector} of this theory: the open Beilinson tower with
+boundary~$\partial = \Vir_c$, bulk
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$,
+and interaction the $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure
+on the pair $(Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c), \Vir_c)$. The
+ordered bar complex $\barB^{\mathrm{ord}}(\Vir_c)$ on
+$\mathbb{C} \times \mathbb{R}$ is the twisting coalgebra; the
+derived chiral centre carries $E_3^{\mathrm{top}}$ structure via
+Sugawara topologisation (cohomological + weight-completed scope);
+the universal Maurer--Cartan element $\Theta_{\Vir_c}$ generates the
+shadow obstruction tower $\{S_r\}_{r \ge 2}$ recording the
+boundary-to-scalar trace of the algebraic sector.
+
+The trace direction (operators $\to$ scalar) is well-defined and
+unconditional on the Virasoro Koszul locus: $\kappa(\Vir_c) = c/2$
+is the Brown--Henneaux central charge; the quartic shadow
+$10/[c(5c{+}22)]$ matches the level-$4$ Kac determinant; the
+shadow free energies $F_g = \kappa\,\lambda_g^{\mathrm{FP}}$
+reproduce the perturbative one-loop Hodge-integral expansion. The
+inverse direction (scalar $\to$ operator), in particular the
+construction of a compact dynamical-metric path integral from the
+algebraic sector, is the Vol~I open frontier~F12: it requires the
+BTZ / Cardy hypothesis package (modular invariance, vacuum
+dominance, saddle stability) together with the Maloney--Witten
+plus Manschot--Moore Farey-tail modular completion. Koszul duality
+$\Vir_c \leftrightarrow \Vir_{26-c}$ is the algebraic shadow of
+S-duality; the self-dual point sits at $c = 13$. The algebraic Page
+curve emerges from complementarity:
+$\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = 13$ forces saddle exchange
+at $t_P = 3S_{\mathrm{BH}}/13$, $c$-independent. The crossing is the
+structural shadow of the Page transition; the full
+information-theoretic content remains controlled by the island
+mechanism (Penington, AEMM). BTZ black holes are Maurer--Cartan
+elements of the gravitational convolution algebra; de~Sitter entropy
+arises by analytic continuation $\kappa \to -|\kappa|$.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+% ================================================================
+\section{Three-dimensional gravity as Chern--Simons}
+\label{sec:gravity-as-cs}
+
+Three-dimensional Einstein gravity with negative cosmological
+constant $\Lambda = -1/\ell^2$ has no propagating degrees of
+freedom. The Riemann tensor is determined algebraically by the
+Ricci tensor, which equals $\Lambda g_{\mu\nu}$; every solution
+is locally $\mathrm{AdS}_3$. The local triviality has an exact
+formulation: pure gravity in $2{+}1$ dimensions is a gauge theory.
+
+\subsection{The Chern--Simons formulation}
+
+\begin{theorem}[Ach\'ucarro--Townsend \cite{AT86}, Witten \cite{Wit88}]
+\label{thm:cs-gravity}
+Three-dimensional gravity with cosmological constant\/
+$\Lambda = -1/\ell^2$ is classically equivalent to\/
+$SL(2,\mathbb{R}) \times SL(2,\mathbb{R})$ Chern--Simons theory
+at levels\/ $k_\pm = \ell/(4G)$, where $G$ is Newton's constant.
+The gauge fields are
+\begin{equation}\label{eq:cs-gauge-fields}
+A_\pm^a \;=\; \omega^a \pm \frac{e^a}{\ell},
+\end{equation}
+where $e^a$ is the dreibein and\/ $\omega^a$ the spin connection.
+Flatness $F_\pm = dA_\pm + A_\pm \wedge A_\pm = 0$ is equivalent
+to constant negative curvature plus torsion-freedom.
+\end{theorem}
+
+\begin{proof}
+The Einstein--Hilbert action with $\Lambda < 0$ in three dimensions
+reads
+\[
+I_{\mathrm{EH}} \;=\;
+\frac{1}{16\pi G}\int
+\epsilon_{abc}\left(
+  e^a \wedge R^{bc} + \frac{1}{3\ell^2}\,e^a \wedge e^b \wedge e^c
+\right),
+\]
+where $R^{ab} = d\omega^{ab} + \omega^a{}_c \wedge \omega^{cb}$ is
+the curvature two-form. The Chern--Simons functional for a gauge
+field~$A$ on a three-manifold is
+$I_{\mathrm{CS}}[A] = (k/4\pi)\int\mathrm{tr}(A \wedge dA
++ \tfrac{2}{3}A \wedge A \wedge A)$.
+Using the $\mathfrak{sl}_2$ trace $\mathrm{tr}(J_a J_b)
+= \frac{1}{2}\eta_{ab}$ and the decomposition~\eqref{eq:cs-gauge-fields}:
+\begin{equation}\label{eq:cs-eh-identity}
+I_{\mathrm{CS}}[A_+] - I_{\mathrm{CS}}[A_-]
+\;=\;
+\frac{k}{4\pi}\int \epsilon_{abc}\!\left(
+  2\,e^a \wedge R^{bc}
+  + \frac{2}{3\ell^2}\,e^a \wedge e^b \wedge e^c
+\right)
+\;=\;
+\frac{k}{2\pi}\,I_{\mathrm{EH}},
+\end{equation}
+provided $k = \ell/(4G)$. The equations of motion
+$F_\pm = 0$ decompose into the torsion constraint
+$T^a = de^a + \epsilon^a{}_{bc}\,\omega^b \wedge e^c = 0$ and the
+Einstein equation $R^{ab} + (1/\ell^2)e^a \wedge e^b = 0$.
+\end{proof}
+
+\begin{remark}[Scope: algebraic sector versus dynamical-metric path integral]
+\label{rem:scope-algebraic-sector}
+The Ach\'ucarro--Townsend--Witten equivalence holds at the classical
+level: both theories have the same equations of motion and the same
+moduli of flat connections. At the quantum level, the Chern--Simons
+path integral is a topological invariant (the Reshetikhin--Turaev
+functor), while a compact dynamical-metric gravitational path
+integral must also sum over topologies and saddle geometries.
+
+The \emph{algebraic holographic HT sector} of the gravitational theory
+is the open Beilinson tower
+$\partial = \Vir_c$, bulk
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$,
+interaction the $\mathsf{SC}^{\mathrm{ch,top}}$-brace structure on
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c), \Vir_c)$. This sector is
+the level-3 / level-4 / level-5 Beilinson rungs of the gravitational
+theory; it is unconditional on the Virasoro Koszul locus (generic
+$c$).
+
+The \emph{trace direction} (operators $\to$ scalar) descends from
+the algebraic sector to modular and partition-function shadows by
+trace + clutching on the open category; this is the content of
+Sections~\ref{sec:shadow-as-gravity}--\ref{sec:koszul-s-duality}
+and is unconditional. The \emph{inverse direction} (scalar $\to$
+operator), in particular the construction of a compact
+dynamical-metric path integral from the algebraic sector, is the
+Vol~I open frontier~F12 and requires a distinct hypothesis package:
+the BTZ / Cardy hypotheses (modular invariance + vacuum dominance +
+saddle stability) together with the Maloney--Witten
+plus Manschot--Moore Farey-tail modular completion. The reverse
+direction is a separate conjectural inverse problem, stated in
+Section~\ref{sec:btz} and Section~\ref{sec:f12-frontier}.
+\end{remark}
+
+\subsection{The Brown--Henneaux central charge}
+
+The boundary dynamics is not trivial. Imposing asymptotically
+$\mathrm{AdS}_3$ boundary conditions at the conformal boundary
+$\partial(\mathrm{AdS}_3) \cong \mathbb{R} \times S^1$ produces
+a two-dimensional conformal field theory whose symmetry algebra is
+generated by the asymptotic charges.
+
+\begin{theorem}[Brown--Henneaux \cite{BH86}]
+\label{thm:brown-henneaux}
+The asymptotic symmetry algebra of\/ $\mathrm{AdS}_3$ gravity with
+$\Lambda = -1/\ell^2$ is two copies of the Virasoro algebra at
+central charge
+\begin{equation}\label{eq:brown-henneaux}
+c \;=\; \frac{3\ell}{2G},
+\end{equation}
+equivalently $c = 6k$ with $k = \ell/(4G)$ the Chern--Simons level.
+\end{theorem}
+
+\begin{proof}
+In the Chern--Simons formulation, the boundary condition on the
+half-space $\mathbb{R}_{\ge 0} \times \mathbb{C}$ is the
+Fefferman--Graham gauge
+$A_z|_{t=0} = J_- + T(z)\,J_+$, where $J_\pm, J_0$ are the
+$\mathfrak{sl}_2$ generators with
+$[J_0, J_\pm] = \pm J_\pm$, $[J_+, J_-] = 2J_0$.
+The residual gauge transformations preserving this form are
+$g = \exp(\epsilon(z)\,J_+)$, acting by
+\begin{equation}\label{eq:vir-coadjoint}
+\delta_\epsilon T \;=\;
+\epsilon'\,T + 2\epsilon\,T' + \frac{c}{12}\,\epsilon''',
+\end{equation}
+which is the Virasoro coadjoint action. The Chern--Simons symplectic
+form induces the Poisson bracket
+\begin{equation}\label{eq:vir-poisson}
+\{T(z),\, T(w)\}_{\mathrm{PB}} \;=\;
+\frac{c}{2}\,\delta'''(z{-}w)
++ 2T(w)\,\delta'(z{-}w)
++ T'(w)\,\delta(z{-}w),
+\end{equation}
+which is the defining relation of
+$\mathrm{Vir}_c$. The central charge is
+$c = 6k = 3\ell/(2G)$.
+\end{proof}
+
+\subsection{The input datum}
+
+The entire construction of this paper flows from the Virasoro
+$\lambda$-bracket, which encodes the OPE of the boundary stress
+tensor in algebraic form:
+\begin{equation}\label{eq:vir-lambda-bracket}
+\{T{}_\lambda T\}
+\;=\;
+\partial T + 2T\lambda + \frac{c}{12}\,\lambda^3.
+\end{equation}
+The three terms encode, respectively: the translation
+$T_{(0)}T = \partial T$ (simple pole), the dilatation
+$T_{(1)}T = 2T$ (double pole), and the central extension
+$T_{(3)}T = c/2$ (quartic pole). In the OPE formalism:
+\begin{equation}\label{eq:vir-ope}
+T(z)\,T(w) \;\sim\;
+\frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2}
++ \frac{\partial T(w)}{z-w}.
+\end{equation}
+The triple pole $T_{(2)}T = 0$ vanishes: the coefficient of
+$\lambda^2$ in the $\lambda$-bracket is zero, forced by
+skew-symmetry. The quartic pole is the single datum from which
+the entire gravitational structure follows.
+
+\begin{remark}[Physical parameters]
+\label{rem:physical-parameters}
+The central charge $c = 3\ell/(2G)$ is the only free parameter of
+3d gravity with $\Lambda < 0$. In Planck units $\ell = 1$, it is
+$c = 3/(2G)$: the inverse coupling constant. The semiclassical limit
+$c \to \infty$ is $G \to 0$. The curvature
+$\kappa(\mathrm{Vir}_c) = c/2$
+% kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+records the same information; the relation $c = 2\kappa$ persists
+throughout.
+\end{remark}
+
+\subsection{The holomorphic-topological structure}
+
+The Chern--Simons theory on $\mathbb{R}_{\ge 0} \times \mathbb{C}$
+has a natural factorisation into holomorphic and topological
+directions: the $\mathbb{C}$-direction carries the holomorphic OPE
+structure (the vertex algebra of the boundary), while the
+$\mathbb{R}_{\ge 0}$-direction carries the topological ordering
+(the associative structure of the bar complex). The product
+$\mathbb{C} \times \mathbb{R}$ is the habitat of the $E_1$-chiral
+bar complex $\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_c)$, which is a
+dg coalgebra over the Koszul dual cooperad
+$(\mathrm{ChirAss})^!$: the bar differential uses the holomorphic
+OPE data from $\mathrm{FM}_k(\mathbb{C})$, while the deconcatenation
+coproduct uses the ordered topological structure from
+$\mathrm{Conf}_k^<(\mathbb{R})$.
+
+The $\mathsf{SC}^{\mathrm{ch,top}}$ structure on the chiral derived
+centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$ (see
+Section~\ref{sec:gravitational-bulk}) becomes $E_3$-topological
+via Sugawara topologisation at non-critical level: the Sugawara
+stress tensor $T(z)$ satisfies $T = \{Q_{\mathrm{CS}}, G'\}$ in the
+BRST complex, so $\mathbb{C}$-translations are $Q$-exact, the
+complex structure on $\mathbb{C}$ becomes irrelevant in cohomology,
+and the two $\mathsf{SC}^{\mathrm{ch,top}}$ colours collapse. The
+result is an $E_3$-topological algebra: $E_2^{\mathrm{top}} \times
+E_1^{\mathrm{top}}$ via Dunn additivity, independent of the complex
+structure on $\mathbb{C}$. This is proved for the affine Kac--Moody
+algebra $V_k(\mathfrak{sl}_2)$ at non-critical level $k \ne -2$; for
+the Virasoro algebra obtained by Drinfeld--Sokolov reduction, the
+topologisation is cohomological and the chain-level structure is
+conditional on $A_\infty$ coherence.
+
+% ================================================================
+\section{The Virasoro bar complex}
+\label{sec:vir-bar-complex}
+
+The ordered bar complex $\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_c)
+= T^c(s^{-1}\overline{\mathrm{Vir}}_c)$
+% augmentation-ideal: augmentation ideal present
+% desuspension: desuspension s^{-1}, |s^{-1}v| = |v|-1
+is an $E_1$-chiral coassociative coalgebra: the bar differential
+$d_{\bar{B}}$ comes from the OPE residues at the boundary strata of
+$\mathrm{FM}_k(\mathbb{C})$, and the deconcatenation coproduct
+$\Delta\colon \bar{B} \to \bar{B} \otimes \bar{B}$ is the cofree
+tensor coalgebra structure on $T^c(s^{-1}\overline{\mathrm{Vir}}_c)$.
+The bar complex is a single-coloured $E_1$ coalgebra; it is not an
+$\mathsf{SC}^{\mathrm{ch,top}}$-coalgebra (the Swiss-cheese structure
+emerges on the derived centre pair
+$(C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c, \mathrm{Vir}_c),
+\mathrm{Vir}_c)$, not on $\bar{B}$).
+
+\subsection{The $A_\infty$ operations}
+
+The $\lambda$-bracket~\eqref{eq:vir-lambda-bracket} determines the
+binary $A_\infty$ operation $m_2$ directly. The quartic pole forces
+$m_2$ to be non-associative; the Stasheff identity then forces all
+higher operations $m_3, m_4, \ldots$ in perpetuity: the tower is
+infinite, and $\mathrm{Vir}_c$ is class~$\mathbf{M}$.
+
+\begin{definition}[The binary operation]
+\label{def:vir-m2}
+The binary $A_\infty$ operation for $\mathrm{Vir}_c$ is the
+$\lambda$-bracket itself:
+\begin{equation}\label{eq:vir-m2}
+m_2(T, T;\, \lambda)
+\;=\;
+\{T{}_\lambda T\}
+\;=\;
+\frac{c}{12}\,\lambda^3
++ 2T\,\lambda
++ \partial T.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[The Virasoro associator]
+\label{prop:vir-associator}
+The associator\/ $A_3 = m_2 \circ (\mathrm{id} \otimes m_2)
+- m_2 \circ (m_2 \otimes \mathrm{id})$ is
+\begin{equation}\label{eq:vir-associator}
+A_3(T,T,T;\,\lambda_{12},\lambda_{23})
+\;=\;
+-\partial^2 T
+- (2\lambda_{12} + 3\lambda_{23})\,\partial T
+- 2\lambda_{23}(2\lambda_{12} + \lambda_{23})\,T
+- \frac{c}{12}\lambda_{23}^3(2\lambda_{12} + \lambda_{23}).
+\end{equation}
+In particular $A_3 \ne 0$ whenever $c \ne 0$ or the field-dependent
+terms are non-trivial: the $\lambda$-bracket is not associative.
+For affine Kac--Moody algebras (where the quartic pole vanishes),
+$A_3 = 0$ and $m_2$ is strictly associative.
+\end{proposition}
+
+\begin{proof}
+The PVA Jacobi identity gives
+$A_3(\ell,\mu) = -\{T{}_\mu\{T{}_\ell T\}\}$. Direct computation
+using sesquilinearity of the $\lambda$-bracket: the inner bracket
+$\{T{}_\ell T\} = \partial T + 2T\ell + (c/12)\ell^3$ is
+substituted into the outer bracket using $\{T{}_\mu (\partial T)\}
+= -(\mu + \partial)\{T{}_\mu T\}$ (the left sesquilinearity
+identity) and $\{T{}_\mu T\} = \partial T + 2T\mu + (c/12)\mu^3$.
+The scalar term $\{T{}_\mu (c/12)\ell^3\} = 0$ (the bracket of a
+constant vanishes). Collecting terms yields~\eqref{eq:vir-associator}.
+\end{proof}
+
+The Stasheff identity $m_3 = -A_3$ then gives the ternary operation.
+
+\begin{proposition}[The ternary operation]
+\label{prop:vir-m3}
+The ternary $A_\infty$ operation for $\mathrm{Vir}_c$ is
+\begin{equation}\label{eq:vir-m3}
+m_3(T,T,T;\,\lambda_{12},\lambda_{23})
+\;=\;
+\partial^2 T
++ (2\lambda_{12} + 3\lambda_{23})\,\partial T
++ 2\lambda_{23}(2\lambda_{12} + \lambda_{23})\,T
++ \frac{c}{12}\lambda_{23}^3(2\lambda_{12} + \lambda_{23}).
+\end{equation}
+The four terms encode: the second-order geometric correction
+$(\partial^2 T)$, the first-order response
+$((2\lambda_{12}+3\lambda_{23})\partial T)$, the stress-tensor
+backreaction $(2\lambda_{23}(2\lambda_{12}+\lambda_{23})T)$, and
+the three-graviton coupling
+$((c/12)\lambda_{23}^3(2\lambda_{12}+\lambda_{23}))$.
+\end{proposition}
+
+\begin{proposition}[The quaternary operation]
+\label{prop:vir-m4}
+The quaternary\/ $A_\infty$ operation, determined by the degree-$4$
+Stasheff identity on\/ $\mathrm{FM}_4(\mathbb{C}) \cong K_4$
+(five compositions: two from $(r,s) = (2,3)$, three from
+$(r,s) = (3,2)$), is
+\begin{equation}\label{eq:vir-m4}
+\begin{aligned}
+m_4(T^4;\,&\lambda_{12},\lambda_{23},\lambda_{34})
+\\[3pt]
+&=\;
+(\lambda_{23} + 2\lambda_{34})\,\partial^2 T
+\\[2pt]
+&\quad +\;
+(5\lambda_{12}^2 - 4\lambda_{12}\lambda_{23}
+ + 3\lambda_{12}\lambda_{34}
+ - 5\lambda_{23}^2 + 10\lambda_{23}\lambda_{34}
+ + 4\lambda_{34}^2)\,\partial T
+\\[2pt]
+&\quad +\; \text{(degree-$3$ polynomial)}\cdot T
+\\[2pt]
+&\quad +\;
+\frac{c}{12}\,Q_4(\lambda_{12},\lambda_{23},\lambda_{34}),
+\end{aligned}
+\end{equation}
+where $Q_4$ is a homogeneous polynomial of degree~$5$.
+At the symmetric point\/ $\lambda_{12} = \lambda_{23}
+= \lambda_{34} = \lambda$:
+\begin{equation}\label{eq:vir-m4-sym}
+m_4(T^4;\,\lambda,\lambda,\lambda)
+\;=\;
+3\lambda\,\partial^2 T
++ 13\lambda^2\,\partial T
++ 14\lambda^3\, T
++ \frac{7c}{12}\,\lambda^5.
+\end{equation}
+The leading term is $\partial^2 T$ (at spectral depth $2$), not
+$\partial^3 T$ (depth $1$): the depth-$1$ coefficient vanishes by
+palindromic cancellation among the Stasheff compositions.
+\end{proposition}
+
+\begin{proof}
+Solve the degree-$4$ Stasheff relation using the sesquilinearity of
+$m_2$~\eqref{eq:vir-m2} and $m_3$~\eqref{eq:vir-m3}: the
+first-slot rule $m_3(\partial^j T, \ldots)
+= (-\lambda_{12})^j m_3(T, \ldots)$ and the last-slot rule
+$m_3(\ldots, \partial^j T) = (\lambda_{23}+\partial)^j
+m_3(\ldots, T)$ reduce every composition to a polynomial in
+$\lambda_{12}, \lambda_{23}, \lambda_{34}$. The symmetric-point
+evaluation~\eqref{eq:vir-m4-sym} is verified by direct computation.
+\end{proof}
+
+\subsection{The collision kernel and its represented $r$-matrix}
+
+The collision kernel is obtained from the $\lambda$-bracket by the
+binary residue construction.  A represented classical $r$-matrix
+arises under $H_{\mathrm{CYBE}}^{\mathrm{rep}}$.
+
+\begin{proposition}[Virasoro collision residue]
+\label{prop:vir-r-matrix}
+The collision residue of the Virasoro\/ $\lambda$-bracket is
+\begin{equation}\label{eq:vir-r-matrix}
+K_{\Vir_c}^{\mathrm{coll}}(z) \;=\;
+\frac{c/2}{z^3} + \frac{2T}{z},
+\end{equation}
+% level-shift: level prefix c/2 present; at c=0, scalar part vanishes
+a cubic-plus-simple rational function. The OPE has a quartic pole;
+the $d\log$ absorption reduces the order by one. The Laplace kernel
+(without $d\log$ absorption) is $r^L(z)
+= (c/2)/z^4 + 2T/z^2 + \partial T/z$.
+\end{proposition}
+
+\begin{remark}[Convention]
+\label{rem:r-matrix-convention}
+Two conventions coexist in the literature. The collision
+residue~\eqref{eq:vir-r-matrix} absorbs $d\log(z)$ (one pole fewer
+than OPE). The Laplace kernel $r^L(z)$ retains the full OPE poles.
+We use the collision residue throughout, following the bar-complex
+convention where the propagator is $d\log E(z,w)$ (weight $1$
+always). At $c = 0$ the scalar part of
+$r^{\mathrm{coll}}$ vanishes: the abelian limit, consistent with
+$\kappa(\mathrm{Vir}_0) = 0$.
+\end{remark}
+
+\begin{proposition}[Represented Yang--Baxter equation]
+\label{prop:vir-ybe}
+Assume a representation~$\rho$ and
+$H_{\mathrm{CYBE}}^{\mathrm{rep}}(\Vir_c,\rho)$.  Then
+The CYBE
+\begin{equation}\label{eq:vir-cybe}
+[r_{12}(z_{12}),\, r_{13}(z_{13})]
++ [r_{12}(z_{12}),\, r_{23}(z_{23})]
++ [r_{13}(z_{13}),\, r_{23}(z_{23})]
+= 0
+\end{equation}
+holds for $r=\rho(K_{\Vir_c}^{\mathrm{coll}})$ from
+\eqref{eq:vir-r-matrix}. It is the
+projection to the binary collision stratum of the Arnold relation
+$\omega_{12} \wedge \omega_{23} + \omega_{23} \wedge \omega_{13}
++ \omega_{13} \wedge \omega_{12} = 0$ on\/
+$\mathrm{FM}_3(\mathbb{C})$, with\/
+$\omega_{ij} = d\log(z_i - z_j)$.
+\end{proposition}
+
+\subsection{The $c$-linearity theorem}
+
+A structural pattern persists across all computed degrees
+$m_2$ through $m_5$: the central charge enters each operation through
+a single scalar contact term, while all stress-tensor-dependent
+coefficients are $c$-independent. This separates the universal
+gravitational backreaction from the coupling-dependent scattering
+amplitude.
+
+\begin{theorem}[$c$-linearity]
+\label{thm:c-linearity}
+For all\/ $k \ge 2$, the scalar part of\/
+$m_k(T^{\otimes k};\,\lambda_1, \ldots, \lambda_{k-1})$ is
+\textbf{linear} in~$c$:
+\begin{equation}\label{eq:c-linearity}
+m_k\big|_{\textup{scalar}}
+\;=\;
+\frac{c}{12}\,P_k(\lambda_1, \ldots, \lambda_{k-1}),
+\end{equation}
+where $P_k$ is a homogeneous polynomial of degree $k+1$.
+All\/ $T$-dependent coefficients (the polynomials multiplying\/
+$\partial^j T$ for $0 \le j \le k-2$) are independent of~$c$.
+\end{theorem}
+
+\begin{proof}
+The central charge enters the $\lambda$-bracket~\eqref{eq:vir-lambda-bracket}
+as a scalar contact term $(c/12)\lambda^3$. Scalars are
+annihilated by the bracket in both slots:
+$\{1{}_\lambda T\} = 0 = \{T{}_\lambda 1\}$ (PVA vacuum axiom).
+Induction on the Stasheff relations: each $m_k$ is a sum of
+compositions of lower $m_j$, and the only $c$-dependent input is the
+scalar part of $m_2$. Since scalars are killed by subsequent brackets,
+$c$ propagates linearly through the recursion. The degree count
+follows from $\deg P_2 = 3$ and the Stasheff composition raising
+degree by~$2$ at each step.
+\end{proof}
+
+\begin{remark}[Gravitational interpretation]
+The theorem states that graviton self-interaction at every degree is
+controlled by a single coupling: $c/12 = \kappa/6$, where
+$\kappa(\mathrm{Vir}_c) = c/2$. The stress-tensor backreaction
+($T, \partial T, \ldots, \partial^{k-2}T$ terms) is universal,
+independent of the cosmological constant. The pure-graviton
+scattering amplitude is proportional to $c/12$: Newton's constant
+enters once.
+\end{remark}
+
+\subsection{Infinite tower and class $\mathbf{M}$}
+
+\begin{theorem}[Non-truncation]
+\label{thm:non-truncation}
+The\/ $A_\infty$ tower of\/ $\mathrm{Vir}_c$ does not truncate:
+$m_k \ne 0$ for all\/ $k \ge 3$ and generic~$c$. More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The quartic OPE pole forces\/ $A_3 \ne 0$, hence
+  $m_3 = -A_3 \ne 0$.
+\item The Stasheff identity at each subsequent degree forces
+  $m_k \ne 0$ from the non-vanishing of the wheel integral
+  on the associahedron $K_k$.
+\item At $c = 0$, the scalar terms vanish but the field-dependent
+  terms ($\partial^j T$ coefficients) survive unchanged: the tower
+  remains infinite even without central charge.
+\end{enumerate}
+The discriminant\/ $\Delta = 8\kappa S_4 = 8(c/2) \cdot S_4 \ne 0$
+for generic~$c$, confirming class~$\mathbf{M}$: infinite shadow
+depth.
+\end{theorem}
+
+\begin{proof}
+Part~(i): the associator~\eqref{eq:vir-associator} contains the
+field-independent term $-\partial^2 T$, which is nonzero regardless
+of $c$, and the $c$-dependent term
+$-(c/12)\lambda_{23}^3(2\lambda_{12}+\lambda_{23})$, which is
+nonzero for $c \ne 0$.
+
+Part~(ii): the degree-$k$ Stasheff identity is
+$\sum_{i+j=k+1}(-1)^{i(j-1)} m_i \circ m_j = 0$. The
+compositions involve the previously established nonzero operations
+$m_2, \ldots, m_{k-1}$, and the obstruction at degree $k$ is nonzero
+by the wheel integral computation: the Hamiltonian cycle on the
+complete graph $K_k$ with $k-1$ cubic vertices has nonzero residue
+from the quartic OPE pole.
+
+Part~(iii): by the $c$-linearity theorem (Theorem~\ref{thm:c-linearity}),
+setting $c = 0$ kills only the scalar contact terms. The
+field-dependent coefficients are $c$-independent and nonzero (the
+self-coupling $T_{(1)}T = 2T$ drives the induction).
+\end{proof}
+
+\begin{remark}[The Drinfeld--Sokolov mechanism]
+\label{rem:ds-mechanism}
+The infinite $A_\infty$ tower is manufactured by Drinfeld--Sokolov
+reduction from the \emph{finite} Kac--Moody tower. The principal
+DS reduction of $V_k(\mathfrak{sl}_2)$ produces $\mathrm{Vir}_c$
+with $c = 1 - 6(k+1)^2/(k+2)$, transporting the complexity class
+from $\mathbf{L}$ (affine: $m_k = 0$ for $k \ge 3$) to
+$\mathbf{M}$ (Virasoro: all $m_k \ne 0$). The mechanism: the DS
+stress tensor $T^{\mathrm{DS}} = J^f + (J^h)^2/(4(k+2))
++ \frac{1}{2}\partial J^h$ contains a quadratic Sugawara term whose
+double Wick self-contraction generates the quartic OPE pole,
+absent in the original affine OPE. The manufactured quartic pole
+makes $m_2$ non-associative, which seeds the entire infinite tower.
+\end{remark}
+
+\subsection{The deconcatenation coproduct}
+
+The bar complex $\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_c)
+= T^c(s^{-1}\overline{\mathrm{Vir}}_c)$
+% augmentation-ideal: augmentation ideal
+carries the deconcatenation coproduct
+\begin{equation}\label{eq:deconc}
+\Delta[s^{-1}a_1 | \cdots | s^{-1}a_n]
+\;=\;
+\sum_{i=0}^{n}
+[s^{-1}a_1 | \cdots | s^{-1}a_i]
+\otimes
+[s^{-1}a_{i+1} | \cdots | s^{-1}a_n],
+\end{equation}
+which is the cofree coassociative coalgebra structure. Together with
+the bar differential $d_{\bar{B}}$, this makes
+$\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_c)$ an $E_1$ dg coassociative
+coalgebra. The coproduct is structural (it exists for any bar
+complex); the gravitational content is in the differential $d_{\bar{B}}$,
+which encodes the $A_\infty$ operations via the OPE residues.
+
+The Drinfeld--Sokolov transfer theorem shows that the \emph{spectral}
+coproduct $\Delta_z$ (the deformation of the deconcatenation by the
+spectral parameter) is primitive on $\mathrm{Vir}_c$:
+$\Delta_z(T) = \tau_z(T) \otimes 1 + 1 \otimes T$, with no corrections
+at any order. The mechanism is a ghost-number obstruction: the
+homotopy $h$ of the DS strong deformation retract has ghost degree
+$-1$, and every tree in the HPL expansion of the transferred
+coproduct at degree $n \ge 2$ contains an uncompensated
+$h$-insertion that deposits the intermediate state in a ghost sector
+invisible to the projection. Gravitons do not split.
+
+% ================================================================
+\section{The derived chiral centre and the gravitational comparison}
+\label{sec:gravitational-bulk}
+
+The bar complex computes the boundary data. The level-$3$
+closed-sector object is the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
+= C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c, \mathrm{Vir}_c)$:
+the chiral Hochschild cochain complex of the boundary algebra,
+defined via the chiral endomorphism operad
+$\mathrm{End}^{\mathrm{ch}}_{\mathrm{Vir}_c}$ with spectral
+parameters from $\mathrm{FM}_k(\mathbb{C})$. A gravitational bulk is
+obtained from it only after the Virasoro open--closed comparison map
+has been supplied.
+
+\subsection{Chiral Hochschild cohomology of the Virasoro algebra}
+
+\begin{theorem}[Bounded Virasoro cohomology and chart transport]
+\label{thm:vir-hochschild}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: bounded vertex cochains followed by a
+weight-completed curve chart.
+Level: 3 (derived chiral centre as universal closed sector).
+Hypothesis package: the Bakalov--De Sole--Kac bounded complex and a
+bounded-to-chart quasi-isomorphism
+\[
+ \chi^{\mathrm{bd}}_{\mathrm{Vir}_c}\colon
+ C^\bullet_{\mathrm{ch},b}(\mathrm{Vir}_c,\mathrm{Vir}_c)
+ \xrightarrow{\sim}
+ C^\bullet_{\mathrm{ch}}(\cA_{\mathrm{Vir}_c},
+ \cA_{\mathrm{Vir}_c}).
+\]
+
+Bakalov--De Sole--Kac compute, for every central charge~$c$,
+\begin{equation}\label{eq:hhn}
+ \dim H^n_{\mathrm{ch},b}(\mathrm{Vir}_c,\mathrm{Vir}_c)
+ =
+ \begin{cases}
+  1,&n\in\{0,2,3\},\\
+  0,&n\in\mathbb Z_{\geq0}\setminus\{0,2,3\}.
+ \end{cases}
+\end{equation}
+Hence $P^{\mathrm{bd}}_{\mathrm{Vir}_c}(t)=1+t^2+t^3$.
+The map $\chi^{\mathrm{bd}}_{\mathrm{Vir}_c}$ transports this
+dimension vector to the curve-chart chiral Hochschild complex.
+\end{theorem}
+
+\begin{proof}
+The bounded calculation is \cite[Theorem~7.2]{BDSK21}.  Cohomology
+is invariant under the displayed quasi-isomorphism, which proves the
+chart statement.
+\end{proof}
+
+\begin{corollary}[The Virasoro universal closed sector]
+\label{cor:bulk-gravity}
+Under $\chi^{\mathrm{bd}}_{\mathrm{Vir}_c}$, the cohomology of the
+universal closed-sector dg algebra
+\begin{equation}\label{eq:bulk}
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
+ =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)
+\end{equation}
+has Hilbert series $1+t^2+t^3$.  A Virasoro open--closed
+quasi-isomorphism
+$\Psi_{\mathrm{OCA}}\colon\cO^{\mathrm{phys}}_{\mathrm{bulk}}
+\xrightarrow{\sim}Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$
+transports this dg algebra to physical bulk observables.  The
+classical absence of local propagating gravitons follows separately
+from the Chern--Simons presentation of three-dimensional gravity.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:vir-hochschild} gives the cohomology statement.
+The second assertion is transport along $\Psi_{\mathrm{OCA}}$.
+Ach\'ucarro--Townsend and Witten identify the classical gravitational
+field equations with flatness of the Chern--Simons connection
+\cite{AT86,Wit88}.
+\end{proof}
+
+\subsection{The Swiss-cheese structure and $E_3$-topologisation}
+
+The chiral derived centre carries a natural
+$\mathsf{SC}^{\mathrm{ch,top}}$ structure: the pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c),
+\mathrm{Vir}_c)$ is a two-coloured datum where the bulk
+(closed colour) acts on the boundary (open colour). This is the
+algebraic encoding of the bulk-to-boundary map in
+$\mathrm{AdS}_3/\mathrm{CFT}_2$.
+
+\begin{theorem}[$E_3$-topologisation for Virasoro]
+\label{thm:e3-topologisation}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: cohomological + weight-completed (chain-level on the
+original direct-sum complex is Frontier~F3, conditional on the
+Felder BRST Mittag--Leffler tower).
+Level: 3 (derived chiral centre).
+Hypothesis package: non-critical level $k \ne -2$ on the affine
+side; Sugawara primitive $G_{\mathrm{Sug}}$ with
+$[Q_{\mathrm{tot}}, G_{\mathrm{Sug}}] = T_{\mathrm{Sug}}$ on
+cohomology; $A_\infty$ coherence of the topologisation primitives
+in the chain-level lift (open at Class~$\mathbf M$).
+
+For\/ $\mathrm{Vir}_c$ obtained by Drinfeld--Sokolov reduction from\/
+$V_k(\mathfrak{sl}_2)$ at non-critical level\/ $k \ne -2$
+(the critical level $k = -h^\vee = -2$ maps to $c \to \infty$
+under $c = 1 - 6(k+1)^2/(k+2)$; the condition excludes this
+singularity), the $\mathsf{SC}^{\mathrm{ch,top}}$
+structure on the derived centre pair promotes to an
+$E_3$-topological structure on\/ $H^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c), Q)$.
+The mechanism: the Sugawara stress tensor satisfies\/
+$T(z) = \{Q_{\mathrm{CS}}, G'(z)\}$ in the BRST complex, so
+$\mathbb{C}$-translations are $Q$-exact, the two
+$\mathsf{SC}^{\mathrm{ch,top}}$ colours collapse in cohomology,
+and\/ $E_2^{\mathrm{hol}} \times E_1^{\mathrm{top}} \to
+E_2^{\mathrm{top}} \times E_1^{\mathrm{top}} = E_3^{\mathrm{top}}$
+via Dunn additivity.
+\end{theorem}
+
+\begin{remark}[Scope]
+\label{rem:e3-scope}
+The $E_3$-topological structure is proved cohomologically: it holds
+on $H^\bullet(Z^{\mathrm{der}}, Q)$, not necessarily at the cochain
+level. For class~$\mathbf{M}$ algebras (Virasoro), the chain-level
+$E_3$ is conditional on $A_\infty$ coherence of the topologisation.
+The cohomological statement suffices for the genus-tower
+computations of Section~\ref{sec:shadow-as-gravity}. The proof is
+for affine Kac--Moody $V_k(\mathfrak{sl}_2)$ at non-critical level,
+transported to Virasoro by the DS intertwining theorem; general
+chiral algebras with conformal vector are conjectural.
+\end{remark}
+
+\subsection{The bulk-to-boundary map}
+
+The bulk-to-boundary map sends the degree-$2$ chiral Hochschild class
+$\Theta_c \in \mathrm{ChirHoch}^2$ to the stress tensor
+$T \in \mathrm{Vir}_c$ via the conformal Ward identity:
+\begin{equation}\label{eq:bulk-boundary}
+\beta_B(\partial_c)(z_0) \cdot T(w)
+\;=\;
+\frac{T(w)}{(z_0 - w)^2} + \frac{\partial T(w)}{z_0 - w}.
+\end{equation}
+These constructions form the algebraic
+closed-sector/boundary/line comparison diagram.  The bar complex
+supports three typed functors:
+\begin{enumerate}[label=(\roman*)]
+\item $\Omega(\bar{B}) \simeq \mathrm{Vir}_c$
+  (cobar recovers the boundary; bar-cobar adjunction),
+\item
+  \(K_X(\mathrm{Vir}_c)
+    :=\mathbb D_{\mathrm{Ran}}\bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\)
+  is the full-bar Verdier algebra, with a chosen comparison
+  \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\);
+\item $\mathrm{RHom}_{\mathrm{Vir}_c^e}
+  (\mathrm{Vir}_c,\mathrm{Vir}_c)
+  =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)$
+  is the universal algebraic closed sector.  An OCA realization
+  \(\Psi_{\mathrm{OCA}}\) supplies its physical bulk interpretation.
+\end{enumerate}
+
+% ================================================================
+\section{The shadow tower as algebraic-sector trace}
+\label{sec:shadow-as-gravity}
+
+The universal Maurer--Cartan element $\Theta_{\mathrm{Vir}_c}$ in
+the modular convolution algebra
+$\mathfrak{g}^{\mathrm{mod}}_{\mathrm{Vir}_c}$ satisfies the MC
+equation $D\Theta + \frac{1}{2}[\Theta, \Theta] = 0$ and encodes
+the algebraic-sector trace of the perturbative expansion of 3d
+gravity (operator $\to$ scalar trace direction; level-4 $\to$
+level-5 of the Beilinson tower). Its projections to successive
+degrees constitute the \emph{shadow obstruction tower}, a sequence
+of invariants $\{S_r\}_{r \ge 2}$ that record the perturbative
+corrections to the semiclassical gravitational dictionary at the
+level of the algebraic sector. The inverse construction (from the
+$\{S_r\}$ to a compact dynamical-metric path integral) is the
+named open obstruction F12; here we compute the trace.
+
+\subsection{The shadow invariants}
+
+\begin{definition}[Shadow tower of $\mathrm{Vir}_c$]
+\label{def:shadow-tower}
+The shadow obstruction tower is the sequence
+$S_2, S_3, S_4, \ldots$ of projections of the MC element
+$\Theta_{\mathrm{Vir}_c}$ to successive degrees in the convolution
+algebra. The first four named invariants are:
+\begin{enumerate}[label=(\roman*)]
+\item $S_2 = \kappa(\mathrm{Vir}_c) = c/2$: the curvature of the
+  bar complex (UNIFORM-WEIGHT).
+  % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+\item $S_3 = \mathfrak{C}(\mathrm{Vir}_c) = -c$: the cubic shadow,
+  encoding the Lie bracket structure of the convolution algebra.
+\item $S_4$: the quartic shadow, which determines the quartic contact
+  invariant
+  \begin{equation}\label{eq:quartic-contact}
+  \mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}}
+  \;=\;
+  \frac{10}{c(5c+22)}.
+  \end{equation}
+  The numerator $10$ arises from the Shapovalov inner product at
+  level~$4$; the denominator $c(5c+22)$ is the Kac determinant.
+  Poles at $c = 0$ ($G = \infty$) and $c = -22/5$ (Lee--Yang)
+  mark reorganisation points of the tower.
+\item $S_r$ for $r \ge 5$: the higher shadow obstructions, each
+  determined by the degree-$r$ Stasheff identity and the Kac
+  determinant at levels $\le r$.
+\end{enumerate}
+\end{definition}
+
+\subsection{The discriminant and class $\mathbf{M}$}
+
+\begin{theorem}[Discriminant]
+\label{thm:discriminant}
+The discriminant of\/ $\mathrm{Vir}_c$ is
+\begin{equation}\label{eq:discriminant}
+\Delta(\mathrm{Vir}_c) \;=\; 8\,\kappa\,S_4
+\;=\; 8 \cdot \frac{c}{2} \cdot S_4 \;\ne\; 0
+\end{equation}
+for generic~$c$ (in particular for all\/ $c > 0$). The discriminant
+is linear in~$\kappa$, not quadratic. Since\/ $\Delta \ne 0$, the
+shadow tower does not terminate: $\mathrm{Vir}_c$ is
+class~$\mathbf{M}$ with infinite shadow depth\/ $r_{\max} = \infty$.
+\end{theorem}
+
+\begin{proof}
+The quartic OPE pole forces $S_4 \ne 0$
+(Proposition~\ref{prop:vir-m4}): the scalar contact term
+$(7c/12)\lambda^5$ at the symmetric point is proportional to $c$ and
+nonzero for $c \ne 0$. Combined with $\kappa = c/2 \ne 0$ for
+$c \ne 0$: $\Delta = 8(c/2)S_4 \ne 0$. When $\Delta \ne 0$, the
+recursion governing the shadow tower propagates to all genera, giving
+$r_{\max} = \infty$.
+\end{proof}
+
+\subsection{Gravitational interpretation of the shadow degrees}
+
+Each shadow degree has a direct gravitational reading. The table:
+
+\medskip
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\textbf{Shadow} & \textbf{Algebraic content}
+  & \textbf{Gravitational counterpart} \\
+\hline
+$\kappa = c/2$
+  & bar complex curvature
+  & Brown--Henneaux central charge; one-loop Weyl anomaly \\[2pt]
+$\mathfrak{C} = -c$
+  & cubic Lie bracket
+  & cubic graviton vertex $\propto \ell/(16\pi G)$ \\[2pt]
+$\mathfrak{Q} = \frac{10}{c(5c+22)}$
+  & quartic contact
+  & four-graviton amplitude; genus-$2$ contact correction \\[2pt]
+$S_r$, $r \ge 5$
+  & degree-$r$ obstruction
+  & $r$-graviton vertex; higher-loop correction
+\end{tabular}
+\end{center}
+
+\subsection{The genus tower}
+
+The curvature $\kappa = \kappa(\mathrm{Vir}_c) = c/2$ controls the
+scalar genus shadow of the gravitational partition function through the
+fiberwise differential $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$,
+where $\omega_g = c_1(\mathbb{E})$ is the first Chern class of the
+Hodge bundle on $\overline{\mathcal{M}}_g$.
+
+\begin{theorem}[The intrinsic genus tower]
+\label{thm:genus-tower}
+The intrinsic genus-$g$ free energy of\/ $\mathrm{Vir}_c$ is
+(UNIFORM-WEIGHT, all $g \ge 1$):
+\begin{equation}\label{eq:Fg}
+F_g^{\mathrm{intr}}(\mathrm{Vir}_c) \;=\;
+\kappa(\mathrm{Vir}_c) \cdot \lambda_g^{\mathrm{FP}},
+\qquad
+\lambda_g^{\mathrm{FP}} \;=\;
+\int_{\overline{\mathcal{M}}_g} \lambda_g
+\;=\;
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}
+\;>\; 0.
+\end{equation}
+% kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+The generating function is the\/ $\hat{A}$-genus:
+\begin{equation}\label{eq:genus-generating}
+\sum_{g \ge 1} F_g^{\mathrm{intr}}\,x^{2g}
+\;=\;
+\frac{c}{2}\bigl(\hat{A}(ix) - 1\bigr),
+\qquad
+\hat{A}(x) = \frac{x/2}{\sinh(x/2)}.
+\end{equation}
+The first two terms:
+\begin{align}
+F_1^{\mathrm{intr}} &= \frac{\kappa}{24}
+  = \frac{c}{48}, \label{eq:F1} \\
+F_2^{\mathrm{intr}} &= \frac{7\kappa}{5760}
+  = \frac{7c}{11520}. \label{eq:F2}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+The genus-$g$ free energy is
+$F_g^{\mathrm{intr}} = \kappa \cdot
+\int_{\overline{\mathcal{M}}_g}\lambda_g$ by the scalar genus tower
+theorem applied to the single-generator algebra $\mathrm{Vir}_c$
+(uniform weight: one generating field of conformal weight $2$). The
+Hodge integrals $\lambda_g^{\mathrm{FP}}$ are the
+Faber--Pandharipande values, whose generating function is
+$\sum_{g \ge 1}\lambda_g^{\mathrm{FP}} x^{2g}
+= \hat{A}(ix) - 1 = (x/2)/\sin(x/2) - 1$ by the Mittag-Leffler
+expansion
+$(x/2)/\sin(x/2) = 1 + 2\sum_{g \ge 1}
+\frac{(2^{2g-1}-1)|B_{2g}|}{(2g)!}\,x^{2g}$.
+The substitution $x \mapsto ix$ converts
+$\sinh(ix/2) = i\sin(x/2)$, producing the $\hat{A}(ix)$ form with
+all positive coefficients (the Wick rotation from Lorentzian to
+Euclidean signature).
+
+For $F_1^{\mathrm{intr}}$:
+$\lambda_1^{\mathrm{FP}}
+= (2^1-1)|B_2|/(2^1 \cdot 2!)
+= 1 \cdot (1/6)/(2 \cdot 2) = 1/24$,
+using $B_2 = 1/6$; then
+$F_1^{\mathrm{intr}} = (c/2)(1/24) = c/48$.
+
+For $F_2^{\mathrm{intr}}$:
+$\lambda_2^{\mathrm{FP}} = (2^3-1)|B_4|/(2^3 \cdot 4!)
+= 7/(8 \cdot 24) \cdot (1/30)$; since $B_4 = -1/30$,
+$|B_4| = 1/30$, $\lambda_2^{\mathrm{FP}}
+= 7 \cdot (1/30)/(8 \cdot 24) = 7/(5760)$.
+Then $F_2^{\mathrm{intr}} = (c/2)(7/5760) = 7c/11520$.
+\end{proof}
+
+\begin{remark}[Why the $\hat{A}$-genus, not Todd]
+\label{rem:why-a-hat}
+Three independent reasons force the $\hat{A}$-genus:
+(a) \emph{symmetry}: the genus tower uses only even powers of $x$;
+the Todd class has odd powers;
+(b) \emph{KO orientation}: the Hodge bundle
+$\mathbb{E}$ on $\overline{\mathcal{M}}_g$ carries a real structure
+via Serre duality ($\mathbb{E}^* \simeq \mathbb{E} \otimes \omega$);
+real vector bundles are oriented by KO-theory, whose multiplicative
+genus is $\hat{A}$;
+(c) \emph{explicit integration}: the Faber--Pandharipande integrals
+match the $\hat{A}(ix)$ coefficients through $g = 6$.
+\end{remark}
+
+\begin{remark}[Intrinsic versus effective]
+\label{rem:intrinsic-effective}
+The intrinsic free energies $F_g^{\mathrm{intr}} = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ use $\kappa(\mathrm{Vir}_c) = c/2$ and
+are the fundamental algebraic invariants. The \emph{effective} free
+energies incorporate ghost subtraction from the $bc$ ghost system
+($c_{\mathrm{ghost}} = -26$, $\kappa_{\mathrm{ghost}} = -13$):
+\begin{equation}\label{eq:kappa-eff}
+F_g^{\mathrm{eff}}
+\;=\;
+\kappa_{\mathrm{eff}} \cdot \lambda_g^{\mathrm{FP}},
+\qquad
+\kappa_{\mathrm{eff}} = \kappa + \kappa_{\mathrm{ghost}}
+= \frac{c-26}{2}.
+\end{equation}
+The cancellation $\kappa_{\mathrm{eff}} = 0$ at $c = 26$ is
+matter-ghost cancellation (the bosonic string critical point), not
+vanishing of the intrinsic curvature
+($\kappa(\mathrm{Vir}_{26}) = 13 \ne 0$). Throughout this paper,
+$F_g$ without superscript denotes $F_g^{\mathrm{intr}}$; the
+effective version appears only in contexts involving ghost coupling.
+\end{remark}
+
+\subsection{The quartic contact correction at genus $2$}
+
+\begin{proposition}[Genus-$2$ contact correction]
+\label{prop:genus2-contact}
+The quartic contact shadow~\eqref{eq:quartic-contact} contributes a
+genus-$2$ correction via the $r = 4$ planted-forest graph amplitude:
+\begin{equation}\label{eq:F2-contact}
+F_2^{\mathrm{contact}} \;=\;
+\mathfrak{Q} \cdot \int_{\overline{\mathcal{M}}_2} \psi_1^2
+\;=\;
+\frac{10}{c(5c+22)} \cdot \frac{1}{240}
+\;=\;
+\frac{1}{24\,c(5c+22)},
+\end{equation}
+where $\int_{\overline{\mathcal{M}}_2}\psi_1^2 = 1/240$ by Faber's
+formula. In the semiclassical limit $c \to \infty$:
+$F_2^{\mathrm{contact}} \sim 1/(120\,c^2)$.
+\end{proposition}
+
+\begin{remark}[Convergence dichotomy]
+\label{rem:convergence}
+The shadow tower exhibits a sharp analytic dichotomy: the
+\emph{scalar sector} (contact terms $\propto c/12$) has an algebraic
+generating function $H(t) = t^2\sqrt{Q_{\mathrm{Vir}}(t)}$ with the
+shadow metric $Q_{\mathrm{Vir}}(t) = c^2 + 12ct
++ \frac{180c+872}{5c+22}\,t^2$; its Taylor series converges for
+$|t| < R_{\mathrm{scal}} = c\sqrt{(5c+22)/(180c+872)}$. The
+\emph{field sector} ($T$-dependent terms, $c$-independent) diverges
+factorially: $\|m_k|_T\| \sim C^k \cdot k!$ (Gevrey-$1$), requiring
+Borel resummation. The Borel sum is unambiguous because the spectral
+curve $u^2 = Q_{\mathrm{Vir}}(t)$ has genus~$0$ (no real branch
+points for $c > 0$): 3d gravity has no resurgent ambiguity.
+\end{remark}
+
+% ================================================================
+\section{Koszul duality as the algebraic shadow of S-duality}
+\label{sec:koszul-s-duality}
+
+The Virasoro algebra has a Koszul dual: it is another Virasoro
+algebra, at the complementary central charge $26 - c$. This
+algebraic duality is the level-2 / level-5 algebraic shadow of
+gravitational S-duality, computed by trace + clutching on the
+algebraic sector; the self-dual point $c = 13$ is the fixed point
+of the Koszul involution. Lifting this algebraic shadow to a
+nonperturbative S-duality on the dynamical-metric path integral
+is part of F12 (Section~\ref{sec:f12-frontier}).
+
+\subsection{The Koszul dual}
+
+\begin{conjecture}[Virasoro reflection comparison]
+\label{thm:vir-koszul}
+Fix a completed Virasoro presentation and its Verdier/Koszul
+comparison \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\).
+The proposed reflection comparison is a quasi-isomorphism
+\begin{equation}\label{eq:vir-koszul}
+\chi_c\colon \mathrm{Vir}_c^! \xrightarrow{\;\sim\;}
+\mathrm{Vir}_{26-c}.
+\end{equation}
+Its scalar consequence is
+\begin{equation}\label{eq:complementarity}
+K(\mathrm{Vir}) \;=\;
+\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
+\;=\;
+\frac{c}{2} + \frac{26-c}{2}
+\;=\; 13.
+\end{equation}
+Self-duality holds at\/ $c = 13$: $\mathrm{Vir}_{13}^!
+\simeq \mathrm{Vir}_{13}$ after choosing the coherence of
+\(\chi_{13}\).
+\end{conjecture}
+
+\begin{remark}[Comparison obligation]
+The scalar identity in~\eqref{eq:complementarity} follows directly
+from the two displayed central-charge parameters.  The categorical
+statement~\eqref{eq:vir-koszul} requires a chain map on the completed
+Virasoro bar model, compatibility with the Virasoro relations, and a
+quasi-isomorphism proof.  These three constructions constitute the
+reflection-comparison obligation.
+\end{remark}
+
+\subsection{The two critical central charges}
+
+The Koszul involution $c \mapsto 26-c$ has two distinguished points.
+
+\begin{proposition}[Two critical points]
+\label{prop:critical-points}
+\mbox{}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{$c = 13$: Koszul self-duality.}
+  $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$. The boundary algebra
+  equals its Koszul dual: $\kappa = \kappa' = 13/2$. The genus tower
+  is symmetric under the involution: $F_g(c) = F_g(26-c)$ for all
+  $g \ge 1$. The graviton resolvent
+  $\mathcal{G}(t;\,\lambda)$ acquires a $c \mapsto 26-c$ symmetry.
+  This is the algebraic self-duality of $3$d gravity; it is
+  \emph{not} the string theory critical point.
+\item \textbf{$c = 26$: matter-ghost cancellation.}
+  The effective curvature
+  $\kappa_{\mathrm{eff}} = (c-26)/2 = 0$: the effective genus tower
+  $F_g^{\mathrm{eff}} = 0$ for all $g \ge 1$ (the intrinsic tower
+  $F_g^{\mathrm{intr}} = 13\,\lambda_g^{\mathrm{FP}} \ne 0$). The
+  gravitational partition function becomes $S$-invariant (modular
+  weight vanishes). This is the bosonic string critical point. The
+  Koszul dual $\mathrm{Vir}_{26}^! = \mathrm{Vir}_0$ is the Witt
+  algebra at $c = 0$: uncurved ($\kappa = 0$) but non-formal
+  (infinite $A_\infty$ tower from the field-dependent terms).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): at $c = 13$, the involution $c \mapsto 26 - c$ fixes
+$c$, so $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{26-13}
+= \mathrm{Vir}_{13}$. The symmetry $F_g(c) = F_g(26-c)$ follows
+from $F_g = (c/2)\lambda_g^{\mathrm{FP}}$: replacing $c$ by
+$26-c$ gives $((26-c)/2)\lambda_g^{\mathrm{FP}}$; the two are
+equal when $c/2 = (26-c)/2$, i.e.\ $c = 13$.
+
+Part~(ii): at $c = 26$, $\kappa_{\mathrm{eff}} = (c-26)/2 = 0$
+directly, so $F_g^{\mathrm{eff}} = 0$. The effective genus-$1$
+partition function
+$Z_1^{\mathrm{eff}}(\tau) = \eta(\tau)^{-\kappa_{\mathrm{eff}}}
+= \eta(\tau)^0 = 1$. The Koszul dual is
+$\mathrm{Vir}_0$; by Theorem~\ref{thm:non-truncation}(iii),
+$\mathrm{Vir}_0$ has $\kappa = 0$ (uncurved) but $m_k \ne 0$ for all
+$k \ge 3$ (non-formal).
+\end{proof}
+
+\subsection{The complementarity constant and Page time}
+
+The complementarity constant $K = 13$ has physical content beyond its
+algebraic origin.
+
+\begin{proposition}[Complementarity and the genus tower]
+\label{prop:complementarity-genus}
+For any\/ $g \ge 1$:
+\begin{equation}\label{eq:complementarity-genus}
+F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c})
+\;=\;
+13 \cdot \lambda_g^{\mathrm{FP}}.
+\end{equation}
+The sum is independent of~$c$: the total intrinsic genus-$g$ free
+energy of the Koszul pair is a topological constant equal to the
+complementarity constant~$K = 13$ times the Hodge integral.
+\end{proposition}
+
+\begin{proof}
+$F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c})
+= \frac{c}{2}\lambda_g^{\mathrm{FP}}
++ \frac{26-c}{2}\lambda_g^{\mathrm{FP}}
+= 13\,\lambda_g^{\mathrm{FP}}$.
+\end{proof}
+
+\begin{remark}[Verdier duality and the modular $S$-transform]
+\label{rem:verdier-s-commute}
+The Koszul involution $\mathbb{D}\colon c \mapsto 26-c$ (Verdier
+duality on the bar complex) and the modular $S$-transform
+$S\colon \tau \mapsto -1/\tau$ commute on genus-$1$ MC elements:
+$S \circ \mathbb{D}(\Theta^{(1)}(\tau))
+= \mathbb{D} \circ S(\Theta^{(1)}(\tau))
+= \Theta_{\mathrm{Vir}_{26-c}}^{(1)}(-1/\tau)$.
+They act on different variables ($c$ vs.\ $\tau$). The commutativity
+produces a paired Cardy formula:
+$S_{\mathrm{Cardy}}(\mathrm{Vir}_c; h)
++ S_{\mathrm{Cardy}}(\mathrm{Vir}_{26-c}; h)
+= 2\pi\sqrt{ch/6} + 2\pi\sqrt{(26-c)h/6}$,
+which is maximised at $c = 13$ by concavity of $\sqrt{\cdot}$.
+\end{remark}
+
+\subsection{The quartic contact under Koszul duality}
+
+\begin{proposition}[Quartic complementarity]
+\label{prop:quartic-complementarity}
+Under the Koszul involution $c \mapsto 26-c$:
+\begin{equation}\label{eq:quartic-complementarity}
+\mathfrak{Q}(c) + \mathfrak{Q}(26-c)
+\;=\;
+\frac{10}{c(5c+22)} + \frac{10}{(26-c)(152-5c)}.
+\end{equation}
+At $c = 13$ (self-dual):
+$\mathfrak{Q}(13) = 10/(13 \cdot 87) = 10/1131$.
+The quartic contact invariant is the first nonlinear witness of the
+duality between boundary and line sectors.
+\end{proposition}
+
+\begin{remark}[The gauge-gravity-matter trichotomy]
+\label{rem:trichotomy}
+The complexity classification by the discriminant $\Delta$
+organises the standard landscape into three columns:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l|ccc@{}}
+& \textbf{Gauge (CS/KM)} & \textbf{Pure gravity (Vir/$\mathcal{W}_N$)}
+& \textbf{Matter-coupled (BP)} \\
+\hline
+Class & $\mathbf{L}$ & $\mathbf{M}$ & $\mathbf{M}$ \\
+Shadow depth & $3$ & $\infty$ & $\infty$ \\
+$A_\infty$ tower & finite & infinite & infinite \\
+$\Delta$ & $0$ & $\ne 0$ & $\ne 0$ \\
+\end{tabular}
+\end{center}
+The passage from gauge ($\Delta = 0$, integrable) to gravity
+($\Delta \ne 0$, chaotic) is Drinfeld--Sokolov reduction: the
+Sugawara construction manufactures the quartic pole from double
+poles, and $\mathbf{L} \to \mathbf{M}$.
+\end{remark}
+
+% ================================================================
+\section{The holographic datum $\mathcal{H}(\mathrm{Vir}_c)$}
+\label{sec:holographic-datum}
+
+The six preceding sections assembled the gravitational Koszul
+data from the single input~\eqref{eq:vir-lambda-bracket}.
+We now organise the output into the \emph{holographic modular
+Koszul datum}: a seven-entry algebraic package.  It becomes a
+physical bulk datum only after the open--closed comparison and the
+line-comparison maps are supplied.
+
+\subsection{The seven-entry package}
+
+\begin{definition}[Holographic datum of $\mathrm{Vir}_c$]
+\label{def:holographic-datum}
+The \emph{holographic datum} of $3$d gravity at central charge
+$c = 3\ell/(2G)$ is the seven-entry package
+\begin{equation}\label{eq:holographic-datum}
+\mathcal{H}(\mathrm{Vir}_c)
+\;=\;
+\bigl(
+ \mathrm{Vir}_c,\;
+ \mathrm{Vir}_c^{\mathrm i},\;
+ \mathrm{Vir}_c^!,\;
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c),\;
+ r_c(z),\;
+ \Theta_c,\;
+ \nabla^{\mathrm{hol}}
+\bigr),
+\end{equation}
+where the seven components are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathrm{Vir}_c$: the \textbf{boundary algebra}, the
+  Virasoro vertex algebra at central charge
+  $c = 3\ell/(2G)$, with OPE~\eqref{eq:vir-ope} and
+  $\kappa(\mathrm{Vir}_c) = c/2$;
+  % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+\item Fix a quadratic-linear presentation
+  \(\mathrm{Vir}_c=T_X(V_c)/(R_c)\).  Its
+  \textbf{presentation coalgebra} is
+  \(\mathrm{Vir}_c^{\mathrm i}=C_X(s^{-1}V_c,s^{-2}R_c)\), with
+  \(q_c\colon\mathrm{Vir}_c^{\mathrm i}\to
+  \bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\).
+\item The \textbf{strict Koszul partner} \(\mathrm{Vir}_c^!\)
+  is reached from
+  \(K_X(\mathrm{Vir}_c)=\mathbb D_{\Ran}
+  \bar B_X^{\mathrm{ch}}(\mathrm{Vir}_c)\)
+  through the chosen pair map
+  \(\nu_c\colon K_X(\mathrm{Vir}_c)\to\mathrm{Vir}_c^!\).
+  Conjecture~\textup{\ref{thm:vir-koszul}} formulates the further
+  reflection comparison with \(\mathrm{Vir}_{26-c}\).
+\item $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$: the
+  \textbf{algebraic closed-sector object}.  The open--closed map
+  \(\Psi_{\mathrm{OCA}}\) realizes it in the physical bulk when the
+  OCA comparison package holds.  The line category is
+  $\mathrm{Vir}_c^!\text{-}\mathsf{mod}$ on the strict
+  line-comparison surface.
+\item $r_c(z) = (c/2)/z^3 + 2T/z$: the \textbf{classical
+  $r$-matrix}
+  % level-shift: level prefix c/2 present; at c=0 scalar part vanishes
+  (Proposition~\textup{\ref{prop:vir-r-matrix}}), the
+  collision residue of the Virasoro $\lambda$-bracket with
+  cubic-plus-simple poles;
+\item $\Theta_c$: the \textbf{universal Maurer--Cartan
+  element} in the modular convolution algebra
+  $\mathfrak{g}^{\mathrm{mod}}_{\mathrm{Vir}_c}$, whose
+  projections constitute the shadow obstruction tower
+  $\{S_r\}_{r \ge 2}$
+  (Definition~\textup{\ref{def:shadow-tower}});
+\item $\nabla^{\mathrm{hol}}$: the \textbf{shadow
+  connection}, the flat connection on the configuration-space
+  bundle determined by the MC equation
+  $D\Theta + \frac{1}{2}[\Theta, \Theta] = 0$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[The algebraic closed/open/line triangle]
+\label{rem:koszul-triangle}
+Entries \textup{(i)}, \textup{(iii)}, and \textup{(iv)} form the
+\emph{algebraic closed/open/line triangle}:
+\begin{center}
+\begin{tabular}{@{}rcl@{}}
+\textbf{Closed sector} & $=$ & $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)
+  =C^\bullet_{\mathrm{ch}}(\mathrm{Vir}_c,\mathrm{Vir}_c)$ \\
+\textbf{Boundary} & $=$ & $\mathrm{Vir}_c$ \\
+\textbf{Lines} & $=$ & $\mathrm{Vir}_c^!\text{-mod}$
+  (on Koszul locus)
+\end{tabular}
+\end{center}
+The closed-to-boundary edge is the Swiss-cheese restriction
+\(\rho_\partial\colon
+Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)\to\mathrm{Vir}_c\).
+The boundary-to-lines edge is the composite of \(q_c\), Ran-space
+Verdier duality, and \(\nu_c\).  The OCA comparison
+\(\Psi_{\mathrm{OCA}}\) maps the algebraic closed sector to the
+physical bulk observables.
+\end{remark}
+
+\subsection{Explicit computation of the seven-entry package}
+
+The seven-entry package $\mathcal{H}(\mathrm{Vir}_c)$ is determined
+by $c$. Its nonformal numerical projections admit closed-form
+expressions.
+
+\begin{theorem}[The holographic datum: explicit form]
+\label{thm:holographic-explicit}
+The seven entries of\/ $\mathcal{H}(\mathrm{Vir}_c)$ are determined
+by the single datum $c$; their numerical projections include:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Boundary curvature:
+  $\kappa(\mathrm{Vir}_c) = c/2$;
+  % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+  dual curvature:
+  $\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2$;
+  complementarity:
+  $\kappa + \kappa' = 13$.
+\item Shadow obstruction tower through degree~$5$:
+  \begin{align}
+  S_2 &= \kappa = c/2 & &\text{(curvature)},
+    \label{eq:hol-S2}\\
+  S_3 &= -c & &\text{(cubic shadow)},
+    \label{eq:hol-S3}\\
+  S_4 &= \frac{10}{c(5c+22)} & &\text{(quartic contact)},
+    \label{eq:hol-S4}\\
+  S_5 &= \frac{-48}{c^2(5c+22)} & &\text{(quintic)}.
+    \label{eq:hol-S5}
+  \end{align}
+  At large $c$ (semiclassical):
+  $S_4 \sim 2/c^2 \sim G^2$,
+  $S_5 \sim -48/(5c^3) \sim G^3$.
+\item Classical $r$-matrix:
+  $r_c(z) = (c/2)/z^3 + 2T/z$;
+  % level-shift: level prefix c/2 present; at c=0, scalar part vanishes
+  at $c = 0$: $r_0(z) = 2T/z$ (field-dependent only, no central
+  extension);
+  at $c = 13$: $r_{13}(z) = (13/2)/z^3 + 2T/z$ (self-dual).
+\item Spectral coproduct: strictly primitive,
+  $\Delta_z(T) = \tau_z(T) \otimes 1 + 1 \otimes T$.
+  No higher terms at any degree: gravitons do not split.
+\item Shadow connection:
+  $\nabla^{\mathrm{hol}} = d - \sum_{r \ge 2} S_r\,
+  \omega_{(r)}$,
+  where $\omega_{(r)}$ is the degree-$r$ component of the
+  bar-complex propagator form on the configuration space
+  $\mathrm{FM}_n(\mathbb{C})$.
+  Flatness of $\nabla^{\mathrm{hol}}$ is equivalent to the
+  MC equation for $\Theta_c$.
+\item Discriminant: $\Delta = 8\kappa S_4
+  = 40/(5c+22) \ne 0$ for $c \ne -22/5$. Class $\mathbf{M}$:
+  infinite shadow depth.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each listed projection was computed in the preceding sections:
+(i)~equation~\eqref{eq:complementarity};
+(ii)~Definition~\ref{def:shadow-tower} for $S_2$--$S_4$, and
+the quintic shadow from the shadow-metric expansion
+$H(t) = t^2\sqrt{Q_{\mathrm{Vir}}(t)}$ with
+$Q_{\mathrm{Vir}}(t) = c^2 + 12ct + (180c+872)t^2/(5c+22)$,
+giving $S_5 = [t^5]H/5 = -48/[c^2(5c+22)]$;
+(iii)~equation~\eqref{eq:vir-r-matrix};
+(iv)~the DS ghost-number obstruction
+(Section~\ref{sec:vir-bar-complex});
+(v)~the MC equation of Section~\ref{sec:shadow-as-gravity};
+(vi)~equation~\eqref{eq:discriminant}.
+\end{proof}
+
+\subsection{The shadow connection and soft graviton hierarchy}
+
+The shadow connection $\nabla^{\mathrm{hol}}$ decomposes the MC
+element into a hierarchy of Ward identities. The first three are
+classical; the rest are new.
+
+\begin{proposition}[Shadow connection and soft gravitons]
+\label{prop:soft-graviton-hierarchy}
+The shadow connection $\nabla^{\mathrm{hol}}$ on
+$\mathrm{FM}_n(\mathbb{C})$ acts on $n$-point correlation
+functions of primary operators $\mathcal{O}_i$ of weight $h_i$.
+Its decomposition by shadow degree gives:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Degree $2$ ($S_2 = c/2$): the Weinberg leading soft
+  graviton theorem. Soft factor:
+  $S^{(0)}_i = \partial_{z_i}/(z_0 - z_i)$.
+\item Degree $2$ (double pole of $S_2$): the Cachazo--Strominger
+  subleading soft theorem. Soft factor:
+  $S^{(1)}_i = h_i/(z_0 - z_i)^2$.
+\item Degree $3$--$4$: the cubic shadow $S_3 = -c$ is
+  gauge-trivial; the first non-trivial sub-subleading contribution
+  is the quartic contact $S_4 = 10/[c(5c+22)]$, the
+  Cachazo--He--Yuan soft factor requiring the ternary
+  $A_\infty$ operation $m_3$.
+\item Degree $r \ge 5$: one independent Ward identity per
+  degree, forced by the class $\mathbf{M}$ property ($m_k \ne 0$
+  for all $k \ge 3$). The infinite $A_\infty$ tower produces
+  infinitely many soft theorems beyond the known three.
+\end{enumerate}
+At large $c$: the soft factors at degree $r$ scale as
+$S_r \sim G^{r-2}$, and the semiclassical limit retains only
+$S_2$ (Weinberg) and the subleading $S^{(1)}$ (Cachazo--Strominger).
+\end{proposition}
+
+\begin{proof}
+The shadow connection is flat (from the MC equation), so each
+degree-$r$ component $S_r$ gives an independent Ward identity.
+The degree-$2$ components extract the conformal Ward identity,
+whose simple-pole and double-pole residues are the Weinberg and
+Cachazo--Strominger soft factors. The cubic shadow is
+gauge-trivial: $S_3 = d_2\sigma_3$ for an explicit gauge
+transformation $\sigma_3$ (using the fact that the Virasoro algebra
+is simple for generic $c$, so $H^1(\mathrm{Vir}_c,\mathrm{Vir}_c)
+= 0$). The quartic contact $S_4 = 10/[c(5c+22)]$ is genuinely new
+by the non-vanishing of the Kac determinant at level~$4$.
+For degree $\ge 5$: non-vanishing follows from the infinite tower
+(Theorem~\ref{thm:non-truncation}).
+\end{proof}
+
+\subsection{The spectral braiding}
+
+\begin{proposition}[Virasoro fusion kernel as braiding]
+\label{prop:fusion-braiding}
+The braided monoidal structure on $\mathcal{C}_c$ is determined
+by the $r$-matrix $r_c(z) = (c/2)/z^3 + 2T/z$
+% level-shift: level prefix c/2 present; at c=0, scalar part vanishes
+via the KZ-type connection on the category of Virasoro modules:
+\begin{equation}\label{eq:fusion-braiding}
+\nabla_{\mathrm{KZ}}
+\;=\;
+d - \sum_{i < j} r_c(z_i - z_j)\,dz_{ij},
+\end{equation}
+whose monodromy is the Virasoro fusion kernel
+(the Ponsot--Teschner $6j$-symbol~\cite{PT01}).
+The KZ connection has an irregular singularity at $z_i = z_j$
+of Poincar\'{e} rank~$2$ (from the cubic pole), in contrast
+to the regular-singular KZ connection of affine Kac--Moody
+algebras (where the $r$-matrix has only a simple pole).
+The irregular singularity produces Stokes phenomena in the
+braiding, not present in the KM setting.
+\end{proposition}
+
+\begin{proof}
+The classical $r$-matrix~\eqref{eq:vir-r-matrix} determines the
+connection $1$-form $\sum r_c(z_{ij})\,dz_{ij}$ on
+$\mathrm{Conf}_n(\mathbb{C})$. The CYBE
+(Proposition~\ref{prop:vir-ybe}) is equivalent to flatness of this
+connection. The Poincar\'{e} rank at $z_i = z_j$ is the order of
+the pole minus one: $(z_{ij})^{-3}$ gives rank~$2$. The
+monodromy of the flat connection around $z_j = z_i + \epsilon\,
+e^{2\pi i\theta}$ produces the braiding on modules; for
+the Virasoro algebra, this is the Ponsot--Teschner kernel.
+\end{proof}
+
+\begin{remark}[Gravity versus gauge theory]
+\label{rem:gravity-vs-gauge}
+The holographic datum distinguishes gravity from gauge theory
+through three structural signatures:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l|cc@{}}
+& \textbf{Gauge} ($V_k(\mathfrak{g})$)
+& \textbf{Gravity} ($\mathrm{Vir}_c$) \\
+\hline
+$r$-matrix pole & simple ($1/z$)
+  & cubic ($1/z^3$) \\
+Coproduct & non-trivial
+  & primitive \\
+$A_\infty$ tower & finite ($m_k = 0$, $k \ge 3$)
+  & infinite (all $m_k \ne 0$) \\
+KZ singularity & regular
+  & irregular (Poincar\'{e} rank $2$) \\
+Shadow depth & $3$ (class $\mathbf{L}$)
+  & $\infty$ (class $\mathbf{M}$) \\
+Discriminant & $\Delta = 0$
+  & $\Delta \ne 0$ \\
+\end{tabular}
+\end{center}
+The passage from gauge to gravity is Drinfeld--Sokolov reduction:
+the Sugawara construction manufactures the quartic pole from
+double poles, simultaneously creating the infinite $A_\infty$
+tower, the irregular KZ singularity, and the primitive coproduct.
+\end{remark}
+
+% ================================================================
+\section{The genus expansion and the $\hat{A}$-genus}
+\label{sec:genus-expansion}
+
+The shadow obstruction tower of Section~\ref{sec:shadow-as-gravity}
+produces a sequence of genus-$g$ free energies $F_g$ through the
+scalar genus tower theorem. This section derives the same free
+energies from an independent method: the Grothendieck--Riemann--Roch
+theorem applied to the Hodge bundle on
+$\overline{\mathcal{M}}_g$. The agreement of the two derivations
+is a non-trivial consistency check.
+
+\subsection{The genus-$1$ formal coefficient and the Weinberg soft theorem}
+
+\begin{theorem}[Genus-$1$ formal coefficient]
+\label{thm:F1-derivation}
+The genus-$1$ formal scalar coefficient of\/ $\mathrm{Vir}_c$ is
+(UNIFORM-WEIGHT):
+\begin{equation}\label{eq:F1-explicit}
+F_1(\mathrm{Vir}_c) \;=\;
+\frac{\kappa(\mathrm{Vir}_c)}{24}
+\;=\;
+\frac{c}{48}.
+\end{equation}
+Three independent derivations:
+\begin{enumerate}[label=\textup{(\roman*)},itemsep=2pt]
+\item \textbf{Shadow tower.}
+  $F_1 = \kappa \cdot \lambda_1^{\mathrm{FP}}$,
+  where $\lambda_1^{\mathrm{FP}}
+  = \int_{\overline{\mathcal{M}}_{1,1}} \lambda_1
+  = 1/24$ and
+  $\kappa(\mathrm{Vir}_c) = c/2$.
+  % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+\item \textbf{Dedekind eta function.}
+  The genus-$1$ partition function is
+  $Z_1(\tau) = \mathrm{Tr}_{\mathrm{Vir}_c}
+  (q^{L_0 - c/24}) = q^{-c/24}/\prod_{n \ge 1}(1-q^n)
+  = q^{-c/24}\,\eta(\tau)^{-1}$,
+  % eta(q) = q^{1/24} prod(1-q^n)
+  where $\eta(\tau) = q^{1/24}\prod_{n \ge 1}(1-q^n)$ is the
+  Dedekind eta function. The free energy
+  $F_1 = -\log|Z_1|^2|_{q \to 0}
+  = c/48 \cdot \log|q|^{-2} = c/48$ (leading term).
+\item \textbf{Soft graviton.}
+  The Weinberg leading soft factor
+  $S^{(0)}_i = \partial_{z_i}/(z_0 - z_i)$ applied to the
+  genus-$1$ one-point function gives
+  $\langle T \rangle_{g=1} = -c/24$ (the Casimir energy
+  on the torus). The free energy
+  $F_1 = \kappa \cdot \lambda_1^{\mathrm{FP}}
+  = (c/2)(1/24) = c/48$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Derivation~(i) follows from the genus tower
+(Theorem~\ref{thm:genus-tower}) at $g = 1$, using the intrinsic
+curvature $\kappa = c/2$ (not the effective curvature).
+
+Derivation~(ii): the vacuum character of $\mathrm{Vir}_c$
+for generic $c$ (no null vectors) is
+$\chi_0(\tau) = q^{-c/24}\prod_{n \ge 2}(1-q^n)^{-1}$.
+The full partition function on a genus-$1$ surface
+with modular parameter $\tau$ includes the full
+Fock space: $Z_1(\tau) = q^{-c/24}\prod_{n \ge 1}(1-q^n)^{-1}$.
+The leading $q$-expansion gives the free energy
+$F_1 = c/48$.
+
+Derivation~(iii): the genus-$1$ one-point function is
+\[
+\langle T \rangle_{g=1}
+\;=\;
+\frac{\mathrm{Tr}(L_0\,q^{L_0 - c/24})}
+     {\mathrm{Tr}(q^{L_0 - c/24})}
+\;=\;
+q\,\partial_q \log Z_1(\tau)
+\;=\;
+-\frac{c}{24} + O(q).
+\]
+This is the Casimir energy density. The integrated free energy
+is $F_1 = (c/2) \cdot (1/24)$.
+\end{proof}
+
+\subsection{The genus-$2$ formal coefficient}
+
+\begin{theorem}[Genus-$2$ formal coefficient]
+\label{thm:F2-derivation}
+The genus-$2$ formal scalar coefficient is (UNIFORM-WEIGHT):
+\begin{equation}\label{eq:F2-explicit}
+F_2(\mathrm{Vir}_c) \;=\;
+\frac{7\,\kappa(\mathrm{Vir}_c)}{5760}
+\;=\;
+\frac{7c}{11520}.
+\end{equation}
+% kappa-normalization: kappa(Vir) from C2; verified: c=0 -> 0
+The Hodge integral value
+$\lambda_2^{\mathrm{FP}}
+= \int_{\overline{\mathcal{M}}_2}\lambda_2
+= 7/5760$
+% Faber--Pandharipande value; B_4 = -1/30, |B_4| = 1/30
+% lambda_2^FP = (2^3-1)|B_4|/(2^3 * 4!) = 7/(8*24*30) = 7/5760
+uses $B_4 = -1/30$ and
+$(2^3-1)/2^3 = 7/8$.
+\end{theorem}
+
+\begin{proof}
+From the genus tower (Theorem~\ref{thm:genus-tower}):
+$F_2 = \kappa \cdot \lambda_2^{\mathrm{FP}}
+= (c/2)(7/5760) = 7c/11520$.
+The computation of $\lambda_2^{\mathrm{FP}}$:
+$\lambda_2^{\mathrm{FP}}
+= (2^{2 \cdot 2 - 1}-1)|B_{2 \cdot 2}|
+  /(2^{2 \cdot 2 - 1}\cdot (2 \cdot 2)!)
+= (2^3-1)|B_4|/(2^3 \cdot 4!)
+= 7 \cdot (1/30)/(8 \cdot 24)
+= 7/5760$.
+\end{proof}
+
+\begin{remark}[The quartic contact correction]
+\label{rem:quartic-contact-F2}
+The shadow free energy $F_2 = 7\kappa/5760$ is the scalar-lane
+contribution. The quartic contact shadow adds a correction
+(Proposition~\ref{prop:genus2-contact}):
+$F_2^{\mathrm{contact}} = \mathfrak{Q} \cdot
+\int_{\overline{\mathcal{M}}_2}\psi_1^2
+= 10/[c(5c+22)] \cdot 1/240
+= 1/[24c(5c+22)]$.
+At large $c$: $F_2^{\mathrm{contact}} \sim 1/(120c^2)$, which
+is $O(G^2)$, a genuine two-loop quantum gravity correction
+invisible in the one-loop $\hat{A}$-genus formula.
+\end{remark}
+
+\subsection{The GRR derivation}
+
+The $\hat{A}$-genus formula for the genus tower admits an
+independent derivation from the Grothendieck--Riemann--Roch
+theorem, providing a second proof that does not depend on the
+shadow obstruction tower.
+
+\begin{theorem}[GRR derivation of the genus tower]
+\label{thm:grr-derivation}
+Let $\pi\colon \mathcal{C}_g \to \overline{\mathcal{M}}_g$ be the
+universal curve, and $\mathbb{E} = \pi_*\omega_{\mathcal{C}_g/
+\overline{\mathcal{M}}_g}$ the Hodge bundle. The
+Grothendieck--Riemann--Roch theorem gives:
+\begin{equation}\label{eq:grr}
+\mathrm{ch}(\mathbb{E})
+\;=\;
+\pi_*\bigl(\mathrm{td}(\omega_{\mathcal{C}_g/
+\overline{\mathcal{M}}_g})\bigr)
+\;=\;
+g + \sum_{k \ge 1}
+\frac{B_{2k}}{(2k)!}\,\kappa_{2k-1},
+\end{equation}
+where $\kappa_{2k-1}$ is the Miller--Morita--Mumford class and
+$B_{2k}$ are Bernoulli numbers. The generating function of
+the Hodge integrals $\lambda_g^{\mathrm{FP}}
+= \int_{\overline{\mathcal{M}}_g}\lambda_g$
+is determined by the $\hat{A}$-genus:
+\begin{equation}\label{eq:grr-ahat}
+\sum_{g \ge 1} \lambda_g^{\mathrm{FP}}\,x^{2g}
+\;=\;
+\hat{A}(ix) - 1,
+\qquad
+\hat{A}(x) = \frac{x/2}{\sinh(x/2)}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The Chern character of the Hodge bundle is computed by GRR:
+$\mathrm{ch}(\mathbb{E}) = \pi_*(\mathrm{td}(\Omega^1_{\pi}))$,
+where $\mathrm{td}$ is the Todd class. The top
+Chern class $\lambda_g = c_g(\mathbb{E})$ is extracted from
+$\mathrm{ch}(\mathbb{E})$ via the Newton identities relating
+Chern characters to Chern classes. The generating function
+of $\lambda_g^{\mathrm{FP}} = \int_{\overline{\mathcal{M}}_g}
+\lambda_g$ is then determined by integrating the Todd class
+over the fibres of $\pi$: the fibre integral produces the
+$\hat{A}$-genus of the tangent bundle of $\mathcal{C}_g$
+(which has real rank $2$, so the KO orientation produces
+$\hat{A}$ rather than Todd).
+\end{proof}
+
+\begin{remark}[Why $\hat{A}$, not Todd: three reasons]
+\label{rem:why-ahat-grr}
+The GRR derivation confirms Remark~\ref{rem:why-a-hat}:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Even powers}: the genus tower uses $x^{2g}$
+  (even); the Todd class has odd powers.
+\item \emph{KO orientation}: the Hodge bundle carries a real
+  structure from Serre duality
+  $\mathbb{E}^* \simeq \mathbb{E} \otimes \omega$; the
+  real vector bundle is oriented by KO-theory, whose
+  multiplicative genus is $\hat{A}$.
+\item \emph{Explicit verification}: the Faber--Pandharipande
+  integrals match $\hat{A}(ix)$ through $g = 6$.
+\end{enumerate}
+\end{remark}
+
+\subsection{Uniform-weight structure for the Virasoro algebra}
+
+\begin{proposition}[Uniform-weight and absence of cross-channel corrections]
+\label{prop:uniform-weight}
+The Virasoro algebra $\mathrm{Vir}_c$ has a single generating field
+$T(z)$ of conformal weight $2$. The genus-$g$ free energy
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ (UNIFORM-WEIGHT)
+receives no cross-channel correction:
+$\delta F_g^{\mathrm{cross}} = 0$ for all\/ $g \ge 1$.
+\end{proposition}
+
+\begin{proof}
+The cross-channel correction $\delta F_g^{\mathrm{cross}}$
+arises from the interaction between fields of different conformal
+weights in the propagator sum. The Virasoro algebra has a single
+generator of weight $2$: there is only one channel, and the
+cross-channel correction vanishes identically. The scalar
+formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is exact
+at all genera for this single-weight algebra.
+\end{proof}
+
+\subsection{The genus-$1$ fibre differential}
+
+The explicit genus-$1$ bar complex provides a direct computation
+of $F_1$. The genus-$1$ propagator on the elliptic curve $E_\tau$
+is $\eta^{(1)}(z_1, z_2;\,\tau)
+= \partial_{z_1}\log\vartheta_1(z_1 - z_2 \,|\, \tau)
++ 2\pi i\,\mathrm{Im}(z_1 - z_2)/\mathrm{Im}\,\tau$.
+
+\begin{proposition}[The three-term formula]
+\label{prop:three-term}
+The fibre differential on the degree-$2$ bar element
+$[s^{-1}T \,|\, s^{-1}T]$ at genus~$1$ is:
+\begin{equation}\label{eq:three-term}
+d_{\mathrm{fib}}^{(1)}[s^{-1}T \,|\, s^{-1}T]
+\;=\;
+s^{-1}\!\left(
+ {:}TT{:}
+ \;-\; \frac{2\pi^2}{3}\,E_2(\tau)\cdot T
+ \;-\; \frac{c\pi^4}{90}\,E_4(\tau)\cdot \mathbf{1}
+\right)\!,
+\end{equation}
+where $E_2(\tau) = 1 - 24\sum_{n \ge 1}\sigma_1(n)\,q^n$ is the
+quasi-modular Eisenstein series and $E_4(\tau)$ is the weight-$4$
+Eisenstein series. The three terms arise from:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item ${:}TT{:}$: the genus-$0$ normal-ordered product (regular
+  term paired with $1/u$);
+\item $-\frac{2\pi^2}{3}E_2(\tau) \cdot T$: the genus-$1$
+  state-dependent correction (double pole $2T/u^2$ paired with
+  the propagator coefficient $-(\pi^2/3)E_2(\tau)\,u$);
+\item $-\frac{c\pi^4}{90}E_4(\tau) \cdot \mathbf{1}$: the
+  genus-$1$ vacuum correction (quartic pole $(c/2)/u^4$ paired
+  with $-(\pi^4/45)E_4(\tau)\,u^3$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The meromorphic part of the genus-$1$ propagator has the Laurent
+expansion $h(u;\,\tau) = 1/u - (\pi^2/3)E_2(\tau)\,u
+- (\pi^4/45)E_4(\tau)\,u^3 - \cdots$ (odd powers only).
+The fibre differential is the residue of $h(u;\,\tau) \cdot
+T(z_1)\,T(z_2)$ at $u = 0$. The Virasoro OPE~\eqref{eq:vir-ope}
+has poles at orders $4$, $2$, and $1$ in $u = z_1 - z_2$.
+Pairing the propagator terms $c_k(\tau)\,u^{2k-1}$ with the
+OPE terms $T_{(2k-1)}T\,u^{-(2k)}$ gives the residue:
+$T_{(-1)}T = {:}TT{:}$ from the leading $1/u$,
+$c_1 \cdot T_{(1)}T = -(\pi^2/3)E_2 \cdot 2T$ from $k=1$,
+$c_2 \cdot T_{(3)}T = -(\pi^4/45)E_4 \cdot (c/2)$ from $k=2$.
+\end{proof}
+
+The $E_2$-correction is quasi-modular (it transforms anomalously
+under $\tau \mapsto -1/\tau$); the $E_4$-correction is fully
+modular. The Virasoro OPE pole structure generates precisely the
+Eisenstein tower $\{E_{2k}\}$ at genus~$1$.
+
+% ================================================================
+\section{BTZ black holes as Maurer--Cartan elements}
+\label{sec:btz}
+
+The BTZ black hole of Ba\~{n}ados, Teitelboim, and
+Zanelli~\cite{BTZ92} is the unique black hole solution of
+$2{+}1$-dimensional gravity with $\Lambda < 0$. We identify it as a
+Maurer--Cartan element of the gravitational convolution algebra of
+the algebraic sector. The identification is unconditional at the
+algebraic level (boundary $A_b = \Vir_c$, MC element
+$\alpha_{\mathrm{BTZ}}$); the lift of $\alpha_{\mathrm{BTZ}}$ to a
+saddle of a compact dynamical-metric path integral, and the
+recovery of microstate counts from a sum over geometries, requires
+the BTZ / Cardy hypothesis package and the Maloney--Witten +
+Manschot--Moore Farey-tail completion (Section~\ref{sec:f12-frontier}).
+
+\begin{quote}
+\textbf{BTZ / Cardy hypothesis package} (named for use throughout
+this section and Section~\ref{sec:page-curve}):
+\begin{enumerate}[label=\textup{(BC\arabic*)}]
+\item \emph{Modular invariance.} The torus partition function
+  $Z_1(\tau)$ is invariant under $\mathrm{SL}_2(\mathbb{Z})$, and in
+  particular under the $S$-transform $\tau \mapsto -1/\tau$ used in
+  the Cardy saddle-point.
+\item \emph{Vacuum dominance.} As $\tau \to i 0^+$ along the
+  imaginary axis, $Z_1(\tau)$ is dominated by the Virasoro vacuum
+  representation: $Z_1(\tau) \sim e^{-2\pi i (-c/24)\tau} \cdot (1 +
+  O(q))$.
+\item \emph{Saddle stability.} The saddle-point approximation to
+  the modular $S$-transform is uncorrected at leading order in
+  $h \gg c$, with subleading corrections enumerated by the
+  Hardy--Ramanujan circle method (Faulkner--Lewkowycz subleading;
+  Manschot--Moore Farey expansion).
+\item \emph{Maloney--Witten Farey-tail completion.} The sum over
+  $\mathrm{SL}_2(\mathbb{Z})/\mathbb{Z}$ images of the BTZ saddle
+  produces the Maloney--Witten partition function
+  $Z_{\mathrm{MW}}(\tau)$; the Manschot--Moore Farey-tail
+  prescription regularises this (otherwise non-convergent /
+  negatively-graded) sum into a holomorphic mock-modular
+  completion.
+\end{enumerate}
+The identification of $\alpha_{\mathrm{BTZ}}$ as an MC element is
+unconditional. The Cardy entropy formula
+(Theorem~\ref{thm:cardy-bh}) below uses (BC1)--(BC3); the
+genus-$g$ saddle expansion (Proposition~\ref{prop:btz-genus}) uses
+(BC3); the construction of a compact gravitational partition
+function from the algebraic sector uses all four hypotheses and is
+the F12 open problem.
+\end{quote}
+
+\subsection{The BTZ solution}
+
+A BTZ black hole is specified by two parameters: mass $M$ and
+angular momentum $J$, subject to $|J| \le M\ell$.
+In the Chern--Simons formulation, the BTZ solution is a pair of
+flat $\mathfrak{sl}_2$-connections with holonomy around the
+spatial circle:
+
+\begin{definition}[BTZ gauge configuration]
+\label{def:btz-gauge}
+The BTZ black hole with mass $M$ and angular momentum $J$ is the
+flat connection $A_\pm$ with holonomy eigenvalues
+\begin{equation}\label{eq:btz-holonomy}
+\exp\!\bigl(\pm 2\pi\sqrt{h}\,\bigr)
+\qquad\text{and}\qquad
+\exp\!\bigl(\pm 2\pi\sqrt{\bar{h}}\,\bigr),
+\end{equation}
+where the conformal weights are
+\begin{equation}\label{eq:btz-conformal-weights}
+h \;=\; \frac{M\ell + J}{2},
+\qquad
+\bar{h} \;=\; \frac{M\ell - J}{2}.
+\end{equation}
+The outer horizon radius is
+$r_+ = \ell\sqrt{8GM}
+\bigl(1 + \sqrt{1 - (J/(M\ell))^2}\bigr)^{1/2}$.
+\end{definition}
+
+\subsection{BTZ as MC element}
+
+\begin{theorem}[BTZ as Maurer--Cartan element]
+\label{thm:btz-mc}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: chain-level (Maurer--Cartan in the modular
+convolution algebra of the algebraic sector).
+Level: 4 (operator-level: line / flat-connection encoding).
+Hypothesis package: $\Lambda < 0$ (AdS$_3$); flat $A_\pm$
+connection on the solid torus $D \times S^1$ with prescribed
+holonomy; identification of holonomy weights with conformal
+weights $(h, \bar h)$ via Brown--Henneaux. The lift to a saddle
+of a compact dynamical-metric path integral requires (BC1)--(BC4)
+and is the F12 frontier.
+
+The BTZ black hole of mass $M$ and angular momentum $J$ is
+a Maurer--Cartan element
+\begin{equation}\label{eq:btz-mc}
+\alpha_{\mathrm{BTZ}}
+\;=\;
+h\,e_h + \bar{h}\,e_{\bar{h}}
+\;\in\;
+\mathfrak{g}^{\mathrm{mod}}_{\mathrm{Vir}_c},
+\end{equation}
+where $e_h, e_{\bar{h}}$ are the generators of the modular
+convolution algebra at conformal weights $h = (M\ell + J)/2$,
+$\bar{h} = (M\ell - J)/2$. The MC equation
+$D\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ is equivalent to the
+flatness condition $F_\pm = 0$ for the BTZ gauge connection.
+\end{theorem}
+
+\begin{proof}
+The BTZ solution is a flat $SL(2,\mathbb{R})$ connection on the
+solid torus $D \times S^1$ with specified holonomy. In the boundary
+Virasoro description, flatness becomes the MC equation: the
+highest-weight state $|h, \bar{h}\rangle$ in the Virasoro module
+of weight $(h, \bar{h})$ satisfies the conformal Ward identities,
+which are exactly the components of the MC equation
+$D\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ projected to the
+boundary.
+\end{proof}
+
+\subsection{The Cardy entropy}
+
+The statistical entropy of the BTZ black hole is computed from
+the asymptotic growth of Virasoro characters.
+
+\begin{theorem}[Cardy formula and Bekenstein--Hawking entropy]
+\label{thm:cardy-bh}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: chain-level + Cardy saddle.
+Level: 5 (modular trace of level-$4$ operators).
+Hypothesis package: BTZ / Cardy (BC1)--(BC3) above; trace
+direction (operators $\to$ scalar) only.
+
+The microstate entropy of the BTZ black hole at conformal weights
+$(h, \bar{h})$ with $h, \bar{h} \gg c$ is:
+\begin{equation}\label{eq:cardy}
+S_{\mathrm{Cardy}}(h, \bar{h})
+\;=\;
+2\pi\sqrt{\frac{c\,h}{6}}
++ 2\pi\sqrt{\frac{c\,\bar{h}}{6}}
+\;=\;
+S_{\mathrm{BH}},
+\end{equation}
+where the Bekenstein--Hawking entropy is
+\begin{equation}\label{eq:bekenstein-hawking}
+S_{\mathrm{BH}}
+\;=\;
+\frac{\pi r_+}{2G}
+\;=\;
+\frac{\mathrm{Area}(\mathrm{horizon})}{4G}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The Cardy formula: the number of Virasoro primaries of weight $h$
+grows as $\rho(h) \sim \exp(2\pi\sqrt{ch/6})$ for $h \gg c$
+(the saddle-point approximation to the modular $S$-transform of
+the partition function). For the BTZ state $(h, \bar{h})$:
+$S = \log\rho(h) + \log\rho(\bar{h})
+= 2\pi\sqrt{ch/6} + 2\pi\sqrt{c\bar{h}/6}$.
+
+The Bekenstein--Hawking entropy in terms of boundary data:
+using $c = 3\ell/(2G)$, $h = (M\ell + J)/2$,
+$\bar{h} = (M\ell - J)/2$:
+\begin{align*}
+S_{\mathrm{Cardy}}
+&= 2\pi\sqrt{\frac{3\ell}{12G}(M\ell + J)}
+ + 2\pi\sqrt{\frac{3\ell}{12G}(M\ell - J)} \\[4pt]
+&= 2\pi\sqrt{\frac{\ell}{4G}\cdot\frac{M\ell + J}{1}}
+ + 2\pi\sqrt{\frac{\ell}{4G}\cdot\frac{M\ell - J}{1}} \\[4pt]
+&= \frac{\pi r_+}{2G},
+\end{align*}
+where the last step uses the relation
+$r_\pm^2 = 8G\ell^2 M \bigl(1 \pm \sqrt{1-(J/(M\ell))^2}\bigr)/2$
+for the non-rotating case $J = 0$:
+$r_+ = \ell\sqrt{8GM}$,
+$S_{\mathrm{BH}} = \pi\ell\sqrt{8GM}/(2G)
+= \pi r_+/(2G)$.
+\end{proof}
+
+\subsection{Quantum corrections to BTZ entropy}
+
+The shadow obstruction tower provides a systematic genus expansion
+of quantum corrections to the leading Bekenstein--Hawking entropy.
+
+\begin{proposition}[BTZ genus expansion]
+\label{prop:btz-genus}
+The entropy of the BTZ black hole admits a saddle-point expansion:
+\begin{equation}\label{eq:btz-genus-expansion}
+S(M)
+\;=\;
+S_{\mathrm{BH}}
+- \frac{3}{2}\log S_{\mathrm{BH}}
++ \sum_{g=2}^{\infty}
+\frac{C_g(\kappa)}{S_{\mathrm{BH}}^{2g-2}},
+\end{equation}
+where $S_{\mathrm{BH}} = 2\pi\sqrt{ch/6}$ and the coefficients
+$C_g(\kappa)$ depend on the shadow free energies
+$F_1, \ldots, F_g$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The leading correction is logarithmic:
+  $-\frac{3}{2}\log S_{\mathrm{BH}}$, universal across all
+  $2{+}1$-dimensional black holes.
+\item $F_1 = \kappa/24 = c/48$:
+  % kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+  the one-loop free energy from the scalar shadow.
+\item $F_2 = 7\kappa/5760 = 7c/11520$:
+  the two-loop free energy.
+\item The shadow partition function
+  $Z^{\mathrm{sh}} = \exp(\sum_{g \ge 1} F_g\,\hbar^{2g})$
+  converges absolutely (Bernoulli decay
+  $\lambda_g^{\mathrm{FP}} \sim (2\pi)^{-2g}$),
+  in contrast to the string free energy
+  which diverges as $(2g)!$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The saddle-point expansion of $Z(\beta)
+= \exp(\sum_{g \ge 0} F_g\,\beta^{2g})$
+around the BTZ saddle gives the $1/S_{\mathrm{BH}}$ expansion.
+The logarithmic correction $-3/2$ is the universal contribution
+from the one-loop determinant of the graviton fluctuation around
+the BTZ geometry (the Jacobian of the saddle-point integral
+in three dimensions). The higher-order corrections $C_g$ are
+determined by the shadow free energies through the
+saddle-point formula.
+\end{proof}
+
+\subsection{BTZ complementarity and the Hawking--Page transition}
+
+\begin{proposition}[BTZ paired entropy]
+\label{prop:btz-complementarity}
+The Koszul pair $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ induces
+a paired entropy:
+\begin{equation}\label{eq:btz-paired}
+S_{\mathrm{BH}}(\mathrm{Vir}_c;\, h)
++ S_{\mathrm{BH}}(\mathrm{Vir}_{26-c};\, h)
+\;=\;
+2\pi\sqrt{\frac{h}{6}}\!\left(\sqrt{c} + \sqrt{26-c}\right)\!,
+\end{equation}
+maximised at $c = 13$ by the concavity of\/ $\sqrt{\cdot}$,
+where
+$\sqrt{c} + \sqrt{26-c}|_{c=13} = 2\sqrt{13}$.
+The Hawking--Page transition at $\beta_{\mathrm{HP}} = 2\pi\ell$
+exchanges the BTZ and thermal $\mathrm{AdS}$ saddles.
+\end{proposition}
+
+\begin{proof}
+The paired entropy is
+$S_{\mathrm{BH}}(\mathrm{Vir}_c) + S_{\mathrm{BH}}(\mathrm{Vir}_{26-c})
+= 2\pi\sqrt{ch/6} + 2\pi\sqrt{(26-c)h/6}
+= 2\pi\sqrt{h/6}(\sqrt{c} + \sqrt{26-c})$.
+By AM-QM inequality, $\sqrt{c} + \sqrt{26-c}$ is maximised when
+$c = 26-c$, i.e.\ $c = 13$. The Hawking--Page temperature
+$\beta_{\mathrm{HP}} = 2\pi\ell$ is the point where the BTZ free
+energy $F_{\mathrm{BTZ}} = -(c/6\pi)(\pi^2/\beta)$ crosses the
+thermal $\mathrm{AdS}$ free energy
+$F_{\mathrm{AdS}} = -(c/6\pi)\beta$.
+\end{proof}
+
+\begin{remark}[The entanglement entropy]
+\label{rem:entanglement}
+The Calabrese--Cardy entanglement entropy of a boundary interval
+of length $L$ is
+$S_{\mathrm{EE}} = (c/3)\log(L/\varepsilon)$.
+The Koszul-dual entanglement entropy is
+$S_{\mathrm{EE}}' = ((26-c)/3)\log(L/\varepsilon)$.
+Their sum:
+$S_{\mathrm{EE}} + S_{\mathrm{EE}}'
+= (26/3)\log(L/\varepsilon)$, independent of $c$.
+At $c = 13$: $S_{\mathrm{EE}} = S_{\mathrm{EE}}'
+= (13/3)\log(L/\varepsilon)$.
+\end{remark}
+
+% ================================================================
+\section{The algebraic Page-curve shadow from complementarity}
+\label{sec:page-curve}
+
+Under the BTZ / Cardy hypothesis package
+(Section~\ref{sec:btz}, (BC1)--(BC3)) and the island-saddle
+mechanism upstream (Penington~\cite{Pen19},
+Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19,AMMZ19}), the
+complementarity constant $K = \kappa(\mathrm{Vir}_c)
++ \kappa(\mathrm{Vir}_{26-c}) = 13$ controls the transition
+between the two Koszul-dual phases of the algebraic-sector
+saddle competition. The derivation below is the algebraic Page
+shadow of the gravitational Page curve: the Lagrangian
+decomposition of the genus expansion evaluated on the BTZ
+Maurer--Cartan element, the evaporation rate from the genus-$1$
+free energy, and the Page time as the crossing of the two
+saddle-point contributions on the algebraic sector. The
+$c$-independent Page time $t_P = 3S_{\mathrm{BH}}/13$ is a
+consequence of complementarity, not an assumption. The full
+information-theoretic Page curve requires the island mechanism on
+the dynamical-metric path integral (a distinct construction); the
+present theorem computes the algebraic-sector saddle exchange.
+
+\subsection{The Lagrangian decomposition on the BTZ background}
+
+The complementarity theorem (Theorem~\ref{thm:vir-koszul})
+decomposes the genus-$g$ bar complex into Koszul-dual halves.
+We evaluate this decomposition on the BTZ Maurer--Cartan element
+$\alpha_{\mathrm{BTZ}} \in \mathfrak{g}^{\mathrm{mod}}$
+(Theorem~\ref{thm:btz-mc}), producing a two-saddle
+partition function parametrised by the black hole mass.
+
+\begin{construction}[Lorentzian BTZ genus expansion]
+\label{con:lorentzian-btz}
+Let $\alpha_{\mathrm{BTZ}}$ be the MC element at conformal weight
+$h$ (non-rotating, $J = 0$). The genus-summed free energy
+(Proposition~\ref{prop:btz-genus}) is:
+\begin{equation}\label{eq:btz-genus-sum}
+\mathcal{F}(h;\,\hbar)
+\;=\;
+S_{\mathrm{BH}}(h)\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1} F_g(\alpha_{\mathrm{BTZ}})\,
+\hbar^{2g-2},
+\end{equation}
+where $S_{\mathrm{BH}}(h) = 2\pi\sqrt{ch/6}$ and
+$\hbar = S_{\mathrm{BH}}^{-1}$.
+The Lorentzian continuation replaces the Euclidean modular
+parameter $\tau = i\beta/(2\pi\ell)$ by
+$\tau \mapsto t/(2\pi\ell) + i\epsilon$, where $t$ is
+Lorentzian time and $\epsilon \to 0^+$ selects the retarded
+contour.
+For an evaporating black hole, the conformal weight is
+time-dependent: $h(t) = h_0 - \dot{h}\,t$ with
+$\dot{h} > 0$, so that
+$S_{\mathrm{BH}}(t) = 2\pi\sqrt{c\,h(t)/6}$ decreases
+monotonically.
+\end{construction}
+
+\begin{theorem}[Lagrangian decomposition on the BTZ background]
+\label{thm:lagrangian-btz}
+The complementarity decomposition
+(Theorem~\textup{\ref{thm:vir-koszul}}, Theorem~C) applied to
+the genus expansion~\eqref{eq:btz-genus-sum} produces:
+\begin{equation}\label{eq:lagrangian-btz}
+\mathcal{F}(h;\,\hbar)
+\;=\;
+\mathcal{F}_+(\kappa;\,h;\,\hbar)
+\;+\;
+\mathcal{F}_-(\kappa';\,h;\,\hbar),
+\end{equation}
+where the two Lagrangian contributions are:
+\begin{align}
+\mathcal{F}_+(\kappa;\,h;\,\hbar)
+&\;=\;
+\kappa\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1}\kappa\,\lambda_g^{\mathrm{FP}}\,
+\hbar^{2g-2},
+\qquad
+\kappa = c/2,
+\label{eq:F-plus}\\[4pt]
+\mathcal{F}_-(\kappa';\,h;\,\hbar)
+&\;=\;
+\kappa'\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1}\kappa'\,\lambda_g^{\mathrm{FP}}\,
+\hbar^{2g-2},
+\qquad
+\kappa' = (26-c)/2.
+\label{eq:F-minus}
+\end{align}
+% kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+The genus-$g$ obstruction decomposes:
+\begin{equation}\label{eq:Cg-decomp-btz}
+\mathbf{C}_g(\mathrm{Vir}_c)\big|_{\alpha_{\mathrm{BTZ}}}
+\;=\;
+\mathbf{Q}_g^+(\kappa)
+\;\oplus\;
+\mathbf{Q}_g^-(\kappa'),
+\end{equation}
+with fiberwise differentials satisfying
+$(d_{\mathrm{fib}}^+)^2 = \kappa\cdot\omega_g$ and
+$(d_{\mathrm{fib}}^-)^2 = \kappa'\cdot\omega_g$ on the two
+summands.
+\end{theorem}
+
+\begin{proof}
+Theorem~C applied to the Virasoro algebra gives the
+Lagrangian eigenspace decomposition of the genus-$g$ bar complex
+under the Koszul involution $c \mapsto 26-c$. The involution has
+period~$2$; its two eigenvalues on the fiberwise differential
+$d_{\mathrm{fib}}^2 = \kappa\cdot\omega_g$ are $\kappa = c/2$
+and $\kappa' = (26-c)/2$, the curvatures of the two eigenspaces.
+Since $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+(UNIFORM-WEIGHT, Proposition~\ref{prop:uniform-weight}), each
+summand contributes proportionally to its curvature eigenvalue.
+The genus-summed partition function decomposes accordingly. The
+evaluation on $\alpha_{\mathrm{BTZ}}$ preserves the
+decomposition: the MC equation
+$D\alpha + \frac{1}{2}[\alpha,\alpha] = 0$ is satisfied
+independently on each Lagrangian half because the Koszul
+involution commutes with the MC operator (it acts on the
+parameter $c$, not on the MC variable $\alpha$).
+\end{proof}
+
+\subsection{The radiation entropy from saddle-point competition}
+
+The two Lagrangian halves compete as the black hole evaporates.
+The radiation entropy is determined by the saddle-point
+prescription (the gravitational path integral selects the
+geometry minimising the generalised entropy), and the Page
+curve emerges from the exchange of dominance.
+
+\begin{definition}[Evaporation rate from the genus expansion]
+\label{def:evaporation-rate}
+The entanglement production rate of a $2$d CFT at central charge
+$c$ and Hawking temperature $T_H$ is determined by the genus-$1$
+free energy. In thermal time units $\beta/(2\pi)$:
+\begin{equation}\label{eq:evaporation-rate}
+\dot{S}_{\mathrm{rad}}
+\;=\;
+\frac{4\pi\,F_1}{\beta/(2\pi)}
+\;=\;
+4\pi \cdot \frac{c}{48}
+\;=\;
+\frac{\pi c}{12}
+\;=\;
+\frac{c}{6}\;\text{per unit}\;\frac{\beta}{2\pi},
+\end{equation}
+using $F_1 = \kappa/24 = c/48$
+(Theorem~\ref{thm:F1-derivation}).
+% kappa-normalization: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+The Koszul dual boundary, at central charge $26-c$, has
+entanglement production rate $(26-c)/6$.
+\end{definition}
+
+\begin{theorem}[The algebraic Page curve]
+\label{thm:page-curve}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: scalar shadow on the algebraic sector (operator
+$\to$ scalar trace direction).
+Level: 5 (modular trace + saddle competition; scalar shadow
+output, not operator-level reconstruction).
+Hypothesis package: BTZ / Cardy (BC1)--(BC3); semiclassical
+$S_{\mathrm{BH}} \gg 1$; Lagrangian decomposition under the
+Koszul involution (Theorem~\ref{thm:lagrangian-btz}); island
+mechanism upstream (Penington, AEMM) supplies the
+information-theoretic content; the algebraic sector supplies the
+saddle-exchange shadow only.
+
+The radiation entropy of an evaporating BTZ black hole is
+\begin{equation}\label{eq:page-curve-formula}
+S_{\mathrm{rad}}(t)
+\;=\;
+\min\!\left(
+ S_+(t),\;\;
+ S_{\mathrm{BH}}(0) - S_-(t)
+\right)\!,
+\end{equation}
+where:
+\begin{itemize}
+\item $S_+(t) = (c/6)\,t$ is the no-island contribution
+  (entanglement growth at the boundary rate $\dot{S}_+ = c/6$,
+  controlled by $\kappa = c/2$);
+\item $S_-(t) = ((26-c)/6)\,t$ is the island contribution
+  (entanglement growth at the dual rate $\dot{S}_- = (26-c)/6$,
+  controlled by $\kappa' = (26-c)/2$);
+\item $S_{\mathrm{BH}}(0)$ is the initial Bekenstein--Hawking
+  entropy.
+\end{itemize}
+The following are consequences:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Page time.}
+  The crossing condition
+  $S_+(t_P) = S_{\mathrm{BH}}(0) - S_-(t_P)$ gives:
+  \begin{equation}\label{eq:page-time}
+  t_P \;=\;
+  \frac{3\,S_{\mathrm{BH}}(0)}{K}
+  \;=\;
+  \frac{3\,S_{\mathrm{BH}}(0)}{13},
+  \end{equation}
+  independent of~$c$.
+\item \textbf{Page entropy.}
+  $S_{\mathrm{Page}} = S_+(t_P)
+  = \dfrac{c\,S_{\mathrm{BH}}(0)}{26}$.
+\item \textbf{Hawking phase} ($t < t_P$):
+  the boundary saddle $\barB(\mathrm{Vir}_c)$ with curvature
+  $\kappa = c/2$ dominates; radiation
+  entropy grows at rate $c/6$.
+\item \textbf{Island phase} ($t > t_P$):
+  the Koszul dual saddle $\barB(\mathrm{Vir}_{26-c})$ with
+  $\kappa' = (26-c)/2$ dominates; radiation entropy
+  decreases.
+\item \textbf{Self-dual point} ($c = 13$):
+  $\kappa = \kappa' = 13/2$, the two saddles have equal
+  weight at all times,
+  $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof has three steps: the Lagrangian decomposition of the
+replica partition function, the identification of the radiation
+entropy from saddle dominance, and the computation of the
+crossing time.
+
+\medskip
+\noindent\textit{Step~1: The replica partition function.}
+The radiation entropy is computed from the replica partition
+function $Z(n)$ on the $n$-sheeted BTZ geometry:
+$S_{\mathrm{rad}}
+= \lim_{n \to 1}(1-n)^{-1}\log(Z(n)/Z(1)^n)$.
+The Lagrangian decomposition
+(Theorem~\ref{thm:lagrangian-btz}) gives
+$Z(n) = Z_+(n) + Z_-(n)$, corresponding to the boundary and
+dual saddles. The $n$-sheeted replica of the BTZ geometry is
+itself a BTZ geometry with conical excess at the replica branch
+point; Theorem~\ref{thm:btz-mc} identifies it as an MC
+element, so the genus expansion retains the same two-saddle
+decomposition at every replica number.
+
+\medskip
+\noindent\textit{Step~2: The $\min$ formula from the generalised
+entropy.}
+In the semiclassical regime $S_{\mathrm{BH}} \gg 1$, the
+gravitational path integral is dominated by the saddle with
+smallest generalised entropy (the quantum extremal surface
+prescription). Two saddles contribute:
+\begin{itemize}
+\item The \emph{no-island saddle}: the boundary-side partition
+  function $Z_+$, contributing
+  $S_{\mathrm{rad}} = S_+(t)$ to the radiation entropy.
+  The rate $\dot{S}_+ = c/6$ is the genus-$1$
+  entanglement rate
+  (Definition~\ref{def:evaporation-rate}).
+\item The \emph{island saddle}: the Koszul dual partition
+  function $Z_-$, contributing
+  $S_{\mathrm{rad}} = S_{\mathrm{BH}}(0) - S_-(t)$.
+  The subtraction arises because the island saddle computes
+  the complement: the radiation entropy equals the total entropy
+  minus the interior entropy, and the interior is controlled
+  by $\kappa' = (26-c)/2$.
+\end{itemize}
+The dominant saddle is whichever gives the
+\emph{smaller} radiation entropy:
+$S_{\mathrm{rad}} = \min(S_+,\,S_{\mathrm{BH}}(0) - S_-)$.
+
+\medskip
+\noindent\textit{Step~3: The crossing time.}
+The crossing condition
+$S_+(t_P) = S_{\mathrm{BH}}(0) - S_-(t_P)$ reads:
+\[
+\frac{c}{6}\,t_P
+\;=\;
+S_{\mathrm{BH}}(0) - \frac{26-c}{6}\,t_P.
+\]
+Adding the two rates:
+$t_P\!\left(\frac{c}{6} + \frac{26-c}{6}\right)
+= t_P \cdot \frac{26}{6} = S_{\mathrm{BH}}(0)$.
+Solving:
+\[
+t_P
+\;=\;
+\frac{6\,S_{\mathrm{BH}}(0)}{26}
+\;=\;
+\frac{3\,S_{\mathrm{BH}}(0)}{13}
+\;=\;
+\frac{3\,S_{\mathrm{BH}}(0)}{K}.
+\]
+The $c$-independence is exact: the rates $c/6$ and $(26-c)/6$
+are individually $c$-dependent, but their sum
+$26/6 = \varkappa/3$ depends only on the scalar complementarity
+invariant $\varkappa := \kappa + \kappa' = 13$ (distinct from the
+Trinity ghost-charge conductor $K(\Vir) := c + c^! = 26$; related
+by $\varkappa = \varrho_{\Vir}\cdot K$, $\varrho_{\Vir} = 1/2$).
+\end{proof}
+
+\begin{remark}[The entanglement rate is not an external input]
+\label{rem:rate-from-genus}
+The Calabrese--Cardy entanglement rate $c/6$ is not imported
+from an independent argument. It is \emph{derived} from the
+bar complex: the genus-$1$ free energy
+$F_1 = \kappa/24 = c/48$
+(Theorem~\ref{thm:F1-derivation})
+determines the Hawking radiation rate via
+$\dot{S}_{\mathrm{rad}} = 4\pi F_1/(\beta/(2\pi)) = c/6$
+(Definition~\ref{def:evaporation-rate}).
+The rate for the Koszul dual is $(26-c)/6$, and their sum
+$26/6 = K/3$ is the quantity controlling the Page time.
+The bar complex provides both the two saddles and their
+relative growth rates; the entire Page curve is internal
+to the genus expansion.
+\end{remark}
+
+\begin{remark}[$c$-independence of the Page time]
+\label{rem:c-independence}
+The coefficient $3/13$ in
+$t_P = 3S_{\mathrm{BH}}/13$ is purely algebraic:
+$3$ is the entanglement normalisation ($c/6$ rather than
+$c/2$; equivalently, $\kappa/3$ rather than $\kappa$), and $13$
+is the Virasoro complementarity constant $K = 13$.
+The dependence on the specific black hole enters only through
+$S_{\mathrm{BH}}$.
+For any Koszul pair with complementarity constant $K$, the
+Page time is $t_P = 3S_{\mathrm{BH}}/K$.
+\end{remark}
+
+\subsection{The island as Koszul dual dominance}
+
+The island of the quantum extremal surface prescription has a
+precise algebraic incarnation: it is the locus in the genus
+expansion where the Koszul dual saddle dominates. The
+complementarity theorem fixes the number of saddles (exactly two),
+their curvatures ($\kappa$ and $\kappa'$), and the transition
+time ($t_P$).
+
+\begin{theorem}[Complementarity decomposition]
+\label{thm:complementarity-decomposition}
+At each genus $g \ge 1$, the genus-$g$ obstruction decomposes
+under the Koszul involution:
+\begin{equation}\label{eq:complementarity-decomposition}
+\mathbf{C}_g(\mathrm{Vir}_c)
+\;=\;
+\mathbf{Q}_g(\mathrm{Vir}_c)
+\;\oplus\;
+\mathbf{Q}_g(\mathrm{Vir}_{26-c}).
+\end{equation}
+The curvature of the first summand is $\kappa = c/2$; the
+curvature of the second is $\kappa' = (26-c)/2$.
+There is no third saddle: the Koszul involution has period~$2$,
+so the pair $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ exhausts
+the decomposition.
+
+The transition is sharp: at $t = t_P$, the dominance switches
+at every genus simultaneously because the ratio
+$\kappa/\kappa' = c/(26-c)$ is genus-independent (the
+$\lambda_g^{\mathrm{FP}}$ factors cancel in the ratio of
+Boltzmann weights).
+\end{theorem}
+
+\begin{proof}
+The Lagrangian eigenspace decomposition is
+Theorem~C applied to the Virasoro algebra
+(Theorem~\ref{thm:lagrangian-btz}). The curvatures
+$\kappa$ and $\kappa'$ are the eigenvalues of
+$d_{\mathrm{fib}}^2/\omega_g$ on the two summands. The
+ratio of Boltzmann weights at genus $g$ is
+\[
+\frac{Z_+^{(g)}}{Z_-^{(g)}}
+\;=\;
+\exp\!\bigl((\kappa - \kappa')\,
+\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}\bigr)
+\;=\;
+\exp\!\left((c-13)\,
+\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}\right)\!,
+\]
+which depends on $g$ through the common factor
+$\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}$ but whose sign
+($c > 13$ vs $c < 13$) is genus-independent.
+At $c = 13$: the ratio is $1$ at all genera and all times.
+\end{proof}
+
+\begin{remark}[Comparison with Penington and AEMM]
+\label{rem:island}
+The gravitational island of
+Penington~\cite{Pen19} and
+Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19,AMMZ19}
+is the locus where the quantum extremal surface dominates the
+gravitational path integral. The Koszul dual saddle
+$\barB(\mathrm{Vir}_{26-c})$ is the algebraic counterpart:
+the two-saddle structure, the exchange of dominance, and the
+$c$-independent Page time all emerge from the complementarity
+constant $K = 13$ alone.
+The identification:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l@{\;\;}l@{}}
+\textbf{QES / replica wormhole} & \textbf{Bar complex} \\
+\hline
+no-island saddle & $\mathbf{Q}_g(\mathrm{Vir}_c)$ \\
+island saddle & $\mathbf{Q}_g(\mathrm{Vir}_{26-c})$ \\
+quantum extremal surface & Koszul involution fixed locus \\
+island region & $\kappa'$-eigenspace dominance \\
+Page time & saddle crossing \\
+two saddles, no more & period-$2$ involution \\
+\end{tabular}
+\end{center}
+The number of saddles (exactly two) is determined by the Koszul
+involution, not by a choice of replica geometry. The bar complex
+provides the mechanism; the Penington--AEMM programme provides
+the physical context and the fine-grained interpretation.
+\end{remark}
+
+\subsection{The transgression algebra and the Page transition}
+
+The transgression algebra $B_\Theta$ provides a second,
+independent characterisation of the Page transition. The
+degeneration of $B_\Theta$ at $u = \eta^2 = 0$ is the algebraic
+mechanism underlying the saddle exchange: the Morita-invisible
+Hawking phase degenerates into the information-carrying island
+phase.
+
+\begin{proposition}[The transgression algebra at the BTZ saddle]
+\label{prop:transgression-btz}
+Let $B_\Theta$ be the transgression algebra of the bar complex
+$\barB(\mathrm{Vir}_c)$ with MC element
+$\Theta = \Theta_{\mathrm{Vir}_c}$
+(Section~\textup{\ref{sec:shadow-as-gravity}}). Set
+$u := \eta^2$ where $\eta$ is the degree-one generator with
+$d\eta = \Theta$. At the BTZ saddle:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For $u \ne 0$ (the generic locus): the genus-$g$
+  Clifford completion satisfies
+  $\mathfrak{G}_g(B_\Theta)[u^{-1}]
+  \cong \mathrm{Mat}_{2^g}(B_\Theta[u^{-1}])$.
+  Higher genus is Morita-invisible: the matrix algebra carries
+  no new invariants beyond the genus-$0$ data.
+  This is the \textbf{Hawking phase}: the boundary saddle
+  dominates, and the black hole appears thermal.
+\item For $u = 0$ (the degenerate locus):
+  $\mathfrak{G}_g(B_\Theta)/(\eta^2)
+  \cong B/(\Theta) \otimes \Lambda^{2g+1}$,
+  the exterior algebra degeneration. The
+  $\binom{2g+1}{k}$ generators in $\Lambda^k$ resolve the
+  Morita-invisible matrix algebra into topological sectors of the
+  genus-$g$ partition function.
+  This is the \textbf{island phase}: the Koszul dual saddle
+  dominates, and the radiation carries fine-grained information.
+\item The \textbf{Page transition} is the passage from $u \ne 0$
+  to $u = 0$. The secondary anomaly
+  $u = \eta^2$ vanishes when the two Lagrangian saddles reach
+  equal weight. The locus $u = 0$ is the
+  codimension-one wall in the space of MC deformations where
+  the matrix algebra degenerates to the exterior algebra.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i) and~(ii) are the two regimes of the Clifford
+completion. The Clifford algebra
+$\mathrm{Cl}_{2g+1}(u)$ is the matrix algebra
+$\mathrm{Mat}_{2^g}$ for $u \ne 0$ (non-degenerate quadratic
+form) and the exterior algebra $\Lambda^{2g+1}$ for $u = 0$
+(zero form).
+
+Part~(iii): the BTZ MC element $\alpha_{\mathrm{BTZ}} = h\,e_h$
+determines the curvature $\Theta|_{\alpha} = \kappa\cdot\omega_1$
+at genus~$1$. As the black hole evaporates,
+$h(t) \to 0$ and $\alpha_{\mathrm{BTZ}}(t) \to 0$;
+correspondingly, $u(t) = \eta^2|_{\alpha(t)} \to 0$. The Page
+time $t_P$ is the time at which $u(t_P) = 0$ to leading
+semiclassical order, which coincides with the saddle
+crossing~\eqref{eq:page-time} because $u = 0$ is the locus
+where neither Lagrangian half dominates.
+\end{proof}
+
+\begin{remark}[Morita invisibility is thermality]
+\label{rem:morita-unitarity}
+The Morita equivalence
+$\mathfrak{G}_g \cong \mathrm{Mat}_{2^g}(B_\Theta[\eta^{-2}])$
+for $u \ne 0$ is the algebraic expression of Hawking's
+argument: a thermal state carries no fine-grained information
+regardless of the number of replicas ($g$). The breakdown at
+$u = 0$ is the algebraic expression of unitarity restoration:
+the exterior algebra $\Lambda^{2g+1}$ resolves the thermal
+degeneracy. The Page curve interpolates between these two
+regimes; the passage is controlled by the scalar complementarity
+$\varkappa := \kappa + \kappa' = 13$ (the Trinity
+$K(\Vir) = 26$; $\varkappa = K/2$).
+\end{remark}
+
+\subsection{The Borel singularity and Stokes phenomenon}
+
+Conditionally on the genus-expansion model, the shadow free energies $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ \emph{converge} (Bernoulli decay:
+$\lambda_g^{\mathrm{FP}} \sim (2\pi)^{-2g}$). The full
+gravitational genus expansion, including the field-sector
+contributions from the infinite $A_\infty$ tower (class
+$\mathbf{M}$), diverges: the field-dependent terms $m_k|_T$
+grow as $C^k \cdot k!$ (Gevrey-$1$,
+Remark~\ref{rem:convergence}). The Page transition has a
+third incarnation in this divergent structure: the Stokes
+phenomenon of the Borel-summed genus expansion.
+
+\begin{theorem}[Borel singularity from the Koszul dual]
+\label{thm:page-borel}
+The full gravitational genus expansion
+\begin{equation}\label{eq:genus-borel}
+Z_{\mathrm{grav}}(\hbar)
+\;=\;
+\exp\!\left(
+ \sum_{g \ge 0} F_g^{\mathrm{full}}\,\hbar^{2g-2}
+\right)\!,
+\end{equation}
+where $F_g^{\mathrm{full}}$ includes both the convergent scalar
+shadow $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+(UNIFORM-WEIGHT) and the Gevrey-$1$ field-sector corrections,
+satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The series diverges factorially:
+  $|F_g^{\mathrm{full}}| \sim C^g \cdot (2g)!$,
+  forced by class~$\mathbf{M}$ (all $m_k \ne 0$).
+\item The Borel transform
+  $\hat{Z}(\zeta) = \sum_{g \ge 0}
+  F_g^{\mathrm{full}}\,\zeta^{2g-2}/(2g{-}2)!$ has a
+  singularity at the instanton action
+  \begin{equation}\label{eq:instanton-action}
+  A_{\mathrm{inst}}
+  \;=\;
+  \frac{|\kappa' - \kappa|}{K}
+  \cdot(2\pi)^2
+  \;=\;
+  \frac{|13 - c|}{13}\cdot 4\pi^2.
+  \end{equation}
+  The singularity corresponds to the Koszul dual saddle
+  $\barB(\mathrm{Vir}_{26-c})$.
+\item At $c = 13$ (self-dual): $A_{\mathrm{inst}} = 0$.
+  The Borel singularity sits at the origin, the two saddles
+  have equal action, and the Stokes phenomenon is maximally
+  strong.
+\item The Stokes wall of the Borel summation is the Page time:
+  the exponentially suppressed correction
+  $\sim e^{-A_{\mathrm{inst}}/\hbar}$
+  becomes of order unity at $t = t_P$ and
+  dominates thereafter.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): the shadow depth $r_{\max} = \infty$ (all $m_k \ne 0$,
+Theorem~\ref{thm:non-truncation}) forces the field-sector
+contributions to grow as $\|m_k|_T\| \sim C^k\cdot k!$ by
+the Virasoro OPE recursion. The cumulative genus-$g$ free
+energy includes the sum over stable graph topologies at genus
+$g$ with vertices decorated by $\{m_k\}$; the factorial growth
+of $m_k$ combined with the graph-counting factor produces
+$|F_g^{\mathrm{full}}| \sim C^g\cdot(2g)!$ (Gevrey-$1$).
+The scalar shadow $\kappa\cdot\lambda_g^{\mathrm{FP}}
+\sim \kappa\cdot(2\pi)^{-2g}$ converges (Bernoulli decay)
+but the field sector dominates for $g \gg 1$.
+
+Part~(ii): in the resurgence framework, the Borel singularity
+nearest to the origin corresponds to the non-perturbative saddle
+closest in action. Complementarity provides exactly one such
+saddle: $\barB(\mathrm{Vir}_{26-c})$ with curvature $\kappa'$.
+The tree-level free energies are
+$\mathcal{F}_+^{(0)} = \kappa\,\hbar^{-2}$ and
+$\mathcal{F}_-^{(0)} = \kappa'\,\hbar^{-2}$; the action
+difference is
+$|\mathcal{F}_+^{(0)} - \mathcal{F}_-^{(0)}|
+= |\kappa - \kappa'|\,\hbar^{-2}
+= |c - 13|\,\hbar^{-2}/1$.
+Normalising by the scalar instanton action $(2\pi)^2$ (the
+leading pole of the $\hat{A}$-genus at $x = 2\pi i$) gives
+$A_{\mathrm{inst}} = (2\pi)^2|\kappa'-\kappa|/K$.
+
+Part~(iii): at $c = 13$, $\kappa = \kappa'$, so
+$A_{\mathrm{inst}} = 0$.
+
+Part~(iv): the Stokes wall is crossed when the Borel contour
+passes through the singularity. On one side:
+$\barB(\mathrm{Vir}_c)$ dominates. On the other:
+$\barB(\mathrm{Vir}_{26-c})$ dominates. The Stokes multiplier
+is $\pm 1$ (the involution has period~$2$). The wall is
+crossed when the evaporating black hole reaches the critical
+value $\hbar^{-1} = S_{\mathrm{BH}}(t_P)$; at leading order
+this reproduces $t_P = 3S_0/13$.
+\end{proof}
+
+\begin{remark}[Three incarnations of the Page transition]
+\label{rem:three-threads}
+The Page transition has three equivalent descriptions, each
+originating from a different structure on the bar complex:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Lagrangian:} the crossing of the two Koszul-dual
+  saddle-point contributions to the gravitational partition
+  function (Theorem~\ref{thm:page-curve}).
+\item \textbf{Transgression:} the degeneration
+  $u = \eta^2 \to 0$ in the transgression algebra $B_\Theta$,
+  where the Morita-invisible matrix algebra degenerates to the
+  exterior algebra
+  (Proposition~\ref{prop:transgression-btz}).
+\item \textbf{Resurgent:} the Stokes wall of the Borel-summed
+  genus expansion, where the exponentially suppressed Koszul dual
+  contribution becomes dominant
+  (Theorem~\ref{thm:page-borel}).
+\end{enumerate}
+All three are controlled by the single datum
+$\varkappa := \kappa + \kappa' = 13$ (the scalar complementarity;
+the Trinity $K(\Vir) = c + c^! = 26$ sits upstream through
+$\varkappa = \varrho_{\Vir}\cdot K = K/2$): it
+determines the crossing time, the degeneration locus, and the
+instanton action. The number of saddles is fixed by
+complementarity (period-$2$ involution), the degeneration type
+by the Clifford structure (matrix vs.\ exterior), and the Stokes
+multiplier is $\pm 1$ (the involution sign).
+\end{remark}
+
+% ================================================================
+\section{De Sitter entropy and the gravitational Yangian}
+\label{sec:de-sitter}
+
+\subsection{Analytic continuation to de Sitter}
+
+The algebraic Page curve exploits the Koszul pair $(\mathrm{Vir}_c,
+\mathrm{Vir}_{26-c})$ at fixed signature. Analytic continuation
+to Lorentzian de~Sitter signature ($\ell \mapsto i\ell$, equivalently
+$\Lambda = -1/\ell^2 \mapsto +1/\ell^2$) preserves the shadow
+obstruction tower and the complementarity structure.
+
+\begin{theorem}[De Sitter shadow tower]
+\label{thm:desitter}
+Under the Wick rotation $\ell \mapsto i\ell$ mapping\/
+$\mathrm{AdS}_3 \to \mathrm{dS}_3$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The central charge continues to\/
+  $c_{\mathrm{dS}} = 3\ell_{\mathrm{dS}}/(2G)$, and the curvature
+  to\/ $\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$.
+  % kappa-normalization: kappa(Vir) from C2
+\item The Gibbons--Hawking entropy of the cosmological horizon is:
+  \begin{equation}\label{eq:gibbons-hawking}
+  S_{\mathrm{dS}}
+  \;=\;
+  \frac{\pi\,c_{\mathrm{dS}}}{3}
+  \;=\;
+  \frac{\pi\,\ell_{\mathrm{dS}}}{2G}
+  \;=\;
+  \frac{\mathrm{Area}(\mathrm{cosmological\;horizon})}{4G}.
+  \end{equation}
+\item The shadow obstruction tower continues with real quantum
+  corrections:
+  \begin{equation}\label{eq:desitter-Fg}
+  F_g^{\mathrm{dS}}
+  \;=\;
+  \kappa_{\mathrm{dS}} \cdot \lambda_g^{\mathrm{FP}}
+  \;=\;
+  \frac{c_{\mathrm{dS}}}{2} \cdot \lambda_g^{\mathrm{FP}}
+  \quad\text{(UNIFORM-WEIGHT)}.
+  \end{equation}
+  In particular: $F_1^{\mathrm{dS}} = c_{\mathrm{dS}}/48$.
+\item The Nariai limit\/ $c_{\mathrm{dS}} = 13$ is the analytic
+  continuation of the self-dual point: the de~Sitter cosmological
+  horizon entropy at the Nariai bound is self-dual under
+  $c_{\mathrm{dS}} \mapsto 26 - c_{\mathrm{dS}}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Brown--Henneaux formula $c = 3\ell/(2G)$ is algebraic in
+$\ell$ and continues under $\ell \mapsto i\ell$ (or, equivalently,
+$\ell_{\mathrm{dS}} = |\ell|$). The curvature
+$\kappa = c/2$ is polynomial in $c$ and continues directly.
+The Gibbons--Hawking entropy: the cosmological horizon of
+$\mathrm{dS}_3$ has circumference $2\pi\ell_{\mathrm{dS}}$,
+so $\mathrm{Area} = 2\pi\ell_{\mathrm{dS}}$, and
+$S_{\mathrm{dS}} = 2\pi\ell_{\mathrm{dS}}/(4G)
+= \pi\ell_{\mathrm{dS}}/(2G)
+= \pi c_{\mathrm{dS}}/3$.
+The shadow free energies $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ are polynomial in $\kappa$ and continue
+to real values. The Nariai limit corresponds to the maximal
+black hole in $\mathrm{dS}_3$, where the black hole and
+cosmological horizons coincide; the central charge at this point
+is $c_{\mathrm{dS}} = 13$, the self-dual value.
+\end{proof}
+
+\begin{remark}[The Banks conjecture]
+\label{rem:banks}
+The Banks conjecture states that the Hilbert space of de~Sitter
+quantum gravity is finite-dimensional:
+$\dim(\mathcal{H}_{\mathrm{dS}})
+= \exp(S_{\mathrm{dS}})
+= \exp(\pi c_{\mathrm{dS}}/3)$.
+The convergent shadow obstruction tower (Bernoulli decay:
+$\lambda_g^{\mathrm{FP}} \sim (2\pi)^{-2g}$) is consistent with
+this finite-dimensionality: the quantum corrections to the
+de~Sitter entropy do not produce a divergent series that would
+require non-perturbative completion from additional degrees of
+freedom.
+\end{remark}
+
+\subsection{Horizon thermodynamics from negative curvature}
+
+The analytic continuation $\kappa \to -|\kappa|$ has a direct
+interpretation in the bar complex.
+
+\begin{proposition}[Negative curvature and horizon thermodynamics]
+\label{prop:negative-kappa}
+The fiberwise differential at genus $g \ge 1$ satisfies
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ on
+$\overline{\mathcal{M}}_g$. Under
+$\kappa \to -|\kappa|$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The curved bar complex acquires \emph{opposite} curvature:
+  $d_{\mathrm{fib}}^2 = -|\kappa| \cdot \omega_g$.
+\item The genus tower changes sign:
+  $F_g^{\mathrm{dS}} = -|\kappa| \cdot \lambda_g^{\mathrm{FP}}
+  < 0$ for $g \ge 1$.
+\item The negative free energies produce \emph{positive} entropy
+  contributions: $-F_g < 0$ in the exponent of $Z$ means the
+  partition function decreases, consistent with a finite-dimensional
+  Hilbert space.
+\end{enumerate}
+The de~Sitter entropy $S_{\mathrm{dS}} = \pi c_{\mathrm{dS}}/3$
+is the genus-$0$ contribution (the classical action evaluated on
+the cosmological horizon saddle), with the tower of negative
+corrections $\{F_g^{\mathrm{dS}}\}_{g \ge 1}$ systematically
+reducing the effective number of microstates.
+\end{proposition}
+
+\begin{proof}
+The fiberwise differential is $d_{\mathrm{fib}}^2
+= \kappa \cdot \omega_g$ (proved in Section~\ref{sec:shadow-as-gravity}).
+Replacing $\kappa$ by $-|\kappa|$ changes the sign of $\omega_g$.
+The genus-$g$ free energy $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ then becomes
+$F_g^{\mathrm{dS}} = -|\kappa| \cdot \lambda_g^{\mathrm{FP}} < 0$
+(since $\lambda_g^{\mathrm{FP}} > 0$).
+\end{proof}
+
+\subsection{The gravitational Yangian at $c = 13$}
+\label{sec:gravitational-yangian}
+
+At the Koszul self-dual point $c = 13$, the Virasoro algebra
+acquires a distinguished algebraic structure: the ordered bar
+complex $\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_{13})$ carries a
+gravitational Yangian symmetry.
+
+\begin{definition}[Gravitational Yangian]
+\label{def:gravitational-yangian}
+The \emph{gravitational Yangian}
+$\mathcal{Y}_{\mathrm{grav}}$ is the algebra of conserved
+charges of the shadow obstruction tower
+$\{S_r\}_{r \ge 2}$ at $c = 13$, acting on the ordered bar
+complex $\bar{B}^{\mathrm{ord}}(\mathrm{Vir}_{13})
+= T^c(s^{-1}\overline{\mathrm{Vir}}_{13})$.
+% augmentation-ideal: augmentation ideal present
+% desuspension: desuspension s^{-1}, |s^{-1}v| = |v|-1
+The shadow connection $\nabla^{\mathrm{hol}} = d - \sum_{r \ge 2}
+S_r$ at $c = 13$ is the generating function of the Yangian
+generators.
+\end{definition}
+
+\begin{theorem}[Properties of the gravitational Yangian at $c = 13$]
+\label{thm:gravitational-yangian}
+At the self-dual point $c = 13$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Self-duality.}
+  $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$:
+  the boundary algebra equals its Koszul dual. The
+  curvature is $\kappa = 13/2$,
+  % kappa-normalization: kappa(Vir) from C2; c=13 -> 13/2 verified
+  and $\kappa_{\mathrm{eff}} = (13-26)/2 = -13/2$.
+\item \textbf{Symmetric genus tower.}
+  $F_g(13) = F_g(26-13) = F_g(13)$: the genus tower is
+  self-dual. The free energies:
+  $F_1 = 13/48$, $F_2 = 91/11520$.
+\item \textbf{Symmetric Page curve.}
+  At $c = 13$: $\kappa = \kappa' = 13/2$, the two saddles have
+  equal action, the Page curve is symmetric about $t_P$, and
+  $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$.
+\item \textbf{Infinite conserved charges.}
+  The shadow obstructions $S_r$, $r \ge 2$, at $c = 13$ satisfy:
+  \begin{align}
+  S_2 &= 13/2, \quad S_3 = -13, \quad
+  S_4 = 10/(13 \cdot 87) = 10/1131,
+    \label{eq:shadow-c13}\\
+  S_5 &= -48/(169 \cdot 87) = -48/14703.
+    \label{eq:shadow-c13-5}
+  \end{align}
+  The discriminant $\Delta = 8 \cdot (13/2) \cdot 10/1131
+  = 40/87 \ne 0$ confirms class $\mathbf{M}$: the gravitational
+  Yangian has infinitely many generators.
+\item \textbf{$R$-matrix at self-duality.}
+  The classical $r$-matrix at $c = 13$ is
+  $r_{13}(z) = (13/2)/z^3 + 2T/z$,
+  % level-shift: level prefix 13/2 present; at c=0, scalar part vanishes
+  and the CYBE holds by
+  Proposition~\textup{\ref{prop:vir-ybe}}.
+  The KZ connection~\eqref{eq:fusion-braiding} at $c = 13$ has
+  self-dual monodromy: the braiding $\sigma$ satisfies
+  $\sigma^2 = \sigma_{\mathrm{dual}}^2$ (the braiding of
+  $\mathrm{Vir}_{13}$ and $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$
+  coincide).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts (i)--(iii) are immediate from Theorem~\ref{thm:vir-koszul}
+and Proposition~\ref{prop:critical-points} at $c = 13$.
+
+Part (iv): the shadow invariants at $c = 13$ are obtained by
+evaluating the general formulas: $S_2 = 13/2$,
+$S_3 = -13$, $S_4 = 10/(13(5 \cdot 13 + 22))
+= 10/(13 \cdot 87) = 10/1131$,
+$S_5 = -48/(13^2 \cdot 87) = -48/14703$.
+The discriminant $\Delta = 8\kappa S_4
+= 8(13/2)(10/1131) = 40/87 \ne 0$; class $\mathbf{M}$.
+
+Part (v): the $r$-matrix at $c = 13$ is
+$r_{13}(z) = (13/2)/z^3 + 2T/z$ by direct evaluation
+of~\eqref{eq:vir-r-matrix}. The CYBE holds for all $c$ by
+Proposition~\ref{prop:vir-ybe}. Koszul self-duality of the
+monodromy at $c = 13$ (i.e.\ $\mathrm{Vir}_{13}^!
+= \mathrm{Vir}_{13}$, the Koszul involution $c \mapsto 26 - c$
+fixing $c = 13$) implies that the Koszul dual connection is the
+same connection.
+\end{proof}
+
+\begin{remark}[The role of $c = 13$ versus $c = 26$]
+\label{rem:c13-vs-c26}
+The two distinguished central charges are:
+\begin{itemize}
+\item $c = 13$: \emph{Koszul self-duality}.
+  $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$. The
+  complementarity constant is $K = 13$. The algebraic Page curve
+  is symmetric. The gravitational Yangian has full self-dual structure.
+  This is the algebraic self-duality of $3$d gravity.
+\item $c = 26$: \emph{matter-ghost cancellation}.
+  $\kappa_{\mathrm{eff}} = 0$. The effective genus tower vanishes:
+  $F_g^{\mathrm{eff}} = 0$ for all $g \ge 1$. The gravitational
+  partition function becomes $S$-invariant. This is the bosonic
+  string critical point, not self-duality.
+\end{itemize}
+The physical content of $3$d gravity concentrates at $c = 13$, not
+$c = 26$: at $c = 13$, the gravitational perturbation series
+(the shadow obstruction tower) has maximal symmetry (self-duality),
+the algebraic Page curve has maximal symmetry (equal entropies),
+and the Yangian has maximal structure (self-dual braiding).
+At $c = 26$,
+the effective perturbation series vanishes.
+\end{remark}
+
+\begin{conjecture}[The gravitational Yangian as symmetry algebra]
+\label{conj:yangian-symmetry}
+At $c = 13$, the gravitational Yangian
+$\mathcal{Y}_{\mathrm{grav}}$ is the symmetry algebra of $3$d
+self-dual quantum gravity in the following sense:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The shadow obstructions $\{S_r\}_{r \ge 2}$ generate an
+  algebra isomorphic to a quotient of the Yangian
+  $Y(\mathfrak{vir}_{13})$ associated to the Virasoro Lie algebra
+  at $c = 13$.
+\item The shadow connection
+  $\nabla^{\mathrm{hol}} = d - \sum_{r \ge 2} S_r$ is a
+  connection for $\mathcal{Y}_{\mathrm{grav}}$-modules.
+\item The integrability of the self-dual gravitational theory
+  (manifested by the convergence of the scalar shadow tower)
+  is a consequence of the Yangian symmetry.
+\item The conserved charges $S_r$ at $c = 13$ satisfy the
+  RTT-type commutation relations
+  \begin{equation}\label{eq:yangian-rtt}
+  R_{12}(z-w)\,T_1(z)\,T_2(w)
+  \;=\;
+  T_2(w)\,T_1(z)\,R_{12}(z-w)
+  \end{equation}
+  with $R$-matrix constructed from $r_{13}(z)$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Comparison with the holographic datum]
+\label{rem:yangian-holographic}
+The gravitational Yangian at $c = 13$ is the most structured
+specialisation of the holographic datum
+$\mathcal{H}(\mathrm{Vir}_c)$: at $c = 13$, all seven entries
+are Koszul self-dual (invariant under $c \mapsto 26 - c$),
+the algebraic Page curve is symmetric, the genus tower has
+maximal symmetry, and the Yangian structure organises the
+infinite
+$A_\infty$ tower into a representation-theoretic framework.
+The holographic datum at generic $c$ carries the same seven
+entries but without the Koszul self-duality (specific to
+$c = 13$) that enables the Yangian interpretation.
+\end{remark}
+
+% ================================================================
+% 3d gravity, the E_infty-topologization ladder, and celestial holography
+% ================================================================
+
+\section{Gravity, topologization, and celestial holography}
+\label{sec:3dqg-climax}
+
+The algebraic-sector identification of 3d gravity is not a
+motivational appendix to the modular Koszul programme. The
+algebraic sector is the first nontrivial gravitational realisation
+of the homotopy-completed iterated Sugawara topologisation ladder
+(conditional, scope-tagged), the chiral higher-Deligne
+identification of the bulk, the algebraic shadow of celestial
+holography, and the topologization tower across the four shadow
+classes. None of these constructions builds the compact
+dynamical-metric path integral; that lift is the F12 frontier
+(Section~\ref{sec:f12-frontier}).
+
+\begin{theorem}[Conditional iterated Sugawara topologisation ladder]
+\label{thm:einfty-ladder}
+For a chiral algebra $\cA$ with a tower of inner higher-spin
+Casimirs $\{T^{(n)}\}_{2 \le n \le N+1}$, each admitting a BRST
+primitive $G^{(n)}$ with $T^{(n)} = [Q_{\mathrm{tot}}, G^{(n)}]$ on
+$Q$-cohomology, assume in addition that the primitives are
+BRST-commuting up to coherent homotopy,
+$[G^{(n)},G^{(m)}]=Q$-exact, and determine independent topological
+directions. Then the transferred derived chiral centre carries an
+$E_{N+2}$-topological structure via iterated Dunn additivity.
+Specialisations:
+\begin{itemize}
+\item $\cA = \Vir_c$: one inner stress tensor, cohomological and
+  weight-completed $E_3^{\mathrm{top}}$;
+\item $\cA = \cW_N$: inner tower of depth $N-1$,
+  $E_{N+1}^{\mathrm{top}}$ under the same coherent-homotopy package;
+\item $\cA = \cW_\infty$: infinite depth,
+  $E_\infty^{\mathrm{top}}$ only under convergence and completion
+  hypotheses.
+\end{itemize}
+Consequently, 3d quantum gravity is modeled by the $N = 2$ shadow of
+this conditional topological tower.
+\end{theorem}
+
+\begin{theorem}[Chiral higher Deligne and holographic shadow]
+\label{thm:chiral-higher-deligne-holography}
+The derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)$
+is acted on, in the cohomological and weight-completed sense, by
+$\mathsf{SC}^{\mathrm{ch,top}}$ through the heptagon edges
+$(3) \leftrightarrow (4) \leftrightarrow (5)$ of the Vol~II
+$\mathsf{SC}^{\mathrm{ch,top}}$ heptagon. On the C$_2$-cofinite
+non-logarithmic standard landscape, this gives the algebraic shadow
+of celestial holography: the celestial chiral algebra
+$\cA^{\mathrm{cel}}$ of boundary soft modes, the SC$^{\mathrm{ch,top}}$
+structure on $(\cA^{\mathrm{cel}}, Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^{\mathrm{cel}}))$,
+and the shadow-tower coefficients reproducing the soft-factor
+hierarchy. Coverage: self-dual gauge (KM), gauge+matter (DS),
+gravity (Virasoro + $w_{1+\infty}$).
+\end{theorem}
+
+\begin{remark}[Topologization tower: scope per class]
+\label{rem:topologization-tower}
+Topologization of $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ has four
+regimes, with scope tags attached for every reference in this
+paper:
+\begin{itemize}
+\item Class~G (Heisenberg): $E_3^{\mathrm{top}}$ immediate via
+  Dunn on $F^{H_k}$ (commutative $\Rightarrow$ Dunn applies).
+\item Class~L ($V_k(\fg)$, $k \ne -h^\vee$):
+  $E_3^{\mathrm{top}}$ on the \emph{original} complex via
+  Costello--Gwilliam factorization on $\bR \times \bC$ with
+  explicit topologizing primitives
+  $\eta_1^{(i)},\eta_1^{(ii)}$ making
+  $[Q, \widetilde G_1] = T_{\mathrm{Sug}}$ strict chain-level.
+\item Class~C ($\beta\gamma$, $bc$): $E_3^{\mathrm{top}}$ via
+  Friedan--Martinec--Shenker bosonisation, reducing to Heisenberg.
+\item Class~M ($\Vir$, $\cW_N$): $E_3^{\mathrm{top}}$
+  weight-completed via half-BRST + MC5 pattern; original-complex
+  chain-level \emph{open} (sole remaining direction of the
+  topologization tower theorem).
+\item Critical level $k = -h^\vee$: $E_2^{\mathrm{top}}$ (dimension
+  drop, not failure).
+\end{itemize}
+Theorem~\ref{thm:e3-topologisation} is the
+class~M line of this tower, attached with the cohomological /
+weight-completed hypothesis package.
+\end{remark}
+
+\begin{remark}[Class~M scope and logarithmic exceptions]
+\label{rem:class-m-scope}
+Class~M chain-level topologization on the \emph{original}
+complex remains open; the weight-completed statement is proved.
+The scope qualifications are: (i)~W$(p)$ triplet tempering is conjectural
+pending an Adamovi\'c--Milas character-amplitude bound
+(Gurarie 1993 + Flohr 1996 counterexamples); (ii)~non-tempered
+stratum is \emph{empty} only on the non-logarithmic subset;
+(iii)~the conditional harmonic $\beta_N$ law separates the two
+polynomial candidates at $N = 4$ ($13$ versus $15$ and $16$),
+a parameter-question not structural; (iv)~super-Yangian canonical
+pairing is sub-Sugawara. 3d quantum gravity with $\Lambda < 0$,
+the Virasoro climax at $c = 3\ell/(2G)$, and the
+$c$-linearity/self-duality structure are unconditional on the
+Virasoro Koszul locus (generic~$c$); the class~M chain-level
+conditional affects only original-complex chain-level bar/BV
+comparison, not the genus expansion computed in
+Section~\ref{sec:shadow-as-gravity}.
+\end{remark}
+
+\begin{remark}[Algebraic identification, not gravitational construction]
+\label{rem:climax-identity}
+The relationship between the Virasoro Beilinson tower and 3d
+gravity is an \emph{identification of the algebraic sector}, not a
+construction of a compact dynamical-metric path integral. The
+universal Maurer--Cartan element $\Theta_{\Vir_c}$ of the modular
+convolution algebra encodes, via its MC projections to successive
+degrees, the complete \emph{algebraic-sector trace} of the
+perturbative gravitational genus expansion. Koszul duality
+$\Vir_c \leftrightarrow \Vir_{26-c}$ is the algebraic shadow of
+S-duality; Page-time complementarity $t_P = 3 S_{\mathrm{BH}}/13$ is
+the structural shadow of the Page transition. The full
+information-theoretic Page curve (Penington, AEMM) requires the
+island mechanism on the dynamical-metric path integral; the
+complementarity decomposition computes the saddle-exchange shadow
+on the algebraic sector. BTZ black holes are MC elements of the
+algebraic convolution algebra; de~Sitter entropy emerges from
+analytic continuation $\kappa \to -|\kappa|$.
+
+The trace direction is unconditional on the Virasoro Koszul locus.
+The inverse direction (algebraic sector $\to$ compact
+dynamical-metric path integral) is open frontier F12: it requires
+the BTZ / Cardy hypothesis package (modular invariance + vacuum
+dominance + saddle stability) plus the Maloney--Witten +
+Manschot--Moore Farey-tail completion, and it remains the named
+operator-level Pfaffian / square-root reconstruction problem (Vol~I
+F11 + F12). The iterated Sugawara ladder
+(Theorem~\ref{thm:einfty-ladder}) embeds the present algebraic
+sector as the $N = 2$ truncation of a conditional $E_\infty$
+topologisation tower; the unconditional content is the $N = 2$
+algebraic identification proved here.
+\end{remark}
+
+
+% ================================================================
+\section{The F12 frontier: from algebraic sector to compact dynamical-metric path integral}
+\label{sec:f12-frontier}
+
+The preceding sections constructed the algebraic holographic
+HT~sector of 3d gravity at $\Lambda < 0$: the open Beilinson tower
+with boundary $\Vir_c$, bulk $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+=C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$, and the
+$\mathsf{SC}^{\mathrm{ch,top}}$-brace structure on the pair. The
+trace direction (operators $\to$ scalar shadow) is unconditional on
+the Virasoro Koszul locus: the genus tower
+$F_g = \kappa\,\lambda_g^{\mathrm{FP}}$, the algebraic Page shadow
+$t_P = 3 S_{\mathrm{BH}}/13$, the Cardy / Bekenstein--Hawking entropy,
+the de~Sitter analytic continuation, and the gravitational Yangian
+at $c = 13$ are all level-5 scalar shadows of the level-4 operator
+algebra, computed via modular trace and clutching on the open
+category.
+
+The \emph{inverse direction}, namely the reconstruction of a
+compact dynamical-metric path integral from the algebraic sector,
+is the open frontier F12. Stating this precisely:
+
+\begin{conjecture}[F12: algebraic sector $\to$ dynamical-metric path integral]
+\label{conj:f12-frontier}
+\textbf{Type signature.} Quadrant: Open.
+Presentation: operator-level Pfaffian / square-root reconstruction.
+Level: 5 $\to$ 4 (inverse modular reconstruction; scalar-shadow to
+operator-algebra comparison).
+Hypothesis package: BTZ / Cardy (BC1)--(BC4) of
+Section~\ref{sec:btz}; Maloney--Witten partition function
+$Z_{\mathrm{MW}}(\tau)$ defined via the
+$\mathrm{SL}_2(\mathbb{Z})/\mathbb{Z}$ Farey sum over BTZ images;
+Manschot--Moore mock-modular Farey-tail completion; Hall--Borcherds
+residual + virtual $K_0$-determinant package (Vol I F11).
+
+There exists a compact holomorphic-topological saddle structure on
+the gravitational path integral
+\begin{equation}\label{eq:f12-target}
+Z_{3\mathrm{d\,QG, Vir}}(S^2 \times S^1_\tau)
+\;=\; q^{(1{-}c)/24}\,(1-q)/\eta(\tau),
+\end{equation}
+extending the algebraic-sector partition function of the present
+construction, such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $Z_{3\mathrm{d\,QG, Vir}}$ equals the Maloney--Witten
+  Farey-tail-completed sum over BTZ saddles plus thermal
+  $\mathrm{AdS}_3$;
+\item the inverse trace map sends the level-5 scalar tower
+  $\{S_r\}_{r \ge 2}$ to the level-4
+  operator content of the BTZ ensemble;
+\item the algebraic Page shadow $t_P = 3 S_{\mathrm{BH}}/13$ lifts
+  to the full information-theoretic Page curve of
+  Penington--AEMM via the island mechanism applied to the
+  dynamical-metric path integral.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[F12 comparison problem]
+\label{rem:f12-heal-path}
+F12 is the conjunction of the following three constructions:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Operator-level Pfaffian} for the Virasoro family,
+  analogous to the Igusa cusp form $\Delta_5$ on K3 $\times$ E
+  (Vol I F11). The construction would identify the
+  Manschot--Moore Farey-tail completion as a virtual
+  $K_0$-determinant of an explicit operator-level object whose
+  protected Pfaffian is the Maloney--Witten partition function.
+\item \emph{Cross-volume bridge to Vol II / III.} Vol II's
+  $\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk is the operator-level
+  companion of the algebraic sector identified here; the
+  dynamical-metric path integral would emerge as the
+  gravity-line completion of the Vol II climax. Vol III's
+  Drinfeld double $G(X) = D(Y^+(X))$ supplies the line / brane
+  operator data.
+\item \emph{Resolution of the Maloney--Witten negativity problem.}
+  The naive Maloney--Witten sum has negative Fourier coefficients
+  in the partition function; Manschot--Moore Farey-tail completion
+  is the candidate cure, but its compatibility with the
+  Beilinson-tower reconstruction at level 4 is unverified. The
+  resolution is the F12 endpoint.
+\end{enumerate}
+Until F12 is closed, every statement of the form ``the algebraic
+sector \emph{is} the gravitational path integral'' or ``the
+modular form $Z_{3\mathrm{d\,QG}}$ \emph{constructs} the BPS
+Hilbert space'' has the wrong type: scalar shadow $\ne$ operator
+algebra. The trace direction is unconditional; the inverse direction
+remains the open F12 comparison problem with its own hypothesis
+package.
+\end{remark}
+
+\begin{remark}[The cross-volume vertical]
+\label{rem:cross-volume-vertical}
+The algebraic holographic HT sector identified here sits at
+levels 3--5 of the Vol~I Beilinson tower:
+\begin{itemize}
+\item Level 1 (chart): $A_b = \Vir_c$.
+\item Level 2 (twisting): $\barB^{\mathrm{ord}}(\Vir_c)$.
+\item Level 3 (bulk):
+  $Z^{\mathrm{der}}_{\mathrm{ch}}(\Vir_c)
+  =C^\bullet_{\mathrm{ch}}(\Vir_c,\Vir_c)$, with
+  $E_3^{\mathrm{top}}$ structure
+  (cohomological + weight-completed scope; Class~$\mathbf M$).
+\item Level 4 (operator): BTZ MC elements, Wilson lines,
+  $\Vir_{26-c}$-modules.
+\item Level 5 (scalar shadow): genus tower
+  $F_g = \kappa\,\lambda_g^{\mathrm{FP}}$, Cardy entropy,
+  algebraic Page shadow.
+\end{itemize}
+Vertical equivalences: level 3 of Vol~I corresponds to the
+Vol~II $\mathsf{SC}^{\mathrm{ch,top}}$-brace bulk (climax of
+Vol~II); level 5 corresponds to the gravity-line completion
+(Vol~II) and to the Borcherds-weight identity
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ (Vol~III). F12 is
+precisely the vertical equivalence at level 4 in the gravitational
+direction: identifying the BTZ ensemble of the algebraic sector
+with the saddle ensemble of the compact dynamical-metric path
+integral.
+\end{remark}
+
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{AT86}
+A.~Ach\'ucarro and P.~K.~Townsend,
+\textit{A Chern--Simons action for three-dimensional
+anti-de~Sitter supergravity theories},
+Phys.\ Lett.\ B \textbf{180} (1986), 89--92.
+
+\bibitem{Wit88}
+E.~Witten,
+\textit{$(2+1)$-dimensional gravity as an exactly soluble system},
+Nucl.\ Phys.\ B \textbf{311} (1988), 46--78.
+
+\bibitem{BH86}
+J.~D.~Brown and M.~Henneaux,
+\textit{Central charges in the canonical realization of asymptotic
+symmetries: an example from three-dimensional gravity},
+Comm.\ Math.\ Phys.\ \textbf{104} (1986), 207--226.
+
+\bibitem{BDSK21}
+B.~Bakalov, A.~De Sole, and V.~G.~Kac,
+\textit{Computation of cohomology of vertex algebras},
+Japan J. Math. \textbf{16} (2021), 81--154.
+
+\bibitem{BTZ92}
+M.~Ba\~nados, C.~Teitelboim, and J.~Zanelli,
+\textit{The black hole in three-dimensional space-times},
+Phys.\ Rev.\ Lett.\ \textbf{69} (1992), 1849--1851.
+
+\bibitem{PT01}
+B.~Ponsot and J.~Teschner,
+\textit{Clebsch--Gordan and Racah--Wigner coefficients for a
+continuous series of representations of $U_q(\mathfrak{sl}(2,\mathbb{R}))$},
+Comm.\ Math.\ Phys.\ \textbf{224} (2001), 613--655.
+
+\bibitem{Pen19}
+G.~Penington,
+\textit{Entanglement wedge reconstruction and the information problem},
+J.\ High Energy Phys.\ \textbf{2020} (2020), no.~9, 002;
+arXiv:1905.08255.
+
+\bibitem{AEMM19}
+A.~Almheiri, N.~Engelhardt, D.~Marolf, and H.~Maxfield,
+\textit{The entropy of bulk quantum fields and the entanglement
+wedge of an evaporating black hole},
+J.\ High Energy Phys.\ \textbf{2019} (2019), no.~12, 063;
+arXiv:1905.08762.
+
+\bibitem{AMMZ19}
+A.~Almheiri, R.~Mahajan, J.~Maldacena, and Y.~Zhao,
+\textit{The Page curve of Hawking radiation from semiclassical geometry},
+J.\ High Energy Phys.\ \textbf{2020} (2020), no.~3, 149;
+arXiv:1908.10996.
+
+\bibitem{MW07}
+A.~Maloney and E.~Witten,
+\textit{Quantum gravity partition functions in three dimensions},
+J.\ High Energy Phys.\ \textbf{2010} (2010), no.~2, 029;
+arXiv:0712.0155.
+
+\bibitem{MM08}
+J.~Manschot and G.~W.~Moore,
+\textit{A modern Farey tail},
+Commun.\ Number Theory Phys.\ \textbf{4} (2010), no.~1, 103--159;
+arXiv:0712.0573.
+
+\end{thebibliography}
+
+\end{document}

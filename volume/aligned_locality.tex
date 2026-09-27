@@ -1,0 +1,159 @@
+\chapter{Aligned decompositions and the exact locality law}
+\label{ch:aligned-locality}
+
+The Ran category carries the two products of
+Chapter~\ref{ch:two-directions}. A statement that they interchange, so
+that a chiral algebra is a bimonoid for a duoidal structure, asserts an
+isomorphism where only a retraction exists. This chapter isolates the
+exact content: a combinatorial idempotent in the additive category of
+linear species, and a family of commuting squares at sheaf level.
+
+\section{The Hadamard and Cauchy products}
+
+Let $\mathcal V$ be a stable symmetric monoidal category with finite
+direct sums. A \emph{linear species} is a functor $F\colon
+\mathrm{Fin}^{\simeq}\to\mathcal V$. Species carry two products, the
+Hadamard product, componentwise,
+\[
+  (F \Hd G)(I) = F(I)\otimes G(I),
+\]
+and the Cauchy product, Day convolution for disjoint union,
+\[
+  (F \Cy G)(I) = \bigoplus_{I = I_1\sqcup I_2} F(I_1)\otimes G(I_2).
+\]
+These isolate the finite-set combinatorics beneath $\otimes^!$ and
+$\starch$ respectively. An \emph{ordered decomposition} of $I$ is an
+ordered pair $d=(I_1,I_2)$ with $I = I_1\sqcup I_2$.
+
+For four species the arity-$I$ component of
+$(F_1\Cy F_2)\Hd(G_1\Cy G_2)$ is
+\[
+  \bigoplus_{d,\,e}
+  \bigl[F_1(I_1)\otimes F_2(I_2)\bigr]\otimes
+  \bigl[G_1(J_1)\otimes G_2(J_2)\bigr],
+  \qquad d=(I_1,I_2),\ e=(J_1,J_2),
+\]
+a sum over two independent ordered decompositions, whereas the arity-$I$
+component of $(F_1\Hd G_1)\Cy(F_2\Hd G_2)$ is
+\[
+  \bigoplus_{d}
+  \bigl[F_1(I_1)\otimes G_1(I_1)\bigr]\otimes
+  \bigl[F_2(I_2)\otimes G_2(I_2)\bigr],
+\]
+a sum over one. The second is the $(d,d)$ sector of the first.
+
+\begin{theorem}[Aligned-decomposition splitting]
+\label{thm:aligned-splitting}
+\StatusProved{} There are canonical natural transformations
+\[
+  \iota\colon (F_1\Hd G_1)\Cy(F_2\Hd G_2)
+    \longrightarrow (F_1\Cy F_2)\Hd(G_1\Cy G_2),
+\]
+\[
+  \pi\colon (F_1\Cy F_2)\Hd(G_1\Cy G_2)
+    \longrightarrow (F_1\Hd G_1)\Cy(F_2\Hd G_2),
+\]
+satisfying
+\[
+  \pi\iota = \id,\qquad e := \iota\pi,\qquad e^2 = e .
+\]
+The image of $e$ is the common-decomposition summand. Both
+transformations are compatible with the associativity and unit
+constraints of each product and with the symmetry of the Hadamard
+product.
+\end{theorem}
+
+\begin{proof}
+At a finite set $I$ both source and target are finite direct sums indexed
+as displayed. Define $\iota$ to be the inclusion of the summands indexed
+by the diagonal $d\mapsto(d,d)$, composed with the symmetry of
+$\mathcal V$ reordering the four tensor factors, and $\pi$ the projection
+onto those summands. The index map $d\mapsto(d,d)$ is injective, so
+$\pi\iota=\id$; hence $e=\iota\pi$ is the projector onto the
+diagonal-indexed summand, $e^2=e$, and $\operatorname{im}e$ is as stated.
+
+For three Cauchy factors both coherence composites include, respectively
+project onto, the triples carrying one common ordered decomposition, so
+the associativity constraints are matched. The Cauchy unit is the species
+concentrated at $\emptyset$ and the Hadamard unit is the constant species
+at the tensor unit; on units the two index sets coincide and $\iota,\pi$
+are identities. The symmetry of the Hadamard product exchanges the two
+blocks of $(d,d)$, and the diagonal index set is stable under that
+exchange. Every identity is checked componentwise on finite direct sums.
+\end{proof}
+
+There is no global interchange isomorphism. The failure is precisely the
+off-diagonal sector $(d,e)$ with $d\ne e$.
+
+\begin{definition}[Aligned species window]
+\label{def:aligned-window}
+A full replete subcategory $\mathcal S$ of linear species is
+\emph{aligned} when it contains both units, is closed under $\Hd$ and
+$\Cy$, the idempotent $e$ acts as the identity on every iterated mixed
+product of objects of $\mathcal S$, and the inclusions and projections
+remain morphisms of $\mathcal S$.
+\end{definition}
+
+\begin{corollary}[Strong duoidality on an aligned window]
+\label{cor:aligned-duoidal}
+\StatusProved{} On an aligned window $\iota$ and $\pi$ are mutually
+inverse interchange isomorphisms, and $(\Hd,\Cy)$ restricts to a strong
+duoidal pair.
+\end{corollary}
+
+\begin{proof}
+The condition $e=\id$ gives $\iota\pi=\id$, and $\pi\iota=\id$ holds by
+Theorem~\ref{thm:aligned-splitting}. The coherence identities restrict to
+the window by fullness and repleteness.
+\end{proof}
+
+Fixed decomposition types and finite-support conditions supply elementary
+aligned windows. Off such a window the interchange is a retraction and
+nothing more, so a bimonoid formulation of locality is unavailable and
+must be replaced by the criterion below. Compare the general Day and
+duoidal formalisms of \cite{Tor25}.
+
+\section{The sheaf-level locality criterion}
+
+Fix an ordered decomposition $d=(I_1,I_2)$ of $I$ and let $j_d\colon
+U_d\hookrightarrow X^I$ be its disjointness locus. Factorisation supplies
+\[
+  j_d^!A_I \simeq j_d^!\bigl(A_{I_1}\boxtimes A_{I_2}\bigr),
+\]
+and $\Delta_d$ denotes the inverse factorisation equivalence.
+
+\begin{theorem}[Locality criterion]
+\label{thm:locality}
+\StatusProved{} Let $A$ be a factorisation right $D$-module and
+$m\colon A\otimes^! A\to A$ an $E_1$ multiplication in the ambient Ran
+category. Then $m$ defines an $E_1$-algebra in $\FactD(X)$ if and only if
+for every ordered decomposition $d$ the square
+\[
+\begin{tikzcd}[column sep=3.2em, row sep=2.6em]
+j_d^!\bigl(A_I\otimes^! A_I\bigr)
+  \arrow[r, "j_d^!m"]
+  \arrow[d, "\Delta_d\otimes^!\Delta_d"']
+& j_d^!A_I \arrow[d, "\Delta_d"] \\
+j_d^!\Bigl(\bigl(A_{I_1}\otimes^! A_{I_1}\bigr)\boxtimes
+           \bigl(A_{I_2}\otimes^! A_{I_2}\bigr)\Bigr)
+  \arrow[r, "m\boxtimes m"]
+& j_d^!\bigl(A_{I_1}\boxtimes A_{I_2}\bigr)
+\end{tikzcd}
+\]
+commutes. Under the finite-set indexing functor these squares occupy the
+common-decomposition sector of Theorem~\ref{thm:aligned-splitting}.
+\end{theorem}
+
+\begin{proof}
+A morphism of $\FactD(X)$ is a morphism of underlying Ran objects
+intertwining every factorisation equivalence. Applying the definition to
+$m$ produces exactly the displayed family, indexed by ordered
+decompositions. Each square uses the same $d$ before and after
+multiplication, so under the indexing functor it lies in the sector
+indexed by $d\mapsto(d,d)$, which is $\operatorname{im}e$.
+\end{proof}
+
+This family is the complete sheaf-level law for ordered locality.
+Extension across the partial diagonals remains part of the datum of the
+factorisation $D$-module; the indexing projector records only the
+separated-support combinatorics.

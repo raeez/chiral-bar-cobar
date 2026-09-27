@@ -1,0 +1,2250 @@
+% Theorem A: bar-cobar reconstruction, ordered descent, and Verdier duality.
+
+\providecommand{\Bbarch}{\bar{B}^{\mathrm{ch}}}
+\providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\Conil}{\mathsf{Conil}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\FactOp}{\mathsf{FactOp}}
+\providecommand{\FactProp}{\mathsf{FactProp}}
+\providecommand{\CoFact}{\mathsf{CoFact}}
+\providecommand{\CoFactProp}{\mathsf{CoFactProp}}
+\providecommand{\Dmod}{D\text{-}\mathsf{mod}}
+\providecommand{\Tc}{\mathrm{T}^{\mathrm c}}
+\providecommand{\rel}{\mathrm{rel}}
+\providecommand{\PTVV}{\mathrm{PTVV}}
+\providecommand{\CY}{\mathrm{CY}}
+\providecommand{\Arnold}{\mathrm{Arnold}}
+
+\chapter[Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality]%
+{Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality}
+\label{ch:theorem-A-infinity-2}\label{chap:theorem-A-infinity-2}
+
+\section*{Notation, hypotheses, and lane structure}
+
+The full bar construction and the quadratic Koszul dual occupy two
+successive layers.  For an augmented dg algebra $A$, the full
+tensor coalgebra $B(A)=T^c(s^{-1}\bar A)$ gives a functorial
+resolution
+\[
+ \varepsilon_A\colon\Omega B(A)\xrightarrow{\ \sim\ }A
+\]
+for every $A$ \cite[Corollary~2.3.4]{LV12}.  Under the quadratic
+Koszul package, the canonical comparison
+$A^i\rightarrow B(A)$ is a quasi-isomorphism; finite or continuous
+duality then produces $A^!$.  Higher Massey operations occur as
+components of the full bar differential and measure the passage from
+the quadratic model to the full resolution.
+
+On the Ran space there is a second distinction.  Francis--Gaitsgory's
+Proposition~4.1.2 gives bar--cobar equivalence for a reduced operad in
+any pro-nilpotent stable symmetric-monoidal category, while the
+pro-nilpotence argument in the proof of their Theorem~5.1.1 applies
+this result to the chiral category $D(\Ran X)$
+\cite{Francis2012}.
+Their factorization category is the full subcategory of chiral
+commutative coalgebras whose structure maps are equivalences
+\cite[Definition~2.4.7]{Francis2012}.  The published associative
+bar--cobar theorem lives in $D(\Ran X)$.  Its restriction to the
+associative factorization objects of this volume is the closure theorem
+named $H_{\mathrm{fact}}$ below.
+
+The notation is fixed accordingly:
+\[
+ R_X(A):=\Omega_XB_X(A),
+ \qquad
+ K_X(A):=\mathbb D_{\Ran}B_X(A).
+\]
+$R_X$ denotes reconstruction by the full bar.  $K_X$ denotes
+Verdier-dualized Koszul duality on the stated dualizable domain.  For
+a connected positive quadratic presentation $A=T_X(V)/(R)$, the five
+typed objects are
+\[
+ A,\quad B_X(A),\quad
+ A^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\quad
+ K_X(A)=\mathbb D_{\Ran}B_X(A),\quad
+ Z_{\ch}^{\mathrm{der}}(A)=C^\bullet_{\ch}(A,A).
+\]
+The quadratic presentation carries its canonical twisting morphism
+\[
+ \tau_{\mathrm i}\colon A^{\mathrm i}\longrightarrow A.
+\]
+Their comparison maps have distinct targets:
+\[
+ q_A\colon A^{\mathrm i}\longrightarrow B_X(A),\qquad
+ \mathbb D(q_A)\colon K_X(A)\longrightarrow
+ \mathbb D_{\Ran}(A^{\mathrm i}),\qquad
+ \nu_A\colon K_X(A)\longrightarrow A^!.
+\]
+The first is quadratic recognition, the second is its Verdier-dual
+map, and the third is the chosen comparison with the strict quadratic
+partner.  This chapter
+proves the ambient reconstruction, isolates the factorization closure
+theorem, and states the quadratic and Verdier refinements on their
+typed domains.  The categorical level is $(\infty,1)$; the
+factorization-enriched properadic transfer is governed by
+$H_{\mathrm{prop}}$.
+
+\paragraph{Ran ambient and four Theorem~A packages.}
+Let $X$ be a separated finite-type scheme over a characteristic-zero
+field.  Francis--Gaitsgory's ambient datum is
+\[
+ \mathcal C_X=\bigl(D(\Ran X),\otimes^{\ch}\bigr),
+ \qquad \mathcal O=\mathsf{Ass}_{\mathrm{red}}.
+\]
+The proof of \cite[Theorem~5.1.1]{Francis2012} makes
+$\mathcal C_X$ pro-nilpotent, and
+\cite[Proposition~4.1.2]{Francis2012} then supplies enhanced
+bar--cobar equivalence for $\mathcal O$, with divided-power
+coalgebras on the coalgebra side.  These are the published ambient
+data.  Four packages govern the subsequent Theorem~A transitions used in this
+volume.
+\begin{itemize}
+\item[$H_{\mathrm{fact}}$] \emph{Factorization-restriction package.}
+The chosen associative factorization subcategories satisfy four
+closure conditions: enhanced bar and cobar preserve the
+factorization equivalences on every disjoint configuration locus;
+their collision maps satisfy base change along the diagonal
+stratification; units and completed inverse limits remain in the
+chosen subcategories; and a regular-singular ordered local system has
+Fulton--MacPherson nearby cycles compatible with the chiral collision
+product.  The last clause is denoted $H_{\mathrm{fact}}^{R}$ when an
+$R$-matrix is present.  These closure conditions form a conditional
+input of this volume.
+\item[$H_{\mathrm{VD}}$] \emph{Verdier package.}
+$B_X(A)$ lies in a constructible or holonomic dualizable subcategory
+on which $\mathbb D_{\Ran}$ is defined and exchanges the relevant
+coalgebra and algebra structures.  Every base-change and K\"unneth
+map used after duality belongs to this package.  The properadic lane
+also includes a specified evaluation--coevaluation pair between $A$
+and $K_X(A)$ satisfying the two zig--zag identities.
+\item[$H_{\mathrm{conv}}$] \emph{Convergence package.}
+The increasing bar-length filtration on the direct-sum bar is
+exhaustive; a completed algebra satisfies
+$A\simeq\varprojlim_q A/\bar A^{\,q}$; and a completed coalgebra has a
+pro-coradical presentation
+$C\simeq\varprojlim_q C_{\leq q}$ whose transition maps are
+cohomologically Mittag--Leffler in every input--output profile.
+These are three independent clauses, denoted respectively
+$H_{\mathrm{len}}$, $H_{\mathrm{aug}}$, and $H_{\mathrm{ML}}$.
+\item[$H_{\mathrm{prop}}$] \emph{Factorization-properad transfer
+package.}
+The factorization enrichment satisfies the monoid axiom, has
+cofibrant unit, admits connected-graph substitution, carries weak
+equivalences through the transfer functors, and preserves
+factorization descent.  The full formulation appears in
+Theorem~\ref{thm:factorization-properad-transfer}.
+\end{itemize}
+The quadratic comparison is the Theorem~B interface and carries
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$ from
+Definition~\ref{def:chiral-comparison-lemma-package}.  Finite-weight
+models provide concrete instances of $H_{\mathrm{VD}}$ and
+$H_{\mathrm{conv}}$.
+The universal full bar--cobar counit belongs to the published ambient
+theorem.  Factorization closure, completed chain realization,
+quadratic compression, Verdier transport, and properadic transfer
+carry the five displayed packages.  Weak curvature retains
+Positselski's CDG definition as a separate structure.
+
+\paragraph{Parametric strength taxonomy.}
+\label{par:A-strength-taxonomy}%
+\index{Theorem A!parametric strength}%
+Theorem~A has three typed layers.
+\begin{itemize}
+\item[\textsc{Ran reconstruction; $\ClaimStatusProvedElsewhere$.}]
+\emph{Type signature:} (Open quadrant; chiral Ran presentation;
+Beilinson level $1\leftrightarrow2$; $(\infty,1)$; pro-nilpotent
+ambient $\mathcal C_X$; reduced associative operad).  Enhanced bar and cobar form mutually inverse
+equivalences for the reduced associative operad in
+$D(\Ran X)$ \cite[Proposition~4.1.2]{Francis2012}.
+\item[\textsc{Factorization closure; $\ClaimStatusConjectured$.}]
+\emph{Type signature:} (Open quadrant; associative factorization
+presentation; Beilinson level $1\leftrightarrow2$; pro-nilpotent
+ambient $\mathcal C_X$; package $H_{\mathrm{fact}}$).  The closure theorem
+restricts enhanced bar and cobar to the factorization subcategories
+used in this volume, including collision and completion data.
+\item[\textsc{Theorem B interface and Verdier refinement;
+$\ClaimStatusConditional$.}]
+\emph{Type signature:} (Open quadrant; quadratic and Verdier
+presentations; Beilinson level $2$; packages
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})\cup H_{\mathrm{VD}}$).
+The comparison
+$A^i\to B_X(A)$ and Verdier duality identify the full bar model with
+the quadratic and dual models on this locus.
+\end{itemize}
+Thus $R_X=\Omega_XB_X$ is the reconstruction functor.  The functor
+$K_X=\mathbb D_{\Ran}B_X$ carries the Verdier--Koszul refinement;
+biduality supplies its involutive form on the dualizable locus.
+
+\paragraph{Lane split: Priddy versus Positselski.}
+\label{par:A-priddy-vs-positselski}%
+\index{Theorem A!Priddy lane vs Positselski lane}%
+\index{Priddy lane!chain-level Theorem A}%
+\index{Positselski lane!coderived Theorem A}%
+Three constructions meet along explicit comparison morphisms.
+\begin{itemize}
+\item[\textsc{Full bar lane.}]
+The tensor coalgebra $B(A)$ and the counit
+$\Omega B(A)\xrightarrow{\sim}A$ give the functorial resolution
+\cite[Corollary~2.3.4]{LV12}.  Francis--Gaitsgory supply its enhanced
+form in the pro-nilpotent chiral Ran ambient.
+\item[\textsc{Quadratic lane.}]
+Under $H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$, Priddy's
+quadratic coalgebra $A^i$ maps
+quasi-isomorphically to $B(A)$.  The weight spectral sequence and its
+contracting homotopy prove this comparison.
+\item[\textsc{Curved completed lane.}]
+For a weakly curved $A_\infty$-algebra over a complete local base,
+Positselski's equivalence is formed after localization at
+semi-isomorphisms \cite[Theorem~6.7.1]{Positselski2018}.  A chiral
+factorization realization requires its own stratumwise assembly
+theorem and belongs to $H_{\mathrm{fact}}$.
+\end{itemize}
+The maps $A^i\to B(A)$ and
+$B_X(A)\to\mathbb D_{\Ran}\mathbb D_{\Ran}B_X(A)$ organize the
+intersection of these lanes.  Each archetype enters after its
+weight filtration, completion, and dualizability witnesses have been
+constructed.
+
+\paragraph{Four lanes by categorical level.}
+\label{par:A-four-lanes}%
+\index{Theorem A!four lanes by categorical level}%
+The categorical ledger has four levels:
+\begin{enumerate}[label=\textsc{L\arabic*.}]
+\item \label{L1-chain} \emph{Chain level;
+$\ClaimStatusProvedElsewhere$.}
+For augmented dg algebras and conilpotent dg coalgebras, the unit and
+counit are quasi-isomorphisms
+\cite[Corollary~2.3.4]{LV12}.  The $P_\infty$ form is
+\cite[Proposition~11.4.4]{LV12}.
+\item \label{L2-quillen} \emph{Ran $(\infty,1)$ level;
+$\ClaimStatusProvedElsewhere$.}
+Proposition~4.1.2 of \cite{Francis2012}, applied in the
+pro-nilpotent category $(D(\Ran X),\otimes^{\ch})$, gives the enhanced
+associative equivalence.
+\item \label{L3-infty1} \emph{Associative factorization level;
+$\ClaimStatusConjectured$.}
+The package $H_{\mathrm{fact}}$ is the closure theorem carrying the
+Ran equivalence to the factorization subcategories and their collision
+descent data.
+\item \label{L4-infty2} \emph{Properadic comparison level;
+$\ClaimStatusConjectured$.}
+Frontier~$A2$ asks for an enriched factorization-properad model and a
+comparison functor from its operadic bar--cobar envelope.  The
+presentation clause $H_{\mathrm{HR}}$
+(Theorem~\ref{thm:hackney-robertson-model}, Conjectured) posits the
+model structure on simplicial properads which forms one input to that
+construction; the graphical-set homotopy theory of
+Hackney--Robertson--Yau \cite{HRY17} is its evidence.
+\end{enumerate}
+Admission of an archetype to levels~\ref{L3-infty1} and
+\ref{L4-infty2} is witnessed by explicit closure, completion, and
+descent morphisms.  The finite-weight series of
+Lemma~\ref{lem:archetype-H123-witness} supplies the locally finite
+bar-weight input in $H_{\mathrm{conv}}$; the separate quadratic
+acyclicity belongs to $H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$.
+
+\paragraph{Notion of $\Eone$-chiral algebra in use.}
+Five constructions occur in the surrounding literature:
+(A) algebras for the reduced associative operad in
+$(D(\Ran X),\otimes^{\ch})$; (B) $A_\infty$-algebras in a chiral
+endomorphism operad; (C) Etingof--Kazhdan quantum vertex algebras;
+(D) associative factorization algebras; and (E) ordered-Ran
+factorization data.  Theorem~A begins with construction~(A).
+Construction~(D) enters through $H_{\mathrm{fact}}$.
+
+Each passage among (A)--(E) carries its own comparison morphism.  An
+$A_\infty$ enhancement is governed by the internal form of
+\cite[Proposition~11.4.4]{LV12}.  Quantized braided descent carries a
+Drinfeld associator and a unitary quantum $R$-datum.  Ordered-to-Ran
+descent carries the collision-extension maps of
+$H_{\mathrm{fact}}$.  The bar object is a coalgebra over
+$\operatorname{Bar}(\mathsf{Ass})$.  The Swiss--cheese action belongs
+to the subsequent center pair
+$(C^\bullet_{\ch}(A,A),A)$ through its own center-level theorem.
+
+\begin{convention}[Ordered bar signs and desuspension; \ClaimStatusDefinitional]
+\label{conv:A-infinity-2-ordered-bar-signs}
+\index{ordered bar complex!desuspension signs}
+\index{bar differential!ordered sign convention}
+The cohomological convention is $|d|=+1$ and
+$|s^{-1}a|=|a|-1$. For homogeneous $a_i\in\bar\cA$ the ordered bar
+coalgebra is
+\[
+B_X^{\ord}(\cA)=T^c(s^{-1}\bar\cA)
+\]
+with deconcatenation coproduct. Its differential is the coderivation
+whose unary and binary projections are
+\[
+b_1(s^{-1}a)=-s^{-1}(d_\cA a),\qquad
+b_2^{(r)}(s^{-1}a\otimes s^{-1}b)
+=(-1)^{|a|}s^{-1}(a_{(r)}b),
+\]
+and whose action on the $i$-th adjacent pair carries the prefix sign
+\[
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}.
+\]
+For an $A_\infty$-chiral algebra, the higher maps are extended by the
+same desuspended coderivation rule. With this convention
+$d_{B^{\ord}}^2=0$ is precisely the desuspended Stasheff identity
+together with the Arnold relation on logarithmic collision forms.
+The symmetric bar inherits this sign convention through the
+$R$-twisted descent morphism of
+Lemma~\ref{lem:R-twisted-descent-unitary}.
+
+For a coaugmented dg coalgebra $C$ with reduced coproduct
+$\bar\Delta c=\sum c_{(1)}\otimes c_{(2)}$, the compatible cobar
+construction is
+\[
+ \Omega(C)=T(s\bar C),\qquad |sc|=|c|+1.
+\]
+On generators its differential is
+\[
+ d_{\Omega}(sc)
+ =-s(d_Cc)-\sum(-1)^{|c_{(1)}|}
+   (sc_{(1)})(sc_{(2)}).
+\]
+The internal term and the coproduct term both have degree~$+1$.
+Equivalently, the degree-one universal twisting map
+$\tau_C(c)=sc$ satisfies
+$d\tau_C+\tau_C\star\tau_C=0$.
+\end{convention}
+
+%================================================================
+\section{Bar-cobar reconstruction and Verdier duality: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
+%================================================================
+
+\subsection{Ran reconstruction, factorization closure, and the
+quadratic--Verdier refinement}
+
+\begin{computation}[The first square-zero algebra;
+\ClaimStatusProvedHere]
+\label{comp:A-square-zero-bar-cobar}
+Let $A=k\oplus k\epsilon$ with augmentation
+$\epsilon\mapsto0$ and $\epsilon^2=0$.  Then
+\[
+ B(A)=T^c(s^{-1}k\epsilon).
+\]
+Write $e_n=[\epsilon|\cdots|\epsilon]$ for the length-$n$ bar word and
+$x_n:=s e_n$ for its cobar generator.  Thus $|e_n|=-n$ and
+$|x_n|=1-n$.  The bar differential vanishes,
+and the cobar differential is
+\[
+ d x_n=\sum_{i=1}^{n-1}(-1)^{\alpha_i}x_i x_{n-i},
+\]
+with the sign $\alpha_i$ fixed by
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.  At fixed total
+length, every term on the right has degree $2-n=|x_n|+1$.  At fixed total
+length $n$, a monomial
+$x_{n_1}\cdots x_{n_r}$ is indexed by the composition
+$n=n_1+\cdots+n_r$, hence by a subset of the $n-1$ possible internal
+cuts.  The differential adds one cut.  This identifies the
+total-length-$n$ summand, for $n\geq2$, with the augmented cochain
+complex of the $(n-2)$-simplex, equivalently with the Boolean cut
+complex.  It is acyclic.
+
+The total-length-$0$ and total-length-$1$ summands are generated by
+$1$ and $x_1$.  The counit sends $x_1$ to $\epsilon$ and $x_n$ to zero
+for $n\geq2$; moreover $x_1^2=d x_2$ up to the fixed sign.  Hence
+\[
+ H^\bullet(\Omega B(A))\cong k\oplus k\epsilon=A.
+\]
+This calculation is the first nontrivial instance of the universal
+bar--cobar resolution.
+\end{computation}
+
+\begin{theorem}[Theorem~A: associative bar--cobar reconstruction in
+the chiral Ran ambient; \ClaimStatusConditional]
+\label{thm:koszul-reflection}
+\index{Theorem A!bar-cobar reconstruction and Verdier duality}
+\index{Koszul duality!Verdier-dualized chiral form}
+\index{bar-cobar!reconstruction}
+\textup{[Type signature: Open quadrant; chiral Ran presentation;
+Beilinson level $1\leftrightarrow2$; reduced associative operad;
+categorical level $(\infty,1)$; pro-nilpotent Francis--Gaitsgory
+ambient $\mathcal C_X$; factorization package
+$H_{\mathrm{fact}}$; named hypothesis packages consisting of the
+completed chain package $H_{\mathrm{conv}}$ and the Verdier package
+$H_{\mathrm{VD}}$.  Clause~\ref{KR-iv} carries the
+Theorem~B package
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$.]}
+Let $X$ be a separated finite-type scheme over a field $k$ of
+characteristic zero and set
+\[
+ \mathcal C_X:=\bigl(D(\Ran X),\otimes^{\ch}\bigr).
+\]
+The following statements occupy successive domains.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \label{KR-i} \emph{Enhanced Ran equivalence;
+$\ClaimStatusProvedElsewhere$.}
+For the reduced associative operad, enhanced bar and cobar give
+mutually inverse equivalences
+\[
+ \operatorname{Bar}^{\mathrm{enh}}_{\mathsf{Ass}}\colon
+ \operatorname{Alg}_{\mathsf{Ass}}(\mathcal C_X)
+ \xrightarrow{\ \sim\ }
+ \operatorname{CoAlg}^{\mathrm{dp}}_{
+      \operatorname{Bar}(\mathsf{Ass})}(\mathcal C_X)
+ \mathbin{:}
+ \operatorname{Cobar}^{\mathrm{enh}}_{
+      \operatorname{Bar}(\mathsf{Ass})}.
+\]
+\item \label{KR-ii} \emph{Universal reconstruction;
+$\ClaimStatusProvedElsewhere$.}
+For augmented unital algebras, apply clause~\ref{KR-i} to the
+nonunital augmentation ideal and then restore the unit.  The unit and
+counit are equivalences; on chain models they specialize to
+\[
+ C\xrightarrow{\ \sim\ }B\Omega C,
+ \qquad
+ \Omega B(A)\xrightarrow{\ \sim\ }A.
+\]
+Under $H_{\mathrm{conv}}$, these maps pass to the selected completed
+chain realizations through the exhaustive complete filtrations and
+cohomologically Mittag--Leffler inverse systems.
+\item \label{KR-iii} \emph{Factorization closure;
+$\ClaimStatusConjectured$.}
+Under $H_{\mathrm{fact}}$, the equivalence in clause~\ref{KR-i}
+restricts to the associative factorization subcategories of this
+volume.  The resulting functors are denoted
+\[
+ \Omegach_X\colon\CoAlg_X^{\fact,\mathrm{dp}}
+ \rightleftarrows
+ \Alg_X^{\fact,\aug}\colon\Bbarch_X .
+\]
+\item \label{KR-iv} \emph{Quadratic compression;
+$\ClaimStatusConditional$.}
+Under the Theorem~B package
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$, the canonical morphism
+\[
+ A^i\longrightarrow B_X(A)
+\]
+is a quasi-isomorphism.  Equivalently,
+$\Omega_X(A^i)\to A$ is a quasi-isomorphism.  Local finite
+dimensionality identifies the continuous dual of $A^i$ with the
+quadratic Koszul-dual algebra $A^!$.
+\item \label{KR-v} \emph{Verdier refinement;
+$\ClaimStatusConditional$.}
+Under $H_{\mathrm{VD}}$, Verdier duality transports the bar coalgebra
+to the algebra
+\[
+ K_X(A):=\mathbb D_{\Ran}B_X(A).
+\]
+The biduality morphism identifies
+$B_X(A)\xrightarrow{\sim}\mathbb D_{\Ran}K_X(A)$ on this domain.
+Together with clause~\ref{KR-iv}, this identifies $K_X(A)$ with the
+continuous Verdier realization of $A^!$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Francis--Gaitsgory's Proposition~4.1.2 gives enhanced operadic
+bar--cobar equivalence in every pro-nilpotent stable
+symmetric-monoidal $\infty$-category.  Their proof of
+Theorem~5.1.1 establishes pro-nilpotence of
+$(D(\Ran X),\otimes^{\ch})$.  Applying the proposition to the reduced
+associative operad proves clause~\ref{KR-i}.
+
+Augmented unital algebras correspond to nonunital augmentation ideals
+together with re-unitalization.  The equivalence of
+clause~\ref{KR-i} therefore carries its unit and counit to the maps in
+clause~\ref{KR-ii}.  On ordinary dg chain models this is the
+bar--cobar adjunction of \cite[Theorem~2.2.9]{LV12} and the unit--counit
+quasi-isomorphism of \cite[Corollary~2.3.4]{LV12}.
+
+The closure morphisms collected in $H_{\mathrm{fact}}$ make enhanced
+bar and cobar preserve the factorization equivalences on every
+disjoint locus and their extensions across collision strata.  Hence
+the ambient equivalence restricts as stated in clause~\ref{KR-iii}.
+
+Under $H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$, the universal
+twisting morphism $A^i\to A$ is Koszul.  The twisting-morphism fundamental theorem
+\cite[Theorem~2.3.2]{LV12} identifies this condition with either
+$A^i\to B(A)$ or $\Omega(A^i)\to A$ being a quasi-isomorphism.  This
+proves clause~\ref{KR-iv}.
+
+Finally, $H_{\mathrm{VD}}$ supplies a dualizable bar object and the
+monoidal Verdier comparison maps.  Verdier duality transports its
+coalgebra structure to $K_X(A)$, and Verdier biduality gives the
+displayed equivalence in clause~\ref{KR-v}.
+\end{proof}
+
+\subsection{The single diagram and the single equation}
+
+The ambient equivalence is captured by one diagram:
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+\operatorname{CoAlg}^{\mathrm{dp}}_{\operatorname{Bar}(\mathsf{Ass})}
+ (\mathcal C_X)
+ \arrow[r,bend left=15,"\operatorname{Cobar}^{\mathrm{enh}}"]
+ \arrow[r,phantom,"\rotatebox{90}{$\dashv$}"description]
+&
+\operatorname{Alg}_{\mathsf{Ass}}(\mathcal C_X)
+ \arrow[l,bend left=15,"\operatorname{Bar}^{\mathrm{enh}}"]
+\end{tikzcd}
+\qquad
+\mathcal C_X=(D(\Ran X),\otimes^{\ch}).
+\]
+Its two equations are
+\[
+\boxed{
+\operatorname{Cobar}^{\mathrm{enh}}
+\operatorname{Bar}^{\mathrm{enh}}\simeq\mathrm{id}_{\Alg},
+\qquad
+\operatorname{Bar}^{\mathrm{enh}}
+\operatorname{Cobar}^{\mathrm{enh}}\simeq\mathrm{id}_{\CoAlg^{\mathrm{dp}}}.
+}
+\]
+Under $H_{\mathrm{fact}}$ the same equations restrict to
+$\Omegach_X$ and $\Bbarch_X$ on the associative factorization
+subcategories.
+
+\begin{remark}[Reconstruction and duality are separate operations]
+\label{rem:reconstruction-duality-separation}
+\index{bar-cobar!reconstruction versus Verdier duality}
+Two functors leave the bar object in different directions.  The
+counit
+$\Omegach_X\Bbarch_X(A)\to A$ gives reconstruction.  Verdier duality
+gives the Koszul-dual lane
+$K_X(A)=\mathbb D_{\Ran}\Bbarch_X(A)$.  Their codomains and hypothesis
+packages determine their respective type signatures.
+\end{remark}
+
+\begin{corollary}[Typed comparison of reconstruction and Verdier
+duality;
+\ClaimStatusProvedHere]
+\label{cor:no-dual-from-barcobar-counit}
+\index{bar-cobar!comparison with Verdier duality}
+\index{Koszul duality!requires Verdier branch}
+\index{self-duality theorem!required for identifying reconstruction with duality}
+Type signature: \textup{(}Open quadrant, reconstruction/Verdier
+comparison lane, Beilinson level \(1\leftrightarrow2\),
+pro-nilpotent chiral Ran ambient; packages
+$H_{\mathrm{fact}}\cup H_{\mathrm{VD}}$\textup{)}.
+Let $A$ lie in the factorization and Verdier domains of
+Theorem~\ref{thm:koszul-reflection}.  Reconstruction and Verdier
+duality give
+\[
+ \varepsilon_A\colon R_X(A)=\Omegach_X\Bbarch_X(A)\xrightarrow{\sim}A,
+ \qquad
+ K_X(A)=\mathbb D_{\Ran}\Bbarch_X(A).
+\]
+Composition with $\varepsilon_A$ induces an equivalence of mapping
+spaces
+\[
+ \operatorname{Map}(A,K_X(A))
+ \xrightarrow{\ \sim\ }
+ \operatorname{Map}(R_X(A),K_X(A)).
+\]
+Hence an equivalence $R_X(A)\simeq K_X(A)$ is precisely the composite
+of reconstruction with a self-duality equivalence
+\[
+\sigma_A\colon A\xrightarrow{\sim}K_X(A).
+\]
+Under $H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$ and local finite
+duality, the target
+$K_X(A)$ identifies with the continuous realization of $A^!$.  A
+strict model is obtained from a specified formality equivalence
+$K_X(A)\simeq A^!$.
+\end{corollary}
+
+\begin{proof}
+The morphism $\varepsilon_A$ is an equivalence by
+Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}.  Precomposition with
+an equivalence induces an equivalence of mapping spaces.  Under this
+equivalence, $\sigma_A$ corresponds to
+$\sigma_A\circ\varepsilon_A$.  Clauses~\ref{KR-iv} and~\ref{KR-v}
+supply the quadratic and Verdier identifications of the target.
+\end{proof}
+
+\begin{remark}[Four named morphisms in Theorem~A]
+\label{rem:four-named-morphisms}
+\index{Koszul reflection!four named morphisms}
+Four canonical morphisms organize the theorem:
+\begin{itemize}
+\item $\eta_C\colon C\xrightarrow{\sim}B\Omega(C)$ is the
+coalgebra-side unit in the Ran ambient;
+\item $\varepsilon_A\colon\Omega B(A)\xrightarrow{\sim}A$ is the
+algebra-side counit in the Ran ambient;
+\item $q_A\colon A^i\to B(A)$ is the quadratic comparison under
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$;
+\item $\delta_{B(A)}\colon
+B(A)\xrightarrow{\sim}\mathbb D_{\Ran}\mathbb D_{\Ran}B(A)$ is
+Verdier biduality under $H_{\mathrm{VD}}$.
+\end{itemize}
+The factorization closure package transports these morphisms to the
+factorization subcategories.
+\end{remark}
+
+\begin{proposition}[Module transport along the bar--cobar counit;
+\ClaimStatusProvedHere]
+\label{prop:A-module-completion-firewall}
+\index{Theorem A!module and completion ambient}
+\index{coderived category!bar-cobar continuation}
+Let $A\in\operatorname{Alg}_{\mathsf{Ass}}(\mathcal C_X)$ and put
+$R_X(A)=\operatorname{Cobar}^{\mathrm{enh}}
+\operatorname{Bar}^{\mathrm{enh}}(A)$.  Extension and restriction
+along the counit give mutually inverse equivalences
+\[
+\operatorname{Mod}_{R_X(A)}(\mathcal C_X)
+\simeq
+\operatorname{Mod}_{A}(\mathcal C_X).
+\]
+Under $H_{\mathrm{fact}}$ this equivalence restricts to the
+factorization-module categories.  Under a self-duality equivalence
+$\sigma_A\colon A\xrightarrow{\sim}K_X(A)$ it further gives
+\[
+\operatorname{Mod}_{R_X(A)}^{\fact}
+\simeq
+\operatorname{Mod}_{A}^{\fact}
+\simeq
+\operatorname{Mod}_{K_X(A)}^{\fact}.
+\]
+\end{proposition}
+
+\begin{proof}
+The counit is an equivalence by
+Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}.  The functoriality of
+module objects carries an equivalence of associative algebras to an
+equivalence of their module categories.  The packages
+$H_{\mathrm{fact}}$ and $\sigma_A$ supply the two displayed
+restrictions and transports.
+\end{proof}
+
+\begin{remark}[Operadic levels of the bar object and the center pair]
+\label{rem:bar-over-chirAss-shriek}
+
+\index{SC-chtop!derived-centre action}
+The bar object $\Bbarch_X(A)$ is a coalgebra over
+$\operatorname{Bar}(\mathsf{Ass})$, with deconcatenation coproduct
+and degree-$1$ bar differential.  The derived center pair
+$(C^\bullet_{\ch}(A,A),A)$ carries its brace structure at the next
+operadic level.  A Swiss--cheese action on this pair is supplied by
+the corresponding open--closed center theorem.  Thus the bar object
+serves as the level-$2$ resolution and the center pair as the
+level-$3$ open--closed object.
+\end{remark}
+
+\subsection{Locally finite positive weights and bar finiteness}
+\label{subsec:archetype-witness-H123}
+
+Positive weight bounds the tensor length contributing to a fixed bar
+weight.  This elementary observation is the complete finiteness input
+needed here.
+
+For the square-zero algebra of
+Computation~\ref{comp:A-square-zero-bar-cobar}, assign weight~$1$ to
+$\epsilon$.  Its length-$p$ bar word has total weight~$p$, so the
+weight-$w$ reduced bar is the one-dimensional span of $e_w$.  The
+general statement replaces this single word by a finite sum over
+compositions of~$w$.
+
+\begin{lemma}[Positive local finiteness passes to the reduced bar;
+\ClaimStatusProvedHere]
+\label{lem:archetype-H123-witness}
+\index{bar construction!positive-weight local finiteness}%
+\textup{[Type signature: Open quadrant; weight-graded chain
+presentation; Beilinson level~$2$; hypothesis package: augmentation,
+positive weight, and finite-dimensional weight fibers.]}
+Let $A=k\mathbf 1\oplus\bar A$ be an augmented dg algebra and suppose
+\[
+ \bar A=\bigoplus_{w\geq w_0}\bar A_w,
+ \qquad w_0\geq1,
+ \qquad \dim_k\bar A_w<\infty.
+\]
+Assume that $d_A$ has weight zero and that multiplication has additive
+weight.  Then the reduced bar
+$\bar B(A)=\bigoplus_{p\geq1}(s^{-1}\bar A)^{\otimes p}$ is graded by
+total weight, its differential preserves that grading, and every
+weight space $\bar B(A)_w$ is finite-dimensional.  Writing
+$d_w=\dim_k\bar A_w$ and $P_A(q)=\sum_{w\geq w_0}d_wq^w$, one has
+\[
+\dim_k \bar B(A)_w
+ \;=\;
+ \sum_{p\geq 1}\;
+ \sum_{w_1+\cdots+w_p=w,\,w_i\geq w_0}\;
+ d_{w_1}\cdots d_{w_p}
+ \;=\; [q^w]\,\frac{P_A(q)}{1-P_A(q)}.
+\]
+The same conclusion holds for a weight-graded factorization algebra
+after application of any exact weight-preserving symmetric-monoidal
+fiber functor to $\mathsf{Ch}(k)$.
+\end{lemma}
+
+\begin{proof}
+Every tensor in total weight $w$ has length
+$p\leq\lfloor w/w_0\rfloor$.  For fixed $p$, the set of compositions
+$w=w_1+\cdots+w_p$ with $w_i\geq w_0$ is finite.  Each corresponding
+tensor product
+$\bar A_{w_1}\otimes\cdots\otimes\bar A_{w_p}$ is finite-dimensional,
+so their finite direct sum is finite-dimensional.  The internal
+differential preserves every $w_i$, while the multiplication term
+replaces adjacent weights $w_i,w_{i+1}$ by $w_i+w_{i+1}$; hence the bar
+differential preserves total weight.  Summing over tensor length gives
+$\sum_{p\geq1}P_A(q)^p=P_A(q)/(1-P_A(q))$.  An exact fiber functor
+preserves the displayed direct sums, tensor products, and differential.
+\end{proof}
+
+\begin{remark}[Weight and length filtrations]
+\label{rem:H3-not-finite-bar-depth}
+\index{bar construction!weight and length filtrations}%
+The length-$p$ summand is $(s^{-1}\bar A)^{\otimes p}$ and may carry
+infinitely many total weights.  The weight-$w$ summand receives
+contributions from the finite range
+$1\leq p\leq\lfloor w/w_0\rfloor$.  Thus the direct-sum length
+filtration supplies $H_{\mathrm{len}}$, while the positive grading and
+finite-dimensional fibers supply finite bar-weight pieces.
+Augmentation completeness and Koszul acyclicity remain the separate
+maps in $H_{\mathrm{aug}}$ and
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$.
+\end{remark}
+
+\begin{remark}[Class-$\mathsf{M}$ completion problem;
+\ClaimStatusConditional]
+\label{rem:class-M-pro-conilpotent}
+\index{class M!pro-conilpotent completion}%
+\index{pro-conilpotent completion!Virasoro and W-algebras}%
+Let $A$ be a positive-energy Virasoro or principal $\mathcal W_N$
+factorization model with finite-dimensional weight fibers.  The
+weight-completed object is
+\[
+\widehat A^{\mathrm{wt}}=\varprojlim_N A/A_{\geq N}
+ \;\in\; \Alg^{\fact,\aug,\comp}_X,
+\]
+while augmentation completion is
+\[
+\widehat A^{I}=\varprojlim_q A/\bar A^{\,q}.
+\]
+The class-$\mathsf M$ application of Theorem~A requires an explicit
+cofinal comparison
+$\gamma_A\colon\widehat A^{I}\xrightarrow{\sim}\widehat A^{\mathrm{wt}}$,
+the equivalence $A\xrightarrow{\sim}\widehat A^{I}$ of
+$H_{\mathrm{aug}}$, the pro-coradical Mittag--Leffler maps of
+$H_{\mathrm{ML}}$, and the acyclicity of
+$A\otimes_{\tau_{\mathrm i}}A^i$ from
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$.
+\end{remark}
+
+\begin{remark}[Five conditional applications; \ClaimStatusConditional]
+\label{rem:five-archetype-K-squared}
+\index{bar-cobar reconstruction!conditional family inputs}%
+Lemma~\ref{lem:archetype-H123-witness} applies to a family after its
+augmentation, positive grading, and finite-dimensional weight fibers
+have been constructed.  The full Ran, factorization, completion,
+quadratic, and duality application lies in the pro-nilpotent chiral
+Ran ambient and uses $H_{\mathrm{fact}}$, $H_{\mathrm{aug}}$, $H_{\mathrm{ML}}$,
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$, and $H_{\mathrm{VD}}$.
+For the five named families the remaining inputs are these:
+\begin{itemize}
+\item[$\mathsf G$.]  For a Heisenberg or free-field presentation,
+construct the vacuum augmentation as a factorization morphism and the
+quadratic twisting complex
+$A\otimes_{\tau_{\mathrm i}}A^i$.  Its positive-weight acyclicity and the
+completion maps give the $\mathsf G$ application.
+\item[$\mathsf L$.]  For $V_k(\fg)$, construct the factorization bar at
+the chosen level, the cofinal map from augmentation completion to the
+chosen level/weight completion, and a contraction of
+$A\otimes_{\tau_{\mathrm i}}A^i$.  At $k=-h^\vee$ the corresponding statement
+uses a separately specified completed resolution together with its
+maps $\iota_A,p_A,h_A$.
+\item[$\mathsf C$.]  For $\beta\gamma_\lambda$, choose a charge sector
+whose conformal weights are bounded below and finite-dimensional,
+then construct the factorization collision maps and the quadratic
+twisting contraction on that sector.
+\item[$\mathsf M$.]  For Virasoro and principal $\mathcal W_N$, supply
+the comparison $\gamma_A$ of
+Remark~\ref{rem:class-M-pro-conilpotent}, the pro-coradical
+Mittag--Leffler tower, and a chain map from the relevant Felder or BRST
+resolution to $A\otimes_{\tau_{\mathrm i}}A^i$ carrying its contraction.
+\item[$\mathsf B$.]  For a Mukai/Hall presentation, choose a
+positive-energy cone or charge truncation with finite-dimensional
+weight fibers, construct its factorization multiplication and
+augmentation, and give the quadratic twisting contraction in that
+completed sector.
+\end{itemize}
+Each item is a concrete input list for
+Theorem~\ref{thm:koszul-reflection}\ref{KR-iii}--\ref{KR-v}.
+\end{remark}
+
+\subsection{Rescaling a deformation retract}
+\label{subsec:A-universal-chain-homotopy}
+
+A scalar rescales a deformation retract by an elementary identity.
+Its identification with a trace or conductor requires a family-level
+chain comparison.
+
+\begin{convention}[Scalar invariant and chain-level rescaling]
+\label{conv:A-two-kappa-shriek}
+\index{Verdier duality!at level 1 vs level 2}%
+The algebra-level scalar invariant is
+\[
+ K^\kappa(\cA):=\kappa(\cA)+\kappa(\cA^!).
+\]
+It is defined from the chosen scalar theory on a Verdier--Koszul pair.
+A chain-level rescaling is a separate datum: for a deformation retract
+$(\iota_A,p_A,h_A)$ of a complex $(C_A,d_A)$, it is a scalar
+$\nu_A\in k$ occurring in the identity
+\[
+ d_Ah_A+h_Ad_A
+ =\nu_A(\mathrm{id}_{C_A}-\iota_Ap_A).
+\]
+A chain map relating the contraction to the scalar trace promotes this
+datum to the theorem $\nu_A=K^\kappa(A)$.
+\end{convention}
+
+\begin{proposition}[Rescaling identity for a deformation retract;
+\ClaimStatusProvedHere]
+\label{prop:A-universal-chain-homotopy}
+\index{chain-homotopy!scalar rescaling}%
+\textup{[Type signature: chain presentation; deformation-retract
+level; hypothesis package: a scaled homotopy identity with invertible
+scalar.]}
+Let $(C,d)$ and $(H,d_H)$ be complexes, let
+$\iota\colon H\to C$ and $p\colon C\to H$ be chain maps with
+$p\iota=\mathrm{id}_H$, and let $h\colon C\to C[-1]$.  Suppose that
+$\nu\in k^\times$ and
+\[
+ dh+hd=\nu(\mathrm{id}_C-\iota p).
+\]
+Then $\widetilde h=\nu^{-1}h$ satisfies
+\[
+ d\widetilde h+\widetilde h d=\mathrm{id}_C-\iota p.
+\]
+The side conditions $h\iota=0$, $ph=0$, and $h^2=0$ pass to
+$\widetilde h$.  Conversely, every contracting homotopy $h_0$ gives a
+scaled identity with $h=\nu h_0$.
+\end{proposition}
+
+\begin{proof}
+Scalar linearity gives
+\[
+d(\nu^{-1}h)+(\nu^{-1}h)d
+=\nu^{-1}(dh+hd)
+=\mathrm{id}_C-\iota p.
+\]
+Multiplication by $\nu^{-1}$ preserves the three side conditions.
+Starting from $dh_0+h_0d=\mathrm{id}_C-\iota p$ and setting
+$h=\nu h_0$ gives the converse identity.
+\end{proof}
+
+\begin{remark}[Family comparison problems for scalar rescaling;
+\ClaimStatusConditional]
+\label{rem:A-h-three-paths}
+\index{chain-homotopy!family comparison problems}%
+For a family $F$, put
+$C_F=\Omegach_X\Bbarch_X(A_F)$ and $p_F=\varepsilon_{A_F}$.  A proposed
+scalar $\nu_F$ becomes a chain-level rescaling after constructing a
+chain map $\iota_F\colon A_F\to C_F$ and an operator
+$h_F\colon C_F\to C_F[-1]$ satisfying
+\[
+p_F\iota_F=\mathrm{id}_{A_F},
+\qquad
+d_Fh_F+h_Fd_F
+=\nu_F(\mathrm{id}_{C_F}-\iota_Fp_F).
+\]
+The five scalar expressions lead to five separate construction
+problems.
+\begin{itemize}
+\item[$\mathsf G$: $\nu_{\mathsf G}=1$.]
+Construct $\iota_{\mathsf G}$ and $h_{\mathsf G}$ on the actual
+factorization bar--cobar complex from the Fock/Koszul resolution.
+\item[$\mathsf L$: $\nu_{\mathsf L}=2(k+h^\vee)$.]
+Localize the level-parameter ring at $k+h^\vee$.  Construct a chain
+map from the chosen Garland--Lepowsky or Sugawara resolution to
+$C_{\mathsf L}$, together with $\iota_{\mathsf L}$ and
+$h_{\mathsf L}$ satisfying the displayed scaled identity.
+\item[$\mathsf C$: $\nu_{\mathsf C}=1$.]
+On the selected finite charge sector, construct the chain map from the
+free $\beta\gamma$ Koszul resolution to $C_{\mathsf C}$ and transport
+its deformation retract.
+\item[$\mathsf M$: $\nu_{\mathsf M}=c(5c+22)/10$.]
+Localize the central-charge parameter ring at $\nu_{\mathsf M}$.
+Construct a chain map from the Felder/BRST resolution to
+$C_{\mathsf M}$ and operators
+$\iota_{\mathsf M},h_{\mathsf M}$ satisfying the scaled identity.
+\item[$\mathsf B$: $\nu_{\mathsf B}=8$.]
+Construct a chain map from the completed Mukai/Hall resolution to
+$C_{\mathsf B}$ and operators $\iota_{\mathsf B},h_{\mathsf B}$
+satisfying the scaled identity.
+\end{itemize}
+An equality $\nu_F=K^\kappa(A_F)$ consists additionally of the chain
+map in Convention~\ref{conv:A-two-kappa-shriek} comparing the
+contraction datum with the scalar trace complex.
+\end{remark}
+
+\begin{remark}[The chain comparison required between Theorems~A, C,
+and D]
+\label{rem:A-h-bridge}
+\index{chain rescaling!bridge to Theorems C, D}%
+Let $(C_A,d_A)$ be the complex used in Theorem~A.  A scalar
+$\nu_A\in k^\times$ rescales a homotopy after one has constructed
+maps $\iota_A,p_A$ and an operator $h_A$ such
+that
+\[
+ d_Ah_A+h_Ad_A
+ =\nu_A\bigl(\mathrm{id}_{C_A}-\iota_Ap_A\bigr).
+\]
+Then $\nu_A^{-1}h_A$ gives the corresponding
+contraction.  A relation with Theorems~C and~D therefore requires an
+explicit chain map that identifies $\nu_A$ with the scalar
+invariant occurring in the census or Hodge obstruction.  The five
+family expressions
+$\{1,2(k+h^\vee),1,c(5c+22)/10,8\}$ define candidate values for
+$\nu_A$; the
+construction of this chain map is the comparison problem linking the
+three theorems.
+\end{remark}
+
+%================================================================
+\section{The eight standard facets of Theorem~A}\label{sec:ainf2-eight-corollaries}
+%================================================================
+
+The eight standard facets of Theorem~A are recovered as corollaries of
+the unified Koszul reflection
+Theorem~\ref{thm:koszul-reflection}.
+
+\begin{corollary}[Twisting morphism $\tau\colon\Bbarch_X(\cA)\to\cA$
+is a Maurer--Cartan element; \ClaimStatusConditional]
+\label{cor:eight-cor-twisting-morphism}
+\index{twisting morphism!as Maurer-Cartan}
+The universal twisting morphism
+$\tau\colon\Bbarch_X(\cA)\to\cA$ associated to the algebra-side counit
+$\psi_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ of the Koszul
+reflection is a Maurer--Cartan element of the convolution
+$L_\infty$-algebra
+$\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$:
+\[
+d\tau+\tfrac{1}{2}[\tau,\tau]=0.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the counit
+of the adjunction $\Omegach_X\dashv\Bbarch_X$ encodes, by adjunction,
+the universal twisting
+morphism $\tau\colon\Bbarch_X(\cA)\to\cA$ (LV12 Theorem~2.2.9
+specialised to the chiral ambient). The Maurer--Cartan condition
+$d\tau+\tfrac{1}{2}[\tau,\tau]=0$ is exactly the compatibility
+between the bar differential on $\Bbarch_X(\cA)$ and the
+multiplication on~$\cA$, which is the chain-level statement
+that~$\psi_\cA$ is a chain map.
+\end{proof}
+
+\begin{corollary}[Universal reconstruction in the enhanced Ran
+ambient; \ClaimStatusProvedElsewhere]
+\label{cor:eight-cor-counit-qi}
+\index{counit!universal reconstruction in the Ran ambient}
+\textup{[Type signature: Open quadrant; enhanced associative Ran
+presentation; Beilinson levels (1\leftrightarrow2); pro-nilpotent
+Francis--Gaitsgory ambient; reduced associative operad.]}
+For every augmented algebra
+$\cA\in\operatorname{Alg}^{\mathrm{aug}}_{mathsf{Ass}}
+(D(\operatorname{Ran}X),\otimes^{\mathrm{ch}})$, the enhanced counit
+\[
+ \varepsilon_\cA\colon
+ \Omega_X^{\mathrm{enh}}B_X^{\mathrm{enh}}(\cA)
+ \xrightarrow{\ \sim\ }\cA
+\]
+is an equivalence.
+\end{corollary}
+
+\begin{proof}
+This is Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, obtained by
+applying Francis--Gaitsgory's pro-nilpotent enhanced bar--cobar
+equivalence to the augmentation ideal and restoring the unit.
+\end{proof}
+
+\begin{remark}[Factorization and chain realizations]
+\label{rem:eight-cor-counit-factorization-realization}
+Under \(H_{\mathrm{fact}}\), the displayed equivalence restricts to the
+chosen factorization subcategories.  Under \(H_{\mathrm{conv}}\), its
+completed chain realization is a quasi-isomorphism.  Quadratic
+Koszulness is the further comparison
+\(q_\cA\colon\cA^{\mathrm i}\to B_X(\cA)\) of
+Theorem~\ref{thm:koszul-reflection}\ref{KR-iv}.
+\end{remark}
+
+\begin{corollary}[Unit weak equivalence on $\Conil(X)$;
+\ClaimStatusConditional]
+\label{cor:eight-cor-unit-weq}
+\index{unit!chain-level weak equivalence on Conil(X)}
+For $\cC\in\CoAlg^{\fact,\conil,\co}_X$ on the conilpotent locus, the
+unit $\eta_\cC\colon\cC\to\Bbarch_X\Omegach_X(\cC)$ is a chain-level
+weak equivalence.
+\end{corollary}
+
+\begin{proof}
+Filter $\cC$ by the coradical filtration. The associated graded of
+$\Bbarch_X\Omegach_X(\cC)$ is the classical bar construction on the
+free algebra generated by the graded pieces of $\cC$, and the map
+$\gr\,\eta_\cC$ is the unit of the acyclic twisting morphism for
+$(\Ass,\Ass^!)$ \cite[Theorem~2.4.1]{LV12}. Conilpotence makes the
+filtration exhaustive, completeness makes it separated, and
+$H_{\mathrm{ML}}$ gives Mittag--Leffler convergence weight-by-weight. Hence the
+filtered cone of $\eta_\cC$ is acyclic, so the unit is a chain-level
+weak equivalence on the conilpotent-complete locus.
+\end{proof}
+
+\begin{corollary}[Twisted tensor acyclicity;
+\ClaimStatusConditional]
+\label{cor:eight-cor-twisted-tensor}
+\index{twisted tensor product!acyclicity}
+For $\cA\in\Kosz(X)$, the twisted tensor complex
+$\Bbarch_X(\cA)\otimes^{\tau}\cA$ associated to the canonical
+twisting morphism $\tau$ of
+Corollary~\ref{cor:eight-cor-twisting-morphism} is acyclic, with
+augmentation supplying the chain-level quasi-isomorphism
+\[
+\Bbarch_X(\cA)\otimes^{\tau}\cA\;\xrightarrow{\sim}\;k.
+\]
+\end{corollary}
+
+\begin{proof}
+The twisted tensor complex computes $\Tor^{\Omegach_X\Bbarch_X(\cA)}_{*}(k,k)$
+via the bar resolution; under
+Corollary~\ref{cor:eight-cor-counit-qi},
+$\Omegach_X\Bbarch_X(\cA)\simeq\cA$, so the Tor reduces to
+$\Tor^{\cA}_{*}(k,k)=H_{*}(\Bbarch_X(\cA))$, which by definition of
+$\Kosz(X)$ is concentrated in bar degree~$0$ at the augmentation. The
+augmentation map then realises the twisted tensor complex as the
+augmentation chain complex, which is acyclic
+(\cite[Theorem~2.4]{LV12} specialised to the chiral ambient).
+\end{proof}
+
+\begin{corollary}[Bar concentrated in weight~$1$ at $g=0$ on
+class~$\mathsf{G}$; \ClaimStatusConditional]
+\label{cor:eight-cor-bar-weight-1}
+\index{bar complex!concentration in weight 1}
+\index{class G!bar concentration}
+For $\cA$ in class~$\mathsf{G}$ (PBW $E_2$-collapse class), lying in
+the genus-zero finite-type PBW window of
+Definition~\ref{def:ftm-g0-pbw-window}, $\Bbarch_X(\cA)$ has
+cohomology concentrated in bar weight~$1$:
+\[
+H^{*}(\Bbarch_X(\cA))=H^{1}(\Bbarch_X(\cA))\;[\text{shifted}\,]\,\quad
+H^{i}(\Bbarch_X(\cA))=0\;\text{for}\;i\neq 1.
+\]
+At $g\geq 1$, weight-$1$ concentration occupies the
+class~$\mathsf{G}$ locus.  In classes~$\mathsf{L}$, $\mathsf{C}$,
+$\mathsf{M}$, the fiberwise curvature
+$d^{2}_{\mathrm{fib}}=\kappa\cdot\omega_g$ produces the higher-weight
+terms.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, reconstruction on
+$\Kosz(X)$ is equivalent (via the PBW spectral sequence of the bar
+filtration) to the $E_2$-collapse of the
+bar--cobar spectral sequence at $E_2$-page. On the genus-zero
+finite-type PBW window of Definition~\ref{def:ftm-g0-pbw-window} ---
+and only there --- the $E_2$-collapse is
+exactly the hub-and-spoke TFAE of
+Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, which gives bar
+concentration in weight~$1$ at $g=0$ for any class
+$\cA\in\Kosz(X)$ lying in that window; $E_2$-collapse outside the
+window is not delivered by that theorem and is an open problem.
+At $g\geq 1$, the fiberwise differential
+$d_{\mathrm{fib}}^{2}=\kappa\cdot\omega_g$ identifies weight-$1$
+concentration with the zero-curvature locus $\kappa=0$, namely
+class~$\mathsf{G}$.
+\end{proof}
+
+\begin{corollary}[SC-formality criterion on class~$\mathsf{G}$;
+\ClaimStatusConditional]
+\label{cor:eight-cor-sc-formality}
+\index{SC-formality!class G criterion}
+\index{class G!SC-formal}
+For $\cA$ in class~$\mathsf{G}$ lying in the genus-zero finite-type
+PBW window of Definition~\ref{def:ftm-g0-pbw-window}, the convolution
+$L_\infty$-algebra
+$\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$ is SC-formal: all
+higher Stasheff--Massey operations $m_k$ for $k\geq 3$ vanish on
+cohomology, and the $A_\infty$-quasi-isomorphism inverting
+$\varepsilon_\cA$ collapses to a strict isomorphism.  In
+classes~$\mathsf{L}$, $\mathsf{C}$, $\mathsf{M}$, the higher
+operations realize the shadow-tower invariants $S_k$ and retain the
+$A_\infty$ deformation.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, SC-formality is
+equivalent to a strict isomorphism realizing the chain-level
+equivalence $\Omegach_X\Bbarch_X(\cA)\simeq\cA$.
+The shadow tower $S_k$ measures the $A_\infty$-corrections to
+$\varepsilon_\cA$; vanishing of $S_k$ for $k\geq 3$ is the
+PBW-collapse-to-strict criterion, which by the hub-and-spoke TFAE
+(Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, spoke~7, valid
+on the genus-zero finite-type PBW window of
+Definition~\ref{def:ftm-g0-pbw-window}) is the
+class~$\mathsf{G}$ condition exactly on that window.
+\end{proof}
+
+\begin{corollary}[$R$-twisted $\Sigma_n$-descent (unitary $R$)
+$\barB^{\Sigma}(\cA)\simeq B^{\ord}(\cA)^{R\text{-}\Sigma_n}$;
+\ClaimStatusConditional]
+\label{cor:eight-cor-R-descent}
+\index{R-twisted descent!corollary form}
+For $\cA$ an $\Eone$-chiral algebra with meromorphic quantum
+$R$-matrix~$R(z)$, with checked braiding
+$\check R(z)=\tau\circ R(z)$, satisfying the quantum Yang--Baxter
+equation (Lemma~\ref{lem:R-twisted-descent-unitary}~\ref{R1}) and unitarity
+$R^{21}(-z)R^{12}(z)=\id$
+(Lemma~\ref{lem:R-twisted-descent-unitary}~\ref{R2}), the restriction of
+$\barB^{\Sigma}_n(\cA)$ to $\Conf_n(X)$ is the $R$-twisted descent of
+the ordered bar along the principal torsor
+$\pi_n^\circ\colon\Conf_n^{\ord}(X)\to\Conf_n(X)$.  Under
+$H_{\mathrm{fact}}^{R}$ this descent extends to the cardinality-$n$
+Ran stratum and gives
+\[
+\barB^{\Sigma}_n(\cA)\;\simeq\;
+\bigl(B^{\ord}_n(\cA)\bigr)^{\Sigma_n\text{-coinv},\;L_R\text{-twisted}}.
+\]
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:R-twisted-descent-unitary} constructs the equivariant
+local system and proves descent on the open torsor.  The clause
+$H_{\mathrm{fact}}^{R}$ supplies the compatible nearby-cycle
+extension.
+\end{proof}
+
+\begin{corollary}[Conditional properadic envelope of the Ran
+equivalence; \ClaimStatusConditional]
+\label{cor:eight-cor-properad-equiv}
+\index{Francis-Gaitsgory equivalence!properad level}
+Assume $H_{\mathrm{fact}}$, $H_{\mathrm{conv}}$, and
+$H_{\mathrm{prop}}$.  The enhanced bar--cobar equivalence of
+Theorem~\ref{thm:koszul-reflection}\ref{KR-i} extends by
+connected-graph substitution to a derived adjoint equivalence
+\[
+\Bbarch_X\;:\;\FactProp^{\aug}_{\langle\chirAss\rangle}(X)
+\;\rightleftarrows\;
+\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)
+\;:\;\Omegach_X
+\]
+on the conilpotent-complete properadic envelope generated by the
+chiral associative bar--cobar pair.  Pullback to a marked point
+recovers the ordinary associative bar--cobar equivalence
+\cite[Corollary~2.3.4]{LV12}.
+\end{corollary}
+
+\begin{proof}
+Detailed proof in \S\ref{sec:ainf2-main} as
+Theorem~\ref{thm:A-infinity-2}.
+\end{proof}
+
+These eight corollaries, taken together, account for the theorem content
+of the standard Theorem~A facets. The unified reconstruction theorem
+Theorem~\ref{thm:koszul-reflection} is the source of these facets;
+each facet specialises to a
+single facet of the adjunction, reconstruction counit, or
+Verdier-dualized Koszul-duality functor.
+
+%================================================================
+\section{Francis--Gaitsgory factorization ambient}\label{sec:ainf2-setup}
+%================================================================
+
+Francis--Gaitsgory place enhanced operadic bar and cobar in the stable
+presentable symmetric-monoidal category
+$(D(\Ran X),\otimes^{\ch})$.  The factorization restriction selects
+the coalgebras whose disjoint-locus structure maps are equivalences.
+The conditional packages below record the additional closure and
+model-categorical input needed for internal properads and completed
+inverse limits.  Ordered descent begins on the principal
+$\Sigma_n$-cover of the open configuration locus; its collision
+extension is the clause $H_{\mathrm{fact}}^{R}$.
+
+Let $X$ be a smooth curve over a field~$k$ of characteristic~$0$.
+Write $\Ran(X)$ for the Ran space of~$X$ (the colimit of finite powers
+$X^n$ along surjective finite-order maps), and $\Ran^{\ord}(X)$ for the
+ordered Ran space (the same colimit taken over strictly increasing
+index maps on labelled finite sets).
+
+\begin{definition}[Ran factorization ambient;
+\ClaimStatusDefinitional]
+\label{def:fg-ambient}
+\index{Francis--Gaitsgory ambient}
+\index{factorization algebra!infinity-category}
+The \emph{Ran factorization ambient} has sheaf-level base
+\[
+\Fact_{\Ran}(X)
+\;=\;
+\Alg^{\fact}(\Shv^{\DR}(\Ran(X)))
+\]
+of factorization algebras on $\Ran(X)$ valued in de~Rham sheaves, with
+monoidal operation given by the Francis--Gaitsgory chiral product
+\cite{Francis2012}.  Throughout this chapter $\Fact(X)$ denotes a
+chosen symmetric-monoidal model enhancement satisfying
+$H_{\Fact}(X)$ of Proposition~\ref{prop:fg-ambient-properties}.
+\end{definition}
+
+\begin{remark}[Monoidal factorization realization]
+\label{rem:why-fact}
+\index{chiral pseudo-tensor!Ran symmetric-monoidal realization}
+The Beilinson--Drinfeld chiral pseudo-tensor structure on $\Dmod(X)$
+defines a sequence of multilinear operations
+\[
+\otimes^{\ch}_I \colon \prod_{i\in I} \Dmod(X) \to \Dmod(X),\qquad
+|I|<\infty,
+\]
+indexed by finite sets~$I$ \cite[\S3.4]{BD04}.  Its Ran realization is
+the chiral symmetric-monoidal structure of Francis--Gaitsgory.  The
+unit and the disjoint-union product are encoded by the factorization
+structure, and $H_{\Fact}(X)$ chooses a model presentation on which
+ordinary enriched transfer arguments may be applied.
+\end{remark}
+
+\begin{proposition}[Conditional factorization ambient package;
+\ClaimStatusConditional]
+\label{prop:fg-ambient-properties}
+Let $\Fact(X)$ be the enhancement named in
+Definition~\ref{def:fg-ambient}. The hypothesis package
+$H_{\Fact}(X)$ consists of the following clauses.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The Ran sheaf ambient $\Shv^{\DR}(\Ran(X))$ is stable and
+presentable, and $\Fact_{\Ran}(X)$ is the factorization-algebra lane on
+that ambient.
+\item The Francis--Gaitsgory star-product extends to a colimit-compatible
+symmetric monoidal operation on the chosen enhancement.
+\item The factorization unit, represented sheaf-theoretically by the
+constant factorization algebra on $\cO_X$, gives a strict unit in the
+enhancement; the Beilinson--Drinfeld chiral unit maps to this unit by
+the sheafified factorization comparison.  The two units belong to the
+pseudo-tensor and factorization presentations, respectively.
+\item The model enhancement is cofibrantly generated and supports the
+enriched collections from which internal operads and properads are
+formed.
+\end{enumerate}
+Under $H_{\Fact}(X)$, the uses of $\Fact(X)$ in
+Theorem~\ref{thm:A-infinity-2}
+are stable, presentable, symmetric monoidal, and compatible with
+colimits in each variable.
+\end{proposition}
+
+\begin{proof}
+The de~Rham sheaf ambient is stable and presentable in the GR
+formalism \cite[Chapter~I.3]{GR17}; Francis--Gaitsgory construct the
+chiral monoidal operation on $D(\Ran X)$ \cite{Francis2012}.  Clauses
+(b)--(d) specify the model presentation used in this volume.  The
+properadic transfer adds the separate package $H_{\mathrm{prop}}$ of
+Theorem~\ref{thm:factorization-properad-transfer}.
+\end{proof}
+
+%================================================================
+\section{Simplicial properads and factorization transfer}
+\label{sec:ainf2-properads}
+%================================================================
+
+An operad records many inputs and one output.  A properad records many
+inputs and many outputs, with composition indexed by connected graphs
+\cite{Val07}.  We use the profile convention
+$\cP(n,m)=$ ``$n$ inputs and $m$ outputs.''
+
+A Verdier--Koszul properadic datum consists of a specified evaluation
+and its duality transpose
+\[
+ \operatorname{ev}_{A}\colon
+ A\otimes^{\ch}K_X(A)\longrightarrow\omega_X,
+ \qquad (2,1),
+\]
+\[
+ \operatorname{coev}_{A}\colon
+ \omega_X\longrightarrow K_X(A)\otimes^{\ch}A,
+ \qquad (1,2),
+\]
+where $K_X(A)=\mathbb D_{\Ran}B_X(A)$.  The zig--zag identities are
+part of the dual-pair clause of $H_{\mathrm{VD}}$.  A multiplication
+or Maurer--Cartan operation has profile $(n,1)$; its Verdier transpose
+has profile $(1,n)$.  These profiles generate the properadic envelope
+used below.
+
+\begin{definition}[Factorization-enriched properad;
+\ClaimStatusDefinitional]
+\label{def:v1-factorization-properad}
+\index{properad!factorization}
+Let $\cV_X$ be the symmetric-monoidal model enhancement selected by
+$H_{\Fact}(X)$.  A \emph{$\cV_X$-enriched properad} is a colored
+collection $\{\cP(\mathbf d;\mathbf c)\}$ in $\cV_X$, equivariant in
+the input and output colors, with units and associative substitution
+maps indexed by connected directed graphs.  It is a
+\emph{factorization-enriched properad} when every profile satisfies
+disjoint-locus factorization descent and the substitution maps commute
+with those descent equivalences.  We write $\FactProp(X)$ for the
+resulting category whenever the model presentation of
+Theorem~\ref{thm:factorization-properad-transfer} is available.
+\end{definition}
+
+\begin{theorem}[Model-categorical presentation of simplicial
+properads; \ClaimStatusConjectured]
+\label{thm:hackney-robertson-model}
+\textup{[Type signature: external homotopy-theory input; simplicial
+properad presentation; properadic enrichment level; hypothesis
+package: the presentation clause $H_{\mathrm{HR}}$ stated in the
+theorem body.]}
+The presentation clause $H_{\mathrm{HR}}$ asserts: the ordinary
+category $\mathsf{sProperad}$ of small simplicial properads carries a
+cofibrantly generated model structure in which a morphism
+$f\colon P\to Q$ is a weak equivalence precisely when it is a weak
+homotopy equivalence on every input--output profile and
+$\pi_0f\colon\pi_0P\to\pi_0Q$ is an equivalence of categories, and a
+fibration precisely when it is a Kan fibration on every profile and
+$\pi_0f$ is an isofibration; and this model structure presents the
+homotopy theory of $\infty$-properads of
+Hackney--Robertson--Yau \cite{HRY17}.
+\end{theorem}
+
+\begin{remark}[Scope of the literature input]
+\label{rem:hackney-robertson-scope}
+Hackney--Robertson--Yau \cite{HRY17} construct the homotopy theory of
+$\infty$-properads inside graphical sets, a presheaf model built from
+simplicial sets; that construction does not itself furnish the model
+structure on $\mathsf{sProperad}$ displayed in $H_{\mathrm{HR}}$.
+The clause $H_{\mathrm{HR}}$ is therefore consumed as a named
+hypothesis, with the graphical-set homotopy theory as its evidence,
+and every use below routes through
+Theorem~\ref{thm:factorization-properad-transfer}, whose package
+$H_{\mathrm{prop}}$ is stated independently.
+\end{remark}
+
+\begin{theorem}[Conditional factorization-enriched properad transfer;
+\ClaimStatusConditional]
+\label{thm:factorization-properad-transfer}
+\textup{[Type signature: Open quadrant; factorization-enriched
+properad presentation; Beilinson level $1\leftrightarrow2$ envelope;
+hypothesis package $H_{\mathrm{prop}}$.]}
+Let $\cV_X$ be a cofibrantly generated symmetric-monoidal model
+enhancement of the factorization ambient.  The package
+$H_{\mathrm{prop}}$ consists of the following clauses.
+\begin{enumerate}[label=\textup{(P\arabic*)}]
+\item \label{Hprop-monoid} $\cV_X$ satisfies the monoid axiom.
+\item \label{Hprop-unit} The monoidal unit of $\cV_X$ is cofibrant.
+\item \label{Hprop-admissible} The free properad monad formed by
+connected-graph substitution is admissible: its generating cell
+domains are small and the transferred factorizations exist.
+\item \label{Hprop-weq} Connected-graph extension and the operad-to-
+properad transfer preserve weak equivalences between cofibrant
+collections; on the envelope generated by the associative bar--cobar
+pair they preserve the derived unit and counit equivalences.
+\item \label{Hprop-descent} The localization imposing disjoint-locus
+factorization descent is stable under the free properad monad,
+homotopy colimits of cofibrant diagrams, and the transferred
+factorizations.
+\end{enumerate}
+Under $H_{\mathrm{prop}}$, factorization-enriched properads carry the
+transferred cofibrantly generated model structure.  Its weak
+equivalences are the profilewise weak equivalences together with the
+equivalence condition on the color category.  The graphwise extension
+of the associative bar--cobar adjunction is a Quillen equivalence on
+the properadic envelope generated by that pair.
+\end{theorem}
+
+\begin{proof}
+Clauses~\ref{Hprop-monoid}--\ref{Hprop-admissible} transfer the model
+structure from enriched collections to algebras over the free
+properad monad.  Clause~\ref{Hprop-descent} descends this structure to
+the factorization-local objects.  Clause~\ref{Hprop-weq} carries the
+derived bar--cobar unit and counit through connected-graph extension,
+which gives the asserted Quillen equivalence on the generated
+envelope.  The presentation clause $H_{\mathrm{HR}}$ of
+Theorem~\ref{thm:hackney-robertson-model} posits the
+simplicial properad model that motivates the profile and color
+conditions; the enrichment over $\cV_X$ is governed by the five
+displayed clauses.
+\end{proof}
+
+%================================================================
+\section{Conditional factorization and properadic forms of Theorem~A}
+\label{sec:ainf2-main}
+%================================================================
+
+\begin{theorem}[Factorization restriction and properadic envelope of
+Theorem~A; \ClaimStatusConditional]
+\label{thm:A-infinity-2}
+\label{thm:theorem-A-E1}
+\index{Theorem A-infinity-2}
+\index{Theorem A!E_1-ordered variant}
+\textup{[Type signature: Open quadrant; Ran, factorization, and
+properadic presentations; Beilinson level $1\leftrightarrow2$;
+pro-nilpotent chiral Ran ambient; hypothesis packages
+$H_{\Fact}+H_{\mathrm{fact}}+H_{\mathrm{conv}}$, with
+$H_{\mathrm{prop}}$ for clause~\ref{A2-i}.]}
+Let $X$ be a smooth curve over a characteristic-zero field and place
+the reduced associative operad in
+$\mathcal C_X=(D(\Ran X),\otimes^{\ch})$.  Assume
+$H_{\Fact}(X)$, $H_{\mathrm{fact}}$, and $H_{\mathrm{conv}}$.
+Enhanced bar and cobar restrict to a derived
+adjoint equivalence
+\[
+ \Omegach_X\colon\CoFact^{\conil,\comp}(X)
+ \rightleftarrows
+ \Fact^{\aug,\comp}(X)\colon\Bbarch_X
+\]
+on the chosen factorization subcategories, with unit and counit
+equivalences.  It has the following refinements.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \label{A2-i} \emph{Properadic envelope;
+$\ClaimStatusConditional$.}
+Under $H_{\mathrm{prop}}$, connected-graph extension gives a derived
+adjoint equivalence
+\[
+ \Omegach_X\colon
+ \CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)
+ \rightleftarrows
+ \FactProp^{\aug,\comp}_{\langle\chirAss\rangle}(X)
+ \colon\Bbarch_X .
+\]
+The subscript $\langle\chirAss\rangle$ denotes the envelope generated
+from the associative operadic pair by connected-graph substitution,
+radical completion, and weak equivalence.
+
+\item \label{A2-ii} \emph{Fiber restriction;
+$\ClaimStatusConditional$.}
+For a marked point $x\in X$, assume that the fiber functor
+$i_x^!\colon\Fact(X)\to\mathsf{Ch}(k)$ is exact symmetric monoidal and
+commutes with the completed bar and cobar constructions.  Its image is
+the ordinary associative bar--cobar adjunction, whose unit and counit
+are quasi-isomorphisms \cite[Corollary~2.3.4]{LV12}.
+
+\item \label{A2-iii} \emph{Ordered-to-symmetric descent;
+$\ClaimStatusConditional$.}
+Let $R(z)$ satisfy hypotheses~\ref{R1} and~\ref{R2} of
+Lemma~\ref{lem:R-twisted-descent-unitary} and arise as monodromy of the
+stated flat connection.  On the open configuration locus the principal
+$\Sigma_n$-torsor
+\[
+ \pi_n^\circ\colon\Conf_n^{\ord}(X)\longrightarrow\Conf_n(X)
+\]
+gives $L_R$-twisted descent of the ordered bar.  Under
+$H_{\mathrm{fact}}^{R}$, nearby cycles extend this equivalence through
+the Fulton--MacPherson collision strata to the cardinality-$n$ Ran
+stratum.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Francis--Gaitsgory's Proposition~4.1.2, together with the
+pro-nilpotence argument in the proof of their Theorem~5.1.1, gives
+the enhanced equivalence in $D(\Ran X)$.
+The closure maps of $H_{\mathrm{fact}}$ restrict it to the displayed
+factorization subcategories.
+
+On chain models the two free constructions are
+\[
+ \Bbarch_X(A)=\Tc_{\Fact(X)}(s^{-1}\bar A),
+ \qquad
+ \Omegach_X(C)=T_{\Fact(X)}(s\bar C).
+\]
+The bar multiplication term and the cobar coproduct term both have
+cohomological degree~$+1$ by
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.  Their universal
+twisting-morphism property gives the adjunction
+\cite[Theorem~2.2.9]{LV12}.
+
+The three convergence clauses enter at distinct points.  The direct-
+sum bar is the filtered colimit of its finite length pieces by
+$H_{\mathrm{len}}$.  The identity
+$A\simeq\varprojlim_qA/\bar A^{\,q}$ is supplied by
+$H_{\mathrm{aug}}$ and identifies the completed algebra with its
+finite augmentation quotients.  The pro-coradical tower of
+$H_{\mathrm{ML}}$ has vanishing derived inverse-limit obstruction, so
+the stagewise unit and counit equivalences pass to the completed limit.
+This proves the first assertion.
+
+Clause~\ref{A2-i} is Theorem~\ref{thm:factorization-properad-transfer}.
+The exact symmetric-monoidal fiber functor in clause~\ref{A2-ii}
+carries the displayed free constructions to $T^c(s^{-1}\bar A)$ and
+$T(s\bar C)$; Loday--Vallette's unit and counit theorem then applies.
+Clause~\ref{A2-iii} is the open-locus assertion and the
+$H_{\mathrm{fact}}^{R}$ extension of
+Lemma~\ref{lem:R-twisted-descent-unitary}.
+\end{proof}
+
+\begin{remark}[Three convergence mechanisms]
+\label{rem:A-inf-2-ml-step-2}
+\index{Mittag-Leffler!bar-length vs coradical filtration}
+For the direct-sum bar,
+\[
+ F^{\mathrm{bar}}_{\leq p}B(A)
+ =\bigoplus_{0\leq n\leq p}(s^{-1}\bar A)^{\otimes n},
+ \qquad
+ B(A)=\varinjlim_pF^{\mathrm{bar}}_{\leq p}B(A).
+\]
+This is bar-length exhaustiveness.  Augmentation completeness is the
+separate comparison
+\[
+ A\xrightarrow{\sim}\varprojlim_qA/\bar A^{\,q}.
+\]
+Coradical convergence belongs to a pro-coalgebra presentation
+$C\simeq\varprojlim_qC_{\leq q}$.  For every cohomological degree and
+every properadic profile, $H_{\mathrm{ML}}$ requires the tower
+$\{H^j(C_{\leq q})\}_q$ to be Mittag--Leffler.  The Milnor sequence
+\[
+ 0\longrightarrow
+ R^1\!\varprojlim_q H^{j-1}(C_{\leq q})
+ \longrightarrow H^j(R\!\varprojlim_q C_{\leq q})
+ \longrightarrow \varprojlim_q H^j(C_{\leq q})
+ \longrightarrow0
+\]
+then identifies the derived inverse limit with the ordinary limit.
+Thus $H_{\mathrm{len}}$, $H_{\mathrm{aug}}$, and $H_{\mathrm{ML}}$
+control respectively a filtered colimit, an algebraic completion, and
+a derived inverse limit.
+\end{remark}
+
+\begin{remark}[Fixed curve, relative interior, and Deligne--Mumford boundary]
+\label{rem:A-infinity-2-modular-family-scope}
+Theorem~\ref{thm:A-infinity-2} is a fixed-smooth-curve theorem.  It
+has two relative enhancements.  The enhancement over
+$\mathcal{M}_{g,n}$ carries base change for the relative Ran prestack;
+the enhancement over $\overline{\mathcal{M}}_{g,n}$ carries, in
+addition, nodal factorization sewing.
+
+Let $\pi:\mathcal C\to S$ be a smooth projective family of marked
+curves and let $\Ran^{\rel}(\mathcal C/S)\to S$ be the relative Ran
+prestack. For $f:S'\to S$, write
+$f':\Ran^{\rel}(\mathcal C'/S')\to\Ran^{\rel}(\mathcal C/S)$ for the
+induced map. The relative interior obstruction is the base-change
+comparison
+\[
+\alpha_{\mathrm{BC}}:\;
+f^{!}\pi^{\Ran}_{*}\Longrightarrow \pi'^{\Ran}_{*}f'^{!}
+\]
+on relative factorization sheaves.  For
+$\mathcal F\in\Fact^{\rel}(\mathcal C/S)$ satisfying
+$H_{\mathrm{fact}}+H_{\mathrm{conv}}$, the cone of this comparison
+defines
+\[
+[\alpha_{\mathrm{BC}}]\in
+\mathrm{Ext}^{1}_{\Shv^{\DR}(S')}
+\bigl(f^{!}\pi^{\Ran}_{*}\mathcal F,\;
+\pi'^{\Ran}_{*}f'^{!}\mathcal F\bigr).
+\]
+Vanishing of this class for the conilpotent-complete subcategory gives
+the relative version of Theorem~\ref{thm:A-infinity-2} over
+$\mathcal M_{g,n}$.
+
+Let $D_\Delta\subset\overline{\mathcal M}_{g,n}$ be a boundary divisor
+with normalisation $\widetilde C=C'\sqcup C''$ and formal node
+$\widehat D_p$. Mok's logarithmic Fulton--MacPherson geometry
+\cite[Theorem~3.3.1, Theorem~5.2.3, Corollary~5.3.4]{Mok25} supplies
+the normal-crossings and degeneration space on which nodal sewing is
+formulated. The chain-level factorization statement is the separate
+nearby-cycle comparison
+\[
+\beta_{\mathrm{nodal}}:\;
+\Psi_\Delta(\pi_{\log})_{*}\mathcal F
+\Longrightarrow
+(\pi_{\log})_{*,D_\Delta}
+\bigl(\mathcal F(C')\otimes_{\mathcal F(\widehat D_p)}
+\mathcal F(C'')\bigr),
+\]
+where $\Psi_\Delta$ denotes Beilinson--Drinfeld factorization nearby
+cycles. Its obstruction class is
+\[
+[\beta_{\mathrm{nodal}}]\in
+\mathrm{Ext}^{1}_{\Shv^{\DR}(D_\Delta)}
+\bigl(\Psi_\Delta(\pi_{\log})_{*}\mathcal F,\;
+(\pi_{\log})_{*,D_\Delta}
+\bigl(\mathcal F(C')\otimes_{\mathcal F(\widehat D_p)}
+\mathcal F(C'')\bigr)\bigr).
+\]
+Vanishing of $[\beta_{\mathrm{nodal}}]$ at every boundary divisor is
+the extra condition for the Deligne--Mumford extension.
+
+The two obstructions are independent. The class
+$[\alpha_{\mathrm{BC}}]$ controls horizontal transport over smooth
+families; $[\beta_{\mathrm{nodal}}]$ controls sewing at nodal
+degenerations. Class~$\mathsf G$ satisfies the nodal condition by
+direct free-field sewing. Class~$\mathsf L$ satisfies it under the
+generic non-critical Beilinson--Drinfeld chiral sewing hypotheses.
+For class~$\mathsf M$, the sewing datum lives in the weight-completed
+lane.
+
+The $R$-twisted descent of Lemma~\ref{lem:R-twisted-descent-unitary} is a
+fixed-curve configuration-space theorem.  Its Fulton--MacPherson
+collision extension is the clause $H_{\mathrm{fact}}^{R}$.  A
+Deligne--Mumford extension additionally carries the family classes
+$[\alpha_{\mathrm{BC}}]$ and $[\beta_{\mathrm{nodal}}]$.  Their
+vanishing extends the family comparison across the compactified base.
+Together with the indicated Theorem~D packages, the resulting hierarchy
+is
+\[
+ \operatorname{Obs}^{\mathrm{def}}_g(\cA)
+ \in H^2\!\left(\Def_g(\cA)\right),
+ \qquad g\geq2,
+ \qquad
+ \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)
+ =+\kappa(\cA)\lambda_1
+ \in H^2(\overline{\cM}_{1,1})
+ \quad\text{under }H_D^1,
+\]
+\[
+ \mathfrak O_g^K(\cA)
+ =\kappa(\cA)\lambda_{-1}(\mathbb E_g)
+ \in K^0(\overline{\cM}_g),
+ \qquad
+ \operatorname{ch}_g\!\left(\mathfrak O_g^K(\cA)\right)
+ =(-1)^g\kappa(\cA)\lambda_g
+ \in H^{2g}(\overline{\cM}_g)
+ \quad\text{under }H_D^K.
+\]
+The package~$H_D^{\mathrm{tr}}$ supplies the derived comparison between
+the deformation and virtual Hodge carriers.  Under
+$H_D^{\mathrm{graph}}$, the stable-graph scalar is
+\[
+ F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
+ +\delta F_g^{\mathrm{cross}}(\cA)\in\mathbb C.
+\]
+\end{remark}
+
+\begin{remark}[Alternative proof lanes: Theorem~A versus Theorem~C]
+\label{rem:A-inf-2-ptvv-scope}
+\index{Theorem A!alternative proof lanes}
+\index{PTVV!Theorem C proof lane}
+Lurie~HA~\S5.5 gives a topological route to the locally constant
+specialization of clause~\ref{A2-ii}: factorization algebras via little
+discs and factorization envelopes reproduce the classical associative
+Koszul pair.  The $\PTVV$ shifted-symplectic construction belongs to
+\emph{Theorem~C}: its lane
+constructs the $(-(3g-3))$-shifted symplectic structure on
+$\RMap(\overline{\cM}_g,BG_\cA)$ as a genuinely disjoint path from the
+fiber-center Koszul identification, relevant to the characteristic-datum
+C0/C1/C2 clauses and to the $\lambda_g$-free formulation of Theorem~D.
+Francis--Gaitsgory and Loday--Vallette supply the bar--cobar
+reconstruction inputs.  The simplicial properad model structure is the
+presentation clause $H_{\mathrm{HR}}$
+(Theorem~\ref{thm:hackney-robertson-model}, Conjectured), while
+$H_{\mathrm{prop}}$ carries its factorization-enriched transfer.
+\end{remark}
+
+\begin{corollary}[Classical chain model from fiber restriction;
+\ClaimStatusConditional]
+\label{cor:classical-A-from-A-infinity-2}
+\index{Theorem A!descent from A-infinity-2}
+Assume the fiber and Verdier clauses of
+Theorem~\ref{thm:A-infinity-2}\ref{A2-ii}, $H_{\mathrm{VD}}$, and the
+following fiber package $H_{\mathrm{fib}}$: a chosen !-fiber functor
+on the finite-window holonomic subcategory is exact, its tensor
+exchange maps are isomorphisms, it commutes with the completed inverse
+limits used by bar and cobar, and Verdier base change identifies the
+fiber of $\mathbb D_{\Ran}$ with the linear dual of the fiber.  The
+geometric bar--cobar adjunction
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}})
+and its Verdier-duality intertwining
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-verdier}}) are the images
+of the enhanced Ran constructions under this fiber functor.
+\end{corollary}
+
+\begin{proof}
+Clause~\ref{A2-ii} and $H_{\mathrm{fib}}$ carry $\Bbarch_X$ and $\Omegach_X$ to
+$T^c(s^{-1}\bar A)$ and $T(s\bar C)$ and carries their unit and counit
+to the classical maps.  The base-change, K\"unneth, and biduality maps
+of $H_{\mathrm{VD}}$ carry the Verdier comparison to the same fiber.
+\end{proof}
+
+%================================================================
+\section{$R$-matrix-twisted $\Sigma_n$-descent}\label{sec:ainf2-R-descent}
+%================================================================
+
+The descent lemma relating ordered and symmetric bar for
+$\Eone$-chiral algebras is the explicit content of
+Corollary~\ref{cor:eight-cor-R-descent} of the unified Koszul
+reflection (equivalently, of
+Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
+
+\begin{proposition}[Classical MC/CYBE output and quantum QYBE input;
+\ClaimStatusConditional]
+\label{prop:classical-cybe-quantum-r-input}
+\index{Maurer-Cartan!classical output versus quantum input}
+\index{CYBE!classical output}
+\index{QYBE!quantum input}
+The universal twisting morphism of
+Corollary~\ref{cor:eight-cor-twisting-morphism} produces a
+classical Maurer--Cartan equation in the ordered convolution algebra,
+\[
+D\theta_\cA+\tfrac12[\theta_\cA,\theta_\cA]=0.
+\]
+On the binary collision stratum, if the residue kernel is
+$r(z)\in(\End \cA^{\otimes 2})((z))$, the flatness of the classical
+logarithmic connection
+\[
+\nabla_{\mathrm{cl}}
+=d-\hbar\sum_{i<j}r_{ij}(z_i-z_j)\,d(z_i-z_j)
+\]
+is the spectral classical Yang--Baxter identity
+\[
+[r_{12}(z_{12}),r_{13}(z_{13})]
++[r_{12}(z_{12}),r_{23}(z_{23})]
++[r_{13}(z_{13}),r_{23}(z_{23})]=0
+\]
+together with the Arnold relation for the logarithmic forms when
+$r(z)$ has rational KZ form $\Omega/z$. This is classical output of
+the bar differential. A quantum descent datum is extra input: a
+formal or meromorphic family
+\[
+R(z)=1+\hbar r(z)+O(\hbar^2),\qquad
+\check R(z):=\tau\circ R(z),
+\]
+whose checked operators satisfy the braid cocycle and whose ordinary
+operators satisfy the quantum Yang--Baxter equation and unitarity of
+Lemma~\ref{lem:R-twisted-descent-unitary}.  The $\hbar^2$ coefficient
+of QYBE is CYBE.  The coefficients $R^{(m)}(z)$ for $m\geq2$ and the
+flat realization of $L_R$ form the additional quantum descent datum.
+\end{proposition}
+
+\begin{proof}
+Expanding QYBE for
+$R(z)=1+\hbar r(z)+\hbar^2R^{(2)}(z)+O(\hbar^3)$ gives identical
+linear terms on both sides. At order~$\hbar^2$, the unknown
+$R^{(2)}$ terms cancel, and the remaining difference is precisely
+the displayed sum of commutators. Expanding unitarity
+$R^{21}(-z)R^{12}(z)=1$ at order~$\hbar$ gives
+$r^{21}(-z)+r^{12}(z)=0$. The Maurer--Cartan equation is the same
+flatness identity before choosing a quantization; the Arnold relation
+annihilates the three logarithmic two-form coefficients on
+$\Conf_3(X)$.  Thus the expansion determines the classical kernel,
+while the higher coefficients $R^{(m)}(z)$ and their flat connection
+are quantum input.
+\end{proof}
+
+\begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent, unitary quantum $R$;
+\ClaimStatusConditional]
+\label{lem:R-twisted-descent-unitary}% renamed 2026-05-17 from lem:R-twisted-descent (collision with ordered_associative_chiral_kd.tex:587)
+\index{R-matrix!Sigma-descent}
+\index{descent!R-twisted}
+\textup{[Type signature: Open quadrant; ordered/symmetric
+configuration presentation; Beilinson level~$2$; hypotheses
+\ref{R1}+\ref{R2}, with $H_{\mathrm{fact}}^{R}$ for Ran extension.]}
+Let $\cA$ be an $\Eone$-chiral algebra with a meromorphic unitary
+quantum $R$-matrix
+$R(z) \in \operatorname{Aut}(\cA \otimes \cA)((z))$; write
+$\check R(z):=\tau\circ R(z)$ for the checked braiding. Assume
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item \label{R1} the quantum Yang--Baxter equation
+$R_{12}(z_{12})\,R_{13}(z_{13})\,R_{23}(z_{23})
+=R_{23}(z_{23})\,R_{13}(z_{13})\,R_{12}(z_{12})$ on
+$\{z_1,z_2,z_3\}$-triples; and
+\item \label{R2} \emph{unitarity}: $R^{21}(-z)\,R^{12}(z)=\id_{\cA\otimes\cA}$
+on the formal punctured disc, where
+$R^{21}(w):=\tau\cdot R(w)\cdot\tau$ is the swap-conjugate.
+\end{enumerate}
+Assume also that the meromorphic family is realized as the monodromy
+of a flat KZ/Cherednik-type connection on
+$\Conf^{\ord}_n(X)$ for each~$n$, with elementary chamber-crossing
+operator $\check R_i(z_i-z_{i+1})$ on adjacent factors.
+Then
+\[
+ \pi_n^\circ\colon\Conf_n^{\ord}(X)\longrightarrow\Conf_n(X)
+\]
+is a principal $\Sigma_n$-torsor, and there is a canonical
+$\Sigma_n$-equivariant local system $L_R$ on
+$\Conf^{\ord}_n(X)$ whose descent isomorphism for the elementary
+transposition $s_i$ is $\check R_i(z_i-z_{i+1})$.  On the open locus,
+\[
+ \left.\barB^{\Sigma}_n(\cA)\right|_{\Conf_n(X)}
+ \simeq
+ \operatorname{Desc}_{\pi_n^\circ}
+ \left(\left.B^{\ord}_n(\cA)\right|_{\Conf_n^{\ord}(X)}\otimes L_R\right).
+\]
+Under $H_{\mathrm{fact}}^{R}$, $L_R$ has compatible nearby cycles on
+the Fulton--MacPherson collision strata, and the open equivalence
+extends to
+\[
+\barB^{\Sigma}_n(\cA)
+\;\simeq\;
+\bigl(B^{\ord}_n(\cA)\bigr)^{\Sigma_n\text{-coinv},\; L_R\text{-twisted}}.
+\]
+\end{lemma}
+
+\begin{proof}
+The free action of $\Sigma_n$ on
+$\Conf_n^{\ord}(X)=X^n\setminus\Delta$ permutes the labels, and its
+geometric quotient is $\Conf_n(X)$.  Hence $\pi_n^\circ$ is a
+principal $\Sigma_n$-torsor.
+
+Assign to each point
+$(z_1,\dots,z_n) \in \Conf^{\ord}_n(X)$ the vector space
+$\cA^{\otimes n}$ at that point and to each elementary deck
+transformation $s_i$ the isomorphism
+\[
+\phi_i=\check R_i(z_i-z_{i+1})\colon
+s_i^*(\cA^{\otimes n})\longrightarrow \cA^{\otimes n}.
+\]
+The QYBE of~\ref{R1} is exactly the braid cocycle
+\[
+\phi_i\,s_i^*(\phi_{i+1})\,(s_i s_{i+1})^*(\phi_i)
+=
+\phi_{i+1}\,s_{i+1}^*(\phi_i)\,(s_{i+1}s_i)^*(\phi_{i+1})
+\]
+on triple overlaps; distant generators commute because they act on
+disjoint tensor factors. The unitarity condition~\ref{R2} gives
+$\phi_i\,s_i^*(\phi_i)=\id$, since $s_i$ sends $z_i-z_{i+1}$ to
+$-(z_i-z_{i+1})$ and swaps the two factors. Thus
+\ref{R1}+\ref{R2} supply the Coxeter descent cocycle on the ordered
+cover. The flat KZ/Cherednik realization supplies the underlying
+local system on $\Conf^{\ord}_n(X)$; the cocycle above supplies its
+$\Sigma_n$-equivariant descent datum.
+
+Descent along the principal torsor is the standard equivalence between
+sheaves on $\Conf_n(X)$ and sheaves on the ordered cover equipped
+with a $\Sigma_n$-cocycle. The ordered bar $B^{\ord}_n(\cA)$ restricted to
+$\Conf^{\ord}_n(X)$ is
+$\cA^{\boxtimes n} \otimes \Omega^{n-1}_{\Conf^{\ord}_n(X)}(\log D)$,
+and its descent to $\Conf_n(X)$ with twist by $L_R$ is by definition
+the symmetric bar $\barB^{\Sigma}_n(\cA)$ of
+Definition~\ref{def:geometric-bar} (the bar coefficient in the
+symmetric setting is the Arnold 1-form $d\log(z_i - z_j)$, which
+transforms under $\Sigma_n$ by the sign character twisted by
+the checked operator $\check R(z_i-z_j)$ acting on the fibres).
+
+The log Fulton--MacPherson compactification
+$\overline{\Conf}_n(X)$ supplies the fixed-curve normal-crossings
+boundary on which $H_{\mathrm{fact}}^{R}$ is formulated.  That clause
+identifies the nearby-cycle monodromy with the chiral collision
+product.  The ordered bar differential is a coderivation for
+deconcatenation and preserves stratum depth, so descent on a boundary
+stratum is the top-stratum descent applied to the nearby-cycle fibre.
+For the pole-free case the exceptional-divisor limit is the checked
+swap $\tau$, and
+the formula reduces to ordinary $\Sigma_n$-coinvariants.
+\end{proof}
+
+\begin{remark}[Unitarity and collision extension]
+\label{rem:R-descent-unitarity-scope}
+\index{R-matrix!unitarity scope}
+\index{descent!scope across families}
+Hypothesis~\ref{R2} is satisfied on the finite-dimensional evaluation
+module lane of the rational Drinfeld Yangian $Y_\hbar(\fg)$ after the
+standard scalar normalization of the rational $R$-matrix, and on the
+integrable finite-type lane of trigonometric quantum affine
+$U_q(\hat\fg)$ at generic~$q$ after the corresponding normalization.
+These are representation-surface statements.  A factorization
+Drinfeld--Kohno equivalence on Yangian category~$\mathcal O$ and a
+dg-shifted Yangian/line-operator comparison carry their own comparison
+morphisms.  At roots of unity, and for elliptic or dynamical
+$R$-matrices of Belavin/Felder type, the chosen presentation supplies
+unitarity and the regular-singular boundary extension.  For chiral
+algebras in a genuinely trivial ordinary
+$R$-matrix lane~$R(z)=1$, the checked braiding is $\check R(z)=\tau$;
+unitarity~\ref{R2} is immediate and~\ref{R1} is vacuous. The
+non-zero-level Heisenberg lane is separate: its ordered-bar braiding is
+the scalar $R_{\cH_k}(z)=\exp(k\hbar/z)$. It satisfies
+unitarity~\ref{R2} by scalar cancellation and satisfies~\ref{R1}
+tautologically; its local system becomes trivial on the zero-level and
+zero-charge specializations.
+
+The fixed-curve collision extension is $H_{\mathrm{fact}}^{R}$.  For
+the rational KZ and trigonometric Cherednik connections it is the
+regular-singular logarithmic extension along the Fulton--MacPherson
+boundary on the stated representation lanes.  Elliptic and dynamical
+$R$-matrices use the chosen compactification and dynamical-parameter
+convention.  Thus hypotheses~\ref{R1}+\ref{R2} govern open
+configuration-space descent, while $H_{\mathrm{fact}}^{R}$ governs
+the Ran-level symmetric bar.
+\end{remark}
+
+\begin{remark}[Comparison with $\fg^{\Eone}_\cA$ versus $\fg^{\mathrm{mod}}_\cA$]
+\label{rem:av-via-descent}
+\index{averaging map!via R-twisted descent}
+The averaging map
+$\mathrm{av}\colon \fg^{\Eone}_\cA \to \fg^{\mathrm{mod}}_\cA$
+(\S\ref{sec:e1-first-prose-architecture}) is the dual of the descent
+map $\pi^!$ after forgetting the monodromy datum: dualising
+$\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ and tensoring with the structure
+sheaf gives the $\Sigma_n$-coinvariant projection on the classical
+shadow.  Quantization is supplied by the quantum $R$-datum, and the
+full modular characteristic additionally uses the conformal-vector
+normalization. For affine
+Kac--Moody $V_k(\fg)$ in trace-form convention, the classical residue
+kernel is
+\[
+r^{KM}(z)=k\,\Omega_{\mathrm{tr}}/z.
+\]
+Its trace-form contribution to the scalar diagonal is
+$k\,\dim(\fg)/(2h^\vee)$. The full invariant is
+\[
+\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee),
+\]
+where the trace of the descent local system contributes
+$k\dim(\fg)/(2h^\vee)$ and the Sugawara conformal vector contributes
+$\dim(\fg)/2$.
+\end{remark}
+
+%================================================================
+\section{Typed restrictions of Theorem~A}\label{sec:ainf2-downstream}
+%================================================================
+
+The Ran equivalence, its factorization restriction, its completed
+chain model, its conditional properadic transfer, and its ordered
+descent occupy five distinct hypothesis packages.
+
+\begin{corollary}[Five typed outputs of Theorem~A;
+\ClaimStatusConditional]
+\label{cor:ainf2-downstream-list}
+\index{Theorem A-infinity-2!downstream corollaries}
+The following outputs hold on their stated domains:
+\begin{enumerate}[label=\textup{(D\arabic*)}]
+\item \label{D1} In the pro-nilpotent chiral Ran ambient, enhanced
+associative bar and cobar are inverse equivalences in $D(\Ran X)$
+\textup{(}Theorem~\ref{thm:koszul-reflection}\ref{KR-i}\textup{)}.
+\item \label{D2} Under $H_{\mathrm{fact}}$, the equivalence restricts
+to the chosen associative factorization subcategories
+\textup{(}Theorem~\ref{thm:koszul-reflection}\ref{KR-iii}\textup{)}.
+\item \label{D3} Under $H_{\mathrm{conv}}$, the completed chain models
+have bar $T^c(s^{-1}\bar A)$, cobar $T(s\bar C)$, and unit and counit
+equivalences \textup{(}Theorem~\ref{thm:A-infinity-2}\textup{)}.
+\item \label{D4} Under $H_{\mathrm{prop}}$, connected-graph extension
+gives the Quillen equivalence on the properadic envelope
+\textup{(}Theorem~\ref{thm:A-infinity-2}\ref{A2-i}\textup{)}.
+\item \label{D5} Under hypotheses~\ref{R1}+\ref{R2}, the ordered bar
+descends along the principal $\Sigma_n$-torsor on the open
+configuration locus; $H_{\mathrm{fact}}^{R}$ supplies its Ran
+extension \textup{(}Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}\textup{)}.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Items~\ref{D1}--\ref{D3} are the Ran equivalence, its factorization
+closure, and the convergence argument of
+Theorem~\ref{thm:A-infinity-2}.  Item~\ref{D4} is
+Theorem~\ref{thm:factorization-properad-transfer}; item~\ref{D5} is
+Lemma~\ref{lem:R-twisted-descent-unitary}.
+\end{proof}
+
+\begin{remark}[Cross-volume bridges to climax and conductor chapters]
+\label{rem:cross-volume-bridges-to-climax-and-conductor}
+\index{cross-volume bridge!climax and conductor}
+The unified Koszul reflection
+(Theorem~\ref{thm:koszul-reflection}) feeds directly into two
+parallel-established chapters:
+\begin{itemize}
+\item \textbf{Climax chapter} \textup{(}\ref{chap:climax-platonic})
+identifying $\bar\partial=\KZ^{*}(\nabla_{\Arnold})$ as the bar
+differential on the universal Arnold connection: the unit~$\eta$ of
+the Koszul reflection at the geometric Arnold connection produces the
+Knizhnik--Zamolodchikov pullback identification of the bar
+differential.
+\item \textbf{Universal conductor chapter}
+\textup{(}\ref{chap:universal-conductor}) proving
+$K=-c_{\mathrm{ghost}}(\mathrm{BRST})$ as the universal ghost-charge
+conductor: the conductor
+$K^{\kappa}(\cA)=\kappa(\cA)+\kappa(\cA^{!})$ is the numerical
+observable of the Verdier-dualized Koszul pair.  The functor
+$K_X=\mathbb D_{\Ran}B_X$ is its categorical antecedent.  Pairwise
+equivalences
+$K_X(\cA)\simeq\cA^!$ and $K_X(\cA^!)\simeq\cA$
+belong to the separate represented self-duality package.
+\end{itemize}
+\end{remark}
+
+%================================================================
+\section{Symmetric monoidal ambient corrections}\label{sec:ainf2-heals}
+%================================================================
+
+Theorem~\ref{thm:A-infinity-2} uses the following ambient data.
+
+\begin{remark}[Symmetric-bar and ordered-bar forms]
+\label{rem:ainf2-heal-69}
+
+The factorization form has two parts:
+\begin{itemize}
+\item[\textsc{Symmetric}:] The \emph{symmetric-bar} statement lies
+in the pro-nilpotent Francis--Gaitsgory Ran ambient; its
+factorization restriction uses $H_{\mathrm{fact}}$.
+\item[\textsc{Ordered}:] The \emph{ordered-bar} statement is
+\ref{A2-iii} of Theorem~\ref{thm:A-infinity-2}: the
+ordered bar on $\Conf_n^{\ord}(X)$ carries the $R$-twisted local system
+$L_R$; descent along $\pi_n^\circ$ gives the symmetric form on
+$\Conf_n(X)$, and $H_{\mathrm{fact}}^{R}$ gives the Ran extension.
+\end{itemize}
+Both forms hold on their stated hypotheses. The level-$0$
+primitive is the open factorization category and its chosen vacuum;
+the level-$2$ ordered object is $B^{\ord}(\cA)$ on $\Ran^{\ord}(X)$,
+and the symmetric bar is the $L_R$-twisted $\Sigma_n$-coinvariant
+descent image.
+\end{remark}
+
+\begin{remark}[Factorization unit functor]
+\label{rem:ainf2-heal-70}
+
+The operadic transfer uses the symmetric-monoidal functor
+\[
+ \mathsf{Ch}(k)\longrightarrow\Fact(X),
+ \qquad M\longmapsto M\otimes\mathbf 1_{\Fact(X)}.
+\]
+Here $\mathbf 1_{\Fact(X)}$ is the factorization unit represented by
+the constant factorization algebra on $\cO_X$.  This is the unit
+functor in $H_{\Fact}(X)$.
+\end{remark}
+
+\begin{remark}[$R$-twisted descent]
+\label{rem:ainf2-heal-71}
+
+For $\cH_k$ the ordered bar carries the scalar descent datum
+\[
+R_{\cH_k}(z)=\exp(k\hbar/z),
+\]
+and Lemma~\ref{lem:R-twisted-descent-unitary} identifies its symmetric
+bar with the scalar-local-system descent.  The zero-level and
+zero-charge specializations give the trivial local system.
+\end{remark}
+
+\begin{remark}[Model-categorical transfer]
+\label{rem:ainf2-heal-72}
+
+Francis--Gaitsgory provide the enhanced Ran bar--cobar equivalence.
+Proposition~\ref{prop:fg-ambient-properties} supplies the chosen model
+presentation, and Theorem~\ref{thm:factorization-properad-transfer}
+states the five additional hypotheses for factorization-enriched
+properads.  The presentation clause $H_{\mathrm{HR}}$
+(Theorem~\ref{thm:hackney-robertson-model}, Conjectured) posits the
+simplicial properad model structure appearing at the base of this
+transfer; \cite{HRY17} constructs the graphical-set homotopy theory
+that evidences it.
+\end{remark}
+
+\begin{remark}[Chain realization]
+\label{rem:ainf2-heal-73}
+
+The enhanced Ran equivalence is constructed from the universal
+properties of enhanced bar and cobar.  A strict chain realization uses
+either a specified split contraction in the chosen model enhancement
+or a Cousin resolution compatible with the diagonal stratification.
+On the quadratic locus, the acyclic twisted complex in
+$H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$ supplies the corresponding
+contraction.
+\end{remark}
+
+\begin{remark}[Truncation-wise Hochschild finiteness]
+\label{rem:ainf2-heal-74}
+
+The convergence package uses truncation-wise finiteness with
+conformal-weight control.  For a chiral algebra with positive-energy conformal
+weight grading
+$\cA = \bigoplus_{n\geq 0} \cA_n$ and finite-dimensional
+weight spaces $\cA_n$, the bar complex $\bar B(\cA)$ is
+truncation-wise finite (each conformal weight stratum
+$\bar B(\cA)_{\leq N}$ has finite-dimensional cohomology), and
+Theorem~\ref{thm:A-infinity-2} applies to the pro-nilpotent completion
+$\hat\cA := \varprojlim_N \cA / \cA_{\geq N}$. This weakening captures
+Virasoro (weight space $\cA_n = S^n \Vir_0 / \mathrm{null}$ with
+finite dimension), Yangian (weight grading by spectral-parameter
+order), and critical KM (weight grading by conformal weight of
+the current algebra).  The resulting equivalence lies in the
+weight-completed ambient specified by $H_{\mathrm{aug}}$ and
+$H_{\mathrm{ML}}$.
+\end{remark}
+
+\begin{remark}[Correct cross-volume citation]
+\label{rem:ainf2-heal-195}
+
+The precise cross-volume references are
+Theorem~\ref{thm:koszul-reflection}\ref{KR-i} for the published Ran
+equivalence, Theorem~\ref{thm:A-infinity-2} for its conditional
+factorization restriction, Theorem~\ref{thm:A-infinity-2}\ref{A2-i}
+for the $H_{\mathrm{prop}}$ properadic envelope, and
+Corollary~\ref{cor:classical-A-from-A-infinity-2} for the chain model
+at a marked point.
+\end{remark}
+
+%================================================================
+\section{Formal smoothness of chirally Koszul algebras}\label{sec:ainf2-formal-smoothness}
+%================================================================
+
+\begin{corollary}[Cotangent criterion for properadic-envelope formal
+smoothness; \ClaimStatusConditional]
+\label{cor:chiral-KK-formal-smoothness}
+\index{formal smoothness!chiral Koszul implies}
+\index{Koszul Kontsevich!formal smoothness}
+\textup{[Type signature: Open quadrant; factorization-properad
+presentation; Beilinson level $1\leftrightarrow2$ deformation lane;
+hypothesis package $H_{\mathrm{prop}}$ plus cotangent Ext-vanishing.]}
+Let $\cA$ be a chirally Koszul factorization algebra on $X$
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}), and assume
+$H_{\mathrm{prop}}$.  Let $L_{\cA}^{\mathrm{prop}}$ be its cotangent
+complex in
+$\FactProp^{\aug}_{\langle\chirAss\rangle}(X)$.  If
+\[
+ \operatorname{Ext}^1_{\cA}(L_{\cA}^{\mathrm{prop}},M)=0
+\]
+for every coefficient module $M$ arising from a square-zero
+extension, then $\cA$ is formally smooth in this properadic envelope.
+For a square-zero extension $R\to R_0$ with kernel $M$ and an
+$R_0$-valued point through $\cA$, the space of lifts is a torsor for
+$\operatorname{Map}_{\cA}(L_{\cA}^{\mathrm{prop}},M)$; it is
+contractible when this derived mapping space is contractible.
+\end{corollary}
+
+\begin{proof}
+Cotangent deformation theory places the obstruction to a lift in
+$\operatorname{Ext}^1_{\cA}(L_{\cA}^{\mathrm{prop}},M)$.  Its
+vanishing gives a lift.  The derived mapping space from the cotangent
+complex to $M$ acts simply transitively on the lift space, which gives
+the asserted torsor and contractibility statements.  The package
+$H_{\mathrm{prop}}$ supplies the model category in which this
+cotangent complex and its derived mapping space are formed.
+\end{proof}
+
+\begin{remark}[Compatibility with the five-theorem architecture]
+\label{rem:ainf2-architecture}
+The unified Theorem~A
+(Theorem~\ref{thm:koszul-reflection}) is the bar--cobar spine of the
+volume. It occupies the first place in the five-package architecture
+$A,B,C,D,H$: Theorems~B and~D use its ambient-qualified inversion and
+obstruction theory, Theorem~C uses its Koszul-dual Verdier surface,
+and Theorem~H uses its chiral Hochschild control on the Koszul/generic
+locus.  Corollary~\ref{cor:ainf2-downstream-list} records the five
+typed outputs: Ran reconstruction, factorization closure, completion,
+properadic transfer, and ordered descent.
+\end{remark}
+
+%================================================================
+\section{Platonic obstructions: four named conjectures}\label{sec:ainf2-platonic-obstructions}
+%================================================================
+
+Four conjectures govern the extension of Koszul reflection to the full
+category $\Alg^{\fact,\aug}_X$.
+
+\begin{conjecture}[$\Pi 1$: Francis--Gaitsgory transfer]
+\label{conj:fg-transfer}
+\ClaimStatusConjectured
+The $(\infty,1)$-categorical bar--cobar Quillen equivalence transfers
+from $\IndCoh(\Ran(X))$ to $\Alg^{\fact,\aug,\comp}_X$ and its
+coalgebra dual through the factorization comparison functor.
+\end{conjecture}
+Lurie supplies the topological transfer theorem
+\textup{(}Lurie HA~\S5.5\textup{)}. This
+theorem-level use in the chiral setting requires a named transfer
+proposition \texttt{prop:chiral-quillen-transfer}.
+
+\begin{conjecture}[$\Pi 2$: $E_n$-bar--cobar at higher chiral
+dimension]
+\label{conj:en-bar-cobar-higher-d}
+\ClaimStatusConjectured
+For $d\geq 2$, the $E_n$-bar functor on $n$-dimensional factorization
+$E_n$-algebras admits a left adjoint (cobar) that is a Quillen
+equivalence onto conilpotent CDG-coalgebras over the appropriate
+$n$-dimensional Maurer--Cartan complex. The $n=1$ case is
+Theorem~\ref{thm:koszul-reflection}.
+\end{conjecture}
+This is the load-bearing direction connecting Vol~I to Vol~III's
+CY-to-chiral functor. Currently open in the chiral setting (proved in
+Lurie~HA~\S5.5.3 for the topological setting).
+
+\begin{conjecture}[$\Pi 3$: Lagrangian--Koszul converse]
+\label{conj:lagrangian-koszul-converse}
+\ClaimStatusConjectured
+Lagrangian transversality of $M_{\mathrm{comp}}$ at $[\cA]$ implies
+chiral Koszulness of $\cA$.
+\end{conjecture}
+This requires the chiral PTVV shifted-symplectic construction.
+
+\begin{conjecture}[$\Pi 4$: Unbounded-rank Koszul reflection]
+\label{conj:unbounded-rank-koszul-reflection}
+\ClaimStatusConjectured
+On the locus of complete augmented chiral algebras with
+arbitrary graded bar pieces, the Koszul reflection of
+Theorem~\ref{thm:koszul-reflection} holds in the coderived category.
+Its chain-level realization is the locus on which the pro-coradical
+tower satisfies $H_{\mathrm{ML}}$.
+\end{conjecture}
+Finite-dimensional weight pieces give Mittag--Leffler towers for the
+standard Heisenberg, Kac--Moody, Virasoro, and $W_N$ presentations.
+The conjecture identifies $H_{\mathrm{ML}}$ as the chain-level frontier
+inside the full completed category.
+
+%================================================================
+\section{Comparison with independent constructions}\label{sec:ainf2-hziv}
+%================================================================
+
+\begin{remark}[Sources for the five typed outputs]
+\label{rem:ainf2-hziv}
+\index{Theorem A-infinity-2!comparison constructions}
+The five outputs of Corollary~\ref{cor:ainf2-downstream-list} have the
+following sources:
+\begin{itemize}
+\item Francis--Gaitsgory's Proposition~4.1.2, together with the
+pro-nilpotence argument in the proof of their Theorem~5.1.1,
+supplies the enhanced Ran equivalence \cite{Francis2012}.
+\item $H_{\mathrm{fact}}$ supplies the factorization closure and the
+Fulton--MacPherson nearby-cycle extension.
+\item Loday--Vallette \cite[Corollary~2.3.4]{LV12} supply the ordinary
+chain-level unit and counit equivalences; $H_{\mathrm{conv}}$ carries
+them through completion.
+\item The presentation clause $H_{\mathrm{HR}}$
+(Theorem~\ref{thm:hackney-robertson-model}, Conjectured) posits the
+cofibrantly generated model structure on simplicial properads; the
+graphical-set homotopy theory of \cite{HRY17} is its evidence.
+\item $H_{\mathrm{prop}}$ supplies the factorization-enriched transfer
+and the connected-graph preservation of the derived unit and counit.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Independent constructions for bar-cobar reconstruction]
+\label{rem:ainf2-hziv-koszul-reflection}
+\index{bar-cobar reconstruction!comparison constructions}
+The reconstruction statement has two published realizations and two
+conditional extensions:
+\begin{itemize}
+\item Francis--Gaitsgory give enhanced reconstruction in the
+pro-nilpotent Ran ambient.
+\item Loday--Vallette give the ordinary associative chain models
+$T^c(s^{-1}\bar A)$ and $T(s\bar C)$.
+\item $H_{\mathrm{fact}}+H_{\mathrm{conv}}$ give the factorization and
+completed realizations.
+\item $H_{\mathrm{prop}}$ gives the properadic-envelope realization.
+\end{itemize}
+\end{remark}
+
+%================================================================
+\section*{Theorem~A as the algebraic structure on the KZ functor}
+%================================================================
+
+One adjunction, one reconstruction counit, one Verdier-dualized
+duality functor.  Theorem~\ref{thm:A-infinity-2} acts by
+factorization restriction, fiber realization, and pro-conilpotent
+completion.  Verdier duality is the $K_X$ branch; a quantum $R$-matrix
+is the ordered-descent input; the equations
+$[\alpha_{\mathrm{BC}}]=[\beta_{\mathrm{nodal}}]=0$ give the
+Deligne--Mumford family extension.  Theorem~A enters the
+five-theorem spine of Volume~I as the algebraic structure on the KZ
+functor of Chapter~\ref{chap:climax-platonic}: the pullback identity
+$\bar\partial = \KZ^{*}(\nabla_{\Arnold})$ is the bar differential read
+through the Koszul reflection.
+
+\section{K3 Hall--Drinfeld input and Theorem~A scope}
+\label{sec:tainf2-supplement}
+
+\begin{remark}[$A_\infty$-structure on $\mathbf H_{\Delta_5}$ as external input]
+\label{rem:tainf2-1}
+Theorem~A supplies the completed bar--cobar ambient for a fixed chiral
+shadow of a supplied factorization algebra.  The K3/Hall--Drinfeld
+input consists of the object $\mathbf H_{\Delta_5}$, its comparison
+with a Drinfeld Yangian, and its higher products.  Suppose Volumes
+II--III supply a completed K3 chiral shadow
+$\mathbf H_{\Delta_5}$ with $A_\infty$ structure maps
+\[
+\mu_n: \mathbf H_{\Delta_5}^{\otimes n}\to \mathbf H_{\Delta_5},\qquad n\ge 2,
+\]
+and verify $H_{\mathrm{fact}}+H_{\mathrm{conv}}$ together with the
+relevant $R$-descent hypotheses.  The proposed first products
+\[
+\mu_2=\text{Hall multiplication in }\mathrm{CoHA}_{K3\times E},\qquad
+\mu_3=\text{Drinfeld-associator coboundary at order }\hbar,
+\]
+and
+\[
+\mu_4=\text{Igusa-form twist at order }\hbar^2
+\quad\text{from}\quad \Phi_{10}/\eta^{24}
+\]
+belong to the K3/Hall--Drinfeld input surface. The order
+$\hbar^{\leq3}$ pentagon coboundary
+\[
+\phi^{(3)} = \zeta(3)c_{\mathrm{symm}}
++ \tfrac{25}{3}c_{\mathrm{timelike}}
++ (\Phi_{10}/\eta^{24})c_{\Phi_{10}}
+\]
+is likewise external structure data.  The completed bar--cobar
+adjunction transports this supplied datum.
+\end{remark}

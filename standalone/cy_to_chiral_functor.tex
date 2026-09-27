@@ -1,0 +1,1270 @@
+\documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
+
+%%% Packages
+
+%%% Page geometry
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fgl}{\mathfrak{gl}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Eone}{E_1}
+\newcommand{\Etwo}{E_2}
+\newcommand{\En}{E_n}
+\newcommand{\Sd}{\bS^d}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\HC}{\mathrm{HC}}
+\newcommand{\CC}{\mathrm{CC}}
+\newcommand{\Zder}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+\newcommand{\CoHA}{\mathrm{CoHA}}
+\newcommand{\Fuk}{\mathrm{Fuk}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Fact}{\mathrm{Fact}}
+\newcommand{\CY}{\mathrm{CY}}
+\newcommand{\DT}{\mathrm{DT}}
+\newcommand{\GW}{\mathrm{GW}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\MF}{\mathrm{MF}}
+\newcommand{\Coh}{\mathrm{Coh}}
+\newcommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch},\mathrm{top}}}
+\newcommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\newcommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Spec}{Spec}
+
+%%% Title
+\title{The Calabi--Yau-to-chiral functor\\
+and the $\kappa_\bullet$-spectrum}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+%%% ================================================================
+%%% ABSTRACT
+%%% ================================================================
+
+\begin{abstract}
+Where do chiral algebras come from?  Volumes~I and~II of the
+modular Koszul duality programme accept a chiral algebra as given
+and extract its invariants: bar-cobar adjunction, the modular
+characteristic~$\kappa_{\mathrm{ch}}$, the shadow tower, the five
+theorems A--D+H.  The geometric source is left unspecified.  This
+paper constructs it.
+
+A Calabi--Yau category $\cC$ of dimension~$d$ carries a
+negative-cyclic Calabi--Yau class
+$[\sigma_\cC]\in HC^{-}_{d}(\cC)$ whose Hochschild shadow is a
+non-degenerate cyclic pairing.  On the verified specialisation locus,
+the CY-to-chiral assignment
+\[
+ \Phi_d^{(\Sigma_{d-1},C)} \;=\; \SpCh_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d
+ \colon \CY_d^{\mathrm{wit}}\text{-}\mathrm{Cat} \longrightarrow
+ \En\text{-}\mathrm{ChirAlg}
+\]
+factors in two stages. Stage~1, $\Phi^{\mathrm{FA}}_d$, produces a
+holomorphic $E_d$-factorisation algebra
+$\Phi^{\mathrm{FA}}_d(\cC)$ on a CY$_d$ variety~$X$ after the needed
+formality, locality, and completion witnesses are fixed.  Its algebraic
+input is the Gerstenhaber bracket of degree $-1$ on
+$\HH^\bullet(\cC)$, or degree $1-d$ after CY duality to Hochschild
+homology. Stage~2,
+$\SpCh_{\Sigma_{d-1}, C}$, is factorisation homology over a
+closed $(d-1)$-cycle $\Sigma_{d-1} \subset X$ followed by restriction
+to a reference curve $C \subset X$. The four structural operations,
+Lie conformal algebra $\fL_\cC$ from the Gerstenhaber bracket,
+factorisation envelope $\Fact_C(\fL_\cC)$, witnessed framing data, and
+negative-cyclic quantisation, realise the composite. The assignment is
+proved at $d = 2$ (Theorem~CY-A$_2$, $\Etwo$-chiral on any curve~$C$).
+At $d = 3$ it is an object-level $\Eone$-chiral construction on the
+witnessed filtered locus. A single CY$_d$ category admits a family of
+$\Eone$-chiral shadows indexed by the choice of $(\Sigma_{d-1}, C)$;
+the Borcherds--$\Delta_5$, Igusa--$\chi_{10}$, and paramodular
+Gritsenko--Cl\'ery outputs at $d = 3$ are distinct specialisations of
+one canonical $\Phi^{\mathrm{FA}}_3$.
+
+A single CY manifold admits multiple chiral algebraizations, each
+with its own modular characteristic.  The resulting
+$\kappa_\bullet$-spectrum
+$\Spec_{\kappa_\bullet}(X) = \{\kappa_{\mathrm{cat}},
+\kappa_{\mathrm{ch}}^{\mathrm{Heis}}, \kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\}$: four numbers measuring four faces of
+the same manifold.  For $K3 \times E$:
+$\Spec_{\kappa_\bullet} = \{0, 3, 5, 24\}$. The value~$2$ belongs to
+the K3 fibre lane, not to the total-space categorical characteristic.
+The shadow--Siegel
+gap theorem identifies four structural obstructions separating
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}} = 3$ from $\kappa_{\mathrm{BKM}} = 5$.
+
+For toric CY$_3$, the functor interfaces with the critical
+cohomological Hall algebra: $\CoHA(Q_X, W_X) \simeq
+Y^+(\widehat{\fgl}_{Q_X})$ provides the $\Eone$-sector, and the
+Drinfeld center recovers $\Etwo$-braiding.  The $\Eone$
+stabilization theorem proves that for toric $GL(d)$-invariant local
+models at $d \geq 3$, the relevant invariant Schouten--Nijenhuis
+sector is silent. General CY categories acquire their $\Eone$ output
+from Stage~2 and the CY degree shift.
+\end{abstract}
+
+\tableofcontents
+
+%%% ================================================================
+%%% 1. INTRODUCTION
+%%% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The source problem}
+
+A chiral algebra is a solution.  What is the problem it solves?
+
+The bar-cobar machine of Volume~I extracts from any chiral
+algebra~$A$ on a curve~$X$ a sequence of invariants: the bar
+complex $B(A) = T^c(s^{-1}\bar{A})$ with its deconcatenation
+coproduct, the universal Maurer--Cartan element $\Theta_A$
+satisfying $d\Theta + \frac{1}{2}[\Theta, \Theta] = 0$, the
+modular characteristic $\kappa_{\mathrm{ch}}(A)$ governing the
+genus-$1$ curvature, and the shadow tower
+$\{S_r\}_{r \geq 2}$ encoding higher-genus data.  The five
+theorems (A--D+H) are structural properties of this machine.
+Volume~II supplies the physical comparison surface: the derived chiral
+center $\Zder(A) = C^\bullet_{\mathrm{ch}}(A,A)$ is the universal
+closed-sector cochain object of~$A$. It becomes the bulk observable
+algebra of a 3d holomorphic-topological gauge theory only after the
+open--closed comparison map has been constructed; the
+$\SCchtop$ pair $(C^\bullet_{\mathrm{ch}}(A,A), A)$
+is the closed-sector--boundary algebraic system. It is a physical
+boundary--bulk system only after that comparison.
+
+Neither volume constructs a single chiral algebra.  Affine
+Kac--Moody algebras arise from flat connections; Virasoro from
+reparametrizations; every other family in the standard landscape
+must be supplied by hand.  The question is: what functor connects
+geometric input to chiral algebraic output, and what structure
+must it preserve?
+
+The answer is the CY-to-chiral specialization
+$\Phi_d^{(\Sigma_{d-1},C)} = \SpCh_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d$.
+A Calabi--Yau category $\cC$ carries a cyclic $\Ainf$-structure
+encoding a $d$-dimensional Frobenius condition at the chain level.
+The first stage $\Phi^{\mathrm{FA}}_d$ converts this datum into a
+canonical $E_d$-holomorphic factorisation algebra on the CY$_d$
+variety~$X$; the second stage $\SpCh_{\Sigma_{d-1}, C}$
+specialises along a closed $(d-1)$-cycle $\Sigma_{d-1} \subset X$
+and restricts to a reference curve $C \subset X$, producing the
+chiral algebra $A_\cC$ on~$C$ with three preservation properties:
+the bar complex of $A_\cC$ recovers the cyclic bar complex
+of~$\cC$, the modular characteristic $\kappa_{\mathrm{ch}}(A_\cC)$
+equals the CY Euler characteristic $\chi^{\CY}(\cC)$, and the
+$\Sd$-framing determines the operadic level on~$C$.
+
+\subsection{The $\kappa_\bullet$-spectrum}
+
+A single CY manifold admits multiple chiral algebraizations.  The
+lattice vertex algebra $V_\Lambda$ attached to $H^*(K3, \bZ)$,
+the generalized Kac--Moody algebra whose denominator is the Igusa
+cusp form $\Delta_5$, and the Conway module from the Leech lattice
+frame are three algebraizations of the same K3 surface.  Each
+carries its own modular characteristic.
+
+The $\kappa_\bullet$-spectrum records all four lanes:
+\begin{align*}
+ \kappa_{\mathrm{cat}} &= \chi(\cO_S)
+   &&\text{(holomorphic Euler characteristic)}, \\
+ \kappa_{\mathrm{ch}}^{\mathrm{Heis}} &= \dim_\bC X
+   &&\text{(Heisenberg--Mukai chiral specialisation)}, \\
+ \kappa_{\mathrm{BKM}} &= \tfrac{1}{2}\operatorname{wt}(\Phi_{10}^{\mathrm{un}})
+   &&\text{(Borcherds--Kac--Moody automorphic weight)}, \\
+ \kappa_{\mathrm{fiber}} &= \operatorname{rank}(\Lambda)
+   &&\text{(lattice rank)}.
+\end{align*}
+For $K3 \times E$:
+$\Spec_{\kappa_\bullet} = \{0, 3, 5, 24\}$.  The four numbers
+measure four faces of the same manifold: holomorphic Euler
+characteristic, boundary chiral algebra, Borcherds denominator weight,
+and lattice frame.  The chiral-holographic pair
+$(\kappa_{\mathrm{ch}}^{\mathrm{Heis}}, \kappa_{\mathrm{BKM}}) = (3, 5)$ governs
+the boundary--Borcherds comparison axis of Volumes~I--II.  The
+$\kappa_\bullet$-spectrum is invisible from any single chiral
+algebra; it is intrinsic to the CY category.
+
+\subsection{The $\Eone$ stabilization theorem}
+
+For $d \geq 3$, the CY chiral algebra is natively $\Eone$, not
+$E_d$.  The full Schouten--Nijenhuis bracket on
+$\mathrm{PV}^*(\bC^d)$ does not vanish.  The toric
+$GL(d)$-invariant CY sector used below is the abelian local sector,
+and the CoHA extension correspondence (sub before quotient) imposes
+a preferred ordering, which is $\Eone$.  The braided monoidal structure is
+recovered through the Drinfeld center of the $\Eone$-monoidal
+representation category.
+
+The obstruction to additional structure beyond $\Eone$ is
+controlled by $\pi_d(BU)$, which is $\bZ$ for even~$d$ and
+$0$ for odd~$d$ by Bott periodicity.  The effective obstruction is
+trivial precisely at $d \bmod 8 \in \{1, 3, 7\}$.
+
+\subsection{Outline}
+
+Section~\ref{sec:cy-cats} reviews CY categories and cyclic
+$\Ainf$-structures.  Section~\ref{sec:functor} constructs the
+four-step functor $\Phi$ and proves Theorem~CY-A$_2$.
+Section~\ref{sec:kappa-spectrum} defines the
+$\kappa_\bullet$-spectrum and develops its properties.
+Section~\ref{sec:k3e} works through the $K3 \times E$ prototype
+in detail: the thirteen structural results K3-1 through K3-13,
+the shadow--Siegel gap theorem, and the four obstructions
+separating $\kappa_{\mathrm{ch}}$ from $\kappa_{\mathrm{BKM}}$.
+Sections~\ref{sec:toric}--\ref{sec:e1-stabilization} treat toric
+CY$_3$, the CoHA, and the $\Eone$ stabilization theorem.
+
+
+%%% ================================================================
+%%% 2. CY CATEGORIES AND CYCLIC A-INFINITY
+%%% ================================================================
+
+\section{Calabi--Yau categories and cyclic $\Ainf$-structures}
+\label{sec:cy-cats}
+
+\subsection{CY categories}
+
+\begin{definition}[Calabi--Yau category]
+\label{def:v3-st-cy-category}
+A smooth proper dg category $\cC$ over a field~$k$ is
+\emph{Calabi--Yau of dimension~$d$} if there exists a
+quasi-isomorphism of $\cC$-bimodules
+\[
+ \cC^\vee \;\xrightarrow{\;\sim\;}\; \cC[d]
+\]
+where $\cC^\vee = \mathrm{RHom}_{\cC^e}(\cC, \cC^e)$ is the
+inverse dualizing bimodule and $[d]$ denotes the cohomological
+shift by~$d$.
+\end{definition}
+
+The CY condition encodes Serre duality at the categorical level.
+For the bounded derived category $D^b(\Coh(X))$ of a smooth
+projective variety~$X$ with trivial canonical bundle
+$\omega_X \simeq \cO_X$, Serre duality gives
+$\bS_X \simeq [d]$ on $D^b(\Coh(X))$ (where $d = \dim_\bC X$),
+and the resulting $\CY_d$-structure is the classical Serre
+functor.
+
+\begin{example}[Standard families]
+\label{ex:v3-st-cy-families}
+Four families of CY categories provide the standard landscape:
+\begin{enumerate}[(i)]
+ \item \emph{Elliptic curves} ($d = 1$): $D^b(\Coh(E_\tau))$ is
+ $\CY_1$; the functor $\Phi$ produces the Heisenberg vertex
+ algebra $H_k$ at level $k = \mathrm{vol}(E_\tau)$.
+ \item \emph{K3 surfaces} ($d = 2$): $D^b(\Coh(S))$ is $\CY_2$;
+ $\Phi$ produces an $\Etwo$-chiral algebra with
+ $\kappa_{\mathrm{ch}} = \chi(\cO_S) = 2$.
+ \item \emph{CY threefolds} ($d = 3$): the conifold, local $\bP^2$,
+ $K3 \times E$.  The functor $\Phi$ at $d = 3$ is proved
+ (Theorem~CY-A$_3$).
+ \item \emph{CY fourfolds} ($d = 4$): $K3 \times K3$, the sextic
+ fourfold.  The obstruction $\pi_4(BU) = \bZ$ controls the
+ shifted symplectic structure.
+\end{enumerate}
+\end{example}
+
+\subsection{Cyclic $\Ainf$-structure}
+
+A CY category $\cC$ of dimension~$d$ carries a negative-cyclic
+Calabi--Yau class whose Hochschild shadow is a non-degenerate trace:
+\[
+ \Tr \colon \HH_d(\cC) \longrightarrow k.
+\]
+The negative-cyclic class is the CY datum; the Hochschild trace is
+its decategorified shadow.  The primary chain object is the cyclic
+bar complex $\CC_\bullet(\cC)$ equipped with the Connes
+$B$-operator.  Higher framing data are additional witnesses, not a
+formal consequence of the trace alone.
+
+\begin{definition}[Cyclic $\Ainf$-structure]
+\label{def:v3-st-cyclic-ainf}
+A \emph{cyclic $\Ainf$-structure} on a CY$_d$ category $\cC$
+consists of:
+\begin{enumerate}[(i)]
+ \item An $\Ainf$-category structure on $\cC$: operations
+ $\mu_k \colon \cC^{\otimes k} \to \cC[2-k]$ for $k \geq 1$
+ satisfying the Stasheff identities.
+ \item A non-degenerate cyclic pairing
+ $\langle -, - \rangle \colon \cC \otimes \cC \to k[-d]$
+ satisfying the higher cyclicity conditions
+ $\langle \mu_k(a_1, \ldots, a_k), a_0 \rangle
+ = \pm \langle \mu_k(a_0, a_1, \ldots, a_{k-1}), a_k \rangle$.
+ \item The induced Connes $B$-operator $B \colon \CC_n(\cC) \to
+ \CC_{n+1}(\cC)$ with $B^2 = 0$ and $Bb + bB = 0$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Categorical Hochschild homology and the Gerstenhaber bracket]
+\label{prop:v3-st-gerstenhaber}
+The categorical Hochschild cohomology $\HH^\bullet(\cC)$ of any dg category
+carries a Gerstenhaber bracket $[-,-]$ of degree~$-1$.  For a
+$\CY_d$ category, the CY pairing identifies
+$\HH^\bullet(\cC) \simeq \HH_{d - \bullet}(\cC)$, and the
+Gerstenhaber bracket becomes a Lie bracket on $\HH_\bullet(\cC)$
+of degree $1 - d$.
+\end{proposition}
+
+\begin{proof}
+The Gerstenhaber bracket is a standard structure on categorical Hochschild
+cohomology (Gerstenhaber 1963, Keller 2006); the CY identification
+with homology uses the non-degenerate trace and the
+Hochschild--Kostant--Rosenberg degeneration at the $E_1$-page of
+the Hodge-to-de~Rham spectral sequence.
+\end{proof}
+
+\subsection{The framing witness}
+
+The CY$_d$-structure on $\cC$ supplies the negative-cyclic and
+Connes data.  A chain-level $\Sd$-framing is an additional witness.
+The $\bS^1$-action on $\HH_\bullet(\cC)$ is the Connes shadow; the
+full framing, when constructed, governs the operadic level of the
+chiral algebra.
+
+\begin{proposition}[Framing witness; Kontsevich--Vlassopoulos]
+\label{prop:v3-st-sd-framing}
+For a $\CY_d$ category $\cC$, the negative-cyclic CY class supplies
+the Connes action on $\CC_\bullet(\cC)$.  At $d = 2$, the
+Kontsevich--Vlassopoulos framing witness provides the $\bS^2$-action
+needed for the $\Etwo$-algebra structure on cyclic homology.  At
+$d = 3$, the corresponding chain-level $\bS^3$-framing is part of
+the witnessed filtered locus.
+\end{proposition}
+
+The framing witness is the datum that the assignment $\Phi$ consumes
+to determine the operadic enhancement.  At $d = 2$, the
+$\bS^2$-framing is proved.  At $d = 3$, the chain-level
+$\bS^3$-framing compatible with the BV structure is one of the
+explicit witnesses imposed on the constructed locus.
+
+\begin{remark}[Bott periodicity and the framing obstruction]
+\label{rem:v3-st-bott-obstruction}
+The obstruction to extending the $\Sd$-framing beyond the
+base $\Eone$ level is controlled by $\pi_d(BU)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{lllll}
+ \toprule
+ $d$ & Native $\En$ & $\pi_d(BU)$ & Obstruction & Example \\
+ \midrule
+ $1$ & $E_\infty$ & $0$ & trivial & elliptic curve \\
+ $2$ & $\Etwo$ & $\bZ$ & braiding ($c_1$) & K3, abelian surface \\
+ $3$ & $\Eone$ & $0$ & trivial & $K3 \times E$, conifold \\
+ $4$ & $\Eone$ & $\bZ$ & shifted symplectic ($p_1$) & $K3 \times K3$ \\
+ \bottomrule
+\end{tabular}
+\end{center}
+The complex Bott group $\pi_d(BU)=KU^{-d}$ is $2$-periodic:
+\[
+ \pi_d(BU)=\begin{cases}\bZ,&d\ \mathrm{even},\\0,&d\ \mathrm{odd}.
+ \end{cases}
+\]
+The $8$-periodicity belongs to the real and symplectic refinements
+$\pi_d(BO)$ and $\pi_d(B\Sp)$.  In the Vol~III effective obstruction
+tower the trivial dimensions occur at $d\bmod 8\in\{1,3,7\}$, with
+a separate $\bZ/2$ symplectic refinement at $d\equiv5\pmod 8$.
+\end{remark}
+
+
+%%% ================================================================
+%%% 3. THE FUNCTOR PHI
+%%% ================================================================
+
+\section{The CY-to-chiral functor}
+\label{sec:functor}
+
+\subsection{The two-stage factorisation and its four-step
+realisation}
+
+On the verified loci, the CY-to-chiral assignment factorises as
+\[
+ \Phi_d^{(\Sigma_{d-1},C)} \;=\; \SpCh_{\Sigma_{d-1}, C} \circ
+ \Phi^{\mathrm{FA}}_d
+ \colon \CY_d^{\mathrm{wit}}\text{-}\mathrm{Cat} \longrightarrow
+ \En\text{-}\mathrm{ChirAlg}.
+\]
+Stage~1 produces the canonical $E_d$-holomorphic factorisation
+algebra $\Phi^{\mathrm{FA}}_d(\cC)$ on the CY$_d$ variety~$X$ after
+the relevant formality and holomorphic-locality witnesses have been
+fixed.  Kontsevich--Tamarkin $E_d$-formality acts on Hochschild
+cochains with their degree-$-1$ Gerstenhaber bracket; after CY duality
+to homology the shifted bracket has degree $1-d$. Stage~2 takes the
+factorisation
+homology of $\Phi^{\mathrm{FA}}_d(\cC)$ over a closed
+$(d-1)$-cycle $\Sigma_{d-1} \subset X$ and restricts to a
+reference curve $C \subset X$. A single CY$_d$ category thus
+admits a family of $\Eone$-chiral shadows indexed by
+$(\Sigma_{d-1}, C)$.
+
+The four-step construction below is the computational incarnation
+of the composite $\SpCh_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$ along a codimension-one cycle followed by
+curve restriction; each step consumes a specific piece of the CY
+data and produces a specific algebraic structure on the reference
+curve~$C$.
+
+\begin{construction}[The functor $\Phi$]
+\label{con:v3-st-phi}
+Let $\cC$ be a smooth proper CY$_d$ category equipped with the
+negative-cyclic CY class, formality, holomorphic-twist, framing,
+completion, and specialisation witnesses required in the dimension
+under discussion.  Let $C$ be the reference curve.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+ \item \textbf{Cyclic $\Ainf \to$ Lie conformal algebra.}
+ The Gerstenhaber bracket on $\HH^\bullet(\cC)$ is a graded Lie
+ bracket of degree~$-1$ (Proposition~\ref{prop:v3-st-gerstenhaber}).
+ The CY pairing promotes this to a Lie conformal algebra
+ $\fL_\cC$: the bracket becomes a $\lambda$-bracket
+ $\{a_\lambda b\}$, and the pairing becomes the invariant
+ bilinear form.  This step consumes the $\Ainf$-structure and
+ the CY trace; it produces the current algebra of $\cC$.
+
+ \item \textbf{Lie conformal algebra $\to$ factorization
+ envelope.}
+ The factorization envelope construction produces a factorization
+ algebra $\Fact_X(\fL_\cC)$ on any smooth curve~$X$.  This step
+ consumes the Lie conformal algebra and the curve; it produces a
+ cosheaf on $\Ran(X)$ whose sections are the OPE data.  The
+ universal enveloping vertex algebra $U_X^{\mathrm{fact}}(\fL_\cC)$
+ is the chiral algebra.
+
+ \item \textbf{$\Sd$-framing $\to$ $\En$ enhancement.}
+ The framing witness on $\HH_\bullet(\cC)$
+ (Proposition~\ref{prop:v3-st-sd-framing}) enhances the
+ factorization algebra to an $\En$-chiral algebra.  At $d = 2$:
+ the $\bS^2$-framing of Kontsevich--Vlassopoulos gives an
+ $\Etwo$-chiral algebra.  At $d \geq 3$: the native $E_d$-structure
+ restricts to $\Eone$ for CY quantum group purposes (the direct
+ $E_d$-braiding is over-symmetric for braided chiral purposes; the
+ ordered $\Eone$ direction is retained on~$C$).
+
+ \item \textbf{Quantization.}
+ The negative-cyclic CY class determines the quantization datum for
+ the classical factorization algebra; its Hochschild trace is only the
+ decategorified shadow.  The
+ quantum chiral algebra $A_\cC = \Phi(\cC)$ is the output.  At
+ $d = 2$, the Serre functor $\bS_\cC \simeq [2]$ kills the
+ one-loop anomaly by parity, so the quantization preserves
+ $\kappa_{\mathrm{ch}}$.  At $d = 3$, the Serre functor
+ $\bS_\cC \simeq [3]$ no longer guarantees this; quantum
+ corrections may shift $\kappa_{\mathrm{ch}}$.
+\end{enumerate}
+\end{construction}
+
+\subsection{Theorem CY-A: the $d = 2$ case}
+
+\begin{theorem}[CY-to-chiral functor at $d = 2$]
+\label{thm:v3-st-cy-a2}
+There exists a functor
+$\Phi \colon \CY_2\text{-}\mathrm{Cat} \to
+\Etwo\text{-}\mathrm{ChirAlg}$
+from smooth proper CY categories of dimension~$2$ to
+$\Etwo$-chiral algebras, such that:
+\begin{enumerate}[label=(\roman*)]
+ \item $\Phi(\cC)$ is a chiral algebra whose generating fields are
+ in bijection with $\HH^{\bullet+1}(\cC)$.
+ \item The bar complex $B(\Phi(\cC))$ is quasi-isomorphic to the
+ cyclic bar complex $\CC_\bullet(\cC)$ as a factorization
+ coalgebra.
+ \item The modular characteristic is the chiral trace supertrace
+ \[
+  \kappa_{\mathrm{ch}}(\Phi(\cC))=\Xi(\cC).
+ \]
+ For $\cC=D^b(\Coh(X))$ with $h^{1,0}(X)=0$,
+ \[
+  \Xi(X)=\sum_q(-1)^q h^{0,q}(X)=\chi(\cO_X).
+ \]
+ The full Hochschild Euler characteristic
+ $\sum_i(-1)^i\dim\HH_i(\cC)$ is a different invariant.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first two parts of Construction~\ref{con:v3-st-phi} are standard: the
+Gerstenhaber bracket produces a Lie conformal algebra, and the
+factorization envelope produces a chiral algebra.  The framing part at
+$d = 2$ uses the Kontsevich--Vlassopoulos $\bS^2$-framing on
+$\HH_\bullet(\cC)$, which gives an $\Etwo$-algebra structure on
+the cyclic homology; this enhances the factorization algebra to an
+$\Etwo$-chiral algebra.  The CY trace supplies quantization; at
+$d = 2$, the Serre functor $\bS_\cC \simeq [2]$ forces the
+holomorphic anomaly to vanish on the stated Hodge-filtered trace
+lane.  Part~(i) follows from the construction; part~(ii) from the
+identification of the bar differential with the cyclic boundary
+operator; part~(iii) from the Hodge-filtered genus-one coefficient.
+\end{proof}
+
+\begin{remark}[Verification at $d = 2$]
+\label{rem:v3-st-d2-verification}
+For K3 surfaces: $\Xi(D^b(\Coh(S))) = \chi(\cO_S) = 2$,
+and $\kappa_{\mathrm{ch}} = 2$ is verified by six independent
+paths (direct Hodge, Mukai pairing, Dolbeault contracting
+homotopy, bar computation, Borcherds lift, elliptic genus).  For
+abelian surfaces: $\kappa_{\mathrm{ch}} = \chi(\cO_A) = 0$.
+\end{remark}
+
+\begin{conjecture}[Compact Hodge-trace lane at $d \geq 3$]
+\label{conj:v3-st-cy-kappa-d3}
+For $\cC=D^b(\Coh(X))$ on a constructed compact Hodge-trace lane with
+$d \geq 3$,
+\[
+ \kappa_{\mathrm{ch}}(\Phi(\cC)) \;=\; \Xi(X)=\chi(\cO_X).
+\]
+This conjecture does not identify the compact Hodge supertrace with
+the Heisenberg--Mukai specialisation or with the BKM weight.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:v3-st-d3-evidence}
+At $d = 3$, compact total-space values such as
+$\Xi(K3\times E)=0$ are distinct from the Heisenberg--Mukai value
+$3$ and the BKM value $5$.  Non-compact toric local models require
+their own normalization.  The obstruction to extending the $d = 2$
+proof is that the $d = 3$ quantization step may introduce corrections:
+Serre duality $\bS_\cC \simeq [3]$ no longer kills the one-loop
+anomaly by parity.
+\end{remark}
+
+\subsection{The five objects in the CY context}
+
+Under the functor $\Phi$, the five-object chain of Volume~I
+becomes a chain of CY invariants.  The five objects are produced by
+four distinct functors and should never be conflated.
+
+\begin{remark}[Five objects from $\Phi(\cC)$]
+\label{rem:v3-st-five-objects}
+Let $A_\cC = \Phi(\cC)$ be the chiral algebra of a CY$_d$
+category~$\cC$.
+\begin{enumerate}[label=(\roman*)]
+ \item $A_\cC$ (the chiral algebra): the factorization envelope
+ of the Lie conformal algebra $\fL_\cC$.
+ \item $B(A_\cC) = T^c(s^{-1}\bar{A}_\cC)$ (the bar coalgebra):
+ a factorization coalgebra on $\Ran(X)$ with deconcatenation
+ coproduct.  At genus $g \geq 1$, the fiberwise differential
+ satisfies $d_{\mathrm{fib}}^2 = \kappa_{\mathrm{ch}}(A_\cC)
+ \cdot \omega_g$.
+ \item For a chosen quadratic presentation
+ $A_\cC=T_X(V_\cC)/(R_\cC)$, the presentation coalgebra is
+ $A_\cC^i=C_X(s^{-1}V_\cC,s^{-2}R_\cC)$, with
+ $q_{A_\cC}\colon A_\cC^i\to B(A_\cC)$.  On the Koszul locus,
+ $H^\bullet(q_{A_\cC})$ identifies its cohomology with
+ $H^\bullet B(A_\cC)$.  A BPS comparison datum may then identify
+ the latter coalgebra with the corresponding BPS state space.
+ \item Verdier duality forms
+ $K_X(A_\cC)=D_{\Ran}B(A_\cC)$, and a chosen pair map
+ $\nu_{A_\cC}\colon K_X(A_\cC)\to A_\cC^!$ reaches the Koszul partner.
+ For CY$_2$ categories, the mirror statement is the corresponding
+ CY-to-chiral comparison theorem.
+ \item $\Zder(A_\cC)$ (the derived chiral center):
+ the chiral Hochschild cochain complex encoding the algebraic
+ closed-sector slot; a physical bulk interpretation requires the
+ open--closed comparison datum.
+\end{enumerate}
+The bar complex is the $\Eone$ engine; the derived center is the
+$\SCchtop/E_3$ output.  The counit
+$\Omega(B(A_\cC))\to A_\cC$ performs reconstruction, Verdier duality
+forms $K_X(A_\cC)$, and categorical Hochschild cochains form the
+derived center.
+\end{remark}
+
+
+%%% ================================================================
+%%% 4. THE KAPPA-SPECTRUM
+%%% ================================================================
+
+\section{The $\kappa_\bullet$-spectrum}
+\label{sec:kappa-spectrum}
+
+\subsection{Four modular characteristics}
+
+A CY manifold~$X$ admits multiple chiral algebraizations, each
+with its own modular characteristic.  The four approved subscripts
+in this volume are: $\kappa_{\mathrm{cat}}$ (categorical Hodge
+supertrace), $\kappa_{\mathrm{ch}}$ and its explicit specialisations
+such as $\kappa_{\mathrm{ch}}^{\mathrm{Heis}}$ (boundary chiral
+trace lanes), $\kappa_{\mathrm{BKM}}$ (Borcherds--Kac--Moody), and
+$\kappa_{\mathrm{fiber}}$ (lattice).
+An unsubscripted $\kappa$ has no invariant meaning on this surface.
+
+\begin{definition}[The $\kappa_\bullet$-spectrum]
+\label{def:v3-st-kappa-spectrum}
+For a CY$_d$ manifold~$X$ (or more generally a CY$_d$
+category~$\cC$), the \emph{$\kappa_\bullet$-spectrum} is the
+ordered tuple
+\[
+ \Spec_{\kappa_\bullet}(X)
+ = (\kappa_{\mathrm{cat}},\; \kappa_{\mathrm{ch}}^{\mathrm{Heis}},\;
+ \kappa_{\mathrm{BKM}},\; \kappa_{\mathrm{fiber}})
+\]
+where:
+\begin{enumerate}[label=(\roman*)]
+ \item $\kappa_{\mathrm{cat}} = \chi(\cO_X)$
+ (the holomorphic Euler characteristic) measures the total-space
+ categorical Hochschild datum.  On products it is
+ K\"unneth-multiplicative; fibre multipliers such as
+ $\chi(\cO_{K3})=2$ must be named on the fibre lane, not imported into
+ $\kappa_{\mathrm{cat}}(K3\times E)$.
+ \item $\kappa_{\mathrm{ch}}^{\mathrm{Heis}}$ is the
+ Heisenberg--Mukai boundary specialisation.  For $K3\times E$ it is
+ $3=\dim_\bC(K3\times E)$.  The compact total-space chiral trace lane
+ is instead $\kappa_{\mathrm{ch}}(A_{K3\times E})=\Xi(K3\times E)=0$.
+ For $d = 2$ and $h^{1,0}=0$, Theorem~\ref{thm:v3-st-cy-a2} gives
+ $\kappa_{\mathrm{ch}}=\chi(\cO_X)$.
+ \item $\kappa_{\mathrm{BKM}}=c_N(0)/2$ is the Borcherds weight of
+ the automorphic BKM denominator in the Vol~III normalization.
+ For $K3 \times E$, the primitive denominator is $\Delta_5$ and
+ $\kappa_{\mathrm{BKM}}=5$; the squared unnormalised Igusa convention is
+ $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$.
+ \item $\kappa_{\mathrm{fiber}} = \operatorname{rank}(\Lambda_X)$
+ (the lattice rank) measures the frame data.  For $K3 \times E$:
+ $\kappa_{\mathrm{fiber}} = 24$.
+\end{enumerate}
+\end{definition}
+
+The four characteristics are generically distinct.  Their relations
+encode the internal structure of the CY manifold.
+
+\begin{proposition}[Spectrum relations for $K3 \times E$]
+\label{prop:v3-st-k3e-spectrum}
+For $X = K3 \times E$:
+\[
+ \Spec_{\kappa_\bullet}(K3 \times E)
+ = (0,\; 3,\; 5,\; 24).
+\]
+Here the first entry is the total-space value
+$\chi(\cO_{K3\times E})=0$, while the value $2$ belongs only to the
+K3 fibre.  No additive identity equates the Borcherds weight with
+the sum of the categorical and chiral entries.
+The ratio
+$\kappa_{\mathrm{BKM}}/\kappa_{\mathrm{ch}}^{\mathrm{Heis}} = 5/3$ reflects the
+single-copy-to-second-quantization passage between the Heisenberg
+specialisation and the Borcherds denominator.
+\end{proposition}
+
+\begin{proof}
+$\kappa_{\mathrm{cat}} = \chi(\cO_{K3\times E})
+= \chi(\cO_{K3})\chi(\cO_E)=2\cdot 0=0$ by K\"unneth multiplicativity
+for the total space.
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}} = \dim_\bC(K3 \times E) = 3$ (additivity
+under Cartesian product, Route~B:
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3) = 2$,
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(E) = 1$;
+verified by six independent paths).  This is the Heisenberg-level
+additive invariant; the total-space Hodge-supertrace Route~A
+$\Xi(X)=\chi(\cO_X)$ is K\"unneth-multiplicative and vanishes on
+$K3 \times E$.
+The Volume~III Beauville-route comparison separates these two
+invariants: Route~A is the total-space Hodge supertrace, while
+Route~B is the additive Heisenberg-level shadow.
+$\kappa_{\mathrm{BKM}} = c_1(0)/2=\operatorname{wt}(\Delta_5)
+=\frac{1}{2}\operatorname{wt}(\Phi_{10}^{\mathrm{un}})=5$ because
+$\Phi_{10}^{\mathrm{un}} = \Delta_5^2$ has weight~$10$.
+$\kappa_{\mathrm{fiber}} = \operatorname{rank}(H^*(K3, \bZ))
+= 24$ (the second Betti number $b_2(K3) = 22$ plus
+$b_0 + b_4 = 2$).  The numerical decomposition $5=2+3$ uses the K3
+fibre value $2$ and the Heisenberg specialisation $3$; it is not an
+identity among total-space $\kappa_\bullet$-invariants.  The fibre
+rank relation $24 = 12 \cdot 2$ uses $\chi(\cO_{K3})=2$, not
+$\chi(\cO_{K3\times E})$.
+\end{proof}
+
+\subsection{Koszul complementarity in the CY context}
+
+Volume~I defines the Koszul conductor $K(A) =
+\kappa_{\mathrm{ch}}(A) + \kappa_{\mathrm{ch}}(A^!)$: it is $0$
+for KM/Heisenberg/lattice/free families, $13$ for Virasoro, and
+family-dependent in general.  The CY context introduces a new
+complementarity: mirror symmetry exchanges $\cC$ and $\cC^\vee$,
+and $A_{\cC^\vee} = A_\cC^!$ when both are constructed.
+
+\begin{conjecture}[CY Koszul complementarity]
+\label{conj:v3-st-cy-koszul-complementarity}
+For a CY$_2$ category $\cC$ with mirror $\cC^\vee$:
+\[
+ \kappa_{\mathrm{ch}}(\Phi(\cC)) + \kappa_{\mathrm{ch}}
+ (\Phi(\cC^\vee)) = 0.
+\]
+The Koszul conductor vanishes for all mirror pairs at $d = 2$.
+\end{conjecture}
+
+\begin{remark}[Scope]
+\label{rem:v3-st-cy-complement-evidence}
+The quintic threefold is a CY$_3$ example and does not supply
+evidence for the CY$_2$ complementarity statement.  Moreover
+$\chi(\cO_{X_5})=0$ and $\chi_{\mathrm{top}}(X_5)=-200$, so
+$\chi(X_5)/2$ is not the categorical trace invariant used here.
+The CY$_3$ BCOV and mirror lane is a separate problem.
+\end{remark}
+
+\subsection{Shadow depth classification}
+
+The CY-to-chiral functor assigns to each CY geometry a chiral
+algebra whose shadow class (Volume~I) organizes the landscape.
+
+\begin{proposition}[Shadow depth of CY chiral algebras]
+\label{prop:v3-st-cy-shadow-depth}
+Under $\Phi$, the shadow depth classification of Volume~I
+(G/L/C/M) distributes over the CY landscape as follows:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{llll}
+ \toprule
+ CY geometry & Shadow class & $\kappa_{\mathrm{ch}}$ &
+ Shadow depth \\
+ \midrule
+ $\bC^3$ (toric, abelian) & G & $1$ & $2$ \\
+ Resolved conifold & G & $1$ & $2$ \\
+ Local $\bP^2$ & M & $3/2$ & $\infty$ \\
+ $K3 \times E$ & M & $3$ & $\infty$ \\
+ \bottomrule
+\end{tabular}
+\end{center}
+Classes~G and~M are populated.  Classes~L (shadow depth~$3$) and~C
+(shadow depth~$4$) are targets of the toric programme: the toric
+vertex bound $r_{\max} \leq N$ (where $N$ is the number of
+web-diagram vertices) predicts that specific toric geometries
+should realize these classes, but explicit CY examples at shadow
+depth exactly~$3$ or~$4$ remain to be identified.
+\end{proposition}
+
+
+%%% ================================================================
+%%% 5. K3 x E PROTOTYPE (PARTIAL -- SECTION HEAD)
+%%% ================================================================
+
+\section{The $K3 \times E$ prototype}
+\label{sec:k3e}
+
+The product of a K3 surface~$S$ and an elliptic curve~$E$ is the
+canonical CY$_3$ testing ground.  It is simple enough to compute
+(lattice $\Lambda^{3,2}$ of signature $(3,2)$, K3 elliptic genus
+$\phi_{0,1}(\tau, z)$, Borcherds denominator $\Delta_5$) and
+already exhibits every obstruction that separates the shadow tower
+from the full automorphic form.
+
+\subsection{The thirteen structural results}
+
+The structural spine begins with six computations: modular
+characteristic, moonshine multiplier, BKM weight, BPS factorisation,
+mock modular decomposition, and shadow convergence.
+
+\emph{K3-1} (Heisenberg-level modular characteristic, Route~B):
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3 \times E) = 3 = \dim_\bC$,
+verified by six independent paths (direct Hodge, Mukai pairing,
+Dolbeault contracting homotopy, bar computation, Borcherds lift,
+elliptic genus).  Additivity under Cartesian product:
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3) = 2$,
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(E) = 1$.  The Route~A
+Hodge-supertrace $\Xi(X)=\chi(\cO_X)$ is K\"unneth-multiplicative and gives
+$\Xi(K3 \times E) = 2 \cdot 0 = 0$; the two routes label
+genuinely distinct invariants.  The Volume~III Beauville-route
+comparison records the same split between total-space trace and
+Heisenberg-level additive shadow.
+
+\emph{K3-2} (moonshine multiplier): the factor~$2$ in
+$Z_{K3} = 2\,\phi_{0,1}$ is
+$\kappa_{\mathrm{cat}}(K3) = \chi(\cO_{K3}) = 2$.  The massive
+Mathieu multiplicities satisfy
+$A_n = \kappa_{\mathrm{cat}} \cdot \dim(\rho_n)$: the bar complex
+provides the universal coefficient and does not detect~$M_{24}$
+directly.
+
+\emph{K3-3} (BKM weight):
+$\kappa_{\mathrm{BKM}} = \frac{1}{2}\operatorname{wt}(\Phi_{10}^{\mathrm{un}})
+= 5$.  The ratio
+$\kappa_{\mathrm{BKM}}/\kappa_{\mathrm{ch}} = 5/3$ reflects
+second quantization; the Hilbert--Chow exceptional divisor accounts
+for $\chi(\operatorname{Hilb}^2) - \chi(\operatorname{Sym}^2) =
+24 = \chi(K3)$.
+
+\emph{K3-4} (BPS factorization):
+$A_n = \kappa_{\mathrm{cat}}(K3) \cdot \dim(\rho_n)$, separating the
+fibre homological part ($\kappa_{\mathrm{cat}}(K3) = 2$) from the
+group-theoretic part ($\rho_n$, the Mathieu representation).
+
+\emph{K3-5} (mock modular verification): the mock modular
+decomposition
+$Z_{K3} = (h - 24\mu)\,\vartheta_1^2/\eta^3$ is verified to
+machine precision ($\sim 5.7 \times 10^{-16}$ relative error),
+where $\mu$ is the Zwegers Appell--Lerch sum.
+
+\emph{K3-6} (shadow convergence): the shadow generating function
+$Z^{\mathrm{sh}}(t) = \kappa_{\mathrm{ch}}\bigl((t/2)/
+\sin(t/2) - 1\bigr)$ converges with radius $R = 2\pi$, has entire
+Borel transform, and exhibits no resurgence.
+
+\subsection{The shadow--Siegel gap theorem}
+
+\begin{theorem}[Shadow--Siegel gap]
+\label{thm:v3-st-shadow-siegel-gap}
+The shadow obstruction tower of $K3 \times E$ does not produce the
+unnormalised Igusa cusp form $\Phi_{10}^{\mathrm{un}}$.  Four
+structural obstructions
+separate the two:
+\begin{enumerate}[label=\textup{(O\arabic*)}]
+ \item \emph{Categorical}: the shadow tower produces numbers
+ (Taylor coefficients of $\Theta_{A_\cC}$); the denominator
+ identity is a function (an automorphic form on~$\cH_2$).
+ \item \emph{$\kappa_{\mathrm{ch}}^{\mathrm{Heis}}$--$\kappa_{\mathrm{BKM}}$
+ mismatch}:
+ \[
+  \kappa_{\mathrm{ch}}^{\mathrm{Heis}}=3\neq 5=\kappa_{\mathrm{BKM}}.
+ \]
+ The compact total-space Hodge-supertrace value is separately
+ $\kappa_{\mathrm{ch}}(A_{K3\times E})=0$.  The number $3$ is the
+ Heisenberg--Mukai specialisation, not the total-space $\Phi$-trace.
+ \item \emph{Second quantization}: the physical DT partition
+ function is the DMVV symmetric product of single-copy data; the
+ bar complex of a single algebra is the single copy.
+ \item \emph{Schottky}: at $g \geq 4$, the Torelli map
+ $\cM_g \to \cA_g$ is no longer dominant, and the shadow tower
+ is imprisoned in tautological classes on $\Mbar_g$.
+\end{enumerate}
+\end{theorem}
+
+Each obstruction points to a research programme.  The
+$\kappa_{\mathrm{ch}}$--$\kappa_{\mathrm{BKM}}$ mismatch~(O2) is
+the most telling: a single CY$_3$ admits multiple chiral
+algebraizations, and the $\kappa_\bullet$-spectrum records which
+face of the geometry each algebraization captures.
+
+
+%%% ================================================================
+%%% 6. TORIC CY3 AND CoHA (SECTION HEAD)
+%%% ================================================================
+
+\section{Toric CY$_3$ and the cohomological Hall algebra}
+\label{sec:toric}
+
+A toric CY$_3$ $X_\Sigma$ is determined by a fan~$\Sigma$ in
+$\bZ^3$ satisfying the CY condition (all generators coplanar).
+The toric diagram fixes a quiver with potential $(Q_X, W_X)$, and
+the critical CoHA
+$\cH(Q_X, W_X) = \bigoplus_\mathbf{d}
+H^{\mathrm{BM}}_*(\mathrm{Crit}(W_\mathbf{d}),
+\phi_{W_\mathbf{d}})$ provides the $\Eone$-sector of the CY
+quantum group.
+
+\subsection{$\bC^3$ and the affine Yangian}
+
+The simplest toric CY$_3$.  Toric diagram: a single triangle.
+Quiver: the Jordan quiver (one vertex, one loop~$\circlearrowleft$).
+Cubic potential $W = \mathrm{tr}(XYZ - XZY)$.
+
+\begin{theorem}[Schiffmann--Vasserot]
+\label{thm:v3-st-sv}
+The critical CoHA of $\bC^3$ is isomorphic to the positive half of
+the affine Yangian of $\fgl_1$:
+\[
+ \CoHA(\bC^3) \;\simeq\; Y^+(\widehat{\fgl}_1).
+\]
+The full $\cW_{1+\infty}$ vertex realisation appears only after
+taking the appropriate double/evaluation realisation.
+\end{theorem}
+
+The chain $\bC^3 \to Y^+(\widehat{\fgl}_1) \to
+\Rep^{\Etwo}(Y(\widehat{\fgl}_1))$ is verified end-to-end: the
+toric CY$_3$ produces the CoHA, which is the positive half of the
+Yangian and hence the $\Eone$-chiral quantum group.  The
+$\cW_{1+\infty}$ vertex realisation enters only after the
+double/evaluation step.  The Drinfeld center recovers the full
+$\Etwo$-braiding
+(Theorem~\ref{thm:v3-st-drinfeld-center} below).
+
+\subsection{The CoHA as ordered Hall input}
+
+The CoHA is an associative ($\Eone$) algebra: the Hall
+multiplication is ordered (short exact sequences
+$0 \to V' \to V \to V'' \to 0$ have sub before quotient).  In the
+present framework:
+
+\begin{itemize}
+\item The CoHA is the positive half: an ordered associative Hall
+ algebra before chiralisation.
+ \item The full quantum vertex realisation is obtained only after the
+ double/center construction, where the $\Etwo$-braiding lives.
+ \item The braiding (the passage from $\Eone$ to $\Etwo$) is
+ the quantum group $R$-matrix of the affine super Yangian.
+ \item The ordered bar $B^{\mathrm{ord}}(A_\cC)$ carries the
+ collision kernel and its represented $R$-operator.  The symmetric
+ bar $B^\Sigma(A_\cC)$ carries the homotopy-coinvariant operator
+ $q_2(K_{A_\cC}^{\mathrm{coll}})$.  A normalized functional
+ $\tau_{A_\cC,2}^{\mathrm{res}}$ gives $\kappa_{\mathrm{ch}}$ in
+ abelian and scalar families and $\kappa_{\mathrm{dp}}$ on the
+ non-abelian affine row; the Sugawara contribution $\dim(\fg)/2$
+ completes $\kappa_{\mathrm{ch}}$ there.
+\end{itemize}
+
+For local toric charts the hCS BV complex and the Hall shuffle algebra
+glue at finite positive-half Rees level: after truncating the Rees
+filtration, the positive-half Hall multiplication and the hCS extension
+correspondence define the same ordered $\Eone$ operation.  Vol~III now
+constructs this passage on the resolved conifold by gluing the hCS
+$E_3$ factorisation algebra, adding the anomaly-free quantum lift, and
+writing the finite hCS--Rees-Hall chart maps.  The compact Hall,
+quasi-NCCR, and recognised Hall-double comparisons are separate global
+identifications; finite radical-quotient doubles now exist from compact
+windows, while the Borcherds recognition/completion remains a
+finite-defect and inverse-limit condition.
+
+\begin{remark}[Shadow = $\GW(\bC^3)$]
+\label{rem:v3-st-shadow-gw}
+At $\kappa_{\mathrm{ch}} = \Psi$ (the deformation parameter of
+$\cW_{1+\infty}$ at $c = 1$), the shadow obstruction tower recovers
+the genus-$1$ constant-map channel for $\bC^3$. The all-genus virtual
+identification requires the uniform-weight and $\Phi_3^{(\Sigma_2,C)}$ hypotheses,
+and the motivic identification remains conjectural. On the DT side,
+the MacMahon function
+$M(q) = \prod_{n \geq 1}(1 - q^n)^{-n}$ encodes the partition
+function as the second-quantized bar/DT character in the non-compact
+degree-zero normalization.
+\end{remark}
+
+\subsection{The Drinfeld center}
+
+\begin{theorem}[Drinfeld center for $\bC^3$]
+\label{thm:v3-st-drinfeld-center}
+The Drinfeld center of the $\Eone$-monoidal representation
+category of $Y^+(\widehat{\fgl}_1)$ recovers the full
+$\Etwo$-braided monoidal structure:
+\[
+ \cZ(\Rep^{\Eone}(Y^+(\widehat{\fgl}_1)))
+ \;\simeq\;
+ \Rep^{\Etwo}(Y(\widehat{\fgl}_1))
+ \;\simeq\;
+ \Rep^{\Etwo}(\cW_{1+\infty}).
+\]
+Five invariants match at six levels: the ordinary center has
+dimension~$1$, while the derived center has dimension~$3$
+(capturing $\Ext^{1,2}$ invisible to the commutant).
+\end{theorem}
+
+The Drinfeld center is the categorical-centre step in the Volume~I
+circle: it is the right adjoint to forgetting the braiding and
+recovers non-trivial half-braidings at the categorical level. The
+averaging map
+$\mathrm{av} \colon \fg^{\Eone} \to \fg^{\mathrm{mod}}$
+is a different, lossy projection from ordered $R$-matrix data to the
+scalar $\kappa_{\mathrm{ch}}$ shadow in the $\kappa_\bullet$-spectrum.
+
+
+%%% ================================================================
+%%% 7. E_1 STABILIZATION (SECTION HEAD)
+%%% ================================================================
+
+\section{The $\Eone$ stabilization theorem}
+\label{sec:e1-stabilization}
+
+\begin{theorem}[$\Eone$ stabilization for toric local models]
+\label{thm:v3-st-e1-stabilization}
+For toric $GL(d)$-invariant local CY models with $d \geq 3$, the
+Stage-2 CY chiral algebra $A_\cC=\Phi(\cC)$ is natively $\Eone$ on
+the reference curve.  In this local invariant lane the selected CY
+polyvector sector has trivial Schouten--Nijenhuis bracket, and the
+CoHA extension correspondence imposes a preferred ordering (sub
+before quotient).  For general CY categories the full
+Schouten--Nijenhuis bracket remains nonzero; the $\Eone$ level is
+forced by Stage~2 and degree.  The braided monoidal structure is
+recovered through the Drinfeld center.
+\end{theorem}
+
+\begin{proof}
+The Schouten--Nijenhuis bracket on $\mathrm{PV}(\bC^d)$ is nonzero in
+general; vector fields already bracket.  The toric local model uses
+the $GL(d)$-invariant CY sector generated by the volume class and the
+scalar torus-weight data entering the Hall construction.  On this
+selected sector the Schouten output has no invariant target of the
+required CY weight, hence the induced bracket is zero.  The quantum
+operation then comes from the CoHA convolution correspondence, which
+is associative ($\Eone$) and ordered by subobject before quotient.
+\end{proof}
+
+\begin{remark}[Arithmetic of the fundamental group]
+\label{rem:v3-st-pi1-arithmetic}
+The key arithmetic for ordered configurations is
+\[
+\pi_1(\Conf^{\mathrm{ord}}_2(\bR^2))=\bZ,\qquad
+\pi_1(\Conf^{\mathrm{ord}}_2(\bR^d))=0\quad(d\geq3).
+\]
+For the unordered quotient,
+\[
+\pi_1(\Conf^{\mathrm{unord}}_2(\bR^d))=\bZ/2\quad(d\geq3).
+\]
+Thus the native $E_d$ operation at $d\geq3$ is over-symmetric for
+braided chiral purposes; the construction keeps the ordered $\Eone$
+direction on $C$ and recovers braiding through the Drinfeld center.
+\end{remark}
+
+
+%%% ================================================================
+%%% Three consolidated structural theorems: native $\En$ output,
+%%%   CY-dimension stratification, Borcherds weight
+%%% ================================================================
+
+\section{$\Phi$ scope, CY-dimension stratification, Borcherds weight}
+\label{sec:phi-scope-stratification-trace}
+
+Three consolidated structural theorems pin the CY-to-chiral
+assignment to its precise scope: the native $\En$-output level on the
+reference curve, the dimension-stratified trace spectrum, and the
+Vol~III Borcherds weight normalisation
+$\kappa_{\mathrm{BKM}} = c_N(0)/2$.
+
+\begin{theorem}[Native $\En$-output scope of the two-stage $\Phi_d^{(\Sigma_{d-1},C)}$]
+\label{thm:phi-native-en-scope}
+Let
+\[
+ \Phi_d^{(\Sigma_{d-1},C)}
+ =\SpCh_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d
+\]
+be evaluated on a constructed locus with the required formality,
+holomorphic-twist, framing, completion, and specialisation witnesses.
+Its native output level is
+\[
+ n \;=\; \begin{cases} \infty & d = 1, \\ 2 & d = 2, \\
+1 & \text{constructed } d \ge 3. \end{cases}
+\]
+At $d = 2$ the native $\bS^2$-framing on $\HH_\bullet(\cC)$
+supplies a genuine $\Etwo$-chiral structure
+(Kontsevich--Vlassopoulos; Theorem~\textup{CY-A$_2$}).
+At $d = 3$ this is a witnessed object-level assignment for fixed
+$(\Sigma_2,C)$; arbitrary functoriality on all CY morphisms is not
+asserted.  For $d\geq4$ the display names a construction problem, not
+a theorem.  Braiding is recovered categorically via the Drinfeld
+centre, closing the $\En$ operadic circle on
+$Z^{\mathrm{der}}_{\mathrm{ch}}$ rather than on a bare output.
+\end{theorem}
+
+\begin{theorem}[Trace stratification by
+ CY-dimension]\label{thm:phi-kappa-stratification}
+For a compact Calabi--Yau manifold $X$ of dimension $d$ and a
+reference curve $C \subset X$ with specialisation cycle
+$\Sigma_{d-1} \subset X$,
+\begin{equation}\label{eq:phi-kappa-hodge-supertrace}
+\kappa_{\mathrm{ch}}^{\mathrm{Hodge}}\bigl(\Phi_d^{(\Sigma_{d-1},C)}(D^b\Coh(X))\bigr)
+\;=\; \sum_{q=0}^{d} (-1)^q h^{0,q}(X),
+\end{equation}
+on the compact Hodge-trace lane. The stratification across the canonical
+families reads
+\begin{center}\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcl}
+\toprule
+family (dim $d$) & $\kappa_{\mathrm{ch}}^{\mathrm{Hodge}}$ & notes \\
+\midrule
+elliptic curve $E$ ($d=1$) & $0$ & $h^{0,0}-h^{0,1}=1-1$ \\
+$K3$ ($d=2$) & $2$ & $\chi(\cO_{K3}) = 2$ \\
+abelian/bielliptic surface ($d=2$) & $0$ & $\chi(\cO) = 0$ \\
+quintic $\subset \bP^4$ ($d=3$) & $0$ & $\chi(\cO_X) = 0$ \\
+$K3 \times E$ ($d=3$) & $0$ & $\chi(\cO) = 0$ \\
+triple elliptic $E^3$ ($d=3$) & $0$ & $\chi(\cO) = 0$ \\
+local $\bP^2 = \mathrm{Tot}(K_{\bP^2})$ & $3/2$
+  & $\chi(S)/2 = 3/2$ (shadow) \\
+$\mathrm{CY}_4$ sextic $\subset \bP^5$ & $2$
+  & Hodge supertrace \\
+generic $\mathrm{CY}_5$ & $0$ & Hodge supertrace vanishes \\
+\bottomrule
+\end{tabular}
+\end{center}
+The Heisenberg--Mukai, BKM, and fibre lanes are not entries of this
+table.  The conifold is \emph{not} a local surface: its geometry is
+$\mathrm{Tot}(\cO(-1) \oplus \cO(-1) \to \bP^1)$, not
+$\mathrm{Tot}(K_S \to S)$, and the identity
+$\kappa_{\mathrm{ch}}^{\mathrm{Hodge}} = \chi(S)/2$ does not apply. The McKay
+orbifold $[\bC^3/\bZ_3]$ gives
+$\kappa_{\mathrm{ch}}^{\mathrm{Hodge}} = 1$ by direct calculation.
+\end{theorem}
+
+\begin{proof}
+The identification
+$\kappa_{\mathrm{ch}}^{\mathrm{Hodge}} = \sum(-1)^q h^{0,q}$ is
+the Hochschild--Kostant--Rosenberg degeneration composed with the
+Mukai pairing; the degree-$d$ cyclic trace $\Tr\colon \HC^-_d(\cC) \to k$
+restricts to the top-dimensional Hodge piece, and Serre duality
+pairs it with the full Hodge decomposition. The family entries are
+direct computation; ``local~$\bP^2$'' comes from the shadow
+$\kappa_{\mathrm{ch}}^{\mathrm{Hodge}} = \chi(S)/2 = 3/2$ because
+$\chi(\bP^2) = 3$. The conifold exclusion is structural: its
+total space is not the total space of a canonical line bundle over
+a surface, so the local-surface formula is inapplicable.
+\end{proof}
+
+\begin{theorem}[Borcherds weight normalisation]
+\label{thm:phi-universal-trace}
+On the Vol~III Borcherds-denominator locus
+$N\in\{1,2,3,4,6\}$,
+\[
+ \kappa_{\mathrm{BKM}}(\Phi_N)=\frac{c_N(0)}{2}.
+\]
+Thus $c_N(0)=(10,6,4,3,2)$ \textup{(}Jatkar--Sen /
+Govindarajan--Krishna; the fourth rung half-integral\textup{)} gives
+\[
+ \kappa_{\mathrm{BKM}}=(5,3,2,\tfrac32,1).
+\]
+This is a Borcherds-weight identity.  The compact Hodge supertrace is
+separate, and the ghost-charge normalisation belongs to the
+Monster--Leech lane.
+\end{theorem}
+
+\begin{remark}[$\kappa$ subscript conventions (all subscripts explicit)]
+\label{rem:phi-kappa-subscripts}
+Every $\kappa$ in this section carries an approved Vol~III
+subscript from the closed set $\{\mathrm{ch}, \mathrm{cat},
+\mathrm{BKM}, \mathrm{fiber}\}$. The identifications
+$\kappa_{\mathrm{ch}} \to \chi(\cO)$ (Hodge supertrace),
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}} \to \dim_\bC X$ on the
+Heisenberg--Mukai specialisation, and
+$\kappa_{\mathrm{BKM}} \to c_N(0)/2$ are the precise uses here.
+\end{remark}
+
+\begin{remark}[Dimension range of $\Phi_d^{(\Sigma_{d-1},C)}$]
+\label{rem:phi-dimensional-range}
+Stage~1 $\Phi^{\mathrm{FA}}_d$ is unconditional for $d \in \{1, 2\}$
+and is constructed at $d=3$ on the witnessed filtered locus by
+Kontsevich--Tamarkin $E_d$-formality applied to Hochschild cochains,
+Costello--Gwilliam--Li locality on~$X$, and the required framing and
+completion witnesses. Stage~2
+$\SpCh_{\Sigma_{d-1}, C}$ is factorisation homology followed by
+curve restriction along a witnessed admissible specialisation datum
+$(\Sigma_{d-1},C)$.
+ $\Phi_d^{(\Sigma_0,C)}$ at $d = 1$: trivial ($\Ainf = \mathrm{comm}$).
+$d = 2$: proved (Theorem~\textup{CY-A$_2$}), $\Etwo$-chiral
+output. $d = 3$: witnessed object-level output for fixed
+$(\Sigma_2,C)$, $\Eone$-chiral on the reference curve; the family of
+constructed specialisations
+$\{\SpCh_{\Sigma_2, C}(\Phi^{\mathrm{FA}}_3(\cC))\}_{\Sigma_2}$
+over choices of $K3$-, $T^4$-, or Enriques-fibres produces
+the Borcherds--$\Delta_5$, Igusa--$\chi_{10}$, and
+Gritsenko--Cl\'ery paramodular shadows respectively.
+$d = 4$: Stage~1 is obstructed by $\pi_4(BU) = \bZ$; the
+$p_1$-twisted double current algebra is the surviving structure.
+For $K3\times K3$ one has
+$\int_{K3\times K3}p_1(T_X)^2=4608$, so this product lies on the
+$p_1$-twisted stratum rather than on a Pontryagin-vanishing locus.
+The untwisted $E_4$ lift requires separate vanishing data. For $d = 5, 6$ no general
+Stage~1 theorem is asserted here; the expected Hodge-supertrace value
+$\kappa_{\mathrm{ch}}=0$ for a generic smooth CY requires a separate
+existence theorem for the relevant higher factorisation algebra.
+Thus the unconditional range is $d \in \{1, 2\}$, the constructed
+$d=3$ range is witnessed object-level, and the $d=4$
+untwisted range is the Pontryagin-vanishing family; $p_1$-twisted
+examples such as $K3\times K3$ require the twisted datum.
+\end{remark}
+
+
+%%% ================================================================
+%%% REFERENCES
+%%% ================================================================
+
+\section*{References}
+
+\begin{enumerate}[label={[\arabic*]}]
+\item
+ R.~Lorgat,
+ \emph{Modular Koszul Duality},
+ Volume~I of the Modular Koszul Duality Programme, 2026.
+
+\item
+ R.~Lorgat,
+ \emph{$\Ainf$ Chiral Algebras and 3D Holomorphic-Topological QFT},
+ Volume~II of the Modular Koszul Duality Programme, 2026.
+
+\item
+ R.~Lorgat,
+ \emph{Calabi--Yau Categories, Quantum Groups, and BPS Algebras},
+ Volume~III of the Modular Koszul Duality Programme, 2026.
+
+\item
+ K.~Costello,
+ \emph{Notes on supersymmetric and holomorphic field theories in
+ dimensions $2$ and $4$},
+ Pure Appl.\ Math.\ Q.\ \textbf{9} (2013), 73--165.
+
+\item
+ K.~Costello and O.~Gwilliam,
+ \emph{Factorization Algebras in Quantum Field Theory},
+ Cambridge University Press, 2017, 2021.
+
+\item
+ M.~Kontsevich and Y.~Vlassopoulos,
+ \emph{Pre-Calabi--Yau algebras and topological quantum field
+ theories}, in preparation.
+
+\item
+ O.~Schiffmann and E.~Vasserot,
+ \emph{Cherednik algebras, $\cW$-algebras and the equivariant
+ cohomology of the moduli space of instantons on $\mathbb{A}^2$},
+ Publ.\ Math.\ IHES \textbf{118} (2013), 213--342.
+
+\item
+ M.~Rapcak, Y.~Soibelman, Y.~Yang, and G.~Zhao,
+ \emph{Cohomological Hall algebras, vertex algebras, and
+ instantons},
+ Comm.\ Math.\ Phys.\ \textbf{376} (2020), 1803--1873.
+
+\item
+ V.~Gritsenko, V.~Nikulin,
+ \emph{Automorphic forms and Lorentzian Kac--Moody algebras},
+ Part~II, Internat.\ J.\ Math.\ \textbf{9} (1998), 201--275.
+
+\item
+ R.~Dijkgraaf, E.~Verlinde, H.~Verlinde,
+ \emph{Counting dyons in $N=4$ string theory},
+ Nucl.\ Phys.\ B \textbf{484} (1997), 543--561.
+
+\item
+ D.~Maulik, N.~Nekrasov, A.~Okounkov, R.~Pandharipande,
+ \emph{Gromov--Witten theory and Donaldson--Thomas theory, I, II},
+ Compos.\ Math.\ \textbf{142} (2006), 1263--1285 and 1286--1304.
+\end{enumerate}
+
+\end{document}

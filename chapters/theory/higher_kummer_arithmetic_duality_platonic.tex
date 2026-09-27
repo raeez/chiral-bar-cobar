@@ -1,0 +1,186 @@
+% !TEX root = ../../main.tex
+%
+% Exact Bernoulli witnesses and the open Virasoro residue comparison.
+
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\ClaimStatusDefinitional}{}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusOpen}{}
+
+\chapter{Bernoulli Witnesses and Virasoro Residue Comparison}
+\label{ch:higher-kummer-arithmetic-duality}
+
+\section*{Two arithmetic objects}
+
+An odd prime \(p\) is Kummer-irregular when
+\(p\mid\operatorname{num}(B_{2m})\) for an even index
+\(2\le2m\le p-3\).  This classical condition applies directly to
+the Bernoulli coefficients of the \(\mathrm{SL}_2\) Verlinde
+polynomials.  A comparison with Virasoro higher residues begins after
+the ordered-residue package
+\(\mathsf H_{\mathrm{res}}(\Vir_c;X)\) constructs the scalar
+coordinates and the arithmetic package fixes their primitive integer
+normalization.
+
+The Bernoulli window through \(B_{22}\) contains the set
+\begin{equation}
+ \mathrm{IrrKum}_{\le22}
+ :=\{691,3617,43867,283,617,131,593\}.
+ \label{eq:higher-irrkum-tower}
+\end{equation}
+
+\section{Exact Bernoulli witnesses}
+
+\begin{theorem}[Kummer-irregular primes in the Bernoulli window]
+\ClaimStatusProvedHere
+\label{thm:higher-kummer-z-g-presence}
+\emph{Type signature:}
+\textup{(Open/modular quadrants, \(\mathrm{SL}_2\) Verlinde-polynomial
+presentation, level \(5\),
+\(\mathsf H_{Z_g}^{\mathrm{Bern}}\)).}
+Here \(\mathsf H_{Z_g}^{\mathrm{Bern}}\) is the leading-coefficient
+formula of Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}
+together with the standard Bernoulli normalization.
+For every prime \(p\) in~\eqref{eq:higher-irrkum-tower}, the first
+displayed Bernoulli witness and its Verlinde genus are:
+\begin{center}
+\begin{tabular}{rccc}
+\hline
+\(p\)&\(2m\)&\(g(p)=m+1\)&\(\lvert\operatorname{num}(B_{2m})\rvert\)\\
+\hline
+\(691\)&\(12\)&\(7\)&\(691\)\\
+\(3617\)&\(16\)&\(9\)&\(3617\)\\
+\(43867\)&\(18\)&\(10\)&\(43867\)\\
+\(283\)&\(20\)&\(11\)&\(174611=283\cdot617\)\\
+\(617\)&\(20\)&\(11\)&\(174611=283\cdot617\)\\
+\(131\)&\(22\)&\(12\)&\(854513=11\cdot131\cdot593\)\\
+\(593\)&\(22\)&\(12\)&\(854513=11\cdot131\cdot593\)\\
+\hline
+\end{tabular}
+\end{center}
+Each \(p\) divides the numerator of the leading coefficient of
+\(Z_{g(p)}(k)\), written as a polynomial in \(n=k+2\).
+\end{theorem}
+
+\begin{proof}
+The even Bernoulli numerators through \(B_{22}\) are
+\[
+\begin{array}{c|ccccccccccc}
+2m&2&4&6&8&10&12&14&16&18&20&22\\ \hline
+\lvert\operatorname{num}(B_{2m})\rvert
+&1&1&1&1&5&691&7&3617&43867&174611&854513.
+\end{array}
+\]
+The displayed factorizations give the seven primes and their first
+indices in this window.  Every witness satisfies \(2m\le p-3\), so
+Kummer's criterion applies.
+
+By Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}, the relevant
+Verlinde coefficient equals
+\[
+ (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+For the seven rows, \(p>2g-2\); hence the rational multiplier is a
+\(p\)-adic unit.  The Bernoulli numerator factor therefore survives
+in the reduced coefficient.
+\end{proof}
+
+\begin{remark}[The factor (11) and the Kummer window]
+\label{rem:regular-factor-11}
+The factor \(11\mid\operatorname{num}(B_{22})\) lies beyond the
+Kummer index window for \(p=11\), since the defining range ends at
+\(p-3=8\).  This illustrates the role of the index bound in the
+cyclotomic criterion.
+\end{remark}
+
+\section{The Virasoro coefficient census}
+
+\begin{definition}[Arithmetic residue package]
+\ClaimStatusDefinitional
+The package \(\mathsf H_{\mathrm{Kum}}^{\le13}\) consists of:
+\begin{enumerate}[(i)]
+\item \(\mathsf H_{\mathrm{res}}^{\le13}(\Vir_c;X)\) and its scalar
+coordinates;
+\item a proved rational-function presentation in every arity;
+\item a canonical primitive integer normalization of each numerator;
+\item exact factorization certificates from two independent integer
+oracles;
+\item compatibility with changes of residue representative and gauge.
+\end{enumerate}
+For a completed package, let \(C_r\) be the coefficient set of the
+primitive numerator polynomial and let
+\(\mathcal P_{\le13}:=\bigcup_{4\le r\le13}\operatorname{Supp}(C_r)\).
+\end{definition}
+
+\begin{problem}[Compute the Virasoro prime census through arity \(13\)]
+\ClaimStatusOpen
+\label{thm:higher-kummer-s-r-absence-through-r-13}
+\emph{Type signature:}
+\textup{(Open quadrant, ordered residue-bar and primitive numerator
+presentations, level \(2\),
+\(\mathsf H_{\mathrm{res}}^{\le13}
++\mathsf H_{\mathrm{Kum}}^{\le13}\)).}
+
+Construct \(\mathsf H_{\mathrm{Kum}}^{\le13}\), compute the sets
+\(C_r\), and decide the finite separation condition
+\begin{equation}
+ \mathcal P_{\le13}\cap\mathrm{IrrKum}_{\le22}=\varnothing.
+ \label{eq:higher-kummer-s-r-absence}
+ \label{eq:char-s-r-disjoint}
+\end{equation}
+The computation includes chain-level residue representatives and
+factorization certificates for every primitive coefficient.
+\end{problem}
+
+\begin{remark}[Characteristic-prime certificate]
+\label{rem:characteristic-s-r-primes}
+The characteristic-prime set is an output of the arithmetic residue
+package.  Its certificate records each coefficient, its primitive
+normalization, and its exact factorization.
+\end{remark}
+
+\begin{remark}[First overlap boundary]
+\label{rem:2111-sharpness}
+After the coefficient census is constructed, the first overlap with
+the full set of Kummer-irregular primes defines a further arithmetic
+invariant of the residue tower.  This boundary is computed from the
+certified sets \(C_r\).
+\end{remark}
+
+\section{Finite Bernoulli--Virasoro comparison}
+
+\begin{problem}[Determine the finite genus--residue separation]
+\ClaimStatusOpen
+\label{thm:higher-kummer-refined-duality}
+\emph{Type signature:}
+\textup{(Open/modular quadrants, primitive residue numerator and
+Bernoulli presentations, levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{Kum}}^{\le13}
++\mathsf H_{Z_g}^{\mathrm{Bern}}\)).}
+For \(p\in\mathrm{IrrKum}_{\le22}\), define
+\[
+ r_0(p):=\inf\{r\ge4:p\in\operatorname{Supp}(C_r)\},
+ \qquad
+ g(p):=\min\{g\ge2:p\mid\operatorname{num}(B_{2g-2})\}.
+\]
+Use the convention \(\inf\varnothing=\infty\).
+Theorem~\ref{thm:higher-kummer-z-g-presence} gives
+\[
+ (g(691),g(3617),g(43867),g(283),g(617),g(131),g(593))
+ =(7,9,10,11,11,12,12).
+\]
+Complete the Virasoro census and determine whether it yields
+\begin{equation}
+ g(p)\le12<14\le r_0(p)
+ \qquad(p\in\mathrm{IrrKum}_{\le22}).
+ \label{eq:boundary-inequality}
+\end{equation}
+\end{problem}
+
+\begin{remark}[Weight and arity boundary]
+\label{rem:higher-kummer-weight-boundary}
+The Bernoulli index \(2g-2\) and the residue arity~\(r\) are separate
+gradings.  A comparison theorem records the map between them together
+with its normalization; the finite inequality above is the first
+test case.
+\end{remark}

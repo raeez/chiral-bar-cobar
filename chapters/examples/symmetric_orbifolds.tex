@@ -1,0 +1,1131 @@
+% ======================================================================
+% Chapter: Symmetric Orbifolds
+% ======================================================================
+
+\chapter{\texorpdfstring{The symmetric orbifold $\operatorname{Sym}^N(X)$}{The symmetric orbifold Sym\^{}N(X)}}\label{chap:symmetric-orbifold}
+% Regime III: non-perturbative (Convention~\ref{conv:regime-tags}).
+
+The notation $\operatorname{Sym}^N(X)$ carries three different
+objects. The fixed-point chiral algebra is
+\[
+ X_N^{\mathrm{id}} := (X^{\otimes N})^{S_N};
+\]
+its ordered bar complex is built from the invariant chiral product.
+The full permutation-orbifold conformal field theory has state space
+\[
+ \mathcal H_N^{\mathrm{orb}}
+ = \bigoplus_{[\sigma]\in \operatorname{Conj}(S_N)}
+ \mathcal H_\sigma^{C(\sigma)} ,
+\]
+with $C(\sigma)$ the centralizer and with twisted sectors indexed by
+conjugacy classes. A
+$G$-crossed orbifold completion, when constructed, adjoins twist
+fields as genuine fields and has a different bar complex. The
+genus-$1$ scalar identity
+\[
+ \kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})
+ = N\,\kappa(X)
+\]
+belongs only to the first object: the identity-sector fixed-point
+chiral algebra. The DMVV product \cite{DMVV97} computes the
+genus-$1$ elliptic genera of the second object; it does not compute
+ordered chiral bar cohomology.
+
+The diagonal fields
+$a_\Delta=\sum_{i=1}^N a^{(i)}\in (X^{\otimes N})^{S_N}$ retain the
+pole orders of the seed OPE, while scalar residues add over the
+$N$ independent copies. Twisted sectors have conformal weights
+\[
+ h_{\mathrm{twist}}(\lambda)
+ = \frac{c(X)}{24}\sum_j m_j\Bigl(j-\frac1j\Bigr)
+\]
+for cycle type $\lambda=(1^{m_1}2^{m_2}\cdots)$, and they affect the
+full orbifold partition function. They are not generators of the
+ordered bar complex of $X_N^{\mathrm{id}}$.
+
+\begin{definition}[The averaging kernel of the fixed-point bar]
+\label{def:symn-averaging-kernel}
+Two finite groups act in this chapter. The group $S_N$ permutes the
+$N$ tensor factors of $X^{\otimes N}$. The group $\Sigma_r$ permutes
+the $r$ ordered inputs in bar degree~$r$ of
+\[
+ \barB^{\mathrm{ord}}_r(X_N^{\mathrm{id}})
+ =
+ (s^{-1}\overline{X_N^{\mathrm{id}}})^{\otimes r}.
+\]
+Over characteristic zero the ordered-to-symmetric averaging map in
+bar degree~$r$ is the Reynolds projector
+\[
+ \operatorname{av}_{r,N}
+ =
+ \frac{1}{r!}\sum_{\tau\in\Sigma_r}\tau
+ \colon
+ \barB^{\mathrm{ord}}_r(X_N^{\mathrm{id}})
+ \longrightarrow
+ \bigl(\barB^{\mathrm{ord}}_r(X_N^{\mathrm{id}})\bigr)^{\Sigma_r}.
+\]
+Its kernel
+\[
+ \mathcal K^{\mathrm{av}}_{r,N}(X)
+ :=
+ \ker(\operatorname{av}_{r,N})
+\]
+is the lost ordered information. In the weight-completed finite-type
+setting the same notation denotes the closed kernel of the continuous
+Reynolds projector on
+$\widehat{\barB}^{\mathrm{ord}}_r(X_N^{\mathrm{id}})$.
+\end{definition}
+
+\begin{proposition}[Ordered data and symmetric shadow;
+\ClaimStatusProvedHere]\label{prop:symn-averaging-kernel}
+\index{symmetric orbifold!averaging kernel}
+Assume each graded piece of $X_N^{\mathrm{id}}$ is finite-dimensional,
+or work in the weight-completed product topology. Then, as a graded
+vector space,
+\[
+ \barB^{\mathrm{ord}}_r(X_N^{\mathrm{id}})
+ =
+ \bigl(\barB^{\mathrm{ord}}_r(X_N^{\mathrm{id}})\bigr)^{\Sigma_r}
+ \oplus \mathcal K^{\mathrm{av}}_{r,N}(X).
+\]
+The first summand is the symmetric/coinvariant shadow of the ordered
+bar data; the second summand is invisible to the symmetric shadow.
+This is not a decomposition of bar complexes unless the bar
+differential preserves the two summands.
+\end{proposition}
+
+\begin{proof}
+The representation category of the finite group $\Sigma_r$ over
+characteristic zero is semisimple. The Reynolds operator
+$\operatorname{av}_{r,N}$ is an idempotent whose image is the trivial
+$\Sigma_r$-isotypic component and whose kernel is the direct sum of
+the nontrivial isotypic components. Passing to finite weight windows
+and then to the completed inverse product gives the completed
+statement. The warning about the differential is the
+non-splitting phenomenon for the ordered-to-symmetric map
+\textup{(}Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction}}\textup{)}.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem scope for
+$\operatorname{Sym}^N(X)$.}\label{tab:symn-five-theorems}
+\begin{tabular}{p{2.5cm}p{6.6cm}p{4.2cm}}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $\operatorname{Sym}^N(X)$}
+ & \textbf{Scope} \\
+\midrule
+A (adjunction) &
+ completed bar--cobar adjunction for the fixed-point algebra;
+ twisted completion separate
+ & Conj.~\ref{conj:symn-koszul-dual} \\
+B (inversion) &
+ $\Omega(\widehat{\barB}(X_N^{\mathrm{id}}))\to X_N^{\mathrm{id}}$
+ & Reynolds descent hypothesis; Prop.~\ref{prop:symn-inversion} \\
+C (complementarity) &
+ finite-type identity sector:
+ $\kappa+\kappa^!=N(\kappa(X)+\kappa(X^!))$
+ & Rem.~\ref{rem:symn-complementarity} \\
+D (modular char.) &
+ $\kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})=N\kappa(X)$
+ & Prop.~\ref{prop:symn-kappa} \\
+H (chiral Hochschild) &
+ $H_H(X_N^{\mathrm{id}};S_N)$ gives
+ $\operatorname{Supp}\operatorname{ChirHoch}^\bullet
+ (X_N^{\mathrm{id}})\subseteq S_N$
+ & family-retract lane; Prop.~\ref{prop:symn-hochschild} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five noninterchangeable registers for the fixed-point and
+completed orbifold objects.}\label{tab:symn-register-firewall}
+\begin{tabular}{p{3.0cm}p{5.0cm}p{5.0cm}}
+\toprule
+\textbf{Register} & \textbf{Fixed-point object}
+ & \textbf{Completed orbifold object} \\
+\midrule
+Chiral homology &
+ $\int_C^{\mathrm{ch}} X_N^{\mathrm{id}}$ on the chosen curve~$C$ &
+ requires a specified $G$-crossed chiral algebra \\
+Chiral Hochschild &
+ $\ChirHoch^\bullet(X_N^{\mathrm{id}})$ &
+ Hochschild complex of the completed OPE algebra \\
+Verdier duality &
+ $(X_N^{\mathrm{id}})^!$ after bar cohomology and Verdier duality &
+ computed only after twisted OPE data are installed \\
+Bar--cobar inversion &
+ $\Omega\widehat{\barB}(X_N^{\mathrm{id}})\to X_N^{\mathrm{id}}$ &
+ a separate completed counit \\
+Physical bulk &
+ not $\barB(X_N^{\mathrm{id}})$ and not $(X_N^{\mathrm{id}})^!$ &
+ model-dependent open--closed comparison \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for the fixed-point
+sector.}\label{tab:symn-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Diagonal class & Same as seed $X$ \\
+Shadow depth $r_{\max}$ &
+ at least $r_{\max}(X)$ in the diagonal fixed-point channel \\
+$\kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})$ &
+ $N \cdot \kappa(X)$ \\
+Identity-sector $F_1$ & $N \cdot \kappa(X) / 24$ \\
+Koszul dual &
+ Verdier dual after fixed-point Reynolds descent; not
+ $\Omega\barB$ \\
+Complementarity (identity sector) &
+ $N \cdot (\kappa(X) + \kappa(X^!))$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proposition}[Identity-sector modular characteristic;
+\ClaimStatusProvedHere]\label{prop:symn-kappa}
+\index{symmetric orbifold!modular characteristic}
+Let $N\geq1$, and let $X$ be a modular Koszul chiral algebra with
+finite-dimensional graded pieces, completed along the weight
+filtration, and with finite pointed genus-$1$ trace
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X)
+=\kappa(X)\lambda_1$. For the fixed-point chiral algebra
+$X_N^{\mathrm{id}}=(X^{\otimes N})^{S_N}$,
+\[
+ \kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})
+ \;=\; N \cdot \kappa(X).
+\]
+This is the identity-sector scalar obstruction. It is not a
+statement about the full twisted orbifold Hilbert space, a
+higher-genus free energy, or the ordered bar complex of a
+$G$-crossed orbifold completion. Singular parameter values at which
+the seed scalar lane is not finite are outside the statement; no
+genericity is otherwise used.
+\end{proposition}
+
+\begin{proof}
+The tensor product $X^{\otimes N}$ has diagonal stress tensor and
+diagonal obstruction cocycle equal to the sum of the $N$ copywise
+cocycles. Additivity of the scalar obstruction for independent
+tensor factors gives
+\[
+ \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X^{\otimes N})
+ = \sum_{i=1}^N
+   \operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}(X^{(i)})
+ = N\,\kappa(X)\lambda_1 .
+\]
+The Reynolds idempotent
+$\frac1{N!}\sum_{\sigma\in S_N}\sigma$ fixes the diagonal cocycle.
+Thus the invariant chiral algebra $X_N^{\mathrm{id}}$ carries the
+same diagonal scalar obstruction. Exactness of finite-group
+invariants over characteristic zero gives the fixed-point passage in
+each finite weight window, and completion is taken after
+the finite-window calculation. No twisted-sector state is used in
+this computation.
+\end{proof}
+
+\begin{remark}[K3 elliptic genus and the identity scalar]
+\label{rem:symn-k3-elliptic-identity}
+For the CY$_2$ sigma-model scalar lane used here,
+$\kappa(K3)=2$. This is the categorical/CY scalar, not the
+Virasoro curvature $c/2=3$ of the $c=6$ stress tensor.
+Proposition~\ref{prop:symn-kappa} gives
+$\kappa^{\mathrm{id}}_1((K3^{\otimes N})^{S_N})=2N$.
+The DMVV formula \cite{DMVV97} instead concerns the elliptic genus:
+if
+\[
+ \operatorname{Ell}_{K3}(\tau,z)
+ =\sum_{n,\ell}c_{K3}(n,\ell)q^n y^\ell,
+\]
+then
+\[
+ \sum_{N\geq0}p^N
+ \operatorname{Ell}_{\operatorname{Sym}^N(K3)}(\tau,z)
+ =
+ \prod_{\substack{m\geq1,\; n\geq0\\ \ell}}
+ (1-p^m q^n y^\ell)^{-c_{K3}(mn,\ell)} .
+\]
+At $z=0$ this specializes to
+$\sum_N p^N\chi(\operatorname{Hilb}^N(K3))
+=\prod_{m\geq1}(1-p^m)^{-24}$.
+This partition-function identity includes all commuting-pair
+orbifold sectors. It is compatible with the identity-sector scalar,
+but it is not a proof of ordered-bar linearity.
+\end{remark}
+
+% ======================================================================
+% Section: Twist sectors and vacuum energy
+% ======================================================================
+
+\section{Twist sectors and vacuum energy}\label{sec:symn-twist-sectors}
+
+The full orbifold Hilbert space $\mathcal H_N^{\mathrm{orb}}$
+decomposes over conjugacy classes of~$S_N$. Each conjugacy class is
+parametrized by
+a partition $\lambda = (1^{m_1}\, 2^{m_2} \cdots k^{m_k})$ of~$N$,
+and the twist field associated to a permutation of cycle type~$\lambda$
+has conformal weight \cite{LuninMathur2001}
+\begin{equation}\label{eq:symn-twist-weight}
+ h_{\mathrm{twist}}(\lambda)
+ \;=\; \frac{c(X)}{24}\, \sum_{j=1}^{k} m_j\Bigl(j - \frac{1}{j}\Bigr).
+\end{equation}
+The identity conjugacy class ($\lambda = (1^N)$) is the only
+cycle type with twist energy zero; after the centralizer projection
+it gives the fixed-point sector $X_N^{\mathrm{id}}$. For a single
+transposition ($\lambda = (2, 1^{N-2})$):
+$h_{\mathrm{twist}} = c(X)/16$, the lightest twist field when
+$c(X)>0$.
+
+\begin{proposition}[Twist weights and the identity vacuum;
+\ClaimStatusProvedHere]\label{prop:symn-twist-vanishing}
+\index{symmetric orbifold!twist sector weights}
+Assume the seed conformal field theory is of CFT type, has
+finite-dimensional conformal-weight spaces, and has $c(X)>0$. For
+every nontrivial cycle type $\lambda\neq (1^N)$, the twist ground
+state has $h_{\mathrm{twist}}(\lambda)>0$. Consequently no
+nontrivial twist ground state lies in the identity-vacuum conformal
+weight.
+The identity-sector scalar in Proposition~\ref{prop:symn-kappa} is
+therefore unaffected by adjoining the twisted Hilbert spaces.
+
+The proposition does not assert that twisted sectors vanish from the
+genus-$1$ partition function. They are precisely the additional
+terms organized by the DMVV product. No positivity conclusion is
+asserted at $c(X)\leq0$ or in singular non-CFT-type quotients.
+\end{proposition}
+
+\begin{proof}
+For $\lambda=(1^{m_1}2^{m_2}\cdots k^{m_k})$,
+\[
+ h_{\mathrm{twist}}(\lambda)
+ = \frac{c(X)}{24}\sum_{j=1}^k m_j\Bigl(j-\frac1j\Bigr).
+\]
+Each summand is nonnegative and it is positive for every cycle of
+length $j>1$. A nontrivial conjugacy class contains such a cycle, so
+$h_{\mathrm{twist}}(\lambda)>0$ when $c(X)>0$. The identity
+conjugacy class is therefore the only sector with zero twist
+energy; if the seed theory is of CFT type, this sector contains the
+unique vacuum vector. At $c(X)\leq0$ this positivity argument
+disappears; no conclusion about the twisted contribution follows
+from the weight formula alone.
+\end{proof}
+
+\begin{remark}[Twisted sectors and bar degree]
+\label{rem:symn-twist-higher-degree}
+\index{symmetric orbifold!twisted sector shadows}
+There is no universal ``first quartic correction'' theorem. In the
+fixed-point chiral algebra $X_N^{\mathrm{id}}$, twist fields are
+modules rather than bar generators. In a $G$-crossed completion that
+adjoins twist fields, the binary OPE
+\[
+ \sigma_g(z)\sigma_h(w)\sim
+ (z-w)^{-\alpha(g,h)}\,\sigma_{gh}(w)+\cdots
+\]
+already enters the bar differential. For $N=2$ the covering-space
+calculation of Lunin--Mathur \cite{LuninMathur2001} gives the leading
+branch exponent $\alpha=c(X)/8$ in the $\sigma_2$--$\sigma_2$
+channel. The degree at which twisted data first changes a shadow
+coefficient is therefore part of the chosen orbifold completion, not
+a consequence of DMVV.
+\end{remark}
+
+\begin{conjecture}[Orbifold Koszul duality;
+\ClaimStatusConjectured]\label{conj:symn-koszul-dual}
+\index{symmetric orbifold!Koszul dual}
+On the finite-type completed PBW lane, the Koszul dual of the
+fixed-point algebra $X_N^{\mathrm{id}}$ is obtained from the
+$S_N$-equivariant Koszul dual of $X^{\otimes N}$ only after the
+Reynolds bar comparison is a filtered quasi-isomorphism. For a
+$G$-crossed orbifold completion, additional summands are controlled
+by the twist-field OPE algebra, not by $\operatorname{Sym}^N(X^!)$
+alone. Singular quotient regimes require their own Reynolds and
+twist-OPE calculations.
+Here $X^!$ denotes the Verdier-side Koszul dual algebra extracted
+from bar cohomology. It is not the cobar inverse
+$\Omega\barB(X)$.
+\end{conjecture}
+
+\begin{proposition}[Bar-cobar inversion under Reynolds descent;
+\ClaimStatusConditional]\label{prop:symn-inversion}
+The bar-cobar counit
+$\Omega(\widehat{\barB}(X_N^{\mathrm{id}})) \to X_N^{\mathrm{id}}$
+is a quasi-isomorphism on the finite-type completed lane if $X$ is
+chirally Koszul and the natural Reynolds comparison
+\[
+ \widehat{\barB}(X_N^{\mathrm{id}})
+ \longrightarrow
+ \widehat{\barB}(X^{\otimes N})^{S_N}
+\]
+is a filtered quasi-isomorphism. No assertion is made at singular
+levels where the completed bar complex loses finite-type
+perfectness.
+\end{proposition}
+
+\begin{proof}
+Koszulness of $X$ gives completed bar-cobar inversion for each
+tensor factor, and Proposition~\ref{prop:independent-sum-factorization}
+gives the tensor-product statement for $X^{\otimes N}$. Over
+characteristic zero the finite-group invariants functor is exact in
+each finite weight window, so inversion descends along the displayed
+comparison once that comparison is a filtered quasi-isomorphism.
+Completion is taken after the weightwise descent. The comparison is
+the only extra hypothesis; it is exactly the assertion that taking
+the fixed-point chiral algebra introduces no higher bar torsion.
+\end{proof}
+
+\begin{remark}[Identity-sector complementarity]
+\label{rem:symn-complementarity}
+\index{symmetric orbifold!complementarity}
+In the identity sector, complementarity
+(Theorem~\ref{thm:quantum-complementarity}) for the tensor product
+$X^{\otimes N}$ gives
+$\kappa(X^{\otimes N}) + \kappa((X^!)^{\otimes N}) =
+N(\kappa(X) + \kappa(X^!))$. The fixed-point comparison requires the
+same Reynolds descent as Proposition~\ref{prop:symn-inversion}. A
+twisted orbifold completion has its own chiral derived centre and
+its own chiral Hochschild complex; the physical $3$d bulk, if
+present, is related by an open--closed comparison rather than by
+identifying it with $\barB(X_N^{\mathrm{id}})$ or
+$(X_N^{\mathrm{id}})^!$. Theorem~C for that completed object is a
+separate theorem.
+\end{remark}
+
+\begin{proposition}[Theorem H for the fixed-point sector;
+\ClaimStatusConditional]\label{prop:symn-hochschild}
+Let $S_N\subset\mathbb Z$ be finite and assume the fixed-point chiral
+algebra carries the family datum $H_H(X_N^{\mathrm{id}};S_N)$.  Then
+\[
+ \operatorname{ChirHoch}^n(X_N^{\mathrm{id}})
+ \cong H^n(K_{X_N^{\mathrm{id}},S_N}),
+ \qquad
+ \operatorname{Supp}\operatorname{ChirHoch}^\bullet
+ (X_N^{\mathrm{id}})\subseteq S_N.
+\]
+This is an ambient-curve statement.  The categorical Hochschild
+cohomology of the full twisted orbifold module category and singular
+quotient charts carry their own family models and comparison maps.
+A companion family datum and a perfect degree-$d$ pairing supply the
+separate degree reflection.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:main-koszul-hoch} applied to
+$H_H(X_N^{\mathrm{id}};S_N)$ gives the displayed identification.
+Twisted sectors are modules for $X_N^{\mathrm{id}}$ in the present
+chart; a constructed $G$-crossed algebra supplies a distinct chiral
+Hochschild input.  Theorem~\ref{thm:hochschild-polynomial-growth}
+gives a polynomial Hilbert series when the groups
+$H^n(K_{X_N^{\mathrm{id}},S_N})$ are finite-dimensional.
+\end{proof}
+
+
+% ======================================================================
+% Section: Diagonal shadow depth
+% ======================================================================
+
+\section{Diagonal shadow depth}\label{sec:symn-shadow-depth}
+
+\begin{proposition}[Diagonal shadow depth of the fixed-point sector;
+\ClaimStatusProvedHere]\label{prop:symn-shadow-depth}
+\index{symmetric orbifold!shadow depth}
+Let $N\geq1$, and let $X$ be a modular Koszul algebra. For the
+fixed-point chiral algebra
+$X_N^{\mathrm{id}}=(X^{\otimes N})^{S_N}$, the diagonal fixed-point
+channels in the completed finite-type bar surface satisfy
+\begin{equation}\label{eq:symn-shadow-depth-bound}
+ r_{\max}(X_N^{\mathrm{id}})
+ \;\geq\; r_{\max}(X).
+\end{equation}
+If $X$ is class~M, the diagonal Virasoro field
+$T_\Delta=\sum_iT^{(i)}$ gives
+$r_{\max}(X_N^{\mathrm{id}})=\infty$ on the generic class-M lane.
+At singular quotient values the statement applies only after the
+seed channel witnessing $r_{\max}(X)$ survives in the quotient.
+\end{proposition}
+
+\begin{proof}
+Let $u(z)v(w)$ be a seed OPE channel witnessing shadow depth~$r$.
+Set $u_\Delta=\sum_i u^{(i)}$ and
+$v_\Delta=\sum_i v^{(i)}$. Mixed-copy OPEs are regular, hence the
+singular part of $u_\Delta(z)v_\Delta(w)$ is the sum of the $N$
+copywise singular parts. The highest nonzero pole or shadow
+coefficient is therefore multiplied by $N$, not cancelled. Since
+the diagonal fields are $S_N$-invariant, the same channel lies in
+$X_N^{\mathrm{id}}$. For class~M the seed Virasoro channel has
+unbounded shadow depth, and the diagonal Virasoro channel has the
+same unbounded depth.
+\end{proof}
+
+\begin{remark}[Shadow class of specific orbifolds]
+\label{rem:symn-shadow-class-examples}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccl}
+\toprule
+Seed $X$ & Class of $X$ & $r_{\max}(X)$ &
+ Fixed-point conclusion \\
+\midrule
+Heisenberg $\mathcal{H}_\kappa$ & G & $2$ &
+ diagonal depth $\geq2$; exact class open \\
+$\widehat{\mathfrak{sl}}_2$ at level $k$ & L & $3$ &
+ diagonal depth $\geq3$; exact class open \\
+$\beta\gamma$ & C & $4$ &
+ diagonal depth $\geq4$; exact class open \\
+$\mathrm{Vir}_c$ & M & $\infty$ & M \\
+$K3$ $\mathcal N=4$ matter lane & M & $\infty$ & M \\
+\bottomrule
+\end{tabular}
+\end{center}
+For class~M seeds, a non-formal diagonal channel forces infinite
+depth in $X_N^{\mathrm{id}}$. For class~G, L, or C seeds, the table
+records only the inherited diagonal lower bound; invariant composite
+fields in $X_N^{\mathrm{id}}$ may raise the fixed-point depth beyond
+the seed value. A $G$-crossed completion may raise it again through
+twist-field OPEs. These are two different questions.
+\end{remark}
+
+
+% ======================================================================
+% Section: Fixed-point Koszulness
+% ======================================================================
+
+\section{Fixed-point Koszulness}
+\label{sec:symn-koszulness}
+
+\begin{proposition}[Tensor-product Koszulness and fixed-point descent;
+\ClaimStatusConditional]\label{prop:symn-koszulness}
+\index{symmetric orbifold!Koszulness}
+Let $N\geq1$. If the seed algebra~$X$ is freely strongly generated
+in finite weight windows, complete for the weight filtration, and
+hence chirally Koszul on the PBW/generic lane
+(Proposition~\textup{\ref{prop:pbw-universality}}), then the
+tensor product $X^{\otimes N}$ is chirally Koszul. The fixed-point
+algebra $X_N^{\mathrm{id}}$ is chirally Koszul if the Reynolds
+comparison
+\[
+ \widehat{\barB}(X_N^{\mathrm{id}})
+ \longrightarrow
+ \widehat{\barB}(X^{\otimes N})^{S_N}
+\]
+is a filtered quasi-isomorphism. Singular simple quotients where
+PBW freeness or finite-type perfectness fails are outside this
+conditional statement unless the displayed comparison is verified
+directly there.
+\end{proposition}
+
+\begin{proof}
+The tensor product of freely strongly generated algebras is freely
+strongly generated: if $\{a_i\}$ are free strong generators of~$X$,
+then $\{a_i^{(r)}\}_{r=1}^N$ (the $i$-th generator in the $r$-th
+copy) are free strong generators of $X^{\otimes N}$. PBW
+universality (Proposition~\ref{prop:pbw-universality}) applies to
+$X^{\otimes N}$, giving bar concentration. If the displayed completed
+Reynolds comparison is a filtered quasi-isomorphism, then
+\[
+ H^\bullet\widehat{\barB}(X_N^{\mathrm{id}})
+ \cong H^\bullet(\widehat{\barB}(X^{\otimes N})^{S_N}).
+\]
+Over characteristic zero, $S_N$-invariants are exact, so the right
+side is $H^\bullet\widehat{\barB}(X^{\otimes N})^{S_N}$ and remains
+concentrated in the same bar degree, weight by weight.
+\end{proof}
+
+\begin{remark}[The two Koszul obstructions]
+\label{rem:symn-full-koszulness}
+Two independent obstructions remain after the tensor-product
+calculation. First, fixed-point vertex algebras can have
+invariant-theoretic relations even when the original tensor product
+is freely strongly generated; this is measured by the Reynolds
+comparison. Second, a $G$-crossed completion has twist fields and
+binary twist OPEs, so its bar differential is not controlled by PBW
+universality for $X^{\otimes N}$.
+\end{remark}
+
+
+% ======================================================================
+% Section: The DMVV formula and second quantization
+% ======================================================================
+
+\section{The DMVV formula and second quantization}\label{sec:symn-dmvv}
+
+The genus-$1$ elliptic genus of the full permutation-orbifold
+conformal field theory has a closed expression in terms of the seed
+elliptic genus.
+
+\begin{theorem}[DMVV product formula;
+\ClaimStatusProvedElsewhere{} \cite{DMVV97}]
+\label{thm:symn-dmvv-product}
+For a seed theory~$X$ with elliptic genus
+$Z_X(\tau, z) = \sum_{n,\ell} c_X(n,\ell)\, q^n y^\ell$,
+the DMVV product computes the generating series over all~$N$
+simultaneously:
+\begin{equation}\label{eq:symn-dmvv}
+ \mathcal Z_X(p,\tau,z)
+ :=
+ \sum_{N \geq 0} p^N\, Z(\operatorname{Sym}^N(X);\, \tau, z)
+ \;=\; \prod_{\substack{n \geq 0,\; m \geq 1 \\ \ell}}
+ \bigl(1 - q^n\, y^\ell\, p^m\bigr)^{-c_X(mn,\, \ell)}.
+\end{equation}
+\end{theorem}
+
+The formula is a second-quantized lift: the genus-$1$ data of
+the seed~$X$ (the Fourier coefficients $c_X(n, \ell)$) generate
+the full orbifold partition function at all~$N$ through a
+Borcherds-type infinite product. Its input and output are
+elliptic genera, not ordered bar complexes.
+
+\begin{proposition}[Cycle-index and plethystic normalization;
+\ClaimStatusProvedHere]\label{prop:symn-cycle-index-plethystic}
+\index{DMVV formula!cycle-index normalization}
+\index{plethystic exponential!symmetric orbifold}
+Assume the seed elliptic genus has finite-dimensional graded
+coefficients. With the normalized Hecke operator $V_j$ of
+\eqref{eq:symn-hecke-operator},
+\[
+ \mathcal Z_X(p,\tau,z)
+ =
+ \exp\Bigl(\sum_{j\geq1}p^jV_jZ_X(\tau,z)\Bigr).
+\]
+Consequently, for a partition
+$\lambda=(1^{m_1}2^{m_2}\cdots)\vdash N$,
+\begin{equation}\label{eq:symn-cycle-index}
+ [p^N]\,\mathcal Z_X
+ =
+ \sum_{\lambda\vdash N}
+ \prod_{j\geq1}
+ \frac{\bigl(V_jZ_X\bigr)^{m_j}}{m_j!}.
+\end{equation}
+The factors $j^{-m_j}$ from the cyclic centralizers are already
+inside $V_j$; the factors $(m_j!)^{-1}$ are the symmetric products
+of equal-length cycles. This is the cycle-index/plethystic
+normalization of DMVV, not an ordered-bar Hilbert series.
+\end{proposition}
+
+\begin{proof}
+Dijkgraaf--Moore--Verlinde--Verlinde \cite{DMVV97} decompose the
+orbifold Hilbert space as
+$\bigoplus_{[\sigma]}\mathcal H_\sigma^{C(\sigma)}$ and write a
+conjugacy class as
+$\lambda=(1^{m_1}2^{m_2}\cdots)$, with centralizer
+\[
+ C(\sigma)
+ =
+ \prod_{j\geq1}\bigl(S_{m_j}\ltimes \mathbb Z_j^{m_j}\bigr).
+\]
+The cyclic factors produce the $1/j$ normalization in the connected
+length-$j$ Hecke term $V_jZ_X$, and the symmetric factors produce
+the $1/m_j!$ coefficient in the exponential. Expanding the
+plethystic exponential gives~\eqref{eq:symn-cycle-index}. The
+derivation is a trace calculation over twisted Hilbert spaces; no
+ordered bar generator appears.
+\end{proof}
+
+\begin{remark}[DMVV as an elliptic-genus lift]
+\label{rem:symn-dmvv-shadow}
+\index{DMVV formula!shadow interpretation}
+The logarithm of the DMVV product is the Hecke expansion of the
+seed elliptic genus. It records the full genus-$1$ orbifold
+spectrum, including commuting-pair twisted sectors. A shadow
+coefficient of the ordered bar complex can be compared with this
+series only after specifying a projection to the identity-sector
+vacuum anomaly. There is no implication
+$F_g(\operatorname{Sym}^N(X))=N F_g(X)$ for $g\geq2$ from DMVV.
+\end{remark}
+
+For $X = K3$, the product is related to the unscaled Igusa cusp
+form~$\Phi_{10}^{\mathrm{un}}$ by the Fourier--Jacobi normalization
+\[
+ \mathcal Z_{K3}(p,\tau,z)
+ =
+ \frac{p\,\phi_{10,1}(\tau,z)}
+      {\Phi_{10}^{\mathrm{un}}(\tau,z,\sigma)},
+ \qquad p=e^{2\pi i\sigma}.
+\]
+Thus $1/\Phi_{10}^{\mathrm{un}}$ itself carries the Weyl-vector
+prefactor $p^{-1}/\phi_{10,1}$ at the cusp; it is not the DMVV
+series without this normalization. At the Euler-characteristic
+specialization one obtains
+$\sum_N p^N \chi(\operatorname{Hilb}^N(K3))
+= \prod_{n \geq 1}(1 - p^n)^{-24}$.
+
+\begin{proposition}[DMVV does not compute ordered-bar $\kappa$;
+\ClaimStatusProvedHere]\label{prop:symn-dmvv-kappa}
+\index{DMVV formula!kappa separation}
+The coefficient of $p^N$ in the DMVV series~\eqref{eq:symn-dmvv}
+is the full genus-$1$ orbifold elliptic genus, with cycle-index
+normalization~\eqref{eq:symn-cycle-index}. For $N>1$ it is not the
+identity-sector ordered-bar scalar $N\kappa(X)/24$. Any extraction
+of Proposition~\ref{prop:symn-kappa} from DMVV requires an
+additional projection to the diagonal vacuum-anomaly summand. This
+is a finite-coefficient genus-$1$ elliptic-genus statement, not a
+claim about higher genus, completed bar cohomology, or singular
+parameter loci.
+\end{proposition}
+
+\begin{proof}
+Taking the logarithm of~\eqref{eq:symn-dmvv} gives the explicit
+covering expansion
+\[
+ \log\mathcal Z_X(p,\tau,z)
+ =
+ \sum_{\substack{r\geq1,\; m\geq1\\ n\geq0,\;\ell}}
+ \frac{c_X(mn,\ell)}{r}\,
+ p^{rm}q^{rn}y^{r\ell}.
+\]
+Thus the connected $p^N$ coefficient is the divisor sum over
+$rm=N$, equivalently the normalized Hecke transform of the seed
+elliptic genus. The coefficient of the original exponential also
+contains products indexed by partitions of~$N$. These terms include
+non-identity covering data and twisted sectors. They are part of the
+elliptic genus and have no canonical identification with the ordered
+bar differential of $X_N^{\mathrm{id}}$.
+\end{proof}
+
+
+% ======================================================================
+% Section: Large-N limit and holography
+% ======================================================================
+
+\section{Large-$N$ limit and holography}\label{sec:symn-large-N}
+
+The identity-sector scalar
+$\kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})=N\kappa(X)$ grows
+linearly with~$N$. The full symmetric-orbifold free energy is a
+different object: it is extracted from the DMVV product and depends
+on the polar spectrum and the choice of large-$N$ regime.
+
+In a Cardy or holographic scaling limit one may write an expansion
+\begin{equation}\label{eq:symn-large-N-expansion}
+ \log Z(\operatorname{Sym}^N)
+ \;=\; N f_0 + f_1 + N^{-1} f_2 + \cdots
+\end{equation}
+after fixing the ensemble and the normalization of $Z$. The
+identity-sector scalar gives only the genus-$1$ diagonal anomaly:
+\begin{equation}\label{eq:symn-genus-scaling}
+ F^{\mathrm{id}}_1(\operatorname{Sym}^N(X))
+ \;=\; \frac{N\kappa(X)}{24}.
+\end{equation}
+It does not determine the higher-genus coefficients $f_g$ of the
+full orbifold partition function.
+
+\begin{remark}[The $1/N$ expansion is not a bar theorem]
+\label{rem:symn-genus-vs-1-over-N}
+The string-theoretic rule $g_s\sim N^{-1/2}$ predicts genus-$g$
+weights $N^{1-g}$ for connected closed-string amplitudes. The
+ordered-bar scalar gives the boundary identity-sector anomaly
+$N\kappa(X)$, not the whole closed-string genus expansion. A theorem
+identifying higher shadow coefficients with bulk loop amplitudes
+requires the Costello--Paquette bulk-boundary comparison and a
+specified completion; it is not a consequence of DMVV or of
+Proposition~\ref{prop:symn-kappa}.
+\end{remark}
+
+For $X = T^4$ or $K3$, Costello--Paquette
+\cite{CP2020} identify, in their twisted $\mathrm{AdS}_3$ setting,
+the large-$N$ boundary chiral algebra with the free symmetric
+orbifold and the Kodaira--Spencer theory with the physical
+holographic bulk. This is a bulk-boundary comparison theorem in
+that physical model. It is not, by itself, an identification of
+the chiral derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(X_N)$,
+the Verdier-side Koszul dual $X_N^!$, or the ordered bar coalgebra
+$\barB^{\mathrm{ord}}(X_N)$ with the physical bulk. On the K3
+identity lane, $\kappa^{\mathrm{id}}_1=2N$ while the
+Brown--Henneaux central charge is $c=6N$; the anomaly ratio is
+$\varrho=\kappa/c=1/3$, not the Virasoro ratio~$1/2$.
+
+
+% ======================================================================
+% Section: BTZ entropy and the shadow tower
+% ======================================================================
+
+\section{BTZ entropy and the shadow tower}\label{sec:symn-btz}
+
+In a unitary Cardy regime with a specified bulk normalization, the
+BTZ black hole entropy is
+\begin{equation}\label{eq:symn-btz}
+ S_{\mathrm{BH}}
+ \;=\; 2\pi\sqrt{\frac{c \cdot n}{6}}
+ \;=\; 2\pi\sqrt{\frac{\kappa \cdot n}{6\varrho}}
+\end{equation}
+where $n=L_0-c/24$ and $\varrho=\kappa/c$ on the chosen anomaly
+lane. Cardy asymptotics determine the central charge. They determine
+$\kappa$ only after the lane-specific ratio~$\varrho$ is fixed. For
+the K3 symmetric-orbifold lane, $c=6N$, $\kappa=2N$, and
+$\varrho=1/3$, giving
+$S_{\mathrm{BH}}=2\pi\sqrt{Nn}$.
+
+\begin{remark}[Logarithmic corrections and shadow data]
+\label{rem:symn-btz-log-corrections}
+\index{BTZ black hole!logarithmic corrections}
+For a pure BTZ saddle with no extra light fields, the first
+logarithmic correction has the standard form
+\[
+ S_{\mathrm{BH}}
+ \;=\; 2\pi\sqrt{\frac{c n}{6}}
+ \;-\; \frac{3}{2}\log\Bigl(\frac{c n}{6}\Bigr)
+ \;+\; O(1),
+\]
+with the coefficient depending on the one-loop field content. Higher
+ordered-bar shadows are boundary invariants which may enter a
+specified bulk-boundary comparison, but they do not universally
+determine the $O(1)$ Rademacher or one-loop terms of the full
+orbifold spectrum.
+\end{remark}
+
+
+% ======================================================================
+% Section: The N=2 fixed-point and transposition sectors
+% ======================================================================
+
+\section{The \texorpdfstring{$N = 2$}{N = 2} orbifold:
+fixed-point and transposition sectors}\label{sec:symn-n2-explicit}
+
+The simplest nontrivial symmetric orbifold is
+$X_2^{\mathrm{id}}=(X\otimes X)^{\mathbb Z_2}$. The full
+permutation-orbifold CFT also has the transposition sector $(12)$,
+which carries one family of twist fields.
+
+\begin{computation}[$\operatorname{Sym}^2(X)$ invariants]
+\label{comp:sym2-explicit}
+\index{symmetric orbifold!N=2 explicit}
+Let $X$ be a chirally Koszul seed on the completed finite-type lane,
+with central charge $c(X)$ and modular characteristic $\kappa(X)$.
+The fixed-point identity sector has:
+\begin{align}
+ c(X_2^{\mathrm{id}})
+ &= 2c(X), \label{eq:sym2-c} \\
+ \kappa^{\mathrm{id}}_1(X_2^{\mathrm{id}})
+ &= 2 \kappa(X), \label{eq:sym2-kappa} \\
+ F^{\mathrm{id}}_1(\operatorname{Sym}^2(X))
+ &= \kappa(X) / 12, \label{eq:sym2-f1}
+\end{align}
+by Proposition~\ref{prop:symn-kappa}. The transposition sector
+contributes to the full orbifold genus-$1$ partition function, but
+it does not enter the ordered bar complex of $X_2^{\mathrm{id}}$.
+\end{computation}
+
+\begin{remark}[The twist field at $N = 2$]
+\label{rem:sym2-twist-field}
+\index{twist field!N=2}
+The transposition $(12) \in S_2$ introduces a twist field
+$\sigma_2$ of conformal weight
+\begin{equation}\label{eq:sym2-twist-weight}
+ h(\sigma_2) \;=\; \frac{c(X)}{16}.
+\end{equation}
+For the K3 sigma-model central charge $c(X)=6$, this gives
+$h(\sigma_2)=3/8$.
+The twist-field OPE is computed by the covering-space method:
+the two-sheeted branched cover $\pi \colon \Sigma \to
+\mathbb{P}^1$ ramified at the twist-field insertion points
+maps the orbifold correlator to a correlator on the
+covering surface~$\Sigma$. The leading
+$\sigma_2$--$\sigma_2$ branch factor is
+$(z-w)^{-c(X)/8}$, coming from the Casimir energy of the
+two-sheeted cover. This is a branch exponent in the twisted module
+category, not an ordinary meromorphic pole order in the fixed-point
+chiral algebra.
+\end{remark}
+
+\begin{remark}[Covering space and the bar complex]
+\label{rem:sym2-covering-bar}
+\index{symmetric orbifold!covering space}
+The covering-space technology has a bar-complex interpretation only
+after the object has been chosen. For the fixed-point algebra,
+\[
+ \barB^{\mathrm{ord}}(X_2^{\mathrm{id}})
+ = T^c\bigl(s^{-1}\overline{(X\otimes X)^{\mathbb Z_2}}\bigr),
+\]
+and the generators are invariant fields. There are no desuspended
+twist fields in this complex.
+
+For a $G$-crossed completion that adjoins $\sigma_2$, the bar
+complex has three families of tensors:
+\begin{enumerate}
+\item invariant--invariant tensors inherited from
+ $(X\otimes X)^{\mathbb Z_2}$;
+\item The \emph{twist-twist} sector:
+ tensor products of desuspended twist fields
+ $s^{-1}\sigma_2 \otimes s^{-1}\sigma_2$, whose bar
+ differential involves the $\sigma_2$-$\sigma_2$ OPE.
+\item The \emph{mixed} sector: tensor products involving both
+ untwisted and twist-field generators, with the bar
+ differential involving mixed OPE data.
+\end{enumerate}
+The invariant-sector Koszul question is the Reynolds comparison of
+Proposition~\ref{prop:symn-koszulness}. The completed-orbifold
+Koszul question is the additional twist-OPE calculation.
+\end{remark}
+
+
+% ======================================================================
+% Section: Hecke operators and the Fock space structure
+% ======================================================================
+
+\section{Hecke operators and the Fock space structure}
+\label{sec:symn-hecke}
+
+The DMVV formula~\eqref{eq:symn-dmvv} has a Hecke-operator form.
+
+\begin{proposition}[DMVV Hecke-operator form;
+\ClaimStatusProvedElsewhere{} \cite{DMVV97}]
+\label{prop:symn-hecke-form}
+The generating series
+$\sum_{N \geq 0} p^N Z(\operatorname{Sym}^N(X))$ can be
+reorganized using the normalized Hecke operator $V_m$ acting on
+the seed elliptic genus:
+\begin{equation}\label{eq:symn-hecke}
+ \sum_{N \geq 0} p^N\, Z(\operatorname{Sym}^N(X);\, \tau, z)
+ \;=\; \exp\Bigl(\sum_{m \geq 1} p^m\,
+ V_m\, Z_X(\tau, z)\Bigr),
+\end{equation}
+where
+\begin{equation}\label{eq:symn-hecke-operator}
+ V_m Z_X(\tau, z)
+ =
+ \frac{1}{m}\sum_{ad = m,\, 0 \leq b < d}
+ Z_X\bigl(\frac{a\tau + b}{d},\, az\bigr).
+\end{equation}
+If $\mathsf H_m$ denotes the raw covering sum, then
+$V_m=\mathsf H_m/m$. This normalization is the one whose Fourier
+expansion is the logarithm of the DMVV product.
+\end{proposition}
+
+\begin{remark}[Fock space interpretation]
+\label{rem:symn-fock}
+\index{symmetric orbifold!Fock space}
+The exponential in~\eqref{eq:symn-hecke} identifies the
+symmetric orbifold partition function with the partition
+function of a \emph{bosonic Fock space} built from the
+Hecke-transformed seed elliptic genus. The ``single-particle''
+object is the graded vector space counted by the seed elliptic
+genus, not the ordered bar complex of the seed VOA. The Hecke
+operators organize covering data of the torus. They do not act as
+creation operators on the chiral bar complex and do not imply
+$S_r(\operatorname{Sym}^N(X))=N S_r(X)$.
+\end{remark}
+
+\begin{remark}[K3 seed and the genus-$2$ Igusa character]
+\label{rem:symn-k3-igusa-character}
+For the K3 seed one has the classical DMVV identity
+\[
+ \sum_{N\geq 0} p^N\,Z\bigl(\operatorname{Sym}^N(K3);\tau,z\bigr)
+ \;=\;
+ \frac{p\,\phi_{10,1}(\tau,z)}
+      {\Phi_{10}^{\mathrm{un}}(\tau,z,\sigma)}.
+\]
+Two boundary regimes of the reciprocal Siegel form must be kept
+distinct. The Fourier--Jacobi cusp $p\to 0$ gives
+\[
+ \frac{1}{\Phi_{10}^{\mathrm{un}}(\tau,z,\sigma)}
+ \;=\;
+ \frac{p^{-1}}{\phi_{10,1}(\tau,z)} + O(p^0),
+ \qquad
+ \phi_{10,1}(\tau,z)=\eta(\tau)^{18}\vartheta_1(\tau,z)^2.
+\]
+The separating divisor $z\to 0$ gives
+\[
+ \frac{1}{\Phi_{10}^{\mathrm{un}}(\tau,z,\sigma)}
+ \;=\;
+ -\frac{1}{4\pi^2 z^2\,\eta(\tau)^{24}\eta(\sigma)^{24}} + O(z^0).
+\]
+The DMVV series differs from this reciprocal by the factor
+$p\,\phi_{10,1}$. Volume~III uses the reciprocal Siegel form as the
+target genus-$2$ character of the K3 chiral-bialgebra recognition
+object $\mathbf{H}_{\Delta_5}^{\mathrm{tgt}}$, conditional on the
+Hall/CoHA source, compact pairing, PBW/no-extra-relations theorem,
+and comparison maps. The first limit isolates the Jacobi coefficient,
+while the second is the genuine separating degeneration.
+\end{remark}
+
+\begin{proposition}[Hecke operators and the identity scalar;
+\ClaimStatusProvedHere]\label{prop:symn-hecke-kappa}
+\index{Hecke operator!identity scalar}
+Assume the seed elliptic genus has finite-dimensional graded
+coefficients. The Hecke operator $V_1 = \mathrm{id}$ reproduces the
+seed contribution, so the $p^1$ term of~\eqref{eq:symn-hecke}
+is $Z_X(\tau, z)$ and the connected genus-$1$ amplitude at
+$N = 1$ has identity scalar $F^{\mathrm{id}}_1(X)=\kappa(X)/24$.
+For $N>1$, the Hecke coefficient is not the ordered-bar scalar
+$N\kappa(X)/24$ without the identity-sector projection of
+Proposition~\ref{prop:symn-kappa}.
+\end{proposition}
+
+\begin{proof}
+The logarithm of~\eqref{eq:symn-hecke} gives the connected
+elliptic-genus generating function:
+$\sum_{N \geq 1} p^N F_1^{\mathrm{conn}}
+(\operatorname{Sym}^N(X))
+= \sum_{m \geq 1} p^m V_m Z_X$.
+At order $p^N$: the connected genus-$1$ amplitude receives
+contributions from the normalized $m = N$ Hecke operator acting on
+the seed elliptic genus. Already for $N=2$,
+\[
+ [p^2]\,\mathcal Z_X
+ =
+ \frac{1}{2}Z_X^2 + V_2Z_X,
+ \qquad
+ V_2Z_X
+ =
+ \frac{1}{2}\Bigl(
+ Z_X(2\tau,2z)
+ +Z_X(\tau/2,z)
+ +Z_X((\tau+1)/2,z)
+ \Bigr).
+\]
+The constant terms are divisor-weighted Hecke sums, not the
+diagonal copy sum in the ordered bar complex. The ordered-bar
+scalar is recovered only by isolating the diagonal identity-sector
+anomaly before taking the full orbifold trace.
+\end{proof}
+
+
+% ======================================================================
+% Section: Fixed-point and completed-orbifold bar complexes
+% ======================================================================
+
+\section{Fixed-point and completed-orbifold bar complexes}
+\label{sec:symn-bar-complex}
+
+The ordered bar complex depends on which orbifold object is meant.
+For the fixed-point chiral algebra it is the bar complex of
+$X_N^{\mathrm{id}}=(X^{\otimes N})^{S_N}$; for a $G$-crossed
+completion it is a larger complex with twisted generators.
+
+\begin{computation}[Fixed-point bar complex]
+\label{comp:symn-bar-decomposition}
+\index{bar complex!symmetric orbifold}
+The fixed-point ordered bar complex, completed weightwise when the
+seed has infinitely many modes, is
+\[
+ \barB^{\mathrm{ord}}(X_N^{\mathrm{id}})
+ =
+ T^c\bigl(s^{-1}\overline{(X^{\otimes N})^{S_N}}\bigr).
+\]
+Its generators are invariant combinations of tensor-product fields,
+for example diagonal generators
+$a_\Delta=\sum_i a^{(i)}$ and higher invariant normally ordered
+polynomials. The natural comparison map
+\[
+ \barB^{\mathrm{ord}}(X_N^{\mathrm{id}})
+ \longrightarrow
+ \barB^{\mathrm{ord}}(X^{\otimes N})^{S_N}
+\]
+is the Reynolds descent map of
+Proposition~\ref{prop:symn-koszulness}. The further ordered-to-symmetric
+projection in bar degree~$r$ is
+$\operatorname{av}_{r,N}$ with kernel
+$\mathcal K^{\mathrm{av}}_{r,N}(X)$
+\textup{(}Definition~\ref{def:symn-averaging-kernel}\textup{)}.
+Twist fields $\sigma_\lambda$ are absent from this complex. They
+enter only after a $G$-crossed completion has been chosen.
+\end{computation}
+
+\begin{remark}[Collision residues of the fixed-point and twisted objects]
+\label{rem:symn-r-matrix}
+\index{symmetric orbifold!$R$-matrix}
+The collision residue $r^{\mathrm{coll}}(z) =
+\operatorname{Res}^{\mathrm{coll}}_{0,2}
+(\Theta_{X_N^{\mathrm{id}}})$ has a diagonal fixed-point channel.
+For the stress tensor,
+\[
+ T_\Delta(z)T_\Delta(w)
+ \sim
+ \frac{N\,c(X)/2}{(z-w)^4}
+ + \frac{2T_\Delta(w)}{(z-w)^2}
+ + \frac{\partial T_\Delta(w)}{z-w}.
+\]
+Thus the Virasoro collision residue has the same pole order as the
+seed and scalar coefficient multiplied by~$N$.
+
+Twist-twist channels are not meromorphic channels of
+$X_N^{\mathrm{id}}$. In a completed orbifold category, the
+$N=2$ field satisfies
+\[
+ T(z)\sigma_2(w)\sim
+ \frac{(c/16)\sigma_2(w)}{(z-w)^2}
+ +\frac{\partial\sigma_2(w)}{z-w},
+ \qquad
+ \sigma_2(z)\sigma_2(w)\sim
+ (z-w)^{-c/8}(1+\cdots).
+\]
+The second formula is a branch expansion on the cover, not a pole of
+integer order in the fixed-point VOA.
+\end{remark}
+
+\begin{remark}[Koszulness and the permutation orbifold
+functor]\label{rem:symn-orbifold-functor}
+\index{symmetric orbifold!orbifold functor}
+The fixed-point construction defines the functor
+$X\mapsto (X^{\otimes N})^{S_N}$ on vertex operator algebras. Its
+Koszul question is whether the Reynolds comparison for bar complexes
+is a quasi-isomorphism. A full permutation-orbifold CFT is not this
+functor; it is the fixed-point algebra together with twisted modules,
+and a $G$-crossed completion must specify their OPEs.
+
+At the level of identity-sector modular characteristics,
+$\kappa^{\mathrm{id}}_1(X_N^{\mathrm{id}})=N\kappa(X)$ by
+Proposition~\ref{prop:symn-kappa}. Higher shadow coefficients and
+twisted sectors are not functorial consequences of that scalar
+identity.
+\end{remark}
+
+\begin{remark}[Comparison with the wreath product]
+\label{rem:symn-wreath}
+\index{symmetric orbifold!wreath product}
+The permutation action is the vertex-algebra analogue of the wreath
+product $\Gamma \wr S_N$ in finite group theory: the group $\Gamma$
+(the automorphism group of~$X$) is wrapped by the symmetric group
+$S_N$. When $\Gamma$ is trivial, the fixed-point algebra is
+$(X^{\otimes N})^{S_N}$ and the full CFT still has permutation
+twisted modules. When
+$\Gamma = \mathbb{Z}_2$ (e.g., $X = \beta\gamma$ with its
+$\mathbb{Z}_2$ symmetry), the wreath product
+$\mathbb{Z}_2 \wr S_N$ acts on the tensor product, and the
+fixed-point algebra is $(X^{\otimes N})^{\mathbb Z_2\wr S_N}$.
+The completed CFT has both copywise $\mathbb Z_2$ twisted sectors
+and permutation twisted sectors. Its Koszulness is a problem about
+that completed OPE algebra, not a corollary of the fixed-point
+scalar identity.
+\end{remark}
+
+
+% ======================================================================
+% Section: Remaining open mathematical conditions
+% ======================================================================
+
+\section{Remaining open mathematical conditions}\label{sec:symn-open-problems}
+
+\begin{enumerate}
+\item \textbf{Reynolds descent.}
+Decide when
+$\widehat{\barB}((X^{\otimes N})^{S_N})
+\to\widehat{\barB}(X^{\otimes N})^{S_N}$
+is a filtered quasi-isomorphism. This is the fixed-point
+Koszulness obstruction.
+
+\item \textbf{Twisted-sector Koszul dual.}
+Construct the $G$-crossed bar complex when twist fields are adjoined
+and compute its Koszul dual from the twist-field OPE and
+covering-space structure.
+
+\item \textbf{Higher-genus orbifold amplitudes.}
+The DMVV formula is a genus-$1$ elliptic-genus statement. Determine
+which higher-genus amplitudes of the full orbifold CFT are fixed by
+seed data and which require new twisted-sector sewing input.
+
+\item \textbf{Exact shadow depth for non-M seeds.}
+For class~G, L, or C seeds, determine whether invariant composite
+fields in $X_N^{\mathrm{id}}$ increase the fixed-point shadow depth.
+For completed orbifolds, repeat the calculation with twist-field
+channels.
+\end{enumerate}

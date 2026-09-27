@@ -1,0 +1,894 @@
+\chapter{Exceptional Yangians: quadratic RTT data and the duality problem}
+\label{chap:exceptional-yangian-koszul-duality-platonic}
+
+\providecommand{\ClaimStatusProvedHere}{\textsc{ProvedHere}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textsc{ProvedElsewhere}}
+\providecommand{\ClaimStatusConditional}{\textsc{Conditional}}
+\providecommand{\ClaimStatusComputed}{\textsc{Computed}}
+\providecommand{\ClaimStatusDefinitional}{\textsc{Definitional}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+
+Fix
+\[
+ \fg\in\{E_6,E_7,E_8,F_4,G_2\},
+ \qquad Y_\hbar(\fg)\text{ over }\C[[\hbar]].
+\]
+The local calculations determine Cartan matrices, root counts, selected
+Weyl dimensions, and four recorded tensor-square decompositions.  An
+exceptional RTT theorem requires further structure: a type-specific
+kernel, its transfer matrix, a presentation morphism to
+$Y_\hbar(\fg)$, PBW and Koszul statements in that presentation, and a
+calculation of the orthogonal relation space.  The central map is the
+inverse-kernel comparison
+$R_N(K_{\fg,\hbar})^\perp\to R_N(K_{\fg,\hbar}^{-1})$ and its passage
+through the Yangian presentation map.
+
+\begin{remark}[Affine and Hall companions; \ClaimStatusConditional]
+\label{rem:exceptional-yangian-archetype-and-volIII-shadow}
+\index{Yangian!affine companion}
+\index{K3!Hall--Drinfeld companion}
+The affine vertex algebra $V_k(\fg)$ belongs to the Open chart and has
+the numerical row
+\[
+\bigl(\kappa_{\mathrm{cat}},\kappa^{\mathrm{Hodge}}_{\mathrm{ch}},
+\kappa^{\mathrm{Heis}}_{\mathrm{ch}},\kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\bigr)
+=\left(0,0,\frac{\dim\fg\,(k+h^\vee)}{2h^\vee},-,\operatorname{rk}\fg\right).
+\]
+The K3 Hall construction has the typed arrow
+\[
+\PhiFA_3\bigl(D^b\Coh(K3\times E)\bigr)
+\xrightarrow{\ \SpCh_{\Sigma_2,C}\ }
+\mathcal D_\hbar\!\left(
+\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})
+\right).
+\]
+The exceptional RTT problem is governed by a different arrow,
+\[
+\pi_{\fg}\colon
+\widehat A^{\mathrm{RTT}}(K_{\fg,\hbar})/\mathcal N_{\fg}
+\longrightarrow Y_\hbar(\fg).
+\]
+The RTT duality criterion uses $\pi_{\fg}$ and the quadratic relation
+spaces of its source.  A comparison with the Hall construction consists
+of a filtered bialgebra morphism into the displayed Drinfeld double.
+\end{remark}
+
+\section{Finite RTT presentations}
+\label{sec:exceptional-yangian-finite-rtt-windows}
+
+Let $V_0$ be a finite-dimensional vector space.  The homogeneous
+extended RTT presentation uses
+\[
+W_N(V_0):=\End(V_0)\otimes
+\operatorname{span}\{1,u^{-1},\ldots,u^{-N}\}.
+\]
+Writing
+$T_N(u)=\sum_{r=0}^{N}T^{(r)}u^{-r}$, a kernel
+\[
+K(u)\in\End(V_0\otimes V_0)((u^{-1}))[[\hbar]],
+\qquad K(u)=1+O(u^{-1}),
+\]
+defines a quadratic subspace $R_N(K)\subset W_N(V_0)^{\otimes2}$:
+it is spanned by the coefficients, projected to modes at most $N$, of
+\begin{equation}\label{eq:exceptional-rtt-relation-map}
+K_{12}(u-v)T_{N,1}(u)T_{N,2}(v)
+-T_{N,2}(v)T_{N,1}(u)K_{12}(u-v).
+\end{equation}
+Set
+\[
+A_N(K):=T(W_N(V_0))/\langle R_N(K)\rangle.
+\]
+
+\begin{definition}[Finite RTT presentation datum;
+\ClaimStatusDefinitional]
+\label{def:finite-yangian-module-packet}
+\index{Yangian!finite RTT presentation datum}
+A finite RTT presentation datum for $Y_\hbar(\fg)$ is a tuple
+\[
+\mathscr R_{\fg,N}
+=(V_0,\rho_0,K_{\fg,\hbar}(u),T_{\fg,N}(u),
+\mathcal N_{\fg,N},\pi_{\fg,N}).
+\]
+Here $\rho_0$ is a chosen finite-dimensional $\fg$-module,
+$K_{\fg,\hbar}$ is a type-specific kernel on $V_0^{\otimes2}$,
+$T_{\fg,N}$ is the universal transfer matrix in $A_N(K_{\fg,\hbar})$,
+$\mathcal N_{\fg,N}$ is the stated normalization ideal, including the
+specialization $T^{(0)}=I$ when this is part of the presentation, and
+\[
+\pi_{\fg,N}\colon
+A_N(K_{\fg,\hbar})/\mathcal N_{\fg,N}
+\xrightarrow{\ \sim\ }Y_{\hbar,\leq N}(\fg)
+\]
+is a filtered presentation isomorphism.  The transition maps
+$p_{N+1,N}$ form part of the datum.  If
+$r_{N+1,N}$ denotes the transition on the specified Yangian
+truncations, they satisfy
+$\pi_{\fg,N}p_{N+1,N}=r_{N+1,N}\pi_{\fg,N+1}$.
+When the normalization introduces lower filtration terms, the datum
+also contains the Rees algebra
+\[
+\mathcal R_{\fg,N}
+:=\operatorname{Rees}_F\!\left(
+A_N(K_{\fg,\hbar})/\mathcal N_{\fg,N}\right)
+\]
+and the specializations
+\[
+\mathcal R_{\fg,N}/(t-1)\xrightarrow{\sim}
+Y_{\hbar,\le N}(\fg),
+\qquad
+\mathcal R_{\fg,N}/(t)\xrightarrow{\sim}
+\operatorname{gr}_F Y_{\hbar,\le N}(\fg).
+\]
+\end{definition}
+
+\begin{proposition}[Trace duality for the coefficient space;
+\ClaimStatusProvedHere]
+\label{prop:finite-rtt-trace-pairing-nondegenerate}
+The formula
+\[
+\bigl\langle Xu^{-r},Yu^{-s}\bigr\rangle_N
+=\operatorname{Tr}_{V_0}(XY)\,\delta_{rs}
+\]
+gives a perfect pairing on $W_N(V_0)$.  It therefore defines
+\[
+R_N(K)^\perp\subset W_N(V_0)^\vee\otimes W_N(V_0)^\vee.
+\]
+\end{proposition}
+
+\begin{proof}
+For matrix units $E_{ij}$ one has
+$\operatorname{Tr}(E_{ij}E_{kl})=\delta_{jk}\delta_{il}$.
+Thus $E_{ij}u^{-r}$ pairs with $E_{ji}u^{-r}$, and the Gram
+matrix is a permutation matrix in every spectral mode.
+\end{proof}
+
+\begin{definition}[Spectral completion and inverse-kernel comparison;
+\ClaimStatusDefinitional]
+\label{def:finite-rtt-window-spectral-completion}
+\index{RTT algebra!spectral completion}
+The coefficientwise $(u^{-1},\hbar)$-adic completion is denoted
+$\widehat A_N(K)$.  The inverse-kernel comparison at level $N$ is the
+map of relation spaces
+\begin{equation}\label{eq:exceptional-inverse-kernel-comparison}
+\vartheta_{\fg,N}\colon
+R_N(K_{\fg,\hbar})^\perp
+\longrightarrow R_N(K_{\fg,\hbar}^{-1}).
+\end{equation}
+It is an isomorphism precisely when the two subspaces coincide under
+the trace identification $W_N(V_0)^\vee\simeq W_N(V_0)$.
+The scalar-gauge comparison is an identity
+\begin{equation}\label{eq:exceptional-scalar-gauge}
+K_{\fg,\hbar}(u)^{-1}
+=f_{\fg}(u,\hbar)K_{\fg,-\hbar}(u),
+\qquad
+f_{\fg}\in\C((u^{-1}))[[\hbar]]^\times.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Permutation-kernel benchmark; \ClaimStatusProvedHere]
+Let $P(x\otimes y)=y\otimes x$ and
+$K_\hbar(u)=1-\hbar P/u$.  Then
+\[
+K_\hbar(u)^{-1}
+=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}
+\left(1+\frac{\hbar P}{u}\right)
+=\left(1-\frac{\hbar^2}{u^2}\right)^{-1}K_{-\hbar}(u).
+\]
+\end{lemma}
+
+\begin{proof}
+The equality follows from $P^2=1$ by multiplying the two factors
+$1-\hbar P/u$ and $1+\hbar P/u$.
+\end{proof}
+
+\section{Typed comparison maps}
+\label{sec:exceptional-yangian-taxa}
+
+\begin{proposition}[Objects entering the exceptional RTT problem;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-type-separation}
+The constructions used in this chapter have the following types:
+\[
+\begin{array}{c|c}
+\text{object}&\text{ambient category}\\ \hline
+(A_{\fg},\Phi_{\fg})&\text{based root data}\\
+(V_0,\rho_0)&\operatorname{Rep}(\fg)\\
+A_N(K_{\fg,\hbar})&\operatorname{Alg}^{\mathrm{quad}}_{\C[[\hbar]]}\\
+Y_{\hbar,\leq N}(\fg)&\operatorname{HopfAlg}^{\mathrm{filt}}_{\C[[\hbar]]}\\
+B(A_N)&\operatorname{Coalg}^{\mathrm{conil}}\\
+V_k(\fg)&\operatorname{ChAlg}(X)\\
+\mathcal D_\hbar(\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E}))
+&\operatorname{HopfAlg}^{\mathrm{comp}}.
+\end{array}
+\]
+The arrows relating the first five rows are
+\[
+\rho_0,\qquad
+\pi_{\fg,N}\colon A_N(K_{\fg,\hbar})/\mathcal N_{\fg,N}
+\xrightarrow{\sim}Y_{\hbar,\leq N}(\fg),
+\qquad
+q_N\colon A_N^{\mathrm i}\longrightarrow B(A_N).
+\]
+A chiral conclusion additionally uses a strong monoidal
+factorization functor $\mathfrak C_X$ and a comparison
+\[
+\gamma_N\colon
+\mathfrak C_X\bigl(A_N^{!,\mathrm{quad}}\bigr)
+\xrightarrow{\sim}
+\mathfrak C_X(A_N)^{!,\mathrm{ch}}.
+\]
+\end{proposition}
+
+\begin{proof}
+Each row follows from its defining generators and structure maps.
+The displayed arrows state the additional data required to move from
+one row to the next.
+\end{proof}
+
+\section{The inverse-kernel criterion}
+\label{sec:exceptional-yangian-template}
+
+\begin{proposition}[Quadratic RTT duality criterion;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-template}
+This is the algebraic RTT presentation of the Open chart at levels
+$1\leftrightarrow2$.  The finite hypothesis package is
+$H_{\mathrm{RTT},N}=\textup{(a)}$--$\textup{(d)}$; the completed
+package adds transition compatibility and Mittag--Leffler, and the
+chiral package adds $(\mathfrak C_X,\gamma_N)$.
+Let $\mathscr R_{\fg,N}$ be a finite RTT presentation datum.  Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\pi_{\fg,N}$ is a filtered algebra isomorphism, and the
+normalization ideal is compatible with quadratic duality and with
+$\hbar\mapsto-\hbar$;
+\item the same presentation has a PBW isomorphism
+\[
+\operatorname{gr}_F Y_{\hbar,\le N}(\fg)
+\xrightarrow{\sim}U(\fg[t])_{\le N}
+\]
+and diagonal Koszul cohomology
+\[
+H^{p,q}B(A_N)=0\qquad(p\ne q),
+\]
+so that $q_N\colon A_N^{\mathrm i}\to B(A_N)$ is a quasi-isomorphism;
+\item $\vartheta_{\fg,N}$ in
+\eqref{eq:exceptional-inverse-kernel-comparison} is an isomorphism;
+\item the scalar-gauge identity
+\eqref{eq:exceptional-scalar-gauge} holds.
+\end{enumerate}
+Then the quadratic dual algebra satisfies
+\begin{equation}\label{eq:exceptional-finite-quadratic-dual}
+A_N(K_{\fg,\hbar})^{!,\mathrm{quad}}
+\cong A_N(K_{\fg,-\hbar}).
+\end{equation}
+The duality-compatible normalization and $\pi_{\fg,N}$ give
+\[
+Y_{\hbar,\le N}(\fg)^{!,\mathrm{quad}}
+\cong Y_{-\hbar,\le N}(\fg).
+\]
+If the isomorphisms commute with $p_{N+1,N}$ and every finite total
+weight window is Mittag--Leffler, they assemble to
+\begin{equation}\label{eq:exceptional-completed-quadratic-dual}
+\widehat A(K_{\fg,\hbar})^{!,\mathrm{cont}}
+\cong\widehat A(K_{\fg,-\hbar}).
+\end{equation}
+If $\mathfrak C_X$ and $\gamma_N$ of
+Proposition~\ref{prop:exceptional-yangian-type-separation} are supplied,
+the same isomorphism holds in the stated $E_1$-chiral completion.
+\end{proposition}
+
+\begin{proof}
+For $A_N=T(W_N)/\langle R_N\rangle$, quadratic duality gives
+\[
+A_N^{!,\mathrm{quad}}
+=T(W_N^\vee)/\langle R_N^\perp\rangle.
+\]
+Hypothesis~\textup{(c)} replaces $R_N^\perp$ by the relation space of
+$K_{\fg,\hbar}^{-1}$; hypothesis~\textup{(d)} replaces this kernel by
+$K_{\fg,-\hbar}$ because a central scalar factor cancels from
+\eqref{eq:exceptional-rtt-relation-map}.  Hypothesis~\textup{(b)}
+identifies the quadratic coalgebra with bar cohomology.
+Hypothesis~\textup{(a)} carries the result through the normalization
+and the presentation isomorphism.  Compatibility
+with $p_{N+1,N}$ and the Mittag--Leffler condition gives the completed
+isomorphism weight by weight.  The comparison $\gamma_N$ transports it
+to the chiral category.
+\end{proof}
+
+\begin{remark}[Chevalley involution]
+\label{rem:exceptional-chevalley-intrinsic}
+The Lie-algebra involution
+\[
+e_i\longmapsto-f_i,\qquad f_i\longmapsto-e_i,
+\qquad h_i\longmapsto-h_i
+\]
+acts by $-I$ on the simple-root lattice.  Its use in
+Proposition~\ref{prop:exceptional-yangian-template} requires a compatible
+Yangian morphism
+\[
+\omega_{\fg,N}\colon
+A_N(K_{\fg,\hbar})\longrightarrow
+A_N(K_{\fg,-\hbar})^{\mathrm{op}}
+\]
+intertwining $T_{\fg,N}$, $\mathcal N_{\fg,N}$, and the transition maps.
+This is a presentation-level construction.
+\end{remark}
+
+\begin{lemma}[Passage from finite windows to the completed algebra;
+\ClaimStatusProvedHere]
+\label{lem:exceptional-finite-window-promotion}
+Let $\theta_N\colon A_N^{!,\mathrm{quad}}\to A_N'$ be finite-window
+isomorphisms commuting with the transition maps.  Suppose each finite
+total weight $w$ is eventually constant in $N$ on both sides.  Then
+\[
+\widehat\theta\colon
+\varprojlim_N A_N^{!,\mathrm{quad}}
+\xrightarrow{\sim}\varprojlim_N A_N'
+\]
+is an isomorphism in the completed graded category.
+\end{lemma}
+
+\begin{proof}
+For fixed $w$, choose $N\ge w$.  Both inverse systems are constant in
+that weight, and $\theta_N$ identifies their stable values.  Taking the
+product over $w$ gives $\widehat\theta$.  Equivalently, the Milnor
+sequence has $\varprojlim^{1}=0$ in every weight.
+\end{proof}
+
+\begin{proposition}[Ordered bar information under averaging;
+\ClaimStatusProvedHere]
+\label{prop:exceptional-yangian-ordered-bar-averaging}
+For $A_N=T(W_N)/\langle R_N\rangle$, the ordered reduced bar coalgebra is
+\[
+B^{\mathrm{ord}}(A_N)=
+\bigl(T^c(s^{-1}\bar A_N),d_\mu,\Delta_{\mathrm{dec}}\bigr).
+\]
+The quotient
+\[
+\operatorname{Av}_N\colon
+T^c(s^{-1}\bar A_N)\longrightarrow
+\bigoplus_{m\ge0}(s^{-1}\bar A_N)^{\otimes m}_{\Sigma_m}
+\]
+has kernel containing
+$x\otimes y-(-1)^{|x||y|}y\otimes x$.  Hence the equality
+$R_N(K)^\perp=R_N(K^{-1})$ is an equality in the ordered tensor square.
+An averaged formulation requires a section of $\operatorname{Av}_N$ or
+an equivariant descent theorem carrying both relation spaces.
+\end{proposition}
+
+\begin{proof}
+Deconcatenation records the order of the two tensor factors, whereas
+coinvariants identify their graded permutations.  The orthogonal
+relation space belongs to $W_N^\vee\otimes W_N^\vee$, so its recovery
+from coinvariants is exactly the stated section or descent datum.
+\end{proof}
+
+\section{Root data and the scope of the cited PBW source}
+\label{sec:exceptional-yangian-pbw}
+
+\begin{proposition}[Guay--Regelskis--Wendlandt;
+\ClaimStatusProvedElsewhere]
+\label{thm:exceptional-yangian-pbw-grw18}
+Guay--Regelskis--Wendlandt~\cite{GRW18} compare the RTT, extended
+Drinfeld, and Drinfeld presentations for orthogonal and symplectic
+Yangians.  Their Lie types are $B$, $C$, and $D$.  For an exceptional
+$\fg$, the corresponding input to
+Proposition~\ref{prop:exceptional-yangian-template} is an isomorphism
+\[
+\pi_{\fg,N}\colon
+A_N(K_{\fg,\hbar})/\mathcal N_{\fg,N}
+\xrightarrow{\sim}Y_{\hbar,\le N}(\fg)
+\]
+together with PBW in this same presentation.
+\end{proposition}
+
+\begin{corollary}[Exceptional Cartan calculations;
+\ClaimStatusComputed]
+\label{cor:exceptional-yangian-graded}
+\index{exceptional root systems!Cartan matrices}
+Fix the numbering in which the Cartan matrices are
+\[
+A_{G_2}=\begin{pmatrix}2&-1\\-3&2\end{pmatrix},\qquad
+A_{F_4}=\begin{pmatrix}
+2&-1&0&0\\-1&2&-2&0\\0&-1&2&-1\\0&0&-1&2
+\end{pmatrix},
+\]
+\[
+A_{E_6}=\begin{pmatrix}
+2&0&-1&0&0&0\\0&2&0&-1&0&0\\-1&0&2&-1&0&0\\
+0&-1&-1&2&-1&0\\0&0&0&-1&2&-1\\0&0&0&0&-1&2
+\end{pmatrix},
+\]
+\[
+A_{E_7}=\begin{pmatrix}
+2&0&-1&0&0&0&0\\0&2&0&-1&0&0&0\\-1&0&2&-1&0&0&0\\
+0&-1&-1&2&-1&0&0\\0&0&0&-1&2&-1&0\\
+0&0&0&0&-1&2&-1\\0&0&0&0&0&-1&2
+\end{pmatrix},
+\]
+\[
+A_{E_8}=\begin{pmatrix}
+2&0&-1&0&0&0&0&0\\0&2&0&-1&0&0&0&0\\
+-1&0&2&-1&0&0&0&0\\0&-1&-1&2&-1&0&0&0\\
+0&0&0&-1&2&-1&0&0\\0&0&0&0&-1&2&-1&0\\
+0&0&0&0&0&-1&2&-1\\0&0&0&0&0&0&-1&2
+\end{pmatrix}.
+\]
+Iterated simple reflections give
+\[
+\begin{array}{c|ccccc}
+\fg&E_6&E_7&E_8&F_4&G_2\\ \hline
+\operatorname{rk}\fg&6&7&8&4&2\\
+|\Phi_+|&36&63&120&24&6\\
+\dim\fg=\operatorname{rk}\fg+2|\Phi_+|&78&133&248&52&14\\
+d& (1,1,1,1,1,1)&(1,1,1,1,1,1,1)&(1,1,1,1,1,1,1,1)&(1,1,2,2)&(3,1)\\
+|\operatorname{Out}(\fg)|&2&1&1&1&1
+\end{array}
+\]
+The dual Coxeter numbers are
+\[
+(h^\vee_{E_6},h^\vee_{E_7},h^\vee_{E_8},h^\vee_{F_4},h^\vee_{G_2})
+=(12,18,30,9,4).
+\]
+Consequently
+\[
+\kappa(V_k(\fg))=\frac{\dim\fg\,(k+h^\vee)}{2h^\vee}
+\]
+gives
+\[
+\frac{13(k+12)}4,\quad
+\frac{133(k+18)}{36},\quad
+\frac{62(k+30)}{15},\quad
+\frac{26(k+9)}9,\quad
+\frac{7(k+4)}4
+\]
+for $E_6,E_7,E_8,F_4,G_2$, respectively.
+\end{corollary}
+
+\begin{proof}
+Starting from the simple roots, repeatedly apply the simple reflections
+$s_i(\alpha_j)=\alpha_j-A_{ij}\alpha_i$ and retain the positive roots.
+This gives the displayed finite sets $\Phi_+$.  Then
+$\dim\fg=\operatorname{rk}\fg+2|\Phi_+|$.  Solving
+$d_iA_{ij}=d_jA_{ji}$ gives the displayed minimal positive
+symmetrizers, while direct permutation of the finite node sets gives
+the diagram-automorphism orders.  Substitution of the standard dual
+Coxeter numbers in the formula for $\kappa$ gives the final row.
+\end{proof}
+
+\begin{proposition}[Finite exceptional representation calculations;
+\ClaimStatusComputed]
+\label{prop:exceptional-fundamental-packet-scope}
+\index{exceptional Yangian!representation calculations}
+The Weyl-dimension routines evaluate
+\[
+\dim V_{E_6}(\omega_1)=\dim V_{E_6}(\omega_6)=27,
+\quad
+\dim V_{E_7}(\omega_7)=56,
+\quad
+\dim V_{E_8}(\omega_8)=248.
+\]
+The rank-two routine gives $\dim V_{G_2}(\omega_1)=7$.
+For the following decompositions, the dimension sums and Casimir
+eigenvalues are:
+\[
+\begin{array}{c|c|c}
+\fg&V_0^{\otimes2}&C_2\text{ on the listed summands}\\ \hline
+E_6&351_A\oplus351_S\oplus27^*_S&100/3,\ 112/3,\ 52/3\\
+E_7&1_A\oplus1539_A\oplus133_S\oplus1463_S&0,\ 56,\ 36,\ 60\\
+E_8&1_S\oplus3875_S\oplus27000_S\oplus248_A\oplus30380_A
+&0,\ 96,\ 124,\ 60,\ 120\\
+G_2&1_S\oplus27_S\oplus7_A\oplus14_A&0,\ 28/3,\ 4,\ 8.
+\end{array}
+\]
+No $F_4$ tensor-square decomposition is supplied here.  Thus the first
+$F_4$ construction is a decomposition of
+$V_{F_4}(\omega_4)^{\otimes2}$ together with explicit primitive
+idempotents in $\End(V_{F_4}(\omega_4)^{\otimes2})$.
+\end{proposition}
+
+\begin{proof}
+For each displayed highest weight, evaluate the finite Weyl product
+$\prod_{\alpha\in\Phi_+}(\lambda+\rho,\alpha)/(\rho,\alpha)$.
+On every listed summand, evaluate
+$C_2(\lambda)=(\lambda,\lambda+2\rho)$ using the symmetrized Cartan
+form.  The resulting dimensions sum to $(\dim V_0)^2$ in the four
+listed tensor squares.  This calculation determines dimensions and
+scalar eigenvalues only; the matrix projectors $P_\lambda$, transfer
+matrices $T(u)$, and exceptional kernels $K_{\fg,\hbar}(u)$ remain
+additional constructions.
+\end{proof}
+
+\section{The five exceptional types}
+\label{sec:exceptional-yangian-per-type}
+
+\begin{proposition}[$E_6$ reduction; \ClaimStatusConditional]
+\label{prop:exceptional-yangian-koszul-E6}
+For $V_0=V(\omega_1)=27$ and $V_0^\vee=V(\omega_6)=27^*$, construct
+\[
+K_{E_6,\hbar}(u),\quad T_{E_6,N}(u),\quad
+\pi_{E_6,N},\quad\vartheta_{E_6,N},\quad f_{E_6}(u,\hbar)
+\]
+on the three channels
+$351_A\oplus351_S\oplus27^*_S$ and their contragredient channels.
+Together with PBW, diagonal Koszulness, and compatible transition maps,
+these data give
+\[
+\widehat Y_\hbar(E_6)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(E_6).
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:exceptional-yangian-template} to the stated
+three-channel presentation.
+\end{proof}
+
+\begin{remark}[$E_6$ contragredient representation]
+\label{rem:exceptional-yangian-E6-outer}
+The diagram involution exchanges $V(\omega_1)$ and $V(\omega_6)$.
+The inverse-kernel map $\vartheta_{E_6,N}$ therefore carries an explicit
+identification between the $27$ presentation and its contragredient
+$27^*$ presentation, in addition to the diagram involution.
+\end{remark}
+
+\begin{proposition}[$E_7$ reduction; \ClaimStatusConditional]
+\label{prop:exceptional-yangian-koszul-E7}
+For the symplectic representation $V_0=V(\omega_7)=56$, construct the
+four primitive projectors
+\[
+P_1,\ P_{1539},\ P_{133},\ P_{1463},
+\qquad
+\sum_\lambda P_\lambda=1,
+\quad P_\lambda P_\mu=\delta_{\lambda\mu}P_\lambda,
+\]
+and a kernel
+$K_{E_7,\hbar}(u)=\sum_\lambda k_\lambda(u,\hbar)P_\lambda$.
+The maps $T_{E_7,N}$, $\pi_{E_7,N}$, $\vartheta_{E_7,N}$, together
+with PBW, diagonal Koszulness, scalar gauge, and tower compatibility,
+give
+\[
+\widehat Y_\hbar(E_7)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(E_7).
+\]
+\end{proposition}
+
+\begin{proof}
+The four idempotents define $R_N(K)$ channel by channel; the conclusion
+is Proposition~\ref{prop:exceptional-yangian-template}.
+\end{proof}
+
+\begin{remark}[$E_7$ symplectic form]
+\label{rem:exceptional-yangian-E7-self-dual}
+The invariant alternating form identifies $V_0$ with $V_0^\vee$.
+A spectral kernel on this decomposition has four coefficient functions
+$k_\lambda(u,\hbar)$; its inverse is governed by their reciprocals and
+the four projector matrices.
+\end{remark}
+
+\begin{proposition}[$E_8$ reduction; \ClaimStatusConditional]
+\label{prop:exceptional-yangian-koszul-E8}
+For $V_0=\fg=248$, construct the five projectors on
+\[
+248\otimes248
+=1_S\oplus3875_S\oplus27000_S\oplus248_A\oplus30380_A
+\]
+and a five-channel kernel $K_{E_8,\hbar}$.  A presentation map
+$\pi_{E_8,N}$, PBW, diagonal Koszulness, the relation-space map
+$\vartheta_{E_8,N}$, scalar gauge, and compatible finite windows give
+\[
+\widehat Y_\hbar(E_8)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(E_8).
+\]
+\end{proposition}
+
+\begin{proof}
+This is the five-channel instance of
+Proposition~\ref{prop:exceptional-yangian-template}.
+\end{proof}
+
+\begin{remark}[$E_8$ adjoint tensor square]
+\label{rem:exceptional-yangian-E8-adjoint}
+The equality
+$1+3875+27000+248+30380=248^2=61504$
+checks the dimensions of the five isotypic summands.  The RTT relation
+space is obtained from their actual projector matrices and the five
+spectral functions $k_\lambda(u,\hbar)$.
+\end{remark}
+
+\begin{proposition}[$F_4$ reduction; \ClaimStatusConditional]
+\label{prop:exceptional-yangian-koszul-F4}
+Let $V_0=V(\omega_4)$ have dimension $26$.  Construct its tensor-square
+decomposition, the corresponding primitive projectors, and a spectral
+kernel $K_{F_4,\hbar}$.  A presentation map $\pi_{F_4,N}$, PBW,
+diagonal Koszulness, $\vartheta_{F_4,N}$, scalar gauge, and compatible
+finite windows then give
+\[
+\widehat Y_\hbar(F_4)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(F_4).
+\]
+\end{proposition}
+
+\begin{proof}
+The root datum supplies $A_{F_4}$, $d=(1,1,2,2)$,
+$\dim F_4=52$, and $h^\vee=9$.  The listed representation and RTT
+constructions supply hypotheses~\textup{(a)}--\textup{(d)} of
+Proposition~\ref{prop:exceptional-yangian-template}.
+\end{proof}
+
+\begin{remark}[$F_4$ folding]
+\label{rem:exceptional-yangian-F4-folding}
+The fixed Lie algebra $E_6^{\mathbb Z/2}\cong F_4$ suggests a second
+route.  That route consists of transition-compatible isomorphisms
+\[
+A_N(K_{E_6,\hbar})^{\mathbb Z/2}
+\xrightarrow{\sim}A_N(K_{F_4,\hbar}),
+\qquad
+R_N(K_{E_6,\hbar})^{\perp,\mathbb Z/2}
+\xrightarrow{\sim}R_N(K_{F_4,\hbar})^\perp.
+\]
+Exactness of invariants and compatibility with $\vartheta_N$ complete
+the folding construction.
+\end{remark}
+
+\begin{proposition}[$G_2$ reduction; \ClaimStatusConditional]
+\label{prop:exceptional-yangian-koszul-G2}
+For $V_0=V(\omega_1)=7$, construct the four projectors on
+\[
+7\otimes7=1_S\oplus27_S\oplus7_A\oplus14_A
+\]
+and a four-channel kernel $K_{G_2,\hbar}$.  A presentation map
+$\pi_{G_2,N}$, PBW, diagonal Koszulness, $\vartheta_{G_2,N}$,
+scalar gauge, and compatible finite windows give
+\[
+\widehat Y_\hbar(G_2)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(G_2).
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:exceptional-yangian-template} to the four
+isotypic channels.
+\end{proof}
+
+\begin{remark}[$G_2$ triality]
+\label{rem:exceptional-yangian-G2-folding}
+The fixed Lie algebra $D_4^{\mathbb Z/3}\cong G_2$ gives a folding route
+through maps
+\[
+A_N(K_{D_4,\hbar})^{\mathbb Z/3}
+\longrightarrow A_N(K_{G_2,\hbar}).
+\]
+An isomorphism here, exactness of invariants, and compatibility with
+$R_N(-)^\perp$ and $p_{N+1,N}$ provide the required descent theorem.
+\end{remark}
+
+\section{Exceptional-family reduction theorem}
+\label{sec:exceptional-yangian-five-family}
+
+\begin{theorem}[Exceptional Yangian duality from RTT data;
+\ClaimStatusConditional]
+\label{thm:exceptional-yangian-koszul-duality-all-five-types}
+\index{Yangian!exceptional quadratic duality}
+The source is the Open chart in algebraic RTT presentation, the target
+is its continuous quadratic dual at levels $1\leftrightarrow2$, and the
+hypothesis package is
+$H_{\mathrm{excRTT}}=\textup{(1)}$--$\textup{(7)}$.
+For each
+$\fg\in\{E_6,E_7,E_8,F_4,G_2\}$, suppose the following constructions
+are given in one presentation:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item the finite RTT datum $\mathscr R_{\fg,N}$, the presentation
+isomorphism $\pi_{\fg,N}$, and compatibility of
+$\mathcal N_{\fg,N}$ with quadratic duality and
+$\hbar\mapsto-\hbar$;
+\item primitive projector matrices for every irreducible channel of
+$V_0^{\otimes2}$ and a type-specific kernel $K_{\fg,\hbar}$ satisfying
+the Yang--Baxter equation;
+\item PBW and diagonal Koszulness for $A_N(K_{\fg,\hbar})$;
+\item the relation-space isomorphism
+$\vartheta_{\fg,N}\colon R_N(K_{\fg,\hbar})^\perp
+\xrightarrow{\sim}R_N(K_{\fg,\hbar}^{-1})$;
+\item the scalar-gauge identity
+$K_{\fg,\hbar}^{-1}=f_{\fg}K_{\fg,-\hbar}$;
+\item compatibility with $p_{N+1,N}$ and the Mittag--Leffler property in
+each finite total weight;
+\item for the chiral formulation, the factorization functor
+$\mathfrak C_X$ and the comparison isomorphisms $\gamma_N$.
+\end{enumerate}
+Then
+\[
+\widehat Y_\hbar(\fg)^{!,\mathrm{cont}}
+\cong\widehat Y_{-\hbar}(\fg),
+\]
+and the same formula holds in the specified $E_1$-chiral completion
+under construction~\textup{(7)}.
+\end{theorem}
+
+\begin{proof}
+The five propositions of
+\S\ref{sec:exceptional-yangian-per-type} identify $V_0$ and the
+isotypic channels.  Constructions~\textup{(1)}--\textup{(5)} give
+Proposition~\ref{prop:exceptional-yangian-template} at every $N$;
+construction~\textup{(6)} gives
+Lemma~\ref{lem:exceptional-finite-window-promotion};
+construction~\textup{(7)} transports the completed algebraic result to
+the chiral category.
+\end{proof}
+
+\begin{corollary}[Passage from the classical families to all simple
+types; \ClaimStatusConditional]
+\label{cor:exceptional-yangian-all-simple}
+\index{Yangian!all simple Lie types}
+Molev~\cite{Molev07} gives classical RTT structures, and
+Guay--Regelskis--Wendlandt~\cite{GRW18} compare three presentations
+in types $B$, $C$, and $D$.  Assume the quadratic relation-space,
+Koszul, and completion hypotheses of
+Proposition~\ref{prop:exceptional-yangian-template} throughout the
+classical families.  Adding the seven constructions of
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types} for
+$E_6,E_7,E_8,F_4,G_2$ yields the corresponding statement for every
+simple complex Lie algebra.
+\end{corollary}
+
+\begin{remark}[Adjacent representation-theoretic constructions]
+\label{rem:exceptional-yangian-does-not-close}
+Shifted Yangians, BFN Coulomb branches, quantum affine algebras,
+toroidal algebras, and elliptic Yangians carry their own presentations
+and completions.  Comparisons with the theorem above are functors from
+those presentations to the finite RTT systems $\mathscr R_{\fg,N}$.
+\end{remark}
+
+\begin{proposition}[Comparison data supplied by neighboring theories;
+\ClaimStatusConditional]
+\label{prop:exceptional-yangian-no-dk-root-k3-promotion}
+A transfer from a neighboring construction to the exceptional RTT
+theorem is a functor producing the tuple
+\[
+\mathscr R_{\fg,N}
+=(V_0,\rho_0,K_{\fg,\hbar},T_{\fg,N},
+\mathcal N_{\fg,N},\pi_{\fg,N})
+\]
+and the relation-space map
+$\vartheta_{\fg,N}$.  The available source objects are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Drinfeld--Kohno supplies monodromy and braiding on tensor powers
+of evaluation modules.
+\item A root-of-unity specialization supplies an integral form and its
+specialized braided category.
+\item The K3 construction supplies the completed Hall--Drinfeld
+bialgebra
+\[
+\mathcal D_\hbar\bigl(
+\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3\times E})
+\bigr).
+\]
+\item Affine, toroidal, elliptic, and Borcherds constructions supply
+their respective filtered algebras, shuffle products, and denominator
+identities.
+\end{enumerate}
+For each source, the comparison theorem is the construction of
+$K_{\fg,\hbar}$, its projector matrices, $\pi_{\fg,N}$, and
+$\vartheta_{\fg,N}$ with the transition identities of
+Definition~\ref{def:finite-yangian-module-packet}.
+\end{proposition}
+
+\begin{proof}
+The target tuple is exactly the input of
+Proposition~\ref{prop:exceptional-yangian-template}; preservation of its
+filtration and relation spaces gives the required hypothesis package.
+\end{proof}
+
+\section{Finite arithmetic and its boundary}
+\label{sec:exceptional-yangian-verification}
+
+The preceding tables use the following finite computations.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Simple reflections enumerate the positive roots of the five
+displayed Cartan matrices, and the equations
+$d_iA_{ij}=d_jA_{ji}$ determine their symmetrizers.
+\item The Weyl product evaluates the displayed $E_6$, $E_7$, $E_8$,
+and $G_2$ dimensions.
+\item The stated $E_6$, $E_7$, $E_8$, and $G_2$ decompositions give
+their component dimensions and Casimir scalars; no $F_4$
+decomposition is asserted.
+\item For the permutation operator $P$ on $V_0^{\otimes2}$,
+$(1-\hbar P/u)(1+\hbar P/u)=(1-\hbar^2/u^2)I$.
+\item The finite node permutations give the displayed diagram
+automorphism orders, and $(-I)^2=I$.
+\item The classical dimension comparison is
+Corollary~\ref{cor:exceptional-yangian-graded}.
+\item The equality
+$\sum_\lambda\dim V_\lambda=(\dim V_0)^2$ checks only the dimension
+of a proposed tensor-square decomposition.  It is not the
+Yang--Baxter equation, which appears separately as construction~\textup{(2)} in
+Theorem~\ref{thm:exceptional-yangian-koszul-duality-all-five-types}.
+\end{enumerate}
+
+\begin{remark}[Scope of the finite calculations]
+\label{rem:exceptional-yangian-hziv}
+The arithmetic above is finite and exact.  The exceptional theorem has
+status \ClaimStatusConditional.  Its additional inputs are the matrices
+$P_\lambda$, kernels $K_{\fg,\hbar}$, transfer matrices $T_{\fg,N}$,
+presentation maps $\pi_{\fg,N}$, relation maps $\vartheta_{\fg,N}$,
+bar differentials, and PBW filtrations.
+\end{remark}
+
+\section{Exceptional RTT data}
+\label{sec:exceptional-yangian-summary}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Computed representation data and remaining RTT constructions.}
+\label{tab:exceptional-yangian-theorem-status}
+\begin{tabular}{c|c|p{4.1cm}|p{5.2cm}}
+$\fg$&$\dim V_0$&\textsc{local calculation}&\textsc{remaining construction}\\ \hline
+$E_6$&$27,27^*$&three recorded channels and their Casimir scalars&
+projector matrices, $K,T,\pi$, PBW/Koszul, $\vartheta$, tower maps\\
+$E_7$&$56$&four recorded channels and their Casimir scalars&
+four projectors, $K,T,\pi$, PBW/Koszul, $\vartheta$, tower maps\\
+$E_8$&$248$&five recorded channels and their Casimir scalars&
+five projectors, $K,T,\pi$, PBW/Koszul, $\vartheta$, tower maps\\
+$F_4$&$26$&Cartan matrix, roots, $d$, $\dim\fg$, $h^\vee$&
+tensor decomposition, projectors, $K,T,\pi$, PBW/Koszul, $\vartheta$, tower maps\\
+$G_2$&$7$&four recorded channels and their Casimir scalars&
+four projectors, $K,T,\pi$, PBW/Koszul, $\vartheta$, tower maps
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Passage from a finite quadratic presentation to the completed Yangian.}
+\label{tab:exceptional-yangian-ambient-registers}
+\begin{tabular}{c|p{4.8cm}|p{5.4cm}}
+\textsc{stage}&\textsc{object}&\textsc{map}\\ \hline
+finite coefficients&$W_N(V_0)$ with its trace pairing&
+$R_N(K)^\perp\xrightarrow{\vartheta_N}R_N(K^{-1})$\\
+finite algebra&$A_N(K)=T(W_N)/\langle R_N(K)\rangle$&
+$\pi_{\fg,N}\colon A_N(K)/\mathcal N_N\xrightarrow{\sim}Y_{\hbar,\le N}(\fg)$\\
+normalization&$\mathcal R_{\fg,N}=\operatorname{Rees}_F(A_N/\mathcal N_N)$&
+specialization at $t=1$ to $Y_{\hbar,\le N}$ and at $t=0$ to
+$\operatorname{gr}_F Y_{\hbar,\le N}$\\
+bar construction&$A_N^{\mathrm i}\xrightarrow{q_N}B(A_N)$&
+$q_N$ is a quasi-isomorphism under diagonal Koszulness\\
+completion&$\varprojlim_N A_N(K)$&
+$p_{N+1,N}$ and weightwise Mittag--Leffler passage\\
+chiralization&$\mathfrak C_X(A_N)$&
+$\gamma_N\colon\mathfrak C_X(A_N^{!,\mathrm{quad}})\xrightarrow{\sim}
+\mathfrak C_X(A_N)^{!,\mathrm{ch}}$
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five typed objects associated with an RTT algebra.}
+\label{tab:exceptional-yangian-object-firewall}
+\begin{tabular}{c|p{9.5cm}}
+\textsc{symbol}&\textsc{definition}\\ \hline
+$A_N$&$T(W_N)/\langle R_N(K)\rangle$\\
+$B(A_N)$&$T^c(s^{-1}\bar A_N)$ with the multiplication differential\\
+$A_N^{\mathrm i}$&the quadratic coalgebra on $s^{-1}W_N$ with
+corelations determined by $R_N(K)$\\
+$A_N^{!,\mathrm{quad}}$&$T(W_N^\vee)/\langle R_N(K)^\perp\rangle$\\
+$Z_{\mathrm{ch}}^{\mathrm{der}}(\mathfrak C_X(A_N))$&the chiral
+Hochschild cochain object of the chiralized algebra
+\end{tabular}
+\end{table}
+
+\begin{remark}[Passage from root data to exceptional duality;
+\ClaimStatusProvedHere]
+\label{rem:exceptional-yangian-three-table-quarantine}
+Tables~\ref{tab:exceptional-yangian-theorem-status},
+\ref{tab:exceptional-yangian-ambient-registers}, and
+\ref{tab:exceptional-yangian-object-firewall} display the complete
+sequence of maps.  Cartan arithmetic chooses $\fg$ and $V_0$; projector
+matrices and $K_{\fg,\hbar}$ define $R_N(K)$; $\pi_{\fg,N}$ identifies
+the RTT algebra with the Yangian; $q_N$ and $\vartheta_{\fg,N}$ give
+quadratic duality; the transition maps give the completion; $\gamma_N$
+gives the chiral formulation.
+\end{remark}

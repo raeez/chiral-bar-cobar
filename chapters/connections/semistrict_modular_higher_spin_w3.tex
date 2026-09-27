@@ -1,0 +1,1019 @@
+% Status and semantic-level disputes are settled by Chapter 34 (concordance.tex).
+% This file is a repository-ready chapter fragment intended for inclusion in main.tex.
+% It assumes the theorem environments and typography declared there.
+
+\chapter{Semistrict modular higher-spin geometry of the classical \texorpdfstring{$W_3$}{W3} sector}
+\label{chap:semistrict-modular-W3}
+
+% ======================================================================
+% Local macros: provided only if absent from the ambient manuscript.
+% ======================================================================
+\providecommand{\Bbbk}{\mathbb{k}}
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\HS}{\operatorname{HS}}
+\providecommand{\wt}{\operatorname{wt}}
+\providecommand{\CE}{\operatorname{CE}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\Bdy}{\operatorname{Bdy}}
+\providecommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\qc}{\mathrm{qc}}
+\providecommand{\sh}{\mathrm{sh}}
+\providecommand{\nc}{\mathrm{nc}}
+\providecommand{\modu}{\mathrm{mod}}
+\providecommand{\Lie}{\mathrm{Lie}}
+
+\section{The semistrict \texorpdfstring{$W_3$}{W3} sector}
+\label{sec:why-semistrict-modular-W3}
+
+Protected holographic sectors are useful only when the algebraic
+object being compared is fixed. Here the object is the formal
+three-dimensional holomorphic-topological Poisson sigma model at the
+vacuum attached to the classical $W_3$ Poisson vertex algebra, together
+with its central Hodge-shadow extension. It is not the physical boundary
+chiral algebra and it is not the chiral derived centre.
+
+The boundary PVA controls the Taylor degree of this formal moduli
+problem. For the classical $W_3$ PVA the only nonlinear coefficients in
+the $\lambda$-brackets are quadratic, so the associated cyclic
+$L_\infty$ algebra has no brackets beyond $\ell_3$. The modular problem
+over a fixed scalar Hodge shadow is therefore a filtered cubic recursion
+around a central Maurer--Cartan base point.
+
+The structural statement is:
+\begin{center}
+\emph{the specialization of the universal shadow obstruction tower
+$\Theta_\cA^{\le r}$ to the classical $W_3$ family has a semistrict
+three-dimensional HT formal envelope, with brackets only through
+\(\ell_3\); the modular shadow tower still has a degree-$4$ quartic
+resonance class \(\mathfrak Q\), a boundary obstruction created by
+contact and sewing terms rather than by an $\ell_4$ vertex.}
+\end{center}
+Every construction below is an MC element in a specified completed
+convolution or cyclic $L_\infty$ algebra, and every finite-degree
+shadow truncation is a projection of the bar-intrinsic $\Theta_\cA$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
+
+\begin{convention}[Scope and semantic level for this chapter; \ClaimStatusDefinitional]
+\label{conv:scope-semistrict-W3}
+The H/M/S distinctions of Chapter~\ref{chap:concordance} remain in force.
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item Statements about universal Maurer--Cartan classes, formal moduli problems, or derived centers are \textbf{H}-level when they are model-independent.
+ \item Explicit BV differentials, filtered completions, obstruction classes, and graph identities are \textbf{M}-level.
+ \item Scalar characteristic packages, such as the Hodge shadow $\kappa(\mathcal A)\lambda_g$, are \textbf{S}-level.
+ \item Throughout this chapter, ``modular'' refers to the open-category trace $\mathrm{Tr}_{\mathcal C}$ and clutching morphisms on the open factorisation category $\mathcal C^{\mathrm{op}}$ on $(X,D,\tau)$, not to a closed-algebra property of $W_3^{\mathrm{cl}}$ or $\HS(W_3^{\mathrm{cl}})$. Modular reconstruction is the level-$5\to 4$ functor of master-concordance Convention~\textup{open-trace}; closed shadows have modular consequences only when traced through that open category.
+\end{enumerate}
+The proved modular Koszul core of
+Chapters~\ref{chap:bar-cobar} and~\ref{chap:higher-genus} is not
+altered here. The universal class $\Theta_{\mathcal A}$ is proved in
+the completed coinvariant modular convolution algebra
+(Theorem~\ref{thm:mc2-bar-intrinsic}). Its $W_3$ specialization has two
+separate projections. The local three-dimensional HT formal moduli
+problem has the semistrict cyclic $L_\infty$ envelope
+\(\HS(W_3^{\mathrm{cl}})\), with no brackets $\ell_n$ for $n \ge 4$.
+The modular shadow tower has degree projections of $\Theta_{W_3}$:
+the cubic shadow~$\mathfrak{C}$ is the degree-$3$ projection, while the
+quartic resonance class~$\mathfrak{Q}$ is the degree-$4$ contact/sewing
+obstruction in the shadow tower. The second statement does not assert
+an $\ell_4$ operation in the semistrict HT envelope.
+\end{convention}
+
+\begin{remark}[The smallest nonlinear higher-spin model]
+\label{rem:why-W3-first}
+The classical $W_3$ algebra is the first nontrivial point where three constraints meet at once.
+\begin{enumerate}[label=\textup{(\alph*)}]
+ \item The three-dimensional HT theory attached to the $W_3$ PVA is written in closed form in~\cite{KhanZeng25}.
+ \item Boundary chiral algebras, higher operations, and homotopy transfer are available in the surrounding HT literature~\cite{CDG20,Zeng23,GKW24}.
+ \item The Virasoro field and the spin-$3$ current give a genuine higher-spin sector, while the quadratic nonlinearity keeps the formal moduli problem semistrict.
+\end{enumerate}
+\end{remark}
+
+\section{From boundary \texorpdfstring{$\lambda$}{lambda}-brackets to bulk semistrictity}
+\label{sec:boundary-to-bulk-semistrictity}
+
+The order of boundary nonlinearity controls the degree of the bulk deformation algebra. At this interface the boundary PVA, the BV description of the bulk, and cyclic $L_\infty$-algebras meet.
+
+\begin{definition}[Nonlinear generator-degree]
+\label{def:nonlinear-generator-degree-chapter}
+Let $V$ be a freely generated Poisson vertex algebra on generators $u_i$. We say that $V$ has \emph{nonlinear generator-degree at most $d$} if every coefficient appearing in every $\lambda$-bracket
+\[
+\{u_i{}_{\lambda}u_j\}
+\]
+is a differential polynomial in the generators and their $z$-derivatives whose monomials involve at most $d$ generator factors.
+\end{definition}
+
+\begin{definition}[Higher-spin envelope; \ClaimStatusDefinitional]
+\label{def:higher-spin-envelope-chapter}
+Let $V$ be a freely generated Poisson vertex algebra for which the
+Khan--Zeng three-dimensional HT Poisson sigma model is defined as a
+formal BV theory at the vacuum. Let $\mathfrak M_V$ be that formal
+moduli problem, and let
+\[
+Q_{\mathrm{BV}}=\sum_{n\ge 1}Q_n
+\]
+be the Taylor expansion of the BV homological vector field into homogeneous polynomial vector fields of degree~$n$. The \emph{higher-spin envelope} of~$V$ is the completed cyclic $L_\infty$-algebra
+\[
+\HS(V)
+\]
+whose $n$-ary bracket $\ell_n$ is the shifted multilinear operation corresponding to~$Q_n$.
+\end{definition}
+
+\begin{theorem}[Finite-degree theorem for polynomial PVAs \ClaimStatusProvedHere]
+\label{thm:finite-degree-polynomial-pva-chapter}
+\textup{[}Type signature:
+$(\mathrm{quadrant}=\mathrm{Open}\cap\mathrm{Chain},
+\mathrm{presentation}=\mathrm{chain\text{-}level\ cyclic\ }L_\infty,
+\mathrm{level}=2\to 3,
+\mathrm{hypothesis\ package}=\mathrm{freely\ generated\ PVA};
+\mathrm{nonlinear\ generator\text{-}degree\ }d;
+\mathrm{Khan\text{--}Zeng\ formal\ BV\ HT\ sigma\ model\ exists\ at\ vacuum})$\textup{]}
+The statement is at the local formal envelope of the HT bulk, not at
+the modular-shadow level: a finite-degree generator OPE controls the
+local cyclic $L_\infty$ envelope, but the modular shadow tower may
+admit higher-degree projections from contact and sewing strata
+\textup{(}Convention~\textup{\ref{conv:scope-semistrict-W3}}\textup{)}.
+Let $V$ be a freely generated Poisson vertex algebra of nonlinear
+generator-degree at most $d$, and assume its three-dimensional HT
+Poisson sigma model exists in the formal BV sense used in
+Definition~\ref{def:higher-spin-envelope-chapter}. Then $\HS(V)$ is a
+completed cyclic $L_\infty$-algebra satisfying
+\[
+\ell_n=0
+\qquad
+\text{for all } n>d+1.
+\]
+\end{theorem}
+
+\begin{proof}
+In the formal neighbourhood of the vacuum, the BV differential of the
+three-dimensional Poisson sigma model associated to~$V$ has the form
+\[
+Q_{\mathrm{BV}}\Phi^i
+=
+ d_{\mathrm{HT}}\Phi^i + \Pi^{ij}(\partial,\Phi)\,\eta_j,
+\]
+\[
+Q_{\mathrm{BV}}\eta_i
+=
+ d_{\mathrm{HT}}\eta_i
++
+\frac12\sum_{n\ge 0}(-\partial)^n\eta_j
+\frac{\partial \Pi^{jk}(\partial,\Phi)}{\partial(\partial^n\Phi^i)}\eta_k,
+\]
+where $\Pi$ records the $\lambda$-bracket coefficients of~$V$; compare~\cite{KhanZeng25}. If each coefficient of~$\Pi$ has nonlinear generator-degree at most~$d$, then the first formula is polynomial of total degree at most $d+1$: a degree-$\le d$ coefficient multiplies one ghost $\eta_j$. In the second formula, differentiation with respect to a field or jet variable reduces the field degree by one, while multiplication by two ghosts raises the total degree by two; hence this expression also has degree at most $d+1$.
+
+Therefore the Taylor expansion of $Q_{\mathrm{BV}}$ contains no homogeneous terms of degree $>d+1$. Equivalently,
+\[
+Q_n=0 \qquad (n>d+1),
+\]
+and hence the corresponding brackets satisfy
+\[
+\ell_n=0 \qquad (n>d+1).
+\]
+Since $Q_{\mathrm{BV}}^2=0$, the collection $\{\ell_n\}$ obeys the $L_\infty$ identities. Since $Q_{\mathrm{BV}}$ is Hamiltonian for the BV pairing, the resulting $L_\infty$-algebra is cyclic.\qedhere
+\end{proof}
+
+\begin{corollary}[Semistrictity of the classical $W_3$ bulk \ClaimStatusProvedHere]
+\label{cor:semistrictity-classical-W3-chapter}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=2,
+\mathrm{hypothesis\ package}=\mathrm{classical\ }W_3\mathrm{\ PVA};
+\mathrm{Khan\text{--}Zeng\ formal\ BV\ envelope};
+\mathrm{quadratic\ nonlinearity\ in\ }\lambda\mathrm{\text{-}brackets})$\textup{]}
+The corollary asserts semistrictity of the formal HT envelope $\HS(W_3^{\mathrm{cl}})$, not of the
+modular shadow tower of the quantum $\Walg_3$: the quartic resonance
+class $\mathfrak Q$ of the shadow tower remains nonzero
+\textup{(}Convention~\textup{\ref{conv:scope-semistrict-W3}}\textup{)}.
+Quadratic PVA $\lambda$-bracket nonlinearity does \emph{not} entail
+all-loop quantum HT theory; passage to the quantum $\cW_3$ shadow
+requires the Yamada finite presentation and the KZ analytic SDR.
+Let $W_3^{\mathrm{cl}}$ denote the classical $W_3$ Poisson vertex algebra. Then
+\[
+\HS(W_3^{\mathrm{cl}})
+\]
+is semistrict and cyclic:
+\[
+\ell_n=0
+\qquad
+(n\ge 4).
+\]
+\end{corollary}
+
+\begin{proof}
+The only genuinely nonlinear monomials in the classical $W_3$ $\lambda$-brackets are quadratic, namely the $T^2$ and $T\partial T$ terms in the $\{W{}_{\lambda}W\}$ bracket; see~\cite[\S\,4]{KhanZeng25}. Thus the nonlinear generator-degree is $d=2$, and Theorem~\ref{thm:finite-degree-polynomial-pva-chapter} implies $\ell_n=0$ for $n\ge 4$.\qedhere
+\end{proof}
+
+\begin{proposition}[Tree identity for semistrict cyclic theories \ClaimStatusProvedHere]
+\label{prop:tree-identity-semistrict-chapter}
+Let $L$ be a semistrict cyclic $L_\infty$-algebra. Consider a connected tree-level Feynman graph with $n$ external legs, $v_3$ trivalent interaction vertices, and $v_4$ quadrivalent interaction vertices. Then
+\begin{equation}
+\label{eq:tree-identity-semistrict-chapter}
+v_3+2v_4=n-2.
+\end{equation}
+In particular, only finitely many interaction trees occur at fixed~$n$.
+\end{proposition}
+
+\begin{proof}
+Let $e$ be the number of internal edges. For a connected tree,
+\[
+e=v_3+v_4-1.
+\]
+Counting half-edges gives
+\[
+3v_3+4v_4=2e+n.
+\]
+Substituting the tree relation into the half-edge count yields
+\[
+3v_3+4v_4=2(v_3+v_4-1)+n,
+\]
+which simplifies to~\eqref{eq:tree-identity-semistrict-chapter}. Finiteness follows immediately because only finitely many integer pairs $(v_3,v_4)$ satisfy the relation for fixed~$n$.\qedhere
+\end{proof}
+
+\begin{remark}[Reduction of the gravitational problem]
+\label{rem:first-reduction-gravitational-problem}
+Theorem~\ref{thm:finite-degree-polynomial-pva-chapter} and
+Corollary~\ref{cor:semistrictity-classical-W3-chapter} identify the
+classical $W_3$ formal HT sector as a semistrict higher-spin
+deformation problem. Its tree-level graphs use only trivalent and
+quadrivalent vertices, with external valence constrained by the
+diophantine identity~\eqref{eq:tree-identity-semistrict-chapter}.
+\end{remark}
+
+\section{Central Hodge-shadow geometry}
+\label{sec:central-hodge-shadow-geometry}
+
+The scalar Hodge-shadow package proved earlier lives at S-level
+(Chapter~\ref{chap:concordance}). Its lift to a Maurer--Cartan element
+in a canonical central extension solves the central sector of the
+universal problem, not the noncentral semistrict sector.
+
+\begin{definition}[Hodge-shadow coefficient algebra]
+\label{def:hodge-shadow-coefficient-algebra-chapter}
+Define the completed commutative Hopf algebra
+\[
+\mathcal H_{\lambda}:=\widehat{\Sym}\!\Big(\bigoplus_{g\ge 1}\Bbbk\,\sigma_g\Big),
+\]
+where each $\sigma_g$ has cohomological degree~$0$ and Hodge weight
+\[
+\wt(\sigma_g):=2g.
+\]
+The coproduct is determined by primitivity:
+\[
+\Delta(\sigma_g)=\sigma_g\otimes 1 + 1\otimes \sigma_g.
+\]
+There is a realization morphism
+\[
+\rho:\mathcal H_{\lambda}\longrightarrow \prod_{g\ge 1} H^{2g}(\mathcal M_g,\mathbb Q),
+\qquad
+\rho(\sigma_g)=\lambda_g.
+\]
+This is the completed polynomial algebra on the Hodge-shadow
+coefficients only. It does not assert that the full tautological ring is
+freely generated by the classes \(\lambda_g\), and it does not include
+the noncentral \(W_3\) contact or sewing sectors.
+\end{definition}
+
+\begin{definition}[Central Hodge-shadow extension; \ClaimStatusDefinitional]
+\label{def:central-hodge-shadow-extension-chapter}
+Let $L$ be a complete $L_\infty$-algebra with brackets $\ell_n$. Define
+its one-dimensional central extension by
+\[
+\widetilde L:=L\oplus \Bbbk\varepsilon,
+\qquad
+|\varepsilon|=1,
+\]
+where \(\widetilde\ell_1(\varepsilon)=0\),
+\(\widetilde\ell_n(x_1,\ldots,x_n)=\ell_n(x_1,\ldots,x_n)\) for
+\(x_i\in L\), and every higher bracket with at least one
+\(\varepsilon\)-input is zero.
+The associated modular extension is
+\[
+L^{\modu}(L):=\widetilde L\,\widehat{\otimes}\,\mathcal H_{\lambda},
+\]
+and its noncentral summand is
+\[
+L^{\nc}(L):=L\,\widehat{\otimes}\,\mathcal H_{\lambda}
+\subset L^{\modu}(L).
+\]
+Write
+\[
+\operatorname{ctr}:L^{\modu}(L)\to \mathcal H_{\lambda}
+\]
+for projection to the coefficient of~$\varepsilon$.
+\end{definition}
+
+\begin{proposition}[Canonical central Hodge-shadow lift \ClaimStatusProvedHere]
+\label{prop:canonical-central-hodge-shadow-lift-chapter}
+For every complete $L_\infty$-algebra $L$ and every scalar
+$\kappa\in\Bbbk$, the element
+\[
+\Theta^{\sh}_{\kappa}:=\kappa\,\varepsilon\otimes \sum_{g\ge 1}\sigma_g
+\in L^{\modu}(L)^1
+\]
+is a Maurer--Cartan element. It is the unique Maurer--Cartan element in
+the central summand
+\(\Bbbk\varepsilon\widehat\otimes\mathcal H_\lambda\) whose central
+trace equals
+\[
+\operatorname{ctr}(\Theta^{\sh}_{\kappa})=\kappa\sum_{g\ge 1}\sigma_g.
+\]
+\end{proposition}
+
+\begin{proof}
+Because $\varepsilon$ is closed and all brackets with an
+$\varepsilon$-input vanish,
+\[
+\widetilde\ell_1(\Theta^{\sh}_{\kappa})=0,
+\qquad
+\widetilde\ell_n(\Theta^{\sh}_{\kappa},\ldots,\Theta^{\sh}_{\kappa})=0
+\quad(n\ge2),
+\]
+so the Maurer--Cartan equation holds identically.
+
+Now let $\Theta$ be a Maurer--Cartan element in
+\(\Bbbk\varepsilon\widehat\otimes\mathcal H_\lambda\) with the same
+central trace. Then
+\[
+\Theta=\varepsilon\otimes h
+\]
+for some $h\in \mathcal H_{\lambda}$. The trace condition forces
+\[
+h=\kappa\sum_{g\ge 1}\sigma_g,
+\]
+and therefore $\Theta=\Theta^{\sh}_{\kappa}$. The infinite sum converges in the Hodge-weight completion because $\wt(\sigma_g)=2g\to\infty$.\qedhere
+\end{proof}
+
+\begin{proposition}[Clutching additivity and duality symmetry \ClaimStatusProvedHere]
+\label{prop:clutching-duality-shadow-lift-chapter}
+The canonical central Hodge-shadow lift satisfies the following functorial properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item Under the Hopf coproduct on $\mathcal H_{\lambda}$,
+ \[
+ \Delta\bigl(\Theta^{\sh}_{\kappa}\bigr)
+ =\Theta^{\sh}_{\kappa}\otimes 1 + 1\otimes \Theta^{\sh}_{\kappa}.
+ \]
+ \item If an involution $\mathbb D$ acts by $\mathbb D(\varepsilon)=-\varepsilon$ and the scalar shadow satisfies $\kappa(A^!)=-\kappa(A)$ \textup{(}this holds for affine Kac--Moody and free-field families, but not in general; for Virasoro, $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$, as recorded in Chapter~\ref{chap:concordance}\textup{)}, then
+ \[
+ \mathbb D\bigl(\Theta_A^{\sh}\bigr)=\Theta_{A^!}^{\sh}.
+ \]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part \textup{(i)} follows from the primitivity of the generators $\sigma_g$:
+\[
+\Delta\Big(\sum_{g\ge1}\sigma_g\Big)
+=
+\sum_{g\ge1}(\sigma_g\otimes 1+1\otimes\sigma_g)
+=
+\Big(\sum_{g\ge1}\sigma_g\Big)\otimes 1 + 1\otimes\Big(\sum_{g\ge1}\sigma_g\Big).
+\]
+Multiplying by the central factor $\kappa\varepsilon$ gives the claim.
+
+For part \textup{(ii)},
+\[
+\mathbb D\bigl(\Theta_A^{\sh}\bigr)
+=
+\kappa(A)\,\mathbb D(\varepsilon)\otimes\sum_{g\ge1}\sigma_g
+=
+-\kappa(A)\,\varepsilon\otimes\sum_{g\ge1}\sigma_g
+=
+\kappa(A^!)\,\varepsilon\otimes\sum_{g\ge1}\sigma_g
+=
+\Theta_{A^!}^{\sh}.
+\]
+This is exactly the stated symmetry.\qedhere
+\end{proof}
+
+\begin{theorem}[Fiber decomposition over the shadow base point \ClaimStatusProvedHere]
+\label{thm:fiber-decomposition-shadow-base-point-chapter}
+For any complete $L_\infty$-algebra $L$ and scalar $\kappa$, translation
+by the shadow base point induces a canonical bijection
+\[
+\MC\bigl(L^{\nc}(L)\bigr)
+\xrightarrow{\ \sim\ }
+\Bigl\{\Theta\in\MC\bigl(L^{\modu}(L)\bigr)
+\,\Big|\,
+\operatorname{ctr}(\Theta)=\kappa\sum_{g\ge1}\sigma_g\Bigr\},
+\qquad
+\alpha\longmapsto \Theta^{\sh}_{\kappa}+\alpha.
+\]
+\end{theorem}
+
+\begin{proof}
+Every degree-one element of $L^{\modu}(L)$ with central trace
+$\kappa\sum_{g\ge1}\sigma_g$ has a unique decomposition
+\[
+\Theta=\Theta^{\sh}_{\kappa}+\alpha,
+\qquad
+\alpha\in L^{\nc}(L)^1.
+\]
+Because $\Theta^{\sh}_{\kappa}$ is closed and all mixed brackets with it
+vanish, the Maurer--Cartan equation for $\Theta$ reduces to
+\[
+\sum_{n\ge1}\frac1{n!}\ell_n(\alpha,\ldots,\alpha)=0,
+\]
+which is exactly the Maurer--Cartan equation in $L^{\nc}(L)$. This
+proves the claimed bijection.\qedhere
+\end{proof}
+
+\begin{corollary}[Shadow-centered reduction \ClaimStatusProvedHere]
+\label{cor:shadow-centered-reduction-chapter}
+Inside the central-extension model of
+Definition~\ref{def:central-hodge-shadow-extension-chapter}, the
+modular lift problem above a fixed scalar shadow reduces canonically to
+the noncentral sector. Every noncentral semistrict refinement of the
+classical $W_3$ formal problem is measured relative to the single
+distinguished point $\Theta^{\sh}_{W_3}$.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:fiber-decomposition-shadow-base-point-chapter} to
+the complete semistrict $L_\infty$ algebra $\HS(W_3^{\mathrm{cl}})$ and
+to the scalar $\kappa(W_3)$.\qedhere
+\end{proof}
+
+\section{From quadratic-cubic relations to cubic Maurer--Cartan theory}
+\label{sec:quadratic-cubic-to-cubic-MC}
+
+The $W_3$ deformation problem is an MC equation in a specified
+convolution algebra. On the finite quadratic-cubic presentation used
+below, the dual cooperadic datum is $3$-truncated; hence the associated
+convolution $L_\infty$-algebra has $\ell_n = 0$ for $n \ge 4$. The MC
+equation is cubic in this presentation. This is the algebraic analogue
+of the semistrict HT envelope, not an assertion that every shadow
+projection of $\Theta_{W_3}$ terminates at degree~$3$.
+
+\begin{definition}[Truncated cooperad]
+\label{def:truncated-cooperad-chapter}
+Let $C$ be a coaugmented conilpotent dg cooperad, and let $\bar C$ denote the coaugmentation coideal. For each $n\ge 2$, write
+\[
+\bar\Delta_n:\bar C\longrightarrow \bar C^{\otimes n}
+\]
+for the reduced $n$-ary decomposition map. We say that $C$ is \emph{$N$-truncated} if
+\[
+\bar\Delta_n=0
+\qquad
+(n>N).
+\]
+\end{definition}
+
+\begin{theorem}[Finite-degree convolution theorem \ClaimStatusProvedHere]
+\label{thm:finite-degree-convolution-chapter}
+Let $C$ be an $N$-truncated conilpotent dg cooperad and $P$ a dg operad. Then the convolution $L_\infty$-algebra
+\[
+\mathfrak{Conv}(C,P):=\Hom_{\mathbb S}(\bar C,P)
+\]
+satisfies
+\[
+\ell_n=0
+\qquad
+(n>N).
+\]
+Equivalently, its Maurer--Cartan equation truncates at degree~$N$.
+\end{theorem}
+
+\begin{proof}
+The standard convolution construction defines the $n$-ary bracket by composing the $n$-ary reduced decomposition of $C$ with $n$ maps into~$P$, followed by operadic composition in~$P$. Up to the standard Koszul signs,
+\[
+\ell_n(f_1,\dots,f_n)
+=
+\gamma_P\circ(f_1\otimes\cdots\otimes f_n)\circ\bar\Delta_n.
+\]
+If $C$ is $N$-truncated, then $\bar\Delta_n=0$ for all $n>N$. Hence $\ell_n=0$ for all $n>N$. The Maurer--Cartan equation therefore contains only terms of degree at most~$N$.\qedhere
+\end{proof}
+
+\begin{definition}[Quadratic-cubic chiral datum]
+\label{def:quadratic-cubic-chiral-datum-chapter}
+Let
+\[
+A=\mathrm{Free}_{\mathrm{ch}}(V)/(R_2\oplus R_3)
+\]
+be a finite-type chiral algebra generated by a finite-dimensional graded space~$V$, with quadratic relation space $R_2\subset V^{\otimes 2}$ and cubic relation space $R_3\subset V^{\otimes 3}$. Define its \emph{quadratic-cubic dual cooperadic datum}
+\[
+A^{\vee}_{\qc}
+\]
+to be the cofree conilpotent cooperad on $sV$ equipped with a codifferential
+\[
+d=d_2+d_3
+\]
+whose binary and ternary Taylor coefficients are dual to the inclusions of $R_2$ and~$R_3$, and whose higher Taylor coefficients vanish.
+\end{definition}
+
+\begin{definition}[Truncated Maurer--Cartan set]
+\label{def:truncated-MC-set-chapter}
+If $L$ is an $L_\infty$-algebra with $\ell_n=0$ for $n>N$, define
+\[
+\MC_{\le N}(L)
+:=
+\Bigl\{\alpha\in L^1\;\Big|\; \sum_{n=1}^{N}\frac{1}{n!}\ell_n(\alpha,\dots,\alpha)=0\Bigr\}.
+\]
+\end{definition}
+
+\begin{theorem}[Quadratic-cubic twisting theorem \ClaimStatusProvedHere]
+\label{thm:quadratic-cubic-twisting-theorem-chapter}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=1\to 2,
+\mathrm{hypothesis\ package}=
+\mathrm{finite\text{-}type\ quadratic\text{-}cubic\ chiral\ algebra};
+A=\mathrm{Free}_{\mathrm{ch}}(V)/(R_2\oplus R_3);
+B\mathrm{\ complete\ dg\ chiral})$\textup{]}
+Let $A=\mathrm{Free}_{\mathrm{ch}}(V)/(R_2\oplus R_3)$ be a finite-type quadratic-cubic chiral algebra, and let $B$ be a complete dg chiral algebra. Then there is a natural bijection
+\[
+\Hom_{\mathrm{ch}}(A,B)
+\cong
+\MC_{\le 3}\!\bigl(\Hom_{\mathbb S}(A^{\vee}_{\qc},\End_B)\bigr).
+\]
+Equivalently, maps from $A$ into $B$ are controlled by the cubic Maurer--Cartan equation
+\[
+\partial\alpha+\frac12\ell_2(\alpha,\alpha)+\frac16\ell_3(\alpha,\alpha,\alpha)=0.
+\]
+\end{theorem}
+
+\begin{proof}
+A chiral algebra map $A\to B$ is the same as a map
+\[
+\phi:\mathrm{Free}_{\mathrm{ch}}(V)\to B
+\]
+that vanishes on $R_2$ and~$R_3$. By freeness, such a map is determined by a linear map
+\[
+f:V\to B.
+\]
+Via suspension and the standard free/cofree adjunction, $f$ corresponds to a degree-one element
+\[
+\alpha_f\in \Hom_{\mathbb S}(A^{\vee}_{\qc},\End_B).
+\]
+The binary component of the codifferential on $A^{\vee}_{\qc}$ records the quadratic relation space, so the quadratic part of the Maurer--Cartan expression for $\alpha_f$ vanishes exactly when $\phi(R_2)=0$. Likewise, the ternary component records the cubic relation space, so the cubic part vanishes exactly when $\phi(R_3)=0$.
+
+By construction, $A^{\vee}_{\qc}$ has no higher Taylor coefficients. Hence it is $3$-truncated, and Theorem~\ref{thm:finite-degree-convolution-chapter} implies that the convolution algebra has no brackets $\ell_n$ for $n\ge 4$. Therefore the full Maurer--Cartan equation is precisely the cubic equation displayed above. Solving it is equivalent to requiring that the free map $\phi$ kill both relation spaces $R_2$ and $R_3$, which is equivalent to the factorization of $\phi$ through the quotient $A$. This establishes the desired bijection.\qedhere
+\end{proof}
+
+\begin{remark}[The first nonquadratic step]
+\label{rem:first-nonquadratic-step}
+The usual quadratic Maurer--Cartan correspondence is the zeroth approximation. Theorem~\ref{thm:quadratic-cubic-twisting-theorem-chapter} is the first nonlinear upgrade needed for $W$-algebras: the Maurer--Cartan problem is still finite, but cubic rather than quadratic, the algebraic expression of semistrictity.
+\end{remark}
+
+\section{The weighted modular semistrict envelope of \texorpdfstring{$W_3$}{W3}}
+\label{sec:weighted-modular-semistrict-envelope}
+
+The preceding ingredients assemble the central-shadow-fixed semistrict model
+of the $W_3$ modular problem. The shadow obstruction
+tower of Part~\ref{part:bar-complex} gives the ambient framework:
+$\Theta_{W_3}^{\le r}$
+is the projection of the bar-intrinsic MC element to degree~$\le r$,
+and each level is a finite graph sum with obstruction class
+$o_{r+1}(W_3)$ in the cyclic deformation complex. For $W_3$,
+semistrictity of the HT envelope forces $\ell_n = 0$ for $n \ge 4$ in
+the local operation algebra. The shadow tower may still have higher
+degree projections; the recursion below is only the weight-by-weight MC
+equation in the semistrict envelope tensored with the Hodge-shadow
+coefficient ring.
+
+\begin{definition}[Weighted modular semistrict envelope of $W_3$]
+\label{def:weighted-modular-semistrict-envelope-chapter}
+Define
+\[
+L_{W_3}^{\modu}
+:=
+\bigl(\HS(W_3^{\mathrm{cl}})\oplus \Bbbk\varepsilon\bigr)\,\widehat{\otimes}\,\mathcal H_{\lambda}.
+\]
+Assign weights by
+\[
+\wt(\partial^mT)=m+2,
+\qquad
+\wt(\partial^mW)=m+3,
+\qquad
+\wt(\sigma_g)=2g,
+\qquad
+\wt(\varepsilon)=0,
+\]
+and extend additively to monomials. Let $F^NL_{W_3}^{\modu}$ be the closed span of all monomials of total weight at least~$N$. The distinguished central shadow point is
+\[
+\Theta_{W_3}^{\sh}:=\kappa(W_3)\,\varepsilon\otimes\sum_{g\ge1}\sigma_g,
+\qquad
+\kappa(W_3)=c(H_3-1)=\frac{5c}{6}.
+\]
+\end{definition}
+
+\begin{proposition}[Admissibility and finite-dimensional weight slices \ClaimStatusProvedHere]
+\label{prop:admissibility-finite-slices-chapter}
+The filtration $F^{\bullet}L_{W_3}^{\modu}$ is complete, separated, and admissible:
+\[
+\ell_1(F^N)\subseteq F^N,
+\qquad
+\ell_2(F^i,F^j)\subseteq F^{i+j},
+\qquad
+\ell_3(F^i,F^j,F^k)\subseteq F^{i+j+k}.
+\]
+Each quotient
+\[
+F^N L_{W_3}^{\modu}\big/ F^{N+1}L_{W_3}^{\modu}
+\]
+is finite-dimensional.
+\end{proposition}
+
+\begin{proof}
+Completeness and separatedness are built into the weight-adic completion. The differential $\ell_1$ is induced by the linearized BV differential and preserves total weight. The operations $\ell_2$ and $\ell_3$ are built from multiplication, derivatives, and the explicit polynomial coefficients appearing in the $W_3$ brackets; these operations can only add weights, never decrease them. Hence the stated filtration inclusions hold.
+
+For finite-dimensionality, first note that there are only finitely many jet monomials in $T$ and~$W$ of a fixed total weight, because such a monomial is determined by a partition of an integer into parts of the form $m+2$ and $m+3$. Likewise, there are only finitely many monomials in the Hodge-shadow variables $\sigma_g$ of any given total Hodge weight because $\wt(\sigma_g)=2g$ and integer partitions are finite in number. Combining the two observations yields finite-dimensionality of each weight slice.\qedhere
+\end{proof}
+
+\begin{theorem}[Cubic weight recursion around the shadow base point \ClaimStatusProvedHere]
+\label{thm:cubic-weight-recursion-chapter}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=2\to 3,
+\mathrm{hypothesis\ package}=
+\mathrm{semistrict\ }L_{W_3}^{\modu};
+\mathrm{Hodge\text{-}weight\ admissible\ filtration};
+\mathrm{finite\text{-}dimensional\ slices})$\textup{]}
+Write a putative modular lift in the form
+\[
+\Theta
+=
+\Theta_{W_3}^{\sh}+\alpha,
+\qquad
+\alpha=\sum_{N\ge1}\alpha_N,
+\qquad
+\alpha_N\in F^N/F^{N+1}.
+\]
+Then $\Theta\in \MC(L_{W_3}^{\modu})$ if and only if, for every $N\ge1$,
+\begin{equation}
+\label{eq:cubic-weight-recursion-chapter}
+\ell_1(\alpha_N)
+=
+-\frac12\sum_{i+j=N}\pi_N\ell_2(\alpha_i,\alpha_j)
+-\frac16\sum_{i+j+k=N}\pi_N\ell_3(\alpha_i,\alpha_j,\alpha_k),
+\end{equation}
+where $\pi_N:F^N\to F^N/F^{N+1}$ is the quotient map. In particular, each stage of the modular lift problem is a finite linear equation in the unknown coefficient~$\alpha_N$.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:canonical-central-hodge-shadow-lift-chapter}, the base point $\Theta_{W_3}^{\sh}$ is closed and central. By Corollary~\ref{cor:semistrictity-classical-W3-chapter}, the only nonzero brackets in the noncentral sector are $\ell_1$, $\ell_2$, and~$\ell_3$. Therefore the Maurer--Cartan equation for $\Theta$ is exactly
+\[
+\ell_1(\alpha)+\frac12\ell_2(\alpha,\alpha)+\frac16\ell_3(\alpha,\alpha,\alpha)=0.
+\]
+Expanding $\alpha=\sum_{N\ge1}\alpha_N$ and collecting the part of weight~$N$ yields~\eqref{eq:cubic-weight-recursion-chapter}, thanks to the admissibility of the filtration proved in Proposition~\ref{prop:admissibility-finite-slices-chapter}. Finiteness of each stage follows from finite-dimensionality of the quotient $F^N/F^{N+1}$.\qedhere
+\end{proof}
+
+\begin{corollary}[Cubic obstruction classes \ClaimStatusProvedHere]
+\label{cor:cubic-obstruction-classes-chapter}
+At weight $N$, the obstruction to solving~\eqref{eq:cubic-weight-recursion-chapter} lies in
+\[
+H^2\bigl(F^N/F^{N+1},\ell_1\bigr),
+\]
+and depends polynomially of degree at most three on the lower-weight coefficients $\alpha_1,\dots,\alpha_{N-1}$.
+\end{corollary}
+
+\begin{proof}
+The right-hand side of~\eqref{eq:cubic-weight-recursion-chapter} is $\ell_1$-closed by the semistrict $L_\infty$ identities. Hence it defines a cohomology class in $H^2(F^N/F^{N+1},\ell_1)$, which vanishes exactly when the weight-$N$ coefficient can be chosen. Because only $\ell_2$ and $\ell_3$ occur, the dependence on lower-weight data is at most cubic.\qedhere
+\end{proof}
+
+\begin{proposition}[Stable-graph identity for semistrict modular theories \ClaimStatusProvedHere]
+\label{prop:stable-graph-identity-chapter}
+Let $\Gamma$ be a connected stable graph contributing to a modular semistrict cyclic $L_\infty$-theory. Suppose $\Gamma$ has total genus $g$, $n$ external legs, vertex genera $g(v)$, $v_3$ trivalent interaction vertices, and $v_4$ quadrivalent interaction vertices. Then
+\begin{equation}
+\label{eq:stable-graph-identity-chapter}
+v_3+2v_4+2\sum_{v\in V(\Gamma)}g(v)=n+2g-2.
+\end{equation}
+In particular,
+\[
+v_3+2v_4\le n+2g-2,
+\]
+so only finitely many stable graphs contribute for fixed $(g,n)$.
+\end{proposition}
+
+\begin{proof}
+Let $E(\Gamma)$ and $V(\Gamma)$ denote the edge and vertex sets, and let $k_v$ be the valence of a vertex~$v$. Since each internal edge contributes two half-edges,
+\[
+\sum_{v\in V(\Gamma)}k_v=2|E(\Gamma)|+n.
+\]
+Hence
+\[
+\sum_{v\in V(\Gamma)}(k_v-2)
+=n+2\bigl(|E(\Gamma)|-|V(\Gamma)|+1\bigr)-2.
+\]
+Now
+\[
+b_1(\Gamma)=|E(\Gamma)|-|V(\Gamma)|+1,
+\qquad
+g=b_1(\Gamma)+\sum_{v\in V(\Gamma)}g(v),
+\]
+so
+\[
+\sum_{v\in V(\Gamma)}(k_v-2)
+=
+ n+2g-2-2\sum_{v\in V(\Gamma)}g(v).
+\]
+If every interaction vertex has valence $3$ or $4$, then the left-hand side is $v_3+2v_4$. This gives~\eqref{eq:stable-graph-identity-chapter}, and finiteness follows immediately.\qedhere
+\end{proof}
+
+\begin{definition}[Completed boundary model; \ClaimStatusDefinitional]
+\label{def:completed-boundary-model-chapter}
+Let $L$ be a positively weighted complete semistrict $L_\infty$-algebra whose weight slices are finite-dimensional. Define its \emph{completed boundary model} by
+\[
+\Bdy(L):=\widehat{\CE}^{\bullet}(\tau_{>0}L)
+:=
+\prod_{m\ge 0}\Sym^m\!\bigl((\tau_{>0}L[1])^{\vee}\bigr),
+\]
+with continuous differential
+\[
+d_{\CE}=d_1+d_2+d_3
+\]
+dual to the coderivation determined by $\ell_1$, $\ell_2$, and~$\ell_3$.
+This is a Chevalley--Eilenberg model attached to the positive-weight
+part of the formal bulk envelope. It is not, by definition, the physical
+boundary chiral algebra, and its Hochschild centre is not identified
+with the classical $W_3$ PVA without an additional open/closed
+comparison map.
+\end{definition}
+
+\begin{proposition}[Well-definedness of the completed boundary model \ClaimStatusProvedHere]
+\label{prop:well-definedness-completed-boundary-model-chapter}
+If $L$ is as in Definition~\ref{def:completed-boundary-model-chapter}, then $\Bdy(L)$ is a well-defined complete dg algebra. In particular,
+\[
+\Bdy(W_3):=\Bdy\bigl(\HS(W_3^{\mathrm{cl}})\bigr)
+\]
+is well-defined.
+\end{proposition}
+
+\begin{proof}
+The positive-weight truncation $\tau_{>0}L$ has finite-dimensional weight slices, so its graded dual is defined weightwise and the completed symmetric algebra above makes sense. The maps dual to $\ell_1$, $\ell_2$, and~$\ell_3$ are continuous because these brackets preserve positive weight and raise filtration as in Proposition~\ref{prop:admissibility-finite-slices-chapter}. Their sum therefore defines a continuous derivation $d_{\CE}$ of the completed symmetric algebra.
+
+The square $d_{\CE}^2$ is dual to the square of the coderivation on the completed symmetric coalgebra $\widehat{S}^c(\tau_{>0}L[1])$ induced by the brackets $\ell_1$, $\ell_2$, and~$\ell_3$. Because these brackets satisfy the semistrict $L_\infty$ identities, that coderivation squares to zero. Therefore $d_{\CE}^2=0$, and $\Bdy(L)$ is a complete dg algebra.\qedhere
+\end{proof}
+
+\begin{definition}[Semistrict modular higher-spin package]
+\label{def:semistrict-modular-higher-spin-package-chapter}
+A \emph{semistrict modular higher-spin package} consists of a quadruple
+\[
+\mathfrak P=(V,L,\Theta^{\sh},\Bdy(L))
+\]
+with the following properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item $V$ is a freely generated Poisson vertex algebra of finite nonlinear generator-degree.
+ \item $L=\HS(V)$ is the completed cyclic bulk envelope attached to~$V$.
+ \item $\Theta^{\sh}\in \MC\bigl((L\oplus\Bbbk\varepsilon)\widehat{\otimes}\mathcal H_{\lambda}\bigr)$ is the canonical central Hodge-shadow base point.
+ \item $L$ is positively weighted and complete, with finite-dimensional slices, so that the completed boundary model $\Bdy(L)$ is defined.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Classical $W_3$ semistrict modular higher-spin package \ClaimStatusProvedHere]
+\label{thm:main-semistrict-modular-higher-spin-package-chapter}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=2\to 5,
+\mathrm{hypothesis\ package}=\mathrm{classical\ }W_3\mathrm{\ PVA};
+\mathrm{KZ}\mathrm{\text{-}sigma\text{-}model\ formal\ BV};
+\mathrm{Hodge\text{-}shadow\ central\ extension};
+\mathrm{quadratic\ }\lambda\mathrm{\text{-}bracket\ nonlinearity})$\textup{]}
+The package is the formal envelope of the classical $W_3$ HT moduli
+problem with a Hodge-shadow central base point. It is not a quantum
+$\cW_3$ modular Koszul datum: passage to the quantum sector requires
+the Yamada presentation, the KZ analytic SDR, and the open/closed
+comparison map of the derived boundary-duality conjecture.
+The classical $W_3$ Poisson vertex algebra canonically determines a semistrict modular higher-spin package
+\[
+\mathfrak P_{W_3}
+=
+\bigl(W_3^{\mathrm{cl}},\HS(W_3^{\mathrm{cl}}),\Theta^{\sh}_{W_3},\Bdy(W_3)\bigr)
+\]
+with the following properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item The shadow base point
+ \[
+ \Theta^{\sh}_{W_3}=\frac{5c}{6}\,\varepsilon\otimes\sum_{g\ge1}\sigma_g
+ \]
+ is a canonical Maurer--Cartan element.
+ \item The bulk envelope is cyclic and semistrict:
+ \[
+ \ell_n=0 \qquad (n\ge4).
+ \]
+ \item Translation by $\Theta^{\sh}_{W_3}$ identifies the Maurer--Cartan fiber of fixed central shadow with the Maurer--Cartan set of the noncentral sector.
+ \item Every modular lift of $\Theta^{\sh}_{W_3}$ is governed by the cubic weight recursion of Theorem~\ref{thm:cubic-weight-recursion-chapter}; each obstruction is finite-dimensional and cubic in lower-weight data.
+ \item Tree-level and higher-genus graph expansions are finite at fixed external data, controlled by the identities
+ \[
+ v_3+2v_4=n-2,
+ \qquad
+ v_3+2v_4+2\sum_v g(v)=n+2g-2.
+ \]
+ \item The completed boundary model $\Bdy(W_3)$ is a well-defined complete dg algebra.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~\textup{(i)} is Proposition~\ref{prop:canonical-central-hodge-shadow-lift-chapter}. Part~\textup{(ii)} is Corollary~\ref{cor:semistrictity-classical-W3-chapter}. Part~\textup{(iii)} is Theorem~\ref{thm:fiber-decomposition-shadow-base-point-chapter}. Part~\textup{(iv)} follows from Proposition~\ref{prop:admissibility-finite-slices-chapter} and Theorem~\ref{thm:cubic-weight-recursion-chapter}. Part~\textup{(v)} is Proposition~\ref{prop:tree-identity-semistrict-chapter} together with Proposition~\ref{prop:stable-graph-identity-chapter}. Part~\textup{(vi)} is Proposition~\ref{prop:well-definedness-completed-boundary-model-chapter}.\qedhere
+\end{proof}
+
+\begin{corollary}[Finite semistrict reduction of the classical $W_3$ frontier \ClaimStatusProvedHere]
+\label{cor:platonic-reduction-W3-frontier}
+The central-shadow-fixed modular $W_3$ formal problem is reduced from an
+a priori unbounded $\infty$-coherence problem to the following finite
+package:
+\begin{enumerate}[label=\textup{(\alph*)}]
+ \item one canonical central Maurer--Cartan base point,
+ \item one semistrict cyclic bulk envelope,
+ \item one cubic filtered obstruction theory,
+ \item one finite family of interaction graphs at each fixed $(g,n)$,
+ \item one canonical completed boundary model.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+This is exactly the content of Theorem~\ref{thm:main-semistrict-modular-higher-spin-package-chapter}.\qedhere
+\end{proof}
+
+\section{Boundary duality, line operators, and quantization}
+\label{sec:boundary-duality-line-operators}
+
+The semistrict package becomes gravitational only after an open/closed
+comparison is supplied. The objects in that comparison have different
+types: the physical boundary chiral algebra is an open-sector object,
+the chiral derived centre is the cochain-level closed-sector algebra, and
+\(\Bdy(W_3)\) is the completed CE model attached to the formal
+semistrict envelope.
+
+\begin{conjecture}[Boundary enhancement and centre map for the classical semistrict $W_3$ package \ClaimStatusConjectured]
+\label{conj:derived-boundary-duality-W3}
+\textup{[}Type signature:
+$(\mathrm{quadrant}=\mathrm{Open}\cap\mathrm{Cat},
+\mathrm{presentation}=\mathrm{factorisation},
+\mathrm{level}=2\to 3,
+\mathrm{hypothesis\ package}=
+\mathrm{Costello\text{--}Dimofte\text{--}Gaiotto\ HT\ open/closed};
+\mathrm{Yamada\ generic\text{-}level\ finite\ presentation\ for\ quantum\ }\cW_3;
+\mathrm{KZ\ analytic\ SDR\ for\ classical\text{-}to\text{-}quantum\ passage};
+\mathrm{Penkava\text{--}Vanhaecke\ PVA\text{-}to\text{-}quantum\ bridge};
+\mathrm{Vol\ III\ }(\Sigma_2,C)\text{-specialisation\ at\ }d=3,\ C\ \mathrm{the\ }W_3\ \mathrm{boundary\ curve})$\textup{]}
+Let $\Bdy(W_3)$ be the completed boundary model of
+Definition~\ref{def:completed-boundary-model-chapter}. There should
+exist a chiral enhancement \(\Bdy_{\mathrm{ch}}(W_3)\) and an
+open/closed morphism
+\[
+Z^{\mathrm{der}}_{\mathrm{ch}}\bigl(\Bdy_{\mathrm{ch}}(W_3)\bigr)
+\longrightarrow
+\operatorname{Obs}_{\mathrm{bulk}}\bigl(\HS(W_3^{\mathrm{cl}})\bigr)
+\]
+whose associated graded boundary OPE contains the classical
+$W_3$ PVA. The conjecture does not identify the derived centre with
+$W_3^{\mathrm{cl}}$; the derived centre is the closed-sector algebra
+acting on the boundary, while $W_3^{\mathrm{cl}}$ is the classical
+boundary PVA recovered from the OPE filtration. Quadratic PVA
+$\lambda$-bracket nonlinearity does not entail the all-loop quantum
+HT theory; the open/closed comparison map requires the named PBW and
+analytic-SDR endpoint hypotheses.
+\end{conjecture}
+
+\begin{remark}[Boundary open mathematical conditions]
+\label{rem:why-derived-boundary-duality-right}
+Boundary chiral algebras in holomorphic-topological theories appear
+in~\cite{CDG20}, and the boundary-chiral-algebra approach to twisted
+and celestial holography is developed in~\cite{Zeng23}. To turn
+Conjecture~\ref{conj:derived-boundary-duality-W3} into a theorem one
+must construct the chiral enhancement of \(\Bdy(W_3)\), identify the
+OPE filtration whose associated graded is \(W_3^{\mathrm{cl}}\), and
+prove that the open/closed map agrees with the chiral Hochschild
+centre of Chapter~\ref{chap:concordance}.
+\end{remark}
+
+\begin{conjecture}[Semistrict reconstruction theorem \ClaimStatusConjectured]
+\label{conj:semistrict-reconstruction-W3}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=2\to 4,
+\mathrm{hypothesis\ package}=\mathrm{Neumann\ }W_3\mathrm{\ boundary\ condition};
+\mathrm{open/closed\ comparison\ map\ of\ Conj.\ \ref{conj:derived-boundary-duality-W3}};
+\mathrm{Yamada\ finite\ presentation};\mathrm{KZ\ analytic\ SDR};
+\mathrm{tree\text{-}level\ scope:\ not\ all\text{-}loop\ HT};
+\mathrm{Vol\ III\ }(\Sigma_2,C)\text{-specialisation\ at\ }d=3)$\textup{]}
+Assume a Neumann $W_3$ boundary condition and an open/closed map as in
+Conjecture~\ref{conj:derived-boundary-duality-W3}. Then the tree-level
+boundary OPE coefficients are recovered by summing the trivalent and
+quadrivalent bulk trees of the semistrict package $\mathfrak P_{W_3}$.
+Equivalently, the semistrict HT envelope determines the tree-level
+boundary algebra on this boundary condition by a finite recursive graph
+expansion. Tree-level recovery is not an all-loop theorem; the
+all-loop quantum HT theory requires the Yamada finite presentation and
+the KZ analytic SDR named in
+Conjecture~\textup{\ref{conj:derived-boundary-duality-W3}}.
+\end{conjecture}
+
+\begin{remark}[Boundary and loop open mathematical conditions]
+\label{rem:research-blueprint-semistrict-W3}
+The remaining open mathematical conditions are concrete.
+\begin{enumerate}[label=\textup{(\roman*)}]
+ \item Compute an explicit minimal model of $\HS(W_3^{\mathrm{cl}})$ and identify its linearized cohomology with the deformation complex of principal $\mathfrak{sl}_3$-opers.
+ \item Construct the completed boundary model $\Bdy(W_3)$ and compare it to concrete boundary chiral algebra calculations.
+ \item Prove Conjecture~\ref{conj:semistrict-reconstruction-W3} by identifying boundary OPE coefficients with semistrict tree sums.
+ \item Extend the analysis from local operators to line operators and modules.
+ \item Classify one-loop anomalies and counterterms in the semistrict bulk.
+\end{enumerate}
+Every stage is attached to a precise object constructed in the semistrict
+$W_3$ bulk.
+\end{remark}
+
+\begin{conjecture}[Line operators and semistrict modules \ClaimStatusConjectured]
+\label{conj:line-operators-semistrict-modules}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Cat},\mathrm{factorisation},
+\mathrm{level}=4,
+\mathrm{hypothesis\ package}=\mathrm{Dimofte\text{--}Niu\text{--}Py\ wedge\ limit};
+\mathrm{quasi\text{-}linear\ regime\ scope};
+\mathrm{open\text{-}category\ trace\ +\ clutching\ recovers\ modular\ shadow,\ not\ closed\text{-}algebra\ modularity};
+\mathrm{Vol\ III\ }(\Sigma_2,C)\text{-specialisation\ for\ Drinfeld\text{-}double\ comparison})$\textup{]}
+The dg category of finite-energy line operators in the semistrict $W_3$
+bulk should be modeled by a meromorphic $A_\infty$-enhancement of the
+completed boundary model $\Bdy(W_3)$. In the quasi-linear regime this
+enhancement should recover the dg-shifted-Yangian structures
+of~\cite{DNP25} as a wedge limit. The wedge-limit reduction is a
+quasi-linear endpoint claim, not a finite-spin or quadratic-OPE
+identification with the full quantum group; the latter requires the
+Drinfeld-double bridge of the master concordance.
+\end{conjecture}
+
+\begin{problem}[One-loop quantization of the classical semistrict $W_3$ package]
+\label{prob:oneloop-quantization-semistrict-W3}
+Determine whether the local one-loop cocycle selected by the
+semistrict $W_3$ BV complex reproduces the expected quantum correction
+to the classical $W_3$ data. More concretely: compute the one-loop
+anomaly classes using the higher-operation formalism of~\cite{GKW24}
+and compare the result to the quantum shift predicted by the physics
+of~\cite{KhanZeng25}.
+\end{problem}
+
+\begin{remark}[Twisted and celestial comparison surfaces]
+\label{rem:companion-targets-twisted-celestial}
+The central Hodge-shadow lift is formal and applies to any complete
+$L_\infty$ algebra. The finite-degree theorem and the weighted cubic
+recursion require additional hypotheses: a polynomial PVA with bounded
+nonlinear generator-degree, a formal HT BV model, and finite-dimensional
+positive-weight slices. Twisted and celestial boundary-chiral-algebra
+sectors of~\cite{Zeng23} enter this framework only after these
+hypotheses are verified in the relevant sector.
+\end{remark}
+
+\begin{conjecture}[Finite-degree principle for principal $W_N$ \ClaimStatusConjectured]
+\label{conj:finite-degree-principle-WN-chapter}
+\textup{[}Type signature:
+$(\mathrm{Open}\cap\mathrm{Chain},\mathrm{chain\text{-}level},
+\mathrm{level}=2\to 3,
+\mathrm{hypothesis\ package}=\mathrm{classical\ principal\ }W_N\mathrm{\ PVA};
+\mathrm{HT\ Poisson\text{-}sigma\ formal\ envelope};
+\mathrm{nonlinear\ generator\text{-}degree\ }\le N-1;
+\mathrm{statement\ at\ HT\ envelope\ level:\ not\ at\ the\ modular\ shadow\ tower};
+\mathrm{Prochazka\text{--}Rapcak\ }\Walg_N\mathrm{\ closure\ for\ quantum\ promotion};
+\mathrm{Yamada\ finite\ presentation};
+\mathrm{KZ\ analytic\ SDR};
+\mathrm{Vol\ III\ }(\Sigma_{N-1},C)\text{-specialisation\ at\ }d=N)$\textup{]}
+For a classical principal $W_N$ Poisson vertex algebra whose HT
+Poisson-sigma presentation has nonlinear generator-degree at most
+$N-1$, the associated formal bulk deformation algebra is $N$-strict in
+the sense that
+\[
+\ell_n=0
+\qquad
+(n>N),
+\]
+and, when the positive-weight slices are finite-dimensional, the
+central-shadow-fixed modular lift problem is governed by a
+finite-dimensional weight recursion involving only the brackets
+$\ell_1,\dots,\ell_N$. The statement is at the HT envelope level;
+the modular shadow tower may carry higher-degree projections from
+contact and sewing strata, and identification with quantum $\Walg_N$
+data requires the named Prochazka--Rapcak / Yamada / KZ-SDR endpoint
+package.
+\end{conjecture}
+
+\begin{remark}[Higher-spin tower evidence]
+\label{rem:recent-external-evidence}
+The topological-string framework of~\cite{GZ26} embeds minimal-model
+holography and ties classical $W_\infty$ structures to higher-spin
+holography. This proves no theorem about the classical semistrict
+$W_3$ package,
+but it supports the expectation that this package is the first
+finite-valence term of a larger tower.
+\end{remark}
+
+\section{Finite semistrict package}
+\label{sec:epilogue-what-achieved}
+
+The preceding analysis establishes:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+ \item a canonical central Maurer--Cartan lift of the Hodge shadow;
+ \item a finite-degree theorem for polynomial Poisson vertex algebras;
+ \item identification of the classical $W_3$ bulk as a semistrict cyclic $L_\infty$-algebra;
+ \item reduction of the central-shadow-fixed modular $W_3$ formal problem to a filtered cubic recursion with finite-dimensional slices;
+ \item a single transportable package
+ \[
+ \mathfrak P_{W_3}=(W_3^{\mathrm{cl}},\HS(W_3^{\mathrm{cl}}),\Theta^{\sh}_{W_3},\Bdy(W_3)).
+ \]
+\end{enumerate}
+The full universal class $\Theta_{\mathcal A}$ is proved
+(Theorem~\ref{thm:mc2-bar-intrinsic}), while the physical boundary
+duality and one-loop quantization remain open. The central-shadow-fixed
+$W_3$ formal problem has been reduced from an unbounded coherence
+problem to a finite semistrict recursion with a canonical base point.

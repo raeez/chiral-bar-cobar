@@ -1,0 +1,1371 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{array}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\Ainf}{A_{\infty}}
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Ass}{\mathrm{Ass}}
+\newcommand{\Com}{\mathrm{Com}}
+\newcommand{\Lie}{\mathrm{Lie}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
+\newcommand{\gEone}{\mathfrak{g}^{E_{1}}_{\cA}}
+\newcommand{\Barch}{\overline{B}^{\mathrm{ch}}}
+\newcommand{\BarchFG}{\overline{B}^{\mathrm{FG}}}
+\newcommand{\Barord}{\overline{B}^{\mathrm{ord}}}
+\newcommand{\BarSig}{\overline{B}^{\Sigma}}
+\newcommand{\Cobar}{\Omega^{\mathrm{ch}}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\KM}{\mathrm{KM}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\FM}{\overline{\mathrm{FM}}}
+\newcommand{\av}{\operatorname{av}}
+\newcommand{\GRT}{\mathrm{GRT}}
+\newcommand{\id}{\mathrm{id}}
+
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\ch}{ch}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[$E_{1}$ Primacy in Modular Koszul Duality]
+{$E_{1}$ Primacy in Modular Koszul Duality:\\
+The Ordered Bar Complex, the Averaging Map,\\
+and Five Invariants Surviving a $\Sigma_{n}$-Quotient}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University,
+ Cambridge, MA 02138, USA}
+\email{rlorgat@math.harvard.edu}
+
+\date{}
+
+\begin{abstract}
+For a cyclic chiral algebra $\cA$, the ordered bar complex
+$\Barord(\cA) = T^{c}(s^{-1}\bar\cA)$ with deconcatenation coproduct
+is the level-$2$ chain object before averaging. The symmetric bar
+$\BarSig(\cA)$, which underlies the classical Francis--Gaitsgory
+factorization picture, is its $R$-twisted coinvariant image when
+descent exists; in the pole-free locus this is the ordinary
+$\Sigma_n$-coinvariant image under an admissible averaging
+comparison $\av \colon \gEone \to \gmod$. The scalar modular
+characteristic $\kappa(\cA)$
+is recovered at degree $2$ from a meromorphic $r$-matrix $r(z)$ that
+lives natively on the ordered side: for abelian families the average
+is $\kappa$, while for non-abelian affine Kac--Moody it is the
+double-pole term $\kappa_{\mathrm{dp}}$, and the full $\kappa$
+adds the Sugawara shift $\dim(\fg)/2$. The Drinfeld associator has
+a degree-$3$ coinvariant shadow, while the full associator remains
+ordered data. The five foundational theorems A--D and H of modular
+Koszul duality have ordered formulations on the Koszul/descent
+locus; their $\Sigma_n$-shadows recover the symmetric theorems
+where the descent comparison is available. Information lost under
+$\av$ includes the full braiding, associator-dependent choices of
+splitting, and cross-degree terms invisible to scalar invariants.
+Three distinct coalgebra structures feature and must not be
+conflated: the Harrison coLie structure with $n!/n$ terms at degree
+$n$, the coshuffle structure with $2^{n}$ terms, and the
+deconcatenation structure with $n+1$ terms. Only deconcatenation
+equips the ordered bar. There are three tiers of $r$-matrix input:
+the pole-free tier with Koszul-signed $R=\tau$, the vertex-algebra
+tier where $R$ is read from the local OPE, and the genuinely
+$E_1$ tier containing Yangians and Etingof--Kazhdan quantum vertex
+algebras.
+
+The dimensional uplift from a $2$-real-dimensional chiral algebra
+on a curve to a $3$-real-dimensional holomorphic--topological
+theory is governed by the chiral Deligne--Tamarkin theorem
+(Theorem~\ref{thm:swiss-cheese-chiral-DT-N3} below): the universal
+local Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ is terminal in the
+category of two-coloured $\SCchtop$-pairs over $\cA$, the open
+colour $\cA$ is acted on by the closed colour through the chiral
+Swiss-cheese mixed operations, and the closed sector is not acted
+on by the open sector. The bar coalgebra $\Barord(\cA)$ is a
+chain-level computational model that resolves $\cA$ for the purpose
+of computing $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ via
+$\mathrm{Hom}_{\mathrm{ch}}(\Barord(\cA),\, \cA)$; it does not by
+itself supply the closed colour or the dimensional uplift.
+\end{abstract}
+
+\subjclass[2020]{17B69, 18M70, 18M85, 81T40}
+
+\keywords{Ordered bar complex, $E_{1}$-algebras, chiral algebras,
+Koszul duality, $R$-matrix, Drinfeld associator,
+modular operad, averaging, Grothendieck--Teichm\"uller group}
+
+\maketitle
+
+% ================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+The bar complex attached to an augmented associative algebra
+admits two very different presentations. In the first, one takes
+the reduced tensor coalgebra $T^{c}(s^{-1}\bar A)$ with its
+deconcatenation coproduct; the bar differential is built from the
+associative product in consecutive slots. In the second, one passes
+to $\Sigma_{n}$-coinvariants and works with the symmetric bar
+complex, which is the natural home for commutative or
+$E_{\infty}$-algebras and for the Francis--Gaitsgory chiral bar.
+The ordered bar complex is the level-$2$ chain object before
+averaging; the symmetric bar is obtained from it by descent and coinvariants. The
+averaging map is $R$-twisted when the spectral kernel is nontrivial
+and ordinary only in the pole-free locus. Under an admissible
+descent datum it gives a dg Lie comparison from the ordered
+convolution algebra to the symmetric one. The five foundational
+theorems of modular Koszul duality (Theorems A through D, together
+with the chiral Hochschild theorem H) have ordered versions on the
+Koszul/descent locus, and each symmetric theorem is the
+$\Sigma_{n}$-coinvariant shadow of its ordered counterpart. The
+information lost under $\av$ is geometric, arithmetic, and
+physical: the spectral $r$-matrix, the KZ connection, the
+Drinfeld associator, and the full braiding of tensor categories
+of modules all live on the ordered side.
+
+Three principles motivate the inversion. The first is operadic:
+Stasheff's associahedra $K_{n}$ (cf.~\cite{Stasheff63}) carry
+more information than the symmetric groups $\Sigma_{n}$, and the
+Getzler--Jones~\cite{GetzlerJones94} theory of $E_{n}$-operads
+makes $E_{1}$ the lowest rung of a ladder whose every step is
+non-commutative. The second is representation-theoretic: the
+classical $r$-matrix of an affine Kac--Moody algebra at level $k$
+is the content of the degree-$2$ genus-$0$ Maurer--Cartan element
+on the ordered side, and its $\Sigma_{2}$-average recovers the
+degree-$2$ scalar shadow: for Heisenberg this is $\kappa$, while
+for non-abelian affine Kac--Moody it is
+$\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^{\vee})$, with the full
+$\kappa$ obtained after adding the Sugawara shift $\dim(\fg)/2$.
+The third is operadic--holographic: the chiral Deligne--Tamarkin
+theorem (Theorem~\ref{thm:swiss-cheese-chiral-DT-N3} below)
+constructs the universal Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ as terminal in the
+category of two-coloured $\SCchtop$-pairs over $\cA$. The closed
+colour $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ acts on the open
+colour $\cA$ through the chiral Swiss-cheese mixed operations; the
+open colour does not act back on the closed colour. The bar
+coalgebra $\Barord(\cA)$ is a chain-level computational model used
+to compute and present this Swiss-cheese pair, not the source of
+the open--closed transition. The averaging map sends the ordered
+structure to its $\Sigma_n$-coinvariant image \emph{within} the
+open colour; the closed--open Swiss-cheese relation requires the
+two-coloured operad and is invisible to averaging on a single
+colour.
+
+The conventions are those of the monograph \cite{Lorgat26I},
+referred to below as Volume I. OPE-mode notation is used throughout;
+conformal
+weights are denoted $h$ and desuspended degrees $|s^{-1}v| = |v|-1$
+(the bar complex lowers degree). The grading is cohomological.
+
+\subsection{Notation and conventions}
+
+Let $k$ be a field of characteristic zero, $X$ a smooth algebraic
+curve over $k$, and $\cA$ an augmented cyclic chiral algebra on
+$X$ in the sense of Beilinson--Drinfeld. Write $\bar\cA$ for
+the augmentation ideal $\ker(\varepsilon \colon \cA \to k)$. All
+bar constructions are defined on $\bar\cA$, not on $\cA$ itself.
+Symmetric groups $\Sigma_{n}$ act on tensor powers in the
+standard way. Over characteristic zero, the finite group algebra
+$k[\Sigma_n]$ is semisimple, so invariants and coinvariants are
+exact and identified by the Reynolds idempotent. Coinvariants are
+denoted with a lower subscript, $(-)_{\Sigma_{n}}$. The ordered and symmetric
+Fulton--MacPherson compactifications are written
+$\FM_{n}^{\mathrm{ord}}(\CC)$ and $\FM_{n}(\CC)$ respectively;
+the former is the Ran-space blow-up along ordered collision
+diagonals.
+
+% ================================================================
+\section{Three coalgebra structures}
+\label{sec:three-coalgebras}
+
+A sum of tensor powers carries three distinct cooperadic
+structures. They differ as natural transformations and by their
+degree-$n$ coproduct term counts. Only deconcatenation equips the
+ordered bar complex.
+
+\begin{definition}[The three coalgebra structures on $T(V)$]
+\label{def:three-coalgebras}
+Let $V$ be a graded vector space and $T(V) = \bigoplus_{n\geq 0}
+V^{\otimes n}$ its tensor space. Three cooperad structures on
+$T(V)$ (or on the ordered/symmetric variants) arise naturally:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{Harrison coLie} (or co-Lie) cooperad
+ $\Lie^{c}$, whose degree-$n$ component has dimension $(n-1)!$ and
+ whose coproduct decomposes a Lie word into pairs of sub-Lie-words
+ using the Harrison differential.
+\item The \emph{coshuffle cooperad} $\Sym^{c}$, whose degree-$n$
+ coproduct produces $2^{n}$ summands by the shuffle formula
+ \[
+ \Delta_{\mathrm{sh}}(v_{1}\cdots v_{n})
+ = \sum_{I\sqcup J = \{1,\ldots,n\}}
+ \varepsilon(I,J)\,
+ (v_{I}) \otimes (v_{J}),
+ \]
+ with the sum running over all $2^{n}$ bipartitions and
+ $\varepsilon(I,J)$ the Koszul sign.
+\item The \emph{deconcatenation cooperad} $T^{c}$, whose degree-$n$
+ coproduct produces $n+1$ summands by splitting the word at a
+ single position:
+ \[
+ \Delta(v_{1}\cdots v_{n})
+ = \sum_{i=0}^{n}
+ (v_{1}\cdots v_{i}) \otimes (v_{i+1}\cdots v_{n}).
+ \]
+\end{enumerate}
+\end{definition}
+
+The three structures are not interconvertible without loss of
+information. At degree $3$ the Harrison differential sees
+$2$ terms, the coshuffle sees $8$, and deconcatenation sees $4$.
+Only the last is ordered and strictly associative at the
+coalgebra level.
+
+\begin{proposition}[Coshuffle is not deconcatenation]
+\label{prop:coshuffle-not-deconcat}
+Let $V$ be nonzero. The coshuffle coproduct on $\Sym(V)$ and the
+deconcatenation coproduct on $T^{c}(V)$ are distinct cooperadic
+structures: they have different degree-$n$ term counts
+($2^{n}$ vs.\ $n+1$), different symmetry properties
+(the coshuffle is cocommutative, deconcatenation is not), and
+different primitive subspaces.
+\end{proposition}
+
+\begin{proof}
+Cocommutativity of the coshuffle follows from the involution
+$I \leftrightarrow J$ on bipartitions. Deconcatenation does not
+admit such an involution: swapping $(v_{1}\cdots v_{i})$ with
+$(v_{i+1}\cdots v_{n})$ does not preserve the ordered word. The
+term counts are elementary.
+\end{proof}
+
+The three cooperads sit in a commutative square of natural
+transformations whose top arrow is the symmetrization and whose
+bottom arrow is the Harrison projection, but they are not
+canonically isomorphic. Conflating coshuffle with deconcatenation
+is a standard error in the chiral-algebra literature and produces
+spurious identifications between factorization coproducts and
+bar coproducts.
+
+\begin{remark}[Where each structure appears]
+\label{rem:where-three-appear}
+The Harrison coLie cooperad $\Lie^{c}$ underlies the chiral Lie
+bar complex used by Francis--Gaitsgory, where only the zeroth
+product of the OPE is visible. The coshuffle cooperad $\Sym^{c}$
+underlies the symmetric bar $\BarSig(\cA)$ on the Ran space,
+where factorization is implemented by the topological
+coproduct on unordered configuration space. The deconcatenation
+cooperad $T^{c}$ underlies the ordered bar $\Barord(\cA)$, where
+the coproduct splits a word along a single internal edge and
+remembers the ordering on the collision points. The averaging
+map $\av$ of Section~\ref{sec:av-map} descends from $T^{c}$ to
+$\Sym^{c}$ by external $\Sigma_{n}$-coinvariants; it does not
+factor through Harrison unless one further restricts to the
+Eulerian weight-$1$ summand.
+\end{remark}
+
+% ================================================================
+\section{The ordered bar complex \texorpdfstring{$\Barord(\cA)$}{Bord(A)}}
+\label{sec:ordered-bar}
+
+For a cyclic chiral algebra, the ordered bar complex is the
+deconcatenation coalgebra on the ordered configuration space.
+
+\begin{definition}[The ordered bar complex]
+\label{def:ordered-bar}
+Let $\cA$ be a strongly admissible augmented $E_{1}$-chiral
+algebra on $X$, with augmentation ideal $\bar\cA = \ker\varepsilon$.
+The \emph{ordered bar complex} is the graded vector space
+\begin{equation}
+\label{eq:ordered-bar-definition}
+\Barord(\cA)
+\;:=\;
+T^{c}\bigl(s^{-1}\bar\cA\bigr)
+\;=\;
+\bigoplus_{n \geq 0} \bigl(s^{-1}\bar\cA\bigr)^{\otimes n},
+\end{equation}
+equipped with the deconcatenation coproduct
+$\Delta([a_{1}|\cdots|a_{n}])
+= \sum_{i=0}^{n}
+ [a_{1}|\cdots|a_{i}] \otimes [a_{i+1}|\cdots|a_{n}]$
+and the bar differential
+$d_{\mathrm{bar}}$ obtained by extracting OPE collision residues
+at consecutive pairs of points in the ordered configuration
+space. The augmentation ideal $\bar\cA$ is essential here: using
+$\cA$ in place of $\bar\cA$ in \eqref{eq:ordered-bar-definition}
+would include the unit and break the construction.
+\end{definition}
+
+The desuspension $s^{-1}$ lowers the degree by one, so
+$|s^{-1}a| = |a|-1$. The bar differential lowers tensor degree by
+one; the coproduct is a chain map with respect to
+$d_{\mathrm{bar}}$ by associativity of the chiral product in
+consecutive slots. Both the differential and the coproduct are
+built from the \emph{ordered} collision pattern on
+$\FM_{n}^{\mathrm{ord}}(\CC)$; the form $\eta = d\log(z_{i}-z_{j})$
+is the universal Arnold propagator (weight one, not weight $h$).
+
+\begin{theorem}[Ordered bar differential squared]
+\label{thm:ordered-d-squared}
+The ordered bar differential satisfies $d_{\mathrm{bar}}^{2} = 0$.
+\end{theorem}
+
+\begin{proof}
+The argument is a codimension-two face pairing on
+$\FM_{n}^{\mathrm{ord}}(\CC)$ with the Arnold relation supplying
+the required cancellation between the two ways of contracting an
+adjacent pair of collisions. The full face-pairing argument is
+the ordered Fulton--MacPherson compactification calculation of
+\cite[Chapter~3]{Lorgat26I}.
+\end{proof}
+
+\begin{remark}[Three bar complexes, one map]
+\label{rem:three-bars}
+Let $\BarchFG(\cA)$ denote the Francis--Gaitsgory chiral Lie bar,
+which uses only the zeroth OPE product $a_{(0)}b$; let
+$\BarSig(\cA) = \Barch(\cA)$ denote the symmetric bar, which uses
+all OPE products and takes $\Sigma_{n}$-coinvariants (the bar
+complex of Volume I, Theorem A); and let $\Barord(\cA)$ denote
+the ordered bar of \eqref{eq:ordered-bar-definition}. There is a
+natural surjection
+\begin{equation}
+\label{eq:three-bars}
+\Barord(\cA) \twoheadrightarrow \BarSig(\cA),
+\qquad
+\mathrm{gr}\,\BarSig(\cA) \twoheadrightarrow \BarchFG(\cA),
+\end{equation}
+where the first arrow is $\Sigma_{n}$-coinvariant projection
+and the second is associated graded along the OPE filtration.
+These three complexes must not be conflated: the
+Francis--Gaitsgory complex sees only the Lie part, the symmetric
+bar sees the full symmetric OPE, and the ordered bar sees the
+braiding as well.
+\end{remark}
+
+\begin{example}[Heisenberg ordered bar]
+\label{ex:heisenberg-ordered-bar}
+Let $\cH_{k}$ be the Heisenberg chiral algebra at level $k$,
+generated by a single field $J$ of conformal weight $h=1$. The
+desuspended generator has degree $|s^{-1}J| = 0$. At degree $2$
+the ordered bar component is
+\[
+(s^{-1}\bar\cH_{k})^{\otimes 2}
+\cong k \cdot [J|J],
+\]
+a one-dimensional space. The bar differential extracts the
+collision residue of $J(z_{1})J(z_{2}) \sim k/(z_{1}-z_{2})^{2}$
+against the Arnold form $\eta = d\log(z_{1}-z_{2})$, producing
+a single pole $k/(z_{1}-z_{2})$.
+\end{example}
+
+\begin{remark}[Heisenberg flat and curved $R$-data]
+\label{rem:heisenberg-flat-curved-rdatum}
+The Heisenberg algebra $\cH_{k}$ has a flat presentation
+$r(z)=k/z$ and a curved presentation $R(z)=\exp(k\hbar/z)$.
+They are related by $R(z)=\exp(\hbar r(z))$, so $r(z)$ is the
+classical coefficient of $\log R$. Since $r(z)$ is central in the
+two tensor factors, the exponentiated form satisfies the quantum
+Yang--Baxter equation order by order in $\hbar$.
+\end{remark}
+
+% ================================================================
+\section{The averaging map \texorpdfstring{$\av$}{av}}
+\label{sec:av-map}
+
+The averaging comparison realises the symmetric bar as the
+$\Sigma_{n}$-coinvariant shadow of the ordered bar after a descent
+datum has been chosen. Its domain is the $E_{1}$ convolution dg Lie
+algebra, its codomain is the modular convolution dg Lie algebra of
+Volume I, and its kernel records the information lost in the passage
+from the open to the closed sector.
+
+\begin{definition}[The $E_{1}$ modular convolution dg Lie algebra]
+\label{def:e1-convolution}
+Let $\cA$ be a cyclic $E_{1}$-chiral algebra and let $\cM_{\Ass}$
+denote the ribbon modular operad with $\cM_{\Ass}(g,n)
+= C_{*}(\overline{\cM}_{g,n}^{\,\mathrm{rib}})$, the chain complex
+of the moduli of stable Riemann surfaces with $n$ parametrised
+boundary circles. Define
+\begin{equation}
+\label{eq:e1-convolution-hom}
+\gEone
+\;:=\;
+\prod_{\substack{g,n \\ 2g-2+n > 0}}
+\Hom\!\bigl(\cM_{\Ass}(g,n),\,\End_{\cA}(n)\bigr).
+\end{equation}
+The Hom is taken \emph{without} $\Sigma_{n}$-equivariance: this
+is the structural feature distinguishing $\gEone$ from the
+modular convolution algebra $\gmod$ of Volume I, in which the
+Hom is $\Sigma_{n}$-equivariant and the source cooperad is of
+$\Sym^{c}$-type; the ordered source is of $T^{c}$-type. The dg Lie structure
+on $\gEone$ is inherited from the Feynman transform
+$F\Ass$: the differential contracts internal edges of ribbon
+graphs, the bracket composes ribbon graphs.
+\end{definition}
+
+\begin{definition}[Admissible averaging datum and averaging map]
+\label{def:averaging-map}
+An \emph{admissible averaging datum} is a strong-unitary
+$R$-twisted $\Sigma_n$-descent action $\rho_R$ on the ordered bar
+local systems, satisfying the Yang--Baxter relation,
+$R_{12}(z)R_{21}(-z)=\id$, and Fulton--MacPherson boundary
+compatibility. Equivalently, after descent it gives chain maps
+\[
+q_{g,n}\colon \cM_{\Ass}(g,n)_{\Sigma_n}
+\longrightarrow \cM_{\Com}(g,n)
+\]
+compatible with the modular-operadic differentials and edge
+compositions. With such a datum fixed, the \emph{averaging map}
+\begin{equation}
+\label{eq:averaging-map}
+\av_R \;\colon\; \gEone \;\longrightarrow\; \gmod,
+\qquad
+\av_R(\phi)(g,n)
+\;:=\;
+\bigl[\phi(g,n)\bigr]_{R-\Sigma_n}
+\end{equation}
+is the induced $R$-twisted coinvariant comparison after the
+descent identification. In the pole-free case $R=\id$, this is
+the ordinary Reynolds quotient. Without this descent datum no map
+\(\gEone\to\gmod\) is asserted.
+\end{definition}
+
+\begin{theorem}[Averaging is a dg Lie comparison on the descent locus]
+\label{thm:av-dg-lie}
+For an admissible averaging datum, the map
+$\av_R \colon \gEone \to \gmod$ is a morphism of dg Lie algebras
+on the descent locus. It commutes with the differential because
+ribbon edge contraction descends to stable edge contraction under the
+strong-unitary $R$-descent, and it commutes with the Lie bracket
+because the twisted coinvariant comparison is compatible with
+modular-operadic composition. Aritywise surjectivity holds after
+choosing linear splittings of the finite descent quotients; no
+canonical dg Lie section is part of the datum.
+\end{theorem}
+
+\begin{proof}
+The hypotheses say exactly that the $R$-twisted descent quotient
+intertwines edge-contraction differentials and modular-operadic
+compositions. Applying $\Hom(-,\End_{\cA})$ and passing to the
+descent quotient gives a chain map preserving the convolution
+bracket. Over characteristic zero the finite group algebra
+$k[\Sigma_n]$ is semisimple, so each arity admits linear splittings
+of the quotient maps. These splittings are not canonical and need
+not respect the full cross-arity differential.
+\end{proof}
+
+\begin{theorem}[Degree-$2$ averaging: Heisenberg exact, affine KM with Sugawara shift]
+\label{thm:av-degree-2}
+Let $r(z) \in \End(V \otimes V) \otimes \cO(*\Delta)$ be the
+genus-$0$ degree-$2$ $E_{1}$ shadow of $\cA$: the degree-$2$
+component of the $E_{1}$ Maurer--Cartan element, in the
+pre-dualisation convention of
+Volume~I (the shadow-archetype column of
+\cite[Example]{Lorgat26I}, equivalently the collision residue
+computed in $\cA\otimes\cA$ before applying the Koszul pairing).
+Then
+\begin{equation}
+\label{eq:av-degree-2}
+\av_{R,n=2}\bigl(r(z)\bigr)
+\;=\;
+\begin{cases}
+\kappa(\cA), & \text{for abelian Heisenberg families},\\[4pt]
+\kappa_{\mathrm{dp}}(\widehat\fg_{k})
+:= \dfrac{k\,\dim(\fg)}{2h^{\vee}}, &
+\text{for non-abelian affine Kac--Moody in the trace-form convention.}
+\end{cases}
+\end{equation}
+In the affine Kac--Moody case the full modular characteristic is
+\[
+\kappa(\widehat\fg_{k})
+\;=\;
+\kappa_{\mathrm{dp}}(\widehat\fg_{k}) + \frac{\dim(\fg)}{2}
+\;=\;
+\frac{\dim(\fg)(k+h^{\vee})}{2h^{\vee}},
+\]
+so the extra $\dim(\fg)/2$ is the Sugawara simple-pole shift.
+Concretely, for the
+principal examples:
+\begin{itemize}
+\item Heisenberg $\cH_{k}$: $r(z) = k/z$, $\kappa(\cH_{k}) = k$.
+\item Affine Kac--Moody $\widehat\fg_{k}$: $r(z) = k\Omega_{\fg}/z$
+ (the level $k$ survives; at $k=0$ the $r$-matrix vanishes
+ identically),
+ $\av_R(r(z)) = \kappa_{\mathrm{dp}}(\widehat\fg_k)
+ = k\dim(\fg)/(2h^{\vee})$, and
+ $\kappa(\widehat\fg_{k}) = \dim(\fg)(k+h^{\vee})/(2h^{\vee})$.
+\item Virasoro $\Vir_{c}$: $r(z) = (c/2)/z^{3} + 2T/z$ (cubic
+ plus simple pole, no quartic), and $\kappa(\Vir_{c}) = c/2$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+The degree-$2$ Maurer--Cartan component is, by definition, the
+degree-$2$ $E_{1}$ shadow
+$r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$
+in the pre-dualisation convention. Averaging over $\Sigma_{2}$
+projects onto the trivial isotypic component. For abelian
+Heisenberg families this scalar coincides with the full modular
+characteristic. For non-abelian affine Kac--Moody in the
+trace-form convention $r(z)=k\Omega_{\fg}/z$, the averaging sees
+only the double-pole channel and yields
+$\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^{\vee})$; the simple-pole
+self-contraction contributes the additional Sugawara term
+$\dim(\fg)/2$, so
+$\kappa = \kappa_{\mathrm{dp}} + \dim(\fg)/2$. The example
+computations are recorded in \cite[Chapter~5]{Lorgat26I}; each
+formula is verified by the three independent paths of pole-order
+analysis, the limiting case at $k=0$ for the trace-form
+$r$-matrix, and cross-family consistency against the landscape
+census.
+\end{proof}
+
+\begin{theorem}[Degree-$3$ averaging: associator to cubic shadow]
+\label{thm:av-degree-3}
+Let $\Phi_{\mathrm{KZ}}(\cA) \in \End(V^{\otimes 3})$ be the
+genus-$0$ degree-$3$ Maurer--Cartan component, which for affine
+Kac--Moody $\widehat\fg_{k}$ is the Drinfeld--Kontsevich KZ
+associator. Then
+\begin{equation}
+\label{eq:av-degree-3}
+\av_{R,n=3}\bigl(\Phi_{\mathrm{KZ}}(\cA)\bigr)
+\;=\;
+\mathfrak{C}(\cA),
+\end{equation}
+where $\mathfrak{C}(\cA)$ is the cubic shadow of Volume I,
+equivalently the $\Sigma_{3}$-coinvariant of the associator. The
+antisymmetric component $[\Omega_{12},\Omega_{23}]$ lies entirely
+in $\ker(\av)$: it is antisymmetric under the transposition
+$(1 \leftrightarrow 3)$, so its $\Sigma_{3}$-average vanishes.
+Only the symmetric products
+$\Omega_{12}\Omega_{23} + \Omega_{23}\Omega_{12}$
+contribute to $\mathfrak{C}(\cA)$.
+\end{theorem}
+
+\begin{proof}
+The $\Sigma_{3}$-isotypic decomposition of $\Phi_{\mathrm{KZ}}$ in
+$\End(V^{\otimes 3})$ splits into the trivial, sign, and standard
+representations. In the pole-free specialization, the Reynolds
+operator $\av = (1/6)\sum_{\sigma
+\in \Sigma_{3}}\sigma$ projects onto the trivial isotypic
+component. A direct check on $[\Omega_{12},\Omega_{23}]$ shows
+it is antisymmetric under $(1 \leftrightarrow 3)$ and therefore
+has trivial isotypic component zero. The symmetric products
+$\Omega_{ij}\Omega_{k\ell} + \Omega_{k\ell}\Omega_{ij}$ are the
+only surviving contributors. The identification of this
+coinvariant with the cubic shadow is Volume I Theorem D(iii).
+\end{proof}
+
+\begin{proposition}[Splittings and associator dependence]
+\label{prop:nonsplitting}
+For a fixed admissible averaging datum, the sequence of graded
+linear spaces
+\begin{equation}
+\label{eq:nonsplitting-ses}
+0 \longrightarrow \ker(\av) \longrightarrow \gEone
+ \xrightarrow{\av} \gmod \longrightarrow 0
+\end{equation}
+splits aritywise, but it has no canonical splitting compatible with
+the full Maurer--Cartan problem. At each fixed degree $n$, the
+inclusion
+$\End^{\Sigma_{n}}(V^{\otimes n}) \hookrightarrow
+\End(V^{\otimes n})$ is a Lie subalgebra embedding. The obstruction
+to a canonical global section is cross-degree: the bar differential
+reduces degree by one and can carry a chosen representative in
+\(\ker(\av_{R,n})\) to a term with nonzero
+\(\av_{R,n-1}\)-component.
+On the associator-controlled subproblem, choices of compatible
+splitting form the usual Drinfeld associator torsor under
+$\GRT_1$.
+\end{proposition}
+
+\begin{proof}
+Maschke semisimplicity gives aritywise linear splittings over a
+field of characteristic zero. Compatibility with the bar
+differential is extra structure, because the differential relates
+different arities. For KZ/Yangian input the remaining choice is the
+choice of associator; Drinfeld's theorem identifies the set of
+associators as a $\GRT_1$-torsor~\cite{Drinfeld90}, and
+Etingof--Kazhdan quantisation supplies the corresponding
+quasi-triangular deformation data only after the source Lie bialgebra,
+\(\hbar\)-adic topology, associator, and QUE/quasi-Hopf target are
+fixed~\cite{EtingofKazhdan96}.
+\end{proof}
+
+% ================================================================
+\section{The five theorems as averaging-invariants}
+\label{sec:five-theorems}
+
+The following are conditional all-genus $E_1$ comparison surfaces.
+Their genus-zero finite-degree pieces are proved where cited; the
+all-genus statements assume the strict ordered Mittag--Leffler
+tower, PBW-completeness on the Koszul locus, strong-unitary
+$R$-descent, and completed finite-window convergence. In the
+verified families, Theorem D identifies the scalar modular
+characteristic with the degree-$2$ coinvariant of $r(z)$.
+
+\begin{theorem}[Theorem~$\mathrm{A}^{E_{1}}$: ordered bar--cobar]
+\label{thm:e1-theorem-a}
+\textup{(}\emph{quadrant} Open, \emph{presentation} bar / twisting
+coalgebra, \emph{level} $1 \leftrightarrow 2$ of the Beilinson
+tower, \emph{hypothesis package}: strongly admissible augmented
+cyclic $E_{1}$-chiral algebra $\cA$ with an admissible $R$-twisted
+descent datum.\textup{)}
+Let $\cA$ be a strongly admissible augmented cyclic
+$E_1$-chiral algebra with an admissible descent datum. The genus-$g$
+ordered bar complex
+$\Barord(\cA)(g,n)$ is an $F\Ass$-coalgebra with differential
+satisfying $d^{2} = 0$, where $F\Ass$ is the Feynman transform
+of the ribbon modular operad. The bar and cobar functors form an
+adjunction
+\[
+(\Cobar)^{(g)} \dashv (\Barord)^{(g)}
+\colon \mathsf{Alg}_{F\Ass} \rightleftarrows
+\mathsf{Coalg}_{F\Ass},
+\]
+and coinvariant projection recovers Theorem A of Volume I.
+\end{theorem}
+
+\begin{theorem}[Theorem~$\mathrm{B}^{E_{1}}$: ordered inversion on the Koszul locus]
+\label{thm:e1-theorem-b}
+\textup{(}\emph{quadrant} Open, \emph{presentation} bar / cobar
+inversion, \emph{level} $1 \to 3$ of the Beilinson tower,
+\emph{hypothesis package}: $E_{1}$ Koszul locus
+\textup{(}PBW-completeness on the ordered bar
+complex\textup{)}, propagated genus by genus via the MC
+perturbation lemma.\textup{)}
+Assume $\cA$ lies on the $E_{1}$ Koszul locus, meaning the
+PBW-completeness hypothesis of
+\cite[Chapter~4]{Lorgat26I} holds for the ordered bar complex.
+Then at each genus $g$, the counit
+\[
+(\Cobar)^{(g)}\!\bigl(\Barord(\cA)(g,\bullet)\bigr)
+\;\xrightarrow{\;\sim\;}\; \cA
+\]
+is a quasi-isomorphism (the inversion $\Cobar \circ \Barord
+\simeq \id$ on the Koszul locus, not a Koszul-duality statement),
+and the $E_{1}$ linear Koszul dual $\cA^{!,E_{1}}$ obtained by
+linear duality on a finite-dimensional model of $\Barord(\cA)$ is
+an $E_{1}$-chiral algebra at each such genus. The scope of ``all
+genera'' here is contingent on the PBW-completeness hypothesis
+being propagated genus by genus via the MC perturbation lemma of
+\cite[Chapter~9]{Lorgat26I}.
+\end{theorem}
+
+\begin{theorem}[Theorem~$\mathrm{C}^{E_{1}}$: conditional ordered complementarity]
+\label{thm:e1-theorem-c}
+\textup{(}\emph{quadrant} Open, \emph{presentation} ordered
+complementarity, \emph{level} $5$ per stratum, \emph{hypothesis
+package}: ordered Koszul / descent locus, finite perfect model for
+the ordered bar pairing, ordered Hochschild centre
+$Z^{\mathrm{der},E_1}_{\mathrm{ch}}(\cA)$ identified with the
+centre used by the strict ordered tower.\textup{)}
+Assume $\cA$ lies in the ordered Koszul/descent locus, admits a
+finite perfect model for the ordered bar pairing, and has an
+ordered Hochschild centre
+$Z^{\mathrm{der},E_1}_{\mathrm{ch}}(\cA)$ identified with the
+centre used by the strict ordered tower. At each stable $(g,n)$
+the ordered complementarity comparison is conditional:
+\begin{equation}
+\label{eq:e1-complementarity}
+Q_{g,n}^{E_{1}}(\cA) + Q_{g,n}^{E_{1}}(\cA^{!,E_{1}})
+\;\longrightarrow\;
+H^{*}\!\bigl(\overline{\cM}_{g,n}^{\,\mathrm{rib}},
+Z^{\mathrm{der},E_1}_{\mathrm{ch}}(\cA)\bigr),
+\end{equation}
+after applying the ordered centre functor and the perfect pairing.
+Here the centre is a Hochschild object, not the subspace of
+$R$-matrix-fixed vectors, and the comparison is not a consequence
+of averaging alone. The scalar identity
+$\kappa + \kappa^{!} = 0$ for Kac--Moody and free-field families
+(and $\kappa + \kappa^{!} = 13$ for Virasoro) is the
+$\Sigma_{n}$-coinvariant image in the verified scalar examples.
+\end{theorem}
+
+\begin{theorem}[Theorem~$\mathrm{D}^{E_{1}}$: degree-$2$ package]
+\label{thm:e1-theorem-d}
+\textup{(}\emph{quadrant} Open, \emph{presentation} degree-$2$
+shadow tower, \emph{level} $4$ on $\overline\cM_{g,n}$,
+\emph{hypothesis package}: genus-refined degree-$2$ projection of
+$\Theta^{E_{1}}_\cA$ exists genus by genus; cyclic admissibility
+on each stratum; higher-genus line-side $R$-matrix
+interpretation requires additional Yangian input
+\textup{(}open\textup{)}.\textup{)}
+The formal ordered degree-$2$ shadow series
+\begin{equation}
+\label{eq:e1-theorem-d-series}
+R^{E_{1},\mathrm{bin}}(z;\hbar)
+\;=\;
+\sum_{g \geq 0} \hbar^{2g}\, r_{g}(z)
+\end{equation}
+obtained from the genus-refined degree-$2$ projection of the
+$E_{1}$ Maurer--Cartan element is the $E_{1}$ degree-$2$
+characteristic package of $\cA$. It is universal, additive,
+antisymmetric under opposite-duality, and satisfies
+$\av_R(r_{0}(z)) = \kappa(\cA)$ on abelian families, while for
+non-abelian affine Kac--Moody one has
+$\av_R(r_{0}(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+$\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
+The coinvariant recovery of the scalar curvature from $r(z)$ is
+the content of Theorem~\ref{thm:av-degree-2}. A full higher-genus
+line-side modular $R$-matrix interpretation requires additional
+Yangian input and remains open here.
+\end{theorem}
+
+\begin{theorem}[Theorem~$\mathrm{H}^{E_{1}}$: ordered chiral Hochschild]
+\label{thm:e1-theorem-h}
+\textup{(}\emph{quadrant} Open, \emph{presentation} ordered chiral
+Hochschild concentration, \emph{level} $3$ of the Beilinson tower,
+\emph{hypothesis package}: $\cA$ complete, ordered Koszul,
+admissible $R$-twisted descent datum; complete $\cA$-bimodule $M$
+in the same completion as $\cA$; chain-level statement requires
+weight-completed / pro-object / $J$-adic ambient for class M.\textup{)}
+Let $\cA$ be complete, ordered Koszul, and equipped with the
+admissible descent datum of Definition~\ref{def:averaging-map}.
+For complete bimodules $M$ in the same completion, the genus-$g$
+ordered chiral Hochschild
+homology is computed by the ordered chiral coHochschild complex of
+the ordered bar coalgebra $C = \Barord(\cA)$. In the uniform-weight
+case the twisted differential contains the curvature term
+$\kappa(\cA)\lambda_g$. At genus $g\geq 2$ with multi-weight field
+content the scalar formula receives the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ of Volume I. The
+$\Sigma_{n}$-coinvariant recovers the symmetric chiral Hochschild
+complex of Theorem H.
+\end{theorem}
+
+\begin{remark}[Theorem D as the degree-two model]
+\label{rem:theorem-d-degree-two-model}
+Theorem D is the degree-two model for the $E_1$ primacy thesis.
+The scalar $\kappa$ is one number per family, while its ordered source
+is the meromorphic collision kernel $K_\cA^{\mathrm{coll}}(z)$.  For
+Heisenberg,
+$\tau_{\cH,2}^{\mathrm{res}}q_2(K_\cH^{\mathrm{coll}})=\kappa$; for
+non-abelian affine Kac--Moody the corresponding trace is
+$\kappa_{\mathrm{dp}}$ and the Sugawara channel adds $\dim(\fg)/2$.
+The coinvariant $q_2(K_\cA^{\mathrm{coll}})$ remains operator-valued.
+\end{remark}
+
+\begin{remark}[What averaging forgets]
+\label{rem:what-av-forgets}
+The kernel of $\av$ contains several objects of independent
+interest. At degree $2$, $\ker(\av)$ is the antisymmetric part of
+$r(z)$; for bosonic generators of even desuspended degree this
+vanishes identically, and $\kappa$ recovers all of $r(z)$. For
+generators of odd desuspended degree, the kernel is nontrivial
+and captures the parity-dependent Eulerian weight structure
+on the bar complex. At degree $3$, $\ker(\av)$ contains the
+linearised Drinfeld commutator $[\Omega_{12},\Omega_{23}]$ and,
+by the non-splitting proposition, obstructs a canonical
+reconstruction of the full associator from $\mathfrak{C}$.
+The $\GRT_{1}$-torsor attached to associator-controlled splittings
+is the operadic shadow of Etingof--Kazhdan non-uniqueness of
+quantisation.
+\end{remark}
+
+% ================================================================
+\section{Three tiers of \texorpdfstring{$R$}{R}-matrix}
+\label{sec:three-tiers}
+
+The ordered bar complex distinguishes three tiers of input,
+corresponding to how the degree-$2$ Maurer--Cartan component
+$r(z)$ is constructed. The tiers are a refinement of the
+$E_{n}$-hierarchy restricted to the degree-$2$ slice; only the
+third is genuinely $E_{1}$ in the sense that the Maurer--Cartan
+element cannot be recovered from the underlying
+$E_{\infty}$-chiral algebra.
+
+\subsection*{Tier (a): pole-free, $R$ is the Koszul-signed flip}
+
+If $\cA$ is pole-free (that is, the OPE $a(z)b(w)$ has no
+singularity for any $a, b \in \cA$), then the degree-$2$ collision
+residue vanishes identically and $r(z) = 0$. In this tier the
+ordered bar complex admits a canonical $\Sigma_{n}$-equivariant
+structure: the descent datum $R_{\sigma}$ on the local system
+$\mathcal{F}_{n}^{\mathrm{ord}}$ is the Koszul-signed permutation
+\begin{equation}
+\label{eq:tier-a-R}
+R_{\sigma} \;=\; \varepsilon(\sigma)\cdot \tau_{\sigma},
+\end{equation}
+where $\tau_{\sigma}$ permutes tensor factors. The ordered and
+symmetric bar complexes are quasi-isomorphic in this tier. Every
+genuinely commutative (in the $E_{\infty}$ sense) example lives
+here: the trivial chiral algebra, free-field tensor products
+with vanishing cross-OPE, and the structure sheaf of a point.
+
+\subsection*{Tier (b): vertex algebras, $R$ from local OPE}
+
+If $\cA$ is a vertex algebra in the Borcherds--Frenkel--Lepowsky--Meurman sense (more generally, any $E_{\infty}$-chiral algebra with
+poles in its OPE), then $r(z)$ is determined by the degree-$2$
+residue of the OPE along the Arnold form $d\log(z_{1}-z_{2})$.
+All standard families of conformal field theory live here:
+Heisenberg $\cH_{k}$ with $r(z) = k/z$, affine Kac--Moody
+$\widehat\fg_{k}$ with $r(z) = k\Omega_{\fg}/z$, Virasoro $\Vir_{c}$ with $r(z) = (c/2)/z^{3}
++ 2T/z$ (cubic and simple poles, no quartic), $\beta\gamma$,
+$bc$, $W$-algebras, Bershadsky--Polyakov. In each case $r(z)$ is
+fully determined by the underlying $E_{\infty}$ vertex algebra
+structure; the $E_{1}$ refinement adds no new data at degree $2$
+beyond what is already visible in the OPE. The averaging map on
+tier (b) recovers the scalar degree-$2$ shadow: for Heisenberg
+$\av_R(r(z)) = \kappa(\cA)$, while for non-abelian affine
+Kac--Moody $\av_R(r(z)) = \kappa_{\mathrm{dp}}(\cA)$ and the full
+$\kappa(\cA)$ adds the Sugawara shift $\dim(\fg)/2$; the kernel is
+nontrivial but reconstructible from $\cA$.
+
+\subsection*{Tier (c): genuinely $E_{1}$}
+
+The third tier is populated by algebras in which $r(z)$ is
+independent input: the Maurer--Cartan element cannot be recovered
+from any underlying $E_{\infty}$ structure. The paradigmatic
+examples are the Yangians $Y_{\hbar}(\fg)$ and the
+Etingof--Kazhdan quantum vertex algebras~\cite{EtingofKazhdan00}
+obtained from quasi-triangular Lie bialgebras. In this tier the
+degree-$2$ Maurer--Cartan element is the rational Yang--Baxter
+$r$-matrix $r_{\mathrm{YB}}(z)$, and the associator is a full
+Drinfeld associator. Existing vertex-algebra theory cannot
+recognise these algebras, and the ordered bar complex is the
+minimal framework that makes them visible.
+
+\begin{remark}[$E_{1}$ is the atom of the nonlocal regime]
+\label{rem:e1-atom-nonlocal}
+The three tiers form a strict hierarchy. Every standard chiral
+algebra is $E_{\infty}$ in the sense that its OPE is symmetric in
+the operator ordering up to the signs from the Arnold form; it is
+the interpretation as an $E_{1}$ algebra that is the refinement.
+Tier (c) consists of genuinely nonlocal objects, in the precise
+sense that the Maurer--Cartan element lies outside the image of
+any $E_{\infty}$-to-$E_{1}$ promotion functor. The error of
+calling $E_{\infty}$-chiral algebras ``local'' and $E_{1}$-chiral
+algebras ``non-abelian'' obscures the structure. The operative
+distinction is symmetric versus ordered, or closed versus open.
+The averaging map of Section~\ref{sec:av-map} erases the
+ordering.
+\end{remark}
+
+% ================================================================
+\section{Four functors, four distinct objects}
+\label{sec:four-functors}
+
+The structural part closes with a table of
+functors. Four distinct functors act on a cyclic $E_{1}$-chiral
+algebra $\cA$, and each produces a different object. Care is
+required in keeping them apart.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bar.} The ordered bar functor
+ $\cA \mapsto \Barord(\cA) = T^{c}(s^{-1}\bar\cA)$. The output
+ is a coalgebra over the Feynman transform $F\Ass$ of the
+ ribbon modular operad.
+\item \emph{Cobar.} The cobar functor
+ $C \mapsto \Cobar(C)$ on $F\Ass$-coalgebras. On the PBW-complete
+ locus of Theorem~\ref{thm:e1-theorem-b}, the composite
+ $\Cobar \circ \Barord$ is quasi-isomorphic to the identity; this
+ is a statement about the bar--cobar adjunction returning $\cA$
+ to itself, and is structurally distinct from the functor that
+ produces the dual algebra.
+\item \emph{Verdier.} The Verdier-duality functor
+ $\cA \mapsto \cA^{!}_{\infty}$, where $\cA^{!}_{\infty}$ is the
+ chain-level dual on the Ran space. Verdier duality intertwines
+ the bar functor in the sense of~\cite[Theorem~A]{Lorgat26I};
+ the strict linear Koszul dual $\cA^{!}$, obtained by taking a
+ finite-dimensional model and applying linear duality, in
+ general differs from $\cA^{!}_{\infty}$ and the two must be
+ kept distinct.
+\item \emph{Derived centre.} The chiral Hochschild cochain
+ functor
+ $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ = \mathrm{HH}^{*,\mathrm{ch}}(\cA)$.
+ In the open-closed picture this is the cochain-level closed-sector
+ actor: the centre of the open (line-operator) algebra $\cA$ is the
+ closed-sector entry. A physical bulk interpretation requires an
+ open--closed comparison datum. This functor is \emph{not} the
+ bar--cobar composition; it is a separate construction, the subject
+ of Theorem H.
+\end{enumerate}
+
+Theorem A of Volume I is the compatibility statement between (i)
+and (iii): the bar functor intertwines with Verdier duality on
+the Ran space. Theorem B (its $E_{1}$ version,
+Theorem~\ref{thm:e1-theorem-b} above) is the internal statement
+about (i) and (ii): on the PBW-complete locus the bar-cobar
+composite returns $\cA$ up to quasi-isomorphism. Theorem H is the
+statement about (iv): the derived centre coincides with the
+ordered chiral Hochschild complex of the bar coalgebra. The four
+objects are four different outputs; the statement
+``$\Barord(\cA)$ computes the bulk'' is category-theoretically
+ill-formed, because the closed sector is the derived centre, not the bar.
+
+\medskip
+
+In the three-pillar language of Volume I, the distinction is:
+bar-cobar adjointness gives inversion; Verdier duality gives
+$\cA^{!}$; chiral Hochschild cochains give the closed sector. The averaging map
+$\av$ of Section~\ref{sec:av-map} intertwines the ordered and
+symmetric versions of the bar functor on the descent locus. The
+Verdier, cobar, and Hochschild functors require their own
+compatibility data; they are not formal consequences of averaging
+alone.
+
+% ================================================================
+\section{The Swiss-cheese / chiral Deligne--Tamarkin mechanism}
+\label{sec:swiss-cheese-DT}
+
+The bar functor and the averaging map both live on the open colour
+of the chiral theory. The dimensional uplift to a
+$3$-real-dimensional holomorphic--topological theory is not
+accomplished by either of them: it is a property of the universal
+Swiss-cheese pair built by the chiral Deligne--Tamarkin
+construction. The bar coalgebra $\Barord(\cA)$ is the chain-level
+computational model used to present that pair.
+
+\begin{theorem}[Swiss-cheese / chiral Deligne--Tamarkin]
+\label{thm:swiss-cheese-chiral-DT-N3}
+\textup{(}\emph{quadrant} Open, \emph{presentation} two-coloured
+chiral Swiss-cheese pair, \emph{level} $1 \to 3$ of the Beilinson
+tower, \emph{hypothesis package}: a local $\Ainf$-chiral algebra
+$\cA$ on a tangential log curve $(X, D, \tau)$ with completed
+conformal-weight topology and finite chiral residue at every
+double-point collision; a two-coloured chiral Swiss-cheese operad
+$\SCchtop$ with chiral colour and topological collar
+colour~\textup{\cite{Voronov99,KS00}}; an inner conformal vector
+controlling $\bar Q$-translations on the topological collar.\textup{)}
+The universal local chiral Swiss-cheese pair
+\[
+  U(\cA) \;=\; \bigl(\,
+    \HH^{*,\mathrm{ch}}(\cA, \cA),\; \cA,\;
+    \{\mu^{\mathrm{univ}}_{p;q}\}\,\bigr)
+  \;=\;
+  \bigl(\,Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\; \cA,\;
+  \{\mu^{\mathrm{univ}}_{p;q}\}\,\bigr)
+\]
+is terminal in the category of local $\SCchtop$-pairs over $\cA$:
+the closed colour $\HH^{*,\mathrm{ch}}(\cA, \cA)
+= Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ acts on the open colour
+$\cA$ through the chiral Swiss-cheese mixed operations
+$\mu_{p;q}$ \textup{(}$p$ closed inputs, $q$ open inputs\textup{)};
+the open colour does not act back on the closed colour. For any
+local $\SCchtop$-pair $(B, \cA, \{\mu_{p;q}\})$ over $\cA$ with
+continuous mixed operations there is a unique morphism
+$\Phi \colon (B, \cA, \mu) \to U(\cA)$ over the identity on $\cA$.
+\end{theorem}
+
+\begin{proof}[Citation]
+This is Volume~I's chiral Deligne--Tamarkin theorem, the chiral
+analogue of the Voronov Swiss-cheese Deligne
+conjecture~\cite{Voronov99} and the Kontsevich--Soibelman Deligne
+conjecture~\cite{KS00}; the Swiss-cheese operad itself is not
+formal (Livernet), and the argument routes around formality. Concretely, $\Phi(b)_n$ is the chiral
+Hochschild cochain
+$\Phi(b)_n(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})
+= (-1)^{|b|}\mu_{1;n}(b; a_1, \ldots, a_n; \lambda_1, \ldots,
+\lambda_{n-1})$ on $n - 1$ open-sector spectral variables.
+\end{proof}
+
+\begin{remark}[The Swiss-cheese pair is the explanatory mechanism;
+the bar is a computational model]
+\label{rem:bar-is-computational-N3}
+The $2$-real to $3$-real dimensional uplift is the universal
+normal-collar direction of the codimension-one boundary condition
+forced by the chiral Deligne--Tamarkin terminal-object construction
+of Theorem~\textup{\ref{thm:swiss-cheese-chiral-DT-N3}}. It is not
+produced by iterating the bar functor on $\cA$ alone. The bar
+coalgebra $\Barord(\cA) = T^{c}(s^{-1}\bar\cA)$ is
+$E_{1}$-coassociative on the curve geometry: a single
+twisting coalgebra over the chiral associative operad
+$(\mathrm{ChirAss})^!$, with deconcatenation coproduct and bar
+differential constituting one graded coalgebra structure --- not
+two colours of a Swiss-cheese algebra. The bar serves as a
+chain-level computational model that resolves $\cA$ for the purpose
+of computing the closed-colour Hochschild cochain complex via
+\[
+  Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+  \;\simeq\;
+  \mathrm{Hom}_{\mathrm{ch}}\bigl(\Barord(\cA),\, \cA\bigr).
+\]
+The averaging map $\av_R$ of Section~\ref{sec:av-map} acts within
+the open colour, projecting the ordered bar onto the symmetric bar;
+it does not construct or witness the closed colour. The open and
+closed colours are linked only through the Swiss-cheese mixed
+operations $\mu_{p;q}$.
+
+In particular, the slogans \emph{``$\Barord(\cA)$ is the bulk''},
+\emph{``the bar direction explains the $2$d $\to$ $3$d HT lift''},
+and \emph{``the bar is the open--closed transition''} are
+category-level errors: the universal closed sector is the closed colour
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the dimensional uplift is
+the universal collar of the Swiss-cheese pair, and the open--closed
+transition is the chiral Deligne--Tamarkin morphism, not the bar
+functor.
+\end{remark}
+
+\begin{remark}[Where the dimensional uplift comes from in
+$\SCchtop$]
+\label{rem:uplift-source-N3}
+The chiral Swiss-cheese chain-level construction adapts the
+topological Voronov pair~\cite{Voronov99} to the chiral setting:
+the open colour records $E_1$-chiral operations on $\cA$ along the
+curve $X$ (one complex direction, two real directions); the closed
+colour records $E_2$-topological brace operations on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ in the transverse half-plane
+(two real directions). The chiral Deligne--Tamarkin terminal-object
+construction supplies a universal morphism between these two
+sectors that is itself a chiral object, with the inner conformal
+vector of the algebra controlling $\bar Q$-translations on the
+topological collar. The total $\SCchtop$ structure is built from a
+holomorphic chiral colour on the boundary curve and a topological
+collar normal to it; the dimensional count is $2 + 1 = 3$. This
+mechanism is neither the Costello--Gwilliam factorisation
+construction, which is single-colour ambient, nor Voronov's
+topological Swiss-cheese alone, which lacks a holomorphic colour
+--- it is their fusion via chiral Deligne--Tamarkin. The bar of
+$E_1$ is again $E_1$ (cofree conilpotent over $T^{c}$); the
+Swiss-cheese pair $(E_2, E_1)$ at the chiral-topological level is
+the source of the dimensional uplift.
+\end{remark}
+
+% ================================================================
+\section{Conclusion and open problems}
+\label{sec:open-problems}
+
+The ordered bar complex $\Barord(\cA) =
+T^{c}(s^{-1}\bar\cA)$, equipped with its deconcatenation
+coproduct, is the level-$2$ chain object before averaging in modular
+Koszul duality, and the symmetric bar $\BarSig(\cA)$ is its
+$\Sigma_{n}$-coinvariant shadow under an admissible averaging
+comparison $\av$. The five foundational theorems A, B, C, D, H of
+modular Koszul duality admit ordered $E_{1}$ formulations on the
+Koszul/descent locus. Theorem D is the degree-two calculation: the
+scalar degree-$2$ shadow is
+$\tau_{\cA,2}^{\mathrm{res}}q_2(K_\cA^{\mathrm{coll}})$, giving $\kappa$
+for abelian families and $\kappa_{\mathrm{dp}}$ for non-abelian
+affine Kac--Moody before the Sugawara shift $\dim(\fg)/2$ is
+added.  The intermediate coinvariant retains its equivariant operator
+class.
+
+Several problems remain open.
+
+\subsection*{The full $E_{1}$ Koszul duality theorem}
+
+Theorems~\ref{thm:e1-theorem-a} and~\ref{thm:e1-theorem-b} prove
+the $F\Ass$-coalgebra structure, the inversion quasi-isomorphism on
+the Koszul locus, and compatibility with averaging. They do not
+prove an unconditional equivalence between all $E_1$-chiral
+algebras and cocomplete $F\Ass$-coalgebras. A full equivalence of
+categories requires tighter control of the coderived category of
+$F\Ass$-coalgebras and a characterisation of the Koszul locus that
+is independent of the commutative shadow.
+
+\subsection*{The line-side modular $R$-matrix at higher genus}
+
+Theorem~\ref{thm:e1-theorem-d} packages the ordered degree-$2$
+shadow into a formal series
+$R^{E_{1},\mathrm{bin}}(z;\hbar)$ whose $g$-th coefficient is the
+ordered degree-$2$ correction at genus $g$. Whether this formal
+series has a line-side interpretation as a genuine higher-genus
+modular $R$-matrix is a separate question. Ribbon-graph physics
+predicts such an object from the 't~Hooft expansion, and the cyclic
+trace formalism gives the combinatorial language. Beyond genus one
+this remains an open construction.
+
+\subsection*{$\GRT_{1}$-torsor structure of splittings}
+
+Proposition~\ref{prop:nonsplitting} isolates the point at which
+aritywise linear splittings cease to be canonical: compatibility
+with the Maurer--Cartan equation depends on associator data. The
+Etingof--Kazhdan theorem provides this structure for Lie
+bialgebras. The chiral analogue, including a functorial lift
+$\kappa \mapsto r(z)$, remains open.
+
+\subsection*{Swiss-cheese Koszul duality and the brane sector}
+
+Theorem~\ref{thm:swiss-cheese-chiral-DT-N3} supplies the universal
+local Swiss-cheese pair
+$(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ as a terminal object,
+identifying the bulk and the open--closed mechanism that lifts
+$2$d chiral data to a $3$d holomorphic--topological theory. The
+averaging map of this paper is internal to the open colour and
+does not extend to a $\SCchtop$-functor. A Koszul duality theorem
+for the chiral Swiss-cheese operad itself, that would package the
+two-coloured operad together with its bar / cobar adjunction and
+bind the brane / boundary-condition data of Volume~II to the
+terminal pair, remains open. The mixed sector governing brane
+boundaries and the open--closed coupling belongs to Volume~II.
+
+\bigskip
+
+In modular Koszul duality, the ordered bar complex $\Barord(\cA) =
+T^{c}(s^{-1}\bar\cA)$ is the primitive object and the symmetric
+bar is its $R$-twisted coinvariant shadow when descent exists. The
+five theorem surfaces A, B, C, D, H are the invariants visible
+after averaging. At degree $2$, Heisenberg satisfies
+$\av_R(r(z)) = \kappa(\cA)$; non-abelian affine Kac--Moody satisfies
+$\av_R(r(z)) = \kappa_{\mathrm{dp}}(\cA)$, with the Sugawara shift
+$\dim(\fg)/2$ supplying the full $\kappa(\cA)$.
+
+% ================================================================
+\appendix
+\section{Ordered-locus evidence}
+\label{sec:ordered-locus-evidence}
+
+The ordered comparison becomes a theorem on the locus where the
+bar construction, the $R$-twisted descent, and the associator data
+are all present.
+
+\begin{definition}[Ordered Koszul chiral algebra]
+\label{def:ordered-koszul-chiral}
+A chiral algebra $\cA$ on a smooth curve $X$ is \emph{ordered
+Koszul} if:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2.2em]
+\item the ordered bar complex
+$\Barord(\cA)=T^c(s^{-1}\bar\cA)$ with deconcatenation coproduct
+carries a coalgebra deformation retract onto its cohomology over
+$(\mathrm{ChirAss})^!$;
+\item the counit $\Cobar(\Barord(\cA))\to\cA$ is a
+quasi-isomorphism in the Francis--Gaitsgory factorization ambient;
+\item the $R$-twisted descent from ordered to symmetric bar is
+compatible with the chiral twisting morphism.  This requires the
+Yang--Baxter equation and the unitarity relation
+$R(z)R^{\op}(-z)=\id$ after the scalar normalization appropriate
+to the family.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Yangian ordered Koszul instance]
+\label{prop:yangian-ordered-koszul}
+The chiral Yangian $Y_\hbar(\fg)^{\mathrm{ch}}$, defined from the
+Drinfeld second presentation and Etingof--Kazhdan flatness, is
+ordered Koszul in the sense of
+Definition~\textup{\ref{def:ordered-koszul-chiral}}.
+\end{proposition}
+
+\begin{proof}
+The Drinfeld second-presentation generators assemble an ordered bar
+complex controlled by pure-braid Orlik--Solomon cohomology. The
+Shelton--Yuzvinsky Koszulity theorem~\cite{SheltonYuzvinsky97}
+gives the required quadratic
+Koszul calculation on the pure-braid algebra, while
+Etingof--Kazhdan flatness supplies the chiral twisting morphism and
+the normalized $R$-twisted descent.
+\end{proof}
+
+\begin{theorem}[Ordered quantum-group comparison on the Koszul locus]
+\label{thm:ordered-qg-comparison}
+On the finite-type strongly admissible $E_1$ Koszul locus, after
+fixing a Drinfeld associator $\Phi$ and a strong-unitary
+$R$-twisted descent gauge, the following structures are equivalent
+descriptions of the same ordered bar coalgebra:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.2em]
+\item the classical $R$-matrix $r_\cA(z)$;
+\item the $A_\infty$-structure transferred to $\Barord(\cA)$;
+\item the deconcatenation coproduct on $\Barord(\cA)$ with its
+compatible chiral twisting morphism, coassociative up to $\Phi$.
+\end{enumerate}
+The asserted $H^0$ associator-independence for the
+$\mathfrak{sl}_2$ Yangian remains a separate first-order
+computation until it is inscribed in the body theorem.
+\end{theorem}
+
+\begin{proof}
+A choice of Drinfeld associator identifies the ordered tensor
+calculus with the quasi-triangular deformation supplied by
+Etingof--Kazhdan. The transferred $A_\infty$ operations are then
+read from the same associator-controlled Maurer--Cartan element as
+the $R$-matrix. Conversely, the twisting morphism and
+deconcatenation coproduct recover the binary $R$-matrix and its
+higher associator corrections.
+\end{proof}
+
+\begin{remark}[Further ordered-locus extensions]
+Three extensions remain conditional.
+For $\mathfrak{gl}_N$, the chiral Drinfeld double can be constructed
+internally from Miura data, cross-arity Stasheff operations, and
+$U(\widehat{\mathfrak{gl}}_1)$ screenings.  For
+$\cW_\infty$, the ordered comparison belongs to the
+weight-completed class-$\mathsf M$ category. In genus one, Felder's
+dynamical $R(z,\tau)$ and the Fay trisecant identity
+\cite{Felder94,Fay73} replace the pentagon identity; higher genus
+requires theta-divisor input.
+\end{remark}
+
+\begin{remark}[Toroidal formal-disk comparison]
+The toroidal formal-disk comparison uses Schiffmann--Vasserot
+CoHA~\cite{SchiffmannVasserot13} and the Ding--Iohara--Miki
+presentation~\cite{DingIohara97} of
+$U_{q,t}(\ddot{\mathfrak{sl}}_N)$ with spectral parameters $(u,v)$.
+It is a formal-disk statement. The global
+$\mathbb{P}^1\times\mathbb{P}^1$ comparison requires the
+class-$\mathsf{M}$ chain-level topologization of the original bar
+complex.
+\end{remark}
+
+\begin{remark}[Degree-two constants]
+The degree-two averaging constants are:
+\begin{itemize}[leftmargin=1.8em]
+\item Heisenberg $\cH_k$: $\av_R(r(z))=\kappa(\cH_k)=k$.
+\item Non-abelian affine Kac--Moody $V_k(\fg)$:
+$\av_R(r(z))=\kappa_{\mathrm{dp}}(V_k(\fg))
+=k\dim(\fg)/(2h^\vee)$, and
+$\kappa(V_k(\fg))=\dim(\fg)(k+h^\vee)/(2h^\vee)$ after the
+Sugawara shift $\dim(\fg)/2$.
+\item Virasoro $\Vir_c$:
+$r(z)=(c/2)/z^3+2T/z$, and $\kappa(\Vir_c)=c/2$.
+\item Principal $\cW_N$:
+$\kappa(\cW_N)=c(H_N-1)$ with
+$H_N=\sum_{j=1}^N 1/j$; for $N=2$ this recovers
+$\kappa(\Vir_c)=c/2$.
+\end{itemize}
+\end{remark}
+
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{BeilinsonDrinfeld04}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral algebras},
+American Mathematical Society Colloquium Publications, vol.~51,
+AMS, Providence, RI, 2004.
+
+\bibitem{Drinfeld90}
+V.~G. Drinfeld,
+\emph{On quasitriangular quasi-Hopf algebras and a group closely
+connected with $\mathrm{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$},
+Leningrad Math.~J. \textbf{2} (1991), 829--860.
+
+\bibitem{EtingofKazhdan96}
+P.~Etingof and D.~Kazhdan,
+\emph{Quantization of Lie bialgebras, I},
+Selecta Math. (N.S.) \textbf{2} (1996), 1--41.
+
+\bibitem{EtingofKazhdan00}
+P.~Etingof and D.~Kazhdan,
+\emph{Quantization of Lie bialgebras, V: Quantum vertex operator
+algebras},
+Selecta Math. (N.S.) \textbf{6} (2000), 105--130.
+
+\bibitem{FrancisGaitsgory12}
+J.~Francis and D.~Gaitsgory,
+\emph{Chiral Koszul duality},
+Selecta Math. (N.S.) \textbf{18} (2012), 27--87.
+
+\bibitem{Fay73}
+J.~D. Fay,
+\emph{Theta Functions on Riemann Surfaces},
+Lecture Notes in Mathematics, vol.~352, Springer-Verlag,
+Berlin-New York, 1973.
+
+\bibitem{Felder94}
+G.~Felder,
+\emph{Conformal field theory and integrable systems associated to
+elliptic curves},
+in \emph{Proceedings of the International Congress of
+Mathematicians (Z\"urich, 1994)}, Birkh\"auser, 1995,
+1247--1255; arXiv:hep-th/9407154.
+
+\bibitem{DingIohara97}
+J.~Ding and K.~Iohara,
+\emph{Generalization of Drinfeld quantum affine algebras},
+Lett. Math. Phys. \textbf{41} (1997), no.~2, 181--193.
+
+\bibitem{GetzlerJones94}
+E.~Getzler and J.~D.~S. Jones,
+\emph{Operads, homotopy algebra and iterated integrals for
+double loop spaces},
+preprint, 1994, arXiv:hep-th/9403055.
+
+\bibitem{GetzlerKapranov98}
+E.~Getzler and M.~M. Kapranov,
+\emph{Modular operads},
+Compositio Math.\ \textbf{110} (1998), 65--126.
+
+\bibitem{LodayVallette12}
+J.-L. Loday and B.~Vallette,
+\emph{Algebraic operads},
+Grundlehren der mathematischen Wissenschaften, vol.~346,
+Springer, Heidelberg, 2012.
+
+\bibitem{Lorgat26I}
+R.~Lorgat,
+\emph{Modular Koszul Duality, Volume I},
+monograph, 2026.
+
+\bibitem{SchiffmannVasserot13}
+O.~Schiffmann and E.~Vasserot,
+\emph{Cherednik algebras, W-algebras and the equivariant
+cohomology of the moduli space of instantons on
+$\mathbb{A}^2$},
+Publ. Math. IH\'ES \textbf{118} (2013), 213--342,
+arXiv:1202.2756.
+
+\bibitem{SheltonYuzvinsky97}
+B.~Shelton and S.~Yuzvinsky,
+\emph{Koszul algebras from graphs and hyperplane arrangements},
+J.\ London Math.\ Soc.\ \textbf{56} (1997), 477--490.
+
+\bibitem{Stasheff63}
+J.~D. Stasheff,
+\emph{Homotopy associativity of $H$-spaces, I},
+Trans.\ Amer.\ Math.\ Soc.\ \textbf{108} (1963), 275--292.
+
+\bibitem{Vallette14}
+B.~Vallette,
+\emph{Homotopy theory of homotopy algebras},
+Ann.\ Inst.\ Fourier \textbf{70} (2020), 683--738.
+
+\bibitem{Voronov99}
+A.\,A.~Voronov,
+\emph{The Swiss-cheese operad},
+Contemp.\ Math.\ \textbf{239} (1999), 365--373;
+arXiv:math/9807037.
+
+\bibitem{KS00}
+M.~Kontsevich and Y.~Soibelman,
+\emph{Deformations of algebras over operads and the Deligne
+conjecture},
+in \emph{Conf\'erence Mosh\'e Flato 1999, Vol.~I}, Math.\ Phys.\
+Stud.\ \textbf{21}, Kluwer, 2000, 255--307;
+arXiv:math/0001151.
+
+\end{thebibliography}
+
+\end{document}

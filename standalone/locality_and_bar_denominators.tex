@@ -1,0 +1,572 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+\usepackage{array}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\FactD}{\mathrm{FactD}}
+\providecommand{\Alg}{\mathrm{Alg}}
+\providecommand{\Coalg}{\mathrm{Coalg}}
+\providecommand{\Fin}{\mathrm{Fin}}
+\providecommand{\sdim}{\mathrm{sdim}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Bar}{\mathrm{Bar}}
+\providecommand{\Cobar}{\mathrm{Cobar}}
+\providecommand{\den}{\mathrm{den}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\unit}{\mathbf{1}}
+\providecommand{\Hd}{\boxtimes_{\mathrm{H}}}
+\providecommand{\Cy}{\boxtimes_{\mathrm{C}}}
+
+\title[Locality and bar denominators]
+{The aligned-decomposition locality law and the bar denominator product}
+
+\author{Raeez Lorgat}
+
+\date{July 2026}
+
+\begin{document}
+
+\begin{abstract}
+Let $X$ be a smooth complex algebraic curve and let $A$ be an augmented
+$E_1$-algebra in factorisation right $D$-modules on $X$. Two structures
+on the Ran category, the pointwise coefficient tensor and the chiral
+convolution, do not interchange. The canonical comparison between them
+is a retraction with an idempotent whose image is the
+common-decomposition summand, and strong duoidality holds exactly on the
+windows where that idempotent is the identity. At sheaf level the
+corresponding exact statement is a criterion: an $E_1$ multiplication in
+the ambient Ran category is an algebra in $\FactD(X)$ if and only if
+every disjointness-locus square commutes, and those squares occupy the
+common-decomposition sector.
+
+For a root-graded Lie superalgebra with finite root spaces, the completed
+graded Euler supercharacter of the ordered bar of $U(\mathfrak n_+)$ is
+the product side of the Weyl--Kac--Borcherds denominator identity. The
+positive Witt algebra gives $\prod_{n\ge1}(1-q^n)$, and the
+Gritsenko--Nikulin algebra of $\phi_{0,1}$ gives
+$64^{-1}\Delta_5(2Z)$. The Witt specialisation is rigid: Goncharova's
+theorem makes the cohomology two-dimensional in every positive degree,
+concentrated in the pentagonal weights $(3n^2\pm n)/2$, and Euler's
+pentagonal number theorem accounts for the Euler character degree by
+degree with no residual freedom. Two circulating dimension formulas for
+the bar cohomology of the Virasoro and $\mathfrak{sl}_2$ families are
+incompatible with this rigidity; their shared discriminant is an
+elementary Motzkin--Riordan identity.
+\end{abstract}
+
+\maketitle
+
+\section{The two products on the Ran category}
+
+Let $X$ be a smooth complex algebraic curve, $\Fin^{\mathrm{surj}}$ the
+category of nonempty finite sets and surjections, and $\FactD(X)$ the
+category of factorisation right $D$-modules: systems $A_I$ on $X^I$ with
+multiplicative equivalences on every disjointness locus together with a
+filtered extension across the collision diagonals. An
+\emph{ordered chiral algebra} is an object
+\[
+  A \in \Alg^{\mathrm{aug}}_{E_1}\bigl(\FactD(X), \otimes^!\bigr),
+\]
+an augmented $E_1$-algebra for the pointwise coefficient tensor. The
+chiral coefficient records collision on $X$; the internal $E_1$
+multiplication records ordered fusion along a transverse oriented line.
+
+The Ran category carries a second monoidal structure, the chiral
+convolution assembling disjoint supports. A statement that these two
+products interchange, so that an ordered chiral algebra is a bimonoid for
+a duoidal structure, asserts an isomorphism where only a retraction
+exists. The following two sections isolate the exact content: a
+combinatorial idempotent in the additive category of linear species, and
+a family of commuting squares at sheaf level.
+
+\section{Aligned decompositions of linear species}
+
+Let $\mathcal V$ be a stable symmetric monoidal category with finite
+direct sums. A \emph{linear species} is a functor
+$F\colon \Fin^{\simeq}\to\mathcal V$. Species carry two products: the
+Hadamard product, componentwise,
+\[
+  (F \Hd G)(I) = F(I)\otimes G(I),
+\]
+and the Cauchy product, Day convolution for disjoint union,
+\[
+  (F \Cy G)(I) = \bigoplus_{I = I_1\sqcup I_2} F(I_1)\otimes G(I_2).
+\]
+These isolate the finite-set combinatorics beneath the pointwise
+coefficient tensor and the chiral convolution respectively. Write an
+\emph{ordered decomposition} of $I$ for an ordered pair $d=(I_1,I_2)$
+with $I=I_1\sqcup I_2$.
+
+For four species $F_1,F_2,G_1,G_2$ the arity-$I$ component of
+$(F_1\Cy F_2)\Hd(G_1\Cy G_2)$ is
+\[
+  \bigoplus_{d,\,e}
+  \bigl[F_1(I_1)\otimes F_2(I_2)\bigr]\otimes
+  \bigl[G_1(J_1)\otimes G_2(J_2)\bigr],
+  \qquad d=(I_1,I_2),\ e=(J_1,J_2),
+\]
+a sum over \emph{two} independent ordered decompositions, while the
+arity-$I$ component of $(F_1\Hd G_1)\Cy(F_2\Hd G_2)$ is
+\[
+  \bigoplus_{d}
+  \bigl[F_1(I_1)\otimes G_1(I_1)\bigr]\otimes
+  \bigl[F_2(I_2)\otimes G_2(I_2)\bigr],
+\]
+a sum over \emph{one}. The second is the $(d,d)$ sector of the first.
+
+\begin{theorem}[Aligned-decomposition splitting]
+\label{thm:aligned-splitting}
+There are canonical natural transformations
+\[
+  \iota\colon (F_1\Hd G_1)\Cy(F_2\Hd G_2)
+    \longrightarrow (F_1\Cy F_2)\Hd(G_1\Cy G_2),
+\]
+\[
+  \pi\colon (F_1\Cy F_2)\Hd(G_1\Cy G_2)
+    \longrightarrow (F_1\Hd G_1)\Cy(F_2\Hd G_2),
+\]
+satisfying
+\[
+  \pi\iota = \id,\qquad e := \iota\pi,\qquad e^2 = e .
+\]
+The image of $e$ is the common-decomposition summand. Both
+transformations are compatible with the associativity and unit
+constraints of each product and with the symmetry of the Hadamard
+product.
+\end{theorem}
+
+\begin{proof}
+At a finite set $I$ both source and target are finite direct sums indexed
+as displayed. Define $\iota$ to be the inclusion of the summands indexed
+by the diagonal $d\mapsto(d,d)$, composed with the symmetry of
+$\mathcal V$ reordering the four tensor factors, and $\pi$ to be the
+projection onto those summands. Since the index map $d\mapsto(d,d)$ is
+injective, $\pi\iota=\id$; consequently $e=\iota\pi$ is the projector
+onto the diagonal-indexed direct summand, so $e^2=e$ and
+$\operatorname{im} e$ is as stated.
+
+For three Cauchy factors both coherence composites include, respectively
+project onto, the triples carrying one common ordered decomposition, so
+the associativity constraints are matched. The unit for the Cauchy
+product is the species concentrated at $\emptyset$ and the unit for the
+Hadamard product is the constant species at the tensor unit; on units the
+two index sets coincide and $\iota,\pi$ are identities. Symmetry of the
+Hadamard product exchanges the two blocks of the pair $(d,d)$, which the
+diagonal index set is stable under. Each identity is checked
+componentwise on finite direct sums.
+\end{proof}
+
+The theorem is an exact statement in the additive category of species. It
+identifies the projector selected by using one common decomposition
+simultaneously in both convolution factors, and it shows the failure of
+interchange is precisely the presence of the off-diagonal sector
+$(d,e)$, $d\ne e$.
+
+\begin{definition}[Aligned species window]
+\label{def:aligned-window}
+A full replete subcategory $\mathcal S$ of linear species is
+\emph{aligned} when it contains both units, is closed under $\Hd$ and
+$\Cy$, the idempotent $e$ of
+Theorem~\ref{thm:aligned-splitting} acts as the identity on every
+iterated mixed product of objects of $\mathcal S$, and the inclusions and
+projections remain morphisms of $\mathcal S$.
+\end{definition}
+
+\begin{corollary}[Strong duoidality on an aligned window]
+\label{cor:aligned-duoidal}
+On an aligned window $\iota$ and $\pi$ are mutually inverse interchange
+isomorphisms, and $(\Hd,\Cy)$ restricts to a strong duoidal pair.
+\end{corollary}
+
+\begin{proof}
+The condition $e=\id$ gives $\iota\pi=\id$, and $\pi\iota=\id$ holds by
+Theorem~\ref{thm:aligned-splitting}. The coherence identities of that
+theorem restrict to the window by fullness and repleteness.
+\end{proof}
+
+Fixed decomposition types and finite-support conditions supply elementary
+aligned windows. Off such a window the interchange is a retraction and
+nothing more, so a bimonoid formulation of locality is unavailable and
+must be replaced by the criterion of the next section.
+
+\section{The sheaf-level locality criterion}
+
+Fix an ordered decomposition $d=(I_1,I_2)$ of $I$ and let
+$j_d\colon U_d\hookrightarrow X^I$ be its disjointness locus.
+Factorisation supplies
+\[
+  j_d^!A_I \simeq j_d^!\bigl(A_{I_1}\boxtimes A_{I_2}\bigr),
+\]
+and we write $\Delta_d$ for the inverse factorisation equivalence.
+
+\begin{theorem}[Locality criterion]
+\label{thm:locality}
+Let $A$ be a factorisation right $D$-module and let
+$m\colon A\otimes^! A\to A$ be an $E_1$ multiplication in the ambient Ran
+category. Then $m$ defines an $E_1$-algebra in $\FactD(X)$ if and only if
+for every ordered decomposition $d$ the square
+\[
+\begin{tikzcd}[column sep=3.2em, row sep=2.6em]
+j_d^!\bigl(A_I\otimes^! A_I\bigr)
+  \arrow[r, "j_d^!m"]
+  \arrow[d, "\Delta_d\otimes^!\Delta_d"']
+& j_d^!A_I \arrow[d, "\Delta_d"] \\
+j_d^!\Bigl(\bigl(A_{I_1}\otimes^! A_{I_1}\bigr)\boxtimes
+           \bigl(A_{I_2}\otimes^! A_{I_2}\bigr)\Bigr)
+  \arrow[r, "m\boxtimes m"]
+& j_d^!\bigl(A_{I_1}\boxtimes A_{I_2}\bigr)
+\end{tikzcd}
+\]
+commutes. Under the finite-set indexing functor these squares occupy the
+common-decomposition sector of Theorem~\ref{thm:aligned-splitting}.
+\end{theorem}
+
+\begin{proof}
+A morphism of $\FactD(X)$ is a morphism of the underlying Ran objects
+intertwining every factorisation equivalence. Applying that definition to
+$m$ produces exactly the displayed family, indexed by ordered
+decompositions. Each square uses the same $d$ before and after
+multiplication, so under the indexing functor it lies in the sector
+indexed by the diagonal $d\mapsto(d,d)$, which is
+$\operatorname{im}e$.
+\end{proof}
+
+This family is the complete sheaf-level law for ordered locality.
+Extension across the partial diagonals remains part of the datum of the
+factorisation $D$-module; the indexing projector records only the
+separated-support combinatorics.
+
+\begin{proposition}[The ordered bar factorises]
+\label{prop:bar-factorises}
+Let $B^{\mathrm{ord}}_r(A) = \unit\otimes^! A^{\otimes^! r}\otimes^!\unit$
+be the simplicial ordered bar. Every face is built from $m$ or the
+augmentation and every degeneracy from the unit, so
+Theorem~\ref{thm:locality} applies to each simplicial operator and
+$B^{\mathrm{ord}}_\bullet(A)$ is a simplicial object of $\FactD(X)$. Its
+realization inherits the factorisation structure and the
+deconcatenation coproduct is a morphism of factorisation objects.
+\end{proposition}
+
+\begin{proof}
+Faces and degeneracies are the structure maps to which the criterion
+applies. Realization is computed componentwise. Deconcatenation cuts a
+transverse word while a factorisation equivalence separates the chiral
+support letter by letter; the two operations commute on every
+disjointness locus, which is the morphism condition in $\FactD(X)$.
+\end{proof}
+
+Together with the interval identity
+$B^{\mathrm{ord}}_X(A)\simeq\unit\otimes^{L}_A\unit$ this places the bar
+differential in the transverse direction and keeps the chiral coefficient
+uncontracted: no logarithmic residue is asked to produce a bar
+differential.
+
+\section{The bar denominator product}
+
+Let
+\[
+  \mathfrak g = \mathfrak h \oplus
+  \bigoplus_{\alpha\in\Gamma\setminus\{0\}} \mathfrak g_\alpha
+\]
+be a root-graded Lie superalgebra, $\Gamma_+\subset\Gamma$ a positive
+monoid, and $\mathfrak n_+ = \bigoplus_{\alpha\in\Gamma_+}\mathfrak
+g_\alpha$. Assume every root space is finite dimensional and every degree
+admits finitely many decompositions in the chosen $\Gamma_+$-adic
+completion. Internal PBW and the bar--Chevalley comparison give
+\[
+  B^{\mathrm{ord}}\bigl(U(\mathfrak n_+)\bigr)
+  \;\simeq\; \CE_*(\mathfrak n_+)
+  \;=\; \Sym\bigl(\mathfrak n_+[1]\bigr).
+\]
+
+\begin{theorem}[Bar denominator product]
+\label{thm:bar-denominator}
+The completed graded Euler supercharacter of the ordered bar is
+\[
+  \chi_\Gamma\Bigl(B^{\mathrm{ord}}\bigl(U(\mathfrak n_+)\bigr)\Bigr)
+  \;=\;
+  \prod_{\alpha\in\Gamma_+}\bigl(1-e^{-\alpha}\bigr)^{\sdim\mathfrak g_\alpha}.
+\]
+If $\mathfrak g$ is a Borcherds--Kac--Moody superalgebra with Weyl vector
+$\rho$, then
+$e^{-\rho}\,\chi_\Gamma\bigl(B^{\mathrm{ord}}(U(\mathfrak n_+))\bigr)$
+is the product side of its Weyl--Kac--Borcherds denominator identity.
+\end{theorem}
+
+\begin{proof}
+Choose a homogeneous basis of each root space. Suspension reverses
+parity. An even root vector of root $\alpha$ becomes odd in
+$\Sym(\mathfrak n_+[1])$, so it contributes an exterior factor
+$1-e^{-\alpha}$ to the Euler supercharacter; an odd root vector becomes
+even and contributes a polynomial factor $(1-e^{-\alpha})^{-1}$.
+Multiplying over the basis gives the exponent
+$\dim\mathfrak g_{\alpha,\bar0}-\dim\mathfrak g_{\alpha,\bar1}
+=\sdim\mathfrak g_\alpha$. The finite-decomposition hypothesis makes
+every coefficient of the completed product a finite sum. The prefactor
+$e^{-\rho}$ is the leading Weyl monomial of the denominator identity.
+\end{proof}
+
+The theorem is an object-to-character bridge with the functor named: the
+bracket controls the Chevalley differential, and the Euler product
+remembers only the signed root spaces. It is not an identification of
+the bar object with an automorphic form, and it is not a classification.
+
+\subsection{The Igusa specialisation}
+
+Let $\phi_{0,1}(\tau,z)=\sum_{n\ge0,\ \ell\in\mathbb Z}f(n,\ell)q^ny^\ell$
+be the weak Jacobi form of weight $0$ and index $1$ normalized by
+$f(0,0)=10$ and $f(0,\pm1)=1$. In the standard cusp chamber its monic
+Borcherds product is
+\[
+  D_5(Z) = q^{1/2}y^{1/2}p^{1/2}
+  \prod_{(n,\ell,m)>0}\bigl(1-q^ny^\ell p^m\bigr)^{f(nm,\ell)},
+  \qquad \Delta_5(Z) = 64\,D_5(Z),
+\]
+the second equality being the theta-constant normalization. Gritsenko and
+Nikulin \cite{GN97} construct a Borcherds algebra
+$\mathfrak g_{\Delta_5}$ with signed root multiplicities
+$\sdim(\mathfrak g_{\Delta_5})_{\alpha(n,\ell,m)} = f(nm,\ell)$ and
+denominator $\den(\mathfrak g_{\Delta_5}) = D_5(2Z)$.
+
+\begin{corollary}[Igusa bar identity]
+\label{cor:igusa}
+For the positive nilpotent subalgebra $\mathfrak n_{\Delta_5,+}$,
+\[
+  e^{-\rho}\,
+  \chi_\Gamma\Bigl(B^{\mathrm{ord}}\bigl(U(\mathfrak n_{\Delta_5,+})\bigr)\Bigr)
+  \;=\; D_5(2Z) \;=\; 64^{-1}\Delta_5(2Z).
+\]
+\end{corollary}
+
+\begin{proof}
+Insert the Gritsenko--Nikulin root supermultiplicities into
+Theorem~\ref{thm:bar-denominator}. The Weyl monomial and the doubled
+period variable are those of the type-II denominator chamber, and the
+theta-product leading coefficient converts the monic product to
+$64^{-1}\Delta_5(2Z)$.
+\end{proof}
+
+The root multiplicities are an input, quoted from \cite{GN97}, not a
+consequence of Theorem~\ref{thm:bar-denominator}. What the theorem
+supplies is the object whose Euler character the product is.
+
+\section{Rigidity of the Witt specialisation}
+
+Let $L_1 = \bigoplus_{n\ge1}\mathbb C\,e_n$ with
+$[e_i,e_j]=(j-i)e_{i+j}$, the positive part of the Witt algebra and the
+transverse enveloping presentation of the Virasoro family. Every root
+space is one dimensional and even, so $\sdim (L_1)_n = 1$ and
+Theorem~\ref{thm:bar-denominator} specialises to
+\begin{equation}
+\label{eq:witt-euler}
+  \chi_q\Bigl(B^{\mathrm{ord}}\bigl(U(L_1)\bigr)\Bigr)
+  = \prod_{n\ge1}\bigl(1-q^n\bigr).
+\end{equation}
+
+\begin{theorem}[Pentagonal rigidity]
+\label{thm:pentagonal-rigidity}
+The bar cohomology of $U(L_1)$ satisfies
+\[
+  \dim H^n\Bigl(B^{\mathrm{ord}}\bigl(U(L_1)\bigr)\Bigr) = 2
+  \qquad\text{for every } n\ge1,
+\]
+concentrated in the two weights $(3n^2-n)/2$ and $(3n^2+n)/2$, one
+dimension in each. The Euler character \eqref{eq:witt-euler} is
+accounted for degree by degree with no residual freedom.
+\end{theorem}
+
+\begin{proof}
+Under internal PBW the bar of $U(L_1)$ is $\CE_*(L_1)$, whose cohomology
+is Goncharova's \cite{Gon73}: $H^n(L_1)$ is two dimensional for $n\ge1$
+and lies in the weights $(3n^2\mp n)/2$. Euler's pentagonal number
+theorem expands the left side of \eqref{eq:witt-euler} as
+$\sum_{m\in\mathbb Z}(-1)^m q^{m(3m-1)/2}$, whose support is exactly
+$\{(3n^2\pm n)/2 : n\ge0\}$ with coefficient $(-1)^n$ at each of
+$(3n^2-n)/2$ and $(3n^2+n)/2$. Comparing with
+$\sum_n(-1)^n\dim H^n_w$ shows every weight of the Euler character is
+saturated by a single cohomology class of the degree $n$ predicted by
+Goncharova, so no further classes and no cancellation are available.
+\end{proof}
+
+Theorem~\ref{thm:pentagonal-rigidity} was verified by exact rational
+linear algebra on the weight-graded Chevalley--Eilenberg complex of $L_1$
+for $n=1,2,3,4$, with $d^2=0$ asserted on every cochain space rather than
+assumed. The computed cohomology occupies the weights
+$(1,2)$, $(5,7)$, $(12,15)$, $(22,26)$, one dimension in each, and the
+nonzero coefficients of $\prod_{n\ge1}(1-q^n)$ occupy
+$0,1,2,5,7,12,15,22,26$ with signs $+,-,-,+,+,-,-,+,+$.
+
+\subsection{Two incompatible dimension formulas}
+
+Two formulas circulate for the bar cohomology of these families:
+\[
+  \dim H^n = M(n+1)-M(n) = 1,2,5,12,30,76,196,512,1353,3610,\dots
+\]
+for the Virasoro family, where $M$ denotes the Motzkin numbers, and
+\[
+  \dim H^n = R(n+3) = 3,6,15,36,91,232,603,1585,\dots
+\]
+for the $\mathfrak{sl}_2$ family, where $R$ denotes the Riordan numbers;
+the coincidence of the discriminant $\sqrt{1-2z-3z^2}$ in the two
+generating functions is attributed to Drinfeld--Sokolov reduction.
+Neither formula is the bar cohomology of the algebra it names, and the
+attribution is unnecessary.
+
+\begin{proposition}[The two sequences are one sequence]
+\label{prop:one-sequence}
+For all $n\ge0$,
+\[
+  M(n) = R(n)+R(n+1),
+  \qquad
+  M(n+1)-M(n) = R(n+2)-R(n).
+\]
+Hence the Virasoro sequence is $R(n+2)-R(n)$ and the $\mathfrak{sl}_2$
+sequence is $R(n+3)$: both are elementary transforms of one sequence, and
+their generating functions are rational in the single algebraic function
+$\sqrt{1-2z-3z^2}$ for that reason alone.
+\end{proposition}
+
+\begin{proof}
+Riordan numbers count Motzkin paths with no level step at height zero.
+Splitting a Motzkin path of length $n$ according to whether its first
+step is level gives $M(n)=R(n)+R(n+1)$, and subtracting consecutive
+instances gives the second identity. Both were checked termwise for
+$n<24$.
+\end{proof}
+
+\begin{proposition}[Neither formula is a cohomology of its algebra]
+\label{prop:not-cohomology}
+$\dim H^n(\mathfrak{sl}_2;k) = 1,0,0,1$ for $n=0,1,2,3$, and the
+Chevalley--Eilenberg chain dimensions are $1,3,3,1$. For an augmented
+algebra with $\dim\bar A = d$ the length-$r$ ordered bar term has
+dimension $d^r$, so for $\mathfrak{sl}_2$ the bar chain dimensions are
+$3,9,27,81,243$. The sequence $3,6,15,36,91$ is neither. For the Virasoro
+family, Theorem~\ref{thm:pentagonal-rigidity} gives $\dim H^n = 2$ for
+every $n\ge1$, so the sequence $1,2,5,12,30$ is not that cohomology
+either.
+\end{proposition}
+
+\begin{proof}
+The first assertion is Whitehead's lemma for the semisimple Lie algebra
+$\mathfrak{sl}_2$, whose cohomology is the invariants
+$H^*(\mathfrak{sl}_2;k)=\Lambda(c_3)$ with $c_3$ the Cartan class; it was
+recomputed by exact rational elimination on $\Lambda^\bullet
+\mathfrak{sl}_2^*$ with $d^2=0$ asserted. The chain counts are the
+binomial coefficients $\binom{3}{n}$ and the powers $3^r$. The second
+assertion is Theorem~\ref{thm:pentagonal-rigidity}.
+\end{proof}
+
+\begin{remark}[Where the Virasoro formula appears to hold]
+\label{rem:n2-coincidence}
+On degrees $n=1,2,3$ the true dimensions are $2,2,2$ by
+Theorem~\ref{thm:pentagonal-rigidity} while the asserted values are
+$1,2,5$. The two agree at $n=2$ and nowhere else. A formula tested at
+that degree alone reproduces the truth, which is the mechanism by which a
+constant sequence can be mistaken for a Motzkin difference.
+\end{remark}
+
+\begin{remark}[The type error]
+\label{rem:type-error}
+Beyond the numerical mismatch the formulas have the wrong type. The bar
+cohomology of $U(L_1)$ is bigraded by cohomological degree and weight,
+and its total dimension in each degree is finite only because Goncharova
+concentrates it in two weights. A formula assigning a single integer to
+each degree $n$, with no weight truncation named, does not specify an
+invariant of a graded chiral algebra with infinite-dimensional graded
+pieces. The sequences $1,2,5,12,30,\dots$ and $3,6,15,36,91,\dots$ are
+counts of planar objects; the passage from such a count to a homology
+dimension requires a differential, and no quasi-isomorphism to a Motzkin
+or Riordan complex has been constructed.
+\end{remark}
+
+The honest replacement of both formulas is
+Theorem~\ref{thm:bar-denominator}: the invariant of the ordered bar of a
+positively graded enveloping algebra that is computable in closed form is
+its Euler supercharacter, and that invariant is a denominator product.
+For $L_1$ it is $\prod_{n\ge1}(1-q^n)$; the underlying cohomology is two
+dimensional in every degree.
+
+\section{The order of dependence}
+
+The constructions above have distinct sources and none determines the
+next. The chiral coefficient is the system of $D$-modules with its
+factorisation equivalences and diagonal extension. The ordered bar is the
+transverse interval amplitude $\unit\otimes^L_A\unit$. An $E_2$
+enhancement of the transverse multiplication, or a flat meromorphic
+connection on two-dimensional configurations, supplies braid transport. A
+cyclic trace supplies the circle object. A clutching-compatible modular
+action supplies sewing over stable curves. Scalars occur at specified
+functors along
+\[
+  \FactD(X) \longrightarrow A \longrightarrow B^{\mathrm{ord}}(A)
+  \longrightarrow Z^{\mathrm{der}}(A) \longrightarrow \mathrm{Rep}(H)
+  \longrightarrow K_0 \longrightarrow \text{character},
+\]
+and an equality of scalars is explained only by a comparison morphism
+between the structured objects preceding them. A central charge, a Hall
+polynomial, a determinant, and an automorphic denominator are invariants
+at different positions in this sequence; they are not one universal
+scalar, and Corollary~\ref{cor:igusa} is an equality of characters
+produced by a named functor, not an identification of objects.
+
+\begin{thebibliography}{9}
+
+\bibitem{Bor88}
+R.\,E.~Borcherds,
+\emph{Generalized Kac--Moody algebras},
+J.\ Algebra \textbf{115} (1988), 501--512.
+
+\bibitem{BG96}
+A.~Braverman and D.~Gaitsgory,
+\emph{Poincar\'e--Birkhoff--Witt theorem for quadratic algebras of
+Koszul type},
+J.\ Algebra \textbf{181} (1996), 315--328.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+\emph{Chiral Koszul duality},
+Selecta Math.\ \textbf{18} (2012), 27--87.
+
+\bibitem{Gon73}
+L.\,V.~Goncharova,
+\emph{Cohomology of Lie algebras of formal vector fields on the line},
+Funktsional.\ Anal.\ i Prilozhen.\ \textbf{7} (1973), 6--14.
+
+\bibitem{GN97}
+V.~Gritsenko and V.\,V.~Nikulin,
+\emph{Siegel automorphic form corrections of some Lorentzian
+Kac--Moody Lie algebras},
+Amer.\ J.\ Math.\ \textbf{119} (1997), 181--224.
+
+\bibitem{Heu24}
+G.~Heuts,
+\emph{Koszul duality and a conjecture of Francis--Gaitsgory},
+preprint (2024).
+
+\bibitem{Kac90}
+V.\,G.~Kac,
+\emph{Infinite dimensional Lie algebras},
+3rd ed., Cambridge Univ.\ Press, 1990.
+
+\bibitem{Tor25}
+T.~Torii,
+\emph{On duoidal $\infty$-categories},
+J.\ Homotopy Relat.\ Struct.\ \textbf{20} (2025).
+
+\end{thebibliography}
+
+\end{document}

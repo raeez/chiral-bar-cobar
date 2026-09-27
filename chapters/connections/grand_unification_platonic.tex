@@ -1,0 +1,1197 @@
+% !TEX root = ../../main.tex
+% =====================================================================
+% Chapter: Grand Unification; The Chiral Bar--Cobar Adjunction
+%
+% A typed conditional assembly theorem for the bar--cobar lane
+%
+% $\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$
+% on $\BrMon^{\mathrm{comp}}_\infty$
+%
+% whose unit/counit assemble Theorems A, B, C, D, H only after the
+% signed log-FM, firewall, completion, trace, OCA, and comparison
+% packages have been supplied. The three avatars
+%
+% L1 = chain-level ensemble (genus-$g$ trace on $U_\cA$)
+% L2 = non-Tannakian categorical bar-cobar
+% L3 = $(\infty,1)$-adjunction on braided conilpotent factorisation
+% coalgebras
+%
+% are three presentations on their common comparison domain.
+%
+% Conventions:
+% - $U_\cA := \cA \bowtie \cA^!_\infty$ conditional envelope
+% (Drinfeld-double-type factorisation bialgebra: bowtie denotes
+% factorisation-matched twist, not set-theoretic join)
+% - $\BrMon^{\mathrm{comp}}_\infty$ = presentable $\infty$-category
+% of conilpotent braided monoidal compact-generated presheaves on
+% $\overline{\Conf}(X)$; equivalently, factorisation $\infty$-
+% coalgebras on the Ran-compactified configuration space (Lurie
+% HA~5.2; Francis-Gaitsgory chiral Koszul; Costello--Gwilliam II)
+% - $\Phi_d^{(\Sigma_{d-1},C)}$ = two-stage CY$_d$-to-chiral specialization (Vol III: ch:cy-to-chiral);
+% Rozansky-Witten category $\RW_4$ is the genuine output of
+% $\Phi_4|_{\mathrm{HK}}$ on hyperkaehler targets.
+% - Native-$E_n$ vs derived-$E_n$: native-$E_n$ is the structure
+% inherited from factorisation; derived-$E_n$ is the structure
+% exhibited by the derived centre. These never coincide on
+% non-formal inputs; the Grand Theorem tracks both.
+% =====================================================================
+
+\providecommand{\BrMon}{\mathsf{BrMon}}
+\providecommand{\BrMoncomp}{\BrMon^{\mathrm{comp}}_{\infty}}
+\providecommand{\Coalg}{\mathsf{Coalg}}
+\providecommand{\FactCoalg}{\Coalg^{\mathrm{fact}}_{\mathrm{conil}}}
+\providecommand{\FactAlg}{\mathsf{ChirAlg}}
+\providecommand{\BCh}{B^{\mathrm{ch}}}
+\providecommand{\OmCh}{\Omega^{\mathrm{ch}}}
+\providecommand{\Uch}{U^{\mathrm{ch}}}
+\providecommand{\RW}{\mathsf{RW}}
+\providecommand{\HK}{\mathrm{HK}}
+\providecommand{\trgenus}{\mathrm{tr}_{g}}
+\providecommand{\unitcounit}{\eta \dashv \varepsilon}
+\providecommand{\cZch}{\cZ^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\barBch}{\bar B^{\mathrm{ch}}}
+\providecommand{\Confbar}{\overline{\Conf}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\kappader}{\kappa}
+\providecommand{\Phich}{\Phi^{\mathrm{ch}}}
+\providecommand{\Psich}{\Psi^{\mathrm{ch}}}
+\providecommand{\Vrep}{\mathsf{Rep}}
+\providecommand{\locsys}{\mathrm{LocSys}}
+\providecommand{\DMod}{\mathcal{D}}
+\providecommand{\BarOrd}{B^{\mathrm{ord}}}
+\providecommand{\ChapterIntro}[1]{\par\noindent\textit{#1}\par\medskip}
+
+\chapter{Grand Unification: One Adjunction, Five Theorems, Three Avatars}
+\label{chap:grand-unification-platonic}
+\index{grand unification!bar-cobar adjunction|textbf}
+\index{chiral bar-cobar!universal property|textbf}
+\index{braided conilpotent factorisation coalgebras|textbf}
+\index{L1 avatar (chain-level ensemble)|textbf}
+\index{L2 avatar (non-Tannakian categorical bar-cobar)|textbf}
+\index{L3 avatar ($\infty$-categorical adjunction)|textbf}
+
+\ChapterIntro{Theorems A, B, C, D, H and the three avatars L1, L2,
+L3 meet only after the source and target of each map have been fixed.
+The ordered bar coalgebra, the Verdier--Koszul dual, the derived
+chiral centre, the physical bulk, and the scalar modular shadow are
+different objects. The adjunction
+\[
+ \OmCh \;\dashv\; \BCh
+ \colon
+ \FactAlg_X
+ \rightleftarrows
+ \BrMoncomp_X
+\]
+organises the bar--cobar lane. It does not by itself construct the
+signed logarithmic Fulton--MacPherson cooperad, the completed
+Positselski tower, the open--closed comparison, or the
+Calabi--Yau-to-chiral comparison. This chapter records the exact
+hypothesis packages under which the separate theorem surfaces assemble
+into one typed diagram.}
+
+\section{The Grand Theorem}
+\label{sec:grand-theorem}
+
+\subsection{Statement}
+\label{ssec:grand-theorem-statement}
+
+\begin{theorem}[Typed assembly theorem for chiral bar--cobar]
+\label{thm:grand-unification-platonic}
+\ClaimStatusConditional
+\textup{[Type: Open, Cat\&Chain, levels $1$--$5$, hypothesis package
+$\mathrm{LF}+\mathrm{FW}+H_A+\mathrm{CP}+H_H+H_D+\mathrm{OCA}+H_{L2}$.]}
+Fix a smooth projective curve $X/\CC$ and an augmented,
+conformal-weight filtered $E_1$-chiral algebra $\cA$ on $X$ with
+finite-dimensional weight windows. Assume the following packages.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Signed log-FM package $\mathrm{LF}$.} The relative
+logarithmic Fulton--MacPherson chains form a modular cooperad
+$C^{\log\mathrm{FM}}_{\mathrm{mod}}(X)$ with cocompositions
+\[
+ \Delta_\Gamma^{\log}=(\nu_\Gamma)_*\circ i_\Gamma^!
+\]
+including determinant-line signs, automorphism normalisations, Gysin
+residue maps, proper pushforwards, and homotopy-coherent
+coassociativity. With these signs the modular differential
+$D_{\mathrm{mod}}^{\log}$ satisfies
+$(D_{\mathrm{mod}}^{\log})^2=0$.
+\item \emph{Firewall package $\mathrm{FW}$.} Every comparison uses the
+five-object firewall of Convention~\ref{conv:master-five-object-firewall}
+and Theorem~\ref{thm:typed-verdier-koszul-firewall}:
+\[
+ \cA,\quad B^{\ord}(\cA),\quad
+ \cA^{\mathrm i}=C_X(s^{-1}V,s^{-2}R),\quad
+ \cA^!,\quad Z^{\der}_{\ch}(\cA).
+\]
+The quadratic presentation carries the comparison
+$q_\cA\colon\cA^{\mathrm i}\to B^{\ord}(\cA)$; its
+quasi-isomorphism is the conclusion of quadratic Koszul recognition.
+The counit $\OmCh B^{\ord}(\cA)\to\cA$ is bar--cobar inversion;
+Verdier duality produces $\cA^!$; Hochschild cochains produce
+$Z^{\der}_{\ch}(\cA)$. These arrows are not interchangeable.
+\item \emph{Theorem A package $H_A$.} The hypotheses of
+Theorem~\ref{thm:koszul-reflection} hold: augmentation,
+augmentation-ideal completion, finite-dimensional conformal-weight bar
+pieces, and the weight-completed/pro-conilpotent ambient for
+class~$\mathsf M$.
+\item \emph{Completed Positselski package $\mathrm{CP}$.} The finite
+weight windows of the chiral bar coalgebra form a strict
+Mittag--Leffler tower satisfying \textup{(CP1)--(CP3)} of
+Theorem~\ref{thm:chiral-positselski-weight-completed}. In particular
+all Milnor $\varprojlim^1$ terms in the co/contra comparison are
+controlled.
+\item \emph{Theorem H package $H_H(\cA;S)$.} A complete chart model
+$Q_\cA$ is compared quasi-isomorphically with
+$R\!\operatorname{Hom}_{\cA^e}(\cA,\cA)$ and carries a strong
+deformation retract onto a complex $K_{\cA,S}$ supported in the
+finite set~$S$.  A finite-window construction includes the
+incidence-compatible collision retracts, derived inverse-limit
+comparison, and ordered-to-symmetric averaging quasi-isomorphism.
+\item \emph{Trace package $H_D$.} The modular trace is defined on the
+signed log-FM cooperad and is compatible with clutching.  Its four
+components are the genus-one trace~$H_D^1$, the virtual Hodge
+comparison~$H_D^K$, the derived comparison~$H_D^{\mathrm{tr}}$, and
+the stable-graph functional~$H_D^{\mathrm{graph}}$.
+\item \emph{Comparison packages.} The physical-bulk reading requires
+the open--closed algebra comparison
+$\mathrm{OCA}$:
+$\mathcal O^{\mathrm{phys}}_{\mathrm{bulk}}(\cA)
+\xrightarrow{\sim} Z^{\der}_{\ch}(\cA)$. The categorical and
+Calabi--Yau faces require the two-stage functor
+$\Phi_d^{(\Sigma_{d-1},C)}
+=\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d$ with its gerbe, Hall,
+completion, and descent hypotheses; call this package $H_{L2}$.
+\end{enumerate}
+
+\medskip\noindent
+\textbf{Two-stage CY-to-chiral notation gate
+\textup{(}conditional\textup{)}.}
+\label{prop:gu-two-stage-cy-to-chiral-gate}
+\index{CY-to-chiral functor!two-stage gate}
+\index{Hall--Drinfeld double!notation gate}
+\textup{[}Type signature:
+$(\mathrm{CY}\to\mathrm{Open},\mathrm{comparison\ package},
+\mathrm{level}=0\to 3\to 5,
+\mathrm{hypothesis\ package}=H_{L2};
+\mathrm{reference\ curve}\ C;
+\mathrm{transverse\ manifold}\ \Sigma_{d-1};
+\mathrm{factorisation\ homology};
+\mathrm{gerbe/Hall/descent/completion})$\textup{]}
+The symbol $\Phi_d$ is not used as a one-stage functor on any
+load-bearing comparison surface. The typed notation is
+\begin{equation}
+\label{eq:gu-two-stage-cy-to-chiral}
+\Phi_d^{(\Sigma_{d-1},C)}
+:=
+\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d .
+\end{equation}
+Here $\PhiFA_d$ is the first-stage factorisation-algebra output of
+the CY$_d$ input; $\SpCh_{\Sigma_{d-1},C}$ is the chiral
+specialisation along an oriented transverse manifold
+$\Sigma_{d-1}$ followed by restriction to the smooth reference
+curve~$C$. The package $H_{L2}$ includes the factorisation-homology
+existence, descent, gerbe, completion, and finite-window hypotheses
+needed for the composition in \eqref{eq:gu-two-stage-cy-to-chiral}.
+
+The $d=2$ K3 slice and the $d\ge3$ Hall/CoHA slices are separate:
+\begin{equation}
+\label{eq:gu-cy-slice-separation}
+d=2:\ \text{Mukai-Heisenberg/K3 surface lane},\qquad
+d\ge3:\ \text{Hall--Drinfeld or CoHA comparison lane}.
+\end{equation}
+If a shifted Hochschild grading uses an $HH^{-1}$ slice, the convention
+is
+\begin{equation}
+\label{eq:gu-hh-minus-one-zero-slice}
+HH^{-1}=0
+\end{equation}
+unless the shifted complex defining the slice is supplied explicitly.
+
+The Hilbert-scheme Fock-space bridge is a character or state-space
+comparison. It is not a categorical lift unless a theorem supplies the
+functor on categories and proves preservation of the relevant bar,
+centre, or trace structures. The CoHA source is the cohomological Hall
+algebra attached to the stated CY/moduli problem in finite charge and
+weight windows. The Hall--Drinfeld double is the Drinfeld double of
+that windowed CoHA with its product, coproduct, Hopf pairing, and
+completion. The double structure is part of $H_{L2}$: it is available
+only after product--coproduct compatibility and nondegeneracy of the
+pairing have been proved on the same finite windows. The Lusztig
+specialisation, when used, is the integral-form root-of-unity
+specialisation, including the local convention $\hbar^2=-1/8$ on the
+K3/B-family lane; it must commute with the finite-window transition
+maps before any completed statement is made.
+
+Then the bar--cobar lane carries the presentable
+$\infty$-categorical adjoint pair
+\begin{equation}
+\label{eq:grand-adjunction-platonic}
+ \OmCh \;\dashv\; \BCh
+ \colon\;
+ \FactAlg_X
+ \;\rightleftarrows\;
+ \BrMoncomp_X,
+\end{equation}
+with left adjoint the chiral cobar construction and right adjoint the
+chiral bar construction, and the following typed readouts are valid.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Ordered twisting morphism.} The unit and counit of
+\eqref{eq:grand-adjunction-platonic} are represented, on the ordered
+chain presentation, by the universal Maurer--Cartan element
+\[
+ \Theta_\cA\in
+ \mathrm{Conv}\bigl(B^{\ord}(\cA),\cA\bigr),
+ \qquad
+ D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0,
+\]
+with $D^2=0$ on the modular logarithmic enhancement only under
+$\mathrm{LF}$.
+\item \emph{Koszul duality locus.} The full $\infty$-subcategory
+$\FactAlg^{\mathrm{Kos}}_X \subset \FactAlg_X$ on which $\varepsilon$
+is an equivalence is presented by chirally Koszul algebras and
+carries a symmetric duality $\cA \mapsto \cA^!$ induced from
+Verdier dualisation of factorisation $\DMod$-modules;
+equivalently $\BCh$ restricts there to an equivalence of
+presentable stable $\infty$-categories under $H_A$.
+\item \emph{Fixed-coalgebra second-kind comparison.} For a supplied
+strict completed chiral CDG-coalgebra
+$\widehat C=\varprojlim_N C_N$, the package $\mathrm{CP}$ gives
+\[
+D^{\mathrm{co}}_{\mathrm{ch}}(\widehat C\text{-}\mathrm{comod})
+\simeq
+D^{\mathrm{ctr}}_{\mathrm{ch}}(\widehat C\text{-}\mathrm{contra}).
+\]
+This equivalence compares module categories over the same coalgebra.
+The quadratic reconstruction map $q_A\colon A^{\mathrm i}\to B_X(A)$
+and the raw counit cone have their own type signatures.
+\item \emph{Centre-local-system complementarity.} The C0 comparison
+identifies the degree-zero strict-flat fibre with the ordinary centre
+local system~$\mathcal Z(\cA)$.  The represented involution~$\sigma$
+then splits
+\[
+ \mathbf C_g(\cA)
+ =R\Gamma(\overline{\mathcal M}_g,\mathcal Z(\cA))
+\]
+into its C1 eigensummands.  A supplied brace comparison
+$\iota_Z^{\mathrm{der}}$, followed by~$H^0$ and C0, relates this
+coefficient system to the Theorem~H derived centre
+$Z^{\der}_{\ch}(\cA)$.  The normalized Theorem~D trace gives
+$\kappa+\kappa^!\in\{0,13,250/3\}$ on the represented Vol~I
+witnesses.  The Bershadsky--Polyakov and Mukai rows carry their
+separate comparison packages.
+\item \emph{Deformation, Hodge, and graph traces.}  For $g\geq2$, the
+native class is
+$\operatorname{Obs}^{\mathrm{def}}_g(\cA)\in H^2(\Def_g(\cA))$.
+Under~$H_D^1$, the pointed class
+$\operatorname{Obs}^{\mathrm{def}}_{1,1}(\cA)$ has trace
+$\kappa(\cA)\lambda_1$.  Under~$H_D^K$, the scalar virtual object and
+its Hodge image are
+\[
+ \mathfrak O_g^K(\cA)=\kappa(\cA)\lambda_{-1}(\mathbb E_g),
+ \qquad
+ \operatorname{ch}_g\!\left(\mathfrak O_g^K(\cA)\right)
+ =(-1)^g\kappa(\cA)\lambda_g.
+\]
+The comparison with the deformation class is~$H_D^{\mathrm{tr}}$.
+Under~$H_D^{\mathrm{graph}}$, the genus-$g$ cohomological trace and
+graph functional are
+\begin{equation}
+\label{eq:genus-g-trace-platonic}
+ \trgenus^{\mathrm{cl}} \colon
+ \BCh(\cA)
+ \;\longrightarrow\;
+ H^\ast(\overline{\cM}_{g,n},\CC),
+ \qquad
+ \operatorname{Tr}^{\mathrm{graph}}_g\colon
+ H^\ast(\overline{\cM}_{g,n},\CC)\longrightarrow\CC .
+\end{equation}
+Their composite has numerical value
+\[
+F_g(\cA)
+=F_g^{\mathrm{sc}}(\cA)+\delta F_g^{\mathrm{cross}}(\cA),
+\qquad
+F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}},
+\]
+on the multi-weight scalar lane.
+\item \emph{Family-indexed Hochschild support.} The chiral Hochschild object
+$\ChirHoch^\bullet(\cA) := \cZch(\cA)$ is naturally equivalent, inside
+the adjunction~\eqref{eq:grand-adjunction-platonic}, to the
+endomorphism object
+$\End_{\BrMoncomp_X}(\BCh(\cA))$ once the centre-comparison map is
+part of the hypothesis package.  Theorem~H assigns a support set
+$S$ through $H_{\mathrm H}(\cA;S)$.  Its basic benchmarks are the
+Virasoro support $\{0,2,3\}$ and the rank-one even free-superboson
+dimensions $(2,1,0,\ldots)$.
+\item \emph{Three-avatar presentation.} The adjoint
+pair~\eqref{eq:grand-adjunction-platonic} admits three canonical
+presentations on the common domain where their comparison packages
+hold:
+\begin{itemize}
+\item \emph{L1 (chain-level ensemble).} Presented on chain-complexes
+ in the ordered-configuration model: $\BCh(\cA)$ is $\BarOrd(\cA) =
+ T^c(s^{-1}\bar\cA)$ equipped with the Beilinson-Drinfeld
+ factorisation differential; $\OmCh$ is the ordered cobar
+ construction; unit/counit are the explicit Mittag-Leffler
+ witnesses of Chapter~\ref{chap:bar-cobar} and
+ Theorem~\ref{thm:chiral-positselski-weight-completed}.
+\item \emph{L2 (non-Tannakian categorical).} Presented on the
+ presentable stable $\infty$-category
+ $\Vrep(\cA) := \cA\text{-}\mathsf{mod}^{\mathrm{fact}}$ as the
+ bar--cobar reconstruction on braided module categories; the
+ formal-locus restriction recovers the Tannakian reconstruction,
+ while the non-formal complement is detected by $\RW_d$-type
+ category-valued outputs of the Calabi--Yau specialization
+ $\Phi_d^{(\Sigma_{d-1},C)}$ under $H_{L2}$.  Formality of the
+ chiral $A_\infty$-structure and quadratic Koszul recognition are
+ separate coordinates; the latter is carried by
+ $q_A\colon A^{\mathrm i}\to B_X(A)$ for each archetype row.
+\item \emph{L3 ($\infty$-categorical, genus-$g$).} Presented on the
+ Lurie-Francis-Gaitsgory machinery \cite[HA~5.2]{LurieDAGX}, \cite{FG12}
+ of factorisation $\infty$-operads with values in presentable
+ stable $\infty$-categories; the genus-$g$ trace is the homotopy
+ fixed-point spectrum of the $S^1$-action on $\Uch_\cA :=
+ \cA \bowtie_{\infty} \cA^!_\infty$ restricted to
+ $\overline{\cM}_{g,n}$ only after the universal-envelope and trace
+ packages have been supplied.
+\end{itemize}
+Each clause retains its displayed source, target, and comparison map.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Open construction problems]
+\label{rem:gu-missing-packages}
+\ClaimStatusConditional
+The theorem is an assembly theorem.  Its unrestricted form is
+equivalent to the following construction problems:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item construct the signed relative log-FM modular cooperad, including
+orientation lines, Gysin residues, proper pushforwards, automorphism
+normalisations, and homotopy-coherent coassociativity;
+\item prove \textup{(CP1)--(CP3)} for every class-$\mathsf M$ tower
+used downstream, including the Hom-cone Mittag--Leffler calculation;
+\item identify the Hochschild defect complex
+$K^\bullet_{\mathrm{DH}}(\cA)$ off the PBW/generic locus and prove
+acyclicity before claiming concentration;
+\item construct OCA whenever the derived chiral centre is read as the
+physical bulk;
+\item construct the Hall--Borcherds chain datum
+$(\beta,\delta,\varepsilon,\tau)$ before promoting $\Delta_5$ from a
+scalar denominator to an operator-level theorem;
+\item prove the two-stage CY-to-chiral functor
+$\SpCh_{\Sigma_{d-1},C}\circ\PhiFA_d$ with completion, gerbe, and
+descent data before using L2 as a theorem rather than a recognition
+target.
+\end{enumerate}
+\end{remark}
+
+\subsection{The five theorem corollaries}
+\label{ssec:grand-theorem-five-corollaries}
+
+\begin{corollary}[Theorem~A is the adjunction itself]
+\label{cor:gu-theorem-a-platonic}
+\ClaimStatusConditional
+Under the Theorem A package $H_A$, the bar--cobar clause of
+Theorem~\ref{thm:grand-unification-platonic} is exactly
+Theorem~\ref{thm:koszul-reflection}: the ordered chiral bar functor
+is right adjoint to the ordered chiral cobar functor, and the counit
+\[
+ \OmCh_X B^{\ord}_X(\cA)\longrightarrow \cA
+\]
+is a quasi-isomorphism on the Koszul/complete locus.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:koszul-reflection} supplies the Hom-bijection, the
+universal twisting morphism, and the counit quasi-isomorphism under
+augmentation, completion, and finite-window hypotheses. The assembly
+theorem imports exactly those hypotheses as $H_A$ and adds no raw
+class-$\mathsf M$ direct-sum statement.
+\end{proof}
+
+\begin{corollary}[Theorem~B is quadratic recognition]
+\label{cor:gu-theorem-b-platonic}
+\ClaimStatusConditional
+For a connected positive quadratic chiral presentation, Theorem~B is
+carried by the comparison
+\[
+q_A\colon A^{\mathrm i}\longrightarrow B_X(A).
+\]
+Under $H_{\mathrm{CL}}(A,A^{\mathrm i},\tau_{\mathrm i})$, its
+quasi-isomorphism is equivalent to acyclicity of the two quadratic
+twisted tensor products and to concentration of the PBW/bar spectral
+sequence on the Koszul diagonal.  The package \textup{(CP1)--(CP3)}
+governs the adjacent fixed-coalgebra co--contra comparison.
+\end{corollary}
+
+\begin{proof}
+This is Theorem~\ref{thm:theorem-B-scope-quadratic-recognition}.
+Theorem~\ref{thm:chiral-positselski-weight-completed} has source and
+target the second-kind module categories over a fixed completed
+coalgebra, and therefore supplies a neighbouring comparison.
+\end{proof}
+
+\begin{corollary}[Theorem~C and its normalized scalar trace]
+\label{cor:gu-theorem-c-platonic}
+\ClaimStatusConditional
+Property~\textup{(iv)} of
+Theorem~\ref{thm:grand-unification-platonic} is the C0/C1
+centre-local-system decomposition.  After the normalized Theorem~D
+trace, the computed Vol~I landmark values are
+$\{0,13,250/3\}$.  The Mukai arithmetic value~$8$ has its conjectural
+chiral interpretation under~$H_{\mathsf B}$, while the
+Bershadsky--Polyakov value~$25/3$ remains conditional on its genus-one
+curvature calculation.  These statuses are recorded in
+Convention~\ref{conv:theorem-c-bucket}.
+\end{corollary}
+
+\begin{proof}
+Chapter~\ref{ch:landscape-census} and
+Chapter~\ref{ch:theorem-C-refinements-platonic} compute the listed
+scalar values on their family witnesses.  Theorem~C supplies the C1
+eigensummands of~$\mathbf C_g(\cA)$, and Theorem~D supplies their
+normalized trace.  The object firewall keeps
+$B^{\ord}(\cA)$, $Z^{\der}_{\ch}(\cA)$,
+$\mathcal Z(\cA)$, and the resulting scalar in their native targets.
+\end{proof}
+
+\begin{corollary}[Theorem~D separates deformation, Hodge, and graph traces]
+\label{cor:gu-theorem-d-platonic}
+\ClaimStatusConditional
+Property~\textup{(v)} of
+Theorem~\ref{thm:grand-unification-platonic} gives
+$\operatorname{Obs}^{\mathrm{def}}_g\in H^2(\Def_g)$ for $g\geq2$,
+$\operatorname{tr}_1\operatorname{Obs}^{\mathrm{def}}_{1,1}
+=\kappa\lambda_1$ under~$H_D^1$,
+$\mathfrak O_g^K=\kappa\lambda_{-1}(\mathbb E_g)$ and
+$\operatorname{ch}_g(\mathfrak O_g^K)=(-1)^g\kappa\lambda_g$ under
+$H_D^K$, and, under~$H_D^{\mathrm{graph}}$,
+\[
+F_g(\cA)=F_g^{\mathrm{sc}}(\cA)
+       +\delta F_g^{\mathrm{cross}}(\cA),
+\qquad
+F_g^{\mathrm{sc}}(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}.
+\]
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:modular-characteristic} gives these four clauses.
+The assembly theorem imports their trace and clutching hypotheses as
+$H_D$.
+\end{proof}
+
+\begin{corollary}[Theorem~H is family-indexed Hochschild support]
+\label{cor:gu-theorem-h-platonic}
+\ClaimStatusConditional
+For every package $H_H(\cA;S)$, property~\textup{(vi)} of
+Theorem~\ref{thm:grand-unification-platonic} identifies
+$\ChirHoch^\bullet(\cA)$ with the cohomology of $K_{\cA,S}$ and
+places its support in~$S$:
+\[
+ \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S.
+\]
+\end{corollary}
+
+\begin{proof}
+Property~(vi) names the centre-comparison map from
+$\End_{\BrMoncomp_X}(\BCh(\cA))$ to the chiral chart complex.
+The strong deformation retract in $H_H(\cA;S)$ computes its
+cohomology and support.  The bounded Virasoro support
+$\{0,2,3\}$ and rank-one even superboson dimensions
+$(2,1,0,\ldots)$ enter through their respective bounded-to-chart
+quasi-isomorphisms.
+\end{proof}
+
+\subsection{The three-avatar corollaries (L1, L2, L3)}
+\label{ssec:grand-theorem-three-avatars}
+
+\begin{corollary}[L1; chain-level ensemble via genus-$g$ trace]
+\label{cor:gu-L1-platonic}
+\ClaimStatusConditional
+Under $\mathrm{LF}$, $H_A$, $\mathrm{CP}$, and $H_D$, the L1 avatar is
+the ordered chain presentation of the bar--cobar lane, evaluated by
+the modular trace along $\overline{\cM}_{g,n}\to\mathrm{pt}$. On that
+scope the displayed identity is
+\begin{equation}
+\label{eq:L1-avatar-platonic}
+ \trgenus \!\left( \OmCh(\BCh(\cA)) \right)
+ \;=\;
+ \int_{\overline{\cM}_{g,n}} \Theta_{\cA}^{\wedge g}
+ \;=\;
+ F_g(\cA).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The ordered chain model gives $\BCh(\cA)=B^{\ord}(\cA)$ and
+$H_A+\mathrm{CP}$ supplies the completed counit comparison. The trace
+package $H_D$ is exactly the extra datum required to integrate
+$\Theta_\cA^{\wedge g}$ over the modular boundary. Without $H_D$ the
+left side remains a bar--cobar object and no genus-$g$ scalar
+identity follows.
+\end{proof}
+
+\begin{corollary}[L2; non-Tannakian categorical bar--cobar]
+\label{cor:gu-L2-platonic}
+\ClaimStatusConditional
+On the $H_{L2}$ comparison domain and on the non-formal complement,
+the $\infty$-adjunction restricts to
+a categorical bar--cobar adjunction
+\[
+ \OmCh^{\mathrm{cat}} \;\dashv\; \BCh^{\mathrm{cat}}
+ \colon
+ \mathsf{BrCat}^{\mathrm{cat}}_X
+ \;\rightleftarrows\;
+ \mathsf{BrCat}^{\mathrm{cat,cocomp}}_X
+\]
+on braided monoidal $\infty$-categories of factorisation modules. In
+this domain the formal locus maps to the Tannakian fixed locus. The
+non-Tannakian stratum is detected by failure of the categorical bar to
+be fibrewise semisimple; the Rozansky-Witten category $\RW_4$ is the
+genuine output of $\Phi_4|_{\HK}$ in the constructed hyperkaehler
+cases, with non-Tannakian character witnessed by the categorical
+structure of $\RW_4$.  The non-Tannakian comparison tracks formality
+of the chiral $A_\infty$-structure.  Membership in the Koszul locus is
+the family-specific quasi-isomorphism status of~$q_A$.
+\end{corollary}
+
+\begin{proof}[Proof sketch and scope]
+The categorical bar--cobar of Francis-Gaitsgory
+$(\infty,1)$-operadic machinery \cite{FG12} restricts to
+$\BrMoncomp_X$ by the presentability of
+$\cA\text{-}\mathsf{mod}^{\mathrm{fact}}$; the non-Tannakian
+stratum is detected, on the $H_{L2}$ comparison domain, by the
+complement of the locus where fibrewise exact $\otimes$-functors into
+$\Vrep_\infty$ are representable. On the hyperkaehler targets for
+which the Vol~III chiral-to-CY functor $\Phi_4$ has been constructed,
+the Rozansky-Witten category $\RW_4$ gives the concrete witness; the
+absence of an exceptional collection is supporting evidence, not an
+if-and-only-if criterion.
+\end{proof}
+
+\begin{corollary}[L3; $(\infty,1)$-categorical adjunction]
+\label{cor:gu-L3-platonic}
+\ClaimStatusConditional
+The Lurie-Francis-Gaitsgory
+$(\infty,1)$-presentation of bar--cobar
+\cite[HA~5.2.3]{LurieDAGX}, \cite{FG12} is property~(vii.L3) of
+Theorem~\ref{thm:grand-unification-platonic}; the two presentations
+L1 and L3 are related by factorisation Dold-Kan
+\cite[HA~1.2.3]{Lurie17} on their common completed finite-window
+domain, and L2 sits between them only under the comparison package
+$H_{L2}$.
+\end{corollary}
+
+\section{Proof of the Grand Theorem}
+\label{sec:grand-theorem-proof}
+
+\subsection{What is assembled}
+\label{ssec:grand-theorem-new-content}
+
+The theorem does not assert that a single presentability argument
+constructs every object in the programme. It assembles already named
+lanes after their hypotheses have been supplied. Clause~(i) is the
+ordered Maurer--Cartan bar lane. Clause~(ii) is the Koszul locus of
+Theorem~\ref{thm:koszul-reflection}. Clause~(iii) is the completed
+Positselski theorem of
+Theorem~\ref{thm:chiral-positselski-weight-completed}. Clause~(iv) is
+the Theorem~C decomposition of the strict-flat centre-local-system
+complex; clause~(v) applies Theorem~D on the trace lane and includes its
+scalar shadow. Clause~(vi) is Theorem~H under its PBW
+and completion hypotheses. Clause~(vii) records the L1/L2/L3
+comparison only on the common domain where the comparison packages
+exist.
+
+\begin{proof}[Proof of Theorem~\ref{thm:grand-unification-platonic}]
+\emph{Step 1: the bar--cobar adjunction.}
+Theorem~\ref{thm:koszul-reflection} and the Francis--Gaitsgory
+universal twisting property \cite[\S6]{FG12} give the adjunction
+\eqref{eq:grand-adjunction-platonic} in the ordered, augmented,
+complete chiral ambient. The finite-window and completion hypotheses
+in $H_A$ are exactly the hypotheses under which the counit is a
+quasi-isomorphism.
+
+\emph{Step 2: modular logarithmic enhancement.}
+The ordered bar differential satisfies the Maurer--Cartan equation on
+the fixed-curve Ran model. Passing to modular logarithmic families
+adds the planted-forest, collision, sewing, and trace terms. The
+assumption $\mathrm{LF}$ supplies the missing determinant-line signs,
+Gysin residues, proper pushforwards, automorphism normalisations, and
+homotopy-coherent coassociativity; hence
+$(D_{\mathrm{mod}}^{\log})^2=0$ is available exactly on that surface.
+
+\emph{Step 3: completed inversion.}
+Theorem~\ref{thm:chiral-positselski-weight-completed} identifies the
+completed coderived comodule category with the completed
+contraderived contramodule category after \textup{(CP1)--(CP3)}. This
+is the fixed-coalgebra content of clause~(iii).  For class~$\mathsf M$,
+the raw counit is governed by the open cone
+$\operatorname{Cone}(\varepsilon_A^{\mathrm{raw}})$.
+
+\emph{Step 4: centre, trace, and scalar lanes.}
+Convention~\ref{conv:master-five-object-firewall} and
+Theorem~\ref{thm:typed-verdier-koszul-firewall} separate bar--cobar
+inversion, Verdier duality, and Hochschild centre formation. The
+scalar constants of Theorem~C are imported from
+Chapter~\ref{ch:landscape-census}; the trace formula of Theorem~D is
+imported from Chapter~\ref{ch:higher-genus}; and Theorem~H is imported
+from Theorem~\ref{thm:main-koszul-hoch}. Each import is made only with
+its corresponding package $H_H$ or $H_D$.
+
+\emph{Step 5: comparison faces.}
+OCA converts the derived centre into a physical bulk when such a
+statement is made. The L2 face is supplied by $H_{L2}$ and by
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic}; without it, the
+non-Tannakian and Calabi--Yau faces are recognition targets rather
+than consequences of the bar--cobar adjunction.
+\qedhere
+\end{proof}
+
+\subsection{Primary references for the $\infty$-categorical surface}
+\label{ssec:grand-theorem-primary-references}
+
+The proof uses: Lurie \cite[Higher Algebra~5.2, 5.5]{Lurie17} for
+presentable $\infty$-adjoint-functor theory and Dold-Kan; Francis-
+Gaitsgory \cite{FG12} for the chiral Koszul duality adjunction at
+the $(\infty,1)$-categorical level; Costello-Gwilliam \cite{CG17,CG-vol2}
+for the factorisation-algebra presentation on the curve~$X$. The
+chain-level witnesses are the standard Beilinson-Drinfeld
+\cite{BD04} presentation.
+
+\section{Avatar corollaries expanded}
+\label{sec:avatar-corollaries-expanded}
+
+\subsection{L1 as a trace identity on the universal envelope}
+\label{ssec:L1-trace-identity}
+
+\begin{proposition}[L1 trace identity]
+\label{prop:L1-trace-identity-platonic}
+\ClaimStatusConditional
+\textup{[Type signature: Open quadrant; universal-envelope and
+stable-graph trace presentations; levels $4\to5$; universal-envelope,
+completion, and $H_D^{\mathrm{graph}}$ packages.]}
+Assume the universal-envelope comparison, the graph package
+$H_D^{\mathrm{graph}}$, and
+the completion packages of Theorem~\ref{thm:grand-unification-platonic}.
+Then the constructed genus-$g$ trace of the envelope
+$\Uch_\cA := \cA \bowtie \cA^!_\infty$ agrees with the chain-level integration of
+$\Theta_\cA$ along $\overline{\cM}_{g,n}$:
+\begin{equation}
+\label{eq:L1-trace-identity-platonic}
+ \trgenus(\Uch_\cA)
+ \;=\;
+ F_g(\cA)
+ \;=\;
+ \kappa(\cA)\,\lambda_g^{\mathrm{FP}}
+ \;+\;
+ \delta F_g^{\mathrm{cross}},
+\end{equation}
+with $\delta F_g^{\mathrm{cross}}$ the cross-modular correction.  The
+scalar-diagonal graph package gives $\delta F_g^{\mathrm{cross}}=0$.
+\end{proposition}
+
+\begin{proof}
+The universal-envelope comparison supplies the object
+$\Uch_\cA$ and the map from its trace to the ordered bar trace. The
+graph package $H_D^{\mathrm{graph}}$ supplies integration over the
+signed modular log-FM boundary. Theorem~D gives the displayed
+diagonal and cross-channel terms.
+\end{proof}
+
+\subsection{L2 as the non-Tannakian recognition surface}
+\label{ssec:L2-non-tannakian}
+
+On the $H_{L2}$ comparison domain the non-Tannakian stratum is read
+through the locus on which $\Phi_d^{(\Sigma_{d-1},C)}$ produces
+category-valued outputs (Vol~III, chapter
+\texttt{cy\_to\_chiral.tex}). For $d = 4$ in the constructed
+hyperkaehler cases, $\Phi_4^{(\Sigma_3,C)}|_{\HK}$ produces $\RW_4$,
+the Rozansky-Witten category; failure of an exceptional collection is
+a witness for non-Tannakian behaviour, not a classification theorem.
+
+\begin{proposition}[Non-Tannakian projection]
+\label{prop:L2-non-tannakian-platonic}
+\ClaimStatusConditional
+Conditional on Conjecture~$\Pi_3^{\mathrm{ch}}$ of
+Vol~III (chain-level CY-A$_3$), the non-Tannakian stratum of L2
+is detected by the conditional image of the non-formal CY$_d$ targets
+$T$, i.e.\ the targets for which
+$\Phi_d^{(\Sigma_{d-1},C)}(T)$ lies in the non-formal categorical
+stratum.  Formality and quadratic Koszul recognition are recorded by,
+respectively, the transferred higher products and the comparison map
+$q_A$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Under $\Pi_3^{\mathrm{ch}}$, the CY$_3$-to-chiral correspondence
+$\Phi_3^{(\Sigma_2,C)}=\SpCh_{\Sigma_2,C}\circ\PhiFA_3$
+is defined on chain-level; its output is chirally formal on the
+constructed formal comparison locus (classes G and L), and carries
+the displayed higher products on the constructed non-formal comparison
+locus (classes C and M).  The Koszul status of every output is computed
+by its map~$q_A$.  The formality-locus
+restriction of L2 recovers the Tannakian stratum on this comparison
+domain; the non-formal complement supplies the detected
+non-Tannakian stratum. The Rozansky-Witten category is the witness for
+$d=4$ on the constructed hyperkaehler targets.
+\end{proof}
+
+\subsection{L3 as a presentable $\infty$-category adjunction}
+\label{ssec:L3-infinity}
+
+The L3 presentation is the most flexible for stating universal
+properties. The adjunction $\OmCh \dashv \BCh$ in L3 form is
+characterised by the $\infty$-universal property: $\BCh(\cA)$ is
+the classifying object for conilpotent braided factorisation
+coalgebras receiving a chiral twisting morphism from $\cA$. This is
+the $(\infty,1)$-categorical statement for the bar--cobar lane. The
+trace, centre, physical-bulk, and CY comparison faces enter only
+through the packages named in
+Theorem~\ref{thm:grand-unification-platonic}.
+
+\section{The typed assembly diagram}
+\label{sec:single-infty-adjunction}
+
+Theorem~\ref{thm:grand-unification-platonic} fixes the common
+bar--cobar spine:
+$\infty$-adjunction
+\[
+ \OmCh \;\dashv\; \BCh
+ \colon\;
+ \FactAlg_X
+ \;\rightleftarrows\;
+\BrMoncomp_X,
+\]
+whose domain is chiral algebras on $X$, whose codomain is
+braided conilpotent factorisation coalgebras on $\Confbar(X)$, and
+whose unit/counit control the inversion lane. The categorical target
+(L2), the chain-level trace (L1), and the genus-$g$ categorical trace
+(L3) are comparison faces of this spine only after their listed
+hypotheses have been supplied.
+
+\subsection{Three-volume corollary of the Grand Theorem}
+\label{ssec:three-volume-corollary}
+
+\begin{corollary}[Three volumes, three faces of the adjunction]
+\label{cor:three-volume-platonic}
+\ClaimStatusConditional
+The three Volumes of the chiral bar--cobar theory develop
+complementary faces of the
+adjunction~\eqref{eq:grand-adjunction-platonic}, each using both
+L1 and L3 presentations and restricting the categorical face L2
+to a different geometric locus. This is a conditional comparison
+statement: the Volume~I and Volume~II faces below are valid in their
+stated scopes, and the Volume~III CY$_3$ gerbe-twisted face has
+exactly the conditional strength of
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic}. Volume~I develops the chain-level
+(L1) and $(\infty,1)$-categorical (L3) presentations on a smooth
+projective curve $X$, with the ordered bar complex
+$\BarOrd(\cA) = T^c(s^{-1}\bar\cA)$ as the chain-level anchor.
+Volume~II develops the L3 presentation on
+$\mathrm{SC}^{\mathrm{ch,top}}$-algebras over
+$\Confbar(X) \times \bR^k$, with transverse topological structure
+extending the L3 machinery. Volume~III develops L2 in the
+CY-to-chiral direction via the two-stage specialization
+$\Phi_d^{(\Sigma_{d-1},C)}$, and is the source
+of the non-Tannakian stratum of L2 as
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic} exhibits for $d = 3$.
+\end{corollary}
+
+\begin{proof}
+The statement is obtained by applying the three comparison corollaries
+with their hypotheses left visible. Volume~I supplies the ordered
+chain model and the completed bar--cobar adjunction. Volume~II enters
+only after the transverse topological $\SCchtop$ comparison is
+provided. Volume~III enters only through
+$\Phi_d^{(\Sigma_{d-1},C)}$ and the gerbe-twisted L2 package of
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic}. Thus the corollary
+records a diagram of conditional restrictions between the three
+volumes.
+\end{proof}
+
+\section{Sources and comparison maps}
+\label{sec:grand-theorem-verification}
+
+The numerical inputs imported into the typed assembly have their own
+verification sources. The assembly itself remains conditional on the
+packages in Theorem~\ref{thm:grand-unification-platonic}.
+\begin{itemize}
+\item \emph{Source for property~(i).} Chain-level: the
+universal twisting morphism $\Theta_\cA$ is constructed explicitly
+in Chapter~\ref{chap:bar-cobar}.
+The Francis--Gaitsgory reduced-operad equivalence supplies the
+categorical ambient; $H_{\mathrm{fact}}$ carries the comparison with
+the chiral factorization subcategory.
+\item \emph{Source for property~(iii).}  Positselski's theorem gives
+the fixed-coalgebra coderived/contraderived equivalence.  Chiral
+transport is the separate twisting-data package of
+Chapter~\ref{ch:theorem-B-scope-platonic}.
+\item \emph{Source for property~(iv).} The computed Vol~I scalar set
+is $\{0,13,250/3\}$.  The Bershadsky--Polyakov value is open pending
+its genus-one minimal-DS trace, and the Mukai integer~$8$ becomes a
+chiral conductor under~$H_{\mathsf B}$; see
+Convention~\ref{conv:theorem-c-bucket}.
+\item \emph{Source for property~(v).}  The genus-one trace,
+virtual Hodge object, signed Hodge image, and stable-graph functional
+are the four conditional clauses of
+Theorem~\ref{thm:modular-characteristic}.  The genus-one and clutching
+chapters construct the corresponding comparison maps.
+\item \emph{Source for property~(vi).}  The family package
+$H_H(\cA;S)$ supplies the chart retract and hence support in~$S$.
+Bakalov--De Sole--Kac supply the bounded Virasoro and rank-one even
+free-superboson benchmarks; chart transport is a separate comparison.
+\end{itemize}
+
+\section{Open threads}
+\label{sec:grand-theorem-open-threads}
+
+The L1 and L3 faces close only on the completed finite-window domain
+specified above. The L2 face is a comparison target until the
+Costello--Li curved-HKR transfer \cite{CL20}, the gerbe/descent
+package, and the two-stage CY-to-chiral specialization have been
+constructed for the chosen compact CY$_3$ target. The theorem below
+records that conditional chain-level scope; Vol~III
+(\texttt{cy\_to\_chiral.tex}) contains the corresponding CY-side
+formulation.
+
+\begin{theorem}[L2 chain-level functor into gerbe-twisted braided monoidal $\infty$-category]
+\label{thm:L2-chain-level-gerbe-platonic}
+\ClaimStatusConditional
+Let $X$ be a compact CY$_3$ without a full exceptional collection
+(Bondal-Van den Bergh non-representability \cite{BondalVdB03});
+let $\alpha_X \in H^3(X,\CC^\times)$ denote the Brauer-type gerbe
+class obstructing strictification of the braided $\infty$-category
+of perfect complexes to an honest bialgebra; let
+$\mathrm{HKR}_\infty^{\mathrm{curv},\hbar}$ denote the
+curved-$L_\infty$ quasi-isomorphism of Costello-Li \cite{CL20}.
+Conditional on the BCOV transfer of \cite{CL20} extending to the
+genus range used on $X$, and on the gerbe/descent data of
+\S\ref{ssec:pr-alpha-X-local-global}, there is a chain-level
+$\infty$-functor
+\begin{equation}
+\label{eq:Phi-3-ch-platonic}
+ \Phi_3^{\mathrm{ch}}
+ \;\colon\;
+ \mathrm{Perf}^{\mathrm{CY3}}_\infty(X)
+ \;\longrightarrow\;
+ \BrMoncomp_{X,\alpha_X}
+\end{equation}
+valued in the gerbe-twisted presentable $\infty$-category of
+conilpotent braided-monoidal compact-generated factorisation
+coalgebras on $\Confbar(X)$. The functor~\eqref{eq:Phi-3-ch-platonic}
+satisfies three properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chain-level realisation.} The underlying chain-level
+model of $\Phi_3^{\mathrm{ch}}(X)$ is the explicit chain-level bar
+$B^{\mathrm{cat}}(D^b(X))$ (\S~\ref{ssec:explicit-bar-model}),
+with $L_\infty$-structure inherited from
+$\mathrm{HKR}_\infty^{\mathrm{curv},\hbar}$ and with
+gerbe-twisting $\alpha_X$ acting on the associator.
+\item \emph{Gerbe compatibility.} The class
+$\alpha_X \in H^3(X,\CC^\times)$ is the specified obstruction datum
+for lifting $\Phi_3^{\mathrm{ch}}$ from the gerbe-twisted target
+$\BrMoncomp_{X,\alpha_X}$ to $\BrMoncomp_X$. A strict untwisted lift
+exists only after a separate descent computation trivialises this
+class.
+\item \emph{Categorical-H compatibility.} The ambient Hochschild
+complex $\mathrm{ChirHoch}^\bullet(\Phi_3^{\mathrm{ch}}(X))$ is
+equivalent to the Costello-Li BCOV ambient Hochschild complex,
+concentrated in the three-step filtration of Theorem~H only under the
+package $H_H$ of Theorem~\ref{thm:grand-unification-platonic}.
+\end{enumerate}
+Consequently, on the subcategory of compact CY$_3$ targets for
+which the Costello-Li BCOV transfer and descent package are
+established, the non-Tannakian stratum of the L2 avatar of
+Theorem~\ref{thm:grand-unification-platonic} is detected by
+the non-formal chain-level CY$_3$ targets in the conditional image of
+$\Phi_3^{\mathrm{ch}}$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1 (lift the derived category to a chain-level $\infty$-functor).}
+On a compact CY$_3$, $D^b(X)$ admits no full exceptional
+collection \cite{BondalVdB03}, and the derived-to-bialgebra
+construction via semiorthogonal decomposition fails. By
+\cite[HA~5.1.2.2, 5.1.4.2]{LurieDAGX}, the $\infty$-category
+$\mathrm{Perf}^{\mathrm{CY3}}_\infty(X)$ of perfect complexes on a
+CY$_3$ is symmetric-monoidally enriched over
+$(\Coalg^{\mathrm{fact}}_{\mathrm{conil}})_\infty$; its underlying
+braided monoidal structure lands in $\BrMoncomp_X$ up to a
+Brauer-type twist.
+
+\emph{Step 2 (identify the gerbe obstruction).}
+The Brauer-type twist is controlled by $H^3(X,\CC^\times)$, the
+standard obstruction group for strictifying a braided
+$\infty$-category to an honest bialgebra \cite{Toen07}, giving the
+specified class $\alpha_X = [\mathrm{Gerbe}(\Phi_3)]$. A full
+exceptional collection is a sufficient strictification datum in cases
+where the semiorthogonal bialgebra construction is available; absence
+of such a collection does not by itself compute $\alpha_X$. Thus the
+target is $\BrMoncomp_{X,\alpha_X}$ until a separate descent
+computation proves $\alpha_X=0$.
+
+\emph{Step 3 (construct the $L_\infty$-structure via BCOV transfer).}
+The Costello-Li curved $L_\infty$-quasi-isomorphism
+$\mathrm{HKR}_\infty^{\mathrm{curv},\hbar}$ of \cite{CL20}
+transfers the Dolbeault-BCOV $L_\infty$-structure on
+$\mathrm{PV}^\bullet(X)[[\hbar]]$ to the chain-level
+$\infty$-operadic structure on
+$\mathrm{Perf}^{\mathrm{CY3}}_\infty(X)$ when the $H_{L2}$ transfer
+datum has been supplied. The quintic discussion below records the
+finite genus range used in the model calculation
+(\S~\ref{ssec:BCOV-transfer-X5}); extension to another compact
+CY$_3$ is part of the theorem's scope condition, not a consequence of
+the local model alone. Combining with Step~2 gives the chain-level
+$L_\infty$-data of
+$\Phi_3^{\mathrm{ch}}(X) \in \BrMoncomp_{X,\alpha_X}$.
+
+\emph{Step 4 (verify the object is well-defined).}
+The conditional object requires three checks: compact generation of the
+chosen chain model, conilpotence of the categorical bar coproduct, and
+factorisation compatibility on $\Confbar(X)$. These checks are part of
+the $H_{L2}$ package; \S~\ref{ssec:BCOV-transfer-X5} and
+\S~\ref{ssec:explicit-bar-model} record the model calculations rather
+than an all-CY$_3$ theorem.
+
+\emph{Step 5 (paste to the explicit bar object).}
+The $\infty$-functor $\Phi_3^{\mathrm{ch}}$ factors through the
+explicit chain model
+$B^{\mathrm{cat}}(D^b(X)) \in \BrMoncomp_{X,\alpha_X}$ after the
+descent datum of Theorem~\ref{thm:pr-alpha-X-local-global} has been
+chosen. The resulting diagram of $\infty$-functors
+\begin{equation}
+\label{eq:Phi-3-ch-commutative-platonic}
+\begin{tikzcd}[column sep=large, row sep=large]
+\mathrm{Perf}^{\mathrm{CY3}}_\infty(X)
+ \arrow[r, "\Phi_3^{\mathrm{ch}}"]
+ \arrow[d, "\mathrm{HKR}_\infty^{\mathrm{curv},\hbar}"']
+&
+\BrMoncomp_{X,\alpha_X}
+ \arrow[d, "\mathrm{pr}_{\alpha_X}"]
+\\
+\mathrm{PV}^\bullet(X)[[\hbar]]
+ \arrow[r, "B^{\mathrm{cat}}"']
+&
+\BrMoncomp_{X}
+\end{tikzcd}
+\end{equation}
+commutes in the effective descent regime and otherwise commutes only
+after the specified Cech-coherent descent homotopy. The upper path is
+the L2 realisation of
+Theorem~\ref{thm:grand-unification-platonic}; the lower path is the
+chain-level realisation via BCOV and the explicit bar. The right
+vertical $\mathrm{pr}_{\alpha_X}$ is the local gerbe-trivialising
+projection after tensoring with a chosen local trivialisation of
+$\alpha_X$. Francis-Gaitsgory universality \cite[Thm~6.3]{FG12}
+together with Lurie \cite[HA~5.5.2.9]{LurieDAGX} supplies the
+comparison once this descent datum is part of $H_{L2}$; it does not
+annihilate the gerbe obstruction.
+
+Property~(i) follows from Step~5. Property~(ii) is Step~2 together
+with the descent-scoped projection of
+diagram~\eqref{eq:Phi-3-ch-commutative-platonic}. Property~(iii)
+identifies $\mathrm{ChirHoch}^\bullet$ with the Costello-Li BCOV
+ambient Hochschild complex only on the $H_H+H_{L2}$ comparison
+surface, combining Theorem~\ref{thm:theorem-h-on-koszul-locus} with
+the BCOV transfer datum of Step~3. On the scope of the theorem, the
+non-Tannakian stratum of Corollary~\ref{cor:gu-L2-platonic} is
+detected by non-trivial gerbe or non-formal chain data in the
+conditional image of $\Phi_3^{\mathrm{ch}}$.
+\end{proof}
+
+The two supporting inscriptions referenced in the proof are
+recorded in the next subsections.
+
+\subsection{Chain-level BCOV transfer on $X_5$}
+\label{ssec:BCOV-transfer-X5}
+
+The curved-$L_\infty$ quasi-isomorphism
+$\mathrm{HKR}_\infty^{\mathrm{curv},\hbar}$ of \cite{CL20}
+transfers the Dolbeault-BCOV action functional on
+$\mathrm{PV}^\bullet(X_5)[[\hbar]]$ to the chain-level
+$\infty$-operadic structure on
+$\mathrm{Perf}^{\mathrm{CY3}}_\infty(X_5)$. The
+Kodaira-Spencer $L_\infty$-algebra
+$\mathrm{KS}(X_5) = (\mathrm{PV}^\bullet(X_5), \bar\partial, \{-,-\}_{\mathrm{SN}})$
+admits a curved extension at every genus $g \leq g_{\max}(X_5)$
+within the Costello-Li gauge; the induced $\infty$-structure on
+$\mathrm{Perf}^{\mathrm{CY3}}_\infty(X_5)$ is the data passed to
+Step~3 of the proof. Extension to arbitrary compact CY$_3$ is the
+scope condition of
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic}.
+
+\subsection{Explicit $B^{\mathrm{cat}}(D^b(X_5))$}
+\label{ssec:explicit-bar-model}
+
+Given the transfer datum of \S~\ref{ssec:BCOV-transfer-X5}, the bar
+construction $B^{\mathrm{cat}}(D^b(X_5))$ is the explicit
+chain-level coalgebra whose generators are the perfect complexes on
+$X_5$ modulo quasi-isomorphism, whose coproduct is the
+Fulton-MacPherson boundary of $\Confbar(X_5)$, and whose compatibility
+with the Costello-Li BCOV structure is part of that datum. The
+associator is twisted by $\alpha_{X_5}$; after the conilpotence and
+factorisation checks included in $H_{L2}$,
+$B^{\mathrm{cat}}(D^b(X_5))$ lies in
+$\BrMoncomp_{X_5, \alpha_{X_5}}$.
+
+Theorem~\ref{thm:L2-chain-level-gerbe-platonic} scopes the earlier
+conditional formulation: the non-Tannakian surface is a chain-level
+recognition statement on the subcategory of compact CY$_3$ targets
+where the Costello-Li BCOV transfer and gerbe descent data are
+supplied, with the gerbe twist retained in the target category.
+
+\subsection{Local-global gluing of the gerbe-trivialising projection}
+\label{ssec:pr-alpha-X-local-global}
+
+The projection $\mathrm{pr}_{\alpha_X} : \BrMoncomp_{X,\alpha_X}
+\to \BrMoncomp_X$ appearing in
+diagram~\eqref{eq:Phi-3-ch-commutative-platonic} is defined
+locally: on an open cover $\{U_i\}$ of $X$ over which
+$\alpha_X|_{U_i}$ trivialises, tensoring with a local
+trivialisation $\tau_i : \alpha_X|_{U_i} \xrightarrow{\sim} 0$
+produces a gerbe-trivialised restriction
+$\BrMoncomp_{U_i, \alpha_X|_{U_i}} \xrightarrow{\sim}
+\BrMoncomp_{U_i}$. On overlaps $U_i \cap U_j$, the two local
+trivialisations differ by a $\mathbb{C}^\times$-gerbe cocycle
+$g_{ij} \in Z^1(U_i \cap U_j, \underline{\mathbb{C}^\times})$
+whose cohomology class $[\{g_{ij}\}] \in \check H^3(X,
+\underline{\mathbb{C}^\times})$ is $\alpha_X$ itself. The
+question is whether the locally defined functors glue to an
+honest $\infty$-functor on $X$, or only up to Čech-coherent
+homotopy with obstruction in the Postnikov tower.
+
+\begin{theorem}[Conditional local-global gluing of $\mathrm{pr}_{\alpha_X}$]
+\label{thm:pr-alpha-X-local-global}
+\ClaimStatusConditional
+Let $X$ be a smooth projective variety and
+$\alpha_X \in H^3(X, \underline{\mathbb{C}^\times})$ the gerbe
+class under consideration. Fix a hypercover $U_\bullet\to X$ on which
+$\alpha_X$ is trivialised. The local functors
+$\mathrm{pr}_{\alpha_X|_{U_n}}$ glue as follows.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Effective descent regime.} If a finite \'{e}tale Galois
+cover $\pi:\widetilde X\to X$ is given, $\pi^*\alpha_X=0$, and the
+resulting descent datum in
+$\mathrm{Fun}_\infty(\BrMoncomp_{\widetilde X},
+\BrMoncomp_{\widetilde X})$ is effective, then
+$\mathrm{pr}_{\alpha_X}$ exists as an honest global
+$\infty$-functor
+\[
+ \BrMoncomp_{X,\alpha_X}\longrightarrow \BrMoncomp_X .
+\]
+\item \emph{Hypercover regime.} Without such an effective descent
+datum, the local projections determine only an object of the
+totalisation
+\[
+ \mathrm{Tot}\,
+ \mathrm{Fun}_\infty(\BrMoncomp_{U_\bullet,\alpha_X},
+                    \BrMoncomp_{U_\bullet}).
+\]
+The obstruction to strict globalisation is the class of this
+totalisation point in the descent Postnikov tower. It vanishes exactly
+when the local projections are equivalent to a global
+$\infty$-functor on $X$.
+\end{enumerate}
+Consequently, diagram~\eqref{eq:Phi-3-ch-commutative-platonic}
+commutes strictly only in the effective descent regime. In the
+hypercover regime it commutes only after choosing the indicated
+descent homotopy, and the obstruction class is part of the L2 data.
+\end{theorem}
+
+\begin{proof}
+\emph{Regime (a).} On $\widetilde X$ the class $\pi^*\alpha_X$
+vanishes, so the twisted and untwisted targets are identified by the
+chosen trivialisation. Effectivity of the Galois descent datum is
+precisely the hypothesis that this local functor descends along the
+\v Cech nerve of $\pi$. Giraud descent for gerbes
+\cite[III.3.3.2]{Giraud1971} and Lurie descent for presentable
+$\infty$-categories \cite[HA~1.3.1.7]{LurieDAGX} then give the global
+functor.
+
+\emph{Regime (b).} For an arbitrary hypercover, the local projections
+form a cosimplicial diagram of $\infty$-functors. Joyal--Lurie descent
+\cite[HTT~6.5.3.12]{LurieHTT} identifies global functors with the
+descent-effective points of its totalisation. The Postnikov tower of
+this totalisation records the successive homotopy-coherence
+obstructions. Thus strict globalisation is equivalent to vanishing of
+that obstruction tower. The commutativity of
+diagram~\eqref{eq:Phi-3-ch-commutative-platonic} is therefore a
+chosen descent homotopy, not an automatic consequence of the
+bar--cobar adjunction.
+\end{proof}
+
+\begin{remark}[Strict compact CY$_3$ and the quintic]
+\label{rem:pr-alpha-X-quintic}
+If the Vol~III CY-side construction supplies, on the quintic
+$X_5 \subset \mathbb{P}^4$, a gerbe class
+$\alpha_{X_5} = [5 \cdot \mathrm{vol}] \in J^3(X_5) \subset
+H^3(X_5, \underline{\mathbb{C}^\times})$ lies entirely in the
+continuous Griffiths part
+(Proposition~\ref{V3-prop:cy-c-beyond-joyce-three-CY3}(i) of
+Vol~III, \texttt{cy\_c\_beyond\_k3e\_existence\_obstruction.tex})
+and has infinite order, then Regime~(b) of
+Theorem~\ref{thm:pr-alpha-X-local-global} applies:
+$\mathrm{pr}_{\alpha_{X_5}}$ exists only up to Čech-coherent
+homotopy, and diagram~\eqref{eq:Phi-3-ch-commutative-platonic}
+commutes only after the chosen descent homotopy unless the obstruction
+tower vanishes. Regime~(a) applies to polarised K3 surfaces only after
+one supplies an effective finite descent datum for
+$\alpha_{K3}^{\mathrm{tors}} \in
+\mathrm{Br}(K3)$ and the Caldararu--Azumaya gerbe; the two regimes
+separate the two descent problems in the Joyce--Brauer dictionary
+(Remark~\ref{V3-rem:cy-c-beyond-quintic-joyce-not-brauer} of
+Vol~III).
+\end{remark}
+
+\begin{conjecture}[Universal envelope as ambient]
+\label{conj:universal-envelope-ambient-platonic}
+\ClaimStatusConjectured
+The universal envelope $\Uch_\cA = \cA \bowtie \cA^!_\infty$ is
+the final object in the $\infty$-category of factorisation
+$\infty$-bialgebras on $X$ which pair $\cA$ with a
+factorisation-compatible Koszul-dual companion; equivalently,
+every such pairing factors through $\Uch_\cA$.
+\end{conjecture}
+
+\begin{conjecture}[Genus-$g$ universality]
+\label{conj:genus-g-universality-platonic}
+\ClaimStatusConjectured
+For every $g \geq 2$ and every class-M chiral algebra $\cA$, the
+genus-$g$ trace $\trgenus(\Uch_\cA)$ admits a uniform-weight
+decomposition whose cross-modular correction
+$\delta F_g^{\mathrm{cross}}$ is a sum of
+Fulton-MacPherson boundary contributions; equivalently, on
+class~M the shadow-tower depth $r_{\max} = \infty$ forces a
+non-trivial FM boundary contribution at every $g \geq 2$.
+\end{conjecture}
+
+\section{Reader's concordance: the unification map}
+\label{sec:grand-theorem-concordance}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l|l|l}
+\hline
+\textbf{Grand Theorem property} & \textbf{Classical theorem} & \textbf{Location} \\
+\hline
+(i) Universal twisting morphism & Theorem~A (bar--cobar) & Ch.~\ref{chap:bar-cobar} \\
+(ii) Koszul duality locus & Koszul-locus discipline & Ch.~\ref{chap:koszul-pair-structure} \\
+(iii) Fixed-coalgebra co--contra comparison & Positselski second-kind equivalence & Ch.~\ref{ch:theorem-B-scope-platonic} \\
+(iv) Centre-local-system complementarity and normalized trace & Theorem~C followed by Theorem~D & Ch.~\ref{ch:theorem-C-refinements-platonic} \\
+(v) Deformation/Hodge/graph comparison & Theorem~D under $H_D^1,H_D^K,H_D^{\mathrm{tr}},H_D^{\mathrm{graph}}$ & Ch.~\ref{ch:higher-genus} \\
+(vi) Hochschild concentration & Theorem~H on the Koszul/generic surface & Thm.~\ref{thm:theorem-h-on-koszul-locus} \\
+(vii.L1) Chain-level ensemble & chain-level $\Theta_\cA$ & Ch.~\ref{ch:holographic-datum-master} \\
+(vii.L2) Non-Tannakian categorical & non-formal / $\RW_d$-valued & Vol~III, \texttt{cy\_to\_chiral.tex} \\
+(vii.L3) Presentable $\infty$-adjunction & Francis-Gaitsgory machinery & \cite[\S6]{FG11}, \cite[HA~5.2]{LurieDAGX} \\
+\hline
+\end{tabular}
+\caption{The unification map: seven properties of the Grand
+Theorem, their classical-theorem shadows, and their locations in
+the manuscript.}
+\label{tab:gu-unification-map-platonic}
+\end{table}
+
+The Grand Theorem
+\ref{thm:grand-unification-platonic} records the structural arc of
+Volume~I as a typed assembly diagram: the bar--cobar adjunction is the
+spine, and every scalar, categorical, physical, or Calabi--Yau
+projection enters only through its named comparison package.

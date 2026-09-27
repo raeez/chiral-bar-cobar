@@ -1,0 +1,954 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{array}
+\usepackage[all]{xy}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\providecommand{\cF}{\mathcal{F}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\DK}{\mathrm{DK}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Omg}{\Omega}
+\newcommand{\Eone}{E_1}
+\newcommand{\thick}{\mathrm{thick}}
+\newcommand{\ch}{\mathrm{ch}}
+\newcommand{\Yh}{Y_\hbar(\fg)}
+\newcommand{\Uq}{U_q(\hat{\fg})}
+\newcommand{\barB}{\bar{B}}
+\providecommand{\cW}{\mathcal{W}}
+
+\DeclareMathOperator{\gr}{gr}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Thin $\ell$-weight filtrations in the Drinfeld--Kohno core]
+{Thin $\ell$-weight filtrations in the\\
+Drinfeld--Kohno compact core}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University,
+ Cambridge, MA 02138, USA}
+\email{rlorgat@math.harvard.edu}
+
+\date{}
+
+\begin{abstract}
+For finite-dimensional evaluation modules with thin
+$q$-characters, the Gautam--Toledano Laredo transfer from quantum
+loop algebras to Yangians gives the Clebsch--Gordan input needed on
+the evaluation-prefundamental Drinfeld--Kohno compact core. The
+tensor product $V(a)\otimes L^-_i(b)$ has an associated graded
+indexed by the $q$-character monomials of $V(a)$; if
+$\chi_q(V)=\sum_m c_m m$, the corresponding prefundamental factor
+appears with multiplicity $c_m$. Thin modules give the
+coefficient-one form. For non-thin fundamental modules, already
+present in classical types, the correct statement is the
+multiset-valued filtration, not a multiplicity-free direct sum.
+The unconditional output is the evaluation-generated compact-core
+input to MC3; shifted-envelope generation and passage to the full
+completed Drinfeld--Kohno category are separate completion
+statements.
+\end{abstract}
+
+\subjclass[2020]{17B37, 17B69, 18M25, 81R10, 81R50}
+
+\keywords{Drinfeld--Kohno category, Yangian, quantum affine algebra,
+$q$-character, $\ell$-weight, Clebsch--Gordan decomposition,
+Maurer--Cartan equation, chiral algebra, Chari--Moura}
+
+\maketitle
+
+% ================================================================
+% 1. INTRODUCTION
+% ================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The minuscule hypothesis}
+
+The classical Drinfeld--Kohno theorem \cite{Kohno87, Drinfeld90}
+identifies the monodromy of the Knizhnik--Zamolodchikov
+connection on conformal blocks for $\widehat{\fg}_k$ with the
+$R$-matrix action of the quantum group
+$U_q(\fg)$ at $q = e^{\pi i / (k + h^\vee)}$.
+Kazhdan and Lusztig extended this to a braided tensor equivalence
+between the Kazhdan--Lusztig category at level $k$ and the
+category of type-$1$ modules over the quantum group
+\cite{KL93a, KL93b, KL94a, KL94b}. Their proof, and the subsequent
+refinement of Etingof and Kazhdan in terms of quantization of Lie
+bialgebras \cite{EK96, EK98}, leans at several points on the
+availability of a \emph{minuscule} representation: a fundamental
+representation whose nonzero weight spaces are all one-dimensional
+and form a single Weyl group orbit.
+
+The minuscule hypothesis makes the block combinatorics transparent:
+ordinary weight spaces are one-dimensional and are indexed by a
+single Weyl orbit. Type~$A$ has this property for every fundamental
+representation. Outside type~$A$ it is exceptional. In $E_8$ it is
+absent: the adjoint representation is the smallest nontrivial
+fundamental representation, its nonzero root spaces are
+one-dimensional, and its zero-weight space has dimension
+$\mathrm{rk}(E_8)=8$. A proof depending on minuscule fundamentals
+therefore cannot be uniform in Lie type.
+
+\subsection{Multiplicity-free $\ell$-weights}
+
+\(q\)-characters refine ordinary characters by diagonalizing the
+commuting Drinfeld loop-Cartan generators. The monomials of
+\(\chi_q(L(\Psi))\) record the corresponding \(\ell\)-weights. For
+thin modules, this refinement separates ordinary weight
+multiplicities into coefficient-one monomials. For non-thin modules,
+the coefficients of the \(q\)-character must be retained.
+
+\begin{theorem}[Thin fundamental cases; Frenkel--Mukhin, Nakajima, Chari--Moura]
+\label{thm:chari-moura-intro}
+For the fundamental modules whose \(q\)-characters are thin,
+\[
+  \chi_q(V_{\omega_i}(a))=\sum_{s=1}^d m_s
+\]
+with pairwise distinct monomials and coefficient one. Nakajima's
+quiver-variety computation~\cite{Nakajima04}, the
+Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01}, and the
+Chari--Moura formulas~\cite{ChariMoura06} supply the source
+computations in their respective ranges. In non-thin fundamental
+cases the expansion has the form \(\chi_q(V)=\sum_m c_m m\) with
+some \(c_m>1\).
+\end{theorem}
+
+The categorical input is therefore thinness where it holds, and a
+multiset-valued \(q\)-character expansion where it does not.
+
+\subsection{Statement of the main theorem}
+
+Let $\Yh$ denote the Yangian of a simple Lie algebra $\fg$ with
+formal parameter $\hbar$. For a fundamental weight $\omega_i$ and
+spectral parameter $a \in \mathbb{C}$, let $V_{\omega_i}(a)$ be the
+corresponding fundamental evaluation module, and let
+$L^-_i(b) \in \cO^{\mathrm{sh}}$ denote the negative prefundamental
+simple in Hern\'andez' shifted category, of highest $\ell$-weight
+indexed by the Drinfeld polynomial of the identity representation
+with spectral shift $b$ (see Definition~\ref{def:prefundamental}).
+For a monomial $m$ in the $q$-character, write
+$L^-_i(b;m)$ for the simple object whose highest $\ell$-weight is
+obtained from that of $L^-_i(b)$ by multiplication by~$m$.
+
+\begin{theorem}[Main theorem]
+\label{thm:main}
+For every finite-dimensional simple Lie algebra $\fg$, every
+fundamental weight $\omega_i$, and all generic spectral parameters
+$a, b \in \mathbb{C}$, the tensor product
+$V_{\omega_i}(a)\otimes L^-_i(b)$ has a finite filtration in
+$\cO^{\mathrm{sh}}$ with associated graded
+\begin{equation}\label{eq:cg-main}
+\gr\bigl(V_{\omega_i}(a) \otimes L^-_i(b)\bigr)
+ \;\cong\;
+ \bigoplus_{m \in \operatorname{Supp}\chi_q(V_{\omega_i}(a))}
+ L^-_i(b;m)^{\oplus c_m},
+ \qquad
+ \chi_q(V_{\omega_i}(a))=\sum_m c_m m .
+\end{equation}
+The sum is taken with the $q$-character coefficients. Thin
+fundamental modules give the coefficient-one form; non-thin
+fundamental modules retain the displayed multiplicities. If the
+relevant $\Ext^1$ groups between all listed simple factors,
+including repeated factors, vanish on the chosen generic locus,
+the filtration splits and (\ref{eq:cg-main}) is a
+Clebsch--Gordan direct sum. Thus the evaluation-prefundamental
+compact core of $\DK_\fg$ has a finite filtered
+Clebsch--Gordan input in every simple Lie type. Completion beyond
+that core is a separate theorem or hypothesis.
+\end{theorem}
+
+The restriction to generic spectral parameters excludes the finite
+union of values of $a-b$ at which extra Hern\'andez $A$-factor
+extensions occur. The displayed formula is the associated-graded
+statement; a direct sum is exactly the additional Ext-vanishing
+condition in
+Theorem~\ref{thm:main}.
+
+Theorem~\ref{thm:main} replaces the minuscule hypothesis of
+Kazhdan--Lusztig and of earlier type-$A$ treatments of the
+categorical Clebsch--Gordan filtration (see
+\cite[\S 11]{ChariPressley94} and the Francis--Gaitsgory
+pro-nilpotent completion of factorization categories
+\cite{FG12}). The minuscule hypothesis is a computational shortcut:
+it forces classical weight multiplicities to be trivial. The
+$q$-character is the correct invariant for the shifted category.
+Where it is thin, the graded factors occur once; where it is not,
+the coefficients record the repeated prefundamental factors.
+
+\subsection{Compact-core MC3 input}
+
+The chiral bar complex $\barB^{\mathrm{ch}}(\cA)$ of a vertex
+algebra $\cA$ admits a Maurer--Cartan element
+$\Theta_\cA \in \MC(\fg^{\mathrm{mod}}_\cA)$ whose degree-$2$
+projection is the classical $r$-matrix and whose higher-degree
+projections form the shadow tower; see
+\cite[Vol.\ I]{LorgatMKD}. The third master claim (MC3) in
+modular Koszul duality asserts that the degree-$3$
+component of $\Theta_\cA$, when restricted to the
+evaluation-generated core, determines all higher-degree
+components through thick generation and pro-nilpotent completion
+of the ambient factorization category.
+Theorem~\ref{thm:main} removes the Lie-type obstruction on the
+evaluation-prefundamental core: for every simple $\fg$, the
+categorical Clebsch--Gordan step needed by the Yangian target is a
+finite filtered statement whose associated graded is controlled by
+the $q$-character coefficients. The claim that the degree-$3$
+shadow projection determines all higher projections belongs to the
+compact-core MC3 theorem together with its completion hypotheses,
+not to the representation-theoretic input alone.
+
+\subsection{Minuscule weights and $\ell$-weight separation}
+
+Kazhdan and Lusztig~\cite{KL93a} treat the equivalence with
+quantum group modules type by type, with the minuscule weights of
+the classical types doing the combinatorial work. Etingof and
+Kazhdan~\cite{EK96, EK98} replace this by a universal
+quantization functor on Lie bialgebras; their proof is
+type-uniform, but the passage to the Yangian or quantum affine
+setting reintroduces the minuscule hypothesis through the
+prefundamental Clebsch--Gordan decomposition of
+Chari--Pressley~\cite{ChariPressley94}. Hern\'andez and Jimbo
+\cite{HernandezJimbo12} introduced the shifted category
+$\cO^{\mathrm{sh}}$ and proved a block criterion which is the
+combinatorial engine for the filtration. Francis and Gaitsgory
+\cite{FG12} developed the pro-nilpotent completion formalism that
+controls the separate passage from a compact-core comparison to the
+full shifted category.
+
+Theorem~\ref{thm:chari-moura-intro} is the replacement for the
+minuscule hypothesis in the proof of the filtered categorical
+Clebsch--Gordan statement. In the language of the Lorgat
+monograph~\cite{LorgatMKD}, it supplies the categorical CG input
+of MC3 for every simple Lie type, including $E_8$, in which no
+minuscule representation exists.
+
+% ================================================================
+% 2. PRELIMINARIES
+% ================================================================
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Lie bialgebras and Yangians}
+
+Let $\fg$ be a finite-dimensional simple Lie algebra over
+$\mathbb{C}$ with Cartan subalgebra $\fh$, root system $\Phi$,
+simple roots $\alpha_1, \ldots, \alpha_\ell$, fundamental weights
+$\omega_1, \ldots, \omega_\ell$, Weyl group $W$, dual Coxeter
+number $h^\vee$, and invariant symmetric form $(\cdot,\cdot)$
+normalized so that long roots have squared length~$2$.
+The polynomial loop algebra $\fg[t]$ carries a canonical rational
+Lie bialgebra structure whose cobracket
+$\delta: \fg[t] \to \fg[t] \otimes \fg[t]$ is determined by the
+level-stripped rational $r$-matrix
+\begin{equation}\label{eq:r-matrix-level}
+r_{\mathrm{rat}}(u) = \frac{\Omg}{u},
+\qquad
+\Omg = \sum_a I_a \otimes I^a,
+\end{equation}
+where $\{I_a\}$ is a basis of $\fg$ and $\{I^a\}$ its dual with
+respect to $(\cdot, \cdot)$. The affine collision calculation uses
+the level-dependent trace-form residue
+$r^{\mathrm{coll}}_k(z)=k\Omega_{\mathrm{tr}}/z$; the Yangian
+and KZ rational structure use (\ref{eq:r-matrix-level}) with the
+usual coupling normalization. The two normalizations must not be
+identified. At affine level $k=0$ the trace-form double-pole
+collision residue vanishes, while the simple-pole Lie bracket
+channel and the level-stripped rational Yangian structure remain
+nonzero; see~\cite{LorgatMKD}.
+
+\begin{remark}[Level normalization]
+\label{rem:level-norm}
+The symbol $k$ belongs to the affine Kac--Moody collision residue.
+The Yangian rational $r$-matrix is level-stripped. Thus $k=0$ is
+not an abelianization of $\fg[t]$ and does not annihilate the
+Yangian Maurer--Cartan structure.
+\end{remark}
+
+Drinfeld~\cite{Drinfeld85, Drinfeld88} quantized $\fg[t]$ to the
+Yangian $\Yh = Y_\hbar(\fg)$: a Hopf algebra deforming
+$U(\fg[t])$ along the Lie bialgebra structure
+(\ref{eq:r-matrix-level}). The Yangian is graded by
+conformal weight (the eigenvalues of a derivation lifting the
+loop rotation $t \mapsto t + c$) and admits an evaluation
+homomorphism $\mathrm{ev}_a: \Yh \to U(\fg)$ for each
+$a \in \mathbb{C}$ in type~$A$, and more subtly in other types.
+
+\subsection{The Drinfeld--Kohno category}
+
+\begin{definition}[Drinfeld--Kohno categories]
+\label{def:dk}
+The finite Drinfeld--Kohno category $\DK^{\mathrm{fd}}_\fg$ is the
+braided monoidal category of finite-dimensional $\Yh$-modules,
+with braiding induced by the rational $R$-matrix attached to
+(\ref{eq:r-matrix-level}). The shifted category
+$\cO^{\mathrm{sh}}$ of Hern\'andez and Jimbo
+~\cite{HernandezJimbo12} is larger: it contains the
+infinite-dimensional prefundamental modules and has locally finite
+Cartan-loop action with weights in a shifted dominant cone. In this
+paper $\DK_\fg^{\mathrm{ec}}$ denotes the evaluation-prefundamental
+compact core inside the completed shifted category, generated by
+fundamental evaluation modules and negative prefundamental simples.
+\end{definition}
+
+\begin{definition}[Fundamental and prefundamental objects]
+\label{def:prefundamental}
+For each fundamental weight $\omega_i$ and spectral parameter
+$a \in \mathbb{C}$, the \emph{fundamental evaluation module}
+$V_{\omega_i}(a)$ is the finite-dimensional simple $\Yh$-module
+whose Drinfeld polynomial at node $i$ is $1 - a z$ and is
+trivial at all other nodes. The \emph{negative prefundamental
+module} $L^-_i(b)$ is the simple infinite-dimensional object in
+$\cO^{\mathrm{sh}}$ whose highest $\ell$-weight is the
+``minus-delta at node $i$ with shift $b$'' configuration of
+\cite{HernandezJimbo12}.
+\end{definition}
+
+\subsection{The chromatic filtration}
+
+The category $\cO^{\mathrm{sh}}$ carries a decreasing
+\emph{chromatic} or \emph{conformal-weight} filtration
+$\cF^{\geq N} \subset \cO^{\mathrm{sh}}$, where $\cF^{\geq N}$
+consists of objects whose generalized conformal-weight generalized
+eigenvalues are bounded below by $N$. The associated graded
+pieces $\cF^{\geq N} / \cF^{\geq N+1}$ are finite-dimensional
+strata in the sense that, at each fixed highest $\ell$-weight,
+the space of conformal-weight-$N$ vectors is finite-dimensional.
+The compact evaluation-prefundamental core consists of the objects
+supported on finitely many such strata and built from fundamental
+evaluation modules and negative prefundamental simples by finite
+extensions, shifts, cones, and retracts. Identifying this core with
+the whole compact subcategory of the completed Drinfeld--Kohno
+category is a separate completion theorem or hypothesis; it is not
+part of the Clebsch--Gordan statement proved here.
+
+\subsection{$\ell$-weights and the multiplicity-free property}
+
+Let $\Uq$ denote the quantum affine algebra at the corresponding
+parameter~$q$. Its commutative Cartan-type subalgebra is generated
+by the loop elements $\phi_{i,\pm}(z)$ of Drinfeld's second
+realization, and any finite-dimensional simple $\Uq$-module
+decomposes as a direct sum of joint generalized eigenspaces for
+these loop generators.
+
+\begin{definition}[$\ell$-weights]
+\label{def:l-weight}
+An \emph{$\ell$-weight} of $\Uq$ is a pair
+$(\boldsymbol{\psi}^+(z), \boldsymbol{\psi}^-(z))$ of
+$\ell$-tuples of formal power series in $z^{\pm 1}$ subject to
+the compatibility and rationality conditions of Frenkel and
+Reshetikhin~\cite{FR99}. The \emph{$q$-character} of a
+finite-dimensional simple module $V$ is
+\[
+\chi_q(V)
+ \;=\;
+ \sum_{m} \dim V_m \cdot m,
+\]
+where the sum ranges over $\ell$-weights $m$ and $V_m$ is the
+corresponding joint generalized eigenspace. A module $V$ is
+\emph{multiplicity-free in $\ell$-weights} if $\dim V_m \leq 1$
+for every $\ell$-weight $m$.
+\end{definition}
+
+The central structural data we import from the literature is the
+finite $q$-character with its coefficients.
+
+\begin{theorem}[$q$-character coefficient data]
+\label{thm:chari-moura}
+For every finite-dimensional simple Lie algebra $\fg$, every
+fundamental weight $\omega_i$, and every spectral parameter $a$,
+the fundamental evaluation module $V_{\omega_i}(a)$ of $\Uq$ has a
+finite $q$-character
+\[
+\chi_q(V_{\omega_i}(a))
+ \;=\;
+ \sum_m c_m m,
+ \qquad
+ c_m=\dim V_m .
+\]
+In the thin cases all coefficients are $1$. In the non-thin cases
+the coefficients are retained and become multiplicities of the
+prefundamental graded factors. Frenkel--Reshetikhin
+\cite{FR99} define the $q$-character, Nakajima's
+quiver-variety computation~\cite{Nakajima04} supplies the
+simply-laced source calculation, and Chari--Moura
+\cite{ChariMoura06} give explicit formulas for the classical
+families in their range.
+\end{theorem}
+
+\subsection{Transfer between Yangians and quantum affine algebras}
+
+The bridge between the Yangian $\Yh$ and the quantum affine algebra
+$\Uq$ is the theorem of Gautam and Toledano Laredo:
+
+\begin{theorem}[Gautam--Toledano Laredo, \cite{GTL17}]
+\label{thm:gtl}
+After choosing the logarithmic branch and avoiding the singular
+hyperplanes of the parameters, there is a meromorphic tensor
+equivalence
+\[
+\Phi_{\mathrm{GTL}} \;:\;
+\Rep^{\mathrm{fd}}(\Uq) \;\xrightarrow{\;\sim\;}\;
+\Rep^{\mathrm{fd}}(\Yh)
+\]
+between the corresponding finite-dimensional module categories.
+It sends simples to simples and identifies the Drinfeld rational
+fraction data on both sides. In particular,
+$\Phi_{\mathrm{GTL}}$ preserves the $q$-character coefficients.
+\end{theorem}
+
+Consequently, Theorem~\ref{thm:chari-moura} transfers to the
+Yangian as coefficient data: the fundamental evaluation module
+$V_{\omega_i}(a)$ of $\Yh$ has the same finite multiset of
+$\ell$-weights. Thin modules remain coefficient-one; non-thin
+modules retain their multiplicities. The Hern\'andez--Jimbo block
+criterion used below is combinatorial in the Drinfeld rational
+fractions and therefore transfers on the same branch.
+
+% ================================================================
+% 3. STATEMENT
+% ================================================================
+\section{Statement of the main theorem}\label{sec:statement}
+
+\begin{theorem}[Filtered categorical Clebsch--Gordan, all types]
+\label{thm:main-formal}
+Let $\fg$ be any finite-dimensional simple Lie algebra over
+$\mathbb{C}$, let $\omega_i$ be any fundamental weight, and let
+$a, b \in \mathbb{C}$ be spectral parameters lying in the
+finite-filtration locus of $\cO^{\mathrm{sh}}$. Let
+\[
+\chi_q(V_{\omega_i}(a))=\sum_m c_m m,
+\]
+and write $L^-_i(b;m)$ for the negative prefundamental simple
+obtained from $L^-_i(b)$ by multiplying its highest $\ell$-weight
+by~$m$.
+Then:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The tensor product $V_{\omega_i}(a)\otimes L^-_i(b)$ has a
+finite filtration in $\cO^{\mathrm{sh}}$ whose associated graded is
+\begin{equation}\label{eq:main-cg}
+\gr\bigl(V_{\omega_i}(a) \otimes L^-_i(b)\bigr)
+ \;\cong\;
+ \bigoplus_{m\in \operatorname{Supp}\chi_q(V_{\omega_i}(a))}
+ L^-_i(b;m)^{\oplus c_m}.
+\end{equation}
+\item The number of graded factors counted with multiplicity is
+$\sum_m c_m=\dim V_{\omega_i}$. Thin modules are precisely the
+coefficient-one case.
+\item If
+$\Ext^1_{\cO^{\mathrm{sh}}}(S,S')=0$ for all simple factors
+$S,S'$ occurring in the multiset
+\[
+\{\,L^-_i(b;m) \text{ repeated } c_m \text{ times}\,\},
+\]
+then the filtration splits and (\ref{eq:main-cg}) is a
+direct-sum Clebsch--Gordan decomposition.
+\item The object $V_{\omega_i}(a)\otimes L^-_i(b)$ belongs to the
+evaluation-prefundamental compact core generated by fundamental
+evaluation modules and negative prefundamental simples. Identifying
+that core with the full compact subcategory of a completed
+Drinfeld--Kohno category is a separate completion theorem or
+hypothesis.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Scope of ``generic'']
+\label{rem:generic-scope}
+The generic locus excluded in the statement is the union of
+complex hypersurfaces on which additional Hern\'andez $A$-factor
+extensions appear. On the finite-filtration locus the associated
+graded formula is the theorem. On the semisimple sublocus cut out
+by the Ext-vanishing condition in
+Theorem~\ref{thm:main-formal}(3), the filtration splits.
+\end{remark}
+
+% ================================================================
+% 4. PROOF
+% ================================================================
+\section{Proof of the main theorem}\label{sec:proof}
+
+The argument separates the character identity, the Yangian transfer,
+the highest-$\ell$-weight filtration, and the Ext-vanishing
+splitting criterion.
+
+\subsection{Character identity}
+
+\begin{lemma}[$q$-character identity, all types]
+\label{lem:character-identity}
+For every simple Lie algebra $\fg$, every fundamental weight
+$\omega_i$, and all spectral parameters $a, b$:
+\begin{equation}\label{eq:char-identity}
+\bigl[V_{\omega_i}(a) \otimes L^-_i(b)\bigr]
+ \;=\;
+ \sum_{m\in \operatorname{Supp}\chi_q(V_{\omega_i}(a))}
+ c_m\,[L^-_i(b;m)],
+\end{equation}
+in the completed Grothendieck group of the shifted category, where
+$\chi_q(V_{\omega_i}(a))=\sum_m c_m m$.
+\end{lemma}
+
+\begin{proof}
+The $q$-character records the joint generalized eigenspaces of the
+Drinfeld Cartan currents. Tensoring a highest-$\ell$-weight
+prefundamental object by a finite-dimensional module shifts the
+highest $\ell$-weight by each monomial of the finite
+$q$-character, with coefficient equal to the corresponding
+$\ell$-weight dimension. This is the Hern\'andez--Jimbo
+highest-$\ell$-weight calculus in
+$\cO^{\mathrm{sh}}$~\cite{HernandezJimbo12}. The resulting
+identity in the completed Grothendieck group is
+(\ref{eq:char-identity}).
+\end{proof}
+
+\subsection{$q$-character coefficients for Yangian fundamentals}
+
+\begin{lemma}[$q$-character coefficients for Yangian fundamentals]
+\label{lem:qcharacter-yangian}
+For every simple $\fg$ and every fundamental weight $\omega_i$,
+the Yangian fundamental evaluation module $V_{\omega_i}(a)$
+(viewed as a $\Yh$-module in $\cO^{\mathrm{sh}}$) has the same
+$q$-character coefficient multiset as its quantum-loop counterpart
+on the Gautam--Toledano Laredo branch.
+\end{lemma}
+
+\begin{proof}
+For the quantum affine algebra $\Uq$, Theorem~\ref{thm:chari-moura}
+gives the finite coefficient data. For the Yangian $\Yh$, apply
+the Gautam--Toledano Laredo equivalence
+$\Phi_{\mathrm{GTL}}$ of Theorem~\ref{thm:gtl}. This equivalence
+is exact, sends simples to simples, and identifies the Drinfeld
+rational fractions governing the commuting Cartan currents.
+Therefore the joint generalized eigenspace dimensions, equivalently
+the $q$-character coefficients, are preserved~\cite{GTL17}.
+\end{proof}
+
+\subsection{Highest-$\ell$-weight filtration}
+
+\begin{lemma}[Filtration by prefundamental factors]
+\label{lem:prefundamental-filtration}
+Let $\chi_q(V_{\omega_i}(a))=\sum_m c_m m$, and let
+$b \in \mathbb{C}$ be a spectral parameter in the finite-filtration
+locus. Then
+$V_{\omega_i}(a)\otimes L^-_i(b)$ admits a finite filtration whose
+graded factors are the simples
+$L^-_i(b;m)$ with multiplicity $c_m$.
+\end{lemma}
+
+\begin{proof}
+The shifted category $\cO^{\mathrm{sh}}$ is controlled by
+highest $\ell$-weights and the $A_{j,c}$ dominance order of
+Hern\'andez--Jimbo~\cite{HernandezJimbo12}. Tensoring a
+prefundamental simple by a finite-dimensional module produces a
+finite object in this highest-$\ell$-weight order. Its possible
+highest $\ell$-weights are obtained by multiplying the highest
+$\ell$-weight of $L^-_i(b)$ by the monomials in
+$\chi_q(V_{\omega_i}(a))$. Lemma~\ref{lem:qcharacter-yangian}
+gives these monomials and their coefficients on the Yangian side.
+The standard highest-$\ell$-weight filtration in
+$\cO^{\mathrm{sh}}$ therefore has precisely the listed simple
+graded factors, each repeated according to its $q$-character
+coefficient.
+\end{proof}
+
+\subsection{Splitting criterion}
+
+\begin{lemma}[Ext-vanishing splits the filtration]
+\label{lem:ext-splitting}
+Let $M$ be an object of $\cO^{\mathrm{sh}}$ with a finite
+filtration whose graded factors are $S_1,\ldots,S_d$. If
+$\Ext^1_{\cO^{\mathrm{sh}}}(S_j,S_k)=0$ for all $j,k$, then
+$M\cong\bigoplus_j S_j$.
+\end{lemma}
+
+\begin{proof}
+Split the filtration inductively. At each stage the extension class
+lies in an $\Ext^1$ group between one graded factor and the direct
+sum of the preceding factors. The stated vanishing kills that
+class, so the short exact sequence splits. Iteration gives the
+direct sum.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main-formal}]
+Set $M = V_{\omega_i}(a) \otimes L^-_i(b)$. Then $M$ is an object
+of $\cO^{\mathrm{sh}}$: the tensor factor $V_{\omega_i}(a)$ is
+finite-dimensional, $L^-_i(b)$ is in $\cO^{\mathrm{sh}}$ by
+\cite{HernandezJimbo12}, and tensoring with a
+finite-dimensional module preserves $\cO^{\mathrm{sh}}$.
+Lemma~\ref{lem:prefundamental-filtration} gives the finite
+filtration and identifies its graded factors. The number of factors
+counted with multiplicity is $\sum_m c_m=\dim V_{\omega_i}$ by
+Lemma~\ref{lem:qcharacter-yangian}.
+Lemma~\ref{lem:ext-splitting} gives the split Clebsch--Gordan
+decomposition on the Ext-vanishing sublocus. Finally, the
+evaluation-prefundamental compact core is by definition the thick
+idempotent-complete subcategory generated by fundamental evaluation
+modules and negative prefundamental simples. Since thick
+subcategories are closed under tensoring with generators, finite
+extensions, cones, and retracts, the tensor product and its listed
+graded factors lie in that core.
+\end{proof}
+
+% ================================================================
+% 5. MC3 FOR ALL SIMPLE TYPES
+% ================================================================
+\section{Compact-core MC3 input}\label{sec:mc3}
+
+Let $\cA$ be a vertex algebra and let
+$\barB^{\mathrm{ch}}(\cA)$ denote its chiral bar complex on
+ordered configuration space. Recall that the bar complex is
+built on the augmentation ideal $\bar\cA = \ker(\varepsilon)$, not
+on $\cA$ itself; we write
+\[
+\barB^{\mathrm{ch}}(\cA)
+ \;=\; T^c(s^{-1} \bar\cA) \otimes
+ \cO(\overline{C}_\bullet(X)),
+\]
+where $\cO(\overline{C}_n(X))$ is the sheaf of rational functions
+on the Fulton--MacPherson compactification with logarithmic
+poles along the diagonal divisor. The bar complex carries a
+Maurer--Cartan element
+\[
+\Theta_\cA \in \MC(\fg^{\mathrm{mod}}_\cA)
+\]
+whose degree-$r$ projection $\pi_{r,0}(\Theta_\cA)$ is the
+shadow datum at depth $r$; see~\cite{LorgatMKD} for the detailed
+construction.
+
+\begin{corollary}[Compact-core MC3 input for all simple types]
+\label{cor:mc3-all-types}
+Let $\fg$ be any finite-dimensional simple Lie algebra and let
+$\cA_\fg = V_k(\fg)$ be the affine vertex algebra at level $k$
+away from the critical level $k = -h^\vee$. On the thick closure
+of fundamental evaluation modules and negative prefundamental
+simples in $\DK_\fg$, the finite filtered Clebsch--Gordan input
+required by the compact-core MC3 argument is available in every
+simple Lie type. The assertion that the degree-$3$ projection
+$\pi_{3,0}(\Theta_{\cA_\fg})$ determines all higher projections
+then requires the separate compact-core MC3 theorem and its
+completion hypotheses.
+\end{corollary}
+
+\begin{proof}
+The degree-$2$ projection $\pi_{2,0}(\Theta_{\cA_\fg})$ is the
+Yangian rational $r$-matrix in the level-stripped normalization
+(\ref{eq:r-matrix-level}); the affine vertex algebra has collision
+residue $k\Omega_{\mathrm{tr}}/z$. The two normalizations agree
+only after the level convention is fixed. The degree-$3$ projection
+satisfies the classical Yang--Baxter equation together with its
+first Massey-product obstruction, but the passage from degree~$3$
+to degree $r \geq 4$ is the separate pro-nilpotent completion
+problem.
+
+By Theorem~\ref{thm:main-formal}, for every simple Lie type
+including $E_8$, the evaluation-prefundamental compact core has the
+required filtered Clebsch--Gordan input; on the Ext-vanishing
+semisimple locus this input is a direct-sum decomposition. The
+lift from Grothendieck-group Baxter TQ relations to derived exact
+triangles in the completed antidominant shifted envelope is the
+completion statement of~\cite[\S 8]{LorgatMKD}. The
+Francis--Gaitsgory pro-nilpotent formalism~\cite{FG12} then
+controls the separate passage from the compact core to the
+full ind-completion. The representation-theoretic obstruction is
+the availability of this finite filtered $q$-character input, and
+Theorem~\ref{thm:main-formal} supplies it for all simple types.
+\end{proof}
+
+\begin{remark}[The role of the level]
+\label{rem:level-mc3}
+The affine level $k$ enters the collision residue
+$r^{\mathrm{coll}}_k(z)=k\Omega_{\mathrm{tr}}/z$ and the
+Sugawara scalar, not the level-stripped Yangian rational
+$r$-matrix (\ref{eq:r-matrix-level}). At $k=0$ the trace-form
+double-pole residue vanishes, but the simple-pole Lie bracket
+channel and the Yangian MC structure remain. The critical level
+$k=-h^\vee$ is instead a singular Feigin--Frenkel centre regime
+and is excluded from Corollary~\ref{cor:mc3-all-types}.
+\end{remark}
+
+% ================================================================
+% 6. EXAMPLES
+% ================================================================
+\section{Examples by simple type}\label{sec:examples}
+
+The input in Theorem~\ref{thm:main-formal} is the
+$q$-character coefficient multiset. Minuscule fundamentals give
+coefficient-one formulas. Non-minuscule fundamentals require the
+actual coefficients of $\chi_q(V_{\omega_i}(a))$.
+
+\subsection{Type $A_n$}
+
+For $\fg=\fsl_{n+1}$, every fundamental representation is
+minuscule. The $q$-character support is coefficient-one, and on
+the Ext-vanishing locus the associated graded formula becomes the
+usual split Clebsch--Gordan decomposition indexed by the weights
+of $V_{\omega_i}$.
+
+\subsection{Classical types $B_n,C_n,D_n$}
+
+The minuscule fundamentals are the spin representation in type
+$B_n$, the defining representation in type $C_n$, and the vector
+and two half-spin representations in type $D_n$. These are the
+coefficient-one cases. The remaining fundamentals are treated by
+the Chari--Moura $q$-character formulas~\cite{ChariMoura06}. The
+associated graded in Theorem~\ref{thm:main-formal} uses the
+coefficients $c_m$ from those formulas; it is not an all-types
+multiplicity-free statement.
+
+\subsection{Exceptional types}
+
+In $E_6$ the two minuscule fundamentals are coefficient-one. In
+$E_7$ the unique minuscule fundamental is coefficient-one. The
+other exceptional fundamentals, and every fundamental of $E_8$,
+$F_4$, and $G_2$, are governed by their $q$-character coefficient
+data. For $E_8$, the adjoint fundamental has an ordinary zero
+weight space of dimension equal to the rank, so ordinary weights
+cannot supply a multiplicity-free Clebsch--Gordan formula. The
+filtered statement retains the coefficients of
+$\chi_q(V_{\omega_i}(a))$ and then applies the prefundamental
+filtration. A split formula requires the Ext-vanishing hypothesis
+of Theorem~\ref{thm:main-formal}.
+
+\begin{remark}[$q$-character input across simple types]
+\label{rem:cg-table}
+The following table records the input used in
+Theorem~\ref{thm:main-formal}.
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+Type & Minuscule count & Key input & Output \\
+\midrule
+$A_n$ & $n$ & minuscule coefficient-one support & filtered core \\
+$B_n$ & $1$ & Chari--Moura coefficients & filtered core \\
+$C_n$ & $1$ & Chari--Moura coefficients & filtered core \\
+$D_n$ & $3$ & Chari--Moura coefficients & filtered core \\
+$E_6$ & $2$ & Nakajima coefficients & filtered core \\
+$E_7$ & $1$ & Nakajima coefficients & filtered core \\
+$E_8$ & $0$ & Nakajima coefficients & filtered core \\
+$F_4$ & $0$ & $q$-character coefficients & filtered core \\
+$G_2$ & $0$ & $q$-character coefficients & filtered core \\
+\bottomrule
+\end{tabular}
+\end{center}
+The minuscule hypothesis (all ordinary weight multiplicities
+trivial) fails for the exceptional types $E_8$, $F_4$, $G_2$ and
+for the intermediate fundamentals of the classical types. The
+$q$-character coefficient multiset is the uniform replacement.
+\end{remark}
+
+% ================================================================
+% 7. CONCLUSION
+% ================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+The absence of minuscule representations in $E_8$ is a recurring
+technical obstruction in the categorical parts of the quantum
+geometric Langlands programme. Traditional proofs construct
+equivalences of braided monoidal categories type by type, and
+$E_8$ is either omitted or handled by a folding or restriction
+procedure that reduces the representation theory to a setting with
+minuscule weights. The coefficient-aware $q$-character filtration
+supplies the replacement input on the Drinfeld--Kohno
+evaluation-prefundamental core.
+
+For the quantum geometric Langlands correspondence of
+Gaitsgory and collaborators, the categorical CG step appears
+in the proof that the spectral side (quasi-coherent sheaves on
+the moduli of local systems) and the automorphic side (D-modules
+on $\mathrm{Bun}_G$) are related by a functor of factorization
+categories thickly generated by fundamental evaluation objects.
+Corollary~\ref{cor:mc3-all-types} gives the Lie-type input for
+that construction on the evaluation-prefundamental compact core,
+including $E_8$. The existence of the full functor on completed
+ambient categories remains the separate completion problem.
+
+In modular Koszul duality, this supplies the
+type-uniform compact-core Clebsch--Gordan input for MC3. The
+pro-nilpotent passage from compact-core filtrations to the full
+ambient ind-category is governed by the completion formalism of
+Francis--Gaitsgory and by the module-category framework of
+\cite{LorgatMKD}.
+
+\begin{remark}[Limitations]
+\label{rem:limitations}
+Three caveats accompany Theorem~\ref{thm:main-formal}. First, the
+generic spectral parameter hypothesis is genuine: on the
+Hern\'andez $A$-linked hypersurfaces extra extensions may appear.
+Second, the theorem proves an associated-graded filtered statement;
+the direct-sum Clebsch--Gordan formula requires the stated
+Ext-vanishing. Third, the theorem covers the
+evaluation-prefundamental compact core; passage to completed
+categories requires the Francis--Gaitsgory formalism and the
+module-category framework of~\cite{LorgatMKD}.
+\end{remark}
+
+\begin{remark}[Comparison with prior literature]
+\label{rem:comparison}
+Drinfeld's ``Quasi-Hopf algebras''~\cite{Drinfeld90} introduced the
+Drinfeld associator and the universal monodromy. Kazhdan--Lusztig
+\cite{KL93a, KL93b, KL94a, KL94b} proved the categorical
+equivalence type by type in positive-level affine categories.
+Etingof--Kazhdan~\cite{EK96, EK98} gave a type-uniform
+quantization. Hern\'andez and Jimbo~\cite{HernandezJimbo12}
+introduced the shifted category $\cO^{\mathrm{sh}}$ and the
+block criterion used here. Chari--Pressley~\cite{ChariPressley94}
+proved the type-$A$ categorical CG. Francis--Gaitsgory
+\cite{FG12} supplied the factorization pro-nilpotent formalism.
+The $q$-character coefficient filtration is the uniform replacement
+for the minuscule hypothesis, including $E_8$.
+\end{remark}
+
+% ================================================================
+% BIBLIOGRAPHY
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{ChariMoura06}
+V.~Chari and A.~A.~Moura,
+Characters and blocks for finite-dimensional representations of
+quantum affine algebras,
+\textit{Int.\ Math.\ Res.\ Not.}\ \textbf{2005} (2005), no.~5,
+257--298.
+
+\bibitem{ChariPressley94}
+V.~Chari and A.~Pressley,
+\textit{A Guide to Quantum Groups},
+Cambridge University Press, 1994.
+
+\bibitem{Drinfeld85}
+V.~G.~Drinfeld,
+Hopf algebras and the quantum Yang--Baxter equation,
+\textit{Soviet Math.\ Dokl.}\ \textbf{32} (1985), 254--258.
+
+\bibitem{Drinfeld88}
+V.~G.~Drinfeld,
+A new realization of Yangians and quantized affine algebras,
+\textit{Soviet Math.\ Dokl.}\ \textbf{36} (1988), 212--216.
+
+\bibitem{Drinfeld90}
+V.~G.~Drinfeld,
+Quasi-Hopf algebras,
+\textit{Leningrad Math.\ J.}\ \textbf{1} (1990), no.~6, 1419--1457.
+
+\bibitem{EK96}
+P.~Etingof and D.~Kazhdan,
+Quantization of Lie bialgebras I,
+\textit{Selecta Math.\ (N.S.)}\ \textbf{2} (1996), 1--41.
+
+\bibitem{EK98}
+P.~Etingof and D.~Kazhdan,
+Quantization of Lie bialgebras II,
+\textit{Selecta Math.\ (N.S.)}\ \textbf{4} (1998), 213--231.
+
+\bibitem{FeiginFrenkel92}
+B.~Feigin and E.~Frenkel,
+Affine Kac--Moody algebras at the critical level and
+Gelfand--Dikii algebras,
+\textit{Internat.\ J.\ Modern Phys.\ A}\ \textbf{7} (1992),
+197--215.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\textit{Selecta Math.\ (N.S.)}\ \textbf{18} (2012), 27--87.
+
+\bibitem{FR99}
+E.~Frenkel and N.~Reshetikhin,
+The $q$-characters of representations of quantum affine
+algebras and deformations of $\cW$-algebras,
+\textit{Contemp.\ Math.}\ \textbf{248} (1999), 163--205.
+
+\bibitem{FrenkelMukhin01}
+E.~Frenkel and E.~Mukhin,
+Combinatorics of $q$-characters of finite-dimensional
+representations of quantum affine algebras,
+\textit{Comm.\ Math.\ Phys.}\ \textbf{216} (2001), 23--57.
+
+\bibitem{GTL17}
+S.~Gautam and V.~Toledano Laredo,
+Meromorphic tensor equivalence for Yangians and quantum loop
+algebras,
+\textit{Publ.\ Math.\ IH\'ES}\ \textbf{125} (2017), 267--337.
+
+\bibitem{HernandezJimbo12}
+D.~Hern\'andez and M.~Jimbo,
+Asymptotic representations and Drinfeld rational fractions,
+\textit{Compos.\ Math.}\ \textbf{148} (2012), 1593--1623.
+
+\bibitem{KL93a}
+D.~Kazhdan and G.~Lusztig,
+Tensor structures arising from affine Lie algebras I,
+\textit{J.\ Amer.\ Math.\ Soc.}\ \textbf{6} (1993), 905--947.
+
+\bibitem{KL93b}
+D.~Kazhdan and G.~Lusztig,
+Tensor structures arising from affine Lie algebras II,
+\textit{J.\ Amer.\ Math.\ Soc.}\ \textbf{6} (1993), 949--1011.
+
+\bibitem{KL94a}
+D.~Kazhdan and G.~Lusztig,
+Tensor structures arising from affine Lie algebras III,
+\textit{J.\ Amer.\ Math.\ Soc.}\ \textbf{7} (1994), 335--381.
+
+\bibitem{KL94b}
+D.~Kazhdan and G.~Lusztig,
+Tensor structures arising from affine Lie algebras IV,
+\textit{J.\ Amer.\ Math.\ Soc.}\ \textbf{7} (1994), 383--453.
+
+\bibitem{Kohno87}
+T.~Kohno,
+Monodromy representations of braid groups and Yang--Baxter
+equations,
+\textit{Ann.\ Inst.\ Fourier}\ \textbf{37} (1987), 139--160.
+
+\bibitem{LorgatMKD}
+R.~Lorgat,
+\textit{Modular Koszul Duality, Volume I},
+monograph, 2026.
+
+\bibitem{Nakajima04}
+H.~Nakajima,
+Quiver varieties and $t$-analogs of $q$-characters of quantum
+affine algebras,
+\textit{Ann.\ of Math.\ (2)}\ \textbf{160} (2004), 1057--1097.
+
+\end{thebibliography}
+
+\end{document}

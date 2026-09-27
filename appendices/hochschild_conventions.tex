@@ -1,0 +1,286 @@
+\chapter{Hochschild Conventions and Crosswalk}
+\label{app:hochschild-conventions}
+
+\providecommand{\THH}{\mathrm{THH}}
+\providecommand{\HHcat}{\mathrm{HH}_{\mathrm{cat}}}
+\providecommand{\HHalg}{\mathrm{HH}_{\mathrm{alg}}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\id}{\mathrm{id}}
+
+\index{Hochschild conventions|textbf}
+\index{Hochschild cohomology!crosswalk}
+\index{topological Hochschild homology!distinguished from classical Hochschild cochains}
+\index{categorical Hochschild cohomology!distinguished from chiral and topological}
+\index{chiral Hochschild cohomology!distinguished from topological and categorical}
+
+This appendix fixes the Hochschild notation used across the monograph.
+There are three constitutional Hochschild theories and one auxiliary
+algebraic notation. The constitutional theories are chiral,
+topological, and categorical. The auxiliary notation
+$\HHalg^\bullet(A)$ is retained because several comparisons pass
+through mode algebras or compact generators before returning to the
+categorical or chiral side.
+
+\begin{proposition}[Three Hochschild theories: type signatures,
+scope, and comparison rules; \ClaimStatusProvedHere]
+\label{prop:hochschild-crosswalk}
+We use the following typed Hochschild constructions.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chiral Hochschild cohomology.}
+ Let $\cA$ be a chiral algebra on a smooth curve~$X$, regarded as an
+ algebra object in factorizable $\cD$-modules on~$X$. Its chiral
+ Hochschild cohomology is
+ \[
+ \ChirHoch^\bullet(\cA)
+ := \RHom^{\mathrm{ch}}_{\cA \otimes^{\mathrm{ch}} \cA^{\mathrm{op}}}
+ (\cA,\cA).
+ \]
+ Input type: chiral algebra on~$X$.
+ Output type: derived object in the chiral/factorization module
+ category on~$X$, carrying the chiral brace/Gerstenhaber structure and
+ recovering the derived chiral centre
+ $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+ The definition fixes the derived object.  A family datum
+ $H_H(\cA;S)$ supplies the separate Theorem~H support statement
+ $\operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S$.
+ PBW gives its associated-graded input; the finite-window retract,
+ OPE-residue lift, completion, and averaging comparison determine~$S$.
+
+\item \emph{Topological Hochschild homology.}
+ Let $R$ be an $E_1$-ring spectrum. Its topological Hochschild
+ homology is
+ \[
+ \THH(R)
+ := R \otimes^{\mathbf L}_{R \otimes R^{\mathrm{op}}} R.
+ \]
+ Input type: $E_1$-ring spectrum.
+ Output type: $S^1$-equivariant spectrum.
+ This is the closed trace of the spectrum-level bar construction.
+ In particular, the phrase ``topological Hochschild'' in these
+ volumes names $\THH$, not the cochain complex
+ $\RHom_{A^e}(A,A)$ of a discrete algebra.
+
+\item \emph{Categorical Hochschild cohomology.}
+ Let $\cC$ be a dg, $A_\infty$, or stable $\infty$-category. Its
+ categorical Hochschild cohomology is
+ \[
+ \HHcat^\bullet(\cC)
+ := \RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id_{\cC}, \id_{\cC}).
+ \]
+ Input type: dg/$A_\infty$/stable $\infty$-category.
+ Output type: $E_2$-algebra; for a Calabi--Yau category it also
+ carries the shifted Poisson/BV structures recorded in
+ Chapter~\textup{\ref{chap:hochschild-calculus}}.
+ The homology variant $\HH_{\bullet,\mathrm{cat}}(\cC)$ is the cyclic
+ bar complex $\mathrm{CC}_\bullet(\cC)$.
+\end{enumerate}
+
+\noindent
+Alongside these three theories we use the auxiliary notation
+\[
+ \HHalg^\bullet(A)
+ := \RHom_{A \otimes A^{\mathrm{op}}}(A,A)
+\]
+for the classical algebraic Hochschild cochains of a discrete or
+dg algebra~$A$. This is not a fourth constitutional theory:
+it is the single-object / compact-generator algebra model for the
+categorical theory.
+
+\smallskip\noindent
+The comparison rules are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Categorical = algebraic on a compact generator.}
+ If $\cC \simeq \Perf(A)$ for a compact generator with endomorphism
+ algebra~$A$, then
+ \[
+ \HHcat^\bullet(\cC) \simeq \HHalg^\bullet(A),
+ \qquad
+ \HH_{\bullet,\mathrm{cat}}(\cC) \simeq \HH_{\bullet,\mathrm{alg}}(A),
+ \]
+ by Morita invariance of Hochschild theory
+ \textup{(}Chapter~\textup{\ref{chap:hochschild-calculus}},
+ Remark~\textup{\ref{V3-rem:hh-morita}};
+ Volume~II, Remark~\textup{\ref{V2-rem:bulk-categorical}}\textup{)}.
+
+\item \emph{Chiral is not algebraic in general.}
+ For a chiral algebra~$\cA$ on a curve and its mode algebra
+ $A_{\mathrm{mode}}$, one does \emph{not} have a general
+ identification
+ \[
+ \ChirHoch^\bullet(\cA) \simeq \HHalg^\bullet(A_{\mathrm{mode}}).
+ \]
+ The left-hand side uses OPE/factorization products on the curve and
+ Fulton--MacPherson collision data; the right-hand side uses the
+ cartesian bimodule theory of an associative algebra at a point.
+ The comparison available in Volume~I is the fibrewise spectral
+ sequence
+ \textup{(}Theorem~\textup{\ref{thm:hochschild-classical-comparison}}\textup{)}
+ and, on the formal-disk side, the separate chain maps to
+ mode/Gel'fand--Fuchs complexes in
+ Chapter~\textup{\ref{chap:three-hochschild-unification}}.
+
+\item \emph{Topological and algebraic are not identified by notation.}
+ A discrete or dg algebra can be spectrified, but the resulting
+ $\THH$ is a spectrum-valued trace. Any comparison with the dg
+ Hochschild chain complex must name the Eilenberg--Mac Lane
+ realization, the rationalization or completion used, and the map from
+ the bar model to the spectral trace. Outside such a named comparison
+ $\THH$ retains torsion/chromatic information invisible to the
+ classical dg Hochschild complex.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Circle and restriction firewall;
+\ClaimStatusProvedElsewhere]
+\label{rem:hochschild-circle-restriction-firewall}
+\index{circle!restriction firewall for chiral algebras}
+\index{mode algebra!not circle restriction}
+Four circle-adjacent operations are distinct.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A chiral algebra is a $\cD$-module/factorization object on a
+ complex algebraic curve. The operation ``restrict the $\cD$-module to
+ the real submanifold $S^1$'' is not used in these volumes to produce
+ an algebra; real boundary values require extra analytic data.
+\item Choosing a formal coordinate and taking modes gives the
+ formal-disk mode algebra $A_{\mathrm{mode}}$. This is a strict
+ associative topological/dg algebra, not factorization homology over
+ the circle and not an $A_\infty$ transfer by itself.
+\item If $\mathcal F_A$ is the locally constant factorization algebra
+ on $S^1$ associated with an $E_1$-algebra~$A$, then
+ \[
+  \int_{S^1}\mathcal F_A \simeq
+  \mathrm{HH}_{\bullet,\mathrm{alg}}(A)
+ \]
+ by the circle trace theorem for factorization homology
+ \cite{BZFN10,AF15,CG17}. The output is a Hochschild chain complex
+ \textup{(}or, after spectrification, a spectrum-level trace\textup{)},
+ not the mode algebra itself.
+\item Pulling a holomorphic/topological factorization algebra to an
+ oriented real interval or real ray, when the analytic/constructible
+ comparison hypotheses are supplied, gives an $E_1$-algebra. Calling a
+ chain model of this object an $A_\infty$-algebra uses the
+ characteristic-zero homotopy-transfer/rectification theorem
+ \cite{LV12,Kadeishvili80}; it is not a bare topological restriction
+ statement.
+\end{enumerate}
+Consequently a comparison statement must name which operation is in
+force: mode extraction, circle factorization homology, real-ray
+pullback to an $E_1$-algebra, or an analytic boundary-value
+construction.
+\end{remark}
+
+\begin{remark}[BZFN ambient discipline;
+\ClaimStatusProvedElsewhere]
+\label{rem:bzfn-ambient-not-dial}
+\index{Ben--Zvi--Francis--Nadler!ambient discipline}
+\index{ambient category!not a free parameter}
+In the Ben--Zvi--Francis--Nadler circle-trace theorem
+\cite{BZFN10}, the symmetric monoidal target~$\mathcal S$ is fixed
+as part of a single application. The $E_1$-algebra object and its
+Hochschild trace are formed inside that same~$\mathcal S$. Changing
+from a chiral factorisation algebra~$\cA$ in $\cD$-modules on
+$\Ran(X)$ to a formal-disk mode algebra~$A_{\mathrm{mode}}$ in
+chain complexes changes the input algebra and its native
+presentation, not a free scalar or categorical knob holding the
+algebra fixed. Thus
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ \qquad\text{and}\qquad
+ \HH^\bullet(A_{\mathrm{mode}},A_{\mathrm{mode}})
+\]
+are different centre objects because their inputs differ. A comparison
+between them requires the named formal-disk mode-extraction and
+local-global comparison maps; BZFN by itself does not identify the
+chiral and mode centres.
+\end{remark}
+
+\begin{remark}[Theorem~H package in the Hochschild crosswalk;
+\ClaimStatusConditional]
+\label{rem:hochschild-crosswalk-theorem-h-package}
+The chiral entry of Proposition~\ref{prop:hochschild-crosswalk} is
+governed by the family datum $H_H(\cA;S)$ of Theorem~H.  This datum
+consists of a complete chart model, its quasi-isomorphism to
+$RHH_{\mathrm{ch}}(\cA)$, and a strong deformation retract onto
+$K_{\cA,S}$, and therefore gives
+\[
+ \operatorname{Supp}\ChirHoch^\bullet(\cA)\subseteq S.
+\]
+PBW chiral Koszulness supplies the associated-graded quadratic
+contraction; the OPE-residue lift, incidence compatibility,
+completion, and averaging comparison determine~$S$.  The
+positive-depth complex $\mathrm{KD}_{\mathrm H}^{\bullet}(\cA)$ of
+Definition~\ref{def:koszul-defect-complex} records the remaining
+collision columns.  Bakalov--De Sole--Kac give the benchmark support
+$\{0,2,3\}$ for Virasoro and dimensions $(2,1,0,\ldots)$ for the
+rank-one even superboson, transported to the curve chart by a
+bounded-to-chart quasi-isomorphism.  A perfect degree-$d$ pairing is
+a separate map and supplies the corresponding degree reflection.
+\end{remark}
+
+\begin{remark}[Spectrum-level bar lift is not a crosswalk axiom;
+\ClaimStatusConjectured]
+\label{rem:hochschild-crosswalk-spectrum-lift-package}
+The phrase ``rational shadow'' for the passage from a dg bar complex
+to a spectrum-valued trace is governed by the spectrum-lift package
+Conjecture~\ref{conj:spectrum-bar-lift} and by the trace constraints
+of Remark~\ref{rem:spectrum-bar-lift-trace-constraints}. It is not an
+axiom of Proposition~\ref{prop:hochschild-crosswalk}. Until that lift
+is supplied, the proved crosswalk records only the type distinction:
+$\HHalg$ is algebraic/categorical on a compact generator, while
+$\THH$ is the $S^1$-equivariant trace of an $E_1$-ring spectrum.
+\end{remark}
+
+\begin{remark}[Theorem~H is exclusively chiral]
+\label{rem:theorem-h-chiral-only}
+Every statement of Theorem~H in these volumes refers to the chiral
+ complex $\ChirHoch^\bullet(\cA)$ of a chiral algebra on a curve.
+ The proof uses curve-valued inputs at every step: ordered and
+ symmetric Fulton--MacPherson configuration spaces, OPE residue
+ compositions, PBW/Koszul collapse for the chiral bar complex,
+ and the curve-level Verdier shift~$[2]$. None of these steps is a
+ statement about $\THH$, and none is a statement about
+ $\HHcat^\bullet(\cC)$ of a dg category.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Occurrence-pattern crosswalk for Hochschild terminology}
+\label{tab:hochschild-occurrence-crosswalk}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.2cm}p{3.2cm}p{6.2cm}}
+\toprule
+\textbf{Occurrence pattern} & \textbf{Correct theory} &
+\textbf{Why this theory is load-bearing} \\
+\midrule
+Curve $X$, $\Ran(X)$, OPE residues, FM compactifications,
+$Z^{\mathrm{der}}_{\mathrm{ch}}$, Theorem~H,
+Drinfeld--Sokolov transport of chiral classes &
+$\ChirHoch^\bullet$ &
+The input is a chiral algebra on a curve and the proof uses
+factorization/OPE geometry rather than cartesian bimodules or cyclic
+bar constructions. \\
+\addlinespace
+Mode algebra, Zhu algebra, bar resolution of an associative algebra,
+$\Ext_{A^e}(A,A)$, classical Gerstenhaber bracket at a point &
+$\HHalg^\bullet$ &
+The input is a discrete or dg algebra over a point; this is the
+single-object algebra model used for categorical comparisons and
+fibrewise classical limits. \\
+\addlinespace
+Circle factorization homology of an $E_1$-ring spectrum,
+spectrum-level closed trace, chromatic redshift, $S^1$-equivariant
+spectrum &
+$\THH$ &
+The output is a spectrum with an $S^1$-action; the comparison is
+bar-spectrum to closed trace, not an algebraic cochain complex. \\
+\addlinespace
+dg category, $\Perf(A)$, compact generator, Morita invariance, Serre
+pairing, CY shifted Poisson/BV, derived center
+$\RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id,\id)$ &
+$\HHcat^\bullet$ &
+The input is a category rather than an algebra on a curve or a ring
+spectrum; Morita invariance and CY duality are categorical, not
+chiral, statements. \\
+\bottomrule
+\end{tabular}
+\end{table}

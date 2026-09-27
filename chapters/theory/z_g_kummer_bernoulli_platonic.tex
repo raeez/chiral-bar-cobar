@@ -1,0 +1,590 @@
+% !TEX root = ../../main.tex
+%
+% Chapter: Z_g(k) -- Verlinde SL_2 closed form and Kummer–Bernoulli leading term
+%
+% Verlinde SL_2 partition function for affine sl_2 conformal blocks on a
+% genus-g Riemann surface at level k. The leading coefficient is the
+% Hurwitz--Bernoulli scalar
+% (-1)^g 2^{g-1} B_{2g-2}/(2g-2)!, and the first Bernoulli-index
+% Kummer witnesses occur at B_12 and B_16.
+%
+% Author: Raeez Lorgat.
+
+\chapter{The Verlinde polynomial \texorpdfstring{$Z_g(k)$}{Z\_g(k)}, Bernoulli leading term, and Kummer congruences}
+\label{ch:z-g-kummer-bernoulli}
+
+\section*{Orientation}
+
+Fix $G = \mathrm{SL}_2$ and a level $k \in \mathbb{Z}_{\ge 0}$. Set
+\begin{equation}
+n \;=\; k + 2 \;=\; k + h^{\vee}.
+\end{equation}
+The Verlinde partition function on a closed oriented genus-$g$ surface,
+equivalently the dimension of conformal blocks for the affine Kac--Moody
+algebra $\widehat{\mathfrak{sl}}_2$ at level $k$, is
+\begin{equation}
+\label{eq:zg-verlinde-raw}
+Z_g(k) \;=\; \sum_{\lambda} \left( \dim V_\lambda \right)^{2-2g},
+\end{equation}
+where $\lambda$ runs over integrable weights at level $k$ (i.e.\ spins
+$\ell/2$ with $0 \le \ell \le k$). Using the modular $S$-matrix
+$S_{\ell m} = \sqrt{2/n}\,\sin(\pi (\ell+1)(m+1)/n)$ and the Verlinde formula,
+this rewrites as a sum over nonzero $S$-entries; Equation~\eqref{eq:zg-verlinde-raw}
+is the standard starting point.
+
+The arithmetic rests on four facts.
+
+\begin{itemize}
+\item Theorem~\ref{thm:z-g-closed-form-polynomial} rewrites $Z_g(k)$ as a
+finite cosecant sum and promotes the cosecant sum to a polynomial of degree
+$2g - 2$ in $n^2$.
+\item Theorem~\ref{thm:z-g-polynomial-form} refines the polynomial to
+$P_g(n) = n^{g-1}(n^2-1)\,R_{g-2}(n^2)$, degree $3g - 3$ in $n$.
+\item Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} identifies the
+leading coefficient of $R_{g-2}$ as
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ via Hurwitz's cosecant series.
+\item Theorem~\ref{thm:z-g-kummer-congruence} derives Kummer-type
+divisibility witnesses: the irregular primes $691 \mid Z_7$ leading and
+$3617 \mid Z_9$ leading.
+\end{itemize}
+
+The engine is Hurwitz's 1890 cosecant expansion, the Witten~1991 symplectic
+volume interpretation, and the Verlinde~1988 fusion formula. The three
+routes meet on the same leading coefficient with the same normalisation.
+
+\section{Cosecant reduction: Theorem~\ref{thm:z-g-closed-form-polynomial}}
+
+\begin{theorem}[$Z_g(k)$ closed form]
+\label{thm:z-g-closed-form-polynomial}
+\ClaimStatusProvedHere
+For $G = \mathrm{SL}_2$, level $k \ge 0$, genus $g \ge 2$, and $n = k+2$,
+\begin{equation}
+\label{eq:zg-csc}
+Z_g(k) \;=\; \left(\tfrac{n}{2}\right)^{g-1} S_{g-1}(n), \qquad
+S_{g-1}(n) \;=\; \sum_{j=1}^{n-1} \csc^{2(g-1)}\!\!\left(\tfrac{\pi j}{n}\right).
+\end{equation}
+The function $S_{g-1}(n)$ is a polynomial of degree $2g-2$ in $n^2$ with
+rational coefficients; equivalently $Z_g(k)$ is a polynomial of degree
+$3g-3$ in $n$.
+\end{theorem}
+
+\begin{proof}
+Step 1 (Verlinde). The modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
+level $k$ has entries $S_{\ell m} = \sqrt{2/n}\,\sin(\pi(\ell+1)(m+1)/n)$ for
+$0 \le \ell, m \le k$. The Verlinde formula reads
+\begin{equation}
+Z_g(k) \;=\; \sum_{\ell=0}^{k} S_{0\ell}^{2-2g}.
+\end{equation}
+Substitute $S_{0\ell} = \sqrt{2/n}\,\sin(\pi(\ell+1)/n)$ and relabel
+$j = \ell+1 \in \{1, \ldots, k+1\} = \{1, \ldots, n-1\}$:
+\begin{equation}
+Z_g(k) \;=\; \sum_{j=1}^{n-1} \left(\tfrac{2}{n}\right)^{(2-2g)/2}\,
+\sin^{2-2g}\!\left(\tfrac{\pi j}{n}\right)
+\;=\; \left(\tfrac{n}{2}\right)^{g-1}\sum_{j=1}^{n-1}\csc^{2(g-1)}\!\!\left(\tfrac{\pi j}{n}\right).
+\end{equation}
+This yields~\eqref{eq:zg-csc}. \checkmark
+
+Step 2 (polynomiality of $S_{g-1}(n)$ in $n^2$). The sum
+$S_{g-1}(n) = \sum_{j=1}^{n-1} \csc^{2(g-1)}(\pi j / n)$ is a trigonometric
+power sum over nontrivial $n$-th roots of unity. Writing
+$\csc^2(\pi j/n) = -4\,\zeta^j / (1 - \zeta^j)^2$ with
+$\zeta = e^{2\pi i/n}$, $S_{g-1}(n)$ is a symmetric function in
+$\{\zeta, \zeta^2, \ldots, \zeta^{n-1}\}$. Classical results on sums of
+cotangent/cosecant powers (Eisenstein; Cauchy) give that for each integer
+$r \ge 1$,
+\begin{equation}
+\sum_{j=1}^{n-1} \csc^{2r}\!\!\left(\tfrac{\pi j}{n}\right)
+\;=\; T_r(n^2),
+\end{equation}
+where $T_r \in \mathbb{Q}[x]$ is a polynomial of degree $r$ in its argument.
+We record the first three:
+\begin{align}
+T_1(n^2) &= \tfrac{1}{3}(n^2 - 1), \label{eq:T1} \\
+T_2(n^2) &= \tfrac{1}{45}(n^2-1)(n^2+11), \label{eq:T2} \\
+T_3(n^2) &= \tfrac{1}{945}(n^2-1)(2 n^4 + 23 n^2 + 191). \label{eq:T3}
+\end{align}
+The only input used here is the classical cosecant-polynomiality
+statement; the Bernoulli leading coefficient is computed independently
+later from the Hurwitz expansion and is not needed for this
+polynomiality step.
+
+Taking $r = g-1$ gives $S_{g-1}(n) = T_{g-1}(n^2)$, a polynomial of degree
+$g - 1$ in $n^2$, hence degree $2g-2$ in $n$. \checkmark
+
+Step 3 (polynomiality of $Z_g$). Multiplying by $(n/2)^{g-1}$:
+\begin{equation}
+Z_g(k) \;=\; 2^{-(g-1)} n^{g-1} T_{g-1}(n^2),
+\end{equation}
+a polynomial in $n$ of degree $(g-1) + 2(g-1) = 3g-3$. \checkmark
+\end{proof}
+
+\begin{remark}[Witten normalisation]
+\label{rem:witten-normalisation}
+Witten~1991 identifies $Z_g(k)$ (times a level-independent factor) with the
+symplectic volume of the moduli space of flat $\mathrm{SU}(2)$-connections
+on $\Sigma_g$ in the large-$k$ limit. Specifically,
+$\lim_{k\to\infty} Z_g(k) / n^{3g-3} = \mathrm{vol}(\mathcal{M}_g^{\mathrm{flat}})$
+up to explicit Weyl-group factors. This pins the leading $n^{3g-3}$ term
+against the symplectic-volume side and provides an independent verification of
+the degree claim in Thm~\ref{thm:z-g-closed-form-polynomial}; see also the
+Hurwitz-Bernoulli identification in Thm~\ref{thm:z-g-leading-coefficient-bernoulli}.
+\end{remark}
+
+\begin{remark}[low-genus witnesses]
+\label{rem:low-genus}
+Genus $g=2$: $Z_2(k) = (n/2) \sum_{j=1}^{n-1} \csc^2(\pi j/n) = (n/2)\cdot T_1(n^2) = n(n^2-1)/6$.
+At $k=1, n=3$: $Z_2(1) = 3\cdot 8/6 = 4$. Genus $g=3$: $Z_3(k) = (n/2)^2 T_2(n^2) = n^2(n^2-1)(n^2+11)/180$.
+At $k=1, n=3$: $Z_3(1) = 9\cdot 8\cdot 20/180 = 1440/180 = 8$. Both values match direct
+counts of conformal blocks and the Verlinde fusion formula over $\widehat{\mathfrak{sl}}_2$.
+\end{remark}
+
+\section{Factored polynomial form: Theorem~\ref{thm:z-g-polynomial-form}}
+
+\begin{theorem}[Polynomial factorisation of $Z_g$]
+\label{thm:z-g-polynomial-form}
+\ClaimStatusProvedHere
+For $g \ge 2$ and $n = k+2$,
+\begin{equation}
+\label{eq:pg-factored}
+Z_g(k) \;=\; P_g(n) \;=\; n^{g-1}(n^2-1)\,R_{g-2}(n^2),
+\end{equation}
+where $R_{g-2} \in \mathbb{Q}[x]$ has degree $g-2$ (convention: $R_{-1} = 1$ if
+$g=1$; $R_0$ is a rational constant if $g=2$). The factor $n^2 - 1$ is uniform
+in $g$; the residual $R_{g-2}(n^2)$ carries all genus-dependent data of degree
+greater than one in $n^2$.
+\end{theorem}
+
+\begin{proof}
+From Thm~\ref{thm:z-g-closed-form-polynomial},
+$Z_g(k) = 2^{-(g-1)} n^{g-1} T_{g-1}(n^2)$. It suffices to show
+$T_{g-1}(n^2)$ is divisible by $n^2 - 1$ with quotient a polynomial of degree
+$g-2$ in $n^2$, up to the normalising $2^{-(g-1)}$.
+
+Evaluate $T_{g-1}(n^2)$ at $n = 1$. From~\eqref{eq:zg-csc}, the cosecant sum
+$\sum_{j=1}^{n-1} \csc^{2(g-1)}(\pi j / n)$ has an empty range at $n = 1$,
+so $S_{g-1}(1) = 0$ and therefore $T_{g-1}(1) = 0$. Since $T_{g-1}$ is a
+polynomial in $n^2$, vanishing at $n=1$ is equivalent to vanishing at
+$n^2 = 1$, so $(n^2 - 1) \mid T_{g-1}(n^2)$ in $\mathbb{Q}[n^2]$.
+
+Write $T_{g-1}(n^2) = (n^2 - 1)\,\widetilde R_{g-2}(n^2)$ with $\widetilde
+R_{g-2}$ of degree $(g-1) - 1 = g-2$ in $n^2$. Absorb the prefactor
+$2^{-(g-1)}$ into $R_{g-2}(n^2) := 2^{-(g-1)}\,\widetilde R_{g-2}(n^2)$; this
+is again a degree-$(g-2)$ polynomial in $n^2$ with rational coefficients. Then
+$Z_g(k) = n^{g-1}(n^2 - 1)\,R_{g-2}(n^2)$. \checkmark
+
+Total degree in $n$: $(g-1) + 2 + 2(g-2) = 3g - 3$, matching
+Thm~\ref{thm:z-g-closed-form-polynomial}. \checkmark
+\end{proof}
+
+\begin{remark}[explicit $R_{g-2}$ for $g \le 5$]
+\label{rem:r-explicit}
+Combining~\eqref{eq:T1}--\eqref{eq:T3} with the absorption $R_{g-2}(x) =
+2^{-(g-1)}\,T_{g-1}(x)/(x-1)$:
+\begin{align}
+R_0(x) &= \tfrac{1}{6}, \\
+R_1(x) &= \tfrac{1}{180}(x + 11), \\
+R_2(x) &= \tfrac{1}{7560}(2 x^2 + 23 x + 191).
+\end{align}
+The leading coefficients $1/6, 1/180, 2/7560 = 1/3780$ match
+Thm~\ref{thm:z-g-leading-coefficient-bernoulli}: for
+$g=2,3,4$ the formula
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ gives respectively
+$1/6$, $1/180$, and $1/3780$.
+\end{remark}
+
+\begin{remark}[uniform $(n^2-1)$ factor]
+\label{rem:uniform-factor}
+The factor $n^2 - 1$ vanishes at $n = 1$ (equivalently $k = -1$, outside the
+physical range $k \ge 0$). It encodes the removal of the trivial
+representation from the Verlinde sum when the level is too small to
+support any nontrivial fusion; both $Z_g$ and its cosecant presentation
+share this pole-at-$n=1$ structure.
+\end{remark}
+
+\section{Bernoulli leading term: Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}}
+
+\begin{theorem}[Hurwitz--Bernoulli leading coefficient]
+\label{thm:z-g-leading-coefficient-bernoulli}
+\ClaimStatusProvedHere
+For $g \ge 2$, the leading coefficient of $R_{g-2}$ (as a polynomial of degree
+$g-2$ in $n^2$) is
+\begin{equation}
+\label{eq:leading-coeff}
+[n^{2(g-2)}]\,R_{g-2}(n^2)
+\;=\;
+(-1)^g\,\frac{2^{g-1}B_{2g-2}}{(2g-2)!},
+\end{equation}
+where $B_{2g-2}$ denotes the $(2g-2)$-th Bernoulli number in the sign
+convention $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$, $B_8 = -1/30$,
+$B_{10} = 5/66$, $B_{12} = -691/2730$, $B_{14} = 7/6$,
+$B_{16} = -3617/510$.
+\end{theorem}
+
+\begin{proof}
+Step 1 (Hurwitz cosecant series). Hurwitz (1890) proved the
+$\cot$/$\csc$ power-series expansion
+\begin{equation}
+\label{eq:hurwitz-csc}
+\left(\tfrac{\pi x}{\sin \pi x}\right)^{2}
+\;=\; 1 + \sum_{m \ge 1} \frac{(2m)(2^{2m}-2)|B_{2m}|}{(2m)!}(\pi x)^{2m}
+\;=\; 1 + \sum_{m\ge 1} c_m x^{2m},
+\end{equation}
+with
+\begin{equation}
+c_m \;=\; \frac{(2^{2m}-2)|B_{2m}|}{(2m-1)!}\pi^{2m}.
+\end{equation}
+Equivalently, for fixed $r \ge 1$,
+\begin{equation}
+\label{eq:csc-to-bernoulli}
+\csc^{2r}(\pi x) \;=\; \frac{1}{(\pi x)^{2r}}\,\Bigl[1 + O(x^2)\Bigr]^{2r}
+\;=\; \frac{1}{(\pi x)^{2r}}\,\bigl(1 + r\,c_1 x^2 + \cdots\bigr),
+\end{equation}
+valid as $x \to 0$.
+
+Step 2 (leading behaviour of $S_{g-1}(n)$). Set $r = g-1$ and sum
+$x = j/n$ for $j = 1, \ldots, n-1$. The leading contribution to
+$S_{g-1}(n)$ as $n \to \infty$ is
+\begin{equation}
+\label{eq:s-asymp}
+S_{g-1}(n) \;=\; \sum_{j=1}^{n-1} \csc^{2(g-1)}(\pi j/n)
+\;\sim\; \frac{n^{2(g-1)}}{\pi^{2(g-1)}}\,\zeta(2g-2)\cdot 2 \quad(n \to \infty),
+\end{equation}
+where we used $\sum_{j=1}^{\infty} j^{-2(g-1)} = \zeta(2g-2)$ and the factor
+$2$ accounts for the two tails $j \to 0^+$ and $j \to n^-$ (equivalently,
+$\csc^{2(g-1)}(\pi j/n) = \csc^{2(g-1)}(\pi(n-j)/n)$, so the sum doubles each
+tail).
+
+Step 3 (Euler's even-zeta identity). Euler's formula
+\begin{equation}
+\zeta(2m) \;=\; \frac{(-1)^{m+1}(2\pi)^{2m} B_{2m}}{2\,(2m)!}
+\;=\; \frac{(2\pi)^{2m}|B_{2m}|}{2\,(2m)!}
+\end{equation}
+(noting $(-1)^{m+1}B_{2m} = |B_{2m}|$ for $m \ge 1$) with $m = g-1$ gives
+\begin{equation}
+\zeta(2g-2) \;=\; \frac{(2\pi)^{2g-2}|B_{2g-2}|}{2\,(2g-2)!}.
+\end{equation}
+Substituting into the displayed asymptotic for $S_{g-1}(n)$:
+\begin{equation}
+\label{eq:s-leading}
+S_{g-1}(n) \;\sim\; \frac{n^{2g-2}}{\pi^{2g-2}}\cdot 2 \cdot
+\frac{(2\pi)^{2g-2}|B_{2g-2}|}{2(2g-2)!}
+\;=\; \frac{2^{2g-2}|B_{2g-2}|}{(2g-2)!}\,n^{2g-2}.
+\end{equation}
+
+Step 4 (leading coefficient of $Z_g$ in $n$). Combining with
+Thm~\ref{thm:z-g-closed-form-polynomial}:
+\begin{equation}
+Z_g(k) \;=\; \left(\tfrac{n}{2}\right)^{g-1} S_{g-1}(n)
+\;\sim\; \frac{1}{2^{g-1}}\cdot \frac{2^{2g-2}|B_{2g-2}|}{(2g-2)!}\,n^{3g-3}
+\;=\; \frac{2^{g-1}|B_{2g-2}|}{(2g-2)!}\,n^{3g-3}.
+\end{equation}
+
+Step 5 (leading coefficient of $R_{g-2}$). From
+Thm~\ref{thm:z-g-polynomial-form}, $Z_g(k) = n^{g-1}(n^2-1)\,R_{g-2}(n^2)$.
+The leading $n^{3g-3}$ term comes from $n^{g-1}\cdot n^2 \cdot
+[n^{2(g-2)}]\,R_{g-2}(n^2)\cdot n^{2(g-2)}$:
+\begin{equation}
+[n^{3g-3}]\,Z_g(k) \;=\; [n^{2(g-2)}]\,R_{g-2}(n^2).
+\end{equation}
+Therefore
+\begin{equation}
+[n^{2(g-2)}]\,R_{g-2}(n^2)
+\;=\;
+\frac{2^{g-1}|B_{2g-2}|}{(2g-2)!}.
+\end{equation}
+Since $B_{2g-2}=(-1)^g|B_{2g-2}|$, this is exactly
+\eqref{eq:leading-coeff}. \checkmark
+\end{proof}
+
+\begin{remark}[low-genus verification]
+\label{rem:low-genus-bernoulli}
+At $g=2$, \eqref{eq:leading-coeff} gives
+$2B_2/2!=1/6$, matching $R_0=1/6$. At $g=3$ it gives
+$-4B_4/4!=1/180$, matching $[x]R_1(x)$. At $g=4$ it gives
+$8B_6/6!=1/3780$, matching $[x^2]R_2(x)$. These three cases fix the
+normalisation against the explicit polynomials.
+\end{remark}
+
+\begin{remark}[Witten symplectic volume check]
+\label{rem:witten-check}
+Witten's 1991 formula for the symplectic volume of $\mathcal{M}_g(\mathrm{SU}(2))$
+reads $\mathrm{vol}(\mathcal{M}_g) = 2\,(2\pi^2)^{g-1}\zeta(2g-2)/(g-1)!$.
+The $\zeta(2g-2)$ factor, via Euler, reintroduces $|B_{2g-2}|$, and the
+large-$k$ limit of $Z_g(k)/n^{3g-3}$ matches this symplectic volume up to a
+universal combinatorial normalisation. This is a second, independent
+derivation of the Bernoulli leading coefficient, disjoint from the cosecant
+series (step 1 above).
+\end{remark}
+
+\section{Kummer-type congruences: Theorem~\ref{thm:z-g-kummer-congruence}}
+
+\begin{theorem}[Irregular-prime witnesses]
+\label{thm:z-g-kummer-congruence}
+\ClaimStatusProvedHere
+Let $[n^{3g-3}]\,Z_g(k)$ denote the leading coefficient of $Z_g$ as a
+polynomial in $n$; by
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} this coefficient equals
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$. Then:
+\begin{enumerate}
+\item ($g=7$ witness) $B_{12} = -691/2730$, so the prime $691$ divides the
+numerator of the $R_5$ leading coefficient; hence $691$ divides the
+numerator of the leading coefficient of $Z_7(k)$ in $n$.
+\item ($g=9$ witness) $B_{16} = -3617/510$, so the prime $3617$ divides the
+numerator of the $R_7$ leading coefficient; hence $3617$ divides the
+numerator of the leading coefficient of $Z_9(k)$ in $n$.
+\end{enumerate}
+Both primes are \emph{irregular} in the sense of Kummer: $691$ divides the
+numerator of $B_{12}$, and $3617$ divides the numerator of $B_{16}$. These
+divisibilities are falsification tests: if computed leading coefficients
+fail to be divisible by $691$ (resp.\ $3617$), the closed-form identification
+of Thms~\ref{thm:z-g-polynomial-form}--\ref{thm:z-g-leading-coefficient-bernoulli}
+is wrong.
+\end{theorem}
+
+\begin{proof}
+From Thm~\ref{thm:z-g-leading-coefficient-bernoulli}, the leading coefficient
+of $R_{g-2}$ in $n^2$ equals
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$.
+
+(1) At $g = 7$: $2g-2 = 12$, $g-1 = 6$. Thus
+\begin{equation}
+[n^{10}]\,R_5(n^2)
+\;=\;
+-\,\frac{64B_{12}}{12!}
+\;=\;
+\frac{691}{20432412000}.
+\end{equation}
+The numerator is $691$; hence $691$ divides the numerator of
+$[n^{18}]\,Z_7(k)$.
+
+(2) At $g = 9$: $2g-2 = 16$, $g-1 = 8$. Thus
+\begin{equation}
+[n^{14}]\,R_7(n^2)
+\;=\;
+-\,\frac{256B_{16}}{16!}
+\;=\;
+\frac{3617}{41682120480000}.
+\end{equation}
+The numerator is $3617$; hence $3617$ divides the numerator of
+$[n^{24}]\,Z_9(k)$.
+
+Kummer's theorem identifies an odd prime $p$ as \emph{irregular} iff $p$
+divides the numerator of some $B_{2m}$ with $2 \le 2m \le p-3$. For $p=691$,
+$m=6$ gives $B_{12}$ with numerator $-691$; for $p=3617$, $m=8$ gives
+$B_{16}$ with numerator $-3617$. These are the two earliest
+irregular-prime witnesses in Bernoulli-index order for this chapter, not
+the first irregular primes by size. The size order begins with
+$37,59,67,\ldots$, whose Bernoulli witnesses occur at later indices. The
+divisibility statements above therefore expose irregular-prime structure
+directly in the Verlinde polynomial.
+
+\emph{Falsification}. If a numerical computation of $Z_7(k)$ for a range
+$k = 1, 2, \ldots, K$ yields a fitted leading coefficient whose numerator is
+coprime to $691$, then one of the three theorems
+Thms~\ref{thm:z-g-closed-form-polynomial}--\ref{thm:z-g-leading-coefficient-bernoulli}
+is wrong. Symmetrically for $3617$ and $Z_9$. The rational identities
+$B_{12}=-691/2730$ and $B_{16}=-3617/510$, together with the closed
+form~\eqref{eq:pg-factored}, give the leading coefficients displayed
+above.
+\end{proof}
+
+\begin{remark}[next witnesses]
+\label{rem:next-witnesses}
+The Bernoulli-index order and the prime-size order are different. After
+$B_{12}$ and $B_{16}$, the next low-index Bernoulli witnesses are
+\[
+ B_{18}=\frac{43867}{798},\qquad
+ B_{20}=-\frac{283\cdot 617}{330},\qquad
+ B_{22}=\frac{11\cdot 131\cdot 593}{138}.
+\]
+The factor $11$ in $B_{22}$ is regular, since its index violates
+Kummer's bound $2m\leq p-3$; the factors $43867,283,617,131,593$ are
+irregular. By contrast, the first irregular primes by size have later
+Bernoulli witnesses:
+\[
+ 37\mid \mathrm{num}(B_{32}),\qquad
+ 59\mid \mathrm{num}(B_{44}),\qquad
+ 67\mid \mathrm{num}(B_{58}).
+\]
+Each such numerator prime gives a Kummer-type divisibility witness for
+the leading coefficient of the corresponding $Z_g$. The sequence of
+denominators of $B_{2m}$ follows the von Staudt--Clausen theorem,
+$\mathrm{denom}(B_{2m}) = \prod_{(p-1) \mid 2m} p$, and this too is visible
+in the denominators of $R_{g-2}$-leading coefficients.
+\end{remark}
+
+\begin{remark}[Falsification test]
+\label{rem:falsification-test}
+The closed form~\eqref{eq:pg-factored}, the Bernoulli leading
+term~\eqref{eq:leading-coeff}, and the Kummer witnesses~$691 \mid Z_7$,
+$3617 \mid Z_9$ together pin $Z_g(k)$ to a single polynomial for
+each $g$. Any deviation in any term (bulk or leading) is detectable by a
+finite SymPy computation: compute $Z_g(k)$ for $k = 1, \ldots, 3g-3$ via the
+Verlinde formula, interpolate as a polynomial in $n$, and verify the
+factorisation, the leading coefficient, and the prime divisibility. This is
+the preferred falsification protocol for this chapter.
+\end{remark}
+
+\section{Independent verification anchors}
+\label{sec:zg-independent-verification}
+
+The four theorem proofs above are checked against independent mathematical
+routes.
+
+\begin{remark}[Verification anchor: Verlinde closed form]
+\label{rem:zg-verify-closed-form}
+Theorem~\ref{thm:z-g-closed-form-polynomial} starts from the
+Verlinde~1988 fusion formula and the modular matrix
+$S_{\ell m}=\sqrt{2/n}\sin(\pi(\ell+1)(m+1)/n)$ for
+$\widehat{\mathfrak{sl}}_2$. The low-genus values
+$Z_2(1)=4$ and $Z_3(1)=8$ are recovered directly from the fusion ring, and
+the Witten~1991 symplectic-volume asymptotic gives the same
+$n^{3g-3}$ leading degree.
+\end{remark}
+
+\begin{remark}[Verification anchor: polynomial factorisation]
+\label{rem:zg-verify-polynomial}
+The factor $n^2-1$ in Theorem~\ref{thm:z-g-polynomial-form} follows from
+the empty cosecant sum at $n=1$. The explicit polynomials
+in Remarks~\ref{rem:low-genus} and~\ref{rem:r-explicit} exhibit the
+factor in genera $2,3,4$, and interpolation from Verlinde values for
+$k=0,\ldots,3g-3$ checks the same factorisation for $2\leq g\leq9$.
+\end{remark}
+
+\begin{remark}[Verification anchor: Bernoulli leading coefficient]
+\label{rem:zg-verify-leading}
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} has two disjoint
+derivations: Hurwitz's cosecant expansion together with Euler's
+even-zeta identity, and Witten's large-level symplectic-volume formula.
+Both give
+\[
+ [n^{2(g-2)}]R_{g-2}(n^2)
+ =
+ (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+The explicit values $1/6$, $1/180$, and $1/3780$ at $g=2,3,4$ verify
+the normalisation against the displayed polynomials.
+\end{remark}
+
+\begin{remark}[Verification anchor: Kummer witnesses]
+\label{rem:zg-verify-kummer}
+Theorem~\ref{thm:z-g-kummer-congruence} uses
+$B_{12}=-691/2730$ and $B_{16}=-3617/510$. Direct rational reduction gives
+\[
+ [n^{18}]Z_7(k)=\frac{691}{20432412000},
+ \qquad
+ [n^{24}]Z_9(k)=\frac{3617}{41682120480000}.
+\]
+The prime divisibilities are therefore visible in the reduced leading
+coefficients themselves.
+\end{remark}
+
+\section{Dependencies}
+
+\begin{itemize}
+\item Theorem~\ref{thm:z-g-closed-form-polynomial} uses the
+Verlinde~1988 formula; Witten's 1991 volume asymptotic and the
+low-genus fusion-ring counts check the normalisation.
+\item Theorem~\ref{thm:z-g-polynomial-form} uses the empty cosecant sum
+at $n=1$ and the polynomial structure of cosecant power sums; the
+low-genus polynomials check the factor $n^2-1$.
+\item Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} uses
+Hurwitz's 1890 cosecant series and Euler's even-zeta identity; Witten's
+large-level volume formula gives the same Bernoulli factor.
+\item Theorem~\ref{thm:z-g-kummer-congruence} uses von Staudt--Clausen
+and Kummer irregularity; direct interpolation of the Verlinde polynomial
+checks the displayed leading numerators.
+\end{itemize}
+
+This chapter's closed form is the $G = \mathrm{SL}_2$
+specialisation of the universal Verlinde polynomial $P_g$. The
+Hurwitz--Bernoulli leading coefficient generalises to arbitrary simple
+$G$ via the Macdonald denominator formula and the Kac--Peterson
+character-theoretic derivation of $Z_g^G(k)$; this chapter fixes only the
+$\mathrm{SL}_2$ normalisation.
+
+\section{Arithmetic comparison with the Virasoro residue tower}
+\label{sec:zg-arithmetic-duality}
+
+The Verlinde computation above is complete on its own geometric
+surface.  It supplies the exact Bernoulli coefficient
+\[
+ [n^{2(g-2)}]R_{g-2}(n^2)
+ =(-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+A comparison with a Virasoro higher-residue sequence requires three
+additional data: an ordered residue package
+\(\mathsf H_{\mathrm{res}}\), an integral normalization of its scalar
+line, and a Kummer comparison
+\(\mathsf H_{\mathrm{Kum}}\) relating that line to the integral
+Bernoulli coefficient.  These data define the meaning of prime
+comparison across the two constructions.
+
+\begin{theorem}[Bernoulli witnesses and the residue comparison problem]
+\label{thm:z-g-s-r-arithmetic-duality}
+\ClaimStatusConditional
+\emph{Type signature:}
+\textup{(Open/modular comparison, Verlinde and ordered-residue
+presentations, Beilinson levels \(2\leftrightarrow5\),
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Kum}}\)).}
+The Verlinde lane has the exact reduced coefficients
+\[
+ [n^{18}]Z_7(k)=\frac{691}{20432412000},
+ \qquad
+ [n^{24}]Z_9(k)=\frac{3617}{41682120480000}.
+\]
+Consequently \(691\) and \(3617\) are the first two displayed
+Bernoulli-numerator witnesses on this lane.  If
+\(\mathsf H_{\mathrm{res}}+\mathsf H_{\mathrm{Kum}}\) identifies an
+integral Virasoro residue coordinate with these genus slots, then its
+prime divisibility is obtained by transporting these two primitive
+classes through that comparison.
+
+A finite formal Virasoro recurrence may be reduced modulo the same
+primes as a separate exact computation.  Equality of that formal
+sequence with the geometric residue sequence is part of
+\(\mathsf H_{\mathrm{res}}\).
+\end{theorem}
+
+\begin{proof}
+The two rational coefficients follow from
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} and
+\(B_{12}=-691/2730\), \(B_{16}=-3617/510\), followed by rational
+reduction.  The final assertion is functoriality of divisibility under
+the integral comparison specified by \(\mathsf H_{\mathrm{Kum}}\).
+\end{proof}
+
+\begin{remark}[Geometric provenance]
+\label{rem:localization-disjointness}
+The Verlinde coefficient is a characteristic number on the moduli
+space of flat \(\mathrm{SU}(2)\)-connections.  A Virasoro higher
+coefficient is extracted from an ordered chiral residue model.  The
+package \(\mathsf H_{\mathrm{Kum}}\) is therefore a correspondence:
+it consists of a chain map, an integral lattice on the scalar target,
+and compatibility with genus normalization.  Once constructed, it
+turns the two proven local computations into a theorem on one common
+arithmetic object.
+\end{remark}
+
+\begin{remark}[Higher witnesses]
+\label{rem:zg-sr-duality-extensions}
+Higher Bernoulli numerators are governed by the same exact Verlinde
+formula.  Their comparison with Laurent tiers of a residue sequence
+requires tierwise integral lattices and reduction maps.  This is the
+natural extension of \(\mathsf H_{\mathrm{Kum}}\).
+\end{remark}
+
+\begin{remark}[Verification surface]
+\label{rem:zg-verify-sr-duality}
+The Verlinde side has three independent checks: the cosecant power
+sum, Witten's large-level symplectic volume, and interpolation of the
+exact polynomial.  The residue side is checked by direct ordered
+contraction and by its formal recurrence after
+\(\mathsf H_{\mathrm{res}}\) has identified the two sequences.  The
+integral comparison is verified prime by prime on primitive
+normalizations.
+\end{remark}
+
+\bigskip
+
+\emph{End of chapter.}

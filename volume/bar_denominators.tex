@@ -1,0 +1,103 @@
+\chapter{Bar Euler products and Borcherds denominators}
+\label{ch:bar-denominators}
+
+\section{The denominator product}
+
+Let
+\[
+  \mathfrak g = \mathfrak h \oplus
+  \bigoplus_{\alpha\in\Gamma\setminus\{0\}} \mathfrak g_\alpha
+\]
+be a root-graded Lie superalgebra, $\Gamma_+\subset\Gamma$ a positive
+monoid, and $\mathfrak n_+=\bigoplus_{\alpha\in\Gamma_+}\mathfrak
+g_\alpha$. Assume every root space is finite dimensional and every degree
+admits finitely many decompositions in the chosen $\Gamma_+$-adic
+completion. Internal PBW and Theorem~\ref{thm:bar-chevalley} give
+\[
+  \Barperp\bigl(U(\mathfrak n_+)\bigr)
+  \;\simeq\; \CE_*(\mathfrak n_+)
+  \;=\; \Sym\bigl(\mathfrak n_+[1]\bigr).
+\]
+
+\begin{theorem}[Bar denominator product]
+\label{thm:bar-denominator}
+\StatusProved{} The completed graded Euler supercharacter of the ordered
+bar is
+\[
+  \chi_\Gamma\Bigl(\Barperp\bigl(U(\mathfrak n_+)\bigr)\Bigr)
+  \;=\;
+  \prod_{\alpha\in\Gamma_+}\bigl(1-e^{-\alpha}\bigr)^{\sdim\mathfrak g_\alpha}.
+\]
+If $\mathfrak g$ is a Borcherds--Kac--Moody superalgebra with Weyl vector
+$\rho$, then $e^{-\rho}\chi_\Gamma\bigl(\Barperp U(\mathfrak n_+)\bigr)$
+is the product side of its Weyl--Kac--Borcherds denominator identity.
+\end{theorem}
+
+\begin{proof}
+Choose a homogeneous basis of each root space. Suspension reverses parity.
+An even root vector of root $\alpha$ becomes odd in $\Sym(\mathfrak
+n_+[1])$ and contributes an exterior factor $1-e^{-\alpha}$ to the Euler
+supercharacter; an odd root vector becomes even and contributes a
+polynomial factor $(1-e^{-\alpha})^{-1}$. Multiplying over the basis gives
+the exponent $\dim\mathfrak g_{\alpha,\bar0}-\dim\mathfrak
+g_{\alpha,\bar1}=\sdim\mathfrak g_\alpha$. The finite-decomposition
+hypothesis makes every coefficient of the completed product a finite sum.
+The prefactor $e^{-\rho}$ is the leading Weyl monomial of the denominator
+identity \cite{Bor88,Kac90}.
+\end{proof}
+
+This is an object-to-character bridge with the functor named. The bracket
+controls the Chevalley differential; the Euler product remembers only the
+signed root spaces. It is not an identification of the bar object with an
+automorphic form, and it is not a classification.
+
+\section{The Igusa specialisation}
+
+Let $\phi_{0,1}(\tau,z)=\sum_{n\ge0,\ \ell\in\mathbb
+Z}f(n,\ell)q^ny^\ell$ be the weak Jacobi form of weight $0$ and index $1$
+normalized by $f(0,0)=10$ and $f(0,\pm1)=1$. In the standard cusp chamber
+its monic Borcherds product is
+\[
+  D_5(Z) = q^{1/2}y^{1/2}p^{1/2}
+  \prod_{(n,\ell,m)>0}\bigl(1-q^ny^\ell p^m\bigr)^{f(nm,\ell)},
+  \qquad \Delta_5(Z) = 64\,D_5(Z),
+\]
+the second equality being the theta-constant normalization.
+Gritsenko--Nikulin \cite{GN97} construct a Borcherds algebra
+$\mathfrak g_{\Delta_5}$ with signed root multiplicities
+$\sdim(\mathfrak g_{\Delta_5})_{\alpha(n,\ell,m)}=f(nm,\ell)$ and
+denominator $\den(\mathfrak g_{\Delta_5})=D_5(2Z)$.
+
+\begin{corollary}[Igusa bar identity]
+\label{cor:igusa}
+\StatusProved{} For the positive nilpotent subalgebra $\mathfrak
+n_{\Delta_5,+}$,
+\[
+  e^{-\rho}\,
+  \chi_\Gamma\Bigl(\Barperp\bigl(U(\mathfrak n_{\Delta_5,+})\bigr)\Bigr)
+  \;=\; D_5(2Z) \;=\; 64^{-1}\Delta_5(2Z).
+\]
+\end{corollary}
+
+\begin{proof}
+Insert the Gritsenko--Nikulin root supermultiplicities into
+Theorem~\ref{thm:bar-denominator}. The Weyl monomial and the doubled
+period variable are those of the type-II denominator chamber, and the
+theta-product leading coefficient converts the monic product to
+$64^{-1}\Delta_5(2Z)$.
+\end{proof}
+
+The root multiplicities are quoted input from \cite{GN97}, not a
+consequence of Theorem~\ref{thm:bar-denominator}. What the theorem
+supplies is the object whose Euler character the product is.
+
+\begin{remark}[A compact realization is a separate theorem]
+\label{rem:k3e}
+A geometric realization of $\mathfrak g_{\Delta_5}$ on a compact
+Calabi--Yau background, in particular any $\mathrm{K3}\times E$
+realization, is a separate geometric statement. It does not follow from
+Corollary~\ref{cor:igusa}: matching a scalar product against a
+denominator identity constructs no morphism of the structured objects that
+precede the character. See No-go~\ref{nogo:scalar-sequence} and
+No-go~\ref{nogo:anomaly-types}.
+\end{remark}
