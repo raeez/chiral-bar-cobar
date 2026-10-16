@@ -1,0 +1,2953 @@
+\chapter{Vacuum support and derived actions}
+\label{cbc:chap:vacuum-actions}
+
+The scalar vacuum has a nontrivial extension at four positions.
+The two components of its support,
+$\Delta_{14}$ and $\Delta_{13}\cap\Delta_{24}$,
+meet on the total diagonal. A normal coordinate acts
+invertibly on the coefficient along the crossed component.
+It acts nilpotently on each element of the coefficient at
+the intersection. This prevents a splitting of their
+extension, even before differential operators are imposed.
+
+Maps of the Heisenberg primitive coefficient must respect
+such normal attachments. We first determine its ordinary
+horizontal endomorphisms and then its derived maps to the
+regular coefficient. The difference between these two
+calculations leads to the extension equations for actions.
+Those equations retain their prescribed vacuum maps and
+the paths comparing compositions.
+
+Throughout, $k$ has characteristic zero. Complexes are
+cohomological, with $M[r]^i=M^{i+r}$, and tensor products of
+maps use the Koszul rule. All completions will be specified.
+
+\section{The four-position vacuum extension}
+\label{cbc:va:four}
+
+Take $X=\mathbb A^1_k$ and use the coordinates
+\[
+ t=z_4,\qquad a=z_1-z_4,\qquad
+ b=z_1-z_3,\qquad c=z_2-z_4.
+\]
+They are independent. Put $A=k[t,a,b,c]$.
+The support of Example~\ref{ex:words-crossed-support} is
+\[
+ Z_4=V(a)\cup V(b,c),\qquad I(Z_4)=(ab,ac).
+\]
+
+For a coordinate $u$, write
+$P_u=k[u,u^{-1}]/k[u]$. Its basis consists of $u^{-m}$,
+$m\geq1$. Multiplication by $u$ kills $u^{-1}$, and
+differentiation sends $u^{-m}$ to $-m u^{-m-1}$.
+
+\begin{proposition}\label{cbc:va:vacuum-extension}
+The only nonzero local cohomology modules of $A$ on $Z_4$ are
+\begin{align}
+ H^1_{Z_4}(A)&=k[t,b,c]\otimes_kP_a,\notag\\
+ H^2_{Z_4}(A)&=k[t,a,a^{-1}]\otimes_kP_b\otimes_kP_c.
+ \label{cbc:va:four-cohomology}
+\end{align}
+There is an exact sequence of differential modules
+\begin{equation}\label{cbc:va:attachment}
+ 0\longrightarrow k[t,a]\otimes P_b\otimes P_c
+ \longrightarrow H^2_{Z_4}(A)
+ \longrightarrow k[t]\otimes P_a\otimes P_b\otimes P_c
+ \longrightarrow0.
+\end{equation}
+It does not split as a sequence of $A$-modules.
+\end{proposition}
+\begin{proof}
+The localization complex for the generators $ab,ac$ is
+\[
+ A\longrightarrow A[(ab)^{-1}]\oplus A[(ac)^{-1}]
+ \longrightarrow A[(abc)^{-1}],
+\]
+in degrees zero, one and two. Its maps are the diagonal
+and the difference of the two inclusions. The first map
+is injective. Inside the last localization, the two middle
+terms intersect in $A[a^{-1}]$. This gives the first
+module of~\eqref{cbc:va:four-cohomology}.
+
+Their sum contains exactly the Laurent monomials with
+nonnegative $b$ exponent or nonnegative $c$ exponent.
+The remaining monomials have both exponents negative
+and arbitrary integral $a$ exponent. They give the
+second module. Its nonnegative $a$ powers form the first
+term of~\eqref{cbc:va:attachment}. Quotienting leaves
+the negative powers of all three normal coordinates.
+Multiplication and differentiation preserve this submodule.
+
+Multiplication by $a$ is invertible on the middle term,
+whereas each element of the last term is killed by a
+power of $a$. Every $A$-linear map from the last term
+to the middle term is therefore zero. A section cannot exist.
+\end{proof}
+
+The attachment is visible on one class. The indicated
+lift of the total-collision class satisfies
+\begin{equation}\label{cbc:va:attaching-class}
+ a[a^{-1}b^{-1}c^{-1}]=[b^{-1}c^{-1}]\ne0
+ \quad\text{in }H^2_{Z_4}(A).
+\end{equation}
+The right side belongs to the crossed component.
+On $a\ne0$, the crossed coefficient remains nonzero
+although the outer diagonal is absent.
+
+For the scalar vacuum $J_n=\omega_{X^n}[n]$,
+Theorem~\ref{thm:words-support} gives
+\[
+ (\overline{\Omega_cJ})_4
+       \simeq R\Gamma_{Z_4}(\omega_{X^4})[3].
+\]
+After trivializing the density, its cohomology is
+\eqref{cbc:va:four-cohomology} in degrees $-2$ and $-1$.
+Thus the local vacuum is already a complex with two
+cohomological degrees at four positions. The localizations
+and the inverse strong coproducts specify its multiplication.
+The two cohomology modules alone do not.
+
+\section{Horizontal symmetries of the primitive coefficient}
+\label{cbc:va:rigidity}
+
+Return to the left differential modules of
+Chapter~\ref{cbc:chap:heisenberg}. Retain
+$R_n=k[z_1,\ldots,z_n]$, its Weyl algebra $D_n$, the
+primitive module $H_n$, and its generators $g_S$.
+The coefficient of $w^{-1}$ in the expansion at infinity
+of a proper rational representative defines total finite residue:
+\[
+ \operatorname{res}:H_n\longrightarrow R_n,
+ \qquad \operatorname{res}(g_i)=1,\qquad
+ \operatorname{res}(g_S)=0\quad(|S|>1).
+\]
+This coefficient lies in $R_n$, and a $w$-derivative
+has zero residue. Hence the map is well defined and horizontal.
+
+For $v=(v_1,\ldots,v_n)\in k^n$, put
+\[
+ s_v:R_n\longrightarrow H_n,\qquad
+ s_v(1)=\sum_i v_i g_i.
+\]
+Each $g_i$ is horizontal, so $s_v$ is a map of $D_n$-modules.
+
+\begin{theorem}\label{cbc:va:primitive-endomorphisms}
+For $n\geq2$, every $D_n$-linear endomorphism of $H_n$
+has a unique expression
+\begin{equation}\label{cbc:va:endomorphism-form}
+ T=\lambda\,\mathrm{id}+s_v\operatorname{res},
+ \qquad \lambda\in k,\quad v\in k^n.
+\end{equation}
+In residue coordinates its matrix is
+$\lambda I+v\mathbf1^{\mathsf t}$. Composition is
+\[
+ (\lambda,v)(\mu,w)
+  =(\lambda\mu,\lambda w+\mu v+
+                       (\mathbf1^{\mathsf t}w)v).
+\]
+The scalar target and the residue kernel satisfy
+\[
+ \operatorname{Hom}_{D_n}(H_n,R_n)=k\operatorname{res},
+ \qquad \operatorname{End}_{D_n}(\ker\operatorname{res})=k.
+\]
+In particular, the residue kernel is indecomposable.
+\end{theorem}
+\begin{proof}
+Flatness embeds $H_n$ in its generic residue space
+$k(z_1,\ldots,z_n)^n$. The connection there is ordinary
+position differentiation. A horizontal matrix therefore
+has entries in $k$.
+
+Near the generic point of $z_i=z_j$, all other differences
+are invertible. The binary calculation
+\eqref{cbc:hc:binary-transition} gives one localized
+direction $e_i-e_j$ and regular complementary directions.
+An element in the image of a linear map from the localized
+direction to a regular direction would be divisible by
+every power of $z_i-z_j$. The regular module has no such
+nonzero element. The matrix must therefore preserve
+$k(e_i-e_j)$.
+
+For $n\geq3$, the relation
+$(e_i-e_j)+(e_j-e_k)=e_i-e_k$ forces the eigenvalues on
+these lines to agree. For $n=2$ there is one line.
+Thus, in either case, $T-\lambda I$ kills the sum-zero
+hyperplane and has the form $v\mathbf1^{\mathsf t}$.
+The maps in~\eqref{cbc:va:endomorphism-form} realize all
+these matrices on $H_n$, proving the assertion and its
+composition law.
+
+A horizontal map $H_n\to R_n$ is generically a constant
+row vector. Regularity at every binary diagonal forces
+it to kill every $e_i-e_j$. It is a multiple of residue.
+
+The map $s_{e_1}$ splits residue as a differential-module
+map, giving $H_n=R_n\oplus\ker\operatorname{res}$.
+Extend an endomorphism of the kernel by zero on this
+regular summand. Formula~\eqref{cbc:va:endomorphism-form}
+restricts to $\lambda I$ on the kernel. Its endomorphism
+ring is $k$, which has no nontrivial idempotents.
+\end{proof}
+
+The splitting by $s_{e_1}$ singles out a position.
+Compatibility with the whole family of coefficients
+removes this choice.
+
+\begin{proposition}\label{cbc:va:natural-scalars}
+A family of horizontal endomorphisms $T_n$ of $H_n$
+is multiplication by one scalar independent of $n$
+under either of the following hypotheses:
+\begin{enumerate}
+ \item it commutes with every permutation and every
+       coefficient collision map of
+       Proposition~\ref{cbc:hc:collisions}.
+ \item it commutes with the block decompositions of
+       Proposition~\ref{cbc:hc:cuts}. One nontrivial
+       consecutive cut in each arity $n\geq2$ suffices.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Under the first hypothesis, permutation compatibility
+gives $T_n=\lambda_nI+c_n\mathbf1\mathbf1^{\mathsf t}$
+for $n\geq2$. On the simple-pole classes, a collision
+$\alpha$ sends $g_i$ to $g_{\alpha(i)}$.
+A three-to-two collision of fiber sizes $(2,1)$ therefore
+gives, for both possible output labels,
+\[
+ \lambda_3e_j+c_3(2e_1+e_2)
+       =\lambda_2e_j+c_2(e_1+e_2).
+\]
+Subtract the equations for $j=1,2$ and then compare
+their coordinates. One obtains
+$\lambda_3=\lambda_2$ and $2c_3=c_2=c_3$, hence
+$c_2=c_3=0$.
+
+For $n>3$, a collision with fiber sizes
+$(n-1,1)$ similarly gives $c_n=0$ and
+$\lambda_n=\lambda_2$. Collision to a singleton fixes
+the last scalar.
+
+For the second hypothesis, write
+$T_n=\lambda_nI+v_n\mathbf1^{\mathsf t}$.
+A cut into nonempty blocks of sizes $p,q$ forces its
+off-diagonal matrix blocks to vanish. They are
+\[
+ v_{n,[1,p]}\mathbf1_q^{\mathsf t},
+ \qquad v_{n,[p+1,n]}\mathbf1_p^{\mathsf t}.
+\]
+Thus $v_n=0$, and the two diagonal blocks give
+$\lambda_n=\lambda_p=\lambda_q$. Induction from
+$\operatorname{End}_{D_1}(H_1)=k$ proves the result.
+\end{proof}
+
+On the diagram with monotone collisions alone, the maps
+$g_1\operatorname{res}$ and $g_n\operatorname{res}$ are
+natural and distinct for $n\geq2$. A monotone surjection
+preserves the first and last labels, and total residue
+commutes with substitution. They fail the cut condition:
+on the cut $[1,2]\mid[3,4]$, the first map sends the
+residue vector $e_3$ to $e_1$. Thus the cut maps supply
+an essential part of the rigidity assertion.
+
+\section{Derived scalar maps and the residue simplex}
+\label{cbc:va:derived-residue}
+
+Ordinary scalarity does not determine derived endomorphisms.
+The simplest comparison uses the regular module as target.
+We compute it from the normal directions of the diagonal
+constituents, retaining their nonsplit attachments.
+
+For an affine linear subspace $L\subseteq\mathbb A^n$,
+let $\delta_L$ denote the trivial left differential
+module on $L$, pushed forward with all normal derivatives.
+
+\begin{lemma}\label{cbc:va:normal-hom}
+Let affine linear subspaces $L,M\subseteq\mathbb A^n$
+have nonempty intersection. If their dimensions are
+$l,m$, and $d=\dim(L\cap M)$, then choices of linear
+normal coordinates give
+\[
+ R\operatorname{Hom}_{D_n}(\delta_L,\delta_M)
+              \simeq k[-(l+m-2d)].
+\]
+\end{lemma}
+\begin{proof}
+Translate a common point to zero and split the ambient
+space into common tangents, tangents of $L$ alone,
+tangents of $M$ alone, and common normals.
+In one variable put $O=k[u]$ and retain $P_u$ above.
+Their left Weyl-module resolutions use right
+multiplication by $\partial_u$ and by $u$, respectively.
+Applying Hom gives the two-term complexes
+\[
+\begin{array}{c|c|c}
+ (\text{source},\text{target})&d&\text{cohomology representative}\\\hline
+ (O,O)&\partial_u:O\to O&1\text{ in degree }0\\
+ (P_u,P_u)&u:P_u\to P_u&u^{-1}\text{ in degree }0\\
+ (O,P_u)&\partial_u:P_u\to P_u&u^{-1}\text{ in degree }1\\
+ (P_u,O)&u:O\to O&1\text{ in degree }1.
+\end{array}
+\]
+
+Both terms have degrees zero and one. Right inverses
+on the boundaries are, in the displayed order,
+\[
+ u^j\mapsto\frac{u^{j+1}}{j+1},\quad
+ u^{-j}\mapsto u^{-j-1},\quad
+ u^{-j}\mapsto-\frac{u^{-j+1}}{j-1}\ (j\geq2),\quad
+ u^j\mapsto u^{j-1}\ (j\geq1).
+\]
+Set these homotopies to zero on the degree-one
+cohomology representatives. They contract the complementary
+monomials. Tensor their contractions with the Koszul signs.
+Exactly the $l+m-2d$ directions tangent to only one
+subspace contribute degree one.
+\end{proof}
+
+\begin{theorem}\label{cbc:va:scalar-simplex}
+The derived scalar mapping complex has a model
+\begin{equation}\label{cbc:va:simplex}
+ R\operatorname{Hom}_{D_n}(H_n,R_n)
+ \simeq
+ \left[k^{\binom n1}\longrightarrow k^{\binom n2}
+       \longrightarrow\cdots\longrightarrow k^{\binom nn}\right]
+ \simeq k.
+\end{equation}
+Its terms have degrees zero through $n-1$. With subsets
+in increasing order, the differential is
+\[
+ (dc)_{i_0\cdots i_p}
+   =\sum_{j=0}^p(-1)^j
+             c_{i_0\cdots\widehat{i_j}\cdots i_p}.
+\]
+The surviving map is total finite residue.
+\end{theorem}
+\begin{proof}
+Apply derived Hom into $R_n$ to the finite filtration
+of Theorem~\ref{cbc:hc:filtration}. A constituent
+indexed by a subset of size $s$ has mapping cohomology
+$k$ in degree $s-1$, by Lemma~\ref{cbc:va:normal-hom}.
+Choose the normal contractions in its proof and transfer
+along this finite filtration. A transferred differential
+has degree one, so it joins only adjacent subset sizes.
+
+Let $T=S\setminus\{i\}$, and choose $r\in T$.
+The attaching relation
+\[
+ (z_i-z_r)g_S=g_{S\setminus\{r\}}-g_T
+\]
+has coefficient $-1$ on $g_T$. In that component its
+new normal direction is the localization extension
+$0\to O\to O[u^{-1}]\to P_u\to0$.
+The resulting incidence entry is therefore a unit.
+
+For $|S|\geq3$, a subset of size $|S|-1$ not contained
+in $S$ has no degree-one extension with its diagonal,
+by Lemma~\ref{cbc:va:normal-hom}.
+At size two all singleton constituents have the same
+support. The actual relation
+$(z_i-z_j)g_{ij}=g_i-g_j$ fixes the two opposite
+endpoint entries and makes every spectator entry zero.
+
+Order the normal coordinates to fix their orientations.
+The edge entries are the displayed differences.
+Square-zero on each two-step face fixes the higher
+incidence signs after one choice of orientation per subset.
+This gives the complex~\eqref{cbc:va:simplex}.
+
+Choose vertex $1$. In degree $p\geq1$ define
+\[
+ (hc)_S=
+ \begin{cases}
+ c_{\{1\}\cup S},&1\notin S,\\
+ 0,&1\in S,
+ \end{cases}
+\]
+with $1$ first in the orientation. In degree zero put $h=0$.
+
+Let $\pi(c)=c_{\{1\}}$ in degree zero and let $i$ include
+constant vertex cochains. Cancellation of incidences gives
+$dh+hd=1-i\pi$. Thus only the common value on all $g_i$
+survives, which is total residue. The finite transfer
+lifts this contraction to the derived mapping complex.
+\end{proof}
+
+For $n=3$ the two differentials are
+\[
+ (c_1,c_2,c_3)\longmapsto(c_2-c_1,c_3-c_1,c_3-c_2),
+ \qquad
+ (x_{12},x_{13},x_{23})\longmapsto x_{23}-x_{13}+x_{12}.
+\]
+The choice of vertex specifies the contraction, not
+the residue map, which is independent of that choice.
+
+The endomorphism target gives a different answer already
+at two positions. Suppress common translation, put
+$R=k[u]$, $L=R[u^{-1}]$, and use
+$H_2\simeq R\oplus L$ from~\eqref{cbc:hc:binary-transition}.
+Proposition~\ref{cbc:hc:reverse-hom} gives
+$R\operatorname{Hom}_D(L,R)=0$ and
+$\operatorname{Ext}^0_D(L,L)=
+\operatorname{Ext}^1_D(L,L)=k$.
+
+The other two corners are $[R\xrightarrow{\partial_u}R]$
+and $[L\xrightarrow{\partial_u}L]$.
+The first has only its constant class. The second has
+a constant class in degree zero and the class of $u^{-1}$
+in degree one.
+
+Consequently
+\[
+ \dim_k\operatorname{End}_D(H_2)=3,\qquad
+ \operatorname{Ext}^1_D(H_2,H_2)=k^2,\qquad
+ \operatorname{Ext}^{q}_D(H_2,H_2)=0\quad(q>1).
+\]
+Tensoring back the common tangential regular module
+does not change these groups. To compute derived
+natural endomorphisms of the whole coefficient system,
+one must impose the collision and cut comparisons with
+their homotopies. Neither the single-arity endomorphism
+calculation nor~\eqref{cbc:va:simplex} performs that step.
+
+\section{Pointed actions and their comparison paths}
+\label{cbc:va:pointed}
+
+A vacuum-preserving map of coefficients is only the
+linear part of an action. To compare actions, one must
+also retain the path that identifies the restricted
+action with the given one.
+
+The action calculations use a symmetric convolution
+on the full ordered collision atlas. We specify this
+carrier before forming its mapping spaces.
+On the affine line, its underlying scheme is the
+ravioli configuration space of Alfonsi--Kim--Young
+\cite{AKY2024}*{\S4.1}.
+
+For a nonempty finite set $I$, take one copy $X^I_\sigma$
+of $X^I$ for each total order $\sigma$ of $I$.
+For two orders $\sigma,\rho$, remove the diagonal
+$z_i=z_j$ whenever they disagree on the order of $i,j$,
+and identify the resulting opens by their position
+coordinates. Denote the glued scheme by $\mathscr R_I$
+and its position map by $q_I:\mathscr R_I\to X^I$.
+
+These are valid gluing data. If two orders disagree
+on a pair, at least one disagrees with any third
+order on that pair. Thus
+$V_{\sigma\rho}\cap V_{\sigma\eta}
+=V_{\sigma\rho}\cap V_{\rho\eta}$ for the prescribed
+overlaps. The finite smooth chart cover makes
+$\mathscr R_I$ smooth, quasi-compact and quasi-separated,
+and $q_I$ is locally an isomorphism.
+At a position tuple with equality blocks $B$, its
+fiber has $\prod_B|B|!$ points, one for each choice
+of order inside every equality block.
+In particular the total triple collision has six
+branches.
+
+A surjection $\alpha:I\twoheadrightarrow H$ with
+ordered fibers expands an order on $H$ by concatenating
+those fibers. The diagonal substitution then defines
+$\delta_\alpha:\mathscr R_H\to\mathscr R_I$.
+Indeed the preimage of an overlap between expanded
+orders is exactly the overlap of the original orders.
+Concatenation of fiber orders proves
+\mbox{$\delta_\alpha\delta_\beta=\delta_{\beta\alpha}$}.
+For example, a collision identifying $1,3$ on the
+chart $123$ reaches that chart only where $z_1=z_3\ne z_2$.
+Its selected total-collision branches occur on charts
+where $1,3$ are consecutive.
+
+Let $\mathscr D$ be the enhanced category of right
+differential-module families on these schemes with
+coherent equivalences
+$\delta_\alpha^!M_I\simeq M_H$, together with the
+separate empty coefficient in $D(k)$.
+Differential modules on $\mathscr R_I$ are defined by
+descent on its finite smooth chart cover.
+Use the derived six-functor operations with the
+cochain and density conventions of
+Chapter~\ref{chap:collision-words}.
+
+For $I=A\amalg B$, let $U_{A,B}$ separate all cross
+pairs, and let $j_{A,B}$ be its open inclusion.
+Restriction of orders identifies this open with
+$(\mathscr R_A\times\mathscr R_B)_{\mathrm{disj}}$:
+all shuffles of the two block orders agree there.
+Define
+\begin{equation}\label{cbc:va:symmetric-convolution}
+ (M\star N)_I=
+ \bigoplus_{I=A\amalg B}
+ j_{A,B,*}(M_A\boxtimes N_B)|_{U_{A,B}}.
+\end{equation}
+The pairs of subsets are ordered. Either may be empty.
+
+As in Proposition~\ref{prop:words-cut-monoidal},
+all iterated products have the common coefficient
+on the open separating their blocks. This proves
+associativity and its higher coherences. Permuting
+blocks gives the symmetry.
+
+Extraordinary pullback
+kills a summand whose two groups meet inside one
+collision fiber. The other summands are exactly
+the decompositions of the quotient. Base change
+therefore gives the required collision maps.
+The unit is $K$, supported at the empty configuration.
+Every product of more than $|I|$ positive factors
+vanishes on $\mathscr R_I$.
+
+Restricting to the increasing chart and projecting
+onto consecutive decompositions gives the word-cut
+comparison. No equivalence of the two diagram
+categories is asserted by this projection.
+In particular their derived mapping spaces must
+be distinguished.
+
+Now let $\mathscr C$ be the full subcategory of
+coaugmented counital coassociative coalgebras for
+$\star$ whose coproducts are equivalences on every
+block-disjoint open. It carries the diagonal tensor
+$\otimes^!$, with unit the local vacuum $J$.
+Its coproduct uses the pairs of equal decompositions
+in the two finite sums~\eqref{cbc:va:symmetric-convolution}.
+For those summands the two localizations have the
+same open and combine by base change.
+Iterated equal decompositions verify coassociativity
+and the tensor compatibilities.
+
+For a coalgebra $F$ with a pointing $u:J\to F$, and
+$C\in\mathscr C$, define its space of pointed actions by
+\begin{equation}\label{cbc:va:pointed-action}
+ \Phi_C(F,u)=
+ \operatorname{fib}_{\mathrm{id}_C}
+ \left(
+ \operatorname{Map}_{\mathscr C}(F\otimes^!C,C)
+ \longrightarrow\operatorname{Map}_{\mathscr C}(C,C)
+ \right).
+\end{equation}
+The arrow restricts along $u\otimes^!\mathrm{id}_C$.
+An element therefore includes both a map $\alpha$ and
+a specified path from its restriction to $\mathrm{id}_C$.
+All mapping spaces are derived.
+
+A morphism from $(F,u,\alpha)$ to $(G,v,\beta)$ consists
+of a pointed map $f:F\to G$ and a path
+$\alpha\simeq\beta(f\otimes^!\mathrm{id}_C)$ compatible
+with the two pointings. Its higher simplices retain
+the corresponding higher paths. Denote this category
+by $\mathscr A_C$.
+A representing pointed coalgebra $Z$ would give
+natural equivalences
+\[
+ \operatorname{Map}_{J/}(F,Z)\simeq\Phi_C(F,u).
+\]
+The equivalences must hold for every permitted actor $F$.
+
+There is a second question when $F$ is a transverse
+monoid, meaning an associative algebra for $\otimes^!$.
+An action of this monoid includes its multiplication
+and unit coherences. Let $\operatorname{Act}_F(C)$
+be the space of such coherent actions.
+
+A \emph{local center} is a final object among transverse
+monoids acting on $C$, with $C$ fixed. For a candidate
+$(Z,\beta)$ and a test action $(F,\alpha)$, its mapping
+space is
+\begin{equation}\label{cbc:va:action-fibre}
+ \operatorname{fib}_{\alpha}
+ \left(
+ \operatorname{Map}_{\operatorname{Alg}(\mathscr C)}(F,Z)
+ \longrightarrow\operatorname{Act}_F(C)
+ \right).
+\end{equation}
+The map composes with $\beta$. Thus a loop of test
+actions outside the image of the source fundamental
+group makes this fiber disconnected. It disproves
+finality of that candidate.
+
+\subsection{Free fields and the diagonal tensor}
+
+We will use the field coalgebras of
+Chapter~\ref{cbc:chap:transfer} on the affine line.
+A free-field vertex algebra here has finitely many
+homogeneous generators, scalar polynomial
+$\lambda$-brackets, and a basis of ordered monomials
+in their translates. Its differential is linear in
+those translates. The examples below are tensor
+products of Heisenberg fields, regular commutative
+fields and Weyl--Clifford fields.
+
+Let $L_B$ be the positive diagonal family of the
+state differential module of $B$.
+For $|I|\geq2$ its coefficient is the sum of the
+full normal direct images along the small diagonal
+in every order chart. These diagonals have disjoint
+images: two different order charts overlap only
+away from at least one of their pair diagonals.
+The singleton coefficient is the state differential
+module itself. The empty coefficient is zero.
+The operator-product residues define a Lie bracket
+$L_B\star L_B\to L_B$.
+
+Its Chevalley coalgebra is
+\[
+ \operatorname{CE}_\star(L_B)
+   =K\oplus\bigoplus_{r\geq1}
+                      \operatorname{Sym}^r_\star(L_B[1]).
+\]
+It has the unshuffle coproduct, and its
+coderivation is determined by
+\[
+ Q_1(sx)=-s(dx),\qquad
+ Q_2(sx\,sy)=(-1)^{|x|}s[x,y].
+\]
+The square-zero identities are respectively the
+internal chain equation, the derivation rule and
+Jacobi. Positivity makes the displayed sum finite
+at each configuration.
+
+For these algebras $B$, denote this full residue
+coalgebra by $C_B$. In its partition description,
+each summand is the normal direct image from the
+diagonals of its blocks, localized away from
+collisions between blocks. $Q_2$ is their residue
+boundary. Thus it is also the partition Cousin
+model of the factorization lattice on the order
+charts. Its coproduct keeps all block decompositions.
+
+The consecutive components give the cut structure
+used earlier. The vacuum map $k\to B$ gives
+$J=C_k\to C_B$.
+
+\begin{lemma}\label{cbc:va:chevalley-bar}
+For a positive dg Lie object $L$, the twisting
+cochain $sx\mapsto x$ induces an equivalence
+\[
+ \operatorname{CE}_\star(L)\xrightarrow{\sim}B_\star U_\star L.
+\]
+Its length-$r$ component is the unnormalized
+suspended symmetrization
+\[
+ sx_1\cdots sx_r\longmapsto
+ \sum_{\sigma\in S_r}\epsilon(\sigma;sx_1,\ldots,sx_r)
+       [x_{\sigma(1)}|\cdots|x_{\sigma(r)}],
+\]
+where $\epsilon$ is the Koszul permutation sign.
+\end{lemma}
+\begin{proof}
+Deconcatenating the permutation sum chooses a
+subset and independently orders it and its
+complement. This is its unshuffle coproduct.
+The binary chain equation is the envelope
+relation
+$xy-(-1)^{|x||y|}yx=[x,y]$. Grouping adjacent
+pairs proves it in every length.
+
+Filter the envelope by the number of original
+$L$ inputs. The multilinear PBW identity gives
+$\operatorname{gr}U_\star L=\operatorname{Sym}_\star L$:
+ordering a triple has the same result precisely
+by Jacobi, and averaging is exact in characteristic
+zero. Apply this identity to a free simplicial
+Lie resolution for derived inputs.
+The associated graded comparison is the abelian
+Koszul comparison.
+
+Its free resolution is
+$S\star\operatorname{Sym}_\star(L[1])$, where
+$S=\operatorname{Sym}_\star L$ and
+$d_K(sx)=-x$. The derivation $h(x)=-sx$,
+$h(sx)=0$ satisfies $d_Kh+hd_K=N$, with
+$N$ the total polynomial weight.
+It anticommutes with the internal differential.
+Thus $h/N$ contracts each positive weight.
+The permutation sum compares this resolution
+with the free bar resolution and induces the
+identity on their common augmentation.
+Tensoring with the augmentation module proves
+the associated graded equivalence.
+
+Both filtrations stop at $|I|$ on a configuration
+$I$, so filtered comparison proves the lemma.
+The coalgebra map has no factor $1/r!$.
+That factor belongs to PBW averaging.
+\end{proof}
+
+\begin{lemma}\label{cbc:va:free-field-tensor}
+For free fields $A,B$, the residue construction has
+natural equivalences
+\[
+ C_A\otimes^!C_B\simeq C_{A\otimes B}.
+\]
+They preserve units, collisions and iterated
+factorization. The construction preserves
+quasi-isomorphisms of dg vertex algebras in this
+class and polynomial homotopies between their maps.
+\end{lemma}
+\begin{proof}
+The free-field factorization lattice on a position
+chart is the vacuum module for polar sections at the
+marked points
+\cite{BD04}*{\S\S3.7.7, 3.7.20}.
+Filter this module by the number of generating fields.
+Its associated graded is the graded symmetric algebra
+of their principal parts. Those principal parts are
+free over the position ring by~\eqref{cbc:hc:free-basis}.
+
+At a fixed polynomial degree the complex is bounded
+and flat, because there are finitely many generating
+cohomological degrees. The differential preserves the
+filtration. Successive extensions and filtered unions
+therefore give a $K$-flat lattice. Here $K$-flat means
+that tensoring with it preserves acyclic complexes.
+
+The fields of $A$ have zero bracket with those of $B$.
+Their Lie algebras of polar sections consequently
+have commuting noncentral factors. Their joint vacuum
+representation imposes each scalar central relation at
+its stated value and is the tensor product of their
+vacuum modules. This identifies the lattice of
+$A\otimes B$ with the tensor product of the lattices,
+compatibly with collisions and separation of groups.
+
+The finite Cousin resolution of a lattice is its
+partition residue complex: the normal boundary maps
+are the oriented residues of
+Section~\ref{cbc:ct:residues}. Tensoring $K$-flat lattices
+computes the derived tensor. Passing to right
+differential modules contracts one copy of the density
+unit $J$, giving the asserted $\otimes^!$ comparison.
+The maps come from polar sections, so their
+associativity, symmetry, unit and collision diagrams
+commute before passing to the derived category.
+
+A quasi-isomorphism gives a quasi-isomorphism on each
+derived partition coefficient. The finite partition
+filtration then proves the assertion with its residue
+differential. For a polynomial homotopy use the fixed
+target tensored with polynomial forms. Evaluation and
+constant inclusion are inverse quasi-isomorphisms of
+the parameter complex. Their maps of residue
+coalgebras retain all faces.
+\end{proof}
+
+The same argument for a free regular commutative field
+uses its multijet lattice
+\cite{BD04}*{\S\S3.4.20--3.4.22}.
+If $P_I(w)=\prod_{i\in I}(w-z_i)$, each jet stage
+$R_I[w]/P_I^m$ is finite free. Chinese remainders
+give separation of groups, and cofinal powers give
+collision. The positive cohomological degree of a
+generating field changes its graded symmetric powers
+but not this construction.
+
+\subsection{A cochain action}
+\label{cbc:va:cochain-action}
+
+Fix $\kappa\in k^\times$ and let $V_\kappa$ be the
+Heisenberg vertex algebra, with even current $J$ and
+$[J_\lambda J]=\kappa\lambda$.
+Adjoin a regular odd field $c$ of degree one and put
+\[
+ \mathcal Z_\kappa=V_\kappa\otimes\Lambda[c,Tc,T^2c,\ldots],
+ \qquad dJ=\kappa Tc,\quad dc=0.
+\]
+The differential is the zero mode $(:cJ:)_{(0)}$.
+It is a derivation of every vertex product and
+squares to zero.
+
+Introduce even fields $t,p$ of degree zero and odd
+fields $\eta,\iota$ of degrees $1,-1$, with brackets
+\[
+ [p_\lambda t]=1,\qquad [\iota_\lambda\eta]=1.
+\]
+All other generating brackets vanish, apart from
+graded skewsymmetry. Their quartet algebra $E$ has
+differential
+\[
+ Qt=\eta,\qquad Q\iota=p,\qquad Q\eta=Qp=0.
+\]
+
+On $W=V_\kappa\otimes E$, let $Q$ act trivially on
+the first factor. The assignments
+\begin{equation}\label{cbc:va:quartet-maps}
+ i(J)=J+p,\qquad
+ j(J)=J-\kappa Tt,\qquad j(c)=-\eta
+\end{equation}
+define dg vertex maps $i:V_\kappa\to W$ and
+$j:\mathcal Z_\kappa\to W$.
+Their images commute: for example,
+$[J+p{}_\lambda J-\kappa Tt]=\kappa\lambda-\kappa\lambda=0$.
+Thus
+\[
+ \rho:\mathcal Z_\kappa\otimes V_\kappa\longrightarrow W,
+ \qquad \rho(a\otimes v)=j(a)_{(-1)}i(v)
+\]
+is a dg vertex map and restricts to $i$ on the vacuum axis.
+
+The map $i$ is a quasi-isomorphism. In the ordered
+creation-mode basis use $J+p$ in place of $J$.
+The remaining variables form the contractible pairs
+$(T^nt,T^n\eta)$ and $(T^n\iota,T^np)$.
+Their Euler contraction sends $\eta$ to $t$ and $p$
+to $\iota$, with the corresponding formulas for
+translates, and divides by positive total quartet
+degree. Each state is a finite polynomial, so the
+contraction is finite. It commutes with translation.
+
+Give $J,p,\iota$ conformal weight one and $t,\eta$
+weight zero, and let $T$ raise weight by one.
+Both the differential and this contraction preserve
+conformal weight. In particular, they preserve the
+subspace of positive conformal weight.
+
+Lemma~\ref{cbc:va:free-field-tensor} now defines a pointed
+action $\alpha_{\mathcal Z}$ by the roof
+\begin{equation}\label{cbc:va:cochain-roof}
+ C_{\mathcal Z_\kappa}\otimes^!C_{V_\kappa}
+ \simeq C_{\mathcal Z_\kappa\otimes V_\kappa}
+ \xrightarrow{C_\rho}C_W
+ \xleftarrow[\sim]{C_i}C_{V_\kappa}.
+\end{equation}
+The inverse of $C_i$ is taken in the derived category.
+The vacuum axis supplies its specified pointing.
+The obstruction below depends on this action. It
+applies to every coherent transverse monoid structure
+on $C_{\mathcal Z_\kappa}$ with this underlying action.
+
+\section{A vacuum probe against finality}
+\label{cbc:va:nonfinality}
+
+Let $C=C_{V_\kappa}$ and let
+\[
+ N=k[t_0,t_1,\ldots],\qquad |t_n|=2,\qquad
+ Tt_n=t_{n+1},\qquad dN=0.
+\]
+This is the free regular commutative vertex algebra
+on $t_0$. Write $\epsilon:N\to k$ for its augmentation
+and $F=C_N$. Multiplication in $N$ makes $F$ a
+commutative transverse monoid. Its augmentation
+defines a coherent trivial action $\alpha_0$ on $C$.
+The composite $g_0:F\to J\to C_{\mathcal Z_\kappa}$
+is a pointed map inducing that action.
+
+We use total polynomial degree in the $t_n$, denoted
+by $G$, to separate the deformation equations.
+This is independent of their cohomological degree $2G$.
+Put $\mathfrak g=L_{V_\kappa}$
+and $\mathfrak h=L_{N\otimes V_\kappa}$.
+The symmetric convolution envelope is $U_\star\mathfrak g$.
+Its PBW component with $a$ output blocks is
+$\operatorname{Sym}^a_\star\mathfrak g$.
+
+The relative deformation complex at $\alpha_0$ is
+\begin{equation}\label{cbc:va:relative-convolution}
+ \mathcal T=
+ R\operatorname{Hom}
+ \left(
+ \operatorname{CE}_\star(\mathfrak h)/
+             \operatorname{CE}_\star(\mathfrak g),
+ U_\star\mathfrak g
+ \right),
+ \qquad d_{\mathcal T}=d+[\tau_0,-].
+\end{equation}
+Here $\operatorname{CE}_\star$ is the Chevalley
+coalgebra on suspended inputs, and $\tau_0$ is the
+twisting cochain of $\epsilon\otimes\mathrm{id}$.
+Resolve coefficient Homs before taking this convolution
+and the limit over configurations. Take products over
+$G>0$. Convolution adds $G$.
+The differential preserves $G$ and the PBW output number.
+
+The bar--cobar comparison and
+Lemma~\ref{cbc:va:chevalley-bar} identify
+this complex with the relative deformation complex
+of~\eqref{cbc:va:pointed-action}. In the Chevalley
+comparison, the leading PBW filtration is the ordinary
+symmetric--exterior Koszul complex. Its positive
+factor count is bounded at each configuration, as in
+Lemma~\ref{lem:words-arity-bound}. The comparison
+therefore has no infinite length sum there.
+The positive $G$ filtration makes the relative
+convolution pronilpotent.
+
+\begin{lemma}\label{cbc:va:action-degree}
+In total $t$-degree $G$, the component of $\mathcal T$
+with $a$ output blocks has a model in degrees at least
+$a-2G$. For $G=1,a=2$, a degree-zero cocycle is an
+ordinary binary coefficient, and it has no degree-zero
+boundary.
+\end{lemma}
+\begin{proof}
+With $n$ suspended inputs the source degree is
+$2G-n$. A coefficient extension of degree $e$ into
+a degree-zero target contributes degree $e+n-2G$.
+Derived Hom between coefficient modules has a model
+in extension degrees $e\geq0$.
+
+Support forces $n\geq a$: restriction of an input
+supported on at most $n$ blocks to the locus of $a$
+distinct output blocks is zero when $n<a$.
+Adjunction gives the same vanishing for derived Hom.
+These statements give the lower bound.
+For $G=1,a=2$, degree zero forces $n=2,e=0$.
+The internal cocycle equation gives ordinary Hom,
+and degree minus one is absent.
+Products and the configuration limit preserve the
+lower bound.
+\end{proof}
+
+Let $\ell:N\to k$ be the augmentation derivation
+given by $\ell(t_n)=\delta_{n0}$ and zero on all
+other polynomial degrees. It satisfies
+\[
+ \ell(Tb)=0,\qquad
+ \ell(ab)=\ell(a)\epsilon(b)+\epsilon(a)\ell(b).
+\]
+
+On singleton suspended inputs define
+\[
+ \kappa_1\bigl(s(t_n\otimes v)\bigr)=\delta_{n0}v,
+\]
+and let it vanish elsewhere.
+This is translation compatible: applying total
+translation on the source gives the translation of
+the displayed output. Its degree is minus one.
+The augmentation-derivation identity makes it a
+cocycle in $\mathcal T$.
+Equivalently, the infinitesimal vertex map
+$t_0\mapsto u$, $t_n\mapsto0$ for $n>0$, over
+$|u|=2$, $u^2=0$, has twisting cochain
+$\tau_0+u\kappa_1$.
+
+There are no cochains of degree below minus one at
+$G=1,a=1$, by Lemma~\ref{cbc:va:action-degree}.
+Since $\kappa_1(s(t_0\otimes\mathbf1))=\mathbf1$,
+its class is nonzero.
+
+On the Heisenberg Fock space $k[x_1,x_2,\ldots]$,
+let $J_1=\kappa\partial_{x_1}$.
+The current mode identity and $J_0=0$ give
+\[
+ [J_1,Y(v,z)]=Y(J_1v,z),\qquad [T,J_1]=-J_0=0.
+\]
+Thus $J_1$ is a translation-compatible vertex
+derivation, kills the vacuum and satisfies
+$J_1J=\kappa\mathbf1$.
+
+At two separated singleton blocks define
+\begin{equation}\label{cbc:va:boundary-loop}
+ h\bigl(s(t_n\otimes v),s(\mathbf1\otimes w)\bigr)
+     =\delta_{n0}\,v\boxtimes J_1w.
+\end{equation}
+Extend by suspended symmetry, with all other
+components zero. This has degree zero and is relative
+to the boundary copy of $C$.
+
+If $\widehat J_1=J_1\tau_0$, then
+$h=-(\kappa_1*\widehat J_1)^{(2)}$ in convolution.
+The minus sign cancels the sign from a degree-one
+map crossing the suspended $t$ input of degree one.
+Both factors are closed and the differential obeys
+the Leibniz rule. Hence $h$ is closed.
+
+\subsection{Extracting the separated vacuum coefficient}
+
+For a component $K$ with $a$ output blocks, add a
+separated boundary singleton at $z$ carrying $J$.
+Apply the vacuum coefficient at that block and take
+the constant coefficient of its Laurent expansion
+at $z=\infty$. Use test function $1$ in $z$.
+Put the suspended current first in the input order,
+including that permutation's Koszul sign.
+For a cochain of degree $q$, multiply the result by
+$(-1)^{q+1}$ and denote it by $\mathsf P(K)$.
+
+This extraction is defined on a coefficient resolution.
+The input $J$ is a free translation generator: the
+positive-weight Heisenberg states are free over $k[T]$,
+and no translate has weight one. To see freeness,
+translation is injective on nonconstant differential
+polynomials by the largest-mode argument. Homogeneous
+complements to its image then give a free $k[T]$-basis.
+The same argument applies to $N_+$ and $N_+\otimes V_\kappa$.
+On the latter, first use the highest actor weight.
+
+\begin{lemma}\label{cbc:va:vacuum-probe}
+The extraction has degree minus one and satisfies
+\[
+ d_{\mathcal T}\mathsf P+\mathsf P d_{\mathcal T}=0,
+ \qquad \mathsf P(h)=\kappa\,\kappa_1.
+\]
+\end{lemma}
+\begin{proof}
+Extraction at the separated block commutes with
+coefficient differentials, residues and derivatives
+in every remaining position. In the component of a
+fixed output partition, the differential acts within
+one block. A bracket in the added singleton would
+require a second input there. Removing its sole
+input gives the zero component of that output block.
+The two convolution terms multiplying by the added
+$J$ cancel, because different output blocks commute
+on their disjoint locus.
+
+The remaining differential is the one on the other
+blocks. Inserting the suspended current has degree
+minus one. The stated factor $(-1)^{q+1}$ gives the
+displayed anticommutation in the Hom differential.
+Extraction preserves $G$ and finite normal order,
+so it passes to their completed convolution.
+On~\eqref{cbc:va:boundary-loop} its value is the
+vacuum coefficient of $J_1J=\kappa\mathbf1$.
+The permutation sign cancels its prefactor, giving
+$\kappa\kappa_1$.
+\end{proof}
+
+Consider the pointed comparison induced by
+\eqref{cbc:va:cochain-roof}:
+\[
+ \Theta_F:\operatorname{Map}_{J/}
+                 (F,C_{\mathcal Z_\kappa})
+                \longrightarrow\Phi_C(F,u).
+\]
+At $g_0$, its derivative sends source cochains to
+$\mathcal T$. Every class in its $G=1$, two-output,
+degree-zero image has zero vacuum probe.
+
+Indeed, transfer the roof through the quartet
+contraction. Its twisting corestriction is Lie-valued.
+One can construct it by the finite rooted-tree
+formulas for the bracket and the contraction.
+Each corestriction has one output block.
+In the derivative of composition, a source cochain
+acts on one block and the base point acts on the others.
+
+At a separated boundary singleton carrying $J$,
+the resulting state is either $J$ or the contraction
+of $\zeta_{(-1)}(J+p)$. Here $\zeta$ lies in the
+resolving coefficient.
+All states have nonnegative conformal weight.
+The normal product adds weights, and the contraction
+preserves them. Both possible values have positive
+weight and hence zero vacuum coefficient.
+
+This factorization through positive conformal weights
+persists on coefficient resolutions.
+Lemma~\ref{cbc:va:action-degree} places the indicated
+degree-zero component in ordinary binary Hom, so
+there is no hidden lower-degree correction to this
+vanishing. It holds before extraction at infinity.
+But $\mathsf P(h)=\kappa\kappa_1$ represents a
+nonzero class. Thus $[h]$ is outside the image of
+the derivative of $\Theta_F$.
+
+\subsection{The coherent loop and its consequence}
+
+Over polynomial forms $k[s,ds]$, the twisting cochain
+$\tau_0+ds\,h$ is a loop at $\tau_0$.
+It also defines a loop of coherent monoid actions.
+For $p$ actor factors, set
+\[
+ \epsilon_p=\epsilon^{\otimes p},\qquad
+ \ell_p=\sum_{i=1}^p
+     \epsilon^{\otimes(i-1)}\otimes\ell
+                    \otimes\epsilon^{\otimes(p-i)}.
+\]
+Let $\kappa_p$ be its singleton cochain and put
+$h_p=-(\kappa_p*(J_1\tau_0^{(p)}))^{(2)}$.
+
+Each is closed. Adjacent actor multiplication
+preserves $\ell_p$ by its derivation identity,
+and actor-unit insertion preserves it because
+$\ell(1)=0$.
+For composition of two actor words, the two linear
+terms agree with
+\[
+ \ell_{p+q}=\ell_p\otimes\epsilon_q+
+                         \epsilon_p\otimes\ell_q.
+\]
+Every term containing two copies of $ds$ is zero.
+
+Use these formulas on the free associative bar
+resolution of an actor word followed by its module
+input. Each parenthesization of a word of length
+$p$ gives the same constant term and the same
+linear term $h_p$. Thus every face and degeneracy
+agrees with its prescribed multiplication, action
+or unit map. Constant fillers on these bar
+simplices give all higher coherences.
+The extra unit degeneracy contracts the augmented
+bar resolution. The formulas therefore descend
+to the required coherent action, retaining their
+collision maps by Lemma~\ref{cbc:va:free-field-tensor}.
+
+\begin{theorem}\label{cbc:va:cochain-nonfinal}
+The comparison $\Theta_F$ is not surjective on
+fundamental groups at $g_0$.
+For any coherent transverse monoid structure on
+$C_{\mathcal Z_\kappa}$ with action
+$\alpha_{\mathcal Z}$, the mapping space from
+$(C_N,\alpha_0)$ to that action is disconnected.
+In particular this cochain action is not a local center.
+\end{theorem}
+\begin{proof}
+For a nilpotent relative convolution Lie algebra,
+based loops of its Maurer--Cartan space are
+$\exp H^0$ with the Campbell--Hausdorff law.
+The class of a constant loop form $ds\,v$ is
+$\exp[v]$. See \cite{Getzler2009}*{\S5}.
+Here one applies this statement at each finite
+$G$ quotient. The differential preserves $G$,
+so the quotients on cohomology are surjective.
+Taking their inverse limit gives the completed
+Campbell--Hausdorff group.
+
+In composition of loops, terms involving two
+deformation forms vanish. Hence $\Theta_F$ sends
+$\exp[v]$ to the exponential of its derivative
+on $[v]$. The nonzero probe of $[h]$ and the
+vanishing probe on the image show that
+$\exp[h]$ is not in that image.
+
+The constructed loop belongs to
+$\operatorname{Act}_{C_N}(C)$, with all its monoid
+coherences. If it lifted to a loop of monoid maps
+into $C_{\mathcal Z_\kappa}$, forgetting the
+monoid structures would contradict the preceding
+pointed comparison. The homotopy exact sequence
+of~\eqref{cbc:va:action-fibre} therefore gives at
+least two connected components in that fiber.
+A final action would make it contractible.
+\end{proof}
+
+The probe uses a derivation that sends a positive
+weight state to the vacuum. It detects this
+specified action and its weight-preserving
+resolutions. It does not exclude a final transverse
+monoid with different coefficients or a
+different action. That question requires recipients
+for arbitrary monoid actions with their prescribed paths.
+
+\section{Derivation profiles}
+\label{cbc:va:profiles}
+
+A derivation supplies an infinitesimal action. Extending
+it to an action requires products of its values and
+derivatives of its actor inputs. We construct those
+terms together. Their order matters even when the
+actor inputs themselves are symmetrized.
+
+Let $\mathfrak g$ be a positive Lie object in the
+symmetric coefficient category above, concentrated in
+degree zero, and put $A=U_\star\mathfrak g$.
+Let $D:\mathfrak g\to\mathfrak g$ be a degree-zero Lie
+derivation that commutes with the full coefficient
+maps. It extends to an associative derivation of $A$.
+In particular, it commutes with collision and normal
+transfer. A derivation on one separated fiber alone
+does not meet this hypothesis.
+
+Give $\varepsilon\mathfrak g$ degree one and form the
+semidirect product with brackets
+\[
+ [x,\varepsilon m]=\varepsilon[x,m],
+ \qquad [\varepsilon m,\varepsilon n]=0.
+\]
+Its suspended actor inputs $s\varepsilon m$ have
+degree zero. Their number is the \emph{actor weight}.
+The Chevalley coalgebra has underlying comodule
+\[
+ \operatorname{CE}_\star(\mathfrak g)\star
+ \operatorname{Sym}^c_\star(\varepsilon\mathfrak g[1]),
+\]
+where the superscript $c$ specifies the unshuffle
+coproduct. We identify the second factor's generators
+with $m\in\mathfrak g$ in degree zero.
+
+Write $P_w=\operatorname{Sym}^w_\star\mathfrak g$.
+For $u=m_1\circ\cdots\circ m_w$, set
+\[
+ [x,u]=\sum_i
+ m_1\circ\cdots\circ[x,m_i]\circ\cdots\circ m_w.
+\]
+Symmetric powers are coinvariants, identified with
+invariants by averaging.
+
+\begin{lemma}\label{cbc:va:profile-equation}
+Coefficient maps $\theta_w:\mathfrak g\star P_w\to A$,
+$w\geq1$, are the additional components of a twisting
+cochain under $\operatorname{CE}_\star(\mathfrak g)$
+if and only if
+\begin{align}
+0={}&[x,\theta_w(y;u)]-\theta_w(y;[x,u])
+      -[y,\theta_w(x;u)]+\theta_w(x;[y,u])
+      -\theta_w([x,y];u)\notag\\
+ &+\sum_{\substack{S\sqcup T=[w]\\S,T\ne\varnothing}}
+ \bigl(\theta_{|S|}(x;m_S)\theta_{|T|}(y;m_T)
+       -\theta_{|S|}(y;m_S)\theta_{|T|}(x;m_T)\bigr).
+ \label{cbc:va:profile-mc}
+\end{align}
+The splitting $(S,T)$ is ordered, and $m_S$ denotes
+the symmetric product of the inputs with labels in $S$.
+\end{lemma}
+\begin{proof}
+The value of a degree-one cochain on $n$ suspended
+ordinary Lie inputs has degree $1-n$ in $A$.
+Only $n=1$ contributes, and its value is
+$\theta_w(x;u)$. The twisting equation has degree
+$2-n$ and therefore only tests $n=2$.
+
+Use $Q_2(sx\,sy)=s[x,y]$. Its three bracket terms are
+$\theta_w([x,y];u)+\theta_w(y;[x,u])
+-\theta_w(x;[y,u])$.
+
+In a nonzero convolution product, each tensor factor
+has one ordinary suspended input. Passing the second
+degree-one cochain across the first factor contributes
+a minus sign. The unshuffles with an empty actor part
+give the two commutators, and those with both parts
+nonempty give the sum in~\eqref{cbc:va:profile-mc}.
+Multiplying the twisting equation by minus one proves
+the formula. Weight zero is the envelope relation.
+\end{proof}
+
+\subsection{The fixed-point construction}
+
+We first prove a universal identity in an associative
+algebra with derivation. Let $z$ be a central formal
+parameter, and for $R\in zA[[z]]$ set
+\[
+ f\langle R\rangle
+   =\sum_{j\geq0}\frac{D^jf}{j!}R^j.
+\]
+Every power of $R$ stands on the right.
+Choose central scalar parameters $t_1,t_2,\ldots$ and put
+\begin{equation}\label{cbc:va:profile-fixed-point}
+ U=\sum_{r\geq1}\frac{t_rz^r}{r!}m^r,\qquad
+ R=U\langle R\rangle,\qquad G_x=x\langle R\rangle.
+\end{equation}
+Solve for $R$ by increasing powers of $z$.
+Each unknown coefficient on the right is multiplied
+by a coefficient of positive $z$-order, so the
+solution is unique.
+
+Let $\delta_x$ vary the actor variable $m$ in the
+direction $[x,m]$. It replaces $D^jm$ by $D^j[x,m]$
+and fixes all external arguments.
+
+\begin{lemma}\label{cbc:va:profile-transport}
+The series in~\eqref{cbc:va:profile-fixed-point} satisfy
+\begin{align}
+ \delta_xR&=[G_x,R],\label{cbc:va:profile-transport-r}\\
+ [G_x,G_y]-G_{[x,y]}-\delta_xG_y+\delta_yG_x&=0.
+ \label{cbc:va:profile-transport-g}
+\end{align}
+\end{lemma}
+\begin{proof}
+Put $U_j=D^jU/j!$ and $X_i=D^ix/i!$.
+Since $\delta_xU=[x,U]$, differentiation of the
+fixed-point equation gives a linear equation for
+$Z=\delta_xR$:
+\[
+ Z=[x,U]\langle R\rangle+
+       \sum_jU_j\sum_{p+q=j-1}R^pZR^q.
+\]
+Its linear part raises $z$-order, so its solution is
+unique.
+
+Taking the commutator of $G_x$ with the
+fixed-point equation gives the same equation for
+$[G_x,R]$. To check the constant term in that
+equation, expand Leibniz for $D$. The difference is
+\[
+ \sum_{i,j}X_i[R^i,U_j]R^j
+   =\sum_iX_i\sum_{p+q=i-1}R^pWR^q,
+ \qquad
+ W=\sum_j[R,U_j]R^j=[R,R]=0.
+\]
+This proves~\eqref{cbc:va:profile-transport-r}.
+
+Write $Y_j=D^jy/j!$. Subtracting
+$G_{[x,y]}=\sum_{i,j}[X_i,Y_j]R^{i+j}$ from
+$[G_x,G_y]$ leaves
+\[
+ \sum_{i,j}X_i[R^i,Y_j]R^j
+       -\sum_{i,j}Y_j[R^j,X_i]R^i.
+\]
+Expand each commutator with a power of $R$.
+The first sum is $-\delta_yG_x$ and the second,
+with its displayed minus sign, is $\delta_xG_y$,
+by~\eqref{cbc:va:profile-transport-r}.
+This gives~\eqref{cbc:va:profile-transport-g}.
+\end{proof}
+
+For a nonempty set $B$ of actor labels, define
+\[
+ u_B=\frac1{|B|!}\sum_{\sigma\in S_B}
+                 m_{\sigma(1)}\cdots m_{\sigma(|B|)}.
+\]
+Let $\mathcal T_j$ be the nonnegative tuples
+$(a,b_1,\ldots,b_j)$ such that
+\[
+ a+\sum_{i=1}^jb_i=j,\qquad
+ a+\sum_{i=1}^\ell b_i\geq\ell+1
+                    \quad(0\leq\ell<j).
+\]
+These are the child numbers of a plane rooted tree
+with $j$ nonroot vertices, in preorder.
+For arbitrary envelope elements $v_i$, put
+\[
+ T_j^D(x;v_1,\ldots,v_j)=
+ \sum_{(a,b)\in\mathcal T_j}\frac{D^ax}{a!}
+ \sum_{\sigma\in S_j}
+ \frac{D^{b_1}v_{\sigma(1)}\cdots D^{b_j}v_{\sigma(j)}}
+      {b_1!\cdots b_j!},
+ \qquad T_0^D(x)=x.
+\]
+
+\begin{theorem}\label{cbc:va:profiles-theorem}
+For every scalar sequence $\mathbf t=(t_1,t_2,\ldots)$,
+the operations
+\begin{equation}\label{cbc:va:profile-partitions}
+ \theta_w^{\mathbf t}(x;m_1,\ldots,m_w)
+ =\sum_{\pi\in\operatorname{Part}([w])}
+     \left(\prod_{B\in\pi}t_{|B|}\right)
+     T_{|\pi|}^D(x;u_B:B\in\pi)
+\end{equation}
+satisfy~\eqref{cbc:va:profile-mc}. The partitions here
+are unordered and have nonempty blocks.
+They define a map of derived convolution coalgebras
+\[
+ \operatorname{CE}_\star
+          (\mathfrak g\ltimes\varepsilon\mathfrak g)
+ \longrightarrow\operatorname{CE}_\star(\mathfrak g)
+\]
+under $\operatorname{CE}_\star(\mathfrak g)$.
+On a configuration $I$, its nonconstant operations
+use only $t_r$ with $r<|I|$.
+\end{theorem}
+\begin{proof}
+Expanding the fixed point orders the subtrees below
+each vertex. A vertex with $j$ children contributes
+$D^jU/j!$, and the root contributes $D^ax/a!$.
+Polarizing a term of $U$ groups the actor labels into
+the blocks $B$, with product $u_B$ and coefficient
+$t_{|B|}$. Ordering these blocks among the tree's
+vertices and summing their orders gives $T_{|\pi|}^D$.
+
+Consequently
+\[
+ G_x=x+\sum_{w\geq1}\frac{z^w}{w!}
+              \theta_w^{\mathbf t}(x;m,\ldots,m).
+\]
+
+The coefficient of $z^w/w!$ in
+\eqref{cbc:va:profile-transport-g} is
+\eqref{cbc:va:profile-mc} on equal inputs.
+The two variations give its actor substitutions.
+Multiplication of exponential generating series
+gives the ordered unshuffles. Polarization proves it for
+all inputs.
+
+The twisting cochain gives the map to $B_\star A$
+by its iterated reduced coproduct. The
+comparison of Lemma~\ref{cbc:va:chevalley-bar} identifies this target
+with $\operatorname{CE}_\star(\mathfrak g)$.
+On weight zero this is the canonical comparison,
+which gives the specified map under that coalgebra.
+Each positive input occupies a nonempty subset of
+$I$. A term of actor weight $w$ also consumes one
+ordinary input, so $w+1\leq|I|$. All coproduct and
+tree sums are therefore finite on each configuration.
+\end{proof}
+
+The first two operations display both sources of
+higher terms:
+\begin{align*}
+ \theta_1^{\mathbf t}(x;m)&=t_1Dx\,m,\\
+ \theta_2^{\mathbf t}(x;m,n)
+   &=t_2Dx\,\frac{mn+nm}{2}\\
+   &\quad+t_1^2\left(
+       D^2x\,\frac{mn+nm}{2}+Dx(Dm\,n+Dn\,m)\right).
+\end{align*}
+At weight three, the mixed coefficient of $t_1t_2$
+is $\sum_{\{i\}\sqcup B=[3]}T_2^D(x;m_i,u_B)$.
+Thus independently chosen leading weights also have
+specified mixed primitives.
+
+To interpret these maps as actions of a field
+coalgebra, one needs a coefficient comparison.
+Precisely, let $E=\Lambda(\varepsilon)$, with
+$|\varepsilon|=1$ and $d\varepsilon=T\varepsilon=0$.
+Suppose the residue construction identifies
+$C_{E\otimes V}$ and $C_V$ with the two Chevalley
+coalgebras in Theorem~\ref{cbc:va:profiles-theorem},
+respectively. Require these equivalences to preserve
+the vacuum axis, actor weights, collisions and normal
+transfer, and to identify their derived mapping
+spaces. Together with
+Lemma~\ref{cbc:va:free-field-tensor}, they turn the
+constructed map into a pointed action of $C_E$ on
+$C_V$. Under these hypotheses, no completion of
+normal derivatives or of state spaces is needed:
+the formal parameter has proved finite identities
+at every configuration.
+
+\begin{lemma}\label{cbc:va:heisenberg-admissibility}
+For $V=V_\kappa$, $\kappa\ne0$, these comparisons
+exist. They are natural under rescaling
+$\varepsilon\mapsto t\varepsilon$, tensor powers
+of $E$, and finite scalar extension.
+\end{lemma}
+\begin{proof}
+Resolve $E$ by the regular commutative field
+algebra
+\[
+ \mathcal K=k[u,Tu,\ldots]\otimes\Lambda[c,Tc,\ldots],
+ \qquad |u|=0,\quad |c|=1,\quad du=Tc,\quad dc=0.
+\]
+The map $q:\mathcal K\to E$ sends $u$ to zero,
+$c$ to $\varepsilon$, and their positive
+translates to zero.
+The pairs $(T^nu,T^{n+1}c)$ contract by their
+Euler homotopy, leaving only $\Lambda(c)$.
+Thus $q$ is a quasi-isomorphism.
+
+Apply the lattice comparison of
+Lemma~\ref{cbc:va:free-field-tensor} to
+$\mathcal K$ and $V_\kappa$.
+The finite partition filtration preserves the
+quasi-isomorphism induced by $q$, so it gives
+$C_E\otimes^!C_{V_\kappa}\simeq C_{E\otimes V_\kappa}$.
+The diagonal Lie object of $E\otimes V_\kappa$
+is $\mathfrak g\ltimes\varepsilon\mathfrak g$:
+the exterior coefficient multiplies the
+chiral bracket, and $\varepsilon^2=0$.
+This identifies the target with its Chevalley
+model, including the vacuum axis.
+
+The maps $u\mapsto tu$, $c\mapsto tc$ commute
+with $q$ and with the lattice construction.
+They give weight $t^w$ on $w$ suspended actor
+inputs. Tensor powers use the same independent
+contractible pairs. The constructions preserve
+finite scalar extension and all collision maps,
+since these maps already act on the lattices
+and their residue resolutions.
+\end{proof}
+
+Henceforth in the Heisenberg case take
+$D=\kappa^{-1}J_1=\partial_{x_1}$, so $D(J)=\mathbf1$.
+It is the derivative of the vertex automorphism
+$J\mapsto J+t\mathbf1$ and is therefore a map
+of the full coefficient family.
+Let $\alpha_{\mathbf t}$ denote the pointed
+actions just constructed. Write $\alpha_D$ for
+the sequence $t_1=1$, $t_r=0$ for $r>1$.
+
+\begin{proposition}\label{cbc:va:leading-profiles}
+For every $r\geq1$, the first variation of
+$\alpha_{\mathbf t}$ in $t_r$ at the trivial
+action is a nonzero class. The classes for
+different $r$ have distinct actor weights.
+For every $N\geq1$ there is a nontrivial pointed
+action equal to the trivial action on all
+configurations with at most $N$ positions.
+\end{proposition}
+\begin{proof}
+The first variation is
+$u_r(x;m_1,\ldots,m_r)=Dx\,u_{[r]}$.
+In its PBW component with $r+1$ output roots,
+it is $\gamma_r(x;v)=(Dx)\circ v$, where
+$v\in P_r$ and $\circ$ is symmetric multiplication.
+Its Chevalley cocycle equation is
+\[
+ [x,Dy]+[Dx,y]-D[x,y]=0.
+\]
+Thus it defines the triangular module extension
+$P_{r+1}\oplus P_r$ with off-diagonal action
+$\gamma_r$.
+
+There is no coefficient map $P_r\to P_{r+1}$.
+Indeed $P_{r+1}$ is open direct image from its
+$(r+1)$-root locus, where the source restricts
+to zero. The underlying extension therefore
+has only its displayed splitting. It is not
+equivariant: on $r+1$ distinct roots, put $J$
+at the acting root and the vacuum at the others.
+Then $\gamma_r$ gives the nonzero vacuum tensor
+with coefficient one.
+
+Degree-zero derived module maps here are ordinary
+equivariant maps: their resolved coefficient Hom
+and Chevalley complexes have no negative degrees.
+The extension class is therefore nonzero.
+PBW projection preserves the adjoint differential,
+so $[u_r]$ is nonzero as well.
+
+For the last assertion, use $t_N=1$ and all
+other parameters zero. Its positive terms
+require at least $N+1$ supports.
+
+It remains to exclude a homotopy to the trivial
+action. More generally, if two normalized
+relative actions vanish below weight $r$,
+write a gauge between them as $G=1+\sum_{j>0}g_j$.
+The equation $d_0G=G\theta-\theta'G$ gives
+$d_0g_j=0$ below weight $r$ and
+$d_0g_r=\theta_r-\theta'_r$ in weight $r$.
+Their first classes must agree. Here one of
+them is $[u_N]\ne0$ and the other is zero.
+\end{proof}
+
+This also obstructs the ordinary exterior product
+for profiles starting above weight one.
+Let $\beta$ have first nonzero class
+$[\beta_r]$ in weight $r>1$.
+If the standard product $\mu$ of $C_E$ made it
+multiplicative, pull its action path back along
+the primitive map $\varepsilon\mapsto
+\varepsilon_1+\varepsilon_2$.
+On the product side this scales the first
+class by $2^r$. On the iterated-action side
+the first jets add, giving $2[\beta_r]$:
+all products of positive lower jets vanish.
+The preceding gauge calculation would give
+$(2^r-2)[\beta_r]=0$, impossible in
+characteristic zero.
+
+This concerns the standard multiplication
+on this actor. It does not exclude a map of
+the action to a different multiplicative action.
+
+\begin{example}\label{cbc:va:quadratic-profile}
+In $k[q]$, take $D=\partial_q$, $x=m=q$ and
+$t_2=1$, with all other parameters zero.
+Then $G_q=q+R$ and
+\[
+ G_q=q+\frac{z^2}{2}G_q^2.
+\]
+The solution with constant term $q$ is
+\[
+ G_q=\sum_{n\geq0}\frac1{n+1}\binom{2n}{n}
+                    \left(\frac{z^2}{2}\right)^nq^{n+1}.
+\]
+Indeed, $G_q=qC(z^2q/2)$ reduces the equation to
+$C=1+uC^2$, whose solution at $C(0)=1$ is
+$(1-\sqrt{1-4u})/(2u)$.
+\end{example}
+
+\subsection{An inner gauge and its domain}
+\label{cbc:va:inner}
+
+The same fixed point determines when an inner
+derivation gives a trivial profile. We first work
+in an ordinary unital associative algebra $A$.
+Fix $a\in A$ and take $D=[a,-]$.
+
+The variations $\delta_x$ fix $a$.
+They satisfy $[\delta_x,\delta_y]=-\delta_{[x,y]}$,
+so $\rho_xF=[x,F]-\delta_xF$ defines a Lie action
+on functions of $m$. Let $d_0$ be its Chevalley
+differential. In particular, $d_0F(x)=\rho_xF$ on
+zero-cochains.
+
+The positive one-cochain $\theta(x)=G_x-x$ satisfies
+$d_0\theta+\theta\smile\theta=0$ by
+\eqref{cbc:va:profile-transport-g}.
+A normalized gauge from $\theta$ to zero is an
+invertible zero-cochain $B=1\bmod z$ with
+$d_0B=B\theta$.
+
+\begin{proposition}\label{cbc:va:inner-gauge}
+For the fixed point~\eqref{cbc:va:profile-fixed-point}
+with $D=[a,-]$, such a gauge is
+\begin{equation}\label{cbc:va:ordered-gauge}
+ B=\sum_{n\geq0}\frac{(-1)^n}{n!}a^nR^n.
+\end{equation}
+Its powers of $a$ stand to the left of its powers
+of $R$.
+\end{proposition}
+\begin{proof}
+The constant term is one, so its geometric inverse
+converges $z$-adically.
+Since $\delta_xa=0$, transport gives
+\[
+ \delta_xB
+   =\sum_{n\geq0}\frac{(-a)^nG_xR^n}{n!}-BG_x.
+\]
+The coefficient on the left of $R^k$ in the sum is
+\[
+ \sum_{n+j=k}\frac{(-a)^n(\operatorname{ad}a)^jx}{n!j!}
+       =\frac{(-1)^k}{k!}xa^k.
+\]
+For this equality, left and right multiplication
+$L_a,R_a$ commute and $\operatorname{ad}a=L_a-R_a$.
+The coefficient identity is exactly
+$e^{-tL_a}e^{t(L_a-R_a)}=e^{-tR_a}$.
+Thus $\delta_xB=xB-BG_x$, and
+$[x,B]-\delta_xB=B(G_x-x)$, as required.
+\end{proof}
+
+For $U=zm$ the first terms are
+\[
+ R=zm+z^2[a,m]m+O(z^3),\qquad
+ B=1-zam+z^2\left(-a[a,m]m+\frac12a^2m^2\right)
+       +O(z^3).
+\]
+The coefficient of $z^2$ in $B-e^{-aR}$ is
+$\frac12a[a,m]m$, nonzero in the free algebra on
+$a,m$. An ordinary exponential does not give this
+gauge.
+
+The polarized identities also hold in a resolved
+coefficient convolution under two hypotheses.
+All operations must preserve that coefficient family,
+and sufficiently many positive factors must vanish
+at each configuration.
+The inverse and the gauge equation are then finite
+there. These hypotheses include the element that
+implements the inner derivation.
+
+For the positive convolution envelope
+$U_\star\mathfrak g$, that last hypothesis has only
+the zero-derivation instance. Its convolution unit
+$K$ is supported at the empty configuration, whereas
+$\mathfrak g$ is positive. A global element
+$a:K\to U_\star\mathfrak g$ is therefore scalar,
+and $[a,-]=0$. A nonzero state mode can still define
+a derivation of the full coefficient family. It
+need not arise from a global element of this
+envelope. In particular, the gauge above does not
+trivialize the Heisenberg shift used in the vacuum
+probe.
+
+\section{Multiplicative recipients for the profiles}
+\label{cbc:va:profile-recipients}
+
+The failure of the standard product on a higher
+profile does not prevent that action from mapping
+to a multiplicative one. We construct such maps
+by changing the actor parameter. To compare their
+actions, the change of parameter must extend to
+an actual bar map.
+
+\subsection{Tensoring the entire coefficient construction}
+
+\begin{lemma}\label{cbc:va:strong-tensor}
+Let $C$ be a cocommutative factorizing
+$\star$-coalgebra with empty coefficient $k$.
+Then $\mathcal T_C(F)=F\otimes^!C$ is a
+colimit-preserving strong symmetric monoidal
+functor for $\star$.
+For $C=C_V$, it takes $L_k$ to $L_V$ and
+$L_E$ to $L_{E\otimes V}$, with their brackets.
+\end{lemma}
+\begin{proof}
+Use the coproduct of $C$ to compare
+$(F\star G)\otimes^!C$ with
+$(F\otimes^!C)\star(G\otimes^!C)$.
+On the summand for $I=A\amalg B$, this is
+open direct image of
+\[
+ (F_A\boxtimes G_B)\otimes^!C_I|_{U_{A,B}}
+ \longrightarrow
+ ((F_A\otimes^!C_A)\boxtimes
+                  (G_B\otimes^!C_B))|_{U_{A,B}}.
+\]
+It is an equivalence by factorization and the
+open projection formula. That formula follows
+here from localization: extraordinary restriction
+to the complement vanishes, and restriction to
+the open is the displayed tensor.
+At the empty configuration the unit comparison
+is $K\otimes^!C=K$.
+
+Every iterated comparison uses the same final
+partition and the same iterated coproduct.
+Coassociativity and cocommutativity give all
+monoidal coherences. Collision kills exactly
+the summands whose blocks split a collision
+fiber. On the others the comparison is the
+same base-change map. Tensor product and
+convolution preserve colimits.
+
+On a small-diagonal branch, projection for its
+full normal direct image identifies
+$L_k\otimes^!C_V$ with the state coefficient
+$L_V$. The bracket on $L_k$ is the vacuum
+principal-part boundary. Tensoring it with
+the factorization lattice of $V$ gives its
+two-position residue boundary, hence the
+bracket of $L_V$.
+The same computation on the even and odd
+summands of $L_E$ gives
+$L_{E\otimes V}=\mathfrak g\ltimes\varepsilon\mathfrak g$.
+Thus the functor transports the Chevalley,
+envelope and bar constructions, including
+their coefficient maps.
+\end{proof}
+
+For any degree-zero positive Lie object
+$\mathfrak l$, work in
+$U_\star(\mathfrak l\ltimes\varepsilon\mathfrak l)$
+and set
+\[
+ \rho_r(m_1,\ldots,m_r)
+   =\frac1{r!}\sum_{\sigma\in S_r}
+      m_{\sigma(1)}\cdots m_{\sigma(r-1)}
+                       (\varepsilon m_{\sigma(r)}).
+\]
+
+Define a cochain by $\tau_{\mathbf t}(sx)=x$
+on ordinary singleton inputs and
+\[
+ \tau_{\mathbf t}
+   (s\varepsilon m_1\cdots s\varepsilon m_r)
+       =t_r\rho_r(m_1,\ldots,m_r)
+\]
+on pure actor inputs, with all other reduced
+components zero.
+
+It is a twisting cochain. With one ordinary
+input its equation is adjoint equivariance.
+With two ordinary inputs it is the envelope
+relation. The remaining equation polarizes
+from equal actor inputs, where
+$\rho_r(m,\ldots,m)=m^{r-1}\varepsilon m$.
+All products of two such values vanish because
+$[m,\varepsilon m]=0$ and $(\varepsilon m)^2=0$.
+
+Thus $\tau_{\mathbf t}$ gives the strict bar map
+\begin{equation}\label{cbc:va:actor-bar-map}
+ F_{\mathbf t}
+   =\sum_{j\geq0}(s\tau_{\mathbf t})^{\star j}
+                                  \overline\Delta^{(j)}.
+\end{equation}
+After the inverse of
+Lemma~\ref{cbc:va:chevalley-bar}, it defines a
+pointed self-map. For $\mathfrak l=L_k$ denote
+it by $\Sigma_{\mathbf t}:C_E\to C_E$.
+Augmentation kills its positive odd outputs,
+so it also preserves the augmentation to $J$.
+Every sum is finite on each configuration.
+
+\subsection{A bar lift of the derivation action}
+
+The substitution identity has a differential
+version. Let $(\mathcal G,d)$ be a complete
+filtered dg associative algebra, with
+$F^p\mathcal G\,F^q\mathcal G\subseteq F^{p+q}\mathcal G$.
+Let $D$ preserve this filtration and commute
+with $d$. Suppose $a$ has degree one,
+$da+a^2=0$, and $p\in F^1\mathcal G$ has
+degree zero with $dp+[a,p]=0$.
+Put
+\[
+ a_j=D^ja/j!,\qquad p_j=D^jp/j!,\qquad
+ R=\sum_{j\geq0}p_jR^j,\qquad
+ A_R=\sum_{j\geq0}a_jR^j.
+\]
+
+\begin{lemma}\label{cbc:va:covariant-substitution}
+These series satisfy
+$dR+[A_R,R]=0$ and $dA_R+A_R^2=0$.
+\end{lemma}
+\begin{proof}
+The differentiated equations are
+$da_j=-\sum_{u+v=j}a_ua_v$ and
+$dp_j=-\sum_{u+v=j}[a_u,p_v]$.
+Expanding the fixed point gives
+\[
+ \sum_{u,v}[a_u,p_v]R^{u+v}
+ =[A_R,R]-\sum_vp_v[A_R,R^v].
+\]
+The difference between the two sides is
+$\sum_u a_u[R^u,\sum_vp_vR^v]=0$.
+
+Consequently $-[A_R,R]$ solves the linear
+fixed-point equation obtained by differentiating
+$R$. Its positive filtration gives uniqueness.
+Since the $a_j$ are odd, substitution yields
+\[
+ dA_R=-\sum_{u,v}a_ua_vR^{u+v}
+                         +\sum_u a_u[A_R,R^u].
+\]
+Subtracting the first sum from $A_R^2$ gives
+$\sum_u a_u[R^u,A_R]$, which cancels the
+last sum. This proves both equations.
+\end{proof}
+
+Apply the lemma with
+$B=U_\star(\mathfrak g\ltimes\varepsilon\mathfrak g)$,
+$A=U_\star\mathfrak g$ and the bar convolution
+$\mathcal G=\operatorname{Hom}^\bullet(B_\star B,A)$.
+Let $\pi:B\to A$ kill the odd ideal.
+The degree-minus-one projection derivation
+$q:B\to A$ is determined by
+\[
+ q(x)=0,\quad q(\varepsilon m)=m,\quad
+ q(uv)=q(u)\pi(v)+(-1)^{|u|}\pi(u)q(v).
+\]
+It respects the envelope relations.
+For example, applying $q$ to
+$[x,\varepsilon m]=\varepsilon[x,m]$
+gives the same $[x,m]$ on both sides.
+Two-odd-input relations give zero.
+
+Take the length-one cochains induced by $\pi$
+and $q$ for $a$ and $p$. Their degrees are
+one and zero, and the projection derivation
+identity is $dp+[a,p]=0$.
+The lemma gives a twisting cochain and a
+coalgebra map
+$\mathcal F_D:B_\star B\to B_\star A$.
+On a word $[v_0|\cdots|v_w]$, its corestriction is
+\begin{equation}\label{cbc:va:bar-tree}
+ \sum_{(a,b)\in\mathcal T_w}
+ \frac{D^a\pi(v_0)}{a!}
+ \frac{D^{b_1}q(v_1)\cdots D^{b_w}q(v_w)}
+      {b_1!\cdots b_w!}.
+\end{equation}
+
+This follows by the same ordered-subtree
+expansion as the profile fixed point.
+It vanishes unless $v_0$ has odd-generator
+degree zero and each later $v_i$ has
+odd-generator degree one.
+
+Restriction along the Chevalley comparison
+puts the ordinary input first and sums the
+orders of the actor inputs, giving $\alpha_D$.
+The bar-length filtration is finite at each
+configuration, so this is an actual coefficient
+map there.
+
+\begin{proposition}\label{cbc:va:profile-comparison}
+For the Heisenberg actions, there is a natural
+pointed path
+\[
+ \alpha_D(\Sigma_{\mathbf t}\otimes^!\mathrm{id}_C)
+                        \simeq\alpha_{\mathbf t}.
+\]
+It preserves all collisions, normal transfers
+and the specified vacuum path.
+\end{proposition}
+\begin{proof}
+Lemma~\ref{cbc:va:strong-tensor} transports
+$\Sigma_{\mathbf t}$ from $L_k$ to $\mathfrak g$.
+Represent the composite by
+$\mathcal F_DF_{\mathbf t}$.
+A nonzero term puts the ordinary input in
+its first singleton slot and partitions the
+actor inputs into $\rho$-blocks.
+The projection derivation satisfies
+$q\rho_r(m_1,\ldots,m_r)=u_{[r]}$.
+For each unordered partition, summing its
+block orders in~\eqref{cbc:va:bar-tree} gives
+exactly~\eqref{cbc:va:profile-partitions}, with
+coefficient $\prod_Bt_{|B|}$.
+
+Thus the corestrictions agree in every weight.
+The pointed bar comparisons transport this
+equality to the stated path and its coherences.
+All operations are maps of the full coefficient
+families.
+\end{proof}
+
+\subsection{The complex of natural higher comparisons}
+
+It remains to construct multiplication coherences
+for $\alpha_D$ itself. The relevant primitives
+can be chosen as universal differential
+polynomials. No contraction of an unspecified
+geometric mapping complex is assumed.
+
+Let $P,Z$ be finite-dimensional degree-zero
+spaces. Write $E(P)=\Lambda(P^*[-1])$ and
+choose commuting derivations $D_1,\ldots,D_{\dim Z}$
+of a degree-zero Lie algebra $\mathfrak g$.
+A natural cochain on
+$\operatorname{CE}(\mathfrak g\otimes E(P))$
+is a universal multilinear differential polynomial
+with values in $U(\mathfrak g)$.
+It applies the chosen derivations and multiplies
+the resulting inputs, using each input once. Its evaluation
+includes suspended symmetrization.
+Brackets are expanded as commutators.
+
+Let $\mathcal N(P;Z)$ be their convolution
+algebra, with the Hom differential twisted by
+the scalar augmentation action $\tau$.
+Take the product over actor weights, with
+finitely many derivative orders at each
+cochain degree and actor weight.
+Each specified input is evaluated by a
+finite polynomial.
+
+For an exterior subset $S$ and derivative
+multi-index $a$, let $x_{S,a}$ extract that
+exterior coefficient and apply $D^a/a!$.
+It has degree $1-|S|$, actor weight $|S|$
+and derivative weight $|a|$.
+These unary cochains freely generate
+$\mathcal N(P;Z)$ under convolution.
+Indeed their products are signed orbit
+sums of ordered differential monomials.
+Evaluation in the free differential Lie
+algebra on distinct named inputs recovers
+each ordered jet word in its free tensor
+envelope, proving independence.
+Polarization handles repeated exterior types.
+
+Put $t=x_{\varnothing,0}=\tau$ and
+$y_{S,a}=(-1)^{\binom{|S|}{2}}x_{S,a}$.
+For disjoint subsets let $\epsilon(B,C)$
+be the sign sorting their exterior product.
+The differential is
+\begin{equation}\label{cbc:va:natural-differential}
+ \delta t=t^2,\qquad
+ \delta y_{S,a}
+ =-\sum_{\substack{B\sqcup C=S\\b+c=a}}'
+    (-1)^{|B|}\epsilon(B,C)y_{B,b}y_{C,c}.
+\end{equation}
+The prime omits $(\varnothing,0)$ on either
+side, and the second formula excludes $t$.
+To obtain it, use
+$Q_2(s(e_Bx)s(e_Cy))=(-1)^{|B|}
+s(e_Be_C[x,y])$, the divided Leibniz rule,
+and the convolution sign
+$(-1)^{|g||c'|}$ in $(f*g)(c)$.
+The terms containing $t$ cancel the
+commutator with the scalar twisting cochain.
+
+\begin{lemma}\label{cbc:va:natural-cohomology}
+Weight by weight,
+\[
+ H^\bullet\mathcal N(P;Z)
+   =\widehat{\operatorname{Sym}}(P)
+                         \otimes\Lambda(Z[-1]).
+\]
+The $P$ generators have degree zero and actor
+weight one. The $Z[-1]$ generators have
+degree one and derivative weight one.
+Thus actor weight $q$ and derivative order
+$q$ have cohomology
+$\operatorname{Sym}^q(P)\otimes\Lambda^q(Z)$
+in degree $q$.
+\end{lemma}
+\begin{proof}
+Let $\Gamma(Z)$ be the divided-power coalgebra,
+with $\Delta z^{[a]}=\sum_{b+c=a}
+z^{[b]}\otimes z^{[c]}$.
+Formula~\eqref{cbc:va:natural-differential}
+identifies $\mathcal N(P;Z)$ with
+\[
+ (k\langle t\rangle,\delta t=t^2)
+        *\Omega\bigl(\Lambda(P[1])\otimes\Gamma(Z)\bigr).
+\]
+The augmentation ideal of the first factor
+contracts by $t^{2j}\mapsto t^{2j-1}$ and
+$t^{2j-1}\mapsto0$.
+On a free-product word, contract its first
+such factor with the sign of the prefix.
+Projection killing $t$ is therefore a
+quasi-isomorphism.
+
+Map the remaining cobar to
+$\operatorname{Sym}(P)\otimes\Lambda(Z[-1])$
+by preserving its primitive generators and
+killing the others. The differential becomes
+a graded commutator or an odd square, hence
+zero. The map is surjective on cohomology.
+
+To prove injectivity, dualize each auxiliary
+weight. The dual coalgebra algebra is
+$B=\Lambda(P^*[-1])\otimes\operatorname{Sym}(Z^*)$.
+With generators $\alpha_i,z_j$, its free
+resolution of $k$ is
+\[
+ B\otimes k[v_i]\otimes\Lambda(\eta_j),
+ \qquad |v_i|=0,\quad|\eta_j|=-1,\quad
+ dv_i=\alpha_i,\quad d\eta_j=z_j.
+\]
+
+For an odd pair,
+$d(v_i^{m+1})=(m+1)\alpha_i v_i^m$,
+leaving only the scalar class.
+An even pair is the two-term resolution
+for multiplication by $z_j$.
+Their tensor product resolves $k$.
+Its Hom into $k$ has zero differential and
+the stated symmetric--exterior dimensions.
+
+The weightwise dual bar computes the same
+Ext as the cobar above, so the surjection
+has equal finite dimensions in every weight.
+It is an isomorphism.
+\end{proof}
+
+For one derivation, every equal-weight sector
+with $q\geq2$ is acyclic. For two derivations,
+the degree-two sector at $q=2$ need not vanish.
+The number of derivations matters to this
+construction.
+
+We also need the natural associative-bar
+cochains. At each primitive PBW degree,
+allow PBW projections followed by the same
+ordered differential polynomials. Take their
+product over primitive degrees.
+This class is closed under composition and
+extension of the exterior coefficients.
+An actor face sets one exterior generator
+to zero. Cochains vanishing on every actor
+face have positive weight in every actor
+coordinate.
+
+Restriction along the Chevalley--bar map
+is a surjective quasi-isomorphism of these
+natural convolution complexes, also relative
+to any union of actor faces.
+Here is a construction of its kernel contraction.
+For an abelian Lie algebra and fixed
+multilinear primitive degree, the bar is
+the finite complex of ordered nonempty
+partitions, with adjacent-block merging.
+The Koszul resolution in the preceding proof
+identifies its homology with the suspended
+symmetrization image. Choose rational
+complements to cycles and boundaries and
+average their projections over permutations.
+This gives natural maps $p,h$ with
+$pj=1$, $hj=ph=h^2=0$ and $dh+hd=1-jp$.
+
+For a nonabelian Lie algebra, the difference
+of the PBW product from the symmetric product
+lowers primitive degree. If $b$ is the
+resulting bar perturbation, set
+$p'=p(1+bh)^{-1}$ and $h'=h(1+bh)^{-1}$.
+The series are finite on every input.
+The inclusion remains $j$, since $bj=jQ_2$
+and $hj=0$. Its transferred differential
+is precisely the Chevalley differential.
+
+Precomposition with $p'$ splits restriction
+on untwisted Hom complexes, and
+$f\mapsto(-1)^{|f|}fh'$ contracts its kernel.
+Twisting by the scalar action preserves
+that kernel and raises minimum primitive
+input degree. A second finite perturbation
+therefore contracts the twisted kernel.
+All maps preserve actor and derivative
+weights and commute with the actor faces.
+
+\begin{lemma}\label{cbc:va:coherent-fillings}
+Fix one derivation and at least two actor coordinates.
+Prescribe compatible natural action data on all proper
+actor faces and the boundary of a parameter simplex or cube.
+These data extend to the interior, and their extension
+space is contractible.
+The cochains here have derivative order
+equal to actor weight.
+\end{lemma}
+\begin{proof}
+Commuting actor-face projections give a
+surjective restriction by inclusion-exclusion.
+Its kernel consists of the cochains using
+every actor coordinate.
+Each of its weights is at least two,
+so it is acyclic by
+Lemma~\ref{cbc:va:natural-cohomology} and the
+relative bar comparison just constructed.
+
+Polynomial forms extend compatible boundary
+values on a simplex or cube. Choose a
+linear lift of the boundary and actor-face
+data, and solve Maurer--Cartan successively
+in actor weight. At the next weight its
+curvature is a closed degree-two element
+of the fully mixed kernel tensored with
+relative polynomial forms. Closedness is
+the Bianchi identity. The relative condition
+is the already satisfied boundary equation.
+
+This complex is acyclic over $k$, so a
+degree-one correction removes the curvature
+without changing the prescribed data.
+The weight filtration is complete.
+
+The same argument with extra parameter
+simplices solves every relative lifting
+problem. Thus the restriction of
+Maurer--Cartan spaces is a trivial Kan
+fibration and its fibers are contractible.
+\end{proof}
+
+\begin{theorem}\label{cbc:va:multiplicative-recipient}
+The Heisenberg action $\alpha_D$ admits
+a unital homotopy-coherent action of the
+standard monoid $(C_E,\mu)$.
+Every profile action $\alpha_{\mathbf t}$
+maps to this multiplicative action by
+$\Sigma_{\mathbf t}$.
+Its two prescribed unit insertions have
+the common factorizing recipient
+\[
+ \mu(\Sigma_{\mathbf t}\otimes^!\Sigma_{\mathbf t}):
+ C_E\otimes^!C_E\longrightarrow C_E
+\]
+with target action $\alpha_D$.
+\end{theorem}
+\begin{proof}
+Use the bar lift $\mathcal F_D$ for the
+unary action. Its terms have derivative
+order equal to actor weight.
+
+For $n$ actors, a coherent monoid action
+has a family on the cube $I^{n-1}$.
+The face $t_i=0$ multiplies the adjacent
+actors before applying the shorter family.
+The face $t_i=1$ composes the two shorter
+bar actions.
+The unit at an end deletes an adjacent
+parameter. At an interior position it
+combines the two parameters by
+$a\vee b=a+b-ab$.
+This polynomial connection is associative,
+has identity zero and absorbing element
+one, so repeated unit deletions agree.
+
+For $n=2$, these rules prescribe the
+endpoints and the two unit faces.
+They coincide where they meet.
+Lemma~\ref{cbc:va:coherent-fillings} supplies
+the binary path. Inductively, associativity
+of actor multiplication and of bar-map
+composition makes all prescribed boundary
+intersections agree. The same lemma fills
+each higher cube with these values fixed.
+It also proves contractibility of the
+natural fillings after the unary action
+and a binary path are fixed.
+
+Lemma~\ref{cbc:va:strong-tensor} identifies
+extension by another exterior actor with
+geometric tensoring of the action.
+It carries $D$ to $D\otimes1$ by naturality
+in $J\mapsto J+h\mathbf1$ over $k[h]/(h^2)$.
+Thus the bar endpoints are the required
+geometric endpoints, including their unit,
+collision and normal-transfer data.
+Every universal formula has finitely many
+primitive inputs at a fixed configuration.
+
+Proposition~\ref{cbc:va:profile-comparison}
+supplies the profile maps.
+Compose two of them with the constructed
+multiplicative action. On either unit
+axis, its unit path reduces to the
+profile comparison. At the intersection
+both restrict to the same pointing.
+The binary coherence supplies the
+relative two-simplex between these paths.
+Higher coherences give the same assertion
+for finite ordered products.
+\end{proof}
+
+Contractibility above concerns the specified
+class of natural differential-polynomial
+fillings. It is not a classification of
+all geometric multiplicative structures
+or of all pointed actions. The general monoid
+recipient problem still requires their
+full mapping spaces.
+
+\section{Relations between separated inputs}
+\label{cbc:va:separated}
+
+Separation imposes two different equations on an
+action. Operators from different blocks commute,
+and a prescribed mixed input becomes their product.
+Their primitives must in turn satisfy higher
+equations. We construct a resolution that keeps
+both kinds of relation.
+
+Let $V_1,\ldots,V_r$ be vector spaces in degree zero.
+All tensor products in this section are algebraic
+over $k$. For a nonempty subset $S\subseteq[r]$, put
+\[
+ V_S=\bigotimes_{i\in S}^{\mathrm{increasing}}V_i,
+ \qquad
+ F_r=T\left(\bigoplus_{\varnothing\ne S\subseteq[r]}V_S\right),
+ \qquad P_r=\bigotimes_{i=1}^rT(V_i).
+\]
+Here $T$ is the unital tensor algebra.
+
+Write $x_i$ for its singleton generating maps and
+$c_S$ for the other generating maps of $F_r$.
+Every expression below is multilinear in its
+indicated inputs. The quotient
+$\vartheta_r:F_r\to P_r$ sends
+\[
+ c_S\longmapsto p_S=x_{i_1}\cdots x_{i_s},
+ \qquad i_1<\cdots<i_s,
+\]
+and sends $x_i$ to the $i$th tensor factor.
+
+For two one-dimensional spaces, the two relations
+are already independent. Starting with
+$k\langle x_1,x_2,c\rangle$, adjoin $h,e$ in degree
+minus one and set
+\[
+ dh=x_1x_2-x_2x_1,\qquad de=c-x_1x_2.
+\]
+In the bases $(h,e)$ and $(x_1x_2,x_2x_1,c)$
+the differential is
+$\left(\begin{smallmatrix}1&-1\\-1&0\\0&1\end{smallmatrix}\right)$.
+One primitive cannot impose both equations.
+
+\subsection{The subset resolution}
+
+Let $C_i=k\oplus V_i[1]$ be the coaugmented coalgebra
+with primitive reduced part, and form
+$C=\bigotimes_iC_i$. Its cobar algebra $R_r=\Omega C$
+is free on maps
+\[
+ q_S:V_S\longrightarrow R_r^{1-|S|},
+ \qquad q_{\{i\}}=x_i.
+\]
+For disjoint subsets define
+$\operatorname{inv}(L,R)=\#\{(\ell,j)\in L\times R:\ell>j\}$.
+Use the cobar convention
+$d(tc)=-t(dc)+\sum(-1)^{|c'|+1}(tc')(tc'')$,
+where $t$ has degree one.
+
+\begin{theorem}\label{cbc:va:subset-resolution}
+The differential of $R_r$ is
+\begin{equation}\label{cbc:va:subset-differential}
+ dq_S=\sum_{\substack{L\amalg R=S\\L,R\ne\varnothing}}
+       (-1)^{|L|+1+\operatorname{inv}(L,R)}q_Lq_R.
+\end{equation}
+It squares to zero. The map
+$\epsilon:R_r\to P_r$ that preserves the singleton
+generators and kills $q_S$ for $|S|>1$ is a
+quasi-isomorphism.
+\end{theorem}
+\begin{proof}
+Each factor of $V_i[1]$ is odd. Unshuffling a subset
+into $(L,R)$ contributes
+$(-1)^{\operatorname{inv}(L,R)}$. Desuspension
+contributes $(-1)^{|L|+1}$. These are the two signs
+in~\eqref{cbc:va:subset-differential}.
+
+In $d^2q_S$, each ordered three-part decomposition
+of $S$ occurs twice, by splitting the first or the
+second factor. The derivation sign makes their
+coefficients opposite. Thus $d^2=0$.
+
+Under $\epsilon$, the pair differential becomes a
+commutator of different tensor factors. Every
+larger split contains a higher generator, so
+$\epsilon$ is a chain map.
+
+Put $A_i=T(V_i)$. The sequence
+\[
+ 0\longrightarrow A_i\otimes V_i
+ \xrightarrow{a\otimes v\mapsto av}A_i
+ \longrightarrow k\longrightarrow0
+\]
+resolves the augmentation module: every nonempty
+word has a unique last factor. Tensoring these
+resolutions gives $P_r\otimes_\tau C$, where
+$\tau$ sends suspended singletons to their
+generators and all larger subsets to zero.
+
+Map $C$ to $BP_r$ by the signed shuffle of its
+singleton inputs into bar slots. Interior faces
+cancel in pairs because distinct tensor factors
+commute. Splitting a shuffle at a bar cut proves
+the coalgebra identity. Its $P_r$-linear extension
+is a map of free resolutions of $k$ inducing the
+identity on $k$, hence a chain homotopy equivalence.
+Tensoring over $P_r$ with $k$ shows that
+$C\to BP_r$ is a quasi-isomorphism.
+
+Assign weight one to each singleton input.
+At a fixed weight, reduced bar and cobar words have
+bounded length. The cobar-length filtration now
+shows that $\Omega C\to\Omega BP_r$ is a
+quasi-isomorphism. The bar--cobar contraction of
+$\Omega BP_r\to P_r$ is finite in that weight.
+Their composite is $\epsilon$. Taking the direct
+sum over weights proves the assertion.
+\end{proof}
+
+The first higher equation is the six-term relation
+\begin{equation}\label{cbc:va:triple-differential}
+ dq_{123}=x_1h_{23}-x_2h_{13}+x_3h_{12}
+             -h_{12}x_3+h_{13}x_2-h_{23}x_1,
+ \qquad h_{ij}=q_{\{i,j\}}.
+\end{equation}
+Write $k_{ijk}=q_{\{i,j,k\}}$. At four inputs,
+\begin{align}
+ dq_{1234}={}&x_1k_{234}-x_2k_{134}+x_3k_{124}-x_4k_{123}
+                  \notag\\
+ &+k_{123}x_4-k_{124}x_3+k_{134}x_2-k_{234}x_1
+                  \notag\\
+ &-h_{12}h_{34}+h_{13}h_{24}-h_{23}h_{14}
+       -h_{14}h_{23}+h_{24}h_{13}-h_{34}h_{12}.
+ \label{cbc:va:four-differential}
+\end{align}
+The pair--pair terms are necessary for closedness.
+
+In multidegree $(1,\ldots,1)$, a word of generators
+is an ordered partition of $[r]$. A partition into
+$a$ blocks has degree $a-r$. These are the faces
+of the permutohedron with their incidence
+differential. For $r=3$ their dimensions are
+$(1,6,6)$ in degrees $(-2,-1,0)$. For $r=4$
+they are $(1,14,36,24)$.
+The algebra also includes repeated inputs of each
+color, retaining their order within that color.
+
+There is a finite contraction in every multiweight.
+Fix $\mathbf n=(n_1,\ldots,n_r)$.
+After grouping coefficient factors by color, each
+word with these counts has coefficient
+$\bigotimes_iV_i^{\otimes n_i}$.
+The differential is an integer matrix on a finite
+set of words and preserves within-color order.
+
+Choose the color-increasing word as the degree-zero
+representative. In each degree, take in lexicographic
+order the differential columns that increase rank.
+Their source vectors complement the cycles. Their
+images form a basis of boundaries.
+Together with the chosen degree-zero representative,
+these give bases of boundaries, representatives
+and source lifts, by
+Theorem~\ref{cbc:va:subset-resolution}.
+
+Let $h$ send a boundary basis vector to its chosen
+source lift and vanish on the other basis vectors.
+If $i$ includes the color-increasing word, finite
+matrix inversion gives
+\[
+ dh+hd=1-i\epsilon,\qquad
+ h^2=hi=\epsilon h=0.
+\]
+The scalar matrices depend only on $\mathbf n$, so
+this construction is natural in $V_i$.
+It is a contraction of complexes, without a
+multiplicativity assertion.
+
+For complex inputs one includes their internal
+differentials and the full Koszul signs in
+$\Omega\bigotimes_i(k\oplus V_i[1])$.
+The tensor-resolution argument still applies over
+$k$. The scalar signs in
+\eqref{cbc:va:subset-differential} are the
+degree-zero specialization.
+
+\subsection{Preserving the mixed generators}
+
+The map $\vartheta_r$ also has prescribed values
+on $c_S$. To retain them, adjoin to $F_r$ the
+generators $q_S$ of degree $1-|S|$ and $e_S$ of
+degree minus one for $|S|\geq2$. Call the resulting
+free graded algebra $Q_r$ and put
+\[
+ dc_S=0,\qquad de_S=c_S-p_S,
+\]
+with $dq_S$ as in~\eqref{cbc:va:subset-differential}.
+
+\begin{theorem}\label{cbc:va:relative-resolution}
+The factorization $F_r\longrightarrow Q_r
+\xrightarrow{\sim}P_r$ of $\vartheta_r$ is
+relative semifree. The second arrow sends $c_S$
+to $p_S$ and kills all negative-degree generators.
+\end{theorem}
+\begin{proof}
+Adjoin the $q_S$ by increasing cardinality.
+Their differentials use earlier generators. Each
+$de_S$ lies in $F_r$. This proves relative
+semifreeness and $d^2=0$.
+
+Change generators from $c_S$ to $y_S=c_S-p_S$.
+Then $de_S=y_S$ and $dy_S=0$, so $Q_r$ is the
+free product of $R_r$ with a tensor algebra on
+contractible pairs.
+
+Project to $R_r$ by killing the pairs.
+A word in the kernel has a first pair generator,
+so it is uniquely $a y_S b$ or $a e_S b$, with
+$a$ a word of $R_r$. Set
+\[
+ h(a y_S b)=(-1)^{|a|}a e_S b,\qquad h(a e_S b)=0.
+\]
+
+In $dh+hd$, the terms differentiating $a$ or $b$
+cancel, and differentiating this first pair
+returns the original word. This contracts the
+kernel. Compose the resulting quasi-isomorphism
+$Q_r\to R_r$ with $\epsilon$.
+\end{proof}
+
+For one-dimensional $V_i$, the squarefree dimensions
+make the extra mixed-input data visible:
+\[
+\begin{array}{c|rrrr}
+ r&\dim Q_r^{-3}&\dim Q_r^{-2}&\dim Q_r^{-1}&\dim Q_r^0\\\hline
+ 2&0&0&2&3\\
+ 3&0&1&13&13\\
+ 4&1&32&105&75.
+\end{array}
+\]
+Each row has one degree-zero cohomology class.
+The additional generators remember the chosen
+paths from mixed inputs to singleton products.
+
+\subsection{Grouping and its higher comparisons}
+
+Let $\mathcal B=(B_1|\cdots|B_m)$ be an ordered
+partition of $[r]$, with increasing order inside
+each block. Define
+\[
+ \gamma_{\mathcal B}:R_r\longrightarrow
+                           \bigotimes_jR_{B_j}
+\]
+by sending $q_S$ to the same generator in its
+factor if $S\subseteq B_j$, and to zero otherwise.
+
+\begin{proposition}\label{cbc:va:grouping}
+The maps $\gamma_{\mathcal B}$ are dg algebra
+quasi-isomorphisms and commute with ordered
+refinements of the partition.
+\end{proposition}
+\begin{proof}
+For $S$ contained in a block, the chain equation
+is unchanged. Otherwise a differential term can
+survive only if $S$ meets exactly two blocks and
+its two parts are those intersections.
+The two orders of that split cancel:
+$\operatorname{inv}(L,R)+\operatorname{inv}(R,L)=|L||R|$,
+while exchanging their generators contributes
+$(-1)^{(1-|L|)(1-|R|)}$.
+Their total coefficients are opposite.
+This proves the chain equation.
+
+Composing with the tensor of the augmentations
+gives $\epsilon$ followed by regrouping the
+factors of $P_r$. These augmentations are
+quasi-isomorphisms, hence so is $\gamma_{\mathcal B}$.
+Under iterated grouping a generator survives
+exactly when its colors lie in one final block.
+This is also the direct grouping criterion.
+\end{proof}
+
+For the relative map, put $T_j=S\cap B_j$.
+When $|T_j|\geq2$, let $C_j=c_{T_j}$ and
+$E_j=e_{T_j}$. For a singleton use $C_j=x_i$,
+$E_j=0$, and for the empty set use $C_j=1$,
+$E_j=0$. Let $P_j$ be the increasing singleton
+product on $T_j$. Thus $dE_j=C_j-P_j$.
+
+The extension of $\gamma_{\mathcal B}$ to $Q_r$
+is
+\begin{equation}\label{cbc:va:relative-grouping}
+ c_S\longmapsto\prod_jC_j,\qquad
+ e_S\longmapsto
+       \sum_jC_1\cdots C_{j-1}E_jP_{j+1}\cdots P_m.
+\end{equation}
+Its differential telescopes to
+$\prod_jC_j-\prod_jP_j$.
+
+Ordered refinement expands to the same sum with
+one $E$ factor, so these relative maps also
+commute with refinement. Their composition with
+the augmentations proves they are
+quasi-isomorphisms.
+
+Changing the order of two groups changes the
+primitive by the boundary
+\begin{equation}\label{cbc:va:grouping-square}
+ E_1P_2+C_1E_2-P_1E_2-E_1C_2=d(E_1E_2).
+\end{equation}
+All higher comparisons follow from one closed form.
+Let $t_j,dt_j$ have degrees zero and one, and use
+the total differential on polynomial forms
+tensored with the coefficient algebra. Then
+\begin{equation}\label{cbc:va:grouping-cube}
+ \Psi=\prod_{j=1}^m
+       \bigl(P_j+t_j(C_j-P_j)+dt_jE_j\bigr)
+\end{equation}
+is closed. Indeed the differential of $t_j(C_j-P_j)$
+cancels that of $dt_jE_j$. The factors lie in
+separate tensor slots and have total degree zero.
+
+A face sets its corresponding factor to $P_j$
+or $C_j$. Integrating along the edges in their
+specified order gives
+\eqref{cbc:va:relative-grouping}. Square faces
+give~\eqref{cbc:va:grouping-square}.
+
+With parameter forms placed first, the top
+coefficient is
+$(-1)^{m(m-1)/2}E_1\cdots E_m$.
+If $I_m$ integrates the top form over the
+oriented cube, Stokes' formula gives
+\[
+ d I_m\Psi=(-1)^{m+1}I_{\partial}\Psi.
+\]
+All integrals are polynomial over the
+characteristic-zero field. The higher comparisons
+are therefore finite and retain their specified
+faces.
+
+\section{Extension spaces}
+\label{cbc:va:extensions}
+
+The resolution turns extension of an action into
+equations in its intended target. Their solutions
+form a space. Solubility of its first equations,
+existence of a full solution, and contractibility
+of this space are distinct questions.
+
+Let $E$ be a unital dg algebra and fix
+$\phi:F_r\to E$. Write $X_i:V_i\to E^0$ and
+$C_S:V_S\to E^0$ for its closed singleton and mixed
+images. A map $Q_r\to E$ under $F_r$ consists of
+$H_S:V_S\to E^{1-|S|}$ and $T_S:V_S\to E^{-1}$
+for $|S|\geq2$, with $H_{\{i\}}=X_i$, satisfying
+\begin{align}
+ d_EH_S&=
+ \sum_{\substack{L\amalg R=S\\L,R\ne\varnothing}}
+ (-1)^{|L|+1+\operatorname{inv}(L,R)}H_LH_R,
+ \label{cbc:va:extension-h}\\
+ d_ET_S&=C_S-X_{i_1}\cdots X_{i_s},
+                    \qquad i_1<\cdots<i_s.
+ \label{cbc:va:extension-t}
+\end{align}
+These are exactly the chain equations on the
+free generators $q_S,e_S$.
+
+For complexes $U,E$, use the Hom differential
+$\partial f=d_Ef-(-1)^{|f|}fd_U$.
+The spaces $V_S$ still have degree zero.
+
+\begin{proposition}\label{cbc:va:extension-obstruction}
+Fix all $H_T$ for proper nonempty subsets $T\subset S$
+with their equations satisfied. The right side
+$O_S$ of~\eqref{cbc:va:extension-h} is closed in
+$\operatorname{Hom}(V_S,E)^{2-|S|}$.
+An extension $H_S$ exists precisely when $[O_S]=0$.
+If it exists, its components form a torsor for
+$H^{1-|S|}\operatorname{Hom}(V_S,E)$, and at
+a chosen solution its higher homotopy groups are
+\[
+ \pi_j=H^{1-|S|-j}\operatorname{Hom}(V_S,E),
+                         \qquad j\geq1.
+\]
+All lower-stage maps are fixed in this assertion.
+For a mixed cell, the obstruction lies in
+$H^0\operatorname{Hom}(V_S,E)$ and its choice
+groups are $H^{-1-j}\operatorname{Hom}(V_S,E)$
+for $j\geq0$.
+\end{proposition}
+\begin{proof}
+Differentiating $O_S$ produces the two opposite
+terms for each ordered three-part decomposition
+of $S$, as in $d^2q_S=0$. Thus it is closed.
+The next equation is $\partial H_S=O_S$, which
+has a solution exactly when this class vanishes.
+
+Subtract a chosen solution. The fiber becomes the
+simplicial abelian group of closed degree
+$1-|S|$ maps from $V_S$ into
+$E\otimes\Omega^\bullet(\Delta^\bullet)$.
+Integration of polynomial forms identifies its
+normalized homotopy groups with the Hom
+cohomology in degrees $1-|S|-j$.
+In particular, an interval changes two solutions
+by a boundary, giving the stated torsor.
+The same argument applies to a generator of
+degree minus one.
+\end{proof}
+
+A contraction $h$ of the relevant Hom complex
+gives $H_S=hO_S$ when its cohomology projection
+vanishes. If units or collision values are fixed,
+this must be a contraction of the corresponding
+relative Hom complex. A contraction that moves
+those values does not solve the extension problem.
+
+There is also a model of the complete solution
+space:
+\begin{equation}\label{cbc:va:full-extension-fibre}
+ \operatorname{Map}_{F_r/}(Q_r,E)
+ \simeq
+ \operatorname{fib}_{\phi}
+ \left(
+ \operatorname{Map}_{\mathrm{dgAlg}}(P_r,E)
+ \longrightarrow
+ \operatorname{Map}_{\mathrm{dgAlg}}(F_r,E)
+ \right).
+\end{equation}
+Indeed $F_r$ is free, $F_r\to Q_r$ is a
+cofibration, and $Q_r\to P_r$ is a
+quasi-isomorphism. Polynomial forms compute
+mapping spaces from these cofibrant sources.
+Restriction is a Kan fibration, so its strict
+fiber computes its homotopy fiber. These are
+the unital associative instances of
+\cite{Hinich1997}*{Theorem~4.1.1 and \S\S4.8.1--4.8.8}.
+
+If $E$ is zero below degree $-N$, with $N\geq0$,
+only $|S|\leq N+2$ can give nonzero higher-cell
+obstructions. At the last of these sizes the
+obstruction can survive although its primitive
+would have to lie in a zero degree. Larger
+right sides vanish as elements of $E$.
+A cohomological bound alone does not give this
+strict bound on the equations.
+
+\subsection{Choices that survive and choices that disappear}
+
+Take $r=2$, $V_1=V_2=k$, and
+$E=k\oplus k\eta$ with $|\eta|=-1$, $d=0$,
+$\eta^2=0$. Prescribe $X_1=X_2=C_{12}=0$.
+Then
+\[
+ H_{12}=\lambda\eta,\qquad T_{12}=\mu\eta
+                         \quad(\lambda,\mu\in k)
+\]
+are all the solutions.
+
+A degree-minus-one
+element of $E\otimes\Omega^\bullet(\Delta^n)$
+is $\eta f$, with $f$ a polynomial function.
+Closedness forces $df=0$, hence $f$ is constant.
+Thus~\eqref{cbc:va:full-extension-fibre} is the
+discrete space $k^2$. Existence does not imply
+contractibility.
+
+An intermediate choice need not survive a later
+cell. With the same $E$, maps from
+$k\langle x\rangle$, $|x|=-1$, $dx=0$, have
+components $x\mapsto\lambda\eta$.
+Adjoin $y$ in degree minus two with $dy=x$.
+In every polynomial-form simplex, the image of
+$y$ is zero for degree reasons. Its differential
+then forces the image of $x$ to be zero.
+
+The complete extension space is a point.
+Consequently a stage choice group alone cannot
+disprove contractibility of the full space.
+
+\subsection{A triple obstruction after all pair choices}
+
+Start with the free graded algebra on $x_1,x_2,x_3$
+in degree zero and $h_{12},h_{13},h_{23}$ in
+degree minus one, with
+$dh_{ij}=x_ix_j-x_jx_i$.
+Give $x_i$ color weight $e_i$ and $h_{ij}$ color
+weight $e_i+e_j$. Quotient by every word in
+which a color occurs twice, and call the result
+$E$. The differential preserves color counts,
+so the quotient is a dg algebra.
+
+Its degree-zero basis consists of the unit,
+three singletons, six ordered pairs and six
+ordered triples. Its degree-minus-one basis
+consists of the three $h_{ij}$ and the six
+products of an $h_{ij}$ with its complementary
+singleton, on either side. Thus $\dim E=25$.
+Define
+\begin{equation}\label{cbc:va:omega}
+ \omega=x_1h_{23}-x_2h_{13}+x_3h_{12}
+             -h_{12}x_3+h_{13}x_2-h_{23}x_1.
+\end{equation}
+
+\begin{theorem}\label{cbc:va:triple-obstruction}
+Every pair of the marked maps $k[x_i]\to E$
+extends to the corresponding resolution $R_2$.
+No choice of pair primitives extends them to
+$R_3$. More precisely,
+\[
+ H^0(E)=k[x_1,x_2,x_3]/(x_1^2,x_2^2,x_3^2),
+ \qquad H^{-1}(E)=k\omega,
+\]
+and every choice gives the triple obstruction
+$\omega$.
+\end{theorem}
+\begin{proof}
+The displayed $h_{ij}$ solve the pair equations.
+In each pair weight, their differentials are
+injective. In weight $(1,1,1)$, the six
+degree-minus-one basis vectors map to the six
+ordered triple words by the incidence matrix
+of a hexagon. Its rank is five and its kernel
+is its oriented cycle~\eqref{cbc:va:omega}.
+
+The total differential therefore has rank eight.
+Its degree-zero quotient identifies the orderings
+of each set of distinct colors and kills every
+repeated-color product. This gives the two
+cohomology formulas.
+
+Every other pair primitive is
+$h_{ij}+\lambda_{ij}\omega$.
+The augmentation ideal annihilates $\omega$
+on both sides, since its terms already use all
+three colors. Substituting any such primitives
+in~\eqref{cbc:va:triple-differential} therefore
+leaves $\omega$ unchanged.
+Its six summands are distinct basis vectors,
+so it is nonzero. Since $E^{-2}=0$, it cannot
+be a boundary.
+\end{proof}
+
+Prescribe $c_S$ to be the increasing singleton
+product. Then $T_S=0$ solves all mixed equations,
+and the same obstruction excludes a map
+$Q_3\to E$ under these data.
+The regular action of $E$ detects its class:
+multiplication by $\omega$ sends $[1]$ to
+$[\omega]\ne0$. This detects the specified lifts
+in $\operatorname{End}_k(E)$. It does not
+classify the additional pair primitives in that
+larger algebra.
+
+The obstruction also gives an integral family.
+Over $k[s]$, adjoin a vector $K$ of degree
+minus two with $dK=s\omega$.
+Set $K^2=0$ and let the augmentation ideal
+annihilate $K$ on both sides.
+These relations are preserved by the differential
+because the same ideal annihilates $\omega$.
+The resulting $E_s$ is graded-free of rank $26$.
+
+\begin{proposition}\label{cbc:va:parameter-obstruction}
+One has
+\[
+ H^0(E_s)=k[s]\otimes H^0(E),\qquad
+ H^{-1}(E_s)=k[s]/(s)\cdot\omega,\qquad H^{-2}(E_s)=0.
+\]
+Let $R$ be a commutative $k[s]$-algebra.
+The prescribed singleton maps extend to $R_3$ after
+base change to $R$ exactly when $s$ is a unit there. This criterion allows every choice
+of pair primitives. It also applies to $Q_3$
+when the mixed inputs are their prescribed
+singleton products.
+\end{proposition}
+\begin{proof}
+The differential in degrees minus one and zero
+is split over $k$, with kernel $k\omega$.
+After base change its kernel is $R\omega$,
+so changes of pair primitives still leave the
+triple expression unchanged.
+An image of $q_{123}$ must be $bK$ and solve
+$bs\omega=\omega$. As $\omega$ is part of a
+free $R$-basis, this is $bs=1$.
+
+Over $k[s]$, the remaining negative complex is
+$k[s]K\xrightarrow{s}k[s]\omega$.
+Its kernel is zero and its cokernel is
+$k[s]/(s)\cdot\omega$. The degree-zero
+differential is unchanged.
+\end{proof}
+
+The primitive over $k[s,s^{-1}]$ is $K/s$.
+There is none over $k[s]$ or $k[[s]]$.
+At $s=0$, both $K$ and $\omega$ survive.
+At a nonzero field value, rescaling $K$
+gives the quotient of $R_3$ by repeated-color
+words. Graded flatness of the family therefore
+does not imply flatness of its cohomology.
+
+More generally, over a commutative $k$-algebra
+$R$, adjoin vectors $K_j$ with
+$dK_j=f_j\omega$, zero mutual products and
+zero products with the augmentation ideal.
+The same calculation gives
+\[
+ H^{-1}=R/(f_1,\ldots,f_m)\cdot\omega,\qquad
+ H^{-2}=\ker\bigl(R^m\xrightarrow{(f_1,\ldots,f_m)}R\bigr).
+\]
+A triple extension exists exactly when
+$1\in(f_1,\ldots,f_m)$. The degree-minus-two
+classes are the syzygies among these coefficients.
+
+\section{The bar of the full action diagram}
+\label{cbc:va:action-bar}
+
+An extension can become possible after mapping
+to another acting object. To decide a universal
+property, one must therefore retain the arrows
+between all permitted actions and their comparison
+paths. The bar of that diagram gives an explicit
+chain model for the resulting coefficient map.
+
+First let $\mathcal A$ be a small ordinary
+category and $X:\mathcal A\to\operatorname{Ch}(k)$
+a covariant diagram. Its simplicial replacement
+has the length-$n$ term
+\[
+ \bigoplus_{a_0\xrightarrow{f_1}\cdots
+                    \xrightarrow{f_n}a_n}X(a_0)[n].
+\]
+
+Use the direct-sum total complex $\mathcal B(X)$.
+An element $[f_1|\cdots|f_n]x$, with $|x|=q$
+internally, has total degree $q-n$.
+The first face applies $X(f_1)$, the interior
+faces compose adjacent arrows, and the last
+face deletes $f_n$. Degeneracies insert identities.
+If $\partial$ is the alternating face differential,
+put $d=\partial+(-1)^nd_X$ on length $n$.
+
+For a second diagram $Y$, define the
+Alexander--Whitney map by
+\begin{equation}\label{cbc:va:aw}
+\begin{aligned}
+ \operatorname{AW}([f_1|\cdots|f_n](x\otimes y))
+  =\sum_{p=0}^n(-1)^{(n-p)|x|}
+    [f_1|\cdots|f_p]x\otimes
+    [f_{p+1}|\cdots|f_n]Y(f_p\cdots f_1)y.
+\end{aligned}
+\end{equation}
+The empty composite for $p=0$ is the identity.
+The second string begins at $a_p$. Its coefficient
+must be transported to $Y(a_p)$.
+The sign moves $x$ past its suffix, of degree
+$-(n-p)$.
+
+\begin{proposition}\label{cbc:va:aw-chain}
+Formula~\eqref{cbc:va:aw} defines a natural
+coassociative chain map
+\[
+ \mathcal B(X\otimes Y)\longrightarrow
+                         \mathcal B(X)\otimes\mathcal B(Y).
+\]
+It descends to normalization and represents the
+map of homotopy colimits induced by
+$\mathcal A\to\mathcal A^2$, $a\mapsto(a,a)$.
+\end{proposition}
+\begin{proof}
+Before moving coefficients through strings,
+the formula splits a simplex into a prefix
+and a suffix. Deleting the prefix vertices
+from the second factor applies its first
+face repeatedly, giving $Y(f_p\cdots f_1)y$.
+
+A face strictly inside either interval agrees
+with that face taken before the split.
+At the splitting vertex, the last face of
+one prefix cancels the first face of the
+next suffix. At the initial vertex,
+functoriality identifies the composite
+coefficient transport with its first face.
+The last vertex requires no transport.
+These account for the face differential.
+
+Restoring the displayed coefficient order gives
+$(-1)^{(n-p)|x|}$. The same permutation carries
+the internal differential: its source
+simplex sign is $(-1)^n$, and the first
+output has total degree $|x|-p$.
+Thus it also satisfies the internal chain
+equation. An identity arrow remains in a
+prefix or a suffix in every summand, which
+proves descent to normalization.
+
+For three diagrams, either iterated diagonal
+sums over $0\leq p\leq q\leq n$.
+Both transport the second and third coefficients
+to $a_p,a_q$ and have sign
+$(-1)^{(n-p)|x|+(n-q)|y|}$.
+This proves coassociativity.
+
+The diagonal category functor first sends an
+arrow string to two identical strings.
+The prefix--suffix map compares the diagonal
+of their bisimplicial replacement with its
+total complex. The shuffle map gives the
+reverse comparison, with the degeneracy
+homotopies. The latter total complex is
+$\mathcal B(X)\otimes\mathcal B(Y)$.
+Hence the map has the stated derived meaning.
+\end{proof}
+
+For one arrow $f:a\to b$, the formula reads
+\[
+ \operatorname{AW}([f](x\otimes y))
+ =(-1)^{|x|}[\,]_ax\otimes[f]y
+                   +[f]x\otimes[\,]_bY(f)y.
+\]
+Both the transport and the sign are necessary.
+
+Put $Q(a,b)=X(a)\otimes Y(b)$. Over the field $k$,
+tensor product preserves colimits and computes
+derived tensor product. The fiber of the
+diagonal-induced comparison therefore has model
+\begin{align}
+ \mathcal K^j&=\mathcal B(X\otimes Y)^j
+     \oplus(\mathcal B(X)\otimes\mathcal B(Y))^{j-1},
+ \notag\\
+ d(u,v)&=(du,\operatorname{AW}(u)-dv).
+ \label{cbc:va:action-bar-fibre}
+\end{align}
+This describes its differential, without
+asserting that the fiber is acyclic.
+Over a general coefficient ring one first
+takes derived-flat replacements.
+
+For an action category with simplicial mapping
+spaces, use its coherent simplicial replacement
+and normalize every simplicial direction.
+The diagonal and shuffle maps in those
+directions give the same derived comparison.
+Passing to the homotopy category would omit
+the action paths that enter this replacement.
+
+On a binary block-disjoint open, suppose each
+factorizing actor's coefficient is the external product
+of its two block coefficients.
+Require coherence over the full action index. Their diagram comparison then has the
+form~\eqref{cbc:va:action-bar-fibre}, with external
+products. Universal factorization requires its
+acyclicity on that full index. A class on a
+restricted index may disappear after adding
+another recipient and its comparison simplices.
+
+Even bar length matters. For the one-object
+identity category with constant coefficient
+$k$, the unnormalized bar has one copy of
+$k$ in every length and boundary
+$\partial_n=\sum_{i=0}^n(-1)^i$.
+Truncating after length one creates
+$H^{-1}=k$ because $\partial_1=0$.
+In the full bar, $\partial_2=1$ kills this
+class. Normalization removes all positive
+lengths. A finite unnormalized truncation
+can therefore create an obstruction absent
+from the full diagram.
+
+The remaining geometric comparison must join
+these separated relations to the relations
+on singleton collisions. It must also retain
+the positive local vacuum and the specified
+action paths on the full ordered atlas.
+For the dual-number pointed actor on $C_{V_\kappa}$,
+the contractibility question requires these cells
+in its actual relative endomorphism complex. A nonzero obstruction
+must survive every permitted lower-cell
+choice there, and a nontrivial choice must
+survive the rest of the extension tower.
+The ordinary coefficient algebras above
+specify these tests. They do not themselves
+construct the required supported comparison.

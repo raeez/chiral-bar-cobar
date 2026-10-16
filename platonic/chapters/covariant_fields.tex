@@ -1,0 +1,1182 @@
+\chapter{Covariant fields and Gaussian elimination}
+\label{cbc:chap:covariant}
+
+A contraction of complexes need not commute with moving the
+insertion points. The abelian line algebra gives a simple example:
+its cohomology consists of charges, but translating a positive mode
+can produce a charge. Differential forms on the space of positions
+record the missing homotopy. We construct that homotopy and retain
+the logarithmic connection that survives the contraction.
+
+In Gaussian elimination, the hidden quadratic form can vary with
+the fields that remain. Its normalization then contributes to their
+effective differential. The lifts of their antifields also change.
+We compute both effects in a finite polynomial Batalin--Vilkovisky
+complex. Products of lifts require curvature corrections, whose
+connected contractions determine higher comparison maps.
+
+Throughout, $k$ is a field of characteristic zero and differentials
+have cohomological degree one. Odd differentiation is on the left.
+Tensor products and operator extensions use the Koszul rule.
+The line model and the finite Gaussian model have the separate
+coefficient rings and completions specified below.
+
+\section{Charges and spectral translation}
+\label{cbc:cf:line}
+
+Fix $\kappa\in k^\times$. Consider the graded commutative algebra
+\[
+ Y_\kappa=k[B_0,B_1,\ldots]\otimes
+                 \Lambda(C_0,C_1,\ldots),
+ \qquad |B_n|=0,\quad |C_n|=1.
+\]
+Define derivations $Q,T,L$ of degrees $1,0,-1$ by
+\begin{align}
+ QB_n&=\kappa nC_{n-1},& QC_n&=0,\notag\\
+ TB_n&=nB_{n-1},& TC_n&=nC_{n-1},\notag\\
+ LC_n&=\kappa^{-1}B_n,& LB_n&=0.
+ \label{cbc:cf:operators}
+\end{align}
+Terms with index $-1$ are zero. The relations
+\[
+ Q^2=L^2=0,\qquad QL+LQ=T,\qquad [T,L]=[T,Q]=0
+\]
+follow on generators and hence on the algebra.
+
+Give $k[J]$ degree zero and zero differential. Let
+$\pi:Y_\kappa\to k[J]$ send $B_0$ to $J$ and every
+other generator to zero. Let $\iota(J)=B_0$.
+
+Let $N$ count the $C_n$ and the $B_n$ with $n>0$,
+with multiplicity. Define
+\begin{equation}\label{cbc:cf:line-h}
+ h=N^{-1}\sum_{n\geq0}
+       \frac{B_{n+1}}{\kappa(n+1)}\partial_{C_n}
+ \quad\text{on }N>0,\qquad h=0\quad\text{on }N=0.
+\end{equation}
+
+The sum is finite on each polynomial. If its numerator is $H$,
+then $QH+HQ=N$: each pair $(B_{n+1},C_n)$ contributes
+its Euler operator. Also $H^2=0$, and $H$ preserves $N$.
+It follows that
+\begin{equation}\label{cbc:cf:line-sdr}
+ Qh+hQ=1-\iota\pi,\qquad
+ h^2=h\iota=\pi h=0,\qquad \pi\iota=1.
+\end{equation}
+Thus $(\pi,\iota,h)$ is a strong deformation retract,
+linear over $k[B_0]$. Its projection fails to preserve
+translation already on $B_1$, since $\pi(TB_1)=J$.
+
+\begin{proposition}[The de Rham correction]\label{cbc:cf:cartan}
+Let $\epsilon$ have degree one, with $\epsilon^2=d\epsilon=0$.
+Place forms on the left and put $W=1+\epsilon L$.
+Then
+\[
+ (Q+\epsilon T)W=WQ.
+\]
+The dg algebra map
+\[
+ \widetilde\pi=\pi(1-\epsilon L):
+ \bigl(\Lambda(\epsilon)\otimes Y_\kappa,Q+\epsilon T\bigr)
+ \longrightarrow
+ \bigl(\Lambda(\epsilon)\otimes k[J],0\bigr)
+\]
+is a quasi-isomorphism. Together with $\iota$ and
+$WhW^{-1}$ it is a strong deformation retract.
+\end{proposition}
+\begin{proof}
+The operator $\epsilon L$ is a degree-zero derivation with square
+zero. Its exponential is $W$, whose inverse is $1-\epsilon L$.
+Extending $Q$ over forms gives $Q(\epsilon a)=-\epsilon Qa$.
+Consequently the coefficient of $\epsilon$ in the intertwining
+equation is $T-QL=LQ$. Conjugating
+\eqref{cbc:cf:line-sdr} proves the retract identities.
+Since $L\iota=0$, the conjugated inclusion is still $\iota$.
+\end{proof}
+
+For example,
+$\widetilde\pi(C_0)=-\epsilon J/\kappa$.
+The one-form term records the translation homotopy of a state
+whose strict charge projection vanishes.
+
+\begin{proposition}[Polynomial spectral transport]\label{cbc:cf:spectral}
+On polynomial inputs, the maps
+\[
+ E_z=(1+dz\,L)e^{zT}:
+ Y_\kappa\longrightarrow
+ \Omega^\bullet(\mathbb A^1_z)\otimes Y_\kappa
+\]
+are dg algebra maps and satisfy $E_{z+w}=E_zE_w$ after
+pullback to two parameters. Let $\Delta_0$ make every $B_n,C_n$
+primitive, and set
+$\widetilde\Delta_z=(E_z\otimes1)\Delta_0$.
+The spectral coproducts satisfy
+\[
+ (\widetilde\Delta_u\otimes1)\widetilde\Delta_v
+       =(1\otimes\widetilde\Delta_v)\widetilde\Delta_{u+v}.
+\]
+On a generator $a$ their common value is
+\[
+ E_{u+v}a\otimes1\otimes1+
+ 1\otimes E_va\otimes1+1\otimes1\otimes a.
+\]
+\end{proposition}
+\begin{proof}
+The derivation $T$ lowers the mode index, so $e^{zT}$ is finite
+on each polynomial. The identity $QL+LQ=T$, with forms on the
+left, gives $(Q+d_z)E_z=E_zQ$. Both factors of $E_z$ are
+algebra automorphisms over forms. They commute under composition
+because $[T,L]=0$. The possible product of two one-form terms
+vanishes by $L^2=0$. This proves the group law.
+
+Each generator is sent to a linear combination of generators.
+The primitive coproduct therefore gives the displayed equality,
+which extends to all inputs by multiplicativity.
+\end{proof}
+
+The charge projection of this family is
+\begin{align*}
+ (\pi\otimes\pi)\widetilde\Delta_z(B_0)&=J_1+J_2,\\
+ (\pi\otimes\pi)\widetilde\Delta_z(B_n)&=z^nJ_1
+                                      &&(n>0),\\
+ (\pi\otimes\pi)\widetilde\Delta_z(C_n)&=
+                  \kappa^{-1}z^nJ_1\,dz &&(n\geq0).
+\end{align*}
+Pullback along $z\mapsto tz$, including
+$dz\mapsto t\,dz+z\,dt$, gives a polynomial homotopy
+to the primitive charge map at $t=0$. Its composition law
+is the group law just proved.
+
+\section{The completed line connection}
+\label{cbc:cf:completion}
+
+To sum all modes, fix a finite ordered set $I$ of positions and
+write
+\[
+ R_I=k[z_i\ (i\in I),z_{ij}^{-1}\ (i<j)],
+ \qquad z_{ij}=z_i-z_j,\qquad
+ Y_I=\bigotimes_{i\in I}Y_\kappa.
+\]
+
+Give $B_n$ weight $n$ and $C_n$ weight $n+1$. We use the
+product completion
+\begin{equation}\label{cbc:cf:jet-ring}
+ \widehat Y_{I,\mathrm{jet}}
+       =\prod_{w\geq0}(R_I\otimes Y_I)_w.
+\end{equation}
+At each weight the coefficients are polynomials in the finitely
+many zero modes $B_0^{(i)}$. Localization in position differences
+precedes completion, so the finite pole order may vary with $w$.
+Multiplication involves only finitely many summands at any fixed
+weight. Differential forms have weight zero.
+
+For two positions put $z=z_1-z_2$ and define
+\begin{align}
+ r(z)&=\sum_{n,m\geq0}(-1)^n\binom{n+m}{n}
+       \frac{C_n\otimes B_m-B_n\otimes C_m}{z^{n+m+1}},
+       \label{cbc:cf:r}\\
+ \mathcal A&=r(z)+dz\,L_1r(z),&
+ \rho&=\kappa^{-1}J_1J_2\,\frac{dz}{z},
+       \label{cbc:cf:connection}
+\end{align}
+where $L_1=L\otimes1$. Let $D_0=Q+d_{\mathrm{dR}}$.
+The sums define continuous multiplication operators on the
+form-valued version of \eqref{cbc:cf:jet-ring}.
+
+The positive-weight element
+\begin{equation}\label{cbc:cf:primitive}
+ b(z)=-\frac1\kappa\sum_{N\geq1}\frac{z^{-N}}N
+             \sum_{a+c=N}(-1)^a\binom Na B_a\otimes B_c
+\end{equation}
+is a primitive for all but the charge residue.
+
+\begin{lemma}\label{cbc:cf:primitive-identity}
+In the completed coefficient algebra,
+\[
+ Qb=r,\qquad
+ d_{\mathrm{dR}}b=dz\,L_1r-\iota\rho,\qquad
+ D_0b=\mathcal A-\iota\rho.
+\]
+In particular $D_0\mathcal A=0$ and
+$(D_0+\mathcal A\cdot)^2=0$ on coefficient modules.
+\end{lemma}
+\begin{proof}
+Applying $Q$ to $B_a$ in \eqref{cbc:cf:primitive} gives,
+for $a\geq1$, the coefficient
+\[
+ -\frac{(-1)^aa}{N}\binom Na
+       =(-1)^{a-1}\binom{N-1}{a-1}
+\]
+of $C_{a-1}\otimes B_c$. Applying $Q$ to $B_c$ gives
+$-(-1)^a\binom{N-1}{a}$ on $B_a\otimes C_{c-1}$.
+These are exactly the terms of \eqref{cbc:cf:r}.
+
+Differentiating $-z^{-N}/N$ gives $z^{-N-1}dz$.
+The resulting sum is $dz\,L_1r$ with its $N=0$ term
+$\kappa^{-1}B_0\otimes B_0\,dz/z$ removed.
+The first two identities follow weight by weight.
+The form $\rho$ is closed, so the last identity implies
+$D_0\mathcal A=0$. Since $\mathcal A$ has degree one
+in a graded commutative algebra, $\mathcal A^2=0$.
+\end{proof}
+
+For instance the weight-one term is
+\[
+ b(z)=\frac{B_1\otimes B_0-B_0\otimes B_1}{\kappa z}
+                  +\text{terms of weight at least two}.
+\]
+It contains the first-mode information that appeared in the
+spectral projection.
+
+On several sites use the sum of the numerators in
+\eqref{cbc:cf:line-h}, divided by the total number of ghosts and
+positive-index $B$'s. This homotopy and $Q$ preserve weight,
+so their contraction extends continuously to
+\eqref{cbc:cf:jet-ring}.
+
+\begin{theorem}[The line module contraction]\label{cbc:cf:line-retract}
+Let $G=e^{-b}$, which is defined weight by weight. The maps
+\[
+ I_{\mathcal A}=G\iota,\qquad
+ P_{\mathcal A}=\pi,\qquad
+ H_{\mathcal A}=GhG^{-1}
+\]
+give a continuous strong deformation retract
+\[
+ \left(\prod_{w\geq0}
+       \Omega^\bullet(R_{\{1,2\}})\otimes(Y_{\{1,2\}})_w,
+       D_0+\mathcal A\cdot\right)
+ \ \rightleftarrows\
+ \left(\Omega^\bullet(R_{\{1,2\}})\otimes k[J_1,J_2],
+       d_{\mathrm{dR}}+\rho\cdot\right).
+\]
+These are maps of module complexes.
+\end{theorem}
+\begin{proof}
+Positive weight makes both $G$ and $G^{-1}$ well defined.
+Lemma~\ref{cbc:cf:primitive-identity} gives
+\[
+ (D_0+\mathcal A)G=G(D_0+\iota\rho).
+\]
+
+The original homotopy is linear over the zero-mode polynomial
+ring. Its extension over forms anticommutes with both
+$d_{\mathrm{dR}}$ and multiplication by the odd form $\rho$.
+Thus \eqref{cbc:cf:line-sdr} also contracts the $\rho$-twisted
+complexes. Conjugation gives the asserted homotopy and its side
+conditions. Every term of $b$ contains a positive-index $B$,
+so $\pi G=\pi G^{-1}=\pi$ and $P_{\mathcal A}I_{\mathcal A}=1$.
+All identities are finite at each fixed weight.
+\end{proof}
+
+The endpoint vector is $I_{\mathcal A}(1)=G$.
+On the charge complex the differential sends $1$ to $\rho$.
+A further scalar gauge with constant term one in the charges
+would require, at the coefficient of $J_1J_2$, a rational
+primitive of $-\kappa^{-1}dz/z$. Every rational derivative
+has zero residue, so such a gauge cannot remove this connection
+over $R_{\{1,2\}}$. Analytic choices of a logarithm would change
+the coefficient domain.
+
+\begin{corollary}\label{cbc:cf:all-positions}
+For any finite $I$, set
+\[
+ b_I=\sum_{i<j}b_{ij},\qquad
+ \mathcal A_I=\sum_{i<j}(r_{ij}+dz_{ij}L_ir_{ij}),\qquad
+ \rho_I=\kappa^{-1}\sum_{i<j}J_iJ_j\,d\log z_{ij}.
+\]
+Theorem~\ref{cbc:cf:line-retract} holds with
+$G_I=e^{-b_I}$ and the total homotopy.
+Conjugating specified continuous coefficient maps by these
+gauges preserves their composition identities.
+\end{corollary}
+\begin{proof}
+The primitive identities add over pairs and all exponent terms
+commute. For a map $f$ from a source model to a target model,
+the conjugate is $G_{\mathrm t}^{-1}fG_{\mathrm s}$.
+The adjacent gauge factors cancel in every composite.
+Splitting a set of positions into groups splits $b_I$ into
+internal and cross terms, whose exponentials multiply.
+\end{proof}
+
+At three positions the pair sum includes $13$ with its spectator.
+At four positions it includes the crossed pairs. The corollary
+uses the distinct-position ring $R_I$ and presupposes the
+coefficient maps being conjugated. Extension through a collision
+requires further maps.
+
+The completion also restricts spectral transport. The sequence
+$B_n$ tends to zero in jet weight, but for fixed $z\in k^\times$
+\[
+ \pi(e^{zT}B_n)=z^nJ
+\]
+does not tend to zero in the discrete weight-zero coefficient
+ring. Numerical translation therefore has no continuous extension
+to \eqref{cbc:cf:jet-ring}. Proposition~\ref{cbc:cf:spectral}
+has polynomial inputs. Giving a formal translation parameter
+weight one defines a different, combined completion.
+
+\section{A Gaussian complex with retained coordinates}
+\label{cbc:cf:gaussian}
+
+The line contraction leaves a connection on its charge module.
+We now compute the corresponding effect of eliminating finitely
+many hidden fields. The hidden quadratic form may depend on the
+retained coordinates, so its normalization contributes to their
+effective differential.
+
+Let $R$ be a commutative $k$-algebra with commuting derivations
+$\partial_a$, $1\leq a\leq r$. We write them as derivatives
+in retained coordinates $y_a$. Let $A$ be an invertible symmetric
+$d\times d$ matrix over $R$, put $C=A^{-1}$, and choose $U\in R$.
+The ring contains $(\det A)^{-1}$ and is preserved by the
+derivations.
+
+Introduce hidden even coordinates $x_1,\ldots,x_d$,
+a degree-zero parameter $\hbar$, and odd antifields
+$\eta_{x_i},\eta_{y_a}$ of degree $-1$. The algebras are
+\[
+ \mathcal B=R[x_1,\ldots,x_d,\hbar]\otimes\Lambda(\eta_x,\eta_y),
+ \qquad
+ \mathcal B_{\mathrm{ret}}=R[\hbar]\otimes\Lambda(\eta_y).
+\]
+All hidden-coordinate dependence is polynomial.
+
+For $S=U+x^{\mathsf t}Ax/2$, the quantum differential is
+\begin{equation}\label{cbc:cf:Q}
+ Q_S=\sum_i\bigl((Ax)_i-\hbar\partial_{x_i}\bigr)
+                                      \partial_{\eta_{x_i}}
+       +\sum_a\bigl(\partial_aS-\hbar\partial_a\bigr)
+                                      \partial_{\eta_{y_a}}.
+\end{equation}
+Let $q$ range over the hidden and retained coordinates.
+The even operators $\partial_qS-\hbar\partial_q$ commute,
+and the odd derivatives anticommute. Hence $Q_S^2=0$.
+This is a complex over $k[\hbar]$, since the retained
+derivatives need not be $R$-linear.
+
+For example, take $R=k[y,(1+y^2)^{-1}]$ and
+$S=y^2/2+(1+y^2)x^2/2$. Then
+\[
+ Q_S\eta_y=y+yx^2.
+\]
+Eliminating $x$ must replace the hidden quadratic term and lift
+$\eta_y$ to an element whose differential has no hidden variable.
+
+The differential has order two for the polynomial product.
+For homogeneous $f,g$, denote its product deviation by
+\begin{equation}\label{cbc:cf:deviation}
+ B_S(f,g)=Q_S(fg)-(Q_Sf)g-(-1)^{|f|}f(Q_Sg).
+\end{equation}
+It is divisible by $\hbar$. This failure of the Leibniz
+identity will determine the corrections to products of lifts.
+
+\subsection{The finite heat contraction}
+
+Let $N_x$ count hidden polynomial degree and hidden antifield
+number. With repeated hidden indices summed, put
+\[
+ d_{\mathrm{cl}}=(Ax)_i\partial_{\eta_{x_i}},\qquad
+ h_{\mathrm{cl}}=N_x^{-1}\eta_x^{\mathsf t}C\partial_x
+                   \quad(N_x>0),
+\]
+and set $h_{\mathrm{cl}}=0$ on hidden constants.
+Let $\epsilon_x$ set $x=\eta_x=0$, and let $i$ include
+$\mathcal B_{\mathrm{ret}}$. The Euler identity gives
+$d_{\mathrm{cl}}h_{\mathrm{cl}}+
+h_{\mathrm{cl}}d_{\mathrm{cl}}=1-i\epsilon_x$.
+The other contraction identities follow as in
+\eqref{cbc:cf:line-sdr}.
+
+Define
+\begin{equation}\label{cbc:cf:heat}
+ W_x=\exp\left(-\frac{\hbar}{2}
+                    \partial_x^{\mathsf t}C\partial_x\right),
+ \qquad P=\epsilon_xW_x^{-1},\qquad
+ h_x=W_xh_{\mathrm{cl}}W_x^{-1}.
+\end{equation}
+The exponentials terminate on each polynomial. Their commutator
+with multiplication by $Ax$ gives
+$Q_x=W_xd_{\mathrm{cl}}W_x^{-1}$, where $Q_x$ is the hidden
+part of \eqref{cbc:cf:Q}. Thus $(P,i,h_x)$ is a strong
+deformation retract for $Q_x$. The projection $P$ is Wick
+evaluation with covariance $\hbar C$ and kills every hidden
+antifield.
+
+\begin{theorem}[Variable Gaussian contraction]\label{cbc:cf:gaussian-sdr}
+Let $\delta_y=Q_S-Q_x$. The finite formulas
+\begin{equation}\label{cbc:cf:gaussian-maps}
+ I_A=(1+h_x\delta_y)^{-1}i,\qquad
+ H_A=h_x(1+\delta_yh_x)^{-1},\qquad P_A=P
+\end{equation}
+give a strong deformation retract of $(\mathcal B,Q_S)$ onto
+$\mathcal B_{\mathrm{ret}}$ with differential
+\begin{equation}\label{cbc:cf:effective}
+ Q_A=\sum_a(E_a-\hbar\partial_a)\partial_{\eta_{y_a}},
+ \qquad
+ E_a=\partial_aU+\frac{\hbar}{2}\operatorname{tr}(C\partial_aA).
+\end{equation}
+Every map has polynomial $\hbar$-coefficients.
+\end{theorem}
+\begin{proof}
+The operator $\delta_y$ lowers retained antifield number by one,
+whereas $h_x$ preserves it. The inverse series in
+\eqref{cbc:cf:gaussian-maps} terminate after at most $r$
+perturbations on each input.
+
+To verify the contraction, set
+$t=(1+\delta_yh_x)^{-1}\delta_y
+  =\delta_y(1+h_x\delta_y)^{-1}$.
+The identity
+\[
+ Q_xt+tQ_x=-t\,iP\,t
+\]
+follows from $(Q_x+\delta_y)^2=0$ and
+$Q_xh_x+h_xQ_x=1-iP$.
+Indeed multiply on the left by $1+\delta_yh_x$ and on
+the right by $1+h_x\delta_y$. The difference becomes
+\[
+ Q_x\delta_y+\delta_yQ_x+
+ \delta_y(h_xQ_x+Q_xh_x+iP)\delta_y=0.
+\]
+Substitution in
+\[
+ I_A=i-h_xti,\qquad P_A=P-Pth_x,\qquad
+ H_A=h_x-h_xth_x,\qquad Q_A=Pti
+\]
+gives the chain equations and
+\[
+ Q_SH_A+H_AQ_S=1-I_AP_A,\qquad
+ P_AI_A=1,\qquad H_A^2=H_AI_A=P_AH_A=0.
+\]
+
+Every value of $h_x$ has a hidden antifield, which $\delta_y$
+cannot remove. Hence $P\delta_yh_x=0$, so $P_A=P$.
+This also kills every higher term of the transferred
+differential. Its only hidden quadratic expectation is
+\[
+ P\left(\frac12x^{\mathsf t}(\partial_aA)x\right)
+             =\frac{\hbar}{2}\operatorname{tr}(C\partial_aA).
+\]
+This proves \eqref{cbc:cf:effective} on every retained
+antifield degree. The finite heat and perturbation formulas
+give the stated coefficient ring.
+\end{proof}
+
+In the one-variable example, the formulas give
+\[
+ E_y=y+\frac{\hbar y}{1+y^2},\qquad
+ I_A(\eta_y)=\eta_y-\frac{xy}{1+y^2}\eta_x.
+\]
+The extra antifield term cancels the hidden part of the
+differential and leaves the Gaussian variance in the force.
+
+The effective force is the closed algebraic one-form
+\[
+ dU+\frac{\hbar}{2}\operatorname{tr}(A^{-1}dA).
+\]
+Here $d\log\det A$ abbreviates
+$\operatorname{tr}(A^{-1}dA)$. No logarithm need belong to $R$.
+The Gaussian normalization can be retained as the rank-one
+module with connection
+$d+\tfrac12\operatorname{tr}(A^{-1}dA)$.
+For $A=y$ on $\mathbb G_m$, a local analytic horizontal
+section is $y^{-1/2}$, with sign monodromy around zero.
+A positive real quadratic form with a positive branch supplies
+an additional scalar state.
+
+\section{Curvature and products of antifields}
+\label{cbc:cf:curvature}
+
+The finite inclusion first sends a retained antifield to
+\[
+ I_A(\eta_{y_a})=\eta_{y_a}-\eta_x^{\mathsf t}M_ax,
+ \qquad M_a=\frac12C\partial_aA.
+\]
+The relation $\partial_aA=M_a^{\mathsf t}A+AM_a$ cancels
+the hidden quadratic force. Products of these unary lifts
+have a further defect, measured by the curvature of $M$.
+We allow any connection satisfying the same metric relation.
+
+Choose matrices $M_a$ over $R$ with
+\begin{equation}\label{cbc:cf:metric}
+ \partial_aA=M_a^{\mathsf t}A+AM_a,\qquad
+ F_{ab}=\partial_aM_b-\partial_bM_a+[M_a,M_b].
+\end{equation}
+The canonical choice $C\partial_aA/2$ always exists.
+Metric compatibility implies
+$F_{ab}^{\mathsf t}A+AF_{ab}=0$, so $F_{ab}C$
+is antisymmetric.
+
+Define
+\begin{equation}\label{cbc:cf:hats}
+ \widehat\eta_a=\eta_{y_a}-\eta_x^{\mathsf t}M_ax,\qquad
+ R_{ab}=\frac{\hbar}{2}\eta_x^{\mathsf t}F_{ab}C\eta_x.
+\end{equation}
+The element $R_{ab}=-R_{ba}$ has degree $-2$. Taking the
+trace of \eqref{cbc:cf:metric} gives
+$E_a=\partial_aU+\hbar\operatorname{tr}M_a$.
+Thus the effective differential is independent of this choice
+of metric connection.
+
+\begin{lemma}[The pair correction]\label{cbc:cf:pair}
+The elements in \eqref{cbc:cf:hats} satisfy
+\begin{align}
+ Q_S\widehat\eta_a&=E_a,&
+ B_S(\widehat\eta_a,\widehat\eta_b)
+       &=\hbar\eta_x^{\mathsf t}F_{ab}x,\notag\\
+ Q_SR_{ab}&=-\hbar\eta_x^{\mathsf t}F_{ab}x,&
+ B_S(R_{ab},R_{cd})&=0.
+ \label{cbc:cf:pair-identities}
+\end{align}
+Hence $\widehat\eta_a\widehat\eta_b+R_{ab}$ is a chain
+lift of $\eta_{y_a}\eta_{y_b}$ compatible with the unary
+lifts. For the canonical connection,
+$F_{ab}=-[C\partial_aA,C\partial_bA]/4$.
+\end{lemma}
+\begin{proof}
+In $Q_S\widehat\eta_a$, metric compatibility cancels the
+quadratic terms. The quantum derivative of
+$-\eta_x^{\mathsf t}M_ax$ contributes
+$\hbar\operatorname{tr}M_a$. The horizontal vector fields
+associated to $\widehat\eta_a$ are
+$\partial_a-(M_ax)\cdot\partial_x$. Their commutator is
+$-(F_{ab}x)\cdot\partial_x$. Expansion of
+\eqref{cbc:cf:deviation} gives the second identity.
+
+For an antisymmetric matrix $K$, the classical hidden
+differential sends $\eta_x^{\mathsf t}K\eta_x/2$ to
+$-\eta_x^{\mathsf t}KAx$. Apply this with $K=F_{ab}C$.
+Its quantum hidden derivative vanishes because $K$ has no
+$x$-dependence, and its retained differential vanishes because
+it has no retained antifield. This proves the third identity.
+Two curvature pairings have neither hidden-coordinate dependence
+nor retained antifields, so their product deviation is zero.
+
+Finally $\theta=C\,dA$ satisfies
+$d\theta+\theta\wedge\theta=0$.
+The curvature of $\theta/2$ is $-\theta\wedge\theta/4$,
+which proves the canonical formula.
+\end{proof}
+
+For $f\in R$, the additional term of the differential on a
+product by $f$ is
+$-\hbar\sum_a(\partial_af)\partial_{\eta_{y_a}}$.
+The pair correction has no retained antifield, so the lift
+also obeys the chain equation on $f\eta_{y_a}\eta_{y_b}$.
+
+\begin{example}\label{cbc:cf:curved-example}
+For retained coordinates $y,z$, take
+\[
+ A=\begin{pmatrix}1+y^2&yz\\yz&1+z^2\end{pmatrix},
+ \qquad U=\frac12(y^2+z^2),\qquad
+ R=k[y,z,(1+y^2+z^2)^{-1}].
+\]
+The canonical correction and effective coefficients are
+\[
+ R_{yz}=-\frac{\hbar(y^2+z^2)}
+                   {2(1+y^2+z^2)^2}\eta_{x_1}\eta_{x_2},
+ \qquad
+ E_y=y+\frac{\hbar y}{1+y^2+z^2},\quad
+ E_z=z+\frac{\hbar z}{1+y^2+z^2}.
+\]
+At $(y,z)=(1,0)$ the curvature is
+\[
+ F_{yz}=\begin{pmatrix}0&-1/8\\1/4&0\end{pmatrix},
+ \qquad R_{yz}=-\frac{\hbar}{8}\eta_{x_1}\eta_{x_2}.
+\]
+Thus the product of the two specified unary lifts needs a
+nonzero correction.
+\end{example}
+
+\section{The inclusion in every antifield degree}
+\label{cbc:cf:matching-section}
+
+Four retained antifields can require two pair corrections at once.
+A sum over partial matchings gives the full inclusion and explains
+the role of the Bianchi identity.
+
+For an increasing list $L=(a_1,\ldots,a_m)$, set
+$J_M(\varnothing)=1$ and define
+\begin{equation}\label{cbc:cf:matching}
+ J_M(L)=\widehat\eta_{a_1}J_M(a_2,\ldots,a_m)
+ +\sum_{j=2}^m(-1)^jR_{a_1a_j}
+             J_M(a_2,\ldots,\widehat{a_j},\ldots,a_m).
+\end{equation}
+Let $I_M(\eta_{y_{a_1}}\cdots\eta_{y_{a_m}})=J_M(L)$
+and extend by $R[\hbar]$-linearity. Each unmatched label
+contributes $\widehat\eta_a$, each pair contributes $R_{ab}$,
+and collecting the labels gives the exterior sign. In degree
+four the term with two pairs is
+\[
+ R_{ab}R_{cd}-R_{ac}R_{bd}+R_{ad}R_{bc},
+ \qquad a<b<c<d.
+\]
+
+\begin{theorem}[The matching inclusion]\label{cbc:cf:matching-theorem}
+The map
+$I_M:(\mathcal B_{\mathrm{ret}},Q_A)\to(\mathcal B,Q_S)$
+is unital and commutes with the differentials. The Wick
+projection $P$ of \eqref{cbc:cf:heat} satisfies $PI_M=1$.
+All coefficients lie in $R[\hbar]$.
+\end{theorem}
+\begin{proof}
+Put $\nabla_aF_{bc}=\partial_aF_{bc}+[M_a,F_{bc}]$.
+Besides \eqref{cbc:cf:pair-identities}, direct differentiation
+gives
+\begin{equation}\label{cbc:cf:bianchi}
+ B_S(\widehat\eta_a,R_{bc})
+   =-\frac{\hbar^2}{2}
+       \eta_x^{\mathsf t}(\nabla_aF_{bc})C\eta_x.
+\end{equation}
+Indeed, differentiate the pairing
+$\eta_x^{\mathsf t}F_{bc}C\eta_x$ and use
+$\partial_aC=-M_aC-CM_a^{\mathsf t}$.
+The derivative of $F$ and the two actions on its normal
+factors combine into $\nabla_aF$. The cyclic sum of
+\eqref{cbc:cf:bianchi} is zero by the Bianchi identity
+$\nabla_aF_{bc}+\nabla_bF_{ca}+\nabla_cF_{ab}=0$.
+
+Apply the second-order product formula to each matching.
+Differentiating an unmatched factor gives its $E_a$ term.
+The deviation of two unmatched factors cancels the differential
+of the matching in which they are paired, by
+\eqref{cbc:cf:pair-identities}. Deviations between an unmatched
+factor and a pair cancel in triples by \eqref{cbc:cf:bianchi}.
+Pair--pair deviations vanish.
+
+These are all the terms because
+$Q_S$ has order two. The sign $(-1)^j$ in
+\eqref{cbc:cf:matching} moves label $a_j$ past the $j-2$
+intermediate odd labels to form the pair. Thus each cancellation
+has the exterior sign of the differential on the retained
+monomial.
+
+For coefficients $f\in R$, the additional derivative is
+$-\hbar\sum_a(\partial_af)\partial_{\eta_{y_a}}$.
+In the matching formula, retained odd differentiation removes
+the unmatched factor with that label. It therefore commutes with $I_M$.
+This proves the complete chain equation over $k[\hbar]$.
+
+The map $P$ is a chain map by
+Theorem~\ref{cbc:cf:gaussian-sdr}. Every term in $I_M$ other
+than the original retained monomial contains a hidden antifield,
+so $P$ kills it. Hence $PI_M=1$. Each matched edge contributes
+one factor of $\hbar$, and there are finitely many matchings.
+\end{proof}
+
+\begin{example}[Several simultaneous pairs]\label{cbc:cf:rotations}
+Take $A=I$ and hidden and retained ranks $2\ell$. Let $J_a$
+have entries $1,-1$ at $(2a-1,2a),(2a,2a-1)$ and zero
+elsewhere. Choose
+\[
+ M_{2a-1}=0,\qquad M_{2a}=y_{2a-1}J_a,
+ \qquad 1\leq a\leq\ell.
+\]
+Distinct rotations commute. The only nonzero pairings are
+$R_{2a-1,2a}=\hbar\eta_{x_{2a-1}}\eta_{x_{2a}}$.
+The all-paired term in
+$I_M(\eta_{y_1}\cdots\eta_{y_{2\ell}})$ is
+\[
+ \hbar^\ell\eta_{x_1}\cdots\eta_{x_{2\ell}}\ne0.
+\]
+
+Thus these chosen connections require arbitrarily many pairs
+as the rank increases. At fixed hidden rank, the exterior
+algebra bounds the number of pairs. The same constant metric
+also admits $M=0$, whose inclusion is the ordinary one.
+\end{example}
+
+\subsection{A homotopy and the flatness criterion}
+
+The matching formula need not coincide with the particular
+inclusion $I_A$ chosen by finite perturbation. The same
+projection permits a direct comparison of their homotopies.
+
+\begin{proposition}\label{cbc:cf:matching-homotopy}
+Set $H_M=H_A(1-I_MP)$. Then
+\[
+ Q_SH_M+H_MQ_S=1-I_MP,\qquad
+ H_M^2=H_MI_M=PH_M=0.
+\]
+For two metric connections $M,M'$, the degree-minus-one map
+$K_{M,M'}=H_A(I_M-I_{M'})$ satisfies
+\[
+ Q_SK_{M,M'}+K_{M,M'}Q_A=I_M-I_{M'}.
+\]
+\end{proposition}
+\begin{proof}
+Since $1-I_MP$ is a chain map, its commutator with $Q_S$
+after multiplication by $H_A$ is
+\[
+ (1-I_AP)(1-I_MP)=1-I_MP,
+\]
+using $PI_M=1$. The equations $PH_M=H_MI_M=0$ follow
+from the same identity and $PH_A=0$. In the expansion of
+$H_M^2$, every term contains $H_A^2$ or $PH_A$ and vanishes.
+Finally apply $Q_SH_A+H_AQ_S=1-I_AP$ to $I_M-I_{M'}$.
+Its projection is zero, giving the comparison homotopy.
+\end{proof}
+
+\begin{proposition}\label{cbc:cf:flat}
+The matching inclusion $I_M$ is a homomorphism of graded
+commutative algebras if and only if $F_{ab}=0$ for all $a,b$.
+A flat metric connection exists over $R$ whenever there is
+$G\in\operatorname{GL}_d(R)$ for which $G^{\mathsf t}AG$
+is diagonal and invertible.
+\end{proposition}
+\begin{proof}
+Multiplicativity on two retained antifields requires $R_{ab}=0$.
+The matrix $F_{ab}C$ is antisymmetric. Independence of the
+exterior monomials and the absence of $\hbar$-torsion make this
+equivalent to $F_{ab}C=0$, hence to $F_{ab}=0$.
+Conversely, zero curvature removes every matched term, leaving
+the algebra map $\eta_{y_a}\mapsto\widehat\eta_a$.
+
+Write $D=G^{\mathsf t}AG=\operatorname{diag}(d_1,\ldots,d_d)$.
+In this frame the matrices
+\[
+ N_a=\frac12\operatorname{diag}
+       (d_1^{-1}\partial_ad_1,\ldots,d_d^{-1}\partial_ad_d)
+\]
+are metric compatible. Their commutators vanish and their
+logarithmic one-forms are closed, so they are flat. Differentiating
+$D=G^{\mathsf t}AG$ shows that
+$M_a=GN_aG^{-1}-(\partial_aG)G^{-1}$ is compatible with $A$.
+Its curvature is the conjugate of that of $N$, hence zero.
+\end{proof}
+
+For the metric of Example~\ref{cbc:cf:curved-example},
+\[
+ G=\begin{pmatrix}1&-yz/(1+y^2)\\0&1\end{pmatrix}
+ \quad\text{gives}\quad
+ G^{\mathsf t}AG=
+ \operatorname{diag}\left(1+y^2,\frac{1+y^2+z^2}{1+y^2}\right).
+\]
+This gives a multiplicative inclusion over
+$k[y,z,(1+y^2)^{-1},(1+y^2+z^2)^{-1}]$.
+It uses an additional inverse beyond the original ring.
+
+\begin{problem}[A flat metric connection]\label{cbc:cf:flat-question}
+Does the metric
+$\left(\begin{smallmatrix}1+y^2&yz\\yz&1+z^2\end{smallmatrix}\right)$
+admit a flat metric connection over
+$k[y,z,(1+y^2+z^2)^{-1}]$?
+\end{problem}
+
+The nonzero canonical curvature only obstructs multiplicativity
+of its specified lifts. Changing a connection can change its
+curvature. Changing its frame conjugates curvature and cannot
+make a nonzero curvature vanish.
+
+\section{Frames and Gaussian normalization}
+\label{cbc:cf:frames}
+
+A change of hidden coordinates also changes the retained
+antifields. The density determines the corresponding quantum
+correction. For $x=G(y)x'$ with
+$G\in\operatorname{GL}_d(R)$, use
+\begin{align}
+ A'&=G^{\mathsf t}AG,&
+ M'_a&=G^{-1}M_aG+G^{-1}\partial_aG,\notag\\
+ \eta_x&=G^{-\mathsf t}\eta_x',&
+ \eta_{y_a}&=\eta_{y_a}'-
+       \eta_x'{}^{\mathsf t}G^{-1}(\partial_aG)x'.
+ \label{cbc:cf:frame-change}
+\end{align}
+These are the cotangent transformation rules. For a density
+factor $\nu\in R^\times$, define
+\[
+ Q_\nu=Q_S-\hbar\sum_a\nu^{-1}(\partial_a\nu)
+                                     \partial_{\eta_{y_a}}.
+\]
+In a retained coordinate chart this is the differential for
+the volume density $\nu(y)\,dx_1\cdots dx_d\,dy_1\cdots dy_r$.
+
+\begin{proposition}\label{cbc:cf:density}
+The matching inclusion is preserved by
+\eqref{cbc:cf:frame-change}. For $Q_\nu$, the retained force is
+\begin{equation}\label{cbc:cf:density-force}
+ dU+\frac{\hbar}{2}\operatorname{tr}(A^{-1}dA)
+                                    -\hbar\nu^{-1}d\nu.
+\end{equation}
+It is invariant under $\nu'=(\det G)\nu$.
+\end{proposition}
+\begin{proof}
+Substitution gives $\widehat\eta_a=\widehat\eta'_a$.
+Also $F'_{ab}=G^{-1}F_{ab}G$, so
+$\eta_x^{\mathsf t}F_{ab}C\eta_x$ is unchanged.
+Every matching is therefore preserved.
+
+Both $I_M$ and $P$ commute with retained odd differentiation.
+The density operator subtracts the last term of
+\eqref{cbc:cf:density-force} on the retained complex.
+Finally $\det A'=(\det G)^2\det A$.
+Its logarithmic derivative change cancels that of the density.
+These are algebraic one-forms, independent of logarithm choices.
+\end{proof}
+
+Selecting $C\partial_aA/2$ afresh after a frame change need not
+give the transported connection in \eqref{cbc:cf:frame-change}.
+The matching theorem uses the actual connection chosen.
+Where the scalar normalization has no global square root, its
+rank-one module and connection retain the normalization data.
+
+\section{Higher comparison maps}
+\label{cbc:cf:cumulants-section}
+
+The inclusion and projection are chain maps, but their products
+can differ from the products of their values. Joint cumulants
+organize these differences. The powers of $\hbar$ carried by
+connected contractions make the resulting higher maps integral.
+
+For a unital degree-zero linear map $F$ between graded commutative
+algebras, define
+\begin{equation}\label{cbc:cf:cumulants}
+ \kappa_m(F)(a_1,\ldots,a_m)
+  =\sum_{\pi\in\operatorname{Part}([m])}
+       \epsilon(\pi)(-1)^{|\pi|-1}(|\pi|-1)!
+       \prod_{B\in\pi}F\left(\prod_{i\in B}a_i\right).
+\end{equation}
+Within a block labels increase. Blocks are ordered by their
+least label. The Koszul sign $\epsilon(\pi)$ collects the
+inputs in that order. In particular
+$\kappa_1(F)=F$ and
+$\kappa_2(F)(a,b)=F(ab)-F(a)F(b)$.
+
+For a graded $k[\hbar]$-module $V$, let
+$S^c(V)=\bigoplus_{m\geq1}\operatorname{Sym}^m(V)$ be
+the conilpotent symmetric coalgebra, with its unshuffle
+coproduct. An $L_\infty[1]$ structure on $V$ is a
+degree-one square-zero coderivation on $S^c(V)$.
+A morphism is a coalgebra map intertwining these coderivations.
+Its Taylor components are its compositions with the projection
+to the cogenerators. It is a quasi-isomorphism when its unary
+component is one.
+
+Suppose $V$ is also a graded commutative algebra.
+Let $Q$ be a degree-one square-zero operator of order at most
+two, with $Q1=0$. Its unary part and symmetric product deviation
+$B_Q$ define an $L_\infty[1]$ structure.
+The second-order condition eliminates all higher operations.
+In the present complexes $B_Q$ is divisible by $\hbar$.
+The normalized structure has
+operations $(Q,\hbar^{-1}B_Q)$.
+
+\begin{theorem}\label{cbc:cf:higher}
+For $m\geq1$,
+\[
+ \kappa_m(I_M)\in\hbar^{m-1}\mathcal B,\qquad
+ \kappa_m(P)\in\hbar^{m-1}\mathcal B_{\mathrm{ret}}.
+\]
+The exact quotients
+\[
+ \Psi_m=\hbar^{1-m}\kappa_m(I_M),\qquad
+ \Phi_m=\hbar^{1-m}\kappa_m(P)
+\]
+define $L_\infty[1]$ quasi-isomorphisms over $k[\hbar]$
+between the normalized structures on $\mathcal B_{\mathrm{ret}}$
+and $\mathcal B$. They satisfy $\Phi\circ\Psi=1$.
+Their components of arity greater than one vanish on a unit
+input.
+\end{theorem}
+\begin{proof}
+In the matching formula, mark the $m$ input groups.
+The partition sum \eqref{cbc:cf:cumulants} cancels every graph
+disconnected on those groups. For a graph with $c$ connected
+components, its coefficient is
+\[
+ \sum_{\sigma\in\operatorname{Part}([c])}
+       (-1)^{|\sigma|-1}(|\sigma|-1)!=\delta_{c1}.
+\]
+This is the coefficient identity for $\log(e^t)=t$.
+A connected graph on $m$ groups
+has at least $m-1$ edges, each of which contributes $\hbar$
+through $R_{ab}$. This proves divisibility for $I_M$.
+
+The same argument for Wick contractions, with edge covariance
+$\hbar C$, proves it for $P$. Internal edges within one
+marked group are allowed. On polynomial inputs there are only
+finitely many contractions.
+
+Let $\tau_V:S^c(V)\to S^c(V)$ be the triangular coalgebra
+automorphism whose Taylor components are multiplication.
+Its unary component is the identity, so conilpotence gives
+an inverse. The Taylor components of
+\[
+ \tau_{\mathrm{out}}^{-1}S^c(F)\tau_{\mathrm{in}}
+\]
+are the cumulants \eqref{cbc:cf:cumulants}: inversion of the
+partition sum gives the coefficient
+$(-1)^{|\pi|-1}(|\pi|-1)!$.
+Conjugating the unary coderivation $Q$ by $\tau$ gives its
+unary term and product deviation. Since $Q$ kills the unit
+and has order two, all higher terms vanish.
+The chain equations for $I_M$ and $P$ therefore give the
+raw higher identities.
+
+In arity $m$ each term in these identities has the known factor
+$\hbar^{m-1}$. Division gives the normalized binary deviation
+and the displayed higher maps. Equivalently the identities hold
+after adjoining $\hbar^{-1}$ and hence in the original
+polynomial modules, which have no $\hbar$-torsion.
+The unary maps are quasi-isomorphisms by
+Proposition~\ref{cbc:cf:matching-homotopy}.
+
+Raw cumulants compose by cancellation of the middle $\tau$'s.
+For an outer component with $q$ inputs and inner block sizes
+$m_1,\ldots,m_q$, the normalization powers satisfy
+\[
+ (1-q)+\sum_{i=1}^q(1-m_i)=1-\sum_i m_i.
+\]
+Thus normalized cumulants also compose. The equality $PI_M=1$
+gives $\Phi\Psi=1$. Inserting a unit in the partition sum
+cancels all higher components.
+\end{proof}
+
+\begin{example}\label{cbc:cf:composite}
+Use Example~\ref{cbc:cf:rotations} and abbreviate
+$a_i=\eta_{y_i}$. For $\ell=2$, the two-edge matching
+connects the three groups $(a_1),(a_2a_3),(a_4)$, giving
+\[
+ \kappa_3(I_M)(a_1,a_2a_3,a_4)
+        =\hbar^2\eta_{x_1}\eta_{x_2}\eta_{x_3}\eta_{x_4}.
+\]
+For $\ell=3$, the connected three-edge matching gives
+\[
+ \Psi_4(a_1,a_2a_3,a_4a_5,a_6)
+        =\eta_{x_1}\cdots\eta_{x_6}\ne0.
+\]
+
+These normalized components survive at $\hbar=0$.
+For a flat metric connection the inclusion is multiplicative
+and all its higher cumulants vanish. Its Wick projection may
+still have higher cumulants. Even for a single Gaussian variable
+of variance $\hbar/a$,
+$\kappa_3(P)(x,x,x^2)=2(\hbar/a)^2$.
+The third input is composite.
+\end{example}
+
+\section{Formal potential interactions}
+\label{cbc:cf:interactions}
+
+Let $V\in R[x_1,\ldots,x_d]$ and introduce a formal parameter
+$g$. Work in $\mathcal B[[g]]$: each coefficient is polynomial
+in $x,\hbar$ and exterior in the antifields. Define
+\[
+ \delta_V=g\sum_i(\partial_{x_i}V)\partial_{\eta_{x_i}}
+          +g\sum_a(\partial_aV)\partial_{\eta_{y_a}}.
+\]
+Then $Q_{S+gV}=Q_S+\delta_V$ squares to zero.
+Every perturbation raises $g$-order, so the geometric series
+below are defined coefficientwise.
+
+\begin{theorem}[Integral interacting contraction]\label{cbc:cf:interaction}
+For any chosen metric connection, the maps
+\begin{align}
+ I_{M,g}&=(1+H_M\delta_V)^{-1}I_M,&
+ P_g&=P(1+\delta_VH_M)^{-1},\notag\\
+ H_{M,g}&=H_M(1+\delta_VH_M)^{-1},&
+ Q_g&=Q_A+P\delta_V(1+H_M\delta_V)^{-1}I_M
+ \label{cbc:cf:interacting-maps}
+\end{align}
+give a continuous strong deformation retract over $k[\hbar][[g]]$.
+The projection is independent of $M$. After embedding in the
+ring with $\hbar^{-1}$ adjoined, it is
+\begin{align}
+ Z_x&=P(e^{-gV/\hbar}),\notag\\
+ P_g(F)&=Z_x^{-1}P(e^{-gV/\hbar}F|_{\eta_x=0}).
+ \label{cbc:cf:normalized}
+\end{align}
+The effective differential and force are
+\begin{align}
+ Q_g&=\sum_a(E_a(g)-\hbar\partial_a)\partial_{\eta_{y_a}},
+ \notag\\
+ \sum_aE_a(g)\,dy_a
+   &=dU+\frac{\hbar}{2}d\log\det A-\hbar\,d\log Z_x.
+ \label{cbc:cf:interacting-force}
+\end{align}
+The formal interaction potential $-\hbar\log Z_x$ belongs
+to $R[\hbar][[g]]$.
+\end{theorem}
+\begin{proof}
+Apply the geometric-series contraction identity to
+$(P,I_M,H_M)$. Every coefficient in $g$ uses finitely many
+terms, all polynomial in $\hbar$. It gives
+\[
+ (Q_S+\delta_V)H_{M,g}+H_{M,g}(Q_S+\delta_V)
+       =1-I_{M,g}P_g
+\]
+and the chain-map and side identities.
+
+To identify $P_g$, count hidden antifields.
+Each term of $H_A$ adds at least one. Its terms beyond $h_x$
+add at least two, because each further $\delta_yh_x$ adds
+another hidden antifield. The correction $-H_AI_MP$ in $H_M$
+also adds at least two whenever it is nonzero. Indeed the
+purely retained term of $I_M$ is killed by the rightmost hidden
+homotopy, and every other term already has a hidden antifield.
+
+Each $\delta_V$ removes at most one. Thus only successive
+leading hidden homotopies and hidden potential derivatives can
+survive the final $P$.
+The projection kills inputs with hidden antifields and acts
+coefficientwise on retained ones, independently of $M$.
+
+Its functional on hidden polynomials is determined by
+normalization and the hidden Ward identities. Write
+$\delta_{V,x}=g\sum_iV_{x_i}\partial_{\eta_{x_i}}$.
+Since $f-iPf=Q_xh_xf$, any normalized perturbed functional
+$\mathcal L$ satisfies
+\[
+ \mathcal L(f)=Pf-\mathcal L(\delta_{V,x}h_xf).
+\]
+This recursion determines each successive coefficient of $g$.
+The expression \eqref{cbc:cf:normalized} satisfies it by
+Gaussian integration by parts, coefficientwise after adjoining
+$\hbar^{-1}$. It therefore equals the integral perturbation
+formula.
+
+For a function $f$, differentiating normalized Wick evaluation
+gives
+\[
+ \partial_aP_g(f)=P_g(\partial_af)
+ -\hbar^{-1}\left(
+ P_g((\partial_aS+g\partial_aV)f)
+ -P_g(\partial_aS+g\partial_aV)P_g(f)\right).
+\]
+Together with the hidden Ward identity this proves the chain
+equation on all antifield monomials. Since $P_gi=1$, the
+retained differential has the displayed potential form with
+$E_a(g)=P_g(\partial_aS+g\partial_aV)$.
+Differentiating $Z_x$, including the varying Gaussian
+normalization, gives \eqref{cbc:cf:interacting-force}.
+
+Finally, a Wick graph with $v$ interaction vertices and $e$
+edges carries $\hbar^{e-v}$. The logarithm selects connected
+graphs, for which $e\geq v-1$. The outside factor $\hbar$
+then gives a nonnegative power. A hidden-independent interaction
+is its single classical vertex. At fixed $g$-order there are
+finitely many contractions. This proves integrality of
+$-\hbar\log Z_x$.
+\end{proof}
+
+\begin{corollary}\label{cbc:cf:interacting-cumulants}
+For polynomial observables, including antifields,
+\[
+ \kappa_m(P_g)\in
+       \hbar^{m-1}\mathcal B_{\mathrm{ret}}[[g]].
+\]
+The normalized cumulants give an $L_\infty[1]$
+quasi-isomorphism for the normalized BV deviations and obey
+the composition law of Theorem~\ref{cbc:cf:higher}.
+\end{corollary}
+\begin{proof}
+Normalization cancels unmarked vacuum components. The cumulant
+cancels decompositions of the marked inputs. A surviving
+connected graph with $m$ marked observables and $v$ interaction
+vertices has $e\geq m+v-1$, so its power $\hbar^{e-v}$
+is at least $m-1$. Retained antifields supply their exterior
+coefficients and Koszul signs. Moments with a hidden antifield
+vanish.
+
+The cumulant coalgebra argument then gives the higher
+identities and composition before inverting $\hbar$.
+The unary map is a quasi-isomorphism by
+Theorem~\ref{cbc:cf:interaction}.
+\end{proof}
+
+\begin{example}[A cubic hidden interaction]\label{cbc:cf:cubic}
+For one hidden coordinate, let its quadratic coefficient be
+$a\in k^\times$ and let $V=yx^3/6$. Expanding
+\eqref{cbc:cf:normalized} with
+$P(x^{2m})=(2m-1)!!(\hbar/a)^m$ gives
+\begin{align*}
+ -\hbar\log Z_x
+     &=-\frac{5g^2\hbar^2y^2}{24a^3}
+       -\frac{5g^4\hbar^3y^4}{16a^6}+O(g^6),\\
+ P_g(x)&=-\frac{g\hbar y}{2a^2}
+       -\frac{5g^3\hbar^2y^3}{8a^5}+O(g^5),\\
+ \hbar^{-1}\kappa_2(P_g)(x,x)
+       &=\frac1a+\frac{g^2\hbar y^2}{a^4}
+                  +\frac{25g^4\hbar^2y^4}{8a^7}+O(g^6),\\
+ \hbar^{-2}\kappa_3(P_g)(x,x,x^2)
+       &=\frac2{a^2}+\frac{8g^2\hbar y^2}{a^5}
+                  +\frac{175g^4\hbar^2y^4}{4a^8}+O(g^6).
+\end{align*}
+The third normalized comparison is already nonzero at $g=0$
+because one observable is $x^2$.
+\end{example}
+
+\section{Composition of normalized eliminations}
+\label{cbc:cf:sewing}
+
+Successive eliminations must retain the intermediate dependence
+on the remaining coordinates. Let $P_x^0,P_y^0$ be independent
+reference Wick evaluations, and let the interaction be $V(x,y)$.
+Coefficientwise after adjoining $\hbar^{-1}$, put
+\[
+ Z_x=P_x^0(e^{-gV/\hbar}),\qquad
+ P_x(F)=Z_x^{-1}P_x^0(e^{-gV/\hbar}F),\qquad
+ P_y^{\mathrm{eff}}(G)
+       =\frac{P_y^0(Z_xG)}{P_y^0(Z_x)}.
+\]
+The factor $Z_x$ cancels in the composite, so
+\[
+ P_y^{\mathrm{eff}}P_x(F)=
+ \frac{P_y^0P_x^0(e^{-gV/\hbar}F)}
+      {P_y^0P_x^0(e^{-gV/\hbar})}.
+\]
+
+This is joint normalized evaluation. The equality descends to
+the integral formal maps above wherever the successive
+nondegenerate Gaussian contractions are defined. Their
+normalized cumulants compose by
+Theorem~\ref{cbc:cf:higher}.
+
+For a nondegenerate Gaussian block matrix, the same identity
+is expressed by completing the square. If
+\[
+ K=\begin{pmatrix}A&B\\B^{\mathsf t}&D\end{pmatrix},
+ \qquad S_D=D-B^{\mathsf t}A^{-1}B,
+\]
+with $A$ and $S_D$ invertible in the specified coefficient
+ring, elimination of $x$ leaves the quadratic form $S_D$.
+The triangular change
+$x\mapsto x+A^{-1}By$ has determinant one, and
+\[
+ \det K=(\det A)(\det S_D).
+\]
+It therefore composes both the Wick contractions and their
+normalization lines.
+
+For an interacting example, take reference variances
+$P_x^0(x^2)=P_y^0(y^2)=\hbar$ and $V=yx^3/6$. Then
+\[
+ Z_x=1+\frac5{24}g^2\hbar y^2+O(g^4),\qquad
+ P_y^{\mathrm{eff}}(y^2)
+       =\hbar+\frac5{12}g^2\hbar^3+O(g^4).
+\]
+The correction uses
+$P_y^0(y^4)-P_y^0(y^2)^2=2\hbar^2$.
+Replacing the intermediate factor by a scalar would remove it.
+
+These constructions determine maps on their polynomial or formal
+coefficient modules. The line gauge additionally retains all
+position pairs and their logarithmic residue. To compare them
+with the ordered collision coefficients of
+Chapters~\ref{cbc:chap:heisenberg} and~\ref{cbc:chap:transfer},
+one must construct the maps on those coefficient systems.
+
+\begin{problem}[The chiral comparison]\label{cbc:cf:chiral-comparison}
+Construct a comparison from the transverse collision coefficients
+and their varying endpoint modules to the all-mode line
+connection. Require it to preserve the polynomial spectral maps.
+Specify the continuous coefficient dual, the maps through
+collision strata and coherent gauges on nested collision
+domains. For a BV realization, also construct the supported
+operation maps, state domains and renormalized contractions
+whose finite reductions are the Gaussian maps above.
+Require compatibility with both vacuum insertions and with
+composition of normalized eliminations.
+\end{problem}

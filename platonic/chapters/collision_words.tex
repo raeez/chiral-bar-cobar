@@ -1,0 +1,421 @@
+\part{Ordered collisions and reconstruction}
+
+\chapter{Ordered words and collision coefficients}
+\label{chap:collision-words}
+
+Three ordered insertions can have the same first and third position while
+the second remains separate.  A construction that remembers only adjacent
+collisions loses this configuration.  A construction that remembers only
+the three singleton state spaces loses the normal derivatives along its
+collision diagonal.  Both kinds of information enter reconstruction.
+
+Let \(k\) be a field of characteristic zero and let \(X\) be a smooth
+separated curve over \(k\), and write \([n]=\{1,\ldots,n\}\).
+The positions of a word of length \(n\) form \(X^n\), including its
+diagonals.  The order belongs to the labels in \([n]\).
+It does not order the points of \(X\).  Cutting the labels
+between \(p\) and \(p+1\) is permitted where every point of the first
+block is distinct from every point of the second.  Collisions inside
+either block remain permitted.
+
+\section{The coefficient category}
+
+We use cochain complexes: the differential has degree \(1\), and
+\(M[r]^i=M^{i+r}\).  Thus an element \(sa\) of \(M[1]\) has degree
+\(|a|-1\).  Tensor products of maps and differentials use the Koszul
+sign rule.  All tensor products of complexes are derived unless a flat
+model has been specified.
+
+Fix dg-enhanced stable coefficient categories \(\mathscr D(X^n)\), with
+external tensor products, exceptional inverse images \(f^!\), and
+direct images \(j_*\) for open embeddings.  These functors are exact,
+and external tensor products preserve colimits separately.
+We require the following
+six-functor identities on the diagrams used below: open base change,
+composition of open direct images, compatibility of external products
+with those operations, and localization for a closed complement.  For
+the diagonals that identify consecutive labels we also require the
+base-change identifications in \eqref{eq:words-diagonal-cut}.  These
+identities are part of the coefficient setting, with their coherent
+enhancements.  They are the hypotheses on a differential-module or
+sheaf realization of the constructions.
+
+A monotone surjection \(\alpha:[n]\twoheadrightarrow[r]\) has interval
+fibres.  Its diagonal map is
+\[
+ d_\alpha:X^r\longrightarrow X^n,
+ \qquad (y_1,\ldots,y_r)\longmapsto
+ (y_{\alpha(1)},\ldots,y_{\alpha(n)}).
+\]
+An \emph{ordered word coefficient} is a family
+\(F_n\in\mathscr D(X^n)\), \(n\geq1\), with coherent equivalences
+\(d_\alpha^!F_n\simeq F_r\).  We adjoin a separate coefficient
+\(F_0\in D(k)\) for the empty word, where \(D(k)\) is the derived
+category of \(k\)-complexes.  There is no collision map from a
+nonempty word to that empty word.  Write \(\mathscr W_X\) for this
+stable category of diagrams.
+
+Stability concerns the ambient diagram category.  A factorization
+condition selects objects whose specified structure maps are
+equivalences, and need not define a stable subcategory.  For example,
+suppose a coefficient has rank one on every separated configuration
+and is strongly factorizing.  Its direct sum with itself has rank two
+on a separated pair.  The external square of its singleton coefficient
+has rank four.  The componentwise direct sum therefore cannot retain
+the same strong factorization condition.
+
+An arbitrary partition of \([n]\) still defines a diagonal in \(X^n\).
+The restriction of \(F_n\) to it, its supported sections, and its normal
+derivatives remain meaningful.  The definition of \(\mathscr W_X\)
+does not identify such a restriction with a shorter word unless the
+partition is consecutive.  Comparisons on the full collision diagram
+must supply their own maps and coherences.
+
+\section{Consecutive cuts}
+
+For \(0\leq p\leq n\), set
+\[
+ U_p^{(n)}=
+ \{(x_1,\ldots,x_n):x_i\neq x_j\text{ whenever }i\leq p<j\},
+ \qquad j_p:U_p^{(n)}\hookrightarrow X^n.
+\]
+The two end cuts have \(U_0^{(n)}=U_n^{(n)}=X^n\).  Define
+\begin{equation}
+ (F\star_c G)_n=
+ \bigoplus_{p=0}^n
+ j_{p,*}j_p^!(F_p\boxtimes G_{n-p}).
+ \label{eq:words-cut-product}
+\end{equation}
+The coefficient \(K\), equal to \(k\) at the empty word and zero at
+every nonempty word, will be its unit.
+
+Here is the diagonal compatibility required of the coefficient
+setting.  If \(p\) lies strictly inside a fibre of \(\alpha\), the
+image of \(d_\alpha\) misses \(U_p^{(n)}\).  Exceptional pullback of
+the corresponding localized term is zero.  Otherwise
+\(p=|\alpha^{-1}([q])|\) for a unique cut \(q\) of \([r]\), and
+the surviving base-change map gives
+\begin{equation}
+ d_\alpha^!j_{p,*}j_p^!(F_p\boxtimes G_{n-p})
+ \simeq j_{q,*}j_q^!(F_q\boxtimes G_{r-q}).
+ \label{eq:words-diagonal-cut}
+\end{equation}
+The indices on the right use the word-coefficient identifications.
+We require these maps to commute with composition of monotone
+surjections.  Summing them makes \eqref{eq:words-cut-product} an
+object of \(\mathscr W_X\).
+
+\begin{proposition}[The cut product]
+\label{prop:words-cut-monoidal}
+Under the stated coefficient identities, \((\mathscr W_X,\star_c,K)\)
+is a monoidal stable category.  The product is exact separately in
+each variable.  No interchange of the two ordered blocks is part of
+this monoidal structure.
+\end{proposition}
+\begin{proof}
+An iterated product of \(r\) factors is indexed by a consecutive
+decomposition of the word into \(r\) blocks, with empty blocks allowed.
+For any parenthesization, its coefficient is the external product of
+the block coefficients, localized to the open where distinct blocks
+have disjoint positions.  Open base change identifies these
+coefficients.  For four or more factors, every composite associator
+is the same identification with the coefficient of the common block
+decomposition.  This proves the pentagon and, in the enhanced
+categories, the higher coherence identities.  An empty factor
+contributes only the corresponding end cut, giving both unit maps.
+Exactness follows from the assumed exact operations and the finite
+sum in each arity.
+\end{proof}
+
+Call \(F\) \emph{positive} if \(F_0=0\).  Positivity bounds the
+number of factors that can contribute at a fixed word length.
+
+\begin{lemma}[Arity bound]
+\label{lem:words-arity-bound}
+If \(F^1,\ldots,F^r\) are positive, then
+\[
+ (F^1\star_c\cdots\star_c F^r)_n=0
+ \qquad\text{for }r>n.
+\]
+\end{lemma}
+\begin{proof}
+A nonzero summand requires a nonempty block for every factor.
+A word of length \(n\) has at most \(n\) such blocks.
+\end{proof}
+
+This bound does not assert a bound on the pole order or on normal
+derivatives.  Each surviving coefficient may contain all of them.
+It bounds the number of positive factors, which is the number needed
+in the bar--cobar argument.
+
+\section{Finite normalized bar and cobar}
+
+An augmented associative algebra in \(\mathscr W_X\) has unit and
+augmentation \(K\to A\to K\).  Assume that \(A_0\to k\) is an
+equivalence.  Its augmentation ideal \(\overline A\), the fibre of
+\(A\to K\), is then positive.  For a coaugmented counital
+coassociative coalgebra \(C\) with \(C_0=k\), write
+\(\overline C=\operatorname{cofib}(K\to C)\).  The counit splits the
+coaugmentation, so this is the reduced coefficient.
+
+The normalized constructions have underlying coefficients
+\begin{align}
+ B_c A&=K\oplus\bigoplus_{r\geq1}
+              (\overline A[1])^{\star_c r},
+              \label{eq:words-bar}\\
+ \Omega_c C&=K\oplus\bigoplus_{r\geq1}
+              (\overline C[-1])^{\star_c r}.
+              \label{eq:words-cobar}
+\end{align}
+Both sums are finite in each arity.  The first has deconcatenation
+coproduct.  The second has concatenation product.  A flat differential
+graded model makes their signs explicit.  Writing \(s\) for shift
+by \([1]\), the bar differential is the coderivation with terms
+\begin{equation}
+ b_1(sa)=-s(da),\qquad
+ b_2(sa\otimes sb)=(-1)^{|a|}s(ab).
+ \label{eq:words-bar-signs}
+\end{equation}
+Its extension past earlier shifted factors uses their total degree.
+If \(t\) denotes shift by \([-1]\) and
+\(\overline\Delta c=\sum c'\otimes c''\), the cobar differential
+is the derivation determined by
+\begin{equation}
+ d(tc)=-t(dc)+
+       \sum(-1)^{|c'|+1}(tc')(tc'').
+ \label{eq:words-cobar-signs}
+\end{equation}
+The derivation and coderivation identities, together with
+associativity and coassociativity, give square-zero differentials.
+For instance, the two contractions of three suspended factors in the
+bar have signs \((-1)^{|b|}\) and \((-1)^{|b|-1}\).
+
+\begin{theorem}[Bar--cobar on positive word coefficients]
+\label{thm:words-finite-duality}
+In the enhanced coefficient setting above, normalized bar and cobar
+give inverse equivalences between augmented associative algebras
+with empty coefficient \(k\) and coaugmented counital coassociative
+coalgebras with empty coefficient \(k\).  The unit and counit are
+equivalences in every arity.  No extra completion in bar length is
+required for this statement.
+\end{theorem}
+\begin{proof}
+Consider \(\Omega_c B_c A\) in arity \(n\).  Flatten each tensor of
+bar words into its original positive factors from \(\overline A\).
+There are at most \(n\) factors.  Filter by their number.  The
+associated graded differential retains the internal differential
+and the part that splits a bar word into two cobar factors.  It
+omits the multiplication in \(A\), which reduces the number of
+original factors.
+
+For \(r\) original factors, each of the \(r-1\) gaps either lies
+inside a bar word or separates two cobar factors.  Changing the
+first state to the second is the identity of the same localized
+coefficient, with the suspension sign.  Hence the gap complex is
+the tensor product of \(r-1\) two-term identity complexes.  It is
+contractible for \(r>1\): contract one chosen gap and leave the
+others unchanged, using the tensor sign rule.  For \(r=1\) it is
+\(\overline A\).  The counit sends \(t(sa)\) to \(a\), sends longer
+single bar words to zero, and extends multiplicatively.  Formulae
+\eqref{eq:words-bar-signs}--\eqref{eq:words-cobar-signs} make it a
+chain map.  On the associated graded it is the identity on the
+only noncontractible term.  The filtration is finite in arity
+\(n\), so the counit is an equivalence there.
+
+For \(B_c\Omega_c C\), use the number of original reduced
+coalgebra factors with the descending filtration.  The reduced
+coproduct increases this number, and concatenation preserves it.
+The associated graded again consists of the same gap complexes,
+with the direction of the gap differential reversed.  The unit on a
+reduced coefficient has the formula
+\[
+ \eta(c)=\sum_{r\geq1}\sum
+ [tc_{(1)}|\cdots|tc_{(r)}],
+ \qquad
+ \overline\Delta^{(r)}c=
+       \sum c_{(1)}\otimes\cdots\otimes c_{(r)}.
+\]
+The brackets suspend each cobar generator once, so the composite
+map \(c\mapsto s(tc)\) has degree zero.  The chain-map identity
+follows from coassociativity and \eqref{eq:words-cobar-signs}.
+Reduced iterates with more than \(n\) positive factors vanish by
+Lemma~\ref{lem:words-arity-bound}.  The one-factor term
+of the unit is the identity on \(\overline C\).  The same finite
+filtration argument proves that the unit is an equivalence.  These
+are the natural unit and counit of the bar--cobar adjunction, so
+their triangle identities give the asserted inverse equivalences.
+\end{proof}
+
+An ordinary augmented algebra concentrated at a single position
+does not satisfy this arity argument merely because it is augmented.
+Its powers can survive in every tensor length.  Positive weight,
+conilpotence or an appropriate completeness hypothesis must then
+replace Lemma~\ref{lem:words-arity-bound}.
+
+\section{The support left by all cuts}
+
+A coalgebra \(C\) is \emph{strong} if, for every cut, its specified
+coproduct restricts to an equivalence
+\begin{equation}
+ C_n|_{U_p^{(n)}}\longrightarrow
+ (C_p\boxtimes C_{n-p})|_{U_p^{(n)}}.
+ \label{eq:words-strong}
+\end{equation}
+These maps retain the coalgebra coherences.  A collection of
+unrelated equivalences is insufficient.  Define the closed subset
+\begin{equation}
+ Z_n=X^n\setminus\bigcup_{p=1}^{n-1}U_p^{(n)}
+     =\bigcap_{p=1}^{n-1}\ \bigcup_{i\leq p<j}\Delta_{ij},
+ \qquad Z_1=X.
+ \label{eq:words-support}
+\end{equation}
+Thus a configuration lies in \(Z_n\) precisely when every
+consecutive cut is crossed by a coincident pair.
+
+For a closed subset \(Z\subseteq Y\) with open complement
+\(j:U\hookrightarrow Y\), the supported coefficient
+\(R\Gamma_Z M\) is the fibre of \(M\to j_*j^!M\).
+
+\begin{theorem}[Cut-supported reconstruction]
+\label{thm:words-support}
+Let \(C\) be a strong coalgebra with empty coefficient \(k\).
+Then there is a natural equivalence of coefficients
+\begin{equation}
+ (\overline{\Omega_c C})_n
+       \simeq R\Gamma_{Z_n}(C_n)[-1].
+ \label{eq:words-supported-cobar}
+\end{equation}
+Conversely, if the augmentation ideal of \(A\) is supported on
+\(Z_n\) in every arity, then \(B_cA\) is strong.  Consequently
+bar--cobar restricts to an equivalence between strong coalgebras
+and augmented algebras with these support conditions.
+\end{theorem}
+\begin{proof}
+For a set of cuts \(S\subseteq\{1,\ldots,n-1\}\), put
+\(U_S=\bigcap_{p\in S}U_p^{(n)}\), with \(U_\varnothing=X^n\),
+and write \(L_S M=j_{S,*}j_S^!M\).  An \(r\)-factor term in
+\(\overline{\Omega_c C}\) corresponds to \(r-1\) cuts.  Iterated
+strong coproducts identify its coefficient with \(L_S C_n\).
+Coassociativity identifies the splitting differential with the
+maps that insert one more cut.  The resulting complex is
+\[
+ \operatorname{Tot}
+ \left(\bigoplus_{S\subseteq[n-1]}L_SC_n[-|S|-1]\right),
+\]
+with the tensor suspension signs.  Apart from the common shift
+\([-1]\), it is the total fibre of the localization cube for the
+opens \(U_p^{(n)}\).  Finite open descent identifies that fibre
+with \(R\Gamma_{Z_n}C_n\), proving
+\eqref{eq:words-supported-cobar}.
+
+For the converse, restrict a normalized bar word to \(U_p^{(n)}\).
+If one of its consecutive factors crosses the cut \(p\), the
+positions in that factor lie in its own cut open.  The support
+hypothesis makes that factor vanish.  Every surviving word has
+a separator at \(p\).  Cutting there is a bijection between
+surviving bar words and pairs of bar words on the two blocks.
+The bar differential has no remaining term that multiplies
+across this separator, again by the support hypothesis.  Thus
+deconcatenation is the equivalence \eqref{eq:words-strong},
+including its differential and iterated-cut coherences.
+The restricted equivalence follows from
+Theorem~\ref{thm:words-finite-duality}.
+\end{proof}
+
+The right side of \eqref{eq:words-supported-cobar} describes the
+coefficient.  Its multiplication still uses the inverses of the
+strong coproducts and their coherence.  Local cohomology alone
+does not specify that multiplication.
+
+\begin{example}[Three and four positions]
+\label{ex:words-crossed-support}
+For three labels,
+\[
+ Z_3=(\Delta_{12}\cup\Delta_{13})
+       \cap(\Delta_{13}\cup\Delta_{23})=\Delta_{13}.
+\]
+The locus with \(x_1=x_3\neq x_2\) is therefore part of the
+reconstructed support.  For four labels,
+\[
+ Z_4=\Delta_{14}\ \cup\ (\Delta_{13}\cap\Delta_{24}).
+\]
+To check this equality, suppose \(x_1\neq x_4\).  The first cut
+requires \(x_1=x_2\) or \(x_1=x_3\).  If \(x_1=x_2\), the last cut
+forces \(x_3=x_4\), leaving the middle cut uncrossed.
+Hence \(x_1=x_3\), and the last cut then forces \(x_2=x_4\).
+On the affine line,
+take the independent normal coordinates
+\(a=x_1-x_4\), \(b=x_1-x_3\), \(c=x_2-x_4\).  The reduced ideal
+of this union is
+\[
+ (a)\cap(b,c)=(ab,ac).
+\]
+Its codimension-one and codimension-two parts explain why a
+single total-diagonal coefficient cannot replace the full support.
+\end{example}
+
+\section{The empty unit and the local vacuum}
+
+Suppose the coefficient setting has dualizing objects
+\(J_n=p_n^!k\), where \(p_n:X^n\to\operatorname{Spec}k\), with
+the coherent product identifications
+\(J_p\boxtimes J_q\simeq J_{p+q}\).  Set \(J_0=k\).  Localization
+gives cut coproducts on \(J\).  They are equivalences on their cut
+opens.  Thus \(J\) is a strong coalgebra.  Its cobar algebra
+\(\mathcal U_X=\Omega_cJ\) carries the local vacuum coefficient.
+
+A \emph{vacuum-marked coalgebra} has a coalgebra map \(J\to C\).
+Applying bar--cobar gives the equivalence of undercategories
+\[
+ (J\downarrow\operatorname{Coalg}^{\mathrm{strong}})
+ \simeq
+ (\mathcal U_X\downarrow
+       \operatorname{Alg}^{\mathrm{aug},Z}).
+\]
+Here the algebra on the right is augmented over \(K\) and its
+augmentation ideal satisfies the support condition of
+Theorem~\ref{thm:words-support}.  The two maps
+\[
+ \mathcal U_X\longrightarrow A,\qquad A\longrightarrow K
+\]
+have different meanings.  The first is a local vacuum marking;
+the second is an empty-word augmentation.  Neither is a unital
+scalar augmentation of a vertex algebra.
+
+For example, the Heisenberg field with generator \(a\), vacuum
+\(\mathbf1\), and nonzero level \(\kappa\) satisfies
+\(a_{(1)}a=\kappa\mathbf1\).  A unital map to the scalar vertex
+algebra would send the left side to zero and the right side to
+\(\kappa\).  Such a map cannot exist.  The contradiction uses
+preservation of the vertex product \(a_{(1)}a\), a different
+condition from either geometric map.
+
+\section{Finite summands and geometric extensions}
+
+Suppose a coefficient is explicitly a finite direct sum indexed
+by two decompositions of the same finite set.  The summands for
+which those decompositions agree admit an inclusion and a
+projection.  Both maps come from the given direct-sum presentation.
+
+A collision stratum need not be a direct summand of a geometric
+coefficient.  Already over \(R=k[u]\), the sequence
+\[
+ 0\longrightarrow R\longrightarrow R[u^{-1}]
+   \longrightarrow R[u^{-1}]/R\longrightarrow0
+\]
+does not split as \(R\)-modules.  If a retraction \(\rho\) existed,
+then \(1=\rho(1)=u\rho(u^{-1})\), impossible in \(k[u]\).
+Thus a finite indexing argument does not produce a retraction
+across a collision divisor.  A geometric interchange requires
+its actual maps, including any extension class supported on that
+divisor.  Failure of this particular projection does not rule out
+a different distributive law.
+
+The cut product avoids choosing such a projection: its open
+localizations and their base-change maps are specified in
+\eqref{eq:words-cut-product}--\eqref{eq:words-diagonal-cut}.
+Extending reconstruction from this fixed-curve word category to
+arbitrary collision presentations still requires the comparisons
+on those presentations.  The support calculation identifies what
+they must retain, including crossed collisions and the local
+vacuum.

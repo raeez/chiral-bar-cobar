@@ -1,0 +1,1043 @@
+\chapter{Primitive Heisenberg coefficients}
+\label{cbc:chap:heisenberg}
+
+Modulo derivatives, a rational differential with poles at one fixed
+point is determined by its residue. Moving the points changes this calculation: the
+coefficients of partial fractions can acquire poles on the collision
+diagonals. The Heisenberg coefficient must retain these terms before
+the points are identified. Its primitive cohomology is flat over the
+position ring, but its diagonal constituents form nonsplit extensions.
+Those extensions determine both the collision maps and their duals.
+
+Throughout this chapter, $k$ is a field of characteristic zero.
+Complexes have cohomological grading, and differential modules are
+left modules. All rational functions have finite pole order. No
+completion in pole order is taken.
+
+\section{Principal parts and differentiation}
+\label{cbc:hc:principal-parts}
+
+Let $n\geq1$, let $z_1,\ldots,z_n$ be the position coordinates, and
+let $w$ be an auxiliary coordinate. Set
+\begin{equation}\label{cbc:hc:poles}
+ R_n=k[z_1,\ldots,z_n],\qquad
+ P(w)=\prod_{i=1}^n(w-z_i),\qquad
+ M_n=R_n[w,P^{-1}]/R_n[w].
+\end{equation}
+
+Division by the monic denominator gives each element of $M_n$ a
+unique proper rational representative. Differentiation in $w$ and
+in each position preserves the polynomial submodule and therefore
+acts on $M_n$. These operators commute. The primitive coefficient is
+\begin{equation}\label{cbc:hc:primitive}
+ H_n=\operatorname{coker}(\partial_w:M_n\longrightarrow M_n).
+\end{equation}
+The differential $f(w)\,dw$ records the residue convention for a
+representative $f(w)$ of this quotient.
+
+For a nonzero level $\kappa\in k$, let $xM_n$ and $\gamma M_n$
+be copies of $M_n$ in degrees zero and one. The linear
+Heisenberg coefficient complex is
+\begin{equation}\label{cbc:hc:linear-complex}
+ K_{\kappa,n}=[xM_n\xrightarrow{-\kappa\partial_w}\gamma M_n].
+\end{equation}
+Its degree-one cohomology is $H_n$. The polynomial coefficient
+is its graded symmetric algebra, treated in
+Section~\ref{cbc:hc:polynomial}. The primitive calculation
+determines its cohomology.
+
+At one point every class of pole order greater than one is a
+$w$-derivative, and $H_1$ is free on the class of
+$(w-z_1)^{-1}$.
+At two points, writing
+\[
+ g_i=[(w-z_i)^{-1}],\qquad
+ g_{12}=[((w-z_1)(w-z_2))^{-1}],
+\]
+gives
+\begin{equation}\label{cbc:hc:binary-attachment}
+ (z_1-z_2)g_{12}=g_1-g_2.
+\end{equation}
+This identity holds over the polynomial position ring. Dividing by
+$z_1-z_2$ describes the separated residues, but loses the question
+of how they extend over the diagonal. Finite denominator stages
+compute the quotient over that ring.
+
+Put $M^{(0)}=0$ and
+$M^{(m)}=P^{-m}R_n[w]/R_n[w]$ for $m\geq1$, with arity $n$ fixed. The elements $w^e/P^m$, $0\leq e<mn$, form an
+$R_n$-basis of $M^{(m)}$. Repeated monic division also gives a basis
+of the whole module:
+\begin{equation}\label{cbc:hc:free-basis}
+ M_n=\bigoplus_{m\geq1}\bigoplus_{e=0}^{n-1}
+           R_n\frac{w^e}{P^m}.
+\end{equation}
+Indeed, multiplying a finite relation by its largest denominator
+and reducing modulo $P$ first kills the numerator at that
+denominator. Induction kills every numerator.
+
+\begin{theorem}[Finite pole stages]\label{cbc:hc:stages}
+For $m\geq0$, the module
+$F_m=M^{(m+1)}/\partial_wM^{(m)}$ is free of rank $n$, with ordered
+representatives
+\begin{equation}\label{cbc:hc:stage-basis}
+ c_{m,0}=\frac1{P^{m+1}},\quad\ldots,\quad
+ c_{m,n-2}=\frac{w^{n-2}}{P^{m+1}},\qquad
+ c_{m,n-1}=\frac{w^{n(m+1)-1}}{P^{m+1}}.
+\end{equation}
+For $n=1$ only the last representative occurs. The inclusions of
+principal parts induce transitions $T_m:F_m\to F_{m+1}$, and
+$H_n=\operatorname*{colim}_mF_m$. In these bases,
+\begin{equation}\label{cbc:hc:transition-determinant}
+ \det T_m=(-1)^{n(n-1)/2}
+ \frac{(m+1)^{n-1}}
+ {n\prod_{j=1}^{n-1}(n(m+1)-j)}
+ \prod_{i<j}(z_i-z_j)^2.
+\end{equation}
+At a geometric position with exactly $r$ distinct points,
+the specialized transition has rank $r$.
+\end{theorem}
+
+\begin{proof}
+For $0\leq e<mn$, differentiation has numerator
+\[
+ \partial_w\frac{w^e}{P^m}
+ =\frac{d_{m,e}}{P^{m+1}},\qquad
+ d_{m,e}=e w^{e-1}P-mw^eP'.
+\]
+Its leading term is $(e-mn)w^{e+n-1}$. These nonzero integer
+pivots occupy the distinct degrees $n-1,\ldots,n(m+1)-2$.
+Descending elimination leaves precisely
+\eqref{cbc:hc:stage-basis}. It also proves that
+$\partial_w:M_n\to M_n$ is injective. Every fraction and every
+primitive belong to finite stages, so the colimit of these
+cokernels is $H_n$.
+
+The transition is computed by multiplying a basis numerator by
+$P$ and eliminating the pivots for $\partial_wM^{(m+1)}$.
+Only nonzero integers are divided out. Its entries are therefore
+polynomials in the coefficients of $P$.
+
+After specialization to an algebraically closed field, a proper
+rational differential has a proper rational primitive if and only
+if its residues vanish. At a root of multiplicity $d$ in $P$, a
+zero-residue differential with denominator $P^{m+1}$ has a primitive
+of pole order at most $(m+1)d-1$. That primitive lies in $M^{(m+1)}$.
+Consequently the kernel of the specialized $T_m$ is exactly the
+zero-residue subspace of $F_m$. The simple poles at the $r$
+remaining points give independent residue vectors and belong to
+$M^{(m+1)}$. This proves the rank assertion.
+
+The determinant vanishes on every pair diagonal. It is symmetric
+in the roots, so each difference $z_i-z_j$ divides it to even
+order. The last representative in \eqref{cbc:hc:stage-basis} has
+total finite residue one, and all the others have total residue
+zero. The last row of $T_m$ is thus $(0,\ldots,0,1)$.
+Simultaneously scaling $w$ and the roots shows that the determinant
+of the remaining $(n-1)$-square block has degree $n(n-1)$.
+It must be a constant multiple of the discriminant.
+
+Evaluate that constant at $P=w^n-a$, with $a$ indeterminate.
+The block is diagonal, with
+entries
+\[
+ -\frac{an(m+1)}{n(m+1)-j},\qquad 1\leq j\leq n-1.
+\]
+They follow by eliminating $w^{n+j-1}$ from
+$w^{n+j-1}-aw^{j-1}$. The discriminant in the convention
+of \eqref{cbc:hc:transition-determinant} is
+\[
+ \prod_{i<j}(z_i-z_j)^2
+ =(-1)^{n(n-1)/2+n-1}n^na^{n-1}.
+\]
+Taking the product of the diagonal entries gives the formula.
+For $n=1$ the transition is the identity.
+\end{proof}
+
+\begin{corollary}[Flatness and collision fibers]\label{cbc:hc:flat}
+The $R_n$-module $H_n$ is flat. For every commutative
+$R_n$-algebra $C$, its base change is the derivative quotient
+formed from $C[w,\overline P^{-1}]/C[w]$.
+Its geometric fiber is the residue space of the distinct points
+remaining after collision.
+\end{corollary}
+
+\begin{proof}
+The stage description expresses $H_n$ as a filtered colimit of
+finite free modules. Each stage basis and its elimination remain
+valid over $C$, because their pivots are nonzero integers in $k$.
+Taking the colimit proves the base-change assertion. Over a
+geometric point, powers of the specialized $P$ and of its reduced
+polynomial give cofinal denominator systems. A zero-residue stage
+class dies at the next transition. Every simple residue survives.
+\end{proof}
+
+\begin{example}[Two colliding points]\label{cbc:hc:binary}
+Suppress the common translation coordinate and put
+$R=k[u]$, $P=w(w-u)$. In the ordered basis
+$a_m=P^{-m-1}$, $b_m=w^{2m+1}P^{-m-1}$, the residues at
+$w=u$ are
+\[
+ \operatorname{Res}_{w=u}a_m\,dw
+   =(-1)^m\binom{2m}{m}u^{-2m-1},\qquad
+ \operatorname{Res}_{w=u}b_m\,dw=1.
+\]
+The total residues are respectively zero and one. Ratios of
+successive first residues determine the transition on the
+distinct locus. Since its entries are polynomials, this gives
+the transition over $R$:
+\begin{equation}\label{cbc:hc:binary-transition}
+ T_m=\begin{pmatrix}
+ -\dfrac{m+1}{2(2m+1)}u^2&0\\[3pt]0&1
+ \end{pmatrix},\qquad
+ H_2\simeq R[u^{-1}]\oplus R.
+\end{equation}
+
+The coordinates on the right are the residue at $w=u$ and
+the total finite residue. For $m\geq1$, the differential
+$dw/[w^m(w-u)]$ has coordinates $(u^{-m},0)$, while
+$dw/(w-u)$ has coordinates $(1,1)$. Together with their
+$R$-multiples these give the displayed module. The transition
+formula proves injectivity of this residue description.
+In residue coordinates the position connection is ordinary
+differentiation in $u$: differentiating a moving simple pole
+adds a double pole, whose residue is zero.
+
+At $u=0$ the localized summand has zero fiber and the regular
+summand remains. Thus flatness here does not imply finite
+projectivity or constancy of fiber dimension.
+\end{example}
+
+\begin{proposition}\label{cbc:hc:no-section}
+In Example~\ref{cbc:hc:binary}, the quotient $M_2\to H_2$
+has no $R$-linear section. Hence the complex
+$[M_2\xrightarrow{\partial_w}M_2]$ has no $R$-linear strong
+deformation retract onto its cohomology on these modules.
+\end{proposition}
+
+\begin{proof}
+The free module \eqref{cbc:hc:free-basis} satisfies
+$\bigcap_{N\geq0}u^NM_2=0$. Every element in the image of an
+$R$-linear map $R[u^{-1}]\to M_2$ lies in that intersection,
+so the map is zero. A section would be injective on the
+localized summand of \eqref{cbc:hc:binary-transition}.
+A strong deformation retract would in particular supply
+such a section.
+\end{proof}
+
+\section{The differential module on the collision diagonals}
+\label{cbc:hc:diagonals}
+
+Position derivatives retain information beyond a fiber's residue
+space. Let
+\[
+ D_n=R_n\langle\partial_1,\ldots,\partial_n\rangle,
+ \qquad [\partial_i,z_j]=\delta_{ij},\quad
+ [\partial_i,\partial_j]=0,
+\]
+where $\partial_i$ differentiates a rational representative at
+fixed $w$. For every nonempty $S\subseteq[n]$, define
+\begin{equation}\label{cbc:hc:subset-generator}
+ g_S=\left[\prod_{i\in S}(w-z_i)^{-1}\right]\in H_n.
+\end{equation}
+For a singleton write $g_i=g_{\{i\}}$.
+Divided position derivatives recover arbitrary pole orders:
+\begin{equation}\label{cbc:hc:divided-derivatives}
+ \left[\prod_{i\in S}(w-z_i)^{-m_i}\right]
+ =\prod_{i\in S}\frac{\partial_i^{m_i-1}}{(m_i-1)!}\,g_S,
+ \qquad m_i\geq1.
+\end{equation}
+The finite list of $g_S$ can therefore describe an unbounded
+range of pole orders.
+
+Let $L_sM_n$ be the sum of the principal-part submodules whose
+poles use at most $s$ labels, and let $F_sH_n$ be its image in
+$H_n$. Set $L_0M_n=F_0H_n=0$. These filtrations are preserved
+by position derivatives, and $\partial_w$ preserves $L_sM_n$.
+
+For nonempty $S$, the diagonal $\Delta_S$ is given by
+$z_i=z_j$ for $i,j\in S$. Denote by $\delta_S$ the cyclic
+$D_n$-module generated by $\eta_S$, subject to
+\begin{equation}\label{cbc:hc:delta-relations}
+ (z_i-z_j)\eta_S=0\ (i,j\in S),\qquad
+ \partial_k\eta_S=0\ (k\notin S),\qquad
+ \sum_{i\in S}\partial_i\eta_S=0.
+\end{equation}
+
+It is the direct-image differential module of the trivial
+connection on $\Delta_S$.
+
+To see its normal directions explicitly,
+choose $r=\max S$ and put $u_i=z_i-z_r$ for $i\in S\setminus\{r\}$.
+Over the tangential polynomial ring it has the principal-part
+basis $\prod_{i\ne r}u_i^{-b_i}$, $b_i\geq1$.
+Multiplication by $u_i$ kills a term when $b_i=1$, and otherwise
+lowers $b_i$. Differentiation sends $u_i^{-b_i}$ to
+$-b_i u_i^{-b_i-1}$. For $|S|=1$, $\delta_S=R_n$.
+
+Filter $D_n$ by differential order and write
+$\xi_i=\operatorname{gr}(\partial_i)$.
+A compatible exhaustive filtration on a module is good if
+it is bounded below and its associated graded is finitely
+generated over $R_n[\xi_1,\ldots,\xi_n]$.
+The characteristic variety is the support of that associated
+graded module in the cotangent bundle $T^*\mathbb A^n$.
+A nonzero module is holonomic when that variety has dimension
+$n$. Its holonomic length is its composition length.
+
+\begin{theorem}[Diagonal constituents]\label{cbc:hc:filtration}
+The pole-label filtration has differential-module quotients
+\begin{equation}\label{cbc:hc:graded}
+ F_sH_n/F_{s-1}H_n\simeq\bigoplus_{|S|=s}\delta_S,
+ \qquad 1\leq s\leq n,
+\end{equation}
+with the image of $g_S$ as cyclic generator of its summand.
+For $2\leq s\leq n$, the resulting extension of
+$\bigoplus_{|S|=s}\delta_S$ by $F_{s-1}H_n$ does not split
+even as a sequence of $R_n$-modules. The holonomic length of
+$H_n$ is $2^n-1$. Over $k=\mathbb C$ it is regular holonomic.
+\end{theorem}
+
+\begin{proof}
+The variables $w$ and $t_i=w-z_i$, $1\leq i\leq n$, are
+independent coordinates on the auxiliary affine space.
+A Laurent monomial determines its set of negative $t_i$
+exponents. Modulo monomials with fewer negative labels, this
+gives
+\[
+ \operatorname{gr}_s^L M_n
+ =\bigoplus_{|S|=s}H^s_{(t_i:i\in S)}(R_n[w]).
+\]
+Here the local cohomology summand consists of negative powers
+in all its indicated variables, with polynomial coefficients
+in the remaining variables. This description is the top term
+of the coordinate \v Cech complex and fixes its differential
+module structure.
+
+On the summand for $S$, use $t=w-z_r$, the normal coordinates
+$u_i$, and the tangential coordinates $z_r,z_k$ for $k\notin S$.
+The support ideal becomes $(t,u_i:i\ne r)$.
+Differentiation in $w$ at fixed positions becomes $\partial_t$.
+Thus the local cohomology module has basis
+\[
+ t^{-a}\prod_{i\in S\setminus\{r\}}u_i^{-b_i},
+ \qquad a,b_i\geq1,
+\]
+over the tangential polynomial ring. The derivative in $t$ is
+injective and its cokernel retains precisely $a=1$.
+
+The induced position actions are \eqref{cbc:hc:delta-relations}.
+The linear change of normal coordinates has determinant a
+unit. Its fundamental fraction sends $g_S$ to a nonzero
+multiple of the fundamental normal class. Normalize $\eta_S$
+by this image.
+
+Apply the kernel--cokernel sequence for $\partial_w$ to
+$0\to L_{s-1}M_n\to L_sM_n\to\operatorname{gr}_s^LM_n\to0$.
+The injectivity on every graded summand proves, by induction,
+that the cokernels embed in $H_n$ and have the quotients
+\eqref{cbc:hc:graded}.
+
+By Corollary~\ref{cbc:hc:flat}, $H_n$ is torsion-free over the
+domain $R_n$. For $s\geq2$, each element in a summand of
+\eqref{cbc:hc:graded} is killed by a power of a normal equation.
+A product of these equations kills an element of the finite
+direct sum. Every $R_n$-linear map from that
+quotient into $F_sH_n$ is therefore zero. It cannot be a section.
+
+Each $\delta_S$ is simple. In the displayed basis, multiplication
+by normal coordinates lowers the normal derivative degree,
+and tangential differentiation lowers polynomial degree.
+Choose a term of maximal total normal derivative degree and
+multiply by its normal coordinate monomial. This kills all
+other normal monomials of that degree and every lower one,
+leaving a nonzero tangential polynomial times the fundamental
+class. A derivative of maximal total tangential degree
+extracts a nonzero scalar. Normal derivatives and tangential
+multiplication then generate the whole module.
+
+Its characteristic variety is the conormal
+bundle of $\Delta_S$, of dimension $n$, so it is holonomic.
+The finite filtration has one such constituent for each
+nonempty subset, proving its length. Over $\mathbb C$ the
+trivial diagonal connections are regular, and regular
+holonomic modules are closed under extensions
+\cite{HottaTakeuchiTanisaki2008}*{Definition~6.1.1}.
+\end{proof}
+
+The diagonal quotients are not flat over $R_n$. Consequently
+their ordinary exterior powers cannot compute the associated
+graded of exterior powers of $H_n$ without resolving the
+intersections of their supports.
+
+\begin{theorem}[Finite differential-module presentation]
+\label{cbc:hc:presentation}
+The generators \eqref{cbc:hc:subset-generator} present $H_n$
+over $D_n$ with the relations
+\begin{align}
+ \partial_k g_S&=0 &&(k\notin S),\notag\\
+ \sum_{i\in S}\partial_i g_S&=0,\notag\\
+ (z_i-z_j)g_S&=g_{S\setminus\{j\}}-g_{S\setminus\{i\}}
+       &&(i,j\in S,\ i\ne j).
+ \label{cbc:hc:presentation-relations}
+\end{align}
+No empty-subset generator is required.
+\end{theorem}
+
+\begin{proof}
+The first and third equations hold on rational representatives.
+The second represents the $w$-derivative of the negative of
+their product. Formula~\eqref{cbc:hc:divided-derivatives}
+generates every pole multiplicity. Repeatedly writing
+$w=(w-z_i)+z_i$ reduces any numerator to those fractions
+and to polynomial terms, which vanish in $M_n$.
+The presented module $Q$ therefore surjects onto $H_n$.
+
+Filter $Q$ by the cardinalities of its generators. On its
+level-$s$ quotient the right side of the last relation
+vanishes. The remaining relations give surjections
+\[
+ \bigoplus_{|S|=s}\delta_S\longrightarrow
+ \operatorname{gr}_sQ\longrightarrow\operatorname{gr}_s^FH_n.
+\]
+Their composite is the isomorphism of
+Theorem~\ref{cbc:hc:filtration} with its chosen generators.
+Both arrows are thus isomorphisms. Induction on the finite
+filtration proves $Q=H_n$.
+\end{proof}
+
+\begin{example}[The triple attachment]\label{cbc:hc:triple}
+For $a=z_1-z_3$ and $b=z_2-z_3$, the binary and ternary
+generators satisfy
+\begin{align*}
+ (a-b)g_{12}&=g_1-g_2,& ag_{13}&=g_1-g_3,&
+ bg_{23}&=g_2-g_3,\\
+ ag_{123}&=g_{12}-g_{23},&
+ bg_{123}&=g_{12}-g_{13}.&&
+\end{align*}
+On the distinct locus the residue vector of $g_{123}$ is
+\[
+ \left(\frac1{a(a-b)},\frac1{b(b-a)},\frac1{ab}\right).
+\]
+Its total residue is zero, but its image in
+$H_3/F_2H_3=\delta_{123}$ is nonzero. The two attaching
+equations specify how that constituent meets the three
+binary diagonals.
+\end{example}
+
+\section{Collision and cut maps}
+\label{cbc:hc:collision-cuts}
+
+Let $\alpha:[n]\twoheadrightarrow[m]$ identify the positions
+by $z_i=y_{\alpha(i)}$. The specialized coefficient has its
+induced tangential connection: differentiation in $y_t$
+acts by the sum of position derivatives in the fiber
+$\alpha^{-1}(t)$. For nonempty $S$, set
+$T=\alpha(S)$ and $\nu_t=|S\cap\alpha^{-1}(t)|$.
+
+\begin{proposition}\label{cbc:hc:collisions}
+The coefficient base-change isomorphism
+$H_n\otimes_{R_n}k[y_1,\ldots,y_m]\simeq H_m$ sends
+\begin{equation}\label{cbc:hc:collision-formula}
+ g_S\longmapsto
+ \left(\prod_{t\in T}
+       \frac{\partial_{y_t}^{\nu_t-1}}{(\nu_t-1)!}\right)g_T.
+\end{equation}
+These maps are horizontal and compose under successive
+surjections.
+\end{proposition}
+
+\begin{proof}
+Both sides of \eqref{cbc:hc:collision-formula} are represented
+by $\prod_{t\in T}(w-y_t)^{-\nu_t}$. Powers of the repeated
+and reduced denominator products are cofinal, so substitution
+identifies their localizations and principal parts.
+Corollary~\ref{cbc:hc:flat} identifies their derivative
+cokernels. Successive substitutions agree as rational
+functions, and differentiation obeys the chain rule.
+\end{proof}
+
+If all labels of $S$ collapse to one point and $|S|>1$, its
+image is zero, since
+\[
+ (w-y)^{-|S|}
+ =\partial_w\left(-\frac{(w-y)^{1-|S|}}{|S|-1}\right).
+\]
+The proposition concerns coefficient base change with the
+specified tangential action. An extraordinary inverse image
+of differential modules also involves its density and shift
+conventions.
+
+A consecutive cut separates groups of labels while allowing
+collisions inside each group. More generally, let
+$\mathcal B=(B_1|\cdots|B_r)$ be an ordered partition of
+$[n]$ into nonempty blocks. Let $U_{\mathcal B}$ be the open
+where $z_i-z_j$ is invertible whenever $i$ and $j$ lie in
+different blocks. Write $R_{\mathcal B}$ for its coordinate
+ring and $M_{B_a},H_{B_a}$ for the coefficients using just
+the labels in $B_a$, extended to $R_{\mathcal B}$.
+
+\begin{proposition}[Block decomposition]\label{cbc:hc:cuts}
+There are canonical horizontal isomorphisms
+\begin{equation}\label{cbc:hc:cut-decomposition}
+ M_n|_{U_{\mathcal B}}\simeq\bigoplus_aM_{B_a},\qquad
+ H_n|_{U_{\mathcal B}}\simeq\bigoplus_aH_{B_a}.
+\end{equation}
+They commute with ordered refinements and with collisions
+inside the blocks.
+\end{proposition}
+
+\begin{proof}
+Put $P_a=\prod_{i\in B_a}(w-z_i)$. The resultants of
+different $P_a$ are units on $U_{\mathcal B}$, so their
+powers are pairwise coprime. The polynomial Chinese
+remainder theorem gives a unique proper partial-fraction
+decomposition by these denominators. This proves the first
+isomorphism.
+
+Differentiation in $w$ preserves every summand,
+giving the second. Position differentiation also preserves
+each group's allowed poles, so the maps are horizontal.
+Uniqueness makes successive refinements agree. After an
+internal collision the resultants between groups remain
+units. The same decomposition commutes with substitution.
+\end{proof}
+
+\section{Free comparisons and completed mapping complexes}
+\label{cbc:hc:free-comparison}
+
+The absence of a section in Proposition~\ref{cbc:hc:no-section}
+does not prevent comparison by free resolutions. The finite
+stages supply both the resolution and its chain map.
+Let $E=\bigoplus_{m\geq0}F_m$, and let $\sigma_T:E\to E$
+send the $m$-th summand to the next by $T_m$.
+
+\begin{proposition}\label{cbc:hc:telescope}
+The sequence
+\begin{equation}\label{cbc:hc:telescope-sequence}
+ 0\longrightarrow E\xrightarrow{1-\sigma_T}E
+ \longrightarrow H_n\longrightarrow0
+\end{equation}
+is a free $R_n$-resolution. For an $R_n$-module $N$,
+it computes derived Hom as
+\begin{equation}\label{cbc:hc:mapping-complex}
+ \begin{aligned}
+ R\operatorname{Hom}_{R_n}(H_n,N)
+ &=\left[\prod_m\operatorname{Hom}_{R_n}(F_m,N)
+ \xrightarrow{\delta_T}
+ \prod_m\operatorname{Hom}_{R_n}(F_m,N)\right],
+ \\
+ (\delta_Tf)_m&=f_m-f_{m+1}T_m.
+ \end{aligned}
+\end{equation}
+in degrees zero and one.
+\end{proposition}
+
+\begin{proof}
+The first nonzero stage of a finite-support vector survives
+under $1-\sigma_T$, proving injectivity. Its cokernel is
+the defining colimit. Both copies of $E$ are free.
+Applying Hom to these direct sums gives the products in
+\eqref{cbc:hc:mapping-complex} and the stated difference map.
+\end{proof}
+
+The elimination in Theorem~\ref{cbc:hc:stages} records, along
+with each matrix column, a primitive $p_{m,j}\in M^{(m+1)}$:
+\begin{equation}\label{cbc:hc:transition-primitive}
+ c_{m,j}-\sum_i(T_m)_{ij}c_{m+1,i}=\partial_wp_{m,j}.
+\end{equation}
+Each eliminated numerator contributes its coefficient times
+the rational function whose derivative was eliminated.
+
+Place the two copies of $E$ in degrees zero and one,
+with corresponding generators $u_{m,j}$ and $v_{m,j}$.
+The differential is
+$du_{m,j}=v_{m,j}-\sum_i(T_m)_{ij}v_{m+1,i}$.
+
+\begin{proposition}\label{cbc:hc:chain-comparison}
+The maps
+\begin{equation}\label{cbc:hc:comparison-formula}
+ u_{m,j}\longmapsto-\kappa^{-1}x(p_{m,j}),\qquad
+ v_{m,j}\longmapsto\gamma(c_{m,j})
+\end{equation}
+give an $R_n$-linear homotopy equivalence from this
+telescope to $K_{\kappa,n}$.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{cbc:hc:transition-primitive} is exactly the
+chain-map identity. Both degree-zero cohomologies vanish,
+and the map is the identity on degree-one cohomology $H_n$.
+Both complexes are bounded and free over $R_n$.
+
+An inverse can be constructed on their free bases. Reduce
+each degree-one basis vector of $M_n$ at a finite stage
+and lift its class to the corresponding $F_m\subset E$.
+
+The image of a boundary under this lift lies in
+$\ker(E\to H_n)=\operatorname{im}(1-\sigma_T)$. Its unique
+preimage defines the degree-zero map. To find the preimage,
+advance its finitely many components to a common stage and
+telescope the intervening transitions.
+Differences between
+either composite and the identity induce zero on $H_n$.
+Lift those differences through the injective boundary maps
+in the same way. These lifts are the chain homotopies.
+\end{proof}
+
+For $P=w(w-u)$ the first two primitives are
+\begin{equation}\label{cbc:hc:binary-primitives}
+ p_{0,\mathrm{low}}=-\frac{w-u/2}{P},\qquad
+ p_{0,\mathrm{top}}=\frac{u}{w-u}.
+\end{equation}
+Their derivatives are $P^{-1}+u^2/(2P^2)$ and
+$(w-u)^{-1}-w/(w-u)^2$. Even the identity transition on
+the top cohomology coordinate therefore has a nonzero
+chain correction. The displayed homotopy equivalence is
+$R_n$-linear. A connection on a chosen resolution requires
+its own lifts of position differentiation.
+
+\begin{proposition}[The effect of a connection]\label{cbc:hc:reverse-hom}
+For $R=k[u]$ and $L=R[u^{-1}]$,
+\[
+ \operatorname{Hom}_R(L,R)=0,\qquad
+ \operatorname{Ext}^1_R(L,R)=k[[u]]/R,
+ \qquad \operatorname{Ext}^{q}_R(L,R)=0\quad(q>1).
+\]
+Give $L$ and $R$ their ordinary derivative connections, and
+put $D=k\langle u,\partial\rangle/([\partial,u]-1)$.
+Then $R\operatorname{Hom}_D(L,R)=0$.
+With target $L$, the groups $\operatorname{Hom}_D(L,L)$
+and $\operatorname{Ext}^1_D(L,L)$ are each $k$, and the
+higher groups vanish.
+\end{proposition}
+
+\begin{proof}
+Present $L$ by the telescope with generators $u^{-2m}$
+and transition $u^2$. Its Hom differential is
+$(f_m)\mapsto(f_m-u^2f_{m+1})$ on $\prod_{m\geq0}R$.
+The following series converges in the $u$-adic topology.
+The map
+\[
+ (a_m)\longmapsto\sum_{m\geq0}u^{2m}a_m\pmod R
+\]
+takes boundaries to polynomials. If the sum is the
+polynomial $p$, then
+\[
+ f_m=u^{-2m}\left(p-\sum_{j<m}u^{2j}a_j\right)\in R
+\]
+satisfies $a_m=f_m-u^2f_{m+1}$.
+
+Grouping the even and odd
+digits of any power series proves surjectivity.
+Infinite $u$-divisibility makes the degree-zero kernel
+zero, and the resolution has length one.
+
+For the differential-module calculation, the assignment
+$e\mapsto u^{-1}$ gives
+\begin{equation}\label{cbc:hc:localization-presentation}
+ L\simeq D/D(u\partial+1).
+\end{equation}
+Indeed, commuting $u$ past powers of $\partial$ reduces the
+quotient to the spanning set $u^je$ for $j\geq0$ and
+$\partial^je$ for $j\geq1$. Their images are respectively
+$u^{j-1}$ and $(-1)^jj!u^{-j-1}$, distinct Laurent
+monomials, so they are independent.
+
+The free resolution
+given by right multiplication by $u\partial+1$ is
+injective, by the order filtration on the Weyl algebra.
+Applying Hom gives $u\partial+1$ on the target. On $R$
+its eigenvalue at $u^j$ is $j+1$, always invertible.
+On $L$ its kernel and cokernel are both the line represented
+by $u^{-1}$.
+\end{proof}
+
+For example, the constant sequence $a_m=1$ represents the
+nonzero ordinary extension class of $(1-u^2)^{-1}$ modulo
+$R$. That extension has generators $e,f_0,f_1,\ldots$ and
+relations $f_m-u^2f_{m+1}=e$. It cannot carry the prescribed
+connections as an extension of $L$ by $R$, since the
+corresponding differential-module extension group vanishes.
+
+\section{A telescope with all spatial derivatives}
+\label{cbc:hc:spatial}
+
+Position differentiation can raise the denominator stage. To keep
+it on a free resolution, the relation generators must move
+as well. This can be done before taking the auxiliary
+derivative quotient.
+
+Let $d\geq0$, let $B=k[s_1,\ldots,s_d]$, and let $f\in B[w]$ be monic
+of positive $w$-degree. Define the relative Weyl algebra
+\[
+ D_B=B\langle w,\partial_w\rangle/([\partial_w,w]-1),
+\]
+in which the parameters are central. Write $f_a=\partial_{s_a}f$,
+$f_w=\partial_wf$, and $f_{wa}=\partial_w\partial_{s_a}f$.
+Put
+\begin{equation}\label{cbc:hc:weyl-operators}
+ A_m=f\partial_w+mf_w,\qquad
+ A_{m,a}=f_a\partial_w+mf_{wa},\qquad m\geq1.
+\end{equation}
+These are operators: $\partial_wg=g\partial_w+g_w$.
+The identity $A_mf=fA_{m+1}$ gives transition maps, by
+right multiplication by $f$, between the free complexes
+$[D_B\xrightarrow{r_{A_m}}D_B]$ in degrees $-1,0$.
+
+Their direct-sum telescope $\mathcal T_f$ has generators
+$e_m$ in degree zero, $r_m,q_m$ in degree $-1$, and $h_m$
+in degree $-2$. Define its $D_B$-linear differential by
+\begin{equation}\label{cbc:hc:spatial-differential}
+ \begin{aligned}
+ de_m&=0,& dr_m&=A_me_m,\\
+ dq_m&=e_m-fe_{m+1},&
+ dh_m&=r_m-fr_{m+1}-A_mq_m.
+ \end{aligned}
+\end{equation}
+Every vector has finite stage support. The only potentially
+nonzero square is
+$d^2h_m=(A_mf-fA_{m+1})e_{m+1}=0$.
+
+\begin{lemma}\label{cbc:hc:localization-telescope}
+The augmentation $e_m\mapsto f^{-m}$, with negative-degree
+generators sent to zero, makes $\mathcal T_f$ a free
+$D_B$-resolution of $B[w,f^{-1}]$. After every scalar
+extension $B\to C$ to a commutative $k$-algebra it remains
+a resolution of $C[w,\overline f^{-1}]$ and computes
+derived scalar extension.
+\end{lemma}
+
+\begin{proof}
+Right multiplication by $A_m$ is injective: its leading
+coefficient in differential order is multiplication by
+the monic polynomial $f$. This remains a non-zero-divisor
+over $C$. Thus each two-term complex resolves
+$P_m=D_B/D_BA_m$.
+
+In their colimit the transition and the next relation give
+\[
+ e_m=fe_{m+1},\qquad
+ \partial_we_m=-mf_we_{m+1}.
+\]
+Repeatedly applying the second equation reduces every
+operator applied to $e_m$ to a polynomial times a later
+generator. The fraction map has inverse $p/f^m\mapsto pe_m$.
+The first equation makes it well-defined and the second
+makes it horizontal. Hence $\operatorname*{colim}P_m=B[w,f^{-1}]$.
+
+The map $1-\mathrm{shift}$ on the direct sum of the stage
+complexes is injective at the first nonzero stage. Its cone
+therefore resolves the filtered colimit, and its differential
+is \eqref{cbc:hc:spatial-differential} with the displayed
+choice of sign on $h_m$.
+
+Its terms are free over $D_B$
+and over $B$. The same arguments after scalar extension
+prove the last assertion.
+\end{proof}
+
+\begin{example}[A finite stage at collision]\label{cbc:hc:spurious-delta}
+Take $f=w(w-s)$ over $k[s]$ and specialize to $s=0$.
+Write $D=k\langle w,\partial_w\rangle/([\partial_w,w]-1)$.
+Then $A_m=wB_m$, where $B_m=w\partial_w+2m$.
+In the specialized $P_m$, put $g_m=B_me_m$.
+The identities
+\[
+ wg_m=0,\qquad
+ (B_m-(2m-1))B_m=\partial_w A_m
+\]
+give $B_mg_m=(2m-1)g_m$.
+
+Consequently $\ell_m=e_m-g_m/(2m-1)$ is killed by $B_m$,
+and
+\begin{equation}\label{cbc:hc:finite-collision}
+ P_m|_{s=0}\simeq k[w,w^{-1}]\oplus D/Dw.
+\end{equation}
+
+For an explicit inverse, send $e_m$ to
+$(w^{-2m},\eta/(2m-1))$, where $w\eta=0$.
+The operator $A_m$ kills this pair. The element $g_m$ maps to $(0,\eta)$
+and $\ell_m$ to $(w^{-2m},0)$. These maps verify both
+summands of \eqref{cbc:hc:finite-collision}.
+
+The extra delta is removed by the next denominator transition:
+\[
+ g_m\longmapsto B_mw^2e_{m+1}
+ =w^2B_{m+1}e_{m+1}=w^2g_{m+1}=0.
+\]
+The whole telescope therefore has the correct collision
+fiber, although a single cyclic stage does not.
+\end{example}
+
+Extend $\partial_{s_a}$ to $D_B$ by fixing $w,\partial_w$.
+Define $\nabla_a(Pv)=(\partial_{s_a}P)v+P\nabla_av$ and
+\begin{equation}\label{cbc:hc:spatial-connection}
+ \begin{aligned}
+ \nabla_ae_m&=-mf_ae_{m+1},\\
+ \nabla_ar_m&=-(m-1)f_ar_{m+1}+A_{m,a}q_m,\\
+ \nabla_aq_m&=-(m+1)f_aq_{m+1},\\
+ \nabla_ah_m&=-mf_ah_{m+1}.
+ \end{aligned}
+\end{equation}
+The term $A_{m,a}q_m$ compares the derivative of a relation
+with its image at the next stage.
+
+\begin{theorem}[Flat spatial connection]\label{cbc:hc:spatial-flatness}
+The operators \eqref{cbc:hc:spatial-connection} satisfy
+\[
+ [d,\nabla_a]=0,\qquad [\nabla_a,\nabla_b]=0,\qquad
+ [\nabla_a,s_b]=\delta_{ab},\qquad
+ [\nabla_a,w]=[\nabla_a,\partial_w]=0.
+\]
+They make $\mathcal T_f$ a complex over the full Weyl algebra
+$\mathscr D=D_B\langle\partial_{s_1},\ldots,\partial_{s_d}\rangle$,
+with horizontal augmentation to $B[w,f^{-1}]$ with its
+ordinary derivatives. No discriminant is inverted.
+\end{theorem}
+
+\begin{proof}
+The scalar commutators follow from the coefficient Leibniz
+rule. For the chain equation on $r_m$, normal ordering gives
+\begin{equation}\label{cbc:hc:mixed-identity}
+ A_{m,a}f+(m-1)f_aA_{m+1}=mA_mf_a,
+\end{equation}
+both sides equal
+$mff_a\partial_w+mff_{wa}+m^2f_wf_a$.
+On $q_m$, both orders of differentiation give
+$-(m+1)f_ae_{m+1}+(m+1)ff_ae_{m+2}$.
+On $h_m$, both give
+\[
+ -mf_ar_{m+1}+mff_ar_{m+2}+mf_aA_{m+1}q_{m+1}.
+\]
+The last equality follows by differentiating
+$A_mf=fA_{m+1}$ and using \eqref{cbc:hc:mixed-identity}.
+The chain equation on $e_m$ is immediate.
+
+For curvature, mixed derivatives and scalar products cancel
+on $e_m,q_m,h_m$. On $r_m$, the $q_m$ coefficient cancels
+by equality of mixed derivatives of $A_m$. The remaining
+$q_{m+1}$ coefficient is
+\begin{align*}
+ &(m-1)(f_aA_{m+1,b}-f_bA_{m+1,a})\\
+ &\hspace{8mm}+(m+1)(A_{m,a}f_b-A_{m,b}f_a).
+\end{align*}
+Writing $W=f_af_{wb}-f_bf_{wa}$, the first line is
+$(m^2-1)W$ and the second is $(m+1)(1-m)W$.
+Their sum is zero. Finally,
+$\partial_{s_a}f^{-m}=-mf_af^{-m-1}$ proves horizontality
+of the augmentation.
+\end{proof}
+
+For $f=w^3+aw+b$, the correction operators are
+$A_{m,a}=w\partial_w+m$ and $A_{m,b}=\partial_w$.
+These formulas remain defined on $4a^3+27b^2=0$.
+Deleting the mixed term from $\nabla_br_1$ would give
+the nonzero chain defect
+$-\partial_we_1+\partial_wf\,e_2$, where $\partial_wf$
+denotes operator composition. The correction
+$d(\partial_wq_1)$ cancels it.
+
+To obtain free terms over the full Weyl algebra, let
+$v_1,\ldots,v_d$ be the standard basis of $k^d$, and form
+\[
+ \mathcal P_f^j
+ =\bigoplus_{q-p=j}
+   \mathscr D\otimes_{D_B}\mathcal T_f^q\otimes_k\Lambda^pk^d,
+ \qquad 0\leq p\leq d.
+\]
+On the induced module set
+$L_a(P\otimes u)=P\partial_{s_a}\otimes u-P\otimes\nabla_au$.
+The connection's Leibniz rule makes $L_a$ balanced over
+$D_B$. Let $\delta$ be their alternating sum deleting the
+corresponding wedge factor, and define
+\begin{equation}\label{cbc:hc:spencer-differential}
+ d_{\mathcal P}(P\otimes u\otimes\omega)
+ =P\otimes du\otimes\omega
+   +(-1)^q\delta(P\otimes u\otimes\omega),
+ \qquad u\in\mathcal T_f^q.
+\end{equation}
+Flatness makes the $L_a$ commute, and the chain equation
+makes them commute with the internal differential.
+The total sign in \eqref{cbc:hc:spencer-differential}
+therefore gives $d_{\mathcal P}^2=0$.
+
+\begin{proposition}\label{cbc:hc:spencer-resolution}
+The action augmentation
+$\mathcal P_f\to\mathcal T_f\to B[w,f^{-1}]$ is a free
+$\mathscr D$-resolution, bounded in degrees $-d-2,\ldots,0$.
+\end{proposition}
+
+\begin{proof}
+Fix $q$ and normally order the parameter derivatives.
+The induced module becomes their polynomial module with
+coefficients in $\mathcal T_f^q$. Filter the exterior-degree
+$p$ term by parameter-derivative order plus $p$.
+The leading part of $L_a$ is multiplication by its independent
+polynomial variable. The associated augmented row is thus
+the Koszul resolution of $\mathcal T_f^q$ for those variables.
+It is exact.
+
+Lifting a leading boundary lowers the filtration.
+Every vector has finite order, so this procedure terminates.
+The augmented row resolves $\mathcal T_f^q$.
+
+The internal degrees are bounded, and totalization gives
+a quasi-isomorphism to $\mathcal T_f$.
+Lemma~\ref{cbc:hc:localization-telescope} identifies its
+cohomology. Each induced term is free over $\mathscr D$
+because $\mathcal T_f^q$ is free over $D_B$.
+\end{proof}
+
+For $B=R_n$ and $f=P$, this resolves the auxiliary localization
+in \eqref{cbc:hc:poles}. The primitive coefficient $H_n$ is
+obtained by first quotienting by $R_n[w]$ and then taking
+the $\partial_w$-cokernel. It is a different module.
+Applying Hom to the free spatial resolution takes products
+over all its stage generators. Those products are part of
+the mapping complex and cannot be replaced by a finite
+denominator cutoff.
+
+\section{The polynomial Heisenberg complex}
+\label{cbc:hc:polynomial}
+
+The primitive differential \eqref{cbc:hc:linear-complex}
+extends as a derivation to
+\begin{equation}\label{cbc:hc:polynomial-complex}
+ Z_{\kappa,n}=\operatorname{Sym}_{R_n}(xM_n)
+      \otimes_{R_n}\Lambda_{R_n}(\gamma M_n),\qquad
+ dx(f)=-\kappa\gamma(\partial_wf),\quad d\gamma(f)=0.
+\end{equation}
+Here $x(f)$ has degree zero and $\gamma(f)$ degree one.
+The product is the auxiliary graded-commutative polynomial
+product, and each element has finite polynomial degree.
+
+\begin{theorem}\label{cbc:hc:polynomial-cohomology}
+The primitive projection extends to a quasi-isomorphism
+of differential graded $R_n$-algebras
+\begin{equation}\label{cbc:hc:cohomology-map}
+ \rho_n:Z_{\kappa,n}\longrightarrow\Lambda_{R_n}(H_n),
+ \qquad x(f)\longmapsto0,\quad\gamma(f)\longmapsto[f],
+\end{equation}
+where $H_n$ has degree one and zero differential.
+It preserves the unit, the position connection, coefficient
+collision maps, and the block decompositions of
+Proposition~\ref{cbc:hc:cuts}.
+\end{theorem}
+
+\begin{proof}
+The primitive map is a quasi-isomorphism between bounded
+flat complexes by Theorem~\ref{cbc:hc:stages} and
+Corollary~\ref{cbc:hc:flat}. Tensor powers preserve this
+quasi-isomorphism. In characteristic zero, each graded
+symmetric power is the image of its averaging idempotent
+on a tensor power. It therefore preserves the map as well.
+Their direct sum is \eqref{cbc:hc:cohomology-map}.
+
+The generator formulas commute with differentiation,
+substitution, and the direct-sum decomposition of principal
+parts. They also preserve the multiplicative unit.
+\end{proof}
+
+Let $V$ be finite-dimensional with a nondegenerate level
+form, and identify $V$ with its dual by that form.
+Apply the same argument to the corresponding copies of
+$V\otimes M_n$. The resulting cohomology is
+$\Lambda_{R_n}(V\otimes H_n)$.
+
+Over the normal-coordinate ring $R=k[u]$ of
+Example~\ref{cbc:hc:binary}, the rank-one polynomial complex
+has cohomology
+\[
+ H^0(Z_{\kappa,2})=R,\qquad
+ H^1(Z_{\kappa,2})=R[u^{-1}]\oplus R,\qquad
+ H^2(Z_{\kappa,2})=R[u^{-1}],
+\]
+with no higher cohomology. In particular
+$\Lambda_R^2R[u^{-1}]=0$, since every pair of elements
+lies in a common rank-one free submodule.
+Under a cut, exterior algebra converts
+\eqref{cbc:hc:cut-decomposition} into a tensor product.
+Comparison with the transverse product requires its
+contraction maps. The polynomial projection alone does
+not specify those operations.
+
+\section{The binary holonomic dual}
+\label{cbc:hc:dual}
+
+Duality must transpose the attachment, including its normal
+derivative. In one variable let $D$ and $L$ be as in
+Proposition~\ref{cbc:hc:reverse-hom}. Trivialize the canonical
+line by $du$ and use the adjoint anti-involution
+$u^t=u$, $\partial^t=-\partial$.
+For a holonomic left module $N$, the convention is
+\[
+ \mathbb D N={}^{t}R\operatorname{Hom}_D(N,D)[1],
+\]
+where a right module becomes a left module by the adjoint.
+This includes the one-dimensional duality shift
+\cite{HottaTakeuchiTanisaki2008}*{Definition~2.6.1 and Corollary~2.6.8}.
+
+\begin{proposition}\label{cbc:hc:binary-dual}
+There is an isomorphism
+\begin{equation}\label{cbc:hc:dual-module}
+ \mathbb D L\simeq D/D(u\partial).
+\end{equation}
+If $e$ is its cyclic generator, then $p_1=\partial e\ne0$,
+and there is a nonsplit exact sequence of differential modules
+\begin{equation}\label{cbc:hc:dual-extension}
+ 0\longrightarrow D/Du\xrightarrow{\ 1\mapsto p_1\ }
+ D/D(u\partial)\xrightarrow{\ e\mapsto1\ }k[u]
+ \longrightarrow0.
+\end{equation}
+This sequence splits as a sequence of $k[u]$-modules.
+\end{proposition}
+
+\begin{proof}
+Apply $\operatorname{Hom}_D(-,D)$ to the free resolution
+of \eqref{cbc:hc:localization-presentation}. Its only
+cohomology is in degree one. The adjoint of the relation is
+\[
+ (u\partial+1)^t=-\partial u+1=-u\partial.
+\]
+The duality shift puts this cokernel in degree zero,
+giving \eqref{cbc:hc:dual-module}.
+
+A normal spanning set for the quotient is $u^me$, $m\geq0$,
+and $p_j=\partial^je$, $j\geq1$. Their actions are
+\begin{align*}
+ up_1&=0,& up_j&=-(j-1)p_{j-1}\quad(j>1),&
+ \partial p_j&=p_{j+1},\\
+ \partial e&=p_1,&
+ \partial(u^me)&=m u^{m-1}e\quad(m\geq1).&&
+\end{align*}
+These rules satisfy $[\partial,u]=1$ on every indicated
+vector and $u\partial e=0$. Conversely they define a
+module on the free vector space with that basis, generated
+by $e$. The normal spanning set is therefore independent.
+
+The span of the $p_j$ is $D/Du$, and the quotient on the
+$u^me$ is $k[u]$, proving exactness.
+
+Every lift of $1\in k[u]$ is $e+\sum_{j=1}^Na_jp_j$.
+Its derivative has nonzero $p_1$ coefficient, so no lift is
+horizontal and no $D$-linear section exists. The assignment
+$u^m\mapsto u^me$ is, however, a $k[u]$-linear section.
+\end{proof}
+
+The original localization sequence is
+$0\to k[u]\to L\to L/k[u]\to0$.
+The adjoints of their relations $\partial$ and $u$ show
+that the regular and delta constituents are self-dual.
+Sequence~\eqref{cbc:hc:dual-extension} reverses their order and
+retains the nonzero derivative $\partial e=p_1$.
+Tensoring with the tangential regular connection gives the
+corresponding extension with the common translation coordinate.
+By \eqref{cbc:hc:binary-transition}, the complete primitive
+dual over the normal-coordinate ring is
+\[
+ \mathbb D H_2\simeq k[u]\oplus D/D(u\partial).
+\]
+
+This calculation fixes the extension in the primitive
+holonomic category. A duality for the full field coefficient
+must additionally specify its completion and its operations.

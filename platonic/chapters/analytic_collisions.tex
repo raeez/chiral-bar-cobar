@@ -1,0 +1,1919 @@
+\chapter{Analytic coefficients and collision monodromy}
+\label{cbc:chap:analytic}
+
+Formal translation is finite on each mode polynomial. Numerical
+translation acts on an infinite series of modes and can destroy its
+convergence. The first question is therefore quantitative: how much
+jet radius does moving a point consume? For the Heisenberg
+coefficients, a single series of bosons determines the exact loss.
+The same seminorms then determine where the full line gauge exists.
+
+A collision also changes the attachment of a coefficient to the
+regular module. We retain this attachment in finite models of
+punctured lines. Their higher products distinguish a marked
+localization from its primitive quotient. Moving two punctures
+together leads to an inverse telescope, while differentiation in
+all spatial variables gives a different Hom complex. These
+calculations provide explicit coefficient categories on which
+collision transport can be studied.
+
+We first work over $\mathbb C$, with $\kappa\ne0$. Differentials
+have cohomological degree one, odd derivatives act on the left,
+and exterior forms stand on the left of coefficient expressions.
+The algebraic sections below work over a field $k$ of characteristic
+zero. Every completion and every change of coefficient category
+will be specified.
+
+\section{Convergent jets and numerical translation}
+\label{cbc:ac:completion}
+
+For a finite set $I$, let
+\[
+ Y_I=\mathbb C[B_{i,n}:i\in I,\ n\geq0]
+          \otimes\Lambda(C_{i,n}:i\in I,\ n\geq0),
+ \qquad |B_{i,n}|=0,\quad |C_{i,n}|=1.
+\]
+Fix an order for the odd generators. For a monomial $m$, let
+$d_i(m)$ be its number of factors at site $i$, counted with
+multiplicity. Give $B_{i,n}$ weight $n$ and $C_{i,n}$ weight
+$n+1$, and let $w_i(m)$ be the total weight at that site.
+Field degree and jet weight will be controlled independently.
+
+\begin{definition}\label{cbc:ac:seminorms}
+For positive real numbers $A_i,r_i$, set
+\[
+ \left\|\sum_m f_m m\right\|_{\mathbf A,\mathbf r}
+      =\sum_m |f_m|\prod_{i\in I}
+                       A_i^{d_i(m)}r_i^{w_i(m)}.
+\]
+Given positive radii $\mathbf R=(R_i)_{i\in I}$, define
+$\mathcal Y_I(\mathbf R)$ as the completion of $Y_I$ for
+all these seminorms with $0<r_i<R_i$ and $A_i>0$.
+Its cochain complex uses the homogeneous cohomological-degree
+subspaces.
+\end{definition}
+
+Signed multiplication is submultiplicative for each seminorm.
+A repeated odd generator gives zero. Taking rational amplitudes
+cofinal toward infinity and rational radii cofinal below $R_i$
+gives a countable defining family. Thus $\mathcal Y_I(\mathbf R)$
+is a Fr\'echet algebra. It consists exactly of the coefficient
+series for which every displayed absolute sum converges.
+Polynomial truncations converge in this topology.
+
+The subalgebra containing only $J_i=B_{i,0}$ is
+$\mathcal O(\mathbb C^I_J)$, the entire functions of the
+charges. Indeed its seminorms are the absolute power-series
+sums at all positive amplitudes. The projection and inclusion are
+\[
+ \pi:\mathcal Y_I(\mathbf R)\longrightarrow
+                           \mathcal O(\mathbb C^I_J)
+ \quad\text{and}\quad
+ \iota:\mathcal O(\mathbb C^I_J)\longrightarrow
+                           \mathcal Y_I(\mathbf R).
+\]
+
+For an open position domain $U$, a holomorphic coefficient
+series $\sum_m f_m(z)m$ is admitted when
+\[
+ \sum_m\sup_{z\in K}|f_m(z)|
+             \prod_i A_i^{d_i(m)}r_i^{w_i(m)}<\infty
+\]
+for every compact $K\subset U$ and every defining seminorm.
+Use these series as coefficients of holomorphic differential
+forms, denoted by $\Omega^\bullet(U;\mathcal Y_I(\mathbf R))$.
+Position derivatives are continuous by Cauchy estimates on
+slightly larger compact subsets. Entire charge coefficients
+use the same convention.
+
+Recall the derivations of \eqref{cbc:cf:operators}:
+\[
+ QB_n=\kappa nC_{n-1},\quad QC_n=0,\qquad
+ TB_n=nB_{n-1},\quad TC_n=nC_{n-1},\qquad
+ LC_n=\kappa^{-1}B_n,\quad LB_n=0.
+\]
+An index $-1$ gives zero. At several sites take their sums.
+If $N$ counts the ghosts and the positive-index bosons,
+define
+\begin{equation}\label{cbc:ac:h}
+ h=N^{-1}\sum_{i,n\geq0}
+        \frac{B_{i,n+1}}{\kappa(n+1)}\partial_{C_{i,n}}
+       \quad(N>0),\qquad h=0\quad(N=0).
+\end{equation}
+
+\begin{proposition}\label{cbc:ac:continuous-contraction}
+The operators $Q,T,L,h$ are continuous on
+$\mathcal Y_I(\mathbf R)$. Their polynomial identities extend
+to this completion. In particular,
+\[
+ Qh+hQ=1-\iota\pi,\qquad
+ h^2=h\iota=\pi h=0,\qquad
+ \|hF\|_{\mathbf A,\mathbf r}
+              \leq|\kappa|^{-1}\|F\|_{\mathbf A,\mathbf r}.
+\]
+This is an $\mathcal O(\mathbb C^I_J)$-linear strong
+deformation retract onto the entire charges in degree zero.
+\end{proposition}
+\begin{proof}
+We give the one-site estimates. For $r<r'<R$, put
+$c(r/r')=\sup_{w\geq0}w(r/r')^w$, which is finite.
+The operator $Q$ preserves field degree and jet weight.
+On a monomial of weight $w$, the sum of its absolute
+coefficients is at most $|\kappa|w$. The operator $T$
+lowers weight by one, with total coefficient at most $w$.
+Consequently
+\[
+ \|QF\|_{A,r}\leq|\kappa|c(r/r')\|F\|_{A,r'},\qquad
+ \|TF\|_{A,r}\leq r^{-1}c(r/r')\|F\|_{A,r'}.
+\]
+
+For $A<A'$, the operator $L$ has the bound
+\[
+ \|LF\|_{A,r}\leq
+   \frac{\sup_{d\geq0}d(A/A')^d}{|\kappa|r}
+                            \|F\|_{A',r}.
+\]
+These estimates prove continuity for the full seminorm family.
+At finitely many sites the estimates add.
+
+Every replacement in \eqref{cbc:ac:h} preserves field degree
+and jet weight. Its absolute coefficient is
+$1/(|\kappa|(n+1)N)$. The number of ghosts is at most $N$,
+which proves the bound for $h$. The numerator of $h$
+anticommutes with $Q$ to give $N$, squares to zero, and
+commutes with $N$. The resulting polynomial identities
+therefore extend by density and continuity.
+
+The operator never differentiates a charge. Its charge
+linearity extends from polynomials to entire functions.
+\end{proof}
+
+In particular, the inclusion from polynomial to analytic
+coefficients changes the cohomology from
+$\mathbb C[J_i:i\in I]$ to $\mathcal O(\mathbb C^I_J)$.
+It is not a quasi-isomorphism. The larger coefficient algebra
+is the cost of allowing arbitrary numerical charges and
+convergent mode series.
+
+\begin{theorem}[Translation and its optimal radius]
+\label{cbc:ac:translation}
+For $|t|<R$, translation extends continuously to
+\[
+ \tau_t=e^{tT}:\mathcal Y(R)\longrightarrow
+                                      \mathcal Y(R-|t|).
+\]
+If $0<|t|<R$ and $S>R-|t|$, no continuous linear map
+$\mathcal Y(R)\to\mathcal Y(S)$ agrees with $\tau_t$
+on all mode polynomials.
+
+For $0<a<R$ and $D_a=\{t:|t|<a\}$, the formula
+\[
+ E_t=(1+dt\,L)\tau_t
+\]
+defines a continuous dg algebra map
+\[
+ E:\mathcal Y(R)\longrightarrow
+                         \Omega^\bullet(D_a;\mathcal Y(R-a)).
+\]
+It satisfies $E_{t+s}=E_tE_s$ wherever both sides have a
+common radius domain.
+\end{theorem}
+\begin{proof}
+For each generator,
+\[
+ \tau_tB_n=\sum_{j=0}^n\binom njt^{n-j}B_j,\qquad
+ \|\tau_tB_n\|_{A,r}\leq A(r+|t|)^n.
+\]
+For $C_n$ the corresponding bound is
+$Ar(r+|t|)^n\leq A(r+|t|)^{n+1}$.
+Multiplicativity and submultiplicativity give
+\begin{equation}\label{cbc:ac:translation-bound}
+ \|\tau_tF\|_{A,r}\leq\|F\|_{A,r+|t|}.
+\end{equation}
+Every target radius satisfies $r+|t|<R$, so the
+polynomial map extends continuously.
+
+To prove optimality, write $t=s e^{i\alpha}$ with
+$0<s<R$ and take
+\[
+ F=\sum_{n\geq0}R^{-n}e^{-in\alpha}B_n.
+\]
+Its seminorm at $A,r$ is $A/(1-r/R)$, so it belongs
+to $\mathcal Y(R)$. In the translated polynomial
+truncations, the coefficient of $B_j$ tends to
+\[
+ \sum_{n\geq j}R^{-n}e^{-in\alpha}\binom njt^{n-j}
+       =e^{-ij\alpha}\frac{R}{(R-s)^{j+1}}.
+\]
+
+Coefficient evaluation is continuous. Any continuous
+extension must therefore have these coefficients on $F$.
+Their absolute sum diverges at every radius $r>R-s$.
+Choosing $R-s<r<S$ proves the assertion.
+
+For a compact $K\subset D_a$ and $r<R-a$, one has
+$r+\sup_K|t|<R$. Thus \eqref{cbc:ac:translation-bound}
+is uniform on $K$. The estimate for $L$ controls the
+one-form component. On polynomials, the identities
+$QL+LQ=T$, $[T,L]=0$, and $L^2=0$ give
+\[
+ (Q+d_t)E_t=E_tQ,\qquad E_{t+s}=E_tE_s.
+\]
+
+The operator $dt\,L$ is a degree-zero derivation whose
+square is zero, so $1+dt\,L$ is multiplicative.
+Continuity extends these identities to the stated spaces.
+For two numerical translations a common target radius is
+any positive radius below $R-|t|-|s|$.
+\end{proof}
+
+The primitive coproduct $\Delta_0$ is continuous for the
+independently completed sites. For a target seminorm at
+$(A_1,A_2;r_1,r_2)$, choose a source amplitude at least
+$A_1+A_2$ and a source radius at least
+$\max(r_1,r_2)$, still below $R$. These choices bound
+the images of every generator. A translation in the first
+factor replaces $r_1$ by $r_1+|t|$.
+The spectral coproduct identities of
+Proposition~\ref{cbc:cf:spectral} consequently extend on
+the common domains given by these inequalities.
+
+\section{The separated gauge and its collision boundary}
+\label{cbc:ac:gauge}
+
+For two sites with separation $z$, the full primitive of
+\eqref{cbc:cf:primitive} and its differential are
+\begin{align}
+ b(z)&=-\frac1\kappa\sum_{N\geq1}\frac{z^{-N}}N
+              \sum_{a+b=N}(-1)^a\binom Na
+                         B_{1,a}B_{2,b},
+                  \label{cbc:ac:b}\\
+ r(z)&=\sum_{a,b\geq0}(-1)^a\binom{a+b}{a}
+        \frac{C_{1,a}B_{2,b}-B_{1,a}C_{2,b}}
+                    {z^{a+b+1}}.
+                  \label{cbc:ac:r}
+\end{align}
+Let $L_1$ act at the first site, and put
+\[
+ D_0=Q+d_z,\qquad
+ \mathcal A=r+dz\,L_1r,\qquad
+ \rho=\kappa^{-1}J_1J_2\,\frac{dz}{z}.
+\]
+The formulas $Qb=r$ and
+$d_zb=dz\,L_1r-\iota\rho$ hold coefficientwise.
+We now determine their domain of convergence.
+
+\begin{theorem}[Exact gauge domain]\label{cbc:ac:exact-domain}
+Fix $R_1,R_2>0$ and $z\ne0$. Each of
+$b(z)$, $e^{-b(z)}$, and $e^{b(z)}$ belongs to
+$\mathcal Y_{\{1,2\}}(R_1,R_2)$ exactly when
+\[
+ |z|\geq R_1+R_2.
+\]
+Their largest open domain of holomorphic dependence in
+this coefficient space is $|z|>R_1+R_2$.
+For $q=(r_1+r_2)/|z|<1$,
+\begin{equation}\label{cbc:ac:exact-norm}
+ \|b(z)\|_{\mathbf A,\mathbf r}
+   =\frac{A_1A_2}{|\kappa|}
+                      \sum_{N\geq1}\frac{q^N}{N}
+   =\frac{A_1A_2}{|\kappa|}\log\frac1{1-q}.
+\end{equation}
+The tail after weight $N_0$ is bounded by
+\[
+ \frac{A_1A_2}{|\kappa|}
+       \frac{q^{N_0+1}}{(N_0+1)(1-q)}.
+\]
+\end{theorem}
+\begin{proof}
+The monomials $B_{1,a}B_{2,b}$ are distinct. Summing
+their absolute coefficients at $a+b=N$ gives
+$A_1A_2q^N/(|\kappa|N)$ by the binomial theorem.
+The harmonic power series converges precisely for $q<1$.
+Requiring this for every $r_i<R_i$ is equivalent to
+$|z|\geq R_1+R_2$. The tail estimate follows by replacing
+$1/N$ with $1/(N_0+1)$ in its geometric majorant.
+
+Submultiplicativity gives
+$\|e^{\pm b}\|\leq e^{\|b\|}$ wherever $b$ belongs to
+the coefficient space. Conversely, projection to total
+field degree two is continuous and sends $e^{\pm b}$ to
+$\pm b$. The exponentials are defined coefficientwise,
+since $b$ has positive jet weight. Their membership
+therefore implies that of $b$.
+
+All bounds are uniform on compact subsets of the
+strict-inequality domain. Differentiated series converge
+there by the same geometric estimates, which prove
+holomorphic dependence. Every neighborhood of a boundary
+point contains positions where membership fails.
+Boundary membership supplies no larger open domain.
+\end{proof}
+
+\begin{theorem}[Analytic module contraction]
+\label{cbc:ac:gauge-retract}
+Let $U\subset\{z:|z|>R_1+R_2\}$ be open and put
+$G=e^{-b}$. There is a continuous strong deformation
+retract of module complexes
+\[
+ \bigl(\Omega^\bullet(U;\mathcal Y_{\{1,2\}}(R_1,R_2)),
+                                      D_0+\mathcal A\cdot\bigr)
+ \ \rightleftarrows\
+ \bigl(\Omega^\bullet(U;\mathcal O(\mathbb C^2_J)),
+                                      d_z+\rho\cdot\bigr)
+\]
+with inclusion $G\iota$, projection $\pi$, and homotopy
+$GhG^{-1}$. At any defining seminorm,
+\[
+ \|GhG^{-1}\|\leq|\kappa|^{-1}e^{2\|b\|}.
+\]
+\end{theorem}
+\begin{proof}
+In addition to \eqref{cbc:ac:exact-norm}, the binomial
+sums in \eqref{cbc:ac:r} give
+\[
+ \|r(z)\|\leq
+      \frac{A_1A_2(r_1+r_2)}{|z|-r_1-r_2},
+ \qquad
+ \|L_1r(z)\|\leq
+      \frac{A_1A_2}{|\kappa|(|z|-r_1-r_2)}.
+\]
+They make the connection form and the coefficient
+identities convergent on $U$.
+
+To check the first identity
+directly, differentiating a first-site boson in
+\eqref{cbc:ac:b} uses
+\[
+ -\frac{(-1)^a a}{N}\binom Na
+                 =(-1)^{a-1}\binom{N-1}{a-1}.
+\]
+Differentiating a second-site boson supplies the other
+term of $r$. Position differentiation of $-z^{-N}/N$
+gives $z^{-N-1}dz$. Its missing weight-zero term is
+$\iota\rho$. Hence
+\[
+ D_0b=\mathcal A-\iota\rho,\qquad
+ (D_0+\mathcal A\cdot)G=G(D_0+\iota\rho\cdot).
+\]
+
+Extend $h$ over forms with the Koszul sign. Since it is
+charge-linear, it anticommutes with both $d_z$ and
+multiplication by $\rho$. Proposition
+~\ref{cbc:ac:continuous-contraction} thus contracts the
+$\rho$-twisted complex onto the charge connection.
+Conjugation by $G$ gives the asserted retract.
+
+Every monomial of $b$ contains a positive-index boson,
+so $\pi G=\pi G^{-1}=\pi$. This proves that the
+projection remains $\pi$ and that $\pi G\iota=1$.
+The homotopy bound follows by multiplying the three
+operator bounds.
+\end{proof}
+
+For a finite ordered set of positions, require
+$|z_i-z_j|>R_i+R_j$ for every pair and define
+\[
+ b_I=\sum_{i<j}b_{ij}(z_i-z_j),\qquad
+ \mathcal A_I=\sum_{i<j}(r_{ij}+dz_{ij}L_i r_{ij}),
+ \qquad
+ \rho_I=\kappa^{-1}\sum_{i<j}J_iJ_j\,d\log z_{ij}.
+\]
+All even primitives commute. The estimates add over
+finitely many pairs, so the same retract holds with
+$G_I=e^{-b_I}$. Every pair is retained, including the
+nonconsecutive channel at three positions and the
+crossed channels at four.
+
+If a specified continuous coefficient map $f$ relates
+two untwisted models on a common radius domain, its
+conjugate is $G_t^{-1}fG_s$. For multiplicative $f$ its
+extra factor is $\exp(b_t-f(b_s))$. In compositions the
+intermediate factors cancel. Thus conjugation preserves
+the identities of the supplied maps. It does not supply
+a missing map from a native collision coefficient.
+Also $G\iota(1)=e^{-b}$: the endpoint of this module
+contraction is not the constant unit.
+
+\begin{proposition}\label{cbc:ac:essential}
+The full gauge need not extend through $z=0$ as a
+finite-pole meromorphic coefficient map on the same
+analytic carrier.
+\end{proposition}
+\begin{proof}
+Set all modes equal to zero except $B_{1,1}=a$ and
+$B_{2,0}=q$, with $aq\ne0$. This coefficient evaluation
+is continuous. For any fixed $r_1>0$, choose
+$A_1r_1>|a|$ and $A_2>|q|$.
+It sends
+\[
+ b(z)\longmapsto\frac{aq}{\kappa z},\qquad
+ G(z)\longmapsto\exp\left(-\frac{aq}{\kappa z}\right).
+\]
+
+The latter has nonzero coefficients in every negative
+power of $z$. No power of $z$ makes it holomorphic.
+A finite-pole extension would remain finite-pole under
+the continuous evaluation, which is impossible.
+\end{proof}
+
+The logarithmic connection has a different obstruction:
+its cohomology changes at resonant charges.
+
+\begin{proposition}\label{cbc:ac:resonance}
+At numerical charges $q_1,q_2$, put $\nu=q_1q_2/\kappa$.
+On a holomorphic annulus, the complex
+$d_z+\nu\,dz/z$ is acyclic if $\nu\notin\mathbb Z$.
+If $\nu\in\mathbb Z$, its cohomology is one-dimensional
+in each of degrees zero and one, represented by
+$z^{-\nu}$ and $z^{-\nu}dz/z$.
+Its horizontal monodromy is $e^{-2\pi i\nu}$.
+There is no contraction over the entire charge algebra
+that eliminates every nonzero Laurent exponent uniformly
+in the charges.
+\end{proposition}
+\begin{proof}
+On the Laurent mode $z^m$, the differential is
+multiplication by $m+\nu$, with target $z^m dz/z$.
+Except at the possible resonant exponent, division by
+$m+\nu$ has at most polynomial growth in $m$. It
+preserves Laurent convergence on compact subannuli
+and contracts exactly those modes. The horizontal
+solution is $z^{-\nu}$ on a simply connected cover,
+which gives the monodromy.
+
+For any nonzero integer $m$, the entire-charge inverse
+$(m+J_1J_2/\kappa)^{-1}$ has a pole along the nonempty
+hypersurface $J_1J_2=-\kappa m$. At a charge on this
+hypersurface the mode has nonzero cohomology.
+Uniform elimination would contradict that specialization.
+An inverse exists as a formal charge series near zero,
+but it does not extend to an entire charge function.
+\end{proof}
+
+The essential singularity concerns the full-mode gauge.
+Resonance concerns the residual charge connection.
+A collision comparison must account for both on its
+declared coefficient category. Finite algebraic models
+retain the regular attachment through a collision.
+
+\section{Punctures with their regular coefficient}
+\label{cbc:ac:punctures}
+
+Let $k$ be a field of characteristic zero, and choose distinct
+$a_1,\ldots,a_r\in k$, with $r\geq1$. Put
+\[
+ R=k[t],\qquad f=\prod_{i=1}^r(t-a_i),\qquad
+ L_f=R[f^{-1}],\qquad
+ D=k\langle t,\partial\rangle/(\partial t-t\partial-1).
+\]
+All differential modules in this section are left $D$-modules.
+The regular and localized modules have their derivative
+connections. For each puncture, the delta module is
+\[
+ \delta_i=D/D(t-a_i)
+              \simeq R[(t-a_i)^{-1}]/R.
+\]
+Partial fractions give the exact sequence
+\begin{equation}\label{cbc:ac:puncture-extension}
+ 0\longrightarrow R\longrightarrow L_f
+                 \longrightarrow\bigoplus_{i=1}^r\delta_i
+                 \longrightarrow0.
+\end{equation}
+
+We will compare two choices of objects in the dg category
+generated by this sequence. Keeping objects \emph{marked}
+means requiring equivalences to preserve the specified
+objects individually.
+
+For $q\in D$, write $r_q$ for right multiplication by $q$.
+The free resolutions
+\begin{equation}\label{cbc:ac:normal-resolutions}
+ P_0=[D\xrightarrow{r_\partial}D]\longrightarrow R,\qquad
+ P_i=[D\xrightarrow{r_{t-a_i}}D]\longrightarrow\delta_i
+\end{equation}
+have terms in degrees $-1,0$. Their differentials are
+injective: the order filtration identifies the associated
+graded of $D$ with the polynomial domain $k[t,\xi]$.
+The degree-zero augmentations send $1$ to the cyclic
+generator of the target. Products of maps below are
+compositions, with the right map applied first.
+
+\begin{lemma}\label{cbc:ac:puncture-hom}
+The mapping complexes of the regular and delta modules
+have cohomology
+\[
+ \begin{array}{c|cc}
+  \operatorname{RHom}_D(-,-)&R&\delta_j\\ \hline
+  R&k&k[-1]\\
+  \delta_i&k[-1]&
+       \begin{cases}k,&i=j,\\0,&i\ne j\end{cases}
+ \end{array}.
+\]
+Here $k[-1]$ is in cohomological degree one.
+\end{lemma}
+\begin{proof}
+Mapping the two resolutions into $R$ gives the operators
+$\partial$ and $t-a_i$ on polynomials. Integration
+contracts the first to constants. The second is injective
+with one-dimensional cokernel.
+
+On $\delta_j$, differentiation is injective with cokernel
+the simple pole $(t-a_j)^{-1}$. Multiplication by $t-a_j$
+is surjective, with kernel that same pole. If $i\ne j$,
+then $t-a_i=(t-a_j)+(a_j-a_i)$ is invertible on
+$\delta_j$. Its inverse on each vector is a finite
+geometric sum because $t-a_j$ acts locally nilpotently.
+These calculations give all four kinds of corners.
+\end{proof}
+
+Define a finite graded algebra $A_r$ with identities
+$e_0,\ldots,e_r$ and degree-one arrows
+\[
+ \alpha_i:0\longrightarrow i,\qquad
+ \beta_i:i\longrightarrow0\quad(1\leq i\leq r).
+\]
+Every product of two arrows is zero, and the differential
+is zero. Its dimension is $3r+1$. The central vertex
+represents the regular module and the leaves represent
+the individual closed coefficients.
+
+Write $\operatorname{Perf}(A_r)$ for perfect right dg
+$A_r$-modules. Write $\operatorname{thick}_D$ for closure
+under finite cones, shifts, and direct summands in the
+derived category of left $D$-modules.
+
+\begin{theorem}[The formal star category]
+\label{cbc:ac:star}
+There is a strict dg-algebra quasi-isomorphism
+\[
+ A_r\longrightarrow
+           \operatorname{End}_D(P_0\oplus P_1\oplus\cdots\oplus P_r).
+\]
+The dg Yoneda functor on these resolutions gives
+\[
+ \operatorname{Perf}(A_r)\simeq
+ \operatorname{thick}_D(R,\delta_1,\ldots,\delta_r)
+                  =\operatorname{thick}_D(R\oplus L_f).
+\]
+\end{theorem}
+\begin{proof}
+Send $e_i$ to the projection onto $P_i$. Send $\alpha_i$
+to the degree-one identity $P_0^{-1}\to P_i^0$ and
+$\beta_i$ to the degree-one identity $P_i^{-1}\to P_0^0$.
+These maps are closed. Their pairwise products vanish
+strictly, since their targets have degree zero, on which
+the next degree-one map vanishes. They represent the
+nonzero cokernel generators in
+Lemma~\ref{cbc:ac:puncture-hom}. The map is therefore
+a quasi-isomorphism on every corner.
+
+The dg Yoneda functor identifies finite cones and
+summands of these resolutions with perfect $A_r$-modules.
+Sequence~\eqref{cbc:ac:puncture-extension} puts $L_f$
+in the category generated by the regular and delta
+modules. Conversely, its cone recovers the direct sum
+of the deltas, and direct summands recover each delta.
+\end{proof}
+
+Each component of the extension
+\eqref{cbc:ac:puncture-extension} is nonsplit.
+A splitting would embed a nonzero vector annihilated
+by $t-a_i$ into the torsion-free module $L_f$.
+Normalize its nonzero extension class to one.
+Applying derived Hom into $R$ then gives
+\begin{equation}\label{cbc:ac:reverse-localization}
+ \operatorname{RHom}_D(L_f,R)
+       \simeq[k\xrightarrow{(1,\ldots,1)}k^r]
+       \simeq k^{r-1}[-1].
+\end{equation}
+
+The two-term complex has degrees zero and one.
+The reverse Hom vanishes for one puncture and acquires
+a degree-one class at the second puncture.
+Its compositions will detect the localization attachment.
+
+\subsection{The marked pair and its ternary products}
+
+The twisted complexes needed here are finite sums of
+objects of $A_r$, with a strictly triangular degree-one
+matrix $d$ satisfying $d^2=0$. Define
+\[
+ O=e_0,\qquad
+ \mathcal L=e_0\oplus e_1\oplus\cdots\oplus e_r,\qquad
+ d_{\mathcal L}=\sum_i\beta_i.
+\]
+With $e_0$ first, the twisting matrix is triangular.
+
+The corresponding free resolution has generators
+$v_0,\ldots,v_r$ in degree zero and relations
+\[
+ \partial v_0=0,\qquad v_0+(t-a_i)v_i=0.
+\]
+Its augmentation sends $v_0$ to $1$ and $v_i$ to
+$-(t-a_i)^{-1}$. This identifies its cokernel with $L_f$:
+the regular submodule and each quotient delta have the
+extension components just normalized.
+
+The differential
+is injective. A vector in its kernel first satisfies
+$x_i(t-a_i)=0$ at every leaf, hence $x_i=0$.
+Its remaining equation is $x_0\partial=0$, hence $x_0=0$.
+
+Set $B_r=\operatorname{End}(O\oplus\mathcal L)$ in the
+category of twisted complexes. Before twisting, write
+$\mathcal L_j$ for its $j$-th summand. A basis is
+\[
+ \begin{array}{c|c|c}
+  \text{element}&\text{matrix entry}&\text{degree}\\ \hline
+  e&O\to O&0\\
+  a&O\to\mathcal L_0&0\\
+  p&\mathcal L_0\to O&0\\
+  u_j&\mathcal L_j\to\mathcal L_j\ (0\leq j\leq r)&0\\
+  b_i&O\to\mathcal L_i\ (\alpha_i)&1\\
+  c_i&\mathcal L_i\to O\ (\beta_i)&1\\
+  \theta_i&\mathcal L_0\to\mathcal L_i\ (\alpha_i)&1\\
+  z_i&\mathcal L_i\to\mathcal L_0\ (\beta_i)&1 .
+ \end{array}
+\]
+
+Multiply matching entries by matrix composition. Every
+product of two degree-one entries is zero.
+The commutator differential with the twisting matrix is
+\begin{equation}\label{cbc:ac:marked-differential}
+ dp=-\sum_i c_i,\qquad
+ du_0=-\sum_i z_i,\qquad du_i=z_i\quad(i>0),
+\end{equation}
+and is zero on the remaining basis. In particular,
+\[
+ pa=e,\qquad ap=u_0,\qquad
+ ac_i=z_i,\qquad \theta_i a=b_i,\qquad b_i p=\theta_i.
+\]
+This specifies a dg algebra of dimension $5r+4$.
+
+Its cohomology $H$ has degree-zero representatives
+$E=e$, $F=\sum_{j=0}^r u_j$, and $a$. In degree one,
+choose $b_i,\theta_i$ for $i\leq r$ and $c_j$ for
+$j<r$. The remaining class is
+$[c_r]=-\sum_{j<r}c_j$. Thus $\dim H=3r+2$.
+Apart from the two identities, the only nonzero binary
+products are $\theta_i a=b_i$.
+
+Let $i:H\to B_r$ be the chosen inclusion. Define
+$\pi:B_r\to H$ by
+\[
+ \pi(u_0)=F,\quad \pi(u_j)=0\ (j>0),\quad
+ \pi(p)=\pi(z_i)=0,\quad
+ \pi(c_r)=-\sum_{j<r}c_j,
+\]
+and by the identity on the other chosen representatives.
+Define a degree-minus-one map $h$ by
+\[
+ h(z_i)=u_i,\qquad h(c_r)=-p,
+\]
+and set it to zero on the other basis vectors.
+Equation~\eqref{cbc:ac:marked-differential} gives
+\[
+ \pi i=1,\qquad dh+hd=1-i\pi,\qquad
+ h^2=hi=\pi h=0.
+\]
+These formulas retain the homotopies of the products
+$ac_j$, which vanish in cohomology.
+
+We use the suspension $|sx|=|x|-1$ and the conventions
+\[
+ b_2(sx,sy)=(-1)^{|x|}s(xy),\qquad
+ b_3(sx,sy,sz)=(-1)^{|y|}s\,m_3(x,y,z).
+\]
+Thus an unsuspended $m_n$ has degree $2-n$.
+
+\begin{theorem}\label{cbc:ac:marked-model}
+The algebra $B_r$ models
+$\operatorname{REnd}_D(R\oplus L_f)$ with its two
+objects marked. Its strictly unital minimal
+$A_\infty$-model on $H$ has the binary product above
+and the following nonzero ternary products on
+nonidentity basis elements:
+\begin{align}
+ m_3(a,c_j,\theta_i)&=-\delta_{ij}\theta_i,&
+ m_3(a,c_j,b_i)&=-\delta_{ij}b_i,\notag\\
+ m_3(c_\ell,a,c_j)&=-\delta_{\ell j}c_\ell
+        &&(j,\ell<r,\ i\leq r).
+                  \label{cbc:ac:ternary}
+\end{align}
+All $m_n$ with $n\geq4$ vanish. A suspended comparison
+to $B_r$ has $F_1=i$ and
+$F_2(sa,sc_j)=su_j$ for $j<r$.
+Its other higher components vanish.
+\end{theorem}
+\begin{proof}
+The strict quasi-isomorphism of
+Theorem~\ref{cbc:ac:star} extends to finite triangular
+twisted complexes and their Hom complexes. The displayed
+resolution identifies $O,\mathcal L$ with $R,L_f$,
+including their compositions.
+
+Transfer through $(i,\pi,h)$ gives
+\[
+ m_3(x,y,z)=(-1)^{|x|}
+       \pi\bigl(i(x)h(i(y)i(z))\bigr)
+       -\pi\bigl(h(i(x)i(y))i(z)\bigr).
+\]
+The only product of two representatives on which $h$
+is nonzero is $ac_j=z_j$, with $j<r$, and its
+homotopy is $u_j$. The products
+$u_j\theta_i$, $u_jb_i$, and $c_\ell u_j$
+give exactly \eqref{cbc:ac:ternary}.
+
+Multiplying $u_j$ by a representative gives zero,
+$u_j$, or a representative killed by $h$. A transfer
+tree with another homotopy above this multiplication
+therefore vanishes. The remaining four-input tree has
+root product $u_i u_j$, whose projection is zero.
+Every larger tree contains one of these configurations.
+The same reasoning leaves only the stated $F_2$.
+Since $hi=0$, the two identities remain strict units.
+
+The bar equation $b_{B_r}F=Fb_H$ can also be checked
+without a tree expansion. Its nonzero terms reduce
+to $du_j=z_j$ when one pair $(a,c_j)$ occurs,
+and to $u_i u_j=\delta_{ij}u_j$ when two such
+pairs occur. The suspended signs are those fixed
+above. All other terms vanish by the matrix products.
+This verifies the comparison in every arity.
+\end{proof}
+
+\begin{theorem}\label{cbc:ac:marked-nonformality}
+For $r\geq2$, the marked dg category $(R,L_f)$ is
+not equivalent, by an object-preserving strictly
+unital $A_\infty$-equivalence, to its binary
+cohomology category.
+\end{theorem}
+\begin{proof}
+Normalize the linear term of a hypothetical equivalence
+by the inverse of its cohomology isomorphism. Its
+linear term is then the identity. The arity-three
+equation would express $m_3$ as the Hochschild boundary
+of a binary map $G_2$ of degree minus one.
+
+Evaluate that boundary on $(a,c_j,\theta_i)$.
+Both adjacent binary products are zero. The term
+$aG_2(c_j,\theta_i)$ also vanishes: its second
+factor is a reverse degree-one map, and $ac_\ell=0$
+in $H$. Only $G_2(a,c_j)\theta_i$ can remain,
+up to its fixed sign. But
+$G_2(a,c_j)\in H^0\operatorname{End}(\mathcal L)=kF$,
+so it acts by the same scalar on every $\theta_i$.
+
+For fixed $j<r$, formula~\eqref{cbc:ac:ternary}
+acts by $-1$ on $\theta_j$ and by zero on
+$\theta_r$. No scalar has both values.
+The resulting rank-one projector survives modulo
+scalar endomorphisms, a contradiction.
+\end{proof}
+
+For two punctures, the obstruction is already
+\[
+ m_3(a,c_1,\theta_1)=-\theta_1,\qquad
+ m_3(a,c_1,\theta_2)=0.
+\]
+For one puncture, there is no reverse class and
+the five-dimensional minimal model is formal.
+The formal star generator and the nonformal marked
+pair can therefore generate the same dg category.
+The marked objects determine which formality question
+is being asked.
+
+\subsection{The primitive three-point chart}
+
+The primitive module $H_3$ of
+\eqref{cbc:hc:primitive} supplies a geometric instance.
+On $z_1-z_3\ne0$, write
+\[
+ z_3=s_0,\qquad z_1=s_0+u,\qquad z_2=s_0+ut.
+\]
+Here $u$ is invertible. Let $e_i$ denote the generic
+residue vectors, and set $v_0=e_2-e_3$ and
+$v_1=e_1-e_2$.
+
+\begin{proposition}\label{cbc:ac:primitive-chart}
+There is a horizontal isomorphism
+\[
+ H_3|_{u\ne0}\simeq k[s_0,u,u^{-1}]\otimes_k
+ \bigl(k[t]e_3\oplus k[t,t^{-1}]v_0
+                   \oplus k[t,(t-1)^{-1}]v_1\bigr).
+\]
+Its generated dg category has model
+$\operatorname{Perf}(E\otimes_k A_2)$, where
+$E=\Lambda(\rho)$, $|\rho|=1$, and $d\rho=0$.
+Adding the auxiliary exterior coefficients of $H_3$
+does not enlarge this generated category.
+\end{proposition}
+\begin{proof}
+The finite presentation of
+Theorem~\ref{cbc:hc:presentation} gives
+\[
+ g_{23}=\frac{v_0}{ut},\qquad
+ g_{12}=\frac{v_1}{u(1-t)},\qquad
+ g_{13}=\frac{v_0+v_1}{u},\qquad
+ g_{123}=-\frac{v_0}{u^2t}+\frac{v_1}{u^2(1-t)}.
+\]
+The singleton generators are regular combinations of
+$e_3,v_0,v_1$. These formulas and their position
+derivatives place every generator in the proposed
+module. Conversely, $g_{23},g_{12}$ and their
+derivatives generate all finite poles at $t=0,1$
+in the two stated lines.
+
+Flatness from
+Corollary~\ref{cbc:hc:flat} implies torsion-freeness.
+The generic residue map is thus injective, and the
+two submodules with these generators coincide.
+Differentiating the rational representatives proves
+horizontality.
+
+The three shape summands generate $k[t],\delta_0,\delta_1$
+by their localization triangles. Theorem~\ref{cbc:ac:star}
+identifies their category with $\operatorname{Perf}(A_2)$.
+It also contains the double localization. Exterior
+coefficients are sums of these localizations. A rank-one
+localized summand has zero second exterior power,
+as follows by flatness and passage to the generic point.
+No additional generator is needed.
+
+The scale coefficient $k[u,u^{-1}]$ has de Rham
+cohomology represented by $1,du/u$. Their span is
+the strict algebra $E$. Polynomial common translation
+contracts to $k$. Tensoring the bounded free
+resolutions in the three independent coordinates
+gives the asserted dg model.
+\end{proof}
+
+The three summands of the primitive are a different
+marking from the pair consisting of a regular and
+a doubly localized module.
+
+\begin{proposition}\label{cbc:ac:primitive-formal}
+Put $L_1=k[t,t^{-1}]$, $L_2=k[t,(t-1)^{-1}]$,
+and $K=k[t]\oplus L_1\oplus L_2$, with the three
+summands marked. Its derived endomorphism algebra
+has a strict formal model $C$ of dimension eleven.
+The degree-zero basis consists of the three identities
+and $a_i:O\to L_i$ for $i=1,2$. The degree-one
+basis consists of
+\[
+ b_i:O\to L_i,\qquad
+ \theta_{ji}:L_i\to L_j\quad(i,j=1,2).
+\]
+Apart from identity actions, the products are
+$\theta_{ji}a_i=b_j$. The marked primitive on
+the chart consequently has formal model $E\otimes C$.
+\end{proposition}
+\begin{proof}
+Over $A_2$, use $O=e_0$ and the twisted complexes
+$\mathcal L_i=(e_0\oplus e_i,\beta_i)$.
+Represent $a_i$ by the identity into the central
+summand and $b_i$ by $\alpha_i$ into the leaf.
+Represent $\theta_{ji}$ by $\alpha_j$ from the central
+summand of $\mathcal L_i$ to the leaf of
+$\mathcal L_j$. All these maps are closed.
+
+Each reverse block $\operatorname{Hom}(\mathcal L_i,O)$
+is a two-term isomorphism and is acyclic. For $i\ne j$,
+the block $\operatorname{Hom}(\mathcal L_i,\mathcal L_j)$
+has one central map in degree zero and two maps in
+degree one. Its differential spans the map from the
+source leaf to the target center, leaving $\theta_{ji}$.
+On a diagonal block, the sum of its two identities
+and $\theta_{ii}$ represent the two classes.
+The remaining blocks are represented by $1_O,a_i,b_i$.
+
+These eleven maps therefore represent every class and
+no boundary. They form a subalgebra with the stated
+products, so their inclusion is a strict
+quasi-isomorphism. Tensoring with the scale model and
+the contracted translation factor proves the last claim.
+\end{proof}
+
+The exterior coefficients $\Lambda^0H_3$ and
+$\Lambda^3H_3$ restrict instead to the scale factor
+tensored with $k[t]$ and
+$k[t,t^{-1},(t-1)^{-1}]$. Marking this pair retains
+the ternary projector of
+Theorem~\ref{cbc:ac:marked-nonformality}.
+Tensoring with $E$ does not remove it: the degree-zero
+endomorphisms remain scalars, and the reverse
+degree-one maps are still the $c_j$.
+Thus primitive formality does not determine the
+marked exterior system.
+
+\section{Two punctures through a collision}
+\label{cbc:ac:confluence}
+
+We now allow the punctures to meet. Work over $B=k[s]$
+with the relative Weyl algebra
+\[
+ D_B=B\langle t,\partial_t\rangle/
+                         (\partial_t t-t\partial_t-1).
+\]
+The parameter $s$ is central. At this stage there is
+no derivative in $s$. Put
+\[
+ f=t(t-s),\qquad L_B=B[t,f^{-1}],\qquad
+ A_m=f\partial_t+m f_t,\qquad
+ P_m=D_B/D_BA_m\quad(m\geq1).
+\]
+
+The cyclic generator $e_m$ maps to $f^{-m}$.
+The relation $A_m(f^{-m})=0$ makes this a
+differential-module map.
+
+The finite-stage phenomenon of
+Example~\ref{cbc:hc:spurious-delta} is explicit here.
+For a nonzero scalar $a$, the specialization $s=a$
+has two simple roots, and $P_m$ presents their
+localization.
+
+Near a root, write $f=uv$ with $u$
+its linear coordinate and $v$ invertible. Replacing
+the generator by $v^m e_m$ gives the relation
+$(u\partial_u+m)v^m e_m=0$. The Weyl normal
+form identifies this module with the localization
+generated by $u^{-m}$. Away from both roots it
+is the regular rank-one connection. These local
+presentations establish the claim on the fiber.
+
+At $s=0$, put $C_m=t\partial_t+2m$.
+Then $A_m=tC_m$, and $g_m=C_me_m$ satisfies
+\[
+ tg_m=0,\qquad C_mg_m=(2m-1)g_m.
+\]
+There is an exact sequence
+\[
+ 0\longrightarrow D/Dt
+   \xrightarrow{\,r_{C_m}\,}D/D(tC_m)
+   \longrightarrow D/DC_m\longrightarrow0.
+\]
+
+Right cancellation in $D$ proves injectivity of the
+first map. The last quotient is $k[t,t^{-1}]$,
+generated by $t^{-2m}$. The vector
+$\ell_m=e_m-g_m/(2m-1)$ satisfies $C_m\ell_m=0$
+and splits this quotient. Hence
+\begin{equation}\label{cbc:ac:extra-delta}
+ P_m\otimes_B k_0\simeq k[t,t^{-1}]\oplus\delta_0,
+ \qquad g_m\longmapsto0\text{ in }L_B\otimes_B k_0.
+\end{equation}
+The finite presentation acquires an extra closed
+coefficient at the collision.
+
+The transition between denominator orders removes it.
+The identity
+\[
+ A_mf=fA_{m+1}
+\]
+gives $P_m\to P_{m+1}$ by $e_m\mapsto f e_{m+1}$.
+It lifts to right multiplication by $f$ in both
+degrees of $[D_B\xrightarrow{r_{A_m}}D_B]$.
+Lemma~\ref{cbc:hc:localization-telescope} identifies
+the direct-sum telescope of these resolutions with
+$L_B$.
+
+Explicitly, the colimit relations give
+\[
+ \partial_t e_m=-m f_t e_{m+1},\qquad
+ \frac p{f^m}\longleftrightarrow p e_m.
+\]
+These maps are inverse and horizontal.
+They remain so after every scalar extension $B\to C$:
+the leading coefficient $f$ is monic in $t$, hence
+a non-zero-divisor over $C$.
+
+At $s=0$, the transition sends
+\[
+ g_m\longmapsto C_m t^2e_{m+1}
+                 =t^2C_{m+1}e_{m+1}=t^2g_{m+1}=0.
+\]
+Thus the full telescope retains exactly the
+localization at the collision.
+
+\subsection{Finite traces and the inverse telescope}
+
+Apply derived Hom into $B[t]$ with its derivative
+connection. The stage complex is
+$[B[t]\xrightarrow{A_m}B[t]]$ in degrees zero and one.
+On monomials,
+\begin{equation}\label{cbc:ac:stage-action}
+ A_m(t^n)=(n+2m)t^{n+1}-(n+m)s t^n.
+\end{equation}
+Write $(a)_n=a(a+1)\cdots(a+n-1)$, with $(a)_0=1$.
+
+\begin{lemma}\label{cbc:ac:finite-trace}
+The stage complex has zero kernel and a free rank-one
+cokernel over $B$. Its quotient map, normalized by
+$\pi_m(1)=1$, is
+\[
+ \pi_m(t^n)=\frac{(m)_n}{(2m)_n}s^n.
+\]
+The inverse transition on cokernels satisfies
+\begin{equation}\label{cbc:ac:trace-transition}
+ \pi_m(fp)=-\frac{m}{2(2m+1)}s^2\pi_{m+1}(p).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The leading coefficient in \eqref{cbc:ac:stage-action}
+is an invertible positive integer. The operator
+raises the degree of every nonzero polynomial by one,
+so it is injective. Descending elimination reduces
+each polynomial uniquely to a constant modulo its
+image. The successive relations are
+\[
+ \pi_m(t^{n+1})
+       =\frac{n+m}{n+2m}s\,\pi_m(t^n).
+\]
+They give the stated moments and a polynomial
+primitive for every vector with zero moment.
+Substituting $f=t^2-st$ and these moments proves
+\eqref{cbc:ac:trace-transition} on each monomial.
+\end{proof}
+
+Rescale by constants $c_1=1$ and
+$c_{m+1}=-m c_m/(2(2m+1))$.
+In the coordinates $a_m=c_m\pi_m(p_m)$, the
+inverse system becomes
+\[
+ B\xleftarrow{s^2}B\xleftarrow{s^2}B
+                           \xleftarrow{s^2}\cdots
+\]
+in degree one. Dualizing the full direct-sum telescope
+requires products and the derived inverse limit of
+this system.
+
+\begin{theorem}\label{cbc:ac:relative-dual}
+With $Q=k[[s]]/k[s]$ taken as an algebraic module
+quotient, there is an equivalence of $B$-complexes
+\[
+ \operatorname{RHom}_{D_B}(L_B,B[t])
+                 \simeq Q[-2].
+\]
+In the normalized coordinates, the quotient is realized by
+\[
+ (a_m)_{m\geq1}\longmapsto
+            \left[\sum_{m\geq1}s^{2m-2}a_m\right].
+\]
+\end{theorem}
+\begin{proof}
+Hom from the free telescope is the product difference
+complex of the stage mapping complexes.
+Lemma~\ref{cbc:ac:finite-trace} reduces it to
+\[
+ \prod_{j\geq0}B\xrightarrow{\Delta}\prod_{j\geq0}B,
+ \qquad \Delta(b)_j=b_j-s^2b_{j+1},
+\]
+in degrees one and two. Its kernel is zero:
+the relation forces each $b_j$ to be divisible
+by every power of $s^2$.
+
+The sum $\sum_{j\geq0}s^{2j}a_j$ is well-defined
+as a formal series. On a boundary it telescopes
+to the polynomial $b_0$. Conversely, suppose
+the sum is a polynomial $p$. Set
+\[
+ b_j=s^{-2j}\left(p-\sum_{i<j}s^{2i}a_i\right).
+\]
+
+The numerator is a polynomial. Its formal-series
+expression is a tail of order at least $2j$,
+so it is divisible by $s^{2j}$ in $B$.
+Thus $b_j\in B$ and $\Delta(b)=a$.
+Finally, any $\sum c_n s^n$ is obtained by taking
+$a_j=c_{2j}+c_{2j+1}s$.
+This proves the asserted cokernel and all its degrees.
+\end{proof}
+
+The constant sequence $a_m=1$ gives the nonzero
+class of $(1-s^2)^{-1}$ modulo polynomials.
+The formal-series quotient therefore represents
+an actual relative mapping class.
+
+\begin{proposition}\label{cbc:ac:base-change}
+The preceding derived Hom does not commute with the
+flat extension $B\to B[s^{-1}]$. More precisely,
+\begin{align*}
+ \operatorname{RHom}_{D_B}(L_B,B[t])
+                   \otimes_B B[s^{-1}]&\simeq Q[-2],\\
+ \operatorname{RHom}_{D_{B[s^{-1}]}}
+       (B[s^{-1}][t,f^{-1}],B[s^{-1}][t])
+                              &\simeq B[s^{-1}][-1].
+\end{align*}
+For a closed fiber $s=a$, however,
+\[
+ Q[-2]\otimes_B^{\mathbf L}k_a
+       \simeq
+       \begin{cases}k[-1],&a\ne0,\\0,&a=0\end{cases}.
+\]
+These are the derived Hom groups of the corresponding
+closed-fiber localizations.
+\end{proposition}
+\begin{proof}
+Multiplication by $s$ is bijective on $Q$.
+If $sF$ is polynomial, then $F$ is polynomial.
+Removing a constant term and dividing by $s$ gives
+surjectivity. Thus localizing $Q$ leaves it unchanged.
+In contrast, after inverting $s$ in the stage system,
+all transitions are invertible. Its limit is
+$B[s^{-1}]$, its higher derived limit vanishes,
+and its surviving degree is one.
+
+For the closed fibers use
+$0\to B\to k[[s]]\to Q\to0$.
+The formal-series module is torsion-free over the
+principal ideal domain $B$, hence flat.
+For $a\ne0$, the element $s-a$ is invertible on
+$k[[s]]$. The exact triangle therefore gives
+$Q\otimes_B^{\mathbf L}k_a\simeq k[1]$.
+For $a=0$, bijectivity of $s$ on $Q$ makes the
+tensor complex acyclic. Formula
+~\eqref{cbc:ac:reverse-localization} gives the
+same answers for two distinct punctures and one
+puncture, respectively.
+\end{proof}
+
+In particular, $L_B$ is not perfect over $D_B$.
+A bounded resolution by finite projectives would
+make Hom into $B[t]$ commute with this flat extension.
+The bounded free telescope has infinitely generated
+terms, and its Hom involves the products just computed.
+
+\subsection{Restoring the parameter connection}
+
+The quotient $Q$ was computed without differentiating
+in $s$. The flat telescope connection of
+\eqref{cbc:hc:spatial-connection} restores that
+derivative before taking Hom. On its lowest
+generator it is
+$\nabla_s h_m=-m f_s h_{m+1}$.
+For the corresponding degree-two Hom coordinate
+$p_m$, the induced action is therefore
+\[
+ p_m\longmapsto \partial_s p_m+m f_s p_{m+1}.
+\]
+This determines the connection on the quotient.
+
+\begin{theorem}\label{cbc:ac:quotient-connection}
+On $Q=k[[s]]/k[s]$, the induced parameter derivative is
+\[
+ D_Q[F]=\left[F'+\frac{F-F(0)}s\right].
+\]
+It satisfies $[D_Q,s]=1$ and is invertible as a
+$k$-linear map. Its inverse is
+\[
+ K_Q[F]=\left[\frac1s\int_0^s\tau F(\tau)\,d\tau\right].
+\]
+Consequently, for the full Weyl algebra $D_{s,t}$,
+\[
+ \operatorname{RHom}_{D_{s,t}}(L_B,k[s,t])\simeq0.
+\]
+\end{theorem}
+\begin{proof}
+Choose constant-in-$t$ representatives $p_m=b_m(s)$
+of the stage cokernels. Since $f_s=-t$ and
+$\pi_m(t)=s/2$, their derivatives have moments
+$b_m'-(m/2)s b_{m+1}$.
+Multiplication by $c_m$ converts this to
+\[
+ a_m'+(2m+1)s a_{m+1}.
+\]
+For $F=\sum_{m\geq1}s^{2m-2}a_m$, summing gives
+$F'+(F-a_1)/s$. Its difference from the stated
+formula is the polynomial $(F(0)-a_1)/s$:
+$a_1$ is a polynomial with constant term $F(0)$.
+Thus both define the same map on $Q$.
+
+Both $D_Q$ and $K_Q$ preserve polynomial
+representatives. On formal monomials,
+$K_Q(s^n)=s^{n+1}/(n+2)$.
+Direct calculation gives
+$D_QK_QF=F$ and $K_QD_QF=F-F(0)$.
+The latter constant disappears in $Q$.
+Also $D_Q(sF)-sD_Q(F)=F+F(0)$ on representatives,
+which proves the Weyl relation on the quotient.
+
+The Spencer resolution of
+Proposition~\ref{cbc:hc:spencer-resolution} computes
+full spatial Hom from the relative complex with
+its parameter derivative. The relative cohomology
+is concentrated in degree two, so truncation leaves
+$[Q\xrightarrow{D_Q}Q][-2]$.
+Its inverse $K_Q$ contracts the complex.
+\end{proof}
+
+For example, the relative class of $(1-s^2)^{-1}$
+has the spatial primitive
+\[
+ -\frac{\log(1-s^2)}{2s}
+     =\sum_{n\geq0}\frac{s^{2n+1}}{2n+2}.
+\]
+This is a formal series regular at zero.
+No analytic convergence is needed in this computation.
+
+There is also a finite verification of the full
+spatial vanishing. Put $x=t$, $y=t-s$.
+Then $L_B=k[x^{\pm1},y^{\pm1}]$. The two commuting
+cyclic operators are $E_x=x\partial_x+1$ and
+$E_y=y\partial_y+1$. Their tensor resolution gives
+the Hom complex
+\[
+ k[x,y]\xrightarrow{p\mapsto(E_xp,E_yp)}k[x,y]^2
+       \xrightarrow{(a,b)\mapsto E_xb-E_ya}k[x,y].
+\]
+
+Since $E_x^{-1}(x^iy^j)=x^iy^j/(i+1)$, its
+contraction is
+$h_1(a,b)=E_x^{-1}a$ and
+$h_2(c)=(0,E_x^{-1}c)$.
+Commutation with $E_y$ proves $dh+hd=1$ and
+$h^2=0$. The relative nonzero class and the
+spatial vanishing thus have explicit representatives
+and comparison differentials.
+
+\section{Spatial Hom and intersections of supports}
+\label{cbc:ac:spatial-supports}
+
+Full spatial Hom need not vanish for every
+localization. Its answer depends on which support
+intersections exist. Let $X=\mathbb A_k^d$,
+$R=k[x_1,\ldots,x_d]$, and let
+$H_i=\{\ell_i=0\}$ be a nonempty finite list of
+affine hyperplanes defined over $k$. Use the full Weyl
+algebra $D_X$ and the ordinary connection on
+\[
+ L=R[(\ell_1\cdots\ell_r)^{-1}].
+\]
+
+The \emph{intersection nerve} has a face
+$S\subseteq\{1,\ldots,r\}$ when
+$H_S=\bigcap_{i\in S}H_i$ is nonempty.
+Put its augmentation in degree zero:
+\begin{equation}\label{cbc:ac:nerve-complex}
+ B^0=k,\qquad
+ B^q=\bigoplus_{\substack{|S|=q\\H_S\ne\varnothing}}k
+                       \quad(q\geq1).
+\end{equation}
+The differential is alternating incidence in
+increasing index order. In particular,
+$B^0\to B^1$ is the diagonal map.
+
+\begin{theorem}\label{cbc:ac:spatial-nerve}
+There is a natural equivalence
+\[
+ \operatorname{RHom}_{D_X}(L,R)\simeq B^\bullet
+\]
+that retains the support-inclusion maps of the
+finite intersection diagram.
+\end{theorem}
+\begin{proof}
+First let $W\subseteq X$ be a nonempty affine
+linear subspace of codimension $c$. Choose
+independent normal coordinates $u_1,\ldots,u_c$.
+The local-cohomology complex $R\Gamma_W R$ is
+the tensor of $[R\to R[u_i^{-1}]]$.
+Thus it is $\delta_W[-c]$, where $\delta_W$
+is the tensor of the normal principal-part
+modules and the regular tangential module.
+
+In one normal coordinate the free resolution of
+the principal-part module is
+$[D\xrightarrow{r_u}D]$.
+Hom into $k[u]$ has cohomology in degree one,
+and evaluation at zero identifies its cokernel
+with $k$. Tangential polynomial de Rham
+complexes contract to constants. Tensoring gives
+\[
+ \operatorname{RHom}_{D_X}(R\Gamma_W R,R)\simeq k.
+\]
+
+The canonical map to this complex from
+$\operatorname{RHom}_{D_X}(R,R)\simeq k$
+is a quasi-isomorphism. In one normal variable
+the localization triangle proves this because
+the reverse Hom from $k[u,u^{-1}]$ is
+contracted by $(u\partial_u+1)^{-1}$.
+Tensoring proves the assertion in all normal
+directions.
+
+For every inclusion of supports, these canonical
+maps from the same complex
+$\operatorname{RHom}_{D_X}(R,R)$ commute with
+the induced trace map. They therefore give an
+objectwise equivalence of diagrams, not only
+separate identifications of their cohomology.
+Every nonempty intersection contributes $k$,
+each incidence coefficient is one, and an
+empty intersection contributes zero.
+
+Iterating the finite localization complexes
+gives the Mayer--Vietoris complex for support
+in $\bigcup_iH_i$. Applying derived Hom and
+the preceding diagram equivalence gives the
+ordinary cochains of the intersection nerve.
+The triangle
+$R\Gamma_{\cup_iH_i}R\to R\to L$ identifies
+reverse Hom with the fiber of the augmentation
+from $k$ to those cochains.
+This is precisely \eqref{cbc:ac:nerve-complex}.
+\end{proof}
+
+When all hyperplanes meet, the nerve is a simplex.
+Inserting a fixed vertex contracts its augmented
+cochains. In particular, any nonempty arrangement
+of equality hyperplanes has zero reverse Hom of
+this localization into the regular target.
+
+\begin{example}[An affine triple]\label{cbc:ac:affine-triple}
+For $x=0$, $y=0$, and $x+y=1$, every pair
+intersects and the triple does not. The complex is
+\[
+ k\xrightarrow{(1,1,1)}k^3
+       \xrightarrow{(a,b,c)\mapsto(b-a,c-a,c-b)}k^3.
+\]
+It retracts onto $k[-2]$. With coordinates
+$(w_{12},w_{13},w_{23})$ on the last term, take
+\[
+ \pi(w)=w_{12}-w_{13}+w_{23},\qquad
+ i(\lambda)=(0,0,\lambda),
+\]
+and
+$h_1(a,b,c)=a$, $h_2(w)=(0,w_{12},w_{13})$.
+Substitution gives $dh+hd=1-i\pi$ and
+$h^2=hi=\pi h=0$. Thus a full spatial reverse
+class survives when the incidence diagram has
+this missing intersection.
+\end{example}
+
+\begin{corollary}\label{cbc:ac:general-position}
+Suppose $r>d\geq1$ hyperplanes are in affine
+general position. This means that every subset
+of at most $d$ intersects in the expected codimension
+and every $(d+1)$-subset has empty intersection.
+Then
+\[
+ \operatorname{RHom}_{D_X}(L,R)
+                 \simeq k^{\binom{r-1}{d}}[-d].
+\]
+\end{corollary}
+\begin{proof}
+The nerve is the $(d-1)$-skeleton of the simplex.
+For a degree-$q$ cochain $c$, set
+\[
+ (h_qc)_T=
+ \begin{cases}
+  c_{\{1\}\cup T},&1\notin T,\\
+  0,&1\in T,
+ \end{cases}
+ \qquad |T|=q-1.
+\]
+Choose top representatives supported on the
+$d$-subsets avoiding vertex one.
+For $S=\{s_1<\cdots<s_d\}$ of this kind, put
+\[
+ (\pi_dc)_S=c_S-\sum_{j=1}^d(-1)^{j-1}
+                       c_{\{1\}\cup(S\setminus\{s_j\})}.
+\]
+Alternating incidence gives
+$dh+hd=1-i_d\pi_d$, with
+$h^2=hi_d=\pi_dh=0$.
+The number of these representatives is
+$\binom{r-1}{d}$.
+\end{proof}
+
+\subsection{The global regular and localized pair}
+
+For $R_n=k[z_1,\ldots,z_n]$ and
+$\Delta_n=\prod_{i<j}(z_i-z_j)$, all equality
+hyperplanes meet. Hence, for $n\geq2$,
+\[
+ \operatorname{RHom}_{D_n}
+                (R_n[\Delta_n^{-1}],R_n)=0.
+\]
+At three points this vanishing determines the
+marked pair consisting of the regular and fully
+localized coefficient on the whole position space.
+
+Put $R=R_3$ and $L=R[\Delta_3^{-1}]$. Define
+\[
+ E_3=\Lambda(\rho)\otimes_k(k\oplus ka\oplus kb),
+ \qquad |\rho|=|a|=|b|=1,
+\]
+with zero differential and every product of two
+elements of $ka\oplus kb$ equal to zero.
+The tensor product uses the graded sign.
+
+\begin{proposition}\label{cbc:ac:global-pair}
+The derived endomorphism algebra of the marked
+pair $(R,L)$ is formal. A thirteen-dimensional
+model retaining both idempotents and the
+localization map is
+\[
+ T(E_3)=
+ \begin{pmatrix}k&0\\ E_3&E_3\end{pmatrix},
+ \qquad d=0.
+\]
+The lower-left copy models
+$\operatorname{RHom}(R,L)$, its element $1$
+is localization, and composition is graded
+matrix multiplication.
+\end{proposition}
+\begin{proof}
+On the fully localized ring use
+$c=z_3$, $u=z_1-z_3$, and
+$t=(z_2-z_3)/(z_1-z_3)$. Then
+\[
+ L=k[c]\otimes k[u,u^{-1}]
+          \otimes k[t,t^{-1},(t-1)^{-1}].
+\]
+There is a dg-algebra map from $E_3$ to
+the algebraic de Rham complex of $L$ given by
+\[
+ \rho\longmapsto du/u,\qquad
+ a\longmapsto dt/t,\qquad
+ b\longmapsto dt/(t-1).
+\]
+
+It is a quasi-isomorphism. Polynomial integration
+contracts the $c$ factor. In the $u$ factor,
+only $1$ and $du/u$ survive. Partial fractions
+in $t$ leave the two simple-pole forms.
+Polynomial forms and higher poles have
+primitives in the same ring, while residues
+prove independence of the two remaining classes.
+The two shape forms have zero product, so this
+also verifies the multiplicative assertion.
+
+Let $D_L$ be the localized differential-operator
+algebra. Exact localization and its restriction
+adjunction identify
+$\operatorname{REnd}_{D_3}(L)$ with
+$\operatorname{REnd}_{D_L}(L)$.
+To compute its product, use the Spencer resolution
+\[
+ P=D_L\otimes_k\Lambda(e_1,e_2,e_3),\qquad
+ |e_i|=-1,\qquad
+ d_P=\sum_i r_{\partial_i}\iota_i
+\]
+in coordinates $(c,u,t)$, where $\iota_i$
+contracts with $e_i$. Its order filtration
+reduces exactness to the Koszul complex of
+the derivative symbols.
+
+There is a unital dg-algebra map
+\[
+ \Omega_L^\bullet\longrightarrow
+                       \operatorname{End}_{D_L}(P),
+ \qquad f\longmapsto r_f,\qquad dx_i\longmapsto-\iota_i.
+\]
+Indeed
+$[d_P,r_f]=-\sum_i r_{\partial_i f}\iota_i$,
+and the contractions anticommute and commute
+with multiplication by functions.
+Composition with augmentation to
+$\operatorname{Hom}_{D_L}(P,L)$ is the de Rham
+complex with these signs. The augmentation is
+a quasi-isomorphism because $P$ is bounded
+and projective. Thus the displayed algebra
+map is a quasi-isomorphism.
+
+The coordinate Spencer resolution of $R$
+identifies $\operatorname{RHom}_{D_3}(R,L)$
+with the same de Rham complex. Precomposition
+with localization is the identity in these
+models. Polynomial de Rham contraction gives
+$\operatorname{REnd}_{D_3}(R)\simeq k$, and
+the reverse corner vanishes by
+Theorem~\ref{cbc:ac:spatial-nerve}.
+
+To retain composition, choose a dg enhancement
+of the pair and a closed localization map
+$\lambda:R\to L$. Write $A=\operatorname{End}(L)$
+there. The strict dg functor from $T(A)$
+to this pair uses the scalar unit on
+$\operatorname{End}(R)$, the identity on $A$,
+and $a_0\mapsto a_0\lambda$ on the forward
+corner. Its reverse corner is zero.
+Every corner map is a quasi-isomorphism by
+the calculations above. The multiplicative
+zigzag $A\simeq\Omega_L^\bullet\leftarrow E_3$
+therefore gives $T(A)\simeq T(E_3)$, preserving
+the idempotents and localization map.
+\end{proof}
+
+On the chart $u\ne0$, the regular object becomes
+$R[u^{-1}]$. The chart pair, viewed on the
+whole space by restriction and direct image,
+is consequently $(R[u^{-1}],L)$.
+It has the nonzero reverse corner and ternary
+obstruction of Theorem~\ref{cbc:ac:marked-nonformality}.
+The whole-space pair in
+Proposition~\ref{cbc:ac:global-pair} has regular
+object $R$. These different objects account
+for their different formality statements.
+Neither statement by itself determines the
+full exterior system with its primitive,
+second exterior coefficient, diagonal
+attachments, and vacuum maps.
+
+\section{Higher braid transport}
+\label{cbc:ac:braids}
+
+The formal star algebra $A_r$ has no products between
+its nonidentity arrows. It can nevertheless carry
+transport with nonzero higher components. We construct
+such transport on its bar, keeping the leaf generators
+as part of the data.
+
+Fix $r\geq2$ and put $S=\bigoplus_{i=0}^rke_i$.
+The augmentation $A_r\to S$ kills every arrow.
+Its reduced relative bar coalgebra is
+\[
+ BA_r=T_S^c((A_r/S)[1]),
+\]
+where $s$ lowers degree by one and $T^c$ is the
+direct sum over tensor lengths, with deconcatenation
+coproduct. Every suspended arrow has degree zero.
+Thus $BA_r$ is concentrated in degree zero and
+its bar differential is zero.
+
+The full dual is the path-length completion
+$\widehat P$ of the reverse quiver. Denote its
+arrows by
+\[
+ x_i:0\longrightarrow i,\qquad
+ y_i:i\longrightarrow0,
+\]
+where $x_i$ pairs with $s\beta_i$ and $y_i$
+with $s\alpha_i$. Pairing reverses the order
+of the tensors. There is no Koszul sign because
+the suspended arrows have degree zero.
+
+Products are composition with the rightmost map
+applied first. The central loops and units are
+\[
+ z_i=y_ix_i,\qquad g_i=e_0+z_i,\qquad
+ g_i^{-1}=\sum_{m\geq0}(-z_i)^m.
+\]
+Every finite path quotient is finite-dimensional.
+Infinite expressions below mean their compatible
+values in these quotients.
+
+\begin{theorem}\label{cbc:ac:braid-substitution}
+For $j=i+1$, exchange $e_i,e_j$, fix the other
+idempotents, and define
+\begin{align}
+ \sigma_i(x_i)&=x_jg_i^{-1},&
+ \sigma_i(y_i)&=g_i y_j,\notag\\
+ \sigma_i(x_j)&=x_i,&
+ \sigma_i(y_j)&=y_i.
+                 \label{cbc:ac:braid-formulas}
+\end{align}
+Fix all other arrows. These substitutions are
+continuous automorphisms of $\widehat P$.
+They satisfy the braid relations and preserve
+the ordered product $g_1\cdots g_r$.
+Their inverses are
+\[
+ \begin{aligned}
+  \sigma_i^{-1}(x_i)&=x_j,&
+  \sigma_i^{-1}(y_i)&=y_j,\\
+  \sigma_i^{-1}(x_j)&=x_i g_j,&
+  \sigma_i^{-1}(y_j)&=g_j^{-1}y_i.
+ \end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+Every substituted arrow has positive length,
+so the formulas define continuous endomorphisms.
+Substitution verifies both inverse identities.
+On the central units they give
+\begin{equation}\label{cbc:ac:artin}
+ \sigma_i(g_i)=g_ig_jg_i^{-1},\qquad
+ \sigma_i(g_j)=g_i.
+\end{equation}
+Thus $g_ig_j$ and the full ordered product are
+preserved.
+
+For three consecutive leaves, write the central
+units as $g,h,k$. Both sides of the adjacent
+braid relation send the three arrow pairs to
+\[
+ (x_3h^{-1}g^{-1},ghy_3),\qquad
+ (x_2g^{-1},gy_2),\qquad
+ (x_1,y_1).
+\]
+They have the same permutation of vertices.
+The relation therefore holds on all generators.
+Distant substitutions act on disjoint pairs
+and fix the central units used by the other
+substitution, so they commute.
+These identities hold in words in invertible
+units before their series expansions.
+\end{proof}
+
+The central formulas \eqref{cbc:ac:artin} are
+the usual Artin substitutions. Formula
+~\eqref{cbc:ac:braid-formulas} lifts them to
+the arrows themselves. This lift retains a
+chosen generator at each leaf, which is the
+framing of the path action.
+
+Transpose $\sigma_i$ against the finite path
+spaces. This gives a coaugmented coalgebra
+automorphism $F_i$ of $BA_r$, with its stated
+permutation of objects. Its corestrictions
+are specified in every arity by
+\begin{equation}\label{cbc:ac:braid-transpose}
+ \langle q,F_{i,n}(sa_1|\cdots|sa_n)\rangle
+      =\langle\sigma_i(q),sa_1|\cdots|sa_n\rangle
+\end{equation}
+for each dual arrow $q$.
+
+\begin{proposition}\label{cbc:ac:braid-higher}
+The components \eqref{cbc:ac:braid-transpose},
+extended by strict unitality, define augmented
+$A_\infty$-automorphisms of $A_r$. They satisfy
+the braid relations. Every even component
+vanishes, while the expansion
+\[
+ \sigma_i(x_i)=\sum_{m\geq0}(-1)^m x_jz_i^m,\qquad
+ \sigma_i(y_i)=y_j+z_i y_j
+\]
+gives nonzero components in every odd arity
+in the first family.
+\end{proposition}
+\begin{proof}
+Transposing multiplication gives the coalgebra
+identity. The zero bar differential gives the
+chain identity. On an input of fixed length,
+only finitely many path coefficients can
+contribute, since substitution never decreases
+path length. Thus the transpose preserves
+the direct-sum bar.
+
+Inverses transpose to inverses. Transposition
+reverses composition, but the adjacent braid
+words are palindromes and distant commutation
+is symmetric. The braid relations therefore
+remain valid. Every path parallel to an
+arrow has odd length. The displayed series
+then determines the parity and nonvanishing
+of the components. Adjoining the identity
+operations gives strict unitality.
+\end{proof}
+
+For the pure braid $\Phi_i=\sigma_i^2$, the
+vertices and linear terms are fixed. In
+central loop length,
+\begin{equation}\label{cbc:ac:pure-loops}
+ \begin{aligned}
+  \Phi_i(z_i)&=z_i-[z_i,z_j]+O(z^3),\\
+  \Phi_i(z_j)&=z_j+[z_i,z_j]+O(z^3),\\
+  \Phi_i(z_k)&=z_k\quad(k\notin\{i,j\}).
+ \end{aligned}
+\end{equation}
+Here $O(z^3)$ means terms of loop length at
+least three. On arrows the first corrections
+include
+\[
+ \Phi_i(x_i)=x_i-x_i z_j+O(\text{length }5),\qquad
+ \Phi_i(y_i)=y_i+z_j y_i+O(\text{length }5).
+\]
+Their transposes have identity linear term
+and nonzero ternary terms.
+
+\begin{proposition}\label{cbc:ac:pure-nontrivial}
+For $r\geq3$, $\Phi_i$ is not inner on the
+central completed free algebra. For $r=2$,
+the full path action is conjugation by
+\[
+ u=g_1g_2+(e_1+x_1y_1)+(e_2+x_2y_2).
+\]
+In either case, its transpose is not
+homotopic to the identity through augmented,
+strictly unital bar maps with the objects
+fixed.
+\end{proposition}
+\begin{proof}
+An inner automorphism of the central corner
+is conjugation by a unit with nonzero scalar
+constant term. Its degree-two correction is
+the commutator with a linear term
+$h=\sum_k a_k z_k$.
+Formula~\eqref{cbc:ac:pure-loops} forces
+$a_i=a_j=1$ and every other $a_k=0$.
+For a third generator, however,
+$[h,z_k]=[z_i+z_j,z_k]\ne0$, while
+$\Phi_i$ fixes $z_k$. This proves the first
+assertion.
+
+For two leaves, set $u_0=g_1g_2$ and
+$u_j=e_j+x_jy_j$. These are units in their
+corners and satisfy
+$u_jx_j=x_jg_j$, $y_ju_j=g_jy_j$.
+Conjugation by their sum sends
+\[
+ \begin{aligned}
+ (x_1,y_1)&\longmapsto
+   (x_1g_1g_2^{-1}g_1^{-1},\,g_1g_2g_1^{-1}y_1),\\
+ (x_2,y_2)&\longmapsto(x_2g_1^{-1},\,g_1y_2).
+ \end{aligned}
+\]
+These are the twofold substitutions of
+\eqref{cbc:ac:braid-formulas}.
+
+The reduced bars are concentrated in degree
+zero. A degree-minus-one bar homotopy must
+therefore vanish. Equivalently, a chain map
+to the bar tensored with polynomial interval
+forms has no degree-minus-one coefficient
+for a $dt$ term. Its degree-zero component
+has derivative zero and is constant.
+The nonzero ternary term rules out such a
+homotopy to the identity.
+\end{proof}
+
+The two-leaf action is inner, but that inner
+conjugation is not an augmented bar homotopy.
+The equivalence relation is part of the
+transport statement.
+
+\section{Logarithmic families and their curvature}
+\label{cbc:ac:logarithmic}
+
+Let $\Phi$ be a product of the pure-braid
+substitutions. The operator $\Phi-1$ raises
+arrow length by at least two. Its logarithm
+therefore exists on every finite path quotient:
+\[
+ \mathcal L=\log\Phi
+        =\sum_{n\geq1}\frac{(-1)^{n+1}}n(\Phi-1)^n.
+\]
+The resulting operators are compatible under
+quotient maps.
+
+\begin{lemma}\label{cbc:ac:log-derivation}
+The operator $\mathcal L$ is a continuous
+derivation. It raises arrow length by at
+least two and annihilates every vertex
+idempotent and $g_1\cdots g_r$.
+\end{lemma}
+\begin{proof}
+At any finite path precision, the expression
+\[
+ \Phi^v=\sum_{n\geq0}\binom vn(\Phi-1)^n
+\]
+is a polynomial in $v$. For every nonnegative
+integer $v$ it is multiplicative. In
+characteristic zero this is a polynomial
+identity, so it holds for arbitrary $v$.
+Differentiating at zero proves the Leibniz
+rule for $\log\Phi$.
+The length assertion follows termwise.
+Every element fixed by $\Phi$ is killed
+by each term of its logarithm, which proves
+the remaining assertions.
+\end{proof}
+
+Take $k=\mathbb C$ and write
+$D=\mathcal L/(2\pi i)$. On a punctured
+disc with coordinate $q$, define
+\begin{equation}\label{cbc:ac:log-connection}
+ \nabla=d-D\,\frac{dq}{q}.
+\end{equation}
+At a finite path quotient $D$ is nilpotent.
+Horizontal transport is
+$\exp(D\log q)$, a finite polynomial in
+$\log q$, with counterclockwise monodromy
+$\Phi$.
+
+Each quotient has the corresponding
+holomorphic lattice with a logarithmic
+connection at $q=0$. These lattices form
+a compatible inverse system. The same
+formula defines a formal logarithmic
+connection over $\mathbb C[[q]]$.
+
+\begin{theorem}\label{cbc:ac:log-family}
+Connection~\eqref{cbc:ac:log-connection} is
+flat and multiplicative. The paired bar
+coalgebra has connection
+\[
+ \nabla^\vee=d+D^\vee\,\frac{dq}{q}
+\]
+and monodromy $\Phi^{-\vee}$.
+It defines a strictly unital augmented
+$A_\infty$-algebra over logarithmic de Rham
+coefficients. Its new reduced bar components
+are
+\[
+ b_n^{\mathrm{new}}=\frac{dq}{q}(D^\vee)_n,
+                         \qquad n\geq3.
+\]
+Only odd arities occur. Every point
+evaluation recovers $A_r$.
+\end{theorem}
+\begin{proof}
+The derivation property of $D$ proves
+multiplicativity. The form $dq/q$ is
+closed and has square zero, so the
+connection is flat. The plus sign on
+the dual makes evaluation horizontal
+and gives inverse-transpose monodromy.
+
+The transpose of a derivation is a
+coderivation. Here it lowers length by
+at least two, so it acts finitely on
+each bar input and has no unary
+component. Path parity excludes even
+arities. On the bar tensored with
+logarithmic de Rham coefficients,
+$d+(dq/q)D^\vee$ is a degree-one
+coderivation of square zero. This is
+the $A_\infty$ bar equation.
+
+After desuspension, the arity-$n$
+operation has degree $2-n$.
+The original unit and binary product
+remain, and all new operations vanish
+when an input is a unit.
+Point evaluation kills $dq/q$.
+\end{proof}
+
+The pointwise algebra is constant while
+its higher transport is nontrivial.
+The boundary product is horizontal by
+Lemma~\ref{cbc:ac:log-derivation}.
+These statements concern the completed
+path algebra and its paired bar.
+
+Two collision parameters impose an
+additional equation. For three leaves
+put $\mathcal L_{12}=\log(\sigma_1^2)$
+and $\mathcal L_{23}=\log(\sigma_2^2)$.
+
+\begin{proposition}\label{cbc:ac:log-curvature}
+The two derivations have nonzero commutator:
+\[
+ [\mathcal L_{12},\mathcal L_{23}](x_1)
+    =x_1(z_3z_2-z_2z_3)+O(\text{length }7).
+\]
+Consequently, on a product of two punctured
+discs the connection
+\[
+ d-\frac{\mathcal L_{12}}{2\pi i}\,d\log q_1
+   -\frac{\mathcal L_{23}}{2\pi i}\,d\log q_2
+\]
+is not flat.
+\end{proposition}
+\begin{proof}
+The first nonzero terms of a logarithm
+agree with those of its pure map minus
+the identity. Thus
+\[
+ \mathcal L_{12}(x_1)=-x_1z_2+O(\text{length }5),
+ \qquad \mathcal L_{23}(x_1)=0,\qquad
+ \mathcal L_{23}(z_2)=[z_3,z_2]+O(z^3).
+\]
+The derivation rule gives the stated
+commutator. Its leading paths are
+distinct, so their difference is nonzero.
+The curvature is
+\[
+ (2\pi i)^{-2}[\mathcal L_{12},\mathcal L_{23}]
+                   \,d\log q_1\wedge d\log q_2.
+\]
+\end{proof}
+
+For commuting pure monodromies the logarithms
+commute, and the sum of their one-variable
+connections is flat. The displayed adjacent
+pure monodromies instead require further
+terms satisfying the curvature equation
+if they are to belong to a simultaneous
+family. One-variable transport alone
+does not construct those terms.
+
+The analytic line gauge and the framed
+path action were constructed on specified
+coefficient spaces. To identify either
+with native collision transport requires
+maps from the supported collision and
+endpoint modules. Such maps must preserve
+the normal derivatives, the regular
+attachments, both vacuum insertions, and
+nested compositions on a common continuous
+domain. The separated estimates supply
+that domain for the line calculation.
+The finite marked models specify which
+objects and higher operations a collision
+comparison must retain. An identification
+with the full ordered collision atlas
+requires this further construction.

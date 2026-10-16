@@ -1,0 +1,1237 @@
+\chapter{Residues, intersections and cut transfer}
+\label{cbc:chap:transfer}
+
+A collision of the first and last positions can cross every cut
+while leaving all intermediate positions distinct. Such a coefficient
+survives the cut cobar. At three positions it supplies the homotopy
+between the two consecutive products. At four positions the crossed
+partition $13|24$ supplies a further summand. We construct these
+coefficients and their maps before computing their cohomology.
+
+The Heisenberg example then connects two calculations. Wick
+contractions compare the coefficients on separated groups, with an
+explicit correction to their cut maps. Derived intersections compute
+the exterior powers of the primitive module across the diagonals.
+The first calculation retains operations. The second retains the
+extensions of their coefficient modules.
+
+Throughout, $k$ has characteristic zero and complexes have
+cohomological grading. We first use right differential modules on
+$X=\mathbb A^1_k$. In the sections on primitive coefficients we
+use left modules, as in Chapter~\ref{cbc:chap:heisenberg}. Tensoring
+with the canonical bundle converts between the two conventions.
+States and normal derivatives are algebraic. All pole orders on
+an individual input are finite.
+
+\section{Principal parts with spectators}
+\label{cbc:ct:residues}
+
+Let $V$ be a $k$-vector space with translation $T$. Its right
+differential module is $\mathscr V=\omega_X\otimes_kV$, with
+\[
+ (f\,dz\otimes a)\partial_z=-f'\,dz\otimes a-f\,dz\otimes Ta.
+\]
+
+For a partition $\pi$ of $[n]$, order the blocks
+$B_1,\ldots,B_r$ by their largest labels, called their roots.
+Let $i_\pi:X^r\hookrightarrow X^n$ be its diagonal, and let
+$j_r$ include the locus of distinct block positions. Put
+\begin{equation}\label{cbc:ct:partition}
+ \mathcal V_\pi=i_{\pi,*}j_{r,*}j_r^!
+                    (\mathscr V^{\boxtimes r}).
+\end{equation}
+The closed direct image includes every finite normal derivative.
+The root order orients its density and the list of block states.
+Merging blocks $i<j$ removes root $i$ and retains root $j$.
+
+In a normal coordinate $u$, write $\delta_u=[u^{-1}]$ for the
+simple principal part. In the right normal transfer convention,
+\begin{equation}\label{cbc:ct:normal}
+ \operatorname{pp}_u(u^{-m-1}a)
+       =(a\delta_u)\partial_u^m/m!,\qquad m\geq0.
+\end{equation}
+Regular series have zero principal part. A regular multiplier acts
+by its finite Taylor polynomial on any fixed normal derivative.
+
+For example, let $u=z_i-z_j$, let $t=z_e-z_j\ne0$ be a
+spectator separation, and let $r,\ell\geq1$. Then
+\begin{equation}\label{cbc:ct:spectator}
+ (u-t)^{-\ell}[u^{-r}]
+  =(-1)^\ell\sum_{a=0}^{r-1}
+      \binom{\ell+a-1}{a}t^{-\ell-a}[u^{a-r}].
+\end{equation}
+This follows by expanding $(1-u/t)^{-\ell}$. Terms with
+$a\geq r$ vanish in the principal-part module. Thus taking a
+residue retains the spectator poles and only the required normal
+jets.
+
+Suppose $V$ is a vertex algebra with vacuum $\mathbf1$, in degree
+zero. We use $Y(Ta,u)=\partial_uY(a,u)$ and
+$Y(a,u)\mathbf1=e^{uT}a$. For a multiplier $f$ in
+\eqref{cbc:ct:partition}, define
+\begin{equation}\label{cbc:ct:field-residue}
+ r_{ij}(f;a_1,\ldots,a_r)
+   =\operatorname{pp}_{z_i-z_j}
+       \bigl(f\,Y(a_i,z_i-z_j)a_j\bigr),
+\end{equation}
+keeping every other state in root order. Extend this formula over
+the existing normal transfers. Lower truncation of the field and
+the finite pole order of $f$ make its value finite.
+
+The two
+translation identities are
+\begin{align*}
+ r(f;Ta,b)&=\partial_u r(f;a,b)-r(\partial_u f;a,b),\\
+ r(f;a,Tb)&=T r(f;a,b)-\partial_u r(f;a,b)
+                                      +r(\partial_u f;a,b).
+\end{align*}
+Here $\partial_u$ differentiates the rational representative.
+After tensoring with its density it is minus the right action.
+Together with spectator differentiation, they prove that
+\eqref{cbc:ct:field-residue} is a map of right differential modules.
+
+\begin{proposition}[The residue relations]\label{cbc:ct:relations}
+Disjoint mergers commute. For three blocks $i<j<\ell$,
+\begin{equation}\label{cbc:ct:three}
+ r_{(ij),\ell}r_{ij}-r_{i,(j\ell)}r_{j\ell}
+                         +r_{j,(i\ell)}r_{i\ell}=0.
+\end{equation}
+The residues commute with restrictions to cut opens and with
+surviving exceptional collision restrictions. A vacuum in the
+first merged block gives the principal part of the multiplier.
+A vacuum in the second gives its principal part multiplied by
+the creation series $e^{uT}a$.
+\end{proposition}
+
+\begin{proof}
+Disjoint mergers use disjoint state factors and independent normal
+variables. Their finite principal parts commute. Cuts and surviving
+collision restrictions use the same block variables and normal
+transfer. The vacuum assertions are the two vacuum field identities.
+
+For three blocks put $s=z_i-z_\ell$ and $t=z_j-z_\ell$.
+Mutual locality and lower truncation give a common germ
+\[
+ m\in V[[s,t]][s^{-1},t^{-1},(s-t)^{-1}]
+\]
+whose two separated expansions are $Y(a,s)Y(b,t)c$ and
+$Y(b,t)Y(a,s)c$. Indeed a sufficiently large power of $s-t$
+makes these equal, and their common expansion has bounded negative
+powers of both $s$ and $t$. Weak associativity identifies its
+expansion near $s=t$ with $Y(Y(a,s-t)b,t)c$.
+
+Write $P_{a,b}$ for the oriented iterated principal part along
+$a=0$, then $b=0$. The three-channel identity for such a germ is
+\[
+ P_{s-t,t}-P_{t,s}+P_{s,t}=0.
+\]
+It is the boundary squared in the localization complex of the
+three lines. Partial fractions in $s$ over $k((t))$ give a
+second verification. The poles at $0$ and $t$ give the two
+terms in the expansion at infinity. The polynomial part has
+zero second principal part.
+
+Multiplication by powers of $s,t,s-t$ and differentiation
+preserve the identity, so it holds with every finite normal
+derivative. Transport the density once in each change of normal
+coordinates. Applying this identity to $fm$ proves
+\eqref{cbc:ct:three} with its displayed signs.
+\end{proof}
+
+For the construction below, a \emph{residue system} means maps
+on \eqref{cbc:ct:partition} satisfying
+Proposition~\ref{cbc:ct:relations}. This permits the same
+construction whenever these coefficient identities have been
+proved, independently of a presentation by fields.
+
+\section{The finite first-cut contraction}
+\label{cbc:ct:contraction}
+
+A cut $c\in\{1,\ldots,n-1\}$ is \emph{admissible} for
+$\pi$ if each block lies on one side of $c$. Write $J(\pi)$
+for the set of admissible cuts. On the cut open $U_c$ of
+\eqref{eq:words-cut-product}, a partition crossing $c$ has zero
+restriction. An admissible partition splits into its left and
+right coefficients. Since its distinct-block locus already lies
+in $U_c$, its coefficient is the direct image from that open.
+
+Give the partition sum the shifts and differential
+\begin{equation}\label{cbc:ct:coalgebra}
+ C_n=\bigoplus_\pi\mathcal V_\pi[|\pi|],\qquad
+ d_C|_\pi=\sum_{i<j}(-1)^{i-1}r_{ij},\qquad C_0=k.
+\end{equation}
+The two orders of a disjoint merger have opposite signs. The
+three orders reaching one triple block give
+\eqref{cbc:ct:three}. Thus $d_C^2=0$.
+
+Restriction and splitting
+on every $U_c$ give a strong cut coproduct. The differential on
+the two sides is the tensor differential. Successive cuts
+restrict to the same open set.
+
+The positive cut cobar has one cell $(\pi,Q)$ for each
+$Q\subseteq J(\pi)$:
+\begin{equation}\label{cbc:ct:cells}
+ K_n=\bigoplus_{\pi,Q\subseteq J(\pi)}
+       \mathcal V_\pi[|\pi|-|Q|-1].
+\end{equation}
+For states in degree zero its cell degree is $|Q|+1-|\pi|$.
+
+Write $D=v+\delta$, where $v$ inserts a cut and $\delta$
+merges two blocks in one of the segments of $Q$. If $r_{\leq c}$
+counts blocks before $c$, and $i<j$ are global block indices in
+segment $\ell$, the signs are
+\begin{align}
+ v_c&=(-1)^{\#\{q\in Q:q<c\}+1-r_{\leq c}}\operatorname{id},
+                    &&c\in J(\pi)\setminus Q,
+                    \label{cbc:ct:cut-sign}\\
+ \delta_{ij}&=(-1)^{\ell-1+i}r_{ij}.
+                    \label{cbc:ct:merge-sign}
+\end{align}
+
+These follow from the cobar rule
+$d(tc)=-t(d_Cc)+\sum(-1)^{|c'|+1}(tc')(tc'')$,
+where $t$ has degree one and $r_{\mathrm{before}}$ counts
+the blocks in the segments preceding $\ell$.
+Moving past the preceding segments
+contributes $\ell-1-r_{\mathrm{before}}$. The internal merger
+contributes $i-r_{\mathrm{before}}$. The split contributes
+$1-r_{\leq c}+r_{\mathrm{before}}$. This gives both signs.
+The residue relations and cut compatibility give
+$v^2=\delta^2=v\delta+\delta v=0$.
+
+A partition is \emph{indecomposable} when $J(\pi)$ is empty.
+A merger cannot create an admissible cut, so the surviving cells
+form the subcomplex
+\begin{equation}\label{cbc:ct:survivors}
+ G_n=\bigoplus_{J(\pi)=\varnothing}\mathcal V_\pi[|\pi|-1],
+       \qquad d_G|_\pi=\sum_{i<j}(-1)^ir_{ij}.
+\end{equation}
+Let $i:G_n\to K_n$ be the inclusion and $p_0$ the summand
+projection. If $c_0=\min J(\pi)$ exists, set
+\begin{equation}\label{cbc:ct:first-cut}
+ h_0(\pi,Q)=
+ \begin{cases}
+  (-1)^{1-r_{\leq c_0}}(\pi,Q\setminus\{c_0\}),&c_0\in Q,\\
+  0,&c_0\notin Q.
+ \end{cases}
+\end{equation}
+On indecomposable partitions set $h_0=0$.
+
+\begin{theorem}[Finite residue retract]\label{cbc:ct:retract}
+The finite formulas
+\begin{equation}\label{cbc:ct:finite-retract}
+ \Theta=\sum_{a=0}^{n-1}(-\delta h_0)^a,
+       \qquad \rho=p_0\Theta,\qquad H=h_0\Theta
+\end{equation}
+give maps of differential-module complexes and a homotopy
+\[
+ \rho D=d_G\rho,\quad D i=i\,d_G,\quad \rho i=1,\quad
+ DH+HD=1-i\rho,\quad H^2=Hi=\rho H=0.
+\]
+They commute with monotone collision restrictions under the
+coefficient identifications of Chapter~\ref{chap:collision-words}.
+\end{theorem}
+
+\begin{proof}
+Adding and removing $c_0$ in either order gives the identity.
+The terms at any other cut cancel, since its position in the
+ordered cut list changes by one when $c_0$ is removed. Hence
+\[
+ vh_0+h_0v=1-ip_0,\qquad
+ h_0^2=h_0i=p_0h_0=0,\qquad p_0i=1.
+\]
+Each $\delta$ lowers the number of blocks, so
+$(\delta h_0)^n=0$ and $\Theta=(1+\delta h_0)^{-1}$.
+
+Put $E=1+\delta h_0$. Using $\delta i=i\,d_G$ gives
+\[
+ DE-Ev=\delta-\delta(vh_0+h_0v)=\delta ip_0.
+\]
+Since $h_0\delta i=0$, one has $\Theta\delta i=\delta i$.
+Multiplication on both sides by $\Theta$ therefore gives
+$\Theta D=v\Theta+i\,d_Gp_0\Theta$. Projecting proves the
+chain-map identity for $\rho$. It also gives
+\[
+ DH+HD=(vh_0+h_0v+\delta h_0)\Theta=1-i\rho.
+\]
+
+Finally $\Theta i=i$ and $\Theta h_0=h_0$ give all side
+conditions. Every term is a finite composition of coefficient
+maps and keeps its full normal transfer.
+
+Under a monotone collision only partitions whose blocks are
+unions of collision fibers survive. No admissible cut of such a
+partition lies inside a fiber. Its cuts therefore identify with
+those of the quotient partition, with the same order and block
+counts. This preserves $h_0$, its signs and the residues. The
+identifications compose because they preserve the same lists.
+\end{proof}
+
+At two positions,
+\[
+ K_2=[\mathcal V_{1|2}\xrightarrow{(-r_{12},1)}
+           \mathcal V_{12}\oplus\mathcal V_{1|2}],\qquad
+ \rho(p,q)=p+r_{12}q,
+\]
+in degrees $-1,0$. The residue term in $\rho$ is necessary.
+
+At three positions,
+\[
+ G_3=[\mathcal V_{2|13}\xrightarrow{-r_{2,(13)}}
+                         \mathcal V_{123}].
+\]
+The first term has degree $-1$.
+
+At four positions the terms,
+in increasing degree, are
+\begin{equation}\label{cbc:ct:four}
+ \mathcal V_{2|3|14}
+ \xrightarrow{\left(\begin{smallmatrix}
+ -r_{2,14}\\r_{3,14}\\-r_{2,3}\\0
+ \end{smallmatrix}\right)}
+ \begin{matrix}
+ \mathcal V_{3|124}\oplus\mathcal V_{2|134}\\
+ {}\oplus\mathcal V_{23|14}\oplus\mathcal V_{13|24}
+ \end{matrix}
+ \xrightarrow{\ (-r_{3,124},-r_{2,134},-r_{23,14},-r_{13,24})\ }
+ \mathcal V_{1234}.
+\end{equation}
+Their degrees are $-2,-1,0$. The composite is
+$r_{3,124}r_{2,14}-r_{2,134}r_{3,14}+r_{23,14}r_{2,3}=0$.
+The crossed summand $13|24$ has its own outgoing residue even
+though the degree-$-2$ term does not map to it.
+
+\section{Transferred products}
+\label{cbc:ct:products}
+
+Put $K=(K_n)_{n\geq1}$ and $G=(G_n)_{n\geq1}$.
+Concatenation of cobar words inserts the cut between them. It
+gives the associative product $\mu$ on $K$, with the empty unit
+adjoined in arity zero. Let $s:K\to K[1]$ have degree $-1$.
+Set
+\[
+ b_1(sx)=-sDx,\qquad b_2(sx,sy)=(-1)^{|x|}s\mu(x,y),
+ \qquad B_1(sx)=-sd_Gx.
+\]
+
+Write $\bar i=sis^{-1}$, $\bar\rho=s\rho s^{-1}$ and
+$\bar H=-sHs^{-1}$. Define
+\begin{equation}\label{cbc:ct:trees}
+ F_1=\bar i,\qquad
+ L_r=\sum_{a+b=r}b_2(F_a\otimes F_b),\qquad
+ F_r=-\bar H L_r,\qquad B_r=\bar\rho L_r\quad(r\geq2).
+\end{equation}
+Tensor composition includes the Koszul signs. Each $F_r$ has
+degree zero and each $B_r$ degree one.
+
+\begin{theorem}\label{cbc:ct:transfer-products}
+The maps $B_r$ define an $A_\infty$-algebra on $G$ for the
+cut product. The maps $F_r$ define an $A_\infty$
+quasi-isomorphism $G\to K$. All sums are finite in each arity.
+On singleton inputs,
+\begin{equation}\label{cbc:ct:outer}
+ B_n(sx_1,\ldots,sx_n)=s\,r_{1n}(x_1,\ldots,x_n),
+                \qquad n\geq2.
+\end{equation}
+Its target is the coefficient of
+$2|\cdots|n-1|\{1,n\}$ in degree $2-n$ of $G_n$.
+\end{theorem}
+
+\begin{proof}
+Let $T^c_{\mathrm{cut}}$ be the reduced tensor coalgebra for
+the cut product, with deconcatenation. Extend $b_1$ to
+$T^c_{\mathrm{cut}}(sK)$, writing the resulting differential
+as $d$, and extend $b_2$ as a coderivation
+$\beta$. The dg associative identities say
+$d\beta+\beta d=\beta^2=0$. The tensor extension of the
+retract has maps $I_0=T^c_{\mathrm{cut}}(\bar i)$,
+$P_0=T^c_{\mathrm{cut}}(\bar\rho)$ and
+homotopy, on length $a$,
+\[
+ H_0=\sum_{j=0}^{a-1}(\bar i\bar\rho)^{\otimes j}
+           \otimes\bar H\otimes1^{\otimes(a-j-1)}.
+\]
+The terms telescope to $dH_0+H_0d=1-I_0P_0$, with the
+three zero side conditions.
+
+Define
+\[
+ Q=\beta(1+H_0\beta)^{-1},\quad
+ I=(1+H_0\beta)^{-1}I_0,\quad
+ P=P_0(1+\beta H_0)^{-1}.
+\]
+Every inverse is a finite geometric series, since $\beta$
+lowers tensor length. Substituting
+$Q=\beta-\beta H_0Q$ into the contraction identity gives
+\[
+ dQ+Qd=-QI_0P_0Q.
+\]
+It follows by multiplication that
+$B=B_1+P_0QI_0$ squares to zero,
+$(d+\beta)I=IB$, $P(d+\beta)=BP$ and $PI=1$.
+
+For deconcatenation $\Delta$ one has
+$\Delta H_0=(H_0\otimes1+I_0P_0\otimes H_0)\Delta$.
+Apply this identity to $I=I_0-H_0\beta I$ and
+$P=P_0-P\beta H_0$. Induction on tensor length, using
+$H_0I=PH_0=0$, shows that $I,P$ are coalgebra maps.
+Consequently $B=P(d+\beta)I$ is a coderivation. Its
+length-one components are exactly \eqref{cbc:ct:trees}.
+These facts prove the $A_\infty$ identities and the
+quasi-isomorphism assertion.
+
+For singleton inputs let $e_n$ denote the uncut cell and $w_c$
+the cell with sole cut $c$. The product and suspension signs
+give, inductively,
+\[
+ L_n=\sum_{c=1}^{n-1}(-1)^{1-c}s w_c,
+       \qquad Hw_1=e_n,\qquad Hw_c=0\ (c>1).
+\]
+After removing the first cut, there is no cut left for another
+$h_0$. Thus $F_n=se_n$.
+
+Also $\rho w_c=0$ for $c>1$,
+whereas $\rho w_1=-p_0\delta e_n$. Of the single mergers
+of the singleton partition, only $1\sim n$ leaves no admissible
+cut. Its sign in $\delta$ is negative. This proves
+\eqref{cbc:ct:outer}.
+\end{proof}
+
+\begin{corollary}[The coefficients of higher mergers]
+\label{cbc:ct:merger-signs}
+Let $m\geq2$, and take inputs $x_a$ with indecomposable partitions
+$\pi_1,\ldots,\pi_m$ on consecutive groups of positions.
+Put $r_a=|\pi_a|$ and $r=\sum_a r_a$. Number the blocks of
+their union in root order. For state coefficients in degree zero,
+\begin{equation}\label{cbc:ct:suspended-mergers}
+ B_m(sx_1,\ldots,sx_m)
+ =s\sum_{i=1}^{r_1}\sum_{j=r-r_m+1}^{r}
+                    (-1)^{i+1}r_{ij}(x_1,\ldots,x_m).
+\end{equation}
+Here $r_{ij}$ acts on the union coefficient.
+
+Define the desuspended map $m_m=s^{-1}B_m s^{\otimes m}$.
+Since $|x_a|=1-r_a$, its formula is
+\begin{equation}\label{cbc:ct:desuspended-mergers}
+ m_m(x_1,\ldots,x_m)
+ =\sum_{i=1}^{r_1}\sum_{j=r-r_m+1}^{r}
+ (-1)^{i+1+\sum_{a=1}^m(m-a)(1-r_a)}
+                         r_{ij}(x_1,\ldots,x_m).
+\end{equation}
+Every formal merger coefficient for this contraction is $1$ or $-1$.
+\end{corollary}
+
+\begin{proof}
+The union partition has admissible cuts exactly at the input
+boundaries. We prove by induction that $F_a$ sends its suspended
+inputs to the suspended uncut union with coefficient one.
+This holds for $F_1$.
+
+A split $p+q=a$ in \eqref{cbc:ct:trees} creates a cell with
+one cut, after input $p$. On such a cell $H=h_0$.
+Indeed, removing its cut leaves no cut for the next $h_0$,
+and a residue does not insert one. Only $p=1$ survives, because
+$h_0$ removes the first admissible cut.
+The signs of $b_2$ and $h_0$ are both $(-1)^{1-r_1}$.
+They cancel, proving the induction.
+
+At the root, the only part of $\rho$ that survives on a
+one-cut cell is $-p_0\delta h_0$. Again only $p=1$ contributes.
+The product and homotopy signs cancel as above.
+The merger $r_{ij}$ then has coefficient $(-1)^{i+1}$.
+A single merger removes every input boundary exactly when it
+joins the first input to the last. Each such merger survives
+$p_0$ once, proving \eqref{cbc:ct:suspended-mergers}.
+
+Evaluating $s^{\otimes m}$ on homogeneous inputs contributes
+the sign $(-1)^{\sum_a(m-a)|x_a|}$ by the tensor Koszul rule.
+This proves \eqref{cbc:ct:desuspended-mergers}.
+\end{proof}
+
+For example, on inputs with partitions $2|13$, $4$ and $5$,
+the desuspended ternary map is $r_{2,5}-r_{13,5}$.
+The formula fixes the first-cut contraction. It makes no claim
+about coefficients obtained from a different contraction.
+
+On three singleton inputs, Theorem~\ref{cbc:ct:transfer-products}
+gives the homotopy $h=r_{13}$ and
+\[
+ d_Gh=r_{(12),3}r_{12}-r_{1,(23)}r_{23}.
+\]
+In arity four the expression
+$L_4=b_2(F_1,F_3)+b_2(F_2,F_2)+b_2(F_3,F_1)$ contains
+the five planar binary trees. The square-zero identity for $B$
+includes all their boundary terms with the Koszul signs. Its
+maps are defined on the common localized coefficient. They use
+no identification of incompatible iterated Laurent series.
+
+The construction also applies to dg state coefficients when
+residues are cochain maps and all permutations use the Koszul
+rule. On a cell shifted by $r-|Q|-1$, the internal differential
+is multiplied by $(-1)^{r-|Q|-1}$. Tensoring the first-cut
+contraction with the state complexes gives the same proof.
+
+For a concrete three-position value, take the Heisenberg current
+with $[J_m,J_n]=\kappa m\delta_{m+n,0}$, so
+$J=J_{-1}\mathbf1$ and $TJ=J_{-2}\mathbf1$. Set
+$s=z_1-z_3$, $t=z_2-z_3$ and use the multiplier $t^{-2}$
+on three current inputs. Let $L,R,N$ first merge $12,23,13$,
+respectively, and then merge the remaining pair. In the full
+normal module at $s=t=0$ their values are
+\begin{align*}
+ L&=\kappa(s^{-2}t^{-2}+2s^{-3}t^{-1})J,\\
+ R&=\kappa(2s^{-2}t^{-2}+2s^{-3}t^{-1})J
+                         +\kappa s^{-2}t^{-1}TJ,\\
+ N&=\kappa s^{-2}t^{-2}J+\kappa s^{-2}t^{-1}TJ.
+\end{align*}
+
+These are principal-part classes, with their density understood.
+Indeed
+\[
+ \operatorname{pp}_t(t^{-2}Y(J,t)J)
+    =\kappa t^{-4}\mathbf1+t^{-2}J^2+t^{-1}(TJ)J.
+\]
+
+Contraction of the remaining current with $J^2$ gives
+$2\kappa s^{-2}J$. Contraction with $(TJ)J$ gives
+$2\kappa s^{-3}J+\kappa s^{-2}TJ$. This proves the value
+of $R$. The creation series gives $N$.
+
+For $L$, use the
+normal transfer
+\[
+ [(s-t)^{-2}t^{-2}]=[s^{-2}t^{-2}]+2[s^{-3}t^{-1}],
+\]
+obtained by differentiating the simple double principal part.
+Thus $L-R+N=0$ and $N\ne0$. Removing the nonconsecutive
+channel would remove the required homotopy while leaving a
+nonzero associativity defect.
+
+\section{Wick comparisons across a cut}
+\label{cbc:ct:wick}
+
+Two different comparisons arise for polynomial Heisenberg
+coefficients. The first changes the field kernel. The second
+contracts a Wick operator by a homotopy of the primitive
+complex. We specify their domains separately.
+
+Use polynomial states $V=k[x_1,x_2,\ldots]$ with
+$Tx_p=px_{p+1}$, vacuum $1$ and current $J=x_1$. For an even
+Laurent polynomial $P(u)$, put
+\begin{equation}\label{cbc:ct:kernel}
+ K^P_{pq}(u)=\frac{(-1)^{q-1}P^{(p+q-2)}(u)}
+                         {(p-1)!(q-1)!},\qquad
+ C_P(u)=\sum_{p,q\geq1}K^P_{pq}(u)
+                         \partial_{x_p}\otimes\partial_{x_q}.
+\end{equation}
+With $m$ the ordinary polynomial multiplication, the fields are
+$Y_P(u)=m(e^{uT}\otimes1)e^{C_P(u)}$.
+
+Only finitely many derivatives act on each polynomial, and each
+contraction lowers polynomial degree by two. The exponential
+therefore terminates. The recurrences
+$pK^P_{p+1,q}=(K^P_{pq})'$ and
+$qK^P_{p,q+1}=-(K^P_{pq})'$ give translation covariance.
+Commuting contractions give the common three-field expansion
+with exponent $C_{P,12}+C_{P,13}+C_{P,23}$. Evenness gives
+mutual locality after clearing its finitely many poles.
+Thus these fields give the residue system just constructed.
+
+For two such kernels put $H=P-Q$. On a partition coefficient
+with distinct block roots define
+\[
+ \Gamma^H_\pi=\exp\left(\sum_{a<b}C_H(z_a-z_b)_{ab}\right).
+\]
+Extend this horizontal operator to the closed direct image
+in \eqref{cbc:ct:partition}.
+For two separated groups $A,B$ in their word order, let
+$C_{H;A,B}$ be the sum of contractions between the groups.
+Write $\Delta^P_{A,B}$ for the cut restriction and splitting
+in the coefficient system of $Y_P$.
+
+\begin{proposition}\label{cbc:ct:wick-cuts}
+The operators $\Gamma^H$ are horizontal isomorphisms of the
+collision complexes, preserve vacuum coefficients, and satisfy
+\begin{align}
+ \Gamma^H_{\pi/(i\sim j)}r^P_{ij}
+       &=r^Q_{ij}\Gamma^H_\pi,\label{cbc:ct:wick-contact}\\
+ (\Gamma^H_A\boxtimes\Gamma^H_B)\Delta^P_{A,B}
+                    (\Gamma^H_{A\cup B})^{-1}
+       &=e^{-C_{H;A,B}}\Delta^Q_{A,B}.
+                                  \label{cbc:ct:wick-cut}
+\end{align}
+The cross factors obey the three-group cocycle identity and
+commute with mergers inside either group.
+\end{proposition}
+
+\begin{proof}
+The recurrences in \eqref{cbc:ct:kernel} give
+$[\partial_{z_a}+T_a,C_{H,ab}]=0$ and the corresponding
+identity at $b$, so $\Gamma^H$ is horizontal. At a merger,
+a derivative of the merged polynomial splits into its derivatives
+on the two inputs. Taylor translation changes each spectator
+separation by the collision coordinate. The internal contraction
+satisfies $Y_P=Y_Qe^{C_H}$. These identities, followed by the
+finite Taylor rule \eqref{cbc:ct:spectator}, prove
+\eqref{cbc:ct:wick-contact}.
+
+Evenness makes the same argument
+valid after permuting blocks into adjacent positions. It also
+preserves the root-change transfers. Vacuum derivatives vanish.
+
+Split the exponent of $\Gamma^H_{A\cup B}$ into its two
+internal sums and $C_{H;A,B}$. All contractions commute.
+Cancelling the internal sums gives \eqref{cbc:ct:wick-cut}.
+For three groups both iterated cross factors have exponent
+$-C_{H;A,B}-C_{H;A,C}-C_{H;B,C}$. The merger rule already
+proved gives compatibility within each group.
+\end{proof}
+
+For $Q=0$, applying $(\Gamma^P)^{-1}$ to regular polynomial
+tensors gives residue-free sections, including
+\[
+ J_1J_2-P_{12},\qquad
+ J_1J_2J_3-P_{12}J_3-P_{13}J_2-P_{23}J_1,
+ \qquad P_{ij}=P(z_i-z_j).
+\]
+The zero-kernel residue-free lattice itself contains polar
+sections: $u^{-1}(J\otimes1-1\otimes J)$ fuses to
+$(e^{uT}J-J)/u$, which is regular. It is therefore larger than
+the unlocalized external product. Also $\Gamma_1^H=1$
+while $\Gamma_2^H(J\otimes J)=J\otimes J+H(u)1\otimes1$.
+The coefficient comparison is generally not the tensor power
+of a state map.
+
+The primitive complex permits a homotopy of the cross
+contraction itself. Fix $\kappa\in k^\times$ and use
+$K_{\kappa,n}$ of \eqref{cbc:hc:linear-complex} and its
+polynomial algebra $Z_{\kappa,n}$, with
+$dx(f)=-\kappa\gamma(f')$ and $d\gamma(f)=0$.
+On an open separating groups $s,t$, the principal parts split
+by groups by Proposition~\ref{cbc:hc:cuts}.
+
+For proper rational
+$f$ in group $s$ and $g$ in group $t$, let
+$\operatorname{Res}_{D_t}$ sum residues at the whole divisor
+of group $t$. Define a degree-zero contraction $\Delta_{st}$
+by its pair value
+\begin{equation}\label{cbc:ct:wick-pair}
+ \Delta_{st}(x(f)x(g))
+       =\kappa\operatorname{Res}_{D_t}g\,df,
+\end{equation}
+and zero on pairs involving a ghost. It acts by summing over
+unordered pairs of factors in a polynomial, with the Koszul
+sign. Define degree-$-1$ pair contractions by
+\begin{equation}\label{cbc:ct:wick-primitives}
+ K^L_{st}(\gamma(f)x(g))=-\operatorname{Res}_{D_t}fg\,dw,
+ \qquad
+ K^R_{st}(x(f)\gamma(g))=-\operatorname{Res}_{D_s}fg\,dw,
+\end{equation}
+and zero on the other oriented ghost pair.
+
+\begin{theorem}[Polynomial homotopies for Wick contraction]
+\label{cbc:ct:wick-homotopy}
+On this separated-group open,
+$[d,K^L_{st}]=[d,K^R_{st}]=\Delta_{st}$.
+The contractions commute with the position connections and
+internal collisions. For finitely many group pairs $e$, choose
+$K_e$ to be either primitive or their average. Put
+$\Omega=k[t_e,dt_e]_e$, with $|t_e|=0$, $|dt_e|=1$ and
+$d_\Omega t_e=dt_e$. With these polynomial forms written
+on the left, the map
+\begin{equation}\label{cbc:ct:wick-cube}
+ \mathcal F=\exp\left(\sum_e t_e\Delta_e+dt_eK_e\right)
+\end{equation}
+from $Z_{\kappa,n}$ to $\Omega\otimes_kZ_{\kappa,n}$ is a
+cochain map. Its faces and their integrals give compatible
+Wick comparisons and homotopies for refinements of the groups.
+\end{theorem}
+
+\begin{proof}
+On $x(f)x(g)$, the left anticommutator is
+$\kappa\operatorname{Res}_{D_t}gf'\,dw$. The right one is
+$\kappa\operatorname{Res}_{D_s}fg'\,dw$. Integration by
+parts identifies them: the proper rational differential $fg'\,dw$
+has no residue at infinity, so the sum over the two groups is
+zero. On pairs with a ghost both anticommutators vanish.
+Pair values determine these constant contraction operators.
+
+Group residue is computed by monic division. It commutes with
+parameter differentiation and with internal collision substitution,
+without inverting differences inside the group. Thus the operators
+preserve these maps. Constant graded derivatives supercommute.
+
+Since forms stand on the left,
+\[
+ [d+d_{\mathbf t},t_e\Delta_e+dt_eK_e]
+     =dt_e\Delta_e-dt_e[d,K_e]=0.
+\]
+The degree-zero exponent terms commute and lower polynomial
+degree. Their finite exponential is a cochain map. Restriction
+to faces gives the endpoint maps. Polynomial Stokes gives their
+homotopy identities. Refinement partitions the same set of cross
+pairs, so all its comparisons are faces of this formula.
+\end{proof}
+
+For $\Delta=\sum_e\Delta_e$ and $K=\sum_eK_e$, the
+one-parameter integral is
+\[
+ S=K\sum_{j\geq0}\frac{\Delta^j}{(j+1)!},\qquad
+       [d,S]=e^\Delta-1.
+\]
+This sum terminates on every polynomial. For
+$f=(w-z_1)^{-m}$, $g=(w-z_2)^{-n}$ and $u=z_1-z_2$,
+the pair values are
+\begin{align}
+ \beta_{mn}&=\kappa(-1)^m
+       \frac{(m+n-1)!}{(m-1)!(n-1)!}u^{-m-n},
+                                     \label{cbc:ct:wick-values}\\
+ K^L_{mn}&=(-1)^{m+1}\binom{m+n-2}{n-1}u^{1-m-n},\qquad
+ K^R_{mn}=(-1)^m\binom{m+n-2}{m-1}u^{1-m-n}.
+                                     \notag
+\end{align}
+
+These follow by Taylor expansion at the indicated group's pole.
+At $m=n=1$ the primitives are $u^{-1}$ and $-u^{-1}$,
+and the contraction is $-\kappa u^{-2}$. The sign uses the
+rational-generator convention $dx(f)=-\kappa\gamma(f')$.
+Equation~\eqref{cbc:ct:kernel} uses the current convention
+with $Y_P(J,u)J=P(u)+(e^{uT}J)J$.
+
+The polynomial cohomology map of
+Theorem~\ref{cbc:hc:polynomial-cohomology} can be composed with
+these homotopies. Their domain allows every internal collision
+but keeps different groups disjoint. Extension through an external
+collision with both vacuum insertions remains an additional
+comparison problem.
+
+\section{Derived intersections of diagonal coefficients}
+\label{cbc:ct:intersections}
+
+The diagonal filtration of $H_n$ in
+Theorem~\ref{cbc:hc:filtration} has nonflat quotients. Already
+for $R=k[u]$ and $P=R[u^{-1}]/R$, every tensor $p\otimes q$
+vanishes: some $u^m$ kills $p$, while $q=u^mq'$ for a
+principal part $q'$. Hence $P\otimes_RP=0$. The flat
+resolution $[R\to R[u^{-1}]]$ in degrees $-1,0$ instead
+gives
+\[
+ P\otimes_R^{\mathrm L}P\simeq P[1].
+\]
+This degree is needed to pass from the diagonal filtration to
+exterior powers.
+
+Continue over $R_n=k[z_1,\ldots,z_n]$ with its left Weyl
+algebra $D_n$. For a partition $\pi$, let $\Delta_\pi$ be
+its diagonal and put $c_\pi=n-|\pi|$. Write
+\[
+ A_\pi=R\Gamma_{\Delta_\pi}R_n,\qquad
+ \delta_\pi=H^{c_\pi}_{\Delta_\pi}(R_n).
+\]
+Choose an ordered list of independent linear normal equations
+$f_1,\ldots,f_{c_\pi}$. Then
+\begin{equation}\label{cbc:ct:localization}
+ A_\pi\simeq\bigotimes_{a=1}^{c_\pi}
+     [R_n\longrightarrow R_n[f_a^{-1}]]
+       \simeq\delta_\pi[-c_\pi],
+\end{equation}
+where each bracket has degrees zero and one.
+
+The localizations
+are flat and carry their derivative connections. The cohomology
+is concentrated in degree $c_\pi$: after a linear coordinate
+change this is the tensor product of the one-variable
+principal-part calculation. Its Weyl module is the trivial
+module on the diagonal, pushed forward with all normal
+derivatives.
+
+\begin{proposition}\label{cbc:ct:diagonal-tensor}
+Let $\pi\vee\sigma$ impose both sets of equalities. There is
+an equivalence of differential-module complexes
+\begin{equation}\label{cbc:ct:excess}
+ \delta_\pi\otimes_{R_n}^{\mathrm L}\delta_\sigma
+ \simeq\delta_{\pi\vee\sigma}
+            [c_\pi+c_\sigma-c_{\pi\vee\sigma}].
+\end{equation}
+The localization complexes retain the symmetric tensor
+coherence. Ordered normal coordinates specify the signs in
+their top-principal-part identifications.
+\end{proposition}
+
+\begin{proof}
+Tensoring the localization complexes concatenates the lists of
+normal equations. This computes local cohomology on the
+intersection of their supports, so
+$A_\pi\otimes^{\mathrm L}A_\sigma\simeq A_{\pi\vee\sigma}$.
+Restoring the shifts in \eqref{cbc:ct:localization} gives
+\eqref{cbc:ct:excess}. Localization, its counit and their tensor
+maps commute with differentiation. Permutations of equations
+act by the Koszul signs. A change of independent normal basis
+uses the corresponding determinant in the principal-part
+identification.
+\end{proof}
+
+For a graph $G$ on $[n]$, allow repeated edges but no loops,
+and let $\pi_G$ be its connected-component partition. Repeated
+application of \eqref{cbc:ct:excess} gives
+\begin{equation}\label{cbc:ct:graph}
+ \bigotimes_{e\in E(G)}^{\mathrm L}\delta_e
+  \simeq\delta_{\pi_G}[\beta_1(G)],\qquad
+ \beta_1(G)=|E(G)|-n+|\pi_G|.
+\end{equation}
+
+A spanning forest supplies independent normals. Each remaining
+edge supplies one shift. For example, with $a=z_1-z_2$ and
+$b=z_2-z_3$ and $p,q\geq1$, every $[a^{-p}b^{-q}]$ is killed by
+$(a+b)^{p+q-1}$. Localizing at the third edge therefore gives
+zero, and the triangle tensor is $\delta_{123}[1]$.
+The coherent structure sheaf $R_n/I_\pi$, where $I_\pi$
+defines the diagonal, is a different module
+and has different derived intersections.
+
+In characteristic zero, the derived exterior power
+$\mathrm L\Lambda^rM$ is the image of
+$r!^{-1}\sum_{\sigma\in S_r}\operatorname{sgn}(\sigma)\sigma$
+on $M^{\otimes^{\mathrm L}r}$. Permutations here include
+the Koszul signs of the complex.
+
+\begin{lemma}\label{cbc:ct:normal-exterior}
+If $\delta=H^c_Z(R_n)$ for a linear diagonal $Z$ and $r>1$,
+then
+\[
+ \mathrm L\Lambda^r\delta\simeq
+ \begin{cases}
+  0,&c\text{ even},\\
+  \delta[(r-1)c],&c\text{ odd}.
+ \end{cases}
+\]
+For $r=1$ the exterior power is $\delta$.
+\end{lemma}
+
+\begin{proof}
+Put $A=R\Gamma_ZR_n$. Its counit $A\to R_n$ gives a
+symmetric equivalence $A^{\otimes r}\simeq A$. Indeed the
+tensor is supported on $Z$. Its map to $R_n$ lifts uniquely,
+in the derived mapping space, through the right adjoint
+$R\Gamma_Z$. Applying the counit to all but one factor gives
+equivalences with this same lift. This supplies their symmetric
+coherence.
+
+Since $\delta=A[c]$, a permutation of the shifted factors
+introduces the character $\operatorname{sgn}^c$. The alternating
+idempotent vanishes for even $c$ and is the identity for odd
+$c$. In the latter case the shift is $rc-c$. In particular
+the flip on $P\otimes^{\mathrm L}P\simeq P[1]$ is minus
+the identity.
+\end{proof}
+
+\section{Exterior powers of the primitive coefficient}
+\label{cbc:ct:exterior}
+
+Let $S(b,j)$ be the number of partitions of a $b$-element set
+into $j$ nonempty blocks. For $b\geq2$ define
+\[
+ Q_b(t)=\sum_{j=1}^b S(b,j)(j-1)!t^j,
+ \qquad s_1(\pi)=\#\{B\in\pi:|B|=1\}.
+\]
+For example, $Q_2=t+t^2$ and $Q_3=t+3t^2+2t^3$.
+
+\begin{theorem}[Diagonal multiplicities]\label{cbc:ct:multiplicities}
+For $q\geq0$, the exterior power $\Lambda^q_{R_n}H_n$ is flat over $R_n$
+and has finite length over $D_n$. It vanishes for $q>n$.
+The composition multiplicity of $\delta_\pi$ is
+\begin{equation}\label{cbc:ct:multiplicity}
+ m_{\pi,q}=[t^q](1+t)^{s_1(\pi)}
+                 \prod_{\substack{B\in\pi\\|B|\geq2}}
+                      Q_{|B|}(t).
+\end{equation}
+Consequently
+\begin{equation}\label{cbc:ct:length}
+ \operatorname{length}_{D_n}\Lambda^qH_n=q!S(n+1,q+1).
+\end{equation}
+These are composition multiplicities. The resulting modules
+need not split into their simple constituents.
+\end{theorem}
+
+\begin{proof}
+An exterior power is a direct summand of the corresponding
+tensor power, hence is flat by Corollary~\ref{cbc:hc:flat}.
+It is torsion-free over the domain $R_n$. Its generic fiber
+is the exterior power of the $n$-dimensional residue space,
+which proves vanishing above $n$.
+
+Consider the Grothendieck group of bounded differential-module
+complexes whose cohomology has finite filtrations by the
+$\delta_\pi$. These diagonal modules are simple. On a finite
+sum, polynomials in the coordinate Euler operators isolate a
+nonzero monomial. Tangential differentiation and normal
+multiplication then reduce it to the simple normal principal
+part. The reverse operations generate every monomial.
+
+Modules with
+different supports are nonisomorphic. Thus their classes are
+independent. Derived tensor remains in this category by
+Proposition~\ref{cbc:ct:diagonal-tensor}.
+
+Set $e_\pi=(-1)^{c_\pi}[\delta_\pi]$. Their multiplication
+is $e_\pi e_\sigma=e_{\pi\vee\sigma}$. Write
+$\lambda_t(M)=\sum_{r\geq0}[\mathrm L\Lambda^rM]t^r$.
+For an exact triangle $A\to B\to C$, the finite tensor
+filtration, followed by the alternating idempotent, gives
+$\lambda_t(B)=\lambda_t(A)\lambda_t(C)$. The preceding lemma
+therefore gives
+\[
+ \lambda_t(\delta_\pi)=
+ \begin{cases}
+  1+e_\pi t,&c_\pi\text{ even},\\
+  (1+e_\pi t)^{-1},&c_\pi\text{ odd}.
+ \end{cases}
+\]
+Each coefficient of this formal series involves only a finite
+derived calculation.
+
+For a partition $\tau$, evaluate $e_\pi$ as one when $\pi$
+refines $\tau$ and as zero otherwise. These are ring
+homomorphisms, and the refinement matrix is triangular with
+diagonal entries one. The subset filtration of $H_n$ gives
+\[
+ \operatorname{ev}_\tau\lambda_t(H_n)
+ =(1+t)^{\sum_{B\in\tau}\sum_{s=1}^{|B|}
+                        (-1)^{s-1}\binom{|B|}{s}}
+ =(1+t)^{|\tau|}.
+\]
+The $n$ singleton constituents are separate copies of the same
+regular module. The exponent counts all of them. These
+evaluations are operations on classes, not fibers of modules.
+
+Write $\lambda_t(H_n)=\sum_\pi a_\pi(t)e_\pi$.
+M\"obius inversion in the refinement order gives
+\[
+ a_\pi(t)=\prod_{B\in\pi}p_{|B|}(1+t),\qquad
+ p_b(x)=\sum_{j=1}^bS(b,j)(-1)^{j-1}(j-1)!x^j.
+\]
+
+To see the coefficient, a partition of one block into $j$
+pieces has M\"obius value $(-1)^{j-1}(j-1)!$ when those
+pieces are joined. Values multiply on different blocks. Their
+generating series is
+\[
+ \sum_{b\geq1}p_b(x)\frac{z^b}{b!}
+       =\log\bigl(1+x(e^z-1)\bigr).
+\]
+At $x=1+t$ this becomes
+$z+\log(1+t(1-e^{-z}))$. Hence $p_1(1+t)=1+t$ and
+$(-1)^{b-1}p_b(1+t)=Q_b(t)$ for $b\geq2$.
+The sign changing $e_\pi$ back to $[\delta_\pi]$ cancels
+these block signs and proves \eqref{cbc:ct:multiplicity}.
+
+The finite derived tensor filtrations have finitely many
+diagonal simple constituents in each exterior degree. Flatness
+identifies the derived exterior power with the ordinary one in
+degree zero. The computed coefficients are therefore actual
+composition multiplicities. Summing over partitions, with the
+empty-set term included, gives
+\[
+ \sum_{n\geq0}\sum_q
+  \operatorname{length}\Lambda^qH_n\,t^q\frac{z^n}{n!}
+     =\frac{e^z}{1-t(e^z-1)}.
+\]
+The coefficient of $t^q$ is
+$e^z(e^z-1)^q=(q+1)^{-1}\partial_z(e^z-1)^{q+1}$.
+Its coefficient of $z^n/n!$ is $q!S(n+1,q+1)$.
+\end{proof}
+
+At three positions the exterior lengths are $1,7,12,6$.
+In degree two there are three regular constituents, two on
+each pair diagonal and three on the total diagonal. The
+generic rank is three, while the differential-module length
+is twelve.
+
+For a constant $d$-dimensional space $V_0$, with $d\geq1$,
+write $m^{(d)}_{\pi,q}$ for the composition multiplicity of
+$\delta_\pi$ in $\Lambda^q(V_0\otimes H_n)$ and put
+$y=(1+t)^d-1$. The same evaluation and inversion give
+\begin{align}
+ \sum_qm^{(d)}_{\pi,q}t^q
+   &=(1+t)^{d s_1(\pi)}
+       \prod_{\substack{B\in\pi\\|B|\geq2}}Q_{|B|}(y),
+                                      \label{cbc:ct:rank-multiplicity}\\
+ \sum_q\operatorname{length}\Lambda^q(V_0\otimes H_n)t^q
+   &=\sum_{r=0}^n r!S(n+1,r+1)y^r.\notag
+\end{align}
+Indeed its exterior series evaluates at $\tau$ to
+$(1+t)^{d|\tau|}$. Flatness and generic rank give vanishing
+above $dn$. These are also the polynomial Heisenberg
+cohomology modules when the constant level form is invertible.
+The form is an invertible change of variables in the primitive
+differential of Theorem~\ref{cbc:hc:polynomial-cohomology}.
+
+\begin{proposition}[Resolutions and the determinant]
+\label{cbc:ct:exterior-resolutions}
+A flat differential-module resolution of $\Lambda^qH_n$ has
+terms
+\[
+ E_q^{-a}=\operatorname{Sym}^a(M_n)\otimes_{R_n}
+                     \Lambda^{q-a}(M_n),\qquad 0\leq a\leq q,
+\]
+with differential, for $x_i,y_j\in M_n$ and $b=q-a$,
+\begin{align*}
+ d(x_1\cdots x_a\otimes y_1\wedge\cdots\wedge y_b)
+   =\sum_{j=1}^a x_1\cdots\widehat{x_j}\cdots x_a
+       \otimes\partial_wx_j\wedge y_1\wedge\cdots\wedge y_b.
+\end{align*}
+Its augmentation is the quotient in degree zero. There is also
+an ordinary free resolution
+\begin{equation}\label{cbc:ct:exterior-telescope}
+ 0\longrightarrow\bigoplus_m\Lambda^qF_m
+ \xrightarrow{\,1-\operatorname{shift}(\Lambda^qT_m)\,}
+ \bigoplus_m\Lambda^qF_m\longrightarrow\Lambda^qH_n
+ \longrightarrow0,
+\end{equation}
+using the free stages of Theorem~\ref{cbc:hc:stages}.
+In residue coordinates, with
+$\Delta_n=\prod_{i<j}(z_i-z_j)$,
+\begin{equation}\label{cbc:ct:determinant}
+ \Lambda^nH_n\simeq R_n[\Delta_n^{-1}],\qquad
+ \Lambda^{dn}(V_0\otimes H_n)
+    \simeq R_n[\Delta_n^{-1}]\otimes\det(V_0)^{\otimes n}.
+\end{equation}
+These last maps are differential-module isomorphisms. Each
+module has length $n!$, with multiplicity
+$\prod_{B\in\pi}(|B|-1)!$ on $\Delta_\pi$.
+\end{proposition}
+
+\begin{proof}
+The flat complex $[M_n\xrightarrow{\partial_w}M_n]$ in
+degrees $-1,0$ resolves $H_n$. Alternating its $q$-fold
+tensor gives $E_q$. The negative-degree variables become
+symmetric, and the differential is the displayed sum. Two
+replacements cancel by their exterior signs. Since $H_n$ is
+flat, the alternating idempotent preserves the tensor-power
+quasi-isomorphism, proving exactness.
+
+Exterior powers commute with filtered colimits, so the
+cokernel in \eqref{cbc:ct:exterior-telescope} is the required
+module. The least occupied input stage of a nonzero finite
+sum survives under $1-\operatorname{shift}$, proving
+injectivity. Its matrix entries are the corresponding minors
+of $T_m$. This is an ordinary-module resolution: a position
+derivative can increase the pole stage. The first resolution
+itself retains the derivative connections, coefficient base
+change and the block decompositions.
+
+For the top exterior power, every transition determinant is a
+nonzero scalar times $\Delta_n^2$ by
+\eqref{cbc:hc:transition-determinant}. After scalar rescaling,
+its colimit is the localization at $\Delta_n$. In generic
+residue coordinates the connection is ordinary differentiation.
+This proves the first isomorphism in \eqref{cbc:ct:determinant}.
+The determinant identity for $V_0\otimes H_n$ proves the
+second.
+
+Permuting labels acts on the residue determinant with
+its permutation sign, and on the second determinant with that
+sign to the power $d$. The top coefficients of
+\eqref{cbc:ct:multiplicity} and
+\eqref{cbc:ct:rank-multiplicity} give the asserted multiplicities.
+Their sum counts permutations by their cycle partitions, and
+is $n!$.
+\end{proof}
+
+\section{The support left by every consecutive cut}
+\label{cbc:ct:support}
+
+The same partition geometry determines the range of the local
+vacuum coefficient. For this section $X$ may be any smooth
+geometrically connected curve over $k$. Recall
+\[
+ Z_n=\bigcap_{c=1}^{n-1}\bigcup_{i\leq c<j}\Delta_{ij}
+\]
+from \eqref{eq:words-support}. We use its reduced closed
+structure. Local cohomology depends only on its support. An
+equality partition lies in $Z_n$ precisely when each gap is
+crossed by one of its blocks.
+
+A \emph{crossing chain} of length $r$ consists of pair blocks
+$\{i_a,j_a\}$ and singleton blocks at the other positions,
+where
+\begin{equation}\label{cbc:ct:crossing-chain}
+ 1=i_1<i_2<j_1<i_3<j_2<\cdots<i_r<j_{r-1}<j_r=n.
+\end{equation}
+For $r=1$ this means just the pair $\{1,n\}$.
+
+\begin{proposition}\label{cbc:ct:components}
+The irreducible components of $Z_n$ are exactly the diagonals
+of crossing chains. There are $\binom{n-2}{2r-2}$ components
+of codimension $r$, for $1\leq r\leq\lfloor n/2\rfloor$.
+For $n\geq3$ their total number is $2^{n-3}$.
+\end{proposition}
+
+\begin{proof}
+A component is a diagonal of a refinement-minimal
+indecomposable partition. A block crosses exactly the gaps
+between its least and greatest labels. Replacing that block by
+the pair of these endpoints and making its other labels
+singletons preserves the crossed gaps. Minimality therefore
+forces pair and singleton blocks.
+
+The intervals $[i_a,j_a-1]$ of its pair blocks cover all gaps,
+irredundantly. In order of increasing $i_a$, the $j_a$ also
+increase, since otherwise an interval is contained in another.
+The next interval must start before the previous pair ends:
+$i_{a+1}<j_a$. Equality is impossible because pair blocks have
+disjoint endpoints. Irredundancy of the middle interval then
+gives $j_a<i_{a+2}$.
+
+The endpoints of the cover are $1,n$.
+These are precisely \eqref{cbc:ct:crossing-chain}, and the
+same inequalities prove conversely that every chain is an
+irredundant cover.
+
+Each pair contributes one independent normal equation. A chain
+is determined by its $2r-2$ internal endpoints, whose order
+fixes their roles. This proves the codimension and count.
+Summing the even binomial coefficients gives $2^{n-3}$ for
+$n\geq3$.
+\end{proof}
+
+On an affine-line chart one can compute the full supported
+object without splitting it into components. Put
+$f_c=\prod_{i\leq c<j}(z_i-z_j)$. For any complex $M$ of
+coefficients,
+\begin{equation}\label{cbc:ct:cut-cech}
+ R\Gamma_{Z_n}M\simeq
+ M\otimes_{R_n}^{\mathrm L}
+       \bigotimes_{c=1}^{n-1}[R_n\longrightarrow R_n[f_c^{-1}]].
+\end{equation}
+
+Each bracket has degrees zero and one. The tensor computes
+successive supports on $V(f_c)$, hence their intersection.
+Its signs use the displayed gap order. It is a flat model and
+commutes with ordinary derived coefficient base change.
+
+Let
+\[
+ \mathcal U_n=R\Gamma_{Z_n}(\omega_{X^n})[n-1]
+\]
+be the positive coefficient of the cut cobar of the local vacuum.
+This is Theorem~\ref{thm:words-support} applied to
+$\mathcal J_n=\omega_{X^n}[n]$. For a nonzero bounded complex
+$M$, define its width to be the largest nonvanishing cohomological
+degree minus the smallest.
+Write $i_{1n}:X^{n-1}\hookrightarrow X^n$ for the diagonal
+identifying the first and last positions.
+
+\begin{theorem}[Vacuum amplitude]\label{cbc:ct:amplitude}
+For $n\geq2$, the lowest cohomology of $\mathcal U_n$ is
+\[
+ H^{2-n}(\mathcal U_n)=i_{1n,*}\omega_{X^{n-1}}.
+\]
+For every $1\leq c\leq\lfloor n/2\rfloor$,
+$H^{c+1-n}(\mathcal U_n)\ne0$. Thus
+\[
+ \operatorname{width}(\mathcal U_n)\geq\lfloor n/2\rfloor-1.
+\]
+For $2\leq n\leq9$ equality holds, and
+$H^j(\mathcal U_n)=0$ for $j>\lfloor n/2\rfloor+1-n$.
+\end{theorem}
+
+\begin{proof}
+Take $V=k$ and $T=0$ in the residue construction. Its maps
+are scalar principal parts. The resulting partition complex
+resolves $\omega_{X^n}[n]$. To see this, filter $X^n$ by
+the closed unions of collision strata of increasing codimension.
+The successive localization triangles have, on each stratum
+of codimension $c$, only its degree-$c$ normal principal-part
+module.
+
+Its extension from the distinct-root locus is exactly
+\eqref{cbc:ct:partition}. Locally this open inclusion is a
+principal localization and has no higher direct images. The
+boundary between successive strata is the oriented binary
+principal part.
+
+After the common shift $[n]$, totalizing this
+finite filtration gives \eqref{cbc:ct:coalgebra} and resolves
+$\omega_{X^n}[n]$. Applying the supported-cobar theorem and
+the finite contraction gives $G_n$ for $\mathcal U_n$.
+
+The terms whose partition joins $1$ to $n$ form a subcomplex.
+They are the complete scalar Cousin resolution on $\Delta_{1n}$,
+shifted by $n-2$, since every further coarsening remains
+indecomposable. There is only one indecomposable partition
+with $n-1$ blocks, namely $\{1,n\}$ and all other labels
+single. Thus the quotient begins in degree $3-n$. The long
+exact sequence proves the lowest-degree formula and vanishing
+below it.
+
+At the generic point of a crossing-chain component of
+codimension $c$, no other component remains. Its local
+cohomology is the nonzero top principal-part module in degree
+$c$. Chains exist for every stated $c$. After the shift this
+proves the nonvanishing and the width bound.
+
+For the upper bound in the finite range, form the poset
+$\mathcal P_n$ of intersections of nonempty families of
+components, ordered by inclusion of their diagonals. For
+$L\in\mathcal P_n$, let $c(L)=\operatorname{codim}L$ and
+let $\Delta_L$ be the order complex of the diagonals strictly
+containing $L$. The local-cohomology filtration for a linear
+arrangement has graded pieces
+\begin{equation}\label{cbc:ct:arrangement-filtration}
+ H^{c(L)}_L(R_n)\otimes_k
+          \widetilde H_{c(L)-r-1}(\Delta_L;k)
+          \quad\text{in }H^r_{Z_n}(R_n).
+\end{equation}
+This is \cite{AMGLZ2003}*{Corollary~1.3}. Tensoring with
+the canonical bundle gives the right-module convention.
+
+The following finite calculation determines the needed
+vanishing. Enumerate the chains of each strict interval. If
+$N_q$ is the number of its $q$-simplices and $\rho_q$ the
+rank of the boundary in characteristic two, put
+$b_q=N_q-\rho_q-\rho_{q+1}$. Use $N_{-1}=1$, $\rho_{-1}=0$
+and the reduced augmentation: $\rho_0$ is one for a nonempty
+complex and zero for the empty one. Thus the empty complex
+has $b_{-1}=1$.
+
+Let
+$B_{n,r}=\sum_L b_{c(L)-r-1}(L)$. The boundary which deletes
+one vertex gives
+\begin{center}
+\begin{tabular}{r|r|rrrr}
+\toprule
+$n$&$|\mathcal P_n|$&$B_{n,1}$&$B_{n,2}$&$B_{n,3}$&$B_{n,4}$\\
+\midrule
+2&1&1&0&0&0\\
+3&1&1&0&0&0\\
+4&3&1&2&0&0\\
+5&10&1&10&0&0\\
+6&34&1&34&6&0\\
+7&126&1&98&78&0\\
+8&523&1&258&660&24\\
+9&2430&1&642&4764&600\\
+\bottomrule
+\end{tabular}
+\end{center}
+All other $B_{n,r}$ are zero. Boundary matrices have integer
+entries. Their ranks over characteristic zero are at least
+their ranks modulo two. Hence each reduced homology dimension
+in characteristic zero is at most the corresponding $b_q$.
+The table and \eqref{cbc:ct:arrangement-filtration} give
+$H^r_{Z_n}=0$ for $r>\lfloor n/2\rfloor$ in this range.
+
+\'Etale coordinates at the collision strata identify the
+diagonal arrangement locally with the linear one. Local
+cohomology commutes with this flat pullback, giving the same
+vanishing on $X^n$. Shifting by $[n-1]$ and using the
+nonvanishing already proved completes the argument.
+\end{proof}
+
+The table gives dimensions in characteristic two, used only
+as bounds in characteristic zero. It does not split the
+filtration. The lower bound holds in every arity, so no
+choice of shifts makes all vacuum coefficients have a
+uniformly bounded width. The corresponding upper bound for
+$n\geq10$ remains open.

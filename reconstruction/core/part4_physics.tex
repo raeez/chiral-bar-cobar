@@ -1,0 +1,960 @@
+\chapter{Perturbative BV realization of the ordered chiral object}\label{chap:bv}
+
+\section{Classical data}
+A perturbative classical field theory on a manifold \(M\) is described locally by an elliptic \(\Linf\)-algebra of fields \(\mathcal E[-1]\), an invariant pairing of degree \(-1\), and an action functional \(S\) solving the classical master equation
+\[
+ dS+\frac12\{S,S\}=0.
+\]
+Classical observables on an open set are Chevalley cochains of compactly supported fields, with differential induced by the \(\Linf\)-structure.  Disjoint support gives factorisation multiplication.
+
+On \(X^{\mathrm{an}}\times\mathbb R\), assume the kinetic complex is Dolbeault in \(X\) and de Rham or locally constant in the real direction.  A boundary condition on \(X\times\mathbb R_{\ge0}\) restricts fields to a factorisation algebra on \(X\times\mathbb R\).  The ordered interval direction then supplies a transverse \(\Eone\)-product.
+
+\section{Renormalised quantum observables}
+A gauge fixing produces a propagator \(P_\epsilon^L\) between ultraviolet and infrared scales.  Effective interactions \(I[L]\) solve the homotopy renormalisation-group equation and the quantum master equation
+\[
+ (Q+\hbar\Delta_L)e^{I[L]/\hbar}=0.
+\]
+The quantum observable differential is
+\[
+ Q_L=Q+\{I[L],-\}_L+\hbar\Delta_L.
+\]
+The QME is exactly \(Q_L^2=0\).
+
+Feynman weights are differential forms on configuration spaces of vertices.  Renormalisation extends them to compactified collision spaces after local counterterms are added.  Restriction to a boundary face factorises through contraction of the corresponding subgraph.
+
+\begin{theorem}[Feynman-weight morphism]\label{thm:feynman-weight}
+Suppose:
+\begin{enumerate}
+\item renormalised graph weights extend to the chosen two-direction compactifications;
+\item restriction to every face agrees with graph contraction and the relevant local counterterm;
+\item the renormalised QME holds;
+\item boundary observables are holomorphically algebraizable on \(X\) and locally constant in the ordered direction.
+\end{enumerate}
+Then the graph weights define a morphism from the geometric two-coloured forest resolution to the endomorphism operad of boundary observables.  Hence the boundary observables form a homotopy-coherent transversely ordered chiral algebra.  If ordered chiral collision vertices are also present, they form the corresponding doubly associative object.
+\end{theorem}
+\begin{proof}
+Face factorisation is operadic composition.  Stokes' theorem for the extended weights identifies the de Rham boundary with the sum of graph contractions.  The QME cancels the full codimension-one boundary, including BV and counterterm faces, so the assignment is a chain map.  Algebraisation and local constancy identify the resulting operations with the coefficient and transverse structures.
+\end{proof}
+
+\begin{nogobox}[title={No-go theorem 19: a classical local model does not automatically quantize}]
+A classical factorisation algebra can fail to admit a quantum lift because the one-loop obstruction class is nonzero.  Gauge fixing can fail to preserve the chosen boundary condition, and the analytic observables can fail to algebraize as regular holonomic \(D\)-modules.  The quantum ordered chiral object exists only after these obstructions vanish or are cancelled by an invertible anomaly theory.
+\end{nogobox}
+
+\section{Free holomorphic--topological BF theory}
+Let \(V\) be finite dimensional and take fields
+\[
+ A\in\Omega^{0,*}(X)\widehat\otimes\Omega^*(\mathbb R)\otimes V[1],
+ \qquad
+ B\in\Omega^{1,*}(X)\widehat\otimes\Omega^*(\mathbb R)\otimes V^*[-1]
+\]
+with action
+\[
+ S_{\mathrm{BF}}=\int_{X\times\mathbb R}
+ \langle B,(\bar\partial+d_t)A\rangle.
+\]
+The theory is Gaussian.  The de Rham contraction on an interval proves local constancy in \(t\); the Dolbeault complex gives the holomorphic coefficient.  Complementary linear boundary conditions select a polarization.  Quantization of paired boundary fields produces chiral Weyl or Clifford systems according to parity.  The central constant in the Weyl relation is handled by the curved duality of \cref{chap:augmentation}, not by a nonexistent scalar augmentation.
+
+\chapter{BRST descent and Drinfeld--Sokolov reduction}\label{chap:brst}
+The algebraic comparison between BRST reduction and the bar
+construction uses actual coalgebra maps.
+These preserve the differential and deconcatenation.
+Two small algebras show why these maps matter.
+One needs a quadratic correction to a section of cohomology.
+The other has a nonzero higher differential.
+The affine example then separates this associative calculation
+from the additional data needed for vertex-algebra reduction.
+
+\section{The comparison and its hypotheses}
+Retain the conventions of \cref{prop:brst-signed-bar}.
+Thus $A$ is an ordinary unital augmented differential graded
+associative algebra over a characteristic-zero field $k$,
+with differential $Q$ and augmentation $\epsilon Q=0$.
+Its algebraic bar $B(A)=\bigoplus_{r\geq0}(\ker\epsilon)[1]^{\otimes r}$
+has differential $D=Q_B+b$ and deconcatenation coproduct.
+If an augmentation weight is specified, it is positive on
+$\ker\epsilon$, is preserved by $Q$, and is added by multiplication.
+The weight completion and its completed tensor product are those
+of \cref{cor:brst-weight-completion}.
+
+\begin{theorem}[Bar--BRST comparison]\label{thm:bar-brst}
+If $H^i(A,Q)=0$ for $i\ne0$, then the truncation algebra
+$A_{\leq0}$ gives a canonical zigzag
+\[
+ B(A)\ \longleftarrow\ B(A_{\leq0})
+ \ \longrightarrow\ B(H^0(A,Q))
+\]
+of coaugmented differential graded coalgebra quasi-isomorphisms.
+The statement also holds for the positive-weight completions.
+\end{theorem}
+\begin{proof}
+The two augmented algebra maps are the inclusion of the
+truncation and the projection onto degree-zero cohomology.
+They are quasi-isomorphisms, as proved in
+\cref{cor:brst-concentrated-reduction}.
+Homotopy invariance of the bar gives the displayed maps.
+The completed assertion follows weight by weight.
+\end{proof}
+This theorem does not select a strict reverse map from a collapsed
+spectral sequence.  A choice of cycle representatives can require
+higher corrections, even when all cohomology lies in degree zero.
+
+\section{A comparison map from tilings}
+Consider
+\[
+ A=k[x]\otimes\Lambda(t),
+ \qquad |x|=0,\quad |t|=-1,
+ \qquad Qx=0,\quad Qt=x^2.
+\]
+The augmentation kills $x$ and $t$.
+Since multiplication by $x^2$ is injective on $k[x]$,
+the only cohomology is
+$H=H^0(A)=k[\bar x]/(\bar x^2)$.
+The quotient map $p:A\to H$ sends $x$ to $\bar x$ and $t$ to zero.
+It is an augmented algebra quasi-isomorphism.
+There is no algebra section $H\to A^0$: the image of $\bar x$
+would be a nonzero nilpotent in $k[x]$.
+
+The bar differential of $H$ is zero.
+Its length-$n$ space has basis $[\bar x|\cdots|\bar x]$.
+For each tiling of $n$ consecutive positions by blocks of sizes
+one and two, replace a singleton by $x$ and a pair by $t$.
+Let $F_n$ be the sum of the resulting bar words, with coefficient
+one for every tiling, and set $F_0=[\,]$.
+The first terms are
+\[
+ F_1=[x],\qquad F_2=[x|x]+[t],\qquad
+ F_3=[x|x|x]+[t|x]+[x|t].
+\]
+
+The map $F:B(H)\to B(A)$ sends the length-$n$ basis word to $F_n$.
+It has total degree zero: a singleton contributes $-1$ and a pair
+contributes $-2$ in the suspended grading.
+
+\begin{proposition}[Tiling comparison]\label{prop:brst-tiling-map}
+The map $F$ is a coaugmented differential graded coalgebra
+quasi-isomorphism, and $B(p)F=1$.
+For weights $\operatorname{wt}(x)=1$ and
+$\operatorname{wt}(t)=2$, it extends to the weight completions.
+\end{proposition}
+\begin{proof}
+Replacing a $t$ by $Qt=x^2$ in one tiling cancels the
+multiplication of two adjacent $x$ entries in the tiling obtained
+by splitting that pair.
+The prefixes have the same suspended degree, while $Q_B$ and
+the multiplication of two $x$ entries have opposite signs.
+
+The terms joining $x$ to $t$ cancel those joining $t$ to $x$.
+The two tilings occupy the same three consecutive positions
+and have the same exterior prefix.
+Their local signs are $+1$ and $-1$.
+The products agree because $x$ is even.
+Terms joining two $t$ entries vanish because $t^2=0$.
+These exhaust $DF_n$, so $DF_n=0$ for every $n$.
+
+Cutting a bar word produced by a tiling cuts between its blocks.
+Equivalently, choose a position $i$ and independent tilings of
+the first $i$ and last $n-i$ positions.
+Thus
+\[
+ \Delta F_n=\sum_{i=0}^n F_i\otimes F_{n-i},
+\]
+which proves the coalgebra identity.
+
+Under $B(p)$ every tiling containing $t$ vanishes.
+The singleton tiling gives the original word, so $B(p)F=1$.
+Since $B(p)$ is a quasi-isomorphism by
+\cref{thm:brst-bar-invariance}, so is $F$.
+Every term of $F_n$ has weight $n$, which proves the completed
+assertion componentwise.
+\end{proof}
+Already $F_2$ shows the necessity of the correction:
+$b[x|x]=[x^2]$ is cancelled by $Q_B[t]=-[x^2]$.
+The all-length map uses this correction coherently with every cut.
+
+\section{A nonzero higher differential}
+Let
+\[
+ A=\Lambda(x,y,z),\qquad |x|=|y|=|z|=1,
+ \qquad Qx=Qy=0,\quad Qz=xy,
+\]
+with augmentation zero on the generators.
+The weights $\operatorname{wt}(x)=\operatorname{wt}(y)=1$ and
+$\operatorname{wt}(z)=2$ are positive and preserved by $Q$.
+Its first cohomology has basis $x,y$, and all products of these
+classes vanish.  Its second cohomology has basis $xz,yz$.
+These assertions follow directly: $xy=Qz$, whereas $xz$ and $yz$
+are cycles and are not multiples of the only degree-two boundary
+$xy$.
+
+In the length spectral sequence, the word $[x|x|y]$ gives
+a nonzero class in $E_2^{3,3}$.
+Its $d_1$ is zero because the products in $H^1(A)$ vanish.
+There is no incoming $d_1$: four augmentation entries have
+unsuspended degree at least four, whereas the source would
+require degree three.
+The class $[xz]$ is nonzero in $E_2^{1,2}$.
+It is a nonzero cohomology class of $A$, and an incoming $d_1$
+could only be a product of two classes in $H^1(A)$.
+
+The signed differentials are
+\begin{align*}
+ D[x|x|y]&=-[x|xy],\\
+ D[x|z]&=-[x|xy]-[xz].
+\end{align*}
+Consequently
+\[
+ D\bigl([x|x|y]-[x|z]\bigr)=[xz],
+ \qquad d_2([x|x|y])=[xz]\ne0.
+\]
+The correction has length two and the residual has length one,
+which is exactly the bidegree of $d_2$.
+Positive weight makes this a calculation in a finite length
+filtration.  It gives no general collapse at $E_2$.
+
+Concentration in degree zero is also essential to
+\cref{thm:bar-brst}.
+Take $A=k\oplus k\eta$, with $|\eta|=1$, $\eta^2=0$ and $Q=0$.
+Then $H^0(A)=k$, but every word $[\eta|\cdots|\eta]$ is a
+nonzero degree-zero bar class.
+All bar differentials vanish, so
+\[
+ H^0(B(A))=\bigoplus_{n\geq0}k[\eta|\cdots|\eta]
+ \ne B(k)=k.
+\]
+For weight one on $\eta$, the completed example has the product
+of these spaces.  It is a separately specified completion of
+the same nonconcentrated algebra.
+
+\section{The universal affine reduction}
+Let $\mathfrak g$ be a finite-dimensional complex simple Lie
+algebra with invariant form normalized so that long roots have
+squared length two.
+The universal affine vertex algebra $V^\kappa(\mathfrak g)$ has
+currents $J_u$ with singular operator product
+\[
+ J_u(z)J_v(w)\sim
+ \frac{\kappa(u,v)}{(z-w)^2}+\frac{J_{[u,v]}(w)}{z-w}.
+\]
+Here $\sim$ records the singular terms.
+Choose a positive nilpotent subalgebra $\mathfrak n_+$, a basis
+$u_\alpha$ with
+$[u_\alpha,u_\beta]=f_{\alpha\beta}^{\ \gamma}u_\gamma$,
+and a principal character $\chi:\mathfrak n_+\to\mathbb C$.
+It is nonzero on each simple-root direction and vanishes on
+$[\mathfrak n_+,\mathfrak n_+]$.
+
+The charged-ghost vertex superalgebra has odd fields
+$b_\alpha,c^\alpha$, of cohomological degrees $-1,+1$, with
+$b_\alpha(z)c^\beta(w)\sim\delta_\alpha^\beta/(z-w)$.
+Its other generating self-products are regular.
+Colons denote the normal ordered product of fields.
+On the tensor product with $V^\kappa(\mathfrak g)$ define
+\[
+ j=\sum_\alpha :(J_{u_\alpha}-\chi(u_\alpha))c^\alpha:
+ -\frac12\sum_{\alpha,\beta,\gamma}
+ f_{\alpha\beta}^{\ \gamma}:b_\gamma c^\alpha c^\beta:,
+ \qquad Q=\operatorname{Res}_z j(z).
+\]
+
+The residue means the coefficient of $z^{-1}$.
+The character identity and Jacobi identity imply $Q^2=0$,
+and the residue acts as a derivation of the vertex operations
+\cite[Section 2]{KacRoanWakimoto2003}.
+This defines $C_{\mathrm{DS}}^\kappa(\mathfrak g)$.
+
+The principal grading is integral, so this construction needs
+no neutral ghosts.  General good half-integral gradings have
+additional neutral fields and the corresponding correction to $j$.
+
+For this universal complex, Kac--Wakimoto's concentration and
+Poincar\'e--Birkhoff--Witt theorems give
+\begin{align*}
+ H^i(C_{\mathrm{DS}}^\kappa(\mathfrak g),Q)&=0\quad(i\ne0),\\
+ \mathcal W^\kappa(\mathfrak g)&=H^0(C_{\mathrm{DS}}^\kappa(\mathfrak g),Q)
+\end{align*}
+for every $\kappa\in\mathbb C$
+\cite[Theorem 4.1]{KacWakimoto2004}.
+The degree-zero algebra is the universal principal $W$-algebra.
+Statements for simple quotients or other affine modules require
+the corresponding cohomology theorem for those objects.
+Their behavior does not change the universal assertion above.
+
+\section{The \(\mathfrak{sl}_2\) stress tensor}
+Fix $[H,E]=2E$, $[H,F]=-2F$, $[E,F]=H$ and
+$(H,H)=2$, $(E,F)=1$.
+Write $e,h,f$ for the currents, take $\chi(E)=1$, and use one
+charged pair $b,c$.
+The current and differential become
+\[
+ j=(e-1)c,\qquad Q=\operatorname{Res}j.
+\]
+The $e$--$e$ and $c$--$c$ operator products are regular, and
+the affine and ghost sectors have no mutual contractions.
+Thus the self-product of $j$ is regular and $Q^2=0$.
+The simple poles of its products with the generators give
+\[
+ Qb=e-1,\quad Qe=Qc=0,\quad
+ Qh=-2:ec:,\quad Qf=:hc:+\kappa\partial c.
+\]
+
+For $\kappa\ne-2$, define the Sugawara and ghost stress tensors by
+\[
+ T_{\mathrm{Sug}}
+ =\frac{\tfrac12:hh:+:ef:+:fe:}{2(\kappa+2)},
+ \qquad T_{\mathrm{gh}}=:(\partial b)c:.
+\]
+The latter assigns conformal weights zero and one to $b$ and $c$.
+The improved field is
+\[
+ T=T_{\mathrm{Sug}}+\tfrac12\partial h+T_{\mathrm{gh}}.
+\]
+It is $Q$-closed.  In fact,
+\begin{align*}
+ QT_{\mathrm{Sug}}&=:e\partial c:,\\
+ Q(\tfrac12\partial h)&=-:(\partial e)c:-:e\partial c:,\\
+ QT_{\mathrm{gh}}&=:(\partial e)c:.
+\end{align*}
+The three terms cancel exactly.
+
+For a stress tensor with central charge $c_T$, the fourth-order
+pole of its self-product is $c_T/2$.
+The Sugawara contribution here is $3\kappa/(\kappa+2)$.
+Since $h(z)h(w)\sim2\kappa/(z-w)^2$, differentiation gives
+\[
+ \partial h(z)\partial h(w)\sim
+ -\frac{12\kappa}{(z-w)^4}.
+\]
+The coefficient $1/2$ in the improvement therefore shifts the
+central charge by $-6\kappa$.
+
+For the ghosts, the two contractions in the fourth-order pole are
+$\partial b(z)c(w)\sim-(z-w)^{-2}$ and
+$c(z)\partial b(w)\sim(z-w)^{-2}$.
+Their nested fermionic pairing has positive sign, giving
+central charge $-2$.
+There is no scalar fourth-order pole in the mixed products.
+Hence
+\begin{align*}
+ c_{\mathrm{DS}}(\kappa)
+ &=\frac{3\kappa}{\kappa+2}-6\kappa-2\\
+ &=13-6(\kappa+2)-\frac6{\kappa+2}
+ =1-\frac{6(\kappa+1)^2}{\kappa+2}.
+\end{align*}
+
+The cohomology class of $T$ generates the universal Virasoro
+vertex algebra at this central charge.
+This identification uses the generator and independence parts
+of the reduction theorem.
+For principal $\mathfrak{sl}_2$, the centralizer has one even
+generator, and the reduced algebra has the corresponding
+ordered monomial basis in its derivatives.
+The class of $T$ has a nonzero leading coefficient on this
+generator when $\kappa+2\ne0$.
+
+It therefore generates, and the same monomial basis proves
+injectivity of the map from the universal Virasoro algebra
+\cite[Theorems 4.1 and 5.1(b)]{KacWakimoto2004}.
+Matching the central charge alone would not prove injectivity.
+At $\kappa=-2$, concentration of the universal BRST complex
+still holds, while the displayed Sugawara formula is undefined.
+
+\section{Associative coefficients and the vacuum}
+Two features of the vertex complex prevent an immediate use of
+\cref{thm:bar-brst} with its normal product and vacuum coefficient.
+First, the normal product need not be associative.
+For an even Heisenberg current
+$a(z)=\sum_{n\in\mathbb Z}a_nz^{-n-1}$ at level one, fix
+\[
+ [a_m,a_n]=m\delta_{m+n,0},
+ \qquad a_n\mathbf1=0\quad(n\geq0),
+ \qquad a=a_{-1}\mathbf1.
+\]
+
+Write $m(u,v)=u_{(-1)}v$ for the normal product of states.
+The normal ordered mode formula gives
+\[
+ (:aa:)_{(-1)}
+ =\sum_{i<0}a_i a_{-2-i}+\sum_{i\geq0}a_{-2-i}a_i.
+\]
+On $a_{-1}\mathbf1$, the term $i=-1$ gives
+$a_{-1}^3\mathbf1$.
+The terms $i=-3$ and $i=1$ each give $a_{-3}\mathbf1$
+by $[a_1,a_{-1}]=1$.
+Every other term vanishes.
+
+Thus, if $\mathsf T$ denotes translation,
+\[
+ m(m(a,a),a)-m(a,m(a,a))
+ =2a_{-3}\mathbf1=\mathsf T^2a\ne0.
+\]
+This calculation fixes the current algebra and its vacuum
+throughout.
+
+Second, in the affine BRST complex the usual vacuum coefficient
+functional $\epsilon_0$ has
+$\epsilon_0(\mathbf1)=1$ and $\epsilon_0(e)=0$.
+The identity $Qb=e-1$ gives
+\[
+ \epsilon_0(Qb)=-1.
+\]
+It is therefore not a chain augmentation.
+The scalar $1$ in the constraint is not an augmentation value
+of the current.
+
+An associative or derived coefficient realization must specify
+a compatible differential, augmentation or relative boundary
+modules, tensor product and completion.
+An operation-preserving comparison is then required before the
+bar theorem applies.
+These examples obstruct the stated normal-product and vacuum
+choices, without excluding other such realizations.
+Likewise, the quantum BV operator of the finite cotangent model
+has a second-order product defect.  Its square-zero identity
+does not make it the associative derivation required here.
+
+\chapter{From order to exchange: KZ, Tannaka, and four-dimensional Chern--Simons}\label{chap:exchange}
+
+\section{Infinitesimal braid relations}
+Let \(\mathfrak g\) be a quadratic Lie algebra and \(\Omega\in\mathfrak g\otimes\mathfrak g\) the inverse invariant form.  On \(V_1\otimes\cdots\otimes V_n\), write \(\Omega_{ij}\) for its action in factors \(i,j\).  Invariance gives
+\[
+ [\Omega_{ij},\Omega_{kl}]=0\quad\text{for disjoint pairs},
+ \qquad
+ [\Omega_{ij},\Omega_{ik}+\Omega_{jk}]=0.
+\]
+These are the infinitesimal braid relations.
+
+The KZ connection on \(\Conf_n(\mathbb C)\) is
+\[
+ \nabla_{\mathrm{KZ}}
+ =d-\kappa\sum_{i<j}\Omega_{ij}\,d\log(z_i-z_j).
+\]
+
+\begin{proposition}[KZ flatness]\label{prop:kz-flat}
+The KZ connection is flat.
+\end{proposition}
+\begin{proof}
+The logarithmic one-forms are closed, so curvature is the wedge-square of the connection form.  Terms on four distinct labels vanish by disjoint commutativity.  On three labels, the coefficient is an infinitesimal braid commutator multiplied by Arnold's relation
+\[
+ \omega_{12}\wedge\omega_{23}
+ +\omega_{23}\wedge\omega_{31}
+ +\omega_{31}\wedge\omega_{12}=0.
+\]
+Both factors vanish in the required combination.
+\end{proof}
+
+Monodromy gives a braid-group representation.  The Drinfeld--Kohno theorem identifies the formal monodromy category with the braided representation category of the corresponding quantum group after an associator and parameter identification are chosen.  The associator is part of the comparison; it is not produced by the ordered line.
+
+\section{Meromorphic Tannaka reconstruction}
+Let \(\mathcal C\) be a rigid meromorphic tensor category of line operators and let \(\omega:\mathcal C\to\operatorname{Vect}_{\kfield((u))}\) be a faithful exact strong monoidal fibre functor.  The coend
+\[
+ H=\int^{V\in\mathcal C}\omega(V)^*\otimes\omega(V)
+\]
+reconstructs a bialgebra.  Rigidity gives an antipode.  Braided exchange gives a coquasitriangular structure.  A topological completion may be required when spectral expansions are infinite.
+
+\begin{nogobox}[title={No-go theorem 20: a braided category without a fibre functor does not determine an ordinary Hopf algebra}]
+Tannaka reconstruction outputs an ordinary or topological Hopf algebra only after a suitable fibre functor is specified.  Without it, the intrinsic output is the tensor category itself, or a Hopf object in a different base category.  ``The quantum group'' is not a scalar extracted from braid matrices.
+\end{nogobox}
+
+\section{Four-dimensional Chern--Simons theory}
+Let \(\Sigma\) be an oriented real surface, \(C\) a complex curve with meromorphic one-form \(\omega\), and consider the partial connection of four-dimensional Chern--Simons theory on \(\Sigma\times C\):
+\[
+ S_{4d}(A)=\frac{1}{2\pi\hbar}
+ \int_{\Sigma\times C}\omega\wedge
+ \Tr\left(A\wedge dA+\frac23A\wedge A\wedge A\right).
+\]
+The theory is topological on \(\Sigma\) and holomorphic on \(C\).  A Wilson line in \(\Sigma\) at spectral point \(z\in C\) is a line object.  Parallel fusion is ordered; exchange in \(\Sigma\) produces an \(R\)-matrix.  In the rational case, the tree-level exchange is
+\[
+ R(z_1-z_2)=1+\hbar\frac{\Omega}{z_1-z_2}+O(\hbar^2).
+\]
+Gauge invariance at the first nontrivial order imposes the classical Yang--Baxter equation.  Quantisation produces the rational Yangian-type exchange algebra under the boundary, anomaly, and representation hypotheses of the model.
+
+The geometry explains why ZF/RTT relations and Yang--Baxter occur.  The complete identification with a specific Yangian remains a theorem about the line category and its generators, not a consequence of dimensional analysis.
+
+\chapter{Cyclic traces, modular sewing, and the two-edge master equation}\label{chap:two-edge}
+
+\section{Closing the transverse interval}
+The surface construction needs a cyclic pairing and its inverse on a specified coefficient model.
+Let $k$ be a field of characteristic zero, and let $A$ be a finite Calabi--Yau ordered algebra as in Definition~\ref{cbc:cyclic:finite-model}.
+Its pairing has the cohomological convention
+\[
+ B:A\otimes_k A\longrightarrow k[-d],
+ \qquad A\cong A^\vee[-d].
+\]
+For a proper derived algebra, a coherent cyclic trace has source $CC_*(A)_{hS^1}$ and the same shifted target.
+Passing from that datum to a finite cyclic model is a further hypothesis here.
+For an algebra in a chiral coefficient category, a realization must also preserve the chosen tensor, pairing and sewing operations.
+
+\begin{theorem}[Ribbon-graph action]\label{thm:ribbon-action}
+The algebra $A$ determines an open topological conformal field theory and its universal open--closed extension.
+Both use Costello's admissible surface category with determinant coefficients $\mathcal D^{\otimes d}$.
+The extension has circle value quasi-isomorphic to $CC_*(A)$.
+Its closed restriction supplies surface operations on these chains with their coherent compositions.
+Passing to homology gives an action of the homology of the corresponding moduli spaces on $HH_*(A)$.
+\end{theorem}
+\begin{proof}
+Apply Theorem~\ref{cbc:cyclic:surface}.
+The cyclic higher products label disk vertices and the inverse pairing contracts internal edges.
+The cellular disk relations are the cyclic $\Ainf$ identities, while annuli compute the Hochschild circle object.
+Derived extension transports the cellular functor to the surface category and preserves its sewing compositions.
+The determinant line accounts for the grading of the pairing and its inverse.
+\end{proof}
+
+This construction gives the genus $g_\perp$ of the bordered surface.
+Its admissibility condition requires an incoming closed or a free boundary on every component.
+It is not an assertion about a finite cyclic extension of an arbitrary native state algebra.
+
+\section{Chiral sewing over stable curves}
+The chiral genus $g_X$ is the arithmetic genus of a stable algebraic curve.
+A modular chiral coefficient must supply maps along separating and nonseparating clutching,
+\[
+ \overline{\mathcal M}_{g_1,n_1+1}\times
+ \overline{\mathcal M}_{g_2,n_2+1}
+ \longrightarrow\overline{\mathcal M}_{g_1+g_2,n_1+n_2},
+ \qquad
+ \overline{\mathcal M}_{g-1,n+2}
+ \longrightarrow\overline{\mathcal M}_{g,n}.
+\]
+The bars denote the compactified moduli stacks, since the glued curves have nodes.
+The coefficient maps include their pullback, pushforward, support and completion conventions.
+A perfect pairing contracts the two flags at a node, but the modular composition identities and their compatibility with the coefficient maps must also hold.
+These are additional data beyond the transverse surface theory.
+
+\section{Two kinds of contraction}
+Suppose a common collection of decorated graphs admits both transverse and chiral contractions, with coherent identifications of every iterated contraction target.
+Assign a complex $C(G)$ to each graph and equivariant degree-zero cochain maps $c_e^G:C(G)\to C(G/e)$.
+Assume the single-kind composition laws, and require the mixed square
+\[
+ c_f^{G/e}c_e^G=c_e^{G/f}c_f^G
+ \qquad(e\text{ transverse},\ f\text{ chiral}).
+\]
+
+\begin{recognition}[Two-edge sewing theorem]\label{thm:two-edge-recognition}
+Under these assumptions, the maps extend uniquely to the category of finite graph contractions.
+The determinant-oriented direct-sum complex of Proposition~\ref{cbc:cyclic:mixed} has a square-zero differential.
+Its transverse and chiral edge differentials anticommute.
+\end{recognition}
+\begin{proof}
+Factor a contraction into single-edge contractions.
+Adjacent transpositions relate any two edge orders, and the single-kind laws and mixed square identify their coefficient composites.
+The coherent target identifications give an order-independent map and prove its compatibility with further contraction.
+In the graph differential the two edge orders have opposite exterior signs.
+Proposition~\ref{cbc:cyclic:mixed} then gives the square-zero identity, including loops.
+\end{proof}
+
+If the mixed square is given only up to homotopy, higher compatible homotopies are required.
+A square-zero contraction differential is one part of a master-equation construction.
+Theorem~\ref{thm:cbc:two-edge:master} supplies the generator equation when the common sewing maps define a twisted modular operad and its complementary target.
+Its carrier consists of maps on the dual generators, completed by positive stability weight.
+An amplitude $\Theta$ has degree zero there and degree one after the stated Lie-algebra shift.
+
+Write $[-,-]_\perp$ and $[-,-]_X$ for the polarized separating operations of that theorem, and $\Delta_\perp,\Delta_X$ for its loop operations.
+All four operations have degree one on the unshifted amplitude carrier.
+With separating weights one and a common degree-zero loop parameter $\hbar$, the equation is
+\begin{equation}\label{eq:cbc:physics:two-edge-master}
+ d\Theta+\frac12[\Theta,\Theta]_X
+ +\frac12[\Theta,\Theta]_\perp
+ +\hbar(\Delta_X+\Delta_\perp)\Theta=0.
+\end{equation}
+The equation says that the internal boundary and the separating and nonseparating contributions cancel on every generator.
+It is equivalent to compatibility of the extended operad morphism with the differential.
+The common parameter records the ordinary total genus shift.
+
+For a differential graded Lie structure with independent loop parameters $\hbar_X,\hbar_\perp$ and these separating brackets, the crossed derivation defects must vanish separately, as in~\eqref{eq:cbc:two-edge:crossed-defect}.
+The anticommutator $\Delta_X\Delta_\perp+\Delta_\perp\Delta_X=0$ does not imply that condition.
+On the full colored graph category, the universal contraction weights instead satisfy~\eqref{eq:cbc:two-edge:weight-relation}.
+Proposition~\ref{prop:cbc:two-edge:two-genera} gives a restricted contraction domain with two invariant genera, together with its limitation under substitution.
+Realizing two geometric sewings therefore requires the common coefficient maps, their coherent compositions and their compatibility with the chosen completion.
+The equation cannot be inferred from an orientation or from scalar amplitudes alone.
+
+\begin{remark}[The two geometric genera]
+The surface genus $g_\perp$ and the curve genus $g_X$ have different geometric definitions.
+A graph with two vertices and two differently colored parallel edges demonstrates a further issue.
+The color of the edge that becomes a loop depends on the contraction order.
+Assigning its genus increment to that color does not define two invariant genera on the ordinary colored graph category.
+
+Thus a theory using both genera must specify a more structured common sewing object, or restrict its allowed contractions.
+It must prove the desired genus comparison there.
+The existence of such a comparison for an ordered chiral algebra remains a separate construction.
+\end{remark}
+
+\chapter{Prime forms, plumbing, and the analytic chiral genus}\label{chap:higher-genus}
+
+\section{The normalized bidifferential}
+Let \(\Sigma_g\) be a compact Riemann surface with symplectic homology basis and period matrix \(\Omega\).  The prime form \(E(p,q)\) is a \((-1/2,-1/2)\)-form with a simple zero on the diagonal.  The normalized fundamental bidifferential has local behaviour
+\[
+ B(p,q)=\left(\frac{1}{(z(p)-z(q))^2}+O(1)\right)dz(p)dz(q)
+\]
+and vanishing \(A\)-periods.  It may be expressed through logarithmic derivatives of the prime form with the normalization correction fixed by periods.
+
+For a rank-one Heisenberg current,
+\[
+ \langle J(p)J(q)\rangle_{\Sigma_g}=k B(p,q).
+\]
+Higher current correlators are sums over pairings.  This is an exact Gaussian realization of the chiral coefficient at every genus once the determinant line and zero modes are included.
+
+\section{Plumbing a node}
+For local coordinates \(z,w\) at two marked points, plumbing identifies
+\[
+ zw=q,
+ \qquad |q|\ll1.
+\]
+A separating node joins two components; a nonseparating node joins two points on one component.  Formal sewing inserts a complete set of states:
+\[
+ \mathcal F_{\mathrm{sew}}(q)
+ =\sum_\alpha q^{L_0(\alpha)-c/24}
+ \mathcal F_1(\cdots,v_\alpha)
+ \mathcal F_2(v^\alpha,\cdots).
+\]
+The expression is formal in \(q\).  Analytic sewing additionally requires convergence, control of the completion, and compatibility of the chosen local coordinates.
+
+\begin{nogobox}[title={No-go theorem 22: formal sewing does not imply analytic convergence}]
+An identity in \(V[[q]]\) can hold while the corresponding series has zero radius of convergence in a chosen topology.  Trace-class estimates, energy bounds, or a rational/CFT finiteness theorem are separate analytic inputs.  Formal modular-operad structure and analytic conformal blocks must be stated separately.
+\end{nogobox}
+
+\section{Genus one}
+For a positive-energy module \(M\), the torus character is
+\[
+ \chi_M(\tau)=\Tr_M q^{L_0-c/24},
+ \qquad q=e^{2\pi i\tau}.
+\]
+For a rank-one Heisenberg algebra,
+\[
+ \chi_{\mathrm{Heis}}(\tau)=\eta(\tau)^{-1}.
+\]
+For an even lattice \(L\),
+\[
+ \chi_{V_L}(\tau)=\frac{\Theta_L(\tau)}{\eta(\tau)^{\operatorname{rk}L}}.
+\]
+The theta numerator records zero modes; the eta denominator is the oscillator determinant.  Their modular transformations are sections of the anomaly line rather than ordinary invariant functions until the determinant factor is included.
+
+\section{Higher genus and Siegel theta series}
+The lattice zero-mode sum becomes
+\[
+ \Theta_L^{(g)}(\Omega)
+ =\sum_{\lambda_1,\ldots,\lambda_g\in L}
+ \exp\left(\pi i\sum_{a,b}(\lambda_a,\lambda_b)\Omega_{ab}\right).
+\]
+The oscillator factor is the corresponding chiral determinant.  Separating degeneration factorises the theta series into the products of lower-genus theta series; nonseparating degeneration is a Fourier--Jacobi expansion.  These are genuine analytic data that survive the correction from one genus to two independent genera: they belong to \(g_X\), not to the ribbon loop count.
+
+\chapter{A concrete two-genus model}\label{chap:two-genus-example}
+
+\section{The transverse Frobenius algebra}
+Take the augmented noncommutative Frobenius algebra \(B_n=D\times M_n(\kfield)\) of \cref{prop:Bn}.  Its cyclic trace produces a ribbon theory.  Let
+\[
+ R_h(n)=\tau_B(e_{B_n}^{h})
+ =\begin{cases}
+ n,&h=0,\\
+ 2+n^2,&h=1,\\
+ n^{h+1},&h\ge2.
+ \end{cases}
+\]
+This is an exact closed-surface amplitude in the associated two-dimensional topological field theory convention.
+
+\section{A rank-one Deligne--Mumford theory}
+Let \(C_\lambda=\kfield\mathbf1\) be the one-dimensional commutative Frobenius algebra with
+\[
+ \mathbf1\cdot\mathbf1=\mathbf1,
+ \qquad
+ \eta(\mathbf1,\mathbf1)=\lambda\in\kfield^\times.
+\]
+The inverse metric is \(\lambda^{-1}\), and the handle element is \(\lambda^{-1}\mathbf1\).  The associated rank-one cohomological field theory assigns the constant class
+\[
+ \Omega_{g,r}=\lambda^{1-g}\in H^0(\mcM_{g,r};\kfield)
+\]
+to every stable pointed curve.
+
+\begin{proposition}[Clutching]\label{prop:rank-one-clutching}
+The classes \(\Omega_{g,r}\) satisfy both separating and nonseparating CohFT gluing equations.
+\end{proposition}
+\begin{proof}
+A separating gluing contracts two classes with the inverse metric and gives
+\[
+ \lambda^{1-g_1}\lambda^{1-g_2}\lambda^{-1}
+ =\lambda^{1-(g_1+g_2)}.
+\]
+A nonseparating gluing gives
+\[
+ \lambda^{1-(g-1)}\lambda^{-1}=\lambda^{1-g}.
+\]
+The unit axiom is immediate.
+\end{proof}
+
+\section{Strict mixed interchange}
+Form the tensor-product state object
+\[
+ \mathcal H=B_n\otimes C_\lambda.
+\]
+Ribbon contractions act on the first factor; Deligne--Mumford clutching acts on the second.  Common corollas are tensor products of the two multiplications.  Operators on different tensor factors commute before the determinant-line sign is inserted.
+
+\begin{theorem}[Realized two-edge recognition]\label{thm:realized-two-edge}
+The state object \(\mathcal H\) satisfies all five hypotheses of \cref{thm:two-edge-recognition}.  Its bivariate closed amplitude is
+\[
+ \boxed{\quad
+ Z_{g_X,g_\perp}(n,\lambda)
+ =\lambda^{1-g_X}R_{g_\perp}(n).
+ \quad}
+\]
+Thus
+\[
+ Z_{g_X,0}=n\lambda^{1-g_X},
+ \qquad
+ Z_{g_X,1}=(2+n^2)\lambda^{1-g_X},
+ \qquad
+ Z_{g_X,h}=n^{h+1}\lambda^{1-g_X}\ (h\ge2).
+\]
+The two genus variables are independent and the mixed interchange square is strict.
+\end{theorem}
+\begin{proof}
+Cyclicity and perfection for \(B_n\) give the transverse sewing.  \cref{prop:rank-one-clutching} gives the chiral modular sewing.  Tensor-product corollas satisfy each one-colour associativity law.  A contraction on \(B_n\) commutes with a contraction on \(C_\lambda\), and exchanging their odd edge orientations supplies the required sign.  The recognition theorem applies.  The amplitude factorises into the two exact one-colour amplitudes.
+\end{proof}
+
+This is the missing realized invocation of the recognition theorem.  It is deliberately elementary enough that every hypothesis and scalar can be checked.  It proves the formal two-genus architecture unconditionally.  Tensoring the rank-one CohFT with a rational vertex-algebra modular functor gives richer analytic examples once convergence and anomaly-line hypotheses are supplied.
+
+\section{What the model proves and what it does not}
+The example proves existence of a noncommutative transverse sector, a genuine augmentation and bar, two independent modular contractions, and a mixed graph action.  It does not claim that every holomorphic--topological gauge theory factorizes as a tensor product, or that its two loop parameters are physically unrelated.  Interacting theories can have mixed vertices; then the mixed square is a substantive calculation rather than strict tensor-factor commutation.
+
+\chapter{Typed anomalies and invertible theories}\label{chap:anomalies}
+
+\section{Classes, curved data and descent}
+
+A leading anomaly class is defined only after the lower equations give a square-zero differential on the relevant coefficient.
+Chapter~\ref{cbc:anomaly:chapter} constructs the degree-two central-extension and BRST classes, the degree-one BV obstruction, and the separate holomorphic connection class.
+A curved associative element $\kappa$ instead obeys $d^2=[\kappa,-]$ and need not define an ordinary cohomology class.
+Likewise a chosen determinant curvature form, its characteristic class and its flat holonomy retain different information.
+The flat line with holonomy $-1$ and the central BV class in \eqref{eq:cbc:anomaly:central-class} show two ways that passing to a smaller invariant loses an obstruction.
+
+Framing dependence is a descent problem for the geometric bordism category.
+Let $\pi$ be the functor that forgets the framing.
+Descent of a framed theory $T$ requires a theory $T_0$ on the unframed category and a monoidal identification $T\simeq\pi^*T_0$ compatible with all bordisms.
+It is not specified by a scalar curvature coefficient alone.
+A family index map, transgression, boundary map or open--closed comparison must give the actual transport between its declared anomaly data.
+
+\section{Cancellation requires a relative theory or a trivialization}
+
+Fix a bordism setting in which tensor products and monoidal transformations of theories are defined.
+We use the relative-theory convention of Freed--Teleman (2014), Definition~2.1 \cite{FreedTeleman2014}.
+Let $\alpha$ be an invertible theory in dimension $d+1$.
+Put $A=\tau_{\leq d}\alpha$, its truncation to the dimensions used by the relative theory.
+
+Write $\mathbf1$ for the trivial theory.
+In one variance a $d$-dimensional relative theory is a transformation
+\[
+ T:\mathbf1\longrightarrow A.
+\]
+The opposite variance has a map $A\to\mathbf1$ and must be treated with that source and target.
+Choose an inverse $A^{-1}$ and a monoidal evaluation isomorphism $e:A\otimes A^{-1}\xrightarrow{\sim}\mathbf1$.
+
+\begin{theorem}[Cancellation with a compensating theory]\label{cbc:anomaly:relative-cancellation}
+If a relative theory $U:\mathbf1\to A^{-1}$ is supplied, then
+\[
+ \mathbf1\simeq\mathbf1\otimes\mathbf1
+ \xrightarrow{\ T\otimes U\ }A\otimes A^{-1}
+ \xrightarrow{\ e\ }\mathbf1
+\]
+is an absolute theory in the same bordism setting.
+Alternatively, a monoidal trivialization $\varepsilon:A\xrightarrow{\sim}\mathbf1$ makes $\varepsilon\circ T$ absolute.
+For the reversed variance, supplied maps $\widetilde T:A\to\mathbf1$ and $\widetilde U:A^{-1}\to\mathbf1$ give $(\widetilde T\otimes\widetilde U)\circ e^{-1}:\mathbf1\to\mathbf1$.
+\end{theorem}
+\begin{proof}
+Tensoring the transformations preserves their naturality and monoidal composition equations.
+Composing with the monoidal isomorphism $e$ preserves those equations again, and the resulting source and target are both $\mathbf1$.
+In the relative-theory convention, a transformation relative to $\mathbf1$ is an absolute theory.
+On a closed $d$-manifold $M$, it evaluates the covector $U(M)(1)$ on the vector $T(M)(1)$.
+On a bordism, the same evaluation commutes with the structure maps by naturality, so it respects gluing.
+The construction with $\varepsilon$ is composition of monoidal transformations.
+\end{proof}
+
+The inverse object alone gives a different map:
+\[
+ e\circ(T\otimes\mathrm{id}_{A^{-1}}):A^{-1}\longrightarrow\mathbf1.
+\]
+Its source is still the inverse anomaly theory.
+The isomorphism $A\otimes A^{-1}\simeq\mathbf1$ supplies neither the transformation $U$ nor a trivialization of $A$.
+Existence of the required compensating boundary theory, with its locality and gluing, remains an additional construction.
+
+\section{A projective representation and its actual compensator}
+
+Let $G=(\mathbb Z/2)^2$, write its elements as $(a,b)$, and set
+\[
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+ \rho(a,b)=X^aZ^b.
+\]
+Since $ZX=-XZ$,
+\[
+ \rho(g)\rho(h)=\alpha(g,h)\rho(g+h),
+ \qquad \alpha\bigl((a,b),(a',b')\bigr)=(-1)^{ba'}.
+\]
+The exponent is bilinear modulo two, so $\alpha(g,h)\alpha(g+h,k)=\alpha(h,k)\alpha(g,h+k)$.
+Thus $\rho$ is a projective representation with multiplier $\alpha$.
+
+A one-dimensional compensator would be nonzero scalars $b(g)$ satisfying
+\[
+ \frac{b(g)b(h)}{b(g+h)}=\alpha(g,h)^{-1}.
+\]
+The left side is symmetric in $g,h$ because $G$ is abelian.
+The right side takes the values $1$ and $-1$ on $((1,0),(0,1))$ and the reversed pair.
+Consequently no such one-dimensional compensator exists, although the inverse cocycle $\alpha^{-1}$ is defined.
+
+An actual opposite projective system is the dual vector space with
+\[
+ \rho^\vee(g)=\bigl(\rho(g)^{-1}\bigr)^{\mathsf T}.
+\]
+Taking inverses and transposes of the multiplier equation gives
+\[
+ \rho^\vee(g)\rho^\vee(h)=\alpha(g,h)^{-1}\rho^\vee(g+h).
+\]
+Therefore $\rho\otimes\rho^\vee$ is an ordinary representation on the four-dimensional space $V\otimes V^*$.
+Its evaluation pairing is invariant because $\rho^\vee(g)$ is contragredient to $\rho(g)$.
+This supplies a compensating system with its maps.
+Its dimension is two, and the one-dimensional obstruction remains.
+
+\section{Scalar evaluations and central charge}
+
+An evaluation of an anomaly class is a map to scalars, with a chosen cycle, trace or background.
+Equality after that evaluation does not identify the original coefficient objects or their trivializations.
+The preceding projective multiplier and the flat holonomy example retain information not supplied by a curvature scalar.
+
+Central charge also fails to classify general conformal vertex algebras.
+For a finite-dimensional commutative unital algebra $B$, put every state in degree zero and define $Y(a,z)b=ab$, translation $T=0$, and conformal vector $\omega=0$.
+Associativity and commutativity verify the constant-field vertex identities, and the unit verifies the vacuum identities.
+All Virasoro operators vanish, with central charge zero, and $L_{-1}=T$ and $L_0=0$ agree with the chosen grading.
+
+Taking $B=\mathbb C$ and $B=\mathbb C[\epsilon]/(\epsilon^2)$ gives nonisomorphic examples of dimensions one and two.
+The second example is outside the additional CFT-type condition $B_0=\mathbb C$, which is not imposed here.
+The central charge does not recover their states or multiplication, much less the extra coefficient and sewing operations of an ordered chiral theory.
+
+\chapter{Bar Euler products and Borcherds denominators}\label{chap:borcherds}
+
+\section{Root-graded Lie superalgebras}
+Let
+\[
+ \mathfrak g=\mathfrak h\oplus\bigoplus_{\alpha\ne0}\mathfrak g_\alpha,
+ \qquad
+ \mathfrak n_+=\bigoplus_{\alpha\in\Gamma_+}\mathfrak g_\alpha,
+\]
+where every root space is finite dimensional and each degree has finitely many decompositions in the chosen completion.  PBW and \cref{thm:enveloping-bar} give
+\[
+ \Barop^\perp(U(\mathfrak n_+))\simeq\CE_*(\mathfrak n_+)
+ =\Sym(\mathfrak n_+[1]).
+\]
+
+\begin{theorem}[Bar denominator product]\label{thm:bar-denominator}
+The completed graded Euler supercharacter is
+\[
+ \chi_\Gamma\Barop^\perp(U(\mathfrak n_+))
+ =\prod_{\alpha\in\Gamma_+}
+ (1-e^{-\alpha})^{\sdim\mathfrak g_\alpha}.
+\]
+If \(\mathfrak g\) is a Borcherds--Kac--Moody superalgebra with Weyl vector \(\rho\), multiplying by \(e^{-\rho}\) gives the product side of its denominator identity.
+\end{theorem}
+\begin{proof}
+An even root vector becomes odd after suspension and contributes \(1-e^{-\alpha}\) to the Euler supercharacter.  An odd root vector becomes even and contributes its inverse.  Multiplication over a homogeneous basis gives the superdimension exponent.  Finite decomposition makes each coefficient of the completed product finite.
+\end{proof}
+
+The theorem is an object-to-character map: the Lie bracket controls the Chevalley differential, while the Euler character remembers only signed root multiplicities.
+
+\section{The Igusa product}
+Let
+\[
+ \phi_{0,1}(\tau,z)=\sum_{n\ge0,\ell\in\mathbb Z}f(n,\ell)q^ny^\ell
+\]
+be the normalized weak Jacobi form of weight zero and index one.  In the standard chamber, the monic Borcherds product is
+\[
+ D_5(Z)=q^{1/2}y^{1/2}p^{1/2}
+ \prod_{(n,\ell,m)>0}
+ (1-q^ny^\ell p^m)^{f(nm,\ell)}.
+\]
+For the Gritsenko--Nikulin Borcherds algebra, the signed root multiplicities are \(f(nm,\ell)\).  With the theta-constant normalization \(\Delta_5=64D_5\), the denominator convention gives
+\[
+ e^{-\rho}\chi_\Gamma\Barop^\perp(U(\mathfrak n_{\Delta_5,+}))
+ =D_5(2Z)=64^{-1}\Delta_5(2Z).
+\]
+This equality is a typed Euler-character identity.  It does not identify the entire bar complex with an automorphic function.
+
+The scalar \(64\) is not a convention.  Writing \(\mathfrak E\) for the ten
+even genus-two characteristics and
+\(\Delta_5^{\theta}(Z)=\prod_{\mathfrak m\in\mathfrak E}\vartheta[\mathfrak m](Z,0)\),
+the cusp leading terms of the ten factors group by first half-characteristic:
+four contribute the scalar \(1\), and the remaining six each contribute a
+factor \(2\) from a pair of shortest lattice representatives exchanged by
+sign.  The exponents sum to \((1/2,1/2,1/2)\), so
+\[
+ [q^{1/2}r^{1/2}s^{1/2}]\,\Delta_5^{\theta}=2^6=64,
+\]
+which fixes \(\Delta_5^{\theta}=2^6\Delta_5^{\mathrm{mon}}\) and with it the
+normalization used above. The weight is
+\(f(0,0)/2=5\), consistent with the normalization \(f(0,0)=10\) fixed above.
+
+\section{Finite positive windows}
+Let \(h:\Gamma_+\to\mathbb N_{>0}\) be proper and additive.  The quotient
+\[
+ \mathfrak n_+(H)=\mathfrak n_+/\bigoplus_{h(\alpha)>H}\mathfrak g_\alpha
+\]
+is finite-dimensional nilpotent.  Its level-zero current vertex algebra has PBW character, and the inverse limit over \(H\) is separated and complete.  Coefficientwise finiteness follows because a fixed root and oscillator degree sees only finitely many positive roots and modes.
+
+\section{Polarized Gram transform}
+Let \(\Pi:\Gamma_{\mathrm{phys}}\to\Lambda\) be quadratic with polarization
+\[
+ B(\gamma,\delta)=\Pi(\gamma+\delta)-\Pi(\gamma)-\Pi(\delta).
+\]
+For a charge-graded algebra \(A=\bigoplus_\gamma A_\gamma\), define
+\[
+ (a_\gamma u^\lambda)\star_B(b_\delta u^\mu)
+ =a_\gamma b_\delta u^{\lambda+\mu+B(\gamma,\delta)}.
+\]
+Biadditivity gives the cocycle identity and hence associativity.  The Gram embedding
+\[
+ \iota_\Pi(a_\gamma)=a_\gamma u^{\Pi(\gamma)}
+\]
+is an algebra homomorphism for \(\star_B\).  This is the exact device that turns quadratic Fourier indices into an additive grading without pretending that \(\Pi\) itself is additive.
+
+\begin{warning}
+A compact Hall realization of the Igusa root algebra is a further theorem.  It must construct the moduli stack, orientation data, extension correspondence, PBW comparison, and map to the Borcherds algebra.  The denominator product alone supplies none of these maps.
+\end{warning}
+
+\chapter{Higher-dimensional sources and factorisation pushforward}\label{chap:higher-sources}
+
+\section{Pushforward along an actual map}
+Let \(f:M\to X\) be a map and \(\mathcal O\) a factorisation algebra on \(M\).  Under properness/support and descent conditions, factorisation pushforward is
+\[
+ (f_*^{\mathrm{Fact}}\mathcal O)(U)=\mathcal O(f^{-1}U).
+\]
+Disjoint opens in \(X\) have disjoint inverse images, so the factorisation maps descend.  Holomorphic or topological reduction to a curve is therefore a functor only after an actual map and support theory are specified.
+
+\section{Calabi--Yau categories and Hall products}
+A Calabi--Yau category of branes can produce:
+\begin{enumerate}
+\item an \(\Eone\)-algebra of endomorphisms of a chosen brane;
+\item extension correspondences on moduli of objects, yielding Hall or cohomological Hall multiplication;
+\item cyclic pairings and open-string traces;
+\item closed-string maps into Hochschild invariants.
+\end{enumerate}
+Shifted symplectic geometry can orient the correspondences and control quantization.  Each arrow needs its own finiteness and orientation theorem.  A slogan such as ``Calabi--Yau source'' is not yet an ordered chiral algebra.
+
+\section{Coulomb branches and shifted Yangians}
+In suitable supersymmetric gauge theories, convolution on affine Grassmannian-type spaces produces quantized Coulomb branches, while line defects organize modules over shifted Yangians.  To place such an algebra in the present theory one must exhibit:
+\begin{enumerate}
+\item the curve-valued factorisation coefficient;
+\item the ordered line multiplication;
+\item the augmentation or relative base used by the bar;
+\item the exchange geometry or \(R\)-matrix;
+\item the comparison to the RTT/Drinfeld presentation.
+\end{enumerate}
+Once these data are present, bar, centre, and BRST constructions are functorial.  Without them, name matching is not a proof.
+
+\section{Source-to-chiral comparison}
+The correct general pattern is a diagram
+\[
+\begin{tikzcd}[column sep=large]
+ \text{higher-dimensional geometric category}
+ \arrow[r,"\text{pushforward/restriction}"]
+ \arrow[d,"\text{Hall or convolution}"']
+ &\text{factorisation category on }X
+ \arrow[d,"{\RHom(b,b)}"]\\
+ \text{geometric algebra}
+ \arrow[r,"\text{comparison}"']
+ &\Alg_{\Eone}(\FactD(X)).
+\end{tikzcd}
+\]
+Every square is a theorem about correspondences, supports, and descent.  The diagram is the disciplined replacement for a universal ``shadow tower.''
